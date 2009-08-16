@@ -112,23 +112,23 @@ SweaveReadFile <- function(file, syntax)
 
     bf <- basename(f)
     df <- dirname(f)
-    if(!file.exists(f)){
+    if(!file.exists(f)) {
         f <- list.files(df, full.names=TRUE,
                         pattern=paste(bf, syntax$extension, sep=""))
 
-        if(length(f) == 0L){
+        if(length(f) == 0L)
             stop(gettextf("no Sweave file with name '%s' found", file[1L]),
                  domain = NA)
-        }
-        else if(length(f) > 1L){
+        else if(length(f) > 1L)
             stop(paste(gettextf("%d Sweave files for basename '%s' found:",
                                 length(f), file),
                        paste("\n         ", f, collapse="")),
                  domain = NA)
-        }
     }
 
-    text <- readLines(f[1L])
+    ## An incomplete last line is not a real problem.
+    text <- readLines(f[1L], warn = FALSE)
+
     ## <FIXME>
     ## This needs to be more refined eventually ...
     if(any(is.na(nchar(text, "c", TRUE)))) {
@@ -141,25 +141,23 @@ SweaveReadFile <- function(file, syntax)
 
     pos <- grep(syntax$syntaxname, text)
 
-    if(length(pos) > 1L){
+    if(length(pos) > 1L)
         warning(gettextf("more than one syntax specification found, using the first one"), domain = NA)
-    }
-    if(length(pos) > 0L){
+
+    if(length(pos) > 0L) {
         sname <- sub(syntax$syntaxname, "\\1", text[pos[1L]])
         syntax <- get(sname, mode = "list")
         if(class(syntax) != "SweaveSyntax")
             stop(gettextf("object '%s' does not have class \"SweaveSyntax\"",
                           sname), domain = NA)
-
         text <- text[-pos]
     }
 
-    if(!is.null(syntax$input)){
-        while(length(pos <- grep(syntax$input, text))){
-
+    if(!is.null(syntax$input)) {
+        while(length(pos <- grep(syntax$input, text))) {
             pos <- pos[1L]
             ifile <- file.path(df, sub(syntax$input, "\\1", text[pos]))
-            if(any(ifile==file)){
+            if(any(ifile == file)){
                 stop(paste(gettextf("recursive Sweave input '%s' in stack",
                                     ifile),
                            paste("\n         ", seq_len(file), ": ",
@@ -168,9 +166,9 @@ SweaveReadFile <- function(file, syntax)
             }
             itext <- SweaveReadFile(c(ifile, file), syntax)
 
-            if(pos==1)
+            if(pos == 1L)
                 text <- c(itext, text[-pos])
-            else if(pos==length(text))
+            else if(pos == length(text))
                 text <- c(text[-pos], itext)
             else
                 text <- c(text[seq_len(pos-1L)], itext, text[(pos+1L):length(text)])
@@ -245,15 +243,15 @@ SweaveSyntConv <- function(file, syntax, output=NULL)
         stop("target syntax contains no translation table")
 
     insynt <- SweaveGetSyntax(file)
-    text = readLines(file)
+    text <- readLines(file)
     if(is.null(output))
-        output = sub(insynt$extension, syntax$trans$extension, basename(file))
+        output <- sub(insynt$extension, syntax$trans$extension, basename(file))
 
-    TN = names(syntax$trans)
+    TN <- names(syntax$trans)
 
     for(n in TN){
-        if(n!="extension")
-            text = gsub(insynt[[n]], syntax$trans[[n]], text)
+        if(n != "extension")
+            text <- gsub(insynt[[n]], syntax$trans[[n]], text)
     }
 
     cat(text, file=output, sep="\n")
