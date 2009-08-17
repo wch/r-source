@@ -100,6 +100,9 @@ BUG FIXES
 	"tclObj" crashed R with an invalid object -- seen with an
 	object saved from an earlier session.
 
+    o	R CMD BATCH garbled options -d <debugger> (useful for
+	valgrind, although --debugger=valgrind always worked)
+
 
 
 		CHANGES IN R VERSION 2.9.1
