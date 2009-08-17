@@ -369,9 +369,9 @@ BUG FIXES
     o	The C utility function PrintValue no longer attempts to print
 	attributes for CHARSXPs as those attributes are used
 	internally for the CHARSXP cache.  This fixes a segfault when
-	calling Rf_PrintValue on a CHARSXP from C code.
+	calling it on a CHARSXP from C code.
 
-    o	PDF graphics output was producing TWO instances of anything
+    o	PDF graphics output was producing two instances of anything
 	drawn with the symbol font face. (Report from Baptiste Auguie.)
 
     o	length(x) <- newval and grep() could cause memory corruption.
@@ -421,6 +421,9 @@ BUG FIXES
     o	The tclvalue() and the print() and as.xxx methods for class
 	"tclObj" crashed R with an invalid object -- seen with an
 	object saved from an earlier session.
+
+    o	R CMD BATCH garbled options -d <debugger> (useful for
+	valgrind, although --debugger=valgrind always worked)
 
 
 
@@ -543,7 +546,7 @@ BUG FIXES
 	"unregistered" S3 classes now work.
 
     o	srcref records produced by parse() and parse_Rd() did not record
-	the encoding of the source file.  (Reported by Romain FranÃ§ois.)
+	the encoding of the source file.  (Reported by Romain Francois.)
 
     o	The X11 version of View() was misbehaving in MBCS locales, and
 	PgUp/PgDn now behave better, thanks to a patch from Ei-ji Nakama.
