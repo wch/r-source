@@ -122,7 +122,10 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
     dataDir <- file.path(pkgpath, "data")
     ## set the encoding for text files to be read, if specified
     enc <- .read_description(file.path(pkgpath, "DESCRIPTION"))["Encoding"]
-    if(!is.na(enc)) options(encoding=enc)
+    if(!is.na(enc)) {
+        op <- options(encoding=enc)
+        on.exit(options(encoding=op[[1]]))
+    }
     if(file_test("-d", dataDir)) {
         if(file.exists(file.path(dataDir, "Rdata.rds")) &&
 	    file.exists(file.path(dataDir, paste(package, "rdx", sep="."))) &&
