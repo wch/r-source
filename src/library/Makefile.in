@@ -19,6 +19,8 @@ R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 PDFLATEX = @PDFLATEX@
 
+.SUFFIXES: .ts
+
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -54,7 +56,20 @@ docs:
 	@$(MAKE) Rdfiles
 	@touch stamp-docs
 
-## FIXME: do this in parallel
+# <FIXME> this is GNUish
+RD-TS = $(R_PKGS_BASE:=.Rdts)
+Rd-ts: $(RD-TS)
+
+%.Rdts:
+	@$(ECHO) "tools:::.writePkgIndices(\"$(srcdir)/$*\", \"$(top_builddir)/library/$*\")" | LC_ALL=C $(R_EXE) || exit 1
+	@$(ECHO) $(ECHO_N) " $*$(ECHO_C)"
+
+Rdobjects2:
+	@$(ECHO) $(ECHO_N) "installing parsed Rd:$(ECHO_C)"
+	@$(MAKE) Rd-ts
+	@$(ECHO)
+# </FIXME>
+
 Rdobjects:
 	@$(ECHO) $(ECHO_N) "installing parsed Rd:$(ECHO_C)"
 	@for pkg in $(R_PKGS_BASE); do \

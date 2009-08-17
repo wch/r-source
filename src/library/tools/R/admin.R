@@ -418,7 +418,7 @@ function(dir, outDir)
         ## Note that this is not quite good enough: an Rd file or data file
         ## might have been removed since the indices were made.
         RdsFile <- file.path("Meta", "Rd.rds")
-        if(file.exists(RdsFile)) {
+        if(file.exists(RdsFile)) { ## untested code for Rd files
             ## this has file names without path
             files <- .readRDS(RdsFile)$File
             if(!identical(basename(allRd), files)) upToDate <- FALSE

@@ -1,4 +1,4 @@
-
+﻿
 	**************************************************
 	*						 *
 	*	       2.10 SERIES NEWS			 *
@@ -53,7 +53,7 @@ NEW FEATURES
     o	New print() (S3) method for class "function", also used for
 	auto-printing.	Further, .Primitive functions now print and
 	auto-print identically.	 The new method is based on code
-	suggestions by Romain Francois.
+	suggestions by Romain François.
 
     o	The print() and toLatex() methods for class "sessionInfo" now
 	show the locale in a nicer format and have arguments to
@@ -173,7 +173,7 @@ NEW FEATURES
         are debugged as well.
 
     o	Outlier symbols drawn by boxplot() now obey the 'outlwd'
-	argument.  Reported by JÃ¼rgen Kluge.
+	argument.  Reported by Jurgen Kluge.
 
     o	svd(x) and eigen(x) now behave analogously to qr(x) in
 	accepting logical matrices x.
@@ -408,11 +408,13 @@ BUG FIXES
 	expansions lose accuracy (the underlying TOMS708 C code was
 	ignoring some of these, including the PR#13786 example).
 
-    o	new.env(hash = TRUE, size = NA)	 now works, the way it has been
+    o	new.env(hash = TRUE, size = NA)	now works the way it has been
 	documented to for a long time.
 
     o	tcltk::tk_choose.files(multi = TRUE) produces better-formatted
 	output with filenames containing spaces.  (PR#13875)
+
+    o	R CMD check --use-valgrind did not run valgrind on the package tests.
 
 
 
@@ -3478,7 +3480,7 @@ BUG FIXES
     o	strptime() crashed under certain locales on Mac OS X.
 
     o	gregexpr() no longer segfaults when "" is given as the search
-	pattern.  Thanks to HervÃ© PagÃ¨s for the bug report.
+	pattern.  Thanks to Hervé Pagès for the bug report.
 
     o	matplot(x, *) with default 'pch' did not plot columns from column
 	number 37 on (because the default pch was NA for those). (PR#10676)
@@ -4119,8 +4121,8 @@ C-LEVEL FACILITIES
 
     o 	CHAR() now returns (const char *) since CHARSXPs should no
 	longer be modified in place.  This change allows compilers to
-	warn or error about improper modification.  Thanks to HervÃ©
-	PagÃ¨s for the suggestion.
+	warn or error about improper modification.  Thanks to Hervé
+	Pagès for the suggestion.
 
     o	acopy_string is a (provisional) new helper function that
 	copies character data and returns a pointer to memory
