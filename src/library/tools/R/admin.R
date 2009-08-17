@@ -749,6 +749,7 @@ function(dir, outDir)
         names(db) <- sub("\\.[Rr]d", "", basename(nm))
         makeLazyLoadDB(db, file.path(manOutDir, basename(outDir)))
     }
+    invisible()
 }
 
 ### * .install_package_demos
