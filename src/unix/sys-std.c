@@ -202,6 +202,7 @@ addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler,
     input->activity = activity;
     input->fileDescriptor = fd;
     input->handler = handler;
+    input->userData = (void*) NULL;
 
     tmp = handlers;
 
@@ -375,7 +376,7 @@ void R_runHandlers(InputHandler *handlers, fd_set *readMask)
 	    next = tmp->next;
 	    if(FD_ISSET(tmp->fileDescriptor, readMask)
 	       && tmp->handler != NULL)
-		tmp->handler((void*) NULL);
+		tmp->handler(tmp->userData);
 	    tmp = next;
 	}
 }
