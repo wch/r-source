@@ -5204,11 +5204,12 @@ It is possible to run all the examples, tests and vignettes covered by
 @node Using valgrind,  , Using gctorture, Using gctorture and valgrind
 @subsection Using valgrind
 
-If you have access to Linux on an @cputype{ix86}, @cputype{x86_64} or
-@cputype{ppc32} platform you can use @code{valgrind}
-(@uref{http://www.valgrind.org/}, pronounced to rhyme with `tinned') to
-check for possible problems.  To run some examples under @code{valgrind}
-use something like
+If you have access to Linux@footnote{the development version, 3.5.x,
+runs on Mac @cputype{i386} OS 10.5.x (Leopard)} on an @cputype{ix86},
+@cputype{x86_64}, @cputype{ppc32} or @cputype{ppc64} platform you can
+use @code{valgrind} (@uref{http://www.valgrind.org/}, pronounced to
+rhyme with `tinned') to check for possible problems.  To run some
+examples under @code{valgrind} use something like
 
 @example
 R -d valgrind --vanilla < mypkg-Ex.R
