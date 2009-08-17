@@ -246,7 +246,7 @@ testInstalledPackage <-
 }
 
 ## used by R CMD check
-.runPackageTests <- function(use_gct = FALSE, use_valgrind = TRUE)
+.runPackageTests <- function(use_gct = FALSE, use_valgrind = FALSE)
 {
     runone <- function(f)
     {
