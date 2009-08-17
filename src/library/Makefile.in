@@ -76,7 +76,7 @@ Rdobjects:
 RD-H = $(R_PKGS_BASE:=.Rdh)
 
 help-indices:
-	@$(ECHO) "building all R documentation indices"
+	@$(ECHO) "writing package indices"
 	@for pkg in $(R_PKGS_BASE); do touch $${pkg}.in; done
 	@$(MAKE) $(RD-H)
 	@rm *.in

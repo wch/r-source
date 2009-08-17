@@ -45,9 +45,7 @@ R:
 docs:
 	@$(MAKE) -f Makefile.win Rdobjects
 	@$(MAKE) -f Makefile.win metadata
-	@$(ECHO) "building all R documentation indices"
 	@$(MAKE) -f Makefile.win help-indices
-	@$(ECHO) "building all R object docs (text, HTML, LaTeX, examples)"
 	@$(MAKE) -f Makefile.win Rdfiles
 	@touch stamp-docs
 
@@ -66,25 +64,23 @@ Rdobjects:
 	@$(ECHO)
 
 help-indices:
-	@$(ECHO) -n "writing help indices for package:"
+	@$(ECHO) -n "writing indices for package:"
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO) -n " $${pkg}" ; \
 	  $(ECHO) "tools:::.writePkgIndices(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}\", CHM = $(USE_CHM))" | R_DEFAULT_PACKAGES=utils LC_ALL=C $(R_EXE) || exit 1; \
 	done
 	@$(ECHO)
 
-PKGDIR = .
-RLIB = $(RHOME)/library
-
 Rdfiles:
+	@$(ECHO) "building all R object docs"
 ifeq ($(strip $(USE_CHM)),TRUE)
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO) "tools:::.convertRdfiles(\"$${pkg}\", \"$(RLIB)/$${pkg}\", types=c('html', 'chm'))" | LC_ALL=C $(R_EXE) || exit 1; \
+	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\", silent = TRUE)" | LC_ALL=C $(R_EXE) || exit 1; \
 	  $(MAKE) --no-print-directory -C $${pkg}/chm \
 	    -f $(RHOME)/src/gnuwin32/help/MkChm $${pkg}.chm RHOME=$(RHOME); \
 	  if test -f $${pkg}/chm/$${pkg}.chm ; then \
 	    $(MKDIR) -p $(RLIB)/$${pkg}/chtml ;\
-	    $(CP) $${pkg}/chm/$${pkg}.chm $(RLIB)/$${pkg}/chtml ; \
+	    $(CP) $${pkg}/chm/$${pkg}.chm $(RHOME)/library/$${pkg}/chtml ; \
 	  else \
 	    echo CHM compile failed:  HTML Help Workshop not installed? ; \
 	    exit 1; \
@@ -92,7 +88,7 @@ ifeq ($(strip $(USE_CHM)),TRUE)
 	done
 else
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(R_EXE) || exit 1; \
+	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\", silent = TRUE)" | LC_ALL=C $(R_EXE) || exit 1; \
 	done
 endif
 
