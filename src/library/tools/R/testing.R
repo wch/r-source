@@ -256,7 +256,7 @@ testInstalledPackage <-
         outfile <- paste(f, "out", sep = "")
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                      "CMD BATCH --vanilla --no-timing",
-                     if(use_valgrind) "-d valgrind",
+                     if(use_valgrind) "--debugger=valgrind",
                      shQuote(f), shQuote(outfile))
         if (.Platform$OS.type == "windows") {
             Sys.setenv(LANGUAGE="C")
