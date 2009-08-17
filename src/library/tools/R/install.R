@@ -494,7 +494,7 @@
             if (!WINDOWS && lock && is.na(pmatch(tmpdir, getwd()))) {
                 system(paste("(cd", shQuote(file.path(lockdir, pkg_name)),
                              "&&", TAR,
-                             "cf  - R-ex help html latex 2>/dev/null) | (cd",
+                             "cf  - R-ex html latex 2>/dev/null) | (cd",
                              shQuote(instdir), "&&", TAR, "xf -)"))
             }
         }
