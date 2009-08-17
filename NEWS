@@ -222,6 +222,8 @@ NEW FEATURES
 	implemented on Windows since R 2.7.0).  (Use of such escapes
 	requires MBCS support.)
 
+    o	New as.raw() method for "tclObj" objects (wish of PR#13578).
+
 
 Rd HELP FILE CHANGES
 
@@ -415,6 +417,10 @@ BUG FIXES
 	output with filenames containing spaces.  (PR#13875)
 
     o	R CMD check --use-valgrind did not run valgrind on the package tests.
+
+    o	The tclvalue() and the print() and as.xxx methods for class
+	"tclObj" crashed R with an invalid object -- seen with an
+	object saved from an earlier session.
 
 
 

@@ -44,6 +44,7 @@ static const R_ExternalMethodDef ExternEntries[] = {
     {"RTcl_ObjAsCharVector", (DL_FUNC) &RTcl_ObjAsCharVector, 1},
     {"RTcl_ObjAsDoubleVector", (DL_FUNC) &RTcl_ObjAsDoubleVector, 1},
     {"RTcl_ObjAsIntVector", (DL_FUNC) &RTcl_ObjAsIntVector, 1},
+    {"RTcl_ObjAsRawVector", (DL_FUNC) &RTcl_ObjAsRawVector, 1},
     {"RTcl_ObjFromCharVector", (DL_FUNC) &RTcl_ObjFromCharVector, 2},
     {"RTcl_ObjFromDoubleVector", (DL_FUNC) &RTcl_ObjFromDoubleVector, 2},
     {"RTcl_ObjFromIntVector", (DL_FUNC) &RTcl_ObjFromIntVector, 2},

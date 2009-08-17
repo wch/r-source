@@ -260,6 +260,8 @@ as.integer.tclObj <- function(x, ...)
 as.logical.tclObj <- function(x, ...)
     as.logical(.External("RTcl_ObjAsIntVector",
                          x, PACKAGE="tcltk"))
+as.raw.tclObj <- function(x, ...)
+    .External("RTcl_ObjAsRawVector", x, PACKAGE="tcltk")
 
 is.tclObj <- function(x) inherits(x, "tclObj")
 

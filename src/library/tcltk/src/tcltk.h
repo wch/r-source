@@ -63,6 +63,7 @@ SEXP RTcl_StringFromObj(SEXP args);
 SEXP RTcl_ObjAsCharVector(SEXP args);
 SEXP RTcl_ObjAsDoubleVector(SEXP args);
 SEXP RTcl_ObjAsIntVector(SEXP args);
+SEXP RTcl_ObjAsRawVector(SEXP args);
 SEXP RTcl_ObjFromCharVector(SEXP args);
 SEXP RTcl_ObjFromDoubleVector(SEXP args);
 SEXP RTcl_ObjFromIntVector(SEXP args);

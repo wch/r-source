@@ -34,6 +34,8 @@
 \alias{as.character.tclObj}
 \alias{as.integer.tclObj}
 \alias{as.double.tclObj}
+\alias{as.logical.tclObj}
+\alias{as.raw.tclObj}
 \alias{as.tclObj}
 \alias{is.tclObj}
 \alias{tclObj}
@@ -98,6 +100,8 @@ is.tclObj(x)
 \method{as.character}{tclObj}(x, ...)
 \method{as.integer}{tclObj}(x, ...)
 \method{as.double}{tclObj}(x, ...)
+\method{as.logical}{tclObj}(x, ...)
+\method{as.raw}{tclObj}(x, ...)
 \method{tclvalue}{tclObj}(x)
 
 \method{tclvalue}{default}(x)
@@ -220,24 +224,25 @@ tclRequire(package, warn = TRUE)
   This works by using objects of class \code{tclObj}.  The string
   representation of such objects can be extracted (but not set) using
   \code{tclvalue} and conversion to vectors of mode \code{"character"},
-  \code{"double"}, or \code{"integer"}.  Conversely, such vectors can be
-  converted using \code{as.tclObj}.  There is an ambiguity as to what
-  should happen for length one vectors, controlled by the \code{drop}
-  argument; there are cases where the distinction matters to Tcl,
-  although mostly it treats them equivalently.  Notice that
-  \code{tclvalue} and \code{as.character} differ on an object whose
+  \code{"double"}, \code{"integer"}, \code{"logical"}.  Conversely, such
+  vectors can be converted using \code{as.tclObj}.  There is an
+  ambiguity as to what should happen for length one vectors, controlled
+  by the \code{drop} argument; there are cases where the distinction
+  matters to Tcl, although mostly it treats them equivalently.  Notice
+  that \code{tclvalue} and \code{as.character} differ on an object whose
   string representation has embedded spaces, the former is sometimes to
   be preferred, in particular when applied to the result of
-  \code{tclread}, \code{tkgetOpenFile}, and similar functions. 
+  \code{tclread}, \code{tkgetOpenFile}, and similar functions.  The
+  \code{as.raw} method returns a raw vector or a list of raw vectors and
+  can be used to return binary data from Tcl.
 
-  The object behind a \code{tclVar} object
-  is extracted using \code{tclObj(x)} which also allows an assignment
-  form, in which the right hand side of the assignment is automatically
-  converted using \code{as.tclObj}.  There is a print method for
-  \code{tclObj} objects; it prints \code{<Tcl>} followed by the string
-  representation of the object.  Notice that \code{as.character} on a
-  \code{tclVar} object is the \emph{name} of the corresponding Tcl
-  variable and not the value. 
+  The object behind a \code{tclVar} object is extracted using
+  \code{tclObj(x)} which also allows an assignment form, in which the
+  right hand side of the assignment is automatically converted using
+  \code{as.tclObj}.  There is a print method for \code{tclObj} objects;
+  it prints \code{<Tcl>} followed by the string representation of the
+  object.  Notice that \code{as.character} on a \code{tclVar} object is
+  the \emph{name} of the corresponding Tcl variable and not the value.
   
   Tcl packages can be loaded with \code{tclRequire}; it may be necessary
   to add the directory where they are found to the Tcl search path with
