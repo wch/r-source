@@ -61,7 +61,8 @@ RD-TS = $(R_PKGS_BASE:=.Rdts)
 Rd-ts: $(RD-TS)
 
 %.Rdts:
-	@$(ECHO) "tools:::.writePkgIndices(\"$(srcdir)/$*\", \"$(top_builddir)/library/$*\")" | LC_ALL=C $(R_EXE) || exit 1
+	@$(ECHO) "tools:::.install_package_Rd_objects('$(srcdir)/$${pkg}', '$(top_builddir)/library/$${pkg}')" | \
+	    R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null || exit 1
 	@$(ECHO) $(ECHO_N) " $*$(ECHO_C)"
 
 Rdobjects2:
@@ -76,7 +77,7 @@ Rdobjects:
 	  if test -d $(srcdir)/$${pkg}/man; then \
 	    $(ECHO) $(ECHO_N) " $${pkg}$(ECHO_C)"; \
 	    $(ECHO) "tools:::.install_package_Rd_objects('$(srcdir)/$${pkg}', '$(top_builddir)/library/$${pkg}')" | \
-	    R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null; \
+	    R_DEFAULT_PACKAGES=NULL $(R_EXE); \
 	  fi; \
 	done
 	@$(ECHO)
@@ -89,7 +90,7 @@ help-indices:
 ## FIXME: do this in parallel (but avoid interleaving output)
 Rdfiles:
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(R_EXE) || exit 1; \
+	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\", silent = TRUE)" | LC_ALL=C $(R_EXE) || exit 1; \
 	done
 
 vignettes:

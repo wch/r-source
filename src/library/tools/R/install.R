@@ -1963,7 +1963,7 @@
 ### * .convertRdfiles
 
 ## possible types are "html", "chm", "latex", "example"
-.convertRdfiles <- function(dir, outDir, types = "html")
+.convertRdfiles <- function(dir, outDir, types = "html", silent = FALSE)
 {
     showtype <- function(type) {
     	if (!shown) {
@@ -1999,9 +1999,9 @@
     ## FIXME: add this lib to lib.loc?
     if ("html" %in% types) {
         ## may be slow, so add a message
-        message("    finding HTML links ...", appendLF = FALSE)
+        if (!silent) message("    finding HTML links ...", appendLF = FALSE)
         Links <- findHTMLlinks(outDir)
-        message(" done")
+        if (!silent) message(" done")
     } else Links <- ""
 
     ## Rd objects may already have been installed.
