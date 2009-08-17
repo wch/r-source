@@ -47,9 +47,9 @@ BUG FIXES
     o	The C utility function PrintValue no longer attempts to print
 	attributes for CHARSXPs as those attributes are used
 	internally for the CHARSXP cache.  This fixes a segfault when
-	calling Rf_PrintValue on a CHARSXP from C code.
+	calling it on a CHARSXP from C code.
 
-    o	PDF graphics output was producing TWO instances of anything
+    o	PDF graphics output was producing two instances of anything
 	drawn with the symbol font face. (Report from Baptiste Auguie.)
 
     o	length(x) <- newval and grep() could cause memory corruption.
@@ -69,7 +69,7 @@ BUG FIXES
     	P(>|Chi|) from a Poisson/binomial GLM anova as a p-value
     	column in order to format it appropriately (and as a
     	consequence it gave no significance stars).
-    	
+
     o	A missing PROTECT caused rare segfaults during calls to
     	load().  (PR#13880, fix found by Bill Dunlap.)
 
@@ -95,6 +95,10 @@ BUG FIXES
 	output with filenames containing spaces.  (PR#13875)
 
     o	R CMD check --use-valgrind did not run valgrind on the package tests.
+
+    o	The tclvalue() and the print() and as.xxx methods for class
+	"tclObj" crashed R with an invalid object -- seen with an
+	object saved from an earlier session.
 
 
 

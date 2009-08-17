@@ -278,10 +278,13 @@ SEXP RTcl_StringFromObj(SEXP args)
     SEXP so;
     char *s;
     Tcl_DString s_ds;
+    Tcl_Obj *obj;
 
+    obj = (Tcl_Obj *) R_ExternalPtrAddr(CADR(args));
+    if (!obj) error(_("invalid tclObj -- perhaps saved from another session?"));
     Tcl_DStringInit(&s_ds);
-    str = Tcl_GetStringFromObj((Tcl_Obj *) R_ExternalPtrAddr(CADR(args)),
-			       NULL);
+    str = Tcl_GetStringFromObj(obj, NULL);
+    /* FIXME: could use UTF-8 here */
     s = Tcl_UtfToExternalDString(NULL, str, -1, &s_ds);
     so = mkString(s);
     Tcl_DStringFree(&s_ds);
@@ -291,13 +294,13 @@ SEXP RTcl_StringFromObj(SEXP args)
 SEXP RTcl_ObjAsCharVector(SEXP args)
 {
     int count;
-    Tcl_Obj **elem;
+    Tcl_Obj **elem, *obj;
     int ret, i;
     SEXP ans;
 
-    ret = Tcl_ListObjGetElements(RTcl_interp,
-				 (Tcl_Obj *) R_ExternalPtrAddr(CADR(args)),
-				 &count, &elem);
+    obj = (Tcl_Obj *) R_ExternalPtrAddr(CADR(args));
+    if (!obj) error(_("invalid tclObj -- perhaps saved from another session?"));
+    ret = Tcl_ListObjGetElements(RTcl_interp, obj, &count, &elem);
     if (ret != TCL_OK)
 	return RTcl_StringFromObj(args);
 
@@ -387,6 +390,7 @@ SEXP RTcl_ObjAsDoubleVector(SEXP args)
     SEXP ans;
 
     obj = (Tcl_Obj *) R_ExternalPtrAddr(CADR(args));
+    if (!obj) error(_("invalid tclObj -- perhaps saved from another session?"));
 
     /* First try for single value */
     ret = Tcl_GetDoubleFromObj(RTcl_interp, obj, &x);
@@ -449,6 +453,7 @@ SEXP RTcl_ObjAsIntVector(SEXP args)
     SEXP ans;
 
     obj = (Tcl_Obj *) R_ExternalPtrAddr(CADR(args));
+    if (!obj) error(_("invalid tclObj -- perhaps saved from another session?"));
 
     /* First try for single value */
     ret = Tcl_GetIntFromObj(RTcl_interp, obj, &x);
