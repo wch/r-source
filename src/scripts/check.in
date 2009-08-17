@@ -759,7 +759,7 @@ foreach my $pkg (@ARGV) {
 		     $R_check_use_install_log ||
 		     !(-t STDIN && -t STDOUT));
 		my $INSTALL_opts = $opt_install_args;
-		$INSTALL_opts = "$INSTALL_OPTS" .  " --latex";
+		## $INSTALL_opts = "$INSTALL_OPTS" .  " --latex";
 		$INSTALL_opts = "--fake" if($opt_install eq "fake");
 		my $cmd;
 		if($WINDOWS) {
@@ -2610,12 +2610,20 @@ sub check_pkg_manual {
 	    $cmd = join(" ",
 			($cmd0, "Rd2dvi $Rd2dvi_opts",
 			 "--build-dir=${build_dir} --no-clean",
-			 "-o ${pkgname}-manual.${fmt} >/dev/null 2>&1",
+			 "-o ${pkgname}-manual.${fmt} > Rdlatex.log 2>&1",
 			 "$topdir"));
 	    my $res = R_system($cmd);
 	    my $latex_log = &file_path($build_dir, "Rd2.log");
 	    if(-f $latex_log) {copy($latex_log, "${pkgname}-manual.log");}
-	    if($res) {
+	    if($res == 2816) { ## 11*256
+		$log->warning();
+		$log->print("Rd2atex errors when creating \U$fmt\E version:\n");
+		@lines = &read_lines("Rdlatex.log");
+		foreach my $line (@lines) {
+		    print $line, "\n" unless $line =~ /^(Hmm|Execution)/;
+		}
+		rmtree($build_dir);
+	    } elsif($res) {
 		my $latex_file = &file_path($build_dir, "Rd2.tex");
 		if(-f $latex_file) {copy($latex_file, "${pkgname}-manual.tex");}
 		$log->warning();
@@ -2665,9 +2673,10 @@ sub check_pkg_manual {
 		    rmtree($build_dir);
 		    exit(1);
 		}
+	    } else {
+		rmtree($build_dir);
+		$log->result("OK");
 	    }
-	    rmtree($build_dir);
-	    $log->result("OK");
 	}
     }
 }

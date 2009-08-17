@@ -425,6 +425,10 @@ BUG FIXES
     o	R CMD BATCH garbled options -d <debugger> (useful for
 	valgrind, although --debugger=valgrind always worked)
 
+    o	INSTALL with LazyData and Encoding declared in DESCRIPTION
+ 	might have left options("encoding") set for the rest of the
+ 	package installation.
+
 
 
 		CHANGES IN R VERSION 2.9.1

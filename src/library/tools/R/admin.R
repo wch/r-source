@@ -727,7 +727,7 @@ function(dir, outDir)
 ### * .install_package_Rd_objects
 
 .install_package_Rd_objects <-
-function(dir, outDir)
+function(dir, outDir, encoding = "unknown")
 {
     mandir <- file.path(dir, "man")
     if(!file_test("-d", mandir)) return()
@@ -743,7 +743,8 @@ function(dir, outDir)
     if(!file_test("-f", db_file) || !file.exists(pathsFile) ||
        !identical(sort(manfiles), sort(.readRDS(pathsFile))) ||
        !all(file_test("-nt", db_file, manfiles))) {
-        db <- .build_Rd_db(dir, manfiles, db_file = db_file)
+        db <- .build_Rd_db(dir, manfiles, db_file = db_file,
+                           encoding = encoding)
         nm <- names(db)
         .saveRDS(nm, pathsFile)
         names(db) <- sub("\\.[Rr]d", "", basename(nm))

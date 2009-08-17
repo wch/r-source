@@ -210,7 +210,7 @@ mkdir ${build_dir}
 echo "tools:::.Rd2dvi(\"${1}\",  \"${build_dir}/Rd2.tex\", \"$is_bundle\", \
 \"$title\", \"$batch\", \"$description\", \"$only_meta\",\
 \"$enc\", \"$outenc\", \"${dir-$@}\", \"OSdir\", \"$internals\", \"$index\")" \
-  | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla || exit 1
+  | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla || exit 11
 
 ## <FIXME>
 ## Need to do something smarter about the exit status in batch mode.

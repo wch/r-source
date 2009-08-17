@@ -827,9 +827,11 @@
                             invokeRestart("muffleWarning")
                         } else e
                     }
+                    encoding <- desc["Encoding"]
+                    if(is.na(encoding)) encoding <- "unknown"
                     res <-
-                        try(withCallingHandlers(.install_package_Rd_objects(".",
-                                                                            instdir),
+                        try(withCallingHandlers(
+                         .install_package_Rd_objects(".", instdir, encoding),
                                                 warning = .whandler))
                     if(inherits(res, "try-error"))
                         pkgerrmsg("installing Rd objects failed", pkg_name)
@@ -1416,18 +1418,20 @@
 }
 
 .Rdfiles2tex <-
-    function(files, outfile, encoding = "unknown", outputEncoding = "latin1", append = FALSE,
-             extraDirs = NULL, internals = FALSE)
+    function(files, outfile, encoding = "unknown", outputEncoding = "latin1",
+             append = FALSE, extraDirs = NULL, internals = FALSE,
+             silent = FALSE)
 {
     if(file_test("-d", files))
-        latexEncodings <- .pkg2tex(files, outfile, encoding = encoding, append = append,
-                 asChapter = FALSE, extraDirs = extraDirs,
-                 internals = internals)
+        latexEncodings <-
+            .pkg2tex(files, outfile, encoding = encoding, append = append,
+                     asChapter = FALSE, extraDirs = extraDirs,
+                     internals = internals, silent = silent)
     else {
         files <- strsplit(files, "[[:space:]]+")[[1]]
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
-        message("Converting Rd files to LaTeX ...")
+        if(!silent) message("Converting Rd files to LaTeX ...")
         cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
                      encoding, sep="")
         if (is.character(outfile)) {
@@ -1458,7 +1462,7 @@
 .pkg2tex <-
     function(pkgdir, outfile, internals = FALSE, asChapter = TRUE,
              encoding = "unknown", outputEncoding = "latin1",
-             extraDirs = NULL, append = FALSE)
+             extraDirs = NULL, append = FALSE, silent = FALSE)
 {
     ## sort order for topics, a little tricky
     re <- function(x) x[order(toupper(x), x)]
@@ -1477,20 +1481,20 @@
     ## If it does not exist, guess this is a source package.
     latexdir <- file.path(pkgdir, "latex")
     if (!file_test("-d", latexdir)) {
-        ## FIXME needs test for RdDB as well/instead
-        Rdsfile <- Sys.glob(file.path(pkgdir, "man/*.rds"))
-        if(length(Rdsfile)) {
+        if(file_test("-d", file.path(pkgdir, "help"))
+           || length( Sys.glob(file.path(pkgdir, "man/*.rds")) )) {
             ## So convert it
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
-            message("Converting parsed Rd's to LaTeX ",
-                    appendLF=FALSE, domain=NA)
+            if(!silent) message("Converting parsed Rd's to LaTeX ",
+                                appendLF=FALSE, domain=NA)
             Rd <- Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
             cnt <- 0L
             for(f in names(Rd)) {
                 bf <- basename(f)
                 cnt <- cnt + 1L
-                if(cnt %% 10L == 0L) message(".", appendLF=FALSE, domain=NA)
+                if(!silent && cnt %% 10L == 0L)
+                    message(".", appendLF=FALSE, domain=NA)
                 out <-  sub("[Rr]d$", "tex", basename(f))
                 latexEncodings <- c(latexEncodings,
                                     attr(Rd2latex(Rd[[f]],
@@ -1499,7 +1503,7 @@
                                                   defines = NULL),
                                          "latexEncoding"))
             }
-            message(domain=NA)
+            if(!silent) message(domain=NA)
         } else {
             files <- Sys.glob(file.path(pkgdir, "*.[Rr]d"))
             if (!length(files)) {
@@ -1853,7 +1857,7 @@
         if(backtick) {
             x <- gsub("---", "-", x, fixed = TRUE)
             x <- gsub("--", "-", x, fixed = TRUE)
-            ## these hve been changed in the Rd parser
+            ## these have been changed in the Rd parser
             #x <- gsub("``", "&ldquo;", x, fixed = TRUE)
             #x <- gsub("''", "&rdquo;", x, fixed = TRUE)
             #x <- gsub("\\`([^']+)'", "&lsquo;\\1&rsquo;", x)
@@ -2339,11 +2343,14 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
         ## if this looks like a package with no man pages, skip body
         if(file.exists(file.path(pkgdir, "DESCRIPTION")) &&
            !(file_test("-d", file.path(pkgdir, "man")) ||
+             file_test("-d", file.path(pkgdir, "help")) ||
              file_test("-d", file.path(pkgdir, "latex")))) only_meta <- TRUE
         if(!only_meta) {
             if(nzchar(toc)) writeLines(toc, out)
-            latexEncodings <- .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
-                         extraDirs = OSdir, internals = internals)
+            latexEncodings <-
+                .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
+                             extraDirs = OSdir, internals = internals,
+                             silent = (batch == "true"))
         }
     } else {
         writeLines(c("\\setcounter{secnumdepth}{-1}",

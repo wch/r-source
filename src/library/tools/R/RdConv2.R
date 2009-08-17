@@ -688,7 +688,6 @@ Rd2HTML <-
                "\\testonly" = {}, # do nothing
                "\\method" =,
                "\\S3method" = {
-                   ## FIXME: special methods for operators
                    class <- as.character(block[[2L]])
                    if (class == "default")
                        of1('## Default S3 method:\n')
@@ -719,7 +718,8 @@ Rd2HTML <-
     	    stopRd(table, Rdfile, "\\tabular format must be simple text")
     	format <- strsplit(format[[1L]], "", fixed=TRUE)[[1L]]
     	if (!all(format %in% c("l", "c", "r")))
-    	    stopRd(table, Rdfile, "Unrecognized \\tabular format: ", table[[1L]][[1L]])
+    	    stopRd(table, Rdfile,
+                   "Unrecognized \\tabular format: ", table[[1L]][[1L]])
         format <- c(l="left", c="center", r="right")[format]
 
         tags <- RdTags(content)
@@ -737,7 +737,9 @@ Rd2HTML <-
             if (newcol) {
                 col <- col + 1
                 if (col > length(format))
-                    stopRd(table, Rdfile, "Only ", length(format), " columns allowed in this table.")
+                    stopRd(table, Rdfile,
+                           "Only ", length(format),
+                           " columns allowed in this table.")
             	of0('<td align="', format[col], '">')
             	newcol <- FALSE
             }
@@ -902,7 +904,8 @@ Rd2HTML <-
         ## </FIXME>
     }
     else if (length(version) > 1L)
-    	stopRd(Rd[[version[2L]]], Rdfile, "Only one \\Rdversion declaration is allowed")
+    	stopRd(Rd[[version[2L]]], Rdfile,
+               "Only one \\Rdversion declaration is allowed")
 
     ## Give warning (pro tem) for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]",
@@ -931,7 +934,8 @@ Rd2HTML <-
     title <- Rd[[1L]]
     name <- Rd[[2L]]
     tags <- RdTags(name)
-    if (length(tags) > 1L) stopRd(name, Rdfile,"\\name must only contain simple text.")
+    if (length(tags) > 1L)
+        stopRd(name, Rdfile,"\\name must only contain simple text.")
 
     name <- htmlify(name[[1L]])
 
@@ -1096,7 +1100,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                 col <- col + 1
                 if (col > length(format))
                     stopRd(table, Rdfile,
-                           "Only ", length(format), " columns allowed in this table.")
+                           "Only ", length(format),
+                           " columns allowed in this table.")
             	newcol <- FALSE
             }
             switch(tags[i],
@@ -1179,6 +1184,12 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	stopRd(Rd[[version[2L]]], Rdfile,
                "Only one \\Rdversion declaration is allowed")
 
+    ## Give warning (pro tem) for nonblank text outside a section
+    if (length(bad <- grep("[^[:blank:][:cntrl:]]",
+                           unlist(Rd[sections == "TEXT"]), perl = TRUE )))
+    	warnRd(Rd[sections == "TEXT"][[bad[1L]]], Rdfile,
+               "All text must be in a section")
+
     enc <- which(sections == "\\encoding")
     if (length(enc)) {
     	if (length(enc) > 1L)
@@ -1207,7 +1218,23 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 
     name <- Rd[[which(sections == "\\name")]]
     tags <- RdTags(name)
-    if (length(tags) > 1L) stopRd(name, Rdfile, "\\name must only contain simple text.")
+    if (length(tags) > 1L)
+        stopRd(name, Rdfile, "\\name must only contain simple text.")
+
+    ## Drop all the parts that are not rendered
+    drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType",
+                            "\\encoding", "\\keyword", "\\Rdversion", "\\RdOpts")
+    Rd <- Rd[!drop]
+    sections <- sections[!drop]
+
+    sortorder <- sectionOrder[sections]
+    if (any(bad <- is.na(sortorder)))
+    	stopRd(Rd[[which(bad)[1L]]], Rdfile,
+               "Section ", sections[which(bad)[1L]],
+               " unrecognized.")
+    sortorder <- order(sortorder)
+    Rd <- Rd[sortorder]
+    sections <- sections[sortorder]
 
     for (i in seq_along(sections))
     	checkSection(Rd[[i]], sections[i])
