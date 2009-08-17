@@ -92,7 +92,8 @@
   The classes correspond to the POSIX/C99 constructs of \sQuote{calendar
     time} (the \code{time_t} data type) and \sQuote{local time} (or
   broken-down time, the \code{struct tm} data type), from which they
-  also inherit their names.
+  also inherit their names.  The components of \code{"POSIXlt"} are
+  integer vectors except \code{sec}.
 
   \code{"POSIXct"} is more convenient for including in data frames, and
   \code{"POSIXlt"} is closer to human-readable forms.
