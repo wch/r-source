@@ -55,7 +55,7 @@ RD-TS = $(R_PKGS_BASE:=.Rdts)
 Rd-ts: $(RD-TS)
 
 %.Rdts:
-	@$(ECHO) "tools:::.writePkgIndices(\"$(srcdir)/$*\", \"$(top_builddir)/library/$*\")" | R_DEFAULT_PACKAGES=utils $(R_EXE) || exit 1
+	@$(ECHO) "tools:::.install_package_Rd_objects(\"$(srcdir)/$*\", \"$(top_builddir)/library/$*\")" | R_DEFAULT_PACKAGES=NULL $(R_EXE) || exit 1
 	@$(ECHO) -n " $*$(ECHO_C)"
 
 Rdobjects:
@@ -67,7 +67,7 @@ help-indices:
 	@$(ECHO) -n "writing help indices for package:"
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO) -n " $${pkg}" ; \
-	  $(ECHO) "tools:::.writePkgIndices(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}\", CHM = $(USE_CHM))" | LC_ALL=C $(R_EXE) || exit 1; \
+	  $(ECHO) "tools:::.writePkgIndices(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}\", CHM = $(USE_CHM))" | R_DEFAULT_PACKAGES=utils LC_ALL=C $(R_EXE) || exit 1; \
 	done
 	@$(ECHO)
 
