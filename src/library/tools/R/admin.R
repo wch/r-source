@@ -740,7 +740,7 @@ function(dir, outDir)
     ## Avoid (costly) rebuilding if not needed.
     ## Actually, it seems no more costly than these tests, which it also does
     pathsFile <- file.path(manOutDir, "paths.rds")
-    if(!file_test("-f", db_file) ||
+    if(!file_test("-f", db_file) || !file.exists(pathsFile) ||
        !identical(sort(manfiles), sort(.readRDS(pathsFile))) ||
        !all(file_test("-nt", db_file, manfiles))) {
         db <- .build_Rd_db(dir, manfiles, db_file = db_file)
