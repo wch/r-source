@@ -457,7 +457,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                    writeContent(block[[1L]], tag)
                },
                "\\tabular" = writeTabular(block),
-               stopRd(block, "Tag ", tag, " not recognized.")
+               stopRd(block, Rdfile, "Tag ", tag, " not recognized.")
                )
     }
 
@@ -465,7 +465,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     	format <- table[[1L]]
     	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
-    	    stopRd(table, "\\tabular format must be simple text")
+    	    stopRd(table, Rdfile, "\\tabular format must be simple text")
         tags <- RdTags(content)
         of0('\n\\Tabular{', format, '}{')
         for (i in seq_along(tags)) {
@@ -504,7 +504,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                                this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
                                               "\\dots" = "...",
                                               RCODE = as.character(blocks[[j]]),
-                                              stopRd(block, sprintf("invalid markup '%s' in %s", tg, tag)))
+                                              stopRd(block, Rdfile, sprintf("invalid markup '%s' in %s", tg, tag)))
                                txt <- paste(txt, this, sep = "")
                                blocks[[j]] <- structure("", Rd_tag = "COMMENT")
                                if(grepl("\n$", txt)) {
@@ -654,7 +654,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         ## </FIXME>
     }
     else if (length(version) > 1L)
-    	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
+    	stopRd(Rd[[version[2L]]], Rdfile, "Only one \\Rdversion declaration is allowed")
 
     enc <- which(sections == "\\encoding")
     if (length(enc))
@@ -678,7 +678,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     ## Give warning(pro tem) for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]",
                            unlist(Rd[sections == "TEXT"]), perl = TRUE )))
-    	warnRd(Rd[sections == "TEXT"][[bad[1L]]],
+    	warnRd(Rd[sections == "TEXT"][[bad[1L]]], Rdfile,
                "All text must be in a section")
 
     ## Drop all the parts that are not rendered
@@ -688,7 +688,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
     sortorder <- sectionOrder[sections]
     if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1L]]], "Section ", sections[which(bad)[1L]], " unrecognized.")
+    	stopRd(Rd[[which(bad)[1L]]], Rdfile, "Section ", sections[which(bad)[1L]], " unrecognized.")
     ## Need to sort the aliases.
     nm <- character(length(Rd))
     isAlias <- RdTags(Rd) == "\\alias"
@@ -697,7 +697,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
     if (!identical(sections[1:2], c("\\title", "\\name")))
-    	stopRd(Rd, "Sections \\title, and \\name must exist and be unique in Rd files.")
+    	stopRd(Rd, Rdfile, "Sections \\title, and \\name must exist and be unique in Rd files.")
 
     title <- as.character(Rd[[1L]])
     ## remove empty lines, leading whitespace
@@ -707,7 +707,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
     name <- Rd[[2L]]
     tags <- RdTags(name)
-    if (length(tags) > 1L) stopRd(name, "\\name must only contain simple text.")
+    if (length(tags) > 1L) stopRd(name, Rdfile, "\\name must only contain simple text.")
 
     name <- trim(as.character(name[[1L]]))
     ltxname <- latex_escape_name(name)

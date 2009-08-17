@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-get_link <- function(arg, tag) {
+get_link <- function(arg, tag, Rdfile) {
     ## 'topic' is the name to display, 'dest' is the topic to link to
     ## optionaly in package 'pkg'.  If 'target' is set it is the file
     ## to link to in HTML help
@@ -24,7 +24,7 @@ get_link <- function(arg, tag) {
     ## \link{pkg:bar]{foo} means show foo and link to file bar in package pkg.
 
     if (!all(RdTags(arg) == "TEXT"))
-    	stopRd(arg, "Bad \\link text")
+    	stopRd(arg, "", "Bad \\link text")
 
     option <- attr(arg, "Rd_option")
 
@@ -34,7 +34,7 @@ get_link <- function(arg, tag) {
     pkg <- NULL
     if (!is.null(option)) {
         if (!identical(attr(option, "Rd_tag"), "TEXT"))
-    	    stopRd(option, "Bad \\link option")
+    	    stopRd(option, Rdfile, "Bad \\link option -- must be text")
     	if (grepl("^=", option, perl = TRUE))
     	    dest <- sub("^=", "", option, perl = TRUE)
     	else if (grepl(":", option, perl = TRUE)) {
@@ -102,13 +102,12 @@ isBlankLineRd <- function(x) {
     length(grep("^[[:blank:]]*\n", x, perl = TRUE)) == length(x)   # newline required
 }
 
-stopRd <- function(block, ...)
+stopRd <- function(block, Rdfile, ...)
 {
     srcref <- attr(block, "srcref")
     if (is.null(srcref)) stop(..., call. = FALSE, domain = NA)
     else {
-    	loc <- paste(attr(srcref, "srcfile")$filename,
-                     ":", srcref[1L], sep = "")
+    	loc <- paste(Rdfile, ":", srcref[1L], sep = "")
     	if (srcref[1L] != srcref[3L]) loc <- paste(loc, "-", srcref[3L], sep="")
     	stop(call.=FALSE, loc, ": ", ..., domain = NA)
     }
@@ -117,15 +116,14 @@ stopRd <- function(block, ...)
 warnRd <- function(block, Rdfile, ...)
 {
     srcref <- attr(block, "srcref")
-    if (is.null(srcref))
-        warning("file '", Rdfile, "': ", ...,
-                call. = FALSE, domain = NA, immediate. = TRUE)
+    msg <- if (is.null(srcref))
+        paste("file '", Rdfile, "': ", ..., sep = "")
     else {
-    	loc <- paste(attr(srcref, "srcfile")$filename,
-                     ":", srcref[1L], sep = "")
+    	loc <- paste(Rdfile, ":", srcref[1L], sep = "")
     	if (srcref[1L] != srcref[3L]) loc <- paste(loc, "-", srcref[3L], sep="")
-    	warning(loc, ": ", ..., call. = FALSE, domain = NA, immediate. = TRUE)
+        paste(loc, ": ", ..., sep = "")
     }
+    warning(msg, call. = FALSE, domain = NA, immediate. = TRUE)
 }
 
 RweaveRdDefaults <- list(
@@ -195,7 +193,8 @@ evalWithOpt <- function(expr, options, env)
     return(res)
 }
 
-processRdChunk <- function(code, stage, options, env) {
+processRdChunk <- function(code, stage, options, env, Rdfile)
+{
     if (is.null(opts <- attr(code, "Rd_option"))) opts <- ""
     srcref <- attr(code, "srcref")
     options <- utils:::SweaveParseOptions(opts, options, RweaveRdOptions)
@@ -206,7 +205,7 @@ processRdChunk <- function(code, stage, options, env) {
         res <- character(0)
         code <- code[RdTags(code) != "COMMENT"]
 	chunkexps <- try(parse(text=code), silent=TRUE)
-	if (inherits(chunkexps, "try-error")) stopRd(code, chunkexps)
+	if (inherits(chunkexps, "try-error")) stopRd(code, Rdfile, chunkexps)
 
 	if(length(chunkexps) == 0L)
 	    return(tagged(code, "LIST"))
@@ -254,7 +253,7 @@ processRdChunk <- function(code, stage, options, env) {
 	    ## delete empty output
 	    if(length(output) == 1L & output[1L] == "") output <- NULL
 
-	    if (inherits(err, "try-error")) stopRd(code, err)
+	    if (inherits(err, "try-error")) stopRd(code, Rdfile, err)
 
 	    if(length(output) & (options$results != "hide")){
 
@@ -357,7 +356,7 @@ prepare_Rd <-
     } else if(inherits(Rd, "connection")) {
         Rdfile <- summary(Rd)
         Rd <- parse_Rd(Rd, encoding = encoding)
-    }
+    } else Rdfile <- attr(Rd, "Rdfile")
     if ("build" %in% stages)
     	Rd <- processRdSexprs(Rd, "build", options)
     if (!is.null(defines))
@@ -536,7 +535,7 @@ Rd2HTML <-
     }
 
     writeLink <- function(tag, block) {
-	parts <- get_link(block, tag)
+	parts <- get_link(block, tag, Rdfile)
 
         writeHref <- function() {
             of0('<a href="', htmlfile, '">')
@@ -709,7 +708,7 @@ Rd2HTML <-
                        writeContent(block[[1L]], tag)
                },
                "\\tabular" = writeTabular(block),
-               stopRd(block, "Tag ", tag, " not recognized.")
+               stopRd(block, Rdfile, "Tag ", tag, " not recognized.")
                )
     }
 
@@ -717,10 +716,10 @@ Rd2HTML <-
     	format <- table[[1L]]
     	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
-    	    stopRd(table, "\\tabular format must be simple text")
+    	    stopRd(table, Rdfile, "\\tabular format must be simple text")
     	format <- strsplit(format[[1L]], "", fixed=TRUE)[[1L]]
     	if (!all(format %in% c("l", "c", "r")))
-    	    stopRd(table, "Unrecognized \\tabular format: ", table[[1L]][[1L]])
+    	    stopRd(table, Rdfile, "Unrecognized \\tabular format: ", table[[1L]][[1L]])
         format <- c(l="left", c="center", r="right")[format]
 
         tags <- RdTags(content)
@@ -738,7 +737,7 @@ Rd2HTML <-
             if (newcol) {
                 col <- col + 1
                 if (col > length(format))
-                    stopRd(table, "Only ", length(format), " columns allowed in this table.")
+                    stopRd(table, Rdfile, "Only ", length(format), " columns allowed in this table.")
             	of0('<td align="', format[col], '">')
             	newcol <- FALSE
             }
@@ -903,12 +902,12 @@ Rd2HTML <-
         ## </FIXME>
     }
     else if (length(version) > 1L)
-    	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
+    	stopRd(Rd[[version[2L]]], Rdfile, "Only one \\Rdversion declaration is allowed")
 
     ## Give warning (pro tem) for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]",
                            unlist(Rd[sections == "TEXT"]), perl = TRUE )))
-    	warnRd(Rd[sections == "TEXT"][[bad[1L]]],
+    	warnRd(Rd[sections == "TEXT"][[bad[1L]]], Rdfile,
                "All text must be in a section")
 
     ## Drop all the parts that are not rendered
@@ -919,18 +918,20 @@ Rd2HTML <-
 
     sortorder <- sectionOrder[sections]
     if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1L]]], "Section ", sections[which(bad)[1L]],
+    	stopRd(Rd[[which(bad)[1L]]], Rdfile,
+               "Section ", sections[which(bad)[1L]],
                " unrecognized.")
     sortorder <- order(sortorder)
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
     if (!identical(sections[1:2], c("\\title", "\\name")))
-    	stopRd(Rd, "Sections \\title, and \\name must exist and be unique in Rd files.")
+    	stopRd(Rd, Rdfile,
+               "Sections \\title, and \\name must exist and be unique in Rd files.")
 
     title <- Rd[[1L]]
     name <- Rd[[2L]]
     tags <- RdTags(name)
-    if (length(tags) > 1L) stopRd(name, "\\name must only contain simple text.")
+    if (length(tags) > 1L) stopRd(name, Rdfile,"\\name must only contain simple text.")
 
     name <- htmlify(name[[1L]])
 
@@ -1010,7 +1011,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 
     checkBlock <- function(block, tag, blocktag) {
 	switch(tag,
-	UNKNOWN = if (!unknownOK) stopRd(block, "Unrecognized macro ", block[[1L]]) else warnRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
+	UNKNOWN = if (!unknownOK) stopRd(block, Rdfile, "Unrecognized macro ", block[[1L]]) else warnRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
 	VERB = ,
 	RCODE = ,
 	TEXT = ,
@@ -1018,7 +1019,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 	LIST = if (length(block)) {
 		deparse <- sQuote(paste(as.character.Rd(block), collapse=""))
 		if(!listOK)
-               	    stopRd(block, "Unnecessary braces at ", deparse)
+               	    stopRd(block, Rdfile, "Unnecessary braces at ", deparse)
                else warnRd(block, Rdfile, "Unnecessary braces at ", deparse)
               },
 	"\\describe"=,
@@ -1070,17 +1071,18 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 	"\\dontshow" =,
 	"\\testonly" = checkContent(block, tag),
 	"\\tabular" = checkTabular(block),
-        stopRd(block, "Tag ", tag, " not recognized."))
+        stopRd(block, Rdfile, "Tag ", tag, " not recognized."))
     }
 
     checkTabular <- function(table) {
     	format <- table[[1L]]
     	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
-    	    stopRd(table, "\\tabular format must be simple text")
+    	    stopRd(table, Rdfile, "\\tabular format must be simple text")
     	format <- strsplit(format[[1L]], "", fixed=TRUE)[[1L]]
     	if (!all(format %in% c("l", "c", "r")))
-    	    stopRd(table, "Unrecognized \\tabular format: ", table[[1L]][[1L]])
+    	    stopRd(table, Rdfile,
+                   "Unrecognized \\tabular format: ", table[[1L]][[1L]])
         tags <- RdTags(content)
 
         newrow <- TRUE
@@ -1093,7 +1095,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
             if (newcol) {
                 col <- col + 1
                 if (col > length(format))
-                    stopRd(table, "Only ", length(format), " columns allowed in this table.")
+                    stopRd(table, Rdfile,
+                           "Only ", length(format), " columns allowed in this table.")
             	newcol <- FALSE
             }
             switch(tags[i],
@@ -1153,9 +1156,9 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     checkUnique <- function(tag) {
     	which <- which(sections == tag)
     	if (length(which) < 1L)
-    	    stopRd(Rd, "Must have a ", tag)
+    	    stopRd(Rd, Rdfile, "Must have a ", tag)
     	else if (length(which) > 1L)
-    	    stopRd(Rd[[which[2L]]], "Only one ", tag, " is allowed")
+    	    stopRd(Rd[[which[2L]]], Rdfile, "Only one ", tag, " is allowed")
     }
 
     Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
@@ -1173,15 +1176,17 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
         ## </FIXME>
     }
     else if (length(version) > 1L)
-    	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
+    	stopRd(Rd[[version[2L]]], Rdfile,
+               "Only one \\Rdversion declaration is allowed")
 
     enc <- which(sections == "\\encoding")
     if (length(enc)) {
     	if (length(enc) > 1L)
-    	    stopRd(Rd[[enc[2L]]], "Only one \\encoding declaration is allowed")
+    	    stopRd(Rd[[enc[2L]]], Rdfile,
+                   "Only one \\encoding declaration is allowed")
     	encoding <- Rd[[enc]]
     	if (!identical(RdTags(encoding), "TEXT"))
-    	    stopRd(encoding, "Encoding must be plain text")
+    	    stopRd(encoding, Rdfile, "Encoding must be plain text")
     }
 
     dt <- which(sections == "\\docType")
@@ -1190,7 +1195,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
         for (i in dt) {
             docType <- Rd[[i]]
             if(!identical(RdTags(docType), "TEXT"))
-        	stopRd(docType, "docType must be plain text")
+        	stopRd(docType, Rdfile, "docType must be plain text")
             docTypes[i] <- docType[[1L]]
          }
     }
@@ -1202,7 +1207,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 
     name <- Rd[[which(sections == "\\name")]]
     tags <- RdTags(name)
-    if (length(tags) > 1L) stopRd(name, "\\name must only contain simple text.")
+    if (length(tags) > 1L) stopRd(name, Rdfile, "\\name must only contain simple text.")
 
     for (i in seq_along(sections))
     	checkSection(Rd[[i]], sections[i])

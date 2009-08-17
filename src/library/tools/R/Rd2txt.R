@@ -349,7 +349,7 @@ Rd2txt <-
     		   blankLine()
                },
                "\\tabular" = writeTabular(block),
-               stopRd(block, "Tag ", tag, " not recognized.")
+               stopRd(block, Rdfile, "Tag ", tag, " not recognized.")
                )
     }
 
@@ -357,7 +357,7 @@ Rd2txt <-
     	formats <- table[[1L]]
     	content <- table[[2L]]
     	if (length(formats) != 1L || RdTags(formats) != "TEXT")
-    	    stopRd(table, "\\tabular format must be simple text")
+    	    stopRd(table, Rdfile, "\\tabular format must be simple text")
     	formats <- strsplit(formats[[1L]], "", fixed = TRUE)[[1L]]
         tags <- RdTags(content)
         entries <- list()
@@ -377,7 +377,7 @@ Rd2txt <-
                   	newEntry()
                    	col <- col + 1
                    	if (col > length(formats))
-                   	    stopRd(content[[i]],
+                   	    stopRd(content[[i]], Rdfile,
                                    sprintf("too many columns for format '%s'",
                                            table[[1L]]))
                    },
@@ -454,7 +454,7 @@ Rd2txt <-
                                this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
                                               "\\dots" = "...",
                                               RCODE = as.character(blocks[[j]]),
-                                              stopRd(block, sprintf("invalid markup '%s' in %s", tg, tag)))
+                                              stopRd(block, Rdfile, sprintf("invalid markup '%s' in %s", tg, tag)))
                               txt <- paste(txt, this, sep = "")
                                blocks[[j]] <- structure("", Rd_tag = "COMMENT")
                                if(grepl("\n$", txt)) {
@@ -512,7 +512,7 @@ Rd2txt <-
                        putf("':\n")
                        writeCodeBlock(block[[1L]], tag)
                    },
-                   stopRd(block, "Tag ", tag, " not expected in code block.")
+                   stopRd(block, Rdfile, "Tag ", tag, " not expected in code block.")
                    )
         }
     }
@@ -615,6 +615,7 @@ Rd2txt <-
     }
 
     Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
+    Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
     version <- which(sections == "\\Rdversion")
@@ -628,12 +629,12 @@ Rd2txt <-
         ## </FIXME>
     }
     else if (length(version) > 1L)
-    	stopRd(Rd[[version[2L]]], "Only one \\Rdversion declaration is allowed")
+    	stopRd(Rd[[version[2L]]], Rdfile, "Only one \\Rdversion declaration is allowed")
 
     ## Give warning (pro tem) for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]",
                            unlist(Rd[sections == "TEXT"]), perl = TRUE )))
-    	stopRd(Rd[sections == "TEXT"][[bad[1L]]],
+    	stopRd(Rd[sections == "TEXT"][[bad[1L]]], Rdfile,
                "All text must be in a section")
 
     ## Drop all the parts that are not rendered
@@ -644,12 +645,12 @@ Rd2txt <-
 
     sortorder <- sectionOrder[sections]
     if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1L]]], "Section ", sections[which(bad)[1L]], " unrecognized.")
+    	stopRd(Rd[[which(bad)[1L]]], Rdfile, "Section ", sections[which(bad)[1L]], " unrecognized.")
     sortorder <- order(sortorder)
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
     if (!identical(sections[1:2], c("\\title", "\\name")))
-    	stopRd(Rd, "Sections \\title, and \\name must exist and be unique in Rd files.")
+    	stopRd(Rd, Rdfile, "Sections \\title, and \\name must exist and be unique in Rd files.")
 
     title <- as.character(Rd[[1L]])
     ## remove empty lines, leading and trailing whitespace, \n
@@ -659,7 +660,7 @@ Rd2txt <-
 
     name <- Rd[[2L]]
     tags <- RdTags(name)
-    if (length(tags) > 1L) stopRd(name, "\\name must only contain simple text.")
+    if (length(tags) > 1L) stopRd(name, Rdfile, "\\name must only contain simple text.")
 
     name <- trim(name[[1L]])
 

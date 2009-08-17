@@ -2013,8 +2013,7 @@
 
     files <- names(db)
 
-    .whandler <- .make_Rd_whandler(invokeRestart("muffleWarning"))
-    ## .ehandler <- .make_Rd_ehandler(unlink(ff))
+    .whandler <- .make_Rd_whandler()
     .ehandler <- function(e) {
         message("") # force newline
         unlink(ff)
@@ -2075,9 +2074,7 @@
         }
         if(shown) {
             cat("\n")
-            if(length(.messages <-
-                      c(environment(.ehandler)$.messages,
-                        environment(.whandler)$.messages)))
+            if(length(.messages <- environment(.whandler)$.messages))
                 writeLines(unique(.messages))
         }
     }
@@ -2401,29 +2398,17 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
     invisible(NULL)
 }
 
-### * .make_Rd_ehandler
-
-.make_Rd_ehandler <-
-function(expr = NULL)
-{
-    .messages <- character()
-    function(e) {
-        if(!is.null(expr)) on.exit(expr)
-        .messages <<- c(.messages,
-                        paste("Rd error:", conditionMessage(e)))
-    }
-}
 
 ### * .make_Rd_whandler
 
 .make_Rd_whandler <-
-function(expr = NULL)
+function()
 {
-    .messages <- character()
+    .messages <- character() # purely to fool codetools
     function(e) {
-        if(!is.null(expr)) on.exit(expr)
         .messages <<- c(.messages,
                         paste("Rd warning:", conditionMessage(e)))
+        invokeRestart("muffleWarning")
     }
 }
 
