@@ -248,7 +248,7 @@ testInstalledPackage <-
 }
 
 ## used by R CMD check
-.runPackageTests <- function(use_gct = FALSE)
+.runPackageTests <- function(use_gct = FALSE, use_valgrind = TRUE)
 {
     runone <- function(f)
     {
@@ -256,6 +256,7 @@ testInstalledPackage <-
         outfile <- paste(f, "out", sep = "")
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                      "CMD BATCH --vanilla --no-timing",
+                     if(use_valgrind) "-d valgrind",
                      shQuote(f), shQuote(outfile))
         if (.Platform$OS.type == "windows") {
             Sys.setenv(LANGUAGE="C")

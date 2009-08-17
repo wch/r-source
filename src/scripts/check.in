@@ -2452,7 +2452,19 @@ sub check_pkg {
 	    }
 	    chdir($testdir);
 	    dircopy($testsrcdir, ".");
-	    if($opt_use_gct) {$extra = "use_gct = TRUE";} else {$extra = "";}
+	    if($opt_use_valgrind) {
+		if($opt_use_gct) {
+		    $extra = "use_gct = TRUE, use_valgrind = TRUE";
+		} else {
+		    $extra = "use_valgrind = TRUE";
+		}
+	    } else {
+		if($opt_use_gct) {
+		    $extra = "use_gct = TRUE";
+		} else {
+		    $extra = "";
+		}
+	    }
 	    $cmd = join(" ",
 			("(echo 'tools:::.runPackageTestsR($extra)' |",
 			 &shell_quote_file_path(${R::Vars::R_EXE}),
