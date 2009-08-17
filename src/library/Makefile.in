@@ -19,14 +19,14 @@ R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 PDFLATEX = @PDFLATEX@
 
-.SUFFIXES: .ts
+.SUFFIXES: .in .Rdts .Rdh
 
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-## FIXME: do some of this in parallel
+## FIXME: do some of this in parallel?
 ## beware there is a bootstrapping problem here: tools uses tools to
 ## dump its namespace. So it works initially, but not to update.
 ## When base is made we need to use 'date' to set the timestamp,
@@ -50,49 +50,45 @@ R:
 docs:
 	@$(MAKE) Rdobjects
 	@$(MAKE) metadata
-	@$(ECHO) "building all R documentation indices"
 	@$(MAKE) help-indices
-	@$(ECHO) "building all R object docs (text, HTML, LaTeX, examples)"
 	@$(MAKE) Rdfiles
 	@touch stamp-docs
 
-# <FIXME> this is GNUish
-RD-TS = $(R_PKGS_BASE:=.Rdts)
-Rd-ts: $(RD-TS)
+# fix the order to make best use of parallel builds
+RD-TS = base.Rdts stats.Rdts utils.Rdts methods.Rdts graphics.Rdts grDevices.Rdts datasets.Rdts grid.Rdts tools.Rdts tcltk.Rdts splines.Rdts stats4.Rdts
+# RD-TS = $(R_PKGS_BASE:=.Rdts)
 
-%.Rdts:
-	@$(ECHO) "tools:::.install_package_Rd_objects('$(srcdir)/$${pkg}', '$(top_builddir)/library/$${pkg}')" | \
-	    R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null || exit 1
-	@$(ECHO) $(ECHO_N) " $*$(ECHO_C)"
-
-Rdobjects2:
-	@$(ECHO) $(ECHO_N) "installing parsed Rd:$(ECHO_C)"
-	@$(MAKE) Rd-ts
-	@$(ECHO)
-# </FIXME>
+.in.Rdts:
+	@$(ECHO) "tools:::.install_package_Rd_objects('$(srcdir)/$*',\
+	   '$(top_builddir)/library/$*')" | \
+	    R_DEFAULT_PACKAGES=NULL $(R_EXE) || exit 1
+	@$(ECHO) "  $*"
 
 Rdobjects:
-	@$(ECHO) $(ECHO_N) "installing parsed Rd:$(ECHO_C)"
-	@for pkg in $(R_PKGS_BASE); do \
-	  if test -d $(srcdir)/$${pkg}/man; then \
-	    $(ECHO) $(ECHO_N) " $${pkg}$(ECHO_C)"; \
-	    $(ECHO) "tools:::.install_package_Rd_objects('$(srcdir)/$${pkg}', '$(top_builddir)/library/$${pkg}')" | \
-	    R_DEFAULT_PACKAGES=NULL $(R_EXE); \
-	  fi; \
-	done
-	@$(ECHO)
+	@$(ECHO) "installing parsed Rd"
+	@for pkg in $(R_PKGS_BASE); do touch $${pkg}.in; done
+	@$(MAKE) $(RD-TS)
+	@rm *.in
+
+.in.Rdh:
+	@$(ECHO) "tools:::.writePkgIndices(\"$(srcdir)/$*\", \"$(top_builddir)/library/$*\")" | R_DEFAULT_PACKAGES=utils LC_ALL=C $(R_EXE) || exit 1
+
+RD-H = $(R_PKGS_BASE:=.Rdh)
 
 help-indices:
-	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO) "tools:::.writePkgIndices(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | LC_ALL=C $(R_EXE) || exit 1; \
-	done
+	@$(ECHO) "building all R documentation indices"
+	@for pkg in $(R_PKGS_BASE); do touch $${pkg}.in; done
+	@$(MAKE) $(RD-H)
+	@rm *.in
 
 ## FIXME: do this in parallel (but avoid interleaving output)
 Rdfiles:
+	@$(ECHO) "building all R object docs"
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\", silent = TRUE)" | LC_ALL=C $(R_EXE) || exit 1; \
 	done
 
+## only 'grid' has any vignettes
 vignettes:
 	@if test "$(PDFLATEX)" = false; then \
           $(ECHO) "WARNING: cannot build/update package vignettes."; \
@@ -162,7 +158,7 @@ clean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	-@rm -rf .vignettes
-	-@rm -f stamp-*
+	-@rm -f stamp-* *.in
 distclean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
