@@ -5,8 +5,8 @@
 
 \name{parse_Rd}
 \alias{parse_Rd}
-\alias{print.parse_Rd}
-\alias{as.character..parse_Rd}
+\alias{print.Rd}
+\alias{as.character.Rd}
 \title{ Parse an Rd file }
 \description{
   This function reads an R documentation (Rd) file and parses it, for
