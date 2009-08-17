@@ -77,6 +77,12 @@ BUG FIXES
     o	Topics marked as "internal" in help files were not visible
     	from CHM help.
 
+    o	The bmp(), jpeg(), png() and tiff() devices were not scaling
+	'pointsize' correctly with the resolution, for grid-based
+	plots (e.g. those from lattice) only.
+
+	These devices were scaling 'width' by res=1 if units="mm".
+
 
 
 		CHANGES IN R VERSION 2.9.1
