@@ -88,11 +88,13 @@ BUG FIXES
 	expansions lose accuracy (the underlying TOMS708 C code was
 	ignoring some of these, including the PR#13786 example).
 
-    o	new.env(hash = TRUE, size = NA)	 now works, the way it has been
+    o	new.env(hash = TRUE, size = NA)	now works the way it has been
 	documented to for a long time.
 
     o	tcltk::tk_choose.files(multi = TRUE) produces better-formatted
 	output with filenames containing spaces.  (PR#13875)
+
+    o	R CMD check --use-valgrind did not run valgrind on the package tests.
 
 
 

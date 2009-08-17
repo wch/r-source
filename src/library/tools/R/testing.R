@@ -246,7 +246,7 @@ testInstalledPackage <-
 }
 
 ## used by R CMD check
-.runPackageTests <- function(use_gct = FALSE)
+.runPackageTests <- function(use_gct = FALSE, use_valgrind = TRUE)
 {
     runone <- function(f)
     {
@@ -254,6 +254,7 @@ testInstalledPackage <-
         outfile <- paste(f, "out", sep = "")
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                      "CMD BATCH --vanilla --no-timing",
+                     if(use_valgrind) "--debugger=valgrind",
                      shQuote(f), shQuote(outfile))
         if (.Platform$OS.type == "windows") {
             Sys.setenv(LANGUAGE="C")
@@ -281,7 +282,7 @@ testInstalledPackage <-
     Rinfiles <- dir(".", pattern="\\.Rin$")
     for(f in Rinfiles) {
         Rfile <- sub("\\.Rin$", ".R", f)
-        message("  Creating ", sQuote(Rfile))
+        message("  Creating ", sQuote(Rfile), domain = NA)
         cmd <- paste(shQuote(file.path(R.home(), "bin", "R")),
                      "CMD BATCH --no-timing --vanilla --slave", f)
         if (system(cmd))
