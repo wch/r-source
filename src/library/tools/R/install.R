@@ -1997,14 +1997,19 @@
     ## FIXME: perl version cleaned up non-matching converted files
 
     ## FIXME: add this lib to lib.loc?
-    ## FIXME: may be slow, so add a message?
-    Links <- if ("html" %in% types) findHTMLlinks(outDir) else ""
+    if ("html" %in% types) {
+        ## may be slow, so add a message
+        message("    finding HTML links ...", appendLF = FALSE)
+        Links <- findHTMLlinks(outDir)
+        message(" done")
+    } else Links <- ""
 
     ## Rd objects may already have been installed.
     db <- tryCatch(Rd_db(basename(outDir), lib.loc = dirname(outDir)),
                    error = function(e) NULL)
     ## If not, we build the Rd db from the sources:
     if(is.null(db)) db <- Rd_db(dir = dir)
+
 
     files <- names(db)
 

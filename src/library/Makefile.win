@@ -17,6 +17,8 @@ RHOME = $(shell ../gnuwin32/Rpwd.exe ../..)
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
+.SUFFIXES: .Rdts
+
 all: R
 
 ## beware there is a bootstrapping problem here: tools uses tools to
@@ -49,15 +51,16 @@ docs:
 	@$(MAKE) -f Makefile.win Rdfiles
 	@touch stamp-docs
 
+RD-TS = $(R_PKGS_BASE:=.Rdts)
+Rd-ts: $(RD-TS)
+
+%.Rdts:
+	@$(ECHO) "tools:::.writePkgIndices(\"$(srcdir)/$*\", \"$(top_builddir)/library/$*\")" | R_DEFAULT_PACKAGES=utils $(R_EXE) || exit 1
+	@$(ECHO) -n " $*$(ECHO_C)"
+
 Rdobjects:
 	@$(ECHO) -n "installing parsed Rd:"
-	@for pkg in $(R_PKGS_BASE); do \
-	  if test -d $(srcdir)/$${pkg}/man; then \
-	    $(ECHO) -n " $${pkg}"; \
-	    $(ECHO) "tools:::.install_package_Rd_objects('$(srcdir)/$${pkg}', '$(top_builddir)/library/$${pkg}')" | \
-	    R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null; \
-	  fi; \
-	done
+	@$(MAKE) -f Makefile.win Rd-ts
 	@$(ECHO)
 
 help-indices:
