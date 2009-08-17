@@ -14,17 +14,14 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-options <- function(...) .Internal(options(...))
+options <- function(...)
+    .Internal(options(...))
 
-getOption <- function(x, default = NULL) 
+getOption <- function(x, default = NULL)
 {
-     # To avoid always performing the %in%, 
-     # we use the original code if default is not specified.
-   if(missing(default))
-     return(options(x)[[1L]])
+    ## To avoid always performing the %in%,
+    ## we use the original code if default is not specified.
+    if(missing(default)) return(options(x)[[1L]])
 
-   if(x %in% names(options()))
-      options(x)[[1L]]
-   else
-      default
+    if(x %in% names(options())) options(x)[[1L]] else default
 }
