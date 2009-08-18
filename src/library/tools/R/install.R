@@ -123,7 +123,8 @@
             if (lib == .Library) {
                 .file_append_ensuring_LFs(file.path(R.home("doc"), "html", "search", "index.txt"),
                                                   Sys.glob(file.path(R.home(), "library", "*", "CONTENTS")))
-                if (build_help && identical(Sys.getenv("NO_PERL5"), "false"))
+                ## FIXME This is not so clear: rather if built html help?
+                if (build_help)
                     unix.packages.html(.Library, docdir = R.home("doc"))
 
             }
@@ -1998,8 +1999,6 @@
 
     cat("  converting help for package ", sQuote(pkg), "\n", sep="")
 
-    ## FIXME: perl version cleaned up non-matching converted files
-
     ## FIXME: add this lib to lib.loc?
     if ("html" %in% types) {
         ## may be slow, so add a message
@@ -2082,6 +2081,31 @@
                 writeLines(unique(.messages))
         }
     }
+
+    ## Now check for files to remove.
+    bfs <- sub("\\.[Rr]d$", "", basename(files)) # those to keep
+    if ("html" %in% types) {
+        type <- "html"
+        have <- list.files(file.path(outDir, dirname[type]))
+        have2 <- sub("\\.html", "", basename(have))
+        drop <- have[! have2 %in% c(bfs, "00Index")]
+        unlink(file.path(outDir, dirname[type], drop))
+    }
+    if ("latex" %in% types) {
+        type <- "latex"
+        have <- list.files(file.path(outDir, dirname[type]))
+        have2 <- sub("\\.tex", "", basename(have))
+        drop <- have[! have2 %in% bfs]
+        unlink(file.path(outDir, dirname[type], drop))
+    }
+    if ("example" %in% types) {
+        type <- "example"
+        have <- list.files(file.path(outDir, dirname[type]))
+        have2 <- sub("\\.R", "", basename(have))
+        drop <- have[! have2 %in% bfs]
+        unlink(file.path(outDir, dirname[type], drop))
+    }
+
 }
 
 ### * .makeDllRes
