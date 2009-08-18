@@ -3179,9 +3179,9 @@ Default: false.
 Control whether @code{check_T_and_F()} also looks for ``bad'' (global)
 @samp{T}/@samp{F} uses in examples.
 Off by default because this can result in false positives.
-@item _R_CHECK_RD_PARSE_
-Control whether Rd files are checked against the Rd version 2 parser.
-Default: true.
+@c @item _R_CHECK_RD_PARSE_
+@c Control whether Rd files are checked against the Rd version 2 parser.
+@c Default: true.
 @item _R_CHECK_RD_USAGE_METHOD_BINOPS_
 Control whether binops generics are considered as allowing useful S3
 method markup. 

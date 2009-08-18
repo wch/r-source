@@ -139,8 +139,8 @@ my $R_check_executables =
     &R_getenv("_R_CHECK_EXECUTABLES_", "TRUE");
 my $R_check_executables_exclusions =
     &R_getenv("_R_CHECK_EXECUTABLES_EXCLUSIONS_", "TRUE");
-my $R_check_Rd_parse =
-    &R_getenv("_R_CHECK_RD_PARSE_", "TRUE");
+# my $R_check_Rd_parse =
+#     &R_getenv("_R_CHECK_RD_PARSE_", "TRUE");
 ## This check needs codetools
 my $R_check_dot_internal =
     &R_getenv("_R_CHECK_DOT_INTERNAL_", "FALSE");
@@ -193,8 +193,8 @@ $R_check_executables =
     &config_val_to_logical($R_check_executables);
 $R_check_executables_exclusions =
     &config_val_to_logical($R_check_executables_exclusions);
-$R_check_Rd_parse =
-    &config_val_to_logical($R_check_Rd_parse);
+# $R_check_Rd_parse =
+#     &config_val_to_logical($R_check_Rd_parse);
 $R_check_dot_internal =
     &config_val_to_logical($R_check_dot_internal);
 ## <NOTE>
@@ -1919,33 +1919,34 @@ sub check_pkg {
 
     if(-d "man") {
 	$log->checking("Rd files");
-	my $def_enc = 0;
-	$def_enc = 1 if defined($description->{"Encoding"});
+#	my $def_enc = 0;
+#	$def_enc = 1 if defined($description->{"Encoding"});
 
-	my $Rcmd = "options(warn=1)\ntools:::check_Rd_files_in_man_dir(\"man\",$def_enc)\n";
-	my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES=NULL");
-	@out = grep(!/^\>/, @out);
-	if(scalar(@out) > 0) {
-	    ## Output may indicate warnings or errors ...
-	    if(grep(/^Rd files with (syntax errors|missing or empty)/,
-		    @out)) {
-		$log->error();
-		$log->print(join("\n", @out) . "\n");
-		$log->print(wrap("", "", @msg_writing_Rd));
-		exit(1);
-	    }
-	    else {
-		$log->warning();
-		$log->print(join("\n", @out) . "\n");
-		$log->print(wrap("", "", @msg_writing_Rd));
-	    }
-	}
-	else {
-	    $log->result("OK");
-	}
-	if($R_check_Rd_parse) {
-	    $log->checking("Rd files against version 2 parser");
+# 	my $Rcmd = "options(warn=1)\ntools:::check_Rd_files_in_man_dir(\"man\",$def_enc)\n";
+# 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+# 			 "R_DEFAULT_PACKAGES=NULL");
+# 	@out = grep(!/^\>/, @out);
+# 	if(scalar(@out) > 0) {
+# 	    ## Output may indicate warnings or errors ...
+# 	    if(grep(/^Rd files with (syntax errors|missing or empty)/,
+# 		    @out)) {
+# 		$log->error();
+# 		$log->print(join("\n", @out) . "\n");
+# 		$log->print(wrap("", "", @msg_writing_Rd));
+# 		exit(1);
+# 	    }
+# 	    else {
+# 		$log->warning();
+# 		$log->print(join("\n", @out) . "\n");
+# 		$log->print(wrap("", "", @msg_writing_Rd));
+# 	    }
+# 	}
+# 	else {
+# 	    $log->result("OK");
+#	}
+#	if($R_check_Rd_parse) {
+#	    $log->checking("Rd files against version 2 parser");
+	{
 	    my $Rcmd = "options(warn=1)\ntools:::.check_package_parseRd('.')\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			     "R_DEFAULT_PACKAGES=NULL");
@@ -1953,8 +1954,7 @@ sub check_pkg {
 	    if(scalar(@out) > 0) {
 		$log->warning();
 		$log->print(join("\n", @out) . "\n");
-	    }
-	    else {
+	    } else {
 		$log->result("OK");
 	    }
 	}
@@ -2616,13 +2616,14 @@ sub check_pkg_manual {
 	    my $latex_log = &file_path($build_dir, "Rd2.log");
 	    if(-f $latex_log) {copy($latex_log, "${pkgname}-manual.log");}
 	    if($res == 2816) { ## 11*256
-		$log->warning();
-		$log->print("Rd2atex errors when creating \U$fmt\E version:\n");
+		$log->error();
+		$log->print("Rd conversion errors:\n");
 		@lines = &read_lines("Rdlatex.log");
 		foreach my $line (@lines) {
 		    print $line, "\n" unless $line =~ /^(Hmm|Execution)/;
 		}
 		rmtree($build_dir);
+		exit(1);
 	    } elsif($res) {
 		my $latex_file = &file_path($build_dir, "Rd2.tex");
 		if(-f $latex_file) {copy($latex_file, "${pkgname}-manual.tex");}
