@@ -2602,6 +2602,8 @@ function(x, ...)
 
 ### * check_Rd_files_in_package
 
+## FIXME: these are not needed for 2.10.0
+
 ## </NOTE>
 ## We currently have two (internal) check_Rd_files* functions.
 ##
