@@ -87,7 +87,7 @@
             "  -d, --debug		turn on script and build-help debugging",
             "  -l, --library=LIB	install packages to library tree LIB",
             "      --no-configure    do not use the package's configure script",
-            "      --no-docs		do not build and install documentation",
+            "      --no-docs		do not install any documentation",
             "      --no-html		do not build HTML help",
             "      --latex      	install LaTeX help",
             "      --example		install R code for help examples",
@@ -812,8 +812,9 @@
                 ## file.remove(file.path(instdir, "R", "all.rda"))
             }
 
-            if (dir.exists("man")) {
-                ## FIXME: this should not be done if --no-docs
+            if (dir.exists("man") &&
+                length(list_files_with_type("man", "docs"))) {
+                ## FIXME: should this be done if --no-docs
                 starsmsg(stars, "help")
                 {
                     ## Turn
@@ -822,8 +823,8 @@
                     ## they can be picked up by R CMD check.
                     .whandler <- function(e) {
                         call <- conditionCall(e)
-                        if(!is.null(call) && grepl("^parse_Rd",
-                                                   deparse(call))) {
+                        if(!is.null(call) &&
+                           grepl("^parse_Rd", deparse(call))) {
                             warning(conditionMessage(e), call. = FALSE)
                             invokeRestart("muffleWarning")
                         } else e
@@ -837,11 +838,11 @@
                     if(inherits(res, "try-error"))
                         pkgerrmsg("installing Rd objects failed", pkg_name)
                 }
-                ## 'Maybe build preformatted help pages ...'
+
+                starsmsg(paste0(stars, "*"), "installing help indices")
+                .writePkgIndices(pkg_dir, instdir, html = build_html,
+                                 CHM = build_chm)
                 if (build_help) {
-                    starsmsg(paste0(stars, "*"),
-                             "installing help indices")
-                    .writePkgIndices(pkg_dir, instdir, CHM = build_chm)
                     .convertRdfiles(pkg_dir, instdir, types = build_help_types)
                     if (build_chm) {
                         if (dir.exists("chm")) {
@@ -967,7 +968,7 @@
         } else if (a == "--no-configure") {
             use_configure <- FALSE
         } else if (a == "--no-docs") {
-            ## FIXME: should also disable parsing of Rd files
+            ## FIXME: could also disable parsing of Rd files
             build_html <- build_latex <- build_example <- build_chm <- FALSE
         } else if (a == "--no-html") {
             build_html <- FALSE
@@ -1621,6 +1622,7 @@
     1L
 }
 
+if(FALSE) {
 ## given a source package in 'dir', write outDirc/help/AnIndex
 ## This is a two-column tab-separated file of topic and file basename,
 ## conventionally sorted on topic (but with foo-package first)
@@ -1671,9 +1673,10 @@
     write.table(cbind(topics, ff)[re(topics),], file.path(outman, "AnIndex"),
                 quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
 }
+}
 
 .writePkgIndices <-
-    function(dir, outDir, OS = .Platform$OS.type, CHM = FALSE)
+    function(dir, outDir, OS = .Platform$OS.type, html = TRUE, CHM = FALSE)
 {
     re <- function(x)
     {
@@ -1814,10 +1817,13 @@
     write.table(MM, file.path(outman, "AnIndex"),
                 quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
 
-    outman <- file.path(outDir, "html")
-    dir.create(outman, showWarnings = FALSE)
-    outcon <- file(file.path(outman, "00Index.html"), "wt")
-    on.exit(close(outcon))
+    if(!html && !CHM) return()
+    if(html) {
+        outman <- file.path(outDir, "html")
+        dir.create(outman, showWarnings = FALSE)
+        outcon <- file(file.path(outman, "00Index.html"), "wt")
+        on.exit(close(outcon))
+    }
     if(CHM) {
         chmdir <- file.path(dir, "chm")
         dir.create(chmdir, showWarnings = FALSE)
@@ -1826,9 +1832,7 @@
     }
     desc <- read.dcf(file.path(outDir, "DESCRIPTION"))[1,]
     ## drop internal entries
-    if (CHM) {
-    	CHMinternals <- M[M[, 4], ]
-    }
+    if (CHM) CHMinternals <- M[M[, 4], ]
     M <- M[!M[, 4], ]
     if(desc["Package"] %in% c("base", "graphics", "stats", "utils")) {
         for(pass in 1:2) {
@@ -1878,8 +1882,10 @@
         ## FIXME: we could reencode individual files
         encs[nzchar(encs)][1]
     } else def
-    html_header(desc["Package"], desc["Title"], desc["Version"],
-                if(nzchar(enc)) enc else "iso-8859-1", outcon)
+
+    if(html)
+        html_header(desc["Package"], desc["Title"], desc["Version"],
+                    if(nzchar(enc)) enc else "iso-8859-1", outcon)
     if(CHM)
         chm_header(desc["Package"], desc["Title"], desc["Version"], chmcon)
 
@@ -1889,10 +1895,12 @@
         nm <- sort(names(table(first)))
         m <- match(" ", nm, 0L)
         if(m) nm <- c(" ", nm[-m])
-        writeLines("<p align=\"center\">", outcon)
-        writeLines(paste("<a href=\"#", nm, "\">", nm, "</a>", sep = ""),
-                   outcon)
-        writeLines("</p>\n", outcon)
+        if(html) {
+            writeLines("<p align=\"center\">", outcon)
+            writeLines(paste("<a href=\"#", nm, "\">", nm, "</a>", sep = ""), #
+                       outcon)
+            writeLines("</p>\n", outcon)
+        }
         if (CHM) {
             writeLines("<p align=\"center\">", chmcon)
             writeLines(paste("<a href=\"#", nm, "\">", nm, "</a>", sep = ""),
@@ -1904,11 +1912,13 @@
                 sep = "", file = outcon)
             MM <- M[first == f, ]
             ## cat("writing", nrow(MM), "lines for", sQuote(f), "\n")
-            writeLines('<table width="100%">', outcon)
-            writeLines(paste('<tr><td width="25%"><a href="', MM[, 2], '.html">',
-                             MM$HTopic, '</a></td>\n<td>', MM[, 3],'</td></tr>',
-                             sep = ''), outcon)
-            writeLines("</table>", outcon)
+            if(html) {
+                writeLines('<table width="100%">', outcon)
+                writeLines(paste('<tr><td width="25%"><a href="', MM[, 2], '.html">',
+                                 MM$HTopic, '</a></td>\n<td>', MM[, 3],'</td></tr>',
+                                 sep = ''), outcon)
+                writeLines("</table>", outcon)
+            }
             if(CHM) {
                 cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
                     sep = "", file = chmcon)
@@ -1920,11 +1930,13 @@
             }
        }
     } else {
-        writeLines('<table width="100%">', outcon)
-        writeLines(paste('<tr><td width="25%"><a href="', M[, 2], '.html">',
-                         M$HTopic, '</a></td>\n<td>', M[, 3],'</td></tr>',
-                         sep = ''), outcon)
-        writeLines("</table>", outcon)
+        if(html) {
+            writeLines('<table width="100%">', outcon)
+            writeLines(paste('<tr><td width="25%"><a href="', M[, 2], '.html">',
+                             M$HTopic, '</a></td>\n<td>', M[, 3],'</td></tr>',
+                             sep = ''), outcon)
+            writeLines("</table>", outcon)
+        }
         if (CHM) {
             writeLines('<table width="100%">', chmcon)
             writeLines(paste('<tr><td width="25%"><a href="', M[, 2], '.html">',
@@ -1933,7 +1945,7 @@
             writeLines("</table>", chmcon)
         }
     }
-    writeLines('</body></html>', outcon)
+    if(html) writeLines('</body></html>', outcon)
     if(CHM) writeLines('</body></html>', chmcon)
     if(CHM) {
         chm_toc(dir, desc["Package"], M)

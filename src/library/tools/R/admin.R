@@ -699,6 +699,8 @@ function(infile, outfile, encoding)
 
 ### * .install_package_man_sources
 
+## not used in 2.10.0
+if(FALSE) {
 .install_package_man_sources <-
 function(dir, outDir)
 {
@@ -720,6 +722,7 @@ function(dir, outDir)
         cat(file=con, "\\eof\n")
     }
     close(con)
+}
 }
 
 ### * .install_package_Rd_objects
