@@ -20,11 +20,17 @@ Rd2ex <-
     function(Rd, out="", defines=.Platform$OS.type, stages="render",
              outputEncoding="UTF-8", ...)
 {
+    dropNewline <- FALSE # drop next char if newline
+    
     of0 <- function(...)
-        writeLinesUTF8(paste(..., sep=""), con, outputEncoding, sep ="")
-    of1 <- function(text)
+        of1(paste(..., sep=""))
+    of1 <- function(text) {
+        if (dropNewline && length(text)) {
+            text[1] <- gsubUTF8("^\n", "", text[1])
+            dropNewline <<- FALSE
+        }
         writeLinesUTF8(text, con, outputEncoding, sep = "")
-
+    }
     wr <- function(x)
         paste("###", strwrap(remap(x), 73L, indent=1L, exdent=3L),
               sep="", collapse="\n")
@@ -49,7 +55,7 @@ Rd2ex <-
             ## There are fancy rules here if not followed by \n
             ## FIXME: do this better
             of1("## Don't show: ")
-            if (!grepl("^\n", x[[1L]][1L], perl = TRUE))
+            if (!grepl("^\n", x[[1L]][1L], perl = TRUE) && RdTags(x)[1] != "COMMENT")
                 writeLines("", con)
             for(i in seq_along(x)) render(x[[i]], prefix)
             last <- x[[length(x)]]
@@ -63,7 +69,7 @@ Rd2ex <-
                 render(x[[1L]], prefix)
             } else {
                 of1("## Not run: ")
-                if (!grepl("^\n", x[[1L]][1L], perl = TRUE)) {
+                if (!grepl("^\n", x[[1L]][1L], perl = TRUE) && RdTags(x)[1] != "COMMENT") {
                     writeLines("", con)
                     render(x[[1L]], paste("##D", prefix))
                 } else render(x[[1L]], prefix)
@@ -75,7 +81,7 @@ Rd2ex <-
             }
         } else if (tag  == "\\donttest") {
             of1("## No test: ")
-            if (!grepl("^\n", x[[1L]][1L], perl = TRUE))
+            if (!grepl("^\n", x[[1L]][1L], perl = TRUE) && RdTags(x)[1] != "COMMENT")
                 writeLines("", con)
             for(i in seq_along(x)) render(x[[i]], prefix)
             last <- x[[length(x)]]
@@ -86,7 +92,7 @@ Rd2ex <-
             ## % can escape a whole line (e.g. beavers.Rd) or
             ## be trailing when we want a NL
             ## This is not right (leaading spaces?) but it may do
-            if(attr(x, "srcref")[2L] > 1L) writeLines("", con)
+            if(attr(x, "srcref")[2L] == 1L) dropNewline <<- TRUE
         } else if (tag %in% c("\\dots", "\\ldots")) {
             of1("...")
         } else {
