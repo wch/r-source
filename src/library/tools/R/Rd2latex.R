@@ -14,9 +14,15 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## Remaining problems
-## escapes in comments in codeblocks (kappa, qr, qraux, source)
-## [cosmetic) white-spacing in \[d]eqn (Random, Special, polyroot)
+## This warns on text outside sections
+## and errors on
+##  unrecognized tags (can the parser do that?)
+##  \\tabular format must be simple text
+##  invalid markup in \[S3]method
+##  Only one \\Rdversion declaration is allowed
+##  Unrecognized section (but I think the parser catches that)
+##  Sections \\title, and \\name must exist and be unique in Rd files
+##  \\name must only contain simple text
 
 
 latex_canonical_encoding  <- function(encoding)
@@ -457,11 +463,12 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                    writeContent(block[[1L]], tag)
                },
                "\\tabular" = writeTabular(block),
-               stopRd(block, Rdfile, "Tag ", tag, " not recognized.")
+               stopRd(block, Rdfile, "Tag ", tag, " not recognized")
                )
     }
 
     writeTabular <- function(table) {
+        ## FIXME does no check of correct format
     	format <- table[[1L]]
     	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
@@ -650,7 +657,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         ## CRAN currently (2009-07-28) has more than 250 \Rdversion{1.1}
         ## packages ...
         if(identical(getOption("verbose"), TRUE))
-            warning("checkRd is designed for Rd version 2 or higher.")
+            warning("checkRd is designed for Rd version 2 or higher")
         ## </FIXME>
     }
     else if (length(version) > 1L)
@@ -688,7 +695,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
     sortorder <- sectionOrder[sections]
     if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1L]]], Rdfile, "Section ", sections[which(bad)[1L]], " unrecognized.")
+    	stopRd(Rd[[which(bad)[1L]]], Rdfile, "Section ", sections[which(bad)[1L]], " unrecognized")
     ## Need to sort the aliases.
     nm <- character(length(Rd))
     isAlias <- RdTags(Rd) == "\\alias"
@@ -697,7 +704,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
     if (!identical(sections[1:2], c("\\title", "\\name")))
-    	stopRd(Rd, Rdfile, "Sections \\title, and \\name must exist and be unique in Rd files.")
+    	stopRd(Rd, Rdfile, "Sections \\title, and \\name must exist and be unique in Rd files")
 
     title <- as.character(Rd[[1L]])
     ## remove empty lines, leading whitespace
@@ -707,7 +714,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
     name <- Rd[[2L]]
     tags <- RdTags(name)
-    if (length(tags) > 1L) stopRd(name, Rdfile, "\\name must only contain simple text.")
+    if (length(tags) > 1L) stopRd(name, Rdfile, "\\name must only contain simple text")
 
     name <- trim(as.character(name[[1L]]))
     ltxname <- latex_escape_name(name)

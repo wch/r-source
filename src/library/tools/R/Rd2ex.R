@@ -14,6 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## This warns on multiple \examples sections, never fails.
+
 Rd2ex <-
     function(Rd, out="", defines=.Platform$OS.type, stages="render",
              outputEncoding="UTF-8", ...)

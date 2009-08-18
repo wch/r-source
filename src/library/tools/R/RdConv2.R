@@ -24,7 +24,7 @@ get_link <- function(arg, tag, Rdfile) {
     ## \link{pkg:bar]{foo} means show foo and link to file bar in package pkg.
 
     if (!all(RdTags(arg) == "TEXT"))
-    	stopRd(arg, "", "Bad \\link text")
+    	stopRd(arg, Rdfile, "Bad \\link text")
 
     option <- attr(arg, "Rd_option")
 
@@ -403,6 +403,22 @@ writeLinesUTF8 <- function(x, con, outputEncoding, ...) {
     writeLines(x, con, useBytes=TRUE, ...)
 }
 
+## This warns on
+##  text outside sections
+##  missing links
+## and errors on
+##  Bad \\link text
+##  Bad \\link option -- must be text
+##  unrecognized tags (can the parser do that?)
+##  \\tabular format must be simple text
+##  Unrecognized \\tabular format:
+##  "Only ", length(format), " columns allowed in this table"
+##  Only one \\Rdversion declaration is allowed
+##  Unrecognized section (but I think the parser catches that)
+##  Sections \\title, and \\name must exist and be unique in Rd files
+##  \\name must only contain simple text
+
+
 ## FIXME: better to really use XHTML
 Rd2HTML <-
     function(Rd, out = "", package = "", defines = .Platform$OS.type,
@@ -707,7 +723,7 @@ Rd2HTML <-
                        writeContent(block[[1L]], tag)
                },
                "\\tabular" = writeTabular(block),
-               stopRd(block, Rdfile, "Tag ", tag, " not recognized.")
+               stopRd(block, Rdfile, "Tag ", tag, " not recognized")
                )
     }
 
@@ -739,7 +755,7 @@ Rd2HTML <-
                 if (col > length(format))
                     stopRd(table, Rdfile,
                            "Only ", length(format),
-                           " columns allowed in this table.")
+                           " columns allowed in this table")
             	of0('<td align="', format[col], '">')
             	newcol <- FALSE
             }
@@ -900,7 +916,7 @@ Rd2HTML <-
         ## CRAN currently (2009-07-28) has more than 250 \Rdversion{1.1}
         ## packages ...
         if(identical(getOption("verbose"), TRUE))
-            warning("checkRd is designed for Rd version 2 or higher.")
+            warning("checkRd is designed for Rd version 2 or higher")
         ## </FIXME>
     }
     else if (length(version) > 1L)
@@ -923,19 +939,19 @@ Rd2HTML <-
     if (any(bad <- is.na(sortorder)))
     	stopRd(Rd[[which(bad)[1L]]], Rdfile,
                "Section ", sections[which(bad)[1L]],
-               " unrecognized.")
+               " unrecognized")
     sortorder <- order(sortorder)
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
     if (!identical(sections[1:2], c("\\title", "\\name")))
     	stopRd(Rd, Rdfile,
-               "Sections \\title, and \\name must exist and be unique in Rd files.")
+               "Sections \\title, and \\name must exist and be unique in Rd files")
 
     title <- Rd[[1L]]
     name <- Rd[[2L]]
     tags <- RdTags(name)
     if (length(tags) > 1L)
-        stopRd(name, Rdfile,"\\name must only contain simple text.")
+        stopRd(name, Rdfile,"\\name must only contain simple text")
 
     name <- htmlify(name[[1L]])
 
@@ -999,6 +1015,29 @@ Rd2HTML <-
     invisible(out)
 }
 
+## This warns on
+##  text outside sections
+##  Unrecognized macro
+##  Unnecessary braces
+## and errors on
+##  Bad \\link text
+##  Bad \\link option -- must be text
+##  unrecognized tags (can the parser do that?)
+##  \\tabular format must be simple text
+##  Unrecognized \\tabular format:
+##  "Only ", length(format), " columns allowed in this table"
+##  checkUnique \title, \name, \description
+##  Only one \\Rdversion declaration is allowed
+##  Only one \\encoding declaration is allowed
+##  Encoding/docType must be plain text
+##  Unrecognized section (but I think the parser catches that)
+##  \\name must only contain simple text.
+
+## It currently misses
+##  invalid markup in \[S3]method (txt, latex)
+##  "Tag ", tag, " not expected in code block" (txt)
+
+
 checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                     unknownOK = TRUE, listOK = TRUE, ...)
 {
@@ -1011,6 +1050,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	option <- attr(block, "Rd_option")
     	if(!is.null(option)) checkContent(option, tag)
     	checkContent(block, tag)
+        get_link(block, tag, Rdfile) ## to do the same as Rd2HTML
     }
 
     checkBlock <- function(block, tag, blocktag) {
@@ -1075,7 +1115,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 	"\\dontshow" =,
 	"\\testonly" = checkContent(block, tag),
 	"\\tabular" = checkTabular(block),
-        stopRd(block, Rdfile, "Tag ", tag, " not recognized."))
+        stopRd(block, Rdfile, "Tag ", tag, " not recognized"))
     }
 
     checkTabular <- function(table) {
@@ -1101,7 +1141,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                 if (col > length(format))
                     stopRd(table, Rdfile,
                            "Only ", length(format),
-                           " columns allowed in this table.")
+                           " columns allowed in this table")
             	newcol <- FALSE
             }
             switch(tags[i],
@@ -1177,7 +1217,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
         ## CRAN currently (2009-07-28) has more than 250 \Rdversion{1.1}
         ## packages ...
         if(identical(getOption("verbose"), TRUE))
-            warning("checkRd is designed for Rd version 2 or higher.")
+            warning("checkRd is designed for Rd version 2 or higher")
         ## </FIXME>
     }
     else if (length(version) > 1L)
@@ -1219,7 +1259,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     name <- Rd[[which(sections == "\\name")]]
     tags <- RdTags(name)
     if (length(tags) > 1L)
-        stopRd(name, Rdfile, "\\name must only contain simple text.")
+        stopRd(name, Rdfile, "\\name must only contain simple text")
 
     ## Drop all the parts that are not rendered
     drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType",
@@ -1231,7 +1271,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     if (any(bad <- is.na(sortorder)))
     	stopRd(Rd[[which(bad)[1L]]], Rdfile,
                "Section ", sections[which(bad)[1L]],
-               " unrecognized.")
+               " unrecognized")
     sortorder <- order(sortorder)
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]

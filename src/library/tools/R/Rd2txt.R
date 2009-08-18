@@ -14,6 +14,18 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## This warns on text outside sections
+## and errors on
+##  unrecognized tags (can the parser do that?)
+##  \\tabular format must be simple text
+##  too many columns for format
+##  invalid markup in \[S3]method
+##  "Tag ", tag, " not expected in code block"
+##  Only one \\Rdversion declaration is allowed
+##  Unrecognized section (but I think the parser catches that)
+##  Sections \\title, and \\name must exist and be unique in Rd files
+##  \\name must only contain simple text
+
 Rd2txt <-
     function(Rd, out="", package = "", defines=.Platform$OS.type, stages = "render",
              outputEncoding = "", ...)
@@ -349,7 +361,7 @@ Rd2txt <-
     		   blankLine()
                },
                "\\tabular" = writeTabular(block),
-               stopRd(block, Rdfile, "Tag ", tag, " not recognized.")
+               stopRd(block, Rdfile, "Tag ", tag, " not recognized")
                )
     }
 
@@ -499,7 +511,7 @@ Rd2txt <-
                    RCODE =,
                    TEXT = writeCode(block),
                    "\\var" = writeCodeBlock(block, tag),
-                   "\\dots" =,
+                   "\\dots" =, # \ldots is not really allowed
                    "\\ldots" = put("..."),
                    "\\donttest" = writeCodeBlock(block, tag),
                    "\\dontrun"= writeDR(block, tag),
@@ -512,7 +524,9 @@ Rd2txt <-
                        putf("':\n")
                        writeCodeBlock(block[[1L]], tag)
                    },
-                   stopRd(block, Rdfile, "Tag ", tag, " not expected in code block.")
+                   ## All the markup such as \emph
+                   stopRd(block, Rdfile, "Tag ", tag,
+                          " not expected in code block")
                    )
         }
     }
@@ -625,7 +639,7 @@ Rd2txt <-
         ## CRAN currently (2009-07-28) has more than 250 \Rdversion{1.1}
         ## packages ...
         if(identical(getOption("verbose"), TRUE))
-            warning("checkRd is designed for Rd version 2 or higher.")
+            warning("checkRd is designed for Rd version 2 or higher")
         ## </FIXME>
     }
     else if (length(version) > 1L)
@@ -634,7 +648,7 @@ Rd2txt <-
     ## Give warning (pro tem) for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]",
                            unlist(Rd[sections == "TEXT"]), perl = TRUE )))
-    	stopRd(Rd[sections == "TEXT"][[bad[1L]]], Rdfile,
+    	warnRd(Rd[sections == "TEXT"][[bad[1L]]], Rdfile,
                "All text must be in a section")
 
     ## Drop all the parts that are not rendered
@@ -645,12 +659,12 @@ Rd2txt <-
 
     sortorder <- sectionOrder[sections]
     if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1L]]], Rdfile, "Section ", sections[which(bad)[1L]], " unrecognized.")
+    	stopRd(Rd[[which(bad)[1L]]], Rdfile, "Section ", sections[which(bad)[1L]], " unrecognized")
     sortorder <- order(sortorder)
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
     if (!identical(sections[1:2], c("\\title", "\\name")))
-    	stopRd(Rd, Rdfile, "Sections \\title, and \\name must exist and be unique in Rd files.")
+    	stopRd(Rd, Rdfile, "Sections \\title, and \\name must exist and be unique in Rd files")
 
     title <- as.character(Rd[[1L]])
     ## remove empty lines, leading and trailing whitespace, \n
@@ -660,7 +674,7 @@ Rd2txt <-
 
     name <- Rd[[2L]]
     tags <- RdTags(name)
-    if (length(tags) > 1L) stopRd(name, Rdfile, "\\name must only contain simple text.")
+    if (length(tags) > 1L) stopRd(name, Rdfile, "\\name must only contain simple text")
 
     name <- trim(name[[1L]])
 
