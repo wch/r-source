@@ -1039,11 +1039,9 @@ Rd2HTML <-
 
 
 checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
-                    unknownOK = TRUE, listOK = TRUE, ...)
+                    unknownOK = TRUE, listOK = TRUE, ..., def_enc = FALSE)
 {
-    checkWrapped <- function(tag, block) {
-    	checkContent(block, tag)
-    }
+    checkWrapped <- function(tag, block) checkContent(block, tag)
 
     checkLink <- function(tag, block) { # FIXME This doesn't handle aliases, and
                                         # doesn't cover all variations
@@ -1055,10 +1053,21 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 
     checkBlock <- function(block, tag, blocktag) {
 	switch(tag,
-	UNKNOWN = if (!unknownOK) stopRd(block, Rdfile, "Unrecognized macro ", block[[1L]]) else warnRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
+	UNKNOWN = if (!unknownOK)
+               stopRd(block, Rdfile, "Unrecognized macro ", block[[1L]])
+        else warnRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
 	VERB = ,
 	RCODE = ,
-	TEXT = ,
+	TEXT = if(!def_enc) {
+            ## check for encoding; this is UTF-8 if known
+            ## (but then def_enc = TRUE?)
+            if(Encoding(block) == "UTF-8")
+                warnRd(block, Rdfile,
+                       "non-ASCII contents without declared encoding")
+            if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
+                warnRd(block, Rdfile,
+                       "apparent non-ASCII contents without declared encoding")
+        },
 	COMMENT = {},
 	LIST = if (length(block)) {
 		deparse <- sQuote(paste(as.character.Rd(block), collapse=""))
@@ -1246,6 +1255,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	encoding <- Rd[[enc]]
     	if (!identical(RdTags(encoding), "TEXT"))
     	    stopRd(encoding, Rdfile, "Encoding must be plain text")
+        def_enc <- TRUE
     }
 
     dt <- which(sections == "\\docType")

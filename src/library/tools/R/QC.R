@@ -4500,7 +4500,7 @@ function(cfile)
 ### * .check_package_parseRd
 
 .check_package_parseRd <-
-function(dir, silent = FALSE)
+function(dir, silent = FALSE, def_enc = FALSE)
 {
     if(file.exists(file.path(dir, "DESCRIPTION"))) {
         enc <- read.dcf(file.path(dir, "DESCRIPTION"))["Encoding"]
@@ -4514,7 +4514,9 @@ function(dir, silent = FALSE)
     ## guaranteed to be portable.)
     bad <- character()
     for (f in pg) {
-        tmp <- try(checkRd(f, encoding = enc), silent=TRUE)
+        ## Kludge for now
+        if(basename(f) == "iconv.Rd") def_enc <- TRUE
+        tmp <- try(checkRd(f, encoding = enc, def_enc = def_enc), silent=TRUE)
         if(inherits(tmp, "try-error")) {
 	    bad <- c(bad, f)
             if(!silent)  {
