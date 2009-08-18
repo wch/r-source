@@ -1204,6 +1204,14 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	    stopRd(Rd, Rdfile, "Must have a ", tag)
     	else if (length(which) > 1L)
     	    stopRd(Rd[[which[2L]]], Rdfile, "Only one ", tag, " is allowed")
+        empty <- TRUE
+        for(block in Rd[[which]]) {
+            switch(attr(block, "Rd_tag"),
+                   TEXT = if(!grepl("^[[:space:]]*$", block)) empty <- FALSE,
+                   empty <- FALSE)
+        }
+        if(empty)
+            stopRd(Rd[[which]], Rdfile, "Tag ", tag, " must not be empty")
     }
 
     Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
