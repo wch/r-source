@@ -1,6 +1,6 @@
 % File src/library/stats/man/ls.print.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ls.print}
@@ -27,8 +27,8 @@ ls.print(ls.out, digits = 4, print.it = TRUE)
     errors, t- and p-values}
 }
 \note{
-  Usually, you'd rather use \code{summary(lm(\ldots))} and
-  \code{anova(lm(\ldots))} for obtaining similar output.
+  Usually you would use \code{summary(lm(\dots))} and
+  \code{anova(lm(\dots))} to obtain similar output.
 }
 \seealso{
   \code{\link{ls.diag}}, \code{\link{lsfit}}, also for examples;
