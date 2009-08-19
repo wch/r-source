@@ -445,16 +445,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\method" =,
                "\\S3method" = {
                    ## should not get here
-##                    ## FIXME: special methods for [ [<- and operators
-##                    class <- as.character(block[[2L]])
-##                    if (class == "default")
-##                        of1('## Default S3 method:\n')
-##                    else {
-##                        of1("## S3 method for class '")
-##                        writeContent(block[[2L]], tag)
-##                        of1("':\n")
-##                    }
-##                    writeContent(block[[1L]], tag)
                },
                "\\S4method" = {
                    of1("## S4 method for signature '")
@@ -509,6 +499,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                            txt <- ""
                            repeat {
                                this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
+                                              "\\ldots" =, # not really right
                                               "\\dots" = "...",
                                               RCODE = as.character(blocks[[j]]),
                                               stopRd(block, Rdfile, sprintf("invalid markup '%s' in %s", tg, tag)))

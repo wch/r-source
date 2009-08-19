@@ -1019,6 +1019,8 @@ Rd2HTML <-
 ##  text outside sections
 ##  Unrecognized macro
 ##  Unnecessary braces
+##  non-ASCII contents without declared encoding
+##  \\ldots in code block
 ## and errors on
 ##  Bad \\link text
 ##  Bad \\link option -- must be text
@@ -1026,7 +1028,7 @@ Rd2HTML <-
 ##  \\tabular format must be simple text
 ##  Unrecognized \\tabular format:
 ##  "Only ", length(format), " columns allowed in this table"
-##  checkUnique \title, \name, \description
+##  checkUnique \title, \name, \description (include non-empty)
 ##  Only one \\Rdversion declaration is allowed
 ##  Only one \\encoding declaration is allowed
 ##  Encoding/docType must be plain text
@@ -1035,7 +1037,6 @@ Rd2HTML <-
 
 ## It currently misses
 ##  invalid markup in \[S3]method (txt, latex)
-##  "Tag ", tag, " not expected in code block" (txt)
 
 
 checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
@@ -1051,80 +1052,132 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
         get_link(block, tag, Rdfile) ## to do the same as Rd2HTML
     }
 
-    checkBlock <- function(block, tag, blocktag) {
+    ## blocktag is unused
+    checkBlock <- function(block, tag, blocktag)
+    {
 	switch(tag,
-	UNKNOWN = if (!unknownOK)
+               UNKNOWN = if (!unknownOK)
                stopRd(block, Rdfile, "Unrecognized macro ", block[[1L]])
-        else warnRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
-	VERB = ,
-	RCODE = ,
-	TEXT = if(!def_enc) {
-            ## check for encoding; this is UTF-8 if known
-            ## (but then def_enc = TRUE?)
-            if(Encoding(block) == "UTF-8")
-                warnRd(block, Rdfile,
-                       "non-ASCII contents without declared encoding")
-            if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
-                warnRd(block, Rdfile,
-                       "apparent non-ASCII contents without declared encoding")
-        },
-	COMMENT = {},
-	LIST = if (length(block)) {
-		deparse <- sQuote(paste(as.character.Rd(block), collapse=""))
-		if(!listOK)
-               	    stopRd(block, Rdfile, "Unnecessary braces at ", deparse)
-               else warnRd(block, Rdfile, "Unnecessary braces at ", deparse)
-              },
-	"\\describe"=,
-	"\\enumerate"=,
-	"\\itemize"=,
-	"\\bold"=,
-	"\\cite"=,
-	"\\code"=,
-	"\\command"=,
-	"\\dfn"=,
-	"\\emph"=,
-	"\\kbd"=,
-	"\\preformatted"=,
-	"\\Sexpr"=,
-	"\\special"=,
-	"\\strong"=,
-	"\\var" =,
-	"\\verb"= checkContent(tag, block),
-	"\\linkS4class" =,
-	"\\link" = checkLink(tag, block),
-	"\\email" =,
-	"\\url" =,
-	"\\cr" =,
-	"\\dots" =,
-	"\\ldots" =,
-	"\\R" = {},
-	"\\acronym" =,
-	"\\dontrun" =,
-	"\\donttest" =,
-	"\\env" =,
-	"\\file" =,
-	"\\option" =,
-	"\\pkg" =,
-	"\\samp" =,
-	"\\sQuote" =,
-	"\\dQuote" = checkContent(block, tag),
-	"\\method" =,
-	"\\S3method" =,
-	"\\S4method" =,
-	"\\enc" = {
-	    checkContent(block[[1L]], tag)
-	    checkContent(block[[2L]], tag)
-	},
-	"\\eqn" =,
-	"\\deqn" = {
-	    checkContent(block[[1L]])
-	    if (length(block) > 1L) checkContent(block[[2L]])
-	},
-	"\\dontshow" =,
-	"\\testonly" = checkContent(block, tag),
-	"\\tabular" = checkTabular(block),
-        stopRd(block, Rdfile, "Tag ", tag, " not recognized"))
+               else warnRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
+               VERB = ,
+               RCODE = ,
+               TEXT = if(!def_enc) {
+                   ## check for encoding; this is UTF-8 if known
+                   ## (but then def_enc = TRUE?)
+                   if(Encoding(block) == "UTF-8")
+                       warnRd(block, Rdfile,
+                              "non-ASCII contents without declared encoding")
+                   if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
+                       warnRd(block, Rdfile,
+                              "apparent non-ASCII contents without declared encoding")
+               },
+               COMMENT = {},
+               LIST = if (length(block)) {
+                   deparse <- sQuote(paste(as.character.Rd(block), collapse=""))
+                   if(!listOK)
+                       stopRd(block, Rdfile, "Unnecessary braces at ", deparse)
+                   else warnRd(block, Rdfile, "Unnecessary braces at ", deparse)
+               },
+               "\\describe"=,
+               "\\enumerate"=,
+               "\\itemize"=,
+               "\\bold"=,
+               "\\cite"=,
+               "\\command"=,
+               "\\dfn"=,
+               "\\emph"=,
+               "\\kbd"= checkContent(block, tag),
+               "\\code"=,
+               "\\preformatted"= checkCodeBlock(block),
+               "\\Sexpr"=,
+               "\\special"=,
+               "\\strong"=,
+               "\\var" =,
+               "\\verb"= checkContent(block, tag),
+               "\\linkS4class" =,
+               "\\link" = checkLink(tag, block),
+               "\\email" =,
+               "\\url" =,
+               "\\cr" =,
+               "\\dots" =,
+               "\\ldots" =,
+               "\\R" = {},
+               "\\acronym" =,
+               "\\env" =,
+               "\\file" =,
+               "\\option" =,
+               "\\pkg" =,
+               "\\samp" =,
+               "\\sQuote" =,
+               "\\dQuote" = checkContent(block, tag),
+               "\\method" =,
+               "\\S3method" =,
+               "\\S4method" =
+               stopRd(block, Rdfile, "Tag ", tag,
+                      " not valid outside a code block"),
+               "\\enc" = {
+                   checkContent(block[[1L]], tag)
+                   ## second arg should always be ASCII
+                   save_enc <- def_enc
+                   def_enc <<- FALSE
+                   checkContent(block[[2L]], tag)
+                   def_enc <<- save_enc
+               },
+               "\\eqn" =,
+               "\\deqn" = {
+                   checkContent(block[[1L]])
+                   if (length(block) > 1L) checkContent(block[[2L]])
+               },
+               "\\tabular" = checkTabular(block),
+               stopRd(block, Rdfile, "Tag ", tag, " not recognized"))
+    }
+
+    checkCodeBlock <- function(blocks, blocktag)
+    {
+	for (block in blocks) {
+            tag <- attr(block, "Rd_tag")
+            switch(tag,
+                   UNKNOWN = if (!unknownOK)
+                   stopRd(block, Rdfile, "Unrecognized macro ", block[[1L]])
+                   else warnRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
+                   VERB = ,
+                   RCODE = ,
+                   TEXT = if(!def_enc) {
+                       ## check for encoding; this is UTF-8 if known
+                       ## (but then def_enc = TRUE?)
+                       if(Encoding(block) == "UTF-8")
+                           warnRd(block, Rdfile,
+                                  "non-ASCII contents without declared encoding")
+                       if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
+                           warnRd(block, Rdfile,
+                                  "apparent non-ASCII contents without declared encoding")
+                   },
+                   COMMENT = {},
+                   "\\var" = checkCodeBlock(block, blocktag), # not preformatted, but the parser checks that
+                   "\\special" = checkCodeBlock(block, blocktag),
+                   "\\dots" = {},
+                   "\\ldots" = warnRd(block, Rdfile, "Tag ", tag,
+                                    " is invalid in a code block"),
+                   ## these are valid in \code, at least
+                   "\\linkS4class" =,
+                   "\\link" = checkLink(tag, block),
+                   "\\method" =,
+                   "\\S3method" =,
+                   "\\S4method" = if(blocktag == "\\usage") {
+                       checkContent(block[[1L]], tag) # generic
+                       checkContent(block[[2L]], tag) # class
+                   } else stopRd(block, Rdfile, "Tag ", tag,
+                                 " is only valid in \\usage"),
+                   "\\dontrun" =,
+                   "\\donttest" =,
+                   "\\dontshow" =,
+                   "\\testonly" = if(blocktag == "\\examples")
+                   checkCodeBlock(block, blocktag)
+                   else stopRd(block, Rdfile, "Tag ", tag,
+                               " is only valid in \\examples"),
+                   stopRd(block, Rdfile, "Tag ", tag,
+                          " is invalid in a code block"))
+        }
     }
 
     checkTabular <- function(table) {
@@ -1204,7 +1257,9 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	    section <- section[[2L]]
     	    checkContent(title, tag)
     	}
-    	checkContent(section, tag)
+        if (tag %in% c("\\usage", "\\synopsis", "\\examples"))
+            checkCodeBlock(section, tag)
+    	else checkContent(section, tag)
     }
 
     checkUnique <- function(tag) {
@@ -1220,7 +1275,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    empty <- FALSE)
         }
         if(empty)
-            stopRd(Rd[[which]], Rdfile, "Tag ", tag, " must not be empty")
+            warnRd(Rd[[which]], Rdfile, "Tag ", tag, " must not be empty")
     }
 
     Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
@@ -1351,6 +1406,3 @@ function(dir)
     unlist(lapply(rev(dir(dir, full.names = TRUE)),
                   .find_HTML_links_in_package))
 }
-
-
-
