@@ -3112,7 +3112,7 @@ of the @code{load} example).
 
 Because backslashes, braces and percent symbols have special meaning, to
 enter them into text sometimes requires escapes using a backslash.  Thus
-a percent symbol can be entered into text using @code{%}.  Generally
+a percent symbol can be entered into text using @code{%}.  In general
 balanced braces do not need to be escaped, but percent symbols always
 do.  For the complete list of macros and rules for escapes, see the
 @uref{http://developer.r- project.org/parseRd.pdf, ``Parsing Rd files''}

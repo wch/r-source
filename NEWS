@@ -273,6 +273,9 @@ DEPRECATED & DEFUNCT
 
     o	R CMD Rd2txt is defunct: use R CMD Rdconv -t txt or tools::Rd2txt().
 
+    o	tools::Rd_parse() is defunct (as this version of R uses only
+	Rd version 2).
+
 
 INSTALLATION
 
