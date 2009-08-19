@@ -79,14 +79,6 @@ function(db)
 {
     ## Compute contents db from Rd db.
 
-    ## <FIXME>
-    ## This used to work on a list of Rd file paths.
-    ## Legacy code:
-    if(inherits(db, "character"))
-        db <- .build_Rd_db(files = db)
-    ## But should we really keep this?
-    ## </FIXME>
-
     if(!length(db)) {
         out <- data.frame(File = character(),
                           Name = character(),
@@ -233,6 +225,8 @@ function(RdFiles, outFile = "", type = NULL,
     ## files.
     ##
     ## R version of defunct @code{R CMD Rdindex} (now removed).
+    ##
+    ## called from R CMD build
 
     if((length(RdFiles) == 1L) && file_test("-d", RdFiles)) {
         ## Compatibility code for the former @code{R CMD Rdindex}
@@ -294,9 +288,11 @@ function(package, dir, lib.loc = NULL)
             if(file.exists(pathfile)) names(db) <- .readRDS(pathfile)
             return(db)
         }
+
+        ## FIXME: remove this version in due course
         db_file <- file.path(docs_dir, sprintf("%s.rds", package))
-        if(file_test("-f", db_file))
-            return(.readRDS(db_file))
+        if(file_test("-f", db_file)) return(.readRDS(db_file))
+
         db_file <- file.path(docs_dir, sprintf("%s.Rd.gz", package))
         if(file_test("-f", db_file)) {
             lines <- .read_Rd_lines_quietly(db_file)
@@ -308,6 +304,8 @@ function(package, dir, lib.loc = NULL)
         } else
             stop(gettextf("directory '%s' does not contain Rd objects", dir),
                  domain = NA)
+
+        ## NB: we only get here for pre-2.10.0 installs
 
         ## If this was installed using a recent enough version of R CMD
         ## INSTALL, information on source file names is available, and
@@ -424,6 +422,7 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
 
 ### * Rd_aliases
 
+## Called from undoc.
 Rd_aliases <-
 function(package, dir, lib.loc = NULL)
 {
@@ -732,368 +731,6 @@ function(x)
     .strip_whitespace(x)
 }
 
-### * Old-style code.
-
-### * Rd_pp
-
-Rd_pp <-
-function(lines)
-{
-    ## Preprocess lines with Rd markup according to .Platform$OS.type.
-
-    if(!is.character(lines))
-        stop("argument 'lines' must be a character vector")
-
-    ## Re-encode if necessary (and possible).
-    encoding <-
-        .Rd_get_metadata_from_Rd_lines(lines[!is.na(nchar(lines, "c", TRUE))],
-                                       "encoding")
-    if(length(encoding)) {
-        if((Sys.getlocale("LC_CTYPE") != "C")) {
-            encoding <- encoding[1L]     # Just making sure ...
-            if(.is_ASCII(encoding)) {
-                if (!tolower(encoding) %in% c("latin1", "latin2", "utf-8"))
-                    warning(gettextf("encoding '%s' is not portable",
-                                     encoding), domain = NA)
-                lines <- iconv(lines, encoding, "")
-            }
-        }
-    }
-    else {
-        ## No \encoding metadata.
-        ## Determine if ASCII
-        if(!all(.is_ASCII(lines))) encoding <- NA
-    }
-    if(any(is.na(nchar(lines, "c", TRUE)))) {
-        ## Ouch, invalid in the current locale.
-        ## (Can only happen in a MBCS locale.)
-        ## Try re-encoding from Latin1.
-        lines <- iconv(lines, "latin1", "")
-    }
-
-    ## Strip Rd first.
-    lines <- .strip_Rd_comments(lines)
-
-    pp_line_indices <- grep("^#(endif|ifn?def[[:space:]]+[[:alnum:]]+)",
-                            lines)
-    ## <NOTE>
-    ## This is based on the Perl code in R::Rdtools::Rdpp().
-    ## What should we do with #ifn?def lines not matching the above?
-    ## </NOTE>
-    n_of_pp_lines <- length(pp_line_indices)
-    if(n_of_pp_lines == 0L)
-        return(structure(lines, encoding = encoding))
-
-    OS <- .Platform$OS.type
-    pp_lines <- lines[pp_line_indices]
-
-    ## Record the preprocessor line type: starts of conditionals with
-    ## TRUE/FALSE according to whether they increase the skip level or
-    ## not, and NA for ends of conditionals.
-    pp_types <- rep.int(NA, n_of_pp_lines)
-    if(length(i <- grep("^#ifdef", pp_lines))) {
-        pp_types[i] <- gsub("^#ifdef[[:space:]]+([[:alnum:]]+).*",
-                           "\\1", pp_lines[i]) != OS
-    }
-    if(length(i <- grep("^#ifndef", pp_lines))) {
-        pp_types[i] <- gsub("^#ifndef[[:space:]]+([[:alnum:]]+).*",
-                           "\\1", pp_lines[i]) == OS
-    }
-
-    ## Looks stupid, but ... we need a loop to determine the skip list
-    ## to deal with nested conditionals.
-    skip_list <- integer()
-    skip_level <- 0L
-    skip_indices <- pp_line_indices
-    for(i in seq_along(pp_types)) {
-        if(!is.na(skip <- pp_types[i])) {
-            if(skip_level == 0L && skip > 0L) {
-                skipStart <- pp_line_indices[i]
-                skip_level <- 1L
-            }
-            else
-                skip_level <- skip_level + skip
-            skip_list <- c(skip, skip_list) # push
-        }
-        else {
-            if(skip_level == 1L && skip_list[1L] > 0L) {
-                skip_indices <- c(skip_indices,
-                                  seq.int(from = skipStart,
-                                          to = pp_line_indices[i]))
-                skip_level <- 0L
-            }
-            else
-                skip_level <- skip_level - skip_list[1L]
-            skip_list <- skip_list[-1L]    # pop
-        }
-    }
-
-    structure(lines[-skip_indices], encoding = encoding)
-}
-
-.strip_Rd_comments <-
-function(lines)
-{
-    gsub("(^|[^\\])((\\\\\\\\)*)%.*", "\\1\\2", lines)
-}
-
-
-### * .Rd_get_metadata_from_Rd_lines
-
-.Rd_get_metadata_from_Rd_lines <-
-function(lines, kind)
-{
-    pattern <- paste("^[[:space:]]*\\\\", kind,
-                     "\\{[[:space:]]*([^}]*[^}[:space:]])[[:space:]]*\\}.*",
-                     sep = "")
-    lines <- grep(pattern, lines, value = TRUE)
-    lines <- sub(pattern, "\\1", lines)
-    lines <- gsub("\\%", "%", lines, fixed = TRUE)
-    if(kind == "alias")
-        lines <- sub("\\{", "{", lines, fixed = TRUE)
-    lines
-}
-
-### * .Rd_get_section_from_Rd_text
-
-.Rd_get_section_from_Rd_text <-
-function(txt, type, predefined = TRUE)
-{
-    ## Extract Rd section(s) 'type' from (preprocessed) Rd markup in the
-    ## character string 'txt'.  Use 'predefined = FALSE' for dealing
-    ## with user-defined sections.
-
-    ## <NOTE>
-    ## This is *not* vectorized.  As we try extracting *all* top-level
-    ## sections of the given type, computations on a single character
-    ## string can result in a character vector of arbitray length.
-    ## Hence, a vectorized version would return its results similar to
-    ## e.g. strsplit(), i.e., a list of character vectors.  Worth the
-    ## effort?
-    ## </NOTE>
-
-    out <- character()
-    if(length(txt) != 1L)
-        stop("argument 'txt' must be a character string")
-    pattern <- paste("(^|\n)[[:space:]]*\\\\",
-                     ifelse(predefined, type,
-                            paste("section\\{", type, "\\}",
-                                  sep = "")),
-                     "\\{",
-                     sep = "")
-    while((pos <- regexpr(pattern, txt)) != -1L) {
-        txt <- substring(txt, pos + attr(pos, "match.length") - 1L)
-        pos <- delimMatch(txt)
-        if(pos == -1L) {
-            if((type == "alias") && predefined) {
-                ## \alias entries seem to be special (Paren.Rd).
-                ## The regexp below feels wrong, but is based on what is
-                ## used in Perl's R::Rdlists::build_index(), sort of.
-                pos <- regexpr("\\{([^\n]*)\\}(\n|$)", txt)
-            }
-            if(pos == -1L)
-                stop(gettextf("unterminated section '%s'", type),
-                     domain = NA)
-            else {
-                out <- c(out, sub("\\{([^\n]*)\\}(\n|$).*", "\\1", txt))
-                txt <- substring(txt, pos + attr(pos, "match.length"))
-                next
-            }
-
-        }
-        out <- c(out,
-                 substring(txt,
-                           pos + 1L,
-                           pos + attr(pos, "match.length") - 2L))
-        txt <- substring(txt, pos + attr(pos, "match.length"))
-    }
-    out
-}
-
-### * .Rd_get_argument_names_from_Rd_text
-
-.Rd_get_argument_names_from_Rd_text <-
-function(txt)
-{
-    txt <- .Rd_get_section_from_Rd_text(txt, "arguments")
-    txt <- unlist(sapply(txt, .Rd_get_items_from_Rd_text))
-    if(!length(txt)) return(character())
-    txt <- unlist(strsplit(txt, ", *"))
-    txt <- gsub("\\\\l?dots", "...", txt)
-    txt <- gsub("\\\\_", "_", txt)
-    .strip_whitespace(txt)
-}
-
-### * .Rd_get_example_code_from_Rd_text
-
-.Rd_get_example_code_from_Rd_text <-
-function(txt)
-{
-    txt <- .Rd_get_section_from_Rd_text(txt, "examples")
-    if(length(txt) != 1L) return(character())
-
-    txt <- gsub("\\\\l?dots", "...", txt)
-    txt <- gsub("\\\\%", "%", txt)
-
-    ## Version of [Perl] R::Rdconv::drop_full_command().
-    txt <- .Rd_transform_command_in_Rd_text(txt, "dontrun",
-                                            function(u) NULL)
-    ## Version of [Perl] R::Rdconv::undefine_command().
-    txt <- .Rd_transform_command_in_Rd_text(txt,
-                                            c("dontshow", "testonly"),
-                                            function(u) u)
-    txt
-}
-
-### * .Rd_get_items_from_Rd_text
-
-.Rd_get_items_from_Rd_text <-
-function(txt)
-{
-    ## Extract names of Rd \item{}{} markup in the character string
-    ## 'txt'.
-    out <- character()
-    if(length(txt) != 1L)
-        stop("argument 'txt' must be a character string")
-    pattern <- "(^|\n)[[:space:]]*\\\\item\\{"
-    while((pos <- regexpr(pattern, txt)) != -1L) {
-        txt <- substring(txt, pos + attr(pos, "match.length") - 1L)
-        if((pos <- delimMatch(txt)) == -1L)
-            stop(gettextf("unmatched \\item name in '\\item{%s'",
-                          sub("\n.*$", "", txt)),
-                 domain = NA,
-                 call. = FALSE)
-        out <- c(out,
-                 substring(txt,
-                           pos + 1L,
-                           pos + attr(pos, "match.length") - 2L))
-        txt <- substring(txt, pos + attr(pos, "match.length"))
-        ## The next character should really be a '{'.  Let's be nice
-        ## and tolerate whitespace in between ...
-        if((pos <- regexpr("^[[:space:]]*\\{", txt)) == -1L)
-            stop(gettextf("no \\item description for item '%s'",
-                          out[length(out)]),
-                 domain = NA,
-                 call. = FALSE)
-        txt <- substring(txt, pos + attr(pos, "match.length") - 1L)
-        if((pos <- delimMatch(txt)) == -1L)
-            stop(gettextf("unmatched \\item description for item '%s'",
-                          out[length(out)]),
-                 domain = NA,
-                 call. = FALSE)
-        txt <- substring(txt, pos + attr(pos, "match.length"))
-    }
-    out
-}
-
-### * .Rd_get_name_from_Rd_text
-
-.Rd_get_name_from_Rd_text <-
-function(txt)
-{
-    start <-
-        regexpr("\\\\name\\{[[:space:]]*([^}]+)[[:space:]]*\\}", txt)
-    if(start == -1L) return(character())
-    Rd_name <- gsub("[[:space:]]+", " ",
-                    substr(txt,
-                           start + 6L,
-                           start + attr(start, "match.length") - 2L))
-    Rd_name
-}
-
-### * .Rd_get_title_from_Rd_text
-
-.Rd_get_title_from_Rd_text <-
-function(txt)
-{
-    start <-
-        regexpr("\\\\title\\{[[:space:]]*([^}]+)[[:space:]]*\\}", txt)
-    if(start == -1L) return(character())
-    Rd_title <- gsub("[[:space:]]+", " ",
-                     substr(txt,
-                            start + 7L,
-                            start + attr(start, "match.length") - 2L))
-    Rd_title
-}
-
-### * .Rd_get_xrefs_from_Rd_text
-
-.Rd_get_xrefs_from_Rd_text <-
-function(txt)
-{
-    out <- matrix(character(), nrow = 0L, ncol = 2L)
-    if(length(txt) != 1L) return(out)
-    while((pos <-
-           regexpr("\\\\link(\\[[^[]+\\])?\\{", txt)) != -1L) {
-        len <- attr(pos, "match.length")
-        opt <- substring(txt, pos + 6L, pos + len - 3L)
-        txt <- substring(txt, pos + len - 1L)
-        if((pos <- delimMatch(txt)) == -1L)
-            stop("unclosed \\link")
-        len <- attr(pos, "match.length")
-        arg <- substring(txt, 2L, pos + len - 2L)
-        txt <- substring(txt, pos + len)
-        out <- rbind(out, c(arg, opt))
-    }
-    colnames(out) <- c("Target", "Anchor")
-    out[, 1L] <-  gsub("\\\\%", "%", out[, 1L])
-    out
-}
-
-### * .Rd_transform_command_in_Rd_text
-
-.Rd_transform_command_in_Rd_text <-
-function(txt, cmd, FUN)
-{
-    ## In Rd text, replace markup of the form \cmd{something} by the
-    ## result of applying FUN to something.  Covers several separate
-    ## functions in the R::Rdconv Perl code:
-    ##   drop_full_command      FUN = function(u) NULL
-    ##   undefine_command       FUN = function(u) u
-    ##   replace_command        FUN = function(u) sprintf("Bef%sAft", u)
-    ## Currently, optional arguments to \cmd are not supported.
-
-    if(length(txt) != 1L) return(character())
-
-    ## Vectorized in 'cmd':
-    pattern <- sprintf("\\\\(%s)\\{", paste(cmd, collapse = "|"))
-
-    out <- character()
-    while((pos <- regexpr(pattern, txt)) != -1L) {
-        out <- c(out, substring(txt, 1L, pos - 1L))
-        cmd <- substring(txt, pos, pos + attr(pos, "match.length") - 2L)
-        txt <- substring(txt, pos + attr(pos, "match.length") - 1L)
-        if((pos <- delimMatch(txt)) == -1L)
-            stop(sprintf("unclosed \\%s", cmd))
-        out <- c(out,
-                 FUN(substring(txt, 2L,
-                               pos + attr(pos, "match.length") - 2L)))
-        txt <- substring(txt, pos + attr(pos, "match.length"))
-    }
-
-    paste(c(out, txt), collapse = "")
-}
-
-### * .apply_Rd_filter_to_Rd_db
-
-.apply_Rd_filter_to_Rd_db <-
-function(db, FUN, ...)
-{
-    db <- lapply(db,
-                 function(t) tryCatch(FUN(t, ...), error = identity))
-    idx <- as.logical(sapply(db, inherits, "error"))
-    if(any(idx)) {
-	msg <- gettext("Rd syntax errors found")
-	for(i in which(idx))
-	    msg <-
-		c(msg,
-		  gettextf("Syntax error in documentation object '%s':",
-			   names(db)[i]),
-		  conditionMessage(db[[i]]))
-	stop(paste(msg, collapse = "\n"), call. = FALSE, domain = NA)
-    }
-    db
-}
 
 ### * fetchRdDB
 

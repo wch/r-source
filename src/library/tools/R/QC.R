@@ -14,11 +14,46 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## R CMD check uses
+## .find_charset
+## .check_namespace
+## .check_package_depends
+## .check_demo_index
+## .check_vignette_index
+## .check_package_subdirs
+## .check_citation
+## .check_package_ASCII_code
+## .check_package_code_syntax
+## .check_packages_used
+## .checkS3methods
+## .checkReplaceFuns
+## .checkFF
+## .check_package_code_shlib
+## .check_code_usage_in_package
+## .check_T_and_F
+## .check_dotInternal
+## .check_package_parseRd
+## .check_Rd_xrefs
+## undoc
+## codoc
+## codocData
+## codocClass
+## checkDocFiles
+## checkDocStyle
+## .check_package_datasets
+## .check_make_vars
+## .createExdotR (testing.R)
+## .runPackageTestsR (testing.R)
+## .get_LaTeX_errors_from_log_file
+
+## R CMD build uses .check_package_subdirs
+
+## utility for whether Rd sources are available.
 .haveRds <- function(dir)
 {
+    ## either source package or pre-2.10.0 installed package
     if (file_test("-d", file.path(dir, "man"))) return(TRUE)
     file.exists((file.path(dir, "help", "paths.rds")))
-    ## length(Sys.glob(file.path(dir, "help", "*rdx"))) > 0L
 }
 
 ### * undoc/F/out
@@ -2602,7 +2637,7 @@ function(x, ...)
 
 
 ## FIXME remove before 2.10.0
-
+if(FALSE) {
 ### * .check_Rd_files_in_Rd_db
 
 .check_Rd_files_in_Rd_db <-
@@ -2941,7 +2976,7 @@ function(x, ...)
 
     invisible(x)
 }
-
+}
 
 ### * .check_package_description
 
@@ -3670,6 +3705,7 @@ function(x, ...)
 
 ### * .check_package_subdirs
 
+## used by R CMD build
 .check_package_subdirs <-
 function(dir, doDelete = FALSE)
 {

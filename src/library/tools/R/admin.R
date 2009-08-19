@@ -17,6 +17,7 @@
 
 ### * .install_package_description
 
+## called from basepkg.mk and .install_packages
 .install_package_description <-
 function(dir, outDir)
 {
@@ -106,6 +107,7 @@ function(dir, outDir)
 
 ### * .split_description
 
+## also used in .getRequiredPackages
 .split_description <-
 function(db, verbose = FALSE)
 {
@@ -156,6 +158,7 @@ function(db, verbose = FALSE)
 
 ### * .vinstall_package_descriptions_as_RDS
 
+## called from src/library/Makefile
 .vinstall_package_descriptions_as_RDS <-
 function(dir, packages)
 {
@@ -182,6 +185,7 @@ function(dir, packages)
 
 ### * .update_package_rds
 
+## not used
 .update_package_rds <-
 function(lib.loc = NULL)
 {
@@ -552,6 +556,7 @@ function(dir, outDir)
 
 ### * .vinstall_package_indices
 
+## called from src/library/Makefile
 .vinstall_package_indices <-
 function(src_dir, out_dir, packages)
 {
@@ -570,6 +575,8 @@ function(src_dir, out_dir, packages)
 }
 
 ### * .install_package_vignettes
+
+## called from src/library/Makefile
 ## this is only used when building R, to build the 'grid' vignettes.
 .install_package_vignettes <-
 function(dir, outDir, keep.source = FALSE)
@@ -668,6 +675,7 @@ function(dir, outDir)
 
 ### * .vinstall_package_namespaces_as_RDS
 
+## called from src/library/Makefile
 .vinstall_package_namespaces_as_RDS <-
 function(dir, packages)
 {
@@ -684,6 +692,7 @@ function(dir, packages)
 
 ### * .convert_examples
 
+## unused
 .convert_examples <-
 function(infile, outfile, encoding)
 {
@@ -727,6 +736,7 @@ function(dir, outDir)
 
 ### * .install_package_Rd_objects
 
+## called from src/library/Makefile
 .install_package_Rd_objects <-
 function(dir, outDir, encoding = "unknown")
 {
@@ -756,6 +766,7 @@ function(dir, outDir, encoding = "unknown")
 
 ### * .install_package_demos
 
+## called from basepkg.mk and .install_packages
 .install_package_demos <-
 function(dir, outDir)
 {
@@ -794,6 +805,7 @@ function(pkgs, lib.loc = NULL, file = NULL)
 
 ### * .vcreate_bundle_package_descriptions
 
+## called from .install_packages
 .vcreate_bundle_package_descriptions <-
 function(dir, packages)
 {
@@ -883,6 +895,7 @@ function(dir)
     status
 }
 
+## no longer used
 .test_package_depends_R_version <-
 function(dir)
     q(status = .Rtest_package_depends_R_version(dir))
