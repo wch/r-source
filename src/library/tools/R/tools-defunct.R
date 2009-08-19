@@ -14,3 +14,5 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+Rd_parse <-
+function(file, text = NULL) .Defunct("parse_Rd")

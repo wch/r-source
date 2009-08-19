@@ -2600,61 +2600,8 @@ function(x, ...)
     invisible(x)
 }
 
-### * check_Rd_files_in_package
 
-## FIXME: these are not needed for 2.10.0
-
-## </NOTE>
-## We currently have two (internal) check_Rd_files* functions.
-##
-## The primary one is check_Rd_files_in_man_dir, as this always works,
-## but note that its 'dir' argument really is a directory containing Rd
-## source files, and not a package top-level source subdirectory (as
-## indicated by 'man_dir' in the function name).
-##
-## Function check_Rd_files_in_package only works for packages installed
-## with R 2.0 or better (as it requires that the installed Rd sources
-## have the Rd file names preserved).
-##
-## So perhaps eventually unify these functions for 2.1?  Currently, it
-## seems a bad idea to have check_Rd_files(dir, package, lib.loc) which
-## has a different interface than the other QC functions ...
-##
-## Of course, all of this is conditional on not moving away from Rd
-## format ...
-## </NOTE>
-
-check_Rd_files_in_package <-
-function(package, lib.loc = NULL)
-{
-    if(length(package) != 1L)
-        stop("argument 'package' must be of length 1")
-    ## (Actually, Rd_db() would check on this too ...)
-    db <- Rd_db(package, lib.loc)
-    if(is.null(names(db)))
-        stop("Package Rd sources were installed without preserving Rd file names.\n",
-             "Please reinstall using a current version of R.")
-    ## FIXME check for encoding in DESCRIPTION file
-    .check_Rd_files_in_Rd_db(db)
-}
-
-### * check_Rd_files_in_man_dir
-
-check_Rd_files_in_man_dir <-
-function(dir, def_enc = FALSE)
-{
-    if(!file_test("-d", dir))
-        stop(gettextf("directory '%s' does not exist", dir),
-             domain = NA)
-    dir <- file_path_as_absolute(dir)
-    ## Argh.  We cannot call Rd_db() directly, because this works on
-    ## the top-level package source directory ...
-    Rd_files <- list_files_with_type(file.path(dir), "docs")
-    db <- lapply(Rd_files, .read_Rd_lines_quietly)
-    z <- strsplit(Rd_files, "/", fixed = TRUE)
-    names(db) <- sapply(z, function(x) x[length(x)])
-    .check_Rd_files_in_Rd_db(db, def_enc)
-}
+## FIXME remove before 2.10.0
 
 ### * .check_Rd_files_in_Rd_db
 
