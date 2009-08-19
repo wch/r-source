@@ -383,15 +383,19 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                else warnRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
                VERB = ,
                RCODE = ,
-               TEXT = if(!def_enc) {
-                   ## check for encoding; this is UTF-8 if known
-                   ## (but then def_enc = TRUE?)
-                   if(Encoding(block) == "UTF-8")
-                       warnRd(block, Rdfile,
-                              "non-ASCII contents without declared encoding")
-                   if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
-                       warnRd(block, Rdfile,
-                              "apparent non-ASCII contents without declared encoding")
+               TEXT = {
+                   if(!def_enc) {
+                       ## check for encoding; this is UTF-8 if known
+                       ## (but then def_enc = TRUE?)
+                       if(Encoding(block) == "UTF-8")
+                           warnRd(block, Rdfile,
+                                  "Non-ASCII contents without declared encoding")
+                       if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
+                           warnRd(block, Rdfile,
+                                  "Apparent non-ASCII contents without declared encoding")
+                   }
+                   ## check if this renders as non-whitespace
+                   if(!grepl("^[[:space:]]*$", block)) has_text <<- TRUE
                },
                COMMENT = {},
                LIST = if (length(block)) {
@@ -410,7 +414,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                "\\emph"=,
                "\\kbd"= checkContent(block, tag),
                "\\code"=,
-               "\\preformatted"= checkCodeBlock(block),
+               "\\preformatted"= checkCodeBlock(block, tag),
                "\\Sexpr"=,
                "\\special"=,
                "\\strong"=,
@@ -419,11 +423,11 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                "\\linkS4class" =,
                "\\link" = checkLink(tag, block),
                "\\email" =,
-               "\\url" =,
-               "\\cr" =,
+               "\\url" = has_text <<- TRUE,
+               "\\cr" ={},
                "\\dots" =,
                "\\ldots" =,
-               "\\R" = {},
+               "\\R" = has_text <<- TRUE,
                "\\acronym" =,
                "\\env" =,
                "\\file" =,
@@ -435,8 +439,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                "\\method" =,
                "\\S3method" =,
                "\\S4method" =
-               stopRd(block, Rdfile, "Tag ", tag,
-                      " not valid outside a code block"),
+                   stopRd(block, Rdfile, "Tag ", tag,
+                          " not valid outside a code block"),
                "\\enc" = {
                    checkContent(block[[1L]], tag)
                    ## second arg should always be ASCII
@@ -464,22 +468,29 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    else warnRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
                    VERB = ,
                    RCODE = ,
-                   TEXT = if(!def_enc) {
-                       ## check for encoding; this is UTF-8 if known
-                       ## (but then def_enc = TRUE?)
-                       if(Encoding(block) == "UTF-8")
-                           warnRd(block, Rdfile,
-                                  "non-ASCII contents without declared encoding")
-                       if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
-                           warnRd(block, Rdfile,
-                                  "apparent non-ASCII contents without declared encoding")
+                   TEXT = {
+                       if(!def_enc) {
+                           ## check for encoding; this is UTF-8 if known
+                           ## (but then def_enc = TRUE?)
+                           if(Encoding(block) == "UTF-8")
+                               warnRd(block, Rdfile,
+                                      "Non-ASCII contents without declared encoding")
+                           if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
+                               warnRd(block, Rdfile,
+                                      "Apparent non-ASCII contents without declared encoding")
+                       }
+                       ## check if this renders as non-whitespace
+                       if(!grepl("^[[:space:]]*$", block)) has_text <<- TRUE
                    },
                    COMMENT = {},
                    "\\var" = checkCodeBlock(block, blocktag), # not preformatted, but the parser checks that
                    "\\special" = checkCodeBlock(block, blocktag),
-                   "\\dots" = {},
-                   "\\ldots" = warnRd(block, Rdfile, "Tag ", tag,
-                                    " is invalid in a code block"),
+                   "\\dots" = has_text <<- TRUE,
+                   "\\ldots" = {
+                       warnRd(block, Rdfile, "Tag ", tag,
+                              " is invalid in a code block")
+                       has_text <<- TRUE
+                   },
                    ## these are valid in \code, at least
                    "\\linkS4class" =,
                    "\\link" = checkLink(tag, block),
@@ -503,6 +514,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     }
 
     checkTabular <- function(table) {
+        has_text <<- TRUE
     	format <- table[[1L]]
     	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
@@ -573,15 +585,23 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 	}
     }
 
+    has_text <- FALSE
     checkSection <- function(section, tag) {
     	if (tag == "\\section") {
     	    title <- section[[1L]]
-    	    section <- section[[2L]]
+            ## should be simple text
+            if(length(title) < 1L || attr(title[[1L]], "Rd_tag") != "TEXT")
+                warnRd(Rd, Rdfile, "Section title must be plain text")
     	    checkContent(title, tag)
-    	}
+    	    section <- section[[2L]]
+            ## replace 'tag' in message below
+            tagtitle <- as.character(title)
+    	} else tagtitle <- tag
+        has_text <<- FALSE
         if (tag %in% c("\\usage", "\\synopsis", "\\examples"))
             checkCodeBlock(section, tag)
     	else checkContent(section, tag)
+        if(!has_text) warnRd(section, Rdfile, "Empty section ", tagtitle)
     }
 
     checkUnique <- function(tag) {
