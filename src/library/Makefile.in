@@ -19,7 +19,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 PDFLATEX = @PDFLATEX@
 
-.SUFFIXES: .in .Rdts .Rdh
+.SUFFIXES: .inn .Rdts .Rdh
 
 all: Makefile R
 
@@ -58,7 +58,7 @@ docs:
 RD-TS = base.Rdts stats.Rdts utils.Rdts methods.Rdts graphics.Rdts grDevices.Rdts datasets.Rdts grid.Rdts tools.Rdts tcltk.Rdts splines.Rdts stats4.Rdts
 # RD-TS = $(R_PKGS_BASE:=.Rdts)
 
-.in.Rdts:
+.inn.Rdts:
 	@$(ECHO) "tools:::.install_package_Rd_objects('$(srcdir)/$*',\
 	   '$(top_builddir)/library/$*')" | \
 	    R_DEFAULT_PACKAGES=NULL $(R_EXE) || exit 1
@@ -66,20 +66,18 @@ RD-TS = base.Rdts stats.Rdts utils.Rdts methods.Rdts graphics.Rdts grDevices.Rdt
 
 Rdobjects:
 	@$(ECHO) "installing parsed Rd"
-	@for pkg in $(R_PKGS_BASE); do touch $${pkg}.in; done
+	@for pkg in $(R_PKGS_BASE); do touch $${pkg}.inn; done
 	@$(MAKE) $(RD-TS)
-	@rm *.in
 
-.in.Rdh:
+.inn.Rdh:
 	@$(ECHO) "tools:::.writePkgIndices(\"$(srcdir)/$*\", \"$(top_builddir)/library/$*\")" | R_DEFAULT_PACKAGES=utils LC_ALL=C $(R_EXE) || exit 1
 
 RD-H = $(R_PKGS_BASE:=.Rdh)
 
 help-indices:
 	@$(ECHO) "writing package indices"
-	@for pkg in $(R_PKGS_BASE); do touch $${pkg}.in; done
+	@for pkg in $(R_PKGS_BASE); do touch $${pkg}.inn; done
 	@$(MAKE) $(RD-H)
-	@rm *.in
 
 ## FIXME: do this in parallel (but avoid interleaving output)
 Rdfiles:
@@ -158,7 +156,7 @@ clean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	-@rm -rf .vignettes
-	-@rm -f stamp-* *.in
+	-@rm -f stamp-* *.inn
 distclean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
