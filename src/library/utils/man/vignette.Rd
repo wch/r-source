@@ -15,8 +15,8 @@
 \usage{
 vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
 
-\S3method{print}{vignette}(x, \ldots)
-\S3method{edit}{vignette}(name, \ldots)
+\S3method{print}{vignette}(x, \dots)
+\S3method{edit}{vignette}(name, \dots)
 }
 \arguments{
   \item{topic}{a character string giving the (base) name of the vignette

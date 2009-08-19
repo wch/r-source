@@ -22,7 +22,7 @@
   class \code{"Date"} representing calendar dates.
 }
 \usage{
-as.Date(x, \ldots)
+as.Date(x, \dots)
 \method{as.Date}{character}(x, format = "", \dots)
 \method{as.Date}{numeric}(x, origin, \dots)
 

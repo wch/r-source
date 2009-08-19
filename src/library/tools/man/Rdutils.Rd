@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rdutils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2007=9 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Rdutils}
@@ -34,8 +34,9 @@ Rd_parse(file, text = NULL)
   packages, where the individual Rd files in the sources are no longer
   available.
 
-  \code{Rd_parse} is a simple top-level Rd parser/analyzer.  It returns
-  a list with components
+  \code{Rd_parse} is a simple legacy top-level Rd parser/analyzer which
+  is now deprecated in favor of the full \code{\link{parse_Rd}} parser,
+  and will be removed in \R 2.10.0.  It returns a list with components
   \describe{
     \item{\code{meta}}{a list containing the Rd metadata (aliases,
       concepts, keywords, and documentation type);
@@ -57,31 +58,11 @@ Rd_parse(file, text = NULL)
   might change in future versions.
 }
 \seealso{
-  \code{\link{parse_Rd}}, an experimental parser.
+  \code{\link{parse_Rd}}.
 }
 \examples{
 ## Build the Rd db for the (installed) base package.
 db <- Rd_db("base")
-## Run Rd_parse on all entries in the Rd db.
-db <- lapply(db, function(txt) Rd_parse(text = txt))
-## Extract the metadata.
-meta <- lapply(db, "[[", "meta")
-
-## Keyword metadata per Rd file.
-keywords <- lapply(meta, "[[", "keywords")
-## Tabulate the keyword entries.
-kw_table <- sort(table(unlist(keywords)))
-## The 5 most frequent ones:
-rev(kw_table)[1 : 5]
-## The "most informative" ones:
-kw_table[kw_table == 1]
-
-## Concept metadata per Rd file.
-concepts <- lapply(meta, "[[", "concepts")
-## How many files already have \concept metadata?
-sum(sapply(concepts, length) > 0)
-## How many concept entries altogether?
-length(unlist(concepts))
 }
 \keyword{utilities}
 \keyword{documentation}
