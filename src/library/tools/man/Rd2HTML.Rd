@@ -33,7 +33,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       stages = "render", outputEncoding = "UTF-8", ...)
 
 checkRd(Rd, defines = .Platform$OS.type, stages = "render",
-        unknownOK = TRUE, listOK = TRUE, ...)
+        unknownOK = TRUE, listOK = TRUE, ..., def_enc = FALSE)
 
 findHTMLlinks(pkgDir = "", lib.loc = NULL)
 }
@@ -54,6 +54,8 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
     as an argument) are treated as errors if \code{FALSE}, otherwise warnings. }
   \item{...}{ additional parameters to pass to \code{\link{parse_Rd}} when
     \code{Rd} is a filename. }
+  \item{def_enc}{logical: has the package declared an encoding, so tests
+    for non-ASCII text are suppressed?}
   \item{pkgDir}{the top-level directory of an installed package.}
   \item{lib.loc}{character vector describing the location of \R library trees
     to scan: the default indicates \code{\link{.libPaths}()}.}

@@ -4515,7 +4515,7 @@ function(dir, silent = FALSE, def_enc = FALSE)
     bad <- character()
     for (f in pg) {
         ## Kludge for now
-        if(basename(f) == "iconv.Rd") def_enc <- TRUE
+        if(basename(f) %in%  c("iconv.Rd", "showNonASCII.Rd")) def_enc <- TRUE
         tmp <- try(checkRd(f, encoding = enc, def_enc = def_enc), silent=TRUE)
         if(inherits(tmp, "try-error")) {
 	    bad <- c(bad, f)
