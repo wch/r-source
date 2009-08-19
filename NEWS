@@ -360,6 +360,9 @@ DEPRECATED & DEFUNCT
     o	R CMD Rd2txt is deprecated, and will be removed in 2.10.0.
 	(It is just a wrapper for R CMD Rdconv -t txt.)
 
+    o	tools::Rd_parse() is deprecated and will be removed in 2.10.0
+	(which will use only Rd version 2).
+
 
 BUG FIXES
 

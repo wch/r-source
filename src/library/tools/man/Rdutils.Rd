@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rdutils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2007=9 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Rdutils}
@@ -33,9 +33,8 @@ Rd_parse(file, text = NULL)
   source files in the package and processing platform conditionals.
 
   \code{Rd_parse} is a simple legacy top-level Rd parser/analyzer which
-  is now deprecated in favor of the full \code{\link{parse_Rd}} parser.
-  It returns
-  a list with components
+  is now deprecated in favor of the full \code{\link{parse_Rd}} parser,
+  and will be removed in \R 2.10.0.  It returns a list with components
   \describe{
     \item{\code{meta}}{a list containing the Rd metadata (aliases,
       concepts, keywords, and documentation type);

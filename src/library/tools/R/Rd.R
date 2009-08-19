@@ -842,6 +842,7 @@ function(lines)
 Rd_parse <-
 function(file, text = NULL)
 {
+    .Deprecated("parse_Rd")
     ## Arguments similar to the ones in parse(), with 'text' a character
     ## vector with the text to parse (elements are treated as if they
     ## were lines of a file).
