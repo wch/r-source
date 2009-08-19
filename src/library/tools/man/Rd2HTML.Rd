@@ -9,14 +9,11 @@
 \alias{Rd2ex}
 \alias{Rd2latex}
 \alias{checkRd}
-\alias{findHTMLlinks}
 \title{ Work with an Rd object }
 \description{
-  These functions take the output of the
-  \code{\link{parse_Rd}} function and check it or produce a help
-  page from it.  As they are mainly intended for internal
-  use, their interfaces are subject to
-  change.
+  These functions take the output of the \code{\link{parse_Rd}} function
+  and check it or produce a help page from it.  As they are mainly
+  intended for internal use, their interfaces are subject to change.
 }
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
@@ -34,8 +31,6 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 
 checkRd(Rd, defines = .Platform$OS.type, stages = "render",
         unknownOK = TRUE, listOK = TRUE, ..., def_enc = FALSE)
-
-findHTMLlinks(pkgDir = "", lib.loc = NULL)
 }
 \arguments{
   \item{Rd}{ a filename or \code{Rd} object to use as input. }
@@ -46,7 +41,7 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
     \code{"render"} should \\Sexpr macros be executed? See the notes below.}
   \item{outputEncoding}{ see the \sQuote{Encodings} section below.}
   \item{Links}{\code{NULL} or a named (by topics) character vector of
-    links, as returned by \code{findHTMLlinks}.}
+    links, as returned by \code{\link{findHTMLlinks}}.}
   \item{CHM}{logical: prepare HTML suitable for Compiled HTML?}
   \item{unknownOK}{ unrecognized macros are treated as errors if
     \code{FALSE}, otherwise warnings. }
@@ -56,9 +51,6 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
     \code{Rd} is a filename. }
   \item{def_enc}{logical: has the package declared an encoding, so tests
     for non-ASCII text are suppressed?}
-  \item{pkgDir}{the top-level directory of an installed package.}
-  \item{lib.loc}{character vector describing the location of \R library trees
-    to scan: the default indicates \code{\link{.libPaths}()}.}
 }
 \details{
 
@@ -87,17 +79,6 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
   Each of the above functions accepts a filename for an Rd file, and
   will use \code{\link{parse_Rd}} to parse it before applying the
   conversions or checks.
-
-  \code{findHTMLlinks} tries to resolve links from one man page to another.  It
-  uses in decreasing priority
-  \itemize{
-    \item The package in \code{pkgDir}: this is used when converting
-    HTML help for that package.
-    \item The packages that are loaded in a vanilla \R session.
-    \item Other packages found in the library trees specified by
-    \code{lib.loc} in the order of the trees and alphabetically within a
-    library tree.
-  }
 }
 \section{Encodings}{
   Rd files are normally intended to be rendered on a wide variety of
@@ -155,21 +136,18 @@ findHTMLlinks(pkgDir = "", lib.loc = NULL)
 
   \code{checkRd} returns \code{TRUE} if the file has no errors; it
   generates an R error otherwise.
-
-  \code{findHTMLlinks} returns a named character vector of relative
-  file paths, in the same package or in a package in the same library tree.
 }
 \author{
   Duncan Murdoch, Brian Ripley
 }
 \references{ \url{http://developer.r-project.org/parseRd.pdf} }
 \seealso{
-  \code{\link{parse_Rd}}
+  \code{\link{parse_Rd}}, \code{\link{findHTMLlinks}}.
 }
 \examples{\donttest{
 
 \dontrun{
-## Simulate an install and rendering of this page in HTML and text format:
+## Simulate install and rendering of this page in HTML and text format:
 
 Rd <- file.path("src/library/tools/Rd2HTML.Rd")
 
