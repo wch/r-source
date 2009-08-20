@@ -431,28 +431,6 @@ function()
     if(nzchar(OS)) OS else .Platform$OS.type
 }
 
-### ** .capture_output_from_print
-
-## <NOTE>
-## Should no longer be needed now that we have .eval_with_capture().
-##
-## .capture_output_from_print <-
-## function(x, ...)
-## {
-##     ## Better to provide a simple variant of utils::capture.output()
-##     ## ourselves (so that bootstrapping R only needs base and tools).
-##     out <- NULL # Prevent codetools warning about "no visible binding
-##                 # for global variable out".  Maybe there will eventually
-##                 # be a better design for output text connections ...
-##     file <- textConnection("out", "w", local = TRUE)
-##     sink(file)
-##     on.exit({ sink(); close(file) })
-##     print(x, ...)
-##     out
-## }
-##
-## </NOTE>
-
 ### ** .eval_with_capture
 
 .eval_with_capture <-
@@ -666,7 +644,7 @@ function(dir, installed = FALSE)
 
 .get_requires_from_package_db <-
 function(db,
-         category = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")) 
+         category = c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances"))
 {
     category <- match.arg(category)
     if(category %in% names(db)) {
@@ -1132,8 +1110,7 @@ function(dfile)
     ## vector.
     ## </NOTE>
     if(!file_test("-f", dfile))
-        stop(gettextf("file '%s' does not exist", dfile),
-             domain = NA)
+        stop(gettextf("file '%s' does not exist", dfile), domain = NA)
     out <- tryCatch(read.dcf(dfile)[1L, ],
                     error = function(e)
                     stop(gettextf("file '%s' is not in valid DCF format",
