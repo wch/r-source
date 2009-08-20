@@ -403,6 +403,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    if(!listOK)
                        stopRd(block, Rdfile, "Unnecessary braces at ", deparse)
                    else warnRd(block, Rdfile, "Unnecessary braces at ", deparse)
+                   checkContent(block, tag)
                },
                "\\describe"=,
                "\\enumerate"=,
@@ -563,7 +564,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
             "\\item" = {
     	    	if (!inlist) inlist <- TRUE
     		switch(blocktag,
-    		"\\arguments"={
+    		"\\arguments"= {
     		    checkContent(block[[1L]], tag)
     		    checkContent(block[[2L]], tag)
     		},
@@ -595,7 +596,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	    checkContent(title, tag)
     	    section <- section[[2L]]
             ## replace 'tag' in message below
-            tagtitle <- as.character(title)
+            tagtitle <- sQuote(as.character(title))
     	} else tagtitle <- tag
         has_text <<- FALSE
         if (tag %in% c("\\usage", "\\synopsis", "\\examples"))
