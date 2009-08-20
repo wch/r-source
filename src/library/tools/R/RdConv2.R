@@ -387,12 +387,12 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    if(!def_enc) {
                        ## check for encoding; this is UTF-8 if known
                        ## (but then def_enc = TRUE?)
+                       msg2 <- if(inEnc2) "in second part of \\enc" else "without declared encoding"
                        if(Encoding(block) == "UTF-8")
-                           warnRd(block, Rdfile,
-                                  "Non-ASCII contents without declared encoding")
+                           warnRd(block, Rdfile, "Non-ASCII contents ", msg2)
                        if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
                            warnRd(block, Rdfile,
-                                  "Apparent non-ASCII contents without declared encoding")
+                                  "Apparent non-ASCII contents ", msg2)
                    }
                    ## check if this renders as non-whitespace
                    if(!grepl("^[[:space:]]*$", block)) has_text <<- TRUE
@@ -447,8 +447,10 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    ## second arg should always be ASCII
                    save_enc <- def_enc
                    def_enc <<- FALSE
+                   inEnc2 <<- TRUE
                    checkContent(block[[2L]], tag)
                    def_enc <<- save_enc
+                   inEnc2 <<- FALSE
                },
                "\\eqn" =,
                "\\deqn" = {
@@ -473,12 +475,12 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                        if(!def_enc) {
                            ## check for encoding; this is UTF-8 if known
                            ## (but then def_enc = TRUE?)
+                           msg2 <- if(inEnc2) "in second part of \\enc" else "without declared encoding"
                            if(Encoding(block) == "UTF-8")
-                               warnRd(block, Rdfile,
-                                      "Non-ASCII contents without declared encoding")
+                               warnRd(block, Rdfile, "Non-ASCII contents ", msg2)
                            if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
                                warnRd(block, Rdfile,
-                                      "Apparent non-ASCII contents without declared encoding")
+                                      "Apparent non-ASCII contents ", msg2)
                        }
                        ## check if this renders as non-whitespace
                        if(!grepl("^[[:space:]]*$", block)) has_text <<- TRUE
@@ -621,6 +623,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
             warnRd(Rd[[which]], Rdfile, "Tag ", tag, " must not be empty")
     }
 
+    inEnc2 <- FALSE
     Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
