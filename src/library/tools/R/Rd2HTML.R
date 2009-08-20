@@ -690,10 +690,11 @@ Rd2HTML <-
                              'location.href = link;', '}', '</script>',
                              sep = '\n'), con, outputEncoding)
     }
-    if (package != "") {
-    	version <- paste('Package <em>', package,
-    	                 '</em> version ', packageDescription(package, fields="Version"), ' ', sep='')
-    } else version <- ''
+    version <- if (package != "")
+    	paste('Package <em>', package,
+              '</em> version ',
+              packageDescription(package, fields="Version"), ' ', sep='')
+    else ""
     of0('\n',
         '<hr><div align="center">[', version, '<a href="00Index.html">Index</a>]</div>\n',
         '</body></html>\n')
