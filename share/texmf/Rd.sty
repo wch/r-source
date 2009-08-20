@@ -184,7 +184,9 @@
 {\newcommand{\link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1@\texttt{#1}}}}
 {\newcommand{\link}[1]{#1\index{#1@\texttt{#1}}}}
 
-\newcommand{\email}[1]{$\langle${#1}$\rangle$}
+%% as from R 2.10.0 set \email in monospaced font (like \url)
+%\newcommand{\email}[1]{$\langle$\texttt{#1}$\rangle$}
+\newcommand{\email}[1]{\texttt{\textless#1\textgreater}}
 
 %% \code without `-' ligatures
 {\catcode`\-=\active%

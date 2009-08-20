@@ -224,6 +224,9 @@ NEW FEATURES
 
     o	New as.raw() method for "tclObj" objects (wish of PR#13578).
 
+    o	Rd.sty now makes a better job of setting email addresses,
+	including using a monospaced font.
+
 
 Rd HELP FILE CHANGES
 
