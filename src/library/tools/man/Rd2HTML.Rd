@@ -24,7 +24,7 @@ Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
        stages = "render", outputEncoding = "", ...)
 
 Rd2latex(Rd, out = "", defines = .Platform$OS.type,
-         stages = "render", outputEncoding = "latin1", ...)
+         stages = "render", outputEncoding = "ASCII", ...)
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       stages = "render", outputEncoding = "UTF-8", ...)
@@ -85,19 +85,22 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
   systems, so care must be taken in the encoding of non-ASCII
   characters.  In general, any such encoding should be declared using
   the \samp{encoding} section for there to be any hope of correct
-  rendering.  Avoid exotic encodings unless absolutely necessary: all
-  input will be translated to UTF-8, and the quality of such
-  translations is poor on some older systems.
+  rendering.
+% evidence?  All current iconv's are perfect
+%  Avoid exotic encodings unless absolutely necessary: all
+%  input will be translated to UTF-8, and the quality of such
+%  translations is poor on some older systems.
 
-  For output, the \code{outputEncoding} variable will be used:
-  \code{outputEncoding=""} will choose the native encoding for the
+  For output, the \code{outputEncoding} argument will be used:
+  \code{outputEncoding = ""} will choose the native encoding for the
   current system.  The \code{Rd2latex} function is an exception to this
-  rule, because LaTeX installations vary considerably in their ability
-  to handle encodings.  If an input file contains an \samp{encoding}
-  section, \code{Rd2latex} will use that as the output encoding as well.
-  Unfortunately, on some older LaTeX installations the conversion to
-  UTF-8 and back is not perfect, and some characters may not be rendered
-  properly.
+  rule, because UTF-8 is not a viable universal choice for LaTeX: if an
+  input file contains an \samp{encoding} section, \code{Rd2latex} will
+  use that for the output encoding.
+
+  If the text cannot be converted to the \code{outputEncoding}, byte
+  substitution will be used (see \code{\link{iconv}}): \code{Rd2latex}
+  and \code{Rd2ex} give a warning. 
 }
 
 \note{

@@ -49,16 +49,28 @@ latex_canonical_encoding  <- function(encoding)
     encoding
 }
 
-
+## 'encoding' is passed to parse_Rd, as the input encoding
 Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
-		     outputEncoding = "latin1", ...)
+		     outputEncoding = "ASCII", ...)
 {
+    encode_warn <- FALSE
+    WriteLines <- function(x, con, outputEncoding, ...) {
+        if (outputEncoding != "UTF-8") {
+            x <- iconv(x, "UTF-8", outputEncoding,  mark=FALSE)
+            if (any(is.na(x))) {
+                x <- iconv(x, "UTF-8", outputEncoding, sub="byte", mark=FALSE)
+                encode_warn <<- TRUE
+            }
+        }
+        writeLines(x, con, useBytes = TRUE, ...)
+    }
+
     last_char <- ""
     of0 <- function(...) of1(paste(..., sep=""))
     of1 <- function(text) {
         nc <- nchar(text)
         last_char <<- substr(text, nc, nc)
-        writeLinesUTF8(text, con, outputEncoding, sep = "")
+        WriteLines(text, con, outputEncoding, sep = "")
     }
 
     trim <- function(x) {
@@ -655,8 +667,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     	stopRd(Rd[[version[2L]]], Rdfile, "Only one \\Rdversion declaration is allowed")
 
     enc <- which(sections == "\\encoding")
-    if (length(enc))
-	outputEncoding <- as.character(Rd[[enc[1L]]][[1L]])
+   if (length(enc)) outputEncoding <- as.character(Rd[[enc[1L]]][[1L]])
 
     if (is.character(out)) {
         if(out == "") {
@@ -670,8 +681,10 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     	out <- summary(con)$description
     }
 
-    latexEncoding <- latex_canonical_encoding(outputEncoding)
-    of0("\\inputencoding{", latexEncoding, "}\n")
+    if (outputEncoding != "ASCII") {
+        latexEncoding <- latex_canonical_encoding(outputEncoding)
+        of0("\\inputencoding{", latexEncoding, "}\n")
+    } else latexEncoding <- NA
 
     ## Give warning(pro tem) for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]",
@@ -686,7 +699,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
     sortorder <- sectionOrder[sections]
     if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1L]]], Rdfile, "Section ", sections[which(bad)[1L]], " unrecognized")
+    	stopRd(Rd[[which(bad)[1L]]], Rdfile, "Section ",
+               sections[which(bad)[1L]], " unrecognized")
     ## Need to sort the aliases.
     nm <- character(length(Rd))
     isAlias <- RdTags(Rd) == "\\alias"
@@ -705,7 +719,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
     name <- Rd[[2L]]
     tags <- RdTags(name)
-    if (length(tags) > 1L) stopRd(name, Rdfile, "\\name must only contain simple text")
+    if (length(tags) > 1L) stopRd(name, Rdfile,
+                                  "\\name must only contain simple text")
 
     name <- trim(as.character(name[[1L]]))
     ltxname <- latex_escape_name(name)
@@ -717,5 +732,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     for (i in seq_along(sections)[-(1:2)])
         writeSection(Rd[[i]], sections[i])
 
+    if (encode_warn)
+        warnRd(Rd, Rdfile, "Some input could not be re-encoded to ",
+               outputEncoding)
     invisible(structure(out, latexEncoding = latexEncoding))
 }

@@ -202,7 +202,7 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 	if (options$results == "rd") {
 	    res <- err   # The last value of the chunk
 	    tmpcon <- file()
-	    writeLinesUTF8(res, tmpcon, "UTF-8")
+	    writeLines(res, tmpcon, useBytes = TRUE)
 	    res <- tagged(parse_Rd(tmpcon, fragment=TRUE), "LIST")
 	    close(tmpcon)
 	    res <- prepare_Rd(res, defines = .Platform$OS.type, options=options)
@@ -317,8 +317,6 @@ sectionTitles <-
 ## This wrapper strips and replaces the encoding marker on x.  It'll
 ## only work if the pattern and replacement are pure ascii, and x
 ## is UTF-8, as it is for text in Rd objects
-
-## I think useBytes=TRUE suffices here (BDR)
 
 gsubUTF8 <- function(pattern, replacement, x, ...) {
     Encoding(x) <- "unknown"

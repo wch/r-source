@@ -845,7 +845,12 @@
                 .writePkgIndices(pkg_dir, instdir, html = build_html,
                                  CHM = build_chm)
                 if (build_help) {
-                    .convertRdfiles(pkg_dir, instdir, types = build_help_types)
+                    ## This is used as the default outputEncoding for latex
+                    outenc <- desc["Encoding"]
+                    if (is.na(outenc)) outenc <- "latin1" # or ASCII
+                    .convertRdfiles(pkg_dir, instdir,
+                                    types = build_help_types,
+                                    outenc = outenc)
                     if (build_chm) {
                         if (dir.exists("chm")) {
                             owd <- setwd("chm")
@@ -1398,6 +1403,7 @@
             "}\n", sep = "", file = out)
     for (f in fields) {
         text <- desc[f]
+        ## FIXME: set email addresses and URLs in monospaced type.
         ## munge 'text' appropriately (\\, {, }, "...")
         ## not sure why just these: copied from Rd2dvi, then added to.
         ## KH: the LaTeX special characters are
@@ -1408,7 +1414,7 @@
         text <- gsub("\\", "\\textbackslash{}", text, fixed = TRUE)
         text <- gsub("([{}$#_])", "\\\\\\1", text)
         text <- gsub("@VERSION@", version, text, fixed = TRUE)
-        ## test can have paras, and digest/DESCRIPTION does.
+        ## text can have paras, and digest/DESCRIPTION does.
         ## \AsIs is per-para.
         text <- strsplit(text, "\n\n")[[1]]
         Encoding(text) <- "unknown"
@@ -1441,7 +1447,7 @@
             outfile <- file(outfile, if (append) "at" else "wt")
             on.exit(close(outfile))
         }
-        latexEncodings <- character(0)
+        latexEncodings <- character()
         for(f in files) {
             cat("  ", basename(f), "\n", sep="")
             if (!internals) {
@@ -1457,7 +1463,7 @@
                                      "latexEncoding"))
             writeLines(readLines(out), outfile)
         }
-        unique(latexEncodings)
+        unique(latexEncodings[!is.na(latexEncodings)])
     }
 }
 
@@ -1477,7 +1483,7 @@
     if (missing(outfile))
         outfile <- paste(basename(pkgdir), "-pkg.tex", sep="")
 
-    latexEncodings <- character(0) # Record any encodings used in the output
+    latexEncodings <- character() # Record any encodings used in the output
 
     ## First check for a latex dir.
     ## Second guess is this is a >= 2.10.0 package with stored .rds files.
@@ -1503,6 +1509,7 @@
                                     attr(Rd2latex(Rd[[f]],
                                                   file.path(latexdir, out),
                                                   encoding = encoding,
+                                                  outputEncoding = outputEncoding,
                                                   defines = NULL),
                                          "latexEncoding"))
             }
@@ -1529,10 +1536,12 @@
             for(f in files) {
                 cat("  ", basename(f), "\n", sep="")
                 out <-  sub("\\.[Rr]d$", ".tex", basename(f))
-                latexEncodings <- c(latexEncodings,
-                                    attr(Rd2latex(f, file.path(latexdir, out),
-                                                  encoding=encoding),
-                                         "latexEncoding"))
+                latexEncodings <-
+                    c(latexEncodings,
+                      attr(Rd2latex(f, file.path(latexdir, out),
+                                    encoding = encoding,
+                                    outputEncoding = outputEncoding),
+                           "latexEncoding"))
             }
         }
     }
@@ -1982,7 +1991,9 @@ if (FALSE) {
 ### * .convertRdfiles
 
 ## possible types are "html", "chm", "latex", "example"
-.convertRdfiles <- function(dir, outDir, types = "html", silent = FALSE)
+## outenc is used as the default output encoding for latex conversion
+.convertRdfiles <-
+    function(dir, outDir, types = "html", silent = FALSE, outenc = "latin1")
 {
     showtype <- function(type) {
     	if (!shown) {
@@ -2067,7 +2078,8 @@ if (FALSE) {
                             paste(bf, ext[type], sep = ""))
             if (!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 showtype(type)
-                .convert(Rd2latex(Rd, ff, defines = NULL))
+                .convert(Rd2latex(Rd, ff, defines = NULL,
+                                  outputEncoding = outenc))
             }
         }
         if ("chm" %in% types) {
@@ -2421,6 +2433,7 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
     ## Fix up encodings
     ## FIXME cyrillic probably only works with times, not ae.
     latexEncodings <- unique(latexEncodings)
+    latexEncodings <- latexEncodings[!is.na(latexEncodings)]
     cyrillic <- if (nzchar(Sys.getenv("_R_CYRILLIC_TEX_"))) "utf8" %in% latexEncodings else FALSE
     latex_outputEncoding <- latex_canonical_encoding(outputEncoding)
     encs <- latexEncodings[latexEncodings != latex_outputEncoding]
