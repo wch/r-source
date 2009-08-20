@@ -4482,11 +4482,12 @@ function(cfile)
 
 ### * .check_package_parseRd
 
+## FIXME: could use dumped files, except for use of encoding = "ASCII"
 .check_package_parseRd <-
 function(dir, silent = FALSE, def_enc = FALSE)
 {
     if(file.exists(file.path(dir, "DESCRIPTION"))) {
-        enc <- read.dcf(file.path(dir, "DESCRIPTION"))[1L, "Encoding"]
+        enc <- read.dcf(file.path(dir, "DESCRIPTION"))[1L,]["Encoding"]
         if(is.na(enc)) enc <- "ASCII"
         else def_enc <- TRUE
     } else enc <- "ASCII"
