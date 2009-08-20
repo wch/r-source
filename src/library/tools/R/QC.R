@@ -4486,9 +4486,10 @@ function(cfile)
 function(dir, silent = FALSE, def_enc = FALSE)
 {
     if(file.exists(file.path(dir, "DESCRIPTION"))) {
-        enc <- read.dcf(file.path(dir, "DESCRIPTION"))["Encoding"]
-        if(is.na(enc)) enc <- "unknown"
-    } else enc <- "unknown"
+        enc <- read.dcf(file.path(dir, "DESCRIPTION"))[1L, "Encoding"]
+        if(is.na(enc)) enc <- "ASCII"
+        else def_enc <- TRUE
+    } else enc <- "ASCII"
     pg <- c(Sys.glob(file.path(dir, "man", "*.Rd")),
             Sys.glob(file.path(dir, "man", "*.rd")),
             Sys.glob(file.path(dir, "man", "*", "*.Rd")),

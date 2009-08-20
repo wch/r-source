@@ -53,15 +53,20 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     basename <- basename(srcfile$filename)
     srcfile$encoding <- encoding
 
-    if (encoding != "UTF-8")
+    if (encoding == "ASCII") {
+        if (any(is.na(iconv(lines, "", "ASCII"))))
+            stop("non-ASCII input and no declared encoding", domain = NA)
+    } else if (encoding != "UTF-8")
     	lines <- iconv(lines, encoding, "UTF-8", sub = "byte")
 
-    ## FIXME: textConnection is inefficient
+##     ## FIXME: textConnection is inefficient
 
-    ## In a Latin1 locale, the textConnection will recode everything to
-    ## Latin1, so mark it as unknown
-    Encoding(lines) <- "unknown"
-    tcon <- textConnection(lines)
+##     ## In a Latin1 locale, the textConnection will recode everything to
+##     ## Latin1, so mark it as unknown
+##     Encoding(lines) <- "unknown"
+##     tcon <- textConnection(lines)
+    tcon <- file()
+    writeLines(lines, tcon, useBytes = TRUE)
     on.exit(close(tcon))
 
     .Internal(parse_Rd(tcon, srcfile, "UTF-8", verbose, basename, fragment))
@@ -69,7 +74,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
 
 print.Rd <- function(x, deparse=FALSE, ...)
 {
-    cat(as.character.Rd(x, deparse=deparse), sep="", collapse="")
+    cat(as.character.Rd(x, deparse = deparse), sep = "", collapse = "")
     invisible(x)
 }
 
