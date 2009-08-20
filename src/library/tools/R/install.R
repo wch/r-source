@@ -87,7 +87,7 @@
             "  -d, --debug		turn on script and build-help debugging",
             "  -l, --library=LIB	install packages to library tree LIB",
             "      --no-configure    do not use the package's configure script",
-            "      --no-docs		do not install any documentation",
+            "      --no-docs		do not install HTML, LaTeX or examples help",
             "      --no-html		do not build HTML help",
             "      --latex      	install LaTeX help",
             "      --example		install R code for help examples",
@@ -245,7 +245,7 @@
         }
 
         for(p in bundle_pkgs) {
-            if(is_bundle) {
+            if (is_bundle) {
                 pkg_dir <- file.path(pkg, p)
                 setwd(pkg_dir)
                 desc <- read.dcf("DESCRIPTION")[1, ]
@@ -316,7 +316,7 @@
             owd <- setwd(lib)
             system(paste(ZIP, "-r9Xq", filepath,
                          paste(bundle_pkgs, collapse = " ")))
-	    if(is_bundle) {
+	    if (is_bundle) {
                 ## need to add top-level DESCRIPTION file
                 setwd(pkg)
                 system(paste(ZIP, "-9Xq", filepath, "DESCRIPTION"))
@@ -357,7 +357,7 @@
     {
         if (dir.exists("src")) {
             owd <- setwd("src")
-            if(WINDOWS) {
+            if (WINDOWS) {
                 if (file.exists("Makefile.win"))
                     system(paste(MAKE, "-f Makefile.win clean"))
                 else
@@ -403,7 +403,7 @@
                 dest <- file.path(instdir, libarch)
                 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
                 file.copy(files, dest, overwrite = TRUE)
-                if(!WINDOWS)
+                if (!WINDOWS)
                     Sys.chmod(Sys.glob(file.path(dest, "*")), "755")
             }
         }
@@ -511,7 +511,7 @@
                 fi <- file.info(dir("data", full.names=TRUE))
                 if (sum(fi$size) > 100000) {
                     this <- sub("\\.[a-zA-Z]+$", "", row.names(fi))
-                    if(!anyDuplicated(this)) use_zip_data <- TRUE
+                    if (!anyDuplicated(this)) use_zip_data <- TRUE
                 }
                 if (use_zip_data)
                      message("\n  Using auto-selected zip option ",
@@ -812,10 +812,12 @@
                 ## file.remove(file.path(instdir, "R", "all.rda"))
             }
 
-            if (dir.exists("man") &&
-                length(list_files_with_type("man", "docs"))) {
-                ## FIXME: should this be done if --no-docs
+            ## as from 2.10.0 do this always
+            {
                 starsmsg(stars, "help")
+                if (!dir.exists("man") ||
+                   !length(list_files_with_type("man", "docs")))
+                    cat("No man pages found in package ", sQuote(pkg_name), "\n")
                 {
                     ## Turn
                     ##   Warning in parse_Rd(......)
@@ -823,19 +825,19 @@
                     ## they can be picked up by R CMD check.
                     .whandler <- function(e) {
                         call <- conditionCall(e)
-                        if(!is.null(call) &&
+                        if (!is.null(call) &&
                            grepl("^parse_Rd", deparse(call))) {
                             warning(conditionMessage(e), call. = FALSE)
                             invokeRestart("muffleWarning")
                         } else e
                     }
                     encoding <- desc["Encoding"]
-                    if(is.na(encoding)) encoding <- "unknown"
+                    if (is.na(encoding)) encoding <- "unknown"
                     res <-
                         try(withCallingHandlers(
                          .install_package_Rd_objects(".", instdir, encoding),
                                                 warning = .whandler))
-                    if(inherits(res, "try-error"))
+                    if (inherits(res, "try-error"))
                         pkgerrmsg("installing Rd objects failed", pkg_name)
                 }
 
@@ -864,8 +866,7 @@
                         }
                     }
                 }
-            } else                      # yes, to stdout
-            cat("No man pages found in package ", sQuote(pkg_name), "\n")
+            }
 
             ## pkg indices
             starsmsg(stars, "building package indices ...")
@@ -906,7 +907,7 @@
 
     options(showErrorCalls=FALSE)
     pkgs <- character(0)
-    if(is.null(args)) {
+    if (is.null(args)) {
         args <- commandArgs(TRUE)
         ## it seems that splits on spaces, so try harder.
         args <- paste(args, collapse=" ")
@@ -1083,7 +1084,7 @@
         stop("ERROR: no packages specified", call.=FALSE)
 
     if (!nzchar(lib)) {
-        if(get_user_libPaths) { ## need .libPaths()[1] *after* the site- and user-initialization
+        if (get_user_libPaths) { ## need .libPaths()[1] *after* the site- and user-initialization
 	    lib <- system(paste(R.home("bin/Rscript"),
 				"-e 'cat(.libPaths()[1])'"),
 			  intern = TRUE)
@@ -1103,17 +1104,17 @@
     }
     ok <- dir.exists(lib)
     if (ok) {
-        if(WINDOWS) {
+        if (WINDOWS) {
             ## file.access is unreliable on Windows
             ## the only known reliable way is to try it
             fn <- file.path(lib, "_test_dir_")
             unlink(fn, recursive = TRUE) # precaution
             res <- try(dir.create(fn, showWarnings = FALSE))
-            if(inherits(res, "try-error") || !res) ok <- FALSE
+            if (inherits(res, "try-error") || !res) ok <- FALSE
             else unlink(fn, recursive = TRUE)
         } else ok <- file.access(lib, 2L) == 0
     }
-    if(!ok)
+    if (!ok)
         stop("ERROR: no permission to install to directory ",
              sQuote(lib), call. = FALSE)
 
@@ -1239,7 +1240,7 @@
     shlib <- ""
     makefiles <-
         file.path(R.home("share"), "make",
-                  if(WINDOWS) "winshlib.mk" else "shlib.mk")
+                  if (WINDOWS) "winshlib.mk" else "shlib.mk")
     shlib_libadd <- if (nzchar(SHLIB_LIBADD)) SHLIB_LIBADD else character()
     with_cxx <- FALSE
     with_f77 <- FALSE
@@ -1364,7 +1365,7 @@
                       p0("SHLIB_LIBADD='", p1(shlib_libadd), "'"))
 
     ## removed in 2.10.0
-    ## if(WINDOWS) makeargs <- c(makeargs, "all")
+    ## if (WINDOWS) makeargs <- c(makeargs, "all")
     if (WINDOWS && debug) makeargs <- c(makeargs, "DEBUG=T")
 
     cmd <- paste(MAKE, p1(paste("-f", makefiles)), p1(makeargs), p1(makeobjs))
@@ -1392,7 +1393,7 @@
     cat("\\begin{description}", "\\raggedright{}", sep="\n", file=out)
     fields <- names(desc)
     fields <- fields[! fields %in% c("Bundle", "Package", "Packaged", "Built")]
-    if("Encoding" %in% fields)
+    if ("Encoding" %in% fields)
         cat("\\inputencoding{", latex_canonical_encoding(desc["Encoding"]),
             "}\n", sep = "", file = out)
     for (f in fields) {
@@ -1424,7 +1425,7 @@
              append = FALSE, extraDirs = NULL, internals = FALSE,
              silent = FALSE)
 {
-    if(file_test("-d", files))
+    if (file_test("-d", files))
         latexEncodings <-
             .pkg2tex(files, outfile, encoding = encoding, append = append,
                      asChapter = FALSE, extraDirs = extraDirs,
@@ -1433,19 +1434,19 @@
         files <- strsplit(files, "[[:space:]]+")[[1]]
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
-        if(!silent) message("Converting Rd files to LaTeX ...")
+        if (!silent) message("Converting Rd files to LaTeX ...")
         cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
                      encoding, sep="")
         if (is.character(outfile)) {
-            outfile <- file(outfile, if(append) "at" else "wt")
+            outfile <- file(outfile, if (append) "at" else "wt")
             on.exit(close(outfile))
         }
         latexEncodings <- character(0)
         for(f in files) {
             cat("  ", basename(f), "\n", sep="")
-            if(!internals) {
+            if (!internals) {
                 lines <- readLines(f)
-                if(any(grepl("\\\\keyword\\{\\s*internal\\s*\\}",
+                if (any(grepl("\\\\keyword\\{\\s*internal\\s*\\}",
                          lines, perl = TRUE))) next
             }
             out <-  file.path(latexdir, sub("\\.[Rr]d$", ".tex", basename(f)))
@@ -1483,19 +1484,19 @@
     ## If it does not exist, guess this is a source package.
     latexdir <- file.path(pkgdir, "latex")
     if (!file_test("-d", latexdir)) {
-        if(file_test("-d", file.path(pkgdir, "help"))
+        if (file_test("-d", file.path(pkgdir, "help"))
            || length( Sys.glob(file.path(pkgdir, "man/*.rds")) )) {
             ## So convert it
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
-            if(!silent) message("Converting parsed Rd's to LaTeX ",
+            if (!silent) message("Converting parsed Rd's to LaTeX ",
                                 appendLF=FALSE, domain=NA)
             Rd <- Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
             cnt <- 0L
             for(f in names(Rd)) {
                 bf <- basename(f)
                 cnt <- cnt + 1L
-                if(!silent && cnt %% 10L == 0L)
+                if (!silent && cnt %% 10L == 0L)
                     message(".", appendLF=FALSE, domain=NA)
                 out <-  sub("[Rr]d$", "tex", basename(f))
                 latexEncodings <- c(latexEncodings,
@@ -1505,7 +1506,7 @@
                                                   defines = NULL),
                                          "latexEncoding"))
             }
-            if(!silent) message(domain=NA)
+            if (!silent) message(domain=NA)
         } else {
             files <- Sys.glob(file.path(pkgdir, "*.[Rr]d"))
             if (!length(files)) {
@@ -1550,12 +1551,12 @@
         stop("no validly-named files in the ", sQuote("latex"), " directory",
              domain = NA)
 
-    if(is.character(outfile)) {
-        outcon <- file(outfile, if(append) "at" else "wt")
+    if (is.character(outfile)) {
+        outcon <- file(outfile, if (append) "at" else "wt")
         on.exit(close(outcon))
     } else outcon <- outfile
 
-    if(asChapter)
+    if (asChapter)
         cat("\n\\chapter{The \\texttt{", basename(pkgdir), "} package}\n",
             sep = "", file = outcon)
     topics <- rep.int("", length(files)); names(topics) <- files
@@ -1569,7 +1570,7 @@
             next
         }
         this <- sub("\\\\HeaderA\\{\\s*([^}]*)\\}.*", "\\1", hd[1], perl = TRUE)
-        if(!internals &&
+        if (!internals &&
            any(grepl("\\\\keyword\\{\\s*internal\\s*\\}", lines, perl = TRUE)))
             next
         if (scanForEncoding) {
@@ -1582,10 +1583,10 @@
 
     topics <- topics[nzchar(topics)]
     summ <- grep("-package$", topics)
-    topics <- if(length(summ)) c(topics[summ], re(topics[-summ])) else re(topics)
+    topics <- if (length(summ)) c(topics[summ], re(topics[-summ])) else re(topics)
     for (f in names(topics)) writeLines(readLines(f), outcon)
 
-    if(asChapter)
+    if (asChapter)
         cat("\\clearpage\n", file = outcon)
 
     invisible(latexEncodings)
@@ -1611,18 +1612,18 @@
     if (!file.exists(file)) return(0L)
     age <- file.info(file)$mtime
 
-    if(any(file.info(Sys.glob(file.path(dir, "man", "*.Rd")))$mtime > age))
+    if (any(file.info(Sys.glob(file.path(dir, "man", "*.Rd")))$mtime > age))
         return(0L)
 
-    if(isTRUE(file.info(file.path(dir, OS))$isdir)) {
-        if(any(file.info(Sys.glob(file.path(dir, "man", OS, "*.Rd")))$mtime > age))
+    if (isTRUE(file.info(file.path(dir, OS))$isdir)) {
+        if (any(file.info(Sys.glob(file.path(dir, "man", OS, "*.Rd")))$mtime > age))
             return(0L)
     }
 
     1L
 }
 
-if(FALSE) {
+if (FALSE) {
 ## given a source package in 'dir', write outDirc/help/AnIndex
 ## This is a two-column tab-separated file of topic and file basename,
 ## conventionally sorted on topic (but with foo-package first)
@@ -1639,10 +1640,10 @@ if(FALSE) {
     }
 
     mandir <- file.path(dir, "man")
-    if(!file_test("-d", mandir))
+    if (!file_test("-d", mandir))
         stop("there are no help pages in this package")
     files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
-    if(file_test("-d", f <- file.path(mandir, OS)))
+    if (file_test("-d", f <- file.path(mandir, OS)))
         files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
     ## Should only process files starting with [A-Za-z0-9] and with
     ## suffix .Rd or .rd, according to 'Writing R Extensions'.
@@ -1725,7 +1726,7 @@ if(FALSE) {
             "<param name=\"keyword\" value=\".. contents\">\n",
             "</object>\n\n",
             "<h2>Help pages for package &lsquo;", pkg, "&rsquo;",
-            if(nzchar(version)) paste(" version", version),
+            if (nzchar(version)) paste(" version", version),
             "</h2>\n\n",
             sep = "", file = conn)
     }
@@ -1734,7 +1735,7 @@ if(FALSE) {
     {
         conn <- file(file.path(dir, "chm", paste(pkg, ".toc", sep = "")), "wt")
         on.exit(close(conn))
-        if(length(M$File)) M$File <- paste(M$File, ".html", sep = "")
+        if (length(M$File)) M$File <- paste(M$File, ".html", sep = "")
         cat("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">\n",
             "<HEAD></HEAD><HTML><BODY>\n<UL>\n",
             "<LI> <OBJECT type=\"text/sitemap\">\n",
@@ -1774,12 +1775,6 @@ if(FALSE) {
         x
     }
 
-    mandir <- file.path(dir, "man")
-    if(!file_test("-d", mandir)) {
-        warning("there are no help pages in this package")
-        return()
-    }
-
     ## This may well already have been done:
     Rd <- if (file.exists(f <- file.path(outDir, "Meta", "Rd.rds")))
         .readRDS(f)
@@ -1789,27 +1784,29 @@ if(FALSE) {
         db <- tryCatch(Rd_db(basename(outDir), lib.loc = dirname(outDir)),
                        error = function(e) NULL)
         ## If not, we build the Rd db from the sources:
-        if(is.null(db)) db <- Rd_db(dir = dir)
-        if(!length(db)) {
-            warning("there is a 'man' dir but no help pages in this package",
-                    call. = FALSE)
-            return()
-        }
+        if (is.null(db)) db <- Rd_db(dir = dir)
         Rd <- Rd_contents(db)
         .saveRDS(Rd, file.path(outDir, "Meta", "Rd.rds"))
         Rd
     }
 
     topics <- Rd$Aliases
-    if(!length(topics)) stop("no topics found")
-    lens <- sapply(topics, length)
-    files <- sub("\\.[Rr]d$", "", Rd$File)
-    internal <- sapply(Rd$Keywords, function(x) "internal" %in% x)
-    M <- data.frame(Topic = unlist(topics),
-                    File = rep.int(files, lens),
-                    Title = rep.int(Rd$Title, lens),
-                    Internal = rep.int(internal, lens),
-                    stringsAsFactors = FALSE)
+    M <- if (!length(topics)) {
+        data.frame(Topic = character(),
+                   File = character(),
+                   Title = character(),
+                   Internal = character(),
+                   stringsAsFactors = FALSE)
+    } else {
+        lens <- sapply(topics, length)
+        files <- sub("\\.[Rr]d$", "", Rd$File)
+        internal <- sapply(Rd$Keywords, function(x) "internal" %in% x)
+        data.frame(Topic = unlist(topics),
+                   File = rep.int(files, lens),
+                   Title = rep.int(Rd$Title, lens),
+                   Internal = rep.int(internal, lens),
+                   stringsAsFactors = FALSE)
+    }
     ## FIXME duplicated aliases warning
     outman <- file.path(outDir, "help")
     dir.create(outman, showWarnings = FALSE)
@@ -1817,14 +1814,15 @@ if(FALSE) {
     write.table(MM, file.path(outman, "AnIndex"),
                 quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
 
-    if(!html && !CHM) return()
-    if(html) {
+    ## no HTML indices if no help pages?
+    if (!html && !CHM) return()
+    if (html) {
         outman <- file.path(outDir, "html")
         dir.create(outman, showWarnings = FALSE)
         outcon <- file(file.path(outman, "00Index.html"), "wt")
         on.exit(close(outcon))
     }
-    if(CHM) {
+    if (CHM) {
         chmdir <- file.path(dir, "chm")
         dir.create(chmdir, showWarnings = FALSE)
         chmcon <- file(file.path(chmdir, "00Index.html"), "wt")
@@ -1834,7 +1832,7 @@ if(FALSE) {
     ## drop internal entries
     if (CHM) CHMinternals <- M[M[, 4], ]
     M <- M[!M[, 4], ]
-    if(desc["Package"] %in% c("base", "graphics", "stats", "utils")) {
+    if (desc["Package"] %in% c("base", "graphics", "stats", "utils")) {
         for(pass in 1:2) {
             ## we skip method aliases
             gen <- gsub("\\.data\\.frame", ".data_frame", M$Topic)
@@ -1859,7 +1857,7 @@ if(FALSE) {
         x <- gsub("&", "&amp;", x, fixed = TRUE)
         x <- gsub("<", "&lt;", x, fixed = TRUE)
         x <- gsub(">", "&gt;", x, fixed = TRUE)
-        if(backtick) {
+        if (backtick) {
             x <- gsub("---", "-", x, fixed = TRUE)
             x <- gsub("--", "-", x, fixed = TRUE)
             ## these have been changed in the Rd parser
@@ -1874,19 +1872,20 @@ if(FALSE) {
     M$Title <- htmlize(M$Title, TRUE)
 
     ## handle encodings
+    ## FIXME we always use UTF-8 these days
     def <- desc["Encoding"]
-    def <- if(is.na(def)) "" else mime_canonical_encoding(def)
+    def <- if (is.na(def)) "" else mime_canonical_encoding(def)
     encodings <- mime_canonical_encoding(Rd$Encoding)
-    enc <- if(any(nzchar(encodings))) {
+    enc <- if (any(nzchar(encodings))) {
         encs <- unique(c(def, encodings))
         ## FIXME: we could reencode individual files
         encs[nzchar(encs)][1]
     } else def
 
-    if(html)
+    if (html)
         html_header(desc["Package"], desc["Title"], desc["Version"],
-                    if(nzchar(enc)) enc else "iso-8859-1", outcon)
-    if(CHM)
+                    if (nzchar(enc)) enc else "iso-8859-1", outcon)
+    if (CHM)
         chm_header(desc["Package"], desc["Title"], desc["Version"], chmcon)
 
     use_alpha <- (nrow(M) > 100)
@@ -1894,8 +1893,8 @@ if(FALSE) {
         first <- firstLetterCategory(M$Topic)
         nm <- sort(names(table(first)))
         m <- match(" ", nm, 0L)
-        if(m) nm <- c(" ", nm[-m])
-        if(html) {
+        if (m) nm <- c(" ", nm[-m])
+        if (html) {
             writeLines("<p align=\"center\">", outcon)
             writeLines(paste("<a href=\"#", nm, "\">", nm, "</a>", sep = ""), #
                        outcon)
@@ -1912,14 +1911,14 @@ if(FALSE) {
                 sep = "", file = outcon)
             MM <- M[first == f, ]
             ## cat("writing", nrow(MM), "lines for", sQuote(f), "\n")
-            if(html) {
+            if (html) {
                 writeLines('<table width="100%">', outcon)
                 writeLines(paste('<tr><td width="25%"><a href="', MM[, 2], '.html">',
                                  MM$HTopic, '</a></td>\n<td>', MM[, 3],'</td></tr>',
                                  sep = ''), outcon)
                 writeLines("</table>", outcon)
             }
-            if(CHM) {
+            if (CHM) {
                 cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
                     sep = "", file = chmcon)
                 writeLines('<table width="100%">', chmcon)
@@ -1929,8 +1928,8 @@ if(FALSE) {
                 writeLines("</table>", chmcon)
             }
        }
-    } else {
-        if(html) {
+    } else if (nrow(M)) {
+        if (html) {
             writeLines('<table width="100%">', outcon)
             writeLines(paste('<tr><td width="25%"><a href="', M[, 2], '.html">',
                              M$HTopic, '</a></td>\n<td>', M[, 3],'</td></tr>',
@@ -1944,10 +1943,13 @@ if(FALSE) {
                              sep = ''), chmcon)
             writeLines("</table>", chmcon)
         }
+    } else { # no rows
+        if (html) writeLines("There are no help pages in this package", outcon)
+        if (CHM) writeLines("There are no help pages in this package", chmcon)
     }
-    if(html) writeLines('</body></html>', outcon)
-    if(CHM) writeLines('</body></html>', chmcon)
-    if(CHM) {
+    if (html) writeLines('</body></html>', outcon)
+    if (CHM) writeLines('</body></html>', chmcon)
+    if (CHM) {
         chm_toc(dir, desc["Package"], M)
         .write_CHM_hhp(dir, desc["Package"], CHMinternals)
     }
@@ -1956,7 +1958,7 @@ if(FALSE) {
 ## dir is the package top-level source directory
 .write_CHM_hhp <- function(dir, pkg, internals)
 {
-    if(missing(pkg)) pkg <- basename(dir)
+    if (missing(pkg)) pkg <- basename(dir)
     d <- file.path(dir, "chm")
     dir.create(d, showWarnings = FALSE)
     con <- file(file.path(d, paste(pkg, ".hhp", sep = "")), "wt")
@@ -1985,7 +1987,7 @@ if(FALSE) {
     showtype <- function(type) {
     	if (!shown) {
             nc <- nchar(bf)
-            if(nc < 38L)
+            if (nc < 38L)
                 cat("    ", bf, rep(" ", 40L - nc), sep = "")
             else
                 cat("    ", bf, "\n", rep(" ", 44L), sep = "")
@@ -1999,14 +2001,13 @@ if(FALSE) {
     ext <- c(".html", ".tex", ".R", ".html")
     names(dirname) <- names(ext) <- c("html", "latex", "example", "chm")
     mandir <- file.path(dir, "man")
-    if(!file_test("-d", mandir))
-        stop("there are no help pages in this package")
+    if (!file_test("-d", mandir)) return()
     desc <- .readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION
     pkg <- desc["Package"]
 
     ## CHM is built in the source tree
     for(type in types)
-        if(type != "chm")
+        if (type != "chm")
             dir.create(file.path(outDir, dirname[type]), showWarnings = FALSE)
 
     cat("  converting help for package ", sQuote(pkg), "\n", sep="")
@@ -2023,8 +2024,9 @@ if(FALSE) {
     db <- tryCatch(Rd_db(basename(outDir), lib.loc = dirname(outDir)),
                    error = function(e) NULL)
     ## If not, we build the Rd db from the sources:
-    if(is.null(db)) db <- Rd_db(dir = dir)
+    if (is.null(db)) db <- Rd_db(dir = dir)
 
+    if (!length(db)) return()
 
     files <- names(db)
 
@@ -2047,11 +2049,11 @@ if(FALSE) {
         environment(.ehandler)$.messages <- character()
         environment(.whandler)$.messages <- character()
 
-        if("html" %in% types) {
+        if ("html" %in% types) {
             type <- "html"
             ff <- file.path(outDir, dirname[type],
                             paste(bf, ext[type], sep = ""))
-            if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
+            if (!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 showtype(type)
                 ## assume prepare_Rd was run when dumping the .rds
                 ## so use defines = NULL for speed
@@ -2063,16 +2065,16 @@ if(FALSE) {
             type <- "latex"
             ff <- file.path(outDir, dirname[type],
                             paste(bf, ext[type], sep = ""))
-            if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
+            if (!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 showtype(type)
                 .convert(Rd2latex(Rd, ff, defines = NULL))
             }
         }
-        if("chm" %in% types) {
+        if ("chm" %in% types) {
             type <- "chm"
             ff <- file.path(dir, dirname[type],
                             paste(bf, ext[type], sep=""))
-            if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
+            if (!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 showtype(type)
                 .convert(Rd2HTML(Rd, ff, package = pkg, defines = NULL,
                                  Links = Links, CHM = TRUE))
@@ -2082,14 +2084,14 @@ if(FALSE) {
             type <- "example"
             ff <- file.path(outDir, dirname[type],
                             paste(bf, ext[type], sep = ""))
-            if(!file_test("-f", ff) || file_test("-nt", f, ff)) {
+            if (!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 .convert(Rd2ex(Rd, ff, defines = NULL))
-                if(file_test("-f", ff)) showtype(type)
+                if (file_test("-f", ff)) showtype(type)
             }
         }
-        if(shown) {
+        if (shown) {
             cat("\n")
-            if(length(.messages <- environment(.whandler)$.messages))
+            if (length(.messages <- environment(.whandler)$.messages))
                 writeLines(unique(.messages))
         }
     }
@@ -2128,8 +2130,8 @@ function(name="", version = "0.0")
     if (file.exists(f <- "../DESCRIPTION") ||
         file.exists(f <- "../../DESCRIPTION")) {
         desc <- read.dcf(f)[[1]]
-        if(!is.na(f <- desc["Package"])) name <- f
-        if(!is.na(f <- desc["Version"])) version <- f
+        if (!is.na(f <- desc["Package"])) name <- f
+        if (!is.na(f <- desc["Version"])) version <- f
     }
     writeLines(c('#include <windows.h>',
                  '#include "Rversion.h"',
@@ -2199,7 +2201,7 @@ function(name="", version = "0.0")
     out <- NULL
     os <- ""
 
-    if(is.null(args)) {
+    if (is.null(args)) {
         args <- commandArgs(TRUE)
         ## it seems that splits on spaces, so try harder.
         args <- paste(args, collapse=" ")
@@ -2299,7 +2301,7 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
     desc <- NULL
     if (file.exists(f <- file.path(pkgdir, "DESCRIPTION"))) {
         desc <- read.dcf(f)[1,]
-        if(enc == "unknown") {
+        if (enc == "unknown") {
             pkg_enc <- desc["Encoding"]
             if (!is.na(pkg_enc)) {
             	enc <- pkg_enc
@@ -2309,17 +2311,17 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
     }
 
     ## Rd2.tex part 1: header
-    if(batch == "true") writeLines("\\nonstopmode{}", out)
+    if (batch == "true") writeLines("\\nonstopmode{}", out)
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
         "\\usepackage[", Sys.getenv("R_RD4DVI", "ae"), "]{Rd}\n",
         sep = "", file = out)
-    if(index) writeLines("\\usepackage{makeidx}", out)
+    if (index) writeLines("\\usepackage{makeidx}", out)
     ## this needs to be canonical, e.g. 'utf8'
     setEncoding <- paste("\\usepackage[", latex_canonical_encoding(outputEncoding), "]{inputenc} % @SET ENCODING@", sep="")
     writeLines(c(setEncoding,
                  "\\makeindex{}",
                  "\\begin{document}"), out)
-    if(is_bundle == "no") {
+    if (is_bundle == "no") {
         if (!nzchar(title)) {
             if (is.character(desc))
                 title <- paste("Package `", desc["Package"], "'", sep = "")
@@ -2343,11 +2345,11 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
             "{\\textbf{\\huge ", title, "}}\n",
             "\\par\\bigskip{\\large \\today}\n",
             "\\end{center}\n", sep = "", file = out)
-        if(description && file.exists(f <- file.path(pkgdir, "DESCRIPTION")))
+        if (description && file.exists(f <- file.path(pkgdir, "DESCRIPTION")))
             .DESCRIPTION_to_latex(f, out)
         ## running on the sources of a base package will have DESCRIPTION.in,
         ## only.
-        if(description &&
+        if (description &&
            file.exists(f <- file.path(pkgdir, "DESCRIPTION.in"))) {
             version <- readLines(file.path(pkgdir, "../../../VERSION"))
             .DESCRIPTION_to_latex(file.path(pkgdir, "DESCRIPTION.in"),
@@ -2370,19 +2372,19 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
     }
 
     ## Rd2.tex part 2: body
-    toc <- if(file_test("-d", files_or_dir)) {
+    toc <- if (file_test("-d", files_or_dir)) {
         "\\Rdcontents{\\R{} topics documented:}"
     } else ""
 
     latexEncodings <- character(0)
     if (is_bundle == "no") {
         ## if this looks like a package with no man pages, skip body
-        if(file.exists(file.path(pkgdir, "DESCRIPTION")) &&
+        if (file.exists(file.path(pkgdir, "DESCRIPTION")) &&
            !(file_test("-d", file.path(pkgdir, "man")) ||
              file_test("-d", file.path(pkgdir, "help")) ||
              file_test("-d", file.path(pkgdir, "latex")))) only_meta <- TRUE
-        if(!only_meta) {
-            if(nzchar(toc)) writeLines(toc, out)
+        if (!only_meta) {
+            if (nzchar(toc)) writeLines(toc, out)
             latexEncodings <-
                 .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
                              extraDirs = OSdir, internals = internals,
@@ -2402,7 +2404,7 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
             if (description &&
                 file.exists(f <- file.path(pkgdir, p, "DESCRIPTION.in")))
                 .DESCRIPTION_to_latex(f, out)
-            if(!only_meta)
+            if (!only_meta)
                 latexEncodings <- c(latexEncodings, .pkg2tex(file.path(pkgdir, p), out, encoding = enc,
                          append = TRUE, asChapter = FALSE,
                          internals = internals))
@@ -2412,14 +2414,14 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
     }
 
     ## Rd2.tex part 3: footer
-    if(index) writeLines("\\printindex{}", out)
+    if (index) writeLines("\\printindex{}", out)
     writeLines("\\end{document}", out)
     close(out)
 
     ## Fix up encodings
     ## FIXME cyrillic probably only works with times, not ae.
     latexEncodings <- unique(latexEncodings)
-    cyrillic <- if(nzchar(Sys.getenv("_R_CYRILLIC_TEX_"))) "utf8" %in% latexEncodings else FALSE
+    cyrillic <- if (nzchar(Sys.getenv("_R_CYRILLIC_TEX_"))) "utf8" %in% latexEncodings else FALSE
     latex_outputEncoding <- latex_canonical_encoding(outputEncoding)
     encs <- latexEncodings[latexEncodings != latex_outputEncoding]
     if (length(encs) || cyrillic) {

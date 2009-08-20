@@ -4502,10 +4502,7 @@ function(dir, silent = FALSE, def_enc = FALSE)
         tmp <- try(checkRd(f, encoding = enc, def_enc = def_enc), silent=TRUE)
         if(inherits(tmp, "try-error")) {
 	    bad <- c(bad, f)
-            if(!silent)  {
-                message("*** error on file ", f)
-                message(geterrmessage())
-            }
+            if(!silent) message(geterrmessage())
         }
     }
     if(length(bad)) bad <- sQuote(sub(".*/","", bad))

@@ -244,11 +244,13 @@ function(contents, packageName, defaultEncoding = NULL)
 .build_links_index <-
 function(contents, package)
 {
-    aliases <- contents$Aliases
-    lens <- sapply(aliases, length)
-    structure(file.path("../..", package, "html",
-                        rep.int(contents$File, lens)),
-              names = unlist(aliases))
+    if(length(contents)) {
+        aliases <- contents$Aliases
+        lens <- sapply(aliases, length)
+        structure(file.path("../..", package, "html",
+                            rep.int(contents$File, lens)),
+                  names = unlist(aliases))
+    } else character()
 }
 
 

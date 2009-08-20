@@ -381,14 +381,6 @@ function(dir, outDir)
     dataDir <- file.path(outDir, "data")
     outDir <- file_path_as_absolute(outDir)
 
-    ## allow for a data dir but no man pages
-    if(!file_test("-d", docsDir)) {
-        if(file_test("-d", dataDir))
-            .saveRDS(.build_data_index(dataDir, NULL),
-                     file.path(outDir, "Meta", "data.rds"))
-        return(invisible())
-    }
-
     ## <FIXME>
     ## Not clear whether we should use the basename of the directory we
     ## install to, or the package name as obtained from the DESCRIPTION
@@ -398,7 +390,8 @@ function(dir, outDir)
     packageName <- basename(outDir)
     ## </FIXME>
 
-    allRd <- list_files_with_type(docsDir, "docs")
+    allRd <- if(file_test("-d", docsDir))
+        list_files_with_type(docsDir, "docs") else character()
     ## some people have man dirs without any valid .Rd files
     if(length(allRd)) {
         ## we want the date of the newest .Rd file we will install
@@ -460,7 +453,16 @@ function(dir, outDir)
             writeLines(formatDL(.build_Rd_index(contents)),
                        file.path(outDir, "INDEX"))
         ## </NOTE>
-    } else contents <- NULL
+    } else {
+        contents <- NULL
+        .saveRDS(.build_hsearch_index(contents, packageName, defaultEncoding),
+                 file.path(outDir, "Meta", "hsearch.rds"))
+
+        .saveRDS(.build_links_index(contents, packageName),
+                 file.path(outDir, "Meta", "links.rds"))
+        ## and don't write empty CONTENTS file
+
+    }
     if(file_test("-d", dataDir))
         .saveRDS(.build_data_index(dataDir, contents),
                  file.path(outDir, "Meta", "data.rds"))
@@ -741,9 +743,8 @@ function(dir, outDir)
 function(dir, outDir, encoding = "unknown")
 {
     mandir <- file.path(dir, "man")
-    if(!file_test("-d", mandir)) return()
-    manfiles <- list_files_with_type(mandir, "docs")
-    if(!length(manfiles)) return()
+    manfiles <- if(!file_test("-d", mandir)) character()
+    else list_files_with_type(mandir, "docs")
     manOutDir <- file.path(outDir, "help")
     dir.create(manOutDir, FALSE)
     db_file <- file.path(manOutDir,
