@@ -27,8 +27,8 @@
 ##  \\name must only contain simple text
 
 Rd2txt <-
-    function(Rd, out="", package = "", defines=.Platform$OS.type, stages = "render",
-             outputEncoding = "", ...)
+    function(Rd, out="", package = "", defines=.Platform$OS.type,
+             stages = "render", outputEncoding = "", ...)
 {
     WIDTH <- 72L
     HDR_WIDTH <- 70L
