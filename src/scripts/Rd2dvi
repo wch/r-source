@@ -26,6 +26,7 @@ equals the basename of argument 'files' if this specifies a package
 The Rd sources are assumed to be ASCII unless they contain \encoding
 declarations (which take priority) or --encoding is supplied or if using
 package sources, if the package DESCRIPTION file has an Encoding field.
+The output encoding defaults to the package encoding then to latin1.
 
 Options:
   -h, --help		print short help message and exit
@@ -44,7 +45,7 @@ Options:
   -V, --verbose		report on what is done
       --no-index	don't index PDF output
       --no-description	don't typeset the description of a package
-      --internals	typeset 'internal' documentatiom (usually skipped)
+      --internals	typeset 'internal' documentation (usually skipped)
 
 The output papersize is set by the environment variable R_PAPERSIZE.
 The DVI previewer is set by the environment variable xdvi.
