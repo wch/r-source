@@ -43,7 +43,7 @@ Options:
   -V, --verbose		report on what is done
       --no-index	don't index PDF output
       --no-description	don't typeset the description of a package
-      --internals	typeset 'internal' documentatiom (usually skipped)
+      --internals	typeset 'internal' documentation (usually skipped)
 
 The output papersize is set by the environment variable R_PAPERSIZE.
 The DVI previewer is set by the environment variable xdvi.
