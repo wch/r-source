@@ -104,7 +104,7 @@
             "      --no-multiarch	build only the main architecture",
             "\nand on Windows only",
             "      --auto-zip	select whether to zip automatically",
-            "      --no-chm		do not build CHM help [disabled pro lem]",
+            "      --no-chm		do not build CHM help",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
