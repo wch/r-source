@@ -2487,7 +2487,10 @@ this will be machine-dependent: you may have Russian or Japanese fonts
 installed but your users may not.  Using @samp{postscript} or @samp{pdf}
 will choose a default 8-bit encoding depending on the language of the
 UTF-8 locale, and your users would need to be told how to select the
-@samp{encoding} argument.
+@samp{encoding} argument.  As from @R{} 2.7.0 UTF-8-encoded text works
+reasonably well on Windows using the @code{Rgui} console and the
+@code{windows} family of devices, since they work internally in Unicode
+(UCS-2).
 
 Another fairly common scenario is where a package will only be used in
 one language, e.g.@: French.  It is not very safe to assume that all
@@ -2517,6 +2520,17 @@ version @code{1.02}):
 
 @noindent
 was used to update a @file{.rda} file.
+
+From @R{} 2.10.0 there is a fairly portable@footnote{this has worked on
+Windows since @R{} 2.7.0, and works now on all Unix-alikes built with
+MBCS support.} way to have arbitrary text in character strings (only) in
+your @R{} code, which is to supply them in Unicode as @code{\uxxxx}
+escapes.  If there are any characters not in the current encoding the
+parser will encode the character string as UTF-8 and mark it as such.
+For maximum portability a package that makes uses of this strategy
+should be installed in a UTF-8 or C locale (to ensure that all such
+strings are parsed to UTF-8 and so available in all possible locales
+under which the package might be used).
 
 If you want to run @command{R CMD check} on a Unix-alike over a package
 that sets the encoding you may need to specify a suitable locale via an
