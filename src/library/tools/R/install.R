@@ -107,7 +107,7 @@
             "      --libs-only	only install the libs directory",
             "      --no-multiarch	build only the main architecture",
             "\nand on Windows only",
-            "      --auto-zip	select whether to zip automatically",
+            "      --auto-zip	select whether to zip data automatically",
             "      --no-chm		do not build CHM help",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
