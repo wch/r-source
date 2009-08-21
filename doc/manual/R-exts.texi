@@ -2522,7 +2522,10 @@ this will be machine-dependent: you may have Russian or Japanese fonts
 installed but your users may not.  Using @samp{postscript} or @samp{pdf}
 will choose a default 8-bit encoding depending on the language of the
 UTF-8 locale, and your users would need to be told how to select the
-@samp{encoding} argument.
+@samp{encoding} argument.  As from @R{} 2.7.0 UTF-8-encoded text works
+reasonably well on Windows using the @code{Rgui} console and the
+@code{windows} family of devices, since they work internally in Unicode
+(UCS-2).
 
 Another fairly common scenario is where a package will only be used in
 one language, e.g.@: French.  It is not very safe to assume that all
@@ -3323,7 +3326,7 @@ Each @code{\keyword} entry should specify one of the standard keywords
 as listed in file @file{KEYWORDS} in the R documentation directory
 (default @file{@var{R_HOME}/doc}).  Use e.g.@:
 @code{file.show(file.path(R.home("doc"), "KEYWORDS"))} to inspect the
-standard keywords from within R.  There can be more than @code{\keyword}
+standard keywords from within R.  There can be more than one @code{\keyword}
 entry if the @R{} object being documented falls into more than one
 category.
 
@@ -3969,7 +3972,7 @@ it might for example use
 later.  Also, the use of Cyrillic characters in @samp{UTF-8} appears to
 also need @samp{\usepackage[T2A]@{fontenc@}}, and @command{R CMD Rd2dvi}
 includes this conditionally on the file @file{t2aenc.def} being present
-and @env{_R_CYRILLIC_TEX_} being set.)
+and environment variable @env{_R_CYRILLIC_TEX_} being set.)
 
 Note that this mechanism works best with Latin letters and for example
 the copyright symbol may be rendered as a subscript and the plus--minus
@@ -4157,7 +4160,7 @@ differences from version 1.1 include
 Unmatched right braces are an error, not just a warning.
 
 @item
-No space is allowed bewteen the first and second arguments of a macro
+No whitespace is allowed between the first and second arguments of a macro
 such as @code{\item}.
 
 @item
