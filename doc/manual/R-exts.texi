@@ -218,7 +218,7 @@ so far.} unless they are listed (one filepath per line) in a file
 @acronym{CRAN} will no longer accept submissions containing binary files
 even if they are listed.
 
-The @R{} function @code{package.skeleton} can create the
+The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
 
 @menu
@@ -1064,8 +1064,7 @@ slamc.o: slamc.f
 @noindent
 (since the other macros are all empty on that platform, and R's internal
 BLAS is not used).  Note that the first target in @file{Makevars} will
-be called on a Unix-alike, and target @samp{all} on Windows (but the
-latter will change in as from @R 2.10.0).
+be called, but target @samp{all} was called on Windows prior to @R 2.10.0.
 
 If you want to create and then link to a library, say using code in a
 subdirectory, use something like
@@ -1088,18 +1087,6 @@ multiple CPUs and parallel makes).
 
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
 or @file{Makevars.win}: this will be used by @command{R CMD build}.
-
-If you really want to subvert the mechanisms, use a first target named
-something other than @samp{all}, as the standard makefile (which is
-included after @file{Makevars}) includes the target
-
-@example
-all: $(SHLIB)
-@end example
-
-@noindent
-and hence target @samp{all} in @file{Makevars} adds to that target.
-(This is for Unix-alikes only until @R{} 2.10.0.)
 
 @menu
 * Back-compatibility for Makevars::  
@@ -1138,11 +1125,11 @@ all: before $(SHLIB) after
 @end example
 
 @noindent
-omitting @code{bwfore} or @code{after} if they are unused.  Note however
+omitting @code{before} or @code{after} if they are unused.  Note however
 that this is not compatible with the use of a parallel make.
 
 Note that as from @R{} 2.10.0 the first target in @file{Makevars[.win]}
-will be called if there is one, so for future compatibility this should
+will be called if there is one, so for backwards compatibility this should
 be named @samp{all}.
 
 Some packages used undocumented macros under Windows, notably
@@ -2530,7 +2517,10 @@ parser will encode the character string as UTF-8 and mark it as such.
 For maximum portability a package that makes uses of this strategy
 should be installed in a UTF-8 or C locale (to ensure that all such
 strings are parsed to UTF-8 and so available in all possible locales
-under which the package might be used).
+under which the package might be used).  A variation of this approach
+that has worked for Latin-1 text since @R{} 2.5.0 is to enter the text
+with @code{\x} escapes and using @code{Encoding(x) <- "latin1"} to
+declare its encoding.
 
 If you want to run @command{R CMD check} on a Unix-alike over a package
 that sets the encoding you may need to specify a suitable locale via an
