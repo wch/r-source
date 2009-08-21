@@ -35,13 +35,13 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     ## do this in two steps to minimize warnings in MBCS locales
     ## Note this is required to be on a line by itself.
     enc <- grep("\\encoding{", lines, fixed = TRUE, useBytes=TRUE)
-    enc <- grep("^\\\\encoding\\{([^}]*)\\}.*", lines[enc], value=TRUE)
+    enc <- grep("^[[:space:]]*\\\\encoding\\{([^}]*)\\}.*", lines[enc], value=TRUE)
     if(length(enc)) {
         if(length(enc) > 1L)
             warning("multiple \\encoding lines in file ", file0)
         ## keep first one
         enc <- enc[1L]
-        enc <- sub("^\\\\encoding\\{([^}]*)\\}.*", "\\1", enc)
+        enc <- sub("^[[:space:]]*\\\\encoding\\{([^}]*)\\}.*", "\\1", enc)
         if(verbose) message("found encoding ", enc)
         encoding <- if(enc %in% c("UTF-8", "utf-8", "utf8")) "UTF-8" else enc
     }
