@@ -41,8 +41,7 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
     ctr
 }
 
-"contrasts<-" <-
-    function(x, how.many, value)
+`contrasts<-` <- function(x, how.many, value)
 {
     if (is.logical(x)) x <- factor(x, levels=c(FALSE, TRUE))
     if(!is.factor(x))
@@ -50,15 +49,17 @@ contrasts <- function (x, contrasts = TRUE, sparse = FALSE)
     if(nlevels(x) < 2L)
         stop("contrasts can be applied only to factors with 2 or more levels")
     if(is.function(value)) value <- value(nlevels(x))
-    if(is.numeric(value)) {
-	value <- as.matrix(value)
+    if((is.n <- is.numeric(value)) || is(value, "Matrix")) {
+	## also work for "sparseMatrix"
+	if(is.n) value <- as.matrix(value)
 	nlevs <- nlevels(x)
 	if(nrow(value) != nlevs)
 	    stop("wrong number of contrast matrix rows")
 	n1 <- if(missing(how.many)) nlevs - 1L else how.many
 	nc <- ncol(value)
 	rownames(value) <- levels(x)
-	if(nc  < n1) {
+	if(nc < n1) {
+	    if(!is.n) value <- as.matrix(value) ## for now use traditional qr():
 	    cm <- qr(cbind(1,value))
 	    if(cm$rank != nc+1) stop("singular contrast matrix")
 	    cm <- qr.qy(cm, diag(nlevs))[, 2L:nlevs]

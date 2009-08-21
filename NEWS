@@ -1,4 +1,4 @@
-﻿
+
 	**************************************************
 	*						 *
 	*	       2.10 SERIES NEWS			 *
@@ -160,6 +160,10 @@ NEW FEATURES
 
 	contrasts() also gains a 'sparse' argument which it passes to the
 	actual contrast function if that has a formal argument 'sparse'.
+
+	'contrasts(f, .) <- val' now also works when 'val' is a sparse
+	Matrix.  It is planned that model.matrix() will work with such
+	factors 'f' in the future.
 
     o	readNEWS() will recognize a UTF-8 byte-order mark (BOM) in the
 	NEWS file. However, it is safer to use only ASCII code there
