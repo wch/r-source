@@ -88,7 +88,7 @@ Rd2txt <-
         txt <- paste(..., collapse="", sep="")
         trail <- grepl("\n$", txt)
         # Convert newlines
-        txt <- strsplit(txt, "\n", fixed=TRUE)[[1]]
+        txt <- strsplit(txt, "\n", fixed = TRUE)[[1]]
         if (dropBlank) {
             while(length(txt) && grepl("^[[:space:]]*$",txt[1]))
             	txt <- txt[-1]
@@ -115,7 +115,8 @@ Rd2txt <-
 
     	if (wrapping) {
 	    if (keepFirstIndent) {
-		first <- nchar(sub("[^ ].*", "", buffer[1]))
+		first <- nchar(sub("[^ ].*", "", buffer[1],
+                                   perl = TRUE, useBytes = TRUE))
 		keepFirstIndent <<- FALSE
 	    } else
 		first <- indent
@@ -153,58 +154,52 @@ Rd2txt <-
     encoding <- "unknown"
 
     trim <- function(x) {
-        x <- sub("^\\s*", "", x, perl = TRUE)
-        sub("\\s*$", "", x, perl = TRUE)
+        x <- sub("^\\s*", "", x, perl = TRUE, useBytes = TRUE)
+        sub("\\s*$", "", x, perl = TRUE, useBytes = TRUE)
     }
 
     striptitle <- function(text) {
-        Encoding(text) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
-        text <- gsub("\\", "", text, fixed = TRUE)
-        text <- gsub("---", "_", text, fixed = TRUE)
-        text <- gsub("--", "-", text, fixed = TRUE)
-        Encoding(text) <- "UTF-8"
+        text <- fsub("\\", "", text)
+        text <- fsub("---", "_", text)
+        text <- fsub("--", "-", text)
         text
     }
 
     txt_striptitle <- function(text) {
         text <- striptitle(text)
-        Encoding(text) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
         if (.Platform$OS.type == "windows" &&
             Sys.getlocale("LC_CTYPE") != "C") {
-            text <- gsub("``", LDQM, text, fixed = TRUE)
-            text <- gsub("''", RDQM, text, fixed = TRUE)
-            text <- gsub("`([^']+)'", paste(LSQM, "\\1", RSQM, sep=""), text)
-            text <- gsub("`", "'", text, fixed = TRUE)
+            text <- fsub("``", LDQM, text)
+            text <- fsub("''", RDQM, text)
+            text <- psub("`([^']+)'", paste(LSQM, "\\1", RSQM, sep=""), text)
+            text <- fsub("`", "'", text)
         } else {
-            text <- gsub("(``|'')", '"', text)
-            text <- gsub("`", "'", text, fixed = TRUE)
+            text <- psub("(``|'')", '"', text)
+            text <- fsub("`", "'", text)
         }
-        Encoding(text) <- "UTF-8"
         text
     }
 
     ## underline via backspacing
     txt_header <- function(header) {
         header <- paste(strwrap(header, WIDTH), collapse="\n")
-        letters <- strsplit(header, "", fixed=TRUE)[[1L]]
+        letters <- strsplit(header, "", fixed = TRUE)[[1L]]
         isaln <- grep("[[:alnum:]]", letters)
         letters[isaln] <- paste("_\b", letters[isaln], sep="")
         paste(letters, collapse = "")
     }
 
     unescape <- function(x) {
-        x <- gsubUTF8("(---|--)", "-", x)
+        x <- psub("(---|--)", "-", x)
         x
     }
 
     writeCode <- function(x) {
         txt <- as.character(x)
         if(inEqn) txt <- txt_eqn(txt)
-        Encoding(txt) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
-        txt <- gsub('"\\{"', '"{"', txt, fixed = TRUE)
+        txt <- fsub('"\\{"', '"{"', txt)
         ## \dots gets left in noquote.Rd
-        txt <- gsub("\\dots",  "....", txt, fixed = TRUE)
-        Encoding(txt) <- "UTF-8"
+        txt <-fsub("\\dots",  "....", txt)
         put(txt)
     }
 
@@ -223,11 +218,9 @@ Rd2txt <-
     }
 
     txt_eqn <- function(x) {
-        Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
-        x <- gsub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilaon|psi)", "\\1", x)
-        x <- gsub("\\\\(bold|strong|emph|var)\\{([^}]*)\\}", "\\2", x)
-        x <- gsub("\\\\(ode|samp)\\{([^}]*)\\}", "'\\2'", x)
-        Encoding(x) <- "UTF-8"
+        x <- psub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilaon|psi)", "\\1", x)
+        x <- psub("\\\\(bold|strong|emph|var)\\{([^}]*)\\}", "\\2", x)
+        x <- psub("\\\\(ode|samp)\\{([^}]*)\\}", "'\\2'", x)
         x
     }
 
@@ -475,14 +468,19 @@ Rd2txt <-
                                }
                                j <- j + 1L
                            }
-                           txt <- sub("\\(([^,]*),\\s*", "\\1@generic@", txt)
-                           txt <- sub("@generic@", generic, txt, fixed = TRUE)
+                           txt <- sub("\\(([^,]*),\\s*", "\\1@generic@", txt,
+                                      perl = TRUE, useBytes = TRUE)
+                           txt <- sub("@generic@", generic, txt,
+                                      fixed = TRUE, useBytes = TRUE)
                            if (generic == "[")
-                               txt <- sub(")([^)]*)$", "]\\1", txt)
+                               txt <- sub(")([^)]*)$", "]\\1", txt,
+                                      perl = TRUE, useBytes = TRUE)
                            else if (generic == "[[")
-                               txt <- sub(")([^)]*)$", "]]\\1", txt)
+                               txt <- sub(")([^)]*)$", "]]\\1", txt,
+                                      perl = TRUE, useBytes = TRUE)
                            else if (generic == "$")
-                               txt <- sub(")([^)]*)$", "\\1", txt)
+                               txt <- sub(")([^)]*)$", "\\1", txt,
+                                      perl = TRUE, useBytes = TRUE)
                            if (grepl("<-\\s*value", txt))
                                putf("## S3 replacement method for class '")
                            else
@@ -578,8 +576,7 @@ Rd2txt <-
                        ## The next item must be TEXT, and start with a space.
                        itemskip <- FALSE
                        if (tag == "TEXT") {
-                           txt <- gsubUTF8("^ ", "", as.character(block),
-                                           perl = TRUE)
+                           txt <- psub("^ ", "", as.character(block))
                            put(txt)
                        } else writeBlock(block, tag, blocktag) # should not happen
                    } else writeBlock(block, tag, blocktag)
@@ -647,7 +644,7 @@ Rd2txt <-
 
     ## Give warning (pro tem) for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]",
-                           unlist(Rd[sections == "TEXT"]), perl = TRUE )))
+                           unlist(Rd[sections == "TEXT"]), perl = TRUE)))
     	warnRd(Rd[sections == "TEXT"][[bad[1L]]], Rdfile,
                "All text must be in a section")
 
@@ -668,9 +665,10 @@ Rd2txt <-
 
     title <- as.character(Rd[[1L]])
     ## remove empty lines, leading and trailing whitespace, \n
-    title <- trim(paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
+    title <- trim(paste(sub("^\\s+", "", title[nzchar(title)],
+                            perl = TRUE, useBytes = TRUE),
                         collapse=" "))
-    title <- gsubUTF8("\n", "", title, fixed = TRUE)
+    title <- fsub("\n", "", title)
 
     name <- Rd[[2L]]
     tags <- RdTags(name)

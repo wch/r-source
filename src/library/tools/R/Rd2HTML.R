@@ -166,7 +166,7 @@ Rd2HTML <-
     addParaBreaks <- function(x, tag) {
         start <- attr(x, "srcref")[2L] # FIXME: what if no srcref?, start col
 	if (isBlankLineRd(x)) "</p>\n<p>\n"
-	else if(start == 1) gsubUTF8("^\\s+", "", x, perl = TRUE)
+	else if(start == 1) psub("^\\s+", "", x)
         else x
     }
 
@@ -175,27 +175,22 @@ Rd2HTML <-
 
 
     htmlify <- function(x) {
-        ## FIXME: just use useBytes = TRUE?
-    	Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
-	x <- gsub("&", "&amp;", x, fixed = TRUE)
-	x <- gsub("---", "&mdash;", x, fixed = TRUE)
-	x <- gsub("--", "&ndash;", x, fixed = TRUE)
-	x <- gsub("``", "&ldquo;", x, fixed = TRUE)
-	x <- gsub("''", "&rdquo;", x, fixed = TRUE)
-        x <- gsub("`([^']+)'", "&lsquo;\\1&rsquo;", x, perl=TRUE)
-	x <- gsub("`", "'", x, fixed = TRUE)
-	x <- gsub("<", "&lt;", x, fixed = TRUE)
-	x <- gsub(">", "&gt;", x, fixed = TRUE)
-	Encoding(x) <- "UTF-8"
+	x <- fsub("&", "&amp;", x)
+	x <- fsub("---", "&mdash;", x)
+	x <- fsub("--", "&ndash;", x)
+	x <- fsub("``", "&ldquo;", x)
+	x <- fsub("''", "&rdquo;", x)
+        x <- psub("`([^']+)'", "&lsquo;\\1&rsquo;", x)
+	x <- fsub("`", "'", x)
+	x <- fsub("<", "&lt;", x)
+	x <- fsub(">", "&gt;", x)
 	x
     }
 
     vhtmlify <- function(x) { # code version
-    	Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
-	x <- gsub("&", "&amp;", x, fixed = TRUE)
-	x <- gsub("<", "&lt;", x, fixed = TRUE)
-	x <- gsub(">", "&gt;", x, fixed = TRUE)
-	Encoding(x) <- "UTF-8"
+	x <- fsub("&", "&amp;", x)
+	x <- fsub("<", "&lt;", x)
+	x <- fsub(">", "&gt;", x)
 	x
     }
 
@@ -203,13 +198,11 @@ Rd2HTML <-
     {
         x <- htmlify(x)
         ## historical escapes for math
-    	Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
-        x <- gsub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilaon)", "&\\1;", x)
-        x <- gsub("\\\\left\\(", "(", x)
-        x <- gsub("\\\\right", "\\)", x)
-        x <- gsub("\\le", "&lt;=", x)
-        x <- gsub("\\ge", "&gt;=", x)
-        Encoding(x) <- "UTF-8"
+        x <- psub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilaon)", "&\\1;", x)
+        x <- fsub("\\left(", "(", x)
+        x <- fsub("\\right", ")", x)
+        x <- fsub("\\le", "&lt;=", x)
+        x <- fsub("\\ge", "&gt;=", x)
         x
     }
 
@@ -299,12 +292,10 @@ Rd2HTML <-
     }
 
     writeComment <- function(txt) {
-       	Encoding(txt) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
-       	txt <- sub("^%", "", txt, fixed = TRUE)
-       	txt <- sub("\n", "", txt)
-       	txt <- gsub("--", "- - ", txt, fixed = TRUE)
-       	txt <- gsub(">", "&gt;", txt, fixed = TRUE)
-       	Encoding(txt) <- "UTF-8"
+       	txt <- sub("^%", "", txt, perl = TRUE, useBytes = TRUE)
+       	txt <- sub("\n", "", txt, fixed = TRUE, useBytes = TRUE)
+       	txt <- fsub("--", "- - ", txt)
+       	txt <- fsub(">", "&gt;", txt)
 	of("<!-- ", txt, " -->\n")
     }
 
@@ -417,7 +408,7 @@ Rd2HTML <-
     	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
     	    stopRd(table, Rdfile, "\\tabular format must be simple text")
-    	format <- strsplit(format[[1L]], "", fixed=TRUE)[[1L]]
+    	format <- strsplit(format[[1L]], "", fixed = TRUE)[[1L]]
     	if (!all(format %in% c("l", "c", "r")))
     	    stopRd(table, Rdfile,
                    "Unrecognized \\tabular format: ", table[[1L]][[1L]])
@@ -537,7 +528,7 @@ Rd2HTML <-
                     ## The next item must be TEXT, and start with a space.
                     itemskip <- FALSE
                     if (tag == "TEXT") {
-                        txt <- gsubUTF8("^ ", "", as.character(block), perl = TRUE)
+                        txt <- psub("^ ", "", as.character(block))
                         of1(txt)
                     } else writeBlock(block, tag, blocktag) # should not happen
                 } else writeBlock(block, tag, blocktag)

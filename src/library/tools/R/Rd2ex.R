@@ -38,7 +38,7 @@ Rd2ex <-
         of1(paste(..., sep=""))
     of1 <- function(text) {
         if (dropNewline && length(text)) {
-            text[1] <- gsubUTF8("^\n", "", text[1])
+            text[1] <- psub("^\n", "", text[1])
             dropNewline <<- FALSE
         }
         WriteLines(text, con, outputEncoding, sep = "")
@@ -50,13 +50,12 @@ Rd2ex <-
     remap <- function(x) {
         if(!length(x)) return(x)
         ## \link, \var are untouched in comments: e.g. is.R
-        Encoding(x) <- "unknown" ## Avoid overhead of all those gsubUTF8 calls here
-        x <- gsub("\\\\(link|var)\\{([^}]+)\\}", "\\2", x, perl = TRUE)
-        ## FIXME not valid in perl: use lookbehind instead.
-        x <- gsub("(^|[^\\])\\\\([%{])", "\\1\\2", x)
-        x <- gsub("\\\\(l|)dots", "...", x, perl = TRUE)
+        x <- psub("\\\\(link|var)\\{([^}]+)\\}", "\\2", x)
+        ## not valid in perl: use lookbehind instead.
+        ## x <- gsub("(^|[^\\])\\\\([%{])", "\\1\\2", x)
+        x <- psub("(?<!\\\\)\\\\([%{])", "\\1", x)
+        x <- psub("\\\\(l|)dots", "...", x)
         ## FIXME:  Previously said "Want to leave file bytes unchanged"
-        Encoding(x) <- "UTF-8"
         x
     }
 
@@ -158,10 +157,11 @@ Rd2ex <-
         if (any(titleblk)) {
             title <- as.character(Rd[[ which(titleblk)[1L] ]])
             ## remove empty lines, leading whitespace
-            title <- paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
+            title <- paste(sub("^\\s+", "", title[nzchar(title)],
+                               perl = TRUE, useBytes = TRUE),
                            collapse=" ")
             ## FIXME: more?
-            title <- gsubUTF8("(---|--)", "-", title, perl =  TRUE)
+            title <- psub("(---|--)", "-", title)
         } else title <- "No title found"
         of0(wr(paste("Title: ", title, sep='')), "\n")
         aliasblks <- sections == "\\alias"
@@ -177,7 +177,7 @@ Rd2ex <-
             ## some people have only empty keyword blocks.
             keys <- unlist(Rd[keyblks])
             if(length(keys)) {
-                keys <- gsubUTF8("^\\s+", "", keys, perl = TRUE)
+                keys <- psub("^\\s+", "", keys)
                 of0(wr(paste("Keywords: ",
                              paste(keys, collapse=" "), sep="")), "\n")
             }

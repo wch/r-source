@@ -3695,6 +3695,10 @@ installed under @file{/opt/csw}.  You will need GNU @code{libiconv} and
 @code{readline}: the Solaris version of @code{iconv} is not sufficiently
 powerful.
 
+Some people have reported that the Solaris @code{libintl} needs to be
+avoided, for example by using @option{--disable-nls} or
+@option{--with-included-gettext} or using @code{libintl} from OpenCSW.
+
 If using @command{gcc}, do ensure that the compiler was compiled for the
 version of Solaris in use.  (This can be ascertained from @command{gcc
 -v}.)  @command{gcc} makes modified versions of some header files, and

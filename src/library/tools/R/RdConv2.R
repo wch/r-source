@@ -224,7 +224,7 @@ processRdIfdefs <- function(blocks, defines)
 	    if (tag %in% c("#ifdef", "#ifndef")) {
 		target <- block[[1L]][[1L]]
 		# The target will have picked up some whitespace and a newline
-		target <- gsubUTF8("[[:blank:][:cntrl:]]*", "", target)
+		target <- psub("[[:blank:][:cntrl:]]*", "", target)
 		if ((target %in% defines) == (tag == "#ifdef"))
 		    block <- tagged(block[[2L]], "#expanded")
 		else
@@ -313,17 +313,13 @@ sectionTitles <-
       "\\references"="References", "\\source"="Source",
       "\\seealso"="See Also", "\\examples"="Examples", "\\value"="Value")
 
-## gsub in some locales (e.g. C) gets confused by UTF-8 characters.
-## This wrapper strips and replaces the encoding marker on x.  It'll
-## only work if the pattern and replacement are pure ascii, and x
-## is UTF-8, as it is for text in Rd objects
+psub <- function(pattern, replacement, x, ...)
+    gsub(pattern, replacement, x, ..., perl = TRUE, useBytes = TRUE)
 
-gsubUTF8 <- function(pattern, replacement, x, ...) {
-    Encoding(x) <- "unknown"
-    x <- gsub(pattern, replacement, x, ...)
-    Encoding(x) <- "UTF-8"
-    x
-}
+fsub <- function(pattern, replacement, x, ...)
+    gsub(pattern, replacement, x, ..., fixed = TRUE, useBytes = TRUE)
+
+
 
 ## writeLines by default re-encodes strings to the local encoding.
 ## Avoid that by useBytes=TRUE
