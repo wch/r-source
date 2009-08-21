@@ -1173,7 +1173,7 @@ all: before $(SHLIB) after
 @end example
 
 @noindent
-omitting @code{bwfore} or @code{after} if they are unused.  Note however
+omitting @code{before} or @code{after} if they are unused.  Note however
 that this is not compatible with the use of a parallel make.
 
 Note that as from @R{} 2.10.0 the first target in @file{Makevars[.win]}
