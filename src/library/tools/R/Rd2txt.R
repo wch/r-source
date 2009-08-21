@@ -77,6 +77,19 @@ Rd2txt <-
     	result
     }
 
+    ## for efficiency
+    WriteLines <-
+        if(outputEncoding == "UTF-8" ||
+           (outputEncoding == "" && l10n_info()[["UTF-8"]])) {
+        function(x, con, outputEncoding, ...)
+            writeLines(x, con, useBytes = TRUE, ...)
+    } else {
+        function(x, con, outputEncoding, ...) {
+            x <- iconv(x, "UTF-8", outputEncoding, sub="byte", mark=FALSE)
+            writeLines(x, con, useBytes = TRUE, ...)
+        }
+    }
+
     wrap <- function(doWrap = TRUE)
 	if (doWrap != wrapping) { flushBuffer(); wrapping <<- doWrap }
 
@@ -115,8 +128,7 @@ Rd2txt <-
 
     	if (wrapping) {
 	    if (keepFirstIndent) {
-		first <- nchar(sub("[^ ].*", "", buffer[1],
-                                   perl = TRUE, useBytes = TRUE))
+		first <- nchar(psub1("[^ ].*", "", buffer[1]))
 		keepFirstIndent <<- FALSE
 	    } else
 		first <- indent
@@ -146,7 +158,7 @@ Rd2txt <-
 		buffer <<- paste(blanks(indent), buffer, sep="")
 	}
 
-    	if (length(buffer)) writeLinesUTF8(buffer, con, outputEncoding)
+    	if (length(buffer)) WriteLines(buffer, con, outputEncoding)
     	buffer <<- character()
     	linestart <<- TRUE
     }
@@ -154,8 +166,8 @@ Rd2txt <-
     encoding <- "unknown"
 
     trim <- function(x) {
-        x <- sub("^\\s*", "", x, perl = TRUE, useBytes = TRUE)
-        sub("\\s*$", "", x, perl = TRUE, useBytes = TRUE)
+        x <- psub1("^\\s*", "", x)
+        psub1("\\s*$", "", x)
     }
 
     striptitle <- function(text) {
@@ -468,19 +480,14 @@ Rd2txt <-
                                }
                                j <- j + 1L
                            }
-                           txt <- sub("\\(([^,]*),\\s*", "\\1@generic@", txt,
-                                      perl = TRUE, useBytes = TRUE)
-                           txt <- sub("@generic@", generic, txt,
-                                      fixed = TRUE, useBytes = TRUE)
+                           txt <- psub1("\\(([^,]*),\\s*", "\\1@generic@", txt)
+                           txt <- fsub1("@generic@", generic, txt)
                            if (generic == "[")
-                               txt <- sub(")([^)]*)$", "]\\1", txt,
-                                      perl = TRUE, useBytes = TRUE)
+                               txt <- psub1("\\)([^)]*)$", "]\\1", txt)
                            else if (generic == "[[")
-                               txt <- sub(")([^)]*)$", "]]\\1", txt,
-                                      perl = TRUE, useBytes = TRUE)
+                               txt <- psub1("\\)([^)]*)$", "]]\\1", txt)
                            else if (generic == "$")
-                               txt <- sub(")([^)]*)$", "\\1", txt,
-                                      perl = TRUE, useBytes = TRUE)
+                               txt <- psub1("\\)([^)]*)$", "\\1", txt)
                            if (grepl("<-\\s*value", txt))
                                putf("## S3 replacement method for class '")
                            else
@@ -665,9 +672,7 @@ Rd2txt <-
 
     title <- as.character(Rd[[1L]])
     ## remove empty lines, leading and trailing whitespace, \n
-    title <- trim(paste(sub("^\\s+", "", title[nzchar(title)],
-                            perl = TRUE, useBytes = TRUE),
-                        collapse=" "))
+    title <- trim(paste(psub1("^\\s+", "", title[nzchar(title)]), collapse=" "))
     title <- fsub("\n", "", title)
 
     name <- Rd[[2L]]

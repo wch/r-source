@@ -313,23 +313,21 @@ sectionTitles <-
       "\\references"="References", "\\source"="Source",
       "\\seealso"="See Also", "\\examples"="Examples", "\\value"="Value")
 
-psub <- function(pattern, replacement, x, ...)
-    gsub(pattern, replacement, x, ..., perl = TRUE, useBytes = TRUE)
+psub <- function(pattern, replacement, x)
+##    gsub(pattern, replacement, x, perl = TRUE, useBytes = TRUE)
+    .Internal(gsub(pattern, replacement, x, FALSE, TRUE, TRUE, FALSE, TRUE))
 
-fsub <- function(pattern, replacement, x, ...)
-    gsub(pattern, replacement, x, ..., fixed = TRUE, useBytes = TRUE)
+psub1 <- function(pattern, replacement, x)
+##    sub(pattern, replacement, x, perl = TRUE, useBytes = TRUE)
+    .Internal(sub(pattern, replacement, x, FALSE, TRUE, TRUE, FALSE, TRUE))
 
+fsub <- function(pattern, replacement, x)
+##    gsub(pattern, replacement, x, fixed = TRUE, useBytes = TRUE)
+    .Internal(gsub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE, TRUE))
 
-
-## writeLines by default re-encodes strings to the local encoding.
-## Avoid that by useBytes=TRUE
-
-writeLinesUTF8 <- function(x, con, outputEncoding, ...) {
-    if (outputEncoding != "UTF-8")
-	x <- iconv(x, "UTF-8", outputEncoding, sub="byte", mark=FALSE)
-    writeLines(x, con, useBytes=TRUE, ...)
-}
-
+fsub1 <- function(pattern, replacement, x)
+##    sub(pattern, replacement, x, fixed = TRUE, useBytes = TRUE)
+    .Internal(sub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE, TRUE))
 
 ## This warns on
 ##  text outside sections

@@ -54,15 +54,21 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 		     outputEncoding = "ASCII", ...)
 {
     encode_warn <- FALSE
-    WriteLines <- function(x, con, outputEncoding, ...) {
-        if (outputEncoding != "UTF-8") {
-            x <- iconv(x, "UTF-8", outputEncoding,  mark=FALSE)
-            if (any(is.na(x))) {
-                x <- iconv(x, "UTF-8", outputEncoding, sub="byte", mark=FALSE)
-                encode_warn <<- TRUE
+    WriteLines <-
+        if(outputEncoding == "UTF-8" ||
+           (outputEncoding == "" && l10n_info()[["UTF-8"]])) {
+            function(x, con, outputEncoding, ...)
+                writeLines(x, con, useBytes = TRUE, ...)
+        } else {
+            function(x, con, outputEncoding, ...) {
+                x <- iconv(x, "UTF-8", outputEncoding,  mark=FALSE)
+                if (any(is.na(x))) {
+                    x <- iconv(x, "UTF-8", outputEncoding,
+                               sub="byte", mark=FALSE)
+                    encode_warn <<- TRUE
+                }
+                writeLines(x, con, useBytes = TRUE, ...)
             }
-        }
-        writeLines(x, con, useBytes = TRUE, ...)
     }
 
     last_char <- ""
@@ -74,8 +80,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     }
 
     trim <- function(x) {
-        x <- sub("^\\s*", "", x, perl = TRUE, useBytes = TRUE)
-        sub("\\s*$", "", x, perl = TRUE, useBytes = TRUE)
+        x <- psub1("^\\s*", "", as.character(x))
+        psub1("\\s*$", "", x)
     }
 
     envTitles <- c("\\description"="Description", "\\usage"="Usage",
@@ -135,7 +141,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             ## We do want to escape { }, but unmatched braces had
             ## to be escaped in earlier versions (e.g. Paren.Rd, body.tex).
             ## So fix up for now
-            x <- sub('"\\{"', '"{"', x, fixed = TRUE, useBytes = TRUE)
+            x <- fsub1('"\\{"', '"{"', x)
         } else if (inPre) {
             BSL = '@BSL@';
             BSL2 = '@BSLBSL@';
@@ -497,19 +503,14 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                                j <- j + 1L
                            }
                            #print(txt)
-                           txt <- sub("\\(([^,]*),\\s*", "\\1@generic@",
-                                      txt, perl = TRUE, useBytes = TRUE)
-                           txt <- sub("@generic@", generic, txt,
-                                      fixed = TRUE, useBytes = TRUE)
+                           txt <- psub1("\\(([^,]*),\\s*", "\\1@generic@", txt)
+                           txt <- fsub1("@generic@", generic, txt)
                            if (generic == "[")
-                               txt <- sub("\\)([^)]*)$", "]\\1", txt,
-                                          perl = TRUE, useBytes = TRUE)
+                               txt <- psub1("\\)([^)]*)$", "]\\1", txt)
                            else if (generic == "[[")
-                               txt <- sub("\\)([^)]*)$", "]]\\1", txt,
-                                          perl = TRUE, useBytes = TRUE)
+                               txt <- psub1("\\)([^)]*)$", "]]\\1", txt)
                            else if (generic == "$")
-                               txt <- sub("\\)([^)]*)$", "\\1", txt,
-                                          perl = TRUE, useBytes = TRUE)
+                               txt <- psub1("\\)([^)]*)$", "\\1", txt)
                            #print(txt)
                            if (grepl("<-\\s*value", txt))
                                of1("## S3 replacement method for class '")
@@ -691,8 +692,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
     title <- as.character(Rd[[1L]])
     ## remove empty lines, leading whitespace
-    title <- trim(paste(sub("^\\s+", "", title[nzchar(title)],
-                            perl = TRUE, useBytes = TRUE),
+    title <- trim(paste(psub1("^\\s+", "", title[nzchar(title)]),
                         collapse=" "))
     ## substitutions?
 

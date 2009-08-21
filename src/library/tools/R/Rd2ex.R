@@ -157,8 +157,7 @@ Rd2ex <-
         if (any(titleblk)) {
             title <- as.character(Rd[[ which(titleblk)[1L] ]])
             ## remove empty lines, leading whitespace
-            title <- paste(sub("^\\s+", "", title[nzchar(title)],
-                               perl = TRUE, useBytes = TRUE),
+            title <- paste(psub1("^\\s+", "", title[nzchar(title)]),
                            collapse=" ")
             ## FIXME: more?
             title <- psub("(---|--)", "-", title)

@@ -14,6 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## also used by Rd2latex
 get_link <- function(arg, tag, Rdfile) {
     ## 'topic' is the name to display, 'dest' is the topic to link to
     ## optionaly in package 'pkg'.  If 'target' is set it is the file
@@ -35,11 +36,11 @@ get_link <- function(arg, tag, Rdfile) {
     if (!is.null(option)) {
         if (!identical(attr(option, "Rd_tag"), "TEXT"))
     	    stopRd(option, Rdfile, "Bad \\link option -- must be text")
-    	if (grepl("^=", option, perl = TRUE))
-    	    dest <- sub("^=", "", option, perl = TRUE)
-    	else if (grepl(":", option, perl = TRUE)) {
-    	    targetfile <- sub("^[^:]*:", "", option, perl = TRUE)
-    	    pkg <- sub(":.*", "", option, perl = TRUE)
+    	if (grepl("^=", option, perl = TRUE, useBytes = TRUE))
+    	    dest <- psub1("^=", "", option)
+    	else if (grepl(":", option, perl = TRUE, useBytes = TRUE)) {
+    	    targetfile <- psub1("^[^:]*:", "", option)
+    	    pkg <- psub1(":.*", "", option)
     	} else {
             targetfile <- dest
     	    pkg <- option
@@ -49,21 +50,6 @@ get_link <- function(arg, tag, Rdfile) {
     list(topic = topic, dest = dest, pkg = pkg, targetfile = targetfile)
 }
 
-if(FALSE) {
-transform_S3_method  <- function(x)
-{
-    ## should take a call such as \method{foo}{bar}
-    ## and convert it to a parse_Rd version of the required line(s)
-    x
-}
-
-transform_S4_method  <- function(x)
-{
-    ## should take a call such as \S4method{foo}{bar}
-    ## and convert it to a parse_Rd version of the required line(s)
-    x
-}
-}
 
 # translation of Utils.pm function of the same name, plus "unknown"
 mime_canonical_encoding <- function(encoding)
@@ -88,6 +74,9 @@ mime_canonical_encoding <- function(encoding)
     encoding[encoding == "utf8"] <-    "utf-8"
     encoding
 }
+
+
+
 ## This warns on
 ##  text outside sections
 ##  missing links
@@ -110,6 +99,20 @@ Rd2HTML <-
              Links = NULL, CHM = FALSE,
              stages = "render", outputEncoding = "UTF-8", ...)
 {
+    ## writeLines by default re-encodes strings to the local encoding.
+    ## Avoid that by useBytes=TRUE
+    writeLinesUTF8 <-
+        if(outputEncoding == "UTF-8" ||
+           (outputEncoding == "" && l10n_info()[["UTF-8"]])) {
+        function(x, con, outputEncoding, ...)
+            writeLines(x, con, useBytes = TRUE, ...)
+    } else {
+        function(x, con, outputEncoding, ...) {
+            x <- iconv(x, "UTF-8", outputEncoding, sub="byte", mark=FALSE)
+            writeLines(x, con, useBytes = TRUE, ...)
+        }
+    }
+
     of <- function(...)
         writeLinesUTF8(paste(...), con, outputEncoding, sep = "")
     of0 <- function(...)
@@ -159,8 +162,8 @@ Rd2HTML <-
                    "\\dQuote"="&rdquo;")
 
     trim <- function(x) {
-        x <- sub("^\\s*", "", x, perl = TRUE)
-        sub("\\s*$", "", x, perl = TRUE)
+        x <- psub1("^\\s*", "", x)
+        psub1("\\s*$", "", x)
     }
 
     addParaBreaks <- function(x, tag) {
@@ -292,8 +295,8 @@ Rd2HTML <-
     }
 
     writeComment <- function(txt) {
-       	txt <- sub("^%", "", txt, perl = TRUE, useBytes = TRUE)
-       	txt <- sub("\n", "", txt, fixed = TRUE, useBytes = TRUE)
+       	txt <- psub1("^%", "", txt)
+       	txt <- fsub1("\n", "", txt)
        	txt <- fsub("--", "- - ", txt)
        	txt <- fsub(">", "&gt;", txt)
 	of("<!-- ", txt, " -->\n")
@@ -601,7 +604,8 @@ Rd2HTML <-
 
     ## Give warning (pro tem) for nonblank text outside a section
     if (length(bad <- grep("[^[:blank:][:cntrl:]]",
-                           unlist(Rd[sections == "TEXT"]), perl = TRUE )))
+                           unlist(Rd[sections == "TEXT"]),
+                           perl = TRUE, useBytes = TRUE )))
     	warnRd(Rd[sections == "TEXT"][[bad[1L]]], Rdfile,
                "All text must be in a section")
 
@@ -638,7 +642,7 @@ Rd2HTML <-
             '<html><head><title>R: ')
     ## special for now, as we need to remove leading and trailing spaces
     title <- trim(as.character(title))
-    title <- htmlify(paste(sub("^\\s+", "", title[nzchar(title)], perl = TRUE),
+    title <- htmlify(paste(psub1("^\\s+", "", title[nzchar(title)]),
                            collapse=" "))
     of1(title)
     of0('</title>\n',
@@ -671,7 +675,7 @@ Rd2HTML <-
 
     if (CHM) {
         if (nlinks > 0)
-            writeLinesUTF8(paste('',
+            writeLines(paste('',
                              '<script Language="JScript">',
                              'function findlink(pkg, fn) {',
                              'var Y, link;',
@@ -679,7 +683,7 @@ Rd2HTML <-
                              'link = location.href.substring(0, Y);',
                              'link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;',
                              'location.href = link;', '}', '</script>',
-                             sep = '\n'), con, outputEncoding)
+                             sep = '\n'), con)
     }
     version <- if (package != "")
     	paste('Package <em>', package,
