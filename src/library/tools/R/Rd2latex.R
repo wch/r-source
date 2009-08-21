@@ -502,13 +502,13 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                            txt <- sub("@generic@", generic, txt,
                                       fixed = TRUE, useBytes = TRUE)
                            if (generic == "[")
-                               txt <- sub(")([^)]*)$", "]\\1", txt,
+                               txt <- sub("\\)([^)]*)$", "]\\1", txt,
                                           perl = TRUE, useBytes = TRUE)
                            else if (generic == "[[")
-                               txt <- sub(")([^)]*)$", "]]\\1", txt,
+                               txt <- sub("\\)([^)]*)$", "]]\\1", txt,
                                           perl = TRUE, useBytes = TRUE)
                            else if (generic == "$")
-                               txt <- sub(")([^)]*)$", "\\1", txt,
+                               txt <- sub("\\)([^)]*)$", "\\1", txt,
                                           perl = TRUE, useBytes = TRUE)
                            #print(txt)
                            if (grepl("<-\\s*value", txt))
