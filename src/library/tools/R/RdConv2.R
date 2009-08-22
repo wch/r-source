@@ -336,7 +336,7 @@ prepare2_Rd <- function(Rd, Rdfile)
     where <- which(sections == "\\examples")
     if(length(where) > 1L) {
         warnRd(Rd[where], Rdfile,
-               "Only one \\examples section is allowed and only the first will be used")
+               "Only one \\examples section is allowed: the first will be used")
         drop[where[-1L]] <- TRUE
     }
 
@@ -344,13 +344,13 @@ prepare2_Rd <- function(Rd, Rdfile)
     if (length(enc)) {
     	if (length(enc) > 1L) {
     	    warnRd(Rd[[enc[2L]]], Rdfile,
-                   "Only one \\encoding declaration is allowed and the first will be used")
+                   "Only one \\encoding declaration is allowed: the first will be used")
             drop[enc[-1L]] <- TRUE
             enc <- enc[[1L]]
         }
     	encoding <- Rd[[enc]]
     	if (!identical(RdTags(encoding), "TEXT"))
-    	    stopRd(encoding, Rdfile, "Encoding must be plain text")
+    	    stopRd(encoding, Rdfile, "'encoding' must be plain text")
     }
 
     dt <- which(sections == "\\docType")
@@ -359,7 +359,7 @@ prepare2_Rd <- function(Rd, Rdfile)
         for (i in dt) {
             docType <- Rd[[i]]
             if(!identical(RdTags(docType), "TEXT"))
-        	stopRd(docType, Rdfile, "docType must be plain text")
+        	stopRd(docType, Rdfile, "'docType' must be plain text")
             docTypes[i] <- docType[[1L]]
          }
     }

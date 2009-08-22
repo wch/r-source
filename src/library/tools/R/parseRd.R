@@ -32,15 +32,17 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     lines <- readLines(file, warn = FALSE)
     ## remove old-style marking for data, keep line nos
     lines[lines == "\\non_function{}"] <- ""
-    ## extract the encoding if marked in the file:
+    ## Extract the encoding if marked in the file:
     ## do this in two steps to minimize warnings in MBCS locales
-    ## Note this is required to be on a line by itself.
+    ## Note this is required to be on a line by itself,
+    ## but some people have preceding whitespace
     enc <- grep("\\encoding{", lines, fixed = TRUE, useBytes=TRUE)
     enc <- grep("^[[:space:]]*\\\\encoding\\{([^}]*)\\}.*", lines[enc], value=TRUE)
     if(length(enc)) {
         if(length(enc) > 1L)
             warning("multiple \\encoding lines in file ", file0,
-                    "using the first", domain = NA, call. = FALSE)
+                    ", using the first",
+                    domain = NA, call. = warningCalls)
         ## keep first one
         enc <- enc[1L]
         enc <- sub("^[[:space:]]*\\\\encoding\\{([^}]*)\\}.*", "\\1", enc)
