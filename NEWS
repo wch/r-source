@@ -224,14 +224,14 @@ NEW FEATURES
     o	"\uxxxx" and "\Uxxxxxxxx" escapes can now be parsed to a UTF-8
 	encoded string even in non-UTF-8 locales (this has been
 	implemented on Windows since R 2.7.0).  (Use of such escapes
-	requires MBCS support.)
+	requires Unicode wide character support.)
 
     o	New as.raw() method for "tclObj" objects (wish of PR#13578).
 
     o	Rd.sty now makes a better job of setting email addresses,
 	including using a monospaced font.
 
-    o	On systems using ICU (including Mac OS X), using
+    o	On systems using ICU for collation (including Mac OS X), using
  	Sys.setlocale() to change the LC_COLLATE setting is more
  	likely to change the collation provided by ICU.
 

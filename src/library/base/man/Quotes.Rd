@@ -57,7 +57,9 @@
   \samp{\\u\{nnnn\}} and \samp{\\U\{nnnnnnnn\}}.  All except the Unicode
   escape sequences are also supported when reading character strings by
   \code{\link{scan}} and \code{\link{read.table}} if
-  \code{allowEscapes = TRUE}.
+  \code{allowEscapes = TRUE}.  On most platforms they can be used to
+  enter Unicode characters not in the current locale (which will be
+  stored internally in UTF-8).
 
   These forms will also be used by \code{\link{print.default}}
   when outputting non-printable characters (including backslash).
