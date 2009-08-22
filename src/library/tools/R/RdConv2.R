@@ -752,18 +752,21 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	which <- which(sections == tag)
     	if (length(which) < 1L)
     	    warnRd(Rd, Rdfile, level = 7, "Must have a ", tag)
-    	else if (length(which) > 1L)
+    	else {
+            if (length(which) > 1L)
     	    warnRd(Rd[[which[2L]]], Rdfile, level = 7,
                    "Only one ", tag, " is allowed")
-        empty <- TRUE
-        for(block in Rd[[which]]) {
-            switch(attr(block, "Rd_tag"),
-                   TEXT = if(!grepl("^[[:space:]]*$", block)) empty <- FALSE,
-                   empty <- FALSE)
+            empty <- TRUE
+            for(block in Rd[[which]]) {
+                switch(attr(block, "Rd_tag"),
+                       TEXT = if(!grepl("^[[:space:]]*$", block))
+                       empty <- FALSE,
+                       empty <- FALSE)
+            }
+            if(empty)
+                warnRd(Rd[[which]], Rdfile, level = 5,
+                       "Tag ", tag, " must not be empty")
         }
-        if(empty)
-            warnRd(Rd[[which]], Rdfile, level = 5,
-                   "Tag ", tag, " must not be empty")
     }
 
     dt <- which(RdTags(Rd) == "\\docType")
