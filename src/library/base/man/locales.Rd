@@ -1,6 +1,6 @@
 % File src/library/base/man/locales.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{locales}
@@ -108,9 +108,10 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 
 \note{
   Changing the values of locale categories whilst \R is running ought
-  to be noticed by the OS services, and usually is: one known exception
-  is collation on Mac OS X which always uses the setting from the start
-  of the session.
+  to be noticed by the OS services, and usually is: known exceptions
+  include systems using ICU (including Mac OS X), where the collation
+  rules are cached when first used in a non-C locale (but can be reset
+  by a call to \code{\link{icuSetCollate}}).
 }
 
 \seealso{
@@ -132,6 +133,6 @@ Sys.setlocale("LC_TIME", "German") # Windows
 }
 Sys.getlocale("LC_PAPER")          # may or may not be set
 
-Sys.setlocale("LC_COLLATE", "C")   # turn off locale-specific sorting
+Sys.setlocale("LC_COLLATE", "C")   # turn off locale-specific sorting, usually
 }
 \keyword{utilities}
