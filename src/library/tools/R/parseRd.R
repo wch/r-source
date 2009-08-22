@@ -39,7 +39,8 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     enc <- grep("^[[:space:]]*\\\\encoding\\{([^}]*)\\}.*", lines[enc], value=TRUE)
     if(length(enc)) {
         if(length(enc) > 1L)
-            warning("multiple \\encoding lines in file ", file0)
+            warning("multiple \\encoding lines in file ", file0,
+                    "using the first", domain = NA, call. = FALSE)
         ## keep first one
         enc <- enc[1L]
         enc <- sub("^[[:space:]]*\\\\encoding\\{([^}]*)\\}.*", "\\1", enc)
@@ -60,12 +61,6 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     } else if (encoding != "UTF-8")
     	lines <- iconv(lines, encoding, "UTF-8", sub = "byte")
 
-##     ## FIXME: textConnection is inefficient
-
-##     ## In a Latin1 locale, the textConnection will recode everything to
-##     ## Latin1, so mark it as unknown
-##     Encoding(lines) <- "unknown"
-##     tcon <- textConnection(lines)
     tcon <- file()
     writeLines(lines, tcon, useBytes = TRUE)
     on.exit(close(tcon))

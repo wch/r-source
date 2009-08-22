@@ -3426,6 +3426,9 @@ for, for example in some locales.  (Use e.g. @code{capabilities()} to
 test for features needed in the examples wherever possible, and you can
 also use @code{try()} or @code{trycatch()}.)
 
+There should be only one @code{\examples} section per file, and only the
+first will be used.
+
 @findex \keyword
 @item \keyword@{@var{key}@}
 Each @code{\keyword} entry should specify one of the standard keywords
@@ -4027,17 +4030,19 @@ can be put in a @file{unix} or @file{windows} subdirectory.
 @cindex encoding
 
 Rd files are text files and so it is impossible to deduce the encoding
-they are written in unless @acronym{ASCII}: files with 8-bit
-characters could be UTF-8, Latin-1, Latin-9, KOI8-R, EUC-JP,
-@emph{etc}.  So the @code{\encoding@{@}} directive must be used to
-specify the encoding if it is not @acronym{ASCII}.  (The
-@code{\encoding@{@}} directive must be on a line by itself, and in
-particular one containing no non-@acronym{ASCII} characters.  As from
-@R{} 2.6.0 the encoding declared in the @file{DESCRIPTION} file will
-be used if none is declared in the file.)  This is for input:  internally,
-the Rd files are converted to the UTF-8 encoding.  It is
-also used for output in the case of @LaTeX{} conversions, while HTML
-is output in UTF-8 and text is output in the local encoding.
+they are written in unless @acronym{ASCII}: files with 8-bit characters
+could be UTF-8, Latin-1, Latin-9, KOI8-R, EUC-JP, @emph{etc}.  So the
+@code{\encoding@{@}} directive must be used to specify the encoding if
+it is not @acronym{ASCII}.  (The @code{\encoding@{@}} directive must be
+on a line by itself, and in particular one containing no
+non-@acronym{ASCII} characters.  There should be only one
+@code{\encoding@{@}} directive per file, but only the first
+will be used.  As from @R{} 2.6.0 the encoding declared in the
+@file{DESCRIPTION} file will be used if none is declared in the file.)
+This is for input: internally, the Rd files are converted to the UTF-8
+encoding.  It is also used for output in the case of @LaTeX{}
+conversions, while HTML is output in UTF-8 and text is output in the
+local encoding.
 
 Wherever possible, avoid non-@acronym{ASCII} chars in Rd files, and
 even symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},
