@@ -278,8 +278,8 @@ function(package, dir, lib.loc = NULL)
         ## 1) pre-2.10.0-style  man/package.Rd.gz
         ## file with suitable concatenated Rd sources,
         ##
-        ## 2) either  man/package.rds or help/package.rd[bx]
-        ## with a list of the parsed (and platform processed, see
+        ## 2) help/package.rd[bx]
+        ## with a DB of the parsed (and platform processed, see
         ## above) Rd objects.
         db_file <- file.path(dir, "help", package)
         if(file_test("-f", paste(db_file, "rdx", sep="."))) {
@@ -288,11 +288,6 @@ function(package, dir, lib.loc = NULL)
             if(file.exists(pathfile)) names(db) <- .readRDS(pathfile)
             return(db)
         }
-
-        ## FIXME: remove this version in due course
-        db_file <- file.path(docs_dir, sprintf("%s.rds", package))
-        if(file_test("-f", db_file)) return(.readRDS(db_file))
-
         db_file <- file.path(docs_dir, sprintf("%s.Rd.gz", package))
         if(file_test("-f", db_file)) {
             lines <- .read_Rd_lines_quietly(db_file)
@@ -388,15 +383,9 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
 
     if(!is.null(db_file) && file_test("-f", db_file)) {
         ## message("updating database of parsed Rd files")
-        if(grepl("\\.rds$", db_file)) {
-            ## FIXME early-2.10.0 style, remove in due course
-            db <- .readRDS(db_file)
-            db_names <- names(db)
-        } else {
-            db <- fetchRdDB(sub("\\.rdx$", "", db_file))
-            db_names <- names(db) <-
-                .readRDS(file.path(dirname(db_file), "paths.rds"))
-        }
+        db <- fetchRdDB(sub("\\.rdx$", "", db_file))
+        db_names <- names(db) <-
+            .readRDS(file.path(dirname(db_file), "paths.rds"))
         ## Files in the db in need of updating:
         ind <- (files %in% db_names) & file_test("-nt", files, db_file)
         if(any(ind))

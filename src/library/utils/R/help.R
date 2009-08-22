@@ -202,37 +202,24 @@ function(x, ...)
                           delete.file = TRUE,
                           pager = attr(x, "pager"))
             } else {
-                bfile <- paste(file, ".rds", sep="")
-                zfile <- suppressWarnings(zip.file.extract(bfile, "Rhelp.zip"))
-                if(file.exists(zfile)) {
-                    ## The new system with man pages stored in parsed form
-                    ## as .rds files.
-                    temp <- tools::Rd2txt(.readRDS(zfile), out=tempfile(), package=pkgname)
-                    file.show(temp,
+                ## Fallback to the old system with help pages
+                ## stored as plain text
+                zfile <- zip.file.extract(file, "Rhelp.zip")
+                if (file.exists(zfile)) {
+                    first <- readLines(zfile, n = 1L)
+                    enc <- if(length(grep("\\(.*\\)$", first)))
+                        sub("[^(]*\\((.*)\\)$", "\\1", first) else ""
+                    if(enc == "utf8") enc <- "UTF-8"
+                    ## allow for 'smart' quotes on Windows, which work
+                    ## in all but CJK encodings
+                    if(.Platform$OS.type == "windows" && enc == ""
+                       && l10n_info()$codepage < 1000) enc <- "CP1252"
+                    file.show(zfile,
                               title = gettextf("R Help on '%s'", topic),
-                              delete.file = TRUE,
-                              pager = attr(x, "pager"))
-                    if(zfile != bfile)
-                        unlink(zfile)
-                } else {
-                                        # Fallback to the old system with man pages stored as plain text
-                    zfile <- zip.file.extract(file, "Rhelp.zip")
-                    if (file.exists(zfile)) {
-                        first <- readLines(zfile, n = 1L)
-                        enc <- if(length(grep("\\(.*\\)$", first)))
-                            sub("[^(]*\\((.*)\\)$", "\\1", first) else ""
-                        if(enc == "utf8") enc <- "UTF-8"
-                        ## allow for 'smart' quotes on Windows, which work
-                        ## in all but CJK encodings
-                        if(.Platform$OS.type == "windows" && enc == ""
-                           && l10n_info()$codepage < 1000) enc <- "CP1252"
-                        file.show(zfile,
-                                  title = gettextf("R Help on '%s'", topic),
-                                  delete.file = (zfile != file),
-                                  pager = attr(x, "pager"), encoding = enc)
-                    } else
+                              delete.file = (zfile != file),
+                              pager = attr(x, "pager"), encoding = enc)
+                } else
 		    stop(gettextf("No text help for '%s' is available:\ncorresponding file is missing", topic), domain = NA)
-                }
             }
         }
         else if(type == "latex") {

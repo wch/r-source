@@ -46,12 +46,8 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
         encoding <- "UTF-8"
         ## FIXME: use outputEncoding="" ?
         ## FUTURE: we already have the parsed file ....
-        tools::Rd2ex(tools:::fetchRdDB(RdDB, sub("\\.R$", "", basename(file))), zfile)
-    } else if(file.exists(Rdsfile <- file.path(packagePath, "help",
-                                               sub("R$", "rds", basename(file))))) {
-        zfile <- tempfile("Rex")
-        encoding <- "UTF-8"
-        tools::Rd2ex(.readRDS(Rdsfile), zfile)
+        tools::Rd2ex(tools:::fetchRdDB(RdDB, sub("\\.R$", "", basename(file))),
+                     zfile)
     } else
         zfile <- zip.file.extract(file, "Rex.zip")
     if(!file.exists(zfile)) {
