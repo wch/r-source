@@ -649,8 +649,12 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    checkCodeBlock(block, blocktag)
                    else warnRd(block, Rdfile, level = 5,
                                "Tag ", tag, " is only valid in \\examples"),
-                   warnRd(block, Rdfile, level = 5,
-                          "Tag ", tag, " is invalid in a ", blocktag, " block"))
+                   {
+                       warnRd(block, Rdfile, level = 5,
+                              "Tag ", tag, " is invalid in a ",
+                              blocktag, " block")
+                       has_text <<- TRUE  # likely, e.g. \url
+                   })
         }
     }
 
