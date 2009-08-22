@@ -2025,7 +2025,12 @@ if (FALSE) {
 
     files <- names(db)
 
-    .whandler <- .make_Rd_whandler()
+    .messages <- character()
+    .whandler <-  function(e) {
+        .messages <<- c(.messages,
+                        paste("Rd warning:", conditionMessage(e)))
+        invokeRestart("muffleWarning")
+    }
     .ehandler <- function(e) {
         message("") # force newline
         unlink(ff)
@@ -2041,8 +2046,6 @@ if (FALSE) {
         bf <- sub("\\.[Rr]d$", "", basename(f))
 
         shown <- FALSE
-        environment(.ehandler)$.messages <- character()
-        environment(.whandler)$.messages <- character()
 
         if ("html" %in% types) {
             type <- "html"
@@ -2087,8 +2090,7 @@ if (FALSE) {
         }
         if (shown) {
             cat("\n")
-            if (length(.messages <- environment(.whandler)$.messages))
-                writeLines(unique(.messages))
+            if (length(.messages)) writeLines(unique(.messages))
         }
     }
 
@@ -2440,19 +2442,6 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
     invisible(NULL)
 }
 
-
-### * .make_Rd_whandler
-
-.make_Rd_whandler <-
-function()
-{
-    .messages <- character() # purely to fool codetools
-    function(e) {
-        .messages <<- c(.messages,
-                        paste("Rd warning:", conditionMessage(e)))
-        invokeRestart("muffleWarning")
-    }
-}
 
 ### Local variables: ***
 ### mode: outline-minor ***

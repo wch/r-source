@@ -40,8 +40,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     enc <- grep("^[[:space:]]*\\\\encoding\\{([^}]*)\\}.*", lines[enc], value=TRUE)
     if(length(enc)) {
         if(length(enc) > 1L)
-            warning("multiple \\encoding lines in file ", file0,
-                    ", using the first",
+            warning(file0, ": multiple \\encoding lines, using the first",
                     domain = NA, call. = warningCalls)
         ## keep first one
         enc <- enc[1L]
@@ -59,7 +58,8 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
 
     if (encoding == "ASCII") {
         if (any(is.na(iconv(lines, "", "ASCII"))))
-            stop("non-ASCII input and no declared encoding", domain = NA)
+            stop(file0, ": non-ASCII input and no declared encoding",
+                 domain = NA, call. = warningCalls)
     } else if (encoding != "UTF-8")
     	lines <- iconv(lines, encoding, "UTF-8", sub = "byte")
 
@@ -71,13 +71,13 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
                        verbose, basename, fragment, warningCalls))
 }
 
-print.Rd <- function(x, deparse=FALSE, ...)
+print.Rd <- function(x, deparse = FALSE, ...)
 {
     cat(as.character.Rd(x, deparse = deparse), sep = "", collapse = "")
     invisible(x)
 }
 
-as.character.Rd <- function(x, deparse=FALSE, ...)
+as.character.Rd <- function(x, deparse = FALSE, ...)
 {
     ZEROARG <- c("\\cr", "\\dots", "\\ldots", "\\R", "\\tab") # Only these cause trouble when {} is added
     TWOARG <- c("\\section", "\\item", "\\enc", "\\method", "\\S3method",

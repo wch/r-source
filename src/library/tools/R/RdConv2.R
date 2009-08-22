@@ -279,7 +279,8 @@ processRdSexprs <-
 
 prepare_Rd <-
     function(Rd, encoding = "unknown", defines = NULL, stages = NULL,
-             options = RweaveRdDefaults, stage2 = TRUE, stage3 = TRUE, ...)
+             options = RweaveRdDefaults,
+             stage2 = TRUE, stage3 = TRUE, ..., msglevel = 0)
 {
     Rdfile <- "not known"
     if (is.character(Rd)) {
@@ -300,8 +301,10 @@ prepare_Rd <-
     for (stage in c("install", "render"))
     	if (stage %in% stages)
     	    Rd <- processRdSexprs(Rd, stage, options)
-    if (pratt < 2L && stage2) Rd <- prepare2_Rd(Rd, Rdfile)
-    if (pratt < 3L && stage3) Rd <- prepare3_Rd(Rd, Rdfile)
+    if (pratt < 2L && stage2)
+        Rd <- prepare2_Rd(Rd, Rdfile)
+    if (pratt < 3L && stage3)
+        Rd <- prepare3_Rd(Rd, Rdfile, msglevel = msglevel)
     structure(Rd, Rdfile=Rdfile, class = "Rd")
 }
 
@@ -387,7 +390,7 @@ prepare2_Rd <- function(Rd, Rdfile)
     Rd
 }
 
-prepare3_Rd <- function(Rd, Rdfile)
+prepare3_Rd <- function(Rd, Rdfile, msglevel = 0)
 {
     ## Drop 'empty' sections: less rigorous than checkRd test
     keep <- rep(TRUE, length(Rd))
@@ -418,7 +421,7 @@ prepare3_Rd <- function(Rd, Rdfile)
         } else tagtitle <- tag
         for(s in section) this <- checkEmpty(s, this)
         keep[i] <- this
-        if(!this)
+        if(!this && msglevel > 0)
             warnRd(section, Rdfile, "Dropping empty section ", tagtitle)
     }
     Rd[keep]
@@ -481,6 +484,20 @@ fsub1 <- function(pattern, replacement, x)
 checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                     unknownOK = TRUE, listOK = TRUE, ..., def_enc = FALSE)
 {
+    warnRd <- function(block, Rdfile, ..., level=0)
+    {
+        srcref <- attr(block, "srcref")
+        msg <- if (is.null(srcref))
+            paste("file '", Rdfile, "': ", ..., sep = "")
+        else {
+            loc <- paste(Rdfile, ":", srcref[1L], sep = "")
+            if (srcref[1L] != srcref[3L]) loc <- paste(loc, "-", srcref[3L], sep="")
+            paste(loc, ": ", ..., sep = "")
+        }
+        msg <- sprintf("checkRd: (%d) %s", level, msg)
+        .messages <<- c(.messages, msg)
+    }
+
     checkWrapped <- function(tag, block) checkContent(block, tag)
 
     checkLink <- function(tag, block) { # FIXME This doesn't handle aliases, and
@@ -495,9 +512,9 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     checkBlock <- function(block, tag, blocktag)
     {
 	switch(tag,
+               ## parser already warned here
                UNKNOWN = if (!unknownOK)
-               stopRd(block, Rdfile, "Unrecognized macro ", block[[1L]])
-               else warnRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
+               stopRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
                VERB = ,
                RCODE = ,
                TEXT = {
@@ -506,9 +523,10 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                        ## (but then def_enc = TRUE?)
                        msg2 <- if(inEnc2) "in second part of \\enc" else "without declared encoding"
                        if(Encoding(block) == "UTF-8")
-                           warnRd(block, Rdfile, "Non-ASCII contents ", msg2)
+                           warnRd(block, Rdfile, level = -1,
+                                  "Non-ASCII contents ", msg2)
                        if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
-                           warnRd(block, Rdfile,
+                           warnRd(block, Rdfile, level = -3,
                                   "Apparent non-ASCII contents ", msg2)
                    }
                    ## check if this renders as non-whitespace
@@ -519,7 +537,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    deparse <- sQuote(paste(as.character.Rd(block), collapse=""))
                    if(!listOK)
                        stopRd(block, Rdfile, "Unnecessary braces at ", deparse)
-                   else warnRd(block, Rdfile, "Unnecessary braces at ", deparse)
+                   else warnRd(block, Rdfile, level = -3,
+                               "Unnecessary braces at ", deparse)
                    checkContent(block, tag)
                },
                "\\describe"=,
@@ -557,7 +576,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                "\\method" =,
                "\\S3method" =,
                "\\S4method" =
-                   stopRd(block, Rdfile, "Tag ", tag,
+                   warnRd(block, Rdfile, level = 7, "Tag ", tag,
                           " not valid outside a code block"),
                "\\enc" = {
                    checkContent(block[[1L]], tag)
@@ -575,7 +594,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    if (length(block) > 1L) checkContent(block[[2L]])
                },
                "\\tabular" = checkTabular(block),
-               stopRd(block, Rdfile, "Tag ", tag, " not recognized"))
+               warnRd(block, Rdfile, level = 7, "Tag ", tag, " not recognized"))
     }
 
     checkCodeBlock <- function(blocks, blocktag)
@@ -583,9 +602,9 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 	for (block in blocks) {
             tag <- attr(block, "Rd_tag")
             switch(tag,
+                   ## parser already warned here
                    UNKNOWN = if (!unknownOK)
-                   stopRd(block, Rdfile, "Unrecognized macro ", block[[1L]])
-                   else warnRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
+                   stopRd(block, Rdfile, "Unrecognized macro ", block[[1L]]),
                    VERB = ,
                    RCODE = ,
                    TEXT = {
@@ -594,9 +613,10 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                            ## (but then def_enc = TRUE?)
                            msg2 <- if(inEnc2) "in second part of \\enc" else "without declared encoding"
                            if(Encoding(block) == "UTF-8")
-                               warnRd(block, Rdfile, "Non-ASCII contents ", msg2)
+                               warnRd(block, Rdfile, level = -1,
+                                      "Non-ASCII contents ", msg2)
                            if(grepl("<[0123456789abcdef][0123456789abcdef]>", block))
-                               warnRd(block, Rdfile,
+                               warnRd(block, Rdfile, level = -3,
                                       "Apparent non-ASCII contents ", msg2)
                        }
                        ## check if this renders as non-whitespace
@@ -607,8 +627,9 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    "\\special" = checkCodeBlock(block, blocktag),
                    "\\dots" = has_text <<- TRUE,
                    "\\ldots" = {
-                       warnRd(block, Rdfile, "Tag ", tag,
-                              " is invalid in a code block")
+                       ## but it is rendered as \\dots
+                       warnRd(block, Rdfile, level = 3,
+                              "Tag ", tag, " is invalid in a code block")
                        has_text <<- TRUE
                    },
                    ## these are valid in \code, at least
@@ -619,17 +640,17 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    "\\S4method" = if(blocktag == "\\usage") {
                        checkContent(block[[1L]], tag) # generic
                        checkContent(block[[2L]], tag) # class
-                   } else stopRd(block, Rdfile, "Tag ", tag,
-                                 " is only valid in \\usage"),
+                   } else warnRd(block, Rdfile, level = 5,
+                                 "Tag ", tag, " is only valid in \\usage"),
                    "\\dontrun" =,
                    "\\donttest" =,
                    "\\dontshow" =,
                    "\\testonly" = if(blocktag == "\\examples")
                    checkCodeBlock(block, blocktag)
-                   else stopRd(block, Rdfile, "Tag ", tag,
-                               " is only valid in \\examples"),
-                   stopRd(block, Rdfile, "Tag ", tag,
-                          " is invalid in a ", blocktag, " block"))
+                   else warnRd(block, Rdfile, level = 5,
+                               "Tag ", tag, " is only valid in \\examples"),
+                   warnRd(block, Rdfile, level = 5,
+                          "Tag ", tag, " is invalid in a ", blocktag, " block"))
         }
     }
 
@@ -638,10 +659,11 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	format <- table[[1L]]
     	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
-    	    stopRd(table, Rdfile, "\\tabular format must be simple text")
+    	    warnRd(table, Rdfile, level = 7,
+                   "\\tabular format must be simple text")
     	format <- strsplit(format[[1L]], "", fixed=TRUE)[[1L]]
     	if (!all(format %in% c("l", "c", "r")))
-    	    stopRd(table, Rdfile,
+    	    warnRd(table, Rdfile, level = 7,
                    "Unrecognized \\tabular format: ", table[[1L]][[1L]])
         tags <- RdTags(content)
 
@@ -655,7 +677,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
             if (newcol) {
                 col <- col + 1
                 if (col > length(format))
-                    stopRd(table, Rdfile,
+                    warnRd(table, Rdfile, level = 7,
                            "Only ", length(format),
                            " columns allowed in this table")
             	newcol <- FALSE
@@ -711,7 +733,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	    title <- section[[1L]]
             ## should be simple text
             if(length(title) < 1L || attr(title[[1L]], "Rd_tag") != "TEXT")
-                warnRd(Rd, Rdfile, "Section title must be plain text")
+                warnRd(Rd, Rdfile, level = 5,
+                       "Section title must be plain text")
     	    checkContent(title, tag)
     	    section <- section[[2L]]
             ## replace 'tag' in message below
@@ -721,15 +744,17 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
         if (tag %in% c("\\usage", "\\synopsis", "\\examples"))
             checkCodeBlock(section, tag)
     	else checkContent(section, tag)
-        if(!has_text) warnRd(section, Rdfile, "Empty section ", tagtitle)
+        if(!has_text) warnRd(section, Rdfile, level = 3,
+                             "Empty section ", tagtitle)
     }
 
     checkUnique <- function(tag) {
     	which <- which(sections == tag)
     	if (length(which) < 1L)
-    	    stopRd(Rd, Rdfile, "Must have a ", tag)
+    	    warnRd(Rd, Rdfile, level = 7, "Must have a ", tag)
     	else if (length(which) > 1L)
-    	    stopRd(Rd[[which[2L]]], Rdfile, "Only one ", tag, " is allowed")
+    	    warnRd(Rd[[which[2L]]], Rdfile, level = 7,
+                   "Only one ", tag, " is allowed")
         empty <- TRUE
         for(block in Rd[[which]]) {
             switch(attr(block, "Rd_tag"),
@@ -737,7 +762,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    empty <- FALSE)
         }
         if(empty)
-            warnRd(Rd[[which]], Rdfile, "Tag ", tag, " must not be empty")
+            warnRd(Rd[[which]], Rdfile, level = 5,
+                   "Tag ", tag, " must not be empty")
     }
 
     dt <- which(RdTags(Rd) == "\\docType")
@@ -746,13 +772,22 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
         for (i in dt) {
             docType <- Rd[[i]]
             if(!identical(RdTags(docType), "TEXT"))
-        	stopRd(docType, Rdfile, "docType must be plain text")
+        	warnRd(docType, Rdfile, level = 7,
+                       "docType must be plain text")
             docTypes[i] <- docType[[1L]]
          }
     }
 
-    inEnc2 <- FALSE
-    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, warningCalls = FALSE, ...)
+    .messages <- character()
+    .whandler <-     function(e) {
+        .messages <<- c(.messages, paste("prepare_Rd:", conditionMessage(e)))
+        invokeRestart("muffleWarning")
+    }
+
+    Rd <- withCallingHandlers({
+        prepare_Rd(Rd, defines=defines, stages=stages,
+                   warningCalls = FALSE, ..., msglevel = 1)
+    }, warning = .whandler)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
@@ -760,11 +795,22 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     ## sanity was checked in prepare2_Rd
     if (length(enc)) def_enc <- TRUE
 
+    inEnc2 <- FALSE
     if(!identical("package", docTypes))
         checkUnique("\\description")
-
     for (i in seq_along(sections))
-    	checkSection(Rd[[i]], sections[i])
+        checkSection(Rd[[i]], sections[i])
 
-    TRUE
+    structure(.messages, class = "checkRd")
+}
+
+print.checkRd <- function(x, minlevel = -Inf, ...)
+{
+    fromParse <- grepl("^prepare_Rd", x)
+    x1 <- x[fromParse]
+    x2 <- x[!fromParse]
+    levs <- as.numeric(sub("^checkRd: \\(([-0123456789]+)(.*)", "\\1", x2))
+    xx <- if(minlevel > 0) x2[levs >= minlevel] else c(x1, x2[levs >= minlevel])
+    writeLines(unique(xx))
+    invisible(x)
 }

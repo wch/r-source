@@ -4491,10 +4491,11 @@ function(dir, silent = FALSE, def_enc = FALSE)
         if(is.na(enc)) enc <- "ASCII"
         else def_enc <- TRUE
     } else enc <- "ASCII"
-    pg <- c(Sys.glob(file.path(dir, "man", "*.Rd")),
-            Sys.glob(file.path(dir, "man", "*.rd")),
-            Sys.glob(file.path(dir, "man", "*", "*.Rd")),
-            Sys.glob(file.path(dir, "man", "*", "*.rd")))
+    owd <- setwd(file.path(dir, "man"))
+    on.exit(setwd(owd))
+    pg <- c(Sys.glob("*.Rd"), Sys.glob("*.rd"),
+            Sys.glob(file.path("*", "*.Rd")),
+            Sys.glob(file.path("*", "*.rd")))
     ## (Note that Using character classes as in '*.[Rr]d' is not
     ## guaranteed to be portable.)
     bad <- character()
@@ -4505,7 +4506,7 @@ function(dir, silent = FALSE, def_enc = FALSE)
         if(inherits(tmp, "try-error")) {
 	    bad <- c(bad, f)
             if(!silent) message(geterrmessage())
-        }
+        } else print(tmp, minlevel = -1)
     }
     if(length(bad)) bad <- sQuote(sub(".*/","", bad))
     if(length(bad) > 1L)

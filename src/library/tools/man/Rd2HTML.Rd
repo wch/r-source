@@ -8,11 +8,10 @@
 \alias{Rd2HTML}
 \alias{Rd2ex}
 \alias{Rd2latex}
-\alias{checkRd}
-\title{ Work with an Rd object }
+\title{ Rd Converters }
 \description{
   These functions take the output of the \code{\link{parse_Rd}} function
-  and check it or produce a help page from it.  As they are mainly
+  and produce a help page from it.  As they are mainly
   intended for internal use, their interfaces are subject to change.
 }
 \usage{
@@ -28,9 +27,6 @@ Rd2latex(Rd, out = "", defines = .Platform$OS.type,
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       stages = "render", outputEncoding = "UTF-8", ...)
-
-checkRd(Rd, defines = .Platform$OS.type, stages = "render",
-        unknownOK = TRUE, listOK = TRUE, ..., def_enc = FALSE)
 }
 \arguments{
   \item{Rd}{ a filename or \code{Rd} object to use as input. }
@@ -43,26 +39,16 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
   \item{Links}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{CHM}{logical: prepare HTML suitable for Compiled HTML?}
-  \item{unknownOK}{ unrecognized macros are treated as errors if
-    \code{FALSE}, otherwise warnings. }
-  \item{listOK}{ unnecessary non-empty braces (e.g. around text, not
-    as an argument) are treated as errors if \code{FALSE}, otherwise warnings. }
   \item{...}{ additional parameters to pass to \code{\link{parse_Rd}} when
     \code{Rd} is a filename. }
-  \item{def_enc}{logical: has the package declared an encoding, so tests
-    for non-ASCII text are suppressed?}
 }
 \details{
+  These functions convert help pages: \code{Rd2HTML} produces HTML (or
+  compiled HTML, for Windows), \code{Rd2txt} produces plain text,
+  \code{Rd2latex} produces LaTeX input.  By default,
+  \code{outputEncoding} is set to \code{""} and the native character
+  encoding (shown by \code{\link{localeToCharset}}) is used.
 
-  The \code{Rd2*} functions convert man pages:
-  \code{Rd2HTML} produces HTML (or compiled HTML, for Windows),
-  \code{Rd2txt} produces plain text, \code{Rd2latex} produces
-  LaTeX input.  By default, \code{outputEncoding} is set to \code{""}
-  and the native character encoding (shown by \code{\link{localeToCharset}})
-  is used.
-
-  The converters are still in development, and may still make some errors
-  in rendering.
 
   \code{Rd2ex} extracts the examples in the format used by
   \code{\link{example}} and \R utilities.  it reproduces the previous
@@ -72,11 +58,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     to be done.
     \item Small improvements in layout.
   }
-
-  \code{checkRd} makes consistency checks on an Rd file, confirming that
-  required sections are present, etc.
-
-  Each of the above functions accepts a filename for an Rd file, and
+  Each of the functions accepts a filename for an Rd file, and
   will use \code{\link{parse_Rd}} to parse it before applying the
   conversions or checks.
 }
@@ -131,21 +113,19 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
 }
 
 \value{
-  The \code{Rd2*} functions are executed mainly for the side effect of
+  These functions are executed mainly for the side effect of
   writing the converted help page.  Their value is the name of the output
   file (invisibly).  For \code{Rd2latex}, the output name is given an
   attribute \code{"latexEncoding"} giving the encoding of the file in a
   form suitable for use with the LaTeX \samp{inputenc} package.
-
-  \code{checkRd} returns \code{TRUE} if the file has no errors; it
-  generates an R error otherwise.
 }
 \author{
   Duncan Murdoch, Brian Ripley
 }
 \references{ \url{http://developer.r-project.org/parseRd.pdf} }
 \seealso{
-  \code{\link{parse_Rd}}, \code{\link{findHTMLlinks}}.
+  \code{\link{parse_Rd}}, \code{\link{checkRd}},
+  \code{\link{findHTMLlinks}}.
 }
 \examples{\donttest{
 
