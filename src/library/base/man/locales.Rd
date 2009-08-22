@@ -108,10 +108,8 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 
 \note{
   Changing the values of locale categories whilst \R is running ought
-  to be noticed by the OS services, and usually is: known exceptions
-  include systems using ICU (including Mac OS X), where the collation
-  rules are cached when first used in a non-C locale (but can be reset
-  by a call to \code{\link{icuSetCollate}}).
+  to be noticed by the OS services, and usually is but exceptions have
+  been seen (usually in collation services).
 }
 
 \seealso{

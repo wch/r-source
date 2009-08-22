@@ -1598,6 +1598,13 @@ void uloc_setDefault(const char* localeID, UErrorCode* status);
 
 static UCollator *collator = NULL;
 
+/* called from platform.c */
+void resetICUcollator(void)
+{
+    if (collator) ucol_close(collator);
+    collator = NULL;
+}
+
 static const struct {
     const char * const str;
     int val;

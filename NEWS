@@ -231,6 +231,10 @@ NEW FEATURES
     o	Rd.sty now makes a better job of setting email addresses,
 	including using a monospaced font.
 
+    o	On systems using ICU (including Mac OS X), using
+ 	Sys.setlocale() to change the LC_COLLATE setting is more
+ 	likely to change the collation provided by ICU.
+
 
 Rd HELP FILE CHANGES
 
