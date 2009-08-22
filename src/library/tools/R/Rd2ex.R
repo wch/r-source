@@ -131,7 +131,7 @@ Rd2ex <-
             out <- summary(con)$description
         }
 
-        if(length(which) > 1L)
+        if(length(where) > 1L)
             warning("more than one \\examples section, using the first")
         ex <- Rd[[ where[1L] ]]
         exl <- unlist(ex)

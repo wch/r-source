@@ -595,6 +595,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     }
 
     writeSection <- function(section, tag) {
+        if (tag %in% c("\\encoding", "\\concept"))
+            return()
         if (tag == "\\alias")
             writeAlias(section, tag)
         else if (tag == "\\keyword") {
@@ -626,27 +628,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
-    ## Print initial comments
-    ## for (i in seq_along(sections)) {
-    ## 	if (sections[i] != "COMMENT") break
-    ##	writeComment(Rd[[i]])
-    ##}
-
-    version <- which(sections == "\\Rdversion")
-    if (length(version) == 1L && as.numeric(Rd[[version]][[1L]]) < 2) {
-        ## <FIXME>
-        ## Should we unconditionally warn (or notify using message())?
-        ## CRAN currently (2009-07-28) has more than 250 \Rdversion{1.1}
-        ## packages ...
-        if(identical(getOption("verbose"), TRUE))
-            warning("checkRd is designed for Rd version 2 or higher")
-        ## </FIXME>
-    }
-    else if (length(version) > 1L)
-    	stopRd(Rd[[version[2L]]], Rdfile, "Only one \\Rdversion declaration is allowed")
-
     enc <- which(sections == "\\encoding")
-   if (length(enc)) outputEncoding <- as.character(Rd[[enc[1L]]][[1L]])
+    if (length(enc)) outputEncoding <- as.character(Rd[[enc[1L]]][[1L]])
 
     if (is.character(out)) {
         if(out == "") {
@@ -660,35 +643,19 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     	out <- summary(con)$description
     }
 
-    if (outputEncoding != "ASCII") {
+   if (outputEncoding != "ASCII") {
         latexEncoding <- latex_canonical_encoding(outputEncoding)
         of0("\\inputencoding{", latexEncoding, "}\n")
     } else latexEncoding <- NA
 
-    ## Give warning(pro tem) for nonblank text outside a section
-    if (length(bad <- grep("[^[:blank:][:cntrl:]]",
-                           unlist(Rd[sections == "TEXT"]), perl = TRUE )))
-    	warnRd(Rd[sections == "TEXT"][[bad[1L]]], Rdfile,
-               "All text must be in a section")
-
-    ## Drop all the parts that are not rendered
-    drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding", "\\Rdversion", "\\RdOpts")
-    Rd <- Rd[!drop]
-    sections <- sections[!drop]
-
-    sortorder <- sectionOrder[sections]
-    if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1L]]], Rdfile, "Section ",
-               sections[which(bad)[1L]], " unrecognized")
-    ## Need to sort the aliases.
+    ## we know this has been ordered by prepare2_Rd, but
+    ## need to sort the aliases.
     nm <- character(length(Rd))
-    isAlias <- RdTags(Rd) == "\\alias"
+    isAlias <- sections == "\\alias"
     nm[isAlias] <- sapply(Rd[isAlias], as.character)
-    sortorder <- order(sortorder, toupper(nm), nm)
+    sortorder <- order(sectionOrder[sections], toupper(nm), nm)
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
-    if (!identical(sections[1:2], c("\\title", "\\name")))
-    	stopRd(Rd, Rdfile, "Sections \\title, and \\name must exist and be unique in Rd files")
 
     title <- as.character(Rd[[1L]])
     ## remove empty lines, leading whitespace
@@ -697,11 +664,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     ## substitutions?
 
     name <- Rd[[2L]]
-    tags <- RdTags(name)
-    if (length(tags) > 1L) stopRd(name, Rdfile,
-                                  "\\name must only contain simple text")
 
-    name <- trim(as.character(name[[1L]]))
+    name <- trim(as.character(Rd[[2L]][[1L]]))
     ltxname <- latex_escape_name(name)
 
     of0('\\HeaderA{', ltxname, '}{',

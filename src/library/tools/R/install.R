@@ -818,28 +818,12 @@
                 if (!dir.exists("man") ||
                    !length(list_files_with_type("man", "docs")))
                     cat("No man pages found in package ", sQuote(pkg_name), "\n")
-                {
-                    ## Turn
-                    ##   Warning in parse_Rd(......)
-                    ## warnings into warnings without the call so that
-                    ## they can be picked up by R CMD check.
-                    .whandler <- function(e) {
-                        call <- conditionCall(e)
-                        if (!is.null(call) &&
-                           grepl("^parse_Rd", deparse(call))) {
-                            warning(conditionMessage(e), call. = FALSE)
-                            invokeRestart("muffleWarning")
-                        } else e
-                    }
-                    encoding <- desc["Encoding"]
-                    if (is.na(encoding)) encoding <- "unknown"
-                    res <-
-                        try(withCallingHandlers(
-                         .install_package_Rd_objects(".", instdir, encoding),
-                                                warning = .whandler))
-                    if (inherits(res, "try-error"))
-                        pkgerrmsg("installing Rd objects failed", pkg_name)
-                }
+                encoding <- desc["Encoding"]
+                if (is.na(encoding)) encoding <- "unknown"
+                res <- try(.install_package_Rd_objects(".", instdir, encoding))
+                if (inherits(res, "try-error"))
+                    pkgerrmsg("installing Rd objects failed", pkg_name)
+
 
                 starsmsg(paste0(stars, "*"), "installing help indices")
                 .writePkgIndices(pkg_dir, instdir, html = build_html,

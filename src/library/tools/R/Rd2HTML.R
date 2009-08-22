@@ -548,7 +548,8 @@ Rd2HTML <-
     }
 
     writeSection <- function(section, tag) {
-        if (tag == "\\alias") return() ## \alias only used on CHM header
+        if (tag %in% c("\\alias", "\\concept", "\\encoding", "\\keyword"))
+            return() ## \alias only used on CHM header
     	of1("\n\n<h3>")
     	if (tag == "\\section") {
     	    title <- section[[1L]]
@@ -588,52 +589,8 @@ Rd2HTML <-
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
-    version <- which(sections == "\\Rdversion")
-    if (length(version) == 1L && as.numeric(Rd[[version]][[1L]]) < 2) {
-        ## <FIXME>
-        ## Should we unconditionally warn (or notify using message())?
-        ## CRAN currently (2009-07-28) has more than 250 \Rdversion{1.1}
-        ## packages ...
-        if(identical(getOption("verbose"), TRUE))
-            warning("checkRd is designed for Rd version 2 or higher")
-        ## </FIXME>
-    }
-    else if (length(version) > 1L)
-    	stopRd(Rd[[version[2L]]], Rdfile,
-               "Only one \\Rdversion declaration is allowed")
-
-    ## Give warning (pro tem) for nonblank text outside a section
-    if (length(bad <- grep("[^[:blank:][:cntrl:]]",
-                           unlist(Rd[sections == "TEXT"]),
-                           perl = TRUE, useBytes = TRUE )))
-    	warnRd(Rd[sections == "TEXT"][[bad[1L]]], Rdfile,
-               "All text must be in a section")
-
-    ## Drop all the parts that are not rendered
-    drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding",
-                            "\\keyword", "\\Rdversion", "\\RdOpts")
-    Rd <- Rd[!drop]
-    sections <- sections[!drop]
-
-    sortorder <- sectionOrder[sections]
-    if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1L]]], Rdfile,
-               "Section ", sections[which(bad)[1L]],
-               " unrecognized")
-    sortorder <- order(sortorder)
-    Rd <- Rd[sortorder]
-    sections <- sections[sortorder]
-    if (!identical(sections[1:2], c("\\title", "\\name")))
-    	stopRd(Rd, Rdfile,
-               "Sections \\title, and \\name must exist and be unique in Rd files")
-
     title <- Rd[[1L]]
-    name <- Rd[[2L]]
-    tags <- RdTags(name)
-    if (length(tags) > 1L)
-        stopRd(name, Rdfile,"\\name must only contain simple text")
-
-    name <- htmlify(name[[1L]])
+    name <- htmlify(Rd[[2L]][[1L]])
 
     if(CHM)
         of0('<html><head><title>')

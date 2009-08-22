@@ -380,9 +380,10 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
 
     .fetch_Rd_object <- function(f) {
         ## This calls parse_Rd
-        prepare_Rd(f, encoding = encoding,
-                   defines = .Platform$OS.type,
-                   stages = "install")
+        Rd <- prepare_Rd(f, encoding = encoding,
+                         defines = .Platform$OS.type,
+                         stages = "install", warningCalls = FALSE)
+        structure(Rd, prepared = 3L)
     }
 
     if(!is.null(db_file) && file_test("-f", db_file)) {

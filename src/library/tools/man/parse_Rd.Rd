@@ -14,7 +14,7 @@
 }
 \usage{
 parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
-         fragment = FALSE)
+         fragment = FALSE, warningCalls = TRUE)
 \method{print}{Rd}(x, deparse = FALSE, \dots)
 \method{as.character}{Rd}(x, deparse = FALSE, \dots)
 }
@@ -27,7 +27,8 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
   \item{verbose}{Logical indicating whether detailed parsing
     information should be printed.} 
   \item{fragment}{Logical indicating whether file represents a complete
-  Rd file, or a fragment.}
+    Rd file, or a fragment.}
+  \item{warningCall}{Logical: should parser warnings include the call?}
   \item{x}{An object of class Rd.}
   \item{deparse}{If \code{TRUE}, attempt to reinstate the escape characters
     so that the resulting characters will parse to the same object.}

@@ -592,6 +592,8 @@ Rd2txt <-
     }
 
     writeSection <- function(section, tag) {
+        if (tag %in% c("\\alias", "\\concept", "\\encoding", "\\keyword"))
+            return()
     	blankLine(0L)
         indent <<- 5L
         keepFirstIndent <<- TRUE
@@ -636,50 +638,12 @@ Rd2txt <-
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
-    version <- which(sections == "\\Rdversion")
-    if (length(version) == 1L && as.numeric(Rd[[version]][[1L]]) < 2) {
-        ## <FIXME>
-        ## Should we unconditionally warn (or notify using message())?
-        ## CRAN currently (2009-07-28) has more than 250 \Rdversion{1.1}
-        ## packages ...
-        if(identical(getOption("verbose"), TRUE))
-            warning("checkRd is designed for Rd version 2 or higher")
-        ## </FIXME>
-    }
-    else if (length(version) > 1L)
-    	stopRd(Rd[[version[2L]]], Rdfile, "Only one \\Rdversion declaration is allowed")
-
-    ## Give warning (pro tem) for nonblank text outside a section
-    if (length(bad <- grep("[^[:blank:][:cntrl:]]",
-                           unlist(Rd[sections == "TEXT"]), perl = TRUE)))
-    	warnRd(Rd[sections == "TEXT"][[bad[1L]]], Rdfile,
-               "All text must be in a section")
-
-    ## Drop all the parts that are not rendered
-    drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType", "\\encoding",
-                            "\\keyword", "\\alias", "\\Rdversion", "\\RdOpts")
-    Rd <- Rd[!drop]
-    sections <- sections[!drop]
-
-    sortorder <- sectionOrder[sections]
-    if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1L]]], Rdfile, "Section ", sections[which(bad)[1L]], " unrecognized")
-    sortorder <- order(sortorder)
-    Rd <- Rd[sortorder]
-    sections <- sections[sortorder]
-    if (!identical(sections[1:2], c("\\title", "\\name")))
-    	stopRd(Rd, Rdfile, "Sections \\title, and \\name must exist and be unique in Rd files")
-
     title <- as.character(Rd[[1L]])
     ## remove empty lines, leading and trailing whitespace, \n
     title <- trim(paste(psub1("^\\s+", "", title[nzchar(title)]), collapse=" "))
     title <- fsub("\n", "", title)
 
-    name <- Rd[[2L]]
-    tags <- RdTags(name)
-    if (length(tags) > 1L) stopRd(name, Rdfile, "\\name must only contain simple text")
-
-    name <- trim(name[[1L]])
+    name <- trim(Rd[[2L]][[1L]])
 
     if(nzchar(package)) {
         left <- name

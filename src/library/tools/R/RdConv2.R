@@ -32,12 +32,13 @@ isBlankLineRd <- function(x) {
 stopRd <- function(block, Rdfile, ...)
 {
     srcref <- attr(block, "srcref")
-    if (is.null(srcref)) stop(..., call. = FALSE, domain = NA)
+    msg <- if (is.null(srcref))
+        paste("file '", Rdfile, "': ", ..., sep = "")
     else {
     	loc <- paste(Rdfile, ":", srcref[1L], sep = "")
     	if (srcref[1L] != srcref[3L]) loc <- paste(loc, "-", srcref[3L], sep="")
-    	stop(call.=FALSE, loc, ": ", ..., domain = NA)
     }
+    stop(msg, call. = FALSE, domain = NA)
 }
 
 warnRd <- function(block, Rdfile, ...)
@@ -234,18 +235,18 @@ processRdIfdefs <- function(blocks, defines)
 	    }
 	}
 	if (is.list(block)) {
-	    i <- 1
+	    i <- 1L
 	    while (i <= length(block)) {
 	    	newval <- recurse(block[[i]])
 	    	newtag <- attr(newval, "Rd_tag")
 	    	if (!is.null(newtag) && newtag == "#expanded") { # ifdef has expanded.
 	    	    all <- seq_along(block)
-	    	    before <- all[all<i]
-	    	    after <- all[all>i]
+	    	    before <- all[all < i]
+	    	    after <- all[all > i]
 	    	    block <- tagged(c(block[before], newval, block[after]), tag)
 	    	} else {
 		    block[[i]] <- newval
-		    i <- i+1
+		    i <- i+1L
 		}
 	    }
 	}
@@ -278,18 +279,20 @@ processRdSexprs <-
 
 prepare_Rd <-
     function(Rd, encoding = "unknown", defines = NULL, stages = NULL,
-             options = RweaveRdDefaults)
+             options = RweaveRdDefaults, stage2 = TRUE, stage3 = TRUE, ...)
 {
     Rdfile <- "not known"
     if (is.character(Rd)) {
         Rdfile <- Rd
         ## do it this way to get info in internal warnings
-        Rd <- eval(substitute(parse_Rd(f, encoding = enc),
+        Rd <- eval(substitute(parse_Rd(f, encoding = enc, ...),
                               list(f = Rd, enc = encoding)))
     } else if(inherits(Rd, "connection")) {
         Rdfile <- summary(Rd)
-        Rd <- parse_Rd(Rd, encoding = encoding)
+        Rd <- parse_Rd(Rd, encoding = encoding, ...)
     } else Rdfile <- attr(Rd, "Rdfile")
+    pratt <- attr(Rd, "prepared")
+    if (is.null(pratt)) pratt <- 0L
     if ("build" %in% stages)
     	Rd <- processRdSexprs(Rd, "build", options)
     if (!is.null(defines))
@@ -297,10 +300,132 @@ prepare_Rd <-
     for (stage in c("install", "render"))
     	if (stage %in% stages)
     	    Rd <- processRdSexprs(Rd, stage, options)
+    if (pratt < 2L && stage2) Rd <- prepare2_Rd(Rd, Rdfile)
+    if (pratt < 3L && stage3) Rd <- prepare3_Rd(Rd, Rdfile)
     structure(Rd, Rdfile=Rdfile, class = "Rd")
 }
 
-sectionOrder <- c("\\title"=1, "\\name"=2, "\\alias"=2.1, "\\keyword"=2.2,
+prepare2_Rd <- function(Rd, Rdfile)
+{
+    sections <- RdTags(Rd)
+
+    ## FIXME: we no longer make any use of \Rdversion
+    version <- which(sections == "\\Rdversion")
+    if (length(version) == 1L && as.numeric(Rd[[version]][[1L]]) < 2) {
+        ## <FIXME>
+        ## Should we unconditionally warn (or notify using message())?
+        ## CRAN currently (2009-07-28) has more than 250 \Rdversion{1.1}
+        ## packages ...
+        if(identical(getOption("verbose"), TRUE))
+            warning("checkRd is designed for Rd version 2 or higher")
+        ## </FIXME>
+    } else if (length(version) > 1L)
+    	stopRd(Rd[[version[2L]]], Rdfile,
+               "Only one \\Rdversion declaration is allowed")
+
+    ## Give warning (pro tem) for nonblank text outside a section
+    if (length(bad <- grep("[^[:blank:][:cntrl:]]",
+                           unlist(Rd[sections == "TEXT"]),
+                           perl = TRUE, useBytes = TRUE )))
+        for(s in bad)
+            warnRd(Rd[sections == "TEXT"][[s]], Rdfile,
+                   "All text must be in a section")
+
+    drop <- rep.int(FALSE, length(sections))
+
+    where <- which(sections == "\\examples")
+    if(length(where) > 1L) {
+        warnRd(Rd[where], Rdfile,
+               "Only one \\examples section is allowed and only the first will be used")
+        drop[where[-1L]] <- TRUE
+    }
+
+    enc <- which(sections == "\\encoding")
+    if (length(enc)) {
+    	if (length(enc) > 1L) {
+    	    warnRd(Rd[[enc[2L]]], Rdfile,
+                   "Only one \\encoding declaration is allowed and the first will be used")
+            drop[enc[-1L]] <- TRUE
+            enc <- enc[[1L]]
+        }
+    	encoding <- Rd[[enc]]
+    	if (!identical(RdTags(encoding), "TEXT"))
+    	    stopRd(encoding, Rdfile, "Encoding must be plain text")
+    }
+
+    dt <- which(sections == "\\docType")
+    docTypes <- character(length(dt))
+    if (length(dt)) {
+        for (i in dt) {
+            docType <- Rd[[i]]
+            if(!identical(RdTags(docType), "TEXT"))
+        	stopRd(docType, Rdfile, "docType must be plain text")
+            docTypes[i] <- docType[[1L]]
+         }
+    }
+
+    ## Drop all the parts that are not rendered
+    extras <- c("COMMENT", "TEXT", "\\docType", "\\Rdversion", "\\RdOpts")
+    drop <- drop | (sections %in% extras)
+    bad <- ! sections %in% c(names(sectionOrder), extras)
+    if (any(bad)) {
+        for(s in which(bad))
+            warnRd(Rd[[s]], Rdfile, "Section ",
+                   sections[Rd[[s]]], "is unrecognized and will be dropped")
+        drop <- drop | bad
+    }
+    Rd <- Rd[!drop]
+    sections <- sections[!drop]
+    sortorder <- order(sectionOrder[sections])
+    Rd <- Rd[sortorder]
+    sections <- sections[sortorder]
+    if (!identical(sections[1:2], c("\\title", "\\name")))
+    	stopRd(Rd, Rdfile,
+               "Sections \\title, and \\name must exist and be unique in Rd files")
+    if (length(RdTags(Rd[[2L]])) > 1L)
+        stopRd(name, Rdfile,"\\name must only contain simple text")
+    Rd
+}
+
+prepare3_Rd <- function(Rd, Rdfile)
+{
+    ## Drop 'empty' sections: less rigorous than checkRd test
+    keep <- rep(TRUE, length(Rd))
+    checkEmpty <- function(x, this)
+    {
+        if(this) return(TRUE)
+        if(is.list(x))
+            for(xx in x) this <- checkEmpty(xx, this)
+        else {
+            tag <- attr(x, "Rd_tag")
+            switch(tag,
+                   COMMENT = {},
+                   VERB =,
+                   RCODE =,
+                   TEXT = if(any(grepl("[^[:space:]]", s, perl = TRUE, useBytes=TRUE))) return(TRUE),
+                   return(TRUE)
+                   )
+        }
+        this
+     }
+    for (i in seq_along(Rd)) {
+        this <- FALSE
+        section <- Rd[[i]]
+        tag <- attr(section, "Rd_tag")
+        if(tag == "\\section") {
+            tagtitle <- sQuote(as.character(section[[1L]]))
+            section <- section[[2L]]
+        } else tagtitle <- tag
+        for(s in section) this <- checkEmpty(s, this)
+        keep[i] <- this
+        if(!this)
+            warnRd(section, Rdfile, "Dropping empty section ", tagtitle)
+    }
+    Rd[keep]
+}
+
+sectionOrder <- c("\\title"=1, "\\name"=2, "\\alias"=2.1, "\\concept"=2.2,
+                  "\\keyword"=2.3, "\\encoding"=2.4,
     "\\description"=3, "\\usage"=4, "\\synopsis"=4, "\\arguments"=5,
     "\\format"=6, "\\details"=7, "\\value"=8, "\\section"=9,
     "\\note"=10, "\\author" = 11, "\\source"=12, "\\references"=13,
@@ -615,43 +740,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
             warnRd(Rd[[which]], Rdfile, "Tag ", tag, " must not be empty")
     }
 
-    inEnc2 <- FALSE
-    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
-    Rdfile <- attr(Rd, "Rdfile")
-    sections <- RdTags(Rd)
-
-    version <- which(sections == "\\Rdversion")
-    if (length(version) == 1L && as.numeric(Rd[[version]][[1L]]) < 2) {
-        ## <FIXME>
-        ## Should we unconditionally warn (or notify using message())?
-        ## CRAN currently (2009-07-28) has more than 250 \Rdversion{1.1}
-        ## packages ...
-        if(identical(getOption("verbose"), TRUE))
-            warning("checkRd is designed for Rd version 2 or higher")
-        ## </FIXME>
-    }
-    else if (length(version) > 1L)
-    	stopRd(Rd[[version[2L]]], Rdfile,
-               "Only one \\Rdversion declaration is allowed")
-
-    ## Give warning (pro tem) for nonblank text outside a section
-    if (length(bad <- grep("[^[:blank:][:cntrl:]]",
-                           unlist(Rd[sections == "TEXT"]), perl = TRUE )))
-    	warnRd(Rd[sections == "TEXT"][[bad[1L]]], Rdfile,
-               "All text must be in a section")
-
-    enc <- which(sections == "\\encoding")
-    if (length(enc)) {
-    	if (length(enc) > 1L)
-    	    stopRd(Rd[[enc[2L]]], Rdfile,
-                   "Only one \\encoding declaration is allowed")
-    	encoding <- Rd[[enc]]
-    	if (!identical(RdTags(encoding), "TEXT"))
-    	    stopRd(encoding, Rdfile, "Encoding must be plain text")
-        def_enc <- TRUE
-    }
-
-    dt <- which(sections == "\\docType")
+    dt <- which(RdTags(Rd) == "\\docType")
     docTypes <- character(length(dt))
     if (length(dt)) {
         for (i in dt) {
@@ -662,30 +751,17 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
          }
     }
 
-    checkUnique("\\title")
-    checkUnique("\\name")
+    inEnc2 <- FALSE
+    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, warningCalls = FALSE, ...)
+    Rdfile <- attr(Rd, "Rdfile")
+    sections <- RdTags(Rd)
+
+    enc <- which(sections == "\\encoding")
+    ## sanity was checked in prepare2_Rd
+    if (length(enc)) def_enc <- TRUE
+
     if(!identical("package", docTypes))
         checkUnique("\\description")
-
-    name <- Rd[[which(sections == "\\name")]]
-    tags <- RdTags(name)
-    if (length(tags) > 1L)
-        stopRd(name, Rdfile, "\\name must only contain simple text")
-
-    ## Drop all the parts that are not rendered
-    drop <- sections %in% c("COMMENT", "TEXT", "\\concept", "\\docType",
-                            "\\encoding", "\\keyword", "\\Rdversion", "\\RdOpts")
-    Rd <- Rd[!drop]
-    sections <- sections[!drop]
-
-    sortorder <- sectionOrder[sections]
-    if (any(bad <- is.na(sortorder)))
-    	stopRd(Rd[[which(bad)[1L]]], Rdfile,
-               "Section ", sections[which(bad)[1L]],
-               " unrecognized")
-    sortorder <- order(sortorder)
-    Rd <- Rd[sortorder]
-    sections <- sections[sortorder]
 
     for (i in seq_along(sections))
     	checkSection(Rd[[i]], sections[i])
