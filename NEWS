@@ -235,6 +235,9 @@ NEW FEATURES
  	Sys.setlocale() to change the LC_COLLATE setting is more
  	likely to change the collation provided by ICU.
 
+    o	textConnection() gains an 'encoding' argument to determine how
+	input strings with marked encodings will be handled.
+
 
 Rd HELP FILE CHANGES
 

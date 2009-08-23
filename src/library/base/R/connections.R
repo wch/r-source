@@ -106,9 +106,13 @@ rawConnection <- function(object, open = "r") {
 
 rawConnectionValue <- function(con) .Internal(rawConnectionValue(con))
 
-textConnection <- function(object, open = "r", local = FALSE) {
+textConnection <- function(object, open = "r", local = FALSE,
+                           encoding = c("", "bytes", "UTF-8"))
+{
     env <- if (local) parent.frame() else .GlobalEnv
-    .Internal(textConnection(deparse(substitute(object)), object, open, env))
+    type <- match(match.arg(encoding), c("", "bytes", "UTF-8"))
+    .Internal(textConnection(deparse(substitute(object)), object, open,
+                             env, type))
 }
 
 textConnectionValue <- function(con) .Internal(textConnectionValue(con))

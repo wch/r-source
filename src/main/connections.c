@@ -2113,7 +2113,7 @@ SEXP attribute_hidden do_rawconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
 /* ------------------- text connections --------------------- */
 
 /* read a R character vector into a buffer */
-static void text_init(Rconnection con, SEXP text)
+static void text_init(Rconnection con, SEXP text, int type)
 {
     int i, nlines = length(text), nchars = 0;
     Rtextconn this = (Rtextconn)con->private;
@@ -2127,7 +2127,10 @@ static void text_init(Rconnection con, SEXP text)
     }
     *(this->data) = '\0';
     for(i = 0; i < nlines; i++) {
-	strcat(this->data, translateChar(STRING_ELT(text, i)));
+	strcat(this->data,
+	       type == 1 ? translateChar(STRING_ELT(text, i))
+	       : ((type == 3) ?translateCharUTF8(STRING_ELT(text, i))
+		  : CHAR(STRING_ELT(text, i))) );
 	strcat(this->data, "\n");
     }
     this->nchars = nchars;
@@ -2172,7 +2175,7 @@ static double text_seek(Rconnection con, double where, int origin, int rw)
     return 0; /* if just asking, always at the beginning */
 }
 
-static Rconnection newtext(const char *description, SEXP text)
+static Rconnection newtext(const char *description, SEXP text, int type)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
@@ -2201,7 +2204,7 @@ static Rconnection newtext(const char *description, SEXP text)
 	free(new->description); free(new->class); free(new);
 	error(_("allocation of text connection failed"));
     }
-    text_init(new, text);
+    text_init(new, text, type);
     return new;
 }
 
@@ -2429,7 +2432,7 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, stext, sopen, ans, class, venv;
     const char *desc, *open;
-    int ncon;
+    int ncon, type;
     Rconnection con = NULL;
 
     checkArity(op, args);
@@ -2447,11 +2450,14 @@ SEXP attribute_hidden do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("use of NULL environment is defunct"));
     if (!isEnvironment(venv))
 	error(_("invalid '%s' argument"), "environment");
+    type = asInteger(CAD4R(args));
+    if (type == NA_INTEGER)
+	error(_("invalid '%s' argument"), "encoding");
     ncon = NextConnection();
     if(!strlen(open) || strncmp(open, "r", 1) == 0) {
 	if(!isString(stext))
 	    error(_("invalid '%s' argument"), "text");
-	con = Connections[ncon] = newtext(desc, stext);
+	con = Connections[ncon] = newtext(desc, stext, type);
     } else if (strncmp(open, "w", 1) == 0 || strncmp(open, "a", 1) == 0) {
 	if (OutTextData == NULL) {
 	    OutTextData = allocVector(VECSXP, NCONNECTIONS);
