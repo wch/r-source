@@ -223,8 +223,11 @@ NEW FEATURES
 
     o	"\uxxxx" and "\Uxxxxxxxx" escapes can now be parsed to a UTF-8
 	encoded string even in non-UTF-8 locales (this has been
-	implemented on Windows since R 2.7.0).  (Use of such escapes
-	requires Unicode wide character support.)
+	implemented on Windows since R 2.7.0).  The semantics have
+	been changed slightly: a string containing such escapes is
+	always stored in UTF-8 (and hence is suitable for portably
+	including Unicode text in packages).  Use of such escape
+	requires MBCS support.
 
     o	New as.raw() method for "tclObj" objects (wish of PR#13578).
 

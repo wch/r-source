@@ -1903,16 +1903,63 @@ static int NumericValue(int c)
    valid in the current locale, we should switch to UTF-8 for that
    string.  Needs Unicode wide-char support.
 */
+
 #ifdef SUPPORT_MBCS
-# if defined(Win32) || defined(__STDC_ISO_10646__)
+#if defined(__APPLE_CC__)
+/* This may not be 100% true (see the comment in rlocales.h),
+   but it seems true in normal locales */
+# define __STDC_ISO_10646__
+#endif
+
 #  define USE_UTF8_IF_POSSIBLE
+# if defined(Win32) || defined(__STDC_ISO_10646__)
+typedef wchar_t ucs_t;
+#  define mbcs_get_next2 mbcs_get_next
+# else
+typedef unsigned int ucs_t;
+#  define WC_NOT_UNICODE 
+static int mbcs_get_next2(int c, ucs_t *wc)
+{
+    int i, res, clen = 1; char s[9];
+
+    s[0] = c;
+    /* This assumes (probably OK) that all MBCS embed ASCII as single-byte
+       lead bytes, including control chars */
+    if((unsigned int) c < 0x80) {
+	*wc = (wchar_t) c;
+	return 1;
+    }
+    if(utf8locale) {
+	clen = utf8clen(c);
+	for(i = 1; i < clen; i++) {
+	    s[i] = xxgetc();
+	    if(s[i] == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), xxlineno);
+	}
+	res = mbtoucs(wc, s, clen);
+	if(res == -1) error(_("invalid multibyte character in parser at line %d"), xxlineno);
+    } else {
+	/* This is not necessarily correct for stateful MBCS */
+	while(clen <= MB_CUR_MAX) {
+	    res = mbtoucs(wc, s, clen);
+	    if(res >= 0) break;
+	    if(res == -1)
+		error(_("invalid multibyte character in parser at line %d"), xxlineno);
+	    /* so res == -2 */
+	    c = xxgetc();
+	    if(c == R_EOF) error(_("EOF whilst reading MBCS char at line %d"), xxlineno);
+	    s[clen++] = c;
+	} /* we've tried enough, so must be complete or invalid by now */
+    }
+    for(i = clen - 1; i > 0; i--) xxungetc(s[i]);
+    return clen;
+}
 # endif
 #endif
 
 #ifdef USE_UTF8_IF_POSSIBLE
-#define WTEXT_PUSH(c) do { if(wcnt < 1000) wcs[wcnt++] = c; } while(0)
+#define WTEXT_PUSH(c) do { if(wcnt < 10000) wcs[wcnt++] = c; } while(0)
 
-static SEXP mkStringUTF8(const wchar_t *wcs, int cnt)
+static SEXP mkStringUTF8(const ucs_t *wcs, int cnt)
 {
     SEXP t;
     char *s;
@@ -1927,7 +1974,14 @@ static SEXP mkStringUTF8(const wchar_t *wcs, int cnt)
     s = alloca(nb);
     R_CheckStack();
     memset(s, 0, nb); /* safety */
+#ifdef WC_NOT_UNICODE
+    {
+	char *s;
+	for(ss = s; *wcs; wcs++) ss += ucstoutf8(ss, *wcs);
+    }
+#else
     wcstoutf8(s, wcs, nb);
+#endif
     PROTECT(t = allocVector(STRSXP, 1));
     SET_STRING_ELT(t, 0, mkCharCE(s, CE_UTF8));
     UNPROTECT(1);
@@ -1944,6 +1998,7 @@ static SEXP mkStringUTF8(const wchar_t *wcs, int cnt)
 #define CTEXT_POP() ct--
 
 
+/* forSymbol is true when parsing backticked symbols */
 static int StringValue(int c, Rboolean forSymbol)
 {
     int quote = c;
@@ -1955,7 +2010,7 @@ static int StringValue(int c, Rboolean forSymbol)
 
 #ifdef USE_UTF8_IF_POSSIBLE
     int wcnt = 0;
-    wchar_t wcs[1001];
+    ucs_t wcs[10001];
     Rboolean use_wcs = FALSE;
 #endif
 
@@ -2016,9 +2071,11 @@ static int StringValue(int c, Rboolean forSymbol)
 #ifndef SUPPORT_MBCS
 		error(_("\\uxxxx sequences not supported (line %d)"), xxlineno);
 #else
-		unsigned int val = 0; int i, ext; size_t res;
-		char buff[MB_CUR_MAX+1]; /* could be variable, and hence not legal C90 */
+		unsigned int val = 0; int i, ext; 
 		Rboolean delim = FALSE;
+
+		if(forSymbol) 
+		    error(_("\\uxxxx sequences not supported inside backticks (line %d)"), xxlineno);
 		if((c = xxgetc()) == '{') {
 		    delim = TRUE;
 		    CTEXT_PUSH(c);
@@ -2044,35 +2101,41 @@ static int StringValue(int c, Rboolean forSymbol)
 		}
 		if(delim) {
 		    if((c = xxgetc()) != '}')
-			error(_("invalid \\u{xxxx} sequence (line %d)"), xxlineno);
+			error(_("invalid \\u{xxxx} sequence (line %d)"),
+			      xxlineno);
 		    else CTEXT_PUSH(c);
 		}
 		WTEXT_PUSH(val); /* this assumes wchar_t is Unicode */
-		res = ucstomb(buff, val);
-		if((int) res <= 0) {
 #ifdef USE_UTF8_IF_POSSIBLE
-		    if(!forSymbol) {
-			use_wcs = TRUE;
-		    } else
-#endif
-		    {
+		use_wcs = TRUE;
+#else
+		{
+		    size_t res;
+		    char buff[MB_CUR_MAX+1]; /* could be variable, and hence not legal C90 */
+		    res = ucstomb(buff, val);
+		    if((int) res <= 0) {
 			if(delim)
-			    error(_("invalid \\u{xxxx} sequence (line %d)"), xxlineno);
+			    error(_("invalid \\u{xxxx} sequence (line %d)"),
+				  xxlineno);
 			else
-			    error(_("invalid \\uxxxx sequence (line %d)"), xxlineno);
-		    }
-		} else
-		    for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
-		continue;
+			    error(_("invalid \\uxxxx sequence (line %d)"),
+				  xxlineno);
+		    } else
+			for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
+		}
 #endif
+		continue;
+#endif /* SUPPORT_MBCS */
 	    }
 	    else if(c == 'U') {
 #ifndef SUPPORT_MBCS
-		error(_("\\Uxxxxxxxx sequences not supported (line %d)"), xxlineno);
+		error(_("\\Uxxxxxxxx sequences not supported (line %d)"),
+		      xxlineno);
 #else
-		unsigned int val = 0; int i, ext; size_t res;
-		char buff[MB_CUR_MAX+1]; /* could be variable, and hence not legal C90 */
+		unsigned int val = 0; int i, ext;
 		Rboolean delim = FALSE;
+		if(forSymbol) 
+		    error(_("\\Uxxxxxxxx sequences not supported inside backticks (line %d)"), xxlineno);
 		if((c = xxgetc()) == '{') {
 		    delim = TRUE;
 		    CTEXT_PUSH(c);
@@ -2101,24 +2164,25 @@ static int StringValue(int c, Rboolean forSymbol)
 			error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
 		    else CTEXT_PUSH(c);
 		}
-		res = ucstomb(buff, val);
-		if((int)res <= 0) {
+		WTEXT_PUSH(val);
 #ifdef USE_UTF8_IF_POSSIBLE
-		    if(!forSymbol) {
-			use_wcs = TRUE;
-		    } else
-#endif
-		    {
+		use_wcs = TRUE;
+#else
+		{
+		    size_t res;
+		    char buff[MB_CUR_MAX+1];
+		    res = ucstomb(buff, val);
+		    if((int) res <= 0) {
 			if(delim)
 			    error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
 			else
 			    error(_("invalid \\Uxxxxxxxx sequence (line %d)"), xxlineno);
 		    }
+		    for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
 		}
-		for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
-		WTEXT_PUSH(val);
-		continue;
 #endif
+		continue;
+#endif /* SUPPORT_MBCS */
 	    }
 	    else {
 		switch (c) {
@@ -2163,9 +2227,8 @@ static int StringValue(int c, Rboolean forSymbol)
 #if defined(SUPPORT_MBCS)
        else if(mbcslocale) {
 	   int i, clen;
-	   wchar_t wc = L'\0';
-	   /* We can't assume this is valid UTF-8 */
-	   clen = /* utf8locale ? utf8clen(c):*/ mbcs_get_next(c, &wc);
+	   ucs_t wc;
+	   clen = mbcs_get_next2(c, &wc);
 	   WTEXT_PUSH(wc);
 	   for(i = 0; i < clen - 1; i++){
 	       STEXT_PUSH(c);
@@ -2184,12 +2247,19 @@ static int StringValue(int c, Rboolean forSymbol)
 #endif /* SUPPORT_MBCS */
 	STEXT_PUSH(c);
 #ifdef USE_UTF8_IF_POSSIBLE
-	if ((unsigned int) c < 0x80) WTEXT_PUSH(c); /* assumes wchar_t embeds ASCII */
+	if ((unsigned int) c < 0x80) WTEXT_PUSH(c);
 	else { /* have an 8-bit char in the current encoding */
+#ifdef WC_NOT_UNICODE
+	    ucs_t wc;
+	    char s[2] = " ";
+	    s[0] = c;
+	    mbtoucs(&wc, s, 2);
+#else
 	    wchar_t wc;
 	    char s[2] = " ";
 	    s[0] = c;
 	    mbrtowc(&wc, s, 2, NULL);
+#endif
 	    WTEXT_PUSH(wc);
 	}
 #endif
@@ -2203,10 +2273,10 @@ static int StringValue(int c, Rboolean forSymbol)
     } else {
 #ifdef USE_UTF8_IF_POSSIBLE
 	if(use_wcs) {
-	    if(wcnt < 1000)
+	    if(wcnt < 10000)
 		PROTECT(yylval = mkStringUTF8(wcs, wcnt)); /* include terminator */
 	    else
-		error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 1000 chars)"), xxlineno);
+		error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 10000 chars)"), xxlineno);
 	} else
 #endif
 	    PROTECT(yylval = mkString2(stext,  bp - stext - 1));
@@ -2297,8 +2367,7 @@ static int SymbolValue(int c)
 #if defined(SUPPORT_MBCS)
     if(mbcslocale) {
 	wchar_t wc; int i, clen;
-	   /* We can't assume this is valid UTF-8 */
-	clen = /* utf8locale ? utf8clen(c) :*/ mbcs_get_next(c, &wc);
+	clen = mbcs_get_next(c, &wc);
 	while(1) {
 	    /* at this point we have seen one char, so push its bytes
 	       and get one more */
