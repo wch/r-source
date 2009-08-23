@@ -4005,16 +4005,16 @@ workarounds added for @R{} 2.6.0.
 
 Only building as a shared library works,@footnote{Windows DLLs need to
 have all links resolved at build time and so cannot resolve against
-@file{R.bin}.} so use
+@file{R.bin}.} so use e.g@:
 
 @example
-./configure --disable-nls --disable-mbcs --enable-R-shlib
+./configure --disable-nls --enable-R-shlib
 make
 @end example
 
 @noindent
-MBCS does not work---@code{wcstod} is missing---but would only be of any
-use in a CJK locale.  NLS does work, although
+MBCS does work apart from some aspects of date strings, but will be of
+little use outside a CJK locale.  NLS does work, although
 @option{--with-included-gettext} is preferable.  You will see many
 warnings about the use of auto-import.
 
