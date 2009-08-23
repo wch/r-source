@@ -338,7 +338,7 @@ prepare2_Rd <- function(Rd, Rdfile)
 
     where <- which(sections == "\\examples")
     if(length(where) > 1L) {
-        warnRd(Rd[where], Rdfile,
+        warnRd(Rd[where[[2L]]], Rdfile,
                "Only one \\examples section is allowed: the first will be used")
         drop[where[-1L]] <- TRUE
     }
@@ -736,9 +736,10 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	if (tag == "\\section") {
     	    title <- section[[1L]]
             ## should be simple text
-            if(length(title) < 1L || attr(title[[1L]], "Rd_tag") != "TEXT")
-                warnRd(Rd, Rdfile, level = 5,
-                       "Section title must be plain text")
+            if(length(title) < 1L || attr(title[[1L]], "Rd_tag") != "TEXT") {
+                warnRd(section, Rdfile, level = 5,
+                       "Title of \\section must be non-empty plain text")
+            }
     	    checkContent(title, tag)
     	    section <- section[[2L]]
             ## replace 'tag' in message below
@@ -780,7 +781,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
             docType <- Rd[[i]]
             if(!identical(RdTags(docType), "TEXT"))
         	warnRd(docType, Rdfile, level = 7,
-                       "docType must be plain text")
+                       "'docType' must be plain text")
             docTypes[i] <- docType[[1L]]
          }
     }
