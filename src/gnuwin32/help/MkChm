@@ -1,6 +1,6 @@
 #-*- Makefile -*-
 
-## Called from <pkg source>/chm
+## Called from <_base_ pkg source>/chm
 
 HTM = $(filter-out 00Index.html, $(wildcard *.html))
 %.chm: $(HTM) Rchm.css logo.jpg
