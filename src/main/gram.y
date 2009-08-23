@@ -1976,7 +1976,7 @@ static SEXP mkStringUTF8(const ucs_t *wcs, int cnt)
     memset(s, 0, nb); /* safety */
 #ifdef WC_NOT_UNICODE
     {
-	char *s;
+	char *ss;
 	for(ss = s; *wcs; wcs++) ss += ucstoutf8(ss, *wcs);
     }
 #else
