@@ -1092,7 +1092,7 @@ R_strptime (const char *buf, const char *format, struct tm *tm, double *psecs)
 {
     enum locale_status decided;
     decided = raw;
-#ifdef SUPPORT_MBCS
+#if defined(SUPPORT_MBCS) && defined(HAVE_WCSTOD)
     if(mbcslocale) {
 	wchar_t wbuf[1001], wfmt[1001]; size_t n;
 #if defined(HAVE_LOCALE_H) && defined(HAVE_WCSFTIME)

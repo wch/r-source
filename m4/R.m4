@@ -3362,7 +3362,7 @@ if test "$want_mbcs_support" = yes ; then
   R_CHECK_FUNCS([mbrtowc wcrtomb wcscoll wcsftime wcstod], [#include <wchar.h>])
   R_CHECK_FUNCS([mbstowcs wcstombs], [#include <stdlib.h>])
   R_CHECK_FUNCS([wctrans iswblank wctype iswctype], [#include <wctype.h>])
-  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstod wcstombs \
+  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcstombs \
                  wctrans wctype iswctype
   do
     as_ac_var=`echo "ac_cv_have_decl_$ac_func"`
