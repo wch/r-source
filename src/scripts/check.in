@@ -1924,7 +1924,11 @@ sub check_pkg {
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
-	    $log->warning();
+	    if(scalar(grep(!/^prepare.*Dropping empty section/, @out)) > 0) {
+		$log->warning();
+	    } else {
+		$log->note();
+	    }
 	    $log->print(join("\n", @out) . "\n");
 	} else {
 	    $log->result("OK");

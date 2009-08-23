@@ -413,7 +413,7 @@ prepare3_Rd <- function(Rd, Rdfile, msglevel = 0)
      }
     for (i in seq_along(Rd)) {
         this <- FALSE
-        section <- Rd[[i]]
+        s0 <- section <- Rd[[i]]
         tag <- attr(section, "Rd_tag")
         if(tag == "\\section") {
             tagtitle <- sQuote(as.character(section[[1L]]))
@@ -422,7 +422,7 @@ prepare3_Rd <- function(Rd, Rdfile, msglevel = 0)
         for(s in section) this <- checkEmpty(s, this)
         keep[i] <- this
         if(!this && msglevel > 0)
-            warnRd(section, Rdfile, "Dropping empty section ", tagtitle)
+            warnRd(s0, Rdfile, "Dropping empty section ", tagtitle)
     }
     Rd[keep]
 }
