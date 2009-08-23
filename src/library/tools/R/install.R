@@ -1479,14 +1479,18 @@
     ## If it does not exist, guess this is a source package.
     latexdir <- file.path(pkgdir, "latex")
     if (!file_test("-d", latexdir)) {
-        if (file_test("-d", file.path(pkgdir, "help"))
-           || length( Sys.glob(file.path(pkgdir, "man/*.rds")) )) {
+        if (file_test("-d", file.path(pkgdir, "help"))) {
             ## So convert it
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
             if (!silent) message("Converting parsed Rd's to LaTeX ",
-                                appendLF=FALSE, domain=NA)
+                                 appendLF = FALSE, domain = NA)
             Rd <- Rd_db(basename(pkgdir), lib.loc = dirname(pkgdir))
+            if (!length(Rd)) {
+                if (is.character(outfile))
+                    close(file(outfile, if (append) "at" else "wt"))
+                return(invisible(character()))
+            }
             cnt <- 0L
             for(f in names(Rd)) {
                 bf <- basename(f)
@@ -1502,7 +1506,7 @@
                                                   defines = NULL),
                                          "latexEncoding"))
             }
-            if (!silent) message(domain=NA)
+            if (!silent) message(domain = NA)
         } else {
             files <- Sys.glob(file.path(pkgdir, "*.[Rr]d"))
             if (!length(files)) {
@@ -1511,7 +1515,7 @@
                 if (!length(files))
                     stop("this package does not have either a ", sQuote("latex"),
                          " or a (source) ", sQuote("man"), " directory",
-                         domain=NA)
+                         domain = NA)
                 if (is.null(extraDirs)) extraDirs <- .Platform$OS.type
                 for(e in extraDirs)
                     files <- c(files,
