@@ -386,7 +386,7 @@ prepare2_Rd <- function(Rd, Rdfile)
     	stopRd(Rd, Rdfile,
                "Sections \\title, and \\name must exist and be unique in Rd files")
     if (length(RdTags(Rd[[2L]])) > 1L)
-        stopRd(name, Rdfile,"\\name must only contain simple text")
+        stopRd(RdTags(Rd[[2L]]), Rdfile,"\\name must only contain simple text")
     Rd
 }
 
@@ -627,8 +627,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    "\\special" = checkCodeBlock(block, blocktag),
                    "\\dots" = has_text <<- TRUE,
                    "\\ldots" = {
-                       ## but it is rendered as \\dots
-                       warnRd(block, Rdfile, level = 3,
+                       ## but it is rendered as ... in all converters
+                       warnRd(block, Rdfile, level = -3,
                               "Tag ", tag, " is invalid in a code block")
                        has_text <<- TRUE
                    },
