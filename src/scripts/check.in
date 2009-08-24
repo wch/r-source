@@ -2596,7 +2596,7 @@ sub check_pkg_manual {
 		$log->print("Rd conversion errors:\n");
 		@lines = &read_lines("Rdlatex.log");
 		foreach my $line (@lines) {
-		    print $line, "\n" unless $line =~ /^(Hmm|Execution)/;
+		    $log->print($line . "\n") unless $line =~ /^(Hmm|Execution)/;
 		}
 		rmtree($build_dir);
 		exit(1);
