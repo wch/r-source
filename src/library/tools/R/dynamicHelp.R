@@ -14,10 +14,12 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## 'query' is unused.
 httpd <- function(path, query, ...)
 {
     fileRegexp <- "^/library/([^/]*)/html/([^/]*)\\.html$"
     topicRegexp <- "^/library/([^/]*)/help/([^/]*)$"
+    docRegexp <- "^/library/([^/]*)/doc/(.*)"
     file <- NULL
     if (grepl(topicRegexp, path)) {
     	pkg <- sub(topicRegexp, "\\1", path)
@@ -30,14 +32,15 @@ httpd <- function(path, query, ...)
             file <- help(topic, htmlhelp=FALSE, chmhelp=FALSE,
                          try.all.packages=TRUE)
 	if (length(file) == 0L) {
-	    return(list(payload=paste('<p>No help found for topic ', topic, ' in package ',
-                        pkg, '.</p>\n',
+	    return(list(payload=paste('<p>No help found for topic ', topic,
+                        ' in package ', pkg, '.</p>\n',
                         '<hr><div align="center">[<a href="00Index.html">Index</a>]</div>\n',
                         sep="", collapse="")))
 	} else if (length(file) == 1L) {
 	    path <- dirname(dirname(file))
 	    file <- paste('../../', basename(path), '/html/', basename(file), '.html', sep='')
-	    return(list(payload=paste('Redirect to <a href="', file, '">"', basename(file), '"</a>', sep=''),
+	    return(list(payload=paste('Redirect to <a href="', file, '">"',
+                        basename(file), '"</a>', sep=''),
 	    		"content-type"='text/html',
 	    		header=paste('Location: ', file, '\n', sep=''),
 	    		"status code" = 302L)) # temporary redirect
@@ -54,10 +57,19 @@ httpd <- function(path, query, ...)
     } else if (grepl(fileRegexp, path)) {
     	pkg <- sub(fileRegexp, "\\1", path)
     	topic <- sub(fileRegexp, "\\2", path)
+        ## FIXME: this too needs links unfixed
+        ## FIXME: what if package not found
     	if (basename(path) == "00Index.html")
     	    return(list(file=file.path(system.file("html", package=pkg), "00Index.html")))
     	else
     	    file <- file.path(system.file("help", package=pkg), topic)
+    } else if (grepl(docRegexp, path)) {
+        ## vignettes etc directory
+    	pkg <- sub(docRegexp, "\\1", path)
+    	rest <- sub(docRegexp, "\\2", path)
+        ## FIXME: what if package not found, directory listing case.
+        file <- paste(system.file("doc", package = pkg), rest, sep = "/")
+        return(list(file=file))
     }
     if (!is.null(file)) {
 	path <- dirname(file)
@@ -76,7 +88,24 @@ httpd <- function(path, query, ...)
             ## Try for pre-generated HTML.
             file2 <- paste(sub("/help/", "/html/", file, fixed = TRUE),
                            "html", sep=".")
-            if(file.exists(file2)) return(list(file=file2))
+            if(file.exists(file2)) {
+                if(.Platform$OS.type == "windows") {
+                    ## we need to re-fix links altered by fixup.package.URLs
+                    fixedfile <- sub("/html/.*", "/fixedHTMLlinks", file2)
+                    if(file.exists(fixedfile)) {
+                        top <- readLines(fixedfile)
+                        tf <- tempfile("httpd")
+                        lines <- readLines(file2)
+                        lines <- gsub(paste(top, "library", sep="/"),
+                                      "../../", lines)
+                        lines <- gsub(paste(top, "doc/", sep = "/"),
+                                      "../../../doc/", lines)
+                        writeLines(lines, tf)
+                        file2 <- tf
+                    }
+                }
+                return(list(file=file2))
+            }
             return(list(file=file))
         }
     } else if(grepl("doc/html/.*html$" , path) &&
