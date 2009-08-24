@@ -234,10 +234,6 @@ NEW FEATURES
     o	Rd.sty now makes a better job of setting email addresses,
 	including using a monospaced font.
 
-    o	On systems using ICU for collation (including Mac OS X), using
- 	Sys.setlocale() to change the LC_COLLATE setting is more
- 	likely to change the collation provided by ICU.
-
     o	textConnection() gains an 'encoding' argument to determine how
 	input strings with marked encodings will be handled.
 
@@ -305,6 +301,9 @@ INSTALLATION
     o	Perl is no longer 'essential'.  R can be built without it, but
     	scripts R CMD build, check, Rprof and Sd2d require it.
 
+    o	A system 'glob' function is now essential (a working
+	Sys.glob() has been assumed since R 2.9.0 at least).
+
 
 INTERNATIONALIZATION
 
@@ -346,6 +345,17 @@ BUG FIXES
 	*	       2.9 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.9.2 patched
+
+
+NEW FEATURES
+
+    o	On systems using ICU for collation (including Mac OS X), using
+ 	Sys.setlocale() to change the LC_COLLATE setting is more
+ 	likely to change the collation provided by ICU.
+
 
 
 		CHANGES IN R VERSION 2.9.2
