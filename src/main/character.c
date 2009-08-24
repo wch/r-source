@@ -19,13 +19,67 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* The character functions in this file are
+
+nzchar
+nchar
+substr substr<-
+strplit
+abbreviate
+grep
+[g]sub
+[g]regexpr
+tolower
+toupper
+chartr
+agrep
+strtrim
+
+the raw/bit manipulators
+
+charToRaw
+rawToChar
+rawShift
+rawToBits
+intToBits
+packBits
+utf8ToInt
+intToUTf8
+
+and the utility 
+
+make.names
+
+String matching funs are in match.c
+make.unique, duplicated, unique are in unique.c
+iconv is in sysutils.c
+
+
+Support for UTF-8-encoded strings in non-UTF-8 locales
+======================================================
+
+Comparison is done directly unless you happen to have the same string
+in UTF-8 and Latin-1.
+
+nzchar and nchar(, "bytes") are indpendent of the encoding
+nchar(, "char") handle UTF-8 directly, translates Latin-1
+nchar(, "width") ditto (with SUPPORT_MBCS, otherwise no width tables)
+substr substr<- handle UTF-8 and Latin-1 directly
+strsplit grep [g]sub [g]regexpr
+  handle UTF-8 directly is fixed/perl = TRUE, otherwise translate
+  BUT this needs SUPPORT_MBCS
+tolower toupper chartr translate UTF-8 to wchar, rest to current charset
+  which needs SUPPORT_MBCS
+abbreviate agrep strtrim translate
+
+*/
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
 
 #include <Defn.h>
 
-/* #include <sys/types.h> probably not needed */
 #include <R_ext/RS.h>  /* for Calloc/Free */
 #define imax2(x, y) ((x < y) ? y : x)
 
@@ -117,24 +171,21 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    continue;
 	}
 	if (strncmp(type, "bytes", ntype) == 0) {
-	    /* This case counts embedded nuls */
 	    INTEGER(s)[i] = LENGTH(sxi);
 	} else if (strncmp(type, "chars", ntype) == 0) {
-#ifdef SUPPORT_MBCS
-	    /* only on Windows will non-representable UTF-8 chars be
-	       usefully output as chars and not <U+xxxx> */
 	    if (IS_UTF8(sxi)) { /* assume this is valid */
 		const char *p = CHAR(sxi);
 		nc = 0;
-		for( ; *p; p +=utf8clen(*p)) nc++;
+		for( ; *p; p += utf8clen(*p)) nc++;
 		INTEGER(s)[i] = nc;
+#ifdef SUPPORT_MBCS
 	    } else if (mbcslocale) {
 		nc = mbstowcs(NULL, translateChar(sxi), 0);
 		if (!allowNA && nc < 0)
 		    error(_("invalid multibyte string %d"), i+1);
 		INTEGER(s)[i] = nc >= 0 ? nc : NA_INTEGER;
-	    } else
 #endif
+	    } else
 		INTEGER(s)[i] = strlen(translateChar(sxi));
 	} else if (strncmp(type, "width", ntype) == 0) {
 #ifdef SUPPORT_MBCS
@@ -142,9 +193,9 @@ SEXP attribute_hidden do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		const char *p = CHAR(sxi);
 		wchar_t wc1;
 		nc = 0;
-		for( ; *p; p +=utf8clen(*p)) {
+		for( ; *p; p += utf8clen(*p)) {
 		    utf8toucs(&wc1, p);
-		    nc +=Ri18n_wcwidth(wc1);
+		    nc += Ri18n_wcwidth(wc1);
 		}
 		INTEGER(s)[i] = nc;
 	    } else if (mbcslocale) {
@@ -3020,7 +3071,7 @@ static int mbrtoint(int *w, const char *s)
 			| ((s[5] & 0x3F) << 6)
 			| (s[5] & 0x3F));
 	    byte = *w;
-	    return 5;
+	    return 6;
 	} else return -1;
     }
     /* return -2; not reached */
@@ -3130,7 +3181,7 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
     checkArity(op, args);
-    /* conversion happens at R level now */
+    /* as.character happens at R level now */
     if (!isString(x = CAR(args)))
 	error(_("strtrim() requires a character vector"));
     len = LENGTH(x);
