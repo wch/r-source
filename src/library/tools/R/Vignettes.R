@@ -239,11 +239,16 @@ vignetteInfo <-
 function(file)
 {
     lines <- readLines(file, warn = FALSE)
+
     ## <FIXME>
-    ## Can only proceed with lines with are valid in the current
-    ## locale ... (or should we try to iconv() from latin1?)
+    ## Can only proceed with lines with are valid in the current locale.
+    ## Unfortunately, vignette encodings are a mess: package encodings
+    ## might apply, but be overridden by \inputencoding commands.
+    ## For now, assume that vignette metadata occur in all ASCII lines.
+    ## (Could also iconv() using sub = "byte".)
     lines[is.na(nchar(lines, "c", TRUE))] <- ""
     ## </FIXME>
+
     ## \VignetteIndexEntry
     title <- c(.get_vignette_metadata(lines, "IndexEntry"), "")[1L]
     ## \VignetteDepends

@@ -135,12 +135,15 @@ function(package, dir, lib.loc = NULL)
         files <- list_files_with_type(data_dir, "data")
         files <- unique(basename(file_path_sans_ext(files)))
         ## <FIXME>
+        ## Why does this not use list_data_in_pkg() as does codoc()?
+        ## </FIXME>
+        ## <FIXME>
         ## Argh.  When working on the source directory of a package in a
         ## bundle, or a base package, we (currently?) cannot simply use
         ## data().  In these cases, we only have a 'DESCRIPTION.in'
         ## file.  On the other hand, data() uses .find.package() to find
         ## the package paths from its 'package' and '.lib.loc'
-        ## arguments, and .find.packages() is really for finding
+        ## arguments, and .find.package() is really for finding
         ## *installed* packages, and hence tests for the existence of a
         ## 'DESCRIPTION' file.  As a last resort, use the fact that
         ## data() can be made to for look data sets in the 'data'
@@ -173,12 +176,12 @@ function(package, dir, lib.loc = NULL)
             rm(list = new, envir = data_env)
         }
 
-	## <FIXME>
+	## <NOTE>
 	## Currently, loading data from an R file via sys.source() puts
 	## .required into the load environment if the R code has a call to
 	## require().
 	data_objs <- data_objs %w/o% c(".required")
-	## </FIXME>
+	## </NOTE>
     }
 
     ## There was a time when packages contained code or data (or both).
@@ -193,19 +196,11 @@ function(package, dir, lib.loc = NULL)
         ## Code objects in add-on packages with names starting with a
         ## dot are considered 'internal' (not user-level) by
         ## convention.
-        ## <FIXME>
-        ## Not clear whether everyone believes in this convention.
-        ## We used to have
-        ##   allObjs[! allObjs %in% c(all_doc_topics,
-        ##                            ".First.lib", ".Last.lib")]
-        ## i.e., only exclude '.First.lib' and '.Last.lib'.
         code_objs <- grep("^[^.].*", code_objs, value = TRUE)
         ## Note that this also allows us to get rid of S4 meta objects
         ## (with names starting with '.__C__' or '.__M__'; well, as long
         ## as there are none in base).
-        ## </FIXME>
 
-        ## <FIXME>
         ## Need to do something about S4 generic functions 'created' by
         ## setGeneric() or setMethod() on 'ordinary' functions.
         ## The test below exempts objects that are generic functions
@@ -223,7 +218,6 @@ function(package, dir, lib.loc = NULL)
                        },
                        code_objs)
         }
-        ## </FIXME>
 
         ## Allow group generics to be undocumented other than in base.
         ## In particular, those from methods partially duplicate base
@@ -273,7 +267,7 @@ function(package, dir, lib.loc = NULL)
             else
                 character()
         }
-        S4_methods <- sapply(get_S4_generics_with_methods(code_env),
+        S4_methods <- lapply(get_S4_generics_with_methods(code_env),
                              .make_S4_method_siglist)
         S4_methods <- as.character(unlist(S4_methods, use.names = FALSE))
 
@@ -348,12 +342,6 @@ codoc <-
 function(package, dir, lib.loc = NULL,
          use.values = NULL, verbose = getOption("verbose"))
 {
-    ## <FIXME>
-    ## Improvements worth considering:
-    ## * Parallelize the actual checking (it is not necessary to loop
-    ##   over the Rd files);
-    ## </FIXME>
-
     has_namespace <- FALSE
 
     ## Argument handling.
@@ -461,7 +449,6 @@ function(package, dir, lib.loc = NULL,
                    is.function(f) && (length(formals(f)) > 0L)
                },
                objects_in_code)
-    ## <FIXME>
     ## Sourcing all R code files in the package is a problem for base,
     ## where this misses the .Primitive functions.  Hence, when checking
     ## base for objects shown in \usage but missing from the code, we
@@ -486,7 +473,6 @@ function(package, dir, lib.loc = NULL,
         functions_in_code <- c(functions_in_code, extras)
         code_env <- known_env
     }
-    ## </FIXME>
 
     ## Build a list with the formals of the functions in the code
     ## indexed by the names of the functions.
@@ -612,15 +598,9 @@ function(package, dir, lib.loc = NULL,
                              function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
-    ## <FIXME>
-    ## Currently, there is no useful markup for S3 Ops group methods
-    ## and S3 methods for subscripting and subassigning.  Hence, we
-    ## cannot reliably distinguish between usage for the generic and
-    ## that of a method ...
     functions_to_be_ignored <-
         c(.functions_to_be_ignored_from_usage(basename(dir)),
           .functions_with_no_useful_S3_method_markup())
-    ## </FIXME>
 
     bad_doc_objects <- list()
     functions_in_usages <- character()
@@ -796,56 +776,6 @@ function(package, dir, lib.loc = NULL,
 print.codoc <-
 function(x, ...)
 {
-    ## In general, functions in the code which only have an \alias but
-    ## no \usage entry are not necessarily a problem---they might be
-    ## mentioned in other parts of the Rd object documenting them, or be
-    ## 'internal'.  However, if a package has a namespace (and this was
-    ## used in the codoc() computations), then clearly all *exported*
-    ## functions should have \usage entries.
-    ## <FIXME>
-    ## Things are not quite that simple.
-    ## E.g., for generic functions with just a default and a formula
-    ## method we typically do not have \usage for the generic itself.
-    ## (This will change now with the new \method{}{} transformation.)
-    ## Also, earlier versions of codoc() based on the defunct Perl code
-    ## in extract-usage.pl (now removed) only dealt with the *functions*
-    ## so all variables would come out as 'without usage information' ...
-    ## As we can always access the information via
-    ##    attr(codoc("foo"), "objects_in_code_not_in_usages")
-    ## disable reporting this for the time being ...
-    ## <COMMENT>
-    ##     objects_in_code_not_in_usages <-
-    ##         attr(x, "objects_in_code_not_in_usages")
-    ##     if(length(objects_in_code_not_in_usages)
-    ##        && identical(TRUE, attr(x, "has_namespace"))) {
-    ##         if(length(objects_in_code_not_in_usages)) {
-    ##             writeLines("Exported objects without usage information:")
-    ##             .pretty_print(objects_in_code_not_in_usages)
-    ##             writeLines("")
-    ##         }
-    ##     }
-    ## </COMMENT>
-    ## Hmm.  But why not mention the exported *functions* without \usage
-    ## information?  Note that currently there is no useful markup for
-    ## S3 Ops group methods and S3 methods for subscripting and
-    ## subassigning, so the corresponding generics and methods cannot
-    ## reliably be distinguished, and hence would need to be excluded
-    ## here as well.
-    ## <COMMENT>
-    ##     functions_in_code_not_in_usages <-
-    ##         attr(x, "functions_in_code_not_in_usages")
-    ##     if(length(functions_in_code_not_in_usages)
-    ##        && identical(TRUE, attr(x, "has_namespace"))) {
-    ##         if(length(functions_in_code_not_in_usages)) {
-    ##             writeLines("Exported functions without usage information:")
-    ##             .pretty_print(functions_in_code_not_in_usages)
-    ##             writeLines("")
-    ##         }
-    ##     }
-    ## </COMMENT>
-    ## Update: there's now functions_missing_from_usages ...
-    ## </FIXME>
-
     functions_in_usages_not_in_code <-
         attr(x, "functions_in_usages_not_in_code")
     if(length(functions_in_usages_not_in_code)) {
@@ -868,8 +798,27 @@ function(x, ...)
         }
     }
 
+    ## In general, functions in the code which only have an \alias but
+    ## no \usage entry are not necessarily a problem---they might be
+    ## mentioned in other parts of the Rd object documenting them, or be
+    ## 'internal'.  However, if a package has a namespace, then all
+    ## *exported* functions should have \usage entries (apart from
+    ## defunct functions and S4 generics, see the above comments for
+    ## functions_missing_from_usages).  Currently, this information is
+    ## returned in the codoc object but not shown.  Eventually, we might
+    ## add something like
+    ##     functions_missing_from_usages <-
+    ##         attr(x, "functions_missing_from_usages")
+    ##     if(length(functions_missing_from_usages)) {
+    ##         writeLines("Exported functions without usage information:")
+    ##         .pretty_print(functions_in_code_not_in_usages)
+    ##         writeLines("")
+    ##     }
+    ## similar to the above.
+
     if(!length(x))
         return(invisible(x))
+
     has_only_names <- is.character(x[[1L]][[1L]][["code"]])
 
     format_args <- function(s) {
@@ -1237,7 +1186,7 @@ function(package, lib.loc = NULL)
     data_env <- new.env()
     data_dir <- file.path(dir, "data")
     ## with lazy data we have data() but don't need to use it.
-    hasData <- file_test("-d", data_dir) &&
+    has_data <- file_test("-d", data_dir) &&
         !file_test("-f", file.path(data_dir, "Rdata.rdb"))
     data_exts <- .make_file_exts("data")
 
@@ -1254,7 +1203,7 @@ function(package, lib.loc = NULL)
         } else if(has_namespace && exists(al, envir = ns_env, mode = "list",
                   inherits = FALSE)) {
             al <- get(al, envir = ns_env, mode = "list")
-        } else if(hasData) {
+        } else if(has_data) {
             ## Should be a data set.
             if(!length(dir(data_dir)
                        %in% paste(al, data_exts, sep = "."))) {
@@ -1459,19 +1408,14 @@ function(package, dir, lib.loc = NULL)
         ## have aliases, provided that there is no alias which ends in
         ## '-deprecated' (see e.g. base-deprecated.Rd).
         if(!length(grep("-deprecated$", aliases))) {
-            ## Currently, there is no useful markup for S3 Ops group
-            ## methods and S3 methods for subscripting and subassigning,
-            ## so the corresponding generics and methods need to be
-            ## excluded from this test (e.g., the usage for '+' in
-            ## 'DateTimeClasses.Rd' ...).
             functions <-
                 functions %w/o% .functions_with_no_useful_S3_method_markup()
             ## Argh.  There are good reasons for keeping \S4method{}{}
             ## as is, but of course this is not what the aliases use ...
             ## <FIXME>
-            ## Should maybe use topicName(), but in any case, we should
-            ## have functions for converting between the two forms, see
-            ## also the code for undoc().
+            ## Should maybe use utils:::topicName(), but in any case, we
+            ## should have functions for converting between the two
+            ## forms, see also the code for undoc().
             aliases <- sub("([^,]+),(.+)-method$",
                            "\\\\S4method{\\1}{\\2}",
                            aliases)
@@ -1796,7 +1740,7 @@ checkFF <-
 function(package, dir, file, lib.loc = NULL,
          verbose = getOption("verbose"))
 {
-    hasNamespace <- FALSE
+    has_namespace <- FALSE
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1L)
@@ -1814,7 +1758,7 @@ function(package, dir, file, lib.loc = NULL,
             ce <- asNamespace(package)
             if(exists("DLLs", envir = ce$.__NAMESPACE__.)) {
                 DLLs <- get("DLLs", envir = ce$.__NAMESPACE__.)
-                hasNamespace <- length(DLLs) > 0L
+                has_namespace <- length(DLLs) > 0L
             }
             ce
         } else
@@ -1827,12 +1771,12 @@ function(package, dir, file, lib.loc = NULL,
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
-        descfile <- file.path(dir, "DESCRIPTION")
-        enc <- if(file.exists(descfile))
-            .read_description(descfile)["Encoding"] else NA
+        dfile <- file.path(dir, "DESCRIPTION")
+        enc <- if(file.exists(dfile))
+            .read_description(dfile)["Encoding"] else NA
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             nm <- parseNamespaceFile(basename(dir), dirname(dir))
-            hasNamespace <- length(nm$dynlibs)
+            has_namespace <- length(nm$dynlibs)
         }
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
@@ -1856,7 +1800,6 @@ function(package, dir, file, lib.loc = NULL,
         stop(gettextf("file '%s' does not exist", file),
              domain = NA)
 
-    ## <FIXME>
     ## Should there really be a 'verbose' argument?
     ## It may be useful to extract all foreign function calls but then
     ## we would want the calls back ...
@@ -1866,7 +1809,6 @@ function(package, dir, file, lib.loc = NULL,
     ## 'bad' FF calls (i.e., where the 'PACKAGE' argument is missing)
     ## *invisibly* (so that output is not duplicated).
     ## Otherwise, if not verbose, we return the list of bad FF calls.
-    ## </FIXME>
 
     bad_exprs <- list()
     FF_funs <- FF_fun_names <- c(".C", ".Fortran", ".Call", ".External",
@@ -1899,7 +1841,7 @@ function(package, dir, file, lib.loc = NULL,
                 else {
                     parg <- e[["PACKAGE"]]
                     parg <- if(!is.null(parg) && (parg != "")) "OK"
-                    else if(!hasNamespace) {
+                    else if(!has_namespace) {
                         bad_exprs <<- c(bad_exprs, e)
                         "MISSING"
                     } else "MISSING but in a function in a namespace"
@@ -3045,14 +2987,6 @@ function(dfile)
         if(!grepl(sprintf("^%s$", valid_package_name_regexp), val)
            && !grepl("^Translation-[[:alnum:].]+$", val))
             tmp <- c(tmp, gettext("Malformed package name"))
-        ## <FIXME>
-        ## Not clear if we really want to do this.  The Perl code still
-        ## seemed to assume that when checking a package, package name
-        ## and 'directory' (i.e., the base name of the directory with
-        ## the DESCRIPTION metadata) need to be the same.
-        ## if(val != basename(dirname(dfile)))
-        ##     tmp <- c(tmp, "Package name differs from dir name.")
-        ## </FIXME>
         if(!is_base_package) {
             if(val %in% standard_package_names$base)
                 tmp <- c(tmp,
@@ -3264,11 +3198,6 @@ function(dfile, dir)
     ## check's R::Utils::check_package_description() takes any output
     ## from this as indication of an error.
 
-    ## <FIXME>
-    ## With the newly proposed standard the License specs should be all
-    ## ASCII.  Test for this in .check_package_description() ...
-    ## </FIXME>
-
     out <- list()
     if(!is.na(val <- db["License"])) {
         ## If there is no License field, .check_package_description()
@@ -3279,7 +3208,7 @@ function(dfile, dir)
         ## whether pointers exist, so let us do this here.
         if(length(pointers <- status$pointers)) {
             bad_pointers <-
-                pointers[!file.exists(file.path(dir, pointers))]
+                pointers[!file_test("-f", file.path(dir, pointers))]
             if(length(bad_pointers)) {
                 status$bad_pointers <- bad_pointers
                 ok <- FALSE
@@ -3344,9 +3273,10 @@ function(dir)
         return(bad_flags)
 
     ## Try to be careful ...
-    lines <- lines[grepl("^PKG_(CPP|C|CXX|F|FC|OBJC)FLAGS: ", lines)]
+    pkg_flags_re <- "^PKG_(CPP|C|CXX|F|FC|OBJC|OBJCCXX)FLAGS: "
+    lines <- lines[grepl(pkg_flags_re, lines)]
     names <- sub(":.*", "", lines)
-    lines <- sub("^PKG_(CPP|C|CXX|F|FC|OBJC)FLAGS: ", "", lines)
+    lines <- sub(pkg_flags_re, "", lines)
     flags <- strsplit(lines, "[[:space:]]+")
     ## Bad flags:
     ##   -O*
@@ -3848,9 +3778,9 @@ function(dir)
         dir <- file_path_as_absolute(dir)
     dir_name <- basename(dir)
 
-    descfile <- file.path(dirname(dir), "DESCRIPTION")
-    enc <- if(file.exists(descfile))
-        .read_description(descfile)["Encoding"] else NA
+    dfile <- file.path(dirname(dir), "DESCRIPTION")
+    enc <- if(file.exists(dfile))
+        .read_description(dfile)["Encoding"] else NA
 
     ## This was always run in the C locale < 2.5.0
     ## However, what chars are alphabetic depends on the locale,
@@ -3963,9 +3893,9 @@ function(dir)
     ## We should really have a more general-purpose tree walker.
     ## </NOTE>
 
-    descfile <- file.path(dir, "..", "DESCRIPTION")
-    enc <- if(file.exists(descfile))
-        .read_description(descfile)["Encoding"] else NA
+    dfile <- file.path(dir, "..", "DESCRIPTION")
+    enc <- if(file.exists(dfile))
+        .read_description(dfile)["Encoding"] else NA
 
     ## Workhorse function.
     filter <- function(file) {
@@ -4129,7 +4059,6 @@ function(package, dir, lib.loc = NULL)
                        && identical(e[[pos]], TRUE)
                        && !identical(class(e[[2L]]), "character"))
                         dunno <- TRUE
-                    ## <NOTE>
                     ## </NOTE>
                     ## <FIXME> could be inside substitute or a variable
                     ## and is in e.g. R.oo
@@ -4496,7 +4425,7 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
     pg <- c(Sys.glob("*.Rd"), Sys.glob("*.rd"),
             Sys.glob(file.path("*", "*.Rd")),
             Sys.glob(file.path("*", "*.rd")))
-    ## (Note that Using character classes as in '*.[Rr]d' is not
+    ## (Note that using character classes as in '*.[Rr]d' is not
     ## guaranteed to be portable.)
     bad <- character()
     for (f in pg) {
@@ -4606,27 +4535,14 @@ function(package_name)
 
 ### ** .functions_with_no_useful_S3_method_markup
 
+## <FIXME>
+## Remove eventually ...
 .functions_with_no_useful_S3_method_markup <-
 function()
 {
     ## Once upon a time ... there was no useful markup for S3 methods
-    ## for subscripting/subassigning and binary operators.  There is
-    ## still no such markup for *unary* operators, and, strictly
-    ## speaking, for S3 Ops group methods for binary operators [but it
-    ## seems that people do not want to provide explicit documentation
-    ## for these].
-    ##
-    ## Support for S3 methods for subscripting/subassigning was added
-    ## for R 2.1, and for S3 methods for binary operators in 2.2.
-    ## Markup for the former is a bit controversial, as some legacy docs
-    ## have non-synopsis-style \usage entries for these methods.  E.g.,
-    ## as of 2005-05-21, \link[base]{Extract.data.frame} had
-    ##   x[i]
-    ##   x[i] <- value
-    ##   x[i, j, drop = TRUE]
-    ##   x[i, j] <- value
-    ## Hence, we provide internal environment variables for controlling
-    ## what should be ignored.
+    ## for subscripting/subassigning and binary operators.
+    
     c(if(identical(as.logical(Sys.getenv("_R_CHECK_RD_USAGE_METHOD_SUBSET_")),
                    FALSE))
       c("[", "[[", "$", "[<-", "[[<-", "$<-"),
@@ -4634,9 +4550,9 @@ function()
                    FALSE))
       c("+", "-", "*", "/", "^", "<", ">", "<=", ">=", "!=", "==", "%%",
         "%/%", "&", "|"),
-      ## Current, nothing for unary operators.
       "!")
 }
+## </FIXME>
 
 ### ** get_S4_generics_with_methods
 
