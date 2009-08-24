@@ -59,7 +59,7 @@ static int isDir(char *path)
 
 void rcmdusage (char *RCMD)
 {
-    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
+    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
 	    "where 'command' is one of:\n",
 	    "  INSTALL  Install add-on packages.\n",
 	    "  REMOVE   Remove add-on packages.\n",
@@ -70,7 +70,9 @@ void rcmdusage (char *RCMD)
 	    "  Rprof    Post process R profiling files.\n",
 	    "  Rdconv   Convert Rd format to various other formats.\n",
 	    "  Rdiff    difference R output files.\n",
-	    "  Rd2dvi   Convert Rd format to DVI/PDF.\n",
+	    "  Rd2dvi   Convert Rd format to DVI.\n",
+	    "  Rd2pdf   Convert Rd format to PDF.\n",
+	    "  Rd2txt   Convert Rd format to pretty text.\n",
 	    "  Sd2Rd    Convert S documentation to Rd format.\n",
 	    "  Stangle  Extract S/R code from Sweave documentation.\n",
 	    "  Sweave   Process Sweave documentation.\n",
@@ -361,6 +363,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    } else if (strcmp(p, "Rd2txt") == 0) {
 		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/Rdconv.sh -t txt");
+	    } else if (strcmp(p, "Rd2pdf") == 0) {
+		strcpy(cmd, "sh ");
+		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2dvi.sh --pdf");
 	    } else {
 		if (!strcmp(".sh", p + strlen(p) - 3)) {
 		    strcpy(cmd, "sh ");

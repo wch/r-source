@@ -7045,9 +7045,11 @@ Check add-on packages.
 Post-process @R{} profiling files.
 @item Rdconv
 Convert Rd format to various other formats, including @HTML{}, Nroff,
-@LaTeX{}, plain text, and S documentation format.
+@LaTeX{}, plain text, and S documentation format.  @code{Rd2txt} can be
+used as shorthand for @code{Rd2txt -t txt}.
 @item Rd2dvi
-Convert Rd format to DVI/PDF.
+Convert Rd format to DVI/PDF.  @code{Rd2pdf} can be used as shorthand
+for @code{Rd2dvi --pdf}.
 @item Sd2Rd
 Convert S documentation to Rd format.
 @item config

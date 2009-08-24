@@ -6,6 +6,7 @@
 \name{RdUtils}
 \alias{Rdconv}
 \alias{Rd2dvi}
+\alias{Rd2pdf}
 \alias{Sd2Rd}
 \title{Utilities for Processing Rd Files}
 \description{
@@ -17,6 +18,7 @@
 
 \special{R CMD Rdconv [options] file}
 \special{R CMD Rd2dvi [options] files}
+\special{R CMD Rd2pdf [options] files}
 \special{R CMD Sd2Rd [options] file}
 }
 \arguments{
@@ -39,13 +41,14 @@
   installed) and \env{xdvi} (the DVI previewer, default \code{xdvi}),
 #endif
 #ifdef windows
-  \env{R_PAPERSIZE} (default \code{a4}, valid values are \code{a4},
-  \code{letter}, \code{legal} and \code{executive}) and \env{xdvi} (the
-  DVI previewer, default \code{open} (use file associations)),
+  \env{R_PAPERSIZE} (default \code{a4}, \code{legal} and
+  \code{executive}) and \env{xdvi} (the DVI previewer, default
+  \code{open} (use file associations)),
 #endif
   and \env{R_PDFVIEWER} (the PDF previewer).  (Valid values for
   \env{R_PAPERSIZE} are \code{a4}, \code{letter}, \code{legal} and
-  \code{executive}.)
+  \code{executive}.)  \command{Rd2pdf} is shorthand for \command{Rd2dvi
+  --pdf}.
 
   \code{Sd2Rd} converts S (version 3 or 4) documentation formats to Rd
   format: it is no longer much used and the results may need

@@ -45,6 +45,10 @@ case "${1}" in
     cmd="${R_HOME}/bin/Rdconv"
     extra="-t txt"
     ;;
+  Rd2pdf)
+    cmd="${R_HOME}/bin/Rd2dvi"
+    extra="--pdf"
+    ;;
   *)
     if test -x "${R_HOME}/bin/${1}"; then
       cmd="${R_HOME}/bin/${1}"

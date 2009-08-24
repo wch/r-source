@@ -237,6 +237,8 @@ NEW FEATURES
     o	textConnection() gains an 'encoding' argument to determine how
 	input strings with marked encodings will be handled.
 
+    o	R CMD Rd2pdf is available as a shortcut for R CMD Rd2dvi --pdf.
+
 
 Rd HELP FILE CHANGES
 
