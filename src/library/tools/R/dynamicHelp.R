@@ -81,15 +81,15 @@ httpd <- function(path, query, ...)
         }
     } else if(grepl("doc/html/.*html$" , path) &&
               file.exists(tmp <- file.path(tempdir(), ".R", path))) {
-        ## use symlinked copy
+        ## use generated (or symlinked) copy
         return(list(file=tmp, "content-type"="text/html"))
     } else {
         ## If we got here, we've followed a link that's not to a man page.
+        ## FIXME some of those things are vignette listings/overviews
     	file <- file.path(R.home(), path)
         content_type <- ifelse(grepl("css$", path),  "text/css",
                                ifelse(grepl("jpg$", path),  "image/jpeg",
                                       "text/html"))
-
     	return(list(file=file, "content-type"=content_type))
     }
 }
@@ -102,12 +102,12 @@ startDynamicHelp <- function(start=TRUE)
     unlockBinding("httpdPort", env)
     if (start) {
 	httpdPort <<- 8080L
-	repeat {
+	repeat { ## FIXME, no infinite loop please
 	    status <- .Internal(startHTTPD("127.0.0.1", httpdPort))
 	    if (status == 0L) break
 	    httpdPort <<- httpdPort + 1L
 	}
-
+        ## FIXME: only assign this if we know it is working.
     } else {
         # FIXME actually shut down the server?
     	httpdPort <<- NULL
