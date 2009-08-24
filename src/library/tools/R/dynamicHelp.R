@@ -71,7 +71,20 @@ httpd <- function(path, query, ...)
                                    dynamic = TRUE)
 	    on.exit(unlink(outfile))
 	    return(list(payload=paste(readLines(temp), collapse="\n")))
-	} else return(list(file=file))
+	} else {
+            ## This is a link of the form .../pkg/help/topic
+            ## Try for pre-generated HTML.
+            file2 <- paste(sub("/help/", "/html/", file, fixed = TRUE),
+                           "html", sep=".")
+            if(file.exists(file2)) return(list(file=file2))
+            return(list(file=file))
+        }
+    } else if(.Platform$OS.type != "windows" &&
+              grepl("doc/html/.*html$" , path) &&
+              file_test("-d", tmp <- file.path(tempdir(), ".R"))) {
+        ## use symlinked copy
+        file <- file.path(tmp, path)
+        return(list(file=file, "content-type"="text/html"))
     } else {
         ## If we got here, we've followed a link that's not to a man page.
     	file <- file.path(R.home(), path)
