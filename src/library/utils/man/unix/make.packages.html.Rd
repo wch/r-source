@@ -1,6 +1,6 @@
 % File src/library/utils/man/unix/make.packages.html.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{make.packages.html}
@@ -15,7 +15,7 @@ make.packages.html(lib.loc = .libPaths(), packages = TRUE)
 }
 \arguments{
   \item{lib.loc}{character vector. List of libraries to be included.}
-  \item{packages}{logical: should be package indices be create.}
+  \item{packages}{logical: should the package indices be re-created?}
 }
 \details{
   This sets up the links from packages in libraries to the \file{.R}

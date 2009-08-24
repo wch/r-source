@@ -25,12 +25,19 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
         options(browser = browser)
     }
     make.packages.html()
-    tmpdir <- paste("file://", URLencode(tempdir()), "/.R", sep = "")
-    if (!is.null(tools:::httpdPort))
-        tmpdir <- paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
-    url <- paste(if (is.null(remote)) tmpdir else remote,
-                 if(searchEngine) "/doc/html/search/SearchEngine.html"
-                 else "/doc/html/index.html", sep = "")
+    url <- if (is.null(remote)) {
+        if(is.null(tools:::httpdPort)) tools::startDynamicHelp()
+        tmpdir <- if (!is.null(tools:::httpdPort))
+            paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
+        else paste("file://", URLencode(tempdir()), "/.R", sep = "")
+        paste(tmpdir,
+              if(searchEngine) "/doc/html/search/SearchEngine.html"
+              else "/doc/html/index.html", sep = "")
+    } else
+        paste(remote,
+              if(searchEngine) "/doc/html/search/SearchEngine.html"
+              else "/doc/html/index.html", sep = "")
+
     if (is.character(browser)) {
         writeLines(strwrap(gettextf("If '%s' is already running, it is *not* restarted, and you must switch to its window.",
                                     browser),
@@ -84,7 +91,7 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
 make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
 {
     message("Making links in per-session dir ...", " ", appendLF = FALSE)
-    .Script("sh", "help-links.sh",tempdir())
+    .Script("sh", "help-links.sh", tempdir())
     if(packages) {
         f.tg <- file.path(tempdir(), ".R/doc/html/packages.html")
         if(!file.create(f.tg)) {
@@ -138,7 +145,7 @@ make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
                          contents[isURL], fixed = TRUE, useBytes = TRUE)
             writeLines(c(contents, ""), search)  # space between packages
         }
-        if(packages)cat("</table>\n\n", file=out)
+        if(packages) cat("</table>\n\n", file=out)
         known <- c(known, pg)
     }
     if(packages) {
