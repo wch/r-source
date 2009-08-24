@@ -387,7 +387,8 @@ prepare2_Rd <- function(Rd, Rdfile)
                "Sections \\title, and \\name must exist and be unique in Rd files")
     if (length(RdTags(Rd[[2L]])) > 1L)
         stopRd(RdTags(Rd[[2L]]), Rdfile,"\\name must only contain simple text")
-    Rd
+
+    structure(Rd, meta = list(docType = docTypes))
 }
 
 prepare3_Rd <- function(Rd, Rdfile, msglevel = 0)

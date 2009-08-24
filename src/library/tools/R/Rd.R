@@ -44,7 +44,7 @@ function(file, encoding = "unknown")
     keywords <- .Rd_get_metadata(Rd, "keyword")
 
     ## Could be none or more than one ... argh.
-    Rd_type <- c(.Rd_get_metadata(Rd, "docType"), "")[1L]
+    Rd_type <- .Rd_get_doc_type(Rd)
     encoding <- c(.Rd_get_metadata(Rd, "encoding"), "")[1L]
 
     Rd_name <- .Rd_get_name(Rd)
@@ -524,16 +524,7 @@ function(x, tag = TRUE)
 
 .Rd_drop_comments <-
 function(x)
-{
-    recurse <- function(e) {
-        if(is.list(e))
-	    structure(lapply(e[RdTags(e) != "COMMENT"], recurse),
-		      Rd_tag = attr(e, "Rd_tag"))
-        else
-            e
-    }
-    recurse(x)
-}
+    .Rd_drop_nodes_with_tags(x, "COMMENT")
 
 ### * .Rd_drop_nodes_with_tags
 
@@ -559,10 +550,7 @@ function(x)
     if(!length(x)) return(character())
     txt <- .Rd_get_item_tags(x)
     txt <- unlist(strsplit(txt, ", *"))
-    ## <FIXME Rd2>
-    ## Currently, \dots deparses as \dots{}.
-    txt <- gsub("\\\\l?dots(\\{\\})?", "...", txt)
-    ## </FIXME>
+    txt <- gsub("\\\\l?dots", "...", txt)
     txt <- gsub("\\\\_", "_", txt)
     .strip_whitespace(txt)
 }
@@ -573,9 +561,6 @@ function(x)
 function(x)
 {
     ## Extract two-arg \item tags at top level ... non-recursive.
-    ## <FIXME>
-    ## Might \item tags contain comments?
-    ## </FIXME>
 
     x <- x[RdTags(x) == "\\item"]
     out <- lapply(x[sapply(x, length) == 2L],
@@ -595,7 +580,10 @@ function(x)
     ## and "undefine" \dontshow and \testonly (which is achieved by
     ## changing the Rd tag to "Rd").
 
+    ## <FIXME>
+    ## Remove eventually.
     x <- .Rd_drop_comments(x)
+    ## </FIXME>
 
     recurse <- function(e) {
         if(!is.null(tag <- attr(e, "Rd_tag"))
@@ -612,6 +600,14 @@ function(x)
     .Rd_deparse(recurse(x), tag = FALSE)
 }
 
+### * .Rd_get_doc_type
+
+.Rd_get_doc_type <-
+function(x)
+{
+    c(attr(x, "meta")$docType, .Rd_get_metadata(x, "docType"), "")[1L]
+}
+
 ### * .Rd_get_name
 
 .Rd_get_name <-
@@ -620,9 +616,6 @@ function(x)
     x <- .Rd_get_section(x, "name")
     ## The name should really be plain text, so as.character() should be
     ## fine as well ...
-    ## <FIXME>
-    ## Might names contain comments?
-    ## </FIXME>
     if(length(x))
         .strip_whitespace(.Rd_deparse(x, tag = FALSE))
     else
@@ -635,9 +628,14 @@ function(x)
 function(x)
 {
     x <- .Rd_get_section(x, "title")
-    if(length(x))
-        .strip_whitespace(.Rd_deparse(.Rd_drop_comments(x),
-                                      tag = FALSE))
+
+    if(length(x)) {
+        ## <FIXME>
+        ## Remove eventually.
+        x <- .Rd_drop_comments(x)
+        ## </FIXME>
+        .strip_whitespace(.Rd_deparse(x, tag = FALSE))
+    }
     else
         character()
 }
