@@ -13,12 +13,15 @@ This function starts the internal help server, so that HTML help pages
 are rendered when requested.
 }
 \usage{
-startDynamicHelp()
+startDynamicHelp(start=TRUE)
 }
+\arguments{
+  \item{start}{ whether to start, or shut down, the dynamic help system. }
 \details{
 This function starts the internal HTTPD server.  It attempts to start it
-on port 8080, but will try subsequent ports if that one is in use.  It also sets
-\code{option(htmlhelp=TRUE)}.
+on port 8080, but will try subsequent ports if that one is in use.  
+
+Note that \code{option(htmlhelp=TRUE)} must be set to actually make use of dynamic help.
 }
 \value{
 The chosen port number is returned invisibly.

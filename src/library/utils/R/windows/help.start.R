@@ -17,9 +17,11 @@
 help.start <- function(update = TRUE, gui = "irrelevant",
                        browser = getOption("browser"), searchEngine = FALSE)
 {
-    a <- if(!searchEngine) file.path(R.home("doc"), "html", "index.html")
-    else file.path(R.home("doc"), "html", "search", "SearchEngine.html")
-    if(!file.exists(a))
+    if (!is.null(tools:::httpdPort)) home <- paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
+    else home <- R.home()
+    a <- if(!searchEngine) file.path(home, "doc", "html", "index.html")
+    else file.path(home, "doc", "html", "search", "SearchEngine.html")
+    if(is.null(tools:::httpdPort) && !file.exists(a))
         stop("unable to find the HTML help")
     if(update) {
         cat(gettext("updating HTML package listing\n"))

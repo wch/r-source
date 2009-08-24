@@ -98,17 +98,22 @@ httpd <- function(path, query, ...)
 
 httpdPort <- NULL
 
-startDynamicHelp <- function()
+startDynamicHelp <- function(start=TRUE)
 {
     env <- environment(startDynamicHelp)
     unlockBinding("httpdPort", env)
-    httpdPort <<- 8080L
-    repeat {
-        status <- .Internal(startHTTPD("127.0.0.1", httpdPort))
-        if (status == 0L) break
-        httpdPort <<- httpdPort + 1L
+    if (start) {
+	httpdPort <<- 8080L
+	repeat {
+	    status <- .Internal(startHTTPD("127.0.0.1", httpdPort))
+	    if (status == 0L) break
+	    httpdPort <<- httpdPort + 1L
+	}
+
+    } else {
+        # FIXME actually shut down the server?
+    	httpdPort <<- NULL	
     }
     lockBinding("httpdPort", env)
-    options(htmlhelp = TRUE)
     invisible(httpdPort)
 }
