@@ -303,9 +303,10 @@ prepare_Rd <-
     	    Rd <- processRdSexprs(Rd, stage, options)
     if (pratt < 2L && stage2)
         Rd <- prepare2_Rd(Rd, Rdfile)
+    meta <- attr(Rd, "meta")
     if (pratt < 3L && stage3)
         Rd <- prepare3_Rd(Rd, Rdfile, msglevel = msglevel)
-    structure(Rd, Rdfile=Rdfile, class = "Rd")
+    structure(Rd, Rdfile = Rdfile, class = "Rd", meta = meta)
 }
 
 prepare2_Rd <- function(Rd, Rdfile)
@@ -358,9 +359,9 @@ prepare2_Rd <- function(Rd, Rdfile)
 
     dt <- which(sections == "\\docType")
     docTypes <- character(length(dt))
-    if (length(dt)) {
-        for (i in dt) {
-            docType <- Rd[[i]]
+    if(length(dt)) {
+        for(i in seq_along(dt)) {
+            docType <- Rd[[dt[i]]]
             if(!identical(RdTags(docType), "TEXT"))
         	stopRd(docType, Rdfile, "'docType' must be plain text")
             docTypes[i] <- docType[[1L]]
