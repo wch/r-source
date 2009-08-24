@@ -374,7 +374,7 @@ prepare2_Rd <- function(Rd, Rdfile)
     if (any(bad)) {
         for(s in which(bad))
             warnRd(Rd[[s]], Rdfile, "Section ",
-                   sections[Rd[[s]]], "is unrecognized and will be dropped")
+                   sections[Rd[[s]]], " is unrecognized and will be dropped")
         drop <- drop | bad
     }
     Rd <- Rd[!drop]
@@ -457,30 +457,8 @@ fsub1 <- function(pattern, replacement, x)
 ##    sub(pattern, replacement, x, fixed = TRUE, useBytes = TRUE)
     .Internal(sub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE, TRUE))
 
-## This warns on
-##  text outside sections
-##  Unrecognized macro
-##  Unnecessary braces
-##  non-ASCII contents without declared encoding
-##  \\ldots in code block
-## and errors on
-##  Bad \\link text
-##  Bad \\link option -- must be text
-##  unrecognized tags (can the parser do that?)
-##  \\tabular format must be simple text
-##  Unrecognized \\tabular format:
-##  "Only ", length(format), " columns allowed in this table"
-##  checkUnique \title, \name, \description (include non-empty)
-##  Only one \\Rdversion declaration is allowed
-##  Only one \\encoding declaration is allowed
-##  Encoding/docType must be plain text
-##  Unrecognized section (but I think the parser catches that)
-##  \\name must only contain simple text.
 
-## It currently misses
-##  invalid markup in \[S3]method (txt, latex)
-## but test on codeblocks suffices.
-
+## for lists of messages, see ../man/checkRd.Rd
 checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                     unknownOK = TRUE, listOK = TRUE, ..., def_enc = FALSE)
 {

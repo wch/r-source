@@ -41,20 +41,60 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
 
   An Rd object is passed through \code{prepare_Rd}, but it may already
   have been (and installed Rd objects have).
+  
+  Warnings are given a \sQuote{level}: those from \code{prepare_Rd} have
+  level 0.  These include
+  \tabular{l}{
+    All text must be in a section\cr
+    Only one \samp{\examples} section is allowed: the first will be used\cr
+    Only one \samp{\encoding} section is allowed: the first will be used\cr
+    Section \var{name} is unrecognized and will be dropped\cr
+    Dropping empty section \var{name}\cr
+  }
+  \code{checkRd} itself can show
+  \tabular{rl}{
+    7 \tab Tag \var{tag name} not recognized\cr
+    7 \tab \samp{\tabular} format must be simple text\cr
+    7 \tab Unrecognized \samp{\tabular} format: \ldots\cr
+    7 \tab Ony \var{n} columns allowed in this table\cr
+    7 \tab Must have a \var{tag name}\cr
+    7 \tab Only one \var{tag name} is allowed\cr
+    7 \tab Tag \var{tag name} must not be empty\cr
+    7 \tab 'docType' must be plain text\cr
+    5 \tab Tag \samp{\method} is only valid in \samp{\usage}\cr
+    5 \tab Tag \samp{\dontrun} is only valid in \samp{\examples}\cr
+    5 \tab Tag \var{tag name} is invalid in a \var{block name} block\cr
+    5 \tab Title of \samp{\section} must be non-empty plain text\cr
+    3 \tab Empty section \var{tag name}\cr
+    -1 \tab Non-ASCII contents without declared encoding\cr
+    -1 \tab Non-ASCII contents in second part of \samp{\enc}\cr 
+    -3 \tab Tag \samp{\ldots} is not valid in a code block\cr
+    -3 \tab Apparent non-ASCII contents without declared encoding\cr
+    -3 \tab Apparent non-ASCII contents in second part of \samp{\enc}\cr
+    -3 \tab Unnecessary braces at \ldots\cr
+    -3 \tab \samp{\method} not valid outside a code block\cr
+  }
+  and variations with \samp{\method} replaced by \samp{\S3method} or
+  \samp{\S4method}.
+
+  Note that both \code{prepare_Rd} and \code{checkRd} have tests for an
+  empty section: that in \code{checkRd} is stricter (essentially that
+  nothing is output).
 }
 \value{
   This may fail through an \R error, but otherwise warnings are
   collected as returned as an object of class \code{"checkRd"}, a
   character vector of messages.  This class has a \code{print} method
   which only prints unique messages, and has argument \code{minlevel}
-  that can be used to select only more serious messages.
+  that can be used to select only more serious messages.  (This is set
+  to \code{-1} in \command{R CMD check}.)
 
   Possible fatal errors are those from running the parser (e.g. a
   non-existent file, unclosed quoted string, non-ASCII input without a
   specified encoding) or from \code{prepare_Rd} (multiple
-  \verb{\Rdversion} declarations, invalid \verb{\encoding} or
-  \verb{\docType} or \verb{\name} sections, and missing or duplicate
-  \verb{\name} or \verb{\title} sections).
+  \samp{\Rdversion} declarations, invalid \samp{\encoding} or
+  \samp{\docType} or \samp{\name} sections, and missing or duplicate
+  \samp{\name} or \samp{\title} sections).
 }
 \author{
   Duncan Murdoch, Brian Ripley
