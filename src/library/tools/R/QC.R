@@ -128,61 +128,13 @@ function(package, dir, lib.loc = NULL)
         }
     }
 
-    data_objs <- character(0L)
+    ## Find the data sets to work on.
     data_dir <- file.path(dir, "data")
-    if(file_test("-d", data_dir)) {
-        data_env <- new.env()
-        files <- list_files_with_type(data_dir, "data")
-        files <- unique(basename(file_path_sans_ext(files)))
-        ## <FIXME>
-        ## Why does this not use list_data_in_pkg() as does codoc()?
-        ## </FIXME>
-        ## <FIXME>
-        ## Argh.  When working on the source directory of a package in a
-        ## bundle, or a base package, we (currently?) cannot simply use
-        ## data().  In these cases, we only have a 'DESCRIPTION.in'
-        ## file.  On the other hand, data() uses .find.package() to find
-        ## the package paths from its 'package' and '.lib.loc'
-        ## arguments, and .find.package() is really for finding
-        ## *installed* packages, and hence tests for the existence of a
-        ## 'DESCRIPTION' file.  As a last resort, use the fact that
-        ## data() can be made to for look data sets in the 'data'
-        ## subdirectory of the current working directory ...
-        package_name <- basename(dir)
-        libPath <- dirname(dir)
-        if(!file.exists(file.path(dir, "DESCRIPTION"))) {
-            ## Hope that there is a 'DESCRIPTION.in', maybe we should
-            ## check for this?
-            package_name <- character()
-            libPath <- NULL
-            owd <- getwd()
-            setwd(dir)
-            on.exit(setwd(owd))
-        }
-        ## </FIXME>
-        for(f in files) {
-            ## <NOTE>
-            ## Non-standard evaluation for argument 'package' to data()
-            ## gone in R 1.9.0.
-            .try_quietly(utils::data(list = f, package = package_name,
-                                     lib.loc = libPath, envir = data_env))
-            ## (We use .try_quietly() because a .R data file using scan()
-            ## to read in data from some other place may do this without
-            ## 'quiet = TRUE', giving output which R CMD check would
-            ## think to indicate a problem.)
-            ## </NOTE>
-            new <- ls(envir = data_env, all.names = TRUE)
-            data_objs <- c(data_objs, new)
-            rm(list = new, envir = data_env)
-        }
-
-	## <NOTE>
-	## Currently, loading data from an R file via sys.source() puts
-	## .required into the load environment if the R code has a call to
-	## require().
-	data_objs <- data_objs %w/o% c(".required")
-	## </NOTE>
-    }
+    data_objs <- if(file_test("-d", data_dir))
+        names(unlist(.try_quietly(list_data_in_pkg(dataDir = data_dir)),
+                     use.names = FALSE))
+    else
+        character()
 
     ## There was a time when packages contained code or data (or both).
     ## But not anymore ...
@@ -976,8 +928,7 @@ function(package, lib.loc = NULL)
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
 
-    idx <- sApply(lapply(db, .Rd_get_metadata, "docType"),
-                  identical, "class")
+    idx <- sApply(lapply(db, .Rd_get_doc_type), identical, "class")
     if(!any(idx)) return(bad_Rd_objects)
     db <- db[idx]
     stats <- c(n.S4classes = length(S4_classes), n.db = length(db))
@@ -1013,10 +964,7 @@ function(package, lib.loc = NULL)
         ## Get the \item tags inside \describe.
         txt <- .Rd_get_item_tags(x)
         if(!length(txt)) return(character())
-        ## <FIXME Rd2>
-        ## Currently, \dots deparses as \dots{}.
-        txt <- gsub("\\\\l?dots(\\{\\})?", "...", txt)
-        ## </FIXME>
+        txt <- gsub("\\\\l?dots", "...", txt)
         ## And now strip enclosing '\code{...}:'
         txt <- gsub("\\\\code\\{([^}]*)\\}:?", "\\1", as.character(txt))
         txt <- unlist(strsplit(txt, ", *"))
@@ -1153,7 +1101,10 @@ function(package, lib.loc = NULL)
         x <- x[RdTags(x) == "\\format"]
         if(length(x) != 1L) return(character())
         ## Drop comments.
+        ## <FIXME>
+        ## Remove calling .Rd_drop_comments() eventually.
         x <- .Rd_drop_comments(x[[1L]])
+        ## </FIXME>
         ## What did the format section start with?
         if(!grepl("^[ \n\t]*(A|This) data frame",
                   .Rd_deparse(x, tag = FALSE)))
@@ -1293,9 +1244,12 @@ function(package, dir, lib.loc = NULL)
     db_usages <- lapply(db, .Rd_get_section, "usage")
     ## We traditionally also use the usage "texts" for some sanity
     ## checking ...
+    ## <FIXME>
+    ## Remove calling .Rd_drop_comments() eventually.
     db_usage_texts <-
         lapply(db_usages,
                function(e) .Rd_deparse(.Rd_drop_comments(e)))
+    ## </FIXME>
     db_usages <- lapply(db_usages, .parse_usage_as_much_as_possible)
     ind <- as.logical(sapply(db_usages,
                              function(x) !is.null(attr(x, "bad_lines"))))
@@ -2392,10 +2346,7 @@ function(package, dir, file, lib.loc = NULL)
     }
     for(file in docs_files) {
         Rd <- prepare_Rd(file, defines = .Platform$OS.type)
-        ## <FIXME Rd2>
-        ## Should this do any stage expansion?
         txt <- .Rd_get_example_code(Rd)
-        ## </FIXME>
         exprs <- find_TnF_in_code(file, txt)
         if(length(exprs)) {
             exprs <- list(exprs)
@@ -4750,13 +4701,13 @@ function(x)
 {
     if(!length(x)) return(expression())
     ## Drop specials and comments.
+    ## <FIXME>
+    ## Remove calling .Rd_drop_comments() eventually.
     x <- .Rd_drop_comments(x)
+    ## </FIXME>
     txt <- .Rd_deparse(.Rd_drop_nodes_with_tags(x, "\\special"),
                        tag = FALSE)
-    ## <FIXME Rd2>
-    ## Currently, \dots deparses as \dots{}.
-    txt <- gsub("\\\\l?dots(\\{\\})?", "...", txt)
-    ## </FIXME>
+    txt <- gsub("\\\\l?dots", "...", txt)
     txt <- .dquote_method_markup(txt, .S3_method_markup_regexp)
     txt <- .dquote_method_markup(txt, .S4_method_markup_regexp)
     ## Transform <<see below>> style markup so that we can catch and
