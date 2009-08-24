@@ -26,6 +26,8 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
     }
     make.packages.html()
     tmpdir <- paste("file://", URLencode(tempdir()), "/.R", sep = "")
+    if (!is.null(tools:::httpdPort))
+        tmpdir <- paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
     url <- paste(if (is.null(remote)) tmpdir else remote,
                  if(searchEngine) "/doc/html/search/SearchEngine.html"
                  else "/doc/html/index.html", sep = "")
