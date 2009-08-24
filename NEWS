@@ -6,6 +6,17 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.9.2 patched
+
+
+NEW FEATURES
+
+    o	On systems using ICU for collation (including Mac OS X), using
+ 	Sys.setlocale() to change the LC_COLLATE setting is more
+ 	likely to change the collation provided by ICU.
+
+
+
 		CHANGES IN R VERSION 2.9.2
 
 

@@ -1602,6 +1602,13 @@ void uloc_setDefault(const char* localeID, UErrorCode* status);
 
 static UCollator *collator = NULL;
 
+/* called from platform.c */
+void attribute_hidden resetICUcollator(void)
+{
+    if (collator) ucol_close(collator);
+    collator = NULL;
+}
+
 static const struct {
     const char * const str;
     int val;
@@ -1629,7 +1636,7 @@ static const struct {
 };
     
 
-SEXP do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x;
     UErrorCode  status = U_ZERO_ERROR;
@@ -1704,11 +1711,13 @@ int Scollate(SEXP a, SEXP b)
 
 #else /* not USE_ICU */
 
-SEXP do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_ICUset(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     warning(_("ICU is not supported on this build"));
     return R_NilValue;
 }
+
+void attribute_hidden resetICUcollator(void) {}
 
 # ifdef Win32
 
