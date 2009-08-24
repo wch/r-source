@@ -79,12 +79,10 @@ httpd <- function(path, query, ...)
             if(file.exists(file2)) return(list(file=file2))
             return(list(file=file))
         }
-    } else if(.Platform$OS.type != "windows" &&
-              grepl("doc/html/.*html$" , path) &&
-              file_test("-d", tmp <- file.path(tempdir(), ".R"))) {
+    } else if(grepl("doc/html/.*html$" , path) &&
+              file.exists(tmp <- file.path(tempdir(), ".R", path))) {
         ## use symlinked copy
-        file <- file.path(tmp, path)
-        return(list(file=file, "content-type"="text/html"))
+        return(list(file=tmp, "content-type"="text/html"))
     } else {
         ## If we got here, we've followed a link that's not to a man page.
     	file <- file.path(R.home(), path)
@@ -112,7 +110,7 @@ startDynamicHelp <- function(start=TRUE)
 
     } else {
         # FIXME actually shut down the server?
-    	httpdPort <<- NULL	
+    	httpdPort <<- NULL
     }
     lockBinding("httpdPort", env)
     invisible(httpdPort)

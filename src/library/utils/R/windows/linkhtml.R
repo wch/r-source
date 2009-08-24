@@ -27,9 +27,11 @@ link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
     fixup.libraries.URLs(lib.loc)
 }
 
-make.packages.html <- function(lib.loc=.libPaths())
+make.packages.html <- function(lib.loc=.libPaths(), outfile = NULL)
 {
-    f.tg <- file.path(R.home("doc"), "html", "packages.html")
+    dynamic <- is.character(outfile)
+    f.tg <- if(dynamic) outfile
+    else file.path(R.home("doc"), "html", "packages.html")
     f.hd <- file.path(R.home("doc"), "html", "packages-head-utf8.html")
     if(!file.create(f.tg)) {
         # warning("cannot update HTML package index")
@@ -41,20 +43,21 @@ make.packages.html <- function(lib.loc=.libPaths())
     drive <- substring(rh, 1L, 2L)
     for (lib in lib.loc) {
         pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
+        lib0 <- "../../library"
         ## use relative indexing for .Library
         if(is.na(pmatch(rh, lib))) {
             libname <- chartr("/", "\\", lib)
-            lib0 <- if(substring(lib, 2L, 2L) != ":")
-                paste(drive, lib, sep="") else lib
-            lib0 <- paste("file:///", URLencode(lib0), sep="")
-        } else {
-            lib0 <- "../../library"
+            if(!dynamic) {
+                lib0 <- if(substring(lib, 2L, 2L) != ":")
+                    paste(drive, lib, sep="") else lib
+                lib0 <- paste("file:///", URLencode(lib0), sep="")
+            }
+        } else
             libname <- "the standard library"
-        }
         if(length(lib.loc) > 1L)
             cat("<p><h3>Packages in ", libname, "</h3>\n",
                 sep = "", file = out)
-        if(libname != "the standard library")
+        if(!dynamic && libname != "the standard library")
             cat("<p>Cross-links from this library to other libraries may not work.\n\n", file = out)
         cat("<p>\n<table width=\"100%\" summary=\"R Package list\">\n",
             file = out)

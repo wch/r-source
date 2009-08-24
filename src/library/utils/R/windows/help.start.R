@@ -17,27 +17,34 @@
 help.start <- function(update = TRUE, gui = "irrelevant",
                        browser = getOption("browser"), searchEngine = FALSE)
 {
-    if (!is.null(tools:::httpdPort)) home <- paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
-    else home <- R.home()
+    if(is.null(tools:::httpdPort)) tools::startDynamicHelp()
+    dynamic <- !is.null(tools:::httpdPort)
+    home <- if (dynamic)
+        paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
+    else R.home()
     a <- if(!searchEngine) file.path(home, "doc", "html", "index.html")
     else file.path(home, "doc", "html", "search", "SearchEngine.html")
-    if(is.null(tools:::httpdPort) && !file.exists(a))
+    if(!dynamic && !file.exists(a))
         stop("unable to find the HTML help")
     if(update) {
+        if(dynamic) dir.create(file.path(tempdir(), ".R/doc/html"),
+                               recursive = TRUE)
         cat(gettext("updating HTML package listing\n"))
         flush.console()
-        try(make.packages.html(.libPaths()))
+        try(make.packages.html(.libPaths(),
+                               outfile = if(dynamic) file.path(tempdir(), ".R/doc/html/packages.html")
+                               ))
         cat("updating HTML search index\n")
         flush.console()
         try(make.search.html(.libPaths()))
-        if(any(.libPaths() != .Library)) {
-            cat(gettext("fixing URLs in non-standard libraries\n"))
-            flush.console()
-            try(fixup.libraries.URLs(.libPaths()))
-        }
+##         if(any(.libPaths() != .Library)) {
+##             cat(gettext("fixing URLs in non-standard libraries\n"))
+##             flush.console()
+##             try(fixup.libraries.URLs(.libPaths()))
+##         }
     }
-    a <- chartr("/", "\\", a)
     cat(gettextf("If nothing happens, you should open '%s' yourself\n", a))
+    if(!dynamic) a <- chartr("/", "\\", a)
     browseURL(a, browser = browser)
     invisible("")
 }
