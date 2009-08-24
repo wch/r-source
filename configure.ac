@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2008 R Core Team
+### Copyright (C) 1998-2009 R Core Team
 ###
 ### This file is part of R.
 ###

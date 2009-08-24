@@ -75,22 +75,15 @@ mime_canonical_encoding <- function(encoding)
     encoding
 }
 
-
-
 ## This warns on
-##  text outside sections
 ##  missing links
-## and errors on
+## and stops on
 ##  Bad \\link text
 ##  Bad \\link option -- must be text
-##  unrecognized tags (can the parser do that?)
+##  unrecognized tag
 ##  \\tabular format must be simple text
 ##  Unrecognized \\tabular format:
 ##  "Only ", length(format), " columns allowed in this table"
-##  Only one \\Rdversion declaration is allowed
-##  Unrecognized section (but I think the parser catches that)
-##  Sections \\title, and \\name must exist and be unique in Rd files
-##  \\name must only contain simple text
 
 
 ## FIXME: better to really use XHTML

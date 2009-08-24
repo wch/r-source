@@ -14,17 +14,12 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## This warns on text outside sections
-## and errors on
-##  unrecognized tags (can the parser do that?)
+## This stops on
+##  unrecognized tag
 ##  \\tabular format must be simple text
 ##  too many columns for format
 ##  invalid markup in \[S3]method
 ##  "Tag ", tag, " not expected in code block"
-##  Only one \\Rdversion declaration is allowed
-##  Unrecognized section (but I think the parser catches that)
-##  Sections \\title, and \\name must exist and be unique in Rd files
-##  \\name must only contain simple text
 
 Rd2txt <-
     function(Rd, out="", package = "", defines=.Platform$OS.type,
