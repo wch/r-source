@@ -381,7 +381,7 @@ static void process_request(httpd_conn_t *c) {
 	SEXP y, x = PROTECT(lang3(install("try"), LCONS(install("httpd"), CONS(mkString(c->url), CONS(query ? parse_query(query) : R_NilValue, R_NilValue))), sTrue));
 	SET_TAG(CDR(CDR(x)), install("silent"));
 	DBG(Rprintf("eval(try(httpd('%s'),silent=TRUE))\n", c->url));
-	x = PROTECT(eval(x, R_GlobalEnv)); /* FIXME: for now we evaluate in the global environemnt for testing purposes, but later it should be base or something like that ... */
+	x = PROTECT(eval(x, R_FindNamespace(mkString("tools")))); 
 
 	/* the result is expected to have one of the following forms:
 	 * a) character vector of length 1 => error (possibly from try), will create 500 response

@@ -90,7 +90,7 @@ mime_canonical_encoding <- function(encoding)
 Rd2HTML <-
     function(Rd, out = "", package = "", defines = .Platform$OS.type,
              Links = NULL, CHM = FALSE,
-             stages = "render", outputEncoding = "UTF-8", ...)
+             stages = "render", outputEncoding = "UTF-8", dynamic = FALSE, ...)
 {
     ## writeLines by default re-encodes strings to the local encoding.
     ## Avoid that by useBytes=TRUE
@@ -232,13 +232,16 @@ Rd2HTML <-
             writeContent(block, tag)
             of1('</a>')
         }
-
+	
     	if (is.null(parts$targetfile)) {
             topic <- parts$dest
-            htmlfile  <- NA_character_
-            if (!is.null(Links)) {
-                tmp <- Links[topic]
-                if (!is.na(tmp)) htmlfile <- tmp
+    	    if (dynamic) htmlfile <- paste("../../", package, "/help/", topic, sep="")
+            else {
+            	htmlfile  <- NA_character_
+            	if (!is.null(Links)) {
+            	    tmp <- Links[topic]
+            	    if (!is.na(tmp)) htmlfile <- tmp
+            	}
             }
             if (is.na(htmlfile)) {
                 ## FIXME for CHM?

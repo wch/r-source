@@ -127,6 +127,10 @@ function(x, ...)
                                     indent = 22))))
     } else {
         if(length(paths) > 1L) {
+            if (type == "html" && !is.null(tools:::httpdPort)) { # Redo the search if dynamic help is running 
+		browseURL(paste("http://127.0.0.1:", tools:::httpdPort, "/library/NULL/help/", topic, sep="")) 
+		return(invisible(x))
+	    }
             file <- paths[1L]
             p <- paths
             msg <- gettextf("Help on topic '%s' was found in the following packages:",
@@ -161,7 +165,13 @@ function(x, ...)
             file <- paths
 
         if(type == "html") {
-            if(file.exists(file))
+            if (!is.null(tools:::httpdPort)) {
+		path <- dirname(file)
+		dirpath <- dirname(path)
+		pkgname <- basename(dirpath)
+		browseURL(paste("http://127.0.0.1:", tools:::httpdPort, "/library/",
+			  pkgname, "/html/", basename(file), sep=""))
+	    } else if (file.exists(file))
                 .show_help_on_topic_as_HTML(file, topic)
             else
                 stop(gettextf("No HTML help for '%s' is available:\ncorresponding file is missing", topic), domain = NA)
