@@ -38889,11 +38889,6 @@ fi
 ## support for MBCS
 
 if test "$want_mbcs_support" = yes ; then
-  if test "$r_cv_iconv_latin1" != yes ; then
-    want_mbcs_support=no
-  fi
-fi
-if test "$want_mbcs_support" = yes ; then
 
 
 for ac_header in wchar.h wctype.h

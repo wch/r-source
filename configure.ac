@@ -2376,6 +2376,7 @@ case "${host_os}" in
     AC_DEFINE(HAVE_SOCKETS, 1, [Define if you have support for sockets.])
     AC_DEFINE(HAVE_TCLTK, 1, [Define if you have the Tcl/Tk headers and 
                               libraries and want Tcl/Tk support to be built.] )
+    AC_DEFINE(HAVE_TIFF, 1, [Define if libtiff is available.])
     AC_DEFINE(HAVE_TIMES, 1, [Define to 1 if you have the `times' function.])
     want_R_profiling=yes
     AC_DEFINE(R_PROFILING, 1, [Define this to enable R-level profiling.])
