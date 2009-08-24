@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.glob.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Sys.glob}
@@ -9,9 +9,6 @@
 \description{
   Function to do wildcard expansion (also known as \sQuote{globbing}) on
   file paths.
-
-  Platforms are not required to support this, but all known current \R
-  platforms do.
 }
 \usage{
 Sys.glob(paths, dirmark = FALSE)
@@ -105,11 +102,6 @@ Sys.glob(paths, dirmark = FALSE)
   
   Directory errors are normally ignored, so the matches are to
   accessible file paths (but not necessarily accessible files).
-#ifdef unix
-  
-  On platforms which do not have the \code{glob} system call,
-  \code{paths} is returned unchanged.
-#endif
 }
 \seealso{
   \code{\link{path.expand}}.

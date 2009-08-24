@@ -1508,10 +1508,12 @@
             }
             if (!silent) message(domain = NA)
         } else {
-            files <- Sys.glob(file.path(pkgdir, "*.[Rr]d"))
+            files <- Sys.glob(file.path(pkgdir, "*.Rd"),
+                              file.path(pkgdir, "*.rd"))
             if (!length(files)) {
                 ## is this a source package?  That has man/*.Rd files.
-                files <- Sys.glob(file.path(pkgdir, "man", "*.[Rr]d"))
+                files <- Sys.glob(file.path(pkgdir, "man", "*.Rd"),
+                                  file.path(pkgdir, "man", "*.rd"))
                 if (!length(files))
                     stop("this package does not have either a ", sQuote("latex"),
                          " or a (source) ", sQuote("man"), " directory",
@@ -1519,7 +1521,8 @@
                 if (is.null(extraDirs)) extraDirs <- .Platform$OS.type
                 for(e in extraDirs)
                     files <- c(files,
-                               Sys.glob(file.path(pkgdir, "man", e, "*.[Rr]d")))
+                               Sys.glob(file.path(pkgdir, "man", e, "*.Rd"),
+                                        file.path(pkgdir, "man", e, "*.rd")))
             }
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
@@ -1644,9 +1647,10 @@ if (FALSE) {
     mandir <- file.path(dir, "man")
     if (!file_test("-d", mandir))
         stop("there are no help pages in this package")
-    files <- Sys.glob(file.path(mandir, "*.[Rr]d"))
+    files <- Sys.glob(file.path(mandir, "*.Rd"),
+                      file.path(mandir, "*.rd"))
     if (file_test("-d", f <- file.path(mandir, OS)))
-        files <- c(files, Sys.glob(file.path(f, "*.[Rr]d")))
+        files <- c(files, Sys.glob(file.path(f, "*.Rd"), file.path(f, "*.rd")))
     ## Should only process files starting with [A-Za-z0-9] and with
     ## suffix .Rd or .rd, according to 'Writing R Extensions'.
     OK <- grep("^[A-Za-z0-9]", basename(files))

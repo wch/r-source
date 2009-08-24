@@ -1733,6 +1733,16 @@ fi
 if test "${ac_cv_search_opendir}" = "no"; then
    AC_MSG_ERROR([Building R requires the 'opendir' system call])
 fi
+## Lots of uses of Sys.glob, e.g. install.packages
+case "${host_os}" in
+  mingw*)
+  ;;
+  *)
+    if test "${ac_cv_search_glob}" = "no"; then
+       AC_MSG_ERROR([Building R requires the 'glob' system call])
+    fi
+  ;;
+esac
 
 
 ## <NOTE>

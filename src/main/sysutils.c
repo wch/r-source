@@ -1457,10 +1457,8 @@ do_setSessionTimeLimit(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-/* moved from character.c in 2.10.0 */
+/* moved from character.c in 2.10.0: configure requires this */
 
-
-#if defined(HAVE_GLOB) || defined(Win32)
 #ifdef HAVE_GLOB_H
 # include <glob.h>
 #endif
@@ -1540,14 +1538,3 @@ SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
     globfree(&globbuf);
     return ans;
 }
-#else
-SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP x;
-
-    checkArity(op, args);
-    if (!isString(x = CAR(args)))
-	error(_("invalid '%s' argument"), "paths");
-    return x;
-}
-#endif

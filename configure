@@ -34193,6 +34193,18 @@ if test "${ac_cv_search_opendir}" = "no"; then
 echo "$as_me: error: Building R requires the 'opendir' system call" >&2;}
    { (exit 1); exit 1; }; }
 fi
+## Lots of uses of Sys.glob, e.g. install.packages
+case "${host_os}" in
+  mingw*)
+  ;;
+  *)
+    if test "${ac_cv_search_glob}" = "no"; then
+       { { echo "$as_me:$LINENO: error: Building R requires the 'glob' system call" >&5
+echo "$as_me: error: Building R requires the 'glob' system call" >&2;}
+   { (exit 1); exit 1; }; }
+    fi
+  ;;
+esac
 
 
 ## <NOTE>
@@ -47833,11 +47845,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:47836: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:47848: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:47840: \$? = $ac_status" >&5
+   echo "$as_me:47852: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -47932,11 +47944,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:47935: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:47947: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:47939: \$? = $ac_status" >&5
+   echo "$as_me:47951: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -47984,11 +47996,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:47987: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:47999: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:47991: \$? = $ac_status" >&5
+   echo "$as_me:48003: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
