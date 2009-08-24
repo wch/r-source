@@ -958,7 +958,6 @@
         } else if (a == "--no-configure") {
             use_configure <- FALSE
         } else if (a == "--no-docs") {
-            ## FIXME: could also disable parsing of Rd files
             build_html <- build_latex <- build_example <- build_chm <- FALSE
         } else if (a == "--no-html") {
             build_html <- FALSE
@@ -1387,7 +1386,6 @@
             "}\n", sep = "", file = out)
     for (f in fields) {
         text <- desc[f]
-        ## FIXME: set email addresses and URLs in monospaced type.
         ## munge 'text' appropriately (\\, {, }, "...")
         ## not sure why just these: copied from Rd2dvi, then added to.
         ## KH: the LaTeX special characters are
@@ -1508,12 +1506,12 @@
             }
             if (!silent) message(domain = NA)
         } else {
-            files <- Sys.glob(file.path(pkgdir, "*.Rd"),
-                              file.path(pkgdir, "*.rd"))
+            files <- c(Sys.glob(file.path(pkgdir, "*.Rd")),
+                       Sys.glob(file.path(pkgdir, "*.rd")))
             if (!length(files)) {
                 ## is this a source package?  That has man/*.Rd files.
-                files <- Sys.glob(file.path(pkgdir, "man", "*.Rd"),
-                                  file.path(pkgdir, "man", "*.rd"))
+                files <- c(Sys.glob(file.path(pkgdir, "man", "*.Rd")),
+                           Sys.glob(file.path(pkgdir, "man", "*.rd")))
                 if (!length(files))
                     stop("this package does not have either a ", sQuote("latex"),
                          " or a (source) ", sQuote("man"), " directory",
@@ -1521,8 +1519,8 @@
                 if (is.null(extraDirs)) extraDirs <- .Platform$OS.type
                 for(e in extraDirs)
                     files <- c(files,
-                               Sys.glob(file.path(pkgdir, "man", e, "*.Rd"),
-                                        file.path(pkgdir, "man", e, "*.rd")))
+                               Sys.glob(file.path(pkgdir, "man", e, "*.Rd")),
+                               Sys.glob(file.path(pkgdir, "man", e, "*.rd")))
             }
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
@@ -1617,11 +1615,15 @@
     if (!file.exists(file)) return(0L)
     age <- file.info(file)$mtime
 
-    if (any(file.info(Sys.glob(file.path(dir, "man", "*.Rd")))$mtime > age))
+    if (any(file.info(c(Sys.glob(file.path(dir, "man", "*.Rd")),
+                        Sys.glob(file.path(dir, "man", "*.rd")))
+                      )$mtime > age))
         return(0L)
 
     if (isTRUE(file.info(file.path(dir, OS))$isdir)) {
-        if (any(file.info(Sys.glob(file.path(dir, "man", OS, "*.Rd")))$mtime > age))
+        if (any(file.info(c(Sys.glob(file.path(dir, "man", OS, "*.Rd")),
+                            Sys.glob(file.path(dir, "man", OS, "*.rd")))
+                          )$mtime > age))
             return(0L)
     }
 
@@ -1647,10 +1649,12 @@ if (FALSE) {
     mandir <- file.path(dir, "man")
     if (!file_test("-d", mandir))
         stop("there are no help pages in this package")
-    files <- Sys.glob(file.path(mandir, "*.Rd"),
-                      file.path(mandir, "*.rd"))
+    files <- c(Sys.glob(file.path(mandir, "*.Rd")),
+               Sys.glob(file.path(mandir, "*.rd")))
     if (file_test("-d", f <- file.path(mandir, OS)))
-        files <- c(files, Sys.glob(file.path(f, "*.Rd"), file.path(f, "*.rd")))
+        files <- c(files,
+                   Sys.glob(file.path(f, "*.Rd")),
+                   Sys.glob(file.path(f, "*.rd")))
     ## Should only process files starting with [A-Za-z0-9] and with
     ## suffix .Rd or .rd, according to 'Writing R Extensions'.
     OK <- grep("^[A-Za-z0-9]", basename(files))
