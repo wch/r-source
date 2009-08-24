@@ -3182,6 +3182,10 @@ Off by default because this can result in false positives.
 @c @item _R_CHECK_RD_PARSE_
 @c Control whether Rd files are checked against the Rd version 2 parser.
 @c Default: true.
+@item _R_CHECK_RD_CHECKRD_MINLEVEL_
+New in @R{} 2.10.0.  Controls the minimum level for reporting warninsgs
+from @code{checkRd}.
+Default: -1.
 @item _R_CHECK_RD_USAGE_METHOD_BINOPS_
 Control whether binops generics are considered as allowing useful S3
 method markup. 

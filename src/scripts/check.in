@@ -1919,7 +1919,8 @@ sub check_pkg {
 
     if(-d "man") {
 	$log->checking("Rd files");
-	my $Rcmd = "options(warn=1)\ntools:::.check_package_parseRd('.')\n";
+	my $minlevel = &R_getenv("_R_CHECK_RD_CHECKRD_MINLEVEL_", "-1");
+	my $Rcmd = "options(warn=1)\ntools:::.check_package_parseRd('.', minlevel=$minlevel)\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);

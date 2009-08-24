@@ -4484,7 +4484,7 @@ function(cfile)
 
 ## FIXME: could use dumped files, except for use of encoding = "ASCII"
 .check_package_parseRd <-
-function(dir, silent = FALSE, def_enc = FALSE)
+function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
 {
     if(file.exists(file.path(dir, "DESCRIPTION"))) {
         enc <- read.dcf(file.path(dir, "DESCRIPTION"))[1L,]["Encoding"]
@@ -4506,7 +4506,7 @@ function(dir, silent = FALSE, def_enc = FALSE)
         if(inherits(tmp, "try-error")) {
 	    bad <- c(bad, f)
             if(!silent) message(geterrmessage())
-        } else print(tmp, minlevel = -1)
+        } else print(tmp, minlevel = minlevel)
     }
     if(length(bad)) bad <- sQuote(sub(".*/","", bad))
     if(length(bad) > 1L)
