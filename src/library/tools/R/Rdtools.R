@@ -7,7 +7,7 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
     else p <- parse_Rd(ifile, encoding = encoding)
     tags <- RdTags(p)
     if ("\\encoding" %in% tags) {
-	encoding <- p[[which(tags=="\\encoding")]][[1]]
+	encoding <- p[[which(tags=="\\encoding")]][[1L]]
 	if(encoding %in% c("UTF-8", "utf-8", "utf8")) encoding <- "UTF-8"
 	p <- parse_Rd(ifile, encoding=encoding)
     } else

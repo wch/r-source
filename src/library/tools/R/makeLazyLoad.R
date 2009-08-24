@@ -92,7 +92,7 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
             ans <- strsplit(readLines(sv), ":")
             nms <- lapply(ans, function(x) x[1L])
             ans <- lapply(ans, function(x)
-                          if(length(x)==1) x[1L] else
+                          if(length(x) == 1L) x[1L] else
                           strsplit(x[2L], " +")[[1L]][-1L])
             names(ans) <- nms
         } else {
@@ -124,7 +124,7 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
     enc <- .read_description(file.path(pkgpath, "DESCRIPTION"))["Encoding"]
     if(!is.na(enc)) {
         op <- options(encoding=enc)
-        on.exit(options(encoding=op[[1]]))
+        on.exit(options(encoding=op[[1L]]))
     }
     if(file_test("-d", dataDir)) {
         if(file.exists(file.path(dataDir, "Rdata.rds")) &&
