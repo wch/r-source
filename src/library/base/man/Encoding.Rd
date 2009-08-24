@@ -61,7 +61,11 @@ Encoding(x) <- value
   any of the inputs are UTF-8.
 
   \code{\link{paste}} and \code{\link{sprintf}} return a UTF-8 marked
-  element if any of the inputs to that element are UTF-8.
+  element if any of the inputs to that element is marked as UTF-8.
+
+  \code{\link{match}}, \code{\link{pmatch}}, \code{\link{charmatch}},
+  \code{\link{duplicated}} and \code{\link{unique}} all match in UTF-8
+  if any of the elements are marked as UTF-8.
 }
 \value{
   A character vector.
