@@ -316,23 +316,11 @@ function(package, dir, lib.loc = NULL)
         ## Determine package encoding.
         encoding <- .get_package_metadata(dir, TRUE)["Encoding"]
         if(is.na(encoding)) encoding <- "unknown"
-        ## <FIXME>
-        ## Change back to
-        ##   db <- lapply(db, prepare_Rd_from_Rd_lines,
-        ##                encoding = encoding,
-        ##                defines = .Platform$OS.type,
-        ##                stages = "install")
-        ## when we no longer need the Rd sources ...
-        ## </FIXME>
-        db <- Map(function(x, y) structure(x, source = y),
-                  suppressWarnings(lapply(db, prepare_Rd_from_Rd_lines,
-                                          encoding = encoding,
-                                          defines = .Platform$OS.type,
-                                          stages = "install")),
-                  if(encoding != "unknown")
-                      Map(c, db, sprintf("\\encoding{%s}", encoding))
-                  else
-                      db)
+        db <- suppressWarnings(lapply(db,
+                                      prepare_Rd_from_Rd_lines,
+                                      encoding = encoding,
+                                      defines = .Platform$OS.type,
+                                      stages = "install"))
     }
     else {
         if(missing(dir))
