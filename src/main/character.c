@@ -55,10 +55,10 @@ nchar(, "char") handle UTF-8 directly, translates Latin-1
 nchar(, "width") ditto (with SUPPORT_MBCS, otherwise no width tables)
 substr substr<- handle UTF-8 and Latin-1 directly
 strsplit grep [g]sub [g]regexpr
-  handle UTF-8 directly is fixed/perl = TRUE, otherwise translate
+  handle UTF-8 directly if fixed/perl = TRUE, otherwise translate
   BUT this needs SUPPORT_MBCS
 tolower toupper chartr translate UTF-8 to wchar, rest to current charset
-  which needs SUPPORT_MBCS
+  which needs SUPPORT_MBCS and Unicode wide characters
 abbreviate agrep strtrim translate
 
 */
@@ -2135,7 +2135,8 @@ SEXP attribute_hidden do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
     n = LENGTH(x);
     PROTECT(y = allocVector(STRSXP, n));
 #ifdef SUPPORT_MBCS
-#if defined(Win32) || defined(__STDC_ISO_10646__)
+#if defined(Win32) || defined(__STDC_ISO_10646__) || defined(__APPLE_CC__)
+    /* utf8towcs is really to UCS-4/2 */
     for (i = 0; i < n; i++)
 	if (getCharCE(STRING_ELT(x, i)) == CE_UTF8) use_UTF8 = TRUE;
     if (mbcslocale || use_UTF8 == TRUE) {
@@ -2481,7 +2482,8 @@ SEXP attribute_hidden do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(x)) error("invalid '%s' argument", "x");
 
 #ifdef SUPPORT_MBCS
-#if defined(Win32) || defined(__STDC_ISO_10646__)
+    /* utf8towcs is really to UCS-4/2 */
+#if defined(Win32) || defined(__STDC_ISO_10646__) || defined(__APPLE_CC__)
     for (i = 0; i < n; i++)
 	if (getCharCE(STRING_ELT(x, i)) == CE_UTF8) use_UTF8 = TRUE;
 

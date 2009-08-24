@@ -1234,9 +1234,16 @@ Latin-1, the old @R{} assumption.
 This was taken further in @R{} 2.7.0.  There the parser can return a
 UTF-8-encoded string if it encounters a @samp{\uxxx} escape for a
 Unicode point that cannot be represented in the current charset.  (This
-needs MBCS support, and is currently only enabled@footnote{See define
-@code{USE_UTF8_IF_POSSIBLE} in @file{gram.c}.} on Windows.)
-Many of the character manipulation functions now preserve UTF-8 encodings.
+needs MBCS support, and was only enabled@footnote{See define
+@code{USE_UTF8_IF_POSSIBLE} in @file{gram.c}.} on Windows.)  This was
+taken further in @R{} 2.10.0, where it is enabled for all platforms with
+MBCS support, and a @samp{\uxxx} or @samp{\Uxxxxxxxx} escape ensures
+that the parsed string will be marked as UTF-8.
+
+Most of the character manipulation functions now preserve UTF-8
+encodings: there are some notes as to which at the top of
+@file{src/main/character.c} and in
+@file{src/library/base/man/Encoding.Rd}.
 
 Graphics devices are offered the possibility of handing UTF-8-encoded
 strings without re-encoding to the native character set, by setting

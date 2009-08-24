@@ -994,8 +994,8 @@ int attribute_hidden utf8clen(char c)
     return 1 + utf8_table4[c & 0x3f];
 }
 
-/* This returns the result in wchar_t, but does not assume
-   wchar_t is UCS-2/4 and so is for internal use only */
+/* These return the result in wchar_t, but does assume
+   wchar_t is UCS-2/4 and so are for internal use only */
 size_t attribute_hidden
 utf8toucs(wchar_t *wc, const char *s)
 {
