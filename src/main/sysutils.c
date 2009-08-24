@@ -1456,3 +1456,98 @@ do_setSessionTimeLimit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     return R_NilValue;
 }
+
+/* moved from character.c in 2.10.0 */
+
+
+#if defined(HAVE_GLOB) || defined(Win32)
+#ifdef HAVE_GLOB_H
+# include <glob.h>
+#endif
+#ifdef Win32
+# include <dos_wglob.h>
+# define globfree dos_wglobfree
+# define glob_t wglob_t
+#else
+# ifndef GLOB_QUOTE
+#  define GLOB_QUOTE 0
+# endif
+#endif
+SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x, ans;
+    int i, n, res, dirmark;
+    glob_t globbuf;
+
+    checkArity(op, args);
+    if (!isString(x = CAR(args)))
+	error(_("invalid '%s' argument"), "paths");
+    if (!LENGTH(x)) return allocVector(STRSXP, 0);
+    dirmark = asLogical(CADR(args));
+    if (dirmark == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "dirmark");
+#ifndef GLOB_MARK
+    if (dirmark)
+	error(_("'dirmark = TRUE' is not supported on this platform"));
+#endif
+
+    for (i = 0; i < LENGTH(x); i++) {
+	SEXP el = STRING_ELT(x, i);
+	if (el == NA_STRING) continue;
+#ifdef Win32
+	res = dos_wglob(filenameToWchar(el, FALSE),
+			(dirmark ? GLOB_MARK : 0) |
+			GLOB_QUOTE | (i ? GLOB_APPEND : 0),
+			NULL, &globbuf);
+	if (res == GLOB_NOSPACE)
+	    error(_("internal out-of-memory condition"));
+#else
+	res = glob(translateChar(el),
+# ifdef GLOB_MARK
+		   (dirmark ? GLOB_MARK : 0) |
+# endif
+		   GLOB_QUOTE | (i ? GLOB_APPEND : 0),
+		   NULL, &globbuf);
+# ifdef GLOB_ABORTED
+	if (res == GLOB_ABORTED)
+	    warning(_("read error on '%s'"), translateChar(el));
+# endif
+# ifdef GLOB_NOSPACE
+	if (res == GLOB_NOSPACE)
+	    error(_("internal out-of-memory condition"));
+# endif
+#endif
+    }
+    n = globbuf.gl_pathc;
+    PROTECT(ans = allocVector(STRSXP, n));
+    for (i = 0; i < n; i++)
+#ifdef Win32
+    {
+	wchar_t *w = globbuf.gl_pathv[i];
+	char *buf;
+	int nb = wcstoutf8(NULL, w, 0);
+	buf = R_AllocStringBuffer(nb+1, &cbuff);
+	wcstoutf8(buf, w, nb+1); buf[nb] = '\0'; /* safety check */
+	SET_STRING_ELT(ans, i, mkCharCE(buf, CE_UTF8));
+    }
+#else
+	SET_STRING_ELT(ans, i, mkChar(globbuf.gl_pathv[i]));
+#endif
+    UNPROTECT(1);
+#ifdef Win32
+    R_FreeStringBufferL(&cbuff);
+#endif
+    globfree(&globbuf);
+    return ans;
+}
+#else
+SEXP attribute_hidden do_glob(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x;
+
+    checkArity(op, args);
+    if (!isString(x = CAR(args)))
+	error(_("invalid '%s' argument"), "paths");
+    return x;
+}
+#endif
