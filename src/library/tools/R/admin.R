@@ -130,7 +130,7 @@ function(db, verbose = FALSE)
     if("R" %in% names(Depends)) {
         Rdeps2 <- Depends["R" == names(Depends)]
         names(Rdeps2) <- NULL
-        if(verbose && !all(sapply(Rdeps2[-1], function(x)
+        if(verbose && !all(sapply(Rdeps2[-1L], function(x)
             		   x$op %in% c("<", "<=")
             		&& x$version >= package_version("2.7.0")))) {
             entries <- lapply(Rdeps2, function(x)
@@ -692,50 +692,6 @@ function(dir, packages)
     invisible()
 }
 
-### * .convert_examples
-
-## unused
-.convert_examples <-
-function(infile, outfile, encoding)
-{
-    ## convert infile from encoding to current, if possible
-    if(l10n_info()[["MBCS"]]) {
-        text <- iconv(readLines(infile), encoding, "")
-        if(any(is.na(text)))
-            stop("invalid input", domain = NA)
-        writeLines(text, outfile)
-    } else file.copy(infile, outfile, TRUE)
-}
-
-
-### * .install_package_man_sources
-
-## not used in 2.10.0
-if(FALSE) {
-.install_package_man_sources <-
-function(dir, outDir)
-{
-    mandir <- file.path(dir, "man")
-    if(!file_test("-d", mandir)) return()
-    manfiles <- list_files_with_type(mandir, "docs")
-    if(!length(manfiles)) return()
-    manOutDir <- file.path(outDir, "man")
-    if(!file_test("-d", manOutDir)) dir.create(manOutDir)
-    pkgname <- sub("_.*$", "", basename(outDir)) # allow for versioned installs
-    filepath <- file.path(manOutDir, paste(pkgname, ".Rd.gz", sep = ""))
-    con <- gzfile(filepath, "wb")
-    for(file in manfiles) {
-        fn <- sub(".*/man/", "", file)
-        cat(file=con, "% --- Source file: ", fn, " ---\n", sep="")
-        writeLines(readLines(file, warn = FALSE), con) # will ensure final \n
-        ## previous format had (sometimes) blank line before \eof, but
-        ## this is not needed.
-        cat(file=con, "\\eof\n")
-    }
-    close(con)
-}
-}
-
 ### * .install_package_Rd_objects
 
 ## called from src/library/Makefile
@@ -759,7 +715,7 @@ function(dir, outDir, encoding = "unknown")
                            encoding = encoding)
         nm <- names(db)
         .saveRDS(nm, pathsFile)
-        names(db) <- sub("\\.[Rr]d", "", basename(nm))
+        names(db) <- sub("\\.[Rr]d$", "", basename(nm))
         makeLazyLoadDB(db, file.path(manOutDir, basename(outDir)))
     }
     invisible()

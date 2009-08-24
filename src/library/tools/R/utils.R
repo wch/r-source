@@ -83,7 +83,7 @@ function(dir, exts, all.files = FALSE, full.names = TRUE)
 {
     ## Return the paths or names of the files in @code{dir} with
     ## extension in @code{exts}.
-    ## Might be in a zipped dir on Windows
+    ## Might be in a zipped dir on Windows.
     if(file.exists(file.path(dir, "filelist")) &&
        any(file.exists(file.path(dir, c("Rdata.zip", "Rex.zip", "Rhelp.zip")))))
     {
@@ -144,27 +144,6 @@ function(dir, type, all.files = FALSE, full.names = TRUE,
         files <- files[grep("^[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]", basename(files))]
     }
     files
-}
-
-### ** extract_Rd_file
-
-extract_Rd_file <-
-function(file, topic)
-{
-    ## extract an Rd file from the man dir.
-    if(is.character(file)) {
-        file <- if(length(grep("\\.gz$", file))) gzfile(file, "r")
-        else file(file, "r")
-        on.exit(close(file))
-    }
-    valid_lines <- lines <- readLines(file, warn = FALSE)
-    valid_lines[is.na(nchar(lines, "c", TRUE))] <- ""
-    patt <- paste("^% --- Source file:.*/", topic, ".Rd ---$", sep="")
-    if(length(top <- grep(patt, valid_lines)) != 1L)
-        stop("no or more than one match")
-    eofs <- grep("^\\\\eof$", valid_lines)
-    end <- min(eofs[eofs > top]) - 1
-    lines[top:end]
 }
 
 ### ** showNonASCII
@@ -1175,10 +1154,10 @@ function(file, envir, enc = NA)
 ### .source_assignments_in_code_dir
 
 .source_assignments_in_code_dir <-
-function(dir, env, meta = character())
+function(dir, envir, meta = character())
 {
     ## Combine all code files in @code{dir}, read and parse expressions,
-    ## and successively evaluate the top-level assignments in @code{env}.
+    ## and successively evaluate the top-level assignments in @code{envir}.
     con <- tempfile("Rcode")
     on.exit(unlink(con))
     if(!file.create(con))
@@ -1194,7 +1173,7 @@ function(dir, env, meta = character())
         list_files_with_type(dir, "code")
     if(!all(.file_append_ensuring_LFs(con, files)))
         stop("unable to write code files")
-    tryCatch(.source_assignments(con, env, enc = meta["Encoding"]),
+    tryCatch(.source_assignments(con, envir, enc = meta["Encoding"]),
              error =
              function(e)
              stop("cannot source package code\n",
