@@ -3089,16 +3089,15 @@ other types of Rd file.
 
 The general syntax of Rd files is summarized below.  For a detailed
 technical discussion of current Rd syntax, see
-@uref{http://developer.r-project.org/parseRd.pdf, ``Parsing Rd
-files''}.  Note that there have been a number of changes to the Rd
-format over the years, which can be important if a package is intended
-to be used with earlier versions of @R{}.    The @code{\Rdversion@{@}}
-block was introduced in @R{} 2.9.0 to allow help files to identify the
-version they follow: files without such a block are implicitly assumed
-to be in the current version. New files created by e.g.@:
-@code{prompt} in @R{} 2.9.0 and later are marked as version 1.1.  See
-@ref{Back-compatibility issues} for notes on earlier versions of the
-Rd format.
+@uref{http://developer.r-project.org/parseRd.pdf, ``Parsing Rd files''}.
+Note that there have been a number of changes to the Rd format over the
+years, which can be important if a package is intended to be used with
+earlier versions of @R{}.  The @code{\Rdversion@{@}} block was
+introduced in @R{} 2.9.0 to allow help files to identify the version
+they follow: files without such a block are implicitly assumed to be in
+the current version. New files created by e.g.@: @code{prompt} in @R{}
+2.9.x.  See @ref{Back-compatibility issues} for notes on earlier
+versions of the Rd format.
 
 As of @R{} 2.10.0, the syntax of Rd files consists of three types of
 text input.  The most common is @LaTeX{}-like, with the backslash used
@@ -3148,6 +3147,8 @@ problems with indexing the package manual, it may not contain @samp{!}
 @c and must not contain @LaTeX{}
 @c special characters (@samp{#}, @samp{$}, @samp{%}, @samp{&}, @samp{~},
 @c @samp{_}, @samp{^}, @samp{\}, @samp{@{}, @samp{@}}).
+There can only be one @code{\name} entry in a file, and it must not
+contain any markup.
 
 @item \alias@{@var{topic}@}
 @findex \alias
@@ -3189,13 +3190,15 @@ example).
 Title information for the Rd file.  This should be capitalized, not end
 in a period, and not use any markup (which would cause problems for
 hypertext search).  Use of characters other than English text and
-punctuation (e.g., @samp{<}) may limit portability.
+punctuation (e.g., @samp{<}) may limit portability.  There must be one
+(and one only) @code{\title} section in a help file.
 
 @item \description@{@dots{}@}
 @findex \description
 A short description of what the function(s) do(es) (one paragraph, a few
 lines only).  (If a description is ``too long'' and cannot easily be
 shortened, the file probably tries to document too much at once.)
+This is mandatory except for package-overview files.
 
 @item \usage@{@var{fun}(@var{arg1}, @var{arg2}, @dots{})@}
 @findex \usage
@@ -3486,7 +3489,8 @@ This uses the following additional markup commands.
 @table @code
 @item \docType@{@dots{}@}
 Indicates the ``type'' of the documentation object.  Always @samp{data}
-for data sets.
+for data sets, and @samp{package} for @file{@var{pkg}-package.Rd}
+overview files.
 
 @item \format@{@dots{}@}
 @findex \format
@@ -3921,11 +3925,16 @@ itself.  Use
 for the dots in function argument lists @samp{@dots{}}, and
 @code{\ldots}
 @findex \ldots
-for ellipsis dots in ordinary text.  These can be followed by
+for ellipsis dots in ordinary text.@footnote{There is only a fine
+distinction between @code{\dots} and @code{\dots}.  It is technically
+incorrect to use @code{\ldots} in code blocks and @code{tools::checkRd}
+will warn about this---on the other hand the current convertors treat
+them the same way in code blocks, and elsewhere apart from the small
+distinction between the two in LaTeX.}  These can be followed by
 @code{@{@}}, and should be unless followed by whitespace.
 
-After an unescaped @samp{%}, you can put your own comments regarding the help text.
-The rest of the line will be completely disregarded.
+After an unescaped @samp{%}, you can put your own comments regarding the
+help text.  The rest of the line will be completely disregarded.
 Therefore, you can also use it to make part of the ``help'' invisible.
 
 You can produce a backslash (@samp{\}) by escaping it by another

@@ -469,6 +469,7 @@ Rd2txt <-
                            txt <- ""
                            repeat {
                                this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
+                                              "\\ldots" =, # not really right
                                               "\\dots" = "...",
                                               RCODE = as.character(blocks[[j]]),
                                               stopRd(block, Rdfile, sprintf("invalid markup '%s' in %s", tg, tag)))
