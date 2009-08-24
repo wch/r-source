@@ -284,8 +284,6 @@ DEPRECATED & DEFUNCT
 
     o	png(type="cairo1") is defunct: the value is no longer recognized.
 
-    o	R CMD Rd2txt is defunct: use R CMD Rdconv -t txt or tools::Rd2txt().
-
     o	tools::Rd_parse() is defunct (as this version of R uses only
 	Rd version 2).
 
@@ -387,8 +385,8 @@ NEW FEATURES
 
 DEPRECATED & DEFUNCT
 
-    o	R CMD Rd2txt is deprecated, and will be removed in 2.10.0.
-	(It is just a wrapper for R CMD Rdconv -t txt.)
+    o	R CMD Rd2txt is deprecated.  (It is just a wrapper for
+	R CMD Rdconv -t txt.)
 
     o	tools::Rd_parse() is deprecated and will be removed in 2.10.0
 	(which will use only Rd version 2).

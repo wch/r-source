@@ -39,8 +39,7 @@ and the utility
 
 make.names
 
-String matching funs are in match.c
-make.unique, duplicated, unique are in unique.c
+make.unique, duplicated, unique, match, pmatch, charmatch are in unique.c
 iconv is in sysutils.c
 
 
@@ -51,15 +50,17 @@ Comparison is done directly unless you happen to have the same string
 in UTF-8 and Latin-1.
 
 nzchar and nchar(, "bytes") are indpendent of the encoding
-nchar(, "char") handle UTF-8 directly, translates Latin-1
-nchar(, "width") ditto (with SUPPORT_MBCS, otherwise no width tables)
-substr substr<- handle UTF-8 and Latin-1 directly
+nchar(, "char")  handle UTF-8 directly, translates Latin-1
+nchar(, "width")  ditto (with SUPPORT_MBCS, otherwise no width tables)
+substr substr<-  handle UTF-8 and Latin-1 directly
 strsplit grep [g]sub [g]regexpr
   handle UTF-8 directly if fixed/perl = TRUE, otherwise translate
   BUT this needs SUPPORT_MBCS
-tolower toupper chartr translate UTF-8 to wchar, rest to current charset
+tolower toupper chartr  translate UTF-8 to wchar, rest to current charset
   which needs SUPPORT_MBCS and Unicode wide characters
-abbreviate agrep strtrim translate
+abbreviate agrep strtrim  translate
+
+All the string matching functions translate.
 
 */
 

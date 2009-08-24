@@ -34,11 +34,17 @@ export TEXINPUTS
 . "${R_HOME}/etc${R_ARCH}/Renviron"
 export `sed 's/^ *#.*//; s/^\(.*\)=.*/\1/' "${R_HOME}/etc${R_ARCH}/Renviron"`
 
+extra=
 case "${1}" in
   perl)
     cmd="${PERL}" ;;
   awk)
     cmd="${AWK}"  ;;
+## this was a separate command prior to 2.10.0
+  Rd2txt)
+    cmd="${R_HOME}/bin/Rdconv"
+    extra="-t txt"
+    ;;
   *)
     if test -x "${R_HOME}/bin/${1}"; then
       cmd="${R_HOME}/bin/${1}"
@@ -49,7 +55,7 @@ case "${1}" in
 esac
 shift
 
-exec "${cmd}" "${@}"
+exec "${cmd}" ${extra} "${@}"
 
 ### Local Variables: ***
 ### mode: sh ***
