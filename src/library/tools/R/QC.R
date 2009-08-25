@@ -308,7 +308,7 @@ function(package, dir, lib.loc = NULL,
                           dir),
                  domain = NA)
         if(!.haveRds(dir))
-            stop(gettextf("directory '%s' does not contain Rd sources", dir),
+            stop(gettextf("directory '%s' does not contain Rd objects", dir),
                  domain = NA)
         is_base <- basename(dir) == "base"
 
@@ -351,7 +351,7 @@ function(package, dir, lib.loc = NULL,
                           dir),
                  domain = NA)
         if(!.haveRds(dir))
-            stop(gettextf("directory '%s' does not contain Rd sources", dir),
+            stop(gettextf("directory '%s' does not contain Rd objects", dir),
                  domain = NA)
         package_name <- basename(dir)
         is_base <- package_name == "base"
@@ -897,7 +897,7 @@ function(package, lib.loc = NULL)
         stop(gettextf("directory '%s' does not contain R code", dir),
              domain = NA)
     if(!.haveRds(dir))
-        stop(gettextf("directory '%s' does not contain Rd sources", dir),
+        stop(gettextf("directory '%s' does not contain Rd objects", dir),
              domain = NA)
     is_base <- basename(dir) == "base"
 
@@ -1464,7 +1464,7 @@ function(package, dir, lib.loc = NULL)
                           dir),
                  domain = NA)
         if(!.haveRds(dir))
-            stop(gettextf("directory '%s' does not contain Rd sources", dir),
+            stop(gettextf("directory '%s' does not contain Rd objects", dir),
                  domain = NA)
         package_name <- package
         is_base <- package_name == "base"
@@ -1501,7 +1501,7 @@ function(package, dir, lib.loc = NULL)
                           dir),
                  domain = NA)
         if(!.haveRds(dir))
-            stop(gettextf("directory '%s' does not contain Rd sources", dir),
+            stop(gettextf("directory '%s' does not contain Rd objects", dir),
                  domain = NA)
         package_name <- basename(dir)
         is_base <- package_name == "base"
