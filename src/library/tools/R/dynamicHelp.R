@@ -19,22 +19,23 @@
 ## Better directory listing, possibly via a redirect to a file:// link
 ## Handle more of the types what might be in a vignette directory.
 
-## basic version - a placeholder
-.HTMLdirListing <- function(dir)
+## basic version
+.HTMLdirListing <- function(dir, base)
 {
     files <- list.files(dir) # note, no hidden files
-    ## Use (UTF-8) quotes here?
-    title <- paste("Listing of directory", dir)
     out <- paste('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
-        '<html><head><title>R: ', title, '</title>\n',
-        '<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">',
+        '<html><head><title>R: ', dir , '</title>\n',
+        '<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">\n',
+        '<link rel="stylesheet" type="text/css" href="/doc/html/R.css">\n',
         '</head><body>\n',
-        '<h1>', title, '</h1>\n\n<hr>\n', sep="")
+        '<h1>', "Listing of directory<br>", dir, '</h1>\n\n<hr>\n', sep="")
     if(!length(files))
         out <- c(out, "No files in this directory")
     else {
+        urls <- paste('<a href="', base, '/', files, '">', files, '</a>',
+                      sep = "")
         out <- c(out, "<ul>",
-                 paste("<LI>", iconv(files, "", "UTF-8"), "</LI>", sep = ""),
+                 paste("<li>", iconv(urls, "", "UTF-8"), "</li>", sep = ""),
                  "</ul>")
     }
     out <- c(out, "<hr>\n</BODY></HTML>")
@@ -60,15 +61,30 @@ httpd <- function(path, query, ...)
         }
         list(file=file)
     }
-    fixdoc <- function(file, pkg)
+
+    mime_type <- function(path)
     {
-        lines <- readLines(file)
-        lines <- gsub('"../doc"',
-                      paste("file://",
-                            gsub("html/00index.html$", "doc",file),
-                            sep  = ""),
-                      lines)
-        return(list(payload=paste(lines, collapse="\n")))
+        ext <- strsplit(path, ".", fixed = TRUE)[[1L]]
+        if(n <- length(ext)) ext <- ext[n] else ""
+        switch(ext,
+               "css" = "text/css",
+               "jpg" = "image/jpeg",
+               "html" = "text/html",
+               "text/plain")
+    }
+
+    sQuote <- function(text) # needs to be in UTF-8
+        ## paste("\u2018", text, "\u2019", sep = "") # if we require MBCS
+        paste("'", text, "'", sep="")
+
+    error_page <- function(msg)
+    {
+        out <- paste('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
+                     '<html><head><title>R: doc not found</title>\n',
+                     '<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">\n',
+                     '<link rel="stylesheet" type="text/css" href="/doc/html/R.css">\n',
+                     '</head><body>\n', msg, sep = "")
+        list(payload = out)
     }
 
     fileRegexp <- "^/library/([^/]*)/html/([^/]*)\\.html$"
@@ -115,29 +131,20 @@ httpd <- function(path, query, ...)
             file <- system.file("html", "00Index.html", package=pkg)
             if(!nzchar(file) || !file.exists(file)) {
                 if(nzchar(system.file(package=pkg)))
-                    return(list(payload =
-                                paste("No package index found for package",
-                                      pkg)))
+                    return(error_page(paste("No package index found for package", sQuote(pkg))))
                 else
-                    return(list(payload =
-                                paste("No package of name", pkg,
-                                      "could be located")))
-
+                    return(error_page(paste("No package of name", sQuote(pkg), "could be located")))
             } else {
                 if(.Platform$OS.type == "windows") return(unfix(file))
-                ## return(fixdoc(file, pkg))
                 return(list(file=file))
             }
     	} else {
             file <- system.file("help", package=pkg)
             if (!nzchar()) {
                 if(nzchar(system.file(package=pkg)))
-                    return(list(payload =
-                                paste("No help found for package", pkg)))
+                    return(error_page(paste("No help found for package", sQuote(pkg))))
                 else
-                   return(list(payload =
-                                paste("No package of name", pkg,
-                                      "could be located")))
+                   return(error_page(paste("No package of name", sQuote(pkg), "could be located")))
             }
             ## this is not a real file
     	    file <- file.path(file, topic)
@@ -148,16 +155,14 @@ httpd <- function(path, query, ...)
     	rest <- sub(docRegexp, "\\2", path)
         docdir <- system.file("doc", package = pkg)
         if(!nzchar(docdir))
-            return(list(payload = paste("No docs found for package", pkg)))
+            return(error_page(paste("No docs found for package", sQuote(pkg))))
         if(nzchar(rest)) {
             file <- paste(docdir, rest, sep = "")
-            ## FIXME: cope with more types, e.g. .R, .Rnw, .bib
-            content_type <- ifelse(grepl("pdf$", path),  "application/pdf",
-                                   "text/html")
-            return(list(file=file, "content-type"=content_type))
+            return(list(file = file, "content-type" = mime_type(path)))
         } else {
             ## request to list <pkg>/doc
-            return(.HTMLdirListing(docdir))
+            return(.HTMLdirListing(docdir,
+                                   paste("/library", pkg, "doc", sep="/")))
         }
     }
     if (!is.null(file)) {
@@ -191,10 +196,7 @@ httpd <- function(path, query, ...)
         ## If we got here, we've followed a link that's not to a man page.
         ## FIXME some of those things are vignette listings/overviews
     	file <- file.path(R.home(), path)
-        content_type <- ifelse(grepl("css$", path),  "text/css",
-                               ifelse(grepl("jpg$", path),  "image/jpeg",
-                                      "text/html"))
-    	return(list(file=file, "content-type"=content_type))
+    	return(list(file = file, "content-type" = mime_type(path)))
     }
 }
 
