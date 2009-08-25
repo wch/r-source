@@ -54,12 +54,22 @@ httpd <- function(path, query, ...)
             top <- readLines(fixedfile)
             lines <- readLines(file)
             lines <- gsub(paste(top, "library", sep="/"),
-                          "../../", lines)
+                          "../../", lines, fixed = TRUE)
             lines <- gsub(paste(top, "doc/", sep = "/"),
-                          "../../../doc/", lines)
+                          "../../../doc/", lines, fixed = TRUE)
             return(list(payload=paste(lines, collapse="\n")))
         }
         list(file=file)
+    }
+    fixdoc <- function(file, pkg)
+    {
+        lines <- readLines(file)
+        lines <- gsub('"../doc"',
+                      paste("file://",
+                            gsub("html/00index.html$", "doc",file),
+                            sep  = ""),
+                      lines)
+        return(list(payload=paste(lines, collapse="\n")))
     }
 
     fileRegexp <- "^/library/([^/]*)/html/([^/]*)\\.html$"
@@ -102,13 +112,28 @@ httpd <- function(path, query, ...)
     } else if (grepl(fileRegexp, path)) {
     	pkg <- sub(fileRegexp, "\\1", path)
     	topic <- sub(fileRegexp, "\\2", path)
-        ## FIXME: what if package not found?
     	if (basename(path) == "00Index.html") {
-            file <- file.path(system.file("html", package=pkg), "00Index.html")
-            if(.Platform$OS.type == "windows") return(unfix(file))
-    	    return(list(file=file))
-    	} else
-    	    file <- file.path(system.file("help", package=pkg), topic)
+            file <- system.file("html", "00index.html", package=pkg)
+            if(!nzchar(file) || !file.exists(file)) {
+                ## FIXME: could distinguish no package and no help
+                return(list(payload =
+                            paste("No package index found for package", pkg)
+                            ))
+            } else {
+                if(.Platform$OS.type == "windows") return(unfix(file))
+                ## return(fixdoc(file, pkg))
+                return(list(file=file))
+            }
+    	} else {
+            file <- system.file("help", package=pkg)
+            if (!nzchar(file))
+                ## FIXME: could distinguish no package and no help
+                return(list(payload =
+                            paste("No help found for package", pkg)
+                            ))
+            ## this is not a real file
+    	    file <- file.path(file, topic)
+        }
     } else if (grepl(docRegexp, path)) {
         ## vignettes etc directory
     	pkg <- sub(docRegexp, "\\1", path)
