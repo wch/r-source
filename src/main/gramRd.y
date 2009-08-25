@@ -226,13 +226,13 @@ LatexArg:	goLatexLike Arg		 	{ xxpopMode($1); $$ = $2; }
 
 LatexArg2:	goLatexLike Arg			{ xxpopMode($1); $$ = $2; }
 	|	goLatexLike TEXT		{ xxpopMode($1); $$ = xxnewlist($2); 
-     if(wCalls)
-    	    					  warning(_("bad markup (extra space?) at %s:%d:%d"), 
+     						  if(wCalls)
+    	    					      warning(_("bad markup (extra space?) at %s:%d:%d"), 
     	    					            xxBasename, @2.first_line, @2.first_column); 
-     else
-    	    					  warningcall(R_NilValue_("bad markup (extra space?) at %s:%d:%d"), 
+     						  else
+    	    					      warningcall(R_NilValue, _("bad markup (extra space?) at %s:%d:%d"), 
     	    					            xxBasename, @2.first_line, @2.first_column); 
-}	
+						}	
 
 Item0Arg:	goItem0 Arg		 	{ xxpopMode($1); $$ = $2; }
 
