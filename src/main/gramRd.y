@@ -35,8 +35,6 @@
 
 Rboolean wCalls = TRUE;
 
-
-
 #define YYERROR_VERBOSE 1
 
 static void yyerror(const char *);
@@ -1395,7 +1393,7 @@ SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     int  outlen, *statevals, quoteBraces, inRComment;
     const char *c;
     char *outbuf, *out, lookahead;
-    Rboolean escape, escaped;
+    Rboolean escape;
 
     checkArity(op, args);
     
@@ -1419,16 +1417,14 @@ SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     
     for (c = CHAR(e), outlen=0; *c; c++) {
     	outlen++;
-    	/* any special char might be escaped; the backslash might be tripled */
+    	/* any special char might be escaped */
     	if (*c == '{' || *c == '}' || *c == '%' || *c == '\\') outlen++;
-    	if (*c == '\\') outlen++; 
     }
     out = outbuf = R_chk_calloc(outlen+1, sizeof(char));
-    escaped = FALSE;
     inRComment = FALSE;
     for (c = CHAR(e); *c; c++) {
     	escape = FALSE;
-    	if (!escaped && xxmode != UNKNOWNMODE) {
+    	if (xxmode != UNKNOWNMODE) {
 	    switch (*c) {
 	    case '\\':
 		if (xxmode == RLIKE && xxinRString) {
@@ -1468,7 +1464,7 @@ SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
 	    	inRComment = FALSE;
 	    	break;
 	    }
-	} else escaped = FALSE;
+	}
     	if (escape)
     	    *out++ = '\\';
     	*out++ = *c;
