@@ -12,7 +12,7 @@
   Data of 3000 male criminals over 20 years old undergoing their
   sentences in the chief prisons of England and Wales.
 }
-\usage{data(crimtab)}
+\usage{crimtab}
 \format{
   A \code{\link{table}} object of  \code{\link{integer}} counts, of dimension
   \eqn{42 \times 22}{42 * 22} with a total count, \code{sum(crimtab)} of

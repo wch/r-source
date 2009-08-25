@@ -11,7 +11,7 @@
   The number of telephones in various regions of the world (in
   thousands).
 }
-\usage{phones}
+\usage{WorldPhones}
 \format{
   A matrix with 7 rows and 8 columns.  The columns of the matrix give
   the figures for a given region, and the rows the figures for a year.
