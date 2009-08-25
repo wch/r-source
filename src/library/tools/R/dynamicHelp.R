@@ -14,12 +14,38 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## basic version
+.HTMLdirListing <- function(dir)
+{
+    tf <- tempfile("Rhttpd")
+    con <- file(tf, "w")
+    files <- list.files(dir)
+    title <- paste("Listing of directory", sQuote(dir))
+    cat('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
+        '<html><head><title>R: ', title, '</title>\n',
+        '<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">',
+        '</head><body>\n',
+        '<h1>', title, '</h1>\n\n<hr>\n\n', file = con, sep="")
+    if(!length(files))
+        cat("No files in this directory\n", file = con)
+    else {
+        cat("<ul>\n", file = con)
+        ## FIXME encoding of files should be UTF-8
+        for(f in files)
+            writeLines(paste("<LI>", f, "</LI>\n", sep = ""), con)
+        cat("</ul>\n", file = con)
+    }
+    cat("<hr>\n</BODY></HTML>\n", sep="", file = con)
+    close(con)
+    tf
+}
+
 ## 'query' is unused.
 httpd <- function(path, query, ...)
 {
     fileRegexp <- "^/library/([^/]*)/html/([^/]*)\\.html$"
     topicRegexp <- "^/library/([^/]*)/help/([^/]*)$"
-    docRegexp <- "^/library/([^/]*)/doc/(.*)"
+    docRegexp <- "^/library/([^/]*)/doc(.*)"
     file <- NULL
     if (grepl(topicRegexp, path)) {
     	pkg <- sub(topicRegexp, "\\1", path)
@@ -67,9 +93,17 @@ httpd <- function(path, query, ...)
         ## vignettes etc directory
     	pkg <- sub(docRegexp, "\\1", path)
     	rest <- sub(docRegexp, "\\2", path)
-        ## FIXME: what if package not found, directory listing case.
-        file <- paste(system.file("doc", package = pkg), rest, sep = "/")
-        return(list(file=file))
+        ## FIXME: what if package not found
+        if(nzchar(rest)) {
+            file <- paste(system.file("doc", package = pkg), rest, sep = "")
+            ## FIXME: cope with more types, e.g. .R, .Rnw, .bib
+            content_type <- ifelse(grepl("pdf$", path),  "application/pdf",
+                                   "text/html")
+            return(list(file=file, "content-type"=content_type))
+        } else {
+            ## request to list <pkg>/doc
+            return(list(file=.HTMLdirListing(system.file("doc", package = pkg))))
+        }
     }
     if (!is.null(file)) {
 	path <- dirname(file)
