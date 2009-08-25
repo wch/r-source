@@ -15,11 +15,8 @@
 #  http://www.r-project.org/Licenses/
 
 ### TODO
-
 ## Better directory listing, possibly via a redirect to a file:// link
-## Handle more of the types what might be in a vignette directory.
 
-## basic version
 .HTMLdirListing <- function(dir, base)
 {
     files <- list.files(dir) # note, no hidden files
@@ -65,11 +62,17 @@ httpd <- function(path, query, ...)
     mime_type <- function(path)
     {
         ext <- strsplit(path, ".", fixed = TRUE)[[1L]]
-        if(n <- length(ext)) ext <- ext[n] else ""
+        if(n <- length(ext) > 1L) ext <- ext[n] else ""
         switch(ext,
                "css" = "text/css",
+               "gif" = "image/gif", # in R2HTML
                "jpg" = "image/jpeg",
                "html" = "text/html",
+               "pdf" = "application/pdf",
+               "eps" =,
+               "ps" = "application/postscript", # in GLMMGibbs, mclust
+               "sgml"= "text/sgml", # in RGtk2
+               "xml" = "text/xml",  # in RCurl
                "text/plain")
     }
 
