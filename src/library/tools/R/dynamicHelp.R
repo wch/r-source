@@ -163,23 +163,34 @@ httpd <- function(path, query, ...)
     }
 }
 
-httpdPort <- NULL
+## 0 = untried, < 0 = failed to start,  > 0 = actual port
+httpdPort <- 0L
 
 startDynamicHelp <- function(start=TRUE)
 {
     env <- environment(startDynamicHelp)
     unlockBinding("httpdPort", env)
     if (start) {
-	httpdPort <<- 8080L
-	repeat { ## FIXME, no infinite loop please
-	    status <- .Internal(startHTTPD("127.0.0.1", httpdPort))
-	    if (status == 0L) break
-	    httpdPort <<- httpdPort + 1L
+        OK <- FALSE
+	for(i in 1:10) {
+            tmp <- as.integer(runif(1, 10000, 32000))
+	    status <- .Internal(startHTTPD("127.0.0.1", tmp))
+	    if (status == 0L) {
+                OK <- TRUE
+                httpdPort <<- tmp
+                break
+            }
 	}
-        ## FIXME: only assign this if we know it is working.
+        if (OK) {
+            ## FIXME: actually test the server
+        } else {
+            warning("failed to start the httpd server",
+                    call. = FALSE, immediate. = TRUE)
+            httpdPort <<- -1L
+        }
     } else {
         # FIXME actually shut down the server?
-    	httpdPort <<- NULL
+    	httpdPort <<- 0L
     }
     lockBinding("httpdPort", env)
     invisible(httpdPort)

@@ -28,6 +28,18 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	in packages are previously undetected/corrected errors in the
 	package sources or changes in the Rd dialect.
 
+    o	HTML help is now generated dynamically using a http server
+	running in the R process and listening on the loopback
+	connection.
+
+	- the implementation is currently incomplete, for example
+          browsing vignette directories is only minimally implemented
+          and not much error reporting is in place.
+
+	- those who need to worry about security implications of
+	  such a server should not use HTML help until more security
+	  measures are in place -- the server is started at first use.
+
 
 NEW FEATURES
 

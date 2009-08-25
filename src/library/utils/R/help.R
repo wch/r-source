@@ -127,7 +127,7 @@ function(x, ...)
                                     indent = 22))))
     } else {
         if(length(paths) > 1L) {
-            if (type == "html" && !is.null(tools:::httpdPort)) { # Redo the search if dynamic help is running
+            if (type == "html" && tools:::httpdPort > 0L) { # Redo the search if dynamic help is running
 		browseURL(paste("http://127.0.0.1:", tools:::httpdPort,
                                 "/library/NULL/help/", topic, sep=""))
 		return(invisible(x))
@@ -166,8 +166,8 @@ function(x, ...)
             file <- paths
 
         if(type == "html") {
-            if (is.null(tools:::httpdPort)) tools::startDynamicHelp()
-            if (!is.null(tools:::httpdPort)) {
+            if (tools:::httpdPort == 0L) tools::startDynamicHelp()
+            if (tools:::httpdPort > 0L) {
 		path <- dirname(file)
 		dirpath <- dirname(path)
 		pkgname <- basename(dirpath)

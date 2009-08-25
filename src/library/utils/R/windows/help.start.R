@@ -17,8 +17,8 @@
 help.start <- function(update = TRUE, gui = "irrelevant",
                        browser = getOption("browser"), searchEngine = FALSE)
 {
-    if(is.null(tools:::httpdPort)) tools::startDynamicHelp()
-    dynamic <- !is.null(tools:::httpdPort)
+    if(tools:::httpdPort == 0L) tools::startDynamicHelp()
+    dynamic <- tools:::httpdPort > 0L
     home <- if (dynamic)
         paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
     else R.home()

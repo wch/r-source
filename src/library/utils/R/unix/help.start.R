@@ -26,8 +26,8 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
     }
     make.packages.html()
     url <- if (is.null(remote)) {
-        if(is.null(tools:::httpdPort)) tools::startDynamicHelp()
-        tmpdir <- if (!is.null(tools:::httpdPort))
+        if(tools:::httpdPort == 0L) tools::startDynamicHelp()
+        tmpdir <- if (tools:::httpdPort > 0L)
             paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
         else paste("file://", URLencode(tempdir()), "/.R", sep = "")
         paste(tmpdir,
