@@ -14,35 +14,54 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## basic version
+### TODO
+
+## Better directory listing, possibly via a redirect to a file:// link
+## Handle more of the types what might be in a vignette directory.
+## More checks on existence of packages, error-reporting pages.
+
+## basic version - a placeholder
 .HTMLdirListing <- function(dir)
 {
-    tf <- tempfile("Rhttpd")
-    con <- file(tf, "w")
-    files <- list.files(dir)
-    title <- paste("Listing of directory", sQuote(dir))
-    cat('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
+    files <- list.files(dir) # note, no hidden files
+    ## Use (UTF-8) quotes here?
+    title <- paste("Listing of directory", dir)
+    out <- paste('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
         '<html><head><title>R: ', title, '</title>\n',
         '<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">',
         '</head><body>\n',
-        '<h1>', title, '</h1>\n\n<hr>\n\n', file = con, sep="")
+        '<h1>', title, '</h1>\n\n<hr>\n', sep="")
     if(!length(files))
-        cat("No files in this directory\n", file = con)
+        out <- c(out, "No files in this directory")
     else {
-        cat("<ul>\n", file = con)
-        ## FIXME encoding of files should be UTF-8
-        for(f in files)
-            writeLines(paste("<LI>", f, "</LI>\n", sep = ""), con)
-        cat("</ul>\n", file = con)
+        out <- c(out, "<ul>",
+                 paste("<LI>", iconv(files, "", "UTF-8"), "</LI>", sep = ""),
+                 "</ul>")
     }
-    cat("<hr>\n</BODY></HTML>\n", sep="", file = con)
-    close(con)
-    tf
+    out <- c(out, "<hr>\n</BODY></HTML>")
+    list(payload = paste(out, collapse="\n"))
 }
+
 
 ## 'query' is unused.
 httpd <- function(path, query, ...)
 {
+    unfix <- function(file)
+    {
+        ## we need to re-fix links altered by fixup.package.URLs
+        fixedfile <- sub("/html/.*", "/fixedHTMLlinks", file)
+        if(file.exists(fixedfile)) {
+            top <- readLines(fixedfile)
+            lines <- readLines(file)
+            lines <- gsub(paste(top, "library", sep="/"),
+                          "../../", lines)
+            lines <- gsub(paste(top, "doc/", sep = "/"),
+                          "../../../doc/", lines)
+            return(list(payload=paste(lines, collapse="\n")))
+        }
+        list(file=file)
+    }
+
     fileRegexp <- "^/library/([^/]*)/html/([^/]*)\\.html$"
     topicRegexp <- "^/library/([^/]*)/help/([^/]*)$"
     docRegexp <- "^/library/([^/]*)/doc(.*)"
@@ -83,11 +102,12 @@ httpd <- function(path, query, ...)
     } else if (grepl(fileRegexp, path)) {
     	pkg <- sub(fileRegexp, "\\1", path)
     	topic <- sub(fileRegexp, "\\2", path)
-        ## FIXME: this too needs links unfixed
-        ## FIXME: what if package not found
-    	if (basename(path) == "00Index.html")
-    	    return(list(file=file.path(system.file("html", package=pkg), "00Index.html")))
-    	else
+        ## FIXME: what if package not found?
+    	if (basename(path) == "00Index.html") {
+            file <- file.path(system.file("html", package=pkg), "00Index.html")
+            if(.Platform$OS.type == "windows") return(unfix(file))
+    	    return(list(file=file))
+    	} else
     	    file <- file.path(system.file("help", package=pkg), topic)
     } else if (grepl(docRegexp, path)) {
         ## vignettes etc directory
@@ -102,7 +122,7 @@ httpd <- function(path, query, ...)
             return(list(file=file, "content-type"=content_type))
         } else {
             ## request to list <pkg>/doc
-            return(list(file=.HTMLdirListing(system.file("doc", package = pkg))))
+            return(.HTMLdirListing(system.file("doc", package = pkg)))
         }
     }
     if (!is.null(file)) {
@@ -111,7 +131,7 @@ httpd <- function(path, query, ...)
 	pkgname <- basename(dirpath)
 	RdDB <- file.path(path, pkgname)
 	if(file.exists(paste(RdDB, "rdx", sep="."))) {
-	    outfile <- tempfile()
+	    outfile <- tempfile("Rhttpd")
 	    temp <- tools::Rd2HTML(tools:::fetchRdDB(RdDB, basename(file)),
                                    out = outfile, package = pkgname,
                                    dynamic = TRUE)
@@ -123,21 +143,7 @@ httpd <- function(path, query, ...)
             file2 <- paste(sub("/help/", "/html/", file, fixed = TRUE),
                            "html", sep=".")
             if(file.exists(file2)) {
-                if(.Platform$OS.type == "windows") {
-                    ## we need to re-fix links altered by fixup.package.URLs
-                    fixedfile <- sub("/html/.*", "/fixedHTMLlinks", file2)
-                    if(file.exists(fixedfile)) {
-                        top <- readLines(fixedfile)
-                        tf <- tempfile("httpd")
-                        lines <- readLines(file2)
-                        lines <- gsub(paste(top, "library", sep="/"),
-                                      "../../", lines)
-                        lines <- gsub(paste(top, "doc/", sep = "/"),
-                                      "../../../doc/", lines)
-                        writeLines(lines, tf)
-                        file2 <- tf
-                    }
-                }
+                if(.Platform$OS.type == "windows") return(unfix(file2))
                 return(list(file=file2))
             }
             return(list(file=file))
