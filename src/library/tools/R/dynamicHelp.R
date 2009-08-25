@@ -143,7 +143,7 @@ httpd <- function(path, query, ...)
             }
     	} else {
             file <- system.file("help", package=pkg)
-            if (!nzchar()) {
+            if (!nzchar(file)) {
                 if(nzchar(system.file(package=pkg)))
                     return(error_page(paste("No help found for package", sQuote(pkg))))
                 else
