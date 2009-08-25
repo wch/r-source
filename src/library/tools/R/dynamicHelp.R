@@ -113,12 +113,17 @@ httpd <- function(path, query, ...)
     	pkg <- sub(fileRegexp, "\\1", path)
     	topic <- sub(fileRegexp, "\\2", path)
     	if (basename(path) == "00Index.html") {
-            file <- system.file("html", "00index.html", package=pkg)
+            file <- system.file("html", "00Index.html", package=pkg)
             if(!nzchar(file) || !file.exists(file)) {
-                ## FIXME: could distinguish no package and no help
-                return(list(payload =
-                            paste("No package index found for package", pkg)
-                            ))
+                if(nzchar(system.file(package=pkg)))
+                    return(list(payload =
+                                paste("No package index found for package",
+                                      pkg)))
+                else
+                    return(list(payload =
+                                paste("No package of name", pkg,
+                                      "could be located")))
+
             } else {
                 if(.Platform$OS.type == "windows") return(unfix(file))
                 ## return(fixdoc(file, pkg))
@@ -126,11 +131,17 @@ httpd <- function(path, query, ...)
             }
     	} else {
             file <- system.file("help", package=pkg)
-            if (!nzchar(file))
-                ## FIXME: could distinguish no package and no help
-                return(list(payload =
-                            paste("No help found for package", pkg)
-                            ))
+            if (!nzchar()) {
+                if(nzchar(system.file(package=pkg)))
+                    return(list(payload =
+                                paste("No help found for package", pkg)
+                                ))
+                else
+                   return(list(payload =
+                                paste("No package of name", pkg,
+                                      "could be located")
+                                ))
+            }
             ## this is not a real file
     	    file <- file.path(file, topic)
         }
