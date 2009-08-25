@@ -296,9 +296,7 @@ function(package, dir, lib.loc = NULL)
             db <- split(lines[-eof_pos],
                         rep(seq_along(eof_pos),
                             times = diff(c(0, eof_pos)))[-eof_pos])
-        } else
-            stop(gettextf("directory '%s' does not contain Rd objects", dir),
-                 domain = NA)
+        } else return(list())
 
         ## NB: we only get here for pre-2.10.0 installs
 
@@ -331,10 +329,6 @@ function(package, dir, lib.loc = NULL)
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
-        docs_dir <- file.path(dir, "man")
-        if(!file_test("-d", docs_dir))
-            stop(gettextf("directory '%s' does not contain Rd sources", dir),
-                 domain = NA)
         db <- .build_Rd_db(dir)
     }
 
@@ -354,8 +348,10 @@ function(x, ...)
 function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
 {
     if(!is.null(dir)) {
+        man_dir <- file.path(dir, "man")
+        if(!file_test("-d", man_dir)) return(list())
         if(is.null(files))
-            files <- list_files_with_type(file.path(dir, "man"), "docs")
+            files <- list_files_with_type(man_dir, "docs")
         encoding <- .get_package_metadata(dir, FALSE)["Encoding"]
         if(is.na(encoding)) encoding <- "unknown"
     } else if(is.null(files))
