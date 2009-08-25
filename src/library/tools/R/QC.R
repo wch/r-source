@@ -986,7 +986,8 @@ function(package, lib.loc = NULL)
         cld <- methods::getClass(cl, where = code_env)
         ii <- idx[icl]
         ## Add sanity checking later ...
-        codeSlots <- sort(methods::slotNames(cld))
+        scld <- methods::slotNames(cld)
+        codeSlots <- if(!is.null(scld)) sort(scld) else character()
         docSlots  <- sort(.get_slot_names(Rd_slots[[ii]]))
         superSlots <- .inheritedSlotNames(cld@contains)
         if(length(superSlots)) ## allow '\dots' in docSlots
@@ -4493,7 +4494,7 @@ function()
 {
     ## Once upon a time ... there was no useful markup for S3 methods
     ## for subscripting/subassigning and binary operators.
-    
+
     c(if(identical(as.logical(Sys.getenv("_R_CHECK_RD_USAGE_METHOD_SUBSET_")),
                    FALSE))
       c("[", "[[", "$", "[<-", "[[<-", "$<-"),
