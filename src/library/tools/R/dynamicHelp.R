@@ -18,7 +18,6 @@
 
 ## Better directory listing, possibly via a redirect to a file:// link
 ## Handle more of the types what might be in a vignette directory.
-## More checks on existence of packages, error-reporting pages.
 
 ## basic version - a placeholder
 .HTMLdirListing <- function(dir)
@@ -134,13 +133,11 @@ httpd <- function(path, query, ...)
             if (!nzchar()) {
                 if(nzchar(system.file(package=pkg)))
                     return(list(payload =
-                                paste("No help found for package", pkg)
-                                ))
+                                paste("No help found for package", pkg)))
                 else
                    return(list(payload =
                                 paste("No package of name", pkg,
-                                      "could be located")
-                                ))
+                                      "could be located")))
             }
             ## this is not a real file
     	    file <- file.path(file, topic)
@@ -149,16 +146,18 @@ httpd <- function(path, query, ...)
         ## vignettes etc directory
     	pkg <- sub(docRegexp, "\\1", path)
     	rest <- sub(docRegexp, "\\2", path)
-        ## FIXME: what if package not found
+        docdir <- system.file("doc", package = pkg)
+        if(!nzchar(docdir))
+            return(list(payload = paste("No docs found for package", pkg)))
         if(nzchar(rest)) {
-            file <- paste(system.file("doc", package = pkg), rest, sep = "")
+            file <- paste(docdir, rest, sep = "")
             ## FIXME: cope with more types, e.g. .R, .Rnw, .bib
             content_type <- ifelse(grepl("pdf$", path),  "application/pdf",
                                    "text/html")
             return(list(file=file, "content-type"=content_type))
         } else {
             ## request to list <pkg>/doc
-            return(.HTMLdirListing(system.file("doc", package = pkg)))
+            return(.HTMLdirListing(docdir))
         }
     }
     if (!is.null(file)) {
