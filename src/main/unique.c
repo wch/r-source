@@ -786,6 +786,7 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     int *used = NULL, *ians;
     const char **in, **tar;
     Rboolean no_dups;
+    Rboolean useUTF8 = FALSE;
 
     checkArity(op, args);
     input = CAR(args);
@@ -806,17 +807,31 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (j = 0; j < n_target; j++) used[j] = 0;
     }
 
+    for(i = 0; i < n_input; i++)
+	if(IS_UTF8(STRING_ELT(input, i))) {useUTF8 = TRUE; break;}
+    if (!useUTF8)
+	for(i = 0; i < n_target; i++)
+	    if(IS_UTF8(STRING_ELT(target, i))) {useUTF8 = TRUE; break;}
+
     in = (const char **) R_alloc(n_input, sizeof(char *));
     tar = (const char **) R_alloc(n_target, sizeof(char *));
     PROTECT(ans = allocVector(INTSXP, n_input));
     ians = INTEGER(ans);
-    for (i = 0; i < n_input; i++) {
-	in[i] = translateChar(STRING_ELT(input, i));
-	ians[i] = 0;
+    if(useUTF8) {
+	for (i = 0; i < n_input; i++) {
+	    in[i] = translateCharUTF8(STRING_ELT(input, i));
+	    ians[i] = 0;
+	}
+	for (j = 0; j < n_target; j++)
+	    tar[j] = translateCharUTF8(STRING_ELT(target, j));
+    } else {
+	for (i = 0; i < n_input; i++) {
+	    in[i] = translateChar(STRING_ELT(input, i));
+	    ians[i] = 0;
+	}
+	for (j = 0; j < n_target; j++)
+	    tar[j] = translateChar(STRING_ELT(target, j));
     }
-    for (j = 0; j < n_target; j++)
-	tar[j] = translateChar(STRING_ELT(target, j));
-
     /* First pass, exact matching */
     if(no_dups) {
 	for (i = 0; i < n_input; i++) {
@@ -840,15 +855,7 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(n_target > 100 && 10*n_input > n_target) {
 	    HashData data;
 	    HashTableSetup(target, &data);
-	    {
-		Rboolean useUTF8 = FALSE;
-		for(i = 0; i < length(input); i++)
-		    if(IS_UTF8(STRING_ELT(input, i))) {useUTF8 = TRUE; break;}
-		if (!useUTF8)
-		    for(i = 0; i < length(target); i++)
-			if(IS_UTF8(STRING_ELT(target, i))) {useUTF8 = TRUE; break;}
-		data.useUTF8 = useUTF8;
-	    }
+	    data.useUTF8 = useUTF8;
 	    data.nomatch = 0;
 	    DoHashing(target, &data);
 	    for (i = 0; i < n_input; i++) {
@@ -912,6 +919,7 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean perfect;
     int i, j, k, imatch, n_input, n_target, temp, no_match, *ians;
     const char *ss, *st;
+    Rboolean useUTF8 = FALSE;
 
     checkArity(op, args);
 
@@ -924,16 +932,28 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("argument is not of mode character"));
     no_match = asInteger(CADDR(args));
 
+    for(i = 0; i < n_input; i++)
+	if(IS_UTF8(STRING_ELT(input, i))) {useUTF8 = TRUE; break;}
+    if (!useUTF8)
+	for(i = 0; i < n_target; i++)
+	    if(IS_UTF8(STRING_ELT(target, i))) {useUTF8 = TRUE; break;}
+
     PROTECT(ans = allocVector(INTSXP, n_input));
     ians = INTEGER(ans);
 
     for (i = 0; i < n_input; i++) {
-	ss = translateChar(STRING_ELT(input, i));
+	if (useUTF8)
+	    ss = translateCharUTF8(STRING_ELT(input, i));
+	else
+	    ss = translateChar(STRING_ELT(input, i));
 	temp = strlen(ss);
 	imatch = NA_INTEGER;
 	perfect = FALSE;
 	for (j = 0; j < n_target; j++) {
-	    st = translateChar(STRING_ELT(target, j));
+	    if (useUTF8)
+		st = translateCharUTF8(STRING_ELT(target, j));
+	    else
+		st = translateChar(STRING_ELT(target, j));
 	    k = strncmp(ss, st, temp);
 	    if (k == 0) {
 		if (strlen(st) == temp) {
