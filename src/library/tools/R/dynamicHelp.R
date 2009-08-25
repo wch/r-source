@@ -62,7 +62,7 @@ httpd <- function(path, query, ...)
     mime_type <- function(path)
     {
         ext <- strsplit(path, ".", fixed = TRUE)[[1L]]
-        if(n <- length(ext) > 1L) ext <- ext[n] else ""
+        if(n <- length(ext)) ext <- ext[n] else ""
         switch(ext,
                "css" = "text/css",
                "gif" = "image/gif", # in R2HTML
@@ -208,18 +208,28 @@ httpdPort <- 0L
 
 startDynamicHelp <- function(start=TRUE)
 {
+    if (start && httpdPort) {
+        if(httpdPort > 0) stop("server already running")
+        else stop("server could not be started earlier")
+    }
+    if(!start && httpdPort <= 0L)
+        stop("no server running to stop")
     env <- environment(startDynamicHelp)
     unlockBinding("httpdPort", env)
     if (start) {
         OK <- FALSE
 	for(i in 1:10) {
             tmp <- as.integer(runif(1, 10000, 32000))
+            ## the next can throw an R-level error,
+            ## so do not assign port unless it succeeds.
 	    status <- .Internal(startHTTPD("127.0.0.1", tmp))
 	    if (status == 0L) {
                 OK <- TRUE
                 httpdPort <<- tmp
                 break
             }
+            if (status != 2L) break
+            ## so status was -2, which means port in use
 	}
         if (OK) {
             ## FIXME: actually test the server
@@ -229,7 +239,8 @@ startDynamicHelp <- function(start=TRUE)
             httpdPort <<- -1L
         }
     } else {
-        # FIXME actually shut down the server?
+        ## Not really tested
+        .Internal(stopHTTPD())
     	httpdPort <<- 0L
     }
     lockBinding("httpdPort", env)

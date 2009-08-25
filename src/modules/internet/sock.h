@@ -61,3 +61,4 @@ int R_SockWrite(int sockp, const void *buf, int len);
 
 /* from Rhttpd.c */
 int in_R_HTTPDCreate(const char *ip, int port);
+void in_R_HTTPDStop(void);
