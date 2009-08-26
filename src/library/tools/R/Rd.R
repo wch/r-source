@@ -397,7 +397,7 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
 
 ### * Rd_aliases
 
-## Called from undoc.
+## Called from undoc and .check_Rd_xrefs
 Rd_aliases <-
 function(package, dir, lib.loc = NULL)
 {
@@ -633,12 +633,11 @@ function(x)
     out <- matrix(character(), nrow = 0L, ncol = 2L)
     recurse <- function(e) {
         if(identical(attr(e, "Rd_tag"), "\\link")) {
-            arg <- as.character(e[[1L]])
-            opt <- attr(e, "Rd_option")
-            val <- if(is.null(opt))
-                c(arg, "")
-            else
-                c(arg, as.character(opt))
+            val <- if(length(e)) { # mvbutils has empty links
+                arg <- as.character(e[[1L]])
+                opt <- attr(e, "Rd_option")
+                c(arg, if(is.null(opt)) "" else as.character(opt))
+            } else c("", "")
             out <<- rbind(out, val)
         }
         if(is.list(e)) lapply(e, recurse)

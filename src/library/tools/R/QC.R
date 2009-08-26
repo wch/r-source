@@ -3488,12 +3488,71 @@ function(package, dir, lib.loc = NULL)
     ## Flatten the xref db into one big matrix.
     db <- cbind(do.call("rbind", db), rep(names(db), sapply(db, NROW)))
 
-    ## Take the targets from the non-anchored xrefs.
-    db <- db[db[, 2L] == "", -2L, drop = FALSE]
+    ## fixup \link[=dest] form
+    anchor <- db[, 2L]
+    have_equals <- grepl("^=", anchor)
+    if(any(have_equals))
+        db[have_equals, 1:2] <- cbind(sub("^=", "", anchor[have_equals]), "")
 
+    db <- cbind(db, bad = FALSE)
+    have_anchor <- nzchar(anchor <- db[, 2L])
+    ## Check the targets from the non-anchored xrefs.
+    db[!have_anchor, "bad"] <- !( db[!have_anchor, 1L] %in% unlist(aliases))
+
+    ## and then check the anchored ones if we can.
+    ## NB, ones of the form base:Rhome are to a *file*
+    have_colon <- grepl(":", anchor, fixed = TRUE)
+    pkgs <- sapply(strsplit(anchor[have_colon], ":", fixed = TRUE), `[`, 1L)
+    unknown <- character()
+    for (pkg in pkgs) {
+        ## we can't do this on the current uninstalled package!
+        if (missing(package) && pkg == basename(dir)) next
+        part1 <- sub("([^:]*):(.*)", "\\1", anchor[have_colon])
+        part2 <- sub("([^:]*):(.*)", "\\2", anchor[have_colon])
+        this <- part1 %in% pkg
+        files <- part2[this]
+        top <- system.file(package = pkg, lib.loc = lib.loc)
+        if(nzchar(top)) {
+            RdDB <- file.path(top, "help", "paths.rds")
+            if(file.exists(RdDB)) {
+                nm <- sub("\\.[Rr]d", "", basename(.readRDS(RdDB)))
+            } else {
+                ## old-style
+                nm <- list.files(file.path(top, "help"))
+            }
+            good <- files %in% nm
+        } else {
+            unknown <- c(unknown, pkg)
+            next
+        }
+        db[anchor %in% paste(pkg, files, sep=":") , "bad"] <- !good
+    }
+    topic <- db[ , 1L]
+    for (pkg in unique(anchor[!have_colon])) {
+        if (pkg == "") next
+        this <- anchor %in% pkg
+        good <- if(pkg %in% names(aliases))
+            topic[this] %in% aliases[[pkg]]
+        else {
+            top <- system.file(package = pkg, lib.loc = lib.loc)
+            if (nzchar(top)) {
+                topic[this] %in% Rd_aliases(pkg, lib.loc = lib.loc)
+            } else {
+                unknown <- c(unknown, pkg)
+                TRUE
+            }
+        }
+        db[this, "bad"] <- !good
+    }
+
+    unknown <- unique(unknown)
+    if (length(unknown))
+        warning(gettextf("did not find package(s) %s to check xrefs",
+                         paste(sQuote(unknown), collapse = ", ")),
+                         domain = NA, call. = FALSE)
     ## The bad ones:
-    db <- db[! db[, 1L] %in% unlist(aliases), , drop = FALSE]
-    structure(split(db[, 1L], db[, 2L]), class = "check_Rd_xrefs")
+    bad <- db[, "bad"] == "TRUE"
+    structure(split(db[bad, 1L], db[bad, 3L]), class = "check_Rd_xrefs")
 }
 
 print.check_Rd_xrefs <-
@@ -3503,7 +3562,8 @@ function(x, ...)
         for(i in seq_along(x)) {
             writeLines(gettextf("Missing link(s) in documentation object '%s':",
                                 names(x)[i]))
-            .pretty_print(x[[i]])
+            ## NB, link might be empty, and was in mvbutils
+            .pretty_print(sQuote(x[[i]]))
             writeLines("")
         }
         ## <FIXME>
