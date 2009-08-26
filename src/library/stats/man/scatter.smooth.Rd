@@ -49,8 +49,8 @@ loess.smooth(x, y, span = 2/3, degree = 1,
   grid points).
 }
 \seealso{\code{\link{loess}};
-  \code{\link[graphics]{smoothScatter}} for scatter plots with smoothed
-  \emph{density} color representation.
+  \code{\link[graphics:smoothscatter]{smoothScatter}} for scatter plots
+  with smoothed \emph{density} color representation.
 }
 \examples{
 require(graphics)

@@ -77,8 +77,8 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
   This function currently uses the \code{layout} function and so is
   restricted to a full page display.  As an alternative consider the
   \code{\link[lattice]{levelplot}} and
-  \code{\link[lattice]{contourplot}} functions from the \pkg{lattice}
-  package which work in multipanel displays.
+  \code{\link[lattice:levelplot]{contourplot}} functions from the
+  \pkg{lattice} package which work in multipanel displays.
 
   The output produced by \code{filled.contour} is actually a combination
   of two plots; one is the filled contour and one is the legend.  Two
@@ -89,8 +89,8 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
   the \code{plot.axes} argument.  An example is given below.
 }
 \seealso{\code{\link{contour}}, \code{\link{image}},
-  \code{\link{palette}}; \code{\link[lattice]{contourplot}} from package
-  \pkg{lattice}.}
+  \code{\link{palette}}; \code{\link[lattice:levelplot]{contourplot}}
+  from package \pkg{lattice}.}
 \examples{
 require(grDevices) # for colours
 filled.contour(volcano, color = terrain.colors, asp = 1)# simple

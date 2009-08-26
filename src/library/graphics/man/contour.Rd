@@ -88,7 +88,7 @@ contour(x, \dots)
   i.e. a 90 degree clockwise rotation of the conventional textual
   layout.
 
-  Alternatively, use \code{\link[lattice]{contourplot}} from the
+  Alternatively, use \code{\link[lattice:levelplot]{contourplot}} from the
   \pkg{lattice} package where the \code{\link{formula}} notation allows
   to use vectors \code{x,y,z} of the same length.
 
@@ -106,11 +106,12 @@ contour(x, \dots)
   \code{\link{options}("max.contour.segments")} for the maximal
   complexity of a single contour line.
 
-  \code{\link[grDevices]{contourLines}},
-  \code{\link{filled.contour}} for color-filled contours,
-  \code{\link[lattice]{contourplot}} (and \code{\link[lattice]{levelplot}})
-  from package \pkg{lattice}.  Further, \code{\link{image}} and the
-  graphics demo which can be invoked as \code{demo(graphics)}.
+  \code{\link[grDevices]{contourLines}}, \code{\link{filled.contour}}
+  for color-filled contours,
+  \code{\link[lattice:levelplot]{contourplot}} (and
+  \code{\link[lattice]{levelplot}}) from package \pkg{lattice}.
+  Further, \code{\link{image}} and the graphics demo which can be
+  invoked as \code{demo(graphics)}.
 }
 \examples{
 require(grDevices) # for colours

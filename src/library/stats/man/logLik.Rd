@@ -67,7 +67,7 @@ logLik(object, \dots)
   documentation.
 }
 \seealso{
-  \code{\link[nlme]{logLik.gls}}, \code{\link[nlme]{logLik.lme}}, in
+  \code{\link[nlme:logLik.lme]{logLik.gls}}, \code{\link[nlme]{logLik.lme}}, in
   package \pkg{nlme}, etc.
 }
 \references{
