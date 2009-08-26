@@ -149,8 +149,9 @@ wilcox.test(x, \dots)
   in \pkg{exactRankTests} covers much of the same ground, but also
   produces exact p-values in the presence of ties.
 
-  \code{\link[coin]{wilcox_test}} in package \pkg{coin} for exact and
-  approximate \emph{conditional} p-values for the Wilcoxon tests.
+  \code{\link[coin:LocationTests]{wilcox_test}} in package \pkg{coin}
+  for exact and approximate \emph{conditional} p-values for the Wilcoxon
+  tests.
   
   \code{\link{kruskal.test}} for testing homogeneity in location
   parameters in the case of two or more samples;
