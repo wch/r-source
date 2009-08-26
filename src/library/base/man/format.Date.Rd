@@ -55,8 +55,7 @@ as.Date(x, \dots)
   \code{"\link{POSIXct}"}.  (The last are converted to days by
   ignoring the time after midnight in the
   representation of the time in UTC.)  Also objects of class
-  \code{"date"} (from package \pkg{\link[date:as.date]{date}} or
-  \pkg{\link[survival:as.date]{survival}}) and
+  \code{"date"} (from package \pkg{\link[date:as.date]{date}}) and
   \code{"dates"} (from package \pkg{\link[chron]{chron}}).  Character
   strings are processed as far as necessary for the format specified: any
   trailing characters are ignored.

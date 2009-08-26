@@ -46,7 +46,7 @@ shapiro.test(x)
   \eqn{n \ge 12}.
 }
 \seealso{
-  \code{\link[base:qqnorm]{qqnorm}} for producing a normal quantile-quantile plot.
+  \code{\link{qqnorm}} for producing a normal quantile-quantile plot.
 }
 \examples{
 % FIXME: could use something more interesting here
