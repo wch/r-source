@@ -168,14 +168,14 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
 Name: "chtml"; Description: "Compiled HTML Help Files"; Types: user full custom
 Name: "html"; Description: "HTML Files"; Types: user full custom; Flags: checkablealone
-Name: "html/help"; Description: "HTML versions of Help Files"; Types: user full custom; Flags: dontinheritcheck
+Name: "html/help"; Description: "Prebuilt HTML Help Files"; Types: full custom; Flags: dontinheritcheck
 Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom; Flags: checkablealone
-Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: user full custom
+Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
 Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
 Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom; Flags: dontinheritcheck
 Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom; Flags: dontinheritcheck
 Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom; Flags: dontinheritcheck
-Name: "libdocs"; Description: "Docs for Package grid"; Types: user full custom
+Name: "libdocs"; Description: "Docs for Package grid"; Types: full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "tests"; Description: "Test files"; Types: full custom
 
@@ -398,12 +398,13 @@ sub listFiles {
 	if ($_ eq "bin\\Rchtml.dll" 
 	    || m/^library\\[^\\]*\\chtml/) {
 	    $component = "chtml";
-# 	} elsif ($_ eq "doc\\html\\logo.jpg") {
-# 	    $component = "html devel";
 	} elsif ($_ eq "doc\\manual\\R-FAQ.html"
 		 || $_ eq "doc\\html\\rw-FAQ.html"
 		 || $_ eq "share\\texmf\\Sweave.sty") {
 	    $component = "main";
+	} elsif (m/^library\\[^\\]*\\html\\00Index.html/) {
+	    ## HTML indices are needed by dynamic HTML help
+	    $component = "html";
 	} elsif (m/^library\\[^\\]*\\html/
 		 || m/^library\\[^\\]*\\CONTENTS/
 		 || $_ eq "library\\R.css") {
@@ -433,31 +434,18 @@ sub listFiles {
 	    $component = "tcl/chm";
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
-# 	} elsif (exists($develfiles{$_})
-# 		 || m/^doc\\KEYWORDS/
-# 		 || m/^src\\gnuwin32/
-# 		 || m/^include/
-# 		 || m/^src\\library\\windlgs/
-# 		 || m/^share\\make/
-# 		 || m/^share\\perl/
-# 		 || m/^share\\R/
-# 		 || m/^share\\texmf/
-# 		 || m/^lib\\/) {
-# 	    $component = "devel";
 	} elsif (m/^library\\grid\\doc/) {
 	    $component = "libdocs";
-	} elsif ($_ eq "modules\\iconv.dll") {
-	    $component = "main";
 	} elsif (m/^share\\locale/ 
-		 || m/^library\\[^\\]*\\po/) { # needs iconv
+		 || m/^library\\[^\\]*\\po/) {
 	    $component = "trans";
 	} else {
 	    $component = "main";
 	}
 
 	$lines="Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; Flags: ignoreversion; Components: $component";
-	$lines="$lines; AfterInstall: EditOptions()" if $_ eq "etc\\Rprofile.site"
-	                                             || $_ eq "etc\\Rconsole";
+	$lines="$lines; AfterInstall: EditOptions()" 
+	    if $_ eq "etc\\Rprofile.site" || $_ eq "etc\\Rconsole";
 	$lines="$lines\n";
 
 	print insfile $lines;

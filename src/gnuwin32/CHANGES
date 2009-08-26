@@ -43,6 +43,10 @@ INSTALLATION
 	installed (they were now only 0.7Mb), and there are no longer
 	categories 'latex' and 'Rd'.
 
+	The default is now not to install prebuilt HTML help pages
+	(which are not needed if the dynamic help, the default, is
+	used).   [Not yet for the .msi installer.]
+
 
 
 
@@ -2122,3 +2126,7 @@ BUG FIXES
 	*	distribution.					*
 	*							*
 	*********************************************************
+
+%%% Local Variables:
+%%% mode: text
+%%% End:

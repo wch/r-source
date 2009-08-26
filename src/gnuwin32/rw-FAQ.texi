@@ -137,8 +137,8 @@ release.
 @node How do I install R for Windows?, How do I check an installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-Current binary versions of R will only run on Windows 2000 or later.  (R
-2.6.2 was the last version for Windows 95. 98, ME and NT4.)  There is no
+Current binary versions of R run on Windows 2000 or later.@footnote{R
+2.6.2 was the last version for Windows 95. 98, ME and NT4.}  There is no
 specific binary@footnote{See @ref{How can I compile R from source?} for
 the possibility of building one from the sources.} version for x64
 Windows, but the standard 32-bit version works well enough.  We only
@@ -146,21 +146,23 @@ test on versions of Windows currently supported by Microsoft, mainly on
 32-bit XP SP3, and 64-bit Vista and Windows Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
-except perhaps for some network-mounted systems).  A full installation
-takes up about 80Mb of disk space and a minimal one about 32Mb.
+except perhaps for some network-mounted systems).  A typical install
+takes 50-60Mb of disk space, a full installation about 80Mb and a
+minimal one about 32Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
 with spaces in will probably work, but is little-tested.)  Users of
-Vista installing for a single user using an account with administrator
-rights@footnote{Non-administrator accounts will automatically be offered
-a default installation directory in the user area.} should consider
-installing into a non-system area (such as @file{C:\R}).  If you are
-installing to a network drive, you should consider changing the default
-form of help during the install @strong{not} to be Compiled HTML help:
-@xref{Help is not shown for some of the packages}.  Installing to a
-network share (a filepath starting with @code{\\machine\...}) is not
-supported: such paths will need to mapped to a network drive.
+Vista/Windows 7 installing for a single user using an account with
+administrator rights@footnote{Non-administrator accounts will
+automatically be offered a default installation directory in the user
+area.} should consider installing into a non-system area (such as
+@file{C:\R}).  If you are installing to a network drive, you should
+consider changing the default form of help during the install
+@strong{not} to be Compiled HTML help: @xref{Help is not shown for some
+of the packages}.  Installing to a network share (a filepath starting
+with @code{\\machine\...}) is not supported: such paths will need to
+mapped to a network drive.
 
 To install use @samp{@RWVER@-win32.exe}.  Just double-click on the icon
 and follow the instructions.  If you have an account with Administrator
@@ -279,12 +281,12 @@ without creating a shortcut in a writable folder.
 
 Normally you can do this from the R group on the Start Menu or from the
 @samp{Add/Remove Programs}@footnote{@samp{Programs and Features} under
-Vista} in the Control Panel.  If it does not appear there or if you want
-to remove an old version, run @file{unins000.exe} in the top-level
-installation directory.  (There should be a separate uninstall item in
-the R group for each installed version of R.  On recent versions of
-Windows you may well be asked to confirm that you wish to run a program
-from an `unidentified publisher'.)
+Vista and later} in the Control Panel.  If it does not appear there or
+if you want to remove an old version, run @file{unins000.exe} in the
+top-level installation directory.  (There should be a separate uninstall
+item in the R group for each installed version of R.  On recent versions
+of Windows you may well be asked to confirm that you wish to run a
+program from an `unidentified publisher'.)
 
 Uninstalling R only removes files from the initial installation, not
 (for example) packages you have installed or updated.
@@ -645,6 +647,9 @@ It does.  A few issues have been reported that related to the way
 accounts and file permissions work.  (These are not specifically R
 issues, but changes in user experiences.)
 
+The comments here apply also to Windows Server 2008 and the upcoming
+Windows 7.
+
 Earlier versions of Windows had user and Administrator accounts, and
 user accounts could be give administrative privileges (by being added to
 the local Administrators group) and so write permission over system
@@ -733,7 +738,7 @@ Another issue with Vista is that the standard POSIX ways that R uses
 (e.g.@: in @code{file.info} and @code{file.access}) to look at file
 permissions no longer work reliably.  @code{file.access} was re-written
 for R 2.5.1 to work with Windows NT-based security and the new version
-seems much more reliable with Vista.
+seems much more reliable with Vista (but still not 100% correct).
 
 On suitably recent hardware Vista can prevent the execution of code
 from data areas via `Data Execution Prevention' (from a tab in
@@ -1050,10 +1055,11 @@ library for you and install the packages there.  This will also happen
 if @code{update.packages} offers to update packages for you in a library
 where you do not have write permission.
 
-There can be additional security issues under Windows Vista: @xref{Does
-R run under Windows Vista?}.  In particular, the detection that a
-standard user has suitable permissions appears to be unreliable under
-Vista, so we recommend that you do create a personal directory yourself.
+There can be additional security issues under Windows Vista and later:
+@xref{Does R run under Windows Vista?}.  In particular, the detection
+that a standard user has suitable permissions appears to be unreliable
+under Vista, so we recommend that you do create a personal directory
+yourself.
 
 
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the @RWVER@\library directory, Packages
@@ -1153,8 +1159,8 @@ install of Tcl/Tk 8.4 or downloaded via the @code{Teacup} facility.
 
 They may well not work between packages installed in different
 libraries.  This is solved under Unix using symbolic links which Windows
-does not implement (except on NTFS file systems under Vista/Server 2008
--- where they may need Administrator privileges).
+does not implement (except on NTFS file systems under Vista and later --
+where they may need Administrator privileges).
 
 With HTML, @code{help.start()} fixes up links to the most of the
 standard packages if it has write permission in the main library tree.

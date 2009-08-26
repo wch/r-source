@@ -352,12 +352,11 @@ sub listFiles {
 	if ($_ eq "bin\\Rchtml.dll" 
 	    || m/^library\\[^\\]*\\chtml/) {
 	    $component = "chtml";
-# 	} elsif ($_ eq "doc\\html\\logo.jpg") {
-# 	    $component = "html devel";
 	} elsif ($_ eq "doc\\manual\\R-FAQ.html"
 		 || $_ eq "doc\\html\\rw-FAQ.html"
 		 || $_ eq "share\\texmf\\Sweave.sty") {
 	    $component = "main";
+## FIXME: split out prebuilt HTML help pages
 	} elsif (m/^doc\\html/
 		 || m/^doc\\manual\\[^\\]*\.html/
 		 || m/^library\\[^\\]*\\html/
@@ -374,23 +373,10 @@ sub listFiles {
 	    	$component = "tests";
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
-# 	} elsif (exists($develfiles{$_})
-# 		 || m/^doc\\KEYWORDS/
-# 		 || m/^src\\gnuwin32/
-# 		 || m/^include/
-# 		 || m/^src\\library\\windlgs/
-# 		 || m/^share\\make/
-# 		 || m/^share\\perl/
-# 		 || m/^share\\R/
-# 		 || m/^share\\texmf/
-# 		 || m/^lib\\/) {
-# 	    $component = "devel";
 	} elsif (m/^library\\grid\\doc/) {
 	    $component = "libdocs";
-	} elsif ($_ eq "modules\\iconv.dll") {
-	    $component = "main";
 	} elsif (m/^share\\locale/ 
-		 || m/^library\\[^\\]*\\po/) { # needs iconv
+		 || m/^library\\[^\\]*\\po/) {
 	    $component = "trans";
 	} else {
 	    $component = "main";
