@@ -18,7 +18,7 @@
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         Links = NULL, CHM = FALSE,
         stages = "render", outputEncoding = "UTF-8", 
-        dynamic = FALSE, ...)
+        dynamic = FALSE, no_links = FALSE, ...)
 
 Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
        stages = "render", outputEncoding = "", ...)
@@ -37,7 +37,9 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   \item{stages}{ at which stage (\code{"build"}, \code{"install"}, or
     \code{"render"} should \\Sexpr macros be executed? See the notes below.}
   \item{outputEncoding}{ see the \sQuote{Encodings} section below.}
-  \item{dynamic}{ set links for render-time resolution by dynamic help system.}
+  \item{dynamic}{logical: set links for render-time resolution by
+      dynamic help system.}
+  \item{no_links}{logical: suppress hyperlinks to other help topics.}
   \item{Links}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{CHM}{logical: prepare HTML suitable for Compiled HTML?}

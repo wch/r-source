@@ -90,7 +90,8 @@ mime_canonical_encoding <- function(encoding)
 Rd2HTML <-
     function(Rd, out = "", package = "", defines = .Platform$OS.type,
              Links = NULL, CHM = FALSE,
-             stages = "render", outputEncoding = "UTF-8", dynamic = FALSE, ...)
+             stages = "render", outputEncoding = "UTF-8",
+             dynamic = FALSE, no_links = FALSE, ...)
 {
     ## writeLines by default re-encodes strings to the local encoding.
     ## Avoid that by useBytes=TRUE
@@ -228,11 +229,11 @@ Rd2HTML <-
 	parts <- get_link(block, tag, Rdfile)
 
         writeHref <- function() {
-            of0('<a href="', htmlfile, '">')
+            if(!no_links) of0('<a href="', htmlfile, '">')
             writeContent(block, tag)
-            of1('</a>')
+            if(!no_links) of1('</a>')
         }
-	
+
     	if (is.null(parts$targetfile)) {
             topic <- parts$dest
     	    if (dynamic) htmlfile <- paste("../../", package, "/help/", topic, sep="")
@@ -245,8 +246,8 @@ Rd2HTML <-
             }
             if (is.na(htmlfile)) {
                 ## FIXME for CHM?
-                ## 'should be <a href="../../../doc/html/search/SearchObject.html?$argkey">$arg<\/a>/s; where $argkey is the topic and $arg the HTMLified version.'
-                warnRd(block, Rdfile, "missing link ", sQuote(topic))
+                if(!no_links)
+                    warnRd(block, Rdfile, "missing link ", sQuote(topic))
                 htmlfile <- paste("../../../doc/html/search/SearchObject.html?",
                                    parts$dest, sep= "")
                 writeHref()
@@ -615,8 +616,9 @@ Rd2HTML <-
         of0('<param name="keyword" value=" ', title, '">\n')
         of1('</object>\n\n\n')
     } else
-        of0('<link rel="stylesheet" type="text/css" href="../../R.css">\n',
-            '</head><body>\n\n',
+        of0('<link rel="stylesheet" type="text/css"',
+            if(no_links) 'href="R.css">' else 'href="../../R.css">',
+            '\n</head><body>\n\n',
             '<table width="100%" summary="page for ', name, ' {', package,
             '}"><tr><td>',name,' {', package,
             '}</td><td align="right">R Documentation</td></tr></table>\n\n')
@@ -644,8 +646,9 @@ Rd2HTML <-
               packageDescription(package, fields="Version"), ' ', sep='')
     else ""
     of0('\n',
-        '<hr><div align="center">[', version, '<a href="00Index.html">Index</a>]</div>\n',
-        '</body></html>\n')
+        '<hr><div align="center">[', version,
+        if(!no_links) '<a href="00Index.html">Index</a>',
+        ']</div>\n', '</body></html>\n')
     invisible(out)
 }
 

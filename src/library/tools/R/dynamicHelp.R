@@ -208,15 +208,24 @@ httpdPort <- 0L
 
 startDynamicHelp <- function(start=TRUE)
 {
+    env <- environment(startDynamicHelp)
+    if(nzchar(Sys.getenv("R_DISABLE_HTTPD"))) {
+        unlockBinding("httpdPort", env)
+        httpdPort <<- -1L
+        lockBinding("httpdPort", env)
+        warning("httpd server disabled by R_DISABLE_HTTPD",
+                immediate. = TRUE)
+        return(httpdPort)
+    }
     if (start && httpdPort) {
         if(httpdPort > 0) stop("server already running")
         else stop("server could not be started earlier")
     }
     if(!start && httpdPort <= 0L)
-        stop("no server running to stop")
-    env <- environment(startDynamicHelp)
+        stop("no running server to stop")
     unlockBinding("httpdPort", env)
     if (start) {
+        message("starting httpd help server ...", appendLF = FALSE)
         OK <- FALSE
 	for(i in 1:10) {
             tmp <- as.integer(runif(1, 10000, 32000))
@@ -232,10 +241,11 @@ startDynamicHelp <- function(start=TRUE)
             ## so status was -2, which means port in use
 	}
         if (OK) {
+            message(" done")
             ## FIXME: actually test the server
         } else {
             warning("failed to start the httpd server",
-                    call. = FALSE, immediate. = TRUE)
+                    immediate. = TRUE)
             httpdPort <<- -1L
         }
     } else {

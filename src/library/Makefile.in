@@ -51,7 +51,7 @@ docs:
 	@$(MAKE) Rdobjects
 	@$(MAKE) metadata
 	@$(MAKE) help-indices
-	@$(MAKE) Rdfiles
+	@@BUILD_HTML_TRUE@$(MAKE) Rdfiles
 	@touch stamp-docs
 
 # fix the order to make best use of parallel builds
@@ -59,7 +59,7 @@ RD-TS = base.Rdts stats.Rdts utils.Rdts methods.Rdts graphics.Rdts grDevices.Rdt
 # RD-TS = $(R_PKGS_BASE:=.Rdts)
 
 .inn.Rdts:
-	@$(ECHO) "tools:::.install_package_Rd_objects('$(srcdir)/$*',\
+	@$(ECHO) "options(warn=1);tools:::.install_package_Rd_objects('$(srcdir)/$*',\
 	   '$(top_builddir)/library/$*')" | \
 	    R_DEFAULT_PACKAGES=NULL $(R_EXE) || exit 1
 	@$(ECHO) "  $*"

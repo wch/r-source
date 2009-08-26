@@ -30,15 +30,23 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
     o	HTML help is now generated dynamically using a http server
 	running in the R process and listening on the loopback
-	connection.
+	interface.
 
-	- the implementation is currently incomplete, for example
-          browsing vignette directories is only minimally implemented
-          and not much error reporting is in place.
+	- The implementation is currently incomplete.
 
-	- those who need to worry about security implications of
-	  such a server should not use HTML help until more security
-	  measures are in place -- the server is started at first use.
+	- Those who need to worry about security implications of
+	  such a server can disable it by setting the environment
+	  variable R_DISABLE_HTTPD to a non-empty value.
+
+	- Those using the server do not need to build or install
+          static HTML pages and can use the configure option
+	  --disable-prebuilt-html.  This sets the default for
+	  installing packages.  If the server is disabled and there
+          are no static HTML pages, a page wthout links is generated
+          dynamically.
+
+	- The documentation has not caught up with this set of
+          changes: details may change before release.
 
 
 NEW FEATURES
@@ -47,9 +55,9 @@ NEW FEATURES
 	'fillOddEven' (default FALSE), which controls the mode used for
 	polygon fills of self-intersecting shapes.
 
-    o	New debugonce() function; further, getOption("deparse.max.lines")
-	is now observed as well when debugging, from a code suggestion by
-	John Brzustowski.  (PR#13647/8)
+    o   New debugonce() function; further,
+	getOption("deparse.max.lines") is now observed when debugging,
+	from a code suggestion by John Brzustowski.  (PR#13647/8)
 
     o	plot() methods for "stepfun" and hence "ecdf" no longer plot
 	points by default for n >= 1000.

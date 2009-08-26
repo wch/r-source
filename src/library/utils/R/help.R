@@ -176,8 +176,26 @@ function(x, ...)
                                 sep=""))
 	    } else if (file.exists(file))
                 .show_help_on_topic_as_HTML(file, topic)
-            else
-                stop(gettextf("No HTML help for '%s' is available:\ncorresponding file is missing", topic), domain = NA)
+            else {
+                ## try to generate a link-less page
+                path <- dirname(file)
+                dirpath <- dirname(path)
+                pkgname <- basename(dirpath)
+                RdDB <- file.path(dirpath, "help", pkgname)
+                if(file.exists(paste(RdDB, "rdx", sep="."))) {
+                    ## FIXME: install R.css?
+                    tfile <- paste(tempfile("Rhelp"), "html", sep=".")
+                    tp <- gsub("\\.html$", "", basename(file))
+                    tools::Rd2HTML(tools:::fetchRdDB(RdDB, tp),
+                                   out = tfile, package = pkgname,
+                                   no_links = TRUE)
+                    file.copy(file.path(R.home("doc"), "html", "R.css") ,
+                              tempdir())
+                    .show_help_on_topic_as_HTML(tfile, topic, FALSE)
+                } else
+                    stop(gettextf("No HTML help for '%s' is available", topic),
+                         domain = NA)
+            }
         }
         else if(type == "chm") {
             ## unneeded but harmless under Unix

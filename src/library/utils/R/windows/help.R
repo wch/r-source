@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 .show_help_on_topic_as_HTML <-
-function(file, topic)
+function(file, topic, ...)
 {
     ## Uwe Ligges reported this as needed on his system (PR#7269)
     browseURL(chartr("/", "\\", file))

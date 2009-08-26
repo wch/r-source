@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 .show_help_on_topic_as_HTML <-
-function(file, topic)
+function(file, topic, warn = TRUE)
 {
     ofile <- file
     ## We need to use the version in per-session dir if we can.
@@ -29,7 +29,7 @@ function(file, topic)
     if(any(ex <- file.exists(lnkfile))) {
         file <- lnkfile[ex][1L]          # could be more than one
     }
-    if(file == ofile) {
+    if(warn && file == ofile) {
         msg <- gettext("Using non-linked HTML file: hyperlinks may be incorrect")
         warning(paste(strwrap(msg), collapse = "\n"))
     }

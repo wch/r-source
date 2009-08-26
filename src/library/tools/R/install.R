@@ -88,6 +88,7 @@
             "  -l, --library=LIB	install packages to library tree LIB",
             "      --no-configure    do not use the package's configure script",
             "      --no-docs		do not install HTML, LaTeX or examples help",
+            "      --html		build HTML help",
             "      --no-html		do not build HTML help",
             "      --latex      	install LaTeX help",
             "      --example		install R code for help examples",
@@ -109,6 +110,10 @@
             "\nand on Windows only",
             "      --auto-zip	select whether to zip data automatically",
             "      --no-chm		do not build CHM help",
+            "",
+            "Which of --html or --no-html is the default depends on the build of R:",
+            paste("for this one it is ",
+                  ifelse(static_html, "--html", "--no-html"), ".", sep = ""),
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -909,7 +914,8 @@
     clean <- FALSE
     preclean <- FALSE
     debug <- FALSE
-    build_html <- TRUE
+    static_html <- nzchar(system.file("html", "mean.html", package="base"))
+    build_html <- static_html
     build_latex <- FALSE
     build_example <- FALSE
     build_chm <- WINDOWS
@@ -961,6 +967,8 @@
             build_html <- build_latex <- build_example <- build_chm <- FALSE
         } else if (a == "--no-html") {
             build_html <- FALSE
+        } else if (a == "--html") {
+            build_html <- TRUE
         } else if (a == "--latex") {
             build_latex <- TRUE
         } else if (a == "--example") {
