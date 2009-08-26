@@ -259,6 +259,9 @@ NEW FEATURES
 
     o	R CMD Rd2pdf is available as a shortcut for R CMD Rd2dvi --pdf.
 
+    o	R CMD check now check Rd crossreferences when a package is
+	specified, if the package is available.
+
 
 Rd HELP FILE CHANGES
 

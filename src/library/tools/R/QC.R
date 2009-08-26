@@ -3489,71 +3489,54 @@ function(package, dir, lib.loc = NULL)
     db <- cbind(do.call("rbind", db), rep(names(db), sapply(db, NROW)))
     if(nrow(db) == 0L) return(structure(NULL, class = "check_Rd_xrefs"))
 
+    db <- cbind(db, bad = FALSE, report = db[, 1L])
+    have_anchor <- nzchar(anchor <- db[, 2L])
+    db[have_anchor, "report"] <-
+        paste("[", db[have_anchor, 2L], "]{", db[have_anchor, 1L], "}", sep = "")
+
     ## fixup \link[=dest] form
     anchor <- db[, 2L]
     have_equals <- grepl("^=", anchor)
     if(any(have_equals))
         db[have_equals, 1:2] <- cbind(sub("^=", "", anchor[have_equals]), "")
 
-    db <- cbind(db, bad = FALSE)
-    have_anchor <- nzchar(anchor <- db[, 2L])
     ## Check the targets from the non-anchored xrefs.
     db[!have_anchor, "bad"] <- !( db[!have_anchor, 1L] %in% unlist(aliases))
 
     ## and then check the anchored ones if we can.
-    ## NB, ones of the form base:Rhome are to a *file*
     have_colon <- grepl(":", anchor, fixed = TRUE)
-    pkgs <- sapply(strsplit(anchor[have_colon], ":", fixed = TRUE), `[`, 1L)
     unknown <- character()
-    for (pkg in pkgs) {
+    thispkg <- anchor
+    thisfile <- db[, 1L]
+    thispkg[have_colon] <- sub("([^:]*):(.*)", "\\1", anchor[have_colon])
+    thisfile[have_colon] <- sub("([^:]*):(.*)", "\\2", anchor[have_colon])
+    for (pkg in unique(thispkg[have_anchor])) {
         ## we can't do this on the current uninstalled package!
         if (missing(package) && pkg == basename(dir)) next
-        part1 <- sub("([^:]*):(.*)", "\\1", anchor[have_colon])
-        part2 <- sub("([^:]*):(.*)", "\\2", anchor[have_colon])
-        this <- part1 %in% pkg
-        files <- part2[this]
+        this <- have_anchor & (thispkg %in% pkg)
         top <- system.file(package = pkg, lib.loc = lib.loc)
         if(nzchar(top)) {
             RdDB <- file.path(top, "help", "paths.rds")
-            if(file.exists(RdDB)) {
-                nm <- sub("\\.[Rr]d", "", basename(.readRDS(RdDB)))
-            } else {
-                ## old-style
-                nm <- list.files(file.path(top, "help"))
-            }
-            good <- files %in% nm
+            nm <- if(file.exists(RdDB))
+                sub("\\.[Rr]d", "", basename(.readRDS(RdDB)))
+            else
+                list.files(file.path(top, "help"))
+            good <- thisfile[this] %in% nm
         } else {
             unknown <- c(unknown, pkg)
             next
-        }
-        db[anchor %in% paste(pkg, files, sep=":") , "bad"] <- !good
-    }
-    topic <- db[ , 1L]
-    for (pkg in unique(anchor[!have_colon])) {
-        if (pkg == "") next
-        this <- anchor %in% pkg
-        good <- if(pkg %in% names(aliases))
-            topic[this] %in% aliases[[pkg]]
-        else {
-            top <- system.file(package = pkg, lib.loc = lib.loc)
-            if (nzchar(top)) {
-                topic[this] %in% Rd_aliases(pkg, lib.loc = lib.loc)
-            } else {
-                unknown <- c(unknown, pkg)
-                TRUE
-            }
         }
         db[this, "bad"] <- !good
     }
 
     unknown <- unique(unknown)
     if (length(unknown))
-        message(gettextf("did not find package(s) %s to check xrefs",
+        message(gettextf("Did not find package(s) %s to check Rd xrefs",
                          paste(sQuote(unknown), collapse = ", ")),
-                         domain = NA, call. = FALSE)
+                         domain = NA)
     ## The bad ones:
     bad <- db[, "bad"] == "TRUE"
-    structure(split(db[bad, 1L], db[bad, 3L]), class = "check_Rd_xrefs")
+    structure(split(db[bad, "report"], db[bad, 3L]), class = "check_Rd_xrefs")
 }
 
 print.check_Rd_xrefs <-
@@ -3564,7 +3547,7 @@ function(x, ...)
             writeLines(gettextf("Missing link(s) in documentation object '%s':",
                                 names(x)[i]))
             ## NB, link might be empty, and was in mvbutils
-            .pretty_print(sQuote(x[[i]]))
+            .pretty_print(sQuote(unique(x[[i]])))
             writeLines("")
         }
         ## <FIXME>
