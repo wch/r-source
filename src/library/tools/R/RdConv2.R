@@ -307,7 +307,7 @@ prepare_Rd <-
              options = RweaveRdDefaults,
              stage2 = TRUE, stage3 = TRUE, ..., msglevel = 0)
 {
-    Rdfile <- NULL
+    Rdfile <- "not known"
     if (is.character(Rd)) {
         Rdfile <- Rd
         ## do it this way to get info in internal warnings
@@ -317,10 +317,6 @@ prepare_Rd <-
         Rdfile <- summary(Rd)
         Rd <- parse_Rd(Rd, encoding = encoding, ...)
     } else Rdfile <- attr(Rd, "Rdfile")
-    if (is.null(Rdfile) && !is.null(srcref <- attr(Rd, "srcref")))
-    	Rdfile <- attr(srcref, "srcfile")$filename
-    else 
-    	Rdfile <- "not known"
     pratt <- attr(Rd, "prepared")
     if (is.null(pratt)) pratt <- 0L
     if ("build" %in% stages)
@@ -408,7 +404,7 @@ prepare2_Rd <- function(Rd, Rdfile)
     if (any(bad)) {
         for(s in which(bad))
             warnRd(Rd[[s]], Rdfile, "Section ",
-                   sections[s], " is unrecognized and will be dropped")
+                   sections[Rd[[s]]], " is unrecognized and will be dropped")
         drop <- drop | bad
     }
     Rd <- Rd[!drop]
