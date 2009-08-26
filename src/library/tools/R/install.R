@@ -288,7 +288,7 @@
             else
                 do_install_binary(pkg_name, instdir, desc)
 
-            ## Add read permission to all, write permission to ownwe
+            ## Add read permission to all, write permission to ownwer
             .Internal(dirchmod(instdir))
             ##    system(paste("find", shQuote(instdir),  "-exec chmod a+r \\{\\} \\;"))
             if (is_bundle)
@@ -2033,7 +2033,7 @@ if (FALSE) {
     cat("  converting help for package ", sQuote(pkg), "\n", sep="")
 
     ## FIXME: add this lib to lib.loc?
-    if ("html" %in% types) {
+    if (any(c("html", "chm") %in% types)) {
         ## may be slow, so add a message
         if (!silent) message("    finding HTML links ...", appendLF = FALSE)
         Links <- findHTMLlinks(outDir)
