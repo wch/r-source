@@ -228,6 +228,7 @@ startDynamicHelp <- function(start=TRUE)
     unlockBinding("httpdPort", env)
     if (start) {
         message("starting httpd help server ...", appendLF = FALSE)
+        utils::flush.console()
         OK <- FALSE
 	for(i in 1:10) {
             tmp <- as.integer(runif(1, 10000, 32000))
@@ -244,6 +245,7 @@ startDynamicHelp <- function(start=TRUE)
 	}
         if (OK) {
             message(" done")
+            utils::flush.console()
             ## FIXME: actually test the server
         } else {
             warning("failed to start the httpd server",
