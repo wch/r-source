@@ -121,6 +121,19 @@ evalWithOpt <- function(expr, options, env)
     return(res)
 }
 
+getDynamicFlags <- function(block) {
+    flag <- attr(block, "dynamicFlag")
+    if (is.null(flag)) c("#ifdef"=FALSE, "\\Sexpr"=FALSE)
+    else c("#ifdef" = flag %% 2 > 0, "\\Sexpr" = flag %/% 2 > 0)
+}
+
+setDynamicFlags <- function(block, flags) {  # flags in format coming from getDynamicFlags
+    flag <- sum(flags * c(1,2))
+    if (flag == 0) flag <- NULL
+    attr(block, "dynamicFlag") <- flag
+    block
+}
+
 processRdChunk <- function(code, stage, options, env, Rdfile)
 {
     if (is.null(opts <- attr(code, "Rd_option"))) opts <- ""
@@ -204,7 +217,10 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 	    res <- err   # The last value of the chunk
 	    tmpcon <- file()
 	    writeLines(res, tmpcon, useBytes = TRUE)
-	    res <- tagged(parse_Rd(tmpcon, fragment=TRUE), "LIST")
+	    res <- parse_Rd(tmpcon, fragment=TRUE)
+	    flag <- getDynamicFlags(res)
+	    res <- tagged(res, "LIST")
+	    res <- setDynamicFlags(res, flag)
 	    close(tmpcon)
 	    res <- prepare_Rd(res, defines = .Platform$OS.type, options=options)
 	} else if (options$results == "text")
@@ -221,14 +237,18 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 processRdIfdefs <- function(blocks, defines)
 {
     recurse <- function(block) {
+    	if (!(getDynamicFlags(block)["#ifdef"])) return(block)
+        
         if (!is.null(tag <- attr(block, "Rd_tag"))) {
 	    if (tag %in% c("#ifdef", "#ifndef")) {
 		target <- block[[1L]][[1L]]
 		# The target will have picked up some whitespace and a newline
 		target <- psub("[[:blank:][:cntrl:]]*", "", target)
-		if ((target %in% defines) == (tag == "#ifdef"))
+		if ((target %in% defines) == (tag == "#ifdef")) {
+		    flag <- getDynamicFlags(block[[2L]])
 		    block <- tagged(block[[2L]], "#expanded")
-		else
+		    block <- setDynamicFlags(block, flag)
+		} else
 		    block <- structure(tagged(paste(tag, target, "not active"),
                                               "COMMENT"),
 		    		       srcref = attr(block, "srcref"))
@@ -236,6 +256,7 @@ processRdIfdefs <- function(blocks, defines)
 	}
 	if (is.list(block)) {
 	    i <- 1L
+	    flags <- getDynamicFlags(NULL)
 	    while (i <= length(block)) {
 	    	newval <- recurse(block[[i]])
 	    	newtag <- attr(newval, "Rd_tag")
@@ -245,10 +266,12 @@ processRdIfdefs <- function(blocks, defines)
 	    	    after <- all[all > i]
 	    	    block <- tagged(c(block[before], newval, block[after]), tag)
 	    	} else {
+	    	    flags <- flags | getDynamicFlags(newval)
 		    block[[i]] <- newval
 		    i <- i+1L
 		}
 	    }
+	    block <- setDynamicFlags(block, flags)
 	}
 	block
     }
@@ -261,6 +284,8 @@ processRdSexprs <-
              env = new.env(parent=globalenv()))
 {
     recurse <- function(block) {
+    	if (!getDynamicFlags(block)["\\Sexpr"]) return(block)
+    	
         if (is.list(block)) {
             if (!is.null(tag <- attr(block, "Rd_tag"))) {
         	if (tag == "\\Sexpr")
@@ -306,6 +331,10 @@ prepare_Rd <-
     meta <- attr(Rd, "meta")
     if (pratt < 3L && stage3)
         Rd <- prepare3_Rd(Rd, Rdfile, msglevel = msglevel)
+    
+    # Restore flags from any sections that are left
+    Rd <- setDynamicFlags(Rd, apply(sapply(Rd, getDynamicFlags), 1, any))
+
     structure(Rd, Rdfile = Rdfile, class = "Rd", meta = meta)
 }
 

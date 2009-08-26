@@ -89,6 +89,11 @@ static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP     makeSrcref(YYLTYPE *, SEXP);
 
+/* Flags used to mark presence of IFDEF or Sexpr in the dynamicFlag attribute */
+
+#define STATIC 0
+#define HAS_IFDEF 1
+#define HAS_SEXPR 2
 
 /* Internal lexer / parser state variables */
 
@@ -121,9 +126,9 @@ static SEXP	xxpushMode(int, int, int);
 static void	xxpopMode(SEXP);
 static SEXP	xxnewlist(SEXP);
 static SEXP	xxlist(SEXP, SEXP);
-static SEXP	xxmarkup(SEXP, SEXP, YYLTYPE *);
-static SEXP	xxmarkup2(SEXP, SEXP, SEXP, int, YYLTYPE *);
-static SEXP	xxOptionmarkup(SEXP, SEXP, SEXP, YYLTYPE *);
+static SEXP	xxmarkup(SEXP, SEXP, int, YYLTYPE *);
+static SEXP	xxmarkup2(SEXP, SEXP, SEXP, int, int, YYLTYPE *);
+static SEXP	xxOptionmarkup(SEXP, SEXP, SEXP, int, YYLTYPE *);
 static SEXP	xxtag(SEXP, int, YYLTYPE *);
 static void	xxsavevalue(SEXP, YYLTYPE *);
 static void	xxWarnNewline();
@@ -181,14 +186,14 @@ RdFile	:	SectionList			{ $$ = $1; }
 SectionList:	Section				{ $$ = xxnewlist($1); }
 	|	SectionList Section		{ $$ = xxlist($1, $2); }
 	
-Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, &@$); }	
-	|	RSECTIONHEADER RLikeArg		{ $$ = xxmarkup($1, $2, &@$); }
-	|	SECTIONHEADER  LatexArg  	{ $$ = xxmarkup($1, $2, &@$); }
-	|	LISTSECTION    Item2Arg		{ $$ = xxmarkup($1, $2, &@$); }
-	|	SECTIONHEADER2 LatexArg LatexArg2 { $$ = xxmarkup2($1, $2, $3, 2, &@$); }
-	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, 2, &@$); UNPROTECT_PTR($4); } 
-	|	SEXPR       goOption RLikeArg2   { $$ = xxmarkup($1, $3, &@$); xxpopMode($2); }
-	|	SEXPR       goOption Option RLikeArg2 { $$ = xxOptionmarkup($1, $3, $4, &@$); xxpopMode($2); }
+Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, STATIC, &@$); }	
+	|	RSECTIONHEADER RLikeArg		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
+	|	SECTIONHEADER  LatexArg  	{ $$ = xxmarkup($1, $2, STATIC, &@$); }
+	|	LISTSECTION    Item2Arg		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
+	|	SECTIONHEADER2 LatexArg LatexArg2 { $$ = xxmarkup2($1, $2, $3, 2, STATIC, &@$); }
+	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, 2, HAS_IFDEF, &@$); UNPROTECT_PTR($4); } 
+	|	SEXPR       goOption RLikeArg2   { $$ = xxmarkup($1, $3, HAS_SEXPR, &@$); xxpopMode($2); }
+	|	SEXPR       goOption Option RLikeArg2 { $$ = xxOptionmarkup($1, $3, $4, STATIC, &@$); xxpopMode($2); }
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
 	|	TEXT				{ $$ = xxtag($1, TEXT, &@$); } /* must be whitespace */
 	|	error Section			{ $$ = $2; }
@@ -201,24 +206,24 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 	|	VERB				{ $$ = xxtag($1, VERB, &@$); }
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
 	|	UNKNOWN				{ $$ = xxtag($1, UNKNOWN, &@$); yyerror(yyunknown); }
-	|	Arg				{ $$ = xxmarkup(R_NilValue, $1, &@$); }
+	|	Arg				{ $$ = xxmarkup(R_NilValue, $1, STATIC, &@$); }
 	|	Markup				{ $$ = $1; }	
 	|	error Item			{ $$ = $2; }
 
-Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, &@$); }
-	|	LATEXMACRO2 LatexArg LatexArg2  { $$ = xxmarkup2($1, $2, $3, 2, &@$); }
-	|	ITEMIZE     Item0Arg		{ $$ = xxmarkup($1, $2, &@$); }
-	|	DESCRIPTION Item2Arg		{ $$ = xxmarkup($1, $2, &@$); }
-	|	OPTMACRO    goOption LatexArg  	{ $$ = xxmarkup($1, $3, &@$); xxpopMode($2); }
-	|	OPTMACRO    goOption Option LatexArg { $$ = xxOptionmarkup($1, $3, $4, &@$); xxpopMode($2); }
-	|	RCODEMACRO  RLikeArg     	{ $$ = xxmarkup($1, $2, &@$); }
-	|	SEXPR       goOption RLikeArg2   { $$ = xxmarkup($1, $3, &@$); xxpopMode($2); }
-	|	SEXPR       goOption Option RLikeArg2 { $$ = xxOptionmarkup($1, $3, $4, &@$); xxpopMode($2); }
-	|	VERBMACRO   VerbatimArg		{ $$ = xxmarkup($1, $2, &@$); }
-	|	VERBMACRO2  VerbatimArg1	{ $$ = xxmarkup2($1, $2, R_NilValue, 1, &@$); }
-	|       VERBMACRO2  VerbatimArg1 VerbatimArg2 { $$ = xxmarkup2($1, $2, $3, 2, &@$); }
-	|	ESCAPE				{ $$ = xxmarkup($1, R_NilValue, &@$); }
-	|	IFDEF IfDefTarget ArgItems ENDIF { $$ = xxmarkup2($1, $2, $3, 2, &@$); UNPROTECT_PTR($4); } 
+Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
+	|	LATEXMACRO2 LatexArg LatexArg2  { $$ = xxmarkup2($1, $2, $3, 2, STATIC, &@$); }
+	|	ITEMIZE     Item0Arg		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
+	|	DESCRIPTION Item2Arg		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
+	|	OPTMACRO    goOption LatexArg  	{ $$ = xxmarkup($1, $3, STATIC, &@$); xxpopMode($2); }
+	|	OPTMACRO    goOption Option LatexArg { $$ = xxOptionmarkup($1, $3, $4, STATIC, &@$); xxpopMode($2); }
+	|	RCODEMACRO  RLikeArg     	{ $$ = xxmarkup($1, $2, STATIC, &@$); }
+	|	SEXPR       goOption RLikeArg2   { $$ = xxmarkup($1, $3, HAS_SEXPR, &@$); xxpopMode($2); }
+	|	SEXPR       goOption Option RLikeArg2 { $$ = xxOptionmarkup($1, $3, $4, HAS_SEXPR, &@$); xxpopMode($2); }
+	|	VERBMACRO   VerbatimArg		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
+	|	VERBMACRO2  VerbatimArg1	{ $$ = xxmarkup2($1, $2, R_NilValue, 1, STATIC, &@$); }
+	|       VERBMACRO2  VerbatimArg1 VerbatimArg2 { $$ = xxmarkup2($1, $2, $3, 2, STATIC, &@$); }
+	|	ESCAPE				{ $$ = xxmarkup($1, R_NilValue, STATIC, &@$); }
+	|	IFDEF IfDefTarget ArgItems ENDIF { $$ = xxmarkup2($1, $2, $3, 2, HAS_IFDEF, &@$); UNPROTECT_PTR($4); } 
 	
 LatexArg:	goLatexLike Arg		 	{ xxpopMode($1); $$ = $2; }
 
@@ -326,6 +331,19 @@ static void xxpopMode(SEXP oldmode)
     UNPROTECT_PTR(oldmode);
 }
 
+static int getDynamicFlag(SEXP item)
+{
+    SEXP flag = getAttrib(item, install("dynamicFlag"));
+    if (isNull(flag)) return 0;
+    else return INTEGER(flag)[0];
+}
+
+void setDynamicFlag(SEXP item, int flag)
+{
+    if (flag)
+    	setAttrib(item, install("dynamicFlag"), ScalarInteger(flag));
+}
+
 static SEXP xxnewlist(SEXP item)
 {
     SEXP ans, tmp;
@@ -334,7 +352,9 @@ static SEXP xxnewlist(SEXP item)
 #endif    
     PROTECT(tmp = NewList());
     if (item) {
+    	int flag = getDynamicFlag(item);
     	PROTECT(ans = GrowList(tmp, item));
+    	setDynamicFlag(ans, flag);
     	UNPROTECT_PTR(tmp);
     	UNPROTECT_PTR(item);
     } else ans = tmp;
@@ -347,19 +367,21 @@ static SEXP xxnewlist(SEXP item)
 static SEXP xxlist(SEXP oldlist, SEXP item)
 {
     SEXP ans;
+    int flag = getDynamicFlag(oldlist) | getDynamicFlag(item);
 #if DEBUGVALS
     Rprintf("xxlist(oldlist=%p, item=%p)", oldlist, item);
 #endif
     PROTECT(ans = GrowList(oldlist, item));
     UNPROTECT_PTR(item);
     UNPROTECT_PTR(oldlist);
+    setDynamicFlag(ans, flag);
 #if DEBUGVALS
     Rprintf(" result: %p is length %d\n", ans, length(ans));
 #endif
     return ans;
 }
 
-static SEXP xxmarkup(SEXP header, SEXP body, YYLTYPE *lloc)
+static SEXP xxmarkup(SEXP header, SEXP body, int flag, YYLTYPE *lloc)
 {
     SEXP ans;
 #if DEBUGVALS
@@ -368,6 +390,7 @@ static SEXP xxmarkup(SEXP header, SEXP body, YYLTYPE *lloc)
     if (isNull(body)) 
         PROTECT(ans = allocVector(VECSXP, 0));
     else {
+        flag |= getDynamicFlag(body);
 	PROTECT(ans = PairToVectorList(CDR(body)));
     	UNPROTECT_PTR(body);	
     }
@@ -377,32 +400,36 @@ static SEXP xxmarkup(SEXP header, SEXP body, YYLTYPE *lloc)
     setAttrib(ans, install("Rd_tag"), header);
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
     UNPROTECT_PTR(header);
+    setDynamicFlag(ans, flag);
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
 #endif
     return ans;
 }
 
-static SEXP xxOptionmarkup(SEXP header, SEXP option, SEXP body, YYLTYPE *lloc)
+static SEXP xxOptionmarkup(SEXP header, SEXP option, SEXP body, int flag, YYLTYPE *lloc)
 {
     SEXP ans;
 #if DEBUGVALS
     Rprintf("xxOptionmarkup(header=%p, option=%p, body=%p)", header, option, body);    
 #endif
+    flag |= getDynamicFlag(body);
     PROTECT(ans = PairToVectorList(CDR(body)));
     UNPROTECT_PTR(body);	
     setAttrib(ans, install("Rd_tag"), header);
     UNPROTECT_PTR(header);
+    flag |= getDynamicFlag(option);
     setAttrib(ans, install("Rd_option"), option);
     UNPROTECT_PTR(option);
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setDynamicFlag(ans, flag);    
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
 #endif
     return ans;
 }
 
-static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, int argcount, YYLTYPE *lloc)
+static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, int argcount, int flag, YYLTYPE *lloc)
 {
     SEXP ans;
 #if DEBUGVALS
@@ -411,17 +438,25 @@ static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, int argcount, YYLTYPE
     
     PROTECT(ans = allocVector(VECSXP, argcount));
     if (!isNull(body1)) {
+    	int flag1 = getDynamicFlag(body1);
     	SET_VECTOR_ELT(ans, 0, PairToVectorList(CDR(body1)));
     	UNPROTECT_PTR(body1);
+    	setDynamicFlag(VECTOR_ELT(ans, 0), flag1);
+    	flag |= flag1;
     }
     if (!isNull(body2)) {
+    	int flag2;
 	if (argcount < 2) error("internal error: inconsistent argument count");
+	flag2 = getDynamicFlag(body2);
     	SET_VECTOR_ELT(ans, 1, PairToVectorList(CDR(body2)));    
     	UNPROTECT_PTR(body2);
+    	setDynamicFlag(VECTOR_ELT(ans, 1), flag2);
+    	flag |= flag2;
     }
     setAttrib(ans, install("Rd_tag"), header);
     UNPROTECT_PTR(header);    
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setDynamicFlag(ans, flag);
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
 #endif
@@ -430,10 +465,12 @@ static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, int argcount, YYLTYPE
 
 static void xxsavevalue(SEXP Rd, YYLTYPE *lloc)
 {
+    int flag = getDynamicFlag(Rd);
     PROTECT(Value = PairToVectorList(CDR(Rd)));
     if (!isNull(Value)) {
     	setAttrib(Value, R_ClassSymbol, mkString("Rd"));
     	setAttrib(Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    	setDynamicFlag(Value, flag);
     }
     UNPROTECT_PTR(Rd);
 }
@@ -1481,4 +1518,5 @@ SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return result;
 }
+
 
