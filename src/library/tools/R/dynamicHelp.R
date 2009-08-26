@@ -94,11 +94,13 @@ httpd <- function(path, query, ...)
     topicRegexp <- "^/library/([^/]*)/help/([^/]*)$"
     docRegexp <- "^/library/([^/]*)/doc(.*)"
     file <- NULL
-    if (grepl(topicRegexp, path)) {
+    if (grepl("R\\.css$", path)) {
+        ## this sometimes gets fetched at the wrong level
+        return(list(file = file.path(R.home("doc"), "html", "R.css")))
+    } else if (grepl(topicRegexp, path)) {
     	pkg <- sub(topicRegexp, "\\1", path)
     	if (pkg == "NULL") pkg <- NULL
     	topic <- sub(topicRegexp, "\\2", path)
-    	file <- NULL
     	if (!is.null(pkg))
     	    file <- help(topic, package=(pkg), htmlhelp=FALSE, chmhelp=FALSE)
     	if (length(file) == 0L)
@@ -197,7 +199,7 @@ httpd <- function(path, query, ...)
         return(list(file=tmp, "content-type"="text/html"))
     } else {
         ## If we got here, we've followed a link that's not to a man page.
-        ## FIXME some of those things are vignette listings/overviews
+        ## FIXME how about those who relocate doc/share?
     	file <- file.path(R.home(), path)
     	return(list(file = file, "content-type" = mime_type(path)))
     }
