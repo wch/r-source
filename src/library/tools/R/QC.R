@@ -3487,6 +3487,7 @@ function(package, dir, lib.loc = NULL)
 
     ## Flatten the xref db into one big matrix.
     db <- cbind(do.call("rbind", db), rep(names(db), sapply(db, NROW)))
+    if(nrow(db) == 0L) return(structure(NULL, class = "check_Rd_xrefs"))
 
     ## fixup \link[=dest] form
     anchor <- db[, 2L]
@@ -3547,7 +3548,7 @@ function(package, dir, lib.loc = NULL)
 
     unknown <- unique(unknown)
     if (length(unknown))
-        warning(gettextf("did not find package(s) %s to check xrefs",
+        message(gettextf("did not find package(s) %s to check xrefs",
                          paste(sQuote(unknown), collapse = ", ")),
                          domain = NA, call. = FALSE)
     ## The bad ones:
