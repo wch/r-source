@@ -53,7 +53,7 @@ range(\dots, na.rm = FALSE)
 \seealso{
   The \code{\link[grDevices]{extendrange}()} utility;
   \code{\link{min}}, \code{\link{max}},
-  \code{\link[base]{Methods}}.
+  \code{\link[base]{methods}}.
 }
 \examples{
 (r.x <- range(stats::rnorm(100)))

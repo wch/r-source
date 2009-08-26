@@ -78,7 +78,7 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
 }
 \seealso{
   \code{\link{aov}}, \code{\link{qtukey}}, \code{\link{model.tables}},
-  \code{\link[multcomp]{simint}}
+  \code{\link[multcomp]{glht}}
 }
 \examples{
 require(graphics)
