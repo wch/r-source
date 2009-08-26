@@ -67,7 +67,7 @@ checkS3methods(package, dir, lib.loc = NULL)
   see the source code.  Functions recognized as S3 generics are those
   with a call to \code{UseMethod} in their body, internal S3 generics
   (see \link[base]{InternalMethods}), and S3 group generics (see
-  \code{\link[base]{Math}}).  Possible dispatch under a different name
+  \code{\link[base:groupGeneric]{Math}}).  Possible dispatch under a different name
   is not taken into account.  The generics are sought first in the given
   package, then in the \pkg{base} package and (currently) the packages 
   \pkg{graphics}, \pkg{stats}, and \pkg{utils} added in R 1.9.0 by

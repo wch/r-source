@@ -64,7 +64,7 @@ simulate(object, nsim, seed, \dots)
   Poisson, for which prior weights are ignored with a warning.
 
   For a gamma GLM the shape parameter is estimated by maximum likelihood
-  (using function \code{\link[MASS]{gamma.shape}} in package
+  (using function \code{\link[MASS:gamma.shape.glm]{gamma.shape}} in package
   \pkg{MASS}).  The interpretation of weights is as multipliers to a
   basic shape parameter, since dispersion is inversely proportional to
   shape.

@@ -42,8 +42,8 @@ confint(object, parm, level = 0.95, \dots)
   likelihoods.
 }
 \seealso{
-  \code{\link[MASS]{confint.glm}} and \code{\link[MASS]{confint.nls}} in
-  package \pkg{MASS}.
+  \code{\link[MASS:confint]{confint.glm}} and
+  \code{\link[MASS:confint]{confint.nls}} in package \pkg{MASS}.
 }
 \examples{
 fit <- lm(100/mpg ~ disp + hp + wt + am, data=mtcars)

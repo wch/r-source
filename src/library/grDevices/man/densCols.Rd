@@ -41,7 +41,7 @@ blues9
   represents the local density around the corresponding point.
 }
 \seealso{\code{\link[KernSmooth]{bkde2D}} from package \pkg{KernSmooth},
-  and \code{\link[graphics]{smoothScatter}()} which builds on the same
+  and \code{\link{smoothScatter}()} which builds on the same
   computations as \code{densCols}.
 }
 \author{Florian Hahne at FHCRC, originally}
