@@ -11,7 +11,7 @@ EXTRA_PKGS =
 MDISDI = 0
 
 ## Default help style, 0=plain text, 1=CHM, 2=HTML
-HelpStyle = 1
+HelpStyle = 2
 
 ## Default internet connection, 0=Standard, 1=Internet2
 Internet = 0

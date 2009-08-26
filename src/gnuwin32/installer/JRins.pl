@@ -166,7 +166,7 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
 Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
-Name: "chtml"; Description: "Compiled HTML Help Files"; Types: user full custom
+Name: "chtml"; Description: "Compiled HTML Help Files"; Types: full custom
 Name: "html"; Description: "HTML Files"; Types: user full custom; Flags: checkablealone
 Name: "html/help"; Description: "Prebuilt HTML Help Files"; Types: full custom; Flags: dontinheritcheck
 Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom; Flags: checkablealone
