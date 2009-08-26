@@ -3489,16 +3489,16 @@ function(package, dir, lib.loc = NULL)
     db <- cbind(do.call("rbind", db), rep(names(db), sapply(db, NROW)))
     if(nrow(db) == 0L) return(structure(NULL, class = "check_Rd_xrefs"))
 
-    db <- cbind(db, bad = FALSE, report = db[, 1L])
-    have_anchor <- nzchar(anchor <- db[, 2L])
-    db[have_anchor, "report"] <-
-        paste("[", db[have_anchor, 2L], "]{", db[have_anchor, 1L], "}", sep = "")
-
     ## fixup \link[=dest] form
     anchor <- db[, 2L]
     have_equals <- grepl("^=", anchor)
     if(any(have_equals))
         db[have_equals, 1:2] <- cbind(sub("^=", "", anchor[have_equals]), "")
+
+    db <- cbind(db, bad = FALSE, report = db[, 1L])
+    have_anchor <- nzchar(anchor <- db[, 2L])
+    db[have_anchor, "report"] <-
+        paste("[", db[have_anchor, 2L], "]{", db[have_anchor, 1L], "}", sep = "")
 
     ## Check the targets from the non-anchored xrefs.
     db[!have_anchor, "bad"] <- !( db[!have_anchor, 1L] %in% unlist(aliases))
