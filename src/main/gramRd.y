@@ -149,7 +149,7 @@ static int 	mkComment(int);
 %token		END_OF_INPUT ERROR
 %token		SECTIONHEADER RSECTIONHEADER VSECTIONHEADER
 %token		SECTIONHEADER2
-%token		RCODEMACRO SEXPR LATEXMACRO VERBMACRO OPTMACRO ESCAPE
+%token		RCODEMACRO SEXPR RDOPTS LATEXMACRO VERBMACRO OPTMACRO ESCAPE
 %token		LISTSECTION ITEMIZE DESCRIPTION NOITEM
 %token		LATEXMACRO2 VERBMACRO2
 %token		IFDEF ENDIF
@@ -187,6 +187,7 @@ SectionList:	Section				{ $$ = xxnewlist($1); }
 	|	SectionList Section		{ $$ = xxlist($1, $2); }
 	
 Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, STATIC, &@$); }	
+	|	RDOPTS VerbatimArg		{ $$ = xxmarkup($1, $2, HAS_SEXPR, &@$); }
 	|	RSECTIONHEADER RLikeArg		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
 	|	SECTIONHEADER  LatexArg  	{ $$ = xxmarkup($1, $2, STATIC, &@$); }
 	|	LISTSECTION    Item2Arg		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
@@ -744,7 +745,6 @@ static keywords[] = {
     { "\\name",    VSECTIONHEADER },
     { "\\synopsis",VSECTIONHEADER }, 
     { "\\Rdversion",VSECTIONHEADER },
-    { "\\RdOpts",   VSECTIONHEADER },
     
     /* These macros take no arguments.  One character non-alpha escapes get the
        same token value */
@@ -805,9 +805,13 @@ static keywords[] = {
     { "\\donttest",RCODEMACRO },
     { "\\testonly",RCODEMACRO },
     
-    /* These macros take one optional bracketed option and one R-like argument */
+    /* This macro take one optional bracketed option and one R-like argument */
     
     { "\\Sexpr",   SEXPR },
+    
+    /* This is just like a VSECTIONHEADER, but it needs SEXPR processing */
+    
+    { "\\RdOpts",   RDOPTS },
     
     /* These macros take one verbatim arg and ignore everything except braces */
     
