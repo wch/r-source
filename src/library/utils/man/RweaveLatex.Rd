@@ -49,6 +49,30 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   \env{SWEAVE_STYLEPATH_DEFAULT}, or is \code{FALSE} it that is unset or
   empty.  If set, it should be exactly \code{TRUE} or \code{FALSE}: any
   other values are taken as \code{FALSE}.
+
+  By default, \file{Sweave.sty} sets the width of all included graphics to:
+
+  \code{\\setkeys{Gin}{width=0.8\\textwidth}}
+
+  You can adjust this by including the above in your .Rnw file after the
+  \code{\\begin{document}} directive and adjust the \code{width}
+  parameter above accordingly. Note that this parameter determines the actual
+  graphic dimensions in your final document and therefore overrides the
+  \code{height} and \code{width} options that you may use in each
+  figure chunk or have set globally. The \code{height} and \code{width}
+  options will determine the dimensions of the runtime generated
+  PDF and EPS files created in this setting.
+
+  If you wish to override this default behavior, you can use
+  \code{\\usepackage[nogin]{Sweave}} in your preamble. In this case, the
+  \code{height} and \code{width} options will determine the runtime
+  generated graphic file sizes and the size of the graphics in your
+  final document.
+
+  \file{Sweave.sty} also supports the \code{[noae]} option, which
+  suppresses the use of the \code{ae} package, the use of which may
+  interfere with certain encoding and typeface selections. If you have
+  problems in the rendering of certain character sets, try this option.  
 }
 \section{Supported Options}{
   \code{RweaveLatex} supports the following options for code chunks (the values
@@ -101,8 +125,8 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       generated. Ignored if \code{fig = FALSE}.}
     \item{pdf.version, pdf.encoding:}{passed to \code{\link{pdf}} to set
       the version and encoding.  Defaults taken from \code{pdf.options()}.}
-    \item{width:}{numeric (6), width of figures in inches.}
-    \item{height:}{numeric (6), height of figures in inches.}
+    \item{width:}{numeric (6), width of figures in inches. See \sQuote{Details}.}
+    \item{height:}{numeric (6), height of figures in inches. See \sQuote{Details}.}
     \item{expand:}{logical (\code{TRUE}).  Expand references to other chunks
       so that only R code appears in the output file.  If \code{FALSE}, the
       chunk reference (e.g. \code{<<chunkname>>}) will appear.  The 
