@@ -178,9 +178,9 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
     ## FIXME only used for \verb, not right yet
     writeWrapped <- function(tag, block) {
-    	of0("\\verb|")
+    	of0("\\AsIs{")
     	writeContent(block, tag)
-    	of1("|")
+    	of1("}")
     }
 
     writePass <- function(block, tag) {
