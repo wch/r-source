@@ -360,6 +360,9 @@ BUG FIXES
     	main effect will be see in the output from print.anova, as
     	this grouped SS-like columns in the zap.ind group.
 
+    o	R_ReplDLLinit() initializes top-level jump so that embedding
+	applications on Windows no longer crash on error.
+
 
 
 
