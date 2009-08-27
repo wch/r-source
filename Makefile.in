@@ -210,7 +210,7 @@ uninstall-tests:
 	-@(cd src/library && $(MAKE) $@)
 	-@(cd tests && $(MAKE) $@)
 
-check check-devel check-all:
+check check-devel check-all check-recommended:
 	@(cd tests && $(MAKE) $@)
 
 reset-recommended:

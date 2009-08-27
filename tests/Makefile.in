@@ -11,6 +11,7 @@ subdir = tests
 all check: test-all-basics
 check-devel: check test-all-devel
 check-all: check-devel test-Packages-Recommended
+check-recommended: test-Packages-Recommended
 
 
 include $(top_builddir)/Makeconf

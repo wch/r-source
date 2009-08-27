@@ -5,6 +5,7 @@
 all check: test-all-basics
 check-devel: check test-all-devel
 check-all: check-devel test-Packages-Recommended
+check-recommended: test-Packages-Recommended
 
 # for R_PKGS_BASE
 include ../src/gnuwin32/MkRules

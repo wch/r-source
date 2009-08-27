@@ -296,7 +296,7 @@ cleanwin:
 
 #                          ===== testing ======
 
-check check-devel check-all:
+check check-devel check-all check-recommended:
 	@$(MAKE) --no-print-directory -C ../../tests \
 	  -f Makefile.win RHOME=$(RHOME) $@
 
