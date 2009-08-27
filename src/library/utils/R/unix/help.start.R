@@ -17,11 +17,12 @@
 help.start <- function (gui = "irrelevant", browser = getOption("browser"),
 			remote = NULL, searchEngine = FALSE)
 {
-    if(is.null(browser))
+    ## should always be set, but might be empty
+    if(length(browser) != 1 || !is.character(browser) || !nzchar(browser))
 	stop("invalid browser name, check options(\"browser\").")
     if (is.character(browser) && browser != getOption("browser")) {
         msg <- gettext("Changing the default browser (as specified by the 'browser' option) to the given browser so that it gets used for all future help requests.")
-        writeLines(strwrap(msg, exdent = 4))
+        writeLines(strwrap(msg, exdent = 4L))
         options(browser = browser)
     }
     make.packages.html()
@@ -41,7 +42,7 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
     if (is.character(browser)) {
         writeLines(strwrap(gettextf("If '%s' is already running, it is *not* restarted, and you must switch to its window.",
                                     browser),
-                           exdent = 4))
+                           exdent = 4L))
         writeLines(gettext("Otherwise, be patient ..."))
     }
     browseURL(url)
