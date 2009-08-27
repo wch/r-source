@@ -246,10 +246,9 @@ function(RdFiles, outFile = "", type = NULL,
     if(!inherits(outFile, "connection"))
         stop("argument 'outFile' must be a character string or connection")
 
-    index <- .build_Rd_index(Rd_contents(RdFiles), type = type)
-
-    writeLines(formatDL(index, width = width, indent = indent),
-               outFile)
+    db <- .build_Rd_db(files = RdFiles)
+    index <- .build_Rd_index(Rd_contents(db), type = type)
+    writeLines(formatDL(index, width = width, indent = indent), outFile)
 }
 
 ### * Rd_db
