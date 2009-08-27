@@ -1760,7 +1760,7 @@ Optional Features:
                           [no]
   --enable-mbcs           enable support for UTF-8 and other MBCS locales
                           [yes]
-  --enable-prebuilt-html  build static HTML help pages [yes]
+  --enable-prebuilt-html  build static HTML help pages [no]
   --enable-static[=PKGS]  build static libraries [default=no]
   --enable-shared[=PKGS]  build shared libraries [default=yes]
 
@@ -2764,7 +2764,7 @@ fi
 if test "${enable_prebuilt_html+set}" = set; then
   enableval=$enable_prebuilt_html; want_prebuilt_html="${enableval}"
 else
-  want_prebuilt_html=yes
+  want_prebuilt_html=no
 fi
 
  if test "x${want_prebuilt_html}" = xyes; then

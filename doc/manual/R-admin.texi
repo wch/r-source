@@ -248,6 +248,7 @@ of this chapter we consider only building from the sources.
 
 @menu
 * Simple compilation::          
+* Help options::                
 * Making the manuals::          
 * Installation::                
 * Uninstallation::              
@@ -255,7 +256,7 @@ of this chapter we consider only building from the sources.
 * Testing a Unix Installation::  
 @end menu
 
-@node Simple compilation, Making the manuals, Installing R under Unix-alikes, Installing R under Unix-alikes
+@node Simple compilation, Help options, Installing R under Unix-alikes, Installing R under Unix-alikes
 @section Simple compilation
 
 First review the essential and useful tools and libraries in
@@ -368,9 +369,34 @@ Now @code{rehash} if necessary, type @kbd{R}, and read the @R{} manuals
 and the @R{} @acronym{FAQ} (files @file{FAQ} or
 @file{doc/manual/R-FAQ.html}, or
 @uref{http://CRAN.R-project.org/@/doc/@/FAQ/@/R-FAQ.html} which always
-has the latest version).
+has the version for the latest release of @R{}).
 
-@node Making the manuals, Installation, Simple compilation, Installing R under Unix-alikes
+@node Help options, Making the manuals, Simple compilation, Installing R under Unix-alikes
+@section Help options
+
+As from @R{} 2.10.0, by default HTML help pages are created when needed
+rather than being built at install time.  This happens even if the
+@acronym{HTTP} server has been disabled, but then the pages created have
+no hyperlinks.
+
+If you both need to disable the server and want hyperlinked help, there
+is the option to continue to build HTML pages at when packages are
+installed (including those installed with @R{}).  This is enabled by the
+@command{configure} option @option{--enable-prebuilt-html}.  Whether
+@command{R CMD INSTALL} (and hence @code{install.packages}) pre-builds
+HTML pages is determined by looking at the @R{} installation and is
+reported by @command{R CMD INSTALL --help}: it can be overridden by
+specifying the one of the @command{INSTALL} options @option{--html} or
+@option{-no-html}.
+
+The server is disabled by setting the environment variable
+@env{R_DISABLE_HTTPD} to a non-empty value, either before @R{} is
+started or within the @R{} session before HTML help (including
+@code{help.start}) is used.  It is also possible that system security
+measures will prevent the server from being started, for example if the
+loopback interface has been disabled.
+
+@node Making the manuals, Installation, Help options, Installing R under Unix-alikes
 @section Making the manuals
 @cindex Manuals
 
@@ -1183,9 +1209,9 @@ Both methods create an executable with the standard name,
 it is customized.  If you intend to @emph{distribute} a customized
 installer please do check that license requirements are met -- note that
 the installer will (unless modified) state that the contents are
-distributed under GPL-2 and this has a requirement for supplying the
-sources (including the R sources even if you started with a binary
-distribution of R).
+distributed under GPL-2 and this has a requirement for @emph{you} to
+supply the complete sources (including the R sources even if you started
+with a binary distribution of R).
 
 
 The defaults for the startup parameters may also be customized.  For example
@@ -1226,8 +1252,8 @@ make msi
 
 @noindent
 which will results in a file of about 52Mb with a name like
-@file{R-2.6.0-win32.msi}.  This can be double-clicked to be installed,
-but those who need it will know what to do with it.
+@file{@value{RWVERSION}-win32.msi}.  This can be double-clicked to be
+installed, but those who need it will know what to do with it.
 
 Thanks to David del Campo (Dept of Statistics, University of Oxford)
 for suggesting WiX and building a prototype installer.

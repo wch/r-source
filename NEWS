@@ -19,34 +19,29 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	  aspects of package help will be missing if there are so
 	  used.  (Text and latex help and the runnable examples.)
 
-	- Text help, latex help and examples for packages installed
-          under the new system is converted on-demand from stored
-          parsed Rd files.  (Conversions stored in R < 2.10.0 are
-          used if no parsed Rd files are found.)
+	- Text, HTML and latex help and examples for packages
+          installed under the new system is converted on-demand from
+          stored parsed Rd files.  (Conversions stored in R < 2.10.0
+          are used if no parsed Rd files are found.)
 
-	The converters are still being polished; but almost all errors
-	in packages are previously undetected/corrected errors in the
-	package sources or changes in the Rd dialect.
-
-    o	HTML help is now generated dynamically using a http server
+    o	HTML help is now generated dynamically using a HTTP server
 	running in the R process and listening on the loopback
 	interface.
 
-	- The implementation is currently incomplete.
+	- The implementation is not quite complete.
 
 	- Those who need to worry about security implications of
 	  such a server can disable it by setting the environment
-	  variable R_DISABLE_HTTPD to a non-empty value.
+	  variable R_DISABLE_HTTPD to a non-empty value.  They may
+	  want to build static HTML pages, which is done by the
+	  configure option --enable-prebuilt-html (which adds --html
+	  to the default for installing packages).
 
-	- Those using the server do not need to build or install
-          static HTML pages and can use the configure option
-	  --disable-prebuilt-html.  This sets the default for
-	  installing packages.  If the server is disabled and there
-          are no static HTML pages, a page wthout links is generated
-          dynamically.
+	- If the server is disabled and there are no static HTML
+          pages, a HTML help page wthout links is generated as a
+          file:// URL.
 
-	- The documentation has not caught up with this set of
-          changes: details may change before release.
+	- Details may change before release.
 
 
 NEW FEATURES

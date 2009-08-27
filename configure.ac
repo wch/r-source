@@ -300,9 +300,9 @@ AC_ARG_ENABLE([mbcs],
 [want_mbcs_support=yes])
 
 AC_ARG_ENABLE([prebuilt-html],
-[AS_HELP_STRING([--enable-prebuilt-html],[build static HTML help pages @<:@yes@:>@])],
+[AS_HELP_STRING([--enable-prebuilt-html],[build static HTML help pages @<:@no@:>@])],
 [want_prebuilt_html="${enableval}"],
-[want_prebuilt_html=yes])
+[want_prebuilt_html=no])
 AM_CONDITIONAL(BUILD_HTML, [test "x${want_prebuilt_html}" = xyes])
 
 
