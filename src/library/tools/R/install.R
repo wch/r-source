@@ -1925,11 +1925,10 @@ if (FALSE) {
             writeLines("</p>\n", chmcon)
        }
         for (f in nm) {
-            cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
-                sep = "", file = outcon)
             MM <- M[first == f, ]
-            ## cat("writing", nrow(MM), "lines for", sQuote(f), "\n")
             if (html) {
+                cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
+                    sep = "", file = outcon)
                 writeLines('<table width="100%">', outcon)
                 writeLines(paste('<tr><td width="25%"><a href="', MM[, 2], '.html">',
                                  MM$HTopic, '</a></td>\n<td>', MM[, 3],'</td></tr>',
