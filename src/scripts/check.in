@@ -760,7 +760,8 @@ foreach my $pkg (@ARGV) {
 		     !(-t STDIN && -t STDOUT));
 		my $INSTALL_opts = $opt_install_args;
 		## don't use HTML, checkRd goes over the same ground.
-		$INSTALL_opts = "$INSTALL_OPTS" .  " --no-html";
+		$INSTALL_opts = $INSTALL_opts .  " --no-html";
+		$INSTALL_opts = $INSTALL_opts .  " --no-chm" if $WINDOWS;
 		$INSTALL_opts = "--fake" if($opt_install eq "fake");
 		my $cmd;
 		if($WINDOWS) {
@@ -1113,6 +1114,7 @@ sub check_pkg {
 		return 0 if($file_path =~ /$p/i);
 	    }
 	    else {
+		## Hmm, but Unix-alikes such as Mac OS X have such file systems
 		return 0 if($file_path =~ /$p/);
 	    }
 	}
