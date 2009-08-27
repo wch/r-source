@@ -28,7 +28,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
     of replicates for \code{(x[i],y[i])}, may be 0.\cr
     Default (\code{missing(number)}): compute the exact multiplicity of
     the points \code{x[],y[]}, via
-    \code{\link[grDevices]{xyTable}()}.}
+    \code{\link{xyTable}()}.}
   \item{log}{character indicating log coordinate scale, see
     \code{\link{plot.default}}.}
   \item{digits}{when \code{number} is computed (i.e., not specified),
@@ -79,7 +79,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   \item{y}{y coordinates}
   \item{number}{number}
 
-  Use \code{\link[grDevices]{xyTable}()} (from package
+  Use \code{\link{xyTable}()} (from package
   \pkg{grDevices}) if you are only interested in this return value.
 }
 \references{
@@ -97,7 +97,7 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   1989--1993.  Port to \R by Martin Maechler
   \email{maechler@stat.math.ethz.ch}.
 }
-\seealso{\code{\link{density}}, \code{\link[grDevices]{xyTable}}
+\seealso{\code{\link{density}}, \code{\link{xyTable}}
 }
 \examples{
 require(stats)

@@ -85,7 +85,9 @@ symnum(x, cutpoints = c(0.3, 0.6, 0.8, 0.9, 0.95),
   \eqn{s_j}{s[j]}\code{ = symbols[j]}.
 }
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch}}
-\seealso{\code{\link{as.character}}; \code{\link[graphics]{image}}}
+\seealso{
+  \code{\link{as.character}}; \code{\link{image}}
+}
 \examples{
 ii <- 0:8; names(ii) <- ii
 symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"))

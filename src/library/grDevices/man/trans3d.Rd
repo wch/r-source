@@ -9,7 +9,7 @@
 \description{
   Projection of 3-dimensional to 2-dimensional points using a 4x4
   viewing transformation matrix.  Mainly for adding to
-  perspective plots such as \code{\link[graphics]{persp}}.
+  perspective plots such as \code{\link{persp}}.
 }
 \usage{
 trans3d(x,y,z, pmat)
@@ -26,7 +26,7 @@ trans3d(x,y,z, pmat)
   a list with two components
   \item{x,y}{the projected 2d coordinates of the 3d input \code{(x,y,z)}.}
 }
-\seealso{ \code{\link[graphics]{persp}} }
+\seealso{ \code{\link{persp}} }
 \examples{
 %% it would be nice to have an independent example
 ## See  help(persp) {after attaching the 'graphics' package}

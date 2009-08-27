@@ -106,7 +106,7 @@ contour(x, \dots)
   \code{\link{options}("max.contour.segments")} for the maximal
   complexity of a single contour line.
 
-  \code{\link[grDevices]{contourLines}}, \code{\link{filled.contour}}
+  \code{\link{contourLines}}, \code{\link{filled.contour}}
   for color-filled contours,
   \code{\link[lattice:levelplot]{contourplot}} (and
   \code{\link[lattice]{levelplot}}) from package \pkg{lattice}.

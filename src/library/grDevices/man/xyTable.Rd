@@ -29,7 +29,7 @@ xyTable(x, y = NULL, digits)
   \item{number}{multiplicities (positive integers); i.e.,
     \code{number[i]} is the multiplicity of \code{(x[i],y[i])}.}
 }
-\seealso{\code{\link[graphics]{sunflowerplot}} which typically uses
+\seealso{\code{\link{sunflowerplot}} which typically uses
   \code{xyTable()}; \code{\link{signif}}.
 }
 \examples{

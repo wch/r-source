@@ -51,8 +51,9 @@ range(\dots, na.rm = FALSE)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  The \code{\link[grDevices]{extendrange}()} utility;
-  \code{\link{min}}, \code{\link{max}}
+  \code{\link{min}}, \code{\link{max}}.
+
+  The \code{\link{extendrange}()} utility in package \pkg{grDevices}.
 }
 \examples{
 (r.x <- range(stats::rnorm(100)))

@@ -34,7 +34,7 @@ demo(topic, package = NULL, lib.loc = NULL,
     printed.}
   \item{echo}{a logical.  If \code{TRUE}, show the \R input when sourcing.}
     \item{ask}{a logical (or \code{"default"}) indicating if
-    \code{\link[grDevices]{devAskNewPage}(ask=TRUE)} should be called before
+    \code{\link{devAskNewPage}(ask=TRUE)} should be called before
     graphical output happens from the demo code.  The value
     \code{"default"} (the factory-fresh default) means to ask if
     \code{echo == TRUE} and the graphics device appears to be
@@ -49,7 +49,7 @@ demo(topic, package = NULL, lib.loc = NULL,
   with listing available demos.
 }
 \seealso{
-  \code{\link{source}} and \code{\link[grDevices]{devAskNewPage}} which 
+  \code{\link{source}} and \code{\link{devAskNewPage}} which 
 are called by \code{demo}.
 }
 

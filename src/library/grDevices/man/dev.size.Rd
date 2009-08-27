@@ -23,7 +23,7 @@ dev.size(units = c("in", "cm", "px"))
 }
 \seealso{
   The size information in inches can be obtained by
-  \code{\link[graphics]{par}("din")}, but this provides a way to access it
+  \code{\link{par}("din")}, but this provides a way to access it
   independent of the graphics sub-system in use.
 }
 \examples{

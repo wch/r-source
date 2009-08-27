@@ -29,18 +29,17 @@
     the numbers \code{1:6}.}
   \item{caption}{captions to appear above the plots;
     \code{\link{character}} vector or \code{\link{list}} of valid
-    graphics annotations, see \code{\link[grDevices]{as.graphicsAnnot}}.
+    graphics annotations, see \code{\link{as.graphicsAnnot}}.
     Can be set to \code{""} or \code{NA} to suppress all captions.
   }
   \item{panel}{panel function.  The useful alternative to
     \code{\link{points}}, \code{\link{panel.smooth}} can be chosen
     by \code{add.smooth = TRUE}.}
-  \item{sub.caption}{common title---above figures if there are multiple;
-    used as \code{sub} (s.\code{\link{title}}) otherwise.  If \code{NULL},
-    as by default, a possible shortened version of
+  \item{sub.caption}{common title---above the figures if there are more
+    than one; used as \code{sub} (s.\code{\link{title}}) otherwise.  If
+    \code{NULL}, as by default, a possible abbreviated version of
     \code{deparse(x$call)} is used.}
-  \item{main}{title to each plot---in addition to the above
-    \code{caption}.}
+  \item{main}{title to each plot---in addition to \code{caption}.}
   \item{ask}{logical; if \code{TRUE}, the user is \emph{ask}ed before
     each plot, see \code{\link{par}(ask=.)}.}
   \item{\dots}{other parameters to be passed through to plotting

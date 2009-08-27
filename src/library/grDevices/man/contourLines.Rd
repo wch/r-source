@@ -47,7 +47,7 @@ contourLines(x = seq(0, 1, length.out = nrow(z)),
   \code{\link{options}("max.contour.segments")} for the maximal
   complexity of a single contour line.
 
-  \code{\link[graphics]{contour}}.
+  \code{\link{contour}}.
 }
 \examples{
 x <- 10*1:nrow(volcano)
