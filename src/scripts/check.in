@@ -60,6 +60,8 @@ my $opt_subdirs;
 my $HAVE_LATEX = 0;
 my $HAVE_PDFLATEX = 0;
 
+my $INSTALL_OPTS ="";
+
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
 R::Vars::error("R_HOME", "R_EXE");
@@ -758,11 +760,11 @@ foreach my $pkg (@ARGV) {
 		    (($opt_install =~ /^check/) ||
 		     $R_check_use_install_log ||
 		     !(-t STDIN && -t STDOUT));
-		my $INSTALL_opts = $opt_install_args;
+		$INSTALL_opts = $opt_install_args;
 		## don't use HTML, checkRd goes over the same ground.
 		$INSTALL_opts = $INSTALL_opts .  " --no-html";
 		$INSTALL_opts = $INSTALL_opts .  " --no-chm" if $WINDOWS;
-		$INSTALL_opts = "--fake" if($opt_install eq "fake");
+		$INSTALL_opts = $INSTALL_opts . " --fake" if($opt_install eq "fake");
 		my $cmd;
 		if($WINDOWS) {
 		    ## avoid some quoting hell
@@ -815,7 +817,11 @@ foreach my $pkg (@ARGV) {
 			## </NOTE>
 		    }
 		    else {
-			$cmd .= " >" .
+			## record in the log what options were used
+			open(LOG, "> $out");
+			print LOG "* install options are '$INSTALL_opts'\n\n";
+			close(LOG);
+			$cmd .= " >>" .
 			    &shell_quote_file_path($out) .
 			    " 2>&1";
 			$install_error = &R_system($cmd);
