@@ -13,7 +13,7 @@
 \title{Update HTML documentation files}
 \usage{
 link.html.help(verbose = FALSE, lib.loc = .libPaths())
-make.packages.html(lib.loc = .libPaths())
+make.packages.html(lib.loc = .libPaths(), outfile = NULL)
 make.search.html(lib.loc = .libPaths())
 
 fixup.package.URLs(pkg, force = FALSE)
@@ -31,6 +31,7 @@ fixup.libraries.URLs(lib.loc = .libPaths())
   \item{verbose}{logical. If true, print out a message. For use to
     explain a delay when called from other functions.}
   \item{lib.loc}{character vector. List of libraries to be included.}
+  \item{outfile}{character vector or NULL.  Where to write the package list.}
   \item{pkg}{character vector. The full path to a package.}
   \item{force}{logical. Should the links be fixed even if the stamp is
     present?}
