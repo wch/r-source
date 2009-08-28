@@ -1,6 +1,6 @@
 % File src/library/base/man/identical.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 2001-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{identical}
@@ -12,10 +12,24 @@
   \code{FALSE} in every other case.
 }
 \usage{
-identical(x, y)
+identical(x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE)
 }
 \arguments{
   \item{x, y}{any \R objects.}
+  \item{num.eq}{logical indicating if (\code{\link{double}} and
+    \code{\link{complex}} non-\code{\link{NA}}) numbers should be
+    compared using \code{\link{==}} (\sQuote{equal}), or by bitwise
+    comparison. The latter (non-default) differentiates between
+    \code{-0} and \code{+0}.}
+  \item{single.NA}{logical indicating if there is conceptually just one numeric
+    \code{\link{NA}} and one \code{\link{NaN}};  \code{single.NA = FALSE}
+    differentiates bit patterns.}
+  \item{attrib.as.set}{logical indicating if \code{\link{attributes}} of
+    \code{x} and \code{y} should be treated as \emph{unordered} tagged
+    pairlists (\dQuote{sets}); this currently also applies to
+    \code{\link{slot}}s of S4 objects.  It may well be too strict to set
+    \code{attrib.as.set = FALSE}.
+  }
 }
 \details{
   A call to \code{identical} is the way to test exact equality in
@@ -46,12 +60,16 @@ identical(x, y)
   independent copies.  For most applications, however, the computational cost
   should be negligible.
 
-  \code{identical} sees \code{\link{NaN}} as different from
-  \code{\link{NA_real_}}, but all \code{NaN}s are equal (and all \code{NA}
-  of the same type are equal).
+  If \code{single.NA} is true, as by default, \code{identical} sees
+  \code{\link{NaN}} as different from \code{\link{NA_real_}}, but all
+  \code{NaN}s are equal (and all \code{NA} of the same type are equal).
 
-  Comparison of attributes view them as a set (and not a vector, so
-  order is not tested).
+  If \code{attrib.as.set} is true, as by default, comparison of
+  attributes view them as a set (and not a vector, so order is not
+  tested).
+
+  Note that \code{identical(x,y, FALSE,FALSE,FALSE)} pickily tests for
+  very exact equality.
 }
 \value{
   A single logical value, \code{TRUE} or \code{FALSE}, never \code{NA}
@@ -82,8 +100,26 @@ identical(TRUE, E)
 ## If all.equal thinks the objects are different, it returns a
 ## character string, and the above expression evaluates to FALSE
 
-# even for unusual R objects :
+## even for unusual R objects :
 identical(.GlobalEnv, environment())
+
+### ------- Pickyness Flags : -----------------------------
+
+## the infamous example:
+identical(0., -0.) # TRUE, i.e. not differentiated
+identical(0., -0., num.eq = FALSE)
+## similar:
+identical(NaN, -NaN) # TRUE
+identical(NaN, -NaN, single.NA=FALSE) # differ on bit-level
+\dontshow{
+m0 <- m <- structure(cbind(I=1, a=1:3), foo = "bar", class = "matrix")
+attributes(m0) <- rev(attributes(m))
+names(attributes(m0)) # 'dim' remains first, interestingly...
+
+stopifnot(identical(0, -0),     !identical(0, -0, num.eq=FALSE),
+          identical(NaN, -NaN), !identical(NaN, -NaN, single.NA=FALSE),
+          identical(m, m0),     !identical(m, m0, attrib.as.set=FALSE) )
+}
 }
 \keyword{ programming }
 \keyword{ logic }

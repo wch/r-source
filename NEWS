@@ -17,12 +17,12 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	- Packages that were installed by R-devel after 2009-08-09
 	  should not be used with earlier versions of R, and some
 	  aspects of package help will be missing if there are so
-	  used.  (Text and latex help and the runnable examples.)
+	  used.	 (Text and latex help and the runnable examples.)
 
 	- Text, HTML and latex help and examples for packages
-          installed under the new system is converted on-demand from
-          stored parsed Rd files.  (Conversions stored in R < 2.10.0
-          are used if no parsed Rd files are found.)
+	  installed under the new system is converted on-demand from
+	  stored parsed Rd files.  (Conversions stored in R < 2.10.0
+	  are used if no parsed Rd files are found.)
 
     o	HTML help is now generated dynamically using a HTTP server
 	running in the R process and listening on the loopback
@@ -38,8 +38,8 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	  to the default for installing packages).
 
 	- If the server is disabled and there are no static HTML
-          pages, a HTML help page wthout links is generated as a
-          file:// URL.
+	  pages, a HTML help page wthout links is generated as a
+	  file:// URL.
 
 	- Details may change before release.
 
@@ -50,7 +50,7 @@ NEW FEATURES
 	'fillOddEven' (default FALSE), which controls the mode used for
 	polygon fills of self-intersecting shapes.
 
-    o   New debugonce() function; further,
+    o	New debugonce() function; further,
 	getOption("deparse.max.lines") is now observed when debugging,
 	from a code suggestion by John Brzustowski.  (PR#13647/8)
 
@@ -177,7 +177,7 @@ NEW FEATURES
 	actual contrast function if that has a formal argument 'sparse'.
 
 	'contrasts(f, .) <- val' now also works when 'val' is a sparse
-	Matrix.  It is planned that model.matrix() will work with such
+	Matrix.	 It is planned that model.matrix() will work with such
 	factors 'f' in the future.
 
     o	readNEWS() will recognize a UTF-8 byte-order mark (BOM) in the
@@ -189,7 +189,7 @@ NEW FEATURES
     o	tabulate() now allows NAs to pass through (and be ignored).
 
     o	If debug() is called on an S3 generic function then all methods
-        are debugged as well.
+	are debugged as well.
 
     o	Outlier symbols drawn by boxplot() now obey the 'outlwd'
 	argument.  Reported by Jurgen Kluge.
@@ -197,14 +197,14 @@ NEW FEATURES
     o	svd(x) and eigen(x) now behave analogously to qr(x) in
 	accepting logical matrices x.
 
-    o	[Experimental]  File NEWS is now in UTF-8, and has a BOM
+    o	[Experimental]	File NEWS is now in UTF-8, and has a BOM
 	(often invisible) on the first line, and Emacs local variables
 	set for UTF-8 at the end.  RShowDoc("NEWS") should display
 	this correctly, given suitable fonts.
 
     o	terms.formula(simplify = TRUE) now does not deparse the LHS and
-    	so preserves non-standard responses such as `a: b` (requested
-    	by Sundar Dorai-Raj).
+	so preserves non-standard responses such as `a: b` (requested
+	by Sundar Dorai-Raj).
 
     o	New function news() for building and querying R or package news
 	information.
@@ -228,17 +228,17 @@ NEW FEATURES
 	experts) to suppress the declaration of encodings.
 
     o	grep() and friends now use useBytes=TRUE to inhibit the
- 	translation of inputs with marked encodings.
+	translation of inputs with marked encodings.
 
     o	DESCRIPTION 'LinkingTo' specs are now recognized as installation
-    	dependencies, and included in package management computations.
+	dependencies, and included in package management computations.
 
     o	Standardized DESCRIPTION 'License' specs are now available for
-    	package management computations.
+	package management computations.
 
     o	"\uxxxx" and "\Uxxxxxxxx" escapes can now be parsed to a UTF-8
 	encoded string even in non-UTF-8 locales (this has been
-	implemented on Windows since R 2.7.0).  The semantics have
+	implemented on Windows since R 2.7.0).	The semantics have
 	been changed slightly: a string containing such escapes is
 	always stored in UTF-8 (and hence is suitable for portably
 	including Unicode text in packages).  Use of such escape
@@ -256,6 +256,9 @@ NEW FEATURES
 
     o	R CMD check now check Rd crossreferences when a package is
 	specified, if the package is available.
+
+    o	identical() gains three logical arguments, which allow for even
+	more differentiation, notably '-0' and '0'.
 
 
 Rd HELP FILE CHANGES
@@ -278,7 +281,7 @@ Rd HELP FILE CHANGES
 	which controls how their output is encoded.
 
     o	parse_Rd() no longer includes the newline as part of a
-        "%"-style comment.
+	"%"-style comment.
 
     o	There have been various bug fixes and code reorganization in
 	the Rd renderers Rd2HTML, Rd2latex, Rd2txt, and Rd2ex.
@@ -293,10 +296,10 @@ Rd HELP FILE CHANGES
 	equivalent object.
 
     o	parse_Rd() was incorrectly handling multiple backslashes in
-    	R code strings, converting 4n+3 backslashes to 2n+1 instead
-    	of 2n+2.
-    	
-    o 	A new dynamic help system may be started using
+	R code strings, converting 4n+3 backslashes to 2n+1 instead
+	of 2n+2.
+
+    o	A new dynamic help system may be started using
 	tools::startDynamicHelp().  With this option, HTML help pages
 	will be generated on request, resolving links by searching
 	through all installed packages.
@@ -321,8 +324,8 @@ INSTALLATION
     o	A suitable iconv() is now required: support for
 	--without-iconv has been withdrawn (it was deprecated in R 2.5.0).
 
-    o	Perl is no longer 'essential'.  R can be built without it, but
-    	scripts R CMD build, check, Rprof and Sd2d require it.
+    o	Perl is no longer 'essential'.	R can be built without it, but
+	scripts R CMD build, check, Rprof and Sd2d require it.
 
     o	A system 'glob' function is now essential (a working
 	Sys.glob() has been assumed since R 2.9.0 at least).
@@ -354,11 +357,11 @@ BUG FIXES
 	non-zero representation.
 
     o	printCoefmat() formatted groups of columns together, not just
-    	the cs.ind group but also the zap.ind group and a residual
-    	group.  It now formats all columns except the cs.ind group
-    	separately (and zaps the zap.ind group column-by-column).  The
-    	main effect will be see in the output from print.anova, as
-    	this grouped SS-like columns in the zap.ind group.
+	the cs.ind group but also the zap.ind group and a residual
+	group.	It now formats all columns except the cs.ind group
+	separately (and zaps the zap.ind group column-by-column).  The
+	main effect will be see in the output from print.anova, as
+	this grouped SS-like columns in the zap.ind group.
 
     o	R_ReplDLLinit() initializes top-level jump so that embedding
 	applications on Windows no longer crash on error.

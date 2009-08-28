@@ -581,7 +581,8 @@ int Rf_asLogical(SEXP);
 double Rf_asReal(SEXP);
 SEXP Rf_classgets(SEXP, SEXP);
 SEXP Rf_cons(SEXP, SEXP);
-Rboolean R_compute_identical(SEXP, SEXP);/* ../main/identical.c */
+Rboolean R_compute_identical(SEXP, SEXP, Rboolean num_eq,
+			     Rboolean single_NA, Rboolean attr_asSet);
 void Rf_copyMatrix(SEXP, SEXP, Rboolean);
 void Rf_copyMostAttrib(SEXP, SEXP);
 void Rf_copyVector(SEXP, SEXP);
