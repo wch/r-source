@@ -23,7 +23,9 @@ contrasts(x, how.many) <- value
   \item{how.many}{How many contrasts should be made. Defaults to one
     less than the number of levels of \code{x}.  This need not be the
     same as the number of columns of \code{value}.}
-  \item{value}{either a numeric matrix whose columns give coefficients for
+  \item{value}{either a numeric matrix (or a sparse or dense matrix of a
+    class extending \code{\link[Matrix:dMatrix-class]{dMatrix}} from
+    package \pkg{Matrix})  whose columns give coefficients for
     contrasts in the levels of \code{x}, or the (quoted) name of a
     function which computes such matrices.}
 }
@@ -77,6 +79,12 @@ contrasts(fff) <- contr.sum(5); contrasts(fff)  # set sum contrasts
 contrasts(fff, 2) <- contr.sum(5); contrasts(fff)  # set 2 contrasts
 # supply 2 contrasts, compute 2 more to make full set of 4.
 contrasts(fff) <- contr.sum(5)[,1:2]; contrasts(fff)
+
+## using sparse contrasts: % useful, once model.matrix() works with these :
+ffs <- fff
+contrasts(ffs) <- contr.sum(5, sparse=TRUE)[,1:2]; contrasts(ffs)
+stopifnot(all.equal(ffs, fff))
+contrasts(ffs) <- contr.sum(5, sparse=TRUE); contrasts(ffs)
 }
 \keyword{design}
 \keyword{regression}
