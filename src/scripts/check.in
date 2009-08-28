@@ -394,10 +394,14 @@ foreach my $pkg (@ARGV) {
     ## Package sources from the R distribution are special.  They have a
     ## 'DESCRIPTION.in' file (instead of 'DESCRIPTION'), with Version
     ## field containing '@VERSION@' for substitution by configure.  We
-    ## test for such packages by looking for 'DESCRIPTION.in' with
+    ## test for such packages by looking for 'DESCRIPTION.in' (and 'Makefile.in') with
     ## Priority 'base', and skip the installation test for such
-    ## packages.
-    if(-r &file_path($pkgdir, "DESCRIPTION.in")) {
+    ## packages.  We have to check for Makefile.in in addition to DESCRIPTION.in
+    ## so that we can allow packages to have a DESCRIPTION.in.  Such DESCRIPTION.in files will
+    ## have their content completed via the package's configuration which we have not yet run.
+    ## The DESCRIPTION.in file may be malformed (according to R::Dcf()), e.g if it has a line
+    ## @SYSTEM@ which is either empty or "System: ...." depending on the configuration script.
+    if(-r &file_path($pkgdir, "DESCRIPTION.in") && -r &file_path($pkgdir, "Makefile.in")) {
 	$description =
 	  new R::Dcf(&file_path($pkgdir, "DESCRIPTION.in"));
 	if($description->{"Priority"} eq "base") {
