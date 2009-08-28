@@ -115,13 +115,13 @@ export(nsl)
 if(tools:::.OStype() == "windows") {
 export(DLL.version, Filters, choose.dir, choose.files,
        fixup.libraries.URLs, fixup.package.URLs, getClipboardFormats,
-       getIdentification, getWindowsHandle, getWindowTitle,
+       getIdentification, getWindowsHandle, getWindowsHandles, getWindowTitle,
        link.html.help, loadRconsole, make.search.html, readClipboard,
        readRegistry, setStatusBar, setWindowTitle, shortPathName,
        win.version, winDialog, winDialogString, winMenuAdd,
        winMenuAddItem, winMenuDel, winMenuDelItem, winMenuNames,
        winMenuItems, writeClipboard, zip.unpack,
        winProgressBar, getWinProgressBar, setWinProgressBar,
-       setInternet2)
+       setInternet2, arrangeWindows)
 S3method(close, winProgressBar)
 }

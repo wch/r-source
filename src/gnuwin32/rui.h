@@ -23,6 +23,12 @@
 #define RW_STATUSBAR   0x0100
 #define RW_LARGEICONS   0x1000
 
+#define CASCADE 1
+#define TILEHORIZ 2
+#define TILEVERT 3
+#define MINIMIZE 4
+#define RESTORE 5
+
 extern int MDIset;
 
 #include <R_ext/Boolean.h>

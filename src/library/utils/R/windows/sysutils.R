@@ -61,6 +61,42 @@ getWindowsHandle <- function(which = "Console") {
     .Internal(getWindowHandle(which))
 }
 
+getWindowsHandles <- function(which = "R", pattern="", minimized=FALSE) {
+    which <- match.arg(which, c("R", "all"), several.ok=TRUE)
+    len <- max(length(which), length(pattern), length(minimized))
+    which <- rep(which, length.out=len)
+    pattern <- rep(pattern, length.out=len)
+    minimized <- rep(minimized, length.out=len)
+    result <- list()
+    for (i in seq_along(which)) {
+	res <- .Internal(getWindowHandles(which[i], minimized))
+	if (nzchar(pattern[i])) 
+    	    res <- res[grep(pattern[i], names(res))]
+    	result <- c(result, res)
+    }
+    dup <- duplicated(sapply(result, deparse))
+    result[!dup]
+}
+
+arrangeWindows <- function(action=c("vertical", "horizontal","cascade",  
+                                    "minimize", "restore"),
+                           windows, preserve=TRUE, outer=FALSE) {
+    action <- match.arg(action)
+    action <- which(action == c("cascade", "horizontal", "vertical", "minimize", "restore"))
+    stopifnot(length(action) == 1 && !is.na(action))
+    
+    if (missing(windows)) {
+    	if (exists(".arrangeWindowsDefaults", globalenv()))
+            args <- get(".arrangeWindowsDefaults", globalenv())
+        else
+            args <- list()
+        if (action == 5) # restore
+            args$minimized <- TRUE
+    	windows <- do.call(getWindowsHandles, args)
+    }
+   .Internal(arrangeWindows(windows, action, preserve, outer))
+}                                        
+
 menuShowCRAN <- function()
 {
     CRAN <- as.vector(getOption("repos")["CRAN"])

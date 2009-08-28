@@ -525,6 +525,37 @@ static void menupkginstalllocal(control m)
     if (!ConsoleAcceptCmd) return;
     consolecmd(RConsole, "utils:::menuInstallLocal()");
 }
+ 
+ 
+static void menucascade(control m)
+{
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole, "utils::arrangeWindows(action='cascade')");
+}
+
+static void menutilehoriz(control m)
+{
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole, "utils::arrangeWindows(action='horizontal')");
+}
+
+static void menutilevert(control m)
+{
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole, "utils::arrangeWindows(action='vertical')");
+}
+
+static void menuminimizegroup(control m)
+{
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole, "utils::arrangeWindows(action='minimize')");
+}
+
+static void menurestoregroup(control m)
+{
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole, "utils::arrangeWindows(action='restore')");
+}
 
 static void menuconsolehelp(control m)
 {
@@ -1000,6 +1031,24 @@ int RguiCommonHelp(menu m, HelpMenuItems hmenu)
     return 0;
 }
 
+static int RguiWindowMenu()
+{
+#ifdef USE_MDI
+    if (ismdi())
+	newmdimenu();
+    else 
+#endif
+    {
+	MCHECK(newmenu(G_("Windows")));
+	MCHECK(newmenuitem(G_("Cascade"), 0, menucascade));
+	MCHECK(newmenuitem(G_("Tile &Horizontally"), 0, menutilehoriz));
+	MCHECK(newmenuitem(G_("Tile &Vertically"), 0, menutilevert));
+	MCHECK(newmenuitem(G_("Minimize group"), 0, menuminimizegroup));
+	MCHECK(newmenuitem(G_("Restore group"), 0, menurestoregroup));
+    }
+    return 0;
+}
+
 #include <locale.h>
 
 int setupui(void)
@@ -1158,9 +1207,7 @@ int setupui(void)
 
     pmenu = (PkgMenuItems) malloc(sizeof(struct structPkgMenuItems));
     RguiPackageMenu(pmenu);
-#ifdef USE_MDI
-    newmdimenu();
-#endif
+    RguiWindowMenu();
     MCHECK(m = newmenu(G_("Help")));
     MCHECK(newmenuitem(G_("Console"), 0, menuconsolehelp));
     MCHECK(newmenuitem("-", 0, NULL));

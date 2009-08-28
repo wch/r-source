@@ -44,7 +44,7 @@ getWindowsHandle(which = "Console")
 \value{
   An external pointer holding the Windows handle, or \code{NULL}.
 }
-\seealso{\code{\link{getIdentification}}}
+\seealso{\code{\link{getIdentification}}, \code{\link{getWindowsHandles}}}
 \examples{
 getWindowsHandle()
 }

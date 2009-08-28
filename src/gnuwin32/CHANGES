@@ -21,6 +21,14 @@ NEW FEATURES
     o	windows() now has a parameter fillOddEven (default TRUE),
 	which controls the mode used for polygon fills of self-
 	intersecting shapes.
+	
+    o 	The functions arrangeWindows() and getWindowsHandles() have
+    	been added to give more programmatic control to the appearance
+    	of windows in an R session.
+    	
+    o	A Windows menu has been added to the SDI version of the R GUI,
+	and the corresponding menu in the MDI version has been
+	expanded slightly.
     	
     	
 PACKAGE INSTALLATION

@@ -50,6 +50,7 @@ SEXP do_aqua_custom_print(SEXP, SEXP, SEXP, SEXP);
 /* Function Names */
 
 #if Win32
+SEXP do_arrangeWindows(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bringtotop(SEXP, SEXP, SEXP, SEXP);
 SEXP do_chooseFiles(SEXP, SEXP, SEXP, SEXP);
 SEXP do_chooseDir(SEXP, SEXP, SEXP, SEXP);
@@ -58,6 +59,7 @@ SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getClipboardFormats(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getIdentification(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getWindowHandle(SEXP, SEXP, SEXP, SEXP);
+SEXP do_getWindowHandles(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getWindowTitle(SEXP, SEXP, SEXP, SEXP);
 SEXP do_loadRconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memsize(SEXP, SEXP, SEXP, SEXP);
