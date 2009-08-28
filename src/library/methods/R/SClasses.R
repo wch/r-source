@@ -713,7 +713,7 @@ findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
             else if(nzchar(unique)) {
                 where <- where[1L]
                 ## problem: 'unique'x is text passed in, so do not translate
-                warning(sprintf("multiple definitions of class \"%s\" visible; using the definition on package \"%s\" for %s",
+                warning(gettextf("multiple definitions of class \"%s\" visible; using the definition\n   in package \"%s\" for %s",
                                  Class, getPackageName(where[[1L]]), unique),
                         domain = NA)
             }

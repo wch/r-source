@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-05-27 r48637)
+R version 2.10.0 Under development (unstable) (2009-08-27 r49475)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -721,13 +721,15 @@ include omitted arguments in definition: mode = "missing"
 + 	   function (..., na.last=TRUE, decreasing=FALSE)
 + 	   standardGeneric("order"))
 Creating a generic for "order" in package  ".GlobalEnv"
-    (the supplied definition differs from and overrides the implicit generic in package "base": Signatures differ:  (...), (na.last, decreasing))
+    (the supplied definition differs from and overrides the implicit generic
+    in package "base": Signatures differ:  (...), (na.last, decreasing))
 [1] "order"
 > stopifnot(identical(rbind(1), matrix(1,1,1)))
 > setGeneric("rbind", function(..., deparse.level=1)
 + 	   standardGeneric("rbind"), signature = "...")
 Creating a generic for "rbind" in package  ".GlobalEnv"
-    (the supplied definition differs from and overrides the implicit generic in package "base": Signatures differ:  (...), (deparse.level))
+    (the supplied definition differs from and overrides the implicit generic
+    in package "base": Signatures differ:  (...), (deparse.level))
 [1] "rbind"
 > stopifnot(identical(rbind(1), matrix(1,1,1)))
 > ## gave Error in .Method( .... in R 2.8.0

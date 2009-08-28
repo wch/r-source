@@ -128,12 +128,12 @@ existsFunction <- function(f, generic=TRUE, where = topenv(parent.frame()))
 
 Quote <- base::quote #was get("quote" , mode = "function")
 
-.message <- function(...) {
+.message <- function(..., domain = NULL, appendLF = TRUE) {
     ## Output all the arguments, pasted together with no intervening spaces,
     ## wrapping long lines
     text <- paste(..., collapse="", sep="")
     lines <- strwrap(text, width = max(20, 7 * getOption("width") %/% 8))
-    message(paste(lines, collapse="\n"))
+    message(paste(lines, collapse="\n"), domain = domain, appendLF = appendLF)
 }
 
 hasArg <- function(name) {
