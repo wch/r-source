@@ -89,12 +89,14 @@ type?topic
     \item HTML help, selected by \code{options(htmlhelp=TRUE)}.
     HTML help pages will be generated with hyperlinks to other topics if
     the internal HTTP server is in use (the default, but see
-    \code{\link{startDynamicHelp}}), otherwise the pages will be linkless.
+    \code{\link{startDynamicHelp}}), otherwise the pages will be
+    linkless.  If for some reason HTML help is unavailable, plain text
+    help will be shown.
 #ifdef windows
     \item (Windows only) Compiled HTML help, selected by
     \code{options(chmhelp=TRUE)}.  Takes priority over
     \code{options(htmlhelp=TRUE)}.  May not be available for
-    some or all packages, when text help is used instead.
+    some or all packages, when plain text help is shown.
 #endif
     \item For \code{help} only, typeset as a PostScript or PDF file --
     see the section on \sQuote{Offline help}  Selected by \code{offline =

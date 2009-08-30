@@ -192,9 +192,15 @@ function(x, ...)
                     file.copy(file.path(R.home("doc"), "html", "R.css") ,
                               tempdir())
                     .show_help_on_topic_as_HTML(tfile, topic, FALSE)
-                } else
-                    stop(gettextf("No HTML help for '%s' is available", topic),
-                         domain = NA)
+                } else {
+                    warning(gettextf("No HTML help for '%s' is available",
+                                     topic), domain = NA)
+                    att <- attributes(x)
+                    xx <- sub("/chm/([^/]*$)", "/help/\\1", x)
+                    attributes(xx) <- att
+                    attr(xx, "type") <- "help"
+                    print(xx)
+                }
             }
         }
         else if(type == "chm") {
@@ -214,10 +220,10 @@ function(x, ...)
             } else {
             	warning(gettextf("No CHM help for '%s' in package '%s' is available:\nthe CHM file for the package is missing", topic, thispkg), domain = NA)
             	att <- attributes(x)
-            	x <- sub("/chm/([^/]*$)", "/help/\\1", x)
-            	attributes(x) <- att
-            	attr(x, "type") <- "help"
-            	print(x)
+            	xx <- sub("/chm/([^/]*$)", "/help/\\1", x)
+            	attributes(xx) <- att
+            	attr(xx, "type") <- "help"
+            	print(xx)
             }
         }
         else if(type == "help") {

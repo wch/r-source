@@ -317,6 +317,9 @@ HELP & Rd FILE CHANGES
 	For the default helper, options(offline_PDF = TRUE) will
 	select PDF output rather than the default PostScript.
 
+    o	Plain text help is now used as the fallback for HTML help (as
+	it always has been for Compiled HTML help on Windows).
+
 
 DEPRECATED & DEFUNCT
 

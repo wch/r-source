@@ -57,7 +57,7 @@ offline_help_helper <- function(texfile)
     if(!PDF) {
         dfile <- sub("tex$", "dvi", texfile)
         on.exit(unlink(dfile))
-        dvips <- getOption("dvipscmd",, default = "dvips")
+        dvips <- getOption("dvipscmd", default = "dvips")
         res <- system(paste(dvips, dfile, "> /dev/null 2>&1"))
         if(res)
             stop(gettextf("running '%s' failed", dvips), domain = NA)
