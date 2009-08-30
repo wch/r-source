@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 help.start <- function (gui = "irrelevant", browser = getOption("browser"),
-			remote = NULL, searchEngine = FALSE)
+			remote = NULL)
 {
     ## should always be set, but might be empty
     if(length(browser) != 1 || !is.character(browser) || !nzchar(browser))
@@ -31,13 +31,8 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
         tmpdir <- if (tools:::httpdPort > 0L)
             paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
         else paste("file://", URLencode(tempdir()), "/.R", sep = "")
-        paste(tmpdir,
-              if(searchEngine) "/doc/html/search/SearchEngine.html"
-              else "/doc/html/index.html", sep = "")
-    } else
-        paste(remote,
-              if(searchEngine) "/doc/html/search/SearchEngine.html"
-              else "/doc/html/index.html", sep = "")
+        paste(tmpdir, "/doc/html/index.html", sep = "")
+    } else paste(remote, "/doc/html/index.html", sep = "")
 
     if (is.character(browser)) {
         writeLines(strwrap(gettextf("If '%s' is already running, it is *not* restarted, and you must switch to its window.",

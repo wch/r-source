@@ -41,6 +41,12 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	  pages, a HTML help page wthout links is generated as a
 	  file:// URL.
 
+	- The Java/Javascript search engine has been replaced by an
+	  HTML interface to help.search(): currently this means that
+	  search from HTML is only available if the HTTP server is
+	  used.  help.start() no longer has an argument 'searchEngine'
+	  as it is no longer needed.
+
 	- Details may change before release.
 
 

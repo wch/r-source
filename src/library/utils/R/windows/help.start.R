@@ -15,15 +15,14 @@
 #  http://www.r-project.org/Licenses/
 
 help.start <- function(update = TRUE, gui = "irrelevant",
-                       browser = getOption("browser"), searchEngine = FALSE)
+                       browser = getOption("browser"))
 {
     if(tools:::httpdPort == 0L) tools::startDynamicHelp()
     dynamic <- tools:::httpdPort > 0L
     home <- if (dynamic)
         paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
     else R.home()
-    a <- if(!searchEngine) file.path(home, "doc", "html", "index.html")
-    else file.path(home, "doc", "html", "search", "SearchEngine.html")
+    a <- file.path(home, "doc", "html", "index.html")
     if(!dynamic && !file.exists(a))
         stop("unable to find the HTML help")
     if(update) {
@@ -37,11 +36,6 @@ help.start <- function(update = TRUE, gui = "irrelevant",
         cat("updating HTML search index\n")
         flush.console()
         try(make.search.html(.libPaths()))
-##         if(any(.libPaths() != .Library)) {
-##             cat(gettext("fixing URLs in non-standard libraries\n"))
-##             flush.console()
-##             try(fixup.libraries.URLs(.libPaths()))
-##         }
     }
     cat(gettextf("If nothing happens, you should open '%s' yourself\n", a))
     if(!dynamic) a <- chartr("/", "\\", a)

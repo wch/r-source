@@ -76,7 +76,6 @@ The current version of this document is @value{VERSION}.
 * Essential and useful other programs under Unix::  
 * Configuration on Unix::       
 * Platform notes::              
-* Enabling search in HTML help::  
 * The Windows toolset::         
 * Function and variable index::  
 * Concept index::               
@@ -3293,7 +3292,7 @@ which are always required, for example to force @acronym{IEC}@tie{}60559
 compliance.
 
 
-@node Platform notes, Enabling search in HTML help, Configuration on Unix, Top
+@node Platform notes, The Windows toolset, Configuration on Unix, Top
 @appendix Platform notes
 
 This section provides some notes on building @R{} on different Unix-like
@@ -4117,119 +4116,8 @@ feel free to use the @samp{R-devel} mailing list to ask questions.  We
 have had a fair amount of practice at porting @R{} to new platforms
 @enddots{}
 
-@node Enabling search in HTML help, The Windows toolset, Platform notes, Top
-@appendix Enabling search in @HTML{} help
 
-There is a search engine available from the front page of the @HTML{}
-help system, the page that is displayed by @code{help.start()}.  The
-search engine is written in Java and invoked by Javascript code, so the
-first thing to do is to ensure that both are enabled in your favourite
-browser.  Then try it and see: with most browsers you should see
-
-@example
-Applet SearchEngine started
-@end example
-
-@noindent
-displayed in the status bar.  (Internet Explorer shows @code{Applet
-started}.) Then click on one of the keywords and after a short delay
-(several seconds) you should see a page of search results.
-
-If this fails you should double-check that Java is enabled in your
-browser by visiting a page such as
-@uref{http://www.java.com/@/en/@/download/@/help/@/testvm.jsp}.  Java
-1.4 or later is needed.
-
-On Mozilla-based browsers the links on the results page will
-become inactive if you return to it: to work around this you can open
-a link in a new tab or window.
-
-@c https://stat.ethz.ch/pipermail/r-help/2008-July/169521.html
-There is a known issue with Firefox 3.0 up to 3.0.6 (it was fixed in
-3.0.7).  The links in the results page may point to the wrong directory
-level.  This is a bug in the way Firefox is interpreting relative URLs,
-and can be circumvented by opening the HTML search page
-(@file{.../doc/html/SearchEngine.html}) directly rather than from
-@file{.../doc/html/index.html} as shown by @code{help.start()}.
-
-Many thanks to Marc Schwartz in tracking down many of these issues with
-enabling the Java search engine.
-
-@menu
-* Java Virtual Machines on Linux ::  
-* Java Virtual Machines on Unix::  
-* Java Virtual Machines on Windows::  
-* Java Virtual Machines on Mac OS X::  
-@end menu
-
-@node Java Virtual Machines on Linux , Java Virtual Machines on Unix, Enabling search in HTML help, Enabling search in HTML help
-@section Java Virtual Machines on Linux
-
-We are aware of problems with certain older Java installations: Sun's
-Java Run-time Environment version 1.5.0 or later is strongly recommended
-for Mozilla-based browsers.  In particular, Sun's Java Run-time
-Environment @code{j2re}@tie{}1.4.2_02 to _05 do not work under
-@cputype{ix86} Linux.
-
-There is a Sun Java plugin (as of version @code{1.6.0_u12} for 64-bit
-browsers on @cputype{x86_64} Linux: but 32-bit browsers are often used
-on that platform.
-
-Marc Schwartz reports that the `OpenJDK' (formerly called `IcedTea') JVM
-that ships with Fedora >= 8 does not work with the search applet.  (The
-bug report is part of
-@uref{https://bugzilla.redhat.com/@/show_bug.cgi?id=304021}.)  The Sun
-JRE and plugin can be installed: see
-@uref{http://www.fedorafaq.org/#java}.  (See also
-@uref{http://www.mjmwired.net/@/resources/@/mjm-fedora-f8.@/html#java},
-@uref{http://www.mjmwired.net/@/resources/@/mjm-fedora-f9.@/html#java}
-and
-@uref{http://www.mjmwired.net/@/resources/@/mjm-fedora-f10.@/html#java}.)
-
-Older but still useful links are for Firefox/Mozilla,
-@uref{http://plugindoc.mozdev.org/@/faqs/@/java.html}, for Konqueror
-@uref{http://www.@/konqueror.org/@/javahowto/}, for Opera
-@uref{http://www.opera.com/@/support/@/search/@/supsearch.dml?@/index=459}
-and for Debian GNU/Linux
-@uref{http://www.debian.org/@/doc/@/manuals/@/debian-java-faq/}.
-
-
-@node Java Virtual Machines on Unix, Java Virtual Machines on Windows, Java Virtual Machines on Linux , Enabling search in HTML help
-@section Java Virtual Machines on Unix
-
-We have much less experience than under Linux, but we do know that Sun's
-Run-time Environment @code{j2re}@tie{}1.4.2_03 does not work under Sparc
-Solaris 8, whereas @code{jre}@tie{}1.5.0 and @code{j2re}@tie{}1.4.2_01
-(available from @uref{http://java.sun.com/@/products/@/archive/}) do.
-
-@node Java Virtual Machines on Windows, Java Virtual Machines on Mac OS X, Java Virtual Machines on Unix, Enabling search in HTML help
-@section Java Virtual Machines on Windows
-
-We have not seen any problems on Windows provided a Java Virtual Machine
-has been installed and is operational: Sun's current
-@code{j2re}@tie{}1.6.0 works in Internet Explorer and Mozilla Firefox on
-Windows XP/Vista.  Note that a recent Windows system may not have a JVM
-installed at all.  Visit
-@uref{http://java.sun.com/@/getjava/@/manual.html} to install a Sun JVM.
-Which (if any) JVM is enabled can be set in `Set Program Access and
-Defaults' in Windows XP (SP1 or later), and which JVM is used by browser
-plugins may also be controlled by the Sun Java applet in the Control
-Panel.
-
-Recent versions of Internet Explorer may block the use of Java applets
-and need the block removed @emph{via} the @emph{information bar}.  Also,
-we have seen cases in which the search results come up as a blank page:
-go back one page in the browser history to find the real results page.
-
-Apple's Safari and Google's Chrome also work.
-
-@node Java Virtual Machines on Mac OS X,  , Java Virtual Machines on Windows, Enabling search in HTML help
-@section Java Virtual Machines on Mac OS X
-
-Java 1.5.0 ships with recent versions of Mac OS X, and the @HTML{}
-search engine works with both Safari and Safari under Mac OS 10.5.
-
-@node The Windows toolset, Function and variable index, Enabling search in HTML help, Top
+@node The Windows toolset, Function and variable index, Platform notes, Top
 @appendix The Windows toolset
 
 If you want to build @R{} or add-on packages from source in Windows, you
@@ -4239,8 +4127,8 @@ locations and other updates to these instructions.  (Most Windows users
 will not need to build add-on packages from source; see @ref{Add-on
 packages} for details.)
 
-Only building with @command{gcc 4.y.z} is supported, and that compiler
-set works out-of-the-box on Windows Vista.
+Only building with MinGW @command{gcc 4.2.1} is supported, and that
+compiler set works out-of-the-box on Windows Vista.
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},

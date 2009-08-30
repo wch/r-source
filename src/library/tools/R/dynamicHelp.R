@@ -31,16 +31,46 @@
     else {
         urls <- paste('<a href="', base, '/', files, '">', files, '</a>',
                       sep = "")
-        out <- c(out, "<ul>",
-                 paste("<li>", iconv(urls, "", "UTF-8"), "</li>", sep = ""),
-                 "</ul>")
+        out <- c(out, "<dl>",
+                 paste("<dd>", iconv(urls, "", "UTF-8"), "</dd>", sep = ""),
+                 "</dl>")
     }
     out <- c(out, "<hr>\n</BODY></HTML>")
     list(payload = paste(out, collapse="\n"))
 }
 
+.HTMLsearch <- function(query)
+{
+    res <- if(identical(names(query), "category"))
+        help.search(keyword = query)$matches
+   else
+        help.search(query[1L], names(query))$matches
+    title <- "Search Results"
+    out <- paste('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
+                 '<html><head><title>R: ', title , '</title>\n',
+                 '<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">\n',
+                 '<link rel="stylesheet" type="text/css" href="/doc/html/R.css">\n',
+                 '</head><body>\n',
+                 '<h1>', title, '</h1>\n',
+                 'The search string was <b>"', query[1L], '"</b><hr>\n',
+                 sep="")
 
-## 'query' is unused.
+    if(nrow(res)) {
+        paths <- paste("/library/", res[, "Package"], "/html/",
+                       res[, "topic"], ".html", sep = "")
+        urls <- paste('<a href="', paths, '">',
+                      res[, "Package"], "::", res[, "topic"],
+                      '</a>', sep = "")
+        out <- c(out, "<dl>",
+                 paste("<dt>", iconv(urls, "", "UTF-8"), "</dt>\n",
+                       "<dd>", res[, "title"], "</dd>", sep = ""),
+                 "</dl>")
+    } else out <- c(out, "No results found")
+    out <- c(out, "<hr>\n</BODY></HTML>")
+    list(payload = paste(out, collapse="\n"))
+}
+
+
 httpd <- function(path, query, ...)
 {
     unfix <- function(file)
@@ -197,6 +227,8 @@ httpd <- function(path, query, ...)
               file.exists(tmp <- file.path(tempdir(), ".R", path))) {
         ## use generated (or symlinked) copy
         return(list(file=tmp, "content-type"="text/html"))
+    } else if(path == "/doc/html/Search") {
+        .HTMLsearch(query)
     } else {
         ## If we got here, we've followed a link that's not to a man page.
         ## FIXME how about those who relocate doc/share?
