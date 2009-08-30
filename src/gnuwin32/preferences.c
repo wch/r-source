@@ -44,7 +44,7 @@ void R_fixbackslash(char *s);
 
 #define gettext GA_gettext
 
-extern char fontname[LF_FACESIZE+1]; /* from console.c */
+extern char fontname[LF_FACESIZE+4]; /* from console.c */
 extern int consolex, consoley; /* from console.c */
 extern int pagerMultiple, haveusedapager; /* from pager.c */
 void editorsetfont(font f);
@@ -723,12 +723,16 @@ static void changeElement(control c, int argument)
 
 static void changeFont(control c)
 {
-    char fontname[LF_FACESIZE+1];
+    char fontname[LF_FACESIZE+4];
     
     if (samplefont) delobj(samplefont);
     
     if(ischecked(tt_font)) strcpy(fontname, "TT "); else strcpy(fontname, "");
-    strcat(fontname,  FontsList[sampleFontNum]);   	
+    
+    if (sampleFontNum >= 0) {
+    	strcat(fontname,  FontsList[sampleFontNum]);
+    } else 
+    	strcat(fontname, gettext(f_font));
     
     samplefont = gnewfont(NULL, fontname, sampleStyle, samplePointsize, 0.0, 1);
     settextfont(guisample, samplefont);

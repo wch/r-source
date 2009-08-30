@@ -68,6 +68,16 @@ INSTALLATION
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.9.2 patched
+
+
+BUG FIXES
+
+    o	If a nonstandard font were specified in Rconsole, the GUI
+    	preferences dialog would crash R.
+    	
+
+
 		CHANGES IN R VERSION 2.9.2
 
 

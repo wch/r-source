@@ -1902,7 +1902,7 @@ void consolesetbrk(console c, actionfn fn, char ch, char mod)
 }
 
 font consolefn = NULL;
-char fontname[LF_FACESIZE+1];
+char fontname[LF_FACESIZE+4];
 int fontsty, pointsize;
 int consoler = 25, consolec = 80, consolex = 0, consoley = 0;
 int pagerrow = 25, pagercol = 80;
