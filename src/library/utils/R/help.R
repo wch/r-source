@@ -293,10 +293,13 @@ function(x, ...)
                         perl = TRUE, useBytes = TRUE)
     texfile <- paste(topic, ".tex", sep = "")
     on.exit(unlink(texfile)) ## ? leave to helper
+    opt <- if(getOption("offline_PDF")) {
+        if(nzchar(opt <- Sys.getenv("R_RD4PDF"))) opt else "times"
+    } else {
+        if(nzchar(opt <- Sys.getenv("R_RD4DVI"))) opt else "ae"
+    }
     cat("\\documentclass[", getOption("papersize"), "paper]{article}\n",
-        "\\usepackage[",
-        if(nzchar(opt <- Sys.getenv("R_RD4DVI"))) opt else "ae",
-        "]{Rd}\n",
+        "\\usepackage[", opt, "]{Rd}\n",
         if(nzchar(encoding)) sprintf("\\usepackage[%s]{inputenc}\n", encoding),
         "\\InputIfFileExists{Rhelp.cfg}{}{}\n",
         "\\begin{document}\n",

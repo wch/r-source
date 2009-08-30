@@ -23,6 +23,7 @@ function(file, topic, ...)
     return(invisible())
 }
 
+## differs in not sending to /dev/null
 offline_help_helper <- function(texfile)
 {
     PDF <- getOption("offline_PDF")
@@ -31,8 +32,7 @@ offline_help_helper <- function(texfile)
     if(!PDF) {
         dfile <- sub("tex$", "dvi", texfile)
         on.exit(unlink(dfile))
-        dvips <- getOption("dvipscmd")
-        if(!nzchar(dvips)) stop("'dvipscmd' is empty")
+        dvips <- getOption("dvipscmd", default = "dvips")
         res <- system(paste(dvips, dfile))
         if(res)
             stop(gettextf("running '%s' failed", dvips), domain = NA)

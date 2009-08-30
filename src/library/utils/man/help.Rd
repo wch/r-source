@@ -131,23 +131,26 @@ type?topic
 }
 
 \section{Offline help}{
-    If \code{offline} is \code{TRUE}, typeset documentation is produced
-    by running the LaTeX version of the help page through
-    \command{latex} and \command{dvips} or, if
-    \code{getOption("offine_PDF") == TRUE}, \command{pdflatex}.  This
-    will either produce a PostScript or PDF file or (depending on the
-    configuration of \command{dvips}) send a postscript file to a printer.
+  If \code{offline} is \code{TRUE}, typeset documentation is produced
+  by running the LaTeX version of the help page through
+  \command{latex} and \command{dvips} or, if
+  \code{getOption("offine_PDF") == TRUE}, \command{pdflatex}.  This
+  will either produce a PostScript or PDF file or (depending on the
+  configuration of \command{dvips}) send a PostScript file to a printer.
 
-   The appearance of the output can be customized through a file
-   \file{Rhelp.cfg} somewhere in your LaTeX search path: this will be
-   input as a LaTeX style file after \code{Rd.sty}.  Some 
-   \link{environment variables} are consulted, notably \env{R_PAPERSIZE}
-   (\emph{via} \code{getOption("papersize")}) and \env{R_RD4DVI}.
+  The appearance of the output can be customized through a file
+  \file{Rhelp.cfg} somewhere in your LaTeX search path: this will be
+  input as a LaTeX style file after \code{Rd.sty}.  Some 
+  \link{environment variables} are consulted, notably \env{R_PAPERSIZE}
+  (\emph{via} \code{getOption("papersize")}) and \env{R_RD4DVI} /
+  \env{R_RD4PDF} (see \sQuote{Making manuals} in the
+  \sQuote{R Installation and Administration Manual}).
 
-   If there is a function \code{offline_help_helper} in the workspace or
-   further down the search path it is used to do the typesetting,
-   otherwise the function of that name in the \code{utils} name space
-   (to which the first paragraph applies).
+  If there is a function \code{offline_help_helper} in the workspace or
+  further down the search path it is used to do the typesetting,
+  otherwise the function of that name in the \code{utils} name space
+  (to which the first paragraph applies).  It should have a single
+  argument, a LaTeX file to be typeset.
 }
 
 \section{Pre-2.10.0 packages}{
