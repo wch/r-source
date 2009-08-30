@@ -48,33 +48,28 @@ function(file, topic, warn = TRUE)
     return(invisible())
 }
 
-.show_help_on_topic_offline <-
-function(file, topic)
+
+offline_help_helper <- function(texfile)
 {
-    con <- tempfile()
-    on.exit(unlink(con))
-    cat("\\documentclass[", getOption("papersize"), "paper]{article}\n",
-        "\\usepackage[", Sys.getenv("R_RD4DVI"), "]{Rd}\n",
-        ## FIXME: look in the file to check this is right
-        "\\usepackage[latin1]{inputenc}\n",
-        "\\InputIfFileExists{Rhelp.cfg}{}{}\n",
-        "\\begin{document}\n",
-        file = con, sep = "")
-    file.append(con, file)
-    cat("\\end{document}\n",
-        file = con, append = TRUE)
-    ## FIXME: should we try 'latex' and 'dvips' here?
-    if(!nzchar(getOption("latexcmd")))
-        stop("'latexcmd' is empty")
-    if(!nzchar(getOption("dvipscmd")))
-        stop("'dvipscmd' is empty")
-    Rtexmf <- file.path(R.home("share"), "texmf")
-    system(paste("/bin/sh",
-                 shQuote(file.path(R.home("share"), "sh", "help-print.sh")),
-                 con,
-                 topic,
-                 shQuote(getOption("latexcmd")),
-                 shQuote(getOption("dvipscmd")),
-                 Rtexmf))
-    return(invisible())
+    PDF <- getOption("offline_PDF")
+    tools::texi2dvi(texfile, pdf=PDF, clean=TRUE)
+    ofile <- sub("tex$", if(PDF) "pdf" else "ps", texfile)
+    if(!PDF) {
+        dfile <- sub("tex$", "dvi", texfile)
+        on.exit(unlink(dfile))
+        dvips <- getOption("dvipscmd")
+        if(!nzchar(dvips)) stop("'dvipscmd' is empty")
+        res <- system(paste(dvips, dfile, "> /dev/null 2>&1"))
+        if(res)
+            stop(gettextf("running '%s' failed", dvips), domain = NA)
+        if(!file.exists(ofile)) {
+            message(gettextf("'%s' produced no output file: sent to printer?",
+                             dvips), domain = NA)
+            return(invisible())
+        }
+    } else if(!file.exists(ofile))
+        stop(gettextf("creation of '%s' failed", ofile), domain = NA)
+    if(ofile != basename(ofile)) file.copy(ofile, basename(ofile))
+    message("Saving help page to ", sQuote(basename(ofile)))
+    invisible()
 }

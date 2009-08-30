@@ -1,6 +1,6 @@
 % File src/library/utils/man/help.start.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{help.start}
@@ -24,8 +24,12 @@ help.start(update = TRUE, gui = "irrelevant",
   \item{gui}{just for compatibility with S-PLUS.}
   \item{browser}{the name of the program to be used as hypertext
     browser. It should be in the \env{PATH}, or a full path specified.
-    Alternatively, it can be a function which will be called with an
+    Alternatively, it can be an \R function which will be called with a
     URL as its only argument.
+#ifdef windows
+    This option is normally unset on Windows, when the file-association
+    mechanism will be used.
+#endif
   }
 #ifdef unix  
   \item{remote}{A character giving a valid URL for the
@@ -46,9 +50,6 @@ help.start(update = TRUE, gui = "irrelevant",
   is run, which should be done after packages are installed, updated or
   removed.
 
-  A side effect is to set \code{options(htmlhelp = TRUE)} so that future
-  help requests (by default) are sent to the browser.
-
   If the browser named by the \code{browser} argument is different from
   the default browser as specified by \code{options("browser")}, the
   default is changed to the given browser so that it gets used for all
@@ -56,20 +57,9 @@ help.start(update = TRUE, gui = "irrelevant",
   not a function.)
 #endif
 #ifdef windows
-  The Windows file association mechanism is used to send the HTML file
-  to a browser, launching one if necessary.
-
-  Unlike Unix systems, running \code{help.start} does not send all
-  future help requests to the browser: use \code{options(htmlhelp=TRUE)}
-  to set that.
-
-  Alternatively, a specific browser can be started if \code{browser} is
-  specified, but \code{help} will still use the file association mechanism.
-
   \code{help.start} and the Java-based search engine have been tested
-  under Internet Explorer 6/7,  Opera 7.54,
-  Mozilla 1.7 and Firefox 1.5/2.0/3.0.  Users of IE
-  will probably need to allow \sQuote{active content} from the
+  under Internet Explorer, Firefox, Chrome, Opera and Mozilla 1.7.
+  Users of IE may need to allow \sQuote{active content} from the
   \sQuote{information bar} before the search engine can be used.
 #endif
 }
@@ -86,8 +76,7 @@ help.start(update = TRUE, gui = "irrelevant",
 }
 
 \seealso{
-  \code{\link{help}()} for on- and off-line help in ASCII/Editor or
-  PostScript format.
+  \code{\link{help}()} for on- and off-line help in other formats.
 
   \code{\link{browseURL}} for how the help file is displayed.
 
@@ -98,7 +87,6 @@ help.start(update = TRUE, gui = "irrelevant",
 #ifdef windows
 help.start(browser="C:\\\\Program Files\\\\Internet Explorer\\\\IEXPLORE.EXE")
 help.start(browser="C:/Program Files/Opera/Opera.exe")
-help.start(browser="C:/Program Files/mozilla.org/Mozilla/mozilla.exe")
 help.start(browser="C:/Program Files/Mozilla Firefox/firefox.exe")
 #endif
 }}

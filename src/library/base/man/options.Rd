@@ -461,6 +461,10 @@ getOption(x, default = NULL)
       to \code{\link{chooseCRANmirror}}, \code{\link{setRepositories}}
       and to select from multiple help files in \code{\link{help}}.}
 
+    \item{\code{offline_PDF}:}{Logical: should
+      \code{\link{help}(offline = TRUE)} produce a PDF file,
+      rather than the default PostScript file?}
+
     \item{\code{pkgType}:}{The default type of packages to be downloaded
       and installed -- see \code{\link{install.packages}}.
 #ifdef windows

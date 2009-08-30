@@ -254,14 +254,16 @@ NEW FEATURES
 
     o	R CMD Rd2pdf is available as a shortcut for R CMD Rd2dvi --pdf.
 
-    o	R CMD check now check Rd crossreferences when a package is
-	specified, if the package is available.
+    o	R CMD check now checks links where a package is specified
+	(\link[pkg]{file} or \link[pkg:file]{topic}), if the package
+	is available.  It notes if the package is not available, as in
+	many cases this is an error in the link.
 
     o	identical() gains three logical arguments, which allow for even
 	more differentiation, notably '-0' and '0'.
 
 
-Rd HELP FILE CHANGES
+HELP & Rd FILE CHANGES
 
     o	An experimental tag \Sexpr has been added to Rd files, to
 	evaluate expressions at build, install, or render time.
@@ -298,11 +300,22 @@ Rd HELP FILE CHANGES
     o	parse_Rd() was incorrectly handling multiple backslashes in
 	R code strings, converting 4n+3 backslashes to 2n+1 instead
 	of 2n+2.
+    	
+    o	A new dynamic HTML help system is used by default, and may be
+	controlled using tools::startDynamicHelp().  With this enabled,
+	HTML help pages will be generated on request, resolving links
+	by searching through the current .libPaths().
 
-    o	A new dynamic help system may be started using
-	tools::startDynamicHelp().  With this option, HTML help pages
-	will be generated on request, resolving links by searching
-	through all installed packages.
+    o	help.start() no longer sets options(htmlhelp = TRUE) (it used
+	to on Unix but not on Windows).
+
+    o	help(offline = TRUE) now calls a function
+	offline_help_helper() if this exists in the workspace or
+	further down the search path, otherwise the function of that
+	name in the 'utils' name space.
+
+	For the default helper, options(offline_PDF = TRUE) will
+	select PDF output rather than the default PostScript.
 
 
 DEPRECATED & DEFUNCT

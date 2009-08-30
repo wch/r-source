@@ -26,9 +26,9 @@ help(topic, offline = FALSE, package = NULL,
 type?topic
 }
 \arguments{
-  \item{topic}{usually, a \link{name} or character string specifying the topic
-   for which help is sought.  A character string (enclosed in explicit
-   single or double quotes) is always taken as naming a topic.
+  \item{topic}{usually, a \link{name} or character string specifying the
+   topic for which help is sought.  A character string (enclosed in
+   explicit single or double quotes) is always taken as naming a topic.
 
    For \code{help}, if the value of \code{topic} is a length-one
    character vector the topic is taken to be the value of the only
@@ -39,14 +39,14 @@ type?topic
    to ask for documentation on a corresponding method: see the section
    on S4 method documentation.  Unlike \code{help}, all names are
    deparsed to give the desired topic.  The forms
-   \code{pkg::topic} and \code{pkg:::topic} are treated specially, and
-   look for help on \code{topic} in package \pkg{package}.
+   \code{\var{pkg}::\var{topic}} and \code{\var{pkg}:::\var{topic}} are
+   treated specially, and look for help on \code{topic} in package
+   \pkg{package}.
 
    See \sQuote{Details} for what happens if this is omitted for \code{help}.
  }
  \item{offline}{a logical indicating whether documentation should be
-   displayed on-line to the screen (the default) or hardcopy of it
-   should be produced.}
+   displayed on-line to the screen (the default) or typeset.}
  \item{package}{a name or character vector giving the packages to look
    into for documentation, or \code{NULL}.  By default, all packages
    in the search path are used.}
@@ -60,30 +60,55 @@ type?topic
    If \code{TRUE} the Compiled HTML version of the help on the topic
    will be shown in a help viewer.  If none is available, plain text
    help will be shown.}
+ \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, an HTML
+   version of the help page on the topic will be shown in the
+   browser specified by \code{options("browser")}.
 #ifdef unix
- \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (which is the
-   default after \code{\link{help.start}} has been called), the HTML
-   version (if available) of the help on the topic will be shown in the
-   browser specified by \code{options("browser")}.  See
-   \code{\link{browseURL}} for details of the browsers that are
-   supported.  Where possible an existing browser window is re-used.}
+   See \code{\link{browseURL}} for details of the browsers that are
+   supported.  Where possible an existing browser window is re-used.
 #endif
 #ifdef windows
- \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML
-   version (if available) of the help on the topic will be shown in a
-   browser specified by \code{options("browser")} or the
-   file-association mechanism.
-  }
+   By default this option is unset on Windows and the file-association
+   mechanism is used to select a browser.
 #endif
-  \item{pager}{the pager to be used for \code{\link{file.show}}.}
+ }
+  \item{pager}{the pager to be used by \code{\link{file.show}} to
+    display text help.}
   \item{type}{the special type of documentation to use for this topic;
     for example, if the type is \code{class}, documentation is
-    provided for the class with name \code{topic}.  The function
-    \code{topicName} returns the actual name used in this case.
-    See the section on method documentation for the uses of
-    \code{type} to get help on formal methods.}
+    provided for the class with name \code{topic}.
+    See the Section \sQuote{S4 Method Documentation} for the uses of
+    \code{type} to get help on formal methods, including
+    \code{methods?\var{function}} and \code{method?\var{call}}.
+  }
 }
 \details{
+  The following types of help are available:
+  \itemize{
+    \item Plain text help
+    \item HTML help, selected by \code{options(htmlhelp=TRUE)}.
+    HTML help pages will be generated with hyperlinks to other topics if
+    the internal HTTP server is in use (the default, but see
+    \code{\link{startDynamicHelp}}), otherwise the pages will be linkless.
+#ifdef windows
+    \item (Windows only) Compiled HTML help, selected by
+    \code{options(chmhelp=TRUE)}.  Takes priority over
+    \code{options(htmlhelp=TRUE)}.  May not be available for
+    some or all packages, when text help is used instead.
+#endif
+    \item For \code{help} only, typeset as a PostScript or PDF file --
+    see the section on \sQuote{Offline help}  Selected by \code{offline =
+      TRUE}.
+  }
+#ifdef unix
+  The \sQuote{factory-fresh} default is text help except from the Mac OS
+  GUI, which uses HTML help displayed in its own browser window.
+#endif
+#ifdef windows
+  The defaults for the type of help are selected when \R is installed --
+  the \sQuote{factory-fresh} default is HTML help.
+#endif
+  
   \code{topic} is not optional: if it is omitted \R will give a hint as
   to suitable topics if a package is specified, to available packages if
   \code{lib.loc} only is specified, and help on \code{help} itself if
@@ -91,7 +116,7 @@ type?topic
 
   Some topics need to be quoted (by \link{backtick}s) or given as a
   character string.  There include those which cannot syntactically
-  appear on their own such  as unary and binary operators,
+  appear on their own such as unary and binary operators,
   \code{function} and control-flow \link{reserved} words (including
   \code{if}, \code{else} \code{for}, \code{in}, \code{repeat},
   \code{while}, \code{break} and \code{next}.  The other \code{reserved}
@@ -100,43 +125,45 @@ type?topic
 
   If multiple help files matching \code{topic} are found, in interactive
   use a menu is presented for the user to choose one: otherwise the
-  first on the search path is used.  (The menu will be a graphical menu
-  if possible if \code{\link{getOption}("menu.graphics")} is true, the
-  default.)
-
-#ifdef unix
-  HTML help works best if \code{\link{help.start}()} has been called in
-  the session.  Otherwise there will be a warning about
-  \sQuote{Using non-linked HTML file: hyperlinks may be incorrect} and
-  cross-library links will most likely not be resolved.
- 
-  If \code{offline} is \code{TRUE}, hardcopy of the documentation is
-  produced by running the LaTeX version of the help page through
-  \code{latex} and \code{dvips}.  Depending on your \code{dvips}
-  configuration, hardcopy will be sent to the printer or saved in a
-  file.  If the programs are in non-standard locations and hence were
-  not found at compile time, you can either set the options
-  \code{latexcmd} and \code{dvipscmd}, or the environment variables
-  \env{R_LATEXCMD} and \env{R_DVIPSCMD} appropriately.
-#endif
-#ifdef windows
-  If \code{offline} is \code{TRUE}, hardcopy of the documentation is
-  produced by running the LaTeX version of the help page through
-  \code{latex}.  You will need to customize the file
-  \file{\var{\link[base:Rhome]{R_HOME}}/bin/helpPRINT.bat} which
-  examples.  A TeX file named \file{\var{topic}.tex} is created in the
-  current working directory and passed as an argument to \file{helpPRINT.bat}.
-#endif
-  The appearance of the output can be customized through a file
-  \file{Rhelp.cfg} somewhere in your LaTeX search path: this will be
-  input as a LaTeX style file after \code{Rd.sty}.  Some 
-  \link{environment variables} are consulted, notably \env{R_PAPERSIZE}
-  (\emph{via} \code{getOption("papersize")}) and \env{R_RD4DVI}
-
-  If LaTeX versions of help pages were not built at the installation of
-  the package, the \code{print} method will convert the \file{Rd}
-  sources if these are available.
+  first on the search path is used.  (For HTML help the menu will be an
+  HTML page, otherwise a graphical menu if possible if
+  \code{\link{getOption}("menu.graphics")} is true, the default.)
 }
+
+\section{Offline help}{
+    If \code{offline} is \code{TRUE}, typeset documentation is produced
+    by running the LaTeX version of the help page through
+    \command{latex} and \command{dvips} or, if
+    \code{getOption("offine_PDF") == TRUE}, \command{pdflatex}.  This
+    will either produce a PostScript or PDF file or (depending on the
+    configuration of \command{dvips}) send a postscript file to a printer.
+
+   The appearance of the output can be customized through a file
+   \file{Rhelp.cfg} somewhere in your LaTeX search path: this will be
+   input as a LaTeX style file after \code{Rd.sty}.  Some 
+   \link{environment variables} are consulted, notably \env{R_PAPERSIZE}
+   (\emph{via} \code{getOption("papersize")}) and \env{R_RD4DVI}.
+
+   If there is a function \code{offline_help_helper} in the workspace or
+   further down the search path it is used to do the typesetting,
+   otherwise the function of that name in the \code{utils} name space
+   (to which the first paragraph applies).
+}
+
+\section{Pre-2.10.0 packages}{
+  Packages installed under earlier versions of \R do not have parsed Rd
+  files, but do have prebuilt text, html and latex help pages, and
+  these are used if parsed Rd files are not available.
+#ifdef unix
+  
+  HTML help without the http server works best if
+  \code{\link{help.start}()} has been called earlier in the session.
+  Otherwise there will be a warning about \sQuote{Using non-linked HTML
+  file: hyperlinks may be incorrect} and cross-library links will most
+  likely not be resolved.
+#endif
+}
+
 \note{
   Unless \code{lib.loc} is specified explicitly, the loaded packages are
   searched before those in the specified libraries.  This ensures that
@@ -150,16 +177,6 @@ type?topic
   searched for help on \code{topic} and a list of (any) packages where
   help may be found is printed (but no help is shown).
   \bold{N.B.} searching all packages can be slow.
-
-  The help files can be many small files.  On some file systems it is
-  desirable to save space, and the text files in the \file{help} directory
-  of an installed package can be zipped up as a zip archive
-  \file{Rhelp.zip}.  Ensure that file \file{AnIndex} remains un-zipped.
-  Similarly, all the files in the \file{latex} directory can be zipped
-  to \file{Rhelp.zip}.
-#ifdef windows
-  This is done on Windows for the larger packages.
-#endif
 }
 
 \section{S4 Method Documentation}{
@@ -168,9 +185,10 @@ type?topic
   of a particular function.  The \code{"?"} operator allows access to
   this documentation in three ways.
 
-  The expression \code{methods ? f} will look for the overall
-  documentation methods for the function \code{f}.  Currently, this
-  means the documentation file containing the alias \code{f-methods}.
+  The expression \code{methods?\var{f}} will look for the overall
+  documentation methods for the function \code{\var{f}}.  Currently,
+  this means the documentation file containing the alias
+  \code{\var{f}-methods}.
 
   There are two different ways to look for documentation on a
   particular method.  The first is to supply the \code{topic} argument
@@ -181,7 +199,7 @@ type?topic
   for it), the help reverts to documentation on the function name.
 
   The \code{"?"} operator can also be called with \code{type} supplied
-  as \code{"method"}; in this case also, the \code{topic} argument is
+  as \code{method}; in this case also, the \code{topic} argument is
   a function call, but the arguments are now interpreted as specifying
   the class of the argument, not the actual expression that will
   appear in a real call to the function.  See the examples below.
@@ -194,7 +212,7 @@ type?topic
 
   Both approaches make use of any inherited methods; the signature of
   the method to be looked up is found by using \code{selectMethod}
-  (see the documentation for  \code{\link{getMethod}}).
+  (see the documentation for \code{\link{getMethod}}).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

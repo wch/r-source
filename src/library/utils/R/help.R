@@ -267,7 +267,7 @@ function(x, ...)
                 pkgname <- basename(dirpath)
                 RdDB <- file.path(dirpath, "help", pkgname)
                 if(file.exists(paste(RdDB, "rdx", sep="."))) {
-                    message("on-demand Rd conversion for ", sQuote(topic))
+                    ## message("on-demand Rd conversion for ", sQuote(topic))
                     key <- sub("\\.tex$", "", basename(file))
                     tf2 <- tempfile("Rlatex")
                     tools::Rd2latex(tools:::fetchRdDB(RdDB, key), tf2)
@@ -283,3 +283,29 @@ function(x, ...)
     invisible(x)
 }
 
+.show_help_on_topic_offline <- function(file, topic)
+{
+    encoding <-""
+    lines <- readLines(file)
+    encpatt <- "^\\\\inputencoding\\{(.*)\\}$"
+    if(length(res <- grep(encpatt, lines, perl = TRUE, useBytes = TRUE)))
+        encoding <- sub(encpatt, "\\1", lines[res],
+                        perl = TRUE, useBytes = TRUE)
+    texfile <- paste(topic, ".tex", sep = "")
+    on.exit(unlink(texfile)) ## ? leave to helper
+    cat("\\documentclass[", getOption("papersize"), "paper]{article}\n",
+        "\\usepackage[",
+        if(nzchar(opt <- Sys.getenv("R_RD4DVI"))) opt else "ae",
+        "]{Rd}\n",
+        if(nzchar(encoding)) sprintf("\\usepackage[%s]{inputenc}\n", encoding),
+        "\\InputIfFileExists{Rhelp.cfg}{}{}\n",
+        "\\begin{document}\n",
+        file = texfile, sep = "")
+    file.append(texfile, file)
+    cat("\\end{document}\n", file = texfile, append = TRUE)
+    helper <- if (exists("offline_help_helper", envir = .GlobalEnv))
+        get("offline_help_helper", envir = .GlobalEnv)
+    else utils:::offline_help_helper
+    helper(texfile)
+    invisible()
+}

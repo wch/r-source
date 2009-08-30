@@ -23,29 +23,27 @@ function(file, topic, ...)
     return(invisible())
 }
 
-.show_help_on_topic_offline <-
-function(file, topic)
+offline_help_helper <- function(texfile)
 {
-    FILE <- topic # must be in the current dir
-    con <- paste(FILE, ".tex", sep = "")
-    cat("\\documentclass[",
-        getOption("papersize"),
-        "paper]{article}",
-        "\n",
-        "\\usepackage[",
-        if(nzchar(opt <- Sys.getenv("R_RD4DVI"))) opt else "ae",
-        "]{Rd}",
-        "\n",
-        "\\InputIfFileExists{Rhelp.cfg}{}{}\n",
-        "\\begin{document}\n",
-        file = con, sep = "")
-    file.append(con, file)
-    cat("\\end{document}\n", file = con, append = TRUE)
-    cmd <- paste('"',
-                 paste(R.home("bin"), "helpPRINT", sep="/"),
-                 '"', sep="")
-    texpath <- chartr("\\", "/",
-                      file.path(R.home("share"), "texmf"))
-    system(paste(cmd, FILE, topic, texpath), wait = FALSE)
-    return(invisible())
+    PDF <- getOption("offline_PDF")
+    tools::texi2dvi(texfile, pdf=PDF, clean=TRUE)
+    ofile <- sub("tex$", if(PDF) "pdf" else "ps", texfile)
+    if(!PDF) {
+        dfile <- sub("tex$", "dvi", texfile)
+        on.exit(unlink(dfile))
+        dvips <- getOption("dvipscmd")
+        if(!nzchar(dvips)) stop("'dvipscmd' is empty")
+        res <- system(paste(dvips, dfile))
+        if(res)
+            stop(gettextf("running '%s' failed", dvips), domain = NA)
+        if(!file.exists(ofile)) {
+            message(gettextf("'%s' produced no output file: sent to printer?",
+                             dvips), domain = NA)
+            return(invisible())
+        }
+    } else if(!file.exists(ofile))
+        stop(gettextf("creation of '%s' failed", ofile), domain = NA)
+    if(ofile != basename(ofile)) file.copy(ofile, basename(ofile))
+    message("Saving help page to ", sQuote(basename(ofile)))
+    invisible()
 }

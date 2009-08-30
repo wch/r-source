@@ -46,7 +46,7 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
         writeLines(gettext("Otherwise, be patient ..."))
     }
     browseURL(url)
-    options(htmlhelp = TRUE)
+    ## options(htmlhelp = TRUE)
 }
 
 browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
