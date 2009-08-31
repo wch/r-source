@@ -126,6 +126,9 @@ function(x, ...)
                                       dirname(paths)),
                                     indent = 22))))
     } else {
+        if(type == "html") 
+            if (tools:::httpdPort == 0L) tools::startDynamicHelp()    
+            
         if(length(paths) > 1L) {
             if (type == "html" && tools:::httpdPort > 0L) { # Redo the search if dynamic help is running
 		browseURL(paste("http://127.0.0.1:", tools:::httpdPort,
@@ -166,7 +169,6 @@ function(x, ...)
             file <- paths
 
         if(type == "html") {
-            if (tools:::httpdPort == 0L) tools::startDynamicHelp()
             if (tools:::httpdPort > 0L) {
 		path <- dirname(file)
 		dirpath <- dirname(path)
