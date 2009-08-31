@@ -1,9 +1,9 @@
 % File src/library/base/man/Sys.localeconv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
-\name{localeconv}
+\name{Sys.localeconv}
 \alias{localeconv}
 \alias{Sys.localeconv}
 \title{Find Details of the Numerical and Monetary Representations
@@ -22,7 +22,7 @@ Sys.localeconv()
 
   Normally \R is run without looking at the value of \env{LC_NUMERIC},
   so the decimal point remains '\code{.}'.  So the first three of these
-  values will not be useful unless you have set \env{LC_NUMERIC} in
+  components will not be useful unless you have set \env{LC_NUMERIC} in
   the current \R session.
 }
 \value{

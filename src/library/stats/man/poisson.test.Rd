@@ -1,6 +1,5 @@
 \name{poisson.test}
 \alias{poisson.test}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{Exact Poisson tests}
 \description{
      Performs an exact test of a simple null hypothesis about the
@@ -12,7 +11,6 @@ poisson.test(x, T = 1, r = 1,
     alternative = c("two.sided", "less", "greater"),
     conf.level = 0.95)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{number of events. A vector of length one or two.}
   \item{T}{time base for event count. A vector of length one or two. }
@@ -55,9 +53,10 @@ poisson.test(x, T = 1, r = 1,
   conditioning on the total event count, and the rate ratio is directly
   related to the odds in that binomial distribution.  
 }
-\seealso{\code{\link{binom.test}}}
+\seealso{
+  \code{\link{binom.test}}
+}
 \examples{
-
 ### These are paraphrased from data sets in the ISwR package
 
 ## SMR, Welsh Nickel workers
@@ -66,7 +65,5 @@ poisson.test(137, 24.19893)
 ## eba1977, compare Fredericia to other three cities for ages 55-59
 poisson.test(c(11,6+8+7),c(800, 1083+1050+878))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{htest}
 
