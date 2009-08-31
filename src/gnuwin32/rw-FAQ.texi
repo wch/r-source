@@ -1065,45 +1065,15 @@ yourself.
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the @RWVER@\library directory, Packages
 @section The packages I installed do not appear in the HTML help system.
 
-To update the HTML indices after you have installed a pre-compiled
-package, run at the R prompt.
-
-@example
-> link.html.help()
-@end example
-
-This is done automatically when installing from the Packages menu or by
-@code{install.packages()}, and when @code{help.start} is run,
-@emph{provided} you have write permission on @file{@RWVER@/library}.  If
-you do not have sufficient permission, you will get warnings and the
-packages you install will not appear in the list of packages or the
-search system.
+This question applied to the pre-2.10.0 HTML help system, which has been
+replaced.
 
 
 @node My functions are not found by the HTML help search system., Loading a package fails., The packages I installed do not appear in the HTML help system, Packages
 @section My functions are not found by the HTML help search system.
 
-@strong{FIXME}: this needs updating.
-
-The following conditions need to hold for functions in a package you installed.
-
-@itemize @bullet
-@item the package contains a @file{CONTENTS} file in its top-level directory.
-@item you updated the indices as described in the answer to Q4.3 after
-installing the package.
-@end itemize
-
-@noindent
-If those hold, this works for us.  Note that if you were unable to
-update the indices (for which you need write permission in the
-@file{@RWVER@} directory), only the functions in packages installed in
-the main library will be found.
-
-If the help search system does not work @emph{at all}, this probably
-indicates that Java support is either not installed or Java or
-JavaScript is not enabled in your browser.  The search page contains a
-link to the appropriate section in the @emph{R Installation and
-Administration} manual.
+This question applied to the pre-2.10.0 search system, which has been
+replaced.
 
 
 @node Loading a package fails., Package TclTk does not work., My functions are not found by the HTML help search system., Packages
@@ -1139,38 +1109,30 @@ Tcl/Tk 8.5.x installation with the path to its @file{bin} directory
 given by value of @env{MY_TCLTK}, and that this is set up correctly
 (with @env{TCL_LIBRARY} set if needed).  In that case you do not need
 the Tcl/Tk support files installed (but they can be).  Note that you do
-need 8.5.x and not 8.4.x.  (If you build R from the sources yourself you
-can configure it to use 8.4.x.)
+need 8.5.x and not 8.4.x or 8.6.0.
 
 Several package authors have suggested using ActiveTcl
 (@uref{http://www.activestate.com/Products/activetcl/}) as a way to get
 Tcl/Tk extensions.  This could be used by setting (for a default install)
 
 @example
-MT_TCLTK=c:/Tcl/bin
+MY_TCLTK=c:/Tcl/bin
 @end example
 
 @noindent
-@strong{but} current versions (e.g.@: 8.5.1.0) do not contain any extra
-extensions.  Some extensions can be copied over from an ActiveTcl
-install of Tcl/Tk 8.4 or downloaded via the @code{Teacup} facility.
+@strong{but} current versions do not contain any extra extensions.  Some
+extensions can be copied over from an ActiveTcl install of Tcl/Tk 8.4 or
+downloaded via the @code{Teacup} facility.
 
 
 @node  Hyperlinks in HTML do not work., update.packages() fails, Package TclTk does not work., Packages
 @section Hyperlinks in HTML sometimes do not work.
 
-They may well not work between packages installed in different
-libraries.  This is solved under Unix using symbolic links which Windows
-does not implement (except on NTFS file systems under Vista and later --
-where they may need Administrator privileges).
+This question was much more relevant prior to version 2.10.0.
 
-With HTML, @code{help.start()} fixes up links to the most of the
-standard packages if it has write permission in the main library tree.
-Not even these work for Compiled HTML help.
+They may still not work between packages installed in different libraries
+if the HTTP server has been disabled: the remedy is not to do that!
 
-Currently links to the @code{base}, @code{datasets}, @code{utils},
-@code{grDevices}, @code{graphics}, @code{methods} and @code{stats}
-packages are fixed.
 
 
 @node update.packages() fails, How do I add to the list of repositories?, Hyperlinks in HTML do not work., Packages

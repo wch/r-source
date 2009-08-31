@@ -33,9 +33,6 @@ help.start <- function(update = TRUE, gui = "irrelevant",
         try(make.packages.html(.libPaths(),
                                outfile = if(dynamic) file.path(tempdir(), ".R/doc/html/packages.html")
                                ))
-        cat("updating HTML search index\n")
-        flush.console()
-        try(make.search.html(.libPaths()))
     }
     cat(gettextf("If nothing happens, you should open '%s' yourself\n", a))
     if(!dynamic) a <- chartr("/", "\\", a)
