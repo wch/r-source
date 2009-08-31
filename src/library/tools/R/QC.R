@@ -3460,13 +3460,21 @@ function(package, dir, lib.loc = NULL)
 {
     ## Build a db with all possible link targets (aliases) in the base
     ## and recommended packages.
-    aliases <-
-        lapply(unlist(.get_standard_package_names()[c("base",
-                                                      "recommended")],
-                      use.names = FALSE),
-               Rd_aliases, lib.loc = NULL)
+    base <- unlist(.get_standard_package_names()[c("base", "recommended")],
+                   use.names = FALSE)
+    aliases <- lapply(base, Rd_aliases, lib.loc = NULL)
     ## (Don't use lib.loc = .Library, as recommended packages may have
     ## been installed to a different place.)
+
+    ## Now find the aliases in packages it depends on
+    if(!missing(package)) {
+        pfile <- system.file("Meta", "package.rds", package = package,
+                             lib.loc = lib.loc)
+        pkgInfo <- .readRDS(pfile)
+        ## only 'Depends' are guaranteed to be on the search path.
+        pkgs <- unique(names(pkgInfo$Depends)) %w/o% base
+        aliases <- c(aliases, lapply(pkgs, Rd_aliases, lib.loc = lib.loc))
+    } # else FIXME not implemented
 
     ## Add the aliases from the package itself, and build a db with all
     ## \link xrefs in the package Rd objects.
