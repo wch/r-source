@@ -238,12 +238,11 @@ Rd2HTML <-
             	}
             }
             if (is.na(htmlfile)) {
-                ## FIXME for CHM?
+                ## Used to use the search engine, but we no longer have one,
+                ## and we don't get here for dynamic help.
                 if(!no_links)
                     warnRd(block, Rdfile, "missing link ", sQuote(topic))
-                htmlfile <- paste("../../../doc/html/search/SearchObject.html?",
-                                   parts$dest, sep= "")
-                writeHref()
+                writeContent(block, tag)
             } else {
                 ## treat links in the same package specially -- needed for CHM
                 pkg_regexp <- paste("^../../", package, "/html/", sep = "")
