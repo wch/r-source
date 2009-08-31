@@ -238,8 +238,10 @@ httpd <- function(path, query, ...)
         .HTMLsearch(query)
     } else {
         ## If we got here, we've followed a link that's not to a man page.
-        ## FIXME how about those who relocate doc/share?
-    	file <- file.path(R.home(), path)
+        file <- if(grepl("^/doc/", path)) {
+            ## /doc/AUTHORS and so on.
+            file.path(R.home("doc"), sub("^/doc", "", path))
+        } else file.path(R.home(), path)
     	return(list(file = file, "content-type" = mime_type(path)))
     }
 }
