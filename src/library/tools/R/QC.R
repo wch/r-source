@@ -3538,7 +3538,7 @@ function(package, dir, lib.loc = NULL)
     }
 
     unknown <- unique(unknown)
-    obsolete <- unknown %in% c("ctest", "eda", "lqs", "mle", "modreg", "nls", "stepfun", "ts")
+    obsolete <- unknown %in% c("ctest", "eda", "lqs", "mle", "modreg", "mva", "nls", "stepfun", "ts")
     if (any(obsolete)) {
         message(gettextf("Obsolete package(s) %s in Rd xrefs",
                          paste(sQuote(unknown[obsolete]), collapse = ", ")),
