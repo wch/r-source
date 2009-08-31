@@ -1979,7 +1979,7 @@ sub check_pkg {
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
-	    if(scalar(grep(!/^Did not find package/, @out)) > 0) {
+	    if(scalar(grep(!/^Package\(s\) unavailable/, @out)) > 0) {
 		$log->warning();
 	    } else {
 		$log->note();

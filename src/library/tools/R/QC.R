@@ -3538,10 +3538,23 @@ function(package, dir, lib.loc = NULL)
     }
 
     unknown <- unique(unknown)
-    if (length(unknown))
-        message(gettextf("Did not find package(s) %s to check Rd xrefs",
-                         paste(sQuote(unknown), collapse = ", ")),
-                         domain = NA)
+    if (length(unknown)) {
+        p <- file.path(R.home("etc"), "repositories")
+        a <- utils::read.delim(p, header = TRUE, comment.char = "#",
+                               colClasses = c(rep("character", 3L), rep("logical", 4L)))
+        repos <- c("http://cran.r-project.org", a[3:6, "URL"])
+        known <- try(utils::available.packages(utils::contrib.url(repos, "source"))[, "Package"])
+        miss <- if(inherits(known, "try-error")) TRUE
+        else unknown %in% known
+        if(any(miss))
+            message(gettextf("Package(s) unavailable to check Rd xrefs: %s",
+                             paste(sQuote(unknown[miss]), collapse = ", ")),
+                    domain = NA)
+        if(any(!miss))
+            message(gettextf("Unknown package(s) %s in Rd xrefs",
+                             paste(sQuote(unknown[!miss]), collapse = ", ")),
+                    domain = NA)
+    }
     ## The bad ones:
     bad <- db[, "bad"] == "TRUE"
     structure(split(db[bad, "report"], db[bad, 3L]), class = "check_Rd_xrefs")
