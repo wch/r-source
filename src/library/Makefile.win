@@ -75,7 +75,7 @@ Rdfiles:
 	@$(ECHO) "building all R object docs"
 ifeq ($(strip $(USE_CHM)),TRUE)
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\", types=c('html', 'chm'), silent = TRUE)" | LC_ALL=C $(R_EXE) || exit 1; \
+	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\", types='chm', silent = TRUE)" | LC_ALL=C $(R_EXE) || exit 1; \
 	  $(MAKE) --no-print-directory -C $${pkg}/chm \
 	    -f $(RHOME)/src/gnuwin32/help/MkChm $${pkg}.chm RHOME=$(RHOME); \
 	  if test -f $${pkg}/chm/$${pkg}.chm ; then \
@@ -85,10 +85,6 @@ ifeq ($(strip $(USE_CHM)),TRUE)
 	    echo CHM compile failed:  HTML Help Workshop not installed? ; \
 	    exit 1; \
 	  fi; \
-	done
-else
-	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\", silent = TRUE)" | LC_ALL=C $(R_EXE) || exit 1; \
 	done
 endif
 

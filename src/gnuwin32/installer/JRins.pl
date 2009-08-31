@@ -166,9 +166,8 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
 Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
-Name: "chtml"; Description: "Compiled HTML Help Files"; Types: full custom
+; Name: "chtml"; Description: "Compiled HTML Help Files"; Types: full custom
 Name: "html"; Description: "HTML Files"; Types: user full custom; Flags: checkablealone
-Name: "html/help"; Description: "Prebuilt HTML Help Files"; Types: full custom; Flags: dontinheritcheck
 Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom; Flags: checkablealone
 Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
 Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
@@ -402,13 +401,9 @@ sub listFiles {
 		 || $_ eq "doc\\html\\rw-FAQ.html"
 		 || $_ eq "share\\texmf\\Sweave.sty") {
 	    $component = "main";
-	} elsif (m/^library\\[^\\]*\\html\\00Index.html/) {
-	    ## HTML indices are needed by dynamic HTML help
-	    $component = "html";
 	} elsif (m/^library\\[^\\]*\\html/
-		 || m/^library\\[^\\]*\\CONTENTS/
 		 || $_ eq "library\\R.css") {
-	    $component = "html/help";
+	    $component = "html";
 	} elsif (m/^doc\\html/
 		 || m/^doc\\manual\\[^\\]*\.html/ ) {
 	    $component = "html";

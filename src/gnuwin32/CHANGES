@@ -46,6 +46,9 @@ PACKAGE INSTALLATION
 
 INSTALLATION
 
+    o	CHM help is no longer made by default, and support for it may
+	be withdrawn entirely before release.
+
     o	The defaults have been changed: they now are to use HTML help,
 	not install prebuilt HTML help pages and not install CHM help.
 	[Not yet for the MSI installer.]

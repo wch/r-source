@@ -124,7 +124,7 @@ The information here applies only to recent versions of R for Windows,
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win32.exe} of about 34Mb.  This contains all the
+installer @samp{@RWVER@-win32.exe} of about 32Mb.  This contains all the
 components and allows as complete as installation as you choose.
 
 There are also links on that page to the @samp{r-patched} and
@@ -147,7 +147,7 @@ test on versions of Windows currently supported by Microsoft, mainly on
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical install
-takes 50-60Mb of disk space, a full installation about 80Mb and a
+takes 50Mb of disk space, a full installation about 65Mb and a
 minimal one about 32Mb.
 
 If you want to be able to build packages from sources, we recommend that
@@ -158,7 +158,7 @@ administrator rights@footnote{Non-administrator accounts will
 automatically be offered a default installation directory in the user
 area.} should consider installing into a non-system area (such as
 @file{C:\R}).  If you are installing to a network drive, you should
-consider changing the default form of help during the install
+consider choosing the default form of help during the install
 @strong{not} to be Compiled HTML help: @xref{Help is not shown for some
 of the packages}.  Installing to a network share (a filepath starting
 with @code{\\machine\...}) is not supported: such paths will need to
@@ -219,7 +219,7 @@ set the default installation directory
 set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
 set the initial list of components: Components are named @samp{main},
-@samp{chtml}, @samp{html}, @samp{html/help}, @samp{manuals},
+@samp{chtml}, @samp{html}, @samp{manuals},
 @samp{manuals/basic}, @samp{manuals/technical}, @samp{manuals/refman},
 @samp{libdocs}, @samp{tcl}, @samp{tcl/chm}, @samp{trans}
 and @code{tests}.
