@@ -11,24 +11,25 @@
   documentation.
 }
 \usage{
-findHTMLlinks(pkgDir = "", lib.loc = NULL)
+findHTMLlinks(pkgDir = "", lib.loc = NULL, level = 0:2)
 }
 \arguments{
   \item{pkgDir}{the top-level directory of an installed package.  The
     default indicates no package.}
   \item{lib.loc}{character vector describing the location of \R library
     trees to scan: the default indicates \code{\link{.libPaths}()}.}
+  \item{level}{Which level(s) to include.}
 }
 \details{
   \code{findHTMLlinks} tries to resolve links from one help page to
   another.  It uses in decreasing priority
   \itemize{
     \item The package in \code{pkgDir}: this is used when converting
-    HTML help for that package.
-    \item The packages that are loaded in a vanilla \R session.
+    HTML help for that package (level 0).
+    \item The base and recommended packages (level 1).
     \item Other packages found in the library trees specified by
     \code{lib.loc} in the order of the trees and alphabetically within a
-    library tree.
+    library tree (level 2).
   }
 }
 \value{

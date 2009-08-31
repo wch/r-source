@@ -16,7 +16,7 @@
 }
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
-        Links = NULL, CHM = FALSE,
+        Links = NULL, Links2 = NULL, CHM = FALSE,
         stages = "render", outputEncoding = "UTF-8", 
         dynamic = FALSE, no_links = FALSE, ...)
 
@@ -40,7 +40,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   \item{dynamic}{logical: set links for render-time resolution by
       dynamic help system.}
   \item{no_links}{logical: suppress hyperlinks to other help topics.}
-  \item{Links}{\code{NULL} or a named (by topics) character vector of
+  \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{CHM}{logical: prepare HTML suitable for Compiled HTML?}
   \item{...}{ additional parameters to pass to \code{\link{parse_Rd}} when
@@ -53,7 +53,6 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   \code{outputEncoding} is set to \code{""} and the native character
   encoding (shown by \code{\link{localeToCharset}}) is used.
 
-
   \code{Rd2ex} extracts the examples in the format used by
   \code{\link{example}} and \R utilities.  it reproduces the previous
   version up to
@@ -65,6 +64,10 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   Each of the functions accepts a filename for an Rd file, and
   will use \code{\link{parse_Rd}} to parse it before applying the
   conversions or checks.
+  
+  The difference between arguments \code{Link} and \code{Link2} is that
+  links are looked in them in turn, so lazy-evaluation can be used to
+  only do a second-level search for links if required.
 }
 \section{Encodings}{
   Rd files are normally intended to be rendered on a wide variety of

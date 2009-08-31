@@ -75,21 +75,10 @@ mime_canonical_encoding <- function(encoding)
     encoding
 }
 
-## This warns on
-##  missing links
-## and stops on
-##  Bad \\link text
-##  Bad \\link option -- must be text
-##  unrecognized tag
-##  \\tabular format must be simple text
-##  Unrecognized \\tabular format:
-##  "Only ", length(format), " columns allowed in this table"
-
-
 ## FIXME: better to really use XHTML
 Rd2HTML <-
     function(Rd, out = "", package = "", defines = .Platform$OS.type,
-             Links = NULL, CHM = FALSE,
+             Links = NULL, Links2 = NULL, CHM = FALSE,
              stages = "render", outputEncoding = "UTF-8",
              dynamic = FALSE, no_links = FALSE, ...)
 {
@@ -242,6 +231,10 @@ Rd2HTML <-
             	if (!is.null(Links)) {
             	    tmp <- Links[topic]
             	    if (!is.na(tmp)) htmlfile <- tmp
+                    else {
+                        tmp <- Links2[topic]
+                        if (!is.na(tmp)) htmlfile <- tmp
+                    }
             	}
             }
             if (is.na(htmlfile)) {
@@ -652,23 +645,26 @@ Rd2HTML <-
     invisible(out)
 }
 
-findHTMLlinks <- function(pkgDir = "", lib.loc = NULL)
+findHTMLlinks <- function(pkgDir = "", lib.loc = NULL, level = 0:2)
 {
     ## The priority order is
-    ## This package
-    ## The standard packages
-    ## along lib.loc.
+    ## This package (level 0)
+    ## The standard packages (level 1)
+    ## along lib.loc (level 2)
 
     if(is.null(lib.loc)) lib.loc <- .libPaths()
 
-    Links <- lapply(rev(lib.loc), .find_HTML_links_in_library)
-    Links <- c(Links,
-               lapply(file.path(.Library,
-                                c("base", "utils", "graphics",
-                                  "grDevices", "stats", "datasets",
-                                  "methods")),
-                      .find_HTML_links_in_package))
-    if(nzchar(pkgDir))
+    Links <- list()
+    if(2 %in% level)
+        Links <- c(Links, lapply(rev(lib.loc), .find_HTML_links_in_library))
+    if(1 %in% level) {
+        base <- unlist(.get_standard_package_names()[c("base", "recommended")],
+                       use.names = FALSE)
+        Links <- c(Links,
+                   lapply(file.path(.Library, base),
+                          .find_HTML_links_in_package))
+    }
+    if(0 %in% level && nzchar(pkgDir))
         Links <- c(Links, list(.find_HTML_links_in_package(pkgDir)))
     Links <- unlist(Links)
 

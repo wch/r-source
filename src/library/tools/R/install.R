@@ -2031,9 +2031,16 @@ if (FALSE) {
     if (any(c("html", "chm") %in% types)) {
         ## may be slow, so add a message
         if (!silent) message("    finding HTML links ...", appendLF = FALSE)
-        Links <- findHTMLlinks(outDir)
+        Links <- findHTMLlinks(outDir, level = 0:1)
         if (!silent) message(" done")
-    } else Links <- ""
+        .Links2 <- function() {
+            message("\n    finding level-2 HTML links ...", appendLF = FALSE)
+            Links2 <- findHTMLlinks(level = 2)
+            message(" done")
+            Links2
+        }
+        delayedAssign("Links2", .Links2())
+    }
 
     ## Rd objects may already have been installed.
     db <- tryCatch(Rd_db(basename(outDir), lib.loc = dirname(outDir)),
@@ -2045,7 +2052,6 @@ if (FALSE) {
 
     files <- names(db)
 
-    .messages <- character()
     .whandler <-  function(e) {
         .messages <<- c(.messages,
                         paste("Rd warning:", conditionMessage(e)))
@@ -2061,6 +2067,7 @@ if (FALSE) {
                             warning = .whandler)
 
     for(f in files) {
+        .messages <- character()
         Rd <- db[[f]]
         attr(Rd, "source") <- NULL
         bf <- sub("\\.[Rr]d$", "", basename(f))
@@ -2076,7 +2083,7 @@ if (FALSE) {
                 ## assume prepare_Rd was run when dumping the .rds
                 ## so use defines = NULL for speed
                 .convert(Rd2HTML(Rd, ff, package = pkg, defines = NULL,
-                                 Links = Links))
+                                 Links = Links, Links2 = Links2))
             }
         }
         if ("latex" %in% types) {
@@ -2096,7 +2103,7 @@ if (FALSE) {
             if (!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 showtype(type)
                 .convert(Rd2HTML(Rd, ff, package = pkg, defines = NULL,
-                                 Links = Links, CHM = TRUE))
+                                 Links = Links, Links2 = Links2, CHM = TRUE))
             }
         }
         if ("example" %in% types) {
