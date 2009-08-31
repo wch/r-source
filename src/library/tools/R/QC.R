@@ -3538,6 +3538,13 @@ function(package, dir, lib.loc = NULL)
     }
 
     unknown <- unique(unknown)
+    obsolete <- unknown %in% c("ctest", "eda", "lqs", "mle", "modreg", "nls", "stepfun", "ts")
+    if (any(obsolete)) {
+        message(gettextf("Obsolete package(s) %s in Rd xrefs",
+                         paste(sQuote(unknown[obsolete]), collapse = ", ")),
+                domain = NA)
+    }
+    unknown <- unknown[!obsolete]
     if (length(unknown)) {
         p <- file.path(R.home("etc"), "repositories")
         a <- utils::read.delim(p, header = TRUE, comment.char = "#",
