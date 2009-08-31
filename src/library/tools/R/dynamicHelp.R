@@ -43,8 +43,12 @@
 {
     res <- if(identical(names(query), "category"))
         help.search(keyword = query)$matches
-   else
-        help.search(query[1L], names(query))$matches
+    else {
+       nm <- names(query)
+       m <- match("exact", nm)
+       if(is.na(m)) help.search(query[1L], nm)$matches
+       else help.search(query[1L], nm[-m], agrep = FALSE)$matches
+    }
     title <- "Search Results"
     out <- paste('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
                  '<html><head><title>R: ', title , '</title>\n',
