@@ -15,13 +15,15 @@
 #  http://www.r-project.org/Licenses/
 
 help.start <- function(update = TRUE, gui = "irrelevant",
-                       browser = getOption("browser"))
+                       browser = getOption("browser"), remote = NULL)
 {
     if(tools:::httpdPort == 0L) tools::startDynamicHelp()
     dynamic <- tools:::httpdPort > 0L
-    home <- if (dynamic)
-        paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
-    else R.home()
+    home <- if(is.null(remote)) {
+        if (dynamic)
+            paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
+        else R.home()
+    } else remote
     a <- file.path(home, "doc", "html", "index.html")
     if(!dynamic && !file.exists(a))
         stop("unable to find the HTML help")

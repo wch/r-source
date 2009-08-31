@@ -11,20 +11,13 @@
   documentation.
 }
 \usage{
-#ifdef unix  
-help.start(gui = "irrelevant", browser = getOption("browser"),
-           remote = NULL)
-#endif
-#ifdef windows  
 help.start(update = TRUE, gui = "irrelevant",
-           browser = getOption("browser"))
-#endif
+           browser = getOption("browser"), remote = NULL)
 }
 \arguments{
-#ifdef windows  
   \item{update}{logical: should this attempt to update the indices to
-    reflect the currently installed packages.}
-#endif
+    reflect the currently available packages.  (Not attempted if
+    \code{remote} is non-\code{NULL}.)}
   \item{gui}{just for compatibility with S-PLUS.}
   \item{browser}{the name of the program to be used as hypertext
     browser. It should be in the \env{PATH}, or a full path specified.
@@ -35,18 +28,27 @@ help.start(update = TRUE, gui = "irrelevant",
     mechanism will be used.
 #endif
   }
-#ifdef unix  
-  \item{remote}{A character giving a valid URL for the
+  \item{remote}{A character string giving a valid URL for the
     \file{\var{\link[base:Rhome]{R_HOME}}} directory on a remote location.}
-#endif
 }
+% Linking is needed for two purposes
+% - to have an updated doc/html/packages.html
+% - to allow links in static HTML help pages to other libraries
+%   to be resolved.
 \details{
 #ifdef unix
-  All the packages in the library trees in \code{\link{.libPaths}()} are
+  Unless argument \code{remote} is used or \code{update = FALSE}, all
+  the packages in the library trees in \code{\link{.libPaths}()} are
   linked to directory \file{.R} in the per-session temporary directory.
   The links are re-made each time \code{\link{make.packages.html}} or
   \code{help.start} is run, which should be done after packages are
   installed, updated or removed, or \code{.libPaths} changed.
+
+#endif
+  Argument \code{remote} can be used to point to HTML help published by
+  another \R installation: it will typically only show packages from the
+  main library of that installation.
+#ifdef unix
 
   If the browser named by the \code{browser} argument is different from
   the default browser as specified by \code{options("browser")}, the
@@ -64,7 +66,12 @@ help.start(update = TRUE, gui = "irrelevant",
   \code{\link{RSiteSearch}} to access an on-line search of \R resources.
 }
 \examples{
-\dontrun{help.start()
+\donttest{help.start()}
+\dontrun{
+#ifdef unix
+## the 'remote' arg can be tested by
+help.start(remote=paste("file://", R.home(), sep=""))
+#endif
 #ifdef windows
 help.start(browser="C:\\\\Program Files\\\\Internet Explorer\\\\IEXPLORE.EXE")
 help.start(browser="C:/Program Files/Opera/Opera.exe")

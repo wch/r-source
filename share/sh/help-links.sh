@@ -27,7 +27,7 @@ for f in "${R_DOC_DIR}"/html/*.html "${R_DOC_DIR}"/html/*.jpg "${R_DOC_DIR}"/htm
 done
 ## we are going to recreate this in R code
 rm -f "${USER_R_HOME}/doc/html/packages.html"
-## this needs to be copied for OS X 
+## this needs to be copied (rather than linked) for R.app on Mac OS X 
 rm -f "${USER_R_HOME}/doc/html/index.html"
 cp "${R_DOC_DIR}/html/index.html" "${USER_R_HOME}/doc/html"
 

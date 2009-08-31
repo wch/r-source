@@ -14,8 +14,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-help.start <- function (gui = "irrelevant", browser = getOption("browser"),
-			remote = NULL)
+help.start <-
+    function (update = TRUE, gui = "irrelevant", browser = getOption("browser"),
+              remote = NULL)
 {
     ## should always be set, but might be empty
     if(length(browser) != 1 || !is.character(browser) || !nzchar(browser))
@@ -26,13 +27,15 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
         options(browser = browser)
     }
     url <- if (is.null(remote)) {
-        make.packages.html()
+        if(update) make.packages.html()
         if(tools:::httpdPort == 0L) tools::startDynamicHelp()
         if (tools:::httpdPort > 0L)
             paste("http://127.0.0.1:", tools:::httpdPort,
                   "/doc/html/index.html", sep = "")
-        else paste("file://", URLencode(tempdir()),
+        else if(file.exists(file.path(tempdir(), "/.R/doc/html/index.html")))
+            paste("file://", URLencode(tempdir()),
                    "/.R/doc/html/index.html", sep = "")
+        else paste("file://", R.home("doc"), "/html/index.html", sep = "")
     } else paste(remote, "/doc/html/index.html", sep = "")
 
     if (is.character(browser)) {
@@ -88,6 +91,8 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
 make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
 {
     message("Making links in per-session dir ...", " ", appendLF = FALSE)
+    ## FIXME: we could do this in R.
+    ## We only need to do it whilst we support non-server HTML help
     .Script("sh", "help-links.sh", tempdir())
     if(packages) {
         f.tg <- file.path(tempdir(), ".R/doc/html/packages.html")
