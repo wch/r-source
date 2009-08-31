@@ -96,8 +96,6 @@ metadata:
 	@$(ECHO) "building/updating package metadata ..."
 	@$(ECHO) "tools:::.vinstall_package_indices(\"$(srcdir)\", \"$(top_builddir)/library\", \"$(R_PKGS_BASE)\")" | \
 	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) > /dev/null
-	@cat $(top_builddir)/library/*/CONTENTS \
-	  > $(top_builddir)/doc/html/search/index.txt
 
 clean:
 	@for pkg in $(R_PKGS_BASE); do \

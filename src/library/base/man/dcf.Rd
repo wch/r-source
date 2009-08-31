@@ -78,11 +78,11 @@ write.dcf(x, file = "", append = FALSE,
 \seealso{
   \code{\link{write.table}}.
 }
-\examples{
+\examples{\dontrun{
 ## Create a reduced version of the 'CONTENTS' file in package 'splines'
 x <- read.dcf(file = system.file("CONTENTS", package = "splines"),
               fields = c("Entry", "Description"))
 write.dcf(x)
-}
+}}
 \keyword{print}
 \keyword{file}

@@ -25,13 +25,14 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
         writeLines(strwrap(msg, exdent = 4L))
         options(browser = browser)
     }
-    make.packages.html()
     url <- if (is.null(remote)) {
+        make.packages.html()
         if(tools:::httpdPort == 0L) tools::startDynamicHelp()
-        tmpdir <- if (tools:::httpdPort > 0L)
-            paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
-        else paste("file://", URLencode(tempdir()), "/.R", sep = "")
-        paste(tmpdir, "/doc/html/index.html", sep = "")
+        if (tools:::httpdPort > 0L)
+            paste("http://127.0.0.1:", tools:::httpdPort,
+                  "/doc/html/index.html", sep = "")
+        else paste("file://", URLencode(tempdir()),
+                   "/.R/doc/html/index.html", sep = "")
     } else paste(remote, "/doc/html/index.html", sep = "")
 
     if (is.character(browser)) {
@@ -94,15 +95,9 @@ make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
             warning("cannot create HTML package index")
             return(FALSE)
         }
-        searchindex <- file.path(tempdir(), ".R/doc/html/search/index.txt")
-        if(!file.create(searchindex)) {
-            warning("cannot create HTML search index")
-            return(FALSE)
-        }
         file.append(f.tg,
                     file.path(R.home("doc"), "html", "packages-head-utf8.html"))
         out <- file(f.tg, open="a")
-        search <- file(searchindex, open="w")
     }
     known <- character(0L)
     for (lib in lib.loc) {
@@ -130,16 +125,6 @@ make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
                 '<td width="25%"><a href="../../library/', link,
                 '/html/00Index.html">', i, "</a></td><td>", title,
                 "</td></tr>\n", file=out, sep="")
-            contentsfile <- file.path(from, "CONTENTS")
-            if(!file.exists(contentsfile)) next
-            contents <- readLines(contentsfile)
-            isURL <- grep("URL:", contents, fixed = TRUE, useBytes = TRUE)
-            if(length(isURL) && link != i)
-                contents[isURL] <-
-                    gsub(paste("/library/", i, sep = ""),
-                         paste("/library/", link, sep = ""),
-                         contents[isURL], fixed = TRUE, useBytes = TRUE)
-            writeLines(c(contents, ""), search)  # space between packages
         }
         if(packages) cat("</table>\n\n", file=out)
         known <- c(known, pg)
@@ -147,7 +132,6 @@ make.packages.html <- function(lib.loc=.libPaths(), packages = TRUE)
     if(packages) {
         cat("</body></html>\n", file=out)
         close(out)
-        close(search)
     }
     message("done")
     invisible(TRUE)

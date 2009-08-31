@@ -400,7 +400,7 @@ function(dir, outDir)
         indices <- c(file.path("Meta", "Rd.rds"),
                      file.path("Meta", "hsearch.rds"),
                      file.path("Meta", "links.rds"),
-                     "CONTENTS", "INDEX")
+                     "INDEX")
         upToDate <- file.info(file.path(outDir, indices))$mtime >= newestRd
         if(file_test("-d", dataDir)
            && length(dataFiles <- list.files(dataDir))) {
@@ -440,9 +440,6 @@ function(dir, outDir)
         .saveRDS(.build_links_index(contents, packageName),
                  file.path(outDir, "Meta", "links.rds"))
 
-        .write_Rd_contents_as_DCF(contents, packageName,
-                                  file.path(outDir, "CONTENTS"))
-
         ## If there is no @file{INDEX} file in the package sources, we
         ## build one.
         ## <NOTE>
@@ -460,7 +457,6 @@ function(dir, outDir)
 
         .saveRDS(.build_links_index(contents, packageName),
                  file.path(outDir, "Meta", "links.rds"))
-        ## and don't write empty CONTENTS file
 
     }
     if(file_test("-d", dataDir))

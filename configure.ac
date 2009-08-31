@@ -2399,7 +2399,6 @@ AC_CONFIG_FILES(
   Makefile
   doc/Makefile
   doc/html/Makefile
-  doc/html/search/Makefile
   doc/manual/Makefile
   etc/Makefile
   etc/Makeconf

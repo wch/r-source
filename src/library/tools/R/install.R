@@ -126,12 +126,8 @@
             ## *one* package ... well not so sure for bundles.
             file.copy(file.path(R.home("doc"), "html", "R.css"), lib)
             if (lib == .Library) {
-                .file_append_ensuring_LFs(file.path(R.home("doc"), "html", "search", "index.txt"),
-                                                  Sys.glob(file.path(R.home(), "library", "*", "CONTENTS")))
-                ## FIXME This is not so clear: rather if built html help?
                 if (build_help)
                     unix.packages.html(.Library, docdir = R.home("doc"))
-
             }
         }
         if (lock && nzchar(lockdir)) unlink(lockdir, recursive = TRUE)

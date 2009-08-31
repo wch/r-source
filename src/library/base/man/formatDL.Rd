@@ -43,7 +43,7 @@ formatDL(x, y, style = c("table", "list"),
   In table style, items with more than \code{indent - 3} characters are
   displayed on a line of their own.
 }
-\examples{
+\examples{\dontrun{
 ## Use R to create the 'INDEX' for package 'splines' from its 'CONTENTS'
 x <- read.dcf(file = system.file("CONTENTS", package = "splines"),
                fields = c("Entry", "Description"))
@@ -53,5 +53,5 @@ writeLines(formatDL(x$Entry, x$Description))
 ## Same information in tagged description list style:
 writeLines(formatDL(x$Entry, x$Description, style = "list"))
 ## or equivalently: writeLines(formatDL(x, style = "list"))
-}
+}}
 \keyword{print}

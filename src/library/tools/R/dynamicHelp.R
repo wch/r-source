@@ -223,6 +223,9 @@ httpd <- function(path, query, ...)
             }
             return(list(file=file))
         }
+    } else if(path == "/doc/html/Search.html") {
+        return(list(file=file.path(R.home("doc"), "html/SearchOn.html"),
+                    "content-type"="text/html"))
     } else if(grepl("doc/html/.*html$" , path) &&
               file.exists(tmp <- file.path(tempdir(), ".R", path))) {
         ## use generated (or symlinked) copy

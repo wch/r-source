@@ -132,6 +132,7 @@ function(contents, outFile)
 
 ### * .write_Rd_contents_as_DCF
 
+if(FALSE) {
 .write_Rd_contents_as_DCF <-
 function(contents, packageName, outFile)
 {
@@ -170,6 +171,7 @@ function(contents, packageName, outFile)
               t(cbind(contents, URLs))),
         sep = c("\n", "\n", "\n", "\n", "\n\n"),
         file = outFile)
+}
 }
 
 ### * .build_Rd_index

@@ -1083,6 +1083,8 @@ search system.
 @node My functions are not found by the HTML help search system., Loading a package fails., The packages I installed do not appear in the HTML help system, Packages
 @section My functions are not found by the HTML help search system.
 
+@strong{FIXME}: this needs updating.
+
 The following conditions need to hold for functions in a package you installed.
 
 @itemize @bullet

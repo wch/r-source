@@ -258,7 +258,7 @@ distclean: clean
 	$(RM) ../library/tcltk/src/tcl$(TCL_VERSION).def \
 	../library/tcltk//src/tk$(TCL_VERSION).def
 	$(RM) R.exp COPYRIGHTS
-	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
+	$(RM) ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html
 	$(RM) ../../etc/Makeconf ../../etc/Rconsole ../../etc/Rdevga \
