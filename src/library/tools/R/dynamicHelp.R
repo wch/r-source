@@ -155,10 +155,22 @@ httpd <- function(path, query, ...)
 	    		"status code" = 302L)) # temporary redirect
 	} else if (length(file) > 1L) {
             paths <- dirname(dirname(file))
+            fp <- file.path(paths, "Meta", "Rd.rds")
+            tp <- basename(file)
+            titles <- tp
+            for (i in seq_along(fp)) {
+                tmp <- try(.readRDS(fp[i]))
+                titles[i] <- if(inherits(tmp, "try-error"))
+                    "unknown title" else
+                    tmp[tools::file_path_sans_ext(tmp$File) == tp[i], "Title"]
+            }            
             packages <- paste('<dt><a href="../../', basename(paths), '/html/',
-                              basename(file), '.html">', basename(paths), '</a></dt><dd> (in library ',
-                              dirname(paths), ")</dd>",
+                              basename(file), '.html">', titles, 
+                              '</a></dt><dd> (in package <a href="../../', basename(paths),
+                              '/html/00Index.html">', basename(paths), 
+                              '</a> in library ', dirname(paths), ")</dd>",
                               sep="", collapse="\n")
+
             return(list(payload=paste(gettextf("<p>Help on topic '%s' was found in the following packages:</p><dl>\n",
                         topic),
                         packages, "</dl>", sep="", collapse="\n")))
