@@ -153,7 +153,7 @@ httpd <- function(path, query, ...)
 	    		"content-type"='text/html',
 	    		header=paste('Location: ', file, '\n', sep=''),
 	    		"status code" = 302L)) # temporary redirect
-	} else if (length(file) > 1) {
+	} else if (length(file) > 1L) {
             paths <- dirname(dirname(file))
             packages <- paste('<dt><a href="../../', basename(paths), '/html/',
                               basename(file), '.html">', basename(paths), '</a></dt><dd> (in library ',
