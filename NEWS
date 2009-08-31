@@ -268,6 +268,9 @@ NEW FEATURES
     o	identical() gains three logical arguments, which allow for even
 	more differentiation, notably '-0' and '0'.
 
+    o	legend() now can specify the 'border' color of filled boxes,
+	thanks to a patch from Frederic Schutz.
+
 
 HELP & Rd FILE CHANGES
 
@@ -306,7 +309,7 @@ HELP & Rd FILE CHANGES
     o	parse_Rd() was incorrectly handling multiple backslashes in
 	R code strings, converting 4n+3 backslashes to 2n+1 instead
 	of 2n+2.
-    	
+
     o	A new dynamic HTML help system is used by default, and may be
 	controlled using tools::startDynamicHelp().  With this enabled,
 	HTML help pages will be generated on request, resolving links

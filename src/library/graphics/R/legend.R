@@ -15,8 +15,8 @@
 #  http://www.r-project.org/Licenses/
 
 legend <-
-function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
-	 angle = 45, density = NULL, bty = "o", bg = par("bg"),
+function(x, y = NULL, legend, fill=NULL, col = par("col"), border="black",
+         lty, lwd, pch, angle = 45, density = NULL, bty = "o", bg = par("bg"),
          box.lwd = par("lwd"), box.lty = par("lty"), box.col = par("fg"),
 	 pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
 	 xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = c(0, 0.5),
@@ -217,7 +217,7 @@ function(x, y = NULL, legend, fill=NULL, col = par("col"), lty, lwd, pch,
 	    fill <- rep(fill, length.out = n.leg)
 	    rect2(left = xt, top=yt+ybox/2, dx = xbox, dy = ybox,
 		  col = fill,
-		  density = density, angle = angle, border = "black")
+		  density = density, angle = angle, border = border)
 	}
 	xt <- xt + dx.fill
     }

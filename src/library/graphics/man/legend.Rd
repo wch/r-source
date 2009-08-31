@@ -8,7 +8,7 @@
 \title{Add Legends to Plots}
 \usage{
 legend(x, y = NULL, legend, fill = NULL, col = par("col"),
-       lty, lwd, pch,
+       border="black", lty, lwd, pch,
        angle = 45, density = NULL, bty = "o", bg = par("bg"),
        box.lwd = par("lwd"), box.lty = par("lty"), box.col = par("fg"),
        pt.bg = NA, cex = 1, pt.cex = cex, pt.lwd = lwd,
@@ -34,6 +34,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     with the specified colors (or shaded in the specified colors)
     to appear beside the legend text.}
   \item{col}{the color of points or lines appearing in the legend.}
+  \item{border}{the border color for the boxes (used only if
+    \code{fill} is specified).}
   \item{lty, lwd}{the line types and widths for lines appearing in the
     legend.  One of these two \emph{must} be specified for line drawing.}
   \item{pch}{the plotting symbols appearing in the legend, either as
