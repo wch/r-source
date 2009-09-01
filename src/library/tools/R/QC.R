@@ -3179,20 +3179,26 @@ function(dfile, dir)
 print.check_package_license <-
 function(x, ...)
 {
-    if(length(x)
-       && isTRUE(as.logical(Sys.getenv("_R_CHECK_LICENSE_"))))
-    {
-        writeLines(c(gettext("Non-standard license specification:"),
-                     strwrap(x$license, indent = 2L, exdent = 2L),
-                     if(length(x$bad_pointers))
-                     gettextf("Invalid license file pointers: %s",
-                              paste(x$bad_pointers, collapse = " ")),
-                     gettextf("Standardizable: %s",
-                              x$is_standardizable),
-                     if(x$is_standardizable)
-                     c(gettextf("Standardized license specification:"),
-                       strwrap(x$standardization,
-                               indent = 2L, exdent = 2L))))
+    if(length(x)) {
+        check <- Sys.getenv("_R_CHECK_LICENSE_")
+        check <- if(check %in% c("maybe", ""))
+            !(x$is_standardizable) || length(x$bad_pointers)
+        else
+            isTRUE(as.logical(check))
+        if(check) {
+            if(!(x$is_canonical))
+                writeLines(c(gettext("Non-standard license specification:"),
+                             strwrap(x$license, indent = 2L, exdent = 2L),
+                             gettextf("Standardizable: %s",
+                                      x$is_standardizable),
+                             if(x$is_standardizable)
+                             c(gettext("Standardized license specification:"),
+                               strwrap(x$standardization,
+                                       indent = 2L, exdent = 2L))))
+            if(length(x$bad_pointers))
+                writeLines(gettextf("Invalid license file pointers: %s",
+                                    paste(x$bad_pointers, collapse = " ")))
+        }
     }
     invisible(x)
 }

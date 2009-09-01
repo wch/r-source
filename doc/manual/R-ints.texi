@@ -3175,8 +3175,9 @@ removed eventually.
 Allows turning off @code{checkFF()} testing.  Legacy mostly.
 Default: true.
 @item _R_CHECK_LICENSE_
-Control whether license checks are performed.
-Default: false.
+Control whether/how license checks are performed.
+Default: maybe (warn in case of problems, but not about standardizable
+non-standard license specs).
 @item _R_CHECK_RD_EMPTY_SECTIONS_
 Control whether @code{Rd_parse()} and @code{check_Rd_files_in_Rd_db()}
 worry about empty sections.  Of questionable use, as Rdconv drops empty

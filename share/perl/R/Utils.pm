@@ -429,19 +429,39 @@ sub check_package_description {
 	## entries because these really are a part of R: hence, skip the
 	## check.
 
-	## The check code conditionalizes *output* on _R_CHECK_LICENSE_,
-	## but there is little point in running the code with no output ...
-	my $check_license =
-	    &config_val_to_logical(&R_getenv("_R_CHECK_LICENSE_", "FALSE"));
-	my $Rcmd =
-	    "tools:::.check_package_license(\"$dfile\", \"$pkgdir\")";
-	my @out = R_runR($Rcmd, "--vanilla --quiet",
-			 "R_DEFAULT_PACKAGES=NULL");
-	@out = grep(!/^\>/, @out);
-	if(scalar(@out) > 0) {
-	    $log->note() unless $any;
-	    $log->print(join("\n", @out) . "\n");
-	    $any++;
+	my $check_license = &R_getenv("_R_CHECK_LICENSE_", "maybe");
+	if($check_license eq "maybe") {
+	    $ENV{"_R_CHECK_LICENSE_"} = "maybe";
+	} else {
+	    $check_license = &config_val_to_logical($check_license);
+	}
+
+	## The check code conditionalizes *output* on _R_CHECK_LICENSE_.
+	if($check_license) {
+	    my $Rcmd =
+		"tools:::.check_package_license(\"$dfile\", \"$pkgdir\")";
+	    my @out = R_runR($Rcmd, "--vanilla --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
+	    @out = grep(!/^\>/, @out);
+	    ## In the default case, all output indicates problems.
+	    ## Otherwise, if _R_CHECK_LICENSE_ was set to true, "only"
+	    ## notify about non-standardizable licenses we know how to
+	    ## standardize, as CRAN and writePACKAGES() will rewrite the
+	    ## license specs in these cases anyway.
+	    ## (This is not quite perfect, as l10n might give different
+	    ## message strings.)
+	    if(scalar(@out) > 0) {
+		if($check_license eq "maybe") {
+		    $log->warning() unless $any;
+		} elsif(scalar(grep(/^(Standardizable: FALSE|Invalid license file pointers:)/,
+				    @out)) > 0) {
+		    $log->warning() unless $any;
+		} else {
+		    $log->note() unless $any;
+		}
+		$log->print(join("\n", @out) . "\n");
+		$any++;
+	    }
 	}
     }
 
