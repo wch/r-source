@@ -3826,7 +3826,7 @@ class (in package @pkg{stats}).  To make these easy to read,
 There are two other forms of optional argument specified as
 @code{\link[@var{pkg}]@{@var{foo}@}} and
 @code{\link[@var{pkg:bar}]@{@var{foo}@}} to link to the package
-@var{pkg}, to @emph{files} @file{@var{foo}.html} and
+@pkg{@var{pkg}}, to @emph{files} @file{@var{foo}.html} and
 @file{@var{bar}.html} respectively.  These are rarely needed, perhaps to
 refer to not-yet-installed packages (but there the @HTML{} help system
 will resolve the link at run time) or in the normally undesirable event
@@ -3836,7 +3836,12 @@ which case the present package has precedence so this is only needed to
 refer to other packages).  They are only in used in (C)HTML help (and
 not for hyperlinks in @LaTeX{} conversions of help pages), and link to
 the file rather than the topic (since there is no way to know which
-topics are in which files in an uninstalled package).
+topics are in which files in an uninstalled package).  The @strong{only}
+reason to use these forms for base and recommended packages is to force
+a reference to a package that might be further down the search path.
+Because they have been frequently misused, as from @R{} 2.10.0 the HTML
+help system with look for topic @code{@var{foo}} in package
+@pkg{@var{pkg}} if it does not find file @file{@var{foo}.html}.
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation files
 @section Mathematics
