@@ -21,8 +21,9 @@ get_link <- function(arg, tag, Rdfile) {
     ## to link to in HTML help
 
     ## \link[=bar]{foo} means shows foo but treat this as a link to bar.
-    ## \link[pkg]{foo} means show foo and link to *file* foo in package pkg
+    ## \link[pkg]{bar} means show bar and link to *file* bar in package pkg
     ## \link{pkg:bar]{foo} means show foo and link to file bar in package pkg.
+    ## As from 2.10.0, look for topic 'bar' if file not found.
 
     if (!all(RdTags(arg) == "TEXT"))
     	stopRd(arg, Rdfile, "Bad \\link text")
@@ -225,7 +226,8 @@ Rd2HTML <-
 
     	if (is.null(parts$targetfile)) {
             topic <- parts$dest
-    	    if (dynamic) htmlfile <- paste("../../", package, "/help/", topic, sep="")
+    	    if (dynamic)
+                htmlfile <- paste("../../", package, "/help/", topic, sep="")
             else {
             	htmlfile  <- NA_character_
             	if (!is.null(Links)) {

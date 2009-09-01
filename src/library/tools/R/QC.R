@@ -3503,7 +3503,7 @@ function(package, dir, lib.loc = NULL)
     if(any(have_equals))
         db[have_equals, 1:2] <- cbind(sub("^=", "", anchor[have_equals]), "")
 
-    db <- cbind(db, bad = FALSE, report = db[, 1L])
+    db <- cbind(db, bad = FALSE, suspect = FALSE, report = db[, 1L])
     have_anchor <- nzchar(anchor <- db[, 2L])
     db[have_anchor, "report"] <-
         paste("[", db[have_anchor, 2L], "]{", db[have_anchor, 1L], "}", sep = "")
@@ -3530,11 +3530,17 @@ function(package, dir, lib.loc = NULL)
             else
                 list.files(file.path(top, "help"))
             good <- thisfile[this] %in% nm
+            suspect <- if(any(!good)) {
+                aliases1 <- if (pkg %in% names(aliases)) aliases[[pkg]]
+                else Rd_aliases(pkg, lib.loc = lib.loc)
+                !good & (thisfile[this] %in% aliases1)
+            } else FALSE
         } else {
             unknown <- c(unknown, pkg)
             next
         }
-        db[this, "bad"] <- !good
+        db[this, "suspect"] <- suspect
+        db[this, "bad"] <- !good & !suspect
     }
 
     unknown <- unique(unknown)
@@ -3564,24 +3570,38 @@ function(package, dir, lib.loc = NULL)
     }
     ## The bad ones:
     bad <- db[, "bad"] == "TRUE"
-    structure(split(db[bad, "report"], db[bad, 3L]), class = "check_Rd_xrefs")
+    res1 <- split(db[bad, "report"], db[bad, 3L])
+    ## do not report these for a package that depends on R >= 2.10.0?
+    bad <- db[, "suspect"] == "TRUE"
+    res2 <- split(db[bad, "report"], db[bad, 3L])
+    structure(list(bad = res1, suspect = res2), class = "check_Rd_xrefs")
 }
 
 print.check_Rd_xrefs <-
 function(x, ...)
 {
-    if(length(x)) {
-        for(i in seq_along(x)) {
+    if(any(sapply(x, length))) {
+        xx <- x$bad
+        for(i in seq_along(xx)) {
             writeLines(gettextf("Missing link(s) in documentation object '%s':",
-                                names(x)[i]))
+                                names(xx)[i]))
             ## NB, link might be empty, and was in mvbutils
-            .pretty_print(sQuote(unique(x[[i]])))
+            .pretty_print(sQuote(unique(xx[[i]])))
             writeLines("")
         }
-        ## <FIXME>
-        ## Add some explanatory message and a pointer to R-exts
-        ## eventually ...
-        ## </FIXME>
+        xx <- x$suspect
+        for(i in seq_along(xx)) {
+            writeLines(gettextf("Suspect link(s) in documentation object '%s':",
+                                names(xx)[i]))
+            .pretty_print(sQuote(unique(xx[[i]])))
+            writeLines("")
+        }
+
+        msg <- strwrap(gettextf("See the information in section 'Cross-references' of the 'Writing R Extensions' manual."))
+        if(length(x$suspect))
+            msg <- c(msg, "",
+                     strwrap(gettextf("'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an alias but not as a filename -- such links will not work in R < 2.10.0, and only in HTML (not PDF) help in current versions.")))
+        writeLines(c(msg, ""))
     }
     invisible(x)
 }

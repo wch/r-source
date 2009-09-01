@@ -38,6 +38,11 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	  HTML interface to help.search().  help.start() no longer has
 	  an argument 'searchEngine' as it is no longer needed.
 
+	- The dynamic help can now locate cross-references of the form
+          \link[pkg]{foo} and \link[pkg:foo]{bar} where 'foo' is an
+          alias in the package, rather than the documented (base of a)
+          filename.
+
 	- Details may change before release.
 
 

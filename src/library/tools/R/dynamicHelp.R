@@ -169,11 +169,11 @@ httpd <- function(path, query, ...)
                 titles[i] <- if(inherits(tmp, "try-error"))
                     "unknown title" else
                     tmp[tools::file_path_sans_ext(tmp$File) == tp[i], "Title"]
-            }            
+            }
             packages <- paste('<dt><a href="../../', basename(paths), '/html/',
-                              basename(file), '.html">', titles, 
+                              basename(file), '.html">', titles,
                               '</a></dt><dd> (in package <a href="../../', basename(paths),
-                              '/html/00Index.html">', basename(paths), 
+                              '/html/00Index.html">', basename(paths),
                               '</a> in library ', dirname(paths), ")</dd>",
                               sep="", collapse="\n")
 
@@ -183,8 +183,8 @@ httpd <- function(path, query, ...)
         }
     } else if (grepl(fileRegexp, path)) { # help by file
     	pkg <- sub(fileRegexp, "\\1", path)
-    	topic <- sub(fileRegexp, "\\2", path)
-    	if (basename(path) == "00Index.html") {
+    	helpdoc <- sub(fileRegexp, "\\2", path)
+        if (helpdoc == "00Index") {
             file <- system.file("html", "00Index.html", package=pkg)
             if(!nzchar(file) || !file.exists(file)) {
                 if(nzchar(system.file(package=pkg)))
@@ -193,18 +193,33 @@ httpd <- function(path, query, ...)
                     return(error_page(paste("No package of name", sQuote(pkg), "could be located")))
             } else {
                 if(.Platform$OS.type == "windows") return(unfix(file))
-                return(list(file=file))
+                return(list(file = file))
             }
     	} else {
-            file <- system.file("help", package=pkg)
+            file <- system.file("help", package = pkg)
             if (!nzchar(file)) {
-                if(nzchar(system.file(package=pkg)))
+                if(nzchar(system.file(package = pkg)))
                     return(error_page(paste("No help found for package", sQuote(pkg))))
                 else
                    return(error_page(paste("No package of name", sQuote(pkg), "could be located")))
             }
+            ## if 'topic' is not a help doc, try it as an alias
+            f <- file.path(sub("/help", "/Meta/Rd.rds", file))
+            contents <- .readRDS(f)
+            files <- sub("\\.[Rr]d$", "", contents$File)
+            if(! helpdoc %in% files) {
+                aliases <- contents$Aliases
+                lens <- sapply(aliases, length)
+                aliases <- structure(rep.int(contents$File, lens),
+                                     names = unlist(aliases))
+                tmp <- sub("\\.[Rr]d$", "", aliases[helpdoc])
+                if(is.na(tmp)) {
+                   return(error_page(paste("Link", sQuote(helpdoc), "in package", sQuote(pkg), "could be located")))
+                }
+                helpdoc <- tmp
+            }
             ## this is not a real file [*]
-    	    file <- file.path(file, topic)
+    	    file <- file.path(file, helpdoc)
         }
     } else if (grepl(docRegexp, path)) { # docs
         ## vignettes etc directory
