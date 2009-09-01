@@ -3,7 +3,7 @@
 % Copyright 1995-2007 R Core Development Team
 % Distributed under GPL 2 or later
 
-\name{Multinomial}
+\name{Multinom}
 \alias{Multinomial}
 \alias{rmultinom}
 \alias{dmultinom}
