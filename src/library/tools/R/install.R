@@ -827,7 +827,8 @@
 
 
                 starsmsg(paste0(stars, "*"), "installing help indices")
-                .writePkgIndices(pkg_dir, instdir, html = build_html,
+                ## always want HTML package index
+                .writePkgIndices(pkg_dir, instdir, html = TRUE,
                                  CHM = build_chm)
                 if (build_help) {
                     ## This is used as the default outputEncoding for latex
