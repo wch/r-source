@@ -138,6 +138,8 @@ httpd <- function(path, query, ...)
     if (grepl("R\\.css$", path)) {
         ## this sometimes gets fetched at the wrong level
         return(list(file = file.path(R.home("doc"), "html", "R.css")))
+    } else if(path == "/favicon.ico") {
+        return(list(file = file.path(R.home("doc"), "html", "favicon.ico")))
     } else if (grepl(topicRegexp, path)) { # help by topic
     	pkg <- sub(topicRegexp, "\\1", path)
     	if (pkg == "NULL") pkg <- NULL
