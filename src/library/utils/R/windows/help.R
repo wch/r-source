@@ -14,6 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## unused
 .show_help_on_topic_as_HTML <-
 function(file, topic, ...)
 {
@@ -24,9 +25,9 @@ function(file, topic, ...)
 }
 
 ## differs in not sending to /dev/null
-offline_help_helper <- function(texfile)
+offline_help_helper <- function(texfile, type = "postscript")
 {
-    PDF <- getOption("offline_PDF")
+    PDF <- type == "pdf"
     tools::texi2dvi(texfile, pdf=PDF, clean=TRUE)
     ofile <- sub("tex$", if(PDF) "pdf" else "ps", texfile)
     if(!PDF) {

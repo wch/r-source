@@ -17,9 +17,9 @@ make.packages.html(lib.loc = .libPaths(), outfile = NULL)
   the list of packages, and \code{link.html.help} is a more verbose wrapper.
 }
 \arguments{
-  \item{verbose}{logical. If true, print out a message. For use to
+  \item{verbose}{logical.  If true, print out a message. For use to
     explain a delay when called from other functions.}
-  \item{lib.loc}{character vector. List of libraries to be included.}
+  \item{lib.loc}{character vector.  List of libraries to be included.}
   \item{outfile}{character vector or NULL.  Where to write the package list.}
 }
 \value{
@@ -27,7 +27,7 @@ make.packages.html(lib.loc = .libPaths(), outfile = NULL)
   
   The file
   \file{\var{\link[base:Rhome]{R_HOME}}\\doc\\html\\packages.html} is
-  \code{make.packages.html}.
+  recreated by \code{make.packages.html(outfile = NULL)}.
 }
 \note{
   You will need write permission in the

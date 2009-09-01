@@ -28,24 +28,15 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	running in the R process and listening on the loopback
 	interface.
 
-	- The implementation is not quite complete.
-
 	- Those who need to worry about security implications of
 	  such a server can disable it by setting the environment
-	  variable R_DISABLE_HTTPD to a non-empty value.  They may
-	  want to build static HTML pages, which is done by the
-	  configure option --enable-prebuilt-html (which adds --html
-	  to the default for installing packages).
-
-	- If the server is disabled and there are no static HTML
-	  pages, a HTML help page wthout links is generated as a
-	  file:// URL.
+	  variable R_DISABLE_HTTPD to a non-empty value.  This
+	  disables help.start() and HTML help (so text help is shown
+	  instead).
 
 	- The Java/Javascript search engine has been replaced by an
-	  HTML interface to help.search(): this means that search from
-	  HTML is only available if the HTTP server is used.
-	  help.start() no longer has an argument 'searchEngine' as it
-	  is no longer needed.
+	  HTML interface to help.search().  help.start() no longer has
+	  an argument 'searchEngine' as it is no longer needed.
 
 	- Details may change before release.
 
@@ -316,15 +307,21 @@ HELP & Rd FILE CHANGES
 	by searching through the current .libPaths().
 
     o	help.start() no longer sets options(htmlhelp = TRUE) (it used
-	to on Unix but not on Windows).
+	to on Unix but not on Windows).  Nor does it on Unix reset the
+	"browser" option if given an argument of that name.
 
-    o	help(offline = TRUE) now calls a function
-	offline_help_helper() if this exists in the workspace or
-	further down the search path, otherwise the function of that
-	name in the 'utils' name space.
+	Arguments 'update' and 'remote' are now available on all
+	platforms.
 
-	For the default helper, options(offline_PDF = TRUE) will
-	select PDF output rather than the default PostScript.
+    o	help() has a new argument 'help_type' (with default set by the
+	option of that name) to supersede 'offline', 'htmlhelp' and
+	'chmhelp' (although for now they still work if 'help_type' is
+	unset).  There is a new type, "PDF" to allow offline PDF
+	(rather than PostScript).
+
+	A function offline_help_helper() will be used if this exists
+	in the workspace or further down the search path, otherwise
+	the function of that name in the 'utils' name space.
 
     o	Plain text help is now used as the fallback for HTML help (as
 	it always has been for Compiled HTML help on Windows).

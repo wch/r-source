@@ -27,8 +27,7 @@
 	     str = list(strict.width = "no", digits.d = 3, vec.len = 4),
 	     demo.ask = "default", example.ask = "default",
 	     HTTPUserAgent = defaultUserAgent(),
-	     menu.graphics = TRUE,
-             offline_PDF = FALSE)
+	     menu.graphics = TRUE)
     extra <-
         if(.Platform$OS.type == "windows") {
             list(mailer = "none",

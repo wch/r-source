@@ -74,12 +74,18 @@
     list(payload = paste(out, collapse="\n"))
 }
 
-
+## This may be asked for
+##  R.css
+##  searches with path = "/doc/html/Search"
+##  documentation with path = "/doc/....", possibly updated under tempdir/.R
+##  html help, either by topic, /library/<pkg>/help/<topic> (pkg=NULL means any)
+##             or by file, /library/<pkg>/html/<file>.html
 httpd <- function(path, query, ...)
 {
     unfix <- function(file)
     {
         ## we need to re-fix links altered by fixup.package.URLs
+        ## in R < 2.10.0
         fixedfile <- sub("/html/.*", "/fixedHTMLlinks", file)
         if(file.exists(fixedfile)) {
             top <- readLines(fixedfile)
@@ -131,14 +137,14 @@ httpd <- function(path, query, ...)
     if (grepl("R\\.css$", path)) {
         ## this sometimes gets fetched at the wrong level
         return(list(file = file.path(R.home("doc"), "html", "R.css")))
-    } else if (grepl(topicRegexp, path)) {
+    } else if (grepl(topicRegexp, path)) { # help by topic
     	pkg <- sub(topicRegexp, "\\1", path)
     	if (pkg == "NULL") pkg <- NULL
     	topic <- sub(topicRegexp, "\\2", path)
-    	if (!is.null(pkg))
-    	    file <- help(topic, package=(pkg), htmlhelp=FALSE, chmhelp=FALSE)
+    	if (!is.null(pkg)) # () avoids deparse here
+    	    file <- help(topic, package=(pkg), help_type = "text")
     	if (length(file) == 0L)
-            file <- help(topic, htmlhelp=FALSE, chmhelp=FALSE,
+            file <- help(topic, help_type = "text",
                          try.all.packages=TRUE)
 	if (length(file) == 0L) {
 	    return(list(payload=paste('<p>No help found for topic ', topic,
@@ -175,7 +181,7 @@ httpd <- function(path, query, ...)
                         topic),
                         packages, "</dl>", sep="", collapse="\n")))
         }
-    } else if (grepl(fileRegexp, path)) {
+    } else if (grepl(fileRegexp, path)) { # help by file
     	pkg <- sub(fileRegexp, "\\1", path)
     	topic <- sub(fileRegexp, "\\2", path)
     	if (basename(path) == "00Index.html") {
@@ -197,10 +203,10 @@ httpd <- function(path, query, ...)
                 else
                    return(error_page(paste("No package of name", sQuote(pkg), "could be located")))
             }
-            ## this is not a real file
+            ## this is not a real file [*]
     	    file <- file.path(file, topic)
         }
-    } else if (grepl(docRegexp, path)) {
+    } else if (grepl(docRegexp, path)) { # docs
         ## vignettes etc directory
     	pkg <- sub(docRegexp, "\\1", path)
     	rest <- sub(docRegexp, "\\2", path)
@@ -216,6 +222,7 @@ httpd <- function(path, query, ...)
                                    paste("/library", pkg, "doc", sep="/")))
         }
     }
+    ## to get here we came from [*] or matched none of the patterns.
     if (!is.null(file)) {
 	path <- dirname(file)
 	dirpath <- dirname(path)

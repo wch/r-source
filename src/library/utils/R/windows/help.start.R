@@ -22,8 +22,11 @@ help.start <- function(update = TRUE, gui = "irrelevant",
     home <- if(is.null(remote)) {
         if (dynamic)
             paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
-        else R.home()
-    } else remote
+        else stop("help.start() requires the HTTP server to be running")
+    } else {
+        update <- FALSE
+        remote
+    }
     a <- file.path(home, "doc", "html", "index.html")
     if(!dynamic && !file.exists(a))
         stop("unable to find the HTML help")

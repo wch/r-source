@@ -20,7 +20,7 @@ help.start(update = TRUE, gui = "irrelevant",
     \code{remote} is non-\code{NULL}.)}
   \item{gui}{just for compatibility with S-PLUS.}
   \item{browser}{the name of the program to be used as hypertext
-    browser. It should be in the \env{PATH}, or a full path specified.
+    browser.  It should be in the \env{PATH}, or a full path specified.
     Alternatively, it can be an \R function which will be called with a
     URL as its only argument.
 #ifdef windows
@@ -31,31 +31,19 @@ help.start(update = TRUE, gui = "irrelevant",
   \item{remote}{A character string giving a valid URL for the
     \file{\var{\link[base:Rhome]{R_HOME}}} directory on a remote location.}
 }
-% Linking is needed for two purposes
-% - to have an updated doc/html/packages.html
-% - to allow links in static HTML help pages to other libraries
-%   to be resolved.
 \details{
-#ifdef unix
-  Unless argument \code{remote} is used or \code{update = FALSE}, all
-  the packages in the library trees in \code{\link{.libPaths}()} are
-  linked to directory \file{.R} in the per-session temporary directory.
-  The links are re-made each time \code{\link{make.packages.html}} or
+  Unless \code{remote} is specified this requires the HTTP server to be
+  available (it will be started if possible: see
+  \code{\link{startDynamicHelp}}).
+  
+  Unless argument \code{remote} is used or \code{update = FALSE}, the
+  package list is re-made each time \code{\link{make.packages.html}} or
   \code{help.start} is run, which should be done after packages are
   installed, updated or removed, or \code{.libPaths} changed.
 
-#endif
   Argument \code{remote} can be used to point to HTML help published by
   another \R installation: it will typically only show packages from the
   main library of that installation.
-#ifdef unix
-
-  If the browser named by the \code{browser} argument is different from
-  the default browser as specified by \code{options("browser")}, the
-  default is changed to the given browser so that it gets used for all
-  future help requests.  (This only holds when \code{browser} is a name,
-  not a function.)
-#endif
 }
 
 \seealso{

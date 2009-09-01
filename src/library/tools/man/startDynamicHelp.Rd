@@ -5,7 +5,7 @@
 
 \name{startDynamicHelp}
 \alias{startDynamicHelp}
-\title{Start the dynamic HTML help system}
+\title{Start the Dynamic HTML Help System}
 \description{
   This function starts the internal help server, so that HTML help pages
   are rendered when requested.
@@ -18,17 +18,27 @@ startDynamicHelp(start=TRUE)
     system.}
 }
 \details{
-  This function starts the internal HTTPD server.  It tries up to 10
-  ports to find one not in use.
+  This function starts the internal HTTP server.  It tries up to 10
+  ports to find one not in use.  It can be disabled by setting the
+  environment variable \env{R_DISABLE_HTTPD} to a non-empty value.  It
+  is called by functions that need to use the server, so would rarely be
+  called directly by a user.
 
   Note that \code{option(htmlhelp=TRUE)} must be set to actually make use
-  of dynamic HTML help.
+  of HTML help, altough it might be the default for an \R installation.
+
+  If the server cannot be started or is disabled,
+  \code{\link{help.start}} will be unavailable and requests for HTML
+  help will give text help (with a warning).
 }
 \value{
   The chosen port number is returned invisibly (which will be \code{0}
   if the server has been stopped).
 }
 \seealso{
+  \code{\link{help.start}} and \code{\link{help}(help_type = "html")}
+  will attempt to start the HTTP server if required
+  
   \code{\link{Rd2HTML}} is used to render the package help pages.
 }
 \keyword{ documentation }

@@ -446,6 +446,8 @@ getOption(x, default = NULL)
 
     \item{\code{help.try.all.packages}:}{default for an argument of
       \code{\link{help}}.}
+    
+    \item{\code{help_type}:}{default for an argument of \code{\link{help}}.}
 
     \item{\code{HTTPUserAgent}:}{string used as the user agent in HTTP
       requests.  If \code{NULL}, HTTP requests will be made without a
@@ -460,10 +462,6 @@ getOption(x, default = NULL)
       used if available?.  Defaults to \code{TRUE}.  Currently applies
       to \code{\link{chooseCRANmirror}}, \code{\link{setRepositories}}
       and to select from multiple help files in \code{\link{help}}.}
-
-    \item{\code{offline_PDF}:}{Logical: should
-      \code{\link{help}(offline = TRUE)} produce a PDF file,
-      rather than the default PostScript file?}
 
     \item{\code{pkgType}:}{The default type of packages to be downloaded
       and installed -- see \code{\link{install.packages}}.
