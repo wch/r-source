@@ -57,7 +57,7 @@ format(x, \dots)
   % because Mr Gorjanc won't read, PR#12318
   \item{scientific}{Either a logical specifying whether
     elements of a real or complex vector should be encoded in scientific
-    format, or an integer penalty (see \code{\link{options}("scipen")}.
+    format, or an integer penalty (see \code{\link{options}("scipen")}).
     Missing values correspond to the current default penalty.}
   \item{\dots}{further arguments passed to or from other methods.}
 
