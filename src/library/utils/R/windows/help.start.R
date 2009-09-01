@@ -17,32 +17,22 @@
 help.start <- function(update = TRUE, gui = "irrelevant",
                        browser = getOption("browser"), remote = NULL)
 {
-    if(tools:::httpdPort == 0L) tools::startDynamicHelp()
-    dynamic <- tools:::httpdPort > 0L
     home <- if(is.null(remote)) {
-        if (dynamic)
+        if(tools:::httpdPort == 0L) tools::startDynamicHelp()
+        if (tools:::httpdPort > 0L) {
+            if(update) {
+                cat(gettext("updating HTML package listing\n"))
+                flush.console()
+                try(make.packages.html(temp = TRUE))
+            }
             paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
-        else stop("help.start() requires the HTTP server to be running")
-    } else {
-        update <- FALSE
-        remote
-    }
-    a <- file.path(home, "doc", "html", "index.html")
-    if(!dynamic && !file.exists(a))
-        stop("unable to find the HTML help")
-    if(update) {
-        if(dynamic) dir.create(file.path(tempdir(), ".R/doc/html"),
-                               recursive = TRUE)
-        cat(gettext("updating HTML package listing\n"))
-        flush.console()
-        try(make.packages.html(.libPaths(),
-                               outfile = if(dynamic) file.path(tempdir(), ".R/doc/html/packages.html")
-                               ))
-    }
-    cat(gettextf("If nothing happens, you should open '%s' yourself\n", a))
-    if(!dynamic) a <- chartr("/", "\\", a)
-    browseURL(a, browser = browser)
-    invisible("")
+        } else stop("help.start() requires the HTTP server to be running",
+                  call. = FALSE)
+    } else remote
+    url <- paste(home, "/doc/html/index.html", sep = "")
+    cat(gettextf("If nothing happens, you should open '%s' yourself\n", url))
+    browseURL(url, browser = browser)
+    invisible()
 }
 
 browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)

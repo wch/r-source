@@ -18,9 +18,9 @@ make.packages.html(lib.loc = .libPaths(), temp = TRUE)
     temporary location?}
 }
 \details{
-  This creates the \file{packages.html} file, either a temprorary copy
+  This creates the \file{packages.html} file, either a temporary copy
   for use by \code{\link{help.start}}, or the copy in
-  \file{R.home("doc")/html}.
+  \file{R.home("doc")/html} (for which you will need write permission).
 
   It can be slow, as all the package \file{DESCRIPTION} files are read.
 }

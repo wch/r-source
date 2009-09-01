@@ -60,10 +60,5 @@ help.start(update = TRUE, gui = "irrelevant",
 ## the 'remote' arg can be tested by
 help.start(remote=paste("file://", R.home(), sep=""))
 #endif
-#ifdef windows
-help.start(browser="C:\\\\Program Files\\\\Internet Explorer\\\\IEXPLORE.EXE")
-help.start(browser="C:/Program Files/Opera/Opera.exe")
-help.start(browser="C:/Program Files/Mozilla Firefox/firefox.exe")
-#endif
 }}
 \keyword{documentation}

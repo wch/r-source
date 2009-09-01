@@ -21,15 +21,15 @@ help.start <-
     ## should always be set, but might be empty
     if(length(browser) != 1 || !is.character(browser) || !nzchar(browser))
 	stop("invalid browser name, check options(\"browser\").")
-    url <- if (is.null(remote)) {
+    home <- if (is.null(remote)) {
         if(tools:::httpdPort == 0L) tools::startDynamicHelp()
         if (tools:::httpdPort > 0L) {
             if (update) make.packages.html()
-            paste("http://127.0.0.1:", tools:::httpdPort,
-                  "/doc/html/index.html", sep = "")
+            paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
         } else stop("help.start() requires the HTTP server to be running",
                     call. = FALSE)
-    } else paste(remote, "/doc/html/index.html", sep = "")
+    } else remote
+    url <- paste(home, "/doc/html/index.html", sep = "")
 
     if (is.character(browser)) {
         writeLines(strwrap(gettextf("If '%s' is already running, it is *not* restarted, and you must switch to its window.",
@@ -37,8 +37,8 @@ help.start <-
                            exdent = 4L))
         writeLines(gettext("Otherwise, be patient ..."))
     }
-    browseURL(url)
-    ## options(htmlhelp = TRUE)
+    browseURL(url, browser = browser)
+    invisible()
 }
 
 browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
@@ -83,16 +83,16 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
 
 make.packages.html <- function(lib.loc = .libPaths(), temp = TRUE)
 {
-    if(temp) {
+    f.tg <- if(temp) {
         dir.create(file.path(tempdir(), ".R/doc/html"), recursive = TRUE,
                    showWarnings = FALSE)
-        f.tg <- file.path(tempdir(), ".R/doc/html/packages.html")
-    } else f.tg <- file.path(R.home("doc"), "/html/packages.html")
+       file.path(tempdir(), ".R/doc/html/packages.html")
+    } else file.path(R.home("doc"), "/html/packages.html")
     if(!file.create(f.tg)) {
         warning("cannot create HTML package index")
         return(FALSE)
     }
-    message("Making paackages.html ...", " ", appendLF = FALSE)
+    message("Making packages.html ...", " ", appendLF = FALSE)
     file.append(f.tg,
                 file.path(R.home("doc"), "html", "packages-head-utf8.html"))
     out <- file(f.tg, open="a")

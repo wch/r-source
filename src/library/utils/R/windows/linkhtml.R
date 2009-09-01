@@ -25,11 +25,13 @@ link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
     make.packages.html(lib.loc)
 }
 
-make.packages.html <- function(lib.loc=.libPaths(), outfile = NULL)
+make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
 {
-    dynamic <- is.character(outfile)
-    f.tg <- if(dynamic) outfile
-    else file.path(R.home("doc"), "html", "packages.html")
+    f.tg <- if(temp) {
+        dir.create(file.path(tempdir(), ".R/doc/html"), recursive = TRUE,
+                   showWarnings = FALSE)
+        file.path(tempdir(), ".R/doc/html/packages.html")
+    } else file.path(R.home("doc"), "html", "packages.html")
     f.hd <- file.path(R.home("doc"), "html", "packages-head-utf8.html")
     if(!file.create(f.tg)) {
         # warning("cannot update HTML package index")
@@ -45,7 +47,7 @@ make.packages.html <- function(lib.loc=.libPaths(), outfile = NULL)
         ## use relative indexing for .Library
         if(is.na(pmatch(rh, lib))) {
             libname <- chartr("/", "\\", lib)
-            if(!dynamic) {
+            if(!temp) {
                 lib0 <- if(substring(lib, 2L, 2L) != ":")
                     paste(drive, lib, sep="") else lib
                 lib0 <- paste("file:///", URLencode(lib0), sep="")

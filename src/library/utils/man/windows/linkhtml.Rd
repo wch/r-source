@@ -9,7 +9,7 @@
 \title{Update HTML documentation files}
 \usage{
 link.html.help(verbose = FALSE, lib.loc = .libPaths())
-make.packages.html(lib.loc = .libPaths(), outfile = NULL)
+make.packages.html(lib.loc = .libPaths(), temp = FALSE)
 }
 \description{
   Functions to re-create the HTML documentation files to reflect all
@@ -20,7 +20,8 @@ make.packages.html(lib.loc = .libPaths(), outfile = NULL)
   \item{verbose}{logical.  If true, print out a message. For use to
     explain a delay when called from other functions.}
   \item{lib.loc}{character vector.  List of libraries to be included.}
-  \item{outfile}{character vector or NULL.  Where to write the package list.}
+    \item{temp}{logical: should the package indices be created in a
+    temporary location?}
 }
 \value{
   \code{make.packages.html} returns a logical showing if it succeeded.
@@ -32,6 +33,6 @@ make.packages.html(lib.loc = .libPaths(), outfile = NULL)
 \note{
   You will need write permission in the
   \file{\var{\link[base:Rhome]{R_HOME}}\\doc\\html}
-  directory to use these functions.
+  directory to use these functions (unless \code{temp = FALSE}).
 }
 \keyword{utilities}
