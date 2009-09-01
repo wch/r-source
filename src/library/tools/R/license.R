@@ -184,10 +184,7 @@ list("Artistic-2.0" =
        ),
      
      "GPL" =
-     c(## <FIXME>
-       "GPL.",
-       ## </FIXME>
-       "GNU Public License",
+     c("GNU Public License",
        "Gnu GPL",
        "GNU GPL",
        "GPL (http://www.gnu.org/copyleft/gpl.html)"
