@@ -32,17 +32,17 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
                    showWarnings = FALSE)
         file.path(tempdir(), ".R/doc/html/packages.html")
     } else file.path(R.home("doc"), "html", "packages.html")
-    f.hd <- file.path(R.home("doc"), "html", "packages-head-utf8.html")
     if(!file.create(f.tg)) {
-        # warning("cannot update HTML package index")
+        warning("cannot update HTML package index")
         return(FALSE)
     }
-    file.append(f.tg, f.hd)
+    message("Making packages.html ...", " ", appendLF = FALSE)
+    file.append(f.tg,
+                file.path(R.home("doc"), "html", "packages-head-utf8.html"))
     out <- file(f.tg, open="a")
     rh <- chartr("\\", "/", R.home())
     drive <- substring(rh, 1L, 2L)
     for (lib in lib.loc) {
-        pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
         lib0 <- "../../library"
         ## use relative indexing for .Library
         if(is.na(pmatch(rh, lib))) {
@@ -53,15 +53,16 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
                 lib0 <- paste("file:///", URLencode(lib0), sep="")
             }
         } else
-            libname <- "the standard library"
+        libname <- "the standard library"
         if(length(lib.loc) > 1L)
             cat("<p><h3>Packages in ", libname, "</h3>\n",
                 sep = "", file = out)
-        if(!dynamic && libname != "the standard library")
-            cat("<p>Cross-links from this library to other libraries may not work.\n\n", file = out)
-        cat("<p>\n<table width=\"100%\" summary=\"R Package list\">\n",
-            file = out)
-        for (i in  pg) {
+        cat('<p>\n<table width="100%" summary="R Package list">\n', file = out)
+        ## pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
+        pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
+        pg <- sort(sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"),
+                       "\\1", pg))
+        for (i in pg) {
             title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                         encoding = "UTF-8")
             if (is.na(title)) title <- "-- Title is missing --"
@@ -74,6 +75,7 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
     }
     cat("</body></html>\n", file=out)
     close(out)
+    message("done")
     invisible(TRUE)
 }
 

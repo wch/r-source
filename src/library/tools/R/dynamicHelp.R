@@ -130,8 +130,9 @@ httpd <- function(path, query, ...)
         list(payload = out)
     }
 
-    fileRegexp <- "^/library/([^/]*)/html/([^/]*)\\.html$"
-    topicRegexp <- "^/library/([^/]*)/help/([^/]*)$"
+    ## seems we got ../..//<pkg> in the past
+    fileRegexp <- "^/library/+([^/]*)/html/([^/]*)\\.html$"
+    topicRegexp <- "^/library/+([^/]*)/help/([^/]*)$"
     docRegexp <- "^/library/([^/]*)/doc(.*)"
     file <- NULL
     if (grepl("R\\.css$", path)) {
@@ -204,8 +205,7 @@ httpd <- function(path, query, ...)
                    return(error_page(paste("No package of name", sQuote(pkg), "could be located")))
             }
             ## if 'topic' is not a help doc, try it as an alias
-            f <- file.path(sub("/help", "/Meta/Rd.rds", file))
-            contents <- .readRDS(f)
+            contents <- .readRDS(sub("/help", "/Meta/Rd.rds", file))
             files <- sub("\\.[Rr]d$", "", contents$File)
             if(! helpdoc %in% files) {
                 aliases <- contents$Aliases
@@ -245,6 +245,7 @@ httpd <- function(path, query, ...)
 	RdDB <- file.path(path, pkgname)
 	if(file.exists(paste(RdDB, "rdx", sep="."))) {
 	    outfile <- tempfile("Rhttpd")
+            ## FIXME better error reporting on missing names
 	    temp <- tools::Rd2HTML(tools:::fetchRdDB(RdDB, basename(file)),
                                    out = outfile, package = pkgname,
                                    dynamic = TRUE)

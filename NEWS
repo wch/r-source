@@ -17,7 +17,8 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	- Packages that were installed by R-devel after 2009-08-09
 	  should not be used with earlier versions of R, and some
 	  aspects of package help will be missing if there are so
-	  used.	 (Text and latex help and the runnable examples.)
+	  used.  (Text, HTML and latex help and the runnable
+	  examples.)
 
 	- Text, HTML and latex help and examples for packages
 	  installed under the new system is converted on-demand from

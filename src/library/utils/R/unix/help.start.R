@@ -86,10 +86,10 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = TRUE)
     f.tg <- if(temp) {
         dir.create(file.path(tempdir(), ".R/doc/html"), recursive = TRUE,
                    showWarnings = FALSE)
-       file.path(tempdir(), ".R/doc/html/packages.html")
-    } else file.path(R.home("doc"), "/html/packages.html")
+        file.path(tempdir(), ".R/doc/html/packages.html")
+    } else file.path(R.home("doc"), "html", "packages.html")
     if(!file.create(f.tg)) {
-        warning("cannot create HTML package index")
+        # warning("cannot update HTML package index")
         return(FALSE)
     }
     message("Making packages.html ...", " ", appendLF = FALSE)

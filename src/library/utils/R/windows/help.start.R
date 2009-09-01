@@ -20,17 +20,13 @@ help.start <- function(update = TRUE, gui = "irrelevant",
     home <- if(is.null(remote)) {
         if(tools:::httpdPort == 0L) tools::startDynamicHelp()
         if (tools:::httpdPort > 0L) {
-            if(update) {
-                cat(gettext("updating HTML package listing\n"))
-                flush.console()
-                try(make.packages.html(temp = TRUE))
-            }
+            if(update) try(make.packages.html(temp = TRUE))
             paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
         } else stop("help.start() requires the HTTP server to be running",
                   call. = FALSE)
     } else remote
     url <- paste(home, "/doc/html/index.html", sep = "")
-    cat(gettextf("If nothing happens, you should open '%s' yourself\n", url))
+    cat(gettextf("If nothing happens, you should open\n'%s' yourself\n", url))
     browseURL(url, browser = browser)
     invisible()
 }
