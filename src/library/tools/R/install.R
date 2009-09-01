@@ -23,7 +23,7 @@
 .install_packages <- function(args = NULL)
 {
     ## calls system() on Windows for
-    ## sh (configure.win/cleanup.win) mv make zip hhc
+    ## sh (configure.win/cleanup.win) mv make zip [hhc if CHM help]
 
     ## we don't want to load utils just for this
     .file_test <- function(op, x)
@@ -489,16 +489,7 @@
                 system(paste("mv", instdir, file.path(lockdir, pkg_name)))
             } else if (more_than_libs && !WINDOWS)
                 unlink(instdir, recursive = TRUE)
-            dir.create(instdir, recursive=TRUE, showWarnings = FALSE)
-
-            ## Preserve man pages to speed up installation?  Only makes sense
-            ## if we install from a non-temporary directory.
-            if (!WINDOWS && lock && is.na(pmatch(tmpdir, getwd()))) {
-                system(paste("(cd", shQuote(file.path(lockdir, pkg_name)),
-                             "&&", TAR,
-                             "cf  - R-ex html latex 2>/dev/null) | (cd",
-                             shQuote(instdir), "&&", TAR, "xf -)"))
-            }
+            dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
 
         if (preclean) run_clean()
