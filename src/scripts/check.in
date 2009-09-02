@@ -2349,16 +2349,19 @@ sub check_pkg {
 			"' in an ASCII locale.\n";
 		    }
 		}
+		## might be diff-ing results against tests/Examples later
 		if($opt_use_gct) {
 		    $cmd = join(" ",
 				("(echo 'gctorture(TRUE)';",
 				 "cat ${pkgname}-Ex.R) |",
+				 "LANGUAGE=en",
 				 &shell_quote_file_path(${R::Vars::R_EXE}),
 				 "${R_opts}", $enc,
 				 "> ${pkgname}-Ex.Rout 2>&1"));
 		} else {
 		    $cmd = join(" ",
-				(&shell_quote_file_path(${R::Vars::R_EXE}),
+				("LANGUAGE=en",
+				 &shell_quote_file_path(${R::Vars::R_EXE}),
 				 "${R_opts}", $enc,
 				 "< ${pkgname}-Ex.R",
 				 "> ${pkgname}-Ex.Rout 2>&1"));
