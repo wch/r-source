@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## also used by Rd2latex
+## also used by Rd2latex, but only 'topic' and 'dest'
 get_link <- function(arg, tag, Rdfile) {
     ## 'topic' is the name to display, 'dest' is the topic to link to
     ## optionaly in package 'pkg'.  If 'target' is set it is the file
@@ -30,8 +30,7 @@ get_link <- function(arg, tag, Rdfile) {
 
     option <- attr(arg, "Rd_option")
 
-    dest <- paste(unlist(arg), collapse = "")
-    topic <- dest
+    topic <- dest <- paste(unlist(arg), collapse = "")
     targetfile <- NULL
     pkg <- NULL
     if (!is.null(option)) {

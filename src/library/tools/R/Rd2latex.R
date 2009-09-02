@@ -14,16 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## This warns on text outside sections
-## and errors on
-##  unrecognized tags (can the parser do that?)
-##  \\tabular format must be simple text
-##  invalid markup in \[S3]method
-##  Only one \\Rdversion declaration is allowed
-##  Unrecognized section (but I think the parser catches that)
-##  Sections \\title, and \\name must exist and be unique in Rd files
-##  \\name must only contain simple text
-
 
 latex_canonical_encoding  <- function(encoding)
 {
@@ -202,7 +192,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     	of1("}")
     }
 
-    ## could be more complicated, e.g. force.Rd
+    ## Currently ignores [option] except for [=dest] form
+    ## (as documented)
     writeLink <- function(tag, block) {
         parts <- get_link(block, tag)
         of0("\\LinkA{", latex_escape_link(parts$topic), "}{",

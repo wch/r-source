@@ -3833,9 +3833,9 @@ will resolve the link at run time) or in the normally undesirable event
 that more than one package offers help on a topic@footnote{a common
 example in @acronym{CRAN} packages is @code{\link[mgcv]@{gam@}}.} (in
 which case the present package has precedence so this is only needed to
-refer to other packages).  They are only in used in (C)HTML help (and
-not for hyperlinks in @LaTeX{} conversions of help pages), and link to
-the file rather than the topic (since there is no way to know which
+refer to other packages).  They are only in used in HTML help (and
+ignored for hyperlinks in @LaTeX{} conversions of help pages), and link
+to the file rather than the topic (since there is no way to know which
 topics are in which files in an uninstalled package).  The @strong{only}
 reason to use these forms for base and recommended packages is to force
 a reference to a package that might be further down the search path.
