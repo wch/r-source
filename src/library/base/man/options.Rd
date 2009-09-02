@@ -69,10 +69,10 @@ getOption(x, default = NULL)
     \item{\code{continue}:}{a non-empty string setting the prompt used
       for lines which continue over one line.}
 
+    %%  default is set in ../../profile/Common.R :
     \item{\code{defaultPackages}:}{the packages that are attached by
       default when \R starts up.  Initially set from value of the
       environment variable \env{R_DEFAULT_PACKAGES}, or if that is unset
-      %%  default is set in ../../profile/Common.R :
       to \code{c("datasets", "utils", "grDevices", "graphics", "stats",
         "methods")}.  (Set \env{R_DEFAULT_PACKAGES} to \code{NULL} or
       a comma-separated list of package names.)   A call to

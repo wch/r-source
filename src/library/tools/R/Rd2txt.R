@@ -542,7 +542,23 @@ Rd2txt <-
             switch(tag,
                    "\\item" = {
                        switch(blocktag,
-                              "\\describe"=,
+                              "\\describe"= {
+                                  blankLine()
+                                  save <- startCapture()
+                                  dropBlank <<- TRUE
+                                  writeContent(block[[1L]], tag)
+                                  DLlab <- endCapture(save)
+                                  indent0 <- indent
+                                  indent <<- max(10L, indent + 4L)
+                                  keepFirstIndent <<- TRUE
+                                  putw(paste(rep(" ", indent0), collapse=""),
+                                       format(paste(DLlab,  sep=""),
+                                              justify="right", width=indent),
+                                       " ")
+                                  writeContent(block[[2L]], tag)
+			  	  blankLine(0L)
+                                  indent <<- indent0
+                              },
                               "\\value"=,
                               "\\arguments"= {
                                   blankLine()
@@ -587,6 +603,25 @@ Rd2txt <-
 	}
     }
 
+    toChar <- function(x)
+    {
+        out <- character()
+        for(i in seq_along(x)) {
+            this <- x[[i]]
+            out <- c(out,
+                     switch(attr(this, "Rd_tag"),
+                            "\\ldots" =,
+                            "\\dots" = "...",
+                            "\\R" = "R",
+                            "\\bold"=,
+                            "\\strong"=,
+                            "\\emph" = toChar(this),
+                            as.character(this))
+                     )
+        }
+        paste(out, collapse = "")
+    }
+
     writeSection <- function(section, tag) {
         if (tag %in% c("\\alias", "\\concept", "\\encoding", "\\keyword"))
             return()
@@ -594,7 +629,8 @@ Rd2txt <-
         indent <<- 5L
         keepFirstIndent <<- TRUE
         if (tag == "\\section") {
-            putf(txt_header(as.character(section[[1L]])), ":")
+            ## section header could have markup
+            putf(txt_header(toChar(section[[1L]])), ":")
             blankLine()
             dropBlank <<- TRUE
             wrapping <<- TRUE
