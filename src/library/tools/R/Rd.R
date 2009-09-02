@@ -78,7 +78,8 @@ Rd_contents <-
 function(db)
 {
     ## Compute contents db from Rd db.
-
+    ## NB: Encoding is the encoding declared in the file, not
+    ## that after parsing.
     if(!length(db)) {
         out <- data.frame(File = character(),
                           Name = character(),

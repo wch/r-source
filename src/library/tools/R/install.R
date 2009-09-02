@@ -819,8 +819,7 @@
 
                 starsmsg(paste0(stars, "*"), "installing help indices")
                 ## always want HTML package index
-                .writePkgIndices(pkg_dir, instdir, html = TRUE,
-                                 CHM = build_chm)
+                .writePkgIndices(pkg_dir, instdir, html = TRUE, CHM = build_chm)
                 if (build_help) {
                     ## This is used as the default outputEncoding for latex
                     outenc <- desc["Encoding"]
@@ -1626,62 +1625,8 @@
     1L
 }
 
-if (FALSE) {
-## given a source package in 'dir', write outDirc/help/AnIndex
-## This is a two-column tab-separated file of topic and file basename,
-## conventionally sorted on topic (but with foo-package first)
-## NB: ASCII sort, C locale
-.writeAnIndex <- function(dir, outDir, OS = .Platform$OS.type)
-{
-    re <- function(x)
-    {
-        ## sort order for topics, a little tricky
-        ## FALSE sorts before TRUE
-        xx <- rep(TRUE, length(x))
-        xx[grep("-package", x, fixed = TRUE)] <- FALSE
-        order(xx, toupper(x), x)
-    }
-
-    mandir <- file.path(dir, "man")
-    if (!file_test("-d", mandir))
-        stop("there are no help pages in this package")
-    files <- c(Sys.glob(file.path(mandir, "*.Rd")),
-               Sys.glob(file.path(mandir, "*.rd")))
-    if (file_test("-d", f <- file.path(mandir, OS)))
-        files <- c(files,
-                   Sys.glob(file.path(f, "*.Rd")),
-                   Sys.glob(file.path(f, "*.rd")))
-    ## Should only process files starting with [A-Za-z0-9] and with
-    ## suffix .Rd or .rd, according to 'Writing R Extensions'.
-    OK <- grep("^[A-Za-z0-9]", basename(files))
-    files <- files[OK]
-    topics <- ff <- character()
-    for (f in files) {
-        lines <- readLines(f, warn = FALSE)
-        ## some \alias entries have trailing comments including a }
-        aliases <- grep("^\\s*\\\\alias\\{\\s*([^}]+)\\}", lines,
-                        perl = TRUE, value = TRUE)
-        aliases <- sub("\\s*\\\\alias\\{\\s*([^}]+)\\}.*", "\\1",
-                       aliases, perl = TRUE)
-        ## unescape % and {
-        aliases <- gsub("\\\\([%{])", "\\1", aliases)
-        dups <- aliases %in% topics
-        if (any(dups))
-            warning("skipping repeated alias(es) ",
-                    paste(sQuote(aliases[dups]), collapse = ", "),
-                    " in file ", basename(f))
-        aliases <- aliases[!dups]
-        topics <- c(topics, aliases)
-        fff <- sub("\\.[Rr]d$", "", basename(f))
-        ff <- c(ff, rep(fff, length(aliases)))
-    }
-    outman <- file.path(outDir, "help")
-    dir.create(outman, showWarnings = FALSE)
-    write.table(cbind(topics, ff)[re(topics),], file.path(outman, "AnIndex"),
-                quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
-}
-}
-
+## called for base packages from src/Makefile[.win] and from
+## .install.packages in this file.
 .writePkgIndices <-
     function(dir, outDir, OS = .Platform$OS.type, html = TRUE, CHM = FALSE)
 {
@@ -1722,6 +1667,7 @@ if (FALSE) {
 
     chm_header <- function(pkg, title, version, conn)
     {
+        ## FIXME: we probably need to give the encoding (UTF-8)
         cat("<html><head><title>", title, "</title>\n",
             "<link rel=\"stylesheet\" type=\"text/css\" href=\"Rchm.css\">\n" ,
             "</head><body>\n",
@@ -1877,20 +1823,11 @@ if (FALSE) {
     M$HTopic <- htmlize(M$Topic, FALSE)
     M$Title <- htmlize(M$Title, TRUE)
 
-    ## handle encodings
-    ## FIXME we always use UTF-8 these days
-    def <- desc["Encoding"]
-    def <- if (is.na(def)) "" else mime_canonical_encoding(def)
-    encodings <- mime_canonical_encoding(Rd$Encoding)
-    enc <- if (any(nzchar(encodings))) {
-        encs <- unique(c(def, encodings))
-        ## FIXME: we could reencode individual files
-        encs[nzchar(encs)][1]
-    } else def
+    ## No need to handle encodings: everything is in UTF-8
 
     if (html)
         html_header(desc["Package"], desc["Title"], desc["Version"],
-                    if (nzchar(enc)) enc else "iso-8859-1", outcon)
+                    "UTF-8", outcon)
     if (CHM)
         chm_header(desc["Package"], desc["Title"], desc["Version"], chmcon)
 
