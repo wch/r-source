@@ -26,6 +26,9 @@
 
 .HTMLdirListing <- function(dir, base)
 {
+    mono <- function(text)
+        paste('<span class="samp">', text, "</span>", sep="")
+
     files <- list.files(dir) # note, no hidden files are listed
     out <- c(.httpdHeader(dir),
              paste('<h1>', "Listing of directory<br>", dir, '</h1>\n\n<hr>\n',
