@@ -14,8 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-### TODO
-## Better directory listing, possibly via a redirect to a file:// link
 
 .HTMLdirListing <- function(dir, base)
 {
@@ -27,7 +25,7 @@
         '</head><body>\n',
         '<h1>', "Listing of directory<br>", dir, '</h1>\n\n<hr>\n', sep="")
     if(!length(files))
-        out <- c(out, "No files in this directory")
+        out <- c(out, gettext("No files in this directory"))
     else {
         urls <- paste('<a href="', base, '/', files, '">', files, '</a>',
                       sep = "")
@@ -69,7 +67,7 @@
                  paste("<dt>", iconv(urls, "", "UTF-8"), "</dt>\n",
                        "<dd>", res[, "title"], "</dd>", sep = ""),
                  "</dl>")
-    } else out <- c(out, "No results found")
+    } else out <- c(out, gettext("No results found"))
     out <- c(out, "<hr>\n</BODY></HTML>")
     list(payload = paste(out, collapse="\n"))
 }
@@ -146,12 +144,17 @@ httpd <- function(path, query, ...)
     	topic <- sub(topicRegexp, "\\2", path)
     	if (!is.null(pkg)) # () avoids deparse here
     	    file <- help(topic, package=(pkg), help_type = "text")
-    	if (length(file) == 0L)
-            file <- help(topic, help_type = "text",
-                         try.all.packages=TRUE)
-	if (length(file) == 0L) {
-	    return(list(payload=paste('<p>No help found for topic ', topic,
-                        ' in package ', pkg, '.</p>\n',
+        ## FIXME: do we really want to do this, search all packages if
+        ## one was specified?
+    	if (!length(file))
+            file <- help(topic, help_type = "text", try.all.packages = TRUE)
+	if (!length(file)) {
+            msg <- if(!is.null(pkg))
+                gettextf("No help found for topic '%s' in package '%s'.",
+                        topic, pkg)
+            else
+                gettextf("No help found for topic '%s' in any package.", topic)
+	    return(list(payload=paste('<p>', msg, '</p>\n',
                         '<hr><div align="center">[<a href="00Index.html">Index</a>]</div>\n',
                         sep="", collapse="")))
 	} else if (length(file) == 1L) {
@@ -191,9 +194,9 @@ httpd <- function(path, query, ...)
             file <- system.file("html", "00Index.html", package=pkg)
             if(!nzchar(file) || !file.exists(file)) {
                 if(nzchar(system.file(package=pkg)))
-                    return(error_page(paste("No package index found for package", sQuote(pkg))))
+                    return(error_page(gettextf("No package index found for package", sQuote(pkg))))
                 else
-                    return(error_page(paste("No package of name", sQuote(pkg), "could be located")))
+                    return(error_page(gettextf("No package of name %s could be located", sQuote(pkg) )))
             } else {
                 if(.Platform$OS.type == "windows") return(unfix(file))
                 return(list(file = file))
@@ -202,21 +205,24 @@ httpd <- function(path, query, ...)
             file <- system.file("help", package = pkg)
             if (!nzchar(file)) {
                 if(nzchar(system.file(package = pkg)))
-                    return(error_page(paste("No help found for package", sQuote(pkg))))
+                    return(error_page(gettextf("No help found for package %s", sQuote(pkg) )))
                 else
-                   return(error_page(paste("No package of name", sQuote(pkg), "could be located")))
+                   return(error_page(paste("No package of name %s could be located", sQuote(pkg) )))
             }
-            ## if 'topic' is not a help doc, try it as an alias
+            ## if 'topic' is not a help doc, try it as an alias in the package
             contents <- .readRDS(sub("/help", "/Meta/Rd.rds", file))
             files <- sub("\\.[Rr]d$", "", contents$File)
             if(! helpdoc %in% files) {
+                ## or call help()
                 aliases <- contents$Aliases
                 lens <- sapply(aliases, length)
                 aliases <- structure(rep.int(contents$File, lens),
                                      names = unlist(aliases))
                 tmp <- sub("\\.[Rr]d$", "", aliases[helpdoc])
                 if(is.na(tmp)) {
-                   return(error_page(paste("Link", sQuote(helpdoc), "in package", sQuote(pkg), "could be located")))
+                    ## FIXME: look for this as alias generally?
+                   return(error_page(gettextf("Link %s in package %s could not be located",
+                                              sQuote(helpdoc), sQuote(pkg) )))
                 }
                 helpdoc <- tmp
             }
@@ -229,7 +235,8 @@ httpd <- function(path, query, ...)
     	rest <- sub(docRegexp, "\\2", path)
         docdir <- system.file("doc", package = pkg)
         if(!nzchar(docdir))
-            return(error_page(paste("No docs found for package", sQuote(pkg))))
+            return(error_page(gettextf("No docs found for package %s",
+                                       sQuote(pkg))))
         if(nzchar(rest)) {
             file <- paste(docdir, rest, sep = "")
             return(list(file = file, "content-type" = mime_type(path)))
