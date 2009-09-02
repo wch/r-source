@@ -4,12 +4,12 @@
 # options(editor="notepad")
 # options(pager="internal")
 
-# to prefer Compiled HTML help
-# options(chmhelp=TRUE)
+# set the default help type
+# options(help_type="text")
+# options(help_type="html")
+# options(help_type="chm")
 
-# to prefer HTML help
-# options(htmlhelp=TRUE)
-
+# set a site library
 # .Library.site <- file.path(chartr("\\", "/", R.home()), "site-library")
 
 # set a CRAN mirror

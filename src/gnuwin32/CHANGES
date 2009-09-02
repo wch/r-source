@@ -38,7 +38,7 @@ PACKAGE INSTALLATION
 	same as on Unix, and was announced in the NEWS for 2.9.0.
 
     o	Help in base and recommended packages is no longer zipped: text,
-	latex and examples files are now built when needed.
+	HTML, latex and examples files are now built when needed.
 
 	Options --use-zip and --use-zip-help in R CMD INSTALL are no
 	longer available and --auto-zip only zips data (or not).
@@ -49,9 +49,9 @@ INSTALLATION
     o	CHM help is no longer made by default, and support for it may
 	be withdrawn entirely before release.
 
-    o	The defaults have been changed: they now are to use HTML help,
-	not install prebuilt HTML help pages and not install CHM help.
-	[Not yet for the MSI installer.]
+    o	The help default has been changed to be HTML help rather than
+	CHM help (which is currently unavailable).
+	[Not yet the MSI installer.]
 
 	Binary packages are currently installed with all the types of
 	help they contain [but that may change before release].

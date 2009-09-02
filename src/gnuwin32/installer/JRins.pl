@@ -341,8 +341,8 @@ begin
   SetCommentMarker(lines, \'MDI = yes\', MDISDIPage.SelectedValueIndex = 0);
   SetCommentMarker(lines, \'MDI = no\', MDISDIPage.SelectedValueIndex = 1);
   
-  SetCommentMarker(lines, \'options(chmhelp\', HelpStylePage.SelectedValueIndex = 1);
-  SetCommentMarker(lines, \'options(htmlhelp\', HelpStylePage.SelectedValueIndex = 2);
+  SetCommentMarker(lines, \'options(help_type="chm"\', HelpStylePage.SelectedValueIndex = 1);
+  SetCommentMarker(lines, \'options(help_type="html"\', HelpStylePage.SelectedValueIndex = 2);
   
   SaveStringsToFile(filename, lines, False);
 end;
