@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-02 09:57\n"
+"POT-Creation-Date: 2009-09-02 20:13\n"
 "PO-Revision-Date: 2009-03-29 22:45+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -607,21 +607,19 @@ msgstr ""
 msgid "No results found"
 msgstr "aucun fichier source n'est trouvé"
 
-msgid "No help found for topic '%s' in package '%s'."
-msgstr ""
+#, fuzzy
+msgid "No help found for topic %s in any package."
+msgstr "ceci ne peut être utilisé pour le package 'base'"
 
-msgid "No help found for topic '%s' in any package."
-msgstr ""
-
-msgid "<p>Help on topic '%s' was found in the following packages:</p><dl>"
+msgid "Help on topic '%s' was found in the following packages:"
 msgstr ""
 
 #, fuzzy
-msgid "No package index found for package %d"
+msgid "No package index found for package %s"
 msgstr "ceci ne peut être utilisé pour le package 'base'"
 
 #, fuzzy
-msgid "No package of name %s could be located"
+msgid "No package named %s could be found"
 msgstr "le package doit être chargé"
 
 #, fuzzy
@@ -629,11 +627,22 @@ msgid "No help found for package %s"
 msgstr "ceci ne peut être utilisé pour le package 'base'"
 
 #, fuzzy
+msgid "No package of named %s could be found"
+msgstr "le package doit être chargé"
+
+#, fuzzy
 msgid "Link %s in package %s could not be located"
 msgstr "l'espace de noms ne doit pas être chargé."
 
+msgid "Unable to locate help document %s in package %s"
+msgstr ""
+
 msgid "No docs found for package %s"
 msgstr ""
+
+#, fuzzy
+msgid "URL %s was not found"
+msgstr "le package '%s' est introuvable"
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"
 msgstr ""
@@ -641,7 +650,7 @@ msgstr ""
 msgid "server already running"
 msgstr ""
 
-msgid "server could not be started earlier"
+msgid "server could not be started on an earlier attempt"
 msgstr ""
 
 #, fuzzy
@@ -749,15 +758,6 @@ msgstr "option -o sans valeur"
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Conversion des fichiers Rd en LaTeX ..."
-
-msgid "there are no help pages in this package"
-msgstr "il n'y a pas de pages d'aide dans ce package"
-
-msgid "skipping repeated alias(es)"
-msgstr "alias(es) répétitifs ignorés"
-
-msgid "in file"
-msgstr "dans le fichier"
 
 msgid "finding HTML links ..."
 msgstr ""
@@ -1023,6 +1023,15 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
 msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
+#~ msgid "there are no help pages in this package"
+#~ msgstr "il n'y a pas de pages d'aide dans ce package"
+
+#~ msgid "skipping repeated alias(es)"
+#~ msgstr "alias(es) répétitifs ignorés"
+
+#~ msgid "in file"
+#~ msgstr "dans le fichier"
 
 #~ msgid "directory '%s' does not contain Rd sources"
 #~ msgstr "le répertoire '%s' ne contient pas de sources Rd"

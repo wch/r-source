@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-02 09:57\n"
+"POT-Creation-Date: 2009-09-02 20:13\n"
 "PO-Revision-Date: 2009-03-26 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -590,21 +590,19 @@ msgstr ""
 msgid "No results found"
 msgstr "kein Quellkode gefunden"
 
-msgid "No help found for topic '%s' in package '%s'."
-msgstr ""
+#, fuzzy
+msgid "No help found for topic %s in any package."
+msgstr "dies kann für Paket 'base' nicht benutzt werden"
 
-msgid "No help found for topic '%s' in any package."
-msgstr ""
-
-msgid "<p>Help on topic '%s' was found in the following packages:</p><dl>"
+msgid "Help on topic '%s' was found in the following packages:"
 msgstr ""
 
 #, fuzzy
-msgid "No package index found for package %d"
+msgid "No package index found for package %s"
 msgstr "dies kann für Paket 'base' nicht benutzt werden"
 
 #, fuzzy
-msgid "No package of name %s could be located"
+msgid "No package named %s could be found"
 msgstr "Paket muss geladen werden"
 
 #, fuzzy
@@ -612,11 +610,22 @@ msgid "No help found for package %s"
 msgstr "dies kann für Paket 'base' nicht benutzt werden"
 
 #, fuzzy
+msgid "No package of named %s could be found"
+msgstr "Paket muss geladen werden"
+
+#, fuzzy
 msgid "Link %s in package %s could not be located"
 msgstr "Namensraum darf nicht geladen werden"
 
+msgid "Unable to locate help document %s in package %s"
+msgstr ""
+
 msgid "No docs found for package %s"
 msgstr ""
+
+#, fuzzy
+msgid "URL %s was not found"
+msgstr "Paket '%s' nicht gefunden"
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"
 msgstr ""
@@ -624,7 +633,7 @@ msgstr ""
 msgid "server already running"
 msgstr ""
 
-msgid "server could not be started earlier"
+msgid "server could not be started on an earlier attempt"
 msgstr ""
 
 #, fuzzy
@@ -732,15 +741,6 @@ msgstr "-o Option ohne Wert"
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Konvertiere RD Dateien nach LaTeX"
-
-msgid "there are no help pages in this package"
-msgstr "keine Hilfeseiten in diesem Paket"
-
-msgid "skipping repeated alias(es)"
-msgstr "überspringe wiederholte(n) Alias(se)"
-
-msgid "in file"
-msgstr "in Datei"
 
 msgid "finding HTML links ..."
 msgstr ""
@@ -997,6 +997,15 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
+
+#~ msgid "there are no help pages in this package"
+#~ msgstr "keine Hilfeseiten in diesem Paket"
+
+#~ msgid "skipping repeated alias(es)"
+#~ msgstr "überspringe wiederholte(n) Alias(se)"
+
+#~ msgid "in file"
+#~ msgstr "in Datei"
 
 #~ msgid "directory '%s' does not contain Rd sources"
 #~ msgstr "Verzeichnis '%s' enthält keine Rd Quellen"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-02 09:57\n"
+"POT-Creation-Date: 2009-09-02 20:13\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -584,21 +584,19 @@ msgstr ""
 msgid "No results found"
 msgstr ""
 
-msgid "No help found for topic '%s' in package '%s'."
-msgstr ""
+#, fuzzy
+msgid "No help found for topic %s in any package."
+msgstr "이것은 패키지 'base'를 위해서 사용할수가 없습니다"
 
-msgid "No help found for topic '%s' in any package."
-msgstr ""
-
-msgid "<p>Help on topic '%s' was found in the following packages:</p><dl>"
+msgid "Help on topic '%s' was found in the following packages:"
 msgstr ""
 
 #, fuzzy
-msgid "No package index found for package %d"
+msgid "No package index found for package %s"
 msgstr "이것은 패키지 'base'를 위해서 사용할수가 없습니다"
 
 #, fuzzy
-msgid "No package of name %s could be located"
+msgid "No package named %s could be found"
 msgstr "name space를 적재해서는 안됩니다"
 
 #, fuzzy
@@ -606,11 +604,22 @@ msgid "No help found for package %s"
 msgstr "이것은 패키지 'base'를 위해서 사용할수가 없습니다"
 
 #, fuzzy
+msgid "No package of named %s could be found"
+msgstr "name space를 적재해서는 안됩니다"
+
+#, fuzzy
 msgid "Link %s in package %s could not be located"
 msgstr "name space를 적재해서는 안됩니다"
 
+msgid "Unable to locate help document %s in package %s"
+msgstr ""
+
 msgid "No docs found for package %s"
 msgstr ""
+
+#, fuzzy
+msgid "URL %s was not found"
+msgstr "패키지 '%s'가 검색되지 않습니다"
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"
 msgstr ""
@@ -618,7 +627,7 @@ msgstr ""
 msgid "server already running"
 msgstr ""
 
-msgid "server could not be started earlier"
+msgid "server could not be started on an earlier attempt"
 msgstr ""
 
 msgid "no running server to stop"
@@ -724,15 +733,6 @@ msgid "-o option without value"
 msgstr ""
 
 msgid "Converting Rd files to LaTeX ..."
-msgstr ""
-
-msgid "there are no help pages in this package"
-msgstr ""
-
-msgid "skipping repeated alias(es)"
-msgstr ""
-
-msgid "in file"
 msgstr ""
 
 msgid "finding HTML links ..."

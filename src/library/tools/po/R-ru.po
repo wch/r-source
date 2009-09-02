@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-02 09:57\n"
+"POT-Creation-Date: 2009-09-02 20:13\n"
 "PO-Revision-Date: 2009-03-28 23:43-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -595,21 +595,19 @@ msgstr ""
 msgid "No results found"
 msgstr "не найдено файлов исходников"
 
-msgid "No help found for topic '%s' in package '%s'."
-msgstr ""
+#, fuzzy
+msgid "No help found for topic %s in any package."
+msgstr "это нельзя использовать для пакета 'base'"
 
-msgid "No help found for topic '%s' in any package."
-msgstr ""
-
-msgid "<p>Help on topic '%s' was found in the following packages:</p><dl>"
+msgid "Help on topic '%s' was found in the following packages:"
 msgstr ""
 
 #, fuzzy
-msgid "No package index found for package %d"
+msgid "No package index found for package %s"
 msgstr "это нельзя использовать для пакета 'base'"
 
 #, fuzzy
-msgid "No package of name %s could be located"
+msgid "No package named %s could be found"
 msgstr "должен быть загружен пакет"
 
 #, fuzzy
@@ -617,11 +615,22 @@ msgid "No help found for package %s"
 msgstr "это нельзя использовать для пакета 'base'"
 
 #, fuzzy
+msgid "No package of named %s could be found"
+msgstr "должен быть загружен пакет"
+
+#, fuzzy
 msgid "Link %s in package %s could not be located"
 msgstr "должно быть загружено пространство имен."
 
+msgid "Unable to locate help document %s in package %s"
+msgstr ""
+
 msgid "No docs found for package %s"
 msgstr ""
+
+#, fuzzy
+msgid "URL %s was not found"
+msgstr "пакет '%s' не найден"
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"
 msgstr ""
@@ -629,7 +638,7 @@ msgstr ""
 msgid "server already running"
 msgstr ""
 
-msgid "server could not be started earlier"
+msgid "server could not be started on an earlier attempt"
 msgstr ""
 
 #, fuzzy
@@ -736,15 +745,6 @@ msgstr "-o опция без значения"
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Конвертирую  Rd файлы в LaTeX ..."
-
-msgid "there are no help pages in this package"
-msgstr "в пакете нет файлов помощи"
-
-msgid "skipping repeated alias(es)"
-msgstr "пропускаю повторяющиеся имена-ссылк(и)"
-
-msgid "in file"
-msgstr "в файле"
 
 msgid "finding HTML links ..."
 msgstr ""
@@ -1003,6 +1003,15 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Найден вызов .Internal call в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
+
+#~ msgid "there are no help pages in this package"
+#~ msgstr "в пакете нет файлов помощи"
+
+#~ msgid "skipping repeated alias(es)"
+#~ msgstr "пропускаю повторяющиеся имена-ссылк(и)"
+
+#~ msgid "in file"
+#~ msgstr "в файле"
 
 #~ msgid "directory '%s' does not contain Rd sources"
 #~ msgstr "папка '%s' не содержит Rd-исходников"

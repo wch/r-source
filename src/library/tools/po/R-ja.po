@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-02 09:57\n"
+"POT-Creation-Date: 2009-09-02 20:13\n"
 "PO-Revision-Date: 2009-04-01 08:36+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -609,21 +609,19 @@ msgstr ""
 msgid "No results found"
 msgstr "ソースファイルが見つかりません "
 
-msgid "No help found for topic '%s' in package '%s'."
-msgstr ""
+#, fuzzy
+msgid "No help found for topic %s in any package."
+msgstr " これはパッケージ 'base' に使用することが出来ません "
 
-msgid "No help found for topic '%s' in any package."
-msgstr ""
-
-msgid "<p>Help on topic '%s' was found in the following packages:</p><dl>"
+msgid "Help on topic '%s' was found in the following packages:"
 msgstr ""
 
 #, fuzzy
-msgid "No package index found for package %d"
+msgid "No package index found for package %s"
 msgstr " これはパッケージ 'base' に使用することが出来ません "
 
 #, fuzzy
-msgid "No package of name %s could be located"
+msgid "No package named %s could be found"
 msgstr " パッケージがロードされなければなりません "
 
 #, fuzzy
@@ -631,11 +629,22 @@ msgid "No help found for package %s"
 msgstr " これはパッケージ 'base' に使用することが出来ません "
 
 #, fuzzy
+msgid "No package of named %s could be found"
+msgstr " パッケージがロードされなければなりません "
+
+#, fuzzy
 msgid "Link %s in package %s could not be located"
 msgstr " 名前空間はロードされてはいけません。 "
 
+msgid "Unable to locate help document %s in package %s"
+msgstr ""
+
 msgid "No docs found for package %s"
 msgstr ""
+
+#, fuzzy
+msgid "URL %s was not found"
+msgstr " パッケージ '%s' は見つかりませんでした "
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"
 msgstr ""
@@ -643,7 +652,7 @@ msgstr ""
 msgid "server already running"
 msgstr ""
 
-msgid "server could not be started earlier"
+msgid "server could not be started on an earlier attempt"
 msgstr ""
 
 #, fuzzy
@@ -751,15 +760,6 @@ msgstr " 値のない -o オプションです "
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "RdファイルをLaTeXに変換しています "
-
-msgid "there are no help pages in this package"
-msgstr "このパッケージにはヘルプ頁がありません "
-
-msgid "skipping repeated alias(es)"
-msgstr "重複したエイリアスをスキップ中"
-
-msgid "in file"
-msgstr " 以下のファイル中 "
 
 msgid "finding HTML links ..."
 msgstr ""
@@ -1012,6 +1012,15 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+
+#~ msgid "there are no help pages in this package"
+#~ msgstr "このパッケージにはヘルプ頁がありません "
+
+#~ msgid "skipping repeated alias(es)"
+#~ msgstr "重複したエイリアスをスキップ中"
+
+#~ msgid "in file"
+#~ msgstr " 以下のファイル中 "
 
 #~ msgid "directory '%s' does not contain Rd sources"
 #~ msgstr " ディレクトリ '%s' は Rd ソースを含んでいません "
