@@ -194,7 +194,7 @@ httpd <- function(path, query, ...)
             file <- system.file("html", "00Index.html", package=pkg)
             if(!nzchar(file) || !file.exists(file)) {
                 if(nzchar(system.file(package=pkg)))
-                    return(error_page(gettextf("No package index found for package", sQuote(pkg))))
+                    return(error_page(gettextf("No package index found for package %d", sQuote(pkg))))
                 else
                     return(error_page(gettextf("No package of name %s could be located", sQuote(pkg) )))
             } else {
