@@ -72,8 +72,26 @@ mime_canonical_encoding <- function(encoding)
     encoding[encoding == "latin-9"] <- "iso-8859-15"
     encoding[encoding == "latin10"] <- "iso-8859-16"
     encoding[encoding == "utf8"] <-    "utf-8"
+    encoding[encoding == "ascii"] <-    "us-ascii" # from W3C validator
     encoding
 }
+
+## This gets used three ways:
+## 1) With dynamic = TRUE from tools:::httpd()
+##    Here generated links are of the forms
+##    ../../NULL/help/topic
+##    file.html
+##    ../../pkg/html/file.html
+##
+## 2) With dynamic = FALSE from .convertRdfiles (with Links[2], used for
+##    prebuilt HTML pages) and .Rdconv (no link lookup)
+##    Here generated links are of the forms
+##    file.html
+##    ../../pkg/html/file.html
+##    and missing links (those without an explicit package, and
+##    those topics not in Links[2]) don't get linked anywhere.
+##
+## 3) With CHM = TRUE from .convertRdfiles (currently not in use).
 
 ## FIXME: better to really use XHTML
 Rd2HTML <-
@@ -105,7 +123,7 @@ Rd2HTML <-
 
     pendingClose <- pendingOpen <- character(0)  # Used for infix methods
 
-    nlinks <- 0L
+    if(CHM) nlinks <- 0L
 ### These correspond to HTML wrappers
     HTMLTags <- c("\\bold"="B",
     	          "\\cite"="CITE",
@@ -198,6 +216,7 @@ Rd2HTML <-
     	of0("</",  HTMLTags[tag], ">")
     }
 
+    ## unused?
     topic2Path <- function(alias, package, type, lib.loc=NULL)
     {
         paths <- sapply(.find.package(package, lib.loc, verbose = FALSE),
@@ -224,10 +243,13 @@ Rd2HTML <-
         }
 
     	if (is.null(parts$targetfile)) {
+            ## \link{foo} and \link[=bar]{foo}
             topic <- parts$dest
-    	    if (dynamic)
+    	    if (dynamic) { # never called with package=""
                 htmlfile <- paste("../../", package, "/help/", topic, sep="")
-            else {
+                writeHref()
+                return()
+            } else {
             	htmlfile  <- NA_character_
             	if (!is.null(Links)) {
             	    tmp <- Links[topic]
@@ -260,13 +282,18 @@ Rd2HTML <-
                     of1('</a>')
                 } else writeHref()
             }
-    	} else if (is.null(parts$pkg) || parts$pkg == package) {
+    	}
+        ## targetfile without pkg cannot currently happen
+        else if (is.null(parts$pkg) || parts$pkg == package) {
+            ## This package was specified
+            ## href = "file.html"
+            ## FIXME: check that 'file' not 'topic' was meant
     	    htmlfile <- paste(parts$targetfile, ".html", sep="")
             writeHref()
     	} else {
+            ## another package was specified
+            ## FIXME: check that 'file' not 'topic' was meant
             if(CHM) {
-                ## Cross-packages CHM links are of the form
-                ## <a onclick="findlink('stats', 'weighted.mean.html')" style="text-decoration: underline; color: blue; cursor: hand">weighted.mean</a>
                 htmlfile <- paste("findlink('", parts$pkg, "', '",
                                   parts$targetfile, ".html", "')",
                                   sep="")
@@ -274,14 +301,14 @@ Rd2HTML <-
                     '" style="text-decoration: underline; color: blue; cursor: hand">')
                 writeContent(block, tag)
                 of1('</a>')
+                nlinks <<- nlinks + 1L
             } else {
+                ## href = "../../pkg/html/file.html"
                 htmlfile <- paste("../../", parts$pkg, "/html/",
                                   parts$targetfile, ".html", sep="")
                 writeHref()
             }
         }
-
-        nlinks <<- nlinks + 1L
     }
 
     writeComment <- function(txt) {
@@ -621,18 +648,17 @@ Rd2HTML <-
     for (i in seq_along(sections)[-(1:2)])
     	writeSection(Rd[[i]], sections[i])
 
-    if (CHM) {
-        if (nlinks > 0)
-            writeLines(paste('',
-                             '<script Language="JScript">',
-                             'function findlink(pkg, fn) {',
-                             'var Y, link;',
-                             'Y = location.href.lastIndexOf("\\\\") + 1;',
-                             'link = location.href.substring(0, Y);',
-                             'link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;',
-                             'location.href = link;', '}', '</script>',
-                             sep = '\n'), con)
-    }
+    if (CHM && nlinks > 0)
+        writeLines(paste('',
+                         '<script Language="JScript">',
+                         'function findlink(pkg, fn) {',
+                         'var Y, link;',
+                         'Y = location.href.lastIndexOf("\\\\") + 1;',
+                         'link = location.href.substring(0, Y);',
+                         'link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;',
+                         'location.href = link;', '}', '</script>',
+                         sep = '\n'), con)
+
     version <- if (package != "")
     	paste('Package <em>', package,
               '</em> version ',

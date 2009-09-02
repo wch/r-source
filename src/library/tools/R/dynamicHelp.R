@@ -73,9 +73,9 @@
 }
 
 ## This may be asked for
-##  R.css
+##  R.css, favicon.ico
 ##  searches with path = "/doc/html/Search"
-##  documentation with path = "/doc/....", possibly updated under tempdir/.R
+##  documentation with path = "/doc/....", possibly updated under tempdir()/.R
 ##  html help, either by topic, /library/<pkg>/help/<topic> (pkg=NULL means any)
 ##             or by file, /library/<pkg>/html/<file>.html
 httpd <- function(path, query, ...)
@@ -128,38 +128,41 @@ httpd <- function(path, query, ...)
         list(payload = out)
     }
 
+    if (grepl("R\\.css$", path))
+        return(list(file = file.path(R.home("doc"), "html", "R.css")))
+    else if(path == "/favicon.ico")
+        return(list(file = file.path(R.home("doc"), "html", "favicon.ico")))
+    else if(!grepl("^/(doc|library)/", path))
+        return(error_page("Only URLs under /doc and /library are allowed"))
+
+    ## ----------------------- per-package documentation ---------------------
     ## seems we got ../..//<pkg> in the past
     fileRegexp <- "^/library/+([^/]*)/html/([^/]*)\\.html$"
     topicRegexp <- "^/library/+([^/]*)/help/([^/]*)$"
     docRegexp <- "^/library/([^/]*)/doc(.*)"
     file <- NULL
-    if (grepl("R\\.css$", path)) {
-        ## this sometimes gets fetched at the wrong level
-        return(list(file = file.path(R.home("doc"), "html", "R.css")))
-    } else if(path == "/favicon.ico") {
-        return(list(file = file.path(R.home("doc"), "html", "favicon.ico")))
-    } else if (grepl(topicRegexp, path)) { # help by topic
+    if (grepl(topicRegexp, path)) {
+        ## ----------------------- package help by topic ---------------------
     	pkg <- sub(topicRegexp, "\\1", path)
-    	if (pkg == "NULL") pkg <- NULL
+    	if (pkg == "NULL") pkg <- NULL  # how can this occur?
     	topic <- sub(topicRegexp, "\\2", path)
+        ## if a package is specified, look there first
     	if (!is.null(pkg)) # () avoids deparse here
     	    file <- help(topic, package=(pkg), help_type = "text")
-        ## FIXME: do we really want to do this, search all packages if
-        ## one was specified?
     	if (!length(file))
             file <- help(topic, help_type = "text", try.all.packages = TRUE)
 	if (!length(file)) {
-            msg <- if(!is.null(pkg))
-                gettextf("No help found for topic '%s' in package '%s'.",
-                        topic, pkg)
-            else
-                gettextf("No help found for topic '%s' in any package.", topic)
-	    return(list(payload=paste('<p>', msg, '</p>\n',
-                        '<hr><div align="center">[<a href="00Index.html">Index</a>]</div>\n',
-                        sep="", collapse="")))
+##             msg <- if(!is.null(pkg))
+##                 gettextf("No help found for topic '%s' in package '%s'.",
+##                         topic, pkg)
+##             else
+            msg <- gettextf("No help found for topic '%s' in any package.",
+                            topic)
+	    return(list(payload = error_page(msg)))
 	} else if (length(file) == 1L) {
 	    path <- dirname(dirname(file))
-	    file <- paste('../../', basename(path), '/html/', basename(file), '.html', sep='')
+	    file <- paste('../../', basename(path), '/html/',
+                          basename(file), '.html', sep='')
 	    return(list(payload=paste('Redirect to <a href="', file, '">"',
                         basename(file), '"</a>', sep=''),
 	    		"content-type"='text/html',
@@ -183,11 +186,12 @@ httpd <- function(path, query, ...)
                               '</a> in library ', dirname(paths), ")</dd>",
                               sep="", collapse="\n")
 
-            return(list(payload=paste(gettextf("<p>Help on topic '%s' was found in the following packages:</p><dl>\n",
-                        topic),
-                        packages, "</dl>", sep="", collapse="\n")))
+            return(list(payload =
+                        paste(gettextf("<p>Help on topic '%s' was found in the following packages:</p><dl>\n", topic),
+                              packages, "</dl>", sep="", collapse="\n") ))
         }
-    } else if (grepl(fileRegexp, path)) { # help by file
+    } else if (grepl(fileRegexp, path)) {
+        ## ----------------------- package help by file ---------------------
     	pkg <- sub(fileRegexp, "\\1", path)
     	helpdoc <- sub(fileRegexp, "\\2", path)
         if (helpdoc == "00Index") {
@@ -207,10 +211,10 @@ httpd <- function(path, query, ...)
                 if(nzchar(system.file(package = pkg)))
                     return(error_page(gettextf("No help found for package %s", sQuote(pkg) )))
                 else
-                   return(error_page(paste("No package of name %s could be located", sQuote(pkg) )))
+                   return(error_page(gettextf("No package of name %s could be located", sQuote(pkg) )))
             }
             ## if 'topic' is not a help doc, try it as an alias in the package
-            contents <- .readRDS(sub("/help", "/Meta/Rd.rds", file))
+            contents <- .readRDS(sub("/help", "/Meta/Rd.rds", file, fixed = TRUE))
             files <- sub("\\.[Rr]d$", "", contents$File)
             if(! helpdoc %in% files) {
                 ## or call help()
@@ -220,16 +224,30 @@ httpd <- function(path, query, ...)
                                      names = unlist(aliases))
                 tmp <- sub("\\.[Rr]d$", "", aliases[helpdoc])
                 if(is.na(tmp)) {
-                    ## FIXME: look for this as alias generally?
-                   return(error_page(gettextf("Link %s in package %s could not be located",
-                                              sQuote(helpdoc), sQuote(pkg) )))
+                    msg <- gettextf("Link %s in package %s could not be located",
+                                    sQuote(helpdoc), sQuote(pkg))
+                    files <- help(helpdoc, help_type = "text",
+                                  try.all.packages = TRUE)
+                    if (length(files)) {
+                        path <- dirname(dirname(files))
+                        files <- paste(basename(path), '/html/',
+                                       basename(files), '.html', sep='')
+                        msg <- c(msg, "<br>",
+                                 "However, you might be looking for one of",
+                                 "<p></p>",
+                                 paste('<p><a href="/library/', files, '">',
+                                       ".../", files, "</a></p>", sep="")
+                                 )
+                    }
+                    return(error_page(paste(msg, collapse ="\n")))
                 }
                 helpdoc <- tmp
             }
             ## this is not a real file [*]
     	    file <- file.path(file, helpdoc)
         }
-    } else if (grepl(docRegexp, path)) { # docs
+    } else if (grepl(docRegexp, path)) {
+        ## ----------------------- package doc directory ---------------------
         ## vignettes etc directory
     	pkg <- sub(docRegexp, "\\1", path)
     	rest <- sub(docRegexp, "\\2", path)
@@ -246,7 +264,7 @@ httpd <- function(path, query, ...)
                                    paste("/library", pkg, "doc", sep="/")))
         }
     }
-    ## to get here we came from [*] or matched none of the patterns.
+    ## to get here we came from [*] or this was not within a package
     if (!is.null(file)) {
 	path <- dirname(file)
 	dirpath <- dirname(path)
@@ -254,39 +272,40 @@ httpd <- function(path, query, ...)
 	RdDB <- file.path(path, pkgname)
 	if(file.exists(paste(RdDB, "rdx", sep="."))) {
 	    outfile <- tempfile("Rhttpd")
-            ## FIXME better error reporting on missing names
 	    temp <- tools::Rd2HTML(tools:::fetchRdDB(RdDB, basename(file)),
                                    out = outfile, package = pkgname,
                                    dynamic = TRUE)
 	    on.exit(unlink(outfile))
-	    return(list(payload=paste(readLines(temp), collapse="\n")))
+	    return(list(payload = paste(readLines(temp), collapse = "\n")))
 	} else {
-            ## This is a link of the form .../pkg/help/topic
             ## Try for pre-generated HTML.
             file2 <- paste(sub("/help/", "/html/", file, fixed = TRUE),
-                           "html", sep=".")
+                           "html", sep = ".")
             if(file.exists(file2)) {
                 if(.Platform$OS.type == "windows") return(unfix(file2))
-                return(list(file=file2))
+                return(list(file = file2))
             }
-            return(list(file=file))
+            return(list(file = file))
         }
-    } else if(path == "/doc/html/Search.html") {
-        return(list(file=file.path(R.home("doc"), "html/SearchOn.html"),
-                    "content-type"="text/html"))
+    }
+
+    ## ----------------------- R docs ---------------------
+    if(path == "/doc/html/Search.html") {
+        ## redirect to the page that has search enabled
+        list(file = file.path(R.home("doc"), "html/SearchOn.html"),
+             "content-type" = "text/html")
     } else if(grepl("doc/html/.*html$" , path) &&
               file.exists(tmp <- file.path(tempdir(), ".R", path))) {
-        ## use generated (or symlinked) copy
-        return(list(file=tmp, "content-type"="text/html"))
+        ## use updated version, e.g. of packages.html
+        list(file = tmp, "content-type" = "text/html")
     } else if(path == "/doc/html/Search") {
         .HTMLsearch(query)
     } else {
-        ## If we got here, we've followed a link that's not to a man page.
         file <- if(grepl("^/doc/", path)) {
             ## /doc/AUTHORS and so on.
             file.path(R.home("doc"), sub("^/doc", "", path))
-        } else file.path(R.home(), path)
-    	return(list(file = file, "content-type" = mime_type(path)))
+        } else file.path(R.home(), path) # not clear there any of these
+        list(file = file, "content-type" = mime_type(path))
     }
 }
 
