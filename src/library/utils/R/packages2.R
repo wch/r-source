@@ -233,7 +233,7 @@ install.packages <-
         ## the only known reliable way is to try it
         ok <- file.info(lib)$isdir
         if(ok) {
-            fn <- file.path(lib, "_test_dir_")
+            fn <- file.path(lib, paste("_test_dir", Sys.getpid(), sep="_"))
             unlink(fn, recursive = TRUE) # precaution
             res <- try(dir.create(fn, showWarnings = FALSE))
             if(inherits(res, "try-error") || !res) ok <- FALSE
