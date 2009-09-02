@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-12 10:17\n"
+"POT-Creation-Date: 2009-09-02 09:57\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -44,8 +44,8 @@ msgstr ""
 msgid "directory '%s' does not contain R code"
 msgstr "ls directory '%s' non contiene codice R"
 
-msgid "directory '%s' does not contain Rd sources"
-msgstr "la directory '%s' non contiene sorgenti Rd"
+msgid "directory '%s' does not contain Rd objects"
+msgstr "la directory '%s' non contiene oggetti Rd"
 
 msgid ""
 "Functions/methods with usage in documentation object '%s' but not in code:"
@@ -194,14 +194,6 @@ msgstr ""
 
 msgid "Namespace dependencies not required:"
 msgstr ""
-
-msgid "Package Rd sources were installed without preserving Rd file names."
-msgstr ""
-"I sorgenti Rd del pacchetto sono stati installati senza mantenere i nomi "
-"originali dei file Rd."
-
-msgid "Please reinstall using a current version of R."
-msgstr "Si prega di reinstallare usando una versione corrente di R."
 
 #, fuzzy
 msgid "Rd files with syntax errors:"
@@ -354,13 +346,13 @@ msgstr ""
 msgid "Non-standard license specification:"
 msgstr ""
 
-msgid "Invalid license file pointers: %s"
-msgstr ""
-
 msgid "Standardizable: %s"
 msgstr ""
 
 msgid "Standardized license specification:"
+msgstr ""
+
+msgid "Invalid license file pointers: %s"
 msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
@@ -370,9 +362,33 @@ msgstr ""
 msgid "package must be loaded"
 msgstr "il name space non deve essere caricato."
 
+msgid "Obsolete package(s) %s in Rd xrefs"
+msgstr ""
+
+msgid "Package(s) unavailable to check Rd xrefs: %s"
+msgstr ""
+
+msgid "Unknown package(s) %s in Rd xrefs"
+msgstr ""
+
 #, fuzzy
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
+#, fuzzy
+msgid "Suspect link(s) in documentation object '%s':"
+msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
+msgid ""
+"See the information in section 'Cross-references' of the 'Writing R "
+"Extensions' manual."
+msgstr ""
+
+msgid ""
+"'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an "
+"alias but not as a filename -- such links will not work in R < 2.10.0, and "
+"only in HTML (not PDF) help in current versions."
+msgstr ""
 
 msgid "found %s"
 msgstr ""
@@ -385,10 +401,6 @@ msgstr ""
 
 msgid "'library' or 'require' calls not declared from:"
 msgstr ""
-
-#, fuzzy
-msgid "*** error on file"
-msgstr "errore analisi file '%s'"
 
 msgid "Generics g in env ="
 msgstr ""
@@ -442,9 +454,6 @@ msgid "argument 'outFile' must be a character string or connection"
 msgstr ""
 "l'argomento 'outFile' deve essere una stringa carattere o una connessione"
 
-msgid "directory '%s' does not contain Rd objects"
-msgstr "la directory '%s' non contiene oggetti Rd"
-
 #, fuzzy
 msgid "you must specify 'dir' or 'files'"
 msgstr "specificare 'package', 'dir' o 'file'"
@@ -455,58 +464,17 @@ msgstr "non posso lavorare con oggetti Rd con nomi mancanti/vuoti"
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "campo \\name mancante/vuoto nei file Rd"
 
-msgid "argument 'lines' must be a character vector"
-msgstr "argomento 'lines' deve essere un vettore carattere"
-
 #, fuzzy
-msgid "encoding '%s' is not portable"
-msgstr "il test '%s' non è disponibile"
+msgid "No help on %s found in RdDB %s"
+msgstr "non può essere usato per il pacchetto 'base'"
 
-msgid "unterminated section '%s'"
-msgstr "sezione '%s' non conclusa"
-
-msgid "incomplete section 'section{%s}'"
-msgstr "sezione 'section{%s}' incompleta"
-
-msgid "unterminated section 'section{%s}'"
-msgstr "sezione 'section{%s}' non conclusa"
-
-msgid "argument 'txt' must be a character string"
-msgstr "l'argomento 'txt' deve essere una stringa carattere"
-
-msgid "unmatched \\item name in '\\item{%s'"
-msgstr "nome \\item non coincidente in ''\\item{%s'"
-
-msgid "no \\item description for item '%s'"
-msgstr "manca la descrizione dell'\\item per l'elemento '%s'"
-
-msgid "unmatched \\item description for item '%s'"
-msgstr "descrizione \\item non coincidente per l'elemento '%s'"
-
-#, fuzzy
-msgid "unclosed \\link"
-msgstr "\\dontrun non chiusa"
-
-#, fuzzy
-msgid "unclosed \\%s"
-msgstr "\\dontrun non chiusa"
-
-msgid "Rd syntax errors found"
-msgstr "Trovati errori di sintassi Rd"
-
-msgid "Syntax error in documentation object '%s':"
-msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
-
-msgid "should not get here"
-msgstr ""
-
-msgid "checkRd is designed for Rd version 2 or higher."
+msgid "more than one \\examples section, using the first"
 msgstr ""
 
 msgid "invalid value for '%s' : %s"
 msgstr ""
 
-msgid "more than one \\examples section, using the first"
+msgid "checkRd is designed for Rd version 2 or higher"
 msgstr ""
 
 msgid "unable to create temp directory"
@@ -608,6 +576,61 @@ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
 msgstr ""
 
 msgid "ERROR: this R is version %s, required is R %s %s"
+msgstr ""
+
+msgid "No files in this directory"
+msgstr ""
+
+msgid "No results found"
+msgstr ""
+
+msgid "No help found for topic '%s' in package '%s'."
+msgstr ""
+
+msgid "No help found for topic '%s' in any package."
+msgstr ""
+
+msgid "<p>Help on topic '%s' was found in the following packages:</p><dl>"
+msgstr ""
+
+#, fuzzy
+msgid "No package index found for package %d"
+msgstr "non può essere usato per il pacchetto 'base'"
+
+#, fuzzy
+msgid "No package of name %s could be located"
+msgstr "il name space non deve essere caricato."
+
+#, fuzzy
+msgid "No help found for package %s"
+msgstr "non può essere usato per il pacchetto 'base'"
+
+#, fuzzy
+msgid "Link %s in package %s could not be located"
+msgstr "il name space non deve essere caricato."
+
+msgid "No docs found for package %s"
+msgstr ""
+
+msgid "httpd server disabled by R_DISABLE_HTTPD"
+msgstr ""
+
+msgid "server already running"
+msgstr ""
+
+msgid "server could not be started earlier"
+msgstr ""
+
+msgid "no running server to stop"
+msgstr ""
+
+msgid "starting httpd help server ..."
+msgstr ""
+
+msgid "done"
+msgstr "fatto"
+
+msgid "failed to start the httpd server"
 msgstr ""
 
 msgid "cannot read index information in file '%s'"
@@ -712,7 +735,10 @@ msgstr ""
 msgid "in file"
 msgstr ""
 
-msgid "there is a 'man' dir but no help pages in this package"
+msgid "finding HTML links ..."
+msgstr ""
+
+msgid "finding level-2 HTML links ..."
 msgstr ""
 
 msgid "-t option without value"
@@ -773,9 +799,6 @@ msgstr ""
 #, fuzzy
 msgid "cannot create HTML package index"
 msgstr "impossibile leggere codice sorgente del pacchetto"
-
-msgid "multiple \\encoding lines in file"
-msgstr ""
 
 msgid "found encoding"
 msgstr ""
@@ -905,9 +928,6 @@ msgstr ""
 msgid "test '%s' is not available"
 msgstr "il test '%s' non è disponibile"
 
-msgid "no or more than one match"
-msgstr "non più di una corrispondenza"
-
 msgid "argument 'x' must be a character vector"
 msgstr "l'argomento 'x' deve essere un vettore carattere"
 
@@ -950,9 +970,6 @@ msgstr "Successione delle chiamate:"
 msgid "Processing packages:"
 msgstr "Elaboro i pacchetti:"
 
-msgid "done"
-msgstr "fatto"
-
 msgid "parsing '%s'"
 msgstr "analizzo '%s'"
 
@@ -977,3 +994,63 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "directory '%s' does not contain Rd sources"
+#~ msgstr "la directory '%s' non contiene sorgenti Rd"
+
+#~ msgid "Package Rd sources were installed without preserving Rd file names."
+#~ msgstr ""
+#~ "I sorgenti Rd del pacchetto sono stati installati senza mantenere i nomi "
+#~ "originali dei file Rd."
+
+#~ msgid "Please reinstall using a current version of R."
+#~ msgstr "Si prega di reinstallare usando una versione corrente di R."
+
+#, fuzzy
+#~ msgid "*** error on file"
+#~ msgstr "errore analisi file '%s'"
+
+#~ msgid "argument 'lines' must be a character vector"
+#~ msgstr "argomento 'lines' deve essere un vettore carattere"
+
+#, fuzzy
+#~ msgid "encoding '%s' is not portable"
+#~ msgstr "il test '%s' non è disponibile"
+
+#~ msgid "unterminated section '%s'"
+#~ msgstr "sezione '%s' non conclusa"
+
+#~ msgid "incomplete section 'section{%s}'"
+#~ msgstr "sezione 'section{%s}' incompleta"
+
+#~ msgid "unterminated section 'section{%s}'"
+#~ msgstr "sezione 'section{%s}' non conclusa"
+
+#~ msgid "argument 'txt' must be a character string"
+#~ msgstr "l'argomento 'txt' deve essere una stringa carattere"
+
+#~ msgid "unmatched \\item name in '\\item{%s'"
+#~ msgstr "nome \\item non coincidente in ''\\item{%s'"
+
+#~ msgid "no \\item description for item '%s'"
+#~ msgstr "manca la descrizione dell'\\item per l'elemento '%s'"
+
+#~ msgid "unmatched \\item description for item '%s'"
+#~ msgstr "descrizione \\item non coincidente per l'elemento '%s'"
+
+#, fuzzy
+#~ msgid "unclosed \\link"
+#~ msgstr "\\dontrun non chiusa"
+
+#, fuzzy
+#~ msgid "unclosed \\%s"
+#~ msgstr "\\dontrun non chiusa"
+
+#~ msgid "Rd syntax errors found"
+#~ msgstr "Trovati errori di sintassi Rd"
+
+#~ msgid "Syntax error in documentation object '%s':"
+#~ msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
+#~ msgid "no or more than one match"
+#~ msgstr "non più di una corrispondenza"

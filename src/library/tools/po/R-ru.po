@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-12 10:17\n"
+"POT-Creation-Date: 2009-09-02 09:57\n"
 "PO-Revision-Date: 2009-03-28 23:43-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -52,8 +52,8 @@ msgstr "Недокументированные %s:"
 msgid "directory '%s' does not contain R code"
 msgstr "папка '%s' не содержит кода R"
 
-msgid "directory '%s' does not contain Rd sources"
-msgstr "папка '%s' не содержит Rd-исходников"
+msgid "directory '%s' does not contain Rd objects"
+msgstr "папка '%s' не содержит Rd-объектов"
 
 msgid ""
 "Functions/methods with usage in documentation object '%s' but not in code:"
@@ -197,12 +197,6 @@ msgstr ""
 
 msgid "Namespace dependencies not required:"
 msgstr "Определения пространства имен не требуются:"
-
-msgid "Package Rd sources were installed without preserving Rd file names."
-msgstr "Rd-исходники пакета были установлены без сохранения имен Rd-файлов."
-
-msgid "Please reinstall using a current version of R."
-msgstr "Пожалуйста, переустановите, используя текущую версию R."
 
 msgid "Rd files with syntax errors:"
 msgstr "Rd-файлы с синтаксическими ошибками:"
@@ -358,14 +352,14 @@ msgstr "Неизвестная кодировка с не-ASCII данными"
 msgid "Non-standard license specification:"
 msgstr "Нестандартная лицензия:"
 
-msgid "Invalid license file pointers: %s"
-msgstr "Неправильные указатели файла лицензии: %s"
-
 msgid "Standardizable: %s"
 msgstr "Стандартизируемо:: %s"
 
 msgid "Standardized license specification:"
 msgstr "Стандартизованная спецификация лицензии:"
+
+msgid "Invalid license file pointers: %s"
+msgstr "Неправильные указатели файла лицензии: %s"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Непереносимые флаги в переменной '%s':"
@@ -373,8 +367,35 @@ msgstr "Непереносимые флаги в переменной '%s':"
 msgid "package must be loaded"
 msgstr "должен быть загружен пакет"
 
+msgid "Obsolete package(s) %s in Rd xrefs"
+msgstr ""
+
+msgid "Package(s) unavailable to check Rd xrefs: %s"
+msgstr ""
+
+msgid "Unknown package(s) %s in Rd xrefs"
+msgstr ""
+
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Пропущенные связ(и) с объектом документации '%s':"
+
+#, fuzzy
+msgid "Suspect link(s) in documentation object '%s':"
+msgstr "Пропущенные связ(и) с объектом документации '%s':"
+
+#, fuzzy
+msgid ""
+"See the information in section 'Cross-references' of the 'Writing R "
+"Extensions' manual."
+msgstr ""
+"См. информацию о файлах DESCRIPTION в секции  'Creating R пакетs' "
+"руководства 'Writing R Extensions'."
+
+msgid ""
+"'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an "
+"alias but not as a filename -- such links will not work in R < 2.10.0, and "
+"only in HTML (not PDF) help in current versions."
+msgstr ""
 
 msgid "found %s"
 msgstr "найден %s"
@@ -387,9 +408,6 @@ msgstr "не объявлен импорт '::' или ':::' из:"
 
 msgid "'library' or 'require' calls not declared from:"
 msgstr "не объявлены вызовы 'library' или 'require' из:"
-
-msgid "*** error on file"
-msgstr "*** ошибка в файле"
 
 msgid "Generics g in env ="
 msgstr "Общие 'g' в env ="
@@ -440,9 +458,6 @@ msgstr "Rd-файлы должны иметь непустой \\заголовок."
 msgid "argument 'outFile' must be a character string or connection"
 msgstr "аргумент 'outFile' должен быть текстовой строкой или соединением"
 
-msgid "directory '%s' does not contain Rd objects"
-msgstr "папка '%s' не содержит Rd-объектов"
-
 #, fuzzy
 msgid "you must specify 'dir' or 'files'"
 msgstr "Вы должны задать 'package', 'dir' или 'file'"
@@ -453,58 +468,20 @@ msgstr "не могу работать с Rd-объектами в пропущенными/пустыми именами"
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "пропущенное/пустое поле \\имя Rd-файлы"
 
-msgid "argument 'lines' must be a character vector"
-msgstr "аргумент 'lines' должен быть текстовым вектором"
-
-msgid "encoding '%s' is not portable"
-msgstr "кодировка '%s' не переносима"
-
-msgid "unterminated section '%s'"
-msgstr "незаконченный раздел '%s'"
-
-msgid "incomplete section 'section{%s}'"
-msgstr "неполный раздел 'section{%s}'"
-
-msgid "unterminated section 'section{%s}'"
-msgstr "незаконченный раздел 'section{%s}'"
-
-msgid "argument 'txt' must be a character string"
-msgstr "аргумент 'txt' должен быть текстовой строкой"
-
-msgid "unmatched \\item name in '\\item{%s'"
-msgstr "несоответствующее \\item имя в '\\item{%s'"
-
-msgid "no \\item description for item '%s'"
-msgstr "нет \\item описания для файла '%s'"
-
-msgid "unmatched \\item description for item '%s'"
-msgstr "несоответствующее определение \\item для пункта '%s'"
-
-msgid "unclosed \\link"
-msgstr "незакрытая \\link"
-
-msgid "unclosed \\%s"
-msgstr "незакрытое \\%s"
-
-msgid "Rd syntax errors found"
-msgstr "В Rd найдена ошибка синтаксиса"
-
-msgid "Syntax error in documentation object '%s':"
-msgstr "Синтаксическая ошибка в объекте документации '%s':"
-
-msgid "should not get here"
-msgstr "сюда не должно дойти"
-
 #, fuzzy
-msgid "checkRd is designed for Rd version 2 or higher."
-msgstr "Rd2HTML разработан для Rd версии 2 или выше."
+msgid "No help on %s found in RdDB %s"
+msgstr "это нельзя использовать для пакета 'base'"
+
+msgid "more than one \\examples section, using the first"
+msgstr "более чем одна \\секция примеров, использую первую"
 
 #, fuzzy
 msgid "invalid value for '%s' : %s"
 msgstr "Неправильные указатели файла лицензии: %s"
 
-msgid "more than one \\examples section, using the first"
-msgstr "более чем одна \\секция примеров, использую первую"
+#, fuzzy
+msgid "checkRd is designed for Rd version 2 or higher"
+msgstr "Rd2HTML разработан для Rd версии 2 или выше."
 
 msgid "unable to create temp directory"
 msgstr "не могу создать временную папку"
@@ -611,6 +588,63 @@ msgstr "ОШИБКА: это R версии %s, а набор '%s' требует R %s %s"
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ОШИБКА: это R версии %s, а требуется R %s %s"
 
+msgid "No files in this directory"
+msgstr ""
+
+#, fuzzy
+msgid "No results found"
+msgstr "не найдено файлов исходников"
+
+msgid "No help found for topic '%s' in package '%s'."
+msgstr ""
+
+msgid "No help found for topic '%s' in any package."
+msgstr ""
+
+msgid "<p>Help on topic '%s' was found in the following packages:</p><dl>"
+msgstr ""
+
+#, fuzzy
+msgid "No package index found for package %d"
+msgstr "это нельзя использовать для пакета 'base'"
+
+#, fuzzy
+msgid "No package of name %s could be located"
+msgstr "должен быть загружен пакет"
+
+#, fuzzy
+msgid "No help found for package %s"
+msgstr "это нельзя использовать для пакета 'base'"
+
+#, fuzzy
+msgid "Link %s in package %s could not be located"
+msgstr "должно быть загружено пространство имен."
+
+msgid "No docs found for package %s"
+msgstr ""
+
+msgid "httpd server disabled by R_DISABLE_HTTPD"
+msgstr ""
+
+msgid "server already running"
+msgstr ""
+
+msgid "server could not be started earlier"
+msgstr ""
+
+#, fuzzy
+msgid "no running server to stop"
+msgstr "запускаю регрессионные тесты"
+
+msgid "starting httpd help server ..."
+msgstr ""
+
+msgid "done"
+msgstr "готово"
+
+msgid "failed to start the httpd server"
+msgstr ""
+
 msgid "cannot read index information in file '%s'"
 msgstr "не могу прочитать индексную информацию из файла '%s'"
 
@@ -712,9 +746,11 @@ msgstr "пропускаю повторяющиеся имена-ссылк(и)"
 msgid "in file"
 msgstr "в файле"
 
-#, fuzzy
-msgid "there is a 'man' dir but no help pages in this package"
-msgstr "в пакете нет файлов помощи"
+msgid "finding HTML links ..."
+msgstr ""
+
+msgid "finding level-2 HTML links ..."
+msgstr ""
 
 #, fuzzy
 msgid "-t option without value"
@@ -773,9 +809,6 @@ msgstr "у 'DESCRIPTION' есть поле 'Encoding', перекодировка невозможна"
 
 msgid "cannot create HTML package index"
 msgstr "не могу создать HTML-индекс пакета"
-
-msgid "multiple \\encoding lines in file"
-msgstr "несколько \\строк кодировок в файле"
 
 msgid "found encoding"
 msgstr "найдена кодировка"
@@ -902,9 +935,6 @@ msgstr "запускаю тесты на возможное переключение ошибок сегментации"
 msgid "test '%s' is not available"
 msgstr "тест '%s' недоступен"
 
-msgid "no or more than one match"
-msgstr "нет или более одного соответствия"
-
 msgid "argument 'x' must be a character vector"
 msgstr "аргумент 'x' должен быть текстовым вектором"
 
@@ -944,9 +974,6 @@ msgstr "Последовательность вызова:"
 msgid "Processing packages:"
 msgstr "Обрабатываю пакеты:"
 
-msgid "done"
-msgstr "готово"
-
 msgid "parsing '%s'"
 msgstr "разбор '%s'"
 
@@ -976,3 +1003,67 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Найден вызов .Internal call в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
+
+#~ msgid "directory '%s' does not contain Rd sources"
+#~ msgstr "папка '%s' не содержит Rd-исходников"
+
+#~ msgid "Package Rd sources were installed without preserving Rd file names."
+#~ msgstr "Rd-исходники пакета были установлены без сохранения имен Rd-файлов."
+
+#~ msgid "Please reinstall using a current version of R."
+#~ msgstr "Пожалуйста, переустановите, используя текущую версию R."
+
+#~ msgid "*** error on file"
+#~ msgstr "*** ошибка в файле"
+
+#~ msgid "argument 'lines' must be a character vector"
+#~ msgstr "аргумент 'lines' должен быть текстовым вектором"
+
+#~ msgid "encoding '%s' is not portable"
+#~ msgstr "кодировка '%s' не переносима"
+
+#~ msgid "unterminated section '%s'"
+#~ msgstr "незаконченный раздел '%s'"
+
+#~ msgid "incomplete section 'section{%s}'"
+#~ msgstr "неполный раздел 'section{%s}'"
+
+#~ msgid "unterminated section 'section{%s}'"
+#~ msgstr "незаконченный раздел 'section{%s}'"
+
+#~ msgid "argument 'txt' must be a character string"
+#~ msgstr "аргумент 'txt' должен быть текстовой строкой"
+
+#~ msgid "unmatched \\item name in '\\item{%s'"
+#~ msgstr "несоответствующее \\item имя в '\\item{%s'"
+
+#~ msgid "no \\item description for item '%s'"
+#~ msgstr "нет \\item описания для файла '%s'"
+
+#~ msgid "unmatched \\item description for item '%s'"
+#~ msgstr "несоответствующее определение \\item для пункта '%s'"
+
+#~ msgid "unclosed \\link"
+#~ msgstr "незакрытая \\link"
+
+#~ msgid "unclosed \\%s"
+#~ msgstr "незакрытое \\%s"
+
+#~ msgid "Rd syntax errors found"
+#~ msgstr "В Rd найдена ошибка синтаксиса"
+
+#~ msgid "Syntax error in documentation object '%s':"
+#~ msgstr "Синтаксическая ошибка в объекте документации '%s':"
+
+#~ msgid "should not get here"
+#~ msgstr "сюда не должно дойти"
+
+#, fuzzy
+#~ msgid "there is a 'man' dir but no help pages in this package"
+#~ msgstr "в пакете нет файлов помощи"
+
+#~ msgid "multiple \\encoding lines in file"
+#~ msgstr "несколько \\строк кодировок в файле"
+
+#~ msgid "no or more than one match"
+#~ msgstr "нет или более одного соответствия"

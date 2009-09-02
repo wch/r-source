@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-12 10:17\n"
+"POT-Creation-Date: 2009-09-02 09:57\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,7 +44,7 @@ msgstr ""
 msgid "directory '%s' does not contain R code"
 msgstr ""
 
-msgid "directory '%s' does not contain Rd sources"
+msgid "directory '%s' does not contain Rd objects"
 msgstr ""
 
 msgid "Functions/methods with usage in documentation object '%s' but not in code:"
@@ -174,12 +174,6 @@ msgid "Vignette dependencies (\\VignetteDepends{} entries) must be contained in 
 msgstr ""
 
 msgid "Namespace dependencies not required:"
-msgstr ""
-
-msgid "Package Rd sources were installed without preserving Rd file names."
-msgstr ""
-
-msgid "Please reinstall using a current version of R."
 msgstr ""
 
 msgid "Rd files with syntax errors:"
@@ -314,13 +308,13 @@ msgstr ""
 msgid "Non-standard license specification:"
 msgstr ""
 
-msgid "Invalid license file pointers: %s"
-msgstr ""
-
 msgid "Standardizable: %s"
 msgstr ""
 
 msgid "Standardized license specification:"
+msgstr ""
+
+msgid "Invalid license file pointers: %s"
 msgstr ""
 
 msgid "Non-portable flags in variable '%s':"
@@ -329,7 +323,25 @@ msgstr ""
 msgid "package must be loaded"
 msgstr ""
 
+msgid "Obsolete package(s) %s in Rd xrefs"
+msgstr ""
+
+msgid "Package(s) unavailable to check Rd xrefs: %s"
+msgstr ""
+
+msgid "Unknown package(s) %s in Rd xrefs"
+msgstr ""
+
 msgid "Missing link(s) in documentation object '%s':"
+msgstr ""
+
+msgid "Suspect link(s) in documentation object '%s':"
+msgstr ""
+
+msgid "See the information in section 'Cross-references' of the 'Writing R Extensions' manual."
+msgstr ""
+
+msgid "'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an alias but not as a filename -- such links will not work in R < 2.10.0, and only in HTML (not PDF) help in current versions."
 msgstr ""
 
 msgid "found %s"
@@ -342,9 +354,6 @@ msgid "'::' or ':::' imports not declared from:"
 msgstr ""
 
 msgid "'library' or 'require' calls not declared from:"
-msgstr ""
-
-msgid "*** error on file"
 msgstr ""
 
 msgid "Generics g in env ="
@@ -395,9 +404,6 @@ msgstr ""
 msgid "argument 'outFile' must be a character string or connection"
 msgstr ""
 
-msgid "directory '%s' does not contain Rd objects"
-msgstr ""
-
 msgid "you must specify 'dir' or 'files'"
 msgstr ""
 
@@ -407,55 +413,16 @@ msgstr ""
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr ""
 
-msgid "argument 'lines' must be a character vector"
+msgid "No help on %s found in RdDB %s"
 msgstr ""
 
-msgid "encoding '%s' is not portable"
-msgstr ""
-
-msgid "unterminated section '%s'"
-msgstr ""
-
-msgid "incomplete section 'section{%s}'"
-msgstr ""
-
-msgid "unterminated section 'section{%s}'"
-msgstr ""
-
-msgid "argument 'txt' must be a character string"
-msgstr ""
-
-msgid "unmatched \\item name in '\\item{%s'"
-msgstr ""
-
-msgid "no \\item description for item '%s'"
-msgstr ""
-
-msgid "unmatched \\item description for item '%s'"
-msgstr ""
-
-msgid "unclosed \\link"
-msgstr ""
-
-msgid "unclosed \\%s"
-msgstr ""
-
-msgid "Rd syntax errors found"
-msgstr ""
-
-msgid "Syntax error in documentation object '%s':"
-msgstr ""
-
-msgid "should not get here"
-msgstr ""
-
-msgid "checkRd is designed for Rd version 2 or higher."
+msgid "more than one \\examples section, using the first"
 msgstr ""
 
 msgid "invalid value for '%s' : %s"
 msgstr ""
 
-msgid "more than one \\examples section, using the first"
+msgid "checkRd is designed for Rd version 2 or higher"
 msgstr ""
 
 msgid "unable to create temp directory"
@@ -548,6 +515,57 @@ msgstr ""
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr ""
 
+msgid "No files in this directory"
+msgstr ""
+
+msgid "No results found"
+msgstr ""
+
+msgid "No help found for topic '%s' in package '%s'."
+msgstr ""
+
+msgid "No help found for topic '%s' in any package."
+msgstr ""
+
+msgid "<p>Help on topic '%s' was found in the following packages:</p><dl>"
+msgstr ""
+
+msgid "No package index found for package %d"
+msgstr ""
+
+msgid "No package of name %s could be located"
+msgstr ""
+
+msgid "No help found for package %s"
+msgstr ""
+
+msgid "Link %s in package %s could not be located"
+msgstr ""
+
+msgid "No docs found for package %s"
+msgstr ""
+
+msgid "httpd server disabled by R_DISABLE_HTTPD"
+msgstr ""
+
+msgid "server already running"
+msgstr ""
+
+msgid "server could not be started earlier"
+msgstr ""
+
+msgid "no running server to stop"
+msgstr ""
+
+msgid "starting httpd help server ..."
+msgstr ""
+
+msgid "done"
+msgstr ""
+
+msgid "failed to start the httpd server"
+msgstr ""
+
 msgid "cannot read index information in file '%s'"
 msgstr ""
 
@@ -638,7 +656,10 @@ msgstr ""
 msgid "in file"
 msgstr ""
 
-msgid "there is a 'man' dir but no help pages in this package"
+msgid "finding HTML links ..."
+msgstr ""
+
+msgid "finding level-2 HTML links ..."
 msgstr ""
 
 msgid "-t option without value"
@@ -693,9 +714,6 @@ msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
 msgstr ""
 
 msgid "cannot create HTML package index"
-msgstr ""
-
-msgid "multiple \\encoding lines in file"
 msgstr ""
 
 msgid "found encoding"
@@ -821,9 +839,6 @@ msgstr ""
 msgid "test '%s' is not available"
 msgstr ""
 
-msgid "no or more than one match"
-msgstr ""
-
 msgid "argument 'x' must be a character vector"
 msgstr ""
 
@@ -861,9 +876,6 @@ msgid "Call sequence:"
 msgstr ""
 
 msgid "Processing packages:"
-msgstr ""
-
-msgid "done"
 msgstr ""
 
 msgid "parsing '%s'"

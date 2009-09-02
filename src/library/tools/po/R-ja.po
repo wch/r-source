@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-12 10:17\n"
+"POT-Creation-Date: 2009-09-02 09:57\n"
 "PO-Revision-Date: 2009-04-01 08:36+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -45,8 +45,8 @@ msgstr " ドキュメント化されてない %s: "
 msgid "directory '%s' does not contain R code"
 msgstr " ディレクトリ '%s' は R コードを含んでいません "
 
-msgid "directory '%s' does not contain Rd sources"
-msgstr " ディレクトリ '%s' は Rd ソースを含んでいません "
+msgid "directory '%s' does not contain Rd objects"
+msgstr " ディレクトリ '%s' は Rd オブジェクトを含んでいません "
 
 msgid ""
 "Functions/methods with usage in documentation object '%s' but not in code:"
@@ -198,14 +198,6 @@ msgstr ""
 
 msgid "Namespace dependencies not required:"
 msgstr " Namespaceの依存性は必要ありません： "
-
-msgid "Package Rd sources were installed without preserving Rd file names."
-msgstr ""
-" パッケージの Rd ソースファイルが Rd ファイル名を保存せずにインストールされま"
-"した "
-
-msgid "Please reinstall using a current version of R."
-msgstr " 現在のバージョンの R を使って再インストールしてください "
 
 msgid "Rd files with syntax errors:"
 msgstr " 構文エラーを含む Rd ファイル： "
@@ -364,14 +356,14 @@ msgstr " 非ASCIIデータをもつ未知のエンコーディングです "
 msgid "Non-standard license specification:"
 msgstr " 標準ではないライセンス指定: "
 
-msgid "Invalid license file pointers: %s"
-msgstr " 不正なライセンスファイルのポインタ: %s "
-
 msgid "Standardizable: %s"
 msgstr " 標準化可能：%s "
 
 msgid "Standardized license specification:"
 msgstr " 標準ではないライセンス指定: "
+
+msgid "Invalid license file pointers: %s"
+msgstr " 不正なライセンスファイルのポインタ: %s "
 
 msgid "Non-portable flags in variable '%s':"
 msgstr " 変数 '%s' 中に non-portable フラグ: "
@@ -379,8 +371,35 @@ msgstr " 変数 '%s' 中に non-portable フラグ: "
 msgid "package must be loaded"
 msgstr " パッケージがロードされなければなりません "
 
+msgid "Obsolete package(s) %s in Rd xrefs"
+msgstr ""
+
+msgid "Package(s) unavailable to check Rd xrefs: %s"
+msgstr ""
+
+msgid "Unknown package(s) %s in Rd xrefs"
+msgstr ""
+
 msgid "Missing link(s) in documentation object '%s':"
 msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
+
+#, fuzzy
+msgid "Suspect link(s) in documentation object '%s':"
+msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
+
+#, fuzzy
+msgid ""
+"See the information in section 'Cross-references' of the 'Writing R "
+"Extensions' manual."
+msgstr ""
+" マニュアル'Writing R Extensions' の章'Creating R packages'中のDESCRIPTION"
+"ファイルにある情報を参照してください． "
+
+msgid ""
+"'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an "
+"alias but not as a filename -- such links will not work in R < 2.10.0, and "
+"only in HTML (not PDF) help in current versions."
+msgstr ""
 
 msgid "found %s"
 msgstr " %s が見つかりました "
@@ -394,9 +413,6 @@ msgstr " '::' もしくは ':::'　によるインポートが以下から宣言
 msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 " 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
-
-msgid "*** error on file"
-msgstr " *** ファイルにエラー "
 
 msgid "Generics g in env ="
 msgstr " 総称的な g (以下の環境中） "
@@ -452,9 +468,6 @@ msgstr " Rdファイルには、空でない \title がなければならなり�
 msgid "argument 'outFile' must be a character string or connection"
 msgstr " 引数 'outFile' は文字列ベクトルかコネクションでなければなりません "
 
-msgid "directory '%s' does not contain Rd objects"
-msgstr " ディレクトリ '%s' は Rd オブジェクトを含んでいません "
-
 #, fuzzy
 msgid "you must specify 'dir' or 'files'"
 msgstr " 'package', 'dir' もしくは 'file' を指定しなければなりません "
@@ -467,58 +480,20 @@ msgstr ""
 " Rd ファイル中に欠損もしくは空の  \n"
 " ame 欄 "
 
-msgid "argument 'lines' must be a character vector"
-msgstr " 引数 'lines' は文字列ベクトルでなければなりません "
-
-msgid "encoding '%s' is not portable"
-msgstr " エンコーディング '%s' は移植出来ません "
-
-msgid "unterminated section '%s'"
-msgstr " セクション '%s' は未完です "
-
-msgid "incomplete section 'section{%s}'"
-msgstr " 完結しないセクション 'section{%s}' "
-
-msgid "unterminated section 'section{%s}'"
-msgstr " 終了しないセクション 'section{%s}' "
-
-msgid "argument 'txt' must be a character string"
-msgstr " 引数 'txt' は文字列でなければなりません "
-
-msgid "unmatched \\item name in '\\item{%s'"
-msgstr " マッチしない \\item 名が以下にあります '\\item{%s' "
-
-msgid "no \\item description for item '%s'"
-msgstr " 項目 '%s' に対する \\item 記述がありません "
-
-msgid "unmatched \\item description for item '%s'"
-msgstr " 項目 '%s' に対するマッチしない \\item   記述 "
-
-msgid "unclosed \\link"
-msgstr " 閉じられていない \\link "
-
-msgid "unclosed \\%s"
-msgstr " 閉じられていない \\%s "
-
-msgid "Rd syntax errors found"
-msgstr " Rd 構文エラーが見つかりました "
-
-msgid "Syntax error in documentation object '%s':"
-msgstr " ドキュメンテーション・オブジェクト '%s' 中の構文エラー： "
-
-msgid "should not get here"
-msgstr "ここに到達すべきではありません "
-
 #, fuzzy
-msgid "checkRd is designed for Rd version 2 or higher."
-msgstr "Rd2HTML は Rdのバージョン2以降で使われるように設計されています "
+msgid "No help on %s found in RdDB %s"
+msgstr " これはパッケージ 'base' に使用することが出来ません "
+
+msgid "more than one \\examples section, using the first"
+msgstr " 2つ以上の\\examples節があります、1番目を用います "
 
 #, fuzzy
 msgid "invalid value for '%s' : %s"
 msgstr " 不正なライセンスファイルのポインタ: %s "
 
-msgid "more than one \\examples section, using the first"
-msgstr " 2つ以上の\\examples節があります、1番目を用います "
+#, fuzzy
+msgid "checkRd is designed for Rd version 2 or higher"
+msgstr "Rd2HTML は Rdのバージョン2以降で使われるように設計されています "
 
 msgid "unable to create temp directory"
 msgstr " 仮ディレクトリを生成することが出来ません "
@@ -627,6 +602,63 @@ msgstr ""
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "エラー：この R はバージョン %s です。 R %s %s を必要とします "
 
+msgid "No files in this directory"
+msgstr ""
+
+#, fuzzy
+msgid "No results found"
+msgstr "ソースファイルが見つかりません "
+
+msgid "No help found for topic '%s' in package '%s'."
+msgstr ""
+
+msgid "No help found for topic '%s' in any package."
+msgstr ""
+
+msgid "<p>Help on topic '%s' was found in the following packages:</p><dl>"
+msgstr ""
+
+#, fuzzy
+msgid "No package index found for package %d"
+msgstr " これはパッケージ 'base' に使用することが出来ません "
+
+#, fuzzy
+msgid "No package of name %s could be located"
+msgstr " パッケージがロードされなければなりません "
+
+#, fuzzy
+msgid "No help found for package %s"
+msgstr " これはパッケージ 'base' に使用することが出来ません "
+
+#, fuzzy
+msgid "Link %s in package %s could not be located"
+msgstr " 名前空間はロードされてはいけません。 "
+
+msgid "No docs found for package %s"
+msgstr ""
+
+msgid "httpd server disabled by R_DISABLE_HTTPD"
+msgstr ""
+
+msgid "server already running"
+msgstr ""
+
+msgid "server could not be started earlier"
+msgstr ""
+
+#, fuzzy
+msgid "no running server to stop"
+msgstr "回帰テストを実行中"
+
+msgid "starting httpd help server ..."
+msgstr ""
+
+msgid "done"
+msgstr " 完了 "
+
+msgid "failed to start the httpd server"
+msgstr ""
+
 msgid "cannot read index information in file '%s'"
 msgstr " ファイル '%s' 中のインデックス情報を読み取ることが出来ません "
 
@@ -729,9 +761,11 @@ msgstr "重複したエイリアスをスキップ中"
 msgid "in file"
 msgstr " 以下のファイル中 "
 
-#, fuzzy
-msgid "there is a 'man' dir but no help pages in this package"
-msgstr "このパッケージにはヘルプ頁がありません "
+msgid "finding HTML links ..."
+msgstr ""
+
+msgid "finding level-2 HTML links ..."
+msgstr ""
 
 #, fuzzy
 msgid "-t option without value"
@@ -791,9 +825,6 @@ msgstr " 'DESCRIPTION' は 'Encoding' 欄を持ち、再エンコーディング
 
 msgid "cannot create HTML package index"
 msgstr " HTMLパッケージのインデックスを生成することが出来ません "
-
-msgid "multiple \\encoding lines in file"
-msgstr " 以下のファイル中に重複した \\encoding 行 "
 
 msgid "found encoding"
 msgstr " 見つけられたエンコーディング"
@@ -922,9 +953,6 @@ msgstr " 可能性のある trigger segfaults のテストを実行中"
 msgid "test '%s' is not available"
 msgstr " テスト '%s' は利用出来ません "
 
-msgid "no or more than one match"
-msgstr " 0か複数のマッチ "
-
 msgid "argument 'x' must be a character vector"
 msgstr " 引数 'x' は文字型ベクトルでなければいけません "
 
@@ -964,9 +992,6 @@ msgstr " 呼び出しシーケンス： "
 msgid "Processing packages:"
 msgstr " パッケージを処理中： "
 
-msgid "done"
-msgstr " 完了 "
-
 msgid "parsing '%s'"
 msgstr " '%s' を構文解析中 "
 
@@ -987,3 +1012,69 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+
+#~ msgid "directory '%s' does not contain Rd sources"
+#~ msgstr " ディレクトリ '%s' は Rd ソースを含んでいません "
+
+#~ msgid "Package Rd sources were installed without preserving Rd file names."
+#~ msgstr ""
+#~ " パッケージの Rd ソースファイルが Rd ファイル名を保存せずにインストールさ"
+#~ "れました "
+
+#~ msgid "Please reinstall using a current version of R."
+#~ msgstr " 現在のバージョンの R を使って再インストールしてください "
+
+#~ msgid "*** error on file"
+#~ msgstr " *** ファイルにエラー "
+
+#~ msgid "argument 'lines' must be a character vector"
+#~ msgstr " 引数 'lines' は文字列ベクトルでなければなりません "
+
+#~ msgid "encoding '%s' is not portable"
+#~ msgstr " エンコーディング '%s' は移植出来ません "
+
+#~ msgid "unterminated section '%s'"
+#~ msgstr " セクション '%s' は未完です "
+
+#~ msgid "incomplete section 'section{%s}'"
+#~ msgstr " 完結しないセクション 'section{%s}' "
+
+#~ msgid "unterminated section 'section{%s}'"
+#~ msgstr " 終了しないセクション 'section{%s}' "
+
+#~ msgid "argument 'txt' must be a character string"
+#~ msgstr " 引数 'txt' は文字列でなければなりません "
+
+#~ msgid "unmatched \\item name in '\\item{%s'"
+#~ msgstr " マッチしない \\item 名が以下にあります '\\item{%s' "
+
+#~ msgid "no \\item description for item '%s'"
+#~ msgstr " 項目 '%s' に対する \\item 記述がありません "
+
+#~ msgid "unmatched \\item description for item '%s'"
+#~ msgstr " 項目 '%s' に対するマッチしない \\item   記述 "
+
+#~ msgid "unclosed \\link"
+#~ msgstr " 閉じられていない \\link "
+
+#~ msgid "unclosed \\%s"
+#~ msgstr " 閉じられていない \\%s "
+
+#~ msgid "Rd syntax errors found"
+#~ msgstr " Rd 構文エラーが見つかりました "
+
+#~ msgid "Syntax error in documentation object '%s':"
+#~ msgstr " ドキュメンテーション・オブジェクト '%s' 中の構文エラー： "
+
+#~ msgid "should not get here"
+#~ msgstr "ここに到達すべきではありません "
+
+#, fuzzy
+#~ msgid "there is a 'man' dir but no help pages in this package"
+#~ msgstr "このパッケージにはヘルプ頁がありません "
+
+#~ msgid "multiple \\encoding lines in file"
+#~ msgstr " 以下のファイル中に重複した \\encoding 行 "
+
+#~ msgid "no or more than one match"
+#~ msgstr " 0か複数のマッチ "

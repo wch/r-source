@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-12 10:17\n"
+"POT-Creation-Date: 2009-09-02 09:57\n"
 "PO-Revision-Date: 2009-03-29 22:45+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -49,8 +49,8 @@ msgstr "%s non documentés :"
 msgid "directory '%s' does not contain R code"
 msgstr "le répertoire '%s' ne contient pas de code R"
 
-msgid "directory '%s' does not contain Rd sources"
-msgstr "le répertoire '%s' ne contient pas de sources Rd"
+msgid "directory '%s' does not contain Rd objects"
+msgstr "le répertoire '%s' ne contient aucun objet Rd"
 
 msgid ""
 "Functions/methods with usage in documentation object '%s' but not in code:"
@@ -203,14 +203,6 @@ msgstr ""
 
 msgid "Namespace dependencies not required:"
 msgstr "Dépendances d'espaces de noms non requises :"
-
-msgid "Package Rd sources were installed without preserving Rd file names."
-msgstr ""
-"Les sources Rd du package ont été installées sans préserver les noms de "
-"fichiers Rd."
-
-msgid "Please reinstall using a current version of R."
-msgstr "Veuillez réinstaller en utilisant la dernière version de R."
 
 msgid "Rd files with syntax errors:"
 msgstr "Fichiers Rd avec des erreurs de syntaxe :"
@@ -366,14 +358,14 @@ msgstr "Encodage inconnu avec des données non-ASCII"
 msgid "Non-standard license specification:"
 msgstr "Spécification de licence non standard :"
 
-msgid "Invalid license file pointers: %s"
-msgstr "Pointeur de fichier licence incorrect : %s"
-
 msgid "Standardizable: %s"
 msgstr "Standardisable : %s"
 
 msgid "Standardized license specification:"
 msgstr "Spécification de licence standard :"
+
+msgid "Invalid license file pointers: %s"
+msgstr "Pointeur de fichier licence incorrect : %s"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Indicateur non portable dans la variable '%s' :"
@@ -381,8 +373,35 @@ msgstr "Indicateur non portable dans la variable '%s' :"
 msgid "package must be loaded"
 msgstr "le package doit être chargé"
 
+msgid "Obsolete package(s) %s in Rd xrefs"
+msgstr ""
+
+msgid "Package(s) unavailable to check Rd xrefs: %s"
+msgstr ""
+
+msgid "Unknown package(s) %s in Rd xrefs"
+msgstr ""
+
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
+
+#, fuzzy
+msgid "Suspect link(s) in documentation object '%s':"
+msgstr "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
+
+#, fuzzy
+msgid ""
+"See the information in section 'Cross-references' of the 'Writing R "
+"Extensions' manual."
+msgstr ""
+"Voyez l'information à propos des fichiers DESCRIPTION dans la section "
+"'Creating R packages' du manuel 'Writing R Extensions'."
+
+msgid ""
+"'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an "
+"alias but not as a filename -- such links will not work in R < 2.10.0, and "
+"only in HTML (not PDF) help in current versions."
+msgstr ""
 
 msgid "found %s"
 msgstr "trouvé(s) %s"
@@ -395,9 +414,6 @@ msgstr "importations '::' ou ':::' non déclarées depuis :"
 
 msgid "'library' or 'require' calls not declared from:"
 msgstr "appels 'library' ou 'require' non déclarés depuis :"
-
-msgid "*** error on file"
-msgstr "*** erreur dans le fichier"
 
 msgid "Generics g in env ="
 msgstr "Les génériques g dans env ="
@@ -450,9 +466,6 @@ msgid "argument 'outFile' must be a character string or connection"
 msgstr ""
 "l'argument 'outfile' doit être une chaîne de caractères ou une connexion"
 
-msgid "directory '%s' does not contain Rd objects"
-msgstr "le répertoire '%s' ne contient aucun objet Rd"
-
 #, fuzzy
 msgid "you must specify 'dir' or 'files'"
 msgstr "vous devez spécifier 'package', 'dir' ou 'file'"
@@ -465,59 +478,20 @@ msgstr ""
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "champ \\name manquant ou vide dans le(s) fichier(s) Rd"
 
-msgid "argument 'lines' must be a character vector"
-msgstr "l'argument 'lines' doit être un vecteur de chaînes de caractères"
-
-msgid "encoding '%s' is not portable"
-msgstr "l'encodage '%s' n'est pas portable"
-
-msgid "unterminated section '%s'"
-msgstr "section non terminée '%s'"
-
-msgid "incomplete section 'section{%s}'"
-msgstr "section incomplète 'section{%s}'"
-
-msgid "unterminated section 'section{%s}'"
-msgstr "section non terminée 'section{%s}'"
-
-msgid "argument 'txt' must be a character string"
-msgstr "l'argument 'txt' doit être une chaîne de caractères"
-
-msgid "unmatched \\item name in '\\item{%s'"
-msgstr "nom \\item ne correspondant à rien dans '\\item{%s'"
-
-msgid "no \\item description for item '%s'"
-msgstr "pas de description \\item pour l'élément de liste '%s'"
-
-msgid "unmatched \\item description for item '%s'"
-msgstr ""
-"description \\item ne correspondant à rien pour l'élément de liste '%s'"
-
-msgid "unclosed \\link"
-msgstr "\\link non terminé"
-
-msgid "unclosed \\%s"
-msgstr "\\%s non terminé"
-
-msgid "Rd syntax errors found"
-msgstr "Erreurs de syntaxe Rd détectées"
-
-msgid "Syntax error in documentation object '%s':"
-msgstr "Erreur de syntaxe dans la documentation de l'objet '%s' :"
-
-msgid "should not get here"
-msgstr "ne devrait pas être là"
-
 #, fuzzy
-msgid "checkRd is designed for Rd version 2 or higher."
-msgstr "Rd2HTML est conçu pour des Rd version 2 ou plus."
+msgid "No help on %s found in RdDB %s"
+msgstr "ceci ne peut être utilisé pour le package 'base'"
+
+msgid "more than one \\examples section, using the first"
+msgstr "plus d'une section \\example, utilisation de la première"
 
 #, fuzzy
 msgid "invalid value for '%s' : %s"
 msgstr "Pointeur de fichier licence incorrect : %s"
 
-msgid "more than one \\examples section, using the first"
-msgstr "plus d'une section \\example, utilisation de la première"
+#, fuzzy
+msgid "checkRd is designed for Rd version 2 or higher"
+msgstr "Rd2HTML est conçu pour des Rd version 2 ou plus."
 
 msgid "unable to create temp directory"
 msgstr "impossible de créer le répertoire temporaire"
@@ -626,6 +600,63 @@ msgstr "ERREUR : cette version de R est %s, le bundle '%s' nécessite R %s %s "
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ERREUR : cette version de R est %s, requis R %s %s "
 
+msgid "No files in this directory"
+msgstr ""
+
+#, fuzzy
+msgid "No results found"
+msgstr "aucun fichier source n'est trouvé"
+
+msgid "No help found for topic '%s' in package '%s'."
+msgstr ""
+
+msgid "No help found for topic '%s' in any package."
+msgstr ""
+
+msgid "<p>Help on topic '%s' was found in the following packages:</p><dl>"
+msgstr ""
+
+#, fuzzy
+msgid "No package index found for package %d"
+msgstr "ceci ne peut être utilisé pour le package 'base'"
+
+#, fuzzy
+msgid "No package of name %s could be located"
+msgstr "le package doit être chargé"
+
+#, fuzzy
+msgid "No help found for package %s"
+msgstr "ceci ne peut être utilisé pour le package 'base'"
+
+#, fuzzy
+msgid "Link %s in package %s could not be located"
+msgstr "l'espace de noms ne doit pas être chargé."
+
+msgid "No docs found for package %s"
+msgstr ""
+
+msgid "httpd server disabled by R_DISABLE_HTTPD"
+msgstr ""
+
+msgid "server already running"
+msgstr ""
+
+msgid "server could not be started earlier"
+msgstr ""
+
+#, fuzzy
+msgid "no running server to stop"
+msgstr "exécution des tests de régression"
+
+msgid "starting httpd help server ..."
+msgstr ""
+
+msgid "done"
+msgstr "fini"
+
+msgid "failed to start the httpd server"
+msgstr ""
+
 msgid "cannot read index information in file '%s'"
 msgstr "impossible de lire l'indice de l'information dans le fichier '%s'"
 
@@ -728,9 +759,11 @@ msgstr "alias(es) répétitifs ignorés"
 msgid "in file"
 msgstr "dans le fichier"
 
-#, fuzzy
-msgid "there is a 'man' dir but no help pages in this package"
-msgstr "il n'y a pas de pages d'aide dans ce package"
+msgid "finding HTML links ..."
+msgstr ""
+
+msgid "finding level-2 HTML links ..."
+msgstr ""
 
 #, fuzzy
 msgid "-t option without value"
@@ -790,9 +823,6 @@ msgstr ""
 
 msgid "cannot create HTML package index"
 msgstr "impossible de créer l'index HTML du package"
-
-msgid "multiple \\encoding lines in file"
-msgstr "lignes \\encoding multiples dans le fichier "
 
 msgid "found encoding"
 msgstr "encodage trouvé"
@@ -923,9 +953,6 @@ msgstr "exécution de tests pour générer éventuellement des 'segfaults'"
 msgid "test '%s' is not available"
 msgstr "le test '%s' n'est pas disponible"
 
-msgid "no or more than one match"
-msgstr "soit aucune, soit plus d'une correspondance"
-
 msgid "argument 'x' must be a character vector"
 msgstr "l'argument 'x' doit être un vecteur de chaînes de caractères"
 
@@ -965,9 +992,6 @@ msgstr "Séquence d'appel :"
 msgid "Processing packages:"
 msgstr "Traitement des packages :"
 
-msgid "done"
-msgstr "fini"
-
 msgid "parsing '%s'"
 msgstr "analyse de '%s'"
 
@@ -999,3 +1023,70 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
 msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
+#~ msgid "directory '%s' does not contain Rd sources"
+#~ msgstr "le répertoire '%s' ne contient pas de sources Rd"
+
+#~ msgid "Package Rd sources were installed without preserving Rd file names."
+#~ msgstr ""
+#~ "Les sources Rd du package ont été installées sans préserver les noms de "
+#~ "fichiers Rd."
+
+#~ msgid "Please reinstall using a current version of R."
+#~ msgstr "Veuillez réinstaller en utilisant la dernière version de R."
+
+#~ msgid "*** error on file"
+#~ msgstr "*** erreur dans le fichier"
+
+#~ msgid "argument 'lines' must be a character vector"
+#~ msgstr "l'argument 'lines' doit être un vecteur de chaînes de caractères"
+
+#~ msgid "encoding '%s' is not portable"
+#~ msgstr "l'encodage '%s' n'est pas portable"
+
+#~ msgid "unterminated section '%s'"
+#~ msgstr "section non terminée '%s'"
+
+#~ msgid "incomplete section 'section{%s}'"
+#~ msgstr "section incomplète 'section{%s}'"
+
+#~ msgid "unterminated section 'section{%s}'"
+#~ msgstr "section non terminée 'section{%s}'"
+
+#~ msgid "argument 'txt' must be a character string"
+#~ msgstr "l'argument 'txt' doit être une chaîne de caractères"
+
+#~ msgid "unmatched \\item name in '\\item{%s'"
+#~ msgstr "nom \\item ne correspondant à rien dans '\\item{%s'"
+
+#~ msgid "no \\item description for item '%s'"
+#~ msgstr "pas de description \\item pour l'élément de liste '%s'"
+
+#~ msgid "unmatched \\item description for item '%s'"
+#~ msgstr ""
+#~ "description \\item ne correspondant à rien pour l'élément de liste '%s'"
+
+#~ msgid "unclosed \\link"
+#~ msgstr "\\link non terminé"
+
+#~ msgid "unclosed \\%s"
+#~ msgstr "\\%s non terminé"
+
+#~ msgid "Rd syntax errors found"
+#~ msgstr "Erreurs de syntaxe Rd détectées"
+
+#~ msgid "Syntax error in documentation object '%s':"
+#~ msgstr "Erreur de syntaxe dans la documentation de l'objet '%s' :"
+
+#~ msgid "should not get here"
+#~ msgstr "ne devrait pas être là"
+
+#, fuzzy
+#~ msgid "there is a 'man' dir but no help pages in this package"
+#~ msgstr "il n'y a pas de pages d'aide dans ce package"
+
+#~ msgid "multiple \\encoding lines in file"
+#~ msgstr "lignes \\encoding multiples dans le fichier "
+
+#~ msgid "no or more than one match"
+#~ msgstr "soit aucune, soit plus d'une correspondance"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-12 10:17\n"
+"POT-Creation-Date: 2009-09-02 09:57\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -49,8 +49,8 @@ msgstr "未公开的%s:"
 msgid "directory '%s' does not contain R code"
 msgstr "文件目录'%s'不含R编码"
 
-msgid "directory '%s' does not contain Rd sources"
-msgstr "文件目录'%s'不含Rd源编码"
+msgid "directory '%s' does not contain Rd objects"
+msgstr "目录'%s'没有Rd对象"
 
 msgid ""
 "Functions/methods with usage in documentation object '%s' but not in code:"
@@ -190,12 +190,6 @@ msgstr ""
 
 msgid "Namespace dependencies not required:"
 msgstr "不需要名字空间从属:"
-
-msgid "Package Rd sources were installed without preserving Rd file names."
-msgstr "安装程辑包Rd源编码的时候没有保留Rd文件名字."
-
-msgid "Please reinstall using a current version of R."
-msgstr "请用最新版本的R重新安装."
 
 msgid "Rd files with syntax errors:"
 msgstr "Rd文件里有语法错误:"
@@ -344,9 +338,6 @@ msgstr "没有这样的编码，带非ASCII数据:"
 msgid "Non-standard license specification:"
 msgstr "非标准执照规格"
 
-msgid "Invalid license file pointers: %s"
-msgstr "执照文件指示器无效：%s"
-
 msgid "Standardizable: %s"
 msgstr ""
 
@@ -354,14 +345,43 @@ msgstr ""
 msgid "Standardized license specification:"
 msgstr "非标准执照规格"
 
+msgid "Invalid license file pointers: %s"
+msgstr "执照文件指示器无效：%s"
+
 msgid "Non-portable flags in variable '%s':"
 msgstr "变量'%s'里有不可便携的标志:"
 
 msgid "package must be loaded"
 msgstr "必需载入程序包。"
 
+msgid "Obsolete package(s) %s in Rd xrefs"
+msgstr ""
+
+msgid "Package(s) unavailable to check Rd xrefs: %s"
+msgstr ""
+
+msgid "Unknown package(s) %s in Rd xrefs"
+msgstr ""
+
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "使用手冊对象'%s'缺少联结:"
+
+#, fuzzy
+msgid "Suspect link(s) in documentation object '%s':"
+msgstr "使用手冊对象'%s'缺少联结:"
+
+#, fuzzy
+msgid ""
+"See the information in section 'Cross-references' of the 'Writing R "
+"Extensions' manual."
+msgstr ""
+"请参考'如何写R附加软件'说明书'写R程辑包'这一段中关于DESCRIPTION文件的信息."
+
+msgid ""
+"'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an "
+"alias but not as a filename -- such links will not work in R < 2.10.0, and "
+"only in HTML (not PDF) help in current versions."
+msgstr ""
 
 msgid "found %s"
 msgstr "找到了%s"
@@ -374,10 +394,6 @@ msgstr "'::'或':::'引进没有被声明:"
 
 msgid "'library' or 'require' calls not declared from:"
 msgstr "'library'或'require'调用没有被声明:"
-
-#, fuzzy
-msgid "*** error on file"
-msgstr "文件'%s'里句法分析有错:"
 
 msgid "Generics g in env ="
 msgstr "同属函数g在env="
@@ -427,9 +443,6 @@ msgstr "Rd文件必需要有非空白的\\title."
 msgid "argument 'outFile' must be a character string or connection"
 msgstr "变元'outfile'必需是字符串或联结"
 
-msgid "directory '%s' does not contain Rd objects"
-msgstr "目录'%s'没有Rd对象"
-
 #, fuzzy
 msgid "you must specify 'dir' or 'files'"
 msgstr "你必需设定'package', 'dir'或'file'三个中的一个"
@@ -440,56 +453,18 @@ msgstr "无法使用缺少或有空白名字的Rd对象"
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "Rd文件里缺少或有空白的\\name域"
 
-msgid "argument 'lines' must be a character vector"
-msgstr "变元'lines'必需是字符矢量"
+#, fuzzy
+msgid "No help on %s found in RdDB %s"
+msgstr "这个程序无法用在程辑包'base'上"
 
-msgid "encoding '%s' is not portable"
-msgstr "非便携编码'%s' "
-
-msgid "unterminated section '%s'"
-msgstr "'%s'这一段没有结局"
-
-msgid "incomplete section 'section{%s}'"
-msgstr "'section{%s}'这一段不全"
-
-msgid "unterminated section 'section{%s}'"
-msgstr "'section{%s}'这一段没有结局"
-
-msgid "argument 'txt' must be a character string"
-msgstr "变元'txt'必需为字符串"
-
-msgid "unmatched \\item name in '\\item{%s'"
-msgstr "在'\\item{%s'里的\\item名字对不上"
-
-msgid "no \\item description for item '%s'"
-msgstr "条目'%s'里没有\\item的描述"
-
-msgid "unmatched \\item description for item '%s'"
-msgstr "条目'%s'的\\item描述对不上"
-
-msgid "unclosed \\link"
-msgstr "未关闭\\link"
-
-msgid "unclosed \\%s"
-msgstr "未关闭\\%s"
-
-msgid "Rd syntax errors found"
-msgstr "Rd语法错误于"
-
-msgid "Syntax error in documentation object '%s':"
-msgstr "使用手冊对象'%s'里主语法错误:"
-
-msgid "should not get here"
-msgstr ""
-
-msgid "checkRd is designed for Rd version 2 or higher."
+msgid "more than one \\examples section, using the first"
 msgstr ""
 
 #, fuzzy
 msgid "invalid value for '%s' : %s"
 msgstr "执照文件指示器无效：%s"
 
-msgid "more than one \\examples section, using the first"
+msgid "checkRd is designed for Rd version 2 or higher"
 msgstr ""
 
 msgid "unable to create temp directory"
@@ -595,6 +570,61 @@ msgstr "错误：R的版本是%s，捆程序捆包'%s'要求版本为%s %s的R"
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "错误：R的版本是%s，需要的是版本为%s %s的R"
 
+msgid "No files in this directory"
+msgstr ""
+
+msgid "No results found"
+msgstr ""
+
+msgid "No help found for topic '%s' in package '%s'."
+msgstr ""
+
+msgid "No help found for topic '%s' in any package."
+msgstr ""
+
+msgid "<p>Help on topic '%s' was found in the following packages:</p><dl>"
+msgstr ""
+
+#, fuzzy
+msgid "No package index found for package %d"
+msgstr "这个程序无法用在程辑包'base'上"
+
+#, fuzzy
+msgid "No package of name %s could be located"
+msgstr "必需载入程序包。"
+
+#, fuzzy
+msgid "No help found for package %s"
+msgstr "这个程序无法用在程辑包'base'上"
+
+#, fuzzy
+msgid "Link %s in package %s could not be located"
+msgstr "绝不能载入名字空间."
+
+msgid "No docs found for package %s"
+msgstr ""
+
+msgid "httpd server disabled by R_DISABLE_HTTPD"
+msgstr ""
+
+msgid "server already running"
+msgstr ""
+
+msgid "server could not be started earlier"
+msgstr ""
+
+msgid "no running server to stop"
+msgstr ""
+
+msgid "starting httpd help server ..."
+msgstr ""
+
+msgid "done"
+msgstr "好了"
+
+msgid "failed to start the httpd server"
+msgstr ""
+
 msgid "cannot read index information in file '%s'"
 msgstr "无法从文件'%s'中读取索引信息"
 
@@ -698,7 +728,10 @@ msgstr ""
 msgid "in file"
 msgstr ""
 
-msgid "there is a 'man' dir but no help pages in this package"
+msgid "finding HTML links ..."
+msgstr ""
+
+msgid "finding level-2 HTML links ..."
 msgstr ""
 
 msgid "-t option without value"
@@ -756,9 +789,6 @@ msgstr "'DESCRIPTION'有'encoding'这个域，却无法重新编码"
 
 msgid "cannot create HTML package index"
 msgstr "无法建立HTML程辑包索引"
-
-msgid "multiple \\encoding lines in file"
-msgstr ""
 
 #, fuzzy
 msgid "found encoding"
@@ -886,9 +916,6 @@ msgstr ""
 msgid "test '%s' is not available"
 msgstr "不存在'%s'这个测试"
 
-msgid "no or more than one match"
-msgstr "没有成对的，或多于一双"
-
 msgid "argument 'x' must be a character vector"
 msgstr "变元'x'必需是字符矢量"
 
@@ -928,9 +955,6 @@ msgstr "调用序列:"
 msgid "Processing packages:"
 msgstr "正在处理程辑包:"
 
-msgid "done"
-msgstr "好了"
-
 msgid "parsing '%s'"
 msgstr "文名分析'%s'"
 
@@ -951,3 +975,58 @@ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "在下面的函数里遇到了有可能是全局的T或F值:"
+
+#~ msgid "directory '%s' does not contain Rd sources"
+#~ msgstr "文件目录'%s'不含Rd源编码"
+
+#~ msgid "Package Rd sources were installed without preserving Rd file names."
+#~ msgstr "安装程辑包Rd源编码的时候没有保留Rd文件名字."
+
+#~ msgid "Please reinstall using a current version of R."
+#~ msgstr "请用最新版本的R重新安装."
+
+#, fuzzy
+#~ msgid "*** error on file"
+#~ msgstr "文件'%s'里句法分析有错:"
+
+#~ msgid "argument 'lines' must be a character vector"
+#~ msgstr "变元'lines'必需是字符矢量"
+
+#~ msgid "encoding '%s' is not portable"
+#~ msgstr "非便携编码'%s' "
+
+#~ msgid "unterminated section '%s'"
+#~ msgstr "'%s'这一段没有结局"
+
+#~ msgid "incomplete section 'section{%s}'"
+#~ msgstr "'section{%s}'这一段不全"
+
+#~ msgid "unterminated section 'section{%s}'"
+#~ msgstr "'section{%s}'这一段没有结局"
+
+#~ msgid "argument 'txt' must be a character string"
+#~ msgstr "变元'txt'必需为字符串"
+
+#~ msgid "unmatched \\item name in '\\item{%s'"
+#~ msgstr "在'\\item{%s'里的\\item名字对不上"
+
+#~ msgid "no \\item description for item '%s'"
+#~ msgstr "条目'%s'里没有\\item的描述"
+
+#~ msgid "unmatched \\item description for item '%s'"
+#~ msgstr "条目'%s'的\\item描述对不上"
+
+#~ msgid "unclosed \\link"
+#~ msgstr "未关闭\\link"
+
+#~ msgid "unclosed \\%s"
+#~ msgstr "未关闭\\%s"
+
+#~ msgid "Rd syntax errors found"
+#~ msgstr "Rd语法错误于"
+
+#~ msgid "Syntax error in documentation object '%s':"
+#~ msgstr "使用手冊对象'%s'里主语法错误:"
+
+#~ msgid "no or more than one match"
+#~ msgstr "没有成对的，或多于一双"

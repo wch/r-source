@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-12 10:17\n"
+"POT-Creation-Date: 2009-09-02 09:57\n"
 "PO-Revision-Date: 2009-03-26 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -48,8 +48,8 @@ msgstr "Undokumentierte %s:"
 msgid "directory '%s' does not contain R code"
 msgstr "Verzeichnis '%s' enthält keinen R Code"
 
-msgid "directory '%s' does not contain Rd sources"
-msgstr "Verzeichnis '%s' enthält keine Rd Quellen"
+msgid "directory '%s' does not contain Rd objects"
+msgstr "Verzeichnis '%s' enthält keine Rd-Objekte"
 
 msgid ""
 "Functions/methods with usage in documentation object '%s' but not in code:"
@@ -190,13 +190,6 @@ msgstr ""
 
 msgid "Namespace dependencies not required:"
 msgstr "Nicht benötigte Namensraumabhängigkeiten:"
-
-msgid "Package Rd sources were installed without preserving Rd file names."
-msgstr ""
-"Rd Quellen des Paketes wurden ohne Sicherung der Rd Dateinamen installiert."
-
-msgid "Please reinstall using a current version of R."
-msgstr "Bitte mit einer aktuellen Version von R neu installieren"
 
 msgid "Rd files with syntax errors:"
 msgstr "Rd Dateien mit Syntaxfehlern:"
@@ -354,14 +347,14 @@ msgstr "Unbekannte Kodierung mit nicht-ASCII Daten"
 msgid "Non-standard license specification:"
 msgstr "Nicht-Standard Lizenzspezifikation:"
 
-msgid "Invalid license file pointers: %s"
-msgstr "Ungültiger Verweis auf Lizenzdatei: %s"
-
 msgid "Standardizable: %s"
 msgstr "Zu standardisieren: %s"
 
 msgid "Standardized license specification:"
 msgstr "Standardisierte Lizenzspezifikation:"
+
+msgid "Invalid license file pointers: %s"
+msgstr "Ungültiger Verweis auf Lizenzdatei: %s"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nicht portierbare Flags in der Variablen '%s'"
@@ -369,8 +362,35 @@ msgstr "Nicht portierbare Flags in der Variablen '%s'"
 msgid "package must be loaded"
 msgstr "Paket muss geladen werden"
 
+msgid "Obsolete package(s) %s in Rd xrefs"
+msgstr ""
+
+msgid "Package(s) unavailable to check Rd xrefs: %s"
+msgstr ""
+
+msgid "Unknown package(s) %s in Rd xrefs"
+msgstr ""
+
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Fehlende(r) Link(s) im Dokuobjekt '%s':"
+
+#, fuzzy
+msgid "Suspect link(s) in documentation object '%s':"
+msgstr "Fehlende(r) Link(s) im Dokuobjekt '%s':"
+
+#, fuzzy
+msgid ""
+"See the information in section 'Cross-references' of the 'Writing R "
+"Extensions' manual."
+msgstr ""
+"Information über DESCRIPTION Dateien finden sie im Abschnitt 'Creating R "
+"packages' im 'Writing R Extension' Handbuch"
+
+msgid ""
+"'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an "
+"alias but not as a filename -- such links will not work in R < 2.10.0, and "
+"only in HTML (not PDF) help in current versions."
+msgstr ""
 
 msgid "found %s"
 msgstr "'%s' gefunden"
@@ -383,9 +403,6 @@ msgstr "'::' oder ':::' importieren unangemeldet aus:"
 
 msgid "'library' or 'require' calls not declared from:"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
-
-msgid "*** error on file"
-msgstr "*** Fehler in Datei"
 
 msgid "Generics g in env ="
 msgstr "Generische g in env ="
@@ -436,9 +453,6 @@ msgstr "Rd-Dateien dürfen kein leeres \\title Feld haben"
 msgid "argument 'outFile' must be a character string or connection"
 msgstr "Argument 'outFile' muss eine Zeichenkette oder eine Verbindung sein"
 
-msgid "directory '%s' does not contain Rd objects"
-msgstr "Verzeichnis '%s' enthält keine Rd-Objekte"
-
 #, fuzzy
 msgid "you must specify 'dir' or 'files'"
 msgstr "sie müssen 'package', 'dir' oder 'file' angeben"
@@ -449,58 +463,20 @@ msgstr "kann mit Rd Objekten mit fehlendem bzw. leerem Namen nicht umgehen"
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "fehlendes bzw. leeres \\name Feld in Rd Datei(en)"
 
-msgid "argument 'lines' must be a character vector"
-msgstr "Argument 'lines' muss ein Charaktervektor sein"
-
-msgid "encoding '%s' is not portable"
-msgstr "Kodierung '%s' ist nicht portabel"
-
-msgid "unterminated section '%s'"
-msgstr "unbeendeter Abschnitt '%s'"
-
-msgid "incomplete section 'section{%s}'"
-msgstr "unvollständiger Abschnitt 'section[%s]'"
-
-msgid "unterminated section 'section{%s}'"
-msgstr "unbeendeter Abschnitt 'section[%s]'"
-
-msgid "argument 'txt' must be a character string"
-msgstr "Argument 'txt' muss eine Zeichenkette sein"
-
-msgid "unmatched \\item name in '\\item{%s'"
-msgstr "kein passender \\item Name in '\\item[%s'"
-
-msgid "no \\item description for item '%s'"
-msgstr "keine \\item Beschreibung für Item '%s'"
-
-msgid "unmatched \\item description for item '%s'"
-msgstr "keine passende \\item Beschreibung für Item '%s'"
-
-msgid "unclosed \\link"
-msgstr "nicht abgeschlossener \\link"
-
-msgid "unclosed \\%s"
-msgstr "nicht geschlossener \\%s"
-
-msgid "Rd syntax errors found"
-msgstr "Rd Syntaxfehler aufgetreten"
-
-msgid "Syntax error in documentation object '%s':"
-msgstr "Syntaxfehler im Dokuobjekt '%s':"
-
-msgid "should not get here"
-msgstr "sollte nicht hierher kommen"
-
 #, fuzzy
-msgid "checkRd is designed for Rd version 2 or higher."
-msgstr "Rd2HTML ist für Rd in Version 2 oder später entworfen"
+msgid "No help on %s found in RdDB %s"
+msgstr "dies kann für Paket 'base' nicht benutzt werden"
+
+msgid "more than one \\examples section, using the first"
+msgstr "mehr als eine \\examples section, benutze die erste"
 
 #, fuzzy
 msgid "invalid value for '%s' : %s"
 msgstr "Ungültiger Verweis auf Lizenzdatei: %s"
 
-msgid "more than one \\examples section, using the first"
-msgstr "mehr als eine \\examples section, benutze die erste"
+#, fuzzy
+msgid "checkRd is designed for Rd version 2 or higher"
+msgstr "Rd2HTML ist für Rd in Version 2 oder später entworfen"
 
 msgid "unable to create temp directory"
 msgstr "kann kein temp Verzeichnis erzeugen"
@@ -607,6 +583,63 @@ msgstr "Fehler: dies ist R Version %s, Bündel '%s' benötigt R %s %s"
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "Fehler: Dies ist R Version %s, benötigt wird R %s %s"
 
+msgid "No files in this directory"
+msgstr ""
+
+#, fuzzy
+msgid "No results found"
+msgstr "kein Quellkode gefunden"
+
+msgid "No help found for topic '%s' in package '%s'."
+msgstr ""
+
+msgid "No help found for topic '%s' in any package."
+msgstr ""
+
+msgid "<p>Help on topic '%s' was found in the following packages:</p><dl>"
+msgstr ""
+
+#, fuzzy
+msgid "No package index found for package %d"
+msgstr "dies kann für Paket 'base' nicht benutzt werden"
+
+#, fuzzy
+msgid "No package of name %s could be located"
+msgstr "Paket muss geladen werden"
+
+#, fuzzy
+msgid "No help found for package %s"
+msgstr "dies kann für Paket 'base' nicht benutzt werden"
+
+#, fuzzy
+msgid "Link %s in package %s could not be located"
+msgstr "Namensraum darf nicht geladen werden"
+
+msgid "No docs found for package %s"
+msgstr ""
+
+msgid "httpd server disabled by R_DISABLE_HTTPD"
+msgstr ""
+
+msgid "server already running"
+msgstr ""
+
+msgid "server could not be started earlier"
+msgstr ""
+
+#, fuzzy
+msgid "no running server to stop"
+msgstr "Ausführen von Regression-Tests"
+
+msgid "starting httpd help server ..."
+msgstr ""
+
+msgid "done"
+msgstr "fertig"
+
+msgid "failed to start the httpd server"
+msgstr ""
+
 msgid "cannot read index information in file '%s'"
 msgstr "kann die Indexinformation in Datei '%s' nicht lesen"
 
@@ -709,10 +742,11 @@ msgstr "überspringe wiederholte(n) Alias(se)"
 msgid "in file"
 msgstr "in Datei"
 
-msgid "there is a 'man' dir but no help pages in this package"
+msgid "finding HTML links ..."
 msgstr ""
-"das 'man' Verzeichnis exisitert, aber es gibt keine Hilfeseiten in diesem "
-"Paket"
+
+msgid "finding level-2 HTML links ..."
+msgstr ""
 
 #, fuzzy
 msgid "-t option without value"
@@ -771,9 +805,6 @@ msgstr "'DESCRIPTION' hat ein 'Encoding' Feld und rekodieren ist nicht möglich"
 
 msgid "cannot create HTML package index"
 msgstr "kann den HTML Paketindex nicht erzeugen"
-
-msgid "multiple \\encoding lines in file"
-msgstr "mehrere \\encoding Zeilen in der Datei"
 
 msgid "found encoding"
 msgstr "gefundene Kodierung"
@@ -903,9 +934,6 @@ msgstr "Ausführen von Tests, um Segfaults zu provozieren"
 msgid "test '%s' is not available"
 msgstr "Test '%s' nicht verfügbar"
 
-msgid "no or more than one match"
-msgstr "keine oder mehr als eine Übereinstimmung"
-
 msgid "argument 'x' must be a character vector"
 msgstr "Argument 'x' muss ein Charaktervektor sein"
 
@@ -945,9 +973,6 @@ msgstr "Aufrufsequenz:"
 msgid "Processing packages:"
 msgstr "Bearbeitete Pakete:"
 
-msgid "done"
-msgstr "fertig"
-
 msgid "parsing '%s'"
 msgstr "parse '%s'"
 
@@ -972,3 +997,70 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
+
+#~ msgid "directory '%s' does not contain Rd sources"
+#~ msgstr "Verzeichnis '%s' enthält keine Rd Quellen"
+
+#~ msgid "Package Rd sources were installed without preserving Rd file names."
+#~ msgstr ""
+#~ "Rd Quellen des Paketes wurden ohne Sicherung der Rd Dateinamen "
+#~ "installiert."
+
+#~ msgid "Please reinstall using a current version of R."
+#~ msgstr "Bitte mit einer aktuellen Version von R neu installieren"
+
+#~ msgid "*** error on file"
+#~ msgstr "*** Fehler in Datei"
+
+#~ msgid "argument 'lines' must be a character vector"
+#~ msgstr "Argument 'lines' muss ein Charaktervektor sein"
+
+#~ msgid "encoding '%s' is not portable"
+#~ msgstr "Kodierung '%s' ist nicht portabel"
+
+#~ msgid "unterminated section '%s'"
+#~ msgstr "unbeendeter Abschnitt '%s'"
+
+#~ msgid "incomplete section 'section{%s}'"
+#~ msgstr "unvollständiger Abschnitt 'section[%s]'"
+
+#~ msgid "unterminated section 'section{%s}'"
+#~ msgstr "unbeendeter Abschnitt 'section[%s]'"
+
+#~ msgid "argument 'txt' must be a character string"
+#~ msgstr "Argument 'txt' muss eine Zeichenkette sein"
+
+#~ msgid "unmatched \\item name in '\\item{%s'"
+#~ msgstr "kein passender \\item Name in '\\item[%s'"
+
+#~ msgid "no \\item description for item '%s'"
+#~ msgstr "keine \\item Beschreibung für Item '%s'"
+
+#~ msgid "unmatched \\item description for item '%s'"
+#~ msgstr "keine passende \\item Beschreibung für Item '%s'"
+
+#~ msgid "unclosed \\link"
+#~ msgstr "nicht abgeschlossener \\link"
+
+#~ msgid "unclosed \\%s"
+#~ msgstr "nicht geschlossener \\%s"
+
+#~ msgid "Rd syntax errors found"
+#~ msgstr "Rd Syntaxfehler aufgetreten"
+
+#~ msgid "Syntax error in documentation object '%s':"
+#~ msgstr "Syntaxfehler im Dokuobjekt '%s':"
+
+#~ msgid "should not get here"
+#~ msgstr "sollte nicht hierher kommen"
+
+#~ msgid "there is a 'man' dir but no help pages in this package"
+#~ msgstr ""
+#~ "das 'man' Verzeichnis exisitert, aber es gibt keine Hilfeseiten in diesem "
+#~ "Paket"
+
+#~ msgid "multiple \\encoding lines in file"
+#~ msgstr "mehrere \\encoding Zeilen in der Datei"
+
+#~ msgid "no or more than one match"
+#~ msgstr "keine oder mehr als eine Übereinstimmung"
