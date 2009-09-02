@@ -21,7 +21,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla --slave
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) mkR2 front mkdesc mkpo
+	@$(MAKE) mkR2 mkdesc mkpo
 	@$(MAKE) mksrc
 	@$(MAKE) RfilesLazy
 
