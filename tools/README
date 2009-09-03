@@ -42,9 +42,6 @@ The files are as follows.
   install-info.pl
 	create or update entry in Info directory.  Taken from the Debian
 	GNU/Linux stable distribution.
-
-  keywords2html.pl
-	convert 'KEYWORDS.db' to HTML.
 	
   ldAIX4
 	writes an export file, assembling the exported symbols by

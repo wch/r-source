@@ -23,7 +23,6 @@ DISTFILES = README \
 	help2man.pl \
 	install-info.pl \
 	install-sh \
-	keywords2html.pl \
 	ldAIX4 \
 	link-recommended \
 	ltmain.sh \

@@ -2402,7 +2402,7 @@ CMD Sd2Rd}.
 
 @c The Perl scripts left are
 @c src/scripts: Rprof Sd2Rd build check
-@c tools: help2man.pl install-info.pl keywords2html.pl
+@c tools: help2man.pl install-info.pl
 @c src/gnuwin32/fixed/rwver.pl
 @c src/gnuwin32/installer: JRins.pl WIXins.pl
 
