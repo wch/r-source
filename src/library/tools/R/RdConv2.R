@@ -344,6 +344,7 @@ prepare2_Rd <- function(Rd, Rdfile)
     sections <- RdTags(Rd)
 
     ## FIXME: we no longer make any use of \Rdversion
+    version <- which(sections == "\\Rdversion")
     if (length(version) > 1L)
     	stopRd(Rd[[version[2L]]], Rdfile,
                "Only one \\Rdversion declaration is allowed")
