@@ -653,16 +653,14 @@ setRepositories <-
                 res <- match(tcltk::tk_select.list(a[, 1L], a[default, 1L],
                                                    multiple = TRUE, "Repositories"),
                              a[, 1L])
-        }
-        if(!length(res)) {
-            ## text-mode fallback
+        } else {
             cat(gettext("--- Please select repositories for use in this session ---\n"))
             nc <- length(default)
             cat("", paste(seq_len(nc), ": ",
                           ifelse(default, "+", " "), " ", a[, 1L],
                           sep=""),
                 "", sep="\n")
-            cat(gettext("Enter one or more numbers separated by spaces\n"))
+            cat(gettext("Enter one or more numbers separated by spaces, or an empty line to cancel\n"))
             res <- scan("", what=0, quiet=TRUE, nlines=1L)
             if(!length(res) || (length(res) == 1L && !res[1L]))
                 return(invisible())
@@ -672,7 +670,7 @@ setRepositories <-
     if(length(res)) {
         repos <- a[["URL"]]
         names(repos) <- row.names(a)
-        options(repos=repos[res])
+        options(repos = repos[res])
     }
 }
 

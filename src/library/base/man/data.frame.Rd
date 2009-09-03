@@ -62,12 +62,13 @@ default.stringsAsFactors()
   A data frame is a list of variables of the same number of rows with
   unique row names, given class \code{"data.frame"}.  If no variables
   are included, the row names determine the number of rows.
-
-  Duplicate column names are allowed, but you need to use
-  \code{check.names = FALSE} for \code{data.frame} to generate such a data
-  frame.  However, not all operations on data frames will preserve
-  duplicated column names: for example matrix-like subsetting will force
-  column names in the result to be unique.
+  
+  The column names should be non-empty, and attempts to use empty names
+  will have unsupported results.  Duplicate column names are allowed,
+  but you need to use \code{check.names = FALSE} for \code{data.frame}
+  to generate such a data frame.  However, not all operations on data
+  frames will preserve duplicated column names: for example matrix-like
+  subsetting will force column names in the result to be unique.
 
   \code{data.frame} converts each of its arguments to a data frame by
   calling \code{\link{as.data.frame}(optional=TRUE)}.  As that is a

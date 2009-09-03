@@ -1,11 +1,10 @@
 % File src/library/splines/man/bs.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{bs}
 \alias{bs}
-%\alias{makepredictcall.bs}
 \title{B-Spline Basis for Polynomial Splines}
 \description{
   Generate the B-spline basis matrix for a polynomial spline.
@@ -17,14 +16,15 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
 \arguments{
   \item{x}{the predictor variable.  Missing values are allowed.}
   \item{df}{degrees of freedom; one can specify \code{df} rather than
-    \code{knots}; \code{bs()} then chooses \code{df-degree-1} knots at
-    suitable quantiles of \code{x} (which will ignore missing values).}
+    \code{knots}; \code{bs()} then chooses \code{df-degree} (minus one
+    if there is an intercept) knots at suitable quantiles of \code{x}
+    (which will ignore missing values).}
   \item{knots}{the \emph{internal} breakpoints that define the
     spline.  The default is \code{NULL}, which results in a basis for
     ordinary polynomial regression.  Typical values are the mean or
     median for one knot, quantiles for more knots.  See also
     \code{Boundary.knots}.}
-  \item{degree}{degree of the piecewise polynomial---default is 3 for
+  \item{degree}{degree of the piecewise polynomial---default is \code{3} for
     cubic splines.}
   \item{intercept}{if \code{TRUE}, an intercept is included in the
     basis; default is \code{FALSE}.}
@@ -34,11 +34,11 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
     depend on \code{x}. Data can extend beyond \code{Boundary.knots}.}
 }
 \value{
-  A matrix of dimension \code{length(x) * df}, where either \code{df}
-  was supplied or if \code{knots} were supplied,
-  \code{df = length(knots) + 3 + intercept}.  Attributes are returned
-  that  correspond to the arguments to \code{bs}, and explicitly give
-  the \code{knots}, \code{Boundary.knots} etc for use by
+  A matrix of dimension \code{c(length(x), df)}, where either \code{df}
+  was supplied or if \code{knots} were supplied, \code{df =
+  length(knots) + degree} plus one if there is an intercept.  Attributes
+  are returned that correspond to the arguments to \code{bs}, and
+  explicitly give the \code{knots}, \code{Boundary.knots} etc for use by
   \code{predict.bs()}.
 
   \code{bs()} is based on the function \code{\link{spline.des}()}.
