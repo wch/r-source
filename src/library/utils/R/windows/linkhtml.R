@@ -46,6 +46,7 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
         return(FALSE)
     }
     message("Making packages.html ...", " ", appendLF = FALSE)
+    flush.console()
     file.append(f.tg,
                 file.path(R.home("doc"), "html", "packages-head-utf8.html"))
     out <- file(f.tg, open="a")
