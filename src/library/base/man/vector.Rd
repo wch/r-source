@@ -28,15 +28,17 @@ is.vector(x, mode = "any")
   vector of mode \code{mode} (the default is to coerce to whichever mode
   is most convenient).
 
-  \code{is.vector} returns \code{TRUE} if \code{x} is a vector (of mode
-  logical, integer, real, complex, character, raw or list if not
-  specified) or expression and \code{FALSE} otherwise.
+  \code{is.vector} returns \code{TRUE} if \code{x} is a vector of the
+  specified mode having no attributes other than names.  It returns
+  \code{FALSE} otherwise.
 }
 \details{
   The atomic modes are \code{"logical"}, \code{"integer"}, \code{"numeric"},
   \code{"complex"}, \code{"character"} and \code{"raw"}.
 
-  \code{is.vector} returns \code{FALSE} if \code{x} has any attributes
+  If \code{mode = "any"}, \code{is.vector} returns \code{TRUE} for
+  modes logical, integer, real, complex, character, raw, list or
+  expression. It returns \code{FALSE} if \code{x} has any attributes
   except names.  (This is incompatible with S.)  On the other hand,
   \code{as.vector} removes \emph{all} attributes including names for
   results of atomic mode.
