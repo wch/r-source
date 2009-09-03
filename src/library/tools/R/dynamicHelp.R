@@ -14,67 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-.httpdHeader <- function(title)
-{
-    paste('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
-          '<html><head><title>R: ', title , '</title>\n',
-          '<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">\n',
-          '<link rel="stylesheet" type="text/css" href="/doc/html/R.css">\n',
-          '</head><body>\n',
-          sep = "")
-}
-
-.HTMLdirListing <- function(dir, base)
-{
-    mono <- function(text)
-        paste('<span class="samp">', text, "</span>", sep="")
-
-    files <- list.files(dir) # note, no hidden files are listed
-    out <- c(.httpdHeader(dir),
-             paste('<h1>', "Listing of directory<br>", dir, '</h1>\n\n<hr>\n',
-                   sep = ""))
-    if(!length(files))
-        out <- c(out, gettext("No files in this directory"))
-    else {
-        urls <- paste('<a href="', base, '/', files, '">', files, '</a>',
-                      sep = "")
-        out <- c(out, "<dl>",
-                 paste("<dd>", mono(iconv(urls, "", "UTF-8")), "</dd>", sep = ""),
-                 "</dl>")
-    }
-    out <- c(out, "<hr>\n</body></html>")
-    list(payload = paste(out, collapse="\n"))
-}
-
-.HTMLsearch <- function(query)
-{
-    res <- if(identical(names(query), "category"))
-        help.search(keyword = query)$matches
-    else {
-       nm <- names(query)
-       m <- match("exact", nm)
-       if(is.na(m)) help.search(query[1L], nm)$matches
-       else help.search(query[1L], nm[-m], agrep = FALSE)$matches
-    }
-    title <- "Search Results"
-    out <- c(.httpdHeader(title),
-             paste('<h1>', title, '</h1>\n',
-                   'The search string was <b>"', query[1L], '"</b><hr>\n',
-                   sep=""))
-    if(nrow(res)) {
-        paths <- paste("/library/", res[, "Package"], "/html/",
-                       res[, "topic"], ".html", sep = "")
-        urls <- paste('<a href="', paths, '">',
-                      res[, "Package"], "::", res[, "topic"],
-                      '</a>', sep = "")
-        out <- c(out, "<dl>",
-                 paste("<dt>", iconv(urls, "", "UTF-8"), "</dt>\n",
-                       "<dd>", res[, "title"], "</dd>", sep = ""),
-                 "</dl>")
-    } else out <- c(out, gettext("No results found"))
-    out <- c(out, "<hr>\n</body></html>")
-    list(payload = paste(out, collapse="\n"))
-}
 
 ## This may be asked for
 ##  R.css, favicon.ico
@@ -84,6 +23,65 @@
 ##             or by file, /library/<pkg>/html/<file>.html
 httpd <- function(path, query, ...)
 {
+    .httpdHeader <- function(title)
+    {
+        paste('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
+              '<html><head><title>R: ', title , '</title>\n',
+              '<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">\n',
+              '<link rel="stylesheet" type="text/css" href="/doc/html/R.css">\n',
+              '</head><body>\n',
+              sep = "")
+    }
+
+    .HTMLdirListing <- function(dir, base)
+    {
+        files <- list.files(dir)    # note, no hidden files are listed
+        out <- c(.httpdHeader(dir),
+                 paste('<h1>', "Listing of directory<br>", dir, '</h1>\n\n<hr>\n',
+                       sep = ""))
+        if(!length(files))
+            out <- c(out, gettext("No files in this directory"))
+        else {
+            urls <- paste('<a href="', base, '/', files, '">', files, '</a>',
+                          sep = "")
+            out <- c(out, "<dl>",
+                     paste("<dd>", mono(iconv(urls, "", "UTF-8")), "</dd>", sep = ""),
+                     "</dl>")
+        }
+        out <- c(out, "<hr>\n</body></html>")
+        list(payload = paste(out, collapse="\n"))
+    }
+
+    .HTMLsearch <- function(query)
+    {
+        res <- if(identical(names(query), "category"))
+            help.search(keyword = query)$matches
+        else {
+            nm <- names(query)
+            m <- match("exact", nm)
+            if(is.na(m)) help.search(query[1L], nm)$matches
+            else help.search(query[1L], nm[-m], agrep = FALSE)$matches
+        }
+        title <- "Search Results"
+        out <- c(.httpdHeader(title),
+                 paste('<h1>', title, '</h1>\n',
+                       'The search string was <b>"', query[1L], '"</b><hr>\n',
+                       sep=""))
+        if(nrow(res)) {
+            paths <- paste("/library/", res[, "Package"], "/html/",
+                           res[, "topic"], ".html", sep = "")
+            urls <- paste('<a href="', paths, '">',
+                          res[, "Package"], "::", res[, "topic"],
+                          '</a>', sep = "")
+            out <- c(out, "<dl>",
+                     paste("<dt>", iconv(urls, "", "UTF-8"), "</dt>\n",
+                           "<dd>", res[, "title"], "</dd>", sep = ""),
+                     "</dl>")
+        } else out <- c(out, gettext("No results found"))
+        out <- c(out, "<hr>\n</body></html>")
+        list(payload = paste(out, collapse="\n"))
+    }
+
     unfix <- function(file)
     {
         ## we need to re-fix links altered by fixup.package.URLs
@@ -167,6 +165,10 @@ httpd <- function(path, query, ...)
 	    file <- paste('../../', basename(path), '/html/',
                           basename(file), '.html', sep='')
             ## cat("redirect to", file, "\n")
+            ## We need to do this because there are static HTML pages
+            ## with links to "<file>.html" for topics in the same
+            ## package, and if we served one of such a page as a link from
+            ## a different package those links on the page would not work.
 	    return(list(payload = paste('Redirect to <a href="', file, '">"',
                         basename(file), '"</a>', sep=''),
 	    		"content-type" = 'text/html',
@@ -206,7 +208,7 @@ httpd <- function(path, query, ...)
             ## ------------------- package listing ---------------------
             file <- system.file("html", "00Index.html", package = pkg)
             if(!nzchar(file) || !file.exists(file)) {
-                msg <- if(nzchar(system.file(package=pkg)))
+                msg <- if(nzchar(system.file(package = pkg)))
                     gettextf("No package index found for package %s",
                              mono(pkg))
                 else

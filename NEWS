@@ -21,9 +21,12 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	  examples.)
 
 	- Text, HTML and latex help and examples for packages
-	  installed under the new system is converted on-demand from
+	  installed under the new system are converted on-demand from
 	  stored parsed Rd files.  (Conversions stored in R < 2.10.0
 	  are used if no parsed Rd files are found.)
+
+	- Rd version 2 is required in help files.
+
 
     o	HTML help is now generated dynamically using a HTTP server
 	running in the R process and listening on the loopback
@@ -39,10 +42,11 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	  HTML interface to help.search().  help.start() no longer has
 	  an argument 'searchEngine' as it is no longer needed.
 
-	- The dynamic help can now locate cross-references of the form
+	- The HTML help can now locate cross-references of the form
           \link[pkg]{foo} and \link[pkg:foo]{bar} where 'foo' is an
-          alias in the package, rather than the documented (base of a)
-          filename.
+          alias in the package, rather than the documented (basename
+          of a) filename (since the documnetation has been much
+          ignored).
 
 	- Details may change before release.
 

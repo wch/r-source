@@ -3840,7 +3840,7 @@ topics are in which files in an uninstalled package).  The @strong{only}
 reason to use these forms for base and recommended packages is to force
 a reference to a package that might be further down the search path.
 Because they have been frequently misused, as from @R{} 2.10.0 the HTML
-help system with look for topic @code{@var{foo}} in package
+help system will look for topic @code{@var{foo}} in package
 @pkg{@var{pkg}} if it does not find file @file{@var{foo}.html}.
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation files

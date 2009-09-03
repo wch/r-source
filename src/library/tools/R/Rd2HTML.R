@@ -72,17 +72,22 @@ mime_canonical_encoding <- function(encoding)
     encoding[encoding == "latin-9"] <- "iso-8859-15"
     encoding[encoding == "latin10"] <- "iso-8859-16"
     encoding[encoding == "utf8"] <-    "utf-8"
-    encoding[encoding == "ascii"] <-    "us-ascii" # from W3C validator
+    encoding[encoding == "ascii"] <-   "us-ascii" # from W3C validator
     encoding
 }
 
 ## This gets used three ways:
+
 ## 1) With dynamic = TRUE from tools:::httpd()
 ##    Here generated links are of the forms
-##    ../../NULL/help/topic
+##    ../../pkg/help/topic
 ##    file.html
 ##    ../../pkg/html/file.html
-##
+##    and links are never missing: topics are always linked as
+##    ../../pkg/help/topic for the current packages, and this means
+##    'search this package then all the others, and show all matches
+##    if we need to go outside this packages'
+
 ## 2) With dynamic = FALSE from .convertRdfiles (with Links[2], used for
 ##    prebuilt HTML pages) and .Rdconv (no link lookup)
 ##    Here generated links are of the forms
@@ -90,10 +95,10 @@ mime_canonical_encoding <- function(encoding)
 ##    ../../pkg/html/file.html
 ##    and missing links (those without an explicit package, and
 ##    those topics not in Links[2]) don't get linked anywhere.
-##
+
 ## 3) With CHM = TRUE from .convertRdfiles (currently not in use).
 
-## FIXME: better to really use XHTML
+## FIXME: better to use XHTML
 Rd2HTML <-
     function(Rd, out = "", package = "", defines = .Platform$OS.type,
              Links = NULL, Links2 = NULL, CHM = FALSE,
@@ -103,7 +108,7 @@ Rd2HTML <-
     ## writeLines by default re-encodes strings to the local encoding.
     ## Avoid that by useBytes=TRUE
     writeLinesUTF8 <-
-        if(outputEncoding == "UTF-8" ||
+        if (outputEncoding == "UTF-8" ||
            (outputEncoding == "" && l10n_info()[["UTF-8"]])) {
         function(x, con, outputEncoding, ...)
             writeLines(x, con, useBytes = TRUE, ...)
@@ -123,7 +128,7 @@ Rd2HTML <-
 
     pendingClose <- pendingOpen <- character(0)  # Used for infix methods
 
-    if(CHM) nlinks <- 0L
+    if (CHM) nlinks <- 0L
 ### These correspond to HTML wrappers
     HTMLTags <- c("\\bold"="B",
     	          "\\cite"="CITE",
@@ -170,13 +175,9 @@ Rd2HTML <-
     addParaBreaks <- function(x, tag) {
         start <- attr(x, "srcref")[2L] # FIXME: what if no srcref?, start col
 	if (isBlankLineRd(x)) "</p>\n<p>\n"
-	else if(start == 1) psub("^\\s+", "", x)
+	else if (start == 1) psub("^\\s+", "", x)
         else x
     }
-
-    ## FIXME: what other substitutions do we need?
-    ## possibly quotes if the parser had left alone -- NA.Rd
-
 
     htmlify <- function(x) {
 	x <- fsub("&", "&amp;", x)
@@ -216,34 +217,25 @@ Rd2HTML <-
     	of0("</",  HTMLTags[tag], ">")
     }
 
-    ## unused?
-    topic2Path <- function(alias, package, type, lib.loc=NULL)
-    {
-        paths <- sapply(.find.package(package, lib.loc, verbose = FALSE),
-                        function(p) index.search(alias, p, "AnIndex", type))
-        paths[paths != ""]
-    }
-
-    checkInfixMethod <- function(blocks) {
+    checkInfixMethod <- function(blocks)
     	# Is this a method which needs special formatting?
     	if ( length(blocks) == 1 && RdTags(blocks) == "TEXT" &&
-    	     blocks[[1]] %in% c("[","[[","$") ) {
+    	     blocks[[1]] %in% c("[", "[[", "$") ) {
     	    pendingOpen <<- blocks[[1]]
-    	    return(TRUE)
-    	} else return(FALSE)
-    }
+    	    TRUE
+    	} else FALSE
 
     writeLink <- function(tag, block) {
 	parts <- get_link(block, tag, Rdfile)
 
         writeHref <- function() {
-            if(!no_links) of0('<a href="', htmlfile, '">')
+            if (!no_links) of0('<a href="', htmlfile, '">')
             writeContent(block, tag)
-            if(!no_links) of1('</a>')
+            if (!no_links) of1('</a>')
         }
 
     	if (is.null(parts$targetfile)) {
-            ## \link{foo} and \link[=bar]{foo}
+            ## ---------------- \link{topic} and \link[=topic]{foo}
             topic <- parts$dest
     	    if (dynamic) { # never called with package=""
                 htmlfile <- paste("../../", package, "/help/", topic, sep="")
@@ -263,7 +255,7 @@ Rd2HTML <-
             if (is.na(htmlfile)) {
                 ## Used to use the search engine, but we no longer have one,
                 ## and we don't get here for dynamic help.
-                if(!no_links)
+                if (!no_links)
                     warnRd(block, Rdfile, "missing link ", sQuote(topic))
                 writeContent(block, tag)
             } else {
@@ -282,31 +274,57 @@ Rd2HTML <-
                     of1('</a>')
                 } else writeHref()
             }
-    	}
-        ## targetfile without pkg cannot currently happen
-        else if (is.null(parts$pkg) || parts$pkg == package) {
-            ## This package was specified
-            ## href = "file.html"
-            ## FIXME: check that 'file' not 'topic' was meant
-    	    htmlfile <- paste(parts$targetfile, ".html", sep="")
-            writeHref()
     	} else {
-            ## another package was specified
-            ## FIXME: check that 'file' not 'topic' was meant
-            if(CHM) {
-                htmlfile <- paste("findlink('", parts$pkg, "', '",
-                                  parts$targetfile, ".html", "')",
-                                  sep="")
-                of0('<a onclick="', htmlfile,
-                    '" style="text-decoration: underline; color: blue; cursor: hand">')
-                writeContent(block, tag)
-                of1('</a>')
-                nlinks <<- nlinks + 1L
-            } else {
-                ## href = "../../pkg/html/file.html"
-                htmlfile <- paste("../../", parts$pkg, "/html/",
-                                  parts$targetfile, ".html", sep="")
+            ## ----------------- \link[pkg]{file} and \link[pkg:file]{bar}
+            htmlfile <- paste(parts$targetfile, ".html", sep="")
+            if (!dynamic && !no_links &&
+               nzchar(pkgpath <- system.file(package = parts$pkg))) {
+                ## check the link, only if the package is found
+                OK <- FALSE
+                if (!file.exists(file.path(pkgpath, "html", htmlfile))) {
+                    ## does not exist as static HTML, so look harder
+                    f <- file.path(pkgpath, "help", "paths.rds")
+                    if (file.exists(f)) {
+                        paths <- sub("\\.[Rr]d$", "", basename(.readRDS(f)))
+                        OK <- parts$targetfile %in% paths
+                    }
+                }
+                if (!OK) {
+                    ## so how about as a topic?
+                    file <- index.search(parts$targetfile, pkgpath,
+                                         type = "html")
+                    if (nzchar(file)) {
+                        warnRd(block, Rdfile,
+                               "file link ", sQuote(parts$targetfile),
+                               " in package ", sQuote(parts$pkg),
+                               " does not exist and so has been treated as a topic")
+                        parts$targetfile <- basename(file)
+                    } else {
+                        warnRd(block, Rdfile, "missing file link ",
+                               sQuote(parts$targetfile))
+                    }
+                }
+            }
+            if (parts$pkg == package) {
+                ## use href = "file.html"
                 writeHref()
+            } else {
+                ## another package was specified
+                if (CHM) {
+                    htmlfile <- paste("findlink('", parts$pkg, "', '",
+                                      parts$targetfile, ".html", "')",
+                                      sep="")
+                    of0('<a onclick="', htmlfile,
+                        '" style="text-decoration: underline; color: blue; cursor: hand">')
+                    writeContent(block, tag)
+                    of1('</a>')
+                    nlinks <<- nlinks + 1L
+                } else {
+                    ## href = "../../pkg/html/file.html"
+                    htmlfile <- paste("../../", parts$pkg, "/html/",
+                                      htmlfile, sep="")
+                    writeHref()
+                }
             }
         }
     }
@@ -347,26 +365,26 @@ Rd2HTML <-
                LIST =,
                "\\describe"=,
                "\\enumerate"=,
-               "\\itemize"=writeContent(block, tag),
-               "\\bold"=,
-               "\\cite"=,
-               "\\code"=,
-               "\\command"=,
-               "\\dfn"=,
-               "\\emph"=,
-               "\\kbd"=,
-               "\\preformatted"=,
-               "\\strong"=,
+               "\\itemize" = writeContent(block, tag),
+               "\\bold" =,
+               "\\cite" =,
+               "\\code" =,
+               "\\command" =,
+               "\\dfn" =,
+               "\\emph" =,
+               "\\kbd" =,
+               "\\preformatted" =,
+               "\\strong" =,
                "\\var" =,
-               "\\verb"= writeWrapped(tag, block),
-               "\\special"= writeContent(block, tag), ## FIXME, verbatim?
+               "\\verb" = writeWrapped(tag, block),
+               "\\special" = writeContent(block, tag), ## FIXME, verbatim?
                "\\linkS4class" =,
                "\\link" = writeLink(tag, block),
                ## cwhmisc has an empty \\email
-               "\\email" = if(length(block)) of0('<a href="mailto:', block[[1L]], '">', htmlify(block[[1L]]), '</a>'),
+               "\\email" = if (length(block)) of0('<a href="mailto:', block[[1L]], '">', htmlify(block[[1L]]), '</a>'),
                ## FIXME: encode, not htmlify
                ## watch out for empty URLs (TeachingDemos has one)
-               "\\url" = if(length(block)) of0('<a href="', block[[1L]], '">', block[[1L]], '</a>'),
+               "\\url" = if (length(block)) of0('<a href="', block[[1L]], '">', block[[1L]], '</a>'),
                "\\Sexpr"= of0(as.character.Rd(block, deparse=TRUE)),
                "\\cr" =,
                "\\dots" =,
@@ -447,7 +465,7 @@ Rd2HTML <-
             	newcol <- TRUE
             }
             if (newcol) {
-                col <- col + 1
+                col <- col + 1L
                 if (col > length(format))
                     stopRd(table, Rdfile,
                            "Only ", length(format),
@@ -485,20 +503,21 @@ Rd2HTML <-
             	if (tag == "RCODE" && grepl("^\\(", block)) {
             	    block <- sub("^\\(", "", block)
             	    arg1 <- sub("[,)[:space:]].*", "", block)
-            	    block <- sub(paste(arg1, "[[:space:]]*,[[:space:]]*", sep=""), "", block)
+            	    block <- sub(paste(arg1, "[[:space:]]*,[[:space:]]*",
+                                       sep = ""), "", block)
             	    of0(arg1, pendingOpen)
             	    if (pendingOpen == "$")
             	    	pendingClose <<- ""
             	    else
             	    	pendingClose <<- chartr("[", "]", pendingOpen)
             	} else of0("`", pendingOpen, "`")
-            	pendingOpen <<- character(0)
+            	pendingOpen <<- character()
             }
             if (length(pendingClose) && tag == "RCODE"
                 && grepl("\\)", block)) { # Finish it off...
             	of0(sub("\\).*", "", block), pendingClose)
             	block <- sub("[^)]*\\)", "", block)
-            	pendingClose <<- character(0)
+            	pendingClose <<- character()
             }
             switch(tag,
             "\\item" = {
@@ -557,11 +576,11 @@ Rd2HTML <-
 	if (inlist)
 	    switch(blocktag,
 		"\\value"=,
-		"\\arguments"=of1("</table>\n"),
-		"\\itemize"=of1("</ul>\n"),
-		"\\enumerate"=of1("</ol>\n"),
+		"\\arguments" = of1("</table>\n"),
+		"\\itemize" = of1("</ul>\n"),
+		"\\enumerate" = of1("</ol>\n"),
 		# "\\value"=,
-		"\\describe"=of1("</dl>\n"))
+		"\\describe" = of1("</dl>\n"))
     }
 
     writeSection <- function(section, tag) {
@@ -580,18 +599,18 @@ Rd2HTML <-
         of1("</h3>\n")
         ## \arguments is a single table, not a para
         if (tag == "\\arguments") para <- ""
-    	if(nzchar(para)) of0("\n<", para, ">")
+    	if (nzchar(para)) of0("\n<", para, ">")
     	if (length(section)) {
 	    ## There may be an initial \n, so remove that
 	    s1 <- section[[1L]][1L]
 	    if (RdTags(s1) == "TEXT" && s1 == "\n") section <- section[-1]
 	    writeContent(section, tag)
 	}
-    	if(nzchar(para)) of0("</", para, ">\n")
+    	if (nzchar(para)) of0("</", para, ">\n")
     }
 
     if (is.character(out)) {
-        if(out == "") {
+        if (out == "") {
             con <- stdout()
         } else {
 	    con <- file(out, "wt")
@@ -602,14 +621,14 @@ Rd2HTML <-
     	out <- summary(con)$description
     }
 
-    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
+    Rd <- prepare_Rd(Rd, defines = defines, stages = stages, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
     title <- Rd[[1L]]
     name <- htmlify(Rd[[2L]][[1L]])
 
-    if(CHM)
+    if (CHM)
         of0('<html><head><title>')
     else
         of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
@@ -617,13 +636,13 @@ Rd2HTML <-
     ## special for now, as we need to remove leading and trailing spaces
     title <- trim(as.character(title))
     title <- htmlify(paste(psub1("^\\s+", "", title[nzchar(title)]),
-                           collapse=" "))
+                           collapse = " "))
     of1(title)
     of0('</title>\n',
         '<meta http-equiv="Content-Type" content="text/html; charset=',
         mime_canonical_encoding(outputEncoding),
         '">\n')
-    if(CHM) {
+    if (CHM) {
         of0('<link rel="stylesheet" type="text/css" href="Rchm.css">\n',
             '</head><body>\n\n')
         of0('<table width="100%"><tr><td>', name, '(', package, ')',
@@ -637,7 +656,7 @@ Rd2HTML <-
         of1('</object>\n\n\n')
     } else
         of0('<link rel="stylesheet" type="text/css"',
-            if(no_links) 'href="R.css">' else 'href="../../R.css">',
+            if (no_links) 'href="R.css">' else 'href="../../R.css">',
             '\n</head><body>\n\n',
             '<table width="100%" summary="page for ', name, ' {', package,
             '}"><tr><td>',name,' {', package,
@@ -648,7 +667,7 @@ Rd2HTML <-
     for (i in seq_along(sections)[-(1:2)])
     	writeSection(Rd[[i]], sections[i])
 
-    if (CHM && nlinks > 0)
+    if (CHM && nlinks)
         writeLines(paste('',
                          '<script Language="JScript">',
                          'function findlink(pkg, fn) {',
@@ -666,7 +685,7 @@ Rd2HTML <-
     else ""
     of0('\n',
         '<hr><div align="center">[', version,
-        if(!no_links) '<a href="00Index.html">Index</a>',
+        if (!no_links) '<a href="00Index.html">Index</a>',
         ']</div>\n', '</body></html>\n')
     invisible(out)
 }
@@ -678,19 +697,19 @@ findHTMLlinks <- function(pkgDir = "", lib.loc = NULL, level = 0:2)
     ## The standard packages (level 1)
     ## along lib.loc (level 2)
 
-    if(is.null(lib.loc)) lib.loc <- .libPaths()
+    if (is.null(lib.loc)) lib.loc <- .libPaths()
 
     Links <- list()
-    if(2 %in% level)
+    if (2 %in% level)
         Links <- c(Links, lapply(rev(lib.loc), .find_HTML_links_in_library))
-    if(1 %in% level) {
+    if (1 %in% level) {
         base <- unlist(.get_standard_package_names()[c("base", "recommended")],
                        use.names = FALSE)
         Links <- c(Links,
                    lapply(file.path(.Library, base),
                           .find_HTML_links_in_package))
     }
-    if(0 %in% level && nzchar(pkgDir))
+    if (0 %in% level && nzchar(pkgDir))
         Links <- c(Links, list(.find_HTML_links_in_package(pkgDir)))
     Links <- unlist(Links)
 
@@ -703,9 +722,9 @@ findHTMLlinks <- function(pkgDir = "", lib.loc = NULL, level = 0:2)
 .find_HTML_links_in_package <-
 function(dir)
 {
-    if(file_test("-f", f <- file.path(dir, "Meta", "links.rds")))
+    if (file_test("-f", f <- file.path(dir, "Meta", "links.rds")))
         .readRDS(f)
-    else if(file_test("-f", f <- file.path(dir, "Meta", "Rd.rds")))
+    else if (file_test("-f", f <- file.path(dir, "Meta", "Rd.rds")))
         .build_links_index(.readRDS(f), basename(dir))
     else character()
 }
@@ -713,7 +732,7 @@ function(dir)
 .find_HTML_links_in_library <-
 function(dir)
 {
-    if(file_test("-f", f <- file.path(dir, ".Meta", "links.rds")))
+    if (file_test("-f", f <- file.path(dir, ".Meta", "links.rds")))
         .readRDS(f)
     else
         .build_library_links_index(dir)

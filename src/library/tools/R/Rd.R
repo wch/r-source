@@ -715,7 +715,7 @@ fetchRdDB <- function (filebase, key = NULL)
     if(length(key)) {
         if(! key %in% names(v))
             stop(gettextf("No help on %s found in RdDB %s",
-                          sQuote(key), sQuote(fileBase)),
+                          sQuote(key), sQuote(filebase)),
                  domain = NA)
         lazyLoadDBfetch(v[key][[1]], data, TRUE, function(n){})
     } else {
