@@ -35,6 +35,7 @@ help.search <-
     ### Argument handling.
     TABLE <- c("alias", "concept", "keyword", "name", "title")
 
+    if (is.logical(verbose)) verbose <- 2*as.integer(verbose)
     .wrong_args <- function(args)
 	gettextf("argument '%s' must be a single character string", args)
 
@@ -108,7 +109,10 @@ help.search <-
             rebuild <- TRUE
     }
     if(rebuild) {
-	if(verbose) message("Rebuilding the data base ...")
+	if(verbose > 0L) {
+            message("Rebuilding the help.search() database ...")
+            flush.console()
+        }
 	## Check whether we can save the hsearch db later on.
 	if(all(is.na(mem.limits()))) {
 	    save_db <- save_db_to_memory <- TRUE
@@ -153,7 +157,7 @@ help.search <-
 
 	## Create the hsearch db.
 	np <- 0L
-	if(verbose)
+	if(verbose >= 2L)
 	    message("Packages {.readRDS() sequentially}:")
 
 	## Starting with R 1.8.0, prebuilt hsearch indices are available
@@ -175,7 +179,7 @@ help.search <-
 
 	for(p in packages_in_hsearch_db) {
 	    np <- np + 1L
-	    if(verbose)
+	    if(verbose >= 2L)
 		message(" ", p, appendLF = ((np %% 5L) == 0L), domain=NA)
             path <- if(!is.null(package_paths)) package_paths[p]
 	    else .find.package(p, lib.loc, quiet = TRUE)
@@ -196,17 +200,18 @@ help.search <-
 		    ## Put the hsearch index for the np-th package into the
 		    ## np-th row of the matrix used for aggregating.
 		    dbMat[np, seq_along(hDB)] <- hDB
-		} else if(verbose)
+		} else if(verbose >= 2L)
 		    message(gettextf("package '%s' has empty hsearch data - strangely", p), domain=NA)
 	    }
 	    else if(!is.null(package))
                 warning("no hsearch.rds meta data for package ", p)
 	}
 
-	if(verbose)  {
+	if(verbose >= 2L)  {
 	    message(ifelse(np %% 5L == 0L, "\n", "\n\n"),
                     sprintf("Built dbMat[%d,%d]", nrow(dbMat), ncol(dbMat)),
                     domain = NA)
+            flush.console()
             ## DEBUG save(dbMat, file="~/R/hsearch_dbMat.rda", compress=TRUE)
         }
 
@@ -239,7 +244,10 @@ help.search <-
 	}
 	## And maybe re-encode ...
 	if(!identical(Sys.getlocale("LC_CTYPE"), "C")) {
-	    if(verbose) message("reencoding ...", appendLF=FALSE)
+	    if(verbose >= 2L) {
+                message("reencoding ...", appendLF=FALSE)
+                flush.console()
+            }
 	    encoding <- db$Base[, "Encoding"]
 	    IDs_to_iconv <- db$Base[encoding != "", "ID"]
 	    encoding <- encoding[encoding != ""]
@@ -252,7 +260,10 @@ help.search <-
 		    db[[i]][ind, ] <- iconv(db[[i]][ind, ], enc, "")
 		}
 	    }
-	    if(verbose) message(" done")
+	    if(verbose >= 2L) {
+                message(" done")
+                flush.console()
+            }
 	}
 	bad_IDs <-
 	    unlist(sapply(db,
@@ -280,7 +291,10 @@ help.search <-
 	}
 
 	if(save_db) {
-	    if(verbose) message("saving the database ...", appendLF=FALSE)
+	    if(verbose >= 2L) {
+                message("saving the database ...", appendLF=FALSE)
+                flush.console()
+            }
 	    attr(db, "LibPaths") <- lib.loc
 	    attr(db, "mtime") <- Sys.time()
 	    attr(db, "ctype") <- Sys.getlocale("LC_CTYPE")
@@ -293,18 +307,27 @@ help.search <-
 		.hsearch_db(substitute(.readRDS(con),
 				       list(con = db_file)))
 	    }
-	    if(verbose) message(" done")
+	    if(verbose >= 2L) {
+                message(" done")
+                flush.console()
+            }
 	}
+        if(verbose > 0L) {
+            message("... database rebuilt")
+            flush.console()
+        }
     }
 
     ### Matching.
-    if(verbose)
+    if(verbose >= 2L) {
 	message("Database of ",
                 NROW(db$Base), " Rd objects (",
                 NROW(db$Aliases), " aliases, ",
                 NROW(db$Concepts), " concepts, ",
                 NROW(db$Keywords), " keywords)",
                 domain = NA)
+        flush.console()
+    }
     if(!is.null(package)) {
 	## Argument 'package' was given.  Need to check that all given
 	## packages exist in the db, and only search the given ones.
@@ -312,7 +335,7 @@ help.search <-
 	    match(package, unique(db$Base[, "Package"]), nomatch = 0L)
         ## This should not happen for R >= 2.4.0
 	if(any(pos_in_hsearch_db) == 0L)
-	    stop(gettextf("no information in the data base for package '%s': need 'rebuild = TRUE'?",
+	    stop(gettextf("no information in the database for package '%s': need 'rebuild = TRUE'?",
 			  package[pos_in_hsearch_db == 0][1L]), domain = NA)
 	db <-
 	    lapply(db,
@@ -385,7 +408,10 @@ help.search <-
     db <- dbBase[sort(unique(i)),
 		 c("topic", "title", "Package", "LibPath"),
 		 drop = FALSE]
-    if(verbose) message(gettextf("matched %d objects.", NROW(db)), domain=NA)
+    if(verbose>= 2L) {
+        message(gettextf("matched %d objects.", NROW(db)), domain=NA)
+        flush.console()
+    }
 
     ## Retval.
     y <- list(pattern = pattern, fields = fields,

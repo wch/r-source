@@ -54,12 +54,13 @@ httpd <- function(path, query, ...)
 
     .HTMLsearch <- function(query)
     {
+        ## FIXME: would be better to get help.search() to return in UTF-8
         res <- if(identical(names(query), "category"))
-            help.search(keyword = query)$matches
+            help.search(keyword = query, verbose = 1L)$matches
         else {
             nm <- names(query)
             m <- match("exact", nm)
-            if(is.na(m)) help.search(query[1L], nm)$matches
+            if(is.na(m)) help.search(query[1L], nm, verbose = 1L)$matches
             else help.search(query[1L], nm[-m], agrep = FALSE)$matches
         }
         title <- "Search Results"

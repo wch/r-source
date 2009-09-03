@@ -55,7 +55,9 @@ field??pattern
     of \code{NULL} corresponds to all libraries currently known.}
   \item{help.db}{a character string giving the file path to a previously
     built and saved help data base, or \code{NULL}.}
-  \item{verbose}{logical; if \code{TRUE}, the search process is traced.}
+  \item{verbose}{logical; if \code{TRUE}, the search process is traced.
+    Integer values are also accepted, with \code{TRUE} being equivalent
+    to \code{2}, and \code{1} being less verbose.}
   \item{rebuild}{a logical indicating whether the help data base should
     be rebuilt.  This will be done automatically if \code{lib.loc} or
     the search path is changed, or if \code{package} is used and a value
