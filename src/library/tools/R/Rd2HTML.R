@@ -43,7 +43,7 @@ get_link <- function(arg, tag, Rdfile) {
     	    pkg <- psub1(":.*", "", option)
     	} else {
             targetfile <- dest
-    	    pkg <- option
+    	    pkg <- as.character(option)
     	}
     }
     if (tag == "\\linkS4class") dest <- paste(dest, "-class", sep="")
@@ -288,7 +288,7 @@ Rd2HTML <-
                         paths <- sub("\\.[Rr]d$", "", basename(.readRDS(f)))
                         OK <- parts$targetfile %in% paths
                     }
-                }
+                } else OK <- TRUE
                 if (!OK) {
                     ## so how about as a topic?
                     file <- index.search(parts$targetfile, pkgpath,

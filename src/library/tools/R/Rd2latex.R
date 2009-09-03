@@ -14,6 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## TODO: can we do something useful with cross-package links?
 
 latex_canonical_encoding  <- function(encoding)
 {
