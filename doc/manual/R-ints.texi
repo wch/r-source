@@ -3191,7 +3191,7 @@ Off by default because this can result in false positives.
 @c Control whether Rd files are checked against the Rd version 2 parser.
 @c Default: true.
 @item _R_CHECK_RD_CHECKRD_MINLEVEL_
-New in @R{} 2.10.0.  Controls the minimum level for reporting warninsgs
+New in @R{} 2.10.0.  Controls the minimum level for reporting warnings
 from @code{checkRd}.
 Default: -1.
 @item _R_CHECK_RD_USAGE_METHOD_BINOPS_
@@ -3204,6 +3204,11 @@ Control whether subset generics are considered as allowing useful S3
 method markup.
 Default: true (as this Rd feature was added some time ago).
 OBSOLETE.
+@item _R_CHECK_XREFS_REPOSITORIESS_
+New in @R{} 2.10.0.  If set to a non-empty value, a space-separated list
+of repositories to use to determine known packages.
+Default: empty, when the CRAN, Omegahat and
+Bioconductor repositories known to @R{} is used.
 @item _R_CHECK_SRC_MINUS_W_IMPLICIT_
 Control whether installation output is checked for compilation warnings
 about implicit function declarations (as spotted by GCC with command

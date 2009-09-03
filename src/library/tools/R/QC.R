@@ -3561,10 +3561,15 @@ function(package, dir, lib.loc = NULL)
     }
     unknown <- unknown[!obsolete]
     if (length(unknown)) {
-        p <- file.path(R.home("etc"), "repositories")
-        a <- utils::read.delim(p, header = TRUE, comment.char = "#",
-                               colClasses = c(rep("character", 3L), rep("logical", 4L)))
-        repos <- c("http://cran.r-project.org", a[3:6, "URL"])
+        repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")
+        repos <- if(nzchar(repos)) {
+            strsplit(repos, " +")[[1]]
+        } else {
+            p <- file.path(R.home("etc"), "repositories")
+            a <- utils::read.delim(p, header = TRUE, comment.char = "#", #
+                                   colClasses = c(rep("character", 3L), rep("logical", 4L)))
+            c("http://cran.r-project.org", a[3:6, "URL"])
+        }
         known <- try(utils::available.packages(utils::contrib.url(repos, "source"))[, "Package"])
         miss <- if(inherits(known, "try-error")) TRUE
         else unknown %in% known
