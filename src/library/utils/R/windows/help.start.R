@@ -14,13 +14,13 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-help.start <- function(update = TRUE, gui = "irrelevant",
+help.start <- function(update = FALSE, gui = "irrelevant",
                        browser = getOption("browser"), remote = NULL)
 {
     home <- if(is.null(remote)) {
         if(tools:::httpdPort == 0L) tools::startDynamicHelp()
         if (tools:::httpdPort > 0L) {
-            if(update) try(make.packages.html(temp = TRUE))
+            if(update) make.packages.html(temp = TRUE)
             paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
         } else stop("help.start() requires the HTTP server to be running",
                   call. = FALSE)

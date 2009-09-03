@@ -55,6 +55,7 @@ httpd <- function(path, query, ...)
     .HTMLsearch <- function(query)
     {
         ## FIXME: would be better to get help.search() to return in UTF-8
+        ## but agrep is not yet UTF-8-savvy
         res <- if(identical(names(query), "category"))
             help.search(keyword = query, verbose = 1L)$matches
         else {

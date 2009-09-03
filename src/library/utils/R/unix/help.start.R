@@ -15,8 +15,8 @@
 #  http://www.r-project.org/Licenses/
 
 help.start <-
-    function (update = TRUE, gui = "irrelevant", browser = getOption("browser"),
-              remote = NULL)
+    function (update = FALSE, gui = "irrelevant",
+              browser = getOption("browser"), remote = NULL)
 {
     ## should always be set, but might be empty
     if (length(browser) != 1 || !is.character(browser) || !nzchar(browser))

@@ -11,7 +11,7 @@
   documentation.
 }
 \usage{
-help.start(update = TRUE, gui = "irrelevant",
+help.start(update = FALSE, gui = "irrelevant",
            browser = getOption("browser"), remote = NULL)
 }
 \arguments{
@@ -35,14 +35,16 @@ help.start(update = TRUE, gui = "irrelevant",
   Unless \code{remote} is specified this requires the HTTP server to be
   available (it will be started if possible: see
   \code{\link{startDynamicHelp}}).
-  
-  Unless argument \code{remote} is used or \code{update = FALSE}, the
-  package list is re-made each time \code{\link{make.packages.html}} or
-  \code{help.start} is run.  If the HTTP server is in use, that will
-  call \code{\link{make.packages.html}} whenever the packages index page
-  is accessed, and that will check if updating is needed.  So using
-  \code{update = FALSE} is fine provided you are prepared to wait for
-  the package list to be created when first used.
+
+  One of the links on the index page is the HTML package index,
+  \file{R.home("docs")/html/packages.html}, which can be remade by
+  \code{\link{make.packages.html}(temp = FALSE}.  For local operation,
+  the HTTP server will remake a temporary version of this list when the
+  link is first clicked, and each time thereafter check if updating is
+  needed (if \code{\link{.libPaths}} has changed or any of the
+  directories has been changed).  This can be slow, and using
+  \code{update = TRUE} will ensure that the packages list is updated
+  before launching the index page.
 
   Argument \code{remote} can be used to point to HTML help published by
   another \R installation: it will typically only show packages from the

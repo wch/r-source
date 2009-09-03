@@ -24,6 +24,11 @@
     }
 })
 
+## FIXME: use some sort of progress bar or heartbeat for
+## large sets of packages.
+
+## FIXME: use UTF-8, either always or optionally
+## (Needs UTF-8-savvy & fast agrep, and PCRE regexps.)
 help.search <-
     function(pattern, fields = c("alias", "concept", "title"),
              apropos, keyword, whatis, ignore.case = TRUE,
@@ -120,9 +125,9 @@ help.search <-
 	    save_db <- save_db_to_memory <- FALSE
 	    dir <- file.path(tempdir(), ".R")
 	    db_file <- file.path(dir, "hsearch.rds")
-	    if((file_test("-d", dir)
-		|| ((unlink(dir) == 0L) && dir.create(dir)))
-	       && (unlink(db_file) == 0L))
+	    if( (file_test("-d", dir)
+                 || ((unlink(dir) == 0L) && dir.create(dir)) )
+	       && (unlink(db_file) == 0L) )
 		save_db <- TRUE
 	}
 
@@ -201,7 +206,8 @@ help.search <-
 		    ## np-th row of the matrix used for aggregating.
 		    dbMat[np, seq_along(hDB)] <- hDB
 		} else if(verbose >= 2L)
-		    message(gettextf("package '%s' has empty hsearch data - strangely", p), domain=NA)
+		    message(gettextf("package '%s' has empty hsearch data - strangely", p),
+                            domain = NA)
 	    }
 	    else if(!is.null(package))
                 warning("no hsearch.rds meta data for package ", p)
@@ -269,6 +275,7 @@ help.search <-
 	    unlist(sapply(db,
 			  function(u)
 			  u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
+        ## FIXME: drop this fallback
 	if(length(bad_IDs)) { ## try latin1
             for(i in seq_along(db)) {
                 ind <- db[[i]][, "ID"] %in% bad_IDs

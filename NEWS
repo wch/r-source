@@ -321,7 +321,8 @@ HELP & Rd FILE CHANGES
 	"browser" option if given an argument of that name.
 
 	Arguments 'update' and 'remote' are now available on all
-	platforms.
+	platforms: the default is update = FALSE since the http server
+	will update the package index at first use.
 
     o	help() has a new argument 'help_type' (with default set by the
 	option of that name) to supersede 'offline', 'htmlhelp' and
