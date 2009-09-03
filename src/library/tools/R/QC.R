@@ -3565,10 +3565,16 @@ function(package, dir, lib.loc = NULL)
         repos <- if(nzchar(repos)) {
             strsplit(repos, " +")[[1]]
         } else {
-            p <- file.path(R.home("etc"), "repositories")
-            a <- utils::read.delim(p, header = TRUE, comment.char = "#", #
-                                   colClasses = c(rep("character", 3L), rep("logical", 4L)))
-            c("http://cran.r-project.org", a[3:6, "URL"])
+            p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
+            if(file_test("-f", p)) {
+                a <- .build_repositories_user_db(p)
+                a[c("CRAN", "Omegahat", "BioCsoft", "BioCann", "BioCexp"),
+                  "URL"]
+            } else {
+                a <- .read_repositories(file.path(R.home("etc"),
+                                                  "repositories"))
+                c("http://cran.r-project.org", a[3:6, "URL"])
+            }
         }
         known <- try(utils::available.packages(utils::contrib.url(repos, "source"))[, "Package"])
         miss <- if(inherits(known, "try-error")) TRUE

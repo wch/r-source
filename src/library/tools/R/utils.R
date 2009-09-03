@@ -1100,6 +1100,43 @@ function(dfile)
     out
 }
 
+### ** .read_repositories
+
+.read_repositories <-
+function(file)
+    utils::read.delim(file, header = TRUE, comment.char = "#",
+                      colClasses =
+                      c(rep.int("character", 3L),
+                        rep.int("logical", 4L)))
+
+.BioC_version_associated_with_R_version <-
+function()
+{
+    ## For now, try inferring from the site repositories db ...
+    db <- .read_repositories(file.path(R.home("etc"), "repositories"))
+    numeric_version(basename(dirname(db["BioCsoft", "URL"])),
+                    strict = FALSE)
+}
+
+## If we can get the BioC version associated with "our" R version by
+## means different from reading the site repositories file, we could
+## have %v in the site file as well, rename
+##   .build_repositories_user_db => .build_repositories_db
+## and use this for the site and user files.
+ 
+.build_repositories_user_db <-
+function(file)
+{
+    db <- .read_repositories(file)
+    ind <- grep("%v", db[, "URL"], fixed = TRUE)
+    if(length(ind)) {
+        v <- as.character(.BioC_version_associated_with_R_version())
+        if(!is.na(v))
+            db[ind, "URL"] <- sub("%v", v, db[ind, "URL"], fixed = TRUE)
+    }
+    db
+}
+
 ### ** .shell_with_capture
 
 .shell_with_capture <-
