@@ -2216,7 +2216,7 @@ function(name="", version = "0.0")
            "html" = {
                if (!nzchar(enc)) enc <- "UTF-8"
                Rd2HTML(files, out, package = pkg, defines = os,
-                       outputEncoding = enc)
+                       outputEncoding = enc, no_links = TRUE)
            },
            "latex" = {
                if (!nzchar(enc)) enc <- "latin1"

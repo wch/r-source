@@ -39,7 +39,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   \item{outputEncoding}{ see the \sQuote{Encodings} section below.}
   \item{dynamic}{logical: set links for render-time resolution by
       dynamic help system.}
-  \item{no_links}{logical: suppress hyperlinks to other help topics.}
+  \item{no_links}{logical: suppress hyperlinks to other help topics.
+      Used by \command{R CMD \link{Rdconv}}.}
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{CHM}{logical: prepare HTML suitable for Compiled HTML?}
@@ -75,10 +76,6 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   characters.  In general, any such encoding should be declared using
   the \samp{encoding} section for there to be any hope of correct
   rendering.
-% evidence?  All current iconv's are perfect
-%  Avoid exotic encodings unless absolutely necessary: all
-%  input will be translated to UTF-8, and the quality of such
-%  translations is poor on some older systems.
 
   For output, the \code{outputEncoding} argument will be used:
   \code{outputEncoding = ""} will choose the native encoding for the
