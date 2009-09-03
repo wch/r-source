@@ -12,6 +12,10 @@ all:
 	@$(MAKE) --no-print-directory htmldocs
 	@$(MAKE) --no-print-directory  -C ../../po -f Makefile.win
 
+rpackages:
+	@$(MAKE) --no-print-directory -C ../library -f Makefile.win all
+	@$(MAKE) --no-print-directory -C ../library -f Makefile.win docs
+
 ## must be absolute and space-free.  
 ## NB: will not be set correctly first time through.
 RHOME = $(shell ./Rpwd.exe ../..)
