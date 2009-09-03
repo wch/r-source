@@ -3221,11 +3221,11 @@ function(package, dir, lib.loc = NULL)
     if (length(unknown)) {
         repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")
         repos <- if(nzchar(repos)) {
-            strsplit(repos, " +")[[1]]
+            .expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]])
         } else {
             p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
             if(file_test("-f", p)) {
-                a <- .build_repositories_user_db(p)
+                a <- .read_repositories(p)
                 a[c("CRAN", "Omegahat", "BioCsoft", "BioCann", "BioCexp"),
                   "URL"]
             } else {

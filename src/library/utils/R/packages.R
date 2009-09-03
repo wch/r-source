@@ -616,8 +616,7 @@ setRepositories <-
     p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
     if(!file.exists(p))
         p <- file.path(R.home("etc"), "repositories")
-    a <- read.delim(p, header=TRUE, comment.char="#",
-                    colClasses=c(rep("character", 3L), rep("logical", 4L)))
+    a <- tools:::.read_repositories(p)
     pkgType <- getOption("pkgType")
     if(length(grep("^mac\\.binary", pkgType))) pkgType <- "mac.binary"
     thisType <- a[[pkgType]]

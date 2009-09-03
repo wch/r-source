@@ -392,6 +392,16 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     }
 }
 
+### * Internal utility variables.
+
+### ** .BioC_version_associated_with_R_version
+
+.BioC_version_associated_with_R_version <-
+    numeric_version("2.5")
+## (Could also use something programmatically mapping (R) 2.10.x to
+## (BioC) 2.5, 2.9.x to 2.4, ..., 2.1.x to 1.6, but what if R 3.0.0
+## comes out?)
+
 ### * Internal utility functions.
 
 ### ** %w/o%
@@ -1104,38 +1114,20 @@ function(dfile)
 
 .read_repositories <-
 function(file)
-    utils::read.delim(file, header = TRUE, comment.char = "#",
-                      colClasses =
-                      c(rep.int("character", 3L),
-                        rep.int("logical", 4L)))
-
-.BioC_version_associated_with_R_version <-
-function()
 {
-    ## For now, try inferring from the site repositories db ...
-    db <- .read_repositories(file.path(R.home("etc"), "repositories"))
-    numeric_version(basename(dirname(db["BioCsoft", "URL"])),
-                    strict = FALSE)
-}
-
-## If we can get the BioC version associated with "our" R version by
-## means different from reading the site repositories file, we could
-## have %v in the site file as well, rename
-##   .build_repositories_user_db => .build_repositories_db
-## and use this for the site and user files.
- 
-.build_repositories_user_db <-
-function(file)
-{
-    db <- .read_repositories(file)
-    ind <- grep("%v", db[, "URL"], fixed = TRUE)
-    if(length(ind)) {
-        v <- as.character(.BioC_version_associated_with_R_version())
-        if(!is.na(v))
-            db[ind, "URL"] <- sub("%v", v, db[ind, "URL"], fixed = TRUE)
-    }
+    db <- utils::read.delim(file, header = TRUE, comment.char = "#",
+                            colClasses =
+                            c(rep.int("character", 3L),
+                              rep.int("logical", 4L)))
+    db[, "URL"] <- .expand_BioC_repository_URLs(db[, "URL"])
     db
 }
+
+.expand_BioC_repository_URLs <-
+function(x)    
+    sub("%v",
+        as.character(.BioC_version_associated_with_R_version),
+        x, fixed = TRUE)
 
 ### ** .shell_with_capture
 
