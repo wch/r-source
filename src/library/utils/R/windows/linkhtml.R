@@ -52,6 +52,16 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
     out <- file(f.tg, open="a")
     rh <- chartr("\\", "/", R.home())
     drive <- substring(rh, 1L, 2L)
+    ## find out how many
+    pkgs <- vector("list", length(lib.loc))
+    names(pkgs) <- lib.loc
+    for (lib in lib.loc) {
+        pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
+        pkgs[[lib]] <- sort(sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"),
+                                "\\1", pg))
+    }
+    tot <- sum(sapply(pkgs, length))
+    pb <- winProgressBar("R: creating packages.html", max = tot)
     npkgs <- 0L
     for (lib in lib.loc) {
         lib0 <- "../../library"
@@ -69,11 +79,7 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
             cat("<p><h3>Packages in ", libname, "</h3>\n",
                 sep = "", file = out)
         cat('<p>\n<table width="100%" summary="R Package list">\n', file = out)
-        ## pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
-        pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
-        pg <- sort(sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"),
-                       "\\1", pg))
-        for (i in pg) {
+        for (i in pkgs[[lib]]) {
             title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                         encoding = "UTF-8")
             if (is.na(title)) title <- "-- Title is missing --"
@@ -82,11 +88,13 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
                 '/html/00Index.html">', i, "</a></td><td>", title,
                 "</td></tr>\n", file=out, sep="")
             npkgs <- npkgs + 1L
+            setWinProgressBar(pb, npkgs)
         }
         cat("</table>\n\n", file=out)
     }
     cat("</body></html>\n", file=out)
     close(out)
+    close(pb)
     message("done")
     if (temp) .saveRDS(list(libs=lib.loc, npkgs=npkgs), op)
     invisible(TRUE)

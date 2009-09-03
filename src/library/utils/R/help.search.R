@@ -37,6 +37,8 @@ help.search <-
              verbose = getOption("verbose"),
              rebuild = FALSE, agrep = NULL)
 {
+    WINDOWS <- .Platform$OS.type == "windows"
+
     ### Argument handling.
     TABLE <- c("alias", "concept", "keyword", "name", "title")
 
@@ -164,6 +166,10 @@ help.search <-
 	np <- 0L
 	if(verbose >= 2L)
 	    message("Packages {.readRDS() sequentially}:")
+        if(verbose && WINDOWS) {
+            tot <- length(paths)
+            pb <- winProgressBar("R: creating the help.search() DB", max = tot)
+        }
 
 	## Starting with R 1.8.0, prebuilt hsearch indices are available
 	## in Meta/hsearch.rds, and the code to build this from the Rd
@@ -184,6 +190,7 @@ help.search <-
 
 	for(p in packages_in_hsearch_db) {
 	    np <- np + 1L
+            if(verbose && WINDOWS) setWinProgressBar(pb, np)
 	    if(verbose >= 2L)
 		message(" ", p, appendLF = ((np %% 5L) == 0L), domain=NA)
             path <- if(!is.null(package_paths)) package_paths[p]
@@ -321,6 +328,7 @@ help.search <-
 	}
         if(verbose > 0L) {
             message("... database rebuilt")
+            if(WINDOWS) close(pb)
             flush.console()
         }
     }
