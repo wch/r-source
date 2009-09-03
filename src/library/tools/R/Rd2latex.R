@@ -101,7 +101,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         else x
     }
 
-    ## FIXME: what other substitutions do we need?
     texify <- function(x) {
         if(inEqn) return(x)
         # Need to be careful to handle backslash, so do it in three steps.
@@ -167,13 +166,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 	x
     }
 
-    ## FIXME only used for \verb, not right yet
-    writeWrapped <- function(tag, block) {
-    	of0("\\AsIs{")
-    	writeContent(block, tag)
-    	of1("}")
-    }
-
     writePass <- function(block, tag) {
     	of0(tag, "{")
     	writeContent(block, tag)
@@ -205,9 +197,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
     writeDR <- function(block, tag) {
         if (length(block) > 1L) {
-            of1('## Not run: ') # had trailing space before: FIXME remove
+            of1('## Not run: ')
             writeContent(block, tag)
-            ## FIXME only needs a \n here if not at left margin
             of1('\n## End(Not run)')
         } else {
             of1('## Not run: ')
@@ -386,7 +377,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\var" =
                    if (inCodeBlock) writeContent(block, tag)
                    else writePass(block, tag),
-               ## \cite needs to be mapped to \Cite
                "\\cite"= writePass(block, "\\Cite"),
                "\\preformatted"= {
                    inPre <<- TRUE
@@ -400,7 +390,11 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 	       	            of1("\n\\end{verbatim}\n")
 	       	          },
 
-               "\\verb"= writeWrapped(tag, block),
+               "\\verb"= {
+                   of0("\\AsIs{")
+                   writeContent(block, tag)
+                   of1("}")
+               },
                "\\special"= writeContent(block, tag), ## FIXME, verbatim?
                "\\linkS4class" =,
                "\\link" = writeLink(tag, block),

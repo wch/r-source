@@ -345,9 +345,8 @@ Rd2HTML <-
 
     writeDR <- function(block, tag) {
         if (length(block) > 1L) {
-            of1('## Not run: ') # had trailing space before: FIXME remove
+            of1('## Not run: ')
             writeContent(block, tag)
-            ## FIXME only needs a \n here if not at left margin
             of1('\n## End(Not run)')
         } else {
             of1('## Not run: ')

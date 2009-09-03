@@ -238,7 +238,7 @@ processRdIfdefs <- function(blocks, defines)
 {
     recurse <- function(block) {
     	if (!(getDynamicFlags(block)["#ifdef"])) return(block)
-        
+
         if (!is.null(tag <- attr(block, "Rd_tag"))) {
 	    if (tag %in% c("#ifdef", "#ifndef")) {
 		target <- block[[1L]][[1L]]
@@ -285,7 +285,7 @@ processRdSexprs <-
 {
     recurse <- function(block) {
     	if (!getDynamicFlags(block)["\\Sexpr"]) return(block)
-    	
+
         if (is.list(block)) {
             if (!is.null(tag <- attr(block, "Rd_tag"))) {
         	if (tag == "\\Sexpr")
@@ -332,7 +332,7 @@ prepare_Rd <-
     meta <- attr(Rd, "meta")
     if (pratt < 3L && stage3)
         Rd <- prepare3_Rd(Rd, Rdfile, msglevel = msglevel)
-    
+
     # Restore flags from any sections that are left
     Rd <- setDynamicFlags(Rd, apply(sapply(Rd, getDynamicFlags), 1, any))
 
@@ -344,16 +344,7 @@ prepare2_Rd <- function(Rd, Rdfile)
     sections <- RdTags(Rd)
 
     ## FIXME: we no longer make any use of \Rdversion
-    version <- which(sections == "\\Rdversion")
-    if (length(version) == 1L && as.numeric(Rd[[version]][[1L]]) < 2) {
-        ## <FIXME>
-        ## Should we unconditionally warn (or notify using message())?
-        ## CRAN currently (2009-07-28) has more than 250 \Rdversion{1.1}
-        ## packages ...
-        if(identical(getOption("verbose"), TRUE))
-            warning("checkRd is designed for Rd version 2 or higher")
-        ## </FIXME>
-    } else if (length(version) > 1L)
+    if (length(version) > 1L)
     	stopRd(Rd[[version[2L]]], Rdfile,
                "Only one \\Rdversion declaration is allowed")
 
@@ -510,8 +501,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 
     checkWrapped <- function(tag, block) checkContent(block, tag)
 
-    checkLink <- function(tag, block) { # FIXME This doesn't handle aliases, and
-                                        # doesn't cover all variations
+    checkLink <- function(tag, block) {
     	option <- attr(block, "Rd_option")
     	if(!is.null(option)) checkContent(option, tag)
     	checkContent(block, tag)

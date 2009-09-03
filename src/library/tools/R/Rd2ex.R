@@ -63,8 +63,6 @@ Rd2ex <-
     {
         tag <- attr(x, "Rd_tag")
         if(tag %in% c("\\dontshow", "\\testonly")) {
-            ## There are fancy rules here if not followed by \n
-            ## FIXME: do this better
             of1("## Don't show: ")
             if (!grepl("^\n", x[[1L]][1L], perl = TRUE) && RdTags(x)[1] != "COMMENT")
                 writeLines("", con)
