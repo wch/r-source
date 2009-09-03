@@ -23,9 +23,14 @@ make.packages.html(lib.loc = .libPaths(), temp = TRUE)
   \file{R.home("doc")/html} (for which you will need write permission).
 
   It can be slow, as all the package \file{DESCRIPTION} files are read.
+
+  For \code{temp = TRUE} there is some caching of information, so the
+  file will only be re-created if \code{lib.loc} or any of the
+  directories it lists have been changed.
 }
 \value{
-  Invisible logical, indicating if the file was created.
+  Invisible logical, with \code{FALSE} indicating a failure to create
+  the file, probably due to lack of suitable permissions.
 }
 \seealso{
   \code{\link{help.start}}

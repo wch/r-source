@@ -311,6 +311,10 @@ httpd <- function(path, query, ...)
         list(file = file.path(R.home("doc"), "html/SearchOn.html"))
     } else if(path == "/doc/html/Search") {
         .HTMLsearch(query)
+    } else if(path == "/doc/html/packages.html") {
+        ## remake as needed
+        utils::make.packages.html(temp = TRUE)
+        list(file = file.path(tempdir(), ".R", path))
     } else if(grepl("doc/html/.*html$" , path) &&
               file.exists(tmp <- file.path(tempdir(), ".R", path))) {
         ## use updated version, e.g. of packages.html

@@ -23,16 +23,22 @@ make.packages.html(lib.loc = .libPaths(), temp = FALSE)
     \item{temp}{logical: should the package indices be created in a
     temporary location?}
 }
+\details{
+  This creates the \file{packages.html} file, either a temporary copy
+  for use by \code{\link{help.start}}, or the copy in
+  \file{\var{\link[base:Rhome]{R_HOME}}\\doc\\html} (for which you will
+  need write permission).
+
+  It can be very slow, as all the package \file{DESCRIPTION} files in
+  all the library trees are read.
+
+  For \code{temp = TRUE} there is some caching of information, so the
+  file will only be re-created if \code{lib.loc} or any of the
+  directories it lists have been changed.
+}
+
 \value{
   \code{make.packages.html} returns a logical showing if it succeeded.
-  
-  The file
-  \file{\var{\link[base:Rhome]{R_HOME}}\\doc\\html\\packages.html} is
-  recreated by \code{make.packages.html(outfile = NULL)}.
 }
-\note{
-  You will need write permission in the
-  \file{\var{\link[base:Rhome]{R_HOME}}\\doc\\html}
-  directory to use these functions (unless \code{temp = FALSE}).
-}
+
 \keyword{utilities}

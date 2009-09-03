@@ -15,7 +15,7 @@ help.start(update = TRUE, gui = "irrelevant",
            browser = getOption("browser"), remote = NULL)
 }
 \arguments{
-  \item{update}{logical: should this attempt to update the indices to
+  \item{update}{logical: should this attempt to update the package index to
     reflect the currently available packages.  (Not attempted if
     \code{remote} is non-\code{NULL}.)}
   \item{gui}{just for compatibility with S-PLUS.}
@@ -38,8 +38,11 @@ help.start(update = TRUE, gui = "irrelevant",
   
   Unless argument \code{remote} is used or \code{update = FALSE}, the
   package list is re-made each time \code{\link{make.packages.html}} or
-  \code{help.start} is run, which should be done after packages are
-  installed, updated or removed, or \code{.libPaths} changed.
+  \code{help.start} is run.  If the HTTP server is in use, that will
+  call \code{\link{make.packages.html}} whenever the packages index page
+  is accessed, and that will check if updating is needed.  So using
+  \code{update = FALSE} is fine provided you are prepared to wait for
+  the package list to be created when first used.
 
   Argument \code{remote} can be used to point to HTML help published by
   another \R installation: it will typically only show packages from the

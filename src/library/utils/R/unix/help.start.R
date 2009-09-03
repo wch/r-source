@@ -19,10 +19,10 @@ help.start <-
               remote = NULL)
 {
     ## should always be set, but might be empty
-    if(length(browser) != 1 || !is.character(browser) || !nzchar(browser))
+    if (length(browser) != 1 || !is.character(browser) || !nzchar(browser))
 	stop("invalid browser name, check options(\"browser\").")
     home <- if (is.null(remote)) {
-        if(tools:::httpdPort == 0L) tools::startDynamicHelp()
+        if (tools:::httpdPort == 0L) tools::startDynamicHelp()
         if (tools:::httpdPort > 0L) {
             if (update) make.packages.html()
             paste("http://127.0.0.1:", tools:::httpdPort, sep = "")
@@ -49,11 +49,11 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
     shQuote <- function(string)
         paste('"', gsub("\\$", "\\\\$", string), '"', sep="")
 
-    if(!is.character(url) || length(url) != 1L|| !nzchar(url))
+    if (!is.character(url) || length(url) != 1L|| !nzchar(url))
         stop("'url' must be a non-empty character string")
     if (is.function(browser))
         return(invisible(browser(if(encodeIfNeeded) URLencode(url) else url)))
-    if(!is.character(browser)
+    if (!is.character(browser)
        || length(browser) != 1L
        || !nzchar(browser))
         stop("'browser' must be a non-empty character string")
@@ -65,7 +65,7 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
       isLocal <- FALSE
 
     quotedUrl <- shQuote(if(encodeIfNeeded) URLencode(url) else url)
-    remoteCmd <- if(isLocal)
+    remoteCmd <- if (isLocal)
         switch(basename(browser),
                "gnome-moz-remote" =, "open" = quotedUrl,
                "galeon" = paste("-x", quotedUrl),
@@ -83,12 +83,21 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
 
 make.packages.html <- function(lib.loc = .libPaths(), temp = TRUE)
 {
-    f.tg <- if(temp) {
+    f.tg <- if (temp) {
         dir.create(file.path(tempdir(), ".R/doc/html"), recursive = TRUE,
                    showWarnings = FALSE)
         file.path(tempdir(), ".R/doc/html/packages.html")
     } else file.path(R.home("doc"), "html", "packages.html")
-    if(!file.create(f.tg)) {
+    op <- file.path(tempdir(), ".R/doc/html/libPaths.rds")
+    if (temp && file.exists(f.tg) && file.exists(op)) {
+        ## check if we can avoid remaking it.
+        old <- .readRDS(op)$libs
+        if(identical(lib.loc, old)) {
+            dates <- file.info(c(f.tg, lib.loc))$mtime
+            if(which.max(dates) == 1L) return(TRUE)
+        }
+    }
+    if (!file.create(f.tg)) {
         # warning("cannot update HTML package index")
         return(FALSE)
     }
@@ -96,6 +105,7 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = TRUE)
     file.append(f.tg,
                 file.path(R.home("doc"), "html", "packages-head-utf8.html"))
     out <- file(f.tg, open="a")
+    npkgs <- 0L
     for (lib in lib.loc) {
         cat("<p><h3>Packages in ", lib,
             '</h3>\n<p><table width="100%" summary="R Package list">\n',
@@ -111,11 +121,13 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = TRUE)
                 '<td width="25%"><a href="../../library/', i,
                 '/html/00Index.html">', i, "</a></td><td>", title,
                 "</td></tr>\n", file=out, sep="")
+            npkgs <- npkgs + 1L
         }
         cat("</table>\n\n", file=out)
     }
     cat("</body></html>\n", file=out)
     close(out)
     message("done")
+    if (temp) .saveRDS(list(libs=lib.loc, npkgs=npkgs), op)
     invisible(TRUE)
 }

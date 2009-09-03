@@ -27,12 +27,21 @@ link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
 
 make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
 {
-    f.tg <- if(temp) {
+    f.tg <- if (temp) {
         dir.create(file.path(tempdir(), ".R/doc/html"), recursive = TRUE,
                    showWarnings = FALSE)
         file.path(tempdir(), ".R/doc/html/packages.html")
     } else file.path(R.home("doc"), "html", "packages.html")
-    if(!file.create(f.tg)) {
+    op <- file.path(tempdir(), ".R/doc/html/libPaths.rds")
+    if (temp && file.exists(f.tg) && file.exists(op)) {
+        ## check if we can avoid remaking it.
+        old <- .readRDS(op)$libs
+        if(identical(lib.loc, old)) {
+            dates <- file.info(c(f.tg, lib.loc))$mtime
+            if(which.max(dates) == 1L) return(TRUE)
+        }
+    }
+    if (!file.create(f.tg)) {
         warning("cannot update HTML package index")
         return(FALSE)
     }
@@ -42,6 +51,7 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
     out <- file(f.tg, open="a")
     rh <- chartr("\\", "/", R.home())
     drive <- substring(rh, 1L, 2L)
+    npkgs <- 0L
     for (lib in lib.loc) {
         lib0 <- "../../library"
         ## use relative indexing for .Library
@@ -70,12 +80,13 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
                 '<td width="25%"><a href="', lib0, '/', i,
                 '/html/00Index.html">', i, "</a></td><td>", title,
                 "</td></tr>\n", file=out, sep="")
+            npkgs <- npkgs + 1L
         }
         cat("</table>\n\n", file=out)
     }
     cat("</body></html>\n", file=out)
     close(out)
     message("done")
+    if (temp) .saveRDS(list(libs=lib.loc, npkgs=npkgs), op)
     invisible(TRUE)
 }
-
