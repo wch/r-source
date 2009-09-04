@@ -160,6 +160,22 @@ Rd2txt <-
 
     encoding <- "unknown"
 
+    use_fancy_quotes <-
+        (.Platform$OS.type == "windows" &&
+         Sys.getlocale("LC_CTYPE") != "C") || l10n_info()[["UTF-8"]]
+    ## Should this respect the 'useFancyQuotes' option?
+
+    if(use_fancy_quotes) {
+        ## On Windows, Unicode literals are translated to local code page
+    	LSQM <- intToUtf8("0x2018") # Left single quote
+    	RSQM <- intToUtf8("0x2019") # Right single quote
+    	LDQM <- intToUtf8("0x201c") # Left double quote
+    	RDQM <- intToUtf8("0x201d") # Right double quote
+    } else {
+        LSQM <- RSQM <- "'"
+        LDQM <- RDQM <- '"'
+    }
+
     trim <- function(x) {
         x <- psub1("^\\s*", "", x)
         psub1("\\s*$", "", x)
@@ -174,8 +190,7 @@ Rd2txt <-
 
     txt_striptitle <- function(text) {
         text <- striptitle(text)
-        if (.Platform$OS.type == "windows" &&
-            Sys.getlocale("LC_CTYPE") != "C") {
+        if(use_fancy_quotes) {
             text <- fsub("``", LDQM, text)
             text <- fsub("''", RDQM, text)
             text <- psub("`([^']+)'", paste(LSQM, "\\1", RSQM, sep=""), text)
@@ -244,18 +259,9 @@ Rd2txt <-
         }
     }
 
-    if (.Platform$OS.type == "windows") {
-        ## On Windows, Unicode literals are translated to local code page
-    	LSQM <- intToUtf8("0x2018") # Left single quote
-    	RSQM <- intToUtf8("0x2019") # Right single quote
-    	LDQM <- intToUtf8("0x201c") # Left double quote
-    	RDQM <- intToUtf8("0x201d") # Right double quote
-    }
-
     writeQ <- function(block, tag, quote=tag)
     {
-        if (.Platform$OS.type == "windows"
-            && Sys.getlocale("LC_CTYPE") != "C") {
+        if (use_fancy_quotes) {
             if (quote == "\\sQuote") {
                 put(LSQM); writeContent(block, tag); put(RSQM)
             } else {
