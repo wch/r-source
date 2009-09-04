@@ -9,7 +9,7 @@
 \title{Update HTML documentation files}
 \usage{
 link.html.help(verbose = FALSE, lib.loc = .libPaths())
-make.packages.html(lib.loc = .libPaths(), temp = FALSE)
+make.packages.html(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE)
 }
 \description{
   Functions to re-create the HTML documentation files to reflect all
@@ -17,11 +17,11 @@ make.packages.html(lib.loc = .libPaths(), temp = FALSE)
   the list of packages, and \code{link.html.help} is a more verbose wrapper.
 }
 \arguments{
-  \item{verbose}{logical.  If true, print out a message. For use to
-    explain a delay when called from other functions.}
+  \item{verbose}{logical.  If true, print out a message and use a
+    progress bar.}
   \item{lib.loc}{character vector.  List of libraries to be included.}
-    \item{temp}{logical: should the package indices be created in a
-    temporary location?}
+  \item{temp}{logical: should the package indices be created in a
+    temporary location for use by the HTTP server?}
 }
 \details{
   This creates the \file{packages.html} file, either a temporary copy

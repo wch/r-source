@@ -24,9 +24,6 @@
     }
 })
 
-## FIXME: use some sort of progress bar or heartbeat for
-## large sets of packages.
-
 ## FIXME: use UTF-8, either always or optionally
 ## (Needs UTF-8-savvy & fast agrep, and PCRE regexps.)
 help.search <-
@@ -117,7 +114,8 @@ help.search <-
     }
     if(rebuild) {
 	if(verbose > 0L) {
-            message("Rebuilding the help.search() database ...")
+            message("Rebuilding the help.search() database", " ", "...",
+                    if(verbose > 1L) "...")
             flush.console()
         }
 	## Check whether we can save the hsearch db later on.
@@ -164,12 +162,15 @@ help.search <-
 
 	## Create the hsearch db.
 	np <- 0L
-	if(verbose >= 2L)
+	if(verbose >= 2L) {
 	    message("Packages {.readRDS() sequentially}:")
-        if(verbose && WINDOWS) {
-            tot <- length(paths)
-            pb <- winProgressBar("R: creating the help.search() DB", max = tot)
+            flush.console()
         }
+        tot <- length(paths)
+        incr <- 0L
+        if(verbose && WINDOWS)
+            pb <- winProgressBar("R: creating the help.search() DB", max = tot)
+        else if(verbose == 1L) incr <- ifelse(tot > 500L, 100L, 10L)
 
 	## Starting with R 1.8.0, prebuilt hsearch indices are available
 	## in Meta/hsearch.rds, and the code to build this from the Rd
@@ -189,10 +190,16 @@ help.search <-
 	    tools:::.get_standard_package_names()$stubs
 
 	for(p in packages_in_hsearch_db) {
+            if(incr && np %% incr == 0L) {
+                message(".", appendLF = FALSE)
+                flush.console()
+            }
 	    np <- np + 1L
             if(verbose && WINDOWS) setWinProgressBar(pb, np)
-	    if(verbose >= 2L)
+	    if(verbose >= 2L) {
 		message(" ", p, appendLF = ((np %% 5L) == 0L), domain=NA)
+                flush.console()
+            }
             path <- if(!is.null(package_paths)) package_paths[p]
 	    else .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0L) {
@@ -212,9 +219,11 @@ help.search <-
 		    ## Put the hsearch index for the np-th package into the
 		    ## np-th row of the matrix used for aggregating.
 		    dbMat[np, seq_along(hDB)] <- hDB
-		} else if(verbose >= 2L)
+		} else if(verbose >= 2L) {
 		    message(gettextf("package '%s' has empty hsearch data - strangely", p),
                             domain = NA)
+                    flush.console()
+                }
 	    }
 	    else if(!is.null(package))
                 warning("no hsearch.rds meta data for package ", p)
@@ -274,7 +283,7 @@ help.search <-
 		}
 	    }
 	    if(verbose >= 2L) {
-                message(" done")
+                message(" ", "done")
                 flush.console()
             }
 	}
@@ -322,7 +331,7 @@ help.search <-
 				       list(con = db_file)))
 	    }
 	    if(verbose >= 2L) {
-                message(" done")
+                message(" ", "done")
                 flush.console()
             }
 	}

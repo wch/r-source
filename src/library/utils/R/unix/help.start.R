@@ -81,7 +81,8 @@ browseURL <- function(url, browser = getOption("browser"), encodeIfNeeded=FALSE)
                  browser, quotedUrl, "&"))
 }
 
-make.packages.html <- function(lib.loc = .libPaths(), temp = TRUE)
+make.packages.html <-
+    function(lib.loc = .libPaths(), temp = TRUE, verbose = TRUE)
 {
     f.tg <- if (temp) {
         dir.create(file.path(tempdir(), ".R/doc/html"), recursive = TRUE,
@@ -101,19 +102,33 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = TRUE)
         # warning("cannot update HTML package index")
         return(FALSE)
     }
-    message("Making packages.html ...", " ", appendLF = FALSE)
+    if (verbose) {
+        message("Making packages.html", " ", appendLF = FALSE)
+        flush.console()
+    }
     file.append(f.tg,
                 file.path(R.home("doc"), "html", "packages-head-utf8.html"))
     out <- file(f.tg, open="a")
+    ## find out how many
+    pkgs <- vector("list", length(lib.loc))
+    names(pkgs) <- lib.loc
+    for (lib in lib.loc) {
+        pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
+        pkgs[[lib]] <- sort(sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"),
+                                "\\1", pg))
+    }
+    tot <- sum(sapply(pkgs, length))
+    incr <- ifelse(tot > 500L, 100L, 10L)
     npkgs <- 0L
     for (lib in lib.loc) {
+        if (verbose && npkgs %% incr == 0L) {
+            message(".", appendLF = FALSE)
+            flush.console()
+        }
         cat("<p><h3>Packages in ", lib,
             '</h3>\n<p><table width="100%" summary="R Package list">\n',
             sep = "", file=out)
-        pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
-        pg <- sort(sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"),
-                       "\\1", pg))
-        for (i in pg) {
+        for (i in pkgs[[lib]]) {
             title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                         encoding = "UTF-8")
             if (is.na(title)) title <- "-- Title is missing --"
@@ -127,7 +142,10 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = TRUE)
     }
     cat("</body></html>\n", file=out)
     close(out)
-    message("done")
+    if (verbose) {
+        message(" ", "done")
+        flush.console()
+    }
     if (temp) .saveRDS(list(libs=lib.loc, npkgs=npkgs), op)
     invisible(TRUE)
 }

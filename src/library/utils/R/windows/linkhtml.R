@@ -22,10 +22,11 @@ link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
         cat(gettext("updating HTML package descriptions\n"))
         flush.console()
     }
-    make.packages.html(lib.loc)
+    make.packages.html(lib.loc, verbose = verbose)
 }
 
-make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
+make.packages.html <-
+    function(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE)
 {
     f.tg <- if (temp) {
         dir.create(file.path(tempdir(), ".R/doc/html"), recursive = TRUE,
@@ -45,7 +46,7 @@ make.packages.html <- function(lib.loc = .libPaths(), temp = FALSE)
         warning("cannot update HTML package index")
         return(FALSE)
     }
-    message("Making packages.html ...", " ", appendLF = FALSE)
+    message("Making packages.html", " ... ", appendLF = FALSE)
     flush.console()
     file.append(f.tg,
                 file.path(R.home("doc"), "html", "packages-head-utf8.html"))
