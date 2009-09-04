@@ -17,7 +17,7 @@
   \code{\link{contributors}}) for the ability to use their work.
 }
 \details{
-  The file \file{\var{\link[base:Rhome]{R_HOME}}/COPYRIGHTS} lists the copyrights in full
+  The file \file{\var{\link{R_HOME}}/COPYRIGHTS} lists the copyrights in full
   detail.
 }
 \keyword{misc}

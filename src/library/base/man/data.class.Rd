@@ -18,7 +18,7 @@ data.class(x)
 \value{
   character string giving the \emph{class} of \code{x}.
 
-  The class is the (first element) of the \code{\link[base]{class}}
+  The class is the (first element) of the \code{\link{class}}
   attribute if this is non-\code{NULL}, or inferred from the object's
   \code{dim} attribute if this is non-\code{NULL}, or \code{mode(x)}.
 
@@ -32,7 +32,7 @@ data.class(x)
   \code{data.class(x)} is \code{"numeric"} even when \code{x} is classed.
 }
 \seealso{
-  \code{\link[base]{class}}
+  \code{\link{class}}
 }
 \examples{
 x <- LETTERS

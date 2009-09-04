@@ -173,9 +173,9 @@ Summary(\dots, na.rm = FALSE)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{methods}} for methods of non-Internal generic functions.
+  \code{\link{methods}} for methods of non-internal generic functions.
 
-  \link[methods]{S4groupGeneric} for group generics for S4 methods.
+  \link{S4groupGeneric} for group generics for S4 methods.
 }
 \examples{
 require(utils)

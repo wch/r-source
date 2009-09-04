@@ -30,7 +30,7 @@ atanh(x)
 }
 \details{
    These are generic functions: methods can be defined for them
-   individually or via the \code{\link[base:groupGeneric]{Math}} group generic.
+   individually or via the \code{\link[=S3groupGeneric]{Math}} group generic.
 
    Branch cuts are consistent with the inverse trigonometric functions
    \code{asin()} et seq, and agree with those defined in Abramowitz and
@@ -40,7 +40,7 @@ atanh(x)
 \section{S4 methods}{
   All are S4 generic functions: methods can be defined
   for them individually or via the
-  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+  \code{\link[=S4groupGeneric]{Math}} group generic.
 }
 \seealso{
   The trigonometric functions, \code{\link{cos}}, \code{\link{sin}},

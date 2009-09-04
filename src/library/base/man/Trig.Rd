@@ -39,7 +39,7 @@ atan2(y, x)
   \eqn{\pi/2}).
 
   All except \code{atan2} are generic functions: methods can be defined
-  for them individually or via the \code{\link[base:groupGeneric]{Math}}
+  for them individually or via the \code{\link[=S3groupGeneric]{Math}}
   group generic.
 }
 \section{Complex values}{
@@ -64,7 +64,7 @@ atan2(y, x)
 \section{S4 methods}{
   All except \code{atan2} are S4 generic functions: methods can be defined
   for them individually or via the
-  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+  \code{\link[=S4groupGeneric]{Math}} group generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

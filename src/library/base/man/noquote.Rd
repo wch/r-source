@@ -35,13 +35,11 @@ noquote(obj)
   character strings \emph{without} quotes (\code{"\dots"}).
 
   These functions exist both as utilities and as an example of using (S3)
-  \code{\link[base]{class}} and object orientation.
+  \code{\link{class}} and object orientation.
 }
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch}}
 \seealso{
-  \code{\link{methods}},
-  \code{\link[base]{class}},
-  \code{\link{print}}.
+  \code{\link{methods}}, \code{\link{class}}, \code{\link{print}}.
 }
 \examples{
 letters

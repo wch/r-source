@@ -51,20 +51,18 @@ asS4(object, flag = TRUE, complete = TRUE)
 
   Note that the S4 methods for primitive functions do not apply to S3
   classes and that the methods for basic classes, such as the vector
-  types, are sealed.
-  To apply S4 methods reliably to an S3 object, define an S4 class
-  that extends the S3 class
-  (\code{\link[methods:setOldClass]{setOldClass}}).
+  types, are sealed.  To apply S4 methods reliably to an S3 object,
+  define an S4 class that extends the S3 class (see
+  \code{\link{setOldClass}}).
   
   When \code{asS4} is called with \code{flag == FALSE}, the value of
   \code{complete} controls whether an attempt is made to transform
   \code{object} into a valid object of the implied S3 class.  If so,
   then an object from an S4 class extending an S3 class will be
   transformed into an S3 object with the corresponding S3 class (see
-  \code{\link[methods:S3Part]{S3Part}}).  This includes classes
-  extending the pseudo-classes \code{array} and \code{matrix}: such
-  objects will have their class attribute set to \code{NULL}.
-
+  \code{\link{S3Part}}).  This includes classes extending the
+  pseudo-classes \code{array} and \code{matrix}: such objects will have
+  their class attribute set to \code{NULL}.
 }
 \seealso{\code{\link{is.object}} for a more general test; \link{Methods}
 for general information on S4.}

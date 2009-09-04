@@ -32,8 +32,7 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
 
   \item{method}{currently, only \code{method="qr"} is supported.}
   
-  % Avoid Matrix's grab of qr.
-  \item{tol}{tolerance for the \code{\link[base]{qr}} decomposition.  Default
+  \item{tol}{tolerance for the \code{\link{qr}} decomposition.  Default
     is 1e-7.}
 
   \item{singular.ok}{logical. If \code{FALSE}, a singular model is an
@@ -55,7 +54,7 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     functions.}
   \item{rank}{integer, giving the rank}
   \item{df.residual}{degrees of freedom of residuals}
-  \item{qr}{(not null fits) the QR decomposition, see \code{\link[base]{qr}}.}
+  \item{qr}{(not null fits) the QR decomposition, see \code{\link{qr}}.}
 }
 \seealso{
   \code{\link{lm}} which you should use for linear least squares regression,

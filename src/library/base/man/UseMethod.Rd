@@ -142,7 +142,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
 
   \code{.Method} is a character vector (normally of length one) naming
   the method function.  (For functions in the group generic
-  \code{\link[base:groupGeneric]{Ops}} it is of length two.)
+  \code{\link[=S3groupGeneric]{Ops}} it is of length two.)
 
   \code{.Class} is a character vector of classes used to find the next
   method.  \code{NextMethod} adds an attribute \code{"previous"} to
@@ -168,7 +168,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
 \seealso{
   The draft \sQuote{R Language Definition}.
 
-  \code{\link{methods}}, \code{\link[base]{class}},
+  \code{\link{methods}}, \code{\link{class}},
   \code{\link{getS3method}}, \code{\link{is.object}}.
 }
 \references{

@@ -19,10 +19,10 @@
     script, which must be located in the \file{\code{interpreter}}
     subdirectory of
 #ifdef unix
-    \file{\var{R_SHARE_DIR}} (normally \file{\var{\link[base:Rhome]{R_HOME}}/share}).
+    \file{\var{R_SHARE_DIR}} (normally \file{\var{\link{R_HOME}}/share}).
 #endif
 #ifdef windows
-    \file{\var{\link[base:Rhome]{R_HOME}}/share}.
+    \file{\var{\link{R_HOME}}/share}.
 #endif
   }
   \item{args}{a character string giving the arguments to pass to the

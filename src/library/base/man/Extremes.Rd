@@ -65,7 +65,7 @@ pmin.int(\dots, na.rm = FALSE)
 
   \code{max} and \code{min} are generic functions: methods can be
   defined for them individually or via the
-  \code{\link[base:groupGeneric]{Summary}} group generic.  For this to
+  \code{\link[=S3groupGeneric]{Summary}} group generic.  For this to
   work properly, the arguments \code{\dots} should be unnamed, and
   dispatch is on the first argument.
 
@@ -93,7 +93,7 @@ pmin.int(\dots, na.rm = FALSE)
 }
 \section{S4 methods}{
   \code{max} and \code{min} are part of the S4
-  \code{\link[methods:S4groupGeneric]{Summary}} group generic.  Methods
+  \code{\link[=S4groupGeneric]{Summary}} group generic.  Methods
   for them must use the signature \code{x, \dots, na.rm}.
 }
 \references{

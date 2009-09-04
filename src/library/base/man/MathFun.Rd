@@ -21,7 +21,7 @@ sqrt(x)
 }
 \details{
   These are generic functions: methods can be defined for them
-  individually or via the \code{\link[base:groupGeneric]{Math}}
+  individually or via the \code{\link[=S3groupGeneric]{Math}}
   group generic.  For complex arguments (and the default method), \code{z},
   \code{abs(z) == \link{Mod}(z)} and \code{sqrt(z) == z^0.5}.
 
@@ -30,7 +30,7 @@ sqrt(x)
 }
 \section{S4 methods}{
   Both are S4 generic and members of the
-  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+  \code{\link[=S4groupGeneric]{Math}} group generic.
 }
 \seealso{
   \code{\link{Arithmetic}} for simple, \code{\link{log}} for logarithmic,

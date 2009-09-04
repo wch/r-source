@@ -178,10 +178,10 @@ addNA(x, ifany=FALSE)
 }
 \section{Comparison operators and group generic methods}{
   There are \code{"factor"} and \code{"ordered"} methods for the
-  \link{group generic} \code{\link[base:groupGeneric]{Ops}}, which
+  \link{group generic} \code{\link[=S3groupGeneric]{Ops}}, which
   provide methods for the \link{Comparison} operators.  (The rest of the
-  group and the \code{\link[base:groupGeneric]{Math}} and
-  \code{\link[base:groupGeneric]{Summary}} groups generate an error as
+  group and the \code{\link[=S3groupGeneric]{Math}} and
+  \code{\link[=S3groupGeneric]{Summary}} groups generate an error as
   they are not meaningful for factors.)
 
   Only \code{==} and \code{!=} can be used for factors: a factor can

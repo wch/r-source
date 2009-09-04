@@ -26,8 +26,7 @@ print(x, \dots)
 \description{
   \code{print} prints its argument and returns it \emph{invisibly} (via
   \code{\link{invisible}(x)}).  It is a generic function which means that
-  new printing methods can be easily added for new
-  \code{\link[base]{class}}es.
+  new printing methods can be easily added for new \code{\link{class}}es.
 }
 \arguments{
   \item{x}{an object used to select a method.}

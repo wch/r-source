@@ -32,7 +32,7 @@
   \item{idata}{data frame describing intra-block design.}
   % avoid Matrix's grab of qr.
   \item{tol}{tolerance to be used in deciding if the residuals are
-    rank-deficient: see \code{\link[base]{qr}}.}
+    rank-deficient: see \code{\link{qr}}.}
 }
 \details{
   The \code{anova.mlm} method uses either a multivariate test statistic for

@@ -55,7 +55,7 @@ expm1(x)
 }
 \details{
   All except \code{logb} are generic functions: methods can be defined
-  for them individually or via the \code{\link[base:groupGeneric]{Math}}
+  for them individually or via the \code{\link[=S3groupGeneric]{Math}}
   group generic.
 
   \code{log10} and \code{log2} are only convenience wrappers, but logs
@@ -71,7 +71,7 @@ expm1(x)
 \section{S4 methods}{
   \code{exp}, \code{expm1}, \code{log}, \code{log10}, \code{log2} and
   \code{log1p} are S4 generic and are members of the
-  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+  \code{\link[=S4groupGeneric]{Math}} group generic.
 
   Note that this means that the S4 generic for \code{log} has a
   signature with only one argument, \code{x}, but that \code{base} can

@@ -20,7 +20,7 @@ object@name
 \details{
   This operator supports the formal classes of package \pkg{methods}, and
   is enabled only when \pkg{methods} is loaded (as per default).  See
-  \code{\link[methods]{slot}} for further details.
+  \code{\link{slot}} for further details.
 
   It is checked that \code{object} is an S4 object (see
   \code{\link{isS4}}), and it is an error to attempt to use \code{@} on
@@ -33,7 +33,6 @@ object@name
   The current contents of the slot.
 }
 \seealso{
-  \code{\link{Extract}},
-  \code{\link[methods]{slot}}
+  \code{\link{Extract}}, \code{\link{slot}}
 }
 \keyword{manip}

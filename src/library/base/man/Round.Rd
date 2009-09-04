@@ -46,7 +46,7 @@ signif(x, digits = 6)
 }
 \details{
   These are generic functions: methods can be defined for them
-  individually or via the \code{\link[base:groupGeneric]{Math}} group
+  individually or via the \code{\link[=S3groupGeneric]{Math}} group
   generic.
 
   Note that for rounding off a 5, the IEC 60559 standard is expected to
@@ -72,11 +72,11 @@ signif(x, digits = 6)
   These are all (internally) S4 generic.
   
   \code{ceiling}, \code{floor} and \code{trunc} are members of the
-  \code{\link[methods:S4groupGeneric]{Math}} group generic.  As an S4
+  \code{\link[=S4groupGeneric]{Math}} group generic.  As an S4
   generic, \code{trunc} has only one argument.
 
   \code{round} and \code{signif} are members of the
-  \code{\link[methods:S4groupGeneric]{Math2}} group generic.
+  \code{\link[=S4groupGeneric]{Math2}} group generic.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

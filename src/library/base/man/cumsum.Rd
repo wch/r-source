@@ -25,7 +25,7 @@ cummin(x)
 }
 \details{
   These are generic functions: methods can be defined for them
-  individually or via the \code{\link[base:groupGeneric]{Math}} group generic.
+  individually or via the \code{\link[=S3groupGeneric]{Math}} group generic.
 }
 \value{
   A vector of the same length and type as \code{x} (after coercion),
@@ -39,7 +39,7 @@ cummin(x)
 \section{S4 methods}{
   \code{cumsum} and \code{cumprod} are S4 generic functions:
   methods can be defined for them individually or via the
-  \code{\link[methods:S4groupGeneric]{Math}} group generic.
+  \code{\link[=S4groupGeneric]{Math}} group generic.
   \code{cummax} and \code{cummin} are individually S4 generic functions.
 }
 \references{

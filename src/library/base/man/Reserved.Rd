@@ -23,7 +23,7 @@
   arguments passed down from an enclosing function.
 }
 \details{
-  Reserved words outside \link[base:Quotes]{quotes} are always parsed to be
+  Reserved words outside \link[=Quotes]{quotes} are always parsed to be
   references to the objects linked to in the \sQuote{Description}, and
   hence they are not allowed as syntactic names (see
   \code{\link{make.names}}).  They \bold{are} allowed as non-syntactic

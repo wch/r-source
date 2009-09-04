@@ -68,8 +68,7 @@ objects(name, pos= -1, envir = as.environment(pos),
   \code{\link{apropos}} (or \code{\link{find}})
   for finding objects in the whole search path;
   \code{\link{grep}} for more details on \sQuote{regular expressions};
-  \code{\link[base]{class}},
-  \code{\link{methods}}, etc., for
+  \code{\link{class}}, \code{\link{methods}}, etc., for
   object-oriented programming.
 }
 \examples{

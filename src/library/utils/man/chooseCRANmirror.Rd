@@ -32,7 +32,7 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
 }
 \details{
   A list of mirrors is stored in file
-  \file{\var{\link[base:Rhome]{R_HOME}}/doc/CRAN_mirrors.csv}, but first an on-line list of
+  \file{\var{\link{R_HOME}}/doc/CRAN_mirrors.csv}, but first an on-line list of
   current mirrors is consulted, and the file copy used only if the
   on-line list is inaccessible.
 

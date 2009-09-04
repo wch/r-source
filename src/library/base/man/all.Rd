@@ -21,7 +21,7 @@ all(\dots, na.rm = FALSE)
 }
 \details{
   This is a generic function: methods can be defined for it
-  directly or via the \code{\link[base:groupGeneric]{Summary}} group generic.
+  directly or via the \code{\link[=S3groupGeneric]{Summary}} group generic.
   For this to work properly, the arguments \code{\dots} should be
   unnamed, and dispatch is on the first argument.
 
@@ -51,7 +51,7 @@ all(\dots, na.rm = FALSE)
   even if \code{x} has length zero.
 }
 \section{S4 methods}{
-  This is part of the S4 \code{\link[methods:S4groupGeneric]{Summary}}
+  This is part of the S4 \code{\link[=S4groupGeneric]{Summary}}
   group generic.  Methods for it must use the signature
   \code{x, \dots, na.rm}.
 }

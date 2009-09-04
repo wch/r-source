@@ -54,10 +54,9 @@ methods(generic.function, class)
   The original \code{methods} function was written by Martin Maechler.
 }
 \seealso{
-  \code{\link{S3Methods}}, \code{\link[base]{class}},
-  \code{\link{getS3method}}.
+  \code{\link{S3Methods}}, \code{\link{class}}, \code{\link{getS3method}}.
 
-  For S4, \code{\link[methods]{showMethods}}, \code{\link[methods]{Methods}}.
+  For S4, \code{\link{showMethods}}, \code{\link{Methods}}.
 }
 \references{
   Chambers, J. M. (1992)

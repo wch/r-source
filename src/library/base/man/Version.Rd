@@ -60,8 +60,7 @@ version
   for simplicity and backwards compatibility.
 }
 \seealso{
-  \code{\link[utils]{sessionInfo}} which provides additional
-  information;
+  \code{\link{sessionInfo}} which provides additional information;
   \code{\link{getRversion}} typically used inside R code,
   \code{\link{.Platform}}.
 }

@@ -93,7 +93,7 @@ lfactorial(x)
 
   The \code{gamma}, \code{lgamma}, \code{digamma} and \code{trigamma}
   functions are generic: methods can be defined for them individually or
-  via the \code{\link[base:groupGeneric]{Math}} group generic.
+  via the \code{\link[=S3groupGeneric]{Math}} group generic.
 }
 \source{
   \code{gamma}, \code{lgamma}, \code{beta} and \code{lbeta} are based on

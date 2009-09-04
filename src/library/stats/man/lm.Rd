@@ -120,7 +120,7 @@ lm(formula, data, subset, weights, na.action,
   \code{data} and then in the environment of \code{formula}.
 }
 \value{
-  \code{lm} returns an object of \code{\link[base]{class}} \code{"lm"} or for
+  \code{lm} returns an object of \code{\link{class}} \code{"lm"} or for
   multiple responses of class \code{c("mlm", "lm")}.
 
   The functions \code{summary} and \code{\link{anova}} are used to

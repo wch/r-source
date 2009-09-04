@@ -44,7 +44,7 @@ as.difftime(tim, format = "\%X", units = "auto")
 \method{Math}{difftime}(x, \dots)
 }
 \arguments{
-  \item{time1, time2}{\link{date-time} or \link[base:Dates]{date} objects.}
+  \item{time1, time2}{\link{date-time} or \link[=Dates]{date} objects.}
   \item{tz}{a timezone specification to be used for the conversion.
     System-specific, but \code{""} is the current time zone, and
     \code{"GMT"} is UTC.}
@@ -63,12 +63,12 @@ as.difftime(tim, format = "\%X", units = "auto")
   Function \code{difftime} calculates a difference of two date/time
   objects and returns an object of class \code{"difftime"} with an
   attribute indicating the units.  The
-  \code{\link[base:groupGeneric]{Math}} group method provides
+  \code{\link[=S3groupGeneric]{Math}} group method provides
   \code{\link{round}}, \code{\link{signif}}, \code{\link{floor}},
   \code{\link{ceiling}}, \code{\link{trunc}}, \code{\link{abs}}, and
   \code{\link{sign}} methods for objects of this class, and there are
   methods for the group-generic (see
-  \code{\link[base:groupGeneric]{Ops}}) logical and arithmetic
+  \code{\link[=S3groupGeneric]{Ops}}) logical and arithmetic
   operations.
 
   If \code{units = "auto"}, a suitable set of units is chosen, the largest
@@ -87,7 +87,7 @@ as.difftime(tim, format = "\%X", units = "auto")
   \code{"difftime"} object implicitly converts the numeric vector to a
   \code{"difftime"} object with the same units as the \code{"difftime"}
   object.  There are methods for \code{\link{mean}} and
-  \code{\link{sum}} (via the \code{\link[base:groupGeneric]{Summary}}
+  \code{\link{sum}} (via the \code{\link[=S3groupGeneric]{Summary}}
   group generic).
 
   The units of a \code{"difftime"} object can be extracted by the

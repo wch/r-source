@@ -12,7 +12,7 @@
 \description{
   Operators for the \code{"\link{Date}"} class.
 
-  There is an \code{\link[base:groupGeneric]{Ops}} method and specific
+  There is an \code{\link[=S3groupGeneric]{Ops}} method and specific
   methods for \code{+} and \code{-} for the \code{\link{Date}} class.
 }
 \usage{

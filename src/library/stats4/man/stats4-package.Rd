@@ -12,7 +12,7 @@
 }
 \details{
   This package contains functions and classes for statistics
-  using the \link[methods:methods-package]{S version 4} class system.
+  using the \link[=methods-package]{S version 4} class system.
 
   The methods currently support maximum likelihood (function
   \code{\link{mle}()} returning class \code{"\linkS4class{mle}"}),

@@ -78,7 +78,7 @@ is.table(x)
 }
 \value{
   \code{table()} returns a \emph{contingency table}, an object of
-  \code{\link[base]{class}} \code{"table"}, an array of integer values.
+  class \code{"table"}, an array of integer values.
   Note that unlike S the result is always an array, a 1D array if one
   factor is given.
 

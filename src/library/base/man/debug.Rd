@@ -62,7 +62,7 @@ isdebugged(fun)
   Use \code{debugonce} to enter the debugger only the next time the
   function is invoked.
 
-  In order to debug S4 methods (see \code{\link[methods]{Methods}}), you
+  In order to debug S4 methods (see \code{\link{Methods}}), you
   need to use \code{\link{trace}}, typically calling \code{\link{browser}},
   e.g., as \cr
   \code{trace("plot", browser, exit=browser, signature = c("track", "missing"))}

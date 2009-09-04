@@ -92,7 +92,7 @@ oldClass(x) <- value
   The replacement version of the function sets the class to the value
   provided.  For classes that have a formal definition, directly
   replacing the class this way is strongly deprecated.  The expression
-  \code{\link[methods]{as}(object, value)} is the way to coerce an object to a
+  \code{\link{as}(object, value)} is the way to coerce an object to a
   particular class.
 
   The analogue of \code{inherits} for formal classes is \code{\link{is}}.

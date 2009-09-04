@@ -62,7 +62,7 @@ Conj(z)
   \eqn{r = Mod(z) = \sqrt{x^2 + y^2}}, and \eqn{\phi = Arg(z)},
   \eqn{x = r*\cos(\phi)} and \eqn{y = r*\sin(\phi)}.  They are all generic
   functions: methods can be defined for them individually or via the
-  \code{\link[base:groupGeneric]{Complex}} group generic.
+  \code{\link[=S3groupGeneric]{Complex}} group generic.
 
   In addition, the elementary trigonometric, logarithmic and exponential
   functions are available for complex values.
@@ -76,7 +76,7 @@ Conj(z)
 
   \code{Re}, \code{Im}, \code{Mod}, \code{Arg} and \code{Conj}
   constitute the S4 group generic
-  \code{\link[methods:S4groupGeneric]{Complex}} and so S4 methods can be
+  \code{\link[=S4groupGeneric]{Complex}} and so S4 methods can be
   set for them individually or via the group generic.
 }
 \references{
