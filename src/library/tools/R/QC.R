@@ -3193,7 +3193,7 @@ function(package, dir, lib.loc = NULL)
                 sub("\\.[Rr]d", "", basename(.readRDS(RdDB)))
             ## might be pre-2.10.0 and on Windows, hence zipped
             else if(file.exists(f <- file.path(top, "help", "Rhelp.zip")))
-                utils::read.table(file.path(top, help, "AnIndex"))[2]
+                utils::read.table(file.path(top, "help", "AnIndex"))[2]
             else
                 list.files(file.path(top, "help"))
             good <- thisfile[this] %in% nm
