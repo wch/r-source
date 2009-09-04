@@ -228,7 +228,7 @@ int   R_HTTPDCreate(const char *ip, int port)
 }
 
 attribute_hidden
-int R_HTTPDStop(void)
+void R_HTTPDStop(void)
 {
     if(!initialized) internet_Init();
     if(initialized > 0)
