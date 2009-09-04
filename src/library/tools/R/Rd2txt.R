@@ -464,7 +464,7 @@ Rd2txt <-
                    "\\S3method" = {
                        class <- as.character(block[[2L]])
                        generic <- as.character(block[[1L]])
-                       if (generic %in% c("[", "[[", "$")) {
+                       if(generic %in% c("[", "[[", "$")) {
                            ## need to assemble the call
                            j <- i + 1L
                            txt <- ""
@@ -474,7 +474,7 @@ Rd2txt <-
                                               "\\dots" = "...",
                                               RCODE = as.character(blocks[[j]]),
                                               stopRd(block, Rdfile, sprintf("invalid markup '%s' in %s", tg, tag)))
-                              txt <- paste(txt, this, sep = "")
+                               txt <- paste(txt, this, sep = "")
                                blocks[[j]] <- structure("", Rd_tag = "COMMENT")
                                if(grepl("\n$", txt)) {
                                    res <- try(parse(text = paste("a", txt)))
@@ -496,7 +496,53 @@ Rd2txt <-
                                putf("## S3 method for class '")
                            writeCodeBlock(block[[2L]], tag)
                            putf("':\n")
-                           blocks[[i+1L]] <- structure(txt, Rd_tag = "RCODE")
+                           blocks[[i + 1L]] <-
+                               structure(txt, Rd_tag = "RCODE")
+                       } else if(grepl(sprintf("^%s$",
+                                               paste(c("\\+", "\\-", "\\*",
+                                                       "\\/", "\\^", "<=?",
+                                                       ">=?", "!=?", "==",
+                                                       "\\&", "\\|",
+                                                       "\\%[[:alnum:][:punct:]]*\\%"),
+                                                     collapse = "|")),
+                                       generic)) {
+                           ## Binary operators and unary '!'.
+                           ## Need to assemble the call.
+                           j <- i + 1L
+                           txt <- ""
+                           repeat {
+                               this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
+                                              RCODE = as.character(blocks[[j]]),
+                                              stopRd(block, Rdfile, sprintf("invalid markup '%s' in %s", tg, tag)))
+                               txt <- paste(txt, this, sep = "")
+                               blocks[[j]] <- structure("", Rd_tag = "COMMENT")
+                               if(grepl("\n$", txt)) {
+                                   res <- try(parse(text = paste("a", txt)))
+                                   if(!inherits(res, "try-error")) break
+                               }
+                               j <- j + 1L
+                           }
+                           nms <- as.character(res[[1L]])[-1L]
+                           len <- length(nms)
+                           ## (There should be no default values).
+                           if((len == 1L) && (generic == "!")) {
+                               ## Unary: !.
+                               txt <- sprintf("! %s\n", nms[1L])
+                           } else if((len == 2L) && (generic != "!")) {
+                               ## Binary: everything but !.
+                               txt <- sprintf("%s %s %s\n",
+                                              nms[1L], generic, nms[2L])
+                           } else {
+                               warnRd(block, Rdfile,
+                                      sprintf("arity problem for \\method{%s}{%s}",
+                                              generic, class))
+                               txt <- paste(generic, txt)
+                           }
+                           putf("## S3 method for class '")
+                           writeCodeBlock(block[[2L]], tag)
+                           putf("':\n")
+                           blocks[[i + 1L]] <-
+                               structure(txt, Rd_tag = "RCODE")
                        } else {
                            if (class == "default")
                                putf('## Default S3 method:\n')
@@ -526,10 +572,48 @@ Rd2txt <-
                    "\\dontshow" =,
                    "\\testonly" = {}, # do nothing
                    "\\S4method" = {
-                       putf("## S4 method for signature '")
-                       writeCodeBlock(block[[2L]], tag)
-                       putf("':\n")
-                       writeCodeBlock(block[[1L]], tag)
+                       class <- as.character(block[[2L]])
+                       generic <- as.character(block[[1L]])
+                       if(generic %in% c("[", "[[", "$")) {
+                           ## need to assemble the call
+                           j <- i + 1L
+                           txt <- ""
+                           repeat {
+                               this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
+                                              "\\ldots" =, # not really right
+                                              "\\dots" = "...",
+                                              RCODE = as.character(blocks[[j]]),
+                                              stopRd(block, Rdfile, sprintf("invalid markup '%s' in %s", tg, tag)))
+                               txt <- paste(txt, this, sep = "")
+                               blocks[[j]] <- structure("", Rd_tag = "COMMENT")
+                               if(grepl("\n$", txt)) {
+                                   res <- try(parse(text = paste("a", txt)))
+                                   if(!inherits(res, "try-error")) break
+                               }
+                               j <- j + 1L
+                           }
+                           txt <- psub1("\\(([^,]*),\\s*", "\\1@generic@", txt)
+                           txt <- fsub1("@generic@", generic, txt)
+                           if (generic == "[")
+                               txt <- psub1("\\)([^)]*)$", "]\\1", txt)
+                           else if (generic == "[[")
+                               txt <- psub1("\\)([^)]*)$", "]]\\1", txt)
+                           else if (generic == "$")
+                               txt <- psub1("\\)([^)]*)$", "\\1", txt)
+                           if (grepl("<-\\s*value", txt))
+                               putf("## S4 replacement method for signature '")
+                           else
+                               putf("## S4 method for signature '")
+                           writeCodeBlock(block[[2L]], tag)
+                           putf("':\n")
+                           blocks[[i + 1L]] <-
+                               structure(txt, Rd_tag = "RCODE")
+                       } else {
+                           putf("## S4 method for signature '")
+                           writeCodeBlock(block[[2L]], tag)
+                           putf("':\n")
+                           writeCodeBlock(block[[1L]], tag)
+                       }
                    },
                    ## All the markup such as \emph
                    stopRd(block, Rdfile, "Tag ", tag,
