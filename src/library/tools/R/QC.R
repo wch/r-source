@@ -3219,21 +3219,7 @@ function(package, dir, lib.loc = NULL)
     }
     unknown <- unknown[!obsolete]
     if (length(unknown)) {
-        repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")
-        repos <- if(nzchar(repos)) {
-            .expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]])
-        } else {
-            p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
-            if(file_test("-f", p)) {
-                a <- .read_repositories(p)
-                a[c("CRAN", "Omegahat", "BioCsoft", "BioCann", "BioCexp"),
-                  "URL"]
-            } else {
-                a <- .read_repositories(file.path(R.home("etc"),
-                                                  "repositories"))
-                c("http://cran.r-project.org", a[3:6, "URL"])
-            }
-        }
+        repos <- .get_standard_repository_URLs()
         known <- try(utils::available.packages(utils::contrib.url(repos, "source"))[, "Package"])
         miss <- if(inherits(known, "try-error")) TRUE
         else unknown %in% known
@@ -4165,6 +4151,95 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
     else if(length(bad))
         cat("problem found in ", bad, "\n", sep="")
     invisible()
+}
+
+### * .check_package_CRAN_incoming
+
+.check_package_CRAN_incoming <-
+function(dir)
+{
+    out <- list()
+    class(out) <- "check_package_CRAN_incoming"
+    
+    meta <- .get_package_metadata(dir, FALSE)
+
+    urls <- .get_standard_repository_URLs()
+    ## We do not want to use utils::available.packages() for now, as
+    ## this unconditionally filters according to R version and OS type.
+    .repository_db <- function(u) {
+        con <- gzcon(url(sprintf("%s/src/contrib/PACKAGES.gz", u), "rb"))
+        on.exit(close(con))
+        cbind(read.dcf(con,
+                       c(.get_standard_repository_db_fields(), "Path")),
+              Repository = u)
+              
+    }
+    db <- tryCatch(lapply(urls, .repository_db), error = identity)
+    if(inherits(db, "error")) return(out)
+    db <- do.call(rbind, db)
+
+    ## Package names must be unique within standard repositories when
+    ## ignoring case.
+    package <- meta["Package"]
+    packages <- db[, "Package"]
+    existing <-
+        packages[(tolower(packages) == tolower(package)) &
+                 (packages != package)]
+    if(length(existing))
+        out$bad_package <- list(package, existing)
+    ## Could there be more than one?
+
+    ## Is this an update for package already on CRAN?
+    db <- db[(packages == package) &
+             (db[, "Repository"] == urls[1L]) &
+             is.na(db[, "Path"]), , drop = FALSE]
+    ## This assumes the CRAN URL comes first, and drops packages in
+    ## version-specific subdirectories.  It also does not know about
+    ## archived versions.
+    if(!NROW(db)) return(out)
+    ## For now, there should be no duplicates ...
+    
+    ## Package versions should be newer than what we already have on
+    ## CRAN.
+    
+    v_m <- package_version(meta["Version"])
+    v_d <- package_version(db[, "Version"])
+    if(v_m <= max(v_d))
+        out$bad_version <- list(v_m, v_d)
+
+    ## Watch out for maintainer changes.
+    ## Note that we cannot get the maintainer info from the PACKAGES
+    ## files.
+    con <- url(sprintf("%s/web/packages/packages.rds", urls[1L]), "rb")
+    db <- tryCatch(.readRDS(con), error = identity)
+    close(con)
+    if(inherits(db, "error")) return(out)
+    
+    m_m <- meta["Maintainer"]
+    m_d <- db[db[, "Package"] == package, "Maintainer"]
+    if(!all(m_m == m_d))
+        out$new_maintainer <- list(m_m, m_d)
+
+    out
+
+}
+
+print.check_package_CRAN_incoming <-
+function(x, ...)
+{
+    if(length(y <- x$bad_package))
+        writeLines(sprintf("Conflicting package names (submitted: %s, existing: %s)",
+                           y[[1L]], y[[2L]]))
+    if(length(y <- x$bad_version))
+        writeLines(sprintf("Insufficient package version (submitted: %s, existing: %s)",
+                           y[[1L]], y[[2L]]))
+    if(length(y <- x$new_maintainer)) {
+        writeLines(c("New maintainer:",
+                     strwrap(y[[1L]], indent = 2L, exdent = 4L),
+                     "Old maintainer(s):",
+                     strwrap(y[[2L]], indent = 2L, exdent = 4L)))
+    }
+    invisible(x)
 }
 
 ### * .find_charset

@@ -769,6 +769,28 @@ local({
     eval(substitute(function() {out}, list(out=out)), envir=NULL)
 })
 
+### ** .get_standard_repository_URLs
+
+.get_standard_repository_URLs <-
+function() {    
+    repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")
+    repos <- if(nzchar(repos)) {
+        .expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]])
+    } else {
+        p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
+        if(file_test("-f", p)) {
+            a <- .read_repositories(p)
+            a[c("CRAN", "Omegahat", "BioCsoft", "BioCann", "BioCexp"),
+              "URL"]
+        } else {
+            a <- .read_repositories(file.path(R.home("etc"),
+                                              "repositories"))
+            c("http://cran.r-project.org", a[3:6, "URL"])
+        }
+    }
+    repos
+}
+
 ### ** .get_standard_repository_db_fields
 
 .get_standard_repository_db_fields <-

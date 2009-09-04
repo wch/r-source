@@ -464,6 +464,30 @@ foreach my $pkg (@ARGV) {
 	    }
 	}
 
+	## Check CRAN incoming feasibility.
+	if(&config_val_to_logical(&R_getenv("_R_CHECK_CRAN_INCOMING_",
+					    "FALSE"))) {
+	    $log->checking("CRAN incoming feasibility");
+	    my $Rcmd = "tools:::.check_package_CRAN_incoming(\"${pkgdir}\")\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
+	    @out = grep(!/^\>/, @out);
+	    if(scalar(@out) > 0) {
+		my $err = scalar(grep(/^Conflicting/, @out) > 0);
+		if($err) {
+		    $log->error();
+		} elsif(scalar(grep(/^Insufficient/, @out) > 0)) {
+		    $log->warning();
+		} else {
+		    $log->note();
+		}
+		$log->print(join("\n", @out) . "\n");
+		exit(1) if($err);
+	    } else {
+		$log->result("OK");
+	    }
+	}	    
+
 	## Check package dependencies.
 
 	## <NOTE>
