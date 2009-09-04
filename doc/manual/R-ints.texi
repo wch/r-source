@@ -3178,18 +3178,10 @@ Default: true.
 Control whether/how license checks are performed.
 Default: maybe (warn in case of problems, but not about standardizable
 non-standard license specs).
-@item _R_CHECK_RD_EMPTY_SECTIONS_
-Control whether @code{Rd_parse()} and @code{check_Rd_files_in_Rd_db()}
-worry about empty sections.  Of questionable use, as Rdconv drops empty
-sections anyways with a note.
-Default: false.
 @item _R_CHECK_RD_EXAMPLES_T_AND_F_
 Control whether @code{check_T_and_F()} also looks for ``bad'' (global)
 @samp{T}/@samp{F} uses in examples.
 Off by default because this can result in false positives.
-@c @item _R_CHECK_RD_PARSE_
-@c Control whether Rd files are checked against the Rd version 2 parser.
-@c Default: true.
 @item _R_CHECK_RD_CHECKRD_MINLEVEL_
 New in @R{} 2.10.0.  Controls the minimum level for reporting warnings
 from @code{checkRd}.
@@ -3204,7 +3196,7 @@ Control whether subset generics are considered as allowing useful S3
 method markup.
 Default: true (as this Rd feature was added some time ago).
 OBSOLETE.
-@item _R_CHECK_XREFS_REPOSITORIESS_
+@item _R_CHECK_XREFS_REPOSITORIES_
 New in @R{} 2.10.0.  If set to a non-empty value, a space-separated list
 of repositories to use to determine known packages.
 Default: empty, when the CRAN, Omegahat and
