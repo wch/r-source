@@ -1948,6 +1948,7 @@
     if (!file_test("-d", mandir)) return()
     desc <- .readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION
     pkg <- desc["Package"]
+    ver <- desc["Version"]
 
     ## CHM is built in the source tree
     for(type in types)
@@ -2011,7 +2012,8 @@
                 showtype(type)
                 ## assume prepare_Rd was run when dumping the .rds
                 ## so use defines = NULL for speed
-                .convert(Rd2HTML(Rd, ff, package = pkg, defines = NULL,
+                .convert(Rd2HTML(Rd, ff, package = c(pkg, ver),
+                                 defines = NULL,
                                  Links = Links, Links2 = Links2))
             }
         }
@@ -2031,8 +2033,10 @@
                             paste(bf, ext[type], sep=""))
             if (!file_test("-f", ff) || file_test("-nt", f, ff)) {
                 showtype(type)
-                .convert(Rd2HTML(Rd, ff, package = pkg, defines = NULL,
-                                 Links = Links, Links2 = Links2, CHM = TRUE))
+                .convert(Rd2HTML(Rd, ff, package = c(pkg, ver),
+                                 defines = NULL,
+                                 Links = Links, Links2 = Links2,
+                                 CHM = TRUE))
             }
         }
         if ("example" %in% types) {
@@ -2159,11 +2163,11 @@ function(name="", version = "0.0")
         args <- commandArgs(TRUE)
         ## it seems that splits on spaces, so try harder.
         args <- paste(args, collapse=" ")
-        args <- strsplit(args,'nextArg', fixed = TRUE)[[1]][-1]
+        args <- strsplit(args,'nextArg', fixed = TRUE)[[1L]][-1L]
     }
 
     while(length(args)) {
-        a <- args[1]
+        a <- args[1L]
         if (a %in% c("-h", "--help")) {
             Usage()
             q("no", runLast = FALSE)
@@ -2197,7 +2201,7 @@ function(name="", version = "0.0")
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else files <- c(files, a)
-        args <- args[-1]
+        args <- args[-1L]
     }
     if (length(files) != 1L)
         stop("exactly one Rd file must be specified", call. = FALSE)

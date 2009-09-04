@@ -105,6 +105,28 @@ Rd2HTML <-
              stages = "render", outputEncoding = "UTF-8",
              dynamic = FALSE, no_links = FALSE, ...)
 {
+    version <- ""
+    if(package != "") {
+        if(length(package) > 1L) {
+            version <- package[2L]
+            package <- package[1L]
+        } else {
+            dir <- dirname(package)
+            if((dir != "") &&
+               file_test("-f", dfile <- file.path(package,
+                                                  "DESCRIPTION"))) {
+                version <- .read_description(dfile)["Version"]
+                package <- basename(package)
+            } else {
+                ## Should we really do this?
+                ## Used when Rdconv is given a package argument.
+                version <- utils::packageDescription(package,
+                                                     fields = "Version")
+            }
+        }
+        if(is.na(version)) version <- ""
+    }
+    
     ## writeLines by default re-encodes strings to the local encoding.
     ## Avoid that by useBytes=TRUE
     writeLinesUTF8 <-
@@ -677,11 +699,10 @@ Rd2HTML <-
                          'location.href = link;', '}', '</script>',
                          sep = '\n'), con)
 
-    version <- if (package != "")
-    	paste('Package <em>', package,
-              '</em> version ',
-              packageDescription(package, fields="Version"), ' ', sep='')
-    else ""
+    if(version != "")
+        version <- paste('Package <em>', package,
+                         '</em> version ', version,
+                         ' ', sep='')
     of0('\n',
         '<hr><div align="center">[', version,
         if (!no_links) '<a href="00Index.html">Index</a>',

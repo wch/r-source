@@ -271,7 +271,7 @@ httpd <- function(path, query, ...)
 	if(file.exists(paste(RdDB, "rdx", sep="."))) {
 	    outfile <- tempfile("Rhttpd")
 	    temp <- tools::Rd2HTML(tools:::fetchRdDB(RdDB, helpdoc),
-                                   out = outfile, package = pkgname,
+                                   out = outfile, package = dirpath,
                                    dynamic = TRUE)
 	    on.exit(unlink(outfile))
 	    return(list(payload = paste(readLines(temp), collapse = "\n")))
