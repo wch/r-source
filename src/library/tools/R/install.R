@@ -109,7 +109,7 @@
             "      --no-multiarch	build only the main architecture",
             "\nand on Windows only",
             "      --auto-zip	select whether to zip data automatically",
-            "      --no-chm		do not build CHM help",
+            "      --chm		build CHM help",
             "",
             "Which of --html or --no-html is the default depends on the build of R:",
             paste("for this one it is ",
@@ -905,7 +905,7 @@
     build_html <- static_html
     build_latex <- FALSE
     build_example <- FALSE
-    build_chm <- WINDOWS
+    build_chm <- FALSE
     use_configure <- TRUE
     use_zip_data <- FALSE
     auto_zip <- FALSE
@@ -960,8 +960,8 @@
             build_latex <- TRUE
         } else if (a == "--example") {
             build_example <- TRUE
-        } else if (a == "--no-chm") {
-            build_chm <- FALSE
+        } else if (a == "--chm") {
+            build_chm <- WINDOWS
         } else if (a == "--use-zipdata") {
             use_zip_data <- TRUE
         } else if (a == "--auto-zip") {
