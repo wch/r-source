@@ -25,7 +25,7 @@ BIC(object, \dots)
 \arguments{
   \item{object}{An object of a suitable class for the BIC to be
     calculated - usually a \code{"logLik"} object or an object for which
-    a \code{\link[stats4:logLik-methods]{logLik}} method exists.
+    a \code{\link[=logLik-methods]{logLik}} method exists.
   }
   \item{\dots}{Some methods for this generic function may take
     additional, optional arguments.  At present none do.}

@@ -34,7 +34,7 @@
   searches for site and user files to process for setting environment
   variables.  The name of the site file is the one pointed to by the
   environment variable \env{R_ENVIRON}; if this is unset or empty,
-  \file{\var{\link[base:Rhome]{R_HOME}}/etc/Renviron.site} is used (if it exists, which it
+  \file{\var{\link{R_HOME}}/etc/Renviron.site} is used (if it exists, which it
   does not in a \sQuote{factory-fresh} installation).
   The name of the user file can be specified by the \env{R_ENVIRON_USER}
   environment variable; if this is unset, the user files searched for are
@@ -49,7 +49,7 @@
   line option \option{--no-site-file} was given.  The name of this file
   is taken from the value of the \env{R_PROFILE} environment variable.
   If this variable is unset, the default is
-  \file{\var{\link[base:Rhome]{R_HOME}}/etc/Rprofile.site}, which is used if it exists
+  \file{\var{\link{R_HOME}}/etc/Rprofile.site}, which is used if it exists
 #ifdef unix
   (which it does not in a \sQuote{factory-fresh} installation).
 #endif
@@ -108,7 +108,7 @@
   \option{--no-restore} and \option{--no-environ}.
 #ifdef windows
   Under Windows, it also implies \option{--no-Rconsole}, which
-  prevents loading the \file{\link[utils]{Rconsole}} file.
+  prevents loading the \file{\link{Rconsole}} file.
 #endif
 }
 \details{
@@ -135,17 +135,16 @@
 }
 \note{
 #ifdef unix
-  The file \file{\var{\link[base:Rhome]{R_HOME}}/etc/Renviron} is
+  The file \file{\var{\link{R_HOME}}/etc/Renviron} is
   always read very early in the start-up processing.  It contains
   environment variables set by \R in the configure process.  Values in
   that file can be overridden in site or user environment files: do not
-  change \file{\var{\link[base:Rhome]{R_HOME}}/etc/Renviron} itself.
+  change \file{\var{\link{R_HOME}}/etc/Renviron} itself.
   Note that this is distinct from
-  \file{\var{\link[base:Rhome]{R_HOME}}/etc/Renviron.site}.
+  \file{\var{\link{R_HOME}}/etc/Renviron.site}.
 #endif
 #ifdef windows
-  Unix versions of \R have a file
-  \file{\var{\link[base:Rhome]{R_HOME}}/etc/Renviron}
+  Unix versions of \R have a file \file{\var{\link{R_HOME}}/etc/Renviron}
   which is read very early in the start-up processing.  It contains
   environment variables set by \R in the configure process, and is not
   used on \R for Windows.

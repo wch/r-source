@@ -26,7 +26,7 @@ make.packages.html(lib.loc = .libPaths(), temp = FALSE, verbose = TRUE)
 \details{
   This creates the \file{packages.html} file, either a temporary copy
   for use by \code{\link{help.start}}, or the copy in
-  \file{\var{\link[base:Rhome]{R_HOME}}\\doc\\html} (for which you will
+  \file{\var{\link{R_HOME}}\\doc\\html} (for which you will
   need write permission).
 
   It can be very slow, as all the package \file{DESCRIPTION} files in

@@ -29,7 +29,7 @@ help.start(update = FALSE, gui = "irrelevant",
 #endif
   }
   \item{remote}{A character string giving a valid URL for the
-    \file{\var{\link[base:Rhome]{R_HOME}}} directory on a remote location.}
+    \file{\var{\link{R_HOME}}} directory on a remote location.}
 }
 \details{
   Unless \code{remote} is specified this requires the HTTP server to be

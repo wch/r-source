@@ -49,7 +49,7 @@ CIDFont(family, cmap, cmapEncoding, pdfresource = "")
 \details{
   For \code{Type1Fonts}, if four \file{.afm} files are supplied the
   fifth is taken to be \code{"Symbol.afm"}.  Relative paths are taken
-  relative to the directory \file{\var{\link[base:Rhome]{R_HOME}}/library/grDevices/afm}.
+  relative to the directory \file{\var{\link{R_HOME}}/library/grDevices/afm}.
   The fifth (symbol) font must be in \code{AdobeSym} encoding.
   However, the glyphs in the first four fonts are referenced by name
   and any encoding given within the \file{.afm} files is not used.

@@ -14,10 +14,10 @@ RdTextFilter(ifile, encoding = "unknown", keepSpacing = TRUE,
 \arguments{
 \item{ifile}{
   An input file specified as a filename or connection, or an \code{"Rd"} object
-  from \code{\link[tools]{parse_Rd}}.
+  from \code{\link{parse_Rd}}.
 }
 \item{encoding}{
-  An encoding name to pass to \code{\link[tools]{parse_Rd}}.
+  An encoding name to pass to \code{\link{parse_Rd}}.
 }
 \item{keepSpacing}{
   Whether to try to leave the text in the same lines and columns
@@ -61,7 +61,7 @@ Sections of the Rd file to keep.
 }
 
 \seealso{
-  \code{\link[utils]{aspell}}, for which this is an acceptable \code{filter}.
+  \code{\link{aspell}}, for which this is an acceptable \code{filter}.
 }
 \keyword{ utilities }
 \keyword{ documentation }

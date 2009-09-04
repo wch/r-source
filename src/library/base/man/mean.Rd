@@ -15,7 +15,7 @@ mean(x, \dots)
 \alias{mean.data.frame}
 \arguments{
   \item{x}{An \R object.  Currently there are methods for
-    numeric/logical vectors and \link[base:Dates]{date},
+    numeric/logical vectors and \link[=Dates]{date},
     \link{date-time} and \link{time interval} objects, and for data
     frames all of whose columns have a method.  Complex vectors are
     allowed for \code{trim = 0}, only.}

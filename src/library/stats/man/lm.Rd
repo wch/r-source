@@ -191,13 +191,9 @@ lm(formula, data, subset, weights, na.action,
   regression fitting.
 
   More \code{lm()} examples are available e.g., in
-  \code{\link[datasets]{anscombe}},
-  \code{\link[datasets]{attitude}},
-  \code{\link[datasets]{freeny}},
-  \code{\link[datasets]{LifeCycleSavings}},
-  \code{\link[datasets]{longley}},
-  \code{\link[datasets]{stackloss}},
-  \code{\link[datasets]{swiss}}.
+  \code{\link{anscombe}}, \code{\link{attitude}}, \code{\link{freeny}},
+  \code{\link{LifeCycleSavings}}, \code{\link{longley}},
+  \code{\link{stackloss}}, \code{\link{swiss}}.
 
   \code{biglm} in package \pkg{biglm} for an alternative
   way to fit linear models to large datasets (especially those with many

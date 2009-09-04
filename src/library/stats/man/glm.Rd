@@ -277,7 +277,7 @@ glm.fit(x, y, weights = rep(1, nobs),
   \code{bigglm} in package \pkg{biglm} for an alternative
   way to fit GLMs to large datasets (especially those with many cases).
  
-  \code{\link[datasets]{esoph}}, \code{\link[datasets]{infert}} and
+  \code{\link{esoph}}, \code{\link{infert}} and
   \code{\link{predict.glm}} have examples of fitting binomial glms.
 }
 \author{

@@ -28,7 +28,7 @@ setRepositories(graphics = getOption("menu.graphics"), ind = NULL)
 }
 \details{
   The default list of known repositories is stored in the file
-  \file{\var{\link[base:Rhome]{R_HOME}}/etc/repositories}.
+  \file{\var{\link{R_HOME}}/etc/repositories}.
   That file can be edited for a site, or a user can have a personal copy
   in \file{\var{HOME}/.R/repositories} which will take precedence.
 

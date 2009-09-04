@@ -114,7 +114,7 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   back to the original form.
 }
 \seealso{\code{\link{stack}}, \code{\link{aperm}};
-  \code{\link[utils]{relist}} for reshaping the result of \code{\link{unlist}}.
+  \code{\link{relist}} for reshaping the result of \code{\link{unlist}}.
 }
 \examples{
 summary(Indometh)

@@ -32,7 +32,7 @@ Adobe_glyphs
   single Unicode characters.  It is sorted by Unicode point and within a
   point alphabetically on the glyph(there can be more than one name for
   a Unicode point).  The data are in the file
-  \file{\var{\link[base:Rhome]{R_HOME}}/share/encodings/Adobe_glyphlist}.
+  \file{\var{\link{R_HOME}}/share/encodings/Adobe_glyphlist}.
 }
 \source{
   \url{http://partners.adobe.com/public/developer/en/opentype/glyphlist.txt}

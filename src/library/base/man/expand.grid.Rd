@@ -44,7 +44,7 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link[utils]{combn}} (package \code{utils}) for the generation
+  \code{\link{combn}} (package \code{utils}) for the generation
   of all combinations of n elements, taken m at a time.
 }
 \examples{

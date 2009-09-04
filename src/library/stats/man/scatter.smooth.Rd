@@ -48,8 +48,8 @@ loess.smooth(x, y, span = 2/3, degree = 1,
   grid of evaluation points) and \code{y} (the smoothed values at the
   grid points).
 }
-\seealso{\code{\link{loess}};
-  \code{\link[graphics:smoothscatter]{smoothScatter}} for scatter plots
+\seealso{
+  \code{\link{loess}}; \code{\link{smoothScatter}} for scatter plots
   with smoothed \emph{density} color representation.
 }
 \examples{

@@ -51,10 +51,11 @@
   defaults.  It returns no useful value.
 }
 \details{
-  There are system copies of these files in \file{\var{\link[base:Rhome]{R_HOME}}\\etc}.  Users
-  can have personal copies of the files: these are looked for in the
-  location given by the environment variable \env{R_USER}. The system
-  files are read only if a corresponding personal file is not found.
+  There are system copies of these files in
+  \file{\var{\link{R_HOME}}\\etc}.  Users can have personal copies of
+  the files: these are looked for in the location given by the
+  environment variable \env{R_USER}. The system files are read only if a
+  corresponding personal file is not found.
 
   If the environment variable \env{R_USER} is not set, the \R system
   sets it to \env{HOME} if that is set (stripping any trailing slash),

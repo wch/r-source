@@ -43,8 +43,8 @@ makepredictcall(var, call)
 }
 \seealso{
   \code{\link{model.frame}}, \code{\link{poly}}, \code{\link{scale}};
-  \code{\link[splines]{bs}} and \code{\link[splines]{ns}} in package
-  \pkg{splines}, \code{\link[datasets]{cars}}
+  \code{\link{bs}} and \code{\link{ns}} in package \pkg{splines},
+  \code{\link{cars}}
 }
 \examples{
 require(graphics)

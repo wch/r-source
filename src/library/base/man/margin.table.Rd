@@ -23,7 +23,7 @@ margin.table(x, margin=NULL)
   \code{sum(x)}.
 }
 \seealso{
-  \code{\link{prop.table}} and \code{\link[stats]{addmargins}}.
+  \code{\link{prop.table}} and \code{\link{addmargins}}.
 }
 \value{
   The relevant marginal table.  The class of \code{x} is copied to the

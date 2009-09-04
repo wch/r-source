@@ -35,7 +35,7 @@ browseURL(url, browser = getOption("browser"), encodeIfNeeded = FALSE)
 \details{
   The default browser is set by option \code{"browser"}, in turn set by
   the environment variable \env{R_BROWSER} which is by default set in
-  file \file{\var{\link[base:Rhome]{R_HOME}}/etc/Renviron} to a choice
+  file \file{\var{\link{R_HOME}}/etc/Renviron} to a choice
   made manually or automatically when \R was configured.  (See
   \code{\link{Startup}} for where to override that default value.)
   

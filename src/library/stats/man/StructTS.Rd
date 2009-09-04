@@ -123,7 +123,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 }
 \note{
   Optimization of structural models is a lot harder than many of the
-  references admit. For example, the \code{\link[datasets]{AirPassengers}} data
+  references admit. For example, the \code{\link{AirPassengers}} data
   are considered in Brockwell & Davis (1996): their solution appears to
   be a local maximum, but nowhere near as good a fit as that produced by
   \code{StructTS}.  It is quite common to find fits with one or more

@@ -31,7 +31,7 @@ duplicate the text elements of the original Rd file.
 Duncan Murdoch
 }
 \seealso{
-\code{\link[utils]{aspell}}, for which this is used with \code{filter="Sweave"}.
+\code{\link{aspell}}, for which this is used with \code{filter="Sweave"}.
 }
 \keyword{ utilities }
 \keyword{ documentation }

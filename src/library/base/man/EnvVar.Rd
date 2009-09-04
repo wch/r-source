@@ -102,7 +102,7 @@
 #ifdef windows
       For \code{Rgui} it controls the number of lines saved to the
       history file: the size of the history when in use is controlled by
-      the console customization: see \code{\link[utils]{Rconsole}}.
+      the console customization: see \code{\link{Rconsole}}.
 #endif
     }
     \item{\code{R_HOME}:}{The top-level directory of the \R

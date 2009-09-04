@@ -59,7 +59,7 @@ getOption(x, default = NULL)
     \item{\code{add.smooth}:}{typically logical, defaulting to
       \code{TRUE}.  Could also be set to an integer for specifying how
       many (simulated) smooths should be added.  This is currently only
-      used by \code{\link[stats]{plot.lm}}.}
+      used by \code{\link{plot.lm}}.}
 
       \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
       true, a \link{warning} is produced whenever a
