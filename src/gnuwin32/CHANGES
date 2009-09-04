@@ -43,6 +43,11 @@ PACKAGE INSTALLATION
 	Options --use-zip and --use-zip-help in R CMD INSTALL are no
 	longer available and --auto-zip only zips data (or not).
 
+	Help in packages installed under 2.9.x may not work correctly,
+	and a warning is given when such a package is attached by
+	library().  Re-installation of all packages is advised
+	(use update.packages(checkBuilt = TRUE)).
+
 
 INSTALLATION
 

@@ -72,6 +72,16 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 warning(gettextf("package '%s' was built under R version %s",
                                  pkgname, as.character(built$R)),
                         call. = FALSE, domain = NA)
+            ## warn if < 2.10.0, when the help format changed.
+            if(R_version_built_under < "2.10.0")
+                if(.Platform$OS.type == "windows")
+                    warning(gettextf("package '%s' was built under R version %s and help will not work correctly\nPlease re-install it",
+                                     pkgname, as.character(built$R)),
+                            call. = FALSE, domain = NA)
+                else
+                    warning(gettextf("package '%s' was built under R version %s and help may not work correctly",
+                                     pkgname, as.character(built$R)),
+                        call. = FALSE, domain = NA)
             if(.Platform$OS.type == "unix") {
                 platform <- built$Platform
                 r_arch <- .Platform$r_arch
