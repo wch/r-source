@@ -381,8 +381,10 @@ function(x)
 
 
     x <- .strip_whitespace(x)
-    if(x == "") {
+    if(is.na(x) || (x == "")) {
         ## Not really a lot to check ...
+        ## (Note that non-standardizable license specs are dropped by
+        ## writePACKAGES() and friends.)
         return(.make_results(is_empty = TRUE))
     }
 
