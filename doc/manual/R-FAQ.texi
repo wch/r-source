@@ -293,8 +293,8 @@ systems.  Support for Mac OS Classic ended with R 1.7.1.
 The current version of R will configure and build under a number of
 common Unix platforms including @var{cpu}-linux-gnu for the i386, alpha,
 arm, hppa, ia64, m68k, mips/mipsel, powerpc, s390, sparc (e.g.,
-@url{http://buildd.debian.org/build.php?&pkg=r-base}), and x86_64 CPUs,
-powerpc-apple-darwin, mips-sgi-irix,
+@url{http://buildd.debian.org/build.php?&pkg=r-base}), and x86_64
+@acronym{CPU}s, powerpc-apple-darwin, mips-sgi-irix,
 @c <FIXME>
 @c Not sure anymore ...
 @c alpha-dec-osf4,
@@ -570,7 +570,7 @@ recommended packages.  If you also want to build R packages from source,
 also run @code{apt-get install r-base-dev} to obtain the additional
 tools required for this.  So-called ``backports'' of the current R
 packages for at least the @dfn{stable} distribution of Debian are
-provided by Johannes Ranke, and available from CRAN.  See
+provided by Johannes Ranke, and available from @CRAN{}.  See
 @url{http://CRAN.R-project.org/bin/linux/debian/README} for details on R
 Debian packages and installing the backports, which should also be
 suitable for other Debian derivatives.  Native backports for Ubuntu are
@@ -897,18 +897,19 @@ Please always use the @acronym{URL} of the master site when referring to
 
 R is released under the
 @url{http://www.gnu.org/licenses/old-licenses/gpl-2.0.html,,
-@acronym{GNU} General Public License (GPL), version 2}.  If you have any
-questions regarding the legality of using R in any particular situation
-you should bring it up with your legal counsel.  We are in no position
-to offer legal advice.
+@acronym{GNU} General Public License (@acronym{GPL}), version 2}.  If
+you have any questions regarding the legality of using R in any
+particular situation you should bring it up with your legal counsel.  We
+are in no position to offer legal advice.
 
 It is the opinion of the R Core Team that one can use R for commercial
-purposes (e.g., in business or in consulting).  The GPL, like all Open
-Source licenses, permits all and any use of the package.  It only
-restricts distribution of R or of other programs containing code from R.
-This is made clear in clause 6 (``No Discrimination Against Fields of
-Endeavor'') of the @url{http://www.opensource.org/docs/definition.html,
-Open Source Definition}:
+purposes (e.g., in business or in consulting).  The @acronym{GPL}, like
+all Open Source licenses, permits all and any use of the package.  It
+only restricts distribution of R or of other programs containing code
+from R.  This is made clear in clause 6 (``No Discrimination Against
+Fields of Endeavor'') of the
+@url{http://www.opensource.org/docs/definition.html, Open Source
+Definition}:
 
 @quotation
 The license must not restrict anyone from making use of the program in a
@@ -1081,7 +1082,7 @@ the S language.
 
 Contrary to other implementations of the S language, R has adopted an
 evaluation model in which nested function definitions are lexically
-scoped.  This is analogous to the evalutation model in Scheme.
+scoped.  This is analogous to the evaluation model in Scheme.
 
 This difference becomes manifest when @emph{free} variables occur in a
 function.  Free variables are those which are neither formal parameters
@@ -1619,7 +1620,7 @@ for pointers to commercialized versions of R.
 @email{jeff@@math.montana.edu, Jeff Banfield}.  The
 @url{http://www.math.montana.edu/Rweb/, Rweb Home Page} provides access
 to all three versions of Rweb---a simple text entry form that returns
-output and graphs, a more sophisticated Javascript version that provides
+output and graphs, a more sophisticated JavaScript version that provides
 a multiple window environment, and a set of point and click modules that
 are useful for introductory statistics courses and require no knowledge
 of the R language.  All of the Rweb versions can analyze Web accessible
@@ -1674,7 +1675,7 @@ has a web page at @url{http://www.omegahat.org/CGIwithR/}.
 @url{http://www.rpad.org/Rpad, Rpad}, developed and actively maintained
 by Tom Short, provides a sophisticated environment which combines some
 of the features of the previous approaches with quite a bit of
-Javascript, allowing for a @acronym{GUI}-like behavior (with sortable
+JavaScript, allowing for a @acronym{GUI}-like behavior (with sortable
 tables, clickable graphics, editable output), etc.
 
 Jeff Horner is working on the R/Apache Integration Project which embeds
@@ -1844,9 +1845,10 @@ Some @CRAN{} packages that do not build out of the box on Windows,
 require additional software, or are shipping third party libraries for
 Windows cannot be made available on @CRAN{} in form of a Windows binary
 packages.  Nevertheless, some of these packages are available at the
-``CRAN extras'' repository at @url{http://www.stats.ox.ac.uk/pub/RWin/}
-kindly provided by Brian D. Ripley.  Note that this repository is a
-default repository for recent versions of R for Windows.
+``@CRAN{} extras'' repository at
+@url{http://www.stats.ox.ac.uk/pub/RWin/} kindly provided by Brian
+D. Ripley.  Note that this repository is a default repository for recent
+versions of R for Windows.
 
 @node Add-on packages from Omegahat, Add-on packages from Bioconductor, Add-on packages from CRAN, Which add-on packages exist for R?
 @subsection Add-on packages from Omegahat
@@ -2607,7 +2609,7 @@ title(bquote(hat(a) = .(ahat)))
 where subexpressions enclosed in @samp{.()} are replaced by their
 values.
 
-There are more worked examples in the mailing list achives.
+There are more worked examples in the mailing list archives.
 
 @node What are valid names?, Are GAMs implemented in R?, How can I substitute into a plot label?, R Miscellanea
 @section What are valid names?
@@ -2669,7 +2671,7 @@ local regression and smoothing splines, and is extendable.  There is a
 an exact clone of what is described in the White Book (no @code{lo()}
 for example).  Package @strong{gss} can fit spline-based GAMs too.  And
 if you can accept regression splines you can use @code{glm()}.  For
-gaussian GAMs you can use @code{bruto()} from package @strong{mda}.
+Gaussian GAMs you can use @code{bruto()} from package @strong{mda}.
 
 @node Why is the output not printed when I source() a file?, Why does outer() behave strangely with my function?, Are GAMs implemented in R?, R Miscellanea
 @section Why is the output not printed when I source() a file?
@@ -3002,7 +3004,7 @@ Also see Figure 1 and associated code in Paul Murrell (2003),
 
 By default, @code{read.table()} needs to read in everything as character
 data, and then try to figure out which variables to convert to numerics
-or factors.  For a large data set, this takes condiderable amounts of
+or factors.  For a large data set, this takes considerable amounts of
 time and memory.  Performance can substantially be improved by using the
 @code{colClasses} argument to specify the classes to be assumed for the
 columns of the table.
