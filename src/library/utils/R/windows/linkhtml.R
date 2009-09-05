@@ -50,7 +50,8 @@ make.packages.html <-
     flush.console()
     file.append(f.tg,
                 file.path(R.home("doc"), "html", "packages-head-utf8.html"))
-    out <- file(f.tg, open="a")
+    out <- file(f.tg, open = "a")
+    on.exit(close(out))
     rh <- chartr("\\", "/", R.home())
     drive <- substring(rh, 1L, 2L)
     ## find out how many
@@ -63,6 +64,7 @@ make.packages.html <-
     }
     tot <- sum(sapply(pkgs, length))
     pb <- winProgressBar("R: creating packages.html", max = tot)
+    on.exit(close(pb), add = TRUE)
     npkgs <- 0L
     for (lib in lib.loc) {
         lib0 <- "../../library"
@@ -94,8 +96,6 @@ make.packages.html <-
         cat("</table>\n\n", file=out)
     }
     cat("</body></html>\n", file=out)
-    close(out)
-    close(pb)
     message("done")
     if (temp) .saveRDS(list(libs=lib.loc, npkgs=npkgs), op)
     invisible(TRUE)

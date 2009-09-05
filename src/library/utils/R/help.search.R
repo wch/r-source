@@ -168,9 +168,10 @@ help.search <-
         }
         tot <- length(paths)
         incr <- 0L
-        if(verbose && WINDOWS)
+        if(verbose && WINDOWS) {
             pb <- winProgressBar("R: creating the help.search() DB", max = tot)
-        else if(verbose == 1L) incr <- ifelse(tot > 500L, 100L, 10L)
+            on.exit(close(pb))
+        } else if(verbose == 1L) incr <- ifelse(tot > 500L, 100L, 10L)
 
 	## Starting with R 1.8.0, prebuilt hsearch indices are available
 	## in Meta/hsearch.rds, and the code to build this from the Rd
@@ -337,7 +338,10 @@ help.search <-
 	}
         if(verbose > 0L) {
             message("... database rebuilt")
-            if(WINDOWS) close(pb)
+            if(WINDOWS) {
+                close(pb)
+                on.exit() # clear closing of progress bar
+            }
             flush.console()
         }
     }
