@@ -46,7 +46,7 @@ function(dir = ".", fields = NULL,
             colnames(desc) <- fields
             bundle <- !is.na(desc[,"Bundle"])
             desc[bundle, "Package"] <- desc[bundle, "Bundle"]
-            if(latestOnly) desc <- utils:::.remove_stale_dups(desc)
+            if(latestOnly) desc <- .remove_stale_dups(desc)
 
             ## Standardize licenses or replace by NA.
             license_info <- analyze_licenses(desc[, "License"])
