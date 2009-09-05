@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/grDevices-package.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{grDevices-package}
@@ -8,23 +8,23 @@
 \alias{grDevices}
 \docType{package}
 \title{
-The R Graphics Devices and Support for Colours and Fonts
+  The R Graphics Devices and Support for Colours and Fonts
 }
 \description{
-Graphics devices and support for base and grid graphics
+  Graphics devices and support for base and grid graphics
 }
 \details{
-This package contains functions which support both \link[graphics:graphics-package]{base}
-and \link[grid:grid-package]{grid} graphics.
 
-For a complete
-list of functions, use \code{library(help="grDevices")}.
+  This package contains functions which support both
+  \link[=graphics-package]{base} and \link[=grid-package]{grid} graphics.
+
+  For a complete list of functions, use \code{library(help="grDevices")}.
 
 }
 \author{
-R Development Core Team and contributors worldwide
+  R Development Core Team and contributors worldwide
 
-Maintainer: R Core Team \email{R-core@r-project.org}
+  Maintainer: R Core Team \email{R-core@r-project.org}
 }
 \keyword{ package }
 \keyword{ device }

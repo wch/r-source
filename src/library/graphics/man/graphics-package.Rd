@@ -14,17 +14,17 @@ The R Graphics Package
 R functions for base graphics
 }
 \details{
-This package contains functions for base graphics.  Base graphics
-are traditional S graphics, as opposed 
-to the newer \link[grid:grid-package]{grid} graphics.
+  This package contains functions for \sQuote{base} graphics.  Base graphics
+  are traditional S-like graphics, as opposed to the more recent
+  \link[=grid-package]{grid} graphics. 
 
-For a complete list of functions with individual help pages,
-use \code{library(help="graphics")}.
+  For a complete list of functions with individual help pages,
+  use \code{library(help="graphics")}.
 }
 \author{
-R Development Core Team and contributors worldwide
+  R Development Core Team and contributors worldwide
 
-Maintainer: R Core Team \email{R-core@r-project.org}
+  Maintainer: R Core Team \email{R-core@r-project.org}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

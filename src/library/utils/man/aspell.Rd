@@ -24,10 +24,9 @@ aspell(files, filter, control = list(), encoding = "unknown")
   the system search path.  See \url{http://aspell.net} for information
   on obtaining Aspell, and available dictionaries.
   
-  Currently, \code{"Rd"}, corresponding to
-  \code{\link[tools]{RdTextFilter}}, and \code{"Sweave"}, corresponding
-  to \code{\link[tools]{SweaveTeXFilter}} are the only
-  available built-in filters.
+  Currently the only available built-in filters are \code{"Rd"},
+  corresponding to \code{\link{RdTextFilter}}, and \code{"Sweave"},
+  corresponding to \code{\link{SweaveTeXFilter}}.
 }
 \value{
   A data frame inheriting from \code{aspell} (which has a useful print

@@ -120,7 +120,7 @@ get_all_vars(formula, data, \dots)
   A \code{\link{data.frame}} containing the variables used in
   \code{formula} plus those specified in \code{\dots}.  It will have
   additional attributes, including \code{"terms"} for an object of class
-  \code{"\link[stats:terms.object]{terms}"} derived from \code{formula},
+  \code{"\link[=terms.object]{terms}"} derived from \code{formula},
   and possibly \code{"na.action"} giving information on the handling of
   \code{NA}s (which will not be present if no special handling was done,
   e.g. by \code{\link{na.pass}}).
