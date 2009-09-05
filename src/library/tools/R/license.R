@@ -522,12 +522,7 @@ function(dir, unpacked = FALSE, full = TRUE)
         ## Only keep the highest available versions.
         ## Such an option might be useful for build_license_db()
         ## itself.
-        db <- do.call("rbind",
-                      lapply(split(db, db$Package),
-                             function(e) {
-                                 m <- max(as.numeric_version(e$Version))
-                                 e[which(e$Version == m)[1L], ]
-                             }))
+        db <- .remove_stale_dups(db)
     }
     analyze_licenses_in_license_db(db)
 }

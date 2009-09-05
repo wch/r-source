@@ -124,7 +124,8 @@ available.packages <-
         }
         res <- res[apply(res, 1L, .checkOStype), , drop=FALSE]
     }
-    if(length(res) && !duplicates) res <- .remove_stale_dups(res)
+    if(length(res) && !duplicates)
+        res <- tools:::.remove_stale_dups(res)
     res
 }
 
@@ -229,7 +230,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
     available <- if(is.null(available))
         available.packages(contriburl = contriburl, method = method)
-    else .remove_stale_dups(available)
+    else tools:::.remove_stale_dups(available)
 
     ## This should be true in the PACKAGES file, is on CRAN
     ok <- !is.na(available[, "Bundle"])
@@ -830,25 +831,3 @@ function(pkgs, available, dependencies = c("Depends", "Imports", "LinkingTo"))
     done
 }
 
-.remove_stale_dups <- function(ap)
-{
-    ## Given a matrix from available.packages, return a copy
-    ## with no duplicate packages, being sure to keep the packages
-    ## with highest version number.
-    pkgs <- ap[ , "Package"]
-    dup_pkgs <- pkgs[duplicated(pkgs)]
-    stale_dups <- integer(length(dup_pkgs))
-    i <- 1L
-    for (dp in dup_pkgs) {
-        wh <- which(dp == pkgs)
-        vers <- package_version(ap[wh, "Version"])
-        keep_ver <- max(vers)
-        keep_idx = which(vers == keep_ver)[1L] # they might all be max
-        wh <- wh[-keep_idx]
-        end_i <- i + length(wh) - 1L
-        stale_dups[i:end_i] <- wh
-        i <- end_i + 1L
-    }
-    ## Possible to have only one package in a repository
-    if(length(stale_dups)) ap[-stale_dups, , drop = FALSE] else ap
-}
