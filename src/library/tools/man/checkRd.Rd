@@ -15,13 +15,15 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
 }
 \arguments{
   \item{Rd}{ a filename or \code{Rd} object to use as input. }
-  \item{defines}{ string(s) to use in \code{"#ifdef"} tests. }
+  \item{defines}{ string(s) to use in \verb{#ifdef} tests. }
   \item{stages}{ at which stage (\code{"build"}, \code{"install"}, or
-    \code{"render"} should \\Sexpr macros be executed? See the notes below.}
+    \code{"render"} should \verb{\Sexpr} macros be executed? See the
+    notes below.}
   \item{unknownOK}{ unrecognized macros are treated as errors if
     \code{FALSE}, otherwise warnings. }
-  \item{listOK}{ unnecessary non-empty braces (e.g. around text, not
-    as an argument) are treated as errors if \code{FALSE}, otherwise warnings. }
+  \item{listOK}{ unnecessary non-empty braces (e.g., around text, not as
+    an argument) are treated as errors if \code{FALSE}, otherwise
+    warnings.}
   \item{\dots}{ additional parameters to pass to \code{\link{parse_Rd}} when
     \code{Rd} is a filename.  One that is often useful is \code{encoding}.}
   \item{def_enc}{logical: has the package declared an encoding, so tests
@@ -35,9 +37,9 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
   \code{\link{parse_Rd}} to parse it before applying the checks.  If so,
   warnings from \code{parse_Rd} are collected, together with those from
   the internal function \code{prepare_Rd}, which does the
-  \code{"#ifdef"} and \\Sexpr processing, drops sections that would not
-  be rendered or are duplicated (and should not be) and removes empty
-  sections.
+  \verb{#ifdef} and \verb{\Sexpr} processing, drops sections that
+  would not be rendered or are duplicated (and should not be) and
+  removes empty sections.
 
   An Rd object is passed through \code{prepare_Rd}, but it may already
   have been (and installed Rd objects have).

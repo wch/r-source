@@ -33,9 +33,10 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   \item{Rd}{ a filename or \code{Rd} object to use as input. }
   \item{out}{ a filename or connection object to which to write the output. }
   \item{package}{ the package to list in the output. }
-  \item{defines}{ string(s) to use in \code{"#ifdef"} tests. }
+  \item{defines}{ string(s) to use in \verb{#ifdef} tests. }
   \item{stages}{ at which stage (\code{"build"}, \code{"install"}, or
-    \code{"render"} should \\Sexpr macros be executed? See the notes below.}
+    \code{"render"} should \verb{\Sexpr} macros be executed? See the
+    notes below.}
   \item{outputEncoding}{ see the \sQuote{Encodings} section below.}
   \item{dynamic}{logical: set links for render-time resolution by
       dynamic help system.}
@@ -90,7 +91,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 }
 
 \note{
-  The \samp{\\Sexpr} macro is a new addition to Rd files.  It includes
+  The \verb{\Sexpr} macro is a new addition to Rd files.  It includes
   \R code that will be executed at one of three times: \emph{build} time
   (when a package's source code is built into a tarball, not yet
   implemented), \emph{install} time (when the package is installed or

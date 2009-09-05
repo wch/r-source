@@ -45,11 +45,11 @@ checkS3methods(package, dir, lib.loc = NULL)
 
   \code{checkDocStyle} investigates how (S3) methods are shown in the
   usages of the Rd files in a package.  It reports the methods shown by
-  their full name rather than using the Rd \code{\\method} markup for
+  their full name rather than using the Rd \verb{\method} markup for
   indicating S3 methods.  Earlier versions of \R also reported about
   methods shown along with their generic, which typically caused
   problems for the documentation of the primary argument in the generic
-  and its methods.  With \code{\\method} now being expanded in a way
+  and its methods.  With \verb{\method} now being expanded in a way
   that class information is preserved, joint documentation is
   no longer necessarily a problem.  (The corresponding information is
   still contained in the object returned by \code{checkDocStyle}.)

@@ -26,7 +26,7 @@ Rdindex(RdFiles, outFile = "", type = NULL,
   \item{type}{a character string giving the documentation type of the Rd
     files to be included in the index, or \code{NULL} (the default).
     The type of an Rd file is typically specified via the
-    \code{\\docType} tag; if \code{type} is \code{"data"}, Rd files
+    \verb{\docType} tag; if \code{type} is \code{"data"}, Rd files
     whose \emph{only} keyword is \code{datasets} are included as well.}
   \item{width}{a positive integer giving the target column for wrapping
     lines in the output.}
