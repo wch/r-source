@@ -5251,9 +5251,9 @@ the @R{} session.  Expect this to run around 20x slower than without
 versions@footnote{Although this is supposed to have been improved,
 @code{valgrind} 3.2.0 still aborts using optimized BLASes on an
 Opteron.} of @code{valgrind} are not happy with many optimized BLASes
-that use cpu-specific instructions (3D now, SSE, SSE2, SSE3 and similar)
-so you may need to build a version of @R{} specifically to use with
-@code{valgrind}.
+that use @acronym{CPU}-specific instructions (3D now, SSE, SSE2, SSE3
+and similar) so you may need to build a version of @R{} specifically to
+use with @code{valgrind}.
 
 On platforms supported by @code{valgrind} you can build a version of
 @R{} with extra instrumentation to help @code{valgrind} detect errors in

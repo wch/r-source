@@ -224,7 +224,7 @@ Unix-alike platforms including @samp{@var{cpu}-*-linux-gnu} for the
 @cputype{alpha}, @cputype{arm}, @cputype{hppa}, @cputype{ix86},
 @cputype{ia64}, @cputype{m68k}, @cputype{mips}, @cputype{mipsel},
 @cputype{powerpc}, @cputype{s390}, @cputype{sparc}, and @cputype{x86_64}
-CPUs,
+@acronym{CPU}s,
 @c (see e.g.@:  @uref{http://buildd.debian.org/build.php?&pkg=r-base}),
 @c Actually, see http://packages.debian.org/unstable/math/r-base-core as
 @c the build daemon is not used for all platforms; note also that Debian
@@ -373,24 +373,24 @@ has the version for the latest release of @R{}).
 @node Help options, Making the manuals, Simple compilation, Installing R under Unix-alikes
 @section Help options
 
-As from @R{} 2.10.0, by default HTML help pages are created when needed
-rather than being built at install time.  This happens even if the
-@acronym{HTTP} server has been disabled, but then the pages created have
-no hyperlinks.
+As from @R{} 2.10.0, by default @HTML{} help pages are created when
+needed rather than being built at install time.  This happens even if
+the @acronym{HTTP} server has been disabled, but then the pages created
+have no hyperlinks.
 
 If you both need to disable the server and want hyperlinked help, there
-is the option to continue to build HTML pages at when packages are
+is the option to continue to build @HTML{} pages at when packages are
 installed (including those installed with @R{}).  This is enabled by the
 @command{configure} option @option{--enable-prebuilt-html}.  Whether
 @command{R CMD INSTALL} (and hence @code{install.packages}) pre-builds
-HTML pages is determined by looking at the @R{} installation and is
+@HTML{} pages is determined by looking at the @R{} installation and is
 reported by @command{R CMD INSTALL --help}: it can be overridden by
 specifying the one of the @command{INSTALL} options @option{--html} or
 @option{-no-html}.
 
 The server is disabled by setting the environment variable
 @env{R_DISABLE_HTTPD} to a non-empty value, either before @R{} is
-started or within the @R{} session before HTML help (including
+started or within the @R{} session before @HTML{} help (including
 @code{help.start}) is used.  It is also possible that system security
 measures will prevent the server from being started, for example if the
 loopback interface has been disabled.
@@ -633,7 +633,7 @@ directory).  (@command{make install-info} needs Perl installed if there
 is no command @command{install-info} on the system.)
 
 More precise control is possible.  For info, the setting used is that of
-@code{infodir} (default @samp{@var{prefix}/info}, set by configure
+@code{infodir} (default @file{@var{prefix}/info}, set by configure
 option @option{--infodir}).  The DVI and PDF files are installed into
 the @R{} @file{doc} tree, set by the @command{make} variable
 @code{rdocdir}.
@@ -684,7 +684,7 @@ Some platforms can support closely related builds of @R{} which can
 share all but the executables and dynamic objects.  Examples include
 builds under Solaris for different chips (in particular, 32- and 64-bit
 builds), 64- and 32- bit builds on @cputype{x86_64} Linux and different
-CPUs (@cputype{ppc}, @cputype{ppc64}, @cputype{i386} and
+@acronym{CPU}s (@cputype{ppc}, @cputype{ppc64}, @cputype{i386} and
 @cputype{x86_64}) under Mac OS >= 10.4.
 
 @R{} supports the idea of architecture-specific builds, specified by
@@ -851,8 +851,8 @@ package-specific tests) by @code{testInstallPackages} even if
 
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on Windows 2000 or later on ix86 CPUs
-(including AMD64/EM64T chips and Windows x64).
+from @acronym{CRAN} to run on Windows 2000 or later on ix86
+@acronym{CPU}s (including AMD64/EM64T chips and Windows x64).
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
@@ -945,7 +945,7 @@ make rsync-recommended
 Optionally, you can install a version of ATLAS
 (@uref{http://math-atlas.sourceforge.net/}) tuned to your system for
 fast linear algebra routines. Pre-built @file{Rblas.dll} for various
-CPUs are available in the @file{windows/contrib/ATLAS} area on
+@acronym{CPU}s are available in the @file{windows/contrib/ATLAS} area on
 @acronym{CRAN}.  If you are building R from source, there are macros
 @code{USE_ATLAS} and @code{ATLAS_PATH} in the file @file{MkRules}.  Set
 @code{USE_ATLAS = YES} and @code{ATLAS_PATH} to where the ATLAS
@@ -1083,7 +1083,7 @@ should build @file{Rbitmap.dll} and install it in @file{@var{R_HOME}/bin}.
 You can test a build by running @code{make check}.  You may need to set
 @enindex TMPDIR
 @env{TMPDIR} to the absolute path to a suitable temporary directory: the
-default is @samp{c:/TEMP}.  (Use forward slashes and do not use a path
+default is @file{c:/TEMP}.  (Use forward slashes and do not use a path
 including spaces.  It will be ignored if not set to a directory.)
 
 The recommended packages can be  checked by
@@ -1164,7 +1164,7 @@ building all the parts in the sequence:
 Rpwd.exe @r{(a utility needed in the build)}
 rbuild @r{(the executables, the @acronym{FAQ} docs etc.)}
 rpackage @r{(the base packages)}
-htmldocs @r{(the @acronym{HTML} documentation)}
+htmldocs @r{(the @HTML{} documentation)}
 bitmapdll @r{(the bitmap support files)}
 recommended @r{(the recommended packages)}
 vignettes @r{(the vignettes in package @strong{grid}:}
@@ -1393,7 +1393,7 @@ running @command{tmpwatch}.  Set @env{TMPDIR} to another directory
 before running long-running jobs on such a system.
 
 Note that @env{TMPDIR} will be used to execute @command{configure}
-scripts when installing packages, so if @code{/tmp} has been mounted as
+scripts when installing packages, so if @file{/tmp} has been mounted as
 @samp{noexec}, @env{TMPDIR} needs to be set to a directory from which
 execution is allowed.
 
@@ -1959,13 +1959,14 @@ prepare and install translation catalogues.
 * Windows::                     
 @end menu
 
-Many current CPUs have both 32- and 64-bit sets of instructions: this
-has long been true for UltraSparc and more recently for MIPS, PPC and
-@cputype{x86_64} (AMD Opteron and Athlon64, Intel Xeon and
-Pentium/'Core' supporting EM64T).  Many OSes running on such CPUs offer
-the choice of building a 32-bit or a 64-bit version of R (and details
-are given below under specific OSes).  For most a 32-bit version is the
-default, but for some (e.g., @cputype{x86_64} Linux) 64-bit is.
+Many current @acronym{CPU}s have both 32- and 64-bit sets of
+instructions: this has long been true for UltraSparc and more recently
+for MIPS, PPC and @cputype{x86_64} (AMD Opteron and Athlon64, Intel Xeon
+and Pentium/'Core' supporting EM64T).  Many OSes running on such
+@acronym{CPU}s offer the choice of building a 32-bit or a 64-bit version
+of R (and details are given below under specific OSes).  For most a
+32-bit version is the default, but for some (e.g., @cputype{x86_64}
+Linux) 64-bit is.
 
 All current versions of @R{} use 32-bit integers and
 @acronym{IEC}@tie{}60559@footnote{also known as @acronym{IEC}@tie{}559
@@ -2541,9 +2542,9 @@ correct incantation for these is usually found @emph{via}
 Some of the external BLASes are multi-threaded.  One issue is that @R{}
 profiling (which uses the @code{SIGPROF} signal) may cause problems, and
 you may want to disable profiling if you use a multi-threaded BLAS.
-Note that using a multi-threaded BLAS can result in taking more CPU time
-and even more elapsed time (occasionally dramatically so) than using a
-similar single-threaded BLAS.
+Note that using a multi-threaded BLAS can result in taking more
+@acronym{CPU} time and even more elapsed time (occasionally dramatically
+so) than using a similar single-threaded BLAS.
 
 Note that under Unix (but not under Windows) if @R{} is compiled against
 a non-default BLAS and @option{--enable-BLAS-shlib} is @strong{not}
@@ -2650,7 +2651,7 @@ way to use recent versions of the Goto BLAS.
 Note that currently a multi-threaded Goto BLAS will be built by default
 if and only if the building is on a multi-processor system (counting
 multiple cores and hyperthreading), and at run time the default number
-of threads is the number of CPUs detected.
+of threads is the number of @acronym{CPU}s detected.
 
 It has been reported that on some RedHat-based Linux systems it is
 necessary to set @code{GOTO_NUM_THREADS=1} or @code{OMP_NUM_THREADS=1}
@@ -3065,9 +3066,9 @@ likely that including @samp{-Wl,-O1} in @code{LDFLAGS} is worthwhile,
 and on recent systems@footnote{e.g.@: Fedora Core 6 and later}
 @samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
 @uref{http://lwn.net/@/Articles/@/192624/}.  Tuning compilation to a
-specific CPU family (e.g.@: @samp{-mtune=core2} for @command{gcc}) can
-give worthwhile performance gains, especially on older architectures
-such as @cputype{ix86}.
+specific @acronym{CPU} family (e.g.@: @samp{-mtune=core2} for
+@command{gcc}) can give worthwhile performance gains, especially on
+older architectures such as @cputype{ix86}.
 
 @node Making manuals,  , Compilation flags, Configuration variables
 @subsection Making manuals
@@ -3206,8 +3207,8 @@ The default @code{FFLAGS} chosen (by @command{autoconf}) for a GNU
 FORTRAN compiler is @samp{-g -O2}.  This seems not to be documented for
 @command{gfortran}, and has caused problems (segfaults and infinite
 loops) on @cputype{x86_64} Linux (and the optimizer will be shared with
-other platforms on that CPU type).  A maximum optimization of @samp{-O}
-is recommended there.
+other platforms on that @acronym{CPU} type).  A maximum optimization of
+@samp{-O} is recommended there.
 
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on Unix
@@ -3432,11 +3433,11 @@ what is needed.
 
 It seems that @cputype{ix86} Linux accepts non-PIC code in shared
 libraries, but this is not necessarily so on other platforms, in
-particular for 64-bit CPUs such as @cputype{x86_64}.  So care can be
-needed with BLAS libraries and when building @R{} as a shared library to
-ensure that position-independent code is used in any static libraries
-(such as the Tcl/Tk libraries, @code{libpng}, @code{libjpeg} and
-@code{zlib}) which might be linked against.  Fortunately these are
+particular for 64-bit @acronym{CPU}s such as @cputype{x86_64}.  So care
+can be needed with BLAS libraries and when building @R{} as a shared
+library to ensure that position-independent code is used in any static
+libraries (such as the Tcl/Tk libraries, @code{libpng}, @code{libjpeg}
+and @code{zlib}) which might be linked against.  Fortunately these are
 normally built as shared libraries with the exception of the ATLAS BLAS
 libraries.
 
@@ -3976,8 +3977,8 @@ above OSS repositories, and the IBM C/C++ (XL C/C++ 10.01) as well as
 FORTRAN (XL Fortran 12.01) compilers
 (@url{http://www14.software.ibm.com/webapp/download/byproduct.jsp#X}).
 
-To compile for a 64-bit @cputype{powerpc} (Power6 CPU) target one can
-use
+To compile for a 64-bit @cputype{powerpc} (Power6 @acronym{CPU}) target
+one can use
 
 @example
 CC ="gcc -maix64 -pthread"
@@ -4245,16 +4246,17 @@ ActiveState) if they prefer.
 @node The Microsoft HTML Help Workshop, LaTeX, Perl, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
 
-To make compiled html (@file{.chm}) files you will need the Microsoft
+To make compiled @HTML{} (@file{.chm}) files you will need the Microsoft
 @HTML{} Help Workshop, currently available for download at
 @uref{http://msdn.microsoft.com/@/library/@/en-us/@/htmlhelp/@/html/@/hwmicrosofthtmlhelpdownloads.asp}
 and
 @uref{http://www.microsoft.com/@/office/@/ork/@/xp/@/appndx/@/appa06.htm}.
 This is @emph{not} included in @file{Rtools.exe}.
 
-If this is not installed, @command{Rcmd INSTALL} will skip compiled HTML
-help (with a message).  However, to build @R{} itself without CHM help,
-you need to set @code{USE_CHM = FALSE} in @file{src/gnuwin32/MkRules}.
+If this is not installed, @command{Rcmd INSTALL} will skip compiled
+@HTML{} help (with a message).  However, to build @R{} itself without
+CHM help, you need to set @code{USE_CHM = FALSE} in
+@file{src/gnuwin32/MkRules}.
 
 @node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
 @section @LaTeX{}
