@@ -56,7 +56,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     7 \tab Tag \var{tag name} not recognized\cr
     7 \tab \verb{\tabular} format must be simple text\cr
     7 \tab Unrecognized \verb{\tabular} format: \ldots\cr
-    7 \tab Ony \var{n} columns allowed in this table\cr
+    7 \tab Only \var{n} columns allowed in this table\cr
     7 \tab Must have a \var{tag name}\cr
     7 \tab Only one \var{tag name} is allowed\cr
     7 \tab Tag \var{tag name} must not be empty\cr

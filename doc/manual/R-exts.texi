@@ -765,7 +765,7 @@ Unbundling a package bundle is straightforward: just replace the
 @file{DESCRIPTION} files provide a good starting point, but the
 @samp{Bundle}, @samp{Contains} and @samp{BundleDescription} fields
 should not appear.  It may be needed to add references in the
-@samp{Suggests} ot @samp{Iimports} fields to other members of the former
+@samp{Suggests} ot @samp{Imports} fields to other members of the former
 bundle.
 
 Prior to @R{} 2.9.1, @code{update.packages()} will only update members
@@ -3933,7 +3933,7 @@ for the dots in function argument lists @samp{@dots{}}, and
 for ellipsis dots in ordinary text.@footnote{There is only a fine
 distinction between @code{\dots} and @code{\dots}.  It is technically
 incorrect to use @code{\ldots} in code blocks and @code{tools::checkRd}
-will warn about this---on the other hand the current convertors treat
+will warn about this---on the other hand the current converters treat
 them the same way in code blocks, and elsewhere apart from the small
 distinction between the two in LaTeX.}  These can be followed by
 @code{@{@}}, and should be unless followed by whitespace.
@@ -3962,7 +3962,7 @@ encodings should be marked by @code{\enc}, e.g.@:
 @code{\enc@{J@"oreskog@}@{Joreskog@}} (with no whitespace between the
 braces) where the first argument will be used where encodings are
 allowed and the second should be @acronym{ASCII} (and is used for e.g.@:
-the text conversion).  (This is intended to be used for indvidual words,
+the text conversion).  (This is intended to be used for individual words,
 not whole sentences or paragraphs.)
 
 @node Indices, Platform-specific sections, Insertions, Writing R documentation files
@@ -8716,7 +8716,7 @@ including the header file @file{Rmath.h}; @xref{Distribution
 functions}.  Those calls generate a single variate and should also be
 enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 
-@comment MM: FIXME   void rmultinom() is different, returning a vector!
+@c MM: FIXME   void rmultinom() is different, returning a vector!
 
 In addition, there is an interface (defined in header
 @file{R_ext/Applic.h}) to the generation of random 2-dimensional tables

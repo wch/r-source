@@ -25,7 +25,7 @@ startDynamicHelp(start=TRUE)
   called directly by a user.
 
   Note that \code{option(htmlhelp=TRUE)} must be set to actually make use
-  of HTML help, altough it might be the default for an \R installation.
+  of HTML help, although it might be the default for an \R installation.
 
   If the server cannot be started or is disabled,
   \code{\link{help.start}} will be unavailable and requests for HTML

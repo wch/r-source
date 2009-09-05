@@ -8,8 +8,8 @@
 \title{
   Retrieve Dependency Information for a Vignette}
 \description{
-  Given a vignette name, will create a DependsList object that reports
-  information about the packages the vignette depends on.
+  Given a vignette name, will create a \code{DependsList} object that
+  reports information about the packages the vignette depends on.
 }
 \usage{
 vignetteDepends(vignette, recursive = TRUE, reduce = TRUE,
