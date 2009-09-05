@@ -35,7 +35,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   \item{package}{ the package to list in the output. }
   \item{defines}{ string(s) to use in \verb{#ifdef} tests. }
   \item{stages}{ at which stage (\code{"build"}, \code{"install"}, or
-    \code{"render"} should \verb{\Sexpr} macros be executed? See the
+    \code{"render"}) should \verb{\Sexpr} macros be executed? See the
     notes below.}
   \item{outputEncoding}{ see the \sQuote{Encodings} section below.}
   \item{dynamic}{logical: set links for render-time resolution by

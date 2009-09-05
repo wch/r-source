@@ -17,7 +17,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
   \item{Rd}{ a filename or \code{Rd} object to use as input. }
   \item{defines}{ string(s) to use in \verb{#ifdef} tests. }
   \item{stages}{ at which stage (\code{"build"}, \code{"install"}, or
-    \code{"render"} should \verb{\Sexpr} macros be executed? See the
+    \code{"render"}) should \verb{\Sexpr} macros be executed? See the
     notes below.}
   \item{unknownOK}{ unrecognized macros are treated as errors if
     \code{FALSE}, otherwise warnings. }
