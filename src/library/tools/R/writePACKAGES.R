@@ -164,6 +164,10 @@ function(dir, fields = NULL,
     }
     if(verbose) message("done")
 
+    ## Note that we cannot simply do
+    ##   names(db) <- sub("_.*", "", basename(files))
+    ## as repositories could hold multiple versions of packages.
+    
     db
 }
 
