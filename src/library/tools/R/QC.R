@@ -3147,21 +3147,42 @@ function(package, dir, lib.loc = NULL)
         pfile <- system.file("Meta", "package.rds", package = package,
                              lib.loc = lib.loc)
         pkgInfo <- .readRDS(pfile)
-        ## only 'Depends' are guaranteed to be on the search path.
-        pkgs <- unique(names(pkgInfo$Depends)) %w/o% base
-        aliases <- c(aliases, lapply(pkgs, Rd_aliases, lib.loc = lib.loc))
-    } # else FIXME not implemented
+    } else {
+        outDir <- file.path(tempdir(), "fake_pkg")
+        dir.create(file.path(outDir, "Meta"), FALSE, TRUE)
+        .install_package_description(dir, outDir)
+        pfile <- file.path(outDir, "Meta", "package.rds")
+        pkgInfo <- .readRDS(pfile)
+        unlink(outDir, recursive = TRUE)
+    }
+    ## only 'Depends' are guaranteed to be on the search path, but
+    ## 'Imports' have to be installed and hence help there will be found
+    deps <- c(names(pkgInfo$Depends), names(pkgInfo$Imports))
+    pkgs <- unique(deps) %w/o% base
+    aliases <- c(aliases, lapply(pkgs, Rd_aliases, lib.loc = lib.loc))
+
+    ## See testRversion in library()
+    new_only <- FALSE
+    if(length(Rdeps <- pkgInfo$Rdepends2)) {
+        ## has this if installed in > 2.7.0
+        current <- as.numeric_version("2.9.2")
+        for(dep in Rdeps)
+            if(length(dep) > 1L) {
+                target <- as.numeric_version(dep$version)
+                res <- eval(parse(text=paste("current", dep$op, "target")))
+                if(!res) new_only <- TRUE
+            }
+    }
 
     ## Add the aliases from the package itself, and build a db with all
-    ## \link xrefs in the package Rd objects.
+    ## (if any) \link xrefs in the package Rd objects.
     if(!missing(package)) {
         aliases1 <- Rd_aliases(package, lib.loc = lib.loc)
         if(!length(aliases1))
             return(structure(NULL, class = "check_Rd_xrefs"))
         aliases <- c(aliases, list(aliases1))
         db <- .build_Rd_xref_db(package, lib.loc = lib.loc)
-    }
-    else {
+    } else {
         aliases1 <- Rd_aliases(dir = dir)
         if(!length(aliases1))
             return(structure(NULL, class = "check_Rd_xrefs"))
@@ -3247,9 +3268,10 @@ function(package, dir, lib.loc = NULL)
     ## The bad ones:
     bad <- db[, "bad"] == "TRUE"
     res1 <- split(db[bad, "report"], db[bad, 3L])
-    ## do not report these for a package that depends on R >= 2.10.0?
-    bad <- db[, "suspect"] == "TRUE"
-    res2 <- split(db[bad, "report"], db[bad, 3L])
+    res2 <- if(!new_only) {
+        bad <- db[, "suspect"] == "TRUE"
+        split(db[bad, "report"], db[bad, 3L])
+    } else character()
     structure(list(bad = res1, suspect = res2), class = "check_Rd_xrefs")
 }
 
