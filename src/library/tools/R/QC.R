@@ -3057,6 +3057,18 @@ function(package, lib.loc = NULL)
                    envir = compat)
             assign("winMenuNames", function() {}, envir = compat)
             assign("winMenuItems", function(menuname) {}, envir = compat)
+            assign("winProgressBar",
+                   function(title = "R progress bar", label = "",
+                            min = 0, max = 1, initial = 0, width = 300) {},
+                   envir = compat)
+            assign("setWinProgressBar",
+                   function(pb, value, title=NULL, label=NULL) {},
+                   envir = compat)
+            assign(".install.winbinary",
+                   function(pkgs, lib, repos = getOption("repos"),
+                            contriburl = contrib.url(repos),
+                            method, available = NULL, destdir = NULL,
+                            dependencies = FALSE, ...) {}, envir = compat)
         }
         attach(compat, name="compat", pos = length(search()),
                warn.conflicts = FALSE)
@@ -4160,7 +4172,7 @@ function(dir)
 {
     out <- list()
     class(out) <- "check_package_CRAN_incoming"
-    
+
     meta <- .get_package_metadata(dir, FALSE)
 
     urls <- .get_standard_repository_URLs()
@@ -4172,7 +4184,7 @@ function(dir)
         cbind(read.dcf(con,
                        c(.get_standard_repository_db_fields(), "Path")),
               Repository = u)
-              
+
     }
     db <- tryCatch(lapply(urls, .repository_db), error = identity)
     if(inherits(db, "error")) return(out)
@@ -4198,10 +4210,10 @@ function(dir)
     ## archived versions.
     if(!NROW(db)) return(out)
     ## For now, there should be no duplicates ...
-    
+
     ## Package versions should be newer than what we already have on
     ## CRAN.
-    
+
     v_m <- package_version(meta["Version"])
     v_d <- package_version(db[, "Version"])
     if(v_m <= max(v_d))
@@ -4214,7 +4226,7 @@ function(dir)
     db <- tryCatch(.readRDS(con), error = identity)
     close(con)
     if(inherits(db, "error")) return(out)
-    
+
     m_m <- meta["Maintainer"]
     m_d <- db[db[, "Package"] == package, "Maintainer"]
     if(!all(m_m == m_d))
