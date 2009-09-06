@@ -1,6 +1,6 @@
 % File src/library/base/man/tracemem.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{tracemem}
@@ -29,6 +29,9 @@ retracemem(x, previous = NULL)
   traced. \code{tracemem} and \code{untracemem} give errors when R is not
   compiled with memory profiling; \code{retracemem} does not (so it can be
   left in code during development).
+#ifdef Windows
+  It is enabled in a standard Windows build of \R.
+#endif
   
   When an object is traced any copying of the object by the C function
   \code{duplicate} or by arithmetic or mathematical operations produces a
@@ -52,7 +55,7 @@ retracemem(x, previous = NULL)
 \value{
   A character string for identifying the object in the trace output (an
   address in hex enclosed in angle brackets), or \code{NULL} (invisibly
-  for \code{untracemem}.
+  for \code{untracemem}).
 }
 
 \seealso{

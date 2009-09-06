@@ -2897,6 +2897,8 @@ X library files are in @var{DIR}
 use readline library (if available) [yes]
 @item --enable-R-profiling
 attempt to compile support for @code{Rprof()} [yes]
+@item --enable-memory-profiling
+attempt to compile support for @code{Rmemprof()} and @code{tracemem()} [no]
 @item --enable-R-shlib
 build @R{} as a shared/dynamic library [no]
 @item --enable-BLAS-shlib

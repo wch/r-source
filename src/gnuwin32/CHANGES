@@ -51,6 +51,9 @@ PACKAGE INSTALLATION
 
 INSTALLATION
 
+    o	Support for memory profiling is enabled in a standard build
+	(this can be changed by editing config.h).
+
     o	CHM help is no longer made by default, and support for it may
 	be withdrawn entirely before release.
 
