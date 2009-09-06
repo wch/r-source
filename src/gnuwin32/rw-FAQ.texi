@@ -219,10 +219,9 @@ set the default installation directory
 set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
 set the initial list of components: Components are named @samp{main},
-@samp{chtml}, @samp{html}, @samp{manuals},
-@samp{manuals/basic}, @samp{manuals/technical}, @samp{manuals/refman},
-@samp{libdocs}, @samp{tcl}, @samp{tcl/chm}, @samp{trans}
-and @code{tests}.
+@samp{html}, @samp{manuals}, @samp{manuals/basic},
+@samp{manuals/technical}, @samp{manuals/refman}, @samp{libdocs},
+@samp{tcl}, @samp{tcl/chm}, @samp{trans} and @code{tests}.
 @end table
 
 @noindent

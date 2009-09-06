@@ -394,10 +394,11 @@ sub listFiles {
 	$dir =~ s/\\$//;
 	$_ = $fn;
 	
-	if ($_ eq "bin\\Rchtml.dll" 
-	    || m/^library\\[^\\]*\\chtml/) {
-	    $component = "chtml";
-	} elsif ($_ eq "doc\\manual\\R-FAQ.html"
+#	if ($_ eq "bin\\Rchtml.dll" 
+#	    || m/^library\\[^\\]*\\chtml/) {
+#	    $component = "chtml";
+#	} els
+	if ($_ eq "doc\\manual\\R-FAQ.html"
 		 || $_ eq "doc\\html\\rw-FAQ.html"
 		 || $_ eq "share\\texmf\\Sweave.sty") {
 	    $component = "main";

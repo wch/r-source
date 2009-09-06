@@ -29,7 +29,7 @@
     unpackPkg <- function(pkg, pkgname, lib)
     {
         ## Create a temporary directory and unpack the zip to it
-        ## then get the real package & version name, copying the
+        ## then get the real package name, copying the
         ## dir over to the appropriate install dir.
         lib <- normalizePath(lib)
         tmpDir <- tempfile(, lib)
@@ -113,7 +113,9 @@
                         }
                     }
                 }
-             } else {
+            } else {
+                ## We can't use CHM help -- this works even if not there.
+                unlink(file.path(tmpDir, curPkg, "chtml"), recursive = TRUE)
                 instPath <- file.path(lib, desc[1,1])
 
                 ## If the package is already installed w/ this
