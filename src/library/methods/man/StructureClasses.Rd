@@ -87,7 +87,7 @@
   \code{"ts"} as an S3 class,  using an S4-style definition (see the
   documentation for \code{\link{setOldClass}} in the examples section
   for an abbreviated listing of how this is done.  The S3
-  inheritance of \code{"mts"} in package \code{stats} is also
+  inheritance of \code{"mts"} in package \pkg{stats} is also
   registered.
   These classes, as well as \code{"matrix"} and \code{"array"} should
   be valid in most examples as superclasses for new S4 class

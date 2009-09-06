@@ -93,7 +93,7 @@
   than the default ones when you start, insert a call to
   \code{\link{options}} in the \file{.Rprofile} or \file{Rprofile.site}
   file.  For example, \code{options(defaultPackages = character())} will
-  attach no extra packages on startup (only the \code{base} package) (or
+  attach no extra packages on startup (only the \pkg{base} package) (or
   set \code{R_DEFAULT_PACKAGES=NULL} as an environment variable before
   running \R).  Using \code{options(defaultPackages = "")} or
   \code{R_DEFAULT_PACKAGES=""} enforces the R \emph{system} default.

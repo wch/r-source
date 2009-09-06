@@ -40,7 +40,7 @@ vcov(object, \dots)
   Classes with methods for this function include:
   \code{lm}, \code{mlm}, \code{glm}, \code{nls},
   \code{negbin}, \code{polr}, \code{rlm} (in package \pkg{MASS}),
-  \code{multinom} (in package \code{nnet})
+  \code{multinom} (in package \pkg{nnet})
   \code{gls}, \code{lme} (in package \pkg{nlme},
   \code{coxph} and \code{survreg} (in package \pkg{survival}).
 }
