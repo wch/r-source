@@ -3159,7 +3159,9 @@ function(package, dir, lib.loc = NULL)
     ## 'Imports' have to be installed and hence help there will be found
     deps <- c(names(pkgInfo$Depends), names(pkgInfo$Imports))
     pkgs <- unique(deps) %w/o% base
-    aliases <- c(aliases, lapply(pkgs, Rd_aliases, lib.loc = lib.loc))
+    try_Rd_aliases <- function(...) try(Rd_aliases(...), silent = TRUE)
+    aliases <- c(aliases, lapply(pkgs, try_Rd_aliases, lib.loc = lib.loc))
+    aliases[sapply(aliases, class) == "try_error"] <- NULL
 
     ## See testRversion in library()
     new_only <- FALSE
