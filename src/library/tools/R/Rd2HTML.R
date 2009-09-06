@@ -106,7 +106,7 @@ Rd2HTML <-
              dynamic = FALSE, no_links = FALSE, ...)
 {
     version <- ""
-    if(package != "") {
+    if(!identical(package, "")) {
         if(length(package) > 1L) {
             version <- package[2L]
             package <- package[1L]
@@ -126,7 +126,7 @@ Rd2HTML <-
         }
         if(is.na(version)) version <- ""
     }
-    
+
     ## writeLines by default re-encodes strings to the local encoding.
     ## Avoid that by useBytes=TRUE
     writeLinesUTF8 <-
