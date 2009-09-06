@@ -3255,7 +3255,8 @@ function(package, dir, lib.loc = NULL)
         repos <- .get_standard_repository_URLs()
         known <- try(utils::available.packages(utils::contrib.url(repos, "source"))[, "Package"])
         miss <- if(inherits(known, "try-error")) TRUE
-        else unknown %in% known
+        else unknown %in% c(known, c("BRugs", "GLMMGibbs", "survnnet", "yags"))
+        ## from CRANextras
         if(any(miss))
             message(gettextf("Package(s) unavailable to check Rd xrefs: %s",
                              paste(sQuote(unknown[miss]), collapse = ", ")),
