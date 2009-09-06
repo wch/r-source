@@ -274,6 +274,10 @@ NEW FEATURES
 	
     o	Indexing with a vector index to [[]] has now been extended to
     	all recursive types.
+    	
+    o	pairlists may now be assigned as elements of lists.  (Lists
+    	could always be created with pairlist elements, but [[<-
+    	didn't support assigning them.)
 
     o	The perl=TRUE versions of strsplit(), grep() and friends now
 	work in a non-UTF-8 MBCS locale, by translating the inputs to

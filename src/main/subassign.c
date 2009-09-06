@@ -208,7 +208,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level,
     case 1300:	/* integer    <- null       */
     case 1400:	/* real	      <- null       */
     case 1500:	/* complex    <- null       */
-    case 1606:	/* character  <- null       */
+    case 1600:	/* character  <- null       */
     case 1900:  /* vector     <- null       */
     case 2000:  /* expression <- null       */
     case 2400:	/* raw        <- null       */
@@ -266,6 +266,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level,
 	break;
 
     case 1901:  /* vector     <- symbol   */
+    case 1902:	/* vector     <- pairlist */
     case 1904:  /* vector     <- environment   */
     case 1905:  /* vector     <- promise   */
     case 1906:  /* vector     <- language   */
@@ -322,6 +323,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level,
 	break;
 
     case 2001:	/* expression <- symbol	    */
+    case 2002:  /* expression <- pairlist   */
     case 2006:	/* expression <- language   */
     case 2010:	/* expression <- logical    */
     case 2013:	/* expression <- integer    */
@@ -1635,6 +1637,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1619:      /* character  <- vector     */
 
 	case 1901:  /* vector     <- symbol     */
+	case 1902:  /* vector	  <- pairlist   */
 	case 1904:  /* vector     <- environment*/
 	case 1905:  /* vector     <- promise    */
 	case 1906:  /* vector     <- language   */
@@ -1656,6 +1659,7 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    /* drop through: vectors and expressions are treated the same */
 
 	case 2001:	/* expression <- symbol	    */
+	case 2002:	/* expression <- pairlist   */
 	case 2006:	/* expression <- language   */
 	case 2010:	/* expression <- logical    */
 	case 2013:	/* expression <- integer    */
