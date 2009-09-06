@@ -841,22 +841,13 @@ SEXP attribute_hidden do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(nsubs == 1) { /* vector indexing */
 	SEXP thesub = CAR(subs);
-	int i = -1, len = length(thesub);
+	int len = length(thesub);
 
-	/* new case in 1.7.0, one vector index for a list */
-	if(isVectorList(x) && length(CAR(subs)) > 1) {
-	    for(i = 0; i < len - 1; i++) {
-		if(!isVectorList(x))
-		    errorcall(call, _("recursive indexing failed at level %d\n"), i+1);
-		offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
-				   length(x), pok, i, call);
-		if(offset < 0 || offset >= length(x))
-		    errorcall(call, _("no such index at level %d\n"), i+1);
-		x = VECTOR_ELT(x, offset);
-	    }
-	}
-	offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),
-			   length(x), pok, i, call);
+	if (len > 1)
+	    x = vectorIndex(x, thesub, 0, len-1, pok, call);
+	    
+	offset = get1index(thesub, getAttrib(x, R_NamesSymbol),
+			   length(x), pok, len > 1 ? len-1 : -1, call);
 	if (offset < 0 || offset >= length(x)) {
 	    /* a bold attempt to get the same behaviour for $ and [[ */
 	    if (offset < 0 && (isNewList(x) ||

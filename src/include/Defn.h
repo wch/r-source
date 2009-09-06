@@ -880,6 +880,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define ucstoutf8		Rf_ucstoutf8
 # define utf8toucs		Rf_utf8toucs
 # define utf8towcs		Rf_utf8towcs
+# define vectorIndex		Rf_vectorIndex
 # define vectorSubscript	Rf_vectorSubscript
 # define warningcall		Rf_warningcall
 # define WarningMessage		Rf_WarningMessage
@@ -1084,6 +1085,7 @@ void unmarkPhase(void);
 #endif
 SEXP R_LookupMethod(SEXP, SEXP, SEXP, SEXP);
 int usemethod(const char *, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP*);
+SEXP vectorIndex(SEXP, SEXP, int, int, int, SEXP);
 SEXP Rf_vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP),
                         SEXP (*)(SEXP, int), SEXP, SEXP);
 

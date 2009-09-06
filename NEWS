@@ -271,6 +271,9 @@ NEW FEATURES
 
     o	legend() now can specify the 'border' color of filled boxes,
 	thanks to a patch from Frederic Schutz.
+	
+    o	Indexing with a vector index to [[]] has now been extended to
+    	all recursive types.
 
     o	The perl=TRUE versions of strsplit(), grep() and friends now
 	work in a non-UTF-8 MBCS locale, by translating the inputs to

@@ -296,7 +296,9 @@
             for(i in at) {
                 if(print)
                     expri <- substitute({.doTrace(TRACE, MSG); EXPR},
-                                        list(TRACE = tracer, MSG = paste("step",i), EXPR = fBody[[i]]))
+                                        list(TRACE = tracer, 
+                                        MSG = paste("step",paste(i, collapse=",")), 
+                                        EXPR = fBody[[i]]))
                 else
                     expri <- substitute({.doTrace(TRACE); EXPR},
                                         list(TRACE=tracer, EXPR = fBody[[i]]))

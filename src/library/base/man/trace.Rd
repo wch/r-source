@@ -42,7 +42,7 @@ tracingState(on = NULL)
     function will be called or the expression will be evaluated on
     exiting the function.
     See the details section.}
-  \item{at}{optional numeric vector.  If supplied, \code{tracer}
+  \item{at}{optional numeric vector or list.  If supplied, \code{tracer}
     will be called just before the corresponding step in the body of the
     function.
     See the details section. }
@@ -118,7 +118,7 @@ tracingState(on = NULL)
   this case you probably want to supply \code{print=FALSE} in the call
   to \code{trace} also).
 
-  When the \code{at} argument is supplied, it should be a vector of
+  When the \code{at} argument is supplied, it can be a vector of
   integers referring to the substeps of the body of the function (this
   only works if the body of the function is enclosed in \code{{ ...}}.  In
   this case \code{tracer} is \emph{not} called on entry, but instead
@@ -126,6 +126,12 @@ tracingState(on = NULL)
   you don't want to try to count the steps in the printed version of a
   function; instead, look at \code{as.list(body(f))} to get the numbers
   associated with the steps in function \code{f}.)
+  
+  The \code{at} argument can also be a list of integer vectors.  In
+  this case, each vector refers to a step nested within another step of
+  the function.  For example, \code{at = list(c(3,4))}
+  will call the tracer just before the fourth step of the third step
+  of the function.  See the example below.
 
   An intrinsic limitation in the \code{exit} argument is that it won't
   work if the function itself uses \code{on.exit}, since the existing
@@ -218,7 +224,10 @@ if(.isMethodsDispatchOn()) { # non-simple use needs 'methods' package
 
 f <- function(x, y) {
     y <- pmax(y, .001)
-    x ^ y
+    if (x > 0)
+    	x ^ y
+    else
+    	stop("x must be positive")
 }
 
 ## arrange to call the browser on entering and exiting
@@ -231,6 +240,16 @@ trace("f", browser, exit = browser)
 trace("f", quote(if(any(y < 0)) yOrig <- y),
       exit = quote(if(exists("yOrig")) browser()),
       print = FALSE)
+      
+## Enter the browser just before stop() is called.  First, find
+## the step numbers
+
+as.list(body(f))
+as.list(body(f)[[3]])
+
+## Now call the browser there
+
+trace("f", quote(browser()), at=list(c(3,4)))
 
 ## trace a utility function, with recover so we
 ## can browse in the calling functions as well.

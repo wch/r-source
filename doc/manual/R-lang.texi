@@ -1647,10 +1647,10 @@ whereas @code{[} returns a list of the selected elements.
 
 The @code{[[} form allows only a single element to be selected using
 integer or character indices, whereas @code{[} allows indexing by
-vectors.  Note though that for a list, the index can be a vector and
-each element of the vector is applied in turn to the list, the
-selected component, the selected component of that component, and so on.
-The result is still a single element.
+vectors.  Note though that for a list or other recursive object, the
+index can be a vector and each element of the vector is applied in
+turn to the list, the selected component, the selected component of
+that component, and so on. The result is still a single element.
 
 The form using @code{$} applies to recursive objects such as lists and
 pairlists.  It allows only a literal character string or a symbol as the
