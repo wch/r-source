@@ -34,9 +34,6 @@
 #include <R_ext/QuartzDevice.h>
 
 #include "grDevices.h"
-#ifdef SUPPORT_MBCS
-#include <wchar.h>
-#endif
 
 #include <CoreFoundation/CoreFoundation.h>
 

@@ -272,6 +272,10 @@ NEW FEATURES
     o	legend() now can specify the 'border' color of filled boxes,
 	thanks to a patch from Frederic Schutz.
 
+    o	The perl=TRUE versions of strsplit(), grep() and friends now
+	work in a non-UTF-8 MBCS locale, by translating the inputs to
+	UTF-8.
+
 
 HELP & Rd FILE CHANGES
 
@@ -354,7 +358,7 @@ INSTALLATION
     o	cairo >= 1.2 is now required (1.2.0 was released in July 2006)
 	for cairo-based graphics devices (which remain optional).
 
-    o	A suitable iconv() is now required: support for
+    o	A suitable iconv() is now required: support for configure option
 	--without-iconv has been withdrawn (it was deprecated in R 2.5.0).
 
     o	Perl is no longer 'essential'.	R can be built without it, but
@@ -362,6 +366,9 @@ INSTALLATION
 
     o	A system 'glob' function is now essential (a working
 	Sys.glob() has been assumed since R 2.9.0 at least).
+
+    o	C99 support for MBCS is now required, and configure option
+	--disable-mbcs has been withdrawn.
 
 
 INTERNATIONALIZATION

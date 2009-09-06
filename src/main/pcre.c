@@ -33,12 +33,7 @@
 # include <pcre.h>
 #endif
 
-#ifdef SUPPORT_MBCS
-# include <R_ext/rlocale.h>
-# include <wchar.h>
-# include <wctype.h>
-#endif
-
+#include <R_ext/rlocale.h>
 #include <R_ext/RS.h>           /* for CallocCharBuf and Free */
 
 
@@ -61,9 +56,8 @@ static int length_adj(const char *orig, const char *repl, int *ovec,
 		if (k > nsubexpr)
 		    error(_("invalid backreference %d in regular expression"), k);
 		nb = ovec[2*k+1] - ovec[2*k];
-#ifdef SUPPORT_MBCS
 		/* assume for now that in UTF-8 upper/lower pairs are same len */
-		if (nb >0 && !useBytes && mbcslocale && (upper || lower)) {
+		if (nb > 0 && !useBytes && mbcslocale && (upper || lower)) {
 		    wctrans_t tr = wctrans(upper ? "toupper" : "tolower");
 		    int j, nc;
 		    char *xi, *p;
@@ -81,7 +75,6 @@ static int length_adj(const char *orig, const char *repl, int *ovec,
 			nb = wcstombs(NULL, wc, 0);
 		    }
 		}
-#endif
 		n += nb - 2;
 		p++;
 	    } else if (p[1] == 'U') {
@@ -119,7 +112,6 @@ static char *string_adj(char *target, const char *orig, const char *repl,
 		k = p[1] - '0';
 		/* Here we need to work in chars */
 		nb = ovec[2*k+1] - ovec[2*k];
-#ifdef SUPPORT_MBCS
 		if (nb > 0 && !useBytes && mbcslocale && (upper || lower)) {
 		    wctrans_t tr = wctrans(upper ? "toupper" : "tolower");
 		    int j, nc;
@@ -159,7 +151,6 @@ static char *string_adj(char *target, const char *orig, const char *repl,
 			for (j = 0; j < nb; j++) *t++ = *xi++;
 		    }
 		} else
-#endif
 		    for (i = ovec[2*k] ; i < ovec[2*k+1] ; i++) {
 			c = orig[i];
 			*t++ = upper ? toupper(c) : (lower ? tolower(c) : c);
@@ -220,16 +211,15 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 	ienc = CE_NATIVE;
     }
 
-#ifdef SUPPORT_MBCS
     if (useBytes) ;
-    else if (utf8locale || use_UTF8) options = PCRE_UTF8;
-    else if (mbcslocale)
-	warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
+    else {
+	if (mbcslocale && !utf8locale) use_UTF8 = TRUE;
+	if (utf8locale || use_UTF8) options |= PCRE_UTF8;
+    }
     if (!useBytes && mbcslocale && !mbcsValid(spat))
 	error(_("'pattern' is invalid in this locale"));
     if (!useBytes && mbcslocale && !mbcsValid(srep))
 	error(_("'replacement' is invalid in this locale"));
-#endif
 
 
     if (igcase_opt) {
@@ -269,10 +259,8 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 	t = srep;
 	nns = ns = strlen(s);
 
-#ifdef SUPPORT_MBCS
 	if (!useBytes && mbcslocale && !mbcsValid(s))
 	    error(_("input string %d is invalid in this locale"), i+1);
-#endif
 	/* Looks like PCRE_NOTBOL is not needed in this version,
 	   but leave in as a precaution */
 	eflag = 0; last_end = -1;
@@ -289,7 +277,6 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 	    if (s[offset] == '\0' || !global) break;
 	    /* If we have a 0-length match, move on a char */
 	    if (ovector[1] == ovector[0]) {
-#ifdef SUPPORT_MBCS
 		if (!useBytes && ienc == CE_UTF8) {
 		    int used, pos = 0;
 		    while( (used = utf8clen(s[pos])) ) {
@@ -310,7 +297,6 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 			}
 		    }
 		} else
-#endif
 		    offset++;
 	    }
 	    eflag = PCRE_NOTBOL;
@@ -341,7 +327,6 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 		if (s[offset] == '\0' || !global) break;
 		if (ovector[1] == ovector[0]) {
 		    /* advance by a char */
-#ifdef SUPPORT_MBCS
 		    if (!useBytes && ienc == CE_UTF8) {
 			int used, pos = 0;
 			while( (used = utf8clen(s[pos])) ) {
@@ -364,7 +349,6 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 			    }
 			}
 		    } else
-#endif
 			*u++ = s[offset++];
 		}
 
@@ -393,8 +377,6 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 
 #include "RBufferUtils.h"
 
-/* FIXME: this should be using UTF-8 when the strings concerned are
-   UTF-8 */
 SEXP attribute_hidden
 do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 {
@@ -431,22 +413,19 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 	ienc = CE_NATIVE;
     }
 
-#ifdef SUPPORT_MBCS
     if (useBytes) ;
-    else if (utf8locale || use_UTF8) options = PCRE_UTF8;
-    else if (mbcslocale)
-	warning(_("perl = TRUE is only fully implemented in UTF-8 locales"));
-#endif
+    else {
+	if (mbcslocale && !utf8locale) use_UTF8 = TRUE;
+	if (utf8locale || use_UTF8) options = PCRE_UTF8;
+    }
     if (igcase_opt) {
 	options |= PCRE_CASELESS;
 	if (useBytes && utf8locale && !strIsASCII(spat))
 	    warning(_("ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n  in UTF-8 locales only works caselessly for ASCII patterns"));
     }
-
-#ifdef SUPPORT_MBCS
     if (!useBytes && mbcslocale && !mbcsValid(spat))
 	error(_("regular expression is invalid in this locale"));
-#endif
+
     tables = pcre_maketables();
     re_pcre = pcre_compile(spat, options, &errorptr, &erroffset, tables);
     if (!re_pcre) {
@@ -485,7 +464,6 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 	    s = translateCharUTF8(STRING_ELT(text, i));
 	else
 	    s = translateChar(STRING_ELT(text, i));
-#ifdef SUPPORT_MBCS
 	if (!useBytes && ienc != CE_UTF8 && mbcslocale && !mbcsValid(s)) {
 	    warning(_("input string %d is invalid in this locale"), i+1);
 	    PROTECT(ans = allocVector(INTSXP, 1));
@@ -496,7 +474,6 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 	    UNPROTECT(2);
 	    continue;
 	}
-#endif
 	while (!foundAll) {
 	    int rc, ovector[3], slen = strlen(s);
 	    rc = pcre_exec(re_pcre, re_pe, s, slen, start, 0, ovector, 3);
@@ -530,7 +507,6 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 		    start = ovector[0] + 1;
 		else
 		    start = ovector[1];
-#ifdef SUPPORT_MBCS
 		if (!useBytes && ienc == CE_UTF8) {
 		    int mlen = ovector[1] - st;
 		    /* Unfortunately these are in bytes, so we need to
@@ -574,7 +550,6 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 			foundAll = 1;
 		    }
 		}
-#endif
 		if (start >= slen)
 		    foundAll = 1;
 	    } else {

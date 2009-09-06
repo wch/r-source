@@ -393,7 +393,7 @@ SEXP duplicated(SEXP x, Rboolean from_last)
     h = INTEGER(data.HashTable);				\
     if(TYPEOF(x) == STRSXP) {					\
 	for(i = 0; i < length(x); i++) 				\
-	    if(IS_UTF8(STRING_ELT(x, i))) {data.useUTF8 = TRUE; break;} \
+	    if(ENC_KNOWN(STRING_ELT(x, i))) {data.useUTF8 = TRUE; break;} \
     }
 
     DUPLICATED_INIT;
@@ -681,10 +681,10 @@ SEXP match(SEXP itable, SEXP ix, int nmatch)
     if(type == STRSXP) {
 	Rboolean useUTF8 = FALSE;
 	for(i = 0; i < length(x); i++)
-	    if(IS_UTF8(STRING_ELT(x, i))) {useUTF8 = TRUE; break;}
+	    if(ENC_KNOWN(STRING_ELT(x, i))) {useUTF8 = TRUE; break;}
 	if (!useUTF8)
 	    for(i = 0; i < length(table); i++)
-		if(IS_UTF8(STRING_ELT(table, i))) {useUTF8 = TRUE; break;}
+		if(ENC_KNOWN(STRING_ELT(table, i))) {useUTF8 = TRUE; break;}
 	data.useUTF8 = useUTF8;
     }
     PROTECT(data.HashTable);
@@ -724,10 +724,10 @@ SEXP match4(SEXP itable, SEXP ix, int nmatch, SEXP incomp)
     if(type == STRSXP) {
 	Rboolean useUTF8 = FALSE;
 	for(i = 0; i < length(x); i++)
-	    if(IS_UTF8(STRING_ELT(x, i))) {useUTF8 = TRUE; break;}
+	    if(ENC_KNOWN(STRING_ELT(x, i))) {useUTF8 = TRUE; break;}
 	if (!useUTF8)
 	    for(i = 0; i < length(table); i++)
-		if(IS_UTF8(STRING_ELT(table, i))) {useUTF8 = TRUE; break;}
+		if(ENC_KNOWN(STRING_ELT(table, i))) {useUTF8 = TRUE; break;}
 	data.useUTF8 = useUTF8;
     }
     PROTECT(data.HashTable);
@@ -809,10 +809,10 @@ SEXP attribute_hidden do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     for(i = 0; i < n_input; i++)
-	if(IS_UTF8(STRING_ELT(input, i))) {useUTF8 = TRUE; break;}
+	if(ENC_KNOWN(STRING_ELT(input, i))) {useUTF8 = TRUE; break;}
     if (!useUTF8)
 	for(i = 0; i < n_target; i++)
-	    if(IS_UTF8(STRING_ELT(target, i))) {useUTF8 = TRUE; break;}
+	    if(ENC_KNOWN(STRING_ELT(target, i))) {useUTF8 = TRUE; break;}
 
     in = (const char **) R_alloc(n_input, sizeof(char *));
     tar = (const char **) R_alloc(n_target, sizeof(char *));
@@ -934,10 +934,10 @@ SEXP attribute_hidden do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     no_match = asInteger(CADDR(args));
 
     for(i = 0; i < n_input; i++)
-	if(IS_UTF8(STRING_ELT(input, i))) {useUTF8 = TRUE; break;}
+	if(ENC_KNOWN(STRING_ELT(input, i))) {useUTF8 = TRUE; break;}
     if (!useUTF8)
 	for(i = 0; i < n_target; i++)
-	    if(IS_UTF8(STRING_ELT(target, i))) {useUTF8 = TRUE; break;}
+	    if(ENC_KNOWN(STRING_ELT(target, i))) {useUTF8 = TRUE; break;}
 
     PROTECT(ans = allocVector(INTSXP, n_input));
     ians = INTEGER(ans);

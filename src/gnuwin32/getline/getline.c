@@ -24,9 +24,7 @@ int 		(*gl_in_hook)() = 0;
 int 		(*gl_out_hook)() = 0;
 int 		(*gl_tab_hook)() = gl_tab;
 
-#define SUPPORT_MBCS
 #include <R_ext/rlocale.h>
-#include <wchar.h>
 extern Rboolean mbcslocale;
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 

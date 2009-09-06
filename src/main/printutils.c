@@ -271,11 +271,7 @@ const char
    which Western versions at least do not.).
 */
 
-#ifdef SUPPORT_MBCS
-# include <R_ext/rlocale.h> /* redefines isw* functions */
-# include <wchar.h>
-# include <wctype.h>
-#endif
+#include <R_ext/rlocale.h> /* redefines isw* functions */
 
 #ifdef Win32
 #include "rgui_UTF8.h"
@@ -292,7 +288,6 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
     const char *p = str;
     int len = 0, i;
 
-#ifdef SUPPORT_MBCS
     if(mbcslocale || ienc == CE_UTF8) {
 	int res;
 	mbstate_t mb_st;
@@ -351,7 +346,6 @@ int Rstrwid(const char *str, int slen, cetype_t ienc, int quote)
 	    }
 	}
     } else
-#endif
 	for (i = 0; i < slen; i++) {
 	    /* ASCII */
 	    if((unsigned char) *p < 0x80) {
@@ -413,9 +407,7 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 {
     int b, b0, i, j, cnt;
     const char *p; char *q, buf[11];
-#ifdef SUPPORT_MBCS /* always true on Win32 */
     cetype_t ienc = CE_NATIVE;
-#endif
 
     /* We have to do something like this as the result is returned, and
        passed on by EncodeElement -- so no way could be end user be
@@ -481,7 +473,6 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	b -= b0;
     }
     if(quote) *q++ = quote;
-#ifdef SUPPORT_MBCS
     if(mbcslocale || ienc == CE_UTF8) {
 	int j, res;
 	mbstate_t mb_st;
@@ -564,7 +555,6 @@ const char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 #endif
 
     } else
-#endif
 	for (i = 0; i < cnt; i++) {
 
 	    /* ASCII */

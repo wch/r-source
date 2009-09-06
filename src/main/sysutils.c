@@ -702,9 +702,7 @@ const char *translateChar(SEXP x)
     const char *inbuf, *ans = CHAR(x);
     char *outbuf, *p;
     size_t inb, outb, res;
-#ifdef SUPPORT_MBCS
     cetype_t ienc = getCharCE(x);
-#endif
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
     if(TYPEOF(x) != CHARSXP)
@@ -763,7 +761,6 @@ next_char:
 	    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	    goto top_of_loop;
 	}
-#ifdef SUPPORT_MBCS
 	if (ienc == CE_UTF8) {
 	    /* if starting in UTF-8, use \uxxxx */
 	    /* This must be the first byte */
@@ -788,9 +785,7 @@ next_char:
 		outbuf += 4; outb -= 4;
 		inbuf++; inb--;
 	    }
-	} else
-#endif
-	{
+	} else {
 	    snprintf(outbuf, 5, "<%02x>", (unsigned char)*inbuf);
 	    outbuf += 4; outb -= 4;
 	    inbuf++; inb--;

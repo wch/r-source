@@ -866,17 +866,8 @@ void setup_Rmainloop(void)
     /* Print a platform and version dependent greeting and a pointer to
      * the copyleft.
      */
-    if(!R_Quiet) {
-	PrintGreeting();
-#ifndef SUPPORT_MBCS
-	if(utf8locale)
-	    R_ShowMessage(_("WARNING: UTF-8 locales are not supported in this build of R\n"));
-	else if(mbcslocale)
-	    R_ShowMessage(_("WARNING: multibyte locales are not supported in this build of R\n"));
-
-#endif
-    }
-
+    if(!R_Quiet) PrintGreeting();
+ 
     R_LoadProfile(R_OpenSiteFile(), baseEnv);
     R_LockBinding(install(".Library.site"), R_BaseEnv);
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);

@@ -1759,23 +1759,17 @@ their currency symbols).  Since @R{} 2.1.0 it has supported (where
 possible) multi-byte character sets such as UTF-8 and others used in
 Chinese, Japanese and Korean.
 
-Full internationalization of the character sets is enabled unless @R{}
-is built under Unix-alikes using @command{configure} option
-@option{--disable-mbcs} provided the OS can support it:
-@pxref{Configuration on Unix}.  Under Windows, support for Windows' own
-MBCS is always included.
-
 All builds of @R{} support all single-byte character sets that the
 underlying OS can handle.  These are interpreted according to the
 @cindex Locale
 current @code{locale}, a sufficiently complicated topic to merit a
-separate section.  Fully internationalized builds can also handle most
-multi-byte locales, in which a single character is represented by one,
-two or more consecutive bytes: examples of such locales are those using
-UTF-8 (becoming standard under Linux but non-existent under Windows) and
-those for Chinese, Japanese and Korean.
+separate section.  Builds can also handle most multi-byte locales, in
+which a single character is represented by one, two or more consecutive
+bytes: examples of such locales are those using UTF-8 (becoming standard
+under Linux but non-existent under Windows) and those for Chinese,
+Japanese and Korean.
 
-The other aspect of the internationalization is support of the
+The other aspect of the internationalization is support for the
 translation of messages.  This is enabled in almost all builds of @R{}.
 
 @menu
@@ -2307,7 +2301,13 @@ current encoding and to translate to and from the Unicode wide-character
 formats @code{"UCS-[24][BL]E"} --- this is true for @code{glibc} but not
 of most commercial Unixes.  However, you can make use of @acronym{GNU}
 @code{libiconv} (possibly as a plug-in replacement: see
-@uref{http://www.gnu.org/@/software/@/libiconv/}.
+@uref{http://www.gnu.org/@/software/@/libiconv/}.  The OS needs to have
+enough support@footnote{specifically, the C99 functionality of headers
+@file{wchar.h} and @file{wctype.h}, types @code{wctans_t} and
+@code{mbstate_t} and functions @code{mbrtowc}, @code{mbstowcs},
+@code{wcrtomb}, @code{wcscoll}, @code{wcstombs}, @code{wctrans},
+@code{wctype}, and @code{iswctype}.} for wide-character types: this is
+checked at configuration.
 
 You will not be able to build most of the manuals unless you have
 @command{makeinfo} version 4.7 or later installed, and if not some of
@@ -2931,31 +2931,6 @@ If you need to re-configure @R{} with different options you may need to run
 
 @node Internationalization support, Configuration variables, Configuration options, Configuration on Unix
 @section Internationalization support
-
-@R{} can be compiled with support for multi-byte character sets
-(@acronym{MBCS}), in particular for UTF-8 locales (which are usually
-identified by suffix @samp{.utf8} or @samp{UTF-8}, something like
-@samp{en_GB.utf8}).  UTF-8 is an encoding of Unicode and in principle
-covers all human languages simultaneously: however, a given system may
-not have fonts capable of displaying more than a few of these languages.
-
-Support for MBCS is selected if possible at @command{configure} time
-(unless disabled with @option{--disable-mbcs}).  This will check for a
-large number of features, notably support for the C99/UNIX98 wide
-character functions, for UTF-8 or MBCS support in X11 and for
-@command{iconv} with a rich enough functionality.  If enough of these
-are found, @code{MBCS} will be listed as one of the ``Additional
-capabilities''.  Then if @R{} is started in a UTF-8 locale it assumes
-that the terminal will supply and display UTF-8-encoded
-characters@footnote{You may have to set this with @code{luit}, but it
-should be the default in a window manager session started in UTF-8.}.
-If run in a single-byte locale, @R{} behaves almost exactly as if it was
-configured with @option{--disable-mbcs}.
-
-A version of @R{} built with MBCS support can also be run in other
-multi-byte locales, for example those using the EUC-JP, EUC-KR and
-EUC-TW encodings on Unix-alikes and the code pages for Chinese, Japanese
-and Korean on Windows.
 
 Translation of messages is supported via GNU @code{gettext} unless
 disabled by the configure option @option{--disable-nls} or the
@@ -4039,8 +4014,7 @@ make
 @end example
 
 @noindent
-MBCS does work apart from some aspects of date strings, but will be of
-little use outside a CJK locale.  NLS does work, although
+NLS does work if required, although adding
 @option{--with-included-gettext} is preferable.  You will see many
 warnings about the use of auto-import.
 

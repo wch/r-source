@@ -111,8 +111,7 @@ static SEXP     SrcFile = NULL;
 static SEXP	SrcRefs = NULL;
 static PROTECT_INDEX srindex;
 
-#if defined(SUPPORT_MBCS)
-# include <R_ext/rlocale.h>
+#include <R_ext/rlocale.h>
 /* # include <sys/param.h> what was this for? */
 #ifdef HAVE_LANGINFO_CODESET
 # include <langinfo.h>
@@ -156,8 +155,6 @@ static int mbcs_get_next(int c, wchar_t *wc)
     for(i = clen - 1; i > 0; i--) xxungetc(s[i]);
     return clen;
 }
-
-#endif
 
 /* Handle function source */
 
@@ -1739,7 +1736,7 @@ static int SkipSpace(void)
 	return c;
     }
 #endif
-#if defined(SUPPORT_MBCS) && defined(__STDC_ISO_10646__)
+#if defined(__STDC_ISO_10646__)
     if(mbcslocale) { /* wctype functions need Unicode wchar_t */
 	int i, clen;
 	wchar_t wc;
@@ -1904,20 +1901,18 @@ static int NumericValue(int c)
    string.  Needs Unicode wide-char support.
 */
 
-#ifdef SUPPORT_MBCS
 #if defined(__APPLE_CC__)
 /* This may not be 100% true (see the comment in rlocales.h),
    but it seems true in normal locales */
 # define __STDC_ISO_10646__
 #endif
 
-#  define USE_UTF8_IF_POSSIBLE
-# if defined(Win32) || defined(__STDC_ISO_10646__)
+#if defined(Win32) || defined(__STDC_ISO_10646__)
 typedef wchar_t ucs_t;
-#  define mbcs_get_next2 mbcs_get_next
-# else
+# define mbcs_get_next2 mbcs_get_next
+#else
 typedef unsigned int ucs_t;
-#  define WC_NOT_UNICODE 
+# define WC_NOT_UNICODE 
 static int mbcs_get_next2(int c, ucs_t *wc)
 {
     int i, res, clen = 1; char s[9];
@@ -1953,10 +1948,8 @@ static int mbcs_get_next2(int c, ucs_t *wc)
     for(i = clen - 1; i > 0; i--) xxungetc(s[i]);
     return clen;
 }
-# endif
 #endif
 
-#ifdef USE_UTF8_IF_POSSIBLE
 #define WTEXT_PUSH(c) do { if(wcnt < 10000) wcs[wcnt++] = c; } while(0)
 
 static SEXP mkStringUTF8(const ucs_t *wcs, int cnt)
@@ -1987,9 +1980,6 @@ static SEXP mkStringUTF8(const ucs_t *wcs, int cnt)
     UNPROTECT(1);
     return t;
 }
-#else
-#define WTEXT_PUSH(c)
-#endif
 
 #define CTEXT_PUSH(c) do { \
 	if (ct - currtext >= 1000) {memmove(currtext, currtext+100, 901); memmove(currtext, "... ", 4); ct -= 100;} \
@@ -2007,12 +1997,9 @@ static int StringValue(int c, Rboolean forSymbol)
     char st0[MAXELTSIZE];
     unsigned int nstext = MAXELTSIZE;
     char *stext = st0, *bp = st0;
-
-#ifdef USE_UTF8_IF_POSSIBLE
     int wcnt = 0;
     ucs_t wcs[10001];
     Rboolean use_wcs = FALSE;
-#endif
 
     while ((c = xxgetc()) != R_EOF && c != quote) {
 	CTEXT_PUSH(c);
@@ -2068,9 +2055,6 @@ static int StringValue(int c, Rboolean forSymbol)
 		c = val;
 	    }
 	    else if(c == 'u') {
-#ifndef SUPPORT_MBCS
-		error(_("\\uxxxx sequences not supported (line %d)"), xxlineno);
-#else
 		unsigned int val = 0; int i, ext; 
 		Rboolean delim = FALSE;
 
@@ -2106,32 +2090,10 @@ static int StringValue(int c, Rboolean forSymbol)
 		    else CTEXT_PUSH(c);
 		}
 		WTEXT_PUSH(val); /* this assumes wchar_t is Unicode */
-#ifdef USE_UTF8_IF_POSSIBLE
 		use_wcs = TRUE;
-#else
-		{
-		    size_t res;
-		    char buff[MB_CUR_MAX+1]; /* could be variable, and hence not legal C90 */
-		    res = ucstomb(buff, val);
-		    if((int) res <= 0) {
-			if(delim)
-			    error(_("invalid \\u{xxxx} sequence (line %d)"),
-				  xxlineno);
-			else
-			    error(_("invalid \\uxxxx sequence (line %d)"),
-				  xxlineno);
-		    } else
-			for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
-		}
-#endif
 		continue;
-#endif /* SUPPORT_MBCS */
 	    }
 	    else if(c == 'U') {
-#ifndef SUPPORT_MBCS
-		error(_("\\Uxxxxxxxx sequences not supported (line %d)"),
-		      xxlineno);
-#else
 		unsigned int val = 0; int i, ext;
 		Rboolean delim = FALSE;
 		if(forSymbol) 
@@ -2165,24 +2127,8 @@ static int StringValue(int c, Rboolean forSymbol)
 		    else CTEXT_PUSH(c);
 		}
 		WTEXT_PUSH(val);
-#ifdef USE_UTF8_IF_POSSIBLE
 		use_wcs = TRUE;
-#else
-		{
-		    size_t res;
-		    char buff[MB_CUR_MAX+1];
-		    res = ucstomb(buff, val);
-		    if((int) res <= 0) {
-			if(delim)
-			    error(_("invalid \\U{xxxxxxxx} sequence (line %d)"), xxlineno);
-			else
-			    error(_("invalid \\Uxxxxxxxx sequence (line %d)"), xxlineno);
-		    }
-		    for(i = 0; i <  res; i++) STEXT_PUSH(buff[i]);
-		}
-#endif
 		continue;
-#endif /* SUPPORT_MBCS */
 	    }
 	    else {
 		switch (c) {
@@ -2223,30 +2169,26 @@ static int StringValue(int c, Rboolean forSymbol)
 		    break;
 		}
 	    }
+	} else if(mbcslocale) {
+	    int i, clen;
+	    ucs_t wc;
+	    clen = mbcs_get_next2(c, &wc);
+	    WTEXT_PUSH(wc);
+	    for(i = 0; i < clen - 1; i++){
+		STEXT_PUSH(c);
+		c = xxgetc();
+		if (c == R_EOF) break;
+		CTEXT_PUSH(c);
+		if (c == '\n') {
+		    xxungetc(c); CTEXT_POP();
+		    c = '\\';
+		}
+	    }
+	    if (c == R_EOF) break;
+	    STEXT_PUSH(c);
+	    continue;
 	}
-#if defined(SUPPORT_MBCS)
-       else if(mbcslocale) {
-	   int i, clen;
-	   ucs_t wc;
-	   clen = mbcs_get_next2(c, &wc);
-	   WTEXT_PUSH(wc);
-	   for(i = 0; i < clen - 1; i++){
-	       STEXT_PUSH(c);
-	       c = xxgetc();
-	       if (c == R_EOF) break;
-	       CTEXT_PUSH(c);
-	       if (c == '\n') {
-		   xxungetc(c); CTEXT_POP();
-		   c = '\\';
-	       }
-	   }
-	   if (c == R_EOF) break;
-	   STEXT_PUSH(c);
-	   continue;
-       }
-#endif /* SUPPORT_MBCS */
 	STEXT_PUSH(c);
-#ifdef USE_UTF8_IF_POSSIBLE
 	if ((unsigned int) c < 0x80) WTEXT_PUSH(c);
 	else { /* have an 8-bit char in the current encoding */
 #ifdef WC_NOT_UNICODE
@@ -2262,7 +2204,6 @@ static int StringValue(int c, Rboolean forSymbol)
 #endif
 	    WTEXT_PUSH(wc);
 	}
-#endif
     }
     STEXT_PUSH('\0');
     WTEXT_PUSH(0);
@@ -2271,14 +2212,12 @@ static int StringValue(int c, Rboolean forSymbol)
 	if(stext != st0) free(stext);
 	return SYMBOL;
     } else {
-#ifdef USE_UTF8_IF_POSSIBLE
 	if(use_wcs) {
 	    if(wcnt < 10000)
 		PROTECT(yylval = mkStringUTF8(wcs, wcnt)); /* include terminator */
 	    else
 		error(_("string at line %d containing Unicode escapes not in this locale\nis too long (max 10000 chars)"), xxlineno);
 	} else
-#endif
 	    PROTECT(yylval = mkString2(stext,  bp - stext - 1));
 	if(stext != st0) free(stext);
 	if(have_warned) {
@@ -2322,7 +2261,6 @@ int isValidName(const char *name)
     const char *p = name;
     int i;
 
-#ifdef SUPPORT_MBCS
     if(mbcslocale) {
 	/* the only way to establish which chars are alpha etc is to
 	   use the wchar variants */
@@ -2341,9 +2279,7 @@ int isValidName(const char *name)
 	    p += used; n -= used;
 	}
 	if (*p != '\0') return 0;
-    } else
-#endif
-    {
+    } else {
 	int c = 0xff & *p++;
 	if (c != '.' && !isalpha(c) ) return 0;
 	if (c == '.' && isdigit(0xff & (int)*p)) return 0;
@@ -2364,7 +2300,6 @@ static int SymbolValue(int c)
 {
     int kw;
     DECLARE_YYTEXT_BUFP(yyp);
-#if defined(SUPPORT_MBCS)
     if(mbcslocale) {
 	wchar_t wc; int i, clen;
 	clen = mbcs_get_next(c, &wc);
@@ -2384,7 +2319,6 @@ static int SymbolValue(int c)
 	    if(!iswalnum(wc)) break;
 	}
     } else
-#endif
 	do {
 	    YYTEXT_PUSH(c, yyp);
 	} while ((c = xxgetc()) != R_EOF &&
@@ -2416,9 +2350,7 @@ static int SymbolValue(int c)
 static int token(void)
 {
     int c;
-#if defined(SUPPORT_MBCS)
     wchar_t wc;
-#endif
 
     if (SavedToken) {
 	c = SavedToken;
@@ -2470,12 +2402,10 @@ static int token(void)
  symbol:
 
     if (c == '.') return SymbolValue(c);
-#if defined(SUPPORT_MBCS)
     if(mbcslocale) {
 	mbcs_get_next(c, &wc);
 	if (iswalpha(wc)) return SymbolValue(c);
     } else
-#endif
 	if (isalpha(c)) return SymbolValue(c);
 
     /* compound tokens */

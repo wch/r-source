@@ -24,12 +24,10 @@
 #include <R.h>
 #include "tools.h"
 
-#ifdef SUPPORT_MBCS
 #include <stdlib.h> /* for MB_CUR_MAX */
 #include <wchar.h>
 LibExtern Rboolean mbcslocale;
 size_t Rf_mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
-#endif
 
 SEXP
 delim_match(SEXP x, SEXP delims)
@@ -61,9 +59,8 @@ delim_match(SEXP x, SEXP delims)
     int lstart, lend;
     Rboolean is_escaped, equal_start_and_end_delims;
     SEXP ans, matchlen;
-#ifdef SUPPORT_MBCS
     mbstate_t mb_st; int used;
-#endif
+
     if(!isString(x) || !isString(delims) || (length(delims) != 2))
 	error(_("invalid argument type"));
 
@@ -77,9 +74,7 @@ delim_match(SEXP x, SEXP delims)
     PROTECT(matchlen = allocVector(INTSXP, n));
 
     for(i = 0; i < n; i++) {
-#ifdef SUPPORT_MBCS
 	memset(&mb_st, 0, sizeof(mbstate_t));
-#endif
 	start = end = -1;
 	s0 = s = translateChar(STRING_ELT(x, i));
 	pos = is_escaped = delim_depth = 0;
@@ -95,13 +90,11 @@ delim_match(SEXP x, SEXP delims)
 	    }
 	    else if(c == '%') {
 		while((c != '\0') && (c != '\n')) {
-#ifdef SUPPORT_MBCS
 		    if(mbcslocale) {
 			used = Rf_mbrtowc(NULL, s, MB_CUR_MAX, &mb_st);
 			if(used == 0) break;
 			s += used; c = *s;
 		    } else
-#endif
 			c = *++s;
 		    pos++;
 		}
@@ -121,15 +114,12 @@ delim_match(SEXP x, SEXP delims)
 		if(delim_depth == 0) start = pos;
 		delim_depth++;
 	    }
-#ifdef SUPPORT_MBCS
 	    if(mbcslocale) {
 		used = Rf_mbrtowc(NULL, s, MB_CUR_MAX, &mb_st);
 		if(used == 0) break;
 		s += used;
 	    } else
-#endif
-		s++;
-	    pos++;
+		s++; pos++;
 	}
 	if(end > -1) {
 	    INTEGER(ans)[i] = start + 1; /* index from one */

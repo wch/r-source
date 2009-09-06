@@ -42,8 +42,6 @@
 extern char *strdup(const char *s1);
 #endif
 
-#ifdef SUPPORT_MBCS
-# define USE_FONTSET 1
 extern int utf8locale;
 /* In theory we should do this, but it works less well
 # ifdef X_HAVE_UTF8_STRING
@@ -51,7 +49,6 @@ extern int utf8locale;
 #  define HAVE_XUTF8TEXTEXTENTS 1
 #  define HAVE_XUTF8DRAWSTRING 1
 # endif */
-#endif
 
 #include "rotated.h"
 
@@ -181,21 +178,17 @@ static void		XRotAddToLinkedList(Display *dpy, RotatedTextItem *item);
 static void		XRotFreeTextItem(Display *dpy, RotatedTextItem *item);
 static XImage	       *XRotMagnifyImage(Display *dpy, XImage *ximage);
 
-#ifdef USE_FONTSET
 static int XmbRotDrawString(Display *dpy, XFontSet fontset, double angle,
 			    Drawable drawable, GC gc, int x, int y, const char *str);
-#endif
 
 /* ---------------------------------------------------------------------- */
 
 int XRfRotDrawString(Display *dpy, R_XFont *rfont, double angle,
 		     Drawable drawable, GC gc, int x, int y, const char *str)
 {
-#ifdef USE_FONTSET
     if(rfont->type == Font_Set)
 	return XmbRotDrawString(dpy, rfont->fontset, angle, drawable, gc, x, y, str);
     else
-#endif
 	return XRotDrawString(dpy, rfont->font, angle, drawable, gc, x, y, str);
 }
 
@@ -1498,7 +1491,6 @@ XPoint *XRotTextExtents(Display *dpy, XFontStruct *font, double angle,
 }
 
 
-#ifdef USE_FONTSET
 static XFontStruct * RXFontStructOfFontSet(XFontSet font)
 {
     char **ml;
@@ -2436,4 +2428,3 @@ XPoint *XmbRotTextExtents(Display *dpy, XFontSet font, double angle,
 
     return xp_out;
 }
-#endif

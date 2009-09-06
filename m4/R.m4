@@ -3340,19 +3340,19 @@ fi
 ## locales - support for MBCS and specifically UTF-8
 AC_DEFUN([R_MBCS],
 [
+want_mbcs_support=yes
 ## Wide character support -- first test for headers (which are assumed in code)
-if test "$want_mbcs_support" = yes ; then
-  AC_CHECK_HEADERS(wchar.h wctype.h)
-  for ac_header in wchar wctype; do
-    as_ac_var=`echo "ac_cv_header_${ac_header}_h"`
-    this=`eval echo '${'$as_ac_var'}'`
-    if test "x$this" = xno; then
-      want_mbcs_support=no
-    fi
-  done
-fi
+AC_CHECK_HEADERS(wchar.h wctype.h)
+for ac_header in wchar wctype; do
+  as_ac_var=`echo "ac_cv_header_${ac_header}_h"`
+  this=`eval echo '${'$as_ac_var'}'`
+  if test "x$this" = xno; then
+    want_mbcs_support=no
+  fi
+done
 if test "$want_mbcs_support" = yes ; then
 ## Solaris 8 is missing iswblank, but we can make it from iswctype.
+## These are all C99, but Cygwin lacks wcsftime & wcstod
   R_CHECK_FUNCS([mbrtowc wcrtomb wcscoll wcsftime wcstod], [#include <wchar.h>])
   R_CHECK_FUNCS([mbstowcs wcstombs], [#include <stdlib.h>])
   R_CHECK_FUNCS([wctrans iswblank wctype iswctype], [#include <wctype.h>])
@@ -3366,7 +3366,7 @@ if test "$want_mbcs_support" = yes ; then
     fi
   done
 fi
-## it seems IRIX has wctrans but not wctrans_t: we check this when we
+## it seems IRIX once had wctrans but not wctrans_t: we check this when we
 ## know we have the headers and wctrans().
 ## Also Solaris 2.6 (very old) seems to be missing mbstate_t
 if test "$want_mbcs_support" = yes ; then
@@ -3379,12 +3379,8 @@ if test "$want_mbcs_support" = yes ; then
     want_mbcs_support=no
   fi
 fi
-if test "x${want_mbcs_support}" = xyes; then
-## SUPPORT_UTF8 is needed for PCRE, only
-AC_DEFINE(SUPPORT_UTF8, 1, [Define this to enable support for UTF-8 locales.])
-AC_SUBST(SUPPORT_UTF8)
-AC_DEFINE(SUPPORT_MBCS, 1, [Define this to enable support for MBCS locales.])
-AC_SUBST(SUPPORT_MBCS)
+if test "x${want_mbcs_support}" != xyes; then
+AC_MSG_ERROR([Support for MBCS locales is required.])
 fi
 ])# R_MBCS
 

@@ -290,7 +290,6 @@ void UNIMPLEMENTED_TYPE(const char *s, SEXP x)
     UNIMPLEMENTED_TYPEt(s, TYPEOF(x));
 }
 
-#if defined(SUPPORT_MBCS)
 # include <R_ext/Riconv.h>
 # include <sys/param.h>
 # include <errno.h>
@@ -346,17 +345,13 @@ size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc)
     }
     return wc_len; /* status would be better? */
 }
-#endif /* SUPPORT_MBCS */
 
 
-#ifdef SUPPORT_MBCS
 #include <wctype.h>
-#endif
 
 /* This one is not in Rinternals.h, but is used in internet module */
 Rboolean isBlankString(const char *s)
 {
-#ifdef SUPPORT_MBCS
     if(mbcslocale) {
 	wchar_t wc; int used; mbstate_t mb_st;
 	mbs_init(&mb_st);
@@ -365,7 +360,6 @@ Rboolean isBlankString(const char *s)
 	    s += used;
 	}
     } else
-#endif
 	while (*s)
 	    if (!isspace((int)*s++)) return FALSE;
     return TRUE;
@@ -979,7 +973,6 @@ Rboolean strIsASCII(const char *str)
     return TRUE;
 }
 
-#ifdef SUPPORT_MBCS
 /* Number of additional bytes */
 static const unsigned char utf8_table4[] = {
   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -1202,24 +1195,12 @@ char *Rf_strrchr(const char *s, int c)
     }
     return plast;
 }
-#else
-/* Dummy entry points so R.dll always has them */
-int utf8clen(char c) { return 1;}
-size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, void *ps)
-{ return (size_t)(-1);}
-Rboolean mbcsValid(const char *str) { return TRUE; }
-#undef Rf_strchr
-char *Rf_strchr(const char *s, int c) {return strchr(s, c);}
-#undef Rf_strrchr
-char *Rf_strrchr(const char *s, int c) {return strrchr(s, c);}
-#endif
 
 #ifdef Win32
 void R_fixslash(char *s)
 {
     char *p = s;
 
-#ifdef SUPPORT_MBCS
     if(mbcslocale) {
 	mbstate_t mb_st; int used;
 	mbs_init(&mb_st);
@@ -1228,7 +1209,6 @@ void R_fixslash(char *s)
 	    p += used;
 	}
     } else
-#endif
 	for (; *p; p++) if (*p == '\\') *p = '/';
 	/* preserve network shares */
 	if(s[0] == '/' && s[1] == '/') s[0] = s[1] = '\\';
@@ -1257,7 +1237,6 @@ void R_fixbackslash(char *s)
 {
     char *p = s;
 
-#ifdef SUPPORT_MBCS
     if(mbcslocale) {
 	mbstate_t mb_st; int used;
 	mbs_init(&mb_st);
@@ -1266,7 +1245,6 @@ void R_fixbackslash(char *s)
 	    p += used;
 	}
     } else
-#endif
 	for (; *p; p++) if (*p == '/') *p = '\\';
 }
 #endif

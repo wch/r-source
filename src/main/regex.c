@@ -127,9 +127,7 @@
 # define __libc_lock_unlock(NAME) do { } while (0)
 #endif
 
-#ifdef SUPPORT_MBCS
-# include <R_ext/rlocale.h>
-#endif
+#include <R_ext/rlocale.h>
 
 /* In case that the system doesn't have isblank().  */
 #if !defined _LIBC && !defined HAVE_ISBLANK && !defined isblank
@@ -174,11 +172,9 @@
 # define SIZE_MAX ((size_t) -1)
 #endif
 
-#ifdef SUPPORT_MBCS
 #if (defined MB_CUR_MAX && defined HAVE_LOCALE_H && defined HAVE_WCTYPE_H && defined HAVE_WCHAR_H && defined HAVE_WCRTOMB && defined HAVE_MBRTOWC && defined HAVE_WCSCOLL)
 # define RE_ENABLE_I18N
 #endif
-#endif /* SUPPORT_MBCS */
 
 #if __GNUC__ >= 3
 # define BE(expr, val) __builtin_expect (expr, val)

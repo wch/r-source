@@ -908,12 +908,6 @@
 /* Define if you provide support for the libxml ftp/http functions. */
 #define SUPPORT_LIBXML 1
 
-/* Define this to enable support for MBCS locales. */
-#define SUPPORT_MBCS 1
-
-/* Define this to enable support for UTF-8 locales. */
-#define SUPPORT_UTF8 1
-
 /* Define to enable provoking compile errors on write barrier violation. */
 /* #undef TESTING_WRITE_BARRIER */
 

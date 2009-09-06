@@ -212,17 +212,15 @@ void attribute_hidden R_check_locale(void)
 	if (R_strieql(p, "UTF-8")) known_to_be_utf8 = utf8locale = TRUE;
 	if (streql(p, "ISO-8859-1")) known_to_be_latin1 = latin1locale = TRUE;
 	if (R_strieql(p, "ISO8859-1")) known_to_be_latin1 = latin1locale = TRUE;
-#if __APPLE__
+# if __APPLE__
 	/* On Darwin 'regular' locales such as 'en_US' are UTF-8 (hence
 	   MB_CUR_MAX == 6), but CODESET is "" */
 	if (*p == 0 && MB_CUR_MAX == 6)
 	    known_to_be_utf8 = utf8locale = TRUE;
-#endif
+# endif
     }
 #endif
-#ifdef SUPPORT_MBCS
     mbcslocale = MB_CUR_MAX > 1;
-#endif
 #ifdef Win32
     {
 	char *ctype = setlocale(LC_CTYPE, NULL), *p;
@@ -232,7 +230,7 @@ void attribute_hidden R_check_locale(void)
 	known_to_be_latin1 = latin1locale = (localeCP == 1252);
     }
 #endif
-#if defined(Win32) && defined(SUPPORT_UTF8_WIN32)
+#if defined(SUPPORT_UTF8_WIN32) /* never at present */
     utf8locale = mbcslocale = TRUE;
 #endif
 }

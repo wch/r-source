@@ -60,15 +60,11 @@
 #include <R_ext/eventloop.h>
 #include <R_ext/Memory.h>	/* vmaxget */
 
-#ifdef SUPPORT_MBCS
-/* This uses fontsets only in mbcslocales */
-# define USE_FONTSET 1
 /* In theory we should do this, but it works less well
 # ifdef X_HAVE_UTF8_STRING
 #  define HAVE_XUTF8TEXTESCAPEMENT 1
 #  define HAVE_XUTF8TEXTEXTENTS 1
 # endif */
-#endif
 
 typedef int (*X11IOhandler)(Display *);
 
@@ -721,7 +717,6 @@ static void R_XFreeFont(Display *display, R_XFont *font)
 /*
  * Can't load Symbolfont to XFontSet!!
  */
-#ifdef USE_FONTSET
 static R_XFont *R_XLoadQueryFontSet(Display *display,
 				    const char *fontset_name)
 {
@@ -751,7 +746,7 @@ static R_XFont *R_XLoadQueryFontSet(Display *display,
     tmp->fontset = fontset;
     return tmp;
 }
-#endif
+
 
 static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 {
@@ -759,9 +754,7 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
     int pixelsize, i, dpi;
     cacheentry *f;
     char buf[BUFSIZ];
-#ifdef USE_FONTSET
     char buf1[BUFSIZ];
-#endif
     R_XFont *tmp = NULL;
 
 #ifdef DEBUG_X11
@@ -809,7 +802,6 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
     if (face == SYMBOL_FONTFACE - 1) /* NB: face-- above */
 	sprintf(buf, xd->symbolfamily,  pixelsize);
     else
-#ifdef USE_FONTSET
       if (mbcslocale && *slant[(face & 2) >> 1] == 'o') {
 	sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
 		pixelsize);
@@ -817,18 +809,15 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 	strcat(buf,",");
 	strcat(buf,buf1);
       } else
-#endif
-	sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
-		pixelsize);
+	  sprintf(buf, family, weight[face & 1], slant[(face & 2) >> 1],
+		  pixelsize);
 #ifdef DEBUG_X11
     Rprintf("loading:\n%s\n",buf);
 #endif
     if (!mbcslocale || face == SYMBOL_FONTFACE - 1)
       tmp = R_XLoadQueryFont(display, buf);
-#ifdef USE_FONTSET
     else
       tmp = R_XLoadQueryFontSet(display, buf);
-#endif
 
 #ifdef DEBUG_X11
     if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
@@ -848,12 +837,10 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 	   If we can't find a "fixed" font then something is seriously
 	   wrong */
 	if ( ADOBE_SIZE(pixelsize) ) {
-#ifdef USE_FONTSET
 	    if(mbcslocale)
 		tmp = (void*) R_XLoadQueryFontSet(display,
 		   "-*-fixed-medium-r-*--13-*-*-*-*-*-*-*");
 	    else
-#endif
 		tmp = (void*) R_XLoadQueryFont(display, "fixed");
 
 	    if (tmp)
@@ -883,10 +870,8 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 #endif
 	if (!mbcslocale || face == SYMBOL_FONTFACE - 1)
 	    tmp = R_XLoadQueryFont(display, buf);
-#ifdef USE_FONTSET
 	else
 	    tmp = R_XLoadQueryFontSet(display, buf);
-#endif
 #ifdef DEBUG_X11
 	if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
 #endif
@@ -906,10 +891,8 @@ static void *RLoadFont(pX11Desc xd, char* family, int face, int size)
 
 	if (!mbcslocale || face == SYMBOL_FONTFACE - 1)
 	    tmp = R_XLoadQueryFont(display, buf);
-#ifdef USE_FONTSET
 	else
 	    tmp = R_XLoadQueryFontSet(display, buf);
-#endif
 
 #ifdef DEBUG_X11
 	if (tmp) Rprintf("success\n"); else Rprintf("failure\n");
@@ -1589,7 +1572,6 @@ static double X11_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
 
     SetFont(gc, xd);
 
-#ifdef USE_FONTSET
     if (xd->font->type == One_Font)
 	return (double) XTextWidth(xd->font->font, str, strlen(str));
     else  {
@@ -1602,9 +1584,6 @@ static double X11_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
 	    return (double) XmbTextEscapement(xd->font->fontset,
 					      str, strlen(str));
     }
-#else
-    return (double) XTextWidth(xd->font->font, str, strlen(str));
-#endif
 }
 
 
@@ -1624,7 +1603,6 @@ static void X11_MetricInfo(int c, const pGEcontext gc,
 
     SetFont(gc, xd);
 
-#ifdef USE_FONTSET
     *ascent = 0; *descent = 0; *width = 0; /* fallback position */
     if (xd->font) {
 	if (xd->font->type != One_Font) {
@@ -1687,33 +1665,6 @@ static void X11_MetricInfo(int c, const pGEcontext gc,
 	  }
 	}
     }
-#else
-    f = xd->font->font;
-    first = f->min_char_or_byte2;
-    last = f->max_char_or_byte2;
-    if (c == 0) {
-	*ascent = f->ascent;
-	*descent = f->descent;
-	*width = f->max_bounds.width;
-    } else if (first <= c && c <= last) {
-    /* It seems that per_char could be NULL
-       http://www.ac3.edu.au/SGI_Developer/books/XLib_PG/sgi_html/ch06.html
-    */
-	if(f->per_char) {
-	    *ascent = f->per_char[c-first].ascent;
-	    *descent = f->per_char[c-first].descent;
-	    *width = f->per_char[c-first].width;
-	} else {
-	    *ascent = f->max_bounds.ascent;
-	    *descent = f->max_bounds.descent;
-	    *width = f->max_bounds.width;
-	}
-    } else {
-	*ascent = 0;
-	*descent = 0;
-	*width = 0;
-    }
-#endif
 }
 
 static void X11_Clip(double x0, double x1, double y0, double y1,

@@ -88,7 +88,6 @@ static void double_backslashes(char *s, char *out)
 {
     char *p = s;
 
-#ifdef SUPPORT_MBCS
     int i;
     if(mbcslocale) {
 	mbstate_t mb_st; int used;
@@ -98,12 +97,8 @@ static void double_backslashes(char *s, char *out)
 	    for(i = 0; i < used; i++) *out++ = *p++;
 	}
     } else
-#endif
-    for (; *p; p++)
-	if (*p == '\\') {
-	    *out++ = *p;
-	    *out++ = *p;
-	} else *out++ = *p;
+	for (; *p; p++)
+	    if (*p == '\\') {*out++ = *p; *out++ = *p;} else *out++ = *p;
     *out = '\0';
 }
 

@@ -1132,16 +1132,14 @@ SEXP R_subset3_dflt(SEXP, SEXP, SEXP);
 /* main/subassign.c */
 SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 
-#ifdef SUPPORT_MBCS /* implies we have this header */
 #include <wchar.h>
-#endif
 
 /* main/util.c */
 void UNIMPLEMENTED_TYPE(const char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(const char *s, SEXPTYPE t);
 Rboolean Rf_strIsASCII(const char *str);
 int utf8clen(char c);
-#ifdef SUPPORT_MBCS
+
 typedef unsigned short ucs2_t;
 size_t mbcsToUcs2(const char *in, ucs2_t *out, int nout, int enc);
 /* size_t mbcsMblen(char *in);
@@ -1156,20 +1154,16 @@ size_t wcstoutf8(char *s, const wchar_t *wc, size_t n);
 
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
-/* void mbcsToLatin1(const char *in, char *out); */
 Rboolean mbcsValid(const char *str);
 char *Rf_strchr(const char *s, int c);
 char *Rf_strrchr(const char *s, int c);
-#else
-#define Rf_strchr(s, c) strchr(s, c)
-#define Rf_strrchr(s, c) strrchr(s, c)
-#endif
+
 #ifdef Win32
 void R_fixslash(char *s);
 void R_fixbackslash(char *s);
 wchar_t *filenameToWchar(const SEXP fn, const Rboolean expand);
-#endif
-#if defined(Win32) && defined(SUPPORT_UTF8_WIN32)
+
+#if defined(SUPPORT_UTF8_WIN32)
 #define mbrtowc(a,b,c,d) Rmbrtowc(a,b)
 #define wcrtomb(a,b,c) Rwcrtomb(a,b)
 #define mbstowcs(a,b,c) Rmbstowcs(a,b,c)
@@ -1178,6 +1172,7 @@ size_t Rmbrtowc(wchar_t *wc, const char *s);
 size_t Rwcrtomb(char *s, const wchar_t wc);
 size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n);
 size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
+#endif
 #endif
 
 FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand);

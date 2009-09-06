@@ -294,11 +294,6 @@ if test x"${use_strict_barrier}" = xyes; then
              violation.])
 fi
 
-AC_ARG_ENABLE([mbcs],
-[AS_HELP_STRING([--enable-mbcs],[enable support for UTF-8 and other MBCS locales @<:@yes@:>@])],
-[want_mbcs_support="${enableval}"],
-[want_mbcs_support=yes])
-
 AC_ARG_ENABLE([prebuilt-html],
 [AS_HELP_STRING([--enable-prebuilt-html],[build static HTML help pages @<:@no@:>@])],
 [want_prebuilt_html="${enableval}"],
@@ -1965,7 +1960,7 @@ AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 ## iconv headers and function.
 R_ICONV
 
-## support for MBCS
+## check sufficient support for MBCS
 R_MBCS
 
 ## support for ICU
@@ -2546,9 +2541,6 @@ if test "${have_jpeg}" = yes; then
 fi
 if test "${have_tiff}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [TIFF], [, ])
-fi
-if test "${want_mbcs_support}" = yes; then
-  R_SH_VAR_ADD(r_capabilities, [MBCS], [, ])
 fi
 if test "${USE_NLS}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [NLS], [, ])

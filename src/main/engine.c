@@ -26,10 +26,7 @@
 #include <R_ext/Applic.h>	/* pretty0() */
 #include <Rmath.h>
 
-#ifdef SUPPORT_MBCS
-# include <wchar.h>
 # include <R_ext/rlocale.h>
-#endif
 
 int R_GE_getVersion()
 {
@@ -1657,7 +1654,6 @@ void GEText(double x, double y, const char * const str, cetype_t enc,
 				const char *ss = str;
 				int charNum = 0;
 				Rboolean done = FALSE;
-#ifdef SUPPORT_MBCS
 				/* Symbol fonts are not encoded in MBCS ever */
 				if(enc2 != CE_SYMBOL && !strIsASCII(ss)) {
 				    if(mbcslocale && enc2 == CE_NATIVE) {
@@ -1706,7 +1702,6 @@ void GEText(double x, double y, const char * const str, cetype_t enc,
 					done = TRUE;
 				    }
 				}
-#endif
 				if(!done) {
 				    for (ss = str; *ss; ss++) {
 					GEMetricInfo((unsigned char) *ss, gc,
@@ -1879,7 +1874,6 @@ void GESymbol(double x, double y, int pch, double size,
     /* Special cases for plotting pch="." or pch=<character>
      */
     if(pch == NA_INTEGER) /* do nothing */;
-#ifdef SUPPORT_MBCS
     else if(pch < 0) {
 	int res;
 	char str[16];
@@ -1889,9 +1883,7 @@ void GESymbol(double x, double y, int pch, double size,
 	if(res == -1) error("invalid multibyte string '%s'", str);
 	str[res] = '\0';
 	GEText(x, y, str, CE_UTF8, NA_REAL, NA_REAL, 0., gc, dd);
-    }
-#endif
-    else if(' ' <= pch && pch <= maxchar) {
+    } else if(' ' <= pch && pch <= maxchar) {
 	if (pch == '.') {
 	    /*
 	     * NOTE:  we are *filling* a rect with the current
@@ -2841,7 +2833,6 @@ int GEstring_to_pch(SEXP pch)
     if (CHAR(pch)[0] == 0) return NA_INTEGER;  /* pch = "" */
     if (pch == last_pch) return last_ipch;/* take advantage of CHARSXP cache */
     ipch = (unsigned char) CHAR(pch)[0];
-#ifdef SUPPORT_MBCS
     if (IS_LATIN1(pch)) {
 	if (ipch > 127) ipch = -ipch;  /* record as Unicode */
     } else if (IS_UTF8(pch) || utf8locale) {
@@ -2859,7 +2850,6 @@ int GEstring_to_pch(SEXP pch)
 	else error(_("invalid multibyte char in pch=\"c\""));
 	if (ipch > 127) ipch = -ipch;
     }
-#endif
 
     last_ipch = ipch; last_pch = pch;
     return ipch;

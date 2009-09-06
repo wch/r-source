@@ -279,7 +279,6 @@ static void reset_inWarning(void *data)
     inWarning = 0;
 }
 
-#ifdef SUPPORT_MBCS
 #include <R_ext/rlocale.h>
 
 static int wd(const char * buf)
@@ -293,7 +292,6 @@ static int wd(const char * buf)
     }
     return nc;
 }
-#endif
 
 static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 {
@@ -352,11 +350,9 @@ static void vwarningcall_dflt(SEXP call, const char *format, va_list ap)
 	    strcat(buf, " [... truncated]");
 	if(dcall[0] == '\0')
 	    REprintf(_("Warning: %s\n"), buf);
-#ifdef SUPPORT_MBCS
 	else if(mbcslocale &&
 		18 + wd(dcall) + wd(buf) <= LONGWARN)
 	    REprintf(_("Warning in %s : %s\n"), dcall, buf);
-#endif
 	else if(18+strlen(dcall)+strlen(buf) <= LONGWARN)
 	    REprintf(_("Warning in %s : %s\n"), dcall, buf);
 	else
@@ -463,7 +459,6 @@ void PrintWarnings(void)
 	else {
 	    const char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, 0));
 	    dcall = CHAR(STRING_ELT(deparse1s(VECTOR_ELT(R_Warnings, 0)), 0));
-#ifdef SUPPORT_MBCS
 	    if (mbcslocale) {
 		int msgline1;
 		char *p = strchr(msg, '\n');
@@ -473,9 +468,7 @@ void PrintWarnings(void)
 		    *p = '\n';
 		} else msgline1 = wd(msg);
 		if (6 + wd(dcall) + msgline1 > LONGWARN) sep = "\n  ";
-	    } else
-#endif
-	    {
+	    } else {
 		int msgline1 = strlen(msg);
 		char *p = strchr(msg, '\n');
 		if (p) msgline1 = (int)(p - msg);
@@ -492,7 +485,6 @@ void PrintWarnings(void)
 	    else {
 		const char *dcall, *sep = " ", *msg = CHAR(STRING_ELT(names, i));
 		dcall = CHAR(STRING_ELT(deparse1s(VECTOR_ELT(R_Warnings, i)), 0));
-#ifdef SUPPORT_MBCS
 		if (mbcslocale) {
 		    int msgline1;
 		    char *p = strchr(msg, '\n');
@@ -502,9 +494,7 @@ void PrintWarnings(void)
 			*p = '\n';
 		    } else msgline1 = wd(msg);
 		    if (10 + wd(dcall) + msgline1 > LONGWARN) sep = "\n  ";
-		} else
-#endif
-		{
+		} else {
 		    int msgline1 = strlen(msg);
 		    char *p = strchr(msg, '\n');
 		    if (p) msgline1 = (int)(p - msg);
@@ -595,7 +585,6 @@ static void verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	dcall = CHAR(STRING_ELT(deparse1s(call), 0));
 	if (len + strlen(dcall) + strlen(tmp) < BUFSIZE) {
 	    sprintf(errbuf, "%s%s%s", head, dcall, mid);
-#ifdef SUPPORT_MBCS
 	    if (mbcslocale) {
 		int msgline1;
 		char *p = strchr(tmp, '\n');
@@ -605,9 +594,7 @@ static void verrorcall_dflt(SEXP call, const char *format, va_list ap)
 		    *p = '\n';
 		} else msgline1 = wd(tmp);
 		if (14 + wd(dcall) + wd(tmp) > LONGWARN) strcat(errbuf, tail);
-	    } else
-#endif
-	    {
+	    } else {
 		int msgline1 = strlen(tmp);
 		char *p = strchr(tmp, '\n');
 		if (p) msgline1 = (int)(p - tmp);

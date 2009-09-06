@@ -50,8 +50,10 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
   \code{\link{Encoding}}, non-ASCII character strings in the result will
   be in UTF-8 and have the encoding declared as UTF-8.  Otherwise they
   will be in the current locale's encoding, and be declared to have the
-  encoding of the current locale if either Latin-1 or UTF-8 and  the
-  corresponding input had a declared encoding.
+  encoding of the current locale if either Latin-1 or UTF-8 and the
+  corresponding input had a declared encoding.  (As from 2.10.0, when
+  \code{perl = TRUE} all strings in a multibyte locale are translated to
+  UTF-8.)
 }
 \details{
   Argument \code{split} will be coerced to character, so
@@ -92,9 +94,6 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
   when applied to extremely long character strings
   (tens of thousands of characters or more): the code used when
   \code{perl = TRUE} seems much faster and more reliable for such usages.
-
-  The \code{perl = TRUE} option is only implemented for single-byte and
-  UTF-8 encodings, and will warn if used in a non-UTF-8 multibyte locale.
 }
 \seealso{
   \code{\link{paste}} for the reverse,

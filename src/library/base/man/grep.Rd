@@ -103,10 +103,8 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   Its main effect is to avoid errors/warnings about invalid inputs and
   spurious matches, but for \code{regexpr} it changes the interpretation
   of the output.  As from \R 2.10.0 it inhibits the conversion of inputs
-  with marked encodings.
-
-  PCRE only supports caseless matching for a non-ASCII pattern in a
-  UTF-8 locale (and not for \code{useBytes = TRUE} in any locale).
+  with marked encodings.  With PCRE, caseless matching for a non-ASCII
+  pattern is unsupported under this option.
 }
 \value{
   For \code{grep} a vector giving either the indices of the elements of
@@ -122,12 +120,13 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   Elements of character vectors \code{x} which are not substituted will
   be return unchanged (including any declared encoding).  If
   \code{useBytes = FALSE}, either \code{perl = TRUE} or \code{fixed =
-    TRUE} and any element of \code{pattern}, \code{replacement} and
+  TRUE} and any element of \code{pattern}, \code{replacement} and
   \code{x} is declared to be in UTF-8, the result will be in UTF-8.
   Otherwise changed elements of the result will be have the encoding
   declared as that of the current locale (see \code{\link{Encoding}} if
   the corresponding input had a declared encoding and the current locale
-  is either Latin-1 or UTF-8.
+  is either Latin-1 or UTF-8.  (As from 2.10.0, when \code{perl = TRUE}
+  all strings in a multibyte locale are translated to UTF-8.)
 
   For \code{regexpr} an integer vector of the same length as \code{text}
   giving the starting position of the first match, or \eqn{-1} if there
