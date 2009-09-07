@@ -105,6 +105,7 @@ Rd2HTML <-
              stages = "render", outputEncoding = "UTF-8",
              dynamic = FALSE, no_links = FALSE, ...)
 {
+    if (missing(no_links) && is.null(Links)) no_links <- TRUE
     version <- ""
     if(!identical(package, "")) {
         if(length(package) > 1L) {

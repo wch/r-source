@@ -1,6 +1,6 @@
 % File src/library/utils/man/help.search.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{help.search}
@@ -21,7 +21,7 @@ help.search(pattern, fields = c("alias", "concept", "title"),
             package = NULL, lib.loc = NULL,
             help.db = getOption("help.db"),
             verbose = getOption("verbose"),
-            rebuild = FALSE, agrep = NULL)
+            rebuild = FALSE, agrep = NULL, use_UTF8 = FALSE)
 ??pattern
 field??pattern
 }
@@ -30,7 +30,7 @@ field??pattern
     fields.  If this is given, the arguments \code{apropos},
     \code{keyword}, and \code{whatis} are ignored.}
   \item{fields}{a character vector specifying the fields of the help
-    data bases to be searched.  The entries must be abbreviations of
+    database to be searched.  The entries must be abbreviations of
     \code{"name"}, \code{"title"}, \code{"alias"}, \code{"concept"}, and
     \code{"keyword"}, corresponding to the help page's (file) name, its
     title, the topics and concepts it provides documentation for, and
@@ -39,7 +39,7 @@ field??pattern
     topics and title.}
   \item{keyword}{a character string to be matched in the help page
     \sQuote{keywords}. \sQuote{Keywords} are really categories: the
-    standard categories are listed in file \file{RHOME/doc/KEYWORDS}
+    standard categories are listed in file \file{R.home("doc")/KEYWORDS}
     (see also the example) and some package writers have defined their
     own.  If \code{keyword} is specified, \code{agrep} defaults to
     \code{FALSE}.}  \item{whatis}{a character string to be matched in
@@ -54,14 +54,14 @@ field??pattern
     library trees to search through, or \code{NULL}.  The default value
     of \code{NULL} corresponds to all libraries currently known.}
   \item{help.db}{a character string giving the file path to a previously
-    built and saved help data base, or \code{NULL}.}
+    built and saved help database, or \code{NULL}.}
   \item{verbose}{logical; if \code{TRUE}, the search process is traced.
     Integer values are also accepted, with \code{TRUE} being equivalent
     to \code{2}, and \code{1} being less verbose.  On Windows a progress
     bar is shown during rebuilding, and on Unix a heartbeat is shown for
     \code{verbose = 1} and a package-by-package list for \code{verbose
       >= 2}.}
-  \item{rebuild}{a logical indicating whether the help data base should
+  \item{rebuild}{a logical indicating whether the help database should
     be rebuilt.  This will be done automatically if \code{lib.loc} or
     the search path is changed, or if \code{package} is used and a value
     is not found.}
@@ -75,21 +75,23 @@ field??pattern
     used.  Otherwise, one can give a numeric or a list specifying the
     maximal distance for the approximate match, see argument
     \code{max.distance} in the documentation for \code{\link{agrep}}.}
+  \item{use_UTF8}{logical: should be results be given in UTF-8 encoding?
+    Also changes the meaning of regexps in \code{agrep} to be Perl regexps.}
   \item{field}{a single value of \code{fields} to search.}
 }
 \details{
   Upon installation of a package, a pre-built help.search index is
   serialized as \file{hsearch.rds} in the \file{Meta} directory
   (provided the package has any help pages).  These files are used to
-  create the data base.
+  create the database.
 
   The arguments \code{apropos} and \code{whatis} play a role similar to
   the Unix commands with the same names.
 
   Searching with \code{agrep = FALSE} will be several times faster
-  than the default.
+  than the default (once the database is built)
 
-  If possible, the help data base is saved in memory or (if memory
+  If possible, the help database is saved in memory or (if memory
   limits have been set: see \code{\link{mem.limits}}) to a file in the
   session temporary directory for use by subsequent calls in the
   session.

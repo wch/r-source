@@ -32,7 +32,7 @@ help.search <-
              package = NULL, lib.loc = NULL,
              help.db = getOption("help.db"),
              verbose = getOption("verbose"),
-             rebuild = FALSE, agrep = NULL)
+             rebuild = FALSE, agrep = NULL, use_UTF8 = TRUE)
 {
     WINDOWS <- .Platform$OS.type == "windows"
 
@@ -272,12 +272,12 @@ help.search <-
                 flush.console()
             }
 	    encoding <- db$Base[, "Encoding"]
-	    IDs_to_iconv <- db$Base[encoding != "", "ID"]
-	    encoding <- encoding[encoding != ""]
+            target <- ifelse(use_UTF8 && !l10n_info()$`UTF-8`, "UTF-8", "")
 	    ## As iconv is not vectorized in the 'from' argument, loop
 	    ## over groups of identical encodings.
 	    for(enc in unique(encoding)) {
-		IDs <- IDs_to_iconv[encoding == enc]
+                if(enc != target) next
+		IDs <- db$Base[encoding == enc, "ID"]
 		for(i in seq_along(db)) {
 		    ind <- db[[i]][, "ID"] %in% IDs
 		    db[[i]][ind, ] <- iconv(db[[i]][ind, ], enc, "")
@@ -292,17 +292,6 @@ help.search <-
 	    unlist(sapply(db,
 			  function(u)
 			  u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
-        ## FIXME: drop this fallback
-	if(length(bad_IDs)) { ## try latin1
-            for(i in seq_along(db)) {
-                ind <- db[[i]][, "ID"] %in% bad_IDs
-                db[[i]][ind, ] <- iconv(db[[i]][ind, ], "latin1", "")
-            }
-            bad_IDs <-
-                unlist(sapply(db,
-                              function(u)
-                              u[rowSums(is.na(nchar(u, "c", TRUE))) > 0, "ID"]))
-        }
 	## If there are any invalid multi-byte character data
 	## left, we simple remove all Rd objects with at least one
 	## invalid entry, and warn.
@@ -404,7 +393,7 @@ help.search <-
 	    agrep(pattern, x, ignore.case = ignore.case,
 		  max.distance = max.distance, useBytes = TRUE)
 	else
-	    grep(pattern, x, ignore.case = ignore.case)
+	    grep(pattern, x, ignore.case = ignore.case, perl = use_UTF8)
     }
     dbBase <- db$Base
     searchDbField <- function(field) {

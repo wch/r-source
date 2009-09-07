@@ -1,6 +1,6 @@
 % File src/library/utils/man/apropos.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{apropos}
@@ -39,12 +39,7 @@ find(what, mode = "any", numeric = FALSE, simple.words = TRUE)
 
   \code{find} is a different user interface for the same task as
   \code{apropos}. However, by default (\code{simple.words == TRUE}),
-  only full words are searched with \code{grep(fixed = TRUE)}.
-
-  Note that in \R versions prior to 2.5.0, \code{what} was allowed to be
-  non-character, such that \code{find(cor)} worked as it does in S.
-  This possibility has been dropped in line with the aim of minimizing
-  all use of non-standard evaluation in \R.
+  only full words are searched with \code{\link{grep}(fixed = TRUE)}.
 }
 \author{Kurt Hornik and Martin Maechler (May 1997).}
 \value{

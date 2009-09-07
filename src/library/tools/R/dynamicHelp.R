@@ -54,15 +54,13 @@ httpd <- function(path, query, ...)
 
     .HTMLsearch <- function(query)
     {
-        ## FIXME: would be better to get help.search() to return in UTF-8
-        ## but agrep is not yet UTF-8-savvy
         res <- if(identical(names(query), "category"))
-            help.search(keyword = query, verbose = 1L)$matches
+            help.search(keyword = query, verbose = 1L, use_UTF8 = TRUE)$matches
         else {
             nm <- names(query)
             m <- match("exact", nm)
-            if(is.na(m)) help.search(query[1L], nm, verbose = 1L)$matches
-            else help.search(query[1L], nm[-m], agrep = FALSE)$matches
+            if(is.na(m)) help.search(query[1L], nm, verbose = 1L, use_UTF8 = TRUE)$matches
+            else help.search(query[1L], nm[-m], agrep = FALSE, use_UTF8 = TRUE)$matches
         }
         title <- "Search Results"
         out <- c(.httpdHeader(title),
@@ -76,7 +74,7 @@ httpd <- function(path, query, ...)
                           res[, "Package"], "::", res[, "topic"],
                           '</a>', sep = "")
             out <- c(out, "<dl>",
-                     paste("<dt>", iconv(urls, "", "UTF-8"), "</dt>\n",
+                     paste("<dt>", urls, "</dt>\n",
                            "<dd>", res[, "title"], "</dd>", sep = ""),
                      "</dl>")
         } else out <- c(out, gettext("No results found"))
