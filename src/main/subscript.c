@@ -246,9 +246,10 @@ get1index(SEXP s, SEXP names, int len, int pok, int pos, SEXP call)
     return indx;
 }
 
-SEXP attribute_hidden vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call) 
+SEXP attribute_hidden
+vectorIndex(SEXP x, SEXP thesub, int start, int stop, int pok, SEXP call) 
 {
-    int i, len = length(thesub), offset;
+    int i, offset;
 
     for(i = start; i < stop; i++) {
 	if(!isVectorList(x) && !isPairList(x))
