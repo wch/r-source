@@ -95,9 +95,8 @@ be absolutely sure we get our version. */
 #define MAX_NAME_SIZE 32
 #define NEWLINE 10
 #define POSIX_MALLOC_THRESHOLD 10
-#ifdef SUPPORT_UTF8
+#define SUPPORT_UTF8
 #define SUPPORT_UCP
-#endif
 #endif
 
 /* Standard C headers plus the external interface definition. The only time

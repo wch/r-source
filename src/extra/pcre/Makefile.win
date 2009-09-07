@@ -1,11 +1,7 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-DEFS=-DWIN32 -DPCRE_STATIC -DSUPPORT_UTF8
-## used once, but no longer
-#ifdef LEA_MALLOC
-#DEFS+=-DLEA_MALLOC
-#endif
+DEFS=-DWIN32 -DPCRE_STATIC
 
 CPPFLAGS=-I../../include -I. $(DEFS)
 CFLAGS= $(OPTFLAGS)

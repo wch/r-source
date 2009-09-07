@@ -3,7 +3,7 @@ make.
 
 --- pcre-7.9/pcre_internal.h	2009-04-11 09:21:17.000000000 +0100
 +++ ./pcre_internal.h	2009-06-13 10:45:35.000000000 +0100
-@@ -81,6 +81,25 @@
+@@ -81,6 +81,24 @@
  #endif
  
  
@@ -21,9 +21,8 @@ make.
 +#define MAX_NAME_SIZE 32
 +#define NEWLINE 10
 +#define POSIX_MALLOC_THRESHOLD 10
-+#ifdef SUPPORT_UTF8
++#define SUPPORT_UTF8
 +#define SUPPORT_UCP
-+#endif
 +#endif
 +
  /* Standard C headers plus the external interface definition. The only time

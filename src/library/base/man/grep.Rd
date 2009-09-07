@@ -125,7 +125,7 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   Otherwise changed elements of the result will be have the encoding
   declared as that of the current locale (see \code{\link{Encoding}} if
   the corresponding input had a declared encoding and the current locale
-  is either Latin-1 or UTF-8.  (As from 2.10.0, when \code{perl = TRUE}
+  is either Latin-1 or UTF-8.  (As from \R 2.10.0, when \code{perl = TRUE}
   all strings in a multibyte locale are translated to UTF-8.)
 
   For \code{regexpr} an integer vector of the same length as \code{text}
@@ -147,18 +147,13 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
 }
 \section{Warning}{
   The standard regular-expression code has been reported to be very slow
-  when applied to extremely long character strings
-  (tens of thousands of characters or more): the code used when
-  \code{perl = TRUE} seems much faster and more reliable for such
-  usages.
+  when applied to extremely long character strings (tens of thousands of
+  characters or more): the code used when \code{perl = TRUE} seems much
+  faster and more reliable for such usages.
 
   The standard version of \code{gsub} does not substitute correctly
   repeated word-boundaries (e.g. \code{pattern = "\\b"}).
   Use \code{perl = TRUE} for such matches.
-
-  The \code{perl = TRUE} option is only implemented for single-byte and
-  UTF-8 encodings, and will warn if used in a non-UTF-8 multi-byte
-  locale (unless \code{useBytes = TRUE}).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

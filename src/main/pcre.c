@@ -225,7 +225,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
     if (igcase_opt) {
 	options |= PCRE_CASELESS;
 	if (useBytes && utf8locale && !strIsASCII(spat))
-	    warning(_("ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n  in UTF-8 locales only works caselessly for ASCII patterns"));
+	    warning(_("ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n  in UTF-8 locales only works caselessly for 7-bit patterns"));
     }
 
     tables = pcre_maketables();
@@ -421,7 +421,7 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
     if (igcase_opt) {
 	options |= PCRE_CASELESS;
 	if (useBytes && utf8locale && !strIsASCII(spat))
-	    warning(_("ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n  in UTF-8 locales only works caselessly for ASCII patterns"));
+	    warning(_("ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n  in UTF-8 locales only works caselessly for 7-bit patterns"));
     }
     if (!useBytes && mbcslocale && !mbcsValid(spat))
 	error(_("regular expression is invalid in this locale"));
