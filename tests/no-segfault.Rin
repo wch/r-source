@@ -33,8 +33,7 @@ misc.int <- c("browser", "browseVignettes", "bug.report", "checkCRAN",
 inet.list <- c(apropos("download\\."),
                apropos("^url\\."), apropos("\\.url"),
                apropos("packageStatus"),
-               paste(c("CRAN", "install", "update", "old"),
-                     "packages",sep="."))
+               paste(c("CRAN", "install", "update", "old"), "packages", sep="."))
 socket.fun <- apropos("socket")
 ## "Interactive" ones:
 dev.int <- c("X11", "x11", "pdf", "postscript",
@@ -49,7 +48,8 @@ if(.Platform$OS.type == "windows") {
     dev.int <- c(dev.int, "bmp", "windows", "win.graph", "win.print",
                 "win.metafile")
     misc.2 <- c(misc.2, "file.choose", "choose.files", "choose.dir",
-    		"setWindowTitle", "loadRconsole", "link.html.help")
+    		"setWindowTitle", "loadRconsole", "link.html.help",
+                "make.packages.html", "arrangeWindows", "getWindowsHandles")
 }
 
 stop.list[["base"]] <-

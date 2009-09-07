@@ -54,7 +54,7 @@ endif
 saveload-CPPFLAGS=-I../extra/xdr
 connections-CPPFLAGS=-I../extra/zlib -I../extra/bzip2
 dounzip-CPPFLAGS=-I../extra/zlib
-character-CPPFLAGS=-I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
+grep-CPPFLAGS=-I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
 pcre-CPPFLAGS=-I../extra/pcre -DPCRE_STATIC
 platform-CPPFLAGS=-I../gnuwin32
 builtin-CPPFLAGS=-I../gnuwin32

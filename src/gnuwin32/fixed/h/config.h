@@ -848,7 +848,7 @@
 #define R_INLINE inline
 
 /* Define this to enable memory profiling. */
-#undef R_MEMORY_PROFILING 1
+#define R_MEMORY_PROFILING 1
 
 /* Define this to be the name of the OS of your system. */
 #define R_OS "mingw32"
