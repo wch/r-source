@@ -33,7 +33,6 @@
 # include <pcre.h>
 #endif
 
-//#include <R_ext/rlocale.h>
 #include <R_ext/RS.h>           /* for CallocCharBuf and Free */
 #include <wchar.h>
 #include <wctype.h>

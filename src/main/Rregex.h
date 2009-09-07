@@ -19,6 +19,11 @@
    http://www.r-project.org/Licenses/ 
    MA 02110-1301  USA.  */
 
+#ifdef USE_TRE
+# include <tre/regex.h>
+#else
+
+
 #ifndef _REGEX_H
 #define _REGEX_H 1
 
@@ -606,3 +611,5 @@ Rregexec (const regex_t *__restrict preg, const char *__restrict string,
 #endif	/* C++ */
 
 #endif /* regex.h */
+
+#endif /* USE_TRE */

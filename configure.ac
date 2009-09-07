@@ -414,6 +414,17 @@ AC_ARG_WITH([ICU],
 [R_ARG_USE(ICU)],
 [use_ICU=yes])
 
+## TRE
+AC_ARG_WITH([TRE],
+[AS_HELP_STRING([--with-TRE],[use TRE library @<:@no@:>@])],
+[R_ARG_USE(TRE)],
+[use_TRE=no])
+if test "$use_TRE" = yes ; then
+  LIBS="${LIBS} -ltre"
+  AC_DEFINE(USE_TRE, 1, [Define to use TRE for regexp.])
+fi
+AC_SUBST(USE_TRE)
+AM_CONDITIONAL(BUILD_TRE, [test "x${use_TRE}" = "xyes"])
 
 ### ** Precious variables.
 
@@ -1982,7 +1993,6 @@ fi
 AC_SUBST(USE_ICU)
 AC_SUBST(USE_ICU_APPLE)
 
-
 ## X11.
 R_X11
 AM_CONDITIONAL(BUILD_X11, [test "x${use_X11}" = "xyes"])
@@ -2531,6 +2541,9 @@ if test "${acx_lapack_ok}" = "yes"; then
 fi
 if test "${use_ICU}" = yes; then
   R_SH_VAR_ADD(r_external_libs, [ICU], [, ])
+fi
+if test "${use_TRE}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [tre], [, ])
 fi
 r_capabilities=
 if test "${have_png}" = yes; then

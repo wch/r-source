@@ -39,9 +39,13 @@ agrep translates
 #include <R_ext/RS.h>  /* for Calloc/Free */
 #include <wchar.h>
 
-
+#ifdef USE_TRE
+# include <tre/regex.h>
+# define GSUB_HEAD_CHOP 1
+#else
 /* The next must come after other header files to redefine RE_DUP_MAX */
 #include "Rregex.h"
+#endif
 
 #include "apse.h"
 
@@ -864,9 +868,24 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 	    /* regular regexp, no useBytes nor use_UTF8 */
 
-	    /* Looks like REG_NOTBOL is no longer needed in this version,
-	       but leave in as a precaution */
 	    eflags = 0; last_end = -1;
+#ifdef GSUB_HEAD_CHOP
+	    while (regexec(&reg, s+offset, 10, regmatch, eflags) == 0) {
+		nmatch += 1;
+		offset += regmatch[0].rm_eo;
+		/* Do not repeat a 0-length match after a match, so
+		   gsub("a*", "x", "baaac") is "xbxcx" not "xbxxcx" */
+		if (offset > last_end) {
+		    ns += length_adj(t, regmatch, reg.re_nsub);
+		    last_end = offset;
+		}
+		if (s[offset] == '\0' || !global) break;
+		/* If we have a 0-length match, move on */
+		/* <MBCS FIXME> advance by a char */
+		if (regmatch[0].rm_eo == regmatch[0].rm_so) offset++;
+		eflags = REG_NOTBOL;
+	    }
+#else
 	    /* We need to use private version of regexec here, as
 	       head-chopping the string does not work with e.g. \b.
 	     */
@@ -885,6 +904,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (regmatch[0].rm_eo == regmatch[0].rm_so) offset++;
 		eflags = REG_NOTBOL;
 	    }
+#endif
 	    if (nmatch == 0)
 		SET_STRING_ELT(ans, i, STRING_ELT(vec, i));
 	    else if (STRING_ELT(rep, 0) == NA_STRING)
@@ -897,6 +917,24 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		cbuf = u = CallocCharBuf(ns);
 		ns = strlen(s);
 		eflags = 0; last_end = -1;
+#ifdef GSUB_HEAD_CHOP
+		while (regexec(&reg, s+offset, 10, regmatch, eflags) == 0) {
+		    /* printf("%s, %d %d\n", &s[offset],
+		       regmatch[0].rm_so, regmatch[0].rm_eo); */
+		    for (j = 0; j < regmatch[0].rm_so ; j++)
+			*u++ = s[offset+j];
+		    if(offset+regmatch[0].rm_eo > last_end) {
+			u = string_adj(u, s+offset, t, regmatch);
+			last_end = offset+regmatch[0].rm_eo;
+		    }
+		    offset += regmatch[0].rm_eo;
+		    if (s[offset] == '\0' || !global) break;
+		    /* <MBCS FIXME> advance by a char */
+		    if (regmatch[0].rm_eo == regmatch[0].rm_so)
+			*u++ = s[offset++];
+		    eflags = REG_NOTBOL;
+		}
+#else
 		while (Rregexec(&reg, s, 10, regmatch, eflags, offset) == 0) {
 		    /* printf("%s, %d %d\n", &s[offset],
 		       regmatch[0].rm_so, regmatch[0].rm_eo); */
@@ -912,6 +950,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 			*u++ = s[offset++];
 		    eflags = REG_NOTBOL;
 		}
+#endif
 		if (offset < ns)
 		    for (j = offset ; s[j] ; j++)
 			*u++ = s[j];
@@ -1153,7 +1192,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP gregexpr_Regexc(const regex_t *reg, const char *string,
 			    int useBytes)
 {
-    int matchIndex, j, st, foundAll, foundAny, offset, len;
+    int matchIndex, j, st, foundAll, foundAny, offset, offset0, len;
     regmatch_t regmatch[10];
     SEXP ans, matchlen;         /* Return vect and its attribute */
     SEXP matchbuf, matchlenbuf; /* Buffers for storing multiple matches */
@@ -1166,7 +1205,12 @@ static SEXP gregexpr_Regexc(const regex_t *reg, const char *string,
     len = strlen(string);
     while (!foundAll) {
 	if ( offset < len &&
-	     Rregexec(reg, string, 1, regmatch, 0, offset) == 0) {
+#ifdef GSUB_HEAD_CHOP
+	     regexec(reg, string+offset, 1, regmatch, 0)
+#else
+	     Rregexec(reg, string, 1, regmatch, 0, offset)
+#endif
+	     == 0) {	    
 	    if ((matchIndex + 1) == bufsize) {
 		/* Reallocate match buffers */
 		int newbufsize = bufsize * 2;
@@ -1189,21 +1233,31 @@ static SEXP gregexpr_Regexc(const regex_t *reg, const char *string,
 	    matchIndex++;
 	    foundAny = 1;
 	    st = regmatch[0].rm_so;
-	    INTEGER(matchbuf)[matchIndex] = st + 1; /* index from one */
+#ifndef GSUB_HEAD_CHOP
+	    offset = 0;
+#endif
+	    INTEGER(matchbuf)[matchIndex] = offset + st + 1; /* index from one */
 	    INTEGER(matchlenbuf)[matchIndex] = regmatch[0].rm_eo - st;
+	    offset0 = offset;
 	    if (INTEGER(matchlenbuf)[matchIndex] == 0)
-		offset = st + 1;
+		offset += st + 1;
 	    else
-		offset = regmatch[0].rm_eo;
+		offset += regmatch[0].rm_eo;
+
 	    if (!useBytes && mbcslocale) {
 		char *buf;
 		int mlen = regmatch[0].rm_eo - st;
+#ifdef GSUB_HEAD_CHOP
+		st += offset0;		
+#endif
+		
 		/* Unfortunately these are in bytes, so we need to
 		   use chars instead */
 		if (st > 0) {
 		    buf = R_AllocStringBuffer(st, &cbuff);
 		    memcpy(buf, string, st);
 		    buf[st] = '\0';
+		    
 		    INTEGER(matchbuf)[matchIndex] = 1+mbstowcs(NULL, buf, 0);
 		    if (INTEGER(matchbuf)[matchIndex] <= 0) { /* an invalid string */
 			INTEGER(matchbuf)[matchIndex] = NA_INTEGER;
