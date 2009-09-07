@@ -15,7 +15,7 @@ include $(top_builddir)/Makeconf
 SOURCES_C = \
 	CConverters.c CommandLineArgs.c \
 	Rdynload.c Renviron.c RNG.c \
-	apply.c apse.c arithmetic.c array.c attrib.c \
+	agrep.c apply.c apse.c arithmetic.c array.c attrib.c \
 	base.c bind.c builtin.c \
 	character.c coerce.c colors.c complex.c connections.c context.c \
 	cov.c cum.c \
@@ -24,7 +24,7 @@ SOURCES_C = \
 	engine.c envir.c errors.c eval.c \
 	format.c fourier.c \
 	gevents.c gram.c gram-ex.c gramRd.c graphics.c grep.c \
-	identical.c inspect.c inlined.c internet.c iosupport.c \
+	identical.c inlined.c inspect.c internet.c iosupport.c \
 	lapack.c list.c localecharset.c logic.c \
 	main.c mapply.c match.c memory.c model.c \
 	names.c \
@@ -32,14 +32,13 @@ SOURCES_C = \
 	par.c paste.c pcre.c platform.c \
 	plot.c plot3d.c plotmath.c \
 	print.c printarray.c printvector.c printutils.c qsort.c \
-	random.c raw.c registration.c relop.c rlocale.c \
+	random.c raw.c regex.c registration.c relop.c rlocale.c \
 	saveload.c scan.c seq.c serialize.c size.c sort.c source.c split.c \
 	sprintf.c startup.c subassign.c subscript.c subset.c summary.c sysutils.c \
 	unique.c util.c \
-	version.c vfonts.c \
-	@BUILD_TRE_FALSE@ regex.c
-SOURCES_F = \
-	xxxpr.f
+	version.c vfonts.c
+
+SOURCES_F =  xxxpr.f
 
 ## If the substitutes are needed, the corresponding objects are put by
 ## configure in @LIBOBJS@ @ALLOCA@

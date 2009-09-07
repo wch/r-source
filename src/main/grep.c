@@ -39,7 +39,7 @@ agrep translates
 #include <R_ext/RS.h>  /* for Calloc/Free */
 #include <wchar.h>
 
-#ifdef USE_TRE
+#ifdef USE_TRE2
 # include <tre/regex.h>
 # define GSUB_HEAD_CHOP 1
 #else
@@ -523,6 +523,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (utf8locale || use_UTF8) cflags |= PCRE_UTF8;
 	}
     } else {
+	cflags = REG_NOSUB;
 	if (extended_opt) cflags |= REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
     }
@@ -1501,142 +1502,5 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!fixed_opt) regfree(&reg);
     UNPROTECT(1);
     return ansList;
-}
-
-SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP pat, vec, ind, ans;
-    int i, j, n, nmatches, nc;
-    int igcase_opt, value_opt, max_distance_opt, useBytes;
-    int max_deletions_opt, max_insertions_opt, max_substitutions_opt;
-    apse_t *aps;
-    const char *str;
-    Rboolean useMBCS = FALSE;
-    wchar_t *wstr, *wpat = NULL;
-
-    checkArity(op, args);
-    pat = CAR(args); args = CDR(args);
-    vec = CAR(args); args = CDR(args);
-    igcase_opt = asLogical(CAR(args)); args = CDR(args);
-    value_opt = asLogical(CAR(args)); args = CDR(args);
-    max_distance_opt = (apse_size_t)asInteger(CAR(args));
-    args = CDR(args);
-    max_deletions_opt = (apse_size_t)asInteger(CAR(args));
-    args = CDR(args);
-    max_insertions_opt = (apse_size_t)asInteger(CAR(args));
-    args = CDR(args);
-    max_substitutions_opt = (apse_size_t)asInteger(CAR(args));
-    args = CDR(args);
-    useBytes = asLogical(CAR(args));
-
-    if (igcase_opt == NA_INTEGER) igcase_opt = 0;
-    if (value_opt == NA_INTEGER) value_opt = 0;
-    if (useBytes == NA_INTEGER) useBytes = 0;
-
-    if (!isString(pat) || length(pat) < 1)
-	error(_("invalid '%s' argument"), "pattern");
-    if (length(pat) > 1)
-	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pat");
-    if (!isString(vec)) error(_("invalid '%s' argument"), "x");
-
-    /* Create search pattern object. */
-    str = translateChar(STRING_ELT(pat, 0));
-    if (mbcslocale) {
-	useMBCS = !strIsASCII(str) && !useBytes;
-	if (!useMBCS) {
-	    for (i = 0 ; i < LENGTH(vec) ; i++) {
-		if (STRING_ELT(vec, i) == NA_STRING) continue;
-		if (!strIsASCII(translateChar(STRING_ELT(vec, i)))) {
-		    useMBCS = !useBytes;
-		    break;
-		}
-	    }
-	}
-    }
-    if (useMBCS) {
-	nc = mbstowcs(NULL, str, 0);
-	wpat = Calloc(nc+1, wchar_t);
-	mbstowcs(wpat, str, nc+1);
-	aps = apse_create((unsigned char *) wpat, (apse_size_t) nc,
-			  max_distance_opt, 65536);
-    } else {
-	nc = strlen(str);
-	aps = apse_create((unsigned char *) str, (apse_size_t) nc,
-			  max_distance_opt, 256);
-    }
-    if (!aps)
-	error(_("could not allocate memory for approximate matching"));
-
-    /* Set further restrictions on search distances. */
-    apse_set_deletions(aps, max_deletions_opt);
-    apse_set_insertions(aps, max_insertions_opt);
-    apse_set_substitutions(aps, max_substitutions_opt);
-
-    /* Matching. */
-    n = LENGTH(vec);
-    PROTECT(ind = allocVector(LGLSXP, n));
-    nmatches = 0;
-    for (i = 0 ; i < n ; i++) {
-	if (STRING_ELT(vec, i) == NA_STRING) {
-	    LOGICAL(ind)[i] = 0;
-	    continue;
-	}
-	str = translateChar(STRING_ELT(vec, i));
-	/* Perform match. */
-	if (useMBCS) {
-	    nc = mbstowcs(NULL, str, 0);
-	    wstr = Calloc(nc+1, wchar_t);
-	    mbstowcs(wstr, str, nc+1);
-	    /* Set case ignore flag for the whole string to be matched. */
-	    if (!apse_set_caseignore_slice(aps, 0, nc,
-					  (apse_bool_t) igcase_opt))
-		error(_("could not perform case insensitive matching"));
-	    if (apse_match(aps, (unsigned char *) wstr, (apse_size_t) nc)) {
-		LOGICAL(ind)[i] = 1;
-		nmatches++;
-	    } else LOGICAL(ind)[i] = 0;
-	    Free(wstr);
-	} else {
-	    /* Set case ignore flag for the whole string to be matched. */
-	    if (!apse_set_caseignore_slice(aps, 0, strlen(str),
-					  (apse_bool_t) igcase_opt))
-		error(_("could not perform case insensitive matching"));
-	    if (apse_match(aps, (unsigned char *) str,
-			  (apse_size_t) strlen(str))) {
-		LOGICAL(ind)[i] = 1;
-		nmatches++;
-	    } else LOGICAL(ind)[i] = 0;
-	}
-    }
-    apse_destroy(aps);
-
-    PROTECT(ans = value_opt
-	    ? allocVector(STRSXP, nmatches)
-	    : allocVector(INTSXP, nmatches));
-    if (value_opt) {
-	SEXP nmold = getAttrib(vec, R_NamesSymbol), nm;
-	for (j = i = 0 ; i < n ; i++) {
-	    if (LOGICAL(ind)[i])
-		SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
-	}
-	/* copy across names and subset */
-	if (!isNull(nmold)) {
-	    nm = allocVector(STRSXP, nmatches);
-	    for (i = 0, j = 0; i < n ; i++)
-		if (LOGICAL(ind)[i])
-		    SET_STRING_ELT(nm, j++, STRING_ELT(nmold, i));
-	    setAttrib(ans, R_NamesSymbol, nm);
-	}
-    }
-    else {
-	for (j = i = 0 ; i < n ; i++) {
-	    if (LOGICAL(ind)[i]==1)
-		INTEGER(ans)[j++] = i + 1;
-	}
-    }
-
-    if (wpat) Free(wpat);
-    UNPROTECT(2);
-    return ans;
 }
 

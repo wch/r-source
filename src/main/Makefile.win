@@ -13,7 +13,7 @@ FFLAGS=-O2
 CSOURCES=\
 	CConverters.c CommandLineArgs.c \
 	Rdynload.c Renviron.c RNG.c \
-	apply.c apse.c arithmetic.c array.c attrib.c \
+	agrep.c apply.c apse.c arithmetic.c array.c attrib.c \
 	base.c bind.c builtin.c \
 	character.c coerce.c colors.c complex.c connections.c context.c \
 	cov.c cum.c \

@@ -19,7 +19,7 @@
    http://www.r-project.org/Licenses/ 
    MA 02110-1301  USA.  */
 
-#ifdef USE_TRE
+#ifdef USE_TRE2
 # include <tre/regex.h>
 #else
 
