@@ -420,7 +420,6 @@ AC_ARG_WITH([TRE],
 [R_ARG_USE(TRE)],
 [use_TRE=no])
 if test "$use_TRE" = yes ; then
-  LIBS="${LIBS} -ltre"
   AC_DEFINE(USE_TRE, 1, [Define to use TRE for regexp.])
 fi
 AC_SUBST(USE_TRE)

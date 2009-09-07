@@ -3012,7 +3012,6 @@ else
 fi
 
 if test "$use_TRE" = yes ; then
-  LIBS="${LIBS} -ltre"
 
 cat >>confdefs.h <<\_ACEOF
 #define USE_TRE 1
