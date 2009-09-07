@@ -33,14 +33,16 @@
 # include <pcre.h>
 #endif
 
-#include <R_ext/rlocale.h>
+//#include <R_ext/rlocale.h>
 #include <R_ext/RS.h>           /* for CallocCharBuf and Free */
-
+#include <wchar.h>
+#include <wctype.h>
 
 /* The following R functions do substitution for regular expressions,
  * either once or globally.
  * The functions are loosely patterned on the "sub" and "gsub" in "nawk". */
 
+/* FIXME: use UCP for upper/lower conversion */
 static int length_adj(const char *orig, const char *repl, int *ovec,
 		      int nsubexpr, Rboolean useBytes)
 {
