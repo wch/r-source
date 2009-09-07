@@ -60,7 +60,7 @@ platform-CPPFLAGS=-I../gnuwin32
 builtin-CPPFLAGS=-I../gnuwin32
 printutils-CPPFLAGS=-I../gnuwin32
 sysutils-CPPFLAGS=-I../gnuwin32
-
+# agrep-CPPFLAGS=-DUSE_TRE -I../extra
 
 ifeq ($(strip $(USE_ICU)),YES)
 util-CPPFLAGS=-DUSE_ICU -I"$(ICU_PATH)"/include
