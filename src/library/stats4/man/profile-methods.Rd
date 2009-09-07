@@ -37,12 +37,16 @@
   might level off.
 }
 \value{
-An object of class \code{"profile.mle"}, see  \code{"profile.mle-class"}.
+  An object of class \code{"profile.mle"}, see
+  \code{"profile.mle-class"}.
 }
 
-\section{Methods}{\describe{
-\item{fitted = "ANY"}{Generic function: see \code{\link[stats]{profile}}.}
-\item{fitted = "mle"}{Profile the likelihood in the vicinity of the
-  optimum of an \code{"mle"} object.}
-}}
+\section{Methods}{
+  \describe{
+    \item{\code{signature(fitted = "ANY")}}{Generic function: see
+      \code{\link[stats]{profile}}.}
+    \item{\code{signature(fitted = "mle")}}{Profile the likelihood in
+      the vicinity of the optimum of an \code{"mle"} object.}
+  }
+}
 \keyword{methods}

@@ -21,12 +21,13 @@
    changed values. Use \code{name=NULL} to remove the argument \code{name}.}
  \item{evaluate}{If true evaluate the new call else return the call.}
 }
-\section{Methods}{\describe{
-
-\item{object = "ANY"}{Generic function: see \code{\link[stats]{update}}.}
-
-\item{object = "mle"}{Update a fit.}
-}}
+\section{Methods}{
+  \describe{
+    \item{\code{signature(object = "ANY")}}{Generic function: see
+      \code{\link[stats]{update}}.}
+    \item{\code{signature(object = "mle")}}{Update a fit.}
+  }
+}
 \examples{
 x <- 0:10
 y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)

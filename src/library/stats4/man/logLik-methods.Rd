@@ -12,10 +12,12 @@
 \description{
   Extract the maximized log-likelihood from \code{"mle"} objects.
 }
-\section{Methods}{\describe{
-
-\item{object = "ANY"}{Generic function: see \code{\link[stats]{logLik}}.}
-
-\item{object = "mle"}{Extract log-likelihood from the fit.}
-}}
+\section{Methods}{
+  \describe{
+    \item{\code{signature(object = "ANY")}}{Generic function: see
+      \code{\link[stats]{logLik}}.}
+    \item{\code{signature(object = "mle")}}{Extract log-likelihood from
+      the fit.}
+  }
+}
 \keyword{methods}

@@ -604,9 +604,11 @@ promptMethods <- function(f, filename = NULL, methods)
     signatures <- findMethodSignatures(methods = methods, target=TRUE)
     args <- colnames(signatures) # the *same* for all
     for(i in seq_len(n)) {
-	sigi <- paste("\"", signatures[i,], "\"", sep ="")
+        sigi <- signatures[i, ]
 	labels[[i]] <-
-	    paste(args, sigi, collapse = ", ", sep = " = ")
+            sprintf("\\code{\\signature(%s)}",
+                    paste(sprintf("%s = \"%s\"", args, escape(sigi)),
+                          collapse = ", "))
 	aliases[[i]] <-
 	    paste0("\\alias{",
 		   utils:::topicName("method", c(f, signatures[i,])),

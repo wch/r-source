@@ -20,7 +20,7 @@
 }
 \section{Methods}{
   \describe{
-    \item{.Object = "ANY"}{
+    \item{\code{signature(.Object = "ANY")}}{
       The default method for \code{initialize} takes either named or
       unnamed arguments.  Argument names must be the names of slots in
       this class definition, and the corresponding arguments must be
@@ -44,7 +44,7 @@
       subclass arguments.
     }
 
-    \item{.Object = "traceable"}{
+    \item{\code{signature(.Object = "traceable")}}{
       Objects of a class that extends \code{traceable} are used to
       implement debug tracing (see class \linkS4class{traceable} and
       \code{\link{trace}}).
@@ -56,12 +56,12 @@
       \code{\link{trace}}.
     }
 
-    \item{.Object = "environment"}{
+    \item{\code{signature(.Object = "environment")}}{
       The \code{initialize} method for environments takes a named list
       of objects to be used to initialize the environment.
     }
 
-    \item{.Object = "signature"}{
+    \item{\code{signature(.Object = "signature")}}{
       This is a method for internal use only.
       It takes an optional \code{functionDef} argument to provide a
       generic function with a \code{signature} slot to define the

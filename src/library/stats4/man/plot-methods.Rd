@@ -30,10 +30,12 @@
      Defaults to \code{TRUE}.} 
  \item{\dots}{other arguments to the \code{plot} function can be passed here.}
 }
-\section{Methods}{\describe{
-
-\item{x = "ANY", y = "ANY"}{Generic function: see \code{\link[graphics]{plot}}.}
-
-\item{x = "profile.mle", y = "missing"}{Plot likelihood profiles for \code{x}.}
-}}
+\section{Methods}{
+  \describe{
+    \item{\code{signature(x = "ANY", y = "ANY")}}{Generic function: see
+      \code{\link[graphics]{plot}}.}
+    \item{\code{signature(x = "profile.mle", y = "missing")}}{Plot
+      likelihood profiles for \code{x}.}
+  }
+}
 \keyword{methods}

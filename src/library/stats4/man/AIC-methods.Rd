@@ -13,7 +13,8 @@
 }
 \section{Methods}{
   \describe{
-    \item{object = "ANY"}{Generic function: see \code{\link[stats]{AIC}}.}
+    \item{\code{signature(object = "ANY")}}{Generic function: see
+      \code{\link[stats]{AIC}}.}
   }
 }
 \keyword{methods}

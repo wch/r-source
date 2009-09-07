@@ -45,9 +45,10 @@ rbind2(x, y)
 }
 \section{Methods}{
   \describe{
-    \item{x = "ANY", y = "ANY"}{the default method using \R's internal code.}
-    \item{x = "ANY", y = "missing"}{the default method for one argument
+    \item{\code{signature(x = "ANY", y = "ANY")}}{the default method
       using \R's internal code.}
+    \item{\code{signature(x = "ANY", y = "missing")}}{the default method
+      for one argument using \R's internal code.}
   }
 }
 %% The R code is currently in ../R/MethodsListClass.R + ../R/cbind-rbind.R
