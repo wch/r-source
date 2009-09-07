@@ -27,6 +27,11 @@ aspell(files, filter, control = list(), encoding = "unknown")
   Currently the only available built-in filters are \code{"Rd"},
   corresponding to \code{\link{RdTextFilter}}, and \code{"Sweave"},
   corresponding to \code{\link{SweaveTeXFilter}}.
+
+  The print method has for the objects returned by \code{aspell} has an
+  \code{indent} argument controlling the indentation of the positions of
+  possibly mis-spelled words.  The default is 2; Emacs users may find it
+  useful to use an indentation of 0 and visit output in grep-mode.
 }
 \value{
   A data frame inheriting from \code{aspell} (which has a useful print

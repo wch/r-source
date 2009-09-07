@@ -125,7 +125,7 @@ function(files, filter, control = list(), encoding = "unknown")
 }
 
 print.aspell <-
-function(x, sort = TRUE, verbose = FALSE, ...)
+function(x, sort = TRUE, verbose = FALSE, indent = 2L, ...)
 {
     ## A very simple printer ...
     if(!(nr <- nrow(x))) return(invisible(x))
@@ -144,9 +144,11 @@ function(x, sort = TRUE, verbose = FALSE, ...)
     else {
         s <- split(sprintf("%s:%d:%d", x$File, x$Line, x$Column),
                    x$Original)
+        sep <- sprintf("\n%s",
+                       paste(rep.int(" ", indent), collapse = ""))
         out <- paste(names(s),
-                     sapply(s, paste, collapse = "\n  "),
-                     sep = "\n  ", collapse = "\n\n")
+                     sapply(s, paste, collapse = sep),
+                     sep = sep, collapse = "\n\n")
     }
     writeLines(out)
     invisible(x)
