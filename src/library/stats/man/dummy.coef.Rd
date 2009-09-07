@@ -37,7 +37,7 @@ dummy.coef(object, \dots)
   coefficients are by definition zero.
 
   The method used has some limitations, and will give incomplete results
-  for terms such as \code{poly(x, 2))}.  However, it is adequate for
+  for terms such as \code{poly(x, 2)}.  However, it is adequate for
   its main purpose, \code{aov} models.
 }
 \value{

@@ -17,17 +17,18 @@
      absVal =TRUE, \dots)
 }
 \arguments{
- \item{x}{an object of class \code{"profile.nls"} }
- \item{levels}{levels, on the scale of the absolute value of a t
-     statistic, at which to interpolate intervals.  Usually \code{conf}
-     is used instead of giving \code{levels} explicitly.}
+  \item{x}{an object of class \code{"profile.nls"} }
+  \item{levels}{levels, on the scale of the absolute value of a t
+    statistic, at which to interpolate intervals.  Usually \code{conf}
+    is used instead of giving \code{levels} explicitly.}
  \item{conf}{a numeric vector of confidence levels for profile-based
-     confidence intervals on the parameters.  Defaults to \code{c(0.99,
-         0.95, 0.90, 0.80, 0.50).}}
+   confidence intervals on the parameters.
+   Defaults to \code{c(0.99, 0.95, 0.90, 0.80, 0.50).}}
  \item{absVal}{a logical value indicating whether or not the plots
-     should be on the scale of the absolute value of the profile t.
-     Defaults to \code{TRUE}.} 
- \item{\dots}{other arguments to the \code{plot} function can be passed here.}
+   should be on the scale of the absolute value of the profile t.
+   Defaults to \code{TRUE}.} 
+ \item{\dots}{other arguments to the \code{plot} function can be passed
+   here.}
 }
 \references{
   Bates, D.M. and Watts, D.G. (1988),

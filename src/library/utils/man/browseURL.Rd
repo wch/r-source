@@ -27,8 +27,8 @@ browseURL(url, browser = getOption("browser"), encodeIfNeeded = FALSE)
   \item{encodeIfNeeded}{Should the URL be encoded by
     \code{\link{URLencode}} before passing to the browser?  This is not
     needed (and might be harmful) if the \code{browser} program/function
-    itself does encoding, and can be harmful for \code{file://} URLs on some
-    systems and for \code{http://} URLs passed to some CGI applications.
+    itself does encoding, and can be harmful for \samp{file://} URLs on some
+    systems and for \samp{http://} URLs passed to some CGI applications.
     Fortunately, most URLs do not need encoding.}
 }
 #ifdef unix

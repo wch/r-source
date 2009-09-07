@@ -8,7 +8,7 @@
 \title{Compile Files for Use with R}
 \description{
   Compile given source files so that they can subsequently be collected
-  into a shared library using \code{R CMD SHLIB} and be loaded into R
+  into a shared library using \command{R CMD SHLIB} and be loaded into R
   using \code{dyn.load()}.
 }
 \usage{

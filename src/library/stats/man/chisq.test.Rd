@@ -85,8 +85,8 @@ chisq.test(x, y = NULL, correct = TRUE,
   \item{data.name}{a character string giving the name(s) of the data.}
   \item{observed}{the observed counts.}
   \item{expected}{the expected counts under the null hypothesis.}
-  \item{residuals}{the Pearson residuals, \code{(observed - expected)
-      / sqrt(expected)}.}
+  \item{residuals}{the Pearson residuals,
+    \code{(observed - expected) / sqrt(expected)}.}
 }
 \references{
   Hope, A. C. A. (1968)

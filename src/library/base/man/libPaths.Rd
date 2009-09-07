@@ -80,15 +80,15 @@
   to obtain \samp{\%}), with currently available conversion
   specifications as follows:
   \describe{
-    \item{\code{\%V}}{\R version number including the patchlevel (e.g.,
+    \item{\samp{\%V}}{\R version number including the patchlevel (e.g.,
       \samp{2.5.0}).}
-    \item{\code{\%v}}{\R version number excluding the patchlevel (e.g.,
+    \item{\samp{\%v}}{\R version number excluding the patchlevel (e.g.,
       \samp{2.5}).}
-    \item{\code{\%p}}{the platform for which \R was built, the value of
+    \item{\samp{\%p}}{the platform for which \R was built, the value of
       \code{\link{R.version}$platform}.}
-    \item{\code{\%o}}{the underlying operating system, the value of
+    \item{\samp{\%o}}{the underlying operating system, the value of
       \code{\link{R.version}$os}.}
-    \item{\code{\%a}}{the architecture (CPU) \R was built on/for, the
+    \item{\samp{\%a}}{the architecture (CPU) \R was built on/for, the
       value of \code{\link{R.version}$arch}.}
   }
   (See \code{\link{version}} for details on R version information.)

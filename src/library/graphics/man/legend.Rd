@@ -93,11 +93,11 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   \item{title.col}{color for \code{title}.}
 }
 \details{
-  Arguments \code{x, y, legend} are interpreted in a non-standard way to
-  allow the coordinates to be specified \emph{via} one or two arguments.
-  If \code{legend} is missing and \code{y} is not numeric, it is assumed
-  that the second argument is intended to be \code{legend} and that the
-  first argument specifies the coordinates.
+  Arguments \code{x}, \code{y}, \code{legend} are interpreted in a
+  non-standard way to allow the coordinates to be specified \emph{via}
+  one or two arguments.  If \code{legend} is missing and \code{y} is not
+  numeric, it is assumed that the second argument is intended to be
+  \code{legend} and that the first argument specifies the coordinates.
 
   The coordinates can be specified in any way which is accepted by
   \code{\link{xy.coords}}.  If this gives the coordinates of one point,
@@ -129,10 +129,10 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   A list with list components
   \item{rect}{a list with components
     \describe{
-      \item{\code{w, h}}{positive numbers giving \bold{w}idth and
+      \item{\code{w}, \code{h}}{positive numbers giving \bold{w}idth and
         \bold{h}eight of the legend's box.}
-      \item{\code{left, top}}{x and y coordinates of upper left corner
-        of the box.}
+      \item{\code{left}, \code{top}}{x and y coordinates of upper left
+	corner of the box.}
     }
   }
   \item{text}{a list with components

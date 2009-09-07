@@ -28,7 +28,7 @@ toString(x, \dots)
   This is a generic function for which methods can be written: only the
   default method is described here.  Most methods should honor the
   \code{width} argument to specify the maximum display width (as measured
-  by \code{\link{nchar}(type = "width"}) of the result.
+  by \code{\link{nchar}(type = "width")} of the result.
 
   The default method first converts \code{x} to character and then
   concatenates the elements separated by \code{", "}.

@@ -23,17 +23,17 @@
     obtaining information about usage and version of the utility.}
 }
 \details{
-  \code{R CMD check}
+  \command{R CMD check}
   checks \R add-on packages from their sources, performing a wide
   variety of diagnostic checks.
 
-  \code{R CMD build}
+  \command{R CMD build}
   builds \R source or binary packages from their sources.  The name(s)
   of the packages are taken from the \file{DESCRIPTION} files and not
   from the directory names.
 
   Use
-  \code{R CMD foo --help}
+  \command{R CMD foo --help}
   to obtain usage information on utility \code{foo}.
 
   Several of the options to \code{build --binary} are passed to
@@ -42,7 +42,7 @@
 #ifdef windows
 \note{
   They make use of a temporary directory specified by the environment
-  variable \code{TMPDIR} and defaulting to \code{c:/TEMP}.  Do ensure
+  variable \code{TMPDIR} and defaulting to \samp{c:/TEMP}.  Do ensure
   that if set forward slashes are used.
 }
 #endif

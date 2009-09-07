@@ -79,7 +79,7 @@ hist(x, \dots)
 \description{
   The generic function \code{hist} computes a histogram of the given
   data values.  If \code{plot=TRUE}, the resulting object of
-  \code{\link{class} "histogram"} is plotted by
+  \link{class} \code{"histogram"} is plotted by
   \code{\link{plot.histogram}}, before it is returned.
 }
 \details{

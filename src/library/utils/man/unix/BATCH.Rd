@@ -22,7 +22,7 @@
     \file{.R} extension stripped, and \file{.Rout} appended.}
 }
 \details{
-  Use \code{R CMD BATCH --help} to be reminded of the usage.
+  Use \command{R CMD BATCH --help} to be reminded of the usage.
 
   By default, the input commands are printed along with the output.  To
   suppress this behavior, add \code{options(echo = FALSE)} at the
@@ -43,7 +43,7 @@
 \note{
   Unlike \code{Splus BATCH}, this does not run the \R process in the
   background.  In most shells,
-  \code{R CMD BATCH [options] infile [outfile] &}
+  \command{R CMD BATCH [options] infile [outfile] &}
   will do so.
 
   Report bugs to \email{r-bugs@r-project.org}.

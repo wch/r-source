@@ -76,12 +76,12 @@
       the value of \env{DVIPS}, and if that is unset to a value
       determined when \R was built.
 #ifdef unix
-      Used by \code{R CMD Rd2dvi}, and at startup to set the default for
+      Used by \command{R CMD Rd2dvi}, and at startup to set the default for
       \code{\link{options}("latexcmd")}, used by
-      \code{\link{help}(offline = TRUE}.
+      \code{\link{help}(offline = TRUE)}.
 #endif
 #ifdef windows
-      Used by \code{R CMD Rd2dvi}.
+      Used by \command{R CMD Rd2dvi}.
 #endif
     }
     \item{\code{R_ENVIRON}:}{Optional.  The path to the site environment
@@ -113,12 +113,12 @@
       the value of \env{LATEX}, and if that is unset to a value
       determined when \R was built.
 #ifdef unix
-      Used by \code{R CMD Rd2dvi}, and at startup to set the default for
+      Used by \command{R CMD Rd2dvi}, and at startup to set the default for
       \code{\link{options}("latexcmd")}, used by
-      \code{\link{help}(offline = TRUE}.
+      \code{\link{help}(offline = TRUE)}.
 #endif
 #ifdef windows
-      Used by \code{R CMD Rd2dvi}.
+      Used by \command{R CMD Rd2dvi}.
 #endif
       }
     \item{\code{R_LIBS}:}{Optional.  Used for initial setting of
@@ -129,25 +129,29 @@
       \code{\link{.libPaths}}.}
     \item{\code{R_MAKEINDEXCMD}:}{The path to \code{makeindex}.  Defaults
       at startup to the value of \env{MAKEINDEX}, and if that is unset
-      to a value determined when \R was built.  Used by \code{R CMD Rd2dvi}.}
+      to a value determined when \R was built.
+      Used by \command{R CMD Rd2dvi}.}
     \item{\code{R_PAPERSIZE}:}{Optional.  Use to set the default for
       \code{\link{options}("papersize")}, e.g. used by
       \code{\link{pdf}}, \code{\link{postscript}} and
       \code{\link{help}(offline = TRUE)}.}
     \item{\code{R_PDFLATEXCMD}:}{The path to \code{pdflatex}.  Defaults
       at startup to the value of \code{PDFLATEX}, and if that is unset
-      to a value determined when \R was built.  Used by \code{R CMD Rd2dvi}.}
+      to a value determined when \R was built.
+      Used by \command{R CMD Rd2dvi}.}
     \item{\code{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
-      by \code{R CMD Rd2dvi}.}
+      by \command{R CMD Rd2dvi}.}
     \item{\code{R_PLATFORM}:}{The platform -- a string of the form
       \code{\var{cpu}-\var{vendor}-\var{os}}, see \code{\link{R.Version}}.}
     \item{\code{R_PROFILE}:}{Optional.  The path to the site profile
       file: see \link{Startup}.  Consulted at startup.}
     \item{\code{R_RD4DVI}:}{Options for \code{latex} processing of
-      \code{Rd} files.  Used by \code{R CMD Rd2dvi} and
+      \code{Rd} files.
+      Used by \command{R CMD Rd2dvi} and
       \code{\link{help}(offline = TRUE)}.}
     \item{\code{R_RD4PDF}:}{Options for \code{pdflatex} processing of
-      \code{Rd} files.  Used by \code{R CMD Rd2dvi}.}
+      \code{Rd} files.
+      Used by \command{R CMD Rd2dvi}.}
     \item{\code{R_SHARE_DIR}:}{The location of the \R \file{share}
       directory.  Set by \R.} 
     \item{\code{R_TEXI2DVICMD}:}{The path to \code{texi2dvi}. Defaults

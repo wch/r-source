@@ -26,7 +26,7 @@ promptPackage(package, lib.loc = NULL, filename = NULL,
     The default corresponds to a file whose name is \code{name} followed
     by \code{".Rd"}.  Can also be \code{NA} (see below).}
   \item{name}{a character string specifying the name of the help topic,
-    typically of the form \code{<pkg>-package}.}
+    typically of the form \samp{<pkg>-package}.}
   \item{final}{a logical value indicating whether to attempt to
     create a usable version of the help topic, rather than just a shell.}
 }

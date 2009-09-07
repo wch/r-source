@@ -14,7 +14,7 @@
 \special{Rscript [options] [-e expression] file [args]}
 }
 \arguments{
-  \item{options}{A list of options beginning with \code{--}.  These can
+  \item{options}{A list of options beginning with \samp{--}.  These can
     be any of the options of the standard \R front-end, and also those
     described in the details.}
   \item{expression}{a \R expression.}

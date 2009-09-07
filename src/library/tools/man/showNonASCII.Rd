@@ -8,7 +8,7 @@
 \title{Highlight non-ASCII characters}
 \description{
   This function prints elements of a character vector which contain
-  non-ASCII bytes, printing such bytes as a escape like \code{<fc>}.
+  non-ASCII bytes, printing such bytes as a escape like \samp{<fc>}.
 }
 \usage{
 showNonASCII(x)

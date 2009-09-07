@@ -24,8 +24,8 @@ capture.output(\dots, file = NULL, append = FALSE)
 }
 \details{
   An attempt is made to write output as far as possible to \code{file}
-  if there is an error in evaluating the expressions, but for \code{file
-    = NULL} all output will be lost.
+  if there is an error in evaluating the expressions, but for
+  \code{file = NULL} all output will be lost.
 }
 \value{
   A character string (if \code{file=NULL}), or invisible \code{NULL}.

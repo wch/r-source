@@ -25,14 +25,14 @@
     \file{.dll} on Windows).  If not given, the basename of the object
     is taken from the basename of the first file.}
   \item{options}{Further options to control the processing.  Use
-    \code{R CMD SHLIB --help} for a current list.
+    \command{R CMD SHLIB --help} for a current list.
 #ifdef windows
     The most useful one is \code{-d} to build a debug DLL.
 #endif
   }
 }
 \details{
-  \code{R CMD SHLIB} is the mechanism used by \code{\link{INSTALL}} to
+  \command{R CMD SHLIB} is the mechanism used by \code{\link{INSTALL}} to
   compile source code in packages.  It will generate suitable
   compilation commands for C, C++, ObjC(++) and Fortran sources: Fortran
   90/95 sources can also be used but it may not be possible to mix these

@@ -35,10 +35,10 @@
     character strings}, e.g. from the keyboard.
 }
 \section{Extended Regular Expressions}{
-  This section covers the regular expressions allowed if \code{extended
-  = TRUE} in \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
-  \code{gsub} and \code{strsplit}.  They use the \code{glibc} 2.7
-  implementation of the POSIX 1003.2 standard.
+  This section covers the regular expressions allowed if
+  \code{extended = TRUE} in \code{grep}, \code{regexpr},
+  \code{gregexpr}, \code{sub}, \code{gsub} and \code{strsplit}.  They
+  use the \code{glibc} 2.7 implementation of the POSIX 1003.2 standard.
 
   Regular expressions are constructed analogously to arithmetic
   expressions, by using various operators to combine smaller expressions.
@@ -189,9 +189,9 @@
   parenthesized subexpression of the regular expression.
 }
 \section{Basic Regular Expressions}{
-  This section covers the regular expressions allowed if \code{extended
-  = FALSE} in \code{grep}, \code{regexpr}, \code{gregexpr}, \code{sub},
-  \code{gsub} and \code{strsplit}.
+  This section covers the regular expressions allowed if
+  \code{extended = FALSE} in \code{grep}, \code{regexpr},
+  \code{gregexpr}, \code{sub}, \code{gsub} and \code{strsplit}.
 
   In basic regular expressions the metacharacters \samp{?}, \samp{+},
   \samp{\{}, \samp{|}, \samp{(}, and \samp{)} lose their special meaning;

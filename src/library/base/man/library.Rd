@@ -153,7 +153,8 @@ require(package, lib.loc = NULL, quietly = FALSE,
 }
 \section{Packages that require other packages}{
   \bold{NB:} This mechanism has been almost entirely superseded by
-  using the \code{Depends:} field in the \file{DESCRIPTION} file of a package.
+  using the \samp{Depends:} field in the \file{DESCRIPTION} file of a
+  package. 
   
   The source code for a
   package that requires one or more other packages should have a call
@@ -184,7 +185,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
 \note{
   \code{library} and \code{require} can only load an \emph{installed}
   package, and this is detected by having a \file{DESCRIPTION} file
-  containing a \code{Built:} field.
+  containing a \samp{Built:} field.
 
   Under Unix-alikes, the code checks that the package was installed
   under a similar operating system as given by \code{R.version$platform}

@@ -126,18 +126,18 @@ may not want to use the entire file created:
 \itemize{
 \item If you want to document the methods in the file containing the
     documentation for the generic function itself, you can
-    cut-and-paste to move the \code{\\alias} lines and the
+    cut-and-paste to move the \verb{\alias} lines and the
     \code{Methods} section from the file created by
     \code{promptMethods} to the existing file.
 
 \item On the other hand, if these are auxiliary methods, and you only
     want to document the added or modified software, you should strip
-    out all but the relevant \code{\\alias} lines for the methods of
-    interest, and remove all but the corresponding \code{\\item}
-    entries in the  \code{Methods} section. Note that in this case you
-    will usually remove the first  \code{\\alias} line as well, since
+    out all but the relevant \verb{\alias} lines for the methods of
+    interest, and remove all but the corresponding \verb{\item}
+    entries in the \code{Methods} section. Note that in this case you
+    will usually remove the first  \verb{\alias} line as well, since
     that is the marker for general methods documentation on this
-    function (in the example, \code{\\alias\{myfun-methods\}}).
+    function (in the example, \samp{\alias\{myfun-methods\}}).
 }
 
 If you simply want to direct documentation for one or more methods to

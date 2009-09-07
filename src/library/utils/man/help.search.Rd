@@ -59,8 +59,8 @@ field??pattern
     Integer values are also accepted, with \code{TRUE} being equivalent
     to \code{2}, and \code{1} being less verbose.  On Windows a progress
     bar is shown during rebuilding, and on Unix a heartbeat is shown for
-    \code{verbose = 1} and a package-by-package list for \code{verbose
-      >= 2}.}
+    \code{verbose = 1} and a package-by-package list for
+    \code{verbose >= 2}.}
   \item{rebuild}{a logical indicating whether the help database should
     be rebuilt.  This will be done automatically if \code{lib.loc} or
     the search path is changed, or if \code{package} is used and a value

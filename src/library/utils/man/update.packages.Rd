@@ -84,7 +84,8 @@ contrib.url(repos, type = getOption("pkgType"))
 #endif
 #ifdef unix
     \file{.tar.gz} files.  These can be source archives or binary
-    package/bundle archive files (as created by \code{R CMD build --binary}).
+    package/bundle archive files (as created by
+    \command{R CMD build --binary}).
     Tilde-expansion will be done on the file paths.
 #endif
     If this is a zero-length character vector, a listbox of available
@@ -177,7 +178,8 @@ contrib.url(repos, type = getOption("pkgType"))
 #endif
   }
   \item{clean}{a logical value indicating whether to specify
-    to add the \code{--clean} flag to the call to \code{R CMD INSTALL}.
+    to add the \code{--clean} flag to the call to
+    \command{R CMD INSTALL}.
     This is sometimes used to perform additional operations at the end
     of the package installation in addition to removing intermediate files.
   }
@@ -240,9 +242,9 @@ contrib.url(repos, type = getOption("pkgType"))
   
   The main function of the set is \code{update.packages}.  First a list
   of all packages/bundles found in \code{lib.loc} is created and
-  compared with those available at the repositories.  If \code{ask =
-    TRUE} (the default) packages/bundles with a newer version are
-  reported and for each one the user can specify if it should be
+  compared with those available at the repositories.  If
+  \code{ask = TRUE} (the default) packages/bundles with a newer version
+  are reported and for each one the user can specify if it should be
   updated.
 #ifdef unix
   If so, the package sources are downloaded from the repositories and

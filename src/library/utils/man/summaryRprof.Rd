@@ -28,8 +28,8 @@ summaryRprof(filename = "Rprof.out", chunksize = 5000,
   
 }
 \details{
-This function is an alternative to \code{R CMD Rprof}. It provides the
-convenience of an all-\R implementation but will be slower for large
+This function is an alternative to \command{R CMD Rprof}. It provides
+the convenience of an all-\R implementation but will be slower for large
 files.
 
 As the profiling output file could be larger than available memory, it

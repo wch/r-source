@@ -52,8 +52,8 @@
   \code{NA}.  See also \code{\link{napredict}}.
 }
 \value{
-  If \code{se = FALSE}, a vector or matrix of predictions.  If \code{se
-    = TRUE}, a list with components
+  If \code{se = FALSE}, a vector or matrix of predictions.
+  If \code{se = TRUE}, a list with components
   \item{fit}{Predictions}
   \item{se.fit}{Estimated standard errors}
   \item{residual.scale}{A scalar giving the square root of the

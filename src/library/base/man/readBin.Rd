@@ -22,8 +22,9 @@ writeBin(object, con, size = NA_integer_,
     a raw vector.}
   \item{what}{Either an object whose mode will give the mode of the
     vector to be read, or a character vector of length one describing
-    the mode: one of \code{"numeric", "double", "integer", "int",
-      "logical", "complex", "character", "raw"}.}
+    the mode: one of \code{"numeric"}, \code{"double"},
+    \code{"integer"}, \code{"int"}, \code{"logical"}, \code{"complex"},
+    \code{"character"}, \code{"raw"}.} 
   \item{n}{integer.  The (maximal) number of records to be
     read.  You can use an over-estimate here, but not too large as
     storage is reserved for \code{n} items.}

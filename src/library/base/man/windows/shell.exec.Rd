@@ -22,7 +22,7 @@ shell.exec(file)
   applications interpret files relative to \emph{their} working
   directory.
 
-  Encoded \code{file://} URLs are not usually accepted.
+  Encoded \samp{file://} URLs are not usually accepted.
 }
 \value{
   No value, but informative error messages will be given if the

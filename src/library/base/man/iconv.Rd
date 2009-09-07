@@ -53,7 +53,7 @@ iconvlist()
   encoding) will be returned as \code{NA} unless \code{sub} is specified.
 
   Most versions of \code{iconv} will allow transliteration by appending
-  \code{//TRANSLIT} to the \code{to} encoding: see the examples.
+  \samp{//TRANSLIT} to the \code{to} encoding: see the examples.
 
   Any encoding bits (see \code{\link{Encoding}}) on elements of \code{x}
   are ignored: they will always be translated as if from \code{from}
@@ -72,7 +72,7 @@ iconvlist()
   we use a version of Yukihiro Nakadaira's \samp{win\_iconv}, which is
   based on Windows' codepages (but \samp{libiconv} can be used by
   swapping a DLL).  All three have \code{iconvlist}, ignore case in
-  encoding names and support \code{//TRANSLIT} (but with different
+  encoding names and support \samp{//TRANSLIT} (but with different
   results).
 
   Most commercial Unixes contain an implemetation of \code{iconv} but
@@ -81,7 +81,7 @@ iconvlist()
   installing \samp{libiconv} on Solaris and AIX, for example.
 
   There are other implementations, e.g. NetBSD uses one from the Citrus
-  project (which does not support \code{//TRANSLIT}) and there is an
+  project (which does not support \samp{//TRANSLIT}) and there is an
   older FreeBSD port (\samp{libiconv} is usually used there): it has not
   been reported whether or not these work with \R.
 }

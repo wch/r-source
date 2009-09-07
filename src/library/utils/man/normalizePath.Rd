@@ -19,7 +19,7 @@ normalizePath(path)
 \details{
 #ifdef unix
   Where the platform supports it this turns paths into absolute paths
-  in their canonical form (no \code{./}, \code{../} nor symbolic links).
+  in their canonical form (no \samp{./}, \samp{../} nor symbolic links).
 #endif
 #ifdef windows
   This converts relative paths to absolute paths, and converts short

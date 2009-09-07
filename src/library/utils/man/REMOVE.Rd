@@ -20,15 +20,15 @@
 \details{
   If the name of a bundle is given, the whole bundle will be removed.
   
-  If used as \code{R CMD REMOVE pkgs} without explicitly specifying
+  If used as \command{R CMD REMOVE pkgs} without explicitly specifying
   \code{lib}, packages are removed from the library tree rooted at the
   first directory in the library path which would be used by \R run in
   the current environment.
 
   To remove from the library tree \code{lib} instead of the default
-  one, use \code{R CMD REMOVE -l lib pkgs}.
+  one, use \command{R CMD REMOVE -l lib pkgs}.
 
-  Use \code{R CMD REMOVE --help} for more usage information.  
+  Use \command{R CMD REMOVE --help} for more usage information.  
 }
 #ifdef unix
 \note{

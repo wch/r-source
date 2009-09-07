@@ -18,20 +18,21 @@
   \item{options}{a space-separated list of options through which in
     particular the process for building the help files can be controlled.
     Most options should only be given once, and paths including spaces should
-    be quoted.  Use \code{R CMD INSTALL --help} for the full current
+    be quoted.  Use \command{R CMD INSTALL --help} for the full current
     list of options.}
 }
 \details{
   This will stop at the first error, so if you want all the \code{pkgs}
   to be tried, call this via a shell loop.
 
-  If used as \code{R CMD INSTALL pkgs} without explicitly specifying
+  If used as \command{R CMD INSTALL pkgs} without explicitly specifying
   \code{lib}, packages are installed into the library tree rooted at the
   first directory in the library path which would be used by \R run in
   the current environment.
 
-  To install into the library tree \code{lib}, use \code{R CMD INSTALL
-  -l lib pkgs}.  This prepends \code{lib} to the library path for
+  To install into the library tree \code{lib}, use
+  \command{R CMD INSTALL -l lib pkgs}.
+  This prepends \code{lib} to the library path for
   duration of the install, so required packages in the installation
   directory will be found (and used in preference to those in other
   libraries).
@@ -39,7 +40,7 @@
 
   Windows Perl and the files for installing from source packages need to
   be installed.  It is possible that environment variable \env{TMPDIR}
-  will need to be set (although \code{R CMD} tries to set it suitably
+  will need to be set (although \command{R CMD} tries to set it suitably
   otherwise): use forward slashes and no spaces for the path to a
   writable directory.
 #endif
@@ -50,8 +51,8 @@
   \file{pkg_version.tar.gz} as obtained from CRAN: these are then
   extracted to a temporary directory.
 #ifdef unix
-  Finally, binary package/bundle archive files (as created by \code{R
-  CMD build --binary} can be supplied.
+  Finally, binary package/bundle archive files (as created by
+  \command{R CMD build --binary} can be supplied.
 #endif
 
   The package sources can be cleaned up prior to installation by
@@ -122,7 +123,7 @@
   \option{--libs-only}.
 #endif
   
-  Use \code{R CMD INSTALL --help} for concise usage information,
+  Use \command{R CMD INSTALL --help} for concise usage information,
   including all the available options
 }
 

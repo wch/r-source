@@ -36,11 +36,11 @@ plot.xy(xy, type, pch = par("pch"), lty = par("lty"),
     \code{lend}, \code{ljoin} and \code{lmitre}.}
 }
 \details{
-  The arguments \code{pch, col, bg, cex, lwd} may be vectors and
-  may be recycled, depending on \code{type}: see \code{\link{points}} and
-  \code{\link{lines}} for specifics.  In particular note that \code{lwd}
-  is treated as a vector for points and as a single (first) value for
-  lines.
+  The arguments \code{pch}, \code{col}, \code{bg}, \code{cex},
+  \code{lwd} may be vectors and may be recycled, depending on
+  \code{type}: see \code{\link{points}} and \code{\link{lines}} for
+  specifics.  In particular note that \code{lwd} is treated as a vector
+  for points and as a single (first) value for lines.
 
   \code{cex} is a numeric factor in addition to \code{par("cex")} which
   affects symbols and characters as drawn by \code{type} \code{"p"},

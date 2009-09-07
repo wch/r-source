@@ -33,7 +33,7 @@ strheight(s, units = "user", cex = NULL, font = NULL, vfont = NULL, ...)
 }
 \details{
   Where an element of \code{s} is a multi-line string (that is, contains
-  newlines \code{\\n}), the width and height are of an enclosing
+  newlines \samp{\\n}), the width and height are of an enclosing
   rectangle of the string as plotted by \code{\link{text}}.  The
   inter-line spacing is controlled by \code{cex},
   \code{\link{par}("lheight")} and the \sQuote{point size} (but not the

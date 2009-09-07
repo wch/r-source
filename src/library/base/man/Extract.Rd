@@ -40,11 +40,11 @@ x$name
     object (or for matrices/arrays, the \code{\link{dimnames}}):
     see \sQuote{Character indices} below for further details.
 
-    For \code{[}-indexing only: \code{i, j, \dots} can be logical
-    vectors, indicating elements/slices to select.  Such vectors are
-    recycled if necessary to match the corresponding extent.  \code{i, j,
-      \dots} can also be negative integers, indicating elements/slices
-    to leave out of the selection.
+    For \code{[}-indexing only: \code{i}, \code{j}, \code{\dots} can be
+    logical vectors, indicating elements/slices to select.  Such vectors
+    are recycled if necessary to match the corresponding extent.
+    \code{i}, \code{j}, \code{\dots} can also be negative integers,
+    indicating elements/slices to leave out of the selection.
 
     When indexing arrays by \code{[} a single argument \code{i} can be a
     matrix with as many columns as there are dimensions of \code{x}; the

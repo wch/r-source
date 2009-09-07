@@ -38,7 +38,7 @@ sink.number(type = c("output", "message"))
   character string, a file connection with that name will be established
   for the duration of the diversion.
 
-  Normal \R output (to connection \code{\link{stdout}))} is diverted by
+  Normal \R output (to connection \code{\link{stdout}}) is diverted by
   the default \code{type = "output"}.  Only prompts and (most)
   messages continue to appear on the console.  Messages sent to
   \code{\link{stderr}()} (including those from \code{\link{message}},

@@ -24,12 +24,12 @@
     including the extension \file{.dll}.  If not given, the name of the
     DLL is taken from the first source or object file specified.}
   \item{options}{Further options to control the processing.  Use
-    \code{R CMD SHLIB --help} for a current list.  The most useful one
-    is \code{-d} to build a debug DLL.}
+    \command{R CMD SHLIB --help} for a current list.  The most useful one
+    is \option{-d} to build a debug DLL.}
 }
 \details{
-  \code{R CMD SHLIB} uses the mechanism as used by \code{\link{INSTALL}}
-  to compile source code in packages.  To use \code{SHLIB} you need to
+  \command{R CMD SHLIB} uses the mechanism as used by \code{\link{INSTALL}}
+  to compile source code in packages.  To use \command{SHLIB} you need to
   have installed (from the \R installer) the files for compiling source
   packages as well as the tools described in the \sQuote{R Installation and 
   Administration} manual.

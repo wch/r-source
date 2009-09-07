@@ -26,7 +26,7 @@
   Currently only works if the C compiler is used for linking, and no C++
   code is used.
 
-  Use \code{R CMD LINK --help} for more usage information.
+  Use \command{R CMD LINK --help} for more usage information.
 }
 \note{
   Some binary distributions of \R have \code{LINK} in a separate

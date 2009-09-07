@@ -95,8 +95,9 @@ glm.fit(x, y, weights = rep(1, nobs),
     matrix used in the fitting process should be returned as components
     of the returned value.
 
-    For \code{glm.fit}: \code{x} is a design matrix of dimension \code{n
-      * p}, and \code{y} is a vector of observations of length \code{n}.
+    For \code{glm.fit}: \code{x} is a design matrix of dimension
+    \code{n * p}, and \code{y} is a vector of observations of length
+    \code{n}.
   }
 
   \item{contrasts}{an optional list. See the \code{contrasts.arg}

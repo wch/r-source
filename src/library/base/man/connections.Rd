@@ -97,7 +97,7 @@ isIncomplete(con)
   or \code{"clipboard"} (see below).
 
   For \code{url} the description is a complete URL, including scheme
-  (such as \code{http://}, \code{ftp://} or \code{file://}).
+  (such as \samp{http://}, \samp{ftp://} or \samp{file://}).
 
   For \code{gzfile} the description is the path to a file that is
   compressed by \code{gzip}: it can also open uncompressed files.
@@ -200,28 +200,28 @@ isIncomplete(con)
   system.  This provides a temporary file/fifo to write to and then read
   from.
 
-  A note on \code{file://} URLs.  The most general form (from RFC1738) is
-  \code{file://host/path/to/file}, but \R only accepts the form with an
+  A note on \samp{file://} URLs.  The most general form (from RFC1738) is
+  \samp{file://host/path/to/file}, but \R only accepts the form with an
   empty \code{host} field referring to the local machine.
 #ifdef unix
-  This is then \code{file:///path/to/file}, where \code{path/to/file} is
-  relative to \code{/}.  So although the third slash is strictly part of
+  This is then \samp{file:///path/to/file}, where \samp{path/to/file} is
+  relative to \file{/}.  So although the third slash is strictly part of
   the specification not part of the path, this can be regarded as a way
   to specify the file \file{/path/to/file}.  It is not possible to
   specify a relative path using a file URL.
 #endif
 #ifdef windows
   In this form the path is relative to the root of the filesystem, not a
-  Windows concept.  The standard form is \code{file:///d:/R/repos}: for
+  Windows concept.  The standard form is \samp{file:///d:/R/repos}: for
   compatibility with earlier versions of \R and Unix versions,
-  any other form is parsed as \R as \code{file://} plus \code{path_to_file}.
+  any other form is parsed as \R as \samp{file://} plus \code{path_to_file}.
   Also, backslashes are accepted within the path even though
   RFC1738 does not allow them.
 #endif
   Also, no attempt is made to decode an encoded URL: call
   \code{\link{URLdecode}} if necessary.
 
-  Note that \code{https://} connections are
+  Note that \samp{https://} connections are
 #ifdef unix
   not supported.
 #endif
@@ -229,7 +229,7 @@ isIncomplete(con)
   only supported if \code{--internet2} or \code{\link{setInternet2}(TRUE)} 
   was used (to make use of Internet
   Explorer internals), and then only if the certificate is considered to
-  be valid.  With that option only, the \code{http://user:pass@site}
+  be valid.  With that option only, the \samp{http://user:pass@site}
   notation for sites requiring authentication is also accepted.
 #endif
 }
@@ -302,7 +302,7 @@ isIncomplete(con)
   timeout set by \code{options("timeout")}.  Note that this is a timeout
   for no response at all, not for the whole operation.  The timeout is
   set at the time the connection is opened (more precisely, when the
-  last connection of that type -- \code{http:}, \code{ftp:} or socket --
+  last connection of that type -- \samp{http:}, \samp{ftp:} or socket --
   was opened).
 }
 \section{Fifos}{

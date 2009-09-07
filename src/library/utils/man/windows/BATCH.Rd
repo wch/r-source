@@ -22,7 +22,7 @@
     \file{.R} extension stripped, and \file{.Rout} appended.}
 }
 \details{
-  Use \code{R CMD BATCH --help} to be reminded of the usage.
+  Use \command{R CMD BATCH --help} to be reminded of the usage.
 
   By default, the input commands are printed along with the output.  To
   suppress this behavior, add \code{options(echo = FALSE)} at the
