@@ -43,6 +43,8 @@ agrep translates
 /* The next must come after other header files to redefine RE_DUP_MAX */
 #include "Rregex.h"
 
+//#include <tre/regex.h>
+
 #include "apse.h"
 
 #ifdef HAVE_PCRE_PCRE_H
@@ -864,15 +866,13 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else {
 	    /* regular regexp, no useBytes nor use_UTF8 */
 
-	    /* Looks like REG_NOTBOL is no longer needed in this version,
-	       but leave in as a precaution */
 	    eflags = 0; last_end = -1;
 	    /* We need to use private version of regexec here, as
 	       head-chopping the string does not work with e.g. \b.
 	     */
-	    while (Rregexec(&reg, s, 10, regmatch, eflags, offset) == 0) {
+	    while (regexec(&reg, s+offset, 10, regmatch, eflags) == 0) {
 		nmatch += 1;
-		offset = regmatch[0].rm_eo;
+		offset += regmatch[0].rm_eo;
 		/* Do not repeat a 0-length match after a match, so
 		   gsub("a*", "x", "baaac") is "xbxcx" not "xbxxcx" */
 		if (offset > last_end) {
@@ -897,15 +897,16 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		cbuf = u = CallocCharBuf(ns);
 		ns = strlen(s);
 		eflags = 0; last_end = -1;
-		while (Rregexec(&reg, s, 10, regmatch, eflags, offset) == 0) {
+		while (regexec(&reg, s+offset, 10, regmatch, eflags) == 0) {
 		    /* printf("%s, %d %d\n", &s[offset],
 		       regmatch[0].rm_so, regmatch[0].rm_eo); */
-		    for (j = offset; j < regmatch[0].rm_so ; j++) *u++ = s[j];
-		    if (regmatch[0].rm_eo > last_end) {
-			u = string_adj(u, s, t, regmatch);
-			last_end = regmatch[0].rm_eo;
+		    for (j = 0; j < regmatch[0].rm_so ; j++)
+			*u++ = s[offset+j];
+		    if(offset+regmatch[0].rm_eo > last_end) {
+			u = string_adj(u, s+offset, t, regmatch);
+			last_end = offset+regmatch[0].rm_eo;
 		    }
-		    offset = regmatch[0].rm_eo;
+		    offset += regmatch[0].rm_eo;
 		    if (s[offset] == '\0' || !global) break;
 		    /* <MBCS FIXME> advance by a char */
 		    if (regmatch[0].rm_eo == regmatch[0].rm_so)
@@ -1166,7 +1167,7 @@ static SEXP gregexpr_Regexc(const regex_t *reg, const char *string,
     len = strlen(string);
     while (!foundAll) {
 	if ( offset < len &&
-	     Rregexec(reg, string, 1, regmatch, 0, offset) == 0) {
+	     regexec(reg, string+offset, 1, regmatch, 0) == 0) {
 	    if ((matchIndex + 1) == bufsize) {
 		/* Reallocate match buffers */
 		int newbufsize = bufsize * 2;
@@ -1189,12 +1190,12 @@ static SEXP gregexpr_Regexc(const regex_t *reg, const char *string,
 	    matchIndex++;
 	    foundAny = 1;
 	    st = regmatch[0].rm_so;
-	    INTEGER(matchbuf)[matchIndex] = st + 1; /* index from one */
+	    INTEGER(matchbuf)[matchIndex] = offset + st + 1; /* index from one */
 	    INTEGER(matchlenbuf)[matchIndex] = regmatch[0].rm_eo - st;
 	    if (INTEGER(matchlenbuf)[matchIndex] == 0)
-		offset = st + 1;
+		offset += st + 1;
 	    else
-		offset = regmatch[0].rm_eo;
+		offset += regmatch[0].rm_eo;
 	    if (!useBytes && mbcslocale) {
 		char *buf;
 		int mlen = regmatch[0].rm_eo - st;
