@@ -27,6 +27,8 @@
 #include "config.h"
 #endif
 
+#undef HAVE_TRE
+
 /* Make sure noone compiles this code with a C++ compiler.  */
 #ifdef __cplusplus
 # error "This is C code, use a C compiler"

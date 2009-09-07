@@ -27,8 +27,6 @@ Support for UTF-8-encoded strings in non-UTF-8 locales
 strsplit grep [g]sub [g]regexpr
   handle UTF-8 directly if fixed/perl = TRUE, otherwise translate.
 
-agrep translates
-
 */
 
 #ifdef HAVE_CONFIG_H

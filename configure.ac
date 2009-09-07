@@ -2418,6 +2418,7 @@ AC_CONFIG_FILES(
   src/extra/bzip2/Makefile
   src/extra/intl/Makefile
   src/extra/pcre/Makefile
+  src/extra/tre/Makefile
   src/extra/xdr/Makefile
   src/extra/zlib/Makefile
   src/include/Makefile

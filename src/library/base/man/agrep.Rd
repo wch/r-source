@@ -1,6 +1,6 @@
 % File src/library/base/man/agrep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{agrep}
@@ -48,17 +48,22 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
   The Levenshtein edit distance is used as measure of approximateness:
   it is the total number of insertions, deletions and substitutions
   required to transform one string into another.
-
-  The function is a simple interface to the \code{apse} library
-  developed by Jarkko Hietaniemi (also used in the Perl String::Approx
-  module), modified to work with multibyte character sets.  To save
-  space it only supports the first 65536 characters of UTF-8 (where all
-  the characters for human languages lie).  Note that it can be quite
-  slow in UTF-8, and \code{useBytes = TRUE} will be much faster.
   
-  How complex a match may be found can depend on the size of integers.
-  As from \R 2.9.2 this uses 64-bit integers where available (even on
-  32-bit platforms) to try to be consistent across platforms.
+  There are currently two implementations available.  The default is a
+  simple interface to the \code{apse} library developed by Jarkko
+  Hietaniemi (also used in the Perl String::Approx module), modified to
+  work with multibyte character sets.  To save space it only supports
+  the first 65536 characters of UTF-8 (where all the characters for
+  human languages lie).  Note that it can be quite slow in UTF-8, and
+  \code{useBytes = TRUE} will be much faster.  How complex a match may
+  be found can depend on the size of integers.  As from \R 2.9.2 this
+  uses 64-bit integers where available (even on 32-bit platforms) to try
+  to be consistent across platforms.
+
+  The alternative as from \R 2.10.0 is to use \code{tre} by
+  Ville Laurikari (\url{http://http://laurikari.net/tre/}) if enabled at
+  configuration.  This seems to perform better and if likely to become
+  the default.
 }
 \value{
   Either a vector giving the indices of the elements that yielded a
@@ -67,6 +72,7 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE,
 }
 \author{
   Original version by David Meyer, based on C code by Jarkko Hietaniemi.
+  Second version by Brian Ripley.
 }
 \seealso{
   \code{\link{grep}}
