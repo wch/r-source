@@ -43,6 +43,7 @@ strsplit grep [g]sub [g]regexpr
 #define regcomp tre_regcomp
 #define regexec tre_regexec
 #define regfree tre_regfree
+#define regerror tre_regerror
 #else
 /* The next must come after other header files to redefine RE_DUP_MAX */
 #include "Rregex.h"
