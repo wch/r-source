@@ -31,7 +31,7 @@ The regex functions
 
 strsplit grep [g]sub [g]regexpr agrep
 
-here prior to 2.10.0 are now in grep.c
+here prior to 2.10.0 are now in grep.c and agrep.c
 
 make.unique, duplicated, unique, match, pmatch, charmatch are in unique.c
 iconv is in sysutils.c
@@ -40,8 +40,8 @@ iconv is in sysutils.c
 Support for UTF-8-encoded strings in non-UTF-8 locales
 ======================================================
 
-Comparison is done directly unless you happen to have the same string
-in UTF-8 and Latin-1.
+Comparison is done directly unless you happen to be comparing the same
+string in different encodings.
 
 nzchar and nchar(, "bytes") are indpendent of the encoding
 nchar(, "char") nchar(, "width") handle UTF-8 directly, translate Latin-1
@@ -349,7 +349,9 @@ SEXP attribute_hidden do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else {
 		int ienc2 = ienc;
 		v_ss = CHAR(v_el);
-		/* is the value in the same encoding? */
+		/* is the value in the same encoding?
+		   FIXME: could prefer UTF-8 here
+		 */
 		venc = getCharCE(v_el);
 		if (venc != ienc && !strIsASCII(v_ss)) {
 		    ss = translateChar(el);
