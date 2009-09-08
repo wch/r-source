@@ -13,7 +13,7 @@ FFLAGS=-O2
 CSOURCES=\
 	CConverters.c CommandLineArgs.c \
 	Rdynload.c Renviron.c RNG.c \
-	agrep.c apply.c apse.c arithmetic.c array.c attrib.c \
+	agrep.c apply.c arithmetic.c array.c attrib.c \
 	base.c bind.c builtin.c \
 	character.c coerce.c colors.c complex.c connections.c context.c \
 	cov.c cum.c \
@@ -60,7 +60,7 @@ platform-CPPFLAGS=-I../gnuwin32
 builtin-CPPFLAGS=-I../gnuwin32
 printutils-CPPFLAGS=-I../gnuwin32
 sysutils-CPPFLAGS=-I../gnuwin32
-# agrep-CPPFLAGS=-DUSE_TRE -I../extra
+agrep-CPPFLAGS=-I../extra
 
 ifeq ($(strip $(USE_ICU)),YES)
 util-CPPFLAGS=-DUSE_ICU -I"$(ICU_PATH)"/include

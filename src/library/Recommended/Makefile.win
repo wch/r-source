@@ -28,8 +28,8 @@ stamp-recommended: $(OBJECTS)
 ## need to allow parallel installs, modulo dependencies below
 INSTALL_OPTS=--pkglock --install-tests
 
-ifneq ($(strip $(USE_CHM)),TRUE)
-INSTALL_OPTS+=--no-chm
+ifeq ($(strip $(USE_CHM)),TRUE)
+INSTALL_OPTS+=--chm
 endif
 
 
