@@ -11,10 +11,10 @@ Windows, and most likely not on FreeBSD.
 The way we compile it, TRE works internally in one of three modes
 
 STR_BYTE, using bytes
-STR_MBCS, using wchar_t for matching, I/O in MBCS
+STR_MBS , using wchar_t for matching, I/O in MBCS
 STR_WIDE, using wchar_t
 
-We've added interfaces tre_regcompb and tre_regexecb to force
+We've added interfaces tre_regcompb, tre_regexecb and regaexecb to force
 STR_BYTE.  Unless forced, bytes are used in a single-byte locale and
 wchar_t in a MBCS.  We need to force both for useBytes=TRUE and for
 support for UTF-8 encoded strings in a single-byte locale (principally

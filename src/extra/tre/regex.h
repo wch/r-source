@@ -164,6 +164,11 @@ extern int
 regaexec(const regex_t *preg, const char *string,
 	 regamatch_t *match, regaparams_t params, int eflags);
 
+/* R addition */
+extern int
+regaexecb(const regex_t *preg, const char *string,
+	  regamatch_t *match, regaparams_t params, int eflags);
+
 extern int
 reganexec(const regex_t *preg, const char *string, size_t len,
 	  regamatch_t *match, regaparams_t params, int eflags);

@@ -317,6 +317,17 @@ regaexec(const regex_t *preg, const char *str,
   return reganexec(preg, str, (unsigned)-1, match, params, eflags);
 }
 
+int
+regaexecb(const regex_t *preg, const char *str,
+	  regamatch_t *match, regaparams_t params, int eflags)
+{
+  tre_tnfa_t *tnfa = (void *)preg->TRE_REGEX_T_FIELD;
+
+  return tre_match_approx(tnfa, str, (unsigned)-1, STR_BYTE, 
+			  match, params, eflags);
+}
+
+
 #ifdef TRE_WCHAR
 
 int

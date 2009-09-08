@@ -38,9 +38,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, j, n, nmatches;
     int igcase_opt, value_opt, max_distance_opt, useBytes;
     int max_deletions_opt, max_insertions_opt, max_substitutions_opt;
-    const char *str;
     Rboolean useWC = FALSE;
-    const wchar_t *wstr;
 
     regex_t reg;
     regaparams_t params;
@@ -74,24 +72,24 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (igcase_opt) cflags |= REG_ICASE;
 
-    str = CHAR(STRING_ELT(pat, 0));
-    useWC = !strIsASCII(str) && !useBytes;
-    if (!useWC) {
-	for (i = 0 ; i < LENGTH(vec) ; i++) {
-	    if (STRING_ELT(vec, i) == NA_STRING) continue;
-	    if (!strIsASCII(CHAR(STRING_ELT(vec, i)))) {
-		useWC = !useBytes;
-		break;
+    if (!useBytes) {
+	useWC = !strIsASCII(CHAR(STRING_ELT(pat, 0)));
+	if (!useWC) {
+	    for (i = 0 ; i < LENGTH(vec) ; i++) {
+		if (STRING_ELT(vec, i) == NA_STRING) continue;
+		if (!strIsASCII(CHAR(STRING_ELT(vec, i)))) {
+		    useWC = TRUE;
+		    break;
+		}
 	    }
 	}
     }
-    if (useWC) {
-	wstr = wtransChar(STRING_ELT(pat, 0));
-	rc = regwcomp(&reg, wstr, cflags);
-    } else {
-	str = translateChar(STRING_ELT(pat, 0));
-	rc = tre_regcomp(&reg, str, cflags);
-    }
+    if (useBytes)
+	rc = tre_regcompb(&reg, CHAR(STRING_ELT(pat, 0)), cflags);
+    else if (useWC)
+	rc = regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
+    else
+	rc = tre_regcomp(&reg, translateChar(STRING_ELT(pat, 0)), cflags);
     if (rc) {
 	char errbuf[1001];
 	tre_regerror(rc, &reg, errbuf, 1001);
@@ -117,13 +115,18 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Perform match. */
 	/* undocumented, must be zeroed */
 	memset(&match, 0, sizeof(match));
-	if (useWC) {
-	    wstr = wtransChar(STRING_ELT(vec, i));
-	    rc = regawexec(&reg, wstr, &match, params, 0);
-	} else {
-	    str = translateChar(STRING_ELT(vec, i));
-	    rc = regaexec(&reg, str, &match, params, 0);
-	}
+	if (useBytes)
+	    rc = regaexecb(&reg,
+			   CHAR(STRING_ELT(vec, i)),
+			   &match, params, 0);
+	else if (useWC)
+	    rc = regawexec(&reg,
+			   wtransChar(STRING_ELT(vec, i)), 
+			   &match, params, 0);
+	else
+	    rc = regaexec(&reg,
+			  translateChar(STRING_ELT(vec, i)),
+			  &match, params, 0);
 	if (rc == REG_OK) {
 	    LOGICAL(ind)[i] = 1;
 	    nmatches++;
