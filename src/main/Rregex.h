@@ -21,6 +21,9 @@
 
 #ifdef USE_TRE2
 # include <tre/regex.h>
+#define regcomp tre_regcomp
+#define regexec tre_regexec
+#define regfree tre_regfree
 #else
 
 

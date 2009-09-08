@@ -37,9 +37,12 @@ strsplit grep [g]sub [g]regexpr
 #include <R_ext/RS.h>  /* for Calloc/Free */
 #include <wchar.h>
 
-#ifdef USE_TRE2
+#ifdef USE_TRE
 # include <tre/regex.h>
 # define GSUB_HEAD_CHOP 1
+#define regcomp tre_regcomp
+#define regexec tre_regexec
+#define regfree tre_regfree
 #else
 /* The next must come after other header files to redefine RE_DUP_MAX */
 #include "Rregex.h"
