@@ -402,7 +402,7 @@ help.search <-
     searchFun <- function(x) {
 	if(agrep)
 	    agrep(pattern, x, ignore.case = ignore.case,
-		  max.distance = max.distance, useBytes = TRUE)
+		  max.distance = max.distance)
 	else
 	    grep(pattern, x, ignore.case = ignore.case, perl = use_UTF8)
     }

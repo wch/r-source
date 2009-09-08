@@ -89,7 +89,9 @@ field??pattern
   the Unix commands with the same names.
 
   Searching with \code{agrep = FALSE} will be several times faster
-  than the default (once the database is built)
+  than the default (once the database is built).  However, as from
+  \R 2.10.0 approximate searches should be fast enough (around a second
+  with 2000 packages installed).
 
   If possible, the help database is saved in memory or (if memory
   limits have been set: see \code{\link{mem.limits}}) to a file in the
@@ -98,10 +100,6 @@ field??pattern
   
   Note that currently the aliases in the matching help files are not
   displayed.
-
-  Matching by \code{agrep} is by bytes even in multi-byte locales:
-  character-by-character matching will be too slow with a thousand or
-  more packages.
   
   As with \code{\link{?}}, in \code{??} the pattern may be prefixed with a 
   package name followed by \code{::} or \code{:::} to limit the search

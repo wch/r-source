@@ -36,9 +36,8 @@ SOURCES_C = \
 	saveload.c scan.c seq.c serialize.c size.c sort.c source.c split.c \
 	sprintf.c startup.c subassign.c subscript.c subset.c summary.c sysutils.c \
 	unique.c util.c \
-	version.c vfonts.c \
-	@BUILD_TRE_FALSE@ apse.c
- 
+	version.c vfonts.c
+
 SOURCES_F =  xxxpr.f
 
 ## If the substitutes are needed, the corresponding objects are put by
@@ -48,15 +47,14 @@ EXTRA_SOURCES_C = \
 	alloca.c acosh.c asinh.c atanh.c \
 	mkdtemp.c \
 	snprintf.c strdup.c strncasecmp.c \
-	vsnprintf.c xspline.c \
-	@BUILD_TRE_TRUE@ apse.c
+	vsnprintf.c xspline.c
 
 DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) @LIBOBJS@ @ALLOCA@
 HEADERS = \
 	RBufferUtils.h Rregex.h Rstrptime.h \
-	arithmetic.h apse.h \
+	arithmetic.h \
 	basedecl.h \
 	par-common.c \
 	qsort-body.c \
@@ -75,7 +73,7 @@ DISTFILES = Makefile.in Makefile.win \
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 BZLIB_CPPFLAGS = @BUILD_BZLIB_TRUE@ -I$(top_srcdir)/src/extra/bzip2
 PCRE_CPPFLAGS = @BUILD_PCRE_TRUE@ -I$(top_srcdir)/src/extra/pcre
-TRE_CPPFLAGS = @BUILD_TRE_TRUE@ -I$(top_srcdir)/src/extra
+TRE_CPPFLAGS = -I$(top_srcdir)/src/extra
 XDR_CPPFLAGS = @BUILD_XDR_TRUE@ -I$(top_srcdir)/src/extra/xdr
 
 ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(BZLIB_CPPFLAGS) $(PCRE_CPPFLAGS) \
@@ -88,7 +86,7 @@ ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(BZLIB_CPPFLAGS) $(PCRE_CPPFLAGS) \
 R_ZLIBS = @BUILD_ZLIB_TRUE@ ../extra/zlib/libz.a
 R_BZLIBS = @BUILD_BZLIB_TRUE@ ../extra/bzip2/libbz2.a
 R_PCRE = @BUILD_PCRE_TRUE@ ../extra/pcre/libpcre.a
-R_TRE = @BUILD_TRE_TRUE@ ../extra/tre/libtre.a
+R_TRE = ../extra/tre/libtre.a
 R_XDR = @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
 R_LIBINTL = @BUILD_LIBINTL_TRUE@ ../extra/intl/libintl.a
 

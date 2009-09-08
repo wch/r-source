@@ -283,6 +283,11 @@ NEW FEATURES
 	work in a non-UTF-8 MBCS locale, by translating the inputs to
 	UTF-8.
 
+    o	agrep() now makes use of the TRE library of Ville Laurikari
+	rather than apse, and so has full support for MBCS locales
+	(and enables help.search() to use approximate matching
+	characterwise rather than bytewise).
+
 
 HELP & Rd FILE CHANGES
 
