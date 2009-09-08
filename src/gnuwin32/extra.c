@@ -1518,17 +1518,19 @@ SEXP do_arrangeWindows(SEXP call, SEXP op, SEXP args, SEXP env)
     
     checkArity(op, args);
     windows = CAR(args);
-    if (TYPEOF(windows) != VECSXP) error(_("'%s' must be a list"), "windows");
-    handles = (void **)R_alloc(length(windows), sizeof(void *));
-    for (i=0; i<length(windows); i++) {
-    	if (TYPEOF(VECTOR_ELT(windows, i)) != EXTPTRSXP)
-    	    error(_("'%s' element %d is not a window handle"), "windows", i+1);
-    	handles[i] = R_ExternalPtrAddr(VECTOR_ELT(windows, i));
+    if (length(windows)) {
+	if (TYPEOF(windows) != VECSXP) error(_("'%s' must be a list"), "windows");
+	handles = (void **)R_alloc(length(windows), sizeof(void *));
+	for (i=0; i<length(windows); i++) {
+	    if (TYPEOF(VECTOR_ELT(windows, i)) != EXTPTRSXP)
+		error(_("'%s' element %d is not a window handle"), "windows", i+1);
+	    handles[i] = R_ExternalPtrAddr(VECTOR_ELT(windows, i));
+	}
+	action = asInteger(CADR(args));
+	preserve = asInteger(CADDR(args));
+	outer = asInteger(CADDDR(args));
+	ArrangeWindows(length(windows), handles, action, preserve, outer);
     }
-    action = asInteger(CADR(args));
-    preserve = asInteger(CADDR(args));
-    outer = asInteger(CADDDR(args));
-    ArrangeWindows(length(windows), handles, action, preserve, outer);
     return windows;
 }
     
