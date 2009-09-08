@@ -1561,7 +1561,8 @@
     scanForEncoding <- !length(latexEncodings)
     for (f in files) {
         lines <- readLines(f)  # This reads as "unknown", no re-encoding done
-        hd <- grep("^\\\\HeaderA", lines, value = TRUE)
+        hd <- grep("^\\\\HeaderA", lines, value = TRUE,
+                   perl = TRUE, useBytes = TRUE)
         if (!length(hd)) {
             warning("file ", sQuote(f), " lacks a header: skipping",
                     domain = NA)
@@ -1572,7 +1573,7 @@
            any(grepl("\\\\keyword\\{\\s*internal\\s*\\}", lines, perl = TRUE)))
             next
         if (scanForEncoding) {
-	    enc <- lines[grepl('^\\\\inputencoding', lines)]
+	    enc <- lines[grepl('^\\\\inputencoding', lines, perl = TRUE)]
 	    latexEncodings <- c(latexEncodings,
 	                        sub("^\\\\inputencoding\\{(.*)\\}", "\\1", enc))
 	}
@@ -1580,7 +1581,7 @@
     }
 
     topics <- topics[nzchar(topics)]
-    summ <- grep("-package$", topics)
+    summ <- grep("-package$", topics, perl = TRUE)
     topics <- if (length(summ)) c(topics[summ], re(topics[-summ])) else re(topics)
     for (f in names(topics)) writeLines(readLines(f), outcon)
 

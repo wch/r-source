@@ -44,16 +44,19 @@ massageExamples <- function(pkg, files, outFile = stdout())
     for(file in files) {
         nm <- sub("\\.R$", "", basename(file))
         ## make a syntactic name out of the filename
-        nm <- gsub("[^- .a-zA-Z0-9_]", ".", nm, perl = TRUE)
+        nm <- gsub("[^- .a-zA-Z0-9_]", ".", nm, perl = TRUE, useBytes = TRUE)
         if (pkg == "graphics" && nm == "text") next
         if(!file.exists(file)) stop("file ", file, " cannot be opened")
         lines <- readLines(file)
-        have_examples <- any(grepl("_ Examples _|### \\*+ Examples", lines))
+        have_examples <- any(grepl("_ Examples _|### \\*+ Examples",
+                                   lines, perl = TRUE, useBytes = TRUE))
         ## skip comment lines
-        com <- grep("^#", lines)
+        com <- grep("^#", lines, perl = TRUE, useBytes = TRUE)
         lines1 <- if(length(com)) lines[-com] else lines
-        have_par <- length(grep("[^a-zA-Z0-9.]par\\(|^par\\(", lines1)) > 0L
-        have_contrasts <- length(grep("options\\(contrasts", lines1)) > 0L
+        have_par <- any(grepl("[^a-zA-Z0-9.]par\\(|^par\\(",
+                                lines1, perl = TRUE, useBytes = TRUE))
+        have_contrasts <- any(grepl("options\\(contrasts",
+                                   lines1, perl = TRUE, useBytes = TRUE))
 
         if(have_examples)
             cat("cleanEx(); nameEx(\"", nm, "\")\n", sep = "", file = out)
@@ -62,10 +65,11 @@ massageExamples <- function(pkg, files, outFile = stdout())
         cat("flush(stderr()); flush(stdout())\n\n", file = out)
         dont_test <- FALSE
         for (line in lines) {
-            if(length(grep("^[[:space:]]*## No test:", line)))
+            if(any(grepl("^[[:space:]]*## No test:", line, perl = TRUE, useBytes = TRUE)))
                 dont_test <- TRUE
             if(!dont_test) cat(line, "\n", sep = "", file = out)
-            if(length(grep("^[[:space:]]*## End\\(No test\\)", line)))
+            if(any(grepl("^[[:space:]]*## End\\(No test\\)",
+                         line, perl = TRUE, useBytes = TRUE)))
                 dont_test <- FALSE
         }
 
