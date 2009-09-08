@@ -46,7 +46,7 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@BUILD_TRE_TRUE@ @$(MAKE) $(noinst_LIBRARIES)
+	@$(MAKE) $(noinst_LIBRARIES)
 
 libtre.a: $(libtre_a_OBJECTS)
 	rm -f $@

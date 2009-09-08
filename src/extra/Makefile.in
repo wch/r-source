@@ -22,7 +22,7 @@ LIBPCRE =@BUILD_PCRE_TRUE@ make.pcre
 LIBZ =@BUILD_ZLIB_TRUE@ make.zlib
 LIBXDR =@BUILD_XDR_TRUE@ make.xdr
 LIBINTL =@BUILD_LIBINTL_TRUE@ make.intl
-LIBXDR = make.tre
+LIBTRE = @BUILD_TRE_TRUE@ make.tre
 EXTRAS = $(RBLAS) $(LIBBZ2) $(LIBPCRE) $(LIBZ) $(LIBXDR) $(LIBINTL) $(LIBTRE)
 
 all: Makefile R
