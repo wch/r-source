@@ -420,6 +420,27 @@ function()
     if(nzchar(OS)) OS else .Platform$OS.type
 }
 
+### .R_top_srcdir
+
+## Find the root directory of the source tree used for building this
+## version of R (corresponding to Unix configure @top_srcdir@).
+## Seems this is not recorded anywhere, but we can find our way ...
+
+.R_top_srcdir_from_Rd <-
+function() {
+    filebase <-
+        file_path_sans_ext(system.file("help", "tools.rdb",
+                                       package = "tools"))
+    path <- attr(fetchRdDB(filebase, "QC"), "Rdfile")
+    ## We could use 5 dirname() calls, but perhaps more easily:
+    substring(path, 1L, nchar(path) - 28L)
+}
+
+## Unfortunately,
+##   .R_top_srcdir <- .R_top_srcdir_from_Rd()
+## does not work because when tools is installed there are no Rd pages
+## yet ...
+
 ### ** .eval_with_capture
 
 .eval_with_capture <-
