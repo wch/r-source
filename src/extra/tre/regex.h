@@ -86,14 +86,19 @@ tre_regcomp(regex_t *preg, const char *regex, int cflags);
 
 extern int
 tre_regexec(const regex_t *preg, const char *string, size_t nmatch,
-	regmatch_t pmatch[], int eflags);
+	    regmatch_t pmatch[], int eflags);
 
 extern size_t
 tre_regerror(int errcode, const regex_t *preg, char *errbuf,
-	 size_t errbuf_size);
+	     size_t errbuf_size);
 
 extern void
 tre_regfree(regex_t *preg);
+
+/* R addition */
+extern int
+tre_regexecb(const regex_t *preg, const char *string, size_t nmatch,
+	     regmatch_t pmatch[], int eflags);
 
 #ifdef TRE_WCHAR
 #include <wchar.h>

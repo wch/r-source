@@ -359,8 +359,11 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 }
 
 
-##' Read Packages Description and aggregate 'fields' into character matrix
-.readPkgDesc <- function(lib, fields, pkgs = list.files(lib)) {
+## Read packages' Description and aggregate 'fields' into a character matrix
+## NB: this does not handle encodings, so only suitable for
+## ASCII-only fields.
+.readPkgDesc <- function(lib, fields, pkgs = list.files(lib))
+{
     ## to be used in installed.packages() and similar
     ret <- matrix(NA_character_, length(pkgs), 2L+length(fields))
     for(i in seq_along(pkgs)) {

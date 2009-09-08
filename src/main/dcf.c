@@ -23,7 +23,17 @@
 
 #include <Defn.h>
 #include <Rconnections.h>
-#include "Rregex.h"
+
+#ifdef USE_TRE
+# undef regexec
+# include <tre/regex.h>
+# define regcomp tre_regcomp
+# define regexec tre_regexecb
+# define regfree tre_regfree
+# define regerror tre_regerror
+#else
+# include "Rregex.h"
+#endif
 
 static SEXP allocMatrixNA(SEXPTYPE, int, int);
 static void transferVector(SEXP s, SEXP t);

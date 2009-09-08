@@ -1,6 +1,6 @@
 % File src/library/base/man/dcf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dcf}
@@ -72,9 +72,14 @@ write.dcf(x, file = "", append = FALSE,
   record and one column per field, and columns lists of character
   vectors for fields with multiple occurrences, and character vectors
   otherwise.
+  
+  Note that \code{read.dcf(all = FALSE)} reads the file byte-by-byte.
+  This allows a \file{DESCRIPTION} file to be read and only its ASCII
+  fields used, or its \samp{Encoding} field used to re-encode the
+  remaining fields.
 
   \code{write.dcf} does not write \code{NA} fields.
-}    
+}
 \seealso{
   \code{\link{write.table}}.
 }
