@@ -793,7 +793,7 @@ local({
 ### ** .get_standard_repository_URLs
 
 .get_standard_repository_URLs <-
-function() {    
+function() {
     repos <- Sys.getenv("_R_CHECK_XREFS_REPOSITORIES_", "")
     repos <- if(nzchar(repos)) {
         .expand_BioC_repository_URLs(strsplit(repos, " +")[[1L]])
@@ -1148,8 +1148,12 @@ function(dfile)
                     stop(gettextf("file '%s' is not in valid DCF format",
                                   dfile),
                          domain = NA, call. = FALSE))
-    if(!is.na(encoding <- out["Encoding"]))
-        Encoding(out) <- encoding
+    if(!is.na(encoding <- out["Encoding"])) {
+        ## could convert everything to UTF-8
+        if (encoding %in% c("latin1", "UTF-8"))
+            Encoding(out) <- encoding
+        else out <- iconv(out, encoding, "", sub = "byte")
+    }
     out
 }
 
@@ -1167,7 +1171,7 @@ function(file)
 }
 
 .expand_BioC_repository_URLs <-
-function(x)    
+function(x)
     sub("%v",
         as.character(.BioC_version_associated_with_R_version),
         x, fixed = TRUE)
