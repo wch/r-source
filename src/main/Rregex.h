@@ -24,6 +24,7 @@
 #define regcomp tre_regcomp
 #define regexec tre_regexec
 #define regfree tre_regfree
+#define regerror tre_regerror
 #else
 
 
