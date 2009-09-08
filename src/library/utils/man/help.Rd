@@ -150,7 +150,7 @@ help(topic, package = NULL, lib.loc = NULL,
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link[=Question]{?}} for shortcuts to help toics.
+  \code{\link[=Question]{?}} for shortcuts to help topics.
   
   \code{\link{help.search}()} or \code{\link{??}} for finding help pages
   on a vague topic;

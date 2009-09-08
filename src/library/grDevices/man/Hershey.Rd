@@ -46,14 +46,14 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
 %% The basic "table" is in  ../../../main/engine.c
   \tabular{ll}{
     family \tab faces available \cr
-    "HersheySerif" \tab plain, bold, italic, bold-italic \cr
-    "HersheySans" \tab plain, bold, italic, bold-italic \cr
-    "HersheyScript" \tab plain, bold \cr
-    "HersheyGothicEnglish" \tab plain \cr
-    "HersheyGothicGerman" \tab plain \cr
-    "HersheyGothicItalian" \tab plain \cr
-    "HersheySymbol" \tab plain, bold, italic, bold-italic \cr
-    "HersheySansSymbol" \tab plain, italic \cr
+    \code{"HersheySerif"} \tab plain, bold, italic, bold-italic \cr
+    \code{"HersheySans"} \tab plain, bold, italic, bold-italic \cr
+    \code{"HersheyScript"} \tab plain, bold \cr
+    \code{"HersheyGothicEnglish"} \tab plain \cr
+    \code{"HersheyGothicGerman"} \tab plain \cr
+    \code{"HersheyGothicItalian"} \tab plain \cr
+    \code{"HersheySymbol"} \tab plain, bold, italic, bold-italic \cr
+    \code{"HersheySansSymbol"} \tab plain, italic \cr
   }
 
   In the \code{vfont} specification for the \code{text} and
@@ -100,54 +100,55 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
 
   \describe{
     \item{Escape sequences:}{The string to be drawn can include escape
-      sequences, which all begin with a \code{\\}.   When \R encounters a
-      \code{\\}, rather than drawing the \code{\\}, it treats the
+      sequences, which all begin with a \samp{\\}.   When \R encounters a
+      \samp{\\}, rather than drawing the \samp{\\}, it treats the
       subsequent character(s) as a coded description of what to draw.
 
       One useful escape sequence (in the current context) is of the
-      form: \code{\\123}.  The three digits following the \code{\\} specify an
-      octal code for a character.  For example, the octal code for \code{p} is
-      160 so the strings \code{"p"} and \code{"\\160"} are equivalent. This is
-      useful for producing characters when there is not an appropriate key on
-      your keyboard.
+      form: \samp{\\123}.  The three digits following the \samp{\\}
+      specify an octal code for a character.  For example, the octal
+      code for \code{p} is 160 so the strings \code{"p"} and
+      \code{"\\160"} are equivalent. This is useful for producing
+      characters when there is not an appropriate key on your keyboard.
 
-      The other useful escape sequences all begin with \code{\\\\}.  These are
-      described below.
-      Remember that backslashes have to be doubled in \R character
-      strings, so they need to be entered with \emph{four} backslashes.
+      The other useful escape sequences all begin with \samp{\\\\}.
+      These are described below.  Remember that backslashes have to be
+      doubled in \R character strings, so they need to be entered with
+      \emph{four} backslashes.
     }
 
     \item{Symbols:}{an entire string of Greek symbols can be produced by
       selecting the HersheySymbol or HersheySansSymbol family or the
-      Serif Symbol or Sans Serif Symbol typeface.  To allow
-      Greek symbols to be embedded in a string which uses a non-symbol
+      Serif Symbol or Sans Serif Symbol typeface.  To allow Greek
+      symbols to be embedded in a string which uses a non-symbol
       typeface, there are a set of symbol escape sequences of the form
-      \code{\\\\ab}. For example, the escape sequence \code{\\\\*a} produces a
-      Greek alpha.  The second table in \code{demo(Hershey)} shows all of the
-      symbol escape sequences and the symbols that they produce.
+      \samp{\\\\ab}. For example, the escape sequence \samp{\\\\*a}
+      produces a Greek alpha.  The second table in \code{demo(Hershey)}
+      shows all of the symbol escape sequences and the symbols that they
+      produce.
     }
 
     \item{ISO Latin-1:}{further escape sequences of the form
-      \code{\\\\ab} are provided for producing ISO Latin-1 characters.
+      \samp{\\\\ab} are provided for producing ISO Latin-1 characters.
       Another option is to use the appropriate octal code.  The
       (non-ASCII) ISO Latin-1 characters are in the range 241\dots{}377.
-      For example, \code{\\366} produces the character \code{o} with an
-      umlaut.  The third table in \code{demo(Hershey)} shows all of the
-      ISO Latin-1 escape sequences.
+      For example, \samp{\\366} produces the character o with an umlaut.
+      The third table in \code{demo(Hershey)} shows all of the ISO
+      Latin-1 escape sequences.
 
       These characters can be used directly in a Latin-1 locale or on
       a system with MBCS support.  (In the latter, characters not in
       Latin-1 are replaced by a dot.)
 
       Several characters are missing, c-cedilla has no cedilla and
-      \sQuote{sharp s} (\code{U+00DF}, also known as \sQuote{esszett})
+      \sQuote{sharp s} (\samp{U+00DF}, also known as \sQuote{esszett})
       is rendered as \code{ss}.
     }
 
     \item{Special Characters:}{a set of characters are provided which
       do not fall into any standard font.  These can only be accessed by
-      escape sequence.  For example, \code{\\\\LI} produces the zodiac sign for
-      Libra, and \code{\\\\JU} produces the astronomical sign for Jupiter.
+      escape sequence.  For example, \samp{\\\\LI} produces the zodiac sign for
+      Libra, and \samp{\\\\JU} produces the astronomical sign for Jupiter.
       The fourth table in \code{demo(Hershey)} shows all of the
       special character escape sequences.
     }
@@ -177,37 +178,31 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
       digits and add 0x80 and do the same to the second two digits (e.g.,
       0x21 and 0x24 become 0xa4 and 0xa1), then convert both to octal (e.g.,
       0xa4 and 0xa1 become 244 and 241).  For example, the first Hiragana
-      character is produced by \code{\\244\\241}.
+      character is produced by \samp{\\244\\241}.
 
       It is also possible to use the hexadecimal code directly.  This works
       for all non-EUC fonts by specifying an escape sequence of the form
-      \code{\\\\#J1234}.  For example, the first Hiragana character is produced
-      by \code{\\\\#J2421}.
+      \samp{\\\\#J1234}.  For example, the first Hiragana character is produced
+      by \samp{\\\\#J2421}.
 
       The Kanji characters may be specified in a third way, using the
       so-called "Nelson Index", by specifying an escape sequence of the form
-      \code{\\\\#N1234}.  For example, the (obsolete) Kanji for \sQuote{one} is
-      produced by \code{\\\\#N0001}.
+      \samp{\\\\#N1234}.  For example, the (obsolete) Kanji for \sQuote{one} is
+      produced by \samp{\\\\#N0001}.
     
       \code{demo(Japanese)} shows the available Japanese characters.
     }
       
-    \item{Raw Hershey Glyphs:}{all of the characters in the Hershey fonts
-      are stored in a large array.  Some characters are not accessible in
-      any of the Hershey fonts.  These characters can only be accessed via
-      an escape sequence of the form \code{\\\\#H1234}.  For example, the
-      fleur-de-lys is produced by \code{\\\\#H0746}.  The sixth and seventh
-      tables of \code{demo(Hershey)} shows all of the available raw
-      glyphs.
-    }
-  }
-}
-\references{
-  \url{http://www.gnu.org/software/plotutils/plotutils.html}
-}
-\seealso{
-  \code{\link{demo}(Hershey)}, \code{\link{par}}, \code{\link{text}}, 
-  \code{\link{contour}}.
+    \item{Raw Hershey Glyphs:}{all of the characters in the Hershey
+      fonts are stored in a large array.  Some characters are not
+      accessible in any of the Hershey fonts.  These characters can only
+      be accessed via an escape sequence of the form \samp{\\\\#H1234}.
+      For example, the fleur-de-lys is produced by \samp{\\\\#H0746}.
+      The sixth and seventh tables of \code{demo(Hershey)} shows all of
+      the available raw glyphs.  } } } \references{
+      \url{http://www.gnu.org/software/plotutils/plotutils.html} }
+      \seealso{ \code{\link{demo}(Hershey)}, \code{\link{par}},
+      \code{\link{text}}, \code{\link{contour}}.
 
   \code{\link{Japanese}} for the Japanese characters in the Hershey fonts.
 }

@@ -16,9 +16,9 @@
   \code{\link{Hershey}}.
 
   For example, the Hiragana character for the sound "ka" is produced
-  by \code{\\\\#J242b} and the Katakana character for this sound is
-  produced by \code{\\\\#J252b}.  The Kanji ideograph for "one" is
-  produced by \code{\\\\#J306c} or \code{\\\\#N0001}.
+  by \samp{\\\\#J242b} and the Katakana character for this sound is
+  produced by \samp{\\\\#J252b}.  The Kanji ideograph for "one" is
+  produced by \samp{\\\\#J306c} or \samp{\\\\#N0001}.
 
   The output from \code{\link{demo}(Japanese)} shows tables of the escape
   sequences for the available Japanese characters.

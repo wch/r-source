@@ -71,7 +71,7 @@ nzchar(x)
   \code{\link{encodeString}} to find the characters used to print the
   string.
 #ifdef windows
-  This is particularly important on Windows when \code{\\uxxxx}
+  This is particularly important on Windows when \samp{\\uxxxx}
   sequences have been used to enter Unicode characters not representable
   in the current encoding.  Thus \code{nchar("\\u2642")} is \code{1},
   and it is printed in \code{Rgui} as one character, but it will be
@@ -81,7 +81,7 @@ nzchar(x)
 #ifdef unix
   Where character strings have been marked as UTF-8, the number of
   characters and widths will be computed in UTF-8, even though printing
-  may use escapes such as \code{<U+2642>} in a non-UTF-8 locale.
+  may use escapes such as \samp{<U+2642>} in a non-UTF-8 locale.
 #endif
 }
 \references{
