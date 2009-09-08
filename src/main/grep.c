@@ -49,8 +49,6 @@ strsplit grep [g]sub [g]regexpr
 #include "Rregex.h"
 #endif
 
-#include "apse.h"
-
 #ifdef HAVE_PCRE_PCRE_H
 # include <pcre/pcre.h>
 #else
