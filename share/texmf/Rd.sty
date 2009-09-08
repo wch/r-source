@@ -186,7 +186,7 @@
 
 %% as from R 2.10.0 set \email in monospaced font (like \url)
 %\newcommand{\email}[1]{$\langle$\texttt{#1}$\rangle$}
-\newcommand{\email}[1]{\texttt{\textless#1\textgreater}}
+\newcommand{\email}[1]{\normalfont\texttt{\textless#1\textgreater}}
 
 %% \code without `-' ligatures
 {\catcode`\-=\active%
@@ -194,7 +194,7 @@
     \catcode`\-=\active \let-\codedash%
     \Rd@code}}
 \def\codedash{-\discretionary{}{}{}}
-\def\Rd@code#1{\texttt{#1}\egroup}
+\def\Rd@code#1{\normalfont\texttt{#1}\egroup}
 
 \def\AsIs{\bgroup\let\do\@makeother\Rd@AsIs@dospecials\Rd@AsIsX}
 \def\Rd@AsIs@dospecials{\do\$\do\&\do\#\do\^\do\_\do\%\do\~}
@@ -208,7 +208,7 @@
 
 % This is a workaround for the old Rdconv to handle \Sexpr by echoing it
 % Rd2latex() should never let \Sexpr through to here.
-\newcommand\Sexpr[2][]{\texttt{\bsl Sexpr[#1]\{#2\}}}
+\newcommand\Sexpr[2][]{{\normalfont\texttt{\bsl Sexpr[#1]\{#2\}}}}
 
 \newcommand{\var}[1]{{\normalfont\textsl{#1}}}
 
@@ -216,7 +216,7 @@
 \let\Cite=\dfn
 
 \newcommand{\acronym}[1]{\textsc{\lowercase{#1}}}
-\newcommand{\kbd}[1]{\texttt{\textsl{#1}}}
+\newcommand{\kbd}[1]{{\normalfont\texttt{\textsl{#1}}}}
 
 \newcommand{\strong}[1]{{\normalfont\fontseries{b}\selectfont #1}}
 \let\pkg=\strong
