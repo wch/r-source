@@ -854,11 +854,23 @@ next_char:
     return p;
 }
 
+
 #ifdef Win32
+static const char TO_WCHAR[] = "UCS-2LE";
+#else
+# ifdef WORDS_BIGENDIAN
+static const char TO_WCHAR[] = "UCS-4BE";
+# else
+static const char TO_WCHAR[] = "UCS-4LE";
+# endif
+#endif
+
 static void *latin1_wobj = NULL, *utf8_wobj=NULL;
 
-/* Translate from current encoding to wchar_t = UCS-2 on Windows
-   (not using surrogates). NB: this is not general.
+/* Translate from current encoding to wchar_t = UCS-2/4
+   NB: this is not general.
+
+   Not in a general header, as wchar_t is not needed except where used.
 */
 const wchar_t *wtransChar(SEXP x)
 {
@@ -875,29 +887,33 @@ const wchar_t *wtransChar(SEXP x)
 
     if(IS_LATIN1(x)) {
 	if(!latin1_wobj) {
-	    obj = Riconv_open("UCS-2LE", "latin1");
+	    obj = Riconv_open(TO_WCHAR, "latin1");
 	    if(obj == (void *)(-1))
 		error(_("unsupported conversion from '%s' to '%s'"),
-		      "latin1", "UCS-2LE");
+		      "latin1", TO_WCHAR);
 	    latin1_wobj = obj;
 	} else
 	    obj = latin1_wobj;
 	knownEnc = TRUE;
     } else if(IS_UTF8(x)) {
 	if(!utf8_wobj) {
-	    obj = Riconv_open("UCS-2LE", "UTF-8");
+	    obj = Riconv_open(TO_WCHAR, "UTF-8");
 	    if(obj == (void *)(-1)) 
 		error(_("unsupported conversion from '%s' to '%s'"),
-		      "latin1", "UCS-2LE");
+		      "latin1", TO_WCHAR);
 	    utf8_wobj = obj;
 	} else
 	    obj = utf8_wobj;
 	knownEnc = TRUE;
     } else {
-	obj = Riconv_open("UCS-2LE", "");
+	obj = Riconv_open(TO_WCHAR, "");
 	if(obj == (void *)(-1))
+#ifdef Win32
 	    error("unsupported conversion to '%s' from codepage %d",
-		  "UCS-2LE", localeCP);
+		  TO_WCHAR, localeCP);
+#else
+	    error(_("unsupported conversion from '%s' to '%s'"), "", TO_WCHAR);
+#endif
     }
 
     R_AllocStringBuffer(0, &cbuff);
@@ -917,13 +933,14 @@ top_of_loop:
     }
     if(!knownEnc) Riconv_close(obj);
     res = (top - outb);
-    p = (wchar_t *) R_alloc(res+2, 1);
-    memset(p, 0, res+2);
+    /* terminator is 2 or 4 null bytes */
+    p = (wchar_t *) R_alloc(res+4, 1);
+    memset(p, 0, res+4);
     memcpy(p, cbuff.data, res);
     R_FreeStringBuffer(&cbuff);
     return p;
 }
-#endif
+
 
 extern void *Rf_AdobeSymbol2utf8(char* work, const char *c0, int nwork); /* from util.c */
 

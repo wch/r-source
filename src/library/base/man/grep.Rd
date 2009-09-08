@@ -99,12 +99,12 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   PCRE installed on the system in use if \R was configured to use the
   system PCRE.)
 
-  \code{useBytes} is only used if \code{fixed = TRUE} or \code{perl = TRUE}.
-  Its main effect is to avoid errors/warnings about invalid inputs and
-  spurious matches, but for \code{regexpr} it changes the interpretation
-  of the output.  As from \R 2.10.0 it inhibits the conversion of inputs
-  with marked encodings.  With PCRE, caseless matching for a non-ASCII
-  pattern is unsupported under this option.
+  The main effect of \code{useBytes} is to avoid errors/warnings about
+  invalid inputs and spurious matches, but for \code{regexpr} it changes
+  the interpretation of the output.  As from \R 2.10.0 it inhibits the
+  conversion of inputs with marked encodings.  With PCRE, caseless
+  matching for a non-ASCII pattern is unsupported under this option (and
+  case does not really make sense for bytes).
 }
 \value{
   For \code{grep} a vector giving either the indices of the elements of
@@ -140,10 +140,11 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   element of which is an integer vector as in \code{regexpr}, except
   that the starting positions of every (disjoint) match are given.
 
-  If in a multi-byte locale the pattern or replacement is not a valid
-  sequence of bytes, an error is thrown.  An invalid string in \code{x}
-  or \code{text} is a non-match with a warning for \code{grep} or
-  \code{regexpr}, but an error for \code{sub} or \code{gsub}.
+  If in a multi-byte locale (and \code{useBytes = FALSE}) the pattern or
+  replacement is not a valid sequence of bytes, an error is thrown.  An
+  invalid string in \code{x} or \code{text} is a non-match with a
+  warning for \code{grep} or \code{regexpr}, but an error for \code{sub}
+  or \code{gsub}.
 }
 \section{Warning}{
   The standard regular-expression code has been reported to be very slow

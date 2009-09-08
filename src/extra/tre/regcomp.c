@@ -105,6 +105,28 @@ tre_regcomp(regex_t *preg, const char *regex, int cflags)
   return regncomp(preg, regex, regex ? strlen(regex) : 0, cflags);
 }
 
+int
+tre_regcompb(regex_t *preg, const char *regex, int cflags)
+{
+  int ret;
+  tre_char_t *wregex;
+  int wlen, n = strlen(regex);
+  unsigned int i;
+  const unsigned char *str = (const unsigned char *)regex;
+  tre_char_t *wstr;
+
+  wregex = xmalloc(sizeof(tre_char_t) * (n + 1));
+  if (wregex == NULL) return REG_ESPACE;
+  wstr = wregex;
+
+  for (i = 0; i < n; i++) *(wstr++) = *(str++);
+  wlen = n;
+  wregex[wlen] = L'\0';
+  ret = tre_compile(preg, wregex, (unsigned)wlen, cflags);
+  xfree(wregex);
+  return ret;
+}
+
 
 #ifdef TRE_WCHAR
 int

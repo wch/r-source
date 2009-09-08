@@ -17,33 +17,30 @@
  *  http://www.r-project.org/Licenses/
  */
 
-/* This needs to be separate from grep.c, as TRE has a conflicting
-   regcomp and the two headers cannot both be included in one file */
-
-/* FIXME: this could handle marked UTF-8 encodings */
+/* This at times needed to be separate from grep.c, as TRE has a
+   conflicting regcomp and the two headers cannot both be included in
+   one file 
+*/
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
 
-#undef USE_TRE
-#define USE_TRE 1
-
 #include <Defn.h>
-#include <R_ext/RS.h>  /* for Calloc/Free */
 #include <wchar.h>
+#include <tre/regex.h>
 
-# include <tre/regex.h>
+const wchar_t *wtransChar(SEXP x); /* from sysutils.c */
 
 SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
-    int i, j, n, nmatches, nc;
+    int i, j, n, nmatches;
     int igcase_opt, value_opt, max_distance_opt, useBytes;
     int max_deletions_opt, max_insertions_opt, max_substitutions_opt;
     const char *str;
     Rboolean useWC = FALSE;
-    wchar_t *wstr, *wpat = NULL;
+    const wchar_t *wstr;
 
     regex_t reg;
     regaparams_t params;
@@ -75,9 +72,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pat");
     if (!isString(vec)) error(_("invalid '%s' argument"), "x");
 
-#ifdef USE_TRE
     if (igcase_opt) cflags |= REG_ICASE;
-#endif
 
     str = CHAR(STRING_ELT(pat, 0));
     useWC = !strIsASCII(str) && !useBytes;
@@ -91,22 +86,16 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     if (useWC) {
-	nc = mbstowcs(NULL, str, 0);
-	wpat = Calloc(nc+1, wchar_t);
-	mbstowcs(wpat, str, nc+1);
-	if ((rc = regwcomp(&reg, wpat, cflags))) {
-	    char errbuf[1001];
-	    tre_regerror(rc, &reg, errbuf, 1001);
-	    error(_("regcomp error:  '%s'"), errbuf);
-	}
+	wstr = wtransChar(STRING_ELT(pat, 0));
+	rc = regwcomp(&reg, wstr, cflags);
     } else {
 	str = translateChar(STRING_ELT(pat, 0));
-	nc = strlen(str);
-	if ((rc = tre_regcomp(&reg, str, cflags))) {
-	    char errbuf[1001];
-	    tre_regerror(rc, &reg, errbuf, 1001);
-	    error(_("regcomp error:  '%s'"), errbuf);
-	}
+	rc = tre_regcomp(&reg, str, cflags);
+    }
+    if (rc) {
+	char errbuf[1001];
+	tre_regerror(rc, &reg, errbuf, 1001);
+	error(_("regcomp error:  '%s'"), errbuf);
     }
 
     regaparams_default(&params);
@@ -129,22 +118,16 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* undocumented, must be zeroed */
 	memset(&match, 0, sizeof(match));
 	if (useWC) {
-	    str = translateChar(STRING_ELT(vec, i));
-	    nc = mbstowcs(NULL, str, 0);
-	    wstr = Calloc(nc+1, wchar_t);
-	    mbstowcs(wstr, str, nc+1);
-	    if (regawexec(&reg, wstr, &match, params, 0) == REG_OK) {
-		LOGICAL(ind)[i] = 1;
-		nmatches++;
-	    } else LOGICAL(ind)[i] = 0;
-	    Free(wstr);
+	    wstr = wtransChar(STRING_ELT(vec, i));
+	    rc = regawexec(&reg, wstr, &match, params, 0);
 	} else {
 	    str = translateChar(STRING_ELT(vec, i));
-	    if (regaexec(&reg, str, &match, params, 0) == REG_OK) {
-		LOGICAL(ind)[i] = 1;
-		nmatches++;
-	    } else LOGICAL(ind)[i] = 0;
+	    rc = regaexec(&reg, str, &match, params, 0);
 	}
+	if (rc == REG_OK) {
+	    LOGICAL(ind)[i] = 1;
+	    nmatches++;
+	} else LOGICAL(ind)[i] = 0;
     }
     tre_regfree(&reg);
 
@@ -171,7 +154,6 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 		INTEGER(ans)[j++] = i + 1;
     }
 
-    if (wpat) Free(wpat);
     UNPROTECT(2);
     return ans;
 }

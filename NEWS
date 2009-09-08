@@ -288,6 +288,14 @@ NEW FEATURES
 	(and enables help.search() to use approximate matching
 	characterwise rather than bytewise).
 
+    o	There is a different regular expression engine for basic and
+	extended regexps, based on the TRE library.  This is often
+	faster, especially in a MBCS locale, and it allows us to
+	implement the same set of options as for fixed = TRUE and perl
+	= TRUE, including 'useBytes' and full support for UTF-8
+	encoded strings in all locales.  [Currently experimental,
+	selected by the configure option --with-TRE.]
+
 
 HELP & Rd FILE CHANGES
 

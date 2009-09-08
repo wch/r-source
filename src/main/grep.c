@@ -37,6 +37,8 @@ strsplit grep [g]sub [g]regexpr
 #include <R_ext/RS.h>  /* for Calloc/Free */
 #include <wchar.h>
 
+const wchar_t *wtransChar(SEXP x); /* from sysutils.c */
+
 #ifdef USE_TRE
 # include <tre/regex.h>
 # define GSUB_HEAD_CHOP 1
@@ -58,6 +60,14 @@ strsplit grep [g]sub [g]regexpr
 #ifndef MAX
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
 #endif
+
+static void reg_report(int rc,  regex_t *reg, const char *pat)
+{
+    char errbuf[1001];
+    regerror(rc, reg, errbuf, 1001);
+    warning(_("regcomp error:  '%s'"), errbuf);
+    error(_("invalid regular expression '%s'"), pat);
+}
 
 /* We use a shared buffer here to avoid reallocing small buffers, and
    keep a standard-size (MAXELTSIZE = 8192) buffer allocated shared
@@ -203,12 +213,8 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		   the empty string (not a ``token'' in the strict sense).
 		*/
 		usedRegex = TRUE;
-		if ((rc = regcomp(&reg, split, cflags))) {
-		    char errbuf[1001];
-		    regerror(rc, &reg, errbuf, 1001);
-		    warning(_("regcomp error:  '%s'"), errbuf);
-		    error(_("invalid split pattern '%s'"), split);
-		}
+		if ((rc = regcomp(&reg, split, cflags))) 
+		    reg_report(rc, &reg, split);
 		bufp = buf;
 		if (*bufp != '\0') {
 		    while(regexec(&reg, bufp, 1, regmatch, 0) == 0) {
@@ -470,10 +476,12 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
     if ((fixed_opt || perl_opt) && !extended_opt)
 	warning(_("argument '%s' will be ignored"), "extended = FALSE");
+#ifndef USE_TRE
     if (!(fixed_opt || perl_opt) && useBytes) {
 	warning(_("argument '%s' will be ignored"), "useBytes = TRUE");
 	useBytes = 0;
     }
+#endif
 
     if (!isString(pat) || length(pat) < 1)
 	error(_("invalid '%s' argument"), "pattern");
@@ -528,6 +536,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (igcase_opt) cflags |= REG_ICASE;
     }
 
+    /* isn't this covered above? */
     if (!useBytes && ienc != CE_UTF8 && mbcslocale && !mbcsValid(cpat))
 	error(_("regular expression is invalid in this locale"));
 
@@ -546,11 +555,16 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 		    warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
 	    }
 	}
-    } else if ((rc = regcomp(&reg, cpat, cflags))) {
-	char errbuf[1001];
-	regerror(rc, &reg, errbuf, 1001);
-	warning(_("regcomp error:  '%s'"), errbuf);
-	error(_("invalid regular expression '%s'"), cpat);
+    } else {
+#ifdef USE_TRE
+	if (useBytes)
+	    rc = tre_regcompb(&reg, cpat, cflags);
+	else
+	    rc = regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
+#else
+	rc = regcomp(&reg, cpat, cflags);
+#endif
+	if (rc) reg_report(rc, &reg, cpat);
     }
 
     PROTECT(ind = allocVector(LGLSXP, n));
@@ -575,7 +589,18 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else if (perl_opt) {
 		if (pcre_exec(re_pcre, re_pe, s, strlen(s), 0, 0, &ov, 0) >= 0)
 		    INTEGER(ind)[i] = 1;
-	    } else if (regexec(&reg, s, 0, NULL, 0) == 0) LOGICAL(ind)[i] = 1;
+	    } else {
+#ifdef USE_TRE
+		if(useBytes)
+		    rc = tre_regexecb(&reg, s, 0, NULL, 0);
+		else
+		    rc = regwexec(&reg, wtransChar(STRING_ELT(vec, i)), 
+				  0, NULL, 0);
+#else
+		rc = regexec(&reg, s, 0, NULL, 0);
+#endif
+		if(rc == 0) LOGICAL(ind)[i] = 1;
+	    }
 	}
 	if (invert ^ LOGICAL(ind)[i]) nmatches++;
     }
@@ -703,6 +728,7 @@ static char *string_adj(char *target, const char *orig, const char *repl,
 extern SEXP do_pgsub(SEXP pat, SEXP rep, SEXP vec,
 		     int global, int igcase_opt, int useBytes);
 
+/* FIXME: use wchar_t, and do fixed = TRUE via REG_LITERAL in TRE */
 SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, rep, vec, ans;
@@ -739,10 +765,12 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
     if ((fixed_opt || perl_opt) && !extended_opt)
 	warning(_("argument '%s' will be ignored"), "extended = FALSE");
+#ifndef USE_TRE
     if (!(fixed_opt || perl_opt) && useBytes) {
 	warning(_("argument '%s' will be ignored"), "useBytes = TRUE");
 	useBytes = 0;
     }
+#endif
 
     if (!isString(pat) || length(pat) < 1)
 	error(_("invalid '%s' argument"), "pattern");
@@ -764,7 +792,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (perl_opt && !fixed_opt)
 	return do_pgsub(pat, rep, vec, global, igcase_opt, useBytes);
 
-    if (fixed_opt) { /* we don't have UTF-8 version of regex.c */
+    if (fixed_opt) {
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
 	if (getCharCE(STRING_ELT(rep, 0)) == CE_UTF8) use_UTF8 = TRUE;
 	for (i = 0; i < n; i++)
@@ -789,17 +817,19 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (extended_opt) cflags |= REG_EXTENDED;
     if (igcase_opt) cflags |= REG_ICASE;
-    if (!fixed_opt && (rc = regcomp(&reg, spat, cflags))) {
-	char errbuf[1001];
-	regerror(rc, &reg, errbuf, 1001);
-	warning(_("regcomp error:  '%s'"), errbuf);
-	error(_("invalid regular expression '%s'"), spat);
-    }
     if (fixed_opt) {
 	patlen = strlen(spat);
 	if (!patlen)
 	    error(_("zero-length pattern"));
 	replen = strlen(srep);
+    } else {
+#ifdef USE_TRE
+	rc = useBytes ? tre_regcompb(&reg, spat, cflags) :
+	    tre_regcomp(&reg, spat, cflags);
+#else
+	rc = regcomp(&reg, spat, cflags);
+#endif
+	if(rc) reg_report(rc, &reg, spat);
     }
 
     PROTECT(ans = allocVector(STRSXP, n));
@@ -871,7 +901,9 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	    eflags = 0; last_end = -1;
 #ifdef GSUB_HEAD_CHOP
-	    while (regexec(&reg, s+offset, 10, regmatch, eflags) == 0) {
+	    while ((useBytes ?
+		    tre_regexecb(&reg, s+offset, 10, regmatch, eflags) :
+		    regexec(&reg, s+offset, 10, regmatch, eflags)) == 0) {
 		nmatch += 1;
 		offset += regmatch[0].rm_eo;
 		/* Do not repeat a 0-length match after a match, so
@@ -919,7 +951,9 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		ns = strlen(s);
 		eflags = 0; last_end = -1;
 #ifdef GSUB_HEAD_CHOP
-		while (regexec(&reg, s+offset, 10, regmatch, eflags) == 0) {
+		while ((useBytes ? 
+			tre_regexecb(&reg, s+offset, 10, regmatch, eflags) :
+			regexec(&reg, s+offset, 10, regmatch, eflags)) == 0) {
 		    /* printf("%s, %d %d\n", &s[offset],
 		       regmatch[0].rm_so, regmatch[0].rm_eo); */
 		    for (j = 0; j < regmatch[0].rm_so ; j++)
@@ -930,7 +964,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    offset += regmatch[0].rm_eo;
 		    if (s[offset] == '\0' || !global) break;
-		    /* <MBCS FIXME> advance by a char */
+		    /* <MBCS FIXME> advance by a char, unless useBytes */
 		    if (regmatch[0].rm_eo == regmatch[0].rm_so)
 			*u++ = s[offset++];
 		    eflags = REG_NOTBOL;
@@ -956,7 +990,10 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    for (j = offset ; s[j] ; j++)
 			*u++ = s[j];
 		*u = '\0';
-		SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(vec, i)));
+		if (useBytes)
+		    SET_STRING_ELT(ans, i, mkChar(cbuf));
+		else
+		    SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(vec, i)));
 		Free(cbuf);
 	    }
 	}
@@ -1003,13 +1040,15 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
     if ((fixed_opt || perl_opt) && !extended_opt)
 	warning(_("argument '%s' will be ignored"), "extended = FALSE");
+#ifndef USE_TRE
     if (!(fixed_opt || perl_opt) && useBytes) {
 	warning(_("argument '%s' will be ignored"), "useBytes = TRUE");
 	useBytes = 0;
     }
+#endif
 
     /* allow 'text' to be zero-length from 2.3.1 */
-    if (!isString(pat) || length(pat) < 1 || STRING_ELT(pat,0) == NA_STRING)
+    if (!isString(pat) || length(pat) < 1 || STRING_ELT(pat, 0) == NA_STRING)
 	error(_("invalid '%s' argument"), "pattern");
     if (length(pat) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
@@ -1063,13 +1102,17 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(errorptr)
 		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
 	}
-    } else
-	if ((rc = regcomp(&reg, spat, cflags))) {
-	    char errbuf[1001];
-	    regerror(rc, &reg, errbuf, 1001);
-	    warning(_("regcomp error:  '%s'"), errbuf);
-	    error(_("invalid regular expression '%s'"), spat);
-	}
+    } else {
+#ifdef USE_TRE
+	if (useBytes)
+	    rc = tre_regcompb(&reg, spat, cflags);
+	else
+	    rc = regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
+#else
+	rc = regcomp(&reg, spat, cflags);
+#endif
+	if (rc) reg_report(rc, &reg, spat);
+    }
 
     PROTECT(ans = allocVector(INTSXP, n));
     PROTECT(matchlen = allocVector(INTSXP, n));
@@ -1148,10 +1191,20 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		} else INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 	    } else {
-		if (regexec(&reg, s, 1, regmatch, 0) == 0) {
+#ifdef USE_TRE
+		if (useBytes)
+		    rc = tre_regexecb(&reg, s, 1, regmatch, 0);
+		else
+		    rc = regwexec(&reg, wtransChar(STRING_ELT(text, i)),
+				  1, regmatch, 0);
+#else
+		rc = regexec(&reg, s, 1, regmatch, 0);
+#endif
+		if (rc == 0) {
 		    st = regmatch[0].rm_so;
 		    INTEGER(ans)[i] = st + 1; /* index from one */
 		    INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
+#ifndef USE_TRE
 		    /* we don't support useBytes here */
 		    if (mbcslocale) {
 			char *buf;
@@ -1173,6 +1226,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 			if (INTEGER(matchlen)[i] < 0) /* an invalid string */
 			    INTEGER(matchlen)[i] = NA_INTEGER;
 		    }
+#endif
 		} else INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 	    }
 	}
@@ -1207,7 +1261,8 @@ static SEXP gregexpr_Regexc(const regex_t *reg, const char *string,
     while (!foundAll) {
 	if ( offset < len &&
 #ifdef GSUB_HEAD_CHOP
-	     regexec(reg, string+offset, 1, regmatch, 0)
+	     (useBytes ? tre_regexec(reg, string+offset, 1, regmatch, 0) :
+	      regexec(reg, string+offset, 1, regmatch, 0))
 #else
 	     Rregexec(reg, string, 1, regmatch, 0, offset)
 #endif
@@ -1429,10 +1484,12 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
     if ((fixed_opt || perl_opt) && !extended_opt)
 	warning(_("argument '%s' will be ignored"), "extended = FALSE");
+#ifndef USE_TRE
     if (!(fixed_opt || perl_opt) && useBytes) {
 	warning(_("argument '%s' will be ignored"), "useBytes = TRUE");
 	useBytes = 0;
     }
+#endif
 
     if (!isString(text) || length(text) < 1)
 	error(_("invalid '%s' argument"), "text");
@@ -1468,8 +1525,14 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!useBytes && ienc != CE_UTF8 && mbcslocale && !mbcsValid(spat))
 	error(_("regular expression is invalid in this locale"));
 
-    if (!fixed_opt && (rc = regcomp(&reg, spat, cflags))) {
-	error(_("invalid regular expression '%s'"), spat);
+    if (!fixed_opt) {
+#ifdef USE_TRE
+	rc = useBytes ? tre_regcompb(&reg, spat, cflags) : 
+	    regcomp(&reg, spat, cflags);
+#else
+	rc = regcomp(&reg, spat, cflags);
+#endif
+	if (rc) error(_("invalid regular expression '%s'"), spat);
     }
 
     PROTECT(ansList = allocVector(VECSXP, n));

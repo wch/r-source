@@ -95,7 +95,10 @@ tre_regerror(int errcode, const regex_t *preg, char *errbuf,
 extern void
 tre_regfree(regex_t *preg);
 
-/* R addition */
+/* R additions */
+extern int
+tre_regcompb(regex_t *preg, const char *regex, int cflags);
+
 extern int
 tre_regexecb(const regex_t *preg, const char *string, size_t nmatch,
 	     regmatch_t pmatch[], int eflags);
