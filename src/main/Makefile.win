@@ -30,7 +30,7 @@ CSOURCES=\
 	par.c paste.c pcre.c platform.c \
 	plot.c plot3d.c plotmath.c \
 	print.c printarray.c printvector.c printutils.c qsort.c \
-	random.c raw.c regex.c registration.c relop.c rlocale.c \
+	random.c raw.c registration.c relop.c rlocale.c \
 	saveload.c scan.c seq.c serialize.c size.c sort.c source.c split.c \
 	sprintf.c startup.c subassign.c subscript.c subset.c summary.c sysutils.c \
 	unique.c util.c \
@@ -51,16 +51,17 @@ gramRd.c: gramRd.y
 	$(RM) gramRd.tab.c	
 endif
 
-saveload-CPPFLAGS=-I../extra/xdr
-connections-CPPFLAGS=-I../extra/zlib -I../extra/bzip2
-dounzip-CPPFLAGS=-I../extra/zlib
-grep-CPPFLAGS=-I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
-pcre-CPPFLAGS=-I../extra/pcre -DPCRE_STATIC
-platform-CPPFLAGS=-I../gnuwin32
-builtin-CPPFLAGS=-I../gnuwin32
-printutils-CPPFLAGS=-I../gnuwin32
-sysutils-CPPFLAGS=-I../gnuwin32
 agrep-CPPFLAGS=-I../extra
+builtin-CPPFLAGS=-I../gnuwin32
+connections-CPPFLAGS=-I../extra/zlib -I../extra/bzip2
+dcf-CPPFLAGS=-I../extra
+dounzip-CPPFLAGS=-I../extra/zlib
+grep-CPPFLAGS=-I../extra -I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
+pcre-CPPFLAGS=-I../extra/pcre -DPCRE_STATIC
+platform-CPPFLAGS=-I../gnuwin32 -I../extra
+printutils-CPPFLAGS=-I../gnuwin32
+saveload-CPPFLAGS=-I../extra/xdr
+sysutils-CPPFLAGS=-I../gnuwin32
 
 ifeq ($(strip $(USE_ICU)),YES)
 util-CPPFLAGS=-DUSE_ICU -I"$(ICU_PATH)"/include

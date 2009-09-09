@@ -23,3 +23,5 @@ same type.
 
 The offsets in the regmatch_t structure are in characters for
 STR_WIDE, bytes for the other two modes.
+
+On Windows (MinGW?), iswctype is missing 'blank'.

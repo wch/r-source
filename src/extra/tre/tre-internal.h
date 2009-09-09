@@ -106,7 +106,7 @@ typedef short tre_cint_t;
 
 #endif /* !TRE_WCHAR */
 
-#if defined(TRE_WCHAR) && defined(HAVE_ISWCTYPE) && defined(HAVE_WCTYPE)
+#if !defined(WIN32) && defined(TRE_WCHAR) && defined(HAVE_ISWCTYPE) && defined(HAVE_WCTYPE)
 #define TRE_USE_SYSTEM_WCTYPE 1
 #endif
 

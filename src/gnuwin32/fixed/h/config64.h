@@ -945,6 +945,9 @@
    made weak. */
 /* #undef USE_SOLARIS_THREADS_WEAK */
 
+/* Define to use TRE for regexp. */
+#define USE_TRE 1
+
 /* Define if the Win32 multithreading API can be used. */
 /* #undef USE_WIN32_THREADS */
 
