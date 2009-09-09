@@ -209,21 +209,19 @@
   For complete details please consult the man pages for PCRE, especially
   \command{man pcrepattern} and \command{man pcreapi}), on your system or from
   the sources at \url{http://www.pcre.org}. If PCRE support was compiled
-  from the sources within \R, the PCRE version is 7.8 as described here
-  (version \eqn{\ge}{>=} 7.6 is required if \R is configured to use the
-  system's PCRE library).
+  from the sources within \R, the PCRE version is 7.9 as described here.
 
-  Perl regular expressions are computed byte-by-byte rather than
-  character-by-character except in UTF-8 locales.  Since the only
-  non-UTF-8 multibyte locales in common use are those for CJK languages,
-  they should be used with care in non-UTF-8 CJK locales.
+  Perl regular expressions can be computed byte-by-byte or
+  (UTF-8) character-by-character: the latter is use in all multibyte
+  locales and if any of the inputs are marked as UTF-8 (see
+  \code{\link{Encoding}}.
 
   All the regular expressions described for extended regular expressions
   are accepted except \samp{\\<} and \samp{\\>}: in Perl all backslashed
   metacharacters are alphanumeric and backslashed symbols always are
   interpreted as a literal character. \samp{\{} is not special if it would
   be the start of an invalid interval specification.  There can be more than
-  9 backreferences.  In a UTF-8 locale the named character classes only
+  9 backreferences.  In UTF-8 mode the named character classes only
   match ASCII characters: see \samp{\\p} below for an alternative.
 
   The construct \samp{(?...)} is used for Perl extensions in a variety
@@ -276,11 +274,11 @@
   subject (which is subtly different from Perl's end of the previous
   match).  \samp{\\C} matches a single byte. including a newline.
   % pro tem \samp{\\R} matches \R.
-  In a UTF-8 locale, \samp{\\R} matches any Unicode newline character
+  In UTF-8 mode, \samp{\\R} matches any Unicode newline character
   (not just CR), and \samp{\\X} matches any number of Unicode characters
   that form an extended Unicode sequence.
 
-  In a UTF-8 locale, some Unicode properties are supported via
+  In UTF-8 mode, some Unicode properties are supported via
   \samp{\\p\{\var{xx}\}} and \samp{\\P\{\var{xx}\}} which match
   characters with and without property \samp{\var{xx}} respectively.
   For a list of supported properties see the PCRE documentation, but for
@@ -317,7 +315,7 @@
 }
 \author{
   This help page is based on the documentation of GNU grep 2.4.2 and the
-  \code{pcrepattern} man page from PCRE 7.4.
+  \code{pcrepattern} man page from PCRE 7.9.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},

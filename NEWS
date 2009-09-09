@@ -296,7 +296,9 @@ NEW FEATURES
 	strings in all locales.
 
 	One known difference is that it is less tolerant of invalid
-	inputs in MBCS locales.
+	inputs in MBCS locales, and conforms more strictly to the
+	POSIX standard in its interpretation of incorrect regexps such
+	as "^*".
 
 	[Currently experimental, can be deselected by the configure
 	option --without-TRE.]
