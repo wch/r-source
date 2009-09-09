@@ -131,7 +131,7 @@ Makedeps: Makefile $(DEPENDS)
 ## This target has been changed to ensure that R.bin and libR get
 ## installed in the build tree if necessary, even if the corresponding 
 ## objects are not re-made.
-## Note that dependencies in the test Makefiles depend on these objects,
+## Note that dependencies in the test Makefiles used to depend on these objects,
 ## so copy-if-change is used.
 R: Makefile
 	@$(MAKE) Makedeps

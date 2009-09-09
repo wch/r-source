@@ -33,7 +33,7 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
 		    %in% search()) {
 		pp <- attr(as.environment(envname), "path")
 		## could be NULL if a perverse user has been naming
-		## environmnents to look like packages.
+		## environments to look like packages.
 	    } else if(pkg %in% loadedNamespaces())
 		## correct path for a loaded (not attached) namespace:
 		getNamespaceInfo(pkg, "path")
@@ -48,17 +48,20 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
                 break
             }
     }
+
+    ## we no longer have versioned installs:
+##     if(pkgpath == "") {
+##         ## This is slow and does a lot of checking we do here,
+##         ## but is needed for versioned installs
+##         pkgpath <- system.file(package = pkg, lib.loc = lib.loc)
+##     }
     if(pkgpath == "") {
-        ## This is slow and does a lot of checking we do here,
-        ## but is needed for versioned installs
-        pkgpath <- system.file(package = pkg, lib.loc = lib.loc)
-        if(pkgpath == "") {
-            warning(gettextf("no package '%s' was found", pkg), domain = NA)
-            return(NA)
-        }
+        warning(gettextf("no package '%s' was found", pkg), domain = NA)
+        return(NA)
     }
 
     ## New in 2.7.0: look for installed metadata first.
+    ## FIXME: how much longer should be drop back to the file?
 
     if(file.exists(file <- file.path(pkgpath, "Meta", "package.rds"))) {
         desc <- .readRDS(file)$DESCRIPTION
