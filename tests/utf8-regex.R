@@ -28,7 +28,6 @@ testit(grep(pat, txt, fixed = TRUE, useBytes = TRUE))
 testit(grep(pat, txt, perl = TRUE))
 testit(grep(pat, txt, ignore.case = TRUE, perl = TRUE))
 testit(grep(pat, txt, perl = TRUE, useBytes = TRUE))
-## may warn
 testit(grep(pat, txt, ignore.case = TRUE, perl = TRUE, useBytes = TRUE))
 testit(grep(toupper(pat), txt, ignore.case = TRUE))
 testit(grep(toupper(pat), txt, ignore.case = TRUE, perl = TRUE))
@@ -44,7 +43,6 @@ stopifnot(identical(r2, regexpr("en", txt, perl=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr("EN", txt, ignore.case=TRUE)))
 stopifnot(identical(r2, regexpr("EN", txt, ignore.case=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr("EN", txt, ignore.case=TRUE, perl=TRUE)))
-## may warn
 stopifnot(identical(r2, regexpr("EN", txt, ignore.case=TRUE, perl=TRUE,
                                 useBytes=TRUE)))
 
@@ -57,13 +55,12 @@ stopifnot(identical(r2, regexpr(pat, txt, perl=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr(pat, txt, ignore.case=TRUE)))
 stopifnot(identical(r2, regexpr(pat, txt, ignore.case=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr(pat, txt, ignore.case=TRUE, perl=TRUE)))
-## may warn
 stopifnot(identical(r2, regexpr(pat, txt, ignore.case=TRUE, perl=TRUE,
                                 useBytes=TRUE)))
 pat2 <- toupper(pat)
 stopifnot(identical(r1, regexpr(pat2, txt, ignore.case=TRUE)))
 stopifnot(identical(r1, regexpr(pat2, txt, ignore.case=TRUE, perl=TRUE)))
-## will warn and not match in a UTF-8 locale
+## will not match in a UTF-8 locale
 regexpr(pat2, txt, ignore.case=TRUE, perl=TRUE, useBytes=TRUE)
 
 
@@ -76,7 +73,6 @@ stopifnot(identical(r2, gregexpr(pat, txt, perl=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, gregexpr(pat, txt, ignore.case=TRUE)))
 stopifnot(identical(r2, gregexpr(pat, txt, ignore.case=TRUE, useByte=TRUE)))
 stopifnot(identical(r1, gregexpr(pat, txt, ignore.case=TRUE, perl=TRUE)))
-## may warn
 stopifnot(identical(r2, gregexpr(pat, txt, ignore.case=TRUE, perl=TRUE,
                                  useBytes=TRUE)))
 
@@ -111,3 +107,15 @@ stopifnot(identical(r1, gsub(pat, "gh", txt, fixed = TRUE)))
 stopifnot(identical(r1, gsub(pat, "gh", txt, fixed = TRUE, useBytes = TRUE)))
 stopifnot(identical(r1, gsub(pat, "gh", txt, perl = TRUE)))
 stopifnot(identical(r1, gsub(pat, "gh", txt, perl = TRUE, useBytes = TRUE)))
+
+stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"))
+stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"), perl = TRUE)
+stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"), useBytes = TRUE)
+stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"), perl = TRUE, useBytes = TRUE)
+
+(x <- gsub("\\b", "|", "The quick brown \ue8\ue9", perl = TRUE))
+stopifnot(identical(x, "|The| |quick| |brown| |\ue8\ue9|"))
+(x <- gsub("\\b", "|", "The quick brown fox", perl = TRUE))
+stopifnot(identical(x, "|The| |quick| |brown| |fox|"))
+## The following is warned against in the help page, but worked in some versions
+gsub("\\b", "|", "The quick brown fox")
