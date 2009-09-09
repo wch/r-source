@@ -43,7 +43,7 @@
 
 /* FIXME: use UCP for upper/lower conversion */
 static int length_adj(const char *orig, const char *repl, int *ovec,
-		      int nsubexpr, Rboolean useBytes)
+		      int nsubexpr, Rboolean useBytes, int ienc)
 {
     int k, n, nb;
     const char *p = repl;
@@ -58,7 +58,8 @@ static int length_adj(const char *orig, const char *repl, int *ovec,
 		    error(_("invalid backreference %d in regular expression"), k);
 		nb = ovec[2*k+1] - ovec[2*k];
 		/* assume for now that in UTF-8 upper/lower pairs are same len */
-		if (nb > 0 && !useBytes && mbcslocale && (upper || lower)) {
+		if (nb > 0 && !useBytes && ienc != CE_UTF8 &&
+		    mbcslocale && (upper || lower)) {
 		    wctrans_t tr = wctrans(upper ? "toupper" : "tolower");
 		    int j, nc;
 		    char *xi, *p;
@@ -113,7 +114,7 @@ static char *string_adj(char *target, const char *orig, const char *repl,
 		k = p[1] - '0';
 		/* Here we need to work in chars */
 		nb = ovec[2*k+1] - ovec[2*k];
-		if (nb > 0 && !useBytes && mbcslocale && (upper || lower)) {
+		if (nb > 0 && !useBytes && ienc == CE_UTF8 && (upper || lower)) {
 		    wctrans_t tr = wctrans(upper ? "toupper" : "tolower");
 		    int j, nc;
 		    char *xi, *p;
@@ -271,7 +272,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 	    /* Do not repeat a 0-length match after a match, so
 	       gsub("a*", "x", "baaac") is "xbxcx" not "xbxxcx" */
 	    if (ovector[1] > last_end) {
-		ns += length_adj(s, t, ovector, re_nsub, useBytes);
+		ns += length_adj(s, t, ovector, re_nsub, useBytes, ienc);
 		last_end = ovector[1];
 	    }
 	    offset = ovector[1];
