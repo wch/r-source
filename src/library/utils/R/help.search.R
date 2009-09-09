@@ -32,7 +32,7 @@ help.search <-
              package = NULL, lib.loc = NULL,
              help.db = getOption("help.db"),
              verbose = getOption("verbose"),
-             rebuild = FALSE, agrep = NULL, use_UTF8 = TRUE)
+             rebuild = FALSE, agrep = NULL, use_UTF8 = FALSE)
 {
     WINDOWS <- .Platform$OS.type == "windows"
 

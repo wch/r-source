@@ -12,6 +12,11 @@ inp <- readLines(n = 2)
 inp
 (txt <- iconv(inp[1], "latin1", ""))
 (pat <- iconv(inp[2], "latin1", ""))
+if(any(is.na(c(txt, pat)))) {
+    ## backup test
+    warning("this test must be done in a Latin-1 or UTF-8 locale")
+    q()
+}
 
 testit <- function(x) {print(x); stopifnot(identical(x, 1L))}
 testit(grep(pat, txt))
@@ -23,11 +28,10 @@ testit(grep(pat, txt, fixed = TRUE, useBytes = TRUE))
 testit(grep(pat, txt, perl = TRUE))
 testit(grep(pat, txt, ignore.case = TRUE, perl = TRUE))
 testit(grep(pat, txt, perl = TRUE, useBytes = TRUE))
-## next will warn
+## may warn
 testit(grep(pat, txt, ignore.case = TRUE, perl = TRUE, useBytes = TRUE))
 testit(grep(toupper(pat), txt, ignore.case = TRUE))
-## should match
-grep(toupper(pat), txt, ignore.case = TRUE, perl = TRUE)
+testit(grep(toupper(pat), txt, ignore.case = TRUE, perl = TRUE))
 ## matches in Latin-1 but not in UTF-8
 grep(toupper(pat), txt, ignore.case = TRUE, perl = TRUE, useBytes = TRUE)
 
@@ -40,7 +44,7 @@ stopifnot(identical(r2, regexpr("en", txt, perl=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr("EN", txt, ignore.case=TRUE)))
 stopifnot(identical(r2, regexpr("EN", txt, ignore.case=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr("EN", txt, ignore.case=TRUE, perl=TRUE)))
-## will warn
+## may warn
 stopifnot(identical(r2, regexpr("EN", txt, ignore.case=TRUE, perl=TRUE,
                                 useBytes=TRUE)))
 
@@ -53,7 +57,7 @@ stopifnot(identical(r2, regexpr(pat, txt, perl=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr(pat, txt, ignore.case=TRUE)))
 stopifnot(identical(r2, regexpr(pat, txt, ignore.case=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr(pat, txt, ignore.case=TRUE, perl=TRUE)))
-## will warn
+## may warn
 stopifnot(identical(r2, regexpr(pat, txt, ignore.case=TRUE, perl=TRUE,
                                 useBytes=TRUE)))
 pat2 <- toupper(pat)
@@ -72,7 +76,7 @@ stopifnot(identical(r2, gregexpr(pat, txt, perl=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, gregexpr(pat, txt, ignore.case=TRUE)))
 stopifnot(identical(r2, gregexpr(pat, txt, ignore.case=TRUE, useByte=TRUE)))
 stopifnot(identical(r1, gregexpr(pat, txt, ignore.case=TRUE, perl=TRUE)))
-## will warn
+## may warn
 stopifnot(identical(r2, gregexpr(pat, txt, ignore.case=TRUE, perl=TRUE,
                                  useBytes=TRUE)))
 
