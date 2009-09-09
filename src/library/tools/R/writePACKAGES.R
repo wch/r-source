@@ -76,6 +76,8 @@ function(dir = ".", fields = NULL,
     invisible(nfields)
 }
 
+## this is OK provided all the 'fields' are ASCII -- so be careful
+## what you add.
 .build_repository_package_db <-
 function(dir, fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
@@ -118,7 +120,7 @@ function(dir, fields = NULL,
             temp <- try(read.dcf(con, fields = fields)[1L, ], silent = TRUE)
             if(inherits(temp, "try-error")) {
                 close(con)
-                ## prior to 2.9.0 bundle zips had a top-level DESCRIPTION file
+                ## bundle zips may have a top-level DESCRIPTION file
                 con <- unz(files[i], "DESCRIPTION")
                 temp <- try(read.dcf(con, fields = fields)[1L, ], silent = TRUE)
                 if(inherits(temp, "try-error")) {
@@ -167,7 +169,7 @@ function(dir, fields = NULL,
     ## Note that we cannot simply do
     ##   names(db) <- sub("_.*", "", basename(files))
     ## as repositories could hold multiple versions of packages.
-    
+
     db
 }
 

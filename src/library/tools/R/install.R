@@ -1782,6 +1782,11 @@
         on.exit(close(chmcon), add = TRUE)
     }
     desc <- read.dcf(file.path(outDir, "DESCRIPTION"))[1,]
+    ## re-encode if necessary
+    if(!is.na(enc <- desc["Encoding"])) {
+        ## should be valid in UTF-8, might be invalid in declared encoding
+        desc <- iconv(desc, enc, "UTF-8", sub = "byte")
+    }
     ## drop internal entries
     if (CHM) CHMinternals <- M[M[, 4], ]
     M <- M[!M[, 4], ]

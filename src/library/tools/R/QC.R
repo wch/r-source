@@ -4160,8 +4160,8 @@ function(cfile)
 .check_package_parseRd <-
 function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
 {
-    if(file.exists(file.path(dir, "DESCRIPTION"))) {
-        enc <- read.dcf(file.path(dir, "DESCRIPTION"))[1L,]["Encoding"]
+    if(file.exists(dfile <- file.path(dir, "DESCRIPTION"))) {
+        enc <- read.dcf(dfile)[1L, ]["Encoding"]
         if(is.na(enc)) enc <- "ASCII"
         else def_enc <- TRUE
     } else enc <- "ASCII"
@@ -4206,6 +4206,7 @@ function(dir)
     .repository_db <- function(u) {
         con <- gzcon(url(sprintf("%s/src/contrib/PACKAGES.gz", u), "rb"))
         on.exit(close(con))
+        ## hopefully all these fields are ASCII, or we need to re-encode.
         cbind(read.dcf(con,
                        c(.get_standard_repository_db_fields(), "Path")),
               Repository = u)
