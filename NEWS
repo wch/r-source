@@ -296,10 +296,10 @@ NEW FEATURES
 	strings in all locales.
 
 	One known difference is that it is less tolerant of invalid
-	inputs in MBCS locales
+	inputs in MBCS locales.
 
-	[Currently experimental, selected by the configure option
-	--with-TRE.]
+	[Currently experimental, can be deselected by the configure
+	option --without-TRE.]
 
 
 HELP & Rd FILE CHANGES

@@ -15,51 +15,64 @@ inp
 
 testit <- function(x) {print(x); stopifnot(identical(x, 1L))}
 testit(grep(pat, txt))
+testit(grep(pat, txt, ignore.case = TRUE))
+testit(grep(pat, txt, useBytes = TRUE))
+testit(grep(pat, txt, ignore.case = TRUE, useBytes = TRUE))
 testit(grep(pat, txt, fixed = TRUE))
 testit(grep(pat, txt, fixed = TRUE, useBytes = TRUE))
 testit(grep(pat, txt, perl = TRUE))
 testit(grep(pat, txt, ignore.case = TRUE, perl = TRUE))
 testit(grep(pat, txt, perl = TRUE, useBytes = TRUE))
+## next will warn
 testit(grep(pat, txt, ignore.case = TRUE, perl = TRUE, useBytes = TRUE))
 testit(grep(toupper(pat), txt, ignore.case = TRUE))
-## the next two match in Latin-1 but not in UTF-8
+## should match
 grep(toupper(pat), txt, ignore.case = TRUE, perl = TRUE)
+## matches in Latin-1 but not in UTF-8
 grep(toupper(pat), txt, ignore.case = TRUE, perl = TRUE, useBytes = TRUE)
 
 (r1 <- regexpr("en", txt, fixed=TRUE))
 (r2 <- regexpr("en", txt, fixed=TRUE, useBytes=TRUE))
 stopifnot(identical(r1, regexpr("en", txt)))
+stopifnot(identical(r2, regexpr("en", txt, useBytes = TRUE)))
 stopifnot(identical(r1, regexpr("en", txt, perl=TRUE)))
 stopifnot(identical(r2, regexpr("en", txt, perl=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr("EN", txt, ignore.case=TRUE)))
+stopifnot(identical(r2, regexpr("EN", txt, ignore.case=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr("EN", txt, ignore.case=TRUE, perl=TRUE)))
+## will warn
 stopifnot(identical(r2, regexpr("EN", txt, ignore.case=TRUE, perl=TRUE,
                                 useBytes=TRUE)))
 
 (r1 <- regexpr(pat, txt, fixed=TRUE))
 (r2 <- regexpr(pat, txt, fixed=TRUE, useBytes=TRUE))
 stopifnot(identical(r1, regexpr(pat, txt)))
+stopifnot(identical(r2, regexpr(pat, txt, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr(pat, txt, perl=TRUE)))
 stopifnot(identical(r2, regexpr(pat, txt, perl=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr(pat, txt, ignore.case=TRUE)))
+stopifnot(identical(r2, regexpr(pat, txt, ignore.case=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, regexpr(pat, txt, ignore.case=TRUE, perl=TRUE)))
+## will warn
 stopifnot(identical(r2, regexpr(pat, txt, ignore.case=TRUE, perl=TRUE,
                                 useBytes=TRUE)))
 pat2 <- toupper(pat)
 stopifnot(identical(r1, regexpr(pat2, txt, ignore.case=TRUE)))
 stopifnot(identical(r1, regexpr(pat2, txt, ignore.case=TRUE, perl=TRUE)))
+## will warn and not match in a UTF-8 locale
 regexpr(pat2, txt, ignore.case=TRUE, perl=TRUE, useBytes=TRUE)
-## PCRE (as used here) does not have caseless matching for non-ASCII chars
-## unless (from R 2.6.0) in UTF-8 mode
 
 
 (r1 <- gregexpr(pat, txt, fixed=TRUE))
 (r2 <- gregexpr(pat, txt, fixed=TRUE, useBytes=TRUE))
 stopifnot(identical(r1, gregexpr(pat, txt)))
+stopifnot(identical(r2, gregexpr(pat, txt, useBytes=TRUE)))
 stopifnot(identical(r1, gregexpr(pat, txt, perl=TRUE)))
 stopifnot(identical(r2, gregexpr(pat, txt, perl=TRUE, useBytes=TRUE)))
 stopifnot(identical(r1, gregexpr(pat, txt, ignore.case=TRUE)))
+stopifnot(identical(r2, gregexpr(pat, txt, ignore.case=TRUE, useByte=TRUE)))
 stopifnot(identical(r1, gregexpr(pat, txt, ignore.case=TRUE, perl=TRUE)))
+## will warn
 stopifnot(identical(r2, gregexpr(pat, txt, ignore.case=TRUE, perl=TRUE,
                                  useBytes=TRUE)))
 
@@ -81,6 +94,7 @@ txt2[ot != sub("[b-e]",".", txt2, ignore.case = TRUE)]
 
 
 (r1 <- gsub(pat, "ef", txt))
+stopifnot(identical(r1, gsub(pat, "ef", txt, useBytes = TRUE)))
 stopifnot(identical(r1, gsub(pat, "ef", txt, fixed = TRUE)))
 stopifnot(identical(r1, gsub(pat, "ef", txt, fixed = TRUE, useBytes = TRUE)))
 stopifnot(identical(r1, gsub(pat, "ef", txt, perl = TRUE)))
@@ -88,6 +102,7 @@ stopifnot(identical(r1, gsub(pat, "ef", txt, perl = TRUE, useBytes = TRUE)))
 
 pat <- substr(pat, 1, 1)
 (r1 <- gsub(pat, "gh", txt))
+stopifnot(identical(r1, gsub(pat, "gh", txt, useBytes = TRUE)))
 stopifnot(identical(r1, gsub(pat, "gh", txt, fixed = TRUE)))
 stopifnot(identical(r1, gsub(pat, "gh", txt, fixed = TRUE, useBytes = TRUE)))
 stopifnot(identical(r1, gsub(pat, "gh", txt, perl = TRUE)))

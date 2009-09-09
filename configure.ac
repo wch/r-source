@@ -416,9 +416,9 @@ AC_ARG_WITH([ICU],
 
 ## TRE
 AC_ARG_WITH([TRE],
-[AS_HELP_STRING([--with-TRE],[use TRE library @<:@no@:>@])],
+[AS_HELP_STRING([--with-TRE],[use TRE library @<:@yes@:>@])],
 [R_ARG_USE(TRE)],
-[use_TRE=no])
+[use_TRE=yes])
 if test "$use_TRE" = yes ; then
   AC_DEFINE(USE_TRE, 1, [Define to use TRE for regexp.])
 fi

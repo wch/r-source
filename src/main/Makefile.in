@@ -69,7 +69,8 @@ DISTFILES = Makefile.in Makefile.win \
 	$(EXTRA_SOURCES_C) \
 	$(SOURCES_F) \
 	gram.y \
-	gramRd.y
+	gramRd.y \
+	@BUILD_TRE_TRUE@ regex.c
 
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 BZLIB_CPPFLAGS = @BUILD_BZLIB_TRUE@ -I$(top_srcdir)/src/extra/bzip2
