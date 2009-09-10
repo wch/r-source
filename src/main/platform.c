@@ -862,15 +862,11 @@ static SEXP filename(const char *dir, const char *file)
     return ans;
 }
 
-#ifdef USE_TRE
 # include <tre/regex.h>
 # define regcomp tre_regcomp
 # define regexec tre_regexec
 # define regfree tre_regfree
 # define regerror tre_regerror
-#else
-# include "Rregex.h"
-#endif
 
 static void count_files(const char *dnp, int *count,
 			Rboolean allfiles, Rboolean recursive,

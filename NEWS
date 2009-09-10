@@ -234,9 +234,6 @@ NEW FEATURES
     o	iconv() has a new argument 'mark' which can be used (by
 	experts) to suppress the declaration of encodings.
 
-    o	grep() and friends now use useBytes=TRUE to inhibit the
-	translation of inputs with marked encodings.
-
     o	DESCRIPTION 'LinkingTo' specs are now recognized as installation
 	dependencies, and included in package management computations.
 
@@ -248,8 +245,7 @@ NEW FEATURES
 	implemented on Windows since R 2.7.0).	The semantics have
 	been changed slightly: a string containing such escapes is
 	always stored in UTF-8 (and hence is suitable for portably
-	including Unicode text in packages).  Use of such escape
-	requires MBCS support.
+	including Unicode text in packages).
 
     o	New as.raw() method for "tclObj" objects (wish of PR#13578).
 
@@ -279,30 +275,6 @@ NEW FEATURES
     	could always be created with pairlist elements, but [[<-
     	didn't support assigning them.)
 
-    o	The perl=TRUE versions of strsplit(), grep() and friends now
-	work in a non-UTF-8 MBCS locale, by translating the inputs to
-	UTF-8.
-
-    o	agrep() now makes use of the TRE library of Ville Laurikari
-	rather than apse, and so has full support for MBCS locales
-	(and enables help.search() to use approximate matching
-	characterwise rather than bytewise).
-
-    o	There is a different regular expression engine for basic and
-	extended regexps, based on the TRE library.  This is often
-	faster, especially in a MBCS locale, and it allows us to
-	implement the same set of options as for fixed = TRUE and perl
-	= TRUE, including 'useBytes' and support for UTF-8-encoded
-	strings in all locales.
-
-	One known difference is that it is less tolerant of invalid
-	inputs in MBCS locales, and conforms more strictly to the
-	POSIX standard in its interpretation of incorrect regexps such
-	as "^*".
-
-	[Currently experimental, can be deselected by the configure
-	option --without-TRE.]
-	
     o	The parser now supports C-preprocessor-like #line directives,
     	so error messages and source references may refer to the original
     	file rather than an intermediate one.
@@ -310,6 +282,41 @@ NEW FEATURES
     o	New functions findLineNum() and setBreakpoint() work with the
 	source references to find the location of source lines and set
 	breakpoints (using trace()) at those lines.
+
+
+REGULAR EXPRESSIONS
+
+    o	A different regular expression engine for basic and
+	extended regexps and also for approximate matching.  This
+	based on the TRE library of Ville Laurikari, a modifed copy of
+	which is included in the R sources.
+
+	This is often faster, especially in a MBCS locale.
+	
+	Known differences are that it is less tolerant of invalid
+	inputs in MBCS locales, and conforms more strictly to the
+	POSIX standard in its interpretation of incorrect regexps such
+	as "^*".
+
+    o	The use of repeated boundary regexps in gsub() and gregexpr()
+	warned about in the help page does not work in this engine (it
+	did in the previous one since 2005).
+
+    o	Basic and extended regexps now support same set of options as
+	for fixed = TRUE and perl = TRUE, including 'useBytes' and
+	support for UTF-8-encoded strings in non-UTF-8 locales.
+
+    o	agrep() now has full support for MBCS locales with a modest
+	speed penalty.  This enables help.search() to use approximate
+	matching character-wise rather than byte-wise.
+
+    o	[g]sub use a single-pass algorithm instead of matching twice.
+
+    o	The perl = TRUE versions now work correctly in a non-UTF-8 MBCS
+	locale, by translating the inputs to UTF-8.
+
+    o	useBytes = TRUE now inhibits the translation of inputs with
+	marked encodings.
 
 
 HELP & Rd FILE CHANGES

@@ -102,9 +102,11 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   The main effect of \code{useBytes} is to avoid errors/warnings about
   invalid inputs and spurious matches, but for \code{regexpr} it changes
   the interpretation of the output.  As from \R 2.10.0 it inhibits the
-  conversion of inputs with marked encodings.  With PCRE, caseless
-  matching for a non-ASCII pattern is unsupported under this option (and
-  case does not really make sense for bytes).
+  conversion of inputs with marked encodings.
+  
+  Caseless matching does not make much sense for bytes in a MBCS locale,
+  and you should expect it only to work for ASCII characters if
+  \code{useBytes = TRUE}.
 }
 \value{
   For \code{grep} a vector giving either the indices of the elements of
@@ -119,22 +121,14 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   and with the same attributes as \code{x} (after possible coercion).
   Elements of character vectors \code{x} which are not substituted will
   be return unchanged (including any declared encoding).  If
-  \code{useBytes = FALSE}, either \code{perl = TRUE} or \code{fixed =
-  TRUE} and any element of \code{pattern}, \code{replacement} and
-  \code{x} is declared to be in UTF-8, the result will be in UTF-8.
-  Otherwise changed elements of the result will be have the encoding
-  declared as that of the current locale (see \code{\link{Encoding}} if
-  the corresponding input had a declared encoding and the current locale
-  is either Latin-1 or UTF-8.  (As from \R 2.10.0, when \code{perl = TRUE}
-  all strings in a multibyte locale are translated to UTF-8.)
+  \code{useBytes = FALSE} the result will be normally be in UTF-8.
 
   For \code{regexpr} an integer vector of the same length as \code{text}
   giving the starting position of the first match, or \eqn{-1} if there
   is none, with attribute \code{"match.length"} giving the length of the
   matched text (or \eqn{-1} for no match).  In a multi-byte locale these
   quantities are in characters rather than bytes unless
-  \code{useBytes = TRUE} is used with \code{fixed = TRUE} or
-  \code{perl = TRUE}.
+  \code{useBytes = TRUE} is used.
 
   For \code{gregexpr} a list of the same length as \code{text} each
   element of which is an integer vector as in \code{regexpr}, except
@@ -152,9 +146,9 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   characters or more): the code used when \code{perl = TRUE} seems much
   faster and more reliable for such usages.
 
-  The standard version of \code{gsub} does not substitute correctly
-  repeated word-boundaries (e.g. \code{pattern = "\\b"}).
-  Use \code{perl = TRUE} for such matches.
+  The standard version of \code{gsub} and \code{gregexpr} does not work
+  correctly repeated word-boundaries (e.g. \code{pattern = "\\b"}).  Use
+  \code{perl = TRUE} for such matches.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
