@@ -42,70 +42,12 @@
  * The functions are loosely patterned on the "sub" and "gsub" in "nawk". */
 
 /* FIXME: use UCP for upper/lower conversion */
-static int length_adj(const char *orig, const char *repl, int *ovec,
-		      int nsubexpr, Rboolean useBytes, int ienc)
-{
-    int k, n, nb;
-    const char *p = repl;
-    Rboolean upper = FALSE, lower = FALSE;
-
-    n = strlen(repl) - (ovec[1] - ovec[0]);
-    while (*p) {
-	if (*p == '\\') {
-	    if ('1' <= p[1] && p[1] <= '9') {
-		k = p[1] - '0';
-		if (k > nsubexpr)
-		    error(_("invalid backreference %d in regular expression"), k);
-		nb = ovec[2*k+1] - ovec[2*k];
-		/* assume for now that in UTF-8 upper/lower pairs are same len */
-		if (nb > 0 && !useBytes && ienc != CE_UTF8 &&
-		    mbcslocale && (upper || lower)) {
-		    wctrans_t tr = wctrans(upper ? "toupper" : "tolower");
-		    int j, nc;
-		    char *xi, *p;
-		    wchar_t *wc;
-		    p = xi = (char *) alloca((nb+1)*sizeof(char));
-		    R_CheckStack();
-		    for (j = 0; j < nb; j++) *p++ = orig[ovec[2*k]+j];
-		    *p = '\0';
-		    nc = mbstowcs(NULL, xi, 0);
-		    if (nc >= 0) {
-			wc = (wchar_t *) alloca((nc+1)*sizeof(wchar_t));
-			R_CheckStack();
-			mbstowcs(wc, xi, nc + 1);
-			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
-			nb = wcstombs(NULL, wc, 0);
-		    }
-		}
-		n += nb - 2;
-		p++;
-	    } else if (p[1] == 'U') {
-		p++; n -= 2;
-		upper = TRUE; lower = FALSE;
-	    } else if (p[1] == 'L') {
-		p++; n -= 2;
-		upper = FALSE; lower = TRUE;
-	    } else if (p[1] == 'E') { /* end case modification */
-		p++; n -= 2;
-		upper = FALSE; lower = FALSE;
-	    } else if (p[1] == 0) {
-		/* can't escape the final '\0' */
-		n--;
-	    } else {
-		n--;
-		p++;
-	    }
-	}
-	p++;
-    }
-    return n;
-}
-
 static char *string_adj(char *target, const char *orig, const char *repl,
-			int *ovec, Rboolean useBytes, int ienc)
+			int *ovec, int ienc)
 {
     int i, k, nb;
-    const char *p = repl; char *t = target, c;
+    const char *p = repl; 
+    char *t = target, c;
     Rboolean upper = FALSE, lower = FALSE;
 
     while (*p) {
@@ -114,7 +56,7 @@ static char *string_adj(char *target, const char *orig, const char *repl,
 		k = p[1] - '0';
 		/* Here we need to work in chars */
 		nb = ovec[2*k+1] - ovec[2*k];
-		if (nb > 0 && !useBytes && ienc == CE_UTF8 && (upper || lower)) {
+		if (nb > 0 && ienc == CE_UTF8 && (upper || lower)) {
 		    wctrans_t tr = wctrans(upper ? "toupper" : "tolower");
 		    int j, nc;
 		    char *xi, *p;
@@ -131,25 +73,6 @@ static char *string_adj(char *target, const char *orig, const char *repl,
 			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
 			nb = wcstoutf8(NULL, wc, 0);
 			wcstoutf8(xi, wc, nb + 1);
-			for (j = 0; j < nb; j++) *t++ = *xi++;
-		    }
-		} else if (nb > 0 && !useBytes && mbcslocale && (upper || lower)) {
-		    wctrans_t tr = wctrans(upper ? "toupper" : "tolower");
-		    int j, nc;
-		    char *xi, *p;
-		    wchar_t *wc;
-		    p = xi = (char *) alloca((nb+1)*sizeof(char));
-		    R_CheckStack();
-		    for (j = 0; j < nb; j++) *p++ = orig[ovec[2*k]+j];
-		    *p = '\0';
-		    nc = mbstowcs(NULL, xi, 0);
-		    if (nc >= 0) {
-			wc = (wchar_t *) alloca((nc+1)*sizeof(wchar_t));
-			R_CheckStack();
-			mbstowcs(wc, xi, nc + 1);
-			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
-			nb = wcstombs(NULL, wc, 0);
-			wcstombs(xi, wc, nb + 1);
 			for (j = 0; j < nb; j++) *t++ = *xi++;
 		    }
 		} else
@@ -179,30 +102,53 @@ static char *string_adj(char *target, const char *orig, const char *repl,
 }
 
 SEXP attribute_hidden
-do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
+do_pgsub(SEXP pat, SEXP rep, SEXP text, int global,
+	 int igcase_opt, int useBytes)
 {
     SEXP ans;
     int i, j, n, ns, nns, nmatch, offset, re_nsub, ienc;
-    int erroffset, eflag, last_end;
-    int options = 0;
+    int erroffset, eflag, last_end, replen;
+    int cflags = 0;
     const char *spat, *srep, *s, *t;
-    char *u, *cbuf;
+    char *u, *cbuf, *tmp;
     const char *errorptr;
     pcre *re_pcre;
-    pcre_extra *re_pe  =NULL;
+    pcre_extra *re_pe  = NULL;
     const unsigned char *tables;
     Rboolean use_UTF8 = FALSE;
 
-    if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
-    if (getCharCE(STRING_ELT(rep, 0)) == CE_UTF8) use_UTF8 = TRUE;
-    n = LENGTH(vec);
-    for (i = 0; i < n; i++)
-	if (getCharCE(STRING_ELT(vec, 0)) == CE_UTF8) use_UTF8 = TRUE;
+    n = LENGTH(text);
+    if (!useBytes) {
+	Rboolean onlyASCII = strIsASCII(CHAR(STRING_ELT(pat, 0)));
+	if (onlyASCII)
+	    for (i = 0; i < n; i++)
+		if (!strIsASCII(CHAR(STRING_ELT(text, i)))) {
+		    onlyASCII = FALSE;
+		    break;
+		}
+	useBytes = onlyASCII;
+    }
+    if (!useBytes) {
+	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales */
+	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	if(!use_UTF8)
+	    for (i = 0; i < n; i++)
+		if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
+		    use_UTF8 = TRUE;
+		    break;
+		}
+    }
+
+    if (igcase_opt) cflags |= PCRE_CASELESS;
+    if (!useBytes) {
+	if (mbcslocale) use_UTF8 = TRUE;
+	if (use_UTF8) cflags |= PCRE_UTF8;
+    }
 
     if (useBytes) {
 	spat = CHAR(STRING_ELT(pat, 0));
 	srep = CHAR(STRING_ELT(rep, 0));
-	ienc = CE_NATIVE;	
+	ienc = CE_NATIVE;
     } else if (use_UTF8) {
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
 	srep = translateCharUTF8(STRING_ELT(rep, 0));
@@ -212,26 +158,12 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 	srep = translateChar(STRING_ELT(rep, 0));
 	ienc = CE_NATIVE;
     }
+    replen = strlen(srep);
 
-    if (useBytes) ;
-    else {
-	if (mbcslocale && !utf8locale) use_UTF8 = TRUE;
-	if (utf8locale || use_UTF8) options |= PCRE_UTF8;
-    }
-    if (!useBytes && mbcslocale && !mbcsValid(spat))
-	error(_("'pattern' is invalid in this locale"));
-    if (!useBytes && mbcslocale && !mbcsValid(srep))
-	error(_("'replacement' is invalid in this locale"));
-
-
-    if (igcase_opt) {
-	options |= PCRE_CASELESS;
-	if (useBytes && utf8locale && !strIsASCII(spat))
-	    warning(_("ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n  in UTF-8 locales only works caselessly for 7-bit patterns"));
-    }
+    if (igcase_opt) cflags |= PCRE_CASELESS;
 
     tables = pcre_maketables();
-    re_pcre = pcre_compile(spat, options, &errorptr, &erroffset, tables);
+    re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
     if (!re_pcre) {
 	if (errorptr)
 	    warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
@@ -248,130 +180,94 @@ do_pgsub(SEXP pat, SEXP rep, SEXP vec, int global, int igcase_opt, int useBytes)
 
     for (i = 0 ; i < n ; i++) {
 	int ovector[30];
-	offset = 0;
-	nmatch = 0;
 
 	if (useBytes)
-	    s = CHAR(STRING_ELT(vec, i));
+	    s = CHAR(STRING_ELT(text, i));
 	else if (use_UTF8)
-	    s = translateCharUTF8(STRING_ELT(vec, i));
+	    s = translateCharUTF8(STRING_ELT(text, i));
 	else
-	    s = translateChar(STRING_ELT(vec, i));
-
-	t = srep;
-	nns = ns = strlen(s);
+	    s = translateChar(STRING_ELT(text, i));
 
 	if (!useBytes && mbcslocale && !mbcsValid(s))
 	    error(_("input string %d is invalid in this locale"), i+1);
+
 	/* Looks like PCRE_NOTBOL is not needed in this version,
 	   but leave in as a precaution */
-	eflag = 0; last_end = -1;
-	while (pcre_exec(re_pcre, re_pe, s, nns, offset, eflag,
+
+	if (useBytes)
+	    s = CHAR(STRING_ELT(text, i));
+	else if (use_UTF8)
+	    s = translateCharUTF8(STRING_ELT(text, i));
+	else
+	    s = translateChar(STRING_ELT(text, i));
+	t = srep;
+	ns = strlen(s);
+	/* worst possible scenario is to put a copy of the
+	   replacement after every character */
+	nns = ns * (strlen(srep) + 1) + 1000;
+	if (nns > 10000) nns = 2*ns;
+	u = cbuf = Calloc(nns, char);
+	offset = 0; nmatch = 0; eflag = 0; last_end = -1;
+	while (pcre_exec(re_pcre, re_pe, s, ns, offset, eflag,
 			 ovector, 30) >= 0) {
-	    nmatch += 1;
-	    /* Do not repeat a 0-length match after a match, so
-	       gsub("a*", "x", "baaac") is "xbxcx" not "xbxxcx" */
+	    /* printf("%s, %d, %d %d\n", s, offset,
+	       ovector[0], ovector[1]); */
+	    nmatch++;
+	    for (j = offset; j < ovector[0]; j++) *u++ = s[j];
 	    if (ovector[1] > last_end) {
-		ns += length_adj(s, t, ovector, re_nsub, useBytes, ienc);
+		u = string_adj(u, s, t, ovector, ienc);
 		last_end = ovector[1];
 	    }
 	    offset = ovector[1];
 	    if (s[offset] == '\0' || !global) break;
-	    /* If we have a 0-length match, move on a char */
 	    if (ovector[1] == ovector[0]) {
-		if (!useBytes && ienc == CE_UTF8) {
+		/* advance by a char */
+		if (ienc == CE_UTF8) {
 		    int used, pos = 0;
 		    while( (used = utf8clen(s[pos])) ) {
 			pos += used;
 			if (pos > offset) {
-			    offset = pos;
-			    break;
-			}
-		    }
-		} else if (!useBytes && mbcslocale) {
-		    wchar_t wc; int used, pos = 0; mbstate_t mb_st;
-		    mbs_init(&mb_st);
-		    while( (used = Mbrtowc(&wc, s+pos, MB_CUR_MAX, &mb_st)) ) {
-			pos += used;
-			if (pos > offset) {
+			    for (j = offset; j < pos; j++) *u++ = s[j];
 			    offset = pos;
 			    break;
 			}
 		    }
 		} else
-		    offset++;
+		    *u++ = s[offset++];
+	    }
+	    if (nns < (u - cbuf) + (ns-offset) + replen + 1000) {
+		nns *= 2;
+		tmp = Realloc(cbuf, nns, char);
+		u = tmp + (u - cbuf);
+		cbuf = tmp;
 	    }
 	    eflag = PCRE_NOTBOL;
 	}
 	if (nmatch == 0)
-	    SET_STRING_ELT(ans, i, STRING_ELT(vec, i));
+	    SET_STRING_ELT(ans, i, STRING_ELT(text, i));
 	else {
-	    offset = 0;
-	    if (useBytes)
-		s = CHAR(STRING_ELT(vec, i));
-	    else if (use_UTF8)
-		s = translateCharUTF8(STRING_ELT(vec, i));
-	    else
-		s = translateChar(STRING_ELT(vec, i));
-	    t = srep;
-	    cbuf = u = CallocCharBuf(ns);
-	    eflag = 0; last_end = -1;
-	    while (pcre_exec(re_pcre, re_pe, s, nns, offset, eflag,
-			     ovector, 30) >= 0) {
-		/* printf("%s, %d, %d %d\n", s, offset,
-		   ovector[0], ovector[1]); */
-		for (j = offset; j < ovector[0]; j++) *u++ = s[j];
-		if (ovector[1] > last_end) {
-		    u = string_adj(u, s, t, ovector, useBytes, ienc);
-		    last_end = ovector[1];
-		}
-		offset = ovector[1];
-		if (s[offset] == '\0' || !global) break;
-		if (ovector[1] == ovector[0]) {
-		    /* advance by a char */
-		    if (!useBytes && ienc == CE_UTF8) {
-			int used, pos = 0;
-			while( (used = utf8clen(s[pos])) ) {
-			    pos += used;
-			    if (pos > offset) {
-				for (j = offset; j < pos; j++) *u++ = s[j];
-				offset = pos;
-				break;
-			    }
-			}
-		    } else if (!useBytes && mbcslocale) {
-			wchar_t wc; int used, pos = 0; mbstate_t mb_st;
-			mbs_init(&mb_st);
-			while( (used = Mbrtowc(&wc, s+pos, MB_CUR_MAX, &mb_st)) ) {
-			    pos += used;
-			    if (pos > offset) {
-				for (j = offset; j < pos; j++) *u++ = s[j];
-				offset = pos;
-				break;
-			    }
-			}
-		    } else
-			*u++ = s[offset++];
-		}
-
-		eflag = PCRE_NOTBOL;
+	    /* copy the tail */
+	    if (nns < (u - cbuf) + (ns-offset)+1) {
+		nns *= 2;
+		tmp = Realloc(cbuf, nns, char);
+		u = tmp + (u - cbuf);
+		cbuf = tmp;
 	    }
-	    for (j = offset ; s[j] ; j++)
-		*u++ = s[j];
+	    for (j = offset ; s[j] ; j++) *u++ = s[j];
 	    *u = '\0';
 	    if (useBytes)
 		SET_STRING_ELT(ans, i, mkChar(cbuf));
-	    else if (use_UTF8) {
+	    else if (use_UTF8)
 		SET_STRING_ELT(ans, i, mkCharCE(cbuf, CE_UTF8));
-	    } else
-		SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(vec, i)));
-	    Free(cbuf);
-	}
+	    else
+		SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(text, i)));
+	}	
+	Free(cbuf);
     }
     if (re_pe) pcre_free(re_pe);
     pcre_free(re_pcre);
     pcre_free((void *)tables);
-    DUPLICATE_ATTRIB(ans, vec);
+    DUPLICATE_ATTRIB(ans, text);
     UNPROTECT(1);
     return ans;
 }
@@ -386,7 +282,7 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
     SEXP matchbuf, matchlenbuf;
     int bufsize = 1024;
     int i, n, st, erroffset, ienc;
-    int options = 0;
+    int cflags = 0;
     const char *spat, *errorptr;
     pcre *re_pcre;
     pcre_extra *re_pe = NULL;
@@ -399,14 +295,35 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 
     n = LENGTH(text);
     if (!useBytes) {
+	Rboolean onlyASCII = strIsASCII(CHAR(STRING_ELT(pat, 0)));
+	if (onlyASCII)
+	    for (i = 0; i < n; i++)
+		if (!strIsASCII(CHAR(STRING_ELT(text, i)))) {
+		    onlyASCII = FALSE;
+		    break;
+		}
+	useBytes = onlyASCII;
+    }
+    if (!useBytes && !mbcslocale) {
+	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales */
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
-	for (i = 0; i < n; i++)
-	    if (getCharCE(STRING_ELT(text, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	if(!use_UTF8)
+	    for (i = 0; i < n; i++)
+		if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
+		    use_UTF8 = TRUE;
+		    break;
+		}
+    }
+
+    if (igcase_opt) cflags |= PCRE_CASELESS;
+    if (!useBytes) {
+	if (mbcslocale) use_UTF8 = TRUE;
+	if (use_UTF8) cflags |= PCRE_UTF8;
     }
 
     if (useBytes) {
 	spat = CHAR(STRING_ELT(pat, 0));
-	ienc = CE_NATIVE;	
+	ienc = CE_NATIVE;
     } else if (use_UTF8) {
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
 	ienc = CE_UTF8;
@@ -415,21 +332,11 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 	ienc = CE_NATIVE;
     }
 
-    if (useBytes) ;
-    else {
-	if (mbcslocale && !utf8locale) use_UTF8 = TRUE;
-	if (utf8locale || use_UTF8) options = PCRE_UTF8;
-    }
-    if (igcase_opt) {
-	options |= PCRE_CASELESS;
-	if (useBytes && utf8locale && !strIsASCII(spat))
-	    warning(_("ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n  in UTF-8 locales only works caselessly for 7-bit patterns"));
-    }
     if (!useBytes && mbcslocale && !mbcsValid(spat))
 	error(_("regular expression is invalid in this locale"));
 
     tables = pcre_maketables();
-    re_pcre = pcre_compile(spat, options, &errorptr, &erroffset, tables);
+    re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
     if (!re_pcre) {
 	if (errorptr)
 	    warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
@@ -509,7 +416,7 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 		    start = ovector[0] + 1;
 		else
 		    start = ovector[1];
-		if (!useBytes && ienc == CE_UTF8) {
+		if (use_UTF8) {
 		    int mlen = ovector[1] - st;
 		    /* Unfortunately these are in bytes, so we need to
 		       use chars instead */
@@ -526,27 +433,6 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 		    memcpy(cbuff.data, s+st, mlen);
 		    cbuff.data[mlen] = '\0';
 		    INTEGER(matchlenbuf)[matchIndex] = utf8towcs(NULL, cbuff.data, 0);
-		    if (INTEGER(matchlenbuf)[matchIndex] < 0) {/* an invalid string */
-			INTEGER(matchlenbuf)[matchIndex] = NA_INTEGER;
-			foundAll = 1;
-		    }
-		} else if (!useBytes && mbcslocale) {
-		    int mlen = ovector[1] - st;
-		    /* Unfortunately these are in bytes, so we need to
-		       use chars instead */
-		    R_AllocStringBuffer(imax2(st, mlen+1), &cbuff);
-		    if (st > 0) {
-			memcpy(cbuff.data, s, st);
-			cbuff.data[st] = '\0';
-			INTEGER(matchbuf)[matchIndex] = 1 + mbstowcs(NULL, cbuff.data, 0);
-			if (INTEGER(matchbuf)[matchIndex] <= 0) { /* an invalid string */
-			    INTEGER(matchbuf)[matchIndex] = NA_INTEGER;
-			    foundAll = 1; /* if we get here, we are done */
-			}
-		    }
-		    memcpy(cbuff.data, s+st, mlen);
-		    cbuff.data[mlen] = '\0';
-		    INTEGER(matchlenbuf)[matchIndex] = mbstowcs(NULL, cbuff.data, 0);
 		    if (INTEGER(matchlenbuf)[matchIndex] < 0) {/* an invalid string */
 			INTEGER(matchlenbuf)[matchIndex] = NA_INTEGER;
 			foundAll = 1;
