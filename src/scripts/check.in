@@ -1971,8 +1971,27 @@ sub check_pkg {
 	} else {
 	    $log->result("OK");
 	}
-    }
 
+	$log->checking("Rd metadata");
+	my $Rcmd = "options(warn=1)\n";
+	if($opt_install) {
+	    $Rcmd .= "tools:::.check_Rd_metadata(package = \"${pkgname}\")\n";
+	}
+	else {
+	    $Rcmd .= "tools:::.check_Rd_metadata(dir = \"${pkgdir}\")\n";
+	}
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n");
+	}
+	else {
+	    $log->result("OK");
+	}
+    }
+	    
     ## Check cross-references in R documentation files.
 
     ## <NOTE>

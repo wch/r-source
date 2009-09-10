@@ -4280,6 +4280,88 @@ function(x, ...)
     invisible(x)
 }
 
+### * .check_Rd_metadata
+
+.check_Rd_metadata <-
+function(package, dir, lib.loc = NULL)
+{
+    ## Perform package-level Rd metadata checks:
+    ## names and aliases must be unique within a package.
+
+    ## Note that we cannot use Rd_aliases(), as this does
+    ##   if(length(aliases))
+    ##       sort(unique(unlist(aliases, use.names = FALSE)))
+
+    out <- structure(list(), class = "check_Rd_metadata")
+
+    if(!missing(package)) {
+        if(length(package) != 1L)
+            stop("argument 'package' must be of length 1")
+        dir <- .find.package(package, lib.loc)
+        rds <- file.path(dir, "Meta", "Rd.rds")
+        if(file_test("-f", rds)) {
+            meta <- .readRDS(rds)
+            files <- meta$File
+            names <- meta$Name
+            aliases <- meta$Aliases
+        } else {
+            return(out)
+        }
+    } else {
+        if(file_test("-d", file.path(dir, "man"))) {
+            db <- Rd_db(dir = dir)
+            files <- basename(names(db))
+            names <- sapply(db, .Rd_get_metadata, "name")
+            aliases <- lapply(db, .Rd_get_metadata, "alias")
+        } else {
+            return(out)
+        }
+    }
+
+    files_grouped_by_names <- split(files, names)
+    files_with_duplicated_names <-
+        files_grouped_by_names[sapply(files_grouped_by_names,
+                                      length) > 1L]
+    if(length(files_with_duplicated_names))
+        out$files_with_duplicated_names <-
+            files_with_duplicated_names
+
+    files_grouped_by_aliases <-
+        split(rep.int(files, sapply(aliases, length)),
+              unlist(aliases, use.names = FALSE))
+    files_with_duplicated_aliases <-
+        files_grouped_by_aliases[sapply(files_grouped_by_aliases,
+                                      length) > 1L]
+    if(length(files_with_duplicated_aliases))
+        out$files_with_duplicated_aliases <-
+            files_with_duplicated_aliases
+    
+    out
+}
+
+print.check_Rd_metadata <-
+function(x, ...)
+{
+    if(length(x$files_with_duplicated_name)) {
+        bad <- x$files_with_duplicated_name
+        for(nm in names(bad)) {
+            writeLines(gettextf("Rd files with duplicated name '%s':", nm))
+            .pretty_print(bad[[nm]])
+        }
+    }
+    
+    if(length(x$files_with_duplicated_aliases)) {
+        bad <- x$files_with_duplicated_aliases
+        for(nm in names(bad)) {
+            writeLines(gettextf("Rd files with duplicated alias '%s':", nm))
+            .pretty_print(bad[[nm]])
+        }
+    }
+
+    invisible(x)
+}
+
+
 ### * .find_charset
 
 .find_charset <-
