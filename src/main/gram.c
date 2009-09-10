@@ -241,7 +241,7 @@ static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP	NextArg(SEXP, SEXP, SEXP);
 static SEXP	TagArg(SEXP, SEXP, YYLTYPE *);
-static int 	processLineDirective(int);
+static int 	processLineDirective();
 
 /* These routines allocate constants */
 
@@ -3954,18 +3954,19 @@ static int SkipSpace(void)
 
 static int SkipComment(void)
 {
-    DECLARE_YYTEXT_BUFP(yyp);
-    int c;
-    c = xxgetc();
-    if (xxcolno == 2) { /* #line directive starts in column 1, we've just read another char */
-	YYTEXT_PUSH('#', yyp);
-	while (isalpha(c)) {
-	    YYTEXT_PUSH(c, yyp);
-	    c = xxgetc();
-	}
-	if (!strncmp(yytext, "#line", yyp - yytext)) {
-	    c = processLineDirective(c);
-	}
+    int c='#', i;
+    Rboolean maybeLine = (xxcolno == 1);
+    if (maybeLine) {
+    	char lineDirective[] = "#line";
+    	for (i=1; i<5; i++) {
+    	    c = xxgetc();
+  	    if (c != (int)(lineDirective[i])) {
+  	    	maybeLine = FALSE;
+  	    	break;
+  	    }
+  	}
+  	if (maybeLine)     
+	    c = processLineDirective();
     }
     while (c != '\n' && c != R_EOF) 
 	c = xxgetc();
@@ -4562,10 +4563,9 @@ static void setParseFilename(SEXP newname) {
     UNPROTECT_PTR(newname);
 }
 
-static int processLineDirective(int c)
+static int processLineDirective()
 {
-    int tok, linenumber;
-    xxungetc(c);
+    int c, tok, linenumber;
     c = SkipSpace();
     if (!isdigit(c)) return(c);
     tok = NumericValue(c);
@@ -5007,5 +5007,4 @@ static int yylex(void)
     setlastloc();
     return tok;
 }
-
 
