@@ -4151,6 +4151,7 @@ within the @R{} system.
 * Comments::                    
 * Tokens::                      
 * Expressions::                 
+* Directives::                  
 @end menu
 
 @node The parsing process, Comments, Parser, Parser
@@ -4526,7 +4527,7 @@ may be done using the @samp{$} operator.
 
 @c ------end of  @section Tokens ------------
 
-@node Expressions,  Directives, Tokens, Parser
+@node Expressions, Directives, Tokens, Parser
 @section Expressions
 
 An @R{} program consists of a sequence of @R{} expressions.  An
@@ -4758,7 +4759,7 @@ the @var{body}.  The @var{arglist} is stored as a tagged pairlist where
 the tags are the argument names and the values are the default
 expressions.
 
-@node Directives, , Expressions, Parser
+@node Directives,  , Expressions, Parser
 @section Directives
 
 @cindex #line
