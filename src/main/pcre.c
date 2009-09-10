@@ -202,10 +202,12 @@ do_pgsub(SEXP pat, SEXP rep, SEXP text, int global,
 	    s = translateChar(STRING_ELT(text, i));
 	t = srep;
 	ns = strlen(s);
-	/* worst possible scenario is to put a copy of the
-	   replacement after every character */
-	nns = ns * (replen + 1) + 1000;
-	if (nns > 10000) nns = 2*ns;
+	if (global) {
+	    /* worst possible scenario is to put a copy of the
+	       replacement after every character */
+	    nns = ns * (replen + 1) + 1000;
+	    if (nns > 10000) nns = 2*ns + replen + 1000;
+	} else nns = ns + replen + 1;
 	u = cbuf = Calloc(nns, char);
 	offset = 0; nmatch = 0; eflag = 0; last_end = -1;
 	while (pcre_exec(re_pcre, re_pe, s, ns, offset, eflag,
