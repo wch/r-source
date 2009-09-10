@@ -9,7 +9,7 @@ print(4+5)
 
 ## generate some files to source
 
-z <- c("#line 1", "2+3", "ls()", "pi", "# last line")
+z <- c("# line 1", "2+3", "ls()", "pi", "# last line")
 
 ## ========  LF file
 cat(z, file="testIO.R", sep="\n")

@@ -4526,7 +4526,7 @@ may be done using the @samp{$} operator.
 
 @c ------end of  @section Tokens ------------
 
-@node Expressions,  , Tokens, Parser
+@node Expressions,  Directives, Tokens, Parser
 @section Expressions
 
 An @R{} program consists of a sequence of @R{} expressions.  An
@@ -4757,6 +4757,34 @@ function name @code{function} and two arguments, the @var{arglist} and
 the @var{body}.  The @var{arglist} is stored as a tagged pairlist where
 the tags are the argument names and the values are the default
 expressions.
+
+@node Directives, , Expressions, Parser
+@section Directives
+
+@cindex #line
+
+The parser currently only supports one directive, @code{#line}.  
+This is similar to the C-preprocessor directive of the same name.  The
+syntax is
+
+@example
+@var{#line} @var{nn} [ @code{"filename"} ]
+@end example
+
+where @var{nn} is an integer line number, and the optional @var{filename} 
+(in required double quotes) names the source file.
+
+Unlike the C directive, @code{#line} must appear as the first five characters
+on a line.  As in C, @var{nn} and @code{"filename"} entries may be separated
+from it by whitespace.  And unlike C, any following text on the line will be
+treated as a comment and ignored.
+
+This directive tells the parser that the following line should be assumed to 
+be line @var{nn} of file @var{filename}.  (If the filename is not given,
+it is assumed to be the same as for the previous directive.)  This is not
+typically used by users, but may be used by preprocessors so that
+diagnostic messages refer to the original file.
+
 
 @c -- We can probably lose this given the brevity of the section
 @c  @node Summary ,  , Syntactic elements, Parser

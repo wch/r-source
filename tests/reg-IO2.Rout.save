@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-07-26 r48999)
+R version 2.10.0 Under development (unstable) (2009-09-09 r49643)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -154,7 +154,7 @@ logical(0)
 > cat("# a test file",
 +     "# line 2",
 +     "# line 3",
-+     "#line 4",
++     "# line 4",
 +     "# line 5",
 +     "## now the header",
 +     " a b c",

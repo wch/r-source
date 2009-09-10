@@ -48,12 +48,18 @@ open.srcfile <- function(con, line, ...) {
 
     conn <- srcfile$conn
     if (is.null(conn)) {
-	olddir <- setwd(srcfile$wd)
-	on.exit(setwd(olddir))
+        if (!is.null(srcfile$wd)) {
+	    olddir <- setwd(srcfile$wd)
+	    on.exit(setwd(olddir))
+	}
 	timestamp <- file.info(srcfile$filename)[1,"mtime"]
-	if (!is.na(srcfile$timestamp) && ( is.na(timestamp) || timestamp != srcfile$timestamp) )
+	if (!is.null(srcfile$timestamp) 
+	    && !is.na(srcfile$timestamp) 
+	    && ( is.na(timestamp) || timestamp != srcfile$timestamp) )
 	    warning("Timestamp of '",srcfile$filename,"' has changed", call.=FALSE)
-	srcfile$conn <- conn <- file(srcfile$filename, open="rt", encoding=srcfile$encoding)
+	if (is.null(srcfile$encoding)) encoding <- getOption("encoding")
+	else encoding <- srcfile$encoding
+	srcfile$conn <- conn <- file(srcfile$filename, open="rt", encoding=encoding)
 	srcfile$line <- 1L
 	oldline <- 1L
     } else if (!isOpen(conn)) {
@@ -143,6 +149,7 @@ srcref <- function(srcfile, lloc) {
 as.character.srcref <- function(x, useSource = TRUE, ...)
 {
     srcfile <- attr(x, "srcfile")
+    if (!is.null(srcfile) && !inherits(srcfile, "srcfile")) class(srcfile) <- "srcfile"
     if (useSource) lines <- try(getSrcLines(srcfile, x[1L], x[3L]), TRUE)
     if (!useSource || inherits(lines, "try-error"))
     	lines <- paste("<srcref: file \"", srcfile$filename, "\" chars ",

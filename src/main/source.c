@@ -137,7 +137,6 @@ void attribute_hidden parseError(SEXP call, int linenum)
 	    break;
 	case 1:
 	    sprintf(buffer, "%d: %n", R_ParseContextLine, &width); 
-	    Rprintf("Context is '%s'", CHAR(STRING_ELT(context,0)));
 	    error(_("%s%d:%d: %s\n%d: %s\n%*s"),
 		  filename, linenum, R_ParseErrorCol, R_ParseErrorMsg,
 		  R_ParseContextLine, CHAR(STRING_ELT(context, 0)), 

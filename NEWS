@@ -302,6 +302,14 @@ NEW FEATURES
 
 	[Currently experimental, can be deselected by the configure
 	option --without-TRE.]
+	
+    o	The parser now supports C-preprocessor-like #line directives,
+    	so error messages and source references may refer to the original
+    	file rather than an intermediate one.
+    	
+    o	New functions findLineNum() and setBreakpoint() work with the
+	source references to find the location of source lines and set
+	breakpoints (using trace()) at those lines.
 
 
 HELP & Rd FILE CHANGES

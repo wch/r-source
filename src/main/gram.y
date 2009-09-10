@@ -88,6 +88,7 @@ static int	KeywordLookup(const char *);
 static SEXP	NewList(void);
 static SEXP	NextArg(SEXP, SEXP, SEXP);
 static SEXP	TagArg(SEXP, SEXP, YYLTYPE *);
+static int 	processLineDirective(int);
 
 /* These routines allocate constants */
 
@@ -1201,6 +1202,7 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
     if (!isNull(srcfile)) {
 	SrcFile = srcfile;
 	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
+	PROTECT(SrcFile);    /* It may change during the parse */
     }
     else SrcFile = NULL;
 
@@ -1235,6 +1237,7 @@ finish:
 	SET_VECTOR_ELT(rval, n, CAR(t));
     if (SrcFile) {
 	rval = attachSrcrefs(rval, SrcFile);
+	UNPROTECT_PTR(SrcFile);
 	SrcFile = NULL;
     }
     R_PPStackTop = savestack;
@@ -1763,8 +1766,21 @@ static int SkipSpace(void)
 
 static int SkipComment(void)
 {
+    DECLARE_YYTEXT_BUFP(yyp);
     int c;
-    while ((c = xxgetc()) != '\n' && c != R_EOF) ;
+    c = xxgetc();
+    if (xxcolno == 2) { /* #line directive starts in column 1, we've just read another char */
+	YYTEXT_PUSH('#', yyp);
+	while (isalpha(c)) {
+	    YYTEXT_PUSH(c, yyp);
+	    c = xxgetc();
+	}
+	if (!strncmp(yytext, "#line", yyp - yytext)) {
+	    c = processLineDirective(c);
+	}
+    }
+    while (c != '\n' && c != R_EOF) 
+	c = xxgetc();
     if (c == R_EOF) EndOfFile = 2;
     return c;
 }
@@ -2342,6 +2358,39 @@ static int SymbolValue(int c)
     }
     PROTECT(yylval = install(yytext));
     return SYMBOL;
+}
+
+static void setParseFilename(SEXP newname) {
+    if (SrcFile && isEnvironment(SrcFile)) {
+    	SEXP oldname = findVar(install("filename"), SrcFile);
+    	if (isString(oldname) && length(oldname) > 0 &&
+    	    strcmp(CHAR(STRING_ELT(oldname, 0)),
+    	           CHAR(STRING_ELT(newname, 0))) == 0) return;
+    	UNPROTECT_PTR(SrcFile);
+    	PROTECT(SrcFile = NewEnvironment(R_NilValue, R_NilValue, ENCLOS(SrcFile)));
+	defineVar(install("filename"), newname, SrcFile);
+	setAttrib(SrcFile, R_ClassSymbol, mkString("srcfile"));
+    }
+    UNPROTECT_PTR(newname);
+}
+
+static int processLineDirective(int c)
+{
+    int tok, linenumber;
+    xxungetc(c);
+    c = SkipSpace();
+    if (!isdigit(c)) return(c);
+    tok = NumericValue(c);
+    linenumber = atoi(yytext);
+    c = SkipSpace();
+    if (c == '"') 
+	tok = StringValue(c, FALSE);
+    if (tok == STR_CONST) 
+	setParseFilename(yylval);
+    while ((c = xxgetc()) != '\n' && c != R_EOF) /* skip */ ;
+    xxlineno = linenumber;
+    R_ParseContext[R_ParseContextLast] = '\0';  /* Context report shouldn't show the directive */
+    return(c);
 }
 
 /* Split the input stream into tokens. */

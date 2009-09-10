@@ -68,7 +68,7 @@ type.convert(character(0))
 cat("# a test file",
     "# line 2",
     "# line 3",
-    "#line 4",
+    "# line 4",
     "# line 5",
     "## now the header",
     " a b c",
