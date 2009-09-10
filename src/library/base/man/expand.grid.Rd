@@ -29,8 +29,8 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 
   Attribute \code{"out.attrs"} is a list which gives the dimension and
   dimnames for use by \code{\link{predict}} methods.
-  %% currently, from "base R", only predict.loess() makes use of it.
 }
+%% currently, from "base R", only predict.loess() makes use of it.
 \note{
   Character vectors have always been converted to factors: this because
   optional in \R 2.9.1.  Conversion is done with levels in the order

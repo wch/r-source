@@ -148,16 +148,18 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
 
   The standard version of \code{gsub} and \code{gregexpr} does not work
   correctly repeated word-boundaries (e.g. \code{pattern = "\\b"}).  Use
-  \code{perl = TRUE} for such matches.
+  \code{perl = TRUE} for such matches (but that may not works as
+  expected with non-ASCII inputs, as the meaning of \sQuote{word} is
+  system-dependent).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole (\code{grep})
 }
+% the `aka' above is for ESS
 \seealso{
   \link{regular expression} (aka \code{\link{regexp}}) for the details
-% the `aka' above is for ESS (and ?reg....) where a space is problematic
   of the pattern specification.
 
   \code{\link{glob2rx}} to turn wildcard matches into regular expressions.
@@ -179,7 +181,6 @@ i # 2 and 4
 txt[i]
 
 ## Double all 'a' or 'b's;  "\\" must be escaped, i.e., 'doubled'
-%% and escaped even once more in this *.Rd file!
 gsub("([ab])", "\\\\1_\\\\1_", "abc and ABC")
 
 txt <- c("The", "licenses", "for", "most", "software", "are",

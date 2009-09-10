@@ -56,8 +56,8 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   hence the coefficient of variation is
   \eqn{\sqrt{exp(\sigma^2) - 1}}{sqrt(exp(sigma^2) - 1)} which is
     approximately \eqn{\sigma} when that is small (e.g., \eqn{\sigma < 1/2}).
-%% Mode = exp(max(0, mu - sigma^2))
 }
+%% Mode = exp(max(0, mu - sigma^2))
 \note{
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
   is \code{-plnorm(t, r, lower = FALSE, log = TRUE)}.

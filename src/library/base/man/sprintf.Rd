@@ -119,8 +119,6 @@ gettextf(fmt, \dots, domain = NULL)
     \item{\code{0}}{For numbers, pad to the field width with leading zeros.}
     \item{\code{#}}{specifies \dQuote{alternate output} for numbers, its
       action depending on the type:
-      %% This is from Kernighan & Ritchie, p. 243:
-      %% For \code{o}, the first digit will be zero.
       For \code{x} or \code{X}, \code{0x} or \code{0X} will be prefixed
       to a non-zero result.  For \code{e}, \code{e}, \code{f}, \code{g}
       and \code{G}, the output will always have a decimal point; for
@@ -150,6 +148,9 @@ gettextf(fmt, \dots, domain = NULL)
   Field widths and precisions of \code{\%s} conversions are interpreted
   as bytes, not characters, as described in the C standard.
 }
+%% (for #) This is from Kernighan & Ritchie, p. 243:
+%% For \code{o}, the first digit will be zero.
+
 
 \value{
   A character vector of length that of the longest input.  If any

@@ -37,8 +37,8 @@ is.na(x) <- value
   \item{x}{an \R object to be tested.}
   \item{value}{a suitable index vector for use with \code{x}.}
 }
+%% Next par on character NAs taken from R-lang.texi:
 \details{
-  %% Next par on character NAs taken from R-lang.texi:
   The \code{NA} of character type is distinct from the
   string \code{"NA"}.  Programmers who need to specify an explicit
   string \code{NA} should use \code{NA_character_} rather than

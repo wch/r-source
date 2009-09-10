@@ -61,7 +61,6 @@ dmultinom(x, size = NULL, prob, log = FALSE)
   natural at first, the returned matrix is more efficient because of
   columnwise storage.
 }
-%%\author{Martin Maechler}
 \seealso{\code{\link{rbinom}} which is a special case conceptually.
 %% but does not return 2-vectors
 }

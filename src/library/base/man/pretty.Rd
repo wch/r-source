@@ -53,8 +53,6 @@ pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
   \eqn{f =}\code{u5.bias}.
   
   \dots\dots\dots
-%%-- fixme: give even more details
-%%-- fixme: give even more details
 }
 \seealso{
   \code{\link{axTicks}} for the computation of pretty axis tick

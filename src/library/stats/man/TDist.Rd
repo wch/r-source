@@ -75,7 +75,6 @@ rt(n, df, ncp)
   \eqn{\bar{X}}{mX} is the \code{\link{mean}} and \eqn{S} the sample standard
   deviation (\code{\link{sd}}) of \eqn{X_1, X_2, \dots, X_n} which are
   i.i.d. \eqn{{\cal N}(\mu, \sigma^2)}{N(mu, sigma^2)}
-%%        \eqn{       N(\mu, \sigma^2)}{N(mu, sigma^2)}.
   Then \eqn{T} is distributed as non-central \eqn{t} with
   \code{df}\eqn{{} = n-1}
   degrees of freedom and \bold{n}on-\bold{c}entrality \bold{p}arameter

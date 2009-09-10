@@ -48,9 +48,9 @@ beaver2
   \emph{Case Studies in Biometry.}
   New York: John Wiley and Sons.
 }
+%% consider converting times to POSIXct (using 'yday' ?)
 \examples{
 require(graphics)
-%% consider converting times to POSIXct (using 'yday' ?)
 (yl <- range(beaver1$temp, beaver2$temp))
 
 beaver.plot <- function(bdat, ...) {

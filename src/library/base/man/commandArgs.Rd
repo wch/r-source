@@ -35,7 +35,6 @@ commandArgs(trailingOnly = FALSE)
   If \code{trailingOnly = TRUE}, a character vector of those arguments
   (if any) supplied after \code{--args}.
 }
-%\author{DTL}
 \seealso{\code{\link{Startup}}
 #ifdef unix
 \code{\link{BATCH}}

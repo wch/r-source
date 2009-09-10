@@ -33,7 +33,6 @@
 \usage{
 factor(x = character(), levels, labels = levels,
        exclude = NA, ordered = is.ordered(x))
-%       keepUnique = FALSE, digitsLabels = if(keepUnique) 17 else 15)
 
 ordered(x, \dots)
 
@@ -61,16 +60,6 @@ addNA(x, ifany=FALSE)
     will be coerced if necessary.}
   \item{ordered}{logical flag to determine if the levels should be regarded
     as ordered (in the order given).}
-%   \item{keepUnique}{logical, for the case of default levels, indicating
-%     if the \emph{resulting} factor levels correspond exactly to
-%     \code{sort(unique(x))}.}
-%   \item{digitsLabels}{numeric (integer valued), for the case of numeric
-%     (or complex) \code{x}, there are two cases:\cr
-%     1) if \code{levels} are missing and \code{keepUnique} is false,
-%     \code{x} is replaced with \code{signif(x, digitsLabels)}.\cr
-%     2) otherwise, if \code{labels} are numeric (or complex) as well, as by
-%     default, the result levels are built via
-%     \code{\link{sprintf}("\%.*g", digitsLabels, .)}.}
   \item{\dots}{(in \code{ordered(.)}): any of the above, apart from
     \code{ordered} itself.}
   \item{ifany}{(in \code{addNA}): Only add an \code{NA} level if it is
@@ -123,20 +112,6 @@ addNA(x, ifany=FALSE)
   which case the levels are that character string with a sequence
   number appended.
 
-%   If \code{factor(x)} or \code{as.factor(x)} is applied to a numeric
-%   or complex vector \code{x}, the levels and/or labels are not specified (aka
-%   \code{\link{missing}}), \code{keepUnique} will determine what happens:
-
-%   If it is false (as by default), similar \code{x} values are lumped
-%   together via \code{\link{signif}(x, digitsLabels)} \emph{before}
-%   levels construction and matching.  This avoids both duplicate
-%   (character) result levels and accidental differentiation of numbers
-%   differing only because of rounding error, e.g., \code{0.1 + 0.2 != 0.3}.
-%   \cr
-%   When \code{keepUnique} is true (and \code{digitsLabels} at least 17),
-%   it is ensured that \dQuote{uniqueness  is preserved}, i.e.,
-%   differing \code{x} values will correspond to differing result levels.
-
   \code{factor(x, exclude=NULL)} applied to a factor is a no-operation
   unless there are unused levels: in that case, a factor with the
   reduced level set is returned.  If \code{exclude} is used it should
@@ -171,11 +146,12 @@ addNA(x, ifany=FALSE)
   may well depend on the locale at the time of creation, and should
   not be assumed to be ASCII.
 
-%% Is this still true, after Ops.factor (==, !=) is fixed ?
   There are some anomalies associated with factors that have
   \code{NA} as a level.  It is suggested to use them sparingly, e.g.,
   only for tabulation purposes.
 }
+%% Is this still true, after Ops.factor (==, !=) is fixed ?
+
 \section{Comparison operators and group generic methods}{
   There are \code{"factor"} and \code{"ordered"} methods for the
   \link{group generic} \code{\link[=S3groupGeneric]{Ops}}, which

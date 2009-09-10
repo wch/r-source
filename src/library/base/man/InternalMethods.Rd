@@ -14,9 +14,9 @@
   methods to be written for.
 }
 
-\details{
   % -------------------- grep -nw DispatchOrEval src/*/*[ch]
   %                         --------------
+\details{
   The following primitive and internal functions are \emph{generic},
   i.e., you can write \code{\link{methods}} for them:
 

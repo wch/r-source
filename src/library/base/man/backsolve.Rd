@@ -19,9 +19,9 @@
    backsolve(r, x, k=ncol(r), upper.tri=TRUE, transpose=FALSE)
 forwardsolve(l, x, k=ncol(l), upper.tri=FALSE, transpose=FALSE)
 }
+% Name 'r' is not really making sense for upper.tri = FALSE
+% Name 'x' is also a  misnomer,  should rather be  'b'. -- is this S ??
 \arguments{
-  % Name 'r' is not really making sense for upper.tri = FALSE
-  % Name 'x' is also a  misnomer,  should rather be  'b'. -- is this S ??
   \item{r,l}{an upper (or lower) triangular matrix giving the
     coefficients for the system to be solved.  Values below (above)
     the diagonal are ignored.}

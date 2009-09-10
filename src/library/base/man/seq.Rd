@@ -95,13 +95,14 @@ seq(length.out= )
   e.g., only \code{to} is specified, or also if only \code{length} or
   only \code{along.with} is specified.  \strong{Note:} this may change
   in the future and programmers should not rely on it.
-  %% well, for numeric from,   seq(from, to)  <==>  from:to
-  %% which will *not* change in returning integer (when from is integer-valued)
-  % MM: to specify all the conditions doesn't seem worth, nor should the
-  % code be changed just for docu.purposes; e.g. str(seq(from=1L, to=8, by=3L))
   
   \code{seq_along} and \code{seq_length} always return an integer vector.
 }
+%% well, for numeric from,   seq(from, to)  <==>  from:to
+%% which will *not* change in returning integer (when from is integer-valued)
+% MM: to specify all the conditions doesn't seem worth, nor should the
+% code be changed just for docu.purposes; e.g. str(seq(from=1L, to=8, by=3L))
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

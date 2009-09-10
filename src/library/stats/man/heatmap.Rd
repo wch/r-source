@@ -91,11 +91,9 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
   dendrogram is reordered according to the supplied values subject to
   the constraints imposed by the dendrogram, by \code{\link{reorder}(dd,
     Rowv)}, in the row case.
-  %%
   If either is missing, as by default, then the ordering of the
   corresponding dendrogram is by the mean value of the rows/columns,
   i.e., in the case of rows, \code{Rowv <- rowMeans(x, na.rm=na.rm)}.
-  %%
   If either is \code{\link{NULL}}, \emph{no reordering} will be done for
   the corresponding side.
 

@@ -46,8 +46,8 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
   \item{n1, n2, \dots}{integers.  See the details for how many are required
     (which depends on \code{rng.kind}).}
 }
+%% source and more detailed references:  ../../../main/RNG.c
 \details{
-  %% source and more detailed references:  ../../../main/RNG.c
   The currently available RNG kinds are given below.  \code{kind} is
   partially matched to this list.  The default is
   \code{"Mersenne-Twister"}.
