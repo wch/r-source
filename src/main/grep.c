@@ -139,7 +139,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     tlen = LENGTH(tok);
 
     /* treat split = NULL as split = "" */
-    if (!tlen) { tlen = 1; tok = CADR(args0) = mkString(""); }
+    if (!tlen) { tlen = 1; SETCADR(args0, tok = mkString("")); }
 
     if (!useBytes) {
 	for (i = 0; i < tlen; i++)
