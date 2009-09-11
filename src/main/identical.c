@@ -41,16 +41,26 @@ static Rboolean neWithNaN(double x, double y, ne_strictness_type str);
 /* .Internal(identical(..)) */
 SEXP attribute_hidden do_identical(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int num_eq, single_NA, attr_as_set;
-    checkArity(op, args);
+    int num_eq, single_NA, attr_as_set, nargs = length(args);
+    /* avoid problems with earlier version captured in S4 methods */
+    /* checkArity(op, args); */
+    if (nargs != 2 && nargs != 5)
+	error("%d arguments passed to .Internal(%s) which requires %d",
+	      length(args), PRIMNAME(op), PRIMARITY(op));
 
-    num_eq      = asLogical(CADDR(args));
-    single_NA   = asLogical(CADDDR(args));
-    attr_as_set = asLogical(CAD4R(args));
+    if (nargs == 5) {
+	num_eq      = asLogical(CADDR(args));
+	single_NA   = asLogical(CADDDR(args));
+	attr_as_set = asLogical(CAD4R(args));
 
-    if(num_eq      == NA_LOGICAL) error(_("invalid '%s' value"), "num.eq");
-    if(single_NA   == NA_LOGICAL) error(_("invalid '%s' value"), "single.NA");
-    if(attr_as_set == NA_LOGICAL) error(_("invalid '%s' value"), "attrib.as.set");
+	if(num_eq      == NA_LOGICAL) error(_("invalid '%s' value"), "num.eq");
+	if(single_NA   == NA_LOGICAL) error(_("invalid '%s' value"), "single.NA");
+	if(attr_as_set == NA_LOGICAL) error(_("invalid '%s' value"), "attrib.as.set");
+    } else {
+	num_eq      = 1;
+	single_NA   = 1;
+	attr_as_set = 1;
+    }
 
     return ScalarLogical(R_compute_identical(CAR(args), CADR(args),
 					     (Rboolean) num_eq,
