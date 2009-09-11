@@ -4318,6 +4318,12 @@ function(package, dir, lib.loc = NULL)
         }
     }
 
+    ## <FIXME>
+    ## Remove eventually, as .Rd_get_metadata() and hence Rd_info() now
+    ## eliminate duplicated entries ...
+    aliases <- lapply(aliases, unique)
+    ## </FIXME>
+
     files_grouped_by_names <- split(files, names)
     files_with_duplicated_names <-
         files_grouped_by_names[sapply(files_grouped_by_names,

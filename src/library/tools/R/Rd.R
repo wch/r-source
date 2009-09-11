@@ -465,7 +465,7 @@ function(x, kind)
     if(!length(x))
         character()
     else
-        .strip_whitespace(sapply(x, as.character))
+        unique(.strip_whitespace(sapply(x, as.character)))
 }
 
 ### * .Rd_get_section
