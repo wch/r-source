@@ -96,9 +96,9 @@ static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
 SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, tok, x;
+    SEXP args0 = args, ans, tok, x;
     int i, itok, j, len, tlen, ntok;
-    int extended_opt, fixed_opt, perl_opt;
+    int extended_opt, fixed_opt, perl_opt, useBytes;
     char *pt = NULL; wchar_t *wpt = NULL;
     const char *buf, *split = "", *bufp, *laststart, *ebuf = NULL;
     const unsigned char *tables = NULL;
@@ -106,14 +106,16 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean use_UTF8 = FALSE;
 
     checkArity(op, args);
-    x = CAR(args);
-    tok = CADR(args);
-    extended_opt = asLogical(CADDR(args));
-    fixed_opt = asLogical(CADDDR(args));
-    perl_opt = asLogical(CAD4R(args));
+    x = CAR(args); args = CDR(args);
+    tok = CAR(args); args = CDR(args);
+    extended_opt = asLogical(CAR(args)); args = CDR(args);
+    fixed_opt = asLogical(CAR(args)); args = CDR(args);
+    perl_opt = asLogical(CAR(args)); args = CDR(args);
+    useBytes = asLogical(CAR(args));
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
     if (extended_opt == NA_INTEGER) extended_opt = 1;
     if (perl_opt == NA_INTEGER) perl_opt = 0;
+    if (useBytes == NA_INTEGER) useBytes = 0;
     if (fixed_opt && perl_opt) {
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
 	perl_opt = 0;
@@ -137,12 +139,14 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     tlen = LENGTH(tok);
 
     /* treat split = NULL as split = "" */
-    if (!tlen) { tlen = 1; tok = CADR(args) = mkString(""); }
+    if (!tlen) { tlen = 1; tok = CADR(args0) = mkString(""); }
 
-    for (i = 0; i < tlen; i++)
-	if (getCharCE(STRING_ELT(tok, i)) == CE_UTF8) use_UTF8 = TRUE;
-    for (i = 0; i < len; i++)
-	if (getCharCE(STRING_ELT(x, i)) == CE_UTF8) use_UTF8 = TRUE;
+    if (!useBytes) {
+	for (i = 0; i < tlen; i++)
+	    if (getCharCE(STRING_ELT(tok, i)) == CE_UTF8) use_UTF8 = TRUE;
+	for (i = 0; i < len; i++)
+	    if (getCharCE(STRING_ELT(x, i)) == CE_UTF8) use_UTF8 = TRUE;
+    }
     if (use_UTF8 && perl_opt) options = PCRE_UTF8;
 
     /* group by token for efficiency with PCRE/TRE versions */
@@ -161,12 +165,14 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
 		    continue;
 		}
-		if (use_UTF8)
+		if (useBytes)
+		    buf = CHAR(STRING_ELT(x, i));
+		else if (use_UTF8)
 		    buf = translateCharUTF8(STRING_ELT(x, i));
 		else
 		    buf = translateChar(STRING_ELT(x, i));
+		if (!useBytes && (use_UTF8 || mbcslocale) && !strIsASCII(buf)) {
 		/* split into individual characters (not bytes) */
-		if ((use_UTF8 || mbcslocale) && !strIsASCII(buf)) {
 		    char bf[20 /* > MB_CUR_MAX */];
 		    const char *p = buf;
 		    int used;
@@ -195,7 +201,8 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 		    }
 		} else {
-		    /* ASCII, or single-byte locale and not marked as UTF-8 */
+		    /* useBytes or ASCII or 
+		       single-byte locale and not marked as UTF-8 */
 		    char bf[2];
 		    ntok = strlen(buf);
 		    PROTECT(t = allocVector(STRSXP, ntok));
@@ -210,7 +217,9 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	} else if (fixed_opt) {
 	    int slen;
-	    if (use_UTF8)
+	    if (useBytes)
+		split = CHAR(STRING_ELT(tok, itok));
+	    else if (use_UTF8)
 		split = translateCharUTF8(STRING_ELT(tok, itok));
 	    else
 		split = translateChar(STRING_ELT(tok, itok));
@@ -223,7 +232,9 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    continue;
 		}
 
-		if (use_UTF8)
+		if (useBytes)
+		    buf = CHAR(STRING_ELT(x, i));
+		else if (use_UTF8)
 		    buf = translateCharUTF8(STRING_ELT(x, i));
 		else
 		    buf = translateChar(STRING_ELT(x, i));
@@ -278,7 +289,9 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    int erroffset, ovector[30];
 	    const char *errorptr;
 
-	    if (use_UTF8)
+	    if (useBytes)
+		split = CHAR(STRING_ELT(tok, itok));
+	    else if (use_UTF8)
 		split = translateCharUTF8(STRING_ELT(tok, itok));
 	    else
 		split = translateChar(STRING_ELT(tok, itok));
@@ -303,7 +316,9 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    continue;
 		}
 
-		if (use_UTF8)
+		if (useBytes)
+		    buf = CHAR(STRING_ELT(x, i));
+		else if (use_UTF8)
 		    buf = translateCharUTF8(STRING_ELT(x, i));
 		else
 		    buf = translateChar(STRING_ELT(x, i));
@@ -350,7 +365,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    pcre_free(re_pe);
 	    pcre_free(re_pcre);
-	} else if (use_UTF8) { /* basic/extended in wchar_t */
+	} else if (!useBytes && use_UTF8) { /* basic/extended in wchar_t */
 	    regex_t reg;
 	    regmatch_t regmatch[1];
 	    int rc;
@@ -425,7 +440,10 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	       the empty string (not a ``token'' in the strict sense).
 	    */
 	    /* never use_UTF8 */
-	    split = translateChar(STRING_ELT(tok, itok));
+	    if (useBytes)
+		split = CHAR(STRING_ELT(tok, itok));
+	    else
+		split = translateChar(STRING_ELT(tok, itok));
 	    if ((rc = tre_regcomp(&reg, split, cflags)))
 		reg_report(rc, &reg, split);
 
@@ -436,7 +454,10 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    continue;
 		}
 		/* never use_UTF8 */
-		buf = translateChar(STRING_ELT(x, i));
+		if (useBytes)
+		    buf = CHAR(STRING_ELT(x, i));
+		else 
+		    buf = translateChar(STRING_ELT(x, i));
 
 		/* find out how many splits there will be */
 		ntok = 0;

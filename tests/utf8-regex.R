@@ -92,8 +92,7 @@ txt2[ot != sub("[b-e]",".", txt2)]
 (ot <- sub("[b-e]",".", txt2, ignore.case = TRUE, perl = TRUE))
 txt2[ot != sub("[b-e]",".", txt2, ignore.case = TRUE)]
 
-
-if(FALSE) {
+if(inf$`UTF-8`) {
 (r1 <- gsub(pat, "ef", txt))
 stopifnot(identical(r1, gsub(pat, "ef", txt, useBytes = TRUE)))
 stopifnot(identical(r1, gsub(pat, "ef", txt, fixed = TRUE)))
@@ -109,11 +108,11 @@ stopifnot(identical(r1, gsub(pat, "gh", txt, fixed = TRUE, useBytes = TRUE)))
 stopifnot(identical(r1, gsub(pat, "gh", txt, perl = TRUE)))
 stopifnot(identical(r1, gsub(pat, "gh", txt, perl = TRUE, useBytes = TRUE)))
 }
+
 stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"))
 stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"), perl = TRUE)
 stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"), useBytes = TRUE)
 stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"), perl = TRUE, useBytes = TRUE)
-
 
 ## this one seems system-dependent
 (x <- gsub("\\b", "|", "The quick brown \ue8\ue9", perl = TRUE))
@@ -122,3 +121,31 @@ stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"), perl = TRUE, useBytes = 
 stopifnot(identical(x, "|The| |quick| |brown| |fox|"))
 ## The following is warned against in the help page, but worked in some versions
 gsub("\\b", "|", "The quick brown fox")
+
+if(inf$`UTF-8`) {
+(z <- strsplit(txt, pat))
+stopifnot(identical(z, strsplit(txt, pat, useBytes = TRUE)))
+stopifnot(identical(z, strsplit(txt, pat, fixed = TRUE)))
+stopifnot(identical(z, strsplit(txt, pat, fixed = TRUE, useBytes = TRUE)))
+stopifnot(identical(z, strsplit(txt, pat, perl = TRUE)))
+stopifnot(identical(z, strsplit(txt, pat, perl = TRUE, useBytes = TRUE)))
+
+(z <- strsplit(txt, "[a-c]"))
+stopifnot(identical(z, strsplit(txt, "[a-c]", useBytes = TRUE)))
+stopifnot(identical(z, strsplit(txt, "[a-c]", perl = TRUE)))
+stopifnot(identical(z, strsplit(txt, "[a-c]", perl = TRUE, useBytes = TRUE)))
+}
+
+## from strsplit.Rd
+z <- strsplit("A text I want to display with spaces", NULL)[[1]]
+stopifnot(identical(z,
+                    strsplit("A text I want to display with spaces", "")[[1]]))
+
+x <- c(as = "asfef", qu = "qwerty", "yuiop[", "b", "stuff.blah.yech")
+(z <- strsplit(x, "e"))
+stopifnot(identical(z, strsplit(x, "e", useBytes = TRUE)))
+stopifnot(identical(z, strsplit(x, "e", fixed = TRUE)))
+stopifnot(identical(z, strsplit(x, "e", fixed = TRUE, useBytes = TRUE)))
+stopifnot(identical(z, strsplit(x, "e", perl = TRUE)))
+stopifnot(identical(z, strsplit(x, "e", perl = TRUE, useBytes = TRUE)))
+

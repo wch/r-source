@@ -1622,7 +1622,7 @@ tre_parse(tre_parse_ctx_t *ctx)
 
 
 	      /* We are expecting an atom.  If the subexpression (or the whole
-		 regexp ends here, we interpret it as an empty expression
+		 regexp) ends here, we interpret it as an empty expression
 		 (which matches an empty string).  */
 	      if (
 #ifdef REG_LITERAL
@@ -1648,6 +1648,17 @@ tre_parse(tre_parse_ctx_t *ctx)
 		    return REG_ESPACE;
 		  break;
 		}
+
+/* R change */
+	      if ((ctx->cflags & REG_LITERAL) && !ctx->re[0]) {
+		  DPRINT(("tre_parse:	    literal empty: '%.*" STRF "'\n",
+			  REST(ctx->re)));
+		  result = tre_ast_new_literal(ctx->mem, EMPTY, -1, -1);
+		  if (!result)
+		    return REG_ESPACE;
+		  break;
+	      }
+/* end R change */
 
 	      DPRINT(("tre_parse:     literal: '%.*" STRF "'\n",
 		      REST(ctx->re)));

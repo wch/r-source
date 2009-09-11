@@ -1,6 +1,6 @@
 % File src/library/base/man/strsplit.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{strsplit}
@@ -8,10 +8,11 @@
 \title{Split the Elements of a Character Vector}
 \description{
   Split the elements of a character vector \code{x} into substrings
-  according to the presence of substring \code{split} within them.
+  according to the matches to substring \code{split} within them.
 }
 \usage{
-strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
+strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE,
+         useBytes = FALSE)
 }
 \arguments{
   \item{x}{
@@ -40,17 +41,19 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE)
     logical.  Should perl-compatible regexps be used?
     Has priority over \code{extended}.
   }
+  \item{useBytes}{logical.  If \code{TRUE} the matching is done
+    byte-by-byte rather than character-by-character, and inputs with
+    marked encodings are not converted.}
 }
 \value{
   A list of length \code{length(x)} the \code{i}-th element of which
   contains the vector of splits of \code{x[i]}.
 
-  If \code{fixed = TRUE} or \code{perl = TRUE} and if any element of
-  \code{x} or \code{split} is declared to be in UTF-8 (see
-  \code{\link{Encoding}}, non-ASCII character strings in the result will
-  be in UTF-8 and have the encoding declared as UTF-8.  Otherwise they
-  will be in the current locale's encoding, and be declared to have the
-  encoding of the current locale if either Latin-1 or UTF-8 and the
+  If any element of \code{x} or \code{split} is declared to be in UTF-8
+  (see \code{\link{Encoding}}, non-ASCII character strings in the result
+  will be in UTF-8 and have the encoding declared as UTF-8.  Otherwise
+  they will be in the current locale's encoding, and be declared to have
+  the encoding of the current locale if either Latin-1 or UTF-8 and the
   corresponding input had a declared encoding.  (As from 2.10.0, when
   \code{perl = TRUE} all strings in a multibyte locale are translated to
   UTF-8.)
@@ -108,7 +111,7 @@ noquote(strsplit("A text I want to display with spaces", NULL)[[1]])
 
 x <- c(as = "asfef", qu = "qwerty", "yuiop[", "b", "stuff.blah.yech")
 # split x on the letter e
-strsplit(x,"e")
+strsplit(x, "e")
 
 unlist(strsplit("a.b.c", "."))
 ## [1] "" "" "" "" ""

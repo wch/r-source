@@ -298,6 +298,9 @@ REGULAR EXPRESSIONS
 	POSIX standard in its interpretation of incorrect regexps such
 	as "^*".
 
+	This engine may in future be used in 'literal' mode for fixed
+	= TRUE.
+
     o	The use of repeated boundary regexps in gsub() and gregexpr()
 	warned about in the help page does not work in this engine (it
 	did in the previous one since 2005).
@@ -310,13 +313,20 @@ REGULAR EXPRESSIONS
 	speed penalty.  This enables help.search() to use approximate
 	matching character-wise rather than byte-wise.
 
-    o	[g]sub use a single-pass algorithm instead of matching twice.
+    o	[g]sub use a single-pass algorithm instead of matching twice
+	and so is usually faster.
 
     o	The perl = TRUE versions now work correctly in a non-UTF-8 MBCS
 	locale, by translating the inputs to UTF-8.
 
     o	useBytes = TRUE now inhibits the translation of inputs with
 	marked encodings.
+
+    o	strsplit() gains a 'useBytes' argument.
+
+    o	The algorithm used by strsplit() has been reordered to batch
+    	by elements of 'split': this can be much faster where regexps
+    	are used (as multiple compilation is avoided).
 
 
 HELP & Rd FILE CHANGES

@@ -25,3 +25,6 @@ The offsets in the regmatch_t structure are in characters for
 STR_WIDE, bytes for the other two modes.
 
 On Windows (MinGW?), iswctype is missing 'blank'.
+
+REG_LITERAL was not matching "" in some cases, hence a change at
+line 1652 of tre-parse.c.

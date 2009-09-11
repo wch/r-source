@@ -1368,7 +1368,6 @@
 ## DESCRIPTION.in
 ## encodings are tricky: this may be done in a foreign encoding
 ## (e.g., Latin-1 in UTF-8)
-## even so, we do not have useBytes = TRUE for strsplit.
 .DESCRIPTION_to_latex <- function(descfile, outfile, version = "Unknown")
 {
     desc <- read.dcf(descfile)[1, ]
@@ -1397,7 +1396,7 @@
         text <- gsub("@VERSION@", version, text, fixed = TRUE, useBytes = TRUE)
         ## text can have paras, and digest/DESCRIPTION does.
         ## \AsIs is per-para.
-        text <- strsplit(text, "\n\n", fixed = TRUE)[[1]]
+        text <- strsplit(text, "\n\n", fixed = TRUE, useBytes = TRUE)[[1]]
         Encoding(text) <- "unknown"
         wrap <- paste("\\AsIs{", text, "}", sep = "")
         if(f %in% c("Author", "Maintainer"))
