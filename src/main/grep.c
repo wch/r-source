@@ -1029,7 +1029,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		   replacement after every character */
 		nns = ns * (replen + 1) + 1000;
 		if (nns > 10000) nns = 2*ns + replen + 1000;
-	    } else nns = ns + replen + 1;
+	    } else nns = ns + replen + 1000;
 	    u = cbuf = Calloc(nns, char);
 	    offset = 0; nmatch = 0; eflags = 0; last_end = -1;
 	    while (tre_regexecb(&reg, s+offset, 10, regmatch, eflags) == 0) {
