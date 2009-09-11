@@ -49,7 +49,8 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
     in the given character vector.  Coerced by
     \code{\link{as.character}} to a character string if possible.  If a
     character vector of length 2 or more is supplied, the first element
-    is used with a warning.}
+    is used with a warning.  Missing values are allowed except for
+    \code{regexpr} and \code{gregexpr}.}
   \item{x, text}{a character vector where matches are sought, or an
     object which can be coerced by \code{as.character} to a character vector.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
@@ -94,10 +95,9 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   The regular expressions used are those specified by POSIX 1003.2,
   either extended or basic, depending on the value of the
   \code{extended} argument, unless \code{perl = TRUE} when they are
-  those of PCRE, \url{http://www.pcre.org/}.
-  (The exact set of patterns supported may depend on the version of
-  PCRE installed on the system in use if \R was configured to use the
-  system PCRE.)
+  those of PCRE, \url{http://www.pcre.org/}.  (The exact set of patterns
+  supported may depend on the version of PCRE installed on the system in
+  use if \R was configured to use the system PCRE.)
 
   The main effect of \code{useBytes} is to avoid errors/warnings about
   invalid inputs and spurious matches, but for \code{regexpr} it changes

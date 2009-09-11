@@ -101,15 +101,31 @@ static char *string_adj(char *target, const char *orig, const char *repl,
     return t;
 }
 
+/* safe as the only MBCS used in UTF-8 */
+static int count_subs(const char *repl)
+{
+    int i = 0;
+    const char *p = repl;
+    while (*p) {
+	if (*p == '\\') {
+	    if ('1' <= p[1] && p[1] <= '9') {i++; p += 2;}
+	    else if (p[1] == 0) p++; else p += 2;
+	}
+	else p++;
+    }
+    return i;
+}
+
+
 SEXP attribute_hidden
 do_pgsub(SEXP pat, SEXP rep, SEXP text, int global,
 	 int igcase_opt, int useBytes)
 {
     SEXP ans;
-    int i, j, n, ns, nns, nmatch, offset, re_nsub, ienc;
-    int erroffset, eflag, last_end, replen;
+    int i, j, n, ns, nns, nmatch, offset, ienc;
+    int erroffset, eflag, last_end, replen, maxrep;
     int cflags = 0;
-    const char *spat, *srep, *s, *t;
+    const char *spat, *srep, *s;
     char *u, *cbuf, *tmp;
     const char *errorptr;
     pcre *re_pcre;
@@ -170,7 +186,6 @@ do_pgsub(SEXP pat, SEXP rep, SEXP text, int global,
 		    errorptr, spat+erroffset);
 	error(_("invalid regular expression '%s'"), spat);
     }
-    re_nsub = pcre_info(re_pcre, NULL, NULL);
     if (n > 10) {
 	re_pe = pcre_study(re_pcre, 0, &errorptr);
 	if (errorptr)
@@ -200,14 +215,15 @@ do_pgsub(SEXP pat, SEXP rep, SEXP text, int global,
 	    s = translateCharUTF8(STRING_ELT(text, i));
 	else
 	    s = translateChar(STRING_ELT(text, i));
-	t = srep;
 	ns = strlen(s);
+	/* worst possible scenario is to put a copy of the
+	   replacement after every character, unless there are
+	   backrefs */
+	maxrep = replen + (ns-2) * count_subs(srep);
 	if (global) {
-	    /* worst possible scenario is to put a copy of the
-	       replacement after every character */
-	    nns = ns * (replen + 1) + 1000;
+	    nns = ns * (maxrep + 1) + 1000;
 	    if (nns > 10000) nns = 2*ns + replen + 1000;
-	} else nns = ns + replen + 1;
+	} else nns = ns + maxrep + 1000;
 	u = cbuf = Calloc(nns, char);
 	offset = 0; nmatch = 0; eflag = 0; last_end = -1;
 	while (pcre_exec(re_pcre, re_pe, s, ns, offset, eflag,
@@ -217,7 +233,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP text, int global,
 	    nmatch++;
 	    for (j = offset; j < ovector[0]; j++) *u++ = s[j];
 	    if (ovector[1] > last_end) {
-		u = string_adj(u, s, t, ovector, ienc);
+		u = string_adj(u, s, srep, ovector, ienc);
 		last_end = ovector[1];
 	    }
 	    offset = ovector[1];
@@ -237,7 +253,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP text, int global,
 		} else
 		    *u++ = s[offset++];
 	    }
-	    if (nns < (u - cbuf) + (ns-offset) + replen + 1000) {
+	    if (nns < (u - cbuf) + (ns-offset) + maxrep + 100) {
 		nns *= 2;
 		tmp = Realloc(cbuf, nns, char);
 		u = tmp + (u - cbuf);
