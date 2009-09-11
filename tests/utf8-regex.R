@@ -92,22 +92,25 @@ txt2[ot != sub("[b-e]",".", txt2)]
 (ot <- sub("[b-e]",".", txt2, ignore.case = TRUE, perl = TRUE))
 txt2[ot != sub("[b-e]",".", txt2, ignore.case = TRUE)]
 
-if(inf$`UTF-8`) {
+
+## These may end up with different encodings: == copes, identical does not
+
+eq <- function(a, b) a == b
 (r1 <- gsub(pat, "ef", txt))
-stopifnot(identical(r1, gsub(pat, "ef", txt, useBytes = TRUE)))
-stopifnot(identical(r1, gsub(pat, "ef", txt, fixed = TRUE)))
-stopifnot(identical(r1, gsub(pat, "ef", txt, fixed = TRUE, useBytes = TRUE)))
-stopifnot(identical(r1, gsub(pat, "ef", txt, perl = TRUE)))
-stopifnot(identical(r1, gsub(pat, "ef", txt, perl = TRUE, useBytes = TRUE)))
+stopifnot(eq(r1, gsub(pat, "ef", txt, useBytes = TRUE)))
+stopifnot(eq(r1, gsub(pat, "ef", txt, fixed = TRUE)))
+stopifnot(eq(r1, gsub(pat, "ef", txt, fixed = TRUE, useBytes = TRUE)))
+stopifnot(eq(r1, gsub(pat, "ef", txt, perl = TRUE)))
+stopifnot(eq(r1, gsub(pat, "ef", txt, perl = TRUE, useBytes = TRUE)))
 
 pat <- substr(pat, 1, 1)
 (r1 <- gsub(pat, "gh", txt))
-stopifnot(identical(r1, gsub(pat, "gh", txt, useBytes = TRUE)))
-stopifnot(identical(r1, gsub(pat, "gh", txt, fixed = TRUE)))
-stopifnot(identical(r1, gsub(pat, "gh", txt, fixed = TRUE, useBytes = TRUE)))
-stopifnot(identical(r1, gsub(pat, "gh", txt, perl = TRUE)))
-stopifnot(identical(r1, gsub(pat, "gh", txt, perl = TRUE, useBytes = TRUE)))
-}
+stopifnot(eq(r1, gsub(pat, "gh", txt, useBytes = TRUE)))
+stopifnot(eq(r1, gsub(pat, "gh", txt, fixed = TRUE)))
+stopifnot(eq(r1, gsub(pat, "gh", txt, fixed = TRUE, useBytes = TRUE)))
+stopifnot(eq(r1, gsub(pat, "gh", txt, perl = TRUE)))
+stopifnot(eq(r1, gsub(pat, "gh", txt, perl = TRUE, useBytes = TRUE)))
+
 
 stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"))
 stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"), perl = TRUE)
@@ -122,19 +125,17 @@ stopifnot(identical(x, "|The| |quick| |brown| |fox|"))
 ## The following is warned against in the help page, but worked in some versions
 gsub("\\b", "|", "The quick brown fox")
 
-if(inf$`UTF-8`) {
-(z <- strsplit(txt, pat))
-stopifnot(identical(z, strsplit(txt, pat, useBytes = TRUE)))
-stopifnot(identical(z, strsplit(txt, pat, fixed = TRUE)))
-stopifnot(identical(z, strsplit(txt, pat, fixed = TRUE, useBytes = TRUE)))
-stopifnot(identical(z, strsplit(txt, pat, perl = TRUE)))
-stopifnot(identical(z, strsplit(txt, pat, perl = TRUE, useBytes = TRUE)))
+(z <- strsplit(txt, pat)[[1]])
+stopifnot(eq(z, strsplit(txt, pat, useBytes = TRUE)[[1]]))
+stopifnot(eq(z, strsplit(txt, pat, fixed = TRUE)[[1]]))
+stopifnot(eq(z, strsplit(txt, pat, fixed = TRUE, useBytes = TRUE)[[1]]))
+stopifnot(eq(z, strsplit(txt, pat, perl = TRUE)[[1]]))
+stopifnot(eq(z, strsplit(txt, pat, perl = TRUE, useBytes = TRUE)[[1]]))
 
-(z <- strsplit(txt, "[a-c]"))
-stopifnot(identical(z, strsplit(txt, "[a-c]", useBytes = TRUE)))
-stopifnot(identical(z, strsplit(txt, "[a-c]", perl = TRUE)))
-stopifnot(identical(z, strsplit(txt, "[a-c]", perl = TRUE, useBytes = TRUE)))
-}
+(z <- strsplit(txt, "[a-c]")[[1]])
+stopifnot(eq(z, strsplit(txt, "[a-c]", useBytes = TRUE)[[1]]))
+stopifnot(eq(z, strsplit(txt, "[a-c]", perl = TRUE)[[1]]))
+stopifnot(eq(z, strsplit(txt, "[a-c]", perl = TRUE, useBytes = TRUE)[[1]]))
 
 ## from strsplit.Rd
 z <- strsplit("A text I want to display with spaces", NULL)[[1]]
@@ -148,4 +149,3 @@ stopifnot(identical(z, strsplit(x, "e", fixed = TRUE)))
 stopifnot(identical(z, strsplit(x, "e", fixed = TRUE, useBytes = TRUE)))
 stopifnot(identical(z, strsplit(x, "e", perl = TRUE)))
 stopifnot(identical(z, strsplit(x, "e", perl = TRUE, useBytes = TRUE)))
-
