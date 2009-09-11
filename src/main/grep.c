@@ -917,7 +917,6 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("'replacement' is invalid in this locale"));
     }
 
-#ifndef USE_TRE_FOR_FIXED
     if (fixed_opt) {
 	patlen = strlen(spat);
 	if (!patlen) error(_("zero-length pattern"));
