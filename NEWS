@@ -458,6 +458,11 @@ BUG FIXES
     o	R_ReplDLLinit() initializes top-level jump so that embedding
 	applications on Windows no longer crash on error.
 
+    o	identical() failed to take the encoding of character strings
+	into account, so identical byte patterns are not necessarily
+	identical strings, and similarly Latin-1 and UTF-8 versions of
+	the same string differ in byte pattern.
+
 
 
 

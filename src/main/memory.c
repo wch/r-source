@@ -3048,18 +3048,6 @@ R_FreeStringBufferL(R_StringBuffer *buf)
 /* ======== These need direct access to gp field for efficiency ======== */
 
 /* FIXME: consider inlining here */
-#ifdef Win32
-int Seql(SEXP a, SEXP b)
-{
-    if (a == b) return 1;
-    if (LENGTH(a) != LENGTH(b)) return 0;
-    if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
-	 return 0;
-    return !strcmp(translateCharUTF8(a), translateCharUTF8(b));
-}
-
-#else
-
 /* this has NA_STRING = NA_STRING */
 int Seql(SEXP a, SEXP b)
 {
@@ -3068,11 +3056,9 @@ int Seql(SEXP a, SEXP b)
       non-ASCII strings). Note that one of the strings could be marked
       as unknown. */
     if (a == b) return 1;
-    if (LENGTH(a) != LENGTH(b)) return 0;
     /* Leave this to compiler to optimize */
     if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
 	return 0;
     return !strcmp(translateChar(a), translateChar(b));
 }
 
-#endif

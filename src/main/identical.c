@@ -168,28 +168,22 @@ Rboolean R_compute_identical(SEXP x, SEXP y, Rboolean num_eq,
     }
     case STRSXP:
     {
-	int i, n = length(x), n1, n2;
+	int i, n = length(x);
 	if(n != length(y)) return FALSE;
 	for(i = 0; i < n; i++) {
+	    /* This special-casing for NAs is not needed */
 	    Rboolean na1 = (STRING_ELT(x, i) == NA_STRING),
 		na2 = (STRING_ELT(y, i) == NA_STRING);
 	    if(na1 ^ na2) return FALSE;
 	    if(na1 && na2) continue;
-	    /* NB: R strings can have embedded nuls */
-	    n1 = LENGTH(STRING_ELT(x, i));
-	    n2 = LENGTH(STRING_ELT(y, i));
-	    if (n1 != n2) return FALSE;
-	    if(memcmp(CHAR(STRING_ELT(x, i)), CHAR(STRING_ELT(y, i)), n1) != 0)
-		return FALSE;
+	    if (! Seql(STRING_ELT(x, i), STRING_ELT(y, i))) return FALSE;
 	}
 	return TRUE;
     }
     case CHARSXP:
     {
-	/* NB: R strings can have embedded nuls */
-	int n1 = LENGTH(x), n2 = LENGTH(y);
-	if (n1 != n2) return FALSE;
-	if(memcmp(CHAR(x), CHAR(y), n1) != 0) return FALSE;
+	/* This matches NAs */
+	return Seql(x, y);
     }
     case VECSXP:
     case EXPRSXP:
