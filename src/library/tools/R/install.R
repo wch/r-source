@@ -1366,6 +1366,9 @@
 
 ## base packages do not have versions and this is called on
 ## DESCRIPTION.in
+## encodings are tricky: this may be done in a foreign encoding
+## (e.g., Latin-1 in UTF-8)
+## even so, we do not have useBytes = TRUE for strsplit.
 .DESCRIPTION_to_latex <- function(descfile, outfile, version = "Unknown")
 {
     desc <- read.dcf(descfile)[1, ]
@@ -1387,13 +1390,14 @@
         ##   # $ % & _ ^ ~ { } \
         ## \Rd@AsIs@dospecials in Rd.sty handles the first seven, so
         ## braces and backslashes need explicit handling.
-        text <- gsub('"([^"]*)"', "\\`\\`\\1''", text)
-        text <- gsub("\\", "\\textbackslash{}", text, fixed = TRUE)
-        text <- gsub("([{}$#_])", "\\\\\\1", text)
-        text <- gsub("@VERSION@", version, text, fixed = TRUE)
+        text <- gsub('"([^"]*)"', "\\`\\`\\1''", text, useBytes = TRUE)
+        text <- gsub("\\", "\\textbackslash{}", text,
+                     fixed = TRUE, useBytes = TRUE)
+        text <- gsub("([{}$#_])", "\\\\\\1", text, useBytes = TRUE)
+        text <- gsub("@VERSION@", version, text, fixed = TRUE, useBytes = TRUE)
         ## text can have paras, and digest/DESCRIPTION does.
         ## \AsIs is per-para.
-        text <- strsplit(text, "\n\n")[[1]]
+        text <- strsplit(text, "\n\n", fixed = TRUE)[[1]]
         Encoding(text) <- "unknown"
         wrap <- paste("\\AsIs{", text, "}", sep = "")
         if(f %in% c("Author", "Maintainer"))
