@@ -93,6 +93,7 @@ txt2[ot != sub("[b-e]",".", txt2)]
 txt2[ot != sub("[b-e]",".", txt2, ignore.case = TRUE)]
 
 
+if(FALSE) {
 (r1 <- gsub(pat, "ef", txt))
 stopifnot(identical(r1, gsub(pat, "ef", txt, useBytes = TRUE)))
 stopifnot(identical(r1, gsub(pat, "ef", txt, fixed = TRUE)))
@@ -107,11 +108,12 @@ stopifnot(identical(r1, gsub(pat, "gh", txt, fixed = TRUE)))
 stopifnot(identical(r1, gsub(pat, "gh", txt, fixed = TRUE, useBytes = TRUE)))
 stopifnot(identical(r1, gsub(pat, "gh", txt, perl = TRUE)))
 stopifnot(identical(r1, gsub(pat, "gh", txt, perl = TRUE, useBytes = TRUE)))
-
+}
 stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"))
 stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"), perl = TRUE)
 stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"), useBytes = TRUE)
 stopifnot(identical(gsub("a*", "x", "baaac"), "xbxcx"), perl = TRUE, useBytes = TRUE)
+
 
 ## this one seems system-dependent
 (x <- gsub("\\b", "|", "The quick brown \ue8\ue9", perl = TRUE))
