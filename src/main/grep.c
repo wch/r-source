@@ -59,6 +59,21 @@ static void reg_report(int rc,  regex_t *reg, const char *pat)
     error(_("invalid regular expression '%s'"), pat);
 }
 
+/* FIXME: make more robust, and public */
+static SEXP mkCharWLen(const wchar_t *wc, int nc)
+{
+    int nb; char *xi; wchar_t *wt;
+    wt = (wchar_t *) alloca((nc+1)*sizeof(wchar_t));
+    R_CheckStack();
+    wcsncpy(wt, wc, nc); wt[nc] = 0;
+    nb = wcstoutf8(NULL, wt, nc);
+    xi = (char *) alloca((nb+1)*sizeof(char));
+    R_CheckStack();
+    wcstoutf8(xi, wt, nb + 1);
+    return mkCharLenCE(xi, nb, CE_UTF8);
+}
+
+
 /* We use a shared buffer here to avoid reallocing small buffers, and
    keep a standard-size (MAXELTSIZE = 8192) buffer allocated shared
    between the various functions.
@@ -79,23 +94,16 @@ static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
  * list is the collection of splits for the corresponding element of x.
 */
 
-/* This does not yet handle UTF-8-encoded strings except for fixed/perl */
 SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s, t, tok, x;
-    int i, j, len, tlen, ntok, slen, rc;
-    int extended_opt, cflags, fixed_opt, perl_opt;
-    char *pt = NULL;
+    SEXP ans, tok, x;
+    int i, itok, j, len, tlen, ntok;
+    int extended_opt, fixed_opt, perl_opt;
+    char *pt = NULL; wchar_t *wpt = NULL;
     const char *buf, *split = "", *bufp, *laststart, *ebuf = NULL;
-    regex_t reg;
-    regmatch_t regmatch[1];
-    pcre *re_pcre = NULL;
-    pcre_extra *re_pe = NULL;
     const unsigned char *tables = NULL;
-    int options = 0;
-    int erroffset, ovector[30];
-    const char *errorptr;
-    Rboolean usedRegex = FALSE, usedPCRE = FALSE, use_UTF8 = FALSE;
+    int cflags = 0 /* TRE */, options = 0 /* PCRE */;
+    Rboolean use_UTF8 = FALSE;
 
     checkArity(op, args);
     x = CAR(args);
@@ -103,16 +111,19 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     extended_opt = asLogical(CADDR(args));
     fixed_opt = asLogical(CADDDR(args));
     perl_opt = asLogical(CAD4R(args));
-    if (fixed_opt && perl_opt)
+    if (fixed_opt == NA_INTEGER) fixed_opt = 0;
+    if (extended_opt == NA_INTEGER) extended_opt = 1;
+    if (perl_opt == NA_INTEGER) perl_opt = 0;
+    if (fixed_opt && perl_opt) {
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
+	perl_opt = 0;
+    }
     if (fixed_opt && !extended_opt)
 	warning(_("argument '%s' will be ignored"), "extended = FALSE");
 
     if (!isString(x) || !isString(tok)) error(_("non-character argument"));
-    if (extended_opt == NA_INTEGER) extended_opt = 1;
-    if (perl_opt == NA_INTEGER) perl_opt = 0;
 
-    if (!fixed_opt && perl_opt) {
+    if (perl_opt) {
 	if (utf8locale) options = PCRE_UTF8;
 	else if (mbcslocale) {
 	    options = PCRE_UTF8;
@@ -120,120 +131,128 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    cflags = 0;
-    if (extended_opt) cflags = cflags | REG_EXTENDED;
+    if (extended_opt) cflags = REG_EXTENDED;
 
     len = LENGTH(x);
     tlen = LENGTH(tok);
-    /* special case split="" for efficiency */
-    if (tlen == 1 && CHAR(STRING_ELT(tok, 0))[0] == 0) tlen = 0;
 
-    if (fixed_opt || perl_opt || !tlen) {
-	for (i = 0; i < tlen; i++)
+    /* treat split = NULL as split = "" */
+    if (!tlen) { tlen = 1; tok = CADR(args) = mkString(""); }
+
+    for (i = 0; i < tlen; i++)
 	if (getCharCE(STRING_ELT(tok, i)) == CE_UTF8) use_UTF8 = TRUE;
-	for (i = 0; i < len; i++)
-	    if (getCharCE(STRING_ELT(x, i)) == CE_UTF8) use_UTF8 = TRUE;
-    }
-    if (use_UTF8 && !fixed_opt && perl_opt) options = PCRE_UTF8;
+    for (i = 0; i < len; i++)
+	if (getCharCE(STRING_ELT(x, i)) == CE_UTF8) use_UTF8 = TRUE;
+    if (use_UTF8 && perl_opt) options = PCRE_UTF8;
 
-    PROTECT(s = allocVector(VECSXP, len));
-    for (i = 0; i < len; i++) {
-	if (STRING_ELT(x, i) == NA_STRING) {
-	    SET_VECTOR_ELT(s, i, ScalarString(NA_STRING));
+    /* group by token for efficiency with PCRE/TRE versions */
+    PROTECT(ans = allocVector(VECSXP, len));
+    for (itok = 0; itok < tlen; itok++) {
+	SEXP this = STRING_ELT(tok, itok);
+
+	if (this == NA_STRING) { /* NA token doesn't split */
+	    for (i = itok; i < len; i += tlen)
+		SET_VECTOR_ELT(ans, i, ScalarString(STRING_ELT(x, i)));
 	    continue;
-	}
-	if (use_UTF8)
-	    buf = translateCharUTF8(STRING_ELT(x, i));
-	else
-	    buf = translateChar(STRING_ELT(x, i));
-
-	if (tlen > 0) {
-	    /* NA token doesn't split */
-	    if (STRING_ELT(tok, i % tlen) == NA_STRING) {
-		    SET_VECTOR_ELT(s, i, ScalarString(markKnown(buf, STRING_ELT(x, i))));
+	} else if (!CHAR(this)[0]) { /* empty */
+	    for (i = itok; i < len; i += tlen) {
+		SEXP t;
+		if (STRING_ELT(x, i) == NA_STRING) {
+		    SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
 		    continue;
+		}
+		if (use_UTF8)
+		    buf = translateCharUTF8(STRING_ELT(x, i));
+		else
+		    buf = translateChar(STRING_ELT(x, i));
+		/* split into individual characters (not bytes) */
+		if ((use_UTF8 || mbcslocale) && !strIsASCII(buf)) {
+		    char bf[20 /* > MB_CUR_MAX */];
+		    const char *p = buf;
+		    int used;
+		    mbstate_t mb_st;
+
+		    if (use_UTF8) {
+			for (ntok = 0; *p; p += used, ntok++)
+			    used = utf8clen(*p);
+			p = buf;
+			PROTECT(t = allocVector(STRSXP, ntok));
+			for (j = 0; j < ntok; j++, p += used) {
+			    used = utf8clen(*p);
+			    memcpy(bf, p, used); bf[used] = '\0';
+			    SET_STRING_ELT(t, j, mkCharCE(bf, CE_UTF8));
+			}
+		    } else if ((ntok = mbstowcs(NULL, buf, 0)) < 0) {
+			PROTECT(t = ScalarString(NA_STRING));
+		    } else {
+			mbs_init(&mb_st);
+			PROTECT(t = allocVector(STRSXP, ntok));
+			for (j = 0; j < ntok; j++, p += used) {
+			    /* This is valid as we have already checked */
+			    used = mbrtowc(NULL, p, MB_CUR_MAX, &mb_st);
+			    memcpy(bf, p, used); bf[used] = '\0';
+			    SET_STRING_ELT(t, j, markKnown(bf, STRING_ELT(x, i)));
+			}
+		    }
+		} else {
+		    /* ASCII, or single-byte locale and not marked as UTF-8 */
+		    char bf[2];
+		    ntok = strlen(buf);
+		    PROTECT(t = allocVector(STRSXP, ntok));
+		    bf[1] = '\0';
+		    for (j = 0; j < ntok; j++) {
+			bf[0] = buf[j];
+			SET_STRING_ELT(t, j, markKnown(bf, STRING_ELT(x, i)));
+		    }
+		}
+		SET_VECTOR_ELT(ans, i, t);
+		UNPROTECT(1);
 	    }
-	    /* find out how many splits there will be */
+	} else if (fixed_opt) {
+	    int slen;
 	    if (use_UTF8)
-		split = translateCharUTF8(STRING_ELT(tok, i % tlen));
+		split = translateCharUTF8(STRING_ELT(tok, itok));
 	    else
-		split = translateChar(STRING_ELT(tok, i % tlen));
+		split = translateChar(STRING_ELT(tok, itok));
 	    slen = strlen(split);
-	    ntok = 0;
-	    if (fixed_opt) {
+
+	    for (i = itok; i < len; i += tlen) {
+		SEXP t;
+		if (STRING_ELT(x, i) == NA_STRING) {
+		    SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
+		    continue;
+		}
+
+		if (use_UTF8)
+		    buf = translateCharUTF8(STRING_ELT(x, i));
+		else
+		    buf = translateChar(STRING_ELT(x, i));
+		/* find out how many splits there will be */
+		ntok = 0;
 		/* This is UTF-8 safe since it compares whole strings */
 		laststart = buf;
 		ebuf = buf + strlen(buf);
 		for (bufp = buf; bufp < ebuf; bufp++) {
 		    if ((slen == 1 && *bufp != *split) ||
-		       (slen > 1 && strncmp(bufp, split, slen))) continue;
+			(slen > 1 && strncmp(bufp, split, slen))) continue;
 		    ntok++;
 		    bufp += MAX(slen - 1, 0);
 		    laststart = bufp+1;
 		}
 		bufp = laststart;
-	    } else if (perl_opt) {
-		usedPCRE = TRUE;
-		tables = pcre_maketables();
-		re_pcre = pcre_compile(split, options,
-				       &errorptr, &erroffset, tables);
-		if (!re_pcre) {
-		    if(errorptr)
-			warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
-				errorptr, split+erroffset);
-		    error(_("invalid split pattern '%s'"), split);
-		}
-		re_pe = pcre_study(re_pcre, 0, &errorptr);
-		if(errorptr)
-		    warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
-		bufp = buf;
-		if (*bufp != '\0') {
-		    while(pcre_exec(re_pcre, re_pe, bufp, strlen(bufp), 0, 0,
-				    ovector, 30) >= 0) {
-			/* Empty matches get the next char, so move by one. */
-			bufp += MAX(ovector[1], 1);
-			ntok++;
-			if (*bufp == '\0')
-			    break;
-		    }
-		}
-	    } else {
-		/* Careful: need to distinguish empty (rm_eo == 0) from
-		   non-empty (rm_eo > 0) matches.  In the former case, the
-		   token extracted is the next character.  Otherwise, it is
-		   everything before the start of the match, which may be
-		   the empty string (not a ``token'' in the strict sense).
-		*/
-		usedRegex = TRUE;
-		if ((rc = tre_regcomp(&reg, split, cflags)))
-		    reg_report(rc, &reg, split);
-		bufp = buf;
-		if (*bufp != '\0') {
-		    while(tre_regexec(&reg, bufp, 1, regmatch, 0) == 0) {
-			/* Empty matches get the next char, so move by one. */
-			bufp += MAX(regmatch[0].rm_eo, 1);
-			ntok++;
-			if (*bufp == '\0')
-			    break;
-		    }
-		}
-	    }
-	    if (*bufp == '\0')
-		PROTECT(t = allocVector(STRSXP, ntok));
-	    else
-		PROTECT(t = allocVector(STRSXP, ntok + 1));
-	    /* and fill with the splits */
-	    laststart = bufp = buf;
-	    pt = (char *) realloc(pt, (strlen(buf)+1) * sizeof(char));
-	    for (j = 0; j < ntok; j++) {
-		if (fixed_opt) {
+		SET_VECTOR_ELT(ans, i,
+			       t = allocVector(STRSXP, ntok + (*bufp ? 1 : 0)));
+		/* and fill with the splits */
+		laststart = bufp = buf;
+		pt = Realloc(pt, strlen(buf)+1, char);
+		for (j = 0; j < ntok; j++) {
 		    /* This is UTF-8 safe since it compares whole
 		       strings, but <MBCS-FIXME> it would be more
 		       efficient to skip along by chars.
-		     */
+		    */
 		    for (; bufp < ebuf; bufp++) {
 			if ((slen == 1 && *bufp != *split) ||
-			   (slen > 1 && strncmp(bufp, split, slen))) continue;
+			    (slen > 1 && strncmp(bufp, split, slen))) continue;
 			if (slen) {
 			    strncpy(pt, laststart, bufp - laststart);
 			    pt[bufp - laststart] = '\0';
@@ -249,7 +268,64 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			break;
 		    }
 		    bufp = laststart;
-		} else if (perl_opt) {
+		}
+		if (*bufp)
+		    SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
+	    }
+	} else if (perl_opt) {
+	    pcre *re_pcre;
+	    pcre_extra *re_pe;
+	    int erroffset, ovector[30];
+	    const char *errorptr;
+
+	    if (use_UTF8)
+		split = translateCharUTF8(STRING_ELT(tok, itok));
+	    else
+		split = translateChar(STRING_ELT(tok, itok));
+
+	    if (!tables) tables = pcre_maketables();
+	    re_pcre = pcre_compile(split, options,
+				   &errorptr, &erroffset, tables);
+	    if (!re_pcre) {
+		if(errorptr)
+		    warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
+			    errorptr, split+erroffset);
+		error(_("invalid split pattern '%s'"), split);
+	    }
+	    re_pe = pcre_study(re_pcre, 0, &errorptr);
+	    if(errorptr)
+		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
+
+	    for (i = itok; i < len; i += tlen) {
+		SEXP t;
+		if (STRING_ELT(x, i) == NA_STRING) {
+		    SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
+		    continue;
+		}
+
+		if (use_UTF8)
+		    buf = translateCharUTF8(STRING_ELT(x, i));
+		else
+		    buf = translateChar(STRING_ELT(x, i));
+		/* find out how many splits there will be */
+		ntok = 0;
+		bufp = buf;
+		if (*bufp) {
+		    while(pcre_exec(re_pcre, re_pe, bufp, strlen(bufp), 0, 0,
+				    ovector, 30) >= 0) {
+			/* Empty matches get the next char, so move by one. */
+			bufp += MAX(ovector[1], 1);
+			ntok++;
+			if (*bufp == '\0')
+			    break;
+		    }
+		}
+		SET_VECTOR_ELT(ans, i,
+			       t = allocVector(STRSXP, ntok + (*bufp ? 1 : 0)));
+		/* and fill with the splits */
+		bufp = buf;
+		pt = Realloc(pt, strlen(buf)+1, char);
+		for (j = 0; j < ntok; j++) {
 		    pcre_exec(re_pcre, re_pe, bufp, strlen(bufp), 0, 0,
 			      ovector, 30);
 		    if (ovector[1] > 0) {
@@ -268,7 +344,117 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			SET_STRING_ELT(t, j, mkCharCE(pt, CE_UTF8));
 		    else
 			SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
-		} else {
+		}
+		if (*bufp)
+		    SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
+	    }
+	    pcre_free(re_pe);
+	    pcre_free(re_pcre);
+	} else if (use_UTF8) { /* basic/extended in wchar_t */
+	    regex_t reg;
+	    regmatch_t regmatch[1];
+	    int rc;
+	    const wchar_t *wbuf, *wbufp, *wsplit;
+
+	    /* Careful: need to distinguish empty (rm_eo == 0) from
+	       non-empty (rm_eo > 0) matches.  In the former case, the
+	       token extracted is the next character.  Otherwise, it is
+	       everything before the start of the match, which may be
+	       the empty string (not a ``token'' in the strict sense).
+	    */
+
+	    wsplit = wtransChar(STRING_ELT(tok, itok));
+	    if ((rc = regwcomp(&reg, wsplit, cflags)))
+		reg_report(rc, &reg, translateChar(STRING_ELT(tok, itok)));
+
+	    for (i = itok; i < len; i += tlen) {
+		SEXP t;
+		if (STRING_ELT(x, i) == NA_STRING) {
+		    SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
+		    continue;
+		}
+		wbuf = wtransChar(STRING_ELT(x, i));
+
+		/* find out how many splits there will be */
+		ntok = 0;
+		wbufp = wbuf;
+		if (*wbufp) {
+		    while(regwexec(&reg, wbufp, 1, regmatch, 0) == 0) {
+			/* Empty matches get the next char, so move by one. */
+			wbufp += MAX(regmatch[0].rm_eo, 1);
+			ntok++;
+			if (!*wbufp) break;
+		    }
+		}
+		SET_VECTOR_ELT(ans, i,
+			       t = allocVector(STRSXP, ntok + (*wbufp ? 1 : 0)));
+		/* and fill with the splits */
+		wbufp = wbuf;
+		wpt = Realloc(wpt, wcslen(wbuf)+1, wchar_t);
+		for (j = 0; j < ntok; j++) {
+		    regwexec(&reg, wbufp, 1, regmatch, 0);
+		    if (regmatch[0].rm_eo > 0) {
+			/* Match was non-empty. */
+			if (regmatch[0].rm_so > 0)
+			    wcsncpy(wpt, wbufp, regmatch[0].rm_so);
+			wpt[regmatch[0].rm_so] = 0;
+			wbufp += regmatch[0].rm_eo;
+		    } else {
+			/* Match was empty. */
+			wpt[0] = *wbufp;
+			wpt[1] = 0;
+			wbufp++;
+		    }
+		    SET_STRING_ELT(t, j, 
+				   mkCharWLen(wpt, regmatch[0].rm_so));
+		}
+		if (*wbufp)
+		    SET_STRING_ELT(t, ntok,
+				   mkCharWLen(wbufp, wcslen(wbufp)));
+	    }
+	    tre_regfree(&reg);
+	} else { /* basic/extended */
+	    regex_t reg;
+	    regmatch_t regmatch[1];
+	    int rc;
+
+	    /* Careful: need to distinguish empty (rm_eo == 0) from
+	       non-empty (rm_eo > 0) matches.  In the former case, the
+	       token extracted is the next character.  Otherwise, it is
+	       everything before the start of the match, which may be
+	       the empty string (not a ``token'' in the strict sense).
+	    */
+	    /* never use_UTF8 */
+	    split = translateChar(STRING_ELT(tok, itok));
+	    if ((rc = tre_regcomp(&reg, split, cflags)))
+		reg_report(rc, &reg, split);
+
+	    for (i = itok; i < len; i += tlen) {
+		SEXP t;
+		if (STRING_ELT(x, i) == NA_STRING) {
+		    SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
+		    continue;
+		}
+		/* never use_UTF8 */
+		buf = translateChar(STRING_ELT(x, i));
+
+		/* find out how many splits there will be */
+		ntok = 0;
+		bufp = buf;
+		if (*bufp) {
+		    while(tre_regexec(&reg, bufp, 1, regmatch, 0) == 0) {
+			/* Empty matches get the next char, so move by one. */
+			bufp += MAX(regmatch[0].rm_eo, 1);
+			ntok++;
+			if (*bufp == '\0') break;
+		    }
+		}
+		SET_VECTOR_ELT(ans, i,
+			       t = allocVector(STRSXP, ntok + (*bufp ? 1 : 0)));
+		/* and fill with the splits */
+		bufp = buf;
+		pt = Realloc(pt, strlen(buf)+1, char);
+		for (j = 0; j < ntok; j++) {
 		    tre_regexec(&reg, bufp, 1, regmatch, 0);
 		    if (regmatch[0].rm_eo > 0) {
 			/* Match was non-empty. */
@@ -284,69 +470,19 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
 		}
+		if (*bufp)
+		    SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
 	    }
-	    if (*bufp != '\0')
-		SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
-	} else {
-	    /* split into individual characters (not bytes) */
-	    if ((use_UTF8 || mbcslocale) && !strIsASCII(buf)) {
-		char bf[20 /* > MB_CUR_MAX */];
-		const char *p = buf;
-		int used;
-		mbstate_t mb_st;
-
-		if (use_UTF8) {
-		    for (ntok = 0; *p; p += used, ntok++) used = utf8clen(*p);
-		    p = buf;
-		    PROTECT(t = allocVector(STRSXP, ntok));
-		    for (j = 0; j < ntok; j++, p += used) {
-			used = utf8clen(*p);
-			memcpy(bf, p, used); bf[used] = '\0';
-			SET_STRING_ELT(t, j, mkCharCE(bf, CE_UTF8));
-		    }
-		} else if ((ntok = mbstowcs(NULL, buf, 0)) < 0) {
-		    PROTECT(t = ScalarString(NA_STRING));
-		} else {
-		    mbs_init(&mb_st);
-		    PROTECT(t = allocVector(STRSXP, ntok));
-		    for (j = 0; j < ntok; j++, p += used) {
-			/* This is valid as we have already checked */
-			used = mbrtowc(NULL, p, MB_CUR_MAX, &mb_st);
-			memcpy(bf, p, used); bf[used] = '\0';
-			SET_STRING_ELT(t, j, markKnown(bf, STRING_ELT(x, i)));
-		    }
-		}
-	    } else {
-		/* ASCII, or single-byte locale and not marked as UTF-8 */
-		char bf[2];
-		ntok = strlen(buf);
-		PROTECT(t = allocVector(STRSXP, ntok));
-		bf[1] = '\0';
-		for (j = 0; j < ntok; j++) {
-		    bf[0] = buf[j];
-		    SET_STRING_ELT(t, j, markKnown(bf, STRING_ELT(x, i)));
-		}
-	    }
-	}
-	UNPROTECT(1);
-	SET_VECTOR_ELT(s, i, t);
-	if (usedRegex) {
 	    tre_regfree(&reg);
-	    usedRegex = FALSE;
-	}
-	if (usedPCRE) {
-	    pcre_free(re_pe);
-	    pcre_free(re_pcre);
-	    pcre_free((void *)tables);
-	    usedPCRE = FALSE;
 	}
     }
 
     if (getAttrib(x, R_NamesSymbol) != R_NilValue)
-	namesgets(s, getAttrib(x, R_NamesSymbol));
+	namesgets(ans, getAttrib(x, R_NamesSymbol));
     UNPROTECT(1);
-    free(pt);
-    return s;
+    Free(pt); Free(wpt);
+    if (tables) pcre_free((void *)tables);
+    return ans;
 }
 
 
@@ -659,11 +795,11 @@ static char *string_adj(char *target, const char *orig, const char *repl,
     return t;
 }
 
-static wchar_t *wstring_adj(wchar_t *target, const wchar_t *orig, 
+static wchar_t *wstring_adj(wchar_t *target, const wchar_t *orig,
 			    const wchar_t *repl, regmatch_t *regmatch)
 {
     int i, k;
-    const wchar_t *p = repl; 
+    const wchar_t *p = repl;
     wchar_t *t = target;
 
     while (*p) {
@@ -921,7 +1057,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(text, i)));
 	    }
 	    Free(cbuf);
-        } else  {
+	} else  {
 	    /* basic or extended regexp in wchar_t */
 	    const wchar_t *s = wtransChar(STRING_ELT(text, i)), *t;
 	    wchar_t *u, *cbuf;
@@ -973,7 +1109,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		for (j = offset ; s[j] ; j++) *u++ = s[j];
 		*u = L'\0';
-		{ 
+		{
 		    int nb = wcstoutf8(NULL, cbuf, 0);
 		    char *xi = (char *) alloca((nb+1)*sizeof(char));
 		    wcstoutf8(xi, cbuf, nb + 1);
