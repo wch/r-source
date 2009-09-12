@@ -703,9 +703,10 @@ Rd2txt <-
                             "\\ldots" =,
                             "\\dots" = "...",
                             "\\R" = "R",
-                            "\\bold"=,
-                            "\\strong"=,
+                            "\\bold" =,
+                            "\\strong" =,
                             "\\emph" = toChar(this),
+                            "\\code" = sQuote(toChar(this)),
                             as.character(this))
                      )
         }
