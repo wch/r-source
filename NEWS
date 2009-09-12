@@ -290,7 +290,7 @@ NEW FEATURES
 REGULAR EXPRESSIONS
 
     o	A different regular expression engine is used for basic and
-	extended regexps and also for approximate matching.  This
+	extended regexps and also for approximate matching.  This is
 	based on the TRE library of Ville Laurikari, a modifed copy of
 	which is included in the R sources.
 
