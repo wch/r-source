@@ -463,8 +463,8 @@ function(expr, type = NULL)
         capture_message <- !capture_output
     }
 
-    outcon <- file(open = "w+")
-    msgcon <- file(open = "w+")
+    outcon <- file(open = "w+", encoding = "UTF-8")
+    msgcon <- file(open = "w+", encoding = "UTF-8")
     if(capture_output) {
         sink(outcon, type = "output")
         on.exit(sink(type = "output"))
@@ -477,8 +477,8 @@ function(expr, type = NULL)
 
     value <- eval(expr)
     list(value = value,
-         output = readLines(outcon, warn = FALSE),
-         message = readLines(msgcon, warn = FALSE))
+         output = readLines(outcon, encoding = "UTF-8", warn = FALSE),
+         message = readLines(msgcon, encoding = "UTF-8", warn = FALSE))
 }
 
 
@@ -1189,7 +1189,7 @@ function(command, input = NULL)
     outfile <- tempfile("xshell")
     errfile <- tempfile("xshell")
     on.exit(unlink(c(outfile, errfile)))
-    status <-if(.Platform$OS.type == "windows")
+    status <- if(.Platform$OS.type == "windows")
         shell(sprintf("%s > %s 2> %s", command, outfile, errfile),
               input = input, shell = "cmd.exe")
     else system(sprintf("%s > %s 2> %s", command, outfile, errfile),

@@ -1,4 +1,3 @@
-
 RdTextFilter <-
 function(ifile, encoding = "unknown", keepSpacing = TRUE,
          drop = character(), keep = character())
@@ -12,6 +11,21 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
 	p <- parse_Rd(ifile, encoding=encoding)
     } else
 	encoding <- ""
+
+    ## Directly using a text connection to accumulate the filtered
+    ## output seems to be faster than using .eval_with_capture(): to use
+    ## the latter, change mycat to cat, or use mycat <- cat, and create
+    ## out via
+    ## out <- .eval_with_capture({
+    ##     show(p)
+    ##     mycat("\n")
+    ## })$output
+    
+    myval <- character()
+    mycon <- textConnection("myval", open = "w", local = TRUE,
+                            encoding = "UTF-8") 
+    on.exit(close(mycon))
+    mycat <- function(...) cat(..., file = mycon)
 
     prevline <- 1L
     prevcol <- 0L
@@ -58,12 +72,13 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
 	TEXT = {
 	    if (prevline < firstline) {
 		prevcol <<- 0L
-		cat(rep("\n", if (keepSpacing) firstline-prevline else 1L))
+		mycat(rep.int("\n",
+                              if(keepSpacing) firstline - prevline else 1L))
 	    }
-	    if (keepSpacing) cat(rep(" ", firstcol - prevcol - 1L), sep="")
+	    if (keepSpacing)
+                mycat(rep.int(" ", firstcol - prevcol - 1L), sep = "")
 	    x <- as.character(srcref) # go back to original form
-	    if (encoding != "") Encoding(x) <- encoding
-	    cat(x, sep = "")
+	    mycat(x, sep = "")
 	    prevcol <<- lastcol
 	    prevline <<- lastline
 	},
@@ -106,8 +121,26 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
 	    }
 	})
     }
-    .eval_with_capture({
-    	show(p)
-    	cat("\n")
-    })$output
+
+    show(p)
+    mycat("\n")
+    
+    out <- textConnectionValue(mycon)
+
+    ## Ideally, we would always canonicalize to UTF-8.
+    ## However, when using RdTextFilter() for aspell(), it is not clear
+    ## whether this is a good idea: the aspell program does not need to
+    ## have full UTF-8 support (and what precisely holds is not clear:
+    ## the manuals says that aspell
+    ##   can easily check documents in UTF-8 without having to use a
+    ##   special dictionary.
+    ## but also
+    ##   If Aspell is compiled with a version of the curses library that
+    ##   support wide characters then Aspell can also check UTF-8 text. 
+    ## So at least until this can be resolved, turn filter results for
+    ## Rd files originally in latin1 back to latin1.
+    if(encoding == "latin1")
+        out <- iconv(out, "UTF-8", "latin1")
+
+    out
 }
