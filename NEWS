@@ -286,22 +286,24 @@ NEW FEATURES
 
 REGULAR EXPRESSIONS
 
-    o	A different regular expression engine for basic and
+    o	A different regular expression engine is used for basic and
 	extended regexps and also for approximate matching.  This
 	based on the TRE library of Ville Laurikari, a modifed copy of
 	which is included in the R sources.
 
 	This is often faster, especially in a MBCS locale.
 	
-	Known differences are that it is less tolerant of invalid
-	inputs in MBCS locales, and conforms more strictly to the
-	POSIX standard in its interpretation of incorrect regexps such
-	as "^*".
+	Some known differences are that it is less tolerant of invalid
+	inputs in MBCS locales, and in its interpretation of undefined
+	(extended) regexps such as "^*".  Also, the interpretation of
+	ranges such as [W-z] in caseless matching is no longer to map
+	the range to lower case.
 
 	This engine may in future be used in 'literal' mode for fixed
-	= TRUE.
+	= TRUE, and there is a compile-time option in src/main/grep.c
+	to do so.
 
-    o	The use of repeated boundary regexps in gsub() and gregexpr()
+    o	The use of repeated boundary regexps in gsub() and gregexpr() as
 	warned about in the help page does not work in this engine (it
 	did in the previous one since 2005).
 
@@ -324,9 +326,12 @@ REGULAR EXPRESSIONS
 
     o	strsplit() gains a 'useBytes' argument.
 
-    o	The algorithm used by strsplit() has been reordered to batch
-    	by elements of 'split': this can be much faster where regexps
-    	are used (as multiple compilation is avoided).
+    o	The algorithm used by strsplit() has been reordered to batch by
+    	elements of 'split': this can be much faster for fixed = FALSE
+    	(as multiple compilation is avoided).
+
+    o	The help pages, including ?regexp, have been updated and
+	should be consulted for details of the new implementations.
 
 
 HELP & Rd FILE CHANGES
