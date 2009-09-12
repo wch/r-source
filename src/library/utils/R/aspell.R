@@ -56,8 +56,31 @@ function(files, filter, control = list(), encoding = "unknown")
         ##   data line with an uparrow to protect themselves against
         ##   future changes in Aspell. 
         writeLines(paste("^", lines, sep = ""), tfile)
+        ## Note that this re-encodes character strings with marked
+        ## encodings to the current encoding (which is definitely fine
+        ## if this is UTF-8 and Aspell was compiled with full UTF-8
+        ## support).  Alternatively, we could try using something along
+        ## the lines of
+        ##   writeLines(paste("^", lines, sep = ""), tfile,
+        ##              useBytes = TRUE)
+        ## ## Pass encoding info to Aspell in case we know it.
+        ## if(!is.null(filter))  {
+        ##     enc <- unique(Encoding(lines))
+        ##     enc <- enc[enc != "unknown"]
+        ##     if(length(enc) != 1L)
+        ##         enc <- "unknown"
+        ## }
+        ## ## But only if we know how to tell Aspell about it.
+        ## enc <- switch(enc,
+        ##               "UTF-8" = "utf-8",
+        ##               "latin1" = "iso-8859-1",
+        ##               "unknown")
+	## cmd <- sprintf("aspell pipe %s < %s",
+        ##                if(enc == "unknown") control
+        ##                else sprintf("%s --encoding=%s", control, enc),
+        ##                tfile)
 
-	cmd <- sprintf("aspell pipe %s < %s", control, tfile)
+        cmd <- sprintf("aspell pipe %s < %s", control, tfile)
 
 	out <- tools:::.shell_with_capture(cmd)
 
