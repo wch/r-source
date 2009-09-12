@@ -1,0 +1,15 @@
+importFrom("graphics", plot) # because we want to define methods on it
+
+## Generics and functions defined in this package
+export(pubGenf, # a generic function
+       assertError)# and a simple one
+
+## own classes
+exportClasses(pubClass)
+
+exportMethods(
+ ## for own generics:
+ pubGenf,
+ ## for other generics:
+ plot, show
+)

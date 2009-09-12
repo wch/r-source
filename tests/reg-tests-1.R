@@ -5147,8 +5147,17 @@ stopifnot(1 == grep("setClass",
 ## Part 2: -- build, install, load and "inspect" the package:
 if(.Platform$OS.type == "unix") {
     ## <FIXME> need build.package()
-    Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
-    system(paste(Rcmd, "build", "myTst"))
+    dir.exists <- function(x)
+        is.character(x) && file.exists(x) && file.info(path.expand(x))$isdir
+    build.pkg <- function(dir) {
+	stopifnot(dir.exists(dir))
+	Rcmd <- paste(file.path(R.home("bin"), "R"), "CMD")
+	## return name of tar file built
+	r <- tail(system(paste(Rcmd, "build", dir), intern = TRUE), 3)
+	sub(".*'", "", sub("'$", "",
+			   grep("building.*tar\\.gz", r, value=TRUE)))
+    }
+    build.pkg("myTst")
     # clean up any previous attempt (which might have left a 00LOCK)
     system("rm -rf myLib")
     dir.create("myLib")
@@ -5157,8 +5166,24 @@ if(.Platform$OS.type == "unix") {
     stopifnot(require("myTst",lib = "myLib"))
     sm <- getMethods(show, where= as.environment("package:myTst"))
     stopifnot(names(sm@methods) == "foo")
-    unlink("myLib", recursive=TRUE)
     unlink("myTst_*")
+
+    ## More building & installing packages
+    op <- options(warn=2) # *NO* warnings here!
+    p.lis <- c("pkgA", "pkgB", "exS4noNS", "exNSS4")
+    for(p. in p.lis) {
+	cat("building package", p., "...\n")
+	r <- build.pkg(file.path(Sys.getenv("SRCDIR"), "Pkgs", p.))
+	cat("installing package", p., "using file", r, "...\n")
+	## we could install the tar file ... (see build.pkg()'s definition)
+	install.packages(r, lib = "myLib", repos=NULL, type = "source")
+	stopifnot(require(p.,lib = "myLib", character.only=TRUE))
+	detach(pos = match(p., sub("^package:","", search())))
+    }
+    ## TODO: not just print, but check the "list":
+    print(installed.packages(lib.loc= "myLib", priority= "NA"))
+    options(op)
+    unlink("myLib", recursive=TRUE)
 }
 unlink("myTst", recursive=TRUE)
 

@@ -26,7 +26,7 @@ DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \
 	ver20.Rd ver20.txt.save ver20.html.save ver20.tex.save ver20-Ex.R.save \
 	R-intro.Rout.save
 
-SUBDIRS = Embedding Examples Native
+SUBDIRS = Embedding Examples Native Pkgs
 
 ## SRCDIR is used by reg-tests-1.R and reg-IO2.R
 ## GNU gettext disables LANGUAGE if LC_ALL=C, but other systems might not.
@@ -99,7 +99,7 @@ install-tests:
 	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rhome)/tests"; \
 	done
 	@$(INSTALL_DATA) $(srcdir)/Makefile.install \
-	  "$(DESTDIR)/$(rhome)/tests/Makefile"	
+	  "$(DESTDIR)/$(rhome)/tests/Makefile"
 
 uninstall-tests:
 	@$(ECHO) "uninstalling specific tests and removing results"

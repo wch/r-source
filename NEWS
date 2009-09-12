@@ -283,6 +283,9 @@ NEW FEATURES
 	source references to find the location of source lines and set
 	breakpoints (using trace()) at those lines.
 
+    o	Namespace importing is more careful about warning on masked
+	generics, thanks to a patch by Yohan Chalabi.
+
 
 REGULAR EXPRESSIONS
 

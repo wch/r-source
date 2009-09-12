@@ -1,0 +1,9 @@
+import(methods)
+
+import(graphics)
+## instead of just
+## importFrom("graphics", plot) # because we want to define methods on it
+## *Still* do not want warning from this
+
+exportClasses("classA")
+exportMethods("plot")

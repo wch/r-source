@@ -1,0 +1,5 @@
+import(methods)
+
+import(graphics)
+
+import(pkgA) # notably "plot" methods
