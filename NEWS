@@ -267,10 +267,10 @@ NEW FEATURES
 
     o	legend() now can specify the 'border' color of filled boxes,
 	thanks to a patch from Frederic Schutz.
-	
+
     o	Indexing with a vector index to [[]] has now been extended to
     	all recursive types.
-    	
+
     o	pairlists may now be assigned as elements of lists.  (Lists
     	could always be created with pairlist elements, but [[<-
     	didn't support assigning them.)
@@ -278,7 +278,7 @@ NEW FEATURES
     o	The parser now supports C-preprocessor-like #line directives,
     	so error messages and source references may refer to the original
     	file rather than an intermediate one.
-    	
+
     o	New functions findLineNum() and setBreakpoint() work with the
 	source references to find the location of source lines and set
 	breakpoints (using trace()) at those lines.
@@ -295,7 +295,7 @@ REGULAR EXPRESSIONS
 	which is included in the R sources.
 
 	This is often faster, especially in a MBCS locale.
-	
+
 	Some known differences are that it is less tolerant of invalid
 	inputs in MBCS locales, and in its interpretation of undefined
 	(extended) regexps such as "^*".  Also, the interpretation of
@@ -411,6 +411,8 @@ DEPRECATED & DEFUNCT
 
     o	tools::Rd_parse() is defunct (as this version of R uses only
 	Rd version 2).
+
+    o	clearNames() ('stats') is deprecated for unname().
 
 
 INSTALLATION

@@ -24,3 +24,13 @@
 ## 	.Deprecated("mauchly.test")
 ## 	UseMethod("mauchly.test")
 ## }
+
+## <entry>
+## Deprecated in 2.10.0
+clearNames <- function( object )
+{
+    .Deprecated("unname")
+    names( object ) <- NULL
+    object
+}
+## </entry>

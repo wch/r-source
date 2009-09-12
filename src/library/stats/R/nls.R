@@ -133,14 +133,14 @@ nlsModel.plinear <- function(form, data, start, wts)
     {
         assign("internalPars", newPars, envir = thisEnv)
         for(i in names(ind)) {
-            assign(i, clearNames(newPars[ ind[[i]] ]), envir = env )
+            assign(i, unname(newPars[ ind[[i]] ]), envir = env )
         }
     }
     setPars.varying <- function(newPars)
     {
         internalPars[useParams] <- newPars
         for(i in names(ind))
-            assign(i, clearNames(internalPars[ ind[[i]] ]), envir = env)
+            assign(i, unname(internalPars[ ind[[i]] ]), envir = env)
     }
     setPars <- setPars.noVarying
     getPred <-
@@ -303,13 +303,13 @@ nlsModel <- function(form, data, start, wts, upper=NULL)
     {
         assign("internalPars", newPars, envir = thisEnv)
         for(i in names(ind))
-            assign(i, clearNames(newPars[ ind[[i]] ]), envir = env)
+            assign(i, unname(newPars[ ind[[i]] ]), envir = env)
     }
     setPars.varying <- function(newPars)
     {
         internalPars[useParams] <- newPars
         for(i in names(ind))
-            assign(i, clearNames(internalPars[ ind[[i]] ]), envir = env)
+            assign(i, unname(internalPars[ ind[[i]] ]), envir = env)
     }
     setPars <- setPars.noVarying
 

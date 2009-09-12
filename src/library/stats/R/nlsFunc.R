@@ -60,9 +60,3 @@ setNames <- function( object, nm )
     names( object ) <- nm
     object
 }
-
-clearNames <- function( object )
-{
-    names( object ) <- NULL
-    object
-}
