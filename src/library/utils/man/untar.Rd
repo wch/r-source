@@ -23,10 +23,10 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     the default is to extract all files.}
   
   \item{list}{If \code{TRUE}, list the files and extract none.  The
-    equivalent of \command{unzip -l}.}
+    equivalent of \command{tar tf}.}
     
   \item{exdir}{The directory to extract files to (the equivalent of
-    \code{unzip -d}).  It will be created if necessary.}
+    \code{tar -C}).  It will be created if necessary.}
 
   \item{compressed}{logical or character.  Values \code{"gzip"} and
     \code{"bzip2"} select that form of compression (and may be
@@ -49,11 +49,13 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   installation on a Unix-alike, and on Windows to \file{untgz.exe} (which
   we supply) unless \file{tar.exe} is in the path.
 
-  What options are supported will depend on the \command{tar} used.  It
-  is likely that only GNU flavours of \command{tar} will support
-  compressed archives, and recent versions will be able to detect the
-  type of compression automatically: version 1.22 added support for
-  \command{xz} and \command{lzma} compression.
+  What options are supported will depend on the \command{tar} used.
+  Modern GNU flavours of \command{tar} will support compressed archives,
+  and the most recent versions will be able to detect the type of
+  compression automatically: version 1.22 added support for \command{xz}
+  and \command{lzma} compression.  For other flavours environment
+  variable \env{R_ZIPCMD} is used to select a command to decompress
+  \command{gzip} files, and \command{bzip2} for its files.
 #ifdef windows
   
   \file{untgz.exe} supports only uncompressed and
