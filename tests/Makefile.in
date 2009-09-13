@@ -26,7 +26,8 @@ DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.common \
 	ver20.Rd ver20.txt.save ver20.html.save ver20.tex.save ver20-Ex.R.save \
 	R-intro.Rout.save
 
-SUBDIRS = Embedding Examples Native Pkgs
+SUBDIRS = Embedding Examples Native
+SUBDIRS_WITH_NO_BUILD = Pkgs
 
 ## SRCDIR is used by reg-tests-1.R and reg-IO2.R
 ## GNU gettext disables LANGUAGE if LC_ALL=C, but other systems might not.
@@ -117,5 +118,10 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	  chmod 755 $(distdir)/$${d}; \
 	  (cd $${d} && $(MAKE) distdir) \
+	    || exit 1; \
+	done
+	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
+	  ((cd $(srcdir); $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \
+	      | (cd $(distdir); $(TAR) -x -f -)) \
 	    || exit 1; \
 	done
