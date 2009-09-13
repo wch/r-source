@@ -1,4 +1,5 @@
 
+
 Windows version
 ===============
 
@@ -112,6 +113,15 @@ src/fixed/h/iconv.h
 
 From GNU libiconv-1.11, distributed under LGPL>=2,
 Copyright (C) 1999-2003, 2005-2006 Free Software Foundation, Inc.
+
+
+src/front-ends/untgz.c
+based on contrib/untgz.c in the zlib distribution, no copyright statement, but:
+
+ * written by Pedro A. Aranda Gutierrez <paag@tid.es>
+ * adaptation to Unix by Jean-loup Gailly <jloup@gzip.org>
+ * various fixes by Cosmin Truta <cosmint@cs.ubbcluj.ro>
+
 
 
 Binary components

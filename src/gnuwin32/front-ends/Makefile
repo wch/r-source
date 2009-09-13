@@ -27,7 +27,7 @@ all: makeMakedeps \
      $(R_HOME)/bin/Rcmd.exe  $(R_HOME)/bin/RSetReg.exe  \
      $(R_HOME)/bin/R.exe \
      $(R_HOME)/bin/md5check.exe $(R_HOME)/bin/Rscript.exe \
-     $(R_HOME)/bin/open.exe 
+     $(R_HOME)/bin/open.exe $(R_HOME)/bin/untgz.exe
 
 $(R_HOME)/bin/Rgui.exe: Rgui.exe
 	$(MKDIR) -p $(R_HOME)/bin
@@ -60,6 +60,11 @@ $(R_HOME)/bin/Rscript.exe: Rscript.exe
 $(R_HOME)/bin/open.exe: open.exe
 	$(MKDIR) -p $(R_HOME)/bin
 	$(CP) $^ $@	
+
+$(R_HOME)/bin/untgz.exe: untgz.exe
+	$(MKDIR) -p $(R_HOME)/bin
+	$(CP) $^ $@	
+
 
 rgui-CPPFLAGS=-DWin32
 rterm-CPPFLAGS=-DWin32
@@ -104,6 +109,10 @@ rcico.o: Rcmd.exe.manifest
 
 open.o: open.c
 open.exe: open.o
+
+untgz-CPPFLAGS=-I../../extra/zlib -DWin32
+untgz.o: untgz.c
+untgz.exe: untgz.o ../../../bin/Rzlib.dll
 
 clean:
 	$(RM) *.o *.obj *.exe *~ *.exp *.dll *.lib *.a *.d Makedeps

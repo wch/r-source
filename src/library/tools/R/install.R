@@ -23,7 +23,7 @@
 .install_packages <- function(args = NULL)
 {
     ## calls system() on Windows for
-    ## sh (configure.win/cleanup.win) mv make zip [hhc if CHM help]
+    ## tar sh (configure.win/cleanup.win) mv make rm zip [hhc if CHM help]
 
     ## we don't want to load utils just for this
     .file_test <- function(op, x)
@@ -1013,10 +1013,10 @@
             pkgname <- sub("\\.tgz$", "", pkgname)
             pkgname <- sub("_.*", "", pkgname)
             res <- if (WINDOWS) {
-                ## FIXME: may need to play with paths: Perl version had
-                ## $pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
-                td <- chartr("\\", "/", tmpdir)
-                system(paste("tar -zxf", shQuote(pkg), "-C", shQuote(td)))
+                ## Perl version had $pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
+                utils::untar(pkg, exdir = chartr("\\", "/", tmpdir))
+                ## td <- chartr("\\", "/", tmpdir)
+                ## system(paste("tar -zxf", shQuote(pkg), "-C", shQuote(td)))
             } else {
                 ## Note that we use '-m' so that modification dates are *not*
                 ## preserved when untarring the sources.  This is necessary to

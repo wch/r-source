@@ -16,7 +16,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
       compressed = NA, preserve = FALSE, verbose = FALSE)
 }
 \arguments{
-  \item{zipfile}{The pathname of the zip file: tilde expansion (see
+  \item{tarfile}{The pathname of the zip file: tilde expansion (see
     \code{\link{path.expand}}) will be performed.}
 
   \item{files}{A character vector of recorded filepaths to be extracted:
@@ -54,13 +54,19 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   compressed archives, and recent versions will be able to detect the
   type of compression automatically: version 1.22 added support for
   \command{xz} and \command{lzma} compression.
+#ifdef windows
+  
+  \file{untgz.exe} supports only uncompressed and
+  \command{gzip}-compressed archives (including \file{.Z}, which
+  \command{gzip} can handle).
+#endif
 }
 
 \value{
   If \code{list = TRUE}, a character vector of (relative or absolute)
   paths of files contained in the tar archive.
 
-  Otherwise \code{NULL}, invisibly.
+  Otherwise the return code from \code{\link{system}}, invisibly.
 }
 
 \seealso{

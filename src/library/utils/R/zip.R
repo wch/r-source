@@ -58,10 +58,13 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                   compressed = NA, preserve = FALSE, verbose = FALSE)
 {
     TAR <- Sys.getenv("TAR")
-    if (!nzchar("TAR") && .Platform$OS.type == "windows") {
-        TAR <- if (system("tar.exe --help", intern = TRUE) == 0) "tar.exe"
+    if (!nzchar(TAR) && .Platform$OS.type == "windows") {
+        res <- try(system("tar.exe --version", intern = TRUE), silent = TRUE)
+        TAR <- if (!inherits(res, "try-error")) "tar.exe"
         else file.path(R.home(), "bin", "untgz.exe")
     }
+    if (!nzchar(TAR))
+        stop("set evironment variable 'TAR' to point to a GNU-compatible 'tar'")
     tarfile <- path.expand(tarfile)
     cflag <- ""
     if (is.character(compressed)) {
@@ -85,11 +88,11 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             cmd <- paste(cmd, "-C", shQuote(exdir))
         }
         if (!is.null(files))
-            cmd <- paste(cmd, paste(shquote(files), collapse = " "))
+            cmd <- paste(cmd, paste(shQuote(files), collapse = " "))
         if (verbose) message("untar: using cmd = ", sQuote(cmd))
         res <- system(cmd)
         if (res) warning(sQuote(cmd), " returned error code ", res,
                          domain = NA)
-        invisible(NULL)
+        invisible(res)
     }
 }

@@ -29,6 +29,9 @@ NEW FEATURES
     o	A Windows menu has been added to the SDI version of the R GUI,
 	and the corresponding menu in the MDI version has been
 	expanded slightly.
+
+    o	There is a new utility program untgz.exe to be used by untar()
+	when 'tar' is not available.
     	
     	
 PACKAGE INSTALLATION
