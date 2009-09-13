@@ -34,7 +34,7 @@ then its a dimension.
 
 The distinction is made at all because, in some coordinate systems, notably
 {\tt "native"} coordinates, the location $x$ can have a very different
-menaing
+meaning
 from the dimension $x$ -- basically, whenever the minimum value of the
 coordinate system is not zero.
 

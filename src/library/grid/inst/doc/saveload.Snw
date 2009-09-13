@@ -28,7 +28,7 @@ graphics, and some of the pitfalls in the various options.
 
 The way I usually work with graphics is to write \R{} code in a text file
 and copy-and-paste or {\tt source()} it into R.  In this case,
-the presistent
+the persistent
 representation of the graphics is the raw \R{} code.
 
 The representation is fully editable.
