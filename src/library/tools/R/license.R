@@ -475,13 +475,18 @@ analyze_licenses <-
 function(x)
 {
     x <- as.character(x)
-    if((n <- length(x)) == 0L) return(NULL)
-    status <- lapply(x, analyze_license)
+    if(!length(x)) return(NULL)
+    ## As analyzing licenses is costly, only analyze the unique specs.
+    v <- unique(x)
+    status <- lapply(v, analyze_license)
     ## And now turn into a data frame.
-    out <- data.frame(matrix(0, n, 0L))
+    out <- data.frame(matrix(0, length(v), 0L))
     for(j in seq_along(status[[1L]]))
         out[[j]] <- sapply(status, "[[", j)
     names(out) <- names(status[[1L]])
+    ## And re-match specs to the unique specs.
+    out <- out[match(x, v), ]
+    rownames(out) <- NULL
     out
 }
 
