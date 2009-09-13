@@ -52,6 +52,12 @@
 
   Option \option{-n} (also known as \option{--dry-run}) will show the
   commands that would be run without actually executing them.
+#ifdef windows
+
+  If there is an exports file \file{dllname-win.def} in the current
+  directory it will be used, otherwise all entry points in objects (but
+  not libraries) will be exported from the DLL.
+#endif 
 }
 #ifdef unix
 \note{
