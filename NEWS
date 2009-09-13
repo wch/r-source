@@ -91,8 +91,7 @@ NEW FEATURES
 
     o	available.packages() by default only returns information on
 	the latest versions of packages whose version requirements are
-	satisified by the currently running R: use 'duplicates = TRUE'
-	to return information on all available versions.
+	satisified by the currently running R.
 
     o	tools::write_PACKAGES() has a new argument 'latestOnly', which
 	defaults to TRUE when only the latest versions in the

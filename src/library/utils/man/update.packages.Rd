@@ -26,8 +26,8 @@ update.packages(lib.loc = NULL, repos = getOption("repos"),
                 type = getOption("pkgType"))
 
 available.packages(contriburl = contrib.url(getOption("repos"), type),
-                   method, fields = NULL, duplicates = FALSE,
-                   type = getOption("pkgType"))
+                   method, fields = NULL, type = getOption("pkgType"),
+                   filters = NULL)
 
 old.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
@@ -194,9 +194,20 @@ contrib.url(repos, type = getOption("pkgType"))
     \code{NULL} (default).  Unavailable fields result in \code{NA}
     values.
   }
-  \item{duplicates}{logical.  If true, information on all versions of
-    duplicated packages are returned, otherwise only on the
-    highest-numbered versions.}  
+  \item{filters}{a character vector or list specifying the filter
+    operations to be performed on the packages found in the
+    repositories, or \code{NULL} (default).  Specified filters can be
+    one of the strings \code{"R_version"}, \code{"OS_type"}, or
+    \code{"duplicates"}, indicating built-in filters which retain
+    only packages whose version and OS type requirements are met by the
+    running version of \R, and the latest versions of packages,
+    respectively.  Filters can also be user-defined functions which
+    subscript the rows of objects returned by
+    \code{available.packages}.  The default corresponds to the
+    specification 
+    \code{c("R_version", "OS_type", "duplicates")}, and may be changed
+    by setting option \code{available_packages_filters} to something
+    non-\code{NULL}.}
 }
 \details{
   All of these functions work with the names of a package or bundle (and
@@ -207,9 +218,9 @@ contrib.url(repos, type = getOption("pkgType"))
   \code{available.packages} returns a matrix of details corresponding to
   packages/bundles currently available at one or more repositories. The
   current list of packages is downloaded over the internet (or copied
-  from a local mirror).  It returns only packages whose version
-  and OS type requirements are met by the running version of \R, and by
-  default only returns information on the latest versions.
+  from a local mirror).  By default, it returns only packages whose
+  version and OS type requirements are met by the running version of \R,
+  and only information on the latest versions or packages.
   
   \code{old.packages} compares the information from
   \code{available.packages} with that from \code{instPkgs} (computed by

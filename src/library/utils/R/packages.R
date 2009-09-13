@@ -15,8 +15,8 @@
 #  http://www.r-project.org/Licenses/
 
 available.packages <-
-    function(contriburl = contrib.url(getOption("repos"), type), method,
-             fields = NULL, duplicates = FALSE, type = getOption("pkgType"))
+function(contriburl = contrib.url(getOption("repos"), type), method,
+         fields = NULL, type = getOption("pkgType"), filters = NULL)
 {
     requiredFields <-
         tools:::.get_standard_repository_db_fields()
@@ -26,8 +26,10 @@ available.packages <-
 	stopifnot(is.character(fields))
 	fields <- unique(c(requiredFields, fields))
     }
+
     res <- matrix(NA_character_, 0L, length(fields) + 1L,
 		  dimnames = list(NULL, c(fields, "Repository")))
+
     for(repos in contriburl) {
         localcran <- length(grep("^file:", repos)) > 0L
         if(localcran) {
@@ -99,36 +101,66 @@ available.packages <-
             res <- rbind(res, res0)
         }
     }
-    ## ignore packages which don't fit our version of R
-    if(length(res)) {
-        currentR <- getRversion()
-        .checkRversion <- function(x) {
-            if(is.na(xx <- x["Depends"])) return(TRUE)
-            xx <- tools:::.split_dependencies(xx)
-            ## R < 2.7.0 picked up only the first
-            zs <- xx[names(xx) == "R"]
-            r <- TRUE
-            for(z in zs)
-                if(length(z) > 1L)
-                    r <- r & eval(parse(text=paste("currentR", z$op, "z$version")))
-            r
-        }
-        res <- res[apply(res, 1L, .checkRversion), , drop=FALSE]
+
+    if(!length(res)) return(res)
+
+    if(is.null(filters)) {
+        filters <- getOption("available_packages_filters")
+        if(is.null(filters))
+            filters <- c("R_version", "OS_type", "duplicates")
     }
-    ## and those that do not fit our OS
-    if(length(res)) {
-        current <- .Platform$OS.type
-        .checkOStype <- function(x) {
-            xx <- x["OS_type"]
-            is.na(xx) || xx == current
+    filters <- as.list(filters)
+    for(f in filters) {
+        if(!length(res)) break
+        if(is.character(f)) {
+            ## Look up the filters db.
+            ## Could be nice and allow abbrevs or ignore case.
+            f <- available_packages_filters_db[[f[1L]]]
         }
-        res <- res[apply(res, 1L, .checkOStype), , drop=FALSE]
+        if(!is.function(f))
+            stop("Invalid 'filters' argument.")
+        res <- f(res)
     }
-    if(length(res) && !duplicates)
-        res <- tools:::.remove_stale_dups(res)
+
     res
 }
 
+available_packages_filters_db <- new.env()
+
+available_packages_filters_db$R_version <-
+function(res)
+{
+    ## Ignore packages which don't fit our version of R
+    currentR <- getRversion()
+    .check_R_version <- function(x) {
+        if(is.na(xx <- x["Depends"])) return(TRUE)
+        xx <- tools:::.split_dependencies(xx)
+        ## R < 2.7.0 picked up only the first
+        zs <- xx[names(xx) == "R"]
+        r <- TRUE
+        for(z in zs)
+            if(length(z) > 1L)
+                r <- r & eval(parse(text=paste("currentR", z$op, "z$version")))
+        r
+    }
+    res[apply(res, 1L, .check_R_version), , drop = FALSE]
+}
+
+available_packages_filters_db$OS_type <-
+function(res)
+{
+    ## Ignore packages that do not fit our OS.
+    current <- .Platform$OS.type
+    .check_OS_type <- function(x) {
+        xx <- x["OS_type"]
+        is.na(xx) || xx == current
+    }
+    res[apply(res, 1L, .check_OS_type), , drop = FALSE]
+}
+
+available_packages_filters_db$duplicates <-
+function(res)
+    tools:::.remove_stale_dups(res)
 
 ## unexported helper function
 simplifyRepos <- function(repos, type)
