@@ -180,3 +180,147 @@ function(x, sort = TRUE, verbose = FALSE, indent = 2L, ...)
 aspell_filter_db <- new.env()
 aspell_filter_db$Rd <- tools::RdTextFilter
 aspell_filter_db$Sweave <- tools::SweaveTeXFilter
+
+### Utilities.
+
+## For spell-checking the R manuals:
+
+aspell_control_R_manuals <-
+    c("--master=en_US",
+      "--add-extra-dicts=en_GB",
+      "--mode=texinfo",
+      "--add-texinfo-ignore=acronym",
+      "--add-texinfo-ignore=deftypefun",
+      "--add-texinfo-ignore=deftypefunx",
+      "--add-texinfo-ignore=findex",
+      "--add-texinfo-ignore=enindex",
+      "--add-texinfo-ignore=include",
+      "--add-texinfo-ignore=ifclear",
+      "--add-texinfo-ignore=ifset",
+      "--add-texinfo-ignore=math",
+      "--add-texinfo-ignore=macro",
+      "--add-texinfo-ignore=multitable",
+      "--add-texinfo-ignore=node",
+      "--add-texinfo-ignore=pkg",
+      "--add-texinfo-ignore=printindex",
+      "--add-texinfo-ignore=set",
+      "--add-texinfo-ignore=vindex",
+      "--add-texinfo-ignore-env=menu"
+      )
+    
+aspell_R_manuals <-
+function(which = NULL, dir = NULL)
+{
+    if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
+    ## Allow specifying 'R-exts' and alikes, or full paths.
+    files <- if(is.null(which)) {
+        Sys.glob(file.path(dir, "doc", "manual", "*.texi"))
+    } else {
+        ind <- which(which ==
+                     basename(tools::file_path_sans_ext(which)))
+        which[ind] <-
+            file.path(dir, "doc", "manual",
+                      sprintf("%s.texi", which[ind]))
+        which
+    }
+    
+    aspell(files,
+           control = aspell_control_R_manuals)
+}
+
+## For spell-checking the R Rd files:
+
+aspell_control_R_Rd_files <-
+    c("--master=en_US",
+      "--add-extra-dicts=en_GB")
+
+aspell_R_Rd_files <-
+function(which = NULL, dir = NULL, drop = "\\references")
+{
+    if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
+    if(is.null(which))
+        which <- tools:::.get_standard_package_names()$base
+
+    files <-
+        unlist(lapply(file.path(dir, "src", "library", which, "man"),
+                      tools::list_files_with_type,
+                      "docs", OS_subdirs = c("unix", "windows")),
+               use.names = FALSE)
+
+    aspell(files,
+           filter = list("Rd", drop = drop),
+           control = aspell_control_R_Rd_files)
+}
+
+## For spell-checking Rd files in a package:
+
+aspell_package_Rd_files <-
+function(dir, drop = "\\references")
+{
+    man_dir <- file.path(dir, "man")
+    files <- if(file_test("-d", man_dir))
+        tools::list_files_with_type(man_dir,
+                                    "docs",
+                                    OS_subdirs = c("unix", "windows"))
+    else character()
+
+    meta <- tools:::.get_package_metadata(dir, installed = FALSE)
+    if(is.na(encoding <- meta["Encoding"]))
+        encoding <- "unknown"
+    
+    aspell(files,
+           filter = list("Rd", drop = drop),
+           encoding = encoding)
+}
+
+## For spell-checking vignettes:
+
+aspell_control_vignettes <-
+    c("--mode=tex",
+      "--add-tex-command='citep oop'",
+      "--add-tex-command='Sexpr p'",
+      "--add-tex-command='code p'",
+      "--add-tex-command='pkg p'",
+      "--add-tex-command='proglang p'",
+      "--add-tex-command='samp p'"
+      )
+
+aspell_vignettes <-
+function(files)
+    aspell(files,
+           filter = "Sweave",
+           control = aspell_control_vignettes)
+
+## For spell-checking the R vignettes:
+
+aspell_control_R_vignettes <-
+    c("--mode=tex",
+      "--master=en_US",
+      "--add-extra-dicts=en_GB")
+## R vignettes currently do not use \pkg or \code.
+
+aspell_R_vignettes <-
+function()
+{
+    ## No arguments for now.
+    ## Currently, all vignettes are in grid.
+    files <- Sys.glob(file.path(tools:::.R_top_srcdir_from_Rd(),
+                                "src", "library", "grid", "inst", "doc",
+                                "*.Snw"))
+    aspell(files,
+           filter = "Sweave",
+           control = aspell_control_R_vignettes)
+}
+
+## For spell-checking vignettes in a package:
+
+aspell_package_vignettes <-
+function(dir)
+{
+    dir <- file.path(dir, "inst", "doc")
+    files <- if(file_test("-d", dir))
+        tools::list_files_with_type(dir, "vignette")
+    else character()
+    
+    aspell_vignettes(files)
+}
