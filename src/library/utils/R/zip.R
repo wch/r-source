@@ -53,3 +53,43 @@ unzip <-
         data.frame(Name = res[[1]], Length = res[[2]], Date = dates)
     } else invisible(attr(res, "extracted"))
 }
+
+untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
+                  compressed = NA, preserve = FALSE, verbose = FALSE)
+{
+    TAR <- Sys.getenv("TAR")
+    if (!nzchar("TAR") && .Platform$OS.type == "windows") {
+        TAR <- if (system("tar.exe --help", intern = TRUE) == 0) "tar.exe"
+        else file.path(R.home(), "bin", "untgz.exe")
+    }
+    tarfile <- path.expand(tarfile)
+    cflag <- ""
+    if (is.character(compressed)) {
+        switch(match.arg(compressed, c("gzip", "bzip2")),
+               "gzip" = "z", "bzip2" = "j")
+    } else if (is.logical(compressed)) {
+        if (is.na(compressed)) {
+            if (grepl("[.](gz|tgz|taz|Z)$", tarfile)) cflag <- "z"
+            else if (grepl("[.]bz2$", tarfile)) cflag <- "j"
+        } else if (compressed) cflag <- "z"
+    } else stop("'compressed' must be logical or character")
+    if (list) {
+        cmd <- paste(TAR, " ", cflag, "tf ", shQuote(tarfile), sep = "")
+        if (verbose) message("untar: using cmd = ", sQuote(cmd))
+        system(cmd, intern = TRUE)
+    } else {
+        if (preserve) cflag <- paste(cflag, "p", sep = "")
+        cmd <- paste(TAR, " ", cflag, "xf ", shQuote(tarfile), sep = "")
+        if (!missing(exdir)) {
+            dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
+            cmd <- paste(cmd, "-C", shQuote(exdir))
+        }
+        if (!is.null(files))
+            cmd <- paste(cmd, paste(shquote(files), collapse = " "))
+        if (verbose) message("untar: using cmd = ", sQuote(cmd))
+        res <- system(cmd)
+        if (res) warning(sQuote(cmd), " returned error code ", res,
+                         domain = NA)
+        invisible(NULL)
+    }
+}

@@ -286,6 +286,9 @@ NEW FEATURES
     o	Namespace importing is more careful about warning on masked
 	generics, thanks to a patch by Yohan Chalabi.
 
+    o	New function untar() to list or unpack tar archives, possibly
+	compressed.
+
 
 REGULAR EXPRESSIONS
 

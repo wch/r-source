@@ -1,4 +1,4 @@
-% File src/library/utils/man/zip.file.extract.Rd
+% File src/library/utils/man/unzip.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
@@ -6,7 +6,7 @@
 \name{unzip}
 \alias{unzip}
 \title{
-  Extract or List Zip archives
+  Extract or List Zip Archives
 }
 \description{
   Extract files from or list a zip archive.
