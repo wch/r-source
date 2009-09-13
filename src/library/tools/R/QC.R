@@ -4143,15 +4143,46 @@ function(dir)
 .check_citation <-
 function(cfile)
 {
-    cfile <- file_path_as_absolute(cfile)
+    cfile <- tools::file_path_as_absolute(cfile)
     meta <- if(basename(dir <- dirname(cfile)) == "inst")
-        as.list(.get_package_metadata(dirname(dir)))
+        as.list(tools:::.get_package_metadata(dirname(dir)))
     else
         NULL
-    out <- tryCatch(suppressMessages(readCitationFile(cfile, meta)),
+    
+    out <- tryCatch(suppressMessages(utils::readCitationFile(cfile, meta)),
                     error = identity)
-    if(inherits(out, "error"))
+    if(inherits(out, "error")) {
         writeLines(conditionMessage(out))
+        return()
+    }
+
+    if(is.null(encoding <- meta$Encoding))
+        encoding <- "unknown"
+    db <- get_CITATION_entry_fields(cfile, encoding)
+    if(!NROW(db)) return()
+    bad <- Map(find_missing_required_BibTeX_fields, db$Entry, db$Fields,
+               USE.NAMES = FALSE)
+    ind <- sapply(bad, identical, NA_character_)
+    if(length(pos <- which(ind))) {
+        entries <- db$Entry[pos]
+        entries <-
+            ifelse(nchar(entries) < 20L,
+                   entries,
+                   paste(substring(entries, 1L, 20L), "[TRUNCATED]"))
+        writeLines(sprintf("citEntry %d: invalid type %s",
+                           pos, sQuote(entries)))
+    }
+    pos <- which(!ind & (sapply(bad, length) > 0L))
+    if(length(pos)) {
+        writeLines(strwrap(sprintf("citEntry %d (%s): missing required field(s) %s",
+                                   pos,
+                                   tolower(db$Entry[pos]),
+                                   sapply(bad[pos],
+                                          function(s)
+                                          paste(sQuote(s),
+                                                collapse = ", "))),
+                           indent = 0L, exdent = 2L))
+    }
 }
 
 ### * .check_package_parseRd
