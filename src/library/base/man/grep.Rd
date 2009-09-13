@@ -54,7 +54,8 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{extended}{if \code{TRUE}, extended regular expression matching
-    is used, and if \code{FALSE} basic regular expressions are used.}
+    is used, and if \code{FALSE} basic regular expressions are used: the
+    latter are deprecated.}
   \item{perl}{logical. Should perl-compatible regexps be used?
     Has priority over \code{extended}.}
   \item{value}{if \code{FALSE}, a vector containing the (\code{integer})
@@ -89,7 +90,7 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
     \item \code{fixed = TRUE}: use exact matching.
     \item \code{perl = TRUE}: use Perl-style regular expressions.
     \item \code{extended = FALSE}: use POSIX 1003.2 basic regular
-    expressions.
+    expressions (this mode is deprecated).
     \item Defaults for the above three arguments: use POSIX 1003.2
     extended regular expressions.
   }

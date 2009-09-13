@@ -197,10 +197,10 @@
   for basic ones.)
 }
 \section{Basic Regular Expressions}{
-  This section covers the regular expressions allowed if
-  \code{extended = FALSE} is specified.  These are regarded as obsolete,
-  and you should not rely on their conformance to the quirks described
-  in POSIX standard. 
+  Basic regular expressions are used if \code{extended = FALSE} is
+  specified.  These are regarded as obsolete and were deprecated in \R
+  2.10.0; you should not rely on their conformance to the quirks
+  described in POSIX standard.
 
   In basic regular expressions the metacharacters \samp{?}, \samp{+},
   \samp{\{}, \samp{|}, \samp{(}, and \samp{)} lose their special meaning;
@@ -209,6 +209,10 @@
   metacharacters are \samp{. \\ [ ^ $ *}, and \samp{^ $} only have a
   special meaning at the beginning/end of an expression or parenthesized
   subexpression.
+
+  Instead, either use \code{fixed = TRUE} to remove all metacharacters
+  or use extended regular expressions with appropriate escapes for
+  metacharacters.
 }
 \section{Perl Regular Expressions}{
   The \code{perl = TRUE} argument to \code{grep}, \code{regexpr},

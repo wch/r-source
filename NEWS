@@ -414,6 +414,12 @@ DEPRECATED & DEFUNCT
 
     o	clearNames() ('stats') is deprecated for unname().
 
+    o	Basic regular expressions (extended = FALSE) are deprecated in
+	strsplit, grep and friends.  There is a precise POSIX standard
+	for them, but it is not what recent RE engines implement, and
+	it seems that in almost all cases package authors intended
+	fixed = TRUE when using extended = FALSE.
+
 
 INSTALLATION
 
