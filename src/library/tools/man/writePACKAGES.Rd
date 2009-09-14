@@ -52,7 +52,7 @@ write_PACKAGES(dir = ".", fields = NULL,
   Including non-latest versions of packages is only useful if they have
   less constraining version requirements, so for example
   \code{latestOnly = FALSE} could be used for a source repository when
-  \samp{foo\_1.0} depends on \samp{R >= 2.10.0} but \samp{foo\_0.9} is
+  \samp{foo_1.0} depends on \samp{R >= 2.10.0} but \samp{foo_0.9} is
   available which depends on \samp{R >= 2.7.0}.
   
   \code{type = "win.binary"} uses \code{\link{unz}} connections to read
