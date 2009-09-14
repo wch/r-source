@@ -57,27 +57,6 @@ unzip <-
 untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                   compressed = NA, extra = NULL, verbose = FALSE)
 {
-    gzOK <- .Platform$OS.type == "windows"
-    TAR <- Sys.getenv("TAR")
-    if (!nzchar(TAR) && .Platform$OS.type == "windows") {
-        res <- try(system("tar.exe --version", intern = TRUE), silent = TRUE)
-        TAR <- if (!inherits(res, "try-error")) "tar.exe"
-        else file.path(R.home(), "bin", "untgz.exe")
-    }
-    if (!nzchar(TAR))
-        stop("set evironment variable 'TAR' to point to a GNU-compatible 'tar'")
-
-    if (!gzOK ) {
-        ## version info may be sent to stdout or stderr
-        tf <- tempfile()
-        system(paste(TAR, "--version >", tf, "2>&1"))
-        if (file.exists(tf)) {
-            gzOK <- any(grepl("GNU", readLines(tf), fixed = TRUE))
-            unlink(tf)
-        }
-    }
-    tarfile <- path.expand(tarfile)
-    cflag <- ""
     if (is.character(compressed)) {
         switch(match.arg(compressed, c("gzip", "bzip2")),
                "gzip" = "z", "bzip2" = "j")
@@ -87,6 +66,63 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             else if (grepl("[.]bz2$", tarfile)) cflag <- "j"
         } else if (compressed) cflag <- "z"
     } else stop("'compressed' must be logical or character")
+
+    gzOK <- .Platform$OS.type == "windows"
+    TAR <- Sys.getenv("TAR")
+    if (!nzchar(TAR) && .Platform$OS.type == "windows") {
+        res <- try(system("btar.exe --version", intern = TRUE), silent = TRUE)
+        TAR <- if (!inherits(res, "try-error")) "tar.exe"
+        else {
+            TAR <- file.path(R.home(), "bin", "untgz.exe")
+            ## This is rather different.
+            if (cflag == "j")
+                stop("'bzip2 compression is not supported by untgz.exe",
+                     domain = NA)
+            if (list) {
+                cmd <- paste(TAR, "-l", shQuote(tarfile))
+                if (verbose) message("untar: using cmd = ", sQuote(cmd))
+                return(system(cmd, intern = TRUE))
+            } else {
+                ## NB only absolute [aths for tarfile will work
+                tarfile <- chartr("\\", "/", normalizePath(tarfile))
+                if (!missing(exdir)) {
+                    dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
+                    od <- setwd(exdir)
+                    on.exit(setwd(od))
+                }
+                cmd <- paste(TAR, shQuote(tarfile))
+                if (length(files))
+                    cmd <- paste(cmd, paste(shQuote(files), collapse = " "))
+                if (verbose) message("untar: using cmd = ", sQuote(cmd))
+                res <- system(cmd)
+                if (res) warning(sQuote(cmd), " returned error code ", res,
+                                 domain = NA)
+                return(invisible(res))
+            }
+        }
+    }
+    if (!nzchar(TAR))
+        stop("set evironment variable 'TAR' to point to a GNU-compatible 'tar'")
+
+    if (!gzOK ) {
+        ## version info may be sent to stdout or stderr
+        tf <- tempfile()
+        cmd <- paste(TAR, " -", cflag, "tf ", shQuote(tarfile), sep = "")
+        if (verbose) message("untar: using cmd = ", sQuote(cmd))
+        if (length(extra)) cmd <- paste(cmd, extra, collapse = " ")
+        system(cmd, intern = TRUE)
+        cmd <- paste(TAR, " -", cflag, "tf ", shQuote(tarfile), sep = "")
+        if (verbose) message("untar: using cmd = ", sQuote(cmd))
+        if (length(extra)) cmd <- paste(cmd, extra, collapse = " ")
+        system(cmd, intern = TRUE)
+        system(paste(TAR, "--version >", tf, "2>&1"))
+        if (file.exists(tf)) {
+            gzOK <- any(grepl("GNU", readLines(tf), fixed = TRUE))
+            unlink(tf)
+        }
+    }
+    tarfile <- path.expand(tarfile)
+    cflag <- ""
     if (!gzOK && cflag == "z" && nzchar(ZIP <- Sys.getenv("R_GZIPCMD"))) {
         TAR <- paste(ZIP, "-dc", tarfile, "|", TAR)
         tarfile <- "-"
