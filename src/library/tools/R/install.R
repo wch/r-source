@@ -23,7 +23,7 @@
 .install_packages <- function(args = NULL)
 {
     ## calls system() on Windows for
-    ## tar sh (configure.win/cleanup.win) mv make rm zip [hhc if CHM help]
+    ## tar sh (configure.win/cleanup.win) cp mv make rm zip [hhc if CHM help]
 
     ## we don't want to load utils just for this
     .file_test <- function(op, x)
@@ -364,7 +364,7 @@
                 else
                     system("rm -f *_res.rc *.o *.d Makedeps")
                 ## FIXME copied from MakePkg: reconsider?
-                system("rm -rf ../chm ../check ../tests/*.Rout")
+                ## system("rm -rf ../chm ../check ../tests/*.Rout")
             } else {
                 if (file.exists("Makefile")) system(paste(MAKE, "clean"))
                 else ## we will be using SHLIB --preclean
@@ -384,7 +384,7 @@
     {
         cp_r <- function(from, to)
         {
-            ## unused now
+            ## used for inst: could use file.copy
             if (WINDOWS) {
                 system(paste0("cp -r ", shQuote(from), "/* ", shQuote(to)))
             } else {
@@ -1018,17 +1018,11 @@
                 ## td <- chartr("\\", "/", tmpdir)
                 ## system(paste("tar -zxf", shQuote(pkg), "-C", shQuote(td)))
             } else {
-                ## Note that we use '-m' so that modification dates are *not*
-                ## preserved when untarring the sources.  This is necessary to
-                ## ensure that the preformatted help pages are always rebuilt.
-                ## Otherwise, the build date for an older version may be newer
-                ## than the modification date for the new sources as recorded in
-                ## the tarball ...
-
+                utils::untar(pkg, exdir = tmpdir)
                 ## We cannot assume GNU tar, but we can assume system uses
                 ## a shell which understands subshells and pipes
-                system(paste(GZIP, "-dc", shQuote(pkg),
-                             "| (cd ", shQuote(tmpdir), "&&", TAR, "-mxf -)"))
+                ## system(paste(GZIP, "-dc", shQuote(pkg),
+                ##             "| (cd ", shQuote(tmpdir), "&&", TAR, "-xf -)"))
             }
             if (res) errmsg("error unpacking tarball")
             ## If we have a binary bundle distribution, there should be
@@ -1067,13 +1061,12 @@
         stop("ERROR: no packages specified", call.=FALSE)
 
     if (!nzchar(lib)) {
-        if (get_user_libPaths) { ## need .libPaths()[1] *after* the site- and user-initialization
-	    lib <- system(paste(R.home("bin/Rscript"),
-				"-e 'cat(.libPaths()[1])'"),
-			  intern = TRUE)
+        lib <- if (get_user_libPaths) { ## need .libPaths()[1] *after* the site- and user-initialization
+	    system(paste(file.path(R.home("bin"), "Rscript"),
+                         "-e 'cat(.libPaths()[1])'"),
+                   intern = TRUE)
         }
-        else
-            lib <- .libPaths()[1]
+        else .libPaths()[1]
         starsmsg(stars, "installing to library ", sQuote(lib))
     } else {
         lib0 <- lib <- path.expand(lib)
@@ -1115,18 +1108,18 @@
             message("ERROR: failed to lock directory ", sQuote(lib),
                     " for modifying\nTry removing ", sQuote(lockdir))
             do_cleanup_tmpdir()
-            q("no", status=3, runLast = FALSE)
+            q("no", status = 3, runLast = FALSE)
         }
         dir.create(lockdir, recursive = TRUE)
         if (!dir.exists(lockdir)) {
             message("ERROR: failed to create lock directory ", sQuote(lockdir))
             do_cleanup_tmpdir()
-            q("no", status=3, runLast = FALSE)
+            q("no", status = 3, runLast = FALSE)
         }
         if (debug) starsmsg(stars, "created lock directory ", sQuote(lockdir))
     }
 
-    if  (tar_up && fake)
+    if  ((tar_up || zip_up) && fake)
         stop("building a fake installation is disallowed")
 
     if (fake) {
