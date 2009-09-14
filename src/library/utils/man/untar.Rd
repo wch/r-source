@@ -13,7 +13,7 @@
 }
 \usage{
 untar(tarfile, files = NULL, list = FALSE, exdir = ".",
-      compressed = NA, preserve = FALSE, verbose = FALSE)
+      compressed = NA, extras = NULL, verbose = FALSE)
 }
 \arguments{
   \item{tarfile}{The pathname of the zip file: tilde expansion (see
@@ -38,8 +38,8 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     \file{tgz}, \file{taz} or \file{Z} selects \command{gzip}
     compression.}
 
-  \item{preserve}{logical: should the \code{p} modifier be used to
-    restore file permissions (on OSes where this makes sense).}
+  \item{extra}{\code{NULL} or a character string: further command-ilne
+    flags such as \option{-p} to be passed to the \command{tar} program.}
 
   \item{verbose}{logical: if true echo the command used.}
 }
@@ -52,14 +52,14 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 
   What options are supported will depend on the \command{tar} used.
   Modern GNU flavours of \command{tar} will support compressed archives,
-  and since 1.15 will be able to detect the type of compression
+  and since 1.15 is able to detect the type of compression
   automatically: version 1.20 added support for \command{lzma} and
-  version 1.22 for \command{xz} compression.  For other flavours
-  environment variable \env{R_ZIPCMD} is used to as the command to
-  decompress \command{gzip} files, and \command{bzip2} for its files.
+  version 1.22 for \command{xz} compression using LZMA2.  For other
+  flavours environment variable \env{R_ZIPCMD} is used to as the command
+  to decompress \command{gzip} files, and \command{bzip2} for its files.
   (There is a \command{bsdtar} command from the \samp{libarchive}
   project which can also detect compression automagically: for this set
-  \code{compressed = FALSE}. Similarly for \command{tar} from the
+  \code{compressed = FALSE}.  Similarly for \command{tar} from the
   \sQuote{Heirloom Toolchest}.)
 #ifdef windows
   

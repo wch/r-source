@@ -55,7 +55,7 @@ unzip <-
 }
 
 untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
-                  compressed = NA, preserve = FALSE, verbose = FALSE)
+                  compressed = NA, extra = NULL, verbose = FALSE)
 {
     gzOK <- .Platform$OS.type == "windows"
     TAR <- Sys.getenv("TAR")
@@ -98,17 +98,18 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         cflag <- ""
     }
     if (list) {
-        cmd <- paste(TAR, " ", cflag, "tf ", shQuote(tarfile), sep = "")
+        cmd <- paste(TAR, " -", cflag, "tf ", shQuote(tarfile), sep = "")
         if (verbose) message("untar: using cmd = ", sQuote(cmd))
+        if (length(extra)) cmd <- paste(cmd, extra, collapse = " ")
         system(cmd, intern = TRUE)
     } else {
-        if (preserve) cflag <- paste(cflag, "p", sep = "")
-        cmd <- paste(TAR, " ", cflag, "xf ", shQuote(tarfile), sep = "")
+        cmd <- paste(TAR, " -", cflag, "xf ", shQuote(tarfile), sep = "")
         if (!missing(exdir)) {
             dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
             cmd <- paste(cmd, "-C", shQuote(exdir))
         }
-        if (!is.null(files))
+        if (length(extra)) cmd <- paste(cmd, extra, collapse = " ")
+        if (length(files))
             cmd <- paste(cmd, paste(shQuote(files), collapse = " "))
         if (verbose) message("untar: using cmd = ", sQuote(cmd))
         res <- system(cmd)

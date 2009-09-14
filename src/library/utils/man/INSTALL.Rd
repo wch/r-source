@@ -52,7 +52,7 @@
   extracted to a temporary directory.
 #ifdef unix
   Finally, binary package/bundle archive files (as created by
-  \command{R CMD build --binary} can be supplied.
+  \command{R CMD build --binary}) can be supplied.
 #endif
 
   The package sources can be cleaned up prior to installation by
