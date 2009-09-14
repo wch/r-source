@@ -74,7 +74,7 @@
             "",
             "Install the add-on packages specified by pkgs.  The elements of pkgs can",
             "be relative or absolute paths to directories with the package (bundle)",
-            "sources, or to gzipped package 'tar' archives (Unix only).  The library tree",
+            "sources, or to gzipped package 'tar' archives.  The library tree",
             "to install to can be specified via '--library'.  By default, packages are",
             "installed in the library tree rooted at the first directory in",
             ".libPaths() for an R session run in the current environment",
