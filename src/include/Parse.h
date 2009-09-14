@@ -27,18 +27,11 @@
 /* SEXP R_ParseVector(SEXP, int, ParseStatus *, SEXP); in R_ext/Parse.h */
 
 /* Private interface */
-SEXP R_Parse1Buffer(IoBuffer*, int, ParseStatus *); /* in ReplIteration,
+SEXP R_Parse1Buffer(IoBuffer*, int, ParseStatus *, Rboolean); /* in ReplIteration,
 						       R_ReplDLLdo1 */
 SEXP R_ParseBuffer(IoBuffer*, int, ParseStatus *, SEXP, SEXP); /* in source.c */
-SEXP R_Parse1File(FILE*, int, ParseStatus *); /* in R_ReplFile */
+SEXP R_Parse1File(FILE*, int, ParseStatus *, Rboolean); /* in R_ReplFile */
 SEXP R_ParseFile(FILE*, int, ParseStatus *, SEXP);  /* in edit.c */
-
-/* Unused */
-#ifdef PARSE_UNUSED
-SEXP R_Parse1General(int (*)(), int (*)(), int, ParseStatus *);
-SEXP R_ParseGeneral(int (*)(), int (*)(), int, ParseStatus *, SEXP);
-SEXP R_Parse1Vector(TextBuffer*, int, ParseStatus *);
-#endif
 
 #ifndef HAVE_RCONNECTION_TYPEDEF
 typedef struct Rconn  *Rconnection;

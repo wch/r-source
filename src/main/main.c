@@ -80,10 +80,12 @@ static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 {
     ParseStatus status;
     int count=0;
-
+    Rboolean first=TRUE;
+    
     for(;;) {
 	R_PPStackTop = savestack;
-	R_CurrentExpr = R_Parse1File(fp, 1, &status);
+	R_CurrentExpr = R_Parse1File(fp, 1, &status, first);
+	first = FALSE;
 	switch (status) {
 	case PARSE_NULL:
 	    break;
@@ -102,7 +104,7 @@ static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 		PrintWarnings();
 	    break;
 	case PARSE_ERROR:
-	    parseError(R_NilValue, count);
+	    parseError(R_NilValue, R_ParseError);
 	    break;
 	case PARSE_EOF:
 	    return;
@@ -224,7 +226,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
     }
 
     R_PPStackTop = savestack;
-    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &state->status);
+    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &state->status, TRUE);
 
     switch(state->status) {
 
@@ -240,7 +242,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
     case PARSE_OK:
 
 	R_IoBufferReadReset(&R_ConsoleIob);
-	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &state->status);
+	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &state->status, FALSE);
 	if (browselevel) {
 	    browsevalue = ParseBrowser(R_CurrentExpr, rho);
 	    if(browsevalue == 1) return(-1);
@@ -342,7 +344,7 @@ int R_ReplDLLdo1(void)
 	if(c == ';' || c == '\n') break;
     }
     R_PPStackTop = 0;
-    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &status);
+    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 0, &status, TRUE);
 
     switch(status) {
     case PARSE_NULL:
@@ -351,7 +353,7 @@ int R_ReplDLLdo1(void)
 	break;
     case PARSE_OK:
 	R_IoBufferReadReset(&R_ConsoleIob);
-	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &status);
+	R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &status, FALSE);
 	R_Visible = FALSE;
 	R_EvalDepth = 0;
 	resetTimeLimits();

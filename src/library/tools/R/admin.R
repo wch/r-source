@@ -301,13 +301,6 @@ function(dir, outDir)
     need_enc <- !is.na(enc) # Encoding was specified
     ## assume that if locale is 'C' we can used 8-bit encodings unchanged.
     if(need_enc && !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
-        ## syntax check: see below
-        op <- options(encoding = enc, showErrorCalls=FALSE)
-        on.exit(options(op))
-        for(f in codeFiles)
-            eval(substitute(parse(f), list(f=f)))
-        options(op); on.exit()
-
         con <- file(outFile, "a")
         on.exit(close(con))  # Windows does not like files left open
         for(f in codeFiles) {
@@ -319,12 +312,6 @@ function(dir, outDir)
             writeLines(tmp, con)
         }
     } else {
-        ## A syntax check here, both so that we do not install a
-        ## broken package and that we get better diagnostics.
-        op <- options(showErrorCalls=FALSE)
-        on.exit(options(op))
-        for(f in codeFiles)
-            eval(substitute(parse(f), list(f=f)))
         ## <NOTE>
         ## It may be safer to do
         ##   writeLines(sapply(codeFiles, readLines), outFile)
@@ -334,7 +321,12 @@ function(dir, outDir)
             stop("unable to write code files")
         ## </NOTE>
     }
-
+    ## A syntax check here, so that we do not install a broken package.
+    ## FIXME:  this is only needed if we don't lazy load, as the lazy loader
+    ## would detect the error.
+    op <- options(showErrorCalls=FALSE)
+    on.exit(options(op))
+    parse(outFile)
     invisible()
 }
 

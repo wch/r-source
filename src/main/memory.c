@@ -1281,7 +1281,7 @@ static void RunGenCollect(R_size_t size_needed)
     FORWARD_NODE(R_UnboundValue);
     FORWARD_NODE(R_RestartToken);
     FORWARD_NODE(R_MissingArg);
-    FORWARD_NODE(R_CommentSxp);
+    FORWARD_NODE(R_SrcFile);
 
     FORWARD_NODE(R_GlobalEnv);	           /* Global environment */
     FORWARD_NODE(R_BaseEnv);

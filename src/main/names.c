@@ -1076,8 +1076,6 @@ void InitNames()
     SET_SYMVALUE(R_RestartToken, R_RestartToken);
     SET_PRINTNAME(R_RestartToken, mkChar(""));
     SET_ATTRIB(R_RestartToken, R_NilValue);
-    /* Parser Structures */
-    R_CommentSxp = R_NilValue;
     /* String constants (CHARSXP values) */
     /* Note: we don't want NA_STRING to be in the CHARSXP cache, so that
        mkChar("NA") is distinct from NA_STRING */
