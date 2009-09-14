@@ -4142,7 +4142,7 @@ The command line tools (in @file{Rtools.exe})
 The MinGW compilers (in @file{Rtools.exe})
 @end itemize
 For installing simple packages containing data or @R{} source
-but no compiled code, only the second of these are needed.
+but no compiled code, none of these are needed.
 Perl is essential to build @R{}, and needed to develop packages.
 
 A complete build of @R{} including compiled @HTML{} help files and

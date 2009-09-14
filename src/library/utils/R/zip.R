@@ -70,7 +70,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     gzOK <- .Platform$OS.type == "windows"
     TAR <- Sys.getenv("TAR")
     if (!nzchar(TAR) && .Platform$OS.type == "windows") {
-        res <- try(system("btar.exe --version", intern = TRUE), silent = TRUE)
+        res <- try(system("tar.exe --version", intern = TRUE), silent = TRUE)
         TAR <- if (!inherits(res, "try-error")) "tar.exe"
         else {
             TAR <- file.path(R.home(), "bin", "untgz.exe")

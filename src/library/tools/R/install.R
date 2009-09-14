@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-#### R based engine for  'R CMD INSTALL', 'R CMD SHLIB'
+#### R based engine for  R CMD INSTALL SHLIB Rdconv Rd2dvi
 ####
 
 ##' @param args
@@ -23,7 +23,7 @@
 .install_packages <- function(args = NULL)
 {
     ## calls system() on Windows for
-    ## tar sh (configure.win/cleanup.win) cp mv make rm zip [hhc if CHM help]
+    ## sh (configure.win/cleanup.win) make zip [hhc if CHM help]
 
     ## we don't want to load utils just for this
     .file_test <- function(op, x)
@@ -155,8 +155,10 @@
             if (lock && nzchar(lockdir) &&
                 dir.exists(lp <- file.path(lockdir, p))) {
                 starsmsg(stars, "restoring previous ", sQuote(pkgdir))
-                ## FIXME: on Windows use file.copy(recursive = TRUE)
-                system(paste("mv", lp, pkgdir))
+                if (WINDOWS) {
+                    file.copy(lp, pkgdir, recursive = TRUE)
+                    unlink(lp, recursive = TRUE)
+                } else system(paste("mv", lp, pkgdir))
             }
         }
 
@@ -333,6 +335,7 @@
     }
 
 
+    ## Unix only
     do_install_binary <- function(pkg, instdir, desc)
     {
         starsmsg(stars, "installing *binary* package ", sQuote(pkg), " ...")
@@ -362,9 +365,10 @@
                 if (file.exists("Makefile.win"))
                     system(paste(MAKE, "-f Makefile.win clean"))
                 else
-                    system("rm -f *_res.rc *.o *.d Makedeps")
-                ## FIXME copied from MakePkg: reconsider?
-                ## system("rm -rf ../chm ../check ../tests/*.Rout")
+                    unlink(c("Makedeps",
+                             Sys.glob("*_res.rc"),
+                             Sys.glob("*.[do]")))
+                    # system("rm -f *_res.rc *.o *.d Makedeps")
             } else {
                 if (file.exists("Makefile")) system(paste(MAKE, "clean"))
                 else ## we will be using SHLIB --preclean
@@ -384,9 +388,10 @@
     {
         cp_r <- function(from, to)
         {
-            ## used for inst: could use file.copy
+            ## used for inst/
             if (WINDOWS) {
-                system(paste0("cp -r ", shQuote(from), "/* ", shQuote(to)))
+                file.copy(Sys.glob(file.path(from, "*")), to, recursive = TRUE)
+                # system(paste0("cp -r ", shQuote(from), "/* ", shQuote(to)))
             } else {
                 from <- shQuote(from)
                 to <- shQuote(to)

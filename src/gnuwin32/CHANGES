@@ -51,6 +51,10 @@ PACKAGE INSTALLATION
 	library().  Re-installation of all packages is advised
 	(use update.packages(checkBuilt = TRUE)).
 
+    o	It is possible to install source packages without Rtools
+	provided they have no compiled code and no configure.win or
+	cleanup.win script.
+
 
 INSTALLATION
 
