@@ -262,6 +262,22 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	CloseHandle(pi.hThread);
 	return(pwait(pi.hProcess));
     } else if (cmdarg > 0 && argc > cmdarg && 
+	      strcmp(argv[cmdarg], "INSTALL") == 0) {
+	/* handle Rcmd INSTALL internally */
+	snprintf(cmd, CMD_LEN, 
+		 "%s/bin/Rterm.exe -e tools:::.install_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --slave --args ",
+		 getRHOME());
+	for (i = cmdarg + 1; i < argc; i++) {
+	    strcat(cmd, "nextArg");
+	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
+		fprintf(stderr, "command line too long\n");
+		return(27);
+	    }
+	    strcat(cmd, argv[i]);
+	}
+	status = system(cmd);
+	return(status);
+    } else if (cmdarg > 0 && argc > cmdarg && 
 	      strcmp(argv[cmdarg], "REMOVE") == 0) {
 	/* handle Rcmd REMOVE internally */
 	snprintf(cmd, CMD_LEN, 

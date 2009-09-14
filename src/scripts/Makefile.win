@@ -7,7 +7,7 @@ R_HOME = ../..
 all: \
  $(R_HOME)/bin/build $(R_HOME)/bin/check $(R_HOME)/bin/config.sh \
  $(R_HOME)/bin/Rdconv.sh $(R_HOME)/bin/Rd2dvi.sh $(R_HOME)/bin/Sd2Rd \
- $(R_HOME)/bin/Rprof $(R_HOME)/bin/INSTALL.sh $(R_HOME)/bin/SHLIB.sh \
+ $(R_HOME)/bin/Rprof $(R_HOME)/bin/SHLIB.sh \
  $(R_HOME)/bin/Stangle.sh $(R_HOME)/bin/Sweave.sh
 
 $(R_HOME)/bin/check: check.in
@@ -19,19 +19,16 @@ $(R_HOME)/bin/build: build.in
 $(R_HOME)/bin/Sd2Rd: Sd2Rd.in
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/bin/Rdconv.sh: Rdconv
-	@cp $< $@
-
 $(R_HOME)/bin/Rprof: Rprof.in
 	@$(SED) -e 1d $< > $@
+
+$(R_HOME)/bin/Rdconv.sh: Rdconv
+	@cp $< $@
 
 $(R_HOME)/bin/Rd2dvi.sh: Rd2dvi
 	@cp $< $@
 
 $(R_HOME)/bin/config.sh: config
-	@cp $< $@
-
-$(R_HOME)/bin/INSTALL.sh: INSTALL
 	@cp $< $@
 
 $(R_HOME)/bin/SHLIB.sh: SHLIB
