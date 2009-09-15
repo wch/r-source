@@ -535,14 +535,15 @@ AC_SUBST(MAKE)
 R_PROG_PAGER
 ## Perl
 R_PROG_PERL
-## Tar
+## Tar -- we prefer a GNU version
 AC_PATH_PROGS(TAR, [${TAR} gtar tar], "")
 ## TeXMF stuff
 R_PROG_TEXMF
-## Unzip && zip && gzip
+## Unzip && zip && gzip && bip2
 AC_PATH_PROGS(R_UNZIPCMD, [${UNZIP} unzip], "")
 AC_PATH_PROGS(R_ZIPCMD, [${ZIP} zip], "")
 AC_PATH_PROGS(R_GZIPCMD, [${GZIP} gzip], true)
+AC_PATH_PROGS(R_BZIPCMD, [${BZIP} bzip2], "")
 ## Browser
 R_PROG_BROWSER
 ## PDF viewer

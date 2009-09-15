@@ -23,6 +23,7 @@ R_GZIPCMD=${R_GZIPCMD-'@R_GZIPCMD@'}
 ## Default zip/unzip commands
 R_UNZIPCMD=${R_UNZIPCMD-'@R_UNZIPCMD@'}
 R_ZIPCMD=${R_ZIPCMD-'@R_ZIPCMD@'}
+R_BZIPCMD=${R_BZIPCMD-'@R_BZIPCMD@'}
 ## Default browser
 R_BROWSER=${R_BROWSER-'@R_BROWSER@'}
 ## Default editor
