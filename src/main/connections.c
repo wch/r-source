@@ -4805,6 +4805,52 @@ SEXP R_decompress1(SEXP in)
     return ans;
 }
 
+attribute_hidden
+SEXP R_compress2(SEXP in)
+{
+    unsigned int inlen, outlen;
+    int res;
+    char *buf;
+    SEXP ans;
+
+    if(TYPEOF(in) != RAWSXP)
+	error("R_compress2 requires a raw vector");
+    inlen = LENGTH(in);
+    outlen = 1.2*inlen + 20; /* guess */
+    buf = R_alloc(outlen, sizeof(char));
+    /* we want this to be system-independent */
+    *((unsigned int *)buf) = (unsigned int) uiSwap(inlen);
+    res = BZ2_bzBuffToBuffCompress(buf + 4, &outlen, 
+				   (char *)RAW(in), inlen, 
+				   9, 0, 0);
+    if(res != BZ_OK) error(_("internal error in R_decompress2"));
+    printf("compressed %d to %d\n", inlen, outlen);
+    ans = allocVector(RAWSXP, outlen + 4);
+    memcpy(RAW(ans), buf, outlen + 4);
+    return ans;
+}
+
+attribute_hidden
+SEXP R_decompress2(SEXP in)
+{
+    unsigned int inlen, outlen;
+    int res;
+    char *buf, *p = (char *) RAW(in);
+    SEXP ans;
+
+    if(TYPEOF(in) != RAWSXP)
+	error("R_decompress2 requires a raw vector");
+    inlen = LENGTH(in);
+    outlen = (uLong) uiSwap(*((unsigned int *) p));
+    buf = R_alloc(outlen, sizeof(char));
+    res = BZ2_bzBuffToBuffDecompress(buf, &outlen, p + 4, inlen, 0, 0);
+    if(res != BZ_OK) error(_("internal error in R_decompress2"));
+    ans = allocVector(RAWSXP, outlen);
+    memcpy(RAW(ans), buf, outlen);
+    return ans;
+}
+
+
 SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     Rboolean immediate = FALSE;

@@ -48,22 +48,6 @@ code2LazyLoadDB <-
     }
 }
 
-rda2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
-{
-    pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
-    if(!length(pkgpath))
-        stop(gettextf("there is no package called '%s'", package),
-             domain = NA)
-    rdafile <- file.path(pkgpath, "R", "all.rda")
-    if (! file.exists(rdafile))
-        stop(gettextf("package '%s' has no .rda file", package),
-             domain = NA)
-    dbbase <- file.path(pkgpath, "R", package)
-    e <- new.env(hash=TRUE)
-    load(rdafile, e)
-    makeLazyLoadDB(e, dbbase, compress = compress)
-}
-
 sysdata2LazyLoadDB <- function(srcFile, destDir, compress = TRUE)
 {
     e <- new.env(hash=TRUE)
@@ -112,7 +96,7 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
     } else NULL
 }
 
-data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
+data2LazyLoadDB <- function(package, lib.loc = NULL, compress = 2)
 {
     options(warn=1)
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
@@ -300,12 +284,8 @@ makeLazyLoading <-
     if (file.info(codeFile)["size"] == file.info(loaderFile)["size"])
         warning("package seems to be using lazy loading already")
     else {
-        rdaFile <- file.path(pkgpath, "R", "all.rda")
-        if (file.exists(rdaFile))
-            rda2LazyLoadDB(package, lib.loc, compress = compress)
-        else
-            code2LazyLoadDB(package, lib.loc = lib.loc,
-                            keep.source = keep.source, compress = compress)
+        code2LazyLoadDB(package, lib.loc = lib.loc,
+                        keep.source = keep.source, compress = compress)
         file.copy(loaderFile, codeFile, TRUE)
     }
 
