@@ -50,6 +50,10 @@ unserialize(connection, refhook = NULL)
   to \code{TRUE}: only ASCII representations can be written to text-mode
   connections and attempting to use \code{ascii = FALSE} will throw an
   error.
+  
+  The format consists of a single line followed by the data: the first
+  line contains a single character: \code{X} for binary serialization
+  and \code{A} for ASCII serialization, followed by a new line.
 }
 \section{Warning}{
   These functions are still experimental.  Names, interfaces and

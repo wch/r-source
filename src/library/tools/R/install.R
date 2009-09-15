@@ -100,7 +100,9 @@
             "			without using a lock directory",
             "      --pkglock		use a per-package lock directory",
             "      --build    	build binaries of the installed package(s)",
-            "\nfor Unix",
+            "      --data-compress=	none, gzip (default) or bzip2: compression",
+            "			to be used for lazy-loading of data",
+           "\nfor Unix",
             "      --configure-args=ARGS",
             "			set arguments for the configure scripts (if any)",
             "      --configure-vars=VARS",
@@ -109,7 +111,7 @@
             "      --no-multiarch	build only the main architecture",
             "\nand on Windows only",
             "      --auto-zip	select whether to zip data automatically",
-            "      --chm		build CHM help",
+            "      --chm		build CHM help (unsupported)",
             "",
             "Which of --html or --no-html is the default depends on the build of R:",
             paste("for this one it is ",
@@ -727,7 +729,8 @@
                         ## the package we have just installed is on the
                         ## library path.'
                         ## (We set .libPaths)
-                        res <- try(data2LazyLoadDB(pkg_name, lib))
+                        res <- try(data2LazyLoadDB(pkg_name, lib,
+                                                   compress = data_compress))
                         if (inherits(res, "try-error"))
                             pkgerrmsg("lazydata failed", pkg_name)
                     } else if (use_zip_data &&
@@ -928,6 +931,7 @@
     multiarch <- TRUE
     install_tests <- FALSE
     get_user_libPaths <- FALSE
+    data_compress <- TRUE # FALSE, TRUE, 2 for bzip2
 
     while(length(args)) {
         a <- args[1]
@@ -997,6 +1001,13 @@
             get_user_libPaths <- TRUE
         } else if (a == "--build") {
             if (WINDOWS) zip_up <- TRUE else tar_up <- TRUE
+        } else if (substr(a, 1, 16) == "--data-compress=") {
+            dc <- substr(a, 17, 1000)
+            dc <- match.arg(dc, c("none", "gzip", "bzip2"))
+            data_compress <- switch(dc,
+                                    "none" = FALSE,
+                                    "gzip" = TRUE,
+                                    "bzip2" = 2)
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)

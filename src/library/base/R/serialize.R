@@ -21,7 +21,8 @@ function(object, file = "", ascii = FALSE, version = NULL,
     if(is.character(file)) {
         if(file == "") stop("'file' must be non-empty string")
         mode <- if(ascii) "w" else "wb"
-        con <- if(compress) gzfile(file, mode) else file(file, mode)
+        con <- if (identical(compress, "bzip2")) bzfile(file, mode)
+            else if(compress) gzfile(file, mode) else file(file, mode)
         on.exit(close(con))
     }
     else if(inherits(file, "connection")) {

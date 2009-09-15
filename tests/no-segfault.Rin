@@ -27,7 +27,7 @@ edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
 ## warning: parent.env(NULL) <- NULL creates a loop
 ## warning: browseVignettes lanuches many browser processes.
 misc.int <- c("browser", "browseVignettes", "bug.report", "checkCRAN",
-              "getCRANmirrors", "menu", "repeat",
+              "getCRANmirrors", "lazyLoad", "menu", "repeat",
               "readLines", "package.skeleton", "trace", "recover",
               "rm", "remove", "parent.env<-")
 inet.list <- c(apropos("download\\."),

@@ -303,9 +303,14 @@ NEW FEATURES
 	compression (which will be slower, but can give substantially
 	smaller files).  load() can read such saves (but only as from
 	this version of R).
-
     o	detach() now has an argument 'character.only' with the same meaning
 	as in library() or require().
+
+    o	R CMD INSTALL has a new option --data-compress to control the
+	compression used when lazy-loading data.  THe default is
+	'gzip': 'bzip2' will give ca 15% better compression at the
+	expense of slower installation times.  More methods are
+	planned for future releases.
 
 
 REGULAR EXPRESSIONS
