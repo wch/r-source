@@ -1304,8 +1304,10 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	*/
 	FILE *fp = fopen(R_ExpandFileName(file), "rb");  
 	char buf[7];
-	memset(buf, 0, 7); fread(buf, 3, 1, fp); fclose(fp);
-	if(streql(buf, "BZh")) return do_bzfile(call, op, args, env);
+	if (fp) {
+	    memset(buf, 0, 7); fread(buf, 3, 1, fp); fclose(fp);
+	    if(streql(buf, "BZh")) return do_bzfile(call, op, args, env);
+	}
    }
     ncon = NextConnection();
     con = Connections[ncon] = newgzfile(file, strlen(open) ? open : "r",
