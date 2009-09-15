@@ -1,6 +1,7 @@
 ## These can be overridden in MkRules
 
-JPEGDIR = jpeg-6b
+## must be jpeg-6b or jpeg-7
+JPEGDIR = jpeg-7
 PNGDIR = libpng
 TIFFDIR = libtiff
 
@@ -33,7 +34,7 @@ buildpng:
 # (I suspect) using the reduced set of tools we distribute.
 ## 2006-01-15 checked under current tools
 buildjpeg: $(JPEGDIR)/jconfig.h Makefile.jpeg
-	$(MAKE) CC='$(CC)' AR='$(AR) rc' RANLIB=$(RANLIB) -C $(JPEGDIR) \
+	$(MAKE) CC='$(CC)' AR='$(AR) rc' RANLIB=$(RANLIB) JPEGDIR=$(JPEGDIR) -C $(JPEGDIR) \
 	  -f ../Makefile.jpeg libjpeg.a
 
 $(JPEGDIR)/jconfig.h: jconfig.h 

@@ -50,6 +50,9 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
+/* Define to 1 if you have the <io.h> header file. */
+#define HAVE_IO_H 1
+
 /* Define to 1 if you have the `isascii' function. */
 #define HAVE_ISASCII 1
 
@@ -88,6 +91,9 @@
 
 /* Define to 1 if you have the <search.h> header file. */
 #define HAVE_SEARCH_H 1
+
+/* Define to 1 if you have the `setmode' function. */
+#define HAVE_SETMODE 1
 
 /* Define to 1 if you have the `sqrt' function. */
 #define HAVE_SQRT 1
@@ -143,6 +149,9 @@
 
 /* Set the native cpu bit order (FILLORDER_LSB2MSB or FILLORDER_MSB2LSB) */
 #define HOST_FILLORDER FILLORDER_LSB2MSB
+
+/* Support ISO JBIG compression (requires JBIG-KIT library) */
+/* #undef JBIG_SUPPORT */
 
 /* Support JPEG compression (requires IJG JPEG library) */
 /* #undef JPEG_SUPPORT */
@@ -201,8 +210,20 @@
 /* The size of a `int', as computed by sizeof. */
 #define SIZEOF_INT 4
 
-/* The size of a `long', as computed by sizeof. */
+/* The size of `long', as computed by sizeof. */
 #define SIZEOF_LONG 4
+
+/* The size of `signed long', as computed by sizeof. */
+#define SIZEOF_SIGNED_LONG 4
+
+/* The size of `signed long long', as computed by sizeof. */
+#define SIZEOF_SIGNED_LONG_LONG 8
+
+/* The size of `unsigned long', as computed by sizeof. */
+#define SIZEOF_UNSIGNED_LONG 4
+
+/* The size of `unsigned long long', as computed by sizeof. */
+#define SIZEOF_UNSIGNED_LONG_LONG 8
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
@@ -219,6 +240,18 @@
 
 /* Support ThunderScan 4-bit RLE algorithm */
 #define THUNDER_SUPPORT 1
+
+/* Signed 64-bit type formatter */
+#define TIFF_INT64_FORMAT "%lld"
+
+/* Signed 64-bit type */
+#define TIFF_INT64_T signed long long
+
+/* Unsigned 64-bit type formatter */
+#define TIFF_UINT64_FORMAT "%llu"
+
+/* Unsigned 64-bit type */
+#define TIFF_UINT64_T unsigned long long
 
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #define TIME_WITH_SYS_TIME 1
@@ -254,8 +287,8 @@
 /* #undef inline */
 #endif
 
-/* Define to `long' if <sys/types.h> does not define. */
+/* Define to `long int' if <sys/types.h> does not define. */
 /* #undef off_t */
 
-/* Define to `unsigned' if <sys/types.h> does not define. */
+/* Define to `unsigned int' if <sys/types.h> does not define. */
 /* #undef size_t */
