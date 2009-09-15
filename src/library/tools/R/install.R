@@ -1008,26 +1008,19 @@
         stop("cannot create temporary directory")
 
     ## now unpack tarballs and do some basic checks
-    allpkgs <- character(0)
+    allpkgs <- character()
     for(pkg in pkgs) {
         if (debug) message("processing ", sQuote(pkg), domain = NA)
         if (.file_test("-f", pkg)) {
             if (debug) message("a file", domain = NA)
             pkgname <- basename(pkg) # or bundle name
             ## Also allow for 'package.tgz' ...
-            pkgname <- sub("\\.tgz$", "", pkgname)
+            pkgname <- sub("\\.(tgz|tar\\.gz|tar\\.bz2)$", "", pkgname)
             pkgname <- sub("_.*", "", pkgname)
             res <- if (WINDOWS) {
-                ## Perl version had $pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
                 utils::untar(pkg, exdir = chartr("\\", "/", tmpdir))
-                ## td <- chartr("\\", "/", tmpdir)
-                ## system(paste("tar -zxf", shQuote(pkg), "-C", shQuote(td)))
             } else {
                 utils::untar(pkg, exdir = tmpdir)
-                ## We cannot assume GNU tar, but we can assume system uses
-                ## a shell which understands subshells and pipes
-                ## system(paste(GZIP, "-dc", shQuote(pkg),
-                ##             "| (cd ", shQuote(tmpdir), "&&", TAR, "-xf -)"))
             }
             if (res) errmsg("error unpacking tarball")
             ## If we have a binary bundle distribution, there should be

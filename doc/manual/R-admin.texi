@@ -2407,6 +2407,13 @@ CMD Sd2Rd}.
 @c src/gnuwin32/fixed/rwver.pl
 @c src/gnuwin32/installer: JRins.pl WIXins.pl
 
+People working with packages will need a @command{tar} program,
+@command{gzip} and, preferably, @command{bzip2}.  Versions with the
+ability to automagically detect compressed archives (and their type) are
+preferred: these include GNU @command{tar} 1.15 or later,
+@command{bsdtar} (from @uref{http://code.google.com/p/libarchive/}) and
+@command{tar} from the Heirloom Toolchest
+(@uref{http://heirloom.sourceforge.net/tools.html}.
 
 @menu
 * Tcl/Tk::                      

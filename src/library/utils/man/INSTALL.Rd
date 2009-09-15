@@ -47,9 +47,14 @@
   
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names of directories.  \code{pkgs} may also contain
-  names of package/bundle archive files of the form
-  \file{pkg_version.tar.gz} as obtained from CRAN: these are then
-  extracted to a temporary directory.
+  names of package/bundle archive files: these are then
+  extracted to a temporary directory.  Precisely what forms are accepted
+  depends on the system (see \code{\link{untar}}): this will certainly
+  include filenames of the form \file{pkg_version.tar.gz} as obtained
+  from CRAN, \file{pkg.tgz} and \file{pkg.tar.gz}, usuallly
+  \file{pkg_version.tar.bz2} and \file{pkg.tar.bz2}, and on systems with
+  recent toolsets, \file{pkg_version.ext} for any supported extension
+  such as \file{tar.lzma} and \file{tar.xz}.
 #ifdef unix
   Finally, binary package/bundle archive files (as created by
   \command{R CMD build --binary}) can be supplied.
@@ -70,16 +75,9 @@
   locations (and set these via \option{--configure-vars}), see section
   \dQuote{Configuration variables} in \dQuote{R Installation and
   Administration} for more information.  (If these are used more than
-  once on the command line they are concatenated.)  One can bypass the
-  configure mechanism using the option \option{--no-configure}.
+  once on the command line they are concatenated.)  The configure
+  mechanism can be bypassed using the option \option{--no-configure}.
 #endif
-
-  If \option{--no-docs} is given, no help files are built.  Options
-  \option{--no-text}, \option{--no-html}, and \option{--no-latex} suppress
-  creating the text, HTML, and LaTeX versions, respectively.  The
-  default is to build help files in all three versions.  Similarly,
-  \option{--no-example} suppresses extraction of the \R code for the
-  examples from the help files.
 
   If the attempt to install the package fails, leftovers are removed.
   If the package was already installed, the old version is restored.
@@ -100,15 +98,10 @@
   (two names for the same option).
 #ifdef windows
   
-  On Windows it can be helpful to store data files in zip archives since
-  many small files can take up an inordinate amount of disc space.  This
-  is controlled by the option \option{--use-zip-data}.  CRAN binaries
-  are produced by \option{--auto-zip} which chooses to zip data if the
-  sources are more than 100Kb and there are no files with names
-  differing only by extension.
-
-  Option \option{--build} can be used to zip up the installed package or
-  bundle for distribution: it implies \option{--auto-zip}.
+  Windows-only ption \option{--build} can be used to zip up the
+  installed package or bundle for distribution: it implies
+  \option{--auto-zip} which selects if data file are zipped up to save
+  disc space.
 #endif
 #ifdef unix
   
@@ -139,9 +132,8 @@
 \section{Packages using the methods package}{
   Packages that require the methods package and make use functions such
   as \code{\link{setMethod}} or \code{\link{setClass}}, should be
-  installed using lazy-loading (or, deprecated, by creating a binary
-  image): use the field \code{LazyLoad} in the \file{DESCRIPTION} file
-  to ensure this.
+  installed using lazy-loading: use the field \code{LazyLoad} in the
+  \file{DESCRIPTION} file to ensure this.
 }
 
 \seealso{

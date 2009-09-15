@@ -153,7 +153,8 @@ function(dir, fields = NULL,
         for(i in seq_along(files)) {
             if(verbose) message(paste(" ", files[i]))
             p <- file.path(packages[i], "DESCRIPTION")
-            temp <- try(system(paste("tar zxf", files[i], p)))
+            ## temp <- try(system(paste("tar zxf", files[i], p)))
+            temp <- try(utils::untar(files[i], files = p))
             if(!inherits(temp, "try-error")) {
                 temp <- try(read.dcf(p, fields = fields)[1L, ],
                             silent = TRUE)

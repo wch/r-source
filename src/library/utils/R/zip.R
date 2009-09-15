@@ -76,14 +76,14 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             TAR <- file.path(R.home(), "bin", "untgz.exe")
             ## This is rather different.
             if (cflag == "j")
-                stop("'bzip2 compression is not supported by untgz.exe",
+                stop("'bzip2 compression is not yet supported by untgz.exe",
                      domain = NA)
             if (list) {
                 cmd <- paste(TAR, "-l", shQuote(tarfile))
                 if (verbose) message("untar: using cmd = ", sQuote(cmd))
                 return(system(cmd, intern = TRUE))
             } else {
-                ## NB only absolute [aths for tarfile will work
+                ## NB only absolute paths for tarfile will work
                 tarfile <- chartr("\\", "/", normalizePath(tarfile))
                 if (!missing(exdir)) {
                     dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
@@ -102,7 +102,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         }
     }
     if (!nzchar(TAR))
-        stop("set evironment variable 'TAR' to point to a GNU-compatible 'tar'")
+        stop("set environment variable 'TAR' to point to a GNU-compatible 'tar'")
 
     if (!gzOK ) {
         ## version info may be sent to stdout or stderr
@@ -128,8 +128,8 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         tarfile <- "-"
         cflag <- ""
     }
-    if (!gzOK && cflag == "j") {
-        TAR <- paste("bzip2 -dc", tarfile, "|", TAR)
+    if (!gzOK && cflag == "j" && nzchar(ZIP <- Sys.getenv("R_BZIPCMD"))) {
+        TAR <- paste(ZIP,  "-dc", tarfile, "|", TAR)
         tarfile < "-"
         cflag <- ""
     }

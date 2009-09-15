@@ -288,6 +288,13 @@ NEW FEATURES
     o	New function untar() to list or unpack tar archives, possibly
 	compressed.
 
+    o	R CMD INSTALL/check and tools::writePACKAGES accept a wider
+	range of compressed tar archives.  Precisely how wide depends
+	on the capabilities of the host system's 'tar' command: they
+	almost always include .tar.bz2 archives, and with modern
+	versions of 'tar' other forms of compression such as lzma and
+	xz, and arbitrary extensions.
+
 
 REGULAR EXPRESSIONS
 

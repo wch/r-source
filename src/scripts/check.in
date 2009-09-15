@@ -237,7 +237,6 @@ if($opt_library) {
 }
 
 my $tar = R_getenv("TAR", "tar");
-my $gzip = R_getenv("R_GZIPCMD", "gzip");
 
 my $R_opts = "--vanilla";
 
@@ -297,19 +296,19 @@ foreach my $pkg (@ARGV) {
     chdir($startdir);
     $pkg =~ s+/$++;  # strip any trailing '/'
     my $pkgname = basename($pkg);
+    my $opkgname = $pkgname;
     $is_ascii = 0;
 
     my $thispkg_subdirs = $opt_subdirs;
     ## is this a tar archive?
     my $istar = 0;
-    if($pkgname =~ /\.tar\.gz$/ || $pkgname =~ /\.tgz$/) {
-	$pkgname =~ s/\.tar\.gz$//;
-	$pkgname =~ s/\.tgz$//;
-	$pkgname =~ s/_[0-9\.-]*$//;
+    if(-d $pkg) {
+	$thispkg_subdirs = "no" if $thispkg_subdirs eq "default";
+    } else {
 	$istar = 1;
 	$thispkg_subdirs = "yes-maybe" if $thispkg_subdirs eq "default";
-    } else {
-	$thispkg_subdirs = "no" if $thispkg_subdirs eq "default";
+	$pkgname =~ s/\.(tar\.gz|tgz|tar\.bz2)$//;
+	$pkgname =~ s/_[0-9\.-]*$//;
     }
 
     my $pkgoutdir = &file_path($outdir, "$pkgname.Rcheck");
@@ -327,12 +326,26 @@ foreach my $pkg (@ARGV) {
 	    ## workaround for paths in Cygwin tar
 	    $pkg =~ s+^([A-Za-z]):+/cygdrive/\1+;
 	}
-	## this requires GNU tar: ATT 'tar x' does not support -C.
+	## ATT 'tar x' did not support -C.
 	## Note that $pkg, $dir might contain spaces
 	my $pkgq = &shell_quote_file_path($pkg);
 	my $dirq = &shell_quote_file_path($dir);
-	if(R_system("$gzip -dc $pkgq | $tar -xf - -C $dirq")) {
-	    die "Error: cannot untar '$pkg'\n";}
+	if($opkgname =~ /\.bz2$/) {
+	    my $bzip = R_getenv("R_BZIPCMD", "bzip2");
+	    if(R_system("$bzip -dc $pkgq | $tar -xf - -C $dirq")) {
+		die "Error: cannot untar '$pkg'\n";
+	    }
+	} elsif ($opkgname =~ /\.(tar\.gz|tgz)$/) {
+	    my $gzip = R_getenv("R_GZIPCMD", "gzip");
+	    if(R_system("$gzip -dc $pkgq | $tar -xf - -C $dirq")) {
+		die "Error: cannot untar '$pkg'\n";
+	    }
+	} else {
+	    ## let tar automagically fathom out compression (if any)
+	    if(R_system("$tar -xf $pkgq -C $dirq")) {
+		die "Error: cannot untar '$pkg'\n";
+	    }
+	}
 	$pkg = &file_path($dir, $pkgname);
     }
 
@@ -2728,7 +2741,7 @@ sub usage {
 Usage: R CMD $name [options] pkgs
 
 Check R packages from package sources, which can be directories or
-gzipped package 'tar' archives with extension '.tar.gz' or '.tgz'.
+package 'tar' archives with extension '.tar.gz', '.tar.bz2' or '.tgz'.
 
 A variety of diagnostic checks on directory structure, index and
 control files are performed.  The package is installed into the log
