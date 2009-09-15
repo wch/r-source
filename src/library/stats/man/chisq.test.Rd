@@ -68,8 +68,8 @@ chisq.test(x, y = NULL, correct = TRUE,
 
   In the goodness-of-fit case simulation is done by random sampling from
   the discrete distribution specified by \code{p}, each sample being
-  of size \code{n = sum(x)}.  This simulation is done in \code{R}
-  and may be slow.
+  of size \code{n = sum(x)}.  This simulation is done in \R and may be
+  slow.
 }
 \value{
   A list with class \code{"htest"} containing the following

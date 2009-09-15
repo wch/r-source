@@ -43,7 +43,7 @@ stderr()
   output from \code{stdout()} can be split: see the help page).
 
   The encoding for \code{\link{stdin}()} when redirected can
-  be set by the command-line flag \code{--encoding}.
+  be set by the command-line flag \option{--encoding}.
 
   \code{showConnections} returns a matrix of information.  If a
   connection object has been lost or forgotten, \code{getConnection}

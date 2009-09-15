@@ -126,10 +126,10 @@ contrib.url(repos, type = getOption("pkgType"))
   \item{configure.args}{(not Windows) a character vector or a named list.
     If a character vector with no names is supplied, the elements are
     concatenated into a single string (separated by a space) and used
-    as the value for the \code{--configure-args}
+    as the value for the \option{--configure-args}
     flag in the call to \command{R CMD INSTALL}.
     If the character vector has names these are assumed to identify
-    values for \code{--configure-args} for individual packages.
+    values for \option{--configure-args} for individual packages.
     This allows one to specify settings for an entire collection of packages
     which will be used if any of those packages are to be installed.
     (These settings can therefore be reused and act as default settings.)
@@ -137,10 +137,10 @@ contrib.url(repos, type = getOption("pkgType"))
     A named list can be used also to the same effect, and that
     allows multi-element character strings for each package
     which are concatenated to a single string to be used as the
-    value for \code{--configure-args}.
+    value for \option{--configure-args}.
   }
   \item{configure.vars}{(not Windows) similar, for
-    \code{--configure-vars}, which is used to set environment variables
+    \option{--configure-vars}, which is used to set environment variables
     for the \command{configure} run.}
   \item{oldPkgs}{
     if specified as non-NULL, \code{update.packages()} only considers
@@ -178,7 +178,7 @@ contrib.url(repos, type = getOption("pkgType"))
 #endif
   }
   \item{clean}{a logical value indicating whether to specify
-    to add the \code{--clean} flag to the call to
+    to add the \option{--clean} flag to the call to
     \command{R CMD INSTALL}.
     This is sometimes used to perform additional operations at the end
     of the package installation in addition to removing intermediate files.
@@ -249,7 +249,7 @@ contrib.url(repos, type = getOption("pkgType"))
   downloaded but used directly.  Both \code{"file:"} and
   \code{"file:///"} are allowed as prefixes to a file path.  Use the
   latter only for URLs: see \code{\link{url}} for their interpretation.
-  (Other forms of \code{"file://"} URLs are not supported.)
+  (Other forms of \samp{file://} URLs are not supported.)
   
   The main function of the set is \code{update.packages}.  First a list
   of all packages/bundles found in \code{lib.loc} is created and
@@ -287,7 +287,7 @@ contrib.url(repos, type = getOption("pkgType"))
   an attempt is made to install the packages in an order that respects
   their dependencies.  This does assume that all the entries in
   \code{lib} are on the default library path for installs (set by
-  \code{R_LIBS}). 
+  \env{R_LIBS}). 
 #endif
 
   \code{contrib.url} adds the appropriate type-specific path within a

@@ -62,7 +62,7 @@
   \code{.onAttach} only for actions that are needed only when the
   package becomes visible to the user, for example a start-up message.
 
-  If a package was installed with \code{--with-package-versions}, the
+  If a package was installed with \option{--with-package-versions}, the
   \code{pkgname} supplied will be something like \code{tree_1.0-16}.
 }
 \seealso{

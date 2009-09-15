@@ -51,17 +51,17 @@ timestamp(stamp = date(),
 #endif
 #ifdef unix
   This works under the \code{readline} command-line interface and the
-  \code{R.app} Mac OS X console, but not otherwise (for example, in
+  \file{R.app} Mac OS X console, but not otherwise (for example, in
   batch use or in an embedded application).
 
   The \code{readline} history mechanism is controlled by two environment
 #endif
-  variables: \code{R_HISTSIZE} controls the number of lines that are
-  saved (default 512), and \code{R_HISTFILE} sets the filename used for
+  variables: \env{R_HISTSIZE} controls the number of lines that are
+  saved (default 512), and \env{R_HISTFILE} sets the filename used for
   the loading/saving of history if requested at the beginning/end of a
   session (but not the default for these functions).  There is no limit
   on the number of lines of history retained during a session, so
-  setting \code{R_HISTSIZE} to a large value has no penalty unless a
+  setting \env{R_HISTSIZE} to a large value has no penalty unless a
   large file is actually generated.
 
   These variables are read at the time of saving, so can be altered

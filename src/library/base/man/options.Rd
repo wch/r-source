@@ -103,7 +103,7 @@ getOption(x, default = NULL)
     % note use of \code as otherwise -- is an en-dash.
     \item{\code{echo}:}{logical.  Only used in non-interactive mode,
       when it controls whether input is echoed.  Command-line option
-      \code{--slave} sets this to \code{FALSE}, but otherwise
+      \option{--slave} sets this to \code{FALSE}, but otherwise
       it starts the session as \code{TRUE}.}
 
     \item{\code{encoding}:}{The name of an encoding, default
@@ -125,7 +125,7 @@ getOption(x, default = NULL)
       expressions that will be evaluated.  Valid values are
       25\dots500000 with default 5000.  If you increase it, you may
       also want to start \R with a larger protection stack;
-      see \code{--max-ppsize} in \code{\link{Memory}}.  Note too that
+      see \option{--max-ppsize} in \code{\link{Memory}}.  Note too that
       you may cause a segfault from overflow of the C stack, and on OSes
       where it is possible you may want to increase that.}
 

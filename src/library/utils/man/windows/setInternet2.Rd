@@ -5,7 +5,7 @@
 Set or disable the use of Internet Explorer for Internet access.
 }
 \description{
-With the \code{--internet2} startup option, or by calling this function, R
+With the \option{--internet2} startup option, or by calling this function, R
 will make use of the \file{internet2.dll} library for Internet 
 access, which makes use of Internet Explorer functions.  This allows specification
 of proxies, etc., in the \dQuote{Internet Options} applet in \dQuote{Control Panel}.

@@ -15,12 +15,12 @@ commandArgs(trailingOnly = FALSE)
 }
 \arguments{
   \item{trailingOnly}{logical.  Should only arguments after
-    \code{--args} be returned?}
+    \option{--args} be returned?}
 }
 \details{
   These arguments are captured before the standard \R command line
   processing takes place.  This means that they are the unmodified
-  values.  This is especially useful with the \code{--args}
+  values.  This is especially useful with the \option{--args}
   command-line flag to \R, as all of the command line after that flag
   is skipped.
 }
@@ -33,7 +33,7 @@ commandArgs(trailingOnly = FALSE)
   embedded \R it can be anything the programmer supplied.
 
   If \code{trailingOnly = TRUE}, a character vector of those arguments
-  (if any) supplied after \code{--args}.
+  (if any) supplied after \option{--args}.
 }
 \seealso{\code{\link{Startup}}
 #ifdef unix

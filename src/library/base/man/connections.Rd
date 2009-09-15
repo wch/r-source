@@ -228,8 +228,8 @@ isIncomplete(con)
   not supported.
 #endif
 #ifdef windows
-  only supported if \code{--internet2} or \code{\link{setInternet2}(TRUE)} 
-  was used (to make use of Internet
+  only supported if \option{--internet2} or
+  \code{\link{setInternet2}(TRUE)} was used (to make use of Internet
   Explorer internals), and then only if the certificate is considered to
   be valid.  With that option only, the \samp{http://user:pass@site}
   notation for sites requiring authentication is also accepted.

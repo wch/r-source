@@ -7,7 +7,7 @@
 \alias{Rscript}
 \title{Scripting Front-End for R}
 \description{
-  This is an alternative front end for use in \code{#!} scripts and
+  This is an alternative front end for use in \samp{#!} scripts and
   other scripting applications.
 }
 \usage{
@@ -18,21 +18,21 @@
     be any of the options of the standard \R front-end, and also those
     described in the details.}
   \item{expression}{a \R expression.}
-  \item{file}{The name of a file containing \R commands.  \code{-}
+  \item{file}{The name of a file containing \R commands.  \samp{-}
     indicates \file{stdin}.}
   \item{args}{Arguments to be passed to the script in \code{file}.}
 }
 \details{
-  \code{Rscript --help} gives details of usage, and \code{Rscript
-    --version} gives the version of \code{Rscript}.
+  \command{Rscript --help} gives details of usage, and
+  \command{Rscript --version} gives the version of \command{Rscript}.
 
   Other invocations invoke the \R front-end with selected options.  This
-  front-end is convenient for writing \code{#!} scripts since it is an
+  front-end is convenient for writing \samp{#!} scripts since it is an
   executable and takes \code{file} directly as an argument.  Options
-  \code{--slave --no-restore} are always supplied: these imply
-  \code{--no-save}.
+  \option{--slave --no-restore} are always supplied: these imply
+  \option{--no-save}.
 #ifdef windows
-  The standard Windows command line has no concept of \code{#!} scripts,
+  The standard Windows command line has no concept of \samp{#!} scripts,
   but Cygwin shells do.
 #endif
 
@@ -42,13 +42,13 @@
 
   Additional options accepted (before \code{file} or \code{args}) are
   \describe{
-    \item{\code{--verbose}}{gives details of what \code{Rscript} is
+    \item{\option{--verbose}}{gives details of what \command{Rscript} is
       doing.  Also passed on to \R.}
-    \item{\code{--default-packages=list}}{where \code{list} is a
+    \item{\option{--default-packages=list}}{where \code{list} is a
       comma-separated list of package names or \code{NULL}.  Sets the
       environment variable \env{R_DEFAULT_PACKAGES} which determines the
-      packages loaded on startup.  The default for \code{Rscript} omits
-      \pkg{methods} as it takes about 60\% of the startup time.
+      packages loaded on startup.  The default for \command{Rscript}
+      omits \pkg{methods} as it takes about 60\% of the startup time.
     }
   }
 
@@ -71,7 +71,7 @@
 }
 #ifdef unix
 \note{
-  \code{Rscript} is only supported on systems with the \code{execv}
+  \command{Rscript} is only supported on systems with the \code{execv}
   system call.
 }
 #endif

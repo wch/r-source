@@ -58,21 +58,21 @@
   some of the more important ones.  Those that set the defaults for
   options are consulted only at startup (as are some of the others).
   \describe{
-    \item{\code{HOME}:}{The user's \sQuote{home} directory.}
-    \item{\code{LANGUAGE}:}{Optional.  The language(s) to be used for
+    \item{\env{HOME}:}{The user's \sQuote{home} directory.}
+    \item{\env{LANGUAGE}:}{Optional.  The language(s) to be used for
       message translations.  This is consulted when needed.}
-    \item{\code{LC_ALL}:}{(etc) Optional.  Use to set various aspects of
+    \item{\env{LC_ALL}:}{(etc) Optional.  Use to set various aspects of
       the locale -- see \code{\link{Sys.getlocale}}.  Consulted at startup.}
-    \item{\code{R_BATCH}:}{Optional -- set in a batch session.}
-    \item{\code{R_BROWSER}:}{The path to the default browser.  Used to
+    \item{\env{R_BATCH}:}{Optional -- set in a batch session.}
+    \item{\env{R_BROWSER}:}{The path to the default browser.  Used to
       set the default value of \code{\link{options}("browser")}.}
-    \item{\code{R_COMPLETION}:}{Optional.  If set to \code{FALSE},
+    \item{\env{R_COMPLETION}:}{Optional.  If set to \code{FALSE},
       command-line completion is not used.  (Not used by Mac OS GUI.)}
-    \item{\code{R_DEFAULT_PACKAGES}:}{A comma-separated list of packages
+    \item{\env{R_DEFAULT_PACKAGES}:}{A comma-separated list of packages
       which are to be loaded in every session.  See \code{\link{options}}.}
-    \item{\code{R_DOC_DIR}:}{The location of the \R \file{doc}
+    \item{\env{R_DOC_DIR}:}{The location of the \R \file{doc}
       directory.  Set by \R.}
-    \item{\code{R_DVIPSCMD}:}{The path to \code{dvips}.  Defaults to
+    \item{\env{R_DVIPSCMD}:}{The path to \command{dvips}.  Defaults to
       the value of \env{DVIPS}, and if that is unset to a value
       determined when \R was built.
 #ifdef unix
@@ -84,14 +84,14 @@
       Used by \command{R CMD Rd2dvi}.
 #endif
     }
-    \item{\code{R_ENVIRON}:}{Optional.  The path to the site environment
+    \item{\env{R_ENVIRON}:}{Optional.  The path to the site environment
       file: see \link{Startup}.  Consulted at startup.}
-    \item{\code{R_GSCMD}:}{Optional.  The path to GhostScript, used by
+    \item{\env{R_GSCMD}:}{Optional.  The path to GhostScript, used by
       \code{\link{dev2bitmap}}.}
-    \item{\code{R_HISTFILE}:}{Optional.  The path of the history file:
+    \item{\env{R_HISTFILE}:}{Optional.  The path of the history file:
       see \link{Startup}.  Consulted at startup and when the history is
       saved.}
-    \item{\code{R_HISTSIZE}:}{Optional.  The maximum size of the history
+    \item{\env{R_HISTSIZE}:}{Optional.  The maximum size of the history
       file, in lines.  Exactly how this is used depends on the
       interface.
 #ifdef unix
@@ -100,16 +100,16 @@
       end of a session).
 #endif
 #ifdef windows
-      For \code{Rgui} it controls the number of lines saved to the
+      For \command{Rgui} it controls the number of lines saved to the
       history file: the size of the history when in use is controlled by
       the console customization: see \code{\link{Rconsole}}.
 #endif
     }
-    \item{\code{R_HOME}:}{The top-level directory of the \R
+    \item{\env{R_HOME}:}{The top-level directory of the \R
       installation: see \code{\link{R.home}}.  Set by \R.}
-    \item{\code{R_INCLUDE_DIR}:}{The location of the \R \file{include}
+    \item{\env{R_INCLUDE_DIR}:}{The location of the \R \file{include}
       directory.  Set by \R.}
-    \item{\code{R_LATEXCMD}:}{The path to \code{latex}. Defaults to
+    \item{\env{R_LATEXCMD}:}{The path to \code{latex}. Defaults to
       the value of \env{LATEX}, and if that is unset to a value
       determined when \R was built.
 #ifdef unix
@@ -121,58 +121,58 @@
       Used by \command{R CMD Rd2dvi}.
 #endif
       }
-    \item{\code{R_LIBS}:}{Optional.  Used for initial setting of
+    \item{\env{R_LIBS}:}{Optional.  Used for initial setting of
       \code{\link{.libPaths}}.}
-    \item{\code{R_LIBS_SITE}:}{Optional.  Used for initial setting of
+    \item{\env{R_LIBS_SITE}:}{Optional.  Used for initial setting of
       \code{\link{.libPaths}}.}
-    \item{\code{R_LIBS_USER}:}{Optional.  Used for initial setting of
+    \item{\env{R_LIBS_USER}:}{Optional.  Used for initial setting of
       \code{\link{.libPaths}}.}
-    \item{\code{R_MAKEINDEXCMD}:}{The path to \code{makeindex}.  Defaults
-      at startup to the value of \env{MAKEINDEX}, and if that is unset
-      to a value determined when \R was built.
+    \item{\env{R_MAKEINDEXCMD}:}{The path to \command{makeindex}.
+      Defaults at startup to the value of \env{MAKEINDEX}, and if that
+      is unset to a value determined when \R was built.
       Used by \command{R CMD Rd2dvi}.}
-    \item{\code{R_PAPERSIZE}:}{Optional.  Use to set the default for
+    \item{\env{R_PAPERSIZE}:}{Optional.  Use to set the default for
       \code{\link{options}("papersize")}, e.g. used by
       \code{\link{pdf}}, \code{\link{postscript}} and
       \code{\link{help}(offline = TRUE)}.}
-    \item{\code{R_PDFLATEXCMD}:}{The path to \code{pdflatex}.  Defaults
-      at startup to the value of \code{PDFLATEX}, and if that is unset
-      to a value determined when \R was built.
+    \item{\env{R_PDFLATEXCMD}:}{The path to \command{pdflatex}.
+      Defaults at startup to the value of \code{PDFLATEX}, and if that
+      is unset to a value determined when \R was built.
       Used by \command{R CMD Rd2dvi}.}
-    \item{\code{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
+    \item{\env{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
       by \command{R CMD Rd2dvi}.}
-    \item{\code{R_PLATFORM}:}{The platform -- a string of the form
+    \item{\env{R_PLATFORM}:}{The platform -- a string of the form
       \code{\var{cpu}-\var{vendor}-\var{os}}, see \code{\link{R.Version}}.}
-    \item{\code{R_PROFILE}:}{Optional.  The path to the site profile
+    \item{\env{R_PROFILE}:}{Optional.  The path to the site profile
       file: see \link{Startup}.  Consulted at startup.}
-    \item{\code{R_RD4DVI}:}{Options for \code{latex} processing of
+    \item{\env{R_RD4DVI}:}{Options for \command{latex} processing of
       \code{Rd} files.
       Used by \command{R CMD Rd2dvi} and
       \code{\link{help}(offline = TRUE)}.}
-    \item{\code{R_RD4PDF}:}{Options for \code{pdflatex} processing of
+    \item{\env{R_RD4PDF}:}{Options for \command{pdflatex} processing of
       \code{Rd} files.
       Used by \command{R CMD Rd2dvi}.}
-    \item{\code{R_SHARE_DIR}:}{The location of the \R \file{share}
+    \item{\env{R_SHARE_DIR}:}{The location of the \R \file{share}
       directory.  Set by \R.} 
-    \item{\code{R_TEXI2DVICMD}:}{The path to \code{texi2dvi}. Defaults
-      to the value of \env{TEXI2DVI}, and if that is unset to a value
-      determined when \R was built.
+    \item{\env{R_TEXI2DVICMD}:}{The path to \command{texi2dvi}.
+      Defaults to the value of \env{TEXI2DVI}, and if that is unset to a
+      value determined when \R was built.
 #ifdef unix
       Consulted at startup to set the default for
       \code{\link{options}("texi2dvi")}, used by
       \code{\link{texi2dvi}} in package \pkg{tools}.
 #endif
     }
-    \item{\code{R_UNZIPCMD}:}{The path to \code{unzip}.  Sets the default
-      value for \code{\link{options}("unzip")}.}
-    \item{\code{R_ZIPCMD}:}{The path to \code{zip}.}
-    \item{\code{TMPDIR}, \code{TMP}, \code{TEMP}:}{Consulted (in that
+    \item{\env{R_UNZIPCMD}:}{The path to \command{unzip}.  Sets the
+      default value for \code{\link{options}("unzip")}.}
+    \item{\env{R_ZIPCMD}:}{The path to \command{zip}.}
+    \item{\env{TMPDIR}, \env{TMP}, \env{TEMP}:}{Consulted (in that
       order) when setting the temporary directory.  See
       \code{\link{tempdir}}.}
-    \item{\code{TZ}:}{Optional. The current timezone.  See
+    \item{\env{TZ}:}{Optional. The current timezone.  See
       \code{\link{Sys.timezone}} for the system-specific
       formats.  Consulted as needed.}
-    \item{\code{no_proxy}, \code{http_proxy}, \code{ftp_proxy}:}{
+    \item{\env{no_proxy}, \env{http_proxy}, \env{ftp_proxy}:}{
       (and more).  Optional.  Settings for \code{\link{download.file}}:
       see its help for further details.}
   }
@@ -182,11 +182,11 @@
 \section{Unix-specific}{
   Some variables set on Unix-alikes, and not (in general) on Windows.
   \describe{
-    \item{\code{DISPLAY}:}{Optional: used by \code{\link{X11}}, Tk (in
+    \item{\env{DISPLAY}:}{Optional: used by \code{\link{X11}}, Tk (in
       package \pkg{tcltk}), the data editor and various packages.}
-    \item{\code{EDITOR}:}{The path to the default editor.}
-    \item{\code{PAGER}:}{The path to the default pager.}
-    \item{\code{R_PRINTCMD}:}{Sets the default for
+    \item{\env{EDITOR}:}{The path to the default editor.}
+    \item{\env{PAGER}:}{The path to the default pager.}
+    \item{\env{R_PRINTCMD}:}{Sets the default for
       \code{\link{options}("printcmd")}, which sets the default print
       command to be used by \code{\link{postscript}}.}
   }
@@ -197,11 +197,11 @@
 \section{Windows-specific}{
   Some Windows-specific variables are
   \describe{
-    \item{\code{GSC}:}{Optional: the path to GhostScript, used if
+    \item{\env{GSC}:}{Optional: the path to GhostScript, used if
       \env{R_GSCMD} is not set.}
-    \item{\code{R_USER}:}{The user's \sQuote{home} directory.  Set by
+    \item{\env{R_USER}:}{The user's \sQuote{home} directory.  Set by
       \R.  (\env{HOME} will be set to the same value if not already set.)}
-    \item{\code{TZDIR}:}{Optional. The top-level directory of the
+    \item{\env{TZDIR}:}{Optional. The top-level directory of the
       timezone database.  See \code{\link{Sys.timezone}}.}
   }
 }
