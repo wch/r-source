@@ -96,7 +96,7 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
     } else NULL
 }
 
-data2LazyLoadDB <- function(package, lib.loc = NULL, compress = 2)
+data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
 {
     options(warn=1)
     pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
