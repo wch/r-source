@@ -88,7 +88,8 @@ function(entry, fields)
     rfields <- BibTeX_entry_field_db[[pos]]
     if(!length(rfields)) return(character())
     ## Drop non-BibTeX citEntry() fields.
-    fields <- fields[!fields %in% c("textVersion", "header", "footer")]
+    fields <- tolower(fields[!fields %in%
+                             c("textVersion", "header", "footer")])
     ## Go for legibility/generality rather than efficiency.
     ok <- sapply(strsplit(rfields, "|", fixed = TRUE),
                  function(f) any(f %in% fields))
