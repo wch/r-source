@@ -6,7 +6,7 @@
 \name{detach}
 \title{Detach Objects from the Search Path}
 \usage{
-detach(name, pos = 2, unload = FALSE)
+detach(name, pos = 2, unload = FALSE, character.only = FALSE)
 }
 \alias{detach}
 \arguments{
@@ -28,6 +28,8 @@ detach(name, pos = 2, unload = FALSE)
     the namespace is in use or \code{unload} is \code{FALSE}, no
     unloading will occur.
   }
+  \item{character.only}{a logical indicating whether \code{name}
+    can be assumed to be character strings.}
 }
 \description{
   Detach a database, i.e., remove it from the \code{\link{search}()} path
@@ -70,12 +72,13 @@ detach(name, pos = 2, unload = FALSE)
 \examples{
 require(splines) # package
 detach(package:splines)
-## could equally well use detach("package:splines")
-## but NOT  pkg <- "package:splines"; detach(pkg)
-## Instead, use
+## or also
 library(splines)
 pkg <- "package:splines"
-detach(pos = match(pkg, search()))
+\dontshow{
+stopifnot(inherits(tryCatch(detach(pkg), error=function(.).),  "error"))
+}
+detach(pkg, character.only = TRUE)
 
 ## careful: do not do this unless 'splines' is not already loaded.
 library(splines)

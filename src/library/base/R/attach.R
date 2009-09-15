@@ -91,10 +91,11 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
     invisible(value)
 }
 
-detach <- function(name, pos=2, unload=FALSE)
+detach <- function(name, pos=2, unload=FALSE, character.only = FALSE)
 {
     if(!missing(name)) {
-        name <- substitute(name)# when a name..
+	if(!character.only)
+	    name <- substitute(name)# when a name..
 	pos <-
 	    if(is.numeric(name))
                 name

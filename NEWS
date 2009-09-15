@@ -304,6 +304,9 @@ NEW FEATURES
 	smaller files).  load() can read such saves (but only as from
 	this version of R).
 
+    o	detach() now has an argument 'character.only' with the same meaning
+	as in library() or require().
+
 
 REGULAR EXPRESSIONS
 
