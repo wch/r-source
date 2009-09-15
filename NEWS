@@ -295,8 +295,9 @@ NEW FEATURES
 	versions of 'tar' other forms of compression such as lzma and
 	xz, and arbitrary extensions.
 
-    o	gzfile() looks at the file magic and so can now also open
-	bzip2-ed files.
+    o	gzfile() looks at the file header and so can now also open
+	bzip2-ed files.  It is planned in future to extend this to
+	other forms of compression such as lzma and xz.
 
     o	There is the new option of save(compress = "bzip2") to use bzip2
 	compression (which will be slower, but can give substantially
