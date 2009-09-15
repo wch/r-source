@@ -295,6 +295,14 @@ NEW FEATURES
 	versions of 'tar' other forms of compression such as lzma and
 	xz, and arbitrary extensions.
 
+    o	gzfile() looks at the file magic and so can now also open
+	bzip2-ed files.
+
+    o	There is the new option of save(compress = "bzip2") to use bzip2
+	compression (which will be slower, but can give substantially
+	smaller files).  load() can read such saves (but only as from
+	this version of R).
+
 
 REGULAR EXPRESSIONS
 

@@ -43,7 +43,8 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \item{envir}{environment to search for objects to be saved.}
   \item{compress}{logical specifying whether saving to a named file is to
     use compression.  Ignored when \code{file} is a connection and for
-    workspace format version 1.}
+    workspace format version 1.  As from \R 2.10.0 this is also allowed
+    to be \code{"bzip2"} to specify that type of compression.}
   \item{eval.promises}{logical: should objects which are promises be
     forced before saving?}
   \item{precheck}{logical: should the existence of the objects be

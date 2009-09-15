@@ -100,7 +100,8 @@ isIncomplete(con)
   (such as \samp{http://}, \samp{ftp://} or \samp{file://}).
 
   For \code{gzfile} the description is the path to a file that is
-  compressed by \code{gzip}: it can also open uncompressed files.
+  compressed by \code{gzip}: it can also open uncompressed files and (as
+  from \R 2.10.0) those compressed by \code{bzip2}.
 
   For \code{bzfile} the description is the path to a file that is
   compressed by \code{bzip2}.
@@ -178,9 +179,10 @@ isIncomplete(con)
   \code{\link{Sys.umask}}).
 #endif
   
-  \code{gzfile} connections are an exception, as the file always has to
-  be opened in binary mode.  Thus modes such as \code{r} are binary, and
-  \code{rt} is needed to have a text-mode connection.
+  \code{gzfile} and \code{bzfile} connections are an exception, as the
+  file always has to be opened in binary mode.  Thus modes such as
+  \code{r} are binary, and \code{rt} is needed to have a text-mode
+  connection.
 
   \code{close} closes and destroys a connection.  Note that this will
   happen automatically in due course if there is no \R object referring

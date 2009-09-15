@@ -19,8 +19,7 @@ load <-
 {
     if (is.character(file)) {
         ## files are allowed to be of an earlier format
-        ## As zlib is available just open with gzfile, whether file
-        ## is compressed or not; zlib works either way.
+        ## gzfile are open gip, bzip2 and uncompressed files.
         con <- gzfile(file)
         on.exit(close(con))
         magic <- readChar(con, 5L, useBytes = TRUE)
@@ -77,8 +76,9 @@ save <- function(..., list = character(0L),
         }
         if (is.character(file)) {
             if (file == "") stop("'file' must be non-empty string")
-            if (compress) con <- gzfile(file, "wb")
-            else con <- file(file, "wb")
+            con <- if (identical(compress, "bzip2")) bzfile(file, "wb")
+            else if (compress) gzfile(file, "wb")
+            else file(file, "wb")
             on.exit(close(con))
         }
         else if (inherits(file, "connection"))
