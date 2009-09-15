@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-02 20:13\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -195,70 +195,6 @@ msgstr ""
 msgid "Namespace dependencies not required:"
 msgstr ""
 
-#, fuzzy
-msgid "Rd files with syntax errors:"
-msgstr "Trovati errori di sintassi Rd"
-
-msgid "Rd files with likely Rd problems:"
-msgstr ""
-
-msgid "Unaccounted top-level text in file '%s':"
-msgstr ""
-
-#, fuzzy
-msgid "Following section '%s'"
-msgstr "sezione '%s' non conclusa"
-
-msgid "Rd files with unknown encoding:"
-msgstr ""
-
-#, fuzzy
-msgid "Rd files with invalid non-ASCII metadata:"
-msgstr "I file Rd devono avere \\title non vuoto."
-
-#, fuzzy
-msgid "Rd files with non-ASCII section titles:"
-msgstr "I file Rd devono avere \\title non vuoto."
-
-#, fuzzy
-msgid "Rd files with missing or empty '\\name':"
-msgstr "I file Rd devono avere \\name non vuoto."
-
-#, fuzzy
-msgid "Rd files with missing or empty '\\title':"
-msgstr "I file Rd devono avere \\title non vuoto."
-
-msgid "Rd files without '%s':"
-msgstr ""
-
-msgid "These entries are required in an Rd file."
-msgstr ""
-
-msgid "Rd files with duplicate '%s':"
-msgstr ""
-
-msgid "These entries must be unique in an Rd file."
-msgstr ""
-
-#, fuzzy
-msgid "Rd files with unknown sections:"
-msgstr "I file Rd devono avere \\title non vuoto."
-
-msgid "Rd files with non-standard keywords:"
-msgstr ""
-
-msgid ""
-"Each '\\keyword' entry should specify one of the standard keywords (as "
-"listed in file 'KEYWORDS' in the R documentation directory)."
-msgstr ""
-
-msgid "Rd files with duplicated alias '%s':"
-msgstr ""
-
-#, fuzzy
-msgid "Rd files with empty sections:"
-msgstr "I file Rd devono avere \\title non vuoto."
-
 msgid "Malformed package name"
 msgstr ""
 
@@ -402,6 +338,13 @@ msgstr ""
 msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
+#, fuzzy
+msgid "Rd files with duplicated name '%s':"
+msgstr "I file Rd devono avere \\title non vuoto."
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr ""
+
 msgid "Generics g in env ="
 msgstr ""
 
@@ -472,9 +415,6 @@ msgid "more than one \\examples section, using the first"
 msgstr ""
 
 msgid "invalid value for '%s' : %s"
-msgstr ""
-
-msgid "checkRd is designed for Rd version 2 or higher"
 msgstr ""
 
 msgid "unable to create temp directory"
@@ -994,6 +934,34 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "Rd files with syntax errors:"
+#~ msgstr "Trovati errori di sintassi Rd"
+
+#, fuzzy
+#~ msgid "Following section '%s'"
+#~ msgstr "sezione '%s' non conclusa"
+
+#, fuzzy
+#~ msgid "Rd files with invalid non-ASCII metadata:"
+#~ msgstr "I file Rd devono avere \\title non vuoto."
+
+#, fuzzy
+#~ msgid "Rd files with non-ASCII section titles:"
+#~ msgstr "I file Rd devono avere \\title non vuoto."
+
+#, fuzzy
+#~ msgid "Rd files with missing or empty '\\name':"
+#~ msgstr "I file Rd devono avere \\name non vuoto."
+
+#, fuzzy
+#~ msgid "Rd files with missing or empty '\\title':"
+#~ msgstr "I file Rd devono avere \\title non vuoto."
+
+#, fuzzy
+#~ msgid "Rd files with unknown sections:"
+#~ msgstr "I file Rd devono avere \\title non vuoto."
 
 #~ msgid "directory '%s' does not contain Rd sources"
 #~ msgstr "la directory '%s' non contiene sorgenti Rd"

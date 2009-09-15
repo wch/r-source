@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2008-06-05 19:49+0100\n"
-"PO-Revision-Date: 2008-06-05 19:49+0100\n"
+"POT-Creation-Date: 2009-09-15 12:41+0100\n"
+"PO-Revision-Date: 2009-09-15 12:41+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -46,20 +46,24 @@ msgstr "parse error in R expression"
 msgid "tcl error.\n"
 msgstr "tcl error.\n"
 
-#: tcltk.c:187 tcltk.c:685
+#: tcltk.c:187 tcltk.c:721
 msgid "invalid argument"
 msgstr "invalid argument"
 
-#: tcltk.c:561
+#: tcltk.c:284 tcltk.c:302 tcltk.c:392 tcltk.c:455 tcltk.c:507
+msgid "invalid tclObj -- perhaps saved from another session?"
+msgstr "invalid tclObj -- perhaps saved from another session?"
+
+#: tcltk.c:597
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr ""
 "argument list is too long in tcltk internal function ‘callback_closure’"
 
-#: tcltk.c:594
+#: tcltk.c:630
 msgid "argument is not of correct type"
 msgstr "argument is not of correct type"
 
-#: tcltk.c:644
+#: tcltk.c:680
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "no DISPLAY variable so Tk is not available"
 

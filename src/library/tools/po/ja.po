@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2007-08-22 12:25+0100\n"
+"POT-Creation-Date: 2009-09-15 12:41+0100\n"
 "PO-Revision-Date: 2006-09-22 10:46+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -25,6 +25,6 @@ msgstr " 引数 'files' は文字型でなければなりません "
 msgid "md5 failed on file '%s'"
 msgstr " md5 はファイル '%s' で失敗しました "
 
-#: text.c:68
+#: text.c:65
 msgid "invalid argument type"
 msgstr " 不正な引数の型です "

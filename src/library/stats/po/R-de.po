@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2009-03-26 11:24+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -1610,7 +1610,8 @@ msgstr "Boolesches 'hessian' Argument nicht erlaubt. Siehe Dokumentation'"
 msgid "'params' has wrong length"
 msgstr "'params' hat falsche Länge"
 
-msgid "'varying' must be in 1L:length(pars)"
+#, fuzzy
+msgid "'varying' must be in seq_along(pars)"
 msgstr "'varying' muss in 1L:length(pars) liegen"
 
 msgid "'varying' has wrong length"
@@ -1735,7 +1736,8 @@ msgstr "Kein Plot der Beobachtungen mit Leverage 1:"
 msgid "use only with \"lm\" objects"
 msgstr "nur mit \"lm\" Objekten benutzen"
 
-msgid "'which' must be in 1L:6"
+#, fuzzy
+msgid "'which' must be in 1:6"
 msgstr "'which' muss in 1L:6 liegen"
 
 msgid "'id.n' must be in {1,..,%d}"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,13 +95,13 @@ msgstr ""
 msgid "must supply a function skeleton, explicitly or via an existing function"
 msgstr ""
 
-msgid "Restoring the implicit generic function for \"%s\" from package \"%s\" into package \"%s\"; the generic differs from the default conversion (%s)"
+msgid "Restoring the implicit generic function for \"%s\" from package \"%s\"\n    into package \"%s\"; the generic differs from the default conversion (%s)"
 msgstr ""
 
-msgid "Creating a generic for \"%s\" in package  \"%s\"\n    (the supplied definition differs from and overrides the implicit generic in package \"%s\": %s)"
+msgid "Creating a generic for \"%s\" in package  \"%s\"\n    (the supplied definition differs from and overrides the implicit generic\n    in package \"%s\": %s)"
 msgstr ""
 
-msgid "No generic version of  \"%s\" on package \"%s\" is allowed; a new generic will be assigned with package \"%s\""
+msgid "No generic version of  \"%s\" on package \"%s\" is allowed;\n   a new generic will be assigned with package \"%s\""
 msgstr ""
 
 msgid "function \"%s\" appears to be a generic function, but with generic name \"%s\""
@@ -678,6 +678,9 @@ msgid "Class \"%s\" is defined, with package \"%s\", but no corresponding metada
 msgstr ""
 
 msgid "no definition of \"%s\" to use for %s"
+msgstr ""
+
+msgid "multiple definitions of class \"%s\" visible; using the definition\n   in package \"%s\" for %s"
 msgstr ""
 
 msgid "Class definition cannot extend more than one of these data types: %s"

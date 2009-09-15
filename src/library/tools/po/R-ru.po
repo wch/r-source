@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-02 20:13\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2009-03-28 23:43-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -198,64 +198,6 @@ msgstr ""
 msgid "Namespace dependencies not required:"
 msgstr "Определения пространства имен не требуются:"
 
-msgid "Rd files with syntax errors:"
-msgstr "Rd-файлы с синтаксическими ошибками:"
-
-msgid "Rd files with likely Rd problems:"
-msgstr "Rd-файлы, по-видимому, с проблемами Rd:"
-
-msgid "Unaccounted top-level text in file '%s':"
-msgstr "Неопределенный текст верхнего уровня в файле '%s':"
-
-msgid "Following section '%s'"
-msgstr "Следующий раздел '%s'"
-
-msgid "Rd files with unknown encoding:"
-msgstr "Rd-файлы неизвестной кодировки:"
-
-msgid "Rd files with invalid non-ASCII metadata:"
-msgstr "Rd-файлы с неправильными не-ASCII метаданными:"
-
-msgid "Rd files with non-ASCII section titles:"
-msgstr "Rd-файлы с не-ASCII заголовками разделов:"
-
-msgid "Rd files with missing or empty '\\name':"
-msgstr "Rd-файлы с пропущенными или пустыми именами '\\имя':"
-
-msgid "Rd files with missing or empty '\\title':"
-msgstr "Rd-файлы с пропущенными или пустыми \\title':"
-
-msgid "Rd files without '%s':"
-msgstr "Rd-файлы без '%s':"
-
-msgid "These entries are required in an Rd file."
-msgstr "Эти пункты требуются для Rd-файла."
-
-msgid "Rd files with duplicate '%s':"
-msgstr "Rd-файлы с двойными '%s':"
-
-msgid "These entries must be unique in an Rd file."
-msgstr "Эти пункты в Rd-файле должны быть уникальными."
-
-msgid "Rd files with unknown sections:"
-msgstr "Rd-файлы с неизвестными разделами:"
-
-msgid "Rd files with non-standard keywords:"
-msgstr "Rd-файлы с нестандартными ключевыми словами:"
-
-msgid ""
-"Each '\\keyword' entry should specify one of the standard keywords (as "
-"listed in file 'KEYWORDS' in the R documentation directory)."
-msgstr ""
-"Каждый вход '\\keyword' должен определять одно из стандартных ключевых слов "
-"(как перечислено в файле 'KEYWORDS' в папке документации R)."
-
-msgid "Rd files with duplicated alias '%s':"
-msgstr "Rd-файлы с двойным псевдонимом '%s':"
-
-msgid "Rd files with empty sections:"
-msgstr "Rd-файлы с пустыми разделами:"
-
 msgid "Malformed package name"
 msgstr "Плохое имя пакета"
 
@@ -409,6 +351,13 @@ msgstr "не объявлен импорт '::' или ':::' из:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "не объявлены вызовы 'library' или 'require' из:"
 
+#, fuzzy
+msgid "Rd files with duplicated name '%s':"
+msgstr "Rd-файлы с двойными '%s':"
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr "Rd-файлы с двойным псевдонимом '%s':"
+
 msgid "Generics g in env ="
 msgstr "Общие 'g' в env ="
 
@@ -478,10 +427,6 @@ msgstr "более чем одна \\секция примеров, использую первую"
 #, fuzzy
 msgid "invalid value for '%s' : %s"
 msgstr "Неправильные указатели файла лицензии: %s"
-
-#, fuzzy
-msgid "checkRd is designed for Rd version 2 or higher"
-msgstr "Rd2HTML разработан для Rd версии 2 или выше."
 
 msgid "unable to create temp directory"
 msgstr "не могу создать временную папку"
@@ -1003,6 +948,62 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Найден вызов .Internal call в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
+
+#~ msgid "Rd files with syntax errors:"
+#~ msgstr "Rd-файлы с синтаксическими ошибками:"
+
+#~ msgid "Rd files with likely Rd problems:"
+#~ msgstr "Rd-файлы, по-видимому, с проблемами Rd:"
+
+#~ msgid "Unaccounted top-level text in file '%s':"
+#~ msgstr "Неопределенный текст верхнего уровня в файле '%s':"
+
+#~ msgid "Following section '%s'"
+#~ msgstr "Следующий раздел '%s'"
+
+#~ msgid "Rd files with unknown encoding:"
+#~ msgstr "Rd-файлы неизвестной кодировки:"
+
+#~ msgid "Rd files with invalid non-ASCII metadata:"
+#~ msgstr "Rd-файлы с неправильными не-ASCII метаданными:"
+
+#~ msgid "Rd files with non-ASCII section titles:"
+#~ msgstr "Rd-файлы с не-ASCII заголовками разделов:"
+
+#~ msgid "Rd files with missing or empty '\\name':"
+#~ msgstr "Rd-файлы с пропущенными или пустыми именами '\\имя':"
+
+#~ msgid "Rd files with missing or empty '\\title':"
+#~ msgstr "Rd-файлы с пропущенными или пустыми \\title':"
+
+#~ msgid "Rd files without '%s':"
+#~ msgstr "Rd-файлы без '%s':"
+
+#~ msgid "These entries are required in an Rd file."
+#~ msgstr "Эти пункты требуются для Rd-файла."
+
+#~ msgid "These entries must be unique in an Rd file."
+#~ msgstr "Эти пункты в Rd-файле должны быть уникальными."
+
+#~ msgid "Rd files with unknown sections:"
+#~ msgstr "Rd-файлы с неизвестными разделами:"
+
+#~ msgid "Rd files with non-standard keywords:"
+#~ msgstr "Rd-файлы с нестандартными ключевыми словами:"
+
+#~ msgid ""
+#~ "Each '\\keyword' entry should specify one of the standard keywords (as "
+#~ "listed in file 'KEYWORDS' in the R documentation directory)."
+#~ msgstr ""
+#~ "Каждый вход '\\keyword' должен определять одно из стандартных ключевых "
+#~ "слов (как перечислено в файле 'KEYWORDS' в папке документации R)."
+
+#~ msgid "Rd files with empty sections:"
+#~ msgstr "Rd-файлы с пустыми разделами:"
+
+#, fuzzy
+#~ msgid "checkRd is designed for Rd version 2 or higher"
+#~ msgstr "Rd2HTML разработан для Rd версии 2 или выше."
 
 #~ msgid "there are no help pages in this package"
 #~ msgstr "в пакете нет файлов помощи"

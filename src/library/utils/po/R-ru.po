@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2009-03-28 16:30+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -259,11 +259,16 @@ msgstr "в '%s' не найдено файла помощи"
 msgid "more than one help file found: using package '%s'"
 msgstr "найдено более одного файла помощи: использую пакет '%s'"
 
-msgid "'%s' has a help file but no examples file"
+#, fuzzy
+msgid "'%s' has a help file but no examples"
 msgstr "у '%s' есть файл помощи, но нет файла примеров"
 
 msgid "test '%s' is not available"
 msgstr "тест '%s' недоступен"
+
+#, fuzzy
+msgid "Line number missing"
+msgstr "пропущен 'subject'"
 
 msgid "'fix' requires a name"
 msgstr "для 'fix' нужно имя"
@@ -285,6 +290,15 @@ msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr ""
 "'topic' должен быть именем, текстовой строкой единичной длины или "
 "зарезервированным словом"
+
+msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
+msgstr ""
+
+msgid "chmhelp = TRUE is deprecated: use help_type =\"chm\""
+msgstr ""
+
+msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
+msgstr ""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "В указанных пакетах и библиотеках нет документации для '%s':"
@@ -314,25 +328,9 @@ msgstr "Выберите один"
 msgid "Using the first match ..."
 msgstr "Использую первое совпадение..."
 
-msgid ""
-"No HTML help for '%s' is available:\n"
-"corresponding file is missing"
-msgstr ""
-"Для '%s' HTML-справка недоступна:\n"
-"отсутствует соответствующий файл"
-
-msgid "Compiled HTML is not installed"
-msgstr "Скомпилированные HTML не инсталлированы"
-
-msgid "CHM file could not be displayed"
-msgstr "CHM-файл нельзя отобразить"
-
-msgid ""
-"No CHM help for '%s' in package '%s' is available:\n"
-"the CHM file for the package is missing"
-msgstr ""
-"CHM-помощь по '%s' из пакета '%s' недоступна:\n"
-"CHM-файл пакета не найден"
+#, fuzzy
+msgid "HTML help is unavailable"
+msgstr "тест '%s' недоступен"
 
 msgid "R Help on '%s'"
 msgstr "Помощь R по '%s'"
@@ -343,9 +341,6 @@ msgid ""
 msgstr ""
 "Недоступна текстовая помощь по '%s':\n"
 "нет соответствующего файла"
-
-msgid "problems running R CMD Rdconv"
-msgstr "проблемы с запуском R CMD Rdconv"
 
 msgid ""
 "No offline help for '%s' is available:\n"
@@ -366,11 +361,18 @@ msgstr "непонятно, что искать"
 msgid "argument 'help.db' is deprecated"
 msgstr "аргумент 'help.db' устарел"
 
-msgid "Rebuilding the data base ..."
+#, fuzzy
+msgid "Rebuilding the help.search() database"
 msgstr "Перестройка базы данных..."
+
+msgid "..."
+msgstr ""
 
 msgid "Packages {.readRDS() sequentially}:"
 msgstr "Пакеты {.readRDS() последовательно}:"
+
+msgid "."
+msgstr ""
 
 msgid "could not find package '%s'"
 msgstr "не могу найти пакет '%s'"
@@ -393,8 +395,11 @@ msgstr "удаляю все вхождения с неправильными многобайтными данными"
 msgid "saving the database ..."
 msgstr "Сохраняю базу данных..."
 
-msgid ""
-"no information in the data base for package '%s': need 'rebuild = TRUE'?"
+msgid "... database rebuilt"
+msgstr ""
+
+#, fuzzy
+msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
 msgstr "в базе данных нет информации о пакете '%s': надо 'rebuild = TRUE'?"
 
 msgid "incorrect 'agrep' specification"
@@ -522,6 +527,10 @@ msgstr "Дальнейшее указано в '%s'."
 msgid "unable to access index for repository %s"
 msgstr "недоступен индекс для хранилища %s"
 
+#, fuzzy
+msgid "Invalid 'filters' argument."
+msgstr "неправильный аргумент 'x'"
+
 msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr "неверное значение 'oldPkgs'; должен быть результатом old.packages()"
 
@@ -568,7 +577,9 @@ msgstr "не могу установить хранилища неинтерактивно"
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Пожалуйста, выберите хранилища для использования в этой сессии ---"
 
-msgid "Enter one or more numbers separated by spaces"
+#, fuzzy
+msgid ""
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
 msgstr "Введите одну или более цифр, разделенных пробелами"
 
 msgid "'%s' must be supplied"
@@ -893,6 +904,16 @@ msgstr "попытка установить '%s' пропущена"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' должен быть одной текстовой строкой"
 
+#, fuzzy
+msgid "'compressed' must be logical or character"
+msgstr "'code_files' должны быть текстовым вектором"
+
+msgid "untar: using cmd ="
+msgstr ""
+
+msgid "set environment variable 'TAR' to point to a GNU-compatible 'tar'"
+msgstr ""
+
 msgid "'subject' missing"
 msgstr "пропущен 'subject'"
 
@@ -909,21 +930,25 @@ msgstr ""
 msgid "options(\"browser\") not set"
 msgstr "options(\"browser\") не установлены"
 
-msgid "'latexcmd' is empty"
-msgstr "опция 'latexcmd' пуста"
+msgid "running '%s' failed"
+msgstr ""
 
-msgid "'dvipscmd' is empty"
-msgstr "опция 'dvipscmd' пуста"
+msgid "'%s' produced no output file: sent to printer?"
+msgstr ""
+
+#, fuzzy
+msgid "creation of '%s' failed"
+msgstr "скачивание пакета '%s' не удалось"
+
+#, fuzzy
+msgid "Saving help page to"
+msgstr "Делаю файлы помощи..."
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "неправильное имя броузера, проверьте options(\"browser\")."
 
-msgid ""
-"Changing the default browser (as specified by the 'browser' option) to the "
-"given browser so that it gets used for all future help requests."
+msgid "help.start() requires the HTTP server to be running"
 msgstr ""
-"Изменяю броузер по умолчанию (который указан в опции 'browser') на заданный "
-"броузер, что отразится на всех следующих запросах помощи."
 
 msgid ""
 "If '%s' is already running, it is *not* restarted, and you must switch to "
@@ -941,14 +966,8 @@ msgstr "'url' должен быть непустой текстовой строкой"
 msgid "'browser' must be a non-empty character string"
 msgstr "'browser' должен быть непустой текстовой строкой"
 
-msgid "Making links in per-session dir ..."
-msgstr "Делаю ссылки в папке сессии..."
-
-msgid "cannot create HTML package index"
-msgstr "не могу создать HTML-индекс пакетов"
-
-msgid "cannot create HTML search index"
-msgstr "не могу создать HTML-индекс для поиска"
+msgid "Making packages.html"
+msgstr ""
 
 msgid "Updating HTML index of packages in '.Library'"
 msgstr "Обновляю HTML-список пакетов в '.Library'"
@@ -977,16 +996,10 @@ msgstr "'memory.size()' -- Windows-специфичный"
 msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()' -- Windows-специфичный"
 
-msgid "unable to find the HTML help"
-msgstr "не могу найти HTML-помощь"
-
-msgid "updating HTML package listing"
-msgstr "обновляю HTML-список пакетов"
-
-msgid "fixing URLs in non-standard libraries"
-msgstr "исправляю URL'ы в нестандартных библиотеках"
-
-msgid "If nothing happens, you should open '%s' yourself"
+#, fuzzy
+msgid ""
+"If nothing happens, you should open\n"
+"'%s' yourself"
 msgstr "Если ничего не произойдет, надо самому открыть '%s'"
 
 msgid "failed to create '%s'"
@@ -1001,8 +1014,8 @@ msgstr "zip-файл '%s' не найден"
 msgid "updating HTML package descriptions"
 msgstr "обновляю HTML-описания пакетов"
 
-msgid "cannot update '%s'"
-msgstr "не могу обновить '%s'"
+msgid "cannot update HTML package index"
+msgstr "не могу обновить HTML-индекс пакетов"
 
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() нельзя использовать неинтерактивно"
@@ -1054,6 +1067,63 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid ""
+#~ "No HTML help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ "Для '%s' HTML-справка недоступна:\n"
+#~ "отсутствует соответствующий файл"
+
+#~ msgid "Compiled HTML is not installed"
+#~ msgstr "Скомпилированные HTML не инсталлированы"
+
+#~ msgid "CHM file could not be displayed"
+#~ msgstr "CHM-файл нельзя отобразить"
+
+#~ msgid ""
+#~ "No CHM help for '%s' in package '%s' is available:\n"
+#~ "the CHM file for the package is missing"
+#~ msgstr ""
+#~ "CHM-помощь по '%s' из пакета '%s' недоступна:\n"
+#~ "CHM-файл пакета не найден"
+
+#~ msgid "problems running R CMD Rdconv"
+#~ msgstr "проблемы с запуском R CMD Rdconv"
+
+#~ msgid "'latexcmd' is empty"
+#~ msgstr "опция 'latexcmd' пуста"
+
+#~ msgid "'dvipscmd' is empty"
+#~ msgstr "опция 'dvipscmd' пуста"
+
+#~ msgid ""
+#~ "Changing the default browser (as specified by the 'browser' option) to "
+#~ "the given browser so that it gets used for all future help requests."
+#~ msgstr ""
+#~ "Изменяю броузер по умолчанию (который указан в опции 'browser') на "
+#~ "заданный броузер, что отразится на всех следующих запросах помощи."
+
+#~ msgid "Making links in per-session dir ..."
+#~ msgstr "Делаю ссылки в папке сессии..."
+
+#~ msgid "cannot create HTML package index"
+#~ msgstr "не могу создать HTML-индекс пакетов"
+
+#~ msgid "cannot create HTML search index"
+#~ msgstr "не могу создать HTML-индекс для поиска"
+
+#~ msgid "unable to find the HTML help"
+#~ msgstr "не могу найти HTML-помощь"
+
+#~ msgid "updating HTML package listing"
+#~ msgstr "обновляю HTML-список пакетов"
+
+#~ msgid "fixing URLs in non-standard libraries"
+#~ msgstr "исправляю URL'ы в нестандартных библиотеках"
+
+#~ msgid "cannot update '%s'"
+#~ msgstr "не могу обновить '%s'"
 
 #~ msgid "Found invalid multi-byte character data."
 #~ msgstr "Найдены неправильные многобайтные текстовые данные."
@@ -1111,9 +1181,6 @@ msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 #~ msgstr ""
 #~ "Необязательно: другие стандартные ключевые слова, по одному на строку, из "
 #~ "файла KEYWORDS в папке с документацией по R"
-
-#~ msgid "cannot update HTML package index"
-#~ msgstr "не могу обновить HTML-индекс пакетов"
 
 #~ msgid "cannot update HTML search index"
 #~ msgstr "не могу обновить HTML-индекс поиска"

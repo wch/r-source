@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-02 20:13\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -191,64 +191,6 @@ msgstr ""
 msgid "Namespace dependencies not required:"
 msgstr "不需要名字空间从属:"
 
-msgid "Rd files with syntax errors:"
-msgstr "Rd文件里有语法错误:"
-
-msgid "Rd files with likely Rd problems:"
-msgstr "有问题的Rd文件:"
-
-msgid "Unaccounted top-level text in file '%s':"
-msgstr "文件'%s'里缺少最高层正文:"
-
-msgid "Following section '%s'"
-msgstr "以下段'%s'"
-
-msgid "Rd files with unknown encoding:"
-msgstr "没有这样的Rd文件编码:"
-
-msgid "Rd files with invalid non-ASCII metadata:"
-msgstr "Rd文件内含有非-ASCII元数据:"
-
-msgid "Rd files with non-ASCII section titles:"
-msgstr "Rd文件内含非-ASCII的段头:"
-
-msgid "Rd files with missing or empty '\\name':"
-msgstr "Rd文件内缺少或含空白的'\\name'条目:"
-
-msgid "Rd files with missing or empty '\\title':"
-msgstr "Rd文件内缺少或含空白的'\\title'条目:"
-
-msgid "Rd files without '%s':"
-msgstr "Rd文件内没有'%s':"
-
-msgid "These entries are required in an Rd file."
-msgstr "所有的Rd文件必需要包含以下这些条目."
-
-msgid "Rd files with duplicate '%s':"
-msgstr "Rd文件内有重复的'%s':"
-
-msgid "These entries must be unique in an Rd file."
-msgstr "Rd文件内以下这些条目是不能有重复的."
-
-msgid "Rd files with unknown sections:"
-msgstr "Rd文件内有未知名的段:"
-
-msgid "Rd files with non-standard keywords:"
-msgstr "Rd文件内有非标准关键字:"
-
-msgid ""
-"Each '\\keyword' entry should specify one of the standard keywords (as "
-"listed in file 'KEYWORDS' in the R documentation directory)."
-msgstr ""
-"每'\\keyword'条目必需从标准关键字表中取一个(在R使用文件目录中'KEYWORDS'文件"
-"内)."
-
-msgid "Rd files with duplicated alias '%s':"
-msgstr "Rd文件不能有重复的别名'%s':"
-
-msgid "Rd files with empty sections:"
-msgstr "Rd文件内有空的段:"
-
 msgid "Malformed package name"
 msgstr "畸形程辑包名"
 
@@ -395,6 +337,13 @@ msgstr "'::'或':::'引进没有被声明:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "'library'或'require'调用没有被声明:"
 
+#, fuzzy
+msgid "Rd files with duplicated name '%s':"
+msgstr "Rd文件内有重复的'%s':"
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr "Rd文件不能有重复的别名'%s':"
+
 msgid "Generics g in env ="
 msgstr "同属函数g在env="
 
@@ -463,9 +412,6 @@ msgstr ""
 #, fuzzy
 msgid "invalid value for '%s' : %s"
 msgstr "执照文件指示器无效：%s"
-
-msgid "checkRd is designed for Rd version 2 or higher"
-msgstr ""
 
 msgid "unable to create temp directory"
 msgstr "无法建立temp目录"
@@ -975,6 +921,58 @@ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "在下面的函数里遇到了有可能是全局的T或F值:"
+
+#~ msgid "Rd files with syntax errors:"
+#~ msgstr "Rd文件里有语法错误:"
+
+#~ msgid "Rd files with likely Rd problems:"
+#~ msgstr "有问题的Rd文件:"
+
+#~ msgid "Unaccounted top-level text in file '%s':"
+#~ msgstr "文件'%s'里缺少最高层正文:"
+
+#~ msgid "Following section '%s'"
+#~ msgstr "以下段'%s'"
+
+#~ msgid "Rd files with unknown encoding:"
+#~ msgstr "没有这样的Rd文件编码:"
+
+#~ msgid "Rd files with invalid non-ASCII metadata:"
+#~ msgstr "Rd文件内含有非-ASCII元数据:"
+
+#~ msgid "Rd files with non-ASCII section titles:"
+#~ msgstr "Rd文件内含非-ASCII的段头:"
+
+#~ msgid "Rd files with missing or empty '\\name':"
+#~ msgstr "Rd文件内缺少或含空白的'\\name'条目:"
+
+#~ msgid "Rd files with missing or empty '\\title':"
+#~ msgstr "Rd文件内缺少或含空白的'\\title'条目:"
+
+#~ msgid "Rd files without '%s':"
+#~ msgstr "Rd文件内没有'%s':"
+
+#~ msgid "These entries are required in an Rd file."
+#~ msgstr "所有的Rd文件必需要包含以下这些条目."
+
+#~ msgid "These entries must be unique in an Rd file."
+#~ msgstr "Rd文件内以下这些条目是不能有重复的."
+
+#~ msgid "Rd files with unknown sections:"
+#~ msgstr "Rd文件内有未知名的段:"
+
+#~ msgid "Rd files with non-standard keywords:"
+#~ msgstr "Rd文件内有非标准关键字:"
+
+#~ msgid ""
+#~ "Each '\\keyword' entry should specify one of the standard keywords (as "
+#~ "listed in file 'KEYWORDS' in the R documentation directory)."
+#~ msgstr ""
+#~ "每'\\keyword'条目必需从标准关键字表中取一个(在R使用文件目录中'KEYWORDS'文"
+#~ "件内)."
+
+#~ msgid "Rd files with empty sections:"
+#~ msgstr "Rd文件内有空的段:"
 
 #~ msgid "directory '%s' does not contain Rd sources"
 #~ msgstr "文件目录'%s'不含Rd源编码"

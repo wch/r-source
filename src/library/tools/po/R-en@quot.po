@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-02 20:13\n"
-"PO-Revision-Date: 2009-09-02 20:13\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
+"PO-Revision-Date: 2009-09-15 12:41\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -208,64 +208,6 @@ msgstr ""
 msgid "Namespace dependencies not required:"
 msgstr "Namespace dependencies not required:"
 
-msgid "Rd files with syntax errors:"
-msgstr "Rd files with syntax errors:"
-
-msgid "Rd files with likely Rd problems:"
-msgstr "Rd files with likely Rd problems:"
-
-msgid "Unaccounted top-level text in file '%s':"
-msgstr "Unaccounted top-level text in file '%s':"
-
-msgid "Following section '%s'"
-msgstr "Following section ‘%s’"
-
-msgid "Rd files with unknown encoding:"
-msgstr "Rd files with unknown encoding:"
-
-msgid "Rd files with invalid non-ASCII metadata:"
-msgstr "Rd files with invalid non-ASCII metadata:"
-
-msgid "Rd files with non-ASCII section titles:"
-msgstr "Rd files with non-ASCII section titles:"
-
-msgid "Rd files with missing or empty '\\name':"
-msgstr "Rd files with missing or empty '\\name':"
-
-msgid "Rd files with missing or empty '\\title':"
-msgstr "Rd files with missing or empty '\\title':"
-
-msgid "Rd files without '%s':"
-msgstr "Rd files without '%s':"
-
-msgid "These entries are required in an Rd file."
-msgstr "These entries are required in an Rd file."
-
-msgid "Rd files with duplicate '%s':"
-msgstr "Rd files with duplicate '%s':"
-
-msgid "These entries must be unique in an Rd file."
-msgstr "These entries must be unique in an Rd file."
-
-msgid "Rd files with unknown sections:"
-msgstr "Rd files with unknown sections:"
-
-msgid "Rd files with non-standard keywords:"
-msgstr "Rd files with non-standard keywords:"
-
-msgid ""
-"Each '\\keyword' entry should specify one of the standard keywords (as "
-"listed in file 'KEYWORDS' in the R documentation directory)."
-msgstr ""
-"Each ‘\\keyword’ entry should specify one of the standard keywords (as "
-"listed in file ‘KEYWORDS’ in the R documentation directory)."
-
-msgid "Rd files with duplicated alias '%s':"
-msgstr "Rd files with duplicated alias '%s':"
-
-msgid "Rd files with empty sections:"
-msgstr "Rd files with empty sections:"
-
 msgid "Malformed package name"
 msgstr "Malformed package name"
 
@@ -418,6 +360,12 @@ msgstr "‘::’ or ‘:::’ imports not declared from:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "‘library’ or ‘require’ calls not declared from:"
 
+msgid "Rd files with duplicated name '%s':"
+msgstr "Rd files with duplicated name '%s':"
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr "Rd files with duplicated alias '%s':"
+
 msgid "Generics g in env ="
 msgstr "Generics g in env ="
 
@@ -484,9 +432,6 @@ msgstr "more than one \\examples section, using the first"
 
 msgid "invalid value for '%s' : %s"
 msgstr "invalid value for ‘%s’ : %s"
-
-msgid "checkRd is designed for Rd version 2 or higher"
-msgstr "checkRd is designed for Rd version 2 or higher"
 
 msgid "unable to create temp directory"
 msgstr "unable to create temp directory"

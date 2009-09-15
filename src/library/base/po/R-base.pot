@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:09\n"
+"POT-Creation-Date: 2009-09-15 12:40\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -708,6 +708,12 @@ msgid "package '%s' was built before R 2.0.0: please re-install it"
 msgstr ""
 
 msgid "package '%s' was built under R version %s"
+msgstr ""
+
+msgid "package '%s' was built under R version %s and help will not work correctly\nPlease re-install it"
+msgstr ""
+
+msgid "package '%s' was built under R version %s and help may not work correctly"
 msgstr ""
 
 msgid "package '%s' was built for %s"

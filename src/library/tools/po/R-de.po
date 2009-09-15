@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-02 20:13\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2009-03-26 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -191,64 +191,6 @@ msgstr ""
 msgid "Namespace dependencies not required:"
 msgstr "Nicht benötigte Namensraumabhängigkeiten:"
 
-msgid "Rd files with syntax errors:"
-msgstr "Rd Dateien mit Syntaxfehlern:"
-
-msgid "Rd files with likely Rd problems:"
-msgstr "Rd-Dateien, wahrscheinlich mit Rd-Problemen:"
-
-msgid "Unaccounted top-level text in file '%s':"
-msgstr "unbenutzter top-level Text in Datei '%s':"
-
-msgid "Following section '%s'"
-msgstr "Folgender Abschnitt '%s'"
-
-msgid "Rd files with unknown encoding:"
-msgstr "Rd-Dateien mit unbekannter Kodierung:"
-
-msgid "Rd files with invalid non-ASCII metadata:"
-msgstr "Rd-Dateien mit unzulässigen nicht-ASCII Metadaten:"
-
-msgid "Rd files with non-ASCII section titles:"
-msgstr "Rd-Dateien mit nicht-ASCII Abschnittsüberschriften:"
-
-msgid "Rd files with missing or empty '\\name':"
-msgstr "Rd-Dateien mit fehlendem oder leerem '\\name'"
-
-msgid "Rd files with missing or empty '\\title':"
-msgstr "Rd-Dateien mit fehlendem oder leerem '\\title'"
-
-msgid "Rd files without '%s':"
-msgstr "Rd-Dateien ohne '%s':"
-
-msgid "These entries are required in an Rd file."
-msgstr "Diese Einträge werden in einer Rd-Datei verlangt"
-
-msgid "Rd files with duplicate '%s':"
-msgstr "Rd-Dateien mit doppeltem '%s':"
-
-msgid "These entries must be unique in an Rd file."
-msgstr "Diese Einträge dürfen in einer Rd-Datei nur ein Mal vorkommen"
-
-msgid "Rd files with unknown sections:"
-msgstr "Rd-Dateien mit unbekannten Abschnitten:"
-
-msgid "Rd files with non-standard keywords:"
-msgstr "Rd-Dateien mit nicht-standard Schlüsselwörtern:"
-
-msgid ""
-"Each '\\keyword' entry should specify one of the standard keywords (as "
-"listed in file 'KEYWORDS' in the R documentation directory)."
-msgstr ""
-"Jeder '\\keyword'-Eintrag sollte ein Standardschlüsselwort (aus der Datei "
-"'KEYWORDS' im R Doku Verzeichnis) angeben"
-
-msgid "Rd files with duplicated alias '%s':"
-msgstr "Rd-Dateien mit doppeltem Alias '%s':"
-
-msgid "Rd files with empty sections:"
-msgstr "Rd-Dateien mit leeren Abschnitten:"
-
 msgid "Malformed package name"
 msgstr "ungeeigneter Paketname"
 
@@ -404,6 +346,13 @@ msgstr "'::' oder ':::' importieren unangemeldet aus:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "Aufrufe von 'library' oder 'require' nicht angemeldet von:"
 
+#, fuzzy
+msgid "Rd files with duplicated name '%s':"
+msgstr "Rd-Dateien mit doppeltem '%s':"
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr "Rd-Dateien mit doppeltem Alias '%s':"
+
 msgid "Generics g in env ="
 msgstr "Generische g in env ="
 
@@ -473,10 +422,6 @@ msgstr "mehr als eine \\examples section, benutze die erste"
 #, fuzzy
 msgid "invalid value for '%s' : %s"
 msgstr "Ungültiger Verweis auf Lizenzdatei: %s"
-
-#, fuzzy
-msgid "checkRd is designed for Rd version 2 or higher"
-msgstr "Rd2HTML ist für Rd in Version 2 oder später entworfen"
 
 msgid "unable to create temp directory"
 msgstr "kann kein temp Verzeichnis erzeugen"
@@ -997,6 +942,62 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
+
+#~ msgid "Rd files with syntax errors:"
+#~ msgstr "Rd Dateien mit Syntaxfehlern:"
+
+#~ msgid "Rd files with likely Rd problems:"
+#~ msgstr "Rd-Dateien, wahrscheinlich mit Rd-Problemen:"
+
+#~ msgid "Unaccounted top-level text in file '%s':"
+#~ msgstr "unbenutzter top-level Text in Datei '%s':"
+
+#~ msgid "Following section '%s'"
+#~ msgstr "Folgender Abschnitt '%s'"
+
+#~ msgid "Rd files with unknown encoding:"
+#~ msgstr "Rd-Dateien mit unbekannter Kodierung:"
+
+#~ msgid "Rd files with invalid non-ASCII metadata:"
+#~ msgstr "Rd-Dateien mit unzulässigen nicht-ASCII Metadaten:"
+
+#~ msgid "Rd files with non-ASCII section titles:"
+#~ msgstr "Rd-Dateien mit nicht-ASCII Abschnittsüberschriften:"
+
+#~ msgid "Rd files with missing or empty '\\name':"
+#~ msgstr "Rd-Dateien mit fehlendem oder leerem '\\name'"
+
+#~ msgid "Rd files with missing or empty '\\title':"
+#~ msgstr "Rd-Dateien mit fehlendem oder leerem '\\title'"
+
+#~ msgid "Rd files without '%s':"
+#~ msgstr "Rd-Dateien ohne '%s':"
+
+#~ msgid "These entries are required in an Rd file."
+#~ msgstr "Diese Einträge werden in einer Rd-Datei verlangt"
+
+#~ msgid "These entries must be unique in an Rd file."
+#~ msgstr "Diese Einträge dürfen in einer Rd-Datei nur ein Mal vorkommen"
+
+#~ msgid "Rd files with unknown sections:"
+#~ msgstr "Rd-Dateien mit unbekannten Abschnitten:"
+
+#~ msgid "Rd files with non-standard keywords:"
+#~ msgstr "Rd-Dateien mit nicht-standard Schlüsselwörtern:"
+
+#~ msgid ""
+#~ "Each '\\keyword' entry should specify one of the standard keywords (as "
+#~ "listed in file 'KEYWORDS' in the R documentation directory)."
+#~ msgstr ""
+#~ "Jeder '\\keyword'-Eintrag sollte ein Standardschlüsselwort (aus der Datei "
+#~ "'KEYWORDS' im R Doku Verzeichnis) angeben"
+
+#~ msgid "Rd files with empty sections:"
+#~ msgstr "Rd-Dateien mit leeren Abschnitten:"
+
+#, fuzzy
+#~ msgid "checkRd is designed for Rd version 2 or higher"
+#~ msgstr "Rd2HTML ist für Rd in Version 2 oder später entworfen"
 
 #~ msgid "there are no help pages in this package"
 #~ msgstr "keine Hilfeseiten in diesem Paket"

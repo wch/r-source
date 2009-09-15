@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2009-03-29 21:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -262,11 +262,16 @@ msgstr "fichier d'aide introuvable pour '%s'"
 msgid "more than one help file found: using package '%s'"
 msgstr "plusieurs fichiers d'aide trouvés : le package '%s' est utilisé"
 
-msgid "'%s' has a help file but no examples file"
+#, fuzzy
+msgid "'%s' has a help file but no examples"
 msgstr "'%s' a un fichier d'aide mais pas de fichier d'exemples"
 
 msgid "test '%s' is not available"
 msgstr "le test '%s' n'est pas disponible"
+
+#, fuzzy
+msgid "Line number missing"
+msgstr "'subject' manquant"
 
 msgid "'fix' requires a name"
 msgstr "'fix' necessite un nom"
@@ -288,6 +293,15 @@ msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr ""
 "'topic' doit être un nom, une chaîne de caractères de longueur unitaire, ou "
 "un mot réservé"
+
+msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
+msgstr ""
+
+msgid "chmhelp = TRUE is deprecated: use help_type =\"chm\""
+msgstr ""
+
+msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
+msgstr ""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr ""
@@ -319,25 +333,9 @@ msgstr "Choisissez un item"
 msgid "Using the first match ..."
 msgstr "Utilisation de la première correspondance ..."
 
-msgid ""
-"No HTML help for '%s' is available:\n"
-"corresponding file is missing"
-msgstr ""
-"Aucune aide HTML pour '%s' disponible :\n"
-"le fichier correspondant est manquant"
-
-msgid "Compiled HTML is not installed"
-msgstr "L'aide au format HTML compilé n'est pas installée"
-
-msgid "CHM file could not be displayed"
-msgstr "Le fichier CHM n'a pas pu être affiché"
-
-msgid ""
-"No CHM help for '%s' in package '%s' is available:\n"
-"the CHM file for the package is missing"
-msgstr ""
-"Aucune aide CHM disponible sur '%s' dans le package '%s' :\n"
-"le fichier CHM pour ce package est manquant"
+#, fuzzy
+msgid "HTML help is unavailable"
+msgstr "le test '%s' n'est pas disponible"
 
 msgid "R Help on '%s'"
 msgstr "R Help sur '%s'"
@@ -348,9 +346,6 @@ msgid ""
 msgstr ""
 "Aucune aide texte disponible pour '%s':\n"
 "le fichier correspondant est manquant"
-
-msgid "problems running R CMD Rdconv"
-msgstr "problème d'exécution de R CMD Rdconv"
 
 msgid ""
 "No offline help for '%s' is available:\n"
@@ -371,11 +366,18 @@ msgstr "je ne sais pas quoi rechercher"
 msgid "argument 'help.db' is deprecated"
 msgstr "l'argument 'help.db' est obsolète"
 
-msgid "Rebuilding the data base ..."
+#, fuzzy
+msgid "Rebuilding the help.search() database"
 msgstr "Reconstruction de la base de données..."
+
+msgid "..."
+msgstr ""
 
 msgid "Packages {.readRDS() sequentially}:"
 msgstr "Packages {.readRDS() séquentiellement} :"
+
+msgid "."
+msgstr ""
 
 msgid "could not find package '%s'"
 msgstr "impossible de trouver le packages '%s'"
@@ -400,8 +402,11 @@ msgstr ""
 msgid "saving the database ..."
 msgstr "Sauvegarde de la base de données ..."
 
-msgid ""
-"no information in the data base for package '%s': need 'rebuild = TRUE'?"
+msgid "... database rebuilt"
+msgstr ""
+
+#, fuzzy
+msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
 msgstr ""
 "pas d'information dans la base de données pour le package '%s' : faut-il "
 "'rebuild = TRUE' ?"
@@ -535,6 +540,10 @@ msgstr "Les étapes suivantes sont décrites dans '%s'."
 msgid "unable to access index for repository %s"
 msgstr "impossible d'accéder à l'index de l'entrepôt %s"
 
+#, fuzzy
+msgid "Invalid 'filters' argument."
+msgstr "argument 'x' incorrect"
+
 msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr "'oldPkgs' incorrect ; il faut des données renvoyées par old.packages()"
 
@@ -580,7 +589,9 @@ msgstr "impossible de fixer les entrepôts en mode non interactif"
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- SVP sélectionner les entrepôts à utiliser pour cette session ---"
 
-msgid "Enter one or more numbers separated by spaces"
+#, fuzzy
+msgid ""
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
 msgstr "Entrer un ou plusieurs nombres séparés par des espaces"
 
 msgid "'%s' must be supplied"
@@ -912,6 +923,16 @@ msgstr "une tentative de modification de '%s' a échoué"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' doit être une seule chaîne de caractères"
 
+#, fuzzy
+msgid "'compressed' must be logical or character"
+msgstr "'code_files' devrait être un vecteur de type caractère"
+
+msgid "untar: using cmd ="
+msgstr ""
+
+msgid "set environment variable 'TAR' to point to a GNU-compatible 'tar'"
+msgstr ""
+
 msgid "'subject' missing"
 msgstr "'subject' manquant"
 
@@ -929,22 +950,25 @@ msgstr ""
 msgid "options(\"browser\") not set"
 msgstr "options(\"browser\") non fixée"
 
-msgid "'latexcmd' is empty"
-msgstr "'latexcmd' est vide"
+msgid "running '%s' failed"
+msgstr ""
 
-msgid "'dvipscmd' is empty"
-msgstr "'dvipscmd' est vide"
+msgid "'%s' produced no output file: sent to printer?"
+msgstr ""
+
+#, fuzzy
+msgid "creation of '%s' failed"
+msgstr "le téléchargement du package '%s' a échoué"
+
+#, fuzzy
+msgid "Saving help page to"
+msgstr "Création des fichiers d'aide ..."
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "nom de navigateur incorrect, vérifiez options(\"browser\")."
 
-msgid ""
-"Changing the default browser (as specified by the 'browser' option) to the "
-"given browser so that it gets used for all future help requests."
+msgid "help.start() requires the HTTP server to be running"
 msgstr ""
-"Changement du navigateur par défaut (spécifié dans l'option 'brower') pour "
-"ce navigateur de façon qu'il soit utilisé dans toutes les requêtes d'aide "
-"futures"
 
 msgid ""
 "If '%s' is already running, it is *not* restarted, and you must switch to "
@@ -962,14 +986,8 @@ msgstr "'url' doit être une chaîne de caractères non vide"
 msgid "'browser' must be a non-empty character string"
 msgstr "'browser' doit être une chaîne de caractères non vide"
 
-msgid "Making links in per-session dir ..."
-msgstr "Création des liens dans le répertoire de session..."
-
-msgid "cannot create HTML package index"
-msgstr "impossible de créer l'index HTML des packages"
-
-msgid "cannot create HTML search index"
-msgstr "impossible de créer l'index HTML de recherche"
+msgid "Making packages.html"
+msgstr ""
 
 msgid "Updating HTML index of packages in '.Library'"
 msgstr "mise à jour de la liste HTML des packages dans '.Library'"
@@ -1002,16 +1020,10 @@ msgstr "'memory.size()' est spécifique à Windows"
 msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()' est spécifique à Windows"
 
-msgid "unable to find the HTML help"
-msgstr "aide HTML introuvable"
-
-msgid "updating HTML package listing"
-msgstr "mise à jour de la liste HTML des packages"
-
-msgid "fixing URLs in non-standard libraries"
-msgstr "correction des URL dans les librairies non standard"
-
-msgid "If nothing happens, you should open '%s' yourself"
+#, fuzzy
+msgid ""
+"If nothing happens, you should open\n"
+"'%s' yourself"
 msgstr "Si rien ne se passe, vous devrez ouvrir '%s' vous-même"
 
 msgid "failed to create '%s'"
@@ -1026,8 +1038,9 @@ msgstr "fichier zip '%s' introuvable"
 msgid "updating HTML package descriptions"
 msgstr "mise à jour des descriptions HTML des packages"
 
-msgid "cannot update '%s'"
-msgstr "impossible de mettre à jour '%s'"
+#, fuzzy
+msgid "cannot update HTML package index"
+msgstr "impossible de créer l'index HTML des packages"
 
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() ne peut être utilisé en mode non interactif"
@@ -1075,6 +1088,61 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid ""
+#~ "No HTML help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ "Aucune aide HTML pour '%s' disponible :\n"
+#~ "le fichier correspondant est manquant"
+
+#~ msgid "Compiled HTML is not installed"
+#~ msgstr "L'aide au format HTML compilé n'est pas installée"
+
+#~ msgid "CHM file could not be displayed"
+#~ msgstr "Le fichier CHM n'a pas pu être affiché"
+
+#~ msgid ""
+#~ "No CHM help for '%s' in package '%s' is available:\n"
+#~ "the CHM file for the package is missing"
+#~ msgstr ""
+#~ "Aucune aide CHM disponible sur '%s' dans le package '%s' :\n"
+#~ "le fichier CHM pour ce package est manquant"
+
+#~ msgid "problems running R CMD Rdconv"
+#~ msgstr "problème d'exécution de R CMD Rdconv"
+
+#~ msgid "'latexcmd' is empty"
+#~ msgstr "'latexcmd' est vide"
+
+#~ msgid "'dvipscmd' is empty"
+#~ msgstr "'dvipscmd' est vide"
+
+#~ msgid ""
+#~ "Changing the default browser (as specified by the 'browser' option) to "
+#~ "the given browser so that it gets used for all future help requests."
+#~ msgstr ""
+#~ "Changement du navigateur par défaut (spécifié dans l'option 'brower') "
+#~ "pour ce navigateur de façon qu'il soit utilisé dans toutes les requêtes "
+#~ "d'aide futures"
+
+#~ msgid "Making links in per-session dir ..."
+#~ msgstr "Création des liens dans le répertoire de session..."
+
+#~ msgid "cannot create HTML search index"
+#~ msgstr "impossible de créer l'index HTML de recherche"
+
+#~ msgid "unable to find the HTML help"
+#~ msgstr "aide HTML introuvable"
+
+#~ msgid "updating HTML package listing"
+#~ msgstr "mise à jour de la liste HTML des packages"
+
+#~ msgid "fixing URLs in non-standard libraries"
+#~ msgstr "correction des URL dans les librairies non standard"
+
+#~ msgid "cannot update '%s'"
+#~ msgstr "impossible de mettre à jour '%s'"
 
 #~ msgid "Found invalid multi-byte character data."
 #~ msgstr "Données caractère multi-octets incorrectes."

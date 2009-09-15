@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:09\n"
+"POT-Creation-Date: 2009-09-15 12:40\n"
 "PO-Revision-Date: 2009-03-31 13:18+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -754,6 +754,18 @@ msgstr ""
 " パッケージ '%s' は R 2.0.0 以前に造らました。新しくインストールして下さい "
 
 msgid "package '%s' was built under R version %s"
+msgstr " パッケージ '%s' はバージョン %s の R の下で造られました "
+
+#, fuzzy
+msgid ""
+"package '%s' was built under R version %s and help will not work correctly\n"
+"Please re-install it"
+msgstr ""
+" パッケージ '%s' は R 2.0.0 以前に造らました。新しくインストールして下さい "
+
+#, fuzzy
+msgid ""
+"package '%s' was built under R version %s and help may not work correctly"
 msgstr " パッケージ '%s' はバージョン %s の R の下で造られました "
 
 msgid "package '%s' was built for %s"

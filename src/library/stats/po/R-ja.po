@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2009-03-31 20:57+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1595,7 +1595,8 @@ msgstr " 論理値の `hessian' は許されません。ドキュメントを見
 msgid "'params' has wrong length"
 msgstr " 'params' は 誤った長さです "
 
-msgid "'varying' must be in 1L:length(pars)"
+#, fuzzy
+msgid "'varying' must be in seq_along(pars)"
 msgstr " 'varying' は 1L:length(pars) 中になければなりません "
 
 msgid "'varying' has wrong length"
@@ -1720,7 +1721,8 @@ msgstr "てこ比1の観測データはプロットしません "
 msgid "use only with \"lm\" objects"
 msgstr " \"lm\" オブジェクトに対してだけ使用してください "
 
-msgid "'which' must be in 1L:6"
+#, fuzzy
+msgid "'which' must be in 1:6"
 msgstr " 'which' は 1L:6 中になければなりません "
 
 msgid "'id.n' must be in {1,..,%d}"

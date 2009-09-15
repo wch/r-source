@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2009-03-29 04:54+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -1612,7 +1612,8 @@ msgstr "Логический аргумент 'hessian' не разрешен. См. документацию."
 msgid "'params' has wrong length"
 msgstr "у 'params' неправильная длина"
 
-msgid "'varying' must be in 1L:length(pars)"
+#, fuzzy
+msgid "'varying' must be in seq_along(pars)"
 msgstr "'varying' должен быть в пределах 1L:length(pars)"
 
 msgid "'varying' has wrong length"
@@ -1736,7 +1737,8 @@ msgstr "Наблюдения с единичной трансляцией не рисую:"
 msgid "use only with \"lm\" objects"
 msgstr "используется только с \"lm\"-объектами"
 
-msgid "'which' must be in 1L:6"
+#, fuzzy
+msgid "'which' must be in 1:6"
 msgstr "'which' должен быть в пределах 1L:6"
 
 msgid "'id.n' must be in {1,..,%d}"

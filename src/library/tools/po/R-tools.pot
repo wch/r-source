@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-02 20:13\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -176,60 +176,6 @@ msgstr ""
 msgid "Namespace dependencies not required:"
 msgstr ""
 
-msgid "Rd files with syntax errors:"
-msgstr ""
-
-msgid "Rd files with likely Rd problems:"
-msgstr ""
-
-msgid "Unaccounted top-level text in file '%s':"
-msgstr ""
-
-msgid "Following section '%s'"
-msgstr ""
-
-msgid "Rd files with unknown encoding:"
-msgstr ""
-
-msgid "Rd files with invalid non-ASCII metadata:"
-msgstr ""
-
-msgid "Rd files with non-ASCII section titles:"
-msgstr ""
-
-msgid "Rd files with missing or empty '\\name':"
-msgstr ""
-
-msgid "Rd files with missing or empty '\\title':"
-msgstr ""
-
-msgid "Rd files without '%s':"
-msgstr ""
-
-msgid "These entries are required in an Rd file."
-msgstr ""
-
-msgid "Rd files with duplicate '%s':"
-msgstr ""
-
-msgid "These entries must be unique in an Rd file."
-msgstr ""
-
-msgid "Rd files with unknown sections:"
-msgstr ""
-
-msgid "Rd files with non-standard keywords:"
-msgstr ""
-
-msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS' in the R documentation directory)."
-msgstr ""
-
-msgid "Rd files with duplicated alias '%s':"
-msgstr ""
-
-msgid "Rd files with empty sections:"
-msgstr ""
-
 msgid "Malformed package name"
 msgstr ""
 
@@ -356,6 +302,12 @@ msgstr ""
 msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 
+msgid "Rd files with duplicated name '%s':"
+msgstr ""
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr ""
+
 msgid "Generics g in env ="
 msgstr ""
 
@@ -420,9 +372,6 @@ msgid "more than one \\examples section, using the first"
 msgstr ""
 
 msgid "invalid value for '%s' : %s"
-msgstr ""
-
-msgid "checkRd is designed for Rd version 2 or higher"
 msgstr ""
 
 msgid "unable to create temp directory"

@@ -19,8 +19,8 @@ src/main/RNG.c
 src/main/Rdynload.c
 src/main/Rstrptime.h
 src/main/Rmain.c
+src/main/agrep.c
 src/main/apply.c
-src/main/apse.c
 src/main/arithmetic.c
 src/main/array.c
 src/main/attrib.c
@@ -55,6 +55,7 @@ src/main/gevents.c
 src/main/gram-ex.c
 src/main/gram.y
 src/main/graphics.c
+src/main/grep.c
 src/main/internet.c
 src/main/iosupport.c
 src/main/lapack.c
@@ -85,7 +86,6 @@ src/main/printarray.c
 src/main/qsort-body.c
 src/main/qsort.c
 src/main/random.c
-src/main/regex.c
 src/main/registration.c
 src/main/relop.c
 src/main/rlocale.c

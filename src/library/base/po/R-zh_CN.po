@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:09\n"
+"POT-Creation-Date: 2009-09-15 12:40\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -741,6 +741,17 @@ msgid "package '%s' was built before R 2.0.0: please re-install it"
 msgstr "程辑包'%s'是在R版本2.0.0之前建的：你得重新组装"
 
 msgid "package '%s' was built under R version %s"
+msgstr "程辑包'%s'是用R版本%s 来建造的"
+
+#, fuzzy
+msgid ""
+"package '%s' was built under R version %s and help will not work correctly\n"
+"Please re-install it"
+msgstr "程辑包'%s'是在R版本2.0.0之前建的：你得重新组装"
+
+#, fuzzy
+msgid ""
+"package '%s' was built under R version %s and help may not work correctly"
 msgstr "程辑包'%s'是用R版本%s 来建造的"
 
 msgid "package '%s' was built for %s"

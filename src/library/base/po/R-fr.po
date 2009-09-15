@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:09\n"
+"POT-Creation-Date: 2009-09-15 12:40\n"
 "PO-Revision-Date: 2009-03-29 21:29+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -779,6 +779,19 @@ msgstr ""
 "version plus récente, s'il-vous-plait"
 
 msgid "package '%s' was built under R version %s"
+msgstr "le package '%s' a été compilé avec la version R %s"
+
+#, fuzzy
+msgid ""
+"package '%s' was built under R version %s and help will not work correctly\n"
+"Please re-install it"
+msgstr ""
+"le package '%s' a été compilé avant R 2.0.0 : veuillez réinstaller une "
+"version plus récente, s'il-vous-plait"
+
+#, fuzzy
+msgid ""
+"package '%s' was built under R version %s and help may not work correctly"
 msgstr "le package '%s' a été compilé avec la version R %s"
 
 msgid "package '%s' was built for %s"

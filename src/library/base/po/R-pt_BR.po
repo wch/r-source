@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:09\n"
+"POT-Creation-Date: 2009-09-15 12:40\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -780,6 +780,18 @@ msgstr ""
 "pacote '%s' foi compilado antes do R 2.0.0: por favor instale-o novamente"
 
 msgid "package '%s' was built under R version %s"
+msgstr "pacote '%s' foi compilado na versão do R %s"
+
+#, fuzzy
+msgid ""
+"package '%s' was built under R version %s and help will not work correctly\n"
+"Please re-install it"
+msgstr ""
+"pacote '%s' foi compilado antes do R 2.0.0: por favor instale-o novamente"
+
+#, fuzzy
+msgid ""
+"package '%s' was built under R version %s and help may not work correctly"
 msgstr "pacote '%s' foi compilado na versão do R %s"
 
 msgid "package '%s' was built for %s"

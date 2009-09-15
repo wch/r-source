@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -145,19 +145,20 @@ msgstr ""
 "분명히 또는 기존의 함수에 의해 기능 골격을 주어지지 않으면 되지 않습니다"
 
 msgid ""
-"Restoring the implicit generic function for \"%s\" from package \"%s\" into "
-"package \"%s\"; the generic differs from the default conversion (%s)"
+"Restoring the implicit generic function for \"%s\" from package \"%s\"\n"
+"    into package \"%s\"; the generic differs from the default conversion (%s)"
 msgstr ""
 
 msgid ""
 "Creating a generic for \"%s\" in package  \"%s\"\n"
-"    (the supplied definition differs from and overrides the implicit generic "
-"in package \"%s\": %s)"
+"    (the supplied definition differs from and overrides the implicit "
+"generic\n"
+"    in package \"%s\": %s)"
 msgstr ""
 
 msgid ""
-"No generic version of  \"%s\" on package \"%s\" is allowed; a new generic "
-"will be assigned with package \"%s\""
+"No generic version of  \"%s\" on package \"%s\" is allowed;\n"
+"   a new generic will be assigned with package \"%s\""
 msgstr ""
 
 #, fuzzy
@@ -1130,6 +1131,12 @@ msgstr ""
 
 msgid "no definition of \"%s\" to use for %s"
 msgstr "%s를 사용하는 \"%s\"의 정의가 아닙니다"
+
+#, fuzzy
+msgid ""
+"multiple definitions of class \"%s\" visible; using the definition\n"
+"   in package \"%s\" for %s"
+msgstr "\"%s\"의 다수의 정의는 검색되었습니다; %s에서 사용합니다"
 
 msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr ""

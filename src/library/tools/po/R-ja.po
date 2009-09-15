@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-02 20:13\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2009-04-01 08:36+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -199,67 +199,6 @@ msgstr ""
 msgid "Namespace dependencies not required:"
 msgstr " Namespaceの依存性は必要ありません： "
 
-msgid "Rd files with syntax errors:"
-msgstr " 構文エラーを含む Rd ファイル： "
-
-msgid "Rd files with likely Rd problems:"
-msgstr " おそらく Rd 固有の問題を含む Rd ファイル： "
-
-msgid "Unaccounted top-level text in file '%s':"
-msgstr " ファイル '%s' 中のトップレベルの文字列は意味が通りません "
-
-msgid "Following section '%s'"
-msgstr " 以下のセクション '%s'  "
-
-msgid "Rd files with unknown encoding:"
-msgstr " 未知のエンコーディングを含む Rd ファイル： "
-
-msgid "Rd files with invalid non-ASCII metadata:"
-msgstr " 不正な非 ASCII メタデータを持つ Rd ファイル： "
-
-msgid "Rd files with non-ASCII section titles:"
-msgstr " 非 ASCII セクションタイトルを持つ Rd ファイル： "
-
-msgid "Rd files with missing or empty '\\name':"
-msgstr ""
-" ' \n"
-" ame' を持たないか空である Rd ファイル: "
-
-msgid "Rd files with missing or empty '\\title':"
-msgstr " '\\title' を持たないか空である Rd ファイル: "
-
-msgid "Rd files without '%s':"
-msgstr " '%s' を持たない Rd ファイル: "
-
-msgid "These entries are required in an Rd file."
-msgstr " Rd ファイルにはこれらの項目が必要です。 "
-
-msgid "Rd files with duplicate '%s':"
-msgstr " '%s' が重複する Rd ファイル: "
-
-msgid "These entries must be unique in an Rd file."
-msgstr " Rd ファイルではこれらの項目は重複してはなりません。 "
-
-msgid "Rd files with unknown sections:"
-msgstr " 未知のセクションを含む Rd ファイル： "
-
-msgid "Rd files with non-standard keywords:"
-msgstr " 非標準的なキーワードを持つ Rd ファイル： "
-
-msgid ""
-"Each '\\keyword' entry should specify one of the standard keywords (as "
-"listed in file 'KEYWORDS' in the R documentation directory)."
-msgstr ""
-" 各 'keyword' エントリーは、標準のキーワード（R ホームディレクトリの 'doc' サ"
-"ブディレクトリのファイル 'KEYWORDS' にリストされているように）のうちの1つを指"
-"定しなければなりません "
-
-msgid "Rd files with duplicated alias '%s':"
-msgstr " 重複するエイリアス '%s' を持ったRdファイル： "
-
-msgid "Rd files with empty sections:"
-msgstr " 空のセクションを含む Rd ファイル： "
-
 msgid "Malformed package name"
 msgstr " 奇矯なパッケージ名です "
 
@@ -414,6 +353,13 @@ msgid "'library' or 'require' calls not declared from:"
 msgstr ""
 " 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
 
+#, fuzzy
+msgid "Rd files with duplicated name '%s':"
+msgstr " '%s' が重複する Rd ファイル: "
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr " 重複するエイリアス '%s' を持ったRdファイル： "
+
 msgid "Generics g in env ="
 msgstr " 総称的な g (以下の環境中） "
 
@@ -490,10 +436,6 @@ msgstr " 2つ以上の\\examples節があります、1番目を用います "
 #, fuzzy
 msgid "invalid value for '%s' : %s"
 msgstr " 不正なライセンスファイルのポインタ: %s "
-
-#, fuzzy
-msgid "checkRd is designed for Rd version 2 or higher"
-msgstr "Rd2HTML は Rdのバージョン2以降で使われるように設計されています "
 
 msgid "unable to create temp directory"
 msgstr " 仮ディレクトリを生成することが出来ません "
@@ -1012,6 +954,65 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+
+#~ msgid "Rd files with syntax errors:"
+#~ msgstr " 構文エラーを含む Rd ファイル： "
+
+#~ msgid "Rd files with likely Rd problems:"
+#~ msgstr " おそらく Rd 固有の問題を含む Rd ファイル： "
+
+#~ msgid "Unaccounted top-level text in file '%s':"
+#~ msgstr " ファイル '%s' 中のトップレベルの文字列は意味が通りません "
+
+#~ msgid "Following section '%s'"
+#~ msgstr " 以下のセクション '%s'  "
+
+#~ msgid "Rd files with unknown encoding:"
+#~ msgstr " 未知のエンコーディングを含む Rd ファイル： "
+
+#~ msgid "Rd files with invalid non-ASCII metadata:"
+#~ msgstr " 不正な非 ASCII メタデータを持つ Rd ファイル： "
+
+#~ msgid "Rd files with non-ASCII section titles:"
+#~ msgstr " 非 ASCII セクションタイトルを持つ Rd ファイル： "
+
+#~ msgid "Rd files with missing or empty '\\name':"
+#~ msgstr ""
+#~ " ' \n"
+#~ " ame' を持たないか空である Rd ファイル: "
+
+#~ msgid "Rd files with missing or empty '\\title':"
+#~ msgstr " '\\title' を持たないか空である Rd ファイル: "
+
+#~ msgid "Rd files without '%s':"
+#~ msgstr " '%s' を持たない Rd ファイル: "
+
+#~ msgid "These entries are required in an Rd file."
+#~ msgstr " Rd ファイルにはこれらの項目が必要です。 "
+
+#~ msgid "These entries must be unique in an Rd file."
+#~ msgstr " Rd ファイルではこれらの項目は重複してはなりません。 "
+
+#~ msgid "Rd files with unknown sections:"
+#~ msgstr " 未知のセクションを含む Rd ファイル： "
+
+#~ msgid "Rd files with non-standard keywords:"
+#~ msgstr " 非標準的なキーワードを持つ Rd ファイル： "
+
+#~ msgid ""
+#~ "Each '\\keyword' entry should specify one of the standard keywords (as "
+#~ "listed in file 'KEYWORDS' in the R documentation directory)."
+#~ msgstr ""
+#~ " 各 'keyword' エントリーは、標準のキーワード（R ホームディレクトリの "
+#~ "'doc' サブディレクトリのファイル 'KEYWORDS' にリストされているように）のう"
+#~ "ちの1つを指定しなければなりません "
+
+#~ msgid "Rd files with empty sections:"
+#~ msgstr " 空のセクションを含む Rd ファイル： "
+
+#, fuzzy
+#~ msgid "checkRd is designed for Rd version 2 or higher"
+#~ msgstr "Rd2HTML は Rdのバージョン2以降で使われるように設計されています "
 
 #~ msgid "there are no help pages in this package"
 #~ msgstr "このパッケージにはヘルプ頁がありません "

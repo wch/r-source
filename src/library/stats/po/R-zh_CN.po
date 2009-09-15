@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1564,7 +1564,7 @@ msgid "'params' has wrong length"
 msgstr "'params'的长度不对"
 
 #, fuzzy
-msgid "'varying' must be in 1L:length(pars)"
+msgid "'varying' must be in seq_along(pars)"
 msgstr "'varying'必需在1:length(pars) 之间"
 
 msgid "'varying' has wrong length"
@@ -1686,7 +1686,7 @@ msgid "use only with \"lm\" objects"
 msgstr "只对\"lm\"对象适用"
 
 #, fuzzy
-msgid "'which' must be in 1L:6"
+msgid "'which' must be in 1:6"
 msgstr "'which'必需在1:6之间"
 
 msgid "'id.n' must be in {1,..,%d}"

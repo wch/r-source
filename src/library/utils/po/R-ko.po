@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -260,7 +260,8 @@ msgid "more than one help file found: using package '%s'"
 msgstr ""
 "하나의 help를 넘는 지원 파일은 검색되었습니다: 패키지 '%s'의 사용입니다"
 
-msgid "'%s' has a help file but no examples file"
+#, fuzzy
+msgid "'%s' has a help file but no examples"
 msgstr "'%s'는 help file를 지원하지만, examples 파일을 지원하지 않습니다"
 
 #, fuzzy
@@ -268,6 +269,10 @@ msgid "test '%s' is not available"
 msgstr ""
 "dependency '%s'는 이용 가능하지는 않습니다\n"
 "dependencies '%s'는 이용 가능하지는 않습니다"
+
+#, fuzzy
+msgid "Line number missing"
+msgstr "'subject'는 잘못되어집니다"
 
 msgid "'fix' requires a name"
 msgstr "'fix'는 이름을 요구합니다"
@@ -287,6 +292,15 @@ msgstr ""
 #, fuzzy
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "'package'는 문자열이나 NULL이어야만 합니다"
+
+msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
+msgstr ""
+
+msgid "chmhelp = TRUE is deprecated: use help_type =\"chm\""
+msgstr ""
+
+msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
+msgstr ""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "지정된 패키지 및 라이브러리에서 '%s'때문에 documentation는 없습니다"
@@ -317,26 +331,11 @@ msgstr ""
 msgid "Using the first match ..."
 msgstr "첫번째 match를 사용해주십시오..."
 
-msgid ""
-"No HTML help for '%s' is available:\n"
-"corresponding file is missing"
-msgstr ""
-"'%s'의 HTML help는 얻을 수 없습니다:\n"
-"대응하는 파일은 잘못되었습니다"
-
-msgid "Compiled HTML is not installed"
-msgstr "Compile 되어진 HTML는 인스톨 되지 않았습니다"
-
-msgid "CHM file could not be displayed"
-msgstr "CHM 파일을 표시 할수 없을지도 모릅니다"
-
 #, fuzzy
-msgid ""
-"No CHM help for '%s' in package '%s' is available:\n"
-"the CHM file for the package is missing"
+msgid "HTML help is unavailable"
 msgstr ""
-"패키지 '%s'로 '%s'의 CHM help는 얻을 수 없습니다: \n"
-"CHM 파일은 패키지으로 잘못되어져 있습니다"
+"dependency '%s'는 이용 가능하지는 않습니다\n"
+"dependencies '%s'는 이용 가능하지는 않습니다"
 
 msgid "R Help on '%s'"
 msgstr "'%s'에서 R Help입니다"
@@ -347,9 +346,6 @@ msgid ""
 msgstr ""
 "'%s'의 text 지원은 얻을 수 없습니다: \n"
 "대응하는 파일은 잘못되었습니다"
-
-msgid "problems running R CMD Rdconv"
-msgstr "R CMD Rdconv를 실행하는 문제입니다"
 
 msgid ""
 "No offline help for '%s' is available:\n"
@@ -370,10 +366,16 @@ msgstr "무엇을 검색해야할 것인지를 알수가 없습니다"
 msgid "argument 'help.db' is deprecated"
 msgstr "인수 'help.db'는 반대합니다"
 
-msgid "Rebuilding the data base ..."
+msgid "Rebuilding the help.search() database"
+msgstr ""
+
+msgid "..."
 msgstr ""
 
 msgid "Packages {.readRDS() sequentially}:"
+msgstr ""
+
+msgid "."
 msgstr ""
 
 msgid "could not find package '%s'"
@@ -398,8 +400,10 @@ msgstr "무효의 다중 바이트 문자 데이터를 갖춘 엔트리가 모�
 msgid "saving the database ..."
 msgstr "첫번째 match를 사용해주십시오..."
 
-msgid ""
-"no information in the data base for package '%s': need 'rebuild = TRUE'?"
+msgid "... database rebuilt"
+msgstr ""
+
+msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
 msgstr ""
 
 msgid "incorrect 'agrep' specification"
@@ -538,6 +542,10 @@ msgstr ""
 msgid "unable to access index for repository %s"
 msgstr "reposityory %s를 위한 인덱스에 액세스 할수 없습니다"
 
+#, fuzzy
+msgid "Invalid 'filters' argument."
+msgstr "무효의 'data' 인수입니다"
+
 msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr ""
 
@@ -586,7 +594,9 @@ msgstr ""
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- 이 세션에서 사용한 repository를 선택해주십시오 ---"
 
-msgid "Enter one or more numbers separated by spaces"
+#, fuzzy
+msgid ""
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
 msgstr "space에 의해서 분리된 1개이상의 수를 입력합니다"
 
 msgid "'%s' must be supplied"
@@ -924,6 +934,16 @@ msgstr "data set '%s'는 검색되지 않습니다"
 msgid "'unzip' must be a single character string"
 msgstr "인수 '%s'는 단일의 문자열이어야만 합니다"
 
+#, fuzzy
+msgid "'compressed' must be logical or character"
+msgstr "'list'는 R를 오브젝트라고 명명하는 문자 벡터이어야만 합니다"
+
+msgid "untar: using cmd ="
+msgstr ""
+
+msgid "set environment variable 'TAR' to point to a GNU-compatible 'tar'"
+msgstr ""
+
 msgid "'subject' missing"
 msgstr "'subject'는 잘못되어집니다"
 
@@ -939,22 +959,25 @@ msgstr ""
 msgid "options(\"browser\") not set"
 msgstr "세트 되지않는 옵션(\"browser\")입니다"
 
-msgid "'latexcmd' is empty"
+msgid "running '%s' failed"
 msgstr ""
 
-msgid "'dvipscmd' is empty"
+msgid "'%s' produced no output file: sent to printer?"
 msgstr ""
+
+#, fuzzy
+msgid "creation of '%s' failed"
+msgstr "패키지 '%s'의 다운로드는 실패했습니다"
+
+#, fuzzy
+msgid "Saving help page to"
+msgstr "첫번째 match를 사용해주십시오..."
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "무효의 browser명, 체크 옵션(\"browser\")입니다"
 
-msgid ""
-"Changing the default browser (as specified by the 'browser' option) to the "
-"given browser so that it gets used for all future help requests."
+msgid "help.start() requires the HTTP server to be running"
 msgstr ""
-"그것이 얻도록 주어진 브라우저('browser' 옵션에 의해서 지정되었습니다)를 변경"
-"하는 것은\n"
-"모든 미래의 help 요구를 위해서 사용했습니다"
 
 msgid ""
 "If '%s' is already running, it is *not* restarted, and you must switch to "
@@ -974,14 +997,8 @@ msgstr "url는 non-empty이어야만 합니다"
 msgid "'browser' must be a non-empty character string"
 msgstr "브라우저는 non-empty 문자열이어야만 합니다"
 
-msgid "Making links in per-session dir ..."
-msgstr "\"per-session의 dir에서 link를 작성하는것..."
-
-msgid "cannot create HTML package index"
-msgstr "HTML 패키지 인덱스를 작성할 수 없습니다"
-
-msgid "cannot create HTML search index"
-msgstr "HTML 탐색 인덱스를 작성할 수 없습니다"
+msgid "Making packages.html"
+msgstr ""
 
 #, fuzzy
 msgid "Updating HTML index of packages in '.Library'"
@@ -1012,16 +1029,10 @@ msgstr ""
 msgid "'memory.limit()' is Windows-specific"
 msgstr ""
 
-msgid "unable to find the HTML help"
-msgstr "HTML help를 검색되지 못합니다"
-
-msgid "updating HTML package listing"
-msgstr "HTML 패키지의 리스트를 갱신합니다"
-
-msgid "fixing URLs in non-standard libraries"
-msgstr "non-standard 라이브러리에 고정하는 URL입니다"
-
-msgid "If nothing happens, you should open '%s' yourself"
+#, fuzzy
+msgid ""
+"If nothing happens, you should open\n"
+"'%s' yourself"
 msgstr "아무것도 일어나지 않는 경우, 그 자체에 '%s'를 열어야 합니다"
 
 msgid "failed to create '%s'"
@@ -1036,8 +1047,8 @@ msgstr "검색되지 않는 zip파일'%s'입니다"
 msgid "updating HTML package descriptions"
 msgstr "갱신하는 HTML 패키지 기술입니다"
 
-msgid "cannot update '%s'"
-msgstr "'%s'를 갱신할 수 없습니다"
+msgid "cannot update HTML package index"
+msgstr "HTML 패키지 인덱스를 갱신할 수 없습니다"
 
 #, fuzzy
 msgid "winDialog() cannot be used non-interactively"
@@ -1092,6 +1103,59 @@ msgstr[0] ""
 "package '%s'는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages '%s'는 사용되고 있어 인스톨 되지 않을 것입니다"
 
+#~ msgid ""
+#~ "No HTML help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ "'%s'의 HTML help는 얻을 수 없습니다:\n"
+#~ "대응하는 파일은 잘못되었습니다"
+
+#~ msgid "Compiled HTML is not installed"
+#~ msgstr "Compile 되어진 HTML는 인스톨 되지 않았습니다"
+
+#~ msgid "CHM file could not be displayed"
+#~ msgstr "CHM 파일을 표시 할수 없을지도 모릅니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "No CHM help for '%s' in package '%s' is available:\n"
+#~ "the CHM file for the package is missing"
+#~ msgstr ""
+#~ "패키지 '%s'로 '%s'의 CHM help는 얻을 수 없습니다: \n"
+#~ "CHM 파일은 패키지으로 잘못되어져 있습니다"
+
+#~ msgid "problems running R CMD Rdconv"
+#~ msgstr "R CMD Rdconv를 실행하는 문제입니다"
+
+#~ msgid ""
+#~ "Changing the default browser (as specified by the 'browser' option) to "
+#~ "the given browser so that it gets used for all future help requests."
+#~ msgstr ""
+#~ "그것이 얻도록 주어진 브라우저('browser' 옵션에 의해서 지정되었습니다)를 변"
+#~ "경하는 것은\n"
+#~ "모든 미래의 help 요구를 위해서 사용했습니다"
+
+#~ msgid "Making links in per-session dir ..."
+#~ msgstr "\"per-session의 dir에서 link를 작성하는것..."
+
+#~ msgid "cannot create HTML package index"
+#~ msgstr "HTML 패키지 인덱스를 작성할 수 없습니다"
+
+#~ msgid "cannot create HTML search index"
+#~ msgstr "HTML 탐색 인덱스를 작성할 수 없습니다"
+
+#~ msgid "unable to find the HTML help"
+#~ msgstr "HTML help를 검색되지 못합니다"
+
+#~ msgid "updating HTML package listing"
+#~ msgstr "HTML 패키지의 리스트를 갱신합니다"
+
+#~ msgid "fixing URLs in non-standard libraries"
+#~ msgstr "non-standard 라이브러리에 고정하는 URL입니다"
+
+#~ msgid "cannot update '%s'"
+#~ msgstr "'%s'를 갱신할 수 없습니다"
+
 #~ msgid "Found invalid multi-byte character data."
 #~ msgstr "무효의 다중 바이트 문자 데이터를 검색되어졌습니다"
 
@@ -1113,9 +1177,6 @@ msgstr[0] ""
 #, fuzzy
 #~ msgid "package title"
 #~ msgstr "패키지"
-
-#~ msgid "cannot update HTML package index"
-#~ msgstr "HTML 패키지 인덱스를 갱신할 수 없습니다"
 
 #~ msgid "cannot update HTML search index"
 #~ msgstr "HTML 탐색 인덱스를 갱신할 수 없습니다"

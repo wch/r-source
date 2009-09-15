@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33\n"
+"POT-Creation-Date: 2009-09-15 12:40\n"
 "PO-Revision-Date: 2009-03-29 21:31+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -40,7 +40,8 @@ msgstr "au moins un élément de 'x' doit être positif"
 msgid "incorrect 'col': must be length 2"
 msgstr "'col' incorrect : doit être de longueur 2"
 
-msgid "'side' must be in {1L:4}"
+#, fuzzy
+msgid "'side' must be in {1:4}"
 msgstr "'side' doit être dans {1L:4}"
 
 msgid "invalid 'axp'"
@@ -49,7 +50,8 @@ msgstr "'axp' incorrect"
 msgid "invalid 'log'"
 msgstr "'log' incorrect"
 
-msgid "invalid positive 'axp[3L]'"
+#, fuzzy
+msgid "invalid positive 'axp[3]'"
 msgstr "'axp[3L]' positif incorrect"
 
 msgid "invalid 'usr'"

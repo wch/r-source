@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1648,7 +1648,7 @@ msgid "'params' has wrong length"
 msgstr "'parms' ha lunghezza sbagliata"
 
 #, fuzzy
-msgid "'varying' must be in 1L:length(pars)"
+msgid "'varying' must be in seq_along(pars)"
 msgstr "'varying' deve essere in 1:length(pars)"
 
 msgid "'varying' has wrong length"
@@ -1783,7 +1783,7 @@ msgid "use only with \"lm\" objects"
 msgstr "usare solo con oggetti \"lm\""
 
 #, fuzzy
-msgid "'which' must be in 1L:6"
+msgid "'which' must be in 1:6"
 msgstr "'which' deve essere in 1:6"
 
 msgid "'id.n' must be in {1,..,%d}"

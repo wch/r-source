@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,10 +227,13 @@ msgstr ""
 msgid "more than one help file found: using package '%s'"
 msgstr ""
 
-msgid "'%s' has a help file but no examples file"
+msgid "'%s' has a help file but no examples"
 msgstr ""
 
 msgid "test '%s' is not available"
+msgstr ""
+
+msgid "Line number missing"
 msgstr ""
 
 msgid "'fix' requires a name"
@@ -249,6 +252,15 @@ msgid "'form' must be a two-sided formula with one term on each side"
 msgstr ""
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
+msgstr ""
+
+msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
+msgstr ""
+
+msgid "chmhelp = TRUE is deprecated: use help_type =\"chm\""
+msgstr ""
+
+msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
 msgstr ""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
@@ -275,25 +287,13 @@ msgstr ""
 msgid "Using the first match ..."
 msgstr ""
 
-msgid "No HTML help for '%s' is available:\ncorresponding file is missing"
-msgstr ""
-
-msgid "Compiled HTML is not installed"
-msgstr ""
-
-msgid "CHM file could not be displayed"
-msgstr ""
-
-msgid "No CHM help for '%s' in package '%s' is available:\nthe CHM file for the package is missing"
+msgid "HTML help is unavailable"
 msgstr ""
 
 msgid "R Help on '%s'"
 msgstr ""
 
 msgid "No text help for '%s' is available:\ncorresponding file is missing"
-msgstr ""
-
-msgid "problems running R CMD Rdconv"
 msgstr ""
 
 msgid "No offline help for '%s' is available:\ncorresponding file is missing"
@@ -311,10 +311,16 @@ msgstr ""
 msgid "argument 'help.db' is deprecated"
 msgstr ""
 
-msgid "Rebuilding the data base ..."
+msgid "Rebuilding the help.search() database"
+msgstr ""
+
+msgid "..."
 msgstr ""
 
 msgid "Packages {.readRDS() sequentially}:"
+msgstr ""
+
+msgid "."
 msgstr ""
 
 msgid "could not find package '%s'"
@@ -338,7 +344,10 @@ msgstr ""
 msgid "saving the database ..."
 msgstr ""
 
-msgid "no information in the data base for package '%s': need 'rebuild = TRUE'?"
+msgid "... database rebuilt"
+msgstr ""
+
+msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
 msgstr ""
 
 msgid "incorrect 'agrep' specification"
@@ -464,6 +473,9 @@ msgstr ""
 msgid "unable to access index for repository %s"
 msgstr ""
 
+msgid "Invalid 'filters' argument."
+msgstr ""
+
 msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr ""
 
@@ -509,7 +521,7 @@ msgstr ""
 msgid "--- Please select repositories for use in this session ---"
 msgstr ""
 
-msgid "Enter one or more numbers separated by spaces"
+msgid "Enter one or more numbers separated by spaces, or an empty line to cancel"
 msgstr ""
 
 msgid "'%s' must be supplied"
@@ -794,6 +806,15 @@ msgstr ""
 msgid "'unzip' must be a single character string"
 msgstr ""
 
+msgid "'compressed' must be logical or character"
+msgstr ""
+
+msgid "untar: using cmd ="
+msgstr ""
+
+msgid "set environment variable 'TAR' to point to a GNU-compatible 'tar'"
+msgstr ""
+
 msgid "'subject' missing"
 msgstr ""
 
@@ -809,16 +830,22 @@ msgstr ""
 msgid "options(\"browser\") not set"
 msgstr ""
 
-msgid "'latexcmd' is empty"
+msgid "running '%s' failed"
 msgstr ""
 
-msgid "'dvipscmd' is empty"
+msgid "'%s' produced no output file: sent to printer?"
+msgstr ""
+
+msgid "creation of '%s' failed"
+msgstr ""
+
+msgid "Saving help page to"
 msgstr ""
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr ""
 
-msgid "Changing the default browser (as specified by the 'browser' option) to the given browser so that it gets used for all future help requests."
+msgid "help.start() requires the HTTP server to be running"
 msgstr ""
 
 msgid "If '%s' is already running, it is *not* restarted, and you must switch to its window."
@@ -833,13 +860,7 @@ msgstr ""
 msgid "'browser' must be a non-empty character string"
 msgstr ""
 
-msgid "Making links in per-session dir ..."
-msgstr ""
-
-msgid "cannot create HTML package index"
-msgstr ""
-
-msgid "cannot create HTML search index"
+msgid "Making packages.html"
 msgstr ""
 
 msgid "Updating HTML index of packages in '.Library'"
@@ -869,16 +890,7 @@ msgstr ""
 msgid "'memory.limit()' is Windows-specific"
 msgstr ""
 
-msgid "unable to find the HTML help"
-msgstr ""
-
-msgid "updating HTML package listing"
-msgstr ""
-
-msgid "fixing URLs in non-standard libraries"
-msgstr ""
-
-msgid "If nothing happens, you should open '%s' yourself"
+msgid "If nothing happens, you should open\n'%s' yourself"
 msgstr ""
 
 msgid "failed to create '%s'"
@@ -893,7 +905,7 @@ msgstr ""
 msgid "updating HTML package descriptions"
 msgstr ""
 
-msgid "cannot update '%s'"
+msgid "cannot update HTML package index"
 msgstr ""
 
 msgid "winDialog() cannot be used non-interactively"

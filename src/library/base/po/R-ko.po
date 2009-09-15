@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:09\n"
+"POT-Creation-Date: 2009-09-15 12:40\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -771,6 +771,17 @@ msgid "package '%s' was built before R 2.0.0: please re-install it"
 msgstr "패키지 '%s' R 2.0.0 이전 것입니다. 그것을 다시 인스톨을 해주십시오"
 
 msgid "package '%s' was built under R version %s"
+msgstr "패키지 '%s'는 버전 %s의 R미만에서 작성되어졌습니다"
+
+#, fuzzy
+msgid ""
+"package '%s' was built under R version %s and help will not work correctly\n"
+"Please re-install it"
+msgstr "패키지 '%s' R 2.0.0 이전 것입니다. 그것을 다시 인스톨을 해주십시오"
+
+#, fuzzy
+msgid ""
+"package '%s' was built under R version %s and help may not work correctly"
 msgstr "패키지 '%s'는 버전 %s의 R미만에서 작성되어졌습니다"
 
 msgid "package '%s' was built for %s"

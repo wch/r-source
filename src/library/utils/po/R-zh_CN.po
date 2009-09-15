@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10\n"
+"POT-Creation-Date: 2009-09-15 12:41\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -249,11 +249,16 @@ msgstr "找不到与'%s'有关的帮助文件"
 msgid "more than one help file found: using package '%s'"
 msgstr "找到了多个帮助文件：用程序包'%s'"
 
-msgid "'%s' has a help file but no examples file"
+#, fuzzy
+msgid "'%s' has a help file but no examples"
 msgstr "'%s'含帮助文件但没有示范文件"
 
 msgid "test '%s' is not available"
 msgstr "没有'%s'这种测试"
+
+#, fuzzy
+msgid "Line number missing"
+msgstr "缺少'subject'值"
 
 msgid "'fix' requires a name"
 msgstr "'fix'需要名字值"
@@ -272,6 +277,15 @@ msgstr "'form'必需是双边公式，每一边至少带一项"
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "'topic'的值必需是名字，长度为一的字符串或保留文字"
+
+msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
+msgstr ""
+
+msgid "chmhelp = TRUE is deprecated: use help_type =\"chm\""
+msgstr ""
+
+msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
+msgstr ""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "在指定的程序包和图书馆里没有与'%s'有关的说明书:"
@@ -300,25 +314,9 @@ msgstr "选一个"
 msgid "Using the first match ..."
 msgstr "用第一个相配…"
 
-msgid ""
-"No HTML help for '%s' is available:\n"
-"corresponding file is missing"
-msgstr ""
-"没有与'%s'有关的HTML帮助文件:\n"
-"有关的文件不存在"
-
-msgid "Compiled HTML is not installed"
-msgstr "没有安装編譯过的HTML"
-
-msgid "CHM file could not be displayed"
-msgstr "无法显示CHM文件"
-
-msgid ""
-"No CHM help for '%s' in package '%s' is available:\n"
-"the CHM file for the package is missing"
-msgstr ""
-"程序包'%2$s'里没有与'%1$s'有关的CHM帮助文件:\n"
-"CHM文件不存在"
+#, fuzzy
+msgid "HTML help is unavailable"
+msgstr "没有'%s'这种测试"
 
 msgid "R Help on '%s'"
 msgstr "与'%s'有关的R Help"
@@ -329,9 +327,6 @@ msgid ""
 msgstr ""
 "没有与'%s'有关的帮助文件:\n"
 "帮助文件不存在"
-
-msgid "problems running R CMD Rdconv"
-msgstr "调用R CMD Rdconv时出了错"
 
 msgid ""
 "No offline help for '%s' is available:\n"
@@ -352,11 +347,18 @@ msgstr "不知道要搜查什么"
 msgid "argument 'help.db' is deprecated"
 msgstr "变元'help.db'已经不再用了"
 
-msgid "Rebuilding the data base ..."
+#, fuzzy
+msgid "Rebuilding the help.search() database"
 msgstr "重建数据库"
+
+msgid "..."
+msgstr ""
 
 msgid "Packages {.readRDS() sequentially}:"
 msgstr "程序包{顺序.readRDS()}:"
+
+msgid "."
+msgstr ""
 
 msgid "could not find package '%s'"
 msgstr "找不到程序包'%s'"
@@ -379,8 +381,11 @@ msgstr "删除所有多字節字符数据出错的分錄"
 msgid "saving the database ..."
 msgstr "保存到数据库…"
 
-msgid ""
-"no information in the data base for package '%s': need 'rebuild = TRUE'?"
+msgid "... database rebuilt"
+msgstr ""
+
+#, fuzzy
+msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
 msgstr "数据库里没有关于程序包'%s'的信息：是不是需要设定'rebuild = TRUE'？"
 
 msgid "incorrect 'agrep' specification"
@@ -507,6 +512,10 @@ msgstr "'%s'里有详细内容"
 msgid "unable to access index for repository %s"
 msgstr "无法在貯藏處%s中读写索引"
 
+#, fuzzy
+msgid "Invalid 'filters' argument."
+msgstr "'x'变元不对"
+
 msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr "'oldPkgs'的值不对；必需是从old.packages()得到的结果"
 
@@ -552,7 +561,9 @@ msgstr "无法在非互交情况下设定貯藏處"
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- 请选用一个貯藏處 ---"
 
-msgid "Enter one or more numbers separated by spaces"
+#, fuzzy
+msgid ""
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
 msgstr "请输入一个或多个由空格分开的数字"
 
 msgid "'%s' must be supplied"
@@ -867,6 +878,16 @@ msgstr "不能修改'%s'"
 msgid "'unzip' must be a single character string"
 msgstr "'unzip'必需是单字符串"
 
+#, fuzzy
+msgid "'compressed' must be logical or character"
+msgstr "'code_files'必需是字符向量"
+
+msgid "untar: using cmd ="
+msgstr ""
+
+msgid "set environment variable 'TAR' to point to a GNU-compatible 'tar'"
+msgstr ""
+
 msgid "'subject' missing"
 msgstr "缺少'subject'值"
 
@@ -882,21 +903,25 @@ msgstr "用非联接文件：超联结有可能出错"
 msgid "options(\"browser\") not set"
 msgstr "options(\"browser\")没有设好"
 
-msgid "'latexcmd' is empty"
+msgid "running '%s' failed"
 msgstr ""
 
-msgid "'dvipscmd' is empty"
+msgid "'%s' produced no output file: sent to printer?"
 msgstr ""
+
+#, fuzzy
+msgid "creation of '%s' failed"
+msgstr "下载程序包'%s'时出了问题"
+
+#, fuzzy
+msgid "Saving help page to"
+msgstr "制造帮助文件…"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "浏览器的名字不对，请检查options(\"browser\")的设置。"
 
-msgid ""
-"Changing the default browser (as specified by the 'browser' option) to the "
-"given browser so that it gets used for all future help requests."
+msgid "help.start() requires the HTTP server to be running"
 msgstr ""
-"将默认浏览器(由'browser'选项设定)改成目前指定的浏览器，这样未来所有的帮助要求"
-"都会由这个浏览器来控制。"
 
 msgid ""
 "If '%s' is already running, it is *not* restarted, and you must switch to "
@@ -913,14 +938,8 @@ msgstr "url必需的非空字符串"
 msgid "'browser' must be a non-empty character string"
 msgstr "'browser'必需为非空字符串"
 
-msgid "Making links in per-session dir ..."
-msgstr "在每會期文件目录里建立联结…"
-
-msgid "cannot create HTML package index"
-msgstr "无法建立HTML程序包索引"
-
-msgid "cannot create HTML search index"
-msgstr "无法建立HTML搜索索引"
+msgid "Making packages.html"
+msgstr ""
 
 msgid "Updating HTML index of packages in '.Library'"
 msgstr "更新'.Library'里的HTML程序包列表"
@@ -949,16 +968,10 @@ msgstr "'memory.size()'只在Windows上有用"
 msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()'只在Windows上有用"
 
-msgid "unable to find the HTML help"
-msgstr "找不到HTML帮助文件"
-
-msgid "updating HTML package listing"
-msgstr "更新HTML程序包列表"
-
-msgid "fixing URLs in non-standard libraries"
-msgstr "修理非标准的图书馆里的URL"
-
-msgid "If nothing happens, you should open '%s' yourself"
+#, fuzzy
+msgid ""
+"If nothing happens, you should open\n"
+"'%s' yourself"
 msgstr "如果什么都不发生的话，你应该自己打开'%s'"
 
 msgid "failed to create '%s'"
@@ -973,8 +986,8 @@ msgstr "找不到'%s'这一zip文件"
 msgid "updating HTML package descriptions"
 msgstr "更新HTML程序包的描述内容"
 
-msgid "cannot update '%s'"
-msgstr "无法更新'%s'"
+msgid "cannot update HTML package index"
+msgstr "无法更新HTML程序包索引"
 
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog()不能在非互交形式下使用"
@@ -1012,6 +1025,57 @@ msgstr[0] "'lib'元素'%s'不是可写的目录"
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid ""
+#~ "No HTML help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ "没有与'%s'有关的HTML帮助文件:\n"
+#~ "有关的文件不存在"
+
+#~ msgid "Compiled HTML is not installed"
+#~ msgstr "没有安装編譯过的HTML"
+
+#~ msgid "CHM file could not be displayed"
+#~ msgstr "无法显示CHM文件"
+
+#~ msgid ""
+#~ "No CHM help for '%s' in package '%s' is available:\n"
+#~ "the CHM file for the package is missing"
+#~ msgstr ""
+#~ "程序包'%2$s'里没有与'%1$s'有关的CHM帮助文件:\n"
+#~ "CHM文件不存在"
+
+#~ msgid "problems running R CMD Rdconv"
+#~ msgstr "调用R CMD Rdconv时出了错"
+
+#~ msgid ""
+#~ "Changing the default browser (as specified by the 'browser' option) to "
+#~ "the given browser so that it gets used for all future help requests."
+#~ msgstr ""
+#~ "将默认浏览器(由'browser'选项设定)改成目前指定的浏览器，这样未来所有的帮助"
+#~ "要求都会由这个浏览器来控制。"
+
+#~ msgid "Making links in per-session dir ..."
+#~ msgstr "在每會期文件目录里建立联结…"
+
+#~ msgid "cannot create HTML package index"
+#~ msgstr "无法建立HTML程序包索引"
+
+#~ msgid "cannot create HTML search index"
+#~ msgstr "无法建立HTML搜索索引"
+
+#~ msgid "unable to find the HTML help"
+#~ msgstr "找不到HTML帮助文件"
+
+#~ msgid "updating HTML package listing"
+#~ msgstr "更新HTML程序包列表"
+
+#~ msgid "fixing URLs in non-standard libraries"
+#~ msgstr "修理非标准的图书馆里的URL"
+
+#~ msgid "cannot update '%s'"
+#~ msgstr "无法更新'%s'"
 
 #~ msgid "Found invalid multi-byte character data."
 #~ msgstr "多字節字符数据中有错。"
@@ -1080,9 +1144,6 @@ msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
 #~ msgstr ""
 #~ "限制设定得不对。\n"
 #~ "用'%s'"
-
-#~ msgid "cannot update HTML package index"
-#~ msgstr "无法更新HTML程序包索引"
 
 #~ msgid "cannot update HTML search index"
 #~ msgstr "无法更新HTML搜索索引"
