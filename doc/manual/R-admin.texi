@@ -983,8 +983,7 @@ The Tcl/Tk support files are in a zip file at
 
 @item
 You need @code{libpng} and @code{jpeg} sources (available, e.g., from
-@uref{http://www.libpng.org/},
-@uref{ftp://ftp.uu.net/graphics/}[png,jpeg],
+@uref{http://www.libpng.org/}, @uref{http://www.ijg.org},
 @uref{http://www.libtiff.org/}).  You will need files
 @file{libpng-1.2.18.tar.gz}, @file{jpegsrc.v6b.tar.gz},
 @file{tiff-3.8.0.tar.gz} or later.
@@ -993,18 +992,19 @@ Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
 install the @code{libpng} and @code{jpeg} sources in sub-directories.
 The @code{libpng} sub-directory must be named @file{libpng} (as required
 by the @code{libpng} documentation).  The @code{jpeg} sub-directory for
-version 6b is named @file{jpeg-6b}; if you use a different version, edit
-@file{Makefile} and change the definition of @code{JPEGDIR}.
+version 7 is named @file{jpeg-7}; if you use a different version (e.g.@:
+@file{jpeg-6b}), edit @file{Makefile} and change the definition of
+@code{JPEGDIR}.
 
 Example:
 
 @example
-> tar xzvf libpng-1.2.20.tar.gz
-> mv libpng-1.2.20 libpng
-> tar xzvf jpegsrc.v6b.tar.gz
-> tar xzvf tiff-3.8.2.tar.gz
-> mv tiff-3.8.2/libtiff .
-> rm -rf libtiff-3.8.2
+> tar xzvf libpng-1.2.35.tar.gz
+> mv libpng-1.2.35 libpng
+> tar xzvf jpegsrc.v7.tar.gz
+> tar xzvf tiff-3.9.1.tar.gz
+> mv tiff-3.9.1/libtiff .
+> rm -rf tiff-3.9.1
 @end example
 
 @end itemize
@@ -2362,7 +2362,7 @@ rather similar to the first two
 
 The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
-@code{jpeg} (version 6b or later) or @code{libpng} (version 1.2.3 or
+@code{jpeg} (version 6b or 7) or @code{libpng} (version 1.2.3 or
 later) and @code{zlib} (version 1.1.3 or later) or @code{libtiff} (any
 recent version -- 3.8.2 was tested) respectively.
 
