@@ -19,14 +19,22 @@ findGeneric <- function(fname, envir)
 {
     if(!exists(fname, mode = "function", envir = envir)) return("")
     f <- get(fname, mode = "function", envir = envir)
+    ## FIXME? In the first case, e.g. 'methods(qr)', we are very inefficient:
+    ##  inside methods() we transform the 'qr' function object into a character,
+    ##  whereas here, we revert this, searching around unnecessarily
+    ##
     if(.isMethodsDispatchOn() && methods::is(f, "genericFunction")) {
-        ## maybe an S3 generic was turned into the S4 default
-        ## But (in 2.6.x), this no longer works!
-        fdeflt <- methods::finalDefaultMethod(methods::getMethodsForDispatch(f))
-        if(methods::is(fdeflt, "derivedDefaultMethod"))
-            f <- fdeflt
-        else
-            warning(gettextf("'%s' is a formal generic function; S3 methods will not likely be found", fname), domain = NA)
+	## maybe an S3 generic was turned into the S4 default
+	## Try to find it, otherwise warn :
+	fMethsEnv <- methods::getMethodsForDispatch(f)
+	r <- lapply(grep("^ANY\\b", ls(envir = fMethsEnv), value=TRUE),
+		    get, envir = fMethsEnv)
+	if(any(ddm <- unlist(lapply(r, class)) == "derivedDefaultMethod"))
+	    f <- r[ddm][[1]]@generic
+	else
+	    warning(gettextf(
+	"'%s' is a formal generic function; S3 methods will not likely be found",
+			     fname), domain = NA)
     }
     isUMEbrace <- function(e) {
         for (ee in as.list(e[-1L]))
@@ -53,6 +61,9 @@ findGeneric <- function(fname, envir)
     isUME(body(f))
 }
 
+getKnownS3generics <- function()
+    c(names(.knownS3Generics), tools:::.get_internal_S3_generics())
+
 methods <- function (generic.function, class)
 {
     rbindSome <- function(df, nms, msg) {
@@ -70,9 +81,7 @@ methods <- function (generic.function, class)
     }
 
     S3MethodsStopList <- tools:::.make_S3_methods_stop_list(NULL)
-    knownGenerics <- c(names(.knownS3Generics),
-                       tools:::.get_internal_S3_generics())
-
+    knownGenerics <- getKnownS3generics()
     sp <- search()
     an <- lapply(seq_along(sp), ls)
     names(an) <- sp
@@ -85,9 +94,10 @@ methods <- function (generic.function, class)
     if (!missing(generic.function)) {
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
-        else if(!exists(generic.function, mode = "function",
-                        envir = parent.frame()) &&
-                !generic.function %in% c("Math", "Ops", "Complex", "Summary"))
+        ## else
+        if(!exists(generic.function, mode = "function",
+                   envir = parent.frame()) &&
+           !generic.function %in% c("Math", "Ops", "Complex", "Summary"))
             stop(gettextf("no function '%s' is visible", generic.function),
                  domain = NA)
         if(!any(generic.function == knownGenerics)) {
@@ -95,7 +105,7 @@ methods <- function (generic.function, class)
             if(truegf == "")
                 warning(gettextf("function '%s' appears not to be generic",
                                  generic.function), domain = NA)
-            if(nzchar(truegf) && truegf != generic.function) {
+            else if(truegf != generic.function) {
                 warning(gettextf("generic function '%s' dispatches methods for generic '%s'",
                         generic.function, truegf), domain = NA)
                 generic.function <- truegf
@@ -193,9 +203,7 @@ print.MethodsFunction <- function(x, ...)
 
 getS3method <-  function(f, class, optional = FALSE)
 {
-    knownGenerics <- c(tools:::.get_internal_S3_generics(),
-                       names(.knownS3Generics))
-    if(!any(f == knownGenerics)) {
+    if(!any(f == getKnownS3generics())) {
         truegf <- findGeneric(f, parent.frame())
         if(nzchar(truegf)) f <- truegf
         else {
