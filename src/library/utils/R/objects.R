@@ -14,7 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## internal function used only in this file
+## findGeneric(fname) :  is 'fname' the name of an S3 generic ?
+##			[internal function used only in this file]
 findGeneric <- function(fname, envir)
 {
     if(!exists(fname, mode = "function", envir = envir)) return("")
@@ -30,7 +31,7 @@ findGeneric <- function(fname, envir)
 	r <- lapply(grep("^ANY\\b", ls(envir = fMethsEnv), value=TRUE),
 		    get, envir = fMethsEnv)
 	if(any(ddm <- unlist(lapply(r, class)) == "derivedDefaultMethod"))
-	    f <- r[ddm][[1]]@generic
+	    f <- r[ddm][[1]]@.Data
 	else
 	    warning(gettextf(
 	"'%s' is a formal generic function; S3 methods will not likely be found",
@@ -49,7 +50,7 @@ findGeneric <- function(fname, envir)
             else ""
         }
     }
-    isUME <- function(e) {
+    isUME <- function(e) { ## is it an "UseMethod() calling function" ?
         if (is.call(e) && (is.name(e[[1L]]) || is.character(e[[1L]]))) {
             switch(as.character(e[[1L]]),
                    UseMethod = as.character(e[[2L]]),
@@ -97,7 +98,7 @@ methods <- function (generic.function, class)
         ## else
         if(!exists(generic.function, mode = "function",
                    envir = parent.frame()) &&
-           !generic.function %in% c("Math", "Ops", "Complex", "Summary"))
+           !any(generic.function == c("Math", "Ops", "Complex", "Summary")))
             stop(gettextf("no function '%s' is visible", generic.function),
                  domain = NA)
         if(!any(generic.function == knownGenerics)) {

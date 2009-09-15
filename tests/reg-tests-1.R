@@ -5803,3 +5803,14 @@ stopifnot(identical(seq_len(length(x)),
 ## factor(NULL)
 stopifnot(identical(factor(), factor(NULL)))
 ## gave an error from R ~1.3.0 to 2.9.1
+
+## methods() gave two wrong warnings in some cases:
+op <- options(warn = 2)# no warning, please!
+m1 <- methods(na.omit) ## should give (no warning):
+##
+setClass("bla")
+setMethod("na.omit", "bla", function(object, ...) "na.omit(<bla>)")
+(m2 <- methods(na.omit)) ## should give (no warning):
+stopifnot(identical(m1, m2))
+options(op)
+## gave two warnings, when an S3 generic had turned into an S4 one

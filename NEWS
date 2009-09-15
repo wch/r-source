@@ -497,6 +497,9 @@ BUG FIXES
 	identical strings, and similarly Latin-1 and UTF-8 versions of
 	the same string differ in byte pattern.
 
+    o	methods(f) used to warn unnecessarily for an S4 generic 'f' which
+	had been created based on an existing S3 generic.
+
 
 
 
