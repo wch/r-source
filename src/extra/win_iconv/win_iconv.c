@@ -519,6 +519,7 @@ static struct {
     {28605, "iso-8859-15"}, /* ISO 8859-15 Latin 9 */
     {28605, "iso8859-15"},
     {28605, "latin9"},
+    {28605, "latin-9"},
     {29001, "x-Europa"}, /* Europa 3 */
     {38598, "iso-8859-8-i"}, /* ISO 8859-8 Hebrew; Hebrew (ISO-Logical) */
     {38598, "iso8859-8-i"}, /* ISO 8859-8 Hebrew; Hebrew (ISO-Logical) */
