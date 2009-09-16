@@ -1132,7 +1132,7 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-/* ------------------- gzipped file connections --------------------- */
+/* ------------------- [bg]zipped file connections --------------------- */
 
 static Rboolean gzfile_open(Rconnection con)
 {
@@ -1270,75 +1270,6 @@ static Rconnection newgzfile(const char *description, const char *mode,
     return new;
 }
 
-SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP sfile, sopen, ans, class, enc;
-    const char *file, *open;
-    int ncon, compress;
-    Rconnection con = NULL;
-
-    checkArity(op, args);
-    sfile = CAR(args);
-    if(!isString(sfile) || length(sfile) < 1)
-	error(_("invalid '%s' argument"), "description");
-    if(length(sfile) > 1)
-	warning(_("only first element of 'description' argument used"));
-    file = translateChar(STRING_ELT(sfile, 0));
-    sopen = CADR(args);
-    if(!isString(sopen) || length(sopen) != 1)
-	error(_("invalid '%s' argument"), "open");
-    enc = CADDR(args);
-    if(!isString(enc) || length(enc) != 1 ||
-       strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
-	error(_("invalid '%s' argument"), "encoding");
-    compress = asInteger(CADDDR(args));
-    if(compress == NA_LOGICAL || compress < 0 || compress > 9)
-	error(_("invalid '%s' argument"), "compress");
-    open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
-    if (!open[0] || open[0] == 'r') {
-	/* check magic no */
-	/* Possible future magic values are 
-	   "\xFFLZMA" for lzma 
-	   "\x89LZO" for lzop
-	   "\xFD7zXZ" for xz.
-	*/
-	FILE *fp = fopen(R_ExpandFileName(file), "rb");  
-	char buf[7];
-	if (fp) {
-	    memset(buf, 0, 7); fread(buf, 3, 1, fp); fclose(fp);
-	    if(streql(buf, "BZh")) return do_bzfile(call, op, args, env);
-	}
-   }
-    ncon = NextConnection();
-    con = Connections[ncon] = newgzfile(file, strlen(open) ? open : "r",
-					compress);
-    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
-
-    /* open it if desired */
-    if(strlen(open)) {
-	Rboolean success = con->open(con);
-	if(!success) {
-	    con_destroy(ncon);
-	    error(_("cannot open the connection"));
-	}
-    }
-
-    PROTECT(ans = ScalarInteger(ncon));
-    PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("gzfile"));
-    SET_STRING_ELT(class, 1, mkChar("connection"));
-    classgets(ans, class);
-    con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"),
-				    R_NilValue);
-    setAttrib(ans, install("conn_id"), con->ex_ptr);
-    R_RegisterCFinalizerEx(con->ex_ptr, conFinalizer, FALSE);
-    UNPROTECT(2);
-
-    return ans;
-}
-
-/* ------------------- bzipped file connections --------------------- */
-
 #include <bzlib.h>
 
 static Rboolean bzfile_open(Rconnection con)
@@ -1475,12 +1406,15 @@ static Rconnection newbzfile(const char *description, const char *mode)
     return new;
 }
 
-SEXP attribute_hidden do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
+
+/* op 0 is gzfile, 1 is bzfile */
+SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, sopen, ans, class, enc;
     const char *file, *open;
-    int ncon;
+    int ncon, compress = 9;
     Rconnection con = NULL;
+    int type = PRIMVAL(op);
 
     checkArity(op, args);
     sfile = CAR(args);
@@ -1496,9 +1430,36 @@ SEXP attribute_hidden do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
+    if(type == 0) {
+	compress = asInteger(CADDDR(args));
+	if(compress == NA_LOGICAL || compress < 0 || compress > 9)
+	    error(_("invalid '%s' argument"), "compress");
+    }
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
+    if (!open[0] || open[0] == 'r') {
+	/* check magic no */
+	/* Possible future magic values are 
+	   "\xFFLZMA" for lzma 
+	   "\x89LZO" for lzop
+	   "\xFD7zXZ" for xz.
+	*/
+	FILE *fp = fopen(R_ExpandFileName(file), "rb");  
+	char buf[7];
+	if (fp) {
+	    memset(buf, 0, 7); fread(buf, 3, 1, fp); fclose(fp);
+	    if(streql(buf, "BZh")) type = 1;
+	}
+   }
     ncon = NextConnection();
-    con = Connections[ncon] = newbzfile(file, strlen(open) ? open : "r");
+    switch(type) {
+    case 0:
+	con = newgzfile(file, strlen(open) ? open : "r", compress);
+	break;
+    case 1:
+	con = newbzfile(file, strlen(open) ? open : "r");
+	break;
+    }
+    Connections[ncon] = con;
     strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
 
     /* open it if desired */
@@ -1512,7 +1473,14 @@ SEXP attribute_hidden do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
     PROTECT(ans = ScalarInteger(ncon));
     PROTECT(class = allocVector(STRSXP, 2));
-    SET_STRING_ELT(class, 0, mkChar("bzfile"));
+    switch(type) {
+    case 0:
+	SET_STRING_ELT(class, 0, mkChar("gzfile"));
+	break;
+    case 1:
+	SET_STRING_ELT(class, 0, mkChar("bzfile"));
+	break;
+    }
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
     con->ex_ptr = R_MakeExternalPtr(con->id, install("connection"),
@@ -1523,7 +1491,6 @@ SEXP attribute_hidden do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
     return ans;
 }
-
 
 /* ------------------- clipboard connections --------------------- */
 

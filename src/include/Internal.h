@@ -556,7 +556,6 @@ SEXP do_pipe(SEXP, SEXP, SEXP, SEXP);
 SEXP do_url(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gzfile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_unz(SEXP, SEXP, SEXP, SEXP);
-SEXP do_bzfile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_seek(SEXP, SEXP, SEXP, SEXP);
 SEXP do_truncate(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pushback(SEXP, SEXP, SEXP, SEXP);
