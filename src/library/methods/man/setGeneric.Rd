@@ -310,9 +310,10 @@ setGeneric("authorNames",
 \dontshow{
 setMethod("authorNames", "character", function(text)text)
 
+tryIt <- function(expr) tryCatch(expr, error = function(e) e)
 stopifnot(identical(authorNames(c("me", "you")), c("me", "you")),
-          is(trySilent(authorNames(character())), "error"), # empty value
-          is(trySilent(authorNames(NULL)), "error"))        # no default method
+          is(tryIt(authorNames(character())), "error"), # empty value
+          is(tryIt(authorNames(NULL)), "error"))        # no default method
 }
 
 ## An example of group generic methods, using the class
