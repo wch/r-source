@@ -658,16 +658,14 @@ foreach my $pkg (@ARGV) {
 	    ## see http://www.darwinsys.com/file/
 	    my $have_free_file = 0;
 	    my $tmpfile = R_tempfile("file");
-	    if (!$WINDOWS) {
-		## version 4.21 writes to stdout, 4.23 to stderr
-		## and set an error status code
-		R_system("file --version > $tmpfile 2>&1");
-		open FILE, "< $tmpfile";
-		my @lines = <FILE>;
-		close(FILE);
-		## a reasonable check -- it does not identify itself well
-		$have_free_file = 1 if grep(/^file-[45]/, @lines);
-	    }
+	    ## version 4.21 writes to stdout, 4.23 to stderr
+	    ## and set an error status code
+	    R_system("file --version > $tmpfile 2>&1");
+	    open FILE, "< $tmpfile";
+	    my @lines = <FILE>;
+	    close(FILE);
+	    ## a reasonable check -- it does not identify itself well
+	    $have_free_file = 1 if grep(/^(file-[45]|magic file from)/, @lines);
 	    if ($have_free_file) {
 		$log->checking("for executable files");
 		my @exec_files = ();
