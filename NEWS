@@ -533,6 +533,10 @@ BUG FIXES
     o	Names of datasets could clash with temporary filenames used
 	when running examples, causing errors.
 
+    o	as.complex() sometimes warned about NAs on coercions and
+	sometimes not (when the C function asComplex was used, e.g. on
+	list elements).  (PR#13942)
+
     
 
 		CHANGES IN R VERSION 2.9.2
