@@ -137,11 +137,6 @@ typedef struct unzconn {
     void *uf;
 } *Runzconn;
 
-typedef struct bzfileconn {
-    FILE *fp;
-    void *bfp;
-} *Rbzfileconn;
-
 typedef struct clpconn {
     char *buff;
     int pos, len, last, sizeKB;

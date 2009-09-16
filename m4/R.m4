@@ -3112,6 +3112,43 @@ fi
 AM_CONDITIONAL(BUILD_BZLIB, [test "x${have_bzlib}" = xno])
 ])# R_BZLIB
 
+## R_LZMA
+## -------
+## Try finding liblzma library and headers.
+## We check that both are installed,
+AC_DEFUN([R_LZMA], [
+  AC_CHECK_LIB(lzma, lzma_version_number, [have_lzma=yes], [have_lzma=no])
+  if test "${have_lzma}" = yes; then
+    AC_CHECK_HEADERS(lzma.h, [have_lzma=yes], [have_lzma=no])
+  fi
+if test "x${have_lzma}" = xyes; then
+AC_CACHE_CHECK([if lzma version >= 4.999], [r_cv_have_lzma],
+[AC_LANG_PUSH(C)
+r_save_LIBS="${LIBS}"
+LIBS="-llzma ${LIBS}"
+AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifdef HAVE_LZMA_H
+#include <lzma.h>
+#endif
+#include <stdlib.h>
+int main() {
+    unsigned int ver = lzma_version_number();
+    exit(ver < 49990000);
+}
+]])], [r_cv_have_lzma=yes], [r_cv_have_lzma=no], [r_cv_have_lzma=no])
+LIBS="${r_save_LIBS}"
+AC_LANG_POP(C)])
+fi
+if test "x${r_cv_have_lzma}" = xno; then
+  have_lzma=no
+fi
+if test "x${have_lzma}" = xyes; then
+  AC_DEFINE(HAVE_LZMA, 1, [Define if your system has lzma >= 4.999.])
+  LIBS="-llzma ${LIBS}"
+fi
+])# R_LZMA
+
+
 ## R_SYS_POSIX_LEAPSECONDS
 ## -----------------------
 ## See if your system time functions do not count leap seconds, as

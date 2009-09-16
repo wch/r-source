@@ -2415,6 +2415,10 @@ preferred: these include GNU @command{tar} 1.15 or later,
 used by Mac OS 10.6) and @command{tar} from the Heirloom Toolchest
 (@uref{http://heirloom.sourceforge.net/tools.html}.
 
+@code{gzfile} can handle files compressed by @command{xz} if a suitable
+LZMA compression library is found by @code{configure}: it expects that
+from @uref{http://tukaani.org/xz/} version 4.999 or later.
+
 @menu
 * Tcl/Tk::                      
 * Java support::                

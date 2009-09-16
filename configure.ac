@@ -2030,6 +2030,9 @@ R_ZLIB
 ## bzlib headers and libraries.
 R_BZLIB
 
+## LZMA headers and libraries.
+R_LZMA
+
 ## PCRE headers and libraries.
 R_PCRE
 

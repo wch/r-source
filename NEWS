@@ -313,8 +313,15 @@ NEW FEATURES
 	expense of slower installation times.  More methods are
 	planned for future releases.
 
-    o	trySilent() is now a simple direct wrapper around tryCatch(),
-        instead of building on try().
+    o	methods::trySilent() is now a simple direct wrapper around
+        tryCatch(), instead of building on try().
+
+    o	[Experimental]  gzfile() can recognize and decompress files
+	compressed by 'xz' if suitable OS support is found at
+	configuration.  Since gzfile() is widely used to read files,
+	this means that for example load() can read files compressed
+	by 'xv' (and it can save substantial amounts of space on large
+	data files).
 
 
 REGULAR EXPRESSIONS

@@ -1146,7 +1146,7 @@ static Rboolean gzfile_open(Rconnection con)
     fp = gzopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
 	warning(_("cannot open compressed file '%s', probable reason '%s'"),
-	      R_ExpandFileName(con->description), strerror(errno));
+		R_ExpandFileName(con->description), strerror(errno));
 	return FALSE;
     }
     ((Rgzfileconn)(con->private))->fp = fp;
@@ -1271,9 +1271,14 @@ static Rconnection newgzfile(const char *description, const char *mode,
 }
 
 #include <bzlib.h>
+typedef struct bzfileconn {
+    FILE *fp;
+    BZFILE *bfp;
+} *Rbzfileconn;
 
 static Rboolean bzfile_open(Rconnection con)
 {
+    Rbzfileconn bz = (Rbzfileconn) con->private;
     FILE* fp;
     BZFILE* bfp;
     int bzerror;
@@ -1309,8 +1314,8 @@ static Rboolean bzfile_open(Rconnection con)
 	    return FALSE;
 	}
     }
-    ((Rbzfileconn)(con->private))->fp = fp;
-    ((Rbzfileconn)(con->private))->bfp = bfp;
+    bz->fp = fp;
+    bz->bfp = bfp;
     con->isopen = TRUE;
     if(strlen(con->mode) >= 2 && con->mode[1] == 't') con->text = TRUE;
     else con->text = FALSE;
@@ -1322,49 +1327,48 @@ static Rboolean bzfile_open(Rconnection con)
 static void bzfile_close(Rconnection con)
 {
     int bzerror;
-    BZFILE* bfp = (BZFILE *)((Rbzfileconn)(con->private))->bfp;
-    FILE* fp = (FILE *)((Rbzfileconn)(con->private))->fp;
+    Rbzfileconn bz = (Rbzfileconn) con->private;
 
     if(con->canread)
-	BZ2_bzReadClose(&bzerror, bfp);
+	BZ2_bzReadClose(&bzerror, bz->bfp);
     else
-	BZ2_bzWriteClose(&bzerror, bfp, 0, NULL, NULL);
-    fclose(fp);
+	BZ2_bzWriteClose(&bzerror, bz->bfp, 0, NULL, NULL);
+    fclose(bz->fp);
     con->isopen = FALSE;
 }
 
 static int bzfile_fgetc_internal(Rconnection con)
 {
-    BZFILE* bfp = (BZFILE *)((Rbzfileconn)(con->private))->bfp;
+    Rbzfileconn bz = (Rbzfileconn) con->private;
     char buf[1];
     int bzerror, size;
 
-    size = BZ2_bzRead(&bzerror, bfp, buf, 1);
+    size = BZ2_bzRead(&bzerror, bz->bfp, buf, 1);
     return (size < 1) ? R_EOF : (buf[0] % 256);
 }
 
 static size_t bzfile_read(void *ptr, size_t size, size_t nitems,
 			  Rconnection con)
 {
-    BZFILE* bfp = (BZFILE *)((Rbzfileconn)(con->private))->bfp;
+    Rbzfileconn bz = (Rbzfileconn) con->private;
     int bzerror;
 
     /* uses 'int' for len */
     if ((double) size * (double) nitems > INT_MAX)
 	error(_("too large a block specified"));
-    return BZ2_bzRead(&bzerror, bfp, ptr, size*nitems)/size;
+    return BZ2_bzRead(&bzerror, bz->bfp, ptr, size*nitems)/size;
 }
 
 static size_t bzfile_write(const void *ptr, size_t size, size_t nitems,
 			   Rconnection con)
 {
-    BZFILE* bfp = (BZFILE *)((Rbzfileconn)(con->private))->bfp;
+    Rbzfileconn bz = (Rbzfileconn) con->private;
     int bzerror;
 
     /* uses 'int' for len */
     if ((double) size * (double) nitems > INT_MAX)
 	error(_("too large a block specified"));
-    BZ2_bzWrite(&bzerror, bfp, (voidp)ptr, size*nitems);
+    BZ2_bzWrite(&bzerror, bz->bfp, (voidp) ptr, size*nitems);
     if(bzerror != BZ_OK) return 0;
     else return nitems;
 }
@@ -1393,7 +1397,6 @@ static Rconnection newbzfile(const char *description, const char *mode)
     new->vfprintf = &dummy_vfprintf;
     new->fgetc_internal = &bzfile_fgetc_internal;
     new->fgetc = &dummy_fgetc;
-    new->fgetc = &dummy_fgetc;
     new->seek = &null_seek;
     new->fflush = &null_fflush;
     new->read = &bzfile_read;
@@ -1406,8 +1409,167 @@ static Rconnection newbzfile(const char *description, const char *mode)
     return new;
 }
 
+#ifdef HAVE_LZMA
+#include <lzma.h>
 
-/* op 0 is gzfile, 1 is bzfile */
+typedef struct xzfileconn {
+    FILE *fp;
+    lzma_stream stream;
+    unsigned char in_buf[BUFSIZ], out_buf[BUFSIZ];
+    lzma_action action;
+} *Rxzfileconn;
+
+
+static Rboolean xzfile_open(Rconnection con)
+{
+    Rxzfileconn xz = (Rxzfileconn) con->private;
+    lzma_ret ret;
+    char mode[] = "rb";
+
+    con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
+    con->canread = !con->canwrite;
+    if(!con->canread) error("xzfile is supported only for reading");
+    /* regardless of the R view of the file, the file must be opened in
+       binary mode where it matters */
+    mode[0] = con->mode[0];
+    xz->fp = R_fopen(R_ExpandFileName(con->description), mode);
+    if(!xz->fp) {
+	warning(_("cannot open compressed file '%s', probable reason '%s'"),
+		R_ExpandFileName(con->description), strerror(errno));
+	return FALSE;
+    }
+    if(con->canread) {
+	xz->action = LZMA_RUN;
+ 	ret = lzma_stream_decoder(&xz->stream, 536870912, LZMA_CONCATENATED);
+	if (ret != LZMA_OK) {
+	    warning(_("cannot initialize lzma decoder, error %d"), ret);
+	    return FALSE;
+	}
+	xz->stream.avail_in = xz->stream.avail_out = 0;
+    } else {
+	/* DUMMY */
+    }
+    con->isopen = TRUE;
+    if(strlen(con->mode) >= 2 && con->mode[1] == 't') con->text = TRUE;
+    else con->text = FALSE;
+    set_iconv(con);
+    con->save = -1000;
+    return TRUE;
+}
+
+static void xzfile_close(Rconnection con)
+{
+    Rxzfileconn xz = (Rxzfileconn) con->private;
+
+    lzma_end(&(xz->stream));
+    fclose(xz->fp);
+    con->isopen = FALSE;
+}
+
+static size_t xzfile_read(void *ptr, size_t size, size_t nitems,
+			  Rconnection con)
+{
+    Rxzfileconn xz = (Rxzfileconn) con->private;
+    lzma_stream *strm = &(xz->stream);
+    lzma_ret ret;
+    size_t s = size*nitems, have, given = 0;
+    unsigned char *p = ptr;
+
+    if (!s) return 0;
+
+    //printf("request to read %d items of %d bytes\n", nitems, size);
+    while(1) {
+	if (strm->avail_in == 0 &&  xz->action != LZMA_FINISH) {
+	    strm->next_in = xz->in_buf;
+	    strm->avail_in = fread(xz->in_buf, 1, BUFSIZ, xz->fp);
+	    if (feof(xz->fp)) xz->action = LZMA_FINISH;
+	    //printf("read on %d, action %d\n", strm->avail_in, xz->action);
+	}
+	//printf("available: %d, action: %d\n", strm->avail_in, xz->action);
+	strm->avail_out = s; strm->next_out = p;
+	ret = lzma_code(strm, xz->action);
+	have = s - strm->avail_out;  given += have;
+	//printf("available: %d, ready: %d/%d\n", strm->avail_in, given, s);
+	if (ret != LZMA_OK) {
+	    if (ret != LZMA_STREAM_END) {
+		switch(ret) {
+		case LZMA_MEM_ERROR:
+		case LZMA_MEMLIMIT_ERROR:
+		    warning("lzma decoder needed more memory");
+		    break;
+		case LZMA_FORMAT_ERROR:
+		    warning("lzma decoder format error");
+		    break;
+		case LZMA_DATA_ERROR:
+		    warning("lzma decoder corrupt data");
+		    break;
+		default:
+		    warning("lzma decoding result %d", ret);
+		}
+	    }
+	    return given/size;
+	}
+	s -= have;
+	if (!s) return nitems;
+	p += have;
+    }
+}
+
+static int xzfile_fgetc_internal(Rconnection con)
+{
+    char buf[1];
+    size_t size = xzfile_read(buf, 1, 1, con);
+
+    return (size < 1) ? R_EOF : (buf[0] % 256);
+}
+
+
+static size_t xzfile_write(const void *ptr, size_t size, size_t nitems,
+			   Rconnection con)
+{
+    /* DUMMY */
+    return 0;
+}
+
+static Rconnection newxzfile(const char *description, const char *mode)
+{
+    Rconnection new;
+    new = (Rconnection) malloc(sizeof(struct Rconn));
+    if(!new) error(_("allocation of xzfile connection failed"));
+    new->class = (char *) malloc(strlen("xzfile") + 1);
+    if(!new->class) {
+	free(new);
+	error(_("allocation of xzfile connection failed"));
+    }
+    strcpy(new->class, "xzfile");
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) {
+	free(new->class); free(new);
+	error(_("allocation of xzfile connection failed"));
+    }
+    init_con(new, description, CE_NATIVE, mode);
+
+    new->canseek = FALSE;
+    new->open = &xzfile_open;
+    new->close = &xzfile_close;
+    new->vfprintf = &dummy_vfprintf;
+    new->fgetc_internal = &xzfile_fgetc_internal;
+    new->fgetc = &dummy_fgetc;
+    new->seek = &null_seek;
+    new->fflush = &null_fflush;
+    new->read = &xzfile_read;
+    new->write = &xzfile_write;
+    new->private = (void *) malloc(sizeof(struct xzfileconn));
+    memset(new->private, 0, sizeof(struct xzfileconn));
+    if(!new->private) {
+	free(new->description); free(new->class); free(new);
+	error(_("allocation of xzfile connection failed"));
+    }
+    return new;
+}
+#endif
+
+/* op 0 is gzfile, 1 is bzfile, 2 is lzma (decompress only) */
 SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, sopen, ans, class, enc;
@@ -1446,11 +1608,13 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	FILE *fp = fopen(R_ExpandFileName(file), "rb");  
 	char buf[7];
 	if (fp) {
-	    memset(buf, 0, 7); fread(buf, 3, 1, fp); fclose(fp);
-	    if(streql(buf, "BZh")) type = 1;
+	    memset(buf, 0, 7); fread(buf, 6, 1, fp); fclose(fp);
+	    if(!strncmp(buf, "BZh", 3)) type = 1;
+#ifdef HAVE_LZMA
+	    if((buf[0] == '\xFD') && !strncmp(buf+1, "7zXZ", 4)) type = 2;
+#endif
 	}
-   }
-    ncon = NextConnection();
+    }
     switch(type) {
     case 0:
 	con = newgzfile(file, strlen(open) ? open : "r", compress);
@@ -1458,7 +1622,13 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     case 1:
 	con = newbzfile(file, strlen(open) ? open : "r");
 	break;
+#ifdef HAVE_LZMA
+    case 2:
+	con = newxzfile(file, strlen(open) ? open : "r");
+	break;
+#endif
     }
+    ncon = NextConnection();
     Connections[ncon] = con;
     strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100); /* ASCII */
 
@@ -1480,6 +1650,10 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     case 1:
 	SET_STRING_ELT(class, 0, mkChar("bzfile"));
 	break;
+#ifdef HAVE_LZMA
+	SET_STRING_ELT(class, 0, mkChar("xzfile"));
+	break;
+#endif
     }
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
