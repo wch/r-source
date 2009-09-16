@@ -1608,11 +1608,18 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	FILE *fp = fopen(R_ExpandFileName(file), "rb");  
 	char buf[7];
 	if (fp) {
-	    memset(buf, 0, 7); fread(buf, 6, 1, fp); fclose(fp);
+	    memset(buf, 0, 7); fread(buf, 5, 1, fp); fclose(fp);
 	    if(!strncmp(buf, "BZh", 3)) type = 1;
+	    if((buf[0] == '\xFD') && !strncmp(buf+1, "7zXZ", 4)) 
 #ifdef HAVE_LZMA
-	    if((buf[0] == '\xFD') && !strncmp(buf+1, "7zXZ", 4)) type = 2;
+		type = 2;
+#else
+	    error(_("this is a %s-compressed file which this build of R does not support"), "xv");
 #endif
+	    if((buf[0] == '\x89') && !strncmp(buf+1, "LZO", 3)) 
+	        error(_("this is a %s-compressed file which this build of R does not support"), "lzo");
+	    if((buf[0] == '\xFF') && !strncmp(buf+1, "LZMA", 4)) 
+	        error(_("this is a %s-compressed file which this build of R does not support"), "lzma");
 	}
     }
     switch(type) {
