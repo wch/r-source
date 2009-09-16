@@ -296,8 +296,8 @@
             for(i in at) {
                 if(print)
                     expri <- substitute({.doTrace(TRACE, MSG); EXPR},
-                                        list(TRACE = tracer, 
-                                        MSG = paste("step",paste(i, collapse=",")), 
+                                        list(TRACE = tracer,
+                                        MSG = paste("step",paste(i, collapse=",")),
                                         EXPR = fBody[[i]]))
                 else
                     expri <- substitute({.doTrace(TRACE); EXPR},
@@ -381,20 +381,6 @@
 .traceClassName <- function(className) {
     className[] <- paste(className, "WithTrace", sep="")
     className
-}
-
-trySilent <- function(expr) {
-    call <- sys.call()
-    call[[1L]] <- quote(try)
-    opt1 <- options(show.error.messages = FALSE)
-    opt2 <- options(error = quote(empty.dump()))
-    ## following is a workaround of a bug in options that does not
-    ## acknowledge NULL as an options value => delete this element.
-    if(is.null(opt1[[1L]]))
-      on.exit({options(show.error.messages = TRUE); options(opt2)})
-    else
-      on.exit({options(opt1); options(opt2)})
-    eval.parent(call)
 }
 
 .assignOverBinding <- function(what, value, where, verbose = TRUE) {

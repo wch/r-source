@@ -56,13 +56,12 @@ function(..., domain = NULL, appendLF = TRUE)
 .makeMessage <- function(..., domain = NULL, appendLF = FALSE)
  {
     args <- list(...)
-    if(length(args)) {
+    msg <- if(length(args)) {
         args <- lapply(list(...), as.character)
         if(is.null(domain) || !is.na(domain))
             args <- .Internal(gettext(domain, unlist(args)))
-        msg <- paste(args, collapse = "")
-    }
-    else msg <- ""
+        paste(args, collapse = "")
+    } else ""
     if(appendLF) paste(msg, "\n", sep = "") else msg
 }
 

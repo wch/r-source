@@ -63,6 +63,8 @@ tryCatch <- function(expr, ..., finally) {
     tryCatchList(expr, classes, parentenv, handlers)
 }
 
+trySilent <- function(expr) tryCatch(expr, error = function(e) e)
+
 withCallingHandlers <- function(expr, ...) {
     handlers <- list(...)
     classes <- names(handlers)

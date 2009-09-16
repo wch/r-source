@@ -40,7 +40,7 @@ fixPre1.8 <- function(names, where = topenv(parent.frame())) {
             if(isClass(Class, where = where)) {
                 ClassDef <- getClass(Class, where = where)
                 ok <- !(isVirtualClass(ClassDef) ||
-                        is(trySilent(validObject(obj)), "try-error"))
+			!isTRUE(validObject(obj, test=TRUE)))
                 if(ok) {
                     class(obj) <- ClassDef@className
                     assign(what, obj, objWhere)

@@ -10,12 +10,12 @@
 \title{Delay Evaluation}
 \description{
 \code{delayedAssign} creates a \emph{promise} to evaluate the given
-expression if its value is requested.  This provides direct access 
-to the \emph{lazy evaluation} mechanism used by \R for the evaluation 
+expression if its value is requested.  This provides direct access
+to the \emph{lazy evaluation} mechanism used by \R for the evaluation
 of (interpreted) functions.
 }
 \usage{
-delayedAssign(x, value, eval.env = parent.frame(1), 
+delayedAssign(x, value, eval.env = parent.frame(1),
               assign.env = parent.frame(1))
 }
 \arguments{
@@ -26,7 +26,7 @@ delayedAssign(x, value, eval.env = parent.frame(1),
 }
 \value{
   This function is invoked for its side effect, which is assigning
-  a promise to evaluate \code{value} to the variable \code{x}.  
+  a promise to evaluate \code{value} to the variable \code{x}.
 }
 \details{
   Both \code{eval.env} and \code{assign.env} default to the currently active
@@ -35,7 +35,7 @@ delayedAssign(x, value, eval.env = parent.frame(1),
   The expression assigned to a promise by \code{delayedAssign} will
   not be evaluated until it is eventually \sQuote{forced}.  This happens when
   the variable is first accessed.
-  
+
   When the promise is eventually forced, it is evaluated within the
   environment specified by \code{eval.env} (whose contents may have changed in
   the meantime).  After that, the value is fixed and the expression will
@@ -49,7 +49,7 @@ msg <- "old"
 delayedAssign("x", msg)
 msg <- "new!"
 x #- new!
-substitute(x) #- msg
+substitute(x) #- x (was 'msg' ?)
 
 delayedAssign("x", {
     for(i in 1:3)

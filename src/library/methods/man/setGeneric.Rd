@@ -22,7 +22,7 @@ setGroupGeneric(name, def= , group=list(), valueClass=character(),
 }
 \arguments{
   \item{name}{ The character string name of the generic function.
-    The simplest (and recommended) call, \code{setGeneric(name)}, 
+    The simplest (and recommended) call, \code{setGeneric(name)},
     looks for a function with this name and creates a corresponding
     generic function,  if the function found was not generic.
   }
@@ -154,7 +154,7 @@ The description above is the effect when the package that owns the non-generic f
 The \code{useAsDefault} argument controls the default method for the new generic.
  If not
   told otherwise, \code{setGeneric} will try to find a non-generic
-  version of the function to use as a default. 
+  version of the function to use as a default.
 So, if you do have a suitable default method, it is often simpler to first set this up as a non-generic function, and then use the one-argument call to \code{setGeneric} at the beginning of this section.   See the first example in the Examples section below.
 
  If you \emph{don't} want the existing function to be taken as default, supply the argument \code{useAsDefault}.  That argument
@@ -240,7 +240,7 @@ generic version, if one exists.
 
 Including any of the other arguments can force a new, local version of
 the generic function.  If you don't want to create a new version,
-don't use the extra arguments. 
+don't use the extra arguments.
 }
 \section{Generic Functions and Primitive Functions}{
   A number of the basic \R functions are specially implemented as
@@ -311,8 +311,8 @@ setGeneric("authorNames",
 setMethod("authorNames", "character", function(text)text)
 
 stopifnot(identical(authorNames(c("me", "you")), c("me", "you")),
-          is(trySilent(authorNames(character())), "try-error"), # empty value
-          is(trySilent(authorNames(NULL)), "try-error"))        # no default method
+          is(trySilent(authorNames(character())), "error"), # empty value
+          is(trySilent(authorNames(NULL)), "error"))        # no default method
 }
 
 ## An example of group generic methods, using the class

@@ -274,7 +274,8 @@ rm(lm)
 \dontshow{
 ## because nosegfault runs standardGeneric w/o the methods package, nothing
 ## really gets tested.  The following check that it catches some errors
-mustDie <- function(expr) stopifnot(is(trySilent(expr), "try-error"))
+mustDie <- function(expr)
+   stopifnot(is(tryCatch(expr, error=function(e)e), "error"))
 
 mustDie(standardGeneric()) # 3 tests of requiring a single string
 mustDie(standardGeneric(NULL))

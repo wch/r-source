@@ -1,6 +1,6 @@
 % File src/library/base/man/is.recursive.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{is.recursive}
@@ -26,10 +26,10 @@ is.recursive(x)
   (\code{"logical"}, \code{"integer"}, \code{"numeric"},
   \code{"complex"}, \code{"character"} and \code{"raw"}) and \code{NULL}.
 
-  Most types of language objects are regarded as recursive: those which
-  are not are the atomic vector types, \code{NULL} and symbols (as given
-  by \code{\link{as.name}}).
-  
+  Most types of objects are regarded as recursive, except for
+  atomic vector types, \code{NULL} and symbols (as given by
+  \code{\link{as.name}}).
+
   These are \link{primitive} functions.
 }
 \references{
@@ -48,11 +48,11 @@ require(stats)
 is.a.r <- function(x) c(is.atomic(x), is.recursive(x))
 
 is.a.r(c(a=1,b=3))      # TRUE FALSE
-is.a.r(list())          # FALSE TRUE ??
+is.a.r(list())          # FALSE TRUE - a list is a list
 is.a.r(list(2))         # FALSE TRUE
 is.a.r(lm)              # FALSE TRUE
 is.a.r(y ~ x)           # FALSE TRUE
-is.a.r(expression(x+1)) # FALSE TRUE (not in 0.62.3!)
+is.a.r(expression(x+1)) # FALSE TRUE (nowadays)
 }
 \keyword{programming}
 \keyword{classes}

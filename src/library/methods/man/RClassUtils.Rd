@@ -16,7 +16,6 @@
 \alias{subclassesMetaName}
 \alias{extendsMetaName}
 \alias{classPrototypeDef-class}
-\alias{trySilent}
 %%
 \alias{testVirtual}
 \alias{makePrototypeFromClassDef}
@@ -87,8 +86,6 @@ reconcilePropertiesAndPrototype(name, properties, prototype,
        superClasses, where)
 
 tryNew(Class, where)
-
-trySilent(expr)
 
 empty.dump()
 

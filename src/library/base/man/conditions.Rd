@@ -21,6 +21,7 @@
 \alias{simpleWarning}
 \alias{simpleMessage}
 \alias{tryCatch}
+\alias{trySilent}
 \alias{withCallingHandlers}
 \alias{withRestarts}
 
@@ -42,6 +43,7 @@
 
 \usage{
 tryCatch(expr, \dots, finally)
+trySilent(expr)
 withCallingHandlers(expr, \dots)
 
 signalCondition(cond)
@@ -138,6 +140,11 @@ restartFormals(r)
    is called with the condition as its argument, and the result
    returned by the handler is returned as the value of the
    \code{tryCatch} call.
+
+   \code{trySilent}, originally a function in S, reimplemented for
+   package \pkg{methods}, is now a simple wrapper around
+   \code{tryCatch}, also exemplifying one \code{tryCatch()}'s most
+   typical uses.
 
    Calling handlers are established by \code{withCallingHandlers}.  If
    a condition is signaled and the applicable handler is a calling

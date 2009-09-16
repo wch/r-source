@@ -1,6 +1,6 @@
 % File src/library/methods/man/MethodSupport.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{MethodSupport}
@@ -35,12 +35,14 @@ resetGeneric(f, fdef, mlist, where, deflt)
       relevant table.
     }
     \item{\code{resetGeneric}:}{
-      reset the currently defined methods for the generic function named \code{f}, found in environment \code{where} or explicitly supplied as an argument. 
-Other arguments are obsolete and ignored.
+      reset the currently defined methods for the generic function named
+      \code{f}, found in environment \code{where} or explicitly supplied
+      as an argument.  Other arguments are obsolete and ignored.
 
-Called for its side effect of resetting all inherited methods in the generic function's internal table.
+      Called for its side effect of resetting all inherited methods in
+      the generic function's internal table.
       Normally not called directly, since changes to methods and the
-    loading and detaching  of packages all generate a call automatically.
+      loading and detaching  of packages all generate a call automatically.
     }
     \item{\code{cacheMethod}:}{
       Store the definition for this function and signature in the method
@@ -52,9 +54,12 @@ Called for its side effect of resetting all inherited methods in the generic fun
       only.
     }
     \item{\code{getMethodsForDispatch}:}{
-      Get the table of  methods representing the methods for
-      function \code{f}.
-     For user code, the function \code{\link{findMethods}} or \code{\link{findMethodSignatures}} is recommended instead,  returning a simple list of methods or a character matrix of the signatures.
+      Get the table of methods (an \code{\link{environment}} since R
+      version 2.6.0) representing the methods for function \code{f}.
+
+      For user code, the function \code{\link{findMethods}} or
+      \code{\link{findMethodSignatures}} is recommended instead, returning
+      a simple list of methods or a character matrix of the signatures.
     }
   }
 }

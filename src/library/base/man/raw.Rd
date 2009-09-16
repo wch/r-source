@@ -1,6 +1,6 @@
 % File src/library/base/man/raw.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 2004-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{raw}

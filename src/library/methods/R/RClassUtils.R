@@ -808,9 +808,9 @@ tryNew <-
     ClassDef <- getClassDef(Class, where)
     if(is.null(ClassDef) || isVirtualClass(ClassDef))
         return(NULL)
-    value <- trySilent(new(ClassDef))
-    if(is(value, "try-error"))
-        NULL
+    value <- tryCatch(new(ClassDef), error = function(e)e)
+    if(is(value, "error"))
+	NULL
     else
         value
 }

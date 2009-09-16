@@ -303,6 +303,7 @@ NEW FEATURES
 	compression (which will be slower, but can give substantially
 	smaller files).  load() can read such saves (but only as from
 	this version of R).
+
     o	detach() now has an argument 'character.only' with the same meaning
 	as in library() or require().
 
@@ -311,6 +312,10 @@ NEW FEATURES
 	'gzip': 'bzip2' will give ca 15% better compression at the
 	expense of slower installation times.  More methods are
 	planned for future releases.
+
+    o	trySilent() is now a simple direct wrapper around tryCatch(),
+        instead of building on try().  In the error case, it hence
+        inherits from "error" (instead of "try-error").
 
 
 REGULAR EXPRESSIONS
