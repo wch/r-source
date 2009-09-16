@@ -246,3 +246,148 @@ function(ap)
     ## Possible to have only one package in a repository
     if(length(stale_dups)) ap[-stale_dups, , drop = FALSE] else ap
 }
+
+.package_dependencies <-
+function(packages = NULL, db,
+         which = c("Depends", "Imports", "LinkingTo"),
+         recursive = FALSE, reverse = FALSE)
+{
+    ## <FIXME>
+    ## What about duplicated entries?
+    ## </FIXME>
+
+    ## For given packages which are not found in the db, return "list
+    ## NAs" (i.e., NULL entries), as opposed to character() entries
+    ## which indicate no dependencies.
+
+    ## For forward non-recursive depends, we can simplify matters by
+    ## subscripting the db right away---modulo boundary cases.
+
+    out_of_db_packages <- character()
+    if(!recursive && !reverse) {
+        if(!is.null(packages)) {
+            ind <- match(packages, db[, "Package"], nomatch = 0L)
+            db <- db[ind, , drop = FALSE]
+            out_of_db_packages <- packages[ind == 0L]
+        }
+    }
+    
+    depends <-
+        do.call(Map,
+                c(list("c"),
+                  ## Try to make this work for dbs which are character
+                  ## matrices as from available.packages(), or data
+                  ## frame variants thereof.
+                  lapply(which,
+                         function(f) {
+                             if(is.list(d <- db[, f])) d
+                             else lapply(d,
+                                         .extract_dependency_package_names)
+                         }),
+                  list(USE.NAMES = FALSE)))
+
+    if(!recursive && !reverse) {
+        names(depends) <- db[, "Package"]
+        if(length(out_of_db_packages)) {
+            depends <-
+                c(depends,
+                  structure(vector("list", length(out_of_db_packages)),
+                            names = out_of_db_packages))
+        }
+        return(depends)
+    }
+            
+    all_packages <- sort(unique(c(db[, "Package"], unlist(depends))))
+
+    if(!recursive) {
+        ## Need to invert.
+        depends <-
+            split(rep.int(db[, "Package"], sapply(depends, length)),
+                  factor(unlist(depends), levels = all_packages))
+        if(!is.null(packages)) {
+            depends <- depends[match(packages, names(depends))]
+            names(depends) <- packages
+        }
+        return(depends)
+    }
+
+    ## Recursive dependencies.
+    ## We need to compute the transitive closure of the dependency
+    ## relation, but e.g. Warshall's algorithm (O(n^3)) is
+    ## computationally infeasible.
+    ## Hence, in principle, we do the following.
+    ## Take the current list of pairs (i,j) in the relation.
+    ## Iterate over all j and whenever i R j and j R k add (i,k).
+    ## Repeat this until no new pairs get added.
+    ## To do this in R, we use a 2-column matrix of (i,j) rows.
+    ## We then create two lists which for all j contain the i and k
+    ## with i R j and j R k, respectively, and combine these.
+    ## This works reasonably well, but of course more efficient
+    ## implementations should be possible.
+    tab <- if(reverse)
+        split(match(rep.int(db[, "Package"],
+                            sapply(depends, length)),
+                    all_packages),
+              factor(match(unlist(depends), all_packages),
+                     levels = seq_along(all_packages)))
+    else
+        split(match(unlist(depends), all_packages),
+              factor(match(rep.int(db[, "Package"],
+                                   sapply(depends, length)),
+                           all_packages),
+                     levels = seq_along(all_packages)))
+    if(is.null(packages)) {
+        if(reverse) {
+            packages <- all_packages
+            p_L <- seq_along(all_packages)
+        } else {
+            packages <- db[, "Package"]
+            p_L <- match(packages, all_packages)
+        }
+    } else {
+        p_L <- match(packages, all_packages, nomatch = 0L)
+        if(any(ind <- (p_L == 0L))) {
+            out_of_db_packages <- packages[ind]
+            packages <- packages[!ind]
+            p_L <- p_L[!ind]
+        }
+    }
+    p_R <- tab[p_L]
+    pos <- cbind(rep.int(p_L, sapply(p_R, length)), unlist(p_R))
+    ctr <- 1L
+    verbose <- getOption("verbose")
+    repeat {
+        if(verbose) cat("Cycle:", ctr)
+        p_L <- split(pos[, 1L], pos[, 2L])
+        new <- do.call(rbind,
+                       Map(function(i, k)
+                           cbind(rep.int(i, length(k)),
+                                     rep(k, each = length(i))),
+                           p_L, tab[as.integer(names(p_L))]))
+        npos <- unique(rbind(pos, new))
+        nnew <- nrow(npos) - nrow(pos)
+        if(verbose) cat(" NNew:", nnew, "\n")
+        if(!nnew) break
+        pos <- npos
+        ctr <- ctr + 1L
+    }
+    depends <-
+        split(all_packages[pos[, 2L]],
+              factor(all_packages[pos[, 1L]], levels = packages))
+    if(length(out_of_db_packages)) {
+        depends <-
+            c(depends,
+              structure(vector("list", length(out_of_db_packages)),
+                        names = out_of_db_packages))
+    }
+    depends
+}    
+
+.extract_dependency_package_names <-
+function(x) {
+    ## Assume a character *string*.
+    if(is.na(x)) return(character())
+    x <- unlist(strsplit(x, ",[[:space:]]*"))
+    x <- sub("[[:space:]]*([[:alnum:].]+).*", "\\1", x)
+    x[nzchar(x) & (x != "R")]
+}
