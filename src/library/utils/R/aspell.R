@@ -80,7 +80,14 @@ function(files, filter, control = list(), encoding = "unknown")
         ##                else sprintf("%s --encoding=%s", control, enc),
         ##                tfile)
 
-        cmd <- sprintf("aspell pipe %s < %s", control, tfile)
+        exe <- Sys.which("aspell")
+        if(exe == "") {
+            exe <- Sys.which("ispell")
+            if(exe == "")
+                stop("Could not find aspell or ispell executable.")
+        }
+        
+        cmd <- sprintf("%s -a %s < %s", shQuote(exe), control, tfile)
 
 	out <- tools:::.shell_with_capture(cmd)
 
@@ -255,7 +262,7 @@ function(which = NULL, dir = NULL, drop = "\\references")
 ## For spell-checking Rd files in a package:
 
 aspell_package_Rd_files <-
-function(dir, drop = "\\references")
+function(dir, drop = "\\references", control = list())
 {
     man_dir <- file.path(dir, "man")
     files <- if(file_test("-d", man_dir))
@@ -270,6 +277,7 @@ function(dir, drop = "\\references")
     
     aspell(files,
            filter = list("Rd", drop = drop),
+           control = control,
            encoding = encoding)
 }
 
@@ -286,10 +294,10 @@ aspell_control_vignettes <-
       )
 
 aspell_vignettes <-
-function(files)
+function(files, control = list())
     aspell(files,
            filter = "Sweave",
-           control = aspell_control_vignettes)
+           control = c(aspell_control_vignettes, control))
 
 ## For spell-checking the R vignettes:
 
@@ -315,12 +323,12 @@ function()
 ## For spell-checking vignettes in a package:
 
 aspell_package_vignettes <-
-function(dir)
+function(dir, control = list())
 {
     dir <- file.path(dir, "inst", "doc")
     files <- if(file_test("-d", dir))
         tools::list_files_with_type(dir, "vignette")
     else character()
     
-    aspell_vignettes(files)
+    aspell_vignettes(files, control)
 }
