@@ -1573,26 +1573,36 @@ Rcomplex asComplex(SEXP x)
     int warn = 0;
     Rcomplex z;
 
-    z.r = NA_REAL;
-    z.i = NA_REAL;
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
 	switch (TYPEOF(x)) {
 	case LGLSXP:
-	    return Rf_ComplexFromLogical(LOGICAL(x)[0], &warn);
+	    z = Rf_ComplexFromLogical(LOGICAL(x)[0], &warn);
+	    CoercionWarning(warn);
+	    return z;
 	case INTSXP:
-	    return Rf_ComplexFromInteger(INTEGER(x)[0], &warn);
+	    z = Rf_ComplexFromInteger(INTEGER(x)[0], &warn);
+	    CoercionWarning(warn);
+	    return z;
 	case REALSXP:
-	    return Rf_ComplexFromReal(REAL(x)[0], &warn);
+	    z = Rf_ComplexFromReal(REAL(x)[0], &warn);
+	    CoercionWarning(warn);
+	    return z;
 	case CPLXSXP:
 	    return COMPLEX(x)[0];
 	case STRSXP:
-	    return Rf_ComplexFromString(STRING_ELT(x, 0), &warn);
+	    z = Rf_ComplexFromString(STRING_ELT(x, 0), &warn);
+	    CoercionWarning(warn);
+	    return z;
 	default:
 	    UNIMPLEMENTED_TYPE("asComplex", x);
 	}
     } else if(TYPEOF(x) == CHARSXP) {
-	return Rf_ComplexFromString(x, &warn);
+	z = Rf_omplexFromString(x, &warn);
+	CoercionWarning(warn);
+	return z;
     }
+    z.r = NA_REAL;
+    z.i = NA_REAL;
     return z;
 }
 
