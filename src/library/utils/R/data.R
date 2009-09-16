@@ -150,7 +150,9 @@ function(..., list = character(0L), package = NULL, lib.loc = NULL,
                         found <- FALSE
                     else {
                         found <- TRUE
-                        zfile <- zip.file.extract(file, "Rdata.zip")
+                        Rdatadir <- file.path(tempdir(), "Rdata")
+                        dir.create(Rdatadir, showWarnings=FALSE)
+                        zfile <- zip.file.extract(file, "Rdata.zip", dir=Rdatadir)
                         if(zfile != file) on.exit(unlink(zfile))
                         switch(ext,
                                R = , r = {

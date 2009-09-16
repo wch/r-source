@@ -48,8 +48,11 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
         ## FUTURE: we already have the parsed file ....
         tools::Rd2ex(tools:::fetchRdDB(RdDB, sub("\\.R$", "", basename(file))),
                      zfile)
-    } else
-        zfile <- zip.file.extract(file, "Rex.zip")
+    } else {
+	Rexdir <- file.path(tempdir(), "Rex")
+	dir.create(Rexdir, showWarnings=FALSE)
+	zfile <- zip.file.extract(file, "Rex.zip", dir=Rexdir)
+    }
     if(!file.exists(zfile)) {
         warning(gettextf("'%s' has a help file but no examples", topic),
                 domain = NA)

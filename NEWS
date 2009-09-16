@@ -528,6 +528,12 @@ NEW FEATURES
  	likely to change the collation provided by ICU.
 
 
+BUG FIXES
+
+    o	Names of datasets could clash with temporary filenames used
+	when running examples, causing errors.
+
+    
 
 		CHANGES IN R VERSION 2.9.2
 
