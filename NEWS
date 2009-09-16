@@ -314,8 +314,7 @@ NEW FEATURES
 	planned for future releases.
 
     o	trySilent() is now a simple direct wrapper around tryCatch(),
-        instead of building on try().  In the error case, it hence
-        inherits from "error" (instead of "try-error").
+        instead of building on try().
 
 
 REGULAR EXPRESSIONS
