@@ -1597,7 +1597,7 @@ Rcomplex asComplex(SEXP x)
 	    UNIMPLEMENTED_TYPE("asComplex", x);
 	}
     } else if(TYPEOF(x) == CHARSXP) {
-	z = Rf_omplexFromString(x, &warn);
+	z = Rf_ComplexFromString(x, &warn);
 	CoercionWarning(warn);
 	return z;
     }
