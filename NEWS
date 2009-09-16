@@ -323,6 +323,13 @@ NEW FEATURES
 	by 'xv' (and it can save substantial amounts of space on large
 	data files).
 
+    o	available.packages() gains a 'filters' argument for specifying
+    	the filtering operations performed on the packages found in the
+	repositories.  A new built-in 'license/FOSS' filter only
+    	retains packages for which installation can proceed solely based
+    	on packages which can be verified as Free or Open Source
+    	Software (FOSS) employing the available license specifications.
+
 
 REGULAR EXPRESSIONS
 

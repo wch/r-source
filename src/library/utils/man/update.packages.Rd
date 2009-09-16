@@ -197,17 +197,23 @@ contrib.url(repos, type = getOption("pkgType"))
   \item{filters}{a character vector or list specifying the filter
     operations to be performed on the packages found in the
     repositories, or \code{NULL} (default).  Specified filters can be
-    one of the strings \code{"R_version"}, \code{"OS_type"}, or
-    \code{"duplicates"}, indicating built-in filters which retain
-    only packages whose version and OS type requirements are met by the
-    running version of \R, and the latest versions of packages,
-    respectively.  Filters can also be user-defined functions which
-    subscript the rows of objects returned by
-    \code{available.packages}.  The default corresponds to the
-    specification 
-    \code{c("R_version", "OS_type", "duplicates")}, and may be changed
-    by setting option \code{available_packages_filters} to something
-    non-\code{NULL}.}
+    one of the strings \code{"R_version"}, \code{"OS_type"},
+    \code{"duplicates"}, or \code{"license/FOSS"}, indicating built-in
+    filters which retain only packages whose version and OS type
+    requirements are met by the running version of \R, the latest
+    versions of packages, and packages for which installation can
+    proceed solely based on packages which can be verified as Free or
+    Open Source Software (FOSS, e.g.,
+    \url{http://en.wikipedia.org/wiki/FOSS}) employing the available
+    license specifications, respectively.  Filters can also be
+    user-defined functions which subscript the rows of objects returned
+    by \code{available.packages}.  The default corresponds to the
+    specification \code{c("R_version", "OS_type", "duplicates")}, and
+    may be changed by setting option \code{available_packages_filters}
+    to something non-\code{NULL}.  If the filters specification used is
+    a list with an \code{add = TRUE} element, the other elements are
+    used for filtering in addition to the default filters.
+  }
 }
 \details{
   All of these functions work with the names of a package or bundle (and

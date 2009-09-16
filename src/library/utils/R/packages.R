@@ -107,9 +107,16 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
     if(is.null(filters)) {
         filters <- getOption("available_packages_filters")
         if(is.null(filters))
-            filters <- c("R_version", "OS_type", "duplicates")
+            filters <- available_packages_filters_default
     }
-    filters <- as.list(filters)
+    if(is.list(filters)) {
+        ## If filters is a list with an add = TRUE element, add the
+        ## given filters to the default ones.
+        if(identical(filters$add, TRUE)) {
+            filters$add <- NULL
+            filters <- c(available_packages_filters_default, filters)
+        }
+    }
     for(f in filters) {
         if(!length(res)) break
         if(is.character(f)) {
@@ -125,42 +132,100 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
     res
 }
 
+available_packages_filters_default <-
+    c("R_version", "OS_type", "duplicates")
+
 available_packages_filters_db <- new.env()
 
 available_packages_filters_db$R_version <-
-function(res)
+function(db)
 {
-    ## Ignore packages which don't fit our version of R
-    currentR <- getRversion()
-    .check_R_version <- function(x) {
-        if(is.na(xx <- x["Depends"])) return(TRUE)
-        xx <- tools:::.split_dependencies(xx)
-        ## R < 2.7.0 picked up only the first
-        zs <- xx[names(xx) == "R"]
-        r <- TRUE
-        for(z in zs)
-            if(length(z) > 1L)
-                r <- r & eval(parse(text=paste("currentR", z$op, "z$version")))
-        r
-    }
-    res[apply(res, 1L, .check_R_version), , drop = FALSE]
+    ## Ignore packages which don't fit our version of R.
+    depends <- db[, "Depends"]
+    depends[is.na(depends)] <- ""
+    ## Collect the (versioned) R depends entries.
+    x <- lapply(strsplit(sub("^[[:space:]]*", "", depends),
+                             "[[:space:]]*,[[:space:]]*"),
+                function(s) s[grepl("^R[[:space:]]*\\(", s)])
+    lens <- sapply(x, length)
+    ## Unlist.
+    x <- unlist(x)
+    pat <- "^R[[:space:]]*\\(([[<>=!]+)[[:space:]]+(.*)\\)[[:space:]]*"
+    ## Extract ops.
+    ops <- sub(pat, "\\1", x)
+    ## Split target versions accordings to ops.
+    v_t <- split(sub(pat, "\\2", x), ops)
+    ## Current R version.
+    v_c <- getRversion()
+    ## Compare current to target grouped by op.
+    res <- logical(length(x))
+    for(op in names(v_t))
+        res[ops == op] <- do.call(op, list(v_c, v_t[[op]]))
+    ## And assemble test results according to the rows of db.
+    ind <- rep.int(TRUE, NROW(db))
+    pos <- which(lens > 0L)
+    lens <- lens[pos]
+    ind[pos] <- sapply(split(res, rep.int(seq_along(lens), lens)), all)
+    db[ind, , drop = FALSE]
 }
 
 available_packages_filters_db$OS_type <-
-function(res)
+function(db)
 {
     ## Ignore packages that do not fit our OS.
-    current <- .Platform$OS.type
-    .check_OS_type <- function(x) {
-        xx <- x["OS_type"]
-        is.na(xx) || xx == current
-    }
-    res[apply(res, 1L, .check_OS_type), , drop = FALSE]
+    OS_type <- db[, "OS_type"]
+    db[is.na(OS_type) | (OS_type == .Platform$OS.type), , drop = FALSE]
 }
 
 available_packages_filters_db$duplicates <-
-function(res)
-    tools:::.remove_stale_dups(res)
+function(db)
+    tools:::.remove_stale_dups(db)
+
+available_packages_filters_db$`license/FOSS` <-
+function(db)
+{
+    ## What we need to do is find all non-FOSS-verifiable packages and
+    ## all their recursive dependencies.  Somewhat tricky because there
+    ## may be dependencies missing from the package db.
+    ## Hence, for efficiency reasons, do the following.
+    ## Create a data frame which already has Depends/Imports/LinkingTo
+    ## info in package list form, and use this to compute the out of db
+    ## packages.
+    db1 <- data.frame(Package = db[, "Package"],
+                      stringsAsFactors = FALSE)
+    fields <- c("Depends", "Imports", "LinkingTo")
+    for(f in fields)
+        db1[[f]] <-
+            lapply(db[, f], tools:::.extract_dependency_package_names)
+
+    all_packages <- unique(unlist(db1[fields], use.names = FALSE))
+    bad_packages <-
+        all_packages[is.na(match(all_packages, db1$Package))]
+    ## Dependency package names missing from the db can be
+    ## A. base packages
+    ## B. bundle packages
+    ## C. really missing.
+    ## We can ignore type A as these are known to be FOSS.
+    bad_packages <-
+        bad_packages[is.na(match(bad_packages,
+                                 unlist(tools:::.get_standard_package_names())))]
+    ## <FIXME>
+    ## Fix bundle packages ... maybe.
+    ## </FIXME>
+    
+    ## Packages in the db not verifiable as FOSS.
+    ind <- !tools:::analyze_licenses(db[, "License"])$is_verified
+    ## Now find the recursive reverse dependencies of these and the
+    ## packages missing from the db.
+    depends <-
+        tools:::.package_dependencies(db1$Package[ind], db = db1,
+                                      reverse = TRUE, recursive = TRUE)
+    depends <- unique(unlist(depends))
+    ind[match(depends, db1$Package, nomatch = 0L)] <- TRUE
+
+    ## And drop these from the db.
+    db[!ind, , drop = FALSE]
+}
 
 ## unexported helper function
 simplifyRepos <- function(repos, type)
