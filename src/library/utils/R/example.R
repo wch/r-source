@@ -38,7 +38,9 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     }
     pkg <- basename(packagePath)
     lib <- dirname(packagePath)
-    zfile <- zip.file.extract(file, "Rex.zip")
+    Rexdir <- file.path(tempdir(), "Rex")
+    dir.create(Rexdir, showWarnings=FALSE)
+    zfile <- zip.file.extract(file, "Rex.zip", dir=Rexdir)
     if(zfile != file) on.exit(unlink(zfile))
     if(!file.exists(zfile)) {
 	warning(gettextf("'%s' has a help file but no examples file", topic),
