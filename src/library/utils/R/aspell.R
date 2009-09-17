@@ -184,6 +184,17 @@ function(x, sort = TRUE, verbose = FALSE, indent = 2L, ...)
     invisible(x)
 }
 
+summary.aspell <-
+function(object, ...)
+{
+    words <- sort(unique(object$Original))
+    if(length(words)) {
+        writeLines("Possibly mis-spelled words:")
+        print(words)
+    }
+    invisible(words)
+}
+
 aspell_filter_db <- new.env()
 aspell_filter_db$Rd <- tools::RdTextFilter
 aspell_filter_db$Sweave <- tools::SweaveTeXFilter
@@ -264,6 +275,8 @@ function(which = NULL, dir = NULL, drop = "\\references")
 aspell_package_Rd_files <-
 function(dir, drop = "\\references", control = list())
 {
+    dir <- tools::file_path_as_absolute(dir)
+    
     man_dir <- file.path(dir, "man")
     files <- if(file_test("-d", man_dir))
         tools::list_files_with_type(man_dir,
@@ -274,6 +287,22 @@ function(dir, drop = "\\references", control = list())
     meta <- tools:::.get_package_metadata(dir, installed = FALSE)
     if(is.na(encoding <- meta["Encoding"]))
         encoding <- "unknown"
+
+    defaults <- .aspell_package_defaults(dir, encoding)$Rd_files
+    if(!is.null(defaults)) {
+        ## For now, allow providing defaults for drop/control directly,
+        ## and for setting the personal dictionary (without hard-wiring
+        ## the file path).  Direct settings currently override (could
+        ## add a list add = TRUE mechanism eventually).
+        if(!is.null(d <- defaults$drop))
+            drop <- d
+        if(!is.null(d <- defaults$control))
+            control <- d
+        if(!is.null(d <- defaults$personal))
+            control <- c(control,
+                         sprintf("--personal=%s",
+                                 file.path(dir, ".aspell", d)))
+    }
     
     aspell(files,
            filter = list("Rd", drop = drop),
@@ -329,6 +358,56 @@ function(dir, control = list())
     files <- if(file_test("-d", dir))
         tools::list_files_with_type(dir, "vignette")
     else character()
+
+    defaults <- .aspell_package_defaults(dir, encoding)$Rd_files
+    if(!is.null(defaults)) {
+        if(!is.null(d <- defaults$control))
+            control <- d
+        if(!is.null(d <- defaults$personal))
+            control <- c(control,
+                         sprintf("--personal=%s",
+                                 file.path(dir, ".aspell", d)))
+    }
     
     aspell_vignettes(files, control)
+}
+
+## For writing personal dictionaries:
+
+aspell_write_personal_dictionary_file <-
+function(x, out, language = "en")
+{
+    if(inherits(x, "aspell"))
+        x <- sort(unique(a$Original))
+
+    header <- sprintf("personal_ws-1.1 %s %d", language, length(x))
+    ## In case UTF_8 is around ...
+    ## This would be nice:
+    ##   encodings <- unique(Encoding(x))
+    ##   if(identical(encodings[encodings != "unknown"], "UTF-8"))
+    ##       header <- paste(header, "UTF-8")
+    ## but does not work as we currently do not canonicalized to UTF-8
+    ## and do not mark encodings when reading Aspell results which are
+    ## documented to be in the current encoding ...
+    if(localeToCharset()[1L] == "UTF-8") {
+        x <- iconv(x, "", "UTF-8")
+        if(any(Encoding(x) == "UTF-8"))
+            header <- paste(header, "UTF-8")
+    }
+
+    writeLines(c(header, x), out)
+}
+
+## For reading package defaults:
+
+.aspell_package_defaults <-
+function(dir, encoding = "unknown")
+{
+    dfile <- file.path(dir, ".aspell", "defaults.R")
+    if(!file_test("-f", dfile))
+        return(NULL)
+    exprs <- parse(dfile, encoding = encoding)
+    envir <- new.env()
+    for(e in exprs) eval(e, envir)
+    as.list(envir)
 }
