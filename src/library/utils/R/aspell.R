@@ -359,6 +359,10 @@ function(dir, control = list())
         tools::list_files_with_type(dir, "vignette")
     else character()
 
+    meta <- tools:::.get_package_metadata(dir, installed = FALSE)
+    if(is.na(encoding <- meta["Encoding"]))
+        encoding <- "unknown"
+
     defaults <- .aspell_package_defaults(dir, encoding)$Rd_files
     if(!is.null(defaults)) {
         if(!is.null(d <- defaults$control))
@@ -378,7 +382,7 @@ aspell_write_personal_dictionary_file <-
 function(x, out, language = "en")
 {
     if(inherits(x, "aspell"))
-        x <- sort(unique(a$Original))
+        x <- sort(unique(x$Original))
 
     header <- sprintf("personal_ws-1.1 %s %d", language, length(x))
     ## In case UTF_8 is around ...
