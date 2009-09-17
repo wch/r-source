@@ -66,13 +66,12 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   Arguments \code{compressed}, \code{extras} and \code{verbose} are only
   used when an external \command{tar} is used.
 
-  The internal implementation is simple: it is only able to handle
-  directories and files, and does not set the file permissions nor
-  modification times from the tar file --- but this is sufficient for
-  unpacking \R package tarballs.  Since it uses \code{\link{gzfile}} to
-  read a file, it can handle files compressed by any of the methods that
-  \code{gzfile} can handle: at least \command{gzip} and \command{bzip2}
-  compression, and more on some \R builds.
+  The internal implementation restores link (hard and soft) as symbolic
+  links on a Unix-alike, and as file copies on Windows.  Since it uses
+  \code{\link{gzfile}} to read a file, it can handle files compressed by
+  any of the methods that \code{gzfile} can handle: at least
+  \command{gzip} and \command{bzip2} compression, and more on some \R
+  builds.
 }
 
 \value{

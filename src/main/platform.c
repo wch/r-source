@@ -2324,3 +2324,51 @@ SEXP attribute_hidden do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
     setAttrib(ans, R_NamesSymbol, nms);
     return ans;
 }
+
+#ifdef Win32 /* untested */
+static void winSetFileTime(const char *fn, int ftime)
+{
+    SYSTEMTIME st;
+    FILETIME modft;
+    struct tm *utctm;
+    HANDLE hFile;
+
+    utctm = gmtime(&ftime);
+    if (!utctm) return; 
+
+    st.wYear         = (WORD) utctm->tm_year + 1900;
+    st.wMonth        = (WORD) utctm->tm_mon + 1;
+    st.wDayOfWeek    = (WORD) utctm->tm_wday;
+    st.wDay          = (WORD) utctm->tm_mday;
+    st.wHour         = (WORD) utctm->tm_hour;
+    st.wMinute       = (WORD) utctm->tm_min;
+    st.wSecond       = (WORD) utctm->tm_sec;
+    st.wMilliseconds = 0;
+    if (!SystemTimeToFileTime(&st, modft)) return;
+
+    hFile = CreateFile(fn, GENERIC_WRITE, 0, NULL, OPEN_EXISTING,
+		       FILE_FLAG_BACKUP_SEMANTICS, NULL);
+    if (hFile == INVALID_HANDLE_VALUE) return;
+    SetFileTime(hFile, NULL, NULL, &modft);
+    CloseHandle(hFile);
+}
+#else
+# include <sys/time.h>
+# include <utime.h>
+#endif
+
+SEXP R_setFileTime(SEXP name, SEXP time)
+{
+    const char *fn = translateChar(STRING_ELT(name, 0));
+    int ftime = asInteger(time);
+
+#ifdef Win32
+    winSetFileTime(fn, ftime);
+#else
+    struct utimbuf settime;
+
+    settime.actime = settime.modtime = ftime;
+    utime(fn, &settime);
+#endif
+    return R_NilValue;
+}

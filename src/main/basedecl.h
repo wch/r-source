@@ -101,6 +101,8 @@ SEXP R_lazyLoadDBflush(SEXP);
 
 SEXP R_get_primname(SEXP op) ;
 
+SEXP R_setFileTime(SEXP name, SEXP time);
+
 #ifdef BYTECODE
 SEXP R_getbcprofcounts(void);
 SEXP R_startbcprof(void);

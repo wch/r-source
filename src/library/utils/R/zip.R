@@ -126,6 +126,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
 {
     ## A tar file is a set of 512 byte records,
     ## a header record followed by file contents (zero-padded).
+    ## See http://en.wikipedia.org/wiki/Tar_%28file_format%29
     if(is.character(tarfile)) {
         con <- gzfile(path.expand(tarfile), "rb") # reads compressed formats
         on.exit(close(con))
@@ -144,7 +145,9 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         if(all(block == 0)) break
         ns <- max(which(block[1:100] > 0))
         name <- rawToChar(block[seq_len(ns)])
-        # size 12 bytes at 125, octal, zero/space padded
+        ## mode 8 bytes (including nul) at 101
+        mode <- rawToChar(block[101:107])
+        ## size 12 bytes at 125, octal, zero/space padded
         size <- 0L
         for(i in 124L+(1:12))  {
             z <- block[i]
@@ -156,6 +159,8 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                    stop("invalid octal digit in size")
                    )
         }
+        ts <- rawToChar(block[137:146])
+        ft <- as.POSIXct(as.numeric(ts), origin="1970-01-01")
         type <- block[157L]
         if(type == 48 || type == 0) {
             contents <- c(contents, name)
@@ -175,11 +180,28 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                     remain <- remain - 512L
                 }
             }
-            if(dothis) close(out)
+            if(dothis) {
+                close(out)
+                Sys.chmod(name, mode)
+                .Call("R_setFileTime", name, ft)
+            }
+        } else if(type == 49 || type == 50) { # hard and symbolic links
+            contents <- c(contents, name)
+            ns <- max(which(block[158:257] > 0))
+            name2 <- rawToChar(block[158:ns])
+            if(!list) {
+                ## this will not work for links to dirs on Windows
+                if(.Platform$OS.type == "windows") file.copy(name2, name)
+                else file.symlink(name2, name)
+            }
         } else if(type == 53) {
             contents <- c(contents, name)
-            if(!list) dir.create(name, showWarning = FALSE, recursive = TRUE)
+            if(!list) {
+                dir.create(name, showWarning = FALSE, recursive = TRUE)
+                Sys.chmod(name, mode)
+                ## .Call("R_setFileTime", name, ft)
+            }
         } else stop("unsupported entry type", sQuote(rawToChar(type)))
     }
-    contents
+    if(list) contents else invisible(contents)
 }
