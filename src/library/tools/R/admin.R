@@ -311,6 +311,7 @@ function(dir, outDir)
             writeLines(paste("#line 1 \"", f, "\"", sep=""), con)
             writeLines(tmp, con)
         }
+	close(con); on.exit()
     } else {
         ## <NOTE>
         ## It may be safer to do
