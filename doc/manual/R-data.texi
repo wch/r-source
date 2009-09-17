@@ -2113,7 +2113,8 @@ The most common R data import/export question seems to be `how do I read
 an Excel spreadsheet'.  This chapter collects together advice and
 options given earlier.  Note that most of the advice is for pre-Excel
 2007 spreadsheets: currently the only one of these methods that reads
-the @file{.xlsx} format is that @emph{via} @pkg{RODBC}.
+the @file{.xlsx} format is that @emph{via} @pkg{RODBC}, but see also the
+Omegahat package @pkg{RExcelXML}.
 
 @findex read.csv
 @findex read.delim

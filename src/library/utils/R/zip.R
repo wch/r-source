@@ -55,8 +55,18 @@ unzip <-
 }
 
 untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
-                  compressed = NA, extra = NULL, verbose = FALSE)
+                  compressed = NA, extras = NULL, verbose = FALSE)
 {
+    TAR <- Sys.getenv("TAR")
+    if (inherits(tarfile, "connection") || identical(TAR, "internal"))
+        return(untar2(tarfile, files, list, exdir))
+
+    if (!nzchar(TAR) && .Platform$OS.type == "windows") {
+        res <- try(system("tar.exe --version", intern = TRUE), silent = TRUE)
+        if (!inherits(res, "try-error")) TAR <- "tar.exe"
+    }
+    if (!nzchar(TAR)) return(untar2(tarfile, files, list, exdir))
+
     if (is.character(compressed)) {
         switch(match.arg(compressed, c("gzip", "bzip2")),
                "gzip" = "z", "bzip2" = "j")
@@ -68,53 +78,10 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     } else stop("'compressed' must be logical or character")
 
     gzOK <- .Platform$OS.type == "windows"
-    TAR <- Sys.getenv("TAR")
-    if (!nzchar(TAR) && .Platform$OS.type == "windows") {
-        res <- try(system("tar.exe --version", intern = TRUE), silent = TRUE)
-        TAR <- if (!inherits(res, "try-error")) "tar.exe"
-        else {
-            TAR <- file.path(R.home(), "bin", "untgz.exe")
-            ## This is rather different.
-            if (cflag == "j")
-                stop("'bzip2 compression is not yet supported by untgz.exe",
-                     domain = NA)
-            if (list) {
-                cmd <- paste(TAR, "-l", shQuote(tarfile))
-                if (verbose) message("untar: using cmd = ", sQuote(cmd))
-                return(system(cmd, intern = TRUE))
-            } else {
-                ## NB only absolute paths for tarfile will work
-                tarfile <- chartr("\\", "/", normalizePath(tarfile))
-                if (!missing(exdir)) {
-                    dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
-                    od <- setwd(exdir)
-                    on.exit(setwd(od))
-                }
-                cmd <- paste(TAR, shQuote(tarfile))
-                if (length(files))
-                    cmd <- paste(cmd, paste(shQuote(files), collapse = " "))
-                if (verbose) message("untar: using cmd = ", sQuote(cmd))
-                res <- system(cmd)
-                if (res) warning(sQuote(cmd), " returned error code ", res,
-                                 domain = NA)
-                return(invisible(res))
-            }
-        }
-    }
-    if (!nzchar(TAR))
-        stop("set environment variable 'TAR' to point to a GNU-compatible 'tar'")
-
     if (!gzOK ) {
         ## version info may be sent to stdout or stderr
         tf <- tempfile()
         cmd <- paste(TAR, " -", cflag, "tf ", shQuote(tarfile), sep = "")
-        if (verbose) message("untar: using cmd = ", sQuote(cmd))
-        if (length(extra)) cmd <- paste(cmd, extra, collapse = " ")
-        system(cmd, intern = TRUE)
-        cmd <- paste(TAR, " -", cflag, "tf ", shQuote(tarfile), sep = "")
-        if (verbose) message("untar: using cmd = ", sQuote(cmd))
-        if (length(extra)) cmd <- paste(cmd, extra, collapse = " ")
-        system(cmd, intern = TRUE)
         system(paste(TAR, "--version >", tf, "2>&1"))
         if (file.exists(tf)) {
             gzOK <- any(grepl("GNU", readLines(tf), fixed = TRUE))
@@ -135,8 +102,8 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     }
     if (list) {
         cmd <- paste(TAR, " -", cflag, "tf ", shQuote(tarfile), sep = "")
+        if (length(extras)) cmd <- paste(cmd, extras, collapse = " ")
         if (verbose) message("untar: using cmd = ", sQuote(cmd))
-        if (length(extra)) cmd <- paste(cmd, extra, collapse = " ")
         system(cmd, intern = TRUE)
     } else {
         cmd <- paste(TAR, " -", cflag, "xf ", shQuote(tarfile), sep = "")
@@ -144,7 +111,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
             dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
             cmd <- paste(cmd, "-C", shQuote(exdir))
         }
-        if (length(extra)) cmd <- paste(cmd, extra, collapse = " ")
+        if (length(extras)) cmd <- paste(cmd, extras, collapse = " ")
         if (length(files))
             cmd <- paste(cmd, paste(shQuote(files), collapse = " "))
         if (verbose) message("untar: using cmd = ", sQuote(cmd))
@@ -153,4 +120,66 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                          domain = NA)
         invisible(res)
     }
+}
+
+untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
+{
+    ## A tar file is a set of 512 byte records,
+    ## a header record followed by file contents (zero-padded).
+    if(is.character(tarfile)) {
+        con <- gzfile(path.expand(tarfile), "rb") # reads compressed formats
+        on.exit(close(con))
+    } else if(inherits(tarfile, "connection")) con <- tarfile
+    else stop("'tarfile' must be a character string or a connection")
+    if (!missing(exdir)) {
+        dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
+        od <- setwd(exdir)
+        on.exit(setwd(od))
+    }
+    contents <- character()
+    repeat{
+        block <- readBin(con, "raw", n = 512L)
+        if(!length(block)) break
+        if(length(block) < 512L) stop("incomplete block on file")
+        if(all(block == 0)) break
+        ns <- max(which(block[1:100] > 0))
+        name <- rawToChar(block[seq_len(ns)])
+        # size 12 bytes at 125, octal, zero/space padded
+        size <- 0L
+        for(i in 124L+(1:12))  {
+            z <- block[i]
+            if(!as.integer(z)) break;
+            switch(rawToChar(z),
+                   " " = {},
+                   "0"=,"1"=,"2"=,"3"=,"4"=,"5"=,"6"=,"7"=
+                   {size <- 8*size + (as.integer(z)-48)},
+                   stop("invalid octal digit in size")
+                   )
+        }
+        type <- block[157L]
+        if(type == 48 || type == 0) {
+            contents <- c(contents, name)
+            remain <- size
+            dothis <- !list
+            if(dothis && length(files)) dothis <- name %in% files
+            if(dothis) {
+                dir.create(dirname(name), showWarning = FALSE, recursive = TRUE)
+                out <- file(name, "wb")
+            }
+            for(i in seq_len(ceiling(size/512L))) {
+                block <- readBin(con, "raw", n = 512L)
+                if(length(block) < 512L)
+                    stop("incomplete block on file")
+                if (dothis) {
+                    writeBin(block[seq_len(min(512L, remain))], out)
+                    remain <- remain - 512L
+                }
+            }
+            if(dothis) close(out)
+        } else if(type == 53) {
+            contents <- c(contents, name)
+            if(!list) dir.create(name, showWarning = FALSE, recursive = TRUE)
+        } else stop("unsupported entry type", sQuote(rawToChar(type)))
+    }
+    contents
 }

@@ -270,7 +270,7 @@ NEW FEATURES
     o	Indexing with a vector index to [[]] has now been extended to
     	all recursive types.
 
-    o	pairlists may now be assigned as elements of lists.  (Lists
+    o	Pairlists may now be assigned as elements of lists.  (Lists
     	could always be created with pairlist elements, but [[<-
     	didn't support assigning them.)
 
@@ -286,7 +286,8 @@ NEW FEATURES
 	generics, thanks to a patch by Yohan Chalabi.
 
     o	New function untar() to list or unpack tar archives, possibly
-	compressed.
+	compressed.  This uses either an external 'tar' command or an
+	internal implementation.
 
     o	R CMD INSTALL/check and tools::writePACKAGES accept a wider
 	range of compressed tar archives.  Precisely how wide depends
@@ -310,15 +311,13 @@ NEW FEATURES
     o	R CMD INSTALL has a new option --data-compress to control the
 	compression used when lazy-loading data.  THe default is
 	'gzip': 'bzip2' will give ca 15% better compression at the
-	expense of slower installation times.  More methods are
-	planned for future releases.
+	expense of slower installation times.
 
-    o	[Experimental]  gzfile() can recognize and decompress files
-	compressed by 'xz' if suitable OS support is found at
-	configuration.  Since gzfile() is widely used to read files,
-	this means that for example load() can read files compressed
-	by 'xv' (and it can save substantial amounts of space on large
-	data files).
+    o	gzfile() can recognize and decompress files compressed by 'xz'
+	if suitable OS support is found at configuration.  Since
+	gzfile() is widely used to read files, this means that for
+	example load() can read files compressed by 'xv' (and it can
+	save substantial amounts of space on large data files).
 
     o	available.packages() gains a 'filters' argument for specifying
     	the filtering operations performed on the packages found in the

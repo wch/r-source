@@ -17,7 +17,8 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 }
 \arguments{
   \item{tarfile}{The pathname of the zip file: tilde expansion (see
-    \code{\link{path.expand}}) will be performed.}
+    \code{\link{path.expand}}) will be performed.  Alternatively, a
+    connection that can be used for binary reads.}
 
   \item{files}{A character vector of recorded filepaths to be extracted:
     the default is to extract all files.}
@@ -38,35 +39,40 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     \file{tgz}, \file{taz} or \file{Z} selects \command{gzip}
     compression.}
 
-  \item{extra}{\code{NULL} or a character string: further command-ilne
+  \item{extras}{\code{NULL} or a character string: further command-ilne
     flags such as \option{-p} to be passed to the \command{tar} program.}
 
   \item{verbose}{logical: if true echo the command used.}
 }
 \details{
-  This is a wrapper for a \command{tar} or \command{untgz} command,
-  selected by the environment variable \env{TAR}.  This is set at
-  installation on a Unix-alike, and on Windows to \file{untgz.exe}
-  (which we supply) unless \file{tar.exe} (e.g. from \sQuote{Rtools}) is
-  in the path.
+  This is either a wrapper for a \command{tar} command or for an \R
+  implementation of untar.  The \R implementation is used if
+  \code{tarfile} is a connection or if the environment variable \env{TAR}
+  is \code{"internal"} or unset (except on Windows, when
+  \command{tar.exe} is tried first).
 
   What options are supported will depend on the \command{tar} used.
   Modern GNU flavours of \command{tar} will support compressed archives,
-  and since 1.15 is able to detect the type of compression
+  and since 1.15 are able to detect the type of compression
   automatically: version 1.20 added support for \command{lzma} and
   version 1.22 for \command{xz} compression using LZMA2.  For other
-  flavours environment variable \env{R_ZIPCMD} is used to as the command
-  to decompress \command{gzip} files, and \command{bzip2} for its files.
+  flavours environment variable \env{R_ZIPCMD} gives the command to
+  decompress \command{gzip} files, and \command{bzip2} for its files.
   (There is a \command{bsdtar} command from the \samp{libarchive}
   project which can also detect compression automagically: for this set
   \code{compressed = FALSE}.  Similarly for \command{tar} from the
   \sQuote{Heirloom Toolchest}.)
-#ifdef windows
   
-  \file{untgz.exe} supports only uncompressed and
-  \command{gzip}-compressed archives (including \file{.Z}, which
-  \command{gzip} can handle).
-#endif
+  Arguments \code{compressed}, \code{extras} and \code{verbose} are only
+  used when an external \command{tar} is used.
+
+  The internal implementation is simple: it is only able to handle
+  directories and files, and does not set the file permissions nor
+  modification times from the tar file --- but this is sufficient for
+  unpacking \R package tarballs.  Since it uses \code{\link{gzfile}} to
+  read a file, it can handle files compressed by any of the methods that
+  \code{gzfile} can handle: at least \command{gzip} and \command{bzip2}
+  compression, and more on some \R builds.
 }
 
 \value{
