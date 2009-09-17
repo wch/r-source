@@ -2326,7 +2326,7 @@ SEXP attribute_hidden do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef Win32 /* untested */
-static void winSetFileTime(const char *fn, int ftime)
+static void winSetFileTime(const char *fn, time_t ftime)
 {
     SYSTEMTIME st;
     FILETIME modft;
@@ -2344,7 +2344,7 @@ static void winSetFileTime(const char *fn, int ftime)
     st.wMinute       = (WORD) utctm->tm_min;
     st.wSecond       = (WORD) utctm->tm_sec;
     st.wMilliseconds = 0;
-    if (!SystemTimeToFileTime(&st, modft)) return;
+    if (!SystemTimeToFileTime(&st, &modft)) return;
 
     hFile = CreateFile(fn, GENERIC_WRITE, 0, NULL, OPEN_EXISTING,
 		       FILE_FLAG_BACKUP_SEMANTICS, NULL);
@@ -2363,7 +2363,7 @@ SEXP R_setFileTime(SEXP name, SEXP time)
     int ftime = asInteger(time);
 
 #ifdef Win32
-    winSetFileTime(fn, ftime);
+    winSetFileTime(fn, (time_t)ftime);
 #else
     struct utimbuf settime;
 
