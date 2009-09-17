@@ -206,6 +206,9 @@ function(db)
     ## B. bundle packages
     ## C. really missing.
     ## We can ignore type A as these are known to be FOSS.
+    ## We cannot really fully fix bundles as metadata for bundle
+    ## packages (which might have license specs) are not recorded in the
+    ## PACKAGES files.  And as bundles on the way out ...
     bad_packages <-
         bad_packages[is.na(match(bad_packages,
                                  unlist(tools:::.get_standard_package_names())))]
