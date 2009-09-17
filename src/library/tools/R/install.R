@@ -931,7 +931,7 @@
     multiarch <- TRUE
     install_tests <- FALSE
     get_user_libPaths <- FALSE
-    data_compress <- 2 # FALSE, TRUE, 2 for bzip2
+    data_compress <- TRUE # FALSE, TRUE, 2 for bzip2
 
     while(length(args)) {
         a <- args[1]
