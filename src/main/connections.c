@@ -1582,7 +1582,10 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *file, *open;
     int ncon, compress = 9;
     Rconnection con = NULL;
-    int type = PRIMVAL(op), subtype = 0;
+    int type = PRIMVAL(op);
+#ifdef HAVE_LZMA
+    int subtype = 0;
+#endif
 
     checkArity(op, args);
     sfile = CAR(args);

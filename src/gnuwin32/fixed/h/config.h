@@ -416,6 +416,12 @@
 /* Define to 1 if the system has the type `long long int'. */
 #define HAVE_LONG_LONG_INT 1
 
+/* Define if your system has lzma >= 4.999. */
+/* #undef HAVE_LZMA */
+
+/* Define to 1 if you have the <lzma.h> header file. */
+/* #undef HAVE_LZMA_H */
+
 /* Define to 1 if you have the `matherr' function. */
 /* #undef HAVE_MATHERR */
 

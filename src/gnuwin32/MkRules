@@ -48,7 +48,7 @@ TCL_VERSION = 85
 # Some of the Mingw64 compilers are in fact cross-compilers and have prefixes
 BINPREF=
 
-# 32- or 64-bit Windows?  For experminets with Mingw64.
+# 32- or 64-bit Windows?  For experiments with Mingw64.
 WIN=32
 ifeq ($(strip $(WIN)),64)
 USE_IMPLIBS = YES
@@ -61,6 +61,10 @@ endif
 USE_ICU=NO
 # path to parent of ICU headers
 ICU_PATH=/sources/icu
+
+# use liblzma
+USE_LZMA=NO
+LZMA_PATH=/sources/xz-utils
 
 # optional overrides for making bitmapdll: names of source directories
 # JPEGDIR = jpeg-7

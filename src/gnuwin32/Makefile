@@ -50,7 +50,10 @@ OPTFLAGS_M=$(OPTFLAGS)
 
 R-DLLFLAGS=-mwindows
 ifeq ($(strip $(USE_ICU)),YES)
-LIBEXTRAS+=-licuin38 -licuuc38
+LIBEXTRAS+= -licuin38 -licuuc38
+endif
+ifeq ($(strip $(USE_LZMA)),YES)
+LIBEXTRAS+= "$(LZMA_PATH)"/lib/liblzma.a
 endif
 
 R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
