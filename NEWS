@@ -313,9 +313,6 @@ NEW FEATURES
 	expense of slower installation times.  More methods are
 	planned for future releases.
 
-    o	methods::trySilent() is now a simple direct wrapper around
-        tryCatch(), instead of building on try().
-
     o	[Experimental]  gzfile() can recognize and decompress files
 	compressed by 'xz' if suitable OS support is found at
 	configuration.  Since gzfile() is widely used to read files,
@@ -464,6 +461,10 @@ DEPRECATED & DEFUNCT
 	it seems that in almost all cases package authors intended
 	fixed = TRUE when using extended = FALSE.
 
+    o	methods::trySilent() is deprecated for  try(*, silent=TRUE) or
+    	--more efficiently and flexibly--something like
+	tryCatch(*, error=function(e)e).
+
 
 INSTALLATION
 
@@ -555,7 +556,7 @@ BUG FIXES
 	sometimes not (when the C function asComplex was used, e.g. on
 	list elements).  (PR#13942)
 
-    
+
 
 		CHANGES IN R VERSION 2.9.2
 

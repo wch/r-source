@@ -1,4 +1,4 @@
-#  File src/library/methods/R/oldGet.R
+#  File src/library/methods/R/Defunct.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify

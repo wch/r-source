@@ -21,7 +21,7 @@
 \alias{simpleWarning}
 \alias{simpleMessage}
 \alias{tryCatch}
-\alias{trySilent}
+%\alias{trySilent} in methods is deprecated
 \alias{withCallingHandlers}
 \alias{withRestarts}
 
@@ -43,7 +43,6 @@
 
 \usage{
 tryCatch(expr, \dots, finally)
-trySilent(expr)
 withCallingHandlers(expr, \dots)
 
 signalCondition(cond)
@@ -141,11 +140,6 @@ restartFormals(r)
    returned by the handler is returned as the value of the
    \code{tryCatch} call.
 
-   \code{trySilent}, originally a function in S, reimplemented for
-   package \pkg{methods}, is now a simple wrapper around
-   \code{tryCatch}, also exemplifying one \code{tryCatch()}'s most
-   typical uses.
-
    Calling handlers are established by \code{withCallingHandlers}.  If
    a condition is signaled and the applicable handler is a calling
    handler, then the handler is called by \code{signalCondition} in
@@ -207,8 +201,8 @@ restartFormals(r)
   error handling.  Calling handlers are based on Common Lisp and
   Dylan.  Restarts are based on the Common Lisp restart mechanism.}
 
-\seealso{\code{stop} and \code{warning} signal conditions, and
-  \code{try} is essentially a simplified version of \code{tryCatch}.
+\seealso{\code{\link{stop}} and \code{\link{warning}} signal conditions,
+  and \code{\link{try}} is essentially a simplified version of \code{tryCatch}.
 }
 
 \examples{

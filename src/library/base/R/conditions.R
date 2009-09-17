@@ -63,15 +63,6 @@ tryCatch <- function(expr, ..., finally) {
     tryCatchList(expr, classes, parentenv, handlers)
 }
 
-## This would be desirable,
-## trySilent <- function(expr) tryCatch(expr, error = function(e) e)
-## but for back compatibility, we'd need
-trySilent <- function(expr) {
-    r <- tryCatch(expr, error = function(e)
-		  structure(e$message, class = "try-error"))
-}
-## need the above for now
-
 withCallingHandlers <- function(expr, ...) {
     handlers <- list(...)
     classes <- names(handlers)

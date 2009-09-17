@@ -1,6 +1,6 @@
 % File src/library/base/man/try.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{try}
@@ -19,14 +19,18 @@ try(expr, silent = FALSE)
 }
 \details{
   \code{try} evaluates an expression and traps any errors that occur
-  during the evaluation. If an error occurs then the error
+  during the evaluation.  If an error occurs then the error
   message is printed to the \code{stderr} connection unless
   \code{options("show.error.messages")} is false or
   the call includes \code{silent = TRUE}.  The error message is also
   stored in a buffer where it can be retrieved by
   \code{geterrmessage}. (This should not be needed as the value returned
-  in case of an error contains the error message.)  \code{try} is
-  implemented using \code{tryCatch}.  
+  in case of an error contains the error message.)
+
+  \code{try} is implemented using \code{\link{tryCatch}}; for
+  programming, instead of \code{try(expr, silent=TRUE)}, something like
+  \code{tryCatch(expr, error = function(e) e)} (or other simple
+  error handler functions) may be more efficient and flexible.
 }
 \value{
   The value of the expression if \code{expr} is evaluated without error,
@@ -37,7 +41,7 @@ try(expr, silent = FALSE)
   \code{\link{options}} for setting error handlers and suppressing the
   printing of error messages;
   \code{\link{geterrmessage}} for retrieving the last error message.
-  \code{tryCatch} provides another means of catching and handling
+  \code{\link{tryCatch}} provides another means of catching and handling
   errors.
 }
 \examples{
