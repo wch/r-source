@@ -4148,18 +4148,18 @@ function(cfile)
         as.list(tools:::.get_package_metadata(dirname(dir)))
     else
         NULL
-    
+
     out <- tryCatch(suppressMessages(utils::readCitationFile(cfile, meta)),
                     error = identity)
     if(inherits(out, "error")) {
         writeLines(conditionMessage(out))
-        return()
+        return(invisible())
     }
 
     if(is.null(encoding <- meta$Encoding))
         encoding <- "unknown"
     db <- get_CITATION_entry_fields(cfile, encoding)
-    if(!NROW(db)) return()
+    if(!NROW(db)) return(invisible())
     bad <- Map(find_missing_required_BibTeX_fields, db$Entry, db$Fields,
                USE.NAMES = FALSE)
     ind <- sapply(bad, identical, NA_character_)
@@ -4372,7 +4372,7 @@ function(package, dir, lib.loc = NULL)
     if(length(files_with_duplicated_aliases))
         out$files_with_duplicated_aliases <-
             files_with_duplicated_aliases
-    
+
     out
 }
 
@@ -4386,7 +4386,7 @@ function(x, ...)
             .pretty_print(bad[[nm]])
         }
     }
-    
+
     if(length(x$files_with_duplicated_aliases)) {
         bad <- x$files_with_duplicated_aliases
         for(nm in names(bad)) {
