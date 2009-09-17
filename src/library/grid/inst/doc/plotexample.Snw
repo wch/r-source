@@ -1,10 +1,11 @@
 \documentclass[a4paper]{article}
 %\VignetteIndexEntry{Writing grid Code}
 %\VignettePackage{grid}
-\newcommand{\grid}{{\tt grid}}
-\newcommand{\grob}{{\tt grob}}
-\newcommand{\gTree}{{\tt gTree}}
-\newcommand{\R}{{\tt R}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\grid}{\code{grid}}
+\newcommand{\grob}{\code{grob}}
+\newcommand{\gTree}{\code{gTree}}
+\newcommand{\R}{{\sffamily R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -36,7 +37,7 @@ to allow things like editing graphical objects, ``packing'' graphical
 objects, and so on.  This means that many of the
 predefined Grid graphics functions are
 relatively complicated\footnote{Although there are exceptions;  some
-functions, such as {\tt grid.show.viewport}, are purely for producing
+functions, such as \code{grid.show.viewport}, are purely for producing
 illustrative diagrams and remain simple and procedural.}.
 
 One design aim of \grid{} is to allow users to create simple
@@ -71,7 +72,7 @@ This document should be read {\em after} the \grid{} Users'
 Guide.  Here we are assuming that the reader has an understanding
 of viewports, layouts, and units.  For the later sections of the
 document, it will also be helpful to have an understanding of
-\R{}'s {\tt S3} object system.
+\R{}'s \code{S3} object system.
 
 \section*{Procedural \grid{}}
 
@@ -158,15 +159,15 @@ popViewport()
 
 When more complex arrangements of viewports are involved, there may be
 a bewildering array of viewports created, which may make it difficult
-for other users to revisit a particular region of a plot.  A {\tt lattice}
+for other users to revisit a particular region of a plot.  A \code{lattice}
 plot is a good example.
-In such cases, it will be more cooperative to use {\tt upViewport()}
-rather than {\tt popViewport()} and leave the viewports that were
+In such cases, it will be more cooperative to use \code{upViewport()}
+rather than \code{popViewport()} and leave the viewports that were
 created during the drawing of the plot.  Other users can then use
-{\tt vpPath}s to navigate to the desired region.  For example, here
+\code{vpPath}s to navigate to the desired region.  For example, here
 is a slight modification of the original series of commands, where
 the original data viewport is given a name and
-{\tt upViewport()} is used at the end.
+\code{upViewport()} is used at the end.
 
 <<results=hide>>=
 data.vp <- viewport(name="dataregion",
@@ -194,7 +195,7 @@ upViewport()
 @
 
 The date is now added
-using {\tt downViewport()} to get to the data region.
+using \code{downViewport()} to get to the data region.
 
 <<results=hide>>=
 downViewport("dataregion")
@@ -242,7 +243,7 @@ add more arguments to allow different margins, control over
 the axis scales, and so on.
 \item The plot can be embedded in other graphics output.
 \end{enumerate}
-Here is an example which uses the {\tt splot()} function to
+Here is an example which uses the \code{splot()} function to
 create a slightly modified scatterplot, embedded within
 other \grid{} output.
 
@@ -270,8 +271,8 @@ upViewport()
 
 It is still straightforward to annotate the scatterplot as long as
 we have enough information about the viewports.  In this case,
-a non-strict {\tt downViewport()} will still work (though note
-that {\tt upViewport({\bf 0})} is required to get right back to the
+a non-strict \code{downViewport()} will still work (though note
+that \code{upViewport({\bf 0})} is required to get right back to the
 top level).
 
 <<ann2, echo=FALSE, eval=FALSE>>=
@@ -296,8 +297,8 @@ However, there are some things that cannot be done (or at least would
 be extremely hard to do) with such a function.  The output produced by
 the function cannot be addressed as a coherent whole.  It is
 not possible, for example, to
-to change the {\tt x}
-and {\tt y} data used in the plot and have the points and axes update
+to change the \code{x}
+and \code{y} data used in the plot and have the points and axes update
 automatically.  There is no scatterplot object to save;  the individual
 components exist, but they are not bound together as a whole.  If/when
 these sorts of issues become important, it becomes necessary to
@@ -307,7 +308,7 @@ The first step is to write a function which will create a \grob{}
 -- a {\it constructor} function.  In most cases, this will involve
 creating a special sort of \grob{} called a \gTree{};  this is just
 a \grob{} that can have other \grob{}s as children.  Here's an example
-for creating an {\tt splot} \grob{}.  I have put bits of the
+for creating an \code{splot} \grob{}.  I have put bits of the
 construction into separate functions, for reasons which will become
 apparent later.
 
@@ -353,14 +354,14 @@ splot <- function(x, y, title, name=NULL, draw=TRUE, gp=gpar(), vp=NULL) {
 @
 
 There are four important additions to the argument list compared
-to the original {\tt splot()} function:
+to the original \code{splot()} function:
 \begin{enumerate}
-\item The {\tt name} argument allows a string identifier to be
+\item The \code{name} argument allows a string identifier to be
 associated with the scatterplot object we create.  This is
 important for being able to specify the scatterplot when we try to edit
 it after drawing it and/or when it is part of a larger \grob{}
 (see later examples).
-\item The {\tt draw} argument
+\item The \code{draw} argument
  makes it possible to use the function in a procedural
 manner as before:
 
@@ -375,11 +376,11 @@ grid.text(date(), x=unit(1, "npc"),
 upViewport(0)
 
 @
-\item The {\tt gp} argument allows the user to supply {\tt gpar()}
+\item The \code{gp} argument allows the user to supply \code{gpar()}
 settings for the scatterplot as a whole.
-\item The {\tt vp} argument allows the user to supply a viewport
-for the {\tt splot} \grob{} to be drawn in.  This is especially
-useful for specifying a {\tt vpPath} when the {\tt splot} is
+\item The \code{vp} argument allows the user to supply a viewport
+for the \code{splot} \grob{} to be drawn in.  This is especially
+useful for specifying a \code{vpPath} when the \code{splot} is
 used as a component of another \grob{} (see scatterplot matrix
 example
 below).
@@ -387,28 +388,28 @@ below).
 
 The important parts of the \gTree{}  definition are:
 \begin{enumerate}
-\item The {\tt children} argument provides a list of \grob{}s which are
+\item The \code{children} argument provides a list of \grob{}s which are
 part of the scatterplot.  When the scatterplot is drawn, all children
-will be drawn.  Notice that instead of the procedural {\tt grid.*()} functions
-we use {\tt *Grob()} functions which just produce \grob{}s and do not
+will be drawn.  Notice that instead of the procedural \code{grid.*()} functions
+we use \code{*Grob()} functions which just produce \grob{}s and do not
 perform any drawing.  Also notice that I have given each of the
 children a name;  this will make it possible to access the components
 of the scatterplot (see later examples).
-\item The {\tt childrenvp} argument provides a viewport (or
-{\tt vpStack}, {\tt vpList}, or {\tt vpTree}) which will be pushed before
+\item The \code{childrenvp} argument provides a viewport (or
+\code{vpStack}, \code{vpList}, or \code{vpTree}) which will be pushed before
 the children are drawn.  The difference between this argument and the
-{\tt vp} argument common to all \grob{}s is that the {\tt vp} is pushed before
-drawing the children and then popped after, whereas the {\tt childrenvp}
-gets pushed {\it and} then a call to {\tt upViewport()} is made
+\code{vp} argument common to all \grob{}s is that the \code{vp} is pushed before
+drawing the children and then popped after, whereas the \code{childrenvp}
+gets pushed {\it and} then a call to \code{upViewport()} is made
 before the children are drawn.  This allows the children to simply
-specify the viewport they should be drawn in by way of a {\tt vpPath}
-in their {\tt vp} argument.  In this way, viewports remain available
+specify the viewport they should be drawn in by way of a \code{vpPath}
+in their \code{vp} argument.  In this way, viewports remain available
 for further annotation such as we have already seen in procedural code.
-\item The {\tt gp} and {\tt vp} arguments are automatically handled by
-the \gTree{} drawing methods so that {\tt gpar()} settings will be
-enforced and the viewport will be pushed when the {\tt splot} is drawn.
-\item The {\tt cl} argument means that the \grob{} created is a special
-sort of \grob{} called {\tt splot}.  This will allow us to write methods
+\item The \code{gp} and \code{vp} arguments are automatically handled by
+the \gTree{} drawing methods so that \code{gpar()} settings will be
+enforced and the viewport will be pushed when the \code{splot} is drawn.
+\item The \code{cl} argument means that the \grob{} created is a special
+sort of \grob{} called \code{splot}.  This will allow us to write methods
 specifically for our scatterplot (see later examples).
 \end{enumerate}
 
@@ -417,9 +418,9 @@ specifically for our scatterplot (see later examples).
 
 Now that we have a \grob{}, there are some more interesting things that
 we can do with it.
-First of all, the {\tt splot} \grob{} provides a container for the
+First of all, the \code{splot} \grob{} provides a container for the
 \grob{}s which make up the scatterplot.
-If we modify the {\tt splot} \grob{}, it affects all of the children.
+If we modify the \code{splot} \grob{}, it affects all of the children.
 
 <<results=hide>>=
 splot(1:10, 1:10, "Same as Before", name="splot")
@@ -432,7 +433,7 @@ grid.draw(sg)
 
 @
 
-We can access elements of the {\tt splot} \grob{} to edit them
+We can access elements of the \code{splot} \grob{} to edit them
 individually.
 
 <<results=hide>>=
@@ -447,8 +448,8 @@ grid.draw(sg)
 @
 
 With a little more work we can make the scatterplot a bit more dynamic.
-The following describes a {\tt editDetails()} method for the
-{\tt splot} \grob{}.  This will be called whenever a scatterplot
+The following describes a \code{editDetails()} method for the
+\code{splot} \grob{}.  This will be called whenever a scatterplot
 is edited and will update the components of the scatterplot.
 
 <<>>=
@@ -477,7 +478,7 @@ grid.draw(sg)
 
 @
 
-The {\tt splot} \grob{} can also be used in the construction of
+The \code{splot} \grob{} can also be used in the construction of
 other \grob{}s.  Here's a simple scatterplot matrix
 \grob{}\footnote{{\bf Warning:}  As the number of \grob{}s in a \gTree{} gets
 larger the construction of the \gTree{} will get slow.  If this happens,
@@ -617,7 +618,7 @@ grid.draw(date)
 
 All of this may seem a bit irrelevant to interactive use, but it
 does provide a basis for creating an editable plot interface like
-M Kondrin's {\tt Rgrace} package.
+M Kondrin's \code{Rgrace} package.
 
 % Start a new page
 % Not echoed, not evaluated

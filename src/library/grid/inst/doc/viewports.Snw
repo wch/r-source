@@ -1,8 +1,9 @@
 \documentclass[a4paper]{article}
 %\VignetteIndexEntry{Working with viewports}
-\newcommand{\grid}{{\tt grid}}
-\newcommand{\lattice}{{\tt lattice}}
-\newcommand{\R}{{\tt R}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\grid}{\code{grid}}
+\newcommand{\lattice}{\code{lattice}}
+\newcommand{\R}{{\sffamily R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -51,7 +52,7 @@ back up to the top-level and attempt to revisit one of the
 viewports, how can I specify which one I want?  The answer is that
 viewports have a \verb|name| argument\footnote{The print method
 for viewports shows the viewport name within square brackets.  Try
-typing {\tt current.viewport()}.}.  This name, combined with
+typing \code{current.viewport()}.}.  This name, combined with
 the \verb|downViewport()| function, makes it possible to
 navigate back down to viewports in the viewport tree.  Consider the
 following example, which pushes two viewports called \verb|"A"| and
@@ -124,7 +125,7 @@ to represent the strip region.
 
 This design creates a further ambiguity because there may be
 more than one viewport with the same name within the viewport
-tree\footnote{{\tt downViewport()} and {\tt seekViewport()} will stop at the
+tree\footnote{\code{downViewport()} and \code{seekViewport()} will stop at the
 first match they find (the search is currently depth-first).}.
 This ambiguity can be resolved by using the \verb|vpPath()|
 function to generate a specification of a stack of viewports
@@ -234,7 +235,7 @@ plot <- viewport(layout.pos.col=2, layout.pos.row=2,
 @
 Notice that we have not pushed any of these viewports yet so no regions
 exist on the output device.  We first of all arrange the viewports into
-a tree structure, with  the {\tt top.vp} as the parent node and
+a tree structure, with  the \code{top.vp} as the parent node and
 all of the other viewports as its children.
 
 <<>>=
@@ -244,7 +245,7 @@ splot <- vpTree(top.vp, vpList(margin1, margin2, margin3, margin4, plot))
 Now we can push this entire tree of viewports in order to create all of the
 different areas within the drawing region that we need to draw the
 scatterplot.
-The result of this push is that we are left in the {\tt plot} viewport.
+The result of this push is that we are left in the \code{plot} viewport.
 
 <<viewports>>=
 pushViewport(splot)
@@ -307,14 +308,14 @@ pushViewport(viewport(w=0.9, h=0.9))
 
 As a final step, we navigate back to the top-level viewport
 (i.e., back to the viewport we started in)\footnote{Here we have
-used {\tt 0} to indicate ``navigate to the top-level viewport''.
+used \code{0} to indicate ``navigate to the top-level viewport''.
 When writing
 code that could be used by others (i.e., a graphical component that
 could be embedded within something else), it would be necessary to
 specify a precise number of viewports to navigate back up.   In this case,
-the number would be {\tt} 2.  The {\tt downViewport()} function
+the number would be {\tt} 2.  The \code{downViewport()} function
 returns the number of viewports it went down, so a general
-solution is of the form: {\tt depth <- downViewport("avp");
+solution is of the form: \code{depth <- downViewport("avp");
 upViewport(depth)}.}.
 
 <<>>=

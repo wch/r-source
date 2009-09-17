@@ -1,8 +1,9 @@
 \documentclass[a4paper]{article}
 %\VignetteIndexEntry{Editing grid Graphics}
 %\VignettePackage{grid}
-\newcommand{\grid}{{\tt grid}}
-\newcommand{\R}{{\tt R}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\grid}{\code{grid}}
+\newcommand{\R}{{\sffamily R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -21,7 +22,7 @@ options(width=60)
 
 @
 First of all, we create an x-axis and draw it on the device.
-It is very important that we specify a {\tt name} for the object
+It is very important that we specify a \code{name} for the object
 so that we can refer to it later.
 
 <<fig1, results=hide, fig=TRUE, width=6, height=2, include=FALSE>>=
@@ -57,8 +58,8 @@ grid.draw(gxa)
 @
 
 Now we change just the labels of the x-axis to green.  We use the
-{\tt gPath()} function to concatenate the grob names (we could have used
-{\tt "gxa::labels"} here, but {\tt gPath()} is recommended for
+\code{gPath()} function to concatenate the grob names (we could have used
+\code{"gxa::labels"} here, but \code{gPath()} is recommended for
 writing code that will be reused).
 
 <<edit2, term=FALSE>>=

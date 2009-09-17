@@ -3,10 +3,11 @@
 %\VignettePackage{grid}
 %\VignetteDepends{graphics}
 %\VignetteDepends{gridBase}
-\newcommand{\grid}{{\tt grid}}
-\newcommand{\gridBase}{{\tt gridBase}}
-\newcommand{\lattice}{{\tt lattice}}
-\newcommand{\R}{{\tt R}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\grid}{\code{grid}}
+\newcommand{\gridBase}{\code{gridBase}}
+\newcommand{\lattice}{\code{lattice}}
+\newcommand{\R}{{\sffamily R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -30,7 +31,7 @@ options(width=60)
 A display list is a record of drawing operations.  It is used
 to redraw graphics output when a graphics window is resized,
 when graphics output is copied from one device to another, and
-when graphics output is edited (via {\tt grid.edit}).
+when graphics output is edited (via \code{grid.edit}).
 
 There are two display lists that can be used when working with
 \grid{}.  \R{}'s graphics engine maintains a display list and
@@ -53,7 +54,7 @@ based on the physical dimensions of the device -- an example is
 the legend function which performs calculations in order to
 arrange the elements of the legend.  The effect can be seen from
 any example which uses the legend function.  Try running
-{\tt example(legend)} then resize the device (make it quite
+\code{example(legend)} then resize the device (make it quite
 tall and thin or quite wide and fat);  the legend will start
 to look pretty sick.
 
@@ -62,9 +63,9 @@ display list -- it is not specific to \grid{}.  In fact, much
 of \grid{}'s behaviour is protected from this problem because
 things like \grid{} units are ``declarative'' and will be reevaluated
 on each redraw.  However, there are situations where \grid{} output
-can be afflicted, in particular, whenever the {\tt convertUnit()}
+can be afflicted, in particular, whenever the \code{convertUnit()}
 function (or one of its variants) is used (the help file
-for {\tt convertUnit()} gives an example).
+for \code{convertUnit()} gives an example).
 
 A situation where this problem becomes very relevant for
 \grid{} output is when the \gridBase{} package is used.
@@ -102,7 +103,7 @@ grid.edit("gr", gp=gpar(col="red", lwd=3))
 @
 \includegraphics[width=4in, height=3in]{displaylist-ex2}
 
-After the {\tt grid.edit}, the rectangle has been redrawn, but the
+After the \code{grid.edit}, the rectangle has been redrawn, but the
 base plot has not.
 \end{enumerate}
 
@@ -110,13 +111,13 @@ base plot has not.
 and saving base graphics on the \grid{} display list}
 
 Both of the problems described in the previous section can be
-avoided by using a {\tt drawDetails()} method in \grid{}.
-When a \grid{} grob is drawn, the {\tt drawDetails} method
+avoided by using a \code{drawDetails()} method in \grid{}.
+When a \grid{} grob is drawn, the \code{drawDetails} method
 for that grob is called;  if calculations are put within
-a {\tt drawDetails} method, then the calculations will be
+a \code{drawDetails} method, then the calculations will be
 performed every time the grob is drawn.
 
-This means that it is possible, for example, to use {\tt convertUnit()}
+This means that it is possible, for example, to use \code{convertUnit()}
 and have the result consistent across device resizes or
 copies\footnote{In
 each of the examples that follow, you should execute the example
@@ -133,7 +134,7 @@ grid.rect(width=convertWidth(unit(1, "inches"), "npc"))
 
 @
 The next piece of code demonstrates that, if we
-place the calculations within a {\tt drawDetails} method, then
+place the calculations within a \code{drawDetails} method, then
 the output remains consistent across device resizes and
 copies.
 
@@ -147,7 +148,7 @@ grid.draw(grob(cl="myrect"))
 
 @
 The next example shows
-that a {\tt drawDetails()} method can also be used
+that a \code{drawDetails()} method can also be used
 to save base graphics output on the \grid{} display list.
 This  example
 uses
@@ -157,8 +158,8 @@ a set of base pie charts within \grid{} viewports within a base plot.
 In this case, I can produce all of the grobs required in the normal
 manner -- their locations and sizes are not based on special
 calculations\footnote{The example is wrapped inside a check for
-whether the {\tt gridBase} package is installed so that the code
-will still ``run'' on systems without {\tt gridBase}.}.
+whether the \code{gridBase} package is installed so that the code
+will still ``run'' on systems without \code{gridBase}.}.
 
 <<results=hide>>=
 if ("gridBase" %in% .packages(all.available=TRUE)) {
@@ -184,7 +185,7 @@ gr <- rectGrob(gp=gpar(col="grey", fill="white", lty="dashed"))
 
 @
 What is important is that I place the calls to the \gridBase{} functions
-within the  {\tt drawDetails} method so that they are performed
+within the  \code{drawDetails} method so that they are performed
 every time the grob is drawn {\em and} the calls to the base graphics
 functions are in here too so that they are called for every redraw.
 
@@ -210,7 +211,7 @@ drawDetails.pieplot <- function(x, recording) {
 
 @
 The ``pieplot'' is created by assembling the component grobs
-into a collective grob of the appropriate class; the {\tt drawDetails}
+into a collective grob of the appropriate class; the \code{drawDetails}
 method takes care of actually producing the output.
 
 % produce figure, but don't include
@@ -228,13 +229,13 @@ grid.draw(grob(x=x, y=y, z=z,
 The output from this example can be resized safely;  \grid{} handles
 all of the redrawing,
  and performs all of the actions within the
-{\tt drawDetails} method for each redraw,
+\code{drawDetails} method for each redraw,
 including redrawing the base graphics output!
 
 As a final example, we will harness the \grid{} display list
 purely to achieve consistency in base graphics output.
 The following reproduces the last example from the
-{\tt legend()} help page, but produces output which can be
+\code{legend()} help page, but produces output which can be
 resized without the legend going crazy.
 
 % produce figure, but don't include

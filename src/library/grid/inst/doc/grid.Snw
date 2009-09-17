@@ -5,11 +5,11 @@
 %\VignetteDepends{lattice}
 
 % Definitions
-\newcommand{\slan}{{\tt S}}
-\newcommand{\rlan}{{\tt R}}
-\newcommand{\grid}{{\tt grid}}
-\newcommand{\lattice}{{\tt lattice}}
-\newcommand{\code}[1]{{\tt #1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\slan}{{\sffamily S}}
+\newcommand{\rlan}{{\sffamily R}}
+\newcommand{\grid}{\code{grid}}
+\newcommand{\lattice}{\code{lattice}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -324,7 +324,7 @@ coordinates.  It first pushes a viewport with a user-defined
 x-scale, then pushes another viewport which is centred at the x-value
 60 and half-way up the first viewport, and
 is 3 inches high\footnote{If you want to check the figure, the scaling
-factor is $3.5/6$ (i.e., the rectangle in the figure should be 1.75{\tt "} or
+factor is $3.5/6$ (i.e., the rectangle in the figure should be 1.75\code{"} or
 3.94cm high).}  and as wide as the text ``coordinates for everyone''.
 Figure \ref{figure:vpcoords} shows the resulting output.
 
@@ -424,8 +424,8 @@ lists the \grid{} functions that produce these primitives.
 {\bf NOTE:} all of these graphical primitives are available in
 all graphical regions and coordinate systems.
 
-There used to be (prior to R 2.3.0) a separate {\tt grid.arrows()}
-function, but this has been superceded by an {\tt arrow} argument
+There used to be (prior to R 2.3.0) a separate \code{grid.arrows()}
+function, but this has been superceded by an \code{arrow} argument
 to the line-drawing primitives (lines, segments, line-to).
 
 \begin{table}[h!]
@@ -519,7 +519,7 @@ The first example constructs a simple scatterplot from first
 principles.
 Just like in base graphics, it is quite straightforward
 to create a simple plot by hand.  The following code produces the equivalent
-of a  standard {\tt plot(1:10)} (see Figure \ref{figure:simpleplot}).
+of a  standard \code{plot(1:10)} (see Figure \ref{figure:simpleplot}).
 
 <<simpleplot, results=hide, fig=TRUE, width=6, height=6, include=FALSE>>=
 grid.rect(gp=gpar(lty="dashed"))
@@ -541,7 +541,7 @@ popViewport(2)
 }
 \end{center}
 \caption{\label{figure:simpleplot}
-        The grid equivalent of {\tt plot(1:10)}.}
+        The grid equivalent of \code{plot(1:10)}.}
 \end{figure}
 
 Now consider a more complex example, where we create a barplot
@@ -593,7 +593,7 @@ bp <- function(barData) {
 @
 Now we turn our attention to the legend.  We need some labels
 and we will enforce the constraint that the boxes in the legend should
-be 0.5{\tt "} square:
+be 0.5\code{"} square:
 
 <<legendlabels>>=
 legLabels <- c("Group A", "Group B", "Group C", "Something Longer")
@@ -761,7 +761,7 @@ print(
 
 It is also possible to use a \lattice{} plot as an element of
 a \grid{} image.  The following example splits up the page
-so that there is an {\tt xyplot} beside a panel of text
+so that there is an \code{xyplot} beside a panel of text
 (see Figure \ref{figure:trellisgrid}).  First of all, the
 lattice plot is created, but
 not drawn.  \grid{} is used to create some regions and the lattice

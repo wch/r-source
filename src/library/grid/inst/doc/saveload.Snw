@@ -1,8 +1,9 @@
 \documentclass[a4paper]{article}
 %\VignetteIndexEntry{Persistent representations}
 %\VignettePackage{grid}
-\newcommand{\grid}{{\tt grid}}
-\newcommand{\R}{{\tt R}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\grid}{\code{grid}}
+\newcommand{\R}{{\sffamily R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -27,7 +28,7 @@ graphics, and some of the pitfalls in the various options.
 \subsection*{\R{} code}
 
 The way I usually work with graphics is to write \R{} code in a text file
-and copy-and-paste or {\tt source()} it into R.  In this case,
+and copy-and-paste or \code{source()} it into R.  In this case,
 the persistent
 representation of the graphics is the raw \R{} code.
 
@@ -40,11 +41,11 @@ change.  The representation can be reloaded into R.
 Incompatibilities between versions should be handled gracefully by
 \R{}'s argument-matching, type-checking, and/or version-checking.
 
-\subsection*{\grid{} {\tt grob}s}
+\subsection*{\grid{} \code{grob}s}
 
 The next most flexible
 way of creating a persistent version
-of \grid{} graphics is to {\tt save()} a \grid{} {\tt grob} ...
+of \grid{} graphics is to \code{save()} a \grid{} \code{grob} ...
 
 <<>>=
 gt <- textGrob("hi")
@@ -59,14 +60,14 @@ grid.draw(gt)
 
 @
 And the representation is editable;  there is an API for interacting
-with \grid{} {\tt grobs}, including adding new elements, removing
-elements, editing features of a {\tt grob} and so on.  See
-{\tt getGrob()}, {\tt addGrob()}, {\tt removeGrob()},
-and {\tt editGrob()}.
+with \grid{} \code{grobs}, including adding new elements, removing
+elements, editing features of a \code{grob} and so on.  See
+\code{getGrob()}, \code{addGrob()}, \code{removeGrob()},
+and \code{editGrob()}.
 
 The representation is persistent across \R{} sessions, but is
 vulnerable to changes in the internal representation of \grid{}
-{\tt grob}s.  The advantage of this representation is that it is
+\code{grob}s.  The advantage of this representation is that it is
 possible to share and edit graphics produced by someone else,
 without seeing the code they used to produce it.
 

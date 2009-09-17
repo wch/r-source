@@ -6,7 +6,8 @@
 \setlength{\textwidth}{140mm}
 \setlength{\oddsidemargin}{10mm}
 
-\newcommand{\grid}{{\tt grid}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\grid}{\code{grid}}
 
 \title{The difference between Locations and Dimensions in \grid{}}
 \author{Paul Murrell}
@@ -23,7 +24,7 @@ options(width=60)
 
 @
 \grid{} makes use of unit objects to express both the locations and
-dimensions of graphical components.  For example, the {\tt grid.rect()}
+dimensions of graphical components.  For example, the \code{grid.rect()}
 function treats its x- and y-arguments as locations within the current
 viewport, and its width- and height-arguments as dimensions within the
 current viewport.
@@ -33,7 +34,7 @@ if its an x- or y-value then its a location, if its a width- or height-value
 then its a dimension.
 
 The distinction is made at all because, in some coordinate systems, notably
-{\tt "native"} coordinates, the location $x$ can have a very different
+\code{"native"} coordinates, the location $x$ can have a very different
 meaning
 from the dimension $x$ -- basically, whenever the minimum value of the
 coordinate system is not zero.
@@ -90,8 +91,8 @@ diagram.dimn(9, n, unit(1, "native") + unit(-0.4, "native"))
 diagram.dimn(10, n, unit(1, "native") - unit(0.4, "native"))
 
 @
-\item The functions {\tt convertX},
-{\tt convertY}, {\tt convertWidth}, {\tt convertHeight}
+\item The functions \code{convertX},
+\code{convertY}, \code{convertWidth}, \code{convertHeight}
   are used to convert from one coordinate system to another.
 Again, it is important whether the conversion is for a location or
 for a dimension.
