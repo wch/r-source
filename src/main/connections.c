@@ -1417,6 +1417,7 @@ typedef struct xzfileconn {
     lzma_stream stream;
     unsigned char in_buf[BUFSIZ], out_buf[BUFSIZ];
     lzma_action action;
+    int type;
 } *Rxzfileconn;
 
 
@@ -1440,7 +1441,11 @@ static Rboolean xzfile_open(Rconnection con)
     }
     if(con->canread) {
 	xz->action = LZMA_RUN;
- 	ret = lzma_stream_decoder(&xz->stream, 536870912, LZMA_CONCATENATED);
+	if (xz->type == 1)
+	    ret = lzma_alone_decoder(&xz->stream, 536870912);
+	else
+	    ret = lzma_stream_decoder(&xz->stream, 536870912, 
+				      LZMA_CONCATENATED);
 	if (ret != LZMA_OK) {
 	    warning(_("cannot initialize lzma decoder, error %d"), ret);
 	    return FALSE;
@@ -1531,7 +1536,7 @@ static size_t xzfile_write(const void *ptr, size_t size, size_t nitems,
     return 0;
 }
 
-static Rconnection newxzfile(const char *description, const char *mode)
+static Rconnection newxzfile(const char *description, const char *mode, int type)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
@@ -1565,6 +1570,7 @@ static Rconnection newxzfile(const char *description, const char *mode)
 	free(new->description); free(new->class); free(new);
 	error(_("allocation of xzfile connection failed"));
     }
+    ((Rxzfileconn) new->private)->type = type;
     return new;
 }
 #endif
@@ -1576,7 +1582,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *file, *open;
     int ncon, compress = 9;
     Rconnection con = NULL;
-    int type = PRIMVAL(op);
+    int type = PRIMVAL(op), subtype = 0;
 
     checkArity(op, args);
     sfile = CAR(args);
@@ -1600,11 +1606,6 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     if (!open[0] || open[0] == 'r') {
 	/* check magic no */
-	/* Possible future magic values are 
-	   "\xFFLZMA" for lzma 
-	   "\x89LZO" for lzop
-	   "\xFD7zXZ" for xz.
-	*/
 	FILE *fp = fopen(R_ExpandFileName(file), "rb");  
 	char buf[7];
 	if (fp) {
@@ -1616,10 +1617,14 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 	    error(_("this is a %s-compressed file which this build of R does not support"), "xv");
 #endif
-	    if((buf[0] == '\x89') && !strncmp(buf+1, "LZO", 3)) 
-	        error(_("this is a %s-compressed file which this build of R does not support"), "lzo");
 	    if((buf[0] == '\xFF') && !strncmp(buf+1, "LZMA", 4)) 
+#ifdef HAVE_LZMA
+	        {type = 2; subtype = 1;}
+#else
 	        error(_("this is a %s-compressed file which this build of R does not support"), "lzma");
+#endif
+	    if((buf[0] == '\x89') && !strncmp(buf+1, "LZO", 3)) 
+	        error(_("this is a %s-compressed file which this build of R does not support"), "lzop");
 	}
     }
     switch(type) {
@@ -1631,7 +1636,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
 #ifdef HAVE_LZMA
     case 2:
-	con = newxzfile(file, strlen(open) ? open : "r");
+	con = newxzfile(file, strlen(open) ? open : "r", subtype);
 	break;
 #endif
     }
