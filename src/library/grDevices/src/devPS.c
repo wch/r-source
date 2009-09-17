@@ -7142,7 +7142,9 @@ static FontMetricInfo
 	     */
 	    if (fontfamily) {
 		int dontcare;
-		if (!addPDFDevicefont(fontfamily, pd, &dontcare)) {
+		if (addPDFDevicefont(fontfamily, pd, &dontcare)) {
+                    result = &(fontfamily->fonts[face-1]->metrics);
+                } else {
 		    fontfamily = NULL;
 		}
 	    }
@@ -7187,7 +7189,9 @@ static char
 	     */
 	    if (fontfamily) {
 		int dontcare;
-		if (!addPDFDevicefont(fontfamily, pd, &dontcare)) {
+		if (addPDFDevicefont(fontfamily, pd, &dontcare)) {
+                    result = fontfamily->encoding->convname;
+                } else {
 		    fontfamily = NULL;
 		}
 	    }
