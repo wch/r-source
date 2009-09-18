@@ -103,6 +103,7 @@ checked against the current version of the source code.
 * Internal use of global and base environments::  
 * Modules::                     
 * Visibility::                  
+* Lazy loading::                
 @end menu
 
 @node SEXPs, Environments and variable lookup, R Internal Structures, R Internal Structures
@@ -1178,7 +1179,7 @@ The `ASCII' format writes 7-bit characters.  Integers are formatted with
 @code{%d} (except that @code{NA_integer_} is written as @code{NA}),
 doubles formatted with @code{%.16g} (plus @code{NA}, @code{Inf} and
 @code{-Inf}) and bytes with @code{%02x}.  Strings are written using
-standard escapes (e.g.@: @code{\t} and @code{\013} for non-printing and
+standard escapes (e.g.@: @code{\t} and @code{\013}) for non-printing and
 non-ASCII bytes.
 
 @node Encodings for CHARSXPs, The CHARSXP cache, Serialization Formats, R Internal Structures
@@ -1793,7 +1794,7 @@ compiled against Internet Explorer internals (and so loads
 @file{wininet.dll} and @file{wsock32.dll}).
 @end table
 
-@node Visibility,  , Modules, R Internal Structures
+@node Visibility, Lazy loading, Modules, R Internal Structures
 @section Visibility
 @cindex visibility
 
@@ -1879,6 +1880,57 @@ other Windows compiler suites.
 
 It is only possible to check if this has been handled correctly by
 compiling the @R{} sources on Windows.
+
+@node Lazy loading,  , Visibility, R Internal Structures
+@section Lazy loading
+
+Lazy loading was introduced in @R 2.0.0, for code in packages and for
+datasets in packages (both are optional).  When a packages/name space
+which uses it is loaded, the package/name space environment is populated
+with promises for all the named objects: when these promises are
+evaluated they load the actual code from a database.
+
+There are separate databases for code and data, stored in the @file{R}
+and @file{data} subdirectories.  The database consists of two files,
+@file{@var{name}.rdb} and @file{@var{name}.rdx}.  The @file{.rdb} file
+is a concatenation of serialized objects, and the @file{.rdx} file
+contains an index.  The objects are stored in (usually) a
+@command{gip}-compressed format with a 4-byte header giving the
+uncompressed serialized length (in XDR, that is big-endian, order) and
+read by a call to the primitive @code{lazyLoadDBfetch}.  (Note that this
+makes lazy-loading unsuitable for really large objects: the unserialized
+length of an R object can exceed 4GB.)
+
+The index or `map' file @file{@var{name}.rdx} is a compressed serialized
+@R{} object to be read by @code{.readRDS}.  It is a list with three
+elements @code{variables}, @code{references} and @code{compressed}.  The
+first two are named lists of integer vectors of length 2 giving the
+offset and length of the serialized object in the @file{@var{name}.rdb}
+file.  Element @code{variables} has an entry for each named object:
+@code{references} serializes a temporary environment used when named
+environments are added to the database.  @code{compressed} is a logical
+indicating if the serialized objects were compressed: compression is
+always used nowadays. @R{} 2.10.0 adds the value @code{compressed = 2}
+for @command{bzip2} compression (with the possibility of future
+expansion to other methods).
+
+The loader for a lazy-load database of code or data is @code{lazyLoad}
+in base, but note that there is a separate copy to load @pkg{base}
+itself in @file{R_HOME/base/R/base}.
+
+Lazy-load databases are created by the code in
+@file{src/library/tools/R/makeLazyLoad.R}: the main tool is the
+unexported function @code{makeLazyLoadDB} and the insertion of database
+entries is done by calls to @code{.Call("R_lazyLoadDBinsertValue",
+...)}.
+
+Lazy-load databases are cached in memory at first use: this was found
+necessary when using file systems with high latency (removable devices
+and network-mounted file systems on Windows).
+
+The same database mechanism is used to store parsed @file{Rd} files as
+from @R{} 2.10.0.  One or all of the parsed objects is fetched by a call
+to @code{tools:::fetchRdDB}.
 
 @node .Internal vs .Primitive, Internationalization in the R sources, R Internal Structures, Top
 @chapter @code{.Internal} vs @code{.Primitive}
