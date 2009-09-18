@@ -227,6 +227,7 @@
  R_seemsOldStyleS4Object
  R_serialize
  R_serializeb
+ R_setFileTime
  R_subset3_dflt
  R_syscall
  R_sysframe
@@ -936,10 +937,12 @@
  do_split
  do_sprintf
  do_standardGeneric
+ do_startHTTPD
  do_stderr
  do_stdin
  do_stdout
  do_stop
+ do_stopHTTPD
  do_storage_mode
  do_strheight
  do_strptime

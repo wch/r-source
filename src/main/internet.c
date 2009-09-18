@@ -237,7 +237,7 @@ void R_HTTPDStop(void)
 	error(_("internet routines cannot be loaded"));
 }
 
-SEXP do_startHTTPD(SEXP call, SEXP op, SEXP args, SEXP env) 
+SEXP attribute_hidden do_startHTTPD(SEXP call, SEXP op, SEXP args, SEXP env) 
 {
     const char *ip = 0;
     SEXP sIP, sPort;
@@ -251,7 +251,7 @@ SEXP do_startHTTPD(SEXP call, SEXP op, SEXP args, SEXP env)
     return ScalarInteger(R_HTTPDCreate(ip, asInteger(sPort)));
 }
 
-SEXP do_stopHTTPD(SEXP call, SEXP op, SEXP args, SEXP env) 
+SEXP attribute_hidden do_stopHTTPD(SEXP call, SEXP op, SEXP args, SEXP env) 
 {
     checkArity(op, args);
     R_HTTPDStop();

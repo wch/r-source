@@ -2359,7 +2359,7 @@ static void winSetFileTime(const char *fn, time_t ftime)
 # include <utime.h>
 #endif
 
-SEXP R_setFileTime(SEXP name, SEXP time)
+SEXP attribute_hidden R_setFileTime(SEXP name, SEXP time)
 {
     const char *fn = translateChar(STRING_ELT(name, 0));
     int ftime = asInteger(time);

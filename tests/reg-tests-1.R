@@ -984,10 +984,10 @@ plot(ts(matrix(runif(10), ncol = 2)), type = "p")
 
 
 ## in 1.3.0 readLines(ok=FALSE) failed.
-cat(file="foo", 1:10, sep="\n")
-x <- try(readLines("foo", 100, ok=FALSE))
-unlink("foo")
-stopifnot(length(class(x)) == 1 &&class(x) == "try-error")
+cat(file="foo.txt", 1:10, sep="\n")
+x <- try(readLines("foo.txt", 100, ok=FALSE))
+unlink("foo.txt")
+stopifnot(length(class(x)) == 1 && class(x) == "try-error")
 
 
 ## PR 1047 [<-data.frame failure, BDR 2001-08-10
@@ -5417,6 +5417,7 @@ write.dcf(list(Description = 'what a fat goat .haha'),
           file = zz, indent=1, width=10)
 stopifnot(substring(foo[-1], 1,1) == " ", length(foo) == 4,
           foo[4] == "  .haha")
+close(zz)
 ## was " .haha" (not according to DCF standard)
 
 

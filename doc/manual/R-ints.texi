@@ -1685,7 +1685,7 @@ hence available for garbage collection.
 @section Internal use of global and base environments
 
 This section notes known use by the system of these environments: the
-intention is to minimize or eliminate them.
+intention is to minimize or eliminate such uses.
 
 @menu
 * Base environment::            
@@ -1765,7 +1765,7 @@ The code which makes use of the LAPACK library, and is linked to
 @file{libRlapack} or an external LAPACK library.
 
 @item @code{vfonts}
-The Hershey font databases and the code to draw from them.
+The Hershey font databases and the code to draw with them.
 
 @item @code{X11}
 (Unix-alikes only.)  The @code{X11()}, @code{jpeg()}, @code{png()} and
@@ -1779,12 +1779,13 @@ for saving on-screen graphs to those formats. This is technically
 optional, and needs source code not in the tarball.
 
 @item @file{Rchtml.dll}
-(Windows only.)  A link to an ActiveX control that displays Compiled
-@HTML{} help.  This is optional, and only compiled if CHTML is specified.
+(Windows only, up to @R{} 2.9.x.)  A link to an ActiveX control that
+displays Compiled @HTML{} help.  This is optional, and only compiled if
+CHTML is specified.
 
-@item @file{iconv.dll}
-(Windows only.)  A DLL compiled via Visual C++ which contains the
-routines to convert between character sets.
+@c @item @file{iconv.dll}
+@c (Windows only.)  A DLL compiled via Visual C++ which contains the
+@c routines to convert between character sets.
 
 @item @file{internet2.dll}
 (Windows only.)  An alternative version of the internet access routines,
