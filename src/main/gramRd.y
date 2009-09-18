@@ -339,7 +339,7 @@ static int getDynamicFlag(SEXP item)
     else return INTEGER(flag)[0];
 }
 
-void setDynamicFlag(SEXP item, int flag)
+static void setDynamicFlag(SEXP item, int flag)
 {
     if (flag)
     	setAttrib(item, install("dynamicFlag"), ScalarInteger(flag));

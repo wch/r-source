@@ -522,6 +522,7 @@ SEXP eval(SEXP e, SEXP rho)
     return (tmp);
 }
 
+attribute_hidden
 void SrcrefPrompt(const char * prefix, SEXP srcref)
 {
     /* If we have a valid srcref, use it */

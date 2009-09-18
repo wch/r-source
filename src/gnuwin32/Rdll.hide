@@ -188,6 +188,7 @@
  R_binary
  R_check_locale
  R_compress1
+ R_compute_identical
  R_cpolyroot
  R_current_trace_state
  R_data_class2
@@ -290,6 +291,7 @@
  Rf_RealFromInteger
  Rf_RealFromLogical
  Rf_RealFromString
+ Rf_SrcrefPrompt
  Rf_StringFromComplex
  Rf_StringFromInteger
  Rf_StringFromLogical
