@@ -33,7 +33,7 @@
 #define DEBUGVALS 0		/* 1 causes detailed internal state output to R console */	
 #define DEBUGMODE 0		/* 1 causes Bison output of parse state, to stdout or stderr */
 
-Rboolean wCalls = TRUE;
+static Rboolean wCalls = TRUE;
 
 #define YYERROR_VERBOSE 1
 

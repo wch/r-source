@@ -105,6 +105,8 @@
  R_GE_VText
  R_GetMaxNSize
  R_GetMaxVSize
+ R_HTTPDCreate
+ R_HTTPDStop
  R_HandlerStack
  R_HiddenFile
  R_InitialData
@@ -188,12 +190,14 @@
  R_binary
  R_check_locale
  R_compress1
+ R_compress2
  R_compute_identical
  R_cpolyroot
  R_current_trace_state
  R_data_class2
  R_dec_min_exponent
  R_decompress1
+ R_decompress2
  R_dlsym
  R_do_data_class
  R_do_set_class
@@ -506,6 +510,9 @@
  consolex
  consoley
  corth_
+ cpuLimit
+ cpuLimit2
+ cpuLimitValue
  csduplicated
  csroot_
  dbinom_raw
@@ -538,6 +545,7 @@
  do_aperm
  do_args
  do_arith
+ do_arrangeWindows
  do_arrows
  do_asPOSIXct
  do_asPOSIXlt
@@ -612,6 +620,7 @@
  do_dend
  do_dendwindow
  do_deparse
+ do_deparseRd
  do_deriv
  do_detach
  do_devcontrol
@@ -700,6 +709,7 @@
  do_getRtoCConverterStatus
  do_getSnapshot
  do_getWindowHandle
+ do_getWindowHandles
  do_getWindowTitle
  do_getallconnections
  do_getconnection
@@ -916,6 +926,7 @@
  do_seq_len
  do_serializeToConn
  do_set
+ do_setInternet2
  do_setSessionTimeLimit
  do_setStatusBar
  do_setTimeLimit
@@ -1032,6 +1043,9 @@
  editorchecksave
  editorcleanall
  editorsetfont
+ elapsedLimit
+ elapsedLimit2
+ elapsedLimitValue
  epslon_
  filenameToWchar
  fontname
@@ -1163,7 +1177,21 @@
  qr_qy_real
  raise
  realp0_
+ regaexec
+ regaexecb
+ reganexec
+ regaparams_default
+ regawexec
+ regawnexec
  registerBase
+ regncomp
+ regnexec
+ reguexec
+ regwcomp
+ regwexec
+ regwncomp
+ regwnexec
+ resetICUcollator
  resetTimeLimits
  reset_duplicate_counter
  rg_
@@ -1201,6 +1229,53 @@
  tql1_
  tql2_
  tqlrat_
+ tre_ast_new_catenation
+ tre_ast_new_iter
+ tre_ast_new_literal
+ tre_ast_new_node
+ tre_ast_new_union
+ tre_compile
+ tre_config
+ tre_ctype
+ tre_ctype_map
+ tre_fill_pmatch
+ tre_free
+ tre_have_approx
+ tre_have_backrefs
+ tre_isalnum_func
+ tre_isalpha_func
+ tre_isascii_func
+ tre_isblank_func
+ tre_iscntrl_func
+ tre_isdigit_func
+ tre_isgraph_func
+ tre_islower_func
+ tre_isprint_func
+ tre_ispunct_func
+ tre_isspace_func
+ tre_isupper_func
+ tre_isxdigit_func
+ tre_mem_alloc_impl
+ tre_mem_destroy
+ tre_mem_new_impl
+ tre_parse
+ tre_regcomp
+ tre_regcompb
+ tre_regerror
+ tre_regexec
+ tre_regexecb
+ tre_regfree
+ tre_stack_destroy
+ tre_stack_new
+ tre_stack_num_objects
+ tre_stack_pop_int
+ tre_stack_pop_voidptr
+ tre_stack_push_int
+ tre_stack_push_voidptr
+ tre_tnfa_run_approx
+ tre_tnfa_run_backtrack
+ tre_tnfa_run_parallel
+ tre_version
  tred1_
  tred2_
  trio_aprintf
@@ -1238,6 +1313,7 @@
  xbufaddxs
  xbufdel
  xbufgrow
+ xcalloc_impl
  xdr_bool
  xdr_bytes
  xdr_char
@@ -1257,5 +1333,13 @@
  xdr_void
  xdr_wrapstring
  xdrstdio_create
+ xfree_impl
+ xmalloc_configure
+ xmalloc_current
+ xmalloc_current_blocks
+ xmalloc_dump_leaks
+ xmalloc_impl
+ xrealloc_impl
+ yydebug
  yylloc
  z_prec_r

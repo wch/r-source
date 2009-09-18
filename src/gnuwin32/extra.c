@@ -1420,7 +1420,7 @@ static PROTECT_INDEX EnumIndex;
 static int           EnumMinimized;
 static DWORD         EnumProcessId;
 
-BOOL CALLBACK EnumWindowsProc(HWND handle, LPARAM param) 
+static BOOL CALLBACK EnumWindowsProc(HWND handle, LPARAM param) 
 {
     char title[1024];
     if (IsWindowVisible(handle)) {
