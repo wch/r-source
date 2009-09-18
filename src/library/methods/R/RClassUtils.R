@@ -339,7 +339,12 @@ completeClassDefinition <-
 
 }
 
-
+.directSubClasses <- function(ClassDef) {
+    ## no checks for input here:
+    if(length(sc <- ClassDef@subclasses)) {
+        names(sc)[sapply(sc, function(cc) cc@distance == 1L)]
+    } ## else NULL
+}
 
 getAllSuperClasses <-
   ## Get the names of all the classes that this class definition extends.

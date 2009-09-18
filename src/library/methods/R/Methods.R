@@ -912,9 +912,9 @@ showMethods <-
             ffdef <- getGeneric(ff, where = where)
             if(missing(where)) {
                 if(isGeneric(ff))
-                  Recall(ff, classes=classes,
-		   includeDefs=includeDefs, inherited=inherited,
-		   showEmpty=showEmpty, printTo=con, fdef = ffdef)
+		    Recall(ff, classes=classes,
+			   includeDefs=includeDefs, inherited=inherited,
+			   showEmpty=showEmpty, printTo=con, fdef = ffdef)
             }
             else if(isGeneric(ff, where)) {
                 Recall(ff, where=where, classes=classes,
@@ -926,8 +926,8 @@ showMethods <-
     else { ## f of length 1 --- the "workhorse" :
         out <- paste("\nFunction \"", f, "\":\n", sep="")
         isGen  <- if(missing(fdef)) {
-            (if(missing(where)) isGeneric(f) else isGeneric(f, where)) }
-                     else is(fdef, "genericFunction")
+	    if(missing(where)) isGeneric(f) else isGeneric(f, where)
+	} else is(fdef, "genericFunction")
         if(!isGen)
             cat(file = con, out, "<not a generic function>\n")
         else
@@ -1225,17 +1225,17 @@ implicitGeneric <- function(...) NULL
           if(is.primitive(fdefault)) {
               value <- genericForPrimitive(name)
               if(!missing(generic) && !identical(value, generic))
-                stop(gettextf('"%s" is a primitive function; its generic form cannot be redefined',name), domain = NA)
+                  stop(gettextf('"%s" is a primitive function; its generic form cannot be redefined',name), domain = NA)
               generic <- value
               package <- "base"
-               }
+          }
           else
-            package <- getPackageName(env)
+              package <- getPackageName(env)
           ## look for a group
-          if(identical(package,"base"))
-            group <- .getImplicitGroup(name, .methodsNamespace)
-          else
-            group <- .getImplicitGroup(name, environment(fdefault))
+          group <-
+              .getImplicitGroup(name,
+                                if(identical(package,"base"))
+                                .methodsNamespace else environment(fdefault))
           if(missing(generic)) {
             generic <- .getImplicitGeneric(name, env, package)
             if(is.null(generic))  { # make a new one
