@@ -647,7 +647,6 @@ extern0 char   *Sys_TempDir	INI_as(NULL);	/* Name of per-session dir
 extern0 char	R_StdinEnc[31]  INI_as("");	/* Encoding assumed for stdin */
 
 /* Objects Used In Parsing  */
-extern0 SEXP	R_SrcFile;	    /* The name of the parsed file is here (or NULL, for no name) */
 extern0 int	R_ParseError	INI_as(0); /* Line where parse error occurred */
 extern0 int	R_ParseErrorCol;    /* Column of start of token where parse error occurred */
 extern0 SEXP	R_ParseErrorFile;   /* Source file where parse error was seen */
