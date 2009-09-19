@@ -254,3 +254,23 @@ socketSelect <- function(socklist, write = FALSE, timeout = NULL) {
         write <- rep(write, length.out = length(socklist))
     .Internal(sockSelect(socklist, write, timeout))
 }
+
+memCompress <-
+    function(from, type = c("gzip", "bzip2", "xz", "none"))
+{
+    if(is.character(from))
+        from <- charToRaw(paste(from, collapse = "\n"))
+    else if(!is.raw(from)) stop("'from' must be raw or character")
+    type <- match(match.arg(type), c("none", "gzip", "bzip2", "xz"))
+    .Internal(memCompress(from, type))
+}
+
+memDecompress <-
+    function(from,
+             type = c("gzip", "bzip2", "xz", "none"),
+             asChar = FALSE)
+{
+    type <- match(match.arg(type), c("none", "gzip", "bzip2", "xz"))
+    ans <- .Internal(memDecompress(from, type))
+    if(asChar) rawToChar(ans) else ans
+}

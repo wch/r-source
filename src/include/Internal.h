@@ -573,6 +573,8 @@ SEXP do_sockconn(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sockselect(SEXP, SEXP, SEXP, SEXP);
 SEXP do_nsl(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gzcon(SEXP, SEXP, SEXP, SEXP);
+SEXP do_memCompress(SEXP, SEXP, SEXP, SEXP);
+SEXP do_memDecompress(SEXP, SEXP, SEXP, SEXP);
 
 SEXP do_lockEnv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envIsLocked(SEXP, SEXP, SEXP, SEXP);

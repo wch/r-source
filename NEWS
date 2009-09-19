@@ -320,6 +320,9 @@ NEW FEATURES
 	used, often giving substantially better compression on large
 	datasets at the expense of much slower installation times.
 
+    o	New function memCompress() memDecopmress() for in-memory
+	compression and decompression.
+
     o	available.packages() gains a 'filters' argument for specifying
     	the filtering operations performed on the packages found in the
 	repositories.  A new built-in 'license/FOSS' filter only

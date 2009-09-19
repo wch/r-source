@@ -1620,22 +1620,25 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	FILE *fp = fopen(R_ExpandFileName(file), "rb");
 	char buf[7];
 	if (fp) {
-	    memset(buf, 0, 7); fread(buf, 5, 1, fp); fclose(fp);
-	    if(!strncmp(buf, "BZh", 3)) type = 1;
-	    if((buf[0] == '\xFD') && !strncmp(buf+1, "7zXZ", 4))
+	    int res;
+	    memset(buf, 0, 7); res = fread(buf, 5, 1, fp); fclose(fp);
+	    if(res == 5) {
+		if(!strncmp(buf, "BZh", 3)) type = 1;
+		if((buf[0] == '\xFD') && !strncmp(buf+1, "7zXZ", 4))
 #ifdef HAVE_LZMA
-		type = 2;
+		    type = 2;
 #else
-	    error(_("this is a %s-compressed file which this build of R does not support"), "xv");
+		    error(_("this is a %s-compressed file which this build of R does not support"), "xv");
 #endif
-	    if((buf[0] == '\xFF') && !strncmp(buf+1, "LZMA", 4))
+		if((buf[0] == '\xFF') && !strncmp(buf+1, "LZMA", 4))
 #ifdef HAVE_LZMA
-		{type = 2; subtype = 1;}
+		    {type = 2; subtype = 1;}
 #else
-		error(_("this is a %s-compressed file which this build of R does not support"), "lzma");
+		    error(_("this is a %s-compressed file which this build of R does not support"), "lzma");
 #endif
-	    if((buf[0] == '\x89') && !strncmp(buf+1, "LZO", 3))
-		error(_("this is a %s-compressed file which this build of R does not support"), "lzop");
+		if((buf[0] == '\x89') && !strncmp(buf+1, "LZO", 3))
+		    error(_("this is a %s-compressed file which this build of R does not support"), "lzop");
+	    }
 	}
     }
     switch(type) {
@@ -4944,7 +4947,7 @@ SEXP R_compress1(SEXP in)
     /* we want this to be system-independent */
     *((unsigned int *)buf) = (unsigned int) uiSwap(inlen);
     res = compress(buf + 4, &outlen, (Bytef *)RAW(in), inlen);
-    if(res != Z_OK) error("internal error %d in R_compress1");
+    if(res != Z_OK) error("internal error %d in R_compress1", res);
     ans = allocVector(RAWSXP, outlen + 4);
     memcpy(RAW(ans), buf, outlen + 4);
     return ans;
@@ -4965,7 +4968,7 @@ SEXP R_decompress1(SEXP in)
     outlen = (uLong) uiSwap(*((unsigned int *) p));
     buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
     res = uncompress(buf, &outlen, (Bytef *)(p + 4), inlen - 4);
-    if(res != Z_OK) error("internal error %d in R_decompress1");
+    if(res != Z_OK) error("internal error %d in R_decompress1", res);
     ans = allocVector(RAWSXP, outlen);
     memcpy(RAW(ans), buf, outlen);
     return ans;
@@ -5198,3 +5201,137 @@ SEXP R_decompress3(SEXP in)
     return in;
 }
 #endif
+
+SEXP attribute_hidden 
+do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, from;
+    int type, res;
+
+    checkArity(op, args);
+    ans = from = CAR(args);
+    if(TYPEOF(from) != RAWSXP) error("'from' must be raw or character"); 
+    type = asInteger(CADR(args));
+    switch(type) {
+    case 1: break;
+    case 2:
+    {
+	Bytef *buf;
+	/* could use outlen = compressBound(inlen) */
+	uLong inlen = LENGTH(from), outlen = outlen = 1.001*inlen + 20;
+	buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+	res = compress(buf, &outlen, (Bytef *)RAW(from), inlen);
+	if(res != Z_OK) error("internal error %d in memCompress", res);
+	ans = allocVector(RAWSXP, outlen);
+	memcpy(RAW(ans), buf, outlen);
+	break;
+    }
+    case 3:
+    {
+	char *buf;
+	unsigned int inlen = LENGTH(from), outlen = outlen = 1.01*inlen + 600;
+	buf = R_alloc(outlen, sizeof(char));
+	res = BZ2_bzBuffToBuffCompress(buf, &outlen, (char *)RAW(from), 
+				       inlen, 9, 0, 0);
+	if(res != BZ_OK) error("internal error %d in memCompress", res);
+	ans = allocVector(RAWSXP, outlen);
+	memcpy(RAW(ans), buf, outlen);
+	break;
+    }
+    case 4:
+#ifdef HAVE_LZMA
+    {
+	unsigned char *buf;
+	unsigned int inlen = LENGTH(from), outlen;
+	lzma_stream strm = LZMA_STREAM_INIT;
+	lzma_ret ret;
+
+	error("type = 'xz' is not yet implemented");
+	outlen = 1.01 * inlen + 600; /* FIXME */
+	buf = (unsigned char *) R_alloc(outlen, sizeof(unsigned char));
+	init_filters();
+	ret = lzma_raw_encoder(&strm, filters);
+	if (ret != LZMA_OK) error("internal error %d in memCompress", ret);
+	strm.next_in = RAW(from);
+	strm.avail_in = inlen;
+	strm.next_out = buf;
+	strm.avail_out = outlen;
+	while(!ret) ret = lzma_code(&strm, LZMA_FINISH);
+	if (ret != LZMA_STREAM_END || (strm.avail_in > 0))
+	    error("internal error %d in memCompress", ret);
+	outlen = strm.total_out;
+	lzma_end(&strm);
+	ans = allocVector(RAWSXP, outlen);
+	memcpy(RAW(ans), buf, outlen);
+    }
+#else
+	error("type = 'xz' is not supported on this build of R");
+#endif
+	break;
+    default: 
+	break;
+    }
+
+    return ans;
+}
+
+SEXP attribute_hidden 
+do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, from;
+    int type;
+
+    checkArity(op, args);
+    ans = from = CAR(args);
+    if(TYPEOF(from) != RAWSXP) error("'from' must be raw or character"); 
+    type = asInteger(CADR(args));
+    switch(type) {
+    case 1: break;
+    case 2:
+    {
+	uLong inlen = LENGTH(from), outlen = 3*inlen;
+	int res;
+	Bytef *buf, *p = (Bytef *)RAW(from);
+	/* we check for a file header */
+	if (p[0] == 0x1f && p[1] == 0x8b) { p += 2; inlen -= 2; }
+	while(1) {
+	    buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
+	    res = uncompress(buf, &outlen, p, inlen);
+	    if(res == Z_BUF_ERROR) { outlen *= 2; continue; }
+	    if(res == Z_OK) break;
+	    error("internal error %d in memDecompress", res);
+	}
+	ans = allocVector(RAWSXP, outlen);
+	memcpy(RAW(ans), buf, outlen);
+	break;
+    }
+    case 3:
+    {
+	unsigned int inlen = LENGTH(from), outlen = 3*inlen;
+	int res;
+	char *buf, *p = (char *) RAW(from);
+	while(1) {
+	    buf = R_alloc(outlen, sizeof(char));
+	    res = BZ2_bzBuffToBuffDecompress(buf, &outlen, p, inlen, 0, 0);
+	    if(res == BZ_OUTBUFF_FULL) { outlen *= 2; continue; }
+	    if(res == BZ_OK) break;
+	    error("internal error %d in memDecompress", res);
+	}
+	ans = allocVector(RAWSXP, outlen);
+	memcpy(RAW(ans), buf, outlen);
+	break;
+    }
+    case 4:
+    {
+#ifdef HAVE_LZMA
+	error("type = 'xz' is not supported on this build of R");
+#else
+	error("type = 'xz' is not yet implemented");
+#endif
+	break;
+    }
+    default: 
+	break;
+    }
+    return ans;
+}

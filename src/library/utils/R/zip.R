@@ -183,7 +183,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             if(dothis) {
                 close(out)
                 Sys.chmod(name, mode)
-                .Call("R_setFileTime", name, ft)
+                .Call("R_setFileTime", name, ft, PACKAGE = "base")
             }
         } else if(type == 49 || type == 50) { # hard and symbolic links
             contents <- c(contents, name)
