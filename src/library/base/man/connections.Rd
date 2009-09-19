@@ -13,6 +13,7 @@
 \alias{gzfile}
 \alias{unz}
 \alias{bzfile}
+\alias{xzfile}
 \alias{url}
 \alias{socketConnection}
 \alias{open}
@@ -42,6 +43,9 @@ gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
 
 bzfile(description, open = "", encoding = getOption("encoding"))
+
+xzfile(description, open = "", encoding = getOption("encoding"),
+       compression = 6)
 
 unz(description, filename, open = "",
     encoding = getOption("encoding"))
@@ -88,7 +92,7 @@ isIncomplete(con)
   \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
-  The first eight functions create connections.  By default the
+  The first nine functions create connections.  By default the
   connection is not opened (except for \code{socketConnection}), but may
   be opened by setting a non-empty value of argument \code{open}.
 
@@ -102,11 +106,16 @@ isIncomplete(con)
   For \code{gzfile} the description is the path to a file that is
   compressed by \code{gzip}: it can also open uncompressed files and (as
   from \R 2.10.0) those compressed by \code{bzip2} or (as from \R 2.10.0
-  with suitable libraries), \code{xz} or \code{lzma}.
+  with suitable OS support), \code{xz} or \code{lzma}.
 
   For \code{bzfile} the description is the path to a file that is
   compressed by \code{bzip2}.
 
+  For \code{xzfile} the description is the path to a file that is
+  compressed by \code{xz}
+  (\url{http://en.wikipedia.org/wiki/Xz}).  Currently this is only
+  supported for reading, and only on OSes with suitable libraries.
+ 
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path to the zip file, with \file{.zip}
   extension if required.

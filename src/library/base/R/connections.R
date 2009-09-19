@@ -95,6 +95,10 @@ unz <- function(description, filename, open = "",
 bzfile <- function(description, open = "", encoding = getOption("encoding"))
     .Internal(bzfile(description, open, encoding))
 
+xzfile <- function(description, open = "", encoding = getOption("encoding"),
+                   compression = 6)
+    .Internal(xzfile(description, open, encoding, compression))
+
 socketConnection <- function(host= "localhost", port, server = FALSE,
                              blocking = FALSE, open = "a+",
                              encoding = getOption("encoding"))
