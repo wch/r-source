@@ -30,15 +30,15 @@ function(file, encoding = "unknown")
     ## unset, latin1.  Let's simply try latin1 and UTF-8 if simple
     ## parsing fails in case there is no given encoding.
 
-    exprs <- tryCatch(parse(file, encoding = encoding),
+    exprs <- tryCatch(parse(file(file, encoding = encoding)),
                       error = identity)
     if(inherits(exprs, "error")) {
         if(encoding != "unknown")
             return()
-        exprs <- tryCatch(parse(file, encoding = "latin1"),
+        exprs <- tryCatch(parse(file(file, encoding = "latin1")),
                           error = identity)
         if(inherits(exprs, "error"))
-            exprs <- tryCatch(parse(file, encoding = "UTF-8"),
+            exprs <- tryCatch(parse(file(file, encoding = "UTF-8")),
                           error = identity)
         if(inherits(exprs, "error"))
             return()
@@ -49,7 +49,7 @@ function(file, encoding = "unknown")
     ## so we cannot simply compute of the names of the citEntry() calls.
     FOO <- function(entry, textVersion, header = NULL, footer = NULL, ...)
         match.call()
-    
+
     out <- lapply(exprs,
            function(e) {
                if(as.character(e[[1L]]) != "citEntry") return()
@@ -64,7 +64,7 @@ function(file, encoding = "unknown")
                list(entry = entry, fields = fields)
            })
 
-    out <- Filter(Negate(is.null), out)    
+    out <- Filter(Negate(is.null), out)
     entries <- sapply(out, `[[`, 1L)
     fields <- lapply(out, `[[`, 2L)
     out <- data.frame(File = file,
