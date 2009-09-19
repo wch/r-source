@@ -5167,7 +5167,8 @@ SEXP R_decompress3(SEXP in)
 	strm.avail_out = outlen;
 	ret = lzma_code(&strm, LZMA_RUN);
 	if (ret != LZMA_OK && (strm.avail_in > 0))
-	    error("internal error %d in R_decompress3 %d", ret, strm.avail_in);
+	    error("internal error %d in R_decompress3 %d", 
+		  ret, strm.avail_in);
 	lzma_end(&strm);
     } else if (type == '2') {
 	int res;
@@ -5245,12 +5246,20 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	unsigned int inlen = LENGTH(from), outlen;
 	lzma_stream strm = LZMA_STREAM_INIT;
 	lzma_ret ret;
+	lzma_filter filters[LZMA_FILTERS_MAX + 1];
+	size_t preset_number = 9 | LZMA_PRESET_EXTREME;
+	lzma_options_lzma opt_lzma;
 
-	error("type = 'xz' is not yet implemented");
 	outlen = 1.01 * inlen + 600; /* FIXME */
 	buf = (unsigned char *) R_alloc(outlen, sizeof(unsigned char));
-	init_filters();
-	ret = lzma_raw_encoder(&strm, filters);
+
+	if(lzma_lzma_preset(&opt_lzma, preset_number))
+	    error("problem setting presets");
+	filters[0].id = LZMA_FILTER_LZMA2;
+	filters[0].options = &opt_lzma;
+	filters[1].id = LZMA_VLI_UNKNOWN;
+
+	ret = lzma_stream_encoder(&strm, filters, LZMA_CHECK_CRC32);
 	if (ret != LZMA_OK) error("internal error %d in memCompress", ret);
 	strm.next_in = RAW(from);
 	strm.avail_in = inlen;
@@ -5275,16 +5284,29 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP attribute_hidden 
+SEXP attribute_hidden
 do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, from;
-    int type;
+    int type, subtype = 0;
 
     checkArity(op, args);
     ans = from = CAR(args);
     if(TYPEOF(from) != RAWSXP) error("'from' must be raw or character"); 
     type = asInteger(CADR(args));
+    if (type == 5) {/* type = 5 is "unknown" */
+	char *p = (char *) RAW(from);
+	if (strncmp(p, "BZh", 3) == 0) type = 3; /* bzip2 always uses a header */
+	else if(p[0] == '\x1f' && p[1] == '\x8b') type = 2; /* gzip files */
+	else if((p[0] == '\xFD') && !strncmp(p+1, "7zXZ", 4)) type = 4;
+	else if((p[0] == '\xFF') && !strncmp(p+1, "LZMA", 4)) {
+	    type = 4; subtype = 1;
+	} else {
+	    warning(_("unknown compression, assuming none"));
+	    type = 1;
+	}
+    }
+	
     switch(type) {
     case 1: break;
     case 2:
@@ -5299,7 +5321,7 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	    res = uncompress(buf, &outlen, p, inlen);
 	    if(res == Z_BUF_ERROR) { outlen *= 2; continue; }
 	    if(res == Z_OK) break;
-	    error("internal error %d in memDecompress", res);
+	    error("internal error %d in memDecompress(%d)", res, type);
 	}
 	ans = allocVector(RAWSXP, outlen);
 	memcpy(RAW(ans), buf, outlen);
@@ -5315,7 +5337,7 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	    res = BZ2_bzBuffToBuffDecompress(buf, &outlen, p, inlen, 0, 0);
 	    if(res == BZ_OUTBUFF_FULL) { outlen *= 2; continue; }
 	    if(res == BZ_OK) break;
-	    error("internal error %d in memDecompress", res);
+	    error("internal error %d in memDecompress(%d)", res, type);
 	}
 	ans = allocVector(RAWSXP, outlen);
 	memcpy(RAW(ans), buf, outlen);
@@ -5324,9 +5346,36 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
     case 4:
     {
 #ifdef HAVE_LZMA
-	error("type = 'xz' is not supported on this build of R");
+	unsigned char *buf;
+	unsigned int inlen = LENGTH(from), outlen = 3*inlen;
+	lzma_stream strm = LZMA_STREAM_INIT;
+	lzma_ret ret;
+	/* probably at most 80Mb is required, but 512Mb seems OK as a limit */
+	if (subtype == 1)
+	    ret = lzma_alone_decoder(&strm, 536870912);
+	else
+	    ret = lzma_stream_decoder(&strm, 536870912, LZMA_CONCATENATED);
+	if (ret != LZMA_OK)
+	    error(_("cannot initialize lzma decoder, error %d"), ret);
+	while(1) {
+	    buf = (unsigned char *) R_alloc(outlen, sizeof(unsigned char));
+	    strm.avail_in = inlen;
+	    strm.avail_out = outlen;
+	    strm.next_in = (unsigned char *) RAW(from);
+	    strm.next_out = buf;
+	    ret = lzma_code(&strm, LZMA_FINISH);
+	    if (ret == LZMA_BUF_ERROR) { outlen *= 2; continue; }
+	    if (ret != LZMA_OK && (strm.avail_in > 0))
+		error("internal error %d in memDecompress(%d) at %d", 
+		ret, type, strm.avail_in);
+	    break;
+	}
+	outlen = strm.total_out;
+	lzma_end(&strm);
+	ans = allocVector(RAWSXP, outlen);
+	memcpy(RAW(ans), buf, outlen);
 #else
-	error("type = 'xz' is not yet implemented");
+	error("type = 'xz' is not supported on this build of R");
 #endif
 	break;
     }

@@ -13,7 +13,9 @@
 \usage{
 memCompress(from, type = c("gzip", "bzip2", "xz", "none"))
 
-memDecompress(from, type = c("gzip", "bzip2", "xz", "none"), asChar = FALSE)
+memDecompress(from,
+              type = c("unknown", "gzip", "bzip2", "xz", "none"),
+              asChar = FALSE)
 }
 \arguments{
   \item{from}{A raw vector.  For \code{memCompress} a character vector
@@ -27,13 +29,25 @@ memDecompress(from, type = c("gzip", "bzip2", "xz", "none"), asChar = FALSE)
 \details{
   \code{type = "none"} passes the input through unchanged, but may be
   useful if \code{type} is a variable.
-
+  
+  \code{type = "unknown"} attempts to detect the type of compression
+  applied (if any): this will always succeed for \command{bzip2}
+  compression, and will succeed for other forms if there is a suitable
+  header.
+  
   For decompression it will auto-detect the \sQuote{magic} header
   (\code{"\x1f\x8b"}) added to files by the \command{gzip} program (and
   to files written by \code{\link{gzfile}}), but \code{memCompress} does
   not add such a header.
 
   \command{bzip2} compression always adds a header (\code{"BZh"}).
+
+  Compressing with \code{type = "xv"} is equivalent to compressing a
+  file with \command{xz -9e} (including adding the \sQuote{magic}
+  header): decompression should cope with the contents of any file
+  compressed with \command{xv} version 4.999 and some versions of
+  \command{lzma}.  There are other versions, in particular \sQuote{raw}
+  streams, that are not currently handled.
 }
 
 \note{
@@ -53,11 +67,12 @@ txt <- readLines(file.path(R.home("doc"), "AUTHORS"))
 sum(nchar(txt))
 txt.gz <- memCompress(txt, "g")
 length(txt.gz)
-txt2 <- strsplit(memDecompress(txt.gz, "g", TRUE), "\n")[[1]]
+txt2 <- strsplit(memDecompress(txt.gz, "g", asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt2))
 txt.bz2 <- memCompress(txt, "b")
 length(txt.bz2)
-txt3 <- strsplit(memDecompress(txt.bz2, "b", TRUE), "\n")[[1]]
+## can auto-detect bzip2:
+txt3 <- strsplit(memDecompress(txt.bz2, asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt3))
 }
 
