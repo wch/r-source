@@ -442,7 +442,8 @@ static void cat_cleanup(void *data)
 
     con->fflush(con);
     if(changedcon) switch_stdout(-1, 0);
-    if(!wasopen) con->close(con);
+    /* previous line might have closed it */
+    if(!wasopen && con->isopen) con->close(con);
 #ifdef Win32
     WinUTF8out = FALSE;
 #endif
