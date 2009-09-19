@@ -2448,7 +2448,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, setting the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk from 8.3.x to 8.5.6 have been used successfully.
+Versions of Tcl/Tk from 8.3.x to 8.5.7 have been used successfully.
 
 @node Java support,  , Tcl/Tk, Useful libraries and programs
 @subsection Java support

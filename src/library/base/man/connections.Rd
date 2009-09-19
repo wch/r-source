@@ -112,9 +112,15 @@ isIncomplete(con)
   compressed by \code{bzip2}.
 
   For \code{xzfile} the description is the path to a file that is
-  compressed by \code{xz}
-  (\url{http://en.wikipedia.org/wiki/Xz}).  Currently this is only
-  supported for reading, and only on OSes with suitable libraries.
+  compressed by \code{xz} (\url{http://en.wikipedia.org/wiki/Xz}).  This
+  is only supported on OSes with suitable libraries, tested when \R is
+  configured.  For write-mode connections, \code{compress} is the degree
+  of compression, and higher degrees need more memory (up to ca 800Mb).
+  Negative values correspond to \command{xz} argument \option{-e}: this
+  takes more time (double?) to compress but may achieve (slightly)
+  better compression.  The default (\code{6}) has good compression and
+  modest (100Mb memory usage): but if you are using \code{xv}
+  compression you are probably looking for high compression.
  
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path to the zip file, with \file{.zip}

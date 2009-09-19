@@ -33,9 +33,7 @@ memDecompress(from,
   \code{type = "unknown"} attempts to detect the type of compression
   applied (if any): this will always succeed for \command{bzip2}
   compression, and will succeed for other forms if there is a suitable
-  header.
-  
-  For decompression it will auto-detect the \sQuote{magic} header
+  header.  It will auto-detect the \sQuote{magic} header
   (\code{"\x1f\x8b"}) added to files by the \command{gzip} program (and
   to files written by \code{\link{gzfile}}), but \code{memCompress} does
   not add such a header.

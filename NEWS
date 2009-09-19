@@ -296,10 +296,9 @@ NEW FEATURES
 	versions of 'tar' other forms of compression such as lzma and
 	xz, and arbitrary extensions.
 
-    o 	New function xzfile() for use with xz-compressed files
-	(currently only for reading, and only if suitable OS support
-	is found at configuration).  This can also read files
-	compressed by some versions of 'lzma'.
+    o	New function xzfile() for use with xz-compressed files (if
+	suitable OS support is found at configuration).  This can also
+	read files compressed by some versions of 'lzma'.
 
     o	gzfile() looks at the file header and so can now also read
 	bzip2-ed files and xv-comppressed files (where supported).
