@@ -553,6 +553,9 @@ BUG FIXES
 	sometimes not (when the C function asComplex was used, e.g. on
 	list elements).  (PR#13942)
 
+    o	cat() on an unopened connection could close it twice, and
+	file() connections segfaulted on some systems..
+
 
 
 		CHANGES IN R VERSION 2.9.2
