@@ -43,6 +43,7 @@ splinefun <- function(x, y=NULL,
 	    x <- x[o]
 	    y <- y[o]
 	}
+        rm(ux)
     }
     if(nx == 0) stop("zero non-NA points")
     method <- match.arg(method)
@@ -92,7 +93,7 @@ splinefun <- function(x, y=NULL,
 	    d=double(nx),
 	    e=double(if(iMeth == 1) nx else 0),
 	    PACKAGE="stats")
-    rm(x,y,nx,ux,o,method,iMeth)
+    rm(x,y,nx,o,method,iMeth)
     z$e <- NULL
     function(x, deriv = 0) {
 	deriv <- as.integer(deriv)

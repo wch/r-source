@@ -42,12 +42,12 @@ spline <-
 	    y <- as.vector(tapply(y,x,ties))# as.v: drop dim & dimn.
 	    x <- sort(ux)
 	    nx <- length(x)
-	    rm(ux)
 	} else {
 	    o <- order(x)
 	    x <- x[o]
 	    y <- y[o]
 	}
+        rm(ux)
     }
     if(nx == 0) stop("zero non-NA points")
     if(method == 1 && y[1L] != y[nx]) { # periodic
