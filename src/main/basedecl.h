@@ -88,8 +88,6 @@ void Rf_InitColors(void);
 
 SEXP R_compress1(SEXP);
 SEXP R_decompress1(SEXP);
-SEXP R_compress2(SEXP);
-SEXP R_decompress2(SEXP);
 
 SEXP R_serializeb(SEXP, SEXP, SEXP);
 SEXP R_serialize(SEXP, SEXP, SEXP, SEXP);

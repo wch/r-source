@@ -100,7 +100,7 @@
             "			without using a lock directory",
             "      --pkglock		use a per-package lock directory",
             "      --build    	build binaries of the installed package(s)",
-            "      --data-compress=	none, gzip (default) or bzip2: compression",
+            "      --data-compress=	none, gzip or bzip2 (default) compression",
             "			to be used for lazy-loading of data",
            "\nfor Unix",
             "      --configure-args=ARGS",
@@ -931,7 +931,7 @@
     multiarch <- TRUE
     install_tests <- FALSE
     get_user_libPaths <- FALSE
-    data_compress <- TRUE # FALSE, TRUE, 2 for bzip2
+    data_compress <- TRUE # FALSE (none), TRUE (gzip), 2 (bzip2), 3 (xz)
 
     while(length(args)) {
         a <- args[1]
@@ -1003,11 +1003,12 @@
             if (WINDOWS) zip_up <- TRUE else tar_up <- TRUE
         } else if (substr(a, 1, 16) == "--data-compress=") {
             dc <- substr(a, 17, 1000)
-            dc <- match.arg(dc, c("none", "gzip", "bzip2"))
+            dc <- match.arg(dc, c("none", "gzip", "bzip2", "xz"))
             data_compress <- switch(dc,
                                     "none" = FALSE,
                                     "gzip" = TRUE,
-                                    "bzip2" = 2)
+                                    "bzip2" = 2,
+                                    "xz" = 3)
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)

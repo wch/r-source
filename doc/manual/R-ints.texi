@@ -1896,10 +1896,10 @@ and @file{data} subdirectories.  The database consists of two files,
 is a concatenation of serialized objects, and the @file{.rdx} file
 contains an index.  The objects are stored in (usually) a
 @command{gip}-compressed format with a 4-byte header giving the
-uncompressed serialized length (in XDR, that is big-endian, order) and
-read by a call to the primitive @code{lazyLoadDBfetch}.  (Note that this
-makes lazy-loading unsuitable for really large objects: the unserialized
-length of an R object can exceed 4GB.)
+uncompressed serialized length (in XDR, that is big-endian, byte order)
+and read by a call to the primitive @code{lazyLoadDBfetch}.  (Note that
+this makes lazy-loading unsuitable for really large objects: the
+unserialized length of an R object can exceed 4GB.)
 
 The index or `map' file @file{@var{name}.rdx} is a compressed serialized
 @R{} object to be read by @code{.readRDS}.  It is a list with three
@@ -1910,9 +1910,11 @@ file.  Element @code{variables} has an entry for each named object:
 @code{references} serializes a temporary environment used when named
 environments are added to the database.  @code{compressed} is a logical
 indicating if the serialized objects were compressed: compression is
-always used nowadays. @R{} 2.10.0 adds the value @code{compressed = 2}
-for @command{bzip2} compression (with the possibility of future
-expansion to other methods).
+always used nowadays. @R{} 2.10.0 adds the values @code{compressed = 2}
+and @code{3} for @command{bzip2} and @command{xv} compression (with the
+possibility of future expansion to other methods): this adds a fifth
+byte to the header for the type of compression, and stores serialized
+objects uncompressed if compression expands them.
 
 The loader for a lazy-load database of code or data is @code{lazyLoad}
 in base, but note that there is a separate copy to load @pkg{base}
@@ -1924,9 +1926,9 @@ unexported function @code{makeLazyLoadDB} and the insertion of database
 entries is done by calls to @code{.Call("R_lazyLoadDBinsertValue",
 ...)}.
 
-Lazy-load databases are cached in memory at first use: this was found
-necessary when using file systems with high latency (removable devices
-and network-mounted file systems on Windows).
+Lazy-load databases of less than 10MB are cached in memory at first use:
+this was found necessary when using file systems with high latency
+(removable devices and network-mounted file systems on Windows).
 
 The same database mechanism is used to store parsed @file{Rd} files as
 from @R{} 2.10.0.  One or all of the parsed objects is fetched by a call

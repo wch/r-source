@@ -296,28 +296,26 @@ NEW FEATURES
 	versions of 'tar' other forms of compression such as lzma and
 	xz, and arbitrary extensions.
 
-    o	gzfile() looks at the file header and so can now also open
-	bzip2-ed files.  It is planned in future to extend this to
-	other forms of compression such as lzma and xz.
+    o	gzfile() looks at the file header and so can now also read
+	bzip2-ed files.  If suitable OS support is found at
+	configuration, it can also read files compressed by 'xz' and
+	(some versions of) 'lzma'.
 
     o	There is the new option of save(compress = "bzip2") to use bzip2
 	compression (which will be slower, but can give substantially
 	smaller files).  load() can read such saves (but only as from
 	this version of R).
 
-    o	detach() now has an argument 'character.only' with the same meaning
-	as in library() or require().
+    o	detach() now has an argument 'character.only' with the same
+	meaning as for library() or require().
 
     o	R CMD INSTALL has a new option --data-compress to control the
-	compression used when lazy-loading data.  THe default is
-	'gzip': 'bzip2' will give ca 15% better compression at the
-	expense of slower installation times.
-
-    o	gzfile() can recognize and decompress files compressed by 'xz'
-	if suitable OS support is found at configuration.  Since
-	gzfile() is widely used to read files, this means that for
-	example load() can read files compressed by 'xv' (and it can
-	save substantial amounts of space on large data files).
+	compression used when lazy-loading data.  One new option is
+	--data-compress=bzip2 which will give ca 15% better
+	compression at the expense of slower installation times.
+	Where there is suitable OS support --data-compress=xz can be
+	used, often giving substantially better compression on large
+	datasets at the expense of much slower installation times.
 
     o	available.packages() gains a 'filters' argument for specifying
     	the filtering operations performed on the packages found in the

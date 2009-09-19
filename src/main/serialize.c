@@ -645,7 +645,7 @@ static int HashGet(SEXP item, SEXP ht)
 static int PackFlags(int type, int levs, int isobj, int hasattr, int hastag)
 {
     /* We don't write out bit 5 as from R 2.8.0.
-       It is used to indicate if an object is in CHARSXP cache 
+       It is used to indicate if an object is in CHARSXP cache
        - not that it matters to this version of R, but it saves
        checking all previous versions.
     */
@@ -2077,9 +2077,6 @@ SEXP attribute_hidden R_unserialize(SEXP icon, SEXP fun)
  * Support Code for Lazy Loading of Packages
  */
 
-/* This include is to bring in declarations of R_compress1 and
-   R_decompress1 */
-#include "basedecl.h"
 
 #define IS_PROPER_STRING(s) (TYPEOF(s) == STRSXP && LENGTH(s) > 0)
 
@@ -2154,6 +2151,8 @@ SEXP attribute_hidden R_lazyLoadDBflush(SEXP file)
 /* Reads, in binary mode, the bytes in the range specified by a
    position/length vector and returns them as raw vector. */
 
+/* There are some large lazy-data examples, e.g. 80Mb for SNPMaP.cdm */
+#define LEN_LIMIT 10*1048576
 static SEXP readRawFromFile(SEXP file, SEXP key)
 {
     FILE *fp;
@@ -2184,7 +2183,6 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
     if(icache < 0 && used < NC) icache = used++;
 
     if(icache >= 0) {
-	strcpy(names[icache], cfile);
 	if ((fp = R_fopen(cfile, "rb")) == NULL)
 	    error(_("cannot open file '%s': %s"), cfile, strerror(errno));
 	if (fseek(fp, 0, SEEK_END) != 0) {
@@ -2192,29 +2190,41 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 	    error(_("seek failed on %s"), cfile);
 	}
 	filelen = ftell(fp);
-	/* fprintf(stderr, "adding file %s at pos %d in cache, length %d\n",
-	   cfile, icache, filelen); */
-	ptr[icache] = malloc(filelen);
-	if (fseek(fp, 0, SEEK_SET) != 0) {
+	if (filelen < LEN_LIMIT) {
+	    /* fprintf(stderr, "adding file '%s' at pos %d in cache, length %d\n",
+	       cfile, icache, filelen); */
+	    strcpy(names[icache], cfile);
+	    ptr[icache] = malloc(filelen);
+	    if (fseek(fp, 0, SEEK_SET) != 0) {
+		fclose(fp);
+		error(_("seek failed on %s"), cfile);
+	    }
+	    in = fread(ptr[icache], 1, filelen, fp);
 	    fclose(fp);
-	    error(_("seek failed on %s"), cfile);
-	}
-	in = fread(ptr[icache], 1, filelen, fp);
-	fclose(fp);
-	if (filelen != in) error(_("read failed on %s"), cfile);
-	memcpy(RAW(val), ptr[icache]+offset, len);
-    } else {
-	if ((fp = R_fopen(cfile, "rb")) == NULL)
-	    error(_("cannot open file '%s': %s"), cfile, strerror(errno));
-	if (fseek(fp, offset, SEEK_SET) != 0) {
+	    if (filelen != in) error(_("read failed on %s"), cfile);
+	    memcpy(RAW(val), ptr[icache]+offset, len);
+	    return val;
+	} else {
+	    if (fseek(fp, offset, SEEK_SET) != 0) {
+		fclose(fp);
+		error(_("seek failed on %s"), cfile);
+	    }
+	    in = fread(RAW(val), 1, len, fp);
 	    fclose(fp);
-	    error(_("seek failed on %s"), cfile);
+	    if (len != in) error(_("read failed on %s"), cfile);
+	    return val;
 	}
-	in = fread(RAW(val), 1, len, fp);
-	fclose(fp);
-	if (len != in) error(_("read failed on %s"), cfile);
     }
 
+    if ((fp = R_fopen(cfile, "rb")) == NULL)
+	error(_("cannot open file '%s': %s"), cfile, strerror(errno));
+    if (fseek(fp, offset, SEEK_SET) != 0) {
+	fclose(fp);
+	error(_("seek failed on %s"), cfile);
+    }
+    in = fread(RAW(val), 1, len, fp);
+    fclose(fp);
+    if (len != in) error(_("read failed on %s"), cfile);
     return val;
 }
 
@@ -2265,6 +2275,13 @@ SEXP attribute_hidden R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
     return val;
 }
 
+SEXP R_compress1(SEXP in);
+SEXP R_decompress1(SEXP in);
+SEXP R_compress2(SEXP in);
+SEXP R_decompress2(SEXP in);
+SEXP R_compress3(SEXP in);
+SEXP R_decompress3(SEXP in);
+
 /* Serializes and, optionally, compresses a value and appends the
    result to a file.  Returns the key position/length key for
    retrieving the value */
@@ -2279,6 +2296,11 @@ R_lazyLoadDBinsertValue(SEXP value, SEXP file, SEXP ascii,
 
     value = R_serialize(value, R_NilValue, ascii, hook);
     PROTECT_WITH_INDEX(value, &vpi);
+#ifdef HAVE_LZMA
+    if (compress == 3)
+	REPROTECT(value = R_compress3(value), vpi);
+    else
+#endif
     if (compress == 2)
 	REPROTECT(value = R_compress2(value), vpi);
     else if (compress)
@@ -2308,9 +2330,14 @@ do_lazyLoadDBfetch(SEXP call, SEXP op, SEXP args, SEXP env)
     compressed = asInteger(compsxp);
 
     PROTECT_WITH_INDEX(val = readRawFromFile(file, key), &vpi);
-    if (compressed == 2)
- 	REPROTECT(val = R_decompress2(val), vpi);
-   else if (compressed)
+#ifdef HAVE_LZMA
+    if (compressed == 3)
+	REPROTECT(val = R_decompress3(val), vpi);
+    else
+#endif
+   if (compressed == 2)
+	REPROTECT(val = R_decompress2(val), vpi);
+    else if (compressed)
 	REPROTECT(val = R_decompress1(val), vpi);
     val = R_unserialize(val, hook);
     if (TYPEOF(val) == PROMSXP) {

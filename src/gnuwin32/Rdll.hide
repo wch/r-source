@@ -191,6 +191,7 @@
  R_check_locale
  R_compress1
  R_compress2
+ R_compress3
  R_compute_identical
  R_cpolyroot
  R_current_trace_state
@@ -198,6 +199,7 @@
  R_dec_min_exponent
  R_decompress1
  R_decompress2
+ R_decompress3
  R_dlsym
  R_do_data_class
  R_do_set_class
