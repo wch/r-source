@@ -905,9 +905,12 @@ int in_R_HTTPDCreate(const char *ip, int port)
     if (srv_sock == INVALID_SOCKET)
 	Rf_error("unable to create socket");
 
+#ifndef WIN32
     /* set socket for reuse so we can re-init if we die */
+    /* But on Windows, this lets us stomp on any port already in use, so don't do it. */
     setsockopt(srv_sock, SOL_SOCKET, SO_REUSEADDR,
 	       (const char*)&reuse, sizeof(reuse));
+#endif
 
     /* bind to the desired port */
     if (bind(srv_sock, build_sin(&srv_sa, ip, port), sizeof(srv_sa))) {

@@ -357,7 +357,12 @@ startDynamicHelp <- function(start=TRUE)
         utils::flush.console()
         OK <- FALSE
 	for(i in 1:10) {
-            tmp <- as.integer(runif(1, 10000, 32000))
+	    ## Choose a random port number.  The random seed might match
+	    ## on multiple instances, so add the time as well.  But the
+	    ## time may only be accurate to seconds, so rescale it to 
+	    ## 5 minute units.
+	    u <- (runif(1) + unclass(Sys.time())/300) %% 1
+            tmp <- as.integer(10000 + 22000*u) # port between 10000 and 32000
             ## the next can throw an R-level error,
             ## so do not assign port unless it succeeds.
 	    status <- .Internal(startHTTPD("127.0.0.1", tmp))
@@ -366,7 +371,7 @@ startDynamicHelp <- function(start=TRUE)
                 httpdPort <<- tmp
                 break
             }
-            if (status != 2L) break
+            if (status != -2L) break
             ## so status was -2, which means port in use
 	}
         if (OK) {
