@@ -270,7 +270,7 @@ httpd <- function(path, query, ...)
 	    outfile <- tempfile("Rhttpd")
 	    temp <- tools::Rd2HTML(tools:::fetchRdDB(RdDB, helpdoc),
                                    out = outfile, package = dirpath,
-                                   dynamic = TRUE)
+                                   dynamic = TRUE, no_links = FALSE)
 	    on.exit(unlink(outfile))
 	    return(list(payload = paste(readLines(temp), collapse = "\n")))
 	} else {
