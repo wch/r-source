@@ -424,8 +424,9 @@ COMPRESSION
 	effort put into compression when writing.
 
     o	New function xzfile() for use with xz-compressed files, if
-	suitable OS support is found at configuration.  This can also
-	read files compressed by some versions of 'lzma'.
+	suitable OS support is found at configuration.  (This can also
+	read files compressed by some versions of 'lzma'.)  The new
+	capabilities("xz") reports if it is supported.
 
     o	gzfile() looks at the file header and so can now also read
 	bzip2-ed files and xv-comppressed files (where supported).

@@ -49,7 +49,8 @@ memDecompress(from,
 }
 
 \note{
-  \code{type = "xz"} may not be supported on a particular build of \R.
+  \code{type = "xz"} may not be supported on a particular build of \R:
+  \code{\link{capabilities}("xz")} will tell you if it is.
 }
 
 \value{
@@ -58,6 +59,13 @@ memDecompress(from,
 
 \seealso{
   \code{\link{connections}}.
+  
+  \url{http://en.wikipedia.org/wiki/Data_compression} for background on
+  data compression, \url{http://zlib.net/},
+  \url{http://en.wikipedia.org/wiki/Gzip}, \url{http://www.bzip.org/},
+  \url{http://en.wikipedia.org/wiki/Bzip2}, \url{http://tukaani.org/xz/}
+  and \url{http://en.wikipedia.org/wiki/Xz} for references about the
+  particular schemes used.
 }
 
 \examples{
@@ -73,13 +81,15 @@ length(txt.bz2)
 txt3 <- strsplit(memDecompress(txt.bz2, asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt3))
 
-\dontrun{## if xz compression is supported:
+if(capabilities("xz")) {
+## if run  xz compression is supported:
 ## not worthwhile for this small an object
 txt.xz <- memCompress(txt, "x")
-length(txt.xz)
+print(length(txt.xz))
 txt3 <- strsplit(memDecompress(txt.xz, asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt3))
-}}
+}
+}
 
 \keyword{file}
 \keyword{connection}

@@ -115,13 +115,14 @@ isIncomplete(con)
   For \code{xzfile} the description is the path to a file that is
   compressed by \code{xz} (\url{http://en.wikipedia.org/wiki/Xz}).  This
   is only supported on OSes with suitable libraries, tested when \R is
-  configured.  For write-mode connections, \code{compress} is the degree
-  of compression, and higher degrees need more memory (up to ca 800Mb).
-  Negative values correspond to \command{xz} argument \option{-e}: this
-  takes more time (double?) to compress but may achieve (slightly)
-  better compression.  The default (\code{6}) has good compression and
-  modest (100Mb memory usage): but if you are using \code{xv}
-  compression you are probably looking for high compression.
+  configured: \code{\link{capabilities}("xz")} will tell you if it is.
+  For write-mode connections, \code{compress} is the degree of
+  compression, and higher degrees need more memory (up to ca 800Mb).
+  Negative values correspond to adding the \command{xz} argument
+  \option{-e}: this takes more time (double?) to compress but may
+  achieve (slightly) better compression.  The default (\code{6}) has
+  good compression and modest (100Mb memory usage): but if you are using
+  \code{xv} compression you are probably looking for high compression.
  
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path to the zip file, with \file{.zip}
@@ -383,8 +384,9 @@ isIncomplete(con)
 
   On (rare) platforms where \code{vsnprintf} does not return the needed length
   of output there is a 100,000 character output limit on
-  the length of line for \code{fifo}, \code{gzfile} and \code{bzfile}
-  connections: longer lines will be truncated with a warning.
+  the length of line for \code{fifo}, \code{gzfile}, \code{bzfile} and
+  \code{xzfile} connections: longer lines will be truncated with a
+  warning.
 }
 \references{
   Chambers, J. M. (1998)
@@ -407,8 +409,11 @@ isIncomplete(con)
   \code{fifo} and \code{socketConnection} are supported by this build of \R.
 
   \code{\link{gzcon}} to wrap gzip (de)compression around a connection.
-
+  
+  \code{\link{memCompress}} for more ways to (de)compress and references
+  on data compression.
 #ifdef windows
+  
   To flush output to the console, see \code{\link{flush.console}}.
 #endif
 }

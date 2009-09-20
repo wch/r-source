@@ -83,6 +83,10 @@ capabilities(what = NULL)
       for the \code{\link{svg}}, \code{\link{cairo_pdf}} and
       \code{\link{cairo_ps}} devices?}
 #endif    
+    \item{xz}{is there support for \command{xv} compression in
+      \code{\link{xzfile}} and \code{\link{memCompress}}?  This format
+      of compression is sometimes known as \sQuote{LZMA} after the main
+      algorithm used.}
 }
 \seealso{\code{\link{.Platform}}}
 
