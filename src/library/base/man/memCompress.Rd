@@ -72,14 +72,14 @@ length(txt.bz2)
 ## can auto-detect bzip2:
 txt3 <- strsplit(memDecompress(txt.bz2, asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt3))
-\dontrun{
-## if xz compression is supported:
+
+\dontrun{## if xz compression is supported:
 ## not worthwhile for this small an object
 txt.xz <- memCompress(txt, "x")
 length(txt.xz)
 txt3 <- strsplit(memDecompress(txt.xz, asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt3))
-}
+}}
 
 \keyword{file}
 \keyword{connection}
