@@ -62137,6 +62137,15 @@ else
   r_external_libs="${r_external_libs}${separator}ICU"
 fi
 fi
+if test "${have_lzma}" = yes; then
+  separator=", "
+test -z "${separator}" && separator=" "
+if test -z "${r_external_libs}"; then
+  r_external_libs="lzma"
+else
+  r_external_libs="${r_external_libs}${separator}lzma"
+fi
+fi
 r_capabilities=
 if test "${have_png}" = yes; then
   separator=", "

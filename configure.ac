@@ -2535,6 +2535,9 @@ fi
 if test "${use_ICU}" = yes; then
   R_SH_VAR_ADD(r_external_libs, [ICU], [, ])
 fi
+if test "${have_lzma}" = yes; then
+  R_SH_VAR_ADD(r_external_libs, [lzma], [, ])
+fi
 r_capabilities=
 if test "${have_png}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [PNG], [, ])
