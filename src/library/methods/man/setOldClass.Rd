@@ -60,9 +60,13 @@ setOldClass(Classes, prototype, where, test = FALSE, S4Class)
 }
 \arguments{
   \item{Classes}{
-    A character vector, giving the names for old-style
+    A character vector, giving the names for S3
     classes, as they would appear on the right side of an assignment of
     the \code{class} attribute in S3 computations.
+
+    In addition to S3 classes, an object type or other valid data part
+    can be specified, if the S3 class is known to require its data to
+    be of that form.
   }
 \item{prototype}{
     An optional object to use as the prototype.  This should be provided

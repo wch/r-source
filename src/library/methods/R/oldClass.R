@@ -61,18 +61,26 @@ setOldClass <- function(Classes, prototype = NULL,
       assign(".S3MethodsClasses", S3table, envir = where)
     }
     else S3table <- get(".S3MethodsClasses", envir = where)
+    dataPartClass <- NULL
     for(cl in rev(Classes)) {
        S3Class <- c(cl, S3Class)
         if(isClass(cl, where)) {
             def <- getClass(cl, where)
-            if(!extends(def, prevClass))
-                stop(gettextf("inconsistent old-style class information for \"%s\"; the class is defined but does not extend \"%s\"", cl, prevClass), domain = NA)
-            prevP <- def@prototype
-            if(missing(prototype))
-              prototype <- prevP # keep track of inherited prototype for use in mainClass
-            prevS3Class <- attr(prevP, ".S3Class")
-            if(length(prevS3Class) > length(S3Class)) #implies cl is registered S3 class
+            if(!extends(def, prevClass)) {
+                ## maybe an object type or other valid data part
+                cl1 <- .validDataPartClass(cl, where, dataPartClass)
+                if(is.null(cl1))
+                  stop(gettextf("inconsistent old-style class information for \"%s\"; the class is defined but does not extend \"%s\" and is not valid as the data part", cl, prevClass), domain = NA)
+                else dataPartClass <- cl1
+              }
+            else {
+              prevP <- def@prototype
+              if(missing(prototype))
+                prototype <- prevP # keep track of inherited prototype for use in mainClass
+              prevS3Class <- attr(prevP, ".S3Class")
+              if(length(prevS3Class) > length(S3Class)) #implies cl is registered S3 class
                 S3Class <- prevS3Class
+            }
         }
         else {
             useP <- TRUE

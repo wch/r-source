@@ -646,7 +646,7 @@ reconcilePropertiesAndPrototype <-
       slots <-  validSlotNames(allNames(properties))
       dataPartClass <- elNamed(properties, ".Data")
       dataPartValue <- FALSE
-      if(!is.null(dataPartClass) && is.null(.validDataPartClass(dataPartClass, name)))
+      if(!is.null(dataPartClass) && is.null(.validDataPartClass(dataPartClass, where)))
           stop(gettextf("in defining class \"%s\", the supplied data part class, \"%s\" is not valid (must be a basic class or a virtual class combining basic classes)", name, dataPartClass), domain = NA)
       prototypeClass <- getClass(class(prototype), where = where)
       if((!is.null(dataPartClass) || length(superClasses))
@@ -657,21 +657,14 @@ reconcilePropertiesAndPrototype <-
               clDef <- getClassDef(cl, where = where)
               if(is.null(clDef))
                 stop(gettextf("No definition was found for superclass \"%s\" in the specification of class \"%s\" ", cl, name), domain = NA)
-              thisDataPart <-  .validDataPartClass(clDef, name)
+              thisDataPart <-  .validDataPartClass(clDef, where, dataPartClass)
               if(!is.null(thisDataPart)) {
-                  if(is.null(dataPartClass)) {
                     dataPartClass <- thisDataPart
                     if(!is.null(clDef@prototype)) {
                       newObject <- clDef@prototype
                       dataPartValue <- TRUE
                     }
                   }
-                  else if(!extends(dataPartClass, thisDataPart) &&
-                          !isVirtualClass(thisDataPart, where = where))
-                      warning(gettextf("more than one possible class for the data part: using \"%s\" rather than \"%s\"",
-                                       dataPartClass, thisDataPart),
-                              domain = NA)
-              }
           }
           if(length(dataPartClass)) {
               if(is.na(match(".Data", slots))) {
@@ -1338,7 +1331,7 @@ setDataPart <- function(object, value, check = TRUE) {
     .mergeAttrs(value, object)
 }
 
-.validDataPartClass <- function(cl, inClass) {
+.validDataPartClass <- function(cl, where, prevDataPartClass = NULL) {
     if(is(cl, "classRepresentation")) {
         ClassDef <- cl
         cl <- ClassDef@className
@@ -1354,12 +1347,6 @@ setDataPart <- function(object, value, check = TRUE) {
         else if((extends(cl, "vector") || !is.na(match(cl, .BasicClasses))))
             value <- cl
         else if(extends(cl, "oldClass") && isVirtualClass(cl)) {
-            ## The following warning is obsolete if S3 classes can be
-            ## non-virtual--the subclass can have a prototype
-
-##             else
-##                 warning(gettextf("old-style ('S3') class \"%s\" supplied as a superclass of \"%s\", but no automatic conversion will be peformed for S3 classes",
-##                                  cl, .className(inClass)), domain = NA)
         }
         else if(identical(ClassDef@virtual, TRUE) &&
                length(ClassDef@slots) == 0L &&
@@ -1379,6 +1366,13 @@ setDataPart <- function(object, value, check = TRUE) {
                     }
                 }
             }
+    }
+    if(!(is.null(value) || is.null(prevDataPartClass) || extends(prevDataPartClass, value) ||
+         isVirtualClass(value, where = where))) {
+      warning(
+         gettextf("more than one possible class for the data part: using \"%s\" rather than \"%s\"",
+                  prevDataPartClass, value), domain = NA)
+      value <- NULL
     }
     value
 }

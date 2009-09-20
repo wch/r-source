@@ -295,6 +295,10 @@ NEW FEATURES
     	on packages which can be verified as Free or Open Source
     	Software (FOSS) employing the available license specifications.
 
+    o	In registering an S3 class by a call to setOldClass(), the
+        data part (e.g., the object type) required for the class can
+        be included as one of the superclasses in the Classes argument.
+
 
 REGULAR EXPRESSIONS
 
