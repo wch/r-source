@@ -23,7 +23,6 @@
 
 #include <Defn.h>
 #include <Fileio.h>
-#include <zlib.h>		/* needs to be before Rconnections.h */
 #include <Rconnections.h>
 #include <R_ext/Complex.h>
 #include <R_ext/R-ftp-http.h>
@@ -75,6 +74,20 @@ static int SinkCons[NSINKS], SinkConsClose[NSINKS], R_SinkSplit[NSINKS];
    will be passed as a pointer, so it seemed easiest to use void *.
 */
 static void * current_id = NULL;
+
+#include <zlib.h>
+typedef struct gzconn {
+    Rconnection con;
+    int cp; /* compression level */
+    z_stream s;
+    int z_err, z_eof;
+    uLong crc;
+    Byte *inbuf, *outbuf;
+    int nsaved;
+    char saved[2];
+    Rboolean allow;
+} *Rgzconn;
+
 
 /* ------------- admin functions (see also at end) ----------------- */
 
@@ -765,6 +778,11 @@ static Rconnection newfile(const char *description, int enc, const char *mode)
 # include <errno.h>
 #endif
 
+typedef struct fifoconn {
+    int fd;
+} *Rfifoconn;
+
+
 static Rboolean fifo_open(Rconnection con)
 {
     const char *name;
@@ -835,7 +853,7 @@ static void fifo_close(Rconnection con)
 
 static int fifo_fgetc_internal(Rconnection con)
 {
-    Rfifoconn this = (Rfifoconn)con->private;
+    Rfifoconn this = con->private;
     unsigned char c;
     int n;
 
@@ -846,7 +864,7 @@ static int fifo_fgetc_internal(Rconnection con)
 static size_t fifo_read(void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
-    Rfifoconn this = (Rfifoconn)con->private;
+    Rfifoconn this = con->private;
 
     /* uses 'size_t' for len */
     if ((double) size * (double) nitems > SSIZE_MAX)
@@ -857,7 +875,7 @@ static size_t fifo_read(void *ptr, size_t size, size_t nitems,
 static size_t fifo_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
-    Rfifoconn this = (Rfifoconn)con->private;
+    Rfifoconn this = con->private;
 
     /* uses 'size_t' for len */
     if ((double) size * (double) nitems > SSIZE_MAX)
@@ -1134,6 +1152,11 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- [bg]zipped file connections --------------------- */
 
+typedef struct gzfileconn {
+    void *fp;
+    int cp;
+} *Rgzfileconn;
+
 static Rboolean gzfile_open(Rconnection con)
 {
     gzFile fp;
@@ -1274,6 +1297,7 @@ static Rconnection newgzfile(const char *description, const char *mode,
 typedef struct bzfileconn {
     FILE *fp;
     BZFILE *bfp;
+    int compress;
 } *Rbzfileconn;
 
 static Rboolean bzfile_open(Rconnection con)
@@ -1305,11 +1329,11 @@ static Rboolean bzfile_open(Rconnection con)
 	    return FALSE;
 	}
     } else {
-	bfp = BZ2_bzWriteOpen(&bzerror, fp, 9, 0, 0);
+	bfp = BZ2_bzWriteOpen(&bzerror, fp, bz->compress, 0, 0);
 	if(bzerror != BZ_OK) {
 	    BZ2_bzWriteClose(&bzerror, bfp, 0, NULL, NULL);
 	    fclose(fp);
-	    warning(_("file '%s' appears not to be compressed by bzip2"),
+	    warning(_("initializing bzip2 compression for file '%s' failed"),
 		    R_ExpandFileName(con->description));
 	    return FALSE;
 	}
@@ -1327,7 +1351,7 @@ static Rboolean bzfile_open(Rconnection con)
 static void bzfile_close(Rconnection con)
 {
     int bzerror;
-    Rbzfileconn bz = (Rbzfileconn) con->private;
+    Rbzfileconn bz = con->private;
 
     if(con->canread)
 	BZ2_bzReadClose(&bzerror, bz->bfp);
@@ -1339,7 +1363,7 @@ static void bzfile_close(Rconnection con)
 
 static int bzfile_fgetc_internal(Rconnection con)
 {
-    Rbzfileconn bz = (Rbzfileconn) con->private;
+    Rbzfileconn bz = con->private;
     char buf[1];
     int bzerror, size;
 
@@ -1350,7 +1374,7 @@ static int bzfile_fgetc_internal(Rconnection con)
 static size_t bzfile_read(void *ptr, size_t size, size_t nitems,
 			  Rconnection con)
 {
-    Rbzfileconn bz = (Rbzfileconn) con->private;
+    Rbzfileconn bz = con->private;
     int bzerror;
 
     /* uses 'int' for len */
@@ -1362,7 +1386,7 @@ static size_t bzfile_read(void *ptr, size_t size, size_t nitems,
 static size_t bzfile_write(const void *ptr, size_t size, size_t nitems,
 			   Rconnection con)
 {
-    Rbzfileconn bz = (Rbzfileconn) con->private;
+    Rbzfileconn bz = con->private;
     int bzerror;
 
     /* uses 'int' for len */
@@ -1373,7 +1397,8 @@ static size_t bzfile_write(const void *ptr, size_t size, size_t nitems,
     else return nitems;
 }
 
-static Rconnection newbzfile(const char *description, const char *mode)
+static Rconnection newbzfile(const char *description, const char *mode,
+			     int compress)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
@@ -1406,6 +1431,7 @@ static Rconnection newbzfile(const char *description, const char *mode)
 	free(new->description); free(new->class); free(new);
 	error(_("allocation of bzfile connection failed"));
     }
+    ((Rbzfileconn)new->private)->compress = compress;
     return new;
 }
 
@@ -1425,7 +1451,7 @@ typedef struct xzfileconn {
 
 static Rboolean xzfile_open(Rconnection con)
 {
-    Rxzfileconn xz = (Rxzfileconn) con->private;
+    Rxzfileconn xz = con->private;
     lzma_ret ret;
     char mode[] = "rb";
 
@@ -1479,7 +1505,7 @@ static Rboolean xzfile_open(Rconnection con)
 
 static void xzfile_close(Rconnection con)
 {
-    Rxzfileconn xz = (Rxzfileconn) con->private;
+    Rxzfileconn xz = con->private;
 
     if(con->canwrite) {
 	lzma_ret ret;
@@ -1499,7 +1525,7 @@ static void xzfile_close(Rconnection con)
 static size_t xzfile_read(void *ptr, size_t size, size_t nitems,
 			  Rconnection con)
 {
-    Rxzfileconn xz = (Rxzfileconn) con->private;
+    Rxzfileconn xz = con->private;
     lzma_stream *strm = &(xz->stream);
     lzma_ret ret;
     size_t s = size*nitems, have, given = 0;
@@ -1554,7 +1580,7 @@ static int xzfile_fgetc_internal(Rconnection con)
 static size_t xzfile_write(const void *ptr, size_t size, size_t nitems,
 			   Rconnection con)
 {
-    Rxzfileconn xz = (Rxzfileconn) con->private;
+    Rxzfileconn xz = con->private;
     lzma_stream *strm = &(xz->stream);
     lzma_ret ret;
     size_t s = size*nitems;
@@ -1649,7 +1675,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(enc) || length(enc) != 1 ||
        strlen(CHAR(STRING_ELT(enc, 0))) > 100) /* ASCII */
 	error(_("invalid '%s' argument"), "encoding");
-    if(type == 0) {
+    if(type < 2) {
 	compress = asInteger(CADDDR(args));
 	if(compress == NA_LOGICAL || compress < 0 || compress > 9)
 	    error(_("invalid '%s' argument"), "compress");
@@ -1671,7 +1697,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (fp) {
 	    int res;
 	    memset(buf, 0, 7); res = fread(buf, 5, 1, fp); fclose(fp);
-	    if(res == 5) {
+	    if(res == 1) {
 		if(!strncmp(buf, "BZh", 3)) type = 1;
 		if((buf[0] == '\xFD') && !strncmp(buf+1, "7zXZ", 4))
 #ifdef HAVE_LZMA
@@ -1695,7 +1721,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	con = newgzfile(file, strlen(open) ? open : "r", compress);
 	break;
     case 1:
-	con = newbzfile(file, strlen(open) ? open : "r");
+	con = newbzfile(file, strlen(open) ? open : "r", compress);
 	break;
 #ifdef HAVE_LZMA
     case 2:
@@ -2128,10 +2154,18 @@ SEXP attribute_hidden do_stderr(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* Possible future redesign: store nbytes as TRUELENGTH */
 
+typedef struct rawconn {
+    SEXP data; /* all the data, stored as a raw vector */
+    /* replace nbytes by TRUELENGTH in due course? */
+    size_t pos, nbytes; /* current pos and number of bytes 
+			   (same pos for read and write) */
+} *Rrawconn;
+
+
 /* copy a raw vector into a buffer */
 static void raw_init(Rconnection con, SEXP raw)
 {
-    Rrawconn this = (Rrawconn) con->private;
+    Rrawconn this = con->private;
 
     this->data = NAMED(raw) ? duplicate(raw) : raw;
     R_PreserveObject(this->data);
@@ -2150,7 +2184,7 @@ static void raw_close(Rconnection con)
 
 static void raw_destroy(Rconnection con)
 {
-    Rrawconn this = (Rrawconn) con->private;
+    Rrawconn this = con->private;
 
     R_ReleaseObject(this->data);
     free(this);
@@ -2174,7 +2208,7 @@ static void raw_resize(Rrawconn this, size_t needed)
 static size_t raw_write(const void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
-    Rrawconn this = (Rrawconn) con->private;
+    Rrawconn this = con->private;
     size_t freespace = LENGTH(this->data) - this->pos, bytes = size*nitems;
 
     if ((double) size * (double) nitems + (double) this->pos > R_LEN_T_MAX)
@@ -2190,14 +2224,14 @@ static size_t raw_write(const void *ptr, size_t size, size_t nitems,
 
 static void raw_truncate(Rconnection con)
 {
-    Rrawconn this = (Rrawconn)con->private;
+    Rrawconn this = con->private;
     this->nbytes = this->pos;
 }
 
 static size_t raw_read(void *ptr, size_t size, size_t nitems,
 		       Rconnection con)
 {
-    Rrawconn this = (Rrawconn) con->private;
+    Rrawconn this = con->private;
     size_t available = this->nbytes - this->pos, request = size*nitems, used;
 
     if ((double) size * (double) nitems + (double) this->pos > R_LEN_T_MAX)
@@ -2209,14 +2243,14 @@ static size_t raw_read(void *ptr, size_t size, size_t nitems,
 
 static int raw_fgetc(Rconnection con)
 {
-    Rrawconn this = (Rrawconn) con->private;
+    Rrawconn this = con->private;
     if(this->pos >= this->nbytes) return R_EOF;
     else return (int) RAW(this->data)[this->pos++];
 }
 
 static double raw_seek(Rconnection con, double where, int origin, int rw)
 {
-    Rrawconn this = (Rrawconn) con->private;
+    Rrawconn this = con->private;
     double newpos;
     size_t oldpos = this->pos;
 
@@ -2334,7 +2368,7 @@ SEXP attribute_hidden do_rawconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
     con = getConnection(asInteger(CAR(args)));
     if(!con->canwrite)
 	error(_("'con' is not an output rawConnection"));
-    this = (Rrawconn) con->private;
+    this = con->private;
     ans = allocVector(RAWSXP, this->nbytes); /* later, use TRUELENGTH? */
     memcpy(RAW(ans), RAW(this->data), this->nbytes);
     return ans;
@@ -2342,11 +2376,25 @@ SEXP attribute_hidden do_rawconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- text connections --------------------- */
 
+typedef struct textconn {
+    char *data;  /* all the data */
+    int cur, nchars; /* current pos and number of chars */
+    char save; /* pushback */
+} *Rtextconn;
+
+typedef struct outtextconn {
+    int len;  /* number of lines */
+    SEXP namesymbol;
+    SEXP data;
+    char *lastline;
+    int lastlinelength; /* buffer size */
+} *Routtextconn;
+
 /* read a R character vector into a buffer */
 static void text_init(Rconnection con, SEXP text, int type)
 {
     int i, nlines = length(text), nchars = 0;
-    Rtextconn this = (Rtextconn)con->private;
+    Rtextconn this = con->private;
 
     for(i = 0; i < nlines; i++)
 	nchars += strlen(translateChar(STRING_ELT(text, i))) + 1;
@@ -2379,7 +2427,7 @@ static void text_close(Rconnection con)
 
 static void text_destroy(Rconnection con)
 {
-    Rtextconn this = (Rtextconn)con->private;
+    Rtextconn this = con->private;
 
     free(this->data);
     /* this->cur = this->nchars = 0; */
@@ -2388,7 +2436,7 @@ static void text_destroy(Rconnection con)
 
 static int text_fgetc(Rconnection con)
 {
-    Rtextconn this = (Rtextconn)con->private;
+    Rtextconn this = con->private;
     if(this->save) {
 	int c;
 	c = this->save;
@@ -2449,7 +2497,7 @@ static SEXP mkCharLocal(const char *s)
 
 static void outtext_close(Rconnection con)
 {
-    Routtextconn this = (Routtextconn)con->private;
+    Routtextconn this = con->private;
     int idx = ConnIndex(con);
     SEXP tmp, env = VECTOR_ELT(OutTextData, idx);
 
@@ -2468,7 +2516,7 @@ static void outtext_close(Rconnection con)
 
 static void outtext_destroy(Rconnection con)
 {
-    Routtextconn this = (Routtextconn)con->private;
+    Routtextconn this = con->private;
     int idx = ConnIndex(con);
     /* OutTextData is preserved, and that implies that the environment
        we are writing it and hence the character vector is protected.
@@ -2483,7 +2531,7 @@ static void outtext_destroy(Rconnection con)
 
 static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 {
-    Routtextconn this = (Routtextconn)con->private;
+    Routtextconn this = con->private;
     char buf[BUFSIZE], *b = buf, *p, *q;
     void *vmax = vmaxget();
     int res = 0, usedRalloc = FALSE, buffree,
@@ -2578,7 +2626,7 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 
 static void outtext_init(Rconnection con, SEXP stext, const char *mode, int idx)
 {
-    Routtextconn this = (Routtextconn)con->private;
+    Routtextconn this = con->private;
     SEXP val;
 
     if(stext == R_NilValue) {
@@ -2731,7 +2779,7 @@ SEXP attribute_hidden do_textconvalue(SEXP call, SEXP op, SEXP args, SEXP env)
     con = getConnection(asInteger(CAR(args)));
     if(!con->canwrite)
 	error(_("'con' is not an output textConnection"));
-    this = (Routtextconn)con->private;
+    this = con->private;
     return this->data;
 }
 
@@ -2941,7 +2989,7 @@ static void con_close1(Rconnection con)
 {
     if(con->isopen) con->close(con);
     if(con->isGzcon) {
-	Rgzconn priv = (Rgzconn)con->private;
+	Rgzconn priv = con->private;
 	con_close1(priv->con);
 	R_ReleaseObject(priv->con->ex_ptr);
     }
@@ -4620,9 +4668,10 @@ static int gz_magic[2] = {0x1f, 0x8b}; /* gzip magic header */
 #define get_byte() (icon->read(&ccc, 1, 1, icon), ccc)
 #define Z_BUFSIZE 16384
 
+
 static Rboolean gzcon_open(Rconnection con)
 {
-    Rgzconn priv = (Rgzconn)con->private;
+    Rgzconn priv = con->private;
     Rconnection icon = priv->con;
     int err;
 
@@ -4715,7 +4764,7 @@ static void putLong(Rconnection con, uLong x)
 
 static void gzcon_close(Rconnection con)
 {
-    Rgzconn priv = (Rgzconn)con->private;
+    Rgzconn priv = con->private;
     Rconnection icon = priv->con;
     int err;
 
@@ -4776,7 +4825,7 @@ static int gzcon_byte(Rgzconn priv)
 static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
-    Rgzconn priv = (Rgzconn)con->private;
+    Rgzconn priv = con->private;
     Rconnection icon = priv->con;
     Bytef *start = (Bytef*)ptr;
     uLong crc;
@@ -4846,7 +4895,7 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 static size_t gzcon_write(const void *ptr, size_t size, size_t nitems,
 			  Rconnection con)
 {
-    Rgzconn priv = (Rgzconn)con->private;
+    Rgzconn priv = con->private;
     Rconnection icon = priv->con;
 
     if ((double) size * (double) nitems > INT_MAX)
@@ -5110,7 +5159,7 @@ SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     for (i = 0; i < nsock; i++) {
 	Rconnection conn = getConnection(asInteger(VECTOR_ELT(insock, i)));
-	Rsockconn scp = (Rsockconn) conn->private;
+	Rsockconn scp = conn->private;
 	if (strcmp(conn->class, "sockconn") != 0)
 	    error(_("not a socket connection"));
 	INTEGER(insockfd)[i] = scp->fd;

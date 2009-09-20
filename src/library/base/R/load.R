@@ -77,6 +77,7 @@ save <- function(..., list = character(0L),
         if (is.character(file)) {
             if (file == "") stop("'file' must be non-empty string")
             con <- if (identical(compress, "bzip2")) bzfile(file, "wb")
+            else if (identical(compress, "xz")) xzfile(file, "wb")
             else if (compress) gzfile(file, "wb")
             else file(file, "wb")
             on.exit(close(con))

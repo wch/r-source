@@ -46,17 +46,14 @@ struct Rconn {
     int (*vfprintf)(struct Rconn *, const char *, va_list);
     int (*fgetc)(struct Rconn *);
     int (*fgetc_internal)(struct Rconn *);
-/*    int (*ungetc)(int c, struct Rconn *); */
     double (*seek)(struct Rconn *, double, int, int);
     void (*truncate)(struct Rconn *);
     int (*fflush)(struct Rconn *);
     size_t (*read)(void *, size_t, size_t, struct Rconn *);
     size_t (*write)(const void *, size_t, size_t, struct Rconn *);
-/*    void (*onerror)(struct Rconn *); */
     int nPushBack, posPushBack; /* number of lines, position on top line */
     char **PushBack;
     int save, save2;
-    /* unsigned char encoding[256];*/
     char encname[101];
     /* will be iconv_t, which is a pointer. NULL if not in use */
     void *inconv, *outconv;
@@ -70,6 +67,7 @@ struct Rconn {
     void *private;
 };
 
+/* used in dounzip.c */
 typedef struct fileconn {
     FILE *fp;
 #if defined(HAVE_OFF_T) && defined(HAVE_FSEEKO)
@@ -88,43 +86,15 @@ typedef struct fileconn {
 #endif
 } *Rfileconn;
 
-typedef struct fifoconn {
-    int fd;
-} *Rfifoconn;
-
-typedef struct gzfileconn {
-    void *fp;
-    int cp;
-} *Rgzfileconn;
-
-typedef struct rawconn {
-    SEXP data; /* all the data, stored as a raw vector */
-    /* replace nbytes by TRUELENGTH in due course? */
-    size_t pos, nbytes; /* current pos and number of bytes 
-			   (same pos for read and write) */
-} *Rrawconn;
-
-typedef struct textconn {
-    char *data;  /* all the data */
-    int cur, nchars; /* current pos and number of chars */
-    char save; /* pushback */
-} *Rtextconn;
-
-typedef struct outtextconn {
-    int len;  /* number of lines */
-    SEXP namesymbol;
-    SEXP data;
-    char *lastline;
-    int lastlinelength; /* buffer size */
-} *Routtextconn;
-
 typedef enum {HTTPsh, FTPsh, HTTPSsh} UrlScheme;
 
+/* used in internet module */
 typedef struct urlconn {
     void *ctxt;
     UrlScheme type;
 } *Rurlconn;
 
+/* used in internet module */
 typedef struct sockconn {
     int port;
     int server;
@@ -133,30 +103,18 @@ typedef struct sockconn {
     char inbuf[4096], *pstart, *pend;
 } *Rsockconn;
 
-typedef struct unzconn {
-    void *uf;
-} *Runzconn;
-
+/* used in X11 module */
 typedef struct clpconn {
     char *buff;
     int pos, len, last, sizeKB;
     Rboolean warned;
 } *Rclpconn;
 
-/* zlib wants to use ZLIB_H without leading underscore in 1.2.1 */
-#if defined(_ZLIB_H) || defined(ZLIB_H)
-typedef struct gzconn {
-    Rconnection con;
-    int cp; /* compression level */
-    z_stream s;
-    int z_err, z_eof;
-    uLong crc;
-    Byte *inbuf, *outbuf;
-    int nsaved;
-    char saved[2];
-    Rboolean allow;
-} *Rgzconn;
-#endif
+/* used in dounzip.c */
+typedef struct unzconn {
+    void *uf;
+} *Runzconn;
+
 
 #define init_con	Rf_init_con
 #define con_pushback	Rf_con_pushback
@@ -179,8 +137,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap);
 int getActiveSink(int n);
 void con_pushback(Rconnection con, Rboolean newLine, char *line);
 
-int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
-		double timeout);
+int Rsockselect(int nsock, int *insockfd, int *ready, int *write, double timeout);
 
 #define set_iconv Rf_set_iconv
 void set_iconv(Rconnection con);

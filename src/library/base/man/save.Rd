@@ -44,7 +44,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \item{compress}{logical specifying whether saving to a named file is to
     use compression.  Ignored when \code{file} is a connection and for
     workspace format version 1.  As from \R 2.10.0 this is also allowed
-    to be \code{"bzip2"} to specify that type of compression.}
+    to be \code{"bzip2"} or \code{"xz"} to specify that type of compression.}
   \item{eval.promises}{logical: should objects which are promises be
     forced before saving?}
   \item{precheck}{logical: should the existence of the objects be
@@ -75,10 +75,21 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   example section below.  If a \code{save.image.defaults} option is set
   it overrides \code{save.defaults} for function \code{save.image}
   (which allows this to have different defaults).
+}
 
-  It is possible to compress later (with \code{gzip}) a file saved with
-  \code{compress = FALSE}: the effect is the same as saving with
-  \code{compress = TRUE}.
+\section{Compression}{
+  Large files can be reduced considerably in size by compression.  A
+  particular 46MB dataset was saved as 35MB without compression in 2
+  seconds, 22MB with \command{gzip} compression in 8 secs, 19MB with
+  \command{bzip2} compression in 13 secs and 9.4MB with \command{xz}
+  compression in 48 secs.  The load times were 1.3, 2.8, 5.5 and 5.7
+  seconds respectively.  These results are indicative, but the relative
+  perfomances do depend on the actual file.
+  
+  It is possible to compress later (with \command{gzip}, \command{bzip2}
+  or \command{xz}) a file saved with \code{compress = FALSE}: the effect
+  is the same as saving with compression.  Also, a saved file can be
+  uncompressed and re-compressed under a different compression scheme.
 }
 
 \note{

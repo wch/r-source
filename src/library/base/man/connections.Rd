@@ -42,7 +42,8 @@ url(description, open = "", blocking = TRUE,
 gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
 
-bzfile(description, open = "", encoding = getOption("encoding"))
+bzfile(description, open = "", encoding = getOption("encoding"),
+       compression = 9)
 
 xzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
@@ -79,8 +80,8 @@ isIncomplete(con)
   \item{encoding}{The name of the encoding to be used.  See the
     \sQuote{Encoding} section below.}
   \item{compression}{integer in 0--9.  The amount of compression to be
-    applied when writing, from none to maximal.  The default is a good
-    space/time compromise.}
+    applied when writing, from none to maximal. For \code{xzfile} can
+    also be negative: see \sQuote{Details}.}
   \item{filename}{a filename within a zip file.}
   \item{host}{character.  Host name for port.}
   \item{port}{integer.  The TCP port number.}

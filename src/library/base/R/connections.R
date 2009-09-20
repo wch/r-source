@@ -92,14 +92,15 @@ unz <- function(description, filename, open = "",
                 encoding = getOption("encoding"))
     .Internal(unz(paste(description, filename, sep=":"), open, encoding))
 
-bzfile <- function(description, open = "", encoding = getOption("encoding"))
-    .Internal(bzfile(description, open, encoding))
+bzfile <- function(description, open = "", encoding = getOption("encoding"),
+                   compression = 9)
+    .Internal(bzfile(description, open, encoding, compression))
 
 xzfile <- function(description, open = "", encoding = getOption("encoding"),
                    compression = 6)
     .Internal(xzfile(description, open, encoding, compression))
 
-socketConnection <- function(host= "localhost", port, server = FALSE,
+socketConnection <- function(host = "localhost", port, server = FALSE,
                              blocking = FALSE, open = "a+",
                              encoding = getOption("encoding"))
     .Internal(socketConnection(host, port, server, blocking, open, encoding))
