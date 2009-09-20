@@ -43,7 +43,8 @@ load <-
 save <- function(..., list = character(0L),
                  file = stop("'file' must be specified"),
                  ascii = FALSE, version = NULL, envir = parent.frame(),
-                 compress = !ascii, eval.promises = TRUE, precheck = TRUE)
+                 compress = !ascii, compression_level,
+                 eval.promises = TRUE, precheck = TRUE)
 {
     opts <- getOption("save.defaults")
     if (missing(compress) && ! is.null(opts$compress))
@@ -76,10 +77,19 @@ save <- function(..., list = character(0L),
         }
         if (is.character(file)) {
             if (file == "") stop("'file' must be non-empty string")
-            con <- if (identical(compress, "bzip2")) bzfile(file, "wb")
-            else if (identical(compress, "xz")) xzfile(file, "wb")
-            else if (compress) gzfile(file, "wb")
-            else file(file, "wb")
+            con <- if (identical(compress, "bzip2")) {
+                if (!missing(compression_level))
+                    bzfile(file, "wb", compression_level)
+                else bzfile(file, "wb")
+            } else if (identical(compress, "xz")) {
+                if (!missing(compression_level))
+                    xzfile(file, "wb", compression_level)
+                else xzfile(file, "wb", compress = 9)
+            } else if (compress) {
+                if (!missing(compression_level))
+                    gzfile(file, "wb", compression_level)
+                else gzfile(file, "wb")
+            } else file(file, "wb")
             on.exit(close(con))
         }
         else if (inherits(file, "connection"))

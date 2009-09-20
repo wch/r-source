@@ -21,7 +21,8 @@
 save(\dots, list = character(0L),
      file = stop("'file' must be specified"),
      ascii = FALSE, version = NULL, envir = parent.frame(),
-     compress = !ascii, eval.promises = TRUE, precheck = TRUE)
+     compress = !ascii, compression_level,
+     eval.promises = TRUE, precheck = TRUE)
 
 save.image(file = ".RData", version = NULL, ascii = FALSE,
            compress = !ascii, safe = TRUE)
@@ -44,7 +45,11 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \item{compress}{logical specifying whether saving to a named file is to
     use compression.  Ignored when \code{file} is a connection and for
     workspace format version 1.  As from \R 2.10.0 this is also allowed
-    to be \code{"bzip2"} or \code{"xz"} to specify that type of compression.}
+    to be \code{"bzip2"} or \code{"xz"} to specify that type of
+    compression.}
+  \item{compression_level}{integer: the level of compression to be
+    used.  Defaults to \code{6} for \command{gzip} compression and to
+    \code{9} for \command{bzip2} or \command{xz} compression.}
   \item{eval.promises}{logical: should objects which are promises be
     forced before saving?}
   \item{precheck}{logical: should the existence of the objects be
@@ -82,9 +87,10 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   particular 46MB dataset was saved as 35MB without compression in 2
   seconds, 22MB with \command{gzip} compression in 8 secs, 19MB with
   \command{bzip2} compression in 13 secs and 9.4MB with \command{xz}
-  compression in 48 secs.  The load times were 1.3, 2.8, 5.5 and 5.7
+  compression in 40 secs.  The load times were 1.3, 2.8, 5.5 and 5.7
   seconds respectively.  These results are indicative, but the relative
-  perfomances do depend on the actual file.
+  perfomances do depend on the actual file and \command{xz} did
+  unusually well here.
   
   It is possible to compress later (with \command{gzip}, \command{bzip2}
   or \command{xz}) a file saved with \code{compress = FALSE}: the effect
