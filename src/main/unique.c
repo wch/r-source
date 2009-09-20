@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2009  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -413,7 +413,7 @@ SEXP duplicated(SEXP x, Rboolean from_last)
 }
 
 /* simpler version of the above : return 1-based index of first, or 0 : */
-int attribute_hidden any_duplicated(SEXP x, Rboolean from_last)
+int any_duplicated(SEXP x, Rboolean from_last)
 {
     DUPLICATED_INIT;
 
@@ -459,7 +459,7 @@ SEXP duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 }
 
 /* return (1-based) index of first duplication, or 0 : */
-int attribute_hidden any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
+int any_duplicated3(SEXP x, SEXP incomp, Rboolean from_last)
 {
     int j, m = length(incomp);
 
