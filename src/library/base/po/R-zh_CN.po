@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:40\n"
+"POT-Creation-Date: 2009-09-21 10:56\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -205,6 +205,10 @@ msgstr "只能写字符对象"
 
 msgid "supplied timeout must be NULL or a non-negative number"
 msgstr "提供的超时值要么是NULL，要么是非负数"
+
+#, fuzzy
+msgid "'from' must be raw or character"
+msgstr "'arg'要么是NULL，要么是字符矢量。"
 
 msgid "'x' must be numeric"
 msgstr "'x' 必需是数值"

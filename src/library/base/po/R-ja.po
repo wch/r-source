@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:40\n"
+"POT-Creation-Date: 2009-09-21 10:56\n"
 "PO-Revision-Date: 2009-03-31 13:18+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -201,6 +201,10 @@ msgstr " 文字オブジェクトしか書き込めません "
 
 msgid "supplied timeout must be NULL or a non-negative number"
 msgstr " タイムアウトは NULL か非負の数値でなければなりません "
+
+#, fuzzy
+msgid "'from' must be raw or character"
+msgstr " 'arg' は、NULL かひとつの文字列ベクトルでなければなりません "
 
 msgid "'x' must be numeric"
 msgstr " 'x' は数値でなければなりません "

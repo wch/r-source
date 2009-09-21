@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-09-21 10:57\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -699,9 +699,6 @@ msgstr "'%s'라고 불리는 패키지는 없습니다"
 msgid "name space must not be loaded."
 msgstr "name space를 적재해서는 안됩니다"
 
-msgid "package '%s' has no .rda file"
-msgstr "패키지 '%s'는 .rdd 파일을 가지고 있지 않습니다"
-
 msgid "package seems to be using lazy loading for data already"
 msgstr ""
 "패키지는 데이터를 위해서 나태한 로드를 이미 사용하고 있는 것처럼 보입니다"
@@ -930,6 +927,9 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
+
+#~ msgid "package '%s' has no .rda file"
+#~ msgstr "패키지 '%s'는 .rdd 파일을 가지고 있지 않습니다"
 
 #, fuzzy
 #~ msgid "Rd files with syntax errors:"

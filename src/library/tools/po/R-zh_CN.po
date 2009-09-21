@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-09-21 10:57\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -698,9 +698,6 @@ msgstr "没有叫'%s'的程辑包"
 msgid "name space must not be loaded."
 msgstr "绝不能载入名字空间."
 
-msgid "package '%s' has no .rda file"
-msgstr "程辑包'%s'里没有.rda文件"
-
 msgid "package seems to be using lazy loading for data already"
 msgstr "程辑包好象已经用数据延迟加载了"
 
@@ -921,6 +918,9 @@ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "在下面的函数里遇到了有可能是全局的T或F值:"
+
+#~ msgid "package '%s' has no .rda file"
+#~ msgstr "程辑包'%s'里没有.rda文件"
 
 #~ msgid "Rd files with syntax errors:"
 #~ msgstr "Rd文件里有语法错误:"

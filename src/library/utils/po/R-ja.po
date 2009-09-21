@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-09-21 10:57\n"
 "PO-Revision-Date: 2009-03-31 21:07+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -83,6 +83,9 @@ msgstr " %d 回 %s 中に起きました "
 #, fuzzy
 msgid "Invalid 'filter' argument."
 msgstr " 不正な 'x' 引数 "
+
+msgid "Could not find aspell or ispell executable."
+msgstr ""
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
@@ -874,6 +877,33 @@ msgstr " プロファイルはメモリ情報を含んでいません "
 msgid "no events were recorded"
 msgstr " 如何なるイベントも記録されませんでした "
 
+#, fuzzy
+msgid "'compressed' must be logical or character"
+msgstr " 'code_files' は文字ベクトルでなければなりません "
+
+msgid "untar: using cmd ="
+msgstr ""
+
+#, fuzzy
+msgid "'tarfile' must be a character string or a connection"
+msgstr " 'file' は文字列か NULL でなければなりません "
+
+msgid "incomplete block on file"
+msgstr ""
+
+msgid "invalid octal digit in size"
+msgstr ""
+
+msgid "unsupported entry type"
+msgstr ""
+
+#, fuzzy
+msgid "file '%s' not found"
+msgstr " zip ファイル '%s' が見付かりません "
+
+msgid "file path is too long"
+msgstr ""
+
 msgid ""
 "vignette '%s' found more than once,\n"
 "using the one found in '%s'"
@@ -919,16 +949,6 @@ msgstr " '%s' への変更の試みは無視されました "
 
 msgid "'unzip' must be a single character string"
 msgstr " 'unzip' は単一の文字列でなければなりません "
-
-#, fuzzy
-msgid "'compressed' must be logical or character"
-msgstr " 'code_files' は文字ベクトルでなければなりません "
-
-msgid "untar: using cmd ="
-msgstr ""
-
-msgid "set environment variable 'TAR' to point to a GNU-compatible 'tar'"
-msgstr ""
 
 msgid "'subject' missing"
 msgstr " 'subject' が欠けています "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-09-21 10:57\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -85,6 +85,9 @@ msgstr "%2$s里出现了%1$d个具體值"
 #, fuzzy
 msgid "Invalid 'filter' argument."
 msgstr "'x'变元不对"
+
+msgid "Could not find aspell or ispell executable."
+msgstr ""
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
@@ -832,6 +835,33 @@ msgstr "程序资料不包含内存信息"
 msgid "no events were recorded"
 msgstr "没有记录下任何事件"
 
+#, fuzzy
+msgid "'compressed' must be logical or character"
+msgstr "'code_files'必需是字符向量"
+
+msgid "untar: using cmd ="
+msgstr ""
+
+#, fuzzy
+msgid "'tarfile' must be a character string or a connection"
+msgstr "'file'的值必需是字符串或联结"
+
+msgid "incomplete block on file"
+msgstr ""
+
+msgid "invalid octal digit in size"
+msgstr ""
+
+msgid "unsupported entry type"
+msgstr ""
+
+#, fuzzy
+msgid "file '%s' not found"
+msgstr "找不到'%s'这一zip文件"
+
+msgid "file path is too long"
+msgstr ""
+
 msgid ""
 "vignette '%s' found more than once,\n"
 "using the one found in '%s'"
@@ -877,16 +907,6 @@ msgstr "不能修改'%s'"
 
 msgid "'unzip' must be a single character string"
 msgstr "'unzip'必需是单字符串"
-
-#, fuzzy
-msgid "'compressed' must be logical or character"
-msgstr "'code_files'必需是字符向量"
-
-msgid "untar: using cmd ="
-msgstr ""
-
-msgid "set environment variable 'TAR' to point to a GNU-compatible 'tar'"
-msgstr ""
 
 msgid "'subject' missing"
 msgstr "缺少'subject'值"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:40\n"
+"POT-Creation-Date: 2009-09-21 10:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,6 +198,9 @@ msgid "can only write character objects"
 msgstr ""
 
 msgid "supplied timeout must be NULL or a non-negative number"
+msgstr ""
+
+msgid "'from' must be raw or character"
 msgstr ""
 
 msgid "'x' must be numeric"

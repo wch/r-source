@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:40\n"
+"POT-Creation-Date: 2009-09-21 10:56\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -211,6 +211,10 @@ msgstr "só é possível escrever objetos do tipo caracter"
 
 msgid "supplied timeout must be NULL or a non-negative number"
 msgstr "tempo limite especificado deve ser NULL ou um número não negativo"
+
+#, fuzzy
+msgid "'from' must be raw or character"
+msgstr "'normal.kind' deve ser uma string de caractres de tamanho 1."
 
 msgid "'x' must be numeric"
 msgstr "'x' deve ser numérico"

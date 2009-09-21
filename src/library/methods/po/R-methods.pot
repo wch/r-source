@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-09-21 10:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -389,9 +389,6 @@ msgstr ""
 msgid "No definition was found for superclass \"%s\" in the specification of class \"%s\""
 msgstr ""
 
-msgid "more than one possible class for the data part: using \"%s\" rather than \"%s\""
-msgstr ""
-
 msgid "conflicting definition of data part: .Data = \"%s\", superclass implies \"%s\""
 msgstr ""
 
@@ -435,6 +432,9 @@ msgid "no '.Data' slot defined for class \"%s\""
 msgstr ""
 
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
+msgstr ""
+
+msgid "more than one possible class for the data part: using \"%s\" rather than \"%s\""
 msgstr ""
 
 msgid "Class cannot have both an ordinary and hidden data type"
@@ -914,7 +914,7 @@ msgstr ""
 msgid "argument S4Class must be a class definition:  got an object of class \"%s\""
 msgstr ""
 
-msgid "inconsistent old-style class information for \"%s\"; the class is defined but does not extend \"%s\""
+msgid "inconsistent old-style class information for \"%s\"; the class is defined but does not extend \"%s\" and is not valid as the data part"
 msgstr ""
 
 msgid "The S3 class of the prototype, \"%s\", is undefined; only allowed when this is the S3 class being registered (\"%s\")"

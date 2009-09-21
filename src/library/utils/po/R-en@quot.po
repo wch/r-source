@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
-"PO-Revision-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-09-21 10:57\n"
+"PO-Revision-Date: 2009-09-21 10:57\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -103,6 +103,9 @@ msgstr "%d occurrences in %s"
 
 msgid "Invalid 'filter' argument."
 msgstr "Invalid ‘filter’ argument."
+
+msgid "Could not find aspell or ispell executable."
+msgstr "Could not find aspell or ispell executable."
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
@@ -855,6 +858,30 @@ msgstr "profile does not contain memory information"
 msgid "no events were recorded"
 msgstr "no events were recorded"
 
+msgid "'compressed' must be logical or character"
+msgstr "‘compressed’ must be logical or character"
+
+msgid "untar: using cmd ="
+msgstr "untar: using cmd ="
+
+msgid "'tarfile' must be a character string or a connection"
+msgstr "‘tarfile’ must be a character string or a connection"
+
+msgid "incomplete block on file"
+msgstr "incomplete block on file"
+
+msgid "invalid octal digit in size"
+msgstr "invalid octal digit in size"
+
+msgid "unsupported entry type"
+msgstr "unsupported entry type"
+
+msgid "file '%s' not found"
+msgstr "file ‘%s’ not found"
+
+msgid "file path is too long"
+msgstr "file path is too long"
+
 msgid ""
 "vignette '%s' found more than once,\n"
 "using the one found in '%s'"
@@ -900,15 +927,6 @@ msgstr "attempt to set ‘%s’ ignored"
 
 msgid "'unzip' must be a single character string"
 msgstr "‘unzip’ must be a single character string"
-
-msgid "'compressed' must be logical or character"
-msgstr "‘compressed’ must be logical or character"
-
-msgid "untar: using cmd ="
-msgstr "untar: using cmd ="
-
-msgid "set environment variable 'TAR' to point to a GNU-compatible 'tar'"
-msgstr "set environment variable ‘TAR’ to point to a GNU-compatible ‘tar’"
 
 msgid "'subject' missing"
 msgstr "‘subject’ missing"

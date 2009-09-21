@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-09-21 10:57\n"
 "PO-Revision-Date: 2009-03-26 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -713,9 +713,6 @@ msgstr "es gibt kein Paket names '%s'"
 msgid "name space must not be loaded."
 msgstr "Namensraum darf nicht geladen werden"
 
-msgid "package '%s' has no .rda file"
-msgstr "Paket  '%s' enthält keine .rda Datei"
-
 msgid "package seems to be using lazy loading for data already"
 msgstr "Paket scheint für Daten bereits lazyloading zu nutzen"
 
@@ -942,6 +939,9 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
+
+#~ msgid "package '%s' has no .rda file"
+#~ msgstr "Paket  '%s' enthält keine .rda Datei"
 
 #~ msgid "Rd files with syntax errors:"
 #~ msgstr "Rd Dateien mit Syntaxfehlern:"

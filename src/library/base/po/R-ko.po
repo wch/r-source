@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:40\n"
+"POT-Creation-Date: 2009-09-21 10:56\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -207,6 +207,10 @@ msgstr "문자 오브젝트만을 기입할수가 없습니다"
 
 msgid "supplied timeout must be NULL or a non-negative number"
 msgstr "timeout은 NUL이거나 non-negative number가 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "'from' must be raw or character"
+msgstr "'normal.kind'는 길이1의 문자열이 아니면 안됩니다"
 
 msgid "'x' must be numeric"
 msgstr "'x'는 수치가 아니면 되지 않습니다"

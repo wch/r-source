@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-09-21 10:57\n"
 "PO-Revision-Date: 2009-03-28 23:43-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -717,9 +717,6 @@ msgstr "нет пакета по имени '%s'"
 msgid "name space must not be loaded."
 msgstr "должно быть загружено пространство имен."
 
-msgid "package '%s' has no .rda file"
-msgstr "у пакета '%s' нет .rda-файлов"
-
 msgid "package seems to be using lazy loading for data already"
 msgstr "кажется, пакет уже использует ленивую загрузку данных"
 
@@ -948,6 +945,9 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Найден вызов .Internal call в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
+
+#~ msgid "package '%s' has no .rda file"
+#~ msgstr "у пакета '%s' нет .rda-файлов"
 
 #~ msgid "Rd files with syntax errors:"
 #~ msgstr "Rd-файлы с синтаксическими ошибками:"

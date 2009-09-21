@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-09-21 10:57\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,6 +72,9 @@ msgid "%d occurrences in %s"
 msgstr ""
 
 msgid "Invalid 'filter' argument."
+msgstr ""
+
+msgid "Could not find aspell or ispell executable."
 msgstr ""
 
 msgid "Running aspell failed with diagnostics:\n%s"
@@ -764,6 +767,30 @@ msgstr ""
 msgid "no events were recorded"
 msgstr ""
 
+msgid "'compressed' must be logical or character"
+msgstr ""
+
+msgid "untar: using cmd ="
+msgstr ""
+
+msgid "'tarfile' must be a character string or a connection"
+msgstr ""
+
+msgid "incomplete block on file"
+msgstr ""
+
+msgid "invalid octal digit in size"
+msgstr ""
+
+msgid "unsupported entry type"
+msgstr ""
+
+msgid "file '%s' not found"
+msgstr ""
+
+msgid "file path is too long"
+msgstr ""
+
 msgid "vignette '%s' found more than once,\nusing the one found in '%s'"
 msgstr ""
 
@@ -804,15 +831,6 @@ msgid "attempt to set '%s' ignored"
 msgstr ""
 
 msgid "'unzip' must be a single character string"
-msgstr ""
-
-msgid "'compressed' must be logical or character"
-msgstr ""
-
-msgid "untar: using cmd ="
-msgstr ""
-
-msgid "set environment variable 'TAR' to point to a GNU-compatible 'tar'"
 msgstr ""
 
 msgid "'subject' missing"

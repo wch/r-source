@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-09-21 10:57\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -84,6 +84,9 @@ msgstr "%s에서 %d가 발생됩니다"
 #, fuzzy
 msgid "Invalid 'filter' argument."
 msgstr "무효의 'data' 인수입니다"
+
+msgid "Could not find aspell or ispell executable."
+msgstr ""
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
@@ -884,6 +887,33 @@ msgstr "유형 정보를 회복할 수 없었습니다"
 msgid "no events were recorded"
 msgstr "events는 기록되지 않았습니다"
 
+#, fuzzy
+msgid "'compressed' must be logical or character"
+msgstr "'list'는 R를 오브젝트라고 명명하는 문자 벡터이어야만 합니다"
+
+msgid "untar: using cmd ="
+msgstr ""
+
+#, fuzzy
+msgid "'tarfile' must be a character string or a connection"
+msgstr "'package'는 문자열이나 NULL이어야만 합니다"
+
+msgid "incomplete block on file"
+msgstr ""
+
+msgid "invalid octal digit in size"
+msgstr ""
+
+msgid "unsupported entry type"
+msgstr ""
+
+#, fuzzy
+msgid "file '%s' not found"
+msgstr "검색되지 않는 zip파일'%s'입니다"
+
+msgid "file path is too long"
+msgstr ""
+
 msgid ""
 "vignette '%s' found more than once,\n"
 "using the one found in '%s'"
@@ -933,16 +963,6 @@ msgstr "data set '%s'는 검색되지 않습니다"
 #, fuzzy
 msgid "'unzip' must be a single character string"
 msgstr "인수 '%s'는 단일의 문자열이어야만 합니다"
-
-#, fuzzy
-msgid "'compressed' must be logical or character"
-msgstr "'list'는 R를 오브젝트라고 명명하는 문자 벡터이어야만 합니다"
-
-msgid "untar: using cmd ="
-msgstr ""
-
-msgid "set environment variable 'TAR' to point to a GNU-compatible 'tar'"
-msgstr ""
 
 msgid "'subject' missing"
 msgstr "'subject'는 잘못되어집니다"

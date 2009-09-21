@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:40\n"
+"POT-Creation-Date: 2009-09-21 10:56\n"
 "PO-Revision-Date: 2009-03-29 21:29+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -208,6 +208,10 @@ msgstr "seuls des objets de mode caractères peuvent être écrits"
 
 msgid "supplied timeout must be NULL or a non-negative number"
 msgstr "la valeur de délai maximal doit être soit NULL, soit un nombre postif"
+
+#, fuzzy
+msgid "'from' must be raw or character"
+msgstr "'arg' doit être NULL ou une chaîne de caractères"
 
 msgid "'x' must be numeric"
 msgstr "'x' doit être numérique"

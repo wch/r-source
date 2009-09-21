@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:40+0100\n"
+"POT-Creation-Date: 2009-09-21 10:56+0100\n"
 "PO-Revision-Date: 2009-03-28 22:25-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -404,7 +404,7 @@ msgstr ""
 "не могу открыть 'pdf'-файл аргумента '%s'\n"
 "  пожалуйста, выключите PDFdevice"
 
-#: devPS.c:6785 devPS.c:7151 devPS.c:7196
+#: devPS.c:6785 devPS.c:7153 devPS.c:7200
 msgid "Failed to find or load PDF font"
 msgstr "Не удалось найти или загрузить шрифт PDF"
 
@@ -412,32 +412,32 @@ msgstr "Не удалось найти или загрузить шрифт PDF"
 msgid "Failed to find or load PDF CID font"
 msgstr "Не удалось найти или загрузить CID-шрифт PDF"
 
-#: devPS.c:7335 devPS.c:7339 devPS.c:7496 devPS.c:7500
+#: devPS.c:7339 devPS.c:7343 devPS.c:7500 devPS.c:7504
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "неправильный параметр 'family' в %s"
 
-#: devPS.c:7357 devPS.c:7512
+#: devPS.c:7361 devPS.c:7516
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "неправильный параметр 'fonts' в %s"
 
-#: devPS.c:7363 devPS.c:7522 devWindows.c:3266 devWindows.c:3270
+#: devPS.c:7367 devPS.c:7526 devWindows.c:3266 devWindows.c:3270
 #: devWindows.c:3278 devWindows.c:3289 devWindows.c:3295 devWindows.c:3302
 #: devWindows.c:3309
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "неправильное значение '%s'"
 
-#: devPS.c:7376
+#: devPS.c:7380
 msgid "unable to start device PostScript"
 msgstr "не могу запустить устройство PostScript"
 
-#: devPS.c:7443
+#: devPS.c:7447
 msgid "unable to start device xfig"
 msgstr "не могу запустить устройство xfig"
 
-#: devPS.c:7536
+#: devPS.c:7540
 msgid "unable to start device pdf"
 msgstr "не могу запустить устройство pdf"
 

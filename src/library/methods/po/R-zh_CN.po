@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-09-21 10:56\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -556,11 +556,6 @@ msgid ""
 msgstr "在定义\"%2$s\"里不存在母类别\"%1$s\"的定义"
 
 msgid ""
-"more than one possible class for the data part: using \"%s\" rather than \"%s"
-"\""
-msgstr "数据部分有多种类别：用\"%s\"而不是\"%s\""
-
-msgid ""
 "conflicting definition of data part: .Data = \"%s\", superclass implies \"%s"
 "\""
 msgstr "数据部分的定义相互有矛盾: .Data = \"%s\"，而父类别却意味着\"%s\""
@@ -624,6 +619,11 @@ msgstr "类别\"%s\"没有'.Data'这一个槽"
 
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "类别\"%s\"没有数据部分(.Data 槽)"
+
+msgid ""
+"more than one possible class for the data part: using \"%s\" rather than \"%s"
+"\""
+msgstr "数据部分有多种类别：用\"%s\"而不是\"%s\""
 
 msgid "Class cannot have both an ordinary and hidden data type"
 msgstr ""
@@ -1258,7 +1258,7 @@ msgstr "变元S4Class必需是类别定义：现在得到的却是类别为\"%s\
 #, fuzzy
 msgid ""
 "inconsistent old-style class information for \"%s\"; the class is defined "
-"but does not extend \"%s\""
+"but does not extend \"%s\" and is not valid as the data part"
 msgstr "\"%s\"旧式类别信息有矛盾(会不会是将旧的和新的类别混在了一起用?)"
 
 msgid ""

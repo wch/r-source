@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-09-21 10:57\n"
 "PO-Revision-Date: 2009-03-29 21:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -89,6 +89,9 @@ msgstr "%d occurences dans %s"
 #, fuzzy
 msgid "Invalid 'filter' argument."
 msgstr "argument 'x' incorrect"
+
+msgid "Could not find aspell or ispell executable."
+msgstr ""
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
@@ -877,6 +880,33 @@ msgstr "'profile' ne contient pas d'information sur la mémoire"
 msgid "no events were recorded"
 msgstr "aucun événement à enregistrer"
 
+#, fuzzy
+msgid "'compressed' must be logical or character"
+msgstr "'code_files' devrait être un vecteur de type caractère"
+
+msgid "untar: using cmd ="
+msgstr ""
+
+#, fuzzy
+msgid "'tarfile' must be a character string or a connection"
+msgstr "'file' doit être une chaîne de caractères ou une connexion"
+
+msgid "incomplete block on file"
+msgstr ""
+
+msgid "invalid octal digit in size"
+msgstr ""
+
+msgid "unsupported entry type"
+msgstr ""
+
+#, fuzzy
+msgid "file '%s' not found"
+msgstr "fichier zip '%s' introuvable"
+
+msgid "file path is too long"
+msgstr ""
+
 msgid ""
 "vignette '%s' found more than once,\n"
 "using the one found in '%s'"
@@ -922,16 +952,6 @@ msgstr "une tentative de modification de '%s' a échoué"
 
 msgid "'unzip' must be a single character string"
 msgstr "'unzip' doit être une seule chaîne de caractères"
-
-#, fuzzy
-msgid "'compressed' must be logical or character"
-msgstr "'code_files' devrait être un vecteur de type caractère"
-
-msgid "untar: using cmd ="
-msgstr ""
-
-msgid "set environment variable 'TAR' to point to a GNU-compatible 'tar'"
-msgstr ""
 
 msgid "'subject' missing"
 msgstr "'subject' manquant"
