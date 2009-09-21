@@ -897,12 +897,17 @@ showMethods <-
       con <- printTo
     ## must resolve showEmpty in line; using an equivalent default
     ## fails because R resets the "missing()" result for f later on (grumble)
-    if(is(f, "function"))
-        f <- as.character(substitute(f))
+    if(is(f, "function")) {
+        fdef <- f ## note that this causes missing(fdef) to be FALSE below
+        if(missing(where))
+            where <- environment(f)
+        f <- deparse(substitute(f))
+        if(length(f) > 1) f <- paste(f, collapse = "; ")
+    }
     if(!is(f, "character"))
         stop(gettextf("first argument should be the name(s) of generic functions (got object of class \"%s\")",
                       class(f)), domain = NA)
-    if(length(f) ==  0L) {
+    if(length(f) ==  0L) {  ## usually, the default character()
         f <- if(missing(where)) getGenerics() else getGenerics(where)
     }
     if(length(f) == 0L)
@@ -925,10 +930,7 @@ showMethods <-
     }
     else { ## f of length 1 --- the "workhorse" :
         out <- paste("\nFunction \"", f, "\":\n", sep="")
-        isGen  <- if(missing(fdef)) {
-	    if(missing(where)) isGeneric(f) else isGeneric(f, where)
-	} else is(fdef, "genericFunction")
-        if(!isGen)
+        if(!is(fdef, "genericFunction"))
             cat(file = con, out, "<not a generic function>\n")
         else
             ## maybe no output for showEmpty=FALSE
