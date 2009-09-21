@@ -193,7 +193,7 @@ fi],
 
 ## Allow the user to specify support for memory profiling.
 AC_ARG_ENABLE([memory-profiling],
-[AS_HELP_STRING([--enable-memory-profiling],[attempt to compile support for Rmemprof(), tracemem() @<:@no@:>@])],
+[AS_HELP_STRING([--enable-memory-profiling],[attempt to compile support for Rprofmem(), tracemem() @<:@no@:>@])],
 [if test "${enableval}" = no; then
   want_memory_profiling=no
 elif test "${enableval}" = yes; then
