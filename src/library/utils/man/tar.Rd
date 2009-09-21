@@ -16,6 +16,7 @@ tar(tarfile, files = NULL,
     compression = c("none", "gzip", "bzip2", "xz"),
     compression_level = 6)
 }
+
 \arguments{
   \item{tarfile}{The pathname of the tar file: tilde expansion (see
     \code{\link{path.expand}}) will be performed.  Alternatively, a
@@ -30,11 +31,12 @@ tar(tarfile, files = NULL,
   \item{compression_level}{integer: the level of compression.  Only used
     for the internal method.}
 }
+
 \details{
   This is either a wrapper for a \command{tar} command or uses an
-  internal \R implementation of tar.  The \R implementation is used if
-  \code{tarfile} is a connection or if the environment variable
-  \env{TAR} is \code{"internal"} or unset.
+  internal implementation in \R.  The latter is used if \code{tarfile}
+  is a connection or if the environment variable \env{TAR} is
+  \code{"internal"} or unset.
 
   The internal implementation writes only the blocks of 512 bytes
   required, unlike GNU \command{tar} which by default pads with

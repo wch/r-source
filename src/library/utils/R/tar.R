@@ -123,7 +123,6 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         if(all(block == 0)) break
         ns <- max(which(block[1:100] > 0))
         name <- rawToChar(block[seq_len(ns)])
-        ## FIXME: should use prefix.
         magic <- rawToChar(block[258:262])
         if ((magic == "ustar") && block[346] > 0) {
             ns <- max(which(block[346:500] > 0))
@@ -188,7 +187,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             }
         } else stop("unsupported entry type", sQuote(rawToChar(type)))
     }
-    if(list) contents else invisible(contents)
+    if(list) contents else invisible(0L)
 }
 
 tar <- function(tarfile, files = NULL,
@@ -217,11 +216,13 @@ tar <- function(tarfile, files = NULL,
         on.exit(close(con))
     } else if(inherits(tarfile, "connection")) con <- tarfile
     else stop("'tarfile' must be a character string or a connection")
+
     files <- list.files(files, recursive = TRUE, all.files = TRUE,
                         full.names = TRUE)
     ## this omits directories.
     bf <- unique(dirname(files))
     files <- c(bf[!bf %in% c(".", files)], files)
+
     for (f in files) {
         info <- file.info(f)
         if(is.na(info$size)) {
@@ -252,7 +253,9 @@ tar <- function(tarfile, files = NULL,
                 header[156 + seq_along(lnk)] <- charToRaw(lnk)
             }
         }
-        header[258:264] <- charToRaw("ustar  ")
+        ## the next two are what POSIX says, not what GNU tar does.
+        header[258:262] <- charToRaw("ustar")
+        header[264:265] <- charToRaw("0")
         if(!is.na(s <- info$uname)) {
             ns <- nchar(s, "b")
             header[265 + (1:ns)] <- charToRaw(s)
@@ -279,4 +282,5 @@ tar <- function(tarfile, files = NULL,
     block <- raw(512L)
     writeBin(block, con)
     writeBin(block, con)
+    invisible(0L)
 }

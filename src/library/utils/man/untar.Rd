@@ -45,10 +45,10 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \item{verbose}{logical: if true echo the command used.}
 }
 \details{
-  This is either a wrapper for a \command{tar} command or for an \R
-  implementation of untar.  The \R implementation is used if
-  \code{tarfile} is a connection or if the environment variable \env{TAR}
-  is \code{"internal"} or unset (except on Windows, when
+  This is either a wrapper for a \command{tar} command or for an
+  internal implementation written in \R.  The latter is used if
+  \code{tarfile} is a connection or if the environment variable
+  \env{TAR} is \code{"internal"} or unset (except on Windows, when
   \command{tar.exe} is tried first).
 
   What options are supported will depend on the \command{tar} used.
@@ -59,7 +59,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   flavours environment variable \env{R_ZIPCMD} gives the command to
   decompress \command{gzip} files, and \command{bzip2} for its files.
   (There is a \command{bsdtar} command from the \samp{libarchive}
-  project used by Mac OS 10.6 (\sQuote{Snow Leopard})which can also
+  project used by Mac OS 10.6 (\sQuote{Snow Leopard}) which can also
   detect compression automagically as can the \command{tar} from the
   \sQuote{Heirloom Toolchest}.)
   
@@ -74,6 +74,12 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   some \R builds (see \code{\link{capabilities}("xz")}).  It does not
   guard against restoring absolute file paths, as some \command{tar}
   implementations do.
+  
+  The standards only support ASCII filenames (indeed, only alphanumeric
+  plus period, underscore and hyphen).  \code{untar} makes no attempt to map
+  filenames to those acceptable on the current system, and treats the
+  filenames in the archive as applicable without any re-encoding in the
+  current locale.
 }
 
 \value{
@@ -84,9 +90,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 }
 
 \seealso{
-  \url{http://en.wikipedia.org/wiki/Tar_(file_format)}.
-  
-  \code{\link{unzip}}.  
+  \code{\link{tar}}, \code{\link{unzip}}.  
 }
 
 \keyword{file}
