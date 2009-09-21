@@ -295,13 +295,15 @@ NEW FEATURES
     	on packages which can be verified as Free or Open Source
     	Software (FOSS) employing the available license specifications.
 
-    o	In registering an S3 class by a call to setOldClass(), the
-        data part (e.g., the object type) required for the class can
-        be included as one of the superclasses in the Classes argument.
+    o	In registering an S3 class by a call to setOldClass(), the data
+	part (e.g., the object type) required for the class can be
+	included as one of the superclasses in the Classes argument.
 
-    o	The argument f= to showMethods() can be an expression
-        evaluating to a generic function, allowing methods to be shown
-        for non-exported generics and other nonstandard cases.
+    o	The argument f= to showMethods() can be an expression evaluating
+	to a generic function, allowing methods to be shown for
+	non-exported generics and other nonstandard cases.
+
+    o	sprintf() now supports '%o' for octal conversions.
 
 
 REGULAR EXPRESSIONS
