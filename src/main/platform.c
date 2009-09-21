@@ -2314,9 +2314,12 @@ SEXP attribute_hidden do_sysumask(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_readlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP paths = CAR(args), ans;
-    int i, n = LENGTH(paths);
+    int n = LENGTH(paths);
+#ifdef HAVE_READLINK
     char buf[PATH_MAX+1];
     ssize_t res;
+    int i;
+#endif
 
     checkArity(op, args);
     PROTECT(ans = allocVector(STRSXP, n));
