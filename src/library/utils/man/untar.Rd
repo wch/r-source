@@ -59,19 +59,19 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   flavours environment variable \env{R_ZIPCMD} gives the command to
   decompress \command{gzip} files, and \command{bzip2} for its files.
   (There is a \command{bsdtar} command from the \samp{libarchive}
-  project which can also detect compression automagically: for this set
-  \code{compressed = FALSE}.  Similarly for \command{tar} from the
+  project used by Mac OS 10.6 (\sQuote{Snow Leopard})which can also
+  detect compression automagically as can the \command{tar} from the
   \sQuote{Heirloom Toolchest}.)
   
   Arguments \code{compressed}, \code{extras} and \code{verbose} are only
   used when an external \command{tar} is used.
 
-  The internal implementation restores link (hard and soft) as symbolic
+  The internal implementation restores links (hard and soft) as symbolic
   links on a Unix-alike, and as file copies on Windows.  Since it uses
-  \code{\link{gzfile}} to read a file, it can handle files compressed by
+  \code{\link{gzfile}} to read a file it can handle files compressed by
   any of the methods that \code{gzfile} can handle: at least
-  \command{gzip} and \command{bzip2} compression, and more on some \R
-  builds.
+  \command{gzip} and \command{bzip2} compression, and \command{xz} on
+  some \R builds (see \code{\link{capabilities}("xz")}).
 }
 
 \value{
@@ -82,7 +82,9 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 }
 
 \seealso{
-  \code{\link{unzip}}
+  \url{http://en.wikipedia.org/wiki/Tar_(file_format)}.
+  
+  \code{\link{unzip}}.  
 }
 
 \keyword{file}

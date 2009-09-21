@@ -2417,7 +2417,9 @@ used by Mac OS 10.6) and @command{tar} from the Heirloom Toolchest
 
 @code{gzfile} can handle files compressed by @command{xz} if a suitable
 LZMA compression library is found by @code{configure}: it expects that
-from @uref{http://tukaani.org/xz/} version 4.999 or later.
+from @uref{http://tukaani.org/xz/} version 4.999 or later.  This library
+also supports @code{xzfile} and the @code{type = "xz"} option to
+@code{memCompress}.
 
 @menu
 * Tcl/Tk::                      
