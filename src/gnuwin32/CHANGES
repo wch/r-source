@@ -30,9 +30,6 @@ NEW FEATURES
 	and the corresponding menu in the MDI version has been
 	expanded slightly.
 
-    o	There is a new utility program untgz.exe to unpack tarballs
-	such as R packages without needing Rtools.
-    	
     o	The libpng library has been updated to version 1.2.40.
 
     	

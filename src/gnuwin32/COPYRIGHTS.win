@@ -115,14 +115,6 @@ From GNU libiconv-1.11, distributed under LGPL>=2,
 Copyright (C) 1999-2003, 2005-2006 Free Software Foundation, Inc.
 
 
-src/front-ends/untgz.c
-based on contrib/untgz.c in the zlib distribution, no copyright statement, but:
-
- * written by Pedro A. Aranda Gutierrez <paag@tid.es>
- * adaptation to Unix by Jean-loup Gailly <jloup@gzip.org>
- * various fixes by Cosmin Truta <cosmint@cs.ubbcluj.ro>
-
-
 
 Binary components
 -----------------
@@ -136,6 +128,9 @@ contents.
 The build of Tcl/Tk contained in the binary installer is taken via
 Rtools from http://www.stats.ox.ac.uk/pub/Rtools/, which hosts the
 sources used and links to the scripts used for the build.
+
+Where liblzma from xz-utils is included, the binaries used and the
+sources can be found at http://www.stats.ox.ac.uk/pub/Rtools/goodies
 
 Rbitmap.dll is built against static libraries for libpng, jpeg-6b and
 libtiff: the Makefiles and configuration headers used are in the
