@@ -16,7 +16,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
       compressed = NA, extras = NULL, verbose = FALSE)
 }
 \arguments{
-  \item{tarfile}{The pathname of the zip file: tilde expansion (see
+  \item{tarfile}{The pathname of the tar file: tilde expansion (see
     \code{\link{path.expand}}) will be performed.  Alternatively, a
     connection that can be used for binary reads.}
 

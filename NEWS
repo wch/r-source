@@ -427,6 +427,8 @@ COMPRESSION
 	compressed.  This uses either an external 'tar' command or an
 	internal implementation.
 
+    o	New function tar() to create (possibly compressed) tar archives.
+
     o	New functions memCompress() and memDecopmress() for in-memory
 	compression and decompression.
 
