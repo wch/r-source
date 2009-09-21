@@ -71,7 +71,9 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \code{\link{gzfile}} to read a file it can handle files compressed by
   any of the methods that \code{gzfile} can handle: at least
   \command{gzip} and \command{bzip2} compression, and \command{xz} on
-  some \R builds (see \code{\link{capabilities}("xz")}).
+  some \R builds (see \code{\link{capabilities}("xz")}).  It does not
+  guard against restoring absolute file paths, as some \command{tar}
+  implementations do.
 }
 
 \value{

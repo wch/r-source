@@ -2311,6 +2311,28 @@ SEXP attribute_hidden do_sysumask(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+SEXP attribute_hidden do_readlink(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP paths = CAR(args), ans;
+    int i, n = LENGTH(paths);
+    char buf[PATH_MAX+1];
+    ssize_t res;
+
+    checkArity(op, args);
+    PROTECT(ans = allocVector(STRSXP, n));
+#ifdef HAVE_READLINK
+    for (i = 0; i < n; i++) {
+	memset(buf, 0, PATH_MAX+1);
+	res = readlink(translateChar(STRING_ELT(paths, i)), buf, PATH_MAX);
+	if (res >= 0) SET_STRING_ELT(ans, i, mkChar(buf));
+	else if (errno == EINVAL) SET_STRING_ELT(ans, i, mkChar(""));
+	else SET_STRING_ELT(ans, i,  NA_STRING);
+    }
+#endif
+    UNPROTECT(1);
+    return ans;
+}
+
 
 SEXP attribute_hidden do_Cstack_info(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

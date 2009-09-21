@@ -1698,7 +1698,7 @@ R_CHECK_FUNCS([chmod mkfifo stat umask], [#include <sys/stat.h>])
 R_CHECK_FUNCS([gettimeofday], [#include <sys/time.h>])
 R_CHECK_FUNCS([times], [#include <sys/times.h>])
 R_CHECK_FUNCS([time], [#include <time.h>])
-R_CHECK_FUNCS([access chdir execv ftruncate getcwd getuid symlink sysconf],
+R_CHECK_FUNCS([access chdir execv ftruncate getcwd getuid readlink symlink sysconf],
 [#ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif])

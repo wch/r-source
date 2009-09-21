@@ -31,13 +31,14 @@ tar(tarfile, files = NULL,
     for the internal method.}
 }
 \details{
-  This is either a wrapper for a \command{tar} command or for an
+  This is either a wrapper for a \command{tar} command or uses an
   internal \R implementation of tar.  The \R implementation is used if
   \code{tarfile} is a connection or if the environment variable
   \env{TAR} is \code{"internal"} or unset.
 
-  The internal implementation only handles regular files and directories
-  (and not links on OSes which support them).
+  The internal implementation writes only the blocks of 512 bytes
+  required, unlike GNU \command{tar} which by default pads with
+  \samp{nul} to a multiple of 20 blocks (10KB).
 }
 
 \value{
@@ -45,7 +46,8 @@ tar(tarfile, files = NULL,
 }
 
 \seealso{
-  \url{http://en.wikipedia.org/wiki/Tar_(file_format)}.
+  \url{http://en.wikipedia.org/wiki/Tar_(file_format)},
+  \url{http://www.opengroup.org/onlinepubs/009695399/utilities/pax.html#tag_04_100_13_06}.
   
   \code{\link{untar}}.
 }

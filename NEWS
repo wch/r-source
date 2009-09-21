@@ -305,6 +305,8 @@ NEW FEATURES
 
     o	sprintf() now supports '%o' for octal conversions.
 
+    o	New function Sys.readlink() for information about symbolic links.
+
 
 REGULAR EXPRESSIONS
 

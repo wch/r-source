@@ -86,6 +86,22 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
 
 untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
 {
+    getOct <- function(x, start, len)
+    {
+        x <- 0L
+        for(i in start+seq_len(len)) {
+            z <- block[i]
+            if(!as.integer(z)) break;
+            switch(rawToChar(z),
+                   " " = {},
+                   "0"=,"1"=,"2"=,"3"=,"4"=,"5"=,"6"=,"7"=
+                   {x <- 8*x + (as.integer(z)-48)},
+                   stop("invalid octal digit")
+                   )
+        }
+        x
+    }
+
     ## A tar file is a set of 512 byte records,
     ## a header record followed by file contents (zero-padded).
     ## See http://en.wikipedia.org/wiki/Tar_%28file_format%29
@@ -107,22 +123,29 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         if(all(block == 0)) break
         ns <- max(which(block[1:100] > 0))
         name <- rawToChar(block[seq_len(ns)])
+        ## FIXME: should use prefix.
+        magic <- rawToChar(block[258:262])
+        if ((magic == "ustar") && block[346] > 0) {
+            ns <- max(which(block[346:500] > 0))
+            prefix <- rawToChar(block[345+seq_len(ns)])
+            name <- file.path(prefix, name)
+        }
         ## mode 8 bytes (including nul) at 101
         mode <- rawToChar(block[101:107])
-        ## size 12 bytes at 125, octal, zero/space padded
-        size <- 0L
-        for(i in 124L+(1:12))  {
-            z <- block[i]
-            if(!as.integer(z)) break;
-            switch(rawToChar(z),
-                   " " = {},
-                   "0"=,"1"=,"2"=,"3"=,"4"=,"5"=,"6"=,"7"=
-                   {size <- 8*size + (as.integer(z)-48)},
-                   stop("invalid octal digit in size")
-                   )
+        size <- getOct(block, 124, 12)
+        ts <- getOct(block, 136, 12)
+        ft <- as.POSIXct(as.numeric(ts), origin="1970-01-01", tz="UTC")
+        csum <- getOct(block, 148, 6)
+        block[149:156] <- charToRaw(" ")
+        xx <- as.integer(block)
+        checksum <- sum(xx) %% 2^24 # 6 bytes
+        if(csum != checksum) {
+            ## try it with signed bytes.
+            checksum <- sum(ifelse(xx > 127, xx - 128, xx)) %% 2^24 # 6 bytes
+            if(csum != checksum)
+                warning(gettextf("checksum error for entry '%s'", name),
+                        domain = NA)
         }
-        ts <- rawToChar(block[137:146])
-        ft <- as.POSIXct(as.numeric(ts), origin="1970-01-01")
         type <- block[157L]
         if(type == 48 || type == 0) {
             contents <- c(contents, name)
@@ -175,6 +198,8 @@ tar <- function(tarfile, files = NULL,
     if(is.character(tarfile)) {
         TAR <- Sys.getenv("TAR")
         if(nzchar(TAR) && TAR != "internal") {
+            ## FIXME: could pipe through gzip etc: might be safer for xz
+            ## as -J was lzma in GNU tar 1.20:21
             flags <- switch(match.arg(compression),
                             "none" = "cf",
                             "gzip" = "zcf",
@@ -206,6 +231,7 @@ tar <- function(tarfile, files = NULL,
         header <- raw(512L)
         if(info$isdir && !grepl("/$", f)) f <- paste(f, "/", sep = "")
         name <- charToRaw(f)
+        ## FIXME: perhaps use prefix field
         if(length(name) > 100) stop("file path is too long")
         header[seq_along(name)] <- name
         header[101:107] <- charToRaw(sprintf("%07o", info$mode))
@@ -216,7 +242,16 @@ tar <- function(tarfile, files = NULL,
         size <- ifelse(info$isdir, 0, info$size)
         header[125:135] <- charToRaw(sprintf("%011o", as.integer(size)))
         header[137:147] <- charToRaw(sprintf("%011o", as.integer(info$mtime)))
-        header[157L] <- charToRaw(ifelse(info$isdir, "5", "0"))
+        if (info$isdir) header[157L] <- charToRaw("5")
+        else {
+            lnk <- Sys.readlink(f)
+            if(is.na(lnk)) lnk <- ""
+            header[157L] <- charToRaw(ifelse(nzchar(lnk), "2", "0"))
+            if(nzchar(lnk)) {
+                if(length(lnk) > 100) stop("linked path is too long")
+                header[156 + seq_along(lnk)] <- charToRaw(lnk)
+            }
+        }
         header[258:264] <- charToRaw("ustar  ")
         if(!is.na(s <- info$uname)) {
             ns <- nchar(s, "b")
@@ -231,7 +266,7 @@ tar <- function(tarfile, files = NULL,
         header[149:154] <- charToRaw(sprintf("%06o", as.integer(checksum)))
         header[155] <- as.raw(0)
         writeBin(header, con)
-        if(info$isdir) next
+        if(info$isdir || nzchar(lnk)) next
         inf <- file(f, "rb")
         for(i in seq_len(ceiling(info$size/512L))) {
             block <- readBin(inf, "raw", 512L)

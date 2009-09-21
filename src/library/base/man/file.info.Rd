@@ -1,6 +1,6 @@
 % File src/library/base/man/file.info.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{file.info}
@@ -82,6 +82,7 @@ file.info(\dots)
 #endif
 
 \seealso{
+  \code{\link{Sys.readlink}} to find out about symbolic links,
   \code{\link{files}}, \code{\link{file.access}},
   \code{\link{list.files}},
   and \code{\link{DateTimeClasses}} for the date formats.
