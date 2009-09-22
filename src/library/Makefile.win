@@ -7,7 +7,6 @@ top_srcdir = ../..
 top_builddir = ../..
 
 include ../../share/make/vars.mk
-include ../gnuwin32/MkRules #for USE_CHM
 
 ECHO = echo
 MKINSTALLDIRS = mkdir -p
@@ -46,7 +45,6 @@ docs:
 	@$(MAKE) -f Makefile.win Rdobjects
 	@$(MAKE) -f Makefile.win metadata
 	@$(MAKE) -f Makefile.win help-indices
-	@$(MAKE) -f Makefile.win Rdfiles
 	@touch stamp-docs
 
 # fix the order to make best use of parallel builds
@@ -67,26 +65,9 @@ help-indices:
 	@$(ECHO) -n "writing indices for package:"
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(ECHO) -n " $${pkg}" ; \
-	  $(ECHO) "tools:::.writePkgIndices(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}\", CHM = $(USE_CHM))" | R_DEFAULT_PACKAGES=utils LC_ALL=C $(R_EXE) || exit 1; \
+	  $(ECHO) "tools:::.writePkgIndices(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | R_DEFAULT_PACKAGES=utils LC_ALL=C $(R_EXE) || exit 1; \
 	done
 	@$(ECHO)
-
-Rdfiles:
-	@$(ECHO) "building all R object docs"
-ifeq ($(strip $(USE_CHM)),TRUE)
-	@for pkg in $(R_PKGS_BASE); do \
-	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\", types='chm', silent = TRUE)" | LC_ALL=C $(R_EXE) || exit 1; \
-	  $(MAKE) --no-print-directory -C $${pkg}/chm \
-	    -f $(RHOME)/src/gnuwin32/help/MkChm $${pkg}.chm RHOME=$(RHOME); \
-	  if test -f $${pkg}/chm/$${pkg}.chm ; then \
-	    $(MKDIR) -p $(RHOME)/library/$${pkg}/chtml ;\
-	    $(CP) $${pkg}/chm/$${pkg}.chm $(RHOME)/library/$${pkg}/chtml ; \
-	  else \
-	    echo CHM compile failed:  HTML Help Workshop not installed? ; \
-	    exit 1; \
-	  fi; \
-	done
-endif
 
 metadata:
 	@$(ECHO) "building/updating package metadata ..."

@@ -23,7 +23,7 @@
 .install_packages <- function(args = NULL)
 {
     ## calls system() on Windows for
-    ## sh (configure.win/cleanup.win) make zip [hhc if CHM help]
+    ## sh (configure.win/cleanup.win) make zip
 
     ## we don't want to load utils just for this
     .file_test <- function(op, x)
@@ -111,7 +111,6 @@
             "      --no-multiarch	build only the main architecture",
             "\nand on Windows only",
             "      --auto-zip	select whether to zip data automatically",
-            "      --chm		build CHM help (unsupported)",
             "",
             "Which of --html or --no-html is the default depends on the build of R:",
             paste("for this one it is ",
@@ -827,7 +826,7 @@
 
                 starsmsg(paste0(stars, "*"), "installing help indices")
                 ## always want HTML package index
-                .writePkgIndices(pkg_dir, instdir, html = TRUE, CHM = build_chm)
+                .writePkgIndices(pkg_dir, instdir)
                 if (build_help) {
                     ## This is used as the default outputEncoding for latex
                     outenc <- desc["Encoding"]
@@ -835,25 +834,6 @@
                     .convertRdfiles(pkg_dir, instdir,
                                     types = build_help_types,
                                     outenc = outenc)
-                    if (build_chm) {
-                        if (dir.exists("chm")) {
-                            owd <- setwd("chm")
-                            file.copy(file.path(R.home(), "src/gnuwin32/help/Rchm.css"), ".")
-                            file.copy(file.path(R.home("doc"), "html/logo.jpg"), ".")
-                            ## The following should fail gracefully if hhc is not installed.
-                            ## FIXME: give a warning at R level?
-                            system(paste0("hhc ", pkg_name, ".hhp"))
-                            ## always gives an error code
-                            chm_file <- paste0(pkg_name, ".chm")
-                            if (file.exists(chm_file)) {
-                                dest <- file.path(instdir, "chtml")
-                                ## parent must exist by now
-                                dir.create(dest, showWarnings = FALSE)
-                                file.copy(chm_file, dest, TRUE)
-                            }
-                            setwd(owd)
-                        }
-                    }
                 }
             }
 
@@ -913,7 +893,6 @@
     build_html <- static_html
     build_latex <- FALSE
     build_example <- FALSE
-    build_chm <- FALSE
     use_configure <- TRUE
     use_zip_data <- FALSE
     auto_zip <- FALSE
@@ -960,7 +939,7 @@
         } else if (a == "--no-configure") {
             use_configure <- FALSE
         } else if (a == "--no-docs") {
-            build_html <- build_latex <- build_example <- build_chm <- FALSE
+            build_html <- build_latex <- build_example <- FALSE
         } else if (a == "--no-html") {
             build_html <- FALSE
         } else if (a == "--html") {
@@ -969,8 +948,6 @@
             build_latex <- TRUE
         } else if (a == "--example") {
             build_example <- TRUE
-        } else if (a == "--chm") {
-            build_chm <- WINDOWS
         } else if (a == "--use-zipdata") {
             use_zip_data <- TRUE
         } else if (a == "--auto-zip") {
@@ -1137,22 +1114,12 @@
         build_html <- FALSE
         build_latex <- FALSE
         build_example <- FALSE
-        build_chm <- FALSE
-    }
-
-    if (build_chm) {
-        res <- try(system("hhc.exe", intern=TRUE), silent=TRUE)
-        if (inherits(res, "try-error")) {
-            build_chm <- FALSE
-            message("\n*** 'hhc.exe' not found: not building CHM help\n")
-        }
     }
 
     build_help_types <- character(0)
     if (build_html) build_help_types <- c(build_help_types, "html")
     if (build_latex) build_help_types <- c(build_help_types, "latex")
     if (build_example) build_help_types <- c(build_help_types, "example")
-    if (build_chm) build_help_types <- c(build_help_types, "chm")
     build_help <- length(build_help_types) > 0L
 
     if (debug)
@@ -1635,7 +1602,7 @@
 ## called for base packages from src/Makefile[.win] and from
 ## .install.packages in this file.
 .writePkgIndices <-
-    function(dir, outDir, OS = .Platform$OS.type, html = TRUE, CHM = FALSE)
+    function(dir, outDir, OS = .Platform$OS.type, html = TRUE)
 {
     re <- function(x)
     {
@@ -1670,59 +1637,6 @@
 
         cat('<h2>Help Pages</h2>\n\n\n',
             sep ='', file = conn)
-    }
-
-    chm_header <- function(pkg, title, version, conn)
-    {
-        ## FIXME: we probably need to give the encoding (UTF-8)
-        cat("<html><head><title>", title, "</title>\n",
-            "<link rel=\"stylesheet\" type=\"text/css\" href=\"Rchm.css\">\n" ,
-            "</head><body>\n",
-            "<h1>", title, "\n",
-            "<img class=\"toplogo\" src=\"logo.jpg\" alt=\"[R logo]\"></h1>\n\n",
-            "<hr>\n\n",
-            "<object type=\"application/x-oleobject\" classid=\"clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e\">\n",
-            "<param name=\"keyword\" value=\".. contents\">\n",
-            "</object>\n\n",
-            "<h2>Help pages for package &lsquo;", pkg, "&rsquo;",
-            if (nzchar(version)) paste(" version", version),
-            "</h2>\n\n",
-            sep = "", file = conn)
-    }
-
-    chm_toc <- function(dir, pkg, M)
-    {
-        conn <- file(file.path(dir, "chm", paste(pkg, ".toc", sep = "")), "wt")
-        on.exit(close(conn))
-        if (length(M$File)) M$File <- paste(M$File, ".html", sep = "")
-        cat("<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">\n",
-            "<HEAD></HEAD><HTML><BODY>\n<UL>\n",
-            "<LI> <OBJECT type=\"text/sitemap\">\n",
-            "<param name=\"Name\" value=\"Package ", pkg, ":  Contents\">\n",
-            "<param name=\"Local\" value=\"00Index.html\">\n",
-            "</OBJECT>\n",
-            "<LI> <OBJECT type=\"text/sitemap\">\n",
-            "<param name=\"Name\" value=\"Package ", pkg, ":  R objects\">\n",
-            "</OBJECT>\n", "<UL>\n",
-            sep = "", file = conn)
-        writeLines(paste("<LI> <OBJECT type=\"text/sitemap\">\n",
-                         "<param name=\"Name\" value=\"", M$Topic, "\">\n",
-                         "<param name=\"Local\" value=\"", M$File, "\">\n",
-                         "</OBJECT>", sep= ""), conn)
-        cat("</UL>\n",
-            "<LI> <OBJECT type=\"text/sitemap\">\n",
-            "<param name=\"Name\" value=\"Package ", pkg, ":  Titles\">\n",
-            "</OBJECT>\n",
-            "<UL>\n",
-            sep = "", file = conn)
-        M <- M[!duplicated(M$Title), ]
-        o <- order(tolower(M$Title), M$Title)
-        writeLines(paste("<LI> <OBJECT type=\"text/sitemap\">\n",
-                         "<param name=\"Name\" value=\"", M$Title[o], "\">\n",
-                         "<param name=\"Local\" value=\"", M$File[o], "\">\n",
-                         "</OBJECT>", sep = ""), conn)
-        cat("</UL>\n",
-            "</UL>\n</BODY></HTML>\n", sep="", file = conn)
     }
 
     firstLetterCategory <- function(x)
@@ -1774,19 +1688,10 @@
                 quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
 
     ## no HTML indices if no help pages?
-    if (!html && !CHM) return()
-    if (html) {
-        outman <- file.path(outDir, "html")
-        dir.create(outman, showWarnings = FALSE)
-        outcon <- file(file.path(outman, "00Index.html"), "wt")
-        on.exit(close(outcon))
-    }
-    if (CHM) {
-        chmdir <- file.path(dir, "chm")
-        dir.create(chmdir, showWarnings = FALSE)
-        chmcon <- file(file.path(chmdir, "00Index.html"), "wt")
-        on.exit(close(chmcon), add = TRUE)
-    }
+    outman <- file.path(outDir, "html")
+    dir.create(outman, showWarnings = FALSE)
+    outcon <- file(file.path(outman, "00Index.html"), "wt")
+    on.exit(close(outcon))
     desc <- read.dcf(file.path(outDir, "DESCRIPTION"))[1,]
     ## re-encode if necessary
     if(!is.na(enc <- desc["Encoding"])) {
@@ -1794,7 +1699,6 @@
         desc <- iconv(desc, enc, "UTF-8", sub = "byte")
     }
     ## drop internal entries
-    if (CHM) CHMinternals <- M[M[, 4], ]
     M <- M[!M[, 4], ]
     if (desc["Package"] %in% c("base", "graphics", "stats", "utils")) {
         for(pass in 1:2) {
@@ -1837,11 +1741,7 @@
 
     ## No need to handle encodings: everything is in UTF-8
 
-    if (html)
-        html_header(desc["Package"], desc["Title"], desc["Version"],
-                    "UTF-8", outcon)
-    if (CHM)
-        chm_header(desc["Package"], desc["Title"], desc["Version"], chmcon)
+    html_header(desc["Package"], desc["Title"], desc["Version"], "UTF-8", outcon)
 
     use_alpha <- (nrow(M) > 100)
     if (use_alpha) {
@@ -1849,93 +1749,36 @@
         nm <- sort(names(table(first)))
         m <- match(" ", nm, 0L)
         if (m) nm <- c(" ", nm[-m])
-        if (html) {
-            writeLines("<p align=\"center\">", outcon)
-            writeLines(paste("<a href=\"#", nm, "\">", nm, "</a>", sep = ""), #
-                       outcon)
-            writeLines("</p>\n", outcon)
-        }
-        if (CHM) {
-            writeLines("<p align=\"center\">", chmcon)
-            writeLines(paste("<a href=\"#", nm, "\">", nm, "</a>", sep = ""),
-                       chmcon)
-            writeLines("</p>\n", chmcon)
-       }
+        writeLines("<p align=\"center\">", outcon)
+        writeLines(paste("<a href=\"#", nm, "\">", nm, "</a>", sep = ""),
+                   outcon)
+        writeLines("</p>\n", outcon)
+
         for (f in nm) {
             MM <- M[first == f, ]
-            if (html) {
-                cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
-                    sep = "", file = outcon)
-                writeLines('<table width="100%">', outcon)
-                writeLines(paste('<tr><td width="25%"><a href="', MM[, 2], '.html">',
-                                 MM$HTopic, '</a></td>\n<td>', MM[, 3],'</td></tr>',
-                                 sep = ''), outcon)
-                writeLines("</table>", outcon)
-            }
-            if (CHM) {
-                cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
-                    sep = "", file = chmcon)
-                writeLines('<table width="100%">', chmcon)
-                writeLines(paste('<tr><td width="25%"><a href="', MM[, 2], '.html">',
-                                 MM$HTopic, '</a></td>\n<td>', MM[, 3],'</td></tr>',
-                                 sep = ''), chmcon)
-                writeLines("</table>", chmcon)
-            }
-       }
-    } else if (nrow(M)) {
-        if (html) {
+            cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
+                sep = "", file = outcon)
             writeLines('<table width="100%">', outcon)
-            writeLines(paste('<tr><td width="25%"><a href="', M[, 2], '.html">',
-                             M$HTopic, '</a></td>\n<td>', M[, 3],'</td></tr>',
+            writeLines(paste('<tr><td width="25%"><a href="', MM[, 2], '.html">',
+                             MM$HTopic, '</a></td>\n<td>', MM[, 3],'</td></tr>',
                              sep = ''), outcon)
             writeLines("</table>", outcon)
-        }
-        if (CHM) {
-            writeLines('<table width="100%">', chmcon)
-            writeLines(paste('<tr><td width="25%"><a href="', M[, 2], '.html">',
-                             M$HTopic, '</a></td>\n<td>', M[, 3],'</td></tr>',
-                             sep = ''), chmcon)
-            writeLines("</table>", chmcon)
-        }
+       }
+    } else if (nrow(M)) {
+        writeLines('<table width="100%">', outcon)
+        writeLines(paste('<tr><td width="25%"><a href="', M[, 2], '.html">',
+                         M$HTopic, '</a></td>\n<td>', M[, 3],'</td></tr>',
+                         sep = ''), outcon)
+        writeLines("</table>", outcon)
     } else { # no rows
-        if (html) writeLines("There are no help pages in this package", outcon)
-        if (CHM) writeLines("There are no help pages in this package", chmcon)
+         writeLines("There are no help pages in this package", outcon)
     }
-    if (html) writeLines('</body></html>', outcon)
-    if (CHM) writeLines('</body></html>', chmcon)
-    if (CHM) {
-        chm_toc(dir, desc["Package"], M)
-        .write_CHM_hhp(dir, desc["Package"], CHMinternals)
-    }
-}
-
-## dir is the package top-level source directory
-.write_CHM_hhp <- function(dir, pkg, internals)
-{
-    if (missing(pkg)) pkg <- basename(dir)
-    d <- file.path(dir, "chm")
-    dir.create(d, showWarnings = FALSE)
-    con <- file(file.path(d, paste(pkg, ".hhp", sep = "")), "wt")
-    on.exit(close(con))
-    writeLines(paste("[OPTIONS]\nAuto Index=Yes\n",
-                     "Contents file=", pkg, ".toc\n",
-                     "Compatibility=1.1 or later\n",
-                     "Compiled file=", pkg, ".chm\n",
-                     "Default topic=00Index.html\n",
-                     "Display compile progress=No\n",
-                     "Full-text search=Yes\n",
-                     "Full text search stop list file=..\\..\\..\\gnuwin32\\help\\R.stp\n",
-                     "Title=R Help for package ", pkg, "\n",
-                     "\n\n[FILES]\n",
-                     "00Index.html\n", sep = ""), con)
-    # Most files are linked from the index; internals are not, so need to be listed.
-    if (nrow(internals))
-    	writeLines(paste(unique(internals$File), ".html", sep=""), con)
+    writeLines('</body></html>', outcon)
 }
 
 ### * .convertRdfiles
 
-## possible types are "html", "chm", "latex", "example"
+## possible types are "html", "latex", "example"
 ## outenc is used as the default output encoding for latex conversion
 .convertRdfiles <-
     function(dir, outDir, types = "html", silent = FALSE, outenc = "latin1")
@@ -1953,24 +1796,22 @@
         cat(type, rep(" ", max(0L, 6L - nchar(type))), sep="")
     }
 
-    dirname <- c("html", "latex", "R-ex", "chm")
+    dirname <- c("html", "latex", "R-ex")
     ext <- c(".html", ".tex", ".R", ".html")
-    names(dirname) <- names(ext) <- c("html", "latex", "example", "chm")
+    names(dirname) <- names(ext) <- c("html", "latex", "example")
     mandir <- file.path(dir, "man")
     if (!file_test("-d", mandir)) return()
     desc <- .readRDS(file.path(outDir, "Meta", "package.rds"))$DESCRIPTION
     pkg <- desc["Package"]
     ver <- desc["Version"]
 
-    ## CHM is built in the source tree
     for(type in types)
-        if (type != "chm")
-            dir.create(file.path(outDir, dirname[type]), showWarnings = FALSE)
+        dir.create(file.path(outDir, dirname[type]), showWarnings = FALSE)
 
     cat("  converting help for package ", sQuote(pkg), "\n", sep="")
 
     ## FIXME: add this lib to lib.loc?
-    if (any(c("html", "chm") %in% types)) {
+    if ("html" %in% types) {
         ## may be slow, so add a message
         if (!silent) message("    finding HTML links ...", appendLF = FALSE)
         Links <- findHTMLlinks(outDir, level = 0:1)
@@ -2037,18 +1878,6 @@
                 showtype(type)
                 .convert(Rd2latex(Rd, ff, defines = NULL,
                                   outputEncoding = outenc))
-            }
-        }
-        if ("chm" %in% types) {
-            type <- "chm"
-            ff <- file.path(dir, dirname[type],
-                            paste(bf, ext[type], sep=""))
-            if (!file_test("-f", ff) || file_test("-nt", f, ff)) {
-                showtype(type)
-                .convert(Rd2HTML(Rd, ff, package = c(pkg, ver),
-                                 defines = NULL,
-                                 Links = Links, Links2 = Links2,
-                                 CHM = TRUE))
             }
         }
         if ("example" %in% types) {

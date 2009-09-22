@@ -166,7 +166,6 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
 Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
-; Name: "chtml"; Description: "Compiled HTML Help Files"; Types: full custom
 Name: "html"; Description: "HTML Files"; Types: user full custom; Flags: checkablealone
 Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom; Flags: checkablealone
 Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
@@ -224,7 +223,6 @@ begin
     CustomMessage(\'HelpStylet'\), CustomMessage(\'HelpStyleq\'),
     CustomMessage(\'HelpStylei\'), True, False);
   HelpStylePage.Add(CustomMessage(\'HelpStyle0\'));
-  HelpStylePage.Add(CustomMessage(\'HelpStyle1\'));
   HelpStylePage.Add(CustomMessage(\'HelpStyle2\'));
    
   InternetPage := CreateInputOptionPage(HelpStylePage.ID,
@@ -258,7 +256,7 @@ begin
   case option of
     \'plain\': index := 0;
     \'CHM\':   index := 1;
-    \'HTML\':  index := 2;
+    \'HTML\':  index := 1;
   else
     index := ${HelpStyle};
   end;
@@ -299,7 +297,6 @@ begin
     
   case HelpStylePage.SelectedValueIndex of
     0: HelpStyle := \'plain\';
-    1: HelpStyle := \'CHM\';
     2: HelpStyle := \'HTML\';
   end;
   SetPreviousData(PreviousDataKey, \'HelpStyle\', HelpStyle);  
@@ -341,7 +338,6 @@ begin
   SetCommentMarker(lines, \'MDI = yes\', MDISDIPage.SelectedValueIndex = 0);
   SetCommentMarker(lines, \'MDI = no\', MDISDIPage.SelectedValueIndex = 1);
   
-  SetCommentMarker(lines, \'options(help_type="chm"\', HelpStylePage.SelectedValueIndex = 1);
   SetCommentMarker(lines, \'options(help_type="html"\', HelpStylePage.SelectedValueIndex = 2);
   
   SaveStringsToFile(filename, lines, False);
@@ -394,10 +390,6 @@ sub listFiles {
 	$dir =~ s/\\$//;
 	$_ = $fn;
 	
-#	if ($_ eq "bin\\Rchtml.dll" 
-#	    || m/^library\\[^\\]*\\chtml/) {
-#	    $component = "chtml";
-#	} els
 	if ($_ eq "doc\\manual\\R-FAQ.html"
 		 || $_ eq "doc\\html\\rw-FAQ.html"
 		 || $_ eq "share\\texmf\\Sweave.sty") {

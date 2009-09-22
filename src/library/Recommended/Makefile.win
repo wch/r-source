@@ -28,11 +28,6 @@ stamp-recommended: $(OBJECTS)
 ## need to allow parallel installs, modulo dependencies below
 INSTALL_OPTS=--pkglock --install-tests
 
-ifeq ($(strip $(USE_CHM)),TRUE)
-INSTALL_OPTS+=--chm
-endif
-
-
 
 RCMD = ../../../bin/Rcmd
 

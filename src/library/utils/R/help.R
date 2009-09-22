@@ -58,20 +58,15 @@ function(topic, package = NULL, lib.loc = NULL,
             "ps"
         } else if(.Platform$OS.type == "windows" &&
                 is.logical(chmhelp) && !is.na(chmhelp) && chmhelp) {
-            warning('chmhelp = TRUE is deprecated: use help_type ="chm"')
-            "chm"
+            warning('chmhelp = TRUE is no longer supported: use help_type ="text"')
+            "txt"
         } else if(is.logical(htmlhelp) && !is.na(htmlhelp) && htmlhelp) {
             warning('htmhelp = TRUE is deprecated: use help_type ="html"')
             "html"
         } else
             "text"
     } else match.arg(tolower(help_type),
-                     c("text", "html", "chm", "postscript", "ps", "pdf"))
-    if (help_type == "chm") {
-        warning("CHM help is currently unsupported, using text help",
-                domain = NA)
-        help_type <- "text"
-    }
+                     c("text", "html", "postscript", "ps", "pdf"))
     type <- switch(help_type,
                    "text" = "help",
                    "postscript" =,
@@ -228,31 +223,7 @@ function(x, ...)
                 attr(xx, "type") <- "help"
                 print(xx)
             }
-        }
-        else if(type == "chm") {
-##             ## unneeded but harmless under Unix
-##             chm.dll <- file.path(R.home("modules"), "Rchtml.dll")
-##             if(!file.exists(chm.dll))
-##                 stop("Compiled HTML is not installed")
-##             if(!is.loaded("Rchtml")) dyn.load(chm.dll)
-##             wfile <- sub("/chm/([^/]*)$", "", file)
-##             thispkg <- sub(".*/([^/]*)/chm/([^/]*)$", "\\1", file)
-##             thispkg <- sub("_.*$", "", thispkg) # versioned installs.
-##             hlpfile <- paste(wfile, "/chtml/", thispkg, ".chm", sep = "")
-##             if(file.exists(hlpfile)) {
-##                 err <- .C("Rchtml", hlpfile, basename(file),
-##                           err = integer(1), PACKAGE = "Rchtml")$err
-##                 if(err) stop("CHM file could not be displayed")
-##             } else {
-##             	warning(gettextf("No CHM help for '%s' in package '%s' is available:\nthe CHM file for the package is missing", topic, thispkg), domain = NA)
-            att <- attributes(x)
-            xx <- sub("/chm/([^/]*$)", "/help/\\1", x)
-            attributes(xx) <- att
-            attr(xx, "type") <- "help"
-            print(xx)
-##             }
-         }
-        else if(type == "text") {
+        } else if(type == "text") {
             path <- dirname(file)
             dirpath <- dirname(path)
             pkgname <- basename(dirpath)

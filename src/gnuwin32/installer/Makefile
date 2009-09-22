@@ -10,8 +10,8 @@ EXTRA_PKGS =
 ## Default display mode, 0=MDI, 1=SDI
 MDISDI = 0
 
-## Default help style, 0=plain text, 1=CHM, 2=HTML
-HelpStyle = 2
+## Default help style, 0=plain text, 1=HTML
+HelpStyle = 1
 
 ## Default internet connection, 0=Standard, 1=Internet2
 Internet = 0

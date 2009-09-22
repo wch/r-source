@@ -41,11 +41,11 @@ help(topic, package = NULL, lib.loc = NULL,
  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
  \item{try.all.packages}{logical; see \code{Note}.}
  \item{help_type}{character string: the type of help required.
-   Possible values are \code{"text"}, \code{"html"}, \code{"chm"}
-   (compiled HTML, on Windows only), \code{"postscript"}, \code{"ps"} and
-   \code{"pdf"}.  Case is ignored, and partial matching is allowed.}
+   Possible values are \code{"text"}, \code{"html"},
+   \code{"postscript"}, \code{"ps"} and \code{"pdf"}.  Case is ignored,
+   and partial matching is allowed.}
 
-  \item{chmhelp}{a deprecated way to specify \code{help_type = "chm"}.}
+  \item{chmhelp}{a deprecated way to specify \code{help_type = "text"}.}
   \item{htmlhelp}{a deprecated way to specify \code{help_type = "html"}.}
   \item{offline}{a deprecated way to specify \code{help_type = "postscript"}.}
 }
@@ -62,11 +62,6 @@ help(topic, package = NULL, lib.loc = NULL,
     If for some reason HTML help is unavailable (see
     \code{\link{startDynamicHelp}}), plain text help will be used
     instead.
-#ifdef windows
-    \item (Windows only) Compiled HTML help.  May not be available for
-    some or all packages, when plain text help is shown.
-    [Currently disabled.]
-#endif
     \item For \code{help} only, typeset as a PostScript or PDF file --
     see the section on \sQuote{Offline help}.
   }

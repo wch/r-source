@@ -32,7 +32,7 @@ NEW FEATURES
 
     o	The libpng library has been updated to version 1.2.40.
 
-    	
+
 PACKAGE INSTALLATION
 
     o	Rcmd SHLIB (which is used by Rcmd INSTALL) now calls 'make'
@@ -60,11 +60,10 @@ INSTALLATION
     o	Support for memory profiling is enabled in a standard build
 	(this can be changed by editing config.h).
 
-    o	CHM help is no longer made by default, and support for it may
-	be withdrawn entirely before release.
+    o	CHM help is no longer supported.
 
     o	The help default has been changed to be HTML help rather than
-	CHM help (which is currently unavailable).
+	CHM help.
 	[Not yet the MSI installer.]
 
 	Binary packages are installed without CHM help if they contain

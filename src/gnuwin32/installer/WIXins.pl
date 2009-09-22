@@ -216,15 +216,6 @@ foreach $n (sort values %main) {
 
 print insfile <<END;
     </Feature>
-    <Feature Id="chtml" Title="Compiled HTML Help Files" Description="Compiled HTML Help Files" Level="1" InstallDefault="local" AllowAdvertise="no">
-END
-
-foreach $n (sort values %chtml) {
-    print insfile "      <ComponentRef Id='$n' />\n";
-}
-
-print insfile <<END;
-    </Feature>
     <Feature Id="html" Title="HTML Help Files" Description="HTML Help Files" Level="1" InstallDefault="local" AllowAdvertise="no">
 END
 
@@ -349,10 +340,7 @@ sub listFiles {
 	s+/+\\+g;
 	$fn =~ s+.*/++g;
 
-	if ($_ eq "bin\\Rchtml.dll" 
-	    || m/^library\\[^\\]*\\chtml/) {
-	    $component = "chtml";
-	} elsif ($_ eq "doc\\manual\\R-FAQ.html"
+	if ($_ eq "doc\\manual\\R-FAQ.html"
 		 || $_ eq "doc\\html\\rw-FAQ.html"
 		 || $_ eq "share\\texmf\\Sweave.sty") {
 	    $component = "main";
@@ -385,7 +373,6 @@ sub listFiles {
 	s+\\+/+g;
 	$ncomp = $comp{$_};
 	$main{$_} = $ncomp if $component eq "main";
-	$chtml{$_} = $ncomp if $component eq "chtml";
 	$html{$_} = $ncomp if $component eq "html";
 	$manuals{$_} = $ncomp if $component eq "manuals";
 	$refman{$_} = $ncomp if $component eq "refman";

@@ -16,7 +16,7 @@
 }
 \usage{
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
-        Links = NULL, Links2 = NULL, CHM = FALSE,
+        Links = NULL, Links2 = NULL,
         stages = "render", outputEncoding = "UTF-8", 
         dynamic = FALSE, no_links = FALSE, ...)
 
@@ -44,7 +44,6 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       Used by \command{R CMD \link{Rdconv}}.}
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
-  \item{CHM}{logical: prepare HTML suitable for Compiled HTML?}
   \item{...}{ additional parameters to pass to \code{\link{parse_Rd}} when
     \code{Rd} is a filename. }
 }

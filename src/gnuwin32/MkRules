@@ -13,9 +13,6 @@ G_FLAG=-gdwarf-2
 
 ## ============== configuration macros for building R ===================
 
-# Should CHM help be built?  Any value other than TRUE disables this
-USE_CHM = FALSE
-
 # Comment out if the msvcrt.dll malloc/free is required (not tested recently)
 LEA_MALLOC=YES
 
@@ -24,11 +21,6 @@ USE_ATLAS=NO
 ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 
 # Support for the ACML and Goto BLASes has been withdrawn: see R-admin.html
-
-# Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
-# not selected by USE_CHM = TRUE). Spaces allowed.
-# Used to build Rchtml.dll: hhc.exe must also be in the path.
-HHWDIR=C:/Program Files/HTML Help Workshop
 
 # Define this to enable memory profiling.
 # R_MEMORY_PROFILING=YES
@@ -54,7 +46,6 @@ ifeq ($(strip $(WIN)),64)
 USE_IMPLIBS = YES
 DEFINES=-DW64
 BINPREF=x86_64-pc-mingw32-
-USE_CHM = FALSE
 endif
 
 # use ICU

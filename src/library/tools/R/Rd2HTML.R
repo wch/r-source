@@ -76,7 +76,7 @@ mime_canonical_encoding <- function(encoding)
     encoding
 }
 
-## This gets used three ways:
+## This gets used two ways:
 
 ## 1) With dynamic = TRUE from tools:::httpd()
 ##    Here generated links are of the forms
@@ -96,12 +96,10 @@ mime_canonical_encoding <- function(encoding)
 ##    and missing links (those without an explicit package, and
 ##    those topics not in Links[2]) don't get linked anywhere.
 
-## 3) With CHM = TRUE from .convertRdfiles (currently not in use).
-
 ## FIXME: better to use XHTML
 Rd2HTML <-
     function(Rd, out = "", package = "", defines = .Platform$OS.type,
-             Links = NULL, Links2 = NULL, CHM = FALSE,
+             Links = NULL, Links2 = NULL,
              stages = "render", outputEncoding = "UTF-8",
              dynamic = FALSE, no_links = FALSE, ...)
 {
@@ -151,7 +149,6 @@ Rd2HTML <-
 
     pendingClose <- pendingOpen <- character(0)  # Used for infix methods
 
-    if (CHM) nlinks <- 0L
 ### These correspond to HTML wrappers
     HTMLTags <- c("\\bold"="B",
     	          "\\cite"="CITE",
@@ -282,19 +279,10 @@ Rd2HTML <-
                     warnRd(block, Rdfile, "missing link ", sQuote(topic))
                 writeContent(block, tag)
             } else {
-                ## treat links in the same package specially -- needed for CHM
+                ## treat links in the same package specially -- was needed for CHM
                 pkg_regexp <- paste("^../../", package, "/html/", sep = "")
                 if (grepl(pkg_regexp, htmlfile)) {
                     htmlfile <- sub(pkg_regexp, "", htmlfile)
-                } else if (CHM) {
-                    otherpkg <- sub("^../../([^/]*).*", "\\1", htmlfile)
-                    htmlfile <- paste("findlink('", otherpkg, "', '",
-                                      basename(htmlfile), "')",
-                                      sep="")
-                    of0('<a onclick="', htmlfile,
-                        '" style="text-decoration: underline; color: blue; cursor: hand">')
-                    writeContent(block, tag)
-                    of1('</a>')
                 } else writeHref()
             }
     	} else {
@@ -332,22 +320,10 @@ Rd2HTML <-
                 ## use href = "file.html"
                 writeHref()
             } else {
-                ## another package was specified
-                if (CHM) {
-                    htmlfile <- paste("findlink('", parts$pkg, "', '",
-                                      parts$targetfile, ".html", "')",
-                                      sep="")
-                    of0('<a onclick="', htmlfile,
-                        '" style="text-decoration: underline; color: blue; cursor: hand">')
-                    writeContent(block, tag)
-                    of1('</a>')
-                    nlinks <<- nlinks + 1L
-                } else {
-                    ## href = "../../pkg/html/file.html"
-                    htmlfile <- paste("../../", parts$pkg, "/html/",
-                                      htmlfile, sep="")
-                    writeHref()
-                }
+                ## href = "../../pkg/html/file.html"
+                htmlfile <- paste("../../", parts$pkg, "/html/", htmlfile,
+                                  sep="")
+                writeHref()
             }
         }
     }
@@ -650,11 +626,8 @@ Rd2HTML <-
     title <- Rd[[1L]]
     name <- htmlify(Rd[[2L]][[1L]])
 
-    if (CHM)
-        of0('<html><head><title>')
-    else
-        of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
-            '<html><head><title>R: ')
+    of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
+        '<html><head><title>R: ')
     ## special for now, as we need to remove leading and trailing spaces
     title <- trim(as.character(title))
     title <- htmlify(paste(psub1("^\\s+", "", title[nzchar(title)]),
@@ -664,41 +637,18 @@ Rd2HTML <-
         '<meta http-equiv="Content-Type" content="text/html; charset=',
         mime_canonical_encoding(outputEncoding),
         '">\n')
-    if (CHM) {
-        of0('<link rel="stylesheet" type="text/css" href="Rchm.css">\n',
-            '</head><body>\n\n')
-        of0('<table width="100%"><tr><td>', name, '(', package, ')',
-            '</td><td align="right">R Documentation</td></tr></table>\n')
-        of1('<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">\n')
-        aliases <- sapply(Rd[RdTags(Rd) == "\\alias"], as.character)
-        ## FIXME: (un)escape as needed
-        of0('<param name="keyword" value="R:   ', aliases, '">\n')
-        ## space is deliberate, used in sorting indices
-        of0('<param name="keyword" value=" ', title, '">\n')
-        of1('</object>\n\n\n')
-    } else
-        of0('<link rel="stylesheet" type="text/css"',
-            if (no_links) 'href="R.css">' else 'href="../../R.css">',
-            '\n</head><body>\n\n',
-            '<table width="100%" summary="page for ', name, ' {', package,
-            '}"><tr><td>',name,' {', package,
-            '}</td><td align="right">R Documentation</td></tr></table>\n\n')
+
+    of0('<link rel="stylesheet" type="text/css"',
+        if (no_links) 'href="R.css">' else 'href="../../R.css">',
+        '\n</head><body>\n\n',
+        '<table width="100%" summary="page for ', name, ' {', package,
+        '}"><tr><td>',name,' {', package,
+        '}</td><td align="right">R Documentation</td></tr></table>\n\n')
 
     of0("<h2>", title,'</h2>\n')
 
     for (i in seq_along(sections)[-(1:2)])
     	writeSection(Rd[[i]], sections[i])
-
-    if (CHM && nlinks)
-        writeLines(paste('',
-                         '<script Language="JScript">',
-                         'function findlink(pkg, fn) {',
-                         'var Y, link;',
-                         'Y = location.href.lastIndexOf("\\\\") + 1;',
-                         'link = location.href.substring(0, Y);',
-                         'link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;',
-                         'location.href = link;', '}', '</script>',
-                         sep = '\n'), con)
 
     if(version != "")
         version <- paste('Package <em>', package,

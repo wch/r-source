@@ -106,7 +106,7 @@ endif
 ifeq ($(strip $(USE_IMPLIBS)),YES)
 	@$(MAKE) --no-print-directory implibs
 endif
-	@$(MAKE) --no-print-directory Rblas CHTML
+	@$(MAKE) --no-print-directory Rblas
 	@$(MAKE) --no-print-directory front-ends COPYRIGHTS rmodules fixed/fixdesc
 
 
@@ -218,13 +218,6 @@ libRblas.dll.a:  ../extra/blas/Rblas.def
 	  --input-def $< --output-lib $@
 
 
-#                          ===== Packages ======
-
-CHTML:
-ifeq ($(strip $(USE_CHM)),TRUE)
-	$(MAKE) --no-print-directory -C ./help
-endif
-
 #                          ===== cleaning ======
 
 ## used in installer/Makefile
@@ -299,7 +292,6 @@ cleanwin:
 	$(MAKE) -C ../extra/graphapp -f Makefile.win clean
 	$(MAKE) -C fixed clean
 	$(MAKE) -C getline clean
-	$(MAKE) -C help clean
 	$(MAKE) -C front-ends clean
 	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean

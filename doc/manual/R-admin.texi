@@ -1031,11 +1031,6 @@ and sit back and wait while the basic compile takes place.
 
 Notes:
 @itemize
-@item
-The file @file{bin/Rchtml.dll} is only built if CHM help is specified in
-@file{MkRules}. Its source is in the help directory, and you need the
-@HTML{} Help Workshop files to build it.  You can just copy this from a
-binary distribution.
 
 @item
 We have had reports that earlier versions of anti-virus software locking
@@ -4208,14 +4203,13 @@ path.
 
 @menu
 * Perl::                        
-* The Microsoft HTML Help Workshop::  
 * LaTeX::                       
 * The Inno Setup installer::    
 * The command line tools::      
 * The MinGW compilers::         
 @end menu
 
-@node Perl, The Microsoft HTML Help Workshop, The Windows toolset, The Windows toolset
+@node Perl, LaTeX, The Windows toolset, The Windows toolset
 @section Perl
 
 Perl is needed to build @R{} and to use @command{R CMD
@@ -4232,22 +4226,8 @@ alternatives are listed at @uref{http://win32.perl.org/}.
 one.  Users of 64-bit Windows can use a Win64 Perl (such as that from
 ActiveState) if they prefer.
 
-@node The Microsoft HTML Help Workshop, LaTeX, Perl, The Windows toolset
-@section The Microsoft @HTML{} Help Workshop
 
-To make compiled @HTML{} (@file{.chm}) files you will need the Microsoft
-@HTML{} Help Workshop, currently available for download at
-@uref{http://msdn.microsoft.com/@/library/@/en-us/@/htmlhelp/@/html/@/hwmicrosofthtmlhelpdownloads.asp}
-and
-@uref{http://www.microsoft.com/@/office/@/ork/@/xp/@/appndx/@/appa06.htm}.
-This is @emph{not} included in @file{Rtools.exe}.
-
-If this is not installed, @command{Rcmd INSTALL} will skip compiled
-@HTML{} help (with a message).  However, to build @R{} itself without
-CHM help, you need to set @code{USE_CHM = FALSE} in
-@file{src/gnuwin32/MkRules}.
-
-@node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
+@node LaTeX, The Inno Setup installer, Perl, The Windows toolset
 @section @LaTeX{}
 
 The @samp{MiKTeX} (@uref{http://www.miktex.org/}) distribution of
