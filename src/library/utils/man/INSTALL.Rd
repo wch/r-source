@@ -51,7 +51,7 @@
   extracted to a temporary directory.  Precisely what forms are accepted
   depends on the system (see \code{\link{untar}}): this will certainly
   include filenames of the form \file{pkg_version.tar.gz} as obtained
-  from CRAN, \file{pkg.tgz} and \file{pkg.tar.gz}, usuallly
+  from CRAN, \file{pkg.tgz} and \file{pkg.tar.gz}, usually
   \file{pkg_version.tar.bz2} and \file{pkg.tar.bz2}, and on systems with
   recent toolsets, \file{pkg_version.ext} for any supported extension
   such as \file{tar.lzma} and \file{tar.xz}.
@@ -98,7 +98,7 @@
   (two names for the same option).
 #ifdef windows
   
-  Windows-only ption \option{--build} can be used to zip up the
+  Windows-only option \option{--build} can be used to zip up the
   installed package or bundle for distribution: it implies
   \option{--auto-zip} which selects if data file are zipped up to save
   disc space.

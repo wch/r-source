@@ -89,7 +89,7 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   \command{bzip2} compression in 13 secs and 9.4MB with \command{xz}
   compression in 40 secs.  The load times were 1.3, 2.8, 5.5 and 5.7
   seconds respectively.  These results are indicative, but the relative
-  perfomances do depend on the actual file and \command{xz} did
+  performances do depend on the actual file and \command{xz} did
   unusually well here.
   
   It is possible to compress later (with \command{gzip}, \command{bzip2}

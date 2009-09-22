@@ -39,7 +39,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     \file{tgz}, \file{taz} or \file{Z} selects \command{gzip}
     compression.}
 
-  \item{extras}{\code{NULL} or a character string: further command-ilne
+  \item{extras}{\code{NULL} or a character string: further command-line
     flags such as \option{-p} to be passed to the \command{tar} program.}
 
   \item{verbose}{logical: if true echo the command used.}
