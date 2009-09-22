@@ -113,7 +113,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
     if (!missing(exdir)) {
         dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
         od <- setwd(exdir)
-        on.exit(setwd(od))
+        on.exit(setwd(od), add = TRUE)
     }
     contents <- character()
     repeat{
@@ -146,7 +146,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                         domain = NA)
         }
         type <- block[157L]
-        if(type == 48 || type == 0) {
+        if(type == 48L || type == 0L) {
             contents <- c(contents, name)
             remain <- size
             dothis <- !list
@@ -169,23 +169,24 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                 Sys.chmod(name, mode)
                 .Call("R_setFileTime", name, ft, PACKAGE = "base")
             }
-        } else if(type == 49 || type == 50) { # hard and symbolic links
+        } else if(type == 49L || type == 50L) { # hard and symbolic links
             contents <- c(contents, name)
             ns <- max(which(block[158:257] > 0))
-            name2 <- rawToChar(block[158:ns])
+            name2 <- rawToChar(block[157L + seq_len(ns)])
             if(!list) {
                 ## this will not work for links to dirs on Windows
                 if(.Platform$OS.type == "windows") file.copy(name2, name)
                 else file.symlink(name2, name)
             }
-        } else if(type == 53) {
+        } else if(type == 53L) {
             contents <- c(contents, name)
             if(!list) {
                 dir.create(name, showWarning = FALSE, recursive = TRUE)
                 Sys.chmod(name, mode)
+                ## not much point, since dir will be populated afterwards
                 ## .Call("R_setFileTime", name, ft)
             }
-        } else stop("unsupported entry type", sQuote(rawToChar(type)))
+        } else stop("unsupported entry type ", sQuote(rawToChar(type)))
     }
     if(list) contents else invisible(0L)
 }
@@ -217,31 +218,29 @@ tar <- function(tarfile, files = NULL,
     } else if(inherits(tarfile, "connection")) con <- tarfile
     else stop("'tarfile' must be a character string or a connection")
 
-    files <- list.files(files, recursive = TRUE, all.files = TRUE,
-                        full.names = TRUE)
-    ## this omits directories.
-    bf <- unique(dirname(files))
-    files <- c(bf[!bf %in% c(".", files)], files)
+    files <- c(files, list.files(files, recursive = TRUE, all.files = TRUE,
+                                 full.names = TRUE, include.dirs = TRUE))
 
-    for (f in files) {
+    for (f in unique(files)) {
         info <- file.info(f)
         if(is.na(info$size)) {
             warning(gettextf("file '%s' not found", f), domain = NA)
             next
         }
         header <- raw(512L)
+        ## add trailing / to dirs.
         if(info$isdir && !grepl("/$", f)) f <- paste(f, "/", sep = "")
         name <- charToRaw(f)
         ## FIXME: perhaps use prefix field
-        if(length(name) > 100) stop("file path is too long")
+        if(length(name) > 100L) stop("file path is too long")
         header[seq_along(name)] <- name
         header[101:107] <- charToRaw(sprintf("%07o", info$mode))
         if(!is.na(info$uid))
             header[109:115] <- charToRaw(sprintf("%07o", info$uid))
         if(!is.na(info$gid))
             header[117:123] <- charToRaw(sprintf("%07o", info$gid))
+        ## size is 0 for directories and it seems for links.
         size <- ifelse(info$isdir, 0, info$size)
-        header[125:135] <- charToRaw(sprintf("%011o", as.integer(size)))
         header[137:147] <- charToRaw(sprintf("%011o", as.integer(info$mtime)))
         if (info$isdir) header[157L] <- charToRaw("5")
         else {
@@ -249,25 +248,27 @@ tar <- function(tarfile, files = NULL,
             if(is.na(lnk)) lnk <- ""
             header[157L] <- charToRaw(ifelse(nzchar(lnk), "2", "0"))
             if(nzchar(lnk)) {
-                if(length(lnk) > 100) stop("linked path is too long")
-                header[156 + seq_along(lnk)] <- charToRaw(lnk)
+                if(length(lnk) > 100L) stop("linked path is too long")
+                header[157L + seq_len(nchar(lnk))] <- charToRaw(lnk)
+                size <- 0
             }
         }
+        header[125:135] <- charToRaw(sprintf("%011o", as.integer(size)))
         ## the next two are what POSIX says, not what GNU tar does.
         header[258:262] <- charToRaw("ustar")
         header[264:265] <- charToRaw("0")
         if(!is.na(s <- info$uname)) {
             ns <- nchar(s, "b")
-            header[265 + (1:ns)] <- charToRaw(s)
+            header[265L + (1:ns)] <- charToRaw(s)
         }
         if(!is.na(s <- info$grname)) {
             ns <- nchar(s, "b")
-            header[297 + (1:ns)] <- charToRaw(s)
+            header[297L + (1:ns)] <- charToRaw(s)
         }
         header[149:156] <- charToRaw(" ")
         checksum <- sum(as.integer(header)) %% 2^24 # 6 bytes
         header[149:154] <- charToRaw(sprintf("%06o", as.integer(checksum)))
-        header[155] <- as.raw(0)
+        header[155L] <- as.raw(0L)
         writeBin(header, con)
         if(info$isdir || nzchar(lnk)) next
         inf <- file(f, "rb")

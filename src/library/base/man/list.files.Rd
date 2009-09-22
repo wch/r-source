@@ -10,11 +10,11 @@
 \usage{
 list.files(path = ".", pattern = NULL, all.files = FALSE,
            full.names = FALSE, recursive = FALSE,
-           ignore.case = FALSE)
+           ignore.case = FALSE, include.dirs = !recursive)
 
        dir(path = ".", pattern = NULL, all.files = FALSE,
            full.names = FALSE, recursive = FALSE,
-           ignore.case = FALSE)
+           ignore.case = FALSE, include.dirs = !recursive)
 }
 \arguments{
   \item{path}{a character vector of full path names; the default
@@ -30,6 +30,10 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
     the file names are returned.}
   \item{recursive}{logical. Should the listing recurse into directories?}
   \item{ignore.case}{logical. Should pattern-matching be case-insensitive?}
+  \item{include.dirs}{logical. Should the listing include sub-directories
+    themselves (as well as their content for \code{recursive = TRUE})?
+    Note that the directories specified in \code{paths} are never
+    included in the listing.}
 }
 \description{
   These functions produce a character vector of the names of files
@@ -41,16 +45,16 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
   path does not exist or is not a directory or is unreadable it
   is skipped, with a warning.
 
-  The files are sorted in alphabetical order, on the full path
-  if \code{full.names = TRUE}.  Directories are included only if
-  \code{recursive = FALSE}.
+  The names are sorted in alphabetical order, on the full path
+  if \code{full.names = TRUE}.
+
+  \code{pattern} applies to all file names that are returned, including
+  directories if \code{include.dirs = TRUE}, but not to whether
+  a directory is recursed into if \code{recursive = TRUE}.
 }
 \author{Ross Ihaka, Brian Ripley}
 \note{
   File naming conventions are platform dependent.
-
-  \code{recursive = TRUE} is not supported on all platforms and may be
-  ignored (with a warning).
 }
 \seealso{\code{\link{file.info}}, \code{\link{file.access}}
   and \code{\link{files}} for many more file handling functions and 

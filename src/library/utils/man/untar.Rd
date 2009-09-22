@@ -44,6 +44,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 
   \item{verbose}{logical: if true echo the command used.}
 }
+
 \details{
   This is either a wrapper for a \command{tar} command or for an
   internal implementation written in \R.  The latter is used if
@@ -73,7 +74,8 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \command{gzip} and \command{bzip2} compression, and \command{xz} on
   some \R builds (see \code{\link{capabilities}("xz")}).  It does not
   guard against restoring absolute file paths, as some \command{tar}
-  implementations do.
+  implementations do.  It will create the parent directories for
+  directories or files in the archive if necessary.
   
   The standards only support ASCII filenames (indeed, only alphanumeric
   plus period, underscore and hyphen).  \code{untar} makes no attempt to map

@@ -54,7 +54,7 @@ file.symlink(from, to)
   for that use \code{\link{file.access}}.)
 #ifdef unix
   Note that if the file is a symbolic link, the result indicates if the
-  libk points to an actual file, not just if the link exists.
+  link points to an actual file, not just if the link exists.
 #endif
 
   \code{file.remove} attempts to remove the files named in its
@@ -119,7 +119,7 @@ file.symlink(from, to)
 
   \code{\link{Sys.glob}} to expand wildcards in file specifications.
   
-  \code{\link{file_test}}.
+  \code{\link{file_test}}, \code{\link{Sys.readlink}}.
 }
 
 \examples{

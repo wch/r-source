@@ -28,7 +28,7 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	- Rd version 2 is required in help files.
 
 
-    o	HTML help is now generated dynamically using a HTTP server
+    o	HTML help is now generated dynamically using an HTTP server
 	running in the R process and listening on the loopback
 	interface.
 
@@ -45,7 +45,7 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	- The HTML help can now locate cross-references of the form
           \link[pkg]{foo} and \link[pkg:foo]{bar} where 'foo' is an
           alias in the package, rather than the documented (basename
-          of a) filename (since the documnetation has been much
+          of a) filename (since the documentation has been much
           ignored).
 
 	- Details may change before release.
@@ -307,11 +307,16 @@ NEW FEATURES
 
     o	New function Sys.readlink() for information about symbolic links.
 
+    o	list.files() (also known as dir()) has a new argument
+	'include.dirs' to control whether directories are included in
+	the listing: the default of include.dirs = !recursive is
+	unchanged.
+
 
 REGULAR EXPRESSIONS
 
     o	A different regular expression engine is used for basic and
-	extended regexps and also for approximate matching.  This is
+	extended regexps and is also for approximate matching.  This is
 	based on the TRE library of Ville Laurikari, a modifed copy of
 	which is included in the R sources.
 
@@ -331,7 +336,7 @@ REGULAR EXPRESSIONS
 	warned about in the help page does not work in this engine (it
 	did in the previous one since 2005).
 
-    o	Basic and extended regexps now support same set of options as
+    o	Extended (and basic) regexps now support same set of options as
 	for fixed = TRUE and perl = TRUE, including 'useBytes' and
 	support for UTF-8-encoded strings in non-UTF-8 locales.
 
@@ -352,7 +357,7 @@ REGULAR EXPRESSIONS
 
     o	The algorithm used by strsplit() has been reordered to batch by
     	elements of 'split': this can be much faster for fixed = FALSE
-    	(as multiple compilation is avoided).
+    	(as multiple compilation of regexps is avoided).
 
     o	The help pages, including ?regexp, have been updated and
 	should be consulted for details of the new implementations.
