@@ -215,7 +215,7 @@ function(db)
     ## <FIXME>
     ## Fix bundle packages ... maybe.
     ## </FIXME>
-    
+
     ## Packages in the db not verifiable as FOSS.
     ind <- !tools:::analyze_licenses(db[, "License"])$is_verified
     ## Now find the recursive reverse dependencies of these and the
@@ -426,7 +426,8 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                             , res)]
     if(length(update)) {
         install.packages(update, lib = lib.loc[1L], contriburl = contriburl,
-                         method = method, available = available, ...)
+                         method = method, available = available,
+                         type = type, ...)
         # Now check if they were installed and update 'res'
         dirs <- list.files(lib.loc[1L])
         updated <- update[update %in% dirs]
