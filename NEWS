@@ -436,7 +436,7 @@ COMPRESSION
 
     o	New function tar() to create (possibly compressed) tar archives.
 
-    o	New functions memCompress() and memDecopmress() for in-memory
+    o	New functions memCompress() and memDecompress() for in-memory
 	compression and decompression.
 
     o	bzfile() has a 'compress' argument to select the amount of
@@ -448,7 +448,7 @@ COMPRESSION
 	capabilities("xz") reports if it is supported.
 
     o	gzfile() looks at the file header and so can now also read
-	bzip2-ed files and xv-comppressed files (where supported).
+	bzip2-ed files and xv-compressed files (where supported).
 
     o	There is the new option of save(compress = "bzip2") to use bzip2
 	compression (which will be slower, but can give substantially
