@@ -29,8 +29,10 @@
 /* Private interface */
 
 typedef struct {
+
     Rboolean keepSrcRefs;	/* Whether to attach srcrefs to objects as they are parsed */
     SEXP SrcFile;		/* The srcfile object currently being parsed */
+    PROTECT_INDEX SrcFileProt;	/* The SrcFile may change */
     int xxlineno;		/* Position information about the current parse */
     int xxcolno;
     int xxbyteno;

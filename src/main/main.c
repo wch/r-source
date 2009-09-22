@@ -76,13 +76,15 @@ extern void InitDynload(void);
 
 	/* Read-Eval-Print Loop [ =: REPL = repl ] with input from a file */
 
-static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
+static void R_ReplFile(FILE *fp, SEXP rho)
 {
     ParseStatus status;
     int count=0;
     SrcRefState ParseState;
-    R_InitSrcRefState(&ParseState);
+    int savestack;
     
+    R_InitSrcRefState(&ParseState);
+    savestack = R_PPStackTop;    
     for(;;) {
 	R_PPStackTop = savestack;
 	R_CurrentExpr = R_Parse1File(fp, 1, &status, &ParseState);
@@ -649,7 +651,7 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
     if (fp != NULL) {
 	if (! SETJMP(R_Toplevel.cjmpbuf)) {
 	    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-	    R_ReplFile(fp, env, 0, 0);
+	    R_ReplFile(fp, env);
 	}
 	fclose(fp);
     }
@@ -821,7 +823,7 @@ void setup_Rmainloop(void)
     if (R_SignalHandlers) init_signal_handlers();
     if (!doneit) {
 	doneit = 1;
-	R_ReplFile(fp, baseEnv, 0, 0);
+	R_ReplFile(fp, baseEnv);
     }
     fclose(fp);
 

@@ -3282,7 +3282,7 @@ static char	contextstack[CONTEXTSTACK_SIZE], *contextp;
 void R_InitSrcRefState(SrcRefState *state)
 {
     state->keepSrcRefs = FALSE;
-    state->SrcFile = R_NilValue;
+    PROTECT_WITH_INDEX(state->SrcFile = R_NilValue, &(state->SrcFileProt));
     state->xxlineno = 1;
     state->xxcolno = 0;
     state->xxbyteno = 0;
@@ -3290,8 +3290,7 @@ void R_InitSrcRefState(SrcRefState *state)
 
 void R_FinalizeSrcRefState(SrcRefState *state)
 {
-    if (!isNull(state->SrcFile))
-    	UNPROTECT_PTR(state->SrcFile);
+    UNPROTECT_PTR(state->SrcFile);
 }
 
 static void UseSrcRefState(SrcRefState *state)
@@ -3299,6 +3298,7 @@ static void UseSrcRefState(SrcRefState *state)
     if (state) {
 	ParseState.keepSrcRefs = state->keepSrcRefs;
 	ParseState.SrcFile = state->SrcFile;
+	ParseState.SrcFileProt = state->SrcFileProt;
 	ParseState.xxlineno = state->xxlineno;
 	ParseState.xxcolno = state->xxcolno;
 	ParseState.xxbyteno = state->xxbyteno;
@@ -3311,6 +3311,7 @@ static void PutSrcRefState(SrcRefState *state)
     if (state) {
 	state->keepSrcRefs = ParseState.keepSrcRefs;
 	state->SrcFile = ParseState.SrcFile;
+	state->SrcFileProt = ParseState.SrcFileProt;
 	state->xxlineno = ParseState.xxlineno;
 	state->xxcolno = ParseState.xxcolno;
 	state->xxbyteno = ParseState.xxbyteno;
@@ -3424,10 +3425,9 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
     savestack = R_PPStackTop;
     PROTECT(t = NewList());
 
-    ParseState.SrcFile = srcfile;
+    REPROTECT(ParseState.SrcFile = srcfile, ParseState.SrcFileProt);
     if (!isNull(ParseState.SrcFile)) {
     	ParseState.keepSrcRefs = TRUE;
-	PROTECT(ParseState.SrcFile);
 	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
     }
     
@@ -3444,8 +3444,8 @@ static SEXP R_Parse(int n, ParseStatus *status, SEXP srcfile)
 	    break;
 	case PARSE_INCOMPLETE:
 	case PARSE_ERROR:
-	    R_FinalizeSrcRefState(&ParseState);	    
 	    R_PPStackTop = savestack;
+	    R_FinalizeSrcRefState(&ParseState);	    
 	    return R_NilValue;
 	    break;
 	case PARSE_EOF:
@@ -3462,8 +3462,9 @@ finish:
 	SET_VECTOR_ELT(rval, n, CAR(t));
     if (ParseState.keepSrcRefs) 
 	rval = attachSrcrefs(rval, ParseState.SrcFile);
+    R_PPStackTop = savestack;    
     R_FinalizeSrcRefState(&ParseState);
-    R_PPStackTop = savestack;
+
     *status = PARSE_OK;
     return rval;
 }
@@ -3544,19 +3545,18 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
     R_IoBufferWriteReset(buffer);
     buf[0] = '\0';
     bufp = buf;
+    R_InitSrcRefState(&ParseState);    
     savestack = R_PPStackTop;
     PROTECT(t = NewList());
-
-    R_InitSrcRefState(&ParseState);
     
     GenerateCode = 1;
     iob = buffer;
     ptr_getc = buffer_getc;
 
-    ParseState.SrcFile = srcfile;
+    REPROTECT(ParseState.SrcFile = srcfile, ParseState.SrcFileProt);
+    
     if (!isNull(ParseState.SrcFile)) {
     	ParseState.keepSrcRefs = TRUE;
-    	PROTECT(ParseState.SrcFile);
 	PROTECT_WITH_INDEX(SrcRefs = NewList(), &srindex);
     }
     
@@ -3589,8 +3589,8 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
 	case PARSE_INCOMPLETE:
 	case PARSE_ERROR:
 	    R_IoBufferWriteReset(buffer);
-	    R_FinalizeSrcRefState(&ParseState);
 	    R_PPStackTop = savestack;
+	    R_FinalizeSrcRefState(&ParseState);
 	    return R_NilValue;
 	    break;
 	case PARSE_EOF:
@@ -3607,8 +3607,8 @@ finish:
     if (ParseState.keepSrcRefs) {
 	rval = attachSrcrefs(rval, ParseState.SrcFile);
     }
-    R_FinalizeSrcRefState(&ParseState);    
     R_PPStackTop = savestack;
+    R_FinalizeSrcRefState(&ParseState);    
     *status = PARSE_OK;
     return rval;
 }
@@ -4591,9 +4591,8 @@ static void setParseFilename(SEXP newname) {
     	    strcmp(CHAR(STRING_ELT(oldname, 0)),
     	           CHAR(STRING_ELT(newname, 0))) == 0) return;
     }
-    if (!isNull(ParseState.SrcFile))
-    	UNPROTECT_PTR(ParseState.SrcFile);
-    PROTECT(ParseState.SrcFile = NewEnvironment(R_NilValue, R_NilValue, R_EmptyEnv));
+    REPROTECT(ParseState.SrcFile = NewEnvironment(R_NilValue, R_NilValue, R_EmptyEnv), ParseState.SrcFileProt);
+    
     defineVar(install("filename"), newname, ParseState.SrcFile);
     setAttrib(ParseState.SrcFile, R_ClassSymbol, mkString("srcfile"));
     UNPROTECT_PTR(newname);
