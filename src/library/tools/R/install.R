@@ -158,7 +158,7 @@
                 dir.exists(lp <- file.path(lockdir, p))) {
                 starsmsg(stars, "restoring previous ", sQuote(pkgdir))
                 if (WINDOWS) {
-                    file.copy(lp, pkgdir, recursive = TRUE)
+                    file.copy(lp, dirname(pkgdir), recursive = TRUE)
                     unlink(lp, recursive = TRUE)
                 } else system(paste("mv", lp, pkgdir))
             }

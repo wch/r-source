@@ -132,7 +132,7 @@ sources used and links to the scripts used for the build.
 Where liblzma from xz-utils is included, the binaries used and the
 sources can be found at http://www.stats.ox.ac.uk/pub/Rtools/goodies
 
-Rbitmap.dll is built against static libraries for libpng, jpeg-6b and
+Rbitmap.dll is built against static libraries for libpng, jpeg and
 libtiff: the Makefiles and configuration headers used are in the
 src/gnuwin32/bitmap direcctory.  The exact sources used for these
 libraries are available on request to R-windows@r-project.org (you
