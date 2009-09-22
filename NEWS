@@ -555,6 +555,9 @@ BUG FIXES
     o	methods(f) used to warn unnecessarily for an S4 generic 'f' which
 	had been created based on an existing S3 generic.
 
+    o	The check for consistent ordering of superclasses was not
+        ignoring all conditional relations (the symptom was usually
+        spurious warnings for classes extending "array").
 
 
 

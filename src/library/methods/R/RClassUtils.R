@@ -1131,20 +1131,27 @@ completeSubclasses <-
                   domain = NA)
         }
 
-
-.resolveSuperclasses <- function(classDef, ext, where, conflicts = character()) {
+           
+.resolveSuperclasses <- function(classDef, ext, where, conflicts = attr(ext, "conflicts")) {
+  ## find conditional extensions, ignored in superclass ordering
+  .condExts <- function(contains)
+      sapply(contains, function(x) is(x, "conditionalExtension" ))
+  .noncondExtsClass <- function(cl) {
+    if(isClass(cl, where = where) ) {
+      contains <- getClass(cl, where = where)@contains
+      names(contains)[!.condExts(contains)]
+    }
+    else cl
+  }
   what <- names(ext)
   dups <- unique(what[duplicated(what)])
   if(length(dups) > 0) {
     ## First, eliminate all conditional relations, which never override non-conditional
     affected <- match(what, dups, 0) > 0
-    conditionals <- integer()
-    for(j in seq_along(what)[affected])
-      if(is(ext[[j]], "conditionalExtension")) conditionals <- c(conditionals, j)
-    retain <- rep(TRUE, length(what))
-    if(length(conditionals) > 0) {
-      retain[conditionals] <- FALSE
-      what2 <- what[retain]
+    conditionals <- .condExts(ext)
+    if(any(conditionals)) {
+      affected[conditionals] <- FALSE
+      what2 <- what[affected]
       dups <- unique(what2[duplicated(what2)])
       if(length(dups) == 0) {
         ##  eliminating conditonal relations removed duplicates
@@ -1152,25 +1159,31 @@ completeSubclasses <-
           attr(ext, "conflicts") <- unique(c(conflicts, attr(ext, "conflicts")))
         return(ext)
       }
-      ## else, go on with conditionals eliminated from retain
+      ## else, go on with conditionals eliminated 
     }
     directSupers <- sapply(classDef@contains, function(x) identical(x@distance, 1))
     directSupers <- unique(names(classDef@contains[directSupers]))
-    subNames <- lapply(directSupers, function(x) if(isClass(x)) extends(x) else x)
-    names(subNames) <- directSupers
-    retain = .choosePos(c(classDef@className, what),
-      subNames)
+    ## form a list of the superclass orderings of the direct superclasses
+    ## to check consistency with each way to eliminate duplicates
+    ## Once again, conditional relations are eliminated
+    superExts <- lapply(directSupers, .noncondExtsClass)
+    names(superExts) <- directSupers
+    retain = .choosePos(classDef@className, what, superExts, affected)
     if(is.list(retain)) {
-      score <- retain[[2]]
-      conflicts <- unique(c(conflicts, score))
+      these <- retain[[2]]
+      conflicts <- unique(c(conflicts, these)) # append the new conflicts
       retain <- retain[[1]]
     }
-    ext <- ext[retain]
-  } # else, may have inherited some conflicts, which will be copied to the contains list.
+    ## eliminate the affected & not retained
+    affected[retain] <- FALSE
+    ext <- ext[!affected]
+  }
+  ## even if no dups here, may have inherited some conflicts,
+  ## which will be copied to the contains list.
   ## FUTURE NOTE (7/09):  For now, we are using an attribute for conflicts,
   ## rather than promoting the ext list to a new class, which may be desirable
   ## if other code comes to depend on the conflicts information.
-  attr(ext, "conflicts") <- unique(c(conflicts, attr(ext, "conflicts")))
+  attr(ext, "conflicts") <- conflicts
   ext
 }
 
@@ -2145,10 +2158,16 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
     value
 }
 
-.choosePos <- function (allNames, subNames)
+.choosePos <- function (thisClass, superclasses, subNames, affected)
+  ## find if possible a set of superclass relations that gives a consistent
+  ## ordering and eliminates any duplicates in the affected relations
+  ## Note that the returned indices are against the index of superclasses
+  ## If no successful selection is possible, return (one of) the best
+  ## attempt, and the superclass(es) inconsistently embedded
 {
     candidates <- list()
-    dups <- unique(allNames[duplicated(allNames)])
+    allNames <- c(thisClass, superclasses)
+    dups <- unique(superclasses[affected])
     whichCase <- names(subNames)
     for(what in dups) {
         where <- seq_along(allNames)[match( allNames, what,0)>0]
