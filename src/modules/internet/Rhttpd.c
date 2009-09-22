@@ -880,7 +880,9 @@ static void srv_input_handler(void *data)
 
 int in_R_HTTPDCreate(const char *ip, int port) 
 {
+#ifndef WIN32
     int reuse = 1;
+#endif
     SAIN srv_sa;
 
     if (needs_init) /* initialization may need to be performed on first use */
