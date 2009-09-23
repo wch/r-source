@@ -24,8 +24,9 @@ Sys.readlink(paths)
 }
 \value{
   A character vector of the the same length as \code{paths}.  The
-  entries are the path of the file linked to, \code{""} if none is, and
-  \code{NA} if there is an error (e.g., the path does not exist).
+  entries are the path of the file linked to, \code{""} if the path is
+  not a symbolic link, and \code{NA} if there is an error (e.g., the
+  path does not exist).
 }
 \seealso{
   \code{\link{file.symlink}}, \code{\link{file.info}}

@@ -34,9 +34,7 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   \item{exdir}{The directory to extract files to (the equivalent of
     \code{unzip -d}).  It will be created if necessary.}
 }
-\details{
-  Extraction will overwrite any existing files.
-}
+
 \value{
   If \code{list = TRUE}, a data frame with columns \code{Name},
   \code{Length} (the size of the uncompressed file) and \code{Date} (of
@@ -44,13 +42,16 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
 
   Otherwise, a character vector of the filepaths extracted to, invisibly.
 }
+
 \source{
   The C code uses \code{zlib} and is in particular based on the
-  contributed \samp{minizip} application in the \code{zlib} sources by
-  Gilles Vollant.
+  contributed \samp{minizip} application in the \code{zlib} sources
+  (from \url{zlib.net}) by Gilles Vollant.
 }
+
 \seealso{
-  \code{\link{zip.file.extract}}
+  \code{\link{unz}} and \code{\link{zip.file.extract}} to read a single
+  component from a zip file.
 }
 
 \keyword{file}
