@@ -15,7 +15,7 @@ export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rdindex",
        "checkNEWS", "readNEWS", "dependsOnPkgs", "Rdiff",
        "testInstalledBasic", "testInstalledPackage",
        "testInstalledPackages", "RdTextFilter", "SweaveTeXFilter",
-       "startDynamicHelp")
+       "startDynamicHelp", "checkRdaFiles", "resaveRdaFiles")
 
 export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 

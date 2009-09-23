@@ -79,15 +79,15 @@ save <- function(..., list = character(0L),
             if (file == "") stop("'file' must be non-empty string")
             con <- if (identical(compress, "bzip2")) {
                 if (!missing(compression_level))
-                    bzfile(file, "wb", compression_level)
+                    bzfile(file, "wb", compress = compression_level)
                 else bzfile(file, "wb")
             } else if (identical(compress, "xz")) {
                 if (!missing(compression_level))
-                    xzfile(file, "wb", compression_level)
+                    xzfile(file, "wb", compress = compression_level)
                 else xzfile(file, "wb", compress = 9)
             } else if (identical(compress, "gzip") || compress) {
                 if (!missing(compression_level))
-                    gzfile(file, "wb", compression_level)
+                    gzfile(file, "wb", compress = compression_level)
                 else gzfile(file, "wb")
             } else file(file, "wb")
             on.exit(close(con))

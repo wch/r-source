@@ -308,6 +308,13 @@ NEW FEATURES
     o	New function Sys.readlink() for information about symbolic
 	links, including if a file is a symbolic link.
 
+    o	Package 'tools' has new functions checkRdaFiles() and
+	resaveRdaFiles() to report on the format of .rda/.RData data
+	files, and to re-save them in a different compressed format,
+	including choosing the most compact format available.
+
+	A new INSTALL option, --resave-data, makes use of this.
+
 
 REGULAR EXPRESSIONS
 

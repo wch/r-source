@@ -102,6 +102,7 @@
             "      --build    	build binaries of the installed package(s)",
             "      --data-compress=	none, gzip or bzip2 (default) compression",
             "			to be used for lazy-loading of data",
+            "      --resave-data	re-save data files as compactly as possible",
            "\nfor Unix",
             "      --configure-args=ARGS",
             "			set arguments for the configure scripts (if any)",
@@ -713,10 +714,16 @@
                 starsmsg(stars, "data")
                 files <- Sys.glob(file.path("data", "*"))
                 if (length(files)) {
-                    dir.create(file.path(instdir, "data"), recursive = TRUE,
-                               showWarnings = FALSE)
+                    is <- file.path(instdir, "data")
+                    dir.create(is, recursive = TRUE, showWarnings = FALSE)
                     file.remove(Sys.glob(file.path(instdir, "data", "*")))
-                    file.copy(files, file.path(instdir, "data"), TRUE)
+                    file.copy(files, is, TRUE)
+                    if (resave_data) {
+                        starsmsg(paste0(stars, "*"), "resaving rda files")
+                        resaveRdaFiles(Sys.glob(c(file.path(is, "*.rda"),
+                                                  file.path(is, "*.RData"))),
+                                       compress = "auto")
+                    }
                     Sys.chmod(Sys.glob(file.path(instdir, "data", "*")), "644")
                     thislazy <- parse_description_field(desc, "LazyData",
                                                         default = lazy_data)
@@ -911,6 +918,7 @@
     install_tests <- FALSE
     get_user_libPaths <- FALSE
     data_compress <- TRUE # FALSE (none), TRUE (gzip), 2 (bzip2), 3 (xz)
+    resave_data <- FALSE
 
     while(length(args)) {
         a <- args[1]
@@ -986,6 +994,8 @@
                                     "gzip" = TRUE,
                                     "bzip2" = 2,
                                     "xz" = 3)
+        } else if (a == "--resave-data") {
+            resave_data <- TRUE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)

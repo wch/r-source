@@ -848,6 +848,65 @@ function(dir)
     q(status = .Rtest_package_depends_R_version(dir))
 
 
+### * checkRdaFiles
+
+checkRdaFiles <- function(paths)
+{
+    res <- data.frame(size = NA_real_, ASCII = NA,
+                      compress = NA_character_, stringsAsFactors = FALSE)
+    res <- res[rep(1L, length(paths)), ]
+    row.names(res) <- paths
+    keep <- file.exists(paths)
+    res$size[keep] <- file.info(paths)$size[keep]
+    for(p in paths[keep]) {
+        magic <- readBin(p, "raw", n = 5)
+        res[p, "compress"] <- if(all(magic[1:2] == c(0x1f, 0x8b))) "gzip"
+        else if(rawToChar(magic[1:3]) == "BZh") "bzip2"
+        else if(magic[1] == 0xFD && rawToChar(magic[2:5]) == "7zXZ") "xz"
+        else "unknown"
+        con <- gzfile(p)
+        magic <- readChar(con, 5L, useBytes = TRUE)
+        close(con)
+        res[p, "ASCII"]  <- if (grepl("RD[ABX][12]\n", magic, useBytes = TRUE))
+            substr(magic, 3, 3) == "A" else NA
+    }
+    res
+}
+
+resaveRdaFiles <- function(paths,
+                           compress = c("auto", "gzip", "bzip2", "rda"),
+                           compression_level)
+{
+    compress <- match.arg(compress)
+    if (missing(compression_level))
+        compression_level <- switch(compress, "gzip" = 6, 9)
+    for(p in paths) {
+        env <- new.env()
+        load(p, envir = env)
+        if(compress == "auto") {
+            f1 <- tempfile()
+            save(file = f1, list = ls(env, all=TRUE), envir = env)
+            f2 <- tempfile()
+            save(file = f2, list = ls(env, all=TRUE), envir = env,
+                 compress = "bzip2")
+            ss <- file.info(c(f1, f2))$size * c(0.9, 1.0)
+            names(ss) <- c(f1, f2)
+            if(capabilities("xz") && ss[1] > 10240) {
+                f3 <- tempfile()
+                save(file = f2, list = ls(env, all=TRUE), envir = env,
+                     compress = "xz")
+                ss <- c(ss, f3 = file.info(f3)$size)
+            }
+            nm <- names(ss)
+            ind <- which.min(ss)
+            file.copy(nm[ind], p, overwrite = TRUE)
+            unlink(nm)
+        } else
+            save(file = p, list = ls(env, all=TRUE), envir = env,
+                 compress = compress, compression_level = compression_level)
+    }
+}
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
