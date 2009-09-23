@@ -43,7 +43,7 @@ $(JPEGDIR)/jconfig.h: jconfig.h
 buildtiff: $(JPEGDIR)/jconfig.h Makefile.tiff
 	$(MAKE) -C $(TIFFDIR) -f ../Makefile.tiff
 
-rbitmap-CPPFLAGS=-DHAVE_PNG -DHAVE_JPEG -DHAVE_TIFF -I../../extra/zlib -I./$(PNGDIR) -I$(JPEGDIR) -I./$(TIFFDIR) -I../../include
+rbitmap-CPPFLAGS=-DHAVE_PNG -DHAVE_JPEG -DHAVE_TIFF -I. -I../../extra/zlib -I./$(PNGDIR) -I$(JPEGDIR) -I./$(TIFFDIR) -I../../include
 CFLAGS=-O3 -Wall -pedantic 
 
 ../../../library/grDevices/libs/Rbitmap.dll: rbitmap.o $(TIFFDIR)/libtiff.a $(PNGDIR)/libpng.a $(JPEGDIR)/libjpeg.a
