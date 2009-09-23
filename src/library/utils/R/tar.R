@@ -51,7 +51,6 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         }
     }
     tarfile <- path.expand(tarfile)
-    cflag <- ""
     if (!gzOK && cflag == "z" && nzchar(ZIP <- Sys.getenv("R_GZIPCMD"))) {
         TAR <- paste(ZIP, "-dc", tarfile, "|", TAR)
         tarfile <- "-"
