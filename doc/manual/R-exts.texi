@@ -3002,7 +3002,8 @@ between developers and/or interested useRs.
 * Mathematics::                 
 * Insertions::                  
 * Indices::                     
-* Platform-specific sections::  
+* Platform-specific sections::
+* Dynamic pages::
 * Encoding::                    
 * Processing Rd format::        
 * Back-compatibility issues::   
@@ -4002,7 +4003,7 @@ If you want to cross reference such items from other help files via
 @code{\link}, you need to use @code{\alias} and not @code{\concept}.
 
 
-@node  Platform-specific sections, Encoding, Indices, Writing R documentation files
+@node  Platform-specific sections, Dynamic pages, Indices, Writing R documentation files
 @section Platform-specific documentation
 @cindex Platform-specific documentation
 
@@ -4039,7 +4040,108 @@ If the differences between platforms are extensive or the @R{} objects
 documented are only relevant to one platform, platform-specific Rd files
 can be put in a @file{unix} or @file{windows} subdirectory.
 
-@node Encoding, Processing Rd format, Platform-specific sections, Writing R documentation files
+@node Dynamic pages, Encoding, Platform-specific sections, Writing R documentation files
+@section Dynamic pages
+@cindex dynamic pages
+@findex \Sexpr
+@findex \RdOpts
+
+Two new macros supporting dynamically generated man pages were
+introduced in @R{} 2.10.0, @code{\Sexpr} and @code{\RdOpts}.  These
+are modelled after Sweave, and are intended to contain executable R
+expressions in the Rd file.
+
+The main argument to @code{\Sexpr} must be valid R code that can be
+executed. It may also take options in square brackets before the main
+argument. Depending on the options, the code may be executed at
+package build time, package install time, or man page rendering time.
+
+The options follow the same format as in Sweave, but different options are supported.
+Currently the allowed options and their defaults are:
+
+@itemize @bullet
+@item @code{eval=TRUE}
+Whether the R code should be evaluated.
+
+@item @code{echo=FALSE}
+Whether the R code should be echoed.  If @code{TRUE}, a display will be given
+in a preformatted block.  For example, @code{\Sexpr[echo=TRUE]@{ x <- 1 @}} will be displayed
+as 
+@example
+> x <- 1
+@end example
+
+@item @code{keep.source=TRUE} 
+Whether to keep the author's formatting when displaying the
+code, or throw it away and use a deparsed version.
+
+@item @code{results=text}  
+How should the results be displayed?  The possibilities 
+are:
+
+@itemize @minus
+@item @code{results=text}
+Apply @code{as.character()} to the result of the code, and insert it
+as a text element.
+
+@item @code{results=verbatim} 
+Print the results of the code just as if it was executed at the console, 
+and include the printed results verbatim.  (Invisible results will not print.)
+
+@item @code{results=rd}
+The result is assumed to be a character vector containing markup to
+be passed to @code{parse_Rd(fragment=TRUE)}, with the result inserted in place.
+This could be used to insert computed aliases, for instance.  
+
+@item @code{results=hide}
+Insert no output.
+@end itemize
+
+@item @code{strip.white=TRUE} 
+Remove leading and trailing white space from each line of
+output if @code{strip.white=TRUE}.  With 
+@code{strip.white=all}, also remove blank lines.
+
+@item @code{stage=install}  
+Control when this macro is run.  Possible values are
+@itemize @minus
+@item @code{stage=build} 
+The macro is run when building a source tarball.  Currently
+this stage is not processed.
+
+@item @code{stage=install} 
+The macro is run when installing from source.
+
+@item @code{stage=render} 
+The macro is run when displaying the help page.
+@end itemize
+
+Conditionals such as @code{#ifdef} 
+(@pxref{Platform-specific sections}) are applied after the
+@code{build} macros but before the @code{install} macros.  In some
+situations (e.g. installing directly from a source directory without a
+tarball, or building a binary package) the above descriptions may not
+be accurate, but authors should be able to rely on the sequence being
+@code{build}, @code{#ifdef}, @code{install}, @code{render}, with all
+stages executed@footnote{As noted above, the @code{build} stage is not
+currently implemented.}.
+
+Code is only run once in each stage, so a @code{\Sexpr[results=rd]}
+macro can output an @code{\Sexpr} macro designed for a later stage,
+but not for the current one or any earlier stage.
+
+@item @code{width, height, fig}
+These options are currently allowed but ignored.  
+@end itemize
+
+The @code{\RdOpts} macro is used to set new defaults for options to apply
+to following uses of @code{\Sexpr}.
+
+For more details, see the online document 
+@uref{http://developer.r-project.org/parseRd.pdf, ``Parsing Rd
+files''}.
+
+@node Encoding, Processing Rd format, Dynamic pages, Writing R documentation files
 @section Encoding
 @cindex encoding
 
