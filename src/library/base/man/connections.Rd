@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -28,6 +28,11 @@
 \alias{summary.connection}
 \concept{encoding}
 \concept{compression}
+\concept{decompression}
+\concept{zip}
+\concept{gzip}
+\concept{bzip2}
+\concept{lzma}
 \title{Functions to Manipulate Connections}
 \description{
   Functions to create, open and close connections.

@@ -6,6 +6,9 @@
 \name{memCompress}
 \alias{memCompress}
 \alias{memDecompress}
+\concept{gzip}
+\concept{bzip2}
+\concept{lzma}
 \title{In-memory Compression and Decompression}
 \description{
   In-memory compression or decompression for raw vectors.
