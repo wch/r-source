@@ -32,11 +32,20 @@ isBlankLineRd <- function(x) {
 stopRd <- function(block, Rdfile, ...)
 {
     srcref <- attr(block, "srcref")
+    if (missing(Rdfile) && !is.null(srcref)) {
+    	srcfile <- attr(srcref, "srcfile")
+    	if (is.environment(srcfile))
+    	    Rdfile <- srcfile$filename
+    }
+    if (missing(Rdfile) || is.null(Rdfile)) Rdfile <- ""
+    else Rdfile <- paste(Rdfile, ":", sep="")
+    
     msg <- if (is.null(srcref))
-        paste("file '", Rdfile, "': ", ..., sep = "")
+        paste(Rdfile, " ", ..., sep = "")
     else {
-    	loc <- paste(Rdfile, ":", srcref[1L], sep = "")
+    	loc <- paste(Rdfile, srcref[1L], sep = "")
     	if (srcref[1L] != srcref[3L]) loc <- paste(loc, "-", srcref[3L], sep="")
+    	paste(loc, ": ", ..., sep="")
     }
     stop(msg, call. = FALSE, domain = NA)
 }
@@ -44,10 +53,18 @@ stopRd <- function(block, Rdfile, ...)
 warnRd <- function(block, Rdfile, ...)
 {
     srcref <- attr(block, "srcref")
+    if (missing(Rdfile) && !is.null(srcref)) {
+    	srcfile <- attr(srcref, "srcfile")
+    	if (is.environment(srcfile))
+    	    Rdfile <- srcfile$filename
+    }
+    if (missing(Rdfile) || is.null(Rdfile)) Rdfile <- ""
+    else Rdfile <- paste(Rdfile, ":", sep="")
+    
     msg <- if (is.null(srcref))
-        paste("file '", Rdfile, "': ", ..., sep = "")
+        paste(Rdfile, " ", ..., sep = "")
     else {
-    	loc <- paste(Rdfile, ":", srcref[1L], sep = "")
+    	loc <- paste(Rdfile, srcref[1L], sep = "")
     	if (srcref[1L] != srcref[3L]) loc <- paste(loc, "-", srcref[3L], sep="")
         paste(loc, ": ", ..., sep = "")
     }
@@ -109,9 +126,9 @@ evalWithOpt <- function(expr, options, env)
 {
     res <- structure("", Rd_tag="COMMENT")
     if(options$eval){
-        result <- try(withVisible(eval(expr, env)),
-                   silent=TRUE)
-        if(inherits(result, "try-error")) return(result)
+        result <- tryCatch(withVisible(eval(expr, env)), error=function(e) e)
+ 
+        if(inherits(result, "error")) return(result)
         switch(options$results,
         "text" = if (result$visible)
 		    res <- paste(as.character(result$value), collapse=" "),
@@ -137,7 +154,7 @@ setDynamicFlags <- function(block, flags) {  # flags in format coming from getDy
 processRdChunk <- function(code, stage, options, env, Rdfile)
 {
     if (is.null(opts <- attr(code, "Rd_option"))) opts <- ""
-    srcref <- attr(code, "srcref")
+    codesrcref <- attr(code, "srcref")
     options <- utils:::SweaveParseOptions(opts, options, RweaveRdOptions)
     if (stage == options$stage) {
         #  The code below is very similar to RWeaveLatexRuncode, but simplified
@@ -150,9 +167,6 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 
 	if(length(chunkexps) == 0L)
 	    return(tagged(code, "LIST"))
-
-	srclines <- attr(code, "srclines")
-	srcline <- srclines[1L]
 
 	srcrefs <- attr(chunkexps, "srcref")
 	lastshown <- 0L
@@ -168,7 +182,6 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 		dce <- getSrcLines(srcfile, lastshown+1, showto)
 		leading <- showfrom-lastshown
 		lastshown <- showto
-		srcline <- srclines[srcref[3L]]
 		while (length(dce) && grepl("^[[:blank:]]*$", dce[1L])) {
 		    dce <- dce[-1L]
 		    leading <- leading - 1L
@@ -198,8 +211,11 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 	    ## delete empty output
 	    if(length(output) == 1L & output[1L] == "") output <- NULL
 
-	    if (inherits(err, "try-error")) stopRd(code, Rdfile, err)
-
+	    if (inherits(err, "error")) {
+	    	attr(code, "srcref") <- codesrcref
+	    	stopRd(code, Rdfile, err$message)
+	    }
+	    
 	    if(length(output) & (options$results != "hide")){
 
 		output <- paste(output, collapse="\n")
@@ -222,7 +238,8 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 	    res <- tagged(res, "LIST")
 	    res <- setDynamicFlags(res, flag)
 	    close(tmpcon)
-	    res <- prepare_Rd(res, defines = .Platform$OS.type, options=options)
+	    res <- prepare_Rd(res, defines = .Platform$OS.type, options=options,
+	                           stage2 = FALSE, stage3 = FALSE)
 	} else if (options$results == "text")
 	    res <- tagged(err, "TEXT")
 	else if (length(res)) {
