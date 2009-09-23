@@ -69,9 +69,9 @@ file.rename <- function(from, to)
 
 list.files <- function(path = ".", pattern = NULL, all.files = FALSE,
                        full.names = FALSE, recursive = FALSE,
-                       ignore.case = FALSE, include.dirs = !recursive)
+                       ignore.case = FALSE)
     .Internal(list.files(path, pattern, all.files, full.names,
-                         recursive, ignore.case, include.dirs))
+                         recursive, ignore.case))
 
 dir <- list.files
 
