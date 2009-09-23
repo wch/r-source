@@ -765,7 +765,7 @@ Unbundling a package bundle is straightforward: just replace the
 @file{DESCRIPTION} files provide a good starting point, but the
 @samp{Bundle}, @samp{Contains} and @samp{BundleDescription} fields
 should not appear.  It may be needed to add references in the
-@samp{Suggests} ot @samp{Imports} fields to other members of the former
+@samp{Suggests} or @samp{Imports} fields to other members of the former
 bundle.
 
 Prior to @R{} 2.9.1, @code{update.packages()} will only update members
@@ -4071,7 +4071,7 @@ widely.  However, this does not mean that all characters in UTF-8 will
 be recognized, and the coverage of non-Latin characters@footnote{@R{}
 2.9.0 added support for UTF-8 Cyrillic characters in @LaTeX{}, but on
 some OSes this will need Cyrillic support added to @LaTeX{}, so
-environment variable @env{_R_CYRILLIC_TEX_} needs to be set ot a
+environment variable @env{_R_CYRILLIC_TEX_} needs to be set to a
 non-empty value to enable this.} is low.
 
 The @code{\enc} command (@pxref{Insertions}) can be used to provide
