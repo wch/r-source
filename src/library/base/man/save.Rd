@@ -42,11 +42,12 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
     0.99.0 to \R 1.3.1 was version 1.  The default format as from \R
     1.4.0 is version 2.}
   \item{envir}{environment to search for objects to be saved.}
-  \item{compress}{logical specifying whether saving to a named file is to
-    use compression.  Ignored when \code{file} is a connection and for
-    workspace format version 1.  As from \R 2.10.0 this is also allowed
-    to be \code{"bzip2"} or \code{"xz"} to specify that type of
-    compression.}
+  \item{compress}{logical or character string specifying whether saving
+    to a named file is to use compression.  \code{TRUE} corresponds to
+    \command{gzip} compression, and (from \R 2.10.0) character strings
+    \code{"gzip"}, \code{"bzip2"} or \code{"xz"} specify the
+    type of compression.  Ignored when \code{file} is a connection
+    and for workspace format version 1.} 
   \item{compression_level}{integer: the level of compression to be
     used.  Defaults to \code{6} for \command{gzip} compression and to
     \code{9} for \command{bzip2} or \command{xz} compression.}

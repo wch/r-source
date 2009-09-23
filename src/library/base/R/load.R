@@ -85,7 +85,7 @@ save <- function(..., list = character(0L),
                 if (!missing(compression_level))
                     xzfile(file, "wb", compression_level)
                 else xzfile(file, "wb", compress = 9)
-            } else if (compress) {
+            } else if (identical(compress, "gzip") || compress) {
                 if (!missing(compression_level))
                     gzfile(file, "wb", compression_level)
                 else gzfile(file, "wb")
