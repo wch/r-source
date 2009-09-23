@@ -218,8 +218,11 @@ tar <- function(tarfile, files = NULL,
     } else if(inherits(tarfile, "connection")) con <- tarfile
     else stop("'tarfile' must be a character string or a connection")
 
-    files <- c(files, list.files(files, recursive = TRUE, all.files = TRUE,
-                                 full.names = TRUE, include.dirs = TRUE))
+    files <- list.files(files, recursive = TRUE, all.files = TRUE,
+                        full.names = TRUE)
+    ## this omits directories.
+    bf <- unique(dirname(files))
+    files <- c(bf[!bf %in% c(".", files)], files)
 
     for (f in unique(files)) {
         info <- file.info(f)
