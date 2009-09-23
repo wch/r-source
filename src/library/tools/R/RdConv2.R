@@ -247,7 +247,7 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 	    res <- tagged(res, "\\verb")
 	} else res <- tagged("", "COMMENT")
     } else res <- code
-    attr(res, "srcref") <- srcref
+    attr(res, "srcref") <- codesrcref
     res
 }
 
