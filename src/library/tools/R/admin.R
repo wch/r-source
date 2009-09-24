@@ -895,7 +895,8 @@ resaveRdaFiles <- function(paths,
                 f3 <- tempfile()
                 save(file = f3, list = ls(env, all=TRUE), envir = env,
                      compress = "xz")
-                ss <- c(ss, f3 = file.info(f3)$size)
+                ss <- c(ss, file.info(f3)$size)
+		names(ss) <- c(f1, f2, f3)
             }
             nm <- names(ss)
             ind <- which.min(ss)
