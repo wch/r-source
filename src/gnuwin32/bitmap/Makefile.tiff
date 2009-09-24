@@ -1,9 +1,10 @@
 #-*- Makefile -*-
+JPEGDIR = jpeg-7
 include ../../MkRules
 
 all: makeMakedeps libtiff.a
 
-CPPFLAGS+=$(DEFS) -I.. -I../jpeg-6b -I../../../extra/zlib
+CPPFLAGS+=$(DEFS) -I.. -I../$(JPEGDIR) -I../../../extra/zlib
 CFLAGS=-O3
 
 SOURCES = \

@@ -41,7 +41,7 @@ $(JPEGDIR)/jconfig.h: jconfig.h
 	$(CP) jconfig.h $(JPEGDIR)/jconfig.h
 
 buildtiff: $(JPEGDIR)/jconfig.h Makefile.tiff
-	$(MAKE) -C $(TIFFDIR) -f ../Makefile.tiff
+	$(MAKE) -C $(TIFFDIR) -f ../Makefile.tiff JPEGDIR=$(JPEGDIR)
 
 rbitmap-CPPFLAGS=-DHAVE_PNG -DHAVE_JPEG -DHAVE_TIFF -I. -I../../extra/zlib -I./$(PNGDIR) -I$(JPEGDIR) -I./$(TIFFDIR) -I../../include
 CFLAGS=-O3 -Wall -pedantic 
