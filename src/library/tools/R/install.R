@@ -718,15 +718,15 @@
                     dir.create(is, recursive = TRUE, showWarnings = FALSE)
                     file.remove(Sys.glob(file.path(instdir, "data", "*")))
                     file.copy(files, is, TRUE)
-                    if (resave_data) {
+                    thislazy <- parse_description_field(desc, "LazyData",
+                                                        default = lazy_data)
+                    if (!thislazy && resave_data) {
                         starsmsg(paste0(stars, "*"), "resaving rda files")
                         resaveRdaFiles(Sys.glob(c(file.path(is, "*.rda"),
                                                   file.path(is, "*.RData"))),
                                        compress = "auto")
                     }
                     Sys.chmod(Sys.glob(file.path(instdir, "data", "*")), "644")
-                    thislazy <- parse_description_field(desc, "LazyData",
-                                                        default = lazy_data)
                     if (thislazy) {
                         ## This also had an extra space in the sh version
                         starsmsg(stars, " moving datasets to lazyload DB")
