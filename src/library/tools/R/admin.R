@@ -891,9 +891,9 @@ resaveRdaFiles <- function(paths,
                  compress = "bzip2")
             ss <- file.info(c(f1, f2))$size * c(0.9, 1.0)
             names(ss) <- c(f1, f2)
-            if(capabilities("xz") && ss[1] > 10240) {
+            if(capabilities("xz") && ss[1L] > 10240) {
                 f3 <- tempfile()
-                save(file = f2, list = ls(env, all=TRUE), envir = env,
+                save(file = f3, list = ls(env, all=TRUE), envir = env,
                      compress = "xz")
                 ss <- c(ss, f3 = file.info(f3)$size)
             }
