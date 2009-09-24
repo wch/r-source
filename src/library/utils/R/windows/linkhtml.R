@@ -63,8 +63,10 @@ make.packages.html <-
                                 "\\1", pg))
     }
     tot <- sum(sapply(pkgs, length))
-    pb <- winProgressBar("R: creating packages.html", max = tot)
-    on.exit(close(pb), add = TRUE)
+    if(verbose) {
+        pb <- winProgressBar("R: creating packages.html", max = tot)
+        on.exit(close(pb), add = TRUE)
+    }
     npkgs <- 0L
     for (lib in lib.loc) {
         lib0 <- "../../library"
@@ -91,7 +93,7 @@ make.packages.html <-
                 '/html/00Index.html">', i, "</a></td><td>", title,
                 "</td></tr>\n", file=out, sep="")
             npkgs <- npkgs + 1L
-            setWinProgressBar(pb, npkgs)
+            if(verbose) setWinProgressBar(pb, npkgs)
         }
         cat("</table>\n\n", file=out)
     }

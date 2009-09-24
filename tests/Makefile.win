@@ -65,7 +65,7 @@ clean:
 	@rm -f *.Rout *.Rout.fail internet.Rout2 Rplots.ps reg-plot.ps \
 	  reg-plot-latin1.ps reg-tests-?.ps \
 	  $(test-src-auto) R-exts.* R-exts_res.rc R-intro.R Makedeps
-	@rm -rf *.Rcheck myTst* myLib
+	@rm -rf *.Rcheck myTst* myLib Rprofmem.out
 	@rm -f FALSE* PACKAGES* .R .tex mirrors.html Rplots*.pdf
 	@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R

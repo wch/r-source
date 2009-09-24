@@ -50,6 +50,9 @@ PACKAGE INSTALLATION
 	library().  Re-installation of all packages is advised
 	(use update.packages(checkBuilt = TRUE)).
 
+	Binary packages are installed without CHM help if they contain
+	it (as those intended for 2.9.x may).
+
     o	It is possible to install source packages without Rtools
 	provided they have no compiled code and no configure.win or
 	cleanup.win script.
@@ -62,16 +65,12 @@ INSTALLATION
 
     o	CHM help is no longer supported.
 
-    o	The help default has been changed to be HTML help rather than
-	CHM help.
-	[Not yet the MSI installer.]
-
-	Binary packages are installed without CHM help if they contain
-	it.
+    o	The help default for the standard installer is HTML help rather
+	than CHM help.
 
     o	The categories in the installers have been simplified.  Now the
 	files to support installation of source packages are always
-	installed (they were now only 0.7Mb), and there are no longer
+	installed (they are now only 0.7Mb), and there are no longer
 	categories 'chtml', 'html/help', 'latex' and 'Rd'.
 
 

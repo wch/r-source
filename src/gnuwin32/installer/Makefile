@@ -100,7 +100,7 @@ md5sums:
 	  ../../../../bin/Rterm.exe --vanilla --slave)
 
 fixups:
-	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave LC_COLLATE=C
+	echo "make.packages.html(.Library, verbose=FALSE)" | $(RPREFIX)/bin/rterm --vanilla --slave LC_COLLATE=C
 	$(CP) -pr $(R_HOME)/Tcl $(RPREFIX)
 
 

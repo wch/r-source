@@ -646,8 +646,7 @@ It does.  A few issues have been reported that related to the way
 accounts and file permissions work.  (These are not specifically R
 issues, but changes in user experiences.)
 
-The comments here apply also to Windows Server 2008 and the upcoming
-Windows 7.
+The comments here apply also to Windows Server 2008 and Windows 7.
 
 Earlier versions of Windows had user and Administrator accounts, and
 user accounts could be give administrative privileges (by being added to

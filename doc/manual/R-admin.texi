@@ -1237,7 +1237,9 @@ set the path to its home directory in @file{MkRules}.
 
 You need to have the files for a complete R build, including bitmap and
 Tcl/Tk support and the manuals, as well as the recommended packages.
-Then
+There is no option in the installer to customize startup options, so
+edit @file{etc/Rconsole} and @file{etc/Rprofile.site} to set these as
+required.  Then
 
 @example
 cd installer
@@ -1245,7 +1247,7 @@ make msi
 @end example
 
 @noindent
-which will results in a file of about 52Mb with a name like
+which will results in a file of about 45Mb with a name like
 @file{@value{RWVERSION}-win32.msi}.  This can be double-clicked to be
 installed, but those who need it will know what to do with it.
 
