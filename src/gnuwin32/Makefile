@@ -52,9 +52,6 @@ R-DLLFLAGS=-mwindows
 ifeq ($(strip $(USE_ICU)),YES)
 LIBEXTRAS+= -licuin38 -licuuc38
 endif
-ifeq ($(strip $(USE_LZMA)),YES)
-LIBEXTRAS+= "$(LZMA_PATH)"/lib/liblzma.a
-endif
 
 R-DLLLIBS =-L. $(FLIBS) -lRblas -L../../$(IMPDIR) -lRzlib -lRgraphapp -lRiconv -lcomctl32 -lversion $(LIBEXTRAS)
 dllversion-RESFLAGS =-I../include
@@ -70,7 +67,7 @@ MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
 EXTRALIBS = getline/gl.a ../extra/xdr/libxdr.a \
    ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a \
    ../extra/intl/libintl.a ../extra/trio/libtrio.a ../extra/tzone/libtz.a \
-   ../extra/tre/libtre.a
+   ../extra/tre/libtre.a ../extra/xz/liblzma.a
 
 # flags to ensure that Doug Lea's malloc is used:
 ifdef LEA_MALLOC
@@ -116,7 +113,7 @@ rlibs:
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../main RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS_M)' FFLAGS='$(FOPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ./getline OPTFLAGS='$(OPTFLAGS)'
-	@for ex in graphapp pcre bzip2 zlib xdr tre trio tzone win_iconv; do \
+	@for ex in graphapp pcre bzip2 zlib xdr tre trio tzone win_iconv xz; do \
 	  $(MAKE) --no-print-directory -C ../extra/$${ex} OPTFLAGS='$(OPTFLAGS)' -f Makefile.win || exit 1; \
 	done
 
@@ -194,8 +191,12 @@ front-ends:
 
 ../extra/bzip2/libbz2.a:
 	$(MAKE) --no-print-directory -C ../extra/bzip2  -f Makefile.win libbz2.a
+
 ../extra/trio/libtrio.a:
 	$(MAKE) --no-print-directory -C ../extra/trio -f Makefile.win
+
+../extra/xz/liblzma.a:
+	$(MAKE) --no-print-directory -C ../extra/xz -f Makefile.win
 
 
 htmldocs:
@@ -226,7 +227,7 @@ pkgclean-%:
 	@(cd $(PKGDIR)/$*/src; rm -f *.d *.o *.dll *_res.rc Makedeps)
 	@rm -rf $(PKGDIR)/$*/chm
 
-EXTRA_DIRS = blas bzip2 graphapp intl pcre tre trio tzone xdr win_iconv zlib
+EXTRA_DIRS = blas bzip2 graphapp intl pcre tre trio tzone xdr xz win_iconv zlib
 
 clean: cleanwin
 	@$(MAKE) -C ../library -f Makefile.win clean

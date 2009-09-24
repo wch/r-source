@@ -54,6 +54,7 @@ endif
 agrep-CPPFLAGS=-I../extra
 builtin-CPPFLAGS=-I../gnuwin32
 connections-CPPFLAGS=-I../extra/zlib -I../extra/bzip2
+connections-CPPFLAGS+=-DLZMA_API_STATIC -I../extra/xz/api
 dcf-CPPFLAGS=-I../extra
 dounzip-CPPFLAGS=-I../extra/zlib
 grep-CPPFLAGS=-I../extra -I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
@@ -66,11 +67,6 @@ sysutils-CPPFLAGS=-I../gnuwin32
 ifeq ($(strip $(USE_ICU)),YES)
 util-CPPFLAGS=-DUSE_ICU -I"$(ICU_PATH)"/include
 endif
-
-ifeq ($(strip $(USE_LZMA)),YES)
-connections-CPPFLAGS+=-DHAVE_LZMA -DLZMA_API_STATIC -I"$(LZMA_PATH)"/include
-endif
-
 
 libmain.a: $(OBJS)
 

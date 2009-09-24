@@ -53,10 +53,6 @@ USE_ICU=NO
 # path to parent of ICU headers
 ICU_PATH=/sources/icu
 
-# use liblzma
-USE_LZMA=NO
-LZMA_PATH=/sources/xz-utils
-
 # optional overrides for making bitmapdll: names of source directories
 # JPEGDIR = jpeg-7
 # PNGDIR = libpng-1.2.35
