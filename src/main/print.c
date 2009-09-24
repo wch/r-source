@@ -431,9 +431,10 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		    STRING_ELT(names, i) != R_NilValue &&
 		    *CHAR(STRING_ELT(names, i)) != '\0') {
 		    const char *ss = translateChar(STRING_ELT(names, i));
-		    if (taglen + strlen(ss) > TAGBUFLEN)
-			sprintf(ptag, "$...");
-		    else {
+		    if (taglen + strlen(ss) > TAGBUFLEN) {
+		    	if (taglen <= TAGBUFLEN)
+			    sprintf(ptag, "$...");
+		    } else {
 			/* we need to distinguish character NA from "NA", which
 			   is a valid (if non-syntactic) name */
 			if (STRING_ELT(names, i) == NA_STRING)
@@ -445,9 +446,10 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		    }
 		}
 		else {
-		    if (taglen + IndexWidth(i) > TAGBUFLEN)
-			sprintf(ptag, "$...");
-		    else
+		    if (taglen + IndexWidth(i) > TAGBUFLEN) {
+		    	if (taglen <= TAGBUFLEN)
+			    sprintf(ptag, "$...");
+		    } else
 			sprintf(ptag, "[[%d]]", i+1);
 		}
 		Rprintf("%s\n", tagbuf);
@@ -572,9 +574,10 @@ static void printList(SEXP s, SEXP env)
 	while (TYPEOF(s) == LISTSXP) {
 	    if (i > 1) Rprintf("\n");
 	    if (TAG(s) != R_NilValue && isSymbol(TAG(s))) {
-		if (taglen + strlen(CHAR(PRINTNAME(TAG(s)))) > TAGBUFLEN)
-		    sprintf(ptag, "$...");
-		else {
+		if (taglen + strlen(CHAR(PRINTNAME(TAG(s)))) > TAGBUFLEN) {
+		    if (taglen <= TAGBUFLEN)
+			sprintf(ptag, "$...");
+		} else {
 		    /* we need to distinguish character NA from "NA", which
 		       is a valid (if non-syntactic) name */
 		    if (PRINTNAME(TAG(s)) == NA_STRING)
@@ -586,9 +589,10 @@ static void printList(SEXP s, SEXP env)
 		}
 	    }
 	    else {
-		if (taglen + IndexWidth(i) > TAGBUFLEN)
-		    sprintf(ptag, "$...");
-		else
+		if (taglen + IndexWidth(i) > TAGBUFLEN) {
+		    if (taglen <= TAGBUFLEN)
+			sprintf(ptag, "$...");
+		} else
 		    sprintf(ptag, "[[%d]]", i);
 	    }
 	    Rprintf("%s\n", tagbuf);

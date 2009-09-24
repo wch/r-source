@@ -591,7 +591,10 @@ BUG FIXES
 	list elements).  (PR#13942)
 
     o	cat() on an unopened connection could close it twice, and
-	file() connections segfaulted on some systems..
+	file() connections segfaulted on some systems.
+	
+    o	Printing a list could segfault if the elements are nested too
+	deeply.
 
 
 
