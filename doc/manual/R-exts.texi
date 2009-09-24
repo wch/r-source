@@ -328,10 +328,16 @@ License: GPL-2 | file LICENCE
 License: Artistic-1.0 | AGPL-3 + file LICENSE
 @end example
 Please note in particular that ``Public domain'' is not a valid license.
-It is very important that you include this information!  Otherwise, it
-may not even be legally correct for others to distribute copies of the
-package.  Do not use the @samp{License} field for copyright information:
-if needed, use a @samp{Copyright} field.
+
+It is very important that you include this license information!
+Otherwise, it may not even be legally correct for others to distribute
+copies of the package.  Do not use the @samp{License} field for
+copyright information: if needed, use a @samp{Copyright} field.
+
+Please ensure that the license you choose also covers any system
+dependencies of your package: it is particularly important that any
+restrictions on the use of such dependencies are evident to people
+reading your @file{DESCRIPTION} file.
 
 The @samp{Description} field should give a comprehensive description of
 what the package does.  One can use several (complete) sentences, but
