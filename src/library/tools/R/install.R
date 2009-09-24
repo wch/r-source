@@ -721,10 +721,15 @@
                     thislazy <- parse_description_field(desc, "LazyData",
                                                         default = lazy_data)
                     if (!thislazy && resave_data) {
-                        starsmsg(paste0(stars, "*"), "resaving rda files")
-                        resaveRdaFiles(Sys.glob(c(file.path(is, "*.rda"),
-                                                  file.path(is, "*.RData"))),
-                                       compress = "auto")
+                        paths <- Sys.glob(c(file.path(is, "*.rda"),
+                                            file.path(is, "*.RData")))
+                        if (pkg_name == "cyclones")
+                            paths <-
+                                c(paths, Sys.glob(file.path(is, "*.Rdata")))
+                        if (length(paths)) {
+                            starsmsg(paste0(stars, "*"), "resaving rda files")
+                            resaveRdaFiles(paths, compress = "auto")
+                        }
                     }
                     Sys.chmod(Sys.glob(file.path(instdir, "data", "*")), "644")
                     if (thislazy) {
