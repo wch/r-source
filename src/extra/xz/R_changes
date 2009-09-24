@@ -1,0 +1,13 @@
+This is subdirectory src/liblzma of xz-utils-4.999.9beta, except
+
+Makefile.in Makefile.win R_changes
+
+common/{bswap,integer,mythread}.h are from xz-utils-4.999.9beta.
+
+check/sha256.c is modified to look on the usual include path.
+
+common/local.h is a set of definitions of features to be built, and
+common/sysdef.h is a modified copy of
+xz-utils-4.999.9beta/common/sysdefs.h which includes it.
+
+All the files from xz-utils are in the public domain.
