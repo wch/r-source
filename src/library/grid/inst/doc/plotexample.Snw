@@ -2,7 +2,8 @@
 %\VignetteIndexEntry{Writing grid Code}
 %\VignettePackage{grid}
 \newcommand{\code}[1]{\texttt{#1}}
-\newcommand{\grid}{\code{grid}}
+\newcommand{\pkg}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+\newcommand{\grid}{\pkg{grid}}
 \newcommand{\grob}{\code{grob}}
 \newcommand{\gTree}{\code{gTree}}
 \newcommand{\R}{{\sffamily R}}
@@ -618,7 +619,7 @@ grid.draw(date)
 
 All of this may seem a bit irrelevant to interactive use, but it
 does provide a basis for creating an editable plot interface like
-M Kondrin's \code{Rgrace} package.
+M Kondrin's \pkg{Rgrace} package.
 
 % Start a new page
 % Not echoed, not evaluated

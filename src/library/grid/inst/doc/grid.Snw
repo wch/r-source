@@ -8,8 +8,9 @@
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\slan}{{\sffamily S}}
 \newcommand{\rlan}{{\sffamily R}}
-\newcommand{\grid}{\code{grid}}
-\newcommand{\lattice}{\code{lattice}}
+\newcommand{\pkg}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+\newcommand{\grid}{\pkg{grid}}
+\newcommand{\lattice}{\pkg{lattice}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -39,7 +40,7 @@ functions (e.g., the \lattice{} package), the facilities for
 customising and manipulating \lattice{} output, the ability to produce
 high-level plots or non-statistical images from scratch, and the ability to
 add sophisticated annotations to the output from base graphics functions
-(see the \code{gridBase} package).
+(see the \pkg{gridBase} package).
 
 This document provides an introduction to the fundamental concepts
 underlying the \grid{} package:  {\bf viewports}, {\bf units}, and

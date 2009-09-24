@@ -2,7 +2,8 @@
 %\VignetteIndexEntry{Rotated Viewports}
 %\VignettePackage{grid}
 \newcommand{\code}[1]{\texttt{#1}}
-\newcommand{\grid}{\code{grid}}
+\newcommand{\pkg}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+\newcommand{\grid}{\pkg{grid}}
 \newcommand{\R}{{\sffamily R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}

@@ -2,7 +2,8 @@
 %\VignetteIndexEntry{Frames and packing grobs}
 %\VignettePackage{grid}
 \newcommand{\code}[1]{\texttt{#1}}
-\newcommand{\grid}{\code{grid}}
+\newcommand{\pkg}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+\newcommand{\grid}{\pkg{grid}}
 \newcommand{\R}{{\sffamily R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
@@ -249,8 +250,8 @@ components.
 \item The size of the data symbol component is specified, but the
 size of the text components are taken from the \code{"text"} grobs.
 \item The heights of the rows in the legend will be the maximum of
-$\code{vgap} + \verb|unit(1, "lines")|$ and $\code{vgap} +
-\verb|unit(1, "grobheight", <text grob>)|$.
+$\code{vgap} + \code{unit(1, "lines")}$ and $\code{vgap} +
+\code{unit(1, "grobheight", <text grob>)}$.
 \item We have two functions, one for generating a grob and one
 for producing output.
 \end{itemize}

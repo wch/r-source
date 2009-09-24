@@ -7,7 +7,8 @@
 \setlength{\oddsidemargin}{10mm}
 
 \newcommand{\code}[1]{\texttt{#1}}
-\newcommand{\grid}{\code{grid}}
+\newcommand{\pkg}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+\newcommand{\grid}{\pkg{grid}}
 
 \title{The difference between Locations and Dimensions in \grid{}}
 \author{Paul Murrell}

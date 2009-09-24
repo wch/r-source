@@ -1,8 +1,8 @@
 \documentclass[a4paper]{article}
 %\VignetteIndexEntry{Non-finite values}
 %\VignettePackage{grid}
-\newcommand{\grid}{{\tt grid}}
-\newcommand{\R}{{\tt R}}
+\newcommand{\pkg}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+\newcommand{\grid}{\pkg{grid}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}

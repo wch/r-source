@@ -333,8 +333,9 @@ function(files, control = list())
 aspell_control_R_vignettes <-
     c("--mode=tex",
       "--master=en_US",
-      "--add-extra-dicts=en_GB")
-## R vignettes currently do not use \pkg or \code.
+      "--add-extra-dicts=en_GB",
+      "--add-tex-command='code p'",
+      "--add-tex-command='pkg p'")
 
 aspell_R_vignettes <-
 function()

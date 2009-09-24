@@ -1,8 +1,9 @@
 \documentclass[a4paper]{article}
 %\VignetteIndexEntry{Working with viewports}
 \newcommand{\code}[1]{\texttt{#1}}
-\newcommand{\grid}{\code{grid}}
-\newcommand{\lattice}{\code{lattice}}
+\newcommand{\pkg}[1]{{\normalfont\fontseries{b}\selectfont #1}}
+\newcommand{\grid}{\pkg{grid}}
+\newcommand{\lattice}{\pkg{lattice}}
 \newcommand{\R}{{\sffamily R}}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
@@ -33,8 +34,8 @@ to all of the regions created during plotting.
 
 \grid{} maintains a
 tree of pushed viewports on each device.
-When the \verb|upViewport()|
-function is called it works like \verb|popViewport()| except that
+When the \code{upViewport()}
+function is called it works like \code{popViewport()} except that
 it does not remove viewports from the viewport tree.
 For example, the following code pushes a viewport, then navigates
 back up to the top level viewport and pushes another viewport,
@@ -50,13 +51,13 @@ There are now two viewports pushed directly beneath the top-level
 viewport.  This immediately creates an ambiguity;  if I navigate
 back up to the top-level and attempt to revisit one of the
 viewports, how can I specify which one I want?  The answer is that
-viewports have a \verb|name| argument\footnote{The print method
+viewports have a \code{name} argument\footnote{The print method
 for viewports shows the viewport name within square brackets.  Try
 typing \code{current.viewport()}.}.  This name, combined with
-the \verb|downViewport()| function, makes it possible to
+the \code{downViewport()} function, makes it possible to
 navigate back down to viewports in the viewport tree.  Consider the
-following example, which pushes two viewports called \verb|"A"| and
-\verb|"B"|, then navigates to viewport \verb|"A"| from the
+following example, which pushes two viewports called \code{"A"} and
+\code{"B"}, then navigates to viewport \code{"A"} from the
 top level.
 
 <<echo=FALSE, results=hide>>=
@@ -70,18 +71,18 @@ upViewport()
 downViewport("A")
 
 @
-The \verb|downViewport()| function searches down the tree from the
-current position in the tree.  The \verb|seekViewport()|
+The \code{downViewport()} function searches down the tree from the
+current position in the tree.  The \code{seekViewport()}
 function is similar, but it always starts searching from the top-level
 viewport.  In the previous example we ended up in viewport
-\verb|"A"|;  the following command navigates from \verb|"A"| to \verb|"B"|
+\code{"A"};  the following command navigates from \code{"A"} to \code{"B"}
 in a single step.
 
 <<>>=
 seekViewport("B")
 
 @
-The function \verb|current.vpTree()| provides a
+The function \code{current.vpTree()} provides a
 (textual) view of the current viewport tree.
 
 <<>>=
@@ -92,8 +93,8 @@ current.vpTree()
 
 It is possible to create multiple viewport descriptions
 \emph{and their relationships}.  The functions
-\verb|vpStack()|, \verb|vpList()|, and
-\verb|vpTree()| can be used to create a stack, a list, or a tree
+\code{vpStack()}, \code{vpList()}, and
+\code{vpTree()} can be used to create a stack, a list, or a tree
 of viewport descriptions, respectively.  It is then possible to
 push these multiple descriptions at once;  viewports in a stack
 are pushed in series, viewports in  a list are pushed in parallel,
@@ -101,7 +102,7 @@ and for a tree of viewports, the parent is pushed then the children
 are pushed in parallel.  The following simple
 example demonstrates one usage of this feature;  a \grid{} rectangle
 is drawn \emph{two} viewports below the current level by
-specifying a stack of viewports in its \verb|vp| argument.
+specifying a stack of viewports in its \code{vp} argument.
 
 
 <<vpstackguts>>=
@@ -120,19 +121,19 @@ twice (in series).  This demonstrates that viewport names only
 have to be unique for viewports which share the same parent.
 This makes it possible, especially in repetitive plot arrangements,
 to reuse convenient viewport names.  For example, in a \lattice{}
-style plot, each panel could have a viewport called \verb|"strip"|
+style plot, each panel could have a viewport called \code{"strip"}
 to represent the strip region.
 
 This design creates a further ambiguity because there may be
 more than one viewport with the same name within the viewport
 tree\footnote{\code{downViewport()} and \code{seekViewport()} will stop at the
 first match they find (the search is currently depth-first).}.
-This ambiguity can be resolved by using the \verb|vpPath()|
+This ambiguity can be resolved by using the \code{vpPath()}
 function to generate a specification of a stack of viewports
 that must be matched by name.  This path can be passed to
-either \verb|downViewport()| or \verb|seekViewport()| as in the
+either \code{downViewport()} or \code{seekViewport()} as in the
 following example;  notice that we are calling
-\verb|current.vpTree(FALSE)| in order to see the current viewport
+\code{current.vpTree(FALSE)} in order to see the current viewport
 tree \emph{only from the current viewport down}.
 
 <<echo=FALSE, results=hide>>=
@@ -144,7 +145,7 @@ pushViewport(viewport(name="B"))
 pushViewport(viewport(name="A"))
 
 @
-When we do a seek on just \verb|"A"|, we find the first \verb|"A"|
+When we do a seek on just \code{"A"}, we find the first \code{"A"}
 (just below the top-level viewport).
 
 <<>>=
@@ -152,8 +153,8 @@ seekViewport("A")
 current.vpTree(FALSE)
 
 @
-By specifying a \verb|vpPath|, we can get the \verb|"A"| directly
-below viewport \verb|"B"|.
+By specifying a \code{vpPath}, we can get the \code{"A"} directly
+below viewport \code{"B"}.
 
 <<>>=
 seekViewport(vpPath("B", "A"))
@@ -161,7 +162,7 @@ current.vpTree(FALSE)
 
 @
 A viewport path is conceptually just a concatenation of several
-names using a path separator (currently \verb|::|).
+names using a path separator (currently \code{::}).
 
 <<>>=
 vpPath("A", "B")
@@ -324,12 +325,12 @@ upViewport(0)
 @
 So far this example has just shown
 an alternative way of constructing this sort of plot.  The output we have
-generated so far could have been done using \verb|pushViewport()|
-and \verb|popViewport()|.  The difference is that we still have
+generated so far could have been done using \code{pushViewport()}
+and \code{popViewport()}.  The difference is that we still have
 all of the viewports in the \grid{} viewport tree (and they are addressable
 by name).  This means that a user can seek any of the viewports
 we used to construct the plot (by name) and add annotations or
-use \verb|grid.locator()| or whatever.  For example, a user could
+use \code{grid.locator()} or whatever.  For example, a user could
 use the following commands
 to add a title.
 
