@@ -61,9 +61,9 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
             for(e in enc) {
                 if(is.na(e)) next
                 zz <- file(file, encoding = e)
-                res <- try(readLines(zz), silent = TRUE)
+                res <- tryCatch(readLines(zz), error = identity)
                 close(zz)
-                if(!inherits(res, "try-error")) { encoding <- e; break }
+                if(!inherits(res, "error")) { encoding <- e; break }
             }
             options(owarn)
         }

@@ -1074,9 +1074,8 @@
         lib0 <- lib <- path.expand(lib)
         ## lib is allowed to be a relative path.
         ## should be OK below, but be sure.
-        cwd <- try(setwd(lib), silent = TRUE)
-        if (inherits(cwd, "try-error"))
-            stop("ERROR: cannot cd to directory ", sQuote(lib), call. = FALSE)
+        cwd <- tryCatch(setwd(lib), error = function(e)
+                        stop("ERROR: cannot cd to directory ", sQuote(lib), call. = FALSE))
         lib <- getwd()
         setwd(cwd)
     }

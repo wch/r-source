@@ -22,8 +22,9 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
         return(untar2(tarfile, files, list, exdir))
 
     if (!nzchar(TAR) && .Platform$OS.type == "windows") {
-        res <- try(system("tar.exe --version", intern = TRUE), silent = TRUE)
-        if (!inherits(res, "try-error")) TAR <- "tar.exe"
+        res <- tryCatch(system("tar.exe --version", intern = TRUE),
+                        error = identity)
+        if (!inherits(res, "error")) TAR <- "tar.exe"
     }
     if (!nzchar(TAR) || TAR == "internal")
         return(untar2(tarfile, files, list, exdir))

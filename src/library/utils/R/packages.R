@@ -58,21 +58,21 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
                 op <- options("warn")
                 options(warn = -1)
                 ## This is a binary file
-                z <- try(download.file(url=paste(repos, "PACKAGES.gz", sep = "/"),
-                                       destfile = tmpf, method = method,
-                                       cacheOK = FALSE, quiet = TRUE, mode = "wb"),
-                         silent = TRUE)
-                if(inherits(z, "try-error")) {
+                z <- tryCatch(download.file(url = paste(repos, "PACKAGES.gz", sep = "/"),
+                                            destfile = tmpf, method = method,
+                                            cacheOK = FALSE, quiet = TRUE, mode = "wb"),
+                         error = identity)
+                if(inherits(z, "error")) {
                     ## read.dcf is going to interpret CRLF as LF, so use
                     ## binary mode to avoid CRCRLF.
-                    z <- try(download.file(url=paste(repos, "PACKAGES", sep = "/"),
-                                           destfile = tmpf, method = method,
-                                           cacheOK = FALSE, quiet = TRUE,
-                                           mode = "wb"),
-                             silent = TRUE)
+                    z <- tryCatch(download.file(url=paste(repos, "PACKAGES", sep = "/"),
+                                                destfile = tmpf, method = method,
+                                                cacheOK = FALSE, quiet = TRUE,
+                                                mode = "wb"),
+                             error = identity)
                 }
                 options(op)
-                if(inherits(z, "try-error")) {
+                if(inherits(z, "error")) {
                     warning(gettextf("unable to access index for repository %s", repos),
                             call. = FALSE, immediate. = TRUE, domain = NA)
                     next
@@ -472,8 +472,8 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         if(file.access(pkgpath, 5L)) next
         pkgpath <- file.path(pkgpath, "DESCRIPTION")
         if(file.access(pkgpath, 4L)) next
-        desc <- try(read.dcf(pkgpath, fields = fields), silent = TRUE)
-        if(inherits(desc, "try-error")) {
+        desc <- tryCatch(read.dcf(pkgpath, fields = fields), error = identity)
+        if(inherits(desc, "error")) {
             warning(gettextf("read.dcf() error on file '%s'", pkgpath),
                     domain=NA, call.=FALSE)
             next

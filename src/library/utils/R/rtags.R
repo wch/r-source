@@ -124,8 +124,8 @@ expr2token <-
     if (extended && identical(id, "setMethod"))
     {
         ## try to add the signature, comma separated
-        sig <- try(eval(x[[3L]]), silent = TRUE)
-        if (!inherits(sig, "try-error") && is.character(sig))
+        sig <- tryCatch(eval(x[[3L]]), error = identity)
+        if (!inherits(sig, "error") && is.character(sig))
             value <- paste(c(value, sig), collapse=",")
     }
     value

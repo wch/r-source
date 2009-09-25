@@ -117,23 +117,25 @@ function(dir, fields = NULL,
             ## package zips have <name>/DESCRIPTION, rarer bundle zips do not.
             ## So try package case first.
             con <- unz(files[i], file.path(packages[i], "DESCRIPTION"))
-            temp <- try(read.dcf(con, fields = fields)[1L, ], silent = TRUE)
-            if(inherits(temp, "try-error")) {
+            temp <- tryCatch(read.dcf(con, fields = fields)[1L, ],
+                             error = identity)
+            if(inherits(temp, "error")) {
                 close(con)
                 ## bundle zips may have a top-level DESCRIPTION file
                 con <- unz(files[i], "DESCRIPTION")
-                temp <- try(read.dcf(con, fields = fields)[1L, ], silent = TRUE)
-                if(inherits(temp, "try-error")) {
+                temp <- tryCatch(read.dcf(con, fields = fields)[1L, ],
+                                 error = identity)
+                if(inherits(temp, "error")) {
                     close(con)
                     ## otherwise look for the DESCRIPTION file of first package.
                     inzip <- as.character(unzip(files[i], list = TRUE)$Name)
                     d <- grepl("DESCRIPTION$", inzip)
                     if(any(d)) {
                         con <- unz(files[i], (inzip[d])[1])
-                        temp <- try(read.dcf(con, fields = fields)[1L, ],
-                                    silent = TRUE)
+                        temp <- tryCatch(read.dcf(con, fields = fields)[1L, ],
+                                         error = identity)
                     }
-                    if(inherits(temp, "try-error")) {
+                    if(inherits(temp, "error")) {
                         close(con)
                         next
                     }
@@ -156,9 +158,9 @@ function(dir, fields = NULL,
             ## temp <- try(system(paste("tar zxf", files[i], p)))
             temp <- try(utils::untar(files[i], files = p))
             if(!inherits(temp, "try-error")) {
-                temp <- try(read.dcf(p, fields = fields)[1L, ],
-                            silent = TRUE)
-                if(!inherits(temp, "try-error"))
+                temp <- tryCatch(read.dcf(p, fields = fields)[1L, ],
+                                 error = identity)
+                if(!inherits(temp, "error"))
                     db[[i]] <- temp
             }
             unlink(packages[i], recursive = TRUE)
@@ -186,10 +188,10 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
     if(verbose) message("Processing packages:")
     for(i in seq_along(paths)) {
         if(verbose) message(paste(" ", basename(paths[i])))
-        temp <- try(read.dcf(file.path(paths[i], "DESCRIPTION"),
+        temp <- tryCatch(read.dcf(file.path(paths[i], "DESCRIPTION"),
                              fields = fields)[1L, ],
-                    silent = TRUE)
-        if(!inherits(temp, "try-error"))
+                         error = identity)
+        if(!inherits(temp, "error"))
             db[[i]] <- temp
     }
     if(verbose) message("done")
@@ -271,7 +273,7 @@ function(packages = NULL, db,
             out_of_db_packages <- packages[ind == 0L]
         }
     }
-    
+
     depends <-
         do.call(Map,
                 c(list("c"),
@@ -296,7 +298,7 @@ function(packages = NULL, db,
         }
         return(depends)
     }
-            
+
     all_packages <- sort(unique(c(db[, "Package"], unlist(depends))))
 
     if(!recursive) {
@@ -381,7 +383,7 @@ function(packages = NULL, db,
                         names = out_of_db_packages))
     }
     depends
-}    
+}
 
 .extract_dependency_package_names <-
 function(x) {

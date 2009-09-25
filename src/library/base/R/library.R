@@ -780,10 +780,10 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                     ## this must have these fields to get installed
                     .readRDS(pfile)$DESCRIPTION[c("Package", "Version")]
                 else {
-                    info <- try(read.dcf(file.path(p, "DESCRIPTION"),
-                                         c("Package", "Version"))[1, ],
-                                silent = TRUE)
-                    if(inherits(info, "try-error")
+                    info <- tryCatch(read.dcf(file.path(p, "DESCRIPTION"),
+                                              c("Package", "Version"))[1, ],
+                                     error = identity)
+                    if(inherits(info, "error")
                        || (length(info) != 2L)
                        || any(is.na(info)))
                         c(Package = NA, Version = NA) # need dimnames below

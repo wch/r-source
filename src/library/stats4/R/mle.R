@@ -103,8 +103,8 @@ setMethod("profile", "mle",
         fix <- list(bi)
         names(fix) <- pi
         call$fixed <- fix
-        pfit <- try(eval.parent(call, 2), silent=TRUE)
-        if(inherits(pfit, "try-error")) return(NA)
+        pfit <- tryCatch(eval.parent(call, 2L), error = identity)
+        if(inherits(pfit, "error")) return(NA)
         else {
             zz <- 2*(pfit@min - fitted@min)
             ri <- pv0

@@ -2956,7 +2956,7 @@ function(package, lib.loc = NULL)
 		##, errors if not compiled in
                 suppressWarnings(suppressMessages(try(require(pkg,
                                                               character.only = TRUE,
-                                                              quietly=TRUE),
+                                                              quietly = TRUE),
                                                       silent = TRUE)))
         }, type = "output")
 
@@ -3159,9 +3159,9 @@ function(package, dir, lib.loc = NULL)
     ## 'Imports' have to be installed and hence help there will be found
     deps <- c(names(pkgInfo$Depends), names(pkgInfo$Imports))
     pkgs <- unique(deps) %w/o% base
-    try_Rd_aliases <- function(...) try(Rd_aliases(...), silent = TRUE)
+    try_Rd_aliases <- function(...) tryCatch(Rd_aliases(...), error = identity)
     aliases <- c(aliases, lapply(pkgs, try_Rd_aliases, lib.loc = lib.loc))
-    aliases[sapply(aliases, class) == "try_error"] <- NULL
+    aliases[sapply(aliases, class) == "error"] <- NULL
 
     ## See testRversion in library()
     new_only <- FALSE

@@ -38,8 +38,9 @@ function(topic, package = NULL, lib.loc = NULL,
         topic <- "help"; package <- "utils"; lib.loc <- .Library
     }
 
-    ischar <- try(is.character(topic) && length(topic) == 1L, silent = TRUE)
-    if(inherits(ischar, "try-error")) ischar <- FALSE
+    ischar <- tryCatch(is.character(topic) && length(topic) == 1L,
+                       error = identity)
+    if(inherits(ischar, "error")) ischar <- FALSE
     ## if this was not a length-one character vector, try for the name.
     if(!ischar) {
         ## the reserved words that could be parsed as a help arg:

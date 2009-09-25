@@ -39,7 +39,7 @@ stopRd <- function(block, Rdfile, ...)
     }
     if (missing(Rdfile) || is.null(Rdfile)) Rdfile <- ""
     else Rdfile <- paste(Rdfile, ":", sep="")
-    
+
     msg <- if (is.null(srcref))
         paste(Rdfile, " ", ..., sep = "")
     else {
@@ -60,7 +60,7 @@ warnRd <- function(block, Rdfile, ...)
     }
     if (missing(Rdfile) || is.null(Rdfile)) Rdfile <- ""
     else Rdfile <- paste(Rdfile, ":", sep="")
-    
+
     msg <- if (is.null(srcref))
         paste(Rdfile, " ", ..., sep = "")
     else {
@@ -127,7 +127,7 @@ evalWithOpt <- function(expr, options, env)
     res <- structure("", Rd_tag="COMMENT")
     if(options$eval){
         result <- tryCatch(withVisible(eval(expr, env)), error=function(e) e)
- 
+
         if(inherits(result, "error")) return(result)
         switch(options$results,
         "text" = if (result$visible)
@@ -162,8 +162,8 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
         # Results as a character vector for now; convert to list later
         res <- character(0)
         code <- code[RdTags(code) != "COMMENT"]
-	chunkexps <- try(parse(text=code), silent=TRUE)
-	if (inherits(chunkexps, "try-error")) stopRd(code, Rdfile, chunkexps)
+	chunkexps <- tryCatch(parse(text = code), error = identity)
+	if (inherits(chunkexps, "error")) stopRd(code, Rdfile, chunkexps)
 
 	if(length(chunkexps) == 0L)
 	    return(tagged(code, "LIST"))
@@ -215,7 +215,7 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 	    	attr(code, "srcref") <- codesrcref
 	    	stopRd(code, Rdfile, err$message)
 	    }
-	    
+
 	    if(length(output) & (options$results != "hide")){
 
 		output <- paste(output, collapse="\n")
