@@ -30,12 +30,12 @@ resaveRdaFiles(paths, compress = c("auto", "gzip", "bzip2", "rda"),
     \code{\link{save}}.}
 }
 
-\details{  
+\details{
   \code{compress = "auto"} asks \R to choose the compression and ignores
   \code{compression_level}.  It will try \code{"gzip"}, \code{"bzip2"}
-  and if \code{capabilities("xz")} and the \code{"gzip"} compressed size
-  is over 10Kb, \code{"xz"} and choose the smallest (but with a 10\%
-  bias towards \code{"gzip"}).  This can be slow.
+  and if the \code{"gzip"} compressed size is over 10Kb, \code{"xz"} and
+  choose the smallest compressed file (but with a 10\% bias towards
+  \code{"gzip"}).  This can be slow.
 }
 
 \value{
@@ -43,19 +43,18 @@ resaveRdaFiles(paths, compress = c("auto", "gzip", "bzip2", "rda"),
   and columns
   \item{size}{numeric: file size in bytes, \code{NA} if the file does
     not exist.}
-  \item{ASCII}{logical: true for save(ASCII=TRUE), \code{NA} is the
-    format is not that of a \R save files.}
+  \item{ASCII}{logical: true for save(ASCII = TRUE), \code{NA} if the
+    format is not that of an \R save file.}
   \item{compress}{character: type of compression.  One of \code{"gzip"},
-    \code{"bzip2"}, \code{"xv"} or \code{"unknown"} (which if this is an
-    uncorrupted \R save file means it is uncompressed).}
+    \code{"bzip2"}, \code{"xv"}, \code{"none"} or \code{"unknown"} (which
+    means that if this is an \R save file it is from a later version of \R).}
 }
 \examples{\dontrun{
 ## from a package top-level source directory
-paths <- sort(c(Sys.glob("data/*.rda"), Sys.glob("data/*.RData")))
+paths <- sort(Sys.glob(c("data/*.rda", "data/*.RData")))
 (res <- checkRdaFiles(paths))
 ## pick out some that may need attention
-bad <- is.na(res$ASCII) | res$ASCII |
-       (res$size > 1e4 & res$compress == "unknown")
+bad <- is.na(res$ASCII) | res$ASCII | (res$size > 1e4 & res$compress == "none")
 res[bad, ]
 }}
 \keyword{ utilities }

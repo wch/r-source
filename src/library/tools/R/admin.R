@@ -863,6 +863,7 @@ checkRdaFiles <- function(paths)
         res[p, "compress"] <- if(all(magic[1:2] == c(0x1f, 0x8b))) "gzip"
         else if(rawToChar(magic[1:3]) == "BZh") "bzip2"
         else if(magic[1] == 0xFD && rawToChar(magic[2:5]) == "7zXZ") "xz"
+        else if(grepl("RD[ABX][12]\n", magic, useBytes = TRUE)) "none"
         else "unknown"
         con <- gzfile(p)
         magic <- readChar(con, 5L, useBytes = TRUE)
@@ -891,7 +892,7 @@ resaveRdaFiles <- function(paths,
                  compress = "bzip2")
             ss <- file.info(c(f1, f2))$size * c(0.9, 1.0)
             names(ss) <- c(f1, f2)
-            if(capabilities("xz") && ss[1L] > 10240) {
+            if(ss[1L] > 10240) {
                 f3 <- tempfile()
                 save(file = f3, list = ls(env, all=TRUE), envir = env,
                      compress = "xz")
