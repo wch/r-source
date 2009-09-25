@@ -1,6 +1,5 @@
-This is subdirectory src/liblzma of xz-utils-4.999.9beta, except
-
-Makefile.in Makefile.win R_changes
+This is subdirectory src/liblzma of xz-utils-4.999.9beta, except for files
+Makefile.in, Makefile.win and R_changes
 
 common/{bswap,integer,mythread}.h are from xz-utils-4.999.9beta.
 
@@ -11,3 +10,9 @@ common/sysdef.h is a modified copy of
 xz-utils-4.999.9beta/common/sysdefs.h which includes it.
 
 All the files from xz-utils are in the public domain.
+
+The subblock encoder is not used: it is not configured in by
+default and seems not to work on x86_64 platforms.
+
+Performance optimizations are only used on Windows: it is assumed that on
+other systems an optimized system liblzma is or could be made available.

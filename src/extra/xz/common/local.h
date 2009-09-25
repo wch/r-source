@@ -116,3 +116,8 @@
 
 /* Define to 1 if the system has the type `_Bool'. */
 /* #define HAVE__BOOL 1 */
+
+#ifdef WIN32
+#define HAVE_ASM_X86 1
+#define HAVE_FAST_UNALIGNED_ACCESS 1
+#endif
