@@ -1384,10 +1384,11 @@
         Encoding(text) <- "unknown"
         wrap <- paste("\\AsIs{", text, "}", sep = "")
         if(f %in% c("Author", "Maintainer"))
-            wrap <- gsub("<([^@]+)@([^>]+)>", "\\\\email{\\1@\\2}", wrap)
+            wrap <- gsub("<([^@]+)@([^>]+)>", "\\\\email{\\1@\\2}",
+                         wrap, useBytes = TRUE)
         if(f == "URL")
             wrap <- gsub("(http://|ftp://)([^[:space:]]+)",
-                         "\\\\url{\\1\\2}", wrap)
+                         "\\\\url{\\1\\2}", wrap, useBytes = TRUE)
         ## Not entirely safe: in theory, tags could contain \ ~ ^.
         cat("\\item[", gsub("([#$%&_{}])", "\\\\\\1", f),
             "]", paste(wrap, collapse = "\n\n"),  "\n", sep = "", file=out)
