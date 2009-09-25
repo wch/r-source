@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
 	    i0 = i;
 	    continue;
 	}
-	if(strncmp(argv[i], "--", 2)) break;
+	if(strncmp(argv[i], "--", 2) != 0) break;
 	if(strcmp(argv[i], "--verbose") == 0) {
 	    verbose = 1;
 	    i0 = i;
@@ -195,7 +195,11 @@ int main(int argc, char *argv[])
     }
 
     if(!e_mode) {
-	if(strlen(argv[++i0]) > PATH_MAX) {
+      if(++i0 >= argc) {
+        fprintf(stderr, "file name is missing\n");
+        exit(1);
+      }
+      if(strlen(argv[i0]) > PATH_MAX) {
 	    fprintf(stderr, "file name is too long\n");
 	    exit(1);
 	}

@@ -565,6 +565,8 @@ BUG FIXES
     o   Assigning into a raw vector with an index vector containing NA
         could cause a segfault.  Reported by Hervé Pagès.
 
+    o   Rscript would segfault if its filename argument was not
+        provided.  Reported by Martin Morgan.
 
 
 	**************************************************
