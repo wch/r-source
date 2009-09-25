@@ -71,7 +71,7 @@
 #define HAVE_ENCODER_SPARC 1
 
 /* Define to 1 if subblock encoder is enabled. */
-#define HAVE_ENCODER_SUBBLOCK 1
+/* #undef HAVE_ENCODER_SUBBLOCK */
 
 /* Define to 1 if x86 encoder is enabled. */
 #define HAVE_ENCODER_X86 1
@@ -90,3 +90,29 @@
 
 /* Define to 1 to enable hc4 match finder. */
 #define HAVE_MF_HC4 1
+
+/* Things that might be defined on a per-platform basis: */
+
+/* Define to 1 if using x86 assembler optimizations. */
+/* #define HAVE_ASM_X86 1 */
+
+/* Define to 1 if using x86_64 assembler optimizations. */
+/* #undef HAVE_ASM_X86_64 */
+
+/* Define to 1 if bswap_16 is available. */
+/* #undef HAVE_BSWAP_16 */
+
+/* Define to 1 if bswap_32 is available. */
+/* #undef HAVE_BSWAP_32 */
+
+/* Define to 1 if bswap_64 is available. */
+/* #undef HAVE_BSWAP_64 */
+
+/* Define to 1 if you have the <byteswap.h> header file. */
+/* #undef HAVE_BYTESWAP_H */
+
+/* Define to 1 if the system supports fast unaligned memory access. */
+/* #define HAVE_FAST_UNALIGNED_ACCESS 1 */
+
+/* Define to 1 if the system has the type `_Bool'. */
+/* #define HAVE__BOOL 1 */
