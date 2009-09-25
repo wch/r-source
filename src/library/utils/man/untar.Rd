@@ -23,8 +23,8 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \item{files}{A character vector of recorded filepaths to be extracted:
     the default is to extract all files.}
   
-  \item{list}{If \code{TRUE}, list the files and extract none.  The
-    equivalent of \command{tar -tf}.}
+  \item{list}{If \code{TRUE}, just list the files.  The equivalent of
+    \command{tar -tf}.}
     
   \item{exdir}{The directory to extract files to (the equivalent of
     \code{tar -C}).  It will be created if necessary.}
@@ -32,12 +32,10 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   \item{compressed}{logical or character.  Values \code{"gzip"} and
     \code{"bzip2"} select that form of compression (and may be
     abbreviated to the first letter).  \code{TRUE} indicates gzip
-    compression, \code{FALSE} no compression (but the \command{tar}
-    command may detect this automagically), and \code{NA} (the default)
-    that the type is inferred from the file name: an extension
-    \file{bz2} selects \command{bzip2} compression and any of \file{gz},
-    \file{tgz}, \file{taz} or \file{Z} selects \command{gzip}
-    compression.}
+    compression, \code{FALSE} no known compression (but the
+    \command{tar} command may detect compression automagically), and
+    \code{NA} (the default) that the type is inferred from the file
+    header.}
 
   \item{extras}{\code{NULL} or a character string: further command-line
     flags such as \option{-p} to be passed to the \command{tar} program.}
@@ -58,7 +56,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   automatically: version 1.20 added support for \command{lzma} and
   version 1.22 for \command{xz} compression using LZMA2.  For other
   flavours environment variable \env{R_ZIPCMD} gives the command to
-  decompress \command{gzip} files, and \command{bzip2} for its files.
+  decompress \command{gzip} files, and \command{R_BZIPCMD} for its files.
   (There is a \command{bsdtar} command from the \samp{libarchive}
   project used by Mac OS 10.6 (\sQuote{Snow Leopard}) which can also
   detect compression automagically as can the \command{tar} from the
@@ -70,12 +68,12 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   The internal implementation restores links (hard and soft) as symbolic
   links on a Unix-alike, and as file copies on Windows.  Since it uses
   \code{\link{gzfile}} to read a file it can handle files compressed by
-  any of the methods that \code{gzfile} can handle: at least
-  \command{gzip} and \command{bzip2} compression, and \command{xz} on
-  some \R builds (see \code{\link{capabilities}("xz")}).  It does not
-  guard against restoring absolute file paths, as some \command{tar}
-  implementations do.  It will create the parent directories for
-  directories or files in the archive if necessary.
+  any of the methods that function can handle: at least \command{gzip},
+  \command{bzip2} and \command{xz} compression, and some types of
+  \command{lzma} compression.  It does not guard against restoring
+  absolute file paths, as some \command{tar} implementations do.  It
+  will create the parent directories for directories or files in the
+  archive if necessary.
   
   The standards only support ASCII filenames (indeed, only alphanumeric
   plus period, underscore and hyphen).  \code{untar} makes no attempt to map

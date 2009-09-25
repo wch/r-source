@@ -31,12 +31,15 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
 
     cflag <- ""
     if (is.character(compressed)) {
+        ## Any tar which supports -J does not need it for extraction
         switch(match.arg(compressed, c("gzip", "bzip2")),
                "gzip" = "z", "bzip2" = "j")
     } else if (is.logical(compressed)) {
         if (is.na(compressed)) {
-            if (grepl("[.](gz|tgz|taz|Z)$", tarfile)) cflag <- "z"
-            else if (grepl("[.]bz2$", tarfile)) cflag <- "j"
+            magic <- readBin(tarfile, "raw", n = 3)
+            if(all(magic[1:2] == c(0x1f, 0x8b))) cflag <- "z"
+            else if(all(magic[1:2] == c(0x1f, 0x9d))) cflag <- "z" # compress
+            else if(rawToChar(magic[1:3]) == "BZh") cflag <- "j"
         } else if (compressed) cflag <- "z"
     } else stop("'compressed' must be logical or character")
 

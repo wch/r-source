@@ -109,23 +109,24 @@ isIncomplete(con)
   For \code{url} the description is a complete URL, including scheme
   (such as \samp{http://}, \samp{ftp://} or \samp{file://}).
 
-  For \code{gzfile} the description is the path to a file that is
-  compressed by \code{gzip}: it can also open uncompressed files and (as
-  from \R 2.10.0) those compressed by \code{bzip2} or (as from \R
-  2.10.0), \code{xz} or \code{lzma}.
+  For \code{gzfile} the description is the path to a file compressed by
+  \command{gzip}: it can also open for reading uncompressed files and
+  (as from \R 2.10.0) those compressed by \command{bzip2}, \command{xz}
+  or \command{lzma}.
 
-  For \code{bzfile} the description is the path to a file that is
-  compressed by \code{bzip2}.
+  For \code{bzfile} the description is the path to a file compressed by
+  \command{bzip2}.
 
-  For \code{xzfile} the description is the path to a file that is
-  compressed by \code{xz} (\url{http://en.wikipedia.org/wiki/Xz}).  For
-  write-mode connections, \code{compress} is the degree of compression,
-  and higher degrees need more memory (up to ca 800Mb for \code{-9}).
-  Negative values correspond to adding the \command{xz} argument
-  \option{-e}: this takes more time (double?) to compress but may
-  achieve (slightly) better compression.  The default (\code{6}) has
-  good compression and modest (100Mb memory usage): but if you are using
-  \code{xv} compression you are probably looking for high compression.
+  For \code{xzfile} the description is the path to a file compressed by
+  \command{xz} (\url{http://en.wikipedia.org/wiki/Xz}) or
+  \command{lzma}.  For write-mode connections, \code{compress} is the
+  degree of compression, and higher degrees need more memory (up to ca
+  800Mb for \code{9}).  Negative values correspond to adding the
+  \command{xz} argument \option{-e}: this takes more time (double?) to
+  compress but may achieve (slightly) better compression.  The default
+  (\code{6}) has good compression and modest (100Mb memory usage): but
+  if you are using \code{xv} compression you are probably looking for
+  high compression.
  
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path to the zip file, with \file{.zip}
@@ -153,11 +154,6 @@ isIncomplete(con)
 #ifdef windows
   in a console or embedded version of \R, and is not in \code{RGui}).
 #endif
-
-  \code{gzfile}, \code{bzfile} and \code{xzfile} open the actual file in
-  binary mode and so no translations are done if the original file was a
-  text file.  (See \code{\link{gzcon}} for a way to add compression to
-  non-file connections such as URLs.)
 
   All platforms support \code{file}, \code{gzfile}, \code{bzfile},
   \code{xzfile} \code{unz} and \code{url("file://")} connections.  The

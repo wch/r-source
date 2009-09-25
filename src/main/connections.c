@@ -1699,8 +1699,12 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(res == 1) {
 		if(!strncmp(buf, "BZh", 3)) type = 1;
 		if((buf[0] == '\xFD') && !strncmp(buf+1, "7zXZ", 4)) type = 2;
-		if((buf[0] == '\xFF') && !strncmp(buf+1, "LZMA", 4))
-		    {type = 2; subtype = 1;}
+		if((buf[0] == '\xFF') && !strncmp(buf+1, "LZMA", 4)) {
+		    type = 2; subtype = 1;
+		}
+		if(!memcmp(buf, "]\0\0\200\0", 5)) {
+		    type = 2; subtype = 1;
+		}
 		if((buf[0] == '\x89') && !strncmp(buf+1, "LZO", 3))
 		    error(_("this is a %s-compressed file which this build of R does not support"), "lzop");
 	    }
@@ -5334,7 +5338,7 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	while(!ret) ret = lzma_code(&strm, LZMA_FINISH);
 	if (ret != LZMA_STREAM_END || (strm.avail_in > 0))
 	    error("internal error %d in memCompress", ret);
-	/* If LZMZ_BUF_ERROR, realloc and continue */
+	/* If LZMZ_BUF_ERROR, could realloc and continue */
 	outlen = strm.total_out;
 	lzma_end(&strm);
 	ans = allocVector(RAWSXP, outlen);
@@ -5364,6 +5368,8 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	else if(p[0] == '\x1f' && p[1] == '\x8b') type = 2; /* gzip files */
 	else if((p[0] == '\xFD') && !strncmp(p+1, "7zXZ", 4)) type = 4;
 	else if((p[0] == '\xFF') && !strncmp(p+1, "LZMA", 4)) {
+	    type = 4; subtype = 1;
+	} else if(!memcmp(p, "]\0\0\200\0", 5)) {
 	    type = 4; subtype = 1;
 	} else {
 	    warning(_("unknown compression, assuming none"));
