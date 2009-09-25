@@ -892,9 +892,9 @@ showMethods <-
     if(missing(showEmpty))
 	showEmpty <- !missing(f)
     if(identical(printTo, FALSE))
-      con <- textConnection("txtOut", "w", local = TRUE)
+        con <- textConnection(NULL, "w")
     else
-      con <- printTo
+        con <- printTo
     ## must resolve showEmpty in line; using an equivalent default
     ## fails because R resets the "missing()" result for f later on (grumble)
     if(is(f, "function")) {
@@ -902,12 +902,12 @@ showMethods <-
         if(missing(where))
             where <- environment(f)
         f <- deparse(substitute(f))
-        if(length(f) > 1) f <- paste(f, collapse = "; ")
+        if(length(f) > 1L) f <- paste(f, collapse = "; ")
     }
     if(!is(f, "character"))
         stop(gettextf("first argument should be the name(s) of generic functions (got object of class \"%s\")",
                       class(f)), domain = NA)
-    if(length(f) ==  0L) {  ## usually, the default character()
+    if(length(f) ==  0L) { ## usually, the default character()
         f <- if(missing(where)) getGenerics() else getGenerics(where)
     }
     if(length(f) == 0L)
@@ -923,8 +923,8 @@ showMethods <-
             }
             else if(isGeneric(ff, where)) {
                 Recall(ff, where=where, classes=classes,
-		   includeDefs=includeDefs, inherited=inherited,
-		   showEmpty=showEmpty, printTo=con, fdef = ffdef)
+                       includeDefs=includeDefs, inherited=inherited,
+                       showEmpty=showEmpty, printTo=con, fdef = ffdef)
             }
 	}
     }
@@ -935,10 +935,11 @@ showMethods <-
         else
             ## maybe no output for showEmpty=FALSE
             .showMethodsTable(fdef, includeDefs, inherited,
-				  classes = classes, showEmpty = showEmpty,
-				  printTo = con)
+                              classes = classes, showEmpty = showEmpty,
+                              printTo = con)
     }
     if(identical(printTo, FALSE)) {
+        txtOut <- textConnectionValue(con)
         close(con)
         txtOut
     }

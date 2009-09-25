@@ -441,11 +441,11 @@ validObject <- function(object, test = FALSE, complete = FALSE)
 	    next
 	}
         namei <- slotNames[[i]]
-        switch(namei,
-               ## .S3Class for S3 objects (e.g., "factor") uses S3Class()
-               .S3Class = { sloti <- try(S3Class(object), silent = TRUE)},
-               sloti <- try(slot(object, namei), silent = TRUE)
-               )
+        sloti <- try(switch(namei,
+                            ## .S3Class for S3 objects (e.g., "factor")
+                            .S3Class = S3Class(object),
+                            slot(object, namei)
+                            ), silent = TRUE)
         if(inherits(sloti, "try-error")) {
            errors <- c(errors, sloti)
            next
