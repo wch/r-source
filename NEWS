@@ -1,4 +1,4 @@
-
+﻿
 	**************************************************
 	*						 *
 	*	       2.10 SERIES NEWS			 *
@@ -16,7 +16,7 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
 	- Packages that were installed by R-devel after 2009-08-09
 	  should not be used with earlier versions of R, and some
-	  aspects of package help will be missing if there are so
+	  aspects of package help will be missing if they are so
 	  used.  (Text, HTML and latex help and the runnable
 	  examples.)
 
@@ -133,10 +133,10 @@ NEW FEATURES
     o	weighted.mean() is now generic and has "Date", "POSIXct" and
 	"POSIXlt" methods.
 
-    o	Name subscripts in data.frame methods for [ and [[ now gives a
-	warning.  (Names are ignored in the default method, but could
-	have odd semantics for other methods, and do for the
-	data.frame ones.)
+    o	Naming subscripts (e.g. x[i=1, j=2]) in data.frame methods for
+	[ and [[ now gives a warning.  (Names are ignored in the
+	default method, but could have odd semantics for other
+	methods, and do for the data.frame ones.)
 
     o	as.data.frame() has an "aovproj" method.  (Wish of PR#13505)
 
@@ -153,10 +153,10 @@ NEW FEATURES
     o	codoc() now also checks S4 methods for code/documentation
 	mismatches.
 
-    o	for(), while(), and repeat() loops  now always return NULL as their
-	(invisible) value.  This change was needed to address a reference
-	counting bug without creating performance penalties for some common
-	use cases.
+    o	for(), while(), and repeat() loops  now always return NULL as
+	their (invisible) value.  This change was needed to address a
+	reference counting bug without creating performance penalties
+	for some common use cases.
 
     o	The print() method for ls.str() results now obeys an optional
 	'digits' argument.
@@ -218,8 +218,9 @@ NEW FEATURES
     o	z^n for integer n and complex z is more accurate now if
 	|n| <= 65536.
 
-    o	factor(NULL) now returns the same as factor(''[0]) instead of an
-	error, and table(NULL) consequently does analogously.
+    o	factor(NULL) now returns the same as factor(character(0))
+	instead of an error, and table(NULL) consequently does
+	analogously.
 
     o	as.data.frame.vector() (and its copies) is slightly faster
 	by avoiding a copy if there are no names (following a
