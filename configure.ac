@@ -385,6 +385,10 @@ AC_ARG_WITH([system-pcre],
 [AS_HELP_STRING([--with-system-pcre],[use system PCRE library (if available) @<:@no@:>@])],
 [R_ARG_USE_SYSTEM(pcre)],
 [use_system_pcre=no])
+AC_ARG_WITH([system-xz],
+[AS_HELP_STRING([--with-system-xz],[use system xz (lzma) library (if available) @<:@yes@:>@])],
+[R_ARG_USE_SYSTEM(xz)],
+[use_system_xz=yes])
 
 ## Valgrind instrumentation
 AC_ARG_WITH([valgrind-instrumentation],
@@ -2030,7 +2034,7 @@ R_ZLIB
 ## bzlib headers and libraries.
 R_BZLIB
 
-## LZMA headers and libraries.
+## LZMA headers and libraries from xz-utils
 R_LZMA
 
 ## PCRE headers and libraries.
@@ -2412,6 +2416,7 @@ AC_CONFIG_FILES(
   src/extra/pcre/Makefile
   src/extra/tre/Makefile
   src/extra/xdr/Makefile
+  src/extra/xz/Makefile
   src/extra/zlib/Makefile
   src/include/Makefile
   src/include/Rmath.h0

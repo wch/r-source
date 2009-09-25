@@ -2376,6 +2376,10 @@ and are tested with @R{} you should not need to change this.  In
 particular, the version of @code{zlib} 1.2.3 in the @R{} sources has
 enhancements to work with large file systems on 32-bit platforms.
 
+@code{liblzma} from @code{xv-utils} version 4.999 or later will be used
+if installed: the version in the @R{} sources can be selected instead by
+configuring with @option{--with-system-xz=no}.
+
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
 Debian meta-package @samp{xorg-dev}), but some distributions have split
@@ -2411,12 +2415,6 @@ preferred: these include GNU @command{tar} 1.15 or later,
 @command{bsdtar} (from @uref{http://code.google.com/p/libarchive/}, as
 used by Mac OS 10.6) and @command{tar} from the Heirloom Toolchest
 (@uref{http://heirloom.sourceforge.net/tools.html}.
-
-@code{gzfile} can handle files compressed by @command{xz} if a suitable
-LZMA compression library is found by @code{configure}: it expects that
-from @uref{http://tukaani.org/xz/} version 4.999 or later.  This library
-also supports @code{xzfile} and the @code{type = "xz"} option to
-@code{memCompress}.
 
 @menu
 * Tcl/Tk::                      

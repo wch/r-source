@@ -3116,7 +3116,8 @@ AM_CONDITIONAL(BUILD_BZLIB, [test "x${have_bzlib}" = xno])
 ## -------
 ## Try finding liblzma library and headers.
 ## We check that both are installed,
-AC_DEFUN([R_LZMA], [
+AC_DEFUN([R_LZMA],
+[if test "x${use_system_xz}" = xyes; then
   AC_CHECK_LIB(lzma, lzma_version_number, [have_lzma=yes], [have_lzma=no])
   if test "${have_lzma}" = yes; then
     AC_CHECK_HEADERS(lzma.h, [have_lzma=yes], [have_lzma=no])
@@ -3146,6 +3147,10 @@ if test "x${have_lzma}" = xyes; then
   AC_DEFINE(HAVE_LZMA, 1, [Define if your system has lzma >= 4.999.])
   LIBS="-llzma ${LIBS}"
 fi
+else
+  have_lzma="no"
+fi
+AM_CONDITIONAL(BUILD_XZ, [test x${have_lzma} != xyes])
 ])# R_LZMA
 
 

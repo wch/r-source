@@ -75,9 +75,10 @@ BZLIB_CPPFLAGS = @BUILD_BZLIB_TRUE@ -I$(top_srcdir)/src/extra/bzip2
 PCRE_CPPFLAGS = @BUILD_PCRE_TRUE@ -I$(top_srcdir)/src/extra/pcre
 TRE_CPPFLAGS = -I$(top_srcdir)/src/extra
 XDR_CPPFLAGS = @BUILD_XDR_TRUE@ -I$(top_srcdir)/src/extra/xdr
+XZ_CPPFLAGS = @BUILD_XZ_TRUE@  -I$(top_srcdir)/src/extra/xz/api -DHAVE_LZMA
 
 ALL_CPPFLAGS = $(ZLIB_CPPFLAGS) $(BZLIB_CPPFLAGS) $(PCRE_CPPFLAGS) \
-  $(TRE_CPPFLAGS) $(XDR_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
+  $(TRE_CPPFLAGS) $(XDR_CPPFLAGS) $(XZ_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 @WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(ALL_FFLAGS_LO)
 
@@ -88,10 +89,12 @@ R_BZLIBS = @BUILD_BZLIB_TRUE@ ../extra/bzip2/libbz2.a
 R_PCRE = @BUILD_PCRE_TRUE@ ../extra/pcre/libpcre.a
 R_TRE = ../extra/tre/libtre.a
 R_XDR = @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
+R_XZ = @BUILD_XZ_TRUE@  ../extra/xz/liblzma.a
 R_LIBINTL = @BUILD_LIBINTL_TRUE@ ../extra/intl/libintl.a
 
 MAIN_LIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a
-EXTRA_STATIC_LIBS = $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_TRE) $(R_XDR)$(R_LIBINTL)
+EXTRA_STATIC_LIBS = \
+  $(R_ZLIBS) $(R_BZLIBS) $(R_PCRE) $(R_TRE) $(R_XDR) $(R_XZ) $(R_LIBINTL)
 STATIC_LIBS = $(MAIN_LIBS) $(EXTRA_STATIC_LIBS)
 
 EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) @LIBINTL@ $(READLINE_LIBS) $(LIBS)
@@ -167,7 +170,8 @@ $(MAIN_LIBS):
 	(cd $(@D); $(MAKE) $(@F))
 
 ../extra/bzip2/libbz2.a ../extra/pcre/libpcre.a ../extra/pcre/libtre.a\
-  ../extra/xdr/libxdr.a ../extra/zlib/libz.a ../extra/intl/libintl.a:
+  ../extra/xdr/libxdr.a ../extra/zlib/libz.a ../extra/xv/liblzma.a \
+  ../extra/intl/libintl.a:
 	(cd $(@D); $(MAKE))
 
 
