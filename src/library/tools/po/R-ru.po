@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:57\n"
+"POT-Creation-Date: 2009-09-25 12:13\n"
 "PO-Revision-Date: 2009-03-28 23:43-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -682,9 +682,6 @@ msgstr "ОШИБКА: не удалось создать блокированную папку"
 msgid "building a fake installation is disallowed"
 msgstr "сборка ложной установки не разрешается"
 
-msgid "*** 'hhc.exe' not found: not building CHM help"
-msgstr "*** 'hhc.exe' не найден: не собираю CHM помощь"
-
 msgid "-o option without value"
 msgstr "-o опция без значения"
 
@@ -945,6 +942,9 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Найден вызов .Internal call в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
+
+#~ msgid "*** 'hhc.exe' not found: not building CHM help"
+#~ msgstr "*** 'hhc.exe' не найден: не собираю CHM помощь"
 
 #~ msgid "package '%s' has no .rda file"
 #~ msgstr "у пакета '%s' нет .rda-файлов"

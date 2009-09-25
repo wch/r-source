@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:57\n"
+"POT-Creation-Date: 2009-09-25 12:13\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -663,9 +663,6 @@ msgid "ERROR: failed to create lock directory"
 msgstr "无法建立temp目录"
 
 msgid "building a fake installation is disallowed"
-msgstr ""
-
-msgid "*** 'hhc.exe' not found: not building CHM help"
 msgstr ""
 
 msgid "-o option without value"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:57\n"
-"PO-Revision-Date: 2009-09-21 10:57\n"
+"POT-Creation-Date: 2009-09-25 12:13\n"
+"PO-Revision-Date: 2009-09-25 12:13\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -303,8 +303,8 @@ msgstr "‘topic’ should be a name, length-one character vector or reserved wo
 msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
 msgstr "offline = TRUE is deprecated: use help_type =“postscript”"
 
-msgid "chmhelp = TRUE is deprecated: use help_type =\"chm\""
-msgstr "chmhelp = TRUE is deprecated: use help_type =“chm”"
+msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
+msgstr "chmhelp = TRUE is no longer supported: use help_type =“text”"
 
 msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
 msgstr "htmhelp = TRUE is deprecated: use help_type =“html”"
@@ -864,14 +864,17 @@ msgstr "‘compressed’ must be logical or character"
 msgid "untar: using cmd ="
 msgstr "untar: using cmd ="
 
+msgid "invalid octal digit"
+msgstr "invalid octal digit"
+
 msgid "'tarfile' must be a character string or a connection"
 msgstr "‘tarfile’ must be a character string or a connection"
 
 msgid "incomplete block on file"
 msgstr "incomplete block on file"
 
-msgid "invalid octal digit in size"
-msgstr "invalid octal digit in size"
+msgid "checksum error for entry '%s'"
+msgstr "checksum error for entry ‘%s’"
 
 msgid "unsupported entry type"
 msgstr "unsupported entry type"
@@ -881,6 +884,9 @@ msgstr "file ‘%s’ not found"
 
 msgid "file path is too long"
 msgstr "file path is too long"
+
+msgid "linked path is too long"
+msgstr "linked path is too long"
 
 msgid ""
 "vignette '%s' found more than once,\n"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:57\n"
+"POT-Creation-Date: 2009-09-25 12:13\n"
 "PO-Revision-Date: 2009-03-26 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -678,9 +678,6 @@ msgstr "Fehler: kann kein lock Verzeichnis erzeugen"
 msgid "building a fake installation is disallowed"
 msgstr "eine Scheininstallation ist nicht erlaubt"
 
-msgid "*** 'hhc.exe' not found: not building CHM help"
-msgstr "*** 'hhc.exe' nicht gefunden: CHM Hilfe wird nicht erzeugt"
-
 msgid "-o option without value"
 msgstr "-o Option ohne Wert"
 
@@ -939,6 +936,9 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
+
+#~ msgid "*** 'hhc.exe' not found: not building CHM help"
+#~ msgstr "*** 'hhc.exe' nicht gefunden: CHM Hilfe wird nicht erzeugt"
 
 #~ msgid "package '%s' has no .rda file"
 #~ msgstr "Paket  '%s' enthält keine .rda Datei"
