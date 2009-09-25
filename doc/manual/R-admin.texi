@@ -4249,9 +4249,9 @@ suitably; ensure you have the required fonts installed.
 @section The Inno Setup installer
 
 To make the installer package (@file{@value{RWVERSION}-win32.exe}) we
-require Inno Setup 5.1.7 or later (including 5.2.x) from
-@uref{http://jrsoftware.org/}.  This is @emph{not} included in
-@file{Rtools.exe}.
+require Inno Setup 5.1.7 or later (including 5.3.x and the Unicode
+versions) from @uref{http://jrsoftware.org/}.  This is @emph{not}
+included in @file{Rtools.exe}.
 
 Edit file @file{src/gnuwin32/MkRules} and change @code{ISDIR} to the
 location where Inno Setup was installed.
