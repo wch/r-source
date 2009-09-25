@@ -85,8 +85,7 @@ txt3 <- strsplit(memDecompress(txt.bz2, asChar = TRUE), "\n")[[1]]
 stopifnot(identical(txt, txt3))
 
 if(capabilities("xz")) {
-## if run  xz compression is supported:
-## not worthwhile for this small an object
+## xz compression is only worthwhile for large objects
 txt.xz <- memCompress(txt, "x")
 print(length(txt.xz))
 txt3 <- strsplit(memDecompress(txt.xz, asChar = TRUE), "\n")[[1]]
