@@ -26,7 +26,8 @@ all: makeMakedeps \
      $(R_HOME)/bin/Rgui.exe $(R_HOME)/bin/Rterm.exe \
      $(R_HOME)/bin/Rcmd.exe  $(R_HOME)/bin/RSetReg.exe  \
      $(R_HOME)/bin/R.exe \
-     $(R_HOME)/bin/md5check.exe $(R_HOME)/bin/Rscript.exe
+     $(R_HOME)/bin/md5check.exe $(R_HOME)/bin/Rscript.exe \
+     $(R_HOME)/bin/open.exe 
 
 $(R_HOME)/bin/Rgui.exe: Rgui.exe
 	$(MKDIR) -p $(R_HOME)/bin
