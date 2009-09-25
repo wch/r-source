@@ -22,27 +22,27 @@
     	oldwd <- setwd(wd)
     	on.exit(setwd(oldwd))
     }
-    res <- try(normalizePath(path), silent=TRUE)
+    res <- tryCatch(normalizePath(path), error = identity)
     if (inherits(res, "try-error")) path
     else res
 }
- 
+
 fnLineNum <- function(f, srcfile, line, nameonly=TRUE) {
 
     stopifnot(length(line) == 1)
-    
+
     targetfilename <- .normalizePath(srcfile$filename)
 
     fnsrc <- attr(body(f), "srcfile")
     if (is.null(fnsrc)) return(NULL)
-    
+
     if (missing(srcfile)) {
     	srcfile <- fnsrc
     }
-    	
+
     isBrace <- function(expr)
         typeof(expr) == "symbol" && identical(as.character(expr), "{")
-        
+
     lineNumInExpr <- function(expr, haveSrcrefs = FALSE) {
 	if (typeof(expr) == "language") {
 	    srcrefs <- attr(expr, "srcref")
@@ -58,28 +58,28 @@ fnLineNum <- function(f, srcfile, line, nameonly=TRUE) {
 		# Do we have a srcref?  It must point to this expression.
 		# But do avoid matching the opening brace in a block:  match the whole block
 		# instead.
-		
+
 		havebrace <- isBrace(expr[[i]])
-		if (!is.null(srcref) 
+		if (!is.null(srcref)
 		    && (!haveSrcrefs || !havebrace)) {
 		    return(i)
 		}
 	    }
 	}
 	return(NULL)
-    }    
-    
-    perfectMatch <- identical(.normalizePath(fnsrc$filename, fnsrc$wd), targetfilename) 
+    }
+
+    perfectMatch <- identical(.normalizePath(fnsrc$filename, fnsrc$wd), targetfilename)
     if (perfectMatch ||
         (nameonly && !is.null(fnsrc$filename) && basename(fnsrc$filename) == basename(targetfilename))) {
-	if (!is.na(srcfile$timestamp) && fnsrc$timestamp != srcfile$timestamp) 
+	if (!is.na(srcfile$timestamp) && fnsrc$timestamp != srcfile$timestamp)
 	    timediff <- fnsrc$timestamp - srcfile$timestamp
-	else	
+	else
 	    timediff <- 0
 	source <- attr(f, "source")
 	at <- lineNumInExpr(body(f))
-	if (!is.null(at)) 
-	  return(list(at=at, filename=.normalizePath(fnsrc$filename, fnsrc$wd), line=line, 
+	if (!is.null(at))
+	  return(list(at=at, filename=.normalizePath(fnsrc$filename, fnsrc$wd), line=line,
 	              timediff=timediff))
     }
     return(NULL)
@@ -88,22 +88,22 @@ fnLineNum <- function(f, srcfile, line, nameonly=TRUE) {
 findLineNum <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), lastenv) {
     count <- 0
     result <- list()
-    
+
     if (!inherits(srcfile, "srcfile")) {
     	if (missing(line)) {
     	    line <- as.numeric(sub(".*#", "", srcfile))
     	    if (is.na(line)) stop("Line number missing")
     	    srcfile <- sub("#[^#]*", "", srcfile)
     	}
-    
+
     	srcfile <- srcfile(srcfile)
     }
-    
+
     if (missing(lastenv)) {
     	if (missing(envir)) lastenv <- globalenv()
     	else lastenv <- emptyenv()
     }
-    
+
     fns <- character(0)
     envirs <- list()
     e <- envir
@@ -116,17 +116,18 @@ findLineNum <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), last
     	if (identical(e, lastenv) || identical(e, emptyenv())) break
     	e <- parent.env(e)
     }
-    
+
     for (i in seq_along(fns)) {
 	functionName <- fns[i]
 	fn <- get(functionName, envir=envirs[[i]])
-	loc <- fnLineNum(fn, srcfile=srcfile, line=line, 
+	loc <- fnLineNum(fn, srcfile=srcfile, line=line,
     	                  nameonly=nameonly)
     	if (!is.null(loc)) {
     	    count <- count + 1
     	    result[[count]] <- c(list(name=functionName, env=envirs[[i]]), loc)
     	}
-    	gen <- try(methods::isGeneric(functionName, envirs[[i]], fdef=fn), silent=TRUE)
+    	gen <- tryCatch(methods::isGeneric(functionName, envirs[[i]], fdef=fn),
+                        error = identity)
     	if (isTRUE(gen)) {
     	    e1 <- environment(fn)$.AllMTable
     	    if (!is.null(e1)) {
@@ -135,18 +136,18 @@ findLineNum <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), last
 		    sig <- sigs[j]
 		    fn <- get(sig, e1)
 		    if (typeof(fn) != "closure") next
-		    
-		    loc <- fnLineNum(fn, srcfile=srcfile, line=line, 
+
+		    loc <- fnLineNum(fn, srcfile=srcfile, line=line,
 				    nameonly=nameonly)
-		    if (is.null(loc) 
-		        && length(body(fn)) > 1 
+		    if (is.null(loc)
+		        && length(body(fn)) > 1
 		        && length(body(fn)[[2]]) > 2
-		        && typeof(body(fn)[[c(2,3)]]) == "closure") { 
-				# desperate try:  look for 
+		        && typeof(body(fn)[[c(2,3)]]) == "closure") {
+				# desperate try:  look for
 		    		# .local <- original defn
 		    	fn2 <- body(fn)[[c(2,3)]]
-		    	
-		    	loc <- fnLineNum(fn2, srcfile=srcfile, line=line, 
+
+		    	loc <- fnLineNum(fn2, srcfile=srcfile, line=line,
 				    nameonly=nameonly)
 		 	# FIXME:  can trace() set a breakpoint
 		 	#	  within a function like this?
@@ -154,7 +155,7 @@ findLineNum <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), last
 		    }
 		    if (!is.null(loc)) {
 			count <- count + 1
-			result[[count]] <- c(list(name=functionName, env=envirs[[i]], 
+			result[[count]] <- c(list(name=functionName, env=envirs[[i]],
 						signature=strsplit(sig, "#")[[1]]), loc)
 		    }
 		}
@@ -181,16 +182,16 @@ print.findLineNumResult <- function(x, ...) {
         cat(" in ", format(x[[i]]$env), "\n", sep="")
     }
 }
-    
-    	
+
+
 setBreakpoint <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), lastenv,
                           verbose = TRUE, tracer, print=FALSE,
                          ...) {
-    
+
     if (missing(lastenv)) {
     	if (missing(envir)) lastenv <- globalenv()
     	else lastenv <- emptyenv()
-    }                         
+    }
     locations <- findLineNum(srcfile, line, nameonly, envir, lastenv)
     if (verbose) print(locations)
     breakpoint <- missing(tracer)
@@ -218,6 +219,6 @@ setBreakpoint <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), la
     	if (is.null(signature))
     	    trace(what, tracer, at=at, where=where, print=print, ...)
     	else
-    	    trace(what, signature=signature, tracer, at=at, where=where, ...) 
-    }   
+    	    trace(what, signature=signature, tracer, at=at, where=where, ...)
+    }
 }
