@@ -111,18 +111,16 @@ isIncomplete(con)
 
   For \code{gzfile} the description is the path to a file that is
   compressed by \code{gzip}: it can also open uncompressed files and (as
-  from \R 2.10.0) those compressed by \code{bzip2} or (as from \R 2.10.0
-  with suitable OS support), \code{xz} or \code{lzma}.
+  from \R 2.10.0) those compressed by \code{bzip2} or (as from \R
+  2.10.0), \code{xz} or \code{lzma}.
 
   For \code{bzfile} the description is the path to a file that is
   compressed by \code{bzip2}.
 
   For \code{xzfile} the description is the path to a file that is
-  compressed by \code{xz} (\url{http://en.wikipedia.org/wiki/Xz}).  This
-  is only supported on OSes with suitable libraries, tested when \R is
-  configured: \code{\link{capabilities}("xz")} will tell you if it is.
-  For write-mode connections, \code{compress} is the degree of
-  compression, and higher degrees need more memory (up to ca 800Mb).
+  compressed by \code{xz} (\url{http://en.wikipedia.org/wiki/Xz}).  For
+  write-mode connections, \code{compress} is the degree of compression,
+  and higher degrees need more memory (up to ca 800Mb for \code{-9}).
   Negative values correspond to adding the \command{xz} argument
   \option{-e}: this takes more time (double?) to compress but may
   achieve (slightly) better compression.  The default (\code{6}) has
@@ -156,15 +154,16 @@ isIncomplete(con)
   in a console or embedded version of \R, and is not in \code{RGui}).
 #endif
 
-  \code{gzfile} and \code{bzfile} open the actual file in binary mode
-  and so no translations are done if the original file was a text file.
-  (See \code{\link{gzcon}} for a way to add compression to non-file
-  connections such as URLs.)
-  
+  \code{gzfile}, \code{bzfile} and \code{xzfile} open the actual file in
+  binary mode and so no translations are done if the original file was a
+  text file.  (See \code{\link{gzcon}} for a way to add compression to
+  non-file connections such as URLs.)
+
   All platforms support \code{file}, \code{gzfile}, \code{bzfile},
-  \code{unz} and \code{url("file://")} connections.  The other types may
-  be partially implemented or not implemented at all.  (They do work on
-  most Unix platforms, and all but \code{fifo} on Windows.)
+  \code{xzfile} \code{unz} and \code{url("file://")} connections.  The
+  other types may be partially implemented or not implemented at all.
+  (They do work on most Unix platforms, and all but \code{fifo} on
+  Windows.)
 
   Proxies can be specified for \code{url} connections: see
   \code{\link{download.file}}.
@@ -202,10 +201,10 @@ isIncomplete(con)
   \code{\link{Sys.umask}}).
 #endif
   
-  \code{gzfile} and \code{bzfile} connections are an exception, as the
-  file always has to be opened in binary mode.  Thus modes such as
-  \code{r} are binary, and \code{rt} is needed to have a text-mode
-  connection.
+  \code{gzfile}, \code{bzfile} and \code{xzfile} connections are
+  exceptions, as the file always has to be opened in binary mode.  Thus
+  modes such as \code{r} are binary, and \code{rt} is needed to have a
+  text-mode connection.
 
   \code{close} closes and destroys a connection.  Note that this will
   happen automatically in due course if there is no \R object referring
@@ -260,9 +259,9 @@ isIncomplete(con)
 }
 \value{
   \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile},
-  \code{bzfile}, \code{unz} and \code{socketConnection} return a
-  connection object which inherits from class \code{"connection"} and
-  has a first more specific class.
+  \code{bzfile}, \code{xzfile}, \code{unz} and \code{socketConnection}
+  return a connection object which inherits from class
+  \code{"connection"} and has a first more specific class.
 
   \code{isOpen} returns a logical value, whether the connection is
   currently open.
@@ -379,9 +378,8 @@ isIncomplete(con)
 }
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
-  1998).  However \R goes well beyond the S model, for example in
-  output text connections and URL, \code{gzfile}, \code{bzfile} and socket
-  connections.
+  1998).  However \R goes well beyond the S model, for example in output
+  text connections and URL, compressed and socket connections.
 
   The default mode in \R is \code{"r"} except for socket connections.
   This differs from S, where it is the equivalent of \code{"r+"},
@@ -413,7 +411,8 @@ isIncomplete(con)
   \code{\link{capabilities}} to see if \code{url},
   \code{fifo} and \code{socketConnection} are supported by this build of \R.
 
-  \code{\link{gzcon}} to wrap gzip (de)compression around a connection.
+  \code{\link{gzcon}} to wrap \command{gzip} (de)compression around a
+  connection.
   
   \code{\link{memCompress}} for more ways to (de)compress and references
   on data compression.

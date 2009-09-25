@@ -86,7 +86,7 @@ capabilities(what = NULL)
     \item{xz}{is there support for \command{xv} compression in
       \code{\link{xzfile}} and \code{\link{memCompress}}?  This format
       of compression is sometimes known as \sQuote{LZMA} after the main
-      algorithm used.}
+      algorithm used.  Always true as from \R 2.10.0.}
 }
 \seealso{\code{\link{.Platform}}}
 

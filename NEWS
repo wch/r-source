@@ -445,18 +445,18 @@ COMPRESSION
     o	bzfile() has a 'compress' argument to select the amount of
 	effort put into compression when writing.
 
-    o	New function xzfile() for use with xz-compressed files, if
-	suitable OS support is found at configuration.  (This can also
-	read files compressed by some versions of 'lzma'.)  The new
-	capabilities("xz") reports if it is supported.
+    o	New function xzfile() for use with xz-compressed files.  (This
+	can also read files compressed by some versions of 'lzma'.)
 
     o	gzfile() looks at the file header and so can now also read
-	bzip2-ed files and xv-compressed files (where supported).
+	bzip2-ed files and xv-compressed files.
 
-    o	There is the new option of save(compress = "bzip2") to use bzip2
-	compression (which will be slower, but can give substantially
-	smaller files).  load() can read such saves (but only as from
-	this version of R).  Also "xz" where supported.
+    o	There are the new options of save(compress = "bzip2") and "xz"
+	to use bzip2 or xz compression (which will be slower, but can
+	give substantially smaller files).  Argument compression_level
+	gives finer control over the space/time tradeoffs.
+
+	load() can read such saves (but only as from this version of R).
 
     o	R CMD INSTALL/check and tools::writePACKAGES accept a wider
 	range of compressed tar archives.  Precisely how wide depends
@@ -469,9 +469,8 @@ COMPRESSION
 	compression used when lazy-loading data.  One new option is
 	--data-compress=bzip2 which will give ca 15% better
 	compression at the expense of slower installation times.  Also
-	--data-compress=xz where supported, often giving even better
-	compression on large datasets at the expense of much slower
-	installation times.
+	--data-compress=xz, often giving even better compression on
+	large datasets at the expense of much slower installation times.
 
 
 DEPRECATED & DEFUNCT

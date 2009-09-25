@@ -994,10 +994,6 @@
         } else if (substr(a, 1, 16) == "--data-compress=") {
             dc <- substr(a, 17, 1000)
             dc <- match.arg(dc, c("none", "gzip", "bzip2", "xz"))
-            if (dc == "xz" && !capabilities("xz")) {
-                warning("'--data-compress=xz' is not supported on this build -- using 'gzip'")
-                dc <- "gzip"
-            }
             data_compress <- switch(dc,
                                     "none" = FALSE,
                                     "gzip" = TRUE,

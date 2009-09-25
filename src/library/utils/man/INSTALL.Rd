@@ -38,8 +38,7 @@
   libraries).
 #ifdef windows
 
-  Windows Perl and the files for installing from source packages need to
-  be installed.  It is possible that environment variable \env{TMPDIR}
+  It is possible that environment variable \env{TMPDIR}
   will need to be set (although \command{R CMD} tries to set it suitably
   otherwise): use forward slashes and no spaces for the path to a
   writable directory.
@@ -120,6 +119,7 @@
   including all the available options
 }
 
+#ifdef unix
 \note{
   Some parts of the operation of \code{INSTALL} depend on the \R
   temporary directory (see \code{\link{tempdir}}, usually under
@@ -128,6 +128,7 @@
   mounted as \code{noexec}, environment variable \env{TMPDIR} may need
   to be set to a directory from which execution is allowed.
 }
+#endif
 
 \section{Packages using the methods package}{
   Packages that require the methods package and make use functions such
