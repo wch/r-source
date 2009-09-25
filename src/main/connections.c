@@ -1435,7 +1435,6 @@ static Rconnection newbzfile(const char *description, const char *mode,
     return new;
 }
 
-#ifdef HAVE_LZMA
 #include <lzma.h>
 
 typedef struct xzfileconn {
@@ -1654,9 +1653,8 @@ newxzfile(const char *description, const char *mode, int type, int compress)
     ((Rxzfileconn) new->private)->compress = compress;
     return new;
 }
-#endif
 
-/* op 0 is gzfile, 1 is bzfile, 2 is xv/lzma (decompress only) */
+/* op 0 is gzfile, 1 is bzfile, 2 is xv/lzma */
 SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, sopen, ans, class, enc;
@@ -1664,9 +1662,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     int ncon, compress = 9;
     Rconnection con = NULL;
     int type = PRIMVAL(op);
-#ifdef HAVE_LZMA
     int subtype = 0;
-#endif
 
     checkArity(op, args);
     sfile = CAR(args);
@@ -1688,13 +1684,9 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "compress");
     }
     if(type == 2) {
-#ifdef HAVE_LZMA
 	compress = asInteger(CADDDR(args));
 	if(compress == NA_LOGICAL || abs(compress) > 9)
 	    error(_("invalid '%s' argument"), "compress");
-#else
-	error(_("'xzfile' is not supported in this build of R"));
-#endif
     }
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
     if (!open[0] || open[0] == 'r') {
@@ -1706,18 +1698,9 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	    memset(buf, 0, 7); res = fread(buf, 5, 1, fp); fclose(fp);
 	    if(res == 1) {
 		if(!strncmp(buf, "BZh", 3)) type = 1;
-		if((buf[0] == '\xFD') && !strncmp(buf+1, "7zXZ", 4))
-#ifdef HAVE_LZMA
-		    type = 2;
-#else
-		    error(_("this is a %s-compressed file which this build of R does not support"), "xv");
-#endif
+		if((buf[0] == '\xFD') && !strncmp(buf+1, "7zXZ", 4)) type = 2;
 		if((buf[0] == '\xFF') && !strncmp(buf+1, "LZMA", 4))
-#ifdef HAVE_LZMA
 		    {type = 2; subtype = 1;}
-#else
-		    error(_("this is a %s-compressed file which this build of R does not support"), "lzma");
-#endif
 		if((buf[0] == '\x89') && !strncmp(buf+1, "LZO", 3))
 		    error(_("this is a %s-compressed file which this build of R does not support"), "lzop");
 	    }
@@ -1730,11 +1713,9 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     case 1:
 	con = newbzfile(file, strlen(open) ? open : "r", compress);
 	break;
-#ifdef HAVE_LZMA
     case 2:
 	con = newxzfile(file, strlen(open) ? open : "r", subtype, compress);
 	break;
-#endif
     }
     ncon = NextConnection();
     Connections[ncon] = con;
@@ -1758,11 +1739,9 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     case 1:
 	SET_STRING_ELT(class, 0, mkChar("bzfile"));
 	break;
-#ifdef HAVE_LZMA
     case 2:
 	SET_STRING_ELT(class, 0, mkChar("xzfile"));
 	break;
-#endif
     }
     SET_STRING_ELT(class, 1, mkChar("connection"));
     classgets(ans, class);
@@ -5185,8 +5164,6 @@ SEXP attribute_hidden do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
     return val;
 }
 
-#ifdef HAVE_LZMA
-
 static lzma_filter filters[LZMA_FILTERS_MAX + 1];
 
 static void init_filters(void)
@@ -5293,21 +5270,6 @@ SEXP R_decompress3(SEXP in)
     return ans;
 }
 
-#else
-
-attribute_hidden
-SEXP R_compress3(SEXP in)
-{
-    return in;
-}
-
-attribute_hidden
-SEXP R_decompress3(SEXP in)
-{
-    return in;
-}
-#endif
-
 SEXP attribute_hidden 
 do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -5345,7 +5307,6 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     }
     case 4: /* xv */
-#ifdef HAVE_LZMA
     {
 	unsigned char *buf;
 	unsigned int inlen = LENGTH(from), outlen;
@@ -5378,11 +5339,8 @@ do_memCompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	lzma_end(&strm);
 	ans = allocVector(RAWSXP, outlen);
 	memcpy(RAW(ans), buf, outlen);
-    }
-#else
-	error("type = 'xz' is not supported on this build of R");
-#endif
 	break;
+    }
     default: 
 	break;
     }
@@ -5451,7 +5409,6 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     case 4: /* xz */
     {
-#ifdef HAVE_LZMA
 	unsigned char *buf;
 	unsigned int inlen = LENGTH(from), outlen = 3*inlen;
 	lzma_stream strm = LZMA_STREAM_INIT;
@@ -5480,9 +5437,6 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	lzma_end(&strm);
 	ans = allocVector(RAWSXP, outlen);
 	memcpy(RAW(ans), buf, outlen);
-#else
-	error("type = 'xz' is not supported on this build of R");
-#endif
 	break;
     }
     default: 
