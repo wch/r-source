@@ -562,6 +562,9 @@ BUG FIXES
         ignoring all conditional relations (the symptom was usually
         spurious warnings for classes extending "array").
 
+    o   Assigning into a raw vector with an index vector containing NA
+        could cause a segfault.  Reported by Hervé Pagès.
+
 
 
 	**************************************************

@@ -5815,3 +5815,9 @@ setMethod("na.omit", "bla", function(object, ...) "na.omit(<bla>)")
 stopifnot(identical(m1, m2))
 options(op)
 ## gave two warnings, when an S3 generic had turned into an S4 one
+
+## raw vector assignment with NA index used to segfault
+x <- charToRaw("abc")
+y <- charToRaw("bbb")
+x[c(1, NA, 3)] <- x[2]
+stopifnot(identical(x, y))

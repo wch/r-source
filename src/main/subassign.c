@@ -649,6 +649,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
 	for (i = 0; i < n; i++) {
 	    ii = INTEGER(indx)[i];
+	    if (ii == NA_INTEGER) continue;
 	    ii = ii - 1;
 	    RAW(x)[ii] = RAW(y)[i % ny];
 	}
