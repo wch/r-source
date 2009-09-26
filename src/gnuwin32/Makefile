@@ -43,9 +43,6 @@ ifdef DEBUG
 else
  DLLFLAGS=-s
 endif
-ifdef R_MEMORY_PROFILING
- OPTFLAGS+=-DR_MEMORY_PROFILING
-endif
 
 # used when compiling src/main: needed for memory.c, regex.c
 OPTFLAGS_M=$(OPTFLAGS)
@@ -345,9 +342,10 @@ bitmapdll:
 CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER-PAT)/Recommended
 
 ## Use -c here to avoid re-downloading the same versions of files
+## A recent rsync seems to need -p
 rsync-recommended:
 	@(cd ../library; \
-	  rsync --timeout=60 -rcvC --delete \
+	  rsync --timeout=60 -rcvpC --delete \
 	    --exclude=Makefile.in --exclude=Makefile.win --exclude=.cvsignore \
 	    --include=*.tar.gz --exclude=*.tgz --exclude=".svn" $(CRANREC) . )
 	@$(RM) ../library/Recommended/*.tgz

@@ -22,9 +22,6 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 
 # Support for the ACML and Goto BLASes has been withdrawn: see R-admin.html
 
-# Define this to enable memory profiling.
-# R_MEMORY_PROFILING=YES
-
 # Where does Tcl/Tk live? Spaces allowed.
 TCL_HOME = $(RHOME)/Tcl
 TCL_VERSION = 85
@@ -48,8 +45,8 @@ DEFINES=-DW64
 BINPREF=x86_64-pc-mingw32-
 endif
 
-# use ICU
-# USE_ICU=NO
+# set to use ICU (experimental)
+# USE_ICU=YES
 # path to parent of ICU headers
 ICU_PATH=/sources/icu
 
@@ -61,7 +58,7 @@ ICU_PATH=/sources/icu
 
 ## ====== configuration macros for building installer ===========
 
-# location where Inno Setup 5.[12].x was installed. Spaces allowed.
+# location where Inno Setup 5.[123].x was installed. Spaces allowed.
 ISDIR=C:/packages/Inno
 
 ## ====== configuration macros for building MSI installer ===========
@@ -71,6 +68,7 @@ WIXDIR=C:/packages/WiX
 
 ## =============== end of user-customizable parts  ===================
 
+## c99 would force __STRICT_ANSI__ disabling strdup etc, and also alloca
 C99FLAG=-std=gnu99
 
 ifeq ($(strip $(BUILD)),GCC4)
