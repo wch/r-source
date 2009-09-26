@@ -7,18 +7,18 @@ CPPFLAGS=-I. -I../../gnuwin32 -I../../include
 DEFS=-DGA_DLL_BUILD -DENABLE_NLS=1
 CPPFLAGS+=$(DEFS)
 CFLAGS=$(OPTFLAGS)
-# gives ICE in gcc 4.3.0
+# -O3 gives ICE in gcc 4.3.0
 gimage-CFLAGS=-O2
 image-CFLAGS=-O2
 
 SOURCES=$(wildcard *.c)
-OBJECTS=$(foreach i,$(SOURCES),$(basename $i).o)
+OBJECTS=$(SOURCES:.c=.o)
 
 DLL: libR.dll.a Rgraphapp.dll
 	@cp Rgraphapp.dll ../../../bin
 
 
-ifeq ($(strip $(USE_IMPLIBS)),YES)
+ifdef USE_IMPLIBS
 implib: libRgraphapp.dll.a
 	@$(MKDIR) -p ../../../lib
 	@$(CP) libRgraphapp.dll.a ../../../lib

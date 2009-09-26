@@ -49,7 +49,7 @@ BINPREF=x86_64-pc-mingw32-
 endif
 
 # use ICU
-USE_ICU=NO
+# USE_ICU=NO
 # path to parent of ICU headers
 ICU_PATH=/sources/icu
 
@@ -88,7 +88,7 @@ F77=sh $(RHOME)/src/scripts/f77_f2c
 FLIBS=-lf2c
 endif
 
-ifeq ($(strip $(USE_IMPLIBS)),YES)
+ifdef USE_IMPLIBS
 IMPDIR=lib
 else
 IMPDIR=bin

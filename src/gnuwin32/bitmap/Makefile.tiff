@@ -45,7 +45,7 @@ SOURCES = \
 	tif_write.c \
 	tif_zip.c
 
-OBJECTS=$(foreach i,$(SOURCES),$(basename $i).o)
+OBJECTS=$(SOURCES:.c=.o)
 
 libtiff.a: $(OBJECTS)
 

@@ -5,7 +5,7 @@ MODULE=lapack
 all: 
 	@$(MAKE) --no-print-directory -f Makefile.win -s makeMakedeps 
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../bin/Rlapack.dll 
-ifeq ($(strip $(USE_IMPLIBS)),YES)
+ifdef USE_IMPLIBS
 	@$(MAKE) --no-print-directory -f Makefile.win implib
 endif
 	@$(MAKE) --no-print-directory -f Makefile.win ../../../modules/$(MODULE).dll

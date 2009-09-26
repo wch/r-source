@@ -1065,7 +1065,7 @@ restarted.
 @subsection Building the bitmap files
 @cindex Rbitmap.dll
 
-The file @file{@var{R_HOME}/bin/Rbitmap.dll} is not built
+The file @file{@var{R_HOME}/library/grDevices/libs/Rbitmap.dll} is not built
 automatically.  
 
 Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap}
@@ -4259,13 +4259,23 @@ location where Inno Setup was installed.
 
 This item and the next are installed by the @file{Rtools.exe} installer.
 
+@c date is used when building base and tools
+@c find is used in building the installers
+@c comm, sort, uniq are use in producing .def files
+@c cmp is used in src/include/Makefile.win
+@c cut is used to make RVER
+@c gzip and tar are needed to unpack recommended packages
+@c rsync is only needed if building from svn
+@c tr is used by Rdiff
+@c awk, egrep, head, rmdir, tail, wc are no longer used
 If you choose to install these yourself, you will need suitable versions
 of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
-@code{cp}, @code{cut}, @code{diff}, @code{echo}, @code{find},
-@code{grep}, @code{gzip}, @code{ls}, @code{make}, @code{makeinfo},
-@code{mkdir}, @code{mv}, @code{rm}, @code{rsync}, @code{sed}, @code{sh},
-@code{sort}, @code{tar}, @code{texindex} and @code{touch}; we use those from the
-Cygwin distribution (@uref{http://www.cygwin.com/}) or compiled from the
+@code{cp}, @code{cut}, @code{date}, @code{diff}, @code{echo},
+@code{find}, @code{grep}, @code{gzip}, @code{ls}, @code{make},
+@code{makeinfo}, @code{mkdir}, @code{mv}, @code{rm}, @code{rsync},
+@code{sed}, @code{sh}, @code{sort}, @code{tar}, @code{texindex},
+@code{touch}, @code{tr} and @code{uniq}; we use those from the Cygwin
+distribution (@uref{http://www.cygwin.com/}) or compiled from the
 sources.  You will also need @code{zip} and @code{unzip} from the
 Info-ZIP project (@uref{http://www.info-zip.org/}).  All of these tools
 are in @file{Rtools.exe}.
@@ -4318,15 +4328,13 @@ should work on Windows Vista without any workarounds.
 
 Note that @code{mingw-runtime-3.13.tar.gz} or later and @code{gcc-4.2.1}
 or later are needed to get a correct build of @R{} itself.  There are
-known problems with using other compiler sets on Windows Vista
+known problems with using other compiler sets on Windows Vista and later
 (@uref{http://www.nabble.com/@/environment-@/hosed-@/during-@/upgrade-@/tf3305745@/.html#a9195667})
-and that a suitable @code{PATH} needs to be set to include the path to
+and the workaround is to set @code{PATH} to include the path to
 @file{cc1}.
 
-Other builds of @command{gcc} 4 are available from
-@uref{http://gcc.gnu.org/wiki/GFortranBinaries/} and
-@uref{http://www.tdragon.net/recentgcc/}: these need the @code{PATH}
-workaround on Vista.
+The MinGW build of @code{gcc-4.4.0} current in September 2009 failed to
+build a properly functioning @R{}.
 
 @node Function and variable index, Concept index, The Windows toolset, Top
 @unnumbered Function and variable index

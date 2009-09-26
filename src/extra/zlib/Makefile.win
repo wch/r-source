@@ -16,7 +16,7 @@ DLL: Rzlib.dll
 
 Rzlib.dll: $(OBJECTS)
 
-ifeq ($(strip $(USE_IMPLIBS)),YES)
+ifdef USE_IMPLIBS
 implib: libRzlib.dll.a
 	@$(MKDIR) -p ../../../lib
 	@$(CP) libRzlib.dll.a ../../../lib

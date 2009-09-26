@@ -37,6 +37,6 @@ stamp:
 liblzma.a: $(OBJECTS)
 
 clean:
-	@$(RM) -f Makedeps stamp *.c *.h *.o
+	@$(RM) -f Makedeps stamp *.c *.h *.o *.S
 distclean: clean
 	@$(RM) liblzma.a

@@ -1,5 +1,5 @@
 #-*- Makefile -*-
-## This now is use to compile thw standard packages, only
+## This now is use to compile the standard packages, only
 
 all:  makeMakedeps $(DLLNAME).dll
 
@@ -28,7 +28,8 @@ RESFLAGS=-I $(RHOME)/include
 
 CSOURCES=$(wildcard -f *.c)
 FSOURCES=$(wildcard -f *.f)
-OBJECTS=$(foreach i,$(CSOURCES) $(FSOURCES),$(basename $i).o)
+OBJECTS = $(CSOURCES:.c=.o) $(FSOURCES:.f=.o)
+#OBJECTS=$(foreach i,$(CSOURCES) $(FSOURCES),$(basename $i).o)
 DEPS=$(CSOURCES:.c=.d)
 
 RCOBJ=$(DLLNAME)_res.o

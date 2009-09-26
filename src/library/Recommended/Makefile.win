@@ -7,7 +7,7 @@ include ../../../share/make/vars.mk
 include ../../gnuwin32/MkRules
 
 ## foo.ts is the timestamp for package foo;
-## foo.tgz is a symlink to foo_x.y-z.tar.gz in the source dir.
+## foo.tgz is a copy of foo_x.y-z.tar.gz.
 ## unfortunately package foo can be uninstalled and leave foo.ts
 
 ## For developers: A shell script, tools/rsync-recommended, updates
@@ -25,13 +25,12 @@ all: stamp-recommended
 stamp-recommended: $(OBJECTS)
 	@touch $@
 
-## need to allow parallel installs, modulo dependencies below
+## allow parallel installs, modulo dependencies below
 INSTALL_OPTS=--pkglock --install-tests
 
 
 RCMD = ../../../bin/Rcmd
 
-## foo.tgz is a timestamp now, as symlinks fail.
 .tgz.ts:
 	@echo
 	@echo "----- installing recommended package" `basename $< .tgz`
