@@ -116,6 +116,7 @@ DLLTOOL=$(BINPREF)dlltool
 ## even for native builds
 DLLTOOLFLAGS=--as $(AS) -k
 ECHO=echo
+## FIND is only used in installer/Makefile
 FIND=find
 LINKER=$(MAIN_LD)
 MAIN_LD=$(CC)

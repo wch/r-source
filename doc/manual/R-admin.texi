@@ -4261,12 +4261,11 @@ This item and the next are installed by the @file{Rtools.exe} installer.
 
 If you choose to install these yourself, you will need suitable versions
 of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
-@code{cp}, @code{cut}, @code{diff}, @code{echo}, @code{egrep},
-@code{expr}, @code{find}, @code{gawk}, @code{grep}, @code{gzip},
-@code{head}, @code{ls}, @code{make}, @code{makeinfo}, @code{mkdir},
-@code{mv}, @code{rm}, @code{rsync}, @code{sed}, @code{sh}, @code{sort},
-@code{texindex} and @code{touch}; we use those from the Cygwin
-distribution (@uref{http://www.cygwin.com/}) or compiled from the
+@code{cp}, @code{cut}, @code{diff}, @code{echo}, @code{find},
+@code{grep}, @code{gzip}, @code{ls}, @code{make}, @code{makeinfo},
+@code{mkdir}, @code{mv}, @code{rm}, @code{rsync}, @code{sed}, @code{sh},
+@code{sort}, @code{tar}, @code{texindex} and @code{touch}; we use those from the
+Cygwin distribution (@uref{http://www.cygwin.com/}) or compiled from the
 sources.  You will also need @code{zip} and @code{unzip} from the
 Info-ZIP project (@uref{http://www.info-zip.org/}).  All of these tools
 are in @file{Rtools.exe}.

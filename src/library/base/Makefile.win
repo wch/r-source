@@ -18,7 +18,6 @@ ECHO = echo
 MKINSTALLDIRS = mkdir -p
 INSTALL_DATA = cp
 SHELL = sh
-R_GZIPCMD = gzip
 USE_NLS =yes
 
 all:
