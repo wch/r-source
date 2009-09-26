@@ -3,7 +3,7 @@ Makefile.in, Makefile.win and R_changes
 
 common/{bswap,integer,mythread}.h are from xz-utils-4.999.9beta.
 
-check/sha256.c is modified to look on the usual include path.
+check/{sha256.c,crc_macros.h} is modified to look on the usual include path.
 
 common/local.h is a set of definitions of features to be built, and
 common/sysdef.h is a modified copy of
