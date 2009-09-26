@@ -47,7 +47,10 @@ resaveRdaFiles(paths, compress = c("auto", "gzip", "bzip2", "rda"),
     format is not that of an \R save file.}
   \item{compress}{character: type of compression.  One of \code{"gzip"},
     \code{"bzip2"}, \code{"xv"}, \code{"none"} or \code{"unknown"} (which
-    means that if this is an \R save file it is from a later version of \R).}
+    means that if this is an \R save file it is from a later version of
+    \R).}
+  \item{version}{integer: the version of the save -- usually \code{2}
+    but \code{1} for very old files, and \code{NA} for other files.}
 }
 \examples{\dontrun{
 ## from a package top-level source directory

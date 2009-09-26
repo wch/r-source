@@ -853,7 +853,8 @@ function(dir)
 checkRdaFiles <- function(paths)
 {
     res <- data.frame(size = NA_real_, ASCII = NA,
-                      compress = NA_character_, stringsAsFactors = FALSE)
+                      compress = NA_character_, version = NA_integer_,
+                      stringsAsFactors = FALSE)
     res <- res[rep(1L, length(paths)), ]
     row.names(res) <- paths
     keep <- file.exists(paths)
@@ -863,16 +864,20 @@ checkRdaFiles <- function(paths)
         res[p, "compress"] <- if(all(magic[1:2] == c(0x1f, 0x8b))) "gzip"
         else if(rawToChar(magic[1:3]) == "BZh") "bzip2"
         else if(magic[1] == 0xFD && rawToChar(magic[2:5]) == "7zXZ") "xz"
-        else if(grepl("RD[ABX][12]\n", magic, useBytes = TRUE)) "none"
+        else if(grepl("RD[ABX][12]", rawToChar(magic), useBytes = TRUE)) "none"
         else "unknown"
         con <- gzfile(p)
         magic <- readChar(con, 5L, useBytes = TRUE)
         close(con)
-        res[p, "ASCII"]  <- if (grepl("RD[ABX][12]\n", magic, useBytes = TRUE))
+        res[p, "ASCII"]  <- if (grepl("RD[ABX][12]", magic, useBytes = TRUE))
             substr(magic, 3, 3) == "A" else NA
+        ver <- sub("(RD[ABX])([12]*)", "\\2", magic, useBytes = TRUE)
+        res$version <- as.integer(ver)
     }
     res
 }
+
+### * resaveRdaFiles
 
 resaveRdaFiles <- function(paths,
                            compress = c("auto", "gzip", "bzip2", "rda"),
