@@ -492,14 +492,12 @@
             ## Back up a previous version
             if (lock) {
                 if (debug) starsmsg(stars, "backing up earlier installation")
-                ## FIXME use file.copy + unlink
                 if(WINDOWS) {
                     file.copy(instdir, lockdir, recursive = TRUE)
                     unlink(instdir, recursive = TRUE)
                 } else
                     system(paste("mv", instdir, file.path(lockdir, pkg_name)))
-            } else if (more_than_libs && !WINDOWS)
-                unlink(instdir, recursive = TRUE)
+            } else if (more_than_libs) unlink(instdir, recursive = TRUE)
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
 
