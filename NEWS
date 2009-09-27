@@ -15,28 +15,26 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	that were first introduced in 2.9.0.  This means
 
 	- Packages that were installed by R-devel after 2009-08-09
-	  should not be used with earlier versions of R, and some
-	  aspects of package help will be missing if they are so
-	  used.  (Text, HTML and latex help and the runnable
-	  examples.)
+	  should not be used with earlier versions of R, and most
+	  aspects of package help (including the runnable examples)
+	  will be missing if they are so used.
 
 	- Text, HTML and latex help and examples for packages
 	  installed under the new system are converted on-demand from
-	  stored parsed Rd files.  (Conversions stored in R < 2.10.0
-	  are used if no parsed Rd files are found.)
-
-	- Rd version 2 is required in help files.
+	  stored parsed Rd files.  (Conversions stored in packages
+	  installed under R < 2.10.0 are used if no parsed Rd files
+	  are found.  It is recommended that such packages be
+	  re-installed.)
 
 
     o	HTML help is now generated dynamically using an HTTP server
 	running in the R process and listening on the loopback
 	interface.
 
-	- Those who need to worry about security implications of
-	  such a server can disable it by setting the environment
-	  variable R_DISABLE_HTTPD to a non-empty value.  This
-	  disables help.start() and HTML help (so text help is shown
-	  instead).
+	- Those worried about security implications of such a server
+	  can disable it by setting the environment variable
+	  R_DISABLE_HTTPD to a non-empty value.  This disables
+	  help.start() and HTML help (so text help is shown instead).
 
 	- The Java/Javascript search engine has been replaced by an
 	  HTML interface to help.search().  help.start() no longer has
@@ -47,8 +45,6 @@ SIGNIFICANT USER-VISIBLE CHANGES
           alias in the package, rather than the documented (basename
           of a) filename (since the documentation has been much
           ignored).
-
-	- Details may change before release.
 
 
 NEW FEATURES
@@ -144,8 +140,8 @@ NEW FEATURES
 	"0.30", i.e., with trailing zeros.  This change also renders
 	levels construction in factor() more consistent.
 
-    o	codocClasses() which checks consistency of S4 class slots'
-	documentation, now does this in considerably more cases.  The
+    o	codocClasses(), which checks consistency of the documentation of
+	S4 class slots, now does so in considerably more cases.  The
 	documentation of inherited slots (from superclasses) is now
 	optional.  This affects 'R CMD check <pkg>' when the package
 	defines S4 classes.
@@ -203,10 +199,10 @@ NEW FEATURES
     o	svd(x) and eigen(x) now behave analogously to qr(x) in
 	accepting logical matrices x.
 
-    o	[Experimental]	File NEWS is now in UTF-8, and has a BOM
-	(often invisible) on the first line, and Emacs local variables
-	set for UTF-8 at the end.  RShowDoc("NEWS") should display
-	this correctly, given suitable fonts.
+    o	File NEWS is now in UTF-8, and has a BOM (often invisible) on
+	the first line, and Emacs local variables set for UTF-8 at the
+	end.  RShowDoc("NEWS") should display this correctly, given
+	suitable fonts.
 
     o	terms.formula(simplify = TRUE) now does not deparse the LHS and
 	so preserves non-standard responses such as `a: b` (requested
@@ -227,7 +223,7 @@ NEW FEATURES
 	suggestion of Tim Hesterberg).
 
     o	writeLines(), writeBin() and writeChar() have a new argument
-	'useBytes'. If false, character strings with marked encodings
+	'useBytes'.  If false, character strings with marked encodings
 	are translated to the current locale (as before) but if true
 	they are written byte-by-byte.
 
@@ -300,7 +296,7 @@ NEW FEATURES
 	part (e.g., the object type) required for the class can be
 	included as one of the superclasses in the Classes argument.
 
-    o	The argument f= to showMethods() can be an expression evaluating
+    o	The argument 'f' to showMethods() can be an expression evaluating
 	to a generic function, allowing methods to be shown for
 	non-exported generics and other nonstandard cases.
 
@@ -471,18 +467,18 @@ COMPRESSION
 	--data-compress=bzip2 which will give ca 15% better
 	compression at the expense of slower installation times.  Also
 	--data-compress=xz, often giving even better compression on
-	large datasets at the expense of much slower installation times.
+	large datasets at the expense of much longer installation times.
 
 
 DEPRECATED & DEFUNCT
-
-    o	Bundles of packages are deprecated.  See 'Writing R
-	Extensions' for the steps needed to unbundle a bundle.
 
     o	png(type="cairo1") is defunct: the value is no longer recognized.
 
     o	tools::Rd_parse() is defunct (as this version of R uses only
 	Rd version 2).
+
+    o	Bundles of packages are deprecated.  See 'Writing R
+	Extensions' for the steps needed to unbundle a bundle.
 
     o	clearNames() ('stats') is deprecated for unname().
 
@@ -562,11 +558,13 @@ BUG FIXES
         ignoring all conditional relations (the symptom was usually
         spurious warnings for classes extending "array").
 
-    o   Assigning into a raw vector with an index vector containing NA
+    o   Assigning into a raw vector with an index vector containing NAs
         could cause a segfault.  Reported by Hervé Pagès.
 
     o   Rscript would segfault if its filename argument was not
         provided.  Reported by Martin Morgan.
+
+
 
 
 	**************************************************
@@ -588,15 +586,16 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	Names of datasets could clash with temporary filenames used
-	when running examples, causing errors.
+    o	On systems using zipped data and help (Windows) the names of
+	datasets could clash with temporary filenames used when
+	running examples, causing errors.
 
     o	as.complex() sometimes warned about NAs on coercions and
 	sometimes not (when the C function asComplex was used, e.g. on
 	list elements).  (PR#13942)
 
     o	cat() on an unopened connection could close it twice, and
-	file() connections segfaulted on some systems.
+	with file() connections segfaulted on some systems.
 	
     o	Printing a list could segfault if the elements are nested too
 	deeply.
