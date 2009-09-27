@@ -365,6 +365,37 @@ REGULAR EXPRESSIONS
 
 HELP & Rd FILE CHANGES
 
+    o	A new dynamic HTML help system is used by default, and may be
+	controlled using tools::startDynamicHelp().  With this enabled,
+	HTML help pages will be generated on request, resolving links
+	by searching through the current .libPaths().
+
+    o	help.start() no longer sets options(htmlhelp = TRUE) (it used
+	to on Unix but not on Windows).  Nor does it on Unix reset the
+	"browser" option if given an argument of that name.
+
+	Arguments 'update' and 'remote' are now available on all
+	platforms: the default is update = FALSE since the http server
+	will update the package index at first use.
+
+    o	help() has a new argument 'help_type' (with default set by the
+	option of that name) to supersede 'offline', 'htmlhelp' and
+	'chmhelp' (although for now they still work if 'help_type' is
+	unset).  There is a new type, "PDF" to allow offline PDF
+	(rather than PostScript).
+
+	A function offline_help_helper() will be used if this exists
+	in the workspace or further down the search path, otherwise
+	the function of that name in the 'utils' name space is used.
+
+    o	Plain text help is now used as the fallback for HTML help (as
+	it always was for Compiled HTML help on Windows).
+
+    o	It is possible to ask for static HTML pages to be prebuilt via
+	the configure option --enable-prebuilt-html.  This may be
+	useful for those who wish to make HTML help available outside
+	R, e.g. on a local web site.
+
     o	An experimental tag \Sexpr has been added to Rd files, to
 	evaluate expressions at build, install, or render time.
 	Currently install time and render time evaluation are
@@ -400,32 +431,6 @@ HELP & Rd FILE CHANGES
     o	parse_Rd() was incorrectly handling multiple backslashes in
 	R code strings, converting 4n+3 backslashes to 2n+1 instead
 	of 2n+2.
-
-    o	A new dynamic HTML help system is used by default, and may be
-	controlled using tools::startDynamicHelp().  With this enabled,
-	HTML help pages will be generated on request, resolving links
-	by searching through the current .libPaths().
-
-    o	help.start() no longer sets options(htmlhelp = TRUE) (it used
-	to on Unix but not on Windows).  Nor does it on Unix reset the
-	"browser" option if given an argument of that name.
-
-	Arguments 'update' and 'remote' are now available on all
-	platforms: the default is update = FALSE since the http server
-	will update the package index at first use.
-
-    o	help() has a new argument 'help_type' (with default set by the
-	option of that name) to supersede 'offline', 'htmlhelp' and
-	'chmhelp' (although for now they still work if 'help_type' is
-	unset).  There is a new type, "PDF" to allow offline PDF
-	(rather than PostScript).
-
-	A function offline_help_helper() will be used if this exists
-	in the workspace or further down the search path, otherwise
-	the function of that name in the 'utils' name space.
-
-    o	Plain text help is now used as the fallback for HTML help (as
-	it always has been for Compiled HTML help on Windows).
 
 
 COMPRESSION
@@ -480,6 +485,9 @@ DEPRECATED & DEFUNCT
     o	Bundles of packages are deprecated.  See 'Writing R
 	Extensions' for the steps needed to unbundle a bundle.
 
+    o 	help() arguments 'offline', 'htmlhelp' and 'chmhelp' are
+	deprecated in favour of 'help_type'.
+
     o	clearNames() ('stats') is deprecated for unname().
 
     o	Basic regular expressions (extended = FALSE) are deprecated in
@@ -489,8 +497,8 @@ DEPRECATED & DEFUNCT
 	fixed = TRUE when using extended = FALSE.
 
     o	methods::trySilent() is deprecated for  try(*, silent=TRUE) or
-    	--more efficiently and flexibly--something like
-	tryCatch(*, error=function(e)e).
+    	- more efficiently and flexibly - something like
+	tryCatch(*, error = function(e) e).
 
 
 INSTALLATION
