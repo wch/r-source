@@ -379,10 +379,17 @@ Rd2HTML <-
                "\\linkS4class" =,
                "\\link" = writeLink(tag, block),
                ## cwhmisc has an empty \\email
-               "\\email" = if (length(block)) of0('<a href="mailto:', block[[1L]], '">', htmlify(block[[1L]]), '</a>'),
+               "\\email" = if (length(block)) {
+                   url <- paste(as.character(block), collapse="")
+                   url <- gsub("\n", "", url)
+                   of0('<a href="mailto:', url, '">', htmlify(url), '</a>')},
                ## FIXME: encode, not htmlify
                ## watch out for empty URLs (TeachingDemos has one)
-               "\\url" = if (length(block)) of0('<a href="', block[[1L]], '">', block[[1L]], '</a>'),
+               "\\url" = if(length(block)) {
+                   url <- paste(as.character(block), collapse="")
+                   url <- gsub("\n", "", url)
+                   of0('<a href="', url, '">', url, '</a>')
+               },
                "\\Sexpr"= of0(as.character.Rd(block, deparse=TRUE)),
                "\\cr" =,
                "\\dots" =,

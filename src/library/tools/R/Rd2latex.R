@@ -185,6 +185,13 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     	of1("}")
     }
 
+    writeURL <- function(block, tag) {
+        ## really verbatim
+    	of0(tag, "{",
+            gsub("\n", "", paste(as.character(block), collapse="")),
+            "}")
+    }
+
     ## Currently ignores [option] except for [=dest] form
     ## (as documented)
     writeLink <- function(tag, block) {
@@ -356,7 +363,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\option" =,
                "\\samp" = writeVerb(block, tag),
                ## really verbatim
-                "\\url"= of0("\\url{", as.character(block), "}"),
+                "\\url"= writeURL(block, tag),
                ## R-like
                "\\code"= {
                    inCode <<- TRUE
