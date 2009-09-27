@@ -214,7 +214,7 @@ they are not portable, and a security risk if they are of the
 appropriate architecture.  @command{R CMD check} will warn about
 them@footnote{false positives are possible, but only one has been seen
 so far.} unless they are listed (one filepath per line) in a file
-@file{BinaryFiles} at the top level of the package or bundle.  Note that
+@file{BinaryFiles} at the top level of the package.  Note that
 @acronym{CRAN} will no longer accept submissions containing binary files
 even if they are listed.
 
@@ -369,9 +369,8 @@ optionally followed by a comment in parentheses.  The comment should
 contain a comparison operator@footnote{only @samp{>=} and @samp{<=} were
 supported prior to @R{} 2.7.0, and only @samp{>=} is supported for
 package versions by @code{install.packages}.}, whitespace and a valid
-version number).  (List @emph{package} names even if they are part of a
-bundle.)  You can also use the special package name @samp{R} if your
-package depends on a certain version of @R{}.  E.g., if the package
+version number).  You can also use the special package name @samp{R} if
+your package depends on a certain version of @R{}.  E.g., if the package
 works only with @R{} version 2.4.0 or newer, include @samp{R (>= 2.4.0)}
 in the @samp{Depends} field.  Both @code{library} and the @R{} package
 checking facilities use this field, hence it is an error to use improper
@@ -382,8 +381,7 @@ should be listed in the @samp{SystemRequirements} field or a separate
 version of @R{} used is recent enough for the package being installed,
 and the list of packages which is specified will be attached (after
 checking version requirements) before the current package, both when
-@code{library} is called and when saving an image of the package's code
-or preparing for lazy-loading.
+@code{library} is called and when preparing for lazy-loading.
 
 As from @R{} 2.7.0 a package (or @samp{R}) can appear more than once in
 the @samp{Depends}, but only the first occurrence will be used in
@@ -581,14 +579,14 @@ formfeed, LF and CR) should be used in code files.  Other characters are
 accepted in comments, but then the comments may not be readable in
 e.g.@: a UTF-8 locale.  Non-@acronym{ASCII} characters in object names
 will normally@footnote{This is true for OSes which implement the
-@samp{C} locale, unless neither lazy-loading nor saving an image are
-used, in which case it would fail if loaded in a @samp{C}
-locale. (Windows' idea of the @samp{C} locale uses the WinAnsi
-charset.)} fail when the package is installed.  Any byte will be
-allowed@footnote{It is good practice to encode them as octal or hex
-escape sequences.} in a quoted character string (but @code{\uxxxx}
-escapes should not be used), but non-@acronym{ASCII} character strings
-may not be usable in some locales and may display incorrectly in others.
+@samp{C} locale, unles lazy-loading is not used, in which case it would
+fail if loaded in a @samp{C} locale. (Windows' idea of the @samp{C}
+locale uses the WinAnsi charset.)} fail when the package is installed.
+Any byte will be allowed@footnote{It is good practice to encode them as
+octal or hex escape sequences.} in a quoted character string (but
+@code{\uxxxx} escapes should not be used), but non-@acronym{ASCII}
+character strings may not be usable in some locales and may display
+incorrectly in others.
 
 
 @findex .First.lib
@@ -1371,7 +1369,7 @@ not being empty.  The checks on file names are controlled by the option
 @option{--check-subdirs=@var{value}}.  This defaults to @samp{default},
 which runs the checks only if checking a tarball: the default can be
 overridden by specifying the value as @samp{yes} or @samp{no}.  Further,
-the check on the @file{src} directory is only run if the package/bundle
+the check on the @file{src} directory is only run if the package
 does not contain a @file{configure} script (which corresponds to the
 value @samp{yes-maybe}) and there is no @file{src/Makefile} or
 @file{src/Makefile.in}.
@@ -1531,9 +1529,9 @@ of the @R{} package builder.
 
 Unless @kbd{R CMD build} is invoked with the @option{--no-vignettes}
 option, it will attempt to rebuild the vignettes (@pxref{Writing package
-vignettes}) in the package.  To do so it installs the current
-package/bundle into a temporary library tree, but any dependent packages
-need to be installed in an available library tree (see the Note: below).
+vignettes}) in the package.  To do so it installs the current package
+into a temporary library tree, but any dependent packages need to be
+installed in an available library tree (see the Note: below).
 
 One of the checks that @code{R CMD build} runs is for empty source
 directories.  These are in most cases unintentional, in which case they
@@ -4232,7 +4230,7 @@ The currently supported conversions are to plain text, @HTML{} and
 @code{R CMD Rd2dvi} generates DVI (or, if option @option{--pdf} is
 given, PDF) output from documentation in Rd files, which can be
 specified either explicitly or by the path to a directory with the
-sources of a package (or bundle).  In the latter case, a reference
+sources of a package.  In the latter case, a reference
 manual for all documented objects in the package is created, including
 the information in the @file{DESCRIPTION} files.
 
@@ -6288,16 +6286,13 @@ It is better to make use of a @code{Makevars} file rather than a
 @c @code{R CMD SHLIB} does not.  The file must be named @file{Makefile},
 @c not for example @file{makefile} nor @file{GNUmakefile}.
 
-Under Windows@footnote{The files in the @R{} binary Windows distribution
-for installing source packages need to be installed.} the same commands
-work, but @file{Makevars.win} will be used in preference to
-@file{Makevars}, and only @file{src/Makefile.win} will be used by
-@code{R CMD INSTALL} with @file{src/Makefile} being ignored.  For
-details of building DLLs with a variety of compilers, see file
-@samp{README.packages} and
+Under Windows the same commands work, but @file{Makevars.win} will be
+used in preference to @file{Makevars}, and only @file{src/Makefile.win}
+will be used by @code{R CMD INSTALL} with @file{src/Makefile} being
+ignored.  For details of building DLLs with a variety of compilers, see
+file @samp{README.packages} and
 @uref{http://@/www.stats.uwo.ca/@/faculty/@/murdoch/@/software/@/compilingDLLs/}
-.
-Under Windows you can supply an exports definitions file called
+.  Under Windows you can supply an exports definitions file called
 @file{@var{dllname}-win.def}: otherwise all entry points in objects (but
 not libraries) supplied to @code{R CMD SHLIB} will be exported from the
 DLL.  An example is @file{stats-win.def} for the @pkg{stats} package: a

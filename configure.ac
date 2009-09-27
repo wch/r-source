@@ -99,19 +99,11 @@ if test -r "${cfile}"; then
   echo "loading site script '${cfile}'"
   . "${cfile}"
 fi
+## NB: undocumented, replaced ~/.Rconf in late 2004
 cfile="${HOME}/.Rconfig"
 if test -r "${cfile}"; then
   echo "loading user script '${cfile}'"
   . "${cfile}"
-## <FIXME>
-## Remove support for ~/.Rconf eventually.
-else
-  cfile="${HOME}/.Rconf"
-  if test -r "${cfile}"; then
-    echo "loading user script '${cfile}'"
-    . "${cfile}"
-  fi
-## </FIXME>
 fi
 cfile="./config.site"
 if test -r "${cfile}"; then
@@ -123,6 +115,7 @@ fi
 libnn=lib
 case "${host_os}" in
   linux*)
+    ## Not all distros use this: some choose to march out of step  
     case "${host_cpu}" in
       x86_64|mips64|ppc64|powerpc64|sparc64|s390x)
         libnn=lib64
@@ -237,7 +230,8 @@ if test "${want_R_framework}" != no; then
 fi
 AM_CONDITIONAL(WANT_R_FRAMEWORK, [test "x${want_R_framework}" = xyes])
 
-## Allow the user to specify building R shared libraries.
+## Allow the user to specify building R as a shared library.
+## (but a 'dynamic library' in the terminology of Mac OS X).
 ## <NOTE>
 ## Building a framework implies building R shared libraries, hence the
 ## strange default.
@@ -262,9 +256,9 @@ if test "x${want_R_static}" = xyes; then
 fi
 AM_CONDITIONAL(WANT_R_STATIC, [test "x${want_R_static}" = xyes])
 
-## Build separate shared library containing R's BLAS if desired 
+## Build separate shared/dynamic library containing R's BLAS if desired 
 AC_ARG_ENABLE([BLAS-shlib],
-[AS_HELP_STRING([--enable-BLAS-shlib],[build BLAS into a shared library @<:@perhaps@:>@])],
+[AS_HELP_STRING([--enable-BLAS-shlib],[build BLAS into a shared/dynamic library @<:@perhaps@:>@])],
 [use_blas_shlib="${enableval}"],
 [use_blas_shlib="unset"])
 
