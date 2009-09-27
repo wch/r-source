@@ -647,7 +647,7 @@ Rd2txt <-
                                   keepFirstIndent <<- TRUE
                                   putw(paste(rep(" ", indent0), collapse=""),
                                        format(paste(DLlab,  sep=""),
-                                              justify="right", width=indent),
+                                              justify="left", width=indent),
                                        " ")
                                   writeContent(block[[2L]], tag)
 			  	  blankLine(0L)
