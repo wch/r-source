@@ -1,6 +1,31 @@
 ﻿
 	**************************************************
 	*						 *
+	*	       2.11 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.11.0
+
+
+DEPRECATED & DEFUNCT
+
+    o	Bundles of packages are defunct. [In progress.]
+
+    o	stats::clearNames() is defunct: use unname().
+	[But not yet disabled, used in packages nlme and quantreg.]
+
+    o	Basic regular expressions (extended = FALSE) are defunct in
+	strsplit, grep and friends.
+
+    o	methods::trySilent() is defunct.
+	[But not yet disabled, used in packages SODA and geoR.]
+
+
+
+	**************************************************
+	*						 *
 	*	       2.10 SERIES NEWS			 *
 	*						 *
 	**************************************************

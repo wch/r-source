@@ -25,7 +25,7 @@ Support for UTF-8-encoded strings in non-UTF-8 locales
 ======================================================
 
 strsplit grep [g]sub [g]regexpr
-  handle UTF-8 directly if fixed/perl = TRUE, via wchar_t for basic/extended
+  handle UTF-8 directly if fixed/perl = TRUE, via wchar_t for extended
 
 */
 
@@ -106,7 +106,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP args0 = args, ans, tok, x;
     int i, itok, j, len, tlen, ntok;
-    int extended_opt, fixed_opt, perl_opt, useBytes;
+    int fixed_opt, perl_opt, useBytes;
     char *pt = NULL; wchar_t *wpt = NULL;
     const char *buf, *split = "", *bufp;
     const unsigned char *tables = NULL;
@@ -116,22 +116,16 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     x = CAR(args); args = CDR(args);
     tok = CAR(args); args = CDR(args);
-    extended_opt = asLogical(CAR(args)); args = CDR(args);
     fixed_opt = asLogical(CAR(args)); args = CDR(args);
     perl_opt = asLogical(CAR(args)); args = CDR(args);
     useBytes = asLogical(CAR(args));
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
-    if (extended_opt == NA_INTEGER) extended_opt = 1;
     if (perl_opt == NA_INTEGER) perl_opt = 0;
     if (useBytes == NA_INTEGER) useBytes = 0;
     if (fixed_opt && perl_opt) {
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
 	perl_opt = 0;
     }
-    if (!extended_opt)
-	warning("'%s' is deprecated", "extended = FALSE");
-    if ((fixed_opt || perl_opt) && !extended_opt)
-	warning(_("argument '%s' will be ignored"), "extended = FALSE");
 
     if (!isString(x) || !isString(tok)) error(_("non-character argument"));
 
@@ -143,7 +137,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    if (extended_opt) cflags = REG_EXTENDED;
+    cflags = REG_EXTENDED;
 #ifdef USE_TRE_FOR_FIXED
     if (fixed_opt) cflags = REG_LITERAL;
 #endif
@@ -383,7 +377,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    pcre_free(re_pe);
 	    pcre_free(re_pcre);
-	} else if (!useBytes && use_UTF8) { /* basic/extended in wchar_t */
+	} else if (!useBytes && use_UTF8) { /* extended in wchar_t */
 	    regex_t reg;
 	    regmatch_t regmatch[1];
 	    int rc;
@@ -446,7 +440,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 				   mkCharWLen(wbufp, wcslen(wbufp)));
 	    }
 	    tre_regfree(&reg);
-	} else { /* basic/extended */
+	} else { /* extended */
 	    regex_t reg;
 	    regmatch_t regmatch[1];
 	    int rc;
@@ -613,7 +607,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, text, ind, ans;
     regex_t reg;
     int i, j, n, nmatches = 0, cflags = 0, ov, erroffset, ienc, rc;
-    int igcase_opt, extended_opt, value_opt, perl_opt, fixed_opt, useBytes, invert;
+    int igcase_opt, value_opt, perl_opt, fixed_opt, useBytes, invert;
     const char *spat, *errorptr;
     pcre *re_pcre = NULL /* -Wall */;
     pcre_extra *re_pe = NULL;
@@ -624,14 +618,12 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     pat = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
-    extended_opt = asLogical(CAR(args)); args = CDR(args);
     value_opt = asLogical(CAR(args)); args = CDR(args);
     perl_opt = asLogical(CAR(args)); args = CDR(args);
     fixed_opt = asLogical(CAR(args)); args = CDR(args);
     useBytes = asLogical(CAR(args)); args = CDR(args);
     invert = asLogical(CAR(args));
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
-    if (extended_opt == NA_INTEGER) extended_opt = 1;
     if (value_opt == NA_INTEGER) value_opt = 0;
     if (perl_opt == NA_INTEGER) perl_opt = 0;
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
@@ -641,10 +633,6 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
     if (fixed_opt && perl_opt)
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
-    if (!extended_opt)
-	warning("'%s' is deprecated", "extended = FALSE");
-    if ((fixed_opt || perl_opt) && !extended_opt)
-	warning(_("argument '%s' will be ignored"), "extended = FALSE");
 
     if (!isString(pat) || length(pat) < 1)
 	error(_("invalid '%s' argument"), "pattern");
@@ -706,7 +694,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     } else {
 	cflags = REG_NOSUB;
-	if (extended_opt) cflags |= REG_EXTENDED;
+	cflags |= REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
 #ifdef USE_TRE_FOR_FIXED
 	if (fixed_opt) cflags = REG_LITERAL;
@@ -917,8 +905,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     regmatch_t regmatch[10];
     int i, j, n, ns, nns, nmatch, offset, rc;
-    int global, igcase_opt, extended_opt, perl_opt, fixed_opt, useBytes,
-	cflags = 0, eflags, last_end;
+    int global, igcase_opt, perl_opt, fixed_opt, useBytes, cflags = 0, eflags,
+	last_end;
     char *u, *cbuf;
     const char *spat, *srep, *s;
 #ifndef USE_TRE_FOR_FIXED
@@ -936,12 +924,10 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     rep = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
-    extended_opt = asLogical(CAR(args)); args = CDR(args);
     perl_opt = asLogical(CAR(args)); args = CDR(args);
     fixed_opt = asLogical(CAR(args)); args = CDR(args);
     useBytes = asLogical(CAR(args)); args = CDR(args);
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
-    if (extended_opt == NA_INTEGER) extended_opt = 1;
     if (perl_opt == NA_INTEGER) perl_opt = 0;
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
     if (useBytes == NA_INTEGER) useBytes = 0;
@@ -949,10 +935,6 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
     if (fixed_opt && perl_opt)
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
-    if (!extended_opt)
-	warning("'%s' is deprecated", "extended = FALSE");
-    if ((fixed_opt || perl_opt) && !extended_opt)
-	warning(_("argument '%s' will be ignored"), "extended = FALSE");
 
     if (!isString(pat) || length(pat) < 1)
 	error(_("invalid '%s' argument"), "pattern");
@@ -1022,7 +1004,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     {
 	spat = CHAR(STRING_ELT(pat, 0));
-	if (extended_opt) cflags |= REG_EXTENDED;
+	cflags |= REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
 #ifdef USE_TRE_FOR_FIXED
 	if (fixed_opt) cflags = REG_LITERAL;
@@ -1096,7 +1078,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 	if (useBytes) {
 	    int maxrep;
-	    /* basic or extended regexp  in bytes*/
+	    /* extended regexp  in bytes*/
 
 	    /* worst possible scenario is to put a copy of the
 	       replacement after every character, unless there are
@@ -1153,7 +1135,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    Free(cbuf);
 	} else  {
-	    /* basic or extended regexp in wchar_t */
+	    /* extended regexp in wchar_t */
 	    const wchar_t *s = wtransChar(STRING_ELT(text, i));
 	    wchar_t *u, *cbuf;
 	    int maxrep;
@@ -1231,7 +1213,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, text, ans, matchlen;
     regex_t reg;
     regmatch_t regmatch[10];
-    int i, n, st, igcase_opt, extended_opt, perl_opt, fixed_opt, useBytes,
+    int i, n, st, igcase_opt, perl_opt, fixed_opt, useBytes,
 	cflags = 0, erroffset, ienc = CE_NATIVE;
     int rc, ovector[3];
     const char *spat = NULL; /* -Wall */
@@ -1245,12 +1227,10 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     pat = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
-    extended_opt = asLogical(CAR(args)); args = CDR(args);
     perl_opt = asLogical(CAR(args)); args = CDR(args);
     fixed_opt = asLogical(CAR(args)); args = CDR(args);
     useBytes = asLogical(CAR(args)); args = CDR(args);
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
-    if (extended_opt == NA_INTEGER) extended_opt = 1;
     if (perl_opt == NA_INTEGER) perl_opt = 0;
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
     if (useBytes == NA_INTEGER) useBytes = 0;
@@ -1258,10 +1238,6 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
     if (fixed_opt && perl_opt)
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
-    if (!extended_opt)
-	warning("'%s' is deprecated", "extended = FALSE");
-    if ((fixed_opt || perl_opt) && !extended_opt)
-	warning(_("argument '%s' will be ignored"), "extended = FALSE");
 
     /* allow 'text' to be zero-length from 2.3.1 */
     /* Note that excluding NAs differs from grep/sub */
@@ -1309,7 +1285,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (use_UTF8) cflags |= PCRE_UTF8;
 	}
     } else {
-	if (extended_opt) cflags |= REG_EXTENDED;
+	cflags |= REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
 #ifdef USE_TRE_FOR_FIXED
 	if (fixed_opt) cflags = REG_LITERAL;
@@ -1635,8 +1611,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ansList, ans;
     regex_t reg;
-    int i, n, igcase_opt, extended_opt, perl_opt, fixed_opt, useBytes,
-	cflags = 0, rc, ienc;
+    int i, n, igcase_opt, perl_opt, fixed_opt, useBytes, cflags = 0, rc, ienc;
     const char *spat, *s;
     Rboolean use_UTF8 = FALSE;
 
@@ -1644,12 +1619,10 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     pat = CAR(args); args = CDR(args);
     text = CAR(args); args = CDR(args);
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
-    extended_opt = asLogical(CAR(args)); args = CDR(args);
     perl_opt = asLogical(CAR(args)); args = CDR(args);
     fixed_opt = asLogical(CAR(args)); args = CDR(args);
     useBytes = asLogical(CAR(args)); args = CDR(args);
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
-    if (extended_opt == NA_INTEGER) extended_opt = 1;
     if (perl_opt == NA_INTEGER) perl_opt = 0;
     if (useBytes == NA_INTEGER) useBytes = 0;
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
@@ -1657,10 +1630,6 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
     if (fixed_opt && perl_opt)
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
-    if (!extended_opt)
-	warning("'%s' is deprecated", "extended = FALSE");
-    if ((fixed_opt || perl_opt) && !extended_opt)
-	warning(_("argument '%s' will be ignored"), "extended = FALSE");
 
     if (!isString(text) || length(text) < 1)
 	error(_("invalid '%s' argument"), "text");
@@ -1713,7 +1682,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (use_UTF8) cflags |= PCRE_UTF8;
 	}
     } else {
-	if (extended_opt) cflags |= REG_EXTENDED;
+	cflags |= REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
 #ifdef USE_TRE_FOR_FIXED
 	if (fixed_opt) cflags = REG_LITERAL;

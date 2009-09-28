@@ -1,6 +1,6 @@
 % File src/library/methods/man/methods-defunct.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{methods-defunct}
@@ -18,6 +18,7 @@
 \alias{getVirtual}
 \alias{seemsS4Object}
 \alias{allGenerics}
+\alias{trySilent}
 \title{Defunct Functions in the Methods Package}
 \description{
   Defunct functions in package \pkg{methods}.
@@ -38,11 +39,12 @@ mlistMetaName (name, package)
 removeMethodsObject(f, where)
 
 seemsS4Object(object)
-% </Removed 2.8.0>
 
 % Removed in 2.9.0
 allGenerics()
-% </Removed 2.9.0>
+
+% Removed in 2.11.0
+trySilent(expr)
 }
 \details{
   The first block of functions should be replaced by direct access to
@@ -79,6 +81,11 @@ allGenerics()
   by the introduction of the S4 bit in \R 2.4.0.
 
   \code{allGenerics} is superseded by \code{\link{getGenerics}}.
+  
+  \code{trySilent(ex)} was a deprecated equivalent of \code{\link{try}(e,
+    silent=TRUE)}; in \R programming it is typically more efficient and
+  flexible to work with something like \code{\link{tryCatch}(ex,
+    error = function(e) e)} instead.
 }
 
 \seealso{
