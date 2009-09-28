@@ -18,7 +18,7 @@
 trySilent(expr)
 }
 \arguments{
-  \item{\dots}{named arguments with values coercible to a character string.}
+  \item{expr}{an \R expression to try.}
 }
 \details{
   The original help page for these functions is often
@@ -34,5 +34,4 @@ trySilent(expr)
 \seealso{
   \code{\link{Deprecated}}, \code{\link{methods-defunct}}
 }
-\keyword{internal}
 \keyword{misc}
