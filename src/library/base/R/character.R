@@ -14,13 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-strsplit <-
-    function(x, split, extended = TRUE, fixed = FALSE, perl = FALSE,
-             useBytes = FALSE)
-    .Internal(strsplit(x, as.character(split), as.logical(extended),
-                       as.logical(fixed), as.logical(perl),
-                       as.logical(useBytes)))
-
 substr <- function(x, start, stop)
 {
     if(!is.character(x)) x <- as.character(x)
