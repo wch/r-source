@@ -350,46 +350,15 @@ sub get_exclude_patterns {
 ## This is currently shared between build and check.
 sub check_package_description {
     
-    my ($pkgdir, $pkgname, $log, $in_bundle, $is_base_pkg, $full) = @_;
+    my ($pkgdir, $pkgname, $log, $is_base_pkg, $full) = @_;
     
     my ($dfile, $dir, $description);
 
     if($is_base_pkg) {
 	$dfile = "DESCRIPTION.in";
     }
-    elsif(!$in_bundle) {
-	$dfile = "DESCRIPTION";
-    }
     else {
-	## Bundles are a bit tricky, as their package (DESCRIPTION)
-	## metadata come from merging the bundle DESCRIPTION file
-	## with the package DESCRIPTION.in one.  Hence, we
-	## concatenate these files to a temporary one.
-	$log->checking("for file 'DESCRIPTION.in'");
-	if(-r "DESCRIPTION.in") {
-	    $log->result("OK");
-	}
-	else {
-	    $log->result("NO");
-	    exit(1);
-	}
-	## Checking metadata currently also includes verifying that
-	## the package name and "directory name" are the same.
-	$dir = &file_path(${R::Vars::TMPDIR}, "check$$");
-	mkdir($dir, 0755)
-	    or die ("Error: cannot create directory '$dir'\n");
-	$dir = &file_path($dir, $pkgname);
-	mkdir($dir, 0755)
-	    or die ("Error: cannot create directory '$dir'\n");
-	$dfile = &file_path($dir, "DESCRIPTION");
-	my $fh = new IO::File($dfile, "w")
-	    or die "Error: cannot open file '$dpath' for writing\n";
-	my @lines = (&read_lines(&file_path(dirname($pkgdir),
-					    "DESCRIPTION")),
-		     &read_lines("DESCRIPTION.in"));
-	@lines = grep(!/^\s*$/, @lines); # Remove blank lines.
-	$fh->print(join("\n", @lines), "\n");
-	$fh->close();
+	$dfile = "DESCRIPTION";
     }
 
     $log->checking("DESCRIPTION meta-information");
@@ -402,7 +371,6 @@ sub check_package_description {
 			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
-	    rmtree(dirname($dir)) if($in_bundle);
 	    $log->error();
 	    $log->print(join("\n", @out) . "\n");
 	    exit(1);
@@ -466,8 +434,6 @@ sub check_package_description {
     }
 
     $log->result("OK") unless $any;    
-
-    rmtree(dirname($dir)) if($in_bundle);    
 }
 
 

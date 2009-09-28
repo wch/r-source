@@ -92,8 +92,6 @@ if(!$opt_binary && $INSTALL_opts ne "") {
 
 ## This is the main loop over all packages to be packaged.
 foreach my $pkg (@ARGV) {
-    my $is_bundle = 0;
-
     $pkg =~ s/\/$//;
     ## Older versions used $pkg as absolute or relative to $startdir.
     ## This does not easily work if $pkg is a symbolic link.
@@ -120,42 +118,15 @@ foreach my $pkg (@ARGV) {
 	exit(1);
     }
 
-    my @bundlepkgs;
-    if($description->{"Contains"}) {
-	$log->message("looks like '${pkgname}' is a package bundle");
-	$is_bundle = 1;
-	$intname = $description->{"Bundle"};
-	@bundlepkgs = split(/\s+/, $description->{"Contains"});
-	foreach my $ppkg (@bundlepkgs) {
-	    $log->message("cleaning '$ppkg' in bundle '$pkgname'");
-	    $log->setstars("**");
-	    ## chdir($startdir);
-	    cleanup_pkg(&file_path("$pkgdir", "$ppkg"), $log);
-	    $log->setstars("*");
-	}
-	foreach my $ppkg (@bundlepkgs) {
-	    $log->message("preparing '$ppkg' in bundle '$pkgname':");
-	    $log->setstars("**");
-	    ## chdir($startdir);
-	    prepare_pkg(&file_path("$pkgdir", "$ppkg"), $is_bundle,
-			$description, $log);
-	    $log->setstars("*");
-	}
-	foreach my $ppkg (@bundlepkgs) {
-	    $log->message("cleaning '$ppkg' in bundle '$pkgname'");
-	    $log->setstars("**");
-	    ## chdir($startdir);
-	    cleanup_pkg(&file_path("$pkgdir", "$ppkg"), $log);
-	    $log->setstars("*");
-	}
-	rmtree("$libdir") if (-d "$libdir");
-    } else {
-	$is_bundle = 0;
-	## chdir($startdir);
-	$log->message("preparing '$pkg':");
-	$intname = $description->{"Package"};
-	prepare_pkg($pkgdir, $is_bundle, $description, $log);
+    if($description->{"Bundle"}) {
+	$log->message("looks like '${pkgname}' is a package bundle -- they are defunct");
+	$log->error();
+	exit(1);
     }
+
+    $log->message("preparing '$pkg':");
+    $intname = $description->{"Package"};
+    prepare_pkg($pkgdir, $description, $log);
 
     ## chdir($startdir);
 
@@ -184,10 +155,6 @@ foreach my $pkg (@ARGV) {
     open(EXCLUDE, "> $exclude")
 	or die "Error: cannot open file '$exclude' for writing\n";
     binmode EXCLUDE if $WINDOWS;
-    ## <NOTE>
-    ## For bundles, the .Rbuildignore mechanism is not consistent
-    ## between build and check: the latter always works on a per
-    ## package basis.
     if(-f &file_path($pkgdir, ".Rbuildignore")) {
 	open(RBUILDIGNORE, &file_path($pkgdir, ".Rbuildignore"));
 	while(<RBUILDIGNORE>) {
@@ -197,7 +164,6 @@ foreach my $pkg (@ARGV) {
 	}
 	close(RBUILDIGNORE);
     }
-    ## </NOTE>
     sub find_exclude_files {
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^check$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^chm$/);
@@ -262,7 +228,7 @@ foreach my $pkg (@ARGV) {
 	    or die "Error: cannot rename directory to '$intname'\n";
 	$pkgname = $intname;
     }
-    ## Fix up man, R, demo inst/doc directories (in each package for a bundle)
+    ## Fix up man, R, demo inst/doc directories
     sub find_invalid_files {
 	my ($dpath) = @_;
 	my $Rcmd = "tools:::.check_package_subdirs(\"$dpath\", TRUE)\n";
@@ -277,15 +243,9 @@ foreach my $pkg (@ARGV) {
 	    $log->print(join("\n", @out) . "\n");
 	}
     }
-    if($is_bundle) {
-	foreach $ppkg (@bundlepkgs) {
-	    &find_invalid_files(&file_path($pkgname, $ppkg));
-	    chdir($tmpdir);
-	}
-    } else {
-	&find_invalid_files($pkgname);
-	chdir($tmpdir);
-    }
+    &find_invalid_files($pkgname);
+    chdir($tmpdir);
+
     ## Fix permissions.
     sub fix_permissions {
 	## Note that when called via File::Find::find, $_ holds the
@@ -306,15 +266,8 @@ foreach my $pkg (@ARGV) {
     &add_build_stamp_to_description_file(&file_path($pkgname,
 						    "DESCRIPTION"));
     $log->message("checking for LF line-endings in source and make files");
-    if($is_bundle) {
-	foreach my $ppkg (@bundlepkgs) {
-	    &fix_nonLF_in_source_files(&file_path($pkgname, $ppkg), $log);
-	    &fix_nonLF_in_make_files(&file_path($pkgname, $ppkg), $log);
-	}
-    } else {
-	&fix_nonLF_in_source_files($pkgname, $log);
-	&fix_nonLF_in_make_files($pkgname, $log);
-    }
+    &fix_nonLF_in_source_files($pkgname, $log);
+    &fix_nonLF_in_make_files($pkgname, $log);
 
     sub empty_dir_check {
 	if(-d $_) {
@@ -347,13 +300,7 @@ foreach my $pkg (@ARGV) {
 	}
     }
 
-    if($is_bundle) {
-	foreach my $ppkg (@bundlepkgs) {
-	    &fix_unneeded_dirs(&file_path($pkgname, $ppkg));
-	}
-    } else {
-	&fix_unneeded_dirs($pkgname);
-    }
+    &fix_unneeded_dirs($pkgname);
 
     ## Finalize.
     if($opt_binary) {
@@ -373,31 +320,6 @@ foreach my $pkg (@ARGV) {
 			 "--build $INSTALL_opts",
 			 &shell_quote_file_path($srcdir)));
 	    if(R_system($cmd)) { $log->error("installation failed"); }
-	} elsif($is_bundle) {
-	    $binfilename = "${pkgname}_" . $description->{"Version"} .
-		"_R_${R_platform}.tar";
-	    my $filepath = &file_path($startdir, $binfilename);
-	    $cmd = join(" ",
-			(&shell_quote_file_path(${R::Vars::R_EXE}),
-			 "CMD INSTALL -l",
-			 &shell_quote_file_path($libdir),
-			 "$INSTALL_opts",
-			 &shell_quote_file_path($srcdir)));
-	    if(R_system($cmd)) { $log->error("installation failed"); }
-	    chdir("$libdir");
-	    copy(&file_path($pkgdir, "DESCRIPTION"), "DESCRIPTION");
-	    ## precaution for Mac OS X to omit resource forks
-	    $ENV{COPYFILE_DISABLE} = 1; # Leopard
-	    $ENV{COPY_EXTENDED_ATTRIBUTES_DISABLE} = 1; # Tiger
-	    R_system(join(" ",
-			  ("$tar -chf ",
-			   &shell_quote_file_path($filepath),
-			   @bundlepkgs, "DESCRIPTION")));
-	    R_system(join(" ",
-			  ("$gzip -9f ",
-			   &shell_quote_file_path($filepath))));
-	    chdir($startdir);
-	    $log->message("packaged bundle '$pkgname' as '$binfilename.gz'");
 	} else {
 	    $cmd = join(" ",
 			(&shell_quote_file_path(${R::Vars::R_EXE}),
@@ -452,14 +374,13 @@ sub add_build_stamp_to_description_file {
 
 
 sub prepare_pkg {
-    my ($pkgdir, $in_bundle, $description, $log) = @_;
+    my ($pkgdir, $description, $log) = @_;
 
     my $pkgname = basename($pkgdir);
 
-    &R::Utils::check_package_description($pkgdir, $pkgname, $log,
-					 $in_bundle, 0, 1);
+    &R::Utils::check_package_description($pkgdir, $pkgname, $log, 0, 1);
 
-    &cleanup_pkg($pkgdir, $log) if(!$in_bundle);
+    &cleanup_pkg($pkgdir, $log);
 
     ## Only update existing INDEX files.
     &update_Rd_index("INDEX", "man", $log) if(-f "INDEX");
@@ -469,36 +390,21 @@ sub prepare_pkg {
 				"vignette")) {
 	if(!$opt_no_vignettes) {
 	    my $doit = 1;
-	    ## if we are in a bundle, need to install the whole bundle
-	    ## once.
-	    my $pkg_or_bundle_dir;
-	    if ($in_bundle) {
-		$pkg_or_bundle_dir = dirname($pkgdir);
-		if(-d "$libdir") {
-		    $doit = 0;
-		} else {
-		    $log->message("installing the *bundle* to re-build vignettes");
-		mkdir("$libdir", 0755)
-		    or die "Error: cannot create directory '$libdir'\n";
-		}
-	    } else {
-		$pkg_or_bundle_dir = $pkgdir;
-		$log->message("installing the package to re-build vignettes");
-		mkdir("$libdir", 0755)
-		    or die "Error: cannot create directory '$libdir'\n";
-	    }
+	    $log->message("installing the package to re-build vignettes");
+	    mkdir("$libdir", 0755)
+		or die "Error: cannot create directory '$libdir'\n";
 	    my $cmd;
 	    if($WINDOWS) {
 		$cmd = join(" ",
 			    ("Rcmd.exe INSTALL -l",
 			     &shell_quote_file_path($libdir),
-			     &shell_quote_file_path($pkg_or_bundle_dir)));
+			     &shell_quote_file_path($pkgdir)));
 	    } else {
 		$cmd = join(" ",
 			    (&shell_quote_file_path(${R::Vars::R_EXE}),
 			     "CMD INSTALL -l",
 			     &shell_quote_file_path($libdir),
-			     &shell_quote_file_path($pkg_or_bundle_dir)));
+			     &shell_quote_file_path($pkgdir)));
 	    }
 	    if($doit && R_system($cmd)) {
 		$log->error();
@@ -514,7 +420,7 @@ sub prepare_pkg {
 	    my $Rcmd = "library(tools)\n";
 	    $Rcmd .= "buildVignettes(dir = '.')\n";
 	    my %result = R_run_R($Rcmd, "--vanilla --no-save --quiet");
-	    rmtree("$libdir") unless $in_bundle;
+	    rmtree("$libdir");
 	    $ENV{'R_LIBS'} = $R_LIBS;
 	    if($result{"status"}) {
 		my @out = grep(!/^\>/, @{$result{"out"}});
@@ -526,8 +432,8 @@ sub prepare_pkg {
 		$log->result("OK");
 	    }
 
-	    ## And finally, clean up again (if not in a bundle).
-	    &cleanup_pkg($pkgdir, $log) if(!$in_bundle);
+	    ## And finally, clean up again.
+	    &cleanup_pkg($pkgdir, $log);
 	}
     }
 

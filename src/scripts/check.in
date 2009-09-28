@@ -287,12 +287,12 @@ my @msg_DESCRIPTION = ("See the information on DESCRIPTION files",
 ## This is the main loop over all packages to be checked.
 (scalar(@ARGV) > 0) or die "Error: no packages were specified\n";
 foreach my $pkg (@ARGV) {
-    ## $pkg should be the path to the package (bundle) root source
+    ## $pkg should be the path to the package root source
     ## directory, either absolute or relative to $startdir.
     ## As from 2.1.0 it can also be a tarball
 
     ## $pkgdir is the corresponding absolute path.
-    ## $pkgname is the name of the package (bundle).
+    ## $pkgname is the name of the package.
     chdir($startdir);
     $pkg =~ s+/$++;  # strip any trailing '/'
     my $pkgname = basename($pkg);
@@ -400,9 +400,7 @@ foreach my $pkg (@ARGV) {
 
     my $description;
     my $is_base_pkg = 0;
-    my $is_bundle = 0;
-    my $package_or_bundle = "package";
-    my $package_or_bundle_name;
+    my $package_name;
     my $encoding;
     ## Package sources from the R distribution are special.  They have a
     ## 'DESCRIPTION.in' file (instead of 'DESCRIPTION'), with Version
@@ -449,16 +447,13 @@ foreach my $pkg (@ARGV) {
 	}
 
 	if($description->{"Bundle"}) {
-	    $is_bundle = 1;
-	    $log->message("looks like '${pkgname}' is a package bundle");
-	    $package_or_bundle = "bundle";
-	    $package_or_bundle_name = $description->{"Bundle"};
+	    $log->message("looks like '${pkgname}' is a package bundle -- they are defunct");
+	    $log->error();
+	    exit(1);
 	}
-	else {
-	    $package_or_bundle_name = $description->{"Package"};
-	}
-	$log->message("this is $package_or_bundle " .
-		      "'$package_or_bundle_name' " .
+
+	$package_name = $description->{"Package"};
+	$log->message("this is package " . "'$package_name' " .
 		      "version '$description->{\"Version\"}'");
 
 	if(defined $encoding) {$log->message("package encoding: $encoding");}
@@ -519,9 +514,7 @@ foreach my $pkg (@ARGV) {
 
 	    ## <NOTE>
 	    ## We are not checking base packages here, so all packages do
-	    ## have a description file.  Bundles should have dependencies
-	    ## only at the top level to be usable by install.packages and
-	    ## friends, and `Writing R Extensions' requires this.
+	    ## have a description file.
 	    ## </NOTE>
 
 	    ## <NOTE>
@@ -534,9 +527,6 @@ foreach my $pkg (@ARGV) {
 	    ##   Execution halted
 	    ## which are not too helpful :-(
 	    ## Hence, we try to intercept this here.
-	    ## Note that for *bundles*, the respective namespaces are not
-	    ## checked this way (and perhaps should be lateron when the
-	    ## per-package checks are performed).
 	    if(-f &file_path($pkgdir, "NAMESPACE")) {
 		$log->checking("package name space information");
 
@@ -558,7 +548,7 @@ foreach my $pkg (@ARGV) {
 		}
 	    }
 
-	    $log->checking("$package_or_bundle dependencies");
+	    $log->checking("package dependencies");
 	    ## Everything listed in Depends or Suggests or Imports
 	    ## should be available for successfully running R CMD check.
 	    ## \VignetteDepends{} entries not "required" by the package code
@@ -584,37 +574,24 @@ foreach my $pkg (@ARGV) {
 	## This check should be adequate, but would not catch a manually
 	## installed package, nor one installed prior to 1.4.0.
 	## </NOTE>
-	$log->checking("if this is a source $package_or_bundle");
+	$log->checking("if this is a source package");
 	if(defined($description->{"Built"})) {
 	    $log->error();
 	    $log->print("Only *source* packages can be checked.\n");
 	    exit(1);
 	}
 	elsif($opt_install !~ /^check/) {
-	    ## Check for package/bundle 'src' subdirectories with object
+	    ## Check for package 'src' subdirectories with object
 	    ## files (but not if installation was already performed).
 	    my $any;
 	    my $pat = "(a|o|[ls][ao]|sl|obj)"; # Object file extensions.
-	    my @dirs;
-	    if($is_bundle) {
-		foreach my $ppkg (split(/\s+/,
-					$description->{"Contains"})) {
-		    push(@dirs, &file_path($ppkg, "src"));
-		}
-	    }
-	    else {
-		@dirs = ("src");
-	    }
-	    foreach my $dir (@dirs) {
-		if((-d &file_path($pkgdir, $dir))
-		   && &list_files_with_exts(&file_path($pkgdir, $dir),
-					    $pat)) {
-		    $log->warning() unless $any;
-		    $any++;
-		    $dir = &file_path($pkgname, $dir);
-		    $log->print("Subdirectory '$dir' " .
-				"contains object files.\n");
-		}
+	    if((-d &file_path($pkgdir, "src"))
+	       && &list_files_with_exts(&file_path($pkgdir, "src"), $pat)) {
+		$log->warning() unless $any;
+		$any++;
+		my $dir = &file_path($pkgname, "src");
+		$log->print("Subdirectory '$dir' " .
+			    "contains object files.\n");
 	    }
 
 	    if($thispkg_src_subdir ne "no") {
@@ -622,28 +599,26 @@ foreach my $pkg (@ARGV) {
 		my $exts = "(" .
 		    &make_file_exts("sources") . "|" .
 		    &make_file_exts("headers") . ")";
-		foreach my $dir (@dirs) {
-		    if((-d &file_path($pkgdir, $dir))) {
-			chdir(&file_path($pkgdir, $dir));
-			if(!(-f "Makefile") && !(-f "Makefile.win")) {
-			    opendir(DIR, ".") or die "cannot opendir $dir: $!";
-			    @srcfiles = grep {
-				!(/\.$exts$/ || /^Makevars/ || /-win\.def$/ )
-				    && -f "$_" } readdir(DIR);
-			    closedir(DIR);
-			    if(@srcfiles) {
-				$log->warning() unless $any;
-				$any++;
-				$log->print("Subdirectory '$dir' contains:\n");
-				$log->print(wrap("  ", "  ",
-						 join(" ", sort @srcfiles) . "\n"));
-				$log->print(wrap("", "",
-						 ("These are unlikely file names",
-						  "for src files.\n")));
-			    }
+		if((-d &file_path($pkgdir, "src"))) {
+		    chdir(&file_path($pkgdir, "src");
+		    if(!(-f "Makefile") && !(-f "Makefile.win")) {
+			opendir(DIR, ".") or die "cannot opendir $dir: $!";
+			@srcfiles = grep {
+			    !(/\.$exts$/ || /^Makevars/ || /-win\.def$/ )
+				&& -f "$_" } readdir(DIR);
+			closedir(DIR);
+			if(@srcfiles) {
+			    $log->warning() unless $any;
+			    $any++;
+			    $log->print("Subdirectory '$dir' contains:\n");
+			    $log->print(wrap("  ", "  ",
+					     join(" ", sort @srcfiles) . "\n"));
+			    $log->print(wrap("", "",
+					     ("These are unlikely file names",
+					      "for src files.\n")));
 			}
-			chdir($startdir);
 		    }
+		    chdir($startdir);
 		}
 	    }
 	    $log->result("OK") unless $any;
@@ -835,8 +810,7 @@ foreach my $pkg (@ARGV) {
 		else {
 		    ## Case B. All output from installation redirected,
 		    ## or already available in the log file.
-		    $log->checking("whether $package_or_bundle " .
-				   "'$package_or_bundle_name' " .
+		    $log->checking("whether package " . "'$package_name' " .
 				   "can be installed");
 		    my $out = &file_path($pkgoutdir, "00install.out");
 		    my $install_error;
@@ -1008,49 +982,15 @@ foreach my $pkg (@ARGV) {
 
     }
 
-    if($is_bundle) {
-	my @bundlepkgs = split(/\s+/, $description->{"Contains"});
-	if(! $opt_install) {
-	    ## Since we are not installing, we have to use the source
-	    ## directories.  Quite a bit of the R code needs to read the
-	    ## DESCRIPTION files for each package, so we do that bit
-	    ## of the install in Perl.
-	    my @lines0 = &read_lines(&file_path($pkgdir, "DESCRIPTION"));
-	    foreach my $ppkg (@bundlepkgs) {
-		$dfile = &file_path($pkgdir, $ppkg, "DESCRIPTION");
-		my $fh = new IO::File($dfile, "w")
-		    or die "Error: cannot open file '$dpath' for writing\n";
-		my @lines = (@lines0,
-			     &read_lines(&file_path($pkgdir, $ppkg,
-						    "DESCRIPTION.in")));
-		@lines = grep(!/^\s*$/, @lines); # Remove blank lines.
-		$fh->print(join("\n", @lines), "\n");
-		$fh->close();
-	    }
-	}
-	foreach my $ppkg (@bundlepkgs) {
-	    $log->message("checking '$ppkg' in bundle '$pkgname'");
-	    $log->setstars("**");
-	    chdir($startdir);
-	    check_pkg(&file_path($pkgdir, $ppkg), $pkgoutdir, $startdir,
-		      $library, $is_bundle, $description, $log,
-		      $is_base_pkg);
-	    $log->setstars("*");
-	}
-	## We could use the latex-ed pages, but we need the DESCRIPTION.in
-	check_pkg_manual($pkgdir, basename($pkgdir), $log);
-    }
-    else {
-	chdir($startdir);
-	check_pkg($pkgdir, $pkgoutdir, $startdir, $library,
-		  $is_bundle, $description, $log, $is_base_pkg,
-		  $thispkg_subdirs);
-	my $instdir = &file_path($library, $pkgname);
-	if (-d &file_path($instdir, "help")) {
-	    check_pkg_manual($instdir, $description->{"Package"}, $log);
-	} else {
-	    check_pkg_manual($pkgdir, $description->{"Package"}, $log);
-	}
+    chdir($startdir);
+    check_pkg($pkgdir, $pkgoutdir, $startdir, $library,
+	      $description, $log, $is_base_pkg,
+	      $thispkg_subdirs);
+    my $instdir = &file_path($library, $pkgname);
+    if (-d &file_path($instdir, "help")) {
+	check_pkg_manual($instdir, $description->{"Package"}, $log);
+    } else {
+	check_pkg_manual($pkgdir, $description->{"Package"}, $log);
     }
 
     if($log->{"warnings"}) {
@@ -1065,14 +1005,12 @@ foreach my $pkg (@ARGV) {
 sub check_pkg {
 
     my ($pkg, $pkgoutdir, $startdir, $library,
-	$in_bundle, $description, $log, $is_base_pkg, $subdirs) = @_;
+	$description, $log, $is_base_pkg, $subdirs) = @_;
     my ($pkgdir, $pkgname);
 
     ## $pkg is the argument we received from the main loop.
     ## $pkgdir is the corresponding absolute path,
     ## $pkgname the name of the package.
-    ## Note that we need to repeat the checking from the main loop in
-    ## the case of package bundles (and we could check for this).
 
     $log->checking("package directory");
     chdir($startdir);
@@ -1081,11 +1019,7 @@ sub check_pkg {
 	chdir($pkg)
 	  or die "Error: cannot change to directory '$pkg'\n";
 	$pkgdir = R_cwd();
-	if($in_bundle) {
-	    $pkgname = basename($pkgdir);
-	} else {
-	    $pkgname = $description->{"Package"};
-	}
+	$pkgname = $description->{"Package"};
     }
     else {
 	$log->error();
@@ -1100,8 +1034,6 @@ sub check_pkg {
 
     my @exclude_patterns = R::Utils::get_exclude_patterns();
     my $exclude_file = ".Rbuildignore";
-    ## This is a bit tricky for bundles where the build ignore pattern
-    ## file is in the top-level bundle dir.
     $exclude_file = &file_path(dirname($pkgdir), $exclude_file);
     if(-f $exclude_file) {
 	open(RBUILDIGNORE, "< $exclude_file");
@@ -1190,14 +1122,7 @@ sub check_pkg {
 		     $file_name));
 	}
     }
-    if($in_bundle) {
-	chdir(dirname($pkgdir));
-	find(\&find_wrong_names, $pkgname);
-	chdir($pkgname);
-    }
-    else {
-	find(\&find_wrong_names, ".");
-    }
+    find(\&find_wrong_names, ".");
     if(scalar(@bad_files) > 0) {
 	$log->error();
 	$log->print("Found the following file(s) with " .
@@ -1221,14 +1146,7 @@ sub check_pkg {
 	if($seen{$file_path}) {push(@duplicated, $file_path);}
 	$seen{$file_path}  = 1;
     }
-    if($in_bundle) {
-	chdir(dirname($pkgdir));
-	find(\&check_case_names, $pkgname);
-	chdir($pkgname);
-    }
-    else {
-	find(\&check_case_names, ".");
-    }
+    find(\&check_case_names, ".");
     if(scalar(@duplicated) > 0) {
 	$log->error();
 	$log->print("Found the following file(s) with " .
@@ -1290,14 +1208,7 @@ sub check_pkg {
 		push(@bad_files, $filename);
 	    }
 	}
-	if($in_bundle) {
-	    chdir(dirname($pkgdir));
-	    find(\&find_wrong_perms_A, $pkgname);
-	    chdir($pkgname);
-	}
-	else {
-	    find(\&find_wrong_perms_A, ".");
-	}
+	find(\&find_wrong_perms_A, ".");
 	if(scalar(@bad_files) > 0) {
 	    $log->error();
 	    $log->print("Found the following files with " .
@@ -1352,8 +1263,7 @@ sub check_pkg {
 
     my $full =
 	!$opt_install || ($opt_install eq "skip") || $is_base_pkg;
-    &R::Utils::check_package_description($pkgdir, $pkgname, $log,
-					 $in_bundle, $is_base_pkg,
+    &R::Utils::check_package_description($pkgdir, $pkgname, $log, $is_base_pkg,
 					 $full);
 
     $log->checking("top-level files");
@@ -2629,8 +2539,6 @@ sub check_pkg {
 }
 
 
-## NB Bundles should have a bundle manual, not one for each package,
-## so this is no longer part of check_pkg.
 sub check_pkg_manual {
     my ($pkgdir, $pkgname, $log) = @_;
     ## Run LaTeX on the manual, if there are man pages
