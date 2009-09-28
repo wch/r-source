@@ -317,7 +317,7 @@ contrib.url(repos, type = getOption("pkgType"))
 #endif
 }
 \value{
-  For \code{available.packages}, a matrix   with one row per
+  For \code{available.packages}, a matrix with one row per
   package/bundle, row names the package names and 
   column names
   \code{"Package"}, \code{"Version"}, \code{"Priority"},
