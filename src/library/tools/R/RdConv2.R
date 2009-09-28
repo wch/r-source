@@ -484,19 +484,19 @@ sectionTitles <-
 
 psub <- function(pattern, replacement, x)
 ##    gsub(pattern, replacement, x, perl = TRUE, useBytes = TRUE)
-    .Internal(gsub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE))
+    .Internal(gsub(pattern, replacement, x, FALSE, TRUE, TRUE, FALSE, TRUE))
 
 psub1 <- function(pattern, replacement, x)
 ##    sub(pattern, replacement, x, perl = TRUE, useBytes = TRUE)
-    .Internal(sub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE))
+    .Internal(sub(pattern, replacement, x, FALSE, TRUE, TRUE, FALSE, TRUE))
 
 fsub <- function(pattern, replacement, x)
 ##    gsub(pattern, replacement, x, fixed = TRUE, useBytes = TRUE)
-    .Internal(gsub(pattern, replacement, x, FALSE, FALSE, TRUE, TRUE))
+    .Internal(gsub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE, TRUE))
 
 fsub1 <- function(pattern, replacement, x)
 ##    sub(pattern, replacement, x, fixed = TRUE, useBytes = TRUE)
-    .Internal(sub(pattern, replacement, x, FALSE, FALSE, TRUE, TRUE))
+    .Internal(sub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE, TRUE))
 
 
 ## for lists of messages, see ../man/checkRd.Rd

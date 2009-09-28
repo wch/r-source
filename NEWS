@@ -14,13 +14,11 @@ DEPRECATED & DEFUNCT
     o	Bundles of packages are defunct. [In progress.]
 
     o	stats::clearNames() is defunct: use unname().
-	[But not yet disabled, used in packages nlme and quantreg.]
 
     o	Basic regular expressions (extended = FALSE) are defunct in
 	strsplit, grep and friends.
 
     o	methods::trySilent() is defunct.
-	[But not yet disabled, used in packages SODA and geoR.]
 
 
 
@@ -506,6 +504,9 @@ DEPRECATED & DEFUNCT
 
     o	tools::Rd_parse() is defunct (as this version of R uses only
 	Rd version 2).
+
+    o	Use of ~/.Rconf (which was deprecated in favour of ~/.Rconfig
+	in 2004) has finally been removed.
 
     o	Bundles of packages are deprecated.  See 'Writing R
 	Extensions' for the steps needed to unbundle a bundle.

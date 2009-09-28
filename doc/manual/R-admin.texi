@@ -345,12 +345,6 @@ recommended when you work with a version of @R{} from Subversion.
 (You may need @acronym{GNU} @command{make} to allow this, and the
 pathname of the build directory should not contain spaces.)
 
-@cindex Help pages
-Make will also build plain text help pages as well as @HTML{} and
-@LaTeX{} versions of the @R{} object documentation (the three kinds can
-also be generated separately using @code{make help}, @code{make html}
-and @code{make latex}).
-
 For those obtaining @R{} @emph{via} Subversion, one additional step is
 necessary:
 @cindex Vignettes
@@ -2972,10 +2966,16 @@ set) or on the command line as
 @noindent
 If you are building in a directory different from the sources, there can
 be copies of @file{config.site} in the source and the build directories,
-and both will be read (in that order).  To force a single file to be
-@enindex CONFIG_SITE
-read, set the environment variable @env{CONFIG_SITE} to the location of
-the file.
+and both will be read (in that order).  
+@c Was this really true?
+@c To force a single file to be
+@c @enindex CONFIG_SITE
+@c read, set the environment variable @env{CONFIG_SITE} to the location of
+@c the file.
+In addition, if there is a file@footnote{@file{~/.Rconf} was supported
+(but undocumented) in versions of @R{} prior to 2.10.0.}
+@code{~/.Rconfig}, it is read between the @file{config.site} files in
+the source and the build directories.
 
 These variables are @emph{precious}, implying that they do not have to
 be exported to the environment, are kept in the cache even if not

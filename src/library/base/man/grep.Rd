@@ -53,9 +53,7 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
     object which can be coerced by \code{as.character} to a character vector.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
-  \item{extended}{if \code{TRUE}, extended regular expression matching
-    is used, and if \code{FALSE} basic regular expressions are used: the
-    latter are deprecated.}
+  \item{extended}{logical. Values other than \code{TRUE} are defunct.}
   \item{perl}{logical. Should perl-compatible regexps be used?
     Has priority over \code{extended}.}
   \item{value}{if \code{FALSE}, a vector containing the (\code{integer})

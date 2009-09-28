@@ -28,9 +28,7 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE,
     \code{x}.
   }
   \item{extended}{
-    logical.  If \code{TRUE} (the default), extended regular expression
-    matching is used, and if \code{FALSE} basic regular expressions are
-    used (these are deprecated).
+    logical.  Values other than \code{TRUE} are defunct.
   }
   \item{fixed}{
     logical.  If \code{TRUE} match \code{split} exactly, otherwise

@@ -16,9 +16,7 @@
 
 
 ## <entry>
+## Deprecated in 2.10.0
 ## Defunct in 2.11.0
-trySilent <- function(expr) {
-    .Deprecated("try(*, silent=TRUE)")
-    try(expr, silent = TRUE)
-}
+trySilent <- function(expr) .Defunct("try(silent=TRUE)")
 ## </entry>

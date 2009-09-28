@@ -55,10 +55,6 @@ mauchley.test <- function(...) .Defunct("mauchly.test")
 
 ## <entry>
 ## Deprecated in 2.10.0
-clearNames <- function( object )
-{
-    .Deprecated("unname")
-    names( object ) <- NULL
-    object
-}
+## Defunct in 2.11.0
+clearNames <- function( object ) .Defunct("unname")
 ## </entry>
