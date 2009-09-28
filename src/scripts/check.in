@@ -600,7 +600,7 @@ foreach my $pkg (@ARGV) {
 		    &make_file_exts("sources") . "|" .
 		    &make_file_exts("headers") . ")";
 		if((-d &file_path($pkgdir, "src"))) {
-		    chdir(&file_path($pkgdir, "src");
+		    chdir(&file_path($pkgdir, "src"));
 		    if(!(-f "Makefile") && !(-f "Makefile.win")) {
 			opendir(DIR, ".") or die "cannot opendir $dir: $!";
 			@srcfiles = grep {
