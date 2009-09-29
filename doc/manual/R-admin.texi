@@ -1695,7 +1695,9 @@ for one or more of the following types of package distributions:
 @itemize
 @item 
 @code{"source"}: located at @file{src/contrib} and containing
-@file{.tar.gz} files.
+@file{.tar.gz} files.  As from @R{} 2.10.0 other forms of compression
+can be used, e.g.@: @file{.tar.bz2} or @file{.tar.xz} files, although
+not all @R{} platforms will be able to unpack these, especially the latter.
 
 @item 
 @code{"win.binary"}: located at @file{bin/windows/contrib/@var{x.y}} for
@@ -1704,11 +1706,12 @@ for one or more of the following types of package distributions:
 @item 
 @code{"mac.binary"}: located at
 @file{bin/macosx/universal/contrib/@var{x.y}} for @R{} versions @var{x.y.z}
-and containing @file{.tgz} files. If the repository contains only
+and containing @file{.tgz} files.  If the repository contains only
 packages for a specific architecture, the package distribution type
 can be set to @code{"mac.binary.xxx"} where @var{xxx} specifies the
 architecture, replacing @code{universal} by @var{xxx} in the path
-above.
+above.  For packages built for the off-CRAN `leopard' binary, replace
+@code{universal} by @code{leopard}.
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
