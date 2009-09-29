@@ -13,10 +13,10 @@
   Form row and column sums and means for numeric arrays.
 }
 \usage{
-colSums (x, na.rm = FALSE, dims = 1, \dots)
-rowSums (x, na.rm = FALSE, dims = 1, \dots)
-colMeans(x, na.rm = FALSE, dims = 1, \dots)
-rowMeans(x, na.rm = FALSE, dims = 1, \dots)
+colSums (x, na.rm = FALSE, dims = 1)
+rowSums (x, na.rm = FALSE, dims = 1)
+colMeans(x, na.rm = FALSE, dims = 1)
+rowMeans(x, na.rm = FALSE, dims = 1)
 }
 \arguments{
   \item{x}{an array of two or more dimensions, containing numeric,
@@ -27,8 +27,8 @@ rowMeans(x, na.rm = FALSE, dims = 1, \dots)
     \sQuote{columns} to sum over.  For \code{row*}, the sum or mean is
     over dimensions \code{dims+1, \dots}; for \code{col*} it is over
     dimensions \code{1:dims}.}
-  \item{\dots}{potential further arguments for methods, when these are
-    made into generic functions.}%% FIXME: Should rather use implicitGeneric()
+  % \item{\dots}{potential further arguments for methods, when these are
+  %   made into generic functions.}%% FIXME: Should rather use implicitGeneric()
 }
 \details{
   These functions are equivalent to use of \code{\link{apply}} with

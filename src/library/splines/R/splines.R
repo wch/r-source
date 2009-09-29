@@ -77,7 +77,7 @@ bs <- function(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
     a <- list(degree = degree, knots = if(is.null(knots)) numeric(0L) else knots,
               Boundary.knots = Boundary.knots, intercept = intercept)
     attributes(basis) <- c(attributes(basis), a)
-    class(basis) <- c("bs", "basis")
+    class(basis) <- c("bs", "basis", "matrix")
     basis
 }
 
@@ -143,7 +143,7 @@ ns <- function(x, df = NULL, knots = NULL, intercept = FALSE,
     a <- list(degree = 3, knots = if(is.null(knots)) numeric(0) else knots,
               Boundary.knots = Boundary.knots, intercept = intercept)
     attributes(basis) <- c(attributes(basis), a)
-    class(basis) <- c("ns", "basis")
+    class(basis) <- c("ns", "basis", "matrix")
     basis
 }
 
