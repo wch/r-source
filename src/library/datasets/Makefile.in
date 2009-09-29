@@ -28,7 +28,7 @@ all: Makefile DESCRIPTION
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
 	done
 	@rm -f $(top_builddir)/library/$(pkg)/data/Rdata.*
-	@$(ECHO) "tools:::data2LazyLoadDB(\"$(pkg)\")" | \
+	@$(ECHO) "tools:::data2LazyLoadDB(\"$(pkg)\", compress=3)" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE) > /dev/null
 	@$(INSTALL_DATA) $(srcdir)/data/morley.tab \
 	  $(top_builddir)/library/$(pkg)/data

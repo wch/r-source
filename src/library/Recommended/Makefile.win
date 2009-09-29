@@ -26,7 +26,7 @@ stamp-recommended: $(OBJECTS)
 	@touch $@
 
 ## allow parallel installs, modulo dependencies below
-INSTALL_OPTS=--pkglock --install-tests
+INSTALL_OPTS=--pkglock --install-tests --data-compress="xz"
 
 
 RCMD = ../../../bin/Rcmd
