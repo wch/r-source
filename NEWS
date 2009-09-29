@@ -1,4 +1,4 @@
-﻿
+
 	**************************************************
 	*						 *
 	*	       2.11 SERIES NEWS			 *
@@ -11,7 +11,7 @@
 
 DEPRECATED & DEFUNCT
 
-    o	Bundles of packages are defunct. 
+    o	Bundles of packages are defunct.
 
     o	stats::clearNames() is defunct: use unname().
 
@@ -144,6 +144,8 @@ NEW FEATURES
 	reference is displayed by debugging functions such as traceback(),
 	browser(), recover(), and dump.frames(), and is stored as an
 	attribute on each element returned by sys.calls(). [Experimental]
+
+    o	More functions now have an implicit (S4) generic definition.
 
     o	quantile.default() now disallows factors (wish of PR#13631)
 	and its help documents what numeric-like properties its input
@@ -633,7 +635,7 @@ BUG FIXES
 
     o	cat() on an unopened connection could close it twice, and
 	with file() connections segfaulted on some systems.
-	
+
     o	Printing a list could segfault if the elements are nested too
 	deeply.
 

@@ -164,7 +164,43 @@
 
     setGeneric("with", signature = "data", where = where)
     setGenericImplicit("with", where, FALSE)
-    ## not implicitGeneric() which is not yet available "here"
 
+    ## when setMethod()ing on chol2inv, one should *not* have to deal with
+    ## arguments  'size' and 'LINPACK' :
+    setGeneric("chol2inv", function(x, ...) standardGeneric("chol2inv"),
+               signature = "x", where = where)
+    setGenericImplicit("chol2inv", where, FALSE)
+
+    setGeneric("rcond", function(x, norm, ...) standardGeneric("rcond"),
+	       useAsDefault = function(x, norm, ...) base::rcond(x, norm, ...),
+	       signature = c("x", "norm"), where = where)
+    setGenericImplicit("rcond", where, FALSE)
+
+    setGeneric("colMeans", function(x, na.rm = FALSE, dims = 1, ...)
+			standardGeneric("colMeans"),
+	       useAsDefault = function(x, na.rm = FALSE, dims = 1, ...)
+			base::colMeans(x, na.rm=na.rm, dims=dims, ...),
+	       signature = c("x", "na.rm", "dims"), where = where)
+    setGeneric("colSums", function(x, na.rm = FALSE, dims = 1, ...)
+			standardGeneric("colSums"),
+	       useAsDefault = function(x, na.rm = FALSE, dims = 1, ...)
+			base::colSums(x, na.rm=na.rm, dims=dims, ...),
+	       signature = c("x", "na.rm", "dims"), where = where)
+    setGeneric("rowMeans", function(x, na.rm = FALSE, dims = 1, ...)
+			standardGeneric("rowMeans"),
+	       useAsDefault = function(x, na.rm = FALSE, dims = 1, ...)
+			base::rowMeans(x, na.rm=na.rm, dims=dims, ...),
+	       signature = c("x", "na.rm", "dims"), where = where)
+    setGeneric("rowSums", function(x, na.rm = FALSE, dims = 1, ...)
+			standardGeneric("rowSums"),
+	       useAsDefault = function(x, na.rm = FALSE, dims = 1, ...)
+			base::rowSums(x, na.rm=na.rm, dims=dims, ...),
+	       signature = c("x", "na.rm", "dims"), where = where)
+    setGenericImplicit("colMeans", where, FALSE)
+    setGenericImplicit("colSums",  where, FALSE)
+    setGenericImplicit("rowMeans", where, FALSE)
+    setGenericImplicit("rowSums",  where, FALSE)
+
+    ## not implicitGeneric() which is not yet available "here"
     registerImplicitGenerics(where = where)
 }
