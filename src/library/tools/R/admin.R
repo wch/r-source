@@ -750,55 +750,6 @@ function(pkgs, lib.loc = NULL, file = NULL)
     return(invisible())
 }
 
-### * .vcreate_bundle_package_descriptions
-
-## called from .install_packages
-.vcreate_bundle_package_descriptions <-
-function(dir, packages)
-{
-    .canonicalize_metadata <- function(m) {
-        ## Drop entries which are NA or empty.
-        m[!is.na(m) & (regexpr("^[[:space:]]*$", m) < 0L)]
-    }
-
-    dir <- file_path_as_absolute(dir)
-
-    ## Bundle level metadata.
-    meta <- .read_description(file.path(dir, "DESCRIPTION"))
-    meta <- .canonicalize_metadata(meta)
-    if(missing(packages)) packages <- meta[["Contains"]]
-
-    for(p in unlist(strsplit(.strip_whitespace(packages), "[[:space:]]+"))) {
-        bmeta <- meta
-        ## Package metadata.
-        this <- file.path(dir, p, "DESCRIPTION.in")
-        if(file_test("-f", this)) {
-            pmeta <- .read_description(this)
-            pmeta <- .canonicalize_metadata(pmeta)
-            ## Need to merge dependency fields in *both* metadata.
-            fields_to_merge <-
-                c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
-            fields <- intersect(intersect(names(bmeta), fields_to_merge),
-                                intersect(names(pmeta), fields_to_merge))
-            if(length(fields)) {
-                bmeta[fields] <-
-                    paste(bmeta[fields], pmeta[fields], sep = ", ")
-                pmeta <- pmeta[!(names(pmeta) %in% fields)]
-            }
-        } else {
-            warning(gettextf("missing 'DESCRIPTION.in' for package '%s'", p),
-                    domain = NA)
-            d <- sprintf("Package '%s' from bundle '%s'", p, meta[["Bundle"]])
-            pmeta <- c(p, d, d)
-            names(pmeta) <- c("Package", "Description", "Title")
-        }
-        write.dcf(rbind(c(bmeta, pmeta)),
-                  file.path(dir, p, "DESCRIPTION"))
-    }
-
-    invisible()
-}
-
 ### * .test_package_depends_R_version
 
 .Rtest_package_depends_R_version <-
@@ -823,16 +774,12 @@ function(dir)
                 package <- Sys.getenv("R_PACKAGE_NAME")
                 if(!nzchar(package))
                     package <- meta["Package"]
-                if(nzchar(package))
-                    msg <- gettextf("ERROR: this R is version %s, package '%s' requires R %s %s",
+                msg <- if(nzchar(package))
+                    gettextf("ERROR: this R is version %s, package '%s' requires R %s %s",
                                     current, package,
                                     depends$op, depends$version)
-                else if (nzchar(bundle <-  meta["Bundle"]) && !is.na(bundle))
-                    msg <- gettextf("ERROR: this R is version %s, bundle '%s' requires R %s %s",
-                                    current, bundle,
-                                    depends$op, depends$version)
                 else
-                    msg <- gettextf("ERROR: this R is version %s, required is R %s %s",
+                    gettextf("ERROR: this R is version %s, required is R %s %s",
                                     current, depends$op, depends$version)
                 message(strwrap(msg, exdent = 2L))
                 break

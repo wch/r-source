@@ -618,9 +618,7 @@ function(dir, installed = FALSE)
     ## Get the package DESCRIPTION metadata for a package with root
     ## directory 'dir'.  If an unpacked source (uninstalled) package,
     ## base packages (have only a DESCRIPTION.in file with priority
-    ## "base") and bundle packages (have a DESCRIPTION.in file and need
-    ## additional metadata from the the bundle DESCRIPTION file) need
-    ## special attention.
+    ## "base") need special attention.
     dir <- file_path_as_absolute(dir)
     dfile <- file.path(dir, "DESCRIPTION")
     if(file_test("-f", dfile)) return(.read_description(dfile))
@@ -631,23 +629,7 @@ function(dir, installed = FALSE)
     else
         stop("Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing.")
     if(identical(as.character(meta["Priority"]), "base")) return(meta)
-    ## Otherwise, this must be a bundle package.
-    bdfile <- file.path(dirname(dir), "DESCRIPTION")
-    if(file_test("-f", bdfile)) {
-        file <- tempfile()
-        on.exit(unlink(file))
-        writeLines(c(readLines(bdfile), readLines(dfile)), file)
-        .read_description(file)
-        ## Using an anonymous tempfile (con <- file()) would work too
-        ## for accumulating, e.g.,
-        ##   con <- file(open = "w+")
-        ##   on.exit(close(con))
-        ##   writeLines(c(readLines(bdfile), readLines(dfile)), con)
-        ## but .read_description() insists on an existing file (maybe
-        ## this should be changed?).
-    }
-    else
-        stop("Bundle 'DESCRIPTION' is missing.")
+    stop("invalid package layout")
 }
 
 ### ** .get_requires_from_package_db
@@ -817,7 +799,6 @@ function() {
 .get_standard_repository_db_fields <-
 function()
     c("Package", "Version", "Priority",
-      "Bundle", "Contains",
       "Depends", "Imports", "LinkingTo", "Suggests", "Enhances",
       "OS_type", "License")
 

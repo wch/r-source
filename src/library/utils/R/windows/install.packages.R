@@ -48,37 +48,38 @@
             flush.console()
         }
 
-        ## Check to see if this is a bundle or a single package
-        if (file.exists("DESCRIPTION")) {
-            ## Bundle
-            conts <- read.dcf("DESCRIPTION", fields="Contains")[1,]
-            if (is.na(conts))
-                stop("malformed bundle DESCRIPTION file, no Contains field")
-            else
-                pkgs <- strsplit(conts," ")[[1L]]
-            ## now check the MD5 sums
-            res <- TRUE
-            for (curPkg in pkgs) res <- res &
-            tools::checkMD5sums(pkgname, file.path(tmpDir, curPkg))
-            if(!is.na(res) && res) {
-                cat(gettextf("bundle '%s' successfully unpacked and MD5 sums checked\n",
-                             pkgname))
-                flush.console()
+        desc <- read.dcf(file.path(pkgname, "DESCRIPTION"),
+                         c("Package", "Type"))
+        if(desc[1L, "Type"] %in% "Translation") {
+            fp <- file.path(pkgname, "share", "locale")
+            if(file.exists(fp)) {
+                langs <- dir(fp)
+                for(lang in langs) {
+                    path0 <- file.path(fp, lang, "LC_MESSAGES")
+                    mos <- dir(path0, full.names = TRUE)
+                    path <- file.path(R.home("share"), "locale", lang,
+                                      "LC_MESSAGES")
+                    if(!file.exists(path))
+                        if(!dir.create(path, FALSE, TRUE))
+                            warning(gettextf("failed to create '%s'", path),
+                                    domain = NA)
+                    res <- file.copy(mos, path, overwrite = TRUE)
+                    if(any(!res))
+                        warning(gettextf("failed to create '%s'",
+                                         paste(mos[!res], collapse=",")),
+                                domain = NA)
+                }
             }
-        } else pkgs <- pkgname
-
-        for (curPkg in pkgs) {
-            desc <- read.dcf(file.path(curPkg, "DESCRIPTION"),
-                             c("Package", "Version", "Type"))
-            if(desc[1, "Type"] %in% "Translation") {
-                fp <- file.path(curPkg, "share", "locale")
-                if(file.exists(fp)) {
-                    langs <- dir(fp)
+            fp <- file.path(pkgname, "library")
+            if(file.exists(fp)) {
+                spkgs <- dir(fp)
+                for(spkg in spkgs) {
+                    langs <- dir(file.path(fp, spkg, "po"))
                     for(lang in langs) {
-                        path0 <- file.path(fp, lang, "LC_MESSAGES")
+                        path0 <- file.path(fp, spkg, "po", lang, "LC_MESSAGES")
                         mos <- dir(path0, full.names = TRUE)
-                        path <- file.path(R.home("share"), "locale", lang,
-                                          "LC_MESSAGES")
+                        path <- file.path(R.home(), "library", spkg, "po",
+                                          lang, "LC_MESSAGES")
                         if(!file.exists(path))
                             if(!dir.create(path, FALSE, TRUE))
                                 warning(gettextf("failed to create '%s'", path),
@@ -90,52 +91,28 @@
                                     domain = NA)
                     }
                 }
-                fp <- file.path(curPkg, "library")
-                if(file.exists(fp)) {
-                    spkgs <- dir(fp)
-                    for(spkg in spkgs) {
-                        langs <- dir(file.path(fp, spkg, "po"))
-                        for(lang in langs) {
-                            path0 <- file.path(fp, spkg, "po", lang,
-                                               "LC_MESSAGES")
-                            mos <- dir(path0, full.names = TRUE)
-                            path <- file.path(R.home(), "library", spkg, "po",
-                                              lang, "LC_MESSAGES")
-                            if(!file.exists(path))
-                                if(!dir.create(path, FALSE, TRUE))
-                                    warning(gettextf("failed to create '%s'", path),
-                                            domain = NA)
-                            res <- file.copy(mos, path, overwrite = TRUE)
-                        if(any(!res))
-                            warning(gettextf("failed to create '%s'",
-                                             paste(mos[!res], collapse=",")),
-                                    domain = NA)
-                        }
-                    }
-                }
-            } else {
-                ## We can't use CHM help -- this works even if not there.
-                unlink(file.path(tmpDir, curPkg, "chtml"), recursive = TRUE)
-                instPath <- file.path(lib, desc[1,1])
+            }
+        } else {
+            ## We can't use CHM help -- this works even if not there.
+            unlink(file.path(tmpDir, pkgname, "chtml"), recursive = TRUE)
+            instPath <- file.path(lib, pkgname)
 
-                ## If the package is already installed w/ this
-                ## instName, remove it.  If it isn't there, the unlink call will
-                ## still return success.
-                ret <- unlink(instPath, recursive=TRUE)
-                if (ret == 0) {
-                    ## Move the new package to the install lib and
-                    ## remove our temp dir
-                    ret <- file.rename(file.path(tmpDir, curPkg), instPath)
-                    if(!ret)
-                        warning(gettextf("unable to move temporary installation '%s' to '%s'",
-                                         normalizePath(file.path(tmpDir, curPkg)),
-                                         normalizePath(instPath)),
-                                domain = NA, call. = FALSE, immediate. = TRUE)
-                } else {
-                    warning(gettextf("cannot remove prior installation of package '%s'",
-                                     curPkg),
+            ## If the package is already installed, remove it.  If it
+            ## isn't there, the unlink call will still return success.
+            ret <- unlink(instPath, recursive=TRUE)
+            if (ret == 0) {
+                ## Move the new package to the install lib and
+                ## remove our temp dir
+                ret <- file.rename(file.path(tmpDir, pkgname), instPath)
+                if(!ret)
+                    warning(gettextf("unable to move temporary installation '%s' to '%s'",
+                                     normalizePath(file.path(tmpDir, pkgname)),
+                                     normalizePath(instPath)),
                             domain = NA, call. = FALSE, immediate. = TRUE)
-                }
+            } else {
+                warning(gettextf("cannot remove prior installation of package '%s'",
+                                 pkgname),
+                        domain = NA, call. = FALSE, immediate. = TRUE)
             }
         }
         setwd(cDir)
@@ -144,7 +121,7 @@
 
     if(!length(pkgs)) return(invisible())
 
-    ## look for packages/bundles in use.
+    ## look for package in use.
     pkgnames <- basename(pkgs)
     pkgnames <- sub("\\.zip$", "", pkgnames)
     pkgnames <- sub("_[0-9.-]+$", "", pkgnames)
@@ -153,14 +130,6 @@
     ## but we can't tell without trying to unpack it.
     inuse <- search()
     inuse <- sub("^package:", "", inuse[grep("^package:", inuse)])
-    if(!is.null(contriburl)) { # otherwise no info on bundles
-        if(is.null(available))
-            available <- available.packages(contriburl = contriburl,
-                                            method = method)
-        bundles <- .find_bundles(available)
-        for(bundle in names(bundles))
-            if(any(bundles[[bundle]] %in% inuse)) inuse <- c(inuse, bundle)
-    }
     inuse <- pkgnames %in% inuse
     if(any(inuse)) {
         warning(sprintf(ngettext(sum(inuse),

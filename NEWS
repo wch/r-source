@@ -12,8 +12,6 @@
 DEPRECATED & DEFUNCT
 
     o	Bundles of packages are defunct. 
-	[In progress: so far R CMD build cannot build them, and
-	R CMD check refuses them.]
 
     o	stats::clearNames() is defunct: use unname().
 

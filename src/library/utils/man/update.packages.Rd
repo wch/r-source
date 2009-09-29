@@ -74,7 +74,7 @@ contrib.url(repos, type = getOption("pkgType"))
     As \code{repos}, can also be \code{NULL} to install from local files.
   }
   \item{method}{Download method, see \code{\link{download.file}}.}
-  \item{pkgs}{character vector of the short names of packages/bundles whose
+  \item{pkgs}{character vector of the short names of packages whose
     current versions should be downloaded from the repositories.
     If \code{repos = NULL}, a character vector of file paths of
 #ifdef windows
@@ -84,13 +84,11 @@ contrib.url(repos, type = getOption("pkgType"))
 #endif
 #ifdef unix
     \file{.tar.gz} files.  These can be source archives or binary
-    package/bundle archive files (as created by
-    \command{R CMD build --binary}).
+    package archive files (as created by \command{R CMD build --binary}).
     Tilde-expansion will be done on the file paths.
 #endif
     If this is a zero-length character vector, a listbox of available
-    packages (including those contained in bundles) is presented where
-    possible.
+    packages is presented where possible.
   }
   \item{destdir}{directory where downloaded packages are stored.}
   \item{available}{an object listing packages available at the repositories
@@ -216,13 +214,8 @@ contrib.url(repos, type = getOption("pkgType"))
   }
 }
 \details{
-  All of these functions work with the names of a package or bundle (and
-  not the component packages of a bundle, except for
-  \code{install.packages} if the repository provides the necessary
-  information).
-  
   \code{available.packages} returns a matrix of details corresponding to
-  packages/bundles currently available at one or more repositories. The
+  packages currently available at one or more repositories. The
   current list of packages is downloaded over the internet (or copied
   from a local mirror).  By default, it returns only packages whose
   version and OS type requirements are met by the running version of \R,
@@ -231,7 +224,7 @@ contrib.url(repos, type = getOption("pkgType"))
   \code{old.packages} compares the information from
   \code{available.packages} with that from \code{instPkgs} (computed by
   \code{\link{installed.packages}} by default) and reports installed
-  packages/bundles that have newer versions on the repositories or, if
+  packages that have newer versions on the repositories or, if
   \code{checkBuilt = TRUE}, that were built under an earlier minor
   version of \R (for example built under 2.8.x when running \R 2.9.0).
 #ifdef windows
@@ -241,13 +234,11 @@ contrib.url(repos, type = getOption("pkgType"))
 #endif
 
   \code{new.packages} does the same comparison but reports uninstalled
-  packages/bundles that are available at the repositories.  It will
-  give warnings about incompletely installed bundles (provided the
-  information is available) and bundles whose contents has changed.
-  If \code{ask != FALSE} it asks which packages should be installed
-  in the first element of \code{lib.loc}.
+  packages that are available at the repositories.  If \code{ask !=
+  FALSE} it asks which packages should be installed in the first element
+  of \code{lib.loc}.
 
-  \code{download.packages} takes a list of package/bundle names and a
+  \code{download.packages} takes a list of package names and a
   destination directory, downloads the newest versions and saves them in
   \code{destdir}.  If the list of available packages is not given as
   argument, it is obtained from repositories.  If a repository is local,
@@ -258,11 +249,10 @@ contrib.url(repos, type = getOption("pkgType"))
   (Other forms of \samp{file://} URLs are not supported.)
   
   The main function of the set is \code{update.packages}.  First a list
-  of all packages/bundles found in \code{lib.loc} is created and
-  compared with those available at the repositories.  If
-  \code{ask = TRUE} (the default) packages/bundles with a newer version
-  are reported and for each one the user can specify if it should be
-  updated.
+  of all packages found in \code{lib.loc} is created and compared with
+  those available at the repositories.  If \code{ask = TRUE} (the
+  default) packages with a newer version are reported and for each one
+  the user can specify if it should be updated.
 #ifdef unix
   If so, the package sources are downloaded from the repositories and
   installed in the respective library path (or \code{instlib}
@@ -274,15 +264,14 @@ contrib.url(repos, type = getOption("pkgType"))
   specified).
 #endif
 
-  \code{install.packages} can be used to install new
-  packages/bundles. It takes a vector of names and a destination
-  library, downloads the packages from the repositories and installs
-  them.  (If the library is omitted it defaults to the first directory
-  in \code{.libPaths()}, with a warning if there is more than one.)  If
-  \code{lib} is omitted or is of length one and is not a (group)
-  writeable directory, the code offers to create a personal library tree
-  (the first element of \code{Sys.getenv("R_LIBS_USER")}) and install
-  there.
+  \code{install.packages} can be used to install new packages. It takes
+  a vector of names and a destination library, downloads the packages
+  from the repositories and installs them.  (If the library is omitted
+  it defaults to the first directory in \code{.libPaths()}, with a
+  warning if there is more than one.)  If \code{lib} is omitted or is of
+  length one and is not a (group) writeable directory, the code offers
+  to create a personal library tree (the first element of
+  \code{Sys.getenv("R_LIBS_USER")}) and install there.
 #ifdef windows
   Detection of a writeable directory is problematic on Windows: see the
   Note section.
@@ -317,29 +306,28 @@ contrib.url(repos, type = getOption("pkgType"))
 #endif
 }
 \value{
-  For \code{available.packages}, a matrix   with one row per
-  package/bundle, row names the package names and 
+  For \code{available.packages}, a matrix with one row per
+  package, row names the package names and 
   column names
   \code{"Package"}, \code{"Version"}, \code{"Priority"},
-  \code{"Bundle"}, \code{"Contains"},
   \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
   \code{"Suggests"}, \code{"Enhances"},
   \code{"OS_type"}, \code{"License"} and \code{"Repository"}.
   Additional columns can be specified using the \code{fields} argument.
 
   For \code{old.packages}, \code{NULL} or a matrix with one row per
-  package/bundle, row names the package names and column names
+  package, row names the package names and column names
   \code{"Package"}, \code{"LibPath"}, \code{"Installed"} (the version),
   \code{"Built"} (the version built under), \code{"ReposVer"} and
   \code{"Repository"}.
   
-  For \code{new.packages} a character vector of package/bundle names,
+  For \code{new.packages} a character vector of package names,
   \emph{after} any have been installed.
 
   For \code{download.packages}, a two-column matrix of names and
-  destination file names, for those packages/bundles successfully
-  downloaded.  If packages are not available or there is a problem with
-  the download, suitable warnings are given.
+  destination file names, for those packages successfully downloaded.
+  If packages are not available or there is a problem with the download,
+  suitable warnings are given.
 
   \code{install.packages} and \code{update.packages} have no return value.
 }

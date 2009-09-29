@@ -759,24 +759,8 @@ Subdirectory @file{po} is used for files related to @emph{localization}:
 @subsection Package bundles
 @cindex Package bundles
 
-Package bundles were deprecated in @R{} 2.10.0 and support for
-installing them will be removed in @R{} 2.11.0.
-
-Unbundling a package bundle is straightforward: just replace the
-@file{DESCRIPTION.in} file of each package by a suitable
-@file{DESCRIPTION} file and distribute the individual packages (e.g.@:
-@emph{via} tarballs created by @command{R CMD build})).  The installed
-@file{DESCRIPTION} files provide a good starting point, but the
-@samp{Bundle}, @samp{Contains} and @samp{BundleDescription} fields
-should not appear.  It may be needed to add references in the
-@samp{Suggests} or @samp{Imports} fields to other members of the former
-bundle.
-
-Prior to @R{} 2.9.1, @code{update.packages()} will only update members
-of a bundle by an updated bundle, whereas later versions of @R{} will
-update one or more members if an updated package of that name is
-available.  Thus when a bundle is unbundled, updating is transparent in
-@R{} 2.9.1 and later but needs to be done manually in earlier versions.
+Package bundles were deprecated in @R{} 2.10.0 and all support for
+was removed in @R{} 2.11.0.
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup

@@ -71,46 +71,21 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
             flush.console()
         }
 
-        ## Check to see if this is a bundle or a single package
-        if (file.exists("DESCRIPTION")) {
-            ## Bundle
-            conts <- read.dcf("DESCRIPTION", fields="Contains")[1,]
-            if (is.na(conts))
-                stop("malformed bundle DESCRIPTION file, no Contains field")
-            else
-                pkgs <- strsplit(conts," ")[[1L]]
-            ## now check the MD5 sums
-            res <- TRUE
-            for (curPkg in pkgs) res <- res &
-            tools::checkMD5sums(pkgname, file.path(tmpDir, curPkg))
-            if(!is.na(res) && res) {
-                cat(gettextf("bundle '%s' successfully unpacked and MD5 sums checked\n",
-                             pkgname))
-                flush.console()
-            }
-        } else pkgs <- pkgname
-
-        for (curPkg in pkgs) {
-            desc <- read.dcf(file.path(curPkg, "DESCRIPTION"),
-                             c("Package", "Version"))
-            instPath <- file.path(lib, desc[1L,1L])
-
-            ## If the package is already installed w/ this
-            ## instName, remove it.  If it isn't there, the unlink call will
-            ## still return success.
-            ret <- unlink(instPath, recursive=TRUE)
-            if (ret == 0L) {
-                ## Move the new package to the install lib and
-                ## remove our temp dir
-                ret <- file.rename(file.path(tmpDir, curPkg), instPath)
-                if(!ret)
-                    warning(gettextf("unable to move temporary installation '%s' to '%s'",
-                                     file.path(tmpDir, curPkg), instPath),
-                            domain = NA, call. = FALSE)
-            } else
-                stop("cannot remove prior installation of package ",
-                     sQuote(curPkg), call. = FALSE)
-        }
+        instPath <- file.path(lib, pkgname)
+        ## If the package is already installed, remove it.  If it
+        ## isn't there, the unlink call will still return success.
+        ret <- unlink(instPath, recursive=TRUE)
+        if (ret == 0L) {
+            ## Move the new package to the install lib and
+            ## remove our temp dir
+            ret <- file.rename(file.path(tmpDir, pkgname), instPath)
+            if(!ret)
+                warning(gettextf("unable to move temporary installation '%s' to '%s'",
+                                 file.path(tmpDir, pkgname), instPath),
+                        domain = NA, call. = FALSE)
+        } else
+        stop("cannot remove prior installation of package ",
+             sQuote(pkgname), call. = FALSE)
         setwd(cDir)
         unlink(tmpDir, recursive=TRUE)
     }

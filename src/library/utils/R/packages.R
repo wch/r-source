@@ -203,18 +203,12 @@ function(db)
         all_packages[is.na(match(all_packages, db1$Package))]
     ## Dependency package names missing from the db can be
     ## A. base packages
-    ## B. bundle packages
     ## C. really missing.
     ## We can ignore type A as these are known to be FOSS.
-    ## We cannot really fully fix bundles as metadata for bundle
-    ## packages (which might have license specs) are not recorded in the
-    ## PACKAGES files.  And as bundles on the way out ...
     bad_packages <-
         bad_packages[is.na(match(bad_packages,
                                  unlist(tools:::.get_standard_package_names())))]
-    ## <FIXME>
-    ## Fix bundle packages ... maybe.
-    ## </FIXME>
+
 
     ## Packages in the db not verifiable as FOSS.
     ind <- !tools:::analyze_licenses(db[, "License"])$is_verified
@@ -332,10 +326,6 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         available.packages(contriburl = contriburl, method = method)
     else tools:::.remove_stale_dups(available)
 
-    ## This should be true in the PACKAGES file, is on CRAN
-    ok <- !is.na(available[, "Bundle"])
-    available[ok, "Package"] <- available[ok, "Bundle"]
-
     update <- NULL
 
     currentR <- minorR <- getRversion()
@@ -343,15 +333,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     for(k in 1L:nrow(instPkgs)) {
         if (instPkgs[k, "Priority"] %in% "base") next
         z <- match(instPkgs[k, "Package"], available[, "Package"])
-        if(is.na(z)) {
-            bundle <- instPkgs[k, "Bundle"]
-            if(!is.na(bundle)) {
-                ## no match to the package, so look for update to the bundle
-                z <- match(bundle, available[, "Package"])
-                if(is.na(z)) next
-                instPkgs[k, "Package"] <- bundle
-            } else next
-        }
+        if(is.na(z)) next
         onRepos <- available[z, ]
         ## works OK if Built: is missing (which it should not be)
 	if((!checkBuilt || package_version(instPkgs[k, "Built"]) >= minorR) &&
@@ -374,7 +356,7 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         colnames(update) <- c("Package", "LibPath", "Installed", "Built",
                               "ReposVer", "Repository")
     rownames(update) <- update[, "Package"]
-    ## finally, remove duplicate rows (which bundles may give)
+    ## finally, remove any duplicate rows
     update[!duplicated(update), , drop = FALSE]
 }
 
@@ -394,16 +376,6 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                                         method = method)
 
     installed <- unique(instPkgs[, "Package"])
-
-    ## We need to work out what to do with bundles, and unfortunately some
-    ## people have used the same name for a bundle and a package (both as
-    ## one of the components and replacing a package by a bundle or v.v.).
-    ## Since 'available' will have names of bundles or single packages, we
-    ## add the bundle names to the list of installed packages: this means
-    ## that if there is a package installed with the name of a bundle, the
-    ## bundle is regarded as installed.
-    ok <- !is.na(instPkgs[, "Bundle"])
-    if(any(ok)) installed <- c(installed, unique(instPkgs[ok, "Bundle"]))
 
     poss <- sort(unique(available[ ,"Package"])) # sort in local locale
     res <- setdiff(poss, installed)
@@ -431,14 +403,6 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         # Now check if they were installed and update 'res'
         dirs <- list.files(lib.loc[1L])
         updated <- update[update %in% dirs]
-        # Need to check separately for bundles
-        av <- available[update, , drop = FALSE]
-        bundles <- av[!is.na(av[, "Contains"]), , drop=FALSE]
-        for(bundle in rownames(bundles)) {
-            contains <- strsplit(bundles[bundle, "Contains"],
-                                 "[[:space:]]+")[[1L]]
-            if(all(contains %in% dirs)) updated <- c(updated, bundle)
-        }
         res <- res[!res %in% updated]
     }
     res
@@ -557,15 +521,6 @@ remove.packages <- function(pkgs, lib)
         warning(gettextf("argument 'lib' is missing: using %s", lib),
                 immediate. = TRUE, domain = NA)
     }
-    ## For bundles, remove all of the bundle.  This should remain
-    ## this way even if bundles are unbundled, for back compatibility.
-    have <- installed.packages(lib.loc=lib)
-    is_bundle <- pkgs %in% have[, "Bundle"]
-    pkgs0 <- pkgs; pkgs <- pkgs[!is_bundle]
-    for(p in pkgs0[is_bundle]) {
-        add <- have[have[, "Bundle"] %in% p, "Package"]
-        pkgs <- c(pkgs, add)
-    }
 
     paths <- .find.package(pkgs, lib)
     if(length(paths)) {
@@ -591,9 +546,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
     retval <- matrix(character(0L), 0L, 2L)
     for(p in unique(pkgs))
     {
-        ## Normally bundles have a Package field of the same name, but
-        ## allow for repositories that do not.
-        ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
+        ok <- (available[,"Package"] == p)
         ok <- ok & !is.na(ok)
         if(!any(ok))
             warning(gettextf("no package '%s' at the repositories", p),
@@ -796,15 +749,6 @@ compareVersion <- function(a, b)
 }
 
 ## ------------- private functions --------------------
-.find_bundles <- function(available, all=TRUE)
-{
-    ## Sort out bundles. Returns a named list of character vectors
-    ## Once upon a time all=TRUE told it about the VR bundle.
-    ## which might not have been in 'available' on Windows.
-    bundles <- available[!is.na(available[, "Bundle"]), "Contains"]
-    strsplit(bundles, "[[:space:]]+")
-}
-
 .clean_up_dependencies <- function(x, available = NULL)
 {
     ## x is a character vector of Depends / Suggests / Imports entries
@@ -897,13 +841,6 @@ function(pkgs, available, dependencies = c("Depends", "Imports", "LinkingTo"))
     x <- vector("list", length(pkgs)); names(x) <- pkgs
     for (i in seq_along(pkgs))
         x[[i]] <- .clean_up_dependencies(info[i, ])
-    bundles <- .find_bundles(available)
-    x <- lapply(x, function(x) if(length(x)) {
-        for(bundle in names(bundles))
-            x[ x %in% bundles[[bundle]] ] <- bundle
-        x <- x[! x %in% c("R", "NA")]
-        unique(x)
-    } else x)
     x
 }
 

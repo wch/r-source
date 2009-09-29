@@ -34,7 +34,7 @@
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
     ## global variables
-    bundle_pkgs <- character() # list of packages in current pkg/bundle
+    curPkg <- character() # list of packages in current pkg
     lockdir <- ""
     is_first_package <- TRUE
     stars <- "*"
@@ -73,7 +73,7 @@
         cat("Usage: R CMD INSTALL [options] pkgs",
             "",
             "Install the add-on packages specified by pkgs.  The elements of pkgs can",
-            "be relative or absolute paths to directories with the package (bundle)",
+            "be relative or absolute paths to directories with the package",
             "sources, or to gzipped package 'tar' archives.  The library tree",
             "to install to can be specified via '--library'.  By default, packages are",
             "installed in the library tree rooted at the first directory in",
@@ -125,7 +125,7 @@
         do_cleanup_tmpdir()
         if (!is_first_package) {
             ## Only need to do this in case we successfully installed at least
-            ## *one* package ... well not so sure for bundles.
+            ## *one* package
             file.copy(file.path(R.home("doc"), "html", "R.css"), lib)
             if (lib == .Library) {
                 if (build_help)
@@ -146,8 +146,8 @@
     {
         # message("*** do_exit_on_error ***")
         ## If we are not yet processing a package, we will not have
-        ## set bundle_pkgs
-        for(p in bundle_pkgs) {
+        ## set curPkg
+        for(p in curPkg) {
             if (is.na(p) || !nzchar(p)) next
             pkgdir <- file.path(lib, p)
             if (nzchar(pkgdir) && dir.exists(pkgdir)) {
@@ -204,109 +204,62 @@
         do_exit_on_error()
     }
 
-    ## 'pkg' is the absolute path to package/bundle sources.
+    ## 'pkg' is the absolute path to package sources.
     do_install <- function(pkg)
     {
         setwd(pkg)
         desc <- read.dcf(file.path(pkg, "DESCRIPTION"))[1, ]
         ## Let's see if we have a bundle
-        bundle_name <- desc["Bundle"]
-        is_bundle <- !is.na(bundle_name)
-        if (is_bundle) {
-            contains <- .get_contains_from_package_db(desc)
-            for(p in contains) {
-                if (dir.exists(file.path(pkg, p))) {
-                    pkgs <- c(pkgs, p)
-                } else {
-                    warning("incorrect Contains metadata for bundle ",
-                            sQuote(bundle_name),
-                            ": there is no package '", sQuote(p),
-                            call. = FALSE, domain = NA)
-                    warning("skipping installation of bundle ",
-                            sQuote(bundle_name), call. = FALSE, domain = NA)
-                    contains <- character()
-                    break
-                }
-            }
-            ## binary bundles are special.  Like source bundles they
-            ## have a top-level DESCRIPTION file, but they have no
-            ## 'Built' field in it, and no */DESCRIPTION.in
-            if (length(contains) && length(Sys.glob("*/DESCRIPTION.in"))) {
-                ## Create the package level DESCRIPTION files from the bundle
-                ## level DESCRIPTION and the package level DESCRIPTION.in ones.
-                res <- try(.vcreate_bundle_package_descriptions(pkg, paste(contains, collapse=" ")))
-                if (inherits(res, "try-error"))
-                    warning("problem installing per-package DESCRIPTION files",
-                            call. = FALSE, domain = NA)
-            }
-            ## This cannot create a binary bundle, no top-level DESCRIPTION
-            if (tar_up)
-                errmsg("cannot create a binary bundle: use 'R CMD build --binary' to do so")
-            bundle_pkgs <<- contains
+        if (!is.na(desc["Bundle"])) {
+            stop("this seems to be a bundle -- and they are defunct")
         } else {
-            bundle_name <- desc["Package"]
-            if (is.na(bundle_name)) errmsg("no 'Package' field in 'DESCRIPTION'")
-            bundle_pkgs <<- bundle_name
-        }
-
-        for(p in bundle_pkgs) {
-            if (is_bundle) {
-                pkg_dir <- file.path(pkg, p)
-                setwd(pkg_dir)
-                desc <- read.dcf("DESCRIPTION")[1, ]
-            } else pkg_dir <- pkg
             pkg_name <- desc["Package"]
-            Sys.setenv(R_PACKAGE_NAME = pkg_name)
-            instdir <- file.path(lib, pkg_name)
-            Sys.setenv(R_PACKAGE_DIR = instdir) ## installation dir
-            ## if (WINDOWS) Sys.setenv(DPKG = instdir) ## assumed by some
-
-            ## FIXME: do this at bundle level?
-            ## Could different packages have different version requirements?
-            status <- .Rtest_package_depends_R_version()
-            if (status) do_exit_on_error()
-
-            dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
-            if (!dir.exists(instdir)) {
-                message("ERROR: unable to create ", sQuote(instdir),
-                        domain = NA)
-                do_exit_on_error()
-            }
-
-            ## Make sure we do not attempt installing to srcdir.
-            owd <- setwd(instdir)
-            if (owd == getwd()) pkgerrmsg("cannot install to srcdir", pkg_name)
-            setwd(owd)
-
-            ## Figure out whether this is a source or binary package.
-            is_source_package <- is.na(desc["Built"])
-
-            if (!is_first_package) cat("\n")
-
-            if (is_source_package)
-                do_install_source(pkg_name, instdir, pkg_dir, desc)
-            else
-                do_install_binary(pkg_name, instdir, desc)
-
-            ## Add read permission to all, write permission to ownwer
-            .Internal(dirchmod(instdir))
-            ##    system(paste("find", shQuote(instdir),  "-exec chmod a+r \\{\\} \\;"))
-            if (is_bundle)
-                starsmsg(stars, "DONE (", pkg_name, ")")
-            is_first_package <<- FALSE
+            if (is.na(pkg_name)) errmsg("no 'Package' field in 'DESCRIPTION'")
+            curPkg <<- pkg_name
         }
+
+        Sys.setenv(R_PACKAGE_NAME = pkg_name)
+        instdir <- file.path(lib, pkg_name)
+        Sys.setenv(R_PACKAGE_DIR = instdir) ## installation dir
+        status <- .Rtest_package_depends_R_version()
+        if (status) do_exit_on_error()
+
+        dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
+        if (!dir.exists(instdir)) {
+            message("ERROR: unable to create ", sQuote(instdir), domain = NA)
+            do_exit_on_error()
+        }
+
+        ## Make sure we do not attempt installing to srcdir.
+        owd <- setwd(instdir)
+        if (owd == getwd()) pkgerrmsg("cannot install to srcdir", pkg_name)
+        setwd(owd)
+
+        ## Figure out whether this is a source or binary package.
+        is_source_package <- is.na(desc["Built"])
+
+        if (!is_first_package) cat("\n")
+
+        if (is_source_package)
+            do_install_source(pkg_name, instdir, pkg, desc)
+        else
+            do_install_binary(pkg_name, instdir, desc)
+
+        ## Add read permission to all, write permission to ownwer
+        .Internal(dirchmod(instdir))
+        is_first_package <<- FALSE
 
         if (tar_up) {
             version <- desc["Version"]
-            filename <- paste0(bundle_name, "_", version, "_R_",
+            filename <- paste0(pkg_name, "_", version, "_R_",
                                Sys.getenv("R_PLATFORM"), ".tar")
             filepath <- shQuote(file.path(startdir, filename))
             owd <- setwd(lib)
             system(paste(TAR, "-chf", filepath,
-                         paste(bundle_pkgs, collapse = " ")))
+                         paste(curPkg, collapse = " ")))
             system(paste(GZIP, "-9f", filepath))
             message("packaged installation of ",
-                    sQuote(bundle_name), " as ", filename, ".gz",
+                    sQuote(pkg_name), " as ", filename, ".gz",
                     domain = NA)
             setwd(owd)
         }
@@ -314,26 +267,21 @@
         if (zip_up) {
             ZIP <- "zip"                # Windows only
             version <- desc["Version"]
-            filename <- paste0(bundle_name, "_", version, ".zip")
+            filename <- paste0(pkg_name, "_", version, ".zip")
             filepath <- shQuote(file.path(startdir, filename))
             ## system(paste("rm -f", filepath))
             unlink(filepath)
             owd <- setwd(lib)
             system(paste(ZIP, "-r9Xq", filepath,
-                         paste(bundle_pkgs, collapse = " ")))
-	    if (is_bundle) {
-                ## need to add top-level DESCRIPTION file
-                setwd(pkg)
-                system(paste(ZIP, "-9Xq", filepath, "DESCRIPTION"))
-	    }
+                         paste(curPkg, collapse = " ")))
             setwd(owd)
             message("packaged installation of ",
-                    sQuote(bundle_name), " as ", filename)
+                    sQuote(pkg_name), " as ", filename)
         }
 
-        starsmsg(stars, "DONE (", bundle_name, ")")
+        starsmsg(stars, "DONE (", pkg_name, ")")
 
-        bundle_pkgs <<- character()
+        curPkg <<- character()
     }
 
 
@@ -1019,7 +967,7 @@
         if (debug) message("processing ", sQuote(pkg), domain = NA)
         if (.file_test("-f", pkg)) {
             if (debug) message("a file", domain = NA)
-            pkgname <- basename(pkg) # or bundle name
+            pkgname <- basename(pkg)
             ## Also allow for 'package.tgz' ...
             pkgname <- sub("\\.(tgz|tar\\.gz|tar\\.bz2)$", "", pkgname)
             pkgname <- sub("_.*", "", pkgname)
@@ -1029,18 +977,17 @@
                 utils::untar(pkg, exdir = tmpdir)
             }
             if (res) errmsg("error unpacking tarball")
-            ## If we have a binary bundle distribution, there should be
-            ## a DESCRIPTION file at top level.
+
+            ## If we have a binary bundle distribution, there should
+            ## be a DESCRIPTION file at top level.
             if (file.exists(ff <- file.path(tmpdir, "DESCRIPTION"))) {
                 con <- read.dcf(ff, "Contains")
-                if (!is.na(con)) {
-                    starsmsg(stars, "looks like a binary bundle")
-                    allpkgs <- c(allpkgs, tmpdir)
-                } else {
+                if (!is.na(con))
+                    message("looks like a binary bundle", domain = NA)
+                else
                     message("unknown package layout", domain = NA)
-                    do_cleanup_tmpdir()
-                    q("no", status = 1, runLast = FALSE)
-                }
+                do_cleanup_tmpdir()
+                q("no", status = 1, runLast = FALSE)
             } else if (file.exists(file.path(tmpdir, pkgname, "DESCRIPTION"))) {
                 allpkgs <- c(allpkgs, file.path(tmpdir, pkgname))
             } else errmsg("cannot extract package from ", sQuote(pkg))
@@ -1054,7 +1001,7 @@
         }
         if (pkglock) {
             if (nzchar(pkglockname)) {
-                warning("--pkglock applies only to a single bundle/package",
+                warning("--pkglock applies only to a single package",
                         call. = FALSE)
                 pkglock <- FALSE
             } else pkglockname <- pkgname
@@ -1363,7 +1310,7 @@
     } else out <- outfile
     cat("\\begin{description}", "\\raggedright{}", sep="\n", file=out)
     fields <- names(desc)
-    fields <- fields[! fields %in% c("Bundle", "Package", "Packaged", "Built")]
+    fields <- fields[! fields %in% c("Package", "Packaged", "Built")]
     if ("Encoding" %in% fields)
         cat("\\inputencoding{", latex_canonical_encoding(desc["Encoding"]),
             "}\n", sep = "", file = out)
@@ -2096,17 +2043,16 @@ function(name="", version = "0.0")
 ### * .Rd2dvi
 
 .Rd2dvi <-
-function(pkgdir, outfile, is_bundle, title, batch = FALSE,
+function(pkgdir, outfile, title, batch = FALSE,
          description = TRUE, only_meta = FALSE,
          enc = "unknown", outputEncoding = "latin1", files_or_dir, OSdir,
          internals = "no", index = "true")
 {
-    # print(match.call())
 
     ## %in% and others cause problems for some page layouts.
     if (basename(pkgdir) == "base") index <- "false"
-    # Write directly to the final location.  Encodings may mean we need
-    # to make edits, but for most files one pass should be enough.
+    ## Write directly to the final location.  Encodings may mean we need
+    ## to make edits, but for most files one pass should be enough.
     out <- file(outfile, "wt")
     if (!nzchar(enc)) enc <- "unknown"
     description <- description == "true"
@@ -2137,54 +2083,38 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
     writeLines(c(setEncoding,
                  "\\makeindex{}",
                  "\\begin{document}"), out)
-    if (is_bundle == "no") {
-        if (!nzchar(title)) {
-            if (is.character(desc))
-                title <- paste("Package `", desc["Package"], "'", sep = "")
-            else if (file.exists(f <- file.path(pkgdir, "DESCRIPTION.in"))) {
-                desc <- read.dcf(f)[1,]
-                title <- paste("Package `", desc["Package"], "'", sep = "")
+    if (!nzchar(title)) {
+        if (is.character(desc))
+            title <- paste("Package `", desc["Package"], "'", sep = "")
+        else if (file.exists(f <- file.path(pkgdir, "DESCRIPTION.in"))) {
+            desc <- read.dcf(f)[1,]
+            title <- paste("Package `", desc["Package"], "'", sep = "")
+        } else {
+            if (file_test("-d", pkgdir)) {
+                subj <- paste("all in \\file{", pkgdir, "}", sep ="")
             } else {
-                if (file_test("-d", pkgdir)) {
-                    subj <- paste("all in \\file{", pkgdir, "}", sep ="")
-                } else {
-                    files <- strsplit(files_or_dir, "[[:space:]]+")[[1]]
-                    subj1 <- if (length(files) > 1) " etc." else ""
-                    subj <- paste("\\file{", pkgdir, "}", subj1, sep = "")
-                }
-                subj <- gsub("[_$]", "\\\\1", subj)
-                title <- paste("\\R{} documentation}} \\par\\bigskip{{\\Large of", subj)
+                files <- strsplit(files_or_dir, "[[:space:]]+")[[1]]
+                subj1 <- if (length(files) > 1) " etc." else ""
+                subj <- paste("\\file{", pkgdir, "}", subj1, sep = "")
             }
+            subj <- gsub("[_$]", "\\\\1", subj)
+            title <- paste("\\R{} documentation}} \\par\\bigskip{{\\Large of", subj)
         }
-        cat("\\chapter*{}\n",
-            "\\begin{center}\n",
-            "{\\textbf{\\huge ", title, "}}\n",
-            "\\par\\bigskip{\\large \\today}\n",
-            "\\end{center}\n", sep = "", file = out)
-        if (description && file.exists(f <- file.path(pkgdir, "DESCRIPTION")))
-            .DESCRIPTION_to_latex(f, out)
-        ## running on the sources of a base package will have DESCRIPTION.in,
-        ## only.
-        if (description &&
-           file.exists(f <- file.path(pkgdir, "DESCRIPTION.in"))) {
-            version <- readLines(file.path(pkgdir, "../../../VERSION"))
-            .DESCRIPTION_to_latex(file.path(pkgdir, "DESCRIPTION.in"),
-                                  out, version)
-        }
-    } else { ## bundle case
-        if (!nzchar(title) && is.character(desc))
-            title <- paste("Bundle `", desc["Bundle"], "'", sep = "")
-        cat("\\pagenumbering{Roman}\n",
-            "\\begin{titlepage}\n",
-            "\\strut\\vfill\n",
-            "\\begin{center}\n",
-            "{\\textbf{\\Huge ", title, "}}\n",
-            "\\par\\bigskip{\\large \\today}\n",
-            "\\end{center}\n",
-            "\\par\\bigskip\n", sep = "", file = out)
-        if (description)
-            .DESCRIPTION_to_latex(file.path(pkgdir, "DESCRIPTION"), out)
-        writeLines("\\vfill\\vfill\n\\end{titlepage}", out)
+    }
+    cat("\\chapter*{}\n",
+        "\\begin{center}\n",
+        "{\\textbf{\\huge ", title, "}}\n",
+        "\\par\\bigskip{\\large \\today}\n",
+        "\\end{center}\n", sep = "", file = out)
+    if (description && file.exists(f <- file.path(pkgdir, "DESCRIPTION")))
+        .DESCRIPTION_to_latex(f, out)
+    ## running on the sources of a base package will have DESCRIPTION.in,
+    ## only.
+    if (description &&
+        file.exists(f <- file.path(pkgdir, "DESCRIPTION.in"))) {
+        version <- readLines(file.path(pkgdir, "../../../VERSION"))
+        .DESCRIPTION_to_latex(file.path(pkgdir, "DESCRIPTION.in"),
+                              out, version)
     }
 
     ## Rd2.tex part 2: body
@@ -2193,40 +2123,17 @@ function(pkgdir, outfile, is_bundle, title, batch = FALSE,
     } else ""
 
     latexEncodings <- character(0)
-    if (is_bundle == "no") {
-        ## if this looks like a package with no man pages, skip body
-        if (file.exists(file.path(pkgdir, "DESCRIPTION")) &&
-           !(file_test("-d", file.path(pkgdir, "man")) ||
-             file_test("-d", file.path(pkgdir, "help")) ||
-             file_test("-d", file.path(pkgdir, "latex")))) only_meta <- TRUE
-        if (!only_meta) {
-            if (nzchar(toc)) writeLines(toc, out)
-            latexEncodings <-
-                .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
-                             extraDirs = OSdir, internals = internals,
-                             silent = (batch == "true"))
-        }
-    } else {
-        writeLines(c("\\setcounter{secnumdepth}{-1}",
-                     "\\pagenumbering{roman}",
-                     "\\tableofcontents{}",
-                     "\\cleardoublepage{}",
-                     "\\pagenumbering{arabic}"), out)
-        desc <- read.dcf(file.path(pkgdir, "DESCRIPTION"))[1,]
-        bundle_pkgs <- .get_contains_from_package_db(desc)
-        for (p in bundle_pkgs) {
-            message("Bundle package: ", p)
-            cat("\\chapter{Package `", p, "'}\n", sep = "", file = out)
-            if (description &&
-                file.exists(f <- file.path(pkgdir, p, "DESCRIPTION.in")))
-                .DESCRIPTION_to_latex(f, out)
-            if (!only_meta)
-                latexEncodings <- c(latexEncodings, .pkg2tex(file.path(pkgdir, p), out, encoding = enc,
-                         append = TRUE, asChapter = FALSE,
-                         internals = internals))
-            writeLines("\\clearpage{}", out)
-        }
-        writeLines("\\cleardoublepage{}", out)
+    ## if this looks like a package with no man pages, skip body
+    if (file.exists(file.path(pkgdir, "DESCRIPTION")) &&
+        !(file_test("-d", file.path(pkgdir, "man")) ||
+          file_test("-d", file.path(pkgdir, "help")) ||
+          file_test("-d", file.path(pkgdir, "latex")))) only_meta <- TRUE
+    if (!only_meta) {
+        if (nzchar(toc)) writeLines(toc, out)
+        latexEncodings <-
+            .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
+                         extraDirs = OSdir, internals = internals,
+                         silent = (batch == "true"))
     }
 
     ## Rd2.tex part 3: footer

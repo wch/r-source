@@ -27,7 +27,6 @@ write_PACKAGES(dir = ".", fields = NULL,
     default ones, or \code{NULL} (default).  The default corresponds to
     the fields needed by \code{\link{available.packages}}:
     \code{"Package"}, \code{"Version"}, \code{"Priority"},
-    \code{"Bundle"}, \code{"Contains"},
     \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
     \code{"Suggests"}, \code{"Enhances"},
     \code{"OS_type"}, and

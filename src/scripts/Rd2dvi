@@ -17,11 +17,11 @@ usage="Usage: R CMD Rd2dvi [options] files
 
 Generate DVI (or PDF) output from the Rd sources specified by files, by
 either giving the paths to the files, or the path to a directory with
-the sources of a package/bundle, or an installed package.
+the sources of a package, or an installed package.
 
 Unless specified via option '--output', the basename of the output file
 equals the basename of argument 'files' if this specifies a package
-(bundle) or a single file, and 'Rd2' otherwise.
+or a single file, and 'Rd2' otherwise.
 
 The Rd sources are assumed to be ASCII unless they contain \encoding
 declarations (which take priority) or --encoding is supplied or if using
@@ -162,17 +162,10 @@ do_cleanup () {
   fi
 }
 
-is_bundle=no
-
 if test -d "${1}"; then
   if test -f ${1}/DESCRIPTION; then
-    if test -n "`grep '^Bundle:' ${1}/DESCRIPTION`"; then
-      echo "Hmm ... looks like a package bundle"
-      is_bundle=yes
-    else
-      echo "Hmm ... looks like a package"
-      dir=${1}
-    fi
+    echo "Hmm ... looks like a package"
+    dir=${1}
     test -z "${output}" && output="`basename ${1}`.${out_ext}"
   elif test -f ${1}/DESCRIPTION.in && \
        test -n "`grep '^Priority: *base' ${1}/DESCRIPTION.in`"; then
@@ -208,7 +201,7 @@ if test -d ${build_dir}; then
 fi
 mkdir ${build_dir}
 
-echo "tools:::.Rd2dvi(\"${1}\",  \"${build_dir}/Rd2.tex\", \"$is_bundle\", \
+echo "tools:::.Rd2dvi(\"${1}\",  \"${build_dir}/Rd2.tex\", \
 \"$title\", \"$batch\", \"$description\", \"$only_meta\",\
 \"$enc\", \"$outenc\", \"${dir-$@}\", \"OSdir\", \"$internals\", \"$index\")" \
   | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla || exit 11

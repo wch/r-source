@@ -169,7 +169,7 @@ license_regexps <- .make_license_regexps()
 ##   The text clearly says "Version 2, June 1991".
 ## * CeCILL is a bit of a mess: the current version is referred to as
 ##   "version 2" (http://www.cecill.info/licences.en.html) but
-##    internally uses "Version 2.0 dated 2006-09-05" 
+##    internally uses "Version 2.0 dated 2006-09-05"
 ##    (http://www.cecill.info/licences/Licence_CeCILL_V2-en.txt).
 
 .standardizable_license_specs <-
@@ -182,14 +182,14 @@ list("Artistic-2.0" =
      "CeCILL-2" =
      c("CeCILL-2.0"
        ),
-     
+
      "GPL" =
      c("GNU Public License",
        "Gnu GPL",
        "GNU GPL",
        "GPL (http://www.gnu.org/copyleft/gpl.html)"
        ),
-     
+
      "GPL-2" =
      c(## <NOTE>
        ## There is no GPL 2.0, see above.
@@ -213,7 +213,7 @@ list("Artistic-2.0" =
        "GPL V2",
        "GPL, version 2"
        ),
-     
+
      "GPL-3" =
      c("GPL Version 3",
        "GPL version 3",
@@ -283,17 +283,17 @@ list("Artistic-2.0" =
      "GPL-2 | file LICENSE" =
      c("use under GPL2, or see file LICENCE"
        ),
-     
+
      "LGPL" =
      c("LGPL (see <http://www.opensource.org/licenses/lgpl-license.php>).",
        "GNU LGPL (same as wxWidgets)."
        ),
-     
+
      "LGPL-2" =
      c("LGPL2",
        "LGPL2.0"
        ),
-     
+
      "LGPL-2.1" =
      c("LGPL version 2.1"
        ),
@@ -301,7 +301,7 @@ list("Artistic-2.0" =
      "LGPL-3" =
      c("LGPL-v3"
        ),
-       
+
      "LGPL (>= 2.0)" =
      c(## <NOTE>
        ## There is no LGPL-2.0, see above.
@@ -312,7 +312,7 @@ list("Artistic-2.0" =
        "LGPL (version 2 or later)",
        "LGPL version 2 or later"
        ),
-     
+
      "LGPL (>= 2.1)" =
      c("LGPL version 2.1 or later"
        ),
@@ -351,7 +351,7 @@ data.frame(ispecs =
 .other_free_or_open_license_specs <-
 c("Artistic",
   "GPL AFFERO 3.0 (with citation)",
-  ## https://cabig-kc.nci.nih.gov/CTMS/KC/index.php/C3PR_caBIG_License  
+  ## https://cabig-kc.nci.nih.gov/CTMS/KC/index.php/C3PR_caBIG_License
   "caBIG"
   )
 
@@ -440,7 +440,7 @@ function(x)
     is_extended <- NA
     ## Analyze components provided that we know we can standardize.
     if(is_standardizable) {
-        components <- 
+        components <-
             .strip_whitespace(unlist(strsplit(standardization, "|",
                                               fixed = TRUE)))
         ind <- grep(sprintf("%s$",
@@ -454,7 +454,7 @@ function(x)
             is_extended <- FALSE
         }
     }
-    
+
     .make_results(is_canonical = all(ok),
                   bad_components = bad_components,
                   is_standardizable = is_standardizable,
@@ -507,8 +507,6 @@ function(dir, unpacked = FALSE)
     ## worry about this for now ...
 
     db <- do.call("rbind", db)
-    is_bundle <- is.na(db[, "Package"])
-    db[is_bundle, "Package"] <- db[is_bundle, "Bundle"]
 
     ## Retain what is needed ...
     data.frame(db[ , c("Package", "Version", fields)],

@@ -1677,8 +1677,7 @@ From a running @R{} process they can be removed by
 @end example
 
 Finally, in most installations one can just remove the package directory
-from the library (but for a package from a bundle, be sure to remove the
-whole bundle).
+from the library.
 
 
 @node Setting up a package repository,  , Removing packages, Add-on packages
@@ -1714,11 +1713,11 @@ above.
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
 can be a concatenation of the @file{DESCRIPTION} files of the packages
-separated by blank lines (provided there are no bundles), but only a few
-of the fields are needed.  The simplest way to set up such a file is to
-use function @code{write_PACKAGES} in the @pkg{tools} package, and its
-help explains which fields are needed.  Optionally there can also be
-a @file{PACKAGES.gz} file, a @command{gzip}-compressed version of
+separated by blank lines, but only a few of the fields are needed.  The
+simplest way to set up such a file is to use function
+@code{write_PACKAGES} in the @pkg{tools} package, and its help explains
+which fields are needed.  Optionally there can also be a
+@file{PACKAGES.gz} file, a @command{gzip}-compressed version of
 @file{PACKAGES}---as this will be downloaded in preference to
 @file{PACKAGES} it should be included for large repositories.
 

@@ -28,9 +28,6 @@ getDependencies <-
         warning("Do not know which element of 'lib' to install dependencies into\nskipping dependencies")
         depends <- FALSE
     }
-    bundles <- .find_bundles(available)
-    for(bundle in names(bundles))
-        pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
     p0 <- unique(pkgs)
     miss <-  !p0 %in% row.names(available)
     if(sum(miss)) {
@@ -81,8 +78,6 @@ getDependencies <-
             flush.console()
         }
 
-        for(bundle in names(bundles))
-            pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
         pkgs <- unique(pkgs)
         pkgs <- pkgs[pkgs %in% row.names(available)]
         if(length(pkgs) > length(p0)) {
@@ -185,28 +180,7 @@ install.packages <-
 	    available <- available.packages(contriburl = contriburl,
 					    method = method)
 	if(NROW(available)) {
-            explode_bundles <- function(a)
-            {
-                contains <- .find_bundles(a, FALSE)
-                extras <- unlist(lapply(names(contains), function(x)
-                                        paste(contains[[x]], " (", x, ")", sep="")))
-                sort(as.vector(c(a[, 1L], extras)))
-            }
-
-            implode_bundles <- function(pkgs)
-            {
-                bundled <- grep(".* \\(.*\\)$", pkgs)
-                if (length(bundled)) {
-                    bundles <- unique(gsub(".* \\((.*)\\)$", "\\1",
-                                           pkgs[bundled]))
-                    pkgs <- c(pkgs[-bundled], bundles)
-                }
-                pkgs
-            }
-
-	    a <- explode_bundles(available)
-	    pkgs <- implode_bundles(SelectList(a, multiple = TRUE,
-					       title = "Packages"))
+	    pkgs <- SelectList(available, multiple = TRUE, title = "Packages")
             ## avoid duplicate entries in menus, since the latest will
             ## be picked up
             pkgs <- unique(pkgs)

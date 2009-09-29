@@ -46,7 +46,7 @@
   
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names of directories.  \code{pkgs} may also contain
-  names of package/bundle archive files: these are then
+  names of package archive files: these are then
   extracted to a temporary directory.  Precisely what forms are accepted
   depends on the system (see \code{\link{untar}}): this will certainly
   include filenames of the form \file{pkg_version.tar.gz} as obtained
@@ -55,7 +55,7 @@
   recent toolsets, \file{pkg_version.ext} for any supported extension
   such as \file{tar.lzma} and \file{tar.xz}.
 #ifdef unix
-  Finally, binary package/bundle archive files (as created by
+  Finally, binary package archive files (as created by
   \command{R CMD build --binary}) can be supplied.
 #endif
 
@@ -87,10 +87,10 @@
   By default the library directory is \sQuote{locked} by creating a
   directory \file{00LOCK} within it.  This has two purposes: it
   prevents any other process installing into that library concurrently,
-  and is used to store any previous version of the package/bundle to
+  and is used to store any previous version of the package to
   restore on error.  A finer-grained locking is provided by the option
   \option{--pkglock} which creates a separate lock for each
-  package/bundle: this allows enough freedom for careful parallel
+  package: this allows enough freedom for careful parallel
   installation as done by \code{\link{install.packages}(Ncpus =
   \var{n})} with \code{\var{n} > 1}.  Finally locking (and restoration
   on error) can be suppressed by \option{--no-lock} or \option{--unsafe}
@@ -98,7 +98,7 @@
 #ifdef windows
   
   Windows-only option \option{--build} can be used to zip up the
-  installed package or bundle for distribution: it implies
+  installed package for distribution: it implies
   \option{--auto-zip} which selects if data file are zipped up to save
   disc space.
 #endif

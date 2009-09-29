@@ -38,8 +38,6 @@ installed.packages(lib.loc = NULL, priority = NULL,
   package found along \code{lib.loc} and returns a matrix of package
   names, library paths and version numbers.
 
-  \strong{Note:} this works with package names, not bundle names.
-
   The information found is cached (by library) for the \R session and
   specified \code{fields} argument, and updated only if the top-level
   library directory has been altered, for example by installing or
@@ -52,7 +50,6 @@ installed.packages(lib.loc = NULL, priority = NULL,
   column names
   \code{"Package"}, \code{"LibPath"},
   \code{"Version"}, \code{"Priority"},
-  \code{"Bundle"}, \code{"Contains"},
   \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
   \code{"Suggests"}, \code{"Enhances"},
   \code{"OS_type"}, \code{"License"} and
