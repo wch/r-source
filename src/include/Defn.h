@@ -98,6 +98,9 @@ extern0 SEXP	R_StringHash;       /* Global hash of CHARSXPs */
 #define LATIN1_MASK (1<<2)
 #define UTF8_MASK (1<<3)
 #define CACHED_MASK (1<<5)
+#define HASHASH_MASK 1
+/**** HASHASH uses the first bit -- see HASHAS_MASK defined below */
+
 #ifdef USE_RINTERNALS
 # define IS_LATIN1(x) ((x)->sxpinfo.gp & LATIN1_MASK)
 # define SET_LATIN1(x) (((x)->sxpinfo.gp) |= LATIN1_MASK)
@@ -400,9 +403,10 @@ typedef struct {
 #define SET_PRSEEN(x,v)	(((x)->sxpinfo.gp)=(v))
 
 /* Hashing Macros */
-#define HASHASH(x)      ((x)->sxpinfo.gp)
+#define HASHASH(x)      ((x)->sxpinfo.gp & HASHASH_MASK)
 #define HASHVALUE(x)    TRUELENGTH(x)
-#define SET_HASHASH(x,v) (((x)->sxpinfo.gp)=(v))
+#define SET_HASHASH(x,v) ((v) ? (((x)->sxpinfo.gp) |= HASHASH_MASK) : \
+			  (((x)->sxpinfo.gp) &= (~HASHASH_MASK)))
 #define SET_HASHVALUE(x,v) SET_TRUELENGTH(x, v)
 
 /* Vector Heap Structure */
