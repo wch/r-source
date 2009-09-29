@@ -997,19 +997,21 @@ gives the locations of a few other pre-compiled packages.
 
 If there is not a pre-compiled version or that is not up-to-date or you
 prefer compiling from source, read the `R Installation and
-Administration' manual section on `Add-on Packages'.  You need to make
-sure you installed the necessary files, and you will need to collect and
-install several tools: you can download them via the portal at
+Administration' manual section on `Add-on Packages'.  Source packages
+which contain no C/C++/Fortran code which needs compilation can simply
+be installed by @code{install.packages(type = "source")} or @command{R
+CMD INSTALL pkgname}.  Otherwise you will need to collect and install
+several tools: you can download them via the portal at
 @uref{http://www.murdoch-sutherland.com/Rtools/}.  Once you have done
 so, just run @command{R CMD INSTALL pkgname}.  To check the package
 (including running all the examples on its help pages and in its test
-suite, if any) use @command{R CMD check pkgname}: see the @emph{`Writing R
-Extensions'} manual.
+suite, if any) use @command{R CMD check pkgname} (which needs Perl
+installed): see the @emph{`Writing R Extensions'} manual.
 
-Note that setting up Windows to install a source package is rather
-tricky; please do ensure that you have followed the instructions
-@strong{exactly}.  At least 90% of the questions asked are because
-people have not done so.
+Note that setting up Windows to install a source package that needs
+compilation is rather tricky; please do ensure that you have followed
+the instructions @strong{exactly}.  At least 90% of the questions asked
+are because people have not done so.
 
 If you have a source package that is known to work on a Unix-alike
 system, you can try the automated Windows binary package builder
@@ -1195,11 +1197,6 @@ and @key{Ctrl-break} or @key{Ctrl-C} in @command{Rterm.exe}:
 readline-based editing on Unix.  For @command{Rgui.exe}, the menu item `Help |
 Console' will give details.  For @command{Rterm.exe} see file
 @file{README.rterm}.
-
-@item Using @code{help.start()} does not automatically send help
-requests to the browser: use @code{options(htmlhelp=TRUE)} to turn this on.
-
-@item The HTML help system has limitations in supporting cross-library links.
 
 @item Paths to files (e.g.@: in @code{source()}) can be specified with
 either "/" or "\\".
@@ -1446,22 +1443,14 @@ some of the more common chips are available on CRAN in directory
 Installation and Administration Manual} for how to build an ATLAS
 @file{Rblas.dll} tuned to your system using the R sources.
 
-@c An alternative for those building from sources is to use AMD's Core Math
-@c Library (ACML) @url{http://www.amd.com/acml} (see the @emph{R
-@c Installation and Administration Manual} for details).  This does seem to
-@c run on a wide range of CPUs at speeds comparable to ATLAS, but the
-@c license conditions mean we cannot redistribute it.
-
-
 @node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, Can I use a fast BLAS?, Building from Source
 @section How do I include compiled C code?
 
 We strongly encourage you to do this @emph{via} building an R package:
 see the @emph{`Writing R Extensions'} manual.  In any event you should
 install the parts of the R system for building R packages (installed by
-default), and get and install the tools (including Perl) and compilers
-mentioned in the @emph{`R Installation and Administration'} manual.
-Then you can use
+default), and get and install the tools and compilers mentioned in the
+@emph{`R Installation and Administration'} manual.  Then you can use
 @example
 ...\bin\R CMD SHLIB foo.c bar.f
 @end example
