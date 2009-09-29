@@ -312,6 +312,9 @@ NEW FEATURES
 
 	A new INSTALL option, --resave-data, makes use of this.
 
+    o	File ~/.R/config is used in preference to ~/.Rconfig, and
+	these are now documented in 'R Installation and Administration'.
+
 
 REGULAR EXPRESSIONS
 
@@ -481,6 +484,9 @@ DEPRECATED & DEFUNCT
 
     o	tools::Rd_parse() is defunct (as this version of R uses only
 	Rd version 2).
+
+    o	Use of ~/.Rconf (which was deprecated in favour of ~/.Rconfig
+	in 2004) has finally been removed.
 
     o	Bundles of packages are deprecated.  See 'Writing R
 	Extensions' for the steps needed to unbundle a bundle.
