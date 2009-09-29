@@ -335,6 +335,9 @@ NEW FEATURES
 
 	A new INSTALL option, --resave-data, makes use of this.
 
+    o	File ~/.R/config is used in preference to ~/.Rconfig, and
+	these are now documented in 'R Installation and Administration'.
+
 
 REGULAR EXPRESSIONS
 
