@@ -94,20 +94,27 @@ AC_SUBST(R_OSTYPE)
 
 ### ** Defaults.
 
+## NB: autoconf loads such files too
 cfile="${srcdir}/config.site"
 if test -r "${cfile}"; then
   echo "loading site script '${cfile}'"
   . "${cfile}"
 fi
-## NB: undocumented, replaced ~/.Rconf in late 2004
-cfile="${HOME}/.Rconfig"
+cfile="${HOME}/.R/config"
 if test -r "${cfile}"; then
   echo "loading user script '${cfile}'"
   . "${cfile}"
+else
+  ## NB: undocumented, replaced ~/.Rconf in late 2004, latter removed in 2009
+  cfile="${HOME}/.Rconfig"
+  if test -r "${cfile}"; then
+    echo "loading user script '${cfile}'"
+    . "${cfile}"
+  fi
 fi
 cfile="./config.site"
 if test -r "${cfile}"; then
-  echo "loading build specific script '${cfile}'"
+  echo "loading build-specific script '${cfile}'"
   . "${cfile}"
 fi
 
