@@ -5170,10 +5170,14 @@ if(.Platform$OS.type == "unix") {
 
     ## More building & installing packages
     op <- options(warn=2) # *NO* warnings here!
+    pkgSrcPath <- file.path(Sys.getenv("SRCDIR"), "Pkgs")
+    ## pkgB tests an empty R directory
+    dir.create(file.path(pkgSrcPath, "pkgB", "R"), recursive = TRUE,
+               showWarnings = FALSE)
     p.lis <- c("pkgA", "pkgB", "exS4noNS", "exNSS4")
     for(p. in p.lis) {
 	cat("building package", p., "...\n")
-	r <- build.pkg(file.path(Sys.getenv("SRCDIR"), "Pkgs", p.))
+	r <- build.pkg(file.path(pkgSrcPath, p.))
 	cat("installing package", p., "using file", r, "...\n")
 	## we could install the tar file ... (see build.pkg()'s definition)
 	install.packages(r, lib = "myLib", repos=NULL, type = "source")
