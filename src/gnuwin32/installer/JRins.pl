@@ -173,7 +173,7 @@ Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
 Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom; Flags: dontinheritcheck
 Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom; Flags: dontinheritcheck
 Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom; Flags: dontinheritcheck
-Name: "libdocs"; Description: "Docs for Package grid"; Types: full custom
+Name: "libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "tests"; Description: "Test files"; Types: full custom
 
@@ -422,7 +422,7 @@ sub listFiles {
 	    $component = "tcl/chm";
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
-	} elsif (m/^library\\grid\\doc/) {
+	} elsif (m/^library\\grid\\doc/ || m/^library\\Matrix\\doc/) {
 	    $component = "libdocs";
 	} elsif (m/^share\\locale/ 
 		 || m/^library\\[^\\]*\\po/) {
