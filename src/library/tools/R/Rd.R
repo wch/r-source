@@ -711,17 +711,19 @@ function(x)
 fetchRdDB <- function (filebase, key = NULL)
 {
     data <- paste(filebase, "rdb", sep = ".")
-    v <- .readRDS(paste(filebase, "rdx", sep = "."))$variables
+    v <- .readRDS(paste(filebase, "rdx", sep = "."))
+    compress <- v$compress
+    v <- v$variables
     if(length(key)) {
         if(! key %in% names(v))
             stop(gettextf("No help on %s found in RdDB %s",
                           sQuote(key), sQuote(filebase)),
                  domain = NA)
-        lazyLoadDBfetch(v[key][[1]], data, TRUE, function(n){})
+        lazyLoadDBfetch(v[key][[1]], data, compress, function(n){})
     } else {
         res <- v # a list of the right names
         for(i in seq_along(res))
-            res[[i]] <- lazyLoadDBfetch(v[i][[1]], data, TRUE, function(n){})
+            res[[i]] <- lazyLoadDBfetch(v[i][[1]], data, compress, function(n){})
         invisible(res)
     }
 }
