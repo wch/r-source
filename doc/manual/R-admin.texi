@@ -2965,16 +2965,19 @@ set) or on the command line as
 @noindent
 If you are building in a directory different from the sources, there can
 be copies of @file{config.site} in the source and the build directories,
-and both will be read (in that order).  
-@c Was this really true?
-@c To force a single file to be
-@c @enindex CONFIG_SITE
-@c read, set the environment variable @env{CONFIG_SITE} to the location of
-@c the file.
-In addition, if there is a file@footnote{@file{~/.Rconf} was supported
-(but undocumented) in versions of @R{} prior to 2.10.0.}
-@code{~/.Rconfig}, it is read between the @file{config.site} files in
+and both will be read (in that order).  In addition, if there is a file
+@file{~/.R/config} (or failing that@footnote{@file{~/.Rconf} was
+supported (but undocumented) in versions of @R{} prior to 2.10.0.}
+@code{~/.Rconfig}), it is read between the @file{config.site} files in
 the source and the build directories.
+
+There is also a general @command{autoconf} mechanism for
+@file{config.site} files, which are read before any of those mentioned
+in the previous paragraph.  This looks first at a file specified by the
+environment variable @env{CONFIG_SITE}, and if not is set at files such
+as @file{/usr/local/share/config.site} and
+@file{/usr/local/etc/config.site} in the area (exemplified by
+@file{/usr/local} where @R{}) would be installed.
 
 These variables are @emph{precious}, implying that they do not have to
 be exported to the environment, are kept in the cache even if not
