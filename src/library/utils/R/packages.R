@@ -19,7 +19,7 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
          fields = NULL, type = getOption("pkgType"), filters = NULL)
 {
     requiredFields <-
-        tools:::.get_standard_repository_db_fields()
+        c(tools:::.get_standard_repository_db_fields(), "File")
     if (is.null(fields))
 	fields <- requiredFields
     else {
@@ -559,12 +559,16 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 ok[ok][!keep] <- FALSE
             }
             if (substr(type, 1L, 10L) == "mac.binary") type <- "mac.binary"
+            ## in Oct 2009 we introduced file names in PACKAGES files
+            File <- available[ok, "File"]
             fn <- paste(p, "_", available[ok, "Version"],
                         switch(type,
                                "source" = ".tar.gz",
                                "mac.binary" = ".tgz",
                                "win.binary" = ".zip"),
-                        sep="")
+                        sep = "")
+            have_fn <- !is.na(File)
+            fn[have_fn] <- File[have_fn]
             repos <- available[ok, "Repository"]
             if(length(grep("^file:", repos)) > 0L) { # local repository
                 ## This could be file: + file path or a file:/// URL.
