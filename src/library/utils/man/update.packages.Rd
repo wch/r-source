@@ -298,22 +298,22 @@ contrib.url(repos, type = getOption("pkgType"))
   one, the newest version of the package compatible with this version of \R
   is fetched from the first repository on the list within which it is found.
 #ifdef windows
-
-  In order to install packages with \code{type = "source"} on Windows,
-  you will need to have installed the Rtools collection as described
-  in the \sQuote{rw-FAQ}.  You must have the \code{PATH} set up as
-  required by the Rtools.
+  
+  Using packages with \code{type = "source"} works on Windows provided
+  the package contains no C/C++/Fortran code that needs compilation,
+  Otherwise you will need to have installed the Rtools collection as
+  described in the \sQuote{rw-FAQ}, \emph{and} you must have the
+  \code{PATH} set up as required by the Rtools.
 #endif
 }
 \value{
-  For \code{available.packages}, a matrix with one row per
-  package, row names the package names and 
-  column names
-  \code{"Package"}, \code{"Version"}, \code{"Priority"},
-  \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
-  \code{"Suggests"}, \code{"Enhances"},
-  \code{"OS_type"}, \code{"License"} and \code{"Repository"}.
-  Additional columns can be specified using the \code{fields} argument.
+  For \code{available.packages}, a matrix with one row per package, row
+  names the package names and column names \code{"Package"},
+  \code{"Version"}, \code{"Priority"}, \code{"Depends"},
+  \code{"Imports"}, \code{"LinkingTo"}, \code{"Suggests"},
+  \code{"Enhances"}, \code{"OS_type"}, \code{"License"}, \code{"File"}
+  and \code{"Repository"}.  Additional columns can be specified using
+  the \code{fields} argument.
 
   For \code{old.packages}, \code{NULL} or a matrix with one row per
   package, row names the package names and column names

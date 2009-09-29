@@ -28,9 +28,10 @@ write_PACKAGES(dir = ".", fields = NULL,
     the fields needed by \code{\link{available.packages}}:
     \code{"Package"}, \code{"Version"}, \code{"Priority"},
     \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
-    \code{"Suggests"}, \code{"Enhances"},
-    \code{"OS_type"}, and
-    \code{"License"}.
+    \code{"Suggests"}, \code{"Enhances"}, \code{"OS_type"},
+    and \code{"License"} and those fields will always be included, plus
+    the file name in \code{"File"} and \code{"Path"} if
+    subdirectories are used.
   }
   \item{type}{
     Type of packages: currently source \file{.tar.gz} archives, and Mac
@@ -53,6 +54,14 @@ write_PACKAGES(dir = ".", fields = NULL,
   \code{latestOnly = FALSE} could be used for a source repository when
   \samp{foo_1.0} depends on \samp{R >= 2.10.0} but \samp{foo_0.9} is
   available which depends on \samp{R >= 2.7.0}.
+
+  Support for repositories with subdirectories and hence for
+  \code{subdirs != FALSE} was added in \R 2.7.0: this depends on
+  recording a \code{"Path"} field in the \file{PACKAGES} file.
+
+  Support for more general file names (e.g. other types of compression)
+  \emph{via} a \code{"File"} field in the \file{PACKAGES} file was added
+  in \R 2.10.0.
   
   \code{type = "win.binary"} uses \code{\link{unz}} connections to read
   all \file{DESCRIPTION} files contained in the (zipped) binary packages
@@ -61,7 +70,7 @@ write_PACKAGES(dir = ".", fields = NULL,
 }
 \value{
   Invisibly returns the number of packages described in the resulting
-  \file{PACKAGES} and \file{PACKAGES.gz} files.  If 0, no packages were
+  \file{PACKAGES} and \file{PACKAGES.gz} files.  If \code{0}, no packages were
   found and no files were written.
 }
 \note{
