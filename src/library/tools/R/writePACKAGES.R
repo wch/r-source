@@ -41,9 +41,11 @@ function(dir = ".", fields = NULL,
                                              unpacked)
 
         if(length(desc)) {
+            Files <- names(desc)
             fields <- names(desc[[1L]])
             desc <- matrix(unlist(desc), ncol = length(fields), byrow = TRUE)
             colnames(desc) <- fields
+            desc <- cbind(desc, File = Files)
             if(latestOnly) desc <- .remove_stale_dups(desc)
 
             ## Standardize licenses or replace by NA.
@@ -103,6 +105,7 @@ function(dir, fields = NULL,
     fields <- unique(c(.get_standard_repository_db_fields(), fields))
     packages <- sapply(strsplit(files, "_", fixed = TRUE), "[", 1L)
     db <- vector(length(files), mode = "list")
+    names(db) <- files
     ## Many (roughly length(files)) warnings are *expected*, hence
     ## suppressed.
     op <- options(warn = -1)
@@ -147,10 +150,6 @@ function(dir, fields = NULL,
     }
     if(verbose) message("done")
 
-    ## Note that we cannot simply do
-    ##   names(db) <- sub("_.*", "", basename(files))
-    ## as repositories could hold multiple versions of packages.
-
     db
 }
 
@@ -167,7 +166,7 @@ function(dir, fields = NULL, verbose = getOption("verbose"))
     for(i in seq_along(paths)) {
         if(verbose) message(paste(" ", basename(paths[i])))
         temp <- tryCatch(read.dcf(file.path(paths[i], "DESCRIPTION"),
-                             fields = fields)[1L, ],
+                                  fields = fields)[1L, ],
                          error = identity)
         if(!inherits(temp, "error"))
             db[[i]] <- temp
