@@ -250,7 +250,7 @@ foreach $n (sort values %refman) {
 print insfile <<END;
     </Feature>
 
-    <Feature Id="libdocs" Title="Docs for Package grid" Description="Docs for Package grid" Level="1"
+    <Feature Id="libdocs" Title="Docs for Packages grid and Matrix" Description="Docs for Packages grid and Matrix" Level="1"
      InstallDefault="local" AllowAdvertise="no">
 END
 
@@ -361,7 +361,7 @@ sub listFiles {
 	    	$component = "tests";
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
-	} elsif (m/^library\\grid\\doc/) {
+	} elsif (m/^library\\grid\\doc/ || m/^library\\Matrix\\doc/) {
 	    $component = "libdocs";
 	} elsif (m/^share\\locale/ 
 		 || m/^library\\[^\\]*\\po/) {

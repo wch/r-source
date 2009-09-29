@@ -347,7 +347,8 @@ rsync-recommended:
 	@(cd ../library; \
 	  rsync --timeout=60 -rcvpC --delete \
 	    --exclude=Makefile.in --exclude=Makefile.win --exclude=.cvsignore \
-	    --include=*.tar.gz --exclude=*.tgz --exclude=".svn" $(CRANREC) . )
+	    --include=*.tar.gz --exclude=*.tgz --exclude=*.ts \
+	    --exclude=".svn" $(CRANREC) . )
 	@$(RM) ../library/Recommended/*.tgz
 	@(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED}; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 

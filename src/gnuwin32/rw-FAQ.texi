@@ -143,12 +143,12 @@ specific binary@footnote{See @ref{How can I compile R from source?} for
 the possibility of building one from the sources.} version for x64
 Windows, but the standard 32-bit version works well enough.  We only
 test on versions of Windows currently supported by Microsoft, mainly on
-32-bit XP SP3, and 64-bit Vista and Windows Server 2008.
+32-bit XP SP3 and 64-bit Vista and Windows Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical install
 takes 50Mb of disk space, a full installation about 65Mb and a
-minimal one about 32Mb.
+minimal one about 29Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
