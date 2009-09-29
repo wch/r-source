@@ -648,9 +648,11 @@ static int PackFlags(int type, int levs, int isobj, int hasattr, int hastag)
        It is used to indicate if an object is in CHARSXP cache
        - not that it matters to this version of R, but it saves
        checking all previous versions.
+
+       Also make sure the HASHASH bit is not written out.
     */
     int val;
-    if (type == CHARSXP) levs &= (~CACHED_MASK);
+    if (type == CHARSXP) levs &= (~(CACHED_MASK | HASHASH_MASK));
     val = type | ENCODE_LEVELS(levs);
     if (isobj) val |= IS_OBJECT_BIT_MASK;
     if (hasattr) val |= HAS_ATTR_BIT_MASK;
@@ -1317,6 +1319,10 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    PROTECT(s = mkPRIMSXP(StrToInternal(cbuf), type == BUILTINSXP));
 	    break;
 	case CHARSXP:
+	    /* make sure levs does not have CACHED or HASHASH bits set
+	       -- mainly for older serializations. */
+	    levs &= (~(CACHED_MASK | HASHASH_MASK));
+
 	    length = InInteger(stream);
 	    if (length == -1)
 		PROTECT(s = NA_STRING);
@@ -1337,6 +1343,10 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 		PROTECT(s = mkCharLenCE(cbuf, length, enc));
 		Free(cbuf);
 	    }
+
+	    /* make sure levs reflects the CACHED and HASHASH status of s */
+	    if (LEVELS(s) & CACHED_MASK) levs |= CACHED_MASK;
+	    if (LEVELS(s) & HASHASH_MASK) levs |= HASHASH_MASK;
 	    break;
 	case LGLSXP:
 	    length = InInteger(stream);
