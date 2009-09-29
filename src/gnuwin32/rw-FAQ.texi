@@ -157,10 +157,7 @@ Vista/Windows 7 installing for a single user using an account with
 administrator rights@footnote{Non-administrator accounts will
 automatically be offered a default installation directory in the user
 area.} should consider installing into a non-system area (such as
-@file{C:\R}).  If you are installing to a network drive, you should
-consider choosing the default form of help during the install
-@strong{not} to be Compiled HTML help: @xref{Help is not shown for some
-of the packages}.  Installing to a network share (a filepath starting
+@file{C:\R}).  Installing to a network share (a filepath starting
 with @code{\\machine\...}) is not supported: such paths will need to
 mapped to a network drive.
 
@@ -279,13 +276,13 @@ without creating a shortcut in a writable folder.
 @section How do I UNinstall R?
 
 Normally you can do this from the R group on the Start Menu or from the
-@samp{Add/Remove Programs}@footnote{@samp{Programs and Features} under
-Vista and later} in the Control Panel.  If it does not appear there or
-if you want to remove an old version, run @file{unins000.exe} in the
-top-level installation directory.  (There should be a separate uninstall
-item in the R group for each installed version of R.  On recent versions
-of Windows you may well be asked to confirm that you wish to run a
-program from an `unidentified publisher'.)
+@samp{Add/Remove Programs} or @samp{Programs and Features} group in the
+Control Panel.  If it does not appear there or if you want to remove an
+old version, run @file{unins000.exe} in the top-level installation
+directory.  (There should be a separate uninstall item in the R group on
+the Start Menu for each installed version of R.  On recent versions of
+Windows you may well be asked to confirm that you wish to run a program
+from an `unidentified publisher'.)
 
 Uninstalling R only removes files from the initial installation, not
 (for example) packages you have installed or updated.
@@ -356,18 +353,23 @@ the working directory will be set to that containing the file.
 It depends what you want to print.
 
 @itemize @bullet
-@item You can print the graphics window from its menu or by using
+@item
+You can print the graphics window from its menu or by using
 @code{dev.print} with suitable arguments (see its help page: most likely
 @code{dev.print(win.graph)} will work).
 
-@item You can print from the R console or pager by @samp{File | Print}.
+@item
+You can print from the R console or pager by @samp{File | Print}.
 (This will print the selection if there is one, otherwise the whole
 console or pager contents.)
 
-@item You can print help files from the pager or HTML browser.
+@item
+You can print help files from the pager or HTML browser.
 
-@item If you have configured @file{RHOME\bin\helpPRINT.bat} and have
-LaTeX installed you can print help files by @code{help(fn_name, offline=TRUE)}.
+@item
+If you have LaTeX installed and a PostScript or PDF printing system you
+can print help files by @code{help(fn_name, help_type="postscript")} (or
+@code{"PDF"}).
 @end itemize
 
 
@@ -542,7 +544,8 @@ from within R.
 Another (D)COM server is available from @uref{http://www.omegahat.org/},
 which allows R objects to be exported as COM values.  That site also
 has packages @code{RDCOMClient} and @code{SWinTypeLibs} which allow R
-to act as a (D)COM client.
+to act as a (D)COM client.  However, they are normally not available as
+pre-compiled packages for Windows.
 
 
 @node The Internet download functions fail., Entering certain characters crashes Rgui., Does R support automation?, Installation and Usage
@@ -553,12 +556,12 @@ for example @code{update.packages()} and the menu items on the Packages menu.
 We have had several reports of this, although they do work for us on
 @emph{all} of our machines.  There are two known possible fixes.
 
-(a) Use the alternative @file{internet2.dll} by starting R with the
-flag @option{--internet2} (@pxref{How do I install R for Windows?}) or
+(a) Use the alternative @file{internet2.dll} by starting R with the flag
+@option{--internet2} (@pxref{How do I install R for Windows?}) or
 calling @code{setInternet2(TRUE)}.  These cause R to use the Internet
-Explorer internals (and so need Internet Explorer 4 or later
-installed).  Note that this does not work with proxies that need
-authentication.
+Explorer internals.@footnote{and so may need Internet Explorer installed,
+althought these are part of recent versions of Windows}.  Note that this
+does not work with proxies that need authentication.
 
 (b) A proxy needs to be set up: see @code{?download.file}.  Here are two
 versions of an example (a real one, but from a machine that is only
@@ -640,13 +643,13 @@ may want to experiment with disabling it.
 
 
 @node Does R run under Windows Vista?, Quotes don't come out right on the console/terminal/pager, Why does R never use more than 50% of my CPU?, Installation and Usage
-@section Does R run under Windows Vista?
+@section Does R run under Windows Vista/7/Server 2008?
 
 It does.  A few issues have been reported that related to the way
 accounts and file permissions work.  (These are not specifically R
 issues, but changes in user experiences.)
 
-The comments here apply also to Windows Server 2008 and Windows 7.
+The comments here apply to Windows Vista, Server 2008 and Windows 7.
 
 Earlier versions of Windows had user and Administrator accounts, and
 user accounts could be give administrative privileges (by being added to
@@ -764,8 +767,8 @@ rectangle).
 
 Directional quotes will also be used in text help which is normally
 displayed in R's internal pager: these may not be rendered correctly in
-an external pager.  They are also used in CHM and HTML help, where
-most browsers use fonts which render them correctly.
+an external pager.  They are also used in HTML help, where most browsers
+use fonts which render them correctly.
 
 The font used can affect whether quotes are rendered correctly.  The
 default font in the @code{Rgui} console and internal pager is
@@ -810,9 +813,10 @@ Accessories, Accessibility on XP).
 @node The installer does not offer my language, I want R in English!, Languages and Internationalization, Languages and Internationalization
 @section The installer does not offer my language.
 
-Two things may be happening.  First, only languages which can be
-displayed using the current codepage are offered so you cannot install
-in Japanese unless running Windows in Japanese.
+Two things may be happening.  First, in earlier version only languages
+which can be displayed using the current codepage were offered so you
+could install in Japanese unless running Windows in Japanese: this
+changed in mid-2009 in time for R 2.10.0
 
 Second, only a limited range of languages is supported (but still wider
 than those for which R has translations), currently
@@ -980,7 +984,9 @@ handles internationalization slightly odd.  For further details see
 Yes, but you will need a lot of tools to do so, unless the author or the
 maintainers of the @file{bin/windows/contrib} section on CRAN have been
 kind enough to provide a pre-compiled version for Windows as a
-@code{.zip} file.
+@code{.zip} file, or the package is a simple one involving no compiled
+code (and pre-compiled versions are usually available for simple
+packages).
 
 You can install pre-compiled packages either from CRAN or from a local
 @code{.zip} file by using @code{install.packages}: see its help page.
@@ -988,8 +994,8 @@ There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  The packages for
 each minor (2.x) version will be stored in a separate area, so for R
 2.7.? the files are in @file{bin/windows/contrib/2.7}.  You can try
-those compiled for earlier versions (but not before 2.0.0), at your own
-risk.
+those compiled for earlier versions, at your own risk, but help may well
+not work correctly with those installed before R 2.10.0.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
 @uref{http://cran.r-project.org/bin/windows/contrib/ReadMe}, which also
@@ -1165,12 +1171,8 @@ in your HOME directory (@pxref{What are HOME and working directories?}).
 @node Help is not shown for some of the packages,  , How do I add to the list of repositories?, Packages
 @section Help is not shown for some of the packages
 
-Is this for Compiled HTML help (the default)?  If a help viewer appears
-but says the page cannot be displayed, this may be due to a Windows
-security patch (@url{http://support.microsoft.com/kb/896358}).  Either
-apply the workarounds given at that URL or choose another form of help
-as the default (on installation or by editing
-@file{R_HOME\etc\Rprofile.site}).
+This was about Compiled HTML help, which is not longer supported.
+
 
 @newchap{}
 @node Windows Features, Workspaces, Packages, Top
@@ -1353,7 +1355,7 @@ Since R marks character data when it knows it to be in UTF-8 or Latin-1
 (including its Windows superset, CP1252), strings in those encodings are
 likely to be transferred correctly: fortunately this covers most of the
 common cases (Mac OS X normally uses UTF-8, and Linux users are likely
-to use Latin-1 (its interpretation of the C locale) or UTF-8.)
+to use UTF-8 or perhaps Latin-1 (which used to be used for English).)
 
 
 @newchap{}
@@ -1471,10 +1473,9 @@ from the Cygwin distribution.  Debugging under Windows is often a
 fraught process, and sometimes does not work at all.  If all you need is
 a @emph{just-in-time} debugger to catch crashes, consider
 @code{Dr. Mingw} from the @code{mingw-utils} bundle on
-@uref{http://www.mingw.org} (see also
-@uref{http://jrfonseca.dyndns.org/projects/gnu-win32/software/drmingw/}).
-That will be able to pinpoint the error, most effectively if you build a
-version of R with debugging information as described below.
+@uref{http://www.mingw.org}.  That will be able to pinpoint the error,
+most effectively if you build a version of R with debugging information
+as described below.
 
 First, build a version of the R system with debugging information by
 
