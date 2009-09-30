@@ -180,7 +180,7 @@ install.packages <-
 	    available <- available.packages(contriburl = contriburl,
 					    method = method)
 	if(NROW(available)) {
-	    pkgs <- SelectList(available, multiple = TRUE, title = "Packages")
+	    pkgs <- SelectList(rownames(available), multiple = TRUE, title = "Packages")
             ## avoid duplicate entries in menus, since the latest will
             ## be picked up
             pkgs <- unique(pkgs)
