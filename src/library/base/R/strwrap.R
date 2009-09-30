@@ -47,11 +47,14 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
 
             ## Remove extra white space unless after a period which
             ## hopefully ends a sentence.
+            ## Add ? ! as other possible ends, and there might be
+            ## quoted and parenthesised sentences.
             ## NB, input could be invalid here.
             if(any(nc == 0L)) {
                 zLenInd <- which(nc == 0L)
                 zLenInd <- zLenInd[!(zLenInd %in%
-                                     (grep("[.?!]$", words, perl = TRUE, useBytes = TRUE) + 1L))]
+                                     (grep("[.?!][)\"']{0,1}$", words,
+                                           perl = TRUE, useBytes = TRUE) + 1L))]
                 if(length(zLenInd)) {
                     words <- words[-zLenInd]
                     nc <- nc[-zLenInd]

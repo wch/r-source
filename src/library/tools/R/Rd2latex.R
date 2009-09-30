@@ -121,7 +121,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
     ## version for RCODE and VERB
     ## inCodeBlock/inPre is in alltt, where only \ { } have their usual meaning
-    vtexify <- function(x) {
+    vtexify <- function(x, code = TRUE) {
         if(inEqn) return(x)
         ## cat(sprintf("vtexify: '%s'\n", x))
         x <- psub("\\\\[l]{0,1}dots", "...", as.character(x))
@@ -143,9 +143,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             x <- psub("(?<!\\\\)\\{", "\\\\{", x)
             x <- psub("(?<!\\\\)}", "\\\\}", x)
             x <- fsub(BSL2, "\\bsl{}", x)
-            ## need to preserve \var
-            x <- psub("\\\\\\\\var\\\\\\{([^\\\\]*)\\\\}",
-                      "\\\\var{\\1}", x)
+            x <- psub("\\\\\\\\var\\\\\\{([^\\\\]*)\\\\}", "\\\\var{\\1}", x)
         } else {
             ## cat(sprintf("\nvtexify in: '%s'\n", x))
             BSL = '@BSL@';
@@ -160,7 +158,9 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             x <- fsub("<<", "<{}<", x)
             x <- fsub(">>", ">{}>", x)
             x <- fsub(",,", ",{},", x) # ,, is a ligature in the ae font.
-            x <- psub("\\\\bsl{}var\\\\{([^}]+)\\\\}", "\\\\var{\\1}", x)
+            ## used to preserve \var: needed in code only, or not at all
+            if(FALSE) # was code
+                x <- psub("\\\\bsl{}var\\\\{([^}]+)\\\\}", "\\\\var{\\1}", x)
             ## cat(sprintf("\nvtexify out: '%s'\n", x))
         }
 	x
@@ -179,7 +179,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     }
 
     writeVerb <- function(block, tag) {
-        ## no interpretation needed
+        ## no interpretation needed, so \var needs to be turned off
+        ## the content is presumably only tagged as \verb or COMMENT
     	of0(tag, "{")
     	writeContent(block, tag)
     	of1("}")
@@ -335,8 +336,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     writeBlock <- function(block, tag, blocktag) {
 	switch(tag,
                UNKNOWN =,
-               VERB =,
-               RCODE = of1(vtexify(block)),
+               VERB = of1(vtexify(block, FALSE)),
+               RCODE = of1(vtexify(block, TRUE)),
                TEXT = of1(addParaBreaks(texify(block), blocktag)),
                COMMENT = {},
                LIST = writeContent(block, tag),

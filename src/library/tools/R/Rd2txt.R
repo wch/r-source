@@ -98,8 +98,8 @@ Rd2txt <-
         # Convert newlines
         txt <- strsplit(txt, "\n", fixed = TRUE)[[1]]
         if (dropBlank) {
-            while(length(txt) && grepl("^[[:space:]]*$",txt[1]))
-            	txt <- txt[-1]
+            while(length(txt) && grepl("^[[:space:]]*$", txt[1L]))
+            	txt <- txt[-1L]
             if (length(txt)) dropBlank <<- FALSE
         }
         if(!length(txt)) return()
@@ -139,11 +139,17 @@ Rd2txt <-
                                               collapse = " "),
                                         indent=first, exdent=indent))
 		    first <- indent
-		}
-		result <- c(result, buffer[blankLines[i]])
+                }
+                result <- c(result, "")
 		start <- blankLines[i]+1L
 	    }
-	    buffer <<- result[-length(result)] # remove the sentinel
+            ## we want to collapse multiple blank lines when wrapping
+            ## and to remove the sentinel (which we need to do first or
+            ## we will drop a single blank line)
+            buffer <<- result[-length(result)]
+            empty <- !nzchar(buffer)
+            drop <- empty & c(FALSE, empty[-length(empty)])
+            buffer <<- buffer[!drop]
 	} else {  # Not wrapping
 	    if (keepFirstIndent) {
 		if (length(buffer) > 1L)
@@ -343,7 +349,14 @@ Rd2txt <-
                "\\verb"= put(block),
                "\\linkS4class" =,
                "\\link" = writeContent(block, tag),
-               "\\cr" = put("\n"),
+               "\\cr" = {
+                   ## we want to print out what we have, and if
+                   ## followed immediately by \n (as it usually is)
+                   ## discard that.  This is not entirely correct,
+                   ## but it is better than before ....
+                   flushBuffer()
+                   dropBlank <<- TRUE
+                   },
                "\\dots" =,
                "\\ldots" = put("..."),
                "\\R" = put("R"),

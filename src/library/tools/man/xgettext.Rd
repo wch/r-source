@@ -29,8 +29,8 @@ xgettext2pot(dir, potFile)
     otherwise the strings within each argument are extracted.}
 
   \item{potFile}{name of \code{po} template file to be produced.
-    Defaults to \code{"R-\var{pkgname}.pot"} where
-    \var{pkgname} is the basename of \code{dir}.}
+    Defaults to \file{"R-\var{pkgname}.pot"} where
+    \var{pkgname} is the basename of \file{dir}.}
 }
 \details{
   Leading and trailing white space (space, tab and linefeed) is removed
