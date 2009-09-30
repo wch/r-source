@@ -41,10 +41,11 @@ function(dir = ".", fields = NULL,
                                              unpacked)
 
         if(length(desc)) {
+            Files <- names(desc)
             fields <- names(desc[[1L]])
             desc <- matrix(unlist(desc), ncol = length(fields), byrow = TRUE)
             colnames(desc) <- fields
-            if(addFiles) desc <- cbind(desc, File = names(desc))
+            if(addFiles) desc <- cbind(desc, File = Files)
             if(latestOnly) desc <- .remove_stale_dups(desc)
 
             ## Standardize licenses or replace by NA.
