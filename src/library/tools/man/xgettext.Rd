@@ -29,7 +29,7 @@ xgettext2pot(dir, potFile)
     otherwise the strings within each argument are extracted.}
 
   \item{potFile}{name of \code{po} template file to be produced.
-    Defaults to \file{"R-\var{pkgname}.pot"} where
+    Defaults to \file{R-\var{pkgname}.pot} where
     \var{pkgname} is the basename of \file{dir}.}
 }
 \details{
