@@ -14,7 +14,7 @@
 write_PACKAGES(dir = ".", fields = NULL,
                type = c("source", "mac.binary", "win.binary"),
                verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
-               latestOnly = TRUE)
+               latestOnly = TRUE, addFiles = FALSE)
 }
 \arguments{
   \item{dir}{Character vector describing the location of the repository
@@ -30,8 +30,9 @@ write_PACKAGES(dir = ".", fields = NULL,
     \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
     \code{"Suggests"}, \code{"Enhances"}, \code{"OS_type"},
     and \code{"License"} and those fields will always be included, plus
-    the file name in \code{"File"} and \code{"Path"} if
-    subdirectories are used.
+    the file name in field \code{"File"} if \code{addFile = TRUE}
+    and the path to the subdirectory in field \code{"Path"} if subdirectories
+    are used.
   }
   \item{type}{
     Type of packages: currently source \file{.tar.gz} archives, and Mac
@@ -44,9 +45,12 @@ write_PACKAGES(dir = ".", fields = NULL,
   \item{unpacked}{a logical indicating whether the package contents are
     available in unpacked form or not (default).}
   \item{subdirs}{either logical (to indicate if subdirectories should be
-    included) or a character vector of subdirectories to include.}
+    included, recursively) or a character vector of name of subdirectories
+    to include.}
   \item{latestOnly}{logical: if multiple versions of a package are
     available should only the latest version be included?}
+  \item{addFiles}{logical: should the filenames be included as field
+    \samp{File} in the \file{PACKAGES} file.}
 }
 \details{
   Including non-latest versions of packages is only useful if they have
@@ -61,11 +65,13 @@ write_PACKAGES(dir = ".", fields = NULL,
 
   Support for more general file names (e.g. other types of compression)
   \emph{via} a \code{"File"} field in the \file{PACKAGES} file was added
-  in \R 2.10.0.
+  in \R 2.10.0 and can be used by \code{\link{download.packages}}.  If
+  the file names are not of the standard form, use
+  \code{addFiles = TRUE}.
   
   \code{type = "win.binary"} uses \code{\link{unz}} connections to read
   all \file{DESCRIPTION} files contained in the (zipped) binary packages
-  for Windows in the given directory \code{dir}, and builds
+  for Windows in the given directory \code{dir}, and builds files
   \file{PACKAGES} and \file{PACKAGES.gz} files from this information.
 }
 \value{

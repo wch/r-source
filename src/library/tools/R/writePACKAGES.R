@@ -18,7 +18,7 @@ write_PACKAGES <-
 function(dir = ".", fields = NULL,
          type = c("source", "mac.binary", "win.binary"),
          verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
-         latestOnly = TRUE)
+         latestOnly = TRUE, addFiles = FALSE)
 {
     if(missing(type) && .Platform$OS.type == "windows")
         type <- "win.binary"
@@ -41,11 +41,10 @@ function(dir = ".", fields = NULL,
                                              unpacked)
 
         if(length(desc)) {
-            Files <- names(desc)
             fields <- names(desc[[1L]])
             desc <- matrix(unlist(desc), ncol = length(fields), byrow = TRUE)
             colnames(desc) <- fields
-            desc <- cbind(desc, File = Files)
+            if(addFiles) desc <- cbind(desc, File = names(desc))
             if(latestOnly) desc <- .remove_stale_dups(desc)
 
             ## Standardize licenses or replace by NA.
@@ -91,8 +90,10 @@ function(dir, fields = NULL,
 
     type <- match.arg(type)
 
+    ## FIXME: might the source pattern be more general?
+    ## was .tar.gz prior to 2.10.0
     package_pattern <- switch(type,
-                              "source" = "_.*\\.tar\\.gz$",
+                              "source" = "_.*\\.tar\\..*$",
                               "mac.binary" = "_.*\\.tgz$",
                               "win.binary" = "_.*\\.zip$")
     files <- list.files(dir, pattern = package_pattern)
