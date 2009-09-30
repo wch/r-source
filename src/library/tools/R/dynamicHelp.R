@@ -172,7 +172,7 @@ httpd <- function(path, query, ...)
 	    return(list(payload = paste('Redirect to <a href="', file, '">"',
                         basename(file), '"</a>', sep=''),
 	    		"content-type" = 'text/html',
-	    		header = paste('Location: ', file, '\n', sep=''),
+	    		header = paste('Location: ', file, sep=''),
 	    		"status code" = 302L)) # temporary redirect
 	} else if (length(file) > 1L) {
             paths <- dirname(dirname(file))
