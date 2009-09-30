@@ -457,6 +457,21 @@ INLINE_FUN Rboolean isNumeric(SEXP s)
     }
 }
 
+/** Is an object "Numeric" or  complex */
+INLINE_FUN Rboolean isNumber(SEXP s)
+{
+    switch(TYPEOF(s)) {
+    case INTSXP:
+	if (inherits(s,"factor")) return FALSE;
+    case LGLSXP:
+    case REALSXP:
+    case CPLXSXP:
+	return TRUE;
+    default:
+	return FALSE;
+    }
+}
+
 /* As from R 2.4.0 we check that the value is allowed. */
 INLINE_FUN SEXP ScalarLogical(int x)
 {

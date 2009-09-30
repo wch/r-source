@@ -5820,8 +5820,14 @@ stopifnot(identical(m1, m2))
 options(op)
 ## gave two warnings, when an S3 generic had turned into an S4 one
 
-## raw vector assignment with NA index used to segfault
+## raw vector assignment with NA index
 x <- charToRaw("abc")
 y <- charToRaw("bbb")
 x[c(1, NA, 3)] <- x[2]
 stopifnot(identical(x, y))
+## used to segfault
+
+## Logic operations with complex
+stopifnot(TRUE & -3i, FALSE | 0+1i,
+	  TRUE && 1i, 0+0i || 1+0i)
+## was error-caught explicitly in spite of contrary documentation

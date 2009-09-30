@@ -340,6 +340,9 @@ NEW FEATURES
     o	File ~/.R/config is used in preference to ~/.Rconfig, and
 	these are now documented in 'R Installation and Administration'.
 
+    o	Logic operations with complex numbers now work, as they were always
+	documented, and as in S.
+
 
 REGULAR EXPRESSIONS
 
