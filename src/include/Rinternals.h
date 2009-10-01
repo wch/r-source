@@ -1008,6 +1008,7 @@ Rboolean Rf_isLanguage(SEXP);
 Rboolean Rf_isList(SEXP);
 Rboolean Rf_isMatrix(SEXP);
 Rboolean Rf_isNewList(SEXP);
+Rboolean Rf_isNumber(SEXP);
 Rboolean Rf_isNumeric(SEXP);
 Rboolean Rf_isPairList(SEXP);
 Rboolean Rf_isPrimitive(SEXP);
