@@ -694,14 +694,6 @@ climb   1 320.99
 + }
 Loading required package: Matrix
 Loading required package: lattice
-
-Attaching package: 'Matrix'
-
-
-	The following object(s) are masked from package:base :
-
-	 rcond 
-
 5 x 4 sparse Matrix of class "dgTMatrix"
   1 2 3 4
 1 1 . . .
