@@ -825,7 +825,7 @@ Alternatively, the installed @R{} can be run, preferably with
 library("tools")
 testInstalledBasic("both")
 testInstalledPackages("base")
-testInstallPackages("recommended")
+testInstalledPackages("recommended")
 @end example
 
 @noindent
@@ -836,7 +836,7 @@ They run slightly fewer tests than the first approach: in particular
 they do not test Internet access.
 
 It is possible to test the installed packages (but not the
-package-specific tests) by @code{testInstallPackages} even if
+package-specific tests) by @code{testInstalledPackages} even if
 @command{make install-tests} was not run.
 
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
@@ -1272,7 +1272,7 @@ preferably with @option{--vanilla}.  Then
 library("tools")
 testInstalledBasic("both")
 testInstalledPackages("base")
-testInstallPackages("recommended")
+testInstalledPackages("recommended")
 @end example
 
 @noindent
