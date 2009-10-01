@@ -1,6 +1,6 @@
 % File src/library/base/man/Comparison.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Comparison}
@@ -11,6 +11,7 @@
 \alias{>=}
 \alias{>}
 \alias{Comparison}
+\alias{collation}
 \title{Relational Operators}
 \description{
   Binary operators which allow the comparison of values in atomic vectors.
@@ -102,8 +103,9 @@ x != y
   introduction see
   \url{http://en.wikipedia.org/wiki/Collating_sequence}.  The
   \emph{Unicode Collation Algorithm}
-  (\url{http://unicode.org/reports/tr10/}) is likely to be increasing
-  influential. 
+  (\url{http://unicode.org/reports/tr10/}) is likely to be increasingly
+  influential.  Where available \R makes use of ICU
+  (\url{http://site.icu-project.org/} for collation.
 }
 \seealso{
   \code{\link{factor}} for the behaviour with factor arguments.

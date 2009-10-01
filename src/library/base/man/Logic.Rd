@@ -24,13 +24,12 @@ isTRUE(x)
 \alias{Logic}
 \alias{isTRUE}
 \description{
-  These operators act on logical vectors.
+  These operators act on logical and number-like vectors.
 }
 \arguments{
-  \item{x, y}{logical (or \dQuote{number-like}, i.e., of type
+  \item{x, y}{logical or \sQuote{number-like} vectors (i.e., of type
     \code{\link{double}} (class \code{\link{numeric}}), \code{\link{integer}},
-    %% incl. factor
-    \code{\link{complex}} or \code{\link{raw}}) vectors, or objects for
+    \code{\link{complex}} or \code{\link{raw}}), or objects for
     which methods have been written.}
 }
 \details{
@@ -52,8 +51,9 @@ isTRUE(x)
 
   Numeric and complex vectors will be coerced to logical values, with
   zero being false and all non-zero values being true.  Raw vectors are
-  handled without any coercion for \code{!}, \code{&} and \code{|}, with
-  these operators being applied bitwise (so \code{!} is the 1-complement).
+  handled without any coercion for \code{!}, \code{&}, \code{|} and
+  \code{xor}, with these operators being applied bitwise (so \code{!} is
+  the 1s-complement).
 
   The operators \code{!}, \code{&} and \code{|} are generic functions:
   methods can be written for them individually or via the
@@ -93,9 +93,6 @@ isTRUE(x)
   \code{!}, \code{&} and \code{|} are S4 generics, the latter two part
   of the \code{\link[=S4groupGeneric]{Logic}} group generic (and
   hence methods need argument names \code{e1, e2}).
-
-  Prior to \R 2.6.0 S4 methods for \code{!} needed argument name
-  \code{e1}, but now \code{x} is correct.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
