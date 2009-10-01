@@ -1,6 +1,6 @@
 % File src/library/base/man/Logic.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Logic}
@@ -27,8 +27,11 @@ isTRUE(x)
   These operators act on logical vectors.
 }
 \arguments{
-  \item{x, y}{logical vectors, or objects which can be coerced to such
-    or for which methods have been written.}
+  \item{x, y}{logical (or \dQuote{number-like}, i.e., of type
+    \code{\link{double}} (class \code{\link{numeric}}), \code{\link{integer}},
+    %% incl. factor
+    \code{\link{complex}} or \code{\link{raw}}) vectors, or objects for
+    which methods have been written.}
 }
 \details{
   \code{!} indicates logical negation (NOT).
