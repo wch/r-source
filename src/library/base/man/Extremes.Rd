@@ -61,7 +61,7 @@ pmin.int(\dots, na.rm = FALSE)
   \code{pmax.int} and \code{pmin.int} are faster internal versions only
   used when all arguments are atomic vectors and there are no classes:
   they drop all attributes.  (Note that all versions fail for raw and
-  complex vectors since these have no ordered.)
+  complex vectors since these have no ordering.)
 
   \code{max} and \code{min} are generic functions: methods can be
   defined for them individually or via the
@@ -69,16 +69,19 @@ pmin.int(\dots, na.rm = FALSE)
   work properly, the arguments \code{\dots} should be unnamed, and
   dispatch is on the first argument.
 
-  By definition the min/max of any vector containing an \code{NaN} is
-  \code{NaN}, except that the min/max of any vector containing an
+  By definition the min/max of a numeric vector containing an \code{NaN}
+  is \code{NaN}, except that the min/max of any vector containing an
   \code{NA} is \code{NA} even if it also contains an \code{NaN}.  Note
   that \code{max(NA, Inf) == NA} even though the maximum would be
   \code{Inf} whatever the missing value actually is.
-
-  The max/min of an empty character vector is a character \code{NA}.
-  (One could argue that as \code{""} is the smallest character element,
-  the maximum should be \code{""}, but there is no obvious candidate for
-  the minimum.)
+  
+  Character versions are sorted lexicographically, and this depends on
+  the collating sequence of the locale in use: the help for
+  \sQuote{\link{Comparison}} gives details.  The max/min of an empty
+  character vector is defined to be a character \code{NA}.  (One could
+  argue that as \code{""} is the smallest character element, the maximum
+  should be \code{""}, but there is no obvious candidate for the
+  minimum.)
 }
 \value{
   For \code{min} or \code{max}, a length-one vector.  For \code{pmin} or

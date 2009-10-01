@@ -91,7 +91,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   \code{[} (and also that \code{\link{order}} will work, which is not
   the case for a class based on a list).
 
-  For \code{sort.int} the sorted vector unless
+  For \code{sort.int} the value is the sorted vector unless
   \code{index.return} is true, when the result is
   a list with components named \code{x} and \code{ix} containing the
   sorted numbers and the ordering index vector.  In the latter case,
@@ -119,6 +119,8 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   \emph{Communications of the ACM} \bold{12}, 185--187.
 }
 \seealso{
+  \sQuote{\link{Comparison}} for how character strings are collated.
+  
   \code{\link{order}} for sorting on or reordering multiple variables.
 
   \code{\link{is.unsorted}}. \code{\link{rank}}.
