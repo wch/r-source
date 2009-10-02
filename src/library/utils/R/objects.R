@@ -317,7 +317,9 @@ getAnywhere <- function(x)
             gen <- paste(parts[1L:(i-1)], collapse=".")
             cl <- paste(parts[i:np], collapse=".")
             if (gen == "" || cl == "") next
-            if(!is.null(f <- getS3method(gen, cl, TRUE))) {
+            # f might be a special, not a closure, and not have an environment, so
+            # be careful below
+            if(!is.null(f <- getS3method(gen, cl, TRUE)) && !is.null(environment(f))) {    
                 ev <- topenv(environment(f), baseenv())
                 nmev <- if(isNamespace(ev)) getNamespaceName(ev) else NULL
                 objs <- c(objs, f)
