@@ -3672,6 +3672,10 @@ is displayed using
 @code{typewriter} font if possible.  Formatting, e.g.@: line breaks, is
 preserved.  
 
+Due to limitations in LaTeX as of this writing, this macro may not be
+nested within other markup macros other than @code{\dQuote} and 
+@code{\sQuote}, as errors or bad formatting may result.
+
 @item \kbd@{@var{keyboard-characters}@}
 @findex \kbd
 Indicate keyboard input, using @kbd{slanted typewriter} font if
