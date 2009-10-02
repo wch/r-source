@@ -166,24 +166,20 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 	x
     }
 
-    writePass <- function(block, tag) {
-    	of0(tag, "{")
-    	writeContent(block, tag)
-    	of1("}")
-    }
+    # The quotes were Rd.sty macros, but Latex limitations (e.g. nesting \preformatted within)
+    # mean we get better results expanding them here.
+    
+    wrappers <- list("\\dQuote" =c("``", "''"),
+    		     "\\sQuote" =c("`", "'"),
+    		     "\\cite"   =c("\\Cite{", "}"))
 
-    writeRlike <- function(block, tag) {
-    	of0(tag, "{")
+    writeWrapped <- function(block, tag) {
+    	wrapper <- wrappers[[tag]]
+    	if (is.null(wrapper)) 
+    	    wrapper <- c(paste(tag, "{", sep=""), "}")
+    	of1(wrapper[1])
     	writeContent(block, tag)
-    	of1("}")
-    }
-
-    writeVerb <- function(block, tag) {
-        ## no interpretation needed, so \var needs to be turned off
-        ## the content is presumably only tagged as \verb or COMMENT
-    	of0(tag, "{")
-    	writeContent(block, tag)
-    	of1("}")
+    	of1(wrapper[2])
     }
 
     writeURL <- function(block, tag) {
@@ -362,16 +358,16 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\env" =,
                "\\kbd"=,
                "\\option" =,
-               "\\samp" = writeVerb(block, tag),
+               "\\samp" = writeWrapped(block, tag),
                ## really verbatim
                 "\\url"= writeURL(block, tag),
                ## R-like
                "\\code"= {
                    inCode <<- TRUE
-                   writeRlike(block, tag)
+                   writeWrapped(block, tag)
                    inCode <<- FALSE
                },
-               ## latex-like
+               ## simple wrappers 
                "\\acronym" =,
                "\\bold"=,
                "\\dfn"=,
@@ -382,10 +378,10 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\pkg" =,
                "\\sQuote" =,
                "\\strong"=,
-               "\\var" =
+               "\\var" =,
+               "\\cite" =
                    if (inCodeBlock) writeContent(block, tag)
-                   else writePass(block, tag),
-               "\\cite"= writePass(block, "\\Cite"),
+                   else writeWrapped(block, tag),
                "\\preformatted"= {
                    inPre <<- TRUE
                    of1("\\begin{alltt}")
