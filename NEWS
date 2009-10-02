@@ -605,6 +605,10 @@ BUG FIXES
 
     o   Rscript would segfault if its filename argument was not
         provided.  Reported by Martin Morgan.
+        
+    o	getAnywhere (and functions that use it, including argument
+	completion in the console) did not handle special built-in
+	functions properly.  Reported by Romain Francois.
 
 
 
