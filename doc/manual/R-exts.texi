@@ -579,7 +579,7 @@ formfeed, LF and CR) should be used in code files.  Other characters are
 accepted in comments, but then the comments may not be readable in
 e.g.@: a UTF-8 locale.  Non-@acronym{ASCII} characters in object names
 will normally@footnote{This is true for OSes which implement the
-@samp{C} locale, unles lazy-loading is not used, in which case it would
+@samp{C} locale, unless lazy-loading is not used, in which case it would
 fail if loaded in a @samp{C} locale. (Windows' idea of the @samp{C}
 locale uses the WinAnsi charset.)} fail when the package is installed.
 Any byte will be allowed@footnote{It is good practice to encode them as
