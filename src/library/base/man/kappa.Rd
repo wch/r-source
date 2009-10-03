@@ -24,13 +24,14 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
 \alias{kappa.qr}
 \alias{kappa.tri}
 \arguments{
-  \item{z,x}{A matrix or a the result of \code{\link{qr}} or a fit from a class
-    inheriting from \code{"lm"}.}
-  \item{exact}{logical. Should the result be exact?}
-  \item{norm}{character string, specifying the matrix norm with respect to which
-    the condition number is to be computed.  \code{"O"}, the default,
-    means the \bold{O}ne- or 1-norm.  The (currently only) other
-    possible value is \code{"I"} for the infinity norm.}
+  \item{z,x}{A matrix or a the result of \code{\link{qr}} or a fit from
+    a class inheriting from \code{"lm"}.}
+  \item{exact}{logical.  Should the result be exact?}
+  \item{norm}{character string, specifying the matrix norm with respect
+    to which the condition number is to be computed.  For \code{rcond},
+    the default is \code{"O"}, meaning the \bold{O}ne- or 1-norm.  The
+    (currently only) other possible value is \code{"I"} for the infinity
+    norm.}
   \item{method}{character string, specifying the method to be used;
     \code{"qr"} is default for back-compatibility, mainly.}
   \item{triangular}{logical.  If true, the matrix used is just the lower
