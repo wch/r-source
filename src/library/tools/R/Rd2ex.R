@@ -100,10 +100,16 @@ Rd2ex <-
         } else if (tag == "COMMENT") {
             ## % can escape a whole line (e.g. beavers.Rd) or
             ## be trailing when we want a NL
-            ## This is not right (leaading spaces?) but it may do
+            ## This is not right (leading spaces?) but it may do
             if(attr(x, "srcref")[2L] == 1L) dropNewline <<- TRUE
         } else if (tag %in% c("\\dots", "\\ldots")) {
             of1("...")
+        } else if (tag == "\\if") {
+            if (testRdConditional("example", x, Rdfile))
+            	for(i in seq_along(x[[2]])) render(x[[2]][[i]], prefix)
+        } else if (tag == "\\out") {
+            for (i in seq_along(x))
+            	of1(x[[i]])
         } else {
             txt <- unlist(x)
             of0(prefix, remap(txt))

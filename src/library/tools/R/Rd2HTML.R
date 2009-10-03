@@ -442,6 +442,10 @@ Rd2HTML <-
                        writeContent(block[[1L]], tag)
                },
                "\\tabular" = writeTabular(block),
+               "\\if" = if (testRdConditional("html", block, Rdfile))
+               	   writeContent(block[[2L]], tag),
+               "\\out" = for (i in seq_along(block))
+		   of1(block[[i]]),
                stopRd(block, Rdfile, "Tag ", tag, " not recognized")
                )
     }

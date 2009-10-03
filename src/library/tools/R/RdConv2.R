@@ -840,3 +840,16 @@ print.checkRd <- function(x, minlevel = -Inf, ...)
     writeLines(unique(xx))
     invisible(x)
 }
+
+testRdConditional <- function(format, conditional, Rdfile) {
+    condition <- conditional[[1L]]
+    tags <- RdTags(condition)
+    if (!all(tags == "TEXT")) stopRd(conditional, Rdfile, "condition must be plain text")
+    
+    allow <- strsplit(paste(condition, collapse=""), ",")[[1L]]
+    unknown <- allow[!(allow %in% c("latex", "example", "text", "html", "TRUE", "FALSE"))]
+    if (length(unknown)) warnRd(conditional, Rdfile, "unrecognized format:", unknown)
+    
+    any(c("TRUE", format) %in% allow)
+}
+

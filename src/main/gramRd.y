@@ -788,6 +788,7 @@ static keywords[] = {
     /* These macros take two LaTeX-like arguments. */
     
     { "\\enc",     LATEXMACRO2 },
+    { "\\if",      LATEXMACRO2 },
     { "\\method",  LATEXMACRO2 },
     { "\\S3method",LATEXMACRO2 },
     { "\\S4method",LATEXMACRO2 },
@@ -820,6 +821,7 @@ static keywords[] = {
     { "\\env",     VERBMACRO },
     { "\\kbd", 	   VERBMACRO },	
     { "\\option",  VERBMACRO },
+    { "\\out",     VERBMACRO },
     { "\\preformatted", VERBMACRO },
     
     { "\\samp",    VERBMACRO },

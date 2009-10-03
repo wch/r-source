@@ -431,6 +431,9 @@ HELP & Rd FILE CHANGES
 	evaluate expressions at build, install, or render time.
 	Currently install time and render time evaluation are
 	supported.
+	
+    o	Tags \if and \out have been added to allow format-specific (or
+	more general, using \Sexpr) conditional text in man pages.
 
     o	The parse_Rd() parser has been made more tolerant of coding
 	errors in Rd files:  now all syntax errors are reported as

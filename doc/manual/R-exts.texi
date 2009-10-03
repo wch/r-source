@@ -2991,6 +2991,7 @@ between developers and/or interested useRs.
 * Insertions::                  
 * Indices::                     
 * Platform-specific sections::
+* Conditional text::
 * Dynamic pages::
 * Encoding::                    
 * Processing Rd format::        
@@ -3090,11 +3091,16 @@ versions of the Rd format.
 
 As of @R{} 2.10.0, the syntax of Rd files consists of three types of
 text input.  The most common is @LaTeX{}-like, with the backslash used
-as a prefix on markup (e.g. @code{\name}, @code{\Rdversion}), and braces
-used to indicate arguments (e.g. @code{@{load@}}, @code{@{1.1@}}.  The
-second type is @R{}-like, intended for @R{} code, but allowing some
-embedded macros.  The least common type is verbatim text, where no
-markup is processed. Each macro defines the input type for its
+as a prefix on markup (e.g. @code{\name}, @code{\Rdversion}), and
+braces used to indicate arguments (e.g. @code{@{load@}},
+@code{@{1.1@}}.  The least common type of text is verbatim text, where
+no markup is processed. The third type is @R{}-like, intended for @R{}
+code, but allowing some embedded macros.  Quoted strings within 
+@R{}-like text are handled specially: regular character escapes such as
+@code{\n} may be entered as-is.  The only markup macros recognized
+within quoted strings are the link macros which start with @code{\l}.
+
+Each macro defines the input type for its
 argument.  For example, the file initially uses @LaTeX{}-like syntax,
 and this is also used in the @code{\description} section, but the
 @code{\usage} section uses @R{}-like syntax, and the @code{\alias}
@@ -3102,13 +3108,12 @@ macro uses verbatim syntax.  Comments run from a percent symbol @code{%}
 to the end of the line in all types of text (as on the first line
 of the @code{load} example).
 
-Because backslashes, braces and percent symbols have special meaning, to
-enter them into text sometimes requires escapes using a backslash.  Thus
-a percent symbol can be entered into text using @code{%}.  In general
-balanced braces do not need to be escaped, but percent symbols always
-do.  For the complete list of macros and rules for escapes, see the
-@uref{http://developer.r- project.org/parseRd.pdf, ``Parsing Rd files''}
-document.
+Because backslashes, braces and percent symbols have special meaning,
+to enter them into text sometimes requires escapes using a backslash.
+In general balanced braces do not need to be escaped, but percent
+symbols always do.  For the complete list of macros and rules for
+escapes, see the @uref{http://developer.r- project.org/parseRd.pdf,
+``Parsing Rd files''} document.
 
 @menu
 * Documenting functions::       
@@ -3995,7 +4000,7 @@ If you want to cross reference such items from other help files via
 @code{\link}, you need to use @code{\alias} and not @code{\concept}.
 
 
-@node  Platform-specific sections, Dynamic pages, Indices, Writing R documentation files
+@node  Platform-specific sections, Conditional text, Indices, Writing R documentation files
 @section Platform-specific documentation
 @cindex Platform-specific documentation
 
@@ -4031,6 +4036,35 @@ one or more complete sections.
 If the differences between platforms are extensive or the @R{} objects
 documented are only relevant to one platform, platform-specific Rd files
 can be put in a @file{unix} or @file{windows} subdirectory.
+
+@node  Conditional text, Dynamic pages, Platform-specific sections, Writing R documentation files
+@section Conditional text
+@cindex conditionals
+@findex \if
+@findex \out
+
+Occasionally the best content for one output format is different from
+the best content for another.  For this situation, the
+@code{\if@{@var{format}@}@{@var{text}@}} markup is used.  Here
+@var{format} is a comma separated list of formats in which the
+@var{text} should be rendered.  The @var{text} may be any sequence
+of text and markup.
+
+Currently the following formats are recognized:  @code{example},
+@code{html}, @code{latex} and @code{text}.  These select output for
+the corresponding targets. (Note that @code{example} refers to
+extracted example code rather than the displayed example in some other
+format.)  Also accepted are @code{TRUE} (matching all formats) and
+@code{FALSE} (matching no formats).  These could be the output
+of the @code{\Sexpr} macro (@pxref{Dynamic pages}).
+
+The @code{\out@{@var{literal}@}} macro would usually be used within
+the @var{text} part of @code{\if@{@var{format}@}@{@var{text}@}}.  It
+causes the renderer to output the literal text exactly, with no
+attempt to escape special characters.  So for example,
+@code{\if@{html@}@{\out@{&alpha;@}@}} will output the HTML markup
+necessary to display a Greek letter alpha.
+
 
 @node Dynamic pages, Encoding, Platform-specific sections, Writing R documentation files
 @section Dynamic pages
