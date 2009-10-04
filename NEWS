@@ -465,6 +465,9 @@ HELP & Rd FILE CHANGES
     o	parse_Rd() was incorrectly handling multiple backslashes in
 	R code strings, converting 4n+3 backslashes to 2n+1 instead
 	of 2n+2.
+	
+    o   parse_Rd() now recognizes the \var tag within a quoted string
+    	in R-like text.
 
 
 COMPRESSION

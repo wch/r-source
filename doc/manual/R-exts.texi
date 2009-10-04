@@ -3085,20 +3085,21 @@ years, which can be important if a package is intended to be used with
 earlier versions of @R{}.  The @code{\Rdversion@{@}} block was
 introduced in @R{} 2.9.0 to allow help files to identify the version
 they follow: files without such a block are implicitly assumed to be in
-the current version. New files created by e.g.@: @code{prompt} in @R{}
-2.9.x.  See @ref{Back-compatibility issues} for notes on earlier
+the current version. See @ref{Back-compatibility issues} for notes on earlier
 versions of the Rd format.
 
 As of @R{} 2.10.0, the syntax of Rd files consists of three types of
 text input.  The most common is @LaTeX{}-like, with the backslash used
-as a prefix on markup (e.g. @code{\name}, @code{\Rdversion}), and
-braces used to indicate arguments (e.g. @code{@{load@}},
-@code{@{1.1@}}.  The least common type of text is verbatim text, where
+as a prefix on markup (e.g. @code{\alias}), and
+braces used to indicate arguments (e.g. @code{@{load@}}).  
+The least common type of text is verbatim text, where
 no markup is processed. The third type is @R{}-like, intended for @R{}
 code, but allowing some embedded macros.  Quoted strings within 
 @R{}-like text are handled specially: regular character escapes such as
-@code{\n} may be entered as-is.  The only markup macros recognized
-within quoted strings are the link macros which start with @code{\l}.
+@code{\n} may be entered as-is.  Only markup starting with @code{\l} (e.g.
+@code{\link}) or @code{\v} (e.g. @code{\var}) will be recognized
+within quoted strings.  The rarely used vertical tab @code{\v} must be
+entered as @code{\\v}.
 
 Each macro defines the input type for its
 argument.  For example, the file initially uses @LaTeX{}-like syntax,
@@ -3677,7 +3678,7 @@ is displayed using
 @code{typewriter} font if possible.  Formatting, e.g.@: line breaks, is
 preserved.  
 
-Due to limitations in LaTeX as of this writing, this macro may not be
+Due to limitations in @LaTeX{} as of this writing, this macro may not be
 nested within other markup macros other than @code{\dQuote} and 
 @code{\sQuote}, as errors or bad formatting may result.
 
@@ -3717,7 +3718,7 @@ Web.
 @findex \var
 Indicate a metasyntactic variable.  In some cases this will be rendered
 distinctly, e.g.@: in italic, but not in all@footnote{Currently it is
-rendered differently only in HTML conversions, and latex conversion
+rendered differently only in HTML conversions, and @LaTeX{} conversion
 outside @samp{\usage} and @samp{\examples} environments.}.  Text is @LaTeX{}-like.
 @item \env@{@var{environment_variable}@}
 @findex \env
@@ -4408,7 +4409,7 @@ converted correctly.
 @code{\code} is intended @emph{only} for @R{} code, and as such its
 argument must be syntactically valid once macros such as @code{\link}
 and @code{\var} have been substituted.  This means that quotes must
-balance.  Use @code{\verb} (only in this version) or @code{\samp} or
+balance.  Use @code{\verb} (only in @R{} 2.10.0 or later) or @code{\samp} or
 @code{\kbd} for code snippets and code in other languages.
 
 @c @item
