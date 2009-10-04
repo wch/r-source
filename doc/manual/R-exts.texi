@@ -4066,7 +4066,7 @@ attempt to escape special characters.  So for example,
 necessary to display a Greek letter alpha.
 
 
-@node Dynamic pages, Encoding, Platform-specific sections, Writing R documentation files
+@node Dynamic pages, Encoding, Conditional text, Writing R documentation files
 @section Dynamic pages
 @cindex dynamic pages
 @findex \Sexpr
