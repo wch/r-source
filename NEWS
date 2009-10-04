@@ -468,6 +468,9 @@ HELP & Rd FILE CHANGES
 	
     o   parse_Rd() now recognizes the \var tag within a quoted string
     	in R-like text.
+    	
+    o	parse_Rd() now treats the argument of \command as LaTeX-like,
+	rather than verbatim.
 
 
 COMPRESSION

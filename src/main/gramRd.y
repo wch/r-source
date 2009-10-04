@@ -760,6 +760,7 @@ static keywords[] = {
     { "\\acronym", LATEXMACRO },
     { "\\bold",    LATEXMACRO },
     { "\\cite",    LATEXMACRO },
+    { "\\command", LATEXMACRO },
     { "\\dfn",     LATEXMACRO },
     { "\\dQuote",  LATEXMACRO },
     { "\\email",   LATEXMACRO },
@@ -816,7 +817,6 @@ static keywords[] = {
     
     /* These macros take one verbatim arg and ignore everything except braces */
     
-    { "\\command", VERBMACRO },
     { "\\dontrun", VERBMACRO }, /* at least for now */    
     { "\\env",     VERBMACRO },
     { "\\kbd", 	   VERBMACRO },	
