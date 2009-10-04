@@ -3728,7 +3728,7 @@ Indicate an environment variable.
 Indicate a command-line option.
 @item \command@{@var{command_name}@}
 @findex \command
-Indicate the name of a command.
+Indicate the name of a command. Text is @LaTeX{}-like.
 @item \dfn@{@var{term}@}
 @findex \dfn
 Indicate the introductory or defining use of a term. Text is @LaTeX{}-like.
