@@ -226,7 +226,7 @@ httpd <- function(path, query, ...)
             msg <- if(nzchar(system.file(package = pkg)))
                 gettextf("No help found for package %s", mono(pkg) )
             else
-                gettextf("No package of named %s could be found", mono(pkg))
+                gettextf("No package named %s could be found", mono(pkg))
             return(error_page(msg))
         }
         ## if 'topic' is not a help doc, try it as an alias in the package
