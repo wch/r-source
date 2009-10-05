@@ -881,7 +881,7 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (LENGTH(CAR(ap)) != n)
 	    error(_("argument lengths differ"));
     }
-    ans = allocVector(INTSXP, n);
+    PROTECT(ans = allocVector(INTSXP, n));
     if (n != 0) {
 	for (i = 0; i < n; i++) INTEGER(ans)[i] = i;
 	if(narg == 1)
@@ -891,6 +891,7 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    orderVector(INTEGER(ans), n, args, nalast, decreasing, listgreater);
 	for (i = 0; i < n; i++) INTEGER(ans)[i]++;
     }
+    UNPROTECT(1);
     return ans;
 }
 
