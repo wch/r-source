@@ -168,7 +168,8 @@
     ## when setMethod()ing on chol2inv, one should *not* have to deal with
     ## arguments  'size' and 'LINPACK' :
     setGeneric("chol2inv", function(x, ...) standardGeneric("chol2inv"),
-               signature = "x", where = where)
+	       useAsDefault = function(x, ...) base::chol2inv(x, ...),
+	       signature = "x", where = where)
     setGenericImplicit("chol2inv", where, FALSE)
 
     setGeneric("rcond", function(x, norm, ...) standardGeneric("rcond"),
