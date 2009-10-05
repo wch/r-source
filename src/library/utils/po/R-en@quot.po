@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
-"PO-Revision-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
+"PO-Revision-Date: 2009-10-05 14:08\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -994,12 +994,6 @@ msgstr "‘tar’ returned non-zero exit code %d"
 
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "package ‘%s’ successfully unpacked and MD5 sums checked"
-
-msgid "malformed bundle DESCRIPTION file, no Contains field"
-msgstr "malformed bundle DESCRIPTION file, no Contains field"
-
-msgid "bundle '%s' successfully unpacked and MD5 sums checked"
-msgstr "bundle ‘%s’ successfully unpacked and MD5 sums checked"
 
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr "unable to move temporary installation ‘%s’ to ‘%s’"

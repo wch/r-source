@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:56\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2009-03-20 11:23+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -172,9 +172,6 @@ msgstr "'x' muss ein Array mit mindestens zwei Dimensionen sein"
 
 msgid "invalid 'dims'"
 msgstr "ungültige 'dims'"
-
-msgid "extra arguments ignored:"
-msgstr "Zusätliche  Argumente ignoriert:"
 
 msgid "bad handler specification"
 msgstr "schlechte handler Spezifikation"
@@ -723,6 +720,9 @@ msgstr "' nicht gefunden"
 
 msgid "all arguments must be named"
 msgstr "alle Argumente müssen Namen haben"
+
+msgid "argument 'extended' is defunct and will be removed soon"
+msgstr ""
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' muss nichtleere Zeichenkette sein"
@@ -1590,6 +1590,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
+
+#~ msgid "extra arguments ignored:"
+#~ msgstr "Zusätliche  Argumente ignoriert:"
 
 #~ msgid "numeric or complex values required in 'eigen'"
 #~ msgstr "numerische oder komplexe Werte nötig für 'eigen'"

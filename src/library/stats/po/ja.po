@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10+0100\n"
+"POT-Creation-Date: 2009-10-05 14:08+0100\n"
 "PO-Revision-Date: 2008-09-30 10:57+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -24,15 +24,15 @@ msgstr " 移動中央値のバンド幅・バンド範囲(span)が n より大�
 msgid "probabilities outside [0,1] in qansari()"
 msgstr " qansari() 中で確率が [0,1] の範囲外です "
 
-#: approx.c:110
+#: approx.c:110 approx.c:142
 msgid "approx(): invalid f value"
 msgstr " approx()：不正な f 値"
 
-#: approx.c:115
+#: approx.c:115 approx.c:145
 msgid "approx(): invalid interpolation method"
 msgstr " approx()：不正な補間法 "
 
-#: approx.c:121
+#: approx.c:121 approx.c:151
 msgid "approx(): attempted to interpolate NA values"
 msgstr " approx()：NA値を補間しようとしました "
 

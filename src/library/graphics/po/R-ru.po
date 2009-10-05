@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:40\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2009-03-28 22:24-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -33,6 +33,9 @@ msgstr "коэффициенты регресии"
 
 msgid "'a' and 'b' are overridden by 'coef'"
 msgstr "'a' и 'b' отвергнуты в пользу 'coef'"
+
+msgid "one of 'x1' and 'y1' must be given"
+msgstr ""
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x' должна быть a двумерной таблицей сопряженности"

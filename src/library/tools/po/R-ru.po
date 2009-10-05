@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2009-03-28 23:43-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -518,17 +518,11 @@ msgstr "файл '%s' не создан"
 msgid "cannot copy '%s' to '%s'"
 msgstr "не могу скопировать '%s' в '%s'"
 
-msgid "missing 'DESCRIPTION.in' for package '%s'"
-msgstr "пропущен 'DESCRIPTION.in' у пакета '%s'"
-
 msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: неправильное поле 'Depends' в 'DESCRIPTION'"
 
 msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
 msgstr "ОШИБКА: это R версии %s, а пакет '%s' требует R %s %s"
-
-msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
-msgstr "ОШИБКА: это R версии %s, а набор '%s' требует R %s %s"
 
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ОШИБКА: это R версии %s, а требуется R %s %s"
@@ -558,10 +552,6 @@ msgstr "должен быть загружен пакет"
 #, fuzzy
 msgid "No help found for package %s"
 msgstr "это нельзя использовать для пакета 'base'"
-
-#, fuzzy
-msgid "No package of named %s could be found"
-msgstr "должен быть загружен пакет"
 
 #, fuzzy
 msgid "Link %s in package %s could not be located"
@@ -604,6 +594,9 @@ msgstr "не могу прочитать индексную информацию из файла '%s'"
 
 msgid "ERROR:"
 msgstr "ОШИБКА:"
+
+msgid "this seems to be a bundle -- and they are defunct"
+msgstr ""
 
 msgid "packaged installation of"
 msgstr "пакетная установка"
@@ -654,7 +647,8 @@ msgstr "Не могу создать врЕменную"
 msgid "invalid package"
 msgstr "неправильный пакет"
 
-msgid "--pkglock applies only to a single bundle/package"
+#, fuzzy
+msgid "--pkglock applies only to a single package"
 msgstr "--pkglock применим только к одиночному пакету или связке"
 
 msgid "ERROR: no packages specified"
@@ -704,9 +698,6 @@ msgstr ""
 #, fuzzy
 msgid "no 'type' specified"
 msgstr "ОШИБКА: пакет не определен"
-
-msgid "Bundle package:"
-msgstr "Связка пакетов:"
 
 msgid "there is no package called '%s'"
 msgstr "нет пакета по имени '%s'"
@@ -898,8 +889,9 @@ msgstr "Файл 'DESCRIPTION' пропущен."
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
 msgstr "Файлы 'DESCRIPTION' и 'DESCRIPTION.in' пропущены."
 
-msgid "Bundle 'DESCRIPTION' is missing."
-msgstr "У связки пакетов отсутствует 'DESCRIPTION'."
+#, fuzzy
+msgid "invalid package layout"
+msgstr "неправильный пакет"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "файл '%s' не является правильным форматом DCF"
@@ -942,6 +934,22 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Найден вызов .Internal call в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
+
+#~ msgid "missing 'DESCRIPTION.in' for package '%s'"
+#~ msgstr "пропущен 'DESCRIPTION.in' у пакета '%s'"
+
+#~ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
+#~ msgstr "ОШИБКА: это R версии %s, а набор '%s' требует R %s %s"
+
+#, fuzzy
+#~ msgid "No package of named %s could be found"
+#~ msgstr "должен быть загружен пакет"
+
+#~ msgid "Bundle package:"
+#~ msgstr "Связка пакетов:"
+
+#~ msgid "Bundle 'DESCRIPTION' is missing."
+#~ msgstr "У связки пакетов отсутствует 'DESCRIPTION'."
 
 #~ msgid "*** 'hhc.exe' not found: not building CHM help"
 #~ msgstr "*** 'hhc.exe' не найден: не собираю CHM помощь"

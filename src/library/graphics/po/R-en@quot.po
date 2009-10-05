@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:40\n"
-"PO-Revision-Date: 2009-09-15 12:40\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
+"PO-Revision-Date: 2009-10-05 14:08\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -44,6 +44,9 @@ msgstr "regression coefficients"
 
 msgid "'a' and 'b' are overridden by 'coef'"
 msgstr "‘a’ and ‘b’ are overridden by ‘coef’"
+
+msgid "one of 'x1' and 'y1' must be given"
+msgstr "one of ‘x1’ and ‘y1’ must be given"
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "‘x’ must be a 2-d contingency table"

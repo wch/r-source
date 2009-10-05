@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10+0100\n"
+"POT-Creation-Date: 2009-10-05 14:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,15 +24,15 @@ msgstr ""
 msgid "probabilities outside [0,1] in qansari()"
 msgstr ""
 
-#: approx.c:110
+#: approx.c:110 approx.c:142
 msgid "approx(): invalid f value"
 msgstr ""
 
-#: approx.c:115
+#: approx.c:115 approx.c:145
 msgid "approx(): invalid interpolation method"
 msgstr ""
 
-#: approx.c:121
+#: approx.c:121 approx.c:151
 msgid "approx(): attempted to interpolate NA values"
 msgstr ""
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:56\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2009-03-31 13:18+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -167,9 +167,6 @@ msgstr " 'x' は少なくとも二次元の配列でなければなりません 
 
 msgid "invalid 'dims'"
 msgstr " 無効な 'dims' です "
-
-msgid "extra arguments ignored:"
-msgstr " 余計な引数は無視されました: "
 
 msgid "bad handler specification"
 msgstr " 誤ったハンドラーの指定です "
@@ -725,6 +722,9 @@ msgstr " ' が見つけられません "
 
 msgid "all arguments must be named"
 msgstr " 全ての引数は名前を持たなければなりません "
+
+msgid "argument 'extended' is defunct and will be removed soon"
+msgstr ""
 
 msgid "'pattern' must be a non-empty character string"
 msgstr " 'pattern' は空でない文字列でなければなりません "
@@ -1602,6 +1602,9 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "extra arguments ignored:"
+#~ msgstr " 余計な引数は無視されました: "
 
 #~ msgid "numeric or complex values required in 'eigen'"
 #~ msgstr " 'eigen' には数値か複素数値が必要です "

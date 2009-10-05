@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:56\n"
-"PO-Revision-Date: 2009-09-21 10:56\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
+"PO-Revision-Date: 2009-10-05 14:08\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -188,9 +188,6 @@ msgstr "‘x’ must be an array of at least two dimensions"
 
 msgid "invalid 'dims'"
 msgstr "invalid ‘dims’"
-
-msgid "extra arguments ignored:"
-msgstr "extra arguments ignored:"
 
 msgid "bad handler specification"
 msgstr "bad handler specification"
@@ -723,6 +720,9 @@ msgstr "' not found"
 
 msgid "all arguments must be named"
 msgstr "all arguments must be named"
+
+msgid "argument 'extended' is defunct and will be removed soon"
+msgstr "argument ‘extended’ is defunct and will be removed soon"
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "‘pattern’ must be a non-empty character string"

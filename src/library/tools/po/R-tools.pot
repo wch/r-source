@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -449,16 +449,10 @@ msgstr ""
 msgid "cannot copy '%s' to '%s'"
 msgstr ""
 
-msgid "missing 'DESCRIPTION.in' for package '%s'"
-msgstr ""
-
 msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
 msgstr ""
 
 msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
-msgstr ""
-
-msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
 msgstr ""
 
 msgid "ERROR: this R is version %s, required is R %s %s"
@@ -483,9 +477,6 @@ msgid "No package named %s could be found"
 msgstr ""
 
 msgid "No help found for package %s"
-msgstr ""
-
-msgid "No package of named %s could be found"
 msgstr ""
 
 msgid "Link %s in package %s could not be located"
@@ -525,6 +516,9 @@ msgid "cannot read index information in file '%s'"
 msgstr ""
 
 msgid "ERROR:"
+msgstr ""
+
+msgid "this seems to be a bundle -- and they are defunct"
 msgstr ""
 
 msgid "packaged installation of"
@@ -569,7 +563,7 @@ msgstr ""
 msgid "invalid package"
 msgstr ""
 
-msgid "--pkglock applies only to a single bundle/package"
+msgid "--pkglock applies only to a single package"
 msgstr ""
 
 msgid "ERROR: no packages specified"
@@ -612,9 +606,6 @@ msgid "exactly one Rd file must be specified"
 msgstr ""
 
 msgid "no 'type' specified"
-msgstr ""
-
-msgid "Bundle package:"
 msgstr ""
 
 msgid "there is no package called '%s'"
@@ -803,7 +794,7 @@ msgstr ""
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
 msgstr ""
 
-msgid "Bundle 'DESCRIPTION' is missing."
+msgid "invalid package layout"
 msgstr ""
 
 msgid "file '%s' is not in valid DCF format"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:56\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -177,10 +177,6 @@ msgstr "'x' deve ser um array de pelo menos duas dimensões"
 
 msgid "invalid 'dims'"
 msgstr "'dims' inválido"
-
-#, fuzzy
-msgid "extra arguments ignored:"
-msgstr "argumento 'drop' será ignorado"
 
 msgid "bad handler specification"
 msgstr "especificação de handler inválido"
@@ -748,6 +744,9 @@ msgstr "' não encontrado"
 #, fuzzy
 msgid "all arguments must be named"
 msgstr "todos os argumentos devem ter o mesmo comprimento"
+
+msgid "argument 'extended' is defunct and will be removed soon"
+msgstr ""
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' deve ser uma string de caracteres não vazia"
@@ -1645,6 +1644,10 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#, fuzzy
+#~ msgid "extra arguments ignored:"
+#~ msgstr "argumento 'drop' será ignorado"
 
 #~ msgid "numeric or complex values required in 'eigen'"
 #~ msgstr "valores numéricos ou complexos exigidos em 'eigen'"

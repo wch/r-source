@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2009-03-31 21:07+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1020,12 +1020,6 @@ msgstr " 'tar' がゼロでない終了コード %d を返しました "
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr " パッケージ '%s' は無事に開封され、MD5 サムもチェックされました "
 
-msgid "malformed bundle DESCRIPTION file, no Contains field"
-msgstr " 不備なバンドルの DESCRIPTION ファイルです、Contains 欄がありません "
-
-msgid "bundle '%s' successfully unpacked and MD5 sums checked"
-msgstr " バンドル '%s' は無事に開封され、MD5 サムもチェックされました "
-
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr " 一時的なインストール '%s' を '%s' へ移動できませんでした "
 
@@ -1095,6 +1089,13 @@ msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリで�
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "malformed bundle DESCRIPTION file, no Contains field"
+#~ msgstr ""
+#~ " 不備なバンドルの DESCRIPTION ファイルです、Contains 欄がありません "
+
+#~ msgid "bundle '%s' successfully unpacked and MD5 sums checked"
+#~ msgstr " バンドル '%s' は無事に開封され、MD5 サムもチェックされました "
 
 #~ msgid ""
 #~ "No HTML help for '%s' is available:\n"

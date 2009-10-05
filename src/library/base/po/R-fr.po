@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:56\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2009-03-29 21:29+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -175,9 +175,6 @@ msgstr "'x' doit être un tableau ayant au moins 2 dimensions"
 
 msgid "invalid 'dims'"
 msgstr "'dims' incorrect"
-
-msgid "extra arguments ignored:"
-msgstr "l'argument supplémentaire sera ignoré :"
 
 msgid "bad handler specification"
 msgstr "mauvaise définition de manipulateur (handler)"
@@ -749,6 +746,9 @@ msgstr "' non trouvée"
 
 msgid "all arguments must be named"
 msgstr "tous les arguments doivent être nommés"
+
+msgid "argument 'extended' is defunct and will be removed soon"
+msgstr ""
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' doit être une chaîne de caractères non vide"
@@ -1633,6 +1633,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "extra arguments ignored:"
+#~ msgstr "l'argument supplémentaire sera ignoré :"
 
 #~ msgid "numeric or complex values required in 'eigen'"
 #~ msgstr "valeurs numériques ou complexes nécessaires dans 'eigen'"

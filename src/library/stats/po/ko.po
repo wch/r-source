@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10+0100\n"
+"POT-Creation-Date: 2009-10-05 14:08+0100\n"
 "PO-Revision-Date: 2005-05-26 15:32+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -25,15 +25,15 @@ msgstr "이동 중앙값의 bandwidth/span가 n보다 큽니다"
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "qunsari()에서 확률이 [0,1]의 범위외입니다"
 
-#: approx.c:110
+#: approx.c:110 approx.c:142
 msgid "approx(): invalid f value"
 msgstr ""
 
-#: approx.c:115
+#: approx.c:115 approx.c:145
 msgid "approx(): invalid interpolation method"
 msgstr ""
 
-#: approx.c:121
+#: approx.c:121 approx.c:151
 msgid "approx(): attempted to interpolate NA values"
 msgstr ""
 

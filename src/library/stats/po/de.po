@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.9.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10+0100\n"
+"POT-Creation-Date: 2009-10-05 14:08+0100\n"
 "PO-Revision-Date: 2009-06-16 11:00+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -23,15 +23,15 @@ msgstr "Bandbreite/Spannweite der gleitenden Mediane größer als n"
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "Wahrscheinlichkeiten außerhalb von [0,1] in qansar()"
 
-#: approx.c:110
+#: approx.c:110 approx.c:142
 msgid "approx(): invalid f value"
 msgstr "approx(): unzulässiger f Wert"
 
-#: approx.c:115
+#: approx.c:115 approx.c:145
 msgid "approx(): invalid interpolation method"
 msgstr "approx(): ungültige Interpolationsmethode"
 
-#: approx.c:121
+#: approx.c:121 approx.c:151
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): Versuch NAs zu interpolieren"
 

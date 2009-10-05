@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -977,12 +977,6 @@ msgstr "'tar'退出码为%d"
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "程序包'%s'打开成功，MD5和检查也通过"
 
-msgid "malformed bundle DESCRIPTION file, no Contains field"
-msgstr "包袱DESCRIPTION文件格式不对，没有Contains这一域"
-
-msgid "bundle '%s' successfully unpacked and MD5 sums checked"
-msgstr "成功地打开了包袱'%s'，MD5和检查也通过"
-
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr "无法将临时安装'%s'搬到'%s'"
 
@@ -1052,6 +1046,12 @@ msgstr[0] "'lib'元素'%s'不是可写的目录"
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "malformed bundle DESCRIPTION file, no Contains field"
+#~ msgstr "包袱DESCRIPTION文件格式不对，没有Contains这一域"
+
+#~ msgid "bundle '%s' successfully unpacked and MD5 sums checked"
+#~ msgstr "成功地打开了包袱'%s'，MD5和检查也通过"
 
 #~ msgid ""
 #~ "No HTML help for '%s' is available:\n"

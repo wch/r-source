@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:56\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -171,10 +171,6 @@ msgstr "'x'必需是阵列，而且至少得有两个维度"
 
 msgid "invalid 'dims'"
 msgstr "'dims'不对"
-
-#, fuzzy
-msgid "extra arguments ignored:"
-msgstr "忽略drop变元"
 
 msgid "bad handler specification"
 msgstr "处置器柄规格不对"
@@ -713,6 +709,9 @@ msgstr "'不存在"
 
 msgid "all arguments must be named"
 msgstr "所有变元都必需有名字"
+
+msgid "argument 'extended' is defunct and will be removed soon"
+msgstr ""
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern'必需为非空字符串"
@@ -1562,6 +1561,10 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#, fuzzy
+#~ msgid "extra arguments ignored:"
+#~ msgstr "忽略drop变元"
 
 #~ msgid "numeric or complex values required in 'eigen'"
 #~ msgstr "'eigen'必需用数值或复数值"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -503,16 +503,10 @@ msgstr "il file '%s' non è stato creato"
 msgid "cannot copy '%s' to '%s'"
 msgstr "impossibile copiare '%s' su '%s'"
 
-msgid "missing 'DESCRIPTION.in' for package '%s'"
-msgstr ""
-
 msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
 msgstr ""
 
 msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
-msgstr ""
-
-msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
 msgstr ""
 
 msgid "ERROR: this R is version %s, required is R %s %s"
@@ -542,10 +536,6 @@ msgstr "il name space non deve essere caricato."
 #, fuzzy
 msgid "No help found for package %s"
 msgstr "non può essere usato per il pacchetto 'base'"
-
-#, fuzzy
-msgid "No package of named %s could be found"
-msgstr "il name space non deve essere caricato."
 
 #, fuzzy
 msgid "Link %s in package %s could not be located"
@@ -586,6 +576,9 @@ msgid "cannot read index information in file '%s'"
 msgstr "non posso leggere le informazioni dell'indice nel file '%s'"
 
 msgid "ERROR:"
+msgstr ""
+
+msgid "this seems to be a bundle -- and they are defunct"
 msgstr ""
 
 #, fuzzy
@@ -638,7 +631,7 @@ msgstr "impossibile creare directory '%s'"
 msgid "invalid package"
 msgstr ""
 
-msgid "--pkglock applies only to a single bundle/package"
+msgid "--pkglock applies only to a single package"
 msgstr ""
 
 msgid "ERROR: no packages specified"
@@ -685,9 +678,6 @@ msgid "exactly one Rd file must be specified"
 msgstr ""
 
 msgid "no 'type' specified"
-msgstr ""
-
-msgid "Bundle package:"
 msgstr ""
 
 msgid "there is no package called '%s'"
@@ -889,7 +879,7 @@ msgstr ""
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
 msgstr ""
 
-msgid "Bundle 'DESCRIPTION' is missing."
+msgid "invalid package layout"
 msgstr ""
 
 msgid "file '%s' is not in valid DCF format"
@@ -928,6 +918,10 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "No package of named %s could be found"
+#~ msgstr "il name space non deve essere caricato."
 
 #~ msgid "package '%s' has no .rda file"
 #~ msgstr "il pacchetto '%s' non ha un file .rda"

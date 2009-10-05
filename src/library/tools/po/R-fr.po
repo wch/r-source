@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2009-03-29 22:45+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -530,17 +530,11 @@ msgstr "le fichier '%s' n'a pas été créé"
 msgid "cannot copy '%s' to '%s'"
 msgstr "impossible de copier '%s' dans '%s'"
 
-msgid "missing 'DESCRIPTION.in' for package '%s'"
-msgstr "'DESCRIPTION.in' manquant pour le package '%s'"
-
 msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
 msgstr "AVIS : champ 'Depends' erroné dans 'DESCRIPTION'"
 
 msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
 msgstr "ERREUR : cette version de R est %s, le package '%s' nécessite R %s %s "
-
-msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
-msgstr "ERREUR : cette version de R est %s, le bundle '%s' nécessite R %s %s "
 
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ERREUR : cette version de R est %s, requis R %s %s "
@@ -570,10 +564,6 @@ msgstr "le package doit être chargé"
 #, fuzzy
 msgid "No help found for package %s"
 msgstr "ceci ne peut être utilisé pour le package 'base'"
-
-#, fuzzy
-msgid "No package of named %s could be found"
-msgstr "le package doit être chargé"
 
 #, fuzzy
 msgid "Link %s in package %s could not be located"
@@ -616,6 +606,9 @@ msgstr "impossible de lire l'indice de l'information dans le fichier '%s'"
 
 msgid "ERROR:"
 msgstr "ERREUR :"
+
+msgid "this seems to be a bundle -- and they are defunct"
+msgstr ""
 
 msgid "packaged installation of"
 msgstr "installation packagée de"
@@ -667,7 +660,8 @@ msgstr "impossible de créer un répertoire temporaire"
 msgid "invalid package"
 msgstr "package incorrect"
 
-msgid "--pkglock applies only to a single bundle/package"
+#, fuzzy
+msgid "--pkglock applies only to a single package"
 msgstr "--pkglock est utilisé seulement pour un seul bundle/package"
 
 msgid "ERROR: no packages specified"
@@ -717,9 +711,6 @@ msgstr ""
 #, fuzzy
 msgid "no 'type' specified"
 msgstr "ERREUR : aucun package spécifié"
-
-msgid "Bundle package:"
-msgstr "Package du bundle :"
 
 msgid "there is no package called '%s'"
 msgstr "aucun package nommé '%s' n'existe"
@@ -916,8 +907,9 @@ msgstr "Le fichier 'DESCRIPTION' est manquant."
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
 msgstr "Les fichiers 'DESCRIPTION' et 'DESCRIPTION.in' sont manquants."
 
-msgid "Bundle 'DESCRIPTION' is missing."
-msgstr "Le fichier 'DESCRIPTION' du \"bundle\" est manquant."
+#, fuzzy
+msgid "invalid package layout"
+msgstr "package incorrect"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "le fichier '%s' n'est pas d'un format DCF valide"
@@ -962,6 +954,23 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
 msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
+#~ msgid "missing 'DESCRIPTION.in' for package '%s'"
+#~ msgstr "'DESCRIPTION.in' manquant pour le package '%s'"
+
+#~ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
+#~ msgstr ""
+#~ "ERREUR : cette version de R est %s, le bundle '%s' nécessite R %s %s "
+
+#, fuzzy
+#~ msgid "No package of named %s could be found"
+#~ msgstr "le package doit être chargé"
+
+#~ msgid "Bundle package:"
+#~ msgstr "Package du bundle :"
+
+#~ msgid "Bundle 'DESCRIPTION' is missing."
+#~ msgstr "Le fichier 'DESCRIPTION' du \"bundle\" est manquant."
 
 #~ msgid "*** 'hhc.exe' not found: not building CHM help"
 #~ msgstr "*** 'hhc.exe' introuvable : l'aide CHM ne peut être générée"

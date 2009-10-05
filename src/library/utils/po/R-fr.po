@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2009-03-29 21:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1027,14 +1027,6 @@ msgstr ""
 "le package '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
 "succés"
 
-msgid "malformed bundle DESCRIPTION file, no Contains field"
-msgstr "fichier DESCRIPTION du bundle erroné, pas de champ Contains"
-
-msgid "bundle '%s' successfully unpacked and MD5 sums checked"
-msgstr ""
-"le bundle '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
-"succès"
-
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr "impossible de déplacer l'installation temporaire '%s' vers '%s'"
 
@@ -1115,6 +1107,14 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "malformed bundle DESCRIPTION file, no Contains field"
+#~ msgstr "fichier DESCRIPTION du bundle erroné, pas de champ Contains"
+
+#~ msgid "bundle '%s' successfully unpacked and MD5 sums checked"
+#~ msgstr ""
+#~ "le bundle '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
+#~ "succès"
 
 #~ msgid ""
 #~ "No HTML help for '%s' is available:\n"

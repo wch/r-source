@@ -27,10 +27,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:10+0100\n"
-"PO-Revision-Date: 2009-08-06 09:10+0100\n"
+"POT-Creation-Date: 2009-10-05 14:08+0100\n"
+"PO-Revision-Date: 2009-10-05 14:08+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -46,15 +46,15 @@ msgstr "bandwidth/span of running medians is larger than n"
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "probabilities outside [0,1] in qansari()"
 
-#: approx.c:110
+#: approx.c:110 approx.c:142
 msgid "approx(): invalid f value"
 msgstr "approx(): invalid f value"
 
-#: approx.c:115
+#: approx.c:115 approx.c:145
 msgid "approx(): invalid interpolation method"
 msgstr "approx(): invalid interpolation method"
 
-#: approx.c:121
+#: approx.c:121 approx.c:151
 msgid "approx(): attempted to interpolate NA values"
 msgstr "approx(): attempted to interpolate NA values"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -503,16 +503,10 @@ msgstr "파일 '%s'는 작성하지 않았습니다"
 msgid "cannot copy '%s' to '%s'"
 msgstr "'%s'에서 '%s'를 복사할수가 없습니다"
 
-msgid "missing 'DESCRIPTION.in' for package '%s'"
-msgstr ""
-
 msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
 msgstr ""
 
 msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
-msgstr ""
-
-msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
 msgstr ""
 
 msgid "ERROR: this R is version %s, required is R %s %s"
@@ -542,10 +536,6 @@ msgstr "name space를 적재해서는 안됩니다"
 #, fuzzy
 msgid "No help found for package %s"
 msgstr "이것은 패키지 'base'를 위해서 사용할수가 없습니다"
-
-#, fuzzy
-msgid "No package of named %s could be found"
-msgstr "name space를 적재해서는 안됩니다"
 
 #, fuzzy
 msgid "Link %s in package %s could not be located"
@@ -586,6 +576,9 @@ msgid "cannot read index information in file '%s'"
 msgstr "파일 '%s'에서 인덱스 정보를 읽을 수 있지 않습니다"
 
 msgid "ERROR:"
+msgstr ""
+
+msgid "this seems to be a bundle -- and they are defunct"
 msgstr ""
 
 #, fuzzy
@@ -638,7 +631,7 @@ msgstr "디렉토리 '%s'를 작성할 수가 없습니다"
 msgid "invalid package"
 msgstr ""
 
-msgid "--pkglock applies only to a single bundle/package"
+msgid "--pkglock applies only to a single package"
 msgstr ""
 
 msgid "ERROR: no packages specified"
@@ -685,9 +678,6 @@ msgid "exactly one Rd file must be specified"
 msgstr ""
 
 msgid "no 'type' specified"
-msgstr ""
-
-msgid "Bundle package:"
 msgstr ""
 
 msgid "there is no package called '%s'"
@@ -889,7 +879,7 @@ msgstr ""
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
 msgstr ""
 
-msgid "Bundle 'DESCRIPTION' is missing."
+msgid "invalid package layout"
 msgstr ""
 
 msgid "file '%s' is not in valid DCF format"
@@ -924,6 +914,10 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
+
+#, fuzzy
+#~ msgid "No package of named %s could be found"
+#~ msgstr "name space를 적재해서는 안됩니다"
 
 #~ msgid "package '%s' has no .rda file"
 #~ msgstr "패키지 '%s'는 .rdd 파일을 가지고 있지 않습니다"

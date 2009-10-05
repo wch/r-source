@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
-"PO-Revision-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
+"PO-Revision-Date: 2009-10-05 14:08\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -522,17 +522,11 @@ msgstr "file ‘%s’ was not created"
 msgid "cannot copy '%s' to '%s'"
 msgstr "cannot copy ‘%s’ to ‘%s’"
 
-msgid "missing 'DESCRIPTION.in' for package '%s'"
-msgstr "missing ‘DESCRIPTION.in’ for package ‘%s’"
-
 msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
 msgstr "WARNING: malformed ‘Depends’ field in ‘DESCRIPTION’"
 
 msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
 msgstr "ERROR: this R is version %s, package ‘%s’ requires R %s %s"
-
-msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
-msgstr "ERROR: this R is version %s, bundle ‘%s’ requires R %s %s"
 
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ERROR: this R is version %s, required is R %s %s"
@@ -557,9 +551,6 @@ msgstr "No package named %s could be found"
 
 msgid "No help found for package %s"
 msgstr "No help found for package %s"
-
-msgid "No package of named %s could be found"
-msgstr "No package of named %s could be found"
 
 msgid "Link %s in package %s could not be located"
 msgstr "Link %s in package %s could not be located"
@@ -599,6 +590,9 @@ msgstr "cannot read index information in file ‘%s’"
 
 msgid "ERROR:"
 msgstr "ERROR:"
+
+msgid "this seems to be a bundle -- and they are defunct"
+msgstr "this seems to be a bundle -- and they are defunct"
 
 msgid "packaged installation of"
 msgstr "packaged installation of"
@@ -650,8 +644,8 @@ msgstr "cannot create temporary directory"
 msgid "invalid package"
 msgstr "invalid package"
 
-msgid "--pkglock applies only to a single bundle/package"
-msgstr "--pkglock applies only to a single bundle/package"
+msgid "--pkglock applies only to a single package"
+msgstr "--pkglock applies only to a single package"
 
 msgid "ERROR: no packages specified"
 msgstr "ERROR: no packages specified"
@@ -698,9 +692,6 @@ msgstr "exactly one Rd file must be specified"
 
 msgid "no 'type' specified"
 msgstr "no ‘type’ specified"
-
-msgid "Bundle package:"
-msgstr "Bundle package:"
 
 msgid "there is no package called '%s'"
 msgstr "there is no package called ‘%s’"
@@ -892,8 +883,8 @@ msgstr "File ‘DESCRIPTION’ is missing."
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
 msgstr "Files ‘DESCRIPTION’ and ‘DESCRIPTION.in’ are missing."
 
-msgid "Bundle 'DESCRIPTION' is missing."
-msgstr "Bundle ‘DESCRIPTION’ is missing."
+msgid "invalid package layout"
+msgstr "invalid package layout"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "file ‘%s’ is not in valid DCF format"

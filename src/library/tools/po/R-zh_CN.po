@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -501,17 +501,11 @@ msgstr "无法产生文件'%s'"
 msgid "cannot copy '%s' to '%s'"
 msgstr "无法将'%s'拷贝到'%s'"
 
-msgid "missing 'DESCRIPTION.in' for package '%s'"
-msgstr "程序包'%s'缺少'DESCRIPTION.in'"
-
 msgid "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
 msgstr "警告：'DESCRIPTION'里'Depends'项格式不对"
 
 msgid "ERROR: this R is version %s, package '%s' requires R %s %s"
 msgstr "错误：R的版本是%s，程序包'%s'要求版本为%s %s的R"
-
-msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
-msgstr "错误：R的版本是%s，捆程序捆包'%s'要求版本为%s %s的R"
 
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "错误：R的版本是%s，需要的是版本为%s %s的R"
@@ -540,10 +534,6 @@ msgstr "必需载入程序包。"
 #, fuzzy
 msgid "No help found for package %s"
 msgstr "这个程序无法用在程辑包'base'上"
-
-#, fuzzy
-msgid "No package of named %s could be found"
-msgstr "必需载入程序包。"
 
 #, fuzzy
 msgid "Link %s in package %s could not be located"
@@ -584,6 +574,9 @@ msgid "cannot read index information in file '%s'"
 msgstr "无法从文件'%s'中读取索引信息"
 
 msgid "ERROR:"
+msgstr ""
+
+msgid "this seems to be a bundle -- and they are defunct"
 msgstr ""
 
 #, fuzzy
@@ -637,7 +630,7 @@ msgstr "无法建立目录'%s'"
 msgid "invalid package"
 msgstr "程辑包名不对."
 
-msgid "--pkglock applies only to a single bundle/package"
+msgid "--pkglock applies only to a single package"
 msgstr ""
 
 msgid "ERROR: no packages specified"
@@ -684,9 +677,6 @@ msgid "exactly one Rd file must be specified"
 msgstr ""
 
 msgid "no 'type' specified"
-msgstr ""
-
-msgid "Bundle package:"
 msgstr ""
 
 msgid "there is no package called '%s'"
@@ -880,8 +870,9 @@ msgstr "缺少'DESCRIPTION'这个文件"
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
 msgstr "缺少'DESCRIPTION'和'DESCRIPTION.in'这两个文件"
 
-msgid "Bundle 'DESCRIPTION' is missing."
-msgstr "缺少'DESCRIPTION'一捆文件"
+#, fuzzy
+msgid "invalid package layout"
+msgstr "程辑包名不对."
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "文件'%s'不含正确的DCF格式"
@@ -915,6 +906,19 @@ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "在下面的函数里遇到了有可能是全局的T或F值:"
+
+#~ msgid "missing 'DESCRIPTION.in' for package '%s'"
+#~ msgstr "程序包'%s'缺少'DESCRIPTION.in'"
+
+#~ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
+#~ msgstr "错误：R的版本是%s，捆程序捆包'%s'要求版本为%s %s的R"
+
+#, fuzzy
+#~ msgid "No package of named %s could be found"
+#~ msgstr "必需载入程序包。"
+
+#~ msgid "Bundle 'DESCRIPTION' is missing."
+#~ msgstr "缺少'DESCRIPTION'一捆文件"
 
 #~ msgid "package '%s' has no .rda file"
 #~ msgstr "程辑包'%s'里没有.rda文件"

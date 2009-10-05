@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:56\n"
+"POT-Creation-Date: 2009-10-05 14:08\n"
 "PO-Revision-Date: 2009-03-28 18:25+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -176,9 +176,6 @@ msgstr "'x' должен быть матрицей по крайней мере с двумя измерениями"
 
 msgid "invalid 'dims'"
 msgstr "неправильные 'dims'"
-
-msgid "extra arguments ignored:"
-msgstr "дополнительные аргументы проигнорированы"
 
 msgid "bad handler specification"
 msgstr "неправильное указание обработчика"
@@ -722,6 +719,9 @@ msgstr "' не найдено"
 
 msgid "all arguments must be named"
 msgstr "все аргументы должны быть именованы"
+
+msgid "argument 'extended' is defunct and will be removed soon"
+msgstr ""
 
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' должен быть непустой текстовой строкой"
@@ -1595,6 +1595,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "extra arguments ignored:"
+#~ msgstr "дополнительные аргументы проигнорированы"
 
 #~ msgid "numeric or complex values required in 'eigen'"
 #~ msgstr "'eigen' требует числовых или комплексных значений"
