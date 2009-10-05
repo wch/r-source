@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:06\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -542,10 +542,6 @@ msgid "No help found for package %s"
 msgstr "这个程序无法用在程辑包'base'上"
 
 #, fuzzy
-msgid "No package of named %s could be found"
-msgstr "必需载入程序包。"
-
-#, fuzzy
 msgid "Link %s in package %s could not be located"
 msgstr "绝不能载入名字空间."
 
@@ -915,6 +911,10 @@ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "在下面的函数里遇到了有可能是全局的T或F值:"
+
+#, fuzzy
+#~ msgid "No package of named %s could be found"
+#~ msgstr "必需载入程序包。"
 
 #~ msgid "package '%s' has no .rda file"
 #~ msgstr "程辑包'%s'里没有.rda文件"

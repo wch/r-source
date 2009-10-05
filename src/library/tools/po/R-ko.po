@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:06\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -544,10 +544,6 @@ msgid "No help found for package %s"
 msgstr "이것은 패키지 'base'를 위해서 사용할수가 없습니다"
 
 #, fuzzy
-msgid "No package of named %s could be found"
-msgstr "name space를 적재해서는 안됩니다"
-
-#, fuzzy
 msgid "Link %s in package %s could not be located"
 msgstr "name space를 적재해서는 안됩니다"
 
@@ -924,6 +920,10 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
+
+#, fuzzy
+#~ msgid "No package of named %s could be found"
+#~ msgstr "name space를 적재해서는 안됩니다"
 
 #~ msgid "package '%s' has no .rda file"
 #~ msgstr "패키지 '%s'는 .rdd 파일을 가지고 있지 않습니다"

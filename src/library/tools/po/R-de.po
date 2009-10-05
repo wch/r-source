@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:06\n"
 "PO-Revision-Date: 2009-03-26 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -555,10 +555,6 @@ msgid "No help found for package %s"
 msgstr "dies kann für Paket 'base' nicht benutzt werden"
 
 #, fuzzy
-msgid "No package of named %s could be found"
-msgstr "Paket muss geladen werden"
-
-#, fuzzy
 msgid "Link %s in package %s could not be located"
 msgstr "Namensraum darf nicht geladen werden"
 
@@ -936,6 +932,10 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
+
+#, fuzzy
+#~ msgid "No package of named %s could be found"
+#~ msgstr "Paket muss geladen werden"
 
 #~ msgid "*** 'hhc.exe' not found: not building CHM help"
 #~ msgstr "*** 'hhc.exe' nicht gefunden: CHM Hilfe wird nicht erzeugt"

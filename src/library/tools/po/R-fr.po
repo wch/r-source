@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-10-05 14:06\n"
 "PO-Revision-Date: 2009-03-29 22:45+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -572,10 +572,6 @@ msgid "No help found for package %s"
 msgstr "ceci ne peut être utilisé pour le package 'base'"
 
 #, fuzzy
-msgid "No package of named %s could be found"
-msgstr "le package doit être chargé"
-
-#, fuzzy
 msgid "Link %s in package %s could not be located"
 msgstr "l'espace de noms ne doit pas être chargé."
 
@@ -962,6 +958,10 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
 msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
+#, fuzzy
+#~ msgid "No package of named %s could be found"
+#~ msgstr "le package doit être chargé"
 
 #~ msgid "*** 'hhc.exe' not found: not building CHM help"
 #~ msgstr "*** 'hhc.exe' introuvable : l'aide CHM ne peut être générée"
