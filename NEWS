@@ -601,8 +601,8 @@ BUG FIXES
 	main effect will be see in the output from print.anova, as
 	this grouped SS-like columns in the zap.ind group.
 
-    o	R_ReplDLLinit() initializes top-level jump so that embedding
-	applications on Windows no longer crash on error.
+    o	R_ReplDLLinit() initializes the top-level jump so that some
+	embedded applications on Windows no longer crash on error.
 
     o	identical() failed to take the encoding of character strings
 	into account, so identical byte patterns are not necessarily
@@ -616,15 +616,19 @@ BUG FIXES
         ignoring all conditional relations (the symptom was usually
         spurious warnings for classes extending "array").
 
-    o   Assigning into a raw vector with an index vector containing NAs
-        could cause a segfault.  Reported by Hervé Pagès.
+    o	Trying to assign into a raw vector with an index vector
+        containing NAs could cause a segfault.  Reported by Hervé Pagès.
 
-    o   Rscript would segfault if its filename argument was not
-        provided.  Reported by Martin Morgan.
+    o	Rscript could segfault if (by user error) its filename argument
+        was missing.  Reported by Martin Morgan.
         
-    o	getAnywhere (and functions that use it, including argument
+    o	getAnywhere() (and functions that use it, including argument
 	completion in the console) did not handle special built-in
-	functions properly.  Reported by Romain Francois.
+	functions.  Reported by Romain Francois.
+
+    o	order() was missing a PROTECT() call and so could segfault when
+	called on character data under certain (rare) circumstances
+	involving marked non-native encodings.
 
 
 
