@@ -341,7 +341,14 @@ NEW FEATURES
 	these are now documented in 'R Installation and Administration'.
 
     o	Logic operations with complex numbers now work, as they were always
-	documented, and as in S.
+	documented to, and as in S.
+
+    o	arrows() and segments() allow one of x1 or y1 to be omitted to
+	simplify the specification of vertical or horizontal lines
+	(suggestion of Tim Hesterberg).
+
+    o	approxfun() is faster by avoiding repeated NA checks (diagnosis
+	and patch by Karline Soetaert & Thomas Petzoldt).
 
 
 REGULAR EXPRESSIONS

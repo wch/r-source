@@ -29,6 +29,9 @@
 
 void R_approx(double *, double *, int *, double *, int *,
 	      int *, double *, double *, double *);
+void R_approxfun(double *, double *, int *, double *, int *,
+	      int *, double *, double *, double *);
+void R_approxtest(double *, double *, int *, int *, double *);
 void band_ucv_bin(int *, int *, double *, int *, double *, double *);
 void band_bcv_bin(int *, int *, double *, int *, double *, double *);
 void band_phi4_bin(int *, int *, double *, int *, double *, double *);
