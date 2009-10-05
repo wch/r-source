@@ -67,6 +67,8 @@ static R_NativePrimitiveArgType band_phi6_bin_t[] = {INTSXP, INTSXP, REALSXP, IN
 static R_NativePrimitiveArgType band_den_bin_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, INTSXP};
 
 static R_NativePrimitiveArgType R_approx_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, REALSXP};
+static R_NativePrimitiveArgType R_approxtest_t[] = {REALSXP, REALSXP, INTSXP, INTSXP, REALSXP};
+static R_NativePrimitiveArgType R_approxfun_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, REALSXP};
 
 static R_NativePrimitiveArgType loglin_t[] = {INTSXP, INTSXP, INTSXP, INTSXP, INTSXP,
 					      REALSXP, REALSXP, INTSXP, INTSXP, REALSXP,
@@ -135,6 +137,8 @@ static const R_CMethodDef CEntries[]  = {
     {"kmeans_Lloyd", (DL_FUNC) &kmeans_Lloyd, 9},
     {"kmeans_MacQueen", (DL_FUNC) &kmeans_MacQueen, 9},
     CDEF(R_approx),
+    CDEF(R_approxfun),
+    CDEF(R_approxtest),
     CDEF(band_ucv_bin),
     CDEF(band_bcv_bin),
     CDEF(band_phi4_bin),

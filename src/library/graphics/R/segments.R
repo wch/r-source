@@ -15,5 +15,10 @@
 #  http://www.r-project.org/Licenses/
 
 segments <-
-    function(x0, y0, x1, y1, col=par("fg"), lty=par("lty"), lwd=par("lwd"), ...)
+    function(x0, y0, x1 = x0, y1 = y0, col=par("fg"), lty=par("lty"),
+             lwd=par("lwd"), ...)
+{
+    if (missing(x1) && missing(y1))
+        stop("one of 'x1' and 'y1' must be given")
     .Internal(segments(x0, y0, x1, y1, col=col, lty=lty, lwd=lwd, ...))
+}

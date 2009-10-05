@@ -114,10 +114,19 @@ approxfun <- function(x, y = NULL, method = "linear",
     force(f)
     stopifnot(length(yleft) == 1, length(yright) == 1, length(f) == 1)
     rm(o, rule, ties)
-    function(v) .C("R_approx", as.double(x), as.double(y), as.integer(n),
-		   xout = as.double(v), as.integer(length(v)),
-		   as.integer(method), as.double(yleft), as.double(yright),
-		   as.double(f), NAOK = TRUE, PACKAGE = "stats")$xout
+
+## Changed here:
+## suggestion:
+    # 1. Test input consistency once
+    .C("R_approxtest",as.double(x), as.double(y), as.integer(n),
+        as.integer(method), as.double(f), NAOK = TRUE,
+        PACKAGE = "stats")
+
+    # 2. Create and return function that does not test input validity...
+    function(v) .C("R_approxfun", as.double(x), as.double(y), as.integer(n),
+        xout = as.double(v), as.integer(length(v)), as.integer(method),
+        as.double(yleft), as.double(yright), as.double(f), NAOK = TRUE,
+        PACKAGE = "stats")$xout
 }
 
 ### This is a `variant' of  approx( method = "constant" ) :

@@ -14,8 +14,12 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-arrows <- function(x0, y0, x1, y1, length=0.25, angle=30, code=2,
-		   col=par("fg"), lty=par("lty"), lwd=par("lwd"),
-                   ...)
+arrows <-
+    function(x0, y0, x1 = x0, y1 = y0, length = 0.25, angle = 30, code = 2,
+             col = par("fg"), lty = par("lty"), lwd = par("lwd"), ...)
+{
+    if (missing(x1) && missing(y1))
+        stop("one of 'x1' and 'y1' must be given")
     .Internal(arrows(x0, y0, x1, y1, length=length, angle=angle, code=code,
                      col=col, lty=lty, lwd=lwd, ...))
+}

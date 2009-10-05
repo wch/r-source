@@ -1,6 +1,6 @@
 % File src/library/graphics/man/segments.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{segments}
@@ -10,14 +10,15 @@
   Draw line segments between pairs of points.
 }
 \usage{
-segments(x0, y0, x1, y1,
+segments(x0, y0, x1 = x0, y1 = y0,
          col = par("fg"), lty = par("lty"), lwd = par("lwd"),
          \dots)
 }
 \arguments{
   \item{x0, y0}{coordinates of points \bold{from} which to draw.}
-  \item{x1, y1}{coordinates of points \bold{to} which to draw.}
-  \item{col, lty, lwd}{usual graphical parameters as in
+  \item{x1, y1}{coordinates of points \bold{to} which to draw.  At least
+    one must be supplied.}
+  \item{col, lty, lwd}{graphical parameters as in
     \code{\link{par}}, possibly vectors.  \code{NA} values in \code{col}
     cause the segment to be omitted.}
   \item{\dots}{further graphical parameters (from \code{\link{par}}),

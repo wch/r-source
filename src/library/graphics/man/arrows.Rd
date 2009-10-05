@@ -1,19 +1,20 @@
 % File src/library/graphics/man/arrows.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{arrows}
 \title{Add Arrows to a Plot}
 \usage{
-arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
+arrows(x0, y0, x1 = x0, y1 = y0, length = 0.25, angle = 30, code = 2,
        col = par("fg"), lty = par("lty"), lwd = par("lwd"),
        \dots)
 }
 \alias{arrows}
 \arguments{
   \item{x0, y0}{coordinates of points \bold{from} which to draw.}
-  \item{x1, y1}{coordinates of points \bold{to} which to draw.}
+  \item{x1, y1}{coordinates of points \bold{to} which to draw.  At least
+    one must the supplied}
   \item{length}{length of the edges of the arrow head (in inches).}
   \item{angle}{angle from the shaft of the arrow to the edge of the
     arrow head.}
