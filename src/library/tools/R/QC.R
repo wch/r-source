@@ -3196,7 +3196,7 @@ function(package, dir, lib.loc = NULL)
     if(any(have_equals))
         db[have_equals, 1:2] <- cbind(sub("^=", "", anchor[have_equals]), "")
 
-    db <- cbind(db, bad = FALSE, suspect = FALSE, report = db[, 1L])
+    db <- cbind(db, bad = FALSE, report = db[, 1L])
     have_anchor <- nzchar(anchor <- db[, 2L])
     db[have_anchor, "report"] <-
         paste("[", db[have_anchor, 2L], "]{", db[have_anchor, 1L], "}", sep = "")
@@ -3235,7 +3235,6 @@ function(package, dir, lib.loc = NULL)
             unknown <- c(unknown, pkg)
             next
         }
-        db[this, "suspect"] <- suspect
         db[this, "bad"] <- !good & !suspect
     }
 
@@ -3265,18 +3264,14 @@ function(package, dir, lib.loc = NULL)
     ## The bad ones:
     bad <- db[, "bad"] == "TRUE"
     res1 <- split(db[bad, "report"], db[bad, 3L])
-    res2 <- if(!new_only) {
-        bad <- db[, "suspect"] == "TRUE"
-        split(db[bad, "report"], db[bad, 3L])
-    } else character()
-    structure(list(bad = res1, suspect = res2), class = "check_Rd_xrefs")
+    structure(list(bad = res1), class = "check_Rd_xrefs")
 }
 
 print.check_Rd_xrefs <-
 function(x, ...)
 {
-    if(any(sapply(x, length))) {
-        xx <- x$bad
+    xx <- x$bad
+    if(length(xx)) {
         for(i in seq_along(xx)) {
             writeLines(gettextf("Missing link(s) in documentation object '%s':",
                                 names(xx)[i]))
@@ -3284,18 +3279,7 @@ function(x, ...)
             .pretty_print(sQuote(unique(xx[[i]])))
             writeLines("")
         }
-        xx <- x$suspect
-        for(i in seq_along(xx)) {
-            writeLines(gettextf("Suspect link(s) in documentation object '%s':",
-                                names(xx)[i]))
-            .pretty_print(sQuote(unique(xx[[i]])))
-            writeLines("")
-        }
-
         msg <- strwrap(gettextf("See the information in section 'Cross-references' of the 'Writing R Extensions' manual."))
-        if(length(x$suspect))
-            msg <- c(msg, "",
-                     strwrap(gettextf("'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an alias but not as a filename -- such links will not work in R < 2.10.0, and only in HTML (not PDF) help in current versions.")))
         writeLines(c(msg, ""))
     }
     invisible(x)
