@@ -632,7 +632,7 @@ BUG FIXES
 	involving marked non-native encodings.
 
     o	prettyNum(z, drop0trailing=TRUE) did not work correctly when z was
-	complex.  Consequently,	 str(z, ...)  did neither.
+	complex.  Consequently,	 str(z, ...)  did neither.  (PR#13985)
 
 
 
