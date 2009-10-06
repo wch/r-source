@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08+0100\n"
+"POT-Creation-Date: 2009-10-06 18:19+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -288,7 +288,7 @@ msgstr "時間截記不正確"
 #: src/main/plot.c:3328 src/main/plot3d.c:1397 src/main/plot3d.c:2525
 #: src/main/plot3d.c:2529 src/main/plot3d.c:2531 src/main/seq.c:166
 #: src/main/seq.c:264 src/main/seq.c:267 src/main/sort.c:867
-#: src/main/sort.c:965 src/main/source.c:205 src/main/summary.c:978
+#: src/main/sort.c:967 src/main/source.c:205 src/main/summary.c:978
 #: src/main/sysutils.c:229 src/main/util.c:867 src/main/util.c:872
 #: src/main/util.c:879 src/main/util.c:882 src/modules/X11/devX11.c:2544
 #: src/modules/X11/devX11.c:2571 src/modules/X11/devX11.c:2576
@@ -6308,7 +6308,7 @@ msgstr "不當的變數名稱"
 msgid "only atomic vectors can be tested to be sorted"
 msgstr "只有基元向量才能被試著排序"
 
-#: src/main/sort.c:308 src/main/sort.c:871 src/main/sort.c:968
+#: src/main/sort.c:308 src/main/sort.c:871 src/main/sort.c:970
 msgid "'decreasing' must be TRUE or FALSE"
 msgstr "'increasing' 必須是 TRUE 或是 FALSE"
 
@@ -6316,7 +6316,7 @@ msgstr "'increasing' 必須是 TRUE 或是 FALSE"
 msgid "only atomic vectors can be sorted"
 msgstr "只有基元向量才能被排序"
 
-#: src/main/sort.c:313 src/main/sort.c:563 src/main/sort.c:914
+#: src/main/sort.c:313 src/main/sort.c:563 src/main/sort.c:916
 msgid "raw vectors cannot be sorted"
 msgstr "無法排序純量向量"
 
@@ -6338,15 +6338,15 @@ msgstr "引數 %d 不是向量"
 msgid "argument lengths differ"
 msgstr "引數長度不同"
 
-#: src/main/sort.c:920
+#: src/main/sort.c:922
 msgid "invalid ties.method for rank() [should never happen]"
 msgstr "rank() 的 ties.method 不正確 [這是不應該發生的]"
 
-#: src/main/sort.c:975
+#: src/main/sort.c:977
 msgid "negative value in 'x'"
 msgstr "'x' 中有負值"
 
-#: src/main/sort.c:986
+#: src/main/sort.c:988
 msgid "too large a range of values in 'x'"
 msgstr "'x' 中的值的範圍太大"
 

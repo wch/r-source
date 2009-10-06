@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08+0100\n"
-"PO-Revision-Date: 2009-10-05 14:08+0100\n"
+"POT-Creation-Date: 2009-10-06 18:19+0100\n"
+"PO-Revision-Date: 2009-10-06 18:19+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -308,7 +308,7 @@ msgstr "invalid timestamp"
 #: src/main/plot.c:3328 src/main/plot3d.c:1397 src/main/plot3d.c:2525
 #: src/main/plot3d.c:2529 src/main/plot3d.c:2531 src/main/seq.c:166
 #: src/main/seq.c:264 src/main/seq.c:267 src/main/sort.c:867
-#: src/main/sort.c:965 src/main/source.c:205 src/main/summary.c:978
+#: src/main/sort.c:967 src/main/source.c:205 src/main/summary.c:978
 #: src/main/sysutils.c:229 src/main/util.c:867 src/main/util.c:872
 #: src/main/util.c:879 src/main/util.c:882 src/modules/X11/devX11.c:2544
 #: src/modules/X11/devX11.c:2571 src/modules/X11/devX11.c:2576
@@ -6263,7 +6263,7 @@ msgstr "bad variable names"
 msgid "only atomic vectors can be tested to be sorted"
 msgstr "only atomic vectors can be tested to be sorted"
 
-#: src/main/sort.c:308 src/main/sort.c:871 src/main/sort.c:968
+#: src/main/sort.c:308 src/main/sort.c:871 src/main/sort.c:970
 msgid "'decreasing' must be TRUE or FALSE"
 msgstr "‘decreasing’ must be TRUE or FALSE"
 
@@ -6271,7 +6271,7 @@ msgstr "‘decreasing’ must be TRUE or FALSE"
 msgid "only atomic vectors can be sorted"
 msgstr "only atomic vectors can be sorted"
 
-#: src/main/sort.c:313 src/main/sort.c:563 src/main/sort.c:914
+#: src/main/sort.c:313 src/main/sort.c:563 src/main/sort.c:916
 msgid "raw vectors cannot be sorted"
 msgstr "raw vectors cannot be sorted"
 
@@ -6293,15 +6293,15 @@ msgstr "argument %d is not a vector"
 msgid "argument lengths differ"
 msgstr "argument lengths differ"
 
-#: src/main/sort.c:920
+#: src/main/sort.c:922
 msgid "invalid ties.method for rank() [should never happen]"
 msgstr "invalid ties.method for rank() [should never happen]"
 
-#: src/main/sort.c:975
+#: src/main/sort.c:977
 msgid "negative value in 'x'"
 msgstr "negative value in ‘x’"
 
-#: src/main/sort.c:986
+#: src/main/sort.c:988
 msgid "too large a range of values in 'x'"
 msgstr "too large a range of values in ‘x’"
 
