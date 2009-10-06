@@ -657,10 +657,10 @@ static void menuapropos(control m)
 
 static void menuhelpstart(control m)
 {
-/*    if (!ConsoleAcceptCmd) return;
+    if (!ConsoleAcceptCmd) return;
     consolecmd(RConsole, "help.start()");
-    show(RConsole);*/
-    internal_shellexec("doc\\html\\index.html");
+/*    show(RConsole); 
+    internal_shellexec("doc\\html\\index.html"); */
 }
 
 static void menuhelpsearchstart(control m)
@@ -712,12 +712,14 @@ void helpmenuact(HelpMenuItems hmenu)
 {
     if (ConsoleAcceptCmd) {
 	enable(hmenu->mhelp);
+	enable(hmenu->mhelpstart);
 	enable(hmenu->mhelpsearch);
 	enable(hmenu->msearchRsite);
 	enable(hmenu->mapropos);
 	enable(hmenu->mCRAN);
     } else {
 	disable(hmenu->mhelp);
+	disable(hmenu->mhelpstart);
 	disable(hmenu->mhelpsearch);
 	disable(hmenu->msearchRsite);
 	disable(hmenu->mapropos);
