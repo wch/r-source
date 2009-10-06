@@ -384,8 +384,12 @@ Rd2txt <-
     		   blankLine()
                },
                "\\tabular" = writeTabular(block),
-               "\\if" = if (testRdConditional("text", block, Rdfile))
-               	   writeContent(block[[2L]], tag),
+               "\\if"=,
+               "\\ifelse" = 
+                   if (testRdConditional("text", block, Rdfile))
+               		writeContent(block[[2L]], tag)
+               	   else if (tag == "\\ifelse")
+               	   	writeContent(block[[3L]], tag),
                "\\out" = for (i in seq_along(block))
 		   of1(block[[i]]),               
                stopRd(block, Rdfile, "Tag ", tag, " not recognized")

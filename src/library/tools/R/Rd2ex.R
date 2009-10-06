@@ -104,9 +104,11 @@ Rd2ex <-
             if(attr(x, "srcref")[2L] == 1L) dropNewline <<- TRUE
         } else if (tag %in% c("\\dots", "\\ldots")) {
             of1("...")
-        } else if (tag == "\\if") {
+        } else if (tag == "\\if" || tag == "\\ifelse") {
             if (testRdConditional("example", x, Rdfile))
             	for(i in seq_along(x[[2]])) render(x[[2]][[i]], prefix)
+            else if (tag == "\\ifelse")
+            	for(i in seq_along(x[[3]])) render(x[[3]][[i]], prefix)
         } else if (tag == "\\out") {
             for (i in seq_along(x))
             	of1(x[[i]])

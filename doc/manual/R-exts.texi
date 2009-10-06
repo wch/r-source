@@ -4042,14 +4042,17 @@ can be put in a @file{unix} or @file{windows} subdirectory.
 @section Conditional text
 @cindex conditionals
 @findex \if
+@findex \ifelse
 @findex \out
 
 Occasionally the best content for one output format is different from
 the best content for another.  For this situation, the
-@code{\if@{@var{format}@}@{@var{text}@}} markup is used.  Here
-@var{format} is a comma separated list of formats in which the
-@var{text} should be rendered.  The @var{text} may be any sequence
-of text and markup.
+@code{\if@{@var{format}@}@{@var{text}@}} or
+@code{\ifelse@{@var{format}@}@{@var{text}@}@{@var{alternate}@}} markup
+is used.  Here @var{format} is a comma separated list of formats in
+which the @var{text} should be rendered.  The @var{alternate} will be
+rendered if the format does not match.  Both @var{text} and
+@var{alternate} may be any sequence of text and markup.
 
 Currently the following formats are recognized:  @code{example},
 @code{html}, @code{latex} and @code{text}.  These select output for
@@ -4062,10 +4065,12 @@ of the @code{\Sexpr} macro (@pxref{Dynamic pages}).
 The @code{\out@{@var{literal}@}} macro would usually be used within
 the @var{text} part of @code{\if@{@var{format}@}@{@var{text}@}}.  It
 causes the renderer to output the literal text exactly, with no
-attempt to escape special characters.  So for example,
-@code{\if@{html@}@{\out@{&alpha;@}@}} will output the HTML markup
-necessary to display a Greek letter alpha.
-
+attempt to escape special characters.  For example, use
+the following to output the markup necessary to display the Greek letter in
+@LaTeX{} or HTML, and the text string @code{alpha} in other formats:
+@example
+\if@{latex@}@{\out@{\alpha@}@}\ifelse@{html@}@{\out@{&alpha;@}@}@{alpha@}
+@end example
 
 @node Dynamic pages, Encoding, Conditional text, Writing R documentation files
 @section Dynamic pages

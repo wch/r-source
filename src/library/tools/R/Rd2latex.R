@@ -434,8 +434,12 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                    writeContent(block[[1L]], tag)
                },
                "\\tabular" = writeTabular(block),
-               "\\if" = if (testRdConditional("latex", block, Rdfile))
-               	   writeContent(block[[2L]], tag),
+               "\\if" =,
+               "\\ifelse" = 
+		    if (testRdConditional("latex", block, Rdfile))
+               		writeContent(block[[2L]], tag)
+               	    else if (tag == "\\ifelse")
+               	    	writeContent(block[[3L]], tag),
                "\\out" = for (i in seq_along(block))
 		   of1(block[[i]]),              
                stopRd(block, Rdfile, "Tag ", tag, " not recognized")
