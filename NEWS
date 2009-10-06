@@ -350,6 +350,9 @@ NEW FEATURES
     o	approxfun() is faster by avoiding repeated NA checks (diagnosis
 	and patch by Karline Soetaert & Thomas Petzoldt).
 
+    o	There are the beginnings of a Nynorsk translation by Karl Ove
+	Hufthammer.
+
 
 REGULAR EXPRESSIONS
 
@@ -631,8 +634,12 @@ BUG FIXES
 	called on character data under certain (rare) circumstances
 	involving marked non-native encodings.
 
-    o	prettyNum(z, drop0trailing=TRUE) did not work correctly when z was
-	complex.  Consequently,	 str(z, ...)  did neither.  (PR#13985)
+    o	prettyNum(z, drop0trailing=TRUE) did not work correctly when z
+	was a complex vector.  Consequently, str(z, ...)  also did
+	not.  (PR#13985)
+
+    o	'make distclean' removed too many files in etc/ if
+	builddir = srcdir.
 
 
 

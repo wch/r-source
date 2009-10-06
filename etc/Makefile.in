@@ -83,10 +83,12 @@ clean:
 	  rm -f $(INSTFILES) ; \
 	fi
 ## do it this way to cope with subarchitectures
-#distclean: clean
-#	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 distclean: clean
-	@rm -rf *
+	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
+	@if test -n "$(R_ARCH)"; then \
+	  rm -rf .$(R_ARCH) ; \
+	fi
+
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)
