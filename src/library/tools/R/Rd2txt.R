@@ -166,9 +166,12 @@ Rd2txt <-
 
     encoding <- "unknown"
 
+    li <- l10n_info()
+    ## match what sQuote does, more or less
     use_fancy_quotes <-
         (.Platform$OS.type == "windows" &&
-         Sys.getlocale("LC_CTYPE") != "C") || l10n_info()[["UTF-8"]]
+         (li$codepage >= 1250 && li$codepage <= 1258) || li$codepage == 874) ||
+    li[["UTF-8"]]
     ## Should this respect the 'useFancyQuotes' option?
 
     if(use_fancy_quotes) {
@@ -391,7 +394,7 @@ Rd2txt <-
                	   else if (tag == "\\ifelse")
                	   	writeContent(block[[3L]], tag),
                "\\out" = for (i in seq_along(block))
-		   of1(block[[i]]),               
+		   of1(block[[i]]),
                stopRd(block, Rdfile, "Tag ", tag, " not recognized")
                )
     }
