@@ -438,8 +438,8 @@ HELP & Rd FILE CHANGES
 	evaluate expressions at build, install, or render time.
 	Currently install time and render time evaluation are
 	supported.
-	
-    o	Tags \if, \ifelse and \out have been added to allow 
+
+    o	Tags \if, \ifelse and \out have been added to allow
         format-specific (or more general, using \Sexpr) conditional
 	text in man pages.
 
@@ -473,10 +473,10 @@ HELP & Rd FILE CHANGES
     o	parse_Rd() was incorrectly handling multiple backslashes in
 	R code strings, converting 4n+3 backslashes to 2n+1 instead
 	of 2n+2.
-	
+
     o   parse_Rd() now recognizes the \var tag within a quoted string
     	in R-like text.
-    	
+
     o	parse_Rd() now treats the argument of \command as LaTeX-like,
 	rather than verbatim.
 
@@ -622,7 +622,7 @@ BUG FIXES
 
     o	Rscript could segfault if (by user error) its filename argument
         was missing.  Reported by Martin Morgan.
-        
+
     o	getAnywhere() (and functions that use it, including argument
 	completion in the console) did not handle special built-in
 	functions.  Reported by Romain Francois.
@@ -630,6 +630,9 @@ BUG FIXES
     o	order() was missing a PROTECT() call and so could segfault when
 	called on character data under certain (rare) circumstances
 	involving marked non-native encodings.
+
+    o	prettyNum(z, drop0trailing=TRUE) did not work correctly when z was
+	complex.  Consequently,	 str(z, ...)  did neither.
 
 
 

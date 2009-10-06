@@ -46,6 +46,7 @@ format.default <-
 					    adj, na.encode, scientific)),
 	       call=, expression=, "function"=, "(" = deparse(x),
 	       raw = as.character(x),
+           {
 	       ## else: logical, numeric, complex, .. :
 	       prettyNum(.Internal(format(x, trim, digits, nsmall, width,
 					  3L, na.encode, scientific)),
@@ -54,8 +55,9 @@ format.default <-
 			 small.interval = small.interval,
 			 decimal.mark = decimal.mark,
 			 zero.print = zero.print, drop0trailing = drop0trailing,
+			 is.cmplx = is.complex(x),
 			 preserve.width = if (trim) "individual" else "common")
-	       )
+           })
     }
 }
 
@@ -201,7 +203,8 @@ formatC <- function (x, digits = NULL, width = NULL,
 	r <- prettyNum(r, big.mark = big.mark, big.interval = big.interval,
 		       small.mark = small.mark, small.interval = small.interval,
 		       decimal.mark = decimal.mark, preserve.width = preserve.width,
-                       zero.print = zero.print, drop0trailing = drop0trailing)
+		       zero.print = zero.print, drop0trailing = drop0trailing,
+		       is.cmplx = FALSE)
 
     if (!is.null(x.atr <- attributes(x)))
 	attributes(r) <- x.atr
@@ -277,10 +280,12 @@ prettyNum <-
 	     small.mark = "", small.interval = 5L,
 	     decimal.mark = ".",
 	     preserve.width = c("common", "individual", "none"),
-	     zero.print = NULL, drop0trailing = FALSE, ...)
+	     zero.print = NULL, drop0trailing = FALSE, is.cmplx = NA, ...)
 {
-    if(!is.character(x))
+    if(!is.character(x)) {
+        is.cmplx <- is.complex(x)
 	x <- sapply(x, format, ...)
+    }
     ## be fast in trivial case (when all options have their default):
     nMark <- big.mark== "" && small.mark== "" && decimal.mark== "."
     nZero <- is.null(zero.print) && !drop0trailing
@@ -305,9 +310,34 @@ prettyNum <-
 	return(x)
 
     ## else
+    P0 <- function(...) paste(..., sep="")
+    if(is.na(is.cmplx)) { ## find if 'x' is format from a *complex*
+	ina <- is.na(x) | x == "NA"
+	is.cmplx <-
+	    if(all(ina)) FALSE
+	    else length(grep("[0-9].*[-+][0-9].*i$", x)) > 0
+    }
+    if(is.cmplx) {
+	## should be rare .. taking an easy route
+	z.sp <- strsplit(sub("([0-9] *)([-+])( *[0-9])",
+			     "\\1::\\2::\\3", x), "::", fixed=TRUE)
+	z.im <- sapply(z.sp, `[[`, 3L)
+	## drop ending 'i' (and later re-add it)
+	has.i <- grep("i$", z.im)
+	z.im[has.i] <- sub("i$", '', z.im[has.i])
+	r <- lapply(list(sapply(z.sp, `[[`, 1L), z.im),
+		    function(.)
+		    prettyNum(.,
+			      big.mark=big.mark, big.interval=big.interval,
+			      small.mark=small.mark, small.interval=small.interval,
+			      decimal.mark=decimal.mark, preserve.width=preserve.width,
+			      zero.print=zero.print, drop0trailing=drop0trailing,
+			      is.cmplx=FALSE, ...))
+	r[[2]][has.i] <- P0(r[[2]][has.i], "i")
+	return(paste(r[[1]], r[[2]], sep = sapply(z.sp, `[[`, 2L)))
+    }
     preserve.width <- match.arg(preserve.width)
     x.sp <- strsplit(x, ".", fixed=TRUE)
-    P0 <- function(...) paste(..., sep="")
     revStr <- function(cc)
 	sapply(lapply(strsplit(cc,NULL), rev), paste, collapse="")
     B. <- sapply(x.sp, `[`, 1L)	    # Before "."
