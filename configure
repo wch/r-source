@@ -1760,8 +1760,8 @@ Optional Features:
   --enable-strict-barrier provoke compile error on write barrier violation
                           [no]
   --enable-prebuilt-html  build static HTML help pages [no]
-  --enable-static[=PKGS]  build static libraries [default=no]
-  --enable-shared[=PKGS]  build shared libraries [default=yes]
+  --enable-static[=PKGS]  (libtool) build static libraries [default=no]
+  --enable-shared[=PKGS]  (libtool) build shared libraries [default=yes]
 
   --disable-largefile     omit support for large files
   --disable-nls           do not use Native Language Support
