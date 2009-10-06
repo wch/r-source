@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:05+0100\n"
+"POT-Creation-Date: 2009-10-06 18:23+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -290,7 +290,7 @@ msgstr "태그가 부적절합니다"
 #: src/main/plot.c:3328 src/main/plot3d.c:1397 src/main/plot3d.c:2525
 #: src/main/plot3d.c:2529 src/main/plot3d.c:2531 src/main/seq.c:166
 #: src/main/seq.c:264 src/main/seq.c:267 src/main/sort.c:867
-#: src/main/sort.c:965 src/main/source.c:205 src/main/summary.c:978
+#: src/main/sort.c:966 src/main/source.c:205 src/main/summary.c:978
 #: src/main/sysutils.c:229 src/main/util.c:867 src/main/util.c:872
 #: src/main/util.c:879 src/main/util.c:882 src/modules/X11/devX11.c:2544
 #: src/modules/X11/devX11.c:2571 src/modules/X11/devX11.c:2576
@@ -6411,7 +6411,7 @@ msgstr "부적절한 변수명입니다"
 msgid "only atomic vectors can be tested to be sorted"
 msgstr "늘어놓고 바꿀수 있는 검사를 하는것은 atomic벡터뿐입니다"
 
-#: src/main/sort.c:308 src/main/sort.c:871 src/main/sort.c:968
+#: src/main/sort.c:308 src/main/sort.c:871 src/main/sort.c:969
 msgid "'decreasing' must be TRUE or FALSE"
 msgstr "'decreasing'는  TRUE 또는 FALSE가 나오지 않으면 되지 않습니다"
 
@@ -6419,7 +6419,7 @@ msgstr "'decreasing'는  TRUE 또는 FALSE가 나오지 않으면 되지 않습�
 msgid "only atomic vectors can be sorted"
 msgstr "늘어놓고 바꾸고 할수 있는것은 atomic벡터뿐입니다"
 
-#: src/main/sort.c:313 src/main/sort.c:563 src/main/sort.c:914
+#: src/main/sort.c:313 src/main/sort.c:563 src/main/sort.c:915
 msgid "raw vectors cannot be sorted"
 msgstr "raw형태 오브젝트의 벡터는 소트할수가 없습니다"
 
@@ -6441,16 +6441,16 @@ msgstr "인수 %d는 벡터가 아닙니다"
 msgid "argument lengths differ"
 msgstr "인수의 길이는 다릅니다"
 
-#: src/main/sort.c:920
+#: src/main/sort.c:921
 msgid "invalid ties.method for rank() [should never happen]"
 msgstr ""
 "rank() 함수의  ties.method가 부적절합니다 (이러한 것은 발생하지 않을것입니다)"
 
-#: src/main/sort.c:975
+#: src/main/sort.c:976
 msgid "negative value in 'x'"
 msgstr "'x'에서 부의 값이 있습니다"
 
-#: src/main/sort.c:986
+#: src/main/sort.c:987
 msgid "too large a range of values in 'x'"
 msgstr "'x'에서 값 범위가 너무 큽니다"
 
