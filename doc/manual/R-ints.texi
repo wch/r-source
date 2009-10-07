@@ -1895,7 +1895,7 @@ and @file{data} subdirectories.  The database consists of two files,
 @file{@var{name}.rdb} and @file{@var{name}.rdx}.  The @file{.rdb} file
 is a concatenation of serialized objects, and the @file{.rdx} file
 contains an index.  The objects are stored in (usually) a
-@command{gip}-compressed format with a 4-byte header giving the
+@command{gzip}-compressed format with a 4-byte header giving the
 uncompressed serialized length (in XDR, that is big-endian, byte order)
 and read by a call to the primitive @code{lazyLoadDBfetch}.  (Note that
 this makes lazy-loading unsuitable for really large objects: the
@@ -1912,9 +1912,9 @@ environments are added to the database.  @code{compressed} is a logical
 indicating if the serialized objects were compressed: compression is
 always used nowadays. @R{} 2.10.0 adds the values @code{compressed = 2}
 and @code{3} for @command{bzip2} and @command{xv} compression (with the
-possibility of future expansion to other methods): this adds a fifth
-byte to the header for the type of compression, and stores serialized
-objects uncompressed if compression expands them.
+possibility of future expansion to other methods): these formats add a
+fifth byte to the header for the type of compression, and stores
+serialized objects uncompressed if compression expands them.
 
 The loader for a lazy-load database of code or data is @code{lazyLoad}
 in base, but note that there is a separate copy to load @pkg{base}
