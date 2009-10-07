@@ -241,8 +241,8 @@ Rd2HTML <-
     checkInfixMethod <- function(blocks)
     	# Is this a method which needs special formatting?
     	if ( length(blocks) == 1 && RdTags(blocks) == "TEXT" &&
-    	     blocks[[1]] %in% c("[", "[[", "$") ) {
-    	    pendingOpen <<- blocks[[1]]
+    	     blocks[[1L]] %in% c("[", "[[", "$") ) {
+    	    pendingOpen <<- blocks[[1L]]
     	    TRUE
     	} else FALSE
 
@@ -617,7 +617,7 @@ Rd2HTML <-
     	if (length(section)) {
 	    ## There may be an initial \n, so remove that
 	    s1 <- section[[1L]][1L]
-	    if (RdTags(s1) == "TEXT" && s1 == "\n") section <- section[-1]
+	    if (RdTags(s1) == "TEXT" && s1 == "\n") section <- section[-1L]
 	    writeContent(section, tag)
 	}
     	if (nzchar(para)) of0("</", para, ">\n")

@@ -18,7 +18,7 @@
 
 massageExamples <- function(pkg, files, outFile = stdout())
 {
-    if(file_test("-d", files[1]))
+    if(file_test("-d", files[1L]))
         files <- sort(Sys.glob(file.path(files, "*.R")))
 
     if(is.character(outFile)) {
@@ -93,10 +93,10 @@ Rdiff <- function(from, to, useDiff = FALSE)
         if(length(top <- grep("^(R version|R : Copyright)", txt,
                               perl = TRUE, useBytes = TRUE)) &&
            length(bot <- grep("quit R.$", txt, perl = TRUE, useBytes = TRUE)))
-            txt <- txt[-(top[1]:bot[1])]
+            txt <- txt[-(top[1L]:bot[1L])]
         ## remove BATCH footer
         nl <- length(txt)
-        if(grepl("^> proc.time()", txt[nl-2])) txt <- txt[1:(nl-3)]
+        if(grepl("^> proc.time()", txt[nl-2L])) txt <- txt[1:(nl-3L)]
         ## regularize fancy quotes.
         txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
                       perl = TRUE, useBytes = TRUE)

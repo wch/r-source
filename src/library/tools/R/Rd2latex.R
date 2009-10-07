@@ -177,9 +177,9 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     	wrapper <- wrappers[[tag]]
     	if (is.null(wrapper)) 
     	    wrapper <- c(paste(tag, "{", sep=""), "}")
-    	of1(wrapper[1])
+    	of1(wrapper[1L])
     	writeContent(block, tag)
-    	of1(wrapper[2])
+    	of1(wrapper[2L])
     }
 
     writeURL <- function(block, tag) {
@@ -450,7 +450,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         ## FIXME does no check of correct format
     	format <- table[[1L]]
     	content <- table[[2L]]
-    	if (length(format) != 1 || RdTags(format) != "TEXT")
+    	if (length(format) != 1L || RdTags(format) != "TEXT")
     	    stopRd(table, Rdfile, "\\tabular format must be simple text")
         tags <- RdTags(content)
         of0('\n\\Tabular{', format, '}{')
@@ -520,7 +520,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                        } else {
                            if (class == "default")
                                of1('## Default S3 method:\n')
-                           else if (grepl("<-\\s*value", blocks[[i+1]][[1L]])) {
+                           else if (grepl("<-\\s*value", blocks[[i+1L]][[1L]])) {
                                of1("## S3 replacement method for class '")
                                writeContent(block[[2L]], tag)
                                of1("':\n")

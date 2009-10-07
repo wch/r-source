@@ -810,7 +810,7 @@ checkRdaFiles <- function(paths)
         magic <- readBin(p, "raw", n = 5)
         res[p, "compress"] <- if(all(magic[1:2] == c(0x1f, 0x8b))) "gzip"
         else if(rawToChar(magic[1:3]) == "BZh") "bzip2"
-        else if(magic[1] == 0xFD && rawToChar(magic[2:5]) == "7zXZ") "xz"
+        else if(magic[1L] == 0xFD && rawToChar(magic[2:5]) == "7zXZ") "xz"
         else if(grepl("RD[ABX][12]", rawToChar(magic), useBytes = TRUE)) "none"
         else "unknown"
         con <- gzfile(p)

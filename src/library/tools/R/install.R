@@ -842,7 +842,7 @@
         args <- commandArgs(TRUE)
         ## it seems that splits on spaces, so try harder.
         args <- paste(args, collapse=" ")
-        args <- strsplit(args,'nextArg', fixed = TRUE)[[1]][-1]
+        args <- strsplit(args,'nextArg', fixed = TRUE)[[1L]][-1L]
     }
 
     startdir <- getwd()
@@ -876,7 +876,7 @@
     resave_data <- FALSE
 
     while(length(args)) {
-        a <- args[1]
+        a <- args[1L]
         if (a %in% c("-h", "--help")) {
             Usage()
             q("no", runLast = FALSE)
@@ -917,7 +917,7 @@
             if (WINDOWS) auto_zip <- TRUE
             else warning("--auto-zip' is for Windows only", call. = FALSE)
         } else if (a == "-l") {
-            if (length(args) >= 2) {lib <- args[2]; args <- args[-1]}
+            if (length(args) >= 2L) {lib <- args[2L]; args <- args[-1L]}
             else stop("-l option without value", call. = FALSE)
         } else if (substr(a, 1, 10) == "--library=") {
             lib <- substr(a, 11, 1000)
@@ -954,7 +954,7 @@
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
-        args <- args[-1]
+        args <- args[-1L]
     }
 
     tmpdir <- tempfile("R.INSTALL")
@@ -1012,9 +1012,9 @@
         stop("ERROR: no packages specified", call.=FALSE)
 
     if (!nzchar(lib)) {
-        lib <- if (get_user_libPaths) { ## need .libPaths()[1] *after* the site- and user-initialization
+        lib <- if (get_user_libPaths) { ## need .libPaths()[1L] *after* the site- and user-initialization
 	    system(paste(file.path(R.home("bin"), "Rscript"),
-                         "-e 'cat(.libPaths()[1])'"),
+                         "-e 'cat(.libPaths()[1L])'"),
                    intern = TRUE)
         }
         else .libPaths()[1]
@@ -1169,7 +1169,7 @@
     debug <- FALSE
 
     while(length(args)) {
-        a <- args[1]
+        a <- args[1L]
         if (a %in% c("-h", "--help")) {
             Usage()
             return(0L)
@@ -1193,7 +1193,7 @@
         } else if (a == "--preclean") {
             preclean <- TRUE
         } else if (a == "-o") {
-            if (length(args) >= 2) {shlib <- args[2]; args <- args[-1]}
+            if (length(args) >= 2L) {shlib <- args[2L]; args <- args[-1L]}
             else stop("-o option without value", call. = FALSE)
         } else if (substr(a, 1, 9) == "--output=") {
             shlib <- substr(a, 10, 1000)
@@ -1231,7 +1231,7 @@
             if (nzchar(nobj)) objs <- c(objs, nobj)
             else pkg_libs <- c(pkg_libs, a)
         }
-        args <- args[-1]
+        args <- args[-1L]
     }
 
     if (length(objs)) objs <- p0(objs, OBJ_EXT, collapse=" ")
@@ -1329,7 +1329,7 @@
         text <- gsub("@VERSION@", version, text, fixed = TRUE, useBytes = TRUE)
         ## text can have paras, and digest/DESCRIPTION does.
         ## \AsIs is per-para.
-        text <- strsplit(text, "\n\n", fixed = TRUE, useBytes = TRUE)[[1]]
+        text <- strsplit(text, "\n\n", fixed = TRUE, useBytes = TRUE)[[1L]]
         Encoding(text) <- "unknown"
         wrap <- paste("\\AsIs{", text, "}", sep = "")
         if(f %in% c("Author", "Maintainer"))
@@ -1356,7 +1356,7 @@
                      asChapter = FALSE, extraDirs = extraDirs,
                      internals = internals, silent = silent)
     else {
-        files <- strsplit(files, "[[:space:]]+")[[1]]
+        files <- strsplit(files, "[[:space:]]+")[[1L]]
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
         if (!silent) message("Converting Rd files to LaTeX ...")
@@ -1505,7 +1505,7 @@
                     domain = NA)
             next
         }
-        this <- sub("\\\\HeaderA\\{\\s*([^}]*)\\}.*", "\\1", hd[1], perl = TRUE)
+        this <- sub("\\\\HeaderA\\{\\s*([^}]*)\\}.*", "\\1", hd[1L], perl = TRUE)
         if (!internals &&
            any(grepl("\\\\keyword\\{\\s*internal\\s*\\}", lines, perl = TRUE)))
             next
@@ -1647,7 +1647,7 @@
     ## FIXME duplicated aliases warning
     outman <- file.path(outDir, "help")
     dir.create(outman, showWarnings = FALSE)
-    MM <- M[re(M[, 1]), 1:2]
+    MM <- M[re(M[, 1L]), 1:2]
     write.table(MM, file.path(outman, "AnIndex"),
                 quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
 
@@ -1663,7 +1663,7 @@
         desc <- iconv(desc, enc, "UTF-8", sub = "byte")
     }
     ## drop internal entries
-    M <- M[!M[, 4], ]
+    M <- M[!M[, 4L], ]
     if (desc["Package"] %in% c("base", "graphics", "stats", "utils")) {
         for(pass in 1:2) {
             ## we skip method aliases
@@ -1680,9 +1680,9 @@
             skip <- skip | asg
             ##N <- cbind(M$Topic, gen, c("", gen[-last]), skip)
             M <- M[!skip, ]
-            M <- M[re(M[, 1]), ]
+            M <- M[re(M[, 1L]), ]
         }
-    } else M <- M[re(M[, 1]), ]
+    } else M <- M[re(M[, 1L]), ]
     ## encode some entries.
     htmlize <- function(x, backtick)
     {
@@ -1723,15 +1723,15 @@
             cat("\n<h2><a name=\"", f, "\">-- ", f, " --</a></h2>\n\n",
                 sep = "", file = outcon)
             writeLines('<table width="100%">', outcon)
-            writeLines(paste('<tr><td width="25%"><a href="', MM[, 2], '.html">',
-                             MM$HTopic, '</a></td>\n<td>', MM[, 3],'</td></tr>',
+            writeLines(paste('<tr><td width="25%"><a href="', MM[, 2L], '.html">',
+                             MM$HTopic, '</a></td>\n<td>', MM[, 3L],'</td></tr>',
                              sep = ''), outcon)
             writeLines("</table>", outcon)
        }
     } else if (nrow(M)) {
         writeLines('<table width="100%">', outcon)
-        writeLines(paste('<tr><td width="25%"><a href="', M[, 2], '.html">',
-                         M$HTopic, '</a></td>\n<td>', M[, 3],'</td></tr>',
+        writeLines(paste('<tr><td width="25%"><a href="', M[, 2L], '.html">',
+                         M$HTopic, '</a></td>\n<td>', M[, 3L],'</td></tr>',
                          sep = ''), outcon)
         writeLines("</table>", outcon)
     } else { # no rows
@@ -1892,7 +1892,7 @@ function(name="", version = "0.0")
 {
     if (file.exists(f <- "../DESCRIPTION") ||
         file.exists(f <- "../../DESCRIPTION")) {
-        desc <- read.dcf(f)[[1]]
+        desc <- read.dcf(f)[[1L]]
         if (!is.na(f <- desc["Package"])) name <- f
         if (!is.na(f <- desc["Version"])) version <- f
     }
@@ -1988,7 +1988,7 @@ function(name="", version = "0.0")
                 sep="\n")
             q("no", runLast = FALSE)
         } else if (a == "-t") {
-            if (length(args) >= 2) {type <- args[2]; args <- args[-1]}
+            if (length(args) >= 2L) {type <- args[2L]; args <- args[-1L]}
             else stop("-t option without value", call. = FALSE)
         } else if (substr(a, 1, 7) == "--type=") {
             type <- substr(a, 8, 1000)
@@ -1997,7 +1997,7 @@ function(name="", version = "0.0")
         } else if (substr(a, 1, 10) == "--package=") {
             pkg <- substr(a, 11, 1000)
         } else if (a == "-o") {
-            if (length(args) >= 2) {out <- args[2]; args <- args[-1]}
+            if (length(args) >= 2L) {out <- args[2L]; args <- args[-1L]}
             else stop("-o option without value", call. = FALSE)
         } else if (substr(a, 1, 9) == "--output=") {
             out <- substr(a, 10, 1000)
@@ -2093,8 +2093,8 @@ function(pkgdir, outfile, title, batch = FALSE,
             if (file_test("-d", pkgdir)) {
                 subj <- paste("all in \\file{", pkgdir, "}", sep ="")
             } else {
-                files <- strsplit(files_or_dir, "[[:space:]]+")[[1]]
-                subj1 <- if (length(files) > 1) " etc." else ""
+                files <- strsplit(files_or_dir, "[[:space:]]+")[[1L]]
+                subj1 <- if (length(files) > 1L) " etc." else ""
                 subj <- paste("\\file{", pkgdir, "}", subj1, sep = "")
             }
             subj <- gsub("[_$]", "\\\\1", subj)
