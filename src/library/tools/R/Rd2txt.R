@@ -170,8 +170,8 @@ Rd2txt <-
     ## match what sQuote does, more or less
     use_fancy_quotes <-
         (.Platform$OS.type == "windows" &&
-         (li$codepage >= 1250 && li$codepage <= 1258) || li$codepage == 874) ||
-    li[["UTF-8"]]
+         ((li$codepage >= 1250 && li$codepage <= 1258) || li$codepage == 874)) ||
+        li[["UTF-8"]]
     ## Should this respect the 'useFancyQuotes' option?
 
     if(use_fancy_quotes) {
