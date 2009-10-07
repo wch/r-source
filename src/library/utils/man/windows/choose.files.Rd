@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/choose.files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{choose.files}
@@ -55,9 +55,16 @@ Filters
   in the \code{default} argument.  If a directory is not given, the
   dialog will start in the current directory the first time, and
   remember the last directory used on subsequent invocations.
+  
+  There is a buffer limit on the total length of the selected filenames:
+  it is large but this function is not intended to select thousands of
+  files, when the limit might be reached.
 }
 \seealso{
-  \code{\link{file.choose}}, \code{\link{choose.dir}}
+  \code{\link{file.choose}}, \code{\link{choose.dir}}.
+
+  \code{\link{Sys.glob}} or \code{\link{list.files}} to select multiple
+  files by pattern.
 }
 \examples{
   if (interactive()) 
