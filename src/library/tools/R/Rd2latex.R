@@ -18,7 +18,7 @@
 
 latex_canonical_encoding  <- function(encoding)
 {
-    if (encoding == "") encoding <- localeToCharset()[1]
+    if (encoding == "") encoding <- utils::localeToCharset()[1L]
     encoding <- tolower(encoding)
     encoding <- sub("iso_8859-([0-9]+)", "iso-8859-\\1", encoding)
     encoding <- sub("iso8859-([0-9]+)", "iso-8859-\\1", encoding)

@@ -54,7 +54,8 @@ get_link <- function(arg, tag, Rdfile) {
 # translation of Utils.pm function of the same name, plus "unknown"
 mime_canonical_encoding <- function(encoding)
 {
-    encoding[encoding %in% c("", "unknown")] <- localeToCharset()[1]
+    encoding[encoding %in% c("", "unknown")] <-
+        utils::localeToCharset()[1L]
     encoding <- tolower(encoding)
     encoding <- sub("iso_8859-([0-9]+)", "iso-8859-\\1", encoding)
     encoding <- sub("iso8859-([0-9]+)", "iso-8859-\\1", encoding)
