@@ -148,7 +148,7 @@ setGeneric <-
                 }
                 else {
                     message(gettextf(
-                         "Creating a generic for \"%s\" in package  \"%s\"\n    (the supplied definition differs from and overrides the implicit generic\n    in package \"%s\": %s)",
+                         "Creating a generic for \"%s\" in package \"%s\"\n    (the supplied definition differs from and overrides the implicit generic\n    in package \"%s\": %s)",
                                  name,  thisPackage, package,
                                  cmp),
                         domain = NA)
@@ -157,7 +157,7 @@ setGeneric <-
             }
             else { # generic prohibited
                 warning(gettextf(
-			"No generic version of  \"%s\" on package \"%s\" is allowed;\n   a new generic will be assigned with package \"%s\"",
+			"No generic version of \"%s\" on package \"%s\" is allowed;\n   a new generic will be assigned with package \"%s\"",
                                  name, package, thisPackage),
                         domain = NA)
                 fdef@package <- attr(fdef@generic, "package") <- thisPackage
