@@ -95,7 +95,7 @@ msgid "'pb' is not from class \"tkProgressBar\""
 msgstr "'pb'不属于\"tkProgressBar\"这一类别"
 
 msgid "'filters' must be a 2-column character matrix"
-msgstr ""
+msgstr "'filters'必需是有两个列的字符矩阵"
 
 msgid "Loading Tcl/Tk interface ..."
 msgstr "载入Tcl/Tk接口..."
@@ -108,3 +108,4 @@ msgstr "这个系统不支持Tcl/Tk"
 
 msgid "Tcl/Tk support files were not installed"
 msgstr "没有安装Tcl/Tk支持文件"
+

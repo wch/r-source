@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:06\n"
+"POT-Creation-Date: 2009-10-08 08:29\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -311,19 +311,9 @@ msgstr ""
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "파일 '%s'에서 인덱스 정보를 읽을수가 없습니다"
 
-#, fuzzy
-msgid "Suspect link(s) in documentation object '%s':"
-msgstr "파일 '%s'에서 인덱스 정보를 읽을수가 없습니다"
-
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
-msgstr ""
-
-msgid ""
-"'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an "
-"alias but not as a filename -- such links will not work in R < 2.10.0, and "
-"only in HTML (not PDF) help in current versions."
 msgstr ""
 
 msgid "found %s"
@@ -618,7 +608,7 @@ msgstr ""
 msgid "empty 'data' directory"
 msgstr ""
 
-msgid "--auto-zip' is for Windows only"
+msgid "'--auto-zip' is for Windows only"
 msgstr ""
 
 msgid "-l option without value"
@@ -920,6 +910,10 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
+
+#, fuzzy
+#~ msgid "Suspect link(s) in documentation object '%s':"
+#~ msgstr "파일 '%s'에서 인덱스 정보를 읽을수가 없습니다"
 
 #, fuzzy
 #~ msgid "No package of named %s could be found"
