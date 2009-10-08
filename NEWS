@@ -9,6 +9,12 @@
 		CHANGES IN R VERSION 2.11.0
 
 
+NEW FEATURES
+
+    o   New generic function .DollarNames() to enable class authors 
+        to customize completion after the $ extractor.
+
+
 DEPRECATED & DEFUNCT
 
     o	Bundles of packages are defunct.
@@ -20,8 +26,6 @@ DEPRECATED & DEFUNCT
 
     o	methods::trySilent() is defunct.
 
-    o   New generic function .DollarNames() to enable class authors 
-        to customize completion after the $ extractor.
 
 
 	**************************************************
