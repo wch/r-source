@@ -167,14 +167,15 @@ Rd2txt <-
     encoding <- "unknown"
 
     li <- l10n_info()
-    ## match what sQuote does, more or less
+    ## See the comment in ?Rd2txt as to why we do not attempt fancy quotes
+    ## in Windows CJK locales -- and in any case they would need more work
+    ## This covers the common single-byte locales and Thai (874)
     use_fancy_quotes <-
         (.Platform$OS.type == "windows" &&
          ((li$codepage >= 1250 && li$codepage <= 1258) || li$codepage == 874)) ||
         li[["UTF-8"]]
-    ## Should this respect the 'useFancyQuotes' option?
 
-    if(use_fancy_quotes) {
+    if(getOption("useFancyQuotes") && use_fancy_quotes) {
         ## On Windows, Unicode literals are translated to local code page
     	LSQM <- intToUtf8("0x2018") # Left single quote
     	RSQM <- intToUtf8("0x2019") # Right single quote
@@ -388,7 +389,7 @@ Rd2txt <-
                },
                "\\tabular" = writeTabular(block),
                "\\if"=,
-               "\\ifelse" = 
+               "\\ifelse" =
                    if (testRdConditional("text", block, Rdfile))
                		writeContent(block[[2L]], tag)
                	   else if (tag == "\\ifelse")

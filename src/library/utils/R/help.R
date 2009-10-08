@@ -105,6 +105,7 @@ function(topic, package = NULL, lib.loc = NULL,
         tried_all_packages <- TRUE
     }
 
+    paths <- unique(paths)
     attributes(paths) <-
         list(call = match.call(), topic = topic,
              tried_all_packages = tried_all_packages, type = help_type)

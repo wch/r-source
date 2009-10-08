@@ -153,10 +153,6 @@ httpd <- function(path, query, ...)
     	if (!length(file))
             file <- help(topic, help_type = "text", try.all.packages = TRUE)
 	if (!length(file)) {
-##             msg <- if(!is.null(pkg))
-##                 gettextf("No help found for topic '%s' in package '%s'.",
-##                         topic, pkg)
-##             else
             msg <- gettextf("No help found for topic %s in any package.",
                             mono(topic))
 	    return(list(payload = error_page(msg)))
@@ -359,7 +355,7 @@ startDynamicHelp <- function(start=TRUE)
 	for(i in 1:10) {
 	    ## Choose a random port number.  The random seed might match
 	    ## on multiple instances, so add the time as well.  But the
-	    ## time may only be accurate to seconds, so rescale it to 
+	    ## time may only be accurate to seconds, so rescale it to
 	    ## 5 minute units.
 	    u <- (runif(1) + unclass(Sys.time())/300) %% 1
             tmp <- as.integer(10000 + 22000*u) # port between 10000 and 32000
