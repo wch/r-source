@@ -15,7 +15,7 @@
 \usage{
 windowsFont(family)
 
-windowsFonts(...)	   
+windowsFonts(...)
 }
 \arguments{
   \item{family}{a character vector containing the font family name

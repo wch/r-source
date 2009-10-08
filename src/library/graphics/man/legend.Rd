@@ -132,7 +132,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
       \item{\code{w}, \code{h}}{positive numbers giving \bold{w}idth and
         \bold{h}eight of the legend's box.}
       \item{\code{left}, \code{top}}{x and y coordinates of upper left
-	corner of the box.}
+        corner of the box.}
     }
   }
   \item{text}{a list with components

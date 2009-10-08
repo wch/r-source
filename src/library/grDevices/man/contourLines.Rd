@@ -12,7 +12,7 @@
 \usage{
 contourLines(x = seq(0, 1, length.out = nrow(z)),
              y = seq(0, 1, length.out = ncol(z)),
-	     z, nlevels = 10,
+             z, nlevels = 10,
              levels = pretty(range(z, na.rm=TRUE), nlevels))
 }
 \arguments{

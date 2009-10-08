@@ -13,7 +13,7 @@
   PostScript graphics.
 }
 %% The definitive doc is the source :-)
-%% 	../../../main/devices.c  &   ../../../unix/devPS.c
+%%      ../../../main/devices.c  &   ../../../unix/devPS.c
 \usage{
 postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
            onefile, family, title, fonts, encoding, bg, fg,

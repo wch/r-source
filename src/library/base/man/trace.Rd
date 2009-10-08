@@ -223,11 +223,8 @@ untrace(sum)
 if(.isMethodsDispatchOn()) { # non-simple use needs 'methods' package
 
 f <- function(x, y) {
-    y <- pmax(y, .001)
-    if (x > 0)
-    	x ^ y
-    else
-    	stop("x must be positive")
+    y <- pmax(y, 0.001)
+    if (x > 0) x ^ y else stop("x must be positive")
 }
 
 ## arrange to call the browser on entering and exiting
