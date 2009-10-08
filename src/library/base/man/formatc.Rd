@@ -23,11 +23,12 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
           small.mark = "", small.interval = 5L,
           decimal.mark = ".",
           preserve.width = c("common", "individual", "none"),
-          zero.print = NULL, drop0trailing = FALSE, \dots)
+          zero.print = NULL, drop0trailing = FALSE, is.cmplx = NA, \dots)
 }
 \arguments{
-  \item{x}{an atomic numerical or character object, typically a vector
-    of real numbers.}
+  \item{x}{an atomic numerical or character object, possibly
+    \code{\link{complex}} only for \code{prettyNum()}, typically a
+    vector of real numbers.}
 
   \item{digits}{the desired number of digits after the decimal
     point (\code{format = "f"}) or \emph{significant} digits
@@ -102,6 +103,10 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   \item{drop0trailing}{logical, indicating if trailing zeros,
     i.e., \code{"0"} \emph{after} the decimal mark, should be removed;
     also drops \code{"e+00"} in exponential formats.}
+  \item{is.cmplx}{optional logical, to be used when \code{x} is
+    \code{"\link{character}"} to indicate if it stems from
+    \code{\link{complex}} vector or not.  By default (\code{NA}),
+    \code{x} is checked to \sQuote{look like} complex.}
   \item{\dots}{arguments passed to \code{format}.}
 }
 \value{
@@ -127,7 +132,8 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   \code{c("6.1", " 13")}.  If you want common formatting for several
   numbers, use \code{\link{format}}.
 
-  \code{prettyNum} is the utility function for prettifying \code{x}. If
+  \code{prettyNum} is the utility function for prettifying \code{x}.
+  \code{x} can be complex (or \code{\link{format}(<complex>)}, here.  If
   \code{x} is not a character, \code{format(x[i], ...)} is applied to
   each element, and then it is left unchanged if all the other arguments
   are at their defaults.  Note that \code{prettyNum(x)} may behave
@@ -187,6 +193,20 @@ cbind(ff <- format(1.2345 + 10^(0:5), width = 11, big.mark = "'"))
 ## individual formatting to common width:
 fc <- formatC(1.234 + 10^(0:8), format="fg", width=11, big.mark = "'")
 cbind(fc)
+
+## complex numbers:
+r <- 10.0000001; rv <- (r/10)^(1:10)
+(zv <- (rv + 1i*rv))
+op <- options(digits=7) ## (system default)
+(pnv <- prettyNum(zv))
+stopifnot(pnv == "1+1i", pnv == format(zv),
+          pnv == prettyNum(zv, drop0trailing=TRUE))
+## more digits change the picture:
+options(digits=8)
+head(fv <- format(zv), 3)
+prettyNum(fv)
+prettyNum(fv, drop0trailing=TRUE) # a bit nicer
+options(op)
 }
 \keyword{character}
 \keyword{print}
