@@ -65,10 +65,11 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	## save current RNG state:
 	if((exists(".Random.seed", envir = .GlobalEnv))) {
 	    oldSeed <- get(".Random.seed", envir = .GlobalEnv)
-	    on.exit(assign(".Random.seed", oldSeed, envir = .GlobalEnv))
+	    on.exit(assign(".Random.seed", oldSeed, envir = .GlobalEnv),
+                    add = TRUE)
 	} else {
 	    oldRNG <- RNGkind()
-	    on.exit(RNGkind(oldRNG[1L], oldRNG[2L]))
+	    on.exit(RNGkind(oldRNG[1L], oldRNG[2L]), add = TRUE)
 	}
 	## set RNG
 	if(is.logical(setRNG)) { # i.e. == TRUE: use the same as R CMD check
