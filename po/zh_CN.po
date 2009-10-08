@@ -2,12 +2,12 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2006.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-06 18:19+0100\n"
+"POT-Creation-Date: 2009-10-08 08:36+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -87,24 +87,24 @@ msgid "problem in displaying '%s'"
 msgstr "在显示'%s'时出了问题"
 
 #: src/gnuwin32/extra.c:154
-#, fuzzy, c-format
+#, c-format
 msgid "'%ls' not found"
-msgstr "找不到'%s'"
+msgstr "找不到'%ls'"
 
 #: src/gnuwin32/extra.c:156
-#, fuzzy, c-format
+#, c-format
 msgid "file association for '%ls' not available or invalid"
-msgstr "无法同'%s'进行文件关联"
+msgstr "无法同'%ls'文件关联"
 
 #: src/gnuwin32/extra.c:159
-#, fuzzy, c-format
+#, c-format
 msgid "access to '%ls' denied"
-msgstr "不能存取'%s'"
+msgstr "不能存取'%ls'"
 
 #: src/gnuwin32/extra.c:160
-#, fuzzy, c-format
+#, c-format
 msgid "problem in displaying '%ls'"
-msgstr "在显示'%s'时出了问题"
+msgstr "在显示'%ls'时出了问题"
 
 #: src/gnuwin32/extra.c:171 src/gnuwin32/extra.c:202 src/gnuwin32/extra.c:227
 #: src/gnuwin32/extra.c:230 src/gnuwin32/extra.c:276 src/gnuwin32/extra.c:313
@@ -362,19 +362,19 @@ msgid "'text' must be a character string"
 msgstr "'text'必需为字符串"
 
 #: src/gnuwin32/extra.c:1406
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be length 1"
-msgstr "'which'的长度必需为一"
+msgstr "'%s'的长度必需为一"
 
 #: src/gnuwin32/extra.c:1522
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be a list"
-msgstr "'dimnames'必需是串列"
+msgstr "'%s'必需是串列"
 
 #: src/gnuwin32/extra.c:1526
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' element %d is not a window handle"
-msgstr "'%s'调用不对"
+msgstr "'%s'的%d元素不是窗户环柄"
 
 #: src/gnuwin32/extra.c:1558 src/gnuwin32/extra.c:1560
 #: src/gnuwin32/extra.c:1583 src/gnuwin32/extra.c:1585
@@ -395,9 +395,9 @@ msgid "bad device"
 msgstr "设备有错"
 
 #: src/gnuwin32/extra.c:1957
-#, fuzzy, c-format
+#, c-format
 msgid "Registry key '%ls' not found"
-msgstr "找不到寄存器键'%s'"
+msgstr "找不到寄存器键'%ls'"
 
 #: src/gnuwin32/extra.c:2021 src/gnuwin32/extra.c:2029
 msgid "invalid input in Rmbstowcs"
@@ -796,7 +796,7 @@ msgstr "多字节格式字符串不对"
 #: src/main/grep.c:1263 src/main/grep.c:1661
 #, fuzzy, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
-msgstr "条件的长度大于一，因此只能用其第一元素"
+msgstr "变数的长度大于一，因此只能用其第一元素"
 
 #: src/main/agrep.c:96 src/main/grep.c:66
 #, c-format
@@ -955,9 +955,8 @@ msgid "a matrix-like object is required as argument to 'row/col'"
 msgstr "'row/col'必需用矩阵目标对象作变元"
 
 #: src/main/array.c:605
-#, fuzzy
 msgid "requires numeric/complex matrix/vector arguments"
-msgstr "需要数值矩阵/矢量变元"
+msgstr "需要数值/复数矩阵/矢量变元"
 
 #: src/main/array.c:685 src/main/array.c:689 src/main/array.c:693
 msgid "non-conformable arguments"
@@ -1090,11 +1089,11 @@ msgstr "不能有零长度的大小矢量"
 
 #: src/main/attrib.c:1026
 msgid "the dims contain missing values"
-msgstr ""
+msgstr "dims不能包含缺少值"
 
 #: src/main/attrib.c:1028
 msgid "the dims contain negative values"
-msgstr ""
+msgstr "dims不能包含负值级"
 
 #: src/main/attrib.c:1032
 #, c-format
@@ -1103,7 +1102,7 @@ msgstr "dims [product %d]与对象长度[%d]不匹配"
 
 #: src/main/attrib.c:1092
 msgid "duplicated levels will not be allowed in factors anymore"
-msgstr ""
+msgstr "因子里不能有重复"
 
 #: src/main/attrib.c:1119
 msgid "attributes must be a list or NULL"
@@ -1303,7 +1302,7 @@ msgid "vector: zero-length 'type' argument"
 msgstr "矢量: 'type'变元的长度为零"
 
 #: src/main/builtin.c:708
-#, fuzzy, c-format
+#, c-format
 msgid "vector: cannot make a vector of mode '%s'."
 msgstr "矢量: 无法建立状态为\"%s\"的矢量."
 
@@ -1439,9 +1438,9 @@ msgid "out-of-range values treated as 0 in coercion to raw"
 msgstr "在强制改变成原始值时，任何溢位值当作零来处理"
 
 #: src/main/coerce.c:406
-#, fuzzy, c-format
+#, c-format
 msgid "invalid data of mode '%s' (too short)"
-msgstr "状态为\"%s\"的数据有错(太短了)"
+msgstr "数据状态为\"%s\"不对(太短了)"
 
 #: src/main/coerce.c:934
 #, c-format
@@ -1455,16 +1454,15 @@ msgstr "(串列)对象不能强制改变成'%s'种类"
 
 #: src/main/coerce.c:1074 src/main/coerce.c:1372
 msgid "no method for coercing this S4 class to a vector"
-msgstr ""
+msgstr "没有可用来把这个S4类别强迫改为矢量的方法"
 
 #: src/main/coerce.c:1133
 msgid "environments cannot be coerced to other types"
 msgstr "环境不能被强制改变成其他种类"
 
 #: src/main/coerce.c:1276
-#, fuzzy
 msgid "attempting to coerce non-factor"
-msgstr "不能把非矢量变大"
+msgstr "不能强迫改变非因子"
 
 #: src/main/coerce.c:1420
 msgid "list argument expected"
@@ -1512,9 +1510,8 @@ msgid "'what' must be a character string or a function"
 msgstr "'what'必需是字符串或函数"
 
 #: src/main/coerce.c:2196
-#, fuzzy
 msgid "'args' must be a list"
-msgstr "'dimnames'必需是串列"
+msgstr "'args'必需是串列"
 
 #: src/main/coerce.c:2199
 msgid "'envir' must be an environment"
@@ -1526,21 +1523,21 @@ msgstr "环境设定有错"
 
 #: src/main/coerce.c:2415
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
-msgstr ""
+msgstr "把class(x)设成NULL；其结果不再是S4目标对象"
 
 #: src/main/coerce.c:2418
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
 "longer be an S4 object"
-msgstr ""
+msgstr "把class(x)设成多结字符串(\"%s\", \"%s\", ...); 其结果不再是S4目标对象"
 
 #: src/main/coerce.c:2420
 #, c-format
 msgid ""
-"Setting class(x) to \"%s\" sets attribut to NULL;   result will no longer be "
+"Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
 "an S4 object"
-msgstr ""
+msgstr "把class(x)设成\"%s\"集空属性; 其结果不再是S4目标对象"
 
 #: src/main/coerce.c:2450
 msgid "invalid replacement object to be a class string"
@@ -1852,7 +1849,7 @@ msgstr "文件'%s'看起来不象是bzip2类"
 #: src/main/connections.c:1336
 #, c-format
 msgid "initializing bzip2 compression for file '%s' failed"
-msgstr ""
+msgstr "在开始给'%s'文件进行bzip2压缩时出现了错误"
 
 #: src/main/connections.c:1405 src/main/connections.c:1409
 #: src/main/connections.c:1415 src/main/connections.c:1432
@@ -1862,23 +1859,22 @@ msgstr "分配bz文件链结失败"
 #: src/main/connections.c:1477 src/main/connections.c:5428
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
-msgstr ""
+msgstr "无法为lzma译码器进行初始化，错误是%d"
 
 #: src/main/connections.c:1493
 #, c-format
 msgid "cannot initialize lzma encoder, error %d"
-msgstr ""
+msgstr "无法为lzma编码器进行初始化，错误是%d "
 
 #: src/main/connections.c:1622 src/main/connections.c:1626
 #: src/main/connections.c:1632 src/main/connections.c:1650
-#, fuzzy
 msgid "allocation of xzfile connection failed"
-msgstr "分配gz文件链结失败"
+msgstr "分配xzfile文件链结失败"
 
 #: src/main/connections.c:1709
 #, c-format
 msgid "this is a %s-compressed file which this build of R does not support"
-msgstr ""
+msgstr "这一版本的R不支持%s-压缩文件"
 
 #: src/main/connections.c:1800 src/modules/X11/devX11.c:3182
 msgid "memory allocation to copy clipboard failed"
@@ -2214,7 +2210,7 @@ msgstr "非插坐链结"
 
 #: src/main/connections.c:5375
 msgid "unknown compression, assuming none"
-msgstr ""
+msgstr "不知道这种压缩格式，因此假设没有压缩"
 
 #: src/main/context.c:125
 msgid ""
@@ -2250,23 +2246,20 @@ msgid "no function to restart"
 msgstr "没有重新开始的功能"
 
 #: src/main/context.c:516
-#, fuzzy
 msgid "number of contexts must be positive"
-msgstr "'maxiter'必需是正数"
+msgstr "上下文数目必需是正数"
 
 #: src/main/context.c:529
 msgid "no browser context to query"
-msgstr ""
+msgstr "询问缺乏浏览器上下文"
 
 #: src/main/context.c:547
-#, fuzzy
 msgid "not that many calls to browser are active"
-msgstr "堆叠上没有这么多的环境框"
+msgstr "没有么多浏览器得指令"
 
 #: src/main/context.c:561
-#, fuzzy
 msgid "not that many functions on the call stack"
-msgstr "堆叠上没有这么多的环境框"
+msgstr "堆叠上没有这么多函数"
 
 #: src/main/context.c:646
 msgid "internal error in 'do_sys'"
@@ -2443,9 +2436,9 @@ msgid "only the first element is used as variable name"
 msgstr "只用了第一个元素作为变数名"
 
 #: src/main/deriv.c:648
-#, fuzzy, c-format
+#, c-format
 msgid "invalid expression in '%s'"
-msgstr "\"%s\"的表达式不对"
+msgstr "'%s'的表达式不对"
 
 #: src/main/deriv.c:931 src/main/model.c:1322
 msgid "invalid variable names"
@@ -2641,14 +2634,14 @@ msgid "mode '%s' is not supported in call_R"
 msgstr "call_R不支持'%s'状态"
 
 #: src/main/dounzip.c:109
-#, fuzzy, c-format
+#, c-format
 msgid " not overwriting file '%s"
-msgstr "无法打开文件'%s'"
+msgstr "无法覆盖'%s'文件"
 
 #: src/main/dounzip.c:188
-#, fuzzy, c-format
+#, c-format
 msgid "zip file '%s' cannot be opened"
-msgstr "无法载入lapack 例行程序s"
+msgstr "无法打开'%s'文件"
 
 #: src/main/dounzip.c:240
 msgid "invalid zip name argument"
@@ -2918,9 +2911,9 @@ msgid "cannot remove variables from this database"
 msgstr "无法从这个数据库中删除变数"
 
 #: src/main/envir.c:1719
-#, fuzzy, c-format
+#, c-format
 msgid "object '%s' of mode '%s' was not found"
-msgstr "没有状态为\"%2$s\"这样的变数\"%1$s\""
+msgstr "没有状态为\"%2$s\"的\"%1$s\"目标对象"
 
 #: src/main/envir.c:1786
 #, c-format
@@ -2942,7 +2935,7 @@ msgstr "’missing'的用法不对"
 
 #: src/main/envir.c:1969
 msgid "'missing' can only be used for arguments"
-msgstr "missing只能用于这些变元"
+msgstr "'missing'只能用于这些变元"
 
 #: src/main/envir.c:2050
 msgid "'pos' must be an integer"
@@ -2986,7 +2979,6 @@ msgid "using 'as.environment(NULL)' is defunct"
 msgstr "'as.environment(NULL)'不再有用"
 
 #: src/main/envir.c:2771
-#, fuzzy
 msgid "S4 object does not extend class \"environment\""
 msgstr "替换对象不是环境"
 
@@ -3106,10 +3098,9 @@ msgid "Lost warning messages\n"
 msgstr "警告信息丢失\n"
 
 #: src/main/errors.c:453
-#, fuzzy
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
-msgstr[0] "警告信息丢失\n"
+msgstr[0] "警告信息：\n"
 
 #: src/main/errors.c:508
 #, c-format
@@ -3277,7 +3268,7 @@ msgstr "不适用于非函数"
 #: src/main/eval.c:535
 #, c-format
 msgid "%s at %s#%d: "
-msgstr ""
+msgstr "%s在%s#%d: "
 
 #: src/main/eval.c:837
 #, c-format
@@ -3700,9 +3691,9 @@ msgid "'\\x' used without hex digits"
 msgstr "'\\x'必需同hex数字一起使用"
 
 #: src/main/gram.y:2114
-#, fuzzy, c-format
+#, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
-msgstr "不支持\\uxxxx这样的序列(%d行)"
+msgstr "不支持反引号里\\uxxxx这样的序列(%d行)"
 
 #: src/main/gram.y:2130
 msgid "\\u used without hex digits"
@@ -3714,9 +3705,9 @@ msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "\\u{xxxx}顺序不对(%d行)"
 
 #: src/main/gram.y:2152
-#, fuzzy, c-format
+#, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
-msgstr "不支持\\uxxxx这样的序列(%d行)"
+msgstr "不支持反引号里\\Uxxxxxxxx这样的序列(%d行)"
 
 #: src/main/gram.y:2168
 msgid "\\U used without hex digits"
@@ -3733,13 +3724,13 @@ msgid "'\\%c' is an unrecognized escape in a character string"
 msgstr "不认识字符串里'\\%c'这样的逸出号"
 
 #: src/main/gram.y:2271
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 10000 chars)"
 msgstr ""
-"%d行字符串里包含了不属于目前语言环境的Unicode转义字符太长了(最多只能有1000个"
-"字符)"
+"%d行字符串里包含了不属于目前语言环境的Unicode转义字符\n"
+"太长了(最多只能有10000个字符)"
 
 #: src/main/gram.y:2279
 #, c-format
@@ -3912,14 +3903,12 @@ msgid "bad value"
 msgstr "值不对"
 
 #: src/main/internet.c:123
-#, fuzzy
 msgid "internet routines were already initialized"
-msgstr "无法载入互联网例行程序"
+msgstr "互联网例行程序已经打开了"
 
 #: src/main/internet.c:248
-#, fuzzy
 msgid "invalid bind address specification"
-msgstr "文件名字设定不对"
+msgstr "连结文件名字设定不对"
 
 #: src/main/internet.c:268 src/main/internet.c:278 src/main/internet.c:288
 #: src/main/internet.c:298 src/main/internet.c:308 src/main/internet.c:318
@@ -4007,9 +3996,9 @@ msgid "During startup - "
 msgstr "在启动过程中 - "
 
 #: src/main/main.c:1077 src/main/main.c:1083 src/main/main.c:1089
-#, fuzzy, c-format
+#, c-format
 msgid "duplicate '%s' argument"
-msgstr "变元不对"
+msgstr "副本'%s'变元"
 
 #: src/main/main.c:1227
 msgid "cannot quit from browser"
@@ -4118,9 +4107,8 @@ msgid "cons memory exhausted (limit reached?)"
 msgstr "cons内存用完了(达到了极限?)"
 
 #: src/main/memory.c:1570
-#, fuzzy
 msgid "memory exhausted (limit reached?)"
-msgstr "cons内存用完了(达到了极限?)"
+msgstr "内存用完了(达到了极限?)"
 
 #: src/main/memory.c:1694 src/main/memory.c:1700
 #, c-format
@@ -4302,12 +4290,12 @@ msgstr "在公式右手的反应略过不用"
 #: src/main/model.c:1800
 #, c-format
 msgid "term %d would require %.0g columns"
-msgstr ""
+msgstr "%d项需要%.0g个列"
 
 #: src/main/model.c:1804
 #, c-format
 msgid "matrix would require %.0g columns"
-msgstr ""
+msgstr "矩阵需要%.0g个列"
 
 #: src/main/model.c:1815
 #, c-format
@@ -4374,7 +4362,7 @@ msgstr "类属定义环境不对"
 msgid ""
 "No .S3MethodsClass table, can't use S4 objects with S3 methods (methods "
 "package not attached?)"
-msgstr ""
+msgstr "没有.S3MethodsClass表，不能将S3方法用在S4目标对象上(方法"
 
 #: src/main/objects.c:263 src/main/objects.c:411
 msgid "'UseMethod' used in an inappropriate fashion"
@@ -4405,9 +4393,9 @@ msgid "first argument must be a generic name"
 msgstr "第一变元必需是类属名"
 
 #: src/main/objects.c:490
-#, fuzzy, c-format
+#, c-format
 msgid "no applicable method for '%s' applied to an object of class \"%s\""
-msgstr "\"%s\"没有适用的方法"
+msgstr "\"%s\"没有适用于\"%s\"目标对象的方法"
 
 #: src/main/objects.c:551
 msgid "'NextMethod' called from outside a function"
@@ -4566,7 +4554,7 @@ msgstr "'R_get_primname'不能调用于非原始函数"
 #: src/main/objects.c:1487
 #, c-format
 msgid "Object of class \"%s\" does not correspond to a valid S3 object"
-msgstr ""
+msgstr "类别为\"%s\"的目标对象没有对应于有效的S3目标对象"
 
 #: src/main/optim.c:73 src/main/optim.c:100 src/main/optim.c:184
 msgid "non-finite value supplied by optim"
@@ -5105,9 +5093,9 @@ msgid "cannot create dir '%s', reason '%s'"
 msgstr "由于'%2$s'的原因，无法建立'%1$s'文件目录"
 
 #: src/main/platform.c:2026
-#, fuzzy, c-format
+#, c-format
 msgid "'%ls' already exists"
-msgstr "'%s'已存在"
+msgstr "'%ls'已存在"
 
 #: src/main/platform.c:2299
 msgid "insufficient OS support on this platform"
@@ -5547,9 +5535,8 @@ msgid "invalid column labels"
 msgstr "列標記不对"
 
 #: src/main/print.c:176
-#, fuzzy
 msgid "non-function argument to .Internal(print.function(.))"
-msgstr "内部貼補的变元不是字符串"
+msgstr ".Internal(print.function(.))变元是非函数"
 
 #: src/main/print.c:251
 msgid "'gap' must be non-negative integer"
@@ -5988,7 +5975,6 @@ msgid "numerical expression has %d elements: only the first used"
 msgstr "数值表达式一共有%d元素: 只用了第一个"
 
 #: src/main/seq.c:145
-#, fuzzy
 msgid "argument of length 0"
 msgstr "变元长度为零"
 
@@ -6253,34 +6239,33 @@ msgid "too large a range of values in 'x'"
 msgstr "'x'里的值的范围太大"
 
 #: src/main/source.c:135
-#, fuzzy, c-format
+#, c-format
 msgid "%s%d:%d: %s"
-msgstr ""
-"%s%s 于\n"
-"%d: %s"
+msgstr "%s%d:%d: %s"
 
 #: src/main/source.c:140
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%d:%d: %s\n"
 "%d: %s\n"
 "%*s"
 msgstr ""
-"%s%s 于\n"
+"%s%d:%d: %s\n"
 "%d: %s\n"
-"%d: %s"
+"%*s"
 
 #: src/main/source.c:147
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%d:%d: %s\n"
 "%d: %s\n"
 "%d: %s\n"
 "%*s"
 msgstr ""
-"%s%s 于\n"
+"%s%d:%d: %s\n"
 "%d: %s\n"
-"%d: %s"
+"%d: %s\n"
+"%*s"
 
 #: src/main/source.c:157
 #, c-format
@@ -6304,9 +6289,9 @@ msgstr ""
 "%s\""
 
 #: src/main/source.c:216
-#, fuzzy, c-format
+#, c-format
 msgid "argument '%s = \"%s\"' will be ignored"
-msgstr "略过'%s'变元值"
+msgstr "略过'%s = \"%s\"'变元值"
 
 #: src/main/split.c:38
 msgid "first argument must be a vector"
@@ -6327,22 +6312,21 @@ msgstr "数据长度不是分割变数的倍数"
 #: src/main/sprintf.c:92
 #, c-format
 msgid "required resulting string length %d is > maximal %d"
-msgstr ""
+msgstr "所需要的字符串长度%d大于最大限度%d"
 
 #: src/main/sprintf.c:100
-#, fuzzy
 msgid "'fmt' is not a character vector"
 msgstr "'fmt'必需是字符矢量"
 
 #: src/main/sprintf.c:105
-#, fuzzy, c-format
+#, c-format
 msgid "only %d arguments are allowed"
-msgstr "只允许100个变元"
+msgstr "只允许%d个变元"
 
 #: src/main/sprintf.c:112
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type of argument[%d]: '%s'"
-msgstr "'type'(%s)变元不对"
+msgstr "变元[%d] 的种类不对：'%s'"
 
 #: src/main/sprintf.c:123 src/main/sprintf.c:126
 msgid "arguments cannot be recycled to the same length"
@@ -6354,9 +6338,9 @@ msgid "'fmt' length exceeds maximal format length %d"
 msgstr "'fmt'长度超过了缓冲区最大长度%d"
 
 #: src/main/sprintf.c:166
-#, fuzzy, c-format
+#, c-format
 msgid "unrecognised format specification '%s'"
-msgstr "颜色设定'%s'不对"
+msgstr "没有'%s'这样的格式设定"
 
 #: src/main/sprintf.c:177 src/main/sprintf.c:183 src/main/sprintf.c:196
 #: src/main/sprintf.c:203
@@ -6373,9 +6357,8 @@ msgid "argument for '*' conversion specification must be a number"
 msgstr "轉換規格'*'的变元必需是数字"
 
 #: src/main/sprintf.c:254
-#, fuzzy
 msgid "the '%*' constructed 'fmt2' length exceeds maximum of %d"
-msgstr "'fmt'长度超过了缓冲区最大长度%d"
+msgstr "'%*'建立的'fmt2'长度超过了最大长度%d"
 
 #: src/main/sprintf.c:263
 msgid "coercion has changed vector length to 0"
@@ -6383,9 +6366,9 @@ msgstr "矢量长度被強制改变成零"
 
 #: src/main/sprintf.c:330 src/main/sprintf.c:344 src/main/sprintf.c:358
 #: src/main/sprintf.c:393
-#, fuzzy, c-format
+#, c-format
 msgid "invalid format '%s'; %s"
-msgstr "'%s'的值不对"
+msgstr "'%s'的格式不对；%s"
 
 #: src/main/sprintf.c:331
 #, c-format
@@ -6393,9 +6376,9 @@ msgid "use format %d or %i for logical objects"
 msgstr "逻辑对象使用的格式应该是%d或%i"
 
 #: src/main/sprintf.c:345
-#, fuzzy, c-format
+#, c-format
 msgid "use format %d, %i, %o, %x or %X for integer objects"
-msgstr "整数对象使用的格式应该是%d，%i，%x或%X"
+msgstr "整数对象使用的格式应该是%d，%i，%o，%x或%X"
 
 #: src/main/sprintf.c:359
 #, c-format
@@ -6462,9 +6445,8 @@ msgid "incompatible types (from %s to %s) in array subset assignment"
 msgstr "陈列子集赋值有不可兼容的种类(从%s到%s)"
 
 #: src/main/subassign.c:1175 src/main/subassign.c:1195
-#, fuzzy
 msgid "invalid subscript in list assign"
-msgstr "串列赋值里的下标数目不对"
+msgstr "串列赋值里的下标不对"
 
 #: src/main/subassign.c:1188
 msgid "invalid number of subscripts to list assign"
@@ -6480,7 +6462,7 @@ msgstr "计算结果的长度为零，因此不可能是语言目标对象"
 
 #: src/main/subassign.c:1491 src/main/subassign.c:1826
 msgid "no method for assigning subsets of this S4 class"
-msgstr ""
+msgstr "不存在给这个S4类别分配子集的方法"
 
 #: src/main/subassign.c:1497
 msgid "wrong args for environment subassignment"
@@ -6596,9 +6578,8 @@ msgid "no index specified"
 msgstr "没有索引设定"
 
 #: src/main/subset.c:814
-#, fuzzy
 msgid "this S4 class is not subsettable"
-msgstr "对象不可以取子集"
+msgstr "S4对象不可以取子集"
 
 #: src/main/subset.c:820
 msgid "wrong arguments for subsetting an environment"
@@ -6749,7 +6730,7 @@ msgstr "'duplicated'只适用于矢量"
 
 #: src/main/unique.c:469
 msgid "any_duplicated3(., <0-length incomp>)"
-msgstr ""
+msgstr "any_duplicated3(., <0-length incomp>)"
 
 #: src/main/unique.c:523
 #, c-format
@@ -6820,26 +6801,25 @@ msgid "invalid tag in name extraction"
 msgstr "抽取名字的标记不对"
 
 #: src/main/util.c:419
-#, fuzzy, c-format
+#, c-format
 msgid "%d argument passed to .Internal(%s) which requires %d"
 msgid_plural "%d arguments passed to .Internal(%s) which requires %d"
-msgstr[0] "给了'atan'%d个变元，但它最多只能用一个变元"
+msgstr[0] ".Internal(%2$s)收到了%1$d个变元，但它最多只能用%3$d个变元"
 
 #: src/main/util.c:425
-#, fuzzy, c-format
+#, c-format
 msgid "%d argument passed to '%s' which requires %d"
 msgid_plural "%d arguments passed to '%s' which requires %d"
-msgstr[0] "给了%d个变元到'%s'，但它最多只能用两个变元"
+msgstr[0] "%d个变元给'%s'，但它只需要%d个"
 
 #: src/main/util.c:437
-#, fuzzy, c-format
+#, c-format
 msgid "'nthcdr' list shorter than %d"
-msgstr "\"nthcdr\"串列比%d要短"
+msgstr "'nthcdr'串列比%d要短"
 
 #: src/main/util.c:442
-#, fuzzy
 msgid "'nthcdr' needs a list to CDR down"
-msgstr "\"nthcdr\"需要CDR串列"
+msgstr "'nthcdr'需要CDR串列"
 
 #: src/main/util.c:559
 msgid "'all.x' must be TRUE or FALSE"
@@ -7711,9 +7691,9 @@ msgid ""
 msgstr "读行输入嵌套出了不寻常的错，请用bug.report()"
 
 #: src/unix/sys-std.c:1058 src/unix/sys-std.c:1226
-#, fuzzy, c-format
+#, c-format
 msgid "problem in saving the history file '%s'"
-msgstr "在显示'%s'时出了问题"
+msgstr "在保存履历文件'%s'时出了问题"
 
 #: src/unix/sys-std.c:1133
 #, c-format
@@ -7731,9 +7711,8 @@ msgid "no history mechanism available"
 msgstr "没有历史功能"
 
 #: src/unix/sys-std.c:1232
-#, fuzzy
 msgid "problem in truncating the history file"
-msgstr "启动编辑器%s时出了问题"
+msgstr "截短履历文件时出了问题"
 
 #: src/unix/sys-std.c:1234 src/unix/sys-std.c:1236
 msgid "no history available to save"

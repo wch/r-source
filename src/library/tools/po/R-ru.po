@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08\n"
+"POT-Creation-Date: 2009-10-08 08:38\n"
 "PO-Revision-Date: 2009-03-28 23:43-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -322,22 +322,12 @@ msgid "Missing link(s) in documentation object '%s':"
 msgstr "Пропущенные связ(и) с объектом документации '%s':"
 
 #, fuzzy
-msgid "Suspect link(s) in documentation object '%s':"
-msgstr "Пропущенные связ(и) с объектом документации '%s':"
-
-#, fuzzy
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
 msgstr ""
 "См. информацию о файлах DESCRIPTION в секции  'Creating R пакетs' "
 "руководства 'Writing R Extensions'."
-
-msgid ""
-"'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an "
-"alias but not as a filename -- such links will not work in R < 2.10.0, and "
-"only in HTML (not PDF) help in current versions."
-msgstr ""
 
 msgid "found %s"
 msgstr "найден %s"
@@ -632,7 +622,8 @@ msgstr "не найдено файлов исходников"
 msgid "empty 'data' directory"
 msgstr "пустая папка 'data'"
 
-msgid "--auto-zip' is for Windows only"
+#, fuzzy
+msgid "'--auto-zip' is for Windows only"
 msgstr "--auto-zip' только для Windows"
 
 msgid "-l option without value"
@@ -730,6 +721,9 @@ msgid ""
 "Cannot process chunk/lines:\n"
 "%s"
 msgstr ""
+
+msgid "Processing packages:"
+msgstr "Обрабатываю пакеты:"
 
 msgid "cannot update HTML package index"
 msgstr "не могу обновить HTML-индекс пакетов"
@@ -902,9 +896,6 @@ msgstr "не могу выполнить код пакета"
 msgid "Call sequence:"
 msgstr "Последовательность вызова:"
 
-msgid "Processing packages:"
-msgstr "Обрабатываю пакеты:"
-
 msgid "parsing '%s'"
 msgstr "разбор '%s'"
 
@@ -934,6 +925,10 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Найден вызов .Internal call в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
+
+#, fuzzy
+#~ msgid "Suspect link(s) in documentation object '%s':"
+#~ msgstr "Пропущенные связ(и) с объектом документации '%s':"
 
 #~ msgid "missing 'DESCRIPTION.in' for package '%s'"
 #~ msgstr "пропущен 'DESCRIPTION.in' у пакета '%s'"

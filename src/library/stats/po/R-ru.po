@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41\n"
+"POT-Creation-Date: 2009-10-08 08:37\n"
 "PO-Revision-Date: 2009-03-29 04:54+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -853,7 +853,8 @@ msgstr ""
 msgid "non-positive values not allowed for the gamma family"
 msgstr "неположительные значения не разрешены для гамма-семейства"
 
-msgid "using weights as shape paraneters"
+#, fuzzy
+msgid "using weights as shape parameters"
 msgstr "использую веса в качестве параметров формы"
 
 msgid ""

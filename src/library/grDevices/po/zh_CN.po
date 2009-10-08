@@ -64,11 +64,11 @@ msgid "font metrics unknown for character 0x%x"
 msgstr "字符0x%x不带字体度量"
 
 #: devPS.c:904
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "invalid character (%04x) sent to 'PostScriptCIDMetricInfo' in a single-byte "
 "locale"
-msgstr "传给'PostScriptCIDMetricInfo'的字符是单字节場所, 因此不对"
+msgstr "传给'PostScriptCIDMetricInfo'的字符(%04x)在单字节場所里, 因此不对"
 
 #: devPS.c:912
 msgid ""
@@ -367,7 +367,7 @@ msgstr "增加PDF版本到1.4"
 
 #: devPS.c:5861 devPS.c:5899
 msgid "unknown 'colormodel', using 'rgb'"
-msgstr ""
+msgstr "没有这种'colormodel'，用'rgb'"
 
 #: devPS.c:6256
 msgid "Corrupt encodings in PDF device"

@@ -223,17 +223,14 @@ msgstr "从前-2.0.0 R版本载入快照"
 msgid "loading snapshot from different R version"
 msgstr "从另外一个R版本载入快照"
 
-#, fuzzy
 msgid "'nbin' must be numeric of length 1 or 2"
-msgstr "'r'的值应该为\"range\"，因此它的长度必需为二"
+msgstr "'nbin'的值应该是长度1或2的数值"
 
-#, fuzzy
 msgid "'bandwidth' must be numeric"
-msgstr "rgb矩阵必需是数字"
+msgstr "'bandwidth'必需是数字"
 
-#, fuzzy
 msgid "'bandwidth' must be positive"
-msgstr "'bias'的值必需是正数"
+msgstr "'bandwidth'的值必需是正数"
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r'的值应该为\"range\"，因此它的长度必需为二"
@@ -299,11 +296,10 @@ msgid "can only bring windows devices to the front"
 msgstr "只能把窗户装置带到前方去"
 
 msgid "'type' not applicable to the R console"
-msgstr ""
+msgstr "'type'不适于在R控制台使用"
 
-#, fuzzy
 msgid "can only manipulate windows devices"
-msgstr "只能从'devices'拷贝装置"
+msgstr "只能操纵windows装置"
 
 msgid "can only copy from 'windows' devices"
 msgstr "只能从'devices'拷贝装置"
@@ -345,3 +341,4 @@ msgstr[0] "对数图里略过%d个小于等于零的z值"
 
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr "因为没有事件循环管理器，减少quartz()装置的交互能力"
+

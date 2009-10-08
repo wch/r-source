@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-06 18:19+0100\n"
+"POT-Creation-Date: 2009-10-08 08:36+0100\n"
 "PO-Revision-Date: 2009-10-05 19:09+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -1557,9 +1557,9 @@ msgstr ""
 "lenger vera eit S4-objekt."
 
 #: src/main/coerce.c:2420
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Setting class(x) to \"%s\" sets attribut to NULL;   result will no longer be "
+"Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
 "an S4 object"
 msgstr ""
 "Ved å setja class(x) til «%s», vert attributtet sett til NULL. Resultatet vil "

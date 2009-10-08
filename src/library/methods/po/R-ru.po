@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:56\n"
+"POT-Creation-Date: 2009-10-08 08:37\n"
 "PO-Revision-Date: 2009-03-28 23:15-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -174,7 +174,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"Creating a generic for \"%s\" in package  \"%s\"\n"
+"Creating a generic for \"%s\" in package \"%s\"\n"
 "    (the supplied definition differs from and overrides the implicit "
 "generic\n"
 "    in package \"%s\": %s)"
@@ -185,7 +185,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"No generic version of  \"%s\" on package \"%s\" is allowed;\n"
+"No generic version of \"%s\" on package \"%s\" is allowed;\n"
 "   a new generic will be assigned with package \"%s\""
 msgstr ""
 "Нет разрешенной общей функции версии \"%s\" в пакете \"%s\"; новая общая "
@@ -998,7 +998,8 @@ msgstr ""
 "только аргументы 'Class' и 'where' могут быть предоставлены когда аргумент "
 "'representation' является объектом класса 'classRepresentation'"
 
-msgid "Internal error: definiition of class \"%s\" not properly assigned"
+#, fuzzy
+msgid "Internal error: definition of class \"%s\" not properly assigned"
 msgstr "Внутренняя ошибка: определение класса \"%s\" не присвоено как следует"
 
 msgid ""

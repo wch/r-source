@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-06 18:19+0100\n"
+"POT-Creation-Date: 2009-10-08 08:36+0100\n"
 "PO-Revision-Date: 2009-03-28 15:42+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -1552,9 +1552,9 @@ msgstr ""
 "являться объектом S4"
 
 #: src/main/coerce.c:2420
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Setting class(x) to \"%s\" sets attribut to NULL;   result will no longer be "
+"Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
 "an S4 object"
 msgstr ""
 "Установка class(x) в \"%s\" выставляет атрибут в NULL;    результат не будет "

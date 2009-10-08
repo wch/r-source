@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-06 18:19+0100\n"
+"POT-Creation-Date: 2009-10-08 08:36+0100\n"
 "PO-Revision-Date: 2008-02-18 11:38+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -1533,7 +1533,7 @@ msgstr ""
 #: src/main/coerce.c:2420
 #, c-format
 msgid ""
-"Setting class(x) to \"%s\" sets attribut to NULL;   result will no longer be "
+"Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
 "an S4 object"
 msgstr ""
 

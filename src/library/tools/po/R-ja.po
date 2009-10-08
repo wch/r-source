@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08\n"
+"POT-Creation-Date: 2009-10-08 08:38\n"
 "PO-Revision-Date: 2009-04-01 08:36+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -323,22 +323,12 @@ msgid "Missing link(s) in documentation object '%s':"
 msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
 
 #, fuzzy
-msgid "Suspect link(s) in documentation object '%s':"
-msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
-
-#, fuzzy
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
 msgstr ""
 " マニュアル'Writing R Extensions' の章'Creating R packages'中のDESCRIPTION"
 "ファイルにある情報を参照してください． "
-
-msgid ""
-"'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an "
-"alias but not as a filename -- such links will not work in R < 2.10.0, and "
-"only in HTML (not PDF) help in current versions."
-msgstr ""
 
 msgid "found %s"
 msgstr " %s が見つかりました "
@@ -642,7 +632,8 @@ msgstr "ソースファイルが見つかりません "
 msgid "empty 'data' directory"
 msgstr " 'data' ディレクトリが空です "
 
-msgid "--auto-zip' is for Windows only"
+#, fuzzy
+msgid "'--auto-zip' is for Windows only"
 msgstr " --auto-zip'  は Windows 専用です "
 
 msgid "-l option without value"
@@ -741,6 +732,9 @@ msgid ""
 "Cannot process chunk/lines:\n"
 "%s"
 msgstr ""
+
+msgid "Processing packages:"
+msgstr " パッケージを処理中： "
 
 msgid "cannot update HTML package index"
 msgstr " HTMLパッケージのインデックスをアップデートすることが出来ません "
@@ -915,9 +909,6 @@ msgstr " パッケージコードを読み込めません "
 msgid "Call sequence:"
 msgstr " 呼び出しシーケンス： "
 
-msgid "Processing packages:"
-msgstr " パッケージを処理中： "
-
 msgid "parsing '%s'"
 msgstr " '%s' を構文解析中 "
 
@@ -938,6 +929,10 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+
+#, fuzzy
+#~ msgid "Suspect link(s) in documentation object '%s':"
+#~ msgstr " ドキュメントオブジェクト '%s' 中に欠損したリンクが見つかりました: "
 
 #~ msgid "missing 'DESCRIPTION.in' for package '%s'"
 #~ msgstr "パッケージ '%s' には 'DESCRIPTION.in' がありません "

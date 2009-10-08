@@ -357,13 +357,11 @@ msgstr "'x', 'y', 'width'和'height'都应该是长度为一的单元值"
 msgid "'x' and 'y' must all be units of length 1"
 msgstr "'x'和'y'必需是长度为一的单元"
 
-#, fuzzy
 msgid "'r' must be a unit object"
-msgstr "'length'的值必需是单元对象"
+msgstr "''的值必需是单元对象"
 
-#, fuzzy
 msgid "'x', 'y', 'width', and 'height' must have length 1"
-msgstr "'x', 'y', 'width'和'height'都应该是长度为一的单元值"
+msgstr "'x', 'y', 'width'和'height'的长度都应该是为一"
 
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x'和'unit'的长度必需大于零"
@@ -405,7 +403,7 @@ msgid "Zero arguments where at least one expected"
 msgstr "不能没有变元，至少需要有一个"
 
 msgid "Cannot mix signs of indices"
-msgstr ""
+msgstr "不能混用索引符号"
 
 msgid "Index out of bounds (unit subsetting)"
 msgstr "索引值出界(取单元子集时)"
@@ -476,10 +474,10 @@ msgid "Invalid viewport name(s)"
 msgstr "视口名字不对"
 
 msgid "How did we get here?"
-msgstr ""
+msgstr "是怎么到这里的？"
 
 msgid "Must start new page if showing leaves separately"
-msgstr ""
+msgstr "如果分别显示树叶的话需要重新开一页"
 
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "至少要设定'x'或'xscale'两个中的一个"
@@ -504,3 +502,4 @@ msgstr "至少要设定'y'或'yscale'两个中的一个"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x'必需是数字"
+

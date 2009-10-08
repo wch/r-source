@@ -2,7 +2,7 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2006.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
@@ -82,17 +82,18 @@ msgstr "只用'what'值里的第一个元素"
 msgid "%d occurrences in %s"
 msgstr "%2$s里出现了%1$d个具體值"
 
-#, fuzzy
 msgid "Invalid 'filter' argument."
-msgstr "'x'变元不对"
+msgstr "'filter'变元不对"
 
 msgid "Could not find aspell or ispell executable."
-msgstr ""
+msgstr "找不到aspell或ispell执行文件"
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
 "%s"
 msgstr ""
+"执行aspell失败，诊断如下:\n"
+"%s"
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -252,16 +253,14 @@ msgstr "找不到与'%s'有关的帮助文件"
 msgid "more than one help file found: using package '%s'"
 msgstr "找到了多个帮助文件：用程序包'%s'"
 
-#, fuzzy
 msgid "'%s' has a help file but no examples"
 msgstr "'%s'含帮助文件但没有示范文件"
 
 msgid "test '%s' is not available"
 msgstr "没有'%s'这种测试"
 
-#, fuzzy
 msgid "Line number missing"
-msgstr "缺少'subject'值"
+msgstr "缺少行数"
 
 msgid "'fix' requires a name"
 msgstr "'fix'需要名字值"
@@ -282,13 +281,13 @@ msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "'topic'的值必需是名字，长度为一的字符串或保留文字"
 
 msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
-msgstr ""
+msgstr "不推荐用offline = TRUE：请用help_type =\"postscript\""
 
 msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
-msgstr ""
+msgstr "不推荐用chmhelp = TRUE：请用help_type =\"text\""
 
 msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
-msgstr ""
+msgstr "不推荐用htmhelp = TRUE：请用help_type =\"html\""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "在指定的程序包和图书馆里没有与'%s'有关的说明书:"
@@ -317,9 +316,8 @@ msgstr "选一个"
 msgid "Using the first match ..."
 msgstr "用第一个相配…"
 
-#, fuzzy
 msgid "HTML help is unavailable"
-msgstr "没有'%s'这种测试"
+msgstr "没有HTML帮助"
 
 msgid "R Help on '%s'"
 msgstr "与'%s'有关的R Help"
@@ -350,18 +348,17 @@ msgstr "不知道要搜查什么"
 msgid "argument 'help.db' is deprecated"
 msgstr "变元'help.db'已经不再用了"
 
-#, fuzzy
 msgid "Rebuilding the help.search() database"
-msgstr "重建数据库"
+msgstr "重建help.search()数据库"
 
 msgid "..."
-msgstr ""
+msgstr "…"
 
 msgid "Packages {.readRDS() sequentially}:"
 msgstr "程序包{顺序.readRDS()}:"
 
 msgid "."
-msgstr ""
+msgstr "."
 
 msgid "could not find package '%s'"
 msgstr "找不到程序包'%s'"
@@ -385,9 +382,8 @@ msgid "saving the database ..."
 msgstr "保存到数据库…"
 
 msgid "... database rebuilt"
-msgstr ""
+msgstr "…重新建立数据库"
 
-#, fuzzy
 msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
 msgstr "数据库里没有关于程序包'%s'的信息：是不是需要设定'rebuild = TRUE'？"
 
@@ -418,9 +414,8 @@ msgstr "menu()不能在非互交形式下使用"
 msgid "Enter an item from the menu, or 0 to exit"
 msgstr "从菜單中选一项，或选0退出"
 
-#, fuzzy
 msgid "invalid query"
-msgstr "格式不对"
+msgstr "询问不对"
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr "'%s'是正式同属函数; 很有可能找不到S3方法"
@@ -515,9 +510,8 @@ msgstr "'%s'里有详细内容"
 msgid "unable to access index for repository %s"
 msgstr "无法在貯藏處%s中读写索引"
 
-#, fuzzy
 msgid "Invalid 'filters' argument."
-msgstr "'x'变元不对"
+msgstr "'filters'变元不对"
 
 msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr "'oldPkgs'的值不对；必需是从old.packages()得到的结果"
@@ -529,7 +523,7 @@ msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr "'lib.loc=%s'里没有已经安装好了的程序包"
 
 msgid "read.dcf() error on file '%s'"
-msgstr ""
+msgstr "read.dcf()在'%s'文件上出了错"
 
 msgid "'priority' must be character or NULL"
 msgstr "'priority'的值要么是字符要么为NULL"
@@ -564,10 +558,9 @@ msgstr "无法在非互交情况下设定貯藏處"
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- 请选用一个貯藏處 ---"
 
-#, fuzzy
 msgid ""
 "Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr "请输入一个或多个由空格分开的数字"
+msgstr "请输入一个或多个由空格分开的数字，或输入空行来好取消"
 
 msgid "'%s' must be supplied"
 msgstr "必需提供'%s'"
@@ -610,7 +603,7 @@ msgid "unable to create"
 msgstr "无法建立"
 
 msgid "inferring 'repos = NULL' from the file name"
-msgstr ""
+msgstr "从文件名字推断'repos = NULL'"
 
 msgid "cannot install MacOS X binary packages on Windows"
 msgstr "无法在Windows下安装MacOS X二元程序包"
@@ -638,6 +631,8 @@ msgid ""
 "installation of one of more packages failed,\n"
 "  probably %s"
 msgstr ""
+"安装程序包时出了错，\n"
+"  可能原因%s"
 
 msgid ""
 "The downloaded packages are in\n"
@@ -788,10 +783,10 @@ msgid "Invalid roman numeral(s): %s"
 msgstr "罗马数字不对：%S"
 
 msgid "length mismatch: bug in code!"
-msgstr ""
+msgstr "长度不对：程序里有虫!"
 
 msgid "Processing file"
-msgstr ""
+msgstr "处理文件"
 
 msgid "no valid packages were specified"
 msgstr "没有设定程序包"
@@ -827,7 +822,7 @@ msgid "'str.default': 'le' is NA"
 msgstr "'str.default': 'le'的值是NA"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
-msgstr ""
+msgstr "'digits'和'digits.d'两个都设定了，但后者没有用"
 
 msgid "profile does not contain memory information"
 msgstr "程序资料不包含内存信息"
@@ -835,39 +830,35 @@ msgstr "程序资料不包含内存信息"
 msgid "no events were recorded"
 msgstr "没有记录下任何事件"
 
-#, fuzzy
 msgid "'compressed' must be logical or character"
-msgstr "'code_files'必需是字符向量"
+msgstr "'compressed'必需是字符向量"
 
 msgid "untar: using cmd ="
-msgstr ""
+msgstr "untar：用cmd="
 
-#, fuzzy
 msgid "invalid octal digit"
-msgstr "格式不对"
+msgstr "八进制数字格式不对"
 
-#, fuzzy
 msgid "'tarfile' must be a character string or a connection"
-msgstr "'file'的值必需是字符串或联结"
+msgstr "'tarfile'的值必需是字符串或联结"
 
 msgid "incomplete block on file"
-msgstr ""
+msgstr "不完全文件锁"
 
 msgid "checksum error for entry '%s'"
-msgstr ""
+msgstr "项目'%s'检查和错误"
 
 msgid "unsupported entry type"
-msgstr ""
+msgstr "不支持这一项目种类"
 
-#, fuzzy
 msgid "file '%s' not found"
-msgstr "找不到'%s'这一zip文件"
+msgstr "找不到'%s'这一文件"
 
 msgid "file path is too long"
-msgstr ""
+msgstr "文件通路太长"
 
 msgid "linked path is too long"
-msgstr ""
+msgstr "链结的通路太长"
 
 msgid ""
 "vignette '%s' found more than once,\n"
@@ -931,24 +922,22 @@ msgid "options(\"browser\") not set"
 msgstr "options(\"browser\")没有设好"
 
 msgid "running '%s' failed"
-msgstr ""
+msgstr "执行'%s'失败"
 
 msgid "'%s' produced no output file: sent to printer?"
-msgstr ""
+msgstr "'%s'没有产生文件：是不是还要送到打印机？"
 
-#, fuzzy
 msgid "creation of '%s' failed"
-msgstr "下载程序包'%s'时出了问题"
+msgstr "制造'%s'时出了问题"
 
-#, fuzzy
 msgid "Saving help page to"
-msgstr "制造帮助文件…"
+msgstr "保存帮助页到"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "浏览器的名字不对，请检查options(\"browser\")的设置。"
 
 msgid "help.start() requires the HTTP server to be running"
-msgstr ""
+msgstr "help.start()需要用HTTP服务器"
 
 msgid ""
 "If '%s' is already running, it is *not* restarted, and you must switch to "
@@ -966,7 +955,7 @@ msgid "'browser' must be a non-empty character string"
 msgstr "'browser'必需为非空字符串"
 
 msgid "Making packages.html"
-msgstr ""
+msgstr "制造packages.html"
 
 msgid "Updating HTML index of packages in '.Library'"
 msgstr "更新'.Library'里的HTML程序包列表"
@@ -989,7 +978,6 @@ msgstr "'memory.size()'只在Windows上有用"
 msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()'只在Windows上有用"
 
-#, fuzzy
 msgid ""
 "If nothing happens, you should open\n"
 "'%s' yourself"

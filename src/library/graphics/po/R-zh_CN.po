@@ -2,7 +2,7 @@
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2007.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
@@ -43,7 +43,6 @@ msgstr "'x'里至少要有一个值是正数"
 msgid "incorrect 'col': must be length 2"
 msgstr "'col'不对: 长度必需为二"
 
-#, fuzzy
 msgid "'side' must be in {1:4}"
 msgstr "'side'的值必需在{1:4}中"
 
@@ -53,9 +52,8 @@ msgstr "'axp'不对"
 msgid "invalid 'log'"
 msgstr "'log'不对"
 
-#, fuzzy
 msgid "invalid positive 'axp[3]'"
-msgstr "正数'axp[3]'不对"
+msgstr "正的'axp[3]'不对"
 
 msgid "invalid 'usr'"
 msgstr "'usr'不对"
@@ -249,11 +247,10 @@ msgid "horizontal specification overrides: Number of columns :="
 msgstr "水平定义超越其它的定义： 列的数目为 :="
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
-msgstr ""
+msgstr "不画线断时'merge = TRUE'就沿用"
 
-#, fuzzy
 msgid "not using pch[2..] since pch[1L] has multiple chars"
-msgstr "pch[2..] 没用，因为pch[1] 包含多个字符"
+msgstr "pch[2..]没用，因为pch[1L] 包含多个字符"
 
 msgid "must specify at least one of 'x' and 'y'"
 msgstr "必需设定'x'和'y'中的一个"
@@ -346,10 +343,10 @@ msgid "'figs' must specify at least one screen"
 msgstr "'figs'至少要设定一个屏幕"
 
 msgid "'nrpoints' should be numeric scalar with value >= 0."
-msgstr ""
+msgstr "'nrpoints'必需为大于0的数字标量。"
 
 msgid "a 2-way table has to be specified"
-msgstr "没有设定二维表"
+msgstr "没有设定双向表"
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
 msgstr "因为x轴的尺度为累计概率, 'xlim'的值必需在[0,1]"

@@ -2,7 +2,7 @@
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2007.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
@@ -30,7 +30,7 @@ msgstr "变元不对"
 
 #: tcltk.c:284 tcltk.c:302 tcltk.c:392 tcltk.c:455 tcltk.c:507
 msgid "invalid tclObj -- perhaps saved from another session?"
-msgstr ""
+msgstr "tclObj无效--是不是因此它是由另外一个对话期间保存的？"
 
 #: tcltk.c:597
 msgid "argument list is too long in tcltk internal function 'callback_closure'"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:56\n"
+"POT-Creation-Date: 2009-10-08 08:37\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -150,14 +150,14 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Creating a generic for \"%s\" in package  \"%s\"\n"
+"Creating a generic for \"%s\" in package \"%s\"\n"
 "    (the supplied definition differs from and overrides the implicit "
 "generic\n"
 "    in package \"%s\": %s)"
 msgstr ""
 
 msgid ""
-"No generic version of  \"%s\" on package \"%s\" is allowed;\n"
+"No generic version of \"%s\" on package \"%s\" is allowed;\n"
 "   a new generic will be assigned with package \"%s\""
 msgstr ""
 
@@ -1020,7 +1020,7 @@ msgstr ""
 "오브젝트인 경우 주어질수 있습니다"
 
 #, fuzzy
-msgid "Internal error: definiition of class \"%s\" not properly assigned"
+msgid "Internal error: definition of class \"%s\" not properly assigned"
 msgstr "검색되는 클래스 \"%s\"의 정의가 아닙니다"
 
 #, fuzzy

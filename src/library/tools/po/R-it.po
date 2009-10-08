@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08\n"
+"POT-Creation-Date: 2009-10-08 08:38\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -311,19 +311,9 @@ msgstr ""
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
 
-#, fuzzy
-msgid "Suspect link(s) in documentation object '%s':"
-msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
-
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
-msgstr ""
-
-msgid ""
-"'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an "
-"alias but not as a filename -- such links will not work in R < 2.10.0, and "
-"only in HTML (not PDF) help in current versions."
 msgstr ""
 
 msgid "found %s"
@@ -615,7 +605,7 @@ msgstr ""
 msgid "empty 'data' directory"
 msgstr ""
 
-msgid "--auto-zip' is for Windows only"
+msgid "'--auto-zip' is for Windows only"
 msgstr ""
 
 msgid "-l option without value"
@@ -712,6 +702,9 @@ msgid ""
 "Cannot process chunk/lines:\n"
 "%s"
 msgstr ""
+
+msgid "Processing packages:"
+msgstr "Elaboro i pacchetti:"
 
 #, fuzzy
 msgid "cannot update HTML package index"
@@ -891,9 +884,6 @@ msgstr "impossibile leggere codice sorgente del pacchetto"
 msgid "Call sequence:"
 msgstr "Successione delle chiamate:"
 
-msgid "Processing packages:"
-msgstr "Elaboro i pacchetti:"
-
 msgid "parsing '%s'"
 msgstr "analizzo '%s'"
 
@@ -918,6 +908,10 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "Suspect link(s) in documentation object '%s':"
+#~ msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
 
 #, fuzzy
 #~ msgid "No package of named %s could be found"

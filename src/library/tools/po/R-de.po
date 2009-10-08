@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08\n"
+"POT-Creation-Date: 2009-10-08 08:38\n"
 "PO-Revision-Date: 2009-03-26 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -317,22 +317,12 @@ msgid "Missing link(s) in documentation object '%s':"
 msgstr "Fehlende(r) Link(s) im Dokuobjekt '%s':"
 
 #, fuzzy
-msgid "Suspect link(s) in documentation object '%s':"
-msgstr "Fehlende(r) Link(s) im Dokuobjekt '%s':"
-
-#, fuzzy
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
 msgstr ""
 "Information über DESCRIPTION Dateien finden sie im Abschnitt 'Creating R "
 "packages' im 'Writing R Extension' Handbuch"
-
-msgid ""
-"'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an "
-"alias but not as a filename -- such links will not work in R < 2.10.0, and "
-"only in HTML (not PDF) help in current versions."
-msgstr ""
 
 msgid "found %s"
 msgstr "'%s' gefunden"
@@ -628,7 +618,8 @@ msgstr "kein Quellkode gefunden"
 msgid "empty 'data' directory"
 msgstr "leeres 'data' Verzeichnis"
 
-msgid "--auto-zip' is for Windows only"
+#, fuzzy
+msgid "'--auto-zip' is for Windows only"
 msgstr "'--auto-zip'ist nur für Windows"
 
 msgid "-l option without value"
@@ -726,6 +717,9 @@ msgid ""
 "Cannot process chunk/lines:\n"
 "%s"
 msgstr ""
+
+msgid "Processing packages:"
+msgstr "Bearbeitete Pakete:"
 
 msgid "cannot update HTML package index"
 msgstr "kann HTML Paketindex nicht aktualisieren"
@@ -901,9 +895,6 @@ msgstr "kann Paketquelltext nicht einlesen"
 msgid "Call sequence:"
 msgstr "Aufrufsequenz:"
 
-msgid "Processing packages:"
-msgstr "Bearbeitete Pakete:"
-
 msgid "parsing '%s'"
 msgstr "parse '%s'"
 
@@ -928,6 +919,10 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
+
+#, fuzzy
+#~ msgid "Suspect link(s) in documentation object '%s':"
+#~ msgstr "Fehlende(r) Link(s) im Dokuobjekt '%s':"
 
 #~ msgid "missing 'DESCRIPTION.in' for package '%s'"
 #~ msgstr "'DESCRIPTION.in' fehlt für Paket '%s'"

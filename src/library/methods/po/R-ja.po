@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:56\n"
+"POT-Creation-Date: 2009-10-08 08:37\n"
 "PO-Revision-Date: 2009-03-31 20:47+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -170,7 +170,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"Creating a generic for \"%s\" in package  \"%s\"\n"
+"Creating a generic for \"%s\" in package \"%s\"\n"
 "    (the supplied definition differs from and overrides the implicit "
 "generic\n"
 "    in package \"%s\": %s)"
@@ -181,7 +181,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"No generic version of  \"%s\" on package \"%s\" is allowed;\n"
+"No generic version of \"%s\" on package \"%s\" is allowed;\n"
 "   a new generic will be assigned with package \"%s\""
 msgstr ""
 " 如何なるバージョンの総称 \"%s\" (パッケージ \"%s\" からの) も許されません；"
@@ -999,7 +999,8 @@ msgstr ""
 " 'representation' が 'classRepresentation' オブジェクトのときは、引数 "
 "'Class' と 'where' だけを与えられます "
 
-msgid "Internal error: definiition of class \"%s\" not properly assigned"
+#, fuzzy
+msgid "Internal error: definition of class \"%s\" not properly assigned"
 msgstr "内部エラー: 適切に割り当てられなかったクラスの定義 \"%s\" "
 
 msgid ""

@@ -2,12 +2,12 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2006.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-21 10:56\n"
+"POT-Creation-Date: 2009-10-08 08:37\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -141,16 +141,14 @@ msgstr ""
 msgid "must supply a function skeleton, explicitly or via an existing function"
 msgstr "必需提供函数骨架，要么是明确地提供，要么通过已存在的函数来提供"
 
-#, fuzzy
 msgid ""
 "Restoring the implicit generic function for \"%s\" from package \"%s\"\n"
 "    into package \"%s\"; the generic differs from the default conversion (%s)"
 msgstr ""
-"把隐含同属函数\"%s\"从程辑包\"%s\"恢复到\"%s\"；同属函数与缺省转换(%s) 不一样"
+"把隐含同属函数\"%s\"从程辑包\"%s\"恢复到\"%s\"；同属函数与缺省转换(%s)不同"
 
-#, fuzzy
 msgid ""
-"Creating a generic for \"%s\" in package  \"%s\"\n"
+"Creating a generic for \"%s\" in package \"%s\"\n"
 "    (the supplied definition differs from and overrides the implicit "
 "generic\n"
 "    in package \"%s\": %s)"
@@ -159,9 +157,8 @@ msgstr ""
 "    (所提供的函数定义与程辑包\"%3$s\"中的隐含同属函数定义不相同，因此将之覆"
 "盖：%4$s)"
 
-#, fuzzy
 msgid ""
-"No generic version of  \"%s\" on package \"%s\" is allowed;\n"
+"No generic version of \"%s\" on package \"%s\" is allowed;\n"
 "   a new generic will be assigned with package \"%s\""
 msgstr ""
 "程序包\"%2$s\"不允许同属版本的\"%1$s\"；一个新的同属函数将会同程序包\"%3s\"一"
@@ -287,10 +284,10 @@ msgid "\"%s\" has no methods defined"
 msgstr "'%s'没有设定任何方法"
 
 msgid "selectMethod(): mlist is not an environment or NULL :"
-msgstr ""
+msgstr "selectMethod(): mlist不是环境也不是空的"
 
 msgid "** should no longer happen!"
-msgstr ""
+msgstr "不应该产生**!"
 
 msgid ""
 "bad class specified for element %d (should be a single character string)"
@@ -359,9 +356,8 @@ msgstr "findMethods()不适用于非同屬函数'%s'"
 msgid "Only FALSE is meaningful for 'inherited', when 'where' is supplied (got"
 msgstr "用'where'时，FALSE只对于'inherited'有意义，(得到了"
 
-#, fuzzy
 msgid "argument \"f\" must be a generic function or %s"
-msgstr "为变元\"f\"提供的函数必需是同属函数"
+msgstr "变元\"f\"必需是同属函数，或为%s"
 
 msgid "'%s' is not a generic function in '%s' {and 'package' not specified}"
 msgstr "'%s'不是'%s'里的同属函数，{也没有设定'package'}"
@@ -455,16 +451,16 @@ msgid ""
 msgstr "初始化方法回復了类别为\"%s\"的对象而不是所要求的\"%s\"这一类别"
 
 msgid "Reported %d ambiguous selections out of %d for function %s"
-msgstr ""
+msgstr "函数%3$s内%2$d个选择里有%1$d个歧义选择"
 
 msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
-msgstr ""
+msgstr "%d: 目标\"%s\": 选择\"%s\" (其它：%s)"
 
 msgid ","
 msgstr ","
 
 msgid "Notes: %s."
-msgstr ""
+msgstr "记录：%s。"
 
 msgid "the names in signature for method (%s) do not match %s's arguments (%s)"
 msgstr "方法(%s)标记里的名字同函数%s变元(%s)不相对应"
@@ -519,9 +515,8 @@ msgstr ""
 msgid "class \"%s\" extends an undefined class, \"%s\""
 msgstr "类别\"%s\"不能擴充不存在的类别\"%s\""
 
-#, fuzzy
 msgid "'Class' must be a valid class definition or class"
-msgstr "'class1'必需是类别名字或类别定义"
+msgstr "'Class'必需是有效的类别名字或类别定义"
 
 msgid ""
 "trying to assign an object of class \"%s\" as the definition of class \"%s"
@@ -601,18 +596,18 @@ msgstr "类别为\"%s\"的'%s'串列包含不存在的类别\"%s\""
 msgid ""
 "Class \"%s\" is inheriting an inconsistent superclass structure from class "
 "\"%s\", inconsistent with %s"
-msgstr ""
+msgstr "\"%s\"类别从\"%s\"继承了有矛盾的超类别结构，与%s有矛盾"
 
 msgid ""
 "unable to find a consistent ordering of superclasses for class \"%s\": order "
 "chosen is inconsistent with the superclasses of %s"
-msgstr ""
+msgstr "无法为类别\"%s\"找到相容的超类顺序: 所选择的顺序同%s超类不相容"
 
 msgid "\"class\" is a reserved slot name and cannot be redefined"
 msgstr "\"class\"是为保留槽名，不可以重新被定义"
 
 msgid "Data part is undefined for general S4 object"
-msgstr ""
+msgstr "没有定义一般S4对象的数据部分"
 
 msgid "no '.Data' slot defined for class \"%s\""
 msgstr "类别\"%s\"没有'.Data'这一个槽"
@@ -626,7 +621,7 @@ msgid ""
 msgstr "数据部分有多种类别：用\"%s\"而不是\"%s\""
 
 msgid "Class cannot have both an ordinary and hidden data type"
-msgstr ""
+msgstr "类别不能同时具有普通的和暗藏的数据种类"
 
 msgid ""
 "a validity method must be a function of one argument, got an object of class "
@@ -666,12 +661,14 @@ msgid ""
 "argument includeSubclasses must be a logical, either one value or a vector "
 "of the same length as argument classes"
 msgstr ""
+"变元includeSubclasses必需是逻辑值，要么是单一值要么是矢量，其长度应同变元类别"
+"相等"
 
 msgid "Argument abbreviate must be 0, 1, 2, or 3"
-msgstr ""
+msgstr "变元缩写必需为0，1，2，或3 "
 
 msgid "Needed the supplied labels vector of length %n, got %n"
-msgstr ""
+msgstr "需要的是长度为%n不是%n的标签矢量"
 
 msgid ""
 "the function being used as %s in making a generic function for \"%s\" is "
@@ -853,9 +850,8 @@ msgstr "；用第一个"
 msgid "multiple equivalent inherited matches:"
 msgstr "多个等同继承匹配"
 
-#, fuzzy
 msgid "single string; got an object of class \"%s\""
-msgstr "\"),提供的应该是函数，得到的却是对象"
+msgstr "单独字符串：不该是类别为\"%s\"的对象"
 
 msgid "\"%s\" has a sealed class definition and cannot be redefined"
 msgstr "\"%s\"的类别定义被封闭了，因此无法重新被定义"
@@ -867,9 +863,8 @@ msgstr ""
 "当变元'representation'是'classRepresentation'对象时只能使用'Class'和'where'变"
 "元"
 
-#, fuzzy
-msgid "Internal error: definiition of class \"%s\" not properly assigned"
-msgstr "类别\"%s\"的定义不存在"
+msgid "Internal error: definition of class \"%s\" not properly assigned"
+msgstr "内部错误：类别\"%s\"的定义设得不对"
 
 msgid ""
 "error in contained classes (%s) for class \"%s\" and unable to remove "
@@ -959,22 +954,21 @@ msgstr ""
 msgid "no definition of \"%s\" to use for %s"
 msgstr "\"%s\"没有定义，不能为%s起作用"
 
-#, fuzzy
 msgid ""
 "multiple definitions of class \"%s\" visible; using the definition\n"
 "   in package \"%s\" for %s"
-msgstr "\"%s\"有多个定义；现在用%s这一个"
+msgstr "\"%s\"有多个定义；现在用程序包\"%s\"中%s的定义"
 
 msgid "Class definition cannot extend more than one of these data types: %s"
-msgstr ""
+msgstr "类别定义最多只能扩展这些数据种类中的一个: %s"
 
 msgid ""
 "Sorry, abnormal type \"%s\" is not supported as a superclass of a class "
 "definition"
-msgstr ""
+msgstr "对不起，不支持作为一个类别定义的超类\"%s\""
 
 msgid "Defining type \"%s\" as a superclass via class \"%s\""
-msgstr ""
+msgstr "将种类\"%s\"通过类别\"%s\"定义为超类"
 
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
@@ -1153,12 +1147,12 @@ msgstr "同属函数的方法表不对，或还没有设制"
 msgid "Trying to find a methods table in a non-generic function"
 msgstr "在非同属函数里是找不到方法列表的"
 
-#, fuzzy
 msgid ""
 "The \"ambiguousMethodSelection\" option should be a function to be called as "
 "the condition action; got an object of class \"%s\""
 msgstr ""
-"'setIs'的'coerce'变元值必需是单变元函数，而现在它却是类别为\"%s\"的对象"
+"\"ambiguousMethodSelection\"这个选项应该是作为条件来调用的函数；现在它却是类"
+"别为\"%s\"的对象"
 
 msgid ""
 "No simply inherited methods found for function \"%s\"; using non-simple "
@@ -1170,6 +1164,9 @@ msgid ""
 " target signature \"%s\".\n"
 " %s would also be valid"
 msgstr ""
+"注意: 为函数\"%2$s\"选择了带\"%1$s\"标签的方法,\n"
+" 目标标签为\"%3$s\".\n"
+" %4$s应该是有效的"
 
 msgid "found"
 msgstr "找到了"
@@ -1188,16 +1185,16 @@ msgid ""
 msgstr "在搜索继承方法时出了错；找不到唯一方法"
 
 msgid "Selecting %d methods of min. distance"
-msgstr ""
+msgstr "选用min. distance的%d方法"
 
 msgid "Selecting %d non-group methods"
-msgstr ""
+msgstr "选用%d非组方法"
 
 msgid "Selecting %d partially exact-matching method(s)"
-msgstr ""
+msgstr "选用%d部分精密匹配方法"
 
 msgid "Choosing method %s from %d ambiguous possibilities"
-msgstr ""
+msgstr "从%2$d个歧义可能选择中选%1$s方法"
 
 msgid "Failed to find expected group generic function:"
 msgstr "找不到团体同属函数："
@@ -1236,17 +1233,16 @@ msgid ""
 "No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
 msgstr "在\"%3$s\"程序包中，程序包\"%2$s\"里的同属\"%1$s\"没有方法列表"
 
-#, fuzzy
 msgid "Undefined classes ("
-msgstr "\"%s\"不是有定义的类别"
+msgstr "未定义类别"
 
 msgid ") will be ignored, for argument"
-msgstr ""
+msgstr ")略过不用，变元"
 
 msgid ""
 "Argument \"signatures\" must be a character matrix whose rows are method "
 "signatures"
-msgstr ""
+msgstr "\"signatures\"变元必需为字符矩阵，每行都是方法签字"
 
 msgid "not allowed to have test==TRUE and an S4Class definition"
 msgstr "test==TRUE和S4Class定义不能同时存在"
@@ -1255,11 +1251,12 @@ msgid ""
 "argument S4Class must be a class definition:  got an object of class \"%s\""
 msgstr "变元S4Class必需是类别定义：现在得到的却是类别为\"%s\"的目标对象"
 
-#, fuzzy
 msgid ""
 "inconsistent old-style class information for \"%s\"; the class is defined "
 "but does not extend \"%s\" and is not valid as the data part"
-msgstr "\"%s\"旧式类别信息有矛盾(会不会是将旧的和新的类别混在了一起用?)"
+msgstr ""
+"\"%s\"旧式类别信息有矛盾；虽然类别的定义是存在的，但它不扩展\"%s\"而且也不能"
+"当作数据来用"
 
 msgid ""
 "The S3 class of the prototype, \"%s\", is undefined; only allowed when this "
@@ -1267,19 +1264,17 @@ msgid ""
 msgstr ""
 "S3类别的原型, \"%s\", 没有定义；只有在注册这个S3类别时才允许这种情况(\"%s\")"
 
-#, fuzzy
 msgid "Restoring definition of class \"%s\""
-msgstr "类别\"%s\"的定义不存在"
+msgstr "恢复类别\"%s\"的定义"
 
-#, fuzzy
 msgid "Slot \"%s\": class \"%s\" should extend class \"%s\""
-msgstr "类别\"%s\"无法擴充类别\"%s\""
+msgstr "槽\"%s\"：类别\"%s\"无法擴充类别\"%s\""
 
-#, fuzzy
 msgid ""
 "invalid S4 class corresponding to S3 class: slots in  S4 version must extend "
 "corresponding slots in S3 version: fails for %s"
-msgstr "类别\"%s\"里的槽必需擴充类别\"%s\"中相应的槽：%s出了错"
+msgstr ""
+"与S3类别相对应的S4类别不对：S4类别里的槽必需擴充类别S3中相应的槽：%s出了错"
 
 msgid "explicit coercion of old-style class (%s) is not defined"
 msgstr "旧式类别(%s)的明确强制转换没有定义"
