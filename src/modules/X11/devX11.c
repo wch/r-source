@@ -3163,28 +3163,40 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
     }
 
     /* find the size and format of the data in the selection */
-    XGetWindowProperty(display, clpwin, pty, 0, 0, False, AnyPropertyType,
-		       &pty_type, &pty_format, &pty_items, &pty_size, &buffer);
-    XFree(buffer);
-    if (pty_format != 8) { /* bytes */
+    ret = XGetWindowProperty(display, clpwin, pty, 0, 0, False, AnyPropertyType,
+			     &pty_type, &pty_format, &pty_items, &pty_size,
+			     &buffer);
+    if (ret) {
 	warning(_("clipboard cannot be opened or contains no text"));
 	res = FALSE;
-    } else { /* read the property */
-	XGetWindowProperty(display, clpwin, pty, 0, (long)pty_size, False,
-			   AnyPropertyType, &pty_type, &pty_format,
-			   &pty_items, &pty_size, &buffer);
-	this->buff = (char *)malloc(pty_items + 1);
-	this->last = this->len = pty_items;
-	if(this->buff) {
-	    /* property always ends in 'extra' zero byte */
-	    memcpy(this->buff, buffer, pty_items + 1);
-	} else {
-	    warning(_("memory allocation to copy clipboard failed"));
+    } else {
+	XFree(buffer);
+	if (pty_format != 8) { /* bytes */
+	    warning(_("clipboard cannot be opened or contains no text"));
 	    res = FALSE;
+	} else { /* read the property */
+	    ret = XGetWindowProperty(display, clpwin, pty, 0, (long)pty_size, False,
+				     AnyPropertyType, &pty_type, &pty_format,
+				     &pty_items, &pty_size, &buffer);
+	    if (ret) {
+		warning(_("clipboard cannot be read (error code %d)"), ret);
+		res = FALSE;
+	    } else {
+		this->buff = (char *)malloc(pty_items + 1);
+		this->last = this->len = pty_items;
+		if(this->buff) {
+		    /* property always ends in 'extra' zero byte */
+		    memcpy(this->buff, buffer, pty_items + 1);
+		} else {
+		    warning(_("memory allocation to copy clipboard failed"));
+		    res = FALSE;
+		}
+		XFree(buffer);
+	    }
 	}
     }
+    
     XDeleteProperty(display, clpwin, pty);
-    XFree(buffer);
     if (!displayOpen) {
 	XCloseDisplay(display);
 	strcpy(dspname, "");
