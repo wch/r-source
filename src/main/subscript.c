@@ -454,7 +454,7 @@ stringSubscript(SEXP s, int ns, int nx, SEXP names,
     int i, j, nnames, sub, extra;
     int canstretch = *stretch;
     /* product may overflow, so check factors as well. */
-    Rboolean usehashing = in && ( ((ns > 1000 && nx) || (nx > 1000 && ns)) && (ns * nx > 15*nx + ns) );
+    Rboolean usehashing = in && ( ((ns > 1000 && nx) || (nx > 1000 && ns)) || (ns * nx > 15*nx + ns) );
 
     PROTECT(s);
     PROTECT(names);
