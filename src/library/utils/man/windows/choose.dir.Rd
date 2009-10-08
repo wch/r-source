@@ -33,6 +33,6 @@ choose.dir(default = "", caption = "Select folder")
 }
 \examples{
   if (interactive()) 
-	choose.dir(getwd(), "Choose a suitable folder")
+        choose.dir(getwd(), "Choose a suitable folder")
 }
 \keyword{file}

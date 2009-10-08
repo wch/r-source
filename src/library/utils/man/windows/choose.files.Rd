@@ -13,7 +13,7 @@ interactively.
 }
 \usage{
 choose.files(default = "", caption = "Select files",
-	     multi = TRUE, filters = Filters,
+             multi = TRUE, filters = Filters,
              index = nrow(Filters))
 
 Filters
@@ -68,6 +68,6 @@ Filters
 }
 \examples{
   if (interactive()) 
-	choose.files(filters = Filters[c("zip", "All"),])
+       choose.files(filters = Filters[c("zip", "All"),])
 }
 \keyword{file}

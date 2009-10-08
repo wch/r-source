@@ -35,7 +35,7 @@
   Springer.
 }
 \seealso{
-	 \code{\linkS4class{structure}}
+         \code{\linkS4class{structure}}
 }
 \examples{
 setClass("NumericNotStructure", contains = c("numeric","nonStructure"))
