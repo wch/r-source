@@ -2417,7 +2417,7 @@ static SEXP do_unsetS4(SEXP obj, SEXP newClass) {
   else if(length(newClass) > 1)
     warning(_("Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no longer be an S4 object"), translateChar(STRING_ELT(newClass, 0)), translateChar(STRING_ELT(newClass, 1)));
   else
-    warning(_("Setting class(x) to \"%s\" sets attribut to NULL;   result will no longer be an S4 object"), CHAR(asChar(newClass)));
+    warning(_("Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be an S4 object"), CHAR(asChar(newClass)));
   UNSET_S4_OBJECT(obj);
   return obj;
 }

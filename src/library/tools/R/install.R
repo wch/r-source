@@ -967,7 +967,7 @@
             use_zip_data <- TRUE
         } else if (a == "--auto-zip") {
             if (WINDOWS) auto_zip <- TRUE
-            else warning("--auto-zip' is for Windows only", call. = FALSE)
+            else warning("'--auto-zip' is for Windows only", call. = FALSE)
         } else if (a == "-l") {
             if (length(args) >= 2) {lib <- args[2]; args <- args[-1]}
             else stop("-l option without value", call. = FALSE)

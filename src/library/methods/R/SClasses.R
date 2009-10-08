@@ -62,7 +62,7 @@ setClass <-
             else { # update class definition
                 classDef <- getClassDef(Class, where = where)
                 if(is.null(classDef))
-                  stop(gettextf('Internal error: definiition of class "%s" not properly assigned', Class),
+                  stop(gettextf('Internal error: definition of class "%s" not properly assigned', Class),
                        domain = NA)
             }
           }
