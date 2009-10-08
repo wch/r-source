@@ -1345,24 +1345,21 @@
     cat("\\end{description}\n", file = out)
 }
 
+## workhorse of .Rd2dvi
 .Rdfiles2tex <-
     function(files, outfile, encoding = "unknown", outputEncoding = "latin1",
              append = FALSE, extraDirs = NULL, internals = FALSE,
              silent = FALSE)
 {
     if (file_test("-d", files))
-        latexEncodings <-
-            .pkg2tex(files, outfile, encoding = encoding, append = append,
-                     asChapter = FALSE, extraDirs = extraDirs,
-                     internals = internals, silent = silent)
+        .pkg2tex(files, outfile, encoding = encoding, append = append,
+                 asChapter = FALSE, extraDirs = extraDirs,
+                 internals = internals, silent = silent)
     else {
         files <- strsplit(files, "[[:space:]]+")[[1L]]
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
         if (!silent) message("Converting Rd files to LaTeX ...")
-        ## FIXME: do this directly via .Rdconv()
-        cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
-                     encoding, sep="")
         if (is.character(outfile)) {
             outfile <- file(outfile, if (append) "at" else "wt")
             on.exit(close(outfile))
@@ -1387,7 +1384,8 @@
     }
 }
 
-## replacement for tools/pkg2tex.pl, and more
+## used for the refman (from doc/manual/Makefile*)
+## and for directories from .Rdfiles2tex  (with asChapter = FALSE)
 .pkg2tex <-
     function(pkgdir, outfile, internals = FALSE, asChapter = TRUE,
              encoding = "unknown", outputEncoding = "latin1",
@@ -1396,10 +1394,10 @@
     ## sort order for topics, a little tricky
     re <- function(x) x[order(toupper(x), x)]
 
-    ## given an installed package with a latex dir, make a single file
-    ## for use in the refman.
+    ## given an installed package with a latex dir or a source package
+    ## with a man dir, make a single file for use in the refman.
 
-    options(warn=1)
+    options(warn = 1)
     if (missing(outfile))
         outfile <- paste(basename(pkgdir), "-pkg.tex", sep="")
 
@@ -1458,9 +1456,6 @@
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
             message("Converting Rd files to LaTeX ...")
-            ## FIXME: do this directly via .Rdconv()
-            cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
-                         encoding, sep="")
             for(f in files) {
                 cat("  ", basename(f), "\n", sep="")
                 out <-  sub("\\.[Rr]d$", ".tex", basename(f))
