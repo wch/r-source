@@ -69,6 +69,17 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   The difference between arguments \code{Link} and \code{Link2} is that
   links are looked in them in turn, so lazy-evaluation can be used to
   only do a second-level search for links if required.
+  
+  \code{Rd2txt} will use directional quotes (see \code{\link{sQuote}})
+  if option \code{"useFancyQuotes"} is true (the default) and
+#ifdef unix
+  the current encoding is UTF-8.
+#endif
+#ifdef windows
+  the current locale uses a single-byte encoding (except C).
+  (Directional quotes are not attempted in CJK locales as they are
+  usually double-width, which looks wrong with English text.)
+#endif
 }
 \section{Encodings}{
   Rd files are normally intended to be rendered on a wide variety of

@@ -264,7 +264,9 @@ getOption(x, default = NULL)
     \item{\code{topLevelEnvironment}:}{see \code{\link{topenv}} and
       \code{\link{sys.source}}.}
 
-    \item{\code{useFancyQuotes}:}{see \code{\link{sQuote}}.}
+    \item{\code{useFancyQuotes}:}{logical: controls the use of
+      directional quotes: see \code{\link{sQuote}} and
+      \code{\link{Rd2txt}}.}
 
     \item{\code{verbose}:}{logical.  Should \R report extra information
       on progress?  Set to \code{TRUE} by the command-line option
