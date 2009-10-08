@@ -19,7 +19,7 @@ export("?", CRAN.packages, Rprof,Rprofmem, RShowDoc, RSiteSearch,
        normalizePath, object.size, old.packages, package.contents,
        package.skeleton, packageDescription, packageStatus, page,
        person, personList, pico, prompt, promptData, promptPackage,
-       rc.getOption, rc.options, rc.settings, rc.status,
+       rc.getOption, rc.options, rc.settings, rc.status, .DollarNames,
        readCitationFile, read.DIF, read.csv, read.csv2, read.delim,
        read.delim2, read.fwf, read.fortran, read.socket, read.table,
        recover, relist, remove.packages, savehistory, select.list,
@@ -104,6 +104,11 @@ S3method(unstack, default)
 S3method(upgrade, packageStatus)
 ## can't register update.packageStatus as update is in stats
 ## and would create a cycle.
+
+S3method(.DollarNames, default)
+S3method(.DollarNames, list)
+S3method(.DollarNames, environment)
+
 
 export(Rtangle, RtangleSetup, RweaveLatex, RweaveLatexSetup, Stangle,
        Sweave, SweaveSyntConv, SweaveSyntaxLatex, SweaveSyntaxNoweb,

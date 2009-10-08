@@ -9,6 +9,7 @@
 \alias{rc.status}
 \alias{rc.getOption}
 \alias{rc.options}
+\alias{.DollarNames}
 \title{A Completion Generator for R}
 
 \description{
@@ -23,13 +24,17 @@
 \usage{
 
 rc.settings(ops, ns, args, func, ipck, S3, data, help,
-           argdb, files)
+            argdb, files)
 
 rc.status()
-
 rc.getOption(name)
-
 rc.options(\dots)
+
+.DollarNames(x, pattern)
+
+\S3method{.DollarNames}{default}(x, pattern = "")
+\S3method{.DollarNames}{list}(x, pattern = "")
+\S3method{.DollarNames}{environment}(x, pattern = "")
 
 }
 
@@ -69,22 +74,21 @@ rc.options(\dots)
         with a question mark, by looking inside help index files }
 
       \item{\code{argdb}:}{ when \code{args=TRUE}, completion is
-        attempted on function arguments.  Generally, the list of
-        valid arguments is determined by dynamic calls to
-        \code{\link{args}}.  While this gives results that are
-        technically correct, the use of the \code{\dots} argument often
-        hides some useful arguments.  To give more flexibility in this
-        regard, \code{rcompgen} internally retains an optional table of
-        valid arguments names for specific functions.  Setting
-        \code{argdb=TRUE} enables preferential lookup in this internal
-        data base for functions with an entry in it.  Of course, this is
-        useful only when the data base contains information about the
-        function of interest.  Some functions are included in the
-        package (the maintainer is happy to add more upon request), and
-        more can be added by the user through the unexported function
-        \code{.addFunctionInfo} (see below).
+        attempted on function arguments.  Generally, the list of valid
+        arguments is determined by dynamic calls to \code{\link{args}}.
+        While this gives results that are technically correct, the use
+        of the \code{\dots} argument often hides some useful arguments.
+        To give more flexibility in this regard, an optional table of
+        valid arguments names for specific functions is retained
+        internally.  Setting \code{argdb=TRUE} enables preferential
+        lookup in this internal data base for functions with an entry in
+        it.  Of course, this is useful only when the data base contains
+        information about the function of interest.  Some functions are
+        included in the package (the maintainer is happy to add more
+        upon request), and more can be added by the user through the
+        unexported function \code{.addFunctionInfo} (see below).
       }
-
+      
       \item{\code{files}:}{ enables filename completion in R code.  This
         is initially set to \code{FALSE}, in which case the underlying
         completion front-end can take over (and hopefully do a better
@@ -108,6 +112,14 @@ rc.options(\dots)
     }
     See \code{\link{options}} for detailed usage description
   }
+
+  \item{x}{ An R object for which valid names after \code{"$"}
+    are computed and returned.
+  }
+
+  \item{pattern}{ A regular expression.  Only matching names are
+    returned.
+  }
 }
 
 \details{
@@ -128,6 +140,10 @@ rc.options(\dots)
       be evaluated, which is attempted unless it involves an explicit
       function call (implicit function calls involving the use of
       \code{[}, \code{$}, etc \emph{do not} inhibit evaluation).
+
+      Valid completions after the \code{$} extractor are determined by
+      the generic function \code{.DollarNames}.  Some basic methods are
+      provided, and more can be written for custom classes.
     }
 
     \item{\bold{Completion inside name spaces}:}{
