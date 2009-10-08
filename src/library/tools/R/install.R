@@ -1360,6 +1360,7 @@
         latexdir <- tempfile("ltx")
         dir.create(latexdir)
         if (!silent) message("Converting Rd files to LaTeX ...")
+        ## FIXME: do this directly via .Rdconv()
         cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
                      encoding, sep="")
         if (is.character(outfile)) {
@@ -1457,6 +1458,7 @@
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
             message("Converting Rd files to LaTeX ...")
+            ## FIXME: do this directly via .Rdconv()
             cmd <- paste(R.home(), "/bin/R CMD Rdconv -t latex --encoding=",
                          encoding, sep="")
             for(f in files) {
@@ -2011,7 +2013,7 @@ function(name="", version = "0.0")
     if (length(files) != 1L)
         stop("exactly one Rd file must be specified", call. = FALSE)
     if (is.character(out) && !nzchar(out)) {
-        ## choose out from filename
+        ## choose 'out' from filename
         bf <- sub("\\.[Rr]d$", "", file)
         exts <- c(txt=".txt", html=".html", latex=".tex", exmaple=".R")
         out <- paste(bf,  exts[type], sep = "")
@@ -2034,9 +2036,12 @@ function(name="", version = "0.0")
            },
            "example" = {
                if (!nzchar(enc)) enc <- "UTF-8"
-               Rd2ex(files, out, defines=os, outputEncoding=enc)
+               Rd2ex(files, out, defines = os, outputEncoding = enc)
            },
-           stop("no 'type' specified", call. = FALSE))
+           "unknown" = stop("no 'type' specified", call. = FALSE),
+           stop("'type' must be one of 'txt', 'html', 'latex' or 'example'",
+                call. = FALSE)
+           )
     invisible()
 }
 
