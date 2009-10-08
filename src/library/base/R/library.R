@@ -83,8 +83,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                      pkgname, as.character(built$R)),
                         call. = FALSE, domain = NA)
             } else {
-                ## check that this was not under pre-2.10.0
-                if(!file.exists(file.path(pkgpath, "help", "paths.rds")))
+                ## check that this was not under pre-2.10.0, but beware
+                ## of bootstrapping standard packages
+                if(file.exists(file.path(pkgpath, "help")) &&
+                   !file.exists(file.path(pkgpath, "help", "paths.rds")))
                     stop(gettextf("package '%s' claims to be built under R version %s but is missing some help files and needs to be re-installed",
                                   pkgname, as.character(built$R)),
                          call. = FALSE, domain = NA)
