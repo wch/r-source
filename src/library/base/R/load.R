@@ -19,7 +19,7 @@ load <-
 {
     if (is.character(file)) {
         ## files are allowed to be of an earlier format
-        ## gzfile are open gip, bzip2 and uncompressed files.
+        ## gzfile can open gzip, bzip2, xz and uncompressed files.
         con <- gzfile(file)
         on.exit(close(con))
         magic <- readChar(con, 5L, useBytes = TRUE)

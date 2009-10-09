@@ -1341,8 +1341,8 @@ static Rboolean bzfile_open(Rconnection con)
     bz->fp = fp;
     bz->bfp = bfp;
     con->isopen = TRUE;
-    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
-    else con->text = TRUE;
+    if(strlen(con->mode) >= 2 && con->mode[1] == 't') con->text = TRUE;
+    else con->text = FALSE;
     set_iconv(con);
     con->save = -1000;
     return TRUE;
@@ -1495,8 +1495,8 @@ static Rboolean xzfile_open(Rconnection con)
 	}
     }
     con->isopen = TRUE;
-    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
-    else con->text = TRUE;
+    if(strlen(con->mode) >= 2 && con->mode[1] == 't') con->text = TRUE;
+    else con->text = FALSE;
     set_iconv(con);
     con->save = -1000;
     return TRUE;
