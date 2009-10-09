@@ -102,7 +102,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
 	}
     }
     getCaption <- function(k) # allow caption = "" , plotmath etc
-        as.graphicsAnnot(unlist(caption[k]))
+        if(length(caption) < k) NA_character_ else as.graphicsAnnot(caption[[k]])
 
     if(is.null(sub.caption)) { ## construct a default:
 	cal <- x$call
