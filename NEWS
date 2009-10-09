@@ -9,6 +9,12 @@
 		CHANGES IN R VERSION 2.11.0
 
 
+SIGNIFICANT USER-VISIBLE CHANGES
+
+    o	Packages must have been installed under R 2.10.0 or later, as
+	the current help system is the only one now supported.
+
+
 NEW FEATURES
 
     o   New generic function .DollarNames() to enable class authors 
@@ -358,6 +364,9 @@ NEW FEATURES
 
     o	There are the beginnings of a Nynorsk translation by Karl Ove
 	Hufthammer.
+
+    o	stripchart() allows par 'bg' to be passed in for the
+	background colour for pch = 21 (wish of PR#13984).
 
 
 REGULAR EXPRESSIONS

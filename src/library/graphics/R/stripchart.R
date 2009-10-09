@@ -26,11 +26,11 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	 frame.plot=axes, ...)
 {
     method <- pmatch(method, c("overplot", "jitter", "stack"))[1L]
-    if(is.na(method) || method==0)
+    if(is.na(method) || method == 0L)
 	stop("invalid plotting method")
     groups <-
 	if(is.list(x)) x else if(is.numeric(x)) list(x)
-    if(0 == (n <- length(groups)))
+    if(0L == (n <- length(groups)))
 	stop("invalid first argument")
     if(!missing(group.names))
 	attr(groups, "names") <- group.names
@@ -47,11 +47,11 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	dlim <- c(NA, NA)
 	for(i in groups)
 	    dlim <- range(dlim, i[is.finite(i)], na.rm = TRUE)
-	glim <- c(1,n)# in any case, not range(at)
-	if(method == 2) { # jitter
+	glim <- c(1L, n)# in any case, not range(at)
+	if(method == 2L) { # jitter
 	    glim <- glim + jitter * if(n == 1) c(-5, 5) else c(-2, 2)
 	} else if(method == 3) { # stack
-	    glim <- glim + if(n == 1) c(-1,1) else c(0, 0.5)
+	    glim <- glim + if(n == 1L) c(-1,1) else c(0, 0.5)
 	}
 	if(is.null(xlim))
 	    xlim <- if(vertical) glim else dlim
@@ -61,7 +61,7 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	if (frame.plot) box()
 	if(vertical) {
 	    if (axes) {
-		if(n > 1) axis(1, at=at, labels=names(groups), ...)
+		if(n > 1L) axis(1, at=at, labels=names(groups), ...)
 		Axis(x, side = 2, ...)
 	    }
 	    if (is.null(ylab)) ylab <- dlab
@@ -70,31 +70,33 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	else {
 	    if (axes) {
 		Axis(x, side = 1, ...)
-		if(n > 1) axis(2, at=at, labels=names(groups), ...)
+		if(n > 1L) axis(2, at=at, labels=names(groups), ...)
 	    }
 	    if (is.null(xlab)) xlab <- dlab
 	    if (is.null(ylab)) ylab <- glab
 	}
-	title(xlab=xlab, ylab=ylab, ...)
+	title(xlab = xlab, ylab = ylab, ...)
     }
     csize <- cex*
 	if(vertical) xinch(par("cin")[1L]) else yinch(par("cin")[2L])
     for(i in 1L:n) {
 	x <- groups[[i]]
 	y <- rep.int(at[i], length(x))
-	if(method == 2) ## jitter
+	if(method == 2L) ## jitter
 	    y <- y + stats::runif(length(y), -jitter, jitter)
-	else if(method == 3) { ## stack
+	else if(method == 3L) { ## stack
 	    xg <- split(x, factor(x))
 	    xo <- lapply(xg, seq_along)
 	    x <- unlist(xg, use.names=FALSE)
 	    y <- rep.int(at[i], length(x)) +
 		(unlist(xo, use.names=FALSE) - 1) * offset * csize
 	}
-	if(vertical) points(y, x, col=col[(i - 1)%%length(col) + 1],
-			    pch=pch[(i - 1)%%length(pch) + 1], cex=cex)
-	else points(x, y, col=col[(i - 1)%%length(col) + 1],
-		    pch=pch[(i - 1)%%length(pch) + 1], cex=cex)
+	if(vertical)
+            points(y, x, col = col[(i - 1L) %% length(col) + 1L],
+                   pch = pch[(i - 1L) %% length(pch) + 1L], cex = cex, ...)
+	else
+            points(x, y, col = col[(i - 1L) %% length(col) + 1L],
+                   pch = pch[(i - 1L) %% length(pch) + 1L], cex = cex, ...)
     }
     invisible()
 }
@@ -102,7 +104,7 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 stripchart.formula <-
     function(x, data = NULL, dlab = NULL, ..., subset, na.action = NULL)
 {
-    if(missing(x) || (length(x) != 3))
+    if(missing(x) || (length(x) != 3L))
 	stop("formula missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
