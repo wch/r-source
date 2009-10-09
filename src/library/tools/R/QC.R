@@ -3218,24 +3218,21 @@ function(package, dir, lib.loc = NULL)
         top <- system.file(package = pkg, lib.loc = lib.loc)
         if(nzchar(top)) {
             RdDB <- file.path(top, "help", "paths.rds")
-            nm <- if(file.exists(RdDB))
-                sub("\\.[Rr]d", "", basename(.readRDS(RdDB)))
-            ## might be pre-2.10.0 and on Windows, hence zipped
-            else if(file.exists(f <- file.path(top, "help", "Rhelp.zip")))
-                utils::read.table(file.path(top, "help", "AnIndex"), sep="\t")[2L]
-            else
-                list.files(file.path(top, "help"))
+            if(!file.exists(RdDB)) {
+                message(gettextf("package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked", sQuote(pkg)),
+                        domain = NA)
+                next
+            }
+            nm <- sub("\\.[Rr]d", "", basename(.readRDS(RdDB)))
             good <- thisfile[this] %in% nm
             suspect <- if(any(!good)) {
                 aliases1 <- if (pkg %in% names(aliases)) aliases[[pkg]]
                 else Rd_aliases(pkg, lib.loc = lib.loc)
                 !good & (thisfile[this] %in% aliases1)
             } else FALSE
-        } else {
+            db[this, "bad"] <- !good & !suspect
+        } else
             unknown <- c(unknown, pkg)
-            next
-        }
-        db[this, "bad"] <- !good & !suspect
     }
 
     unknown <- unique(unknown)

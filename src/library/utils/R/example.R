@@ -21,12 +21,11 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	 prompt.prefix = abbreviate(topic, 6))
 {
     topic <- substitute(topic)
-    if(!is.character(topic))
-	topic <- deparse(topic)[1L]
+    if(!is.character(topic)) topic <- deparse(topic)[1L]
     INDICES <- .find.package(package, lib.loc, verbose = verbose)
     file <- index.search(topic, INDICES, "AnIndex", "R-ex")
     if(file == "") {
-	warning(gettextf("no help file found for '%s'", topic), domain = NA)
+	warning(gettextf("no help found for '%s'", topic), domain = NA)
 	return(invisible())
     }
     packagePath <- dirname(dirname(file))
@@ -39,36 +38,25 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     pkg <- basename(packagePath)
     lib <- dirname(packagePath)
     encoding <- NULL
-    ## first step, on-demand conversion, then look for (possibly zipped) file
     RdDB <- file.path(packagePath, "help", pkg)
-    if(file.exists(paste(RdDB, "rdx", sep="."))) {
-        zfile <- tempfile("Rex")
-        encoding <- "UTF-8"
-        ## FIXME: use outputEncoding="" ?
-        ## FUTURE: we already have the parsed file ....
-        tools::Rd2ex(tools:::fetchRdDB(RdDB, sub("\\.R$", "", basename(file))),
-                     zfile)
-    } else {
-	Rexdir <- file.path(tempdir(), "Rex")
-	dir.create(Rexdir, showWarnings=FALSE)
-	zfile <- zip.file.extract(file, "Rex.zip", dir=Rexdir)
-    }
-    if(!file.exists(zfile)) {
-        warning(gettextf("'%s' has a help file but no examples", topic),
-                domain = NA)
-        return(invisible())
-    }
-    if(zfile != file) on.exit(unlink(zfile))
+    if(!file.exists(paste(RdDB, "rdx", sep=".")))
+        stop(gettextf("package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed", sQuote(pkg)), domain = NA)
+    zfile <- tempfile("Rex")
+    encoding <- "UTF-8"
+    tools::Rd2ex(tools:::fetchRdDB(RdDB, sub("\\.R$", "", basename(file))),
+                 zfile)
+    on.exit(unlink(zfile))
     if(pkg != "base")
-	library(pkg, lib.loc = lib, character.only = TRUE)
+        library(pkg, lib.loc = lib, character.only = TRUE)
     if(!is.logical(setRNG) || setRNG) {
 	## save current RNG state:
 	if((exists(".Random.seed", envir = .GlobalEnv))) {
 	    oldSeed <- get(".Random.seed", envir = .GlobalEnv)
-	    on.exit(assign(".Random.seed", oldSeed, envir = .GlobalEnv))
+	    on.exit(assign(".Random.seed", oldSeed, envir = .GlobalEnv),
+                    add = TRUE)
 	} else {
 	    oldRNG <- RNGkind()
-	    on.exit(RNGkind(oldRNG[1L], oldRNG[2L]))
+	    on.exit(RNGkind(oldRNG[1L], oldRNG[2L]), add = TRUE)
 	}
 	## set RNG
 	if(is.logical(setRNG)) { # i.e. == TRUE: use the same as R CMD check
@@ -77,7 +65,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	    set.seed(1)
 	} else eval(setRNG)
     }
-    zz <- readLines(zfile, n=1L)
+    zz <- readLines(zfile, n = 1L)
     if(is.null(encoding)) {
         encoding <-
             if(length(enc <- localeToCharset()) > 1L)

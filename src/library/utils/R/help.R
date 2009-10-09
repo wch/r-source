@@ -230,57 +230,26 @@ function(x, ...)
             dirpath <- dirname(path)
             pkgname <- basename(dirpath)
             RdDB <- file.path(path, pkgname)
-            if(file.exists(paste(RdDB, "rdx", sep="."))) {
-                temp <- tools::Rd2txt(tools:::fetchRdDB(RdDB, basename(file)),
-                                      out=tempfile("Rtxt"), package=pkgname)
-                file.show(temp,
-                          title = gettextf("R Help on '%s'", topic),
-                          delete.file = TRUE)
-            } else {
-                ## Fallback to the old system with help pages
-                ## stored as plain text
-                zfile <- zip.file.extract(file, "Rhelp.zip")
-                if (file.exists(zfile)) {
-                    first <- readLines(zfile, n = 1L)
-                    enc <- if(length(grep("\\(.*\\)$", first)))
-                        sub("[^(]*\\((.*)\\)$", "\\1", first) else ""
-                    if(enc == "utf8") enc <- "UTF-8"
-                    ## allow for 'smart' quotes on Windows, which work
-                    ## in all but CJK encodings
-                    if(.Platform$OS.type == "windows" && enc == ""
-                       && l10n_info()$codepage < 1000) enc <- "CP1252"
-                    file.show(zfile,
-                              title = gettextf("R Help on '%s'", topic),
-                              delete.file = (zfile != file),
-                              encoding = enc)
-                } else
-		    stop(gettextf("No text help for '%s' is available:\ncorresponding file is missing", topic), domain = NA)
-            }
+            if(!file.exists(paste(RdDB, "rdx", sep=".")))
+                stop(gettextf("package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed", sQuote(pkgname)), domain = NA)
+            temp <- tools::Rd2txt(tools:::fetchRdDB(RdDB, basename(file)),
+                                  out=tempfile("Rtxt"), package=pkgname)
+            file.show(temp, title = gettextf("R Help on '%s'", topic),
+                      delete.file = TRUE)
         }
         else if(type %in% c("ps", "postscript", "pdf")) {
-            ok <- FALSE
-            zfile <- zip.file.extract(file, "Rhelp.zip")
-            if(zfile != file) on.exit(unlink(zfile))
-            if(file.exists(zfile)) {
-                .show_help_on_topic_offline(zfile, topic, type)
-                ok <- TRUE
-            } else {
-                ## look for stored Rd files
-                path <- dirname(file) # .../pkg/latex
-                dirpath <- dirname(path)
-                pkgname <- basename(dirpath)
-                RdDB <- file.path(dirpath, "help", pkgname)
-                if(file.exists(paste(RdDB, "rdx", sep="."))) {
-                    ## message("on-demand Rd conversion for ", sQuote(topic))
-                    key <- sub("\\.tex$", "", basename(file))
-                    tf2 <- tempfile("Rlatex")
-                    tools::Rd2latex(tools:::fetchRdDB(RdDB, key), tf2)
-                    .show_help_on_topic_offline(tf2, topic, type)
-                    ok <- TRUE
-                }
-            }
-            if(!ok)
-                stop(gettextf("No offline help for '%s' is available:\ncorresponding file is missing", topic), domain = NA)
+            ## look for stored Rd files
+            path <- dirname(file) # .../pkg/latex
+            dirpath <- dirname(path)
+            pkgname <- basename(dirpath)
+            RdDB <- file.path(dirpath, "help", pkgname)
+            if(!file.exists(paste(RdDB, "rdx", sep=".")))
+                stop(gettextf("package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed", sQuote(pkgname)), domain = NA)
+            key <- sub("\\.tex$", "", basename(file))
+            tf2 <- tempfile("Rlatex")
+            tools::Rd2latex(tools:::fetchRdDB(RdDB, key), tf2)
+            .show_help_on_topic_offline(tf2, topic, type)
+            unlink(tf2)
         }
     }
 

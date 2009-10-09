@@ -62,35 +62,23 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
         ## which version was this package built under?
         if(!is.null(built <- pkgInfo$Built)) {
-            ## must be >= 2.0.0
+            ## must be >= 2.10.0 (new help system)
             R_version_built_under <- as.numeric_version(built$R)
-            if(R_version_built_under < "2.0.0")
-                stop(gettextf("package '%s' was built before R 2.0.0: please re-install it",
+            if(R_version_built_under < "2.10.0")
+                stop(gettextf("package '%s' was built before R 2.10.0: please re-install it",
                               pkgname), call. = FALSE, domain = NA)
-            ## warn if later than this version
+            ## check that this was not under pre-2.10.0, but beware
+            ## of bootstrapping standard packages
+            if(file.exists(file.path(pkgpath, "help")) &&
+               !file.exists(file.path(pkgpath, "help", "paths.rds")))
+                warning(gettextf("package '%s' claims to be built under R version %s but is missing some help files and needs to be re-installed",
+                                 pkgname, as.character(built$R)),
+                        call. = FALSE, domain = NA)
+            ## warn if installed under a later version of R
             if(R_version_built_under > current)
                 warning(gettextf("package '%s' was built under R version %s",
                                  pkgname, as.character(built$R)),
                         call. = FALSE, domain = NA)
-            ## warn if < 2.10.0, when the help format changed.
-            if(R_version_built_under < "2.10.0") {
-                if(.Platform$OS.type == "windows")
-                    warning(gettextf("package '%s' was built under R version %s and help will not work correctly\nPlease re-install it",
-                                     pkgname, as.character(built$R)),
-                            call. = FALSE, domain = NA)
-                else
-                    warning(gettextf("package '%s' was built under R version %s and help may not work correctly",
-                                     pkgname, as.character(built$R)),
-                        call. = FALSE, domain = NA)
-            } else {
-                ## check that this was not under pre-2.10.0, but beware
-                ## of bootstrapping standard packages
-                if(file.exists(file.path(pkgpath, "help")) &&
-                   !file.exists(file.path(pkgpath, "help", "paths.rds")))
-                    stop(gettextf("package '%s' claims to be built under R version %s but is missing some help files and needs to be re-installed",
-                                  pkgname, as.character(built$R)),
-                         call. = FALSE, domain = NA)
-            }
             if(.Platform$OS.type == "unix") {
                 platform <- built$Platform
                 r_arch <- .Platform$r_arch
