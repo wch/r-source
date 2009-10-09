@@ -5184,7 +5184,6 @@ if(.Platform$OS.type == "unix") {
     print(installed.packages(lib.loc= "myLib", priority= "NA"))
     options(op)
     unlink("myLib", recursive=TRUE)
-    unlink(file.path(pkgSrcPath, "pkgB", "R"), recursive = TRUE)
 }
 unlink("myTst", recursive=TRUE)
 
