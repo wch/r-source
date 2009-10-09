@@ -333,6 +333,10 @@ NEW FEATURES
     o	stripchart() allows par 'bg' to be passed in for the
 	background colour for pch = 21 (wish of PR#13984).
 
+    o   New generic function .DollarNames() to enable class authors
+        to customize completion after the $ extractor.
+
+
 
 REGULAR EXPRESSIONS
 

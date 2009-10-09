@@ -46,6 +46,38 @@
 ### careful because 0 length components in sprintf will cause errors.
 
 
+## generic and built-in methods to generate completion after $
+
+.DollarNames <- function(x, pattern)
+    UseMethod(".DollarNames")
+
+.DollarNames.default <- function(x, pattern = "") {
+    if (is.atomic(x) || is.symbol(x)) character(0)
+    else grep(pattern, names(x), value = TRUE)
+}
+
+.DollarNames.list <- function(x, pattern = "") {
+    grep(pattern, names(x), value = TRUE)
+}
+
+.DollarNames.environment <- function(x, pattern = "") {
+    ls(x, all.names = TRUE, pattern = pattern)
+}
+
+## if (is.environment(object))
+## {
+##     ls(object,
+##        all.names = TRUE,
+##        pattern = sprintf("^%s", makeRegexpSafe(suffix)))
+## }
+## else
+## {
+##     grep(sprintf("^%s", makeRegexpSafe(suffix)),
+##          names(object), value = TRUE)
+## }
+
+
+
 
 ## modifies settings:
 
@@ -322,18 +354,19 @@ specialCompletions <- function(text, spl)
                            suffix
                        else
                        {
-                           ## suffix must match names(object) (or ls(object) for environments)
-                           if (is.environment(object))
-                           {
-                               ls(object,
-                                  all.names = TRUE,
-                                  pattern = sprintf("^%s", makeRegexpSafe(suffix)))
-                           }
-                           else
-                           {
-                               grep(sprintf("^%s", makeRegexpSafe(suffix)),
-                                    names(object), value = TRUE)
-                           }
+                           ## ## suffix must match names(object) (or ls(object) for environments)
+                           .DollarNames(object, pattern = sprintf("^%s", makeRegexpSafe(suffix)))
+                           ## if (is.environment(object))
+                           ## {
+                           ##     ls(object,
+                           ##        all.names = TRUE,
+                           ##        pattern = sprintf("^%s", makeRegexpSafe(suffix)))
+                           ## }
+                           ## else
+                           ## {
+                           ##     grep(sprintf("^%s", makeRegexpSafe(suffix)),
+                           ##          names(object), value = TRUE)
+                           ## }
                        }
                    } else suffix
                },
