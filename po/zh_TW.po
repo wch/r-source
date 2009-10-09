@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:06+0100\n"
+"POT-Creation-Date: 2009-10-09 14:46+0100\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -152,9 +152,9 @@ msgstr ""
 #: src/main/connections.c:4094 src/main/connections.c:4233
 #: src/main/connections.c:4237 src/main/connections.c:4363
 #: src/main/connections.c:4365 src/main/connections.c:4367
-#: src/main/connections.c:4399 src/main/connections.c:4527
-#: src/main/connections.c:4553 src/main/connections.c:4557
-#: src/main/connections.c:4561 src/main/context.c:597 src/main/context.c:606
+#: src/main/connections.c:4399 src/main/connections.c:4529
+#: src/main/connections.c:4555 src/main/connections.c:4559
+#: src/main/connections.c:4563 src/main/context.c:597 src/main/context.c:606
 #: src/main/context.c:610 src/main/datetime.c:653 src/main/datetime.c:728
 #: src/main/datetime.c:730 src/main/datetime.c:734 src/main/datetime.c:867
 #: src/main/datetime.c:869 src/main/datetime.c:1015 src/main/debug.c:217
@@ -1305,7 +1305,7 @@ msgstr "'parent' 不是環境物件"
 #: src/main/connections.c:3310 src/main/connections.c:3665
 #: src/main/connections.c:3689 src/main/connections.c:4052
 #: src/main/connections.c:4114 src/main/connections.c:4321
-#: src/main/connections.c:4325 src/main/connections.c:4641
+#: src/main/connections.c:4325 src/main/connections.c:4679
 #: src/main/deparse.c:306 src/main/deparse.c:309 src/main/deparse.c:386
 #: src/main/deparse.c:389 src/main/scan.c:1700 src/main/serialize.c:1663
 msgid "cannot write to this connection"
@@ -1815,8 +1815,8 @@ msgstr "無法開啟先進先出 '%s'"
 #: src/main/connections.c:1240 src/main/connections.c:1250
 #: src/main/connections.c:1382 src/main/connections.c:1394
 #: src/main/connections.c:1916 src/main/connections.c:1932
-#: src/main/connections.c:2228 src/main/connections.c:4828
-#: src/main/connections.c:4892
+#: src/main/connections.c:2228 src/main/connections.c:4866
+#: src/main/connections.c:4930
 #, fuzzy
 msgid "too large a block specified"
 msgstr "矩陣: 指定了太多的元素"
@@ -1828,7 +1828,7 @@ msgstr "先進先出連結指派失敗"
 
 #: src/main/connections.c:936 src/main/connections.c:1091
 #: src/main/connections.c:1672 src/main/connections.c:2864
-#: src/main/connections.c:4529
+#: src/main/connections.c:4531
 msgid "only first element of 'description' argument used"
 msgstr "只用了 'description' 引數的第一個元素"
 
@@ -1844,7 +1844,7 @@ msgstr "file(\"\") 只支援 open = \"w+\" 與 open = \"w+b\": 使用前者"
 #: src/main/connections.c:3204 src/main/connections.c:3306
 #: src/main/connections.c:3471 src/main/connections.c:3685
 #: src/main/connections.c:4001 src/main/connections.c:4110
-#: src/main/connections.c:4317 src/main/connections.c:4616 src/main/dcf.c:56
+#: src/main/connections.c:4317 src/main/connections.c:4654 src/main/dcf.c:56
 #: src/main/deparse.c:303 src/main/deparse.c:383 src/main/saveload.c:2239
 #: src/main/saveload.c:2319 src/main/scan.c:900 src/main/scan.c:1011
 #: src/main/scan.c:1510 src/main/scan.c:1704 src/main/source.c:250
@@ -1902,7 +1902,7 @@ msgstr ""
 msgid "allocation of bzfile connection failed"
 msgstr "指派 bz 檔案連結失敗"
 
-#: src/main/connections.c:1477 src/main/connections.c:5428
+#: src/main/connections.c:1477 src/main/connections.c:5466
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr ""
@@ -2033,7 +2033,7 @@ msgstr "本系統沒有插槽這個功能"
 #: src/main/connections.c:2973 src/main/connections.c:3020
 #: src/main/connections.c:3041 src/main/connections.c:3064
 #: src/main/connections.c:3076 src/main/connections.c:3182
-#: src/main/connections.c:3289 src/main/connections.c:4931
+#: src/main/connections.c:3289 src/main/connections.c:4969
 msgid "'con' is not a connection"
 msgstr "'con' 不是個連結"
 
@@ -2061,7 +2061,7 @@ msgstr "無法關閉輸出匯集連結"
 msgid "cannot close messages sink connection"
 msgstr "無法關閉訊息匯集連結"
 
-#: src/main/connections.c:3043 src/main/connections.c:4640
+#: src/main/connections.c:3043 src/main/connections.c:4678
 #: src/main/serialize.c:1653 src/main/serialize.c:1661
 msgid "connection is not open"
 msgstr "連結沒有開啟"
@@ -2197,75 +2197,75 @@ msgstr "本平臺不支援 'split=TRUE'"
 msgid "there is no connection %d"
 msgstr "'file' 不是連結"
 
-#: src/main/connections.c:4586
+#: src/main/connections.c:4588
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr "file(\"\") 只支援 open = \"w+\" 與 open = \"w+b\": 使用前者"
 
-#: src/main/connections.c:4603 src/modules/internet/internet.c:113
+#: src/main/connections.c:4641 src/modules/internet/internet.c:113
 #: src/modules/internet/internet.c:567
 msgid "unsupported URL scheme"
 msgstr "不支援這種 URL 方案"
 
-#: src/main/connections.c:4694
+#: src/main/connections.c:4732
 msgid "file stream does not have gzip magic number"
 msgstr "檔案串流沒有 gzip 魔術數字"
 
-#: src/main/connections.c:4705
+#: src/main/connections.c:4743
 msgid "file stream does not have valid gzip header"
 msgstr "檔案串流的 gzip 表頭不正確"
 
-#: src/main/connections.c:4771
+#: src/main/connections.c:4809
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "清除 'gzcon' 連結時寫入發生錯誤"
 
-#: src/main/connections.c:4874
+#: src/main/connections.c:4912
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc 錯誤 %x %x\n"
 
-#: src/main/connections.c:4901
+#: src/main/connections.c:4939
 msgid "write error on 'gzcon' connection"
 msgstr "'gzcon' 連結寫入發生錯誤"
 
-#: src/main/connections.c:4935
+#: src/main/connections.c:4973
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' 必須是 0...9 之一"
 
-#: src/main/connections.c:4938
+#: src/main/connections.c:4976
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' 的值必須是 TRUE 或是 FALSE"
 
-#: src/main/connections.c:4941
+#: src/main/connections.c:4979
 msgid "this is already a gzcon connection"
 msgstr "這已經是 gzcon 連結"
 
-#: src/main/connections.c:4947
+#: src/main/connections.c:4985
 msgid "can only use read- or write- binary connections"
 msgstr "只用讀或寫的二元連結"
 
-#: src/main/connections.c:4950
+#: src/main/connections.c:4988
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "使用某個文字模式 'file' 連結可能不會正確作用"
 
-#: src/main/connections.c:4953 src/main/connections.c:4957
-#: src/main/connections.c:4964 src/main/connections.c:4978
+#: src/main/connections.c:4991 src/main/connections.c:4995
+#: src/main/connections.c:5002 src/main/connections.c:5016
 msgid "allocation of 'gzcon' connection failed"
 msgstr "指派 'gzcon' 連結失敗"
 
-#: src/main/connections.c:5138
+#: src/main/connections.c:5176
 msgid "not a list of sockets"
 msgstr "非插槽串列"
 
-#: src/main/connections.c:5143
+#: src/main/connections.c:5181
 msgid "bad write indicators"
 msgstr "寫入指示器不正確"
 
-#: src/main/connections.c:5154
+#: src/main/connections.c:5192
 msgid "not a socket connection"
 msgstr "非插槽連結"
 
-#: src/main/connections.c:5375
+#: src/main/connections.c:5413
 msgid "unknown compression, assuming none"
 msgstr ""
 

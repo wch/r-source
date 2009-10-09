@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:06+0100\n"
+"POT-Creation-Date: 2009-10-09 14:46+0100\n"
 "PO-Revision-Date: 2009-03-28 15:42+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -158,9 +158,9 @@ msgstr "проблема при отображении '%s'"
 #: src/main/connections.c:4094 src/main/connections.c:4233
 #: src/main/connections.c:4237 src/main/connections.c:4363
 #: src/main/connections.c:4365 src/main/connections.c:4367
-#: src/main/connections.c:4399 src/main/connections.c:4527
-#: src/main/connections.c:4553 src/main/connections.c:4557
-#: src/main/connections.c:4561 src/main/context.c:597 src/main/context.c:606
+#: src/main/connections.c:4399 src/main/connections.c:4529
+#: src/main/connections.c:4555 src/main/connections.c:4559
+#: src/main/connections.c:4563 src/main/context.c:597 src/main/context.c:606
 #: src/main/context.c:610 src/main/datetime.c:653 src/main/datetime.c:728
 #: src/main/datetime.c:730 src/main/datetime.c:734 src/main/datetime.c:867
 #: src/main/datetime.c:869 src/main/datetime.c:1015 src/main/debug.c:217
@@ -1291,7 +1291,7 @@ msgstr "'parent' не является окружением"
 #: src/main/connections.c:3310 src/main/connections.c:3665
 #: src/main/connections.c:3689 src/main/connections.c:4052
 #: src/main/connections.c:4114 src/main/connections.c:4321
-#: src/main/connections.c:4325 src/main/connections.c:4641
+#: src/main/connections.c:4325 src/main/connections.c:4679
 #: src/main/deparse.c:306 src/main/deparse.c:309 src/main/deparse.c:386
 #: src/main/deparse.c:389 src/main/scan.c:1700 src/main/serialize.c:1663
 msgid "cannot write to this connection"
@@ -1798,8 +1798,8 @@ msgstr "не могу открыть fifo-канал '%s'"
 #: src/main/connections.c:1240 src/main/connections.c:1250
 #: src/main/connections.c:1382 src/main/connections.c:1394
 #: src/main/connections.c:1916 src/main/connections.c:1932
-#: src/main/connections.c:2228 src/main/connections.c:4828
-#: src/main/connections.c:4892
+#: src/main/connections.c:2228 src/main/connections.c:4866
+#: src/main/connections.c:4930
 msgid "too large a block specified"
 msgstr "определен слишком большой блок"
 
@@ -1810,7 +1810,7 @@ msgstr "размещение fifo соединения не удалось"
 
 #: src/main/connections.c:936 src/main/connections.c:1091
 #: src/main/connections.c:1672 src/main/connections.c:2864
-#: src/main/connections.c:4529
+#: src/main/connections.c:4531
 msgid "only first element of 'description' argument used"
 msgstr "использован только первый элемент аргумента 'description'"
 
@@ -1827,7 +1827,7 @@ msgstr ""
 #: src/main/connections.c:3204 src/main/connections.c:3306
 #: src/main/connections.c:3471 src/main/connections.c:3685
 #: src/main/connections.c:4001 src/main/connections.c:4110
-#: src/main/connections.c:4317 src/main/connections.c:4616 src/main/dcf.c:56
+#: src/main/connections.c:4317 src/main/connections.c:4654 src/main/dcf.c:56
 #: src/main/deparse.c:303 src/main/deparse.c:383 src/main/saveload.c:2239
 #: src/main/saveload.c:2319 src/main/scan.c:900 src/main/scan.c:1011
 #: src/main/scan.c:1510 src/main/scan.c:1704 src/main/source.c:250
@@ -1885,7 +1885,7 @@ msgstr ""
 msgid "allocation of bzfile connection failed"
 msgstr "выделение bzfile-соединения не удалось"
 
-#: src/main/connections.c:1477 src/main/connections.c:5428
+#: src/main/connections.c:1477 src/main/connections.c:5466
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr ""
@@ -2011,7 +2011,7 @@ msgstr "для этой системы сокеты недоступны"
 #: src/main/connections.c:2973 src/main/connections.c:3020
 #: src/main/connections.c:3041 src/main/connections.c:3064
 #: src/main/connections.c:3076 src/main/connections.c:3182
-#: src/main/connections.c:3289 src/main/connections.c:4931
+#: src/main/connections.c:3289 src/main/connections.c:4969
 msgid "'con' is not a connection"
 msgstr "'con' не является соединением"
 
@@ -2039,7 +2039,7 @@ msgstr "не могу закрыть выходное sink-соединение"
 msgid "cannot close messages sink connection"
 msgstr "не могу закрыть sink-соединение для сообщений"
 
-#: src/main/connections.c:3043 src/main/connections.c:4640
+#: src/main/connections.c:3043 src/main/connections.c:4678
 #: src/main/serialize.c:1653 src/main/serialize.c:1661
 msgid "connection is not open"
 msgstr "соединение не открыто"
@@ -2174,78 +2174,78 @@ msgstr "эта платформа не поддерживает 'split=TRUE'"
 msgid "there is no connection %d"
 msgstr "соединение %d не существует"
 
-#: src/main/connections.c:4586
+#: src/main/connections.c:4588
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "файл(\"\") поддерживает только open = \"w+\" and open = \"w+b\": использую "
 "второе"
 
-#: src/main/connections.c:4603 src/modules/internet/internet.c:113
+#: src/main/connections.c:4641 src/modules/internet/internet.c:113
 #: src/modules/internet/internet.c:567
 msgid "unsupported URL scheme"
 msgstr "не поддерживаемая схема URL"
 
-#: src/main/connections.c:4694
+#: src/main/connections.c:4732
 msgid "file stream does not have gzip magic number"
 msgstr "файловый поток не имеет магического числа gzip"
 
-#: src/main/connections.c:4705
+#: src/main/connections.c:4743
 msgid "file stream does not have valid gzip header"
 msgstr "файловый поток не имеет правильного заголовка gzip"
 
-#: src/main/connections.c:4771
+#: src/main/connections.c:4809
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "ошибка записи во время gzcon-соединения"
 
-#: src/main/connections.c:4874
+#: src/main/connections.c:4912
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "ошибка crc %x %x\n"
 
-#: src/main/connections.c:4901
+#: src/main/connections.c:4939
 msgid "write error on 'gzcon' connection"
 msgstr "ошибка записи в gzcon-соединение"
 
-#: src/main/connections.c:4935
+#: src/main/connections.c:4973
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' должен быть один из 0 ... 9"
 
-#: src/main/connections.c:4938
+#: src/main/connections.c:4976
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' должно быть TRUE или FALSE"
 
-#: src/main/connections.c:4941
+#: src/main/connections.c:4979
 msgid "this is already a gzcon connection"
 msgstr "это уже gzcon-соединение"
 
-#: src/main/connections.c:4947
+#: src/main/connections.c:4985
 msgid "can only use read- or write- binary connections"
 msgstr "могу только использовать read- или write- бинарные соединения"
 
-#: src/main/connections.c:4950
+#: src/main/connections.c:4988
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
 "использование текстового соединения 'file' может не работать как положено"
 
-#: src/main/connections.c:4953 src/main/connections.c:4957
-#: src/main/connections.c:4964 src/main/connections.c:4978
+#: src/main/connections.c:4991 src/main/connections.c:4995
+#: src/main/connections.c:5002 src/main/connections.c:5016
 msgid "allocation of 'gzcon' connection failed"
 msgstr "выделить gzcon-соединение не удалось"
 
-#: src/main/connections.c:5138
+#: src/main/connections.c:5176
 msgid "not a list of sockets"
 msgstr "не является списком сокетов"
 
-#: src/main/connections.c:5143
+#: src/main/connections.c:5181
 msgid "bad write indicators"
 msgstr "плохие индикаторы записи"
 
-#: src/main/connections.c:5154
+#: src/main/connections.c:5192
 msgid "not a socket connection"
 msgstr "не сокет-соединение"
 
-#: src/main/connections.c:5375
+#: src/main/connections.c:5413
 msgid "unknown compression, assuming none"
 msgstr ""
 
