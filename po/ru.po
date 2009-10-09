@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:36+0100\n"
+"POT-Creation-Date: 2009-10-09 08:06+0100\n"
 "PO-Revision-Date: 2009-03-28 15:42+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -1906,11 +1906,12 @@ msgstr "выделение gzfile-соединения не удалось"
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr ""
 
-#: src/main/connections.c:1800 src/modules/X11/devX11.c:3182
+#: src/main/connections.c:1800 src/modules/X11/devX11.c:3191
 msgid "memory allocation to copy clipboard failed"
 msgstr "выделение памяти для копирования буфера обмена не удалось"
 
 #: src/main/connections.c:1805 src/modules/X11/devX11.c:3170
+#: src/modules/X11/devX11.c:3175
 msgid "clipboard cannot be opened or contains no text"
 msgstr "буфер обмена не может быть открыт или не содержит текста"
 
@@ -7632,7 +7633,12 @@ msgstr "устройства, основанные на cairo, не поддерживаются в этой сборке"
 msgid "unable to contact X11 display"
 msgstr "не могу связаться с экраном X11"
 
-#: src/modules/X11/devX11.c:3204
+#: src/modules/X11/devX11.c:3182
+#, fuzzy, c-format
+msgid "clipboard cannot be read (error code %d)"
+msgstr "буфер обмена не может быть открыт или не содержит текста"
+
+#: src/modules/X11/devX11.c:3216
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "не могу разместить память для структуры 'X11Routines'"
 

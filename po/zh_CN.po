@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:36+0100\n"
+"POT-Creation-Date: 2009-10-09 08:06+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -1876,11 +1876,12 @@ msgstr "分配xzfile文件链结失败"
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr "这一版本的R不支持%s-压缩文件"
 
-#: src/main/connections.c:1800 src/modules/X11/devX11.c:3182
+#: src/main/connections.c:1800 src/modules/X11/devX11.c:3191
 msgid "memory allocation to copy clipboard failed"
 msgstr "抄写裁剪板时内存分配失败"
 
 #: src/main/connections.c:1805 src/modules/X11/devX11.c:3170
+#: src/modules/X11/devX11.c:3175
 msgid "clipboard cannot be opened or contains no text"
 msgstr "打不开裁剪板，或是裁剪板不含文字"
 
@@ -7521,7 +7522,12 @@ msgstr "本平台不支持以cairo为基础的设备"
 msgid "unable to contact X11 display"
 msgstr "无法链结到X11显示"
 
-#: src/modules/X11/devX11.c:3204
+#: src/modules/X11/devX11.c:3182
+#, fuzzy, c-format
+msgid "clipboard cannot be read (error code %d)"
+msgstr "打不开裁剪板，或是裁剪板不含文字"
+
+#: src/modules/X11/devX11.c:3216
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "无法为X11Routines结构分配内存"
 

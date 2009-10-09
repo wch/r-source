@@ -5,10 +5,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-08-06 09:09\n"
-"PO-Revision-Date: 2009-03-25 09:59+0100\n"
+"PO-Revision-Date: 2009-10-07 14:27+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -412,7 +412,7 @@ msgid "Zero arguments where at least one expected"
 msgstr "Kein Argument, wo zumindest eines erwartet"
 
 msgid "Cannot mix signs of indices"
-msgstr ""
+msgstr "Vorzeichen von Indices können nicht gemischt werden"
 
 msgid "Index out of bounds (unit subsetting)"
 msgstr "Index außerhalb des Bereichs (Einheitenauswahl)"
@@ -488,10 +488,10 @@ msgid "Invalid viewport name(s)"
 msgstr "Unzulässige(r) Viewport-Name(n)"
 
 msgid "How did we get here?"
-msgstr ""
+msgstr "Wie konnte es so weit kommen?"
 
 msgid "Must start new page if showing leaves separately"
-msgstr ""
+msgstr "Muss eine neue Seite anfangen, um die Blätter einzeln zu zeigen"
 
 msgid "Must specify at least one of 'x' or 'xscale'"
 msgstr "Mindestens 'x' oder 'xscale' muss angegeben werden"

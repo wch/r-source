@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:36+0100\n"
+"POT-Creation-Date: 2009-10-09 08:06+0100\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -1872,11 +1872,12 @@ msgstr ""
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr ""
 
-#: src/main/connections.c:1800 src/modules/X11/devX11.c:3182
+#: src/main/connections.c:1800 src/modules/X11/devX11.c:3191
 msgid "memory allocation to copy clipboard failed"
 msgstr ""
 
 #: src/main/connections.c:1805 src/modules/X11/devX11.c:3170
+#: src/modules/X11/devX11.c:3175
 msgid "clipboard cannot be opened or contains no text"
 msgstr ""
 
@@ -7473,7 +7474,12 @@ msgstr ""
 msgid "unable to contact X11 display"
 msgstr ""
 
-#: src/modules/X11/devX11.c:3204
+#: src/modules/X11/devX11.c:3182
+#, c-format
+msgid "clipboard cannot be read (error code %d)"
+msgstr ""
+
+#: src/modules/X11/devX11.c:3216
 msgid "cannot allocate memory for X11Routines structure"
 msgstr ""
 

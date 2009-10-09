@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:36+0100\n"
+"POT-Creation-Date: 2009-10-09 08:06+0100\n"
 "PO-Revision-Date: 2009-03-29 19:06+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1943,11 +1943,12 @@ msgstr "l'allocation d'une connexion gzfile a échoué"
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr ""
 
-#: src/main/connections.c:1800 src/modules/X11/devX11.c:3182
+#: src/main/connections.c:1800 src/modules/X11/devX11.c:3191
 msgid "memory allocation to copy clipboard failed"
 msgstr "l'allocation de mémoire pour une copie dans le presse-papier a échoué"
 
 #: src/main/connections.c:1805 src/modules/X11/devX11.c:3170
+#: src/modules/X11/devX11.c:3175
 msgid "clipboard cannot be opened or contains no text"
 msgstr "presse-papier impossible à ouvrir ou ne contenant aucun texte"
 
@@ -7795,7 +7796,12 @@ msgstr ""
 msgid "unable to contact X11 display"
 msgstr "incapable de rentrer en contact avec l'affichage X11"
 
-#: src/modules/X11/devX11.c:3204
+#: src/modules/X11/devX11.c:3182
+#, fuzzy, c-format
+msgid "clipboard cannot be read (error code %d)"
+msgstr "presse-papier impossible à ouvrir ou ne contenant aucun texte"
+
+#: src/modules/X11/devX11.c:3216
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "affectation mémoire impossible pour la structure X11Routines"
 

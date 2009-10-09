@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:36+0100\n"
+"POT-Creation-Date: 2009-10-09 08:06+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -1947,11 +1947,12 @@ msgstr "gzfile connection의 할당에 실패했습니다"
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr ""
 
-#: src/main/connections.c:1800 src/modules/X11/devX11.c:3182
+#: src/main/connections.c:1800 src/modules/X11/devX11.c:3191
 msgid "memory allocation to copy clipboard failed"
 msgstr "clipboard의 복사로 메모리 확보에 실패했습니다"
 
 #: src/main/connections.c:1805 src/modules/X11/devX11.c:3170
+#: src/modules/X11/devX11.c:3175
 msgid "clipboard cannot be opened or contains no text"
 msgstr "clipboard를 열수가 없거나, 내용이 없습니다"
 
@@ -7786,7 +7787,12 @@ msgstr "이 플랫폼에서 nsl함수는 서포트 되어있지 않습니다"
 msgid "unable to contact X11 display"
 msgstr "X11 디스플레이에 접속 할수가 없습니다"
 
-#: src/modules/X11/devX11.c:3204
+#: src/modules/X11/devX11.c:3182
+#, fuzzy, c-format
+msgid "clipboard cannot be read (error code %d)"
+msgstr "clipboard를 열수가 없거나, 내용이 없습니다"
+
+#: src/modules/X11/devX11.c:3216
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "X11Routines 구조에 메모리를 할당할수가 없습니다"
 

@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-10-08 08:37\n"
-"PO-Revision-Date: 2009-03-26 11:24+0100\n"
+"PO-Revision-Date: 2009-10-07 14:33+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -522,7 +522,7 @@ msgid "numeric contrasts or contrast name expected"
 msgstr "numerische Kontraste oder ein Kontrastname erwartet"
 
 msgid "contr*(.., sparse=TRUE) needs package \"Matrix\" correctly installed"
-msgstr ""
+msgstr "contr*(..,sparse=TRUE) benötigt das installierte Paket \"Matrix\""
 
 msgid "not enough degrees of freedom to define contrasts"
 msgstr "zu wenig Freiheitsgrade, um Kontraste zu definieren"
@@ -984,11 +984,9 @@ msgstr "'col.vars' fehlt oder falsch"
 msgid "'family' not recognized"
 msgstr "'family' nicht erkannt"
 
-#, fuzzy
 msgid "invalid 'method': %s"
-msgstr "unzulässige 'method'"
+msgstr "unzulässige 'method': %s"
 
-#, fuzzy
 msgid "invalid 'method'"
 msgstr "unzulässige 'method'"
 
@@ -1531,9 +1529,8 @@ msgstr "'data' muss ein Dataframe sein, weder Matrix noch array"
 msgid "'newdata' had %d rows but variable(s) found have %d rows"
 msgstr "'newdate' hat %d Zeilen, aber die gefundenen Variablen haben %d Zeilen"
 
-#, fuzzy
 msgid "character variable '%s' changed to a factor"
-msgstr "Variable '%s' in Faktor konvertiert"
+msgstr "Zeichenketten-Variable '%s' in Faktor konvertiert"
 
 msgid "variable '%s' is not a factor"
 msgstr "Variable '%s' is kein Faktor"
@@ -1611,9 +1608,8 @@ msgstr "Boolesches 'hessian' Argument nicht erlaubt. Siehe Dokumentation'"
 msgid "'params' has wrong length"
 msgstr "'params' hat falsche Länge"
 
-#, fuzzy
 msgid "'varying' must be in seq_along(pars)"
-msgstr "'varying' muss in 1L:length(pars) liegen"
+msgstr "'varying' muss in seq_along(pars) liegen"
 
 msgid "'varying' has wrong length"
 msgstr "'varying' hat falsche Länge"
@@ -1737,9 +1733,8 @@ msgstr "Kein Plot der Beobachtungen mit Leverage 1:"
 msgid "use only with \"lm\" objects"
 msgstr "nur mit \"lm\" Objekten benutzen"
 
-#, fuzzy
 msgid "'which' must be in 1:6"
-msgstr "'which' muss in 1L:6 liegen"
+msgstr "'which' muss in 1:6 liegen"
 
 msgid "'id.n' must be in {1,..,%d}"
 msgstr "'id.n' muss in {1,...,%d} liegen"
@@ -2289,10 +2284,10 @@ msgid "must supply either 'formula' or 'data'"
 msgstr "entweder 'formula' oder 'data' müssen angegeben werden"
 
 msgid "xtabs(*, sparse=TRUE) applies only to two-way tables"
-msgstr ""
+msgstr "xtabs(*, sparse=TRUE) ist nur für zweifache Tabellen anwendbar"
 
 msgid "xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed"
-msgstr ""
+msgstr "xtabs(*, sparse=TRUE) benötig das installierte Paket \"Matrix\""
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr ""

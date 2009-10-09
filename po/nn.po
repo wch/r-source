@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:36+0100\n"
+"POT-Creation-Date: 2009-10-09 08:06+0100\n"
 "PO-Revision-Date: 2009-10-05 19:09+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -1910,11 +1910,12 @@ msgid "this is a %s-compressed file which this build of R does not support"
 msgstr ""
 "dette er ei %s-komprimert fil, som denne byggversjonen av R ikkje støttar"
 
-#: src/main/connections.c:1800 src/modules/X11/devX11.c:3182
+#: src/main/connections.c:1800 src/modules/X11/devX11.c:3191
 msgid "memory allocation to copy clipboard failed"
 msgstr "feil ved minnereservering til kopiering til utklippstavla"
 
 #: src/main/connections.c:1805 src/modules/X11/devX11.c:3170
+#: src/modules/X11/devX11.c:3175
 msgid "clipboard cannot be opened or contains no text"
 msgstr "utklippstavla kan ikkje opnast, eller inneheld ikkje noko tekst"
 
@@ -7611,7 +7612,12 @@ msgstr "cairo-baserte einingar ikkje støtta på denne bygget"
 msgid "unable to contact X11 display"
 msgstr "fekk ikkje kontakt med X11-display"
 
-#: src/modules/X11/devX11.c:3204
+#: src/modules/X11/devX11.c:3182
+#, fuzzy, c-format
+msgid "clipboard cannot be read (error code %d)"
+msgstr "utklippstavla kan ikkje opnast, eller inneheld ikkje noko tekst"
+
+#: src/modules/X11/devX11.c:3216
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "klarte ikkje tildela minne for X11Routines-struktur"
 

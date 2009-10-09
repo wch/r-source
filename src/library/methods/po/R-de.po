@@ -5,10 +5,10 @@
 # Detlef Steuer <steuer@hsu-hh.de>, 2007-2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-10-08 08:37\n"
-"PO-Revision-Date: 2009-03-26 11:10+0100\n"
+"PO-Revision-Date: 2009-10-07 14:27+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -164,13 +164,12 @@ msgstr ""
 "es muss ein Funktionsskelett angegeben werden, entweder explizit oder über "
 "eine exisitierende Funktion"
 
-#, fuzzy
 msgid ""
 "Restoring the implicit generic function for \"%s\" from package \"%s\"\n"
 "    into package \"%s\"; the generic differs from the default conversion (%s)"
 msgstr ""
 "Wiederherstellung der impliziten generischen Funktion für \"%s\" aus Paket "
-"\"%s\" nach Paket \"%s\"; die Generische unterscheidet sich von der "
+"\"%s\" in Paket \"%s\"; die Generische unterscheidet sich von der "
 "Standardkonvertierung (%s)"
 
 #, fuzzy
@@ -715,11 +714,15 @@ msgid ""
 "Class \"%s\" is inheriting an inconsistent superclass structure from class "
 "\"%s\", inconsistent with %s"
 msgstr ""
+"Klasse \"%s\" erbt eine inkonsistente Superklassenstruktur von Klasse \"%s"
+"\", inkonsistent mit %s"
 
 msgid ""
 "unable to find a consistent ordering of superclasses for class \"%s\": order "
 "chosen is inconsistent with the superclasses of %s"
 msgstr ""
+"kann keine konsistente Anordnung der Superklassen der Klasse \"%s\" finden: "
+"die gewählte Ordnung ist inkonsistent mit den Superklassen von %s"
 
 msgid "\"class\" is a reserved slot name and cannot be redefined"
 msgstr ""
@@ -1140,11 +1143,12 @@ msgstr ""
 msgid "no definition of \"%s\" to use for %s"
 msgstr "keine Definition von \"%s\", die für \"%s\" genutzt werden kann"
 
-#, fuzzy
 msgid ""
 "multiple definitions of class \"%s\" visible; using the definition\n"
 "   in package \"%s\" for %s"
-msgstr "mehrfache Definitionen von \"%s\" gefunden; benutze die auf %s"
+msgstr ""
+"mehrfache Definitionen von \"%s\" sichtbar; benutze die Definition aus Paket "
+"\"%s\" für %s"
 
 msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr ""
@@ -1484,13 +1488,12 @@ msgstr ""
 "Argument S4Class muss eine Klassendefinition sein; bekam ein Objekt aus "
 "Klasse \"%s\""
 
-#, fuzzy
 msgid ""
 "inconsistent old-style class information for \"%s\"; the class is defined "
 "but does not extend \"%s\" and is not valid as the data part"
 msgstr ""
 "inkonsistente Klasseninformation für \"%s\" im alten Stil; die Klasse ist "
-"defineirt, erweitert aber nicht \"%s\""
+"defineirt, erweitert aber nicht \"%s\" und ist als Datenteil unzulässig"
 
 msgid ""
 "The S3 class of the prototype, \"%s\", is undefined; only allowed when this "

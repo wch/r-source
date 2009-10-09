@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.9.0\n"
+"Project-Id-Version: R-2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:36+0100\n"
-"PO-Revision-Date: 2009-03-20 14:22+0100\n"
+"POT-Creation-Date: 2009-10-09 08:06+0100\n"
+"PO-Revision-Date: 2009-10-07 14:23+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -87,24 +87,24 @@ msgid "problem in displaying '%s'"
 msgstr "Problem bei der Anzeige von '%s'"
 
 #: src/gnuwin32/extra.c:154
-#, fuzzy, c-format
+#, c-format
 msgid "'%ls' not found"
-msgstr "'%s' nicht gefunden"
+msgstr "'%ls' nicht gefunden"
 
 #: src/gnuwin32/extra.c:156
-#, fuzzy, c-format
+#, c-format
 msgid "file association for '%ls' not available or invalid"
-msgstr "Dateiverknüpfung für '%s' nicht verfügbar oder ungültig"
+msgstr "Dateiverknüpfung für '%ls' nicht verfügbar oder ungültig"
 
 #: src/gnuwin32/extra.c:159
-#, fuzzy, c-format
+#, c-format
 msgid "access to '%ls' denied"
-msgstr "Zugriff auf '%s' verweigert"
+msgstr "Zugriff auf '%ls' verweigert"
 
 #: src/gnuwin32/extra.c:160
-#, fuzzy, c-format
+#, c-format
 msgid "problem in displaying '%ls'"
-msgstr "Problem bei der Anzeige von '%s'"
+msgstr "Problem bei der Anzeige von '%ls'"
 
 #: src/gnuwin32/extra.c:171 src/gnuwin32/extra.c:202 src/gnuwin32/extra.c:227
 #: src/gnuwin32/extra.c:230 src/gnuwin32/extra.c:276 src/gnuwin32/extra.c:313
@@ -362,19 +362,19 @@ msgid "'text' must be a character string"
 msgstr "'text' muss eine Zeichenkette sein"
 
 #: src/gnuwin32/extra.c:1406
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be length 1"
-msgstr "'which' muss Länge 1 haben"
+msgstr "'%s' muss Länge 1 haben"
 
 #: src/gnuwin32/extra.c:1522
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be a list"
-msgstr "'dimnames' muss eine Liste sein"
+msgstr "'%s' muss eine Liste sein"
 
 #: src/gnuwin32/extra.c:1526
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' element %d is not a window handle"
-msgstr "'%s' ist kein gültiger Aufruf"
+msgstr "'%s' Element %d ist kein Fenster handle"
 
 #: src/gnuwin32/extra.c:1558 src/gnuwin32/extra.c:1560
 #: src/gnuwin32/extra.c:1583 src/gnuwin32/extra.c:1585
@@ -395,9 +395,9 @@ msgid "bad device"
 msgstr "unbrauchbares Device"
 
 #: src/gnuwin32/extra.c:1957
-#, fuzzy, c-format
+#, c-format
 msgid "Registry key '%ls' not found"
-msgstr "Registry-Schlüssel '%s' nicht gefunden"
+msgstr "Registry-Schlüssel '%ls' nicht gefunden"
 
 #: src/gnuwin32/extra.c:2021 src/gnuwin32/extra.c:2029
 msgid "invalid input in Rmbstowcs"
@@ -798,9 +798,10 @@ msgstr "ungültige multi-byte Formattierungs-Zeichenkette"
 #: src/main/agrep.c:70 src/main/character.c:984 src/main/character.c:988
 #: src/main/grep.c:648 src/main/grep.c:954 src/main/grep.c:958
 #: src/main/grep.c:1263 src/main/grep.c:1661
-#, fuzzy, c-format
+#, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
-msgstr "Bedingung hat Länge > 1 und nur das erste Element wird benutzt"
+msgstr ""
+"Argument '%s' hat einen Länge > 1 und nur das erste Element wird benutzt"
 
 #: src/main/agrep.c:96 src/main/grep.c:66
 #, c-format
@@ -1111,7 +1112,7 @@ msgstr "Dimensionen [Produkt %d] passen nicht zur Länge des Objektes [%d]"
 
 #: src/main/attrib.c:1092
 msgid "duplicated levels will not be allowed in factors anymore"
-msgstr ""
+msgstr "doppelt auftretende Faktorstufen werden nicht mehr zulässig sein"
 
 #: src/main/attrib.c:1119
 msgid "attributes must be a list or NULL"
@@ -1524,9 +1525,8 @@ msgid "'what' must be a character string or a function"
 msgstr "'what' muss eine Zeichenkette oder eine Funktion sein"
 
 #: src/main/coerce.c:2196
-#, fuzzy
 msgid "'args' must be a list"
-msgstr "'dimnames' muss eine Liste sein"
+msgstr "'args' muss eine Liste sein"
 
 #: src/main/coerce.c:2199
 msgid "'envir' must be an environment"
@@ -1878,6 +1878,7 @@ msgstr "Datei '%s' scheint nicht mit bzip2 komprimiert zu sein"
 #, c-format
 msgid "initializing bzip2 compression for file '%s' failed"
 msgstr ""
+"Initialisierung der bzip2-Kompression für Datei '%s' ist fehlgeschlagen"
 
 #: src/main/connections.c:1405 src/main/connections.c:1409
 #: src/main/connections.c:1415 src/main/connections.c:1432
@@ -1887,29 +1888,31 @@ msgstr "Allokation einer bzfile Verbindung fehlgeschlagen"
 #: src/main/connections.c:1477 src/main/connections.c:5428
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
-msgstr ""
+msgstr "kann den lzma Dekodierer nicht initialisieren, Fehler %d"
 
 #: src/main/connections.c:1493
 #, c-format
 msgid "cannot initialize lzma encoder, error %d"
-msgstr ""
+msgstr "kann den lzma Kodierer nicht initialisieren, Fehler %d"
 
 #: src/main/connections.c:1622 src/main/connections.c:1626
 #: src/main/connections.c:1632 src/main/connections.c:1650
-#, fuzzy
 msgid "allocation of xzfile connection failed"
-msgstr "Allokation einer gzfile Verbindung fehlgeschlagen"
+msgstr "Allokation einer xzfile Verbindung fehlgeschlagen"
 
 #: src/main/connections.c:1709
 #, c-format
 msgid "this is a %s-compressed file which this build of R does not support"
 msgstr ""
+"dies ist eine %s-komprimierte Datei, die in diesem R Binary nicht "
+"unterstützt wird"
 
-#: src/main/connections.c:1800 src/modules/X11/devX11.c:3182
+#: src/main/connections.c:1800 src/modules/X11/devX11.c:3191
 msgid "memory allocation to copy clipboard failed"
 msgstr "Allokation von Speicher für Kopie der Zwischenablage fehlgeschlagen"
 
 #: src/main/connections.c:1805 src/modules/X11/devX11.c:3170
+#: src/modules/X11/devX11.c:3175
 msgid "clipboard cannot be opened or contains no text"
 msgstr "Zwischenablage kann nicht geöffnet werden oder enthält keinen Text"
 
@@ -2247,7 +2250,7 @@ msgstr "keine Socket Verbindung"
 
 #: src/main/connections.c:5375
 msgid "unknown compression, assuming none"
-msgstr ""
+msgstr "unbekannte Kompression, vermute keine"
 
 #: src/main/context.c:125
 msgid ""
@@ -2283,23 +2286,20 @@ msgid "no function to restart"
 msgstr "keine Funktion für Neustart"
 
 #: src/main/context.c:516
-#, fuzzy
 msgid "number of contexts must be positive"
-msgstr "'maxiter' muss positiv sein"
+msgstr "Anzahl der Kontexte muss positiv sein"
 
 #: src/main/context.c:529
 msgid "no browser context to query"
-msgstr ""
+msgstr "kein Browserkontext für Abfrage"
 
 #: src/main/context.c:547
-#, fuzzy
 msgid "not that many calls to browser are active"
-msgstr "nicht so viele einschließende Umgebungen im Stack"
+msgstr "so viele Browseraufrufe sind nicht aktiv"
 
 #: src/main/context.c:561
-#, fuzzy
 msgid "not that many functions on the call stack"
-msgstr "nicht so viele einschließende Umgebungen im Stack"
+msgstr "nicht so viele Funktionen im Aufrufstack"
 
 #: src/main/context.c:646
 msgid "internal error in 'do_sys'"
@@ -3320,7 +3320,7 @@ msgstr "Versuch eine Nicht-Funktion anzuwenden"
 #: src/main/eval.c:535
 #, c-format
 msgid "%s at %s#%d: "
-msgstr ""
+msgstr "%s bei %s#%d:"
 
 #: src/main/eval.c:837
 #, c-format
@@ -3745,9 +3745,10 @@ msgid "'\\x' used without hex digits"
 msgstr "\\x' ohne Hex-Ziffern genutzt"
 
 #: src/main/gram.y:2114
-#, fuzzy, c-format
+#, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
-msgstr "\\uxxxx Sequenzen werden nicht unterstützt (Zeile %d)"
+msgstr ""
+"\\uxxxx Sequenzen werden nicht zwischen backticks unterstützt (Zeile %d)"
 
 #: src/main/gram.y:2130
 msgid "\\u used without hex digits"
@@ -3759,9 +3760,10 @@ msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "ungültige \\u{xxxx} Sequenz (Zeile %d)"
 
 #: src/main/gram.y:2152
-#, fuzzy, c-format
+#, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
-msgstr "\\Uxxxxxxx Sequenzen werden nicht unterstützt (Zeile %d)"
+msgstr ""
+"\\Uxxxxxxx Sequenzen werden nicht zwischen backticks unterstützt (Zeile %d)"
 
 #: src/main/gram.y:2168
 msgid "\\U used without hex digits"
@@ -3778,7 +3780,7 @@ msgid "'\\%c' is an unrecognized escape in a character string"
 msgstr "'\\%c' ist eine unbekannte Escape-Sequenz in einer Zeichenkette"
 
 #: src/main/gram.y:2271
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 10000 chars)"
@@ -3958,14 +3960,12 @@ msgid "bad value"
 msgstr "unbrauchbarer Wert"
 
 #: src/main/internet.c:123
-#, fuzzy
 msgid "internet routines were already initialized"
-msgstr "Internet Routinen können nicht geladen werden"
+msgstr "Internet Routinen sind bereits initialisiert"
 
 #: src/main/internet.c:248
-#, fuzzy
 msgid "invalid bind address specification"
-msgstr "ungültige Dateinamen Spezifikation"
+msgstr "ungültige Adressenspezifikation für bind"
 
 #: src/main/internet.c:268 src/main/internet.c:278 src/main/internet.c:288
 #: src/main/internet.c:298 src/main/internet.c:308 src/main/internet.c:318
@@ -4054,9 +4054,9 @@ msgid "During startup - "
 msgstr "Beim Start - "
 
 #: src/main/main.c:1077 src/main/main.c:1083 src/main/main.c:1089
-#, fuzzy, c-format
+#, c-format
 msgid "duplicate '%s' argument"
-msgstr "falsches Argument"
+msgstr "doppeltes '%s' Argument"
 
 #: src/main/main.c:1227
 msgid "cannot quit from browser"
@@ -4352,12 +4352,12 @@ msgstr "Antwortvariable erschien auf der rechten Seite und wurde verworfen"
 #: src/main/model.c:1800
 #, c-format
 msgid "term %d would require %.0g columns"
-msgstr ""
+msgstr "Term %d würde %.0g Spalten benötigen"
 
 #: src/main/model.c:1804
 #, c-format
 msgid "matrix would require %.0g columns"
-msgstr ""
+msgstr "Matrix würde %.0g Spalten benötigen"
 
 #: src/main/model.c:1815
 #, c-format
@@ -4457,9 +4457,10 @@ msgid "first argument must be a generic name"
 msgstr "erstes Argument muss ein generischer Name sein"
 
 #: src/main/objects.c:490
-#, fuzzy, c-format
+#, c-format
 msgid "no applicable method for '%s' applied to an object of class \"%s\""
-msgstr "keine anwendbare Methode für \"%s\""
+msgstr ""
+"nicht anwendbare Methode für '%s' auf Objekt der Klasse \"%s\" angewendet"
 
 #: src/main/objects.c:551
 msgid "'NextMethod' called from outside a function"
@@ -5623,9 +5624,8 @@ msgid "invalid column labels"
 msgstr "ungültige Bezeichnungen für die Spalten"
 
 #: src/main/print.c:176
-#, fuzzy
 msgid "non-function argument to .Internal(print.function(.))"
-msgstr "Nicht-Zeichenkette als Argument für internes paste"
+msgstr "Argument für .Internal(print.function(.)) ist keine Funktion"
 
 #: src/main/print.c:251
 msgid "'gap' must be non-negative integer"
@@ -6076,9 +6076,8 @@ msgid "numerical expression has %d elements: only the first used"
 msgstr "numerischer Ausdruck hat %d Elemente: nur erstes wird genutzt"
 
 #: src/main/seq.c:145
-#, fuzzy
 msgid "argument of length 0"
-msgstr "Argument hat Länge 0"
+msgstr "Argument der Länge 0"
 
 #: src/main/seq.c:151
 msgid "NA/NaN argument"
@@ -6395,9 +6394,9 @@ msgstr ""
 "%s\""
 
 #: src/main/source.c:216
-#, fuzzy, c-format
+#, c-format
 msgid "argument '%s = \"%s\"' will be ignored"
-msgstr "Argument '%s' wird ignoriert"
+msgstr "Argument '%s = \"%s\"'' wird ignoriert"
 
 #: src/main/split.c:38
 msgid "first argument must be a vector"
@@ -6431,9 +6430,9 @@ msgid "only %d arguments are allowed"
 msgstr "nur %d Argumente zugelassen"
 
 #: src/main/sprintf.c:112
-#, fuzzy, c-format
+#, c-format
 msgid "invalid type of argument[%d]: '%s'"
-msgstr "ungültiger 'type' (%s) des Argumentes"
+msgstr "ungültiger Typ des Argumentes[%d]: '%s'"
 
 #: src/main/sprintf.c:123 src/main/sprintf.c:126
 msgid "arguments cannot be recycled to the same length"
@@ -6486,9 +6485,9 @@ msgid "use format %d or %i for logical objects"
 msgstr "benutze Format %d oder %i für boolesche Objekte"
 
 #: src/main/sprintf.c:345
-#, fuzzy, c-format
+#, c-format
 msgid "use format %d, %i, %o, %x or %X for integer objects"
-msgstr "benutze Format %d, %i, %x oder %X für integer Objekte"
+msgstr "benutze Format %d, %i, , %o,  %x oder %X für integer Objekte"
 
 #: src/main/sprintf.c:359
 #, c-format
@@ -6557,9 +6556,8 @@ msgid "incompatible types (from %s to %s) in array subset assignment"
 msgstr "inkompatible Typen (von %s nach %s) in Arrayteilzuweisung"
 
 #: src/main/subassign.c:1175 src/main/subassign.c:1195
-#, fuzzy
 msgid "invalid subscript in list assign"
-msgstr "ungültige Anzahl von Indizes für Listenzuweisung"
+msgstr "ungültiger Subskript in Listenzuweisung"
 
 #: src/main/subassign.c:1188
 msgid "invalid number of subscripts to list assign"
@@ -7644,7 +7642,12 @@ msgstr "cairo-basierte Devices sind auf dieser Platform nicht unterstützt"
 msgid "unable to contact X11 display"
 msgstr "konnte Verbindung zu X11 Display nicht herstellen"
 
-#: src/modules/X11/devX11.c:3204
+#: src/modules/X11/devX11.c:3182
+#, fuzzy, c-format
+msgid "clipboard cannot be read (error code %d)"
+msgstr "Zwischenablage kann nicht geöffnet werden oder enthält keinen Text"
+
+#: src/modules/X11/devX11.c:3216
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "kann Speicher für X11Routines-Struktur nicht zuteilen"
 
@@ -7836,9 +7839,9 @@ msgstr ""
 "bug.report() bitte!"
 
 #: src/unix/sys-std.c:1058 src/unix/sys-std.c:1226
-#, fuzzy, c-format
+#, c-format
 msgid "problem in saving the history file '%s'"
-msgstr "Problem bei der Anzeige von '%s'"
+msgstr "Problem beim Speichern der Befehlshistory '%s'"
 
 #: src/unix/sys-std.c:1133
 #, c-format
@@ -7858,9 +7861,8 @@ msgid "no history mechanism available"
 msgstr "kein History Mechanismus verfügbar"
 
 #: src/unix/sys-std.c:1232
-#, fuzzy
 msgid "problem in truncating the history file"
-msgstr "Problem mit laufendem Editor %s"
+msgstr "Problem beim Kürzen der Befehlshistory"
 
 #: src/unix/sys-std.c:1234 src/unix/sys-std.c:1236
 msgid "no history available to save"

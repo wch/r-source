@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.9.0\n"
+"Project-Id-Version: R-2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2009-10-08 08:39+0100\n"
-"PO-Revision-Date: 2009-03-20 11:13+0100\n"
+"PO-Revision-Date: 2009-10-07 14:23+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -805,19 +805,19 @@ msgstr "Kaskadieren"
 
 #: rui.c:1030 ../extra/graphapp/gmenus.c:54
 msgid "Tile &Horizontally"
-msgstr ""
+msgstr "Kachelausrichtung horizontal"
 
 #: rui.c:1031 ../extra/graphapp/gmenus.c:55
 msgid "Tile &Vertically"
-msgstr ""
+msgstr "Kachelausrichtung vertikal"
 
 #: rui.c:1032
 msgid "Minimize group"
-msgstr ""
+msgstr "Minimiere Gruppe"
 
 #: rui.c:1033
 msgid "Restore group"
-msgstr ""
+msgstr "Stelle Gruppe wieder her"
 
 #: rui.c:1088
 msgid "Load workspace"
