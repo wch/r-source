@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.8.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:29\n"
+"POT-Creation-Date: 2009-10-09 08:04\n"
 "PO-Revision-Date: 2009-03-28 23:43-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -691,6 +691,9 @@ msgstr ""
 #, fuzzy
 msgid "no 'type' specified"
 msgstr "ОШИБКА: пакет не определен"
+
+msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
+msgstr ""
 
 msgid "Bundle package:"
 msgstr "Связка пакетов:"

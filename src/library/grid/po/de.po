@@ -1,0 +1,99 @@
+# # German translation of 
+# # src/library/graphics/po/grid.pot
+# # Copyright (C) 2009 The R Foundation
+# # This file is distributed under the same license as the R package.
+# # Detlef Steuer <steuer@hsu-hh.de>, 2009.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R-2.10.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2009-08-06 09:09+0100\n"
+"PO-Revision-Date: 2009-10-07 14:22+0200\n"
+"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"Language-Team:  <R-core@r-project.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
+
+#: grid.c:214
+msgid "Cannot clip to rotated viewport"
+msgstr "Kann rotierten Viewport nicht beschneiden"
+
+#: grid.c:673 grid.c:678 grid.c:767 grid.c:772
+msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
+msgstr "Kann den obersten viewport nicht vom Stack werfen (grid und graphics Ausgaben gemischt?)"
+
+#: grid.c:952
+msgid "attempt to plot on null device"
+msgstr "Versuch in das NUll-Gerät zu zeichnen"
+
+#: grid.c:1232
+msgid "There is no layout defined"
+msgstr "Kein Layout definiert"
+
+#: grid.c:1452
+msgid "Polygon edge not found (zero-width or zero-height?)"
+msgstr "Polygonkante nicht gefunden (Nullbreite oder Nulllänge?)"
+
+#: grid.c:1461
+msgid "Polygon edge not found"
+msgstr "Polygonkante nicht gefunden"
+
+#: grid.c:1601
+msgid "Require at least two points to draw arrow"
+msgstr "Mindestens zwei Punkte nötig, um einen Pfeil zu zeichnen"
+
+#: grid.c:1915
+msgid "Non-finite control point in Xspline"
+msgstr "Nicht-endlicher Kontrollpunkt in Xspline"
+
+#: grid.c:3015
+msgid "invalid plotting symbol"
+msgstr "unzulässiges Plotsymbol"
+
+#: grid.c:3101
+msgid "Unable to clip to rotated rectangle"
+msgstr "Kann nicht auf das rotierte Rechteck zurechtschneiden"
+
+#: layout.c:519
+msgid "invalid layout.pos.row"
+msgstr "unzulässige layout.pos.row"
+
+#: layout.c:523
+msgid "invalid layout.pos.col"
+msgstr "unzulässige layout.pos.col"
+
+#: matrix.c:49
+msgid "singular transformation matrix"
+msgstr "singuläre Transformationsmatrix"
+
+#: state.c:169
+msgid "Unable to store grid state.  Too many devices open?"
+msgstr "Kann den Gridstatus nicht speichern. Zu viele geöffnete Geräte"
+
+#: unit.c:260 unit.c:410 unit.c:1142 unit.c:1222 unit.c:1302 unit.c:1382
+msgid "Unimplemented unit function"
+msgstr "Nicht implementierte Einheitenfunktion"
+
+#: unit.c:831 unit.c:1577
+msgid "Illegal unit or unit not yet implemented"
+msgstr "Unzulässige Einheit oder Einheit nicht implementiert"
+
+#: unit.c:1732
+msgid "Invalid unit"
+msgstr "Ungültige Einheit"
+
+#: unit.c:1748
+msgid "Units must be character"
+msgstr "Einheiten müssen Zeichenketten sein"
+
+#: unit.c:1751
+msgid "Units must be of length > 0"
+msgstr "Einheiten müssen positive Länge haben"
+
+#: viewport.c:317
+msgid "Non-finite location and/or size for viewport"
+msgstr "Nicht-endlicher Ort oder/unf Größe des Viewports"
