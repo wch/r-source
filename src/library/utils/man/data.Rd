@@ -59,7 +59,9 @@ data(\dots, list = character(0), package = NULL, lib.loc = NULL,
     and also result in a data frame.
   }
   If more than one matching file name is found, the first on this list
-  is used.
+  is used.  (Files with extensions \file{.txt}, \file{.tab} or
+  \file{.csv} can be compressed, with or without further extension
+  \file{.gz}, \file{.bz2} or \file{.xz}.)
   
   The data sets to be loaded can be specified as a sequence of names or
   character strings, or as the character vector \code{list}, or as both.
@@ -67,9 +69,9 @@ data(\dots, list = character(0), package = NULL, lib.loc = NULL,
   For each given data set, the first two types (\file{.R} or \file{.r},
   and \file{.RData} or \file{.rda} files) can create several variables
   in the load environment, which might all be named differently from the
-  data set.  The second two (\file{.tab}, \file{.txt}, or \file{.TXT},
-  and \file{.csv} or \file{.CSV} files) will always result in the
-  creation of a single variable with the same name as the data set. 
+  data set.  The third and fourth types will always result in the
+  creation of a single variable with the same name (without extension)
+  as the data set.
 
   If no data sets are specified, \code{data} lists the available data
   sets.  It looks for a new-style data index in the \file{Meta} or, if

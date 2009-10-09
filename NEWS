@@ -540,6 +540,14 @@ COMPRESSION
 	--data-compress=xz, often giving even better compression on
 	large datasets at the expense of much longer installation times.
 
+    o	file() for open = "", "r" or "rt" will automagically detect
+	compressed files (from gzip, bzip2 or xv).  This means that
+	compressed files can be specified by file name to
+	read.table(), readlines(), scan() and so on.
+
+    o	data() can handle compressed text files with extensions 
+	.{txt,tab,csv}.{gz,bz2,xz} .
+
 
 DEPRECATED & DEFUNCT
 

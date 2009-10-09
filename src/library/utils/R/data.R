@@ -18,7 +18,12 @@ data <-
 function(..., list = character(0L), package = NULL, lib.loc = NULL,
          verbose = getOption("verbose"), envir = .GlobalEnv)
 {
-    fileExt <- function(x) sub(".*\\.", "", x)
+    fileExt <- function(x) {
+        db <- grepl("\\.[^.]+\\.(gz|bz2|xz)$", x)
+        ans <- sub(".*\\.", "", x)
+        ans[db] <-  sub(".*\\.([^.]+\\.)(gz|bz2|xz)$", "\\1\\2", x[db])
+        ans
+    }
 
     names <- c(as.character(substitute(list(...))[-1L]), list)
 
@@ -163,14 +168,17 @@ function(..., list = character(0L), package = NULL, lib.loc = NULL,
                                },
                                RData = , rdata = , rda =
                                load(zfile, envir = envir),
-                               TXT = , txt = , tab =
+                               TXT = , txt = , tab = ,
+                               tab.gz = , tab.bz2 = , tab.xz = ,
+                               txt.gz = , txt.bz2 = , txt.xz =
                                assign(name,
                                       ## ensure default has not been
                                       ## overridden by options(charToFactor)
                                       read.table(zfile, header = TRUE,
                                                  as.is = FALSE),
                                       envir = envir),
-                               CSV = , csv =
+                               CSV = , csv = ,
+                               csv.gz = , csv.bz2 = , csv.xz =
                                assign(name,
                                       read.table(zfile, header = TRUE,
                                                  sep = ";", as.is = FALSE),
