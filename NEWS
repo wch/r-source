@@ -330,6 +330,9 @@ NEW FEATURES
     o	There are the beginnings of a Nynorsk translation by Karl Ove
 	Hufthammer.
 
+    o	stripchart() allows par 'bg' to be passed in for the
+	background colour for pch = 21 (wish of PR#13984).
+
 
 REGULAR EXPRESSIONS
 
