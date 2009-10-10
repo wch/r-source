@@ -5169,15 +5169,22 @@ if(.Platform$OS.type == "unix") {
     unlink("myTst_*")
 
     ## More building & installing packages
-    op <- options(warn=2) # *NO* warnings here!
+    ## NB: do not do this in the R sources!
     pkgSrcPath <- file.path(Sys.getenv("SRCDIR"), "Pkgs")
+    ## could use file.copy(recursive = TRUE), but this is Unix-only
+    system(paste('cp -r',
+                 shQuote(file.path(Sys.getenv("SRCDIR"), "Pkgs")),
+                 shQuote(tempdir())
+                 ))
+    pkgPath <- file.path(tempdir(), "Pkgs")
+    op <- options(warn=2) # There should be *NO* warnings here!
     ## pkgB tests an empty R directory
-    dir.create(file.path(pkgSrcPath, "pkgB", "R"), recursive = TRUE,
+    dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
                showWarnings = FALSE)
     p.lis <- c("pkgA", "pkgB", "exS4noNS", "exNSS4")
     for(p. in p.lis) {
 	cat("building package", p., "...\n")
-	r <- build.pkg(file.path(pkgSrcPath, p.))
+	r <- build.pkg(file.path(pkgPath, p.))
 	cat("installing package", p., "using file", r, "...\n")
 	## we could install the tar file ... (see build.pkg()'s definition)
 	install.packages(r, lib = "myLib", repos=NULL, type = "source")
@@ -5185,10 +5192,10 @@ if(.Platform$OS.type == "unix") {
 	detach(pos = match(p., sub("^package:","", search())))
     }
     ## TODO: not just print, but check the "list":
-    print(installed.packages(lib.loc= "myLib", priority= "NA"))
+    print(installed.packages(lib.loc = "myLib", priority = "NA"))
     options(op)
-    unlink("myLib", recursive=TRUE)
-    unlink(file.path(pkgSrcPath, "pkgB", "R"), recursive = TRUE)
+    unlink("myLib", recursive = TRUE)
+    unlink(file.path(pkgPath), recursive = TRUE)
 }
 unlink("myTst", recursive=TRUE)
 
@@ -5311,7 +5318,7 @@ stopifnot(rcond(cbind(1, c(3,3))) == 0)
 ## gave an error (because Lapack's LU detects exact singularity)
 
 
-## dispatch when primitives are called from lapply.
+## dispatch when primitives can called from lapply.
 x <- data.frame(d=Sys.Date())
 stopifnot(sapply(x, is.numeric) == FALSE)
 # TRUE in 2.7.1, tried to dispatch on "FUN"
