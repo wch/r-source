@@ -96,7 +96,8 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   It is possible to compress later (with \command{gzip}, \command{bzip2}
   or \command{xz}) a file saved with \code{compress = FALSE}: the effect
   is the same as saving with compression.  Also, a saved file can be
-  uncompressed and re-compressed under a different compression scheme.
+  uncompressed and re-compressed under a different compression scheme
+  (and see \code{\link{resaveRdaFiles}} for a way to do so from within \R).
 }
 
 \note{

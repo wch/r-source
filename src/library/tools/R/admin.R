@@ -827,7 +827,7 @@ checkRdaFiles <- function(paths)
 ### * resaveRdaFiles
 
 resaveRdaFiles <- function(paths,
-                           compress = c("auto", "gzip", "bzip2", "rda"),
+                           compress = c("auto", "gzip", "bzip2", "xz"),
                            compression_level)
 {
     compress <- match.arg(compress)
