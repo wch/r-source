@@ -167,7 +167,6 @@ msgstr ""
 "隠匿された総称的関数 \"%s\" をパッケージ \"%s\" から \"%s\" へ戻す際、総称が"
 "デフォルトの変換(%s) と異なりました "
 
-#, fuzzy
 msgid ""
 "Creating a generic for \"%s\" in package \"%s\"\n"
 "    (the supplied definition differs from and overrides the implicit "
@@ -178,7 +177,6 @@ msgstr ""
 " (与えられた定義が異なるため, パッケージ \"%s\" 中に隠匿された総称的関数を上"
 "書きします: %s) "
 
-#, fuzzy
 msgid ""
 "No generic version of \"%s\" on package \"%s\" is allowed;\n"
 "   a new generic will be assigned with package \"%s\""
@@ -1002,7 +1000,6 @@ msgstr ""
 " 'representation' が 'classRepresentation' オブジェクトのときは、引数 "
 "'Class' と 'where' だけを与えられます "
 
-#, fuzzy
 msgid "Internal error: definition of class \"%s\" not properly assigned"
 msgstr "内部エラー: 適切に割り当てられなかったクラスの定義 \"%s\" "
 

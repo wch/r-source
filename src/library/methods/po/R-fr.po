@@ -168,7 +168,6 @@ msgstr ""
 "il faut fournir le squelette d'une fonction, de manière explicite ou via une "
 "fonction existante"
 
-#, fuzzy
 msgid ""
 "Restoring the implicit generic function for \"%s\" from package \"%s\"\n"
 "    into package \"%s\"; the generic differs from the default conversion (%s)"
@@ -176,7 +175,6 @@ msgstr ""
 "Recupération de la fonction générique implicite pour \"%s\" depuis le "
 "package \"%s\" ; le générique diffère de la conversion par défaut (%s)"
 
-#, fuzzy
 msgid ""
 "Creating a generic for \"%s\" in package \"%s\"\n"
 "    (the supplied definition differs from and overrides the implicit "
@@ -1058,7 +1056,6 @@ msgstr ""
 "seuls les arguments 'Class' et 'where' peuvent être fournis lorsque "
 "l'argument 'representation' est un objet de type 'classRepresentation'"
 
-#, fuzzy
 msgid "Internal error: definition of class \"%s\" not properly assigned"
 msgstr "aucune définition de la classe \"%s\" n'est trouvée"
 
