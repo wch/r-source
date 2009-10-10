@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08\n"
+"POT-Creation-Date: 2009-10-10 14:12\n"
 "PO-Revision-Date: 2009-03-29 21:44+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -259,15 +259,17 @@ msgstr "la(les) classe(s) de 'name' sera écartées"
 msgid "cannot edit NULL row names"
 msgstr "impossible d'éditer des noms de lignes NULL"
 
-msgid "no help file found for '%s'"
+#, fuzzy
+msgid "no help found for '%s'"
 msgstr "fichier d'aide introuvable pour '%s'"
 
 msgid "more than one help file found: using package '%s'"
 msgstr "plusieurs fichiers d'aide trouvés : le package '%s' est utilisé"
 
-#, fuzzy
-msgid "'%s' has a help file but no examples"
-msgstr "'%s' a un fichier d'aide mais pas de fichier d'exemples"
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
+"accessed"
+msgstr ""
 
 msgid "test '%s' is not available"
 msgstr "le test '%s' n'est pas disponible"
@@ -342,20 +344,6 @@ msgstr "le test '%s' n'est pas disponible"
 
 msgid "R Help on '%s'"
 msgstr "R Help sur '%s'"
-
-msgid ""
-"No text help for '%s' is available:\n"
-"corresponding file is missing"
-msgstr ""
-"Aucune aide texte disponible pour '%s':\n"
-"le fichier correspondant est manquant"
-
-msgid ""
-"No offline help for '%s' is available:\n"
-"corresponding file is missing"
-msgstr ""
-"Aucune aide hors-ligne disponible pour '%s' :\n"
-"le fichier correspondant est manquant"
 
 msgid "argument '%s' must be a single character string"
 msgstr "l'argument '%s' doit être une seule chaîne de caractères"
@@ -1107,6 +1095,24 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#, fuzzy
+#~ msgid "'%s' has a help file but no examples"
+#~ msgstr "'%s' a un fichier d'aide mais pas de fichier d'exemples"
+
+#~ msgid ""
+#~ "No text help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ "Aucune aide texte disponible pour '%s':\n"
+#~ "le fichier correspondant est manquant"
+
+#~ msgid ""
+#~ "No offline help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ "Aucune aide hors-ligne disponible pour '%s' :\n"
+#~ "le fichier correspondant est manquant"
 
 #~ msgid "malformed bundle DESCRIPTION file, no Contains field"
 #~ msgstr "fichier DESCRIPTION du bundle erroné, pas de champ Contains"

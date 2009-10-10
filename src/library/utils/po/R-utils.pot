@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08\n"
+"POT-Creation-Date: 2009-10-10 14:12\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -224,13 +224,13 @@ msgstr ""
 msgid "cannot edit NULL row names"
 msgstr ""
 
-msgid "no help file found for '%s'"
+msgid "no help found for '%s'"
 msgstr ""
 
 msgid "more than one help file found: using package '%s'"
 msgstr ""
 
-msgid "'%s' has a help file but no examples"
+msgid "package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed"
 msgstr ""
 
 msgid "test '%s' is not available"
@@ -294,12 +294,6 @@ msgid "HTML help is unavailable"
 msgstr ""
 
 msgid "R Help on '%s'"
-msgstr ""
-
-msgid "No text help for '%s' is available:\ncorresponding file is missing"
-msgstr ""
-
-msgid "No offline help for '%s' is available:\ncorresponding file is missing"
 msgstr ""
 
 msgid "argument '%s' must be a single character string"

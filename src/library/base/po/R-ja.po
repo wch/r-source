@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:06\n"
-"PO-Revision-Date: 2009-03-31 13:18+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"POT-Creation-Date: 2009-10-10 14:12\n"
+"PO-Revision-Date: 2009-10-07 19:17+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
@@ -199,9 +199,8 @@ msgstr " 文字オブジェクトしか書き込めません "
 msgid "supplied timeout must be NULL or a non-negative number"
 msgstr " タイムアウトは NULL か非負の数値でなければなりません "
 
-#, fuzzy
 msgid "'from' must be raw or character"
-msgstr " 'arg' は、NULL かひとつの文字列ベクトルでなければなりません "
+msgstr " 'from'はrawまたは文字でなければなりません "
 
 msgid "'x' must be numeric"
 msgstr " 'x' は数値でなければなりません "
@@ -227,7 +226,6 @@ msgstr " 'row.names' に欠損値があってはなりません "
 msgid "invalid 'dimnames' given for data frame"
 msgstr " データフレームに無効な 'dimnames' が与えられました "
 
-#, fuzzy
 msgid "cannot coerce class %s into a data.frame"
 msgstr " クラス \"%s\" はデータフレームに強制変換できません "
 
@@ -272,9 +270,8 @@ msgstr " 与えられた列名は誤った長さです "
 msgid "row names were found from a short variable and have been discarded"
 msgstr " 列名は短い変数から見つけられ、捨て去られました "
 
-#, fuzzy
 msgid "named arguments other than 'drop' are discouraged"
-msgstr " 'row.names' に欠損値があってはなりません "
+msgstr " 'drop'以外での名前付き引数は推奨されません "
 
 msgid "drop argument will be ignored"
 msgstr " drop 引数は無視されます "
@@ -282,13 +279,11 @@ msgstr " drop 引数は無視されます "
 msgid "undefined columns selected"
 msgstr " 未定義の列が選ばれました "
 
-#, fuzzy
 msgid "named arguments other than 'exact' are discouraged"
-msgstr " 'row.names' に欠損値があってはなりません "
+msgstr " 'exact'以外での名前付き引数は推奨されません "
 
-#, fuzzy
 msgid "named arguments are discouraged"
-msgstr " 重複した 'row.names' は許されません "
+msgstr "名前付き引数は推奨されません "
 
 msgid "rhs is the wrong length for indexing by a logical matrix"
 msgstr " 右辺は論理値行列によって添字操作するには間違った長さです "
@@ -549,11 +544,10 @@ msgid "determinant not currently defined for complex matrices"
 msgstr " 行列式は現在複素行列には定義されていません "
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
-msgstr ""
+msgstr " 'x'が行列の時は'nrow'と'ncol'は指定できません "
 
-#, fuzzy
 msgid "'x' is an array, but not 1D."
-msgstr " 第一引数は配列ですが、行列ではありません "
+msgstr " 'x'は行列ですが、一次元ではありません "
 
 msgid "only matrix diagonals can be replaced"
 msgstr " 行列の対角成分だけが置き換えられます "
@@ -742,7 +736,7 @@ msgid "'max.distance' components must be non-negative"
 msgstr " 'max.distance' 成分は非負でなければなりません "
 
 msgid "norm '%s' currently always uses exact = FALSE"
-msgstr ""
+msgstr " norm '%S'は現在は常に exact = FALSE を使います "
 
 msgid "triangular matrix should be square"
 msgstr " 三角行列は正方行列であるべきです "
@@ -753,31 +747,21 @@ msgstr " 'object' はリストでなければなりません "
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr " これは R %s です。パッケージ '%s' は %s %s を必要とします "
 
-msgid "package '%s' was built before R 2.0.0: please re-install it"
+#, fuzzy
+msgid "package '%s' was built before R 2.10.0: please re-install it"
 msgstr ""
 " パッケージ '%s' は R 2.0.0 以前に造らました。新しくインストールして下さい "
-
-msgid "package '%s' was built under R version %s"
-msgstr " パッケージ '%s' はバージョン %s の R の下で造られました "
-
-#, fuzzy
-msgid ""
-"package '%s' was built under R version %s and help will not work correctly\n"
-"Please re-install it"
-msgstr ""
-" パッケージ '%s' は R 2.0.0 以前に造らました。新しくインストールして下さい "
-
-#, fuzzy
-msgid ""
-"package '%s' was built under R version %s and help may not work correctly"
-msgstr " パッケージ '%s' はバージョン %s の R の下で造られました "
 
 #, fuzzy
 msgid ""
 "package '%s' claims to be built under R version %s but is missing some help "
 "files and needs to be re-installed"
 msgstr ""
-" パッケージ '%s' は R 2.0.0 以前に造らました。新しくインストールして下さい "
+"パッケージ '%s' はバージョン %s の R の下で造られました。ヘルプは正しく機能し"
+"ません。新しくインストールしてください "
+
+msgid "package '%s' was built under R version %s"
+msgstr " パッケージ '%s' はバージョン %s の R の下で造られました "
 
 msgid "package '%s' was built for %s"
 msgstr " パッケージ '%s' は %s に対して造られました "
@@ -1609,6 +1593,12 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid ""
+#~ "package '%s' was built under R version %s and help may not work correctly"
+#~ msgstr ""
+#~ " パッケージ '%s' はバージョン %s の R の下で造られました。ヘルプは正しく機"
+#~ "能しないかもしれません "
 
 #~ msgid "extra arguments ignored:"
 #~ msgstr " 余計な引数は無視されました: "

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-10-08 08:37\n"
-"PO-Revision-Date: 2009-03-31 20:47+0900 \n"
+"PO-Revision-Date: 2009-10-09 13:09+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
@@ -160,7 +160,6 @@ msgid "must supply a function skeleton, explicitly or via an existing function"
 msgstr ""
 " 明示的もしくは既存の関数経由で関数の骨格(skelton) を与える必要があります "
 
-#, fuzzy
 msgid ""
 "Restoring the implicit generic function for \"%s\" from package \"%s\"\n"
 "    into package \"%s\"; the generic differs from the default conversion (%s)"
@@ -168,7 +167,6 @@ msgstr ""
 "隠匿された総称的関数 \"%s\" をパッケージ \"%s\" から \"%s\" へ戻す際、総称が"
 "デフォルトの変換(%s) と異なりました "
 
-#, fuzzy
 msgid ""
 "Creating a generic for \"%s\" in package \"%s\"\n"
 "    (the supplied definition differs from and overrides the implicit "
@@ -179,7 +177,6 @@ msgstr ""
 " (与えられた定義が異なるため, パッケージ \"%s\" 中に隠匿された総称的関数を上"
 "書きします: %s) "
 
-#, fuzzy
 msgid ""
 "No generic version of \"%s\" on package \"%s\" is allowed;\n"
 "   a new generic will be assigned with package \"%s\""
@@ -697,11 +694,15 @@ msgid ""
 "Class \"%s\" is inheriting an inconsistent superclass structure from class "
 "\"%s\", inconsistent with %s"
 msgstr ""
+"クラス\"%s\"はクラス\"%s\"（%sとは不整合）から不整合な上位クラスの構造を継承"
+"しています "
 
 msgid ""
 "unable to find a consistent ordering of superclasses for class \"%s\": order "
 "chosen is inconsistent with the superclasses of %s"
 msgstr ""
+" クラス \"%s\" に対する上位クラスに一貫性のある順序を見出すことができません。"
+"選ばれた順序は %s の上位クラスと一貫性がありません "
 
 msgid "\"class\" is a reserved slot name and cannot be redefined"
 msgstr " \"class\" は予約済みのスロット名であり、再定義出来ません "
@@ -999,7 +1000,6 @@ msgstr ""
 " 'representation' が 'classRepresentation' オブジェクトのときは、引数 "
 "'Class' と 'where' だけを与えられます "
 
-#, fuzzy
 msgid "Internal error: definition of class \"%s\" not properly assigned"
 msgstr "内部エラー: 適切に割り当てられなかったクラスの定義 \"%s\" "
 
@@ -1104,11 +1104,12 @@ msgstr ""
 msgid "no definition of \"%s\" to use for %s"
 msgstr " \"%s\" (%s に対して使用する)の定義がありません "
 
-#, fuzzy
 msgid ""
 "multiple definitions of class \"%s\" visible; using the definition\n"
 "   in package \"%s\" for %s"
-msgstr " \"%s\" の多重定義が見付かりました；%s に関するものを使います "
+msgstr ""
+"クラス \"%s\" の多重定義が見付かりました；パッケージ\"%s\"の定義を%s に対して"
+"使います "
 
 msgid "Class definition cannot extend more than one of these data types: %s"
 msgstr ""
@@ -1447,13 +1448,12 @@ msgstr ""
 " 引数 S4Class はクラス定義でなければなりません: クラス \"%s\" のオブジェクト"
 "が与えられました "
 
-#, fuzzy
 msgid ""
 "inconsistent old-style class information for \"%s\"; the class is defined "
 "but does not extend \"%s\" and is not valid as the data part"
 msgstr ""
 " \"%s\" に対する不整合な旧式のクラス情報；クラスは定義されていますが \"%s\" "
-"に拡張できません "
+"を拡張しておらず、データ部分として無効です "
 
 msgid ""
 "The S3 class of the prototype, \"%s\", is undefined; only allowed when this "

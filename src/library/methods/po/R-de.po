@@ -172,7 +172,6 @@ msgstr ""
 "\"%s\" in Paket \"%s\"; die Generische unterscheidet sich von der "
 "Standardkonvertierung (%s)"
 
-#, fuzzy
 msgid ""
 "Creating a generic for \"%s\" in package \"%s\"\n"
 "    (the supplied definition differs from and overrides the implicit "
@@ -183,7 +182,6 @@ msgstr ""
 "(die angegebene Definition unterschiedet sich von und überschreibt die "
 "implizite Generische im Paket \"%s\": %s)"
 
-#, fuzzy
 msgid ""
 "No generic version of \"%s\" on package \"%s\" is allowed;\n"
 "   a new generic will be assigned with package \"%s\""
@@ -1036,7 +1034,6 @@ msgstr ""
 "nur die Argumente 'Class' und 'where' können angegeben werden, wenn das "
 "Argument 'representation' vom Typ 'classRepresentation' ist"
 
-#, fuzzy
 msgid "Internal error: definition of class \"%s\" not properly assigned"
 msgstr ""
 "Interner Fehler: die Definition der Klasse \"%s\" ist nicht ordentlich "

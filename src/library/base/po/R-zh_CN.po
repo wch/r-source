@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:06\n"
+"POT-Creation-Date: 2009-10-10 14:12\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -733,26 +733,18 @@ msgstr "'object'必需是串列"
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "这是R%s，程辑包'%s'需要%s %s "
 
-msgid "package '%s' was built before R 2.0.0: please re-install it"
+#, fuzzy
+msgid "package '%s' was built before R 2.10.0: please re-install it"
 msgstr "程辑包'%s'是在R版本2.0.0之前建的：你得重新组装"
-
-msgid "package '%s' was built under R version %s"
-msgstr "程辑包'%s'是用R版本%s 来建造的"
-
-msgid ""
-"package '%s' was built under R version %s and help will not work correctly\n"
-"Please re-install it"
-msgstr "程辑包'%s'是在R版本%s之前建的，与目前的帮助文件不相容，请重新组装"
-
-msgid ""
-"package '%s' was built under R version %s and help may not work correctly"
-msgstr "程辑包'%s'是用R版本%s 来建造的，与目前的帮助文件不相容"
 
 #, fuzzy
 msgid ""
 "package '%s' claims to be built under R version %s but is missing some help "
 "files and needs to be re-installed"
 msgstr "程辑包'%s'是在R版本%s之前建的，与目前的帮助文件不相容，请重新组装"
+
+msgid "package '%s' was built under R version %s"
+msgstr "程辑包'%s'是用R版本%s 来建造的"
 
 msgid "package '%s' was built for %s"
 msgstr "程辑包'%s'是为%s建造的"
@@ -1554,6 +1546,16 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid ""
+#~ "package '%s' was built under R version %s and help will not work "
+#~ "correctly\n"
+#~ "Please re-install it"
+#~ msgstr "程辑包'%s'是在R版本%s之前建的，与目前的帮助文件不相容，请重新组装"
+
+#~ msgid ""
+#~ "package '%s' was built under R version %s and help may not work correctly"
+#~ msgstr "程辑包'%s'是用R版本%s 来建造的，与目前的帮助文件不相容"
 
 #~ msgid "extra arguments ignored:"
 #~ msgstr "忽略额外的变元"

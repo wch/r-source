@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:06\n"
+"POT-Creation-Date: 2009-10-10 14:12\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -781,24 +781,10 @@ msgstr "'subset' deve essere di tipo logico"
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "Questo è R %s, il pacchetto '%s' necessita di %s %s"
 
-msgid "package '%s' was built before R 2.0.0: please re-install it"
+#, fuzzy
+msgid "package '%s' was built before R 2.10.0: please re-install it"
 msgstr ""
 "il pacchetto '%s' è stato creato prima di R 2.0.0: si prega di re-installarlo"
-
-msgid "package '%s' was built under R version %s"
-msgstr "il pacchetto '%s' è stato creato con R versione %s"
-
-#, fuzzy
-msgid ""
-"package '%s' was built under R version %s and help will not work correctly\n"
-"Please re-install it"
-msgstr ""
-"il pacchetto '%s' è stato creato prima di R 2.0.0: si prega di re-installarlo"
-
-#, fuzzy
-msgid ""
-"package '%s' was built under R version %s and help may not work correctly"
-msgstr "il pacchetto '%s' è stato creato con R versione %s"
 
 #, fuzzy
 msgid ""
@@ -806,6 +792,9 @@ msgid ""
 "files and needs to be re-installed"
 msgstr ""
 "il pacchetto '%s' è stato creato prima di R 2.0.0: si prega di re-installarlo"
+
+msgid "package '%s' was built under R version %s"
+msgstr "il pacchetto '%s' è stato creato con R versione %s"
 
 msgid "package '%s' was built for %s"
 msgstr "il pacchetto '%s' è stato creato per %s"
@@ -1657,6 +1646,20 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "package '%s' was built under R version %s and help will not work "
+#~ "correctly\n"
+#~ "Please re-install it"
+#~ msgstr ""
+#~ "il pacchetto '%s' è stato creato prima di R 2.0.0: si prega di re-"
+#~ "installarlo"
+
+#, fuzzy
+#~ msgid ""
+#~ "package '%s' was built under R version %s and help may not work correctly"
+#~ msgstr "il pacchetto '%s' è stato creato con R versione %s"
 
 #, fuzzy
 #~ msgid "extra arguments ignored:"

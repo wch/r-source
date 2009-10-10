@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:07\n"
+"POT-Creation-Date: 2009-10-10 14:12\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -267,6 +267,9 @@ msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
 msgid "package must be loaded"
+msgstr ""
+
+msgid "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be checked"
 msgstr ""
 
 msgid "Obsolete package(s) %s in Rd xrefs"

@@ -8,30 +8,30 @@ msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2009-10-08 08:39+0100\n"
-"PO-Revision-Date: 2009-03-29 16:09+0900\n"
-"Last-Translator: Masafumi OKADA <mokada@mail.ne.jp>\n"
+"PO-Revision-Date: 2009-10-07 12:29+0900\n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CP932\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Pootle 1.1.0\n"
 
 #: console.c:1132 console.c:1174
 msgid "Not enough memory"
-msgstr " ƒƒ‚ƒŠ‚ª•s‘«‚µ‚Ä‚¢‚Ü‚· "
+msgstr " ãƒ¡ãƒ¢ãƒªãŒä¸è¶³ã—ã¦ã„ã¾ã™ "
 
 #: console.c:1221 console.c:1225
 msgid "Insufficient memory: text not copied to the clipboard"
-msgstr " ƒƒ‚ƒŠ•s‘«: ƒeƒLƒXƒg‚ğƒNƒŠƒbƒvƒ{[ƒh‚ÉƒRƒs[‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñ "
+msgstr " ãƒ¡ãƒ¢ãƒªä¸è¶³: ãƒ†ã‚­ã‚¹ãƒˆã‚’ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼ã™ã‚‹ã“ã¨ãŒã§ãã¾ã›ã‚“ "
 
 #: console.c:1261 ../extra/graphapp/clipboard.c:53
 #: ../extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
-msgstr " ƒNƒŠƒbƒvƒ{[ƒh‚ğŠJ‚­‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñ "
+msgstr " ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‚’é–‹ãã“ã¨ãŒã§ãã¾ã›ã‚“ "
 
 #: console.c:1877
 msgid "Insufficient memory. Please close the console"
-msgstr " ƒƒ‚ƒŠ‚ª•s‘«‚µ‚Ä‚¢‚Ü‚·.ƒRƒ“ƒ\[ƒ‹‚ğ•Â‚¶‚Ä‚­‚¾‚³‚¢ "
+msgstr " ãƒ¡ãƒ¢ãƒªãŒä¸è¶³ã—ã¦ã„ã¾ã™.ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã‚’é–‰ã˜ã¦ãã ã•ã„ "
 
 #: console.c:1931 console.c:1983 preferences.c:322
 #, c-format
@@ -39,131 +39,131 @@ msgid ""
 "Font %s-%d-%d  not found.\n"
 "Using system fixed font"
 msgstr ""
-" ƒtƒHƒ“ƒg %s-%d-%d  ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ \n"
-" ƒVƒXƒeƒ€‚É—pˆÓ‚³‚ê‚Ä‚¢‚éƒtƒHƒ“ƒg‚ğg‚¢‚Ü‚· "
+" ãƒ•ã‚©ãƒ³ãƒˆ %s-%d-%d  ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ \n"
+" ã‚·ã‚¹ãƒ†ãƒ ã«ç”¨æ„ã•ã‚Œã¦ã„ã‚‹ãƒ•ã‚©ãƒ³ãƒˆã‚’ä½¿ã„ã¾ã™ "
 
 #: console.c:2088
 msgid "Save selection to"
-msgstr " ‘I‘ğ‚ğˆÈ‰º‚ÉƒZ[ƒu‚µ‚Ü‚· "
+msgstr " é¸æŠã‚’ä»¥ä¸‹ã«ã‚»ãƒ¼ãƒ–ã—ã¾ã™ "
 
 #: console.c:2090
 msgid "Save console contents to"
-msgstr " ƒRƒ“ƒ\[ƒ‹‚Ì“à—e‚ğˆÈ‰º‚É•Û‘¶‚µ‚Ü‚· "
+msgstr " ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã®å†…å®¹ã‚’ä»¥ä¸‹ã«ä¿å­˜ã—ã¾ã™ "
 
 #: console.c:2189
 msgid "Scrolling.\n"
-msgstr " ƒXƒNƒ[ƒ‹. \n"
+msgstr " ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«. \n"
 
 #: console.c:2190
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
-msgstr "   ƒL[ƒ{[ƒh: PgUp, PgDown, Ctrl+–îˆó, Ctrl+Home, Ctrl+End, \n"
+msgstr "   ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰: PgUp, PgDown, Ctrl+çŸ¢å°, Ctrl+Home, Ctrl+End, \n"
 
 #: console.c:2191
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
 msgstr ""
-"   ƒ}ƒEƒX: ƒXƒNƒ[ƒ‹ƒo[‚ğg‚¢‚Ü‚·. \n"
+"   ãƒã‚¦ã‚¹: ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ãƒãƒ¼ã‚’ä½¿ã„ã¾ã™. \n"
 " \n"
 
 #: console.c:2192
 msgid "Editing.\n"
-msgstr " •ÒW. \n"
+msgstr " ç·¨é›†. \n"
 
 #: console.c:2193
 msgid "  Moving the cursor: \n"
-msgstr "   ƒJ[ƒ\ƒ‹ˆÚ“®:  \n"
+msgstr "   ã‚«ãƒ¼ã‚½ãƒ«ç§»å‹•:  \n"
 
 #: console.c:2194
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
-msgstr "      ¶–îˆó ‚Ü‚½‚Í Ctrl+B: 1•¶š–ß‚é; \n"
+msgstr "      å·¦çŸ¢å° ã¾ãŸã¯ Ctrl+B: 1æ–‡å­—æˆ»ã‚‹; \n"
 
 #: console.c:2195
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
-msgstr "      ‰E–îˆó ‚Ü‚½‚Í Ctrl+F: 1•¶ši‚Ş; \n"
+msgstr "      å³çŸ¢å° ã¾ãŸã¯ Ctrl+F: 1æ–‡å­—é€²ã‚€; \n"
 
 #: console.c:2196
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
-msgstr "      Home ‚Ü‚½‚Í Ctrl+A: s“ª‚ÉˆÚ“®; \n"
+msgstr "      Home ã¾ãŸã¯ Ctrl+A: è¡Œé ­ã«ç§»å‹•; \n"
 
 #: console.c:2197
 msgid "     End or Ctrl+E: go to end of line;\n"
-msgstr "      End ‚Ü‚½‚Í Ctrl+E: s––‚ÉˆÚ“®; \n"
+msgstr "      End ã¾ãŸã¯ Ctrl+E: è¡Œæœ«ã«ç§»å‹•; \n"
 
 #: console.c:2198
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
-msgstr "   —š—ğ: ã–îˆó,‰º–îˆó,Ctrl+P, Ctrl+N \n"
+msgstr "   å±¥æ­´: ä¸ŠçŸ¢å°,ä¸‹çŸ¢å°,Ctrl+P, Ctrl+N \n"
 
 #: console.c:2199
 msgid "  Deleting:\n"
-msgstr "   Á‹: \n"
+msgstr "   æ¶ˆå»: \n"
 
 #: console.c:2200
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
-msgstr "      Delete ‚Ü‚½‚Í Ctrl+D: Œ»İ‘I‘ğ‚µ‚Ä‚¢‚é•¶š‚ğÁ‹; \n"
+msgstr "      Delete ã¾ãŸã¯ Ctrl+D: ç¾åœ¨é¸æŠã—ã¦ã„ã‚‹æ–‡å­—ã‚’æ¶ˆå»; \n"
 
 #: console.c:2201
 msgid "     Backspace: delete preceding character;\n"
-msgstr "      Backspace: 1‚Â‘O‚Ì•¶š‚ğÁ‹; \n"
+msgstr "      Backspace: 1ã¤å‰ã®æ–‡å­—ã‚’æ¶ˆå»; \n"
 
 #: console.c:2202
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
-"      Ctrl+Del ‚Ü‚½‚Í Ctrl+K: Œ»İ‘I‘ğ‚µ‚Ä‚¢‚é•¶š‚©‚çs––‚Ü‚Å‚Ì•¶š‚ğ‘S‚ÄÁ"
-"‹. \n"
+"      Ctrl+Del ã¾ãŸã¯ Ctrl+K: ç¾åœ¨é¸æŠã—ã¦ã„ã‚‹æ–‡å­—ã‹ã‚‰è¡Œæœ«ã¾ã§ã®æ–‡å­—ã‚’å…¨ã¦æ¶ˆ"
+"å». \n"
 
 #: console.c:2203
 msgid "     Ctrl+U: delete all text from current line.\n"
-msgstr "      Ctrl+U: Œ»İ‚Ìs‚ÌƒeƒLƒXƒg‚ğ‘S‚ÄÁ‹. \n"
+msgstr "      Ctrl+U: ç¾åœ¨ã®è¡Œã®ãƒ†ã‚­ã‚¹ãƒˆã‚’å…¨ã¦æ¶ˆå». \n"
 
 #: console.c:2204
 msgid "  Copy and paste.\n"
-msgstr "   ƒRƒs[•ƒy[ƒXƒg. \n"
+msgstr "   ã‚³ãƒ”ãƒ¼ï¼†ãƒšãƒ¼ã‚¹ãƒˆ. \n"
 
 #: console.c:2205
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
-"      ƒ}ƒEƒX‚Ì¶ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚È‚ª‚çƒ}ƒEƒX‚ğg‚Á‚Ä•¶š—ñ‚ğƒ}[ƒNi‘I‘ğj‚µ‚Ü"
-"‚·. \n"
+"      ãƒã‚¦ã‚¹ã®å·¦ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãªãŒã‚‰ãƒã‚¦ã‚¹ã‚’ä½¿ã£ã¦æ–‡å­—åˆ—ã‚’ãƒãƒ¼ã‚¯ï¼ˆé¸æŠï¼‰ã—ã¾"
+"ã™. \n"
 
 #: console.c:2206
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
-"      Shift+Del (‚Ü‚½‚Í Ctrl+C) ‚ğg‚Á‚Ä,ƒ}[ƒNi‘I‘ğj‚µ‚½•¶š—ñ‚ğƒNƒŠƒbƒv"
-"ƒ{[ƒh‚ÉƒRƒs[‚µ, \n"
+"      Shift+Del (ã¾ãŸã¯ Ctrl+C) ã‚’ä½¿ã£ã¦,ãƒãƒ¼ã‚¯ï¼ˆé¸æŠï¼‰ã—ãŸæ–‡å­—åˆ—ã‚’ã‚¯ãƒªãƒƒãƒ—"
+"ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼ã—, \n"
 
 #: console.c:2207
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
 msgstr ""
-"      Shift+Ins (‚Ü‚½‚Í Ctrl+V ‚Ü‚½‚Í Ctrl+Y) ‚ÅƒNƒŠƒbƒvƒ{[ƒh‚Ì“à—ei‚à‚µ‚ "
-"‚ê‚Îj‚ğƒy[ƒXƒg‚µ‚Ä \n"
+"      Shift+Ins (ã¾ãŸã¯ Ctrl+V ã¾ãŸã¯ Ctrl+Y) ã§ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã®å†…å®¹ï¼ˆã‚‚ã—ã‚"
+"ã‚Œã°ï¼‰ã‚’ãƒšãƒ¼ã‚¹ãƒˆã—ã¦ \n"
 
 #: console.c:2208
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr ""
-"      ,ƒRƒ“ƒ\[ƒ‹‚Öo—Í‚µ‚Ü‚·,‚Ü‚½ Ctrl+X ‚ÅƒRƒs[‚µ‚½Œã‚Éƒy[ƒXƒg‚µ‚Ä‚à\‚¢"
-"‚Ü‚¹‚ñ \n"
+"      ,ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã¸å‡ºåŠ›ã—ã¾ã™,ã¾ãŸ Ctrl+X ã§ã‚³ãƒ”ãƒ¼ã—ãŸå¾Œã«ãƒšãƒ¼ã‚¹ãƒˆã—ã¦ã‚‚æ§‹ã„"
+"ã¾ã›ã‚“ \n"
 
 #: console.c:2209
 msgid "  Misc:\n"
-msgstr "   ‚»‚Ì‘¼: \n"
+msgstr "   ãã®ä»–: \n"
 
 #: console.c:2210
 msgid "     Ctrl+L: Clear the console.\n"
-msgstr "      Ctrl+L: ƒRƒ“ƒ\[ƒ‹‰æ–Ê‚ğ‘SÁ‹‚µ‚Ü‚·. \n"
+msgstr "      Ctrl+L: ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ç”»é¢ã‚’å…¨æ¶ˆå»ã—ã¾ã™. \n"
 
 #: console.c:2211
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "      Ctrl+O: ã‘‚«ƒ‚[ƒh‚ğØ‚è‘Ö‚¦‚Ü‚·: Å‰‚ÍƒIƒt‚Å‚·. \n"
+msgstr "      Ctrl+O: ä¸Šæ›¸ããƒ¢ãƒ¼ãƒ‰ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™: æœ€åˆã¯ã‚ªãƒ•ã§ã™. \n"
 
 #: console.c:2212
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
-msgstr "      Ctrl+T: Œ»İ‚Ì•¶š‚Æ1•¶š‘O‚Ì•¶š‚ğ“ü‚ê‘Ö‚¦‚Ü‚·. \n"
+msgstr "      Ctrl+T: ç¾åœ¨ã®æ–‡å­—ã¨1æ–‡å­—å‰ã®æ–‡å­—ã‚’å…¥ã‚Œæ›¿ãˆã¾ã™. \n"
 
 #: console.c:2213
 msgid ""
@@ -171,14 +171,14 @@ msgid ""
 "Note: Console is updated only when some input is required.\n"
 msgstr ""
 "\n"
-" ’ˆÓ: ‰½‚ç‚©‚Ì“ü—Í‚ª—v‹‚³‚ê‚½ê‡‚É‚Ì‚İ,ƒRƒ“ƒ\[ƒ‹‚ªXV‚³‚ê‚Ü‚·. \n"
+" æ³¨æ„: ä½•ã‚‰ã‹ã®å…¥åŠ›ãŒè¦æ±‚ã•ã‚ŒãŸå ´åˆã«ã®ã¿,ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ãŒæ›´æ–°ã•ã‚Œã¾ã™. \n"
 
 #: console.c:2214
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
 msgstr ""
-"   Ctrl+W ‚ÅŒ»İ‚Ì‹@”\‚Ì off/on ‚ğØ‚è‘Ö‚¦‚Ü‚·. \n"
+"   Ctrl+W ã§ç¾åœ¨ã®æ©Ÿèƒ½ã® off/on ã‚’åˆ‡ã‚Šæ›¿ãˆã¾ã™. \n"
 " \n"
 
 #: console.c:2215
@@ -186,7 +186,7 @@ msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
 msgstr ""
-" ESC ‚ÅŒvZ‚ğ’†’f‚µ‚Ü‚·. \n"
+" ESC ã§è¨ˆç®—ã‚’ä¸­æ–­ã—ã¾ã™. \n"
 " \n"
 
 #: console.c:2216
@@ -194,81 +194,81 @@ msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
 msgstr ""
-" 'rcompgen'ƒpƒbƒP[ƒW‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚ê‚Î, TAB‚Å•âŠ®‚ğŠJn‚µ‚Ü‚·. \n"
+" 'rcompgen'ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ãŒã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã‚Œã°, TABã§è£œå®Œã‚’é–‹å§‹ã—ã¾ã™. \n"
 " \n"
 
 #: console.c:2217
 msgid "Standard Windows hotkeys can be used to switch to the\n"
-msgstr " •W€ƒEƒCƒ“ƒhƒEƒYEƒzƒbƒgƒL[‚ğg‚¢ˆÈ‰º‚ÖØ‚è‚©‚¦‚é‚±‚Æ‚ª‚Å‚«‚Ü‚· \n"
+msgstr " æ¨™æº–ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚ºãƒ»ãƒ›ãƒƒãƒˆã‚­ãƒ¼ã‚’ä½¿ã„ä»¥ä¸‹ã¸åˆ‡ã‚Šã‹ãˆã‚‹ã“ã¨ãŒã§ãã¾ã™ \n"
 
 #: console.c:2218
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr ""
-" ƒOƒ‰ƒtƒBƒbƒNƒXƒfƒoƒCƒX (MDI ’†‚Ì Ctrl+Tab ‚Ü‚½‚Í Ctrl+F6, SDI ’†‚Ì Alt+Tab) "
+" ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‡ãƒã‚¤ã‚¹ (MDI ä¸­ã® Ctrl+Tab ã¾ãŸã¯ Ctrl+F6, SDI ä¸­ã® Alt+Tab) "
 
 #: dataentry.c:223 dataentry.c:1859 dataentry.c:1862 dataentry.c:1893
 msgid "invalid argument"
-msgstr " –³Œø‚Èˆø”‚Å‚· "
+msgstr " ç„¡åŠ¹ãªå¼•æ•°ã§ã™ "
 
 #: dataentry.c:270
 msgid "invalid type for value"
-msgstr " ’l‚É‘Î‚µ‚Ä–³Œø‚ÈŒ^‚Å‚· "
+msgstr " å€¤ã«å¯¾ã—ã¦ç„¡åŠ¹ãªå‹ã§ã™ "
 
 #: dataentry.c:281
 msgid "Data Editor"
-msgstr " ƒf[ƒ^ƒGƒfƒBƒ^ "
+msgstr " ãƒ‡ãƒ¼ã‚¿ã‚¨ãƒ‡ã‚£ã‚¿ "
 
 #: dataentry.c:282 dataentry.c:1900
 msgid "invalid device"
-msgstr " –³Œø‚ÈƒfƒoƒCƒX‚Å‚· "
+msgstr " ç„¡åŠ¹ãªãƒ‡ãƒã‚¤ã‚¹ã§ã™ "
 
 #: dataentry.c:331
 msgid "dataentry: internal memory problem"
-msgstr " dataentry: “à•”ƒƒ‚ƒŠ‚É–â‘è‚ª”­¶‚µ‚Ü‚µ‚½ "
+msgstr " dataentry: å†…éƒ¨ãƒ¡ãƒ¢ãƒªã«å•é¡ŒãŒç™ºç”Ÿã—ã¾ã—ãŸ "
 
 #: dataentry.c:634 dataentry.c:1229
 msgid "dataentry: internal memory error"
-msgstr " dataentry: “à•”ƒƒ‚ƒŠƒGƒ‰[‚Å‚· "
+msgstr " dataentry: å†…éƒ¨ãƒ¡ãƒ¢ãƒªã‚¨ãƒ©ãƒ¼ã§ã™ "
 
 #: dataentry.c:757 dataentry.c:770
 msgid "internal type error in dataentry"
-msgstr " dataentry ’†‚Ì“à•”‚ÌŒ^ƒGƒ‰[‚Å‚· "
+msgstr " dataentry ä¸­ã®å†…éƒ¨ã®å‹ã‚¨ãƒ©ãƒ¼ã§ã™ "
 
 #: dataentry.c:860
 msgid "dataentry: parse error on string"
-msgstr " dataentry: •¶š—ñ‚Ìƒp[ƒXƒGƒ‰[‚Å‚· "
+msgstr " dataentry: æ–‡å­—åˆ—ã®ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼ã§ã™ "
 
 #: dataentry.c:1003
 msgid "dataentry: expression too long"
-msgstr " dataentry: “ü—Í‚³‚ê‚½®‚ª’·‚·‚¬‚Ü‚· "
+msgstr " dataentry: å…¥åŠ›ã•ã‚ŒãŸå¼ãŒé•·ã™ãã¾ã™ "
 
 #: dataentry.c:1480
 msgid "column names cannot be blank"
-msgstr " —ñ–¼‚Í‹ó”’‚Å‚ ‚Á‚Ä‚Í‚È‚è‚Ü‚¹‚ñ "
+msgstr " åˆ—åã¯ç©ºç™½ã§ã‚ã£ã¦ã¯ãªã‚Šã¾ã›ã‚“ "
 
 #: dataentry.c:1526
 msgid "Variable editor"
-msgstr " •Ï”ƒGƒfƒBƒ^ "
+msgstr " å¤‰æ•°ã‚¨ãƒ‡ã‚£ã‚¿ "
 
 #: dataentry.c:1531
 msgid "variable name"
-msgstr " •Ï”–¼ "
+msgstr " å¤‰æ•°å "
 
 #: dataentry.c:1533
 msgid "type"
-msgstr " Œ^ "
+msgstr " å‹ "
 
 #: dataentry.c:1647
 msgid "Cell width(s)"
-msgstr " ƒZƒ‹i•¡”j‚Ì• "
+msgstr " ã‚»ãƒ«ï¼ˆè¤‡æ•°ï¼‰ã®å¹… "
 
 #: dataentry.c:1653
 msgid "Cell width"
-msgstr " ƒZƒ‹‚Ì• "
+msgstr " ã‚»ãƒ«ã®å¹… "
 
 #: dataentry.c:1656
 msgid "variable"
-msgstr " •Ï” "
+msgstr " å¤‰æ•° "
 
 #: dataentry.c:1699
 msgid ""
@@ -292,267 +292,267 @@ msgid ""
 "  Right-click menu for copy, paste, autosize currently selected column\n"
 "\n"
 msgstr ""
-" ƒiƒrƒQ[ƒVƒ‡ƒ“. \n"
-"  Keyboard: ƒJ[ƒ\ƒ‹ƒL[‚ğg‚Á‚Ä‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢ \n"
-" \tTab ƒL[‚Å‰E‚ÉˆÚ“®, Shift+Tab ‚Å¶‚ÉˆÚ“®‚µ‚Ü‚·. \n"
-" \tPgDn ‚Ü‚½‚Í Ctrl+F: 1‰æ–Ê‰º‚ÉˆÚ“® \n"
-" \tPgUp ‚Ü‚½‚Í Ctrl+B: 1‰æ–Êã‚ÉˆÚ“® \n"
-" \tHome: ¶ã‚Ì (1,1) ƒZƒ‹‚ÉˆÚ“® \n"
-" \tEnd: ÅI—ñ‚ÌÅIs‚ÉˆÚ“® \n"
-"   Mouse: ƒZƒ‹‚ğ¶ƒNƒŠƒbƒN‚µ‚½‚è, ƒXƒNƒ[ƒ‹ƒo[‚ğg‚Á‚½‚è‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü"
-"‚·. \n"
+" ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³. \n"
+"  Keyboard: ã‚«ãƒ¼ã‚½ãƒ«ã‚­ãƒ¼ã‚’ä½¿ã£ã¦é¸æŠã—ã¦ãã ã•ã„ \n"
+" \tTab ã‚­ãƒ¼ã§å³ã«ç§»å‹•, Shift+Tab ã§å·¦ã«ç§»å‹•ã—ã¾ã™. \n"
+" \tPgDn ã¾ãŸã¯ Ctrl+F: 1ç”»é¢ä¸‹ã«ç§»å‹• \n"
+" \tPgUp ã¾ãŸã¯ Ctrl+B: 1ç”»é¢ä¸Šã«ç§»å‹• \n"
+" \tHome: å·¦ä¸Šã® (1,1) ã‚»ãƒ«ã«ç§»å‹• \n"
+" \tEnd: æœ€çµ‚åˆ—ã®æœ€çµ‚è¡Œã«ç§»å‹• \n"
+"   Mouse: ã‚»ãƒ«ã‚’å·¦ã‚¯ãƒªãƒƒã‚¯ã—ãŸã‚Š, ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ãƒãƒ¼ã‚’ä½¿ã£ãŸã‚Šã™ã‚‹ã“ã¨ãŒã§ãã¾"
+"ã™. \n"
 " \n"
-" •ÒW. \n"
-"  Œ»İƒAƒNƒeƒBƒu‚É‚È‚Á‚Ä‚¢‚éƒZƒ‹‚É(ƒ^ƒCƒv)“ü—Í‚µ‚Ä‰º‚³‚¢ \n"
-"  ƒZƒ‹‚ğƒ_ƒuƒ‹ƒNƒŠƒbƒN‚·‚é‚±‚Æ‚ÅƒZƒ‹ƒf[ƒ^‚ğ•ÒW‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚· \n"
+" ç·¨é›†. \n"
+"  ç¾åœ¨ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ãªã£ã¦ã„ã‚‹ã‚»ãƒ«ã«(ã‚¿ã‚¤ãƒ—)å…¥åŠ›ã—ã¦ä¸‹ã•ã„ \n"
+"  ã‚»ãƒ«ã‚’ãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã“ã¨ã§ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’ç·¨é›†ã™ã‚‹ã“ã¨ãŒã§ãã¾ã™ \n"
 " \n"
-" ‚»‚Ì‘¼. \n"
-"  Ctrl-L ‚ÅƒXƒNƒŠ[ƒ“‚ÌÄ•`Ê‚ğs‚¢, ƒZƒ‹‚ÌƒTƒCƒY‚ğ©“®’²ß‚µ‚Ü‚·\n"
-"  Ctrl-C ‚Å‘I‘ğ’†‚ÌƒZƒ‹‚ğƒRƒs[‚µ‚Ü‚· \n"
-"  Ctrl-V ‚Å‘I‘ğ’†‚ÌƒZƒ‹‚Éƒy[ƒXƒg‚µ‚Ü‚· \n"
-"  ‰EƒNƒŠƒbƒN‚·‚é‚Æƒƒjƒ…[‚ª•\‚ê, ƒRƒs[, ƒy[ƒXƒg, ƒZƒ‹ƒTƒCƒY‚Ì©“®’²ß‚ªs"
-"‚¦‚Ü‚· \n"
+" ãã®ä»–. \n"
+"  Ctrl-L ã§ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ã®å†æå†™ã‚’è¡Œã„, ã‚»ãƒ«ã®ã‚µã‚¤ã‚ºã‚’è‡ªå‹•èª¿ç¯€ã—ã¾ã™\n"
+"  Ctrl-C ã§é¸æŠä¸­ã®ã‚»ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã—ã¾ã™ \n"
+"  Ctrl-V ã§é¸æŠä¸­ã®ã‚»ãƒ«ã«ãƒšãƒ¼ã‚¹ãƒˆã—ã¾ã™ \n"
+"  å³ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã¨ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒè¡¨ã‚Œ, ã‚³ãƒ”ãƒ¼, ãƒšãƒ¼ã‚¹ãƒˆ, ã‚»ãƒ«ã‚µã‚¤ã‚ºã®è‡ªå‹•èª¿ç¯€ãŒè¡Œ"
+"ãˆã¾ã™ \n"
 " \n"
 
 #: dataentry.c:1705 dataentry.c:1815 editor.c:781 rui.c:1197
 msgid "Help"
-msgstr " ƒwƒ‹ƒv "
+msgstr " ãƒ˜ãƒ«ãƒ— "
 
 #: dataentry.c:1707
 msgid "Copy selected cell"
-msgstr " ‘I‘ğ’†‚ÌƒZƒ‹‚ğƒRƒs[ "
+msgstr " é¸æŠä¸­ã®ã‚»ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ "
 
 #: dataentry.c:1708
 msgid "Paste to selected cell"
-msgstr " ‘I‘ğ’†‚ÌƒZƒ‹‚Éƒy[ƒXƒg "
+msgstr " é¸æŠä¸­ã®ã‚»ãƒ«ã«ãƒšãƒ¼ã‚¹ãƒˆ "
 
 #: dataentry.c:1709
 msgid "Autosize column"
-msgstr " ƒZƒ‹ƒTƒCƒY‚Ì©“®’²ß "
+msgstr " ã‚»ãƒ«ã‚µã‚¤ã‚ºã®è‡ªå‹•èª¿ç¯€ "
 
 #: dataentry.c:1711 pager.c:310 rui.c:885
 #: ../library/grDevices/src/devWindows.c:1623
 msgid "Stay on top"
-msgstr " ƒEƒBƒ“ƒhƒE‚ğí‚Éƒgƒbƒv‚É’u‚­ "
+msgstr " ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’å¸¸ã«ãƒˆãƒƒãƒ—ã«ç½®ã "
 
 #: dataentry.c:1713 dataentry.c:1800 pager.c:312 pager.c:475
 msgid "Close"
-msgstr " •Â‚¶‚é "
+msgstr " é–‰ã˜ã‚‹ "
 
 #: dataentry.c:1798 editor.c:727 pager.c:467 rui.c:1131
 #: ../library/grDevices/src/devWindows.c:1563
 msgid "File"
-msgstr " ƒtƒ@ƒCƒ‹ "
+msgstr " ãƒ•ã‚¡ã‚¤ãƒ« "
 
 #: dataentry.c:1804 editor.c:745 pager.c:477 rui.c:1152
 msgid "Edit"
-msgstr " •ÒW "
+msgstr " ç·¨é›† "
 
 #: dataentry.c:1805
 msgid "Copy  \tCTRL+C"
-msgstr " ƒRƒs[  \tCTRL+C "
+msgstr " ã‚³ãƒ”ãƒ¼  \tCTRL+C "
 
 #: dataentry.c:1807
 msgid "Paste \tCTRL+V"
-msgstr " ƒy[ƒXƒg \tCTRL+V "
+msgstr " ãƒšãƒ¼ã‚¹ãƒˆ \tCTRL+V "
 
 #: dataentry.c:1809
 msgid "Delete\tDEL"
-msgstr " Á‹ tDEL "
+msgstr " æ¶ˆå» tDEL "
 
 #: dataentry.c:1812
 msgid "Cell widths ..."
-msgstr " ƒZƒ‹‚Ì• ... "
+msgstr " ã‚»ãƒ«ã®å¹… ... "
 
 #: dataentry.c:1816
 msgid "Data editor"
-msgstr " ƒf[ƒ^ƒGƒfƒBƒ^ "
+msgstr " ãƒ‡ãƒ¼ã‚¿ã‚¨ãƒ‡ã‚£ã‚¿ "
 
 #: editor.c:88 editor.c:90
 msgid "R Editor"
-msgstr " RƒGƒfƒBƒ^ "
+msgstr " Rã‚¨ãƒ‡ã‚£ã‚¿ "
 
 #: editor.c:119
 #, c-format
 msgid "unable to open file %s for reading"
-msgstr " ƒtƒ@ƒCƒ‹ %s ‚ğ“Ç‚İ‚İ—p‚ÉŠJ‚­‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñ "
+msgstr " ãƒ•ã‚¡ã‚¤ãƒ« %s ã‚’èª­ã¿è¾¼ã¿ç”¨ã«é–‹ãã“ã¨ãŒã§ãã¾ã›ã‚“ "
 
 #: editor.c:135
 #, c-format
 msgid "Could not read from file '%s'"
-msgstr " ƒtƒ@ƒCƒ‹ '%s' ‚©‚ç“Ç‚İ‚ß‚Ü‚¹‚ñ "
+msgstr " ãƒ•ã‚¡ã‚¤ãƒ« '%s' ã‹ã‚‰èª­ã¿è¾¼ã‚ã¾ã›ã‚“ "
 
 #: editor.c:166
 #, c-format
 msgid "Could not save file '%s'"
-msgstr " ƒtƒ@ƒCƒ‹ '%s' ‚É‘‚«‚ß‚Ü‚¹‚ñ "
+msgstr " ãƒ•ã‚¡ã‚¤ãƒ« '%s' ã«æ›¸ãè¾¼ã‚ã¾ã›ã‚“ "
 
 #: editor.c:182
 msgid "Save script as"
-msgstr " ƒXƒNƒŠƒvƒg‚ğ•Û‘¶‚·‚é "
+msgstr " ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ä¿å­˜ã™ã‚‹ "
 
 #: editor.c:375 editor.c:692 pager.c:431 rui.c:1084
 msgid "Open script"
-msgstr " ƒXƒNƒŠƒvƒg‚ğŠJ‚­ "
+msgstr " ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’é–‹ã "
 
 #: editor.c:498 pager.c:185 pager.c:205
 msgid "No RGui console to paste to"
-msgstr " ƒy[ƒXƒg‚·‚×‚« RGui ƒRƒ“ƒ\[ƒ‹‚ª‚ ‚è‚Ü‚¹‚ñ "
+msgstr " ãƒšãƒ¼ã‚¹ãƒˆã™ã¹ã RGui ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ãŒã‚ã‚Šã¾ã›ã‚“ "
 
 #: editor.c:600
 msgid "R EDITOR\n"
-msgstr " R ƒGƒfƒBƒ^ \n"
+msgstr " R ã‚¨ãƒ‡ã‚£ã‚¿ \n"
 
 #: editor.c:602
 msgid "A standard text editor for editing and running R code.\n"
-msgstr " R ƒR[ƒh‚Ì•ÒWEÀs—p‚Ì•W€ƒeƒLƒXƒgƒGƒfƒBƒ^. \n"
+msgstr " R ã‚³ãƒ¼ãƒ‰ã®ç·¨é›†ãƒ»å®Ÿè¡Œç”¨ã®æ¨™æº–ãƒ†ã‚­ã‚¹ãƒˆã‚¨ãƒ‡ã‚£ã‚¿. \n"
 
 #: editor.c:604
 msgid "RUNNING COMMANDS\n"
-msgstr " ƒRƒ}ƒ“ƒhÀs’† \n"
+msgstr " ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œä¸­ \n"
 
 #: editor.c:605
 msgid "To run a line or section of R code, select the code and either\n"
 msgstr ""
-" ƒJ[ƒ\ƒ‹s‚Ü‚½‚Í‘I‘ğ’†‚Ì R ƒR[ƒh‚ğÀs‚·‚é‚½‚ß‚É, ƒR[ƒh‚ğ‘I‘ğ‚µ‚Ä‚©‚ç \n"
+" ã‚«ãƒ¼ã‚½ãƒ«è¡Œã¾ãŸã¯é¸æŠä¸­ã® R ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œã™ã‚‹ãŸã‚ã«, ã‚³ãƒ¼ãƒ‰ã‚’é¸æŠã—ã¦ã‹ã‚‰ \n"
 
 #: editor.c:606
 msgid "     Press Ctrl-R\n"
-msgstr "     Ctrl+R ‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢ \n"
+msgstr "     Ctrl+R ã‚’æŠ¼ã—ã¦ãã ã•ã„ \n"
 
 #: editor.c:607
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
 msgstr ""
-"      \"•ÒW\" ƒƒjƒ…[‚©‚ç \"ƒJ[ƒ\ƒ‹s‚Ü‚½‚Í‘I‘ğ’†‚Ì R ƒR[ƒh‚ğÀs\" ‚ğ‘I"
-"‘ğ‚µ‚Ä \n"
+"      \"ç·¨é›†\" ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‹ã‚‰ \"ã‚«ãƒ¼ã‚½ãƒ«è¡Œã¾ãŸã¯é¸æŠä¸­ã® R ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œ\" ã‚’é¸"
+"æŠã—ã¦ \n"
 
 #: editor.c:608
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
 msgstr ""
-"      ƒc[ƒ‹ƒo[‚Ì \"ƒJ[ƒ\ƒ‹s‚Ü‚½‚Í‘I‘ğ’†‚Ì R ƒR[ƒh‚ğÀs\" ƒAƒCƒRƒ“‚ğƒN"
-"ƒŠƒbƒN‚µ‚Ä‚­‚¾‚³‚¢ \n"
+"      ãƒ„ãƒ¼ãƒ«ãƒãƒ¼ã® \"ã‚«ãƒ¼ã‚½ãƒ«è¡Œã¾ãŸã¯é¸æŠä¸­ã® R ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œ\" ã‚¢ã‚¤ã‚³ãƒ³ã‚’ã‚¯"
+"ãƒªãƒƒã‚¯ã—ã¦ãã ã•ã„ \n"
 
 #: editor.c:609
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
 msgstr ""
-" ‚±‚ê‚Í‘I‘ğ‚³‚ê‚½ƒRƒ}ƒ“ƒh‚ğƒRƒ“ƒ\[ƒ‹‚ÉƒRƒs[‚µ,‚»‚ÌƒRƒ}ƒ“ƒh‚ğ•]‰¿‚µ‚Ü‚· \n"
+" ã“ã‚Œã¯é¸æŠã•ã‚ŒãŸã‚³ãƒãƒ³ãƒ‰ã‚’ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã«ã‚³ãƒ”ãƒ¼ã—,ãã®ã‚³ãƒãƒ³ãƒ‰ã‚’è©•ä¾¡ã—ã¾ã™ \n"
 
 #: editor.c:610
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
-msgstr " ƒRƒ}ƒ“ƒh‚Ì‘I‘ğ‚ª‚È‚¯‚ê‚ÎŒ»İs‚ğÀs‚µ, \n"
+msgstr " ã‚³ãƒãƒ³ãƒ‰ã®é¸æŠãŒãªã‘ã‚Œã°ç¾åœ¨è¡Œã‚’å®Ÿè¡Œã—, \n"
 
 #: editor.c:611
 msgid "the cursor by one line.\n"
-msgstr " ƒJ[ƒ\ƒ‹‚ğ1si‚ß‚Ü‚· \n"
+msgstr " ã‚«ãƒ¼ã‚½ãƒ«ã‚’1è¡Œé€²ã‚ã¾ã™ \n"
 
 #: editor.c:623 editor.c:700 editor.c:761
 msgid "Run line or selection"
-msgstr " ƒJ[ƒ\ƒ‹s‚Ü‚½‚Í‘I‘ğ’†‚Ì R ƒR[ƒh‚ğÀs "
+msgstr " ã‚«ãƒ¼ã‚½ãƒ«è¡Œã¾ãŸã¯é¸æŠä¸­ã® R ã‚³ãƒ¼ãƒ‰ã‚’å®Ÿè¡Œ "
 
 #: editor.c:625 editor.c:746
 msgid "Undo"
-msgstr " ‚â‚è’¼‚µ "
+msgstr " ã‚„ã‚Šç›´ã— "
 
 #: editor.c:627 editor.c:749
 msgid "Cut"
-msgstr " ƒJƒbƒg "
+msgstr " ã‚«ãƒƒãƒˆ "
 
 #: editor.c:628 editor.c:751 pager.c:305 pager.c:478 rui.c:875 rui.c:1096
 #: rui.c:1153
 msgid "Copy"
-msgstr " ƒRƒs[ "
+msgstr " ã‚³ãƒ”ãƒ¼ "
 
 #: editor.c:629 editor.c:753 rui.c:876 rui.c:1100 rui.c:1154
 msgid "Paste"
-msgstr " ƒy[ƒXƒg "
+msgstr " ãƒšãƒ¼ã‚¹ãƒˆ "
 
 #: editor.c:630 editor.c:755
 msgid "Delete"
-msgstr " Á‹ "
+msgstr " æ¶ˆå» "
 
 #: editor.c:632 editor.c:757 pager.c:308 pager.c:484 rui.c:882 rui.c:1158
 msgid "Select all"
-msgstr " ‘S‚Ä‘I‘ğ "
+msgstr " å…¨ã¦é¸æŠ "
 
 #: editor.c:696
 msgid "Save script"
-msgstr " ƒXƒNƒŠƒvƒg‚ğ•Û‘¶‚·‚é "
+msgstr " ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ä¿å­˜ã™ã‚‹ "
 
 #: editor.c:704 pager.c:451 ../library/grDevices/src/devWindows.c:1531
 msgid "Return focus to Console"
-msgstr " ƒRƒ“ƒ\[ƒ‹‚É–ß‚é "
+msgstr " ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã«æˆ»ã‚‹ "
 
 #: editor.c:707
 msgid "Print script"
-msgstr " ƒXƒNƒŠƒvƒg‚ğˆóü‚·‚é "
+msgstr " ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å°åˆ·ã™ã‚‹ "
 
 #: editor.c:709 pager.c:446 rui.c:1112
 #: ../library/grDevices/src/devWindows.c:1525
 msgid "Print"
-msgstr " ˆóü "
+msgstr " å°åˆ· "
 
 #: editor.c:728 pager.c:468 rui.c:1133
 msgid "New script"
-msgstr " V‚µ‚¢ƒXƒNƒŠƒvƒg "
+msgstr " æ–°ã—ã„ã‚¹ã‚¯ãƒªãƒ—ãƒˆ "
 
 #: editor.c:730 pager.c:469 rui.c:1134
 msgid "Open script..."
-msgstr " ƒXƒNƒŠƒvƒg‚ğŠJ‚­... "
+msgstr " ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’é–‹ã... "
 
 #: editor.c:732
 msgid "Save"
-msgstr " •Û‘¶ "
+msgstr " ä¿å­˜ "
 
 #: editor.c:734
 msgid "Save as..."
-msgstr " •Ê–¼‚Å•Û‘¶... "
+msgstr " åˆ¥åã§ä¿å­˜... "
 
 #: editor.c:737 pager.c:470 rui.c:1147
 #: ../library/grDevices/src/devWindows.c:1626
 msgid "Print..."
-msgstr " ˆóü... "
+msgstr " å°åˆ·... "
 
 #: editor.c:740
 msgid "Close script"
-msgstr " ƒXƒNƒŠƒvƒg‚ğ•Â‚¶‚é "
+msgstr " ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’é–‰ã˜ã‚‹ "
 
 #: editor.c:759 rui.c:1159
 msgid "Clear console"
-msgstr " ƒRƒ“ƒ\[ƒ‹‰æ–Ê‚ğÁ‹ "
+msgstr " ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ç”»é¢ã‚’æ¶ˆå» "
 
 #: editor.c:763
 msgid "Run all"
-msgstr " ‘S‚ÄÀs "
+msgstr " å…¨ã¦å®Ÿè¡Œ "
 
 #: editor.c:766
 msgid "Find..."
-msgstr " ŒŸõ... "
+msgstr " æ¤œç´¢... "
 
 #: editor.c:768
 msgid "Replace..."
-msgstr " ’uŠ·... "
+msgstr " ç½®æ›... "
 
 #: editor.c:771 rui.c:1163
 msgid "GUI preferences..."
-msgstr " GUI ƒvƒŠƒtƒ@ƒŒƒ“ƒX... "
+msgstr " GUI ãƒ—ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹... "
 
 #: editor.c:782
 msgid "Editor"
-msgstr " ƒGƒfƒBƒ^ "
+msgstr " ã‚¨ãƒ‡ã‚£ã‚¿ "
 
 #: editor.c:841
 msgid "Maximum number of editors reached"
-msgstr " ƒGƒfƒBƒ^”ÍˆÍ‚ÌÅ‘å”‚É’B‚µ‚Ä‚µ‚Ü‚¢‚Ü‚µ‚½ "
+msgstr " ã‚¨ãƒ‡ã‚£ã‚¿ç¯„å›²ã®æœ€å¤§æ•°ã«é”ã—ã¦ã—ã¾ã„ã¾ã—ãŸ "
 
 #: editor.c:846
 msgid "Unable to create editor window"
-msgstr " ƒGƒfƒBƒ^ƒEƒCƒ“ƒhƒE‚ğì¬‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñ "
+msgstr " ã‚¨ãƒ‡ã‚£ã‚¿ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆã™ã‚‹ã“ã¨ãŒã§ãã¾ã›ã‚“ "
 
 #: editor.c:854
 msgid "Untitled"
-msgstr " –³‘è "
+msgstr " ç„¡é¡Œ "
 
 #: extra.c:872 ../extra/graphapp/dialogs.c:618 ../extra/graphapp/dialogs.c:737
 msgid "OK"
@@ -562,43 +562,43 @@ msgstr " OK "
 #: ../extra/graphapp/dialogs.c:622 ../extra/graphapp/dialogs.c:721
 #: ../extra/graphapp/dialogs.c:735 ../extra/graphapp/dialogs.c:741
 msgid "Cancel"
-msgstr " ƒLƒƒƒ“ƒZƒ‹ "
+msgstr " ã‚­ãƒ£ãƒ³ã‚»ãƒ« "
 
 #: extra.c:2049 rui.c:1237
 msgid "Select file"
-msgstr " ƒtƒ@ƒCƒ‹‚ğ‘I‘ğ "
+msgstr " ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é¸æŠ "
 
 #: pager.c:89
 msgid "Error opening file"
-msgstr " ƒtƒ@ƒCƒ‹‚ğŠJ‚­Û‚ÉƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½ "
+msgstr " ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãéš›ã«ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸ "
 
 #: pager.c:96
 msgid "Insufficient memory to display file in internal pager"
-msgstr " “à•”ƒy[ƒWƒƒ‚Åƒtƒ@ƒCƒ‹‚ğ•\¦‚·‚é‚½‚ß‚Ìƒƒ‚ƒŠ‚ª•s‘«‚µ‚Ä‚¢‚Ü‚· "
+msgstr " å†…éƒ¨ãƒšãƒ¼ã‚¸ãƒ£ã§ãƒ•ã‚¡ã‚¤ãƒ«ã‚’è¡¨ç¤ºã™ã‚‹ãŸã‚ã®ãƒ¡ãƒ¢ãƒªãŒä¸è¶³ã—ã¦ã„ã¾ã™ "
 
 #: pager.c:177 pager.c:189 pager.c:209 rui.c:242 rui.c:269
 msgid "No selection"
-msgstr " ‘I‘ğ‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ "
+msgstr " é¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“ "
 
 #: pager.c:306 pager.c:436 pager.c:480
 msgid "Paste to console"
-msgstr " ƒRƒ“ƒ\[ƒ‹‚Éƒy[ƒXƒg "
+msgstr " ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã«ãƒšãƒ¼ã‚¹ãƒˆ "
 
 #: pager.c:307 pager.c:441 pager.c:482
 msgid "Paste commands to console"
-msgstr " ƒRƒ}ƒ“ƒh‚ğƒRƒ“ƒ\[ƒ‹‚Éƒy[ƒXƒg "
+msgstr " ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã«ãƒšãƒ¼ã‚¹ãƒˆ "
 
 #: pager.c:472 rui.c:1148
 msgid "Save to File..."
-msgstr " ƒtƒ@ƒCƒ‹‚ğ•Û‘¶... "
+msgstr " ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿å­˜... "
 
 #: pager.c:487 rui.c:1166
 msgid "View"
-msgstr " ‰{—— "
+msgstr " é–²è¦§ "
 
 #: pager.c:519
 msgid "Unable to create pager window"
-msgstr " ƒy[ƒWƒƒ—p‚ÌƒEƒCƒ“ƒhƒE‚ğì¬‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñ "
+msgstr " ãƒšãƒ¼ã‚¸ãƒ£ç”¨ã®ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚’ä½œæˆã™ã‚‹ã“ã¨ãŒã§ãã¾ã›ã‚“ "
 
 #: preferences.c:291
 msgid ""
@@ -607,10 +607,10 @@ msgid ""
 "\n"
 "Save the preferences and restart Rgui to apply them.\n"
 msgstr ""
-" ‘S‘Ì“I‚ÈƒRƒ“ƒ\[ƒ‹İ’è‚ğÀs’†‚É \n"
-" •Ï‚¦‚é–‚Ío—ˆ‚Ü‚¹‚ñ\n"
+" å…¨ä½“çš„ãªã‚³ãƒ³ã‚½ãƒ¼ãƒ«è¨­å®šã‚’å®Ÿè¡Œä¸­ã« \n"
+" å¤‰ãˆã‚‹äº‹ã¯å‡ºæ¥ã¾ã›ã‚“\n"
 " \n"
-" ‚±‚ê‚ç‚ğ“K—p‚·‚é‚½‚ß‚É‚ÍAİ’è‚ğ•Û‘¶‚µ‚Ä‚©‚çARgui‚ğÄÀs‚µ‚Ä‰º‚³‚¢B \n"
+" ã“ã‚Œã‚‰ã‚’é©ç”¨ã™ã‚‹ãŸã‚ã«ã¯ã€è¨­å®šã‚’ä¿å­˜ã—ã¦ã‹ã‚‰ã€Rguiã‚’å†å®Ÿè¡Œã—ã¦ä¸‹ã•ã„ã€‚ \n"
 
 #: preferences.c:295
 msgid ""
@@ -619,413 +619,413 @@ msgid ""
 "\n"
 "Save the preferences and restart Rgui to apply to menus.\n"
 msgstr ""
-" ƒƒjƒ…[‚ÌŒ¾Œêİ’è‚ğÀs’†‚É \n"
-" •Ï‚¦‚é–‚Í‚Å‚«‚Ü‚¹‚ñB \n"
+" ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®è¨€èªè¨­å®šã‚’å®Ÿè¡Œä¸­ã« \n"
+" å¤‰ãˆã‚‹äº‹ã¯ã§ãã¾ã›ã‚“ã€‚ \n"
 " \n"
-" •ÏX‚ğ“K—p‚·‚é‚É‚ÍAİ’è‚ğ•Û‘¶‚µ‚ÄRgui‚ğÄÀs‚µ‚Ä‚­‚¾‚³‚¢B \n"
+" å¤‰æ›´ã‚’é©ç”¨ã™ã‚‹ã«ã¯ã€è¨­å®šã‚’ä¿å­˜ã—ã¦Rguiã‚’å†å®Ÿè¡Œã—ã¦ãã ã•ã„ã€‚ \n"
 
 #: preferences.c:360
 msgid "Changes in pager size will not apply to any open pagers"
-msgstr " ƒy[ƒWƒƒ[ƒTƒCƒY‚Ì•ÏX‚ÍAƒI[ƒvƒ“Ï‚İ‚Ìƒy[ƒWƒƒ[‚É‰e‹¿‚ğ‚ ‚½‚¦‚È‚¢ "
+msgstr " ãƒšãƒ¼ã‚¸ãƒ£ãƒ¼ã‚µã‚¤ã‚ºã®å¤‰æ›´ã¯ã€ã‚ªãƒ¼ãƒ—ãƒ³æ¸ˆã¿ã®ãƒšãƒ¼ã‚¸ãƒ£ãƒ¼ã«å½±éŸ¿ã‚’ã‚ãŸãˆãªã„ "
 
 #: preferences.c:366
 msgid ""
 "Do not change pager type if any pager is open\n"
 "Proceed?"
 msgstr ""
-" ƒy[ƒWƒƒ‚ğŠJ‚¢‚Ä‚¢‚éŠÔ‚ÉAƒy[ƒWƒƒ‚Ìƒ^ƒCƒv‚ğ•Ï‚¦‚Ä‚Í‚¢‚¯‚Ü‚¹‚ñ \n"
-" ‘±s‚µ‚Ü‚·‚©? "
+" ãƒšãƒ¼ã‚¸ãƒ£ã‚’é–‹ã„ã¦ã„ã‚‹é–“ã«ã€ãƒšãƒ¼ã‚¸ãƒ£ã®ã‚¿ã‚¤ãƒ—ã‚’å¤‰ãˆã¦ã¯ã„ã‘ã¾ã›ã‚“ \n"
+" ç¶šè¡Œã—ã¾ã™ã‹? "
 
 #: preferences.c:397
 msgid "Select directory for file 'Rconsole'"
-msgstr " ƒtƒ@ƒCƒ‹ 'Rconsole' —p‚ÌƒfƒBƒŒƒNƒgƒŠ‚ğ‘I‘ğ "
+msgstr " ãƒ•ã‚¡ã‚¤ãƒ« 'Rconsole' ç”¨ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’é¸æŠ "
 
 #: preferences.c:487
 msgid "Select 'Rconsole' file"
-msgstr " ƒtƒ@ƒCƒ‹ 'Rconsole' ‚ğ‘I‘ğ "
+msgstr " ãƒ•ã‚¡ã‚¤ãƒ« 'Rconsole' ã‚’é¸æŠ "
 
 #: preferences.c:662
 #, c-format
 msgid "Error at line %d of file %s"
-msgstr " ƒtƒ@ƒCƒ‹ %2$s ‚Ì %1$d s–Ú‚ÅƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½ "
+msgstr " ãƒ•ã‚¡ã‚¤ãƒ« %2$s ã® %1$d è¡Œç›®ã§ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸ "
 
 #: preferences.c:766
 msgid "Rgui Configuration Editor"
-msgstr " Rguiİ’èƒGƒfƒBƒ^[ "
+msgstr " Rguiè¨­å®šã‚¨ãƒ‡ã‚£ã‚¿ãƒ¼ "
 
 #: rui.c:145
 msgid "Select file to source"
-msgstr " ƒ\[ƒXƒtƒ@ƒCƒ‹‚Ì‘I‘ğ "
+msgstr " ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã®é¸æŠ "
 
 #: rui.c:166
 msgid "Select image to load"
-msgstr " ƒ[ƒh‚·‚é image ‚Ì‘I‘ğ "
+msgstr " ãƒ­ãƒ¼ãƒ‰ã™ã‚‹ image ã®é¸æŠ "
 
 #: rui.c:181
 msgid "Save image in"
-msgstr " image ‚Ì•Û‘¶æ "
+msgstr " image ã®ä¿å­˜å…ˆ "
 
 #: rui.c:195
 msgid "Load history from"
-msgstr " —š—ğ‚Ì“Ç‚İ‚İ "
+msgstr " å±¥æ­´ã®èª­ã¿è¾¼ã¿ "
 
 #: rui.c:204
 msgid "Save history in"
-msgstr " —š—ğ‚Ì•Û‘¶æ "
+msgstr " å±¥æ­´ã®ä¿å­˜å…ˆ "
 
 #: rui.c:251 rui.c:260
 msgid "No text available"
-msgstr " —˜—p‰Â”\‚ÈƒeƒLƒXƒg‚ª‚ ‚è‚Ü‚¹‚ñ "
+msgstr " åˆ©ç”¨å¯èƒ½ãªãƒ†ã‚­ã‚¹ãƒˆãŒã‚ã‚Šã¾ã›ã‚“ "
 
 #: rui.c:309
 msgid "Name of data frame or matrix"
-msgstr " ƒf[ƒ^ƒtƒŒ[ƒ€‚Ü‚½‚Ís—ñ‚Ì–¼‘O "
+msgstr " ãƒ‡ãƒ¼ã‚¿ãƒ•ãƒ¬ãƒ¼ãƒ ã¾ãŸã¯è¡Œåˆ—ã®åå‰ "
 
 #: rui.c:316
 #, c-format
 msgid "'%s' cannot be found"
-msgstr " '%s' ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ "
+msgstr " '%s' ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ "
 
 #: rui.c:455
 msgid "Are you sure?"
-msgstr " –{‹C‚Å‚·‚©? "
+msgstr " æœ¬æ°—ã§ã™ã‹? "
 
 #: rui.c:567
 msgid "Help on"
-msgstr " ƒwƒ‹ƒv "
+msgstr " ãƒ˜ãƒ«ãƒ— "
 
 #: rui.c:618
 msgid "Search help"
-msgstr " ƒwƒ‹ƒv‚ÌŒŸõ "
+msgstr " ãƒ˜ãƒ«ãƒ—ã®æ¤œç´¢ "
 
 #: rui.c:633
 msgid "Search for words in help list archives and documentation"
-msgstr " ƒwƒ‹ƒvƒŠƒXƒgƒA[ƒJƒCƒu‚ÆƒhƒLƒ…ƒƒ“ƒe[ƒVƒ‡ƒ“‚ğŒŸõ‚ğ‚·‚é "
+msgstr " ãƒ˜ãƒ«ãƒ—ãƒªã‚¹ãƒˆã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã¨ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã‚’æ¤œç´¢ã‚’ã™ã‚‹ "
 
 #: rui.c:648
 msgid "Apropos"
-msgstr " ƒIƒuƒWƒFƒNƒg‚ÌŒŸõ "
+msgstr " ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ¤œç´¢ "
 
 #: rui.c:871
 msgid "Can only drag-and-drop .R, .RData and .rda files"
-msgstr " .R, .RData ‚»‚µ‚Ä .rda ƒtƒ@ƒCƒ‹‚Ì‚İƒhƒ‰ƒbƒO•ƒhƒƒbƒv‚ª‚Å‚«‚Ü‚· "
+msgstr " .R, .RData ãã—ã¦ .rda ãƒ•ã‚¡ã‚¤ãƒ«ã®ã¿ãƒ‰ãƒ©ãƒƒã‚°ï¼†ãƒ‰ãƒ­ãƒƒãƒ—ãŒã§ãã¾ã™ "
 
 #: rui.c:877 rui.c:1155
 msgid "Paste commands only"
-msgstr " ƒRƒ}ƒ“ƒh‚Ì‚İƒy[ƒXƒg "
+msgstr " ã‚³ãƒãƒ³ãƒ‰ã®ã¿ãƒšãƒ¼ã‚¹ãƒˆ "
 
 #: rui.c:878 rui.c:1104
 msgid "Copy and paste"
-msgstr " ƒRƒs[•ƒy[ƒXƒg "
+msgstr " ã‚³ãƒ”ãƒ¼ï¼†ãƒšãƒ¼ã‚¹ãƒˆ "
 
 #: rui.c:880
 msgid "Clear window"
-msgstr " ƒEƒCƒ“ƒhƒE‚ÌÁ‹ "
+msgstr " ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®æ¶ˆå» "
 
 #: rui.c:884 rui.c:1180
 msgid "Buffered output"
-msgstr " ƒoƒbƒtƒ@‚Éo—Í "
+msgstr " ãƒãƒƒãƒ•ã‚¡ã«å‡ºåŠ› "
 
 #: rui.c:924
 msgid "Packages"
-msgstr " ƒpƒbƒP[ƒW "
+msgstr " ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ "
 
 #: rui.c:925
 msgid "Load package..."
-msgstr " ƒpƒbƒP[ƒW‚Ì“Ç‚İ‚İ... "
+msgstr " ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã®èª­ã¿è¾¼ã¿... "
 
 #: rui.c:927
 msgid "Set CRAN mirror..."
-msgstr " CRAN ƒ~ƒ‰[ƒTƒCƒg‚Ìİ’è... "
+msgstr " CRAN ãƒŸãƒ©ãƒ¼ã‚µã‚¤ãƒˆã®è¨­å®š... "
 
 #: rui.c:929
 msgid "Select repositories..."
-msgstr " ƒ_ƒEƒ“ƒ[ƒhƒTƒCƒg‚Ì‘I‘ğ... "
+msgstr " ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã‚µã‚¤ãƒˆã®é¸æŠ... "
 
 #: rui.c:931
 msgid "Install package(s)..."
-msgstr " ƒpƒbƒP[ƒW‚ÌƒCƒ“ƒXƒg[ƒ‹... "
+msgstr " ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«... "
 
 #: rui.c:933
 msgid "Update packages..."
-msgstr " ƒpƒbƒP[ƒW‚ÌXV... "
+msgstr " ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã®æ›´æ–°... "
 
 #: rui.c:936
 msgid "Install package(s) from local zip files..."
-msgstr " ƒ[ƒJƒ‹‚É‚ ‚é zip ƒtƒ@ƒCƒ‹‚©‚ç‚ÌƒpƒbƒP[ƒW‚ÌƒCƒ“ƒXƒg[ƒ‹... "
+msgstr " ãƒ­ãƒ¼ã‚«ãƒ«ã«ã‚ã‚‹ zip ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã®ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«... "
 
 #: rui.c:964
 msgid "FAQ on R"
-msgstr " R ‚Ì FAQ "
+msgstr " R ã® FAQ "
 
 #: rui.c:966
 msgid "FAQ on R for &Windows"
-msgstr " Windows ”Å R ‚Ì FAQ "
+msgstr " Windows ç‰ˆ R ã® FAQ "
 
 #: rui.c:972 rui.c:975
 msgid "Manuals (in PDF)"
-msgstr " ƒ}ƒjƒ…ƒAƒ‹ (PDF) "
+msgstr " ãƒãƒ‹ãƒ¥ã‚¢ãƒ« (PDF) "
 
 #: rui.c:1002
 msgid "R functions (text)..."
-msgstr " R ‚ÌŠÖ” (ƒeƒLƒXƒg)... "
+msgstr " R ã®é–¢æ•° (ãƒ†ã‚­ã‚¹ãƒˆ)... "
 
 #: rui.c:1004
 msgid "Html help"
-msgstr " Html ƒwƒ‹ƒv "
+msgstr " Html ãƒ˜ãƒ«ãƒ— "
 
 #: rui.c:1006
 msgid "Search help..."
-msgstr " ƒwƒ‹ƒv‚ÌŒŸõ "
+msgstr " ãƒ˜ãƒ«ãƒ—ã®æ¤œç´¢ "
 
 #: rui.c:1011
 msgid "Apropos..."
-msgstr " ƒIƒuƒWƒFƒNƒg‚ÌŒŸõ "
+msgstr " ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ¤œç´¢ "
 
 #: rui.c:1013
 msgid "R Project home page"
-msgstr " R Project ƒz[ƒ€ƒy[ƒW "
+msgstr " R Project ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸ "
 
 #: rui.c:1014
 msgid "CRAN home page"
-msgstr " CRAN ƒz[ƒ€ƒy[ƒW "
+msgstr " CRAN ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸ "
 
 #: rui.c:1016
 msgid "About"
-msgstr " R ‚É‚Â‚¢‚Ä "
+msgstr " R ã«ã¤ã„ã¦ "
 
 #: rui.c:1028 ../extra/graphapp/gmenus.c:52
 msgid "Windows"
-msgstr " ƒEƒCƒ“ƒhƒE "
+msgstr " ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ "
 
 #: rui.c:1029 ../extra/graphapp/gmenus.c:53
 msgid "Cascade"
-msgstr " ƒJƒXƒP[ƒhƒpƒ^[ƒ“ "
+msgstr " ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰ãƒ‘ã‚¿ãƒ¼ãƒ³ "
 
 #: rui.c:1030 ../extra/graphapp/gmenus.c:54
 msgid "Tile &Horizontally"
-msgstr ""
+msgstr "æ¨ªã«ä¸¦ã¹ã¦è¡¨ç¤º"
 
 #: rui.c:1031 ../extra/graphapp/gmenus.c:55
 msgid "Tile &Vertically"
-msgstr ""
+msgstr "ç¸¦ã«ä¸¦ã¹ã¦è¡¨ç¤º"
 
 #: rui.c:1032
 msgid "Minimize group"
-msgstr ""
+msgstr "ã‚°ãƒ«ãƒ¼ãƒ—ã‚’æœ€å°åŒ–"
 
 #: rui.c:1033
 msgid "Restore group"
-msgstr ""
+msgstr "ã‚°ãƒ«ãƒ¼ãƒ—ã‚’å¾©å…ƒ"
 
 #: rui.c:1088
 msgid "Load workspace"
-msgstr " ì‹ÆƒXƒy[ƒX‚Ì“Ç‚İ‚İ... "
+msgstr " ä½œæ¥­ã‚¹ãƒšãƒ¼ã‚¹ã®èª­ã¿è¾¼ã¿... "
 
 #: rui.c:1092
 msgid "Save workspace"
-msgstr " ì‹ÆƒXƒy[ƒX‚Ì•Û‘¶... "
+msgstr " ä½œæ¥­ã‚¹ãƒšãƒ¼ã‚¹ã®ä¿å­˜... "
 
 #: rui.c:1108
 msgid "Stop current computation"
-msgstr " Œ»İ‚ÌŒvZ‚ğ’†’f "
+msgstr " ç¾åœ¨ã®è¨ˆç®—ã‚’ä¸­æ–­ "
 
 #: rui.c:1132
 msgid "Source R code..."
-msgstr " R ƒR[ƒh‚Ìƒ\[ƒX‚ğ“Ç‚İ‚İ... "
+msgstr " R ã‚³ãƒ¼ãƒ‰ã®ã‚½ãƒ¼ã‚¹ã‚’èª­ã¿è¾¼ã¿... "
 
 #: rui.c:1135
 msgid "Display file(s)..."
-msgstr " ƒtƒ@ƒCƒ‹‚Ì•\¦... "
+msgstr " ãƒ•ã‚¡ã‚¤ãƒ«ã®è¡¨ç¤º... "
 
 #: rui.c:1137
 msgid "Load Workspace..."
-msgstr " ì‹ÆƒXƒy[ƒX‚Ì“Ç‚İ‚İ... "
+msgstr " ä½œæ¥­ã‚¹ãƒšãƒ¼ã‚¹ã®èª­ã¿è¾¼ã¿... "
 
 #: rui.c:1138
 msgid "Save Workspace..."
-msgstr " ì‹ÆƒXƒy[ƒX‚Ì•Û‘¶... "
+msgstr " ä½œæ¥­ã‚¹ãƒšãƒ¼ã‚¹ã®ä¿å­˜... "
 
 #: rui.c:1140
 msgid "Load History..."
-msgstr " —š—ğ‚Ì“Ç‚İ‚İ... "
+msgstr " å±¥æ­´ã®èª­ã¿è¾¼ã¿... "
 
 #: rui.c:1142
 msgid "Save History..."
-msgstr " —š—ğ‚Ì•Û‘¶... "
+msgstr " å±¥æ­´ã®ä¿å­˜... "
 
 #: rui.c:1145
 msgid "Change dir..."
-msgstr " ƒfƒBƒŒƒNƒgƒŠ‚Ì•ÏX... "
+msgstr " ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å¤‰æ›´... "
 
 #: rui.c:1150
 msgid "Exit"
-msgstr " I—¹ "
+msgstr " çµ‚äº† "
 
 #: rui.c:1157
 msgid "Copy and Paste"
-msgstr " ƒRƒs[•ƒy[ƒXƒg "
+msgstr " ã‚³ãƒ”ãƒ¼ï¼†ãƒšãƒ¼ã‚¹ãƒˆ "
 
 #: rui.c:1161
 msgid "Data editor..."
-msgstr " ƒf[ƒ^ƒGƒfƒBƒ^... "
+msgstr " ãƒ‡ãƒ¼ã‚¿ã‚¨ãƒ‡ã‚£ã‚¿... "
 
 #: rui.c:1167
 msgid "Toolbar"
-msgstr " ƒc[ƒ‹ƒo[ "
+msgstr " ãƒ„ãƒ¼ãƒ«ãƒãƒ¼ "
 
 #: rui.c:1168
 msgid "Statusbar"
-msgstr " ƒXƒe[ƒ^ƒXƒo[ "
+msgstr " ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒãƒ¼ "
 
 #: rui.c:1173
 msgid "Misc"
-msgstr " ‚»‚Ì‘¼ "
+msgstr " ãã®ä»– "
 
 #: rui.c:1174
 msgid "Stop current computation           \tESC"
-msgstr " Œ»İ‚ÌŒvZ‚ğ’†’f           \tESC "
+msgstr " ç¾åœ¨ã®è¨ˆç®—ã‚’ä¸­æ–­           \tESC "
 
 #: rui.c:1176
 msgid "Stop all computations"
-msgstr " ‘S‚Ä‚ÌŒvZ‚ğ’†’f "
+msgstr " å…¨ã¦ã®è¨ˆç®—ã‚’ä¸­æ–­ "
 
 #: rui.c:1178
 msgid "Break to debugger"
-msgstr " Às‚ğ’†’f‚µ‚ÄƒfƒoƒbƒK[‚ğ‹N“® "
+msgstr " å®Ÿè¡Œã‚’ä¸­æ–­ã—ã¦ãƒ‡ãƒãƒƒã‚¬ãƒ¼ã‚’èµ·å‹• "
 
 #: rui.c:1181
 msgid "Word completion"
-msgstr " ’PŒê‚Ì•âŠ®"
+msgstr " å˜èªã®è£œå®Œ"
 
 #: rui.c:1183
 msgid "Filename completion"
-msgstr " ƒtƒ@ƒCƒ‹–¼‚Ì•âŠ®"
+msgstr " ãƒ•ã‚¡ã‚¤ãƒ«åã®è£œå®Œ"
 
 #: rui.c:1190
 msgid "List objects"
-msgstr " ƒIƒuƒWƒFƒNƒg‚Ìˆê—— "
+msgstr " ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä¸€è¦§ "
 
 #: rui.c:1191
 msgid "Remove all objects"
-msgstr " ‘S‚Ä‚ÌƒIƒuƒWƒFƒNƒg‚ÌÁ‹ "
+msgstr " å…¨ã¦ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ¶ˆå» "
 
 #: rui.c:1192
 msgid "List search &path"
-msgstr " search ƒpƒX‚Ìˆê—— "
+msgstr " search ãƒ‘ã‚¹ã®ä¸€è¦§ "
 
 #: rui.c:1198
 msgid "Console"
-msgstr " ƒRƒ“ƒ\[ƒ‹ "
+msgstr " ã‚³ãƒ³ã‚½ãƒ¼ãƒ« "
 
 #: rui.c:1281
 msgid "'mname' is limited to 1000 bytes"
-msgstr " 'mname' ‚Í1000ƒoƒCƒg•ª‚Ü‚Å‚É§ŒÀ‚³‚ê‚Ä‚¢‚Ü‚· "
+msgstr " 'mname' ã¯1000ãƒã‚¤ãƒˆåˆ†ã¾ã§ã«åˆ¶é™ã•ã‚Œã¦ã„ã¾ã™ "
 
 #: rui.c:1323
 #, c-format
 msgid "menu %s does not exist"
-msgstr " ƒƒjƒ…[ %s ‚Í‘¶İ‚µ‚Ü‚¹‚ñ "
+msgstr " ãƒ¡ãƒ‹ãƒ¥ãƒ¼ %s ã¯å­˜åœ¨ã—ã¾ã›ã‚“ "
 
 #: rui.c:1376
 msgid "'menu' is limited to 500 bytes"
-msgstr " 'menu' ‚Í”¼Šp‰p”š‚Å 500 •¶š‚Ü‚Å‚É§ŒÀ‚³‚ê‚Ä‚¢‚Ü‚· "
+msgstr " 'menu' ã¯åŠè§’è‹±æ•°å­—ã§ 500 æ–‡å­—ã¾ã§ã«åˆ¶é™ã•ã‚Œã¦ã„ã¾ã™ "
 
 #: rui.c:1386
 msgid "base menu does not exist"
-msgstr " base ƒƒjƒ…[‚ª‘¶İ‚µ‚Ü‚¹‚ñ "
+msgstr " base ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒå­˜åœ¨ã—ã¾ã›ã‚“ "
 
 #: rui.c:1401
 msgid "failed to allocate menu"
-msgstr " ƒƒjƒ…[‚ÌŠ„‚è“–‚Ä‚É¸”s‚µ‚Ü‚µ‚½ "
+msgstr " ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®å‰²ã‚Šå½“ã¦ã«å¤±æ•—ã—ã¾ã—ãŸ "
 
 #: rui.c:1418 rui.c:1542
 msgid "menu + item is limited to 1000 bytes"
-msgstr " menu + item ‚Í”¼Šp‰p”š‚Å 1000 •¶š‚Ü‚Å‚É§ŒÀ‚³‚ê‚Ä‚¢‚Ü‚· "
+msgstr " menu + item ã¯åŠè§’è‹±æ•°å­—ã§ 1000 æ–‡å­—ã¾ã§ã«åˆ¶é™ã•ã‚Œã¦ã„ã¾ã™ "
 
 #: rui.c:1426 rui.c:1509
 msgid "menu does not exist"
-msgstr " ƒƒjƒ…[‚Í‘¶İ‚µ‚Ü‚¹‚ñ "
+msgstr " ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¯å­˜åœ¨ã—ã¾ã›ã‚“ "
 
 #: rui.c:1444 rui.c:1467 rui.c:1472
 msgid "failed to allocate char storage"
-msgstr " char storage ‚ÌŠ„‚è“–‚Ä‚É¸”s‚µ‚Ü‚µ‚½ "
+msgstr " char storage ã®å‰²ã‚Šå½“ã¦ã«å¤±æ•—ã—ã¾ã—ãŸ "
 
 #: rui.c:1480
 msgid "failed to allocate menuitem"
-msgstr " ƒƒjƒ…[ƒAƒCƒeƒ€‚ÌŠ„‚è“–‚Ä‚É¸”s‚µ‚Ü‚µ‚½ "
+msgstr " ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¢ã‚¤ãƒ†ãƒ ã®å‰²ã‚Šå½“ã¦ã«å¤±æ•—ã—ã¾ã—ãŸ "
 
 #: rui.c:1532
 msgid "menu not found"
-msgstr " ƒƒjƒ…[‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ "
+msgstr " ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ "
 
 #: rui.c:1550
 msgid "menu or item does not exist"
-msgstr " ƒƒjƒ…[‚Ü‚½‚ÍƒAƒCƒeƒ€‚ª‘¶İ‚µ‚Ü‚¹‚ñ "
+msgstr " ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¾ãŸã¯ã‚¢ã‚¤ãƒ†ãƒ ãŒå­˜åœ¨ã—ã¾ã›ã‚“ "
 
 #: system.c:439
 msgid "Save workspace image?"
-msgstr " ì‹ÆƒXƒy[ƒX‚ğ•Û‘¶‚µ‚Ü‚·‚©? "
+msgstr " ä½œæ¥­ã‚¹ãƒšãƒ¼ã‚¹ã‚’ä¿å­˜ã—ã¾ã™ã‹? "
 
 #: ../extra/graphapp/clipboard.c:69 ../extra/graphapp/clipboard.c:73
 msgid "Insufficient memory: cell not copied to the clipboard"
 msgstr ""
-" ƒƒ‚ƒŠ‚ª•s‘«‚µ‚Ä‚¢‚Ü‚·: ƒZƒ‹‚ğƒNƒŠƒbƒvƒ{[ƒh‚ÉƒRƒs[‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñ "
+" ãƒ¡ãƒ¢ãƒªãŒä¸è¶³ã—ã¦ã„ã¾ã™: ã‚»ãƒ«ã‚’ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼ã™ã‚‹ã“ã¨ãŒã§ãã¾ã›ã‚“ "
 
 #: ../extra/graphapp/dialogs.c:143 ../extra/graphapp/dialogs.c:160
 #: ../extra/graphapp/dialogs.c:177
 msgid "Question"
-msgstr " ¿–â "
+msgstr " è³ªå• "
 
 #: ../extra/graphapp/dialogs.c:198
 msgid " Change working directory to:"
-msgstr " ì‹ÆƒfƒBƒŒƒNƒgƒŠ‚Ì•ÏX "
+msgstr " ä½œæ¥­ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å¤‰æ›´ "
 
 #: ../extra/graphapp/dialogs.c:201
 #, c-format
 msgid "Unable to set '%s' as working directory"
-msgstr " ì‹ÆƒfƒBƒŒƒNƒgƒŠ‚Æ‚µ‚Ä '%s' ‚ğİ’è‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñ "
+msgstr " ä½œæ¥­ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¨ã—ã¦ '%s' ã‚’è¨­å®šã™ã‚‹ã“ã¨ãŒã§ãã¾ã›ã‚“ "
 
 #: ../extra/graphapp/dialogs.c:729
 msgid "User"
-msgstr " ƒ†[ƒU[ "
+msgstr " ãƒ¦ãƒ¼ã‚¶ãƒ¼ "
 
 #: ../extra/graphapp/dialogs.c:730
 msgid "Password"
-msgstr " ƒpƒXƒ[ƒh "
+msgstr " ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ "
 
 #: ../extra/graphapp/dialogs.c:896 ../extra/graphapp/dialogs.c:902
 #, c-format
 msgid "\"%s\" not found"
-msgstr " \"%s\" ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ "
+msgstr " \"%s\" ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ "
 
 #: ../extra/graphapp/gmenus.c:56
 msgid "Arrange Icons"
-msgstr " ƒAƒCƒRƒ“‚Ì•À‚×‘Ö‚¦ "
+msgstr " ã‚¢ã‚¤ã‚³ãƒ³ã®ä¸¦ã¹æ›¿ãˆ "
 
 #: ../library/grDevices/src/devWindows.c:870
 msgid "Portable network graphics file"
-msgstr " ƒ|[ƒ^ƒuƒ‹Eƒlƒbƒgƒ[ƒNƒOƒ‰ƒtƒBƒbƒNƒtƒ@ƒCƒ‹ "
+msgstr " ãƒãƒ¼ã‚¿ãƒ–ãƒ«ãƒ»ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ãƒ•ã‚¡ã‚¤ãƒ« "
 
 #: ../library/grDevices/src/devWindows.c:873
 msgid "Windows bitmap file"
-msgstr " Windows ƒrƒbƒgƒ}ƒbƒvƒtƒ@ƒCƒ‹ "
+msgstr " Windows ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ãƒ•ã‚¡ã‚¤ãƒ« "
 
 #: ../library/grDevices/src/devWindows.c:876
 msgid "TIFF file"
-msgstr " TIFF ƒtƒ@ƒCƒ‹ "
+msgstr " TIFF ãƒ•ã‚¡ã‚¤ãƒ« "
 
 #: ../library/grDevices/src/devWindows.c:879
 msgid "Jpeg file"
-msgstr " Jpeg ƒtƒ@ƒCƒ‹ "
+msgstr " Jpeg ãƒ•ã‚¡ã‚¤ãƒ« "
 
 #: ../library/grDevices/src/devWindows.c:901
 msgid "Postscript file"
-msgstr " ƒ|ƒXƒgƒXƒNƒŠƒvƒgƒtƒ@ƒCƒ‹ "
+msgstr " ãƒã‚¹ãƒˆã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ•ã‚¡ã‚¤ãƒ« "
 
 #: ../library/grDevices/src/devWindows.c:913
 msgid "PDF file"
-msgstr " PDF ƒtƒ@ƒCƒ‹ "
+msgstr " PDF ãƒ•ã‚¡ã‚¤ãƒ« "
 
 #: ../library/grDevices/src/devWindows.c:925
 msgid "Enhanced metafiles"
@@ -1034,192 +1034,192 @@ msgstr " Enhanced metafiles "
 #: ../library/grDevices/src/devWindows.c:928
 #: ../library/grDevices/src/devWindows.c:3016
 msgid "file path selected is too long: only 512 bytes are allowed"
-msgstr " ‘I‘ğ‚³‚ê‚½ƒtƒ@ƒCƒ‹ƒpƒX‚ª’·‚·‚¬‚Ü‚·: 512 ƒoƒCƒg‚Ü‚Å‚Å‚· "
+msgstr " é¸æŠã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ãŒé•·ã™ãã¾ã™: 512 ãƒã‚¤ãƒˆã¾ã§ã§ã™ "
 
 #: ../library/grDevices/src/devWindows.c:1139
 msgid "No plot to replace!"
-msgstr " ’uŠ·‚·‚×‚«ƒvƒƒbƒg‚ª‚ ‚è‚Ü‚¹‚ñ! "
+msgstr " ç½®æ›ã™ã¹ããƒ—ãƒ­ãƒƒãƒˆãŒã‚ã‚Šã¾ã›ã‚“! "
 
 #: ../library/grDevices/src/devWindows.c:1187
 msgid "Variable name"
-msgstr " •Ï”–¼ "
+msgstr " å¤‰æ•°å "
 
 #: ../library/grDevices/src/devWindows.c:1194
 msgid "Variable doesn't exist or doesn't contain any plots!"
-msgstr " •Ï”‚ª‘¶İ‚µ‚È‚¢‚©A‚¢‚©‚È‚éƒvƒƒbƒg‚àŠÜ‚ñ‚Å‚¢‚Ü‚¹‚ñ! "
+msgstr " å¤‰æ•°ãŒå­˜åœ¨ã—ãªã„ã‹ã€ã„ã‹ãªã‚‹ãƒ—ãƒ­ãƒƒãƒˆã‚‚å«ã‚“ã§ã„ã¾ã›ã‚“! "
 
 #: ../library/grDevices/src/devWindows.c:1210
 msgid "Name of variable to save to"
-msgstr " •Ï”–¼‚Ì•Û‘¶ "
+msgstr " å¤‰æ•°åã®ä¿å­˜ "
 
 #: ../library/grDevices/src/devWindows.c:1519
 msgid "Copy to the clipboard as a metafile"
-msgstr " ƒƒ^ƒtƒ@ƒCƒ‹‚Æ‚µ‚ÄƒNƒŠƒbƒvƒ{[ƒh‚ÉƒRƒs[ "
+msgstr " ãƒ¡ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã¨ã—ã¦ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼ "
 
 #: ../library/grDevices/src/devWindows.c:1537
 #: ../library/grDevices/src/devWindows.c:1548
 msgid "Stop locator"
-msgstr " locator ‚ğ’â~ "
+msgstr " locator ã‚’åœæ­¢ "
 
 #: ../library/grDevices/src/devWindows.c:1547
 #: ../library/grDevices/src/devWindows.c:1551
 msgid "Stop"
-msgstr " ’â~ "
+msgstr " åœæ­¢ "
 
 #: ../library/grDevices/src/devWindows.c:1553
 msgid "Continue"
-msgstr " ‘±‚­ "
+msgstr " ç¶šã "
 
 #: ../library/grDevices/src/devWindows.c:1557
 msgid "Next"
-msgstr " Ÿ "
+msgstr " æ¬¡ "
 
 #: ../library/grDevices/src/devWindows.c:1558
 msgid "Next plot"
-msgstr " Ÿ‚Ìƒvƒƒbƒg "
+msgstr " æ¬¡ã®ãƒ—ãƒ­ãƒƒãƒˆ "
 
 #: ../library/grDevices/src/devWindows.c:1564
 msgid "Save as"
-msgstr " •Ê–¼‚Å•Û‘¶ "
+msgstr " åˆ¥åã§ä¿å­˜ "
 
 #: ../library/grDevices/src/devWindows.c:1573
 #: ../library/grDevices/src/devWindows.c:1575
 #: ../library/grDevices/src/devWindows.c:1577
 #, c-format
 msgid "%s quality..."
-msgstr " %s ‚Ì•i¿... "
+msgstr " %s ã®å“è³ª... "
 
 #: ../library/grDevices/src/devWindows.c:1579
 msgid "Copy to the clipboard"
-msgstr " ƒNƒŠƒbƒvƒ{[ƒh‚ÉƒRƒs[ "
+msgstr " ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼ "
 
 #: ../library/grDevices/src/devWindows.c:1580
 msgid "as a Bitmap\tCTRL+C"
-msgstr " ƒrƒbƒgƒ}ƒbƒvtCTRL+C@‚Æ‚µ‚Ä "
+msgstr " ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—tCTRL+Cã€€ã¨ã—ã¦ "
 
 #: ../library/grDevices/src/devWindows.c:1581
 msgid "as a Metafile\tCTRL+W"
-msgstr " ƒƒ^ƒtƒ@ƒCƒ‹tCTRL+W@‚Æ‚µ‚Ä "
+msgstr " ãƒ¡ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«tCTRL+Wã€€ã¨ã—ã¦ "
 
 #: ../library/grDevices/src/devWindows.c:1584
 msgid "Print...\tCTRL+P"
-msgstr " ˆóü...\tCTRL+P "
+msgstr " å°åˆ·...\tCTRL+P "
 
 #: ../library/grDevices/src/devWindows.c:1586
 msgid "close Device"
-msgstr " ƒfƒoƒCƒX‚ğ•Â‚¶‚é "
+msgstr " ãƒ‡ãƒã‚¤ã‚¹ã‚’é–‰ã˜ã‚‹ "
 
 #: ../library/grDevices/src/devWindows.c:1587
 msgid "History"
-msgstr " —š—ğ "
+msgstr " å±¥æ­´ "
 
 #: ../library/grDevices/src/devWindows.c:1588
 msgid "Recording"
-msgstr " ‹L˜^ "
+msgstr " è¨˜éŒ² "
 
 #: ../library/grDevices/src/devWindows.c:1591
 msgid "Add\tINS"
-msgstr " ’Ç‰Á\tINS "
+msgstr " è¿½åŠ \tINS "
 
 #: ../library/grDevices/src/devWindows.c:1592
 msgid "Replace"
-msgstr " ’uŠ· "
+msgstr " ç½®æ› "
 
 #: ../library/grDevices/src/devWindows.c:1594
 msgid "Previous\tPgUp"
-msgstr " –ß‚é\tPgUp "
+msgstr " æˆ»ã‚‹\tPgUp "
 
 #: ../library/grDevices/src/devWindows.c:1595
 msgid "Next\tPgDown"
-msgstr " i‚Ş\tPgDown "
+msgstr " é€²ã‚€\tPgDown "
 
 #: ../library/grDevices/src/devWindows.c:1597
 msgid "Save to variable..."
-msgstr " •Ï”‚Ö•Û‘¶... "
+msgstr " å¤‰æ•°ã¸ä¿å­˜... "
 
 #: ../library/grDevices/src/devWindows.c:1598
 msgid "Get from variable..."
-msgstr " •Ï”‚©‚çæ“¾... "
+msgstr " å¤‰æ•°ã‹ã‚‰å–å¾—... "
 
 #: ../library/grDevices/src/devWindows.c:1600
 msgid "Clear history"
-msgstr " —š—ğ‚ÌÁ‹ "
+msgstr " å±¥æ­´ã®æ¶ˆå» "
 
 #: ../library/grDevices/src/devWindows.c:1601
 msgid "Resize"
-msgstr " ƒTƒCƒY•ÏX "
+msgstr " ã‚µã‚¤ã‚ºå¤‰æ›´ "
 
 #: ../library/grDevices/src/devWindows.c:1602
 msgid "R mode"
-msgstr " R ƒ‚[ƒh "
+msgstr " R ãƒ¢ãƒ¼ãƒ‰ "
 
 #: ../library/grDevices/src/devWindows.c:1604
 msgid "Fit to window"
-msgstr " ƒEƒCƒ“ƒhƒE‚É‡‚í‚¹‚é "
+msgstr " ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã«åˆã‚ã›ã‚‹ "
 
 #: ../library/grDevices/src/devWindows.c:1606
 msgid "Fixed size"
-msgstr " ŒÅ’èƒTƒCƒY "
+msgstr " å›ºå®šã‚µã‚¤ã‚º "
 
 #: ../library/grDevices/src/devWindows.c:1613
 msgid "Copy as metafile"
-msgstr " ƒƒ^ƒtƒ@ƒCƒ‹‚ÉƒRƒs[ "
+msgstr " ãƒ¡ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚³ãƒ”ãƒ¼ "
 
 #: ../library/grDevices/src/devWindows.c:1615
 msgid "Copy as bitmap"
-msgstr " ƒrƒbƒgƒ}ƒbƒv‚ÉƒRƒs[ "
+msgstr " ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ã«ã‚³ãƒ”ãƒ¼ "
 
 #: ../library/grDevices/src/devWindows.c:1618
 msgid "Save as metafile..."
-msgstr " ƒƒ^ƒtƒ@ƒCƒ‹‚É•Û‘¶... "
+msgstr " ãƒ¡ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã«ä¿å­˜... "
 
 #: ../library/grDevices/src/devWindows.c:1620
 msgid "Save as postscript..."
-msgstr " ƒ|ƒXƒgƒXƒNƒŠƒvƒg‚É•Û‘¶... "
+msgstr " ãƒã‚¹ãƒˆã‚¹ã‚¯ãƒªãƒ—ãƒˆã«ä¿å­˜... "
 
 #: ../library/grDevices/src/devWindows.c:2740
 msgid "Locator is active"
-msgstr " Locator ‚ÍƒAƒNƒeƒBƒu‚Å‚· "
+msgstr " Locator ã¯ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã§ã™ "
 
 #: ../library/grDevices/src/devWindows.c:3360
 msgid "Waiting to confirm page change..."
-msgstr " ƒy[ƒW•ÏX‚ğŠm”F‚·‚é‚Ü‚Å‘Ò‹@’†... "
+msgstr " ãƒšãƒ¼ã‚¸å¤‰æ›´ã‚’ç¢ºèªã™ã‚‹ã¾ã§å¾…æ©Ÿä¸­... "
 
 #: ../library/grDevices/src/devWindows.c:3372
 msgid "Click or hit ENTER for next page"
-msgstr " ƒNƒŠƒbƒN‚Ü‚½‚Í ENTER ƒL[‚ğ‰Ÿ‚·‚ÆŸ‚Ìƒy[ƒW‚ÉˆÚ‚è‚Ü‚· "
+msgstr " ã‚¯ãƒªãƒƒã‚¯ã¾ãŸã¯ ENTER ã‚­ãƒ¼ã‚’æŠ¼ã™ã¨æ¬¡ã®ãƒšãƒ¼ã‚¸ã«ç§»ã‚Šã¾ã™ "
 
 #~ msgid "Html search page"
-#~ msgstr " Html ŒŸõƒy[ƒW "
+#~ msgstr " Html æ¤œç´¢ãƒšãƒ¼ã‚¸ "
 
 #~ msgid "Tile"
-#~ msgstr " ƒ^ƒCƒ‹ƒpƒ^[ƒ“ "
+#~ msgstr " ã‚¿ã‚¤ãƒ«ãƒ‘ã‚¿ãƒ¼ãƒ³ "
 
 #~ msgid "Postscript files (*.ps)"
-#~ msgstr " ƒ|ƒXƒgƒXƒNƒŠƒvƒgƒtƒ@ƒCƒ‹ (*.ps) "
+#~ msgstr " ãƒã‚¹ãƒˆã‚¹ã‚¯ãƒªãƒ—ãƒˆãƒ•ã‚¡ã‚¤ãƒ« (*.ps) "
 
 #~ msgid "PDF files (*.pdf)"
-#~ msgstr " PDF ƒtƒ@ƒCƒ‹ (*.pdf) "
+#~ msgstr " PDF ãƒ•ã‚¡ã‚¤ãƒ« (*.pdf) "
 
 #~ msgid "Enhanced metafiles (*.emf)"
 #~ msgstr " Enhanced metafiles (*.emf) "
 
 #, fuzzy
 #~ msgid "Install source package from local folder..."
-#~ msgstr " ƒ[ƒJƒ‹‚É‚ ‚é zip ƒtƒ@ƒCƒ‹‚©‚ç‚ÌƒpƒbƒP[ƒW‚ÌƒCƒ“ƒXƒg[ƒ‹... "
+#~ msgstr " ãƒ­ãƒ¼ã‚«ãƒ«ã«ã‚ã‚‹ zip ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã®ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«... "
 
 #~ msgid "Png files (*.png)"
-#~ msgstr " Png ƒtƒ@ƒCƒ‹ (*.png) "
+#~ msgstr " Png ãƒ•ã‚¡ã‚¤ãƒ« (*.png) "
 
 #~ msgid "Windows bitmap files (*.bmp)"
-#~ msgstr " Windows ƒrƒbƒgƒ}ƒbƒvƒtƒ@ƒCƒ‹ (*.bmp) "
+#~ msgstr " Windows ãƒ“ãƒƒãƒˆãƒãƒƒãƒ—ãƒ•ã‚¡ã‚¤ãƒ« (*.bmp) "
 
 #, fuzzy
 #~ msgid "TIFF files (*.tiff,*tif)"
-#~ msgstr " PDF ƒtƒ@ƒCƒ‹ (*.pdf) "
+#~ msgstr " PDF ãƒ•ã‚¡ã‚¤ãƒ« (*.pdf) "
 
 #~ msgid "Jpeg files (*.jpeg,*jpg)"
-#~ msgstr " Jpeg ƒtƒ@ƒCƒ‹ (*.jpeg,*jpg) "
+#~ msgstr " Jpeg ãƒ•ã‚¡ã‚¤ãƒ« (*.jpeg,*jpg) "
 
 #~ msgid "Metafile..."
 #~ msgstr " Metafile... "
@@ -1244,31 +1244,31 @@ msgstr " ƒNƒŠƒbƒN‚Ü‚½‚Í ENTER ƒL[‚ğ‰Ÿ‚·‚ÆŸ‚Ìƒy[ƒW‚ÉˆÚ‚è‚Ü‚· "
 #~ msgstr " Jpeg "
 
 #~ msgid "Choose a folder"
-#~ msgstr " ƒtƒHƒ‹ƒ_‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢ "
+#~ msgstr " ãƒ•ã‚©ãƒ«ãƒ€ã‚’é¸æŠã—ã¦ãã ã•ã„ "
 
 #~ msgid "Browse"
-#~ msgstr " ƒuƒ‰ƒEƒY "
+#~ msgstr " ãƒ–ãƒ©ã‚¦ã‚º "
 
 #~ msgid "Load image"
-#~ msgstr " image ‚Ì“Ç‚İ‚İ "
+#~ msgstr " image ã®èª­ã¿è¾¼ã¿ "
 
 #~ msgid "Save image"
-#~ msgstr " image ‚Ì•Û‘¶ "
+#~ msgstr " image ã®ä¿å­˜ "
 
 #~ msgid "Apply"
-#~ msgstr " “K—p "
+#~ msgstr " é©ç”¨ "
 
 #~ msgid "Save..."
-#~ msgstr " •Û‘¶... "
+#~ msgstr " ä¿å­˜... "
 
 #~ msgid "Load..."
-#~ msgstr " ƒ[ƒh... "
+#~ msgstr " ãƒ­ãƒ¼ãƒ‰... "
 
 #~ msgid "75% quality..."
-#~ msgstr " 75% ‚Ì•i¿... "
+#~ msgstr " 75% ã®å“è³ª... "
 
 #~ msgid "100% quality..."
-#~ msgstr " 100% ‚Ì•i¿... "
+#~ msgstr " 100% ã®å“è³ª... "
 
 #~ msgid "Select working directory"
-#~ msgstr " ì‹ÆƒfƒBƒŒƒNƒgƒŠ‚Ì‘I‘ğ "
+#~ msgstr " ä½œæ¥­ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®é¸æŠ "

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08\n"
+"POT-Creation-Date: 2009-10-10 14:12\n"
 "PO-Revision-Date: 2009-03-28 16:30+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -256,15 +256,17 @@ msgstr "класс(ы) у \"name' будут пропущены"
 msgid "cannot edit NULL row names"
 msgstr "не могу редактировать NULL-имена строк"
 
-msgid "no help file found for '%s'"
+#, fuzzy
+msgid "no help found for '%s'"
 msgstr "в '%s' не найдено файла помощи"
 
 msgid "more than one help file found: using package '%s'"
 msgstr "найдено более одного файла помощи: использую пакет '%s'"
 
-#, fuzzy
-msgid "'%s' has a help file but no examples"
-msgstr "у '%s' есть файл помощи, но нет файла примеров"
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
+"accessed"
+msgstr ""
 
 msgid "test '%s' is not available"
 msgstr "тест '%s' недоступен"
@@ -337,20 +339,6 @@ msgstr "тест '%s' недоступен"
 
 msgid "R Help on '%s'"
 msgstr "Помощь R по '%s'"
-
-msgid ""
-"No text help for '%s' is available:\n"
-"corresponding file is missing"
-msgstr ""
-"Недоступна текстовая помощь по '%s':\n"
-"нет соответствующего файла"
-
-msgid ""
-"No offline help for '%s' is available:\n"
-"corresponding file is missing"
-msgstr ""
-"Нет оффлайн-помощи по '%s':\n"
-"соответствующий файл недоступен"
 
 msgid "argument '%s' must be a single character string"
 msgstr "аргумент '%s' должен быть одной текстовой строкой"
@@ -1088,6 +1076,24 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#, fuzzy
+#~ msgid "'%s' has a help file but no examples"
+#~ msgstr "у '%s' есть файл помощи, но нет файла примеров"
+
+#~ msgid ""
+#~ "No text help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ "Недоступна текстовая помощь по '%s':\n"
+#~ "нет соответствующего файла"
+
+#~ msgid ""
+#~ "No offline help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ "Нет оффлайн-помощи по '%s':\n"
+#~ "соответствующий файл недоступен"
 
 #~ msgid "malformed bundle DESCRIPTION file, no Contains field"
 #~ msgstr ""

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:06\n"
+"POT-Creation-Date: 2009-10-10 14:12\n"
 "PO-Revision-Date: 2009-03-28 18:25+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -750,28 +750,18 @@ msgstr "'object' должен быть списком"
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "Это -- R %s, а пакету '%s' нужен %s %s"
 
-msgid "package '%s' was built before R 2.0.0: please re-install it"
-msgstr "пакет '%s' был собран до R 2.0.0: пожалуйста, инсталлируйте его заново"
-
-msgid "package '%s' was built under R version %s"
-msgstr "пакет '%s' был собран под R версии %s"
-
 #, fuzzy
-msgid ""
-"package '%s' was built under R version %s and help will not work correctly\n"
-"Please re-install it"
+msgid "package '%s' was built before R 2.10.0: please re-install it"
 msgstr "пакет '%s' был собран до R 2.0.0: пожалуйста, инсталлируйте его заново"
-
-#, fuzzy
-msgid ""
-"package '%s' was built under R version %s and help may not work correctly"
-msgstr "пакет '%s' был собран под R версии %s"
 
 #, fuzzy
 msgid ""
 "package '%s' claims to be built under R version %s but is missing some help "
 "files and needs to be re-installed"
 msgstr "пакет '%s' был собран до R 2.0.0: пожалуйста, инсталлируйте его заново"
+
+msgid "package '%s' was built under R version %s"
+msgstr "пакет '%s' был собран под R версии %s"
 
 msgid "package '%s' was built for %s"
 msgstr "пакет '%s' был собран для %s"
@@ -1601,6 +1591,19 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "package '%s' was built under R version %s and help will not work "
+#~ "correctly\n"
+#~ "Please re-install it"
+#~ msgstr ""
+#~ "пакет '%s' был собран до R 2.0.0: пожалуйста, инсталлируйте его заново"
+
+#, fuzzy
+#~ msgid ""
+#~ "package '%s' was built under R version %s and help may not work correctly"
+#~ msgstr "пакет '%s' был собран под R версии %s"
 
 #~ msgid "extra arguments ignored:"
 #~ msgstr "дополнительные аргументы проигнорированы"

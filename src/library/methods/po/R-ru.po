@@ -998,7 +998,6 @@ msgstr ""
 "только аргументы 'Class' и 'where' могут быть предоставлены когда аргумент "
 "'representation' является объектом класса 'classRepresentation'"
 
-#, fuzzy
 msgid "Internal error: definition of class \"%s\" not properly assigned"
 msgstr "Внутренняя ошибка: определение класса \"%s\" не присвоено как следует"
 

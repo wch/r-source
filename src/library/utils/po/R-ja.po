@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08\n"
-"PO-Revision-Date: 2009-03-31 21:07+0900 \n"
+"POT-Creation-Date: 2009-10-10 14:12\n"
+"PO-Revision-Date: 2009-10-09 09:12+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
@@ -80,17 +80,16 @@ msgstr " 'what' の要素の最初のもの以降は無視されます "
 msgid "%d occurrences in %s"
 msgstr " %d 回 %s 中に起きました "
 
-#, fuzzy
 msgid "Invalid 'filter' argument."
-msgstr " 不正な 'x' 引数 "
+msgstr " 不正な 'filter' 引数 "
 
 msgid "Could not find aspell or ispell executable."
-msgstr ""
+msgstr " 実行可能なaspellまたはispellが見つかりません "
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
 "%s"
-msgstr ""
+msgstr " aspellの実行は失敗しました: %s "
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -251,22 +250,23 @@ msgstr " 'name'のクラスは破棄されます "
 msgid "cannot edit NULL row names"
 msgstr " NULLの行の名前は編集できません "
 
-msgid "no help file found for '%s'"
+#, fuzzy
+msgid "no help found for '%s'"
 msgstr " '%s' に対するヘルプファイルが見つかりません "
 
 msgid "more than one help file found: using package '%s'"
 msgstr " 複数のヘルプファイルが見つかりました：'%s' 中のものを使います "
 
-#, fuzzy
-msgid "'%s' has a help file but no examples"
-msgstr " '%s' はヘルプファイルを持ちますが、実行例ファイルはありません "
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
+"accessed"
+msgstr ""
 
 msgid "test '%s' is not available"
 msgstr " テスト '%s' が利用できません "
 
-#, fuzzy
 msgid "Line number missing"
-msgstr " 'subject' が欠けています "
+msgstr " 行番号が欠けています "
 
 msgid "'fix' requires a name"
 msgstr " 'fix' は名前を必要とします "
@@ -289,12 +289,15 @@ msgstr " 'topic'は名前、長さ１の文字列、または予約語でなけ�
 
 msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
 msgstr ""
+" offline=TRUEは推奨されません: help_type=\"postscript\"を使ってください "
 
 msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
 msgstr ""
+" chmhelp=TRUEはもうサポートされていません: help_type=\"text\"を使ってくださ"
+"い "
 
 msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
-msgstr ""
+msgstr " htmhelp=TRUEは推奨されません: help_type=\"html\"を使ってください "
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr ""
@@ -326,26 +329,11 @@ msgstr " 一つ選んでください "
 msgid "Using the first match ..."
 msgstr " 最初にマッチしたものを使っています ... "
 
-#, fuzzy
 msgid "HTML help is unavailable"
-msgstr " テスト '%s' が利用できません "
+msgstr "HTMLヘルプは利用できません "
 
 msgid "R Help on '%s'"
 msgstr " '%s' に対する R ヘルプ "
-
-msgid ""
-"No text help for '%s' is available:\n"
-"corresponding file is missing"
-msgstr ""
-" '%s' に対するテキストヘルプはありません： \n"
-" 対応するファイルがありません "
-
-msgid ""
-"No offline help for '%s' is available:\n"
-"corresponding file is missing"
-msgstr ""
-" '%s' に対するオフラインのヘルプはありません： \n"
-" 対応するファイルがありません "
 
 msgid "argument '%s' must be a single character string"
 msgstr " 引数 '%s' は単一の文字列でなければなりません "
@@ -359,18 +347,17 @@ msgstr " 何を検索すべきか分かりません "
 msgid "argument 'help.db' is deprecated"
 msgstr " 引数 'help.db' は廃止されました  "
 
-#, fuzzy
 msgid "Rebuilding the help.search() database"
-msgstr " データベースを再構築しています ... "
+msgstr " help.search()のデータベースを再構築しています ... "
 
 msgid "..."
-msgstr ""
+msgstr " ... "
 
 msgid "Packages {.readRDS() sequentially}:"
 msgstr " パッケージ {.readRDS() sequentially}: "
 
 msgid "."
-msgstr ""
+msgstr " . "
 
 msgid "could not find package '%s'"
 msgstr " パッケージ '%s' を見付けることが出来ませんでした "
@@ -394,13 +381,12 @@ msgid "saving the database ..."
 msgstr " データベースを保存しています ... "
 
 msgid "... database rebuilt"
-msgstr ""
+msgstr " ...データベースの再構築 "
 
-#, fuzzy
 msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
 msgstr ""
-" パッケージ '%s' に対する情報がデータベース中にありません:  'rebuild = TRUE'?"
-"　が必要かもしれません "
+" パッケージ '%s' の情報がデータベース中にありません:  'rebuild = TRUE'が必要"
+"かもしれません "
 
 msgid "incorrect 'agrep' specification"
 msgstr " 不正確な 'agrep' 指定 "
@@ -432,9 +418,8 @@ msgstr " menu() は対話的にしか使用できません "
 msgid "Enter an item from the menu, or 0 to exit"
 msgstr " メニューから項目を入力するか、0 を入力して終了して下さい "
 
-#, fuzzy
 msgid "invalid query"
-msgstr " 不正な書式 "
+msgstr " 不正な問い合わせ "
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr " '%s' は形式的な総称的関数です；S3 メソッドは見付かりそうもありません "
@@ -530,9 +515,8 @@ msgstr " これ以上のステップが '%s' 中に説明されています "
 msgid "unable to access index for repository %s"
 msgstr " リポジトリー %s に対する索引にアクセスできません "
 
-#, fuzzy
 msgid "Invalid 'filters' argument."
-msgstr " 不正な 'x' 引数 "
+msgstr " 不正な 'filters' 引数 "
 
 msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr ""
@@ -582,10 +566,11 @@ msgstr " リポジトリーの設定は対話的にしかできません "
 msgid "--- Please select repositories for use in this session ---"
 msgstr " --- このセッションで使うリポジトリーを選んでください --- "
 
-#, fuzzy
 msgid ""
 "Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr " スペースによって分離された1つ以上の数を入力してください "
+msgstr ""
+"スペースで区切られた1つ以上の数を入力するか、キャンセルするには空白行を入力し"
+"てください "
 
 msgid "'%s' must be supplied"
 msgstr " '%s' を与えてください "
@@ -870,6 +855,7 @@ msgstr " 'str.default': 'le' が NA です "
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
+" 'digits'と'digits.d'の両方が指定されています。'digits.d'は使われません "
 
 msgid "profile does not contain memory information"
 msgstr " プロファイルはメモリ情報を含んでいません "
@@ -877,39 +863,35 @@ msgstr " プロファイルはメモリ情報を含んでいません "
 msgid "no events were recorded"
 msgstr " 如何なるイベントも記録されませんでした "
 
-#, fuzzy
 msgid "'compressed' must be logical or character"
-msgstr " 'code_files' は文字ベクトルでなければなりません "
+msgstr " 'compress'は論理値か文字でなければなりません "
 
 msgid "untar: using cmd ="
-msgstr ""
+msgstr " untar: 以下を使用 cmd = "
 
-#, fuzzy
 msgid "invalid octal digit"
-msgstr " 不正な書式 "
+msgstr " 不正な８進数の数字です "
 
-#, fuzzy
 msgid "'tarfile' must be a character string or a connection"
-msgstr " 'file' は文字列か NULL でなければなりません "
+msgstr " 'tarfile' は文字列かコネクションでなければなりません "
 
 msgid "incomplete block on file"
-msgstr ""
+msgstr "ファイルに不完全なブロック"
 
 msgid "checksum error for entry '%s'"
-msgstr ""
+msgstr "エントリー'%s'に対するチェックサムエラー"
 
 msgid "unsupported entry type"
-msgstr ""
+msgstr "サポートされないエントリー型 "
 
-#, fuzzy
 msgid "file '%s' not found"
-msgstr " zip ファイル '%s' が見付かりません "
+msgstr "ファイル '%s' が見付かりません "
 
 msgid "file path is too long"
-msgstr ""
+msgstr "ファイルパスが長すぎます "
 
 msgid "linked path is too long"
-msgstr ""
+msgstr " linked pathが長すぎます "
 
 msgid ""
 "vignette '%s' found more than once,\n"
@@ -973,24 +955,22 @@ msgid "options(\"browser\") not set"
 msgstr " options(\"browser\") が設定されていません "
 
 msgid "running '%s' failed"
-msgstr ""
+msgstr " '%s'の実行に失敗しました "
 
 msgid "'%s' produced no output file: sent to printer?"
-msgstr ""
+msgstr " '%s'は出力ファイルを生成しません: プリンタに送りますか? "
 
-#, fuzzy
 msgid "creation of '%s' failed"
-msgstr " パッケージ '%s' のダウンロードに失敗しました "
+msgstr " '%s'の作成に失敗しました "
 
-#, fuzzy
 msgid "Saving help page to"
-msgstr " ヘルプファイルを作成中 ... "
+msgstr "ヘルプページを保存中: "
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr " 不正なブラウザー名です、 options(\"browser\") をチェックして下さい "
 
 msgid "help.start() requires the HTTP server to be running"
-msgstr ""
+msgstr " help.start()にはHTTPサーバが実行されている必要があります "
 
 msgid ""
 "If '%s' is already running, it is *not* restarted, and you must switch to "
@@ -1009,7 +989,7 @@ msgid "'browser' must be a non-empty character string"
 msgstr " 'browser' は空でない文字列でなければなりません "
 
 msgid "Making packages.html"
-msgstr ""
+msgstr " packages.htmlの作成 "
 
 msgid "Updating HTML index of packages in '.Library'"
 msgstr " '.Library' 中のパッケージの HTML 索引を更新します "
@@ -1032,11 +1012,10 @@ msgstr " 'memory.size()' は Windows 固有の関数です "
 msgid "'memory.limit()' is Windows-specific"
 msgstr " 'memory.limit()' は Windows 固有の関数です "
 
-#, fuzzy
 msgid ""
 "If nothing happens, you should open\n"
 "'%s' yourself"
-msgstr " もし何も起きなければ、自分で '%s' をオープンして下さい "
+msgstr " もし何も起きなければ、自分で '%s' を開いてください "
 
 msgid "failed to create '%s'"
 msgstr " '%s' を生成できませんでした "
@@ -1089,6 +1068,23 @@ msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリで�
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "'%s' has a help file but no examples"
+#~ msgstr " '%s' にはヘルプファイルはありますが、実行例はありません "
+
+#~ msgid ""
+#~ "No text help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ " '%s' に対するテキストヘルプはありません： \n"
+#~ " 対応するファイルがありません "
+
+#~ msgid ""
+#~ "No offline help for '%s' is available:\n"
+#~ "corresponding file is missing"
+#~ msgstr ""
+#~ " '%s' に対するオフラインのヘルプはありません： \n"
+#~ " 対応するファイルがありません "
 
 #~ msgid "malformed bundle DESCRIPTION file, no Contains field"
 #~ msgstr ""
