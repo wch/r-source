@@ -80,13 +80,15 @@ isIncomplete(con)
   \item{description}{character string. A description of the connection:
     see \sQuote{Details}.}
   \item{open}{character.  A description of how to open the connection
-    (if at all).  See \sQuote{Details} for possible values.}
-  \item{blocking}{logical.  See the \sQuote{Blocking} section below.}
+    (if it should be opened initially).  See section \sQuote{Modes} for
+    possible values.}
+  \item{blocking}{logical.  See the \sQuote{Blocking} section.}
   \item{encoding}{The name of the encoding to be used.  See the
-    \sQuote{Encoding} section below.}
+    \sQuote{Encoding} section.}
   \item{compression}{integer in 0--9.  The amount of compression to be
-    applied when writing, from none to maximal. For \code{xzfile} can
-    also be negative: see \sQuote{Details}.}
+    applied when writing, from none to maximal available.  For
+    \code{xzfile} can also be negative: see the \sQuote{Compression}
+    section.}
   \item{filename}{a filename within a zip file.}
   \item{host}{character.  Host name for port.}
   \item{port}{integer.  The TCP port number.}
@@ -102,38 +104,38 @@ isIncomplete(con)
   connection is not opened (except for \code{socketConnection}), but may
   be opened by setting a non-empty value of argument \code{open}.
 
-  For \code{file} the description is either a path to the file to be
-  opened or a complete URL, or \code{""} (the default) or \code{"stdin"}
-  or \code{"clipboard"} (see below).  In addition, if \code{open} is
-  \code{""}, \code{"r"} or \code{"rt"} it can read any of the compressed
-  file types described for \code{gzfile}.
+  For \code{file} the description is a path to the file to be opened or
+  a complete URL (when it is the same as calling \code{url}), or
+  \code{""} (the default) or \code{"clipboard"} (see the
+  \sQuote{Clipboard} section).  Use \code{"stdin"} to refer to the
+  C-level \sQuote{standard input} of the process (which need not be
+  connected to anything
+#ifdef unix
+  in a console or embedded version of \R), provided the C99 function
+  \code{fdopen} is supported on the platform.
+#endif
+#ifdef windows
+  in a console or embedded version of \R, and is not in \code{RGui}).
+#endif
+  (See also \code{\link{stdin}} for the subtly different R-level concept
+  of \code{stdin}.)
 
   For \code{url} the description is a complete URL, including scheme
-  (such as \samp{http://}, \samp{ftp://} or \samp{file://}).
+  (such as \samp{http://}, \samp{ftp://} or \samp{file://}).  Proxies
+  can be specified for HTTP and FTP \code{url} connections: see
+  \code{\link{download.file}}.
 
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and
   (as from \R 2.10.0) those compressed by \command{bzip2}, \command{xz}
-  or \command{lzma}.  (If a file of that name exists and is compressed
-  and if \code{open} is unspecified, the compression of the file
-  determines the type of connection.  If the intention is to open the
-  connection to write a different file under than name, specify
-  \code{open = "w"} when the connection is created or
-  \code{\link{unlink}} the file before creating the connection.)
-
+  or \command{lzma}.
+  
   For \code{bzfile} the description is the path to a file compressed by
   \command{bzip2}.
 
   For \code{xzfile} the description is the path to a file compressed by
-  \command{xz} (\url{http://en.wikipedia.org/wiki/Xz}) or
-  \command{lzma}.  For write-mode connections, \code{compress} is the
-  degree of compression, and higher degrees need more memory (up to ca
-  800Mb for \code{9}).  Negative values correspond to adding the
-  \command{xz} argument \option{-e}: this takes more time (double?) to
-  compress but may achieve (slightly) better compression.  The default
-  (\code{6}) has good compression and modest (100Mb memory usage): but
-  if you are using \code{xv} compression you are probably looking for
-  high compression.
+  \command{xz} (\url{http://en.wikipedia.org/wiki/Xz}) or (for reading
+  only) \command{lzma} (\url{http://en.wikipedia.org/wiki/LZMA}).
  
   \code{unz} reads (only) single files within zip files, in binary mode.
   The description is the full path to the zip file, with \file{.zip}
@@ -142,8 +144,8 @@ isIncomplete(con)
   For \code{pipe} the description is the command line to be piped to or
   from.
 #ifdef windows
-  This command line is run in the shell specified by the \env{COMSPEC}
-  environment variable.
+  (This command line is run in the shell specified by the \env{COMSPEC}
+  environment variable.)
 #endif
 
   For \code{fifo} the description is the path of the fifo.
@@ -152,24 +154,15 @@ isIncomplete(con)
   error.)
 #endif
 
-  \code{file} allows \code{description="stdin"} to refer to the C-level
-  \code{stdin} of the process (which need not be connected to anything
-#ifdef unix
-  in a console or embedded version of \R), provided the C99 function
-  \code{fdopen} is supported on the platform.
-#endif
-#ifdef windows
-  in a console or embedded version of \R, and is not in \code{RGui}).
-#endif
-
   All platforms support \code{file}, \code{gzfile}, \code{bzfile},
   \code{xzfile} \code{unz} and \code{url("file://")} connections.  The
   other types may be partially implemented or not implemented at all.
   (They do work on most Unix platforms, and all but \code{fifo} on
   Windows.)
 
-  Proxies can be specified for \code{url} connections: see
-  \code{\link{download.file}}.
+  The intention is that \code{file} and \code{gzfile} can be used
+  generally for text input (from files and URLs) and binary input
+  respectively.
 
   \code{open}, \code{close} and \code{seek} are generic functions: the
   following applies to the methods relevant to connections.
@@ -178,39 +171,9 @@ isIncomplete(con)
   connections will open them if they are not open, but then close them
   again, so to leave a connection open call \code{open} explicitly.
 
-  Possible values for the mode \code{open} to open a connection are
-  \describe{
-    \item{\code{"r"} or \code{"rt"}}{Open for reading in text mode.}
-    \item{\code{"w"} or \code{"wt"}}{Open for writing in text mode.}
-    \item{\code{"a"} or \code{"at"}}{Open for appending in text mode.}
-    \item{\code{"rb"}}{Open for reading in binary mode.}
-    \item{\code{"wb"}}{Open for writing in binary mode.}
-    \item{\code{"ab"}}{Open for appending in binary mode.}
-    \item{\code{"r+"}, \code{"r+b"}}{Open for reading and writing.}
-    \item{\code{"w+"}, \code{"w+b"}}{Open for reading and writing,
-      truncating file initially.}
-    \item{\code{"a+"}, \code{"a+b"}}{Open for reading and appending.}
-  }
-  Not all modes are applicable to all connections: for example URLs can
-  only be opened for reading.  Only file and socket connections can be
-  opened for reading and writing/appending. For many connections there
-  is little or no difference between text and binary modes, but there is
-  for file-like connections on Windows, and \code{\link{pushBack}} is
-  text-oriented and is only allowed on connections open for reading in
-  text mode.
-#ifdef unix
-  If a file or fifo is created on a Unix-alike, its permissions will be
-  the maximal allowed by the current setting of \code{umask} (see
-  \code{\link{Sys.umask}}).
-#endif
-  
-  \code{gzfile}, \code{bzfile} and \code{xzfile} connections are
-  exceptions, as the compressed file always has to be opened in binary
-  mode and no conversion of line-endings is done even on Windows.
-
-  \code{close} closes and destroys a connection.  Note that this will
-  happen automatically in due course if there is no \R object referring
-  to the connection.
+  \code{close} closes and destroys a connection.  This will happen
+  automatically in due course (with a warning) if there is no longer an
+  \R object referring to the connection.
 
   A maximum of 128 connections can be allocated (not necessarily open)
   at any one time.  Three of these are pre-allocated (see
@@ -222,10 +185,12 @@ isIncomplete(con)
 
   If for a \code{file} or \code{fifo} connection the description is
   \code{""}, the file/fifo is immediately opened (in \code{"w+"} mode
-  unless \code{open="w+b"} is specified) and unlinked from the file
+  unless \code{open = "w+b"} is specified) and unlinked from the file
   system.  This provides a temporary file/fifo to write to and then read
   from.
+}
 
+\section{URLs}{
   A note on \samp{file://} URLs.  The most general form (from RFC1738) is
   \samp{file://host/path/to/file}, but \R only accepts the form with an
   empty \code{host} field referring to the local machine.
@@ -244,7 +209,8 @@ isIncomplete(con)
   Also, backslashes are accepted within the path even though
   RFC1738 does not allow them.
 #endif
-  Also, no attempt is made to decode an encoded URL: call
+  
+  No attempt is made to decode an encoded URL: call
   \code{\link{URLdecode}} if necessary.
 
   Note that \samp{https://} connections are
@@ -259,6 +225,7 @@ isIncomplete(con)
   notation for sites requiring authentication is also accepted.
 #endif
 }
+
 \value{
   \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile},
   \code{bzfile}, \code{xzfile}, \code{unz} and \code{socketConnection}
@@ -272,18 +239,106 @@ isIncomplete(con)
   was blocked, or for an output text connection whether there is
   unflushed output.
 }
-\section{Encoding}{
-  The encoding of the input/output stream of a connection in \emph{text}
-  mode can be specified by name, in the same way as it would be given to
-  \code{\link{iconv}}: see that help page for how to find out what names are
-  recognized on your platform.  Additionally, \code{""} and
-  \code{"native.enc"} both mean the \sQuote{native} encoding, that is
-  the internal encoding of the current locale and hence no translation
-  is done.
+
+\section{Modes}{
+  Possible values for the argument \code{open} are
+  \describe{
+    \item{\code{"r"} or \code{"rt"}}{Open for reading in (usually) text mode.}
+    \item{\code{"w"} or \code{"wt"}}{Open for writing in (usually) text mode.}
+    \item{\code{"a"} or \code{"at"}}{Open for appending in text mode.}
+    \item{\code{"rb"}}{Open for reading in binary mode.}
+    \item{\code{"wb"}}{Open for writing in binary mode.}
+    \item{\code{"ab"}}{Open for appending in binary mode.}
+    \item{\code{"r+"}, \code{"r+b"}}{Open for reading and writing.}
+    \item{\code{"w+"}, \code{"w+b"}}{Open for reading and writing,
+      truncating file initially.}
+    \item{\code{"a+"}, \code{"a+b"}}{Open for reading and appending.}
+  }
+  Not all modes are applicable to all connections: for example URLs can
+  only be opened for reading.  Only file and socket connections can be
+  opened for both reading and writing/appending.
+  
 #ifdef unix
-  Not all builds of \R support this, and if yours does not, specifying a
-  non-default encoding will give an error when the connection is opened.
+  If a file or fifo is created on a Unix-alike, its permissions will be
+  the maximal allowed by the current setting of \code{umask} (see
+  \code{\link{Sys.umask}}).
 #endif
+
+  For many connections there is little or no difference between text and
+  binary modes. For file-like connections on Windows, translation of
+  line endings (between LF and CRLF) is done in text-mode only (but all
+  text operations in \R such as \code{\link{readLines}} and
+  \code{\link{scan}} work for any form of line ending).  Various
+  \R operations are possible in only one of the modes: for example
+  \code{\link{pushBack}} is text-oriented and is only allowed on
+  connections open for reading in text mode, and binary
+  \code{\link{load}}/\code{\link{save}} operations can only be done on
+  binary-mode connections.
+
+  The mode of a connection is determined when actually opened, which is
+  deferred if \code{open = ""} is given (the default for all but socket
+  connections).   An explicit call to \code{open} can specify the mode,
+  but otherwise the mode will be \code{"r"} or \code{"w"} depending if
+  the connection is being opened for reading or writing.
+  \code{gzfile}, \code{bzfile} and \code{xzfile} connections are
+  exceptions, as the compressed file always has to be opened in binary
+  mode and no conversion of line-endings is done even on Windows.  
+}
+
+\section{Compression}{
+  \R has for a long time supported \command{gzip} and \command{bzip2}
+  compression, and support for \command{xz} compresssion (and read-only
+  support for its precursor \code{lzma} compression) was added in \R
+  2.10.0.
+
+  For reading, the type of compression (if any) can be determined from
+  the first few bytes of the file, and this is exploited as from \R
+  2.10.0.  Thus for \code{file} connections, if \code{open} is
+  \code{""}, \code{"r"} or \code{"rt"} the connection can read any of
+  the compressed file types as well as uncompressed files.  (Using
+  \code{"rb"} will allow compressed files to be read byte-by-byte.)
+  Similarly, \code{gzfile} connections can read any of the forms of
+  compression and uncompressed files in any read mode.
+
+  (The type of compression is determined when the connection is created
+  if \code{open} is unspecifed and a file of that name exists.  If the
+  intention is to open the connection to write a file with a
+  \emph{different} form of compression under that name, specify
+  \code{open = "w"} when the connection is created or
+  \code{\link{unlink}} the file before creating the connection.)
+  
+  For write-mode connections, \code{compress} specifies now hard the
+  compressor works to minimize the file size, and higher values need
+  more CPU time and more working memory (up to ca 800Mb for
+  \code{xzfile(compress = 9)}).  For \code{xzfile} negative values of
+  \code{compress} correspond to adding the \command{xz} argument
+  \option{-e}: this takes more time (double?) to compress but may
+  achieve (slightly) better compression.  The default (\code{6}) has
+  good compression and modest (100Mb memory usage): but if you are using
+  \code{xz} compression you are probably looking for high compression.
+
+  Choosing the type of compression involves tradeoffs: \command{gzip},
+  \command{bzip2} and \command{xz} are successively less widely supported,
+  need more resources for both compression and decompression, and
+  achieve more compression (although individual files may buck the
+  general trend).  Typical experience is that \code{bzip2} compression
+  is 15\% better on text files than \code{gzip} compression, and
+  \code{xz} with maximal compression 30\% better.  The experience with
+  \R \code{\link{save}} files is similar, but on some large \file{.rda}
+  files \code{xz} compression is much better than the other two.  With
+  current computers decompression times even with \code{compress = 9}
+  are typically modest and reading compressed files is usually faster
+  than uncompressed ones because of the reduction in disc activity.
+}
+
+\section{Encoding}{
+  The encoding of the input/output stream of a connection can be
+  specified by name in the same way as it would be given to
+  \code{\link{iconv}}: see that help page for how to find out what
+  encoding names are recognized on your platform.  Additionally,
+  \code{""} and \code{"native.enc"} both mean the \sQuote{native}
+  encoding, that is the internal encoding of the current locale and
+  hence no translation is done.
 
   Re-encoding only works for connections in text mode.
 
@@ -300,49 +355,54 @@ isIncomplete(con)
   (including that in \code{glibc})
 #endif
   will not.
-
-  Exactly what happens when the requested translation cannot be done is
-  in general undocumented.  Requesting a conversion that is not supported is
-  an error, reported when the connection is opened.  On output the
-  result is likely to be that up to the error, with a warning.  On
-  input, it will most likely be all or some of the input up to the
-  error.
+  
+  Requesting a conversion that is not supported is an error, reported
+  when the connection is opened.  Exactly what happens when the
+  requested translation cannot be done is in general undocumented.  On
+  output the result is likely to be that up to the error, with a
+  warning.  On input, it will most likely be all or some of the input up
+  to the error.
 }
+
 \section{Blocking}{
-  The default condition for all but fifo and socket connections is to be in
-  blocking mode.  In that mode, functions do not return to the \R
-  evaluator until they are complete.   In non-blocking mode, operations
-  return as soon as possible, so on input they will return with whatever
-  input is available (possibly none) and for output they will return
-  whether or not the write succeeded.
+  Whether or not the connection blocks can be specified for file, url
+  (default yes) fifo and socket connections (default not).
+
+  In blocking mode, functions using the connection do not return to the
+  \R evaluator until the read/write is complete.  In non-blocking mode,
+  operations return as soon as possible, so on input they will return
+  with whatever input is available (possibly none) and for output they
+  will return whether or not the write succeeded.
 
   The function \code{\link{readLines}} behaves differently in respect of
   incomplete last lines in the two modes: see its help page.
 
   Even when a connection is in blocking mode, attempts are made to
   ensure that it does not block the event loop and hence the operation
-  of GUI parts of \R.  These do not always succeed, and the whole
+  of GUI parts of \R.  These do not always succeed, and the whole \R
   process will be blocked during a DNS lookup on Unix, for example.
 
-  Most blocking operations on URLs and sockets are subject to the
+  Most blocking operations on HTTP/FTP URLs and on sockets are subject to the
   timeout set by \code{options("timeout")}.  Note that this is a timeout
-  for no response at all, not for the whole operation.  The timeout is
-  set at the time the connection is opened (more precisely, when the
-  last connection of that type -- \samp{http:}, \samp{ftp:} or socket --
-  was opened).
+  for no response, not for the whole operation.  The timeout is set at
+  the time the connection is opened (more precisely, when the last
+  connection of that type -- \samp{http:}, \samp{ftp:} or socket -- was
+  opened).
 }
+
 \section{Fifos}{
-  Fifos default to non-blocking.  That follows S version 4 and is probably most
-  natural, but it does have some implications.
-  In particular, opening a non-blocking fifo connection for writing
-  (only) will fail unless some other process is reading on the fifo.
+  Fifos default to non-blocking.  That follows S version 4 and is
+  probably most natural, but it does have some implications.  In
+  particular, opening a non-blocking fifo connection for writing (only)
+  will fail unless some other process is reading on the fifo.
 
   Opening a fifo for both reading and writing (in any mode: one can only
   append to fifos) connects both sides of the fifo to the \R process,
   and provides an similar facility to \code{file()}.
 }
+
 \section{Clipboard}{
-  \code{file} can also be used with \code{description = "clipboard"}
+  \code{file} can be used with \code{description = "clipboard"}
 #ifdef windows
   in modes \code{"r"} and \code{"w"} only.
 #endif
@@ -370,7 +430,7 @@ isIncomplete(con)
 #ifdef unix
   Unix users wishing to \emph{write} to one of the selections may be
   able to do so via \code{xclip}
-  (\url{http://people.debian.org/~kims/xclip/}), for example by
+  (\url{http://sourceforge.net/projects/xclip/}), for example by
   \code{pipe("xclip -i", "w")} for the primary selection.
 
   Mac OS X users can use \code{pipe("pbpaste")} and
@@ -383,7 +443,7 @@ isIncomplete(con)
   1998).  However \R goes well beyond the S model, for example in output
   text connections and URL, compressed and socket connections.
 
-  The default mode in \R is \code{"r"} except for socket connections.
+  The default open mode in \R is \code{"r"} except for socket connections.
   This differs from S, where it is the equivalent of \code{"r+"},
   known as \code{"*"}.
 
@@ -410,7 +470,7 @@ isIncomplete(con)
   \code{\link{load}}, \code{\link{save}}, \code{\link{dput}} and
   \code{\link{dump}}.
   
-  \code{\link{capabilities}} to see if \code{url},
+  \code{\link{capabilities}} to see if HTTP/FTP \code{url},
   \code{fifo} and \code{socketConnection} are supported by this build of \R.
 
   \code{\link{gzcon}} to wrap \command{gzip} (de)compression around a
@@ -472,7 +532,6 @@ if(capabilities("fifo")) {
   close(zz)
   unlink("foo-fifo")
 }}
-
 #ifdef unix
 \donttest{
 ## Unix examples of use of pipes
@@ -524,6 +583,7 @@ while(isIncomplete(con2)) {Sys.sleep(1); readLines(con2)}
 close(con2)
 
 ## examples of use of encodings
+# write a file in UTF-8
 cat(x, file = (con <- file("foo", "w", encoding="UTF-8"))); close(con)
 # read a 'Windows Unicode' file
 A <- read.table(con <- file("students", encoding="UCS-2LE")); close(con)
