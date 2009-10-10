@@ -1689,7 +1689,7 @@ SEXP attribute_hidden do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid '%s' argument"), "compress");
     }
     open = CHAR(STRING_ELT(sopen, 0)); /* ASCII */
-    if (!open[0] || open[0] == 'r') {
+    if (type == 0 && (!open[0] || open[0] == 'r')) {
 	/* check magic no */
 	FILE *fp = fopen(R_ExpandFileName(file), "rb");
 	char buf[7];

@@ -5844,3 +5844,38 @@ stopifnot(identical(x, y))
 stopifnot(TRUE & -3i, FALSE | 0+1i,
 	  TRUE && 1i, 0+0i || 1+0i)
 ## was error-caught explicitly in spite of contrary documentation
+
+
+## Tests of save/load with different types of compression
+x <- xx <- 1:1000
+test1 <- function(ascii, compress)
+{
+    tf <- tempfile()
+    save(x, ascii = ascii, compress = compress, file = tf)
+    load(tf)
+    stopifnot(identical(x, xx))
+    unlink(tf)
+}
+for(compress in c(FALSE, TRUE))
+    for(ascii in c(TRUE, FALSE)) test1(ascii, compress)
+for(compress in c("bzip2", "xz"))
+    for(ascii in c(TRUE, FALSE)) test1(ascii, compress)
+
+
+## tests of read.table with different types of compressed input
+mor <- system.file("data/morley.tab", package="datasets")
+ll <- readLines(mor)
+tf <- tempfile()
+## gzip copression
+writeLines(ll, con <- gzfile(tf)); close(con)
+file.info(tf)$size
+stopifnot(identical(read.table(tf), morley))
+## bzip2 copression
+writeLines(ll, con <- bzfile(tf)); close(con)
+file.info(tf)$size
+stopifnot(identical(read.table(tf), morley))
+## xz copression
+writeLines(ll, con <- xzfile(tf, compression = -9)); close(con)
+file.info(tf)$size
+stopifnot(identical(read.table(tf), morley))
+unlink(tf)

@@ -114,7 +114,12 @@ isIncomplete(con)
   For \code{gzfile} the description is the path to a file compressed by
   \command{gzip}: it can also open for reading uncompressed files and
   (as from \R 2.10.0) those compressed by \command{bzip2}, \command{xz}
-  or \command{lzma}.
+  or \command{lzma}.  (If a file of that name exists and is compressed
+  and if \code{open} is unspecified, the compression of the file
+  determines the type of connection.  If the intention is to open the
+  connection to write a different file under than name, specify
+  \code{open = "w"} when the connection is created or
+  \code{\link{unlink}} the file before creating the connection.)
 
   For \code{bzfile} the description is the path to a file compressed by
   \command{bzip2}.
