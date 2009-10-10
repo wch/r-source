@@ -5659,6 +5659,7 @@ stopifnot(identical(sprintf("%d", integer(0L)), character(0L)))
 stopifnot(identical(sprintf(character(0L), pi), character(0L)))
 ## new feature in 2.9.0
 
+
 ## C-level asLogical(x) or c(<raw>, <number>) did not work
 r <- as.raw(1)
 stopifnot(if(r) TRUE)
@@ -5666,6 +5667,7 @@ for (type in c("null", "logical", "integer", "real", "complex",
                "character", "list", "expression"))
     c(r, r, get(sprintf('as.%s', type))(1))
 ## failed  before 2.9.0
+
 
 ### Non-unique levels in factor should be forbidden from R 2.10.0 on
 c1 <- c("a.b","a"); c2 <- c("c","b.c")
@@ -5698,10 +5700,12 @@ stopifnot(identical(factor(c(2, 1:2), labels = L),
 	  identical(of, factor(of)))
 ## partly failed in R <= 2.9.0, partly in R-devel(2.10.0)
 
+
 ## "misuses" of sprintf()
 assertError(sprintf("%S%"))
 assertError(sprintf("%n %g", 1))
 ## seg.faulted in R <= 2.9.0
+
 
 ## sprintf(., e)  where length(as.character(e)) < length(e):
 e <- tryCatch(stop(), error=identity)
@@ -5719,9 +5723,12 @@ stopifnot(inherits(e, "error"), inherits(e2, "error"),inherits(e3, "error"),
           )
 ## less helpful error messages previously
 
+
+## bw.SJ on extreme example
 ep <- 1e-3
 stopifnot(all.equal(bw.SJ(c(1:99, 1e6), tol=ep), 0.725, tol=ep))
 ## bw.SJ(x) failed for R <= 2.9.0 (in two ways!), when x had extreme outlier
+
 
 ## anyDuplicated() with 'incomp' ...
 oo <- options(warn=2) # no warnings allowed
@@ -5739,6 +5746,7 @@ stopifnot(sapply(z, class) == "factor")
 z <- expand.grid(letters[1:3], letters[1:4], stringsAsFactors = FALSE)
 stopifnot(sapply(z, class) == "character")
 ## did not work in 2.9.0, fixed in 2.9.1 patched
+
 
 ## print.srcref should not fail; a bad encoding should fail; neither should
 ## leave an open connection
@@ -5780,6 +5788,7 @@ stopifnot(identical("0.3", unique(as.character(nx))),
           identical("0.3+0.3i", unique(as.character(nx*(1+1i)))))
 ## the first gave ("0.300000000000000" "0.3") in R < 2.10.0
 
+
 ## aov evaluated a test in the wrong place ((PR#13733)
 DF <- data.frame(y = c(rnorm(10), rnorm(10, mean=3), rnorm(10, mean=6)),
                  x = factor(rep(c("A", "B", "C"), c(10, 10, 10))),
@@ -5788,16 +5797,19 @@ DF <- data.frame(y = c(rnorm(10), rnorm(10, mean=3), rnorm(10, mean=6)),
 junk <- summary(aov(y ~ x + Error(sub/x), data=DF, subset=(x!="C")))
 ## safety check added in 2.9.0 evaluated the call.
 
+
 ## for(var in seq) .. when seq is modified  "inside" :
 x <- c(1,2); s <- 0; for (i in x) { x[i+1] <- i + 42.5; s <- s + i }
 stopifnot(s == 3)
 ## s was  44.5  in R <= 2.9.0
+
 
 ## ":" at the boundary
 M <- .Machine$integer.max
 s <- (M-2):(M+.1)
 stopifnot(is.integer(s), s-M == -2:0)
 ## was "double" in R <= 2.9.1
+
 
 ## too many columns model.matrix()
 dd <- as.data.frame(sapply(1:40, function(i) gl(2, 100)))
@@ -5806,6 +5818,7 @@ e <- tryCatch(X <- model.matrix(f, data = dd), error=function(e)e)
 stopifnot(inherits(e, "error"))
 ## seg.faulted in R <= 2.9.1
 
+
 ## seq_along( <obj> )
 x <- structure(list(a = 1, value = 1:7), class = "FOO")
 length.FOO <- function(x) length(x$value)
@@ -5813,9 +5826,11 @@ stopifnot(identical(seq_len(length(x)),
 		    seq_along(x)))
 ## used C-internal non-dispatching length() in R <= 2.9.1
 
+
 ## factor(NULL)
 stopifnot(identical(factor(), factor(NULL)))
 ## gave an error from R ~1.3.0 to 2.9.1
+
 
 ## methods() gave two wrong warnings in some cases:
 op <- options(warn = 2)# no warning, please!
@@ -5828,12 +5843,14 @@ stopifnot(identical(m1, m2))
 options(op)
 ## gave two warnings, when an S3 generic had turned into an S4 one
 
+
 ## raw vector assignment with NA index
 x <- charToRaw("abc")
 y <- charToRaw("bbb")
 x[c(1, NA, 3)] <- x[2]
 stopifnot(identical(x, y))
 ## used to segfault
+
 
 ## Logic operations with complex
 stopifnot(TRUE & -3i, FALSE | 0+1i,
