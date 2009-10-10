@@ -21,7 +21,7 @@ write.dcf(x, file = "", append = FALSE,
 \arguments{
   \item{file}{either a character string naming a file or a connection.
     \code{""} indicates output to the console.  For \code{read.dcf} this
-    can name a \code{gzip}-compressed file.}
+    can name a compressed file (see \code{\link{gzfile}}).}
   \item{fields}{Fields to read from the DCF file.  Default is to read all
     fields.}
   \item{all}{a logical indicating whether in case of multiple

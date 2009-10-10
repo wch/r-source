@@ -104,7 +104,9 @@ isIncomplete(con)
 
   For \code{file} the description is either a path to the file to be
   opened or a complete URL, or \code{""} (the default) or \code{"stdin"}
-  or \code{"clipboard"} (see below).
+  or \code{"clipboard"} (see below).  In addition, if \code{open} is
+  \code{""}, \code{"r"} or \code{"rt"} it can read any of the compressed
+  file types described for \code{gzfile}.
 
   For \code{url} the description is a complete URL, including scheme
   (such as \samp{http://}, \samp{ftp://} or \samp{file://}).
@@ -198,9 +200,8 @@ isIncomplete(con)
 #endif
   
   \code{gzfile}, \code{bzfile} and \code{xzfile} connections are
-  exceptions, as the file always has to be opened in binary mode.  Thus
-  modes such as \code{r} are binary, and \code{rt} is needed to have a
-  text-mode connection.
+  exceptions, as the compressed file always has to be opened in binary
+  mode and no conversion of line-endings is done even on Windows.
 
   \code{close} closes and destroys a connection.  Note that this will
   happen automatically in due course if there is no \R object referring
