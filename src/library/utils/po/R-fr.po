@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-10-10 14:12\n"
-"PO-Revision-Date: 2009-03-29 21:44+0100\n"
+"PO-Revision-Date: 2009-10-10 15:40+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -86,17 +86,18 @@ msgstr "les éléments suivants de 'what' seront ignorés"
 msgid "%d occurrences in %s"
 msgstr "%d occurences dans %s"
 
-#, fuzzy
 msgid "Invalid 'filter' argument."
-msgstr "argument 'x' incorrect"
+msgstr "argument 'filter' incorrect"
 
 msgid "Could not find aspell or ispell executable."
-msgstr ""
+msgstr "Executable aspell ou ispell introuvable."
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
 "%s"
 msgstr ""
+"L'exécution de aspell a échoué avec le diagnostic :\n"
+"%s"
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -274,9 +275,8 @@ msgstr ""
 msgid "test '%s' is not available"
 msgstr "le test '%s' n'est pas disponible"
 
-#, fuzzy
 msgid "Line number missing"
-msgstr "'subject' manquant"
+msgstr "Numéro de ligne manquant"
 
 msgid "'fix' requires a name"
 msgstr "'fix' necessite un nom"
@@ -300,13 +300,13 @@ msgstr ""
 "un mot réservé"
 
 msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
-msgstr ""
+msgstr "offline = TRUE est obsolète : utilisez help_type = \"postscript\""
 
 msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
-msgstr ""
+msgstr "chmhelp = TRUE n'est plus supporté : utilisez help_type = \"text\""
 
 msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
-msgstr ""
+msgstr "htmlhelp = TRUE est obsolète : utilisez help_type = \"html\""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr ""
@@ -338,9 +338,8 @@ msgstr "Choisissez un item"
 msgid "Using the first match ..."
 msgstr "Utilisation de la première correspondance ..."
 
-#, fuzzy
 msgid "HTML help is unavailable"
-msgstr "le test '%s' n'est pas disponible"
+msgstr "aide HTML non disponible"
 
 msgid "R Help on '%s'"
 msgstr "R Help sur '%s'"
@@ -357,18 +356,17 @@ msgstr "je ne sais pas quoi rechercher"
 msgid "argument 'help.db' is deprecated"
 msgstr "l'argument 'help.db' est obsolète"
 
-#, fuzzy
 msgid "Rebuilding the help.search() database"
-msgstr "Reconstruction de la base de données..."
+msgstr "Reconstruction de la base de données help.search()"
 
 msgid "..."
-msgstr ""
+msgstr "..."
 
 msgid "Packages {.readRDS() sequentially}:"
 msgstr "Packages {.readRDS() séquentiellement} :"
 
 msgid "."
-msgstr ""
+msgstr "."
 
 msgid "could not find package '%s'"
 msgstr "impossible de trouver le packages '%s'"
@@ -394,9 +392,8 @@ msgid "saving the database ..."
 msgstr "Sauvegarde de la base de données ..."
 
 msgid "... database rebuilt"
-msgstr ""
+msgstr "... reconstruction de la base de donnée"
 
-#, fuzzy
 msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
 msgstr ""
 "pas d'information dans la base de données pour le package '%s' : faut-il "
@@ -431,9 +428,8 @@ msgstr "menu() ne peut être utilisé en mode non interactif"
 msgid "Enter an item from the menu, or 0 to exit"
 msgstr "Entrer un des items du menu, ou 0 pour sortir"
 
-#, fuzzy
 msgid "invalid query"
-msgstr "format incorrect"
+msgstr "requête incorrecte"
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr ""
@@ -531,9 +527,8 @@ msgstr "Les étapes suivantes sont décrites dans '%s'."
 msgid "unable to access index for repository %s"
 msgstr "impossible d'accéder à l'index de l'entrepôt %s"
 
-#, fuzzy
 msgid "Invalid 'filters' argument."
-msgstr "argument 'x' incorrect"
+msgstr "argument 'filters' incorrect"
 
 msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr "'oldPkgs' incorrect ; il faut des données renvoyées par old.packages()"
@@ -580,10 +575,11 @@ msgstr "impossible de fixer les entrepôts en mode non interactif"
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- SVP sélectionner les entrepôts à utiliser pour cette session ---"
 
-#, fuzzy
 msgid ""
 "Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr "Entrer un ou plusieurs nombres séparés par des espaces"
+msgstr ""
+"Entrer un ou plusieurs nombres séparés par des espaces, ou une ligne vide "
+"pour anuler"
 
 msgid "'%s' must be supplied"
 msgstr "'%s' doit être fourni"
@@ -861,6 +857,7 @@ msgstr "'str.default': 'le' est NA"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
+"'digits' et 'digits.d' sont tous deux spécifiés et le second est ignoré"
 
 msgid "profile does not contain memory information"
 msgstr "'profile' ne contient pas d'information sur la mémoire"
@@ -868,39 +865,36 @@ msgstr "'profile' ne contient pas d'information sur la mémoire"
 msgid "no events were recorded"
 msgstr "aucun événement à enregistrer"
 
-#, fuzzy
 msgid "'compressed' must be logical or character"
-msgstr "'code_files' devrait être un vecteur de type caractère"
+msgstr ""
+"'compressed' devrait être un vecteur de type caractère ou booléen (logical)"
 
 msgid "untar: using cmd ="
-msgstr ""
+msgstr "untar : utilisation de cmd ="
 
-#, fuzzy
 msgid "invalid octal digit"
-msgstr "format incorrect"
+msgstr "nombre octal incorrect"
 
-#, fuzzy
 msgid "'tarfile' must be a character string or a connection"
-msgstr "'file' doit être une chaîne de caractères ou une connexion"
+msgstr "'tarfile' doit être une chaîne de caractères ou une connexion"
 
 msgid "incomplete block on file"
-msgstr ""
+msgstr "bloc incomplet dans le fichier"
 
 msgid "checksum error for entry '%s'"
-msgstr ""
+msgstr "erreur checksum pour l'entrée '%s'"
 
 msgid "unsupported entry type"
-msgstr ""
+msgstr "type d'entrée non supporté"
 
-#, fuzzy
 msgid "file '%s' not found"
-msgstr "fichier zip '%s' introuvable"
+msgstr "fichier '%s' introuvable"
 
 msgid "file path is too long"
-msgstr ""
+msgstr "le chemin d'accès au fichier est trop long"
 
 msgid "linked path is too long"
-msgstr ""
+msgstr "le chemin de lien est trop long"
 
 msgid ""
 "vignette '%s' found more than once,\n"
@@ -966,24 +960,22 @@ msgid "options(\"browser\") not set"
 msgstr "options(\"browser\") non fixée"
 
 msgid "running '%s' failed"
-msgstr ""
+msgstr "l'exécution de '%s' a échoué"
 
 msgid "'%s' produced no output file: sent to printer?"
-msgstr ""
+msgstr "'%s' n'a produit aucun fichier en sortie : envoyer vers l'imprimante ?"
 
-#, fuzzy
 msgid "creation of '%s' failed"
-msgstr "le téléchargement du package '%s' a échoué"
+msgstr "la création de '%s' a échoué"
 
-#, fuzzy
 msgid "Saving help page to"
-msgstr "Création des fichiers d'aide ..."
+msgstr "Sauvegarde de la page d'aide dans"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "nom de navigateur incorrect, vérifiez options(\"browser\")."
 
 msgid "help.start() requires the HTTP server to be running"
-msgstr ""
+msgstr "help.start() nécessite que le serveur HTTP soit en cours d'exécution"
 
 msgid ""
 "If '%s' is already running, it is *not* restarted, and you must switch to "
@@ -1002,7 +994,7 @@ msgid "'browser' must be a non-empty character string"
 msgstr "'browser' doit être une chaîne de caractères non vide"
 
 msgid "Making packages.html"
-msgstr ""
+msgstr "Création de packages.html"
 
 msgid "Updating HTML index of packages in '.Library'"
 msgstr "mise à jour de la liste HTML des packages dans '.Library'"
@@ -1027,11 +1019,12 @@ msgstr "'memory.size()' est spécifique à Windows"
 msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()' est spécifique à Windows"
 
-#, fuzzy
 msgid ""
 "If nothing happens, you should open\n"
 "'%s' yourself"
-msgstr "Si rien ne se passe, vous devrez ouvrir '%s' vous-même"
+msgstr ""
+"Si rien ne se passe, vous devrez ouvrir\n"
+"'%s' vous-même"
 
 msgid "failed to create '%s'"
 msgstr "la création de '%s' a échoué"
@@ -1045,9 +1038,8 @@ msgstr "fichier zip '%s' introuvable"
 msgid "updating HTML package descriptions"
 msgstr "mise à jour des descriptions HTML des packages"
 
-#, fuzzy
 msgid "cannot update HTML package index"
-msgstr "impossible de créer l'index HTML des packages"
+msgstr "impossible de mettre à jour l'index HTML des packages"
 
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() ne peut être utilisé en mode non interactif"
@@ -1096,7 +1088,6 @@ msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
 
-#, fuzzy
 #~ msgid "'%s' has a help file but no examples"
 #~ msgstr "'%s' a un fichier d'aide mais pas de fichier d'exemples"
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-10-10 14:12\n"
-"PO-Revision-Date: 2009-03-29 22:45+0100\n"
+"PO-Revision-Date: 2009-10-10 15:29+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -321,24 +321,23 @@ msgid ""
 msgstr ""
 
 msgid "Obsolete package(s) %s in Rd xrefs"
-msgstr ""
+msgstr "Package(s) obsolètes %s dans les xrefs Rd"
 
 msgid "Package(s) unavailable to check Rd xrefs: %s"
-msgstr ""
+msgstr "Package(s) non disponibles pour vérifier les xrefs Rd : %s"
 
 msgid "Unknown package(s) %s in Rd xrefs"
-msgstr ""
+msgstr "Package(s) inconnus %s dans les xrefs Rd"
 
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
 
-#, fuzzy
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
 msgstr ""
-"Voyez l'information à propos des fichiers DESCRIPTION dans la section "
-"'Creating R packages' du manuel 'Writing R Extensions'."
+"Voyez l'information dans la section 'Croos-references' du manuel 'Writing R "
+"Extensions'."
 
 msgid "found %s"
 msgstr "trouvé(s) %s"
@@ -352,9 +351,8 @@ msgstr "importations '::' ou ':::' non déclarées depuis :"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "appels 'library' ou 'require' non déclarés depuis :"
 
-#, fuzzy
 msgid "Rd files with duplicated name '%s':"
-msgstr "Fichiers Rd avec duplication de '%s' :"
+msgstr "Fichiers Rd avec nom dupliqué '%s' :"
 
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Fichiers Rd avec alias '%s' dupliqué :"
@@ -410,9 +408,8 @@ msgid "argument 'outFile' must be a character string or connection"
 msgstr ""
 "l'argument 'outfile' doit être une chaîne de caractères ou une connexion"
 
-#, fuzzy
 msgid "you must specify 'dir' or 'files'"
-msgstr "vous devez spécifier 'package', 'dir' ou 'file'"
+msgstr "vous devez spécifier 'dir' ou 'files'"
 
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr ""
@@ -422,16 +419,14 @@ msgstr ""
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "champ \\name manquant ou vide dans le(s) fichier(s) Rd"
 
-#, fuzzy
 msgid "No help on %s found in RdDB %s"
-msgstr "ceci ne peut être utilisé pour le package 'base'"
+msgstr "Pas d'aide pour %s trouvée dans RdDB %s"
 
 msgid "more than one \\examples section, using the first"
 msgstr "plus d'une section \\example, utilisation de la première"
 
-#, fuzzy
 msgid "invalid value for '%s' : %s"
-msgstr "Pointeur de fichier licence incorrect : %s"
+msgstr "valeur inexacte pour '%s' : %s"
 
 msgid "unable to create temp directory"
 msgstr "impossible de créer le répertoire temporaire"
@@ -535,66 +530,58 @@ msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ERREUR : cette version de R est %s, requis R %s %s "
 
 msgid "No files in this directory"
-msgstr ""
+msgstr "Pas de fichiers dans ce répertoire"
 
-#, fuzzy
 msgid "No results found"
-msgstr "aucun fichier source n'est trouvé"
+msgstr "aucun résultat trouvé"
 
-#, fuzzy
 msgid "No help found for topic %s in any package."
-msgstr "ceci ne peut être utilisé pour le package 'base'"
+msgstr "Aucune entrée d'aide pour le mot %s dans aucun package"
 
 msgid "Help on topic '%s' was found in the following packages:"
-msgstr ""
+msgstr "L'aide pour le mot '%s' est trouvée dans les packages suivants :"
 
-#, fuzzy
 msgid "No package index found for package %s"
-msgstr "ceci ne peut être utilisé pour le package 'base'"
+msgstr "Pas d'index de package trouvé pour le package %s"
 
-#, fuzzy
 msgid "No package named %s could be found"
-msgstr "le package doit être chargé"
+msgstr "aucun package nommé %s n'est trouvé"
 
-#, fuzzy
 msgid "No help found for package %s"
-msgstr "ceci ne peut être utilisé pour le package 'base'"
+msgstr "Pas d'aide trouvée pour le package %s"
 
-#, fuzzy
 msgid "Link %s in package %s could not be located"
-msgstr "l'espace de noms ne doit pas être chargé."
+msgstr "Le lien %s dans le package %s ne peut être localisé"
 
 msgid "Unable to locate help document %s in package %s"
-msgstr ""
+msgstr "Impossible de localiser le document d'aide %s dans le package %s"
 
 msgid "No docs found for package %s"
-msgstr ""
+msgstr "Pas de docs trouvés pour le package %s"
 
-#, fuzzy
 msgid "URL %s was not found"
-msgstr "le package '%s' est introuvable"
+msgstr "l'URL %s est introuvable"
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"
-msgstr ""
+msgstr "serveur http arrêté par R_DISABLE_HTTPD"
 
 msgid "server already running"
-msgstr ""
+msgstr "serveur déjà en cours d'exécution"
 
 msgid "server could not be started on an earlier attempt"
-msgstr ""
+msgstr "le serveur n'a pas pu démarrer lors d'un tentative antérieure"
 
-#, fuzzy
 msgid "no running server to stop"
-msgstr "exécution des tests de régression"
+msgstr "aucun serveur en cours d'exécution à arrêter"
 
 msgid "starting httpd help server ..."
-msgstr ""
+msgstr "démarrage du serveur d'aide httpd ..."
 
 msgid "done"
 msgstr "fini"
 
 msgid "failed to start the httpd server"
-msgstr ""
+msgstr "erreur de démarrage du serveur httpd"
 
 msgid "cannot read index information in file '%s'"
 msgstr "impossible de lire l'indice de l'information dans le fichier '%s'"
@@ -640,9 +627,8 @@ msgstr "aucun fichier source n'est trouvé"
 msgid "empty 'data' directory"
 msgstr "répertoire 'data' vide"
 
-#, fuzzy
 msgid "'--auto-zip' is for Windows only"
-msgstr "--auto-zip'  est pour Windows seulement"
+msgstr "'--auto-zip'  est pour Windows seulement"
 
 msgid "-l option without value"
 msgstr "option -l sans valeur"
@@ -692,24 +678,22 @@ msgid "Converting Rd files to LaTeX ..."
 msgstr "Conversion des fichiers Rd en LaTeX ..."
 
 msgid "finding HTML links ..."
-msgstr ""
+msgstr "recherche des liens HTML ..."
 
 msgid "finding level-2 HTML links ..."
-msgstr ""
+msgstr "recherche des liens HTML de niveau 2 ..."
 
-#, fuzzy
 msgid "-t option without value"
-msgstr "option -l sans valeur"
+msgstr "option -t sans valeur"
 
 msgid "exactly one Rd file must be specified"
-msgstr ""
+msgstr "un seul fichier Rd doit être spécifié"
 
-#, fuzzy
 msgid "no 'type' specified"
-msgstr "ERREUR : aucun package spécifié"
+msgstr "aucun 'type' spécifié"
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
-msgstr ""
+msgstr "'type' doit être 'txt', 'html', 'latex' ou 'example'"
 
 msgid "there is no package called '%s'"
 msgstr "aucun package nommé '%s' n'existe"
@@ -742,6 +726,8 @@ msgid ""
 "Cannot process chunk/lines:\n"
 "%s"
 msgstr ""
+"Impossible de traiter la section ou les lignes : \n"
+"%s"
 
 msgid "Processing packages:"
 msgstr "Traitement des packages :"
@@ -807,9 +793,8 @@ msgstr "..."
 msgid "OK"
 msgstr "OK"
 
-#, fuzzy
 msgid "no examples found"
-msgstr "aucun fichier source n'est trouvé"
+msgstr "aucun exemple n'est trouvé"
 
 msgid "Running specific tests for package"
 msgstr "Exécution des tests spécifiques au package"
@@ -826,7 +811,6 @@ msgstr "la création de"
 msgid "failed"
 msgstr "a échoué"
 
-#, fuzzy
 msgid "no parsed files found"
 msgstr "aucun fichier source n'est trouvé"
 
@@ -954,10 +938,6 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
 msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
 
-#, fuzzy
-#~ msgid "Suspect link(s) in documentation object '%s':"
-#~ msgstr "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
-
 #~ msgid "missing 'DESCRIPTION.in' for package '%s'"
 #~ msgstr "'DESCRIPTION.in' manquant pour le package '%s'"
 
@@ -965,15 +945,19 @@ msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
 #~ msgstr ""
 #~ "ERREUR : cette version de R est %s, le bundle '%s' nécessite R %s %s "
 
-#, fuzzy
-#~ msgid "No package of named %s could be found"
-#~ msgstr "le package doit être chargé"
-
 #~ msgid "Bundle package:"
 #~ msgstr "Package du bundle :"
 
 #~ msgid "Bundle 'DESCRIPTION' is missing."
 #~ msgstr "Le fichier 'DESCRIPTION' du \"bundle\" est manquant."
+
+#, fuzzy
+#~ msgid "Suspect link(s) in documentation object '%s':"
+#~ msgstr "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
+
+#, fuzzy
+#~ msgid "No package of named %s could be found"
+#~ msgstr "le package doit être chargé"
 
 #~ msgid "*** 'hhc.exe' not found: not building CHM help"
 #~ msgstr "*** 'hhc.exe' introuvable : l'aide CHM ne peut être générée"
