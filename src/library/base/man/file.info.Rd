@@ -19,9 +19,6 @@ file.info(\dots)
 \details{
   The file paths are tilde-expanded: see \code{\link{path.expand}}.
 
-  What is meant by \sQuote{file access} and hence the last access time
-  is system-dependent.
-
   The file \sQuote{mode} follows POSIX conventions, giving three octal
   digits summarizing the permissions for the file owner, the owner's
   group and for anyone respectively.  Each digit is the logical
@@ -66,18 +63,20 @@ file.info(\dots)
   Entries for non-existent or non-readable files will be \code{NA}.
 #ifdef unix
   The \code{uid}, \code{gid}, \code{uname} and \code{grname} columns
-  may not be supplied on a non-POSIX Unix system.
+  may not be supplied on a non-POSIX Unix-alike system.
 #endif
 
   What is meant by the three file times depends on the OS and file
-  system.  On Windows \code{ctime} is the creation time.
+  system.  On Windows native file systems \code{ctime} is the file
+  creation time.  What is meant by \sQuote{file access} and hence the
+  \sQuote{last access time} is system-dependent.
 }
 #ifdef unix
 \note{
-  Some (broken) systems allow files of more than 2Gb to be created but
+  Some systems allow files of more than 2Gb to be created but
   not accessed by the \code{stat} system call.  Such files will show up
   as non-readable (and very likely not be readable by any of \R's input
-  functions).
+  functions) -- fortunately such file systems are becoming rare.
 }
 #endif
 
