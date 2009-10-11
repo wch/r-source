@@ -7069,13 +7069,15 @@ to obtain usage information for each of the tools accessible via the
 In addition, you can use
 
 @example
-R CMD @var{cmd}
+R CMD @var{cmd} @var{args}
 @end example
 
 @noindent
-for any executable @command{@var{cmd}} on the path: this is useful to
-have the same environment as @R{} or the specific commands run under,
-for example to run @command{ldd} or @command{pdflatex}.
+for any other executable @command{@var{cmd}} on the path: this is useful
+to have the same environment as @R{} or the specific commands run under,
+for example to run @command{ldd} or @command{pdflatex}.  Under a
+Unix-alike, if @var{cmd} is @samp{perl} or @samp{awk} it is replaced by
+the full path to the Perl or AWK command found when @R{} was configured.
 
 
 @node Invoking R under Windows, Invoking R under Mac OS X, Invoking R from the command line, Invoking R
