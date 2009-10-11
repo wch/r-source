@@ -2,24 +2,24 @@
 include ../gnuwin32/MkRules
 R_HOME = ../..
 
-## BATCH and REMVOE are handled internally in Rcmd.exe
+## BATCH, INSTALL and REMVOE are handled internally in Rcmd.exe
 
 all: \
- $(R_HOME)/bin/build $(R_HOME)/bin/check $(R_HOME)/bin/config.sh \
- $(R_HOME)/bin/Rdconv.sh $(R_HOME)/bin/Rd2dvi.sh $(R_HOME)/bin/Sd2Rd \
- $(R_HOME)/bin/Rprof $(R_HOME)/bin/SHLIB.sh \
+ $(R_HOME)/bin/build.pl $(R_HOME)/bin/check.pl $(R_HOME)/bin/config.sh \
+ $(R_HOME)/bin/Rdconv.sh $(R_HOME)/bin/Rd2dvi.sh $(R_HOME)/bin/Sd2Rd.pl \
+ $(R_HOME)/bin/Rprof.pl $(R_HOME)/bin/SHLIB.sh \
  $(R_HOME)/bin/Stangle.sh $(R_HOME)/bin/Sweave.sh
 
-$(R_HOME)/bin/check: check.in
+$(R_HOME)/bin/check.pl: check.in
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/bin/build: build.in
+$(R_HOME)/bin/build.pl: build.in
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/bin/Sd2Rd: Sd2Rd.in
+$(R_HOME)/bin/Sd2Rd.pl: Sd2Rd.in
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/bin/Rprof: Rprof.in
+$(R_HOME)/bin/Rprof.pl: Rprof.in
 	@$(SED) -e 1d $< > $@
 
 $(R_HOME)/bin/Rdconv.sh: Rdconv
