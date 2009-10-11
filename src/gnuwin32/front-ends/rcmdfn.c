@@ -394,20 +394,10 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    } else if (strcmp(p, "open") == 0) {
 		strcpy(cmd, RHome); strcat(cmd, "/bin/open.exe");
 	    } else {
-		/* RHOME/bin is first in the path, so looks there first
-		   for .sh, .pl, .bat, .exe
-		*/
-		if (!strcmp(".sh", p + strlen(p) - 3)) {
-		    strcpy(cmd, "sh ");
-		} else if (!strcmp(".pl", p + strlen(p) - 3)) {
-		    strcpy(cmd, "perl ");
-		} else if (!strcmp(".bat", p + strlen(p) - 4)) strcpy(cmd, "");
-		else if (!strcmp(".exe", p + strlen(p) - 4)) strcpy(cmd, "");
-		else {
-		    /* FIXME: is this still a sensible default? */
-		    strcpy(cmd, "perl ");
-		    strcat(cmd, RHome); strcat(cmd, "/bin/");
-		}
+		/* RHOME/bin is first in the path, so looks there first */
+		if (!strcmp(".sh", p + strlen(p) - 3)) strcpy(cmd, "sh ");
+		else if (!strcmp(".pl", p + strlen(p) - 3)) strcpy(cmd, "perl ");
+		else strcpy(cmd, "");
 		strcat(cmd, p);
 	    }
 	} else

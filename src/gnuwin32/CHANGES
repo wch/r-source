@@ -8,6 +8,29 @@
 
 	**************************************************
 	*						 *
+	*	       2.11 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+    		CHANGES IN R VERSION 2.11.0
+
+
+NEW FEATURES
+
+    o	'Rcmd cmd' (or 'R CMD cmd') now runs an arbitrary 'cmd' if 'cmd'
+	is not one of the builtin commands, and does not have
+	extension '.sh' or '.pl' (when it is run as a shell or Perl
+	script respectively).  This is done by passing 'cmd' to the
+	command interpreter determined by the COMSPEC environment
+	variable (which in a vanilla Windows system points to
+	cmd.exe).
+
+
+
+
+	**************************************************
+	*						 *
 	*	       2.10 SERIES NEWS			 *
 	*						 *
 	**************************************************
