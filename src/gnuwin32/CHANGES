@@ -45,16 +45,16 @@ PACKAGE INSTALLATION
 	without a target, rather than target 'all'.  This is now the
 	same as on Unix, and was announced in the NEWS for 2.9.0.
 
-    o	Help in base and recommended packages is no longer zipped: text,
-	HTML, latex and examples files are now built when needed.
+    o	Help files are no longer zipped: rendering as text, HTML, latex
+	or examples is now done when needed.
 
 	Options --use-zip and --use-zip-help in R CMD INSTALL are no
 	longer available and --auto-zip only zips data (or not).
 
 	Help in packages installed under 2.9.x may not work correctly,
 	and a warning is given when such a package is attached by
-	library().  Re-installation of all packages is advised
-	(use update.packages(checkBuilt = TRUE)).
+	library().  Re-installation of all packages is strongly
+	recommended (use update.packages(checkBuilt = TRUE)).
 
 	Binary packages are installed without CHM help if they contain
 	it (as those intended for 2.9.x may).
