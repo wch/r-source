@@ -32,6 +32,12 @@ NEW FEATURES
 
     o	The libpng library has been updated to version 1.2.40.
 
+    o	The remaining Perl scripts build, check, Rprof, Sd2Rd in
+	R_HOME/bin now have extension .pl.
+
+    o	Rcmd (or R CMD) can now run .sh (shell) and .pl (Perl) scripts
+	anywhere on the path (as well as .bat and .exe files as before).
+
 
 PACKAGE INSTALLATION
 
@@ -73,6 +79,11 @@ INSTALLATION
 	installed (they are now only 0.7Mb), and there are no longer
 	categories 'chtml', 'html/help', 'latex' and 'Rd'.
 
+
+BUG FIXES
+
+    o	'Rcmd open' now work as documented: previously
+	'Rcmd open.exe' was required.
 
 
 
