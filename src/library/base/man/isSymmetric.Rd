@@ -1,6 +1,6 @@
 % File src/library/base/man/isSymmetric.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{isSymmetric}
@@ -30,9 +30,12 @@ isSymmetric(object, \dots)
   default to test symmetry of matrices \emph{up to rounding error}, using
   \code{\link{all.equal}}.  It might not be appropriate in all
   situations.
+
+  Note that a matrix is only symmetric if its \code{rownames} and
+  \code{colnames} are identical.
 }
 \seealso{\code{\link{eigen}} which calls \code{isSymmetric} when its
-  \code{symmetric} argument is missing, as per default.
+  \code{symmetric} argument is missing.
 }
 \examples{
 isSymmetric(D3 <- diag(3)) # -> TRUE
