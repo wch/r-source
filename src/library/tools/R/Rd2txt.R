@@ -21,6 +21,13 @@
 ##  invalid markup in \[S3]method
 ##  "Tag ", tag, " not expected in code block"
 
+tabExpand <- function(x) {
+    srcref <- attr(x, "srcref")
+    if (is.null(srcref)) start <- 0L
+    else start <- srcref[5L] - 1L
+    .Call(doTabExpand, x, start)
+}
+
 Rd2txt <-
     function(Rd, out="", package = "", defines=.Platform$OS.type,
              stages = "render", outputEncoding = "", ...)
@@ -290,8 +297,8 @@ Rd2txt <-
 		switch(tag,
                UNKNOWN =,
                VERB =,
-               RCODE = writeCode(block),
-               TEXT = putw(unescape(block)),
+               RCODE = writeCode(tabExpand(block)),
+               TEXT = putw(unescape(tabExpand(block))),
                LIST =,
                COMMENT = {},
                "\\describe" = {
@@ -541,7 +548,7 @@ Rd2txt <-
                            txt <- ""
                            repeat {
                                this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
-                                              RCODE = as.character(blocks[[j]]),
+                                              RCODE = as.character(tabExpand(blocks[[j]])),
                                               stopRd(block, Rdfile, sprintf("invalid markup '%s' in %s", tg, tag)))
                                txt <- paste(txt, this, sep = "")
                                blocks[[j]] <- structure("", Rd_tag = "COMMENT")
@@ -591,7 +598,7 @@ Rd2txt <-
                    UNKNOWN =,
                    VERB =,
                    RCODE =,
-                   TEXT = writeCode(block),
+                   TEXT = writeCode(tabExpand(block)),
                    "\\var" = writeCodeBlock(block, tag),
                    "\\dots" =, # \ldots is not really allowed
                    "\\ldots" = put("..."),
@@ -611,7 +618,7 @@ Rd2txt <-
                                this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
                                               "\\ldots" =, # not really right
                                               "\\dots" = "...",
-                                              RCODE = as.character(blocks[[j]]),
+                                              RCODE = as.character(tabExpand(blocks[[j]])),
                                               stopRd(block, Rdfile, sprintf("invalid markup '%s' in %s", tg, tag)))
                                txt <- paste(txt, this, sep = "")
                                blocks[[j]] <- structure("", Rd_tag = "COMMENT")
@@ -714,7 +721,7 @@ Rd2txt <-
                        ## The next item must be TEXT, and start with a space.
                        itemskip <- FALSE
                        if (tag == "TEXT") {
-                           txt <- psub("^ ", "", as.character(block))
+                           txt <- psub("^ ", "", as.character(tabExpand(block)))
                            put(txt)
                        } else writeBlock(block, tag, blocktag) # should not happen
                    } else writeBlock(block, tag, blocktag)
