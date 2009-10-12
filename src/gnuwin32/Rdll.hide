@@ -772,7 +772,6 @@
  do_libfixup
  do_listfiles
  do_load
- do_loadFromConn
  do_loadFromConn2
  do_loadRconsole
  do_loadfile

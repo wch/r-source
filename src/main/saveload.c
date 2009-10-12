@@ -2288,13 +2288,12 @@ SEXP attribute_hidden do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-/* This version reads and checks the magic number,
-   opens the connection if needed */
+/* Read and checks the magic number, open the connection if needed */
 
-static void saveloadcon_cleanup(void *data)
+static void load_con_cleanup(void *data)
 {
-    FILE *fp = (FILE *) data;
-    fclose(fp);
+    Rconnection con = data;
+    con->close(con);
 }
 
 SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -2315,8 +2314,9 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!con->canread) error(_("cannot read from this connection"));
     if(con->text) error(_("can only read from a binary connection"));
     wasopen = con->isopen;
-    if(!wasopen)
+    if(!wasopen) {
 	if(!con->open(con)) error(_("cannot open the connection"));
+    }
     if(!con->canread) {
 	if(!wasopen) con->close(con);
 	error(_("connection not open for reading"));
@@ -2340,7 +2340,7 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (wasopen) {
 	    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 			 R_NilValue, R_NilValue);
-	    cntxt.cend = &saveloadcon_cleanup;
+	    cntxt.cend = &load_con_cleanup;
 	    cntxt.cenddata = con;
 	}
 	R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);
@@ -2354,31 +2354,4 @@ SEXP attribute_hidden do_loadFromConn2(SEXP call, SEXP op, SEXP args, SEXP env)
     } else
 	error(_("the input does not start with a magic number compatible with loading from a connection"));
     return res;
-}
-
-/* This assumes the magic number has already been read, and its format
-   specification (A or X) is ignored.  For saved images with many
-   variables and the values saved in a pair list this internal version
-   will be faster than a version in R */
-
-SEXP attribute_hidden do_loadFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    /* loadFromConn(conn, environment) */
-
-    struct R_inpstream_st in;
-    Rconnection con;
-    SEXP aenv;
-
-    checkArity(op, args);
-
-    con = getConnection(asInteger(CAR(args)));
-    aenv = CADR(args);
-    if (TYPEOF(aenv) == NILSXP) {
-	error(_("use of NULL environment is defunct"));
-	aenv = R_BaseEnv;
-    } else if (TYPEOF(aenv) != ENVSXP)
-	error(_("invalid '%s' argument"), "envir");
-
-    R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);
-    return RestoreToEnv(R_Unserialize(&in), aenv);
 }
