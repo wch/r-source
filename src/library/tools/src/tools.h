@@ -31,5 +31,6 @@
 SEXP delim_match(SEXP x, SEXP delims);
 SEXP Rmd5(SEXP files);
 SEXP check_nonASCII(SEXP text, SEXP ignore_quotes);
+SEXP doTabExpand(SEXP strings, SEXP starts);
 
 #endif

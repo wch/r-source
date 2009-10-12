@@ -179,3 +179,31 @@ check_nonASCII(SEXP text, SEXP ignore_quotes)
     }
     return ScalarLogical(FALSE);
 }
+
+SEXP doTabExpand(SEXP strings, SEXP starts)  /* does tab expansion for UTF-8 strings only */
+{
+    int i,start;
+    char buffer[200], *b;
+    const char *input;
+    SEXP result;
+    PROTECT(result = allocVector(STRSXP, length(strings)));
+    for (i = 0; i < length(strings); i++) {
+    	input = CHAR(STRING_ELT(strings, i));
+    	start = INTEGER(starts)[i];
+    	for (b = buffer; input && b-buffer < 192; input++) {   
+    	    /* only the first byte of multi-byte chars counts */
+    	    if (0x80 <= (unsigned char)*input && (unsigned char)*input <= 0xBF)
+    		start--;
+    	    else if (*input == '\n')
+    	    	start = buffer-b-1;
+    	    if (*input == '\t') do {
+    	    	*b++ = ' ';
+    	    } while (((b-buffer+start) & 7) != 0);
+    	    else *b++ = *input;
+    	}
+    	*b = '\0';
+    	SET_STRING_ELT(result, i, mkCharCE(buffer, Rf_getCharCE(STRING_ELT(strings, i))));
+    }
+    UNPROTECT(1);
+    return result;
+}
