@@ -293,7 +293,6 @@ SEXP do_levelsgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_libfixup(SEXP, SEXP, SEXP, SEXP);
 SEXP do_listfiles(SEXP, SEXP, SEXP, SEXP);
 SEXP do_load(SEXP, SEXP, SEXP, SEXP);
-SEXP do_loadFromConn(SEXP, SEXP, SEXP, SEXP);
 SEXP do_loadFromConn2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_loadhistory(SEXP, SEXP, SEXP, SEXP);
 SEXP do_localeconv(SEXP, SEXP, SEXP, SEXP);
