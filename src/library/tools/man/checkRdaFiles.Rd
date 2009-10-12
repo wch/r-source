@@ -24,7 +24,9 @@ resaveRdaFiles(paths, compress = c("auto", "gzip", "bzip2", "xz"),
 }
 
 \arguments{
-  \item{paths}{A character vector of paths to \code{save} files.}
+  \item{paths}{A character vector of paths to \code{save} files.  If
+    this specifies a single directory, it is taken to refer to all
+    \file{.rda} and \file{.RData} files in that directory.}
 
   \item{compress, compression_level}{type and level of compression: see
     \code{\link{save}}.}

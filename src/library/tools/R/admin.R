@@ -852,6 +852,9 @@ function(dir)
 
 checkRdaFiles <- function(paths)
 {
+    if(length(paths) == 1L && file.info(paths)$isdir)
+        paths <- Sys.glob(c(file.path(paths, "*.rda"),
+                            file.path(paths, "*.RData")))
     res <- data.frame(size = NA_real_, ASCII = NA,
                       compress = NA_character_, version = NA_integer_,
                       stringsAsFactors = FALSE)
@@ -883,6 +886,9 @@ resaveRdaFiles <- function(paths,
                            compress = c("auto", "gzip", "bzip2", "xz"),
                            compression_level)
 {
+    if(length(paths) == 1L && file.info(paths)$isdir)
+        paths <- Sys.glob(c(file.path(paths, "*.rda"),
+                            file.path(paths, "*.RData")))
     compress <- match.arg(compress)
     if (missing(compression_level))
         compression_level <- switch(compress, "gzip" = 6, 9)
