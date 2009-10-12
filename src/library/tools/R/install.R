@@ -100,7 +100,7 @@
             "			without using a lock directory",
             "      --pkglock		use a per-package lock directory",
             "      --build    	build binaries of the installed package(s)",
-            "      --data-compress=	none, gzip or bzip2 (default) compression",
+            "      --data-compress=	none, gzip (default), bzip2 or xz compression",
             "			to be used for lazy-loading of data",
             "      --resave-data	re-save data files as compactly as possible",
            "\nfor Unix",
