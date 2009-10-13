@@ -122,12 +122,9 @@ print.packageDescription <- function(x, ...)
     invisible(x)
 }
 
-index.search <- function(topic, path, file = "AnIndex", type = "help")
-{
-    if(!identical(type, "help"))
-        warning("'type' argument is deprecated", domain = NA)
-    .Internal(index.search(topic, path, file, .Platform$file.sep, type))
-}
+index.search <- function(topic, path)
+    .Internal(index.search(topic, path, .Platform$file.sep))
+
 
 print.packageIQR <-
 function(x, ...)
