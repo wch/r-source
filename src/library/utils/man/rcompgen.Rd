@@ -10,6 +10,9 @@
 \alias{rc.getOption}
 \alias{rc.options}
 \alias{.DollarNames}
+\alias{.DollarNames.default}
+\alias{.DollarNames.list}
+\alias{.DollarNames.environment}
 \title{A Completion Generator for R}
 
 \description{
