@@ -53,7 +53,7 @@ DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) @LIBOBJS@ @ALLOCA@
 HEADERS = \
-	RBufferUtils.h Rregex.h Rstrptime.h \
+	RBufferUtils.h Rstrptime.h \
 	arithmetic.h \
 	basedecl.h \
 	par-common.c \
