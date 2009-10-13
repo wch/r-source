@@ -48,7 +48,7 @@ resaveRdaFiles(paths, compress = c("auto", "gzip", "bzip2", "xz"),
   \item{ASCII}{logical: true for save(ASCII = TRUE), \code{NA} if the
     format is not that of an \R save file.}
   \item{compress}{character: type of compression.  One of \code{"gzip"},
-    \code{"bzip2"}, \code{"xv"}, \code{"none"} or \code{"unknown"} (which
+    \code{"bzip2"}, \code{"xz"}, \code{"none"} or \code{"unknown"} (which
     means that if this is an \R save file it is from a later version of
     \R).}
   \item{version}{integer: the version of the save -- usually \code{2}
