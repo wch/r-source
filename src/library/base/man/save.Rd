@@ -1,6 +1,6 @@
 % File src/library/base/man/save.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{save}
@@ -81,6 +81,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
   example section below.  If a \code{save.image.defaults} option is set
   it overrides \code{save.defaults} for function \code{save.image}
   (which allows this to have different defaults).
+
+  A connection that is not already open will be opened in mode
+  \code{"wb"}.  Only ASCII saves can be written to text-mode connections.
 }
 
 \section{Compression}{

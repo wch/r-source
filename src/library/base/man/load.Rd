@@ -1,6 +1,6 @@
 % File src/library/base/man/load.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{load}
@@ -22,7 +22,10 @@ load(file, envir = parent.frame())
   format.  It can read a compressed file (see \code{\link{save}})
   directly from a file or from a suitable connection (including a call
   to \code{\link{url}}).
-
+  
+  A not-open connection will be opened in mode \code{"rb"} and closed
+  after use. 
+  
   Only \R objects saved in the current format (used since \R 1.4.0)
   can be read from a connection.  If no input is available on a
   connection a warning will be given, but any input not in the current

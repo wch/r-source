@@ -336,6 +336,9 @@ NEW FEATURES
     o   New generic function .DollarNames() to enable class authors
         to customize completion after the $ extractor.
 
+    o	load(), save(), dput() and dump() now open a not-yet-open
+	connection in the appropriate mode (as other functions using
+	connections directly already did).
 
 
 REGULAR EXPRESSIONS
@@ -425,9 +428,10 @@ HELP & Rd FILE CHANGES
 	evaluate expressions at build, install, or render time.
 	Currently install time and render time evaluation are
 	supported.
-	
-    o	Tags \if and \out have been added to allow format-specific (or
-	more general, using \Sexpr) conditional text in man pages.
+
+    o	Tags \if, \ifelse and \out have been added to allow
+        format-specific (or more general, using \Sexpr) conditional
+	text in man pages.
 
     o	The parse_Rd() parser has been made more tolerant of coding
 	errors in Rd files:  now all syntax errors are reported as
@@ -459,10 +463,10 @@ HELP & Rd FILE CHANGES
     o	parse_Rd() was incorrectly handling multiple backslashes in
 	R code strings, converting 4n+3 backslashes to 2n+1 instead
 	of 2n+2.
-	
+
     o   parse_Rd() now recognizes the \var tag within a quoted string
     	in R-like text.
-    	
+
     o	parse_Rd() now treats the argument of \command as LaTeX-like,
 	rather than verbatim.
 
@@ -616,7 +620,7 @@ BUG FIXES
 
     o	Rscript could segfault if (by user error) its filename argument
         was missing.  Reported by Martin Morgan.
-        
+
     o	getAnywhere() (and functions that use it, including argument
 	completion in the console) did not handle special built-in
 	functions.  Reported by Romain Francois.
