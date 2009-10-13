@@ -587,6 +587,9 @@ DEPRECATED & DEFUNCT
     	- more efficiently and flexibly - something like
 	tryCatch(*, error = function(e) e).
 
+    o	The 'type' argument of index.search() is deprecated: there are
+	no longer directories of types other than 'help'.
+
 
 INSTALLATION
 

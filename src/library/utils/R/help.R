@@ -68,18 +68,12 @@ function(topic, package = NULL, lib.loc = NULL,
             "text"
     } else match.arg(tolower(help_type),
                      c("text", "html", "postscript", "ps", "pdf"))
-    type <- switch(help_type,
-                   "text" = "help",
-                   "postscript" =,
-                   "ps" =,
-                   "pdf" = "latex",
-                   help_type)
 
     ## Note that index.search() (currently?) only returns the first
     ## match for the given sequence of indices, and returns the empty
     ## string in case of no match.
     paths <- sapply(.find.package(package, lib.loc, verbose = verbose),
-                    function(p) index.search(topic, p, "AnIndex", type))
+                    function(p) index.search(topic, p))
     paths <- paths[paths != ""]
 
     tried_all_packages <- FALSE
@@ -96,8 +90,7 @@ function(topic, package = NULL, lib.loc = NULL,
             ## over libraries?
             for(pkg in packages) {
                 dir <- system.file(package = pkg, lib.loc = lib)
-                paths <- c(paths,
-                           index.search(topic, dir, "AnIndex", "help"))
+                paths <- c(paths, index.search(topic, dir))
             }
             ## </FIXME>
         }
@@ -239,7 +232,7 @@ function(x, ...)
         }
         else if(type %in% c("ps", "postscript", "pdf")) {
             ## look for stored Rd files
-            path <- dirname(file) # .../pkg/latex
+            path <- dirname(file) # .../pkg/help
             dirpath <- dirname(path)
             pkgname <- basename(dirpath)
             RdDB <- file.path(dirpath, "help", pkgname)

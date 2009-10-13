@@ -49,12 +49,6 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
             }
     }
 
-    ## we no longer have versioned installs:
-##     if(pkgpath == "") {
-##         ## This is slow and does a lot of checking we do here,
-##         ## but is needed for versioned installs
-##         pkgpath <- system.file(package = pkg, lib.loc = lib.loc)
-##     }
     if(pkgpath == "") {
         warning(gettextf("no package '%s' was found", pkg), domain = NA)
         return(NA)
@@ -129,7 +123,11 @@ print.packageDescription <- function(x, ...)
 }
 
 index.search <- function(topic, path, file = "AnIndex", type = "help")
+{
+    if(!identical(type, "help"))
+        warning("'type' argument is deprecated", domain = NA)
     .Internal(index.search(topic, path, file, .Platform$file.sep, type))
+}
 
 print.packageIQR <-
 function(x, ...)

@@ -1,6 +1,6 @@
 % File src/library/utils/man/index.search.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{index.search}
@@ -14,7 +14,7 @@ index.search(topic, path, file="AnIndex", type = "help")
   \item{path}{The path(s) to the packages to be searched.}
   \item{file}{The index file to be searched.  Normally
     \file{"AnIndex"}.}
-  \item{type}{The type of file required.}
+  \item{type}{The type of file required.  Deprecated in \R 2.10.0.}
 }
 \description{
   Used to search the indices for help files, possibly under aliases.
@@ -26,9 +26,10 @@ index.search(topic, path, file="AnIndex", type = "help")
 }
 \value{
   A character vector of matching files, as if they are in directory
-  \code{type} of the corresponding package. In the special cases of
+  \code{type} of the corresponding package.  In the special cases of
   \code{type = "html"}, \code{"R-ex"} and \code{"latex"} the file
   extensions \code{".html"}, \code{".R"} and \code{".tex"} are added.
+  Note that as from \R 2.10.0 no such files exist.
 }
 \seealso{
   \code{\link{help}},

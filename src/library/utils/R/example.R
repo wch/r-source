@@ -23,7 +23,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     topic <- substitute(topic)
     if(!is.character(topic)) topic <- deparse(topic)[1L]
     INDICES <- .find.package(package, lib.loc, verbose = verbose)
-    file <- index.search(topic, INDICES, "AnIndex", "R-ex")
+    file <- index.search(topic, INDICES)
     if(file == "") {
 	warning(gettextf("no help found for '%s'", topic), domain = NA)
 	return(invisible())
@@ -32,7 +32,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     if(length(file) > 1L) {
 	packagePath <- packagePath[1L]
 	warning(gettextf("more than one help file found: using package '%s'",
-		basename(packagePath)), domain = NA)
+                         basename(packagePath)), domain = NA)
 	file <- file[1L]
     }
     pkg <- basename(packagePath)
