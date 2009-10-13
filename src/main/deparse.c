@@ -300,7 +300,11 @@ SEXP attribute_hidden do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	con = getConnection(ifile);
 	wasopen = con->isopen;
 	if(!wasopen) {
+	    char mode[5];	
+	    strcpy(mode, con->mode);
+	    strcpy(con->mode, "w");
 	    if(!con->open(con)) error(_("cannot open the connection"));
+	    strcpy(con->mode, mode);
 	    if(!con->canwrite) {
 		con->close(con);
 		error(_("cannot write to this connection"));
@@ -380,7 +384,11 @@ SEXP attribute_hidden do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    con = getConnection(INTEGER(file)[0]);
 	    wasopen = con->isopen;
 	    if(!wasopen) {
+		char mode[5];	
+		strcpy(mode, con->mode);
+		strcpy(con->mode, "w");
 		if(!con->open(con)) error(_("cannot open the connection"));
+		strcpy(con->mode, mode);
 		if(!con->canwrite) {
 		    con->close(con);
 		    error(_("cannot write to this connection"));
