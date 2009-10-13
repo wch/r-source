@@ -19,6 +19,7 @@
 ## By means of this file you can (also) provide default values for the
 ## configuration process.  To set variables, uncomment the VAR=DEFAULT 
 ## lines and set DEFAULT according to your needs.
+## See etc/Renviron.in for further variables you may wish to set.
 
 ## The command used to spool PostScript files to the printer.
 ## If unspecified, the system will look for either 'lpr' or 'lp'.
@@ -226,3 +227,10 @@
 ## Set this if you want to use a make by another name.
 ## For example, if your GNU make is called 'gmake', use 'MAKE=gmake'.
 ## MAKE=
+
+## Tar name
+## Set this to prefer a tar which has the capability to automagically
+## read compressed archives.  The default is to choose 'gtar' (normally
+## GNU tar) then 'tar', but other possibilities include 'bsdtar' from
+## the libarchive project.
+## TAR=
