@@ -243,8 +243,8 @@ isIncomplete(con)
 \section{Modes}{
   Possible values for the argument \code{open} are
   \describe{
-    \item{\code{"r"} or \code{"rt"}}{Open for reading in (usually) text mode.}
-    \item{\code{"w"} or \code{"wt"}}{Open for writing in (usually) text mode.}
+    \item{\code{"r"} or \code{"rt"}}{Open for reading in text mode.}
+    \item{\code{"w"} or \code{"wt"}}{Open for writing in text mode.}
     \item{\code{"a"} or \code{"at"}}{Open for appending in text mode.}
     \item{\code{"rb"}}{Open for reading in binary mode.}
     \item{\code{"wb"}}{Open for writing in binary mode.}
@@ -256,7 +256,7 @@ isIncomplete(con)
   }
   Not all modes are applicable to all connections: for example URLs can
   only be opened for reading.  Only file and socket connections can be
-  opened for both reading and writing/appending.
+  opened for both reading and writing.
   
 #ifdef unix
   If a file or fifo is created on a Unix-alike, its permissions will be
@@ -268,21 +268,23 @@ isIncomplete(con)
   binary modes. For file-like connections on Windows, translation of
   line endings (between LF and CRLF) is done in text-mode only (but all
   text operations in \R such as \code{\link{readLines}} and
-  \code{\link{scan}} work for any form of line ending).  Various
-  \R operations are possible in only one of the modes: for example
+  \code{\link{scan}} work for any form of line ending).  Various \R
+  operations are possible in only one of the modes: for example
   \code{\link{pushBack}} is text-oriented and is only allowed on
-  connections open for reading in text mode, and binary
-  \code{\link{load}}/\code{\link{save}} operations can only be done on
-  binary-mode connections.
+  connections open for reading in text mode, and binary operations such
+  as \code{\link{readBin}}, \code{\link{load}} and \code{\link{save}}
+  operations can only be done on binary-mode connections.
 
   The mode of a connection is determined when actually opened, which is
   deferred if \code{open = ""} is given (the default for all but socket
-  connections).   An explicit call to \code{open} can specify the mode,
-  but otherwise the mode will be \code{"r"} or \code{"w"} depending if
-  the connection is being opened for reading or writing.
-  \code{gzfile}, \code{bzfile} and \code{xzfile} connections are
-  exceptions, as the compressed file always has to be opened in binary
-  mode and no conversion of line-endings is done even on Windows.  
+  connections).  An explicit call to \code{open} can specify the mode,
+  but otherwise the mode will be \code{"r"}.  (\code{gzfile},
+  \code{bzfile} and \code{xzfile} connections are exceptions, as the
+  compressed file always has to be opened in binary mode and no
+  conversion of line-endings is done even on Windows, so the default
+  mode is interpreted as \code{"rb"}.)  Most operations that need write
+  access or text-only or binary-only mode will override the default mode
+  of a non-yet-open connection.
 }
 
 \section{Compression}{

@@ -17,8 +17,11 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o   New generic function .DollarNames() to enable class authors 
-        to customize completion after the $ extractor.
+    o	The 'open' modes for connections are now interpreted more
+	consistently.  open = "r" is now equivalent to open = "rt" for
+	all connections.  The default open = "" now means "rt" for all
+	connections except the compressed file connections gzfile(),
+	bzfile() and xzfile() for which it means "rb".
 
 
 DEPRECATED & DEFUNCT
@@ -368,6 +371,13 @@ NEW FEATURES
     o	stripchart() allows par 'bg' to be passed in for the
 	background colour for pch = 21 (wish of PR#13984).
 
+    o   New generic function .DollarNames() to enable class authors
+        to customize completion after the $ extractor.
+
+    o	load(), save(), dput() and dump() now open a not-yet-open
+	connection in the appropriate mode (as other functions using
+	connections directly already did).
+
 
 REGULAR EXPRESSIONS
 
@@ -663,7 +673,6 @@ BUG FIXES
 
     o	'make distclean' removed too many files in etc/ if
 	builddir = srcdir.
-
 
 
 
