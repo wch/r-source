@@ -23,6 +23,8 @@ NEW FEATURES
 	connections except the compressed file connections gzfile(),
 	bzfile() and xzfile() for which it means "rb".
 
+    o	New Rd tag \ifelse to complement \if.
+
 
 DEPRECATED & DEFUNCT
 
@@ -467,7 +469,7 @@ HELP & Rd FILE CHANGES
 	Currently install time and render time evaluation are
 	supported.
 
-    o	Tags \if, \ifelse and \out have been added to allow
+    o	Tags \if and \out have been added to allow
         format-specific (or more general, using \Sexpr) conditional
 	text in man pages.
 
