@@ -22,7 +22,8 @@ memDecompress(from,
 }
 \arguments{
   \item{from}{A raw vector.  For \code{memCompress} a character vector
-    will be converted to a raw vector with elements separated by \code{"\n"}.}
+    will be converted to a raw vector with character strings separated
+    by \code{"\n"}.}
   \item{type}{character string, the type of compression.  May be
     abbreviated to a single letter, defaults to the first of the alternatives.}
   \item{asChar}{logical: should the result be converted to a character
@@ -43,17 +44,18 @@ memDecompress(from,
 
   \command{bzip2} compression always adds a header (\code{"BZh"}).
 
-  Compressing with \code{type = "xv"} is equivalent to compressing a
+  Compressing with \code{type = "xz"} is equivalent to compressing a
   file with \command{xz -9e} (including adding the \sQuote{magic}
   header): decompression should cope with the contents of any file
-  compressed with \command{xv} version 4.999 and some versions of
+  compressed with \command{xz} version 4.999 and some versions of
   \command{lzma}.  There are other versions, in particular \sQuote{raw}
   streams, that are not currently handled.
-}
-
-\note{
-  \code{type = "xz"} may not be supported on a particular build of \R:
-  \code{\link{capabilities}("xz")} will tell you if it is.
+  
+  All the types of compression can expand the input: for \code{"gzip"}
+  and \code{"bzip"} the maximum expansion is known and so
+  \code{memCompress} can always allocate sufficient space.  For
+  \code{"xz"} it is possible (but extremely unlikely) that compression
+  will fail if the output would have been too large.
 }
 
 \value{

@@ -277,12 +277,14 @@ isIncomplete(con)
 
   The mode of a connection is determined when actually opened, which is
   deferred if \code{open = ""} is given (the default for all but socket
-  connections).   An explicit call to \code{open} can specify the mode,
+  connections).  An explicit call to \code{open} can specify the mode,
   but otherwise the mode will be \code{"r"} or \code{"w"} depending if
-  the connection is being opened for reading or writing.
-  \code{gzfile}, \code{bzfile} and \code{xzfile} connections are
-  exceptions, as the compressed file always has to be opened in binary
-  mode and no conversion of line-endings is done even on Windows.  
+  the connection is being opened for reading or writing.  \code{gzfile},
+  \code{bzfile} and \code{xzfile} connections are exceptions, as the
+  compressed file always has to be opened in binary mode and no
+  conversion of line-endings is done even on Windows.  Most operations
+  that need write access or text-only or binary-only mode will override
+  the default mode of a non-yet-open connection.
 }
 
 \section{Compression}{
