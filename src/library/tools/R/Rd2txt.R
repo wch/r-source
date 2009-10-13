@@ -402,7 +402,7 @@ Rd2txt <-
                	   else if (tag == "\\ifelse")
                	   	writeContent(block[[3L]], tag),
                "\\out" = for (i in seq_along(block))
-		   of1(block[[i]]),
+		   put(block[[i]]),
                stopRd(block, Rdfile, "Tag ", tag, " not recognized")
                )
     }
