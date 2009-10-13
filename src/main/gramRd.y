@@ -128,6 +128,7 @@ static SEXP	xxnewlist(SEXP);
 static SEXP	xxlist(SEXP, SEXP);
 static SEXP	xxmarkup(SEXP, SEXP, int, YYLTYPE *);
 static SEXP	xxmarkup2(SEXP, SEXP, SEXP, int, int, YYLTYPE *);
+static SEXP	xxmarkup3(SEXP, SEXP, SEXP, SEXP, int, YYLTYPE *);
 static SEXP	xxOptionmarkup(SEXP, SEXP, SEXP, int, YYLTYPE *);
 static SEXP	xxtag(SEXP, int, YYLTYPE *);
 static void	xxsavevalue(SEXP, YYLTYPE *);
@@ -152,6 +153,7 @@ static int 	mkComment(int);
 %token		RCODEMACRO SEXPR RDOPTS LATEXMACRO VERBMACRO OPTMACRO ESCAPE
 %token		LISTSECTION ITEMIZE DESCRIPTION NOITEM
 %token		LATEXMACRO2 VERBMACRO2
+%token		LATEXMACRO3
 %token		IFDEF ENDIF
 %token		TEXT RCODE VERB COMMENT UNKNOWN
 %token		STARTFILE STARTFRAGMENT	/* fake tokens to have two entry points */
@@ -165,9 +167,9 @@ static int 	mkComment(int);
 %destructor { UNPROTECT_PTR($$); } SECTIONHEADER RSECTIONHEADER
 VSECTIONHEADER SECTIONHEADER2 RCODEMACRO SEXPR LATEXMACRO VERBMACRO
 OPTMACRO ESCAPE LISTSECTION ITEMIZE DESCRIPTION NOITEM LATEXMACRO2
-VERBMACRO2 IFDEF ENDIF TEXT RCODE VERB COMMENT UNKNOWN STARTFILE
-STARTFRAGMENT goLatexLike goRLike goRLike2 goOption goVerbatim
-goVerbatim1 goVerbatim2 goItem0 goItem2 LatexArg RLikeArg2 
+VERBMACRO2 LATEXMACRO3 IFDEF ENDIF TEXT RCODE VERB COMMENT UNKNOWN
+STARTFILE STARTFRAGMENT goLatexLike goRLike goRLike2 goOption
+goVerbatim goVerbatim1 goVerbatim2 goItem0 goItem2 LatexArg RLikeArg2
 VerbatimArg1 VerbatimArg2 IfDefTarget ArgItems Option
 
 %%
@@ -213,6 +215,7 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 
 Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
 	|	LATEXMACRO2 LatexArg LatexArg2  { $$ = xxmarkup2($1, $2, $3, 2, STATIC, &@$); }
+	|	LATEXMACRO3 LatexArg LatexArg2 LatexArg2 { $$ = xxmarkup3($1, $2, $3, $4, STATIC, &@$); }
 	|	ITEMIZE     Item0Arg		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
 	|	DESCRIPTION Item2Arg		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
 	|	OPTMACRO    goOption LatexArg  	{ $$ = xxmarkup($1, $3, STATIC, &@$); xxpopMode($2); }
@@ -454,6 +457,47 @@ static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, int argcount, int fla
     	setDynamicFlag(VECTOR_ELT(ans, 1), flag2);
     	flag |= flag2;
     }
+    setAttrib(ans, install("Rd_tag"), header);
+    UNPROTECT_PTR(header);    
+    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setDynamicFlag(ans, flag);
+#if DEBUGVALS
+    Rprintf(" result: %p\n", ans);    
+#endif
+    return ans;
+}
+
+static SEXP xxmarkup3(SEXP header, SEXP body1, SEXP body2, SEXP body3, int flag, YYLTYPE *lloc)
+{
+    SEXP ans;
+#if DEBUGVALS
+    Rprintf("xxmarkup2(header=%p, body1=%p, body2=%p, body3=%p)", header, body1, body2, body3);        
+#endif
+    
+    PROTECT(ans = allocVector(VECSXP, 3));
+    if (!isNull(body1)) {
+    	int flag1 = getDynamicFlag(body1);
+    	SET_VECTOR_ELT(ans, 0, PairToVectorList(CDR(body1)));
+    	UNPROTECT_PTR(body1);
+    	setDynamicFlag(VECTOR_ELT(ans, 0), flag1);
+    	flag |= flag1;
+    }
+    if (!isNull(body2)) {
+    	int flag2;
+	flag2 = getDynamicFlag(body2);
+    	SET_VECTOR_ELT(ans, 1, PairToVectorList(CDR(body2)));    
+    	UNPROTECT_PTR(body2);
+    	setDynamicFlag(VECTOR_ELT(ans, 1), flag2);
+    	flag |= flag2;
+    }
+    if (!isNull(body3)) {
+    	int flag3;
+	flag3 = getDynamicFlag(body3);
+    	SET_VECTOR_ELT(ans, 2, PairToVectorList(CDR(body3)));    
+    	UNPROTECT_PTR(body3);
+    	setDynamicFlag(VECTOR_ELT(ans, 2), flag3);
+    	flag |= flag3;
+    }    
     setAttrib(ans, install("Rd_tag"), header);
     UNPROTECT_PTR(header);    
     setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
@@ -795,6 +839,10 @@ static keywords[] = {
     { "\\S4method",LATEXMACRO2 },
     { "\\tabular", LATEXMACRO2 },
     
+    /* This macro takes three LaTeX-like arguments. */
+    
+    { "\\ifelse",  LATEXMACRO3 },
+    
     /* These macros take one optional bracketed option and always take 
        one LaTeX-like argument */
        
@@ -868,7 +916,7 @@ static void yyerror(const char *s)
        the rest are to be copied literally.  The #if 0 block below allows xgettext
        to see these.
     */    
-#define YYENGLISH 16
+#define YYENGLISH 17
 	"$undefined",	"input", 	
 	"SECTIONHEADER","section header",
 	"RSECTIONHEADER","section header",
@@ -877,6 +925,7 @@ static void yyerror(const char *s)
 	
 	"LATEXMACRO",	"macro",
 	"LATEXMACRO2",  "macro",
+	"LATEXMACRO3",  "macro",
 	"RCODEMACRO",	"macro",
 	"VERBMACRO",    "macro",
 	"VERBMACRO2",	"macro",
@@ -1526,5 +1575,4 @@ SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return result;
 }
-
 

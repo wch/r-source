@@ -612,7 +612,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    if (length(block) > 1L) checkContent(block[[2L]])
                },
                "\\tabular" = checkTabular(block),
-               "\\if" = {
+               "\\if" =,
+               "\\ifelse" = {
     		   condition <- block[[1L]]
     		   tags <- RdTags(condition)
     		   if (!all(tags %in% c("TEXT", "\\Sexpr"))) 
@@ -624,6 +625,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     		   if (length(unknown)) 
     		       warnRd(block, Rdfile, "Unrecognized format: ", unknown)
                    checkContent(block[[2L]])
+                   if (tag == "\\ifelse")
+                       checkContent(block[[3L]])
                },
                "\\out" = {
                	   tags <- RdTags(block)
@@ -867,4 +870,5 @@ testRdConditional <- function(format, conditional, Rdfile) {
     allow <- .strip_whitespace(strsplit(paste(condition, collapse=""), ",")[[1L]])
     any(c("TRUE", format) %in% allow)
 }
+
 
