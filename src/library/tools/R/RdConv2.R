@@ -837,6 +837,11 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     }, warning = .whandler)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
+    
+    if (sections[1] == "\\title")  # if not, we've already been warned... 
+    	if (!all(RdTags(Rd[[1]]) == "TEXT"))
+    	    warnRd(Rd[[1]], Rdfile, level = 5,
+    	    	   "\\title content must be plain text")
 
     enc <- which(sections == "\\encoding")
     ## sanity was checked in prepare2_Rd

@@ -67,6 +67,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
     5 \tab Tag \verb{\dontrun} is only valid in \verb{\examples}\cr
     5 \tab Tag \var{tag name} is invalid in a \var{block name} block\cr
     5 \tab Title of \verb{\section} must be non-empty plain text\cr
+    5 \tab \verb{\title} content must be plain text\cr
     3 \tab Empty section \var{tag name}\cr
     -1 \tab Non-ASCII contents without declared encoding\cr
     -1 \tab Non-ASCII contents in second part of \verb{\enc}\cr 
