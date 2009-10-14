@@ -18,10 +18,7 @@ help <-
 function(topic, package = NULL, lib.loc = NULL,
          verbose = getOption("verbose"),
          try.all.packages = getOption("help.try.all.packages"),
-         help_type = getOption("help_type"),
-         chmhelp = getOption("chmhelp"),
-         htmlhelp = getOption("htmlhelp"),
-         offline = FALSE)
+         help_type = getOption("help_type"))
 {
     if(!missing(package))
         if(is.name(y <- substitute(package)))
@@ -54,17 +51,6 @@ function(topic, package = NULL, lib.loc = NULL,
     }
 
     help_type <- if(!length(help_type)) {
-        if(offline) {
-            warning('offline = TRUE is deprecated: use help_type ="postscript"')
-            "ps"
-        } else if(.Platform$OS.type == "windows" &&
-                is.logical(chmhelp) && !is.na(chmhelp) && chmhelp) {
-            warning('chmhelp = TRUE is no longer supported: use help_type ="text"')
-            "txt"
-        } else if(is.logical(htmlhelp) && !is.na(htmlhelp) && htmlhelp) {
-            warning('htmhelp = TRUE is deprecated: use help_type ="html"')
-            "html"
-        } else
             "text"
     } else match.arg(tolower(help_type),
                      c("text", "html", "postscript", "ps", "pdf"))

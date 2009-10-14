@@ -13,10 +13,7 @@
 help(topic, package = NULL, lib.loc = NULL,
      verbose = getOption("verbose"),
      try.all.packages = getOption("help.try.all.packages"),
-     help_type = getOption("help_type"),
-     chmhelp = getOption("chmhelp"),
-     htmlhelp = getOption("htmlhelp"),
-     offline = FALSE)
+     help_type = getOption("help_type"))
 }
 \arguments{
   \item{topic}{usually, a \link{name} or character string specifying the
@@ -44,10 +41,6 @@ help(topic, package = NULL, lib.loc = NULL,
    Possible values are \code{"text"}, \code{"html"},
    \code{"postscript"}, \code{"ps"} and \code{"pdf"}.  Case is ignored,
    and partial matching is allowed.}
-
-  \item{chmhelp}{a deprecated way to specify \code{help_type = "text"}.}
-  \item{htmlhelp}{a deprecated way to specify \code{help_type = "html"}.}
-  \item{offline}{a deprecated way to specify \code{help_type = "postscript"}.}
 }
 \details{
   The following types of help are available:
@@ -70,7 +63,7 @@ help(topic, package = NULL, lib.loc = NULL,
   GUI, which uses HTML help displayed in its own browser window.
 #endif
 #ifdef windows
-  The defaults for the type of help are selected when \R is installed --
+  The default for the type of help is selected when \R is installed --
   the \sQuote{factory-fresh} default is HTML help.
 #endif
 

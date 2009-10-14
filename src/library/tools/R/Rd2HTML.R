@@ -303,8 +303,7 @@ Rd2HTML <-
                 } else OK <- TRUE
                 if (!OK) {
                     ## so how about as a topic?
-                    file <- index.search(parts$targetfile, pkgpath,
-                                         type = "html")
+                    file <- utils:::index.search(parts$targetfile, pkgpath)
                     if (nzchar(file)) {
                         warnRd(block, Rdfile,
                                "file link ", sQuote(parts$targetfile),
@@ -444,7 +443,7 @@ Rd2HTML <-
                },
                "\\tabular" = writeTabular(block),
                "\\if" =,
-               "\\ifelse" = 
+               "\\ifelse" =
                	    if (testRdConditional("html", block, Rdfile))
 			writeContent(block[[2L]], tag)
 		    else if (tag == "\\ifelse")

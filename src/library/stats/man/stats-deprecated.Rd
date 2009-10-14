@@ -14,7 +14,7 @@
 }
 \details{
   %-- Either:
-  % There are currently no deprecated functions in this package.
+  There are currently no deprecated functions in this package.
   %-- Or:
   %% explain *why* it's deprecated, and \code{\link{..}} to new
 }
