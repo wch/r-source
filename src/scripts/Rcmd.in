@@ -24,7 +24,7 @@ else
 fi
 
 ## Append 'share/texmf' to TeX's input search path.
-if test -n "$TEXINPUTS}"; then
+if test -z "$TEXINPUTS}"; then
   TEXINPUTS=".:${R_SHARE_DIR}/texmf:"
 else
   TEXINPUTS=".:${TEXINPUTS}:${R_SHARE_DIR}/texmf:"
