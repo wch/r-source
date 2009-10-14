@@ -754,11 +754,13 @@ needed by the package, and the convention has grown up to use directory
 
 Data files can have one of three types as indicated by their extension:
 plain R code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt},
-or @file{.csv}, see @command{?data} for the file formats), or
-@code{save()} images (@file{.RData} or @file{.rda}). Note that R code
-should be ``self-sufficient'' and not make use of extra functionality
-provided by the package, so that the data file can also be used without
-having to load the package.
+or @file{.csv}, see @command{?data} for the file formats, and note that
+@file{.csv} is @strong{not} the standard@footnote{e.g.@:
+@uref{http://tools.ietf.org/html/rfc4180}) CSV format), or @code{save()}
+images (@file{.RData} or @file{.rda}). Note that R code should be
+``self-sufficient'' and not make use of extra functionality provided by
+the package, so that the data file can also be used without having to
+load the package.
 
 If your data files are enormous and you are not using @samp{LazyData}
 you can speed up installation by providing a file @file{datalist} in the

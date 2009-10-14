@@ -172,10 +172,9 @@ function(..., list = character(0L), package = NULL, lib.loc = NULL,
                                tab.gz = , tab.bz2 = , tab.xz = ,
                                txt.gz = , txt.bz2 = , txt.xz =
                                assign(name,
-                                      ## ensure default has not been
-                                      ## overridden by options(charToFactor)
-                                      read.table(zfile, header = TRUE,
-                                                 as.is = FALSE),
+                                      ## ensure default for as.is has not been
+                                      ## overridden by options(stringsAsFactor)
+                                      read.table(zfile, header = TRUE, as.is = FALSE),
                                       envir = envir),
                                CSV = , csv = ,
                                csv.gz = , csv.bz2 = , csv.xz =
