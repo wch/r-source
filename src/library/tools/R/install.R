@@ -1953,8 +1953,8 @@ function(name="", version = "0.0")
             "Report bugs to <r-bugs@r-project.org>.", sep = "\n")
     }
 
-    options(showErrorCalls=FALSE)
-    files <- character(0)
+    options(showErrorCalls = FALSE, warn = 1)
+    files <- character(0L)
     type <- "unknown"
     enc <- ""
     pkg <- ""

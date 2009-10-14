@@ -226,6 +226,7 @@ structure for a new package: see its help page for details.
 * The INDEX file::              
 * Package subdirectories::      
 * Package bundles::             
+* Data in packages::            
 @end menu
 
 @node The DESCRIPTION file, The INDEX file, Package structure, Package structure
@@ -671,26 +672,7 @@ platform-specific file names on Windows: @file{src/Makevars.win} takes
 precedence over @file{src/Makevars} and @file{src/Makefile.win} must be
 used.
 
-The @file{data} subdirectory is for additional data files the package
-makes available for loading using @code{data()}.  Currently, data files
-can have one of three types as indicated by their extension: plain R
-code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt}, or
-@file{.csv}, see @command{?data} for the file formats), or @code{save()}
-images (@file{.RData} or @file{.rda}).  (All ports of @R{} use the same
-binary (XDR) format and can read compressed images.  Use images saved
-with @code{save(, compress = TRUE)}, the default, to save space.)  Note
-that R code should be ``self-sufficient'' and not make use of extra
-functionality provided by the package, so that the data file can also be
-used without having to load the package.  If your data files are
-enormous you can speed up installation by providing a file
-@file{datalist} in the @file{data} subdirectory.  This should have one
-line per topic that @code{data()} will find, in the format @samp{foo} if
-@code{data(foo)} provides @samp{foo}, or @samp{foo: bar bah} if
-@code{data(foo)} provides @samp{bar} and @samp{bah}.  As from @R{}
-2.10.0 tables (@file{.tab}, @file{.txt}, or @file{.csv} files) can be
-compressed by @command{gzip}, @command{bzip2} or @command{xz},
-optionally with additional extension @file{.gz}, @file{.bz2} or
-@file{.xz}.
+The @file{data} subdirectory is for data files: @xref{Data in packages}.
 
 The @file{demo} subdirectory is for @R{} scripts (for running @emph{via}
 @code{demo()}) that demonstrate some of the functionality of the
@@ -753,12 +735,60 @@ still experimental.
 Subdirectory @file{po} is used for files related to @emph{localization}:
 @pxref{Internationalization}.
 
-@node  Package bundles,  , Package subdirectories, Package structure
+@node Package bundles, Data in packages, Package subdirectories, Package structure
 @subsection Package bundles
 @cindex Package bundles
 
 Package bundles were deprecated in @R{} 2.10.0 and all support for them
 was removed in @R{} 2.11.0.
+
+@node Data in packages,  , Package bundles, Package structure
+@subsection Data in packages
+
+The @file{data} subdirectory is for data files, either to be made
+available @emph{via} lazy-loading or for loading using @code{data()}.
+(The choice is made by the @samp{LazyData} field in the
+@file{DESCRIPTION} file.)  It should not be used for other data files
+needed by the package, and the convention has grown up to use directory
+@file{inst/extdata} for such files.
+
+Data files can have one of three types as indicated by their extension:
+plain R code (@file{.R} or @file{.r}), tables (@file{.tab}, @file{.txt},
+or @file{.csv}, see @command{?data} for the file formats), or
+@code{save()} images (@file{.RData} or @file{.rda}). Note that R code
+should be ``self-sufficient'' and not make use of extra functionality
+provided by the package, so that the data file can also be used without
+having to load the package.
+
+If your data files are enormous and you are not using @samp{LazyData}
+you can speed up installation by providing a file @file{datalist} in the
+@file{data} subdirectory.  This should have one line per topic that
+@code{data()} will find, in the format @samp{foo} if @code{data(foo)}
+provides @samp{foo}, or @samp{foo: bar bah} if @code{data(foo)} provides
+@samp{bar} and @samp{bah}.
+
+As from @R{} 2.10.0 tables (@file{.tab}, @file{.txt}, or @file{.csv}
+files) can be compressed by @command{gzip}, @command{bzip2} or
+@command{xz}, optionally with additional extension @file{.gz},
+@file{.bz2} or @file{.xz}.
+
+If your package is to be distributed, do consider the resource
+implications for your users of large datasets: they can make packages
+very slow to download and use up unwelcome amounts of storage space, as
+well as taking many seconds to load.  It is normally best to distribute
+large datasets as @file{.rda} images prepared by @code{save(, compress =
+TRUE)} (the default): there is no excuse for distributing ASCII saves.
+
+Using @command{bzip2} or @command{xz} compression will usually reduce
+the size of both the package tarball and the installed package, in some
+cases by a factor of two or more.  However, such compression can only be
+used with @R{} 2.10.0 or later, and so the package should have an
+appropriate @samp{Depends} entry in its DESCRIPTION file.
+
+Package @pkg{tools} has a couple of functions to help with data images:
+@code{checkRdaFiles} reports on the way the image was saved, and
+@code{resaveRdaFiles} will re-save in a different type of compression,
+including choosing the best type for that particular image.
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
