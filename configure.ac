@@ -476,8 +476,10 @@ AC_ARG_VAR([TCLTK_LIBS],
            [flags needed for linking against the Tcl and Tk libraries])
 AC_ARG_VAR([TCLTK_CPPFLAGS],
            [flags needed for finding the tcl.h and tk.h headers])
-AC_ARG_VAR([MAKE], [Make command])
+AC_ARG_VAR([MAKE], [make command])
+AC_ARG_VAR([TAR], [tar command])
 AC_ARG_VAR([R_BROWSER], [default browser])
+AC_ARG_VAR([R_PDFVIEWER], [default PDF viewer])
 AC_ARG_VAR([BLAS_LIBS],
            [flags needed for linking against external BLAS libraries])
 AC_ARG_VAR([LAPACK_LIBS],

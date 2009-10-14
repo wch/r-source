@@ -32,11 +32,6 @@ data(\dots, list = character(0), package = NULL, lib.loc = NULL,
     printed.}
   \item{envir}{the \link{environment} where the data should be loaded.}
 }
-\value{
-  a character vector of all data sets specified, or information about
-  all available data sets in an object of class \code{"packageIQR"} if
-  none were specified.
-}
 \details{
   Currently, four formats of data files are supported:
 
@@ -105,6 +100,11 @@ data(\dots, list = character(0), package = NULL, lib.loc = NULL,
   directory, set \code{package = character(0)} (and \code{lib.loc =
     NULL}, the default).
 }
+\value{
+  A character vector of all data sets specified, or information about
+  all available data sets in an object of class \code{"packageIQR"} if
+  none were specified.
+}
 \note{
   The data files can be many small files.  On some file systems it is
   desirable to save space, and the files in the \file{data} directory of
@@ -124,6 +124,9 @@ data(\dots, list = character(0), package = NULL, lib.loc = NULL,
   \code{\link{help}} for obtaining documentation on data sets,
   \code{\link{save}} for \emph{creating} the second (\file{.rda}) kind
   of data, typically the most efficient one.
+  
+  The \sQuote{Writing R Extensions} for considerations in preparing the
+  \file{data} directory of a package.
 }
 \examples{
 require(utils)
