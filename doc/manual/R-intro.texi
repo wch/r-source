@@ -7044,16 +7044,26 @@ Check add-on packages.
 @item Rprof
 Post-process @R{} profiling files.
 @item Rdconv
-Convert Rd format to various other formats, including @HTML{}, Nroff,
-@LaTeX{}, plain text, and S documentation format.  @code{Rd2txt} can be
-used as shorthand for @code{Rd2txt -t txt}.
+@itemx Rd2txt
+Convert Rd format to various other formats, including @HTML{}, @LaTeX{},
+plain text, and extracting the examples.  @code{Rd2txt} can be used as
+shorthand for @code{Rd2txt -t txt}.
 @item Rd2dvi
+@itemx Rd2pdf
 Convert Rd format to DVI/PDF.  @code{Rd2pdf} can be used as shorthand
 for @code{Rd2dvi --pdf}.
 @item Sd2Rd
 Convert S documentation to Rd format.
+@item Stangle
+Extract S/R code from Sweave documentation
+@item Sweave
+Process Sweave documentation
+@item Rdiff
+Diff @R{} output ignoring headers etc
 @item config
 Obtain configuration information.
+@item javareconf
+(Unix only) Update the Java configuration variables
 @end table
 
 Use
@@ -7135,8 +7145,8 @@ Enable the ``Break to debugger'' menu item in @code{Rgui}, and trigger
 a break to the debugger during command line processing.
 @end table
 
-In Windows with @code{R CMD} you may also specify your own @file{*.bat},
-@file{*.exe}, @file{.sh} or @file{.pl} file.  It will be run under the
+In Windows with @code{R CMD} you may also specify your own @file{.bat},
+@file{.exe}, @file{.sh} or @file{.pl} file.  It will be run under the
 appropriate interpreter (Perl for @file{.pl}) with several environment
 variables set appropriately, including @env{R_HOME}, @env{R_VERSION},
 @env{R_CMD}, @env{R_OSTYPE}, @env{PATH}, @env{PERL5LIB}, and
@@ -7155,8 +7165,8 @@ this does not help with the MiKTeX build of @LaTeX{}.)
 @appendixsec Invoking R under Mac OS X
 
 There are two ways to run @R{} under Mac OS X.  Within a Terminal.app
-window by invoking @code{R}, the methods described in the previous
-sections apply.  There is also console-based GUI (@code{R.app}) that by
+window by invoking @code{R}, the methods described in the first
+subsection apply.  There is also console-based GUI (@code{R.app}) that by
 default is installed in the @code{Applications} folder on your
 system.  It is a standard double-clickable Mac OS X application.
 
