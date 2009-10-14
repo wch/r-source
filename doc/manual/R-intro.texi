@@ -7164,7 +7164,7 @@ this does not help with the MiKTeX build of @LaTeX{}.)
 @node Invoking R under Mac OS X, Scripting with R, Invoking R under Windows, Invoking R
 @appendixsec Invoking R under Mac OS X
 
-There are two ways to run @R{} under Mac OS X.  Within a Terminal.app
+There are two ways to run @R{} under Mac OS X.  Within a @code{Terminal.app}
 window by invoking @code{R}, the methods described in the first
 subsection apply.  There is also console-based GUI (@code{R.app}) that by
 default is installed in the @code{Applications} folder on your

@@ -688,6 +688,9 @@ BUG FIXES
     o	'make distclean' removed too many files in etc/ if
 	builddir = srcdir.
 
+    o	R CMD replaced TEXINPUTS rather than appending to it (as
+	documented and intended).
+
 
 
 	**************************************************
