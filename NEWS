@@ -547,16 +547,19 @@ COMPRESSION
 	xz, and arbitrary extensions.
 
     o	R CMD INSTALL has a new option --data-compress to control the
-	compression used when lazy-loading data.  One new option is
+	compression used when lazy-loading data.  New possibilities are
 	--data-compress=bzip2 which will give ca 15% better
-	compression at the expense of slower installation times.  Also
+	compression at the expense of slower installation times, and
 	--data-compress=xz, often giving even better compression on
-	large datasets at the expense of much longer installation times.
+	large datasets at the expense of much longer installation
+	times.  (The latter is used for the recommended packages: it is
+	particularly effective for 'survival'.)
 
     o	file() for open = "", "r" or "rt" will automagically detect
 	compressed files (from gzip, bzip2 or xv).  This means that
-	compressed files can be specified by file name to
-	read.table(), readlines(), scan() and so on.
+	compressed files can be specified by file name (rather than
+	via a gzfile() connection) to read.table(), readlines(),
+	scan() and so on.
 
     o	data() can handle compressed text files with extensions 
 	.{txt,tab,csv}.{gz,bz2,xz} .
@@ -590,8 +593,8 @@ DEPRECATED & DEFUNCT
     	- more efficiently and flexibly - something like
 	tryCatch(*, error = function(e) e).
 
-    o	The 'type' argument of index.search() is deprecated: there are
-	no longer directories of types other than 'help'.
+    o	index.search() is deprecated: there are no longer directories of
+	types other than 'help'.
 
 
 INSTALLATION
@@ -610,6 +613,11 @@ INSTALLATION
 
     o	C99 support for MBCS is now required, and configure option
 	--disable-mbcs has been withdrawn.
+
+    o	Having a version of 'tar' capable of automagically detecting
+	compressed archives is useful for utils::untar(), and so 'gtar'
+	(a common name for GNU tar) is preferred to 'tar': set
+	environment variable TAR to specify a particular 'tar' command.
 
 
 INTERNATIONALIZATION
