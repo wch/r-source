@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-10-15 08:58\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -282,15 +282,6 @@ msgstr "'form'必需是双边公式，每一边至少带一项"
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "'topic'的值必需是名字，长度为一的字符串或保留文字"
-
-msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
-msgstr "不推荐用offline = TRUE：请用help_type =\"postscript\""
-
-msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
-msgstr "不推荐用chmhelp = TRUE：请用help_type =\"text\""
-
-msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
-msgstr "不推荐用htmhelp = TRUE：请用help_type =\"html\""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "在指定的程序包和图书馆里没有与'%s'有关的说明书:"
@@ -904,12 +895,6 @@ msgstr "没有下载方法"
 msgid "download had nonzero exit status"
 msgstr "下载退出状态不是零"
 
-msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr "用非联接文件：超联结有可能出错"
-
-msgid "options(\"browser\") not set"
-msgstr "options(\"browser\")没有设好"
-
 msgid "running '%s' failed"
 msgstr "执行'%s'失败"
 
@@ -1023,6 +1008,21 @@ msgstr[0] "'lib'元素'%s'不是可写的目录"
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
+#~ msgstr "不推荐用offline = TRUE：请用help_type =\"postscript\""
+
+#~ msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
+#~ msgstr "不推荐用chmhelp = TRUE：请用help_type =\"text\""
+
+#~ msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
+#~ msgstr "不推荐用htmhelp = TRUE：请用help_type =\"html\""
+
+#~ msgid "Using non-linked HTML file: hyperlinks may be incorrect"
+#~ msgstr "用非联接文件：超联结有可能出错"
+
+#~ msgid "options(\"browser\") not set"
+#~ msgstr "options(\"browser\")没有设好"
 
 #~ msgid "'%s' has a help file but no examples"
 #~ msgstr "'%s'含帮助文件但没有示范文件"

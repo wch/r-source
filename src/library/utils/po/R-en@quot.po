@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
-"PO-Revision-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-10-15 08:58\n"
+"PO-Revision-Date: 2009-10-15 08:58\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -303,15 +303,6 @@ msgstr "‘form’ must be a two-sided formula with one term on each side"
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr "‘topic’ should be a name, length-one character vector or reserved word"
-
-msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
-msgstr "offline = TRUE is deprecated: use help_type =“postscript”"
-
-msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
-msgstr "chmhelp = TRUE is no longer supported: use help_type =“text”"
-
-msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
-msgstr "htmhelp = TRUE is deprecated: use help_type =“html”"
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "No documentation for ‘%s’ in specified packages and libraries:"
@@ -932,12 +923,6 @@ msgstr "no download method found"
 
 msgid "download had nonzero exit status"
 msgstr "download had nonzero exit status"
-
-msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr "Using non-linked HTML file: hyperlinks may be incorrect"
-
-msgid "options(\"browser\") not set"
-msgstr "options(“browser”) not set"
 
 msgid "running '%s' failed"
 msgstr "running ‘%s’ failed"

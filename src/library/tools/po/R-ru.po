@@ -3,15 +3,15 @@
 #
 # Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <dactylorhiza at gmail.com> 2008
+# Alexey Shipunov <dactylorhiza at gmail.com> 2009
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.8.0\n"
+"Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-10-10 14:12\n"
-"PO-Revision-Date: 2009-03-28 23:43-0500\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
+"PO-Revision-Date: 2009-10-15 02:41-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -315,24 +315,23 @@ msgid ""
 msgstr ""
 
 msgid "Obsolete package(s) %s in Rd xrefs"
-msgstr ""
+msgstr "Устаревши(е) пакет(ы) %s в Rd xrefs"
 
 msgid "Package(s) unavailable to check Rd xrefs: %s"
-msgstr ""
+msgstr "Пакет(ы) недоступны для проверки Rd xrefs: %s"
 
 msgid "Unknown package(s) %s in Rd xrefs"
-msgstr ""
+msgstr "Неизвестные пакет(ы) %s в Rd xrefs"
 
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Пропущенные связ(и) с объектом документации '%s':"
 
-#, fuzzy
 msgid ""
 "See the information in section 'Cross-references' of the 'Writing R "
 "Extensions' manual."
 msgstr ""
-"См. информацию о файлах DESCRIPTION в секции  'Creating R пакетs' "
-"руководства 'Writing R Extensions'."
+"См. информацию в секции 'Cross-references' руководства 'Writing R "
+"Extensions'."
 
 msgid "found %s"
 msgstr "найден %s"
@@ -346,9 +345,8 @@ msgstr "не объявлен импорт '::' или ':::' из:"
 msgid "'library' or 'require' calls not declared from:"
 msgstr "не объявлены вызовы 'library' или 'require' из:"
 
-#, fuzzy
 msgid "Rd files with duplicated name '%s':"
-msgstr "Rd-файлы с двойными '%s':"
+msgstr "Rd-файлы с повторяющимся именем '%s':"
 
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd-файлы с двойным псевдонимом '%s':"
@@ -402,9 +400,8 @@ msgstr "Rd-файлы должны иметь непустой \\заголовок."
 msgid "argument 'outFile' must be a character string or connection"
 msgstr "аргумент 'outFile' должен быть текстовой строкой или соединением"
 
-#, fuzzy
 msgid "you must specify 'dir' or 'files'"
-msgstr "Вы должны задать 'package', 'dir' или 'file'"
+msgstr "Вы должны задать 'dir' или 'file'"
 
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr "не могу работать с Rd-объектами в пропущенными/пустыми именами"
@@ -412,16 +409,14 @@ msgstr "не могу работать с Rd-объектами в пропущенными/пустыми именами"
 msgid "missing/empty \\name field in Rd file(s)"
 msgstr "пропущенное/пустое поле \\имя Rd-файлы"
 
-#, fuzzy
 msgid "No help on %s found in RdDB %s"
-msgstr "это нельзя использовать для пакета 'base'"
+msgstr "Не найдено помощи %s в RdDB %s"
 
 msgid "more than one \\examples section, using the first"
 msgstr "более чем одна \\секция примеров, использую первую"
 
-#, fuzzy
 msgid "invalid value for '%s' : %s"
-msgstr "Неправильные указатели файла лицензии: %s"
+msgstr "неправильное значение '%s' : %s"
 
 msgid "unable to create temp directory"
 msgstr "не могу создать временную папку"
@@ -523,66 +518,58 @@ msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ОШИБКА: это R версии %s, а требуется R %s %s"
 
 msgid "No files in this directory"
-msgstr ""
+msgstr "В этой папке нет файлов"
 
-#, fuzzy
 msgid "No results found"
-msgstr "не найдено файлов исходников"
+msgstr "Не найдено результатов"
 
-#, fuzzy
 msgid "No help found for topic %s in any package."
-msgstr "это нельзя использовать для пакета 'base'"
+msgstr "Не найдено помощи по теме %s ни в одном из пакетов."
 
 msgid "Help on topic '%s' was found in the following packages:"
-msgstr ""
+msgstr "Помощь по теме '%s' была найдена в следующих пакетах:"
 
-#, fuzzy
 msgid "No package index found for package %s"
-msgstr "это нельзя использовать для пакета 'base'"
+msgstr "Не найдено указателя для пакета %s"
 
-#, fuzzy
 msgid "No package named %s could be found"
-msgstr "должен быть загружен пакет"
+msgstr "Не найден пакет %s"
 
-#, fuzzy
 msgid "No help found for package %s"
-msgstr "это нельзя использовать для пакета 'base'"
+msgstr "Не найдено помощи для пакета %s"
 
-#, fuzzy
 msgid "Link %s in package %s could not be located"
-msgstr "должно быть загружено пространство имен."
+msgstr "Ссылка %s в пакете %s не найдена"
 
 msgid "Unable to locate help document %s in package %s"
-msgstr ""
+msgstr "Не могу найти документ помощи %s в пакете %s"
 
 msgid "No docs found for package %s"
-msgstr ""
+msgstr "Не могу найти документации для пакета %s"
 
-#, fuzzy
 msgid "URL %s was not found"
-msgstr "пакет '%s' не найден"
+msgstr "URL %s не найден"
 
 msgid "httpd server disabled by R_DISABLE_HTTPD"
-msgstr ""
+msgstr "сервер httpd отключен через R_DISABLE_HTTPD"
 
 msgid "server already running"
-msgstr ""
+msgstr "сервер уже запущен"
 
 msgid "server could not be started on an earlier attempt"
-msgstr ""
+msgstr "сервер нельзя запустить во время прежней попытки"
 
-#, fuzzy
 msgid "no running server to stop"
-msgstr "запускаю регрессионные тесты"
+msgstr "нет запущенного сервера -- нельзя его остановить"
 
 msgid "starting httpd help server ..."
-msgstr ""
+msgstr "запускаю httpd сервер помощи..."
 
 msgid "done"
 msgstr "готово"
 
 msgid "failed to start the httpd server"
-msgstr ""
+msgstr "не удалось запустить httpd сервер"
 
 msgid "cannot read index information in file '%s'"
 msgstr "не могу прочитать индексную информацию из файла '%s'"
@@ -627,9 +614,8 @@ msgstr "не найдено файлов исходников"
 msgid "empty 'data' directory"
 msgstr "пустая папка 'data'"
 
-#, fuzzy
 msgid "'--auto-zip' is for Windows only"
-msgstr "--auto-zip' только для Windows"
+msgstr "'--auto-zip' -- это только для Windows"
 
 msgid "-l option without value"
 msgstr "-l опция без значения"
@@ -679,24 +665,22 @@ msgid "Converting Rd files to LaTeX ..."
 msgstr "Конвертирую  Rd файлы в LaTeX ..."
 
 msgid "finding HTML links ..."
-msgstr ""
+msgstr "нахожу ссылки HTML..."
 
 msgid "finding level-2 HTML links ..."
-msgstr ""
+msgstr "нахожу ссылки HTML второго уровня..."
 
-#, fuzzy
 msgid "-t option without value"
-msgstr "-l опция без значения"
+msgstr "-t опция без значения"
 
 msgid "exactly one Rd file must be specified"
-msgstr ""
+msgstr "надо указать в точности один Rd-файл"
 
-#, fuzzy
 msgid "no 'type' specified"
-msgstr "ОШИБКА: пакет не определен"
+msgstr "не указан 'type'"
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
-msgstr ""
+msgstr "'type' должен быть одним из 'txt', 'html', 'latex' или 'example'"
 
 msgid "there is no package called '%s'"
 msgstr "нет пакета по имени '%s'"
@@ -729,6 +713,8 @@ msgid ""
 "Cannot process chunk/lines:\n"
 "%s"
 msgstr ""
+"Не могу обработать группу/строки:\n"
+"%s"
 
 msgid "Processing packages:"
 msgstr "Обрабатываю пакеты:"
@@ -793,9 +779,8 @@ msgstr "..."
 msgid "OK"
 msgstr "OK"
 
-#, fuzzy
 msgid "no examples found"
-msgstr "не найдено файлов исходников"
+msgstr "не найдено примеров"
 
 msgid "Running specific tests for package"
 msgstr "Запускаю специфические тесты для пакета"
@@ -812,9 +797,8 @@ msgstr "создание"
 msgid "failed"
 msgstr "не удалось"
 
-#, fuzzy
 msgid "no parsed files found"
-msgstr "не найдено файлов исходников"
+msgstr "не анализированных файлов"
 
 msgid "creating"
 msgstr "создаю"
@@ -934,25 +918,25 @@ msgstr[0] "Найден вызов .Internal call в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
 
-#, fuzzy
-#~ msgid "Suspect link(s) in documentation object '%s':"
-#~ msgstr "Пропущенные связ(и) с объектом документации '%s':"
-
 #~ msgid "missing 'DESCRIPTION.in' for package '%s'"
 #~ msgstr "пропущен 'DESCRIPTION.in' у пакета '%s'"
 
 #~ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
 #~ msgstr "ОШИБКА: это R версии %s, а набор '%s' требует R %s %s"
 
-#, fuzzy
-#~ msgid "No package of named %s could be found"
-#~ msgstr "должен быть загружен пакет"
-
 #~ msgid "Bundle package:"
 #~ msgstr "Связка пакетов:"
 
 #~ msgid "Bundle 'DESCRIPTION' is missing."
 #~ msgstr "У связки пакетов отсутствует 'DESCRIPTION'."
+
+#, fuzzy
+#~ msgid "Suspect link(s) in documentation object '%s':"
+#~ msgstr "Пропущенные связ(и) с объектом документации '%s':"
+
+#, fuzzy
+#~ msgid "No package of named %s could be found"
+#~ msgstr "должен быть загружен пакет"
 
 #~ msgid "*** 'hhc.exe' not found: not building CHM help"
 #~ msgstr "*** 'hhc.exe' не найден: не собираю CHM помощь"

@@ -1,18 +1,17 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Copyright (C) 2008 Alexey Shipunov <dactylorhiza at gmail>
+# Copyright (C) 2009 Alexey Shipunov <dactylorhiza at gmail>
 # Copyright (C) 2009 Anton Korobeynikov <asl at math dot spbu dot ru>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-10-10 14:12\n"
-"PO-Revision-Date: 2009-03-28 18:25+0300\n"
-"Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
+"PO-Revision-Date: 2009-10-15 02:15-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
@@ -207,9 +206,8 @@ msgstr "могу записать только текстовые объекты"
 msgid "supplied timeout must be NULL or a non-negative number"
 msgstr "предложенный тайм-аут должен быть или NULL, или неотрицательным числом"
 
-#, fuzzy
 msgid "'from' must be raw or character"
-msgstr "'arg' должен быть NULL либо текстовой строкой"
+msgstr "'from' должен быть raw либо текстовой строкой"
 
 msgid "'x' must be numeric"
 msgstr "'x' должен быть числом"
@@ -235,7 +233,6 @@ msgstr "пропущенные значения в 'row.names' не разрешены"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "для таблицы данных предложены неправильные 'dimnames'"
 
-#, fuzzy
 msgid "cannot coerce class %s into a data.frame"
 msgstr "не могу поместить класс \"%s\" в data.frame"
 
@@ -278,9 +275,8 @@ msgstr "предложенные имена строк неправильной длины"
 msgid "row names were found from a short variable and have been discarded"
 msgstr "имена строк взяты из короткой переменной и поэтому сброшены"
 
-#, fuzzy
 msgid "named arguments other than 'drop' are discouraged"
-msgstr "пропущенные значения в 'row.names' не разрешены"
+msgstr "именованные аргументы иные, чем 'drop', не допускаются"
 
 msgid "drop argument will be ignored"
 msgstr "аргумент 'drop' не будет учтен"
@@ -288,13 +284,11 @@ msgstr "аргумент 'drop' не будет учтен"
 msgid "undefined columns selected"
 msgstr "выбраны не определенные колонки"
 
-#, fuzzy
 msgid "named arguments other than 'exact' are discouraged"
-msgstr "пропущенные значения в 'row.names' не разрешены"
+msgstr "именованные аргументы иные, чем 'exact', не допускаются"
 
-#, fuzzy
 msgid "named arguments are discouraged"
-msgstr "одинаковые 'row.names' не разрешены"
+msgstr "именованные аргументы не допускаются"
 
 msgid "rhs is the wrong length for indexing by a logical matrix"
 msgstr ""
@@ -554,11 +548,10 @@ msgid "determinant not currently defined for complex matrices"
 msgstr "в настоящее время детерминант для комплексных матриц не определен"
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
-msgstr ""
+msgstr "'nrow' или 'ncol' нельзя определять, если 'x' -- матрица"
 
-#, fuzzy
 msgid "'x' is an array, but not 1D."
-msgstr "первый аргумент -- многомерная матрица, а не матрица."
+msgstr "'x' -- это не одномерная, а многомерная матрица (array)"
 
 msgid "only matrix diagonals can be replaced"
 msgstr "только диагонали матрицы могут быть заменены"
@@ -677,7 +670,7 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' должен быть сортирован не по уменьшению"
 
 msgid "using the first element of 'value' of type expression"
-msgstr ""
+msgstr "использую первый элемент 'value' типа выражения"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
 msgstr ""
@@ -739,7 +732,7 @@ msgid "'max.distance' components must be non-negative"
 msgstr "компоненты 'max.distance' должны быть неотрицательными"
 
 msgid "norm '%s' currently always uses exact = FALSE"
-msgstr ""
+msgstr "norm '%s' сейчас всегда использует exact = FALSE"
 
 msgid "triangular matrix should be square"
 msgstr "треугольная матрица должна быть квадратной"
@@ -754,11 +747,12 @@ msgstr "Это -- R %s, а пакету '%s' нужен %s %s"
 msgid "package '%s' was built before R 2.10.0: please re-install it"
 msgstr "пакет '%s' был собран до R 2.0.0: пожалуйста, инсталлируйте его заново"
 
-#, fuzzy
 msgid ""
 "package '%s' claims to be built under R version %s but is missing some help "
 "files and needs to be re-installed"
-msgstr "пакет '%s' был собран до R 2.0.0: пожалуйста, инсталлируйте его заново"
+msgstr ""
+"пакет '%s' сообщает, что он был собран для версии R %s, но у него нет "
+"некоторых файлов помощи и поэтому его надо переустановить"
 
 msgid "package '%s' was built under R version %s"
 msgstr "пакет '%s' был собран под R версии %s"
@@ -1592,18 +1586,19 @@ msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
 
-#, fuzzy
 #~ msgid ""
 #~ "package '%s' was built under R version %s and help will not work "
 #~ "correctly\n"
 #~ "Please re-install it"
 #~ msgstr ""
-#~ "пакет '%s' был собран до R 2.0.0: пожалуйста, инсталлируйте его заново"
+#~ "пакет '%s' был собран до версии R %s и помощь не будет правильно "
+#~ "работать\n"
+#~ "Пожалуйста, переустановите его"
 
-#, fuzzy
 #~ msgid ""
 #~ "package '%s' was built under R version %s and help may not work correctly"
-#~ msgstr "пакет '%s' был собран под R версии %s"
+#~ msgstr ""
+#~ "пакет '%s' был собран под R версии %s и помощь не будет правильно работать"
 
 #~ msgid "extra arguments ignored:"
 #~ msgstr "дополнительные аргументы проигнорированы"

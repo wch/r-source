@@ -3,16 +3,16 @@
 #
 # Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Copyright (C) 2008 Alexey Shipunov <dactylorhiza at gmail>
+# Copyright (C) 2009 Alexey Shipunov <dactylorhiza at gmail>
 # Copyright (C) 2009 Anton Korobeynikov <asl at math dot spbu dot ru>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
-"PO-Revision-Date: 2009-03-28 16:30+0300\n"
-"Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
+"POT-Creation-Date: 2009-10-15 08:58\n"
+"PO-Revision-Date: 2009-10-15 02:50-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
@@ -90,17 +90,18 @@ msgstr "элементы 'what' после первого будут пропущены"
 msgid "%d occurrences in %s"
 msgstr "%d вхождений в %s"
 
-#, fuzzy
 msgid "Invalid 'filter' argument."
-msgstr "неправильный аргумент 'x'"
+msgstr "Неправильный аргумент 'filter'"
 
 msgid "Could not find aspell or ispell executable."
-msgstr ""
+msgstr "Не могу найти исполняемого файла aspell или ispell."
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
 "%s"
 msgstr ""
+"Запуск aspell не удался с причиной:\n"
+"%s"
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -271,9 +272,8 @@ msgstr ""
 msgid "test '%s' is not available"
 msgstr "тест '%s' недоступен"
 
-#, fuzzy
 msgid "Line number missing"
-msgstr "пропущен 'subject'"
+msgstr "Пропущен номер строки"
 
 msgid "'fix' requires a name"
 msgstr "для 'fix' нужно имя"
@@ -295,15 +295,6 @@ msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr ""
 "'topic' должен быть именем, текстовой строкой единичной длины или "
 "зарезервированным словом"
-
-msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
-msgstr ""
-
-msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
-msgstr ""
-
-msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
-msgstr ""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "В указанных пакетах и библиотеках нет документации для '%s':"
@@ -333,9 +324,8 @@ msgstr "Выберите один"
 msgid "Using the first match ..."
 msgstr "Использую первое совпадение..."
 
-#, fuzzy
 msgid "HTML help is unavailable"
-msgstr "тест '%s' недоступен"
+msgstr "Помощь HTML недоступна"
 
 msgid "R Help on '%s'"
 msgstr "Помощь R по '%s'"
@@ -352,18 +342,17 @@ msgstr "непонятно, что искать"
 msgid "argument 'help.db' is deprecated"
 msgstr "аргумент 'help.db' устарел"
 
-#, fuzzy
 msgid "Rebuilding the help.search() database"
-msgstr "Перестройка базы данных..."
+msgstr "Перестройка базы данных help.search() "
 
 msgid "..."
-msgstr ""
+msgstr "..."
 
 msgid "Packages {.readRDS() sequentially}:"
 msgstr "Пакеты {.readRDS() последовательно}:"
 
 msgid "."
-msgstr ""
+msgstr "."
 
 msgid "could not find package '%s'"
 msgstr "не могу найти пакет '%s'"
@@ -387,9 +376,8 @@ msgid "saving the database ..."
 msgstr "Сохраняю базу данных..."
 
 msgid "... database rebuilt"
-msgstr ""
+msgstr "... база данных перестроена"
 
-#, fuzzy
 msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
 msgstr "в базе данных нет информации о пакете '%s': надо 'rebuild = TRUE'?"
 
@@ -420,9 +408,8 @@ msgstr "menu() нельзя использовать неинтерактивно"
 msgid "Enter an item from the menu, or 0 to exit"
 msgstr "Введите пункт из меню или 0 для выхода"
 
-#, fuzzy
 msgid "invalid query"
-msgstr "неправильный формат"
+msgstr "неправильный запрос"
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr ""
@@ -518,9 +505,8 @@ msgstr "Дальнейшее указано в '%s'."
 msgid "unable to access index for repository %s"
 msgstr "недоступен индекс для хранилища %s"
 
-#, fuzzy
 msgid "Invalid 'filters' argument."
-msgstr "неправильный аргумент 'x'"
+msgstr "Неправильные аргументы 'filter'"
 
 msgid "invalid 'oldPkgs'; must be a result from old.packages()"
 msgstr "неверное значение 'oldPkgs'; должен быть результатом old.packages()"
@@ -568,10 +554,11 @@ msgstr "не могу установить хранилища неинтерактивно"
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Пожалуйста, выберите хранилища для использования в этой сессии ---"
 
-#, fuzzy
 msgid ""
 "Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr "Введите одну или более цифр, разделенных пробелами"
+msgstr ""
+"Введите одну или более цифр, разделенных пробелами, или пустую строку для "
+"отмены"
 
 msgid "'%s' must be supplied"
 msgstr "надо указать '%s'"
@@ -841,7 +828,7 @@ msgid "'str.default': 'le' is NA"
 msgstr "'str.default': 'le' -- это NA"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
-msgstr ""
+msgstr "определены и 'digits', и 'digits.d', последняя не используется"
 
 msgid "profile does not contain memory information"
 msgstr "профиль не содержит информации о памяти"
@@ -849,39 +836,35 @@ msgstr "профиль не содержит информации о памяти"
 msgid "no events were recorded"
 msgstr "события не записаны"
 
-#, fuzzy
 msgid "'compressed' must be logical or character"
-msgstr "'code_files' должны быть текстовым вектором"
+msgstr "'compressed' должен быть логическим или текстовым вектором"
 
 msgid "untar: using cmd ="
-msgstr ""
+msgstr "untar: использую cmd ="
 
-#, fuzzy
 msgid "invalid octal digit"
-msgstr "неправильный формат"
+msgstr "неправильное восьмеричное число"
 
-#, fuzzy
 msgid "'tarfile' must be a character string or a connection"
-msgstr "'file' должен быть текстовой строкой строка или соединением"
+msgstr "'tarfile' должен быть текстовой строкой или соединением"
 
 msgid "incomplete block on file"
-msgstr ""
+msgstr "незавершенный блок в файле"
 
 msgid "checksum error for entry '%s'"
-msgstr ""
+msgstr "ошибка контрольной суммы для записи '%s'"
 
 msgid "unsupported entry type"
-msgstr ""
+msgstr "неподдерживаемый тип записи"
 
-#, fuzzy
 msgid "file '%s' not found"
-msgstr "zip-файл '%s' не найден"
+msgstr "файл '%s' не найден"
 
 msgid "file path is too long"
-msgstr ""
+msgstr "путь к файлу слишком длинный"
 
 msgid "linked path is too long"
-msgstr ""
+msgstr "путь ссылки слишком длинный"
 
 msgid ""
 "vignette '%s' found more than once,\n"
@@ -938,32 +921,23 @@ msgstr "не найдено метода скачивания"
 msgid "download had nonzero exit status"
 msgstr "у скачивания ненулевой статус выхода"
 
-msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr ""
-"Использую нелинкованный HTML-файл: гиперссылки могут быть неправильными"
-
-msgid "options(\"browser\") not set"
-msgstr "options(\"browser\") не установлены"
-
 msgid "running '%s' failed"
-msgstr ""
+msgstr "запуск '%s' не удался"
 
 msgid "'%s' produced no output file: sent to printer?"
-msgstr ""
+msgstr "'%s' не дал выходного файла: послать на принтер?"
 
-#, fuzzy
 msgid "creation of '%s' failed"
-msgstr "скачивание пакета '%s' не удалось"
+msgstr "создание '%s' не удалось"
 
-#, fuzzy
 msgid "Saving help page to"
-msgstr "Делаю файлы помощи..."
+msgstr "Сохраняю страницу помощи в"
 
 msgid "invalid browser name, check options(\"browser\")."
 msgstr "неправильное имя броузера, проверьте options(\"browser\")."
 
 msgid "help.start() requires the HTTP server to be running"
-msgstr ""
+msgstr "help.start() требует запуска сервера HTTP"
 
 msgid ""
 "If '%s' is already running, it is *not* restarted, and you must switch to "
@@ -982,7 +956,7 @@ msgid "'browser' must be a non-empty character string"
 msgstr "'browser' должен быть непустой текстовой строкой"
 
 msgid "Making packages.html"
-msgstr ""
+msgstr "Делаю packages.html"
 
 msgid "Updating HTML index of packages in '.Library'"
 msgstr "Обновляю HTML-список пакетов в '.Library'"
@@ -1005,11 +979,12 @@ msgstr "'memory.size()' -- Windows-специфичный"
 msgid "'memory.limit()' is Windows-specific"
 msgstr "'memory.limit()' -- Windows-специфичный"
 
-#, fuzzy
 msgid ""
 "If nothing happens, you should open\n"
 "'%s' yourself"
-msgstr "Если ничего не произойдет, надо самому открыть '%s'"
+msgstr ""
+"Если ничего не произойдет, надо открыть\n"
+"'%s' самостоятельно"
 
 msgid "failed to create '%s'"
 msgstr "не удалось создать '%s'"
@@ -1077,9 +1052,19 @@ msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 
-#, fuzzy
 #~ msgid "'%s' has a help file but no examples"
-#~ msgstr "у '%s' есть файл помощи, но нет файла примеров"
+#~ msgstr "у '%s' есть файл помощи, но нет примеров"
+
+#~ msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
+#~ msgstr ""
+#~ "offline = TRUE не приветствуется: используйте help_type =\"postscript\""
+
+#~ msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
+#~ msgstr ""
+#~ "chmhelp = TRUE больше не поддерживается: используйте help_type =\"text\""
+
+#~ msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
+#~ msgstr "htmhelp = TRUE не приветствуется: используйте help_type =\"html\""
 
 #~ msgid ""
 #~ "No text help for '%s' is available:\n"
@@ -1094,6 +1079,13 @@ msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 #~ msgstr ""
 #~ "Нет оффлайн-помощи по '%s':\n"
 #~ "соответствующий файл недоступен"
+
+#~ msgid "Using non-linked HTML file: hyperlinks may be incorrect"
+#~ msgstr ""
+#~ "Использую нелинкованный HTML-файл: гиперссылки могут быть неправильными"
+
+#~ msgid "options(\"browser\") not set"
+#~ msgstr "options(\"browser\") не установлены"
 
 #~ msgid "malformed bundle DESCRIPTION file, no Contains field"
 #~ msgstr ""

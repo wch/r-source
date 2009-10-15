@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-10-15 08:58\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -255,15 +255,6 @@ msgid "'form' must be a two-sided formula with one term on each side"
 msgstr ""
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
-msgstr ""
-
-msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
-msgstr ""
-
-msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
-msgstr ""
-
-msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
 msgstr ""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
@@ -840,12 +831,6 @@ msgid "no download method found"
 msgstr ""
 
 msgid "download had nonzero exit status"
-msgstr ""
-
-msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr ""
-
-msgid "options(\"browser\") not set"
 msgstr ""
 
 msgid "running '%s' failed"

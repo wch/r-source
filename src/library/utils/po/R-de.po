@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-10-15 08:58\n"
 "PO-Revision-Date: 2009-10-07 15:13+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -290,16 +290,6 @@ msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr ""
 "'topic' sollte ein Name, ein Zeichenkettenvektor der Länge 1 oder ein "
 "reserviertes Word sein"
-
-msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
-msgstr "offline = TRUE ist veraltet: nutzen sie help_type=\"postscript\""
-
-msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
-msgstr ""
-"chmhelp = TRUE ist nicht mehr unterstützt: nutzen Sie help_type = \"text\""
-
-msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
-msgstr "htmlhelp = TRUE ist veraltet: nutzen sei help_type = \"html\""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr "Keine Dokumentation für '%s' in angegebenen Paketen und Bibliotheken:"
@@ -927,12 +917,6 @@ msgstr "keine Downloadmethode gefunden"
 msgid "download had nonzero exit status"
 msgstr "Download hatte Exit-Status ungleich 0"
 
-msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr "Nutze ungelinktes HTML Datei: Hyperlinks evtl. falsch"
-
-msgid "options(\"browser\") not set"
-msgstr "options(\"browser\") nicht gesetzt"
-
 msgid "running '%s' failed"
 msgstr "Ausführen von '%s' fehlgeschlagen"
 
@@ -1054,6 +1038,22 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "Paket '%s' wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete '%s' werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
+#~ msgstr "offline = TRUE ist veraltet: nutzen sie help_type=\"postscript\""
+
+#~ msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
+#~ msgstr ""
+#~ "chmhelp = TRUE ist nicht mehr unterstützt: nutzen Sie help_type = \"text\""
+
+#~ msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
+#~ msgstr "htmlhelp = TRUE ist veraltet: nutzen sei help_type = \"html\""
+
+#~ msgid "Using non-linked HTML file: hyperlinks may be incorrect"
+#~ msgstr "Nutze ungelinktes HTML Datei: Hyperlinks evtl. falsch"
+
+#~ msgid "options(\"browser\") not set"
+#~ msgstr "options(\"browser\") nicht gesetzt"
 
 #~ msgid "'%s' has a help file but no examples"
 #~ msgstr "'%s' hat eine Hilfe, aber keine Beispiele"

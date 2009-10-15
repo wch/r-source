@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-10-15 08:58\n"
 "PO-Revision-Date: 2009-10-09 09:12+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -286,18 +286,6 @@ msgstr ""
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
 msgstr " 'topic'は名前、長さ１の文字列、または予約語でなければなりません "
-
-msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
-msgstr ""
-" offline=TRUEは推奨されません: help_type=\"postscript\"を使ってください "
-
-msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
-msgstr ""
-" chmhelp=TRUEはもうサポートされていません: help_type=\"text\"を使ってくださ"
-"い "
-
-msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
-msgstr " htmhelp=TRUEは推奨されません: help_type=\"html\"を使ってください "
 
 msgid "No documentation for '%s' in specified packages and libraries:"
 msgstr ""
@@ -948,12 +936,6 @@ msgstr " ダウンロードの方法が見付かりません "
 msgid "download had nonzero exit status"
 msgstr " ダウンロードはゼロ以外の終了状態を持ちました "
 
-msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr " リンクなしHTMLを使います: ハイパーリンクは壊れています "
-
-msgid "options(\"browser\") not set"
-msgstr " options(\"browser\") が設定されていません "
-
 msgid "running '%s' failed"
 msgstr " '%s'の実行に失敗しました "
 
@@ -1068,6 +1050,24 @@ msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリで�
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
+#~ msgstr ""
+#~ " offline=TRUEは推奨されません: help_type=\"postscript\"を使ってください "
+
+#~ msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
+#~ msgstr ""
+#~ " chmhelp=TRUEはもうサポートされていません: help_type=\"text\"を使ってくだ"
+#~ "さい "
+
+#~ msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
+#~ msgstr " htmhelp=TRUEは推奨されません: help_type=\"html\"を使ってください "
+
+#~ msgid "Using non-linked HTML file: hyperlinks may be incorrect"
+#~ msgstr " リンクなしHTMLを使います: ハイパーリンクは壊れています "
+
+#~ msgid "options(\"browser\") not set"
+#~ msgstr " options(\"browser\") が設定されていません "
 
 #~ msgid "'%s' has a help file but no examples"
 #~ msgstr " '%s' にはヘルプファイルはありますが、実行例はありません "
