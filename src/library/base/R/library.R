@@ -36,13 +36,28 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     paste0 <- function(...) paste(..., sep="")
     testRversion <- function(pkgInfo, pkgname, pkgpath)
     {
+        if(is.null(built <- pkgInfo$Built))
+            stop(gettextf("package '%s' has not been installed properly\n", pkgname),
+                 call. = FALSE, domain = NA)
+
+        ## which version was this package built under?
+        ## must be >= 2.10.0 (new help system)
+        R_version_built_under <- as.numeric_version(built$R)
+        if(R_version_built_under < "2.10.0")
+            stop(gettextf("package '%s' was built before R 2.10.0: please re-install it",
+                          pkgname), call. = FALSE, domain = NA)
+        ## check that this was not under pre-2.10.0,
+        ## but beware of bootstrapping base packages
+        if(file.exists(file.path(pkgpath, "help")) &&
+           !file.exists(file.path(pkgpath, "help", "paths.rds")))
+            warning(gettextf("package '%s' claims to be built under R version %s but is missing some help files and needs to be re-installed",
+                             pkgname, as.character(built$R)),
+                    call. = FALSE, domain = NA)
+
         current <- getRversion()
         ## depends on R version?
-        ## If installed >= 2.7.0 it will have Rdepends2
-        ## Otherwise Rdepends, which this NULL or of length 1
-        ## (installed < 2.6.0 only) or
-        ## length 3 with valid components was checked at INSTALL time.
-       if(length(Rdeps <- pkgInfo$Rdepends2)) {
+        ## as it was installed >= 2.7.0 it will have Rdepends2
+        if(length(Rdeps <- pkgInfo$Rdepends2)) {
             for(dep in Rdeps)
                 if(length(dep) > 1L) {
                     target <- as.numeric_version(dep$version)
@@ -52,59 +67,32 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                       current, pkgname, dep$op, target),
                              call. = FALSE, domain = NA)
                 }
-        } else if(length(Rdeps <- pkgInfo$Rdepends) > 1L) {
-            target <- as.numeric_version(Rdeps$version)
-            res <- eval(parse(text=paste("current", Rdeps$op, "target")))
-            if(!res)
-                stop(gettextf("This is R %s, package '%s' needs %s %s",
-                             current, pkgname, Rdeps$op, target),
+        }
+        ## warn if installed under a later version of R
+        if(R_version_built_under > current)
+            warning(gettextf("package '%s' was built under R version %s",
+                             pkgname, as.character(built$R)),
+                    call. = FALSE, domain = NA)
+        if(.Platform$OS.type == "unix") {
+            platform <- built$Platform
+            r_arch <- .Platform$r_arch
+            ## allow mismatches if r_arch is in use, e.g.
+            ## i386-gnu-linux vs x86-gnu-linux depending on
+            ## build system.
+            if(!nzchar(r_arch) && length(grep("\\w", platform)) &&
+               !testPlatformEquivalence(platform, R.version$platform))
+                stop(gettextf("package '%s' was built for %s",
+                              pkgname, platform),
                      call. = FALSE, domain = NA)
-        }
-        ## which version was this package built under?
-        if(!is.null(built <- pkgInfo$Built)) {
-            ## must be >= 2.10.0 (new help system)
-            R_version_built_under <- as.numeric_version(built$R)
-            if(R_version_built_under < "2.10.0")
-                stop(gettextf("package '%s' was built before R 2.10.0: please re-install it",
-                              pkgname), call. = FALSE, domain = NA)
-            ## check that this was not under pre-2.10.0, but beware
-            ## of bootstrapping standard packages
-            if(file.exists(file.path(pkgpath, "help")) &&
-               !file.exists(file.path(pkgpath, "help", "paths.rds")))
-                warning(gettextf("package '%s' claims to be built under R version %s but is missing some help files and needs to be re-installed",
-                                 pkgname, as.character(built$R)),
-                        call. = FALSE, domain = NA)
-            ## warn if installed under a later version of R
-            if(R_version_built_under > current)
-                warning(gettextf("package '%s' was built under R version %s",
-                                 pkgname, as.character(built$R)),
-                        call. = FALSE, domain = NA)
-            if(.Platform$OS.type == "unix") {
-                platform <- built$Platform
-                r_arch <- .Platform$r_arch
-                ## allow mismatches if r_arch is in use, e.g.
-                ## i386-gnu-linux vs x86-gnu-linux depending on
-                ## build system.
-		if(!nzchar(r_arch) && length(grep("\\w", platform)) &&
-                   !testPlatformEquivalence(platform, R.version$platform))
-                    stop(gettextf("package '%s' was built for %s",
-                                  pkgname, platform),
-                         call. = FALSE, domain = NA)
-                ## if using r_arch subdirs, check for presence
-                if(nzchar(r_arch)
-                   && file.exists(file.path(pkgpath, "libs"))
-                   && !file.exists(file.path(pkgpath, "libs", r_arch)))
-                    stop(gettextf("package '%s' is not installed for 'arch=%s'",
-                                  pkgname, r_arch),
-                         call. = FALSE, domain = NA)
+            ## if using r_arch subdirs, check for presence
+            if(nzchar(r_arch)
+               && file.exists(file.path(pkgpath, "libs"))
+               && !file.exists(file.path(pkgpath, "libs", r_arch)))
+                stop(gettextf("package '%s' is not installed for 'arch=%s'",
+                              pkgname, r_arch),
+                     call. = FALSE, domain = NA)
 
-            }
         }
-        else
-            stop(gettextf("package '%s' has not been installed properly\n",
-                          pkgname),
-                 gettext("See the Note in ?library"),
-                 call. = FALSE, domain = NA)
     }
 
     checkNoGenerics <- function(env, pkg)
@@ -172,9 +160,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                               domain = NA)
                     }
 		    packageStartupMessage(paste(
-				"\n\tThe following object(s) are masked",
-				if (i < lib.pos) "_by_" else "from", sp[i],
-				":\n\n\t", paste(same, collapse=",\n\t "), "\n"))
+                                                "\n\tThe following object(s) are masked",
+                                                if (i < lib.pos) "_by_" else "from", sp[i],
+                                                ":\n\n\t", paste(same, collapse=",\n\t "), "\n"))
                 }
             }
         }
@@ -245,7 +233,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 } else pos <- npos
             }
             .getRequiredPackages2(pkgInfo)
-#                .getRequiredPackages2(pkgInfo, lib.loc = lib.loc)
+                                        #                .getRequiredPackages2(pkgInfo, lib.loc = lib.loc)
             ## If the name space mechanism is available and the package
             ## has a name space, then the name space loading mechanism
             ## takes over.
@@ -284,9 +272,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             }
 
             ## non-namespace branch
-            dependsMethods <- "methods" %in% names(pkgInfo$Depends)
-            if(dependsMethods && pkgInfo$Built$R < "2.4.0")
-                stop("package was installed prior to 2.4.0 and must be re-installed")
             codeFile <- file.path(which.lib.loc, package, "R", package)
             ## create environment (not attached yet)
             loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
@@ -362,7 +347,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     else if(!missing(help)) {
 	if(!character.only)
 	    help <- as.character(substitute(help))
-        pkgName <- help[1L]              # only give help on one package
+        pkgName <- help[1L]            # only give help on one package
         pkgPath <- .find.package(pkgName, lib.loc, verbose = verbose)
         docFiles <- c(file.path(pkgPath, "Meta", "package.rds"),
                       file.path(pkgPath, "INDEX"))
@@ -402,7 +387,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                        ")")))
                 else NULL
             } else
-                readLines(f)
+            readLines(f)
         }
         for(i in which(file.exists(docFiles)))
             pkgInfo[[i]] <- readDocFile(docFiles[i])

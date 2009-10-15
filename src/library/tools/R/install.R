@@ -1647,6 +1647,8 @@
     MM <- M[re(M[, 1L]), 1:2]
     write.table(MM, file.path(outman, "AnIndex"),
                 quote = FALSE, row.names = FALSE, col.names = FALSE, sep = "\t")
+    a <- structure(MM[, 2L], names=MM[, 1L])
+    .saveRDS(a, file.path(outman, "aliases.rds"))
 
     ## no HTML indices if no help pages?
     outman <- file.path(outDir, "html")

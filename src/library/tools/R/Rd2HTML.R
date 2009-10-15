@@ -284,7 +284,8 @@ Rd2HTML <-
                 pkg_regexp <- paste("^../../", package, "/html/", sep = "")
                 if (grepl(pkg_regexp, htmlfile)) {
                     htmlfile <- sub(pkg_regexp, "", htmlfile)
-                } else writeHref()
+                }
+                writeHref()
             }
     	} else {
             ## ----------------- \link[pkg]{file} and \link[pkg:file]{bar}

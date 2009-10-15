@@ -294,32 +294,30 @@ loadNamespace <- function (package, lib.loc = NULL,
         }
 
         ## create namespace; arrange to unregister on error
-        ## <FIXME>
         ## Can we rely on the existence of R-ng 'nsInfo.rds' and
         ## 'package.rds'?
-        ## No, not during Unix builds of standard packages
-        nsInfoFilePath <- file.path(pkgpath, "Meta", "nsInfo.rds")
+        ## No, not during builds of standard packages
+        ## stats4 depends on methods, but exports do not matter
+        ## whilst it is being built on Unix
+       nsInfoFilePath <- file.path(pkgpath, "Meta", "nsInfo.rds")
         nsInfo <- if(file.exists(nsInfoFilePath)) .readRDS(nsInfoFilePath)
         else parseNamespaceFile(package, package.lib, mustExist = FALSE)
 
         pkgInfoFP <- file.path(pkgpath, "Meta", "package.rds")
         if(file.exists(pkgInfoFP)) {
             pkgInfo <- .readRDS(pkgInfoFP)
-            version <- pkgInfo$DESCRIPTION["Version"]
+            if(is.null(built <- pkgInfo$Built))
+                stop(gettextf("package '%s' has not been installed properly\n", pkgname),
+                     call. = FALSE, domain = NA)
+            R_version_built_under <- as.numeric_version(built$R)
+            if(R_version_built_under < "2.10.0")
+                stop(gettextf("package '%s' was built before R 2.10.0: please re-install it",
+                              pkgname), call. = FALSE, domain = NA)
             ## we need to ensure that S4 dispatch is on now if the package
             ## will require it, or the exports will be incomplete.
             dependsMethods <- "methods" %in% names(pkgInfo$Depends)
-            if(dependsMethods && pkgInfo$Built$R < "2.4.0")
-                stop("package was installed prior to 2.4.0 and must be re-installed")
             if(dependsMethods) loadNamespace("methods")
-        } else {
-            version <- read.dcf(file.path(pkgpath, "DESCRIPTION"),
-                                fields = "Version")
-            ## stats4 depends on methods, but exports do not matter
-            ## whilst it is being built on Unix
-            dependsMethods <- FALSE
         }
-        ## </FIXME>
         ns <- makeNamespace(package, version = version, lib = package.lib)
         on.exit(.Internal(unregisterNamespace(package)))
 
