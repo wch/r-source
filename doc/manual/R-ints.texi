@@ -2478,7 +2478,7 @@ results as @samp{@var{pkgname}::@var{topic}}) and @samp{Encoding}.
 File @file{links.rds} records a named character vector, the names being
 aliases and the values character strings of the form
 @example
-"../../@var{pkgname}/html/@var{filename}.Rd"
+"../../@var{pkgname}/html/@var{filename}.html"
 @end example
 
 File @file{data.rds} records a two-column character matrix with columns
