@@ -116,12 +116,15 @@ function(topic, package = NULL, lib.loc = NULL,
 print.help_files_with_topic <-
 function(x, ...)
 {
-    if (.Platform$GUI == "AQUA") {
-        .Internal(aqua.custom.print("help-files", x))
-	return(invisible(x))
-    }
+    browser <- getOption("browser")
     topic <- attr(x, "topic")
     type <- attr(x, "type")
+    if (.Platform$GUI == "AQUA" && type == "html") {
+        browser <- function(x, ...) {
+            .Internal(aqua.custom.print("help-files", x))
+    	    return(invisible(x))
+        }
+    }
     paths <- as.character(x)
     if(!length(paths)) {
         writeLines(c(gettextf("No documentation for '%s' in specified packages and libraries:",
@@ -161,7 +164,7 @@ function(x, ...)
             out <- c(out, "</table>\n</p>\n<hr>\n</body></html>")
             writeLines(out, file.path(path, "all.available.html"))
             browseURL(paste("http://127.0.0.1:", tools:::httpdPort,
-                            "/doc/html/all.available.html", sep=""))
+                            "/doc/html/all.available.html", sep=""), browser)
         } else {
             writeLines(c(strwrap(msg), "",
                          paste(" ",
@@ -173,7 +176,7 @@ function(x, ...)
         if(length(paths) > 1L) {
             if (type == "html" && tools:::httpdPort > 0L) { # Redo the search if dynamic help is running
 		browseURL(paste("http://127.0.0.1:", tools:::httpdPort,
-                                "/library/NULL/help/", topic, sep=""))
+                                "/library/NULL/help/", topic, sep=""), browser)
 		return(invisible(x))
 	    }
             file <- paths[1L]
@@ -216,7 +219,7 @@ function(x, ...)
 		pkgname <- basename(dirpath)
 		browseURL(paste("http://127.0.0.1:", tools:::httpdPort,
                                 "/library/", pkgname, "/html/", basename(file),
-                                sep=""))
+                                sep=""), browser)
             } else {
                 warning("HTML help is unavailable", call. = FALSE)
                 att <- attributes(x)
