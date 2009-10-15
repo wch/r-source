@@ -1294,8 +1294,8 @@ the cache.  @code{CHARSXP}s reloaded from the @code{save} formats of
 few examples still exist).  Prior to @R{} 2.8.0, @code{CHARSXP}s were
 used to hold the finalizer function of a C finalizer (uncached) -- now
 @code{RAWSXP}s are used.  Finally, user code could create uncached
-@code{CHARSXP}s via @code{allocString} (removed in @R 2.8.0) and
-@code{allocVector(CHARSXP ...)} (deprecated in @R 2.8.0, removed in @R{}
+@code{CHARSXP}s via @code{allocString} (removed in @R{} 2.8.0) and
+@code{allocVector(CHARSXP ...)} (deprecated in @R{} 2.8.0, removed in @R{}
 2.9.0).
 
 @findex mkCharLenCE
@@ -1884,8 +1884,8 @@ compiling the @R{} sources on Windows.
 @node Lazy loading,  , Visibility, R Internal Structures
 @section Lazy loading
 
-Lazy loading was introduced in @R 2.0.0, for code in packages and for
-datasets in packages (both are optional).  When a packages/name space
+Lazy loading was introduced in @R{} 2.0.0, for code in packages and for
+datasets in packages (both are optional).  When a package/name space
 which uses it is loaded, the package/name space environment is populated
 with promises for all the named objects: when these promises are
 evaluated they load the actual code from a database.
@@ -1911,7 +1911,7 @@ file.  Element @code{variables} has an entry for each named object:
 environments are added to the database.  @code{compressed} is a logical
 indicating if the serialized objects were compressed: compression is
 always used nowadays. @R{} 2.10.0 adds the values @code{compressed = 2}
-and @code{3} for @command{bzip2} and @command{xv} compression (with the
+and @code{3} for @command{bzip2} and @command{xz} compression (with the
 possibility of future expansion to other methods): these formats add a
 fifth byte to the header for the type of compression, and stores
 serialized objects uncompressed if compression expands them.
@@ -2509,8 +2509,8 @@ of a would-be writer of a graphics device.
 There are two types used internally which are pointers to structures
 related to graphics devices.
 
-The @code{DevDesc} type@footnote{@code{NewDevDesc} from @R 1.4.0,
-renamed in @R 2.8.0.} is a structure defined in the header file
+The @code{DevDesc} type@footnote{@code{NewDevDesc} from @R{} 1.4.0,
+renamed in @R{} 2.8.0.} is a structure defined in the header file
 @file{R_ext/GraphicsDevice.h} (which is included by
 @file{R_ext/GraphicsEngine.h}).  This describes the physical
 characteristics of a device, the capabilities of the device driver and
@@ -2937,7 +2937,7 @@ low coverage apart from a few monospaced fonts in a few sizes (which are
 not suitable for graph annotation), and where glyphs are missing what is
 plotted is often quite unsatisfactory.
 
-The approach being taken for @R 2.7.0 is to make use of more modern
+The approach being taken for @R{} 2.7.0 is to make use of more modern
 toolkits, namely @code{cairo} for rendering and @code{Pango} for font
 management---because these are associated with @code{Gtk+2} they are
 widely available.  Cairo supports translucent colours and alpha-blending
