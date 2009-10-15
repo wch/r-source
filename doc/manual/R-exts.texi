@@ -4326,7 +4326,30 @@ Differences from version 1.1 include
 
 @item
 @code{%} never escapes the newline: it used to in text-like modes but
-not in e.g.@: @code{\usage} and @code{\examples} sections.
+not in e.g.@: @code{\usage} and @code{\examples} sections.  This means
+that constructions like
+@example
+\deqn@{
+  latex version
+@}@{%
+  text version
+@}
+@end example
+
+@noindent
+are rendered in text conversion with an extra line, and
+inter-line comments like
+
+@example
+  \item@{x, y@}@{logical (or \dQuote@{number-like@}, i.e., of type
+    \code@{\link@{double@}@} (class \code@{\link@{numeric@}@}), \code@{\link@{integer@}@},
+    %% incl. factor
+    \code@{\link@{complex@}@} or \code@{\link@{raw@}@}) vectors, or objects for
+    which methods have been written.@}
+@end example
+
+@noindent
+start a new paragraph.
 
 @item
 Unmatched right braces are an error, not just a warning.
@@ -4345,6 +4368,10 @@ balance.  Use @code{\verb} (only in @R{} 2.10.0 or later) or @code{\samp} or
 
 @item
 @code{\preformatted} is verbatim, so @code{\var} is not interpreted.
+
+@item
+Both arguments of @code{\dean} and @code{\eqn} are verbatim, so for
+example @code{\code} is not rendered there.
 
 @end itemize
 

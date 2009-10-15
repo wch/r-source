@@ -70,6 +70,10 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   links are looked in them in turn, so lazy-evaluation can be used to
   only do a second-level search for links if required.
   
+  \code{Rd2txt} will format text paragraphs to a width determined by
+  \code{\link{options}("width")}, with appropriate margins.  This
+  differs from the rendering in versions of \R < 2.10.0.
+  
   \code{Rd2txt} will use directional quotes (see \code{\link{sQuote}})
   if option \code{"useFancyQuotes"} is true (the default) and
 #ifdef unix
