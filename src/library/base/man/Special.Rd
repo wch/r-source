@@ -49,8 +49,7 @@ lfactorial(x)
 \details{
   The functions \code{beta} and \code{lbeta} return the beta function
   and the natural logarithm of the beta function,
-  \deqn{B(a,b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}.}{%
-    B(a,b) = (Gamma(a)Gamma(b))/(Gamma(a+b)).}
+  \deqn{B(a,b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}.}{B(a,b) = (Gamma(a)Gamma(b))/(Gamma(a+b)).}
   The formal definition is
   \deqn{B(a, b) = \int_0^1 t^{a-1} (1-t)^{b-1} dt}{integral_0^1 t^(a-1) (1-t)^(b-1) dt}
   (Abramowitz and Stegun section 6.2.1, page 258).  Note that it is only
@@ -73,8 +72,7 @@ lfactorial(x)
   \code{psigamma(x, deriv)} (\code{deriv >= 0}) computes the
   \code{deriv}-th derivative of \eqn{\psi(x)}.
   \deqn{\code{digamma(x)} = \psi(x) = \frac{d}{dx}\ln\Gamma(x) =
-    \frac{\Gamma'(x)}{\Gamma(x)}}{%
-    \code{digamma(x)} = psi(x) = d/dx {ln Gamma(x)} = Gamma'(x) / Gamma(x)}
+    \frac{\Gamma'(x)}{\Gamma(x)}}{digamma(x) = psi(x) = d/dx{ln Gamma(x)} = Gamma'(x) / Gamma(x)}
   This is often called the \sQuote{polygamma} function, e.g. in
   Abramowitz and Stegun (section 6.4.1, page 260); and its higher
   derivatives (\code{deriv = 2:4}) have occasionally been called

@@ -1,14 +1,12 @@
 % File src/library/stats/man/summary.lm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{summary.lm}
 \alias{summary.lm}
-% \alias{summary.lm.null}
 \alias{summary.mlm}% mlm is *not* mentioned at all
 \alias{print.summary.lm}
-% \alias{print.summary.lm.null}
 \title{Summarizing Linear Model Fits}
 \usage{
 \method{summary}{lm}(object, correlation = FALSE, symbolic.cor = FALSE, \dots)
@@ -58,8 +56,7 @@
     coefficients are aliased.} 
   \item{sigma}{the square root of the estimated variance of the random
     error
-    \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{w_i R_i^2},}{%
-      sigma^2 = 1/(n-p) Sum(w[i] R[i]^2),}
+    \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{w_i R_i^2},}{sigma^2 = 1/(n-p) Sum(w[i] R[i]^2),}
     where \eqn{R_i}{R[i]} is the \eqn{i}-th residual, \code{residuals[i]}.}
   \item{df}{degrees of freedom, a 3-vector \eqn{(p, n-p, p*)}, the last
     being the number of non-aliased coefficients.}
@@ -68,8 +65,7 @@
     its numerator and denominator degrees of freedom.}
   \item{r.squared}{\eqn{R^2}, the \sQuote{fraction of variance explained by
     the model},
-    \deqn{R^2 = 1 - \frac{\sum_i{R_i^2}}{\sum_i(y_i- y^*)^2},}{%
-      R^2 = 1 - Sum(R[i]^2) / Sum((y[i]- y*)^2),}
+    \deqn{R^2 = 1 - \frac{\sum_i{R_i^2}}{\sum_i(y_i- y^*)^2},}{R^2 = 1 - Sum(R[i]^2) / Sum((y[i]- y*)^2),}
     where \eqn{y^*}{y*} is the mean of \eqn{y_i}{y[i]} if there is an
     intercept and zero otherwise.}
   \item{adj.r.squared}{the above \eqn{R^2} statistic

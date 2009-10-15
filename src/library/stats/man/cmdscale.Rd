@@ -1,6 +1,6 @@
 % File src/library/stats/man/cmdscale.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{cmdscale}
@@ -54,13 +54,12 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   \item{x}{the doubly centered distance matrix if \code{x.ret} is true.}
   \item{GOF}{a numeric vector of length 2, equal to say
     \eqn{(g_1,g_2)}{(g.1,g.2)}, where
-    \eqn{g_i = (\sum_{j=1}^k \lambda_j)/ (\sum_{j=1}^n T_i(\lambda_j))}{%
-         g.i = (sum{j=1..k} lambda[j]) / (sum{j=1..n} T.i(lambda[j]))}, where
-       \eqn{\lambda_j}{lambda[j]} are the eigenvalues (sorted
-       decreasingly),
-       \eqn{T_1(v) = \left| v \right|}{T.1(v) = abs(v)}, and
-       \eqn{T_2(v) = max( v, 0 )}{T.2(v) = max(v, 0)}.
-     }
+    \eqn{g_i = (\sum_{j=1}^k \lambda_j)/ (\sum_{j=1}^n T_i(\lambda_j))}{g.i = (sum{j=1..k} lambda[j]) / (sum{j=1..n} T.i(lambda[j]))},
+    where \eqn{\lambda_j}{lambda[j]} are the eigenvalues (sorted
+    decreasingly),
+    \eqn{T_1(v) = \left| v \right|}{T.1(v) = abs(v)}, and
+    \eqn{T_2(v) = max( v, 0 )}{T.2(v) = max(v, 0)}.
+  }
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

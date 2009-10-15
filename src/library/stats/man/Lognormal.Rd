@@ -1,6 +1,6 @@
 % File src/library/stats/man/Lognormal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Lognormal}
@@ -51,11 +51,10 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   deviation of the logarithm.
   The mean is \eqn{E(X) = exp(\mu + 1/2 \sigma^2)},
   the median is \eqn{med(X) = exp(\mu)}, and the variance
-  \eqn{Var(X) = exp(2\mu + \sigma^2)(exp(\sigma^2) - 1)}{%
-    Var(X) = exp(2*mu + sigma^2)*(exp(sigma^2) - 1)} and
-  hence the coefficient of variation is
+  \eqn{Var(X) = exp(2\mu + \sigma^2)(exp(\sigma^2) - 1)}{Var(X) = exp(2*mu + sigma^2)*(exp(sigma^2) - 1)}
+  and hence the coefficient of variation is
   \eqn{\sqrt{exp(\sigma^2) - 1}}{sqrt(exp(sigma^2) - 1)} which is
-    approximately \eqn{\sigma} when that is small (e.g., \eqn{\sigma < 1/2}).
+  approximately \eqn{\sigma} when that is small (e.g., \eqn{\sigma < 1/2}).
 }
 %% Mode = exp(max(0, mu - sigma^2))
 \note{

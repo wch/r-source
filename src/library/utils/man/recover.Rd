@@ -52,7 +52,7 @@ recover()
 
 \section{Compatibility Note}{
   The \R \code{recover} function can be used in the same way as the
-  S-Plus function of the same name; therefore, the error option shown is
+  S function of the same name; therefore, the error option shown is
   a compatible way to specify the error action.  However, the actual
   functions are essentially unrelated and interact quite differently
   with the user.  The navigating commands \code{up} and \code{down} do

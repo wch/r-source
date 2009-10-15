@@ -1,6 +1,6 @@
 % File src/library/stats/man/Multinomal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Multinom}
@@ -34,8 +34,7 @@ dmultinom(x, size = NULL, prob, log = FALSE)
 \details{
   If \code{x} is a $K$-component vector, \code{dmultinom(x, prob)} is
   the probability
-  \deqn{P(X_1=x_1,\ldots,X_K=x_k) = C \times \prod_{j=1}^K \pi_j^{x_j}}{%
-    P(X[1]=x[1],\ldots,X[K]=x[k]) = C * prod(j=1,..,K) p[j]^x[j]}
+  \deqn{P(X_1=x_1,\ldots,X_K=x_k) = C \times \prod_{j=1}^K \pi_j^{x_j}}{P(X[1]=x[1],\ldots,X[K]=x[k]) = C * prod(j=1,..,K) p[j]^x[j]}
   where \eqn{C} is the \sQuote{multinomial coefficient}
   \eqn{C = N! / (x_1! \cdots x_K!)}{C = N! / (x[1]! * \dots * x[K]!)}
   and \eqn{N = \sum_{j=1}^K x_j}{N = sum(j=1,..,K) x[j]}.
@@ -48,10 +47,9 @@ dmultinom(x, size = NULL, prob, log = FALSE)
   \eqn{n_1 = N}{n[1] = N} (N := \code{size}),
   \eqn{P_1 = \pi_1}{P[1] = p[1]} (\eqn{\pi}{p} is \code{prob} scaled to sum 1),
   and for \eqn{j \ge 2}{j >= 2}, recursively
-  \eqn{n_j = N - \sum_{k=1}^{j-1} n_k}{%
-    n[j]= N - sum(k=1, .., j-1) n[k]} and
-  \eqn{P_j = \pi_j / (1 - \sum_{k=1}^{j-1} \pi_k)}{%
-    P[j]= p[j] / (1 - sum(p[1:(j-1)]))}.
+  \eqn{n_j = N - \sum_{k=1}^{j-1} n_k}{n[j] = N - sum(k=1, .., j-1) n[k]}
+  and
+  \eqn{P_j = \pi_j / (1 - \sum_{k=1}^{j-1} \pi_k)}{P[j] = p[j] / (1 - sum(p[1:(j-1)]))}.
 }
 \value{
   For \code{rmultinom()},
