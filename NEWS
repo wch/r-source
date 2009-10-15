@@ -530,7 +530,7 @@ COMPRESSION
 	can also read files compressed by some versions of 'lzma'.)
 
     o	gzfile() looks at the file header and so can now also read
-	bzip2-ed files and xv-compressed files.
+	bzip2-ed files and xz-compressed files.
 
     o	There are the new options of save(compress = "bzip2") and "xz"
 	to use bzip2 or xz compression (which will be slower, but can
@@ -556,7 +556,7 @@ COMPRESSION
 	particularly effective for 'survival'.)
 
     o	file() for open = "", "r" or "rt" will automagically detect
-	compressed files (from gzip, bzip2 or xv).  This means that
+	compressed files (from gzip, bzip2 or xz).  This means that
 	compressed files can be specified by file name (rather than
 	via a gzfile() connection) to read.table(), readlines(),
 	scan() and so on.
