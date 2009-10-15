@@ -69,6 +69,7 @@ The current version of this document is @value{VERSION}.
 * R Internal Structures::       
 * .Internal vs .Primitive::     
 * Internationalization in the R sources::  
+* Package Structure::           
 * Graphics Devices::            
 * Tools::                       
 * R coding standards::          
@@ -1779,10 +1780,10 @@ and @code{libtiff} libraries.
 for saving on-screen graphs to those formats. This is technically
 optional, and needs source code not in the tarball.
 
-@item @file{Rchtml.dll}
-(Windows only, up to @R{} 2.9.x.)  A link to an ActiveX control that
-displays Compiled @HTML{} help.  This is optional, and only compiled if
-CHTML is specified.
+@c @item @file{Rchtml.dll}
+@c (Windows only, up to @R{} 2.9.x.)  A link to an ActiveX control that
+@c displays Compiled @HTML{} help.  This is optional, and only compiled if
+@c CHTML is specified.
 
 @c @item @file{iconv.dll}
 @c (Windows only.)  A DLL compiled via Visual C++ which contains the
@@ -2233,8 +2234,7 @@ this can fail for other reasons).  However, there is no certain way to
 know that if other @code{.Internal} or primitive functions are not
 internally generic except by reading the source code.
 
-
-@node Internationalization in the R sources, Graphics Devices, .Internal vs .Primitive, Top
+@node Internationalization in the R sources, Package Structure, .Internal vs .Primitive, Top
 @chapter Internationalization in the R sources
 
 The process of marking messages (errors, warnings etc) for translation
@@ -2362,7 +2362,160 @@ This is handled separately: see
 
 See @file{po/README} for how to update the message templates and catalogs.
 
-@node Graphics Devices, Tools, Internationalization in the R sources, Top
+@node Package Structure, Graphics Devices, Internationalization in the R sources, Top
+@chapter Structure of an Installed Package
+
+@menu
+* Metadata::                    
+* Help::                        
+@end menu
+
+The structure of a @emph{source} packages is described in @ref{Creating
+R packages, , Creating R packages, R-exts, Writing R Extensions}: this
+chapter is concerned with the structure of @emph{installed} packages.
+
+The description here is for @R{} 2.10.0 and later: the way help was
+installed differed in earlier versions.
+
+An installed package has a top-level file @file{DESCRIPTION}, a copy of
+the file of that name in the package sources with a @samp{Built} field
+appended, and file @file{INDEX}, usually describing the objects on which
+help is available, a file @file{NAMESPACE} is the package has a name
+space, files such as @file{CITATION}, @file{LICENCE} and @file{NEWS},
+and any other files copied in from @file{inst}.  It will have
+directories @file{Meta}, @file{help} and @file{html} (even if the
+package has no help), almost always has a directory @file{R} and often
+has a directory @file{libs} to contain compiled code.  Other
+directories with known meaning to @R{} are @file{data}, @file{demo},
+@file{doc} and @file{po}.
+
+Function @code{library} looks for a name space and if one is found
+passes control to @code{loadNamespace}.  Then @code{library} or
+@code{loadNamespace} looks for file @file{R/@var{pkgname}}, warns if it
+is not found and otherwise sources the code (using @code{sys.source})
+into the package's environment, then lazy-load a database
+@file{R/sysdata} if present.  So how @R{} code gets loaded depends on
+the contents of  @file{R/@var{pkgname}}: standard templates to load
+lazy-load databases are provided in @file{share/R/[ns]packloader.R}.
+
+How (and if) compiled code is loaded is down to the package's start-code
+such as @code{.First.lib} or @code{.onLoad}, although a @code{useDynlib}
+directive in a name space provides an alternative.
+Conventionally compiled code is loaded by a call to
+@code{library.dynam} and this looks in directory @file{libs} (and in an
+appropriate sub-directory if sub-architectures are in use) for a shared
+object (Unix-alike) or DLL (Windows).
+
+Subdirectory @file{data} serves two purposes. In a package using
+lazy-loading of data, it contains a lazy-load database @file{Rdata},
+plus a file @file{Rdata.rds} which contain a named character vector used
+by @code{data} in the (unusual) event that it is used for such a
+package.  Otherwise it is copy of the @file{data} directory in the
+sources, with saved images re-compressed if @command{R CMD INSTALL
+--resave-data} was used.  If @command{R CMD INSTALL --use-data-zip} was
+specified or selected @emph{via} @option{--auto-zip}, the contents of
+the directory are moved to a zip file @file{Rdata.zip} and a listing
+written in file @file{filelist}.
+
+Subdirectory @file{demo} supports the @code{demo} function, and is
+copied from the sources.
+
+Subdirectory @file{po} contains (in subdirectories) compiled message
+catalogs.
+
+@node Metadata, Help, Package Structure, Package Structure
+@section Metadata
+
+Directory @file{Meta} contains several files in @code{.rds} format, that
+is saved @R{} objects.  All packages have @file{Rd.rds},
+@file{hsearch.rds}, @file{links.rds} and @file{package.rds}.  Packages
+with name spaces have a file @file{nsInfo.rds}, and those with data,
+demos or vignettes have @file{data.rds}, @file{demo.rds} or
+@file{vignette.rds} files.
+
+The structure of these files (and their existence and names) is private
+to @R{}, so the description here is for those trying to follow the @R{}
+sources: there should be no reference to these files in non-base
+packages.
+
+File @file{package.rds} is a dump of information extracted from the
+@file{DESCRIPTION} file. It is a list of several components.  The first,
+@samp{DESCRIPTION}, is a character vector, the @file{DESCRIPTION} file
+as read by @code{read.dcf}.  Further elements @samp{Depends},
+@samp{Suggests}, @samp{Imports}, @samp{Rdepends} and @samp{Rdepends2}
+record the @samp{Depends}, @samp{Suggests} and @samp{Imports} fields.
+These are all lists, and can be empty.  The first three have an entry
+for each package named, each entry being a list of length 1 or 3, which
+element @samp{name} (the package name) and optional elements @samp{op}
+(a character string) and @samp{version} (an object of class
+@samp{"package_version"}).  Element @samp{Rdepends} is used for the
+first version dependency on @R{}, and @samp{Rdepends2} is a list of zero
+or more @R{} version dependencies---each is a three-element list of the
+form described for packages.  Element @samp{Rdepends} is no longer used,
+but it is still needed so @R{} < 2.7.0 can detect that the package was not
+installed for it.
+
+File @file{nsInfo.rds} records a list, a parsed version of the
+@file{NAMESPACE} file.
+
+File @file{Rd.rds} records a data frame with one row for each help file.
+The (character) columns are @samp{File} (the file name with extension),
+@samp{Name} (the @samp{\name} section), @samp{Type} (from the optional
+@samp{\docType} section), @samp{Title}, @samp{Encoding}, @samp{Aliases},
+@samp{Concepts} and @samp{Keywords}.  The last three are character
+strings with zero or more entries separated by @samp{, }.
+
+File @file{hsearch.rds} records the information to be used by
+@samp{help.search}.  This is a list of four unnamed elements which are
+character vectors for help files, aliases, keywords and concepts.  All
+the matrices have columns @samp{ID} and @samp{Package} which are used to
+tie the aliases, keywords and concepts (the remaining column of the last
+three elements) to a particular help file.  The first element has
+further columns @samp{LibPath} (empty since @R{} 2.3.0), @samp{name},
+@samp{title}, @samp{topic} (the first alias, used when presenting the
+results as @samp{@var{pkgname}::@var{topic}}) and @samp{Encoding}.
+
+File @file{links.rds} records a named character vector, the names being
+aliases and the values character strings of the form
+@example
+"../../@var{pkgname}/html/@var{filename}.Rd"
+@end example
+
+File @file{data.rds} records a two-column character matrix with columns
+of dataset names and titles from the corresponding help file.  File
+@file{demo.rds} has the same structure for package demos.
+
+File @file{vignette.rds} records a dataframe with one row for each
+`vignette' (@file{.[RS]nw} file in @file{inst/doc}) and with columns
+@samp{File} (the full file path in the sources), @samp{Title},
+@samp{PDF} (the pathless file name of the installed PDF version, if
+present), @samp{Depends}, @samp{Keywords} and @samp{R} (the pathless
+file name of the installed R code, if present).
+ 
+
+@node Help,  , Metadata, Package Structure
+@section Help
+
+All installed packages, whether they had an @file{.Rd} files or not,
+have @file{help} and @file{html} directories. The latter normally only
+contains the single file @file{00Index.html}, the package index which
+has hyperlinks to the help topics (if any).
+
+Directory @file{help} contains files @file{AnIndex}, @file{paths.rds}
+and @file{@var{pkgname}.rd[bx]}.  The latter two files are a lazy-load
+database of parsed @file{.Rd} files, accessed by
+@code{tools:::fetchRdDB}.  File @file{paths.rds} is a saved character
+vector of the original path names of the @file{.Rd} files, used when
+updating the database.
+
+File @file{AnIndex} is a two-column tab-delimited file: the first column
+contains the aliases defined in the help files and the second the
+basename (without the @file{.Rd} or @file{.rd} extension) of the file
+containing that alias.  It is read by @code{utils:::index.search} to
+search for files matching a topic (alias).
+
+
+@node Graphics Devices, Tools, Package Structure, Top
 @chapter Graphics
 
 @R{}'s graphics internals were revised for version 1.4.0 (and tidied up
