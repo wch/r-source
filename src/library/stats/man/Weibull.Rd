@@ -1,6 +1,6 @@
 % File src/library/stats/man/Weibull.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Weibull}
@@ -42,15 +42,13 @@ rweibull(n, shape, scale = 1)
 \details{
   The Weibull distribution with \code{shape} parameter \eqn{a} and
   \code{scale} parameter \eqn{\sigma}{b} has density given by
-  \deqn{f(x) = (a/\sigma) {(x/\sigma)}^{a-1} \exp (-{(x/\sigma)}^{a})}{%
-        f(x) = (a/b) (x/b)^(a-1) exp(- (x/b)^a)}
+  \deqn{f(x) = (a/\sigma) {(x/\sigma)}^{a-1} \exp (-{(x/\sigma)}^{a})}{f(x) = (a/b) (x/b)^(a-1) exp(- (x/b)^a)}
   for \eqn{x \ge 0}.
   The cumulative distribution function is
   \eqn{F(x) = 1 - \exp(-{(x/\sigma)}^a)}{F(x) = 1 - exp(- (x/b)^a)}
   on \eqn{x \ge 0}, the
   mean is \eqn{E(X) = \sigma \Gamma(1 + 1/a)}{E(X) = b Gamma(1 + 1/a)}, and
-  the \eqn{Var(X) = \sigma^2(\Gamma(1 + 2/a)-(\Gamma(1 + 1/a))^2)}{%
-           Var(X) = b^2 * (Gamma(1 + 2/a) - (Gamma(1 + 1/a))^2)}.
+  the \eqn{Var(X) = \sigma^2(\Gamma(1 + 2/a)-(\Gamma(1 + 1/a))^2)}{Var(X) = b^2 * (Gamma(1 + 2/a) - (Gamma(1 + 1/a))^2)}.
 }
 \note{
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}

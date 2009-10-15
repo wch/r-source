@@ -1,6 +1,6 @@
 % File src/library/stats/man/dist.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dist}
@@ -63,10 +63,10 @@ as.dist(m, diag = FALSE, upper = FALSE)
     \item{\code{manhattan}:}{Absolute distance between the two vectors
       (1 norm).}
 
-    \item{\code{canberra}:}{\eqn{\sum_i |x_i - y_i| / |x_i + y_i|}{%
-        sum(|x_i - y_i| / |x_i + y_i|)}.  Terms with zero numerator and
-      denominator are omitted from the sum and treated as if the values
-      were missing.
+    \item{\code{canberra}:}{
+      \eqn{\sum_i |x_i - y_i| / |x_i + y_i|}{sum(|x_i - y_i| / |x_i + y_i|)}.
+      Terms with zero numerator and denominator are omitted from the sum
+      and treated as if the values were missing.
     }
 
     \item{\code{binary}:}{(aka \emph{asymmetric binary}): The vectors

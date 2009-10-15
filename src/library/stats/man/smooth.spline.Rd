@@ -1,6 +1,6 @@
 % File src/library/stats/man/smooth.spline.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{smooth.spline}
@@ -82,8 +82,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   where
   \eqn{r = tr(X' W X) / tr(\Sigma)},
   \eqn{\Sigma} is the matrix given by
-  \eqn{\Sigma_{ij} = \int B_i''(t) B_j''(t) dt}{%
-    Sigma[i,j] = Integral B''[i](t) B''[j](t) dt},
+  \eqn{\Sigma_{ij} = \int B_i''(t) B_j''(t) dt}{Sigma[i,j] = Integral B''[i](t) B''[j](t) dt},
   \eqn{X} is given by \eqn{X_{ij} = B_j(x_i)}{X[i,j] = B[j](x[i])},
   \eqn{W} is the diagonal matrix of weights (scaled such that
   its trace is \eqn{n}, the original number of observations)
@@ -108,9 +107,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
 %%   = 1/3 + {log(lam) - log(r)} / {24 log(2)}
 %%   = 1/3 - log(r)/{24 log(2)} +  log(lam) / {24 log(2)}
 %%   =               s0         + 0.0601 * log(lam)
-  \code{spar} is \eqn{s = s0 + 0.0601 * \bold{\log}\lambda}{%
-                   spar = s0 + 0.0601 * log(lambda)},
-  which is intentionally \emph{different} from the S-plus implementation
+  \code{spar} is \eqn{s = s0 + 0.0601 * \bold{\log}\lambda}{spar = s0 + 0.0601 * log(lambda)},
+  which is intentionally \emph{different} from the S-PLUS implementation
   of \code{smooth.spline} (where \code{spar} is proportional to
   \eqn{\lambda}).  In \R's (\eqn{\log \lambda}) scale, it makes more
   sense to vary \code{spar} linearly.

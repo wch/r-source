@@ -1,6 +1,6 @@
 % File src/library/stats/man/dendrogram.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dendrogram}
@@ -99,8 +99,8 @@ is.leaf(object)
     other methods.}
   \item{digits}{integer specifying the precision for printing, see
     \code{\link{print.default}}.}
-  \item{max.level, digits.d, give.attr, wid, nest.lev, indent.str}{%
-    arguments to \code{str}, see \code{\link{str.default}()}.  Note that
+  \item{max.level, digits.d, give.attr, wid, nest.lev, indent.str}{arguments
+    to \code{str}, see \code{\link{str.default}()}.  Note that
     \code{give.attr = FALSE} still shows \code{height} and \code{members}
     attributes for each node.}
   \item{stem}{a string used for \code{str()} specifying the \emph{stem}

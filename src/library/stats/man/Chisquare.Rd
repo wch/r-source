@@ -1,6 +1,6 @@
 % File src/library/stats/man/Chisquare.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Chisquare}
@@ -43,8 +43,7 @@ rchisq(n, df, ncp=0)
 \details{
   The chi-squared distribution with \code{df}\eqn{= n \ge 0}{= n >= 0}
   degrees of freedom has density
-  \deqn{f_n(x) = \frac{1}{{2}^{n/2} \Gamma (n/2)} {x}^{n/2-1} {e}^{-x/2}}{%
-    f_n(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
+  \deqn{f_n(x) = \frac{1}{{2}^{n/2} \Gamma (n/2)} {x}^{n/2-1} {e}^{-x/2}}{f_n(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
   for \eqn{x > 0}.  The mean and variance are \eqn{n} and \eqn{2n}.
 
   The non-central chi-squared distribution with \code{df}\eqn{= n}
@@ -52,8 +51,7 @@ rchisq(n, df, ncp=0)
   \eqn{= \lambda} has density
   \deqn{
     f(x) = e^{-\lambda / 2}
-      \sum_{r=0}^\infty \frac{(\lambda/2)^r}{r!}\, f_{n + 2r}(x)}{%
-    f(x) = exp(-lambda/2) SUM_{r=0}^infty ((lambda/2)^r / r!) dchisq(x, df + 2r)
+      \sum_{r=0}^\infty \frac{(\lambda/2)^r}{r!}\, f_{n + 2r}(x)}{f(x) = exp(-lambda/2) SUM_{r=0}^infty ((lambda/2)^r / r!) dchisq(x, df + 2r)
   }
   for \eqn{x \ge 0}.  For integer \eqn{n}, this is the distribution of
   the sum of squares of \eqn{n} normals each with variance one,

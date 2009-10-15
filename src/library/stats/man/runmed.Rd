@@ -85,7 +85,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
   working paper available from the author.
 }
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch},
-  based on Fortran code from Werner Stuetzle and S-plus and C code from
+  based on Fortran code from Werner Stuetzle and S-PLUS and C code from
   Berwin Turlach.
 }
 \seealso{
