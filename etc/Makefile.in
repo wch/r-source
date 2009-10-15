@@ -84,7 +84,7 @@ clean:
 	fi
 ## do it this way to cope with subarchitectures
 distclean: clean
-	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
+	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 	@if test -n "$(R_ARCH)"; then \
 	  rm -rf .$(R_ARCH) ; \
 	fi
