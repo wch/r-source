@@ -14,42 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## unused
-.show_help_on_topic_as_HTML <-
-function(file, topic, warn = TRUE)
-{
-    ofile <- file
-    ## We need to use the version in per-session dir if we can.
-    third_base_name <-
-        file.path(basename(dirname(dirname(file))),
-                  basename(dirname(file)),
-                  basename(file))
-    ## (Ouch.)
-    lnkfile <-
-        file.path(tempdir(), ".R", "library", third_base_name)
-    if(any(ex <- file.exists(lnkfile))) {
-        file <- lnkfile[ex][1L]          # could be more than one
-    }
-    if(warn && file == ofile) {
-        msg <- gettext("Using non-linked HTML file: hyperlinks may be incorrect")
-        warning(paste(strwrap(msg), collapse = "\n"))
-    }
-    file <- paste("file://", URLencode(file), sep = "")
-    if(is.null(browser <- getOption("browser")))
-        stop("options(\"browser\") not set")
-    browseURL(file)
-    if (is.character(browser)) {
-        writeLines(c(paste("Help for", sQuote(topic),
-                           "is shown in browser", browser, "..."),
-                     "Use",
-                     paste("\thelp(\"", topic, "\", htmlhelp = FALSE)",
-                           sep = ""),
-                     "or\n\toptions(htmlhelp = FALSE)\nto revert."))
-    }
-    return(invisible())
-}
-
-
 offline_help_helper <- function(texfile, type = "postscript")
 {
     PDF <- type == "pdf"

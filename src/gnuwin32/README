@@ -116,29 +116,6 @@ in the global environment.
 There is only one graphics history shared by all the windows devices.
 
 
-HELP:
-
-There are several options for help, depending on which help files you
-installed.
-
-(i) Text help.  This is the the fallback option.  It will display in
-the currently set pager (use options(pager=) to change).
-
-(ii) Compiled HTML files (the default).  Set this as the default by
-options(chmhelp=TRUE) or for individual help items by help(topic,
-chmhelp=TRUE).  Full text search is available from the Search tab.
-
-(iii) HTML help to be displayed in your normal browser.  Set this as
-the default by options(htmlhelp=TRUE) or for individual help items by
-help(topic, htmlhelp=TRUE).  Using help.start() sets the browser to
-the top-level page, from which you can access a search engine.
-
-(iv) Latex help files are available for use with help(topic,
-offline=TRUE).  You will need to customize the file
-@RWVER@\bin\helpPRINT.bat: it contains instructions.
-
-
-
 Customization
 =============
 

@@ -14,17 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## unused
-.show_help_on_topic_as_HTML <-
-function(file, topic, ...)
-{
-    ## Uwe Ligges reported this as needed on his system (PR#7269)
-    browseURL(chartr("/", "\\", file))
-    writeLines(paste("Help for", sQuote(topic), "is shown in the browser"))
-    return(invisible())
-}
-
-## differs in not sending to /dev/null
+## differs from Unix in not sending to /dev/null
 offline_help_helper <- function(texfile, type = "postscript")
 {
     PDF <- type == "pdf"
