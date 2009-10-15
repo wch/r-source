@@ -127,6 +127,9 @@ function(db, verbose = FALSE)
     } else Built <- NULL
     ## might perhaps have multiple entries
     Depends <- .split_dependencies(db[names(db) %in% "Depends"])
+    ## We only need Rdepends for R < 2.7.0, but we still need to be
+    ## able to check that someone is not trying to load this into a
+    ## very old version of R.
     if("R" %in% names(Depends)) {
         Rdeps2 <- Depends["R" == names(Depends)]
         names(Rdeps2) <- NULL
