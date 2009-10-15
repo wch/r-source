@@ -179,7 +179,7 @@ httpd <- function(path, query, ...)
                 tmp <- try(.readRDS(fp[i]))
                 titles[i] <- if(inherits(tmp, "try-error"))
                     "unknown title" else
-                    tmp[tools::file_path_sans_ext(tmp$File) == tp[i], "Title"]
+                    tmp[file_path_sans_ext(tmp$File) == tp[i], "Title"]
             }
             packages <- paste('<dt><a href="../../', basename(paths), '/html/',
                               basename(file), '.html">', titles,
@@ -264,9 +264,9 @@ httpd <- function(path, query, ...)
 	RdDB <- file.path(path, pkgname)
 	if(file.exists(paste(RdDB, "rdx", sep="."))) {
 	    outfile <- tempfile("Rhttpd")
-	    temp <- tools::Rd2HTML(tools:::fetchRdDB(RdDB, helpdoc),
-                                   out = outfile, package = dirpath,
-                                   dynamic = TRUE)
+	    temp <- Rd2HTML(fetchRdDB(RdDB, helpdoc),
+                            out = outfile, package = dirpath,
+                            dynamic = TRUE)
 	    on.exit(unlink(outfile))
 	    return(list(payload = paste(readLines(temp), collapse = "\n")))
 	} else {

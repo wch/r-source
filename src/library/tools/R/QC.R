@@ -4094,9 +4094,9 @@ function(dir)
 .check_citation <-
 function(cfile)
 {
-    cfile <- tools::file_path_as_absolute(cfile)
+    cfile <- file_path_as_absolute(cfile)
     meta <- if(basename(dir <- dirname(cfile)) == "inst")
-        as.list(tools:::.get_package_metadata(dirname(dir)))
+        as.list(.get_package_metadata(dirname(dir)))
     else
         NULL
 
