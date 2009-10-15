@@ -316,7 +316,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             version <- read.dcf(file.path(pkgpath, "DESCRIPTION"),
                                 fields = "Version")
             ## stats4 depends on methods, but exports do not matter
-            ## whilst it is being build on Unix
+            ## whilst it is being built on Unix
             dependsMethods <- FALSE
         }
         ## </FIXME>
