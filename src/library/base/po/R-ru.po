@@ -1,25 +1,23 @@
 # Russian translations for R
 # Русский перевод для R
 #
-# Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Copyright (C) 2008 Alexey Shipunov <dactylorhiza at gmail>
+# Copyright (C) 2009 Alexey Shipunov <dactylorhiza at gmail>
 # Copyright (C) 2009 Anton Korobeynikov <asl at math dot spbu dot ru>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-10-09 08:02\n"
-"PO-Revision-Date: 2009-03-28 18:25+0300\n"
-"Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
+"PO-Revision-Date: 2009-10-15 02:15-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "'%s' is defunct."
 msgstr "'%s' больше не существует."
@@ -207,9 +205,8 @@ msgstr "могу записать только текстовые объекты"
 msgid "supplied timeout must be NULL or a non-negative number"
 msgstr "предложенный тайм-аут должен быть или NULL, или неотрицательным числом"
 
-#, fuzzy
 msgid "'from' must be raw or character"
-msgstr "'arg' должен быть NULL либо текстовой строкой"
+msgstr "'from' должен быть raw либо текстовой строкой"
 
 msgid "'x' must be numeric"
 msgstr "'x' должен быть числом"
@@ -235,7 +232,6 @@ msgstr "пропущенные значения в 'row.names' не разрешены"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "для таблицы данных предложены неправильные 'dimnames'"
 
-#, fuzzy
 msgid "cannot coerce class %s into a data.frame"
 msgstr "не могу поместить класс \"%s\" в data.frame"
 
@@ -278,9 +274,8 @@ msgstr "предложенные имена строк неправильной длины"
 msgid "row names were found from a short variable and have been discarded"
 msgstr "имена строк взяты из короткой переменной и поэтому сброшены"
 
-#, fuzzy
 msgid "named arguments other than 'drop' are discouraged"
-msgstr "пропущенные значения в 'row.names' не разрешены"
+msgstr "именованные аргументы иные, чем 'drop', не допускаются"
 
 msgid "drop argument will be ignored"
 msgstr "аргумент 'drop' не будет учтен"
@@ -288,18 +283,14 @@ msgstr "аргумент 'drop' не будет учтен"
 msgid "undefined columns selected"
 msgstr "выбраны не определенные колонки"
 
-#, fuzzy
 msgid "named arguments other than 'exact' are discouraged"
-msgstr "пропущенные значения в 'row.names' не разрешены"
+msgstr "именованные аргументы иные, чем 'exact', не допускаются"
 
-#, fuzzy
 msgid "named arguments are discouraged"
-msgstr "одинаковые 'row.names' не разрешены"
+msgstr "именованные аргументы не допускаются"
 
 msgid "rhs is the wrong length for indexing by a logical matrix"
-msgstr ""
-"неправильная длина правой стороны выражения для того, чтобы проиндексировать "
-"логическую матрицу"
+msgstr "неправильная длина правой стороны выражения для того, чтобы проиндексировать логическую матрицу"
 
 msgid "only logical matrix subscripts are allowed in replacement"
 msgstr "только логические матричные индексы разрешены для замены"
@@ -307,10 +298,8 @@ msgstr "только логические матричные индексы разрешены для замены"
 msgid "need 0, 1, or 2 subscripts"
 msgstr "нужны 0, 1, или 2 индекса"
 
-msgid ""
-"missing values are not allowed in subscripted assignments of data frames"
-msgstr ""
-"пропущенные значения не разрешены в индексированных присвоениях таблиц данных"
+msgid "missing values are not allowed in subscripted assignments of data frames"
+msgstr "пропущенные значения не разрешены в индексированных присвоениях таблиц данных"
 
 msgid "non-existent rows not allowed"
 msgstr "несуществующие строки не разрешены"
@@ -349,8 +338,7 @@ msgid "provided %d variables to replace %d variables"
 msgstr "предложено %d переменных для замены %d переменных"
 
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
-msgstr ""
-"правильны лишь такие вызовы: x[[j]] <- значение или x[[i,j]] <- значение"
+msgstr "правильны лишь такие вызовы: x[[j]] <- значение или x[[i,j]] <- значение"
 
 msgid "replacing element in non-existent column:"
 msgstr "замена элемента в несуществующей колонке:"
@@ -436,10 +424,8 @@ msgstr "'to' должен быть длиной 1"
 msgid "'length.out' must be of length 1"
 msgstr "'length.out' должен быть длиной 1"
 
-msgid ""
-"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
-msgstr ""
-"нужно указать в точности два из: 'to', 'by' и 'length.out' / 'along.with'"
+msgid "exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr "нужно указать в точности два из: 'to', 'by' и 'length.out' / 'along.with'"
 
 msgid "'by' must be of length 1"
 msgstr "'by' должен быть длиной 1"
@@ -554,11 +540,10 @@ msgid "determinant not currently defined for complex matrices"
 msgstr "в настоящее время детерминант для комплексных матриц не определен"
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
-msgstr ""
+msgstr "'nrow' или 'ncol' нельзя определять, если 'x' -- матрица"
 
-#, fuzzy
 msgid "'x' is an array, but not 1D."
-msgstr "первый аргумент -- многомерная матрица, а не матрица."
+msgstr "'x' -- это не одномерная, а многомерная матрица (array)"
 
 msgid "only matrix diagonals can be replaced"
 msgstr "только диагонали матрицы могут быть заменены"
@@ -590,10 +575,8 @@ msgstr "надо определить DLL через объект DLLInfo. См. getLoadedDLLs()"
 msgid "function is not in a namespace, so cannot locate associated DLL"
 msgstr "функция не в пространстве имен, поэтому не могу найти связанный DLL"
 
-msgid ""
-"looking for DLL for native routine call, but no DLLs in namespace of call"
-msgstr ""
-"ищу DLL для данного внутреннего вызова, но в пространстве имен вызова его нет"
+msgid "looking for DLL for native routine call, but no DLLs in namespace of call"
+msgstr "ищу DLL для данного внутреннего вызова, но в пространстве имен вызова его нет"
 
 msgid "0 x 0 matrix"
 msgstr "0 x 0 матрица"
@@ -677,18 +660,16 @@ msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' должен быть сортирован не по уменьшению"
 
 msgid "using the first element of 'value' of type expression"
-msgstr ""
+msgstr "использую первый элемент 'value' типа выражения"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
-msgstr ""
-"'mode' должна быть \"double\" (\"real\"), \"integer\" или \"character\""
+msgstr "'mode' должна быть \"double\" (\"real\"), \"integer\" или \"character\""
 
 msgid "coercing argument to \"character\" for format=\"s\""
 msgstr "преобразую аргумент в \"character\" для format=\"s\""
 
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
-msgstr ""
-"'format' должен быть одним из {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+msgstr "'format' должен быть одним из {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
 msgid "'digits' reduced to"
 msgstr "'digits' сокращено до"
@@ -736,7 +717,7 @@ msgid "'max.distance' components must be non-negative"
 msgstr "компоненты 'max.distance' должны быть неотрицательными"
 
 msgid "norm '%s' currently always uses exact = FALSE"
-msgstr ""
+msgstr "norm '%s' сейчас всегда использует exact = FALSE"
 
 msgid "triangular matrix should be square"
 msgstr "треугольная матрица должна быть квадратной"
@@ -753,22 +734,18 @@ msgstr "пакет '%s' был собран до R 2.0.0: пожалуйста, инсталлируйте его заново"
 msgid "package '%s' was built under R version %s"
 msgstr "пакет '%s' был собран под R версии %s"
 
-#, fuzzy
 msgid ""
 "package '%s' was built under R version %s and help will not work correctly\n"
 "Please re-install it"
-msgstr "пакет '%s' был собран до R 2.0.0: пожалуйста, инсталлируйте его заново"
+msgstr ""
+"пакет '%s' был собран до версии R %s и помощь не будет правильно работать\n"
+"Пожалуйста, переустановите его"
 
-#, fuzzy
-msgid ""
-"package '%s' was built under R version %s and help may not work correctly"
-msgstr "пакет '%s' был собран под R версии %s"
+msgid "package '%s' was built under R version %s and help may not work correctly"
+msgstr "пакет '%s' был собран под R версии %s и помощь не будет правильно работать"
 
-#, fuzzy
-msgid ""
-"package '%s' claims to be built under R version %s but is missing some help "
-"files and needs to be re-installed"
-msgstr "пакет '%s' был собран до R 2.0.0: пожалуйста, инсталлируйте его заново"
+msgid "package '%s' claims to be built under R version %s but is missing some help files and needs to be re-installed"
+msgstr "пакет '%s' сообщает, что он был собран для версии R %s, но у него нет некоторых файлов помощи и поэтому его надо переустановить"
 
 msgid "package '%s' was built for %s"
 msgstr "пакет '%s' был собран для %s"
@@ -873,9 +850,7 @@ msgstr ""
 "пакет '%s' найден более чем однажды,\n"
 "использую тот, который найден в '%s'"
 
-msgid ""
-"Further information is available in the following vignettes in directory '%"
-"s':"
+msgid "Further information is available in the following vignettes in directory '%s':"
 msgstr "Дальнейшая информация доступна в следующих миниатюрах из папки '%s':"
 
 msgid "doc"
@@ -985,8 +960,7 @@ msgid "attempt to set rownames on object with no dimensions"
 msgstr "попытка установить имена строк для объекта без измерений"
 
 msgid "attempt to set colnames on object with less than two dimensions"
-msgstr ""
-"попытка установить имена колонок для объекта с менее чем двумя измерениями"
+msgstr "попытка установить имена колонок для объекта с менее чем двумя измерениями"
 
 msgid "argument is not numeric or logical: returning NA"
 msgstr "аргумент не является числовым или логическим: возвращаю NA"
@@ -1004,8 +978,7 @@ msgid "'by' must match number of columns"
 msgstr "'by' должен соответствовать числу колонок"
 
 msgid "'by' must specify column(s) as numbers, names or logical"
-msgstr ""
-"'by' должен определять колонк(и) как числа, имена или логические данные"
+msgstr "'by' должен определять колонк(и) как числа, имена или логические данные"
 
 msgid "'by' must specify valid column(s)"
 msgstr "'by' должен определять правильные колонк(и)"
@@ -1019,12 +992,8 @@ msgstr "дополнительные аргументы пропущены в message()"
 msgid "(loaded the methods namespace)"
 msgstr "(загружено пространство имен методов)"
 
-msgid ""
-"Tracing functions requires the methods package, but unable to load methods "
-"namespace"
-msgstr ""
-"Трассировка функций требует пакета 'methods', но я не могу загрузить его "
-"пространство имен"
+msgid "Tracing functions requires the methods package, but unable to load methods namespace"
+msgstr "Трассировка функций требует пакета 'methods', но я не могу загрузить его пространство имен"
 
 msgid "Expected a single logical value for the S4 state flag"
 msgstr "Ожидается простое логическое значение для флага состояния S4"
@@ -1081,8 +1050,7 @@ msgid "package '%s' does not have a name space"
 msgstr "пакет '%s' не имеет пространства имен"
 
 msgid "exportClassPattern specified but no matching classes in %s"
-msgstr ""
-"Указан 'exportClassPattern', но отсутствуют соответствующие классы в %s"
+msgstr "Указан 'exportClassPattern', но отсутствуют соответствующие классы в %s"
 
 msgid "in '%s' classes for export not defined: %s"
 msgstr "в '%s' классы для экспорта не определены: %s"
@@ -1241,8 +1209,7 @@ msgid "'k' is too large"
 msgstr "'k' слишком велик"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
-msgstr ""
-"нужно большее значение 'ncol', так как происходит выбор ведущего элемента"
+msgstr "нужно большее значение 'ncol', так как происходит выбор ведущего элемента"
 
 msgid "'x' must be an atomic vector"
 msgstr "'x' должен быть атомарным вектором"
@@ -1358,8 +1325,7 @@ msgid "'echo' must be logical"
 msgstr "'echo' должно быть логическим"
 
 msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
-msgstr ""
-"'verbose' является TRUE, а 'echo' -- нет; ... преобразую 'echo <- TRUE'"
+msgstr "'verbose' является TRUE, а 'echo' -- нет; ... преобразую 'echo <- TRUE'"
 
 msgid "unable to find a plausible encoding"
 msgstr "не могу найти правдоподобную кодировку"
@@ -1496,12 +1462,8 @@ msgstr "аргумент 'which' не является логическим"
 msgid "invalid 'digits'"
 msgstr "неправильные 'digits'"
 
-msgid ""
-"arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
-"Windows only"
-msgstr ""
-"аргументы у 'show.output.on.console', 'minimized' и 'invisible' только для "
-"Windows"
+msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
+msgstr "аргументы у 'show.output.on.console', 'minimized' и 'invisible' только для Windows"
 
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' должен быть текстовым вектором либо 'NULL'"
@@ -1601,142 +1563,98 @@ msgstr[2] "Предупреждения:\n"
 
 #~ msgid "extra arguments ignored:"
 #~ msgstr "дополнительные аргументы проигнорированы"
-
 #~ msgid "numeric or complex values required in 'eigen'"
 #~ msgstr "'eigen' требует числовых или комплексных значений"
-
 #~ msgid "argument to 'svd' must be numeric"
 #~ msgstr "аргумент для 'svd' должен быть числовым"
-
 #~ msgid "package '%s' has been merged into '%s'"
 #~ msgstr "пакет '%s' был слит с '%s'"
-
 #~ msgid "package 'lqs' has been moved back to package 'MASS'"
 #~ msgstr "пакет 'lqs' перемещен обратно в пакет 'MASS'"
-
 #~ msgid "package 'MASS' has now been loaded"
 #~ msgstr "пакет 'MASS' загрузился"
-
 #~ msgid "package 'MASS' seems to be missing from this R installation"
 #~ msgstr "пакет 'MASS', похоже, пропущен в данной установке R"
-
 #~ msgid "there is no package called '%s', version %s"
 #~ msgstr "нет пакета под названием '%s' и версии %s"
-
 #~ msgid "'%s' is not a valid package -- installed < 2.0.0?"
 #~ msgstr "'%s' не является правильным пакет -- установлен под < 2.0.0?"
-
 #~ msgid "non-numeric data type in frame"
 #~ msgstr "нечисловой тип данных в 'frame'"
-
 #~ msgid "class information lost from one or more columns"
 #~ msgstr "информация о классах потеряна в одной или более колонках"
-
 #~ msgid "Invalid DCF format."
 #~ msgstr "Неправильный формат DCF."
-
 #~ msgid "No methods table for \""
 #~ msgstr "Нет таблицы методов для \""
-
 #~ msgid "\""
 #~ msgstr "\""
-
 #~ msgid "not defined for POSIXt objects"
 #~ msgstr "не определен для объектов POSIXt"
-
 #~ msgid "not defined for \"POSIXct\" objects"
 #~ msgstr "не определен для объектов \"POSIXct\""
-
 #~ msgid "not defined for \"POSIXlt\" objects"
 #~ msgstr "не определен для объектов \"POSIXlt\""
-
 #~ msgid "'within' requires a name for its 'data' argument"
 #~ msgstr "'within' требует имя для своего аргумента 'data'"
-
 #~ msgid "'data' must exist"
 #~ msgstr "'data' должен существовать"
-
 #~ msgid "names do not match previous names:"
 #~ msgstr "имена не соответствуют прежним именам:"
-
 #~ msgid "argument must be character"
 #~ msgstr "аргумент должен быть буквой"
-
 #~ msgid "zero imputs"
 #~ msgstr "нулевые вводы"
-
 #~ msgid "'all' can not be used with other deparse options"
 #~ msgstr "'all' нельзя использовать с другими опциями разбора"
-
 #~ msgid "'form' must be a two-sided formula"
 #~ msgstr "'form' должен быть двусторонней формулой"
-
 #~ msgid "no lines available in input"
 #~ msgstr "во вводе нет строк"
-
 #~ msgid "empty beginning of file"
 #~ msgstr "пустое начало строки"
-
 #~ msgid "header and 'col.names' are of different lengths"
 #~ msgstr "заголовок и 'col.names' разной длины"
-
 #~ msgid "more columns than column names"
 #~ msgstr "больше колонок, чем их имен"
-
 #~ msgid "first five rows are empty: giving up"
 #~ msgstr "первые пять строк пустые: отказ"
-
 #~ msgid "not all columns named in 'colClasses' exist"
 #~ msgstr "не все колонки, названные в 'colClasses', существуют"
-
 #~ msgid "invalid numeric 'as.is' expression"
 #~ msgstr "неправильное числовое 'as.is'-выражение"
-
 #~ msgid "not all columns named in 'as.is' exist"
 #~ msgstr "не все колонки, названные в 'as.is', существуют"
-
 #~ msgid "'as.is' has the wrong length %d  != cols = %d"
 #~ msgstr "у 'as.is' неправильная длина %d  != cols = %d"
-
 #~ msgid "invalid 'row.names' specification"
 #~ msgstr "неправильное указание 'row.names'"
-
 #~ msgid "adding class \"ts\": this is deprecated"
 #~ msgstr "добавление класса \"ts\": это не одобряется"
-
 #~ msgid "conversion to factor is deprecated"
 #~ msgstr "преобразование в фактор не одобряется"
-
 #~ msgid "invalid numbers in 'quote'"
 #~ msgstr "неправильные числа в 'quote'"
-
 #~ msgid "col.names = NA makes no sense when row.names = FALSE"
 #~ msgstr "col.names = NA не имеет смысла, если row.names = FALSE"
-
 #~ msgid "invalid 'col.names' specification"
 #~ msgstr "неправильное указание 'col.names'"
-
 #~ msgid "appending column names to file"
 #~ msgstr "добавляю имена колонок к файлу"
-
 #~ msgid "attempt to change '%s' ignored"
 #~ msgstr "попытка изменить '%s' отклонена"
-
 #~ msgid "no rows to match"
 #~ msgstr "нет соответствующих строк"
 
 #, fuzzy
 #~ msgid "rows are empty: giving up"
 #~ msgstr "первые пять строк пустые: отказ"
-
 #~ msgid "invalid argument 'n'"
 #~ msgstr "неправильный аргумент 'n'"
-
 #~ msgid "invalid argument 'r'"
 #~ msgstr "неправильный аргумент 'r'"
-
 #~ msgid "invalid argument 'c'"
 #~ msgstr "неправильный аргумент 'c'"
-
 #~ msgid "arguments 'r' and 'c' must have the same sums"
 #~ msgstr "аргументы 'r' и 'c' должны иметь одинаковые суммы"
+

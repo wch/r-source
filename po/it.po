@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-10 13:44+0100\n"
+"POT-Creation-Date: 2009-10-15 08:45+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -164,7 +164,7 @@ msgstr ""
 #: src/main/context.c:610 src/main/datetime.c:653 src/main/datetime.c:728
 #: src/main/datetime.c:730 src/main/datetime.c:734 src/main/datetime.c:867
 #: src/main/datetime.c:869 src/main/datetime.c:1015 src/main/debug.c:217
-#: src/main/deparse.c:345 src/main/devices.c:581 src/main/dotcode.c:735
+#: src/main/deparse.c:349 src/main/devices.c:581 src/main/dotcode.c:735
 #: src/main/dotcode.c:739 src/main/dotcode.c:744 src/main/dounzip.c:250
 #: src/main/dounzip.c:257 src/main/dounzip.c:267 src/main/dounzip.c:272
 #: src/main/dounzip.c:276 src/main/envir.c:1520 src/main/envir.c:1523
@@ -201,35 +201,34 @@ msgstr ""
 #: src/main/print.c:269 src/main/random.c:469 src/main/random.c:473
 #: src/main/random.c:477 src/main/saveload.c:1936 src/main/saveload.c:1939
 #: src/main/saveload.c:1942 src/main/saveload.c:2060 src/main/saveload.c:2228
-#: src/main/saveload.c:2233 src/main/saveload.c:2236 src/main/saveload.c:2330
-#: src/main/saveload.c:2380 src/main/scan.c:659 src/main/scan.c:826
-#: src/main/scan.c:839 src/main/scan.c:843 src/main/scan.c:845
-#: src/main/scan.c:856 src/main/scan.c:883 src/main/scan.c:886
-#: src/main/scan.c:939 src/main/scan.c:976 src/main/scan.c:980
-#: src/main/scan.c:990 src/main/scan.c:1204 src/main/scan.c:1429
-#: src/main/scan.c:1480 src/main/scan.c:1492 src/main/scan.c:1496
-#: src/main/scan.c:1502 src/main/scan.c:1716 src/main/scan.c:1717
-#: src/main/scan.c:1719 src/main/scan.c:1720 src/main/scan.c:1721
-#: src/main/scan.c:1722 src/main/scan.c:1723 src/main/scan.c:1724
-#: src/main/seq.c:378 src/main/seq.c:382 src/main/seq.c:400 src/main/seq.c:404
-#: src/main/seq.c:410 src/main/seq.c:418 src/main/sort.c:160
-#: src/main/sysutils.c:558 src/main/sysutils.c:560 src/main/sysutils.c:562
-#: src/main/sysutils.c:567 src/main/sysutils.c:1507 src/main/sysutils.c:1511
-#: src/main/unique.c:800 src/main/unique.c:1075 src/main/unique.c:1135
-#: src/main/unique.c:1142 src/main/util.c:554 src/main/util.c:557
-#: src/main/util.c:1624 src/modules/internet/internet.c:283
-#: src/modules/internet/internet.c:289 src/modules/internet/internet.c:295
-#: src/modules/internet/internet.c:298 src/modules/internet/internet.c:302
-#: src/modules/lapack/Lapack.c:151 src/modules/lapack/Lapack.c:241
-#: src/modules/lapack/Lapack.c:633 src/modules/lapack/Lapack.c:729
-#: src/modules/lapack/Lapack.c:786 src/modules/lapack/Lapack.c:1044
-#: src/modules/X11/devX11.c:2638 src/modules/X11/devX11.c:2641
-#: src/modules/X11/devX11.c:2644 src/modules/X11/devX11.c:2669
-#: src/modules/X11/devX11.c:3038 src/modules/X11/devX11.c:3043
-#: src/modules/X11/devX11.c:3047 src/modules/X11/devX11.c:3051
-#: src/modules/X11/devX11.c:3055 src/modules/X11/devX11.c:3066
-#: src/modules/X11/devX11.c:3070 src/unix/sys-std.c:1194
-#: src/unix/sys-std.c:1217
+#: src/main/saveload.c:2233 src/main/saveload.c:2236 src/main/saveload.c:2340
+#: src/main/scan.c:659 src/main/scan.c:826 src/main/scan.c:839
+#: src/main/scan.c:843 src/main/scan.c:845 src/main/scan.c:856
+#: src/main/scan.c:883 src/main/scan.c:886 src/main/scan.c:939
+#: src/main/scan.c:976 src/main/scan.c:980 src/main/scan.c:990
+#: src/main/scan.c:1204 src/main/scan.c:1429 src/main/scan.c:1480
+#: src/main/scan.c:1492 src/main/scan.c:1496 src/main/scan.c:1502
+#: src/main/scan.c:1716 src/main/scan.c:1717 src/main/scan.c:1719
+#: src/main/scan.c:1720 src/main/scan.c:1721 src/main/scan.c:1722
+#: src/main/scan.c:1723 src/main/scan.c:1724 src/main/seq.c:378
+#: src/main/seq.c:382 src/main/seq.c:400 src/main/seq.c:404 src/main/seq.c:410
+#: src/main/seq.c:418 src/main/sort.c:160 src/main/sysutils.c:558
+#: src/main/sysutils.c:560 src/main/sysutils.c:562 src/main/sysutils.c:567
+#: src/main/sysutils.c:1507 src/main/sysutils.c:1511 src/main/unique.c:800
+#: src/main/unique.c:1075 src/main/unique.c:1135 src/main/unique.c:1142
+#: src/main/util.c:554 src/main/util.c:557 src/main/util.c:1624
+#: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
+#: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
+#: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
+#: src/modules/lapack/Lapack.c:241 src/modules/lapack/Lapack.c:633
+#: src/modules/lapack/Lapack.c:729 src/modules/lapack/Lapack.c:786
+#: src/modules/lapack/Lapack.c:1044 src/modules/X11/devX11.c:2638
+#: src/modules/X11/devX11.c:2641 src/modules/X11/devX11.c:2644
+#: src/modules/X11/devX11.c:2669 src/modules/X11/devX11.c:3038
+#: src/modules/X11/devX11.c:3043 src/modules/X11/devX11.c:3047
+#: src/modules/X11/devX11.c:3051 src/modules/X11/devX11.c:3055
+#: src/modules/X11/devX11.c:3066 src/modules/X11/devX11.c:3070
+#: src/unix/sys-std.c:1194 src/unix/sys-std.c:1217
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argomento '%s' non valido"
@@ -520,8 +519,8 @@ msgstr "<ERRORE: input non valido per questo encoding> "
 #: src/gnuwin32/system.c:542 src/gnuwin32/system.c:1021
 #: src/gnuwin32/system.c:1033 src/main/connections.c:527
 #: src/main/connections.c:532 src/main/dounzip.c:114 src/main/saveload.c:1947
-#: src/main/serialize.c:2111 src/main/serialize.c:2116
-#: src/main/serialize.c:2197 src/main/serialize.c:2230 src/unix/system.c:311
+#: src/main/serialize.c:2110 src/main/serialize.c:2115
+#: src/main/serialize.c:2196 src/main/serialize.c:2229 src/unix/system.c:311
 #: src/unix/system.c:322
 #, fuzzy, c-format
 msgid "cannot open file '%s': %s"
@@ -1304,7 +1303,7 @@ msgstr "dimensione troppo grande per il vettore indicato"
 #: src/main/envir.c:2895 src/main/envir.c:2929 src/main/envir.c:2949
 #: src/main/envir.c:3254 src/main/envir.c:3258 src/main/eval.c:3671
 #: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2056
-#: src/main/saveload.c:2327 src/main/saveload.c:2377 src/main/serialize.c:2252
+#: src/main/saveload.c:2337 src/main/serialize.c:2251
 msgid "use of NULL environment is defunct"
 msgstr ""
 
@@ -1343,8 +1342,8 @@ msgstr "'parent' non è un environment"
 #: src/main/connections.c:3689 src/main/connections.c:4052
 #: src/main/connections.c:4114 src/main/connections.c:4321
 #: src/main/connections.c:4325 src/main/connections.c:4679
-#: src/main/deparse.c:306 src/main/deparse.c:309 src/main/deparse.c:386
-#: src/main/deparse.c:389 src/main/scan.c:1700 src/main/serialize.c:1663
+#: src/main/deparse.c:310 src/main/deparse.c:313 src/main/deparse.c:394
+#: src/main/deparse.c:397 src/main/scan.c:1700 src/main/serialize.c:1662
 msgid "cannot write to this connection"
 msgstr "non posso scrivere su questa connessione"
 
@@ -1888,8 +1887,8 @@ msgstr ""
 #: src/main/connections.c:3471 src/main/connections.c:3685
 #: src/main/connections.c:4001 src/main/connections.c:4110
 #: src/main/connections.c:4317 src/main/connections.c:4654 src/main/dcf.c:56
-#: src/main/deparse.c:303 src/main/deparse.c:383 src/main/saveload.c:2239
-#: src/main/saveload.c:2319 src/main/scan.c:900 src/main/scan.c:1011
+#: src/main/deparse.c:306 src/main/deparse.c:390 src/main/saveload.c:2243
+#: src/main/saveload.c:2327 src/main/scan.c:900 src/main/scan.c:1011
 #: src/main/scan.c:1510 src/main/scan.c:1704 src/main/source.c:250
 msgid "cannot open the connection"
 msgstr "non posso aprire questa connessione"
@@ -2105,7 +2104,7 @@ msgid "cannot close messages sink connection"
 msgstr "impossibile chiudere una connessione di sink dei messaggi"
 
 #: src/main/connections.c:3043 src/main/connections.c:4678
-#: src/main/serialize.c:1653 src/main/serialize.c:1661
+#: src/main/serialize.c:1652 src/main/serialize.c:1660
 msgid "connection is not open"
 msgstr "connessione non aperta"
 
@@ -2116,9 +2115,9 @@ msgstr "Linea più lunga della dimensione del buffer"
 #: src/main/connections.c:3194 src/main/connections.c:3208
 #: src/main/connections.c:3464 src/main/connections.c:3475
 #: src/main/connections.c:3985 src/main/connections.c:4005 src/main/dcf.c:53
-#: src/main/dcf.c:59 src/main/saveload.c:2315 src/main/scan.c:903
+#: src/main/dcf.c:59 src/main/saveload.c:2320 src/main/scan.c:903
 #: src/main/scan.c:907 src/main/scan.c:1014 src/main/scan.c:1018
-#: src/main/serialize.c:1655 src/main/source.c:253 src/main/source.c:256
+#: src/main/serialize.c:1654 src/main/source.c:253 src/main/source.c:256
 msgid "cannot read from this connection"
 msgstr "non posso leggere da questa connessione"
 
@@ -2144,7 +2143,7 @@ msgstr "la stringa incompleta trovata alla fine del file è stata tralasciata"
 msgid "null terminator not found: breaking string at 10000 bytes"
 msgstr "terminatore nullo non trovato: taglio la stringa a 10000 caratteri"
 
-#: src/main/connections.c:3445 src/main/saveload.c:2316
+#: src/main/connections.c:3445 src/main/saveload.c:2321
 msgid "can only read from a binary connection"
 msgstr "posso leggere solo da una connessione binaria"
 
@@ -2505,31 +2504,31 @@ msgstr "la scomposizione può essere incompleta"
 msgid "deparse may be not be source()able in R < 2.7.0"
 msgstr ""
 
-#: src/main/deparse.c:318 src/main/deparse.c:404 src/main/deparse.c:410
+#: src/main/deparse.c:322 src/main/deparse.c:412 src/main/deparse.c:418
 msgid "wrote too few characters"
 msgstr "hai scritto troppi pochi caratteri"
 
-#: src/main/deparse.c:339
+#: src/main/deparse.c:343
 msgid "character arguments expected"
 msgstr "sono attesi argomenti di tipo character"
 
-#: src/main/deparse.c:342
+#: src/main/deparse.c:346
 msgid "zero length argument"
 msgstr "argomento di lunghezza zero"
 
-#: src/main/deparse.c:349
+#: src/main/deparse.c:353
 #, fuzzy
 msgid "'opts' should be small non-negative integer"
 msgstr "'gap' deve essere un intero non negativo"
 
-#: src/main/deparse.c:359 src/main/envir.c:1634 src/main/envir.c:1716
+#: src/main/deparse.c:363 src/main/envir.c:1634 src/main/envir.c:1716
 #: src/main/eval.c:423 src/main/eval.c:909 src/main/eval.c:2730
-#: src/main/saveload.c:1964 src/main/saveload.c:2275 src/main/serialize.c:2270
+#: src/main/saveload.c:1964 src/main/saveload.c:2281 src/main/serialize.c:2269
 #, c-format
 msgid "object '%s' not found"
 msgstr "oggetto \"%s\" non trovato"
 
-#: src/main/deparse.c:1413
+#: src/main/deparse.c:1421
 msgid "badly formed function expression"
 msgstr "l'espressione della funzione è costruita male"
 
@@ -3646,7 +3645,7 @@ msgid "'file' must be non-empty string"
 msgstr "'file' deve essere una stringa non vuota"
 
 #: src/main/eval.c:3774 src/main/saveload.c:1930 src/main/saveload.c:2220
-#: src/main/serialize.c:1796
+#: src/main/serialize.c:1795
 msgid "'ascii' must be logical"
 msgstr "'ascii' deve essere di tipo logico"
 
@@ -4467,32 +4466,32 @@ msgstr ""
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "valori negativi non ammessi come indici di matrice"
 
-#: src/main/names.c:997
+#: src/main/names.c:996
 msgid "string argument required"
 msgstr "necessario argomento stringa"
 
-#: src/main/names.c:1005
+#: src/main/names.c:1004
 msgid "no such primitive function"
 msgstr "funzione primitiva non esistente"
 
-#: src/main/names.c:1122
+#: src/main/names.c:1121
 msgid "attempt to use zero-length variable name"
 msgstr "tentativo di utilizzo di un nome variabile di lunghezza zero"
 
-#: src/main/names.c:1124
+#: src/main/names.c:1123
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr ""
 
-#: src/main/names.c:1153
+#: src/main/names.c:1152
 msgid "invalid .Internal() argument"
 msgstr "argomento .Internal() non valido"
 
-#: src/main/names.c:1156
+#: src/main/names.c:1155
 msgid "invalid internal function"
 msgstr "funzione interna non valida"
 
-#: src/main/names.c:1158
+#: src/main/names.c:1157
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "nessuna funzione interna \"%s\""
@@ -5839,174 +5838,174 @@ msgstr "confronto tra questi tipi non implementato"
 msgid "invalid comparison with complex values"
 msgstr "confronto tra valori complessi non ammissibile"
 
-#: src/main/saveload.c:199 src/main/saveload.c:204 src/main/saveload.c:213
-#: src/main/saveload.c:222 src/main/saveload.c:231 src/main/saveload.c:240
-#: src/main/saveload.c:244 src/main/saveload.c:253 src/main/saveload.c:1369
-#: src/main/saveload.c:1374 src/main/saveload.c:1418 src/main/saveload.c:1486
-#: src/main/saveload.c:1495 src/main/serialize.c:330 src/main/serialize.c:337
-#: src/main/serialize.c:1959 src/main/serialize.c:1967
+#: src/main/saveload.c:198 src/main/saveload.c:203 src/main/saveload.c:212
+#: src/main/saveload.c:221 src/main/saveload.c:230 src/main/saveload.c:239
+#: src/main/saveload.c:243 src/main/saveload.c:252 src/main/saveload.c:1368
+#: src/main/saveload.c:1373 src/main/saveload.c:1417 src/main/saveload.c:1485
+#: src/main/saveload.c:1494 src/main/serialize.c:329 src/main/serialize.c:336
+#: src/main/serialize.c:1958 src/main/serialize.c:1966
 msgid "read error"
 msgstr "errore di lettura"
 
-#: src/main/saveload.c:331
+#: src/main/saveload.c:330
 msgid "a I read error occurred"
 msgstr "si è verificato un errore I in lettura"
 
-#: src/main/saveload.c:341
+#: src/main/saveload.c:340
 msgid "a R read error occurred"
 msgstr "si è verificato un errore R in lettura"
 
-#: src/main/saveload.c:351
+#: src/main/saveload.c:350
 msgid "a C read error occurred"
 msgstr "si è verificato un errore C in lettura"
 
-#: src/main/saveload.c:361
+#: src/main/saveload.c:360
 msgid "a S read error occurred"
 msgstr "si è verificato un errore S in lettura"
 
-#: src/main/saveload.c:386 src/main/saveload.c:394 src/main/saveload.c:402
-#: src/main/saveload.c:1582 src/main/saveload.c:1590
+#: src/main/saveload.c:385 src/main/saveload.c:393 src/main/saveload.c:401
+#: src/main/saveload.c:1581 src/main/saveload.c:1589
 msgid "a read error occurred"
 msgstr "si è verificato un errore in lettura"
 
-#: src/main/saveload.c:466
+#: src/main/saveload.c:465
 msgid "unresolved node during restore"
 msgstr "nodo non ricostruito durante la fase di ripristino"
 
-#: src/main/saveload.c:487
+#: src/main/saveload.c:486
 #, c-format
 msgid "restore compatibility error - no version %d compatibility"
 msgstr ""
 "errore di compatibilità in fase di ripristino - non c'è compatibilità con la "
 "versione %d"
 
-#: src/main/saveload.c:571 src/main/saveload.c:639
+#: src/main/saveload.c:570 src/main/saveload.c:638
 msgid "bad SEXP type in data file"
 msgstr "tipo SEXP errato nel file dei dati"
 
-#: src/main/saveload.c:585
+#: src/main/saveload.c:584
 msgid "mismatch on types"
 msgstr "disaccordo sui tipi"
 
-#: src/main/saveload.c:702
+#: src/main/saveload.c:701
 msgid "cannot save file position while restoring data"
 msgstr ""
 "non possono registrare la posizione del file durante il ripristino dei dati"
 
-#: src/main/saveload.c:715
+#: src/main/saveload.c:714
 msgid "cannot restore file position while restoring data"
 msgstr ""
 "non posso rispristinare la posizione del file durante il ripristino dei dati"
 
-#: src/main/saveload.c:908
+#: src/main/saveload.c:907
 msgid "base namespace is not preserved in version 1 workspaces"
 msgstr "il namespace di base non viene conservato nei workspace versione 1"
 
-#: src/main/saveload.c:910
+#: src/main/saveload.c:909
 msgid "cannot save namespace in version 1 workspaces"
 msgstr "non posso salvare i namespace nella versione 1 dei workspace"
 
-#: src/main/saveload.c:912
+#: src/main/saveload.c:911
 msgid ""
 "cannot save environment with locked/active bindingsin version 1 workspaces"
 msgstr ""
 "non posso registrare l'environment con legami bloccati/attivi nei workspace "
 "versione 1"
 
-#: src/main/saveload.c:936
+#: src/main/saveload.c:935
 msgid "cannot save weak references in version 1 workspaces"
 msgstr "non posso registrare riferimenti deboli nei workspace della versione 1"
 
-#: src/main/saveload.c:1014
+#: src/main/saveload.c:1013
 msgid "NewWriteVec called with non-vector type"
 msgstr "NewWriteVec chiamata con tipo non vettore"
 
-#: src/main/saveload.c:1077
+#: src/main/saveload.c:1076
 msgid "cannot save byte code objects in version 1 workspaces"
 msgstr "non posso salve oggetti byte code in workspace versione 1"
 
-#: src/main/saveload.c:1079
+#: src/main/saveload.c:1078
 #, c-format
 msgid "NewWriteItem: unknown type %i"
 msgstr "NewWriteItem: tipo %i sconosciuto"
 
-#: src/main/saveload.c:1209
+#: src/main/saveload.c:1208
 msgid "NewReadVec called with non-vector type"
 msgstr "NewReadVec chiamato con tipo non vettore"
 
-#: src/main/saveload.c:1274
+#: src/main/saveload.c:1273
 msgid "cannot read byte code objects from version 1 workspaces"
 msgstr "non posso leggere oggetti byte code in workspace versione 1"
 
-#: src/main/saveload.c:1276
+#: src/main/saveload.c:1275
 #, c-format
 msgid "NewReadItem: unknown type %i"
 msgstr "NewReadItem: tipo %i sconosciuto"
 
-#: src/main/saveload.c:1428
+#: src/main/saveload.c:1427
 msgid "out of memory reading ascii string"
 msgstr "memoria esaurita durante la lettura di una stringa ascii"
 
-#: src/main/saveload.c:1553
+#: src/main/saveload.c:1552
 msgid "a binary read error occurred"
 msgstr "si è verificato un errore in lettura binaria"
 
-#: src/main/saveload.c:1568 src/main/saveload.c:1669
+#: src/main/saveload.c:1567 src/main/saveload.c:1668
 msgid "out of memory reading binary string"
 msgstr "memoria esaurita durante la lettura di una stringa binaria"
 
-#: src/main/saveload.c:1573
+#: src/main/saveload.c:1572
 msgid "a binary string read error occurred"
 msgstr "si è erificato un errore durante la lettura di una stringa binaria"
 
-#: src/main/saveload.c:1633
+#: src/main/saveload.c:1632
 msgid "an xdr integer data write error occurred"
 msgstr "si è verificato un errore in scrittura di un intero in formato xdr"
 
-#: src/main/saveload.c:1640
+#: src/main/saveload.c:1639
 msgid "an xdr integer data read error occurred"
 msgstr "si è verificato un errore in lettura di un intero in formato xdr"
 
-#: src/main/saveload.c:1655 src/main/saveload.c:1674
+#: src/main/saveload.c:1654 src/main/saveload.c:1673
 msgid "an xdr string data write error occurred"
 msgstr "si è verificato un errore in scrittura di una stringa in formato xdr"
 
-#: src/main/saveload.c:1682
+#: src/main/saveload.c:1681
 msgid "an xdr real data write error occurred"
 msgstr ""
 "si è verificato un errore in scrittura di un numero reale in formato xdr"
 
-#: src/main/saveload.c:1689
+#: src/main/saveload.c:1688
 msgid "an xdr real data read error occurred"
 msgstr "si è verificato un errore in lettura di un numeor reale in formato xdr"
 
-#: src/main/saveload.c:1696
+#: src/main/saveload.c:1695
 msgid "an xdr complex data write error occurred"
 msgstr ""
 "si è verificato un errore in scrittura di un numero complesso in formato xdr"
 
-#: src/main/saveload.c:1703
+#: src/main/saveload.c:1702
 msgid "an xdr complex data read error occurred"
 msgstr ""
 "si è verificato un errore in lettura di un numero complesso in formato xdr"
 
-#: src/main/saveload.c:1771 src/main/serialize.c:1615
-#: src/main/serialize.c:2127 src/modules/internet/internet.c:349
+#: src/main/saveload.c:1770 src/main/serialize.c:1614
+#: src/main/serialize.c:2126 src/modules/internet/internet.c:349
 #: src/modules/internet/internet.c:407 src/modules/internet/internet.c:512
 msgid "write failed"
 msgstr "scrittura non riuscita"
 
-#: src/main/saveload.c:1897
+#: src/main/saveload.c:1896
 msgid "restore file may be empty -- no data loaded"
 msgstr "il file di restore potrebbe essere vuoto - nessun dato caricato"
 
-#: src/main/saveload.c:1899
+#: src/main/saveload.c:1898
 msgid "restore file may be from a newer version of R -- no data loaded"
 msgstr ""
 "il file di ripristino potrebbe provenire da una versione troppo recente di R "
 "- dati non caricati"
 
-#: src/main/saveload.c:1901
+#: src/main/saveload.c:1900
 msgid "bad restore file magic number (file may be corrupted) -- no data loaded"
 msgstr ""
 "numero magico errato del file di ripristino (il file potrebbe essere "
@@ -6050,36 +6049,36 @@ msgstr "lettura XDR non avvenuta"
 msgid "cannot save data -- unable to open '%s': %s"
 msgstr "impossibile scrivere i dati - impossibile aprire %s"
 
-#: src/main/saveload.c:2230 src/main/serialize.c:1808
+#: src/main/saveload.c:2230 src/main/serialize.c:1807
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr "non posso scrivere su una connessione in formato %d"
 
-#: src/main/saveload.c:2242
+#: src/main/saveload.c:2248
 msgid "connection not open for writing"
 msgstr "connessione non aperta in scrittura"
 
-#: src/main/saveload.c:2251
+#: src/main/saveload.c:2257
 msgid "cannot save XDR format to a text-mode connection"
 msgstr "non posso salvare in formato XDR su una connessione in modo 'text'"
 
-#: src/main/saveload.c:2261 src/main/serialize.c:1723
-#: src/main/serialize.c:1737 src/main/serialize.c:1857
-#: src/main/serialize.c:1879
+#: src/main/saveload.c:2267 src/main/serialize.c:1722
+#: src/main/serialize.c:1736 src/main/serialize.c:1856
+#: src/main/serialize.c:1878
 msgid "error writing to connection"
 msgstr "errore di scrittura sulla connessione"
 
-#: src/main/saveload.c:2322
+#: src/main/saveload.c:2332
 #, fuzzy
 msgid "connection not open for reading"
 msgstr "connessione non aperta in lettura"
 
-#: src/main/saveload.c:2335
+#: src/main/saveload.c:2345
 #, fuzzy
 msgid "no input is available"
 msgstr "non esiste un meccanismo di gestione history"
 
-#: src/main/saveload.c:2355
+#: src/main/saveload.c:2368
 msgid ""
 "the input does not start with a magic number compatible with loading from a "
 "connection"
@@ -6238,87 +6237,87 @@ msgstr "'a' e 'b' devono essere finiti"
 msgid "argument must be non-negative"
 msgstr "l'argomento deve essere di tipo environment"
 
-#: src/main/serialize.c:224 src/main/serialize.c:254 src/main/serialize.c:277
+#: src/main/serialize.c:223 src/main/serialize.c:253 src/main/serialize.c:276
 msgid "unknown or inappropriate output format"
 msgstr "risultato in formato sconosciuto o inappropriato"
 
-#: src/main/serialize.c:495
+#: src/main/serialize.c:494
 msgid "binary format is deprecated; using xdr instead"
 msgstr "il formato binario è stato deprecato; utilizza xdr piuttosto"
 
-#: src/main/serialize.c:503
+#: src/main/serialize.c:502
 msgid "must specify ascii, binary, or xdr format"
 msgstr "si deve specificare un formato ascii, binary o xdr"
 
-#: src/main/serialize.c:504
+#: src/main/serialize.c:503
 msgid "unknown output format"
 msgstr "formato output sconosciuto"
 
-#: src/main/serialize.c:535
+#: src/main/serialize.c:534
 msgid "unknown input format"
 msgstr "formato input sconosciuto"
 
-#: src/main/serialize.c:540
+#: src/main/serialize.c:539
 msgid "input format does not match specified format"
 msgstr "il formato di input non coincide con quello specificato"
 
-#: src/main/serialize.c:740
+#: src/main/serialize.c:739
 msgid "no restore method available"
 msgstr "nessun metodo di restore disponibile"
 
-#: src/main/serialize.c:771
+#: src/main/serialize.c:770
 msgid "names in persistent strings are currently ignored"
 msgstr "i nomi nelle stringhe persistentivengon ignorati"
 
-#: src/main/serialize.c:824
+#: src/main/serialize.c:823
 #, c-format
 msgid "'%s' may not be available when loading"
 msgstr "'%s' potrebbe non essre disponibile durante il caricamento"
 
-#: src/main/serialize.c:831
+#: src/main/serialize.c:830
 msgid "namespaces may not be available when loading"
 msgstr "i namespace potrebbero non essere disponibili durante il caricamento"
 
-#: src/main/serialize.c:936
+#: src/main/serialize.c:935
 msgid "this version of R cannot write byte code objects"
 msgstr "questa versione di R non può scrivere oggetti byte code"
 
-#: src/main/serialize.c:945
+#: src/main/serialize.c:944
 #, c-format
 msgid "WriteItem: unknown type %i"
 msgstr "WriteItem: tipo %i sconosciuto"
 
-#: src/main/serialize.c:1115
+#: src/main/serialize.c:1114
 #, c-format
 msgid "version %d not supported"
 msgstr "versione %d non supportata"
 
-#: src/main/serialize.c:1143
+#: src/main/serialize.c:1142
 msgid "reference index out of range"
 msgstr "indice di riferimento fuori dal campo di variazione"
 
-#: src/main/serialize.c:1173
+#: src/main/serialize.c:1172
 msgid "names in persistent strings are not supported yet"
 msgstr "i nomi delle stringhe persistenti non sono ancora supportati"
 
-#: src/main/serialize.c:1389
+#: src/main/serialize.c:1388
 msgid "this version of R cannot read byte code objects"
 msgstr "questa versione di R non può leggere oggetti byte code"
 
-#: src/main/serialize.c:1392
+#: src/main/serialize.c:1391
 msgid "this version of R cannot read class references"
 msgstr "questa versione di R non può leggere riferimenti di classe"
 
-#: src/main/serialize.c:1394
+#: src/main/serialize.c:1393
 msgid "this version of R cannot read generic function references"
 msgstr "questa versione non può leggere riferimenti a funzioni generiche"
 
-#: src/main/serialize.c:1405
+#: src/main/serialize.c:1404
 #, c-format
 msgid "ReadItem: unknown type %i, perhaps written by later version of R"
 msgstr ""
 
-#: src/main/serialize.c:1539
+#: src/main/serialize.c:1538
 #, c-format
 msgid ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d.%"
@@ -6327,7 +6326,7 @@ msgstr ""
 "impossibile leggere workspace versione non ancora ufficiale %d scritto dalla "
 "versione sperimentale di R %d.%d.%d"
 
-#: src/main/serialize.c:1543
+#: src/main/serialize.c:1542
 #, c-format
 msgid ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
@@ -6336,82 +6335,82 @@ msgstr ""
 "impossibile leggere workspace versione %d scritto da R %d.%d.%d; necessaria "
 "R %d.%d.%d o superiore"
 
-#: src/main/serialize.c:1622
+#: src/main/serialize.c:1621
 #, fuzzy
 msgid "read failed"
 msgstr "lettura XDR non avvenuta"
 
-#: src/main/serialize.c:1685
+#: src/main/serialize.c:1684
 #, fuzzy
 msgid "error reading from ascii connection"
 msgstr "errore durante lettura sulla connessione"
 
-#: src/main/serialize.c:1687
+#: src/main/serialize.c:1686
 #, fuzzy
 msgid "unexpected format in ascii connection"
 msgstr "non posso leggere da questa connessione"
 
-#: src/main/serialize.c:1692 src/main/serialize.c:1706
+#: src/main/serialize.c:1691 src/main/serialize.c:1705
 msgid "error reading from connection"
 msgstr "errore durante lettura sulla connessione"
 
-#: src/main/serialize.c:1747
+#: src/main/serialize.c:1746
 msgid "only ascii format can be written to text mode connections"
 msgstr ""
 "possono essere scritti solo i formati ascii su connessioni in modalità testo"
 
-#: src/main/serialize.c:1761
+#: src/main/serialize.c:1760
 msgid "only ascii format can be read from text mode connections"
 msgstr ""
 "possono esser eletti solo formati ascii in connessioni in modalità testo"
 
-#: src/main/serialize.c:1806
+#: src/main/serialize.c:1805
 msgid "bad version value"
 msgstr "valore versione sbagliato"
 
-#: src/main/serialize.c:1927 src/main/serialize.c:1949
-#: src/main/serialize.c:2010
+#: src/main/serialize.c:1926 src/main/serialize.c:1948
+#: src/main/serialize.c:2009
 msgid "serialization is too large to store in a raw vector"
 msgstr ""
 
-#: src/main/serialize.c:1931
+#: src/main/serialize.c:1930
 msgid "cannot allocate buffer"
 msgstr "impossibile allocare il buffer"
 
-#: src/main/serialize.c:2105 src/main/serialize.c:2174
+#: src/main/serialize.c:2104 src/main/serialize.c:2173
 msgid "not a proper file name"
 msgstr "non è un vero nome file"
 
-#: src/main/serialize.c:2107
+#: src/main/serialize.c:2106
 #, fuzzy
 msgid "not a proper raw vector"
 msgstr "non è un vettore semplice"
 
-#: src/main/serialize.c:2128
+#: src/main/serialize.c:2127
 msgid "could not determine file position"
 msgstr "impossibile determinare la posizione del file"
 
-#: src/main/serialize.c:2176
+#: src/main/serialize.c:2175
 msgid "bad offset/length argument"
 msgstr "argomento 'offset/length' errato"
 
-#: src/main/serialize.c:2200 src/main/serialize.c:2210
-#: src/main/serialize.c:2220 src/main/serialize.c:2233
+#: src/main/serialize.c:2199 src/main/serialize.c:2209
+#: src/main/serialize.c:2219 src/main/serialize.c:2232
 #, c-format
 msgid "seek failed on %s"
 msgstr "posizionamento non riuscito su %s"
 
-#: src/main/serialize.c:2214 src/main/serialize.c:2224
-#: src/main/serialize.c:2237
+#: src/main/serialize.c:2213 src/main/serialize.c:2223
+#: src/main/serialize.c:2236
 #, c-format
 msgid "read failed on %s"
 msgstr "lettura non riuscita su %s"
 
-#: src/main/serialize.c:2256
+#: src/main/serialize.c:2255
 msgid "bad environment"
 msgstr "errato environment"
 
-#: src/main/serialize.c:2258
+#: src/main/serialize.c:2257
 msgid "bad variable names"
 msgstr "nomi errati delle variabili"
 
