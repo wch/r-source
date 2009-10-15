@@ -855,7 +855,7 @@ msgid "Trying to find a methods table in a non-generic function"
 msgstr "Tentative de recherche d'une table de méthodes dans une fonction non générique"
 
 msgid "The \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class \"%s\""
-msgstr "L'option \"ambiguousMethodSelection\" doit être une fonction à appeler comme action de condition ; un objet de classe \"%s\ est fourni à la place"
+msgstr "L'option \"ambiguousMethodSelection\" doit être une fonction à appeler comme action de condition ; un objet de classe \"%s\" est fourni à la place"
 
 msgid "No simply inherited methods found for function \"%s\"; using non-simple method"
 msgstr "Aucune méthode de simple héritage n'est trouvée pour la fonction \"%s\" ; utilisation d'une méthode à héritage plus complexe"
