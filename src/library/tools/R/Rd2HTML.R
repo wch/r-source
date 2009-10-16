@@ -1,4 +1,4 @@
-#  File src/library/tools/R/RdConv2.R
+#  File src/library/tools/R/Rd2HTML.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -444,7 +444,7 @@ Rd2HTML <-
                },
                "\\tabular" = writeTabular(block),
                "\\if" =,
-               "\\ifelse" = 
+               "\\ifelse" =
                	    if (testRdConditional("html", block, Rdfile))
 			writeContent(block[[2L]], tag)
 		    else if (tag == "\\ifelse")

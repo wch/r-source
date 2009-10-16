@@ -225,7 +225,7 @@ function(x, ...)
                 att <- attributes(x)
                 xx <- sub("/html/([^/]*)\\.html$", "/help/\\1", x)
                 attributes(xx) <- att
-                attr(xx, "type") <- "help"
+                attr(xx, "type") <- "text"
                 print(xx)
             }
         } else if(type == "text") {
