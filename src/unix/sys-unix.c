@@ -50,6 +50,8 @@
 # include <sys/resource.h>
 #endif
 
+#include <errno.h>
+
 extern Rboolean LoadInitFile;
 
 /*
@@ -265,11 +267,15 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_POPEN
 	FILE *fp;
 	char *x = "r", buf[INTERN_BUFSIZE];
+	const char *cmd;
 	int i, j;
 	SEXP tchar, rval;
 
 	PROTECT(tlist);
-	fp = R_popen(translateChar(STRING_ELT(CAR(args), 0)), x);
+	cmd = translateChar(STRING_ELT(CAR(args), 0));
+	if(!(fp = R_popen(cmd, x)))
+	    error(_("cannot popen '%s', probable reason '%s'"),
+		  cmd, strerror(errno));
 	for (i = 0; fgets(buf, INTERN_BUFSIZE, fp); i++) {
 	    read = strlen(buf);
 	    if(read >= INTERN_BUFSIZE - 1)
