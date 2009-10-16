@@ -1,6 +1,6 @@
 % File src/library/stats/man/fisher.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{fisher.test}
@@ -117,6 +117,11 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   New York: Wiley.
   Pages 59--66.
 
+  Agresti, A. (2002)
+  \emph{Categorical data analysis}. Second edition.
+  New York: Wiley.
+  Pages 91--101.
+  
   Fisher, R. A. (1935)
   The logic of inductive inference.
   \emph{Journal of the Royal Statistical Society Series A} \bold{98},
@@ -150,7 +155,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   \code{\link{chisq.test}}
 }
 \examples{
-## Agresti (1990), p. 61f, Fisher's Tea Drinker
+## Agresti (1990, p. 61f; 2002, p. 91) Fisher's Tea Drinker
 ## A British woman claimed to be able to distinguish whether milk or
 ##  tea was added to the cup first.  To test, she was given 8 cups of
 ##  tea, in four of which milk was added first.  The null hypothesis
