@@ -35,19 +35,15 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
                          basename(packagePath)), domain = NA)
 	file <- file[1L]
     }
-    pkg <- basename(packagePath)
+    pkgname <- basename(packagePath)
     lib <- dirname(packagePath)
     encoding <- NULL
-    RdDB <- file.path(packagePath, "help", pkg)
-    if(!file.exists(paste(RdDB, "rdx", sep=".")))
-        stop(gettextf("package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed", sQuote(pkg)), domain = NA)
     zfile <- tempfile("Rex")
     encoding <- "UTF-8"
-    tools::Rd2ex(tools:::fetchRdDB(RdDB, sub("\\.R$", "", basename(file))),
-                 zfile)
+    tools::Rd2ex(.getHelpFile(file), zfile)
     on.exit(unlink(zfile))
-    if(pkg != "base")
-        library(pkg, lib.loc = lib, character.only = TRUE)
+    if(pkgname != "base")
+        library(pkgname, lib.loc = lib, character.only = TRUE)
     if(!is.logical(setRNG) || setRNG) {
 	## save current RNG state:
 	if((exists(".Random.seed", envir = .GlobalEnv))) {

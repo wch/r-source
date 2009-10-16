@@ -198,38 +198,25 @@ function(x, ...)
 		pkgname <- basename(dirpath)
 		browseURL(paste("http://127.0.0.1:", tools:::httpdPort,
                                 "/library/", pkgname, "/html/", basename(file),
-                                sep=""), browser)
+                                ".html", sep = ""), browser)
             } else {
                 warning("HTML help is unavailable", call. = FALSE)
                 att <- attributes(x)
                 xx <- sub("/html/([^/]*)\\.html$", "/help/\\1", x)
                 attributes(xx) <- att
-                attr(xx, "type") <- "help"
+                attr(xx, "type") <- "text"
                 print(xx)
             }
         } else if(type == "text") {
-            path <- dirname(file)
-            dirpath <- dirname(path)
-            pkgname <- basename(dirpath)
-            RdDB <- file.path(path, pkgname)
-            if(!file.exists(paste(RdDB, "rdx", sep=".")))
-                stop(gettextf("package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed", sQuote(pkgname)), domain = NA)
-            temp <- tools::Rd2txt(tools:::fetchRdDB(RdDB, basename(file)),
-                                  out=tempfile("Rtxt"), package=pkgname)
+            pkgname <- basename(dirname(file))
+            temp <- tools::Rd2txt(.getHelpFile(file), out = tempfile("Rtxt"),
+                                  package = pkgname)
             file.show(temp, title = gettextf("R Help on '%s'", topic),
                       delete.file = TRUE)
         }
         else if(type %in% c("ps", "postscript", "pdf")) {
-            ## look for stored Rd files
-            path <- dirname(file) # .../pkg/help
-            dirpath <- dirname(path)
-            pkgname <- basename(dirpath)
-            RdDB <- file.path(dirpath, "help", pkgname)
-            if(!file.exists(paste(RdDB, "rdx", sep=".")))
-                stop(gettextf("package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed", sQuote(pkgname)), domain = NA)
-            key <- sub("\\.tex$", "", basename(file))
             tf2 <- tempfile("Rlatex")
-            tools::Rd2latex(tools:::fetchRdDB(RdDB, key), tf2)
+            tools::Rd2latex(.getHelpFile(file), tf2)
             .show_help_on_topic_offline(tf2, topic, type)
             unlink(tf2)
         }
@@ -266,4 +253,18 @@ function(x, ...)
     else utils:::offline_help_helper
     helper(texfile, type)
     invisible()
+}
+
+
+.getHelpFile <- function(file)
+{
+    path <- dirname(file)
+    dirpath <- dirname(path)
+    if(!file.exists(dirpath))
+        stop(gettextf("invalid '%s' argument", "file"), domain = NA)
+    pkgname <- basename(dirpath)
+    RdDB <- file.path(path, pkgname)
+    if(!file.exists(paste(RdDB, "rdx", sep=".")))
+                stop(gettextf("package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed", sQuote(pkgname)), domain = NA)
+    tools:::fetchRdDB(RdDB, basename(file))
 }

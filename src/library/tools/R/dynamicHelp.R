@@ -257,31 +257,15 @@ httpd <- function(path, query, ...)
         }
 
         ## Now we know which document we want in which package
-        ## It might be prebuilt, but we prefer to generate a dynamic version
-
 	dirpath <- dirname(path)
 	pkgname <- basename(dirpath)
 	RdDB <- file.path(path, pkgname)
-	if(file.exists(paste(RdDB, "rdx", sep="."))) {
-	    outfile <- tempfile("Rhttpd")
-	    temp <- Rd2HTML(fetchRdDB(RdDB, helpdoc),
-                            out = outfile, package = dirpath,
-                            dynamic = TRUE)
-	    on.exit(unlink(outfile))
-	    return(list(payload = paste(readLines(temp), collapse = "\n")))
-	} else {
-            ## Try for pre-generated HTML.
-            file <- paste(file.path(dirpath, "html", helpdoc),
-                          "html", sep = ".")
-            if(file.exists(file)) {
-                if(.Platform$OS.type == "windows") return(unfix(file))
-                return(list(file = file))
-            }
-            ## we probably should not get here
-            msg <- gettextf("Unable to locate help document %s in package %s",
-                           mono(h0), mono(pkg))
-            return(error_page(msg))
-        }
+        outfile <- tempfile("Rhttpd")
+        Rd2HTML(utils:::.getHelpFile(file.path(path, helpdoc)),
+                out = outfile, package = dirpath,
+                dynamic = TRUE)
+        on.exit(unlink(outfile))
+        return(list(payload = paste(readLines(outfile), collapse = "\n")))
     } else if (grepl(docRegexp, path)) {
         ## ----------------------- package doc directory ---------------------
     	pkg <- sub(docRegexp, "\\1", path)
