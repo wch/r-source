@@ -2512,7 +2512,11 @@ File @file{AnIndex} is a two-column tab-delimited file: the first column
 contains the aliases defined in the help files and the second the
 basename (without the @file{.Rd} or @file{.rd} extension) of the file
 containing that alias.  It is read by @code{utils:::index.search} to
-search for files matching a topic (alias).
+search for files matching a topic (alias), and read by @code{scan} in
+@code{utils:::matchAvailableTopics}, part of the completion system.
+
+File @file{aliases.rds} is the same information as @file{AnIndex} as a
+named character vector, for future use.
 
 
 @node Graphics Devices, Tools, Package Structure, Top
