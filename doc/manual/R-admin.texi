@@ -3665,14 +3665,15 @@ distribution).
 
 @menu
 * 64-bit builds::               
+* Snow Leopard::                
 @end menu
 
-@node 64-bit builds,  , Mac OS X, Mac OS X
+@node 64-bit builds, Snow Leopard, Mac OS X, Mac OS X
 @subsection 64-bit builds
 
-64-bit builds are supported on 10.5.x (Leopard) and later (Snow
-Leopard).  All that is needed is to select suitable compiler options,
-e.g.@: for recent Intel Macs
+64-bit builds are supported on 10.5.x (Leopard) and later.  All that is
+needed is to select suitable compiler options, e.g.@: for recent Intel
+Macs
 
 @example
 CC='gcc -arch x86_64'
@@ -3683,9 +3684,24 @@ OBJC='gcc -arch x86_64'
 @end example
 
 @noindent
-in @file{config.site} or on the @command{configure} command line.
+in @file{config.site} or on the @command{configure} command line.  (Or
+on Leopard specify @option{gcc-4.2} etc: those versions are the default
+on Snow Leopard.)
 
-On Snow Leopard you may need to specify @option{-arch i386} for a 32-bit build.
+@node Snow Leopard,  , 64-bit builds, Mac OS X
+@subsection Snow Leopard
+
+On Snow Leopard you will most likely to need to specify @option{-arch
+i386} for a 32-bit build and @option{-arch x86_64} for a 64-bit build:
+the Apple compilers default to 64-bit but the @command{gfortran}
+supplied on @acronym{CRAN} defaults to 32-bit.
+
+@command{gcc-4.2} is the default compiler, and is best matched with
+@command{gfortran-4.2} from the @R{} Mac OS X distribution.
+
+Another quirk is that people have found that the X11 libraries are not
+in the default linking path, so something like
+@samp{LIBS=-L/usr/X11/lib} may be required.
 
 @node Solaris, AIX, Mac OS X, Platform notes
 @section Solaris
