@@ -208,7 +208,7 @@ function(x, ...)
                 print(xx)
             }
         } else if(type == "text") {
-            pkgname <- basename(dirname(file))
+            pkgname <- basename(dirname(dirname(file)))
             temp <- tools::Rd2txt(.getHelpFile(file), out = tempfile("Rtxt"),
                                   package = pkgname)
             file.show(temp, title = gettextf("R Help on '%s'", topic),
