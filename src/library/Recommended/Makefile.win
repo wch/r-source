@@ -43,3 +43,4 @@ clean:
 ## Hardcoded dependencies (see '../../../share/make/vars.mk')
 mgcv.ts: nlme.ts MASS.ts
 nlme.ts: lattice.ts
+class.ts: MASS.ts
