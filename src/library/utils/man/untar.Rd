@@ -55,12 +55,13 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   and since 1.15 are able to detect the type of compression
   automatically: version 1.20 added support for \command{lzma} and
   version 1.22 for \command{xz} compression using LZMA2.  For other
-  flavours environment variable \env{R_ZIPCMD} gives the command to
-  decompress \command{gzip} files, and \command{R_BZIPCMD} for its files.
-  (There is a \command{bsdtar} command from the \samp{libarchive}
-  project used by Mac OS 10.6 (\sQuote{Snow Leopard}) which can also
-  detect compression automagically as can the \command{tar} from the
-  \sQuote{Heirloom Toolchest}.)
+  flavours of \command{tar}, environment variable \env{R_GZIPCMD} gives
+  the command to decompress \command{gzip} and \command{compress} files,
+  and \command{R_BZIPCMD} for its files.  (There is a \command{bsdtar}
+  command from the \samp{libarchive} project used by Mac OS 10.6
+  (\sQuote{Snow Leopard}) which can also detect \command{gzip} and
+  \command{bzip2} compression automatically, as can the \command{tar}
+  from the \sQuote{Heirloom Toolchest} project.)
   
   Arguments \code{compressed}, \code{extras} and \code{verbose} are only
   used when an external \command{tar} is used.
@@ -68,12 +69,12 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   The internal implementation restores links (hard and soft) as symbolic
   links on a Unix-alike, and as file copies on Windows.  Since it uses
   \code{\link{gzfile}} to read a file it can handle files compressed by
-  any of the methods that function can handle: at least \command{gzip},
-  \command{bzip2} and \command{xz} compression, and some types of
-  \command{lzma} compression.  It does not guard against restoring
-  absolute file paths, as some \command{tar} implementations do.  It
-  will create the parent directories for directories or files in the
-  archive if necessary.
+  any of the methods that function can handle: at least
+  \command{compress}, \command{gzip}, \command{bzip2} and \command{xz}
+  compression, and some types of \command{lzma} compression.  It does
+  not guard against restoring absolute file paths, as some \command{tar}
+  implementations do.  It will create the parent directories for
+  directories or files in the archive if necessary.
   
   The standards only support ASCII filenames (indeed, only alphanumeric
   plus period, underscore and hyphen).  \code{untar} makes no attempt to map

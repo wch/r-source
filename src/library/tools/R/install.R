@@ -967,16 +967,23 @@
         if (debug) message("processing ", sQuote(pkg), domain = NA)
         if (.file_test("-f", pkg)) {
             if (debug) message("a file", domain = NA)
-            pkgname <- basename(pkg)
-            ## Also allow for 'package.tgz' ...
-            pkgname <- sub("\\.(tgz|tar\\.gz|tar\\.bz2)$", "", pkgname)
-            pkgname <- sub("_.*", "", pkgname)
-            ## force the use of internal untar
+            of <- dir(tmpdir, full.names = TRUE)
+            ## force the use of internal untar,
+            ## so e.g. .tar.xz works everywhere
             if (utils:::untar2(pkg, exdir = tmpdir))
                 errmsg("error unpacking tarball")
+            ## Now see what we got
+            nf <- dir(tmpdir, full.names = TRUE)
+            new <- nf[!nf %in% of]
+            if (!length(new))
+                errmsg("cannot extract package from ", sQuote(pkg))
+            if (length(new) > 1L)
+                errmsg("extracted multiple files from ", sQuote(pkg))
+            if (file.info(new)$isdir) pkgname <- basename(new)
+            else errmsg("cannot extract package from ", sQuote(pkg))
 
             ## If we have a binary bundle distribution, there should
-            ## be a DESCRIPTION file at top level.
+            ## be a DESCRIPTION file at top level. These are defunct
             if (file.exists(ff <- file.path(tmpdir, "DESCRIPTION"))) {
                 con <- read.dcf(ff, "Contains")
                 if (!is.na(con))

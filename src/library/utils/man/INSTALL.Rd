@@ -46,14 +46,10 @@
   
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names of directories.  \code{pkgs} may also contain
-  names of package archive files: these are then
-  extracted to a temporary directory.  Precisely what forms are accepted
-  depends on the system (see \code{\link{untar}}): this will certainly
-  include filenames of the form \file{pkg_version.tar.gz} as obtained
-  from CRAN, \file{pkg.tgz} and \file{pkg.tar.gz}, usually
-  \file{pkg_version.tar.bz2} and \file{pkg.tar.bz2}, and on systems with
-  recent toolsets, \file{pkg_version.ext} for any supported extension
-  such as \file{tar.lzma} and \file{tar.xz}.
+  names of package archive files: these are then extracted to a
+  temporary directory.  These are tarballs containing a single
+  directory, optionally compressed by \command{gzip}, \command{bzip2},
+  \command{xz} or \command{compress}.
 #ifdef unix
   Finally, binary package archive files (as created by
   \command{R CMD build --binary}) can be supplied.
