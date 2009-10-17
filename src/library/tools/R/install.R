@@ -971,11 +971,8 @@
             ## Also allow for 'package.tgz' ...
             pkgname <- sub("\\.(tgz|tar\\.gz|tar\\.bz2)$", "", pkgname)
             pkgname <- sub("_.*", "", pkgname)
-            res <- if (WINDOWS) {
-                utils::untar(pkg, exdir = chartr("\\", "/", tmpdir))
-            } else {
-                utils::untar(pkg, exdir = tmpdir)
-            }
+            ## force the use of internal untar
+            utils:::untar2(pkg, exdir = tmpdir)
             if (res) errmsg("error unpacking tarball")
 
             ## If we have a binary bundle distribution, there should

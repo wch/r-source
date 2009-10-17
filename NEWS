@@ -23,6 +23,10 @@ NEW FEATURES
 	connections except the compressed file connections gzfile(),
 	bzfile() and xzfile() for which it means "rb".
 
+    o	R CMD INSTALL now uses the internal untar() in package utils:
+	this ensures that all platforms can install bzip2- and
+	xz-compressed tarballs.
+
 
 DEPRECATED & DEFUNCT
 
