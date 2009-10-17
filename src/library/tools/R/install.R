@@ -972,8 +972,8 @@
             pkgname <- sub("\\.(tgz|tar\\.gz|tar\\.bz2)$", "", pkgname)
             pkgname <- sub("_.*", "", pkgname)
             ## force the use of internal untar
-            utils:::untar2(pkg, exdir = tmpdir)
-            if (res) errmsg("error unpacking tarball")
+            if (utils:::untar2(pkg, exdir = tmpdir))
+                errmsg("error unpacking tarball")
 
             ## If we have a binary bundle distribution, there should
             ## be a DESCRIPTION file at top level.
