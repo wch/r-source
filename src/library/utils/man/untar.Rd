@@ -55,12 +55,12 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   and since 1.15 are able to detect the type of compression
   automatically: version 1.20 added support for \command{lzma} and
   version 1.22 for \command{xz} compression using LZMA2.  For other
-  flavours environment variable \env{R_ZIPCMD} gives the command to
-  decompress \command{gzip} files, and \command{R_BZIPCMD} for its files.
+  flavours of \command{tar}, environment variable \env{R_GZIPCMD} gives the command to
+  decompress \command{gzip} and \command{compress} files, and \command{R_BZIPCMD} for its files.
   (There is a \command{bsdtar} command from the \samp{libarchive}
   project used by Mac OS 10.6 (\sQuote{Snow Leopard}) which can also
-  detect compression automagically as can the \command{tar} from the
-  \sQuote{Heirloom Toolchest}.)
+  detect \command{gzip} an \command{bzip2} compression automatically,
+  as can the \command{tar} from the \sQuote{Heirloom Toolchest} project.)
   
   Arguments \code{compressed}, \code{extras} and \code{verbose} are only
   used when an external \command{tar} is used.
