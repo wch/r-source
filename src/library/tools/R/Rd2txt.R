@@ -594,15 +594,15 @@ Rd2txt <-
                            writeCodeBlock(block[[1L]], tag)
                        }
                   },
-                   "\\special" =,
                    UNKNOWN =,
                    VERB =,
                    RCODE =,
                    TEXT = writeCode(tabExpand(block)),
+                   "\\donttest" =,
+                   "\\special" =,
                    "\\var" = writeCodeBlock(block, tag),
                    "\\dots" =, # \ldots is not really allowed
                    "\\ldots" = put("..."),
-                   "\\donttest" = writeCodeBlock(block, tag),
                    "\\dontrun"= writeDR(block, tag),
                    COMMENT =,
                    "\\dontshow" =,
