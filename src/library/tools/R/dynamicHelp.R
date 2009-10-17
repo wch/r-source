@@ -274,9 +274,15 @@ httpd <- function(path, query, ...)
         if(!nzchar(docdir))
             return(error_page(gettextf("No docs found for package %s",
                                        mono(pkg))))
-        if(nzchar(rest)) {
+        if(nzchar(rest) && rest != "/") {
+            ## FIXME should we check existence here?
             file <- paste(docdir, rest, sep = "")
-            return(list(file = file, "content-type" = mime_type(path)))
+            if(isTRUE(file.info(file)$isdir))
+                return(.HTMLdirListing(file,
+                                       paste("/library/", pkg, "/doc", rest,
+                                             sep = "")))
+            else
+                return(list(file = file, "content-type" = mime_type(path)))
         } else {
             ## request to list <pkg>/doc
             return(.HTMLdirListing(docdir,
@@ -300,10 +306,10 @@ httpd <- function(path, query, ...)
         ## use updated version, e.g. of packages.html
         list(file = tmp)
     } else {
-        file <- if(grepl("^/doc/", path)) {
+        if(grepl("^/doc/", path)) {
             ## /doc/AUTHORS and so on.
-            file.path(R.home("doc"), sub("^/doc", "", path))
-        } else file.path(R.home(), path) # should not get here
+            file <- file.path(R.home("doc"), sub("^/doc", "", path))
+        } else return(error_page(gettextf("unsupported URL %s", mono(path))))
         if(!file.exists(file))
             error_page(gettextf("URL %s was not found", mono(path)))
         else

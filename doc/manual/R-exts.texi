@@ -1712,7 +1712,9 @@ as then no definition of the command is necessary.
 At install time an @HTML{} index for all vignettes is automatically
 created from the @code{\VignetteIndexEntry} statements unless a file
 @file{index.html} exists in directory @file{inst/doc}. This index is
-linked into the @HTML{} help system for each package.
+linked into the @HTML{} help system for each package.  If you do supply
+a @file{inst/doc/html/index.html} file it should contain only links to
+files under the installed @file{doc} directory.
 
 @node Submitting a package to CRAN, Package name spaces, Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}
