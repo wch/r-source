@@ -30,10 +30,11 @@ tabExpand <- function(x) {
 
 Rd2txt <-
     function(Rd, out="", package = "", defines=.Platform$OS.type,
-             stages = "render", outputEncoding = "", ...)
+             stages = "render", outputEncoding = "", width = 80L, ...)
 {
-    WIDTH <- 72L
-    HDR_WIDTH <- 70L
+    ## these attempt to mimic pre-2.10.0 layout
+    WIDTH <- 0.9 * width
+    HDR_WIDTH <- WIDTH - 2L
 
     ## we need to keep track of where we are.
     buffer <- character()	# Buffer not yet written to con
@@ -144,7 +145,7 @@ Rd2txt <-
 		    result <- c(result,
                                 strwrap(paste(buffer[start:(blankLines[i]-1L)],
                                               collapse = " "),
-                                        indent=first, exdent=indent))
+                                        WIDTH, indent = first, exdent = indent))
 		    first <- indent
                 }
                 result <- c(result, "")
