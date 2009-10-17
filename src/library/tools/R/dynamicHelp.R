@@ -288,6 +288,14 @@ httpd <- function(path, query, ...)
             return(.HTMLdirListing(docdir,
                                    paste("/library", pkg, "doc", sep="/")))
         }
+    } else if (grepl("^/library/", path)) {
+        descRegexp <- "^/library/+([^/]+)/+DESCRIPTION$"
+        if(grepl(descRegexp, path)) {
+            pkg <- sub(descRegexp, "\\1", path)
+            file <- system.file("DESCRIPTION", package = pkg)
+            return(list(file = file, "content-type" = "text/plain"))
+        } else
+            return(error_page(gettextf("Only help files, %s and files under %s in a package can be viewed", mono("DESCRIPTION"), mono("doc/"))))
     }
 
 
