@@ -695,6 +695,9 @@ BUG FIXES
     o	R CMD replaced TEXINPUTS rather than appending to it (as
 	documented and intended).
 
+    o	help.start() no longer fails on unix when "browser" is a
+	function.
+
 
 
 	**************************************************
