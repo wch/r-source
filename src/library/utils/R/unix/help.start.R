@@ -19,7 +19,7 @@ help.start <-
               browser = getOption("browser"), remote = NULL)
 {
     ## should always be set, but might be empty
-    if (length(browser) != 1 || !is.character(browser) || !nzchar(browser))
+    if (!is.function(browser) && (length(browser) != 1 || !is.character(browser) || !nzchar(browser)))
 	stop("invalid browser name, check options(\"browser\").")
     home <- if (is.null(remote)) {
         if (tools:::httpdPort == 0L) tools::startDynamicHelp()
