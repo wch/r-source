@@ -2598,8 +2598,8 @@ multi-threaded version of ATLAS, by specifying
 @end example
 
 Consult its file @file{INSTALL.txt} for how to build ATLAS with
-position-independent code (at least on version 3.8.0): this also
-describes how to build ATLAS as a shared library.
+position-independent code (at least on version 3.8.0 and later): this
+also describes how to build ATLAS as a shared library.
 
 ATLAS can also be used on Windows: see @pxref{Getting the source files}
 when building from source, and
