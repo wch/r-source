@@ -27,6 +27,7 @@ Copyright @copyright{} 1990 W.@: N.@: Venables@*
 Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith@*
 Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka@*
 Copyright @copyright{} 1997, 1998 M.@: Maechler@*
+Copyright @copyright{} 1997-- R Core Development Team@*
 @Rcopyright{1999}
 @end macro
 @end ifnottex
@@ -38,6 +39,7 @@ Copyright @copyright{} 1990 W.@: N.@: Venables
 Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith
 Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka
 Copyright @copyright{} 1997, 1998 M.@: Maechler
+Copyright @copyright{} 1997-- R Core Development Team@*
 @Rcopyright{1999}
 @end macro
 @end iftex
@@ -132,10 +134,10 @@ The current version of this document is @value{VERSION}.
 @unnumbered Preface
 
 This introduction to @R{} is derived from an original set of notes
-describing the @Sl{} and @SPLUS{} environments written by Bill Venables
-and David M. Smith (Insightful Corporation).  We have made a number of
-small changes to reflect differences between the @R{} and @Sl{}
-programs, and expanded some of the material.
+describing the @Sl{} and @SPLUS{} environments written in 1990--2 by
+Bill Venables and David M. Smith when at the University of Adelaide.  We
+have made a number of small changes to reflect differences between the
+@R{} and @Sl{} programs, and expanded some of the material.
 
 We would like to extend warm thanks to Bill Venables (and David Smith)
 for granting permission to distribute this modified version of the notes
