@@ -21,7 +21,7 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         dynamic = FALSE, no_links = FALSE, ...)
 
 Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
-       stages = "render", outputEncoding = "", ...)
+       stages = "render", outputEncoding = "", width = 80L, ...)
 
 Rd2latex(Rd, out = "", defines = .Platform$OS.type,
          stages = "render", outputEncoding = "ASCII", ...)
@@ -44,6 +44,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       Used by \command{R CMD \link{Rdconv}}.}
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
+  \item{width}{The intended page width (in characters) for which the
+      text rendering should be designed.}
   \item{...}{ additional parameters to pass to \code{\link{parse_Rd}} when
     \code{Rd} is a filename. }
 }
@@ -71,8 +73,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   only do a second-level search for links if required.
   
   \code{Rd2txt} will format text paragraphs to a width determined by
-  \code{\link{options}("width")}, with appropriate margins.  This
-  differs from the rendering in versions of \R < 2.10.0.
+  \code{width}, with appropriate margins.  The default is to be close to
+  the rendering in versions of \R < 2.10.0.
   
   \code{Rd2txt} will use directional quotes (see \code{\link{sQuote}})
   if option \code{"useFancyQuotes"} is true (the default) and
