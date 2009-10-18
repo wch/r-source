@@ -385,8 +385,9 @@ The server is disabled by setting the environment variable
 @env{R_DISABLE_HTTPD} to a non-empty value, either before @R{} is
 started or within the @R{} session before @HTML{} help (including
 @code{help.start}) is used.  It is also possible that system security
-measures will prevent the server from being started, for example if the
-loopback interface has been disabled.
+measures will prevent the server from being started, for example if
+the loopback interface has been disabled.  The @option{"help.ports"}
+option can be set to control the port used by the server.
 
 @node Making the manuals, Installation, Help options, Installing R under Unix-alikes
 @section Making the manuals

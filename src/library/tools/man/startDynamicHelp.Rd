@@ -5,6 +5,7 @@
 
 \name{startDynamicHelp}
 \alias{startDynamicHelp}
+\alias{help.ports}
 \title{Start the Dynamic HTML Help System}
 \description{
   This function starts the internal help server, so that HTML help pages
@@ -18,13 +19,17 @@ startDynamicHelp(start=TRUE)
     system.}
 }
 \details{
-  This function starts the internal HTTP server.  It tries up to 10
-  ports to find one not in use.  It can be disabled by setting the
-  environment variable \env{R_DISABLE_HTTPD} to a non-empty value.  It
-  is called by functions that need to use the server, so would rarely be
-  called directly by a user.
+  This function starts the internal HTTP server.  If
+  \code{option("help.ports")} is set to a vector of integer values,
+  \code{startDynamicHelp} will try those ports in order; otherwise, it
+  tries up to 10 random ports to find one not in use.  It can be
+  disabled by setting the environment variable \env{R_DISABLE_HTTPD}
+  to a non-empty value.
+  
+  \code{startDynamicHelp} is called by functions that need to use the
+  server, so would rarely be called directly by a user.
 
-  Note that \code{option(htmlhelp=TRUE)} must be set to actually make use
+  Note that \code{option(help_type="html")} must be set to actually make use
   of HTML help, although it might be the default for an \R installation.
 
   If the server cannot be started or is disabled,

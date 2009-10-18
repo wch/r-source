@@ -350,19 +350,23 @@ startDynamicHelp <- function(start=TRUE)
         message("starting httpd help server ...", appendLF = FALSE)
         utils::flush.console()
         OK <- FALSE
-	for(i in 1:10) {
-	    ## Choose a random port number.  The random seed might match
+        ports <- getOption("help.ports")
+        if (is.null(ports)) {
+	    ## Choose 10 random port numbers between 10000 and 32000.  
+	    ## The random seed might match
 	    ## on multiple instances, so add the time as well.  But the
 	    ## time may only be accurate to seconds, so rescale it to
 	    ## 5 minute units.
-	    u <- (runif(1) + unclass(Sys.time())/300) %% 1
-            tmp <- as.integer(10000 + 22000*u) # port between 10000 and 32000
+            ports <- 10000 + 22000*((runif(10) + unclass(Sys.time())/300) %% 1)
+        }
+        ports <- as.integer(ports)
+        for(i in seq_along(ports)) {
             ## the next can throw an R-level error,
             ## so do not assign port unless it succeeds.
-	    status <- .Internal(startHTTPD("127.0.0.1", tmp))
+	    status <- .Internal(startHTTPD("127.0.0.1", ports[i]))
 	    if (status == 0L) {
                 OK <- TRUE
-                httpdPort <<- tmp
+                httpdPort <<- ports[i]
                 break
             }
             if (status != -2L) break
