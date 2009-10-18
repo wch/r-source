@@ -21,7 +21,8 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         dynamic = FALSE, no_links = FALSE, ...)
 
 Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
-       stages = "render", outputEncoding = "", width = 80L, ...)
+       stages = "render", outputEncoding = "",
+       width = getOption("help_text_width", 80L), ...)
 
 Rd2latex(Rd, out = "", defines = .Platform$OS.type,
          stages = "render", outputEncoding = "ASCII", ...)

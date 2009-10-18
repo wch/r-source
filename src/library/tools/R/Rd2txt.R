@@ -30,7 +30,8 @@ tabExpand <- function(x) {
 
 Rd2txt <-
     function(Rd, out="", package = "", defines=.Platform$OS.type,
-             stages = "render", outputEncoding = "", width = 80L, ...)
+             stages = "render", outputEncoding = "",
+             width = getOption("help_text_width", 80L), ...)
 {
     ## these attempt to mimic pre-2.10.0 layout
     WIDTH <- 0.9 * width
