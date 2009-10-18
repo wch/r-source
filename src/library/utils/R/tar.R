@@ -155,7 +155,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             dothis <- !list
             if(dothis && length(files)) dothis <- name %in% files
             if(dothis) {
-                dir.create(dirname(name), showWarning = FALSE, recursive = TRUE)
+                dir.create(dirname(name), showWarnings = FALSE, recursive = TRUE)
                 out <- file(name, "wb")
             }
             for(i in seq_len(ceiling(size/512L))) {
@@ -184,7 +184,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         } else if(type == 53L) {
             contents <- c(contents, name)
             if(!list) {
-                dir.create(name, showWarning = FALSE, recursive = TRUE)
+                dir.create(name, showWarnings = FALSE, recursive = TRUE)
                 Sys.chmod(name, mode)
                 ## not much point, since dir will be populated afterwards
                 ## .Call("R_setFileTime", name, ft)
