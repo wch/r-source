@@ -382,6 +382,7 @@ specifying the one of the @command{INSTALL} options @option{--html} or
 @option{-no-html}.
 
 The server is disabled by setting the environment variable
+@enindex R_DISABLE_HTTPD
 @env{R_DISABLE_HTTPD} to a non-empty value, either before @R{} is
 started or within the @R{} session before @HTML{} help (including
 @code{help.start}) is used.  It is also possible that system security
@@ -635,6 +636,7 @@ the @R{} @file{doc} tree, set by the @command{make} variable
 A staged installation is possible, that it is installing @R{} into a
 temporary directory in order to move the installed tree to its final
 destination.  In this case @code{prefix} (and so on) should reflect the
+@enindex DESTDIR
 final destination, and @env{DESTDIR} should be used: see
 @uref{http://www.gnu.org/@/prep/@/standards/@/html_node/@/DESTDIR.html}.
 
@@ -1364,6 +1366,7 @@ large as these, but apparently NetBSD does not.)
 of many of which are set in file @file{@var{R_HOME}/etc/Renviron} (there
 are none set by default on Windows and hence no such file).  These are
 set at @command{configure} time, and you would not normally want to
+@enindex R_PAPERSIZE
 change them -- a possible exception is @env{R_PAPERSIZE} (@pxref{Setting
 paper size}).  The paper size will be deduced from the @samp{LC_PAPER}
 locale category if it exists and @env{R_PAPERSIZE} is unset, and this
@@ -1373,9 +1376,13 @@ on modern Unix-alikes (but can always be overridden by setting
 
 Various environment variables can be set to determine where @R{} creates
 its per-session temporary directory.  The environment variables
+@enindex TMPDIR
+@enindex TMP
+@enindex TEMP
 @env{TMPDIR}, @env{TMP} and @env{TEMP} are searched in turn and the
 first one which is set and points to a writable area is used.  If none
 do, the final default is @file{/tmp} on Unix-alikes and the value of
+@enindex R_USER
 @env{R_USER} on Windows.
 
 Some Unix-alike systems are set up to remove files and directories
@@ -1923,6 +1930,7 @@ which are used for Brazilian locales but not for locales specifying
 Portugal.
 
 Translations in the right language but the wrong charset be made use of
+@enindex LANGUAGE
 by on-the-fly re-encoding.  The @env{LANGUAGE} variable (only) can be a
 colon-separated list, for example @samp{se:de}, giving a set of
 languages in decreasing order of preference.  One special value is
@@ -2134,6 +2142,7 @@ and link against @samp{-lRmath} (and @samp{-lm} if needed on your OS).
 The example file @file{test.c} does nothing useful, but is provided to
 test the process (via @command{make test}).  Note that you will probably
 not be able to run it unless you add the directory containing
+@enindex LD_LIBRARY_PATH
 @file{libRmath.so} to the @env{LD_LIBRARY_PATH} environment variable.
 
 The targets
@@ -2145,6 +2154,7 @@ make uninstall
 
 @noindent
 will (un)install the header @file{Rmath.h} and shared and static
+@enindex DESTDIR
 libraries (if built).  Both @code{prefix=} and @env{DESTDIR} are
 supported, together with more precise control as described for the main
 build.
@@ -2310,6 +2320,7 @@ A @command{tar} program is needed to unpack the sources and packages
 (@uref{http://heirloom.sourceforge.net/tools.html}.} that can
 automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} before
+@enindex TAR
 @command{tar}: use environment variable @env{TAR} to override this.
 
 You will not be able to build most of the manuals unless you have
@@ -2456,6 +2467,7 @@ to a specific JRE/JDK.
 
 Principal amongst these are some library paths to the Java libraries and
 JVM, which are stored in environment variable
+@enindex R_JAVA_LD_LIBRARY_PATH
 @env{R_JAVA_LD_LIBRARY_PATH} in file @file{@var{R_HOME}/etc/ldpaths} (or
 a sub-architecture-specific version).  A typical setting for Sun Java is
 
@@ -2981,6 +2993,7 @@ the source and the build directories.
 There is also a general @command{autoconf} mechanism for
 @file{config.site} files, which are read before any of those mentioned
 in the previous paragraph.  This looks first at a file specified by the
+@enindex CONFIG_SITE
 environment variable @env{CONFIG_SITE}, and if not is set at files such
 as @file{/usr/local/share/config.site} and
 @file{/usr/local/etc/config.site} in the area (exemplified by
@@ -3143,6 +3156,7 @@ However, if @command{CC} is @command{gcc}, the matching FORTRAN compiler
 The search mechanism can be changed using the configure variable
 @code{F77} which specifies the command that runs the FORTRAN 77
 compiler.  If your FORTRAN compiler is in a non-standard location, you
+@enindex PATH
 should set the environment variable @env{PATH} accordingly before
 running @command{configure}, or use the configure variable @code{F77} to
 specify its full path.
@@ -3175,11 +3189,16 @@ Sun/Sparc} you may want to choose a FORTRAN 90/95 compiler.
 It is possible to use @command{f2c}, the FORTRAN-to-C converter
 (@uref{http://www.netlib.org/@/f2c}), via a script.  (An example script
 is given in @file{scripts/f77_f2c}: this can be customized by setting
+@enindex F2C
+@enindex F2CLIBS
+@enindex CC
 the environment variables @env{F2C}, @env{F2CLIBS}, @env{CC} and
+@enindex CPP
 @env{CPP}.)  You may need to ensure that the FORTRAN type @code{integer}
 is translated to the C type @code{int}.  Normally @file{f2c.h} contains
 @samp{typedef long int integer;}, which will work on a 32-bit platform
 but not on a 64-bit platform.  If your compiler is not @command{gcc} you
+@enindex FPICFLAGS
 will need to set @env{FPICFLAGS} appropriately.
 
 
@@ -3910,6 +3929,7 @@ CPPFLAGS="-I$LIBICONV/include -I/usr/lpp/X11/include/X11"
 LDFLAGS="-L$LIBICONV/lib -L/usr/lib -L/usr/X11R6/lib"
 @end example
 
+@enindex R_SHELL
 On one AIX 6.x system it was necessary to use @env{R_SHELL} to set the
 default shell to be Bash rather than Zsh.
 
@@ -3931,6 +3951,7 @@ offers more recent versions of the available OSS.  All tools needed and
 libraries downloaded from these repositories (e.g., GCC, Make,
 @code{libreadline}, etc.) are typically installed to
 @file{/opt/freeware}, hence corresponding executables are found in
+@enindex PATH
 @file{/opt/freeware/bin} which thus needs to be in @env{PATH} for using
 these tools.  Like on other Unix systems one needs @acronym{GNU}
 @code{libiconv} as the AIX version of iconv is not sufficiently
@@ -3981,6 +4002,7 @@ CXXFLAGS="-qarch=auto -qcache=auto -qtune=auto -O3 -qstrict"
 @noindent
 for the IBM XL compilers.  For the latter, it is important to note that
 the decision for generating 32-bit or 64-bit code is done by setting the
+@enindex OBJECT_MODE
 @env{OBJECT_MODE} environment variable appropriately (recommended) or
 using an additional compiler flag (@option{-q32} or @option{-q64}).  By
 default the IBM XL compilers produce 32 bit code.  Thus, to build R with
@@ -4152,6 +4174,7 @@ PDF manuals, and producing the standalone installer
 The Inno Setup installer
 @end itemize
 
+@enindex PATH
 It is important to set your @env{PATH} properly.  The @file{Rtools.exe}
 optionally sets the path to components that it installs.
 
