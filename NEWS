@@ -567,7 +567,7 @@ COMPRESSION
 	via a gzfile() connection) to read.table(), readlines(),
 	scan() and so on.
 
-    o	data() can handle compressed text files with extensions 
+    o	data() can handle compressed text files with extensions
 	.{txt,tab,csv}.{gz,bz2,xz} .
 
 
@@ -699,6 +699,9 @@ BUG FIXES
 
     o	help.start() no longer fails on unix when "browser" is a
 	function.
+
+    o	pbeta(x, *, log.p = TRUE) is sometimes more accurate, e.g., for
+	very small x.
 
 
 
