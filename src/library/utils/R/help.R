@@ -50,35 +50,20 @@ function(topic, package = NULL, lib.loc = NULL,
         topic <- stopic
     }
 
-    help_type <- if(!length(help_type)) {
-            "text"
-    } else match.arg(tolower(help_type),
-                     c("text", "html", "postscript", "ps", "pdf"))
+    help_type <- if(!length(help_type)) "text"
+    else match.arg(tolower(help_type),
+                   c("text", "html", "postscript", "ps", "pdf"))
 
-    ## Note that index.search() (currently?) only returns the first
-    ## match for the given sequence of indices, and returns the empty
-    ## string in case of no match.
-    paths <- sapply(.find.package(package, lib.loc, verbose = verbose),
-                    function(p) index.search(topic, p))
-    paths <- paths[paths != ""]
-
+    paths <- index.search(topic, .find.package(package, lib.loc, verbose = verbose))
     tried_all_packages <- FALSE
     if(!length(paths)
        && is.logical(try.all.packages) && !is.na(try.all.packages)
        && try.all.packages && missing(package) && missing(lib.loc)) {
         ## Try all the remaining packages.
-        lib.loc <- .libPaths()
-        packages <- .packages(all.available = TRUE, lib.loc = lib.loc)
-        packages <- packages[is.na(match(packages, .packages()))]
-        for(lib in lib.loc) {
-            ## <FIXME>
-            ## Why does this loop over packages *inside* the loop
-            ## over libraries?
-            for(pkg in packages) {
-                dir <- system.file(package = pkg, lib.loc = lib)
-                paths <- c(paths, index.search(topic, dir))
-            }
-            ## </FIXME>
+        for(lib in .libPaths()) {
+            packages <- .packages(TRUE, lib)
+            packages <- packages[is.na(match(packages, .packages()))]
+            paths <- c(paths, index.search(topic, file.path(lib, packages)))
         }
         paths <- paths[paths != ""]
         tried_all_packages <- TRUE

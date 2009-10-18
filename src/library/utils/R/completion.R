@@ -263,27 +263,24 @@ specialOpLocs <- function(text)
 
 
 ## accessing the help system: should allow anything with an index entry
+## this just looks at packages on the search path.
 
-matchAvailableTopics <-
-    function(text)
+matchAvailableTopics <- function(text)
 {
-    if (length(text) != 1L || text == "") return (character(0L))
-    ll <- installed.packages()[.packages(), "LibPath"]
-    indexFiles <- file.path(ll, names(ll), "help", "AnIndex")
-    unique(unlist(lapply(indexFiles,
-                         function(f) {
-                             if (!file.exists(f)) return (character(0L))
-                             foo <-
-                                 scan(f, what = list("", ""),
-                                      sep = "\t",
-                                      quote = "",
-                                      na.strings = "",
-                                      quiet = TRUE)[[1L]]
-                             grep(sprintf("^%s", makeRegexpSafe(text)),
-                                  foo, value = TRUE)
-                         })))
+    .readAliases <- function(path) {
+        if(file.exists(f <- file.path(path, "help", "aliases.rds")))
+            names(.readRDS(f))
+        else if(file.exists(f <- file.path(path, "help", "AnIndex")))
+            ## aliases.rds was introduced before 2.10.0, as can phase this out
+            scan(f, what = list("", ""), sep = "\t", quote = "",
+                 na.strings = "", quiet = TRUE)[[1L]]
+        else character()
+    }
+    if (length(text) != 1L || text == "") return (character())
+    pkgpaths <- searchpaths()[substr(search(), 1L, 8L) == "package:"]
+    aliases <- unique(unlist(lapply(pkgpaths, .readAliases)))
+    grep(sprintf("^%s", makeRegexpSafe(text)), aliases, value = TRUE)
 }
-
 
 
 
