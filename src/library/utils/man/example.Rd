@@ -22,8 +22,8 @@ example(topic, package = NULL, lib.loc = NULL,
   \item{topic}{name or literal character string: the online
     \code{\link{help}} topic the examples of which should be run.}
   \item{package}{a character vector giving the package names to look
-    into for example code, or \code{NULL}.  By default, all packages in
-    the search path are used.}
+    into for the topic, or \code{NULL} (the default), when all packages on
+    the \link{search} path are used.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  If the default is used, the loaded
@@ -55,17 +55,18 @@ example(topic, package = NULL, lib.loc = NULL,
 }
 \details{
   If \code{lib.loc} is not specified, the packages are searched for
-  amongst those already loaded, then in the specified libraries.
-  If \code{lib.loc} is specified, they are searched for only
-  in the specified libraries, even if they are already loaded from
-  another library.
+  amongst those already loaded, then in the libraries given by
+  \code{\link{.libPaths}()}.  If \code{lib.loc} is specified, packages
+  are searched for only in the specified libraries, even if they are
+  already loaded from another library.  The search stops at the first
+  package found that has help on the topic.
 
   An attempt is made to load the package before running the examples,
   but this will not replace a package loaded from another location.
 
-  If \code{local=TRUE} objects are not created in the workspace and so
+  If \code{local = TRUE} objects are not created in the workspace and so
   not available for examination after \code{example} completes: on the
-  other hand they cannot clobber objects of the same name in the
+  other hand they cannot overwrite objects of the same name in the
   workspace.
 
   As detailed in the manual \emph{Writing \R Extensions}, the author of
