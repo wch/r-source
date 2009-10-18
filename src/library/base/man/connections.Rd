@@ -266,20 +266,20 @@ isIncomplete(con)
 
   For many connections there is little or no difference between text and
   binary modes. For file-like connections on Windows, translation of
-  line endings (between LF and CRLF) is done in text-mode only (but all
-  text operations in \R such as \code{\link{readLines}} and
-  \code{\link{scan}} work for any form of line ending).  Various
-  \R operations are possible in only one of the modes: for example
-  \code{\link{pushBack}} is text-oriented and is only allowed on
-  connections open for reading in text mode, and binary
-  \code{\link{load}}/\code{\link{save}} operations can only be done on
-  binary-mode connections.
-
+  line endings (between LF and CRLF) is done in text mode only (but text
+  read operations on connectiions such as \code{\link{readLines}},
+  \code{\link{scan}} and \code{\link{source}} work for any form of line
+  ending).  Various \R operations are possible in only one of the modes:
+  for example \code{\link{pushBack}} is text-oriented and is only
+  allowed on connections open for reading in text mode, and binary
+  operations such as \code{\link{readBin}}, \code{\link{load}} and
+  \code{\link{save}} operations can only be done on binary-mode
+  connections.
+  
   The mode of a connection is determined when actually opened, which is
   deferred if \code{open = ""} is given (the default for all but socket
   connections).  An explicit call to \code{open} can specify the mode,
-  but otherwise the mode will be \code{"r"} or \code{"w"} depending if
-  the connection is being opened for reading or writing.  \code{gzfile},
+  but otherwise the mode will be \code{"r"}.  \code{gzfile},
   \code{bzfile} and \code{xzfile} connections are exceptions, as the
   compressed file always has to be opened in binary mode and no
   conversion of line-endings is done even on Windows.  Most operations
