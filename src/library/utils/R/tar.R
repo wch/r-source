@@ -119,6 +119,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         on.exit(setwd(od), add = TRUE)
     }
     contents <- character()
+    llink <- lname <- NULL
     repeat{
         block <- readBin(con, "raw", n = 512L)
         if(!length(block)) break
@@ -149,7 +150,9 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                         domain = NA)
         }
         type <- block[157L]
-        if(type == 48L || type == 0L) {
+        ctype <- rawToChar(type)
+        if(type == 0L || ctype == "0") {
+            if(!is.null(lname)) {name <- lname; lname <- NULL}
             contents <- c(contents, name)
             remain <- size
             dothis <- !list
@@ -172,16 +175,18 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                 Sys.chmod(name, mode)
                 .Call("R_setFileTime", name, ft, PACKAGE = "base")
             }
-        } else if(type == 49L || type == 50L) { # hard and symbolic links
+        } else if(ctype %in% c("1", "2")) { # hard and symbolic links
             contents <- c(contents, name)
             ns <- max(which(block[158:257] > 0))
             name2 <- rawToChar(block[157L + seq_len(ns)])
+            if(!is.null(lname)) {name <- lname; lname <- NULL}
+            if(!is.null(llink)) {name2 <- llink; llink <- NULL}
             if(!list) {
                 ## this will not work for links to dirs on Windows
                 if(.Platform$OS.type == "windows") file.copy(name2, name)
                 else file.symlink(name2, name)
             }
-        } else if(type == 53L) {
+        } else if(ctype == "5") {
             contents <- c(contents, name)
             if(!list) {
                 dir.create(name, showWarnings = FALSE, recursive = TRUE)
@@ -189,7 +194,19 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
                 ## not much point, since dir will be populated afterwards
                 ## .Call("R_setFileTime", name, ft)
             }
-        } else stop("unsupported entry type ", sQuote(rawToChar(type)))
+        } else if(ctype %in% c("L", "K")) {
+            ## This is a GNU extension that should no longer be
+            ## in use, but it is.
+            name_size <- 512L * ceiling(size/512L)
+            block <- readBin(con, "raw", n = name_size)
+            if(length(block) < name_size)
+                stop("incomplete block on file")
+            ns <- max(which(block > 0)) # size on file may or may not include final nul
+            if(ctype == "L")
+                lname <- rawToChar(block[seq_len(ns)])
+            else
+                llink <- rawToChar(block[seq_len(ns)])
+        } else stop("unsupported entry type ", sQuote(ctype))
     }
     if(list) contents else invisible(0L)
 }
