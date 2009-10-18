@@ -71,9 +71,9 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \code{eval.with.vis}, an undocumented internal function.
 
   All versions of \R accept input from a connection with end of line
-  marked by LF (as used on Unix), CRLF (as used on DOS/Windows)
-  or CR (as used on classic Mac OS).  The final line can be incomplete, that
-  is missing the final end-of-line marker.
+  marked by LF (as used on Unix), CRLF (as used on DOS/Windows) or CR
+  (as used on classic Mac OS) and map this to newline.  The final line
+  can be incomplete, that is missing the final end-of-line marker.
 
   If \code{\link{options}}("keep.source") is true (the default in
   interactive use), the source of functions is kept so they can be
