@@ -16,6 +16,15 @@
 /* <math.h> is included by above, with suitable defines in glibc systems
    to make log1p and expm1 declared */
 
+/**----------- DEBUGGING -------------
+ *
+ *	make CFLAGS='-DDEBUG_bratio  ...'
+ *MM: (cd ~/R/D/r-devel/Linux-inst/src/nmath ; gcc -std=gnu99 -I. -I../../src/include -I../../../R/src/include -I/usr/local/include -DHAVE_CONFIG_H -DDEBUG_bratio -g  -c ../../../R/src/nmath/toms708.c -o toms708.o)
+*/
+#ifdef DEBUG_bratio
+# include <R_ext/PrtUtil.h>
+#endif
+
 /* MM added R_D_LExp, so redefine here in terms of rexpm1 */
 #undef R_Log1_Exp
 #define R_Log1_Exp(x)   ((x) > -M_LN2 ? log(-rexpm1(x)) : log1p(-exp(x)))
@@ -85,6 +94,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
  *	  ierr = 5  if x + y != 1
  *	  ierr = 6  if x = a = 0
  *	  ierr = 7  if y = b = 0
+ *	  ierr = 8  "error" in bgrat()
 
  * --------------------
  *     Written by Alfred H. Morris, Jr.
@@ -110,9 +120,14 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
     if (x < 0.0 || x > 1.0)   {	*ierr = 3; return; }
     if (y < 0.0 || y > 1.0)   { *ierr = 4; return; }
 
+    /* check that  'y == 1 - x' : */
     z = x + y - 0.5 - 0.5;
 
     if (fabs(z) > eps * 3.0) { *ierr = 5; return; }
+
+#ifdef DEBUG_bratio
+    REprintf("bratio(a=%g, b=%g, x=%g, y=%g, .., log_p=%d): ", a,b,x,y, log_p);
+#endif
 
     *ierr = 0;
     if (x == 0.0) goto L200;
@@ -143,129 +158,163 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
     a0 = b;  x0 = y; \
     b0 = a;  y0 = x;
 
-    if (min(a,b) > 1.0) {
-	goto L30;
-    }
+    if (min(a,b) <= 1.) { /*------------------------ a <= 1  or  b <= 1 ---- */
 
-/*             PROCEDURE FOR a0 <= 1 OR b0 <= 1 */
-
-    do_swap = (x > 0.5);
-    if (do_swap) {
-	SET_0_swap;
-    } else {
-	SET_0_noswap;
-    }
-    /* now have  x0 <= 1/2 <= y0  (still  x0+y0 == 1) */
-
-    if (b0 < min(eps, eps * a0)) { /* L80: */
-	*w = fpser(a0, b0, x0, eps, log_p);
-	*w1 = log_p ? R_D_LExp(*w) : 0.5 - *w + 0.5;
-	goto L_end_after_log;
-    }
-
-    if (a0 < min(eps, eps * b0) && b0 * x0 <= 1.0) { /* L90: */
-	*w1 = apser(a0, b0, x0, eps);
-	*w = 0.5 - *w1 + 0.5;
-	goto L_end;
-    }
-
-    if (max(a0,b0) > 1.0) { /* L20:  min(a,b) <= 1 < max(a,b)  */
-	if (b0 <= 1.0) {
-	    goto L100;
+	do_swap = (x > 0.5);
+	if (do_swap) {
+	    SET_0_swap;
+	} else {
+	    SET_0_noswap;
 	}
-	if (x0 >= 0.29) { /* was 0.3, PR#13786 */
-	    goto L110;
+	/* now have  x0 <= 1/2 <= y0  (still  x0+y0 == 1) */
+
+#ifdef DEBUG_bratio
+	REprintf("  min(a,b) <= 1 : do_swap = %d; ", do_swap);
+#endif
+
+	if (b0 < min(eps, eps * a0)) { /* L80: */
+	    *w = fpser(a0, b0, x0, eps, log_p);
+	    *w1 = log_p ? R_Log1_Exp(*w) : 0.5 - *w + 0.5;
+#ifdef DEBUG_bratio
+	    REprintf("  b0 small -> w := fpser(*) = %g\n", *w);
+#endif
+	    goto L_end_after_log;
 	}
-	if (x0 < 0.1) {
-	    if (pow(x0*b0, a0) <= 0.7) {
-		goto L100;
+
+	if (a0 < min(eps, eps * b0) && b0 * x0 <= 1.0) { /* L90: */
+	    *w1 = apser(a0, b0, x0, eps);
+#ifdef DEBUG_bratio
+	    REprintf("  a0 small -> w1 := apser(*) = %g\n", *w1);
+#endif
+	    goto L_end_from_w1;
+	}
+
+	if (max(a0,b0) > 1.0) { /* L20:  min(a,b) <= 1 < max(a,b)  */
+#ifdef DEBUG_bratio
+	    REprintf("  L20:  min(a,b) <= 1 < max(a,b); ");
+#endif
+	    if (b0 <= 1.0) goto L100;
+
+	    if (x0 >= 0.29) /* was 0.3, PR#13786 */	goto L110;
+
+	    if (x0 < 0.1) {
+		if (pow(x0*b0, a0) <= 0.7) {
+		    goto L100;
+		}
 	    }
+	    if (b0 > 15.0) {
+		*w1 = 0.;
+		goto L131;
+	    }
+	} else { /*  a, b <= 1 */
+#ifdef DEBUG_bratio
+	    REprintf("  both a,b <= 1; ");
+#endif
+	    if (a0 >= min(0.2, b0))	goto L100;
+
+	    if (pow(x0, a0) <= 0.9) goto L100;
+
+	    if (x0 >= 0.3)		goto L110;
 	}
-	if (b0 > 15.0) {
-	    *w1 = 0.;
-	    goto L131;
-	}
-    } else { /*  a, b <= 1 */
-	if (a0 >= min(0.2, b0)) {
-	    goto L100;
-	}
-	if (pow(x0, a0) <= 0.9) {
-	    goto L100;
-	}
-	if (x0 >= 0.3) {
-	    goto L110;
-	}
+	n = 20; /* goto L130; */
+	*w1 = bup(b0, a0, y0, x0, n, eps);
+#ifdef DEBUG_bratio
+	REprintf("  ... n=20 and *w1 := bup(*) = %g; ");
+#endif
+	b0 += n;
+    L131:
+	bgrat(b0, a0, y0, x0, w1, 15*eps, &ierr1);
+
+#ifdef DEBUG_bratio
+	REprintf(" L131: bgrat(*, w1) ==> w1 = %g\n", *w1);
+#endif
+	goto L_end_from_w1;
     }
-    n = 20;
-    goto L130;
+    else { /* L30: -------------------- both  a, b > 1  {a0 > 1  &  b0 > 1} ---*/
 
-
-
-L30:
-/*             PROCEDURE FOR a0 > 1 AND b0 > 1 */
-    if (a > b)
-	lambda = (a + b) * y - b;
-    else
-	lambda = a - (a + b) * x;
-
-    do_swap = (lambda < 0.0);
-    if (do_swap) {
-	lambda = -lambda;
-	SET_0_swap;
-    } else {
-	SET_0_noswap;
-    }
-
-    if (b0 < 40.0) {
-	if (b0 * x0 <= 0.7)
-	    goto L100;
+	if (a > b)
+	    lambda = (a + b) * y - b;
 	else
-	    goto L140;
-    }
-    else if (a0 > b0) { /* ----  a0 > b0 >= 40  ---- */
-	if (b0 <= 100.0) {
+	    lambda = a - (a + b) * x;
+
+	do_swap = (lambda < 0.0);
+	if (do_swap) {
+	    lambda = -lambda;
+	    SET_0_swap;
+	} else {
+	    SET_0_noswap;
+	}
+
+#ifdef DEBUG_bratio
+	REprintf("  L30:  both  a, b > 1; |lambda| = %g, do_swap = %d\n",
+		 lambda, do_swap);
+#endif
+
+	if (b0 < 40.0) {
+#ifdef DEBUG_bratio
+	    REprintf("  b0 < 40; ");
+#endif
+	    if (b0 * x0 <= 0.7)
+		goto L100;
+	    else
+		goto L140;
+	}
+	else if (a0 > b0) { /* ----  a0 > b0 >= 40  ---- */
+#ifdef DEBUG_bratio
+	    REprintf("  a0 > b0 >= 40; ");
+#endif
+	    if (b0 <= 100.0)	goto L120;
+	    if (lambda > b0 * 0.03) goto L120;
+
+	} else if (a0 <= 100.0) {
+#ifdef DEBUG_bratio
+	    REprintf("  a0 <= 100; a0 <= b0 >= 40; ");
+#endif
 	    goto L120;
 	}
-	if (lambda > b0 * 0.03) {
+	else if (lambda > a0 * 0.03) {
+#ifdef DEBUG_bratio
+	    REprintf("  b0 >= a0 > 100; lambda > a0 * 0.03 ");
+#endif
 	    goto L120;
 	}
 
-    } else if (a0 <= 100.0) {
-	goto L120;
-    }
-    else if (lambda > a0 * 0.03) {
-	goto L120;
-    }
+	/* else if none of the above    L180: */
+	*w = basym(a0, b0, lambda, eps * 100.0, log_p);
+	*w1 = log_p ? R_Log1_Exp(*w) : 0.5 - *w + 0.5;
+#ifdef DEBUG_bratio
+	REprintf("  b0 >= a0 > 100; lambda <= a0 * 0.03: *w := basym(*) = %g\n",
+		 *w);
+#endif
+	goto L_end_after_log;
 
-    /* else if none of the above    L180: */
-    *w = basym(a0, b0, lambda, eps * 100.0, log_p);
-    *w1 = log_p ? R_D_LExp(*w) : 0.5 - *w + 0.5;
-    goto L_end_after_log;
+    } /* else: a, b > 1 */
 
 /*            EVALUATION OF THE APPROPRIATE ALGORITHM */
 
 L100:
     *w = bpser(a0, b0, x0, eps, log_p);
-    *w1 = log_p ? R_D_LExp(*w) : 0.5 - *w + 0.5;
+    *w1 = log_p ? R_Log1_Exp(*w) : 0.5 - *w + 0.5;
+#ifdef DEBUG_bratio
+    REprintf(" L100: *w := bpser(*) = %g\n", *w);
+#endif
     goto L_end_after_log;
 
 L110:
     *w1 = bpser(b0, a0, y0, eps, log_p);
-    *w  = log_p ? R_D_LExp(*w1) : 0.5 - *w1 + 0.5;
+    *w  = log_p ? R_Log1_Exp(*w1) : 0.5 - *w1 + 0.5;
+#ifdef DEBUG_bratio
+    REprintf(" L110: *w1 := bpser(*) = %g\n", *w1);
+#endif
     goto L_end_after_log;
 
 L120:
     *w = bfrac(a0, b0, x0, y0, lambda, eps * 15.0, log_p);
-    *w1 = log_p ? R_D_LExp(*w) : 0.5 - *w + 0.5;
+    *w1 = log_p ? R_Log1_Exp(*w) : 0.5 - *w + 0.5;
+#ifdef DEBUG_bratio
+    REprintf(" L120: *w := bfrac(*) = %g\n", *w);
+#endif
     goto L_end_after_log;
-
-L130:
-    *w1 = bup(b0, a0, y0, x0, n, eps);
-    b0 += n;
-L131:
-    bgrat(b0, a0, y0, x0, w1, 15*eps, &ierr1);
-    *w = 0.5 - *w1 + 0.5;
-    goto L_end;
 
 L140:
     /* b0 := fractional_part( b0 )  in (0, 1]  */
@@ -276,51 +325,68 @@ L140:
     }
 
     *w = bup(b0, a0, y0, x0, n, eps);
+
+#ifdef DEBUG_bratio
+    REprintf(" L140: *w := bup(b0=%g, *) = %g; ", b0, *w);
+#endif
     if (x0 <= 0.7) {
 	/* log_p :  TODO:  w = bup(.) + bpser(.)  -- not so easy to use log-scale */
 	*w += bpser(a0, b0, x0, eps, /* log_p = */ FALSE);
-	*w1 = 0.5 - *w + 0.5;
-	goto L_end;
+#ifdef DEBUG_bratio
+	REprintf(" x0 <= 0.7: *w := *w + bpser(*) = %g\n", *w);
+#endif
+	goto L_end_from_w;
     }
     /* L150: */
     if (a0 <= 15.0) {
 	n = 20;
 	*w += bup(a0, b0, x0, y0, n, eps);
+#ifdef DEBUG_bratio
+	REprintf("\n a0 <= 15: *w := *w + bup(*) = %g;", *w);
+#endif
 	a0 += n;
     }
     bgrat(a0, b0, x0, y0, w, 15*eps, &ierr1);
-    *w1 = 0.5 - *w + 0.5;
-    goto L_end;
+#ifdef DEBUG_bratio
+    REprintf(" bgrat(*) ==> *w = %g\n", *w);
+#endif
+    goto L_end_from_w;
 
 
 /* TERMINATION OF THE PROCEDURE */
 
 L200:
-    if (a == 0.0) {
-	*ierr = 6;    return;
-    }
+    if (a == 0.0) { *ierr = 6;    return; }
 L201:
     *w  = R_D__0;
     *w1 = R_D__1;
     return;
 
 L210:
-    if (b == 0.0) {
-	*ierr = 7;    return;
-    }
+    if (b == 0.0) { *ierr = 7;    return; }
 L211:
     *w  = R_D__1;
     *w1 = R_D__0;
     return;
 
-L_end:
-    if (ierr1 > 0) *ierr = 8;
-    if (log_p) {
+L_end_from_w:
+    if(log_p) {
+	*w1 = log1p(-*w);
 	*w  = log(*w);
-	*w1 = log(*w1);
+    } else {
+	*w1 = 0.5 - *w + 0.5;
     }
-L_end_after_log:
+    goto L_end_after_log;
 
+L_end_from_w1:
+    if(log_p) {
+	*w  = log1p(-*w1);
+	*w1 = log(*w1);
+    } else {
+	*w = 0.5 - *w1 + 0.5;
+    }
+
+L_end_after_log:
     if (do_swap) { /* swap */
 	double t = *w; *w = *w1; *w1 = t;
     }
@@ -540,32 +606,30 @@ static double bup(double a, double b, double x, double y, int n, double eps)
     double ret_val;
 
     /* Local variables */
-    int i, k, mu, nm1, kp1;
+    int i, k, mu, nm1;
     double d, l, r, t, w;
     double ap1, apb;
 
 /*          OBTAIN THE SCALING FACTOR EXP(-MU) AND */
-/*             EXP(MU)*(X**A*Y**B/BETA(A,B))/A */
+/*             EXP(MU)*(X^A * Y^B / BETA(A,B))/A */
 
     apb = a + b;
     ap1 = a + 1.0;
-    mu = 0;
-    d = 1.0;
-    if (n == 1 || a < 1.0) {
-	goto L10;
+    if (n > 1 && a >= 1. && apb >= ap1 * 1.1) {
+	mu = fabs(exparg(1));
+	k = (int) exparg(0);
+	if (k < mu) {
+	    mu = k;
+	}
+	t = (double) mu;
+	d = exp(-t);
     }
-    if (apb < ap1 * 1.1) {
-	goto L10;
+    else {
+	mu = 0;
+	d = 1.0;
     }
-    mu = fabs(exparg(1));
-    k = (int) exparg(0);
-    if (k < mu) {
-	mu = k;
-    }
-    t = (double) mu;
-    d = exp(-t);
 
-L10:
+    /* L10: */
     ret_val = brcmp1(mu, a, b, x, y) / a;
     if (n == 1 || ret_val == 0.0) {
 	return ret_val;
@@ -580,24 +644,22 @@ L10:
 	goto L40;
     }
     if (y > 1e-4) {
-	goto L20;
-    }
-    k = nm1;
-    goto L30;
-L20:
-    r = (b - 1.0) * x / y - a;
-    if (r < 1.0) {
-	goto L40;
-    }
-    k = nm1;
-    t = (double) nm1;
-    if (r < t) {
-	k = (int) r;
+	r = (b - 1.0) * x / y - a;
+	if (r < 1.0) {
+	    goto L40;
+	}
+	k = nm1;
+	t = (double) nm1;
+	if (r < t) {
+	    k = (int) r;
+	}
+    } else {
+	k = nm1;
     }
 
 /*          ADD THE INCREASING TERMS OF THE SERIES */
 
-L30:
+/* L30: */
     for (i = 1; i <= k; ++i) {
 	l = (double) (i - 1);
 	d = (apb + l) / (ap1 + l) * x * d;
@@ -611,14 +673,12 @@ L30:
 /*          ADD THE REMAINING TERMS OF THE SERIES */
 
 L40:
-    kp1 = k + 1;
-    for (i = kp1; i <= nm1; ++i) {
+    for (i = k+1; i <= nm1; ++i) {
 	l = (double) (i - 1);
 	d = (apb + l) / (ap1 + l) * x * d;
 	w += d;
-	if (d <= eps * w) {
-	    goto L50;
-	}
+	if (d <= eps * w) /* relativ convergence (eps) */
+	    break;
     }
 
 /*               TERMINATE THE PROCEDURE */
@@ -1007,7 +1067,7 @@ static void bgrat(double a, double b, double x, double y, double *w,
 		  double eps, int *ierr)
 {
 /* -----------------------------------------------------------------------
-*     Asymptotic Expansion for I_x(A,B)  when a is larger than b.
+*     Asymptotic Expansion for I_x(a,b)  when a is larger than b.
 *     The result of the expansion is added to w.
 *     It is assumed a >= 15 and b <= 1.
 *     eps is the tolerance used.
@@ -1027,9 +1087,7 @@ static void bgrat(double a, double b, double x, double y, double *w,
 	lnx = alnrel(-y);
 
     z = -nu * lnx;
-    if (b * z == 0.0) {
-	goto L_Error;
-    }
+    if (b * z == 0.0) goto L_Error; /* should *never* happen */
 
 /*                 COMPUTATION OF THE EXPANSION */
 
@@ -1040,6 +1098,9 @@ static void bgrat(double a, double b, double x, double y, double *w,
     u = algdiv(b, a) + b * log(nu);
     u = r * exp(-u);
     if (u == 0.0) {
+#ifdef DEBUG_bratio
+	REprintf(" bgrat(*) *underflow* r = %g ", r);
+#endif
 	goto L_Error;
     }
     grat1(b, z, r, &p, &q, eps); /* -> (p,q)  {p + q = 1} */
@@ -1331,13 +1392,14 @@ static double basym(double a, double b, double lambda, double eps, int log_p)
 static double exparg(int l)
 {
 /* -------------------------------------------------------------------- */
-/*     IF L = 0 THEN  EXPARG(L) = THE LARGEST POSITIVE W FOR WHICH */
-/*     EXP(W) CAN BE COMPUTED. */
+/*     IF L = 0 THEN  EXPARG(L) = THE LARGEST POSITIVE W FOR WHICH
+ *     EXP(W) CAN BE COMPUTED.  ==>  exparg(0) = 709.7827  nowadays. */
 
-/*     IF L IS NONZERO THEN  EXPARG(L) = THE LARGEST NEGATIVE W FOR */
-/*     WHICH THE COMPUTED VALUE OF EXP(W) IS NONZERO. */
+/*     IF L IS NONZERO THEN  EXPARG(L) = THE LARGEST NEGATIVE W FOR
+ *     WHICH THE COMPUTED VALUE OF EXP(W) IS NONZERO.
+ *       ==> exparg(1) = -708.3964   nowadays. */
 
-/*     NOTE... ONLY AN APPROXIMATE VALUE FOR EXPARG(L) IS NEEDED. */
+/*     Note... only an approximate value for exparg(L) is needed. */
 /* -------------------------------------------------------------------- */
 
     static double const lnb = .69314718055995;
@@ -1682,21 +1744,6 @@ static double gam1(double a)
 /*     COMPUTATION OF 1/GAMMA(A+1) - 1  FOR -0.5 <= A <= 1.5 */
 /*     ------------------------------------------------------------------ */
 
-    /* Initialized data */
-
-    static double p[7] = { .577215664901533,-.409078193005776,
-	    -.230975380857675,.0597275330452234,.0076696818164949,
-	    -.00514889771323592,5.89597428611429e-4 };
-    static double q[5] = { 1.,.427569613095214,.158451672430138,
-	    .0261132021441447,.00423244297896961 };
-    static double r[9] = { -.422784335098468,-.771330383816272,
-	    -.244757765222226,.118378989872749,9.30357293360349e-4,
-	    -.0118290993445146,.00223047661158249,2.66505979058923e-4,
-	    -1.32674909766242e-4 };
-    static double s1 = .273076135303957;
-    static double s2 = .0559398236957378;
-
-    double ret_val;
     double d, t, w, bot, top;
 
     t = a;
@@ -1704,45 +1751,44 @@ static double gam1(double a)
     if (d > 0.0) {
 	t = d - 0.5;
     }
-    if (t < 0.0) {
-	goto L30;
-    } else if (t == 0) {
-	goto L10;
-    } else {
-	goto L20;
-    }
+    if (t < 0.0) { /* L30: */
+	static double
+	    r[9] = { -.422784335098468,-.771330383816272,
+		     -.244757765222226,.118378989872749,9.30357293360349e-4,
+		     -.0118290993445146,.00223047661158249,2.66505979058923e-4,
+		     -1.32674909766242e-4 },
+	    s1 = .273076135303957,
+	    s2 = .0559398236957378;
 
-L10:
-    ret_val = 0.0;
-    return ret_val;
+	top = (((((((r[8] * t + r[7]) * t + r[6]) * t + r[5]) * t + r[4]
+		     ) * t + r[3]) * t + r[2]) * t + r[1]) * t + r[0];
+	bot = (s2 * t + s1) * t + 1.0;
+	w = top / bot;
+	if (d > 0.0)
+	    return t * w / a;
+	else
+	    return a * (w + 0.5 + 0.5);
 
-L20:
-    top = (((((p[6] * t + p[5]) * t + p[4]) * t + p[3]) * t + p[2]) * t + p[1]
-	    ) * t + p[0];
-    bot = (((q[4] * t + q[3]) * t + q[2]) * t + q[1]) * t + 1.0;
-    w = top / bot;
-    if (d > 0.0) {
-	goto L21;
-    }
-    ret_val = a * w;
-    return ret_val;
-L21:
-    ret_val = t / a * (w - 0.5 - 0.5);
-    return ret_val;
+    } else if (t == 0) { /* L10: */
+	return 0.;
 
-L30:
-    top = (((((((r[8] * t + r[7]) * t + r[6]) * t + r[5]) * t + r[4]
-	    ) * t + r[3]) * t + r[2]) * t + r[1]) * t + r[0];
-    bot = (s2 * t + s1) * t + 1.0;
-    w = top / bot;
-    if (d > 0.0) {
-	goto L31;
+    } else { /* t > 0;  L20: */
+	static double
+	    p[7] = { .577215664901533,-.409078193005776,
+		     -.230975380857675,.0597275330452234,.0076696818164949,
+		     -.00514889771323592,5.89597428611429e-4 },
+	    q[5] = { 1.,.427569613095214,.158451672430138,
+		     .0261132021441447,.00423244297896961 };
+
+	top = (((((p[6] * t + p[5]) * t + p[4]) * t + p[3]) * t + p[2]
+		   ) * t + p[1]) * t + p[0];
+	bot = (((q[4] * t + q[3]) * t + q[2]) * t + q[1]) * t + 1.0;
+	w = top / bot;
+	if (d > 0.0) /* L21: */
+	    return t / a * (w - 0.5 - 0.5);
+	else
+	    return a * w;
     }
-    ret_val = a * (w + 0.5 + 0.5);
-    return ret_val;
-L31:
-    ret_val = t * w / a;
-    return ret_val;
 } /* gam1 */
 
 static double gamln1(double a)
@@ -1751,41 +1797,37 @@ static double gamln1(double a)
 /*     EVALUATION OF LN(GAMMA(1 + A)) FOR -0.2 <= A <= 1.25 */
 /* ----------------------------------------------------------------------- */
 
-    /* Initialized data */
-
-    static double p0 = .577215664901533;
-    static double p1 = .844203922187225;
-    static double p2 = -.168860593646662;
-    static double p3 = -.780427615533591;
-    static double p4 = -.402055799310489;
-    static double p5 = -.0673562214325671;
-    static double p6 = -.00271935708322958;
-    static double q1 = 2.88743195473681;
-    static double q2 = 3.12755088914843;
-    static double q3 = 1.56875193295039;
-    static double q4 = .361951990101499;
-    static double q5 = .0325038868253937;
-    static double q6 = 6.67465618796164e-4;
-    static double r0 = .422784335098467;
-    static double r1 = .848044614534529;
-    static double r2 = .565221050691933;
-    static double r3 = .156513060486551;
-    static double r4 = .017050248402265;
-    static double r5 = 4.97958207639485e-4;
-    static double s1 = 1.24313399877507;
-    static double s2 = .548042109832463;
-    static double s3 = .10155218743983;
-    static double s4 = .00713309612391;
-    static double s5 = 1.16165475989616e-4;
-
     double w;
-
     if (a < 0.6) {
+	static double p0 = .577215664901533;
+	static double p1 = .844203922187225;
+	static double p2 = -.168860593646662;
+	static double p3 = -.780427615533591;
+	static double p4 = -.402055799310489;
+	static double p5 = -.0673562214325671;
+	static double p6 = -.00271935708322958;
+	static double q1 = 2.88743195473681;
+	static double q2 = 3.12755088914843;
+	static double q3 = 1.56875193295039;
+	static double q4 = .361951990101499;
+	static double q5 = .0325038868253937;
+	static double q6 = 6.67465618796164e-4;
 	w = ((((((p6 * a + p5)* a + p4)* a + p3)* a + p2)* a + p1)* a + p0) /
 	    ((((((q6 * a + q5)* a + q4)* a + q3)* a + q2)* a + q1)* a + 1.);
 	return -(a) * w;
     }
     else {
+	static double r0 = .422784335098467;
+	static double r1 = .848044614534529;
+	static double r2 = .565221050691933;
+	static double r3 = .156513060486551;
+	static double r4 = .017050248402265;
+	static double r5 = 4.97958207639485e-4;
+	static double s1 = 1.24313399877507;
+	static double s2 = .548042109832463;
+	static double s3 = .10155218743983;
+	static double s4 = .00713309612391;
+	static double s5 = 1.16165475989616e-4;
 	double x = a - 0.5 - 0.5;
 	w = (((((r5 * x + r4) * x + r3) * x + r2) * x + r1) * x + r0) /
 	    (((((s5 * x + s4) * x + s3) * x + s2) * x + s1) * x + 1.0);
