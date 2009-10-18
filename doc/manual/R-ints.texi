@@ -2516,7 +2516,8 @@ search for files matching a topic (alias), and read by @code{scan} in
 @code{utils:::matchAvailableTopics}, part of the completion system.
 
 File @file{aliases.rds} is the same information as @file{AnIndex} as a
-named character vector, for future use.
+named character vector (names the topics, values the file basename), for
+faster access by @R{} >= 2.11.0.
 
 
 @node Graphics Devices, Tools, Package Structure, Top
@@ -2583,7 +2584,7 @@ inch), twips, @dots{}, and can differ@footnote{although that needs to be
 handled carefully, as for example the @code{xspline} functions used
 prior to @R{} 2.7.0 to depend on the aspect ratio of the pixels, and the
 @code{circle} callback is given a radius (and that should be interpreted
-as in the x units).}  in the @samp{x} and @samp{y} directions.
+as in the x units).} in the @samp{x} and @samp{y} directions.
 
 @c think of the engine as colors.c, devices.c, engine.c, plotmath.c, vfonts.c
 The next layer up is the graphics `engine' that is the main interface to
