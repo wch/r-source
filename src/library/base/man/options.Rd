@@ -446,6 +446,10 @@ getOption(x, default = NULL)
     \item{\code{example.ask}:}{default for the \code{ask} argument of
       \code{\link{example}}.}
 
+    \item{\code{help_text_width}:}{The target pager width when
+      formatting text help.  Usually unset, when the default is 80
+      columns.}
+
     \item{\code{help.try.all.packages}:}{default for an argument of
       \code{\link{help}}.}
     
