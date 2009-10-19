@@ -35,7 +35,7 @@
   An object of class \code{c("summary.aov", "listof")} or
   \code{"summary.aovlist"} respectively.
 
-  For a fits with a single stratum the result will be a list of
+  For fits with a single stratum the result will be a list of
   ANOVA tables, one for each response (even if there is only one response):
   the tables are of class \code{"anova"} inheriting from class
   \code{"data.frame"}.  They have columns \code{"Df"}, \code{"Sum Sq"},
