@@ -366,6 +366,9 @@ itself.)  As from @R{} 2.8.0 bit 5 is used to indicate that a CHARSXP
 is hashed by its address, that is NA_STRING or in the CHARSXP cache.
 
 
+As for @R{} 2.6.0, but 5 is for a @code{CHARSXP} is used to indicate
+that it is part of the @code{CHARSXP} cache.
+
 @c Finally, @code{SETLEVELS} and @code{LEVELS} are used by that name for
 @c the internal code for @code{terms.formula} to compute the @code{order}
 @c attribute of the result.  This is computed on an internal pairlist, and
@@ -649,17 +652,20 @@ table.
 @findex SET_ATTRIB
 @findex DUPLICATE_ATTRIB
 As we have seen, every @code{SEXPREC} has a pointer to the attributes of
-the node (default @code{R_NilValue}).  The attributes can be accessed/set
-by the macros/functions @code{ATTRIB} and @code{SET_ATTRIB}, but such
-direct access is normally@footnote{An exception is the internal code for
-@code{terms.formula} which directly manipulates the attributes.} only
-used to check if the attributes are @code{NULL} or to reset them.
-Otherwise access goes through the functions @code{getAttrib} and
-@code{setAttrib} which impose restrictions on the attributes.  One thing
-to watch is that if you copy attributes from one object to another you
-may (un)set the @code{"class"} attribute and so need to copy the object
-and S4 bits as well.  There is a macro/function
-@code{DUPLICATE_ATTRIB} to automate this.
+the node (default @code{R_NilValue}).  The attributes can be
+accessed/set by the macros/functions @code{ATTRIB} and
+@code{SET_ATTRIB}, but such direct access is normally only used to check
+if the attributes are @code{NULL} or to reset them.  Otherwise access
+goes through the functions @code{getAttrib} and @code{setAttrib} which
+impose restrictions on the attributes.  One thing to watch is that if
+you copy attributes from one object to another you may (un)set the
+@code{"class"} attribute and so need to copy the object and S4 bits as
+well.  There is a macro/function @code{DUPLICATE_ATTRIB} to automate
+this.
+
+Note that the `attributes' of a @code{CHARSXP} are used as part of the
+management of the @code{CHARSXP} cache: of course @code{CHARSXP}'s are
+not user-visible but C-level code might look at their attributes.
 
 The code assumes that the attributes of a node are either
 @code{R_NilValue} or a pairlist of non-zero length (and this is checked
