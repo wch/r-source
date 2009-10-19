@@ -76,7 +76,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   implementations do.  It will create the parent directories for
   directories or files in the archive if necessary. It handles both the
   standard (USTAR/POSIX) and GNU ways of handling file paths of more
-  than 100 characters.
+  than 100 bytes
   
   The standards only support ASCII filenames (indeed, only alphanumeric
   plus period, underscore and hyphen).  \code{untar} makes no attempt to map
