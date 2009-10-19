@@ -281,8 +281,8 @@ loadNamespace <- function (package, lib.loc = NULL,
         package.lib <- dirname(pkgpath)
         package <- basename(pkgpath) # need the versioned name
         if (! packageHasNamespace(package, package.lib)) {
-            hasNoNamespaceError <- function (package, package.lib,
-                                             call = NULL) {
+            hasNoNamespaceError <-
+                function (package, package.lib, call = NULL) {
                 class <- c("hasNoNamespaceError", "error", "condition")
                 msg <- gettextf("package '%s' does not have a name space",
                                 package)
@@ -298,8 +298,8 @@ loadNamespace <- function (package, lib.loc = NULL,
         ## 'package.rds'?
         ## No, not during builds of standard packages
         ## stats4 depends on methods, but exports do not matter
-        ## whilst it is being built on Unix
-       nsInfoFilePath <- file.path(pkgpath, "Meta", "nsInfo.rds")
+        ## whilst it is being built on
+        nsInfoFilePath <- file.path(pkgpath, "Meta", "nsInfo.rds")
         nsInfo <- if(file.exists(nsInfoFilePath)) .readRDS(nsInfoFilePath)
         else parseNamespaceFile(package, package.lib, mustExist = FALSE)
 
@@ -307,7 +307,8 @@ loadNamespace <- function (package, lib.loc = NULL,
         if(file.exists(pkgInfoFP)) {
             pkgInfo <- .readRDS(pkgInfoFP)
             if(is.null(built <- pkgInfo$Built))
-                stop(gettextf("package '%s' has not been installed properly\n", pkgname),
+                stop(gettextf("package '%s' has not been installed properly\n",
+                              pkgname),
                      call. = FALSE, domain = NA)
             R_version_built_under <- as.numeric_version(built$R)
             if(R_version_built_under < "2.10.0")

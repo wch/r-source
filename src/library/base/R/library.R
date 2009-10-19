@@ -233,12 +233,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 } else pos <- npos
             }
             .getRequiredPackages2(pkgInfo)
-                                        #                .getRequiredPackages2(pkgInfo, lib.loc = lib.loc)
             ## If the name space mechanism is available and the package
             ## has a name space, then the name space loading mechanism
             ## takes over.
             if (packageHasNamespace(package, which.lib.loc)) {
-                ## this checks for 'depends on methods and installed < 2.4.0'
                 tt <- try({
                     ns <- loadNamespace(package, c(which.lib.loc, lib.loc),
                                         keep.source = keep.source)
