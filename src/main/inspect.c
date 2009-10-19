@@ -68,14 +68,11 @@ static const char *typename(SEXP v) {
     }
 }
 
-/* this could be made configurable by some means or even become a
-   parameter to the function ..  */
-static unsigned int pvec = 5;
-
-/* pre is the prefix, v is the object to inspect and deep specifies
+/* pre is the prefix, v is the object to inspect, deep specifies
    the recursion behavior (0 = no recursion, -1 = [sort of] unlimited
-   recursion, positive numbers define the maximum recursion depth) */
-static void inspect(int pre, SEXP v, int deep) {
+   recursion, positive numbers define the maximum recursion depth)
+   and pvec is the max. number of vector elements to show  */
+static void inspect(int pre, SEXP v, int deep, int pvec) {
     int a = 0;
     pp(pre);
     /* the use of %lx is deliberate because I hate the output of %p,
@@ -137,7 +134,7 @@ static void inspect(int pre, SEXP v, int deep) {
 	    {
 		unsigned int i = 0;
 		while (i<LENGTH(v) && i < pvec) {
-		    inspect(pre+2, VECTOR_ELT(v, i), deep - 1);
+		  inspect(pre+2, VECTOR_ELT(v, i), deep - 1, pvec);
 		    i++;
 		}
 		if (i<LENGTH(v)) { pp(pre+2); Rprintf("...\n"); }
@@ -147,7 +144,7 @@ static void inspect(int pre, SEXP v, int deep) {
 	    {
 		unsigned int i = 0;
 		while (i < LENGTH(v) && i < pvec) {
-		    inspect(pre+2, STRING_ELT(v, i), deep - 1);
+		  inspect(pre+2, STRING_ELT(v, i), deep - 1, pvec);
 		    i++;
 		}
 		if (i < LENGTH(v)) { pp(pre+2); Rprintf("...\n"); }
@@ -160,45 +157,50 @@ static void inspect(int pre, SEXP v, int deep) {
 		    if (TAG(lc) && TAG(lc) != R_NilValue) {
 			pp(pre + 2);
 			Rprintf("TAG: "); /* TAG should be a one-liner since it's a symbol so we don't put it on an extra line*/
-			inspect(0, TAG(lc), deep - 1);
+			inspect(0, TAG(lc), deep - 1, pvec);
 		    }		  
-		    inspect(pre + 2, CAR(lc), deep - 1);
+		    inspect(pre + 2, CAR(lc), deep - 1, pvec);
 		    lc=CDR(lc);
 		}
 	    }
 	    break;
 	case ENVSXP:
 	    pp(pre); Rprintf("FRAME:\n");
-	    inspect(pre+2, FRAME(v), deep - 1);
+	    inspect(pre+2, FRAME(v), deep - 1, pvec);
 	    pp(pre); Rprintf("ENCLOS:\n");
-	    inspect(pre+2, ENCLOS(v), 0);
+	    inspect(pre+2, ENCLOS(v), 0, pvec);
 	    pp(pre); Rprintf("HASHTAB:\n");
-	    inspect(pre+2, HASHTAB(v), deep - 1);
+	    inspect(pre+2, HASHTAB(v), deep - 1, pvec);
 	    break;
 	    
 	case CLOSXP:
 	    pp(pre); Rprintf("FORMALS:\n");
-	    inspect(pre+2, FORMALS(v), deep - 1);
+	    inspect(pre+2, FORMALS(v), deep - 1, pvec);
 	    pp(pre); Rprintf("BODY:\n");
-	    inspect(pre+2, BODY(v), deep - 1);
+	    inspect(pre+2, BODY(v), deep - 1, pvec);
 	    pp(pre); Rprintf("CLOENV:\n");
-	    inspect(pre+2, CLOENV(v), 0);
+	    inspect(pre+2, CLOENV(v), 0, pvec);
 	    break;
 	}
     
-    if (ATTRIB(v) && ATTRIB(v) != R_NilValue) {
-	pp(pre); Rprintf("ATTRIB:\n"); inspect(pre+2, ATTRIB(v), deep);
+    if (ATTRIB(v) && ATTRIB(v) != R_NilValue && TYPEOF(v) != CHARSXP) {
+	pp(pre); Rprintf("ATTRIB:\n"); inspect(pre+2, ATTRIB(v), deep, pvec);
     }
 }
 
 /* internal API - takes one mandatory argument (object to inspect) and
-   one optional argument (deep - see above), positional argument
+   two optional arguments (deep and pvec - see above), positional argument
    matching only */
 SEXP attribute_hidden do_inspect(SEXP call, SEXP op, SEXP args, SEXP env) {
     SEXP obj = CAR(args);
     int deep = -1;
-    if (CDR(args) != R_NilValue)
+    int pvec = 5;
+    if (CDR(args) != R_NilValue) {
 	deep = asInteger(CADR(args));
-    inspect(0, CAR(args), deep);
+	if (CDDR(args) != R_NilValue)
+	    pvec = asInteger(CADDR(args));
+    }
+	
+    inspect(0, CAR(args), deep, pvec);
     return obj;
 }
