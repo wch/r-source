@@ -1752,6 +1752,15 @@ R Installation and Administration},
 @end ifset
 
 @item
+Study the outout from running your examples, in file
+@file{@var{pkg}.Rcheck/@var{pkg}-Ex.Rout}.  Often warnings there
+indicate actual errors, and warnings about your mistakes (which the @R{}
+developers are warning you that they are working around for you) will
+just annoy or confuse your users.
+
+If your package has tests, study their output too.
+
+@item
 Look for any problems with help file conversions.  For example, you
 should
 @itemize

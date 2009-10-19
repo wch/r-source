@@ -1,6 +1,6 @@
 % File src/library/stats/man/loadings.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{loadings}
@@ -20,8 +20,9 @@ loadings(x)
 \method{print}{factanal}(x, digits = 3, \dots)
 }
 \arguments{
-  \item{x}{an object of class \code{"factanal"} or \code{"princomp"}
-    or the \code{loadings} component of such an object.}
+  \item{x}{an object of class \code{"\link{factanal}"} or
+    \code{"\link{princomp}"} or the \code{loadings} component of such an
+    object.}
   \item{digits}{number of decimal places to use in printing uniquenesses
     and loadings.}
   \item{cutoff}{loadings smaller than this (in absolute value) are suppressed.}
@@ -30,8 +31,21 @@ loadings(x)
     than 0.5 (in modulus) is assigned to the factor with the largest
     loading, and the variables are printed in the order of the factor
     they are assigned to, then those unassigned.}
-  \item{\dots}{further arguments for other methods, such as
-    \code{cutoff} and \code{sort} for \code{print.factanal}.}
+  \item{\dots}{further arguments for other methods.}
+}
+
+\details{
+  \sQuote{Loadings} is a term from \emph{factor analysis}, but because
+  factor analysis and principal component analysis (PCA) are often
+  conflated in the social science literature, it was used for PCA by
+  SPSS and hence by \code{\link{princomp}} in S-PLUS to help SPSS users.
+  
+  Small loadings are conventionally not printed (replaced by spaces), to
+  draw the eye to the pattern of the larger loadings.
+  
+  The \code{print} method for class \code{"\link{factanal}"} calls the
+  \code{"loadings"} method to print the loadings, and so passes down
+  arguments such as \code{cutoff} and \code{sort}.
 }
 
 \seealso{

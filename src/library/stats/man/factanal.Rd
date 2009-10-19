@@ -1,11 +1,10 @@
 % File src/library/stats/man/factanal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{factanal}
 \alias{factanal}
-%\alias{factanal.fit.mle}
 \encoding{latin1}
 \title{Factor Analysis}
 \description{
@@ -114,13 +113,19 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
 
   If \code{x} is a formula then the standard NA-handling is applied to
   the scores (if requested): see \code{\link{napredict}}.
+
+  The \code{print} method (documented under \code{\link{loadings}})
+  follows the facter analysis convention of drawing attention to the
+  patterns of the results, so the default precision is three decimal
+  places, and small loadings are suppressed.
 }
 \value{
   An object of class \code{"factanal"} with components
   \item{loadings}{A matrix of loadings, one column for each factor.  The
     factors are ordered in decreasing order of sums of squares of
     loadings, and given the sign that will make the sum of the loadings
-    positive.}
+    positive.  This is of class \code{"loadings"}: see
+    \code{\link{loadings}} for its \code{print} method.}
   \item{uniquenesses}{The uniquenesses computed.}
   \item{correlation}{The correlation matrix used.}
   \item{criteria}{The results of the optimization: the value of the
@@ -165,10 +170,10 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
 }
 
 \seealso{
-  \code{\link{print.loadings}},
-  \code{\link{varimax}}, \code{\link{princomp}},
+  \code{\link{loadings}} (which explains some details of the
+  \code{print} method), \code{\link{varimax}}, \code{\link{princomp}},
   \code{\link{ability.cov}}, \code{\link{Harman23.cor}},
-  \code{\link{Harman74.cor}}
+  \code{\link{Harman74.cor}}.
 }
 
 \examples{
