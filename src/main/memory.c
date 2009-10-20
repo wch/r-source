@@ -3057,16 +3057,7 @@ int Seql(SEXP a, SEXP b)
     if (a == b) return 1;
     /* Leave this to compiler to optimize */
     if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
-#define DODO
-#ifdef DODO
 	return 0;
-#else
-    {
-	if (strcmp(translateChar(a), translateChar(b)) == 0)
-	    error("pointer based string comparison failed");
-	return 0;
-    }
-#endif
     return !strcmp(translateChar(a), translateChar(b));
 }
 
