@@ -87,7 +87,7 @@ massageExamples <- function(pkg, files, outFile = stdout())
                 dont_test <- FALSE
         }
         ## adding timings
-        cat("assign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
+        cat("\nassign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
         cat("cat(\"", nm, "\", get(\".format_ptime\", pos = 'CheckExEnv')(get(\".dptime\", pos = \"CheckExEnv\")), \"\\n\", file=get(\".ExTimings\", pos = 'CheckExEnv'), append=TRUE, sep=\"\\t\")\n", sep = "", file = out)
 
         if(have_par)
