@@ -1318,10 +1318,6 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    PROTECT(s = mkPRIMSXP(StrToInternal(cbuf), type == BUILTINSXP));
 	    break;
 	case CHARSXP:
-	    /* make sure levs does not have CACHED or HASHASH bits set
-	       -- mainly for older serializations. */
-	    levs &= (~(CACHED_MASK | HASHASH_MASK));
-
 	    length = InInteger(stream);
 	    if (length == -1)
 		PROTECT(s = NA_STRING);
@@ -1342,10 +1338,6 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 		PROTECT(s = mkCharLenCE(cbuf, length, enc));
 		Free(cbuf);
 	    }
-
-	    /* make sure levs reflects the CACHED and HASHASH status of s */
-	    if (LEVELS(s) & CACHED_MASK) levs |= CACHED_MASK;
-	    if (LEVELS(s) & HASHASH_MASK) levs |= HASHASH_MASK;
 	    break;
 	case LGLSXP:
 	    length = InInteger(stream);
@@ -1403,7 +1395,8 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	    s = R_NilValue; /* keep compiler happy */
 	    error(_("ReadItem: unknown type %i, perhaps written by later version of R"), type);
 	}
-	SETLEVELS(s, levs);
+	if (type != CHARSXP)
+	    SETLEVELS(s, levs);
 	SET_OBJECT(s, objf);
 #ifdef USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
 	if (TYPEOF(s) == CHARSXP) {
