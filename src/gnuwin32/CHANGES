@@ -108,6 +108,9 @@ BUG FIXES
     o	'Rcmd open' now work as documented: previously
 	'Rcmd open.exe' was required.
 
+    o	cat(x, file=) in Rgui tried to interpre UTF-8-encoded strings
+	for the console rather than converting them to the native encoding.
+
 
 
 	**************************************************

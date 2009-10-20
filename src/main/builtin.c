@@ -465,9 +465,6 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Use standard printing defaults */
     PrintDefaults(rho);
-#ifdef Win32
-    WinCheckUTF8();
-#endif
 
     objs = CAR(args);
     args = CDR(args);
@@ -517,6 +514,10 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     ci.changedcon = switch_stdout(ifile, 0);
     /* will open new connection if required, and check for writeable */
+#ifdef Win32
+    /* do this after re-sinking output */
+    WinCheckUTF8();
+#endif
 
     ci.con = con;
 
