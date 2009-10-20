@@ -707,6 +707,10 @@ BUG FIXES
     o	pbeta(x, *, log.p = TRUE) is sometimes more accurate, e.g., for
 	very small x.
 
+     o	Unserializing a pre-2.8 workspace containing pure ASCII character
+	objects with a LATIN1 or UTF-8 encoding would corrupt the CHARSXP
+	cache.
+
 
 
 	**************************************************
