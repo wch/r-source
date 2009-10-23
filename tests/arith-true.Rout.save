@@ -1,6 +1,6 @@
 
-R version 2.6.0 Under development (unstable) (2007-06-27 r42086)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.11.0 Under development (unstable) (2009-10-23 r50185)
+Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -206,6 +206,13 @@ In gamma(0:-47) : NaNs produced
 Warning messages:
 1: In digamma(x) : NaNs produced
 2: In psigamma(x, deriv) : NaNs produced
+> ## very large x:
+> x <- 1e30 ^ (1:10)
+> a.relE <- function(appr, true) abs(1 - appr/true)
+> stopifnot(a.relE(digamma(x),   log(x)) < 1e-13,
++           a.relE(trigamma(x),     1/x) < 1e-13)
+> x <- sqrt(x[2:6]); stopifnot(a.relE(psigamma(x,2), - 1/x^2) < 1e-13)
+> x <- 10^(10*(2:6));stopifnot(a.relE(psigamma(x,5), +24/x^5) < 1e-13)
 > 
 > ## fft():
 > ok <- TRUE
@@ -307,5 +314,5 @@ Warning messages:
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.86 0 0.88 NA NA 
+Time elapsed:  1.02 0.024 1.145 0 0 
 > 
