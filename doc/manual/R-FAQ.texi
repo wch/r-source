@@ -1787,6 +1787,8 @@ The @CRAN{} @file{src/contrib} area contains a wealth of add-on
 packages, including the following @emph{recommended} packages which are
 to be included in all binary distributions of R.
 
+@c <FIXME>
+@c 3.0.0
 @table @strong
 @item KernSmooth
 Functions for kernel smoothing (and density estimation) corresponding to
@@ -1794,7 +1796,7 @@ the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
 @item MASS
 Functions and datasets from the main package of Venables and Ripley,
 ``Modern Applied Statistics with S''.
-(Contained in the @file{VR} bundle.)
+(Contained in the @file{VR} bundle for R versions prior to 2.10.0.)
 @item Matrix
 A Matrix package.
 (Recommended for R 2.9.0 or later.)
@@ -1804,7 +1806,7 @@ Methods and Their Applications'' by A. C. Davison and D. V. Hinkley,
 1997, Cambridge University Press.
 @item class
 Functions for classification (@math{k}-nearest neighbor and LVQ).
-(Contained in the @file{VR} bundle.)
+(Contained in the @file{VR} bundle for R versions prior to 2.10.0.)
 @item cluster
 Functions for cluster analysis.
 @item codetools
@@ -1823,16 +1825,17 @@ Fit and compare Gaussian linear and nonlinear mixed-effects models.
 @item nnet
 Software for single hidden layer perceptrons (``feed-forward neural
 networks''), and for multinomial log-linear models.
-(Contained in the @file{VR} bundle.)
+(Contained in the @file{VR} bundle for R versions prior to 2.10.0.)
 @item rpart
 Recursive PARTitioning and regression trees.
 @item spatial
 Functions for kriging and point pattern analysis from ``Modern Applied
 Statistics with S'' by W. Venables and B. Ripley.
-(Contained in the @file{VR} bundle.)
+(Contained in the @file{VR} bundle for R versions prior to 2.10.0.)
 @item survival
 Functions for survival analysis, including penalized likelihood.
 @end table
+@c </FIXME>
 See the @url{http://CRAN.R-project.org/web/packages/, , @CRAN{}
 contributed packages page} for more information.
 
