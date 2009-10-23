@@ -47,6 +47,12 @@ DEPRECATED & DEFUNCT
 	argument list.
 
 
+BUG FIXES
+
+    o	trigamma(x) and other psigamma(x,n) calls are now accurate also for
+	very large abs(x). (PR#14020)
+	[will move to '2.10 patched']
+
 
 	**************************************************
 	*						 *
