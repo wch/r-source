@@ -970,7 +970,7 @@
             of <- dir(tmpdir, full.names = TRUE)
             ## force the use of internal untar,
             ## so e.g. .tar.xz works everywhere
-            if (utils:::untar2(pkg, exdir = tmpdir))
+            if (untar(pkg, exdir = tmpdir, tar = "internal"))
                 errmsg("error unpacking tarball")
             ## Now see what we got
             nf <- dir(tmpdir, full.names = TRUE)

@@ -308,12 +308,12 @@ loadNamespace <- function (package, lib.loc = NULL,
             pkgInfo <- .readRDS(pkgInfoFP)
             if(is.null(built <- pkgInfo$Built))
                 stop(gettextf("package '%s' has not been installed properly\n",
-                              pkgname),
+                              basename(pkgpath)),
                      call. = FALSE, domain = NA)
             R_version_built_under <- as.numeric_version(built$R)
             if(R_version_built_under < "2.10.0")
                 stop(gettextf("package '%s' was built before R 2.10.0: please re-install it",
-                              pkgname), call. = FALSE, domain = NA)
+                              basename(pkgpath)), call. = FALSE, domain = NA)
             ## we need to ensure that S4 dispatch is on now if the package
             ## will require it, or the exports will be incomplete.
             dependsMethods <- "methods" %in% names(pkgInfo$Depends)
