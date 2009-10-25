@@ -2157,7 +2157,7 @@ have a suitable driver (e.g.@: that from Actual Technologies).
 
 @findex read.xls
 @code{Perl} users have contributed a module
-@code{OLE::SpreadSheet::ParseExcel} And a program @code{xls2csv.pl} to
+@code{OLE::SpreadSheet::ParseExcel} and a program @code{xls2csv.pl} to
 convert Excel 95--2003 spreadsheets to CSV files.  Package @pkg{gdata}
 provides a basic wrapper in its @code{read.xls} function.
 
@@ -2170,7 +2170,7 @@ component).
 @findex dataframes2xls
 @findex WriteXLS
 Packages @pkg{dataframes2xls} and @pkg{WriteXLS} each contain a function
-to @emph{write} one or more data frames to an @file{.xls} file:, using
+to @emph{write} one or more data frames to an @file{.xls} file, using
 Python and Perl respectively.  Another version of @code{write.xls} in
 available in package @pkg{xlsReadWrite}.
 
