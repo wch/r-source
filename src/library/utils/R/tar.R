@@ -142,7 +142,7 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
         }
         ## mode zero-padded 8 bytes (including nul) at 101
         ## Aargh: bsdtar has this one incorrectly with 6 bytes+space
-        mode <- getOct(block, 100, 8)
+        mode <- as.octmode(getOct(block, 100, 8))
         size <- getOct(block, 124, 12)
         ts <- getOct(block, 136, 12)
         ft <- as.POSIXct(as.numeric(ts), origin="1970-01-01", tz="UTC")
