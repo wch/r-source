@@ -305,7 +305,7 @@ Rd2HTML <-
                 if (!OK) {
                     ## so how about as a topic?
                     file <- utils:::index.search(parts$targetfile, pkgpath)
-                    if (nzchar(file)) {
+                    if (!length(file)) {
                         warnRd(block, Rdfile,
                                "file link ", sQuote(parts$targetfile),
                                " in package ", sQuote(parts$pkg),
