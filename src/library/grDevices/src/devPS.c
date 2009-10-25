@@ -2467,8 +2467,8 @@ static void PSEncodeFonts(FILE *fp, PostScriptDesc *pd)
 	char *name = cidfonts->cidfamily->cidfonts[0]->name;
 	fprintf(fp, "%%%%IncludeResource: CID fake Bold font %s\n", name);
 	fprintf(fp, "/%s-Bold\n/%s /CIDFont findresource\n", name, name);
-	fprintf(fp, CIDBoldFontStr1);
-	fprintf(fp, CIDBoldFontStr2);
+	fprintf(fp, "%s", CIDBoldFontStr1);
+	fprintf(fp, "%s", CIDBoldFontStr2);
 	for (i = 0; i < 4 ; i++) {
 	    char *fmt = NULL /* -Wall */;
 	    fprintf(fp, "%%%%IncludeResource: CID font %s-%s\n", name,
