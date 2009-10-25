@@ -140,8 +140,9 @@ untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
             prefix <- rawToChar(block[345+seq_len(ns)])
             name <- file.path(prefix, name)
         }
-        ## mode 8 bytes (including nul) at 101
-        mode <- rawToChar(block[101:107])
+        ## mode zero-padded 8 bytes (including nul) at 101
+        ## Aargh: bsdtar has this one incorrectly with 6 bytes+space
+        mode <- getOct(block, 100, 8)
         size <- getOct(block, 124, 12)
         ts <- getOct(block, 136, 12)
         ft <- as.POSIXct(as.numeric(ts), origin="1970-01-01", tz="UTC")
