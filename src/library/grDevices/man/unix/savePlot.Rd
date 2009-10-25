@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/windows/savePlot.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008 R Core Development Team
+% Copyright 2008-9 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{savePlot}
@@ -37,8 +37,8 @@ savePlot(filename = paste("Rplot", type, sep="."),
 }
 
 \note{
-  There is a similar function of the same name but fewer types for
-  cairo-based \code{X11} devices on Unix-alikes
+  There is a similar function of the same name but more types for
+  \code{windows} devices on Windows.
 }
 
 \seealso{
