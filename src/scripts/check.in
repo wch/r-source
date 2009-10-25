@@ -73,7 +73,7 @@ my @known_options = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		     "no-vignettes", "use-valgrind" => \$opt_use_valgrind,
 		     "install-args=s" => \$opt_install_args,
 		     "rcfile=s" => \$opt_rcfile,
-		     "check-subdirs=s" => \$opt_subdirs);
+		     "check-subdirs=s" => \$opt_subdirs, "timings");
 GetOptions(@known_options) or usage();
 
 R_version("R add-on package checker", $version) if $opt_version;
@@ -2288,8 +2288,10 @@ sub check_pkg {
 	    $log->result("SKIPPED");
 	} else {
 	    my $pkgtopdir = &file_path($library, $pkgname);
+	    my $timing = "FALSE";
+	    $timing = "TRUE" if $opt_timings;
 	    $cmd = join(" ",
-			("(echo 'tools:::.createExdotR(\"${pkgname}\", \"${pkgtopdir}\", silent = TRUE)'",
+			("(echo 'tools:::.createExdotR(\"${pkgname}\", \"${pkgtopdir}\", silent = TRUE, addTiming = $timing)'",
 			 "| LC_ALL=C",
 			 &shell_quote_file_path(${R::Vars::R_EXE}),
 			 "--vanilla --slave)"
@@ -2673,6 +2675,7 @@ Options:
       --no-latex        do not run LaTeX on help files
       --use-gct         use 'gctorture(TRUE)' when running examples/tests
       --use-valgrind    use 'valgrind' when running examples/tests/vignettes
+      --timings         record timings for examples
       --install-args=	command-line args to be passed to INSTALL
       --check-subdirs=default|yes|no
 			run checks on the package subdirectories

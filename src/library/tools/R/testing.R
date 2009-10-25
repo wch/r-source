@@ -16,7 +16,7 @@
 
 ## functions principally for testing R and packages
 
-massageExamples <- function(pkg, files, outFile = stdout())
+massageExamples <- function(pkg, files, outFile = stdout(), addTiming = FALSE)
 {
     if(file_test("-d", files[1L]))
         files <- sort(Sys.glob(file.path(files, "*.R")))
@@ -40,18 +40,19 @@ massageExamples <- function(pkg, files, outFile = stdout())
     cat("assign(\".oldSearch\", search(), pos = 'CheckExEnv')\n", file = out)
     cat("assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n",
         file = out)
-    ## adding timings
-    cat("assign(\".ExTimings\", \"", pkg,
-        "-Ex.timings\", pos = 'CheckExEnv')\n", sep="", file = out)
-    cat("cat(\"name\\tuser\\tsystem\\telapsed\\n\", file=get(\".ExTimings\", pos = 'CheckExEnv'))\n", file = out)
-    cat("assign(\".format_ptime\",",
-        "function(x) {",
-        "  if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]",
-        "  if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]",
-        "  format(x[1L:3L])",
-        "},",
-        "pos = 'CheckExEnv')\n", sep = "\n", file = out)
-    
+    if(addTiming) {
+        ## adding timings
+        cat("assign(\".ExTimings\", \"", pkg,
+            "-Ex.timings\", pos = 'CheckExEnv')\n", sep="", file = out)
+        cat("cat(\"name\\tuser\\tsystem\\telapsed\\n\", file=get(\".ExTimings\", pos = 'CheckExEnv'))\n", file = out)
+        cat("assign(\".format_ptime\",",
+            "function(x) {",
+            "  if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]",
+            "  if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]",
+            "  format(x[1L:3L])",
+            "},",
+            "pos = 'CheckExEnv')\n", sep = "\n", file = out)
+    }
     for(file in files) {
         nm <- sub("\\.R$", "", basename(file))
         ## make a syntactic name out of the filename
@@ -75,9 +76,9 @@ massageExamples <- function(pkg, files, outFile = stdout())
         cat("### * ", nm, "\n\n", sep = "", file = out)
         cat("flush(stderr()); flush(stdout())\n\n", file = out)
         dont_test <- FALSE
-        ## adding timings
-        cat("assign(\".ptime\", proc.time(), pos = \"CheckExEnv\")\n",
-            file = out)
+        if(addTiming)
+            cat("assign(\".ptime\", proc.time(), pos = \"CheckExEnv\")\n",
+                file = out)
         for (line in lines) {
             if(any(grepl("^[[:space:]]*## No test:", line, perl = TRUE, useBytes = TRUE)))
                 dont_test <- TRUE
@@ -86,17 +87,19 @@ massageExamples <- function(pkg, files, outFile = stdout())
                          line, perl = TRUE, useBytes = TRUE)))
                 dont_test <- FALSE
         }
-        ## adding timings
-        cat("\nassign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
-        cat("cat(\"", nm, "\", get(\".format_ptime\", pos = 'CheckExEnv')(get(\".dptime\", pos = \"CheckExEnv\")), \"\\n\", file=get(\".ExTimings\", pos = 'CheckExEnv'), append=TRUE, sep=\"\\t\")\n", sep = "", file = out)
 
+        if(addTiming) {
+            cat("\nassign(\".dptime\", (proc.time() - get(\".ptime\", pos = \"CheckExEnv\")), pos = \"CheckExEnv\")\n", file = out)
+            cat("cat(\"", nm, "\", get(\".format_ptime\", pos = 'CheckExEnv')(get(\".dptime\", pos = \"CheckExEnv\")), \"\\n\", file=get(\".ExTimings\", pos = 'CheckExEnv'), append=TRUE, sep=\"\\t\")\n", sep = "", file = out)
+        }
         if(have_par)
             cat("graphics::par(get(\"par.postscript\", pos = 'CheckExEnv'))\n", file = out)
         if(have_contrasts)
             cat("options(contrasts = c(unordered = \"contr.treatment\",",
                 "ordered = \"contr.poly\"))\n", sep="", file = out)
     }
-     cat(readLines(file.path(R.home("share"), "R", "examples-footer.R")),
+
+    cat(readLines(file.path(R.home("share"), "R", "examples-footer.R")),
         sep="\n", file = out)
 }
 
@@ -321,7 +324,7 @@ testInstalledPackage <-
     return(nfail)
 }
 
-.createExdotR <- function(pkg, pkgdir, silent = FALSE)
+.createExdotR <- function(pkg, pkgdir, silent = FALSE, addTiming = FALSE)
 {
     Rfile <- paste(pkg, "-Ex.R", sep = "")
     ## might be zipped:
@@ -359,7 +362,7 @@ testInstalledPackage <-
         nof <- length(Sys.glob(file.path(filedir, "*.R")))
         if(!nof) return(invisible(NULL))
     }
-    massageExamples(pkg, filedir, Rfile)
+    massageExamples(pkg, filedir, Rfile, addTiming)
     invisible(Rfile)
 }
 

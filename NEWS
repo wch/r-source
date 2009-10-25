@@ -31,6 +31,9 @@ NEW FEATURES
 	time taken by the OS to find all the packages the first time
 	it is used can dominate the time).
 
+    o	R CMD check has a new option '--timings' for record
+	per-example timings in file <pkg>.Rcheck/<pkg>-Ex.timings.
+
 
 DEPRECATED & DEFUNCT
 
