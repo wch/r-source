@@ -41,9 +41,10 @@ tar(tarfile, files = NULL,
   \code{""}.
 
   Beware of portability considerations: the \sQuote{tar} format no
-  longer has an agreed standard (it was part of POSIX 1003.1 but has
-  been removed), and in any case many common implementations diverged
-  from the former standard.  Known problems arise from
+  longer has an agreed standard (\sQuote{Unix Standard Tar} was part of
+  POSIX 1003.1:1998 but has been removed in favour of \command{pax}),
+  and in any case many common implementations diverged from the former
+  standard.  Known problems arise from
   \itemize{
     \item The handling of file names of more than 100 bytes.  These were
     unsupported in early versions of \command{tar}, and supported in one
