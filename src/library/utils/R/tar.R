@@ -96,12 +96,12 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
 
 untar2 <- function(tarfile, files = NULL, list = FALSE, exdir = ".")
 {
-    getOct <- function(x, start, len)
+    getOct <- function(x, offset, len)
     {
         x <- 0L
-        for(i in start+seq_len(len)) {
+        for(i in offset + seq_len(len)) {
             z <- block[i]
-            if(!as.integer(z)) break;
+            if(!as.integer(z)) break; # terminate on nul
             switch(rawToChar(z),
                    " " = {},
                    "0"=,"1"=,"2"=,"3"=,"4"=,"5"=,"6"=,"7"=
