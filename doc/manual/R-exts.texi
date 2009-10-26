@@ -5992,7 +5992,7 @@ library.dynam("libname", package, lib.loc)
 where @code{libname} is the object/DLL name @emph{with the extension
 omitted}.  Note that the first argument, @code{chname}, should
 @strong{not} be @code{package} since this will not work if the package
-is installed under another name (as it will be with a versioned install).
+is installed under another name.
 
 Under some Unix-alike systems there is a choice of how the symbols are
 resolved when the object is loaded, governed by the arguments
