@@ -1,9 +1,19 @@
-﻿
+
 	**************************************************
 	*						 *
 	*	       2.10 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.10.0 patched
+
+
+BUG FIXES
+
+    o	trigamma(x) and other psigamma(x,n) calls are now accurate also for
+	very large abs(x). (PR#14020)
+
 
 
 		CHANGES IN R VERSION 2.10.0

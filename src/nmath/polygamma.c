@@ -2,7 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000-2007 the R Development Core Team
- *  Copyright (C) 2004	    The R Foundation
+ *  Copyright (C) 2004-2009 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -176,7 +176,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
     int i, j, k, mm, mx, nn, np, nx, fn;
     double arg, den, elim, eps, fln, fx, rln, rxsq,
 	r1m4, r1m5, s, slope, t, ta, tk, tol, tols, tss, tst,
-	tt, t1, t2, wdtol, xdmln, xdmy, xinc, xln = 0.0 /* -Wall */, 
+	tt, t1, t2, wdtol, xdmln, xdmy, xinc, xln = 0.0 /* -Wall */,
 	xm, xmin, xq, yint;
     double trm[23], trmr[n_max + 1];
 
@@ -231,12 +231,25 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	    if(j >= 0) /* by cheat above,  tt === d_k(x) */
 		ans[j] = s*(ans[j] + t1/t2 * tt);
 	}
-	if (n == 0 && kode == 2)
+	if (n == 0 && kode == 2) /* unused from R, but "wrong": xln === 0 :*/
 	    ans[0] += xln;
 	return;
     } /* x <= 0 */
 
+    /* else :  x > 0 */
     *nz = 0;
+    xln = log(x);
+    if(kode == 1 && m == 1) {/* the R case  ---  for very large x: */
+	double lrg = 1/(2. * DBL_EPSILON);
+	if(n == 0 && x * xln > lrg) {
+	    ans[0] = -xln;
+	    return;
+	}
+	else if(n >= 1 && x > n * lrg) {
+	    ans[0] = exp(-n * xln)/n; /* == x^-n / n  ==  1/(n * x^n) */
+	    return;
+	}
+    }
     mm = m;
     nx = imin2(-Rf_i1mach(15), Rf_i1mach(16));/* = 1021 */
     r1m5 = Rf_d1mach(5);
@@ -244,9 +257,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
     wdtol = fmax2(r1m4, 0.5e-18); /* 1.11e-16 */
 
     /* elim = approximate exponential over and underflow limit */
-
     elim = 2.302 * (nx * r1m5 - 3.0);/* = 700.6174... */
-    xln = log(x);
     for(;;) {
 	nn = n + mm - 1;
 	fn = nn;
@@ -315,12 +326,12 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	    if (tk <= elim) /* for all but large x */
 		goto L10;
 	}
-	nz++;
+	nz++; /* underflow */
 	mm--;
 	ans[mm] = 0.;
 	if (mm == 0)
 	    return;
-    }
+    } /* end{for()} */
     nn = (int)fln + 1;
     np = n + 1;
     t1 = (n + 1) * xln;
@@ -462,6 +473,18 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
     return;
 } /* dpsifn() */
 
+#ifdef MATHLIB_STANDALONE
+# define ML_TREAT_psigam(_IERR_)	\
+    if(_IERR_ != 0) {			\
+	errno = EDOM;			\
+	return ML_NAN;			\
+    }
+#else
+# define ML_TREAT_psigam(_IERR_)	\
+    if(_IERR_ != 0) 			\
+	return ML_NAN
+#endif
+
 double psigamma(double x, double deriv)
 {
     /* n-th derivative of psi(x);  e.g., psigamma(x,0) == digamma(x) */
@@ -477,13 +500,8 @@ double psigamma(double x, double deriv)
 	return ML_NAN;
     }
     dpsifn(x, n, 1, 1, &ans, &nz, &ierr);
-    if(ierr != 0) {
-#ifdef MATHLIB_STANDALONE
-	errno = EDOM;
-#endif
-	return ML_NAN;
-    }
-    /* ans ==  A := (-1)^(n+1) / gamma(n+1) * psi(n, x) */
+    ML_TREAT_psigam(ierr);
+    /* ans ==  A := (-1)^(n+1) * gamma(n+1) * psi(n, x) */
     ans = -ans; /* = (-1)^(0+1) * gamma(0+1) * A */
     for(k = 1; k <= n; k++)
 	ans *= (-k);/* = (-1)^(k+1) * gamma(k+1) * A */
@@ -495,14 +513,8 @@ double digamma(double x)
     double ans;
     int nz, ierr;
     if(ISNAN(x)) return x;
-
     dpsifn(x, 0, 1, 1, &ans, &nz, &ierr);
-    if(ierr != 0) {
-#ifdef MATHLIB_STANDALONE
-	errno = EDOM;
-#endif
-	return ML_NAN;
-    }
+    ML_TREAT_psigam(ierr);
     return -ans;
 }
 
@@ -512,12 +524,7 @@ double trigamma(double x)
     int nz, ierr;
     if(ISNAN(x)) return x;
     dpsifn(x, 1, 1, 1, &ans, &nz, &ierr);
-    if(ierr != 0) {
-#ifdef MATHLIB_STANDALONE
-	errno = EDOM;
-#endif
-	return ML_NAN;
-    }
+    ML_TREAT_psigam(ierr);
     return ans;
 }
 
@@ -527,12 +534,7 @@ double tetragamma(double x)
     int nz, ierr;
     if(ISNAN(x)) return x;
     dpsifn(x, 2, 1, 1, &ans, &nz, &ierr);
-    if(ierr != 0) {
-#ifdef MATHLIB_STANDALONE
-	errno = EDOM;
-#endif
-	return ML_NAN;
-    }
+    ML_TREAT_psigam(ierr);
     return -2.0 * ans;
 }
 
@@ -542,11 +544,6 @@ double pentagamma(double x)
     int nz, ierr;
     if(ISNAN(x)) return x;
     dpsifn(x, 3, 1, 1, &ans, &nz, &ierr);
-    if(ierr != 0) {
-#ifdef MATHLIB_STANDALONE
-	errno = EDOM;
-#endif
-	return ML_NAN;
-    }
+    ML_TREAT_psigam(ierr);
     return 6.0 * ans;
 }
