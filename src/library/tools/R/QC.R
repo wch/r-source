@@ -3245,7 +3245,12 @@ function(package, dir, lib.loc = NULL)
     unknown <- unknown[!obsolete]
     if (length(unknown)) {
         repos <- .get_standard_repository_URLs()
-        known <- try(utils::available.packages(utils::contrib.url(repos, "source"))[, "Package"])
+        known <-
+            try(utils::available.packages(utils::contrib.url(repos,
+                                                             "source"),
+                                          filters =
+                                          c("R_version",
+                                            "duplicates"))[, "Package"])
         miss <- if(inherits(known, "try-error")) TRUE
         else unknown %in% c(known, c("BRugs", "GLMMGibbs", "survnnet", "yags"))
         ## from CRANextras
