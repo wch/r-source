@@ -1,6 +1,6 @@
 % File src/library/base/man/cut.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{cut}
@@ -22,7 +22,7 @@ cut(x, \dots)
   \item{labels}{labels for the levels of the resulting category.  By default,
     labels are constructed using \code{"(a,b]"} interval notation. If
     \code{labels = FALSE}, simple integer codes are returned instead of
-    a factor.}.
+    a factor.}
   \item{include.lowest}{logical, indicating if an \sQuote{x[i]} equal to
     the lowest (or highest, for \code{right = FALSE}) \sQuote{breaks}
     value should be included.}
@@ -36,8 +36,7 @@ cut(x, \dots)
 \description{
   \code{cut} divides the range of \code{x} into intervals
   and codes the values in \code{x} according to which
-  interval they fall.
-  The leftmost interval corresponds to level one,
+  interval they fall.  The leftmost interval corresponds to level one,
   the next leftmost to level two and so on.
 }
 \details{
