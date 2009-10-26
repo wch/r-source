@@ -448,7 +448,7 @@ HELP & Rd FILE CHANGES
 	controlled using tools::startDynamicHelp().  With this enabled,
 	HTML help pages will be generated on request, resolving links
 	by searching through the current .libPaths().  The user
-	may set option("help.ports") to control which IP port is used
+	may set options("help.ports") to control which IP port is used
 	by the server.
 
     o	help.start() no longer sets options(htmlhelp = TRUE) (it used
