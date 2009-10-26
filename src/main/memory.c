@@ -1902,8 +1902,8 @@ SEXP attribute_hidden mkPROMISE(SEXP expr, SEXP rho)
     return s;
 }
 
-/* All vector objects  must be a multiple of sizeof(ALIGN) */
-/* bytes so that alignment is preserved for all objects */
+/* All vector objects must be a multiple of sizeof(SEXPREC_ALIGN)
+   bytes so that alignment is preserved for all objects */
 
 /* Allocate a vector object (and also list-like objects).
    This ensures only validity of list-like (LISTSXP, VECSXP, EXPRSXP),
@@ -1936,7 +1936,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	error("use of allocVector(CHARSXP ...) is defunct\n");
     case intCHARSXP:
 	size = BYTE2VEC(length + 1);
-	actual_size=length+1;
+	actual_size = length + 1;
 	break;
     case LGLSXP:
     case INTSXP:

@@ -881,6 +881,7 @@ SEXP attribute_hidden do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (LENGTH(CAR(ap)) != n)
 	    error(_("argument lengths differ"));
     }
+    /* NB: collation functions such as Scollate might allocate */
     PROTECT(ans = allocVector(INTSXP, n));
     if (n != 0) {
 	for (i = 0; i < n; i++) INTEGER(ans)[i] = i;

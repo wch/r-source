@@ -13,7 +13,8 @@
 }
 \usage{
 untar(tarfile, files = NULL, list = FALSE, exdir = ".",
-      compressed = NA, extras = NULL, verbose = FALSE)
+      compressed = NA, extras = NULL, verbose = FALSE,
+      tar = Sys.getenv("TAR"))
 }
 \arguments{
   \item{tarfile}{The pathname of the tar file: tilde expansion (see
@@ -24,14 +25,15 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     the default is to extract all files.}
   
   \item{list}{If \code{TRUE}, just list the files.  The equivalent of
-    \command{tar -tf}.}
+    \command{tar -tf}.  Otherwise extract the files (the equivalent of
+    \command{tar -xf}).}
     
   \item{exdir}{The directory to extract files to (the equivalent of
-    \code{tar -C}).  It will be created if necessary.}
+    \command{tar -C}).  It will be created if necessary.}
 
-  \item{compressed}{logical or character.  Values \code{"gzip"} and
-    \code{"bzip2"} select that form of compression (and may be
-    abbreviated to the first letter).  \code{TRUE} indicates gzip
+  \item{compressed}{logical or character.  Values \code{"gzip"},
+    \code{"bzip2"} and \code{"xz"} select that form of compression (and
+    may be abbreviated to the first letter).  \code{TRUE} indicates gzip
     compression, \code{FALSE} no known compression (but the
     \command{tar} command may detect compression automagically), and
     \code{NA} (the default) that the type is inferred from the file
@@ -41,13 +43,15 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
     flags such as \option{-p} to be passed to the \command{tar} program.}
 
   \item{verbose}{logical: if true echo the command used.}
+
+  \item{tar}{character string: the path to the command to be used.}
 }
 
 \details{
   This is either a wrapper for a \command{tar} command or for an
   internal implementation written in \R.  The latter is used if
-  \code{tarfile} is a connection or if the environment variable
-  \env{TAR} is \code{"internal"} or unset (except on Windows, when
+  \code{tarfile} is a connection or if the argument \code{tar} is
+  \code{"internal"} or \code{""} (except on Windows, when
   \command{tar.exe} is tried first).
 
   What options are supported will depend on the \command{tar} used.
@@ -67,16 +71,16 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   used when an external \command{tar} is used.
 
   The internal implementation restores links (hard and soft) as symbolic
-  links on a Unix-alike, and as file copies on Windows.  Since it uses
-  \code{\link{gzfile}} to read a file it can handle files compressed by
-  any of the methods that function can handle: at least
-  \command{compress}, \command{gzip}, \command{bzip2} and \command{xz}
-  compression, and some types of \command{lzma} compression.  It does
-  not guard against restoring absolute file paths, as some \command{tar}
-  implementations do.  It will create the parent directories for
-  directories or files in the archive if necessary. It handles both the
-  standard (USTAR/POSIX) and GNU ways of handling file paths of more
-  than 100 bytes
+  links on a Unix-alike, and as file copies on Windows (which works only
+  for files, not for directories).  Since it uses \code{\link{gzfile}}
+  to read a file it can handle files compressed by any of the methods
+  that function can handle: at least \command{compress}, \command{gzip},
+  \command{bzip2} and \command{xz} compression, and some types of
+  \command{lzma} compression.  It does not guard against restoring
+  absolute file paths, as some \command{tar} implementations do.  It
+  will create the parent directories for directories or files in the
+  archive if necessary. It handles both the standard (USTAR/POSIX) and
+  GNU ways of handling file paths of more than 100 bytes.
   
   The standards only support ASCII filenames (indeed, only alphanumeric
   plus period, underscore and hyphen).  \code{untar} makes no attempt to map

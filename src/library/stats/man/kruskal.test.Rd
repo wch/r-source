@@ -74,6 +74,10 @@ kruskal.test(x, \dots)
   \code{\link{lm}} together with \code{\link{anova}} for performing
   one-way location analysis under normality assumptions; with Student's
   t test (\code{\link{t.test}}) as the special case for two samples.
+  
+  \code{\link[coin:LocationTests]{wilcox_test}} in package \pkg{coin}
+  for exact, asymptotic and Monte Carlo \emph{conditional} p-values,
+  including in the presence of ties.
 }
 \examples{
 ## Hollander & Wolfe (1973), 116.
