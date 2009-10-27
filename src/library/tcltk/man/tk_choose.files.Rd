@@ -39,6 +39,10 @@ tk_choose.files(default = "", caption = "Select files",
   whether the extensions are named in file chooser widget is
   platform-specific. \bold{The format may change before release.}
 }
+\note{
+  A bug in Tk 8.5.0--8.5.4 prevented multiple selections being used.
+}
+
 \seealso{
   \code{\link{file.choose}}, \code{\link{tk_choose.dir}}
 }

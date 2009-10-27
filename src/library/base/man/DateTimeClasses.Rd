@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -68,7 +68,6 @@
   \item{time1, time2}{date-time objects or character vectors.  (Character
     vectors are converted by \code{\link{as.POSIXct}}.)}
   \item{z}{a numeric vector (in seconds)}
-%   \emph{or} an object of class \code{"\link{difftime}"}.}
   \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
 }
@@ -83,17 +82,17 @@
     \item{\code{hour}}{0--23: hours}
     \item{\code{mday}}{1--31: day of the month}
     \item{\code{mon}}{0--11: months after the first of the year.}
-    \item{\code{year}}{Years since 1900.}
+    \item{\code{year}}{years since 1900.}
     \item{\code{wday}}{0--6 day of the week, starting on Sunday.}
     \item{\code{yday}}{0--365: day of the year.}
-    \item{\code{isdst}}{Daylight savings time flag.  Positive if in
+    \item{\code{isdst}}{Daylight Savings Time flag.  Positive if in
       force, zero if not, negative if unknown.}
   }
   The classes correspond to the POSIX/C99 constructs of \sQuote{calendar
     time} (the \code{time_t} data type) and \sQuote{local time} (or
   broken-down time, the \code{struct tm} data type), from which they
   also inherit their names.  The components of \code{"POSIXlt"} are
-  integer vectors except \code{sec}.
+  integer vectors, except \code{sec}.
 
   \code{"POSIXct"} is more convenient for including in data frames, and
   \code{"POSIXlt"} is closer to human-readable forms.
@@ -112,7 +111,6 @@
   
   Logical comparisons and limited arithmetic are available for both
   classes.  One can add or subtract a number of seconds
-  %or a \code{\link{difftime}} object
   from a date-time object,
   but not add two date-time objects.  Subtraction of two date-time objects
   is equivalent to using \code{\link{difftime}}.  Be aware
@@ -204,7 +202,7 @@
   \code{\link{round.POSIXt}} and \code{\link{trunc.POSIXt}} for methods
   for these classes.
 
-  \code{\link{weekdays.POSIXt}} for convenience extraction functions.
+  \code{\link{weekdays}} for convenience extraction functions.
 }
 \section{Warning}{
   Some Unix-like systems (especially Linux ones) do not have \code{"TZ"}
