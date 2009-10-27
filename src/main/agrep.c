@@ -28,7 +28,7 @@
 
 #include <Defn.h>
 #include <wchar.h>
-#include <tre/regex.h>
+#include <tre/tre.h>
 
 const wchar_t *wtransChar(SEXP x); /* from sysutils.c */
 

@@ -18,7 +18,7 @@
 #endif /* !HAVE_WCTYPE_H */
 
 #include <ctype.h>
-#include "regex.h"
+#include "tre.h"
 
 #ifdef TRE_DEBUG
 #include <stdio.h>
@@ -106,6 +106,7 @@ typedef short tre_cint_t;
 
 #endif /* !TRE_WCHAR */
 
+/* WIN32 opt-out is R addition - iswctype is missing "blank" */
 #if !defined(WIN32) && defined(TRE_WCHAR) && defined(HAVE_ISWCTYPE) && defined(HAVE_WCTYPE)
 #define TRE_USE_SYSTEM_WCTYPE 1
 #endif

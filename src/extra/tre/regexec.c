@@ -1,5 +1,5 @@
 /*
-  regexec.c - TRE POSIX compatible matching functions (and more).
+  tre_regexec.c - TRE POSIX compatible matching functions (and more).
 
   This software is released under a BSD-style license.
   See the file LICENSE for details and copyright.
@@ -45,7 +45,7 @@ char *alloca ();
 #include <limits.h>
 
 #include "tre-internal.h"
-#include "regex.h"
+#include "tre.h"
 #include "xmalloc.h"
 
 

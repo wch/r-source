@@ -1,13 +1,13 @@
 /*
-  regex.h - POSIX.2 compatible regexp interface and TRE extensions
+  tre.h - TRE public API definitions
 
   This software is released under a BSD-style license.
   See the file LICENSE for details and copyright.
 
 */
 
-#ifndef TRE_REGEX_H
-#define TRE_REGEX_H 1
+#ifndef TRE_H
+#define TRE_H 1
 
 #include "tre-config.h"
 
@@ -239,6 +239,6 @@ tre_have_approx(const regex_t *preg);
 #ifdef __cplusplus
 }
 #endif
-#endif				/* TRE_REGEX_H */
+#endif				/* TRE_H */
 
 /* EOF */

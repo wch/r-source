@@ -47,7 +47,7 @@ strsplit grep [g]sub [g]regexpr
 
 const wchar_t *wtransChar(SEXP x); /* from sysutils.c */
 
-# include <tre/regex.h>
+# include <tre/tre.h>
 
 #ifdef HAVE_PCRE_PCRE_H
 # include <pcre/pcre.h>

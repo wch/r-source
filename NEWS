@@ -34,6 +34,8 @@ NEW FEATURES
     o	R CMD check has a new option '--timings' for record
 	per-example timings in file <pkg>.Rcheck/<pkg>-Ex.timings.
 
+    o	The tre library has been updated to version 0.8.0 (minor bugfixes).
+
 
 DEPRECATED & DEFUNCT
 
@@ -48,6 +50,7 @@ DEPRECATED & DEFUNCT
 
     o	index.search() is no longer exported and has a different
 	argument list.
+
 
 
 	**************************************************

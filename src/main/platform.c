@@ -864,11 +864,7 @@ static SEXP filename(const char *dir, const char *file)
     return ans;
 }
 
-# include <tre/regex.h>
-# define regcomp tre_regcomp
-# define regexec tre_regexec
-# define regfree tre_regfree
-# define regerror tre_regerror
+# include <tre/tre.h>
 
 static void count_files(const char *dnp, int *count,
 			Rboolean allfiles, Rboolean recursive,
@@ -913,7 +909,7 @@ static void count_files(const char *dnp, int *count,
 		    }
 		}
 		if (pattern) {
-		    if (regexec(&reg, de->d_name, 0, NULL, 0) == 0) (*count)++;
+		    if (tre_regexec(&reg, de->d_name, 0, NULL, 0) == 0) (*count)++;
 		} else (*count)++;
 	    }
 	}
@@ -976,7 +972,7 @@ static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 		    }
 		}
 		if (pattern) {
-		    if (regexec(&reg, de->d_name, 0, NULL, 0) == 0)
+		    if (tre_regexec(&reg, de->d_name, 0, NULL, 0) == 0)
 			SET_STRING_ELT(ans, (*count)++,
 				       filename(stem, de->d_name));
 		} else
@@ -1014,7 +1010,7 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     flags = REG_EXTENDED;
     if (igcase) flags |= REG_ICASE;
 
-    if (pattern && regcomp(&reg, translateChar(STRING_ELT(p, 0)), flags))
+    if (pattern && tre_regcomp(&reg, translateChar(STRING_ELT(p, 0)), flags))
 	error(_("invalid 'pattern' regular expression"));
     count = 0;
     for (i = 0; i < ndir ; i++) {
@@ -1031,7 +1027,7 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 		   recursive, pattern, reg);
     }
     if (pattern)
-	regfree(&reg);
+	tre_regfree(&reg);
     ssort(STRING_PTR(ans), count);
     UNPROTECT(1);
     return ans;

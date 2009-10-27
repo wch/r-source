@@ -1,5 +1,5 @@
 /*
-  regcomp.c - TRE POSIX compatible regex compilation functions.
+  tre_regcomp.c - TRE POSIX compatible regex compilation functions.
 
   This software is released under a BSD-style license.
   See the file LICENSE for details and copyright.
@@ -14,7 +14,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#include "regex.h"
+#include "tre.h"
 #include "tre-internal.h"
 #include "xmalloc.h"
 

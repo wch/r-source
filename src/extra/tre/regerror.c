@@ -1,5 +1,5 @@
 /*
-  regerror.c - POSIX regerror() implementation for TRE.
+  tre_regerror.c - POSIX tre_regerror() implementation for TRE.
 
   This software is released under a BSD-style license.
   See the file LICENSE for details and copyright.
@@ -19,7 +19,7 @@
 #endif /* HAVE_WCTYPE_H */
 
 #include "tre-internal.h"
-#include "regex.h"
+#include "tre.h"
 
 #ifdef HAVE_GETTEXT
 #include <libintl.h>
@@ -31,7 +31,7 @@
 #define _(String) dgettext(PACKAGE, String)
 #define gettext_noop(String) String
 
-/* Error message strings for error codes listed in `regex.h'.  This list
+/* Error message strings for error codes listed in `tre.h'.  This list
    needs to be in sync with the codes listed there, naturally. */
 static const char *tre_error_messages[] =
   { gettext_noop("No error"),				 /* REG_OK */

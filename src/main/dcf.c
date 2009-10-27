@@ -24,7 +24,7 @@
 #include <Defn.h>
 #include <Rconnections.h>
 
-# include <tre/regex.h>
+# include <tre/tre.h>
 # define regcomp tre_regcomp
 # define regexec tre_regexecb
 # define regfree tre_regfree

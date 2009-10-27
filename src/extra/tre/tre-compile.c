@@ -26,7 +26,7 @@
 #include "tre-ast.h"
 #include "tre-parse.h"
 #include "tre-compile.h"
-#include "regex.h"
+#include "tre.h"
 #include "xmalloc.h"
 
 /*
