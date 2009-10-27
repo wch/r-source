@@ -592,7 +592,7 @@ AC_DISABLE_STATIC
 LT_INIT
 AC_SUBST(LIBTOOL_DEPS)
 
-## cross-compiling
+## cross-compiling: added May 2007, not actually used
 R_CROSS_COMPILING
 AC_SUBST(BUILD_CC)
 AC_SUBST(BUILD_R)

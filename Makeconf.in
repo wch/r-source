@@ -12,9 +12,9 @@ AUTOCONF = @AUTOCONF@
 AUTOMAKE = @AUTOMAKE@
 AUTOHEADER = @AUTOHEADER@
 AWK = @AWK@
-BITMAP_LIBS = @BITMAP_LIBS@
 BLAS_LIBS = @BLAS_LIBS@
 BUILDDIR_IS_SRCDIR = @BUILDDIR_IS_SRCDIR@
+## next two for future support of cross-compiling, not actually used
 BUILD_CC = @BUILD_CC@
 BUILD_R = @BUILD_R@
 CC = @CC@
