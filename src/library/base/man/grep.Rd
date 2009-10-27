@@ -128,15 +128,16 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   length and with the same attributes as \code{x} (after possible
   coercion).  Elements of character vectors \code{x} which are not
   substituted will be return unchanged (including any declared
-  encoding).  If \code{useBytes = FALSE} the result will be in UTF-8 in
-  a multibyte locale.
+  encoding).  If \code{useBytes = FALSE} a non-ASCII result will often
+  be in UTF-8 with a marked encoding (e.g. if there is a UTF-8 input, in
+  a multibyte locale if \code{perl = TRUE}, and always for non-Perl regexps).
 
   For \code{regexpr} an integer vector of the same length as \code{text}
   giving the starting position of the first match or \eqn{-1} if there
   is none, with attribute \code{"match.length"} giving the length of the
-  matched text (or \eqn{-1} for no match).  In a multi-byte locale the
-  match lengths are in characters rather than bytes unless
-  \code{useBytes = TRUE} is used.
+  matched text (or \eqn{-1} for no match).  The match lengths are in
+  characters unless \code{useBytes = TRUE} is used, when they are in
+  bytes.
 
   For \code{gregexpr} a list of the same length as \code{text} each
   element of which is an integer vector as in \code{regexpr}, except
@@ -146,14 +147,14 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   The basic and extended modes of \code{gsub} and \code{gregexpr} do not
   work correctly with repeated word-boundaries (e.g. \code{pattern =
   "\\b"}).  Use \code{perl = TRUE} for such matches (but that may not
-  works as expected with non-ASCII inputs, as the meaning of
+  work as expected with non-ASCII inputs, as the meaning of
   \sQuote{word} is system-dependent).
 }
 \source{
   The C code for POSIX-style regular expression matching has changed
   over the years. As from \R 2.10.0 the TRE library of Ville Laurikari
-  (\url{http://laurikari.net/tre/}) is used.  Frox 2005 to \R 2.9.2,
-  code based on \code{glibc} was used (and earlier code from GNU
+  (\url{http://laurikari.net/tre/}) is used.  From 2005 to \R 2.9.2,
+  code based on \code{glibc} was used (and before that, code from GNU
   \command{grep}).  The POSIX standard does give some room for
   interpretation, especially in the handling of invalid regular
   expressions, so the results will have changed slightly.
