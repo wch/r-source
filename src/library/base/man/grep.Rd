@@ -83,13 +83,11 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   Arguments which should be character strings or character vectors are
   coerced to character if possible.
 
-  Each of these functions operates in one of four modes:
+  Each of these functions operates in one of three modes:
   \enumerate{
     \item \code{fixed = TRUE}: use exact matching.
     \item \code{perl = TRUE}: use Perl-style regular expressions.
-    \item \code{extended = FALSE}: use POSIX 1003.2 basic regular
-    expressions (this mode is deprecated).
-    \item Defaults for the above three arguments: use POSIX 1003.2
+    \item \code{fixed = FALSE, perl = FALSE}: use POSIX 1003.2
     extended regular expressions.
   }
   See the help pages on \link{regular expression} for details of the
@@ -144,7 +142,7 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   that the starting positions of every (disjoint) match are given.
 }
 \section{Warning}{
-  The basic and extended modes of \code{gsub} and \code{gregexpr} do not
+  POSIX 1003.2 mode of \code{gsub} and \code{gregexpr} does not
   work correctly with repeated word-boundaries (e.g. \code{pattern =
   "\\b"}).  Use \code{perl = TRUE} for such matches (but that may not
   work as expected with non-ASCII inputs, as the meaning of

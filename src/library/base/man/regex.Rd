@@ -17,10 +17,8 @@
 }
 \details{
   A \sQuote{regular expression} is a pattern that describes a set of
-  strings.  Three types of regular expressions are used in \R,
-  \emph{extended} regular expressions, used by
-  \code{extended = TRUE} (the default), \emph{basic} regular
-  expressions, as used by \code{extended = FALSE}, and
+  strings.  Two types of regular expressions are used in \R,
+  \emph{extended} regular expressions (the default) and
   \emph{Perl-like} regular expressions used by \code{perl = TRUE}.
   There is a also \code{fixed = TRUE} which can be considered to use a
   \emph{literal} regular expression.
@@ -70,7 +68,7 @@
   \samp{b} or \samp{c}.  A range of characters may be specified by
   giving the first and last characters, separated by a hyphen.  (Because
   their interpretation is so locale-dependent, they are best avoided.)
-  For basic and extended regular expressions the collation order is
+  For extended regular expressions the collation order is
   taken from the OS's implementation of the setting of the locale
   category \code{LC_COLLATE}, so \samp{[W-Z]} may include \samp{x} and
   if it does may or may not include \samp{w}.  (In most English locales
@@ -196,25 +194,7 @@
   extension for extended regular expressions: POSIX defines them only
   for basic ones.)
 }
-\section{Basic Regular Expressions}{
-  Basic regular expressions are used if \code{extended = FALSE} is
-  specified.  These are regarded as obsolete and were deprecated in \R
-  2.10.0; you should not rely on their conformance to the quirks
-  described in POSIX standard.
-
-  In basic regular expressions the metacharacters \samp{?}, \samp{+},
-  \samp{\{}, \samp{|}, \samp{(}, and \samp{)} lose their special meaning;
-  instead use the backslashed versions \samp{\\?}, \samp{\\+},
-  \samp{\\ \{}, \samp{\\|}, \samp{\\(}, and \samp{\\)}.  Thus the
-  metacharacters are \samp{. \\ [ ^ $ *}, and \samp{^ $} only have a
-  special meaning at the beginning/end of an expression or parenthesized
-  subexpression.
-
-  Instead, either use \code{fixed = TRUE} to remove all metacharacters
-  or use extended regular expressions with appropriate escapes for
-  metacharacters.
-}
-\section{Perl Regular Expressions}{
+\section{Perl-like Regular Expressions}{
   The \code{perl = TRUE} argument to \code{grep}, \code{regexpr},
   \code{gregexpr}, \code{sub}, \code{gsub} and \code{strsplit} switches
   to the PCRE library that implements regular expression pattern
