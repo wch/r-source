@@ -45,13 +45,13 @@ Encoding(x) <- value
 
   Most character manipulation functions will set the encoding on output
   strings if it was declared on the corresponding input.  These include
-  \code{\link{chartr}}, \code{\link{strsplit}}, \code{\link{tolower}}
-  and \code{\link{toupper}} as well as \code{\link{sub}(useBytes =
-  FALSE)} and \code{\link{gsub}(useBytes = FALSE)}.  Note that such
-  functions do not \emph{preserve} the encoding, but if they know the
-  input encoding and that the string has been successfully re-encoded to
-  the current encoding, they mark the output with the latter (if it is
-  \code{"latin1"} or \code{"UTF-8"}).
+  \code{\link{chartr}}, \code{\link{strsplit(useBytes = FALSE)}},
+  \code{\link{tolower}} and \code{\link{toupper}} as well as
+  \code{\link{sub}(useBytes = FALSE)} and \code{\link{gsub}(useBytes =
+  FALSE)}.  Note that such functions do not \emph{preserve} the
+  encoding, but if they know the input encoding and that the string has
+  been successfully re-encoded (to the current encoding or UTF-8), they
+  mark the output.
 
   \code{\link{substr}} does preserve the encoding, and
   \code{\link{chartr}}, \code{\link{tolower}} and \code{\link{toupper}}
