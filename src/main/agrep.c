@@ -87,7 +87,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (useBytes)
 	rc = tre_regcompb(&reg, CHAR(STRING_ELT(pat, 0)), cflags);
     else if (useWC)
-	rc = regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
+	rc = tre_regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
     else
 	rc = tre_regcomp(&reg, translateChar(STRING_ELT(pat, 0)), cflags);
     if (rc) {
@@ -96,7 +96,7 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("regcomp error:  '%s'"), errbuf);
     }
 
-    regaparams_default(&params);
+    tre_regaparams_default(&params);
     params.max_cost = max_distance_opt;
     params.max_del = max_deletions_opt;
     params.max_ins = max_insertions_opt;
@@ -116,17 +116,17 @@ SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* undocumented, must be zeroed */
 	memset(&match, 0, sizeof(match));
 	if (useBytes)
-	    rc = regaexecb(&reg,
-			   CHAR(STRING_ELT(vec, i)),
-			   &match, params, 0);
+	    rc = tre_regaexecb(&reg,
+			       CHAR(STRING_ELT(vec, i)),
+			       &match, params, 0);
 	else if (useWC)
-	    rc = regawexec(&reg,
-			   wtransChar(STRING_ELT(vec, i)), 
-			   &match, params, 0);
+	    rc = tre_regawexec(&reg,
+			       wtransChar(STRING_ELT(vec, i)), 
+			       &match, params, 0);
 	else
-	    rc = regaexec(&reg,
-			  translateChar(STRING_ELT(vec, i)),
-			  &match, params, 0);
+	    rc = tre_regaexec(&reg,
+			      translateChar(STRING_ELT(vec, i)),
+			      &match, params, 0);
 	if (rc == REG_OK) {
 	    LOGICAL(ind)[i] = 1;
 	    nmatches++;

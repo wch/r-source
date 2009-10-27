@@ -395,7 +395,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    */
 
 	    wsplit = wtransChar(STRING_ELT(tok, itok));
-	    if ((rc = regwcomp(&reg, wsplit, cflags)))
+	    if ((rc = tre_regwcomp(&reg, wsplit, cflags)))
 		reg_report(rc, &reg, translateChar(STRING_ELT(tok, itok)));
 
 	    for (i = itok; i < len; i += tlen) {
@@ -410,7 +410,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		ntok = 0;
 		wbufp = wbuf;
 		if (*wbufp) {
-		    while(regwexec(&reg, wbufp, 1, regmatch, 0) == 0) {
+		    while(tre_regwexec(&reg, wbufp, 1, regmatch, 0) == 0) {
 			/* Empty matches get the next char, so move by one. */
 			wbufp += MAX(regmatch[0].rm_eo, 1);
 			ntok++;
@@ -423,7 +423,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		wbufp = wbuf;
 		wpt = Realloc(wpt, wcslen(wbuf)+1, wchar_t);
 		for (j = 0; j < ntok; j++) {
-		    regwexec(&reg, wbufp, 1, regmatch, 0);
+		    tre_regwexec(&reg, wbufp, 1, regmatch, 0);
 		    if (regmatch[0].rm_eo > 0) {
 			/* Match was non-empty. */
 			if (regmatch[0].rm_so > 0)
@@ -745,7 +745,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (useBytes)
 	    rc = tre_regcompb(&reg, spat, cflags);
 	else
-	    rc = regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
+	    rc = tre_regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
 	if (rc) reg_report(rc, &reg, spat);
     }
 
@@ -779,8 +779,8 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(useBytes)
 		    rc = tre_regexecb(&reg, s, 0, NULL, 0);
 		else
-		    rc = regwexec(&reg, wtransChar(STRING_ELT(text, i)),
-				  0, NULL, 0);
+		    rc = tre_regwexec(&reg, wtransChar(STRING_ELT(text, i)),
+				      0, NULL, 0);
 		if(rc == 0) LOGICAL(ind)[i] = 1;
 	    }
 	}
@@ -1026,7 +1026,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (rc) reg_report(rc, &reg, spat);
 	    replen = strlen(srep);
 	} else {
-	    rc  = regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
+	    rc  = tre_regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
 	    if (rc) reg_report(rc, &reg, spat);
 	    wrep = wtransChar(STRING_ELT(rep, 0));
 	    replen = wcslen(wrep);
@@ -1162,7 +1162,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    } else nns = ns + maxrep + 1000;
 	    u = cbuf = Calloc(nns, wchar_t);
 	    offset = 0; nmatch = 0; eflags = 0; last_end = -1;
-	    while (regwexec(&reg, s+offset, 10, regmatch, eflags) == 0) {
+	    while (tre_regwexec(&reg, s+offset, 10, regmatch, eflags) == 0) {
 		nmatch++;
 		for (j = 0; j < regmatch[0].rm_so ; j++)
 		    *u++ = s[offset+j];
@@ -1341,7 +1341,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (useBytes)
 	    rc = tre_regcompb(&reg, spat, cflags);
 	else
-	    rc = regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
+	    rc = tre_regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
 	if (rc) reg_report(rc, &reg, spat);
     }
 
@@ -1410,7 +1410,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (useBytes)
 		    rc = tre_regexecb(&reg, s, 1, regmatch, 0);
 		else
-		    rc = regwexec(&reg, wtransChar(STRING_ELT(text, i)),
+		    rc = tre_regwexec(&reg, wtransChar(STRING_ELT(text, i)),
 				  1, regmatch, 0);
 		if (rc == 0) {
 		    st = regmatch[0].rm_so;
@@ -1463,7 +1463,7 @@ static SEXP gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes)
     while (!foundAll) {
 	if ( offset < len &&
 	     (useBytes ? tre_regexecb(reg, string+offset, 1, regmatch, eflags) :
-	      regwexec(reg, ws+offset, 1, regmatch, eflags))
+	      tre_regwexec(reg, ws+offset, 1, regmatch, eflags))
 	     == 0) {
 	    if ((matchIndex + 1) == bufsize) {
 		/* Reallocate match buffers */
@@ -1731,7 +1731,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (useBytes)
 	    rc = tre_regcompb(&reg, spat, cflags);
 	else
-	    rc = regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
+	    rc = tre_regwcomp(&reg, wtransChar(STRING_ELT(pat, 0)), cflags);
 	if (rc) error(_("invalid regular expression '%s'"), spat);
     }
 

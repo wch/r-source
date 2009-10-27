@@ -19,12 +19,12 @@
 #include "xmalloc.h"
 
 int
-regncomp(regex_t *preg, const char *regex, size_t n, int cflags)
+tre_regncomp(regex_t *preg, const char *regex, size_t n, int cflags)
 {
   int ret;
 #if TRE_WCHAR
   tre_char_t *wregex;
-  int wlen;
+  size_t wlen;
 
   wregex = xmalloc(sizeof(tre_char_t) * (n + 1));
   if (wregex == NULL)
@@ -90,7 +90,7 @@ regncomp(regex_t *preg, const char *regex, size_t n, int cflags)
 #endif /* TRE_MULTIBYTE */
 
   wregex[wlen] = L'\0';
-  ret = tre_compile(preg, wregex, (unsigned)wlen, cflags);
+  ret = tre_compile(preg, wregex, wlen, cflags);
   xfree(wregex);
 #else /* !TRE_WCHAR */
   ret = tre_compile(preg, (const tre_char_t *)regex, n, cflags);
@@ -102,15 +102,16 @@ regncomp(regex_t *preg, const char *regex, size_t n, int cflags)
 int
 tre_regcomp(regex_t *preg, const char *regex, int cflags)
 {
-  return regncomp(preg, regex, regex ? strlen(regex) : 0, cflags);
+  return tre_regncomp(preg, regex, regex ? strlen(regex) : 0, cflags);
 }
 
+/* R addition */
 int
 tre_regcompb(regex_t *preg, const char *regex, int cflags)
 {
   int ret;
   tre_char_t *wregex;
-  int wlen, n = strlen(regex);
+  size_t wlen, n = strlen(regex);
   unsigned int i;
   const unsigned char *str = (const unsigned char *)regex;
   tre_char_t *wstr;
@@ -122,7 +123,7 @@ tre_regcompb(regex_t *preg, const char *regex, int cflags)
   for (i = 0; i < n; i++) *(wstr++) = *(str++);
   wlen = n;
   wregex[wlen] = L'\0';
-  ret = tre_compile(preg, wregex, (unsigned)wlen, cflags);
+  ret = tre_compile(preg, wregex, wlen, cflags);
   xfree(wregex);
   return ret;
 }
@@ -130,13 +131,13 @@ tre_regcompb(regex_t *preg, const char *regex, int cflags)
 
 #ifdef TRE_WCHAR
 int
-regwncomp(regex_t *preg, const wchar_t *regex, size_t n, int cflags)
+tre_regwncomp(regex_t *preg, const wchar_t *regex, size_t n, int cflags)
 {
   return tre_compile(preg, regex, n, cflags);
 }
 
 int
-regwcomp(regex_t *preg, const wchar_t *regex, int cflags)
+tre_regwcomp(regex_t *preg, const wchar_t *regex, int cflags)
 {
   return tre_compile(preg, regex, regex ? wcslen(regex) : 0, cflags);
 }
