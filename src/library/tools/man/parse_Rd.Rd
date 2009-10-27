@@ -60,7 +60,7 @@ parse_Rd(file, srcfile = NULL, encoding = "unknown", verbose = FALSE,
 \author{ Duncan Murdoch }
 \seealso{
   \code{\link{Rd2HTML}} for the converters that use the output of
-  \code{parseRd}.
+  \code{parse_Rd()}.
 }
 \keyword{utilities}
 \keyword{documentation}
