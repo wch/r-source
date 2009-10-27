@@ -223,7 +223,7 @@ begin
     CustomMessage(\'HelpStylet'\), CustomMessage(\'HelpStyleq\'),
     CustomMessage(\'HelpStylei\'), True, False);
   HelpStylePage.Add(CustomMessage(\'HelpStyle0\'));
-  HelpStylePage.Add(CustomMessage(\'HelpStyle2\'));
+  HelpStylePage.Add(CustomMessage(\'HelpStyle1\'));
    
   InternetPage := CreateInputOptionPage(HelpStylePage.ID,
     CustomMessage(\'Internett'\), CustomMessage(\'Internetq\'),
@@ -297,7 +297,7 @@ begin
     
   case HelpStylePage.SelectedValueIndex of
     0: HelpStyle := \'plain\';
-    2: HelpStyle := \'HTML\';
+    1: HelpStyle := \'HTML\';
   end;
   SetPreviousData(PreviousDataKey, \'HelpStyle\', HelpStyle);  
   if INIFilename <> \'\' then
@@ -338,7 +338,8 @@ begin
   SetCommentMarker(lines, \'MDI = yes\', MDISDIPage.SelectedValueIndex = 0);
   SetCommentMarker(lines, \'MDI = no\', MDISDIPage.SelectedValueIndex = 1);
   
-  SetCommentMarker(lines, \'options(help_type="html"\', HelpStylePage.SelectedValueIndex = 2);
+  SetCommentMarker(lines, \'options(help_type="text"\', HelpStylePage.SelectedValueIndex = 0);
+  SetCommentMarker(lines, \'options(help_type="html"\', HelpStylePage.SelectedValueIndex = 1);
   
   SaveStringsToFile(filename, lines, False);
 end;
