@@ -36,6 +36,16 @@ NEW FEATURES
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.10.0 patched
+
+
+BUG FIXES
+
+    o	The installer did not properly record help type choices in
+	R_HOME/etc/Rprofile.site.
+    	
+
+
     		CHANGES IN R VERSION 2.10.0
 
 
