@@ -864,7 +864,7 @@ static SEXP filename(const char *dir, const char *file)
     return ans;
 }
 
-# include <tre/tre.h>
+#include <tre/tre.h>
 
 static void count_files(const char *dnp, int *count,
 			Rboolean allfiles, Rboolean recursive,
