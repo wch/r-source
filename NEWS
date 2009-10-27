@@ -9,6 +9,13 @@
 		CHANGES IN R VERSION 2.10.0 patched
 
 
+INSTALLATION
+
+    o	configure will be able to find a usable libtiff is some rare
+	circumstances where it did not previously (where libtiff
+	needed to be linked explicitly against -ljpeg).
+
+
 BUG FIXES
 
     o	trigamma(x) and other psigamma(x,n) calls are now accurate also for
