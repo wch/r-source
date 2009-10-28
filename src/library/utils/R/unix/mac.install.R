@@ -34,8 +34,10 @@ if(substr(R.version$os, 1L, 6L) != "darwin") {
     link.html.help<-function(verbose = FALSE, ...)
     {
         html <- getOption("htmlhelp")
+        htype <- getOption("help_type")
         # update only if temporary help files exist
-        if (!is.null(html) && html && file.exists(paste(tempdir(),"/.R/doc",sep=''))) {
+        if((!is.null(html) && html) || (!is.null(htype) && htype == "html")
+            && file.exists(paste(tempdir(),"/.R/doc",sep=''))) {
             #.Script("sh", "help-links.sh", paste(tempdir(), paste(.libPaths(),
             #                                                      collapse = " ")))
             make.packages.html()

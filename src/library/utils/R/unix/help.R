@@ -42,9 +42,9 @@ function(file, topic, warn = TRUE)
         writeLines(c(paste("Help for", sQuote(topic),
                            "is shown in browser", browser, "..."),
                      "Use",
-                     paste("\thelp(\"", topic, "\", htmlhelp = FALSE)",
-                           sep = ""),
-                     "or\n\toptions(htmlhelp = FALSE)\nto revert."))
+		     paste("\thelp(\"", topic, "\", help_type = \"text\")",
+			   sep = ""),
+		     "or\n\toptions(help_type = \"text\")\nto revert."))
     }
     return(invisible())
 }
