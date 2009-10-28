@@ -26,6 +26,9 @@ NEW FEATURES
 	variable (which in a vanilla Windows system points to
 	cmd.exe).
 
+    o	X11() and x11() gain additional arguments to be more similar
+	to the Unix X11() device.
+
 
 
 
@@ -115,10 +118,10 @@ INSTALLATION
 
 BUG FIXES
 
-    o	'Rcmd open' now work as documented: previously
+    o	'Rcmd open' nows work as documented: previously
 	'Rcmd open.exe' was required.
 
-    o	cat(x, file=) in Rgui tried to interpre UTF-8-encoded strings
+    o	cat(x, file=) in Rgui tried to interpret UTF-8-encoded strings
 	for the console rather than converting them to the native encoding.
 
 
