@@ -59,8 +59,8 @@ function(topic, package = NULL, lib.loc = NULL,
             "ps"
         } else if(.Platform$OS.type == "windows" &&
                 is.logical(chmhelp) && !is.na(chmhelp) && chmhelp) {
-            warning('chmhelp = TRUE is no longer supported: use help_type ="text"')
-            "txt"
+            warning('chmhelp = TRUE is no longer supported: using help_type ="text"')
+            "text"
         } else if(is.logical(htmlhelp) && !is.na(htmlhelp) && htmlhelp) {
             warning('htmhelp = TRUE is deprecated: use help_type ="html"')
             "html"
