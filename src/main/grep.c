@@ -36,7 +36,7 @@ strsplit grep [g]sub [g]regexpr
 /* NB: USE_TRE_FOR_FIXED appears to work, but is minimally tested.
    The main benefit would be code simplification, but there are
    cases where code in a non-UTF-8 MBCS would be converted to UTF-8 by
-   the RE engines and handled directly by the existing code.  That
+   the RE engines but are handled directly by the existing code.  That
    might just matter if wchar_t is not Unicode (but we have no known
    examples).
  */
@@ -79,6 +79,15 @@ static SEXP mkCharWLen(const wchar_t *wc, int nc)
     R_CheckStack();
     wcstoutf8(xi, wt, nb + 1);
     return mkCharLenCE(xi, nb, CE_UTF8);
+}
+
+static SEXP mkCharW(const wchar_t *wc)
+{
+    int nb = wcstoutf8(NULL, wc, 0);
+    char *xi = (char *) alloca((nb+1)*sizeof(char));
+    R_CheckStack();
+    wcstoutf8(xi, wc, nb + 1);
+    return mkCharCE(xi, CE_UTF8);
 }
 
 
@@ -381,7 +390,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    pcre_free(re_pe);
 	    pcre_free(re_pcre);
-	} else if (!useBytes && use_UTF8) { /* basic/extended in wchar_t */
+	} else if (!useBytes && use_UTF8) { /* ERE in wchar_t */
 	    regex_t reg;
 	    regmatch_t regmatch[1];
 	    int rc;
@@ -444,7 +453,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 				   mkCharWLen(wbufp, wcslen(wbufp)));
 	    }
 	    tre_regfree(&reg);
-	} else { /* basic/extended */
+	} else { /* ERE in normal chars */
 	    regex_t reg;
 	    regmatch_t regmatch[1];
 	    int rc;
@@ -1199,12 +1208,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		for (j = offset ; s[j] ; j++) *u++ = s[j];
 		*u = L'\0';
-		{
-		    int nb = wcstoutf8(NULL, cbuf, 0);
-		    char *xi = (char *) alloca((nb+1)*sizeof(char));
-		    wcstoutf8(xi, cbuf, nb + 1);
-		    SET_STRING_ELT(ans, i, mkCharCE(xi, CE_UTF8));
-		}
+		SET_STRING_ELT(ans, i, mkCharW(cbuf));
 	    }
 	    Free(cbuf);
 	}

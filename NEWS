@@ -75,6 +75,10 @@ BUG FIXES
     o	trigamma(x) and other psigamma(x,n) calls are now accurate also for
 	very large abs(x). (PR#14020)
 
+    o	[g]sub() could use excessive stack space when used with a very
+	long vector of non-ASCII data.
+
+
 
 
 		CHANGES IN R VERSION 2.10.0
