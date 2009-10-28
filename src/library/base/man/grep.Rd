@@ -141,6 +141,7 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   element of which is an integer vector as in \code{regexpr}, except
   that the starting positions of every (disjoint) match are given.
 }
+
 \section{Warning}{
   POSIX 1003.2 mode of \code{gsub} and \code{gregexpr} does not
   work correctly with repeated word-boundaries (e.g. \code{pattern =
@@ -148,6 +149,27 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   work as expected with non-ASCII inputs, as the meaning of
   \sQuote{word} is system-dependent).
 }
+
+\section{Performance considerations}{
+  If you are doing a lot of regular expression matching, including on
+  very long strings, you will want to consider the options used.
+  Generally using PCRE (\code{perl = TRUE}) will be fastest.
+
+  If you are working in a single-byte locale and have marked UTF-8
+  strings that are representable in that locale, convert them first as
+  just one UTF-8 string will force all the matching to be done in
+  Unicode, which attracts a penalty of around \eqn{3\times{}}{3x} for
+  the default POSIX 1003.2 mode.
+  
+  If you can make use of \code{useBytes = TRUE}, the strings will not be
+  checked before matching, and the actual matching will be faster.
+  Often byte-based matching suffices in a UTF-8 locale since byte
+  patterns of one character never match part of another.
+  
+  The main performance benefit of \code{fixed = TRUE} is when each
+  pattern is matched only a few times.
+}
+
 \source{
   The C code for POSIX-style regular expression matching has changed
   over the years. As from \R 2.10.0 the TRE library of Ville Laurikari
