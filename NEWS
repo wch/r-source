@@ -65,7 +65,7 @@ DEPRECATED & DEFUNCT
 
 INSTALLATION
 
-    o	configure will be able to find a usable libtiff is some rare
+    o	configure will be able to find a usable libtiff in some rare
 	circumstances where it did not previously (where libtiff
 	needed to be linked explicitly against -ljpeg).
 
