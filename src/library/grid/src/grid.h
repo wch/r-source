@@ -599,6 +599,8 @@ SEXP L_textBounds(SEXP label, SEXP x, SEXP y,
 		  SEXP hjust, SEXP vjust, SEXP rot, SEXP theta);
 SEXP L_xsplineBounds(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
 		     SEXP index, SEXP theta);
+SEXP L_xsplinePoints(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep,
+		     SEXP index, SEXP theta);
 
 /* From unit.c */
 SEXP validUnits(SEXP units);

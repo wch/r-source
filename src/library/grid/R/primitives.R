@@ -762,6 +762,24 @@ grid.xspline <- function(...) {
   grid.draw(xsplineGrob(...))
 }
 
+xsplinePoints <- function(x) {
+    # Raw pts in dev coords
+    devPoints <- grid.Call("L_xsplinePoints",
+                           x$x, x$y, x$shape, x$open, x$arrow,
+                           x$repEnds, list(as.integer(seq_along(x$x))), 0)
+    # Convert to units in inches
+    unitPoints <- lapply(devPoints,
+                         function(x) {
+                             names(x) <- c("x", "y")
+                             x$x <- unit(x$x, "inches")
+                             x$y <- unit(x$y, "inches")
+                             x
+                         })
+    if (length(unitPoints) == 1)
+        unitPoints <- unitPoints[[1]]
+    unitPoints
+}
+
 ######################################
 # CIRCLE primitive
 ######################################

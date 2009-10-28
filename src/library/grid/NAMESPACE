@@ -82,6 +82,7 @@ export(
        "pointsGrob", "polygonGrob", "polylineGrob",
        "rectGrob", "roundrectGrob",
        "segmentsGrob", "textGrob", "xsplineGrob",
+       "xsplinePoints",
        
        "grid.xaxis", "grid.yaxis",
        "xaxisGrob", "yaxisGrob", 

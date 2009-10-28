@@ -1836,7 +1836,7 @@ SEXP L_lines(SEXP x, SEXP y, SEXP index, SEXP arrow)
  * are unit objects 
  */
 SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
-		 double theta, Rboolean draw) 
+		 double theta, Rboolean draw, Rboolean trace) 
 {
     int i, j, nx, np, nloc;
     double *xx, *yy, *ss;
@@ -1846,6 +1846,7 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
     R_GE_gcontext gc;
     LTransform transform;
     SEXP currentvp, currentgp;
+    SEXP tracePts = R_NilValue;
     SEXP result = R_NilValue;
     double edgex, edgey;
     double xmin = DOUBLE_XMAX;
@@ -1866,6 +1867,7 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
      * Number of xsplines
      */
     np = LENGTH(index);
+    PROTECT(tracePts = allocVector(VECSXP, np));
     nloc = 0;
     for (i=0; i<np; i++) {
 	char *vmax;
@@ -1918,24 +1920,24 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
 	PROTECT(points = GEXspline(nx, xx, yy, ss,
 				   LOGICAL(o)[0], LOGICAL(rep)[0],
 				   draw, &gc, dd));
-	if (draw && !isNull(a) && !isNull(points)) {
-	    /*
-	     * In some cases, GEXspline seems to produce identical points 
-	     * (at least observed at end of spline)
-	     * so trim identical points from the ends 
-	     * (so arrow heads are drawn at correct angle)
-	     */
-	    int np = LENGTH(VECTOR_ELT(points, 0));
-	    double *px = REAL(VECTOR_ELT(points, 0));
-	    double *py = REAL(VECTOR_ELT(points, 1));
-	    int start = 0;
-	    int end = np - 1;
-	    /*
-	     * DEBUGGING ...
-	    int k;
-	    for (k=0; k<np; k++) {
-		GESymbol(px[k], py[k], 16, 3, &gc, dd); 
-	    }
+        {
+            /*
+             * In some cases, GEXspline seems to produce identical points 
+             * (at least observed at end of spline)
+             * so trim identical points from the ends 
+             * (so arrow heads are drawn at correct angle)
+             */
+            int np = LENGTH(VECTOR_ELT(points, 0));
+            double *px = REAL(VECTOR_ELT(points, 0));
+            double *py = REAL(VECTOR_ELT(points, 1));
+            int start = 0;
+            int end = np - 1;
+            /*
+             * DEBUGGING ...
+             int k;
+             for (k=0; k<np; k++) {
+             GESymbol(px[k], py[k], 16, 3, &gc, dd); 
+             }
 	     * ... DEBUGGING
 	     */
 	    while (np > 1 && 
@@ -1950,50 +1952,69 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
 		end--;
 		np--;
 	    }
-	    /*
-	     * Can draw an arrow at the either end.
-	     */
-	    arrows(&(px[start]), &(py[start]), np,
-		   a, i, TRUE, TRUE,
-		   vpc, vpWidthCM, vpHeightCM, &gc, dd);
-	}
-	if (!draw && !isNull(points)) {
-	    /*
-	     * Update bounds
-	     */
-	    int j, n = LENGTH(VECTOR_ELT(points, 0));
-	    double *px = REAL(VECTOR_ELT(points, 0));
-	    double *py = REAL(VECTOR_ELT(points, 1));
-	    double *pxx = (double *) R_alloc(n, sizeof(double));
-	    double *pyy = (double *) R_alloc(n, sizeof(double));
-	    for (j=0; j<n; j++) {
-		pxx[j] = fromDeviceX(px[j], GE_INCHES, dd);
-		pyy[j] = fromDeviceY(py[j], GE_INCHES, dd);
-		if (R_FINITE(pxx[j]) && R_FINITE(pyy[j])) {
-		    if (pxx[j] < xmin)
-			xmin = pxx[j];
-		    if (pxx[j] > xmax)
-			xmax = pxx[j];
-		    if (pyy[j] < ymin)
-			ymin = pyy[j];
-		    if (pyy[j] > ymax)
-			ymax = pyy[j];
-		    nloc++;
-		}
-	    }
-	    /*
-	     * Calculate edgex and edgey for case where this is 
-	     * the only xspline
-	     */
-	    hullEdge(pxx, pyy, n, theta, &edgex, &edgey);
-	}
-	UNPROTECT(1);
+            if (trace) {
+                int i;
+                int count = end - start + 1;
+                double *keepXptr, *keepYptr;
+                SEXP keepPoints, keepX, keepY;
+                PROTECT(keepPoints = allocVector(VECSXP, 2));
+                PROTECT(keepX = allocVector(REALSXP, count));
+                PROTECT(keepY = allocVector(REALSXP, count));
+                keepXptr = REAL(keepX);
+                keepYptr = REAL(keepY);
+                for (i=start; i<(end + 1); i++) {
+                    keepXptr[i - start] = fromDeviceX(px[i], GE_INCHES, dd);
+                    keepYptr[i - start] = fromDeviceY(py[i], GE_INCHES, dd);
+                }
+                SET_VECTOR_ELT(keepPoints, 0, keepX);
+                SET_VECTOR_ELT(keepPoints, 1, keepY);
+                SET_VECTOR_ELT(tracePts, 0, keepPoints);
+                UNPROTECT(3); /* keepPoints & keepX & keepY */
+            }
+            if (draw && !isNull(a) && !isNull(points)) {
+                /*
+                 * Can draw an arrow at the either end.
+                 */
+                arrows(&(px[start]), &(py[start]), np,
+                       a, i, TRUE, TRUE,
+                       vpc, vpWidthCM, vpHeightCM, &gc, dd);
+            }
+            if (!draw && !trace && !isNull(points)) {
+                /*
+                 * Update bounds
+                 */
+                int j, n = LENGTH(VECTOR_ELT(points, 0));
+                double *pxx = (double *) R_alloc(n, sizeof(double));
+                double *pyy = (double *) R_alloc(n, sizeof(double));
+                for (j=0; j<n; j++) {
+                    pxx[j] = fromDeviceX(px[j], GE_INCHES, dd);
+                    pyy[j] = fromDeviceY(py[j], GE_INCHES, dd);
+                    if (R_FINITE(pxx[j]) && R_FINITE(pyy[j])) {
+                        if (pxx[j] < xmin)
+                            xmin = pxx[j];
+                        if (pxx[j] > xmax)
+                            xmax = pxx[j];
+                        if (pyy[j] < ymin)
+                            ymin = pyy[j];
+                        if (pyy[j] > ymax)
+                            ymax = pyy[j];
+                        nloc++;
+                    }
+                }
+                /*
+                 * Calculate edgex and edgey for case where this is 
+                 * the only xspline
+                 */
+                hullEdge(pxx, pyy, n, theta, &edgex, &edgey);
+            }
+        } /* End of trimming-redundant-points code */
+	UNPROTECT(1); /* points */
 	if (draw)
 	    GEMode(0, dd);
 	vmaxset(vmax);
     }
-    if (nloc > 0) {
-	result = allocVector(REALSXP, 4);
+    if (!draw && !trace && nloc > 0) {
+	PROTECT(result = allocVector(REALSXP, 4));
 	/*
 	 * If there is more than one xspline, just produce edge
 	 * based on bounding rect of all xsplines
@@ -2014,20 +2035,32 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
 	    REAL(gridStateElement(dd, GSS_SCALE))[0];
 	REAL(result)[3] = (ymax - ymin) / 
 	    REAL(gridStateElement(dd, GSS_SCALE))[0];
-    } 
+        UNPROTECT(1); /* result */
+    } else if (trace) {
+        result = tracePts;
+    }
+    UNPROTECT(1); /* tracePts */
     return result;
 }
 
 SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index) 
 {
-    gridXspline(x, y, s, o, a, rep, index, 0, TRUE);
+    gridXspline(x, y, s, o, a, rep, index, 0, TRUE, FALSE);
     return R_NilValue;
 }
 
 SEXP L_xsplineBounds(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, 
 		     SEXP index, SEXP theta) 
 {
-    return gridXspline(x, y, s, o, a, rep, index, REAL(theta)[0], FALSE);
+    return gridXspline(x, y, s, o, a, rep, index, REAL(theta)[0], 
+                       FALSE, FALSE);
+}
+
+SEXP L_xsplinePoints(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, 
+		     SEXP index, SEXP theta) 
+{
+    return gridXspline(x, y, s, o, a, rep, index, REAL(theta)[0], 
+                       FALSE, TRUE);
 }
 
 SEXP L_segments(SEXP x0, SEXP y0, SEXP x1, SEXP y1, SEXP arrow) 

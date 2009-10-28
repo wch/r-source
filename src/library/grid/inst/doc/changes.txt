@@ -1,3 +1,12 @@
+Changes from grid_2.10.0 to grid_2.11.0:
+--------------------------------------
+
+1.  Added xsplinePoints() function to return the (x, y) 
+    locations that an Xspline would be drawn through.
+    Useful for, e.g., clipping an Xspline against a
+    boundary.
+
+
 Changes from grid_2.9.0 to grid_2.10.0:
 --------------------------------------
 
