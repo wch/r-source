@@ -484,19 +484,19 @@ sectionTitles <-
 
 psub <- function(pattern, replacement, x)
 ##    gsub(pattern, replacement, x, perl = TRUE, useBytes = TRUE)
-    .Internal(gsub(pattern, replacement, x, FALSE, TRUE, TRUE, FALSE, TRUE))
+    .Internal(gsub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE))
 
 psub1 <- function(pattern, replacement, x)
 ##    sub(pattern, replacement, x, perl = TRUE, useBytes = TRUE)
-    .Internal(sub(pattern, replacement, x, FALSE, TRUE, TRUE, FALSE, TRUE))
+    .Internal(sub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE))
 
 fsub <- function(pattern, replacement, x)
 ##    gsub(pattern, replacement, x, fixed = TRUE, useBytes = TRUE)
-    .Internal(gsub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE, TRUE))
+    .Internal(gsub(pattern, replacement, x, FALSE, FALSE, TRUE, TRUE))
 
 fsub1 <- function(pattern, replacement, x)
 ##    sub(pattern, replacement, x, fixed = TRUE, useBytes = TRUE)
-    .Internal(sub(pattern, replacement, x, FALSE, TRUE, FALSE, TRUE, TRUE))
+    .Internal(sub(pattern, replacement, x, FALSE, FALSE, TRUE, TRUE))
 
 
 ## for lists of messages, see ../man/checkRd.Rd
@@ -616,13 +616,13 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                "\\ifelse" = {
     		   condition <- block[[1L]]
     		   tags <- RdTags(condition)
-    		   if (!all(tags %in% c("TEXT", "\\Sexpr"))) 
+    		   if (!all(tags %in% c("TEXT", "\\Sexpr")))
     		       stopRd(block, Rdfile, "Condition must be \\Sexpr or plain text")
     		   condition <- condition[tags == "TEXT"]
     		   allow <- .strip_whitespace(strsplit(paste(condition, collapse=""), ",")[[1L]])
-    		   unknown <- allow[!(allow %in% 
+    		   unknown <- allow[!(allow %in%
     		          c("", "latex", "example", "text", "html", "TRUE", "FALSE"))]
-    		   if (length(unknown)) 
+    		   if (length(unknown))
     		       warnRd(block, Rdfile, "Unrecognized format: ", unknown)
                    checkContent(block[[2L]])
                    if (tag == "\\ifelse")
@@ -837,8 +837,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     }, warning = .whandler)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
-    
-    if (sections[1] == "\\title")  # if not, we've already been warned... 
+
+    if (sections[1] == "\\title")  # if not, we've already been warned...
     	if (!all(RdTags(Rd[[1]]) == "TEXT"))
     	    warnRd(Rd[[1]], Rdfile, level = 5,
     	    	   "\\title content must be plain text")
@@ -871,7 +871,7 @@ testRdConditional <- function(format, conditional, Rdfile) {
     condition <- conditional[[1L]]
     tags <- RdTags(condition)
     if (!all(tags == "TEXT")) stopRd(conditional, Rdfile, "condition must be plain text")
-    
+
     allow <- .strip_whitespace(strsplit(paste(condition, collapse=""), ",")[[1L]])
     any(c("TRUE", format) %in% allow)
 }
