@@ -43,7 +43,7 @@ setBreakpoint(srcfile, line, nameonly = TRUE, envir = parent.frame(),
   back to \code{lastenv}.
 
   \code{lastenv} defaults to the global environment if
-  \code{enviris.primitive(is.function) } is not specified, and to the
+  \code{envir} is not specified, and to the
   root environment \code{\link{emptyenv}()} if \code{envir} is
   specified.  (The first default tends to be quite fast, and will
   usually find all user code other than S4 methods; the second one is
