@@ -1078,66 +1078,6 @@ SEXP attribute_hidden do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-/* <FIXME> can \n or \r occur as part of a MBCS extra byte?
-   Not that I know of */
-static int filbuf(char *buf, FILE *fp)
-{
-    int c;
-    while ((c = fgetc(fp)) != EOF) {
-	if (c == '\n' || c == '\r') {
-	    *buf = '\0';
-	    return 1;
-	}
-	*buf++ = c;
-    }
-    return 0;
-}
-
-/* index.search(topic, path, .Platform$file.sep) */
-SEXP attribute_hidden do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP topic, path, sep;
-    char linebuf[256], topicbuf[256], *p;
-    const char *csep;
-    int i, npath, ltopicbuf;
-    FILE *fp;
-
-    checkArity(op, args);
-    topic = CAR(args); args = CDR(args);
-    if (!isString(topic) || length(topic) < 1 || isNull(topic))
-	error(_("invalid '%s' argument"), "topic");
-    path = CAR(args); args = CDR(args);
-    if (!isString(path) || length(path) < 1 || isNull(path))
-	error(_("invalid '%s' argument"), "path");
-    sep = CAR(args);
-    if (!isString(sep) || length(sep) < 1 || isNull(sep))
-	error(_("invalid '%s' argument"), "sep");
-    csep = CHAR(STRING_ELT(sep, 0));
-    snprintf(topicbuf, 256, "%s\t", translateChar(STRING_ELT(topic, 0)));
-    ltopicbuf = strlen(topicbuf);
-    npath = length(path);
-    for (i = 0; i < npath; i++) {
-	snprintf(linebuf, 256, "%s%s%s%s%s",
-		translateChar(STRING_ELT(path, i)), 
-		 csep, "help", csep, "AnIndex");
-	if ((fp = R_fopen(R_ExpandFileName(linebuf), "rt"))) {
-	    while (filbuf(linebuf, fp)) {
-		if (strncmp(linebuf, topicbuf, ltopicbuf) == 0) {
-		    p = &linebuf[ltopicbuf - 1];
-		    while (isspace((int)*p)) p++;
-		    fclose(fp);
-		    snprintf(topicbuf, 256, "%s%s%s%s%s",
-			     translateChar(STRING_ELT(path, i)),
-			     csep, "help", csep, p);
-		    return mkString(topicbuf);
-		}
-	    }
-	    fclose(fp);
-	}
-    }
-    return mkString("");
-}
-
 #define CHOOSEBUFSIZE 1024
 
 #ifndef Win32
