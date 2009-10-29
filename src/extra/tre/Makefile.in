@@ -18,7 +18,7 @@ SOURCES = regcomp.c regerror.c regexec.c tre-ast.c tre-compile.c \
   tre-match-approx.c tre-match-backtrack.c tre-match-parallel.c \
   tre-mem.c tre-parse.c tre-stack.c xmalloc.c 
 
-HEADERS = regex.h tre-ast.h tre-compile.h tre-config.h tre-internal.h \
+HEADERS = tre.h tre-ast.h tre-compile.h tre-config.h tre-internal.h \
   tre-match-utils.h tre-mem.h tre-parse.h tre-stack.h xmalloc.h
 
 DEPENDS = $(SOURCES:.c=.d)
