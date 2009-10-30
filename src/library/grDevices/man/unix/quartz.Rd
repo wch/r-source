@@ -99,7 +99,7 @@ quartz.options(\dots, reset = FALSE)
   character string with an optional integer printf-style format that
   will be substituted by the device number.  It is also optionally used
   (without a format) to give a title to a PDF file.
-
+    
   Calling \code{quartz()} sets \code{\link{.Device}} to \code{"quartz"}
   for on-screen devices and to \code{"quartz_off_screen"} otherwise.
 }
