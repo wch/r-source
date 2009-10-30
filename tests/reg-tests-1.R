@@ -5879,3 +5879,9 @@ writeLines(ll, con <- xzfile(tf, compression = -9)); close(con)
 file.info(tf)$size
 stopifnot(identical(read.table(tf), morley))
 unlink(tf)
+
+
+## weighted.mean with NAs (PR#14032)
+x <- c(101, 102, NA)
+stopifnot(all.equal(mean(x, na.rm = TRUE), weighted.mean(x, na.rm = TRUE)))
+## divided by 3 in 2.10.0 (only)

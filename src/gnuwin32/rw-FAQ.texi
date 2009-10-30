@@ -177,7 +177,7 @@ Properties... and change the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the
 Target field (@emph{after} any final double quote, and separated by a
-space), for example @code{--sdi --max-mem-size=1Gb}.  You can also set
+space), for example @code{--sdi --max-mem-size=1G}.  You can also set
 environment variables at the end of the Target field, for example
 @code{R_LIBS=p:/myRlib}, and if you want to ensure that menus and
 messages are in (American) English, @code{LANGUAGE=en}.
@@ -316,23 +316,25 @@ to do so is to copy (say) @file{R\win-library\2.6} to
 Indeed there is.  It is set by the command-line flag
 @option{--max-mem-size} (@pxref{How do I install R for Windows?}) and
 defaults to the smaller of the amount of physical RAM in the machine and
-0.5Gb less than the limit of user virtual memory for a process (most
+0.5GB less than the limit of user virtual memory for a process (most
 often 2GB).  It can be set to any amount between 32Mb and 4095Mb.
 
 Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} within a
 running R session.
 
-The executables @file{Rgui.exe} and @file{Rterm.exe} support up to 3Gb
-per process under suitably enabled versions of 32-bit Windows (see
-@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}
-and @uref{http://msdn2.microsoft.com/en-us/library/aa366778.aspx}: where
-this is supported it may need to be specifically enabled).  On such
-systems, the default for @code{--max-mem-size} is the smaller of the
-amount of RAM and 2.5Gb.  On some 64-bit versions of Windows (e.g.@:
-Vista) the limit is 4GB, and there the default for @code{--max-mem-size}
-is the smaller of the amount of RAM and 3.5Gb.
+The executables @file{Rgui.exe} and @file{Rterm.exe} support up to 3GB
+of user address space per process under suitably enabled versions of
+32-bit Windows (see
+@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx},
+@uref{http://msdn.microsoft.com/en-us/library/bb613473%28VS.85%29.aspx};
+this is not enabled by default).  On such systems, the default for
+@code{--max-mem-size} is the smaller of the amount of RAM and 2.5GB.  On
+some 64-bit versions of Windows the user address space for a 32-bit
+process is 4GB, and there the default for @code{--max-mem-size} is the
+smaller of the amount of RAM and 3.5GB.
 
+@c limits are documented at http://msdn.microsoft.com/en-us/library/aa366778%28VS.85%29.aspx
 
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
 @section How can I keep workspaces for different projects in different directories?
