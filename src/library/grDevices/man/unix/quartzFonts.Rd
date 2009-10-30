@@ -50,5 +50,10 @@ quartzFonts(...)
 \examples{
 quartzFonts()
 quartzFonts("mono")
-}
+\dontrun{
+## for CJK locales you can use something like
+quartzFonts(sans = quartzFont(rep("AppleGothic", 4)),
+            serif = quartzFont(rep("AppleMyungjp", 4)))
+## since the default fonts may well not have the glyphs needed
+}}
 \keyword{device}

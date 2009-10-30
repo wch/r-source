@@ -397,7 +397,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 formatDL(nm, txt, indent = max(nchar(nm, "w")) + 3)
             } else if(basename(f) %in% "vignette.rds") {
                 txt <- .readRDS(f)
-                ## New-style vignette indexes are data frames with more
+                ## New-style vignette indices are data frames with more
                 ## info than just the base name of the PDF file and the
                 ## title.  For such an index, we give the names of the
                 ## vignettes, their titles, and indicate whether PDFs
