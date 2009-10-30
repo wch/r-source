@@ -78,6 +78,9 @@ BUG FIXES
     o	[g]sub() could use excessive stack space when used with a very
 	long vector of non-ASCII data.
 
+    o	The default method of weighted.mean(na.rm = TRUE) did not omit
+	weights for NA observations in 2.10.0.  (PR#14032)
+
 
 
 
