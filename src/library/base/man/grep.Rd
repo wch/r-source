@@ -20,12 +20,11 @@
   matches respectively.
 }
 \usage{
-grep(pattern, x, ignore.case = FALSE,
-     perl = FALSE, value = FALSE, fixed = FALSE, useBytes = FALSE,
-     invert = FALSE)
+grep(pattern, x, ignore.case = FALSE, perl = FALSE, value = FALSE,
+     fixed = FALSE, useBytes = FALSE, invert = FALSE)
 
-grepl(pattern, x, ignore.case = FALSE,
-     perl = FALSE, fixed = FALSE, useBytes = FALSE)
+grepl(pattern, x, ignore.case = FALSE, perl = FALSE, fixed = FALSE,
+      useBytes = FALSE)
 
 sub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
     fixed = FALSE, useBytes = FALSE)
@@ -33,11 +32,11 @@ sub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
 gsub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
      fixed = FALSE, useBytes = FALSE)
 
-regexpr(pattern, text, ignore.case = FALSE,
-        perl = FALSE, fixed = FALSE, useBytes = FALSE)
+regexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
+        fixed = FALSE, useBytes = FALSE)
 
-gregexpr(pattern, text, ignore.case = FALSE,
-         perl = FALSE, fixed = FALSE, useBytes = FALSE)
+gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
+         fixed = FALSE, useBytes = FALSE)
 }
 \arguments{
   \item{pattern}{character string containing a \link{regular expression}
@@ -107,6 +106,16 @@ gregexpr(pattern, text, ignore.case = FALSE,
   locale, and you should expect it only to work for ASCII characters if
   \code{useBytes = TRUE}.
 }
+
+\note{
+  Prior to \R 2.11.0 there was an argument \code{extended} which could
+  be used to select \sQuote{basic} regular expressions: this was often
+  used when \code{fixed = TRUE} would be preferable.  In the actual
+  implementation (as distinct from the POSIX standard) the only
+  difference was that \samp{?}, \samp{+}, \samp{\{}, \samp{|}, \samp{(},
+  and \samp{)} were not interpreted as metacharacters.
+}
+
 \value{
   \code{grep(value = FALSE)} returns an integer vector of the indices
   of the elements of \code{x} that yielded a match (or not, for
@@ -174,15 +183,18 @@ gregexpr(pattern, text, ignore.case = FALSE,
   code based on \code{glibc} was used (and before that, code from GNU
   \command{grep}).  The POSIX standard does give some room for
   interpretation, especially in the handling of invalid regular
-  expressions, so the results will have changed slightly.
+  expressions and the collation of character ranges, so the results will
+  have changed slightly.
 
   For Perl-style matching PCRE (\url{http://www.pcre.org}) is used.
 }
+
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole (\code{grep})
 }
+
 % the `aka' below is for ESS
 \seealso{
   \link{regular expression} (aka \code{\link{regexp}}) for the details

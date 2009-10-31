@@ -82,6 +82,16 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   \R 2.10.0, for \code{perl = TRUE, useBytes = FALSE} all non-ASCII
   strings in a multibyte locale are translated to UTF-8.
 }
+
+\note{
+  Prior to \R 2.11.0 there was an argument \code{extended} which could
+  be used to select \sQuote{basic} regular expressions: this was often
+  used when \code{fixed = TRUE} would be preferable.  In the actual
+  implementation (as distinct from the POSIX standard) the only
+  difference was that \samp{?}, \samp{+}, \samp{\{}, \samp{|}, \samp{(},
+  and \samp{)} were not interpreted as metacharacters.
+}
+
 \seealso{
   \code{\link{paste}} for the reverse,
   \code{\link{grep}} and \code{\link{sub}} for string search and

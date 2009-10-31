@@ -65,7 +65,7 @@ function(pattern, text, ignore.case = FALSE, perl = FALSE,
 }
 
 gregexpr <-
-function(pattern, text, ignore.case = FALSE, extended = TRUE, perl = FALSE,
+function(pattern, text, ignore.case = FALSE, perl = FALSE,
          fixed = FALSE, useBytes = FALSE)
 {
     if (!is.character(text)) text <- as.character(text)
