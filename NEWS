@@ -16,9 +16,16 @@ INSTALLATION
 	needed to be linked explicitly against -ljpeg).
 
 
+DEPRECATED & DEFUNCT
+
+    o	The 'extended' argument is deprecated in strsplit(), grep(),
+	grepl(), sub(), gsub(), regexpr() and gregexpr() (not just the
+	value extended = FALSE) and will be removed in R 2.11.0.
+
+
 BUG FIXES
 
-    o	trigamma(x) and other psigamma(x,n) calls are now accurate also for
+    o	trigamma(x) and other psigamma(x, n) calls are now accurate for
 	very large abs(x). (PR#14020)
 
     o	[g]sub() could use excessive stack space when used with a very
