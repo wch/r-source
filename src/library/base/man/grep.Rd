@@ -20,25 +20,23 @@
   matches respectively.
 }
 \usage{
-grep(pattern, x, ignore.case = FALSE, extended = TRUE,
+grep(pattern, x, ignore.case = FALSE,
      perl = FALSE, value = FALSE, fixed = FALSE, useBytes = FALSE,
      invert = FALSE)
 
-grepl(pattern, x, ignore.case = FALSE, extended = TRUE,
+grepl(pattern, x, ignore.case = FALSE,
      perl = FALSE, fixed = FALSE, useBytes = FALSE)
 
-sub(pattern, replacement, x,
-    ignore.case = FALSE, extended = TRUE, perl = FALSE,
+sub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
     fixed = FALSE, useBytes = FALSE)
 
-gsub(pattern, replacement, x,
-     ignore.case = FALSE, extended = TRUE, perl = FALSE,
+gsub(pattern, replacement, x, ignore.case = FALSE, perl = FALSE,
      fixed = FALSE, useBytes = FALSE)
 
-regexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
+regexpr(pattern, text, ignore.case = FALSE,
         perl = FALSE, fixed = FALSE, useBytes = FALSE)
 
-gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
+gregexpr(pattern, text, ignore.case = FALSE,
          perl = FALSE, fixed = FALSE, useBytes = FALSE)
 }
 \arguments{
@@ -53,7 +51,6 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
     object which can be coerced by \code{as.character} to a character vector.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
-  \item{extended}{logical. Values other than \code{TRUE} are defunct.}
   \item{perl}{logical. Should perl-compatible regexps be used?
     Has priority over \code{extended}.}
   \item{value}{if \code{FALSE}, a vector containing the (\code{integer})

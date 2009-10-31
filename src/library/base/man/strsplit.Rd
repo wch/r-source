@@ -11,8 +11,7 @@
   according to the matches to substring \code{split} within them.
 }
 \usage{
-strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE,
-         useBytes = FALSE)
+strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
 }
 \arguments{
   \item{x}{
@@ -26,9 +25,6 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE,
     \code{split} has length 0, \code{x} is split into single characters.
     If \code{split} has length greater than 1, it is re-cycled along
     \code{x}.
-  }
-  \item{extended}{
-    logical.  Values other than \code{TRUE} are defunct.
   }
   \item{fixed}{
     logical.  If \code{TRUE} match \code{split} exactly, otherwise
@@ -55,7 +51,6 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE,
   locale it is the unit represented by a \sQuote{wide character} (almost
   always a Unicode point).
   
-
   A missing value of \code{split} does not split the corresponding
   element(s) of \code{x} at all.
 
@@ -84,8 +79,8 @@ strsplit(x, split, extended = TRUE, fixed = FALSE, perl = FALSE,
   If any element of \code{x} or \code{split} is declared to be in UTF-8
   (see \code{\link{Encoding}}, non-ASCII character strings in the result
   will be in UTF-8 and have their encoding declared as UTF-8.  As from
-  \R 2.10.0, for \code{perl = TRUE, useBytes = FALSE} all strings in a
-  multibyte locale are translated to UTF-8.
+  \R 2.10.0, for \code{perl = TRUE, useBytes = FALSE} all non-ASCII
+  strings in a multibyte locale are translated to UTF-8.
 }
 \seealso{
   \code{\link{paste}} for the reverse,
