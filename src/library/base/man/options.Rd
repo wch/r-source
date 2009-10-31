@@ -265,8 +265,8 @@ getOption(x, default = NULL)
       \code{\link{sys.source}}.}
 
     \item{\code{useFancyQuotes}:}{logical: controls the use of
-      directional quotes: see \code{\link{sQuote}} and
-      \code{\link{Rd2txt}}.}
+      directional quotes in \code{\link{sQuote}}, \code{dQuote} and in
+      rendering text help (see \code{\link{Rd2txt}}).}
 
     \item{\code{verbose}:}{logical.  Should \R report extra information
       on progress?  Set to \code{TRUE} by the command-line option

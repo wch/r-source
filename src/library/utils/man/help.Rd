@@ -80,6 +80,11 @@ help(topic, package = NULL, lib.loc = NULL,
   default) have prebuilt text, html and latex help pages, and these are
   used if parsed Rd files are not available.
   
+  The rendering of text help will use directional quotes in suitable
+  locales (UTF-8 and single-byte Windows locales): sometimes the fonts
+  used do not support these quotes so this can be turned off by setting
+  \code{\link{options}(useFancyQuotes = FALSE)}.
+
   \code{topic} is not optional: if it is omitted \R will give (text)
   information on the package (including hints to suitable help topics)
   if a package is specified, a (text) list of available packages if
