@@ -133,8 +133,8 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   coercion).  Elements of character vectors \code{x} which are not
   substituted will be return unchanged (including any declared
   encoding).  If \code{useBytes = FALSE} a non-ASCII result will often
-  be in UTF-8 with a marked encoding (e.g. if there is a UTF-8 input, in
-  a multibyte locale if \code{perl = TRUE}, and always for non-Perl regexps).
+  be in UTF-8 with a marked encoding (e.g. if there is a UTF-8 input and
+  in a multibyte locale for \code{perl = TRUE}).
 
   For \code{regexpr} an integer vector of the same length as \code{text}
   giving the starting position of the first match or \eqn{-1} if there
@@ -159,7 +159,9 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
 \section{Performance considerations}{
   If you are doing a lot of regular expression matching, including on
   very long strings, you will want to consider the options used.
-  Generally using PCRE (\code{perl = TRUE}) will be fastest.
+  Generally PCRE will be faster than the default regular expression
+  engine, and \code{fixed = TRUE} faster still (especially when each
+  pattern is matched only a few times).
 
   If you are working in a single-byte locale and have marked UTF-8
   strings that are representable in that locale, convert them first as
@@ -171,9 +173,6 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   checked before matching, and the actual matching will be faster.
   Often byte-based matching suffices in a UTF-8 locale since byte
   patterns of one character never match part of another.
-  
-  The main performance benefit of \code{fixed = TRUE} is when each
-  pattern is matched only a few times.
 }
 
 \source{
