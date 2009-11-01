@@ -23,7 +23,7 @@
     	on.exit(setwd(oldwd))
     }
     res <- tryCatch(normalizePath(path), error = identity)
-    if (inherits(res, "try-error")) path
+    if (inherits(res, "error")) path
     else res
 }
 
