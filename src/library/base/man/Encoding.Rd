@@ -1,6 +1,6 @@
 % File src/library/base/man/Encoding.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Encoding}
@@ -45,7 +45,7 @@ Encoding(x) <- value
 
   Most character manipulation functions will set the encoding on output
   strings if it was declared on the corresponding input.  These include
-  \code{\link{chartr}}, \code{\link{strsplit(useBytes = FALSE)}},
+  \code{\link{chartr}}, \code{\link{strsplit}(useBytes = FALSE)},
   \code{\link{tolower}} and \code{\link{toupper}} as well as
   \code{\link{sub}(useBytes = FALSE)} and \code{\link{gsub}(useBytes =
   FALSE)}.  Note that such functions do not \emph{preserve} the
