@@ -640,8 +640,10 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (invert == NA_INTEGER) invert = 0;
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
-    if (fixed_opt && perl_opt)
+    if (fixed_opt && perl_opt) {
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
+	perl_opt = 0;
+    }
 
     if (!isString(pat) || length(pat) < 1)
 	error(_("invalid '%s' argument"), "pattern");
@@ -942,8 +944,10 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (useBytes == NA_INTEGER) useBytes = 0;
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
-    if (fixed_opt && perl_opt)
+    if (fixed_opt && perl_opt) {
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
+	perl_opt = 0;
+    }
 
     if (!isString(pat) || length(pat) < 1)
 	error(_("invalid '%s' argument"), "pattern");
@@ -974,8 +978,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	useBytes = onlyASCII;
     }
 
-    if (perl_opt && !fixed_opt)
-	return do_pgsub(pat, rep, text, global, igcase_opt, useBytes);
+    if (perl_opt) return do_pgsub(pat, rep, text, global, igcase_opt, useBytes);
 
 #ifndef USE_TRE_FOR_FIXED
     if (!useBytes && fixed_opt) {
@@ -1240,8 +1243,10 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (useBytes == NA_INTEGER) useBytes = 0;
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
-    if (fixed_opt && perl_opt)
+    if (fixed_opt && perl_opt) {
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
+	perl_opt = 0;
+    }
 
     /* allow 'text' to be zero-length from 2.3.1 */
     /* Note that excluding NAs differs from grep/sub */
@@ -1632,8 +1637,10 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
-    if (fixed_opt && perl_opt)
+    if (fixed_opt && perl_opt) {
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
+	perl_opt = 0;
+    }
 
     if (!isString(text) || length(text) < 1)
 	error(_("invalid '%s' argument"), "text");
@@ -1643,9 +1650,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (length(pat) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
 
-    if (perl_opt && !fixed_opt)
-	return do_gpregexpr(pat, text, igcase_opt, useBytes);
-
+    if (perl_opt) return do_gpregexpr(pat, text, igcase_opt, useBytes);
 
     n = LENGTH(text);
     if (!useBytes) {
