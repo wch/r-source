@@ -33,14 +33,6 @@ strsplit grep [g]sub [g]regexpr
 # include <config.h>
 #endif
 
-/* NB: USE_TRE_FOR_FIXED appears to work, but is minimally tested.
-   The main benefit would be code simplification, but there are
-   cases where code in a non-UTF-8 MBCS would be converted to UTF-8 by
-   the RE engines but are handled directly by the existing code.  That
-   might just matter if wchar_t is not Unicode (but we have no known
-   examples).
- */
-
 #include <Defn.h>
 #include <R_ext/RS.h>  /* for Calloc/Free */
 #include <wchar.h>
@@ -67,7 +59,6 @@ static void reg_report(int rc,  regex_t *reg, const char *pat)
     error(_("invalid regular expression '%s'"), pat);
 }
 
-/* FIXME: make more robust, and public */
 static SEXP mkCharWLen(const wchar_t *wc, int nc)
 {
     int nb; char *xi; wchar_t *wt;
@@ -153,9 +144,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if (extended_opt) cflags = REG_EXTENDED;
-#ifdef USE_TRE_FOR_FIXED
     if (fixed_opt) cflags = REG_LITERAL;
-#endif
 
     len = LENGTH(x);
     tlen = LENGTH(tok);
@@ -237,9 +226,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_VECTOR_ELT(ans, i, t);
 		UNPROTECT(1);
 	    }
-	} else
-#ifndef USE_TRE_FOR_FIXED
-	if (fixed_opt) {
+	} else if (fixed_opt) {
 	    const char *laststart, *ebuf;
 	    int slen;
 	    if (useBytes)
@@ -308,9 +295,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (*bufp)
 		    SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
 	    }
-	} else
-#endif
-	if (perl_opt) {
+	} else if (perl_opt) {
 	    pcre *re_pcre;
 	    pcre_extra *re_pe;
 	    int erroffset, ovector[30];
@@ -533,7 +518,6 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-#ifndef USE_TRE_FOR_FIXED
 /* This could be faster for plen > 1, but uses in R are for small strings */
 static int fgrep_one(const char *pat, const char *target,
 		     Rboolean useBytes, int ienc, int *next)
@@ -615,7 +599,6 @@ static int fgrep_one_bytes(const char *pat, const char *target, Rboolean useByte
 	    if (strncmp(pat, target+i, plen) == 0) return i;
     return -1;
 }
-#endif
 
 SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -648,8 +631,10 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (invert == NA_INTEGER) invert = 0;
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
-    if (fixed_opt && perl_opt)
+    if (fixed_opt && perl_opt) {
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
+	perl_opt = 0;
+    }
     if (!extended_opt)
 	warning("'%s' is deprecated", "extended = FALSE");
     if ((fixed_opt || perl_opt) && !extended_opt)
@@ -688,11 +673,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (!useBytes) {
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales */
-	if (
-#ifndef USE_TRE_FOR_FIXED
-	    fixed_opt ||
-#endif
-	    (!mbcslocale && perl_opt)) {
+	if (fixed_opt || (!mbcslocale && perl_opt)) {
 	    if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
 	    if(!use_UTF8)
 		for (i = 0; i < n; i++)
@@ -703,11 +684,8 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-#ifndef USE_TRE_FOR_FIXED
-    if (fixed_opt) {
-    } else
-#endif
-    if (perl_opt) {
+    if (fixed_opt) ;
+    else if (perl_opt) {
 	if (igcase_opt) cflags |= PCRE_CASELESS;
 	if (!useBytes) {
 	    if (mbcslocale) use_UTF8 = TRUE;
@@ -717,9 +695,6 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	cflags = REG_NOSUB;
 	if (extended_opt) cflags |= REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
-#ifdef USE_TRE_FOR_FIXED
-	if (fixed_opt) cflags = REG_LITERAL;
-#endif
     }
 
     if (useBytes) {
@@ -736,11 +711,8 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("regular expression is invalid in this locale"));
     }
 
-#ifndef USE_TRE_FOR_FIXED
     if (fixed_opt) ;
-    else
-#endif
-    if (perl_opt) {
+    else if (perl_opt) {
 	tables = pcre_maketables();
 	re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
 	if (!re_pcre) {
@@ -780,12 +752,9 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 
-#ifndef USE_TRE_FOR_FIXED
 	    if (fixed_opt)
 		LOGICAL(ind)[i] = fgrep_one(spat, s, useBytes, ienc, NULL) >= 0;
-	    else
-#endif
-	    if (perl_opt) {
+	    else if (perl_opt) {
 		if (pcre_exec(re_pcre, re_pe, s, strlen(s), 0, 0, &ov, 0) >= 0)
 		    INTEGER(ind)[i] = 1;
 	    } else {
@@ -799,11 +768,8 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if (invert ^ LOGICAL(ind)[i]) nmatches++;
     }
-#ifndef USE_TRE_FOR_FIXED
     if (fixed_opt);
-    else
-#endif
-    if (perl_opt) {
+    else if (perl_opt) {
 	if(re_pe) pcre_free(re_pe);
 	pcre_free(re_pcre);
 	pcre_free((void *)tables);
@@ -930,10 +896,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	cflags = 0, eflags, last_end;
     char *u, *cbuf;
     const char *spat, *srep, *s;
-#ifndef USE_TRE_FOR_FIXED
-    int patlen = 0;
-#endif
-    int replen = 0;
+    int patlen = 0, replen = 0;
     Rboolean use_UTF8 = FALSE;
     const wchar_t *wrep = NULL;
 
@@ -956,8 +919,10 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (useBytes == NA_INTEGER) useBytes = 0;
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
-    if (fixed_opt && perl_opt)
+    if (fixed_opt && perl_opt) {
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
+	perl_opt = 0;
+    }
     if (!extended_opt)
 	warning("'%s' is deprecated", "extended = FALSE");
     if ((fixed_opt || perl_opt) && !extended_opt)
@@ -992,10 +957,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	useBytes = onlyASCII;
     }
 
-    if (perl_opt && !fixed_opt)
-	return do_pgsub(pat, rep, text, global, igcase_opt, useBytes);
+    if (perl_opt) return do_pgsub(pat, rep, text, global, igcase_opt, useBytes);
 
-#ifndef USE_TRE_FOR_FIXED
     if (!useBytes && fixed_opt) {
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
 	if(!use_UTF8)
@@ -1005,7 +968,6 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    break;
 		}
     }
-#endif
 
     if (useBytes) {
 	spat = CHAR(STRING_ELT(pat, 0));
@@ -1022,20 +984,14 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("'replacement' is invalid in this locale"));
     }
 
-#ifndef USE_TRE_FOR_FIXED
     if (fixed_opt) {
 	patlen = strlen(spat);
 	if (!patlen) error(_("zero-length pattern"));
 	replen = strlen(srep);
-    } else
-#endif
-    {
+    } else {
 	spat = CHAR(STRING_ELT(pat, 0));
 	if (extended_opt) cflags |= REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
-#ifdef USE_TRE_FOR_FIXED
-	if (fixed_opt) cflags = REG_LITERAL;
-#endif
 	if (useBytes) {
 	    rc =  tre_regcompb(&reg, spat, cflags);
 	    if (rc) reg_report(rc, &reg, spat);
@@ -1067,7 +1023,6 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(("input string %d is invalid in this locale"), i+1);
 
 	ns = strlen(s);
-#ifndef USE_TRE_FOR_FIXED
 	if (fixed_opt) {
 	    int st, nr;
 	    st = fgrep_one_bytes(spat, s, useBytes);
@@ -1101,9 +1056,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    SET_STRING_ELT(ans, i, markKnown(cbuf, STRING_ELT(text, i)));
 		Free(cbuf);
 	    }
-	} else
-#endif
-	if (useBytes) {
+	} else if (useBytes) {
 	    int maxrep;
 	    /* basic or extended regexp  in bytes*/
 
@@ -1219,10 +1172,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    Free(cbuf);
 	}
     }
-#ifndef USE_TRE_FOR_FIXED
-    if (!fixed_opt)
-#endif
-	tre_regfree(&reg);
+    if (!fixed_opt) tre_regfree(&reg);
     DUPLICATE_ATTRIB(ans, text);
     /* This copied the class, if any */
     UNPROTECT(1);
@@ -1260,8 +1210,10 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (useBytes == NA_INTEGER) useBytes = 0;
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
-    if (fixed_opt && perl_opt)
+    if (fixed_opt && perl_opt) {
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
+	perl_opt = 0;
+    }
     if (!extended_opt)
 	warning("'%s' is deprecated", "extended = FALSE");
     if ((fixed_opt || perl_opt) && !extended_opt)
@@ -1287,11 +1239,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (!useBytes) {
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales */
-	if (
-#ifndef USE_TRE_FOR_FIXED
-	    fixed_opt ||
-#endif
-	    (!mbcslocale && perl_opt)) {
+	if (fixed_opt || (!mbcslocale && perl_opt)) {
 	    if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
 	    if(!use_UTF8)
 		for (i = 0; i < n; i++)
@@ -1302,11 +1250,8 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-#ifndef USE_TRE_FOR_FIXED
-    if (fixed_opt) {
-    } else
-#endif
-    if (perl_opt) {
+    if (fixed_opt);
+    else if (perl_opt) {
 	if (igcase_opt) cflags |= PCRE_CASELESS;
 	if (!useBytes) {
 	    if (mbcslocale) use_UTF8 = TRUE;
@@ -1315,9 +1260,6 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	if (extended_opt) cflags |= REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
-#ifdef USE_TRE_FOR_FIXED
-	if (fixed_opt) cflags = REG_LITERAL;
-#endif
     }
 
     if (useBytes) {
@@ -1331,11 +1273,8 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("regular expression is invalid in this locale"));
     }
 
-#ifndef USE_TRE_FOR_FIXED
     if (fixed_opt) ;
-    else
-#endif
-    if (perl_opt) {
+    else if (perl_opt) {
 	tables = pcre_maketables();
 	re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
 	if (!re_pcre) {
@@ -1376,7 +1315,6 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    continue;
 		}
 	    }
-#ifndef USE_TRE_FOR_FIXED
 	    if (fixed_opt) {
 		st = fgrep_one(spat, s, useBytes, ienc, NULL);
 		INTEGER(ans)[i] = (st > -1)?(st+1):-1;
@@ -1389,9 +1327,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		} else
 		    INTEGER(matchlen)[i] = INTEGER(ans)[i] >= 0 ?
 			strlen(spat):-1;
-	    } else
-#endif
-	    if (perl_opt) {
+	    } else if (perl_opt) {
 		rc = pcre_exec(re_pcre, re_pe, s, strlen(s), 0, 0, ovector, 3);
 		if (rc >= 0) {
 		    st = ovector[0];
@@ -1433,11 +1369,8 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     R_FreeStringBufferL(&cbuff);
-#ifndef USE_TRE_FOR_FIXED
     if (fixed_opt) ;
-    else
-#endif
-    if (perl_opt) {
+    else if (perl_opt) {
 	if(re_pe) pcre_free(re_pe);
 	pcre_free(re_pcre);
 	pcre_free((void *)tables);
@@ -1528,7 +1461,6 @@ static SEXP gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes)
     return ans;
 }
 
-#ifndef USE_TRE_FOR_FIXED
 static SEXP
 gregexpr_fixed(const char *pattern, const char *string, int useBytes, int ienc)
 {
@@ -1606,7 +1538,6 @@ gregexpr_fixed(const char *pattern, const char *string, int useBytes, int ienc)
     UNPROTECT(4);
     return ans;
 }
-#endif
 
 
 static SEXP gregexpr_NAInputAns(void)
@@ -1659,8 +1590,10 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
     if (fixed_opt && igcase_opt)
 	warning(_("argument '%s' will be ignored"), "ignore.case = TRUE");
-    if (fixed_opt && perl_opt)
+    if (fixed_opt && perl_opt) {
 	warning(_("argument '%s' will be ignored"), "perl = TRUE");
+	perl_opt = 0;
+    }
     if (!extended_opt)
 	warning("'%s' is deprecated", "extended = FALSE");
     if ((fixed_opt || perl_opt) && !extended_opt)
@@ -1674,9 +1607,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (length(pat) > 1)
 	warning(_("argument '%s' has length > 1 and only the first element will be used"), "pattern");
 
-    if (perl_opt && !fixed_opt)
-	return do_gpregexpr(pat, text, igcase_opt, useBytes);
-
+    if (perl_opt) return do_gpregexpr(pat, text, igcase_opt, useBytes);
 
     n = LENGTH(text);
     if (!useBytes) {
@@ -1691,11 +1622,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (!useBytes) {
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales */
-	if (
-#ifndef USE_TRE_FOR_FIXED
-	    fixed_opt ||
-#endif
-	    (!mbcslocale && perl_opt)) {
+	if (fixed_opt || (!mbcslocale && perl_opt)) {
 	    if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
 	    if(!use_UTF8)
 		for (i = 0; i < n; i++)
@@ -1706,11 +1633,8 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-#ifndef USE_TRE_FOR_FIXED
-    if (fixed_opt) {
-    } else
-#endif
-    if (perl_opt) {
+    if (fixed_opt) ;
+    else if (perl_opt) {
 	if (igcase_opt) cflags |= PCRE_CASELESS;
 	if (!useBytes) {
 	    if (mbcslocale) use_UTF8 = TRUE;
@@ -1719,9 +1643,6 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	if (extended_opt) cflags |= REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
-#ifdef USE_TRE_FOR_FIXED
-	if (fixed_opt) cflags = REG_LITERAL;
-#endif
     }
 
     if (useBytes) {
@@ -1738,10 +1659,8 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!useBytes && ienc != CE_UTF8 && mbcslocale && !mbcsValid(spat))
 	error(_("regular expression is invalid in this locale"));
 
-#ifndef USE_TRE_FOR_FIXED
-    if (fixed_opt) ; else
-#endif
-    {
+    if (fixed_opt) ; 
+    else {
 	if (useBytes)
 	    rc = tre_regcompb(&reg, spat, cflags);
 	else
@@ -1767,11 +1686,9 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		warning(_("input string %d is invalid in this locale"), i+1);
 		PROTECT(ans = gregexpr_BadStringAns());
 	    } else {
-#ifndef USE_TRE_FOR_FIXED
 		if (fixed_opt)
 		    PROTECT(ans = gregexpr_fixed(spat, s, useBytes, CE_NATIVE));
 		else
-#endif
 		    PROTECT(ans = gregexpr_Regexc(&reg, STRING_ELT(text, i),
 						  useBytes));
 	    }
@@ -1779,10 +1696,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_VECTOR_ELT(ansList, i, ans);
 	UNPROTECT(1);
     }
-#ifndef USE_TRE_FOR_FIXED
-    if (!fixed_opt)
-#endif
-	tre_regfree(&reg);
+    if (!fixed_opt) tre_regfree(&reg);
     UNPROTECT(1);
     return ansList;
 }
