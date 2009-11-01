@@ -101,6 +101,9 @@ BUG FIXES
 	[g]sub(fixed = TRUE) with a single-byte pattern could
 	conceivably have matched a trail byte in a MBCS, but not in
 	UTF-8.
+	
+    o	findLineNum() and setBreakpoint() would sometimes fail if the 
+    	specified file was not in the current directory.
 
 
 
