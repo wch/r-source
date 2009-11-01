@@ -90,17 +90,18 @@ BUG FIXES
 	very large abs(x). (PR#14020)
 
     o	[g]sub() could use excessive stack space when used with a very
-	long vector of non-ASCII data.
+	long vector containing some non-ASCII data.
 
     o	The default method of weighted.mean(na.rm = TRUE) did not omit
 	weights for NA observations in 2.10.0.  (PR#14032)
 
     o	[g]regexpr(pattern, fixed = TRUE) returned match positions in
-	bytes in an MBCS locale if pattern was a single byte.
+	bytes (not characters) in an MBCS locale if 'pattern' was a
+	single byte.
 
 	[g]sub(fixed = TRUE) with a single-byte pattern could
-	conceivably have matched a trail byte in a MBCS, but not in
-	UTF-8.
+	conceivably have matched part of a multibyte character in a
+	non-UTF-8 MBCS.
 	
     o	findLineNum() and setBreakpoint() would sometimes fail if the 
     	specified file was not in the current directory.
