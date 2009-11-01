@@ -36,6 +36,12 @@ NEW FEATURES
 
     o	The tre library has been updated to version 0.8.0 (minor bugfixes).
 
+    o	grep[l], [g]sub and [g]regexpr now work in bytes in an 8-bit
+ 	locales if there is no marked UTF-8 input string: this will be
+ 	somewhat faster, and for [g]sub() give the result in the
+ 	native encoding rather than in UTF-8 (which was the behaviour
+ 	prior to R 2.10.0).
+
 
 DEPRECATED & DEFUNCT
 
@@ -88,6 +94,13 @@ BUG FIXES
 
     o	The default method of weighted.mean(na.rm = TRUE) did not omit
 	weights for NA observations in 2.10.0.  (PR#14032)
+
+    o	[g]regexpr(pattern, fixed = TRUE) returned match positions in
+	bytes in an MBCS locale if pattern was a single byte.
+
+	[g]sub(fixed = TRUE) with a single-byte pattern could
+	conceivably have matched a trail byte in a MBCS, but not in
+	UTF-8.
 
 
 
