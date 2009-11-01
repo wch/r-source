@@ -34,6 +34,9 @@ BUG FIXES
     o	The default method of weighted.mean(na.rm = TRUE) did not omit
 	weights for NA observations in 2.10.0.  (PR#14032)
 
+    o	[g]regexpr(pattern, fixed = TRUE) returned match positions in
+	bytes in an MBCS locale if pattern was a single byte.
+
 
 
 

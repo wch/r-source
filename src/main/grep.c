@@ -529,8 +529,8 @@ static int fgrep_one(const char *pat, const char *target,
 	if (next != NULL) *next = 1;
 	return 0;
     }
-    if (plen == 1) {
-    /* a single byte is a common case */
+    if (plen == 1 && (useBytes || !(mbcslocale || ienc == CE_UTF8))) {
+	/* a single byte is a common case */
 	for (i = 0, p = target; *p; p++, i++)
 	    if (*p == pat[0]) {
 		if (next != NULL) *next = i + 1;
@@ -551,35 +551,35 @@ static int fgrep_one(const char *pat, const char *target,
 	    if (used <= 0) break;
 	    ib += used;
 	}
-    } else
-	if(!useBytes && ienc == CE_UTF8) {
-	    int ib, used;
-	    for (ib = 0, i = 0; ib <= len-plen; i++) {
-		if (strncmp(pat, target+ib, plen) == 0) {
-		    if (next != NULL) *next = ib + plen;
-		    return i;
-		}
-		used = utf8clen(target[ib]);
-		if (used <= 0) break;
-		ib += used;
+    } else if(!useBytes && ienc == CE_UTF8) {
+	int ib, used;
+	for (ib = 0, i = 0; ib <= len-plen; i++) {
+	    if (strncmp(pat, target+ib, plen) == 0) {
+		if (next != NULL) *next = ib + plen;
+		return i;
 	    }
-	} else
-	    for (i = 0; i <= len-plen; i++)
-		if (strncmp(pat, target+i, plen) == 0) {
-		    if (next != NULL) *next = i + plen;
-		    return i;
-		}
+	    used = utf8clen(target[ib]);
+	    if (used <= 0) break;
+	    ib += used;
+	}
+    } else
+	for (i = 0; i <= len-plen; i++)
+	    if (strncmp(pat, target+i, plen) == 0) {
+		if (next != NULL) *next = i + plen;
+		return i;
+	    }
     return -1;
 }
 
-static int fgrep_one_bytes(const char *pat, const char *target, Rboolean useBytes)
+static int fgrep_one_bytes(const char *pat, const char *target, 
+			   Rboolean useBytes, Rboolean use_UTF8)
 {
     int i = -1, plen=strlen(pat), len=strlen(target);
     const char *p;
 
     if (plen == 0) return 0;
-    if (plen == 1) {
-    /* a single byte is a common case */
+    if (plen == 1 && (useBytes || !(mbcslocale || use_UTF8))) {
+	/* a single byte is a common case */
 	for (i = 0, p = target; *p; p++, i++)
 	    if (*p == pat[0]) return i;
 	return -1;
@@ -591,6 +591,14 @@ static int fgrep_one_bytes(const char *pat, const char *target, Rboolean useByte
 	for (ib = 0, i = 0; ib <= len-plen; i++) {
 	    if (strncmp(pat, target+ib, plen) == 0) return ib;
 	    used = Mbrtowc(NULL, target+ib, MB_CUR_MAX, &mb_st);
+	    if (used <= 0) break;
+	    ib += used;
+	}
+    } else if(!useBytes && use_UTF8) {
+	int ib, used;
+	for (ib = 0, i = 0; ib <= len-plen; i++) {
+	    if (strncmp(pat, target+ib, plen) == 0) return ib;
+	    used = utf8clen(target[ib]);
 	    if (used <= 0) break;
 	    ib += used;
 	}
@@ -1008,7 +1016,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0 ; i < n ; i++) {
 	/* NA pattern was handled above */
 	if (STRING_ELT(text,i) == NA_STRING) {
-		SET_STRING_ELT(ans, i, NA_STRING);
+	    SET_STRING_ELT(ans, i, NA_STRING);
 	    continue;
 	}
 
@@ -1025,7 +1033,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	ns = strlen(s);
 	if (fixed_opt) {
 	    int st, nr;
-	    st = fgrep_one_bytes(spat, s, useBytes);
+	    st = fgrep_one_bytes(spat, s, useBytes, use_UTF8);
 	    if (st < 0)
 		SET_STRING_ELT(ans, i, STRING_ELT(text, i));
 	    else if (STRING_ELT(rep, 0) == NA_STRING)
@@ -1038,7 +1046,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    do {
 			nr++;
 			ss += sst+patlen;
-		    } while((sst = fgrep_one_bytes(spat, ss, useBytes)) >= 0);
+		    } while((sst = fgrep_one_bytes(spat, ss, useBytes, use_UTF8)) >= 0);
 		} else nr = 1;
 		cbuf = u = Calloc(ns + nr*(replen - patlen) + 1, char);
 		*u = '\0';
@@ -1046,7 +1054,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    nr = strlen(u);
 		    strncat(u, s, st); u[nr+st] = '\0'; s += st+patlen;
 		    strcat(u, srep);
-		} while(global && (st = fgrep_one_bytes(spat, s, useBytes)) >= 0);
+		} while(global && (st = fgrep_one_bytes(spat, s, useBytes, use_UTF8)) >= 0);
 		strcat(u, s);
 		if (useBytes)
 		    SET_STRING_ELT(ans, i, mkChar(cbuf));
@@ -1620,27 +1628,17 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	useBytes = onlyASCII;
     }
-    if (!useBytes) {
-	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales */
-	if (fixed_opt || (!mbcslocale && perl_opt)) {
-	    if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
-	    if(!use_UTF8)
-		for (i = 0; i < n; i++)
-		    if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
-			use_UTF8 = TRUE;
-			break;
-		    }
-	}
+    if (!useBytes && fixed_opt) {
+	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
+	if(!use_UTF8)
+	    for (i = 0; i < n; i++)
+		if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
+		    use_UTF8 = TRUE;
+		    break;
+		}
     }
 
-    if (fixed_opt) ;
-    else if (perl_opt) {
-	if (igcase_opt) cflags |= PCRE_CASELESS;
-	if (!useBytes) {
-	    if (mbcslocale) use_UTF8 = TRUE;
-	    if (use_UTF8) cflags |= PCRE_UTF8;
-	}
-    } else {
+    if (!fixed_opt) {
 	if (extended_opt) cflags |= REG_EXTENDED;
 	if (igcase_opt) cflags |= REG_ICASE;
     }
