@@ -1456,7 +1456,6 @@ static SEXP gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes)
 	}
 	eflags = REG_NOTBOL;
     }
-    R_FreeStringBufferL(&cbuff);
     PROTECT(ans = allocVector(INTSXP, matchIndex + 1));
     PROTECT(matchlen = allocVector(INTSXP, matchIndex + 1));
     /* copy from buffers */
