@@ -49,7 +49,7 @@ NEW FEATURES
     o	More validity checking of UTF-8 and MBCS strings is done by
 	agrep() and the regular-expression matching functions.
 
-    o	The PCRE library has been unpated to version 8.00.
+    o	The PCRE library has been updated to version 8.00.
 
 
 DEPRECATED & DEFUNCT

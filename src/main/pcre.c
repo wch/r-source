@@ -36,13 +36,11 @@
 #include <wchar.h>
 #include <wctype.h>
 
-/* The following R functions do substitution for regular expressions,
- * either once or globally.
- * The functions are loosely patterned on the "sub" and "gsub" in "nawk". */
 
 /* FIXME: use UCP for upper/lower conversion */
-static char *string_adj(char *target, const char *orig, const char *repl,
-			int *ovec, int ienc)
+static 
+char *pcre_string_adj(char *target, const char *orig, const char *repl,
+		      int *ovec, int ienc)
 {
     int i, k, nb;
     const char *p = repl; 
@@ -234,7 +232,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP text, int global,
 	    nmatch++;
 	    for (j = offset; j < ovector[0]; j++) *u++ = s[j];
 	    if (ovector[1] > last_end) {
-		u = string_adj(u, s, srep, ovector, ienc);
+		u = pcre_string_adj(u, s, srep, ovector, ienc);
 		last_end = ovector[1];
 	    }
 	    offset = ovector[1];
