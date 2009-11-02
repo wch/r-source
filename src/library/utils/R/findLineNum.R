@@ -203,7 +203,8 @@ setBreakpoint <- function(srcfile, line, nameonly=TRUE, envir=parent.frame(), la
     	if (breakpoint) {
     	    filename <- basename(locations[[1]]$filename)
     	    linenum <- locations[[1]]$line
-    	    tracer <- bquote({cat(paste(.(filename), "#", .(linenum), "\n", sep="")); browser()})
+    	    tracer <- bquote({cat(paste(.(filename), "#", .(linenum), "\n", sep="")) 
+    	                      browser(skipCalls=4L)})
     	}
     	locations[[1]] <- NULL
         i <- 1

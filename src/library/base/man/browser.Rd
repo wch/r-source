@@ -11,13 +11,14 @@
   the environment where \code{browser} was called from.
 }
 \usage{
-browser(text="", condition=NULL, expr=TRUE)
+browser(text="", condition=NULL, expr=TRUE, skipCalls=0L)
 }
 \arguments{
   \item{text}{a text string that can be retrieved once the browser is invoked.}
   \item{condition}{a condition that can be retrieved once the browser is invoked.}
   \item{expr}{An expression, which if it evaluates to \code{TRUE} the
     debugger will invoked, otherwise control is returned directly.}
+  \item{skipCalls}{how many previous calls to skip when reporting the calling context.}
 }
 \details{
   A call to \code{browser} can be included in the body of a function.
@@ -38,6 +39,10 @@ browser(text="", condition=NULL, expr=TRUE)
   In most cases it is going to be more efficient to use an \code{if} 
   statement in the calling program, but in some cases using this argument
   will be simpler.
+  
+  The \code{skipCalls} argument should be used when the \code{browser()}
+  call is nested within another debugging function:  it will look further
+  up the call stack to report its location.
 
   At the browser prompt the user can enter commands or \R expressions.
   The commands are

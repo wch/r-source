@@ -41,6 +41,10 @@ NEW FEATURES
  	somewhat faster, and for [g]sub() give the result in the
  	native encoding rather than in UTF-8 (which was the behaviour
  	prior to R 2.10.0).
+ 	
+    o	A new argument 'skipCalls' has been added to browser() so that
+	it can report the original context when called by other
+	debugging functions.
 
 
 DEPRECATED & DEFUNCT
