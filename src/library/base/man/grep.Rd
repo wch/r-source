@@ -101,7 +101,7 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   only the first occurrence of a \code{pattern} whereas \code{gsub}
   replaces all occurrences.
 
-  For \code{regexpr} and \code{regexpr} it is an error for
+  For \code{regexpr} and \code{gregexpr} it is an error for
   \code{pattern} to be \code{NA}, otherwise \code{NA} is permitted and
   gives an \code{NA} match.
 
@@ -134,16 +134,17 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   be in UTF-8 with a marked encoding (e.g. if there is a UTF-8 input, in
   a multibyte locale if \code{perl = TRUE}, and always for non-Perl regexps).
 
-  For \code{regexpr} an integer vector of the same length as \code{text}
-  giving the starting position of the first match or \eqn{-1} if there
-  is none, with attribute \code{"match.length"} giving the length of the
-  matched text (or \eqn{-1} for no match).  The match lengths are in
-  characters unless \code{useBytes = TRUE} is used, when they are in
-  bytes.
+  \code{regexpr} returns an integer vector of the same length as
+  \code{text} giving the starting position of the first match or
+  \eqn{-1} if there is none, with attribute \code{"match.length"}, an
+  integer vector giving the length of the matched text (or \eqn{-1} for
+  no match).  The match positions and lengths are in characters unless
+  \code{useBytes = TRUE} is used, when they are in bytes.
 
-  For \code{gregexpr} a list of the same length as \code{text} each
-  element of which is an integer vector as in \code{regexpr}, except
-  that the starting positions of every (disjoint) match are given.
+  \code{gregexpr} returns a list of the same length as \code{text} each
+  element of is of the same form as the return value for \code{regexpr},
+  except that the starting positions of every (disjoint) match are
+  given.
 }
 
 \section{Warning}{
@@ -157,7 +158,9 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
 \section{Performance considerations}{
   If you are doing a lot of regular expression matching, including on
   very long strings, you will want to consider the options used.
-  Generally using PCRE (\code{perl = TRUE}) will be fastest.
+  Generally PCRE will be faster than the default regular expression
+  engine, and \code{fixed = TRUE} faster still (especially when each
+  pattern is matched only a few times).
 
   If you are working in a single-byte locale and have marked UTF-8
   strings that are representable in that locale, convert them first as
@@ -169,9 +172,6 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   checked before matching, and the actual matching will be faster.
   Often byte-based matching suffices in a UTF-8 locale since byte
   patterns of one character never match part of another.
-  
-  The main performance benefit of \code{fixed = TRUE} is when each
-  pattern is matched only a few times.
 }
 
 \source{
@@ -181,7 +181,8 @@ gregexpr(pattern, text, ignore.case = FALSE, extended = TRUE,
   code based on \code{glibc} was used (and before that, code from GNU
   \command{grep}).  The POSIX standard does give some room for
   interpretation, especially in the handling of invalid regular
-  expressions, so the results will have changed slightly.
+  expressions and the collation of character ranges, so the results will
+  have changed slightly.
 
   For Perl-style matching PCRE (\url{http://www.pcre.org}) is used.
 }
