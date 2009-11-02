@@ -51,6 +51,9 @@ NEW FEATURES
 
     o	The PCRE library has been updated to version 8.00.
 
+    o	The undocumented restriction on gregexpr() to length(text) > 0
+	has been removed.
+
 
 DEPRECATED & DEFUNCT
 
