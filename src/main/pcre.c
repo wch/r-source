@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
- *                            R Development Core Team
+ *  Copyright (C) 1997--2009  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -292,8 +291,15 @@ do_pgsub(SEXP pat, SEXP rep, SEXP text, int global,
     return ans;
 }
 
-
-#include "RBufferUtils.h"
+static int getNc(const char *s, int st)
+{
+    /* char *buf = R_AllocStringBuffer(st+1, &cbuff); */
+    char *buf = alloca(st+1);
+    R_CheckStack();
+    memcpy(buf, s, st);
+    buf[st] = '\0';
+    return utf8towcs(NULL, buf, 0);
+}
 
 SEXP attribute_hidden
 do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
@@ -301,17 +307,13 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
     SEXP ansList, ans, matchlen;
     SEXP matchbuf, matchlenbuf;
     int bufsize = 1024;
-    int i, n, st, erroffset, ienc;
+    int i, n, st, erroffset;
     int cflags = 0;
     const char *spat, *errorptr;
     pcre *re_pcre;
     pcre_extra *re_pe = NULL;
     const unsigned char *tables;
     Rboolean use_UTF8 = FALSE;
-
-    /* To make this thread-safe remove static here use
-       R_FreeStringBuffer below */
-    static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
     n = LENGTH(text);
     if (!useBytes) {
@@ -341,16 +343,12 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 	if (use_UTF8) cflags |= PCRE_UTF8;
     }
 
-    if (useBytes) {
+    if (useBytes)
 	spat = CHAR(STRING_ELT(pat, 0));
-	ienc = CE_NATIVE;
-    } else if (use_UTF8) {
+    else if (use_UTF8)
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
-	ienc = CE_UTF8;
-    } else {
+    else
 	spat = translateChar(STRING_ELT(pat, 0));
-	ienc = CE_NATIVE;
-    }
 
     if (!useBytes && mbcslocale && !mbcsValid(spat))
 	error(_("regular expression is invalid in this locale"));
@@ -387,22 +385,25 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 	    UNPROTECT(2);
 	    continue;
 	}
+
 	if (useBytes)
 	    s = CHAR(STRING_ELT(text, i));
-	else if (ienc == CE_UTF8)
+	else if (use_UTF8)
 	    s = translateCharUTF8(STRING_ELT(text, i));
-	else
+	else {
 	    s = translateChar(STRING_ELT(text, i));
-	if (!useBytes && ienc != CE_UTF8 && mbcslocale && !mbcsValid(s)) {
-	    warning(_("input string %d is invalid in this locale"), i+1);
-	    PROTECT(ans = allocVector(INTSXP, 1));
-	    PROTECT(matchlen = allocVector(INTSXP, 1));
-	    INTEGER(ans)[0] = INTEGER(matchlen)[0] = -1;
-	    setAttrib(ans, install("match.length"), matchlen);
-	    SET_VECTOR_ELT(ansList, i, ans);
-	    UNPROTECT(2);
-	    continue;
+	    if (mbcslocale && !mbcsValid(s)) {
+		warning(_("input string %d is invalid in this locale"), i+1);
+		PROTECT(ans = allocVector(INTSXP, 1));
+		PROTECT(matchlen = allocVector(INTSXP, 1));
+		INTEGER(ans)[0] = INTEGER(matchlen)[0] = -1;
+		setAttrib(ans, install("match.length"), matchlen);
+		SET_VECTOR_ELT(ansList, i, ans);
+		UNPROTECT(2);
+		continue;
+	    }
 	}
+
 	while (!foundAll) {
 	    int rc, ovector[3], slen = strlen(s);
 	    rc = pcre_exec(re_pcre, re_pe, s, slen, start, 0, ovector, 3);
@@ -438,21 +439,15 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 		    start = ovector[1];
 		if (use_UTF8) {
 		    int mlen = ovector[1] - st;
-		    /* Unfortunately these are in bytes, so we need to
-		       use chars instead */
-		    R_AllocStringBuffer(imax2(st, mlen+1), &cbuff);
+		    /* Unfortunately these are in bytes */
 		    if (st > 0) {
-			memcpy(cbuff.data, s, st);
-			cbuff.data[st] = '\0';
-			INTEGER(matchbuf)[matchIndex] = 1 + utf8towcs(NULL, cbuff.data, 0);
+			INTEGER(matchbuf)[matchIndex] = 1 + getNc(s, st);
 			if (INTEGER(matchbuf)[matchIndex] <= 0) { /* an invalid string */
 			    INTEGER(matchbuf)[matchIndex] = NA_INTEGER;
 			    foundAll = 1; /* if we get here, we are done */
 			}
 		    }
-		    memcpy(cbuff.data, s+st, mlen);
-		    cbuff.data[mlen] = '\0';
-		    INTEGER(matchlenbuf)[matchIndex] = utf8towcs(NULL, cbuff.data, 0);
+		    INTEGER(matchlenbuf)[matchIndex] = getNc(s+st, mlen);
 		    if (INTEGER(matchlenbuf)[matchIndex] < 0) {/* an invalid string */
 			INTEGER(matchlenbuf)[matchIndex] = NA_INTEGER;
 			foundAll = 1;
@@ -474,15 +469,11 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 		INTEGER(ans)[j] = INTEGER(matchbuf)[j];
 		INTEGER(matchlen)[j] = INTEGER(matchlenbuf)[j];
 	    }
-	} else {
-	    INTEGER(ans)[0] = INTEGER(matchlen)[0] = -1;
-	}
+	} else INTEGER(ans)[0] = INTEGER(matchlen)[0] = -1;
 	setAttrib(ans, install("match.length"), matchlen);
 	SET_VECTOR_ELT(ansList, i, ans);
 	UNPROTECT(2);
     }
-    /* see comment above */
-    R_FreeStringBufferL(&cbuff);
     if(re_pe) pcre_free(re_pe);
     pcre_free(re_pcre);
     pcre_free((void *)tables);

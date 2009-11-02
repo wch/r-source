@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2009  Robert Gentleman, Ross Ihaka and the
- *                            R Development Core Team
+ *  Copyright (C) 1997--2009  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Pulic License as published by
@@ -34,13 +33,8 @@ strsplit grep [g]sub [g]regexpr
 #endif
 
 /* NB: USE_TRE_FOR_FIXED appears to work, but is minimally tested.
-   The main benefit would be code simplification, but there are
-   cases where code in a non-UTF-8 MBCS would be converted to UTF-8 by
-   the RE engines but are handled directly by the existing code.  That
-   might just matter if wchar_t is not Unicode (but we have no known
-   examples).
-
-   However, the special-purpose code is substantially faster.
+   The main benefit would be code simplification: however, the
+   special-purpose code is substantially faster.
  */
 
 
@@ -54,8 +48,12 @@ strsplit grep [g]sub [g]regexpr
 
 const wchar_t *wtransChar(SEXP x); /* from sysutils.c */
 
-# include <tre/tre.h>
+/* As from TRE 0.8.0, tre.h replaces regex.h */
+#include <tre/tre.h>
 
+/* Some systems using --with-system-pcre might have pcre headers in
+   a subdirectory.
+*/
 #ifdef HAVE_PCRE_PCRE_H
 # include <pcre/pcre.h>
 #else
@@ -96,19 +94,6 @@ static SEXP mkCharW(const wchar_t *wc)
     wcstoutf8(xi, wc, nb + 1);
     return mkCharCE(xi, CE_UTF8);
 }
-
-
-/* We use a shared buffer here to avoid reallocing small buffers, and
-   keep a standard-size (MAXELTSIZE = 8192) buffer allocated shared
-   between the various functions.
-
-   If we want to make this thread-safe, we would need to initialize an
-   instance non-statically in each using function, but this would add
-   to the overhead.
- */
-
-#include "RBufferUtils.h"
-static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
 
 /* strsplit is going to split the strings in the first argument into
@@ -192,8 +177,14 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    buf = CHAR(STRING_ELT(x, i));
 		else if (use_UTF8)
 		    buf = translateCharUTF8(STRING_ELT(x, i));
-		else
+		else {
 		    buf = translateChar(STRING_ELT(x, i));
+		    if (mbcslocale && !mbcsValid(buf)) {
+			warning(_("input string %d is invalid in this locale"), i+1);
+			SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
+			continue;
+		    }
+		}
 		if (!useBytes && (use_UTF8 || mbcslocale) && !strIsASCII(buf)) {
 		/* split into individual characters (not bytes) */
 		    char bf[20 /* > MB_CUR_MAX */];
@@ -247,8 +238,11 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		split = CHAR(STRING_ELT(tok, itok));
 	    else if (use_UTF8)
 		split = translateCharUTF8(STRING_ELT(tok, itok));
-	    else
+	    else {
 		split = translateChar(STRING_ELT(tok, itok));
+		if(mbcslocale && !mbcsValid(split))
+		    error(_("'split' string %d is invalid in this locale"), itok+1);
+	    }
 	    slen = strlen(split);
 
 	    for (i = itok; i < len; i += tlen) {
@@ -262,8 +256,14 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    buf = CHAR(STRING_ELT(x, i));
 		else if (use_UTF8)
 		    buf = translateCharUTF8(STRING_ELT(x, i));
-		else
+		else {
 		    buf = translateChar(STRING_ELT(x, i));
+		    if (mbcslocale && !mbcsValid(buf)) {
+			warning(_("input string %d is invalid in this locale"), i+1);
+			SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
+			continue;
+		    }
+		}
 		/* find out how many splits there will be */
 		ntok = 0;
 		/* This is UTF-8 safe since it compares whole strings */
@@ -321,8 +321,11 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		split = CHAR(STRING_ELT(tok, itok));
 	    else if (use_UTF8)
 		split = translateCharUTF8(STRING_ELT(tok, itok));
-	    else
+	    else {
 		split = translateChar(STRING_ELT(tok, itok));
+		if(mbcslocale && !mbcsValid(split))
+		    error(_("'split' string %d is invalid in this locale"), itok+1);
+	    }
 
 	    if (!tables) tables = pcre_maketables();
 	    re_pcre = pcre_compile(split, options,
@@ -348,8 +351,14 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    buf = CHAR(STRING_ELT(x, i));
 		else if (use_UTF8)
 		    buf = translateCharUTF8(STRING_ELT(x, i));
-		else
+		else {
 		    buf = translateChar(STRING_ELT(x, i));
+		    if (mbcslocale && !mbcsValid(buf)) {
+			warning(_("input string %d is invalid in this locale"), i+1);
+			SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
+			continue;
+		    }
+		}
 		/* find out how many splits there will be */
 		ntok = 0;
 		bufp = buf;
@@ -470,8 +479,11 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* never use_UTF8 */
 	    if (useBytes)
 		split = CHAR(STRING_ELT(tok, itok));
-	    else
+	    else {
 		split = translateChar(STRING_ELT(tok, itok));
+		if(mbcslocale && !mbcsValid(split))
+		    error(_("'split' string %d is invalid in this locale"), itok+1);
+	    }
 	    if ((rc = tre_regcomp(&reg, split, cflags)))
 		reg_report(rc, &reg, split);
 
@@ -484,8 +496,14 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* never use_UTF8 */
 		if (useBytes)
 		    buf = CHAR(STRING_ELT(x, i));
-		else 
+		else {
 		    buf = translateChar(STRING_ELT(x, i));
+		    if (mbcslocale && !mbcsValid(buf)) {
+			warning(_("input string %d is invalid in this locale"), i+1);
+			SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
+			continue;
+		    }
+		}
 
 		/* find out how many splits there will be */
 		ntok = 0;
@@ -781,7 +799,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 		s = translateCharUTF8(STRING_ELT(text, i));
 	    else {
 		s = translateChar(STRING_ELT(text, i));
-		if (!useBytes && mbcslocale && !mbcsValid(s)) {
+		if (mbcslocale && !mbcsValid(s)) {
 		    warning(_("input string %d is invalid in this locale"), i+1);
 		    continue;
 		}
@@ -1243,6 +1261,14 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+static int getNc(const char *s, int st)
+{
+    char *buf = alloca(st+1);
+    R_CheckStack();
+    memcpy(buf, s, st);
+    buf[st] = '\0';
+    return utf8towcs(NULL, buf, 0);
+}
 
 SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1410,24 +1436,14 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    INTEGER(ans)[i] = st + 1; /* index from one */
 		    INTEGER(matchlen)[i] = ovector[1] - st;
 		    if (use_UTF8) {
-			char *buf;
-			int mlen = ovector[1] - st;
-			/* Unfortunately these are in bytes, so we need to
-			   use chars instead */
+			int mlen = ovector[1] - st, nc;
+			/* Unfortunately these are in bytes */
 			if (st > 0) {
-			    buf = R_AllocStringBuffer(st, &cbuff);
-			    memcpy(buf, s, st);
-			    buf[st] = '\0';
-			    INTEGER(ans)[i] = 1+utf8towcs(NULL, buf, 0);
-			    if (INTEGER(ans)[i] <= 0) /* an invalid string */
-				INTEGER(ans)[i] = NA_INTEGER;
+			    nc = getNc(s, st); 
+			    INTEGER(ans)[i] = (nc >= 0) ? nc+1 : NA_INTEGER; 
 			}
-			buf = R_AllocStringBuffer(mlen+1, &cbuff);
-			memcpy(buf, s+st, mlen);
-			buf[mlen] = '\0';
-			INTEGER(matchlen)[i] = utf8towcs(NULL, buf, 0);
-			if (INTEGER(matchlen)[i] < 0) /* an invalid string */
-			    INTEGER(matchlen)[i] = NA_INTEGER;
+			nc = getNc(s+st, mlen);
+			INTEGER(matchlen)[i] = (nc >= 0) ? nc : NA_INTEGER;
 		    }
 		} else INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 	    } else {
@@ -1444,7 +1460,6 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    R_FreeStringBufferL(&cbuff);
 #ifndef USE_TRE_FOR_FIXED
     if (fixed_opt) ; else
 #endif
@@ -1532,7 +1547,6 @@ gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes, int use_WC)
 	}
 	eflags = REG_NOTBOL;
     }
-    R_FreeStringBufferL(&cbuff);
     PROTECT(ans = allocVector(INTSXP, matchIndex + 1));
     PROTECT(matchlen = allocVector(INTSXP, matchIndex + 1));
     /* copy from buffers */
