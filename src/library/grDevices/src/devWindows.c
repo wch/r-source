@@ -221,6 +221,13 @@ static void GA_Size(double *left, double *right,
 		    double *bottom, double *top,
 		    pDevDesc dd);
 static void GA_Resize(pDevDesc dd);
+static void GA_Raster(unsigned int *raster, int w, int h,
+                      double x, double y, 
+                      double width, double height,
+                      double rot, 
+                      Rboolean interpolate,
+                      const pGEcontext gc, pDevDesc dd);
+static SEXP GA_Cap(pDevDesc dd);
 static double GA_StrWidth(const char *str,
 			  const pGEcontext gc,
 			  pDevDesc dd);
@@ -2609,6 +2616,21 @@ static void GA_Polygon(int n, double *x, double *y,
     SH;
 }
 
+static void GA_Raster(unsigned int *raster, int w, int h,
+                      double x, double y, 
+                      double width, double height,
+                      double rot, 
+                      Rboolean interpolate,
+                      const pGEcontext gc, pDevDesc dd)
+{
+    warning(_("%s not yet implemented for this device"), "Raster rendering");
+}
+
+static SEXP GA_Cap(pDevDesc dd)
+{
+    warning(_("%s not yet implemented for this device"), "Raster capture");
+    return R_NilValue;
+}
 
 	/********************************************************/
 	/* device_Text should have the side-effect that the	*/
@@ -2883,6 +2905,8 @@ Rboolean GADeviceDriver(pDevDesc dd, const char *display, double width,
     dd->line = GA_Line;
     dd->polyline = GA_Polyline;
     dd->polygon = GA_Polygon;
+    dd->raster = GA_Raster;
+    dd->cap = GA_Cap;
     dd->locator = GA_Locator;
     dd->mode = GA_Mode;
     dd->metricInfo = GA_MetricInfo;

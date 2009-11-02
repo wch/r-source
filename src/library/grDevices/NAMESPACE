@@ -13,7 +13,8 @@ if(tools:::.OStype() == "windows") {
               Type1FontInUse, CIDFontInUse, R_GD_nullDevice)
 }
 
-export(Hershey, as.graphicsAnnot, blues9, boxplot.stats, check.options, chull,
+export(Hershey, as.graphicsAnnot, as.raster,
+       blues9, boxplot.stats, check.options, chull,
        CIDFont, col2rgb, colors, colours, cm, colorRamp,
        colorRampPalette, contourLines, convertColor, colorConverter,
        colorspaces, cm.colors, densCols, devAskNewPage, dev.control,
@@ -21,10 +22,10 @@ export(Hershey, as.graphicsAnnot, blues9, boxplot.stats, check.options, chull,
        dev.list, dev.new, dev.next, dev.off, dev.prev, dev.print,
        dev.set, dev.size, dev2bitmap, deviceIsInteractive, embedFonts,
        extendrange, getGraphicsEvent, graphics.off, gray, grey,
-       gray.colors, grey.colors, heat.colors, hsv, hcl, make.rgb,
+       gray.colors, grey.colors, heat.colors, hsv, hcl, is.raster, make.rgb,
        n2mfrow, nclass.Sturges, nclass.FD, nclass.scott, palette, pdf,
        pdf.options, pdfFonts, pictex, postscript, postscriptFont,
-       postscriptFonts, ps.options, rainbow, recordGraphics,
+       postscriptFonts, ps.options, rainbow, raster, recordGraphics,
        recordPlot, replayPlot, rgb, rgb2hsv, savePlot, setEPS, setPS,
        terrain.colors, topo.colors, trans3d, Type1Font, xfig, xyTable,
        xy.coords, xyz.coords)
@@ -41,6 +42,9 @@ S3method("checkFont", "Type1Font")
 S3method("checkFont", "CIDFont")
 S3method("matchEncoding", "Type1Font")
 S3method("matchEncoding", "CIDFont")
+
+S3method("as.raster", "raster")
+S3method("as.raster", "matrix")
 
 if(tools:::.OStype() == "windows") {
     export(bringToTop, msgWindow, win.graph, win.metafile, win.print,

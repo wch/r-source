@@ -347,6 +347,11 @@ static void     RQuartz_Clip(double, double, double, double, pDevDesc);
 static double   RQuartz_StrWidth(const char*, const pGEcontext, pDevDesc);
 static void     RQuartz_Text(double, double, const char*, double, double, const pGEcontext, pDevDesc);
 static void     RQuartz_Rect(double, double, double, double, const pGEcontext, pDevDesc);
+static void     RQuartz_Raster(unsigned int *raster, int w, int h,
+                       double x, double y, double width, double height,
+                       double rot, Rboolean interpolate,
+                       const pGEcontext gc, pDevDesc dd);
+static SEXP     RQuartz_Cap(pDevDesc dd);
 static void     RQuartz_Circle(double, double, double, const pGEcontext, pDevDesc);
 static void     RQuartz_Line(double, double, double, double, const pGEcontext, pDevDesc);
 static void     RQuartz_Polyline(int, double*, double*, const pGEcontext, pDevDesc);
@@ -378,6 +383,8 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->strWidth     = RQuartz_StrWidth;
     dev->text         = RQuartz_Text;
     dev->rect         = RQuartz_Rect;
+    dev->raster       = RQuartz_Raster;
+    dev->cap          = RQuartz_Cap;
     dev->circle       = RQuartz_Circle;
     dev->line         = RQuartz_Line;
     dev->polyline     = RQuartz_Polyline;
@@ -947,6 +954,22 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
     CGContextBeginPath(ctx);
     CGContextAddRect(ctx, CGRectMake(x0, y0, x1 - x0, y1 - y0));
     CGContextDrawPath(ctx, kCGPathFillStroke);
+}
+
+static void RQuartz_Raster(unsigned int *raster, int w, int h,
+                           double x, double y, 
+                           double width, double height,
+                           double rot, 
+                           Rboolean interpolate,
+                           const pGEcontext gc, pDevDesc dd)
+{
+    warning(_("%s not yet implemented for this device"), "Raster rendering");
+}
+
+static SEXP RQuartz_Cap(pDevDesc dd)
+{
+    warning(_("%s not yet implemented for this device"), "Raster capture");
+    return R_NilValue;
 }
 
 static void RQuartz_Circle(double x, double y, double r, CTXDESC)

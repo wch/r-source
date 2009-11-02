@@ -213,3 +213,15 @@ grid.grabExpr <- function(expr, warn=2, wrap=FALSE, ...) {
   # Grab the DL on the new device
   grabDL(warn, wrap, ...)
 }
+
+#########################
+# A different sort of capture ...
+# Just grab the screen raster image
+#########################
+
+grid.cap <- function() {
+    # This does not need recording on the display list
+    grid.Call("L_cap")
+}
+
+    

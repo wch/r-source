@@ -424,6 +424,43 @@ struct _DevDesc {
 #else
     void (*rect)();
 #endif
+    /* 
+     * device_Raster should draw a raster image justified 
+     * at the given location,
+     * size, and rotation (not all devices may be able to rotate?)
+     * 
+     * 'raster' gives the image data BY ROW, with every four bytes
+     * giving one R colour (ABGR).
+     *
+     * 'x and 'y' give the bottom-left corner.
+     *
+     * 'rot' is in degrees (as per device_Text), with positive
+     * rotation anticlockwise from the positive x-axis.
+     */
+#if R_USE_PROTOTYPES
+    void (*raster)(unsigned int *raster, int w, int h,
+                   double x, double y, 
+                   double width, double height,
+                   double rot, 
+                   Rboolean interpolate,
+                   const pGEcontext gc, pDevDesc dd);
+#else
+    void (*raster)();
+#endif
+    /* 
+     * device_Cap should return an integer matrix (R colors)
+     * representing the current contents of the device display.
+     * 
+     * The result is expected to be ROW FIRST.
+     *
+     * This will only make sense for raster devices and can 
+     * probably only be implemented for screen devices.
+     */
+#if R_USE_PROTOTYPES
+    SEXP (*cap)(pDevDesc dd);
+#else
+    SEXP (*cap)();
+#endif
     /*
      * device_Size is called whenever the device is
      * resized.

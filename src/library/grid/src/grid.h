@@ -288,6 +288,9 @@ SEXP L_polygon(SEXP x, SEXP y, SEXP index);
 SEXP L_xspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index);
 SEXP L_circle(SEXP x, SEXP y, SEXP r);
 SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust); 
+SEXP L_raster(SEXP raster, SEXP x, SEXP y, SEXP w, SEXP h, 
+              SEXP hjust, SEXP vjust, SEXP interpolate);
+SEXP L_cap();
 SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust, 
 	    SEXP rot, SEXP checkOverlap);
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size);

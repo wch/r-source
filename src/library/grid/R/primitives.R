@@ -938,8 +938,8 @@ rectGrob <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
 
 grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
                       width=unit(1, "npc"), height=unit(1, "npc"),
-                     just="centre", hjust=NULL, vjust=NULL,
-                     default.units="npc",
+                      just="centre", hjust=NULL, vjust=NULL,
+                      default.units="npc",
                       name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
   rg <- rectGrob(x=x, y=y, width=width, height=height, just=just,
                  hjust=hjust, vjust=vjust,
@@ -948,6 +948,86 @@ grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
   if (draw)
     grid.draw(rg)
   invisible(rg)
+}
+
+######################################
+# RASTER primitive
+######################################
+
+validDetails.rastergrob <- function(x) {
+    if (!is.raster(x$raster))
+        x$raster <- as.raster(x$raster)
+    if (is.null(x$width) && is.null(x$height))
+        stop("at least one of 'width' and 'height' must be specified")
+    if (!is.unit(x$x) ||
+        !is.unit(x$y) ||
+        (!is.null(x$width) && !is.unit(x$width)) ||
+        (!is.null(x$height) && !is.unit(x$height)))
+        stop("'x', 'y', 'width', and 'height' must be units")
+    valid.just(x$just)
+    if (!is.null(x$hjust))
+        x$hjust <- as.numeric(x$hjust)
+    if (!is.null(x$vjust))
+        x$vjust <- as.numeric(x$vjust)
+    x
+}
+
+drawDetails.rastergrob <- function(x, recording=TRUE) {
+    # At this point resolve NULL width/height based on
+    # image dimensions
+    if (is.null(x$width)) {
+        h <- convertHeight(x$height, "inches", valueOnly=TRUE)
+        x$width <- unit(h*dim(x$raster)[2]/dim(x$raster)[1],
+                        "inches")
+    }
+    if (is.null(x$height)) {
+        w <- convertWidth(x$width, "inches", valueOnly=TRUE)
+        x$height <- unit(w*dim(x$raster)[1]/dim(x$raster)[2],
+                        "inches")
+    }    
+    grid.Call.graphics("L_raster", x$raster,
+                       x$x, x$y, x$width, x$height,
+                       resolveHJust(x$just, x$hjust),
+                       resolveVJust(x$just, x$vjust),
+                       x$interpolate)
+}
+
+# FIXME: width|height|x|yDetails() methods required
+
+rasterGrob <- function(image,
+                       x=unit(0.5, "npc"), y=unit(0.5, "npc"),
+                       width=unit(1, "npc"), height=NULL,
+                       just="centre", hjust=NULL, vjust=NULL,
+                       interpolate=TRUE,
+                       default.units="npc",
+                       name=NULL, gp=gpar(), vp=NULL) {
+    raster <- as.raster(image)
+    if (!is.unit(x))
+        x <- unit(x, default.units)
+    if (!is.unit(y))
+        y <- unit(y, default.units)
+    if (!is.null(width) && !is.unit(width))
+        width <- unit(width, default.units)
+    if (!is.null(height) && !is.unit(height))
+        height <- unit(height, default.units)
+    grob(raster=raster, x=x, y=y, width=width, height=height, just=just,
+         hjust=hjust, vjust=vjust, interpolate=interpolate,
+         name=name, gp=gp, vp=vp, cl="rastergrob")
+}
+
+grid.raster <- function(image,
+                        x=unit(0.5, "npc"), y=unit(0.5, "npc"),
+                        width=unit(1, "npc"), height=NULL,
+                        just="centre", hjust=NULL, vjust=NULL,
+                        interpolate=TRUE,
+                        default.units="npc",
+                        name=NULL, gp=gpar(), vp=NULL) {
+    rg <- rasterGrob(image,
+                     x=x, y=y, width=width, height=height, just=just,
+                     hjust=hjust, vjust=vjust, interpolate=interpolate,
+                     default.units=default.units,
+                     name=name, gp=gp, vp=vp)
+    grid.draw(rg)
 }
 
 ######################################

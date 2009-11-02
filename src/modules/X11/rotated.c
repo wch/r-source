@@ -1337,10 +1337,10 @@ static XImage *XRotMagnifyImage(Display *dpy, XImage *ximage)
 		z4=(ximage->data[(j+1)*byte_width_in+i/8] & 128>>(i%8))>0;
 	    }
 
-	    /* if interpolated value is greater than 0.5, set bit */
-	    if(((1-t)*(1-u)*z1 + t*(1-u)*z2 + t*u*z3 + (1-t)*u*z4)>0.5)
-		I_out->data[j2*byte_width_out+i2/8]|=128>>i2%8;
-
+            /* if interpolated value is greater than 0.5, set bit */
+            if(((1-t)*(1-u)*z1 + t*(1-u)*z2 + t*u*z3 + (1-t)*u*z4)>0.5)
+                I_out->data[j2*byte_width_out+i2/8]|=128>>i2%8;
+            
 	    x+=mag_inv;
 	}
 	y+=mag_inv;

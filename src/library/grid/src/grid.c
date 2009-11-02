@@ -2730,6 +2730,153 @@ SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust,
     return gridRect(x, y, w, h, hjust, vjust, REAL(theta)[0], FALSE);
 }
 
+/* FIXME: need to add L_rasterBounds */
+
+/* FIXME:  Add more checks on correct inputs,
+   e.g., Raster should be a matrix of R colors */
+SEXP L_raster(SEXP raster, SEXP x, SEXP y, SEXP w, SEXP h, 
+              SEXP hjust, SEXP vjust, SEXP interpolate)
+{
+    char *vmax;
+    int i, n;
+    double xx, yy, ww, hh;
+    double vpWidthCM, vpHeightCM;
+    double rotationAngle;
+    LViewportContext vpc;
+    R_GE_gcontext gc;
+    LTransform transform;
+    SEXP currentvp, currentgp;
+    SEXP dim;
+    /* Get the current device 
+     */
+    pGEDevDesc dd = getDevice();
+    unsigned int *image;
+    currentvp = gridStateElement(dd, GSS_VP);
+    currentgp = gridStateElement(dd, GSS_GPAR);
+    getViewportTransform(currentvp, dd, 
+			 &vpWidthCM, &vpHeightCM, 
+			 transform, &rotationAngle);
+    getViewportContext(currentvp, &vpc);
+    /* Convert the raster matrix to R internal colours */
+    n = LENGTH(raster);
+    vmax = vmaxget();
+    image = (unsigned int*) R_alloc(n, sizeof(unsigned int));
+    for (i=0; i<n; i++) {
+        image[i] = RGBpar3(raster, i, R_TRANWHITE);
+    }
+    dim = getAttrib(raster, R_DimSymbol);
+    GEMode(1, dd);
+    gcontextFromgpar(currentgp, 0, &gc, dd);
+    transformLocn(x, y, 0, vpc, &gc,
+                  vpWidthCM, vpHeightCM,
+                  dd,
+                  transform,
+                  &xx, &yy);
+    ww = transformWidthtoINCHES(w, 0, vpc, &gc,
+                                vpWidthCM, vpHeightCM,
+                                dd);
+    hh = transformHeighttoINCHES(h, 0, vpc, &gc,
+                                 vpWidthCM, vpHeightCM,
+                                 dd);
+    /* If the total rotation angle is zero then we can draw a 
+     * rectangle as the devices understand rectangles
+     * Otherwise we have to draw a polygon equivalent.
+     */
+    if (rotationAngle == 0) {
+        xx = justifyX(xx, ww, REAL(hjust)[0]);
+        yy = justifyY(yy, hh, REAL(vjust)[0]);
+        /* The graphics engine only takes device coordinates
+         */
+        xx = toDeviceX(xx, GE_INCHES, dd);
+        yy = toDeviceY(yy, GE_INCHES, dd);
+        ww = toDeviceWidth(ww, GE_INCHES, dd);
+        hh = toDeviceHeight(hh, GE_INCHES, dd);
+        if (R_FINITE(xx) && R_FINITE(yy) && 
+            R_FINITE(ww) && R_FINITE(hh))
+            GERaster(image, INTEGER(dim)[1], INTEGER(dim)[0],
+                     xx, yy, ww, hh, rotationAngle, 
+                     LOGICAL(interpolate)[0], &gc, dd);
+    } else {
+        /* We have to do a little bit of work to figure out where the 
+         * bottom-left corner of the image is.
+         */
+        double xbl, ybl, xadj, yadj;
+        double dw, dh;
+        SEXP www, hhh;
+        /* Find bottom-left location */
+        justification(ww, hh, 
+                      REAL(hjust)[0], 
+                      REAL(vjust)[0], 
+                      &xadj, &yadj);
+        www = unit(xadj, L_INCHES);
+        hhh = unit(yadj, L_INCHES);
+        transformDimn(www, hhh, 0, vpc, &gc,
+                      vpWidthCM, vpHeightCM,
+                      dd, rotationAngle,
+                      &dw, &dh);
+        xbl = xx + dw;
+        ybl = yy + dh;
+        xbl = toDeviceX(xbl, GE_INCHES, dd);
+        ybl = toDeviceY(ybl, GE_INCHES, dd);
+        ww = toDeviceWidth(ww, GE_INCHES, dd);
+        hh = toDeviceHeight(hh, GE_INCHES, dd);
+        if (R_FINITE(xbl) && R_FINITE(ybl) &&
+            R_FINITE(ww) && R_FINITE(hh)) {
+            /* The graphics engine only takes device coordinates
+             */
+            GERaster(image, INTEGER(dim)[1], INTEGER(dim)[0],
+                     xbl, ybl, ww, hh, rotationAngle, 
+                     LOGICAL(interpolate)[0], &gc, dd);
+        }
+    }
+    GEMode(0, dd);
+    vmaxset(vmax);
+    return R_NilValue;
+}
+
+SEXP L_cap()
+{
+    int i, col, row, nrow, ncol, size;
+    /* Get the current device 
+     */
+    pGEDevDesc dd = getDevice();
+    int *rint;
+    SEXP raster; 
+    /* The raster is R internal colours, so convert to 
+     * R external colours (strings) 
+     * AND the raster is BY ROW so need to rearrange it
+     * to be BY COLUMN (though the dimensions are correct) */
+    SEXP image, idim;
+    
+    PROTECT(raster = GECap(dd));    
+    /* Non-complying devices will return NULL */
+    if (isNull(raster)) {
+        image = raster;
+    } else {
+        size = LENGTH(raster);
+        nrow = INTEGER(getAttrib(raster, R_DimSymbol))[0];
+        ncol = INTEGER(getAttrib(raster, R_DimSymbol))[1];
+        
+        PROTECT(image = allocVector(STRSXP, size));
+        rint = INTEGER(raster);
+        for (i=0; i<size; i++) {
+            col = i % ncol + 1;
+            row = i / ncol + 1;
+            SET_STRING_ELT(image, (col - 1)*nrow + row - 1, 
+                           mkChar(col2name(rint[i])));
+        }
+        
+        PROTECT(idim = allocVector(INTSXP, 2));
+        INTEGER(idim)[0] = nrow;
+        INTEGER(idim)[1] = ncol;
+        setAttrib(image, R_DimSymbol, idim);
+        
+        UNPROTECT(2);
+    }
+    UNPROTECT(1);
+    return image;
+}
+
 /*
  * Code to draw OR size text
  * Combined to avoid code replication

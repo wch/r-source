@@ -49,9 +49,10 @@ extern "C" {
  *             Move displayList, DLlastElt, savedSnapshot from
  *             NewDevDesc to GEDevDesc.
  *             Add 'ask' to GEDevDesc.
+ * Version 6:  Add dev_Raster() and dev_Cap()
  */
 
-#define R_GE_version 5
+#define R_GE_version 6
 
 int R_GE_getVersion(void);
 
@@ -377,6 +378,11 @@ void GECircle(double x, double y, double radius,
 	      const pGEcontext gc, pGEDevDesc dd);
 void GERect(double x0, double y0, double x1, double y1,
 	    const pGEcontext gc, pGEDevDesc dd);
+void GERaster(unsigned int *raster, int w, int h,
+              double x, double y, double width, double height,
+              double angle, Rboolean interpolate,
+              const pGEcontext gc, pGEDevDesc dd);
+SEXP GECap(pGEDevDesc dd);
 void GEText(double x, double y, const char * const str, cetype_t enc,
 	    double xc, double yc, double rot,
 	    const pGEcontext gc, pGEDevDesc dd);

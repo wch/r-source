@@ -1340,6 +1340,36 @@ void GERect(double x0, double y0, double x1, double y1,
 }
 
 /****************************************************************
+ * GERaster
+ ****************************************************************
+ */
+
+void GERaster(unsigned int *raster, int w, int h,
+              double x, double y, 
+              double width, double height,
+              double angle, 
+              Rboolean interpolate,
+              const pGEcontext gc, pGEDevDesc dd)
+{
+    /* FIXME: what about clipping? (if the device can't) 
+     * Maybe not too bad because it is just a matter of shaving off
+     * some rows and columns from the image? (because R only does
+     * rectangular clipping regions) */
+    dd->dev->raster(raster, w, h, x, y, width, height,
+                    angle, interpolate, gc, dd->dev);
+}
+
+/****************************************************************
+ * GERaster
+ ****************************************************************
+ */
+
+SEXP GECap(pGEDevDesc dd)
+{
+    return dd->dev->cap(dd->dev);
+}
+
+/****************************************************************
  * R code for clipping text
  ****************************************************************
  */

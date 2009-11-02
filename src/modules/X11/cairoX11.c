@@ -275,6 +275,105 @@ static void Cairo_Polygon(int n, double *x, double *y,
     }
 }
 
+static void Cairo_Raster(unsigned int *raster, int w, int h,
+                         double x, double y, 
+                         double width, double height,
+                         double rot, 
+                         Rboolean interpolate,
+                         const pGEcontext gc, pDevDesc dd)
+{
+    int i;
+    cairo_surface_t *image;
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+
+    /* The R ABGR needs to be converted to a Cairo ARGB */
+    for (i=0; i<w*h; i++) {
+        raster[i] = ((((raster[i])>>24)&255)<<24 |
+                     ((raster[i])&255)<<16 | 
+                     (((raster[i])>>8)&255)<<8 |
+                     (((raster[i])>>16)&255));
+    }
+    image = cairo_image_surface_create_for_data(raster, 
+                                                CAIRO_FORMAT_ARGB32,
+                                                w, h, 4*w);
+
+    cairo_save(xd->cc);
+
+    cairo_translate(xd->cc, x, y);
+    cairo_rotate(xd->cc, -rot*M_PI/180);
+    cairo_scale(xd->cc, width/w, height/h);
+    /* Flip vertical first */
+    cairo_translate(xd->cc, 0, h/2.0);
+    cairo_scale(xd->cc, 1, -1);
+    cairo_translate(xd->cc, 0, -h/2.0);
+
+    cairo_set_source_surface(xd->cc, image, 0, 0);
+
+    /* Use nearest-neighbour filter so that a scaled up image
+     * is "blocky";  alternative is some sort of linear
+     * interpolation, which gives nasty edge-effects
+     */
+    if (!interpolate) {
+        cairo_pattern_set_filter(cairo_get_source(xd->cc), 
+                                 CAIRO_FILTER_NEAREST);
+    }
+
+    cairo_paint(xd->cc); 
+
+    cairo_restore(xd->cc);
+    cairo_surface_destroy(image);
+}
+
+static SEXP Cairo_Cap(pDevDesc dd)
+{
+    int i, width, height, size;
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    cairo_surface_t* screen;
+    cairo_format_t format;
+    unsigned char *screenData;
+    SEXP dim, raster = R_NilValue;
+    int *rint;
+
+    screen = cairo_surface_reference(cairo_get_target(xd->cc));
+    width = cairo_image_surface_get_width(screen);
+    height = cairo_image_surface_get_height(screen);
+    screenData = cairo_image_surface_get_data(screen);
+
+    /* The type of image surface will depend on what sort
+     * of X11 color model has been used */
+    format = cairo_image_surface_get_format(screen);
+    /* For now, if format is not RGB24 just bail out */
+    if (format != CAIRO_FORMAT_RGB24) 
+        return raster;
+        
+    size = width*height;
+
+    PROTECT(raster = allocVector(INTSXP, size));
+
+    /* Copy each byte of screen to an R matrix. 
+     * The Cairo RGB24 needs to be converted to an R ABGR32 */
+    rint = INTEGER(raster);
+    for (i=0; i<size; i++) {
+        /* First byte is "black" - WTF?
+         * Anyway, I consequently start at byte 2 
+         * (Hence 'i' rather than '(i - 1)') */
+        rint[i] = 255<<24 | ((screenData[i*4])<<16 | 
+                             (screenData[i*4 + 1])<<8 |
+                             (screenData[i*4 + 2]));
+    }
+    
+    PROTECT(dim = allocVector(INTSXP, 2));
+    INTEGER(dim)[0] = height;
+    INTEGER(dim)[1] = width;
+    setAttrib(raster, R_DimSymbol, dim);
+
+    /* Release MY reference to the screen surface */
+    cairo_surface_destroy(screen);    
+    UNPROTECT(2);
+    return raster;
+}
+
+                         
 #ifdef HAVE_PANGOCAIRO
 /* ------------- pangocairo section --------------- */
 
