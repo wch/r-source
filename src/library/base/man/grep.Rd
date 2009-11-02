@@ -93,7 +93,7 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   only the first occurrence of a \code{pattern} whereas \code{gsub}
   replaces all occurrences.
 
-  For \code{regexpr} and \code{regexpr} it is an error for
+  For \code{regexpr} and \code{gregexpr} it is an error for
   \code{pattern} to be \code{NA}, otherwise \code{NA} is permitted and
   gives an \code{NA} match.
 
@@ -136,16 +136,17 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   be in UTF-8 with a marked encoding (e.g. if there is a UTF-8 input and
   in a multibyte locale for \code{perl = TRUE}).
 
-  For \code{regexpr} an integer vector of the same length as \code{text}
-  giving the starting position of the first match or \eqn{-1} if there
-  is none, with attribute \code{"match.length"} giving the length of the
-  matched text (or \eqn{-1} for no match).  The match lengths are in
-  characters unless \code{useBytes = TRUE} is used, when they are in
-  bytes.
+  \code{regexpr} returns an integer vector of the same length as
+  \code{text} giving the starting position of the first match or
+  \eqn{-1} if there is none, with attribute \code{"match.length"}, an
+  integer vector giving the length of the matched text (or \eqn{-1} for
+  no match).  The match positions and lengths are in characters unless
+  \code{useBytes = TRUE} is used, when they are in bytes.
 
-  For \code{gregexpr} a list of the same length as \code{text} each
-  element of which is an integer vector as in \code{regexpr}, except
-  that the starting positions of every (disjoint) match are given.
+  \code{gregexpr} returns a list of the same length as \code{text} each
+  element of is of the same form as the return value for \code{regexpr},
+  except that the starting positions of every (disjoint) match are
+  given.
 }
 
 \section{Warning}{

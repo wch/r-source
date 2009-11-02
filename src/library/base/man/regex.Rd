@@ -67,15 +67,12 @@
   \samp{[^abc]} matches anything except the characters \samp{a},
   \samp{b} or \samp{c}.  A range of characters may be specified by
   giving the first and last characters, separated by a hyphen.  (Because
-  their interpretation is so locale-dependent, they are best avoided.)
-  For extended regular expressions the collation order is
-  taken from the OS's implementation of the setting of the locale
-  category \code{LC_COLLATE}, so \samp{[W-Z]} may include \samp{x} and
-  if it does may or may not include \samp{w}.  (In most English locales
-  the collation order is \samp{wWxXyYzZ}.  In Estonian the last letter
-  is \code{y} and \code{Z} precedes \code{T}.)  The only portable way to
-  specify all ASCII letters is to list them all as the character class
-  \samp{[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]}.
+  their interpretation is locale- and implementation-dependent, they are
+  best avoided.)  The only portable way to specify all ASCII letters is
+  to list them all as the character class
+  \samp{[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]}.  (The
+  current implementation uses numerical order of the encoding: prior to
+  \R 2.10.0 locale-specific collation was used, and might be again.)
 
   Certain named classes of characters are predefined.  Their
   interpretation depends on the \emph{locale} (see \link{locales}); the
