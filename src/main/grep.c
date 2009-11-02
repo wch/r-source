@@ -175,9 +175,14 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		if (useBytes)
 		    buf = CHAR(STRING_ELT(x, i));
-		else if (use_UTF8)
+		else if (use_UTF8) {
 		    buf = translateCharUTF8(STRING_ELT(x, i));
-		else {
+		    if (!utf8Valid(buf)) {
+			warning(_("input string %d is invalid UTF-8"), i+1);
+			SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
+			continue;
+		    }
+		} else {
 		    buf = translateChar(STRING_ELT(x, i));
 		    if (mbcslocale && !mbcsValid(buf)) {
 			warning(_("input string %d is invalid in this locale"), i+1);
@@ -236,11 +241,13 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    int slen;
 	    if (useBytes)
 		split = CHAR(STRING_ELT(tok, itok));
-	    else if (use_UTF8)
+	    else if (use_UTF8) {
 		split = translateCharUTF8(STRING_ELT(tok, itok));
-	    else {
+		if (!utf8Valid(split))
+		    error(_("'split' string %d is invalid UTF-8"), itok+1);
+	    } else {
 		split = translateChar(STRING_ELT(tok, itok));
-		if(mbcslocale && !mbcsValid(split))
+		if (mbcslocale && !mbcsValid(split))
 		    error(_("'split' string %d is invalid in this locale"), itok+1);
 	    }
 	    slen = strlen(split);
@@ -254,9 +261,14 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 
 		if (useBytes)
 		    buf = CHAR(STRING_ELT(x, i));
-		else if (use_UTF8)
+		else if (use_UTF8) {
 		    buf = translateCharUTF8(STRING_ELT(x, i));
-		else {
+		    if (!utf8Valid(buf)) {
+			warning(_("input string %d is invalid UTF-8"), i+1);
+			SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
+			continue;
+		    }
+		} else {
 		    buf = translateChar(STRING_ELT(x, i));
 		    if (mbcslocale && !mbcsValid(buf)) {
 			warning(_("input string %d is invalid in this locale"), i+1);
@@ -319,11 +331,13 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	    if (useBytes)
 		split = CHAR(STRING_ELT(tok, itok));
-	    else if (use_UTF8)
+	    else if (use_UTF8) {
 		split = translateCharUTF8(STRING_ELT(tok, itok));
-	    else {
+		if (!utf8Valid(split))
+		    error(_("'split' string %d is invalid UTF-8"), itok+1);
+	    } else {
 		split = translateChar(STRING_ELT(tok, itok));
-		if(mbcslocale && !mbcsValid(split))
+		if (mbcslocale && !mbcsValid(split))
 		    error(_("'split' string %d is invalid in this locale"), itok+1);
 	    }
 
@@ -331,13 +345,13 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    re_pcre = pcre_compile(split, options,
 				   &errorptr, &erroffset, tables);
 	    if (!re_pcre) {
-		if(errorptr)
+		if (errorptr)
 		    warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
 			    errorptr, split+erroffset);
 		error(_("invalid split pattern '%s'"), split);
 	    }
 	    re_pe = pcre_study(re_pcre, 0, &errorptr);
-	    if(errorptr)
+	    if (errorptr)
 		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
 
 	    for (i = itok; i < len; i += tlen) {
@@ -349,9 +363,14 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 
 		if (useBytes)
 		    buf = CHAR(STRING_ELT(x, i));
-		else if (use_UTF8)
+		else if (use_UTF8) {
 		    buf = translateCharUTF8(STRING_ELT(x, i));
-		else {
+		    if (!utf8Valid(buf)) {
+			warning(_("input string %d is invalid UTF-8"), i+1);
+			SET_VECTOR_ELT(ans, i, ScalarString(NA_STRING));
+			continue;
+		    }
+		} else {
 		    buf = translateChar(STRING_ELT(x, i));
 		    if (mbcslocale && !mbcsValid(buf)) {
 			warning(_("input string %d is invalid in this locale"), i+1);
@@ -481,7 +500,7 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		split = CHAR(STRING_ELT(tok, itok));
 	    else {
 		split = translateChar(STRING_ELT(tok, itok));
-		if(mbcslocale && !mbcsValid(split))
+		if (mbcslocale && !mbcsValid(split))
 		    error(_("'split' string %d is invalid in this locale"), itok+1);
 	    }
 	    if ((rc = tre_regcomp(&reg, split, cflags)))
@@ -588,7 +607,7 @@ static int fgrep_one(const char *pat, const char *target,
 	    if (used <= 0) break;
 	    ib += used;
 	}
-    } else if(!useBytes && use_UTF8) {
+    } else if (!useBytes && use_UTF8) {
 	int ib, used;
 	for (ib = 0, i = 0; ib <= len-plen; i++) {
 	    if (strncmp(pat, target+ib, plen) == 0) {
@@ -632,7 +651,7 @@ static int fgrep_one_bytes(const char *pat, const char *target,
 	    if (used <= 0) break;
 	    ib += used;
 	}
-    } else if(!useBytes && use_UTF8) { /* not really needed */
+    } else if (!useBytes && use_UTF8) { /* not really needed */
 	int ib, used;
 	for (ib = 0, i = 0; ib <= len-plen; i++) {
 	    if (strncmp(pat, target+ib, plen) == 0) return ib;
@@ -734,7 +753,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!useBytes && !use_UTF8) {
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
-	if(!use_UTF8)
+	if (!use_UTF8)
 	    for (i = 0; i < n; i++)
 		if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
 		    use_UTF8 = TRUE;
@@ -754,9 +773,10 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (useBytes)
 	spat = CHAR(STRING_ELT(pat, 0));
     else if (use_WC) ;
-    else if (use_UTF8)
+    else if (use_UTF8) {
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
-    else {
+	if (!utf8Valid(spat)) error(_("regular expression is invalid UTF-8"));
+    } else {
 	spat = translateChar(STRING_ELT(pat, 0));
 	if (mbcslocale && !mbcsValid(spat))
 	    error(_("regular expression is invalid in this locale"));
@@ -769,13 +789,13 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	tables = pcre_maketables();
 	re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
 	if (!re_pcre) {
-	    if(errorptr)
+	    if (errorptr)
 		warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
 			errorptr, spat+erroffset);
 	    error(_("invalid regular expression '%s'"), spat);
-	    if(n > 10) {
+	    if (n > 10) {
 		re_pe = pcre_study(re_pcre, 0, &errorptr);
-		if(errorptr)
+		if (errorptr)
 		    warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
 	    }
 	}
@@ -795,9 +815,13 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (useBytes)
 		s = CHAR(STRING_ELT(text, i));
 	    else if (use_WC) ;
-	    else if (use_UTF8)
+	    else if (use_UTF8) {
 		s = translateCharUTF8(STRING_ELT(text, i));
-	    else {
+		if (!utf8Valid(s)) {
+		    warning(_("input string %d is invalid UTF-8"), i+1);
+		    continue;
+		}
+	    } else {
 		s = translateChar(STRING_ELT(text, i));
 		if (mbcslocale && !mbcsValid(s)) {
 		    warning(_("input string %d is invalid in this locale"), i+1);
@@ -814,12 +838,12 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (pcre_exec(re_pcre, re_pe, s, strlen(s), 0, 0, &ov, 0) >= 0)
 		    INTEGER(ind)[i] = 1;
 	    } else {
-		if(!use_WC)
+		if (!use_WC)
 		    rc = tre_regexecb(&reg, s, 0, NULL, 0);
 		else
 		    rc = tre_regwexec(&reg, wtransChar(STRING_ELT(text, i)),
 				      0, NULL, 0);
-		if(rc == 0) LOGICAL(ind)[i] = 1;
+		if (rc == 0) LOGICAL(ind)[i] = 1;
 	    }
 	}
 	if (invert ^ LOGICAL(ind)[i]) nmatches++;
@@ -828,7 +852,7 @@ SEXP attribute_hidden do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (fixed_opt); else
 #endif
     if (perl_opt) {
-	if(re_pe) pcre_free(re_pe);
+	if (re_pe) pcre_free(re_pe);
 	pcre_free(re_pcre);
 	pcre_free((void *)tables);
     } else
@@ -1017,7 +1041,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!useBytes) {
 	if (mbcslocale) use_UTF8 = TRUE;
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
-	if(!use_UTF8)
+	if (!use_UTF8)
 	    for (i = 0; i < n; i++)
 		if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
 		    use_UTF8 = TRUE;
@@ -1040,7 +1064,9 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	} else if (use_WC) ;
 	else if (use_UTF8) {
 	    spat = translateCharUTF8(STRING_ELT(pat, 0));
+	    if (!utf8Valid(spat)) error(_("'pattern' is invalid UTF-8"));
 	    srep = translateCharUTF8(STRING_ELT(rep, 0));
+	    if (!utf8Valid(srep)) error(_("'replacement' is invalid UTF-8"));
 	} else {
 	    spat = translateChar(STRING_ELT(pat, 0));
 	    if (mbcslocale && !mbcsValid(spat))
@@ -1087,9 +1113,10 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (useBytes)
 	    s = CHAR(STRING_ELT(text, i));
 	else if (use_WC) ;
-	else if (use_UTF8)
+	else if (use_UTF8) {
 	    s = translateCharUTF8(STRING_ELT(text, i));
-	else {
+	    if (!utf8Valid(s)) error(("input string %d is invalid UTF-8"), i+1);
+	} else {
 	    s = translateChar(STRING_ELT(text, i));
 	    if (mbcslocale && !mbcsValid(s))
 		error(("input string %d is invalid in this locale"), i+1);
@@ -1155,7 +1182,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		nmatch++;
 		for (j = 0; j < regmatch[0].rm_so ; j++)
 		    *u++ = s[offset+j];
-		if(offset+regmatch[0].rm_eo > last_end) {
+		if (offset+regmatch[0].rm_eo > last_end) {
 		    u = string_adj(u, s+offset, srep, regmatch);
 		    last_end = offset+regmatch[0].rm_eo;
 		}
@@ -1213,7 +1240,7 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		nmatch++;
 		for (j = 0; j < regmatch[0].rm_so ; j++)
 		    *u++ = s[offset+j];
-		if(offset+regmatch[0].rm_eo > last_end) {
+		if (offset+regmatch[0].rm_eo > last_end) {
 		    u = wstring_adj(u, s+offset, wrep, regmatch);
 		    last_end = offset+regmatch[0].rm_eo;
 		}
@@ -1341,7 +1368,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!useBytes && !use_UTF8) {
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
-	if(!use_UTF8)
+	if (!use_UTF8)
 	    for (i = 0; i < n; i++)
 		if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
 		    use_UTF8 = TRUE;
@@ -1361,9 +1388,10 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (useBytes)
 	spat = CHAR(STRING_ELT(pat, 0));
     else if (use_WC) ;
-    else if (use_UTF8)
+    else if (use_UTF8) {
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
-    else {
+	if (!utf8Valid(spat)) error(_("regular expression is invalid UTF-8"));
+    } else {
 	spat = translateChar(STRING_ELT(pat, 0));
 	if (mbcslocale && !mbcsValid(spat))
 	    error(_("regular expression is invalid in this locale"));
@@ -1376,14 +1404,14 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	tables = pcre_maketables();
 	re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
 	if (!re_pcre) {
-	    if(errorptr)
+	    if (errorptr)
 		warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
 			errorptr, spat+erroffset);
 	    error(_("invalid regular expression '%s'"), spat);
 	}
-	if(n > 10) {
+	if (n > 10) {
 	    re_pe = pcre_study(re_pcre, 0, &errorptr);
-	    if(errorptr)
+	    if (errorptr)
 		warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
 	}
     } else {
@@ -1404,9 +1432,14 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (useBytes)
 		s = CHAR(STRING_ELT(text, i));
 	    else if (use_WC) ;
-	    else if (use_UTF8)
+	    else if (use_UTF8) {
 		s = translateCharUTF8(STRING_ELT(text, i));
-	    else {
+		if (!utf8Valid(s)) {
+		    warning(_("input string %d is invalid UTF-8"), i+1);
+		    INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
+		    continue;
+		}
+	    } else {
 		s = translateChar(STRING_ELT(text, i));
 		if (mbcslocale && !mbcsValid(s)) {
 		    warning(_("input string %d is invalid in this locale"), i+1);
@@ -1464,7 +1497,7 @@ SEXP attribute_hidden do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (fixed_opt) ; else
 #endif
     if (perl_opt) {
-	if(re_pe) pcre_free(re_pe);
+	if (re_pe) pcre_free(re_pe);
 	pcre_free(re_pcre);
 	pcre_free((void *)tables);
     } else
@@ -1716,7 +1749,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (!useBytes) {
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
-	if(!use_UTF8)
+	if (!use_UTF8)
 	    for (i = 0; i < n; i++)
 		if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
 		    use_UTF8 = TRUE;
@@ -1736,7 +1769,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
 #ifndef USE_TRE_FOR_FIXED
-    if(!fixed_opt)
+    if (!fixed_opt)
 #endif
     {
 	use_WC = use_UTF8;
@@ -1749,6 +1782,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (use_WC) ;
     else if (use_UTF8) {
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
+	if (!utf8Valid(spat)) error(_("regular expression is invalid UTF-8"));
     } else {
 	spat = translateChar(STRING_ELT(pat, 0));
 	if (mbcslocale && !mbcsValid(spat))
@@ -1781,7 +1815,7 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else
 		s = translateChar(STRING_ELT(text, i));
 
-	    if (!useBytes && use_UTF8 && mbcslocale && !mbcsValid(s)) {
+	    if (!useBytes && !use_UTF8 && mbcslocale && !mbcsValid(s)) {
 		warning(_("input string %d is invalid in this locale"), i+1);
 		PROTECT(ans = gregexpr_BadStringAns());
 	    } else {
@@ -1789,9 +1823,9 @@ SEXP attribute_hidden do_gregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (fixed_opt) {
 		    if (useBytes)
 			s = CHAR(STRING_ELT(text, i));
-		    else if (use_UTF8)
+		    else if (use_UTF8) {
 			s = translateCharUTF8(STRING_ELT(text, i));
-		    else
+		    } else
 			s = translateChar(STRING_ELT(text, i));
 		    if (!useBytes && !use_UTF8 && mbcslocale && !mbcsValid(s)) {
 			warning(_("input string %d is invalid in this locale"), i+1);

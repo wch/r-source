@@ -146,7 +146,7 @@ do_pgsub(SEXP pat, SEXP rep, SEXP text, int global,
     if (!useBytes) {
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales */
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
-	if(!use_UTF8)
+	if (!use_UTF8)
 	    for (i = 0; i < n; i++)
 		if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
 		    use_UTF8 = TRUE;
@@ -197,13 +197,15 @@ do_pgsub(SEXP pat, SEXP rep, SEXP text, int global,
 
 	if (useBytes)
 	    s = CHAR(STRING_ELT(text, i));
-	else if (use_UTF8)
+	else if (use_UTF8) {
 	    s = translateCharUTF8(STRING_ELT(text, i));
-	else
+	    if (!utf8Valid(s))
+		error(_("input string %d is invalid UTF-8"), i+1);
+	} else {
 	    s = translateChar(STRING_ELT(text, i));
-
-	if (!useBytes && mbcslocale && !mbcsValid(s))
-	    error(_("input string %d is invalid in this locale"), i+1);
+	    if (mbcslocale && !mbcsValid(s))
+		error(_("input string %d is invalid in this locale"), i+1);
+	}
 
 	/* Looks like PCRE_NOTBOL is not needed in this version,
 	   but leave in as a precaution */
@@ -329,7 +331,7 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
     if (!useBytes && !mbcslocale) {
 	/* As from R 2.10.0 we use UTF-8 mode in PCRE in all MBCS locales */
 	if (getCharCE(STRING_ELT(pat, 0)) == CE_UTF8) use_UTF8 = TRUE;
-	if(!use_UTF8)
+	if (!use_UTF8)
 	    for (i = 0; i < n; i++)
 		if (getCharCE(STRING_ELT(text, i)) == CE_UTF8) {
 		    use_UTF8 = TRUE;
@@ -345,13 +347,14 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 
     if (useBytes)
 	spat = CHAR(STRING_ELT(pat, 0));
-    else if (use_UTF8)
+    else if (use_UTF8) {
 	spat = translateCharUTF8(STRING_ELT(pat, 0));
-    else
+	if (!utf8Valid(spat)) error(_("regular expression is invalid UTF-8"));
+    } else {
 	spat = translateChar(STRING_ELT(pat, 0));
-
-    if (!useBytes && mbcslocale && !mbcsValid(spat))
-	error(_("regular expression is invalid in this locale"));
+	if (mbcslocale && !mbcsValid(spat))
+	    error(_("regular expression is invalid in this locale"));
+    }
 
     tables = pcre_maketables();
     re_pcre = pcre_compile(spat, cflags, &errorptr, &erroffset, tables);
@@ -362,7 +365,7 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 	error(_("invalid regular expression '%s'"), spat);
     }
     n = LENGTH(text);
-    if(n > 10) {
+    if (n > 10) {
 	re_pe = pcre_study(re_pcre, 0, &errorptr);
 	if (errorptr)
 	    warning(_("PCRE pattern study error\n\t'%s'\n"), errorptr);
@@ -474,7 +477,7 @@ do_gpregexpr(SEXP pat, SEXP text, int igcase_opt, int useBytes)
 	SET_VECTOR_ELT(ansList, i, ans);
 	UNPROTECT(2);
     }
-    if(re_pe) pcre_free(re_pe);
+    if (re_pe) pcre_free(re_pe);
     pcre_free(re_pcre);
     pcre_free((void *)tables);
     UNPROTECT(3);

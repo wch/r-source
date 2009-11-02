@@ -46,6 +46,9 @@ NEW FEATURES
 	it can report the original context when called by other
 	debugging functions.
 
+    o	More validity checking of UTF-8 and MBCS strings is done by
+	agrep() and the regular-expression matching functions.
+
 
 DEPRECATED & DEFUNCT
 
