@@ -888,6 +888,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define warningcall		Rf_warningcall
 # define WarningMessage		Rf_WarningMessage
 # define wcstoutf8		Rf_wcstoutf8
+# define wtransChar		Rf_wtransChar
 # define yychar			Rf_yychar
 # define yylval			Rf_yylval
 # define yynerrs		Rf_yynerrs
@@ -1156,6 +1157,8 @@ size_t ucstomb(char *s, const unsigned int wc);
 size_t ucstoutf8(char *s, const unsigned int wc);
 size_t mbtoucs(unsigned int *wc, const char *s, size_t n);
 size_t wcstoutf8(char *s, const wchar_t *wc, size_t n);
+
+const wchar_t *wtransChar(SEXP x); /* from sysutils.c */
 
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);

@@ -47,8 +47,6 @@ strsplit grep [g]sub [g]regexpr
 #include <wchar.h>
 #include <wctype.h>    /* for wctrans_t */
 
-const wchar_t *wtransChar(SEXP x); /* from sysutils.c */
-
 /* As from TRE 0.8.0, tre.h replaces regex.h */
 #include <tre/tre.h>
 

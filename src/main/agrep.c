@@ -30,8 +30,6 @@
 #include <wchar.h>
 #include <tre/tre.h>
 
-const wchar_t *wtransChar(SEXP x); /* from sysutils.c */
-
 SEXP attribute_hidden do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
