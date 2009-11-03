@@ -2666,8 +2666,54 @@ static void GA_Raster(unsigned int *raster, int w, int h,
 
 static SEXP GA_Cap(pDevDesc dd)
 {
-    warning(_("%s not yet implemented for this device"), "Raster capture");
-    return R_NilValue;
+    gadesc *xd = (gadesc *) dd->deviceSpecific;
+    SEXP dim, raster = R_NilValue;
+    image img = NULL;
+    byte *screenData;
+
+    /* These in-place conversions are ok */
+    TRACEDEVGA("cap");
+
+    /* Only make sense for on-screen device ? */
+    if(xd->kind == SCREEN) {
+        img = bitmaptoimage(xd->gawin);
+        if (imagedepth(img) == 8) {
+            img = convert8to32(img);
+        }
+    }
+
+    if (img) {
+        int i;
+        int width = imagewidth(img);
+        int height = imageheight(img);
+        int size = width*height;
+        unsigned int *rint;
+
+        screenData = getpixels(img);
+
+        PROTECT(raster = allocVector(INTSXP, size));
+
+        /* Copy each byte of screen to an R matrix. 
+         * The ARGB32 needs to be converted to an R ABGR32 */
+        rint = (unsigned int *) INTEGER(raster);
+        for (i=0; i<size; i++) {
+            rint[i] = R_RGBA(screenData[i*4 + 2], 
+                             screenData[i*4 + 1],
+                             screenData[i*4 + 0], 
+                             255);
+        }
+        PROTECT(dim = allocVector(INTSXP, 2));
+        INTEGER(dim)[0] = height;
+        INTEGER(dim)[1] = width;
+        setAttrib(raster, R_DimSymbol, dim);
+
+        UNPROTECT(2);
+    }
+
+    /* Tidy up */
+    delimage(img);
+
+    return raster;
 }
 
 	/********************************************************/

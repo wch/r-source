@@ -923,6 +923,10 @@ image	newimage(int width, int height, int depth);
 image	copyimage(image img);
 void	delimage(image img);
 
+int     imagedepth(image img);
+int     imagewidth(image img);
+int     imageheight(image img);
+
 void	setpixels(image img, byte pixels[]);
 byte *	getpixels(image img);
 
