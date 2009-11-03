@@ -309,6 +309,7 @@ SEXP RTcl_ObjAsCharVector(SEXP args)
 	char *s;
 	Tcl_DString s_ds;
 	Tcl_DStringInit(&s_ds);
+	/* FIXME: could use UTF-8 here */
 	s = Tcl_UtfToExternalDString(NULL,
 				     (Tcl_GetStringFromObj(elem[i], NULL)),
 				     -1, &s_ds);
@@ -318,13 +319,6 @@ SEXP RTcl_ObjAsCharVector(SEXP args)
     UNPROTECT(1);
     return ans;
 }
-
-/* FIXME: we could look at encoding, and send UTF-8 in an
-   MBCS-supporting environment.  In which case, could convert to
-   UTF-8 and not UCS-2 on Windows. */
-#ifdef Win32
-extern const wchar_t *Rf_wtransChar(SEXP x);
-#endif
 
 SEXP RTcl_ObjFromCharVector(SEXP args)
 {
@@ -342,19 +336,11 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
     tclobj = Tcl_NewObj();
 
     count = length(val);
-#ifdef Win32
-    encoding = Tcl_GetEncoding(RTcl_interp, "unicode");  /* Needs NT */
-#else
-    encoding = NULL;
-#endif
+    encoding = Tcl_GetEncoding(RTcl_interp, "utf-8");
     if (count == 1 && LOGICAL(drop)[0]) {
 	Tcl_DStringInit(&s_ds);
 	s = Tcl_ExternalToUtfDString(encoding,
-#ifdef Win32
-				     (char *) Rf_wtransChar(STRING_ELT(val, 0)), 
-#else
-				     translateChar(STRING_ELT(val, 0)), 
-#endif
+				     translateCharUTF8(STRING_ELT(val, 0)), 
 				     -1, &s_ds);
 	Tcl_SetStringObj(tclobj, s, -1);
 	Tcl_DStringFree(&s_ds);
@@ -363,20 +349,14 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
 	    elem = Tcl_NewObj();
 	    Tcl_DStringInit(&s_ds);
 	    s = Tcl_ExternalToUtfDString(encoding, 
-#ifdef Win32
-					 (char *) Rf_wtransChar(STRING_ELT(val, i)),
-#else
 					 translateChar(STRING_ELT(val, i)),
-#endif
 					 -1, &s_ds);
 	    Tcl_SetStringObj(elem, s, -1);
 	    Tcl_DStringFree(&s_ds);
 	    Tcl_ListObjAppendElement(RTcl_interp, tclobj, elem);
 	}
 
-#ifdef Win32
     Tcl_FreeEncoding(encoding);
-#endif
     return makeRTclObject(tclobj);
 }
 

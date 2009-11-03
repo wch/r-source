@@ -54,6 +54,10 @@ NEW FEATURES
     o	The undocumented restriction on gregexpr() to length(text) > 0
 	has been removed.
 
+    o	Package tcltk now sends strings to Tcl in UTF-8: this means
+	that strings with a marked UTF-8 encoding are supported in
+	non-UTF-8 locales.
+
 
 DEPRECATED & DEFUNCT
 
@@ -117,6 +121,9 @@ BUG FIXES
 	
     o	findLineNum() and setBreakpoint() would sometimes fail if the 
     	specified file was not in the current directory.
+
+    o	Package tcltk's demo(tkdensity) was broken in 2.9.0 when demo()
+	was changed to set par(ask = TRUE).
 
 
 

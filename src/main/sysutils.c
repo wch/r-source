@@ -867,11 +867,10 @@ static const char TO_WCHAR[] = "UCS-4LE";
 static void *latin1_wobj = NULL, *utf8_wobj=NULL;
 
 /* Translate from current encoding to wchar_t = UCS-2/4
-   NB: this is not general.
-
-   Not in a general header, as wchar_t is not needed except where used.
+   NB: that wchar_t is UCS-4 is an assumption, but not easy to avoid.
 */
-attribute_hidden /* but not hidden on Windows, where it is used in tcltk.c */
+
+attribute_hidden /* but not hidden on Windows, where it was used in tcltk.c */
 const wchar_t *wtransChar(SEXP x)
 {
     void * obj;
