@@ -2623,7 +2623,45 @@ static void GA_Raster(unsigned int *raster, int w, int h,
                       Rboolean interpolate,
                       const pGEcontext gc, pDevDesc dd)
 {
-    warning(_("%s not yet implemented for this device"), "Raster rendering");
+    char *vmax = vmaxget();
+    int i;
+    gadesc *xd = (gadesc *) dd->deviceSpecific;
+    rect  sr, dr;
+    image img;
+    byte *imageData;
+
+    /* These in-place conversions are ok */
+    TRACEDEVGA("raster");
+    
+    /* Need to handle negative width or height ? */
+    dr = rect((int) x, (int) y, (int) width, (int) height);
+    
+    /* Create image object */
+    img = newimage(w, h, 32);
+
+    /* Set the image pixels from the raster */
+    /* Need to swap ABGR to ARGB */
+    imageData = (byte *) R_alloc(4*w*h, sizeof(byte));
+    for (i=0; i<w*h; i++) {
+        imageData[i*4 + 3] = R_ALPHA(raster[i]);
+        imageData[i*4 + 2] = R_RED(raster[i]);
+        imageData[i*4 + 1] = R_GREEN(raster[i]);
+        imageData[i*4 + 0] = R_BLUE(raster[i]);
+    }
+
+    setpixels(img, imageData);
+
+    /* Get the image rect */
+    sr = getrect(img);
+
+    /* Draw the image */
+    /* FIXME:  Need code for semi-transparent image */
+    DRAW(gdrawimage(_d, img, dr, sr));
+
+    /* Tidy up */
+    delimage(img);
+    SH;
+    vmaxset(vmax);
 }
 
 static SEXP GA_Cap(pDevDesc dd)

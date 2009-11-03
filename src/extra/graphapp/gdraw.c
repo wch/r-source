@@ -524,6 +524,24 @@ void gfillpolygon(drawing d, rgb fill, point *p, int n)
     DeleteObject(br);
 }
 
+void gdrawimage(drawing d, image img, rect dr, rect sr)
+{
+    HDC dc = GETHDC(d);
+    bitmap b;
+    image i = img;
+
+    if (! img)
+	return;
+    dr = rcanon(dr);
+    if ((dr.width != img->width) || (dr.height != img->height))
+	i = scaleimage(img, rect(0, 0, dr.width, dr.height), sr);
+    b = imagetobitmap(i);
+    BitBlt(dc, dr.x, dr.y, dr.width, dr.height, 
+           get_context(b), sr.x, sr.y, SRCCOPY);
+    if (i != img)
+	del(i);
+}
+
 /* For ordinary text, e.g. in console */
 int gdrawstr(drawing d, font f, rgb c, point p, const char *s)
 {

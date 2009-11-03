@@ -159,6 +159,7 @@ void  gdrawpolyline(drawing d, int width, int style, rgb c,
 #define gdrawpolygon(d,w,s,c,p,n,f,e,j,m) gdrawpolyline(d,w,s,c,p,n,1,f,e,j,m)
 void  gsetpolyfillmode(drawing d, int oddeven);
 void  gfillpolygon(drawing d, rgb fill, point *p, int n);
+void  gdrawimage(drawing d, image img, rect dr, rect sr);
 int   gdrawstr(drawing d, font f, rgb c, point p, const char *s);
 void  gdrawstr1(drawing d, font f, rgb c, point p, const char *s, double hadj);
 rect  gstrrect(drawing d, font f, const char *s);
