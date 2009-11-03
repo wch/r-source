@@ -254,7 +254,6 @@ SEXP do_globalenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_emptyenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_baseenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gray(SEXP, SEXP, SEXP, SEXP);
-SEXP do_gregexpr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_grep(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gsub(SEXP, SEXP, SEXP, SEXP);
 SEXP do_hsv(SEXP, SEXP, SEXP, SEXP);
