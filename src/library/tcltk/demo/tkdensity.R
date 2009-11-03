@@ -40,7 +40,7 @@ local({
         replot()
     }
 
-
+    grDevices::devAskNewPage(FALSE) # override setting in demo()
     tclServiceMode(FALSE)
     base <- tktoplevel()
     tkwm.title(base, "Density")
