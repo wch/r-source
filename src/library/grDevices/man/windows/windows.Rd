@@ -29,8 +29,8 @@ windows(width, height, pointsize, record, rescale, xpinch, ypinch,
         restoreConsole, clickToConfirm, fillOddEven)
 
 win.graph(width, height, pointsize)
-x11(width, height, pointsize)
-X11(width, height, pointsize)
+x11(width, height, pointsize, bg, gamma, xpos, ypos, title)
+X11(width, height, pointsize, bg, gamma, xpos, ypos, title)
 
 win.metafile(filename = "", width = 7, height = 7, pointsize = 12,
              restoreConsole = TRUE)
