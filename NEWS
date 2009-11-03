@@ -58,6 +58,15 @@ NEW FEATURES
 	that strings with a marked UTF-8 encoding are supported in
 	non-UTF-8 locales.
 
+    o   The graphics engine now supports rendering of raster (bitmap)
+        images, though not all graphics devices can provide (full) support.
+        Graphics device packages, e.g., RSvgDevice, will need 
+        to be reinstalled.
+
+        There is also support in the graphics engine for capturing
+        raster images from graphics devices (again not supported
+        on all graphics devices).
+
 
 DEPRECATED & DEFUNCT
 
