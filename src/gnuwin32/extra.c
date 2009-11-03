@@ -532,7 +532,6 @@ SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-extern wchar_t *wtransChar(SEXP x);
 
 SEXP do_addhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1056,7 +1055,8 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(raw)
 		for(i = 0; i < n; i++) *s++ = RAW(text)[i];
 	    else if (format == CF_UNICODETEXT) {
-		wchar_t *wp, *ws = (wchar_t *) s;
+		const wchar_t *wp;
+		wchar_t *ws = (wchar_t *) s;
 		for(i = 0; i < n; i++) {
 		    wp = wtransChar(STRING_ELT(text, i));
 		    while(*wp) *ws++ = *wp++;
