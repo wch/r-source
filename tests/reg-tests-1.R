@@ -667,6 +667,8 @@ stopifnot(abs(quantile(x,p) - ((1-f)*ox[i] + f*ox[i+1])) < 20*Meps)
 ## rep
 stopifnot(identical(rep(letters, 0), character(0)),
 	  identical(rep.int(1:2, 0), integer(0)))
+
+stopifnot(sum(1:8) == length(rep(1:4, 1:8, each=2)))
 ## end of moved from rep.Rd
 
 

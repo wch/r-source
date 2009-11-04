@@ -84,6 +84,13 @@ DEPRECATED & DEFUNCT
 	argument list.
 
 
+BUG FIXES
+
+    o   rep(x, times, each=2) gave invalid results when the times
+        argument is a vector longer than x.  Reported by Bill Dunlap.
+
+
+
 
 	**************************************************
 	*						 *
