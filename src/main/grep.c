@@ -1073,8 +1073,9 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	       backrefs */
 	    maxrep = replen + (ns-2) * count_subs(srep);
 	    if (global) {
-		nns = ns * (maxrep + 1) + 1000;
-		if (nns > 10000) nns = 2*ns + replen + 1000;
+		double dnns = ns * (maxrep + 1.) + 1000;
+		if (dnns > 10000) dnns = 2*ns + replen + 1000;
+		nns = dnns;
 	    } else nns = ns + maxrep + 1000;
 	    u = cbuf = Calloc(nns, char);
 	    offset = 0; nmatch = 0; eflags = 0; last_end = -1;
@@ -1133,8 +1134,9 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (global) {
 		/* worst possible scenario is to put a copy of the
 		   replacement after every character */
-		nns = ns * (maxrep + 1) + 1000;
-		if (nns > 10000) nns = 2*ns + maxrep + 1000;
+		double dnns = ns * (maxrep + 1) + 1000;
+		if (dnns > 10000) dnns = 2*ns + maxrep + 1000;
+		nns = dnns;
 	    } else nns = ns + maxrep + 1000;
 	    u = cbuf = Calloc(nns, wchar_t);
 	    offset = 0; nmatch = 0; eflags = 0; last_end = -1;
