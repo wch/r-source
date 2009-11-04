@@ -39,7 +39,7 @@ runif(n, min=0, max=1)
 
   The uniform distribution has density
   \deqn{f(x) = \frac{1}{max-min}}{f(x) = 1/(max-min)}
-  for \eqn{min \le x \le max}.
+  for \eqn{min \le x \le max}{min <= x <= max}.
 
   For the case of \eqn{u := min == max}, the limit case of
   \eqn{X \equiv u}{X == u} is assumed, although there is no density in

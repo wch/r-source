@@ -40,7 +40,7 @@ rgeom(n, prob)
   is zero, with a warning.
 
   The quantile is defined as the smallest value \eqn{x} such that
-  \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
+  \eqn{F(x) \ge p}{F(x) >= p}, where \eqn{F} is the distribution function.
 }
 \value{
   \code{dgeom} gives the density,

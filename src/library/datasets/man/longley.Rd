@@ -21,7 +21,7 @@
     \item{Unemployed:}{number of unemployed.}
     \item{Armed.Forces:}{number of people in the armed forces.}
     \item{Population:}{\sQuote{noninstitutionalized} population
-      \eqn{\ge} 14 years of age.}
+      \eqn{\ge}{>=} 14 years of age.}
     \item{Year:}{the year (time).}
     \item{Employed:}{number of people employed.}
   }

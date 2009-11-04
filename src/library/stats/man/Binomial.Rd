@@ -51,7 +51,7 @@ rbinom(n, size, prob)
   \eqn{p(x)} is computed using Loader's algorithm, see the reference below.
 
   The quantile is defined as the smallest value \eqn{x} such that
-  \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
+  \eqn{F(x) \ge p}{F(x) >= p}, where \eqn{F} is the distribution function.
 }
 \seealso{
   \code{\link{dnbinom}} for the negative binomial, and
