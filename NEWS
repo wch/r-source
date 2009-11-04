@@ -141,6 +141,9 @@ BUG FIXES
     o	Package tcltk's demo(tkdensity) was broken in 2.9.0 when demo()
 	was changed to set par(ask = TRUE).
 
+    o	gsub() with backrefs could fail on extremely long strings
+	(hundreds of thosands of characters) due to integer overflow
+	in a length calculation.
 
 
 
