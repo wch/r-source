@@ -1,6 +1,6 @@
 % File src/library/base/man/system.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{system}
@@ -56,9 +56,10 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   Windows path name cannot contain a double quote, so we do not need to
   worry about escaping embedded quotes.)
 #endif
-
+  
+  % at least on Linux the shell cannot be changed.
   How the command is run differs by platform: Unix-alikes use a shell
-  (\file{/bin/sh} by default), and Windows executes the command directly
+  (normally \file{/bin/sh}), and Windows executes the command directly
   (extensions \file{.exe}, \file{.com}) or as a batch file (extensions
   \file{.cmd} and \file{.bat}).
 #ifdef windows
@@ -71,8 +72,11 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   include the \R \file{bin} directory, the working directory and the
   Windows system directories before \code{PATH}.
 #endif
-
 #ifdef unix
+  This means that redirection, pipes, \dots cannot be used on Windows,
+  which has a function \code{shell} for use when shell facilities are
+  needed.
+
   If \code{intern} is \code{TRUE} then \code{popen} is used to invoke the
   command and the output collected, line by line, into an \R
   \code{\link{character}} vector.  If \code{intern} is \code{FALSE} then

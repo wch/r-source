@@ -53,7 +53,7 @@ rchisq(n, df, ncp=0)
     f(x) = e^{-\lambda / 2}
       \sum_{r=0}^\infty \frac{(\lambda/2)^r}{r!}\, f_{n + 2r}(x)}{f(x) = exp(-lambda/2) SUM_{r=0}^infty ((lambda/2)^r / r!) dchisq(x, df + 2r)
   }
-  for \eqn{x \ge 0}.  For integer \eqn{n}, this is the distribution of
+  for \eqn{x \ge 0}{x >= 0}.  For integer \eqn{n}, this is the distribution of
   the sum of squares of \eqn{n} normals each with variance one,
   \eqn{\lambda} being the sum of squares of the normal means; further,
   \cr

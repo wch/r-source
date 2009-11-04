@@ -43,7 +43,7 @@ rweibull(n, shape, scale = 1)
   The Weibull distribution with \code{shape} parameter \eqn{a} and
   \code{scale} parameter \eqn{\sigma}{b} has density given by
   \deqn{f(x) = (a/\sigma) {(x/\sigma)}^{a-1} \exp (-{(x/\sigma)}^{a})}{f(x) = (a/b) (x/b)^(a-1) exp(- (x/b)^a)}
-  for \eqn{x \ge 0}.
+  for \eqn{x \ge 0}{x >= 0}.
   The cumulative distribution function is
   \eqn{F(x) = 1 - \exp(-{(x/\sigma)}^a)}{F(x) = 1 - exp(- (x/b)^a)}
   on \eqn{x \ge 0}, the
