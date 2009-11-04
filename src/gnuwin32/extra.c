@@ -899,12 +899,12 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 int Rwin_rename(const char *from, const char *to)
 {
-    return (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING) == 0);
+    return (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED) == 0);
 }
 
 int Rwin_wrename(const wchar_t *from, const wchar_t *to)
 {
-    return (MoveFileExW(from, to, MOVEFILE_REPLACE_EXISTING) == 0);
+    return (MoveFileExW(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED) == 0);
 }
 
 SEXP do_getClipboardFormats(SEXP call, SEXP op, SEXP args, SEXP rho)

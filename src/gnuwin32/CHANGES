@@ -29,6 +29,8 @@ NEW FEATURES
     o	X11() and x11() gain additional arguments to be more similar
 	to the Unix X11() device.
 
+    o	file.rename() can work across volumes (by copy-and-delete).
+
 
 
 
