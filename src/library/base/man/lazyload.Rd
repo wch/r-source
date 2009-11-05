@@ -7,7 +7,7 @@
 \alias{lazyLoad}
 \title{Lazy Load a Database of R Objects}
 \description{
-  Internal function to azy load a database of \R objects.
+  Internal function to lazy load a database of \R objects.
 }
 \usage{
 lazyLoad(filebase, envir = parent.frame(), filter)
