@@ -7,7 +7,7 @@
 \title{Scripting Language Interface}
 \alias{.Script}
 \description{
-  Run a script through its interpreter with given arguments.
+  Internal interface to run a script through its interpreter.
 }
 \usage{
 .Script(interpreter, script, args, \dots)

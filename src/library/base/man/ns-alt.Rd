@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-alt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ns-alt}
@@ -32,7 +32,7 @@
   \code{Namespace: <package_name>} entry to the \file{DESCRIPTION}
   file and placing directives to specify imports and exports directly in
   package code.  These directives should be viewed as declarations, not
-  as function calls.   Except to the optional method argument to
+  as function calls.   Except to the optional \code{method} argument to
   \code{.S3method} arguments are not evaluated.  These directives should
   only be used at top level of package code except as noted below.
 

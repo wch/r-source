@@ -1,13 +1,13 @@
 % File src/library/base/man/dataframeHelpers.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dataframeHelpers}
 \title{Data Frame Auxiliary Functions}
 \alias{xpdrows.data.frame}
 \description{
-  Auxiliary functions for use with data frames.
+  Internal auxiliary functions for use with data frames.
 }
 \usage{
 xpdrows.data.frame(x, old.rows, new.rows)

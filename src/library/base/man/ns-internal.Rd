@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-internal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ns-internals}
@@ -25,6 +25,7 @@
 \alias{.mergeExportMethods}
 \alias{.mergeImportMethods}
 \alias{.knownS3Generics}
+\alias{loadingNamespaceInfo}
 \usage{
 asNamespace(ns, base.OK = TRUE)
 getNamespaceInfo(ns, which)
@@ -44,6 +45,7 @@ setNamespaceInfo(ns, which, val)
 .mergeExportMethods(new, ns)
 .mergeImportMethods(impenv, expenv, metaname)
 .knownS3Generics
+loadingNamespaceInfo()
 }
 
 \arguments{
