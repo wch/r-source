@@ -142,7 +142,7 @@ BUG FIXES
 	was changed to set par(ask = TRUE).
 
     o	gsub() with backrefs could fail on extremely long strings
-	(hundreds of thosands of characters) due to integer overflow
+	(hundreds of thousands of characters) due to integer overflow
 	in a length calculation.
 
 
