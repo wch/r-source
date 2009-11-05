@@ -538,18 +538,6 @@ loadingNamespaceInfo <- function() {
     dynGet("__LoadingNamespaceInfo__", stop("not loading a name space"))
 }
 
-saveNamespaceImage <- function (package, rdafile, lib.loc = NULL,
-                                keep.source = getOption("keep.source.pkgs"),
-                                compress = TRUE)
-{
-    if (! is.null(.Internal(getRegisteredNamespace(as.name(package)))))
-        stop(gettextf("name space '%s' is loaded", package), domain = NA)
-    ns <- loadNamespace(package, lib.loc, keep.source, TRUE, TRUE)
-    vars <- ls(ns, all.names = TRUE)
-    vars <- vars[vars != ".__NAMESPACE__."]
-    save(list = vars, file = rdafile, envir = ns, compress = compress)
-}
-
 topenv <- function(envir = parent.frame(),
                    matchThisEnv = getOption("topLevelEnvironment")) {
     while (! identical(envir, emptyenv())) {

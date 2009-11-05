@@ -1,13 +1,13 @@
 % File src/library/base/man/lazyload.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{lazyLoad}
 \alias{lazyLoad}
 \title{Lazy Load a Database of R Objects}
 \description{
-  Lazy load a database of \R objects.
+  Internal function to azy load a database of \R objects.
 }
 \usage{
 lazyLoad(filebase, envir = parent.frame(), filter)
@@ -20,6 +20,8 @@ lazyLoad(filebase, envir = parent.frame(), filter)
     which this is true will be loaded.}
 }
 \details{
+  This is an internal function for use only by \R itself.
+  
   This is the workhorse function called by the package loader to load
   the code for a package from a database.  The database consists of two
   binary files, \file{\var{filebase}.rdb} (the objects) and
