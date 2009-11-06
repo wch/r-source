@@ -1,6 +1,6 @@
 % File src/library/base/man/detach.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{detach}
@@ -51,12 +51,8 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE)
   So detaching and re-attaching a package may not refresh some
   or all components of the package, and is inadvisable.
 }
-\value{
-  The attached database is returned invisibly, either as
-  \code{\link{data.frame}} or as \code{\link{list}}.
-}
 \note{
-  You cannot detach either the workspace (position 1) or the \pkg{base}
+  You cannot detach either the workspace (position 1) nor the \pkg{base}
   package (the last item in the search list).
 }
 \references{
