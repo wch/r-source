@@ -296,11 +296,11 @@ Rd2txt <-
     }
 
     writeBlock <- function(block, tag, blocktag) {
-		switch(tag,
+        switch(tag,
                UNKNOWN =,
                VERB =,
                RCODE = writeCode(tabExpand(block)),
-               TEXT = putw(unescape(tabExpand(block))),
+               TEXT = if(blocktag == "\\command") putw(block) else putw(unescape(tabExpand(block))),
                LIST =,
                COMMENT = {},
                "\\describe" = {

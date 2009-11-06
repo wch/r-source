@@ -359,7 +359,7 @@ Rd2HTML <-
                UNKNOWN =,
                VERB =,
                RCODE = of1(vhtmlify(block)),
-               TEXT = of1(addParaBreaks(htmlify(block), blocktag)),
+               TEXT = of1(if(blocktag == "\\command") vhtmlify(block) else addParaBreaks(htmlify(block), blocktag)),
                COMMENT = {},
                LIST =,
                "\\describe"=,
