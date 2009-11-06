@@ -1,9 +1,9 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2009  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
- *  Copyright (C) 2002--2004  The R Foundation
+ *  Copyright (C) 2002--2009  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -657,8 +657,8 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
  *	when none has been specified (= default).
  *
  *	axp[0:2] = (x1, x2, nInt), where x1..x2 are the extreme tick marks
- *		   {unless in log case, where nint \in {1,2,3 ; -1,-2,....}
- *		    and the `nint' argument is used.}
+ *		   {unless in log case, where nInt \in {1,2,3 ; -1,-2,....}
+ *		    and the `nint' argument is used *instead*.}
 
  *	The resulting REAL vector must have length >= 1, ideally >= 2
  */
@@ -717,6 +717,10 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 	case 1: /* large range:	1	 * 10^k */
 	    i = floor(log10(axp[1])) - ceil(log10(axp[0])) + 0.25;
 	    ne = i / nint + 1;
+#ifdef DEBUG_axis
+	    REprintf("CreateAtVector [log-axis(), case 1]: (nint, ne) = (%d,%d)\n",
+		     nint, ne);
+#endif
 	    if (ne < 1)
 		error("log - axis(), 'at' creation, _LARGE_ range: "
 		      "ne = %d <= 0 !!\n"
@@ -881,7 +885,7 @@ static void getylimits(double *y, pGEDevDesc dd) {
 SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* axis(side, at, labels, tick, line, pos,
-     	    outer, font, lty, lwd, lwd.ticks, col, col.ticks, 
+     	    outer, font, lty, lwd, lwd.ticks, col, col.ticks,
 	    hadj, padj, ...)
     */
 
@@ -1103,7 +1107,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     if (n > 0 && ntmp == 0)
 	error(_("no locations are finite"));
     n = ntmp;
-    
+
     /* Ok, all systems are "GO".  Let's get to it. */
 
     /* At this point we know the value of "xaxt" and "yaxt",
@@ -1133,7 +1137,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
         /* First set the clipping limits */
         getxlimits(limits, dd);
         /* Now override par("xpd") and force clipping to device region. */
-        gpptr(dd)->xpd = 2;        
+        gpptr(dd)->xpd = 2;
 	GetAxisLimits(limits[0], limits[1], &low, &high);
 	axis_low  = GConvertX(fmin2(high, fmax2(low, REAL(at)[0])), USER, NFC, dd);
 	axis_high = GConvertX(fmin2(high, fmax2(low, REAL(at)[n-1])), USER, NFC, dd);
@@ -1274,7 +1278,7 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
         /* First set the clipping limits */
         getylimits(limits, dd);
         /* Now override par("xpd") and force clipping to device region. */
-        gpptr(dd)->xpd = 2;      
+        gpptr(dd)->xpd = 2;
 	GetAxisLimits(limits[0], limits[1], &low, &high);
 	axis_low = GConvertY(fmin2(high, fmax2(low, REAL(at)[0])), USER, NFC, dd);
 	axis_high = GConvertY(fmin2(high, fmax2(low, REAL(at)[n-1])), USER, NFC, dd);
@@ -2840,27 +2844,36 @@ SEXP attribute_hidden do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 	 * The problem is worse -- you could get NaN, which at least the
 	 * X11 device coerces to -2^31 <TSL>
 	 */
-	getxlimits(x, dd);
+	getxlimits(x, dd);/* -> (x[0], x[1]) */
 	if (R_FINITE(gpptr(dd)->lwd)) {
-	    if (LOGICAL(untf)[0] == 1 && (gpptr(dd)->xlog || gpptr(dd)->ylog)) {
+	    Rboolean xlog = gpptr(dd)->xlog, ylog = gpptr(dd)->ylog;
+	    if (LOGICAL(untf)[0] && (xlog || ylog)) {
 #define NS 100
 		/* Plot curve, linear on original scales */
 		double xx[NS+1], yy[NS+1];
-		double xstep = (x[1] - x[0])/NS;
-		for (i = 0; i < NS; i++) {
-		    xx[i] = x[0] + i*xstep;
-		    yy[i] = aa + xx[i] * bb;
+		if(xlog) {
+		    /* x_i should be equidistant in log-scale, i.e., equi-ratio */
+		    double x_f = x[1] / DBL_MAX;
+		    xx[0] = x[0] = fmax2(x[0], 1.01 *x_f); /* > 0 */
+		    x_f = pow(x[1]/x[0], 1./NS);
+		    for (i = 1; i < NS; i++)
+			xx[i] = xx[i-1] * x_f;
+		} else {
+		    double xstep = (x[1] - x[0])/NS;
+		    for (i = 0; i < NS; i++)
+			xx[i] = x[0] + i*xstep;
 		}
 		xx[NS] = x[1];
-		yy[NS] = aa + x[1] * bb;
+		for (i = 0; i <= NS; i++)
+		    yy[i] = aa + xx[i] * bb;
 
 		/* now get rid of -ve values */
 		lstart = 0;lstop = NS;
-		if (gpptr(dd)->xlog) {
+		if (xlog) {
 		    for(; xx[lstart] <= 0 && lstart < NS+1; lstart++);
 		    for(; xx[lstop] <= 0 && lstop > 0; lstop--);
 		}
-		if (gpptr(dd)->ylog) {
+		if (ylog) {
 		    for(; yy[lstart] <= 0 && lstart < NS+1; lstart++);
 		    for(; yy[lstop] <= 0 && lstop > 0; lstop--);
 		}
@@ -2868,15 +2881,10 @@ SEXP attribute_hidden do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 		GPolyline(lstop-lstart+1, xx+lstart, yy+lstart, USER, dd);
 #undef NS
 	    } else { /* non-log plots, possibly with log scales */
-		double x0, x1;
 
-		x0 = ( gpptr(dd)->xlog ) ?	log10(x[0]) : x[0];
-		x1 = ( gpptr(dd)->xlog ) ?	log10(x[1]) : x[1];
-
-		y[0] = aa + x0 * bb;
-		y[1] = aa + x1 * bb;
-
-		if ( gpptr(dd)->ylog ) {
+		y[0] = aa + (xlog ? log10(x[0]) : x[0]) * bb;
+		y[1] = aa + (xlog ? log10(x[1]) : x[1]) * bb;
+		if (ylog) {
 		    y[0] = pow(10., y[0]);
 		    y[1] = pow(10., y[1]);
 		}
