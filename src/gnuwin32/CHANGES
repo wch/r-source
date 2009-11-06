@@ -48,6 +48,9 @@ BUG FIXES
 
     o	The installer did not properly record help type choices in
 	R_HOME/etc/Rprofile.site.
+
+    o	Rcmd INSTALL once again uses --no-restore, for consistency with
+	the Unix version and R 2.9.2.
     	
 
 
