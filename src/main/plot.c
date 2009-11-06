@@ -2854,10 +2854,10 @@ SEXP attribute_hidden do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(xlog) {
 		    /* x_i should be equidistant in log-scale, i.e., equi-ratio */
 		    double x_f = x[1] / DBL_MAX;
-		    x[0] = fmax2(x[0], 1.01 *x_f); /* > 0 */
+		    xx[0] = x[0] = fmax2(x[0], 1.01 *x_f); /* > 0 */
 		    x_f = pow(x[1]/x[0], 1./NS);
-		    for (i = 0; i < NS; i++)
-			xx[i] = x[0] * pow(x_f, (double)i);
+		    for (i = 1; i < NS; i++)
+			xx[i] = xx[i-1] * x_f;
 		} else {
 		    double xstep = (x[1] - x[0])/NS;
 		    for (i = 0; i < NS; i++)
