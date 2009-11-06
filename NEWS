@@ -67,6 +67,10 @@ NEW FEATURES
 	raster images from graphics devices (again not supported
 	on all graphics devices).
 
+    o	detach/unloadNamespace() arrange to flush the package's
+ 	lazyload cache of R objects once the package/namespace is no
+	longer needed.
+
 
 DEPRECATED & DEFUNCT
 
