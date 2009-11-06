@@ -2298,12 +2298,9 @@ R_lazyLoadDBinsertValue(SEXP value, SEXP file, SEXP ascii,
 
     value = R_serialize(value, R_NilValue, ascii, hook);
     PROTECT_WITH_INDEX(value, &vpi);
-#ifdef HAVE_LZMA
     if (compress == 3)
 	REPROTECT(value = R_compress3(value), vpi);
-    else
-#endif
-    if (compress == 2)
+    else if (compress == 2)
 	REPROTECT(value = R_compress2(value), vpi);
     else if (compress)
 	REPROTECT(value = R_compress1(value), vpi);
@@ -2332,12 +2329,9 @@ do_lazyLoadDBfetch(SEXP call, SEXP op, SEXP args, SEXP env)
     compressed = asInteger(compsxp);
 
     PROTECT_WITH_INDEX(val = readRawFromFile(file, key), &vpi);
-#ifdef HAVE_LZMA
     if (compressed == 3)
 	REPROTECT(val = R_decompress3(val), vpi);
-    else
-#endif
-   if (compressed == 2)
+    else if (compressed == 2)
 	REPROTECT(val = R_decompress2(val), vpi);
     else if (compressed)
 	REPROTECT(val = R_decompress1(val), vpi);

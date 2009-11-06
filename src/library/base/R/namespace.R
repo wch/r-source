@@ -580,6 +580,9 @@ unloadNamespace <- function(ns) {
     for(fun in rev(hook)) try(fun(nsname, nspath))
     try(runHook(".onUnload", ns, nspath))
     .Internal(unregisterNamespace(nsname))
+    .Call("R_lazyLoadDBflush",
+          paste(nspath, "/R/", nsname, ".rdb", sep=""),
+          PACKAGE="base")
     invisible()
 }
 
