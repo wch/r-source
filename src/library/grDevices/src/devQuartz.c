@@ -963,7 +963,45 @@ static void RQuartz_Raster(unsigned int *raster, int w, int h,
                            Rboolean interpolate,
                            const pGEcontext gc, pDevDesc dd)
 {
-    warning(_("%s not yet implemented for this device"), "Raster rendering");
+    DRAWSPEC;
+    if (!ctx) NOCTX;
+    CGDataProviderRef dp;
+    CGColorSpaceRef cs;
+    CGImageRef img;
+    
+    /* Create a "data provider" containing the raster data */
+    dp = CGDataProviderCreateWithData(NULL, (void *) raster, 4*w*h, NULL);
+
+    cs = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+
+ /* Create a quartz image from the data provider */
+    img = CGImageCreate(w, h, 
+                        8,   /* bits per channel */
+                        32,  /* bits per pixel */
+                        4*w, /* bytes per row */
+                        cs,  /* color space */
+                        kCGImageAlphaLast | kCGBitmapByteOrder32Big,
+                        dp,  /* data provider */
+                        NULL,/* decode array */
+                        1,
+                        kCGRenderingIntentDefault);
+
+    /* Draw the quartz image */
+    CGContextSaveGState(ctx);
+    CGContextTranslateCTM(ctx, 0, height + 2*y);
+    CGContextScaleCTM(ctx, 1.0, -1.0);
+    if (interpolate) {
+        CGContextSetInterpolationQuality(ctx, kCGInterpolationDefault);
+    } else {
+        CGContextSetInterpolationQuality(ctx, kCGInterpolationNone);
+    }
+    CGContextDrawImage(ctx, CGRectMake(x, y, width, height), img);
+    CGContextRestoreGState(ctx);
+
+    /* Tidy up */
+    CGColorSpaceRelease(cs);
+    CGDataProviderRelease(dp);
+    CGImageRelease(img);
 }
 
 static SEXP RQuartz_Cap(pDevDesc dd)
