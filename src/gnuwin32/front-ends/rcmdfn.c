@@ -265,7 +265,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	      strcmp(argv[cmdarg], "INSTALL") == 0) {
 	/* handle Rcmd INSTALL internally */
 	snprintf(cmd, CMD_LEN, 
-		 "%s/bin/Rterm.exe -e tools:::.install_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --slave --args ",
+		 "%s/bin/Rterm.exe -e tools:::.install_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --slave --args ",
 		 getRHOME());
 	for (i = cmdarg + 1; i < argc; i++) {
 	    strcat(cmd, "nextArg");
