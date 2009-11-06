@@ -3695,9 +3695,9 @@ will need to be escaped (@pxref{Insertions}).
 @findex \code
 Indicate text that is a literal example of a piece of an @R{} program,
 e.g., a fragment of @R{} code or the name of an @R{} object.  Text is
-entered in @R{}-like syntax, and displayed using
-@code{typewriter} font if possible. Macros @code{\var} and @code{\link}
-are interpreted within @var{text}.
+entered in @R{}-like syntax, and displayed using @code{typewriter} font
+if possible.  Macros @code{\var} and @code{\link} are interpreted within
+@var{text}.
 
 @item \preformatted@{@var{text}@}
 @findex \preformatted
@@ -3718,13 +3718,16 @@ type from computer output.  Text is entered verbatim.
 @item \samp@{@var{text}@}
 @findex \samp
 Indicate text that is a literal example of a sequence of characters,
-entered verbatim.  No wrapping or reformatting will occur.
+entered verbatim.  No wrapping or reformatting will occur.  Displayed
+using @code{typewriter} font if possible.
+
 
 @item \verb@{@var{text}@}
 @findex \verb
 Indicate text that is a literal example of a sequence of characters,
-with no interpretation of e.g.@: @code{\var}, but which will be
-included within word-wrapped text.
+with no interpretation of e.g.@: @code{\var}, but which will be included
+within word-wrapped text.  Displayed using @code{typewriter} font if
+possible.
 
 @item \pkg@{@var{package_name}@}
 @findex \pkg
@@ -3733,16 +3736,20 @@ Indicate the name of an @R{} package.  @LaTeX{}-like.
 @item \file@{@var{file_name}@}
 @findex \file
 Indicate the name of a file.  Text is @LaTeX{}-like, so backslash needs
-to be escaped.
+to be escaped.  Displayed using a distinct font if possible.
+
 @item \email@{@var{email_address}@}
 @findex \email
 Indicate an electronic mail address.  @LaTeX{}-like, will be rendered as
-a hyperlink in HTML and PDF conversion.
+a hyperlink in HTML and PDF conversion.  Displayed using
+@code{typewriter} font if possible.
+
 @item \url@{@var{uniform_resource_locator}@}
 @findex \url
 Indicate a uniform resource locator (@acronym{URL}) for the World Wide
 Web.  The argument is handled verbatim, and rendered as a hyperlink in
-HTML and PDF conversion.
+HTML and PDF conversion.  Displayed using @code{typewriter} font if
+possible.
 
 @item \var@{@var{metasyntactic_variable}@}
 @findex \var
@@ -3753,12 +3760,15 @@ outside @samp{\usage} and @samp{\examples} environments.}. @LaTeX{}-like.
 @item \env@{@var{environment_variable}@}
 @findex \env
 Indicate an environment variable. Verbatim.
+Displayed using @code{typewriter} font if possible
 @item \option@{@var{option}@}
 @findex \option
 Indicate a command-line option.  Verbatim.
+Displayed using @code{typewriter} font if possible.
 @item \command@{@var{command_name}@}
 @findex \command
-Indicate the name of a command. @LaTeX{}-like.
+Indicate the name of a command. @LaTeX{}-like, so @code{\var} is
+interpreted.  Displayed using @code{typewriter} font if possible.
 @item \dfn@{@var{term}@}
 @findex \dfn
 Indicate the introductory or defining use of a term. @LaTeX{}-like.
