@@ -37,11 +37,11 @@ NEW FEATURES
     o	The tre library has been updated to version 0.8.0 (minor bugfixes).
 
     o	grep[l], [g]sub and [g]regexpr now work in bytes in an 8-bit
- 	locales if there is no marked UTF-8 input string: this will be
- 	somewhat faster, and for [g]sub() give the result in the
- 	native encoding rather than in UTF-8 (which was the behaviour
- 	prior to R 2.10.0).
- 	
+	locales if there is no marked UTF-8 input string: this will be
+	somewhat faster, and for [g]sub() give the result in the
+	native encoding rather than in UTF-8 (which was the behaviour
+	prior to R 2.10.0).
+
     o	A new argument 'skipCalls' has been added to browser() so that
 	it can report the original context when called by other
 	debugging functions.
@@ -58,14 +58,14 @@ NEW FEATURES
 	that strings with a marked UTF-8 encoding are supported in
 	non-UTF-8 locales.
 
-    o   The graphics engine now supports rendering of raster (bitmap)
-        images, though not all graphics devices can provide (full) support.
-        Graphics device packages, e.g., RSvgDevice, will need 
-        to be reinstalled.
+    o	The graphics engine now supports rendering of raster (bitmap)
+	images, though not all graphics devices can provide (full) support.
+	Graphics device packages, e.g., RSvgDevice, will need
+	to be reinstalled.
 
-        There is also support in the graphics engine for capturing
-        raster images from graphics devices (again not supported
-        on all graphics devices).
+	There is also support in the graphics engine for capturing
+	raster images from graphics devices (again not supported
+	on all graphics devices).
 
 
 DEPRECATED & DEFUNCT
@@ -86,8 +86,8 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
-    o   rep(x, times, each=2) gave invalid results when the times
-        argument is a vector longer than x.  Reported by Bill Dunlap.
+    o	rep(x, times, each=2) gave invalid results when the times
+	argument is a vector longer than x.  Reported by Bill Dunlap.
 
 
 
@@ -125,7 +125,7 @@ BUG FIXES
 	long vector containing some non-ASCII data.
 
     o	The default method of weighted.mean(na.rm = TRUE) did not omit
-	weights for NA observations in 2.10.0.  (PR#14032)
+	weights for NA observations in 2.10.0.	(PR#14032)
 
     o	[g]regexpr(pattern, fixed = TRUE) returned match positions in
 	bytes (not characters) in an MBCS locale if 'pattern' was a
@@ -134,9 +134,9 @@ BUG FIXES
 	[g]sub(fixed = TRUE) with a single-byte pattern could
 	conceivably have matched part of a multibyte character in a
 	non-UTF-8 MBCS.
-	
-    o	findLineNum() and setBreakpoint() would sometimes fail if the 
-    	specified file was not in the current directory.
+
+    o	findLineNum() and setBreakpoint() would sometimes fail if the
+	specified file was not in the current directory.
 
     o	Package tcltk's demo(tkdensity) was broken in 2.9.0 when demo()
 	was changed to set par(ask = TRUE).
@@ -144,6 +144,9 @@ BUG FIXES
     o	gsub() with backrefs could fail on extremely long strings
 	(hundreds of thousands of characters) due to integer overflow
 	in a length calculation.
+
+    o	abline(*, untf=TRUE) now uses a better x-grid in log-scale, e.g.,
+	for plot(c(1,300), c(1,300), log="xy") ; abline(4,1, untf=TRUE).
 
 
 
