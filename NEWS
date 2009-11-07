@@ -120,7 +120,7 @@ DEPRECATED & DEFUNCT
 
 
 BUG FIXES
-
+ 
     o	trigamma(x) and other psigamma(x, n) calls are now accurate for
 	very large abs(x). (PR#14020)
 
@@ -155,6 +155,10 @@ BUG FIXES
     o	detach/unloadNamespace() arrange to flush the package's
  	lazyload cache of R objects once the package/namespace is no
 	longer needed.
+
+    o	There have been small fixes to the rendering of help,
+	e.g. --command is now rendered verbatim (so e.g. -- is not
+	interpreted, PR#14045).
 
 
 
