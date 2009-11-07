@@ -141,9 +141,11 @@ function(x, file = "", append = FALSE,
     ## * We really should not write out NA entries.
     ## * We have to handle multiple fields per record.
 
+    ## do not assume that the input is valid in this locale
     escape_paragraphs <- function(s)
 	gsub("\n \\.([^\n])","\n  .\\1",
-	     gsub("\n[[:space:]]*\n", "\n .\n ", s))
+	     gsub("\n[[:space:]]*\n", "\n .\n ", s, useBytes=TRUE),
+             useBytes=TRUE)
 
     if(!is.data.frame(x))
         x <- as.data.frame(x, stringsAsFactors = FALSE)

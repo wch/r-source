@@ -29,7 +29,9 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
     indentString <- paste(rep.int(" ", indent), collapse = "")
     exdentString <- paste(rep.int(" ", exdent), collapse = "")
     y <- list()                         # return value
-    z <- lapply(strsplit(x, "\n[ \t\n]*\n"), strsplit, "[ \t\n]")
+    ## input need not be valid in this locale, e.g. from write.dcf
+    z <- lapply(strsplit(x, "\n[ \t\n]*\n", useBytes = TRUE),
+                strsplit, "[ \t\n]", useBytes = TRUE)
     ## Now z[[i]][[j]] is a character vector of all "words" in
     ## paragraph j of x[i].
 
