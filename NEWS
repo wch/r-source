@@ -49,8 +49,6 @@ NEW FEATURES
     o	More validity checking of UTF-8 and MBCS strings is done by
 	agrep() and the regular-expression matching functions.
 
-    o	The PCRE library has been updated to version 8.00.
-
     o	The undocumented restriction on gregexpr() to length(text) > 0
 	has been removed.
 
@@ -66,10 +64,6 @@ NEW FEATURES
 	There is also support in the graphics engine for capturing
 	raster images from graphics devices (again not supported
 	on all graphics devices).
-
-    o	detach/unloadNamespace() arrange to flush the package's
- 	lazyload cache of R objects once the package/namespace is no
-	longer needed.
 
 
 DEPRECATED & DEFUNCT
@@ -106,6 +100,11 @@ BUG FIXES
 		CHANGES IN R VERSION 2.10.0 patched
 
 
+NEW FEATURES
+
+    o	The PCRE library has been updated to version 8.00.
+
+
 INSTALLATION
 
     o	configure will be able to find a usable libtiff in some rare
@@ -125,8 +124,9 @@ BUG FIXES
     o	trigamma(x) and other psigamma(x, n) calls are now accurate for
 	very large abs(x). (PR#14020)
 
-    o	[g]sub() could use excessive stack space when used with a very
-	long vector containing some non-ASCII data.
+    o	[g]sub(perl=FALSE, fixed=FALSE) could use excessive stack space
+	when used with a very long vector containing some non-ASCII
+	strings.
 
     o	The default method of weighted.mean(na.rm = TRUE) did not omit
 	weights for NA observations in 2.10.0.	(PR#14032)
@@ -151,6 +151,10 @@ BUG FIXES
 
     o	abline(*, untf=TRUE) now uses a better x-grid in log-scale, e.g.,
 	for plot(c(1,300), c(1,300), log="xy") ; abline(4,1, untf=TRUE).
+
+    o	detach/unloadNamespace() arrange to flush the package's
+ 	lazyload cache of R objects once the package/namespace is no
+	longer needed.
 
 
 
