@@ -163,6 +163,9 @@ BUG FIXES
 	Also, there are many small changes to help files where the new
 	converters were not rendering them in the same way as before.
 
+    o	available.packages() could fail when run on a small repository
+    	(PR#14042).
+
 
 
 		CHANGES IN R VERSION 2.10.0
