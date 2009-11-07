@@ -109,39 +109,52 @@ detach <- function(name, pos=2, unload=FALSE, character.only = FALSE)
     }
     env <- as.environment(pos)
     packageName <- search()[[pos]]
-    libpath <- attr(env, "path")
-    if(length(grep("^package:", packageName))) {
-        pkgname <- sub("^package:", "", packageName)
-        hook <- getHook(packageEvent(pkgname, "detach")) # might be list()
-        for(fun in rev(hook)) try(fun(pkgname, libpath))
+
+    ## we need treat packages differently from other objects.
+    isPkg <- grepl("^package:", packageName)
+    if (!isPkg) {
+        .Internal(detach(pos))
+        return(invisible())
     }
+
+    pkgname <- sub("^package:", "", packageName)
+    libpath <- attr(env, "path")
+    hook <- getHook(packageEvent(pkgname, "detach")) # might be list()
+    for(fun in rev(hook)) try(fun(pkgname, libpath))
     if(exists(".Last.lib", mode = "function", where = pos, inherits=FALSE)) {
         .Last.lib <- get(".Last.lib",  mode = "function", pos = pos,
                          inherits=FALSE)
         if(!is.null(libpath)) try(.Last.lib(libpath))
     }
     .Internal(detach(pos))
-    ## note: here the code internally assumes the separator is "/" even
-    ## on Windows.
-    if(length(grep("^package:", packageName)))
-        .Call("R_lazyLoadDBflush",
-              paste(libpath, "/R/", pkgname, ".rdb", sep=""), PACKAGE="base")
-    ## Check for detaching a  package required by another package (not
+
+    ## Check for detaching a package require()d by another package (not
     ## by .GlobalEnv because detach() can't currently fix up the
     ## .required there)
-    for(pkgs in search()[-1L]) {
-        if(!isNamespace(as.environment(pkgs)) &&
-           exists(".required", pkgs, inherits = FALSE) &&
-           packageName %in% paste("package:", get(".required", pkgs, inherits = FALSE),sep=""))
-            warning(packageName, " is required by ", pkgs, " (still attached)")
+    for(pkg in search()[-1L]) {
+        ## How can a namespace environment get on the search list?
+        ## (base fails isNamespace).
+        if(!isNamespace(as.environment(pkg)) &&
+           exists(".required", pkg, inherits = FALSE) &&
+           pkgname %in% get(".required", pkg, inherits = FALSE))
+            warning(packageName, " is required by ", pkg, " (still attached)")
     }
-    if(unload)
-      tryCatch(unloadNamespace(pkgname),
-               error=function(e)
-               warning(pkgname, " namespace cannot be unloaded\n",
-                       conditionMessage(e), call. = FALSE))
-    if(unload && .isMethodsDispatchOn() && !(pkgname %in% loadedNamespaces()))
-        methods:::cacheMetaData(env, FALSE)
+
+    if(pkgname %in% loadedNamespaces()) {
+        ## flushing the lazyload DB happens when namespace is unloaded
+        if(unload) {
+            tryCatch(unloadNamespace(pkgname),
+                     error = function(e)
+                     warning(pkgname, " namespace cannot be unloaded\n",
+                             conditionMessage(e), call. = FALSE))
+            if(.isMethodsDispatchOn() && !(pkgname %in% loadedNamespaces()))
+                methods:::cacheMetaData(env, FALSE)
+        }
+    } else
+        .Call("R_lazyLoadDBflush",
+              paste(libpath, "/R/", pkgname, ".rdb", sep=""),
+              PACKAGE="base")
+    invisible()
 }
 
 ls <- objects <-
