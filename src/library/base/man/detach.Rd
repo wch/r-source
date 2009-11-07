@@ -21,12 +21,10 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE)
     is used.
   }
   \item{unload}{A logical value indicating whether or not to attempt to
-    unload the namespace and S4 methods when a package is being
-    detached.  If the package has a namespace and \code{unload} is
-    \code{TRUE}, then \code{detach} will attempt to unload the
-    namespace and remove any S4 methods defined by the package.  If
-    the namespace is in use or \code{unload} is \code{FALSE}, no
-    unloading will occur.
+    unload the namespace. If the package has a namespace and \code{unload} is
+    \code{TRUE}, then \code{detach} will attempt to unload the namespace
+    but if the namespace is in use by another package or \code{unload}
+    is \code{FALSE}, no unloading will occur.
   }
   \item{character.only}{a logical indicating whether \code{name}
     can be assumed to be character strings.}
@@ -50,6 +48,9 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE)
   space is loaded, it attaches the exports of the loaded name space.
   So detaching and re-attaching a package may not refresh some
   or all components of the package, and is inadvisable.
+
+  You should not attempt to detach or unload the \pkg{methods} package
+  if S4 methods are in use by other packages.
 }
 \note{
   You cannot detach either the workspace (position 1) nor the \pkg{base}

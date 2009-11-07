@@ -580,6 +580,8 @@ unloadNamespace <- function(ns) {
     for(fun in rev(hook)) try(fun(nsname, nspath))
     try(runHook(".onUnload", ns, nspath))
     .Internal(unregisterNamespace(nsname))
+    if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(ns))
+        methods:::cacheMetaData(ns, FALSE, ns)
     .Call("R_lazyLoadDBflush",
           paste(nspath, "/R/", nsname, ".rdb", sep=""),
           PACKAGE="base")

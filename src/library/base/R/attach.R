@@ -85,45 +85,40 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
        !exists(".conflicts.OK", envir = value, inherits = FALSE)) {
         checkConflicts(value)
     }
-    if( length(objects(envir = value, all.names = TRUE) )
-       && .isMethodsDispatchOn())
-      methods:::cacheMetaData(value, TRUE)
+    if( length(ls(envir = value, all.names = TRUE)) && .isMethodsDispatchOn() )
+        methods:::cacheMetaData(value, TRUE)
     invisible(value)
 }
 
-detach <- function(name, pos=2, unload=FALSE, character.only = FALSE)
+detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE)
 {
     if(!missing(name)) {
-	if(!character.only)
-	    name <- substitute(name)# when a name..
+	if(!character.only) name <- substitute(name)
 	pos <-
-	    if(is.numeric(name))
-                name
+	    if(is.numeric(name)) name
 	    else {
-                if (!is.character(name))
-                    name <- deparse(name)
+                if (!is.character(name)) name <- deparse(name)
                 match(name, search())
             }
-	if(is.na(pos))
-	    stop("invalid name")
+	if(is.na(pos)) stop("invalid name")
     }
     env <- as.environment(pos)
     packageName <- search()[[pos]]
 
-    ## we need treat packages differently from other objects.
-    isPkg <- grepl("^package:", packageName)
-    if (!isPkg) {
+    ## we need to treat packages differently from other objects, so get those
+    ## out of the way now
+    if (! grepl("^package:", packageName) ) {
         .Internal(detach(pos))
         return(invisible())
     }
 
     pkgname <- sub("^package:", "", packageName)
     libpath <- attr(env, "path")
-    hook <- getHook(packageEvent(pkgname, "detach")) # might be list()
+    hook <- getHook(packageEvent(pkgname, "detach")) # might be list
     for(fun in rev(hook)) try(fun(pkgname, libpath))
-    if(exists(".Last.lib", mode = "function", where = pos, inherits=FALSE)) {
+    if(exists(".Last.lib", mode = "function", where = pos, inherits = FALSE)) {
         .Last.lib <- get(".Last.lib",  mode = "function", pos = pos,
-                         inherits=FALSE)
+                         inherits = FALSE)
         if(!is.null(libpath)) try(.Last.lib(libpath))
     }
     .Internal(detach(pos))
@@ -140,16 +135,17 @@ detach <- function(name, pos=2, unload=FALSE, character.only = FALSE)
             warning(packageName, " is required by ", pkg, " (still attached)")
     }
 
+    ## flush the package S4 metadata before the name space metadata
+    ## is flushed by unloadNamespace()
+    if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(env))
+        methods:::cacheMetaData(env, FALSE)
     if(pkgname %in% loadedNamespaces()) {
-        ## flushing the lazyload DB happens when namespace is unloaded
-        if(unload) {
+        ## the lazyload DB is flushed when the name space is unloaded
+        if(unload)
             tryCatch(unloadNamespace(pkgname),
                      error = function(e)
                      warning(pkgname, " namespace cannot be unloaded\n",
                              conditionMessage(e), call. = FALSE))
-            if(.isMethodsDispatchOn() && !(pkgname %in% loadedNamespaces()))
-                methods:::cacheMetaData(env, FALSE)
-        }
     } else
         .Call("R_lazyLoadDBflush",
               paste(libpath, "/R/", pkgname, ".rdb", sep=""),
