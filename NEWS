@@ -65,6 +65,13 @@ BUG FIXES
  	lazyload cache of R objects once the package/namespace is no
 	longer needed.
 
+    o	There have been small fixes to the rendering of help,
+	e.g. --command is now rendered verbatim (so e.g. -- is not
+	interpreted, PR#14045).
+
+	Also, there are many small changes to help files where the new
+	converters were not rendering them in the same way as before.
+
 
 
 		CHANGES IN R VERSION 2.10.0

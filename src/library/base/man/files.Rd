@@ -72,9 +72,6 @@ file.symlink(from, to)
   to the limitations of the OS's corresponding system call: in
   particular in the interpretation of \sQuote{file}: also most platforms
   will not rename files across file systems.
-#ifdef Windows
-  (As from \R 2.11.0, \code{file.rename} works across Windows' volumes.)
-#endif
 
   \code{file.append} attempts to append the files named by its
   second argument to those named by its first.  The \R subscript
