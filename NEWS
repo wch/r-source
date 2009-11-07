@@ -157,7 +157,7 @@ BUG FIXES
 	longer needed.
 
     o	There have been small fixes to the rendering of help,
-	e.g. --command is now rendered verbatim (so e.g. -- is not
+	e.g. \command is now rendered verbatim (so e.g. -- is not
 	interpreted, PR#14045).
 
 	Also, there are many small changes to help files where the new
