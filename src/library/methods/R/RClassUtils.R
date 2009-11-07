@@ -1131,7 +1131,7 @@ completeSubclasses <-
                   domain = NA)
         }
 
-           
+
 .resolveSuperclasses <- function(classDef, ext, where, conflicts = attr(ext, "conflicts")) {
   ## find conditional extensions, ignored in superclass ordering
   .condExts <- function(contains)
@@ -1159,7 +1159,7 @@ completeSubclasses <-
           attr(ext, "conflicts") <- unique(c(conflicts, attr(ext, "conflicts")))
         return(ext)
       }
-      ## else, go on with conditionals eliminated 
+      ## else, go on with conditionals eliminated
     }
     directSupers <- sapply(classDef@contains, function(x) identical(x@distance, 1))
     directSupers <- unique(names(classDef@contains[directSupers]))
@@ -1966,7 +1966,8 @@ substituteFunctionArgs <-
     NULL
 }
 
-.removeSuperclassBackRefs <- function(Class, classDef, classWhere) {
+.removeSuperclassBackRefs <- function(Class, classDef, classWhere)
+{
     if(length(classDef@contains)) {
         superclasses <- names(classDef@contains)
         for(what in superclasses) {
@@ -1974,10 +1975,9 @@ substituteFunctionArgs <-
             if(length(superWhere)) {
                 superWhere <- superWhere[[1L]]
                 .removeSubClass(what, Class, superWhere)
-            }
-            else
-              warning(gettextf("Couldn't find superclass \"%s\" to clean up when removing subclass references to class \"%s\"",
-                               what, Class))
+            } else if(! what %in% .BasicClasses)
+                warning(gettextf("Couldn't find superclass \"%s\" to clean up when removing subclass references to class \"%s\"",
+                                 what, Class))
         }
     }
     NULL
