@@ -1609,21 +1609,9 @@ sub check_pkg {
 	} else {
 	    $log->result("OK");
 	}
-	$log->checking("whether the package can be unloaded");
-	my $Rcmd = "library(${pkgname}); detach(\"package:${pkgname}\")";
-	my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES=NULL");
-	@out = grep(!/^\>/, @out);
-	if(scalar(grep(/^Error/, @out)) > 0) {
-	    $log->warning();
-	    $log->print(join("\n", @out) . "\n");
-	    $log->print("\nCheck the .Last.lib() function\n");
-	} else {
-	    $log->result("OK");
-	}
     }
 
-    ## and if it has a namespace, that we can load/unload just the namespace
+    ## and if it has a namespace, that we can load just the namespace
 
     if($opt_install && -f "${pkgdir}/NAMESPACE") {
 	$log->checking("whether the name space can be loaded with stated dependencies");
@@ -1642,18 +1630,6 @@ sub check_pkg {
 			      "to start.\n\n",
 			      "Probably some imports need to be declared",
 			      "in the NAMESPACE file.\n")));
-	} else {
-	    $log->result("OK");
-	}
-	$log->checking("whether the name space can be unloaded");
-	my $Rcmd = "library(${pkgname});unloadNamespace(\"${pkgname}\")";
-	my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES=NULL");
-	@out = grep(!/^\>/, @out);
-	if(scalar(grep(/^Error/, @out)) > 0) {
-	    $log->warning();
-	    $log->print(join("\n", @out) . "\n");
-	    $log->print("\nCheck the .onUnload() function\n");
 	} else {
 	    $log->result("OK");
 	}
