@@ -181,6 +181,9 @@ BUG FIXES
     o	An error when unloadNamespace() attempted to run the .onUnload()
 	function gave an error in the reporting function and so was
 	not reported properly.
+	
+    o	Text help rendering did not handle very long input lines
+	properly.
 
 
 

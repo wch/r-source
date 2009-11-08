@@ -182,15 +182,16 @@ check_nonASCII(SEXP text, SEXP ignore_quotes)
 
 SEXP doTabExpand(SEXP strings, SEXP starts)  /* does tab expansion for UTF-8 strings only */
 {
-    int i,start;
-    char buffer[200], *b;
+    int i,start, bufsize = 1024;
+    char *buffer = malloc(bufsize*sizeof(char)), *b;
     const char *input;
     SEXP result;
+    if (!buffer) error(_("out of memory"));
     PROTECT(result = allocVector(STRSXP, length(strings)));
     for (i = 0; i < length(strings); i++) {
     	input = CHAR(STRING_ELT(strings, i));
     	start = INTEGER(starts)[i];
-    	for (b = buffer; input && b-buffer < 192; input++) {   
+    	for (b = buffer; *input; ) {   
     	    /* only the first byte of multi-byte chars counts */
     	    if (0x80 <= (unsigned char)*input && (unsigned char)*input <= 0xBF)
     		start--;
@@ -200,10 +201,19 @@ SEXP doTabExpand(SEXP strings, SEXP starts)  /* does tab expansion for UTF-8 str
     	    	*b++ = ' ';
     	    } while (((b-buffer+start) & 7) != 0);
     	    else *b++ = *input;
+    	    if (b - buffer >= bufsize - 8) {
+    	    	int pos = b - buffer;
+    	        bufsize *= 2;
+    	    	buffer = realloc(buffer, bufsize*sizeof(char));
+    	    	if (!buffer) error(_("out of memory"));
+    	    	b = buffer + pos;
+    	    }
+    	    input++;
     	}
     	*b = '\0';
     	SET_STRING_ELT(result, i, mkCharCE(buffer, Rf_getCharCE(STRING_ELT(strings, i))));
     }
     UNPROTECT(1);
+    free(buffer);
     return result;
 }
