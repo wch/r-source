@@ -135,21 +135,25 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE)
             warning(packageName, " is required by ", pkg, " (still attached)")
     }
 
-    ## flush the package S4 metadata before the name space metadata
-    ## is flushed by unloadNamespace()
-    if(unload && .isMethodsDispatchOn() && methods:::.hasS4MetaData(env))
-        methods:::cacheMetaData(env, FALSE)
     if(pkgname %in% loadedNamespaces()) {
         ## the lazyload DB is flushed when the name space is unloaded
-        if(unload)
+        if(unload) {
+            ## flush the package S4 metadata before the name space metadata
+            ## is flushed by unloadNamespace()
+            if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(env))
+                methods:::cacheMetaData(env, FALSE)
             tryCatch(unloadNamespace(pkgname),
                      error = function(e)
                      warning(pkgname, " namespace cannot be unloaded\n",
                              conditionMessage(e), call. = FALSE))
-    } else
+        }
+    } else {
+        if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(env))
+            methods:::cacheMetaData(env, FALSE)
         .Call("R_lazyLoadDBflush",
               paste(libpath, "/R/", pkgname, ".rdb", sep=""),
               PACKAGE="base")
+    }
     invisible()
 }
 

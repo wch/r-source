@@ -21,7 +21,7 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE)
     is used.
   }
   \item{unload}{A logical value indicating whether or not to attempt to
-    unload the namespace. If the package has a namespace and \code{unload} is
+    unload the namespace.  If the package has a namespace and \code{unload} is
     \code{TRUE}, then \code{detach} will attempt to unload the namespace
     but if the namespace is in use by another package or \code{unload}
     is \code{FALSE}, no unloading will occur.

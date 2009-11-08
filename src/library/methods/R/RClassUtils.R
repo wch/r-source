@@ -1975,7 +1975,7 @@ substituteFunctionArgs <-
             if(length(superWhere)) {
                 superWhere <- superWhere[[1L]]
                 .removeSubClass(what, Class, superWhere)
-            } else if(! what %in% .BasicClasses)
+            } else if(! what %in% c(.BasicClasses, "oldClass"))
                 warning(gettextf("Couldn't find superclass \"%s\" to clean up when removing subclass references to class \"%s\"",
                                  what, Class))
         }
