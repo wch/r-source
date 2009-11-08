@@ -97,15 +97,21 @@ getExportedValue <- function(ns, name) {
     get(name, envir = asNamespace(pkg), inherits = FALSE)
 }
 
-attachNamespace <- function(ns, pos = 2, dataPath = NULL) {
-    runHook <- function(hookname, env, ...) {
+attachNamespace <- function(ns, pos = 2, dataPath = NULL)
+{
+    runHook <- function(hookname, env, ...)
         if (exists(hookname, envir = env, inherits = FALSE)) {
             fun <- get(hookname, envir = env, inherits = FALSE)
-            if (! is.null(try( { fun(...); NULL })))
-                stop(gettextf("%s failed in 'attachNamespace'", hookname),
-                     call. = FALSE)
+            res <- tryCatch(fun(...), error=identity)
+            if (inherits(res, "error")) {
+                stop(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
+                              hookname, "attachNamespace", nsname,
+                              deparse(conditionCall(res))[1L],
+                              conditionMessage(res)),
+                     call. = FALSE, domain = NA)
+            }
         }
-    }
+
     ns <- asNamespace(ns, base.OK = FALSE)
     nsname <- getNamespaceName(ns)
     nspath <- getNamespaceInfo(ns, "path")
@@ -113,7 +119,8 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL) {
     if (attname %in% search())
         stop("name space is already attached")
     env <- attach(NULL, pos = pos, name = attname)
-    on.exit(detach(pos = pos))
+    ## we do not want to run e.g. .Last.lib here
+    on.exit(.Internal(detach(pos)))
     attr(env, "path") <- nspath
     exports <- getNamespaceExports(ns)
     importIntoEnv(env, exports, ns, exports)
@@ -129,7 +136,8 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL) {
 
 loadNamespace <- function (package, lib.loc = NULL,
                            keep.source = getOption("keep.source.pkgs"),
-                           partial = FALSE, declarativeOnly = FALSE) {
+                           partial = FALSE, declarativeOnly = FALSE)
+{
     ## eventually allow version as second component; ignore for now.
     package <- as.character(package)[[1L]]
 
@@ -159,10 +167,14 @@ loadNamespace <- function (package, lib.loc = NULL,
         runHook <- function(hookname, pkgname, env, ...) {
             if (exists(hookname, envir = env, inherits = FALSE)) {
                 fun <- get(hookname, envir = env, inherits = FALSE)
-                if (! is.null(try( { fun(...); NULL })))
-                    stop(gettextf("%s failed in 'loadNamespace' for '%s'",
-                                  hookname, pkgname),
+                res <- tryCatch(fun(...), error=identity)
+                if (inherits(res, "error")) {
+                    stop(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
+                                  hookname, "loadNamespace", pkgname,
+                                  deparse(conditionCall(res))[1L],
+                                  conditionMessage(res)),
                          call. = FALSE, domain = NA)
+                }
             }
         }
         runUserHook <- function(pkgname, pkgpath) {
@@ -556,17 +568,19 @@ topenv <- function(envir = parent.frame(),
     return(.GlobalEnv)
 }
 
-unloadNamespace <- function(ns) {
+unloadNamespace <- function(ns)
+{
+    ## only used to run .onUnload
     runHook <- function(hookname, env, ...) {
         if (exists(hookname, envir = env, inherits = FALSE)) {
             fun <- get(hookname, envir = env, inherits = FALSE)
             res <- tryCatch(fun(...), error=identity)
             if (inherits(res, "error")) {
-                stop(gettextf("%s failed in unloadNamespace(\"%s\"), details:\n  call: %s\n  message: %s",
-                              hookname, nsname,
-                              deparse(conditionCall(res))[1L],
-                              conditionMessage(res)),
-                     call. = FALSE, domain = NA)
+                warning(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
+                                 hookname, "unloadNamespace", nsname,
+                                 deparse(conditionCall(res))[1L],
+                                 conditionMessage(res)),
+                        call. = FALSE, domain = NA)
             }
         }
     }
@@ -583,7 +597,7 @@ unloadNamespace <- function(ns) {
     nspath <- getNamespaceInfo(ns, "path")
     hook <- getHook(packageEvent(nsname, "onUnload")) # might be list()
     for(fun in rev(hook)) try(fun(nsname, nspath))
-    try(runHook(".onUnload", ns, nspath))
+    runHook(".onUnload", ns, nspath)
     .Internal(unregisterNamespace(nsname))
     if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(ns))
         methods:::cacheMetaData(ns, FALSE, ns)

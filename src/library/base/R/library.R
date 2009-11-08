@@ -251,7 +251,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                        package),
                               call. = FALSE, domain = NA)
                 else {
-                    on.exit(do.call("detach", list(name = pkgname)))
+                    on.exit(detach(pos=pos))
                     ## If there are S4 generics then the package should
                     ## depend on methods
                     nogenerics <-
@@ -311,14 +311,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                       envir = env, inherits = FALSE)) {
                 firstlib <- get(".First.lib", mode = "function",
                                 envir = env, inherits = FALSE)
-                tt<- try(firstlib(which.lib.loc, package))
+                tt <- try(firstlib(which.lib.loc, package))
                 if(inherits(tt, "try-error"))
                     if (logical.return) return(FALSE)
                     else stop(gettextf(".First.lib failed for '%s'",
                                        package), domain = NA)
             }
             if(!is.null(firstlib <- getOption(".First.lib")[[package]])) {
-                tt<- try(firstlib(which.lib.loc, package))
+                tt <- try(firstlib(which.lib.loc, package))
                 if(inherits(tt, "try-error"))
                     if (logical.return) return(FALSE)
                     else stop(gettextf(".First.lib failed for '%s'",

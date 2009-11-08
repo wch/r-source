@@ -119,7 +119,16 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE)
     if(exists(".Last.lib", mode = "function", where = pos, inherits = FALSE)) {
         .Last.lib <- get(".Last.lib",  mode = "function", pos = pos,
                          inherits = FALSE)
-        if(!is.null(libpath)) try(.Last.lib(libpath))
+        if(!is.null(libpath)) {
+            res <- tryCatch(.Last.lib(libpath), error=identity)
+            if (inherits(res, "error")) {
+                warning(gettextf("%s failed in %s() for '%s', details:\n  call: %s\n  error: %s",
+                                 ".Last.lib", "detach", pkgname,
+                                 deparse(conditionCall(res))[1L],
+                                 conditionMessage(res)),
+                        call. = FALSE, domain = NA)
+            }
+        }
     }
     .Internal(detach(pos))
 
