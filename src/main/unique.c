@@ -298,6 +298,7 @@ static void MKsetup(int n, HashData *d)
 
 static void HashTableSetup(SEXP x, HashData *d)
 {
+    d->useUTF8 = FALSE;
     switch (TYPEOF(x)) {
     case LGLSXP:
 	d->hash = lhash;
@@ -322,7 +323,6 @@ static void HashTableSetup(SEXP x, HashData *d)
     case STRSXP:
 	d->hash = shash;
 	d->equal = sequal;
-	d->useUTF8 = FALSE;
 	MKsetup(LENGTH(x), d);
 	break;
     case RAWSXP:
