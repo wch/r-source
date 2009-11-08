@@ -560,9 +560,14 @@ unloadNamespace <- function(ns) {
     runHook <- function(hookname, env, ...) {
         if (exists(hookname, envir = env, inherits = FALSE)) {
             fun <- get(hookname, envir = env, inherits = FALSE)
-            if (! is.null(try( { fun(...); NULL })))
-                stop(gettextf("%s failed in unloadNamespace(%s)", hookname,
-                              ns), call. = FALSE, domain = NA)
+            res <- tryCatch(fun(...), error=identity)
+            if (inherits(res, "error")) {
+                stop(gettextf("%s failed in unloadNamespace(\"%s\"), details:\n  call: %s\n  message: %s",
+                              hookname, nsname,
+                              deparse(conditionCall(res))[1L],
+                              conditionMessage(res)),
+                     call. = FALSE, domain = NA)
+            }
         }
     }
     ns <- asNamespace(ns, base.OK = FALSE)
