@@ -628,9 +628,13 @@
                         pkgerrmsg("unable to build sysdata DB", pkg_name)
                 }
                 if (fake) {
+                    ## Fix up hook functions so they do not attempt to
+                    ## (un)load missing compiled code, initialize ...
+                    ## This does stop them being tested at all.
                     if (file.exists("NAMESPACE")) {
                         cat("",
                             '.onLoad <- .onAttach <- function(lib, pkg) NULL',
+                            '.onUnload <- function(libpaths) NULL',
                             sep = "\n",
                             file = file.path(instdir, "R", pkg_name), append = TRUE)
                         ## <NOTE>
@@ -654,6 +658,7 @@
                     } else {
                         cat("",
                             '.First.lib <- function(lib, pkg) NULL',
+                            '.Last.lib <- function(libpath) NULL',
                             sep = "\n",
                             file = file.path(instdir, "R", pkg_name), append = TRUE)
                     }
