@@ -1999,12 +1999,13 @@ but not exported.
 @findex .Last.lib
 @findex .onUnload
 However, packages with name spaces @emph{do} use the @code{.Last.lib}
-function (provided it is exported from the name space).  There is also a
-hook @code{.onUnload} which is called when the name space is unloaded
-(@emph{via} a call to @code{unloadNamespace}) with argument the full
-path to the installed package's directory.  @code{.onUnload} should be
-defined in the name space and not exported, but @code{.Last.lib} does
-need to be exported.
+function (provided it is exported from the name space) when
+@code{detach} is called on the package.  There is also a hook
+@code{.onUnload} which is called when the name space is unloaded
+(@emph{via} a call to @code{unloadNamespace}, perhaps called by
+@code{detach(unload=TRUE)}) with argument the full path to the installed
+package's directory.  @code{.onUnload} should be defined in the name
+space and not exported, but @code{.Last.lib} does need to be exported.
 
 Packages are not likely to need @code{.onAttach} (except perhaps for a
 start-up banner); code to set options and load shared objects should be
