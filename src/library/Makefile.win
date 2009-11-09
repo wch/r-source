@@ -6,6 +6,7 @@ srcdir = .
 top_srcdir = ../..
 top_builddir = ../..
 
+include ../gnuwin32/MkRules
 include ../../share/make/vars.mk
 
 ECHO = echo
@@ -45,6 +46,9 @@ docs:
 	@$(MAKE) -f Makefile.win Rdobjects
 	@$(MAKE) -f Makefile.win metadata
 	@$(MAKE) -f Makefile.win help-indices
+ifeq ($(strip $(BUILD_HTML)),YES)
+	@$(MAKE) -f Makefile.win Rdfiles
+endif
 	@touch stamp-docs
 
 # fix the order to make best use of parallel builds
@@ -68,6 +72,13 @@ help-indices:
 	  $(ECHO) "tools:::.writePkgIndices(\"$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" | R_DEFAULT_PACKAGES=utils LC_ALL=C $(R_EXE) || exit 1; \
 	done
 	@$(ECHO)
+
+## FIXME: do this in parallel (but avoid interleaving output)
+Rdfiles:
+	@$(ECHO) "building all R object docs"
+	@for pkg in $(R_PKGS_BASE); do \
+	  $(ECHO) "tools:::.convertRdfiles(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\", silent = TRUE)" | LC_ALL=C $(R_EXE) || exit 1; \
+	done
 
 metadata:
 	@$(ECHO) "building/updating package metadata ..."

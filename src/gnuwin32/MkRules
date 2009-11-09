@@ -55,6 +55,8 @@ ICU_PATH=/sources/icu
 # PNGDIR = libpng-1.2.35
 # TIFFDIR = libtiff
 
+# set this to YES to build static HTML help
+BUILD_HTML = NO
 
 ## ====== configuration macros for building installer ===========
 
