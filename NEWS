@@ -184,6 +184,8 @@ BUG FIXES
 	
     o	Text help rendering did not handle very long input lines
 	properly.
+	
+    o	promptMethods() generated signature documentation improperly.
 
 
 

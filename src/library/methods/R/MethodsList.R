@@ -606,7 +606,7 @@ promptMethods <- function(f, filename = NULL, methods)
     for(i in seq_len(n)) {
         sigi <- signatures[i, ]
 	labels[[i]] <-
-            sprintf("\\code{\\signature(%s)}",
+            sprintf("\\code{signature(%s)}",
                     paste(sprintf("%s = \"%s\"", args, escape(sigi)),
                           collapse = ", "))
 	aliases[[i]] <-
