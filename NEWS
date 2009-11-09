@@ -88,8 +88,8 @@ DEPRECATED & DEFUNCT
 
     o	methods::trySilent() is defunct.
 
-    o	index.search() is no longer exported and has a different
-	argument list.
+    o	index.search() (which was deprecated in 2.10.0) is no longer
+	exported and has a different argument list.
 
 
 BUG FIXES
