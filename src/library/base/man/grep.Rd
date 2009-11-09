@@ -133,8 +133,8 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
   coercion).  Elements of character vectors \code{x} which are not
   substituted will be return unchanged (including any declared
   encoding).  If \code{useBytes = FALSE} a non-ASCII result will often
-  be in UTF-8 with a marked encoding (e.g. if there is a UTF-8 input and
-  in a multibyte locale for \code{perl = TRUE}).
+  be in UTF-8 with a marked encoding (e.g. if there is a UTF-8 input,
+  and in a multibyte locale unless \code{fixed = TRUE}).
 
   \code{regexpr} returns an integer vector of the same length as
   \code{text} giving the starting position of the first match or
