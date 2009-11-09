@@ -983,19 +983,33 @@ static void RQuartz_Raster(unsigned int *raster, int w, int h,
                         kCGImageAlphaLast | kCGBitmapByteOrder32Big,
                         dp,  /* data provider */
                         NULL,/* decode array */
-                        1,
+                        1,   /* interpolate (interpolation type below) */
                         kCGRenderingIntentDefault);
 
-    /* Draw the quartz image */
+    if (height < 0) {
+        y = y + height;
+        height = -height;
+    }
+
+    Rprintf("%.2f %.2f (%.2f,%.2f)\n",x,y,width,height);       
+
     CGContextSaveGState(ctx);
-    CGContextTranslateCTM(ctx, 0, height + 2*y);
+    /* Translate by height of image */
+    CGContextTranslateCTM(ctx, 0.0, height);
+    /* Flip vertical */
     CGContextScaleCTM(ctx, 1.0, -1.0);
+    /* Translate to position */
+    CGContextTranslateCTM(ctx, x, -y);
+    /* Rotate */
+    CGContextRotateCTM(ctx, rot*M_PI/180.0);
+    /* Determine interpolation method */
     if (interpolate) {
         CGContextSetInterpolationQuality(ctx, kCGInterpolationDefault);
     } else {
         CGContextSetInterpolationQuality(ctx, kCGInterpolationNone);
     }
-    CGContextDrawImage(ctx, CGRectMake(x, y, width, height), img);
+    /* Draw the quartz image */
+    CGContextDrawImage(ctx, CGRectMake(0, 0, width, height), img);
     CGContextRestoreGState(ctx);
 
     /* Tidy up */
