@@ -110,4 +110,4 @@ nlme.ts: lattice.ts
 class.ts: MASS.ts
 ## and for static html links
 boot.ts: MASS.ts survival.ts
-cluster: MASS.ts
+cluster.ts: MASS.ts
