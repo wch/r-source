@@ -6929,11 +6929,9 @@ this way.)
 (UNIX only) Turn off command-line editing via @strong{readline}.  This
 is useful when running @R{} from within Emacs using the @acronym{ESS}
 (``Emacs Speaks Statistics'') package.  @xref{The command-line editor},
-for more information.
-
-@item --ess
-(Windows only) Set @code{Rterm} up for use by @code{R-inferior-mode} in
-@acronym{ESS}.
+for more information.  Command-line editing is enabled by default
+interactive use (see @option{--interactive}).  This option also affects
+tilde-epansion: see the help for @code{path.expand}.
 
 @item --min-vsize=@var{N}
 @itemx --max-vsize=@var{N}
@@ -6978,7 +6976,16 @@ support programs which use @R{} to compute results for them.  It implies
 @item --interactive
 (UNIX only) Assert that @R{} really is being run interactively even if
 input has been redirected: use if input is from a FIFO or pipe and fed
-from an interactive program.
+from an interactive program.  (The default is to deduce that @R{} is
+being run interactively if and only if @file{stdin} is connected to a
+terminal or @code{pty}.)  Using @option{-e}, @option{-f} or
+@option{--file} asserts non-interactive use even if
+@option{--interactive} is given.
+
+@item --ess
+(Windows only) Set @code{Rterm} up for use by @code{R-inferior-mode} in
+@acronym{ESS}, including asserting interactive use without the
+command-line editor.
 
 @item --verbose
 Print more information about progress, and in particular set @R{}'s
