@@ -20,7 +20,7 @@ startDynamicHelp(start=TRUE)
 }
 \details{
   This function starts the internal HTTP server, which runs on the
-  loopback interface (\code{127.0.0.1}).  If \code{option("help.ports")}
+  loopback interface (\code{127.0.0.1}).  If \code{options("help.ports")}
   is set to a vector of integer values, \code{startDynamicHelp} will try
   those ports in order; otherwise, it tries up to 10 random ports to
   find one not in use.  It can be disabled by setting the environment
@@ -29,7 +29,7 @@ startDynamicHelp(start=TRUE)
   \code{startDynamicHelp} is called by functions that need to use the
   server, so would rarely be called directly by a user.
 
-  Note that \code{option(help_type="html")} must be set to actually make use
+  Note that \code{options(help_type="html")} must be set to actually make use
   of HTML help, although it might be the default for an \R installation.
 
   If the server cannot be started or is disabled,
