@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{fileutils}
+\alias{file_ext}
 \alias{file_path_as_absolute}
 \alias{file_path_sans_ext}
 \alias{list_files_with_exts}
@@ -13,6 +14,7 @@
   Utilities for listing files, and manipulating file paths.
 }
 \usage{
+file_ext(x)
 file_path_as_absolute(x)
 file_path_sans_ext(x)
 
@@ -41,6 +43,9 @@ list_files_with_type(dir, type, all.files = FALSE,
     \code{\link{.Platform}$OS.type}, is used.}
 }
 \details{
+  \code{file_ext} returns the file (name) extensions.
+  (Only purely alphanumeric extensions are recognized.)
+  
   \code{file_path_as_absolute} turns a possibly relative file path
   absolute, performing tilde expansion if necessary.  Currently, only a
   single existing path can be given.

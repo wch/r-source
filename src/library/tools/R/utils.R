@@ -16,6 +16,17 @@
 
 ### * File utilities.
 
+### ** file_ext
+
+file_ext <-
+function(x)
+{
+    ## Return the file extensions.
+    ## (Only purely alphanumeric extensions are recognized.)
+    pos <- regexpr("\\.([[:alnum:]]+)$", x)
+    ifelse(pos > -1L, substring(x, pos + 1L), "")
+}
+
 ### ** file_path_as_absolute
 
 file_path_as_absolute <-
