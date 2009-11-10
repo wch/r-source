@@ -75,7 +75,7 @@ browseURL("file://d:/R/R-2.5.1/doc/html/index.html",
 #ifdef unix
 \examples{
 \dontrun{## for KDE users who want to open files in a new tab
-option(browser="kfmclient newTab") 
+options(browser="kfmclient newTab") 
 browseURL("http://www.r-project.org")
 }}
 #endif
