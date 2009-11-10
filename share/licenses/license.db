@@ -131,3 +131,9 @@ Abbrev: EPL
 FSF: free_and_GPL_incompatible
 OSI: open
 URL: http://www.eclipse.org/legal/epl-v10.html
+
+Name: Lucent Public License
+Version: 1.02
+FSF: free_and_GPL_incompatible
+OSI: open
+URL: http://www.opensource.org/licenses/lucent1.02.php
