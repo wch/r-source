@@ -430,7 +430,7 @@ NEW FEATURES
 	always stored in UTF-8 (and hence is suitable for portably
 	including Unicode text in packages).
 
-    o	New as.raw() method for "tclObj" objects (wish of PR#13578).
+    o	New as.raw() method for "tclObj" objects (wish of PR#13758).
 
     o	Rd.sty now makes a better job of setting email addresses,
 	including using a monospaced font.
