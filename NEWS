@@ -75,6 +75,8 @@ NEW FEATURES
 	be unloaded: this provides a check of the .Last.lib() and
 	.onUnload() hook functions (unless --install=fake).
 
+    o   prop.table(x) now accepts a one-dimensional table for x
+
 
 DEPRECATED & DEFUNCT
 

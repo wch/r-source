@@ -12,10 +12,11 @@ prop.test(x, n, p = NULL,
 }
 \alias{prop.test}
 \arguments{
-  \item{x}{a vector of counts of successes or a matrix with 2 columns
+  \item{x}{a vector of counts of successes, a one-dimensional table with
+    two entries, or a two-dimensional table (or matrix) with 2 columns,
     giving the counts of successes and failures, respectively.}
   \item{n}{a vector of counts of trials; ignored if \code{x} is a
-    matrix.}
+    matrix or a table.}
   \item{p}{a vector of probabilities of success.  The length of
     \code{p} must be the same as the number of groups specified by
     \code{x}, and its elements must be greater than 0 and less than 1.}

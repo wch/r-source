@@ -20,7 +20,14 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 {
     DNAME <- deparse(substitute(x))
 
-    if (is.matrix(x)) {
+    if (is.table(x) && length(dim(x))==1) {
+        if (dim(x) != 2)
+            stop("table 'x' should have 2 entries")
+        l <- 1
+        n <- sum(x)
+        x <- x[1]
+    }
+    else if (is.matrix(x)) {
 	if (ncol(x) != 2)
 	    stop("'x' must have 2 columns")
 	l <- nrow(x)
