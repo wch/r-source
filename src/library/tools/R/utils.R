@@ -49,7 +49,7 @@ function(x)
 {
     ## Return the file paths without extensions.
     ## (Only purely alphanumeric extensions are recognized.)
-    sub("([^.]+)\\.[[:alpha:]]+$", "\\1", x)
+    sub("([^.]+)\\.[[:alnum:]]+$", "\\1", x)
 }
 
 ### ** file_test
