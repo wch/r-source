@@ -58,7 +58,7 @@
   \code{0} for success, \code{1} for failure.
   Not deleting a non-existent file is not a failure, nor is being unable
   to delete a directory if \code{recursive = FALSE}.  However, missing
-  values in \code{x} result are regarded as failures.
+  values in \code{x} are regarded as failures.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
