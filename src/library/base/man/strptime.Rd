@@ -113,12 +113,13 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%x}}{Date, locale-specific.}
     \item{\code{\%X}}{Time, locale-specific.}
     \item{\code{\%y}}{Year without century (00--99). If you use this on
-      % switching at 2068, 1969 is as given currently by POSIX,
-      % but the standard does say the recommendation may change in future.
-      % In May 2008 glibc, Solaris 10 and Mac OS 10.5.2 did this, and
-      % hence so does the emulation code used on Windows.
-      input, which century you get is system-specific.  So don't!  Often
-      values up to 68 (or 69) are prefixed by 20 and 69 (or 70) to 99 by 19.}
+      input, which century you get is system-specific.  So don't!  Most often
+      values 00 to 68 are prefixed by 20 and 69 to 99 by 19 -- that is
+      the behaviour specified by the 2001 POSIX standard, but it does
+      also say \sQuote{it is expected that in a future version of IEEE
+	Std 1003.1-2001 the default century inferred from a 2-digit year will
+	change}. 
+    }
     \item{\code{\%Y}}{Year with century.}
 #ifdef unix
     \item{\code{\%z}}{(output only.) Offset from Greenwich, so
