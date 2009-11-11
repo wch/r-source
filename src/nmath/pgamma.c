@@ -53,6 +53,7 @@
 #include "dpq.h"
 /*----------- DEBUGGING -------------
  *	make CFLAGS='-DDEBUG_p -g -I/usr/local/include -I../include'
+ * (cd ~/R/D/r-devel/Linux-inst/src/nmath; gcc -std=gnu99 -I. -I../../src/include -I../../../R/src/include -I/usr/local/include -DDEBUG_p -g -O2 -c ../../../R/src/nmath/pgamma.c -o pgamma.o)
  */
 
 /* Scalefactor:= (2^32)^8 = 2^256 = 1.157921e+77 */
@@ -123,16 +124,19 @@ double log1pmx (double x)
 
     if (x > 1 || x < minLog1Value)
 	return log1p(x) - x;
-    else { /* expand in	 [x/(2+x)]^2 */
-	double term = x / (2 + x);
-	double y = term * term;
+    else { /* -.791 <=  x <= 1  -- expand in  [x/(2+x)]^2 =: y :
+	    * log(1+x) - x =  x/(2+x) * [ 2 * y * S(y) - x],  with
+	    * ---------------------------------------------
+	    * S(y) = 1/3 + y/5 + y^2/7 + ... = \sum_{k=0}^\infty  y^k / (2k + 3)
+	   */
+	double r = x / (2 + x), y = r * r;
 	if (fabs(x) < 1e-2) {
 	    static const double two = 2;
-	    return term * ((((two / 9 * y + two / 7) * y + two / 5) * y +
+	    return r * ((((two / 9 * y + two / 7) * y + two / 5) * y +
 			    two / 3) * y - x);
 	} else {
 	    static const double tol_logcf = 1e-14;
-	    return term * (2 * y * logcf (y, 3, 2, tol_logcf) - x);
+	    return r * (2 * y * logcf (y, 3, 2, tol_logcf) - x);
 	}
     }
 }
@@ -196,8 +200,13 @@ double lgamma1p (double a)
     if (fabs (a) >= 0.5)
 	return lgammafn (a + 1);
 
-    /* Abramowitz & Stegun 6.1.33,
-     * also  http://functions.wolfram.com/06.11.06.0008.01 */
+    /* Abramowitz & Stegun 6.1.33 : for |x| < 2,
+     * <==> log(gamma(1+x)) = -(log(1+x) - x) - gamma*x + x^2 * \sum_{n=0}^\infty c_n (-x)^n
+     * where c_n := (Zeta(n+2) - 1)/(n+2)  = coeffs[n]
+     *
+     * Here, another convergence acceleration trick is used to compute
+     * lgam(x) :=  sum_{n=0..Inf} c_n (-x)^n
+     */
     lgam = c * logcf(-a / 2, N + 2, 1, tol_logcf);
     for (i = N - 1; i >= 0; i--)
 	lgam = coeffs[i] - a * lgam;
@@ -238,7 +247,7 @@ double logspace_sub (double logx, double logy)
 #ifndef R_USE_OLD_PGAMMA
 
 /* dpois_wrap (x_P_1,  lambda, g_log) ==
- *   dpois (x_P_1 - 1, lambda, g_log)
+ *   dpois (x_P_1 - 1, lambda, g_log) :=  exp(-L)  L^k / gamma(k+1) ,  k := x_P_1 - 1
 */
 static double
 dpois_wrap (double x_plus_1, double lambda, int give_log)
@@ -289,7 +298,7 @@ pgamma_smallx (double x, double alph, int lower_tail, int log_p)
     } while (fabs (term) > DBL_EPSILON * fabs (sum));
 
 #ifdef DEBUG_p
-    REprintf (" conv.sum=%g;", sum);
+    REprintf (" %d terms --> conv.sum=%g;", n, sum);
 #endif
     if (lower_tail) {
 	double f1 = log_p ? log1p (sum) : 1 + sum;
@@ -344,13 +353,13 @@ pd_upper_series (double x, double y, int log_p)
 
 /* Continued fraction for calculation of
  *    ???
- *  =  (i / d)	+  o(i/d)
+ *  =  (y / d)	+  o(y/d)
  */
 static double
-pd_lower_cf (double i, double d)
+pd_lower_cf (double y, double d)
 {
     double f = 0, of;
-    double c1, c2, c3, c4,  a1, b1,  a2, b2;
+    double i, c2, c3, c4,  a1, b1,  a2, b2;
 
 #define	NEEDED_SCALE				\
 	  (b2 > scalefactor) {			\
@@ -363,30 +372,38 @@ pd_lower_cf (double i, double d)
 #define max_it 200000
 
 #ifdef DEBUG_p
-    REprintf("pd_lower_cf(i=%.14g, d=%.14g)\n", i, d);
+    REprintf("pd_lower_cf(y=%.14g, d=%.14g)", y, d);
 #endif
+    if (y == 0 || (R_FINITE(y) && !R_FINITE(d))) /* includes d = Inf  or y = 0 */
+	return 0;
+    /* Needed, e.g. for  pgamma(10^c(100,295), shape= 1.1, log=TRUE) */
+    if(fabs(y - 1) < fabs(d) * 1e-20) {
+#ifdef DEBUG_p
+	REprintf(" very small 'y' -> returning (y/d)\n");
+#endif
+	return (y/d);
+    }
 
-    if (i < d * 1e-20) /* includes d = Inf,  or i = 0 < d */
-	return (i/d);
+    c2 = y;
+    c4 = d; /* original (y,d), *not* potentially scaled ones!*/
 
     a1 = 0; b1 = 1;
-    a2 = i; b2 = d;
+    a2 = y; b2 = d;
 
     while NEEDED_SCALE
 
-    if(a2 == 0) return 0;/* just in case, e.g. d=i=0 */
+    /* if(a2 == 0) return 0;/\* just in case, e.g. d=y=0 *\/ */
 
-    c2 = a2;
-    c4 = b2;
+    i = 0;
+    while (i < max_it) {
 
-    c1 = 0;
-    while (c1 < max_it) {
-
-	c1++;	c2--;	c3 = c1 * c2;	c4 += 2;
+	i++;	c2--;	c3 = i * c2;	c4 += 2;
+	/* c2 = y - i,  c3 = i(y - i),  c4 = d + 2i,  for i odd */
 	a1 = c4 * a2 + c3 * a1;
 	b1 = c4 * b2 + c3 * b1;
 
-	c1++;	c2--;	c3 = c1 * c2;	c4 += 2;
+	i++;	c2--;	c3 = i * c2;	c4 += 2;
+	/* c2 = y - i,  c3 = i(y - i),  c4 = d + 2i,  for i even */
 	a2 = c4 * a1 + c3 * a2;
 	b2 = c4 * b1 + c3 * b2;
 
@@ -395,9 +412,17 @@ pd_lower_cf (double i, double d)
 	if (b2 != 0) {
 	    of = f;
 	    f = a2 / b2;
+#ifdef UP_TO_2009_11_07__NO_LONGER
 	    /* convergence check: relative; absolute for small f : */
-	    if (fabs (f - of) <= DBL_EPSILON * fmax2(1., fabs(f)))
+	    if (fabs (f - of) <= DBL_EPSILON * fmax2(1., fabs(f))) { .. }
+#endif
+	    /* convergence check */
+	    if (fabs(f - of) <= DBL_EPSILON * fabs(f)) {
+#ifdef DEBUG_p
+		REprintf(" %g iter.\n", i);
+#endif
 		return f;
+	    }
 	}
     }
 
@@ -422,7 +447,7 @@ pd_lower_series (double lambda, double y)
 	y--;
     }
     /* sum =  \sum_{n=0}^ oo  y*(y-1)*...*(y - n) / lambda^(n+1)
-     *	   =  y/lambda * (1 + \sum_{n=1}^Inf  (y-1)*...*(y-n) / lambda^n
+     *	   =  y/lambda * (1 + \sum_{n=1}^Inf  (y-1)*...*(y-n) / lambda^n)
      *	   ~  y/lambda + o(y/lambda)
      */
 #ifdef DEBUG_p
@@ -439,7 +464,7 @@ pd_lower_series (double lambda, double y)
 	REprintf(" y not int: add another term ");
 #endif
 	/* FIXME: in quite few cases, adding  term*f  has no effect (f too small)
-	 *	  and unnecessary e.g. for pgamma(4e12, 121.1) */
+	 *	  and is unnecessary e.g. for pgamma(4e12, 121.1) */
 	f = pd_lower_cf (y, lambda + 1 - y);
 #ifdef DEBUG_p
 	REprintf("  (= %.14g) * term = %.14g to sum %g\n", f, term * f, sum);
@@ -607,7 +632,7 @@ double pgamma_raw (double x, double alph, int lower_tail, int log_p)
 	double sum = pd_upper_series (x, alph, log_p);/* = x/alph + o(x/alph) */
 	double d = dpois_wrap (alph, x, log_p);
 #ifdef DEBUG_p
-	REprintf(" alph `large': sum=pd_upper*()= %.12g, d=dpois_w(*)= %.12g ",
+	REprintf(" alph 'large': sum=pd_upper*()= %.12g, d=dpois_w(*)= %.12g\n",
 		 sum, d);
 #endif
 	if (!lower_tail)
@@ -621,7 +646,7 @@ double pgamma_raw (double x, double alph, int lower_tail, int log_p)
 	double sum;
 	double d = dpois_wrap (alph, x, log_p);
 #ifdef DEBUG_p
-	REprintf(" x `large': d=dpois_w(*)= %.14g ", d);
+	REprintf(" x 'large': d=dpois_w(*)= %.14g ", d);
 #endif
 	if (alph < 1) {
 	    if (x * DBL_EPSILON > 1 - alph)
@@ -644,7 +669,7 @@ double pgamma_raw (double x, double alph, int lower_tail, int log_p)
 	    res = log_p
 		? R_Log1_Exp (d + sum)
 		: 1 - d * sum;
-    } else { /* x > 1 and x fairly near alph. */
+    } else { /* x >= 1 and x fairly near alph. */
 #ifdef DEBUG_p
 	REprintf(" using ppois_asymp()\n");
 #endif

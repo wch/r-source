@@ -26,8 +26,8 @@ NEW FEATURES
     o	R CMD INSTALL now uses the internal untar() in package utils:
 	this ensures that all platforms can install bzip2- and
 	xz-compressed tarballs.
-	
-    o	R CMD INSTALL has new options --no-R, --no-libs, --no-data, 
+
+    o	R CMD INSTALL has new options --no-R, --no-libs, --no-data,
 	--no-help, --no-demo, --no-exec, and --no-inst to suppress
 	installation of the specified part of the package.  These are
 	intended for special purposes (e.g. building a database
@@ -75,7 +75,7 @@ NEW FEATURES
 	be unloaded: this provides a check of the .Last.lib() and
 	.onUnload() hook functions (unless --install=fake).
 
-    o   prop.table(x) now accepts a one-dimensional table for x
+    o	prop.table(x) now accepts a one-dimensional table for x.
 
 
 DEPRECATED & DEFUNCT
@@ -164,7 +164,7 @@ BUG FIXES
 	for plot(c(1,300), c(1,300), log="xy") ; abline(4,1, untf=TRUE).
 
     o	detach/unloadNamespace() arrange to flush the package's
- 	lazyload cache of R objects once the package/namespace is no
+	lazyload cache of R objects once the package/namespace is no
 	longer needed.
 
     o	There have been small fixes to the rendering of help,
@@ -175,7 +175,7 @@ BUG FIXES
 	converters were not rendering them in the same way as before.
 
     o	available.packages() would fail when run on a repository
-    	with no packages meeting the filtering conditions. (PR#14042)
+	with no packages meeting the filtering conditions. (PR#14042)
 
     o	rep(x, times, each = 2) gave invalid results when the 'times'
 	argument is a vector longer than 'x'.  Reported by Bill Dunlap.
@@ -183,11 +183,15 @@ BUG FIXES
     o	An error when unloadNamespace() attempted to run the .onUnload()
 	function gave an error in the reporting function and so was
 	not reported properly.
-	
+
     o	Text help rendering did not handle very long input lines
 	properly.
-	
+
     o	promptMethods() generated signature documentation improperly.
+
+    o	pgamma(x, a, lower.tail=FALSE) and qgamma(..) are now considerably
+	more accurate in some regions for very small 'a'.  qgamma() no
+	longer warns in that case, see (PR#12324).
 
 
 

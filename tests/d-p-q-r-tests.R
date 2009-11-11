@@ -541,10 +541,12 @@ stopifnot(0   == qgamma(0, sh))
 ## the first gave Inf, NaN, and 99.425 in R 2.1.1 and earlier
 
 ## In extreme left tail {PR#11030}
-qg <- qgamma(10:123*1e-12, shape=19)
+p <- 10:123*1e-12
+qg <- qgamma(p, shape=19)
 qg2<- qgamma(1:100 * 1e-9, shape=11)
 stopifnot(diff(qg, diff=2) < -6e-6,
           diff(qg2,diff=2) < -6e-6,
+	  abs(1 - pgamma(qg, 19)/ p) < 1e-13,
           All.eq(qg  [1], 2.35047385139143),
           All.eq(qg2[30], 1.11512318734547))
 ## was non-continuous in R 2.6.2 and earlier
@@ -715,5 +717,20 @@ for(a in c(1e-8, 1e-12, 16e-16, 4e-16))
     }
 ## had  accidental cancellation '1 - w'
 
+## qgamma(p, a) for small a and (hence) small p
+## pgamma(x, a) for very very small a
+a <- 2^-seq(10,1000, .25)
+q.1c <- qgamma(1e-100,a,lower.tail=FALSE)
+q.3c <- qgamma(1e-300,a,lower.tail=FALSE)
+p.1c <- pgamma(q.1c[q.1c > 0], a[q.1c > 0], lower.tail=FALSE)
+p.3c <- pgamma(q.3c[q.3c > 0], a[q.3c > 0], lower.tail=FALSE)
+x <- 1+1e-7*c(-1,1); pg <- pgamma(x, shape = 2^-64, lower.tail=FALSE)
+stopifnot(abs(pg[2] - 1.18928249197237758088243e-20) < 1e-33,
+	  abs(diff(pg) + diff(x)*dgamma(1, 2^-64)) < 1e-13 * mean(pg),
+	  abs(1 - p.1c/1e-100) < 10e-13,# max = 2.243e-13 / 2.442 e-13
+	  abs(1 - p.3c/1e-300) < 28e-13)# max = 7.057e-13
+## qgamma() was wrong here, orders of magnitude up to R 2.10.0
+## pgamma() had inaccuracies, e.g.,
+## pgamma(x, shape = 2^-64, lower.tail=FALSE)  was discontinuous at x=1
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
