@@ -6,7 +6,7 @@
 \name{interactive}
 \alias{interactive}
 \title{Is R Running Interactively?}
-\description{ 
+\description{
   Return \code{TRUE} when \R is being used interactively and
   \code{FALSE} otherwise.
 }
@@ -36,15 +36,15 @@ interactive()
   Internally, whether a session is interactive determines
   \itemize{
     \item how some errors are handled and reported, e.g. see
-    \code{\link{stop}} and \code{\link{option}("showWarnCalls")}.
-    
+    \code{\link{stop}} and \code{\link{options}("showWarnCalls")}.
+
     \item  whether one of \option{--save}, \option{--no-save} or
     \option{--vanilla} is required, and if \R ever asks whether to save the
     workspace.
-    
+
     \item the choice of default graphics device launched when needed and
-    by \code{\link{dev.new}}: see \code{\link{option}("device")}
-    
+    by \code{\link{dev.new}}: see \code{\link{options}("device")}
+
     \item whether graphics devices ever ask for confirmation of a new
     page.
   }
