@@ -725,7 +725,8 @@ q.3c <- qgamma(1e-300,a,lower.tail=FALSE)
 p.1c <- pgamma(q.1c[q.1c > 0], a[q.1c > 0], lower.tail=FALSE)
 p.3c <- pgamma(q.3c[q.3c > 0], a[q.3c > 0], lower.tail=FALSE)
 x <- 1+1e-7*c(-1,1); pg <- pgamma(x, shape = 2^-64, lower.tail=FALSE)
-stopifnot(abs(pg[2] - 1.18928249197237758088243e-20) < 1e-33,
+stopifnot(qgamma(.99, .00001) == 0,
+          abs(pg[2] - 1.18928249197237758088243e-20) < 1e-33,
 	  abs(diff(pg) + diff(x)*dgamma(1, 2^-64)) < 1e-13 * mean(pg),
 	  abs(1 - p.1c/1e-100) < 10e-13,# max = 2.243e-13 / 2.442 e-13
 	  abs(1 - p.3c/1e-300) < 28e-13)# max = 7.057e-13

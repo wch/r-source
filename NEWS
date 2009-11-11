@@ -190,8 +190,9 @@ BUG FIXES
     o	promptMethods() generated signature documentation improperly.
 
     o	pgamma(x, a, lower.tail=FALSE) and qgamma(..) are now considerably
-	more accurate in some regions for very small 'a'.  qgamma() no
-	longer warns in that case, see (PR#12324).
+	more accurate in some regions for very small 'a'.  qgamma() now
+	correctly returns 0 instead of NaN in similar extreme cases, and
+	qgamma() no longer warns in the case of small 'a', see (PR#12324).
 
 
 

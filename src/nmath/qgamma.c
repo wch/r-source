@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000--2008 The R Development Core Team
- *  Copyright (C) 2004--2008 The R Foundation
+ *  Copyright (C) 2000--2009 The R Development Core Team
+ *  Copyright (C) 2004--2009 The R Foundation
  *  based on AS 91 (C) 1979 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -254,7 +254,18 @@ END:
 	    p = log(p);
 	    log_p = TRUE;
 	}
-	p_ = pgamma(x, alpha, scale, lower_tail, log_p);
+	if(x == 0) {
+	    const double _1_p = 1. + 1e-7;
+	    const double _1_m = 1. - 1e-7;
+	    x = DBL_MIN;
+	    p_ = pgamma(x, alpha, scale, lower_tail, log_p);
+	    if(( lower_tail && p_ > p * _1_p) ||
+	       (!lower_tail && p_ < p * _1_m))
+		return(0.);
+	    /* else:  continue, using x = DBL_MIN instead of  0  */
+	}
+	else
+	    p_ = pgamma(x, alpha, scale, lower_tail, log_p);
 	for(i = 1; i <= max_it_Newton; i++) {
 	    p1 = p_ - p;
 #ifdef DEBUG_qgamma
