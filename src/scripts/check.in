@@ -1650,7 +1650,8 @@ sub check_pkg {
 	if($pkgname ne "base") {
 	    $log->checking("whether the name space can be unloaded cleanly");
 	    my $Rcmd = "invisible(suppressMessages(loadNamespace(\"${pkgname}\"))); cat('\n---- unloading\n'); unloadNamespace(\"${pkgname}\")";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
 	    @out = grep(!/^[+>]/, @out);
 	    if(scalar(grep(/^(Error|\.onUnload failed)/, @out)) > 0) {
 		$log->warning();
