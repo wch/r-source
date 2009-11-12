@@ -715,12 +715,11 @@ asNamespace <- function(ns, base.OK = TRUE) {
     else ns
 }
 
-namespaceImport <- function(self, ...) {
-    for (ns in list(...))
-        namespaceImportFrom(self, asNamespace(ns))
-}
+namespaceImport <- function(self, ...)
+    for (ns in list(...)) namespaceImportFrom(self, asNamespace(ns))
 
-namespaceImportFrom <- function(self, ns, vars, generics, packages) {
+namespaceImportFrom <- function(self, ns, vars, generics, packages)
+{
     addImports <- function(ns, from, what) {
         imp <- structure(list(what), names = getNamespaceName(from))
         imports <- getNamespaceImports(ns)
@@ -745,8 +744,8 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages) {
     if (is.character(self))
         self <- getNamespace(self)
     ns <- asNamespace(ns)
-    if (missing(vars)) impvars <- getNamespaceExports(ns)
-    else impvars <- vars
+    nsname <- getNamespaceName(ns)
+    impvars <- if (missing(vars)) getNamespaceExports(ns) else vars
     impvars <- makeImportExportNames(impvars)
     impnames <- names(impvars)
     if (anyDuplicated(impnames)) {
@@ -755,19 +754,19 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages) {
     }
     if (isNamespace(self) && isBaseNamespace(self)) {
         impenv <- self
-        msg <- "replacing local value with import:"
+        msg <- gettext("replacing local value with import %s when loading %s")
         register <- FALSE
     }
     else if (isNamespace(self)) {
         if (namespaceIsSealed(self))
             stop("cannot import into a sealed name space")
         impenv <- parent.env(self)
-        msg <- "replacing previous import:"
+        msg <- gettext("replacing previous import %s when loading %s")
         register <- TRUE
     }
     else if (is.environment(self)) {
         impenv <- self
-        msg <- "replacing local value with import:"
+        msg <- gettext("replacing local value with import %s when loading %s")
         register <- FALSE
     }
     else stop("invalid import target")
@@ -816,15 +815,17 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages) {
 		genImpenv <- environmentName(environment(get(n, envir = impenv)))
 		if (!identical(genNs, genImpenv) ||
 		    ## warning if generic overwrites another generic
-		    methods:::isGeneric(n, impenv))
-		    warning(msg, " ", n)
-	    } else warning(msg, " ", n)
+		    methods:::isGeneric(n, impenv)) {}
+                else next
+	    }
+            ## this is always called from another function, so reporting call
+            ## is unhelpful
+            warning(sprintf(msg, sQuote(n), sQuote(nsname)),
+                    call. = FALSE, domain = NA)
 	}
     importIntoEnv(impenv, impnames, ns, impvars)
-    if (register) {
-        addImports(self, ns,
-                   if (missing(vars)) TRUE else impvars)
-    }
+    if (register)
+        addImports(self, ns, if (missing(vars)) TRUE else impvars)
 }
 
 namespaceImportClasses <- function(self, ns, vars) {
