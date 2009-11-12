@@ -1611,16 +1611,18 @@ sub check_pkg {
 	} else {
 	    $log->result("OK");
 	}
-	$log->checking("whether the package can be unloaded cleanly");
-	my $Rcmd = "suppressMessages(library(${pkgname})); cat('\n---- unloading\n'); detach(\"package:${pkgname}\")";
-	my @out = R_runR($Rcmd, "${R_opts} --quiet");
-	@out = grep(!/^[+>]/, @out);
-	if(scalar(grep(/^(Error|\.Last\.lib failed)/, @out)) > 0) {
-	    $log->warning();
-	    $log->print(join("\n", @out) . "\n\n");
-	} else {
-	    $log->result("OK");
-	}
+	if($pkgname ne "base") {
+	    $log->checking("whether the package can be unloaded cleanly");
+	    my $Rcmd = "suppressMessages(library(${pkgname})); cat('\n---- unloading\n'); detach(\"package:${pkgname}\")";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    @out = grep(!/^[+>]/, @out);
+	    if(scalar(grep(/^(Error|\.Last\.lib failed)/, @out)) > 0) {
+		$log->warning();
+		$log->print(join("\n", @out) . "\n\n");
+	    } else {
+		$log->result("OK");
+	    }
+        }
     }
 
     ## and if it has a namespace, that we can load/unload just the namespace
@@ -1645,15 +1647,17 @@ sub check_pkg {
 	} else {
 	    $log->result("OK");
 	}
-	$log->checking("whether the name space can be unloaded cleanly");
-	my $Rcmd = "invisible(suppressMessages(loadNamespace(\"${pkgname}\"))); cat('\n---- unloading\n'); unloadNamespace(\"${pkgname}\")";
-	my @out = R_runR($Rcmd, "${R_opts} --quiet");
-	@out = grep(!/^[+>]/, @out);
-	if(scalar(grep(/^(Error|\.onUnload failed)/, @out)) > 0) {
-	    $log->warning();
-	    $log->print(join("\n", @out) . "\n\n");
-	} else {
-	    $log->result("OK");
+	if($pkgname ne "base") {
+	    $log->checking("whether the name space can be unloaded cleanly");
+	    my $Rcmd = "invisible(suppressMessages(loadNamespace(\"${pkgname}\"))); cat('\n---- unloading\n'); unloadNamespace(\"${pkgname}\")";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    @out = grep(!/^[+>]/, @out);
+	    if(scalar(grep(/^(Error|\.onUnload failed)/, @out)) > 0) {
+		$log->warning();
+		$log->print(join("\n", @out) . "\n\n");
+	    } else {
+		$log->result("OK");
+	    }
 	}
     }
 
