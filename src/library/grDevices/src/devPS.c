@@ -5190,6 +5190,7 @@ static void XFig_MetricInfo(int c,
 }
 
 
+
 /***********************************************************************
 
 		 PDF driver also shares font handling
@@ -5199,6 +5200,17 @@ static void XFig_MetricInfo(int c,
 /* TODO
    Flate encoding?
 */
+
+#define MAX_RASTERS 64
+
+typedef rcolor * rcolorPtr;
+
+typedef struct {
+    rcolorPtr raster;
+    int w;
+    int h;
+    Rboolean interpolate;
+} rasterImage;
 
 typedef struct {
     char filename[PATH_MAX];
@@ -5279,6 +5291,12 @@ typedef struct {
     cidfontfamily   defaultCIDFont;
     /* Record if fonts are used */
     Rboolean fontUsed[100];
+
+    /* Raster images used on the device */
+    rasterImage rasters[MAX_RASTERS];
+    int numRasters;
+    /* Soft masks for raster images */
+    int masks[MAX_RASTERS];
 }
 PDFDesc;
 
@@ -5335,6 +5353,159 @@ static void PDF_TextUTF8(double x, double y, const char *str,
 			 const pGEcontext gc,
 			 pDevDesc dd);
 
+/***********************************************************************
+ * Some stuff for recording raster images
+ */
+/* Detect an image by non-NULL rasters[] */
+static void initRasterArray(rasterImage *rasters) {
+    int i;
+    for (i=0; i<MAX_RASTERS; i++) {
+        rasters[i].raster = NULL;
+    }
+}
+
+/* Add a raster (by making a copy) 
+ * Return value indicates whether the image is semi-transparent 
+ */
+static int addRaster(rcolorPtr raster, int w, int h, 
+                     Rboolean interpolate, PDFDesc *pd) {
+    int i, alpha = 0;
+    rcolorPtr newRaster;
+
+    if (pd->numRasters == MAX_RASTERS)
+        error(_("Too many raster images"));
+
+    newRaster = malloc(w*h*sizeof(rcolor));
+
+    if (!newRaster) 
+        error(_("Unable to allocate raster image"));
+
+    for (i=0; i<w*h; i++) {
+        newRaster[i] = raster[i];
+        if (!alpha && R_ALPHA(raster[i]) < 255) {
+            alpha = 1;
+        }
+    }
+    pd->rasters[pd->numRasters].raster = newRaster;
+    pd->rasters[pd->numRasters].w = w;
+    pd->rasters[pd->numRasters].h = h;
+    pd->rasters[pd->numRasters].interpolate = interpolate;
+
+    /* If any of the pixels are not opaque, we need to add
+     * a mask as well */
+    if (alpha) {
+        pd->masks[pd->numRasters] = pd->numRasters;
+    }
+
+    pd->numRasters++;
+
+    return alpha;
+}
+
+static void killRasterArray(rasterImage *rasters) {
+    int i;
+    for (i=0; i<MAX_RASTERS; i++) {
+        if (rasters[i].raster != NULL) {
+            free(rasters[i].raster);
+        }
+    }
+}
+
+/* Detect a mask by masks[] >= 0 */
+static void initMaskArray(int *masks) {
+    int i;
+    for (i=0; i<MAX_RASTERS; i++) {
+        masks[i] = -1;
+    }
+}
+
+static void PDF_imagedata(rcolorPtr raster,
+                          int w, int h,
+                          PDFDesc *pd)
+{
+    /* Each original byte is translated to two hex digits 
+     * (representing a number between 0 and 256)
+     * End-of-data signalled by a '>'
+     */
+    int i;
+    for (i=0; i<w*h; i++) {
+        fprintf(pd->pdffp, "%02x", R_RED(raster[i]));
+        fprintf(pd->pdffp, "%02x", R_GREEN(raster[i]));
+        fprintf(pd->pdffp, "%02x", R_BLUE(raster[i]));
+    }
+    fprintf(pd->pdffp, ">\n");
+}
+
+static void PDF_maskdata(rcolorPtr raster,
+                         int w, int h,
+                         PDFDesc *pd)
+{
+    /* Each alpha byte is translated to two hex digits 
+     * (representing a number between 0 and 256)
+     * End-of-data signalled by a '>'
+     */
+    int i;
+    for (i=0; i<w*h; i++) {
+        fprintf(pd->pdffp, "%02x", R_ALPHA(raster[i]));
+    }
+    fprintf(pd->pdffp, ">\n");
+}
+
+static void writeRasterXObject(rasterImage raster, int n, 
+                               int mask, PDFDesc *pd) {
+    fprintf(pd->pdffp, "%d 0 obj <<\n", n);
+    fprintf(pd->pdffp, "  /Type /XObject\n");
+    fprintf(pd->pdffp, "  /Subtype /Image\n");
+    fprintf(pd->pdffp, "  /Width %d\n", raster.w);
+    fprintf(pd->pdffp, "  /Height %d\n", raster.h);
+    fprintf(pd->pdffp, "  /ColorSpace /DeviceRGB\n");
+    fprintf(pd->pdffp, "  /BitsPerComponent 8\n");
+    /* Number of bytes in stream: 2 hex digits per original pixel
+     * which has 3 color channels, plus final '>' char*/
+    fprintf(pd->pdffp, "  /Length %d\n", 2*3*raster.w*raster.h + 1);    
+    if (raster.interpolate) {
+        fprintf(pd->pdffp, "  /Interpolate true\n");
+    }
+    fprintf(pd->pdffp, "  /Filter /ASCIIHexDecode\n");
+    if (mask >= 0) {
+        fprintf(pd->pdffp, "  /SMask %d 0 R\n", mask);
+    }
+    fprintf(pd->pdffp, "  >>\n");
+    fprintf(pd->pdffp, "stream\n");
+    /* The image stream */
+    PDF_imagedata(raster.raster, raster.w, raster.h, pd);
+    /* End image */
+    fprintf(pd->pdffp, "endstream\n");    
+    fprintf(pd->pdffp, "endobj\n");    
+}
+
+static void writeMaskXObject(rasterImage raster, int n, PDFDesc *pd) {
+    fprintf(pd->pdffp, "%d 0 obj <<\n", n);
+    fprintf(pd->pdffp, "  /Type /XObject\n");
+    fprintf(pd->pdffp, "  /Subtype /Image\n");
+    fprintf(pd->pdffp, "  /Width %d\n", raster.w);
+    fprintf(pd->pdffp, "  /Height %d\n", raster.h);
+    fprintf(pd->pdffp, "  /ColorSpace /DeviceGray\n");
+    fprintf(pd->pdffp, "  /BitsPerComponent 8\n");
+    /* Number of bytes in stream: 2 hex digits per original pixel
+     * which has 1 (alpha) channels, plus final '>' char*/
+    fprintf(pd->pdffp, "  /Length %d\n", 2*raster.w*raster.h + 1);    
+    if (raster.interpolate) {
+        fprintf(pd->pdffp, "  /Interpolate true\n");
+    }
+    fprintf(pd->pdffp, "  /Filter /ASCIIHexDecode\n");
+    fprintf(pd->pdffp, "  >>\n");
+    fprintf(pd->pdffp, "stream\n");
+    /* The image stream */
+    PDF_maskdata(raster.raster, raster.w, raster.h, pd);
+    /* End image */
+    fprintf(pd->pdffp, "endstream\n");    
+    fprintf(pd->pdffp, "endobj\n");    
+}
+
+/***********************************************************************
+ * Some stuff for fonts
+ */
 /*
  * Add a graphics engine font family to the list of fonts used on a
  * PDF device ...
@@ -5614,6 +5785,10 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     /*****************************
      * END Load fonts
      *****************************/
+
+    pd->numRasters = 0;
+    initRasterArray(pd->rasters);
+    initMaskArray(pd->masks);
 
     setbg = R_GE_str2col(bg);
     setfg = R_GE_str2col(fg);
@@ -6201,6 +6376,8 @@ static int isSans(const char *name)
 static void PDF_endfile(PDFDesc *pd)
 {
     int i, startxref, tempnobj, nenc, nfonts, cidnfonts, firstencobj;
+    int nraster, nmask;
+
     /* object 3 lists all the pages */
 
     pd->pos[3] = (int) ftell(pd->pdffp);
@@ -6215,10 +6392,33 @@ static void PDF_endfile(PDFDesc *pd)
 
     /* Object 4 is the standard resources dict for each page */
 
+    /* Count how many images */
+    nraster = pd->numRasters;
+
+    /* Count how many image masks */
+    nmask = 0;
+    for (i=0; i<nraster; i++) {
+        if (pd->masks[i] >= 0) 
+            nmask++;
+    }
+
     pd->pos[4] = (int) ftell(pd->pdffp);
-    /* fonts */
-    fprintf(pd->pdffp,
-	    "4 0 obj\n<<\n/ProcSet [/PDF /Text]\n/Font <<");
+
+    if (nraster > 0) {
+        if (nmask > 0) {
+            fprintf(pd->pdffp,
+                    "4 0 obj\n<<\n/ProcSet [/PDF /Text /ImageC /ImageB]\n/Font <<");
+            
+        } else {
+            fprintf(pd->pdffp,
+                    "4 0 obj\n<<\n/ProcSet [/PDF /Text /ImageC]\n/Font <<");
+        }
+    } else {
+        /* fonts */
+        fprintf(pd->pdffp,
+                "4 0 obj\n<<\n/ProcSet [/PDF /Text]\n/Font <<");
+    }
+
     /* Count how many encodings will be included
      * fonts come after encodings */
     nenc = 0;
@@ -6263,6 +6463,26 @@ static void PDF_endfile(PDFDesc *pd)
 	}
     }
     fprintf(pd->pdffp, ">>\n");
+
+    if (nraster > 0) {
+        /* image XObjects */
+        fprintf(pd->pdffp, "/XObject <<\n");
+        for (i=0; i<nraster; i++) {
+            fprintf(pd->pdffp, "  /Im%d %d 0 R\n", i, ++tempnobj);
+        }
+
+        if (nmask > 0) {
+            /* soft mask XObjects */
+            for (i=0; i<nraster; i++) {
+                if (pd->masks[i] >= 0) {
+                    fprintf(pd->pdffp, "  /Mask%d %d 0 R\n", i, ++tempnobj);
+                }
+            }
+        }
+
+        fprintf(pd->pdffp, ">>\n");
+    }
+    
     /* graphics state parameter dictionaries */
     fprintf(pd->pdffp, "/ExtGState << ");
     /* <FIXME> is this correct now ?
@@ -6271,6 +6491,10 @@ static void PDF_endfile(PDFDesc *pd)
 	fprintf(pd->pdffp, "/GS%i %d 0 R ", i + 1, ++tempnobj);
     for (i = 0; i < 256 && pd->fillAlpha[i] >= 0; i++)
 	fprintf(pd->pdffp, "/GS%i %d 0 R ", i + 257, ++tempnobj);
+    /* Special state to set AIS if we have soft masks */
+    if (nmask > 0) {
+	fprintf(pd->pdffp, "/GSais %d 0 R ", ++tempnobj);        
+    }
     fprintf(pd->pdffp, ">>\n");
 
     fprintf(pd->pdffp, ">>\nendobj\n");
@@ -6439,6 +6663,21 @@ static void PDF_endfile(PDFDesc *pd)
 	}
     }
 
+    /* Write out objects representing the raster images */
+    for (i=0; i<nraster; i++) {
+	pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
+        writeRasterXObject(pd->rasters[i], pd->nobjs, 
+                           pd->nobjs + nraster, pd);
+    }
+
+    /* Write out objects representing the soft masks */
+    for (i=0; i<nraster; i++) {
+        if (pd->masks[i] >= 0) {
+            pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
+            writeMaskXObject(pd->rasters[i], pd->nobjs, pd);
+        }
+    }
+
     /*
      * Write out objects representing the graphics state parameter
      * dictionaries for alpha transparency
@@ -6454,6 +6693,13 @@ static void PDF_endfile(PDFDesc *pd)
 	fprintf(pd->pdffp,
 		"%d 0 obj\n<<\n/Type /ExtGState\n/ca %1.3f\n>>\nendobj\n",
 		pd->nobjs, pd->fillAlpha[i]/255.0);
+    }
+
+    if (nmask > 0) {
+	pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
+	fprintf(pd->pdffp, 
+		"%d 0 obj\n<<\n/Type /ExtGState\n/AIS false\n>>\nendobj\n",
+                pd->nobjs);
     }
 
     /* write out xref table */
@@ -6589,6 +6835,7 @@ static void PDF_Close(pDevDesc dd)
 
     if(pd->pageno > 0) PDF_endpage(pd);
     PDF_endfile(pd);
+    killRasterArray(pd->rasters);
     freeDeviceFontList(pd->fonts);
     freeDeviceEncList(pd->encodings);
     pd->fonts = NULL;
@@ -6624,29 +6871,60 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
     }
 }
 
-static void PDF_imagedata(unsigned int *raster,
-                          int w, int h,
-                          PDFDesc *pd)
-{
-    /* Each original byte is translated to two hex digits 
-     * (representing a number between 0 and 256)
-     * End-of-data signalled by a '>'
-     */
-    int i;
-    for (i=0; i<w*h; i++) {
-        fprintf(pd->pdffp, "%02x", raster[i]&255);
-        fprintf(pd->pdffp, "%02x", raster[i]>>8&255);
-        fprintf(pd->pdffp, "%02x", raster[i]>>16&255);
-    }
-    fprintf(pd->pdffp, ">\n");
-}
-
 static void PDF_Raster(unsigned int *raster,
                        int w, int h,
                        double x, double y, 
                        double width, double height,
                        double rot, Rboolean interpolate,
                        const pGEcontext gc, pDevDesc dd)
+{
+    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+    double angle, cosa, sina;
+    int alpha;
+
+    /* Record the raster so can write it out when file is closed */
+    alpha = addRaster(raster, w, h, interpolate, pd);
+
+    if(pd->inText) textoff(pd);
+    /* Save graphics state */
+    fprintf(pd->pdffp, "Q q\n");  
+    /* Need to set AIS graphics state parameter ? */
+    if (alpha) {
+        fprintf(pd->pdffp, "/GSais gs\n");
+    }
+    /* translate */
+    fprintf(pd->pdffp, 
+            "1 0 0 1 %.2f %.2f cm\n",
+            x, y);  
+    /* rotate */
+    angle = rot*M_PI/180;
+    cosa = cos(angle);
+    sina = sin(angle);
+    fprintf(pd->pdffp, 
+            "%.2f %.2f %.2f %.2f 0 0 cm\n",
+            cosa, sina, -sina, cosa);  
+    /* scale */
+    fprintf(pd->pdffp, 
+            "%.2f 0 0 %.2f 0 0 cm\n",
+            width, height);  
+    /* Refer to XObject which will be written to file when file is closed */
+    fprintf(pd->pdffp, "/Im%d Do\n", pd->numRasters - 1);  
+    /* Restore graphics state */
+    fprintf(pd->pdffp, "Q q\n");  
+
+}
+
+#ifdef SIMPLE_RASTER
+/* Maybe reincoporate this simpler approach as an alternative
+ * (for opaque raster images) because it has the advantage of 
+ * NOT keepig the raster in memory until the PDF file is complete
+ */
+static void PDF_RasterSimple(unsigned int *raster,
+                             int w, int h,
+                             double x, double y, 
+                             double width, double height,
+                             double rot, Rboolean interpolate,
+                             const pGEcontext gc, pDevDesc dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     double angle, cosa, sina;
@@ -6703,6 +6981,7 @@ static void PDF_Raster(unsigned int *raster,
     /* Restore graphics state */
     fprintf(pd->pdffp, "Q q\n");  
 }
+#endif
 
 static SEXP PDF_Cap(pDevDesc dd) 
 {
