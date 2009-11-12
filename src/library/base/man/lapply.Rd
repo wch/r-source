@@ -6,12 +6,15 @@
 \name{lapply}
 \alias{lapply}
 \alias{sapply}
+\alias{vapply}
 \alias{replicate}
 \title{Apply a Function over a List or Vector}
 \usage{
 lapply(X, FUN, \dots)
 
 sapply(X, FUN, \dots, simplify = TRUE, USE.NAMES = TRUE)
+
+vapply(X, FUN, FUN.VALUE, \dots, USE.NAMES = TRUE)
 
 replicate(n, expr, simplify = TRUE)
 }
@@ -29,6 +32,7 @@ replicate(n, expr, simplify = TRUE)
   \item{USE.NAMES}{logical; if \code{TRUE} and if \code{X} is character,
     use \code{X} as \code{\link{names}} for the result unless it had names
     already.}
+  \item{FUN.VALUE}{a vector; a template for the return value from FUN.}
   \item{n}{number of replications.}
   \item{expr}{expression (language object, usually a call)
     to evaluate repeatedly.}
@@ -40,6 +44,10 @@ replicate(n, expr, simplify = TRUE)
 
   \code{sapply} is a user-friendly version of \code{lapply}
   by default returning a vector or matrix if appropriate.
+  
+  \code{vapply} is similar to \code{sapply}, but has a pre-specified
+  type of return value, so it can be safer (and sometimes faster) to
+  use.
 
   \code{replicate} is a wrapper for the common use of \code{sapply} for
   repeated evaluation of an expression (which will usually involve
@@ -60,6 +68,12 @@ replicate(n, expr, simplify = TRUE)
   of \code{X} are all of the same (positive) length.  If the common
   length is one the result is a vector, and if greater than one is a
   matrix with a column corresponding to each element of \code{X}.
+  
+  Simplification is always done in \code{vapply}.  This function
+  checks that all values of \code{FUN} are compatible with the
+  \code{FUN.VALUE}, in that they must have the same length and type.
+  (Types may be promoted to a higher type within the ordering logical
+  < integer < real < complex, but not demoted.)
 
   Users of S4 classes should pass a list to \code{lapply}: the internal
   coercion is done by the system \code{as.list} in the base namespace
@@ -76,6 +90,15 @@ replicate(n, expr, simplify = TRUE)
   type is determined from the highest type of the return values in the
   hierarchy NULL < raw < logical < integer < real < complex < character
   < list < expression, after coercion of pairlists to lists.
+  
+  \code{vapply} returns a vector or matrix of type matching the
+  \code{FUN.VALUE}. If \code{length(FUN.VALUE) != 1} a matrix will be returned
+  with \code{length(FUN.VALUE)} rows and \code{length(X)} columns, otherwise
+  a vector of the same length as \code{X}. 
+  Names of rows in the matrix value are taken from the \code{FUN.VALUE}
+  if it is named, otherwise from the result of the first function call.
+  Column names of the matrix value or names of the vector value are set from
+  \code{X} as in \code{sapply}.
 }
 \note{
   \code{sapply(*, simplify = FALSE, USE.NAMES = FALSE)} is
@@ -121,6 +144,7 @@ lapply(x, quantile, probs = 1:3/4)
 sapply(x, quantile)
 i39 <- sapply(3:9, seq) # list of vectors
 sapply(i39, fivenum)
+vapply(i39, fivenum, c(Min.=0, "1st Qu."=0, Median=0, "3rd Qu."=0, Max.=0))
 
 hist(replicate(100, mean(rexp(10))))
 

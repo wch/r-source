@@ -76,6 +76,12 @@ NEW FEATURES
 	.onUnload() hook functions (unless --install=fake).
 
     o	prop.table(x) now accepts a one-dimensional table for x.
+    
+    o	A new function vapply() has been added, based on a suggestion
+	from Bill Dunlap.  It requires that a template for the
+	function value be specified, and uses it to determine the
+	output type and to check for consistency in the function
+	values.
 
 
 DEPRECATED & DEFUNCT

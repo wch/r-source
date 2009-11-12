@@ -507,6 +507,7 @@ SEXP do_unzip(SEXP, SEXP, SEXP, SEXP);
 SEXP do_updateform(SEXP, SEXP, SEXP, SEXP);
 SEXP do_usemethod(SEXP, SEXP, SEXP, SEXP);
 SEXP do_utf8ToInt(SEXP, SEXP, SEXP, SEXP);
+SEXP do_vapply(SEXP, SEXP, SEXP, SEXP);
 SEXP do_version(SEXP, SEXP, SEXP, SEXP);
 SEXP do_warning(SEXP, SEXP, SEXP, SEXP);
 SEXP do_while(SEXP, SEXP, SEXP, SEXP);
