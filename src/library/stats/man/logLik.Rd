@@ -1,23 +1,18 @@
 % File src/library/stats/man/logLik.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{logLik}
 \alias{logLik}
 \alias{print.logLik}
 \alias{str.logLik}
-% \alias{as.data.frame.logLik}
 \alias{logLik.lm}
 \title{Extract Log-Likelihood}
 \usage{
 logLik(object, \dots)
 
 \method{logLik}{lm}(object, REML = FALSE, \dots)
-%
-%\method{as.data.frame}{logLik}(x, row.names = NULL, optional = FALSE)
-%notyet print(logLik(*), ...)
-%notyet   str(logLik(*), ...)
 }
 \arguments{
  \item{object}{any object from which a log-likelihood value, or a
@@ -27,18 +22,15 @@ logLik(object, \dots)
   \item{REML}{an optional logical value.  If \code{TRUE} the restricted
     log-likelihood is returned, else, if \code{FALSE}, the
     log-likelihood is returned.  Defaults to \code{FALSE}.}
-% \item{x}{an object of class \code{logLik}.}
-% \item{row.names, optional}{arguments to the \code{\link{as.data.frame}}
-%   method; see its documentation.}
 }
 \description{
   This function is generic; method functions can be written to handle
   specific classes of objects.  Classes which already have methods for
   this function include: \code{glm}, \code{lm}, \code{nls}, \code{Arima}
   and \code{gls}, \code{lme} and others in package \pkg{nlme}.
+}
 %   \code{corStruct}, \code{lmList}, \code{lmeStruct}, \code{reStruct}, and
 %   \code{varFunc}.
-}
 \details{
   For a \code{"glm"} fit the \code{\link{family}} does not have to specify
   how to calculate the log-likelihood, so this is based on using the
@@ -89,11 +81,9 @@ utils::str(logLik(lmx))
 logLik(fm1)
 logLik(fm1, REML = TRUE)
 
-res <- try(utils::data(Orthodont, package="nlme"))
-if(!inherits(res, "try-error")) {
-  fm1 <- lm(distance ~ Sex * age, Orthodont)
-  print(logLik(fm1))
-  print(logLik(fm1, REML = TRUE))
-}
+utils::data(Orthodont, package="nlme")
+fm1 <- lm(distance ~ Sex * age, Orthodont)
+logLik(fm1)
+logLik(fm1, REML = TRUE)
 }
 \keyword{models}
