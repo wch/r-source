@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-15 08:58\n"
+"POT-Creation-Date: 2009-11-12 09:44\n"
 "PO-Revision-Date: 2009-10-09 09:12+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -254,14 +254,6 @@ msgstr " NULLの行の名前は編集できません "
 msgid "no help found for '%s'"
 msgstr " '%s' に対するヘルプファイルが見つかりません "
 
-msgid "more than one help file found: using package '%s'"
-msgstr " 複数のヘルプファイルが見つかりました：'%s' 中のものを使います "
-
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
-"accessed"
-msgstr ""
-
 msgid "test '%s' is not available"
 msgstr " テスト '%s' が利用できません "
 
@@ -322,6 +314,15 @@ msgstr "HTMLヘルプは利用できません "
 
 msgid "R Help on '%s'"
 msgstr " '%s' に対する R ヘルプ "
+
+#, fuzzy
+msgid "invalid '%s' argument"
+msgstr " 不正な 'x' 引数 "
+
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
+"accessed"
+msgstr ""
 
 msgid "argument '%s' must be a single character string"
 msgstr " 引数 '%s' は単一の文字列でなければなりません "
@@ -878,6 +879,9 @@ msgstr "ファイル '%s' が見付かりません "
 msgid "file path is too long"
 msgstr "ファイルパスが長すぎます "
 
+msgid "storing paths of more than 100 bytes is not portable:"
+msgstr ""
+
 msgid "linked path is too long"
 msgstr " linked pathが長すぎます "
 
@@ -1050,6 +1054,9 @@ msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリで�
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "more than one help file found: using package '%s'"
+#~ msgstr " 複数のヘルプファイルが見つかりました：'%s' 中のものを使います "
 
 #~ msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
 #~ msgstr ""

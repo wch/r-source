@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41+0100\n"
+"POT-Creation-Date: 2009-11-12 09:43+0000\n"
 "PO-Revision-Date: 2009-10-15 02:30-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -17,39 +17,36 @@ msgstr ""
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: tcltk.c:63
 msgid "parse error in R expression"
 msgstr "ошибка разбора выражения R"
 
-#: tcltk.c:159
-#: tcltk.c:233
+#: tcltk.c:159 tcltk.c:233
 msgid "tcl error.\n"
 msgstr "ошибка tcl.\n"
 
-#: tcltk.c:187
-#: tcltk.c:721
+#: tcltk.c:187 tcltk.c:701
 msgid "invalid argument"
 msgstr "неправильный аргумент"
 
-#: tcltk.c:284
-#: tcltk.c:302
-#: tcltk.c:392
-#: tcltk.c:455
-#: tcltk.c:507
+#: tcltk.c:284 tcltk.c:302 tcltk.c:372 tcltk.c:435 tcltk.c:487
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "неправильный tclObj -- может быть, сохраненный в другой сессии?"
 
-#: tcltk.c:597
+#: tcltk.c:577
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
-msgstr "список аргументов слишком длинен во внутренней функции tcltk 'callback_closure'"
+msgstr ""
+"список аргументов слишком длинен во внутренней функции tcltk "
+"'callback_closure'"
 
-#: tcltk.c:630
+#: tcltk.c:610
 msgid "argument is not of correct type"
 msgstr "аргументы неправильного типа"
 
-#: tcltk.c:680
+#: tcltk.c:660
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "нет переменной DISPLAY, поэтому Tk недоступен"
 
@@ -64,4 +61,3 @@ msgstr "Tcl не загружен"
 #: tcltk_unix.c:115
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl не является последней загруженной инструкцией"
-

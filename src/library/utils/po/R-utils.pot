@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-15 08:58\n"
+"POT-Creation-Date: 2009-11-12 09:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,12 +227,6 @@ msgstr ""
 msgid "no help found for '%s'"
 msgstr ""
 
-msgid "more than one help file found: using package '%s'"
-msgstr ""
-
-msgid "package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed"
-msgstr ""
-
 msgid "test '%s' is not available"
 msgstr ""
 
@@ -285,6 +279,12 @@ msgid "HTML help is unavailable"
 msgstr ""
 
 msgid "R Help on '%s'"
+msgstr ""
+
+msgid "invalid '%s' argument"
+msgstr ""
+
+msgid "package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed"
 msgstr ""
 
 msgid "argument '%s' must be a single character string"
@@ -777,6 +777,9 @@ msgid "file '%s' not found"
 msgstr ""
 
 msgid "file path is too long"
+msgstr ""
+
+msgid "storing paths of more than 100 bytes is not portable:"
 msgstr ""
 
 msgid "linked path is too long"

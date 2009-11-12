@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-11-12 09:44\n"
 "PO-Revision-Date: 2009-10-15 02:41-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -541,11 +541,22 @@ msgstr "Не найдено помощи для пакета %s"
 msgid "Link %s in package %s could not be located"
 msgstr "Ссылка %s в пакете %s не найдена"
 
-msgid "Unable to locate help document %s in package %s"
-msgstr "Не могу найти документ помощи %s в пакете %s"
-
 msgid "No docs found for package %s"
 msgstr "Не могу найти документации для пакета %s"
+
+msgid "Only help files, %s and files under %s in a package can be viewed"
+msgstr ""
+
+#, fuzzy
+msgid "DESCRIPTION"
+msgstr "Неправильный файл 'DESCRIPTION'"
+
+#, fuzzy
+msgid "doc/"
+msgstr "документы"
+
+msgid "unsupported URL %s"
+msgstr ""
 
 msgid "URL %s was not found"
 msgstr "URL %s не найден"
@@ -657,6 +668,12 @@ msgstr "ОШИБКА: не удалось создать блокированную папку"
 
 msgid "building a fake installation is disallowed"
 msgstr "сборка ложной установки не разрешается"
+
+msgid "--no-help overrides"
+msgstr ""
+
+msgid "--"
+msgstr ""
 
 msgid "-o option without value"
 msgstr "-o опция без значения"
@@ -917,6 +934,9 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Найден вызов .Internal call в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
+
+#~ msgid "Unable to locate help document %s in package %s"
+#~ msgstr "Не могу найти документ помощи %s в пакете %s"
 
 #~ msgid "missing 'DESCRIPTION.in' for package '%s'"
 #~ msgstr "пропущен 'DESCRIPTION.in' у пакета '%s'"

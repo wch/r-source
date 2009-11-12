@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-11-12 09:41\n"
 "PO-Revision-Date: 2009-10-10 13:35+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -110,6 +110,12 @@ msgstr "fichier '%s' introuvable"
 
 msgid "invalid name"
 msgstr "nom incorrect"
+
+msgid ""
+"%s failed in %s() for '%s', details:\n"
+"  call: %s\n"
+"  error: %s"
+msgstr ""
 
 msgid "is required by"
 msgstr "est requis par"
@@ -742,9 +748,6 @@ msgstr "' non trouvée"
 msgid "all arguments must be named"
 msgstr "tous les arguments doivent être nommés"
 
-msgid "argument 'extended' is defunct and will be removed soon"
-msgstr ""
-
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' doit être une chaîne de caractères non vide"
 
@@ -769,8 +772,8 @@ msgstr "la matrice triangulaire doit être carrée"
 msgid "'object' must be a list"
 msgstr "'object' doit être une liste"
 
-msgid "This is R %s, package '%s' needs %s %s"
-msgstr "Ceci est R %s, le package '%s' nécessite %s %s"
+msgid "package '%s' has not been installed properly"
+msgstr "le package '%s' n'a pas été installé correctement"
 
 #, fuzzy
 msgid "package '%s' was built before R 2.10.0: please re-install it"
@@ -787,6 +790,9 @@ msgstr ""
 "pas correctement\n"
 "Veuillez le réinstaller, s'il-vous-plait"
 
+msgid "This is R %s, package '%s' needs %s %s"
+msgstr "Ceci est R %s, le package '%s' nécessite %s %s"
+
 msgid "package '%s' was built under R version %s"
 msgstr "le package '%s' a été compilé avec la version R %s"
 
@@ -795,12 +801,6 @@ msgstr "le package '%s' a été compilé pour %s"
 
 msgid "package '%s' is not installed for 'arch=%s'"
 msgstr "le package '%s' n'a pas été installé pour 'arch=%s'"
-
-msgid "package '%s' has not been installed properly"
-msgstr "le package '%s' n'a pas été installé correctement"
-
-msgid "See the Note in ?library"
-msgstr "Voyez la note dans ?library"
 
 msgid "Attaching package: '%s'"
 msgstr "Attachement du package : '%s'"
@@ -835,9 +835,6 @@ msgstr ""
 
 msgid "package/namespace load failed for '%s'"
 msgstr "le chargement du package / espace de noms a échoué pour '%s'"
-
-msgid "package was installed prior to 2.4.0 and must be re-installed"
-msgstr "le package a été intallé avant R 2.4.0 et doit être réinstallé"
 
 msgid "unable to load R code in package '%s'"
 msgstr "impossible de charger le code R depuis le package '%s'"
@@ -1067,9 +1064,6 @@ msgstr "le package '%s' n'a pas d'espace de noms et"
 msgid "is not on the search path"
 msgstr "n'est pas trouvé dans le chemin de recherche"
 
-msgid "%s failed in 'attachNamespace'"
-msgstr "%s a échoué dans 'attachNamespace'"
-
 msgid "name space is already attached"
 msgstr "l'espace de noms est déjà attaché"
 
@@ -1078,9 +1072,6 @@ msgstr "%s introuvable"
 
 msgid "cyclic name space dependencies are not supported"
 msgstr "dépendances cycliques d'espaces de noms non supportées"
-
-msgid "%s failed in 'loadNamespace' for '%s'"
-msgstr "%s a échoué dans 'loadNamespace' pour '%s'"
 
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "l'espace de noms '%s' est déjà verrouillé dans loadNamespace"
@@ -1135,12 +1126,6 @@ msgstr "introuvable"
 msgid "not loading a name space"
 msgstr "un espace de noms n'est pas chargé"
 
-msgid "name space '%s' is loaded"
-msgstr "l'espace de noms '%s' est chargé"
-
-msgid "%s failed in unloadNamespace(%s)"
-msgstr "%s a échoué dans unloadNamespace(%s)"
-
 msgid "name space '%s' is still used by: %s"
 msgstr "l'espace de noms '%s' est encore utilisé par : %s"
 
@@ -1163,8 +1148,14 @@ msgstr "opération non tolérée sur l'espace de noms de base"
 msgid "duplicate import names"
 msgstr "noms d'importation dupliqués"
 
+msgid "replacing local value with import %s when loading %s"
+msgstr ""
+
 msgid "cannot import into a sealed name space"
 msgstr "impossible d'importer vers un espace de noms verouillé"
+
+msgid "replacing previous import %s when loading %s"
+msgstr ""
 
 msgid "invalid import target"
 msgstr "cible d'importation incorrecte"
@@ -1625,6 +1616,24 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "See the Note in ?library"
+#~ msgstr "Voyez la note dans ?library"
+
+#~ msgid "package was installed prior to 2.4.0 and must be re-installed"
+#~ msgstr "le package a été intallé avant R 2.4.0 et doit être réinstallé"
+
+#~ msgid "%s failed in 'attachNamespace'"
+#~ msgstr "%s a échoué dans 'attachNamespace'"
+
+#~ msgid "%s failed in 'loadNamespace' for '%s'"
+#~ msgstr "%s a échoué dans 'loadNamespace' pour '%s'"
+
+#~ msgid "name space '%s' is loaded"
+#~ msgstr "l'espace de noms '%s' est chargé"
+
+#~ msgid "%s failed in unloadNamespace(%s)"
+#~ msgstr "%s a échoué dans unloadNamespace(%s)"
 
 #~ msgid ""
 #~ "package '%s' was built under R version %s and help may not work correctly"

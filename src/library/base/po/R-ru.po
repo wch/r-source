@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-11-12 09:41\n"
 "PO-Revision-Date: 2009-10-15 02:15-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -112,6 +112,12 @@ msgstr "файл '%s' не найден"
 
 msgid "invalid name"
 msgstr "неправильное имя"
+
+msgid ""
+"%s failed in %s() for '%s', details:\n"
+"  call: %s\n"
+"  error: %s"
+msgstr ""
 
 msgid "is required by"
 msgstr "требуется для"
@@ -713,9 +719,6 @@ msgstr "' не найдено"
 msgid "all arguments must be named"
 msgstr "все аргументы должны быть именованы"
 
-msgid "argument 'extended' is defunct and will be removed soon"
-msgstr ""
-
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern' должен быть непустой текстовой строкой"
 
@@ -740,8 +743,8 @@ msgstr "треугольная матрица должна быть квадратной"
 msgid "'object' must be a list"
 msgstr "'object' должен быть списком"
 
-msgid "This is R %s, package '%s' needs %s %s"
-msgstr "Это -- R %s, а пакету '%s' нужен %s %s"
+msgid "package '%s' has not been installed properly"
+msgstr "пакет '%s' как следует не установлен"
 
 #, fuzzy
 msgid "package '%s' was built before R 2.10.0: please re-install it"
@@ -754,6 +757,9 @@ msgstr ""
 "пакет '%s' сообщает, что он был собран для версии R %s, но у него нет "
 "некоторых файлов помощи и поэтому его надо переустановить"
 
+msgid "This is R %s, package '%s' needs %s %s"
+msgstr "Это -- R %s, а пакету '%s' нужен %s %s"
+
 msgid "package '%s' was built under R version %s"
 msgstr "пакет '%s' был собран под R версии %s"
 
@@ -762,12 +768,6 @@ msgstr "пакет '%s' был собран для %s"
 
 msgid "package '%s' is not installed for 'arch=%s'"
 msgstr "пакет '%s' не установлен для 'arch=%s'"
-
-msgid "package '%s' has not been installed properly"
-msgstr "пакет '%s' как следует не установлен"
-
-msgid "See the Note in ?library"
-msgstr "См. 'Note' в ?library"
 
 msgid "Attaching package: '%s'"
 msgstr "Присоединяю пакет: '%s'"
@@ -801,9 +801,6 @@ msgstr "'%s' не найден в пути поиска, использую pos = 2"
 
 msgid "package/namespace load failed for '%s'"
 msgstr "не удалась загрузка пакета/пространства имен для '%s'"
-
-msgid "package was installed prior to 2.4.0 and must be re-installed"
-msgstr "пакет был установлен до R 2.4.0 и должен быть переустановлен"
 
 msgid "unable to load R code in package '%s'"
 msgstr "не могу загрузить код R пакета '%s'"
@@ -1028,9 +1025,6 @@ msgstr "пакет '%s' не имеет пространства имен и"
 msgid "is not on the search path"
 msgstr "не найден в пути поиска"
 
-msgid "%s failed in 'attachNamespace'"
-msgstr "%s не удалось в 'attachNamespace'"
-
 msgid "name space is already attached"
 msgstr "пространство имен уже присоединено"
 
@@ -1039,9 +1033,6 @@ msgstr "%s не найден"
 
 msgid "cyclic name space dependencies are not supported"
 msgstr "циклические зависимости в пространстве имен не поддерживаются"
-
-msgid "%s failed in 'loadNamespace' for '%s'"
-msgstr "%s не удалось в 'loadNamespace' для '%s'"
 
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "пространство имен '%s' уже включено в loadNamespace"
@@ -1095,12 +1086,6 @@ msgstr "не найден"
 msgid "not loading a name space"
 msgstr "не загружаю пространство имен"
 
-msgid "name space '%s' is loaded"
-msgstr "пространство имен '%s' загружено"
-
-msgid "%s failed in unloadNamespace(%s)"
-msgstr "%s не удалось в unloadNamespace(%s)"
-
 msgid "name space '%s' is still used by: %s"
 msgstr "пространство имен '%s' еще используется в: '%s'"
 
@@ -1122,8 +1107,14 @@ msgstr "в базовом пространстве имен эта операция не разрешена"
 msgid "duplicate import names"
 msgstr "одинаковые импортированные имена"
 
+msgid "replacing local value with import %s when loading %s"
+msgstr ""
+
 msgid "cannot import into a sealed name space"
 msgstr "не могу импортировать во включенное пространство имен"
+
+msgid "replacing previous import %s when loading %s"
+msgstr ""
 
 msgid "invalid import target"
 msgstr "неправильное место назначения для импорта"
@@ -1585,6 +1576,24 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "See the Note in ?library"
+#~ msgstr "См. 'Note' в ?library"
+
+#~ msgid "package was installed prior to 2.4.0 and must be re-installed"
+#~ msgstr "пакет был установлен до R 2.4.0 и должен быть переустановлен"
+
+#~ msgid "%s failed in 'attachNamespace'"
+#~ msgstr "%s не удалось в 'attachNamespace'"
+
+#~ msgid "%s failed in 'loadNamespace' for '%s'"
+#~ msgstr "%s не удалось в 'loadNamespace' для '%s'"
+
+#~ msgid "name space '%s' is loaded"
+#~ msgstr "пространство имен '%s' загружено"
+
+#~ msgid "%s failed in unloadNamespace(%s)"
+#~ msgstr "%s не удалось в unloadNamespace(%s)"
 
 #~ msgid ""
 #~ "package '%s' was built under R version %s and help will not work "

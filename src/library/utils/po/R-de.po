@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-15 08:58\n"
+"POT-Creation-Date: 2009-11-12 09:44\n"
 "PO-Revision-Date: 2009-10-07 15:13+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -256,14 +256,6 @@ msgstr "kann NULL Zeilennamen nicht editieren"
 msgid "no help found for '%s'"
 msgstr "kein Hilfefile für '%s' gefunden"
 
-msgid "more than one help file found: using package '%s'"
-msgstr "mehr als ein Hilfefile gefunden: nutze Paket '%s'"
-
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
-"accessed"
-msgstr ""
-
 msgid "test '%s' is not available"
 msgstr "test '%s' ist nicht verfügbar"
 
@@ -324,6 +316,15 @@ msgstr "HTML Hilfe ist nicht verfügbar"
 
 msgid "R Help on '%s'"
 msgstr "R Hilfe zu '%s'"
+
+#, fuzzy
+msgid "invalid '%s' argument"
+msgstr "unzulässiges 'x' Argument"
+
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
+"accessed"
+msgstr ""
 
 msgid "argument '%s' must be a single character string"
 msgstr "Argument '%s' muss einzelne Zeichkette sein"
@@ -859,6 +860,9 @@ msgstr "File '%s' nicht gefunden"
 msgid "file path is too long"
 msgstr "Pfad ist zu lang"
 
+msgid "storing paths of more than 100 bytes is not portable:"
+msgstr ""
+
 msgid "linked path is too long"
 msgstr "verlinkter Pfad ist zu lang"
 
@@ -1038,6 +1042,9 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "Paket '%s' wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete '%s' werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "more than one help file found: using package '%s'"
+#~ msgstr "mehr als ein Hilfefile gefunden: nutze Paket '%s'"
 
 #~ msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
 #~ msgstr "offline = TRUE ist veraltet: nutzen sie help_type=\"postscript\""

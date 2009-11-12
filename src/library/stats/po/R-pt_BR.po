@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:37\n"
+"POT-Creation-Date: 2009-11-12 09:43\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1900,6 +1900,9 @@ msgstr "'proj' não está implementado para \"mlm\" fits"
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr "'proj' não está implementado para múltiplas respostas"
+
+msgid "table 'x' should have 2 entries"
+msgstr ""
 
 msgid "elements of 'n' must be positive"
 msgstr "elementos de 'n' devem ser positivos"

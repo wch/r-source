@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:37\n"
+"POT-Creation-Date: 2009-11-12 09:43\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1743,6 +1743,9 @@ msgid "'proj' is not implemented for \"mlm\" fits"
 msgstr ""
 
 msgid "'proj' is not implemented for multiple responses"
+msgstr ""
+
+msgid "table 'x' should have 2 entries"
 msgstr ""
 
 msgid "elements of 'n' must be positive"

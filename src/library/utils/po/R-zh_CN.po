@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-15 08:58\n"
+"POT-Creation-Date: 2009-11-12 09:44\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -251,14 +251,6 @@ msgstr "无法修改NULL行名"
 msgid "no help found for '%s'"
 msgstr "找不到与'%s'有关的帮助文件"
 
-msgid "more than one help file found: using package '%s'"
-msgstr "找到了多个帮助文件：用程序包'%s'"
-
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
-"accessed"
-msgstr ""
-
 msgid "test '%s' is not available"
 msgstr "没有'%s'这种测试"
 
@@ -315,6 +307,15 @@ msgstr "没有HTML帮助"
 
 msgid "R Help on '%s'"
 msgstr "与'%s'有关的R Help"
+
+#, fuzzy
+msgid "invalid '%s' argument"
+msgstr "'x'变元不对"
+
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
+"accessed"
+msgstr ""
 
 msgid "argument '%s' must be a single character string"
 msgstr "变元'%s'必需是单字符串"
@@ -837,6 +838,9 @@ msgstr "找不到'%s'这一文件"
 msgid "file path is too long"
 msgstr "文件通路太长"
 
+msgid "storing paths of more than 100 bytes is not portable:"
+msgstr ""
+
 msgid "linked path is too long"
 msgstr "链结的通路太长"
 
@@ -1008,6 +1012,9 @@ msgstr[0] "'lib'元素'%s'不是可写的目录"
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "more than one help file found: using package '%s'"
+#~ msgstr "找到了多个帮助文件：用程序包'%s'"
 
 #~ msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
 #~ msgstr "不推荐用offline = TRUE：请用help_type =\"postscript\""

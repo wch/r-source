@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-15 08:58\n"
+"POT-Creation-Date: 2009-11-12 09:44\n"
 "PO-Revision-Date: 2009-10-10 15:40+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -264,14 +264,6 @@ msgstr "impossible d'éditer des noms de lignes NULL"
 msgid "no help found for '%s'"
 msgstr "fichier d'aide introuvable pour '%s'"
 
-msgid "more than one help file found: using package '%s'"
-msgstr "plusieurs fichiers d'aide trouvés : le package '%s' est utilisé"
-
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
-"accessed"
-msgstr ""
-
 msgid "test '%s' is not available"
 msgstr "le test '%s' n'est pas disponible"
 
@@ -334,6 +326,15 @@ msgstr "aide HTML non disponible"
 
 msgid "R Help on '%s'"
 msgstr "R Help sur '%s'"
+
+#, fuzzy
+msgid "invalid '%s' argument"
+msgstr "argument 'x' incorrect"
+
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
+"accessed"
+msgstr ""
 
 msgid "argument '%s' must be a single character string"
 msgstr "l'argument '%s' doit être une seule chaîne de caractères"
@@ -884,6 +885,9 @@ msgstr "fichier '%s' introuvable"
 msgid "file path is too long"
 msgstr "le chemin d'accès au fichier est trop long"
 
+msgid "storing paths of more than 100 bytes is not portable:"
+msgstr ""
+
 msgid "linked path is too long"
 msgstr "le chemin de lien est trop long"
 
@@ -1070,6 +1074,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "more than one help file found: using package '%s'"
+#~ msgstr "plusieurs fichiers d'aide trouvés : le package '%s' est utilisé"
 
 #~ msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
 #~ msgstr "offline = TRUE est obsolète : utilisez help_type = \"postscript\""

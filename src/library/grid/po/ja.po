@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:09+0100\n"
+"POT-Creation-Date: 2009-11-12 09:42+0000\n"
 "PO-Revision-Date: 2008-04-04 15:01+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -46,15 +46,15 @@ msgstr " 多角形の頂点が見付かりません "
 msgid "Require at least two points to draw arrow"
 msgstr " 矢印を書くためには少なくとも二つの点が必要です "
 
-#: grid.c:1915
+#: grid.c:1917
 msgid "Non-finite control point in Xspline"
 msgstr " Xspline 中に有限でない制御点 "
 
-#: grid.c:3015
+#: grid.c:3195
 msgid "invalid plotting symbol"
 msgstr " 不正なプロット記号です "
 
-#: grid.c:3101
+#: grid.c:3281
 msgid "Unable to clip to rotated rectangle"
 msgstr " 回転矩形へクリップ出来ません "
 

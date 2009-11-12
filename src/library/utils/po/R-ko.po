@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-15 08:58\n"
+"POT-Creation-Date: 2009-11-12 09:44\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -260,15 +260,6 @@ msgstr ""
 msgid "no help found for '%s'"
 msgstr "help file는 '%s'에 검색되어져 있지 않았습니다"
 
-msgid "more than one help file found: using package '%s'"
-msgstr ""
-"하나의 help를 넘는 지원 파일은 검색되었습니다: 패키지 '%s'의 사용입니다"
-
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
-"accessed"
-msgstr ""
-
 #, fuzzy
 msgid "test '%s' is not available"
 msgstr ""
@@ -335,6 +326,15 @@ msgstr ""
 
 msgid "R Help on '%s'"
 msgstr "'%s'에서 R Help입니다"
+
+#, fuzzy
+msgid "invalid '%s' argument"
+msgstr "무효의 'data' 인수입니다"
+
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
+"accessed"
+msgstr ""
 
 msgid "argument '%s' must be a single character string"
 msgstr "인수 '%s'는 단일의 문자열이어야만 합니다"
@@ -897,6 +897,9 @@ msgstr "검색되지 않는 zip파일'%s'입니다"
 msgid "file path is too long"
 msgstr ""
 
+msgid "storing paths of more than 100 bytes is not portable:"
+msgstr ""
+
 msgid "linked path is too long"
 msgstr ""
 
@@ -1096,6 +1099,10 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] ""
 "package '%s'는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages '%s'는 사용되고 있어 인스톨 되지 않을 것입니다"
+
+#~ msgid "more than one help file found: using package '%s'"
+#~ msgstr ""
+#~ "하나의 help를 넘는 지원 파일은 검색되었습니다: 패키지 '%s'의 사용입니다"
 
 #~ msgid "options(\"browser\") not set"
 #~ msgstr "세트 되지않는 옵션(\"browser\")입니다"

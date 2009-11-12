@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-11-12 09:41\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,6 +102,9 @@ msgid "file '%s' not found"
 msgstr ""
 
 msgid "invalid name"
+msgstr ""
+
+msgid "%s failed in %s() for '%s', details:\n  call: %s\n  error: %s"
 msgstr ""
 
 msgid "is required by"
@@ -677,9 +680,6 @@ msgstr ""
 msgid "all arguments must be named"
 msgstr ""
 
-msgid "argument 'extended' is defunct and will be removed soon"
-msgstr ""
-
 msgid "'pattern' must be a non-empty character string"
 msgstr ""
 
@@ -704,13 +704,16 @@ msgstr ""
 msgid "'object' must be a list"
 msgstr ""
 
-msgid "This is R %s, package '%s' needs %s %s"
+msgid "package '%s' has not been installed properly"
 msgstr ""
 
 msgid "package '%s' was built before R 2.10.0: please re-install it"
 msgstr ""
 
 msgid "package '%s' claims to be built under R version %s but is missing some help files and needs to be re-installed"
+msgstr ""
+
+msgid "This is R %s, package '%s' needs %s %s"
 msgstr ""
 
 msgid "package '%s' was built under R version %s"
@@ -720,12 +723,6 @@ msgid "package '%s' was built for %s"
 msgstr ""
 
 msgid "package '%s' is not installed for 'arch=%s'"
-msgstr ""
-
-msgid "package '%s' has not been installed properly"
-msgstr ""
-
-msgid "See the Note in ?library"
 msgstr ""
 
 msgid "Attaching package: '%s'"
@@ -759,9 +756,6 @@ msgid "'%s' not found on search path, using pos = 2"
 msgstr ""
 
 msgid "package/namespace load failed for '%s'"
-msgstr ""
-
-msgid "package was installed prior to 2.4.0 and must be re-installed"
 msgstr ""
 
 msgid "unable to load R code in package '%s'"
@@ -971,9 +965,6 @@ msgstr ""
 msgid "is not on the search path"
 msgstr ""
 
-msgid "%s failed in 'attachNamespace'"
-msgstr ""
-
 msgid "name space is already attached"
 msgstr ""
 
@@ -981,9 +972,6 @@ msgid "%s not found"
 msgstr ""
 
 msgid "cyclic name space dependencies are not supported"
-msgstr ""
-
-msgid "%s failed in 'loadNamespace' for '%s'"
 msgstr ""
 
 msgid "namespace '%s' is already sealed in loadNamespace"
@@ -1037,12 +1025,6 @@ msgstr ""
 msgid "not loading a name space"
 msgstr ""
 
-msgid "name space '%s' is loaded"
-msgstr ""
-
-msgid "%s failed in unloadNamespace(%s)"
-msgstr ""
-
 msgid "name space '%s' is still used by: %s"
 msgstr ""
 
@@ -1064,7 +1046,13 @@ msgstr ""
 msgid "duplicate import names"
 msgstr ""
 
+msgid "replacing local value with import %s when loading %s"
+msgstr ""
+
 msgid "cannot import into a sealed name space"
+msgstr ""
+
+msgid "replacing previous import %s when loading %s"
 msgstr ""
 
 msgid "invalid import target"

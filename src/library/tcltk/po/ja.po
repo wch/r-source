@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41+0100\n"
+"POT-Creation-Date: 2009-11-12 09:43+0000\n"
 "PO-Revision-Date: 2009-10-07 13:46+0900 \n"
 "Last-Translator: ei-ji nakama <nakama@ki.rim.or.jp> \n"
 "Language-Team: Japanese <translation-team-ja@lists.sourceforge.net> \n"
@@ -26,23 +26,23 @@ msgstr " R expression 内に構文エラー "
 msgid "tcl error.\n"
 msgstr " tcl エラー \n"
 
-#: tcltk.c:187 tcltk.c:721
+#: tcltk.c:187 tcltk.c:701
 msgid "invalid argument"
 msgstr " 不正な引数 "
 
-#: tcltk.c:284 tcltk.c:302 tcltk.c:392 tcltk.c:455 tcltk.c:507
+#: tcltk.c:284 tcltk.c:302 tcltk.c:372 tcltk.c:435 tcltk.c:487
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr " 不正な tclObj - おそらく、別のセッションから保存された？ "
 
-#: tcltk.c:597
+#: tcltk.c:577
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr " 引数リストはtcltkの内部関数 `callback_closure' において長過ぎます "
 
-#: tcltk.c:630
+#: tcltk.c:610
 msgid "argument is not of correct type"
 msgstr " 引数は正しいタイプではありません "
 
-#: tcltk.c:680
+#: tcltk.c:660
 msgid "no DISPLAY variable so Tk is not available"
 msgstr " DISPLAY環境変数が無いのでTkは利用出来ません "
 

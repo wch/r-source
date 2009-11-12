@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:37\n"
+"POT-Creation-Date: 2009-11-12 09:43\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1791,6 +1791,9 @@ msgstr "'proj'还没有为\"mlm\"拟合实现"
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr "'proj'还没有为多反应实现"
+
+msgid "table 'x' should have 2 entries"
+msgstr ""
 
 msgid "elements of 'n' must be positive"
 msgstr "'n'的单元必需都是正的"

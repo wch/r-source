@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-11-12 09:41\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -108,6 +108,12 @@ msgstr "没有'%s'文件"
 
 msgid "invalid name"
 msgstr "名字不对"
+
+msgid ""
+"%s failed in %s() for '%s', details:\n"
+"  call: %s\n"
+"  error: %s"
+msgstr ""
 
 msgid "is required by"
 msgstr "需要"
@@ -703,9 +709,6 @@ msgstr "'不存在"
 msgid "all arguments must be named"
 msgstr "所有变元都必需有名字"
 
-msgid "argument 'extended' is defunct and will be removed soon"
-msgstr ""
-
 msgid "'pattern' must be a non-empty character string"
 msgstr "'pattern'必需为非空字符串"
 
@@ -730,8 +733,8 @@ msgstr "三角矩阵必需的正方形的"
 msgid "'object' must be a list"
 msgstr "'object'必需是串列"
 
-msgid "This is R %s, package '%s' needs %s %s"
-msgstr "这是R%s，程辑包'%s'需要%s %s "
+msgid "package '%s' has not been installed properly"
+msgstr "程辑包'%s'没有正确安装"
 
 #, fuzzy
 msgid "package '%s' was built before R 2.10.0: please re-install it"
@@ -743,6 +746,9 @@ msgid ""
 "files and needs to be re-installed"
 msgstr "程辑包'%s'是在R版本%s之前建的，与目前的帮助文件不相容，请重新组装"
 
+msgid "This is R %s, package '%s' needs %s %s"
+msgstr "这是R%s，程辑包'%s'需要%s %s "
+
 msgid "package '%s' was built under R version %s"
 msgstr "程辑包'%s'是用R版本%s 来建造的"
 
@@ -751,12 +757,6 @@ msgstr "程辑包'%s'是为%s建造的"
 
 msgid "package '%s' is not installed for 'arch=%s'"
 msgstr "程辑包'%s'没有安装在'arch=%s'中"
-
-msgid "package '%s' has not been installed properly"
-msgstr "程辑包'%s'没有正确安装"
-
-msgid "See the Note in ?library"
-msgstr "见?library 的Note部分"
 
 msgid "Attaching package: '%s'"
 msgstr "载入程辑包：'%s'"
@@ -790,9 +790,6 @@ msgstr "在搜索路径上找不到'%s'，用pos=2"
 
 msgid "package/namespace load failed for '%s'"
 msgstr "'%s'程辑包/名字空间载入失败，"
-
-msgid "package was installed prior to 2.4.0 and must be re-installed"
-msgstr "程辑包'%s'是在R版本2.4.0之前建的：你得重新组装"
 
 msgid "unable to load R code in package '%s'"
 msgstr "程辑包'%s'里的R写碼载入失败"
@@ -1013,9 +1010,6 @@ msgstr "程辑包'%s'没有名字空间"
 msgid "is not on the search path"
 msgstr "'%s'不在搜索路径上"
 
-msgid "%s failed in 'attachNamespace'"
-msgstr "'attachNamespace'里%s出错"
-
 msgid "name space is already attached"
 msgstr "已经连接上名字空间了"
 
@@ -1024,9 +1018,6 @@ msgstr "%s不存在"
 
 msgid "cyclic name space dependencies are not supported"
 msgstr "不支持互相从属的循環名字空间"
-
-msgid "%s failed in 'loadNamespace' for '%s'"
-msgstr "'%2$s'的'loadNamespace'出了错：%1$s "
 
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "名字空间'%s'已经在loadNamespace封條了"
@@ -1079,12 +1070,6 @@ msgstr "不存在"
 msgid "not loading a name space"
 msgstr "不载入名字空间"
 
-msgid "name space '%s' is loaded"
-msgstr "名字空间'%s'没有载入"
-
-msgid "%s failed in unloadNamespace(%s)"
-msgstr "%s出错：unloadNamespace(%s)"
-
 msgid "name space '%s' is still used by: %s"
 msgstr "名字空间'%s'仍用于：'%s'"
 
@@ -1106,8 +1091,14 @@ msgstr "命令不能在基本名字空间上使用"
 msgid "duplicate import names"
 msgstr "重复进口名字"
 
+msgid "replacing local value with import %s when loading %s"
+msgstr ""
+
 msgid "cannot import into a sealed name space"
 msgstr "不能进口到已经封闭了的名字空间"
+
+msgid "replacing previous import %s when loading %s"
+msgstr ""
 
 msgid "invalid import target"
 msgstr "进口目标有错"
@@ -1546,6 +1537,24 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "See the Note in ?library"
+#~ msgstr "见?library 的Note部分"
+
+#~ msgid "package was installed prior to 2.4.0 and must be re-installed"
+#~ msgstr "程辑包'%s'是在R版本2.4.0之前建的：你得重新组装"
+
+#~ msgid "%s failed in 'attachNamespace'"
+#~ msgstr "'attachNamespace'里%s出错"
+
+#~ msgid "%s failed in 'loadNamespace' for '%s'"
+#~ msgstr "'%2$s'的'loadNamespace'出了错：%1$s "
+
+#~ msgid "name space '%s' is loaded"
+#~ msgstr "名字空间'%s'没有载入"
+
+#~ msgid "%s failed in unloadNamespace(%s)"
+#~ msgstr "%s出错：unloadNamespace(%s)"
 
 #~ msgid ""
 #~ "package '%s' was built under R version %s and help will not work "

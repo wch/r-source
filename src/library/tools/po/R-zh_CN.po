@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-11-12 09:44\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -521,11 +521,22 @@ msgstr "%s的程序包没有帮助文件"
 msgid "Link %s in package %s could not be located"
 msgstr "程序包%s里的链结%s不存在"
 
-msgid "Unable to locate help document %s in package %s"
-msgstr "在程序包%s找不到%s这个帮助文件"
-
 msgid "No docs found for package %s"
 msgstr "程序包%s里没有任何文件"
+
+msgid "Only help files, %s and files under %s in a package can be viewed"
+msgstr ""
+
+#, fuzzy
+msgid "DESCRIPTION"
+msgstr "DESCRIPTION文件不对"
+
+#, fuzzy
+msgid "doc/"
+msgstr "文件"
+
+msgid "unsupported URL %s"
+msgstr ""
 
 msgid "URL %s was not found"
 msgstr "找不到%s这个URL"
@@ -635,6 +646,12 @@ msgstr "错误：无法建锁住的目录"
 
 msgid "building a fake installation is disallowed"
 msgstr "不充许伪造安装"
+
+msgid "--no-help overrides"
+msgstr ""
+
+msgid "--"
+msgstr ""
 
 msgid "-o option without value"
 msgstr "-o选项必需带值"
@@ -885,6 +902,9 @@ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "下面的函数调用了.Internal:"
+
+#~ msgid "Unable to locate help document %s in package %s"
+#~ msgstr "在程序包%s找不到%s这个帮助文件"
 
 #~ msgid "Suspect link(s) in documentation object '%s':"
 #~ msgstr "使用手冊对象'%s'联结可能不对:"

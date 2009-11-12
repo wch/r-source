@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:09+0100\n"
+"POT-Creation-Date: 2009-11-12 09:42+0000\n"
 "PO-Revision-Date: 2009-10-07 14:22+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team:  <R-core@r-project.org>\n"
@@ -24,7 +24,9 @@ msgstr "Kann rotierten Viewport nicht beschneiden"
 
 #: grid.c:673 grid.c:678 grid.c:767 grid.c:772
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
-msgstr "Kann den obersten viewport nicht vom Stack werfen (grid und graphics Ausgaben gemischt?)"
+msgstr ""
+"Kann den obersten viewport nicht vom Stack werfen (grid und graphics "
+"Ausgaben gemischt?)"
 
 #: grid.c:952
 msgid "attempt to plot on null device"
@@ -46,15 +48,15 @@ msgstr "Polygonkante nicht gefunden"
 msgid "Require at least two points to draw arrow"
 msgstr "Mindestens zwei Punkte nötig, um einen Pfeil zu zeichnen"
 
-#: grid.c:1915
+#: grid.c:1917
 msgid "Non-finite control point in Xspline"
 msgstr "Nicht-endlicher Kontrollpunkt in Xspline"
 
-#: grid.c:3015
+#: grid.c:3195
 msgid "invalid plotting symbol"
 msgstr "unzulässiges Plotsymbol"
 
-#: grid.c:3101
+#: grid.c:3281
 msgid "Unable to clip to rotated rectangle"
 msgstr "Kann nicht auf das rotierte Rechteck zurechtschneiden"
 

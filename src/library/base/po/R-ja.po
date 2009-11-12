@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-11-12 09:41\n"
 "PO-Revision-Date: 2009-10-07 19:17+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -104,6 +104,12 @@ msgstr " ファイル '%s' が見付かりません "
 
 msgid "invalid name"
 msgstr " 不当な名前です "
+
+msgid ""
+"%s failed in %s() for '%s', details:\n"
+"  call: %s\n"
+"  error: %s"
+msgstr ""
 
 msgid "is required by"
 msgstr " が以下により要求されました： "
@@ -717,9 +723,6 @@ msgstr " ' が見つけられません "
 msgid "all arguments must be named"
 msgstr " 全ての引数は名前を持たなければなりません "
 
-msgid "argument 'extended' is defunct and will be removed soon"
-msgstr ""
-
 msgid "'pattern' must be a non-empty character string"
 msgstr " 'pattern' は空でない文字列でなければなりません "
 
@@ -744,8 +747,8 @@ msgstr " 三角行列は正方行列であるべきです "
 msgid "'object' must be a list"
 msgstr " 'object' はリストでなければなりません "
 
-msgid "This is R %s, package '%s' needs %s %s"
-msgstr " これは R %s です。パッケージ '%s' は %s %s を必要とします "
+msgid "package '%s' has not been installed properly"
+msgstr " パッケージ '%s' は正しくインストールされませんでした "
 
 #, fuzzy
 msgid "package '%s' was built before R 2.10.0: please re-install it"
@@ -760,6 +763,9 @@ msgstr ""
 "パッケージ '%s' はバージョン %s の R の下で造られました。ヘルプは正しく機能し"
 "ません。新しくインストールしてください "
 
+msgid "This is R %s, package '%s' needs %s %s"
+msgstr " これは R %s です。パッケージ '%s' は %s %s を必要とします "
+
 msgid "package '%s' was built under R version %s"
 msgstr " パッケージ '%s' はバージョン %s の R の下で造られました "
 
@@ -768,12 +774,6 @@ msgstr " パッケージ '%s' は %s に対して造られました "
 
 msgid "package '%s' is not installed for 'arch=%s'"
 msgstr " パッケージ '%s' は 'arch=%s' に対してインストールされていません "
-
-msgid "package '%s' has not been installed properly"
-msgstr " パッケージ '%s' は正しくインストールされませんでした "
-
-msgid "See the Note in ?library"
-msgstr " ?library でノートを見て下さい "
 
 msgid "Attaching package: '%s'"
 msgstr " 次のパッケージを付け加えます: '%s' "
@@ -807,11 +807,6 @@ msgstr " '%s' は検索パス上には見つかりませんでした。pos = 2 �
 
 msgid "package/namespace load failed for '%s'"
 msgstr " '%s' に対するパッケージもしくは名前空間のロードが失敗しました "
-
-msgid "package was installed prior to 2.4.0 and must be re-installed"
-msgstr ""
-" パッケージは R 2.4.0 以前にインストールされました。新しくインストールして下"
-"さい "
 
 msgid "unable to load R code in package '%s'"
 msgstr " パッケージ '%s' 中の R コードをロードできません "
@@ -1040,9 +1035,6 @@ msgstr " パッケージ '%s' は名前空間を持っていませんし "
 msgid "is not on the search path"
 msgstr " 検索パス上にありません "
 
-msgid "%s failed in 'attachNamespace'"
-msgstr " %s は 'attachNamespace' で失敗しました "
-
 msgid "name space is already attached"
 msgstr " 名前空間は既に付加されています "
 
@@ -1051,9 +1043,6 @@ msgstr " %s を見付けることができません "
 
 msgid "cyclic name space dependencies are not supported"
 msgstr " サイクリックな名前空間の従属性はサポートされていません "
-
-msgid "%s failed in 'loadNamespace' for '%s'"
-msgstr " %s は '%s' のための 'loadNamespace' で失敗しました "
 
 msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr " 名前空間 '%s' は既に loadNamespace 中に封印(seal)されています "
@@ -1109,12 +1098,6 @@ msgstr " 見つかりません "
 msgid "not loading a name space"
 msgstr " 名前空間をロードしません "
 
-msgid "name space '%s' is loaded"
-msgstr " 名前空間 '%s' がロードされました "
-
-msgid "%s failed in unloadNamespace(%s)"
-msgstr " %s は unloadNamespace(%s) で失敗しました "
-
 msgid "name space '%s' is still used by: %s"
 msgstr " 名前空間 '%s' は以下によりまだ使用されています： %s "
 
@@ -1137,8 +1120,14 @@ msgstr " ベース名前空間では許可されない操作です "
 msgid "duplicate import names"
 msgstr " 重複したインポート名です "
 
+msgid "replacing local value with import %s when loading %s"
+msgstr ""
+
 msgid "cannot import into a sealed name space"
 msgstr " 封印された名前空間にはインポートできません "
+
+msgid "replacing previous import %s when loading %s"
+msgstr ""
 
 msgid "invalid import target"
 msgstr " 無効なインポート対象です "
@@ -1593,6 +1582,26 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "See the Note in ?library"
+#~ msgstr " ?library でノートを見て下さい "
+
+#~ msgid "package was installed prior to 2.4.0 and must be re-installed"
+#~ msgstr ""
+#~ " パッケージは R 2.4.0 以前にインストールされました。新しくインストールして"
+#~ "下さい "
+
+#~ msgid "%s failed in 'attachNamespace'"
+#~ msgstr " %s は 'attachNamespace' で失敗しました "
+
+#~ msgid "%s failed in 'loadNamespace' for '%s'"
+#~ msgstr " %s は '%s' のための 'loadNamespace' で失敗しました "
+
+#~ msgid "name space '%s' is loaded"
+#~ msgstr " 名前空間 '%s' がロードされました "
+
+#~ msgid "%s failed in unloadNamespace(%s)"
+#~ msgstr " %s は unloadNamespace(%s) で失敗しました "
 
 #~ msgid ""
 #~ "package '%s' was built under R version %s and help may not work correctly"

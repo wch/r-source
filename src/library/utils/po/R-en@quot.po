@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-15 08:58\n"
-"PO-Revision-Date: 2009-10-15 08:58\n"
+"POT-Creation-Date: 2009-11-12 09:44\n"
+"PO-Revision-Date: 2009-11-12 09:44\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -270,16 +270,6 @@ msgstr "cannot edit NULL row names"
 msgid "no help found for '%s'"
 msgstr "no help found for ‘%s’"
 
-msgid "more than one help file found: using package '%s'"
-msgstr "more than one help file found: using package ‘%s’"
-
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
-"accessed"
-msgstr ""
-"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
-"accessed"
-
 msgid "test '%s' is not available"
 msgstr "test ‘%s’ is not available"
 
@@ -337,6 +327,16 @@ msgstr "HTML help is unavailable"
 
 msgid "R Help on '%s'"
 msgstr "R Help on ‘%s’"
+
+msgid "invalid '%s' argument"
+msgstr "invalid ‘%s’ argument"
+
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
+"accessed"
+msgstr ""
+"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
+"accessed"
 
 msgid "argument '%s' must be a single character string"
 msgstr "argument ‘%s’ must be a single character string"
@@ -865,6 +865,9 @@ msgstr "file ‘%s’ not found"
 
 msgid "file path is too long"
 msgstr "file path is too long"
+
+msgid "storing paths of more than 100 bytes is not portable:"
+msgstr "storing paths of more than 100 bytes is not portable:"
 
 msgid "linked path is too long"
 msgstr "linked path is too long"

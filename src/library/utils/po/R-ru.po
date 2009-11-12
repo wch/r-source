@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-15 08:58\n"
+"POT-Creation-Date: 2009-11-12 09:44\n"
 "PO-Revision-Date: 2009-10-15 02:50-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -261,14 +261,6 @@ msgstr "не могу редактировать NULL-имена строк"
 msgid "no help found for '%s'"
 msgstr "в '%s' не найдено файла помощи"
 
-msgid "more than one help file found: using package '%s'"
-msgstr "найдено более одного файла помощи: использую пакет '%s'"
-
-msgid ""
-"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
-"accessed"
-msgstr ""
-
 msgid "test '%s' is not available"
 msgstr "тест '%s' недоступен"
 
@@ -329,6 +321,15 @@ msgstr "Помощь HTML недоступна"
 
 msgid "R Help on '%s'"
 msgstr "Помощь R по '%s'"
+
+#, fuzzy
+msgid "invalid '%s' argument"
+msgstr "неправильный аргумент 'x'"
+
+msgid ""
+"package %s exists but was not installed under R >= 2.10.0 so help cannot be "
+"accessed"
+msgstr ""
 
 msgid "argument '%s' must be a single character string"
 msgstr "аргумент '%s' должен быть одной текстовой строкой"
@@ -863,6 +864,9 @@ msgstr "файл '%s' не найден"
 msgid "file path is too long"
 msgstr "путь к файлу слишком длинный"
 
+msgid "storing paths of more than 100 bytes is not portable:"
+msgstr ""
+
 msgid "linked path is too long"
 msgstr "путь ссылки слишком длинный"
 
@@ -1051,6 +1055,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "more than one help file found: using package '%s'"
+#~ msgstr "найдено более одного файла помощи: использую пакет '%s'"
 
 #~ msgid "'%s' has a help file but no examples"
 #~ msgstr "у '%s' есть файл помощи, но нет примеров"

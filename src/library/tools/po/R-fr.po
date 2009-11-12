@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-11-12 09:44\n"
 "PO-Revision-Date: 2009-10-10 15:29+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -553,11 +553,22 @@ msgstr "Pas d'aide trouvée pour le package %s"
 msgid "Link %s in package %s could not be located"
 msgstr "Le lien %s dans le package %s ne peut être localisé"
 
-msgid "Unable to locate help document %s in package %s"
-msgstr "Impossible de localiser le document d'aide %s dans le package %s"
-
 msgid "No docs found for package %s"
 msgstr "Pas de docs trouvés pour le package %s"
+
+msgid "Only help files, %s and files under %s in a package can be viewed"
+msgstr ""
+
+#, fuzzy
+msgid "DESCRIPTION"
+msgstr "Fichier DESCRIPTION incorrect"
+
+#, fuzzy
+msgid "doc/"
+msgstr "docs"
+
+msgid "unsupported URL %s"
+msgstr ""
 
 msgid "URL %s was not found"
 msgstr "l'URL %s est introuvable"
@@ -670,6 +681,12 @@ msgstr "ERREUR : impossible de créer le répertoire verrouillé"
 
 msgid "building a fake installation is disallowed"
 msgstr "construire une installation fantôme n'est pas permise"
+
+msgid "--no-help overrides"
+msgstr ""
+
+msgid "--"
+msgstr ""
 
 msgid "-o option without value"
 msgstr "option -o sans valeur"
@@ -937,6 +954,9 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
 msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
+#~ msgid "Unable to locate help document %s in package %s"
+#~ msgstr "Impossible de localiser le document d'aide %s dans le package %s"
 
 #~ msgid "missing 'DESCRIPTION.in' for package '%s'"
 #~ msgstr "'DESCRIPTION.in' manquant pour le package '%s'"

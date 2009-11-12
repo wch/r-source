@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:37\n"
+"POT-Creation-Date: 2009-11-12 09:43\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1905,6 +1905,9 @@ msgstr "'proj' non implementata per stime \"mlm\""
 
 msgid "'proj' is not implemented for multiple responses"
 msgstr "'proj' non implementata per risposte multiple"
+
+msgid "table 'x' should have 2 entries"
+msgstr ""
 
 msgid "elements of 'n' must be positive"
 msgstr "gli elementi di 'n' devono essere positivi"

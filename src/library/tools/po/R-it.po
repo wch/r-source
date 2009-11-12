@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-10 14:12\n"
+"POT-Creation-Date: 2009-11-12 09:44\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -536,10 +536,20 @@ msgstr "non può essere usato per il pacchetto 'base'"
 msgid "Link %s in package %s could not be located"
 msgstr "il name space non deve essere caricato."
 
-msgid "Unable to locate help document %s in package %s"
+msgid "No docs found for package %s"
 msgstr ""
 
-msgid "No docs found for package %s"
+msgid "Only help files, %s and files under %s in a package can be viewed"
+msgstr ""
+
+#, fuzzy
+msgid "DESCRIPTION"
+msgstr "file DESCRIPTION non valido"
+
+msgid "doc/"
+msgstr ""
+
+msgid "unsupported URL %s"
 msgstr ""
 
 #, fuzzy
@@ -652,6 +662,12 @@ msgid "ERROR: failed to create lock directory"
 msgstr "impossibile creare directory temporanea"
 
 msgid "building a fake installation is disallowed"
+msgstr ""
+
+msgid "--no-help overrides"
+msgstr ""
+
+msgid "--"
 msgstr ""
 
 msgid "-o option without value"
