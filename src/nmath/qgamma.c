@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000--2008 The R Development Core Team
- *  Copyright (C) 2004--2008 The R Foundation
+ *  Copyright (C) 2000--2009 The R Development Core Team
+ *  Copyright (C) 2004--2009 The R Foundation
  *  based on AS 91 (C) 1979 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -73,8 +73,12 @@ double qchisq_appr(double p, double nu, double g/* = log Gamma(nu/2) */,
     c = alpha-1;
 
     if(nu < (-1.24)*(p1 = R_DT_log(p))) {	/* for small chi-squared */
-
-	ch = exp((log(alpha) + p1 + g)/alpha + M_LN2);
+	/* log(alpha) + g = log(alpha) + log(gamma(alpha)) =
+	 *        = log(alpha*gamma(alpha)) = lgamma(alpha+1) suffers from
+	 *  catastrophic cancellation when alpha << 1
+	 */
+	double lgam1pa = (alpha < 0.5) ? lgamma1p(alpha) : (log(alpha) + g);
+	ch = exp((lgam1pa + p1)/alpha + M_LN2);
 #ifdef DEBUG_qgamma
 	REprintf(" small chi-sq., ch0 = %g\n", ch);
 #endif
@@ -117,6 +121,7 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 #define EPS1 1e-2
 #define EPS2 5e-7/* final precision of AS 91 */
 #define EPS_N 1e-15/* precision of Newton step / iterations */
+#define LN_EPS -36.043653389117156 /* = log(.Machine$double.eps) iff IEEE_754 */
 
 #define MAXIT 1000/* was 20 */
 
@@ -144,8 +149,13 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
 
     if (alpha == 0) /* all mass at 0 : */ return 0.;
 
-    if (alpha < 1e-10)
+    if (alpha < 1e-10) {
+    /* Warning seems unnecessary now: */
+#ifdef _DO_WARN_qgamma_
 	MATHLIB_WARNING("value of shape (%g) is extremely small: results may be unreliable", alpha);
+#endif
+	max_it_Newton = 7;/* may still be increased below */
+    }
 
     p_ = R_DT_qIv(p);/* lower_tail prob (in any case) */
 
@@ -168,7 +178,7 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
     }
 
     /* FIXME: This (cutoff to {0, +Inf}) is far from optimal
-     * -----  when log_p or !lower_tail : */
+     * -----  when log_p or !lower_tail, but NOT doing it can be even worse */
     if(p_ > pMAX || p_ < pMIN) {
 	/* did return ML_POSINF or 0.;	much better: */
 	max_it_Newton = 20;
@@ -244,13 +254,25 @@ END:
 	    p = log(p);
 	    log_p = TRUE;
 	}
-	p_ = pgamma(x, alpha, scale, lower_tail, log_p);
+	if(x == 0) {
+	    const double _1_p = 1. + 1e-7;
+	    const double _1_m = 1. - 1e-7;
+	    x = DBL_MIN;
+	    p_ = pgamma(x, alpha, scale, lower_tail, log_p);
+	    if(( lower_tail && p_ > p * _1_p) ||
+	       (!lower_tail && p_ < p * _1_m))
+		return(0.);
+	    /* else:  continue, using x = DBL_MIN instead of  0  */
+	}
+	else
+	    p_ = pgamma(x, alpha, scale, lower_tail, log_p);
 	for(i = 1; i <= max_it_Newton; i++) {
 	    p1 = p_ - p;
 #ifdef DEBUG_qgamma
-	    if(i == 1) REprintf("\n it=%d: p=%g, x = %g, p.=%g; p1:=D{p}=%g\n",
+	    if(i == 1) REprintf("\n it=%d: p=%g, x = %g, p.=%g; p1=d{p}=%g\n",
 				i, p, x, p_, p1);
-	    if(i >= 2) REprintf("         it=%d,  d{p}=%g\n",    i, p1);
+	    if(i >= 2) REprintf("          x{it= %d} = %g, p.=%g, p1=d{p}=%g\n",
+				i,    x, p_, p1);
 #endif
 	    if(fabs(p1) < fabs(EPS_N * p))
 		break;
@@ -272,16 +294,18 @@ END:
 	    if (fabs(p_ - p) > fabs(p1) ||
 		(i > 1 && fabs(p_ - p) == fabs(p1)) /* <- against flip-flop */) {
 		/* no improvement */
-#ifdef DEBUG_q
+#ifdef DEBUG_qgamma
 		if(i == 1 && max_it_Newton > 1)
 		    REprintf("no Newton step done since delta{p} >= last delta\n");
 #endif
 		break;
 	    } /* else : */
+#ifdef Harmful_notably_if_max_it_Newton_is_1
 	    /* control step length: this could have started at
-	       tbe initial approximation */
+	       the initial approximation */
 	    if(t > 1.1*x) t = 1.1*x;
 	    else if(t < 0.9*x) t = 0.9*x;
+#endif
 	    x = t;
 	}
     }

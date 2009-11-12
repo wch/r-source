@@ -62,7 +62,7 @@ BUG FIXES
 	for plot(c(1,300), c(1,300), log="xy") ; abline(4,1, untf=TRUE).
 
     o	detach/unloadNamespace() arrange to flush the package's
- 	lazyload cache of R objects once the package/namespace is no
+	lazyload cache of R objects once the package/namespace is no
 	longer needed.
 
     o	There have been small fixes to the rendering of help,
@@ -73,7 +73,7 @@ BUG FIXES
 	converters were not rendering them in the same way as before.
 
     o	available.packages() would fail when run on a repository
-    	with no packages meeting the filtering conditions. (PR#14042)
+	with no packages meeting the filtering conditions. (PR#14042)
 
     o	rep(x, times, each = 2) gave invalid results when the 'times'
 	argument is a vector longer than 'x'.  Reported by Bill Dunlap.
@@ -81,11 +81,16 @@ BUG FIXES
     o	An error when unloadNamespace() attempted to run the .onUnload()
 	function gave an error in the reporting function and so was
 	not reported properly.
-	
+
     o	Text help rendering did not handle very long input lines
 	properly.
-	
+
     o	promptMethods() generated signature documentation improperly.
+
+    o	pgamma(x, a, lower.tail=FALSE) and qgamma(..) are now considerably
+	more accurate in some regions for very small 'a'.  qgamma() now
+	correctly returns 0 instead of NaN in similar extreme cases, and
+	qgamma() no longer warns in the case of small 'a', see (PR#12324).
 
 
 
