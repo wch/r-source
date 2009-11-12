@@ -408,7 +408,7 @@ SEXP attribute_hidden do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	    COMPLEX(ans)[0].i = si;
 	    break;
 	default:
-	    error(R_MSG_type, type2str(TYPEOF(x)));
+	    error(R_MSG_type, type2char(TYPEOF(x)));
 	}
 	UNPROTECT(1);
 	return ans;
