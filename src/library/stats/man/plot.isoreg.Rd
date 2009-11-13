@@ -6,7 +6,6 @@
 \name{plot.isoreg}
 \alias{plot.isoreg}
 \alias{lines.isoreg}
-%\alias{print.isoreg}
 \title{Plot Method for isoreg Objects}
 \description{
   The \code{\link{plot}} and \code{\link{lines}} method for
@@ -21,10 +20,9 @@
       mar = if (both) 0.1 + c(3.5, 2.5, 1, 1) else par("mar"),
       mgp = if (both) c(1.6, 0.7, 0) else par("mgp"),
       grid = length(x$x) < 12, \dots)
+
 \method{lines}{isoreg}(x, col = "red", lwd = 1.5,
        do.points = FALSE, cex = 1.5, pch = 13, \dots)
-
-%\method{print}{isoreg}(x, digits = getOption("digits"), \dots)
 }
 \arguments{
   \item{x}{an \code{\link{isoreg}} object.}

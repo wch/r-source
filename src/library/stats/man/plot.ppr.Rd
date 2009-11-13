@@ -57,4 +57,3 @@ plot(update(rock.ppr, sm.method="gcv", gcvpen=2),
 })
 }
 \keyword{hplot}
-% Converted by Sd2Rd version 0.2-a5.

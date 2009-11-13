@@ -441,10 +441,7 @@ par(\dots, no.readonly = FALSE)
       \code{\link{title}} whereas \code{mgp[2:3]} affect \code{\link{axis}}.
       The default is \code{c(3, 1, 0)}.}
     \item{\code{mkh}}{The height in inches of symbols to be drawn when
-      the value of \code{pch} is an integer.
-      %% <FIXME>
-      \emph{Completely ignored currently}.
-      %% </FIXME>
+      the value of \code{pch} is an integer. \emph{Completely ignored in \R}.
     }
     \item{\code{new}}{logical, defaulting to \code{FALSE}.  If set to
       \code{TRUE}, the next high-level plotting command (actually

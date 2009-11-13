@@ -82,10 +82,6 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
     \item{\code{rel.tol}}{Relative tolerance.  Defaults to \code{1e-10}.}
     \item{\code{x.tol}}{X tolerance.  Defaults to \code{1.5e-8}.}
     \item{\code{step.min}}{Minimum step size.  Defaults to \code{2.2e-14}.}
-%    \item{\code{step.max}}{Defaults to \code{1}.}
-%    \item{\code{scale.init}}{Defaults to \code{-1}.}
-%    \item{\code{sing.tol}}{Defaults to \code{1e-10}.}
-%    \item{\code{diff.g}}{Defaults to \code{2.2e-13}.}
   }
 }
 \references{ \url{http://netlib.bell-labs.com/netlib/port/} }

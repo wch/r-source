@@ -5,7 +5,6 @@
 
 \name{read.fortran}
 \alias{read.fortran}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{Read fixed-format data }
 \description{
 Read fixed-format data files using Fortran-style format specifications.
@@ -13,7 +12,6 @@ Read fixed-format data files using Fortran-style format specifications.
 \usage{
 read.fortran(file, format, ..., as.is = TRUE, colClasses = NA)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{file}{File or connection to read from}
   \item{format}{Character vector or list of vectors.  See
@@ -56,5 +54,5 @@ cat(file=ff, "123456AB", "987654CD", sep="\n")
 read.fortran(ff, list(c("2F3.1","A2"), c("3I2","2X")))
 unlink(ff)
 }
-\keyword{file}% at least one, from doc/KEYWORDS
-\keyword{connection}% __ONLY ONE__ keyword per line
+\keyword{file}
+\keyword{connection}

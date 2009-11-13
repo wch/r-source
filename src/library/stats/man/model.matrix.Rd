@@ -7,8 +7,6 @@
 \alias{model.matrix}
 \alias{model.matrix.default}
 \alias{model.matrix.lm}
-%\alias{model.matrix.lm.null}
-%\alias{model.matrix.glm.null}
 \title{Construct Design Matrices}
 \usage{
 model.matrix(object, \dots)

@@ -12,7 +12,7 @@
 \alias{as.relistable}
 \alias{is.relistable}
 \alias{unlist.relistable}
-%
+
 \title{Allow Re-Listing an unlist()ed Object}
 \description{
   \code{relist()} is an S3 generic function with a few methods in order

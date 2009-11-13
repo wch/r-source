@@ -5,10 +5,6 @@
 
 \name{arima}
 \alias{arima}
-%\alias{print.Arima}
-%\alias{coef.Arima}
-%\alias{vcov.Arima}
-%\alias{logLik.Arima}
 \concept{ARMA}
 \title{ARIMA Modelling of Time Series}
 \description{

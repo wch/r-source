@@ -3,8 +3,6 @@
 % Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
-%% From package:nlme  AIC.Rd,v 1.4 2000/07/03 18:22:45 bates
-%% with additional "k = 2" argument (MM)
 \name{AIC}
 \alias{AIC}
 \title{Akaike's An Information Criterion}

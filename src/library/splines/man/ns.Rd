@@ -5,7 +5,6 @@
 
 \name{ns}
 \alias{ns}
-%\alias{makepredictcall.ns}
 \title{Generate a Basis Matrix for Natural Cubic Splines}
 \description{
   Generate the B-spline basis matrix for a natural cubic spline.
@@ -48,10 +47,6 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
     which can either be supplied, else default to the extremes of the
     data.  A primary use is in modeling formula to directly specify a
     natural spline term in a model.
-
-%     Beware of making predictions with new \code{x} values when \code{df}
-%     is used as an argument. Either use \code{safe.predict.gam()}, or else
-%     specify \code{knots} and \code{Boundary.knots}.
 }
 \seealso{
   \code{\link{bs}}, \code{\link{predict.ns}}, \code{\link{SafePrediction}}

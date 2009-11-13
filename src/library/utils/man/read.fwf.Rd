@@ -41,8 +41,8 @@ read.fwf(file, widths, header = FALSE, sep = "\t",
   \item{\dots}{further arguments to be passed to
     \code{\link{read.table}}.  Useful further arguments include
     \code{as.is}, \code{na.strings}, \code{colClasses} and \code{strip.white}.}
-    % PR#8083 mentions strip.white
 }
+% PR#8083 mentions strip.white
 \value{
   A \code{\link{data.frame}} as produced by \code{\link{read.table}}
   which is called internally.

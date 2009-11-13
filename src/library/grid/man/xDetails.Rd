@@ -6,7 +6,6 @@
 \name{xDetails}
 \alias{xDetails}
 \alias{yDetails}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Boundary of a grid grob }
 \description{
   These generic functions are used to determine a location
@@ -16,7 +15,6 @@
 xDetails(x, theta)
 yDetails(x, theta)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{ A grid grob. }
   \item{theta}{ A numeric angle, in degrees, measured
@@ -47,4 +45,4 @@ yDetails(x, theta)
   \code{\link{grobY}}.
 }
 \author{ Paul Murrell }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }

@@ -5,17 +5,6 @@
 
 \name{nls}
 \alias{nls}
-%\alias{anova.nls}
-%\alias{anovalist.nls}
-%\alias{coef.nls}
-%\alias{deviance.nls}
-%\alias{df.residual.nls}
-%\alias{fitted.nls}
-%\alias{logLik.nls}
-%\alias{print.nls}
-%\alias{residuals.nls}
-%\alias{vcov.nls}
-%\alias{weights.nls}
 \title{Nonlinear Least Squares}
 \description{
   Determine the nonlinear (weighted) least-squares estimates of the

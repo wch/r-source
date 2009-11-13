@@ -5,12 +5,7 @@
 
 \name{line}
 \alias{line}
-%\alias{coef.tukeyline}
-%\alias{coefficients.tukeyline}
 \alias{residuals.tukeyline}
-%\alias{fitted.tukeyline}
-%\alias{fitted.values.tukeyline}
-%\alias{print.tukeyline}
 \title{Robust Line Fitting}
 \description{
   Fit a line robustly as recommended in \emph{Exploratory Data Analysis}.

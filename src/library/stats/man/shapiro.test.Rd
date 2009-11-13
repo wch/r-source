@@ -48,8 +48,8 @@ shapiro.test(x)
 \seealso{
   \code{\link{qqnorm}} for producing a normal quantile-quantile plot.
 }
-\examples{
 % FIXME: could use something more interesting here
+\examples{
 shapiro.test(rnorm(100, mean = 5, sd = 3))
 shapiro.test(runif(100, min = 2, max = 4))
 }

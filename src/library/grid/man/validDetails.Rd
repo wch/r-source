@@ -5,7 +5,6 @@
 
 \name{validDetails}
 \alias{validDetails}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Customising grid grob Validation }
 \description{
   This generic hook function is called whenever a grid grob is created
@@ -18,7 +17,6 @@
 \usage{
 validDetails(x)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{ A grid grob. }
 }
@@ -39,4 +37,4 @@ validDetails(x)
 }
 \author{ Paul Murrell }
 \seealso{ \code{\link{grid.edit}} }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }

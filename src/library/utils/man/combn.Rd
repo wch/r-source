@@ -70,5 +70,4 @@ combn(c(1,1,1,1,2,2,2,3,3,4), 3, tabulate, nbins = 4)
 # table.mat(t(combn(c(1,1,1,1,2,2,2,3,3,4), 3, tabulate,nbins=4)))
 }
 \keyword{utilities}
-%\keyword{ combinatorics }% substitute:
 \keyword{iteration}

@@ -6,7 +6,6 @@
 \name{widthDetails}
 \alias{widthDetails}
 \alias{heightDetails}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Width and Height of a grid grob }
 \description{
   These generic functions are used to determine the size of grid grobs.
@@ -15,7 +14,6 @@
 widthDetails(x)
 heightDetails(x)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{ A grid grob. }
 }
@@ -33,4 +31,4 @@ heightDetails(x)
   \code{\link{absolute.size}}.
 }
 \author{ Paul Murrell }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }
