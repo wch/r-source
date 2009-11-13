@@ -30,8 +30,8 @@
   first directory in the library path which would be used by \R run in
   the current environment.
 
-  To install into the library tree \code{lib}, use
-  \command{R CMD INSTALL -l lib pkgs}.
+  To install into the library tree \code{\var{lib}}, use
+  \command{R CMD INSTALL -l \var{lib} \var{pkgs}}.
   This prepends \code{lib} to the library path for
   duration of the install, so required packages in the installation
   directory will be found (and used in preference to those in other

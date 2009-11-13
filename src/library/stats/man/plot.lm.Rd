@@ -82,8 +82,8 @@
   hypothesis).  They are given as
   \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s*sqrt(1 - h.ii))}
   where \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
-  \code{\link{influence}()}\code{$hat}, see also \code{\link{hat}}, and
-  where the Residual-Leverage uses standardized Pearson residuals
+  \code{\link{influence}()$hat} (see also \code{\link{hat}}), and
+  where the Residual-Leverage plot uses standardized Pearson residuals
   (\code{\link{residuals.glm}(type = "pearson")}) for \eqn{R[i]}.
 
   The Residual-Leverage plot shows contours of equal Cook's distance,

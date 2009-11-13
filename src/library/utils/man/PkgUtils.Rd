@@ -1,6 +1,6 @@
 % File src/library/utils/man/PkgUtils.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{PkgUtils}
@@ -34,9 +34,8 @@
   of the packages are taken from the \file{DESCRIPTION} files and not
   from the directory names.
 
-  Use
-  \command{R CMD foo --help}
-  to obtain usage information on utility \code{foo}.
+  Use \command{R CMD \var{foo} --help}
+  to obtain usage information on utility \code{\var{foo}}.
 
   Several of the options to \code{build --binary} are passed to
   \code{\link{INSTALL}} so consult its help for the details.
