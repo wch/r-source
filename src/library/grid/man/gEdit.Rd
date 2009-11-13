@@ -8,7 +8,6 @@
 \alias{gEditList}
 \alias{applyEdit}
 \alias{applyEdits}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Create and Apply Edit Objects }
 \description{
   The functions \code{gEdit} and \code{gEditList} create
@@ -27,7 +26,6 @@ gEditList(...)
 applyEdit(x, edit)
 applyEdits(x, edits)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{\dots}{ one or more arguments to the \code{editGrob} function
     (for \code{gEdit}) or one or more \code{"gEdit"} objects
@@ -54,4 +52,4 @@ grid.rect(gp=gpar(col="red"))
 # same thing, but more verbose
 grid.draw(applyEdit(rectGrob(), gEdit(gp=gpar(col="red"))))
 }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }

@@ -11,11 +11,6 @@ coefficients(object, \dots)
 }
 \alias{coef}
 \alias{coefficients}
-%\alias{coef.default}
-%\alias{coef.lm}
-%\alias{coef.glm}
-%\alias{coef.aov}
-%\alias{coef.listof}
 \arguments{
   \item{object}{an object for which the extraction of model coefficients is
     meaningful.}

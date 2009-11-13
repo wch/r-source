@@ -5,8 +5,6 @@
 
 \name{smooth}
 \alias{smooth}
-%\alias{print.tukeysmooth}
-%\alias{summary.tukeysmooth}
 \title{Tukey's (Running Median) Smoothing}
 \description{
   Tukey's smoothers, \emph{3RS3R}, \emph{3RSS}, \emph{3R}, etc.

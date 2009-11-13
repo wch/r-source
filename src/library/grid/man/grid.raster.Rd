@@ -1,7 +1,11 @@
+% File src/library/grid/man/grid.record.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2009 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{grid.raster}
 \alias{grid.raster}
 \alias{rasterGrob}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
   Render a raster object
 }
@@ -16,6 +20,7 @@ grid.raster(image,
             just = "centre", hjust = NULL, vjust = NULL,
             interpolate = TRUE, default.units = "npc",
             name = NULL, gp = gpar(), vp = NULL)
+
 rasterGrob(image,
            x = unit(0.5, "npc"), y = unit(0.5, "npc"),
            width = unit(1, "npc"), height = NULL,
@@ -23,7 +28,6 @@ rasterGrob(image,
            interpolate = TRUE, default.units = "npc",
            name = NULL, gp = gpar(), vp = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{image}{
     Any R object that can be coerced to a raster object.

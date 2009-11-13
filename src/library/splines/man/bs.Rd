@@ -47,10 +47,6 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
   interior knots and degree, evaluated at the values of \code{x}.  A
   primary use is in modeling formulas to directly specify a piecewise
   polynomial term in a model.
-
-%   Beware of making predictions with new \code{x} values when \code{df}
-%   is used as an argument.  Either use \code{safe.predict.gam()}, or else
-%   specify \code{knots} and \code{Boundary.knots}.
 }
 \seealso{
   \code{\link{ns}}, \code{\link{poly}}, \code{\link{smooth.spline}},

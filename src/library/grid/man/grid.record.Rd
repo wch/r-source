@@ -6,7 +6,6 @@
 \name{grid.record}
 \alias{grid.record}
 \alias{recordGrob}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Encapsulate calculations and drawing }
 \description{
   Evaluates an expression that includes both calculations
@@ -20,7 +19,6 @@
 recordGrob(expr, list, name=NULL, gp=NULL, vp=NULL)
 grid.record(expr, list, name=NULL, gp=NULL, vp=NULL)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{expr}{object of mode \code{\link{expression}} or \code{call} or
     an unevaluated expression.}

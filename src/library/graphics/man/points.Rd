@@ -37,7 +37,7 @@ points(x, \dots)
       This can either be a single character or an integer code for one
       of a set of graphics symbols.  The full set of S symbols is
       available with \code{pch=0:18}, see the examples below.
-      % (currently, \R uses circles instead of octagons).
+      (NB: \R uses circles instead of the octagons used in S.)
 
       Value \code{pch="."} (equivalently \code{pch = 46}) is handled
       specially.  It is a rectangle of side 0.01 inch (scaled by

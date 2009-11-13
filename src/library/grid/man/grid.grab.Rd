@@ -15,7 +15,6 @@
 grid.grab(warn = 2, wrap = FALSE, ...)
 grid.grabExpr(expr, warn = 2, wrap = FALSE, ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{expr}{ An expression to be evaluated.  Typically,
     some calls to grid drawing functions. }
@@ -78,4 +77,4 @@ grab <- grid.grab()
 grid.newpage()
 grid.draw(grab)
 }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }

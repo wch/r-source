@@ -5,8 +5,6 @@
 
 \name{medpolish}
 \alias{medpolish}
-%\alias{plot.medpolish}
-%\alias{print.medpolish}
 \title{Median Polish of a Matrix}
 \description{
   Fits an additive model using Tukey's \emph{median polish} procedure.

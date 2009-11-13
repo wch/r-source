@@ -9,8 +9,6 @@
 \alias{df.kernel}
 \alias{is.tskernel}
 \alias{plot.tskernel}
-%\alias{print.tskernel}
-%\alias{[.tskernel}
 \title{Smoothing Kernel Objects}
 \description{
   The \code{"tskernel"} class is designed to represent discrete
@@ -26,8 +24,7 @@ kernel(coef, m, r, name)
 df.kernel(k)
 bandwidth.kernel(k)
 is.tskernel(k)
-%
-%\method{print}{tskernel}(x, digits = max(3,getOption("digits")-3), ...)
+
 \method{plot}{tskernel}(x, type = "h", xlab = "k", ylab = "W[k]",
      main = attr(x,"name"), \dots)
 }
@@ -42,7 +39,6 @@ is.tskernel(k)
     Currently this is supported only for the named "*daniell" kernels.}
   \item{name}{the name the kernel will be called.}
   \item{r}{the kernel order for a Fejer kernel.}
-%  \item{digits}{the number of digits to format real numbers.}
   \item{k,x}{a \code{"tskernel"} object.}
   \item{type, xlab, ylab, main, \dots}{arguments passed to
     \code{\link{plot.default}}.}

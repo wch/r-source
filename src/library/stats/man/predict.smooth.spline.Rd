@@ -5,7 +5,6 @@
 
 \name{predict.smooth.spline}
 \alias{predict.smooth.spline}
-%\alias{predict.smooth.spline.fit}
 \title{Predict from Smoothing Spline Fit}
 \description{
   Predict a smoothing spline fit at new points, return the derivative if

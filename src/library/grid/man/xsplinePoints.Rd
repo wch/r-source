@@ -1,3 +1,8 @@
+% File src/library/grid/man/viewport.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2009 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{xsplinePoints}
 \alias{xsplinePoints}
 \title{
@@ -12,7 +17,6 @@
 \usage{
 xsplinePoints(x)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
     An Xspline grob, as produced by the xsplineGrob() function.
@@ -41,6 +45,4 @@ grid.draw(xsg)
 trace <- xsplinePoints(xsg)
 grid.circle(trace$x, trace$y, default.units="inches", r=unit(.5, "mm"))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ dplot }

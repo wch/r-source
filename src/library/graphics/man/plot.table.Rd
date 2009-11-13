@@ -28,12 +28,9 @@
     \code{\link{dimnames}} coerce-able to numbers.}
   \item{\dots}{further graphical arguments, see \code{\link{plot.default}}.}
 }
-% It has been 'experimental' for a very long time! Commented for 2.6.0.
-%\details{
-%  The current implementation (R 1.2) is somewhat experimental and will
-%  be improved and extended.
-%}
-\seealso{\code{\link{plot.factor}}, the \code{\link{plot}} method for factors.}
+\seealso{
+  \code{\link{plot.factor}}, the \code{\link{plot}} method for factors.
+}
 
 \examples{
 ## 1-d tables

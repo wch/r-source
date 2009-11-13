@@ -5,7 +5,6 @@
 
 \name{splineKnots}
 \alias{splineKnots}
-%\alias{splineKnots.spline}
 \title{Knot Vector from a Spline}
 \description{
   Return the knot vector corresponding to a spline object.

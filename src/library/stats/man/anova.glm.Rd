@@ -10,7 +10,6 @@
 }
 \alias{anova.glm}
 \alias{anova.glmlist}
-%\alias{anova.glm.null}
 \description{
   Compute an analysis of deviance table for one or more generalized
   linear model fits.

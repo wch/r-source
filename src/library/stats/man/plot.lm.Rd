@@ -64,9 +64,7 @@
   \eqn{\sqrt{| residuals |}} against fitted values, a Normal Q-Q plot, a
   plot of Cook's distances versus row labels, a plot of residuals
   against leverages, and a plot of Cook's distances against
-  leverage/(1-leverage).  By default, the first
-  % four of these are provided.
-  three and \code{5} are provided.
+  leverage/(1-leverage).  By default, the first three and \code{5} are provided.
 }
 \details{
   \code{sub.caption}---by default the function call---is shown as
@@ -84,7 +82,6 @@
   hypothesis).  They are given as
   \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s*sqrt(1 - h.ii))}
   where \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
-% bug in Rdconv: "$" and \link inside \code fails; '\$' doesn't help :
   \code{\link{influence}()}\code{$hat}, see also \code{\link{hat}}, and
   where the Residual-Leverage uses standardized Pearson residuals
   (\code{\link{residuals.glm}(type = "pearson")}) for \eqn{R[i]}.

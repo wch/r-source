@@ -8,7 +8,6 @@
 \alias{nestedListing}
 \alias{pathListing}
 \alias{grobPathListing}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ List the names of grobs or viewports }
 \description{
   Returns a listing of the names of grobs or viewports.
@@ -122,4 +121,4 @@ grid.ls(sampleGTree, view=TRUE, grob=FALSE, print=pathListing)
 # raw flat listing
 str(grid.ls(sampleGTree, view=TRUE, print=FALSE))
 }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }

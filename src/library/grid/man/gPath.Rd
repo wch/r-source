@@ -15,7 +15,6 @@
 \usage{
 gPath(...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{\dots}{ Character values which are grob names. }
 }
@@ -46,4 +45,4 @@ gPath(...)
 \examples{
 gPath("g1", "g2")
 }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }

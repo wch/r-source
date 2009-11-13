@@ -5,8 +5,6 @@
 
 \name{xyVector}
 \alias{xyVector}
-%\alias{as.data.frame.xyVector}
-%\alias{plot.xyVector}
 \title{Construct an xyVector Object}
 \description{
   Create an object to represent a set of x-y pairs.  The resulting

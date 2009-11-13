@@ -15,9 +15,6 @@
 \alias{rev.dendrogram}
 \alias{str.dendrogram}
 \alias{plot.dendrogram}
-% Not exported:
-%\alias{plotNode}
-%\alias{plotNodeLimit}
 \alias{is.leaf}
 \description{
   Class \code{"dendrogram"} provides general functions for handling

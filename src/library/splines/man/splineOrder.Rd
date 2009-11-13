@@ -5,8 +5,6 @@
 
 \name{splineOrder}
 \alias{splineOrder}
-%\alias{splineOrder.bSpline}
-%\alias{splineOrder.polySpline}
 \title{Determine the Order of a Spline}
 \description{
   Return the order of a spline object.

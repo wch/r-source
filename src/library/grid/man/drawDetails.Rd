@@ -8,7 +8,6 @@
 \alias{preDrawDetails}
 \alias{postDrawDetails}
 \alias{draw.details}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Customising grid Drawing }
 \description{
   These generic hook functions are called whenever a grid grob is drawn.
@@ -21,7 +20,6 @@ draw.details(x, recording)
 preDrawDetails(x)
 postDrawDetails(x)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{ A grid grob. }
   \item{recording}{ A logical value indicating whether a grob
@@ -60,4 +58,4 @@ postDrawDetails(x)
 }
 \author{ Paul Murrell }
 \seealso{ \code{\link{grid.draw}} }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }

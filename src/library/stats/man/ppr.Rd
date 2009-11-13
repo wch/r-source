@@ -11,10 +11,6 @@
 \alias{ppr}
 \alias{ppr.default}
 \alias{ppr.formula}
-%\alias{predict.ppr}
-%\alias{print.ppr}
-%\alias{summary.ppr}
-%\alias{print.summary.ppr}
 \title{Projection Pursuit Regression}
 \description{
   Fit a projection pursuit regression model.

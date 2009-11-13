@@ -1,8 +1,12 @@
+% File src/library/grid/man/unit.rep.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2009 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{raster}
 \alias{raster}
 \alias{is.raster}
 \alias{as.raster}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
   Create a raster object
 }
@@ -15,7 +19,6 @@ raster(x)
 is.raster(x)
 as.raster(x)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
     Any R object.
@@ -42,6 +45,4 @@ as.raster(x)
 raster(matrix(hcl(0, 80, seq(50, 80, 10)),
               nrow=4, ncol=5))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ dplot }

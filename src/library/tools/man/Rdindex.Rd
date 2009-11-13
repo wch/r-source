@@ -39,8 +39,6 @@ Rdindex(RdFiles, outFile = "", type = NULL,
   if there is none) is used instead.
 }
 %% Currently no \example: at run time we do not have direct access to Rd
-%% files.  What we could do is take an installed Rd archive, and extract
-%% by splitting on the new-style \eof file separator, but we really want
-%% a simple example, right?
+%% files.
 \keyword{documentation}
 \keyword{utilities}

@@ -33,6 +33,4 @@ dev.off()
 grid.raster(cap, width=.5, height=.5, interpolate=FALSE)
 }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ dplot }

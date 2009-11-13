@@ -7,7 +7,6 @@
 \alias{model.tables}
 \alias{model.tables.aov}
 \alias{model.tables.aovlist}
-%\alias{print.tables.aov}
 \title{Compute Tables of Results from an Aov Model Fit}
 \description{
   Computes summary tables for model fits, especially complex \code{aov}

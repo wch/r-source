@@ -5,7 +5,6 @@
 
 \name{editDetails}
 \alias{editDetails}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Customising grid Editing }
 \description{
   This generic hook function is called whenever a grid grob is edited
@@ -16,7 +15,6 @@
 \usage{
 editDetails(x, specs)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{ A grid grob. }
   \item{specs}{ A list of named elements.  The names indicate the
@@ -35,4 +33,4 @@ editDetails(x, specs)
 }
 \author{ Paul Murrell }
 \seealso{ \code{\link{grid.edit}} }
-\keyword{ dplot }% at least one, from doc/KEYWORDS
+\keyword{ dplot }

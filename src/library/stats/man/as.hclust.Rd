@@ -10,8 +10,6 @@
 \title{Convert Objects to Class hclust}
 \usage{
 as.hclust(x, \dots)
-%as.hclust.default(x, \dots)
-%as.hclust.twins(x, \dots)
 }
 \arguments{
   \item{x}{Hierarchical clustering object}

@@ -5,9 +5,7 @@
 
 \name{summary.glm}
 \alias{summary.glm}
-%\alias{summary.glm.null}
 \alias{print.summary.glm}
-%\alias{print.summary.glm.null}
 \title{Summarizing Generalized Linear Model Fits}
 \usage{
 \method{summary}{glm}(object, dispersion = NULL, correlation = FALSE,

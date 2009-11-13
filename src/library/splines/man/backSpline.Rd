@@ -5,8 +5,6 @@
 
 \name{backSpline}
 \alias{backSpline}
-%\alias{backSpline.nbSpline}
-%\alias{backSpline.npolySpline}
 \title{Monotone Inverse Spline}
 \description{
   Create a monotone inverse of a monotone natural spline.
