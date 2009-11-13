@@ -59,7 +59,6 @@ close(zz)
 readLines(zz <- gzcon(file("ex.gz", "rb")))
 close(zz)
 unlink("ex.gz")
-
 % Cygwin seems to require a different name
 zz <- gzcon(file("ex2.gz", "wb"))
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")

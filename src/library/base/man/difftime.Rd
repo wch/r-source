@@ -56,7 +56,6 @@ as.difftime(tim, format = "\%X", units = "auto")
   \item{format}{character specifying the format of \code{tim}: see
     \code{\link{strptime}}.  The default is a locale-specific time format.}
   \item{x}{an object inheriting from class \code{"difftime"}.}
-% round(), etc: \item{digits}{integer.  Number of significant digits to retain.}
   \item{\dots}{arguments to be passed to or from other methods.}
 }
 \details{

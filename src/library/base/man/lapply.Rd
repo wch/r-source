@@ -149,11 +149,11 @@ vapply(i39, fivenum, c(Min.=0, "1st Qu."=0, Median=0, "3rd Qu."=0, Max.=0))
 hist(replicate(100, mean(rexp(10))))
 
 ## use of replicate() with parameters:
-% taken from PR#8472
 foo <- function(x=1, y=2) c(x,y)
 # does not work: bar <- function(n, ...) replicate(n, foo(...))
 bar <- function(n, x) replicate(n, foo(x=x))
 bar(5, x=3)
 }
+% taken from PR#8472
 \keyword{iteration}
 \keyword{list}
