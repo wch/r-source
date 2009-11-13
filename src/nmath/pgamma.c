@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 2005-6 Morten Welinder <terra@gnome.org>
- *  Copyright (C) 2005-6 The R Foundation
+ *  Copyright (C) 2005-9 The R Foundation
  *  Copyright (C) 2006	 The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -352,8 +352,8 @@ pd_upper_series (double x, double y, int log_p)
 }
 
 /* Continued fraction for calculation of
- *    ???
- *  =  (y / d)	+  o(y/d)
+ *    scaled upper-tail F_{gamma}
+ *  ~=  (y / d) * [1 +  (1-y)/d +  O( ((1-y)/d)^2 ) ]
  */
 static double
 pd_lower_cf (double y, double d)
@@ -374,10 +374,9 @@ pd_lower_cf (double y, double d)
 #ifdef DEBUG_p
     REprintf("pd_lower_cf(y=%.14g, d=%.14g)", y, d);
 #endif
-    if (y == 0 || (R_FINITE(y) && !R_FINITE(d))) /* includes d = Inf  or y = 0 */
-	return 0;
-    /* Needed, e.g. for  pgamma(10^c(100,295), shape= 1.1, log=TRUE) */
-    if(fabs(y - 1) < fabs(d) * 1e-20) {
+    if (y == 0) return 0;
+    /* Needed, e.g. for  pgamma(10^c(100,295), shape= 1.1, log=TRUE): */
+    if(fabs(y - 1) < fabs(d) * DBL_EPSILON) { /* includes y < d = Inf */
 #ifdef DEBUG_p
 	REprintf(" very small 'y' -> returning (y/d)\n");
 #endif
@@ -391,8 +390,6 @@ pd_lower_cf (double y, double d)
     a2 = y; b2 = d;
 
     while NEEDED_SCALE
-
-    /* if(a2 == 0) return 0;/\* just in case, e.g. d=y=0 *\/ */
 
     i = 0;
     while (i < max_it) {
