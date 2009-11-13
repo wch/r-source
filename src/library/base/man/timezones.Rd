@@ -66,8 +66,8 @@ Sys.timezone()
   updated (see the section on \sQuote{Time zone names}).  Incorrect
   results will never be an \R issue, so please ensure that you have the
   courtesy not to blame \R for them.
-  % Unlike Tony Plate.
 }
+% Unlike Tony Plate.
 
 \value{
   \code{Sys.timezone} returns an OS-specific character string, possibly

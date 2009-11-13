@@ -1,14 +1,12 @@
 % File src/library/stats/man/AIC.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 %% From package:nlme  AIC.Rd,v 1.4 2000/07/03 18:22:45 bates
 %% with additional "k = 2" argument (MM)
 \name{AIC}
 \alias{AIC}
-%\alias{AIC.default}
-%\alias{AIC.logLik}
 \title{Akaike's An Information Criterion}
 \description{
   Generic function calculating the Akaike information criterion for

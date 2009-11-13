@@ -189,8 +189,8 @@ gettextf(fmt, \dots, domain = NULL)
   of text.
 }
 
-\examples{
 % Escape all the '%' here !
+\examples{
 ## be careful with the format: most things in R are floats
 ## only integer-valued reals get coerced to integer.
 

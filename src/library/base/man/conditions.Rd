@@ -21,7 +21,6 @@
 \alias{simpleWarning}
 \alias{simpleMessage}
 \alias{tryCatch}
-%\alias{trySilent} in methods is deprecated
 \alias{withCallingHandlers}
 \alias{withRestarts}
 

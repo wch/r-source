@@ -67,7 +67,7 @@ is.character(x)
   upper to lower case) and \code{\link{sub}}, \code{\link{grep}} etc for
   string matching and substitutions.  Note that
   \code{help.search(keyword = "character")} gives even more links.
-%
+
   \code{\link{deparse}}, which is normally preferable to
   \code{as.character} for language objects.
 }

@@ -64,7 +64,6 @@ stopifnot(identical(center(x),       center(x, "mean")),
           identical(center(x, NULL), center(x, "mean")) )
 
 ## Allowing more than one match:
-% '3 of 4' -> warning when match.arg() is not coded well enough:
 match.arg(c("gauss", "rect", "ep"),
           c("gaussian", "epanechnikov", "rectangular", "triangular"),
           several.ok = TRUE)

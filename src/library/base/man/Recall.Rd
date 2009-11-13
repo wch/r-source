@@ -17,9 +17,6 @@ Recall(\dots)
   in which it is called.  It allows the definition of recursive
   functions which still work after being renamed, see example below.
 }
-% \details{
-% 
-% }
 \note{
   \code{Recall} will not work correctly when passed as a function
   argument, e.g. to the \code{apply} family of functions.

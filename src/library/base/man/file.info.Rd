@@ -89,7 +89,6 @@ file.info(\dots)
   \code{\link{Sys.chmod}} to change permissions.
 }
 \examples{
-%-- the output of this should be "diff"able, says MM: why?
 ncol(finf <- file.info(dir()))# at least six
 \dontrun{finf # the whole list}
 ## Those that are more than 100 days old :

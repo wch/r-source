@@ -125,11 +125,11 @@ sapply(i39, fivenum)
 hist(replicate(100, mean(rexp(10))))
 
 ## use of replicate() with parameters:
-% taken from PR#8472
 foo <- function(x=1, y=2) c(x,y)
 # does not work: bar <- function(n, ...) replicate(n, foo(...))
 bar <- function(n, x) replicate(n, foo(x=x))
 bar(5, x=3)
 }
+% taken from PR#8472
 \keyword{iteration}
 \keyword{list}

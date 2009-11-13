@@ -10,8 +10,6 @@
 \title{Transform an Object, for Example a Data Frame}
 \usage{
 transform(`_data`, \dots)
-%transform.default(x, \dots)
-%transform.data.frame(x, \dots)
 }
 \arguments{
     \item{_data}{The object to be transformed}

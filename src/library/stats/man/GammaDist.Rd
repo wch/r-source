@@ -72,11 +72,11 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   which will be represented as zero.  (This will also happen for very
   large values of \code{scale} since the actual generation is done for
   \code{scale=1}.)
+}
 % Have caught all currently known problems; hence no longer say:
 %   Similarly, \code{qgamma} has a very hard job for
 %   small \code{scale}, and warns of potential unreliability for
 %   \code{scale < 1e-10}.
-}
 \note{
   The S parametrization is via \code{shape} and \code{rate}: S has no
   \code{scale} parameter.
