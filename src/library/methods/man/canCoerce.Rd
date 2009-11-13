@@ -30,7 +30,7 @@ canCoerce(object, Class)
 m <- matrix(pi, 2,3)
 canCoerce(m, "numeric") # TRUE
 canCoerce(m, "array")   # TRUE
-%% FIXME: give an interesting one returning FALSE
 }
+%% FIXME: give an interesting one returning FALSE
 \keyword{classes}
 \keyword{methods}

@@ -155,11 +155,7 @@ You could also supply methods via \code{setAs} for non-inherited relationships, 
 For further on the distinction between simple and explicit inheritance, see \code{\link{setIs}}.
 
 }
-%% <FIXME>
-%% Currently Rdconv cannot deal with markup in section titles.
-%% \section{How Functions \code{as} and \code{setAs} Work}{
 \section{How Functions \code{as} and \code{setAs} Work}{
-  %% </FIXME>
   The function \code{as}  turns \code{object} into an object
   of class \code{Class}.  In doing so, it applies a \dQuote{coerce
     method}, using S4

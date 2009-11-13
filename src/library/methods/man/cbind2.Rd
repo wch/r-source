@@ -52,8 +52,6 @@ rbind2(x, y)
   }
 }
 %% The R code is currently in ../R/MethodsListClass.R + ../R/cbind-rbind.R
-% \details{
-% }
 \value{
   A matrix (or matrix like object) combining the columns (or rows) of
   \code{x} and \code{y}.

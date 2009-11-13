@@ -8,8 +8,6 @@
 \alias{isGeneric}
 \alias{isGroup}
 \alias{removeGeneric}
-% standardGeneric() is a .Primitive in 'base', not 'methods'
-%\alias{standardGeneric}
 \alias{getGenerics}
 \alias{dumpMethod}
 \alias{findFunction}
@@ -29,7 +27,6 @@
 isGeneric(f, where, fdef, getName = FALSE)
 isGroup(f, where, fdef)
 removeGeneric(f, where)
-%standardGeneric(f)
 
 dumpMethod(f, signature, file, where, def)
 findFunction(f, generic = TRUE, where = topenv(parent.frame()))

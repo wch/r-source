@@ -17,12 +17,9 @@ inheritedSlotNames(Class, where = topenv(parent.frame()))
   \item{where}{environment, to be passed further to
     \code{\link{isClass}} and \code{\link{getClass}}.}
 }
-% \details{
-% }
 \value{
-character vector of slot names, or \code{\link{NULL}}.
+  character vector of slot names, or \code{\link{NULL}}.
 }
-% \author{Martin Maechler}
 
 \seealso{
   \code{\link{slotNames}}, \code{\link{slot}}, \code{\link{setClass}}, etc.
