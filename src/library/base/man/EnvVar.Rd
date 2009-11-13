@@ -78,7 +78,7 @@
 #ifdef unix
       Used by \command{R CMD Rd2dvi}, and at startup to set the default for
       \code{\link{options}("latexcmd")}, used by
-      \code{\link{help}(offline = TRUE)}.
+      \code{\link{help}(help_type="ps")}.
 #endif
 #ifdef windows
       Used by \command{R CMD Rd2dvi}.
@@ -101,8 +101,8 @@
 #endif
 #ifdef windows
       For \command{Rgui} it controls the number of lines saved to the
-      history file: the size of the history when in use is controlled by
-      the console customization: see \code{\link{Rconsole}}.
+      history file: the size of the history used in the session is
+      controlled by the console customization: see \code{\link{Rconsole}}.
 #endif
     }
     \item{\env{R_HOME}:}{The top-level directory of the \R
@@ -112,14 +112,7 @@
     \item{\env{R_LATEXCMD}:}{The path to \code{latex}. Defaults to
       the value of \env{LATEX}, and if that is unset to a value
       determined when \R was built.
-#ifdef unix
-      Used by \command{R CMD Rd2dvi}, and at startup to set the default for
-      \code{\link{options}("latexcmd")}, used by
-      \code{\link{help}(offline = TRUE)}.
-#endif
-#ifdef windows
       Used by \command{R CMD Rd2dvi}.
-#endif
       }
     \item{\env{R_LIBS}:}{Optional.  Used for initial setting of
       \code{\link{.libPaths}}.}
@@ -133,8 +126,7 @@
       Used by \command{R CMD Rd2dvi}.}
     \item{\env{R_PAPERSIZE}:}{Optional.  Use to set the default for
       \code{\link{options}("papersize")}, e.g. used by
-      \code{\link{pdf}}, \code{\link{postscript}} and
-      \code{\link{help}(offline = TRUE)}.}
+      \code{\link{pdf}} and \code{\link{postscript}}.}
     \item{\env{R_PDFLATEXCMD}:}{The path to \command{pdflatex}.
       Defaults at startup to the value of \code{PDFLATEX}, and if that
       is unset to a value determined when \R was built.
@@ -146,9 +138,7 @@
     \item{\env{R_PROFILE}:}{Optional.  The path to the site profile
       file: see \link{Startup}.  Consulted at startup.}
     \item{\env{R_RD4DVI}:}{Options for \command{latex} processing of
-      \code{Rd} files.
-      Used by \command{R CMD Rd2dvi} and
-      \code{\link{help}(offline = TRUE)}.}
+      \code{Rd} files. Used by \command{R CMD Rd2dvi}.}
     \item{\env{R_RD4PDF}:}{Options for \command{pdflatex} processing of
       \code{Rd} files.
       Used by \command{R CMD Rd2dvi}.}
