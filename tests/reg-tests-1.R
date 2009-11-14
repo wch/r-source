@@ -5908,3 +5908,7 @@ stopifnot(identical(regexpr(" ", x), regexpr(" ", x, fixed=TRUE)))
 # fixed=TRUE reported match position in bytes in R <= 2.10.0
 stopifnot(identical(regexpr(" a", x), regexpr(" a", x, fixed=TRUE)))
 ## always worked.
+
+## unname() on 0-length vector
+stopifnot(identical(1[FALSE], unname(c(a=1)[FALSE])))
+##

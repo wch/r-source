@@ -15,9 +15,9 @@
 #  http://www.r-project.org/Licenses/
 
 unname <- function (obj, force= FALSE) {
-    if (length(names(obj)))
+    if (!is.null(names(obj)))
         names(obj) <- NULL
-    if (length(dimnames(obj)) && (force || !is.data.frame(obj)))
+    if (!is.null(dimnames(obj)) && (force || !is.data.frame(obj)))
         dimnames(obj) <- NULL
     obj
 }
