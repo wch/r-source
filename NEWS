@@ -92,6 +92,10 @@ BUG FIXES
 	correctly returns 0 instead of NaN in similar extreme cases, and
 	qgamma() no longer warns in the case of small 'a', see (PR#12324).
 
+    o	unname() now also removes names from a zero length vector.
+
+    o	printing ls.str() results no longer evaluates unevaluated calls.
+
 
 
 		CHANGES IN R VERSION 2.10.0

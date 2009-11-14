@@ -551,7 +551,8 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE,
 		"<missing>" else o$message, "\n", sep='')
 	}
 	else
-	    do.call(str, c(list(o), strargs))
+	    do.call(str, c(list(o), strargs),
+		    quote = is.call(o)) # protect calls from evaluation
     }
     invisible(x)
 }
