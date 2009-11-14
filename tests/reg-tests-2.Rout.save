@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-08-05 r49069)
+R version 2.11.0 Under development (unstable) (2009-11-13 r50424)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6475,4 +6475,10 @@ Error in `[[<-.data.frame`(`*tmp*`, "NewCol", value = integer(0)) :
 > update(`a: b` ~ x, ~ . + y)
 `a: b` ~ x + y
 > ## 2.9.1 dropped backticks
+> 
+> ## print(ls.str(.)) did evaluate calls
+> E <- new.env(); E$cl <- call("print", "Boo !")
+> ls.str(E)
+cl :  language print("Boo !")
+> ## 2.10.0 did print..
 > 

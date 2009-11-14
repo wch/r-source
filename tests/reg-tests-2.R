@@ -2414,3 +2414,8 @@ print(m22, na.print="<missing value>")
 ## https://stat.ethz.ch/pipermail/r-devel/2009-July/054184.html
 update(`a: b` ~ x, ~ . + y)
 ## 2.9.1 dropped backticks
+
+## print(ls.str(.)) did evaluate calls
+E <- new.env(); E$cl <- call("print", "Boo !")
+ls.str(E)
+## 2.10.0 did print..
