@@ -1647,11 +1647,13 @@ sub check_pkg {
 	} else {
 	    $log->result("OK");
 	}
-	if($pkgname ne "base") {
+	## for a reasonable test of S4-using packages we do want methods
+	## and then we can't really test unloading base packages
+	## if they are loaded on startup.  So use standard set of packages.
+	if(!$is_base_pkg) {
 	    $log->checking("whether the name space can be unloaded cleanly");
 	    my $Rcmd = "invisible(suppressMessages(loadNamespace(\"${pkgname}\"))); cat('\n---- unloading\n'); unloadNamespace(\"${pkgname}\")";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES=NULL");
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	    @out = grep(!/^[+>]/, @out);
 	    if(scalar(grep(/^(Error|\.onUnload failed)/, @out)) > 0) {
 		$log->warning();
