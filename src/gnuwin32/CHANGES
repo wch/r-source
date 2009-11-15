@@ -30,6 +30,9 @@ NEW FEATURES
 	to the Unix X11() device.
 
     o	file.rename() can work across volumes (by copy-and-delete).
+    
+    o	The main HTML help page now links to this CHANGES file.
+	(Suggested by Henrik Bengtsson.) 
 
 
 
@@ -1854,7 +1857,7 @@ UNCATEGORIZED
     o	Overwrite mode in the console now works for MBCS charsets.
 	(Patch contributed by Haruki Koyanagi.)
 
-    o	Input from the Rgui console was changing the letter 255 (ÿ in Latin-2)
+    o	Input from the Rgui console was changing the letter 255 ( in Latin-2)
 	in the character set to letter 1.
 
     o	R CMD REMOVE in 2.2.0 removed the package(s) but failed to remake the

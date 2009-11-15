@@ -83,6 +83,9 @@ NEW FEATURES
 	output type and to check for consistency in the function
 	values.
 
+    o	The main HTML help page now links to this NEWS file.
+	(Suggested by Henrik Bengtsson.)
+    
 
 DEPRECATED & DEFUNCT
 

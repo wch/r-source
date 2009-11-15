@@ -132,6 +132,9 @@ httpd <- function(path, query, ...)
         return(list(file = file.path(R.home("doc"), "html", "R.css")))
     else if(path == "/favicon.ico")
         return(list(file = file.path(R.home("doc"), "html", "favicon.ico")))
+    else if(path %in% c("/NEWS", "/ONEWS", "/OONEWS"))
+    	return(list(file = file.path(R.home(), sub("/", "", path)),
+    	            "content-type" = "text/plain"))
     else if(!grepl("^/(doc|library)/", path))
         return(error_page(paste("Only URLs under", mono("/doc"),
                                 "and", mono("/library"), "are allowed")))

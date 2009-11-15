@@ -23,9 +23,9 @@ FULLVERSION=`cat ../../../VERSION`
 RPREFIX = $(shell $(PERL) ../fixed/rwver.pl $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
 
-INFO_FILES = COPYING NEWS README
-DOC_INFO_FILES = AUTHORS COPYING COPYING.LIB FAQ RESOURCES THANKS
-GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
+INFO_FILES = COPYING NEWS ONEWS OONEWS README
+DOC_INFO_FILES = AUTHORS COPYING COPYING.LIB FAQ RESOURCES THANKS CHANGES CHANGES0 CHANGES1
+GW_INFO_FILES = COPYRIGHTS README.Rterm rw-FAQ
 
 ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Makeconf Rcmd_environ
 
@@ -61,7 +61,7 @@ imagedir:
 	$(CP) -p $(foreach i,$(INFO_FILES),$(R_HOME)/$i) $(RPREFIX)
 	$(CP) -p $(foreach i,$(DOC_INFO_FILES),$(R_HOME)/doc/$i) $(RPREFIX)/doc
 	$(CP) -p $(foreach i,$(GW_INFO_FILES),../$i) $(RPREFIX)/doc
-	mv $(RPREFIX)/doc/CHANGES $(RPREFIX)
+	$(CP) -p $(RPREFIX)/doc/CHANGES $(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" ../README > $(RPREFIX)/README.$(RPREFIX)
