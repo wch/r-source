@@ -2,7 +2,7 @@ include ../MkRules
 
 R_HOME = ../../..
 
-all: profiles fixhtml fixbin fixetc fixdoc svnonly
+all: profiles fixhtml fixbin fixetc svnonly
 
 profiles: $(R_HOME)/library/base/R/Rprofile
 
@@ -30,11 +30,7 @@ fixhtml:  html/rwin.html
 fixetc: $(wildcard ./etc/*)
 	$(CP) -p $^ $(R_HOME)/etc
 	@$(ECHO) done > fixetc
-	
-fixdoc: $(wildcard ../CHANGES*)
-	$(CP) -p $^ $(R_HOME)/doc
-	@$(ECHO) done > fixhtml
-	
+
 svnonly:
 	@$(MAKE) -C ../../../doc/manual -f Makefile.win svnonly
 
