@@ -307,8 +307,10 @@ as.data.frame.array <- function(x, row.names = NULL, optional = FALSE, ...)
     }
 }
 
-## will always have a class here
-"[.AsIs" <- function(x, i, ...) structure(NextMethod("["), class = class(x))
+## Allow extraction method to have changed the underlying class,
+## so re-assign the class based on the result.
+"[.AsIs" <- function(x, i, ...) I(NextMethod("["))
+
 
 as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE, ...)
 {

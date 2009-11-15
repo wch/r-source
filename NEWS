@@ -85,6 +85,11 @@ NEW FEATURES
 
     o	The main HTML help page now links to this NEWS file.
 	(Suggested by Henrik Bengtsson.)
+
+    o	The [ method for class "AsIs" allows the next method to change
+	the underlying class.  (Wish of Jens Oehlschlägel.)
+
+    o	write.csv[2] no longer allow 'append' to be changed.
     
 
 DEPRECATED & DEFUNCT
