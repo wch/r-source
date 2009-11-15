@@ -30,7 +30,7 @@ double qnchisq(double p, double df, double ncp, int lower_tail, int log_p)
     const static double Eps = 1e-11; /* must be > accu */
     const static double rEps= 1e-10; /* relative tolerance ... */
 
-    double ux, lx, nx, pp;
+    double ux, lx, ux0, nx, pp;
 
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(df) || ISNAN(ncp))
@@ -57,8 +57,16 @@ double qnchisq(double p, double df, double ncp, int lower_tail, int log_p)
 	ff = (df + 2 * ncp)/(c*c);
 	ux = b + c * qchisq(p, ff, lower_tail, log_p);
 	if(ux < 0) ux = 1;
+	ux0 = ux;
     }
     p = R_D_qIv(p);
+
+    if(!lower_tail && ncp >= 80) {
+	/* pnchisq is only for lower.tail = TRUE */
+	if(p < 1e-10) ML_ERROR(ME_PRECISION, "qnchisq");
+	p = 1. - p;
+	lower_tail = TRUE;
+    }
 
     if(lower_tail) {
 	if(p > 1 - DBL_EPSILON) return ML_POSINF;
@@ -68,7 +76,7 @@ double qnchisq(double p, double df, double ncp, int lower_tail, int log_p)
 		pnchisq_raw(ux, df, ncp, Eps, rEps, 10000, TRUE) < pp;
 	    ux *= 2);
 	pp = p * (1 - Eps);
-        for(lx = fmin2(ux, DBL_MAX);
+        for(lx = fmin2(ux0, DBL_MAX);
 	    lx > DBL_MIN &&
 		pnchisq_raw(lx, df, ncp, Eps, rEps, 10000, TRUE) > pp;
 	    lx *= 0.5);
@@ -81,7 +89,7 @@ double qnchisq(double p, double df, double ncp, int lower_tail, int log_p)
 		pnchisq_raw(ux, df, ncp, Eps, rEps, 10000, FALSE) > pp;
 	    ux *= 2);
 	pp = p * (1 - Eps);
-        for(lx = fmin2(ux, DBL_MAX);
+        for(lx = fmin2(ux0, DBL_MAX);
 	    lx > DBL_MIN &&
 		pnchisq_raw(lx, df, ncp, Eps, rEps, 10000, FALSE) < pp;
 	    lx *= 0.5);
