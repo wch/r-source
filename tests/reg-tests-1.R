@@ -5912,3 +5912,8 @@ stopifnot(identical(regexpr(" a", x), regexpr(" a", x, fixed=TRUE)))
 ## unname() on 0-length vector
 stopifnot(identical(1[FALSE], unname(c(a=1)[FALSE])))
 ##
+
+
+## complete.cases on 0-column data frame
+complete.cases(data.frame(1:10)[-1])
+## failed in 2.10.0
