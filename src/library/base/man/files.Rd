@@ -68,10 +68,11 @@ file.symlink(from, to)
   not, say, an empty directory.
 #endif
   
-  \code{file.rename} attempts to rename a single file.  This is subject
-  to the limitations of the OS's corresponding system call: in
-  particular in the interpretation of \sQuote{file}: also most platforms
-  will not rename files across file systems.
+  \code{file.rename} attempts to rename a single file.  Where file
+  permissions allow this will first remove an existing file \code{to}.
+  This is subject to the limitations of the OS's corresponding system
+  call: in particular in the interpretation of \sQuote{file}: also most
+  platforms will not rename files across file systems.
 
   \code{file.append} attempts to append the files named by its
   second argument to those named by its first.  The \R subscript
