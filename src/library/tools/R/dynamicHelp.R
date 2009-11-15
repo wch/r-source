@@ -368,12 +368,12 @@ startDynamicHelp <- function(start=TRUE)
         OK <- FALSE
         ports <- getOption("help.ports")
         if (is.null(ports)) {
-	    ## Choose 10 random port numbers between 10000 and 32000.  
+	    ## Choose 10 random port numbers between 10000 and 32000.
 	    ## The random seed might match
 	    ## on multiple instances, so add the time as well.  But the
 	    ## time may only be accurate to seconds, so rescale it to
 	    ## 5 minute units.
-            ports <- 10000 + 22000*((runif(10) + unclass(Sys.time())/300) %% 1)
+            ports <- 10000 + 22000*((stats::runif(10) + unclass(Sys.time())/300) %% 1)
         }
         ports <- as.integer(ports)
         for(i in seq_along(ports)) {
