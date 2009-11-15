@@ -216,6 +216,13 @@ BUG FIXES
     o	complete.cases() failed on a 0-column data frame argument.
 	(Underlies PR#14066.)
 
+    o	An error in nls() with a long formula could cause a segfault.
+	(PR#14059)
+
+    o	qnchisq(p, df, ncp, lower.tail = FALSE) with ncp >= 80 was
+	inaccurate for small p (as the help page said): it is now
+	less inaccurate.
+
 
 
 		CHANGES IN R VERSION 2.10.0
