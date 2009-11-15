@@ -33,40 +33,38 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     n.used <- nrow(x)
     if (demean) {
         x.mean <- colMeans(x)
-        x <- sweep(x, 2, x.mean, check.margin=FALSE)
+        x <- sweep(x, 2L, x.mean, check.margin=FALSE)
     }
     else x.mean <- rep(0, nser)
     order.max <- if (is.null(order.max))
         floor(10 * log10(n.used))
     else floor(order.max)
-    xaic <- numeric(order.max + 1)
+    xaic <- numeric(order.max + 1L)
     z <- .C(R_multi_burg,
             as.integer(n.used),
             resid = as.double(x),
             as.integer(order.max),
             as.integer(nser),
-            coefs = double((1 + order.max) * nser * nser),
-            pacf = double((1 + order.max) * nser * nser),
-            var = double((1 + order.max) * nser * nser),
-            aic = double(1 + order.max),
+            coefs = double((1L + order.max) * nser * nser),
+            pacf = double((1L + order.max) * nser * nser),
+            var = double((1L + order.max) * nser * nser),
+            aic = double(1L + order.max),
             order = integer(1L),
             as.integer(aic),
             as.integer(var.method))
     partialacf <- aperm(array(z$pacf, dim = c(nser, nser, order.max +
-        1)), c(3, 2, 1))[-1, , , drop = FALSE]
-    var.pred <- aperm(array(z$var, dim = c(nser, nser, order.max +
-        1)), c(3, 2, 1))
+        1L)), 3:1)[-1L, , , drop = FALSE]
+    var.pred <- aperm(array(z$var, dim = c(nser, nser, order.max + 1L)), 3:1)
     xaic <- z$aic - min(z$aic)
     names(xaic) <- 0:order.max
     order <- z$order
-    ar <- if (order > 0)
-        -aperm(array(z$coefs, dim = c(nser, nser, order.max + 1)),
-               c(3, 2, 1))[2:(order + 1), , , drop = FALSE]
+    ar <- if (order)
+        -aperm(array(z$coefs, dim = c(nser, nser, order.max + 1L)),
+               3:1)[2L:(order + 1L), , , drop = FALSE]
     else array(dim = c(0, nser, nser))
-    var.pred <- var.pred[order + 1, , , drop = TRUE]
+    var.pred <- var.pred[order + 1L, , , drop = TRUE]
     resid <- matrix(z$resid, nrow = n.used, ncol = nser)
-    if (order > 0)
-        resid[1L:order, ] <- NA
+    if (order) resid[seq_len(order), ] <- NA
     if (ists) {
         attr(resid, "tsp") <- xtsp
         attr(resid, "class") <- "mts"
@@ -75,7 +73,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     colnames(resid) <- snames
     dimnames(ar) <- list(seq_len(order), snames, snames)
     dimnames(var.pred) <- list(snames, snames)
-    dimnames(partialacf) <- list(1L:order.max, snames, snames)
+    dimnames(partialacf) <- list(seq_len(order.max), snames, snames)
     res <- list(order = order, ar = ar, var.pred = var.pred,
         x.mean = x.mean, aic = xaic, n.used = n.used, order.max = order.max,
         partialacf = partialacf, resid = resid, method = ifelse(var.method ==

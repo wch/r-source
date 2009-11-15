@@ -30,43 +30,44 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         stop("'x' must be numeric")
     n.used <- nrow(x)
     nser <- ncol(x)
+    iser <- seq_len(nser)
     if(rescale) {
         sc <- sqrt(drop(apply(x, 2L, var)))
         x <- x/rep(sc, rep(n.used, nser))
     } else sc <- rep(1, nser)
 
     order.max <- if (is.null(order.max))
-	min(n.used-1, floor(10 * log10(n.used)))
+	min(n.used-1L, floor(10 * log10(n.used)))
     else round(order.max)
-    if (order.max < 0) stop ("'order.max' must be >= 0")
+    if (order.max < 0L) stop ("'order.max' must be >= 0")
     else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
-    if (aic) order.min <- 0
+    if (aic) order.min <- 0L
     else order.min <- order.max
-    A <- vector("list", order.max - order.min + 1)
-    varE <- vector("list", order.max - order.min + 1)
-    seA <- vector("list", order.max - order.min + 1)
-    aic <- rep(Inf, order.max - order.min + 1)
+    A <- vector("list", order.max - order.min + 1L)
+    varE <- vector("list", order.max - order.min + 1L)
+    seA <- vector("list", order.max - order.min + 1L)
+    aic <- rep(Inf, order.max - order.min + 1L)
 
     det <- function(x) { prod(diag(qr(x)$qr))*(-1)^(ncol(x)-1) }
 
     ## remove means for conditioning
     if(demean) {
         xm <- colMeans(x)
-        x <- sweep(x, 2, xm, check.margin=FALSE)
+        x <- sweep(x, 2L, xm, check.margin=FALSE)
     } else xm <- rep(0, nser)
     ## Fit models of increasing order
 
     for (m in order.min:order.max)
     {
-        y <- embed(x, m+1)
+        y <- embed(x, m+1L)
         if(intercept) {
-            if (m > 0) X <- cbind(rep(1,nrow(y)), y[, (nser+1):ncol(y)])
+            if (m) X <- cbind(rep(1,nrow(y)), y[, (nser+1L):ncol(y)])
             else X <- as.matrix(rep(1, nrow(y)))
         } else {
-            if (m > 0) X <- y[, (nser+1):ncol(y)]
+            if (m) X <- y[, (nser+1L):ncol(y)]
             else X <- matrix(0, nrow(y), 0)
         }
-        Y <- t(y[, 1L:nser])
+        Y <- t(y[, iser])
         N <- ncol(Y)
         XX <- t(X)%*%X
         rank <- qr(XX)$rank
@@ -75,55 +76,55 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
             warning ("model order: ", m,
 
                      "singularities in the computation of the projection matrix",
-                     "results are only valid up to model order", m - 1)
+                     "results are only valid up to model order", m - 1L)
             break
         }
         P <- if(ncol(XX) > 0) solve(XX) else XX
-        A[[m - order.min + 1]] <- Y %*% X %*% P
-        YH <- A[[m - order.min + 1]] %*% t(X)
+        A[[m - order.min + 1L]] <- Y %*% X %*% P
+        YH <- A[[m - order.min + 1L]] %*% t(X)
         E <- (Y - YH)
-        varE[[m - order.min + 1]] <- E %*% t(E)/N
-        varA <- P %x% (varE[[m - order.min + 1]])
-        seA[[m - order.min+1]] <- if(ncol(varA) > 0) sqrt(diag(varA))
-        else numeric(0L)
-        aic[m - order.min+1] <-
-            n.used*log(det(varE[[m-order.min+1]]))+2*nser*(nser*m+intercept)
+        varE[[m - order.min + 1L]] <- E %*% t(E)/N
+        varA <- P %x% (varE[[m - order.min + 1L]])
+        seA[[m - order.min+1L]] <- if(ncol(varA) > 0) sqrt(diag(varA))
+        else numeric()
+        aic[m - order.min+1L] <-
+            n.used*log(det(varE[[m-order.min+1L]]))+2*nser*(nser*m+intercept)
     }
 
-    m <- which(aic==min(aic)) + order.min - 1 # Determine best model
+    m <- which(aic==min(aic)) + order.min - 1L # Determine best model
 
     ## Recalculate residuals of best model
 
-    y <- embed(x, m+1)
-    AA <- A[[m - order.min + 1]]
+    y <- embed(x, m+1L)
+    AA <- A[[m - order.min + 1L]]
     if(intercept) {
-        xint <- AA[, 1]
-        ar <- AA[, -1]
-        if (m > 0) X <- cbind(rep(1,nrow(y)), y[, (nser+1):ncol(y)])
+        xint <- AA[, 1L]
+        ar <- AA[, -1L]
+        if (m) X <- cbind(rep(1,nrow(y)), y[, (nser+1L):ncol(y)])
         else X <- as.matrix(rep(1, nrow(y)))
     } else {
-        if (m > 0) X <- y[, (nser+1):ncol(y)]
-        else X <- matrix(0, nrow(y), 0)
+        if (m) X <- y[, (nser+1L):ncol(y)]
+        else X <- matrix(0, nrow(y), 0L)
         xint <- NULL
         ar <- AA
     }
-    Y <- t(y[, 1L:nser, drop=FALSE])
+    Y <- t(y[, iser, drop = FALSE])
     YH <- AA %*% t(X)
     E <- drop(rbind(matrix(NA, m, nser), t(Y - YH)))
 
     aic <- aic - min(aic)
     names(aic) <- order.min:order.max
     dim(ar) <- c(nser, nser, m)
-    ar <- aperm(ar, c(3,1,2))
-    ses <- seA[[m - order.min + 1]]
+    ar <- aperm(ar, c(3L,1L,2L))
+    ses <- seA[[m - order.min + 1L]]
     if(intercept) {
-        sem <- ses[1L:nser]
-        ses <- ses[-(1L:nser)]
+        sem <- ses[iser]
+        ses <- ses[-iser]
     } else sem <- rep(0, nser)
     dim(ses) <- c(nser, nser, m)
     ses <- aperm(ses, c(3,1,2))
-    var.pred <- varE[[m - order.min + 1]]
-    if(nser > 1) {
+    var.pred <- varE[[m - order.min + 1L]]
+    if(nser > 1L) {
         snames <- colnames(x)
         dimnames(ses) <- dimnames(ar) <- list(seq_len(m), snames, snames)
         dimnames(var.pred) <- list(snames, snames)
@@ -137,13 +138,12 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         xm <- xm * sc
         if(!is.null(xint)) xint <- xint * sc
         aa <- outer(sc, 1/sc)
-        if(nser > 1 && m > 0)
-            for(i in 1L:m) ar[i,,] <- ar[i,,]*aa
+        if(nser > 1L && m) for(i in seq_len(m)) ar[i,,] <- ar[i,,]*aa
         var.pred <- var.pred * outer(sc, sc)
         E <- E * rep(sc, rep(NROW(E), nser))
         sem <- sem*sc
-        if(m > 0)
-            for(i in 1L:m) ses[i,,] <- ses[i,,]*aa
+        if(m)
+            for(i in seq_len(m)) ses[i,,] <- ses[i,,]*aa
     }
     res <- list(order = m, ar = ar, var.pred = var.pred,
                 x.mean = xm, x.intercept = xint, aic = aic,

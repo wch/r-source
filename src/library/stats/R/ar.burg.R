@@ -39,14 +39,14 @@ ar.burg.default <-
     else floor(order.max)
     if (order.max < 1L) stop("'order.max' must be >= 1")
     else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
-    xaic <- numeric(order.max + 1)
+    xaic <- numeric(order.max + 1L)
     z <- .C(R_burg,
             as.integer(n.used),
             as.double(x),
             as.integer(order.max),
             coefs=double(order.max^2),
-            var1=double(1+order.max),
-            var2=double(1+order.max)
+            var1=double(1L+order.max),
+            var2=double(1L+order.max)
             )
     coefs <- matrix(z$coefs, order.max, order.max)
     partialacf <- array(diag(coefs), dim = c(order.max, 1L, 1L))
@@ -55,11 +55,10 @@ ar.burg.default <-
     xaic <- xaic - min(xaic)
     names(xaic) <- 0L:order.max
     order <- if (aic) (0L:order.max)[xaic == 0] else order.max
-    ar <- if (order > 0L) coefs[order, 1L:order] else numeric(0L)
+    ar <- if (order) coefs[order, 1L:order] else numeric()
     var.pred <- var.pred[order+1L]
-    if(order > 0L)
-        resid <- c(rep(NA, order), embed(x, order+1) %*% c(1, -ar))
-    else resid <- as.vector(x)
+    resid <- if(order) c(rep(NA, order), embed(x, order+1) %*% c(1, -ar))
+    else as.vector(x)
     if(ists) {
         attr(resid, "tsp") <- xtsp
         attr(resid, "class") <- "ts"
@@ -69,11 +68,11 @@ ar.burg.default <-
                 partialacf = partialacf, resid = resid,
                 method = ifelse(var.method==1L,"Burg","Burg2"),
                 series = series, frequency = xfreq, call = match.call())
-    if(order > 0L) {
+    if(order) {
         xacf <- acf(x, type = "covariance", lag.max = order, plot=FALSE)$acf
         res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq_len(order)]))*var.pred/n.used
     }
     class(res) <- "ar"
-    return(res)
+    res
 }
 

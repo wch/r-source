@@ -30,35 +30,35 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     x <- as.vector(x)
     n.used <- length(x)
     order.max <- if (is.null(order.max))
-        min(n.used-1, 12, floor(10 * log10(n.used)))
+        min(n.used-1L, 12L, floor(10 * log10(n.used)))
     else round(order.max)
 
-    if (order.max < 0) stop ("'order.max' must be >= 0")
+    if (order.max < 0L) stop ("'order.max' must be >= 0")
     else if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
     if (aic) {
-        coefs <- matrix(NA, order.max+1, order.max+1)
-        var.pred <- numeric(order.max+1)
-        xaic <- numeric(order.max+1)
+        coefs <- matrix(NA, order.max+1L, order.max+1L)
+        var.pred <- numeric(order.max+1L)
+        xaic <- numeric(order.max+1L)
         xm <- if(demean) mean(x) else 0
-        coefs[1, 1] <- xm
+        coefs[1, 1L] <- xm
         var0 <- sum((x-xm)^2)/n.used
         var.pred[1L] <- var0
         xaic[1L] <- n.used * log(var0) + 2 * demean + 2 + n.used + n.used * log(2 * pi)
-        for(i in 1L:order.max) {
-            fit <- arima0(x, order=c(i, 0, 0), include.mean=demean)
-            coefs[i+1, 1L:(i+demean)] <- fit$coef[1L:(i+demean)]
-            xaic[i+1] <- fit$aic
-            var.pred[i+1] <- fit$sigma2
+        for(i in seq_len(order.max)) {
+            fit <- arima0(x, order=c(i, 0L, 0L), include.mean=demean)
+            coefs[i+1L, seq_len(i+demean)] <- fit$coef[seq_len(i+demean)]
+            xaic[i+1L] <- fit$aic
+            var.pred[i+1L] <- fit$sigma2
         }
         xaic <- xaic - min(xaic)
-        names(xaic) <- 0:order.max
-        order <- (0:order.max)[xaic == 0]
-        ar <- coefs[order+1, 1L:order]
-        x.mean <- coefs[order+1, order+1]
-        var.pred <- var.pred[order+1]
+        names(xaic) <- 0L:order.max
+        order <- (0L:order.max)[xaic == 0L]
+        ar <- coefs[order+1L, seq_len(order)]
+        x.mean <- coefs[order+1L, order+1L]
+        var.pred <- var.pred[order+1L]
     } else {
         order <- order.max
-        fit <- arima0(x, order=c(order, 0, 0), include.mean=demean)
+        fit <- arima0(x, order=c(order, 0L, 0L), include.mean=demean)
         coefs <- fit$coef
         if(demean) {
             ar <- coefs[-length(coefs)]
@@ -70,9 +70,8 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         var.pred <- fit$sigma2
         xaic <- structure(0, names=order)
     }
-    if(order > 0)
-        resid <- c(rep(NA, order), embed(x - x.mean, order+1) %*% c(1, -ar))
-    else resid <- as.vector(x) - x.mean
+    resid <- if(order) c(rep(NA, order), embed(x - x.mean, order+1L) %*% c(1, -ar))
+    else as.vector(x) - x.mean
     if(ists) {
         attr(resid, "tsp") <- xtsp
         attr(resid, "class") <- "ts"
@@ -80,9 +79,9 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     res <- list(order = order, ar = ar, var.pred = var.pred,
                 x.mean = x.mean, aic = xaic,
                 n.used = n.used, order.max = order.max,
-                partialacf=NULL, resid=resid, method = "MLE",
+                partialacf = NULL, resid = resid, method = "MLE",
                 series = series, frequency = xfreq, call = match.call())
-    if(order > 0) {
+    if(order) {
         xacf <- acf(x, type = "covariance", lag.max = order, plot=FALSE)$acf
         res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq_len(order)])) *
             var.pred/n.used
