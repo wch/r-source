@@ -11,11 +11,7 @@
 <img class="toplogo" src="logo.jpg" alt="[R logo]"> 
 </h1>
 
-<<<<<<< .working
 <hr width="100%">
-=======
-all: profiles fixhtml fixbin fixetc svnonly
->>>>>>> .merge-right.r50439
 
 <h2>Manuals</h2>
 
@@ -58,7 +54,6 @@ all: profiles fixhtml fixbin fixetc svnonly
 
 <h2>Miscellaneous Material</h2>
 
-<<<<<<< .working
 <table cols="3" width="100%">
 <tr>
 <td align="center" width="33%"><a href="about.html">About R</a> </td>
@@ -71,14 +66,6 @@ all: profiles fixhtml fixbin fixetc svnonly
 <td align="center" width="33%"><a href="../THANKS">Thanks</a> </td>
 </tr>
 </table>
-=======
-fixetc: $(wildcard ./etc/*)
-	$(CP) -p $^ $(R_HOME)/etc
-	@$(ECHO) done > fixetc
-
-svnonly:
-	@$(MAKE) -C ../../../doc/manual -f Makefile.win svnonly
->>>>>>> .merge-right.r50439
 
 </body>
 </html>
