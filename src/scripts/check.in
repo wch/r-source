@@ -710,7 +710,7 @@ foreach my $pkg (@ARGV) {
 		else {
 		    $log->result("OK");
 		}
-	    } else {	       # no GNU file, so just check extensions
+	    } else {	       # no 'file', so just check extensions
 		$log->checking("for .dll and .exe files");
 		my @exec_files = ();
 		sub find_execs2 {
@@ -1575,9 +1575,9 @@ sub check_pkg {
 	}
     }
 
-    ## Check we can actually load the package
+    ## Check we can actually load the package: base is always loaded
 
-    if($opt_install) {
+    if($opt_install && $pkgname ne "base") {
 	$log->checking("whether the package can be loaded");
 	my $Rcmd = "library(${pkgname})";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet");
@@ -1611,23 +1611,21 @@ sub check_pkg {
 	} else {
 	    $log->result("OK");
 	}
-	if($pkgname ne "base") {
-	    $log->checking("whether the package can be unloaded cleanly");
-	    my $Rcmd = "suppressMessages(library(${pkgname})); cat('\n---- unloading\n'); detach(\"package:${pkgname}\")";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
-	    @out = grep(!/^[+>]/, @out);
-	    if(scalar(grep(/^(Error|\.Last\.lib failed)/, @out)) > 0) {
-		$log->warning();
-		$log->print(join("\n", @out) . "\n\n");
-	    } else {
-		$log->result("OK");
-	    }
-        }
+	$log->checking("whether the package can be unloaded cleanly");
+	my $Rcmd = "suppressMessages(library(${pkgname})); cat('\n---- unloading\n'); detach(\"package:${pkgname}\")";
+	my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	@out = grep(!/^[+>]/, @out);
+	if(scalar(grep(/^(Error|\.Last\.lib failed)/, @out)) > 0) {
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n\n");
+	} else {
+	    $log->result("OK");
+	}
     }
 
     ## and if it has a namespace, that we can load/unload just the namespace
 
-    if($opt_install && -f "${pkgdir}/NAMESPACE") {
+    if($opt_install && $pkgname ne "base" && -f "${pkgdir}/NAMESPACE") {
 	$log->checking("whether the name space can be loaded with stated dependencies");
 	my $Rcmd = "loadNamespace(\"${pkgname}\")";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
@@ -1647,20 +1645,24 @@ sub check_pkg {
 	} else {
 	    $log->result("OK");
 	}
+	
+	$log->checking("whether the name space can be unloaded cleanly");
 	## for a reasonable test of S4-using packages we do want methods
 	## and then we can't really test unloading base packages
-	## if they are loaded on startup.  So use standard set of packages.
-	if(!$is_base_pkg) {
-	    $log->checking("whether the name space can be unloaded cleanly");
-	    my $Rcmd = "invisible(suppressMessages(loadNamespace(\"${pkgname}\"))); cat('\n---- unloading\n'); unloadNamespace(\"${pkgname}\")";
+	## if they are loaded on startup.
+	my $Rcmd = "invisible(suppressMessages(loadNamespace(\"${pkgname}\"))); cat('\n---- unloading\n'); unloadNamespace(\"${pkgname}\")";
+	if($is_base_pkg && $pkgname ne "stats4") {
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
-	    @out = grep(!/^[+>]/, @out);
-	    if(scalar(grep(/^(Error|\.onUnload failed)/, @out)) > 0) {
-		$log->warning();
-		$log->print(join("\n", @out) . "\n\n");
-	    } else {
-		$log->result("OK");
-	    }
+	} else {
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=NULL");
+	}
+	@out = grep(!/^[+>]/, @out);
+	if(scalar(grep(/^(Error|\.onUnload failed)/, @out)) > 0) {
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n\n");
+	} else {
+	    $log->result("OK");
 	}
     }
 
