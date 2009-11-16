@@ -217,12 +217,19 @@ BUG FIXES
     o	complete.cases() failed on a 0-column data frame argument.
 	(Underlies PR#14066.)
 
+	It could return nonsensical results if no input determined the
+	number of cases (see in the no-segfault tests).
+
     o	An error in nls() with a long formula could cause a segfault.
 	(PR#14059)
 
     o	qnchisq(p, df, ncp, lower.tail = FALSE) with ncp >= 80 was
 	inaccurate for small p (as the help page said): it is now
-	less inaccurate.
+	less inaccurate. (In part, PR#13999.)
+
+	For ncp less than but close to 80, pchisq() and qnchisq() are
+	more accurate for probablilities very close to 1 (a series
+	expansion was truncated slightly too early).
 
 
 
