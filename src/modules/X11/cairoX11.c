@@ -289,12 +289,21 @@ static void Cairo_Raster(unsigned int *raster, int w, int h,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
     imageData = (unsigned char *) R_alloc(4*w*h, sizeof(unsigned char));
-    /* The R ABGR needs to be converted to a Cairo ARGB */
+    /* The R ABGR needs to be converted to a Cairo ARGB 
+     * AND values need to by premultiplied by alpha 
+     */
     for (i=0; i<w*h; i++) {
-        imageData[i*4 + 3] = R_ALPHA(raster[i]);
-        imageData[i*4 + 2] = R_RED(raster[i]);
-        imageData[i*4 + 1] = R_GREEN(raster[i]);
-        imageData[i*4 + 0] = R_BLUE(raster[i]);
+        int alpha = R_ALPHA(raster[i]);
+        imageData[i*4 + 3] = alpha;
+        if (alpha < 255) {
+            imageData[i*4 + 2] = R_RED(raster[i]) * alpha / 255;
+            imageData[i*4 + 1] = R_GREEN(raster[i]) * alpha / 255;
+            imageData[i*4 + 0] = R_BLUE(raster[i]) * alpha / 255;
+        } else {
+            imageData[i*4 + 2] = R_RED(raster[i]);
+            imageData[i*4 + 1] = R_GREEN(raster[i]);
+            imageData[i*4 + 0] = R_BLUE(raster[i]);
+        }
     }
     image = cairo_image_surface_create_for_data(imageData, 
                                                 CAIRO_FORMAT_ARGB32,
