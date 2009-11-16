@@ -1732,9 +1732,14 @@
             skip <- skip | asg
             ##N <- cbind(M$Topic, gen, c("", gen[-last]), skip)
             M <- M[!skip, ]
-            M <- M[re(M[, 1L]), ]
         }
-    } else M <- M[re(M[, 1L]), ]
+    } 
+    
+    # Collapse method links into unique (generic, file) pairs
+    M$Topic <- sub("^([^,]*),.*-method$", "\\1-method", M$Topic)
+    M <- M[!duplicated(M[, c("Topic", "File")]),]
+    M <- M[re(M[, 1L]), ]
+    
     ## encode some entries.
     htmlize <- function(x, backtick)
     {

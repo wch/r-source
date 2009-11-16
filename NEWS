@@ -1,4 +1,4 @@
-
+﻿
 	**************************************************
 	*						 *
 	*	       2.11 SERIES NEWS			 *
@@ -92,6 +92,9 @@ NEW FEATURES
 
     o	write.csv[2] no longer allow 'append' to be changed.
     
+    o	The index page for HTML help for a package now collapses
+    	multiple signatures for S4 methods into a single entry.
+
 
 DEPRECATED & DEFUNCT
 
