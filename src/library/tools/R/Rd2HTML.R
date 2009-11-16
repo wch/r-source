@@ -77,6 +77,26 @@ mime_canonical_encoding <- function(encoding)
     encoding
 }
 
+htmlify <- function(x) {
+    x <- fsub("&", "&amp;", x)
+    x <- fsub("---", "&mdash;", x)
+    x <- fsub("--", "&ndash;", x)
+    x <- fsub("``", "&ldquo;", x)
+    x <- fsub("''", "&rdquo;", x)
+    x <- psub("`([^']+)'", "&lsquo;\\1&rsquo;", x)
+    x <- fsub("`", "'", x)
+    x <- fsub("<", "&lt;", x)
+    x <- fsub(">", "&gt;", x)
+    x
+}
+
+vhtmlify <- function(x) { # code version
+    x <- fsub("&", "&amp;", x)
+    x <- fsub("<", "&lt;", x)
+    x <- fsub(">", "&gt;", x)
+    x
+}
+
 ## This gets used two ways:
 
 ## 1) With dynamic = TRUE from tools:::httpd()
@@ -198,26 +218,6 @@ Rd2HTML <-
 	if (isBlankLineRd(x)) "</p>\n<p>\n"
 	else if (start == 1) psub("^\\s+", "", x)
         else x
-    }
-
-    htmlify <- function(x) {
-	x <- fsub("&", "&amp;", x)
-	x <- fsub("---", "&mdash;", x)
-	x <- fsub("--", "&ndash;", x)
-	x <- fsub("``", "&ldquo;", x)
-	x <- fsub("''", "&rdquo;", x)
-        x <- psub("`([^']+)'", "&lsquo;\\1&rsquo;", x)
-	x <- fsub("`", "'", x)
-	x <- fsub("<", "&lt;", x)
-	x <- fsub(">", "&gt;", x)
-	x
-    }
-
-    vhtmlify <- function(x) { # code version
-	x <- fsub("&", "&amp;", x)
-	x <- fsub("<", "&lt;", x)
-	x <- fsub(">", "&gt;", x)
-	x
     }
 
     HTMLeqn <- function(x)

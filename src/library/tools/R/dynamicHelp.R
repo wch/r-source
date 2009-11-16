@@ -23,22 +23,12 @@
 ##             or by file, /library/<pkg>/html/<file>.html
 httpd <- function(path, query, ...)
 {
-    .httpdHeader <- function(title)
-    {
-        paste('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
-              '<html><head><title>R: ', title , '</title>\n',
-              '<meta http-equiv="Content-Type" content="text/html; charset="UTF-8">\n',
-              '<link rel="stylesheet" type="text/css" href="/doc/html/R.css">\n',
-              '</head><body>\n',
-              sep = "")
-    }
-
-    .HTMLdirListing <- function(dir, base)
+    .HTMLdirListing <- function(dir, base, up)
     {
         files <- list.files(dir)    # note, no hidden files are listed
-        out <- c(.httpdHeader(dir),
-                 paste('<h1>', "Listing of directory<br>", dir, '</h1>\n\n<hr>\n',
-                       sep = ""))
+        out <- HTMLheader(paste("Listing of directory<br>", dir, sep=""),
+        		  headerTitle = paste("R:", dir), logo=FALSE,
+        		  up = up)
         if(!length(files))
             out <- c(out, gettext("No files in this directory"))
         else {
@@ -63,9 +53,8 @@ httpd <- function(path, query, ...)
             else help.search(query[1L], nm[-m], agrep = FALSE, use_UTF8 = TRUE)$matches
         }
         title <- "Search Results"
-        out <- c(.httpdHeader(title),
-                 paste('<h1>', title, '</h1>\n',
-                       'The search string was <b>"', query[1L], '"</b><hr>\n',
+        out <- c(HTMLheader(title),
+                 paste('The search string was <b>"', query[1L], '"</b><hr>\n',
                        sep=""))
         if(nrow(res)) {
             paths <- paste("/library/", res[, "Package"], "/html/",
@@ -123,7 +112,7 @@ httpd <- function(path, query, ...)
 
     error_page <- function(msg)
         list(payload =
-             paste(.httpdHeader("httpd error"),
+             paste(HTMLheader("httpd error"),
                    msg,
                    "\n</body></html>",
                    sep = ""))
@@ -136,7 +125,7 @@ httpd <- function(path, query, ...)
     	return(list(file = file.path(R.home(), sub("/", "", path)),
     	            "content-type" = "text/plain"))
     else if(!grepl("^/(doc|library)/", path))
-        return(error_page(paste("Only URLs under", mono("/doc"),
+        return(error_page(paste("Only NEWS and URLs under", mono("/doc"),
                                 "and", mono("/library"), "are allowed")))
 
     ## ----------------------- per-package documentation ---------------------
@@ -144,6 +133,9 @@ httpd <- function(path, query, ...)
     fileRegexp <- "^/library/+([^/]*)/html/([^/]*)\\.html$"
     topicRegexp <- "^/library/+([^/]*)/help/([^/]*)$"
     docRegexp <- "^/library/([^/]*)/doc(.*)"
+    demoRegexp <- "^/library/([^/]*)/demo$"
+    dataRegexp <- "^/library/([^/]*)/data$"
+    
     file <- NULL
     if (grepl(topicRegexp, path)) {
         ## ----------------------- package help by topic ---------------------
@@ -274,6 +266,7 @@ httpd <- function(path, query, ...)
     	pkg <- sub(docRegexp, "\\1", path)
     	rest <- sub(docRegexp, "\\2", path)
         docdir <- system.file("doc", package = pkg)
+        up <- paste("/library/", pkg, "/html/00Index.html", sep = "")
         if(!nzchar(docdir))
             return(error_page(gettextf("No docs found for package %s",
                                        mono(pkg))))
@@ -283,14 +276,24 @@ httpd <- function(path, query, ...)
             if(isTRUE(file.info(file)$isdir))
                 return(.HTMLdirListing(file,
                                        paste("/library/", pkg, "/doc", rest,
-                                             sep = "")))
+                                             sep = ""),
+                                       up))
             else
                 return(list(file = file, "content-type" = mime_type(path)))
         } else {
             ## request to list <pkg>/doc
             return(.HTMLdirListing(docdir,
-                                   paste("/library", pkg, "doc", sep="/")))
+                                   paste("/library", pkg, "doc", sep="/"),
+                                   up))
         }
+    } else if (grepl(demoRegexp, path)) {
+    	pkg <- sub(demoRegexp, "\\1", path)
+    	demos <- demo(package=pkg)
+    	return( list(payload = paste(toHTML(demos), collapse="\n")) )
+    } else if (grepl(dataRegexp, path)) {
+    	pkg <- sub(dataRegexp, "\\1", path)
+    	datasets <- data(package=pkg)
+    	return( list(payload = paste(toHTML(datasets), collapse="\n")) )    	
     } else if (grepl("^/library/", path)) {
         descRegexp <- "^/library/+([^/]+)/+DESCRIPTION$"
         if(grepl(descRegexp, path)) {
@@ -300,7 +303,6 @@ httpd <- function(path, query, ...)
         } else
             return(error_page(gettextf("Only help files, %s and files under %s in a package can be viewed", mono("DESCRIPTION"), mono("doc/"))))
     }
-
 
     ## ----------------------- R docs ---------------------
     if(path == "/doc/html/Search.html") {

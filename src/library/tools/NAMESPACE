@@ -15,7 +15,8 @@ export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rdindex",
        "checkNEWS", "readNEWS", "dependsOnPkgs", "Rdiff",
        "testInstalledBasic", "testInstalledPackage",
        "testInstalledPackages", "RdTextFilter", "SweaveTeXFilter",
-       "startDynamicHelp", "checkRdaFiles", "resaveRdaFiles")
+       "startDynamicHelp", "checkRdaFiles", "resaveRdaFiles",
+       "HTMLheader", "toHTML")
 
 export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 
@@ -52,5 +53,7 @@ S3method("print", "check_package_license")
 S3method("print", "check_package_datasets")
 S3method("print", "check_packages_used")
 S3method("print", "check_vignette_index")
+
+S3method("toHTML", "packageIQR")
 
 S3method("as.character", "Rd")

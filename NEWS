@@ -84,7 +84,8 @@ NEW FEATURES
 	values.
 
     o	The main HTML help page now links to this NEWS file.
-	(Suggested by Henrik Bengtsson.)
+	(Suggested by Henrik Bengtsson.)  Package index files link
+	to a list of demos when using dynamic help.
 
     o	The [ method for class "AsIs" allows the next method to change
 	the underlying class.  (Wish of Jens Oehlschlägel.)

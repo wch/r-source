@@ -1622,28 +1622,33 @@
         order(xx, toupper(x), x)
     }
 
-    html_header <- function(pkg, title, version, encoding, conn)
+    html_header <- function(pkg, title, version, conn)
     {
-        cat('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
-            '<html><head><title>R: ', title, '</title>\n',
-            '<meta http-equiv="Content-Type" content="text/html; charset=',
-            encoding, '">',
-            '<link rel="stylesheet" type="text/css" href="../../R.css">\n',
-            '</head><body>\n',
-            '<h1>', title, ' <img class="toplogo" src="../../../doc/html/logo.jpg" alt="[R logo]"></h1>\n\n<hr>\n\n',
-            '<div align="center">\n<a href="../../../doc/html/packages.html"><img src="../../../doc/html/left.jpg"\n',
-            'alt="[Package List]" width="30" height="30" border="0"></a>\n',
-            '<a href="../../../doc/html/index.html"><img src="../../../doc/html/up.jpg"\n',
-            'alt="[Top]" width="30" height="30" border="0"></a>\n</div>\n\n',
-            '<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
+        cat(paste(HTMLheader(title, Rhome="../../..", up="../../../doc/html/packages.html"), collapse="\n"),
+           '<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
             version, '</h2>\n\n', sep ='', file = conn)
 
-        if (file.exists(file.path(outDir, "doc")))
-		    cat('<h2>User Guides and Package Vignettes</h2>\n',
-		        'Read <a href="../doc/index.html">overview</a> or ',
-		        'browse <a href="../doc">directory</a>.\n\n',
-	        sep = '', file=conn)
-
+        doc <- file.exists(file.path(outDir, "doc"))
+        demo <- file.exists(file.path(outDir, "demo"))
+        data <- FALSE # file.exists(file.path(outDir, "data")) # do we want this?
+        news <- FALSE # FIXME:  dynamic help needs to be able to display this
+        if (doc || demo || data || news) {
+            cat('<h2>Additional Material</h2>\n\n', file=conn)
+            if (doc) 
+            	cat('<p><a href="../doc/index.html">Overview of user guides and package vignettes</a>;',
+		    'browse <a href="../doc">directory</a>.</p>\n\n', file=conn)
+	        
+            if (demo)
+		cat('<p><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</p>\n\n',
+	             sep = '', file=conn)
+	    if (data)
+	        cat('<p><a href="../data">Datasets</a>.  Use <a href="../../utils/help/data">data()</a> to load them.</p>\n\n',
+	             sep = '', file=conn)
+	    if (news)
+	    	cat('<p><a href="../NEWS">Package news</a>.</p>\n\n',
+	    	     sep = '', file=conn)
+	}
+	
         cat('<h2>Help Pages</h2>\n\n\n',
             sep ='', file = conn)
     }
@@ -1752,7 +1757,7 @@
 
     ## No need to handle encodings: everything is in UTF-8
 
-    html_header(desc["Package"], desc["Title"], desc["Version"], "UTF-8", outcon)
+    html_header(desc["Package"], desc["Title"], desc["Version"], outcon)
 
     use_alpha <- (nrow(M) > 100)
     if (use_alpha) {
