@@ -1651,11 +1651,12 @@ sub check_pkg {
 	## and then we can't really test unloading base packages
 	## if they are loaded on startup.
 	my $Rcmd = "invisible(suppressMessages(loadNamespace(\"${pkgname}\"))); cat('\n---- unloading\n'); unloadNamespace(\"${pkgname}\")";
+	my @aut;
 	if($is_base_pkg && $pkgname ne "stats4") {
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    @out = R_runR($Rcmd, "${R_opts} --quiet");
 	} else {
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES=NULL");
+	    @out = R_runR($Rcmd, "${R_opts} --quiet",
+			  "R_DEFAULT_PACKAGES=NULL");
 	}
 	@out = grep(!/^[+>]/, @out);
 	if(scalar(grep(/^(Error|\.onUnload failed)/, @out)) > 0) {
