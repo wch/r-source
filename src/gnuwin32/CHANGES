@@ -1,4 +1,4 @@
-
+﻿
 	**************************************************
 	*	 Windows-specific changes to R		 *
 	*	 See the file NEWS for changes that	 *
@@ -1826,7 +1826,7 @@ UNCATEGORIZED
     o	Overwrite mode in the console now works for MBCS charsets.
 	(Patch contributed by Haruki Koyanagi.)
 
-    o	Input from the Rgui console was changing the letter 255 (� in Latin-2)
+    o	Input from the Rgui console was changing the letter 255 (ÿ in Latin-2)
 	in the character set to letter 1.
 
     o	R CMD REMOVE in 2.2.0 removed the package(s) but failed to remake the
