@@ -354,7 +354,7 @@ void gcopy(drawing d, drawing d2, rect r)
     BitBlt(dc, r.x, r.y, r.width, r.height, sdc, r.x, r.y, SRCCOPY);
 }
 
-void gcopyalpha(drawing d, drawing d2, rect r, int alpha)
+void gcopyalpha(drawing d, drawing d2, rect r, int alpha) 
 {
     if(alpha <= 0 || !haveAlpha()) return;
     {
@@ -364,9 +364,9 @@ void gcopyalpha(drawing d, drawing d2, rect r, int alpha)
 	bl.BlendFlags = 0;
 	bl.SourceConstantAlpha = alpha;
 	bl.AlphaFormat = 0;
-	pAlphaBlend(dc, r.x, r.y, r.width, r.height,
-		    sdc, r.x, r.y, r.width, r.height,
-		    bl);
+        pAlphaBlend(dc, r.x, r.y, r.width, r.height,
+                    sdc, r.x, r.y, r.width, r.height,
+                    bl);
     }
 }
 
@@ -536,6 +536,7 @@ void gdrawimage(drawing d, image img, rect dr, rect sr)
     if ((dr.width != img->width) || (dr.height != img->height))
 	i = scaleimage(img, rect(0, 0, dr.width, dr.height), sr);
     b = imagetobitmap(i);
+
     BitBlt(dc, dr.x, dr.y, dr.width, dr.height, 
            get_context(b), sr.x, sr.y, SRCCOPY);
     if (i != img)
