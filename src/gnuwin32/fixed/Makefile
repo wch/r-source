@@ -33,7 +33,7 @@ fixetc: $(wildcard ./etc/*)
 	
 fixdoc: $(wildcard ../CHANGES*)
 	$(CP) -p $^ $(R_HOME)/doc
-	@$(ECHO) done > fixhtml
+	@$(ECHO) done > fixdoc
 	
 svnonly:
 	@$(MAKE) -C ../../../doc/manual -f Makefile.win svnonly
