@@ -2415,7 +2415,14 @@ print(m22, na.print="<missing value>")
 update(`a: b` ~ x, ~ . + y)
 ## 2.9.1 dropped backticks
 
+
 ## print(ls.str(.)) did evaluate calls
 E <- new.env(); E$cl <- call("print", "Boo !")
 ls.str(E)
 ## 2.10.0 did print..
+
+
+## complete.cases with no input
+try(complete.cases())
+try(complete.cases(list(), list()))
+## gave unhelpful messages in 2.10.0, silly results in pre-2.10.1
