@@ -351,7 +351,7 @@
                 to <- shQuote(to)
                 system(paste0("cp -r ", from, "/* ", to,
                               " || (cd ", from, " && ", TAR, " cf - . | (cd '",
-                              to, "' && ", TAR, "xf - ))"))
+                              to, "' && ", TAR, " xf - ))"))
             }
         }
 
