@@ -59,8 +59,7 @@ make.packages.html <-
     names(pkgs) <- lib.loc
     for (lib in lib.loc) {
         pg <- Sys.glob(file.path(lib, "*", "DESCRIPTION"))
-        pkgs[[lib]] <- sort(sub(paste(lib, "([^/]*)", "DESCRIPTION$", sep="/"),
-                                "\\1", pg))
+        pkgs[[lib]] <- sort(sub(".*[\\/]", "", sub(".DESCRIPTION$", "", pg)))
     }
     tot <- sum(sapply(pkgs, length))
     if(verbose) {
