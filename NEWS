@@ -234,6 +234,11 @@ BUG FIXES
 	more accurate for probablilities very close to 1 (a series
 	expansion was truncated slightly too early).
 
+    o	intToUtf8() could fail when asked to produce 10Mb or more
+	strings, something it was never intended to do: unfortunately
+	Windows crashed R (other OSes reported a lack of resources).
+	(PR#14068)
+
 
 
 		CHANGES IN R VERSION 2.10.0

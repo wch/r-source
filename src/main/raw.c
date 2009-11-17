@@ -307,6 +307,8 @@ static size_t inttomb(char *s, const int wc)
     return i + 1;
 }
 
+#include <R_ext/RS.h>  /* for Calloc/Free */
+
 SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x;
@@ -333,8 +335,12 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Note that this gives zero length for input '0', so it is omitted */
 	for (i = 0, len = 0; i < nc; i++)
 	    len += inttomb(NULL, INTEGER(x)[i]);
-	tmp = alloca(len+1); tmp[len] = '\0';
-	R_CheckStack();
+	if(len >= 10000) {
+	    tmp = Calloc(len+1, char);
+	} else {
+	    tmp = alloca(len+1); tmp[len] = '\0';
+	    R_CheckStack();
+	}
 	for (i = 0, len = 0; i < nc; i++) {
 	    used = inttomb(buf, INTEGER(x)[i]);
 	    strncpy(tmp + len, buf, used);
@@ -342,6 +348,7 @@ SEXP attribute_hidden do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	PROTECT(ans = allocVector(STRSXP, 1));
 	SET_STRING_ELT(ans, 0, mkCharLenCE(tmp, len, CE_UTF8));
+	if(len >= 10000) Free(tmp);
     }
     UNPROTECT(2);
     return ans;
