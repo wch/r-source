@@ -1,6 +1,6 @@
 % File src/library/base/man/ns-load.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{ns-load}
@@ -15,7 +15,7 @@
   Functions to load and unload namespaces.
 }
 \usage{
-attachNamespace(ns, pos = 2, dataPath = NULL)
+attachNamespace(ns, pos = 2, dataPath = NULL, depends = NULL)
 loadNamespace(package, lib.loc = NULL,
               keep.source = getOption("keep.source.pkgs"),
               partial = FALSE, declarativeOnly = FALSE)
@@ -27,6 +27,8 @@ unloadNamespace(ns)
   \item{pos}{integer specifying position to attach.}
   \item{dataPath}{path to directory containing a database of datasets to
     be lazy-loaded into the attached environment.}
+  \item{depends}{\code{NULL} or a character vector of dependencies to be
+    recorded in object \code{.Depends} in the package.}
   \item{package}{string naming the package/name space to load.}
   \item{lib.loc}{character vector specifying library search path.}
   \item{keep.source}{

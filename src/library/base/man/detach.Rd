@@ -6,7 +6,8 @@
 \name{detach}
 \title{Detach Objects from the Search Path}
 \usage{
-detach(name, pos = 2, unload = FALSE, character.only = FALSE)
+detach(name, pos = 2, unload = FALSE, character.only = FALSE,
+       force = !interactive())
 }
 \alias{detach}
 \arguments{
@@ -28,6 +29,8 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE)
   }
   \item{character.only}{a logical indicating whether \code{name}
     can be assumed to be character strings.}
+  \item{force}{logical: should a package be detached even though other
+    loaded packages depend on it?}
 }
 \description{
   Detach a database, i.e., remove it from the \code{\link{search}()} path
@@ -55,6 +58,8 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE)
 \note{
   You cannot detach either the workspace (position 1) nor the \pkg{base}
   package (the last item in the search list).
+
+  The intention is to change the default to \code{force = FALSE} before release.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

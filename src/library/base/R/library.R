@@ -114,7 +114,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         dont.mind <- c("last.dump", "last.warning", ".Last.value",
                        ".Random.seed", ".First.lib", ".Last.lib",
                        ".packageName", ".noGenerics", ".required",
-                       ".no_S3_generics")
+                       ".no_S3_generics", ".Depends")
         sp <- search()
         lib.pos <- match(pkgname, sp)
         ## ignore generics not defined for the package
@@ -233,6 +233,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 } else pos <- npos
             }
             .getRequiredPackages2(pkgInfo)
+            deps <- unique(names(pkgInfo$Depends))
             ## If the name space mechanism is available and the package
             ## has a name space, then the name space loading mechanism
             ## takes over.
@@ -242,7 +243,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                         keep.source = keep.source)
                     dataPath <- file.path(which.lib.loc, package, "data")
                     env <- attachNamespace(ns, pos = pos,
-                                           dataPath = dataPath)
+                                           dataPath = dataPath, deps)
                 })
                 if (inherits(tt, "try-error"))
                     if (logical.return)
@@ -275,6 +276,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
             ## save the package name in the environment
             assign(".packageName", package, envir = loadenv)
+            if(length(deps)) assign(".Depends", deps, envir = loadenv)
             ## source file into loadenv
             if(file.exists(codeFile)) {
                 res <- try(sys.source(codeFile, loadenv,
@@ -602,13 +604,14 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 
     if(identical(save, FALSE)) {}
     else {
-        ## update the ".required" variable
+        ## update the ".Depends" variable
+        ## We no longer use '.required' since some packages set that.
         if(identical(save, TRUE)) {
             save <- topenv(parent.frame())
             ## (a package namespace, topLevelEnvironment option or
             ## .GlobalEnv)
             if(identical(save, .GlobalEnv)) {
-                ## try to detect call from .First.lib in  a package
+                ## try to detect call from .First.lib in a package
                 ## <FIXME>
                 ## Although the docs have long and perhaps always had
                 ##   .First.lib(libname, pkgname)
@@ -630,19 +633,16 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
                                                  parent.frame()),
                                              sep = ""))
                 ## </FIXME>
-                ## else either from prompt or in the source for install
-                ## with saved image ?
             }
         }
         else
             save <- as.environment(save)
-        hasDotRequired <- exists(".required", save, inherits=FALSE)
-        if(!isNamespace(save) || hasDotRequired) { ## so assignment allowed
-            if(hasDotRequired)
-                packages <- unique(c(package, get(".required", save)))
-            else
-                packages <- package
-            assign(".required", packages, save)
+        ## detach() only uses .Depends from a package environment.
+        ## so only save it there
+        if(!is.null(nm <- attr(save, "name")) && grepl("^package:", nm)) {
+            hasDotDepends <- exists(".Depends", save, inherits=FALSE)
+            packages <- if(hasDotDepends) unique(c(package, get(".Depends", save))) else package
+            assign(".Depends", packages, save)
         }
     }
     invisible(value)

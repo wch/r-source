@@ -90,7 +90,8 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
     invisible(value)
 }
 
-detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE)
+detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
+                   force = !interactive())
 {
     if(!missing(name)) {
 	if(!character.only) name <- substitute(name)
@@ -102,7 +103,7 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE)
             }
 	if(is.na(pos)) stop("invalid name")
     }
-    env <- as.environment(pos)
+
     packageName <- search()[[pos]]
 
     ## we need to treat packages differently from other objects, so get those
@@ -113,6 +114,20 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE)
     }
 
     pkgname <- sub("^package:", "", packageName)
+    for(pkg in search()[-1L]) {
+        if(grepl("^package:", pkg) &&
+           exists(".Depends", pkg, inherits = FALSE) &&
+           pkgname %in% get(".Depends", pkg, inherits = FALSE))
+            if(force)
+                warning(gettextf("package %s is required by %s, which may no longer work correctly",
+                                 sQuote(pkgname), sQuote(sub("^package:", "", pkg))),
+                     call. = FALSE, domain = NA)
+            else
+                stop(gettextf("package %s is required by %s so will not be detached",
+                              sQuote(pkgname), sQuote(sub("^package:", "", pkg))),
+                     call. = FALSE, domain = NA)
+    }
+    env <- as.environment(pos)
     libpath <- attr(env, "path")
     hook <- getHook(packageEvent(pkgname, "detach")) # might be list
     for(fun in rev(hook)) try(fun(pkgname, libpath))
@@ -131,18 +146,6 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE)
         }
     }
     .Internal(detach(pos))
-
-    ## Check for detaching a package require()d by another package (not
-    ## by .GlobalEnv because detach() can't currently fix up the
-    ## .required there)
-    for(pkg in search()[-1L]) {
-        ## How can a namespace environment get on the search list?
-        ## (base fails isNamespace).
-        if(!isNamespace(as.environment(pkg)) &&
-           exists(".required", pkg, inherits = FALSE) &&
-           pkgname %in% get(".required", pkg, inherits = FALSE))
-            warning(packageName, " is required by ", pkg, " (still attached)")
-    }
 
     if(pkgname %in% loadedNamespaces()) {
         ## the lazyload DB is flushed when the name space is unloaded

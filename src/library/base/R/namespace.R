@@ -97,7 +97,7 @@ getExportedValue <- function(ns, name) {
     get(name, envir = asNamespace(pkg), inherits = FALSE)
 }
 
-attachNamespace <- function(ns, pos = 2, dataPath = NULL)
+attachNamespace <- function(ns, pos = 2, dataPath = NULL, depends = NULL)
 {
     runHook <- function(hookname, env, ...)
         if (exists(hookname, envir = env, inherits = FALSE)) {
@@ -128,6 +128,7 @@ attachNamespace <- function(ns, pos = 2, dataPath = NULL)
         dbbase <- file.path(dataPath, "Rdata")
         if(file.exists(paste(dbbase, ".rdb", sep = ""))) lazyLoad(dbbase, env)
     }
+    if(length(depends)) assign(".Depends", depends, env)
     runHook(".onAttach", ns, dirname(nspath), nsname)
     lockEnvironment(env, TRUE)
     on.exit()

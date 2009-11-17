@@ -152,22 +152,14 @@ require(package, lib.loc = NULL, quietly = FALSE,
   package is available.
 }
 \section{Packages that require other packages}{
-  \bold{NB:} This mechanism has been almost entirely superseded by
-  using the \samp{Depends:} field in the \file{DESCRIPTION} file of a
-  package. 
-  
-  The source code for a
-  package that requires one or more other packages should have a call
-  to \code{require}, preferably near the beginning of the source, and
-  of course before any code that uses functions, classes or methods
-  from the other package.  The default for argument \code{save} will
-  save the names of all required packages in the environment of the
-  new package.  The saved package names are used by
-  \code{\link{detach}} when a package is detached to warn if other
-  packages still require the to-be-detached package.  Also, if a package is
-  installed with saved image (see \link{INSTALL}), the saved package
-  names are used to require these packages when the new package is
-  attached.
+  The usual way for a package to require other packages is to list them
+  in the \samp{Depends:} field of the \file{DESCRIPTION} file.  Such
+  packages are checked by \code{\link{detach}}.
+
+  An alternative way to record that a package is required is to use a
+  call to \code{require(save = TRUE)} in the \code{.First.lib} function
+  of the package (but only for a package without a namespace): this
+  mechanism was used more widely in earlier versions of \R.
 }
 \section{Formal methods}{
   \code{library} takes some further actions when package \pkg{methods}
@@ -197,11 +189,11 @@ require(package, lib.loc = NULL, quietly = FALSE,
   checked since the OS used to build may differ (e.g.
   \code{i386-pc-linux-gnu} code can be built on an
   \code{x86_64-unknown-linux-gnu} OS).
- 
 
   The package name given to \code{library} and \code{require} must match
   the name given in the package's \file{DESCRIPTION} file exactly, even
-  on case-insensitive file systems such as MS Windows.
+  on case-insensitive file systems such as are common on MS Windows and
+  Mac OS X.
 }
 \seealso{
   \code{\link{.libPaths}}, \code{\link{.packages}}.

@@ -95,6 +95,13 @@ NEW FEATURES
     o	The index page for HTML help for a package now collapses
     	multiple signatures for S4 methods into a single entry.
 
+    o	The use of .required by require/detach has been replaced by
+	.Depends which is set from the 'Depends' field of a package
+	(even in packages with name spaces).  By default detach()
+	prevents such dependencies from being detached in interactive
+	use, and warns otherwise.  [The default is intended to be
+	changed before release.]
+
 
 DEPRECATED & DEFUNCT
 
