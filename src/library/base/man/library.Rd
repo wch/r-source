@@ -155,7 +155,9 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \bold{NB:} This mechanism has been almost entirely superseded by
   using the \samp{Depends:} field in the \file{DESCRIPTION} file of a
   package. 
-  
+
+  % But this only works without lazy-loading or in .First.lib,
+  % and if only works in packages without namespaces.
   The source code for a
   package that requires one or more other packages should have a call
   to \code{require}, preferably near the beginning of the source, and
@@ -164,10 +166,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
   save the names of all required packages in the environment of the
   new package.  The saved package names are used by
   \code{\link{detach}} when a package is detached to warn if other
-  packages still require the to-be-detached package.  Also, if a package is
-  installed with saved image (see \link{INSTALL}), the saved package
-  names are used to require these packages when the new package is
-  attached.
+  packages still require the to-be-detached package.
 }
 \section{Formal methods}{
   \code{library} takes some further actions when package \pkg{methods}
