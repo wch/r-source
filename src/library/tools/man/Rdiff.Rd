@@ -6,11 +6,14 @@
   footers and some encoding differences.
 }
 \usage{
-Rdiff(from, to, useDiff = FALSE)
+Rdiff(from, to, useDiff = FALSE, forEx = FALSE)
 }
 \arguments{
   \item{from, to}{filepaths to be compared}
-  \item{useDiff}{should \command{diff} always be used to compare results?}
+  \item{useDiff}{should \command{diff} always be used to compare
+    results?}
+  \item{forEx}{logical: extra pruning for \file{-Ex.Rout} files to
+    exclude the header.}
 }
 \details{
   The \R startup banner and any timing information from \command{R CMD
