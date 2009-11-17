@@ -1657,10 +1657,10 @@ sub check_pkg {
 	my $Rcmd = "invisible(suppressMessages(loadNamespace(\"${pkgname}\"))); cat('\n---- unloading\n'); unloadNamespace(\"${pkgname}\")";
 	my @aut;
 	if($is_base_pkg && $pkgname ne "stats4") {
-	    @out = R_runR($Rcmd, "${R_opts} --quiet");
-	} else {
 	    @out = R_runR($Rcmd, "${R_opts} --quiet",
 			  "R_DEFAULT_PACKAGES=NULL");
+	} else {
+	    @out = R_runR($Rcmd, "${R_opts} --quiet");
 	}
 	@out = grep(!/^[+>]/, @out);
 	if(scalar(grep(/^(Error|\.onUnload failed)/, @out)) > 0) {
@@ -2415,7 +2415,7 @@ sub check_pkg {
 		    $log->checking("differences from '${pkgname}-Ex.Rout' to '${pkgname}-Ex.Rout.save'");
 		    my @out = R_runR("invisible(tools::Rdiff('${pkgname}-Ex.Rout', '${Rex_out_save}',TRUE,TRUE))", "--slave --vanilla");
 		    if(scalar(@out) > 0) {
-			$log->print("\n" . join("\n", @out));
+			$log->print("\n" . join("\n", @out) . "\n");
 		    }
 		    $log->result("OK");
 		}
