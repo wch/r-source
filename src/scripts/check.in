@@ -992,6 +992,10 @@ foreach my $pkg (@ARGV) {
 			@lines = grep(!/$warn_re/, @lines);
 		    }
 
+		    ## 'Warning' from deldir 0.0-10
+		    my $warn_re = "Warning: The process for determining duplicated points";
+		    @lines = grep(!/$warn_re/, @lines);
+
 		    if(scalar(@lines) > 0) {
 			$log->warning();
 			$log->print("Found the following " .
@@ -1079,7 +1083,7 @@ sub check_pkg {
     $pkg =~ s/\/$//;
     if(-d $pkg) {
 	chdir($pkg)
-	  or die "Error: cannot change to directory '$pkg'\n";
+	  or die "Error: will not change to directory '$pkg'\n";
 	$pkgdir = R_cwd();
 	if($in_bundle) {
 	    $pkgname = basename($pkgdir);
