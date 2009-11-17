@@ -1744,22 +1744,28 @@ void attribute_hidden CheckFormals(SEXP ls)
 static SEXP VectorToPairListNamed(SEXP x)
 {
     SEXP xptr, xnew, xnames;
-    int i, len, named;
-    len = length(x);
+    int i, len = 0, named;
+
     PROTECT(x);
-    PROTECT(xnew = allocList(len));
-    PROTECT(xnames = getAttrib(x, R_NamesSymbol));
+    PROTECT(xnames = getAttrib(x, R_NamesSymbol)); /* isn't this protected via x? */
     named = (xnames != R_NilValue);
-    xptr = xnew;
-    for (i = 0; i < len; i++) {
-	SETCAR(xptr, VECTOR_ELT(x, i));
-	if (named && CHAR(STRING_ELT(xnames, i))[0] != '\0') /* ASCII */
-	    SET_TAG(xptr, install(translateChar(STRING_ELT(xnames, i))));
-	xptr = CDR(xptr);
-    }
-    if (len>0)       /* can't set attributes on NULL */
-	copyMostAttrib(x, xnew);
-    UNPROTECT(3);
+    if(named)
+	for (i = 0; i < length(x); i++)
+	    if (CHAR(STRING_ELT(xnames, i))[0] != '\0') len++;
+
+    if(len) {
+	PROTECT(xnew = allocList(len));
+	xptr = xnew;
+	for (i = 0; i < length(x); i++) {
+	    if (CHAR(STRING_ELT(xnames, i))[0] != '\0') {
+		SETCAR(xptr, VECTOR_ELT(x, i));
+		SET_TAG(xptr, install(translateChar(STRING_ELT(xnames, i))));
+		xptr = CDR(xptr);
+	    }
+	}
+	UNPROTECT(1);
+    } else xnew = allocList(0);
+    UNPROTECT(2);
     return xnew;
 }
 
@@ -1799,6 +1805,7 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(env);
 	break;
     case VECSXP:
+	/* PR#14035 */
 	x = VectorToPairListNamed(CADR(args));
 	for (xptr = x ; xptr != R_NilValue ; xptr = CDR(xptr))
 	    SET_NAMED(CAR(xptr) , 2);

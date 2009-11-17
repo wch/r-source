@@ -121,7 +121,8 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
-    o	Placeholder.
+    o	Using with(), eval() etc with a list with some unnamed
+	elements now works. (PR#14035)
 
 
 
