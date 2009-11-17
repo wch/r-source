@@ -47,8 +47,7 @@ assign("cleanEx",
 		  assign.env = .CheckExEnv)
 	   sch <- search()
 	   newitems <- sch[! sch %in% .oldSearch]
-	   for(item in rev(newitems))
-               eval(substitute(detach(item), list(item=item)))
+	   for(item in rev(newitems)) detach(item, character.only=TRUE)
 	   missitems <- .oldSearch[! .oldSearch %in% sch]
 	   if(length(missitems))
 	       warning("items ", paste(missitems, collapse=", "),
@@ -61,8 +60,7 @@ assign("ptime", proc.time(), pos = "CheckExEnv")
 ## Use postscript as incomplete files may be viewable, unlike PDF.
 ## Choose a size that is close to on-screen devices, fix paper
 grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
-grDevices::postscript("@PKG@-Ex.ps")
+grDevices::postscript(paste(pkgname, "-Ex.ps", sep=""))
 
 assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
-options(warn = 1)

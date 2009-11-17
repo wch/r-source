@@ -26,8 +26,12 @@ massageExamples <- function(pkg, files, outFile = stdout())
         on.exit(close(out))
     } else out <- outFile
 
-    lines <- readLines(file.path(R.home("share"), "R", "examples-header.R"))
-    cat(sub("@PKG@", pkg, lines), sep = "\n", file = out)
+#    lines <- readLines(file.path(R.home("share"), "R", "examples-header.R"))
+#    cat(sub("@PKG@", pkg, lines), sep = "\n", file = out)
+    lines <- c(paste('pkgname <- "', pkg, '"', sep =""),
+               'source(file.path(R.home("share"), "R", "examples-header.R"))',
+               "options(warn = 1)")
+    cat(lines, sep = "\n", file = out)
     if(.Platform$OS.type == "windows")
         cat("options(pager = \"console\")\n", file = out)
 
@@ -85,7 +89,7 @@ massageExamples <- function(pkg, files, outFile = stdout())
 }
 
 ## compares 2 files
-Rdiff <- function(from, to, useDiff = FALSE)
+Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE)
 {
     clean <- function(txt)
     {
@@ -105,9 +109,18 @@ Rdiff <- function(from, to, useDiff = FALSE)
         pat <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer): )'
         txt[!grepl(pat, txt, perl = TRUE, useBytes = TRUE)]
     }
+    clean2 <- function(txt)
+    {
+        eoh <- grep("^> options\\(warn = 1\\)$", txt)
+        if(length(eoh)) txt[-(1:eoh[1])] else txt
+    }
 
     left <- clean(readLines(from))
     right <- clean(readLines(to))
+    if (forEx) {
+        left <- clean2(left)
+        right <- clean2(right)
+    }
     if (!useDiff && (length(left) == length(right))) {
         bleft <- gsub("[[:space:]]+", " ", left)
         bright <- gsub("[[:space:]]+", " ", right)

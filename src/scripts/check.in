@@ -733,7 +733,7 @@ foreach my $pkg (@ARGV) {
 		else {
 		    $log->result("OK");
 		}
-	    } else {	       # no GNU file, so just check extensions
+	    } else {	       # no 'file', so just check extensions
 		$log->checking("for .dll and .exe files");
 		my @exec_files = ();
 		sub find_execs2 {
@@ -2469,16 +2469,9 @@ sub check_pkg {
 			       "${pkgname}-Ex.Rout.save");
 		if(-f $Rex_out_save) {
 		    $log->checking("differences from '${pkgname}-Ex.Rout' to '${pkgname}-Ex.Rout.save'");
-		    $cmd = join(" ",
-				(${R::Vars::R_CMD},
-				 "Rdiff",
-				 &shell_quote_file_path("${pkgname}-Ex.Rout"),
-				 &shell_quote_file_path("${Rex_out_save}"),
-				 "0"));
-		    if(R_system($cmd)) {
-			$log->error();
-			$log->print("Comparison failed.\n");
-			exit(1);
+		    my @out = R_runR("invisible(tools::Rdiff('${pkgname}-Ex.Rout', '${Rex_out_save}',TRUE,TRUE))", "--slave --vanilla");
+		    if(scalar(@out) > 0) {
+			$log->print("\n" . join("\n", @out) . "\n");
 		    }
 		    $log->result("OK");
 		}
