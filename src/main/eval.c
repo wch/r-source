@@ -1741,6 +1741,29 @@ void attribute_hidden CheckFormals(SEXP ls)
 }
 
 
+static SEXP VectorToPairListNamed(SEXP x)
+{
+    SEXP xptr, xnew, xnames;
+    int i, len, named;
+    len = length(x);
+    PROTECT(x);
+    PROTECT(xnew = allocList(len));
+    PROTECT(xnames = getAttrib(x, R_NamesSymbol));
+    named = (xnames != R_NilValue);
+    xptr = xnew;
+    for (i = 0; i < len; i++) {
+	SETCAR(xptr, VECTOR_ELT(x, i));
+	if (named && CHAR(STRING_ELT(xnames, i))[0] != '\0') /* ASCII */
+	    SET_TAG(xptr, install(translateChar(STRING_ELT(xnames, i))));
+	xptr = CDR(xptr);
+    }
+    if (len>0)       /* can't set attributes on NULL */
+	copyMostAttrib(x, xnew);
+    UNPROTECT(3);
+    return xnew;
+}
+
+
 
 /* "eval" and "eval.with.vis" : Evaluate the first argument */
 /* in the environment specified by the second argument. */
@@ -1759,22 +1782,24 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     encl = CADDR(args);
     if (isNull(encl)) {
 	/* This is supposed to be defunct, but has been kept here
-	   (and documented as such */
+	   (and documented as such) */
 	encl = R_BaseEnv;
     } else if ( !isEnvironment(encl) )
 	error(_("invalid '%s' argument"), "enclos");
     switch(TYPEOF(env)) {
     case NILSXP:
 	env = encl;     /* so eval(expr, NULL, encl) works */
+	/* falls through */
     case ENVSXP:
 	PROTECT(env);	/* so we can unprotect 2 at the end */
 	break;
     case LISTSXP:
+	/* This usage requires all the pairlist to be named */
 	env = NewEnvironment(R_NilValue, duplicate(CADR(args)), encl);
 	PROTECT(env);
 	break;
     case VECSXP:
-	x = VectorToPairList(CADR(args));
+	x = VectorToPairListNamed(CADR(args));
 	for (xptr = x ; xptr != R_NilValue ; xptr = CDR(xptr))
 	    SET_NAMED(CAR(xptr) , 2);
 	env = NewEnvironment(R_NilValue, x, encl);
