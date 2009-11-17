@@ -3899,6 +3899,24 @@ static void PS_Rect(double x0, double y0, double x1, double y1,
     }
 }
 
+typedef rcolor * rcolorPtr;
+
+static void PS_imagedata(rcolorPtr raster,
+                          int w, int h,
+                          PostScriptDesc *pd)
+{
+    /* Each original byte is translated to two hex digits 
+     * (representing a number between 0 and 256)
+     * End-of-data signalled by a '>'
+     */
+    int i;
+    for (i=0; i<w*h; i++) {
+        fprintf(pd->psfp, "%02x", R_RED(raster[i]));
+        fprintf(pd->psfp, "%02x", R_GREEN(raster[i]));
+        fprintf(pd->psfp, "%02x", R_BLUE(raster[i]));
+    }
+}
+
 static void PS_Raster(unsigned int *raster, int w, int h,
                       double x, double y, 
                       double width, double height,
@@ -3906,7 +3924,46 @@ static void PS_Raster(unsigned int *raster, int w, int h,
                       Rboolean interpolate,
                       const pGEcontext gc, pDevDesc dd)
 {
-    warning(_("%s not yet implemented for this device"), "Raster rendering");
+    PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
+
+    /* This takes the simple approach of creating an inline
+     * image.  This will not work for larger images
+     * due to hard limits in the PostScript language.
+     * There is no support for semitransparent images.
+     */
+    /* Save graphics state */
+    fprintf(pd->psfp, 
+            "gsave\n");
+    /* translate */
+    fprintf(pd->psfp, 
+            "%.2f %.2f translate\n",
+            x, y);  
+    /* rotate */
+    fprintf(pd->psfp, 
+            "%.2f rotate\n", rot);
+    /* scale */
+    fprintf(pd->psfp, 
+            "%.2f %.2f scale\n",
+            width, height);  
+    /* Begin image */
+    /* Image characteristics */ 
+    /* width height bitspercomponent matrix */
+    fprintf(pd->psfp, 
+            "  %d %d 8 [%d 0 0 %d 0 %d]\n", 
+            w, h, w, -h, h);
+    if (interpolate) {
+
+    }
+    /* Begin image data */
+    fprintf(pd->psfp, "{<\n");
+    /* The image stream */
+    PS_imagedata(raster, w, h, pd);
+    /* End image */
+    fprintf(pd->psfp, "\n>}\n");
+    fprintf(pd->psfp, "false 3 colorimage\n");
+    /* Restore graphics state */
+    fprintf(pd->psfp, 
+            "grestore\n");
 }
 
 static SEXP PS_Cap(pDevDesc dd)
@@ -5203,8 +5260,6 @@ static void XFig_MetricInfo(int c,
 
 #define MAX_RASTERS 64
 
-typedef rcolor * rcolorPtr;
-
 typedef struct {
     rcolorPtr raster;
     int w;
@@ -5297,6 +5352,7 @@ typedef struct {
     int numRasters;
     /* Soft masks for raster images */
     int masks[MAX_RASTERS];
+    int numMasks;
 }
 PDFDesc;
 
@@ -5394,7 +5450,7 @@ static int addRaster(rcolorPtr raster, int w, int h,
     /* If any of the pixels are not opaque, we need to add
      * a mask as well */
     if (alpha) {
-        pd->masks[pd->numRasters] = pd->numRasters;
+        pd->masks[pd->numRasters] = pd->numMasks++;
     }
 
     pd->numRasters++;
@@ -5419,6 +5475,21 @@ static void initMaskArray(int *masks) {
     }
 }
 
+static void PDF_maskdata(rcolorPtr raster,
+                         int w, int h,
+                         PDFDesc *pd)
+{
+    /* Each alpha byte is translated to two hex digits 
+     * (representing a number between 0 and 256)
+     * End-of-data signalled by a '>'
+     */
+    int i;
+    for (i=0; i<w*h; i++) {
+        fprintf(pd->pdffp, "%02x", R_ALPHA(raster[i]));
+    }
+    fprintf(pd->pdffp, ">\n");
+}
+
 static void PDF_imagedata(rcolorPtr raster,
                           int w, int h,
                           PDFDesc *pd)
@@ -5436,23 +5507,8 @@ static void PDF_imagedata(rcolorPtr raster,
     fprintf(pd->pdffp, ">\n");
 }
 
-static void PDF_maskdata(rcolorPtr raster,
-                         int w, int h,
-                         PDFDesc *pd)
-{
-    /* Each alpha byte is translated to two hex digits 
-     * (representing a number between 0 and 256)
-     * End-of-data signalled by a '>'
-     */
-    int i;
-    for (i=0; i<w*h; i++) {
-        fprintf(pd->pdffp, "%02x", R_ALPHA(raster[i]));
-    }
-    fprintf(pd->pdffp, ">\n");
-}
-
 static void writeRasterXObject(rasterImage raster, int n, 
-                               int mask, PDFDesc *pd) {
+                               int mask, int maskObj, PDFDesc *pd) {
     fprintf(pd->pdffp, "%d 0 obj <<\n", n);
     fprintf(pd->pdffp, "  /Type /XObject\n");
     fprintf(pd->pdffp, "  /Subtype /Image\n");
@@ -5468,7 +5524,7 @@ static void writeRasterXObject(rasterImage raster, int n,
     }
     fprintf(pd->pdffp, "  /Filter /ASCIIHexDecode\n");
     if (mask >= 0) {
-        fprintf(pd->pdffp, "  /SMask %d 0 R\n", mask);
+        fprintf(pd->pdffp, "  /SMask %d 0 R\n", maskObj);
     }
     fprintf(pd->pdffp, "  >>\n");
     fprintf(pd->pdffp, "stream\n");
@@ -6394,13 +6450,8 @@ static void PDF_endfile(PDFDesc *pd)
 
     /* Count how many images */
     nraster = pd->numRasters;
-
     /* Count how many image masks */
-    nmask = 0;
-    for (i=0; i<nraster; i++) {
-        if (pd->masks[i] >= 0) 
-            nmask++;
-    }
+    nmask = pd->numMasks;
 
     pd->pos[4] = (int) ftell(pd->pdffp);
 
@@ -6475,7 +6526,8 @@ static void PDF_endfile(PDFDesc *pd)
             /* soft mask XObjects */
             for (i=0; i<nraster; i++) {
                 if (pd->masks[i] >= 0) {
-                    fprintf(pd->pdffp, "  /Mask%d %d 0 R\n", i, ++tempnobj);
+                    fprintf(pd->pdffp, "  /Mask%d %d 0 R\n", 
+                            pd->masks[i], ++tempnobj);
                 }
             }
         }
@@ -6667,7 +6719,8 @@ static void PDF_endfile(PDFDesc *pd)
     for (i=0; i<nraster; i++) {
 	pd->pos[++pd->nobjs] = (int) ftell(pd->pdffp);
         writeRasterXObject(pd->rasters[i], pd->nobjs, 
-                           pd->nobjs + nraster, pd);
+                           pd->masks[i], 
+                           pd->nobjs - i + nraster + pd->masks[i], pd);
     }
 
     /* Write out objects representing the soft masks */
@@ -6871,6 +6924,66 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
     }
 }
 
+#ifdef SIMPLE_RASTER
+/* Maybe reincoporate this simpler approach as an alternative
+ * (for opaque raster images) because it has the advantage of 
+ * NOT keepig the raster in memory until the PDF file is complete
+ */
+static void PDF_Raster(unsigned int *raster,
+                       int w, int h,
+                       double x, double y, 
+                       double width, double height,
+                       double rot, Rboolean interpolate,
+                       const pGEcontext gc, pDevDesc dd)
+{
+    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
+    double angle, cosa, sina;
+
+    /* This takes the simple approach of creating an inline
+     * image.  This is not recommended for larger images
+     * because it makes more work for the PDF viewer.
+     * It also does not allow for semitransparent images.
+     */
+    if(pd->inText) textoff(pd);
+    /* Save graphics state */
+    fprintf(pd->pdffp, "Q q\n");  
+    /* translate */
+    fprintf(pd->pdffp, 
+            "1 0 0 1 %.2f %.2f cm\n",
+            x, y);  
+    /* rotate */
+    angle = rot*M_PI/180;
+    cosa = cos(angle);
+    sina = sin(angle);
+    fprintf(pd->pdffp, 
+            "%.2f %.2f %.2f %.2f 0 0 cm\n",
+            cosa, sina, -sina, cosa);  
+    /* scale */
+    fprintf(pd->pdffp, 
+            "%.2f 0 0 %.2f 0 0 cm\n",
+            width, height);  
+    /* Begin image */
+    fprintf(pd->pdffp, "BI\n");
+    /* Image characteristics */ 
+    /* Use ASCIIHexDecode filter for now, just because
+     * it's easier to implement */
+    fprintf(pd->pdffp, 
+            "  /W %d\n  /H %d\n  /CS /RGB\n  /BPC 8\n  /F [/AHx]\n", 
+            w, h);
+    if (interpolate) {
+        fprintf(pd->pdffp, "  /I true\n");
+    }
+    /* Begin image data */
+    fprintf(pd->pdffp, "ID\n");
+    /* The image stream */
+    PDF_imagedata(raster, w, h, pd);
+    /* End image */
+    fprintf(pd->pdffp, "EI\n");
+    /* Restore graphics state */
+    fprintf(pd->pdffp, "Q q\n");  
+}
+#else
+
 static void PDF_Raster(unsigned int *raster,
                        int w, int h,
                        double x, double y, 
@@ -6914,73 +7027,6 @@ static void PDF_Raster(unsigned int *raster,
 
 }
 
-#ifdef SIMPLE_RASTER
-/* Maybe reincoporate this simpler approach as an alternative
- * (for opaque raster images) because it has the advantage of 
- * NOT keepig the raster in memory until the PDF file is complete
- */
-static void PDF_RasterSimple(unsigned int *raster,
-                             int w, int h,
-                             double x, double y, 
-                             double width, double height,
-                             double rot, Rboolean interpolate,
-                             const pGEcontext gc, pDevDesc dd)
-{
-    PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    double angle, cosa, sina;
-
-    /* This takes the simple approach of creating an inline
-     * image.  This is not recommended for larger images
-     * because it makes more work for the PDF viewer, 
-     * but it's a hell of a lot easier to get something
-     * going compared to trying to record and then
-     * save in PDF_endfile() an external XObject 
-     * describing the image. 
-     */
-    /* FIXME:  the image data does NOT contain an alpha component,
-     * so there needs to be some way to produce, say, a "soft mask"
-     * or something similar based on the alpha channel of the image,
-     * so that the image can be rendered with (variable) semitransparency
-     * (and that looks like it will HAVE to be an external XObject).
-     */
-    if(pd->inText) textoff(pd);
-    /* Save graphics state */
-    fprintf(pd->pdffp, "Q q\n");  
-    /* translate */
-    fprintf(pd->pdffp, 
-            "1 0 0 1 %.2f %.2f cm\n",
-            x, y);  
-    /* rotate */
-    angle = rot*M_PI/180;
-    cosa = cos(angle);
-    sina = sin(angle);
-    fprintf(pd->pdffp, 
-            "%.2f %.2f %.2f %.2f 0 0 cm\n",
-            cosa, sina, -sina, cosa);  
-    /* scale */
-    fprintf(pd->pdffp, 
-            "%.2f 0 0 %.2f 0 0 cm\n",
-            width, height);  
-    /* Begin image */
-    fprintf(pd->pdffp, "BI\n");
-    /* Image characteristics */ 
-    /* Use ASCIIHexDecode filter for now, just because
-     * it's easier to implement */
-    fprintf(pd->pdffp, 
-            "  /W %d\n  /H %d\n  /CS /RGB\n  /BPC 8\n  /F [/AHx]\n", 
-            w, h);
-    if (interpolate) {
-        fprintf(pd->pdffp, "  /I true\n");
-    }
-    /* Begin image data */
-    fprintf(pd->pdffp, "ID\n");
-    /* The image stream */
-    PDF_imagedata(raster, w, h, pd);
-    /* End image */
-    fprintf(pd->pdffp, "EI\n");
-    /* Restore graphics state */
-    fprintf(pd->pdffp, "Q q\n");  
-}
 #endif
 
 static SEXP PDF_Cap(pDevDesc dd) 
