@@ -86,12 +86,12 @@ static void reg_report(int rc,  regex_t *reg, const char *pat)
 static SEXP mkCharWLen(const wchar_t *wc, int nc)
 {
     int nb; char *xi; wchar_t *wt;
-    R_CheckStackN((nc+1)*sizeof(wchar_t));
     wt = (wchar_t *) alloca((nc+1)*sizeof(wchar_t));
+    R_CheckStack();
     wcsncpy(wt, wc, nc); wt[nc] = 0;
     nb = wcstoutf8(NULL, wt, nc);
-    R_CheckStackN((nb+1)*sizeof(char));
     xi = (char *) alloca((nb+1)*sizeof(char));
+    R_CheckStack();
     wcstoutf8(xi, wt, nb + 1);
     return mkCharLenCE(xi, nb, CE_UTF8);
 }
@@ -99,9 +99,8 @@ static SEXP mkCharWLen(const wchar_t *wc, int nc)
 static SEXP mkCharW(const wchar_t *wc)
 {
     int nb = wcstoutf8(NULL, wc, 0);
-    char *xi;
-    R_CheckStackN((nb+1)*sizeof(char));
-    xi = (char *) alloca((nb+1)*sizeof(char));
+    char *xi = (char *) alloca((nb+1)*sizeof(char));
+    R_CheckStack();
     wcstoutf8(xi, wc, nb + 1);
     return mkCharCE(xi, CE_UTF8);
 }
@@ -932,14 +931,14 @@ char *pcre_string_adj(char *target, const char *orig, const char *repl,
 		    int j, nc;
 		    char *xi, *p;
 		    wchar_t *wc;
-		    R_CheckStackN((nb+1)*sizeof(char));
 		    p = xi = (char *) alloca((nb+1)*sizeof(char));
+		    R_CheckStack();
 		    for (j = 0; j < nb; j++) *p++ = orig[ovec[2*k]+j];
 		    *p = '\0';
 		    nc = utf8towcs(NULL, xi, 0);
 		    if (nc >= 0) {
-			R_CheckStackN((nc+1)*sizeof(wchar_t));
 			wc = (wchar_t *) alloca((nc+1)*sizeof(wchar_t));
+			R_CheckStack();
 			utf8towcs(wc, xi, nc + 1);
 			for (j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
 			nb = wcstoutf8(NULL, wc, 0);
@@ -1422,9 +1421,8 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static int getNc(const char *s, int st)
 {
-    char *buf;
-    R_CheckStackN(st+1);
-    buf = alloca(st+1);
+    char *buf = alloca(st+1);
+    R_CheckStack();
     memcpy(buf, s, st);
     buf[st] = '\0';
     return utf8towcs(NULL, buf, 0);

@@ -1585,9 +1585,9 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	double *xtemp, *ytemp;
 	int n0 = 0;
 	if(n <= 1000) {
-	    R_CheckStackN(4*n*sizeof(double));
 	    xtemp = (double *) alloca(2*n*sizeof(double));
 	    ytemp = (double *) alloca(2*n*sizeof(double));
+	    R_CheckStack();
 	} else {
 	    vmax = vmaxget();
 	    xtemp = (double *) R_alloc(2*n, sizeof(double));
@@ -1623,9 +1623,9 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	double *xtemp, *ytemp;
 	int n0 = 0;
 	if(n < 1000) {
-	    R_CheckStackN(4*n*sizeof(double));
 	    xtemp = (double *) alloca(2*n*sizeof(double));
 	    ytemp = (double *) alloca(2*n*sizeof(double));
+	    R_CheckStack();
 	} else {
 	    vmax = vmaxget();
 	    xtemp = (double *) R_alloc(2*n, sizeof(double));

@@ -89,8 +89,7 @@ void	rgb2hsv(double r, double g, double b,
 
 void R_CheckUserInterrupt(void);
 void R_CheckStack(void);
-void R_CheckStackN(size_t);
-
+    
 
 /* ../../appl/interv.c: also in Applic.h */
 int findInterval(double *xt, int n, double x,
