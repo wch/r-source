@@ -16,11 +16,12 @@
 
 
 
-bquote<-function(expr, where=parent.frame())
+bquote <- function(expr, where=parent.frame())
 {
-    unquote<-function(e)
+    unquote <- function(e)
         if (length(e) <= 1L) e
         else if (e[[1L]] == as.name(".")) eval(e[[2L]], where)
+        else if (is.pairlist(e)) as.pairlist(lapply(e,unquote))
         else as.call(lapply(e,unquote))
 
     unquote(substitute(expr))

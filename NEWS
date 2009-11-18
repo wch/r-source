@@ -102,6 +102,9 @@ NEW FEATURES
 	use, and warns otherwise.  [The default is intended to be
 	changed before release.]
 
+    o	bquote() has been extended to work on function definitions
+	(wish of PR#14031).
+
 
 DEPRECATED & DEFUNCT
 

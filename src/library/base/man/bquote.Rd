@@ -37,6 +37,10 @@ bquote(a == .(a))
 substitute(a == A, list(A = a))
 
 plot(1:10, a*(1:10), main = bquote(a == .(a)))
+
+## to set a function default arg
+default <- 1
+bquote( function(x, y = .(default)) x+y )
 }
 \keyword{programming}
 \keyword{data}
