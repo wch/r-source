@@ -29,7 +29,7 @@ pkg:::name
 
   If the package \code{pkg} does not have a name space but is on the
   search path then \code{pkg::name} returns the value of \code{name} in
-  the package environment.  This \code{pkg::name} has the same effect
+  the package environment.  Thus \code{pkg::name} has the same effect
   for attached packages whether or not they have a name space.
 
   Specifying a variable that does not exist is an error, as is
