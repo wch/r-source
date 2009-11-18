@@ -5911,9 +5911,16 @@ stopifnot(identical(regexpr(" a", x), regexpr(" a", x, fixed=TRUE)))
 
 ## unname() on 0-length vector
 stopifnot(identical(1[FALSE], unname(c(a=1)[FALSE])))
-##
+## failed to drop names in 2.10.0
 
 
 ## complete.cases on 0-column data frame
 complete.cases(data.frame(1:10)[-1])
 ## failed in 2.10.0
+
+
+## PR#14035, converting (partially) unnamed lists to environments.
+(qq <- with(list(2), ls()))
+nchar(qq)
+with(list(a=1, 2), ls())
+## failed in R < 2.11.0
