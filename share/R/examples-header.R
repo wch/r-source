@@ -47,8 +47,7 @@ assign("cleanEx",
 		  assign.env = .CheckExEnv)
 	   sch <- search()
 	   newitems <- sch[! sch %in% .oldSearch]
-	   for(item in newitems)
-               eval(substitute(detach(item), list(item=item)))
+           if(length(newitems)) tools:::detachPackages(newitems)
 	   missitems <- .oldSearch[! .oldSearch %in% sch]
 	   if(length(missitems))
 	       warning("items ", paste(missitems, collapse=", "),

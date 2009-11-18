@@ -476,3 +476,38 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
 
     invisible(0L)
 }
+
+detachPackages <- function(pkgs)
+{
+    pkgs <- pkgs[pkgs %in% search()]
+    if(!length(pkgs)) return()
+
+    ## Normally 'pkgs' will be in reverse order of attachment (latest first)
+    ## but not always (e.g. BioC package CMA attaches at the end).
+
+    ## The items need not all be packages
+    ## and non-packages can be on the list multiple times.
+    isPkg <- grepl("^package:", pkgs)
+    for(item in pkgs[!isPkg]) {
+        pos <- match(item, search())
+        if(!is.na(pos)) .Internal(detach(pos))
+    }
+
+    pkgs <- pkgs[isPkg]
+    if(!length(pkgs)) return()
+
+    deps <- lapply(pkgs, function(x) if(exists(".Depends", x, inherits = FALSE)) get(".Depends", x) else character())
+    names(deps) <- pkgs
+
+    while(length(deps)) {
+        unl <- unlist(deps)
+        for(i in seq_along(deps)) {
+            this <- names(deps)[i]
+            if(sub("^package:", "", this) %in% unl) next else break
+        }
+        ## hopefully force = TRUE is never needed, but it does ensure
+        ## that progress gets made
+        try(detach(this, character.only = TRUE, force = TRUE))
+        deps <- deps[-i]
+    }
+}
