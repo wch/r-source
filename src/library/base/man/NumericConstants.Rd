@@ -5,6 +5,9 @@
 
 \name{NumericConstants}
 \alias{NumericConstants}
+\alias{1L}
+\alias{0x1}
+\alias{1i}
 \title{Numeric Constants}
 \description{
   How \R parses numeric constants.
