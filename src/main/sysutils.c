@@ -463,7 +463,7 @@ SEXP attribute_hidden do_unsetenv(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < n; i++) {
 	const wchar_t *w = wtransChar(STRING_ELT(vars, i));
 	wchar_t *buf;
-	size_t N = 2*wcslen(w)
+	size_t N = 2*wcslen(w);
 	R_CheckStackN(N);
 	buf = (wchar_t *) alloca(N);
 	wcscpy(buf, w);
