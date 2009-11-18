@@ -1441,8 +1441,7 @@ intention were to always use a @code{PACKAGE} argument)
 The Rd files are checked for correct syntax and meta data, including the
 presence of the mandatory (@code{\name}, @code{\alias}, @code{\title}
 and @code{\description}) fields.  The Rd name and title are checked for
-being non-empty, and the keywords found are compared to the standard
-ones.  There is a check for missing cross-references (links).
+being non-empty, and there is a check for missing cross-references (links).
 
 @item
 A check is made for missing documentation entries, such as undocumented
@@ -3111,8 +3110,8 @@ about the name of the file, the topics documented, a title, a short
 textual description and @R{} usage information for the objects
 documented.  The body gives further information (for example, on the
 function's arguments and return value, as in the above example).
-Finally, there is a footer with keyword information.  The header is
-mandatory.
+Finally, there is an optional footer with keyword information.  The
+header is mandatory.
 
 See @uref{http://developer.r-project.org/Rds.html, ``Guidelines
 for Rd files''} for guidelines for writing documentation in Rd format
@@ -3473,19 +3472,23 @@ first will be used.
 
 @findex \keyword
 @item \keyword@{@var{key}@}
-Each @code{\keyword} entry should specify one of the standard keywords
-as listed in file @file{KEYWORDS} in the R documentation directory
-(default @file{@var{R_HOME}/doc}).  Use e.g.@:
-@code{file.show(file.path(R.home("doc"), "KEYWORDS"))} to inspect the
-standard keywords from within R.  There can be more than one @code{\keyword}
-entry if the @R{} object being documented falls into more than one
-category.
+Each @code{\keyword} entry should specify a single keyword, preferably
+one of the standard keywords as listed in file @file{KEYWORDS} in the R
+documentation directory (default @file{@var{R_HOME}/doc}).  Use e.g.@:
+@code{RShowDoc("KEYWORDS")} to inspect the standard keywords from within
+R.  There can be more than one @code{\keyword} entry if the @R{} object
+being documented falls into more than one category, or none.
 
 The special keyword @samp{internal} marks a page of internal objects
-that are not part of the packages' API. If the help page for object
+that are not part of the packages' API.  If the help page for object
 @code{foo} has keyword @samp{internal}, then @code{help(foo)} gives this
-help page, but @code{foo} is excluded from several object indices, like
-the alphabetical list of objects in the @HTML{} help system.
+help page, but @code{foo} is excluded from several object indices,
+including the alphabetical list of objects in the @HTML{} help system.
+
+@code{help.search()} can search by keyword, including user-defined
+values: however the `Search Engine & Keywords' HTML page accessed
+@emph{via} @code{help.start()} provides single-click access only to a
+pre-defined list of keywords.
 @end table
 
 
@@ -3553,7 +3556,7 @@ The @code{\usage} entry is always @code{@var{bar}} or (for packages
 which do not use lazy-loading of data) @code{data(@var{bar})}.  (In
 particular, only document a @emph{single} data object per Rd file.)
 @item
-The @code{\keyword} entry is always @samp{datasets}.
+The @code{\keyword} entry should always be @samp{datasets}.
 @end itemize
 
 If @code{@var{bar}} is a data frame, documenting it as a data set can
