@@ -956,6 +956,11 @@ static void RQuartz_Rect(double x0, double y0, double x1, double y1, CTXDESC)
     CGContextDrawPath(ctx, kCGPathFillStroke);
 }
 
+/* pre-10.5 doesn't have kCGColorSpaceGenericRGB so fall back to kCGColorSpaceGenericRGB */
+#if MAC_OS_X_VERSION_10_4 >= MAC_OS_X_VERSION_MAX_ALLOWED
+#define kCGColorSpaceSRGB kCGColorSpaceGenericRGB
+#endif
+
 static void RQuartz_Raster(unsigned int *raster, int w, int h,
                            double x, double y, 
                            double width, double height,
