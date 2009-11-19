@@ -44,6 +44,9 @@ assign(".GRID.STATE", vector("list", 64), envir = .GridEvalEnv)
         ## of display list which tries to run grid code
         ## Not very friendly to other registered graphics systems
         ## but its safety first for now
+        if(length(.Devices) > 1L)
+            warning("shutting down all devices when unloading 'grid' name space",
+                    call. = FALSE)
         graphics.off()
         .Call(L_killGrid)
     }
