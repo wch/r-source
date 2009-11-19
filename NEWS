@@ -253,6 +253,10 @@ BUG FIXES
     o	chisq.test() could fail when given argument 'x' or 'y' which
 	deparsed to more than one line.  (Reported by Laurent Gauthier.)
 
+    o	S4 methods are uncached whenever the name space containing
+	them is unloaded (by unloadNamespace() as well as by
+	detach(unload = TRUE)).
+
 
 
 		CHANGES IN R VERSION 2.10.0
