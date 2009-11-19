@@ -141,14 +141,12 @@ detach <- function(name, pos=2, unload=FALSE, character.only = FALSE)
     }
 
     if(pkgname %in% loadedNamespaces()) {
-        ## flushing the lazyload DB happens when namespace is unloaded
+        ## the lazyload DB is flushed when the name space is unloaded
         if(unload) {
             tryCatch(unloadNamespace(pkgname),
                      error = function(e)
                      warning(pkgname, " namespace cannot be unloaded\n",
                              conditionMessage(e), call. = FALSE))
-            if(.isMethodsDispatchOn() && !(pkgname %in% loadedNamespaces()))
-                methods:::cacheMetaData(env, FALSE)
         }
     } else
         .Call("R_lazyLoadDBflush",

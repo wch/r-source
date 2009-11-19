@@ -21,11 +21,10 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE)
     is used.
   }
   \item{unload}{A logical value indicating whether or not to attempt to
-    unload the namespace and S4 methods when a package is being
-    detached.  If the package has a namespace and \code{unload} is
-    \code{TRUE}, then \code{detach} will attempt to unload the
-    namespace and remove any S4 methods defined by the package.  If
-    the namespace is in use or \code{unload} is \code{FALSE}, no
+    unload the namespace when a package is being detached.  If the
+    package has a namespace and \code{unload} is \code{TRUE}, then
+    \code{detach} will attempt to unload the namespace: if the namespace
+    is in use by another namespace or \code{unload} is \code{FALSE}, no
     unloading will occur.
   }
   \item{character.only}{a logical indicating whether \code{name}
@@ -38,7 +37,7 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE)
   previously.
 }
 \details{
-  This most commonly used with a single number argument referring to a
+  This is most commonly used with a single number argument referring to a
   position on the search list, and can also be used with a unquoted or
   quoted name of an item on the search list such as \code{package:tools}.
 
