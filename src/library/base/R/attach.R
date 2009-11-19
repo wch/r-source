@@ -154,11 +154,6 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
                      error = function(e)
                      warning(pkgname, " namespace cannot be unloaded\n",
                              conditionMessage(e), call. = FALSE))
-            ## only if the namespace unload worked can we flush the cache:
-            ## this is after the namespace metadata has been flushed
-            if(.isMethodsDispatchOn() && !(pkgname %in% loadedNamespaces()))
-                methods:::cacheMetaData(env, FALSE)
-
         }
     } else {
         if(.isMethodsDispatchOn() && methods:::.hasS4MetaData(env))
