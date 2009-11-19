@@ -250,6 +250,9 @@ BUG FIXES
 	Windows crashed R (other OSes reported a lack of resources).
 	(PR#14068)
 
+    o	chisq.test() could fail when given argument 'x' or 'y' which
+	deparsed to more than one line.  (Reported by Laurent Gauthier.)
+
 
 
 		CHANGES IN R VERSION 2.10.0

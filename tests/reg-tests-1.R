@@ -5924,3 +5924,12 @@ complete.cases(data.frame(1:10)[-1])
 nchar(qq)
 with(list(a=1, 2), ls())
 ## failed in R < 2.11.0
+
+
+## chisq.test with over-long 'x' or 'y' arg
+# https://stat.ethz.ch/pipermail/r-devel/2009-November/055700.html
+x <- y <- rep(c(1000, 1001, 1002), each=5)
+z <- eval(substitute(chisq.test(x,y), list(x=x)))
+z
+z$observed
+## failed in 2.10.0
