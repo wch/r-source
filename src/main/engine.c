@@ -2997,3 +2997,112 @@ SEXP GE_LTYget(unsigned int lty)
     for(i = 0 ; i < ndash ; i++) cbuf[i] = HexDigits[dash[i]];
     return mkString(cbuf);
 }
+
+/****************************************************************
+ * 
+ * Some functions for operations on raster images
+ * (for those devices that cannot do these themselves)
+ ****************************************************************
+ */
+
+/* 
+ * Scale a raster image to a desired size using 
+ * bilinear interpolation
+ * Code based on scaleColorLILow() from leptonica library
+
+ *  Divide each destination pixel into 16 x 16 sub-pixels.
+ *  Linear interpolation is equivalent to finding the 
+ *  fractional area (i.e., number of sub-pixels divided
+ *  by 256) associated with each of the four nearest src pixels,
+ *  and weighting each pixel value by this fractional area.
+
+ * draster must be pre-allocated.
+ */
+void R_GE_rasterInterpolate(unsigned int *sraster, int sw, int sh,
+                            unsigned int *draster, int dw, int dh) {
+    int i, j;
+    double scx, scy;
+    int wm2, hm2;
+    int xpm, ypm;  /* location in src image, to 1/16 of a pixel */
+    int xp, yp, xf, yf;  /* src pixel and pixel fraction coordinates */
+    int v00r, v01r, v10r, v11r, v00g, v01g, v10g, v11g;
+    int v00b, v01b, v10b, v11b, v00a, v01a, v10a, v11a;
+    int area00, area01, area10, area11;
+    unsigned int pixels1, pixels2, pixels3, pixels4, pixel;
+    unsigned int *sline, *dline;
+
+    /* (scx, scy) are scaling factors that are applied to the
+     * dest coords to get the corresponding src coords.
+     * We need them because we iterate over dest pixels
+     * and must find the corresponding set of src pixels. */
+    scx = (16. * sw) / dw;
+    scy = (16. * sh) / dh;
+
+    wm2 = sw - 2;
+    hm2 = sh - 2;
+
+    /* Iterate over the destination pixels */
+    for (i = 0; i < dh; i++) {
+        ypm = (int) (scy * i);
+        yp = ypm >> 4;
+        yf = ypm & 0x0f;
+        dline = draster + i * dw;
+        sline = sraster + yp * sw;
+        for (j = 0; j < dw; j++) {
+            xpm = (int) (scx * j);
+            xp = xpm >> 4;
+            xf = xpm & 0x0f;
+
+            pixels1 = *(sline + xp);
+
+            if (xp > wm2 || yp > hm2) {
+                if (yp > hm2 && xp <= wm2) {  /* pixels near bottom */
+                    pixels2 = *(sline + xp + 1);
+                    pixels3 = pixels1;
+                    pixels4 = pixels2;
+                }
+                else if (xp > wm2 && yp <= hm2) {  /* pixels near right side */
+                    pixels2 = pixels1;
+                    pixels3 = *(sline + sw + xp);
+                    pixels4 = pixels3;
+                }
+                else {  /* pixels at LR corner */
+                    pixels4 = pixels3 = pixels2 = pixels1;
+                }
+            }
+            else {
+                pixels2 = *(sline + xp + 1);
+                pixels3 = *(sline + sw + xp);
+                pixels4 = *(sline + sw + xp + 1);
+            }
+
+            area00 = (16 - xf) * (16 - yf);
+            area10 = xf * (16 - yf);
+            area01 = (16 - xf) * yf;
+            area11 = xf * yf;
+            v00r = area00 * R_RED(pixels1);
+            v00g = area00 * R_GREEN(pixels1);
+            v00b = area00 * R_BLUE(pixels1);
+            v00a = area00 * R_ALPHA(pixels1);
+            v10r = area10 * R_RED(pixels2);
+            v10g = area10 * R_GREEN(pixels2);
+            v10b = area10 * R_BLUE(pixels2);
+            v10a = area10 * R_ALPHA(pixels2);
+            v01r = area01 * R_RED(pixels3);
+            v01g = area01 * R_GREEN(pixels3);
+            v01b = area01 * R_BLUE(pixels3);
+            v01a = area01 * R_ALPHA(pixels3);
+            v11r = area11 * R_RED(pixels4);
+            v11g = area11 * R_GREEN(pixels4);
+            v11b = area11 * R_BLUE(pixels4);
+            v11a = area11 * R_ALPHA(pixels4);
+            pixel = (((v00r + v10r + v01r + v11r + 128) >>  8) & 0x000000ff) |
+                    (((v00g + v10g + v01g + v11g + 128)      ) & 0x0000ff00) |
+                    (((v00b + v10b + v01b + v11b + 128) <<  8) & 0x00ff0000) |
+                    (((v00a + v10a + v01a + v11a + 128) << 16) & 0xff000000);
+            *(dline + j) = pixel;
+        }
+    }
+
+    return;
+}

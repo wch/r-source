@@ -407,6 +407,12 @@ int GEstring_to_pch(SEXP pch);
 unsigned int GE_LTYpar(SEXP, int);
 SEXP GE_LTYget(unsigned int);
 
+/*
+ * Raster operations
+ */
+void R_GE_rasterInterpolate(unsigned int *sraster, int sw, int sh,
+                            unsigned int *draster, int dw, int dh);
+
 /* 
  * From plotmath.c 
  */

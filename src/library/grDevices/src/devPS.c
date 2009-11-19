@@ -3917,17 +3917,17 @@ static void PS_imagedata(rcolorPtr raster,
     }
 }
 
-static void PS_Raster(unsigned int *raster, int w, int h,
-                      double x, double y, 
-                      double width, double height,
-                      double rot, 
-                      Rboolean interpolate,
-                      const pGEcontext gc, pDevDesc dd)
+static void PS_writeRaster(unsigned int *raster, int w, int h,
+                           double x, double y, 
+                           double width, double height,
+                           double rot, 
+                           pDevDesc dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     /* This takes the simple approach of creating an inline
      * image.  This will not work for larger images
+     * (more than 10000 pixels, e.g., 100x100)
      * due to hard limits in the PostScript language.
      * There is no support for semitransparent images.
      */
@@ -3951,9 +3951,6 @@ static void PS_Raster(unsigned int *raster, int w, int h,
     fprintf(pd->psfp, 
             "  %d %d 8 [%d 0 0 %d 0 %d]\n", 
             w, h, w, -h, h);
-    if (interpolate) {
-
-    }
     /* Begin image data */
     fprintf(pd->psfp, "{<\n");
     /* The image stream */
@@ -3964,6 +3961,37 @@ static void PS_Raster(unsigned int *raster, int w, int h,
     /* Restore graphics state */
     fprintf(pd->psfp, 
             "grestore\n");
+}
+
+static void PS_Raster(unsigned int *raster, int w, int h,
+                      double x, double y, 
+                      double width, double height,
+                      double rot, 
+                      Rboolean interpolate,
+                      const pGEcontext gc, pDevDesc dd)
+{
+    if (interpolate) {
+        /* Generate a new raster 
+         * which is interpolated from the original
+         * Assume a resolution for the new raster of 72 dpi
+         * Ideally would allow user to set this.
+         */
+        char *vmax;
+        vmax = vmaxget();
+        int newW = (int) width;
+        int newH = (int) height;
+        unsigned int *newRaster = 
+            (unsigned int *) R_alloc(newW * newH, sizeof(unsigned int));
+        
+        R_GE_rasterInterpolate(raster, w, h,
+                               newRaster, newW, newH);
+        PS_writeRaster(newRaster, newW, newH, 
+                       x, y, width, height, rot, dd);
+        vmaxset(vmax);
+    } else {
+        PS_writeRaster(raster, w, h, 
+                       x, y, width, height, rot, dd);
+    }
 }
 
 static SEXP PS_Cap(pDevDesc dd)
