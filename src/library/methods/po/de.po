@@ -1,4 +1,4 @@
-# German translation of 
+# German translation of
 # src/library/methods/po/methods.pot
 #
 # Copyright (C) 2007-2009 The R Foundation
@@ -42,7 +42,7 @@ msgid ""
 "for function '%s'"
 msgstr ""
 "kein \"allMethods\" Slot im Objekt der Klasse \"%s\", das als "
-"Methodenlistefür Funktion '%s' genutzt wird"
+"Methodenliste für Funktion '%s' genutzt wird"
 
 #: methods_list_dispatch.c:324
 #, c-format
@@ -72,9 +72,9 @@ msgid ""
 "invalid generic function object for method selection for function '%s': "
 "expected a function or a primitive, got an object of class \"%s\""
 msgstr ""
-"unzulässiges generisches Funktionsobjekt für die Methodenwahl für Funtion '%"
-"s': erwartete eine Funktion oder eine Primitive, bekam Objekt der Klasse \"%s"
-"\""
+"unzulässiges generisches Funktionsobjekt für die Methodenwahl für Funktion "
+"'%s': erwartete eine Funktion oder eine Primitive, bekam Objekt der Klasse "
+"\"%s\""
 
 #: methods_list_dispatch.c:454
 #, c-format

@@ -1100,7 +1100,7 @@ msgstr ""
 "Klasse \"%s\" hat mehrere sichtbare Definitionen; nur die erste entfernt"
 
 msgid "invalid class \"%s\" object:"
-msgstr "Objekt der ungültigen Klasse \"%s\":"
+msgstr "Ungültiges Objekt der Klasse \"%s\":"
 
 msgid "validity method must be NULL or a function of one argument"
 msgstr ""
@@ -1547,7 +1547,7 @@ msgid ""
 "S3Class can only be assigned to S4 objects that extend \"oldClass\"; not "
 "true of class \"%s\""
 msgstr ""
-"S3Class can nur S4 Objekten zugewiesen werden, die \"oldClass\" erweitern; "
+"S3Class kann nur S4 Objekten zugewiesen werden, die \"oldClass\" erweitern; "
 "gilt nicht für Klasse \"%s\""
 
 msgid "Created a package name, \"%s\", when none found"
