@@ -105,6 +105,6 @@ distdir: $(DISTFILES)
 
 
 ## Hardcoded dependencies (see '../../../share/make/vars.mk')
-mgcv.ts: nlme.ts MASS.ts
+mgcv.ts: nlme.ts MASS.ts Matrix.ts
 nlme.ts: lattice.ts
 class.ts: MASS.ts
