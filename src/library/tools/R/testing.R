@@ -477,10 +477,13 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both"))
     invisible(0L)
 }
 
-detachPackages <- function(pkgs)
+detachPackages <- function(pkgs, verbose = TRUE)
 {
     pkgs <- pkgs[pkgs %in% search()]
     if(!length(pkgs)) return()
+    if(verbose) message("detaching ",
+                        paste(sQuote(pkgs), collapse = ", "),
+                        domain = NA)
 
     ## Normally 'pkgs' will be in reverse order of attachment (latest first)
     ## but not always (e.g. BioC package CMA attaches at the end).
@@ -499,6 +502,11 @@ detachPackages <- function(pkgs)
     deps <- lapply(pkgs, function(x) if(exists(".Depends", x, inherits = FALSE)) get(".Depends", x) else character())
     names(deps) <- pkgs
 
+    unload <- nzchar(Sys.getenv("_R_CHECK_UNLOAD_NAMESPACES_"))
+    ## unloading 'grid' kills all devices
+    ## tcltk is unhappy to have its DLL unloaded repeatedly
+    exclusions <- c("grid", "tcltk")
+    exclusions <- paste("package", exclusions, sep=":")
     while(length(deps)) {
         unl <- unlist(deps)
         for(i in seq_along(deps)) {
@@ -507,7 +515,9 @@ detachPackages <- function(pkgs)
         }
         ## hopefully force = TRUE is never needed, but it does ensure
         ## that progress gets made
-        try(detach(this, character.only = TRUE, force = TRUE))
+        try(detach(this, character.only = TRUE,
+                   unload = unload && !(this %in% exclusions),
+                   force = TRUE))
         deps <- deps[-i]
     }
 }
