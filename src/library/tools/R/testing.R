@@ -42,8 +42,7 @@ massageExamples <- function(pkg, files, outFile = stdout(), addTiming = FALSE)
         cat("library('", pkg, "')\n\n", sep = "", file = out)
 
     cat("assign(\".oldSearch\", search(), pos = 'CheckExEnv')\n", file = out)
-    cat("assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n",
-        file = out)
+    ## cat("assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n", file = out)
     if(addTiming) {
         ## adding timings
         cat("assign(\".ExTimings\", \"", pkg,
@@ -75,7 +74,7 @@ massageExamples <- function(pkg, files, outFile = stdout(), addTiming = FALSE)
                                    lines1, perl = TRUE, useBytes = TRUE))
 
         if(have_examples)
-            cat("cleanEx(); nameEx(\"", nm, "\")\n", sep = "", file = out)
+            cat("cleanEx()\nnameEx(\"", nm, "\")\n", sep = "", file = out)
 
         cat("### * ", nm, "\n\n", sep = "", file = out)
         cat("flush(stderr()); flush(stdout())\n\n", file = out)
@@ -481,9 +480,10 @@ detachPackages <- function(pkgs, verbose = TRUE)
 {
     pkgs <- pkgs[pkgs %in% search()]
     if(!length(pkgs)) return()
-    if(verbose) message("detaching ",
-                        paste(sQuote(pkgs), collapse = ", "),
-                        domain = NA)
+    if(verbose){
+        msg <- paste("detaching", paste(sQuote(pkgs), collapse = ", "))
+        cat("", strwrap(msg, exdent = 2L), "", sep = "\n")
+    }
 
     ## Normally 'pkgs' will be in reverse order of attachment (latest first)
     ## but not always (e.g. BioC package CMA attaches at the end).
