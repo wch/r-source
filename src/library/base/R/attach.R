@@ -152,7 +152,8 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
         if(unload) {
             tryCatch(unloadNamespace(pkgname),
                      error = function(e)
-                     warning(pkgname, " namespace cannot be unloaded\n",
+                     warning(sQuote(pkgname),
+                             " name space cannot be unloaded:\n  ",
                              conditionMessage(e), call. = FALSE))
         }
     } else {
