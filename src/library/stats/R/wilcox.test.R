@@ -199,56 +199,49 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ##
                 ## As in the exact case, interchange quantiles.
                 cint <- switch(alternative, "two.sided" = {
-                  repeat({
-                    mindiff<-wdiff(mumin,zq=qnorm(alpha/2, lower.tail=FALSE))
-                    maxdiff<-wdiff(mumax,zq=qnorm(alpha/2))
-                    if(mindiff<0 || maxdiff>0){
-                      alpha<-alpha*2
-                    } else break
-                    })
-                  if(1-conf.level < alpha*0.75){
-                    conf.level<-1-alpha
+                  repeat {
+                      mindiff <- wdiff(mumin,zq = qnorm(alpha/2, lower.tail = FALSE))
+                      maxdiff <- wdiff(mumax,zq = qnorm(alpha/2))
+                      if(mindiff < 0 || maxdiff > 0)  alpha <- alpha*2  else break
+                  }
+                  if(1 - conf.level < alpha*0.75) {
+                    conf.level <- 1 - alpha
                     warning("Requested conf.level not achievable")
                   }
                   l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
                                zq=qnorm(alpha/2, lower.tail=FALSE))$root
                   u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                               zq=qnorm(alpha/2))$root
+                               zq = qnorm(alpha/2))$root
                   c(l, u)
-                }, "greater"= {
-                  repeat({
-                    mindiff<-wdiff(mumin,zq=qnorm(alpha, lower.tail=FALSE))
-                    if(mindiff<0){
-                      alpha<-alpha*2
-                    } else break
-                    })
-                  if(1-conf.level < alpha*0.75){
-                    conf.level<-1-alpha
+                }, "greater" = {
+                  repeat {
+                      mindiff <- wdiff(mumin, zq = qnorm(alpha, lower.tail = FALSE))
+                      if(mindiff < 0)  alpha <- alpha*2  else break
+                  }
+                  if(1 - conf.level < alpha*0.75) {
+                    conf.level <- 1 - alpha
                     warning("Requested conf.level not achievable")
                   }
-                  l <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                               zq=qnorm(alpha, lower.tail=FALSE))$root
-                    c(l, +Inf)
-                }, "less"= {
-                  repeat({
-                    maxdiff<-wdiff(mumax,zq=qnorm(alpha))
-                    if(maxdiff>0){
-                      alpha<-alpha*2
-                    } else break
-                    })
-                  if(1-conf.level < alpha*0.75){
-                    conf.level<-1-alpha
+                  l <- uniroot(wdiff, c(mumin, mumax), tol = 1e-4,
+                               zq = qnorm(alpha, lower.tail = FALSE))$root
+                  c(l, +Inf)
+                }, "less" = {
+                  repeat {
+                      maxdiff <- wdiff(mumax, zq = qnorm(alpha))
+                      if(maxdiff > 0)  alpha <- alpha * 2  else break
+                  }
+                  if (1 - conf.level < alpha*0.75) {
+                    conf.level <- 1 - alpha
                     warning("Requested conf.level not achievable")
                   }
                   u <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                                  zq=qnorm(alpha))$root
+                               zq = qnorm(alpha))$root
                   c(-Inf, u)
                 })
                 attr(cint, "conf.level") <- conf.level
                 ESTIMATE <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
-                                    zq=0)$root
+                                    zq = 0)$root
 		names(ESTIMATE) <- "(pseudo)median"
-
             }
 
             if(exact && TIES) {
@@ -261,7 +254,6 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 if(conf.int)
                     warning("cannot compute exact confidence interval with zeroes")
             }
-
 	}
     }
     else {
