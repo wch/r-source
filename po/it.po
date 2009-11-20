@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-15 08:45+0100\n"
+"POT-Creation-Date: 2009-11-20 08:28+0000\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -125,8 +125,8 @@ msgstr ""
 #: src/main/array.c:73 src/main/array.c:1041 src/main/array.c:1174
 #: src/main/array.c:1176 src/main/array.c:1177 src/main/attrib.c:193
 #: src/main/builtin.c:77 src/main/builtin.c:86 src/main/builtin.c:105
-#: src/main/builtin.c:107 src/main/builtin.c:138 src/main/builtin.c:492
-#: src/main/builtin.c:508 src/main/builtin.c:686 src/main/character.c:117
+#: src/main/builtin.c:107 src/main/builtin.c:138 src/main/builtin.c:489
+#: src/main/builtin.c:505 src/main/builtin.c:687 src/main/character.c:117
 #: src/main/character.c:120 src/main/character.c:172 src/main/character.c:982
 #: src/main/character.c:986 src/main/character.c:1212
 #: src/main/character.c:1216 src/main/connections.c:934
@@ -175,9 +175,9 @@ msgstr ""
 #: src/main/envir.c:2175 src/main/envir.c:2433 src/main/envir.c:2690
 #: src/main/envir.c:2704 src/main/envir.c:2711 src/main/envir.c:2724
 #: src/main/envir.c:3262 src/main/eval.c:281 src/main/eval.c:1765
-#: src/main/eval.c:1789 src/main/eval.c:1793 src/main/grep.c:650
-#: src/main/grep.c:958 src/main/grep.c:962 src/main/grep.c:1269
-#: src/main/grep.c:1666 src/main/grep.c:1669 src/main/memory.c:2978
+#: src/main/eval.c:1789 src/main/eval.c:1793 src/main/grep.c:652
+#: src/main/grep.c:940 src/main/grep.c:944 src/main/grep.c:1235
+#: src/main/grep.c:1612 src/main/grep.c:1615 src/main/memory.c:2978
 #: src/main/model.c:1613 src/main/model.c:1621 src/main/optim.c:225
 #: src/main/paste.c:85 src/main/paste.c:344 src/main/paste.c:351
 #: src/main/paste.c:358 src/main/paste.c:363 src/main/paste.c:368
@@ -193,8 +193,8 @@ msgstr ""
 #: src/main/platform.c:1698 src/main/platform.c:1956 src/main/platform.c:1997
 #: src/main/platform.c:2118 src/main/platform.c:2121 src/main/platform.c:2124
 #: src/main/platform.c:2127 src/main/platform.c:2244 src/main/platform.c:2272
-#: src/main/platform.c:2320 src/main/plot.c:2953 src/main/plot.c:4092
-#: src/main/plot.c:4096 src/main/plot.c:4099 src/main/plot3d.c:2447
+#: src/main/platform.c:2320 src/main/plot.c:2961 src/main/plot.c:4100
+#: src/main/plot.c:4104 src/main/plot.c:4107 src/main/plot3d.c:2447
 #: src/main/plot3d.c:2451 src/main/plot3d.c:2456 src/main/plot3d.c:2460
 #: src/main/plot3d.c:2464 src/main/plot3d.c:2468 src/main/print.c:229
 #: src/main/print.c:235 src/main/print.c:257 src/main/print.c:263
@@ -289,12 +289,12 @@ msgstr "'tag' non valido"
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
 #: src/main/platform.c:2292 src/main/plot.c:276 src/main/plot.c:470
-#: src/main/plot.c:475 src/main/plot.c:2131 src/main/plot.c:2138
-#: src/main/plot.c:3166 src/main/plot.c:3168 src/main/plot.c:3170
-#: src/main/plot.c:3328 src/main/plot3d.c:1397 src/main/plot3d.c:2525
+#: src/main/plot.c:475 src/main/plot.c:2135 src/main/plot.c:2142
+#: src/main/plot.c:3174 src/main/plot.c:3176 src/main/plot.c:3178
+#: src/main/plot.c:3336 src/main/plot3d.c:1397 src/main/plot3d.c:2525
 #: src/main/plot3d.c:2529 src/main/plot3d.c:2531 src/main/seq.c:166
 #: src/main/seq.c:264 src/main/seq.c:267 src/main/sort.c:867
-#: src/main/sort.c:966 src/main/source.c:205 src/main/summary.c:978
+#: src/main/sort.c:967 src/main/source.c:205 src/main/summary.c:990
 #: src/main/sysutils.c:229 src/main/util.c:867 src/main/util.c:872
 #: src/main/util.c:879 src/main/util.c:882 src/modules/X11/devX11.c:2544
 #: src/modules/X11/devX11.c:2571 src/modules/X11/devX11.c:2576
@@ -519,9 +519,9 @@ msgstr "<ERRORE: input non valido per questo encoding> "
 #: src/gnuwin32/system.c:542 src/gnuwin32/system.c:1021
 #: src/gnuwin32/system.c:1033 src/main/connections.c:527
 #: src/main/connections.c:532 src/main/dounzip.c:114 src/main/saveload.c:1947
-#: src/main/serialize.c:2110 src/main/serialize.c:2115
-#: src/main/serialize.c:2196 src/main/serialize.c:2229 src/unix/system.c:311
-#: src/unix/system.c:322
+#: src/main/serialize.c:2103 src/main/serialize.c:2108
+#: src/main/serialize.c:2189 src/main/serialize.c:2222 src/unix/system.c:312
+#: src/unix/system.c:323
 #, fuzzy, c-format
 msgid "cannot open file '%s': %s"
 msgstr "impossibile aprire il file '%s'"
@@ -560,22 +560,22 @@ msgstr ""
 "ATTENZIONE: il valore di max-mem-size =%4.1fM è troppo grande e sarà "
 "considerato il limite di 3Gb\n"
 
-#: src/gnuwin32/system.c:1044 src/unix/system.c:341
+#: src/gnuwin32/system.c:1044 src/unix/system.c:342
 #, c-format
 msgid "WARNING: '-e %s' omitted as input is too long\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:1048 src/unix/system.c:355
+#: src/gnuwin32/system.c:1048 src/unix/system.c:356
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ATTENZIONE: opzione %s sconosciuta\n"
 
-#: src/gnuwin32/system.c:1070 src/unix/system.c:359
+#: src/gnuwin32/system.c:1070 src/unix/system.c:360
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGOMENTO '%s' __ignorato__\n"
 
-#: src/gnuwin32/system.c:1076 src/unix/system.c:366
+#: src/gnuwin32/system.c:1076 src/unix/system.c:367
 #, fuzzy
 msgid "cannot use -e with -f or --file"
 msgstr "impossibile impostare lunghezza di un oggetto non vector"
@@ -584,7 +584,7 @@ msgstr "impossibile impostare lunghezza di un oggetto non vector"
 msgid "creation of tmpfile failed -- set TMPDIR suitably?"
 msgstr ""
 
-#: src/gnuwin32/system.c:1115 src/unix/system.c:416
+#: src/gnuwin32/system.c:1115 src/unix/system.c:417
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "si deve specificare '--save', '--no-save' oppure '--vanilla'"
 
@@ -820,14 +820,14 @@ msgid "invalid multibyte format string"
 msgstr "stringa formato multibyte non valida"
 
 #: src/main/agrep.c:70 src/main/character.c:984 src/main/character.c:988
-#: src/main/grep.c:652 src/main/grep.c:960 src/main/grep.c:964
-#: src/main/grep.c:1271 src/main/grep.c:1671
+#: src/main/grep.c:654 src/main/grep.c:942 src/main/grep.c:946
+#: src/main/grep.c:1237 src/main/grep.c:1617
 #, fuzzy, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
 msgstr ""
 "la condizione la lunghezza > 1 e solo il promo elemento verrà utilizzato"
 
-#: src/main/agrep.c:96 src/main/grep.c:66
+#: src/main/agrep.c:96 src/main/grep.c:58
 #, fuzzy, c-format
 msgid "regcomp error:  '%s'"
 msgstr "errore di lettura"
@@ -1124,11 +1124,11 @@ msgstr ""
 #: src/main/attrib.c:1010 src/main/builtin.c:64 src/main/builtin.c:101
 #: src/main/envir.c:1509 src/main/envir.c:1605 src/main/envir.c:1666
 #: src/main/envir.c:1783 src/main/paste.c:67 src/main/paste.c:254
-#: src/main/plot.c:1723 src/main/random.c:475
+#: src/main/plot.c:1727 src/main/random.c:475
 msgid "invalid first argument"
 msgstr "primo argomento non valido"
 
-#: src/main/attrib.c:1013 src/main/plot.c:1730
+#: src/main/attrib.c:1013 src/main/plot.c:1734
 msgid "invalid second argument"
 msgstr "secondo argomento non valido"
 
@@ -1303,7 +1303,7 @@ msgstr "dimensione troppo grande per il vettore indicato"
 #: src/main/envir.c:2895 src/main/envir.c:2929 src/main/envir.c:2949
 #: src/main/envir.c:3254 src/main/envir.c:3258 src/main/eval.c:3671
 #: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2056
-#: src/main/saveload.c:2337 src/main/serialize.c:2251
+#: src/main/saveload.c:2337 src/main/serialize.c:2244
 msgid "use of NULL environment is defunct"
 msgstr ""
 
@@ -1337,68 +1337,68 @@ msgstr "non posso rompere i legami nell'environment base"
 msgid "'parent' is not an environment"
 msgstr "'parent' non è un environment"
 
-#: src/main/builtin.c:479 src/main/connections.c:3299
+#: src/main/builtin.c:476 src/main/connections.c:3299
 #: src/main/connections.c:3310 src/main/connections.c:3665
 #: src/main/connections.c:3689 src/main/connections.c:4052
 #: src/main/connections.c:4114 src/main/connections.c:4321
 #: src/main/connections.c:4325 src/main/connections.c:4679
 #: src/main/deparse.c:310 src/main/deparse.c:313 src/main/deparse.c:394
-#: src/main/deparse.c:397 src/main/scan.c:1700 src/main/serialize.c:1662
+#: src/main/deparse.c:397 src/main/scan.c:1700 src/main/serialize.c:1655
 msgid "cannot write to this connection"
 msgstr "non posso scrivere su questa connessione"
 
-#: src/main/builtin.c:484 src/main/builtin.c:514 src/main/platform.c:345
+#: src/main/builtin.c:481 src/main/builtin.c:511 src/main/platform.c:345
 #: src/main/platform.c:348 src/main/plot3d.c:2539 src/main/plot3d.c:2543
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "specificazione di '%s' non valida"
 
-#: src/main/builtin.c:501
+#: src/main/builtin.c:498
 msgid "non-positive 'fill' argument will be ignored"
 msgstr ""
 
-#: src/main/builtin.c:571
+#: src/main/builtin.c:572
 #, fuzzy, c-format
 msgid "argument %d (type '%s') cannot be handled by 'cat'"
 msgstr "l'argomento %d (type '%s') non ancora supportato da cat"
 
-#: src/main/builtin.c:689
+#: src/main/builtin.c:690
 msgid "vector: zero-length 'type' argument"
 msgstr "vector: argomento 'type' di lunghezza zero"
 
-#: src/main/builtin.c:708
+#: src/main/builtin.c:709
 #, fuzzy, c-format
 msgid "vector: cannot make a vector of mode '%s'."
 msgstr "vector: non posso creare un vettore in modalità \"%s\"."
 
-#: src/main/builtin.c:733
+#: src/main/builtin.c:734
 msgid "cannot set length of non-vector"
 msgstr "impossibile impostare lunghezza di un oggetto non vector"
 
-#: src/main/builtin.c:832 src/main/devices.c:366 src/main/options.c:566
+#: src/main/builtin.c:833 src/main/devices.c:366 src/main/options.c:566
 msgid "invalid argument"
 msgstr "argomento non valido"
 
-#: src/main/builtin.c:834 src/main/builtin.c:838 src/main/character.c:329
+#: src/main/builtin.c:835 src/main/builtin.c:839 src/main/character.c:329
 #: src/main/coerce.c:2536
 #, fuzzy
 msgid "invalid value"
 msgstr "valore '%s' non valido"
 
-#: src/main/builtin.c:837
+#: src/main/builtin.c:838
 #, fuzzy
 msgid "missing value for 'length'"
 msgstr "length<- valore mancante in 'length'"
 
-#: src/main/builtin.c:864 src/main/coerce.c:2274 src/main/coerce.c:2315
+#: src/main/builtin.c:865 src/main/coerce.c:2274 src/main/coerce.c:2315
 msgid "... used in an incorrect context"
 msgstr "...usato in un contesto sbagliato"
 
-#: src/main/builtin.c:869
+#: src/main/builtin.c:870
 msgid "invalid parameter in 'switch()'"
 msgstr "parametro non valido in 'switch()'"
 
-#: src/main/builtin.c:880
+#: src/main/builtin.c:881
 msgid "switch: EXPR must return a length 1 vector"
 msgstr "switch: EXPR deve restituire un vettore di lunghezza 1"
 
@@ -2104,7 +2104,7 @@ msgid "cannot close messages sink connection"
 msgstr "impossibile chiudere una connessione di sink dei messaggi"
 
 #: src/main/connections.c:3043 src/main/connections.c:4678
-#: src/main/serialize.c:1652 src/main/serialize.c:1660
+#: src/main/serialize.c:1645 src/main/serialize.c:1653
 msgid "connection is not open"
 msgstr "connessione non aperta"
 
@@ -2117,7 +2117,7 @@ msgstr "Linea più lunga della dimensione del buffer"
 #: src/main/connections.c:3985 src/main/connections.c:4005 src/main/dcf.c:53
 #: src/main/dcf.c:59 src/main/saveload.c:2320 src/main/scan.c:903
 #: src/main/scan.c:907 src/main/scan.c:1014 src/main/scan.c:1018
-#: src/main/serialize.c:1654 src/main/source.c:253 src/main/source.c:256
+#: src/main/serialize.c:1647 src/main/source.c:253 src/main/source.c:256
 msgid "cannot read from this connection"
 msgstr "non posso leggere da questa connessione"
 
@@ -2478,12 +2478,12 @@ msgstr ""
 msgid "R was not compiled with support for memory profiling"
 msgstr ""
 
-#: src/main/deparse.c:150 src/main/plot.c:908 src/main/plot.c:1445
-#: src/main/plot.c:1768 src/main/plot.c:1836 src/main/plot.c:1915
-#: src/main/plot.c:2013 src/main/plot.c:2091 src/main/plot.c:2372
-#: src/main/plot.c:2550 src/main/plot.c:2769 src/main/plot.c:3309
-#: src/main/plot.c:3437 src/main/plot.c:3516 src/main/plot.c:3687
-#: src/main/plot.c:3964 src/main/plot3d.c:1360 src/main/sprintf.c:210
+#: src/main/deparse.c:150 src/main/plot.c:912 src/main/plot.c:1449
+#: src/main/plot.c:1772 src/main/plot.c:1840 src/main/plot.c:1919
+#: src/main/plot.c:2017 src/main/plot.c:2095 src/main/plot.c:2376
+#: src/main/plot.c:2554 src/main/plot.c:2773 src/main/plot.c:3317
+#: src/main/plot.c:3445 src/main/plot.c:3524 src/main/plot.c:3695
+#: src/main/plot.c:3972 src/main/plot3d.c:1360 src/main/sprintf.c:210
 #: src/main/sprintf.c:242
 msgid "too few arguments"
 msgstr "argomenti insufficienti"
@@ -2523,7 +2523,7 @@ msgstr "'gap' deve essere un intero non negativo"
 
 #: src/main/deparse.c:363 src/main/envir.c:1634 src/main/envir.c:1716
 #: src/main/eval.c:423 src/main/eval.c:909 src/main/eval.c:2730
-#: src/main/saveload.c:1964 src/main/saveload.c:2281 src/main/serialize.c:2269
+#: src/main/saveload.c:1964 src/main/saveload.c:2281 src/main/serialize.c:2262
 #, c-format
 msgid "object '%s' not found"
 msgstr "oggetto \"%s\" non trovato"
@@ -3645,7 +3645,7 @@ msgid "'file' must be non-empty string"
 msgstr "'file' deve essere una stringa non vuota"
 
 #: src/main/eval.c:3774 src/main/saveload.c:1930 src/main/saveload.c:2220
-#: src/main/serialize.c:1795
+#: src/main/serialize.c:1788
 msgid "'ascii' must be logical"
 msgstr "'ascii' deve essere di tipo logico"
 
@@ -3963,23 +3963,23 @@ msgstr "argomento non valido in GBox"
 msgid "Metric information not available for this device"
 msgstr "'truncation' non disponibile per questa connessione"
 
-#: src/main/grep.c:67 src/main/grep.c:741 src/main/grep.c:1341
-#: src/main/grep.c:1745 src/main/pcre.c:187 src/main/pcre.c:364
+#: src/main/grep.c:59 src/main/grep.c:730 src/main/grep.c:1294
+#: src/main/grep.c:1667 src/main/pcre.c:187 src/main/pcre.c:365
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "espressione regolare '%s' non valida"
 
 #: src/main/grep.c:128 src/main/grep.c:134 src/main/grep.c:641
-#: src/main/grep.c:643 src/main/grep.c:647 src/main/grep.c:949
-#: src/main/grep.c:951 src/main/grep.c:955 src/main/grep.c:1258
-#: src/main/grep.c:1260 src/main/grep.c:1264 src/main/grep.c:1657
-#: src/main/grep.c:1659 src/main/grep.c:1663
+#: src/main/grep.c:643 src/main/grep.c:649 src/main/grep.c:929
+#: src/main/grep.c:931 src/main/grep.c:937 src/main/grep.c:1222
+#: src/main/grep.c:1224 src/main/grep.c:1230 src/main/grep.c:1601
+#: src/main/grep.c:1603 src/main/grep.c:1609
 #, fuzzy, c-format
 msgid "argument '%s' will be ignored"
 msgstr "gli argomenti successivi ai primi due vengono ignorati"
 
-#: src/main/grep.c:322 src/main/grep.c:739 src/main/grep.c:1339
-#: src/main/pcre.c:185 src/main/pcre.c:362
+#: src/main/grep.c:316 src/main/grep.c:728 src/main/grep.c:1292
+#: src/main/pcre.c:185 src/main/pcre.c:363
 #, c-format
 msgid ""
 "PCRE pattern compilation error\n"
@@ -3987,39 +3987,39 @@ msgid ""
 "\tat '%s'\n"
 msgstr ""
 
-#: src/main/grep.c:324
+#: src/main/grep.c:318
 #, c-format
 msgid "invalid split pattern '%s'"
 msgstr "pattern di split '%s' non valido"
 
-#: src/main/grep.c:328 src/main/grep.c:745 src/main/grep.c:1346
-#: src/main/pcre.c:192 src/main/pcre.c:370
+#: src/main/grep.c:322 src/main/grep.c:734 src/main/grep.c:1299
+#: src/main/pcre.c:192 src/main/pcre.c:371
 #, c-format
 msgid ""
 "PCRE pattern study error\n"
 "\t'%s'\n"
 msgstr ""
 
-#: src/main/grep.c:727 src/main/grep.c:1327 src/main/grep.c:1735
-#: src/main/pcre.c:356
+#: src/main/grep.c:719 src/main/grep.c:1283 src/main/grep.c:1659
+#: src/main/pcre.c:357
 msgid "regular expression is invalid in this locale"
 msgstr "l'espressione regolare non è valida in questo locale"
 
-#: src/main/grep.c:769 src/main/grep.c:1370 src/main/grep.c:1763
-#: src/main/pcre.c:207 src/main/pcre.c:397
+#: src/main/grep.c:758 src/main/grep.c:1323 src/main/grep.c:1685
+#: src/main/pcre.c:207 src/main/pcre.c:398
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "stringa di input %d non valida in questo locale"
 
-#: src/main/grep.c:1011
+#: src/main/grep.c:990
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern' non valido per questo locale"
 
-#: src/main/grep.c:1013
+#: src/main/grep.c:992
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacemente' non valido in questo locale"
 
-#: src/main/grep.c:1019
+#: src/main/grep.c:997
 msgid "zero-length pattern"
 msgstr "'pattern' di lunghezza zero"
 
@@ -5340,242 +5340,242 @@ msgstr "Gli assi logaritmici devono avere limiti positivi"
 msgid "invalid type for axis labels"
 msgstr "tipo non valido per le etichette dell'asse"
 
-#: src/main/plot.c:917
+#: src/main/plot.c:921
 #, c-format
 msgid "invalid axis number %d"
 msgstr "numero asse %d non valido"
 
-#: src/main/plot.c:1007
+#: src/main/plot.c:1011
 msgid "'hadj' must be of length one"
 msgstr "'hadj' deve essere di lunghezza 1"
 
-#: src/main/plot.c:1014 src/main/plot.c:2425
+#: src/main/plot.c:1018 src/main/plot.c:2429
 msgid "zero length 'padj' specified"
 msgstr "specificato 'padj' di lunghezza zero"
 
-#: src/main/plot.c:1083
+#: src/main/plot.c:1087
 msgid "'labels' is supplied and not 'at'"
 msgstr ""
 
-#: src/main/plot.c:1087
+#: src/main/plot.c:1091
 #, fuzzy, c-format
 msgid "'at' and 'labels' lengths differ, %d != %d"
 msgstr "le lunghezza di 'at' e 'label' differiscono, %d != %d"
 
-#: src/main/plot.c:1104
+#: src/main/plot.c:1108
 msgid "no locations are finite"
 msgstr "nessuna posizione finita"
 
-#: src/main/plot.c:1461
+#: src/main/plot.c:1465
 msgid "invalid plotting structure"
 msgstr "struttura disegno non valida"
 
-#: src/main/plot.c:1463
+#: src/main/plot.c:1467
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
 msgstr "lunghezza di 'x' e 'y' differenti in %s()"
 
-#: src/main/plot.c:1474
+#: src/main/plot.c:1478
 #, c-format
 msgid "plot type '%s' will be truncated to first character"
 msgstr "tipo lpot '%s' verrà troncato al primo carattere"
 
-#: src/main/plot.c:1478 src/main/plot.c:3031
+#: src/main/plot.c:1482 src/main/plot.c:3039
 msgid "invalid plot type"
 msgstr "tipo grafico non valido"
 
-#: src/main/plot.c:1678
+#: src/main/plot.c:1682
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "tipo grafico '%c' non valido"
 
-#: src/main/plot.c:1738
+#: src/main/plot.c:1742
 msgid "invalid third argument"
 msgstr "terzo argomento non valido"
 
-#: src/main/plot.c:1746
+#: src/main/plot.c:1750
 msgid "invalid fourth argument"
 msgstr "quarto argomento non valido"
 
-#: src/main/plot.c:1754
+#: src/main/plot.c:1758
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr ""
 
-#: src/main/plot.c:1928
+#: src/main/plot.c:1932
 msgid "invalid arrow head length"
 msgstr "lunghezza punta della freccia non valida"
 
-#: src/main/plot.c:1933
+#: src/main/plot.c:1937
 msgid "invalid arrow head angle"
 msgstr "angolazione della punta-freccia non valida"
 
-#: src/main/plot.c:1938
+#: src/main/plot.c:1942
 msgid "invalid arrow head specification"
 msgstr "specificazione della punta-freccia non valida"
 
-#: src/main/plot.c:2103 src/main/plot.c:3173
+#: src/main/plot.c:2107 src/main/plot.c:3181
 msgid "zero length 'labels'"
 msgstr "'labels' di lunghezza zero"
 
-#: src/main/plot.c:2177
+#: src/main/plot.c:2181
 msgid "no coordinates were supplied"
 msgstr "non sono state fornite coordinate"
 
-#: src/main/plot.c:2383
+#: src/main/plot.c:2387
 msgid "zero length 'text' specified"
 msgstr "specificato 'text' di lunghezza zero"
 
-#: src/main/plot.c:2389
+#: src/main/plot.c:2393
 msgid "zero length 'side' specified"
 msgstr "specificato 'side' di lunghezza zero"
 
-#: src/main/plot.c:2396
+#: src/main/plot.c:2400
 msgid "zero length 'line' specified"
 msgstr "specificato 'line' di lunghezza zero"
 
-#: src/main/plot.c:2404
+#: src/main/plot.c:2408
 msgid "zero length 'outer' specified"
 msgstr "specificato 'outer' di lunghezza zero"
 
-#: src/main/plot.c:2411
+#: src/main/plot.c:2415
 msgid "zero length 'at' specified"
 msgstr "specificato un 'at' di lunghezza zero"
 
-#: src/main/plot.c:2418
+#: src/main/plot.c:2422
 msgid "zero length 'adj' specified"
 msgstr "specificato 'adj' di lunghezza zero"
 
-#: src/main/plot.c:2432
+#: src/main/plot.c:2436
 msgid "zero length 'cex' specified"
 msgstr "specificato 'cex' di lunghezza zero"
 
-#: src/main/plot.c:2440
+#: src/main/plot.c:2444
 msgid "zero length 'col' specified"
 msgstr "specificato 'col' di lunghezza zero"
 
-#: src/main/plot.c:2447
+#: src/main/plot.c:2451
 msgid "zero length 'font' specified"
 msgstr "specificato 'font' di lunghezza zero"
 
-#: src/main/plot.c:2810
+#: src/main/plot.c:2814
 msgid "invalid a=, b= specification"
 msgstr "specificazione a=, b= non valida"
 
-#: src/main/plot.c:2819
+#: src/main/plot.c:2823
 msgid "'a' and 'b' must be finite"
 msgstr "'a' e 'b' devono essere finiti"
 
-#: src/main/plot.c:3026
+#: src/main/plot.c:3034
 msgid "invalid number of points in locator()"
 msgstr "numero di punti non valido in locator()"
 
-#: src/main/plot.c:3162
+#: src/main/plot.c:3170
 msgid "invalid number of points in identify()"
 msgstr "numero di punti non valido in identify()"
 
-#: src/main/plot.c:3164
+#: src/main/plot.c:3172
 msgid "incorrect argument type"
 msgstr "tipo argomento non valido"
 
-#: src/main/plot.c:3176
+#: src/main/plot.c:3184
 msgid "different argument lengths"
 msgstr "argomenti di lunghezza diversa"
 
-#: src/main/plot.c:3178
+#: src/main/plot.c:3186
 msgid "more 'labels' than points"
 msgstr ""
 
-#: src/main/plot.c:3231
+#: src/main/plot.c:3239
 #, fuzzy, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr "attenzione: nessun punto nell'intorno di %.2f pollici\n"
 
-#: src/main/plot.c:3237
+#: src/main/plot.c:3245
 msgid "warning: nearest point already identified\n"
 msgstr "attenzione: il punto più vicino è già stato identificato\n"
 
-#: src/main/plot.c:3321
+#: src/main/plot.c:3329
 msgid "invalid units"
 msgstr "unità non valide"
 
-#: src/main/plot.c:3500 src/main/plot.c:3610
+#: src/main/plot.c:3508 src/main/plot.c:3618
 msgid "invalid dendrogram input"
 msgstr "dengrogramma in input non valido"
 
-#: src/main/plot.c:3669
+#: src/main/plot.c:3677
 msgid "invalid symbol parameter vector"
 msgstr "vettore parametro simbolo non valido"
 
-#: src/main/plot.c:3692
+#: src/main/plot.c:3700
 msgid "invalid symbol coordinates"
 msgstr "coordinate simbolo non valide"
 
-#: src/main/plot.c:3700
+#: src/main/plot.c:3708
 msgid "x/y/parameter length mismatch"
 msgstr "lunghezze parametro x/y discordanti"
 
-#: src/main/plot.c:3719
+#: src/main/plot.c:3727
 msgid "invalid circles data"
 msgstr "dati cerchi non validi"
 
-#: src/main/plot.c:3721 src/main/plot.c:3740 src/main/plot.c:3764
-#: src/main/plot.c:3793
+#: src/main/plot.c:3729 src/main/plot.c:3748 src/main/plot.c:3772
+#: src/main/plot.c:3801
 msgid "invalid symbol parameter"
 msgstr "parametro 'symbol' non valido"
 
-#: src/main/plot.c:3738
+#: src/main/plot.c:3746
 msgid "invalid squares data"
 msgstr "dati quadrati non validi"
 
-#: src/main/plot.c:3762
+#: src/main/plot.c:3770
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "dati rettangoli non validi (richieste 2 colonne)"
 
-#: src/main/plot.c:3791
+#: src/main/plot.c:3799
 msgid "invalid stars data"
 msgstr "dati 'stars' non validi"
 
-#: src/main/plot.c:3832
+#: src/main/plot.c:3840
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "dati termometri non validi (richieste 3 o 4 colonne)"
 
-#: src/main/plot.c:3835
+#: src/main/plot.c:3843
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "termometri non validi [,%s]"
 
-#: src/main/plot.c:3838
+#: src/main/plot.c:3846
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "termometri[.%s] non in [0,1] - sembreranno buffi"
 
-#: src/main/plot.c:3841
+#: src/main/plot.c:3849
 msgid "invalid thermometers[,1:2]"
 msgstr "termometri[,1:2] non validi"
 
-#: src/main/plot.c:3880
+#: src/main/plot.c:3888
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "dati boxplot nonv alidi (richieste 5 colonne)"
 
-#: src/main/plot.c:3889
+#: src/main/plot.c:3897
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5] fuori da [0,1] - sembreranno buffi"
 
-#: src/main/plot.c:3891
+#: src/main/plot.c:3899
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplots[,1:4] non validi"
 
-#: src/main/plot.c:3937
+#: src/main/plot.c:3945
 msgid "invalid symbol type"
 msgstr "tipo simbolo non valido"
 
-#: src/main/plot.c:3977 src/main/plot.c:3979 src/main/plot.c:3984
-#: src/main/plot.c:3986
+#: src/main/plot.c:3985 src/main/plot.c:3987 src/main/plot.c:3992
+#: src/main/plot.c:3994
 #, fuzzy, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "lunghezza sbagliata dell'argomento 'mode'"
 
-#: src/main/plot.c:4003
+#: src/main/plot.c:4011
 #, fuzzy
 msgid "unable to allocate memory (in do_xspline)"
 msgstr "impossibile allocare memoria (in GPolygon)"
@@ -5843,7 +5843,7 @@ msgstr "confronto tra valori complessi non ammissibile"
 #: src/main/saveload.c:243 src/main/saveload.c:252 src/main/saveload.c:1368
 #: src/main/saveload.c:1373 src/main/saveload.c:1417 src/main/saveload.c:1485
 #: src/main/saveload.c:1494 src/main/serialize.c:329 src/main/serialize.c:336
-#: src/main/serialize.c:1958 src/main/serialize.c:1966
+#: src/main/serialize.c:1951 src/main/serialize.c:1959
 msgid "read error"
 msgstr "errore di lettura"
 
@@ -5989,8 +5989,8 @@ msgid "an xdr complex data read error occurred"
 msgstr ""
 "si è verificato un errore in lettura di un numero complesso in formato xdr"
 
-#: src/main/saveload.c:1770 src/main/serialize.c:1614
-#: src/main/serialize.c:2126 src/modules/internet/internet.c:349
+#: src/main/saveload.c:1770 src/main/serialize.c:1607
+#: src/main/serialize.c:2119 src/modules/internet/internet.c:349
 #: src/modules/internet/internet.c:407 src/modules/internet/internet.c:512
 msgid "write failed"
 msgstr "scrittura non riuscita"
@@ -6049,7 +6049,7 @@ msgstr "lettura XDR non avvenuta"
 msgid "cannot save data -- unable to open '%s': %s"
 msgstr "impossibile scrivere i dati - impossibile aprire %s"
 
-#: src/main/saveload.c:2230 src/main/serialize.c:1807
+#: src/main/saveload.c:2230 src/main/serialize.c:1800
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr "non posso scrivere su una connessione in formato %d"
@@ -6062,9 +6062,9 @@ msgstr "connessione non aperta in scrittura"
 msgid "cannot save XDR format to a text-mode connection"
 msgstr "non posso salvare in formato XDR su una connessione in modo 'text'"
 
-#: src/main/saveload.c:2267 src/main/serialize.c:1722
-#: src/main/serialize.c:1736 src/main/serialize.c:1856
-#: src/main/serialize.c:1878
+#: src/main/saveload.c:2267 src/main/serialize.c:1715
+#: src/main/serialize.c:1729 src/main/serialize.c:1849
+#: src/main/serialize.c:1871
 msgid "error writing to connection"
 msgstr "errore di scrittura sulla connessione"
 
@@ -6300,24 +6300,24 @@ msgstr "indice di riferimento fuori dal campo di variazione"
 msgid "names in persistent strings are not supported yet"
 msgstr "i nomi delle stringhe persistenti non sono ancora supportati"
 
-#: src/main/serialize.c:1388
+#: src/main/serialize.c:1380
 msgid "this version of R cannot read byte code objects"
 msgstr "questa versione di R non può leggere oggetti byte code"
 
-#: src/main/serialize.c:1391
+#: src/main/serialize.c:1383
 msgid "this version of R cannot read class references"
 msgstr "questa versione di R non può leggere riferimenti di classe"
 
-#: src/main/serialize.c:1393
+#: src/main/serialize.c:1385
 msgid "this version of R cannot read generic function references"
 msgstr "questa versione non può leggere riferimenti a funzioni generiche"
 
-#: src/main/serialize.c:1404
+#: src/main/serialize.c:1396
 #, c-format
 msgid "ReadItem: unknown type %i, perhaps written by later version of R"
 msgstr ""
 
-#: src/main/serialize.c:1538
+#: src/main/serialize.c:1531
 #, c-format
 msgid ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d.%"
@@ -6326,7 +6326,7 @@ msgstr ""
 "impossibile leggere workspace versione non ancora ufficiale %d scritto dalla "
 "versione sperimentale di R %d.%d.%d"
 
-#: src/main/serialize.c:1542
+#: src/main/serialize.c:1535
 #, c-format
 msgid ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
@@ -6335,82 +6335,82 @@ msgstr ""
 "impossibile leggere workspace versione %d scritto da R %d.%d.%d; necessaria "
 "R %d.%d.%d o superiore"
 
-#: src/main/serialize.c:1621
+#: src/main/serialize.c:1614
 #, fuzzy
 msgid "read failed"
 msgstr "lettura XDR non avvenuta"
 
-#: src/main/serialize.c:1684
+#: src/main/serialize.c:1677
 #, fuzzy
 msgid "error reading from ascii connection"
 msgstr "errore durante lettura sulla connessione"
 
-#: src/main/serialize.c:1686
+#: src/main/serialize.c:1679
 #, fuzzy
 msgid "unexpected format in ascii connection"
 msgstr "non posso leggere da questa connessione"
 
-#: src/main/serialize.c:1691 src/main/serialize.c:1705
+#: src/main/serialize.c:1684 src/main/serialize.c:1698
 msgid "error reading from connection"
 msgstr "errore durante lettura sulla connessione"
 
-#: src/main/serialize.c:1746
+#: src/main/serialize.c:1739
 msgid "only ascii format can be written to text mode connections"
 msgstr ""
 "possono essere scritti solo i formati ascii su connessioni in modalità testo"
 
-#: src/main/serialize.c:1760
+#: src/main/serialize.c:1753
 msgid "only ascii format can be read from text mode connections"
 msgstr ""
 "possono esser eletti solo formati ascii in connessioni in modalità testo"
 
-#: src/main/serialize.c:1805
+#: src/main/serialize.c:1798
 msgid "bad version value"
 msgstr "valore versione sbagliato"
 
-#: src/main/serialize.c:1926 src/main/serialize.c:1948
-#: src/main/serialize.c:2009
+#: src/main/serialize.c:1919 src/main/serialize.c:1941
+#: src/main/serialize.c:2002
 msgid "serialization is too large to store in a raw vector"
 msgstr ""
 
-#: src/main/serialize.c:1930
+#: src/main/serialize.c:1923
 msgid "cannot allocate buffer"
 msgstr "impossibile allocare il buffer"
 
-#: src/main/serialize.c:2104 src/main/serialize.c:2173
+#: src/main/serialize.c:2097 src/main/serialize.c:2166
 msgid "not a proper file name"
 msgstr "non è un vero nome file"
 
-#: src/main/serialize.c:2106
+#: src/main/serialize.c:2099
 #, fuzzy
 msgid "not a proper raw vector"
 msgstr "non è un vettore semplice"
 
-#: src/main/serialize.c:2127
+#: src/main/serialize.c:2120
 msgid "could not determine file position"
 msgstr "impossibile determinare la posizione del file"
 
-#: src/main/serialize.c:2175
+#: src/main/serialize.c:2168
 msgid "bad offset/length argument"
 msgstr "argomento 'offset/length' errato"
 
-#: src/main/serialize.c:2199 src/main/serialize.c:2209
-#: src/main/serialize.c:2219 src/main/serialize.c:2232
+#: src/main/serialize.c:2192 src/main/serialize.c:2202
+#: src/main/serialize.c:2212 src/main/serialize.c:2225
 #, c-format
 msgid "seek failed on %s"
 msgstr "posizionamento non riuscito su %s"
 
-#: src/main/serialize.c:2213 src/main/serialize.c:2223
-#: src/main/serialize.c:2236
+#: src/main/serialize.c:2206 src/main/serialize.c:2216
+#: src/main/serialize.c:2229
 #, c-format
 msgid "read failed on %s"
 msgstr "lettura non riuscita su %s"
 
-#: src/main/serialize.c:2255
+#: src/main/serialize.c:2248
 msgid "bad environment"
 msgstr "errato environment"
 
-#: src/main/serialize.c:2257
+#: src/main/serialize.c:2250
 msgid "bad variable names"
 msgstr "nomi errati delle variabili"
 
@@ -6418,7 +6418,7 @@ msgstr "nomi errati delle variabili"
 msgid "only atomic vectors can be tested to be sorted"
 msgstr "è possibile eseguire un ordinamento solo su vettori atomici"
 
-#: src/main/sort.c:308 src/main/sort.c:871 src/main/sort.c:969
+#: src/main/sort.c:308 src/main/sort.c:871 src/main/sort.c:970
 msgid "'decreasing' must be TRUE or FALSE"
 msgstr "'decreasing' deve essere TRUE o FALSE"
 
@@ -6426,7 +6426,7 @@ msgstr "'decreasing' deve essere TRUE o FALSE"
 msgid "only atomic vectors can be sorted"
 msgstr "possono essere ordinati solo i vettori atomici"
 
-#: src/main/sort.c:313 src/main/sort.c:563 src/main/sort.c:915
+#: src/main/sort.c:313 src/main/sort.c:563 src/main/sort.c:916
 msgid "raw vectors cannot be sorted"
 msgstr "vettori raw non possono essere ordinati"
 
@@ -6448,15 +6448,15 @@ msgstr "l'argomento %d non è di tipo vector"
 msgid "argument lengths differ"
 msgstr "la lunghezza degli argomenti differisce"
 
-#: src/main/sort.c:921
+#: src/main/sort.c:922
 msgid "invalid ties.method for rank() [should never happen]"
 msgstr "ties.method non valid in rank() [non dovrebbe mai accadere]"
 
-#: src/main/sort.c:976
+#: src/main/sort.c:977
 msgid "negative value in 'x'"
 msgstr "valore negativo in 'x'"
 
-#: src/main/sort.c:987
+#: src/main/sort.c:988
 msgid "too large a range of values in 'x'"
 msgstr "range dei valori di 'x' troppo grande"
 
@@ -6847,21 +6847,25 @@ msgstr "argomenti di min non finiti; restituisco Inf"
 msgid "no non-missing arguments to max; returning -Inf"
 msgstr "argomenti non finiti in max; restituisco -Inf"
 
-#: src/main/summary.c:962
+#: src/main/summary.c:871
+msgid "no input has determined the number of cases"
+msgstr ""
+
+#: src/main/summary.c:974
 msgid "not all arguments have the same length"
 msgstr "non tutti gli argomenti hanno la stessa lunghezza"
 
-#: src/main/summary.c:981
+#: src/main/summary.c:993
 #, fuzzy
 msgid "no arguments"
 msgstr "argomenti insufficienti"
 
-#: src/main/summary.c:992 src/main/summary.c:1009
+#: src/main/summary.c:1004 src/main/summary.c:1021
 #, fuzzy
 msgid "invalid input type"
 msgstr "line type non valido"
 
-#: src/main/summary.c:1014
+#: src/main/summary.c:1026
 msgid "cannot mix 0-length vectors with others"
 msgstr ""
 
@@ -7863,12 +7867,12 @@ msgstr "bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. fuori range?\n"
 msgid "bessel_y(%g,nu=%g): precision lost in result\n"
 msgstr "bessel_y(%g,nu=%g): perdita di precisione nel risultato\n"
 
-#: src/nmath/pnchisq.c:218
+#: src/nmath/pnchisq.c:224
 #, c-format
 msgid "pnchisq(x=%g, ..): not converged in %d iter."
 msgstr "pnchisq(x=%g, ..): diverge nell'iterazione %d."
 
-#: src/nmath/polygamma.c:476
+#: src/nmath/polygamma.c:499
 #, c-format
 msgid "deriv = %d > %d (= n_max)\n"
 msgstr "deriv = %d > %d (= n_max)\n"
@@ -8021,49 +8025,54 @@ msgstr "nessuna history displonibile da salvare"
 msgid "Sys.sleep is not implemented on this system"
 msgstr "Sys.sleep non è implementata su questo sistema"
 
-#: src/unix/sys-unix.c:259
+#: src/unix/sys-unix.c:261
 msgid "non-empty character argument expected"
 msgstr "richiesti argomenti di tipo character non vuoti"
 
-#: src/unix/sys-unix.c:263
+#: src/unix/sys-unix.c:265
 #, fuzzy
 msgid "'intern' must be logical and not NA"
 msgstr "'ascii' deve essere di tipo logico"
 
-#: src/unix/sys-unix.c:276
+#: src/unix/sys-unix.c:277
+#, fuzzy, c-format
+msgid "cannot popen '%s', probable reason '%s'"
+msgstr "impossibile aprire il file '%s' perché '%s'"
+
+#: src/unix/sys-unix.c:282
 #, c-format
 msgid "line %d may be truncated in call to system(, intern = TRUE)"
 msgstr ""
 
-#: src/unix/sys-unix.c:292
+#: src/unix/sys-unix.c:298
 msgid "'intern=TRUE' is not implemented on this platform"
 msgstr "'intern=TRUE' non è implementato per questa piattaforma"
 
-#: src/unix/sys-unix.c:365
+#: src/unix/sys-unix.c:371
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() non è implementata su questo sistema"
 
-#: src/unix/system.c:249
+#: src/unix/system.c:250
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "ATTENZIONE: --gui o -g senza valore viene ignorata"
 
-#: src/unix/system.c:271
+#: src/unix/system.c:272
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "ATTENZIONE: gui '%s' sconosciuta, verrà utilizzata X11\n"
 
-#: src/unix/system.c:274
+#: src/unix/system.c:275
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "ATTENZIONE: gui '%s' sconosciuta, non ne verrà utilizzata alcuna\n"
 
-#: src/unix/system.c:368
+#: src/unix/system.c:369
 #, fuzzy
 msgid "creating temporary file for '-e' failed"
 msgstr "impostazione del profile timer non riuscita"
 
-#: src/unix/system.c:449
+#: src/unix/system.c:450
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ATTENZIONE: Verrà editato solo il primo file della lista"
 
