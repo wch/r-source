@@ -15,25 +15,28 @@
 #  http://www.r-project.org/Licenses/
 
 
-summaryRprof<-function(filename = "Rprof.out", chunksize = 5000,
-                       memory = c("none", "both", "tseries", "stats"),
-                       index = 2, diff = TRUE, exclude = NULL)
+summaryRprof <-
+    function(filename = "Rprof.out", chunksize = 5000,
+             memory = c("none", "both", "tseries", "stats"),
+             index = 2, diff = TRUE, exclude = NULL)
 {
-    filename <- file(filename, "rt")
-    on.exit(close(filename))
-    firstline <- readLines(filename, n = 1L)
+    con <- file(filename, "rt")
+    on.exit(close(con))
+    firstline <- readLines(con, n = 1L)
+    if(!length(firstline))
+        stop(gettextf("no lines found in %s", sQuote(filename)), domain = NA)
     sample.interval <- as.numeric(strsplit(firstline, "=")[[1L]][2L])/1e6
     memory.profiling <- substr(firstline, 1L, 6L) == "memory"
 
     memory <- match.arg(memory)
-    if(memory!="none" && !memory.profiling)
+    if(memory != "none" && !memory.profiling)
         stop("profile does not contain memory information")
     if (memory == "tseries")
-        return(Rprof_memory_summary(filename = filename, chunksize = chunksize,
+        return(Rprof_memory_summary(filename = con, chunksize = chunksize,
                                     label = index, diff = diff, exclude = exclude,
                                     sample.interval = sample.interval))
     else if (memory == "stats")
-        return(Rprof_memory_summary(filename = filename,  chunksize = chunksize,
+        return(Rprof_memory_summary(filename = con,  chunksize = chunksize,
                                     aggregate = index, diff = diff, exclude = exclude,
                                     sample.interval = sample.interval))
 
@@ -46,7 +49,7 @@ summaryRprof<-function(filename = "Rprof.out", chunksize = 5000,
 
     repeat({
 
-       chunk <- readLines(filename, n = chunksize)
+       chunk <- readLines(con, n = chunksize)
        if (length(chunk) == 0L)
            break
        if (memory.profiling) {
@@ -59,8 +62,8 @@ summaryRprof<-function(filename = "Rprof.out", chunksize = 5000,
            }
            chunk <- substr(chunk, memprefix+1L, nchar(chunk,  "c"))
            if(any((nc <- nchar(chunk, "c")) == 0L)) {
-                chunk <- chunk[nc>0L]
-                memcounts <- memcounts[nc>0L]
+                chunk <- chunk[nc > 0L]
+                memcounts <- memcounts[nc > 0L]
            }
        }
 
@@ -85,8 +88,7 @@ summaryRprof<-function(filename = "Rprof.out", chunksize = 5000,
 
        fnames <- sort(unique(c(fnames, names(new.utable))))
 
-       if (length(chunk)<chunksize)
-           break
+       if (length(chunk) < chunksize) break
     })
 
     if (sum(fcounts) == 0)
