@@ -42,8 +42,7 @@ massageExamples <- function(pkg, files, outFile = stdout())
         cat("library('", pkg, "')\n\n", sep = "", file = out)
 
     cat("assign(\".oldSearch\", search(), pos = 'CheckExEnv')\n", file = out)
-    cat("assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n",
-        file = out)
+    ##cat("assign(\".oldNS\", loadedNamespaces(), pos = 'CheckExEnv')\n", file = out)
 
     for(file in files) {
         nm <- sub("\\.R$", "", basename(file))
@@ -63,7 +62,7 @@ massageExamples <- function(pkg, files, outFile = stdout())
                                    lines1, perl = TRUE, useBytes = TRUE))
 
         if(have_examples)
-            cat("cleanEx(); nameEx(\"", nm, "\")\n", sep = "", file = out)
+            cat("cleanEx()\nnameEx(\"", nm, "\")\n", sep = "", file = out)
 
         cat("### * ", nm, "\n\n", sep = "", file = out)
         cat("flush(stderr()); flush(stdout())\n\n", file = out)
