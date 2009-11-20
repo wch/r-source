@@ -59,6 +59,12 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE,
 
   The intention is to change the default to \code{force = FALSE} before release.
 }
+\value{
+  The return value is \link{invisible}.  It is \code{NULL} when a
+  package is detached, otherwise the environment which was returned by
+  \code{\link{attach}} when the object was attached (incorporating any
+  changes since it was attached).
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

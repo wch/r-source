@@ -53,8 +53,8 @@ attach(what, pos = 2, name = deparse(substitute(what)),
   \code{\link{<<-}} or \code{\link{assign}} to assign to an attached
   database, you only alter the attached copy, not the original object.
   (Normal assignment will place a modified version in the user's
-  workspace: see the examples.)
-  For this reason \code{attach} can lead to confusion.
+  workspace: see the examples.)  For this reason \code{attach} can lead
+  to confusion.
 
   One useful \sQuote{trick} is to use \code{what = NULL} (or equivalently a
   length-zero list) to create a new environment on the search path into

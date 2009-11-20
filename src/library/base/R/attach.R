@@ -101,7 +101,7 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
                 if (!is.character(name)) name <- deparse(name)
                 match(name, search())
             }
-	if(is.na(pos)) stop("invalid name")
+	if(is.na(pos)) stop("invalid 'name' argument")
     }
 
     packageName <- search()[[pos]]
@@ -109,8 +109,8 @@ detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
     ## we need to treat packages differently from other objects, so get those
     ## out of the way now
     if (! grepl("^package:", packageName) ) {
-        .Internal(detach(pos))
-        return(invisible())
+        res <- .Internal(detach(pos))
+        return(invisible(res))
     }
 
     pkgname <- sub("^package:", "", packageName)

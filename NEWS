@@ -105,6 +105,9 @@ NEW FEATURES
     o	bquote() has been extended to work on function definitions
 	(wish of PR#14031).
 
+    o	detach() when applied to an object other than a package
+	returns the environment that has been detached.
+
 
 DEPRECATED & DEFUNCT
 
