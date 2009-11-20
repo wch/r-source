@@ -126,6 +126,10 @@ BUG FIXES
 	them is unloaded (by unloadNamespace() as well as by
 	detach(unload = TRUE)).
 
+    o	The internal record-keeping by dyn.load/dyn.unload was
+	incomplete, which this could crash R if a DLL that registered
+	.External routines had earlier been unloaded.
+
 
 
 		CHANGES IN R VERSION 2.10.0

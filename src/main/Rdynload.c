@@ -627,9 +627,11 @@ addDLL(char *dpath, char *DLLname, HINSTANCE handle)
     LoadedDLL[CountDLL].numCSymbols = 0;
     LoadedDLL[CountDLL].numCallSymbols = 0;
     LoadedDLL[CountDLL].numFortranSymbols = 0;
+    LoadedDLL[CountDLL].numExternalSymbols = 0;
     LoadedDLL[CountDLL].CSymbols = NULL;
     LoadedDLL[CountDLL].CallSymbols = NULL;
     LoadedDLL[CountDLL].FortranSymbols = NULL;
+    LoadedDLL[CountDLL].ExternalSymbols = NULL;
     CountDLL++;
 
     return(ans);
