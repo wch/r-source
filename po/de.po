@@ -843,8 +843,8 @@ msgstr "nicht zusammenpassende Zeitreihen"
 #: src/main/relop.c:161
 msgid "longer object length is not a multiple of shorter object length"
 msgstr ""
-"Länge der längeren Objekts\n"
-" \t ist kein Vielfaches der Länge der kürzeren Objektes"
+"Länge des längeren Objektes\n"
+" \t ist kein Vielfaches der Länge des kürzeren Objektes"
 
 #: src/main/arithmetic.c:512
 msgid "invalid argument to unary operator"
@@ -4631,7 +4631,7 @@ msgstr "'R_get_primname' für ein non-primitive aufgerufen"
 #, c-format
 msgid "Object of class \"%s\" does not correspond to a valid S3 object"
 msgstr ""
-"Objekt der Klasse \"%s\" Korrespondiert nicht mit einem gültigen S3 objekt"
+"Objekt der Klasse \"%s\" korrespondiert nicht mit einem gültigen S3 Objekt"
 
 #: src/main/optim.c:73 src/main/optim.c:100 src/main/optim.c:184
 msgid "non-finite value supplied by optim"
@@ -5920,7 +5920,7 @@ msgstr "keine gültige benannte Liste"
 #: src/main/saveload.c:2005 src/main/saveload.c:2026
 #, c-format
 msgid "'%s' looks like a pre-2.4.0 S4 object: please recreate it"
-msgstr "'%s' sieht aus wie ein pre R-2.4.0Objekt: bitte neu erzeugen"
+msgstr "'%s' sieht aus wie ein pre R-2.4.0 Objekt: bitte neu erzeugen"
 
 #: src/main/saveload.c:2013
 msgid "loaded data is not in pair list form"
@@ -8140,7 +8140,7 @@ msgstr "X11 nicht verfügbar"
 #~ msgstr "Variable \"%s\" nicht gefunden"
 
 #~ msgid "object \"%s\" not found"
-#~ msgstr "objekt \"%s\" nicht gefunden"
+#~ msgstr "Objekt \"%s\" nicht gefunden"
 
 #~ msgid "argument 'x' must be a integer vector"
 #~ msgstr "Argument 'x' muss ein Vektor ganzer Zahlen sein"
