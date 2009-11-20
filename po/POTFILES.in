@@ -76,7 +76,6 @@ src/main/options.c
 src/main/par-common.c
 src/main/par.c
 src/main/paste.c
-src/main/pcre.c
 src/main/platform.c
 src/main/plot.c
 src/main/plot3d.c
