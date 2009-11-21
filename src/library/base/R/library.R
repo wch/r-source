@@ -608,15 +608,31 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
         ## We no longer use '.required' since some packages set that.
         if(identical(save, TRUE)) {
             save <- topenv(parent.frame())
-            ## (a package namespace, topLevelEnvironment option or .GlobalEnv)
+            ## (a package namespace, topLevelEnvironment option or
+            ## .GlobalEnv)
             if(identical(save, .GlobalEnv)) {
                 ## try to detect call from .First.lib in a package
-                if("try(firstlib(which.lib.loc, package))" %in%
-                   sapply(sys.calls(), deparse, nlines = 1L))
+                ## <FIXME>
+                ## Although the docs have long and perhaps always had
+                ##   .First.lib(libname, pkgname)
+                ## the majority of CRAN packages seems to use arguments
+                ## 'lib' and 'pkg'.
+                objectsInParentFrame <- sort(objects(parent.frame()))
+                if(identical(sort(c("libname", "pkgname")),
+                             objectsInParentFrame))
                     save <-
                         as.environment(paste("package:",
-                                             get("pkgname", parent.frame(2L)),
+                                             get("pkgname",
+                                                 parent.frame()),
                                              sep = ""))
+                else if(identical(sort(c("lib", "pkg")),
+                                  objectsInParentFrame))
+                    save <-
+                        as.environment(paste("package:",
+                                             get("pkg",
+                                                 parent.frame()),
+                                             sep = ""))
+                ## </FIXME>
             }
         }
         else
