@@ -59,8 +59,9 @@ unloadNamespace(ns)
 
   \code{loadNamespace} does not attach the name space it loads to the
   search path.  \code{attachNamespace} can be used to attach a frame
-  containing the exported values of a name space to the search path.
-  The hook function \code{\link{.onAttach}} is run after the name space
+  containing the exported values of a name space to the search path (but
+  this is almost always done \emph{via} \code{\link{library}}).  The
+  hook function \code{\link{.onAttach}} is run after the name space
   exports are attached.
 
   \code{loadedNamespaces} returns a character vector of the names of
@@ -73,6 +74,9 @@ unloadNamespace(ns)
   name space is imported by other loaded name spaces, and the namespace
   is not unloaded.  If defined, a hook function \code{\link{.onUnload}}
   is run before removing the name space from the internal registry.
+
+  See the comments in the help for \code{\link{detach}} about some
+  issues with unloading and reloading namespaces.
 }
 \value{
   \code{attachNamespace} returns invisibly the environment it adds to
