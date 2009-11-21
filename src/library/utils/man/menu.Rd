@@ -1,6 +1,6 @@
 % File src/library/utils/man/menu.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{menu}
@@ -24,7 +24,8 @@ menu(choices, graphics = FALSE, title = "")
 \details{
   If \code{graphics = TRUE} and a windowing system is available
   (Windows, Mac OS X or X11 \emph{via} Tcl/Tk) a listbox widget is
-  used, otherwise a text menu.
+  used, otherwise a text menu.  It is an error to use \code{menu} in a
+  non-interactive session.
   
   Ten or fewer items will be displayed in a single column, more in
   multiple columns if possible within the current display width.
