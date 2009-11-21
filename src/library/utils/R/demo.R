@@ -78,10 +78,10 @@ function(topic, package = NULL, lib.loc = NULL,
 	warning(gettextf("Demo for topic '%s' found more than once,\nusing the one found in '%s'",
                 topic, dirname(available[1L])), domain = NA)
     }
-    
+
     if(ask == "default")
-        ask <- echo && grDevices::dev.interactive(orNone = TRUE)    
-    
+        ask <- echo && grDevices::dev.interactive(orNone = TRUE)
+
     if(.Device != "null device") {
 	oldask <- grDevices::devAskNewPage(ask = ask)
         on.exit(grDevices::devAskNewPage(oldask), add = TRUE)
@@ -89,16 +89,14 @@ function(topic, package = NULL, lib.loc = NULL,
 
     op <- options(device.ask.default = ask)
     on.exit(options(op), add = TRUE)
-    
+
     if (echo) {
 	cat("\n\n",
 	    "\tdemo(", topic, ")\n",
 	    "\t---- ", rep.int("~", nchar(topic, type="w")), "\n",
 	    sep="")
-	if(ask) {
-	    cat("\nType  <Return>	 to start : ")
-	    readline()
-	}
+	if(ask && interactive())
+	    readline("\nType  <Return>	 to start : ")
     }
     source(available, echo = echo, max.deparse.length = Inf, keep.source=TRUE)
 }

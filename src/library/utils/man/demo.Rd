@@ -33,20 +33,20 @@ demo(topic, package = NULL, lib.loc = NULL,
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
   \item{echo}{a logical.  If \code{TRUE}, show the \R input when sourcing.}
-    \item{ask}{a logical (or \code{"default"}) indicating if
+  \item{ask}{a logical (or \code{"default"}) indicating if
     \code{\link{devAskNewPage}(ask=TRUE)} should be called before
     graphical output happens from the demo code.  The value
     \code{"default"} (the factory-fresh default) means to ask if
     \code{echo == TRUE} and the graphics device appears to be
     interactive.  This parameter applies both to any currently opened
-    device and to any devices opened by the demo code.}
+    device and to any devices opened by the demo code.  If this is
+    evaluated to \code{TRUE} and the session is \link{interactive}, the
+    user is asked to press RETURN to start.}
 }
 \details{
   If no topics are given, \code{demo} lists the available demos.  The
   corresponding information is returned in an object of class
-  \code{"packageIQR"}.  The structure of this class is experimental.  In
-  earlier versions of R, an empty character vector was returned along
-  with listing available demos.
+  \code{"packageIQR"}.
 }
 \seealso{
   \code{\link{source}} and \code{\link{devAskNewPage}} which 
