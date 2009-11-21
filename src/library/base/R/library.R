@@ -340,14 +340,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                       envir = env, inherits = FALSE)) {
                 firstlib <- get(".First.lib", mode = "function",
                                 envir = env, inherits = FALSE)
-                tt<- try(firstlib(which.lib.loc, package))
+                tt <- try(firstlib(which.lib.loc, package))
                 if(inherits(tt, "try-error"))
                     if (logical.return) return(FALSE)
                     else stop(gettextf(".First.lib failed for '%s'",
                                        package), domain = NA)
             }
             if(!is.null(firstlib <- getOption(".First.lib")[[package]])) {
-                tt<- try(firstlib(which.lib.loc, package))
+                tt <- try(firstlib(which.lib.loc, package))
                 if(inherits(tt, "try-error"))
                     if (logical.return) return(FALSE)
                     else stop(gettextf(".First.lib failed for '%s'",
@@ -634,33 +634,15 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
         ## update the ".required" variable
         if(identical(save, TRUE)) {
             save <- topenv(parent.frame())
-            ## (a package namespace, topLevelEnvironment option or
-            ## .GlobalEnv)
+            ## (a package namespace, topLevelEnvironment option or .GlobalEnv)
             if(identical(save, .GlobalEnv)) {
-                ## try to detect call from .First.lib in  a package
-                ## <FIXME>
-                ## Although the docs have long and perhaps always had
-                ##   .First.lib(libname, pkgname)
-                ## the majority of CRAN packages seems to use arguments
-                ## 'lib' and 'pkg'.
-                objectsInParentFrame <- sort(objects(parent.frame()))
-                if(identical(sort(c("libname", "pkgname")),
-                             objectsInParentFrame))
+                ## try to detect call from .First.lib in a package
+                if("try(firstlib(which.lib.loc, package))" %in%
+                   sapply(sys.calls(), deparse, nlines = 1L))
                     save <-
                         as.environment(paste("package:",
-                                             get("pkgname",
-                                                 parent.frame()),
+                                             get("pkgname", parent.frame(2L)),
                                              sep = ""))
-                else if(identical(sort(c("lib", "pkg")),
-                                  objectsInParentFrame))
-                    save <-
-                        as.environment(paste("package:",
-                                             get("pkg",
-                                                 parent.frame()),
-                                             sep = ""))
-                ## </FIXME>
-                ## else either from prompt or in the source for install
-                ## with saved image ?
             }
         }
         else
