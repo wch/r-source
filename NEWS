@@ -13,6 +13,12 @@ NEW FEATURES
 
     o	The PCRE library has been updated to version 8.00.
 
+    o	R CMD INSTALL has new options --no-R, --no-libs, --no-data,
+	--no-help, --no-demo, --no-exec, and --no-inst to suppress
+	installation of the specified part of the package.  These are
+	intended for special purposes (e.g. building a database
+	of help pages without fully installing all packages).
+
 
 INSTALLATION
 

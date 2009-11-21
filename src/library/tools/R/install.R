@@ -93,7 +93,6 @@
             "      --latex      	install LaTeX help",
             "      --example		install R code for help examples",
             "      --use-zip-data	collect data files in zip archive",
-            "      --install-tests	install package-specific tests (if any)",
             "      --fake		do minimal install for testing purposes",
             "      --no-lock, --unsafe",
             "			install on top of any existing installation",
@@ -110,6 +109,11 @@
             "			set variables for the configure scripts (if any)",
             "      --libs-only	only install the libs directory",
             "      --no-multiarch	build only the main architecture",
+            "      --install-tests	install package-specific tests (if any)",
+            "      --no-R, --no-libs, --no-data, --no-help, --no-demo, --no-exec,",
+            "      --no-inst",
+            "			suppress installation of the specified part of the",
+            "			package for testing or other special purposes",
             "\nand on Windows only",
             "      --auto-zip	select whether to zip data automatically",
             "",
@@ -288,7 +292,7 @@
             else
                 do_install_binary(pkg_name, instdir, desc)
 
-            ## Add read permission to all, write permission to ownwer
+            ## Add read permission to all, write permission to owner
             .Internal(dirchmod(instdir))
             ##    system(paste("find", shQuote(instdir),  "-exec chmod a+r \\{\\} \\;"))
             if (is_bundle)
@@ -563,7 +567,7 @@
                 pkgerrmsg("installing package DESCRIPTION failed", pkg_name)
         }
 
-        if (dir.exists("src") && !fake) {
+        if (install_libs && dir.exists("src")) {
             system_makefile <- file.path(R.home(), paste0("etc", rarch),
                                          "Makeconf")
             starsmsg(stars, "libs")
@@ -663,208 +667,205 @@
                 pkgerrmsg("compilation failed", pkg_name)
         }                               # end of src dir
 
-        if (more_than_libs) {
-            if (dir.exists("R")) {
-                starsmsg(stars, "R")
-                dir.create(file.path(instdir, "R"), recursive = TRUE,
-                           showWarnings = FALSE)
-                ## This cannot be done in a C locale
-                res <- try(.install_package_code_files(".", instdir))
-                if (inherits(res, "try-error"))
-                    pkgerrmsg("unable to collate files", pkg_name)
+	if (install_R && dir.exists("R")) {
+	    starsmsg(stars, "R")
+	    dir.create(file.path(instdir, "R"), recursive = TRUE,
+		       showWarnings = FALSE)
+	    ## This cannot be done in a C locale
+	    res <- try(.install_package_code_files(".", instdir))
+	    if (inherits(res, "try-error"))
+		pkgerrmsg("unable to collate files", pkg_name)
 
-                if (file.exists(file.path("R", "sysdata.rda"))) {
-                    res <- try(sysdata2LazyLoadDB("R/sysdata.rda",
-                                                          file.path(instdir, "R")))
-                    if (inherits(res, "try-error"))
-                        pkgerrmsg("unable to build sysdata DB", pkg_name)
-                }
-                if (fake) {
-                    if (file.exists("NAMESPACE")) {
-                        cat("",
-                            '.onLoad <- .onAttach <- function(lib, pkg) NULL',
-                            sep = "\n",
-                            file = file.path(instdir, "R", pkg_name), append = TRUE)
-                        ## <NOTE>
-                        ## Tweak fake installation to provide an 'empty'
-                        ## useDynLib() for the time being.  Completely
-                        ## removing the directive results in checkFF()
-                        ## being too aggresive in the case where the
-                        ## presence of the directive enables unambiguous
-                        ## symbol resolution w/out 'PACKAGE' arguments.
-                        ## However, empty directives are not really meant
-                        ## to work ...
+	    if (file.exists(file.path("R", "sysdata.rda"))) {
+		res <- try(sysdata2LazyLoadDB("R/sysdata.rda",
+						      file.path(instdir, "R")))
+		if (inherits(res, "try-error"))
+		    pkgerrmsg("unable to build sysdata DB", pkg_name)
+	    }
+	    if (fake) {
+		if (file.exists("NAMESPACE")) {
+		    cat("",
+			'.onLoad <- .onAttach <- function(lib, pkg) NULL',
+			sep = "\n",
+			file = file.path(instdir, "R", pkg_name), append = TRUE)
+		    ## <NOTE>
+		    ## Tweak fake installation to provide an 'empty'
+		    ## useDynLib() for the time being.  Completely
+		    ## removing the directive results in checkFF()
+		    ## being too aggresive in the case where the
+		    ## presence of the directive enables unambiguous
+		    ## symbol resolution w/out 'PACKAGE' arguments.
+		    ## However, empty directives are not really meant
+		    ## to work ...
 
-                        ## encoding issues ... so need useBytes = TRUE
-                        ## FIXME: some packages have useDynlib()
-                        ## spread over several lines.
-                        writeLines(sub("useDynLib.*", 'useDynLib("")',
-                                       readLines("NAMESPACE", warn = FALSE),
-                                       perl = TRUE, useBytes = TRUE),
-                                   file.path(instdir, "NAMESPACE"))
-                        ## </NOTE>
-                    } else {
-                        cat("",
-                            '.First.lib <- function(lib, pkg) NULL',
-                            sep = "\n",
-                            file = file.path(instdir, "R", pkg_name), append = TRUE)
-                    }
-                }
-            }                           # end of R
+		    ## encoding issues ... so need useBytes = TRUE
+		    ## FIXME: some packages have useDynlib()
+		    ## spread over several lines.
+		    writeLines(sub("useDynLib.*", 'useDynLib("")',
+				   readLines("NAMESPACE", warn = FALSE),
+				   perl = TRUE, useBytes = TRUE),
+			       file.path(instdir, "NAMESPACE"))
+		    ## </NOTE>
+		} else {
+		    cat("",
+			'.First.lib <- function(lib, pkg) NULL',
+			sep = "\n",
+			file = file.path(instdir, "R", pkg_name), append = TRUE)
+		}
+	    }
+	}                           # end of R
 
-            if (dir.exists("data")) {
-                starsmsg(stars, "data")
-                files <- Sys.glob(file.path("data", "*"))
-                if (length(files)) {
-                    is <- file.path(instdir, "data")
-                    dir.create(is, recursive = TRUE, showWarnings = FALSE)
-                    file.remove(Sys.glob(file.path(instdir, "data", "*")))
-                    file.copy(files, is, TRUE)
-                    thislazy <- parse_description_field(desc, "LazyData",
-                                                        default = lazy_data)
-                    if (!thislazy && resave_data) {
-                        paths <- Sys.glob(c(file.path(is, "*.rda"),
-                                            file.path(is, "*.RData")))
-                        if (pkg_name == "cyclones")
-                            paths <-
-                                c(paths, Sys.glob(file.path(is, "*.Rdata")))
-                        if (length(paths)) {
-                            starsmsg(paste0(stars, "*"), "resaving rda files")
-                            resaveRdaFiles(paths, compress = "auto")
-                        }
-                    }
-                    Sys.chmod(Sys.glob(file.path(instdir, "data", "*")), "644")
-                    if (thislazy) {
-                        ## This also had an extra space in the sh version
-                        starsmsg(stars, " moving datasets to lazyload DB")
-                        ## 'it is possible that data in a package will
-                        ## make use of the code in the package, so ensure
-                        ## the package we have just installed is on the
-                        ## library path.'
-                        ## (We set .libPaths)
-                        res <- try(data2LazyLoadDB(pkg_name, lib,
-                                                   compress = data_compress))
-                        if (inherits(res, "try-error"))
-                            pkgerrmsg("lazydata failed", pkg_name)
-                    } else if (use_zip_data &&
-                               (WINDOWS ||
-                               (nzchar(Sys.getenv("R_UNZIPCMD")) &&
-                               nzchar(zip <- Sys.getenv("R_ZIPCMD"))) )) {
-                        owd <- setwd(file.path(instdir, "data"))
-                        writeLines(dir(), "filelist")
-                        system(paste(zip, "-q -m Rdata * -x filelist 00Index"))
-                        setwd(owd)
-                    }
-                } else warning("empty 'data' directory", call. = FALSE)
-            }
+	if (install_data && dir.exists("data")) {
+	    starsmsg(stars, "data")
+	    files <- Sys.glob(file.path("data", "*"))
+	    if (length(files)) {
+		is <- file.path(instdir, "data")
+		dir.create(is, recursive = TRUE, showWarnings = FALSE)
+		file.remove(Sys.glob(file.path(instdir, "data", "*")))
+		file.copy(files, is, TRUE)
+		thislazy <- parse_description_field(desc, "LazyData",
+						    default = lazy_data)
+		if (!thislazy && resave_data) {
+		    paths <- Sys.glob(c(file.path(is, "*.rda"),
+					file.path(is, "*.RData")))
+		    if (pkg_name == "cyclones")
+			paths <-
+			    c(paths, Sys.glob(file.path(is, "*.Rdata")))
+		    if (length(paths)) {
+			starsmsg(paste0(stars, "*"), "resaving rda files")
+			resaveRdaFiles(paths, compress = "auto")
+		    }
+		}
+		Sys.chmod(Sys.glob(file.path(instdir, "data", "*")), "644")
+		if (thislazy) {
+		    ## This also had an extra space in the sh version
+		    starsmsg(stars, " moving datasets to lazyload DB")
+		    ## 'it is possible that data in a package will
+		    ## make use of the code in the package, so ensure
+		    ## the package we have just installed is on the
+		    ## library path.'
+		    ## (We set .libPaths)
+		    res <- try(data2LazyLoadDB(pkg_name, lib,
+					       compress = data_compress))
+		    if (inherits(res, "try-error"))
+			pkgerrmsg("lazydata failed", pkg_name)
+		} else if (use_zip_data &&
+			   (WINDOWS ||
+			   (nzchar(Sys.getenv("R_UNZIPCMD")) &&
+			   nzchar(zip <- Sys.getenv("R_ZIPCMD"))) )) {
+		    owd <- setwd(file.path(instdir, "data"))
+		    writeLines(dir(), "filelist")
+		    system(paste(zip, "-q -m Rdata * -x filelist 00Index"))
+		    setwd(owd)
+		}
+	    } else warning("empty 'data' directory", call. = FALSE)
+	}
 
-            if (dir.exists("demo") && !fake) {
-                starsmsg(stars, "demo")
-                dir.create(file.path(instdir, "demo"), recursive = TRUE,
-                           showWarnings = FALSE)
-                file.remove(Sys.glob(file.path(instdir, "demo", "*")))
-                res <- try(.install_package_demos(".", instdir))
-                if (inherits(res, "try-error"))
-                    pkgerrmsg("ERROR: installing demos failed")
-                Sys.chmod(Sys.glob(file.path(instdir, "demo", "*")), "644")
-            }
+	if (install_demo && dir.exists("demo")) {
+	    starsmsg(stars, "demo")
+	    dir.create(file.path(instdir, "demo"), recursive = TRUE,
+		       showWarnings = FALSE)
+	    file.remove(Sys.glob(file.path(instdir, "demo", "*")))
+	    res <- try(.install_package_demos(".", instdir))
+	    if (inherits(res, "try-error"))
+		pkgerrmsg("ERROR: installing demos failed")
+	    Sys.chmod(Sys.glob(file.path(instdir, "demo", "*")), "644")
+	}
 
-            if (dir.exists("exec") && !fake) {
-                starsmsg(stars, "exec")
-                dir.create(file.path(instdir, "exec"), recursive = TRUE,
-                           showWarnings = FALSE)
-                file.remove(Sys.glob(file.path(instdir, "exec", "*")))
-                files <- Sys.glob(file.path("exec", "*"))
-                if (length(files)) {
-                    file.copy(files, file.path(instdir, "exec"), TRUE)
-                    Sys.chmod(Sys.glob(file.path(instdir, "exec", "*")), "755")
-                }
-            }
+	if (install_exec && dir.exists("exec")) {
+	    starsmsg(stars, "exec")
+	    dir.create(file.path(instdir, "exec"), recursive = TRUE,
+		       showWarnings = FALSE)
+	    file.remove(Sys.glob(file.path(instdir, "exec", "*")))
+	    files <- Sys.glob(file.path("exec", "*"))
+	    if (length(files)) {
+		file.copy(files, file.path(instdir, "exec"), TRUE)
+		Sys.chmod(Sys.glob(file.path(instdir, "exec", "*")), "755")
+	    }
+	}
 
-            if (dir.exists("inst") && !fake) {
-                starsmsg(stars, "inst")
-                ## FIXME avoid installing .svn etc?
-                cp_r("inst", instdir)
-                ## file.copy("inst", "instdir", recursive = TRUE)
-            }
+	if (install_inst && dir.exists("inst")) {
+	    starsmsg(stars, "inst")
+	    ## FIXME avoid installing .svn etc?
+	    cp_r("inst", instdir)
+	    ## file.copy("inst", "instdir", recursive = TRUE)
+	}
 
-            if (install_tests && dir.exists("tests") && !fake) {
-                starsmsg(stars, "tests")
-                file.copy("tests", instdir, recursive = TRUE)
-            }
+	if (install_tests && dir.exists("tests")) {
+	    starsmsg(stars, "tests")
+	    file.copy("tests", instdir, recursive = TRUE)
+	}
 
-            ## Defunct:
-            ## FIXME: remove these at some point
-            if (file.exists("install.R"))
-                warning("use of file 'install.R' is no longer supported",
-                        call. = FALSE, domain = NA)
-            if (file.exists("R_PROFILE.R"))
-                warning("use of file 'R_PROFILE.R' is no longer supported",
-                        call. = FALSE, domain = NA)
-            value <- parse_description_field(desc, "SaveImage", default = NA)
-            if (!is.na(value))
-                warning("field 'SaveImage' is defunct: please remove it",
-                        call. = FALSE, domain = NA)
+	## Defunct:
+	## FIXME: remove these at some point
+	if (file.exists("install.R"))
+	    warning("use of file 'install.R' is no longer supported",
+		    call. = FALSE, domain = NA)
+	if (file.exists("R_PROFILE.R"))
+	    warning("use of file 'R_PROFILE.R' is no longer supported",
+		    call. = FALSE, domain = NA)
+	value <- parse_description_field(desc, "SaveImage", default = NA)
+	if (!is.na(value))
+	    warning("field 'SaveImage' is defunct: please remove it",
+		    call. = FALSE, domain = NA)
 
+	## LazyLoading
+	value <- parse_description_field(desc, "LazyLoad", default = lazy)
+	if (install_R && dir.exists("R") && value) {
+	    starsmsg(stars, "preparing package for lazy loading")
+	    ## Something above, e.g. lazydata,  might have loaded the namespace
+	    if (pkg_name %in% loadedNamespaces())
+		unloadNamespace(pkg_name)
+	    ## suppress second round of parse warnings
+	    options(warnEscapes = FALSE)
+	    res <- try({.getRequiredPackages(quietly = TRUE)
+			makeLazyLoading(pkg_name, lib)})
+	    options(warnEscapes = TRUE)
+	    if (inherits(res, "try-error"))
+		pkgerrmsg("lazy loading failed", pkg_name)
+	    ## FIXME: still needed?  If so needs a pretest
+	    ## file.remove(file.path(instdir, "R", "all.rda"))
+	}
 
-            ## LazyLoading
-            value <- parse_description_field(desc, "LazyLoad", default = lazy)
-            if (dir.exists("R") && value) {
-                starsmsg(stars, "preparing package for lazy loading")
-                ## Something above, e.g. lazydata,  might have loaded the namespace
-                if (pkg_name %in% loadedNamespaces())
-                    unloadNamespace(pkg_name)
-                ## suppress second round of parse warnings
-                options(warnEscapes = FALSE)
-                res <- try({.getRequiredPackages(quietly = TRUE)
-                            makeLazyLoading(pkg_name, lib)})
-                options(warnEscapes = TRUE)
-                if (inherits(res, "try-error"))
-                    pkgerrmsg("lazy loading failed", pkg_name)
-                ## FIXME: still needed?  If so needs a pretest
-                ## file.remove(file.path(instdir, "R", "all.rda"))
-            }
-
-            ## as from 2.10.0 do this always
-            {
-                starsmsg(stars, "help")
-                if (!dir.exists("man") ||
-                   !length(list_files_with_type("man", "docs")))
-                    cat("No man pages found in package ", sQuote(pkg_name), "\n")
-                encoding <- desc["Encoding"]
-                if (is.na(encoding)) encoding <- "unknown"
-                res <- try(.install_package_Rd_objects(".", instdir, encoding))
-                if (inherits(res, "try-error"))
-                    pkgerrmsg("installing Rd objects failed", pkg_name)
+	if (install_help) {
+	    starsmsg(stars, "help")
+	    if (!dir.exists("man") ||
+	       !length(list_files_with_type("man", "docs")))
+		cat("No man pages found in package ", sQuote(pkg_name), "\n")
+	    encoding <- desc["Encoding"]
+	    if (is.na(encoding)) encoding <- "unknown"
+	    res <- try(.install_package_Rd_objects(".", instdir, encoding))
+	    if (inherits(res, "try-error"))
+		pkgerrmsg("installing Rd objects failed", pkg_name)
 
 
-                starsmsg(paste0(stars, "*"), "installing help indices")
-                ## always want HTML package index
-                .writePkgIndices(pkg_dir, instdir)
-                if (build_help) {
-                    ## This is used as the default outputEncoding for latex
-                    outenc <- desc["Encoding"]
-                    if (is.na(outenc)) outenc <- "latin1" # or ASCII
-                    .convertRdfiles(pkg_dir, instdir,
-                                    types = build_help_types,
-                                    outenc = outenc)
-                }
-            }
+	    starsmsg(paste0(stars, "*"), "installing help indices")
+	    ## always want HTML package index
+	    .writePkgIndices(pkg_dir, instdir)
+	    if (build_help) {
+		## This is used as the default outputEncoding for latex
+		outenc <- desc["Encoding"]
+		if (is.na(outenc)) outenc <- "latin1" # or ASCII
+		.convertRdfiles(pkg_dir, instdir,
+				types = build_help_types,
+				outenc = outenc)
+	    }
+	}
 
-            ## pkg indices
-            starsmsg(stars, "building package indices ...")
-            res <- try(.install_package_indices(".", instdir))
-            if (inherits(res, "try-error"))
-                errmsg("installing package indices failed")
-
-            ## Install a dump of the parsed NAMESPACE file
-            if (file.exists("NAMESPACE") && !fake) {
-                res <- try(.install_package_namespace_info(".", instdir))
-                if (inherits(res, "try-error"))
-                    errmsg("installing namespace metadata failed")
-            }
-
-        }                               # more_than_libs
+	## pkg indices
+	if (install_inst || install_demo || install_help) {
+	    starsmsg(stars, "building package indices ...")
+	    res <- try(.install_package_indices(".", instdir))
+	    if (inherits(res, "try-error"))
+		errmsg("installing package indices failed")
+	}
+	
+	## Install a dump of the parsed NAMESPACE file
+	if (install_R && file.exists("NAMESPACE") && !fake) {
+	    res <- try(.install_package_namespace_info(".", instdir))
+	    if (inherits(res, "try-error"))
+		errmsg("installing namespace metadata failed")
+	}
 
         ## <NOTE>
         ## Remove stuff we should not have installed in the first place.
@@ -922,11 +923,20 @@
     tar_up <- zip_up <- FALSE
     shargs <- character(0)
     multiarch <- TRUE
-    install_tests <- FALSE
+
     get_user_libPaths <- FALSE
     data_compress <- TRUE # FALSE (none), TRUE (gzip), 2 (bzip2), 3 (xz)
     resave_data <- FALSE
-
+    
+    install_libs <- TRUE
+    install_R <- TRUE
+    install_data <- TRUE
+    install_demo <- TRUE
+    install_exec <- TRUE
+    install_inst <- TRUE
+    install_help <- TRUE
+    install_tests <- FALSE      
+    
     while(length(args)) {
         a <- args[1]
         if (a %in% c("-h", "--help")) {
@@ -987,8 +997,6 @@
             libs_only <- TRUE
         } else if (a == "--no-multiarch") {
             multiarch <- FALSE
-        } else if (a == "--install-tests") {
-            install_tests <- TRUE
         } else if (a == "--maybe-get-user-libPaths") {
             get_user_libPaths <- TRUE
         } else if (a == "--build") {
@@ -1003,6 +1011,22 @@
                                     "xz" = 3)
         } else if (a == "--resave-data") {
             resave_data <- TRUE
+        } else if (a == "--install-tests") {
+            install_tests <- TRUE        
+        } else if (a == "--no-inst") {
+            install_inst <- FALSE
+        } else if (a == "--no-R") {
+            install_R <- FALSE
+        } else if (a == "--no-libs") {
+            install_libs <- FALSE
+        } else if (a == "--no-data") {
+            install_data <- FALSE
+        } else if (a == "--no-demo") {
+            install_demo <- FALSE
+        } else if (a == "--no-exec") {
+            install_exec <- FALSE
+        } else if (a == "--no-help") {
+            install_help <- FALSE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
@@ -1100,6 +1124,12 @@
     if (libs_only) {
         lock <- FALSE
         tar_up <- FALSE
+	install_R <- FALSE
+	install_data <- FALSE
+	install_demo <- FALSE
+	install_exec <- FALSE
+	install_inst <- FALSE
+	install_help <- FALSE
     }
     more_than_libs <- !libs_only
 
@@ -1130,6 +1160,10 @@
         build_html <- FALSE
         build_latex <- FALSE
         build_example <- FALSE
+	install_libs <- FALSE
+	install_demo <- FALSE
+	install_exec <- FALSE
+	install_inst <- FALSE
     }
 
     build_help_types <- character(0)
@@ -1137,7 +1171,12 @@
     if (build_latex) build_help_types <- c(build_help_types, "latex")
     if (build_example) build_help_types <- c(build_help_types, "example")
     build_help <- length(build_help_types) > 0L
-
+    if (build_help && !install_help) {
+	warning("--no-help overrides ", 
+	        paste("--", build_help_types, sep="", collapse=" "),
+                call. = FALSE)
+    }
+    
     if (debug)
         starsmsg(stars, "build_help_types=",
                  paste(build_help_types, collapse=" "))
