@@ -27,12 +27,6 @@ NEW FEATURES
 	this ensures that all platforms can install bzip2- and
 	xz-compressed tarballs.
 
-    o	R CMD INSTALL has new options --no-R, --no-libs, --no-data,
-	--no-help, --no-demo, --no-exec, and --no-inst to suppress
-	installation of the specified part of the package.  These are
-	intended for special purposes (e.g. building a database
-	of help pages without fully installing all packages).
-
     o	help(try.all.packages = TRUE) is much faster (although the
 	time taken by the OS to find all the packages the first time
 	it is used can dominate the time).
@@ -146,6 +140,12 @@ BUG FIXES
 NEW FEATURES
 
     o	The PCRE library has been updated to version 8.00.
+
+    o	R CMD INSTALL has new options --no-R, --no-libs, --no-data,
+	--no-help, --no-demo, --no-exec, and --no-inst to suppress
+	installation of the specified part of the package.  These are
+	intended for special purposes (e.g. building a database
+	of help pages without fully installing all packages).
 
 
 INSTALLATION
