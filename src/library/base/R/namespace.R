@@ -591,8 +591,8 @@ unloadNamespace <- function(ns)
     if (! is.na(pos)) detach(pos = pos)
     users <- getNamespaceUsers(ns)
     if (length(users))
-        stop(gettextf("name space '%s' is still used by: %s",
-                      getNamespaceName(ns),
+        stop(gettextf("name space %s is imported by %s so cannot be unloaded",
+                      sQuote(getNamespaceName(ns)),
                       paste(sQuote(users), collapse = ", ")),
              domain = NA)
     nspath <- getNamespaceInfo(ns, "path")
