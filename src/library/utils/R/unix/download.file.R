@@ -37,9 +37,11 @@ download.file <- function(url, destfile, method,
         else
             stop("no download method found")
     }
-    if(method == "internal")
+    if(method == "internal") {
         status <- .Internal(download(url, destfile, quiet, mode, cacheOK))
-    else if(method == "wget") {
+        ## needed for Mac GUI from download.packages etc
+        if(!quiet) flush.console()
+    } else if(method == "wget") {
         extra <- if(quiet) " --quiet" else ""
         if(!cacheOK) extra <- paste(extra, "--cache=off")
         status <- system(paste("wget", extra, " ", shQuote(url),
