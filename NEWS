@@ -26,6 +26,9 @@ INSTALLATION
 	circumstances where it did not previously (where libtiff
 	needed to be linked explicitly against -ljpeg).
 
+    o	Making the refman.pdf works around a problem with the indexing
+	with hyperref 6.79f.
+
 
 DEPRECATED & DEFUNCT
 
