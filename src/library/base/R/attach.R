@@ -91,7 +91,7 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
 }
 
 detach <- function(name, pos = 2, unload = FALSE, character.only = FALSE,
-                   force = !interactive())
+                   force = FALSE)
 {
     if(!missing(name)) {
 	if(!character.only) name <- substitute(name)

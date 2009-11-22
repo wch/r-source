@@ -4,12 +4,11 @@
 % Distributed under GPL 2 or later
 
 \name{detach}
+\alias{detach}
 \title{Detach Objects from the Search Path}
 \usage{
-detach(name, pos = 2, unload = FALSE, character.only = FALSE,
-       force = !interactive())
+detach(name, pos = 2, unload = FALSE, character.only = FALSE, force = FALSE)
 }
-\alias{detach}
 \arguments{
   \item{name}{
     The object to detach.  Defaults to \code{search()[pos]}.
@@ -17,16 +16,17 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE,
     character vector.  If a number is supplied this is taken as \code{pos}.
   }
   \item{pos}{
-    Index position in \code{\link{search}()} of database to
+    Index position in \code{\link{search}()} of the database to
     detach.  When \code{name} is a number, \code{pos = name}
     is used.
   }
   \item{unload}{A logical value indicating whether or not to attempt to
     unload the namespace when a package is being detached.  If the
     package has a namespace and \code{unload} is \code{TRUE}, then
-    \code{detach} will attempt to unload the namespace: if the namespace
-    is in use by another namespace or \code{unload} is \code{FALSE}, no
-    unloading will occur.
+    \code{detach} will attempt to unload the namespace \emph{via}
+    \code{\link{unloadNamespace}}: if the namespace is imported by
+    another namespace or \code{unload} is \code{FALSE}, no unloading
+    will occur.
   }
   \item{character.only}{a logical indicating whether \code{name}
     can be assumed to be character strings.}
@@ -34,10 +34,10 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE,
     loaded packages depend on it?}
 }
 \description{
-  Detach a database, i.e., remove it from the \code{\link{search}()} path
-  of available \R objects.  Usually, this is either a \code{\link{data.frame}}
-  which has been \code{\link{attach}}ed or a package which was required
-  previously.
+  Detach a database, i.e., remove it from the \code{\link{search}()}
+  path of available \R objects.  Usually this is either a
+  \code{\link{data.frame}} which has been \code{\link{attach}}ed or a
+  package which was attached by \code{\link{library}}.
 }
 \details{
   This is most commonly used with a single number argument referring to a
@@ -47,17 +47,21 @@ detach(name, pos = 2, unload = FALSE, character.only = FALSE,
   If a package has a namespace, detaching it does not by default unload
   the namespace (and may not even with \code{unload=TRUE}), and
   detaching will not in general unload any dynamically loaded compiled
-  code (DLLs).  Further, registered S3 methods from the namespace will not be
-  removed.  If you use \code{\link{library}} on a package whose name
-  space is loaded, it attaches the exports of the loaded name space.
-  So detaching and re-attaching a package may not refresh some
-  or all components of the package, and is inadvisable.
+  code (DLLs).  Further, registered S3 methods from the namespace will
+  not be removed.  If you use \code{\link{library}} on a package whose
+  name space is loaded, it attaches the exports of the already loaded
+  name space.  So detaching and re-attaching a package may not refresh
+  some or all components of the package, and is inadvisable.
 }
 \note{
   You cannot detach either the workspace (position 1) nor the \pkg{base}
-  package (the last item in the search list).
-
-  The intention is to change the default to \code{force = FALSE} before release.
+  package (the last item in the search list), and attempting to do so
+  will throw an error.
+  
+  Unloading some name spaces has undesirable side effects:
+  e.g. unloading \pkg{grid} closes all graphics devices, and on most
+  systems \pkg{tcltk} cannot be reloaded once it has been unloaded and
+  may crash \R if this is attempted.
 }
 \value{
   The return value is \link{invisible}.  It is \code{NULL} when a
@@ -97,7 +101,7 @@ attach_and_detach <- function(db, pos=2)
    name <- deparse(substitute(db))
    attach(db, pos=pos, name=name)
    print(search()[pos])
-   eval(substitute(detach(n), list(n=name)))
+   detach(name, character.only = TRUE)
 }
 attach_and_detach(women, pos=3)
 }
