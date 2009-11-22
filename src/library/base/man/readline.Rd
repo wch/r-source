@@ -1,6 +1,6 @@
 % File src/library/base/man/readline.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{readline}
@@ -16,27 +16,35 @@ readline(prompt = "")
   Should usually end with a space \code{" "}.}
 }
 \description{
-  \code{readline} reads a line from the terminal
+  \code{readline} reads a line from the terminal (in interactive use).
 }
 \details{
   The prompt string will be truncated to a maximum allowed length,
   normally 256 chars (but can be changed in the source code).
+
+  This can only be used in an \link{interactive} session.
 }
 \value{
-  A character vector of length one.
+  A character vector of length one.  Both leading and trailing
+  spaces and tabs are stripped from the result.
+
+  In non-\link{interactive} use the result is as if the response was
+  RETURN and the value is \code{""}.
 }
 \seealso{
-  \code{\link{readLines}} for reading text lines of connections,
+  \code{\link{readLines}} for reading text lines from connections,
   including files.
 }
 \examples{
 fun <- function() {
   ANSWER <- readline("Are you a satisfied R user? ")
+  ## a better version would check the answer less cursorily, and
+  ## perhaps re-prompt
   if (substr(ANSWER, 1, 1) == "n")
     cat("This is impossible.  YOU LIED!\n")
   else
     cat("I knew it.\n")
 }
-fun()
+if(interactive()) fun()
 }
 \keyword{utilities}

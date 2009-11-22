@@ -1383,33 +1383,39 @@ SEXP attribute_hidden do_readln(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op,args);
 
     prompt = CAR(args);
-    if (prompt == R_NilValue)
+    if (prompt == R_NilValue) {
+	ConsolePrompt[0] = '\0'; /* precaution */
 	PROTECT(prompt);
-    else {
+    } else {
 	PROTECT(prompt = coerceVector(prompt, STRSXP));
 	if(length(prompt) > 0)
 	    strncpy(ConsolePrompt, translateChar(STRING_ELT(prompt, 0)),
 		    CONSOLE_PROMPT_SIZE - 1);
     }
 
-    /* skip space or tab */
-    while ((c = ConsoleGetchar()) == ' ' || c == '\t') ;
-    if (c != '\n' && c != R_EOF) {
-	*bufp++ = c;
-	while ((c = ConsoleGetchar())!= '\n' && c != R_EOF) {
-	    if (bufp >= &buffer[MAXELTSIZE - 2]) continue;
+    if(R_Interactive) {
+	/* skip space or tab */
+	while ((c = ConsoleGetchar()) == ' ' || c == '\t') ;
+	if (c != '\n' && c != R_EOF) {
 	    *bufp++ = c;
+	    while ((c = ConsoleGetchar())!= '\n' && c != R_EOF) {
+		if (bufp >= &buffer[MAXELTSIZE - 2]) continue;
+		*bufp++ = c;
+	    }
 	}
-    }
-    /* now strip white space off the end as well */
-    while (--bufp >= buffer && (*bufp == ' ' || *bufp == '\t'))
-	;
-    *++bufp = '\0';
-    ConsolePrompt[0] = '\0';
+	/* now strip white space off the end as well */
+	while (--bufp >= buffer && (*bufp == ' ' || *bufp == '\t'))
+	    ;
+	*++bufp = '\0';
+	ConsolePrompt[0] = '\0';
 
-    PROTECT(ans = allocVector(STRSXP,1));
-    SET_STRING_ELT(ans, 0, mkChar(buffer));
-    UNPROTECT(2);
+	ans = mkString(buffer);
+    } else {
+	/* simulate CR as response */
+	Rprintf("%s\n", ConsolePrompt);
+	ans = mkString("");
+    }
+    UNPROTECT(1);
     return ans;
 }
 

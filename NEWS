@@ -101,6 +101,9 @@ NEW FEATURES
     o	detach() when applied to an object other than a package
 	returns the environment that has been detached.
 
+    o	readline() in non-interactive use returns "" and does not
+	attempt to read from the 'terminal'.
+
 
 DEPRECATED & DEFUNCT
 
