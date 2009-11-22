@@ -1,9 +1,13 @@
-toHTML <- function(x, ...) {
-  UseMethod("toHTML")
+toHTML <-
+function(x, ...)
+{
+    UseMethod("toHTML")
 }
 
-HTMLheader <- function(title, logo=TRUE, up=NULL, top=file.path(Rhome, "doc/html/index.html"),
-                       Rhome="", headerTitle = paste("R:", title), outputEncoding = "UTF-8") {
+HTMLheader <-
+function(title, logo=TRUE, up=NULL, top=file.path(Rhome, "doc/html/index.html"),
+         Rhome="", headerTitle = paste("R:", title), outputEncoding = "UTF-8")
+{
     result <- c('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">',
         paste('<html><head><title>', headerTitle, '</title>', sep=''),
         paste('<meta http-equiv="Content-Type" content="text/html; charset=',
@@ -35,7 +39,8 @@ HTMLheader <- function(title, logo=TRUE, up=NULL, top=file.path(Rhome, "doc/html
     result
 }
 
-toHTML.packageIQR <- function(x, ...)
+toHTML.packageIQR <-
+function(x, ...)
 {
     db <- x$results
 
@@ -73,4 +78,47 @@ toHTML.packageIQR <- function(x, ...)
     	                    '</p>')
     result <- c(result, '</body></html>')
     result
+}
+
+toHTML.news_db <-
+function(x, ...)
+{
+    ## For now, only do something if the NEWS file could be read without
+    ## problems, see utils:::print.news_db():
+    if(is.null(bad <- attr(x, "bad"))
+       || (length(bad) != NROW(x))
+       || any(bad))
+        return(character())
+
+    print_items <- function(x)
+        c("<ul>", sprintf("<li>%s</li>", htmlify(x)), "</ul>")
+
+    x$Text <- iconv(x$Text, to = "UTF-8")
+
+    vchunks <- split(x, x$Version)
+    vchunks <-
+        vchunks[order(as.numeric_version(sub(" *patched", ".1",
+                                             names(vchunks))),
+                      decreasing = TRUE)]
+    vheaders <- sprintf("<h2>Changes in version %s</h2>",
+                        names(vchunks))
+    c(HTMLheader("NEWS", Rhome = "../..", up = "html/00Index.html"),
+      unlist(lapply(seq_along(vchunks),
+                    function(i) {
+                        vchunk <- vchunks[[i]]
+                        if(all(!is.na(category <- vchunk$Category)
+                               & nzchar(category))) {
+                            cchunks <- split(vchunk, category)
+                            c(vheaders[i],
+                              Map(function(h, t)
+                                  c(h, print_items(t$Text)),
+                                  sprintf("<h3>%s</h3>", names(cchunks)),
+                                  cchunks))
+                        } else {
+                            c(vheaders[i],
+                              print_items(vchunk$Text))
+                        }
+                    })
+             ),
+      "</body></html>")
 }

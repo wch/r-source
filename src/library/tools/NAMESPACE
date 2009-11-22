@@ -55,5 +55,6 @@ S3method("print", "check_packages_used")
 S3method("print", "check_vignette_index")
 
 S3method("toHTML", "packageIQR")
+S3method("toHTML", "news_db")
 
 S3method("as.character", "Rd")
