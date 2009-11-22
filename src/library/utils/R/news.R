@@ -72,7 +72,11 @@ function(x, ...)
                 sep = "\n\n")
         vchunks <- split(x, x$Version)
         ## Re-order according to decreasing version.
-        vchunks <- vchunks[order(as.numeric_version(names(vchunks)),
+        ## R NEWS has invalid "versions" such as ""2.4.1 patched" which
+        ## we map to 2.4.1.1.
+        vchunks <-
+            vchunks[order(as.numeric_version(sub(" *patched", ".1",
+                                                 names(vchunks))),
                                  decreasing = TRUE)]
         vheaders <-
             sprintf("%sChanges in version %s:\n\n",
