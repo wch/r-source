@@ -12,7 +12,7 @@ function(title, logo=TRUE, up=NULL, top=file.path(Rhome, "doc/html/index.html"),
         paste('<html><head><title>', headerTitle, '</title>', sep=''),
         paste('<meta http-equiv="Content-Type" content="text/html; charset=',
               mime_canonical_encoding(outputEncoding), '">', sep=''),
-        paste('<link rel="stylesheet" type="text/css" href="', 
+        paste('<link rel="stylesheet" type="text/css" href="',
               file.path(Rhome, 'doc/html/R.css'), '">', sep=''),
         '</head><body>',
 	paste('<h1>', title))
@@ -22,16 +22,16 @@ function(title, logo=TRUE, up=NULL, top=file.path(Rhome, "doc/html/index.html"),
     result <- c(result, '</h1>', '<hr>')
     if (!is.null(up) || !is.null(top)) {
     	result <- c(result, '<div align="center">')
-    	if (!is.null(up)) 
-    	    result <- c(result, 
-    	        paste('<a href="', up, '"><img src="', 
-    	              file.path(Rhome, 'doc/html/left.jpg'), 
+    	if (!is.null(up))
+    	    result <- c(result,
+    	        paste('<a href="', up, '"><img src="',
+    	              file.path(Rhome, 'doc/html/left.jpg'),
     	              '" alt="[Up]" width="30" height="30" border="0"></a>',
     	              sep=''))
     	if (!is.null(top))
     	    result <- c(result,
     	    	paste('<a href="', top, '"><img src="',
-    	    	      file.path(Rhome, 'doc/html/up.jpg'), 
+    	    	      file.path(Rhome, 'doc/html/up.jpg'),
     	    	      '" alt="[Top]" width="30" height="30" border="0"></a>',
     	    	      sep=''))
     	result <- c(result, '</div>')
@@ -48,19 +48,19 @@ function(x, ...)
     x$title <- iconv(x$title, to="UTF-8")
     x$footer <- iconv(x$footer, to="UTF-8")
     db <- iconv(db, to="UTF-8")
-    
-    ## Split according to Package.    
+
+    ## Split according to Package.
     out <- if(nrow(db) == 0L)
          NULL
     else
         lapply(split(1 : nrow(db), db[, "Package"]),
                function(ind) db[ind, c("Item", "Title"),
                                 drop = FALSE])
-                                
-    result <- HTMLheader(...)
-    
+
+    result <- HTMLheader(x$title, ...)
+
     for(pkg in names(out)) {
-        result <- c(result, 
+        result <- c(result,
                     paste('<h2>', htmlify(x$title), ' in package &lsquo;',
                                   htmlify(pkg), '&rsquo;</h2>', sep = ''),
                     '<table cols="2" width="100%">',
