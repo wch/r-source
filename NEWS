@@ -142,6 +142,8 @@ BUG FIXES
     o	bessel[JY](x, nu) with nu a negative integer (a singular case)
 	is now correct, analogously to besselI(), see PR#13556, below.
 
+    o	pchisq(x, df, ncp=L) no longer can return values slightly larger
+	than 1, and for now gives an accuracy warning for L > 80.
 
 
 		CHANGES IN R VERSION 2.10.0
