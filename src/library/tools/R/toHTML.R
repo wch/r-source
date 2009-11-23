@@ -57,7 +57,7 @@ function(x, ...)
                function(ind) db[ind, c("Item", "Title"),
                                 drop = FALSE])
                                 
-    result <- HTMLheader(paste('R', x$title), Rhome="../..", up="html/00Index.html")
+    result <- HTMLheader(...)
     
     for(pkg in names(out)) {
         result <- c(result, 
@@ -102,7 +102,7 @@ function(x, ...)
                       decreasing = TRUE)]
     vheaders <- sprintf("<h2>Changes in version %s</h2>",
                         names(vchunks))
-    c(HTMLheader("NEWS", Rhome = "../..", up = "html/00Index.html"),
+    c(HTMLheader(...),
       unlist(lapply(seq_along(vchunks),
                     function(i) {
                         vchunk <- vchunks[[i]]

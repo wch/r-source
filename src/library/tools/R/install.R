@@ -1628,28 +1628,18 @@
            '<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
             version, '</h2>\n\n', sep ='', file = conn)
 
-        doc <- file.exists(file.path(outDir, "doc"))
-        demo <- file.exists(file.path(outDir, "demo"))
-        data <- FALSE # file.exists(file.path(outDir, "data")) # do we want this?
-        news <- FALSE # FIXME:  dynamic help needs to be able to display this
-        if (doc || demo || data || news) {
-            cat('<h2>Additional Material</h2>\n\n', file=conn)
-            if (doc) 
-            	cat('<p><a href="../doc/index.html">Overview of user guides and package vignettes</a>;',
-		    'browse <a href="../doc">directory</a>.</p>\n\n', file=conn)
-	        
-            if (demo)
-		cat('<p><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</p>\n\n',
-	             sep = '', file=conn)
-	    if (data)
-	        cat('<p><a href="../data">Datasets</a>.  Use <a href="../../utils/help/data">data()</a> to load them.</p>\n\n',
-	             sep = '', file=conn)
-	    if (news)
-	    	cat('<p><a href="../NEWS">Package news</a>.</p>\n\n',
-	    	     sep = '', file=conn)
-	}
+	cat('<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>\n', file=conn)
+	if (file.exists(file.path(outDir, "doc"))) 
+	    cat('<li><a href="../doc/index.html">Overview of user guides and package vignettes</a>;',
+		'browse <a href="../doc">directory</a>.</li>\n', file=conn)
+	if (file.exists(file.path(outDir, "demo")))
+	    cat('<li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>\n',
+		 sep = '', file=conn)
+	if (file.exists(file.path(outDir, "NEWS")))
+	    cat('<li><a href="../NEWS">Package NEWS</a>.</li>\n',
+		 sep = '', file=conn)
 	
-        cat('<h2>Help Pages</h2>\n\n\n',
+        cat('</ul>\n\n<h2>Help Pages</h2>\n\n\n',
             sep ='', file = conn)
     }
 

@@ -121,7 +121,10 @@ httpd <- function(path, query, ...)
         return(list(file = file.path(R.home("doc"), "html", "R.css")))
     else if(path == "/favicon.ico")
         return(list(file = file.path(R.home("doc"), "html", "favicon.ico")))
-    else if(path %in% c("/NEWS", "/ONEWS", "/OONEWS"))
+    else if(path == "/NEWS") {
+     	db <- news()
+    	return( list(payload = paste(toHTML(db, title="R News"), collapse="\n")) )
+    } else if(path %in% c("/ONEWS", "/OONEWS")) 
     	return(list(file = file.path(R.home(), sub("/", "", path)),
     	            "content-type" = "text/plain"))
     else if(!grepl("^/(doc|library)/", path))
@@ -134,7 +137,7 @@ httpd <- function(path, query, ...)
     topicRegexp <- "^/library/+([^/]*)/help/([^/]*)$"
     docRegexp <- "^/library/([^/]*)/doc(.*)"
     demoRegexp <- "^/library/([^/]*)/demo$"
-    dataRegexp <- "^/library/([^/]*)/data$"
+    newsRegexp <- "^/library/([^/]*)/NEWS$"
     
     file <- NULL
     if (grepl(topicRegexp, path)) {
@@ -289,11 +292,18 @@ httpd <- function(path, query, ...)
     } else if (grepl(demoRegexp, path)) {
     	pkg <- sub(demoRegexp, "\\1", path)
     	demos <- demo(package=pkg)
-    	return( list(payload = paste(toHTML(demos), collapse="\n")) )
-    } else if (grepl(dataRegexp, path)) {
-    	pkg <- sub(dataRegexp, "\\1", path)
-    	datasets <- data(package=pkg)
-    	return( list(payload = paste(toHTML(datasets), collapse="\n")) )    	
+    	return( list(payload = paste(toHTML(demos, title=paste("Demos in package", sQuote(pkg)),
+    	                                    up="html/00Index.html"), collapse="\n")) )
+    } else if (grepl(newsRegexp, path)) {
+    	pkg <- sub(newsRegexp, "\\1", path)
+    	formatted <- toHTML(news(package = pkg), 
+    		            title=paste("NEWS in package", sQuote(pkg)),
+    			    up="html/00Index.html")
+        if (length(formatted))
+    	    return( list(payload = paste(formatted, collapse="\n")) )
+    	else
+    	    return( list(file = system.file("NEWS", package = pkg),
+    	                 "content-type" = "text/plain") )
     } else if (grepl("^/library/", path)) {
         descRegexp <- "^/library/+([^/]+)/+DESCRIPTION$"
         if(grepl(descRegexp, path)) {
@@ -301,7 +311,8 @@ httpd <- function(path, query, ...)
             file <- system.file("DESCRIPTION", package = pkg)
             return(list(file = file, "content-type" = "text/plain"))
         } else
-            return(error_page(gettextf("Only help files, %s and files under %s in a package can be viewed", mono("DESCRIPTION"), mono("doc/"))))
+            return(error_page(gettextf("Only help files, %s, %s and files under %s in a package can be viewed", mono("NEWS"), 
+                              mono("DESCRIPTION"), mono("doc/"))))
     }
 
     ## ----------------------- R docs ---------------------
