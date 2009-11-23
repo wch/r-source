@@ -17,12 +17,12 @@
 \source{
   Durbin, J. and Koopman, S. J. (2001) \emph{Time Series Analysis by
     State Space Methods.}  Oxford University Press.
-  \url{http://www.ssfpack.com/dkbook/}
+  \url{http://www.ssfpack.com/DKbook.html}
 }
 \references{
   Balke, N. S. (1993) Detecting level shifts in time series.
   \emph{Journal of Business and Economic Statistics} \bold{11}, 81--92.
-  
+
   Cobb, G. W. (1978) The problem of the Nile: conditional solution to a
   change-point problem.  \emph{Biometrika} \bold{65}, 243--51.
 }
