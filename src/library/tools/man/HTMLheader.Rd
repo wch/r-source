@@ -7,7 +7,7 @@ Generate a standard HTML header for R help.
 This function generates the standard HTML header used on R help pages.
 }
 \usage{
-HTMLheader(title, logo = TRUE, up = NULL, top = file.path(Rhome, "doc/html/index.html"), 
+HTMLheader(title = "R", logo = TRUE, up = NULL, top = file.path(Rhome, "doc/html/index.html"), 
            Rhome = "", headerTitle = paste("R:", title), outputEncoding = "UTF-8")
 }
 \arguments{

@@ -5,7 +5,7 @@ function(x, ...)
 }
 
 HTMLheader <-
-function(title, logo=TRUE, up=NULL, top=file.path(Rhome, "doc/html/index.html"),
+function(title="R", logo=TRUE, up=NULL, top=file.path(Rhome, "doc/html/index.html"),
          Rhome="", headerTitle = paste("R:", title), outputEncoding = "UTF-8")
 {
     result <- c('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">',
@@ -57,7 +57,7 @@ function(x, ...)
                function(ind) db[ind, c("Item", "Title"),
                                 drop = FALSE])
 
-    result <- HTMLheader(x$title, ...)
+    result <- HTMLheader(...)
 
     for(pkg in names(out)) {
         result <- c(result,
