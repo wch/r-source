@@ -20,7 +20,7 @@ cophenetic(x)
   \item{x}{an R object representing a hierarchical clustering.
     For the default method, an object of class \code{\link{hclust}} or
     with a method for \code{\link{as.hclust}()} such as
-    \code{\link[cluster]{agnes}}.}
+    \code{\link[cluster]{agnes}} in package \pkg{cluster}.}
 }
 \details{
   The cophenetic distance between two observations that have been

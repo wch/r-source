@@ -29,8 +29,8 @@ as.hclust(x, \dots)
   An object of class \code{"hclust"}.
 }
 \seealso{
-  \code{\link{hclust}}, \code{\link[cluster]{diana}},
-  \code{\link[cluster]{agnes}}
+  \code{\link{hclust}}, and from package \pkg{cluster},
+  \code{\link[cluster]{diana}} and \code{\link[cluster]{agnes}}
 }
 \examples{
 x <- matrix(rnorm(30), ncol=3)

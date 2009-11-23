@@ -54,7 +54,8 @@
   formula.  Thus, the mode of a terms object is different as well. 
 
   Examples of the \code{specials} argument can be seen in the
-  \code{\link{aov}} and \code{\link[survival]{coxph}} functions.
+  \code{\link{aov}} and \code{\link[survival]{coxph}} functions, the
+  latter from package \pkg{survival}.
 }
 \seealso{
   \code{\link{terms}}, \code{\link{formula}}.
