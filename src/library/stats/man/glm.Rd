@@ -271,9 +271,9 @@ glm.fit(x, y, weights = rep(1, nobs),
   \code{\link{lm}} for non-generalized \emph{linear} models (which SAS
   calls GLMs, for \sQuote{general} linear models).
   
-  \code{\link{loglin}} and \code{\link[MASS]{loglm}} for fitting
-  log-linear models (which binomial and Poisson GLMs are) to contingency
-  tables.
+  \code{\link{loglin}} and \code{\link[MASS]{loglm}} (package
+  \pkg{MASS}) for fitting log-linear models (which binomial and Poisson
+  GLMs are) to contingency tables.
 
   \code{bigglm} in package \pkg{biglm} for an alternative
   way to fit GLMs to large datasets (especially those with many cases).

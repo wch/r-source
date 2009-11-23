@@ -32,8 +32,7 @@ xtabs(formula = ~., data = parent.frame(), subset, sparse = FALSE, na.action,
     to be used.}
   \item{sparse}{logical specifying if the result should be a
     \emph{sparse} matrix, i.e., inheriting from
-    \code{\link[Matrix:sparseMatrix-class]{sparseMatrix}}
-    %\linkS4class{sparseMatrix}.
+    \code{\link[Matrix:sparseMatrix-class]{sparseMatrix}}%\linkS4class{sparseMatrix}.
     Only works for two factors (since there
     are no higher-order sparse array classes yet).
   }

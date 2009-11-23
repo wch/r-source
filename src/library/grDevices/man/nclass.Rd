@@ -59,9 +59,9 @@ nclass.FD(x)
   \emph{Journal of the American Statistical Association} \bold{21}, 65--66.
 }
 \seealso{
-  \code{\link{hist}} and \code{\link[MASS]{truehist}} (which use
-  a different default);  \code{\link[KernSmooth]{dpih}} for a plugin
-  bandwidth proposed by Wand(1995).
+  \code{\link{hist}} and \code{\link[MASS]{truehist}} (package
+  \pkg{MASS});  \code{\link[KernSmooth]{dpih}} (package
+  \pkg{KernSmooth}) for a plugin bandwidth proposed by Wand(1995).
 }
 \examples{
 set.seed(1)

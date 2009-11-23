@@ -54,7 +54,8 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
   hard to interpret without balance: beware that missing values in the
   response(s) will likely lose the balance.  If there are two or more
   error strata, the methods used are statistically inefficient without
-  balance, and it may be better to use \code{\link[nlme]{lme}}.
+  balance, and it may be better to use \code{\link[nlme]{lme}} in
+  package \pkg{nlme}.
 
   Balance can be checked with the \code{\link{replications}} function.
 
