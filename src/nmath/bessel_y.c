@@ -36,7 +36,7 @@ static void Y_bessel(double *x, double *alpha, long *nb,
 double bessel_y(double x, double alpha)
 {
     long nb, ncalc;
-    double *by;
+    double na, *by;
 #ifndef MATHLIB_STANDALONE
     char *vmax;
 #endif
@@ -49,13 +49,15 @@ double bessel_y(double x, double alpha)
 	ML_ERROR(ME_RANGE, "bessel_y");
 	return ML_NAN;
     }
+    na = floor(alpha);
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
 	return(bessel_y(x, -alpha) * cos(M_PI * alpha) -
-	       bessel_j(x, -alpha) * sin(M_PI * alpha));
+	       ((alpha == na) ? 0 :
+		bessel_j(x, -alpha) * sin(M_PI * alpha)));
     }
-    nb = 1+ (long)floor(alpha);/* nb-1 <= alpha < nb */
+    nb = 1+ (long)na;/* nb-1 <= alpha < nb */
     alpha -= (nb-1);
 #ifdef MATHLIB_STANDALONE
     by = (double *) calloc(nb, sizeof(double));

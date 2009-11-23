@@ -139,6 +139,9 @@ BUG FIXES
 	incomplete, which this could crash R if a DLL that registered
 	.External routines had earlier been unloaded.
 
+    o	bessel[JY](x, nu) with nu a negative integer (a singular case)
+	is now correct, analogously to besselI(), see PR#13556, below.
+
 
 
 		CHANGES IN R VERSION 2.10.0
