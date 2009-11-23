@@ -86,7 +86,7 @@ NEW FEATURES
 	the underlying class.  (Wish of Jens Oehlschlägel.)
 
     o	write.csv[2] no longer allow 'append' to be changed.
-    
+
     o	The index page for HTML help for a package now collapses
     	multiple signatures for S4 methods into a single entry.
 
@@ -105,7 +105,7 @@ NEW FEATURES
     o	readline() in non-interactive use returns "" and does not
 	attempt to read from the 'terminal'.
 
-    o	New function file_ext() in package 'tools'.	
+    o	New function file_ext() in package 'tools'.
 
 
 DEPRECATED & DEFUNCT
@@ -271,6 +271,9 @@ BUG FIXES
     o	The internal record-keeping by dyn.load/dyn.unload was
 	incomplete, which this could crash R if a DLL that registered
 	.External routines had earlier been unloaded.
+
+    o	bessel[JY](x, nu) with nu a negative integer (a singular case)
+	is now correct, analogously to besselI(), see PR#13556, below.
 
 
 
