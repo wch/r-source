@@ -1,5 +1,5 @@
 
-R version 2.11.0 Under development (unstable) (2009-11-11 r50398)
+R version 2.11.0 Under development (unstable) (2009-11-23 r50551)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -271,6 +271,7 @@ Warning messages:
 > xB <- c(2000,1e6,1e50,Inf)
 > for(df in c(0.1, 1, 10))
 +     for(ncp in c(0, 1, 10, 100)) stopifnot(pchisq(xB, df=df, ncp=ncp) == 1)
+There were 12 warnings (use warnings() to see them)
 > all.equal(qchisq(0.025,31,ncp=1,lower.tail=FALSE),# inf.loop PR#875
 +           49.7766246561514, tol= 1e-11)
 [1] TRUE
@@ -1200,7 +1201,10 @@ Warning messages:
 > 
 > ## pchisq(df=0) was wrong in 2.7.1
 > stopifnot(pchisq(c(-1,0,1), df=0) == c(0,1,1),
-+           pchisq(c(-1,0,1), df=0, lower.tail=FALSE) == c(1,0,0))
++           pchisq(c(-1,0,1), df=0, lower.tail=FALSE) == c(1,0,0),
++ 	  ## for ncp >= 80, gave values >= 1 in 2.10.0
++ 	  pchisq(500:700, 1.01, ncp = 80) <= 1)
+There were 50 or more warnings (use warnings() to see the first 50)
 > 
 > ## dnbinom for extreme  size and/or mu :
 > mu <- 20
@@ -1270,5 +1274,5 @@ Warning messages:
 > ## pgamma(x, shape = 2^-64, lower.tail=FALSE)  was discontinuous at x=1
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  5.048 0.04 5.319 0 0 
+Time elapsed:  4.908 0.044 5.058 0 0 
 > 

@@ -665,7 +665,9 @@ stopifnot(plnorm(-1:0, lower.tail=FALSE, log.p=TRUE) == 0,
 
 ## pchisq(df=0) was wrong in 2.7.1
 stopifnot(pchisq(c(-1,0,1), df=0) == c(0,1,1),
-          pchisq(c(-1,0,1), df=0, lower.tail=FALSE) == c(1,0,0))
+          pchisq(c(-1,0,1), df=0, lower.tail=FALSE) == c(1,0,0),
+	  ## for ncp >= 80, gave values >= 1 in 2.10.0
+	  pchisq(500:700, 1.01, ncp = 80) <= 1)
 
 ## dnbinom for extreme  size and/or mu :
 mu <- 20
