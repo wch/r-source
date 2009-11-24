@@ -1966,7 +1966,99 @@ static void X11_Raster(unsigned int *raster, int w, int h,
                       Rboolean interpolate,
                       const pGEcontext gc, pDevDesc dd)
 {
-    warning(_("%s not yet implemented for this device"), "Raster rendering");
+    int i, j, pixel;
+    int imageWidth = (int) width;
+    int imageHeight = (int) height;
+    double angle = rot*M_PI/180;
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    XImage *image;
+    unsigned int *rasterImage;
+    char * vmax = vmaxget();
+   
+    if (imageHeight < 0) {
+        imageHeight = -imageHeight;
+        /* convert (x, y) from bottom-left to top-right */
+        y = y - imageHeight*cos(angle);
+        if (angle != 0) {
+            x = x - imageHeight*sin(angle);
+        }
+    }
+
+    rasterImage = (unsigned int *) R_alloc(imageWidth * imageHeight,
+                                           sizeof(unsigned int));
+    if (interpolate) {
+        R_GE_rasterInterpolate(raster, w, h, 
+                               rasterImage, imageWidth, imageHeight);
+    } else {
+        R_GE_rasterScale(raster, w, h, 
+                         rasterImage, imageWidth, imageHeight);
+    }
+    
+    if (rot != 0) {
+        
+        int newW, newH;
+        double xoff, yoff;
+        unsigned int *resizedRaster, *rotatedRaster;
+
+        R_GE_rasterRotatedSize(imageWidth, imageHeight, angle, &newW, &newH);
+        R_GE_rasterRotatedOffset(imageWidth, imageHeight, angle, 0,
+                                 &xoff, &yoff);
+
+        resizedRaster = (unsigned int *) R_alloc(newW * newH, 
+                                             sizeof(unsigned int));
+        R_GE_rasterResizeForRotation(rasterImage, imageWidth, imageHeight, 
+                                     resizedRaster, newW, newH, gc);
+
+        rotatedRaster = (unsigned int *) R_alloc(newW * newH, 
+                                                 sizeof(unsigned int));
+        R_GE_rasterRotate(resizedRaster, newW, newH, angle, rotatedRaster, gc);
+
+        /* 
+         * Adjust (x, y) for resized and rotated image
+         */
+        x = x - (newW - imageWidth)/2 - xoff;
+        y = y - (newH - imageHeight)/2 + yoff;        
+
+        rasterImage = rotatedRaster;
+        imageWidth = newW;
+        imageHeight = newH;
+    }
+
+    image = XCreateImage(display, visual, depth, 
+                         ZPixmap,
+                         0, /* offset */
+                         /* This is just provides (at least enough)
+                          * allocated memory for the image data;  
+                          * each pixel is set separately below
+                          */
+                         (char *) rasterImage,
+                         imageWidth, imageHeight,
+                         depth, /* bitmap_pad */
+                         0); /* bytes_per_line: 0 means auto-calculate*/
+
+    if (XInitImage(image) == 0)
+        error(_("Unable to create XImage"));
+
+    for (i=0; i < imageHeight ;i++) {
+        for (j=0; j < imageWidth; j++) {
+            pixel = i * imageWidth + j;
+            XPutPixel(image, j, i, 
+                      GetX11Pixel(R_RED(rasterImage[pixel]), 
+                                  R_GREEN(rasterImage[pixel]), 
+                                  R_BLUE(rasterImage[pixel])));
+        }
+    }
+
+    XPutImage(display, xd->window, xd->wgc, 
+              image, 0, 0,
+              (int) x, (int) y, imageWidth, imageHeight);
+
+    /* XFree() rather than XDestroyImage() because the latter
+     * tries to free the image 'data' as well
+     */
+    XFree(image);
+
+    vmaxset(vmax);
 }
 
 static SEXP X11_Cap(pDevDesc dd)

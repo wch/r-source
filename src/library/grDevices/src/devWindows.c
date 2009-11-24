@@ -2616,9 +2616,7 @@ static void GA_Polygon(int n, double *x, double *y,
     SH;
 }
 
-static void doRaster(unsigned int *raster, int w, int h,
-                     double x, double y, 
-                     double width, double height,
+static void doRaster(unsigned int *raster, int x, int y, int w, int h,
                      double rot, 
                      pDevDesc dd)
 {
@@ -2632,16 +2630,16 @@ static void doRaster(unsigned int *raster, int w, int h,
     /* Index to pixel that contains fixed alpha for image */
     int fixedAlpha = -1;
 
-    /* These in-place conversions are ok */
     TRACEDEVGA("raster");
     
-    dr = rect((int) x, (int) y, (int) width, (int) height);
+    dr = rect(x, y, w, h);
     
     /* Create image object */
     img = newimage(w, h, 32);
 
     /* Set the image pixels from the raster */
     /* Need to swap ABGR to ARGB */
+    /* NOTE that graphapp usese 0 for opaque and 255 for transparent! */
     imageData = (byte *) R_alloc(4*w*h, sizeof(byte));
     for (i=0; i<w*h; i++) {
         byte alpha = R_ALPHA(raster[i]);
@@ -2653,13 +2651,17 @@ static void doRaster(unsigned int *raster, int w, int h,
              * because the conversion to bitmap (in 
              * gdrawimage()) ONLY copies opaque pixels.
              */
-            byte imgAlpha = 0;
-            if (alpha > 0)
-                imgAlpha = 255;
-            imageData[i*4 + 3] = imgAlpha;
-            imageData[i*4 + 2] = R_RED(raster[i]);
-            imageData[i*4 + 1] = R_GREEN(raster[i]);
-            imageData[i*4 + 0] = R_BLUE(raster[i]);
+            if (alpha == 0) {
+                imageData[i*4 + 3] = 255;
+                imageData[i*4 + 2] = 255;
+                imageData[i*4 + 1] = 255;
+                imageData[i*4 + 0] = 255;
+            } else {
+                imageData[i*4 + 3] = 0;
+                imageData[i*4 + 2] = R_RED(raster[i]);
+                imageData[i*4 + 1] = R_GREEN(raster[i]);
+                imageData[i*4 + 0] = R_BLUE(raster[i]);
+            }
             anyAlpha = 1;
             /* The current implementation can only cope with
              * a single constant alpha across the image
@@ -2672,7 +2674,7 @@ static void doRaster(unsigned int *raster, int w, int h,
                 warning("Per-pixel alpha not supported on this device");
             }
         } else {
-            imageData[i*4 + 3] = 255;
+            imageData[i*4 + 3] = 0;
             imageData[i*4 + 2] = R_RED(raster[i]);
             imageData[i*4 + 1] = R_GREEN(raster[i]);
             imageData[i*4 + 0] = R_BLUE(raster[i]);
@@ -2689,13 +2691,17 @@ static void doRaster(unsigned int *raster, int w, int h,
         DRAW(gdrawimage(_d, img, dr, sr));
     } else if (xd->have_alpha) {
         if (fixedAlpha < 0) {
-            warning("Fully transparent image!?");
+            /* This means we have an image with some FULLY transparent pixels
+             * but otherwise opaque
+             */
+            DRAW(gdrawimage(_d, img, dr, sr));
+        } else {
+            rect r = dr;
+            gsetcliprect(xd->bm, xd->clip);
+            gcopy(xd->bm2, xd->bm, r);
+            gdrawimage(xd->bm2, img, dr, sr);
+            DRAW2(raster[fixedAlpha]);
         }
-        rect r = dr;
-        gsetcliprect(xd->bm, xd->clip);
-        gcopy(xd->bm2, xd->bm, r);
-        gdrawimage(xd->bm2, img, dr, sr);
-        DRAW2(raster[fixedAlpha]);
     } else {
         WARN_SEMI_TRANS;
     }
@@ -2713,38 +2719,93 @@ static void GA_Raster(unsigned int *raster, int w, int h,
                       Rboolean interpolate,
                       const pGEcontext gc, pDevDesc dd)
 {
+    char *vmax = vmaxget();
+    double angle = rot*M_PI/180;
+    unsigned int *image = raster;
+    int imageWidth = w;
+    int imageHeight = h;
+    int adjustXY = 0;
+
     /* The alphablend code cannot handle negative width or height */
     if (height < 0) {
-        y = y + height;
         height = -height;
+        adjustXY = 1;
     }
 
     if (interpolate) {
-        /* Generate a new raster 
-         * which is interpolated from the original
-         * Assume a resolution for the new raster of 72 dpi
-         * Ideally would allow user to set this.
-         */
-        char *vmax = vmaxget();
         int newW = (int) width;
         int newH = (int) height;
         unsigned int *newRaster;
         
-        Rprintf("width %.2f\n", width);
-        Rprintf("height %.2f\n", height);
-        Rprintf("newWidth %d\n", newW);
-        Rprintf("newHeight %d\n", newH);
-
-        newRaster = (unsigned int *) R_alloc(newW * newH, sizeof(unsigned int));
-        R_GE_rasterInterpolate(raster, w, h,
+        newRaster = (unsigned int *) R_alloc(newW * newH, 
+                                             sizeof(unsigned int));
+        R_GE_rasterInterpolate(image, w, h,
                                newRaster, newW, newH);
-        doRaster(newRaster, newW, newH, 
-                 x, y, width, height, rot, dd);
-        vmaxset(vmax);
+        
+        image = newRaster;
+        imageWidth = newW;
+        imageHeight = newH;
+
     } else {
-        doRaster(raster, w, h,
-                 x, y, width, height, rot, dd);
+        /* Even if not interpolating, have to explicitly scale here
+         * before doing rotation, so that image to rotate
+         * is the right size AND so that can adjust (x, y) 
+         * correctly
+         */
+        int newW = (int) width;
+        int newH = (int) height;
+        unsigned int *newRaster;
+        
+        newRaster = (unsigned int *) R_alloc(newW * newH, 
+                                             sizeof(unsigned int));
+        R_GE_rasterScale(image, w, h,
+                         newRaster, newW, newH);
+        
+        image = newRaster;
+        imageWidth = newW;
+        imageHeight = newH;
     }
+
+    if (adjustXY) {
+        /* convert (x, y) from bottom-left to top-right */
+        y = y - imageHeight*cos(angle);
+        if (angle != 0) {
+            x = x - imageHeight*sin(angle);
+        }        
+    }
+
+    if (angle != 0) {
+        int newW, newH;
+        double xoff, yoff;
+        unsigned int *resizedRaster, *rotatedRaster;
+
+        R_GE_rasterRotatedSize(imageWidth, imageHeight, angle, &newW, &newH);
+        R_GE_rasterRotatedOffset(imageWidth, imageHeight, angle, 0,
+                                 &xoff, &yoff);
+
+        resizedRaster = (unsigned int *) R_alloc(newW * newH, 
+                                             sizeof(unsigned int));
+        R_GE_rasterResizeForRotation(image, imageWidth, imageHeight, 
+                                     resizedRaster, newW, newH, gc);
+
+        rotatedRaster = (unsigned int *) R_alloc(newW * newH, 
+                                                 sizeof(unsigned int));
+        R_GE_rasterRotate(resizedRaster, newW, newH, angle, rotatedRaster, gc);
+
+        /* 
+         * Adjust (x, y) for resized and rotated image
+         */
+        x = x - (newW - imageWidth)/2 - xoff;
+        y = y - (newH - imageHeight)/2 + yoff;        
+
+        image = rotatedRaster;
+        imageWidth = newW;
+        imageHeight = newH;
+    }
+
+    doRaster(image, (int) x, (int) y, imageWidth, imageHeight, rot, dd);
+
+    vmaxset(vmax);
 }
 
 static SEXP GA_Cap(pDevDesc dd)

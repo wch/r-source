@@ -410,8 +410,22 @@ SEXP GE_LTYget(unsigned int);
 /*
  * Raster operations
  */
+void R_GE_rasterScale(unsigned int *sraster, int sw, int sh,
+                      unsigned int *draster, int dw, int dh);
 void R_GE_rasterInterpolate(unsigned int *sraster, int sw, int sh,
                             unsigned int *draster, int dw, int dh);
+void R_GE_rasterRotatedSize(int w, int h, double angle,
+                            int *wnew, int *hnew);
+void R_GE_rasterRotatedOffset(int w, int h, double angle, int botleft,
+                              double *xoff, double *yoff);
+void R_GE_rasterResizeForRotation(unsigned int *sraster, 
+                                  int w, int h, 
+                                  unsigned int *newRaster,
+                                  int wnew, int hnew,
+                                  const pGEcontext gc);
+void R_GE_rasterRotate(unsigned int *sraster, int w, int h, double angle,
+                       unsigned int *draster, const pGEcontext gc);
+
 
 /* 
  * From plotmath.c 

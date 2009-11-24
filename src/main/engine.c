@@ -3005,6 +3005,52 @@ SEXP GE_LTYget(unsigned int lty)
  ****************************************************************
  */
 
+/* Some of this code is based on code from the leptonica library
+ * hence the following notice 
+ */
+
+/*====================================================================*
+-  Copyright (C) 2001 Leptonica.  All rights reserved.
+-  This software is distributed in the hope that it will be
+-  useful, but with NO WARRANTY OF ANY KIND.
+-  No author or distributor accepts responsibility to anyone for the
+-  consequences of using this software, or for whether it serves any
+-  particular purpose or works at all, unless he or she says so in
+-  writing.  Everyone is granted permission to copy, modify and
+-  redistribute this source code, for commercial or non-commercial
+-  purposes, with the following restrictions: (1) the origin of this
+-  source code must not be misrepresented; (2) modified versions must
+-  be plainly marked as such; and (3) this notice may not be removed
+-  or altered from any source or modified source distribution.
+*====================================================================*/
+
+/* 
+ * Scale a raster image to a desired size using 
+ * nearest-neighbour interpolation
+
+ * draster must be pre-allocated.
+ */
+void R_GE_rasterScale(unsigned int *sraster, int sw, int sh,
+                      unsigned int *draster, int dw, int dh) {
+    int i, j;
+    int sx, sy;
+    unsigned int pixel;
+
+    /* Iterate over the destination pixels */
+    for (i = 0; i < dh; i++) {
+        for (j = 0; j < dw; j++) {
+            sy = i * sh / dh;
+            sx = j * sw / dw;
+            if ((sx >= 0) && (sx < sw) && (sy >= 0) && sy < sh) {
+                pixel = sraster[sy * sw + sx];
+            } else {
+                pixel = 0;
+            }
+            draster[i * dw + j] = pixel;
+        }
+    }
+}
+
 /* 
  * Scale a raster image to a desired size using 
  * bilinear interpolation
@@ -3103,6 +3149,145 @@ void R_GE_rasterInterpolate(unsigned int *sraster, int sw, int sh,
             *(dline + j) = pixel;
         }
     }
+}
 
-    return;
+/*
+ * Calculate the size needed for rotated image
+ *
+ * Rotate top-right and bottom-right corners
+ * New width/height based on max of rotated corners
+ */
+void R_GE_rasterRotatedSize(int w, int h, double angle,
+                            int *wnew, int *hnew) {
+    double diag = sqrt(w*w + h*h);
+    double theta = atan2((double) h, (double) w);
+    double trx1 = diag*cos(theta + angle);
+    double trx2 = diag*cos(theta - angle);
+    double try1 = diag*sin(theta + angle);
+    double try2 = diag*sin(angle - theta);
+    *wnew = (int) (fmax2(fabs(trx1), fabs(trx2)) + 0.5);
+    *hnew = (int) (fmax2(fabs(try1), fabs(try2)) + 0.5);
+}
+
+/*
+ * Calculate offset for (left, bottom) or 
+ * (left, top) of image 
+ * to account for image rotation
+ */
+void R_GE_rasterRotatedOffset(int w, int h, double angle,
+                              int botleft,
+                              double *xoff, double *yoff) {
+    double hypot = .5*sqrt(w*w + h*h);
+    double theta, dw, dh;
+    if (botleft) {
+        theta = M_PI + atan2(h, w);
+        dw = hypot*cos(theta + angle);
+        dh = hypot*sin(theta + angle);
+        *xoff = dw + w/2;
+        *yoff = dh + h/2;
+    } else {
+        theta = -M_PI - atan2(h, w);
+        dw = hypot*cos(theta + angle);
+        dh = hypot*sin(theta + angle);
+        *xoff = dw + w/2;
+        *yoff = dh - h/2;
+    }
+}
+
+/* 
+ * Copy a raster image into the middle of a larger 
+ * raster image (ready for rotation)
+
+ * newRaster must be pre-allocated.
+ */
+void R_GE_rasterResizeForRotation(unsigned int *sraster, 
+                                  int w, int h, 
+                                  unsigned int *newRaster,
+                                  int wnew, int hnew,
+                                  const pGEcontext gc)
+{
+    int i, j, inew, jnew;
+    int xoff = (wnew - w)/2;
+    int yoff = (hnew - h)/2;
+    for (i=0; i<hnew; i++) {
+        for (j=0; j<wnew; j++) {
+            newRaster[i*wnew + j] = gc->fill;
+        }
+    }
+    for (i=0; i<h; i++) {
+        for (j=0; j<w; j++) {
+            inew = i+yoff;
+            jnew = j+xoff;
+            newRaster[inew*wnew + jnew] = sraster[i*w + j];
+        }
+
+    }
+}
+
+/* 
+ * Rotate a raster image 
+ * Code based on rotateAMColorLow() from leptonica library
+
+ * draster must be pre-allocated.
+ */
+void R_GE_rasterRotate(unsigned int *sraster, int w, int h, double angle,
+                       unsigned int *draster, const pGEcontext gc) {
+    int i, j;
+    int xcen, ycen, wm2, hm2;
+    int xdif, ydif, xpm, ypm, xp, yp, xf, yf;
+    int rval, gval, bval, aval;
+    unsigned int word00, word01, word10, word11;
+    unsigned int *sline, *dline;
+    double sina, cosa;
+
+    /* 'angle' in leptonica is clockwise */
+    angle = -angle;
+
+    xcen = w / 2;
+    wm2 = w - 2;
+    ycen = h / 2;
+    hm2 = h - 2;
+    sina = 16. * sin(angle);
+    cosa = 16. * cos(angle);
+
+    for (i = 0; i < h; i++) {
+        ydif = ycen - i;
+        dline = draster + i * w;
+        for (j = 0; j < w; j++) {
+            xdif = xcen - j;
+            xpm = (int) (-xdif * cosa - ydif * sina);
+            ypm = (int) (-ydif * cosa + xdif * sina);
+            xp = xcen + (xpm >> 4);
+            yp = ycen + (ypm >> 4);
+            xf = xpm & 0x0f;
+            yf = ypm & 0x0f;
+
+                /* if off the edge, use transparent */
+            if (xp < 0 || yp < 0 || xp > wm2 || yp > hm2) {
+                *(dline + j) = gc->fill;
+                continue;
+            }
+
+            sline = sraster + yp * w;
+
+            word00 = *(sline + xp);
+            word10 = *(sline + xp + 1);
+            word01 = *(sline + w + xp);
+            word11 = *(sline + w + xp + 1);
+            rval = ((16 - xf) * (16 - yf) * R_RED(word00) +
+                    xf * (16 - yf) * R_RED(word10) +
+                    (16 - xf) * yf * R_RED(word01) +
+                    xf * yf * R_RED(word11) + 128) / 256;
+            gval = ((16 - xf) * (16 - yf) * R_GREEN(word00) +
+                    xf * (16 - yf) * R_GREEN(word10) +
+                    (16 - xf) * yf * R_GREEN(word01) +
+                    xf * yf * R_GREEN(word11) + 128) / 256;
+            bval = ((16 - xf) * (16 - yf) * R_BLUE(word00) +
+                    xf * (16 - yf) * R_BLUE(word10) +
+                    (16 - xf) * yf * R_BLUE(word01) +
+                    xf * yf * R_BLUE(word11) + 128) / 256;
+            aval = 255;
+            *(dline + j) = R_RGBA(rval, gval, bval, aval);
+        }
+    }
 }
