@@ -2063,8 +2063,44 @@ static void X11_Raster(unsigned int *raster, int w, int h,
 
 static SEXP X11_Cap(pDevDesc dd)
 {
-    warning(_("%s not yet implemented for this device"), "Raster capture");
-    return R_NilValue;
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    XImage *image = XGetImage(display, xd->window, 0, 0,
+                              xd->windowWidth, xd->windowHeight, 
+                              AllPlanes, ZPixmap);
+    SEXP raster = R_NilValue;
+
+    if (image) {
+        int i, j;
+        SEXP dim;
+        int size = xd->windowWidth * xd->windowHeight;
+        char *vmax = vmaxget();
+        unsigned int *rint;
+
+        PROTECT(raster = allocVector(INTSXP, size));
+        
+        /* Copy each byte of screen to an R matrix. 
+         * The ARGB32 needs to be converted to an R ABGR32 */
+        rint = (unsigned int *) INTEGER(raster);
+        for (i=0; i<xd->windowHeight; i++) {
+            for (j=0; j<xd->windowWidth; j++) {
+                /* 
+                 * Convert each pixel in image to an R colour
+                 */
+                rint[i*xd->windowWidth + j] = bitgp((void *) image, i, j);
+            }
+        }
+        PROTECT(dim = allocVector(INTSXP, 2));
+        INTEGER(dim)[0] = xd->windowHeight;
+        INTEGER(dim)[1] = xd->windowWidth;
+        setAttrib(raster, R_DimSymbol, dim);
+    
+        UNPROTECT(2);
+
+        XDestroyImage(image);
+        vmaxset(vmax);
+    }
+
+    return raster;
 }
 
 static void X11_Circle(double x, double y, double r,
