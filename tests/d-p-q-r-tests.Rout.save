@@ -271,7 +271,6 @@ Warning messages:
 > xB <- c(2000,1e6,1e50,Inf)
 > for(df in c(0.1, 1, 10))
 +     for(ncp in c(0, 1, 10, 100)) stopifnot(pchisq(xB, df=df, ncp=ncp) == 1)
-There were 12 warnings (use warnings() to see them)
 > all.equal(qchisq(0.025,31,ncp=1,lower.tail=FALSE),# inf.loop PR#875
 +           49.7766246561514, tol= 1e-11)
 [1] TRUE
@@ -1204,7 +1203,6 @@ Warning messages:
 +           pchisq(c(-1,0,1), df=0, lower.tail=FALSE) == c(1,0,0),
 + 	  ## for ncp >= 80, gave values >= 1 in 2.10.0
 + 	  pchisq(500:700, 1.01, ncp = 80) <= 1)
-There were 50 or more warnings (use warnings() to see the first 50)
 > 
 > ## dnbinom for extreme  size and/or mu :
 > mu <- 20

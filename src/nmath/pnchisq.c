@@ -11,8 +11,8 @@
  *    distribution function. Appl.Statist., 41, 478-482.
 
  *  Other parts
- *  Copyright (C) 2000-2008  The R Development Core Team
- *  Copyright (C) 2003-2006  The R Foundation
+ *  Copyright (C) 2000-2009  The R Development Core Team
+ *  Copyright (C) 2003-2009  The R Foundation
  */
 
 #include "nmath.h"
@@ -42,7 +42,8 @@ double pnchisq(double x, double df, double ncp, int lower_tail, int log_p)
     ans = pnchisq_raw(x, df, ncp, 1e-12, 8*DBL_EPSILON, 1000000, lower_tail);
     if(ncp >= 80) {
 	if(lower_tail) {
-	    if(ans >= 1-1e-10) ML_ERROR(ME_PRECISION, "pnchisq");
+	    /* if(ans >= 1-1e-10) have no idea how close to 1 the true value is,
+	     *   but ML_ERROR(ME_PRECISION, "pnchisq") seems too harsh */
 	    ans = fmin2(ans, 1.0);  /* e.g., pchisq(555, 1.01, ncp = 80) */
 	}
 	else { /* !lower_tail */
@@ -79,7 +80,7 @@ pnchisq_raw(double x, double f, double theta,
     R_CheckUserInterrupt();
 #endif
 
-    if(theta < 80) { /* ppois(110, 40, lower.tail=FALSE) is 2e-20 */
+    if(theta < 80) { /* use 110 for Inf, as ppois(110, 80/2, lower.tail=FALSE) is 2e-20 */
 	LDOUBLE sum = 0, sum2 = 0, lambda = 0.5*theta, pr = exp(-lambda);
 	double ans;
 	int i;
