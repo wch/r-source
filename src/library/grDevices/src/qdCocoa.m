@@ -742,6 +742,53 @@ static void QuartzCocoa_State(QuartzDesc_t dev, void *userInfo, int state) {
     [[ci->view window] setTitle: title];
 }
 
+static void* QuartzCocoa_Cap(QuartzDesc_t dev, void *userInfo) {
+    QuartzCocoaDevice *ci = (QuartzCocoaDevice*)userInfo;
+    SEXP raster = R_NilValue;
+
+    if (!ci || !ci->view) {
+        return (void*) raster;
+    } else {
+        int i;
+        unsigned int *rint;
+        SEXP dim;
+        NSSize size = [ci->view frame].size;
+
+        if (![ci->view canDraw])
+            warning("View not able to draw!?");
+
+        [ci->view lockFocus];
+        NSBitmapImageRep* rep = [[NSBitmapImageRep alloc] 
+                                    initWithFocusedViewRect:
+                                        NSMakeRect(0, 0, 
+                                                   size.width, size.height)];
+
+        unsigned char *screenData = [rep bitmapData];
+                                                                     
+        PROTECT(raster = allocVector(INTSXP, size.width*size.height));
+
+        /* Copy each byte of screen to an R matrix. 
+         * The ARGB32 needs to be converted to an R ABGR32 */
+        rint = (unsigned int *) INTEGER(raster);
+        for (i=0; i < size.width*size.height; i++) {
+            rint[i] = ((screenData[i*4 + 2]) |
+                       (screenData[i*4 + 1] << 8) |
+                       (screenData[i*4 + 0] << 16) |
+                       0xFF000000); 
+        }
+        PROTECT(dim = allocVector(INTSXP, 2));
+        INTEGER(dim)[0] = size.height;
+        INTEGER(dim)[1] = size.width;
+        setAttrib(raster, R_DimSymbol, dim);
+        
+        UNPROTECT(2);
+        
+        [ci->view unlockFocus];
+    }
+    
+    return (void *) raster;
+}
+
 QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
 {
     QuartzDesc_t qd;
@@ -797,6 +844,7 @@ QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPar
 	QuartzCocoa_State,
 	NULL,/* par */
 	QuartzCocoa_Sync,
+        QuartzCocoa_Cap,
     };
     
     qd = qf->Create(dd, &qdef);
