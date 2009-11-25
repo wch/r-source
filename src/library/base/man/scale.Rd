@@ -1,6 +1,6 @@
 % File src/library/base/man/scale.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{scale}
@@ -28,27 +28,26 @@ scale(x, center = TRUE, scale = TRUE)
 }
 \details{
   The value of \code{center} determines how column centering is
-  performed.
-  If \code{center} is a numeric vector with length equal to the number
-  of columns of \code{x}, then each column of \code{x} has the
-  corresponding value from \code{center} subtracted from it.
-  If \code{center} is \code{TRUE} then centering is done by subtracting
-  the column means (omitting \code{NA}s) of \code{x} from their
-  corresponding columns, and if \code{center} is \code{FALSE},
-  no centering is done.
+  performed.  If \code{center} is a numeric vector with length equal to
+  the number of columns of \code{x}, then each column of \code{x} has
+  the corresponding value from \code{center} subtracted from it.  If
+  \code{center} is \code{TRUE} then centering is done by subtracting the
+  column means (omitting \code{NA}s) of \code{x} from their
+  corresponding columns, and if \code{center} is \code{FALSE}, no
+  centering is done.
 
   The value of \code{scale} determines how column scaling is performed
-  (after centering).
-  If \code{scale} is a numeric vector with length equal to the number of
-  columns of \code{x}, then each column of \code{x} is divided by the
-  corresponding value from \code{scale}.
-  If \code{scale} is \code{TRUE} then scaling is done by dividing the
-  (centered) columns of \code{x} by their root-mean-square, and if
+  (after centering).  If \code{scale} is a numeric vector with length
+  equal to the number of columns of \code{x}, then each column of
+  \code{x} is divided by the corresponding value from \code{scale}.  If
+  \code{scale} is \code{TRUE} then scaling is done by dividing the
+  (centered) columns of \code{x} by their standard deviations, and if
   \code{scale} is \code{FALSE}, no scaling is done.
 
-  The root-mean-square for a column is obtained by computing the
+  The standard deviation for a column is obtained by computing the
   square-root of the sum-of-squares of the non-missing values in the
-  column divided by the number of non-missing values minus one.
+  column divided by the number of non-missing values minus one (whether
+  or not centering was done).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
