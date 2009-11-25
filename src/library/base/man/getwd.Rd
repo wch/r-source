@@ -1,6 +1,6 @@
 % File src/library/base/man/getwd.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{getwd}
@@ -26,12 +26,12 @@ setwd(dir)
   \code{\link{list.files}} for the \emph{contents} of a directory.
 }
 \value{
-  \code{getwd} returns a character vector, or \code{NULL} if the
-  working directory is not available.
-#ifdef windows
-  On Windows the path returned will use \code{/} as the path separator.
-#endif
-
+  \code{getwd} returns a character vector, or \code{NULL} if the working
+  directory is not available.  On Windows the path returned will use
+  \code{/} as the path separator.  The path will not have a trailing
+  \code{/} unless it is the root directory (of a drive or share on
+  Windows).
+  
   \code{setwd} returns the current directory before the change,
   invisibly.  It will give an error if it does not succeed.
 }
