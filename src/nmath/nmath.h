@@ -129,19 +129,19 @@ int R_finite(double);
        char *msg = ""; \
        switch(x) { \
        case ME_DOMAIN: \
-	   msg = "argument out of domain in '%s'\n"; \
+	   msg = _("argument out of domain in '%s'\n");	\
 	   break; \
        case ME_RANGE: \
-	   msg = "value out of range in '%s'\n"; \
+	   msg = _("value out of range in '%s'\n");	\
 	   break; \
        case ME_NOCONV: \
-	   msg = "convergence failed in '%s'\n"; \
+	   msg = _("convergence failed in '%s'\n");	\
 	   break; \
        case ME_PRECISION: \
-	   msg = "full precision was not achieved in '%s'\n"; \
+	   msg = _("full precision may not have been achieved in '%s'\n"); \
 	   break; \
        case ME_UNDERFLOW: \
-	   msg = "underflow occurred in '%s'\n"; \
+	   msg = _("underflow occurred in '%s'\n");	\
 	   break; \
        } \
        MATHLIB_WARNING(msg, s); \

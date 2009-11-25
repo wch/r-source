@@ -117,6 +117,7 @@ src/nmath/bessel_i.c
 src/nmath/bessel_j.c
 src/nmath/bessel_k.c
 src/nmath/bessel_y.c
+src/nmath/nmath.h
 src/nmath/pnchisq.c
 src/nmath/polygamma.c
 src/nmath/rhyper.c
