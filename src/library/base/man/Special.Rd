@@ -62,7 +62,10 @@ lfactorial(x)
   (Abramowitz and Stegun section 6.1.1, page 255)
   \deqn{\Gamma(x) = \int_0^\infty t^{a-1} e^{-t} dt}{integral_0^Inf t^(a-1) exp(-t) dt}
   for all real \code{x} except zero and negative integers (when
-  \code{NaN} is returned).
+  \code{NaN} is returned).  There will be a warning on possible loss of
+  precision for values which are too close (within about
+  \eqn{10^{-8}}{1e-8})) to a negative integer less than \samp{-10}.
+
   \code{factorial(x)} (\eqn{x!} for non-negative integer \code{x})
   is defined to be \code{gamma(x+1)} and \code{lfactorial} to be
   \code{lgamma(x+1)}.

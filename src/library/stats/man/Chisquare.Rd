@@ -75,14 +75,15 @@ rchisq(n, df, ncp=0)
 
   The non-central \code{pchisq} is for \code{ncp < 80} computed from
   the Poisson mixture of central chi-squares and for larger \code{ncp}
-  based on a C translation of
+  \emph{via} a C translation of
 
   Ding, C. G. (1992)
   Algorithm AS275: Computing the non-central chi-squared
   distribution function. \emph{Appl.Statist.}, \bold{41} 478--482.
 
   which computes the lower tail only (so the upper tail suffers from
-  cancellation).
+  cancellation and a warning will be given when this is likely to be
+  significant).
 
   The non-central \code{qchisq} is based on inversion of \code{pchisq}.
 }

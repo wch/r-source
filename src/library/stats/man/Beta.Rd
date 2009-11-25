@@ -94,6 +94,10 @@ rbeta(n, shape1, shape2, ncp = 0)
   and\cr
   Lam, M.L. (1995)'s AS R95, \emph{Appl. Statist}, \bold{44}, 551--2.
 
+  This computes the lower tail only, so the upper tail suffers from
+  cancellation and a warning will be given when this is likely to be
+  significant.
+
   \code{qbeta} is based on a C translation of
 
   Cran, G. W., K. J. Martin and G. E. Thomas (1977).

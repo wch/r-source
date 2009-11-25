@@ -83,7 +83,7 @@ rt(n, df, ncp)
   The central \code{dt} is computed via an accurate formula
   provided by Catherine Loader (see the reference in \code{\link{dbinom}}).
 
-  For the non-central case of \code{dt}, contributed by
+  For the non-central case of \code{dt}, C code contributed by
   Claus \enc{Ekstrøm}{Ekstroem} based on the relationship (for
   \eqn{x \neq 0}{x != 0}) to the cumulative distribution.
 
@@ -95,6 +95,10 @@ rt(n, df, ncp)
   Lenth, R. V. (1989). \emph{Algorithm AS 243} ---
   Cumulative distribution function of the non-central \eqn{t} distribution,
   \emph{Applied Statistics} \bold{38}, 185--189.
+
+  This computes the lower tail only, so the upper tail suffers from
+  cancellation and a warning will be given when this is likely to be
+  significant.
 
   For central \code{qt}, a C translation of
 
