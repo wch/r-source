@@ -49,7 +49,8 @@ function(x)
     }
     else {
         setwd(dirname(epath))
-        file.path(getwd(), basename(epath))
+        ## getwd() can be "/" or "d:/"
+        file.path(sub("/$", "", getwd()), basename(epath))
     }
 }
 

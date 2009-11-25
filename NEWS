@@ -278,6 +278,14 @@ BUG FIXES
     o	pchisq(x, df, ncp=L) no longer can return values slightly larger
 	than one for large L.
 
+    o	tools::file_path_as_absolute() doubled the file separator when
+ 	applied to a file such as "/vmunix" or (on Windows) "d:/afile"
+	in a directory for which getwd() would return a path with a
+ 	trailing separator (largely cosmetic, as reasonable file
+ 	systems handle such a path correctly).  (Perhaps what was
+ 	meant by PR#14078.)
+
+
 
 		CHANGES IN R VERSION 2.10.0
 
