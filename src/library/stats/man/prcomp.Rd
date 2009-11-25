@@ -1,6 +1,6 @@
 % File src/library/stats/man/prcomp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{prcomp}
@@ -99,7 +99,10 @@ prcomp(x, \dots)
   is generally the preferred method for numerical accuracy.  The
   \code{print} method for these objects prints the results in a nice
   format and the \code{plot} method produces a scree plot.
-
+  
+  Unlike \code{\link{princomp}}, variances are computed with the usual
+  divisor \eqn{N - 1}.
+  
   Note that \code{scale = TRUE} cannot be used if there are zero or
   constant (for \code{center = TRUE}) variables.
 }
