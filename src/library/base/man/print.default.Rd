@@ -83,11 +83,9 @@
   code: for example the UK currency pound sign in the C locale (if
   implemented correctly) is printed as \samp{\\243}.  Which characters
   are non-printable depends on the locale.
-#ifdef windows
   (Because some versions of Windows get this wrong, all bytes with the
   upper bit set are regarded as printable on Windows in a single-byte
   locale.)
-#endif
 }
 
 #ifdef unix

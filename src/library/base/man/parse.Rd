@@ -60,9 +60,7 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
 
   When input is taken from the console, \code{n = NULL} is equivalent to
   \code{n = 1}, and \code{n < 0} will read until an EOF character is read.
-#ifdef windows
   (The EOF character is Ctrl-Z for the Windows front-ends.)
-#endif
 
   The default for \code{srcfile} is set as follows.  If
   \code{options("keep.source")} is \code{FALSE}, \code{srcfile}

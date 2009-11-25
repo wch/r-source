@@ -23,12 +23,10 @@ read.DIF(file, header = FALSE,
 \arguments{
   \item{file}{the name of the file which the data are to be read from,
     or a connection, or a complete URL.
-#ifdef windows
 
     The name \code{"clipboard"} may also be used on Windows, in which
     case \code{read.DIF("clipboard")} will look for a DIF format entry
     in the Windows clipboard.
-#endif
   }
 
   \item{header}{a logical value indicating whether the spreadsheet contains the

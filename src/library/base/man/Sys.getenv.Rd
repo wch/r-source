@@ -29,14 +29,12 @@ Sys.getenv(x = NULL, unset = "")
   (or the value of \code{unset} if no environment variable with that
   name was found).
 
-  On most platforms \code{Sys.getenv()} will return a named vector giving
-  the values of all the environment variables, sorted in the current
-  locale.  It may be confused by names containing \code{=} which some
-  platforms allow but POSIX does not.
-#ifdef windows
-  (Windows is such a platform: there names including \code{=} are
-  truncated just before the first \code{=}.)
-#endif
+  On most platforms \code{Sys.getenv()} will return a named vector
+  giving the values of all the environment variables, sorted in the
+  current locale.  It may be confused by names containing \code{=} which
+  some platforms allow but POSIX does not.  (Windows is such a platform:
+  there names including \code{=} are truncated just before the first
+  \code{=}.)
 }
 \seealso{
   \code{\link{Sys.setenv}},

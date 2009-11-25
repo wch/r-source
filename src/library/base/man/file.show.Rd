@@ -49,12 +49,10 @@ file.show(\dots, header = rep("", nfiles),
   function which will be called with the same first four arguments as
   \code{file.show} and take care of interfacing to the GUI.
 
-  Not all implementations will honour \code{delete.file}.
-#ifdef windows
-  In particular, using an external pager on Windows does not, as there
-  is no way to know when the external application has finished with
-  the file.
-#endif
+  Not all implementations will honour \code{delete.file}.  In
+  particular, using an external pager on Windows does not, as there is
+  no way to know when the external application has finished with the
+  file.
 }
 \author{Ross Ihaka, Brian Ripley.}
 \seealso{

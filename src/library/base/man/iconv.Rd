@@ -36,17 +36,12 @@ iconvlist()
   encoding of the current locale), \code{"latin1"} and \code{"UTF-8"}.
   Generally case is ignored when specifying an encoding.
 
-#ifdef unix
-  On many platforms \code{iconvlist} provides an alphabetical list of
-  the supported encodings.  On others, the information is on the man
-  page for \code{iconv(5)} or elsewhere in the man pages (but beware
-  that the system command \code{iconv} may not support the same set of
-  encodings as the C functions \R calls).  Unfortunately, the names are
-  rarely common across platforms.
-#endif
-#ifdef windows
-  \code{iconvlist} provides an alphabetical list of the supported encodings.
-#endif
+  On many platforms, including Windows, \code{iconvlist} provides an
+  alphabetical list of the supported encodings.  On others, the
+  information is on the man page for \code{iconv(5)} or elsewhere in the
+  man pages (but beware that the system command \code{iconv} may not
+  support the same set of encodings as the C functions \R calls).
+  Unfortunately, the names are rarely common across platforms.
 
   Elements of \code{x} which cannot be converted (perhaps because they
   are invalid or because they cannot be represented in the target

@@ -1,6 +1,6 @@
 % File src/library/utils/man/chooseCRANmirror.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-200* R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{chooseCRANmirror}
@@ -16,17 +16,11 @@ chooseCRANmirror(graphics = getOption("menu.graphics"))
 getCRANmirrors(all = FALSE, local.only = FALSE)
 }
 \arguments{
-  \item{graphics}{Logical.
-#ifdef windows
-    If true use a Windows list box,
-#endif
-#ifdef unix
-    If true and \pkg{tcltk} and an X server are available, use a Tk
-    widget, or if under the AQUA interface use a Mac OS X widget,
-#endif
-    otherwise use \code{\link{menu}}.}
-  \item{all}{Logical, get all known mirrors or only the ones flagged as
-    OK.}
+  \item{graphics}{Logical. If true, use a graphical list: on Windows or
+    Mac OS X GUI use a list box, and on a Unix-alike if \pkg{tcltk} and an X
+    server are available, use Tk widget. Otherwise use a text
+    \code{\link{menu}}.}
+  \item{all}{Logical, get all known mirrors or only the ones flagged as OK.}
   \item{local.only}{Logical, try to get most recent list from CRAN or
     use file on local disk only.}
 }

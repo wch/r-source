@@ -39,11 +39,7 @@
   The name of the user file can be specified by the \env{R_ENVIRON_USER}
   environment variable; if this is unset, the user files searched for are
   \file{.Renviron} in the current or in the user's home directory (in
-  that order).
-#ifdef windows
-  (See \sQuote{See also} for how the home directory is found on Windows.)
-#endif
-  See \sQuote{Details} for how the files are read.
+  that order). See \sQuote{Details} for how the files are read.
 
   Then \R searches for the site-wide startup profile unless the command
   line option \option{--no-site-file} was given.  The name of this file
@@ -151,11 +147,10 @@
 #endif
 }
 \seealso{
-#ifdef windows
-  For the definition of the home directory see the rw-FAQ.  It can be
-  found from a running \R by \code{Sys.getenv("R_USER")}.
+  For the definition of the \sQuote{home} directory on Windows see the
+  \file{rw-FAQ} Q2.14 It can be found from a running \R by
+  \code{Sys.getenv("R_USER")}.
 
-#endif
   \code{\link{.Last}} for final actions at the close of an \R session.
   \code{\link{commandArgs}} for accessing the command line arguments.
 

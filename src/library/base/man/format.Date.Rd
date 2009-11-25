@@ -100,14 +100,12 @@ as.Date(x, \dots)
   \link{Date} for details of the date class;
   \code{\link{locales}} to query or set a locale.
 
-  Your system's help pages on \code{strftime} and \code{strptime} to
-  see how to specify their formats.
-#ifdef windows
-  Windows users will find no help page for \code{strptime}: code based
-  on \samp{glibc} is used (with corrections), so all the format
-  specifiers described here are supported, but with no alternative
-  number representation nor era available in any locale.
-#endif
+  Your system's help pages on \code{strftime} and \code{strptime} to see
+  how to specify their formats.  Windows users will find no help page
+  for \code{strptime}: code based on \samp{glibc} is used (with
+  corrections), so all the format specifiers described here are
+  supported, but with no alternative number representation nor era
+  available in any locale.
 }
 \examples{
 ## locale-specific version of the date

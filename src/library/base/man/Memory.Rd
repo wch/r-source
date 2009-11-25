@@ -31,12 +31,8 @@ mem.limits(nsize = NA, vsize = NA)
   much less need to set memory options than prior to \R 1.2.0, and most
   users will never need to set these.  They are provided both as a way
   to control the overall memory usage (which can also be done
-#ifdef unix
-  by operating-system facilities such as \code{limit} on Unix),
-#endif
-#ifdef windows
+  by operating-system facilities such as \code{limit} on Unix and by
   using the command-line option \option{--max-mem-size} on Windows),
-#endif
   and since setting larger values of the minima will make \R slightly
   more efficient on large tasks.
 

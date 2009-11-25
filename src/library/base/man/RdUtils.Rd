@@ -40,7 +40,7 @@
   \command{xdvi}),
 #endif
 #ifdef windows
-  \env{R_PAPERSIZE} (default \code{a4}, \code{legal} and
+  \env{R_PAPERSIZE} (default \code{a4}, also \code{legal} and
   \code{executive}) and \env{xdvi} (the DVI previewer, default
   \command{open} (use file associations)),
 #endif

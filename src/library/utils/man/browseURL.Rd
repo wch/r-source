@@ -1,6 +1,6 @@
 % File src/library/utils/man/browseURL.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{browseURL}
@@ -18,11 +18,9 @@ browseURL(url, browser = getOption("browser"), encodeIfNeeded = FALSE)
     program to be used as hypertext browser.  It should be in the PATH,
     or a full path specified.  Alternatively, an \R function to be
     called to invoke the browser.
-#ifdef windows
     
     Under Windows \code{NULL} is also allowed (and is the default), and
     implies that the file association mechanism will be used.
-#endif
   }
   \item{encodeIfNeeded}{Should the URL be encoded by
     \code{\link{URLencode}} before passing to the browser?  This is not
@@ -58,25 +56,23 @@ browseURL(url, browser = getOption("browser"), encodeIfNeeded = FALSE)
   It is the caller's responsibility to encode \code{url} if necessary
   (see \code{\link{URLencode}}).  This can be tricky for file URLs,
   where the format accepted can depend on the browser and OS.
-#ifdef windows
-  Some browsers have required \code{:} be replaced by \code{|} in file
-  paths: others do not accept that.  All seem to accept \code{\\} as a
-  path separator even though the RFC1738 standard requires \code{/}.
-#endif
 }
-#endif
-#ifdef windows
-\examples{
-\dontrun{browseURL("http://www.r-project.org")
-browseURL("file://d:/R/R-2.5.1/doc/html/index.html",
-          browser="C:/Program Files/Mozilla Firefox/firefox.exe")
-}}
-#endif
-#ifdef unix
 \examples{
 \dontrun{## for KDE users who want to open files in a new tab
 options(browser="kfmclient newTab") 
 browseURL("http://www.r-project.org")
+}}
+#endif
+#ifdef windows
+\details{
+  Some browsers have required \code{:} be replaced by \code{|} in file
+  paths: others do not accept that.  All seem to accept \code{\\} as a
+  path separator even though the RFC1738 standard requires \code{/}.
+}
+\examples{
+\dontrun{browseURL("http://www.r-project.org")
+browseURL("file://d:/R/R-2.5.1/doc/html/index.html",
+          browser="C:/Program Files/Mozilla Firefox/firefox.exe")
 }}
 #endif
 \keyword{file}

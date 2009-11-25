@@ -38,7 +38,7 @@ file.access(names, mode = 0)
   Windows does not have the concept of an \sQuote{executable file}, so
   this function regards directories and files with extension
   \file{.exe}, \file{.bat}, \file{.cmd} and \file{.com} as executable.
-  (\code{\link{system}} makes the same assumption.)
+  (\code{\link{system}} and \code{\link{Sys.which}} make the same assumption.)
 #endif
 
   Please note that it is not good to use this function to test before

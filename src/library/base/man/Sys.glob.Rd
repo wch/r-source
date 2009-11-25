@@ -92,13 +92,10 @@ Sys.glob(paths, dirmark = FALSE)
 }
 \value{
   A character vector of matched file paths.  The order is
-  system-specific (but in the order of the elements of \code{paths}):
-#ifdef unix
-  it is normally collated in either the current locale or in byte (ASCII) order.
-#endif
-#ifdef windows
-  on Windows collation is in the order of Unicode points.
-#endif
+  system-specific (but in the order of the elements of \code{paths}): it
+  is normally collated in either the current locale or in byte (ASCII)
+  order; however, on Windows collation is in the order of Unicode
+  points.
   
   Directory errors are normally ignored, so the matches are to
   accessible file paths (but not necessarily accessible files).

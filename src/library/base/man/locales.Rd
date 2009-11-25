@@ -32,10 +32,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   \item{category}{character string.  The following categories should
     always be supported: \code{"LC_ALL"},
     \code{"LC_COLLATE"}, \code{"LC_CTYPE"}, \code{"LC_MONETARY"},
-    \code{"LC_NUMERIC"} and \code{"LC_TIME"}.  Some systems
-#ifdef windows
-    (not Windows)
-#endif
+    \code{"LC_NUMERIC"} and \code{"LC_TIME"}.  Some systems (not Windows)
     will also support \code{"LC_MESSAGES"}, \code{"LC_PAPER"}
     and \code{"LC_MEASUREMENT"}.
   }

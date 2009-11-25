@@ -33,13 +33,10 @@ Sys.unsetenv(x)
   traditions: \R also has \code{Sys.putenv}, but this is now deprecated.
   The internal code uses \code{setenv} if available, otherwise \code{putenv}.
   
-  Non-standard \R names must be quoted in \code{Sys.setenv}:
-  see the examples.  Most platforms (and POSIX) do not allow names
-  containing \code{"="}.
-#ifdef Windows
-  (Windows does, but the facilities provided by \R may not handle these
-  correctly so they should be avoided.)
-#endif
+  Non-standard \R names must be quoted in \code{Sys.setenv}: see the
+  examples.  Most platforms (and POSIX) do not allow names containing
+  \code{"="}.  Windows does, but the facilities provided by \R may not
+  handle these correctly so they should be avoided.
   
   There may be system-specific limits on the maximum length of the values
   of individual environment variables or of all environment variables.

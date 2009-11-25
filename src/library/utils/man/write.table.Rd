@@ -99,11 +99,9 @@ write.csv2(\dots)
 
   If \code{file} is not open for writing, an attempt is made to open it
   and then close it after use.
-#ifdef windows
   
   To write a Unix-style file on Windows, use a binary connection
   e.g. \code{file = file("fn", "wb")}.
-#endif
 }
 \section{CSV files}{
   By default there is no column name for a column of row names.  If

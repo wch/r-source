@@ -13,15 +13,10 @@
 setRepositories(graphics = getOption("menu.graphics"), ind = NULL)
 }
 \arguments{
-  \item{graphics}{Logical.
-#ifdef windows
-    If true use a listbox,
-#endif
-#ifdef unix
-    If true and \pkg{tcltk} and an X server are available, use a Tk
-    widget, or if under the AQUA interface use a Mac OS X widget,
-#endif
-    otherwise use a text list in the console.}
+  \item{graphics}{Logical. If true, use a graphical list: on Windows or
+    Mac OS X GUI use a list box, and on a Unix-alike if \pkg{tcltk} and an X
+    server are available, use Tk widget. Otherwise use a text
+    \code{\link{menu}}.}
   \item{ind}{\code{NULL} or a vector of integer indices, which have the
     same effect as if they were entered at the prompt for
     \code{graphics=FALSE}.}
