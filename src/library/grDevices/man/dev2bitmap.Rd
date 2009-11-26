@@ -104,8 +104,8 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
 \note{
   Use of \code{bitmap} will leave a temporary file (with file name
   starting \code{Rbit}).  Use of the \code{\link{pdf}}, \code{\link{bmp}},
-  \code{\link{png}} and \code{\link{jpeg}} devices may be preferred to
-  using these functions.
+  \code{\link{png}}, \code{\link{tiff}} and \code{\link{jpeg}} devices
+  may be preferred to using these functions.
 }
 #endif
 
@@ -131,8 +131,8 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   \code{X11(type = "Cairo")} provides a simple way to record a PNG
   record of the current plot.
   
-  \code{\link{postscript}}, \code{\link{pdf}}, \code{\link{png}} and
-  \code{\link{jpeg}} and on Windows \code{bmp}.
+  \code{\link{postscript}}, \code{\link{pdf}}, \code{\link{png}},
+  \code{\link{jpeg}}, \code{\link{tiff}} and  \code{bmp}.
 
   To display an array of data, see \code{\link{image}}.
 }

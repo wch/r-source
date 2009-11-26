@@ -119,13 +119,8 @@ dev.control(displaylist = c("inhibit", "enable"))
   \code{postscript}) it sets the width and height in the same way as
   \code{dev.copy2eps}.  This will not be appropriate unless the device
   specifies dimensions in inches, in particular not for
-#ifdef unix
-  \code{png} and \code{jpeg}.
-#endif
-#ifdef windows
-  \code{png}, \code{jpeg} and \code{bmp} unless \code{units="inches"}
-  is specified.
-#endif
+  \code{png}, \code{jpeg}, \code{tiff} and \code{bmp} unless
+  \code{units="inches"} is specified.
 }
 \note{
   Most devices (including all screen devices) have a display list
