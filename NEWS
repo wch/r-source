@@ -26,7 +26,7 @@ INSTALLATION
 	circumstances where it did not previously (where libtiff
 	needed to be linked explicitly against -ljpeg).
 
-    o	Making the refman.pdf works around a problem with the indexing
+    o	Making refman.pdf works around a problem with the indexing
 	with hyperref 6.79f.
 
 
@@ -96,10 +96,11 @@ BUG FIXES
 
     o	promptMethods() generated signature documentation improperly.
 
-    o	pgamma(x, a, lower.tail=FALSE) and qgamma(..) are now considerably
-	more accurate in some regions for very small 'a'.  qgamma() now
-	correctly returns 0 instead of NaN in similar extreme cases, and
-	qgamma() no longer warns in the case of small 'a', see (PR#12324).
+    o	pgamma(x, a, lower.tail=FALSE) and qgamma(..) are now
+	considerably more accurate in some regions for very small 'a'.
+	qgamma() now correctly returns 0 instead of NaN in similar
+	extreme cases, and qgamma() no longer warns in the case of
+	small 'a', see (PR#12324).
 
     o	unname() now also removes names from a zero length vector.
 
@@ -123,6 +124,9 @@ BUG FIXES
 	more accurate for probablilities very close to 1 (a series
 	expansion was truncated slightly too early).
 
+	pchisq(x, df, ncp) no longer can return values just larger
+	than one for large values of ncp.
+
     o	intToUtf8() could fail when asked to produce 10Mb or more
 	strings, something it was never intended to do: unfortunately
 	Windows crashed R (other OSes reported a lack of resources).
@@ -136,14 +140,11 @@ BUG FIXES
 	detach(unload = TRUE)).
 
     o	The internal record-keeping by dyn.load/dyn.unload was
-	incomplete, which this could crash R if a DLL that registered
+	incomplete, which could crash R if a DLL that registered
 	.External routines had earlier been unloaded.
 
     o	bessel[JY](x, nu) with nu a negative integer (a singular case)
 	is now correct, analogously to besselI(), see PR#13556, below.
-
-    o	pchisq(x, df, ncp=L) no longer can return values slightly larger
-	than one for large L.
 
     o	tools::file_path_as_absolute() doubled the file separator when
  	applied to a file such as "/vmunix" or (on Windows) "d:/afile"
