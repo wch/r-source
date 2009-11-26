@@ -51,7 +51,7 @@ timestamp(stamp = date(),
 #endif
 #ifdef unix
   This works under the \code{readline} command-line interface and the
-  \file{R.app} Mac OS X console, but not otherwise (for example, in
+  \file{R.app} Mac OS X GUI, but not otherwise (for example, in
   batch use or in an embedded application).
 
   The \code{readline} history mechanism is controlled by two environment

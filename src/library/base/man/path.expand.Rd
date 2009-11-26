@@ -29,9 +29,9 @@ path.expand(path)
 #endif
 #ifdef windows
 \details{
-  The definition of \sQuote{home} is in the \file{rw-FAQ} Q2.14: it is
-  taken from the \env{R_USER} environment variable when
-  \code{path.expand} is first called.
+  The definition of the \sQuote{home} directory is in the \file{rw-FAQ}
+  Q2.14: it is taken from the \env{R_USER} environment variable when
+  \code{path.expand} is first called in a session.
 }
 #endif
 \seealso{

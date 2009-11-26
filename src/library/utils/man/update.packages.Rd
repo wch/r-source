@@ -165,17 +165,15 @@ contrib.url(repos, type = getOption("pkgType"))
   }
   \item{type}{character, indicating the type of package to download and
     install.
-#ifdef unix
-    Possible values are \code{"source"} (the default except under the
-    CRAN Mac OS X build), \code{"mac.binary"} and \code{"win.binary"}
-    (which can be downloaded but not installed).
-#endif
-#ifdef windows
-    Possible values are \code{"win.binary"} (the default) and
-    \code{"source"} (for which suitable tools need to be installed: see
-    the \sQuote{Details}).  Value \code{"mac.binary"} can be used to
+    
+    Possible values except on Windowsare \code{"source"} (the default
+    except under the CRAN Mac OS X build), \code{"mac.binary"} and
+    \code{"win.binary"} (which can be downloaded but not installed).
+
+    Possible values on Windows are \code{"win.binary"} (the default) and
+    \code{"source"} (for which suitable tools may need to be installed:
+    see the \sQuote{Details}).  Value \code{"mac.binary"} can be used to
     explore and download Mac OS X binaries.
-#endif
   }
   \item{clean}{a logical value indicating whether to specify
     to add the \option{--clean} flag to the call to
@@ -313,8 +311,8 @@ contrib.url(repos, type = getOption("pkgType"))
   Using packages with \code{type = "source"} works on Windows provided
   the package contains no C/C++/Fortran code that needs compilation,
   Otherwise you will need to have installed the Rtools collection as
-  described in the \sQuote{rw-FAQ}, \emph{and} you must have the
-  \code{PATH} set up as required by the Rtools.
+  described in the \sQuote{R for Windows FAQ} \emph{and} you must have the
+  \env{PATH} set up as required by the Rtools.
 #endif
 }
 \value{
@@ -370,8 +368,7 @@ contrib.url(repos, type = getOption("pkgType"))
   find out by creating a test directory, but even this need not be the
   whole story.  Under Windows Vista you may have permission to write in
   a library directory but lack permission to write binary files (such as
-  \file{.chm} and \file{.dll} files) there.  See the \emph{R for Windows
-    FAQ} for workarounds.
+  \file{.dll} files) there.  See the \sQuote{R for Windows FAQ} for workarounds.
 }
 #endif
 \seealso{

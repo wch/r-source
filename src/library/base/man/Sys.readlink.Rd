@@ -11,10 +11,8 @@
 \description{
   Find out if a file path is a symbolic link, and if so what it is
   linked to, \emph{via} the system call \code{readink}.
-#ifdef windows
 
   Symbolic links are a Unix concept, not implemented on Windows.
-#endif
 }
 \usage{
 Sys.readlink(paths)

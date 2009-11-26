@@ -20,27 +20,10 @@
     \item There may be limits on the size of the heap and the number of
     cons cells allowed -- see \code{\link{Memory}} -- but these are
     usually not imposed.
-#ifdef unix
     \item There is a limit on the address space of a single process such
-    as the \R executable.  This is system-specific, but 32-bit OSes
-    imposes a limit of no more than 4Gb: it is often 3Gb or less.
+    as the \R executable.  This is system-specific.
     \item The environment may impose limitations on the resources
-    available to a single process -- see the OS/shell's help on commands such
-    as \code{limit} or \code{ulimit}.
-#endif
-#ifdef windows
-    \item There is a limit on the address space of a single process such
-    as the \R executable.  This is 2Gb under 32-bit Windows unless
-    the OS's default has been changed to allow more (up to 3Gb).
-    See
-    \url{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}
-    and \url{http://msdn2.microsoft.com/en-us/library/aa366778.aspx}.
-    (Under some 64-bit versions of Windows the limit is 4Gb: for others
-    it is 2Gb.)
-    \item Under Windows, \R does impose limits on the total memory
-    allocation available to a single run, as the OS provides no way to
-    do so.  See \code{\link{memory.size}} and \code{\link{memory.limit}}.
-#endif
+    available to a single process: Windows' versions of \R do so directly.
   }
   Error messages beginning \code{cannot allocate vector of size}
   indicate a failure to obtain memory, either because the size exceeded
@@ -57,6 +40,38 @@
   the error message begins \code{cannot allocate vector of length}.
   The number of characters in a character string is in theory only
   limited by the address space.
+}
+\section{Unix}{
+  The address-space limit is system-specific: 32-bit OSes
+  imposes a limit of no more than 4Gb: it is often 3Gb or less.  Running
+  32-bit executables on a 64-bit OS will have the similar limits: 64-bit
+  executables will have an essentially infinite  system-specific limit.
+
+  See the OS/shell's help on commands such as \code{limit} or
+  \code{ulimit} for how to impose limitations on the resources available
+  to a single process.  For example a \command{bash} user could use
+\preformatted{
+ulimit -t 600 -m 2000000
+}
+  whereas a \command{csh} user might use
+\preformatted{
+limit cputime 10m
+limit memoryuse 2048m
+}
+to limit a process to 10 minutes of CPU time and (around) 2GB of memory.
+}
+\section{Windows}{
+ The address space limit is 2Gb under 32-bit Windows unless the OS's
+ default has been changed to allow more (up to 3Gb).  See
+ \url{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}
+ and
+ \url{http://msdn.microsoft.com/en-us/library/bb613473\%28VS.85\%29.aspx}.
+ Under most 64-bit versions of Windows the limit is 4Gb: for some older
+ ones it is 2Gb.
+ 
+ Under Windows, \R imposes limits on the total memory allocation
+ available to a single session as the OS provides no way to do so: see
+ \code{\link{memory.size}} and \code{\link{memory.limit}}.
 }
 \seealso{
   \code{\link{object.size}(a)} for the (approximate) size of \R object

@@ -95,7 +95,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 #ifdef windows
   A progress bar tracks the transfer. If the file length is known, the
   full width of the bar is the known length.  Otherwise the initial
-  width represents 100Kbytes and is doubled whenever the current width
+  width represents 100 Kbytes and is doubled whenever the current width
   is exceeded.
 
   If \code{mode} is not supplied and \code{url} ends in one of
