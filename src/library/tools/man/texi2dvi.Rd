@@ -42,12 +42,10 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
   \file{\var{R_HOME}/share/texmf} and finally the default
   path. Analogous changes are made to \env{BIBINPUTS} and
   \env{BSTINPUTS} settings.
-#ifdef windows
   
   MiKTeX has a \code{texi2dvi} executable but no other Windows TeX
   installation that we know of does, so emulation is used on e.g. TeXLive
   installations.
-#endif
 }
 \author{Achim Zeileis and R-core}
 \keyword{utilities}

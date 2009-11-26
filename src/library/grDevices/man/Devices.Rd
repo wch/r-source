@@ -42,8 +42,9 @@
 
     \item \code{\link{quartz}} The graphics device for the Mac OS X
     native Quartz 2d graphics system.  (This is only functional on Mac
-    OS X, but unlike \R < 2.7.0 can be used from the command line and
-    not just from the GUI console.)
+    OS X where it can be used from the \code{R.app} GUI and from the
+    command line: but it will display on the local screen even for a
+    remote session.)
   }
 #endif
 }

@@ -28,13 +28,8 @@ CIDFont(family, cmap, cmapEncoding, pdfresource = "")
     to the afm (Adobe Font Metric) files for the font.}
   \item{cmap}{the name of a CMap file for a CID-keyed font.}
   \item{encoding}{for \code{Type1Font}, the name of an encoding file.
-    Defaults to \code{"default"}, which maps on this platform to
-#ifdef unix
-"ISOLatin1.enc".
-#endif
-#ifdef windows
-"WinAnsi.enc".
-#endif
+    Defaults to \code{"default"}, which maps on Unix-alikes to
+    \code{"ISOLatin1.enc"} and on Windows to \code{"WinAnsi.enc"}.
     Otherwise, a file name in the \file{enc} directory of the
     \pkg{grDevices} package, which is used if the path does not contain a
     path separator.  An extension \code{".enc"} can be omitted.}
