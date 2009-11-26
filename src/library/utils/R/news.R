@@ -10,6 +10,8 @@ function(query, package = "R", lib.loc = NULL,
     }
     if(is.null(db))
         return(invisible())
+
+    attr(db, "package") <- package
             
     ## Is there a way to directly call/use subset.data.frame?
     ## E.g.,
