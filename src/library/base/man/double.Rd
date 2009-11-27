@@ -74,8 +74,7 @@ as.single(x, \dots)
 
   \code{double} is the name of the \link{type}.
   \code{numeric} is the name of the \link{mode} and also of the implicit
-  \link{class}.  As an S4 formal class, use \code{"numeric"} (there was
-  a formal class \code{"double"} prior to \R 2.7.0).
+  \link{class}.  As an S4 formal class, use \code{"numeric"}.
 
   \code{real} is deprecated and should not be used in new code.
 
