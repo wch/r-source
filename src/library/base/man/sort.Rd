@@ -1,6 +1,6 @@
 % File src/library/base/man/sort.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sort}
@@ -11,7 +11,7 @@
 \title{Sorting or Ordering Vectors}
 \description{
   Sort (or \emph{order}) a vector or factor (partially) into
-  ascending (or descending) order.  For ordering along more than one
+  ascending or descending order.  For ordering along more than one
   variable, e.g., for sorting data frames, see \code{\link{order}}.
 }
 \usage{
@@ -24,8 +24,8 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
 }
 \arguments{
   \item{x}{for \code{sort} an \R object with a class or a numeric,
-         complex, character or logical vector.  For \code{sort.int}, a
-         numeric, complex, character or logical vector, or a factor.}
+    complex, character or logical vector.  For \code{sort.int}, a
+    numeric, complex, character or logical vector, or a factor.}
   \item{decreasing}{logical.  Should the sort be increasing or decreasing?
      Not available for partial sorting.}
   \item{\dots}{arguments to be passed to or from methods or (for the
@@ -46,8 +46,9 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   with S if only the first three arguments are used.
   
   The default \code{sort} method makes use of \code{\link{order}} for
-  objects with classes, which in turn makes use of the generic function
-  \code{\link{xtfrm}}.
+  classed objects, which in turn makes use of the generic function
+  \code{\link{xtfrm}} (and can be slow unless a \code{xtfrm} method has
+  been defined).
 
   If \code{partial} is not \code{NULL}, it is taken to contain indices
   of elements of the result which are to be placed in their correct
@@ -92,15 +93,15 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   the case for a class based on a list).
 
   For \code{sort.int} the value is the sorted vector unless
-  \code{index.return} is true, when the result is
-  a list with components named \code{x} and \code{ix} containing the
-  sorted numbers and the ordering index vector.  In the latter case,
-  if \code{method == "quick"} ties may be reversed in the ordering,
-  unlike \code{sort.list}, as quicksort is not stable.
+  \code{index.return} is true, when the result is a list with components
+  named \code{x} and \code{ix} containing the sorted numbers and the
+  ordering index vector.  In the latter case, if \code{method ==
+    "quick"} ties may be reversed in the ordering, unlike
+  \code{sort.list}, as quicksort is not stable.
 
   All attributes are removed from the return value (see Becker \emph{et
     al}, 1988, p.146) except names, which are sorted.  (If
-  \code{partial} is specified even the names are removed.)  Note that
+  \code{partial} is specified even the names are removed.)   Note that
   this means that the returned value has no class, except for factors
   and ordered factors (which are treated specially and whose result is
   transformed back to the original class).

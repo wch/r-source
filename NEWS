@@ -112,6 +112,9 @@ NEW FEATURES
 
 	Added "difftime" method for xtfrm().
 
+    o	is.numeric(x) is now false for a "difftime" object
+	(multiplication and division make no sense for such objects).
+
 
 DEPRECATED & DEFUNCT
 

@@ -42,7 +42,8 @@ is.numeric(x)
   the result is false).  Methods for \code{is.numeric} should only
   return true if the base type of the class is \code{double} or
   \code{integer} \emph{and} values can reasonably be regarded as
-  numeric (e.g. arithmetic on them makes sense).
+  numeric (e.g. arithmetic on them makes sense, and comparison should be
+  done via the base type).
 }
 \value{
   for \code{numeric} and \code{as.numeric} see \code{\link{double}}.
