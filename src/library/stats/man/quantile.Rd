@@ -20,9 +20,10 @@ quantile(x, \dots)
          names = TRUE, type = 7, \dots)
 }
 \arguments{
-  \item{x}{numeric vector whose sample quantiles are wanted.  
-    \code{\link{NA}} and \code{NaN} values are not allowed unless \code{na.rm}
-    is \code{TRUE}.}
+  \item{x}{numeric vector whose sample quantiles are wanted, or an
+    object of a class for which a method has been defined (see also
+    \sQuote{details}). \code{\link{NA}} and \code{NaN} values are not
+    allowed in numeric vectors unless \code{na.rm} is \code{TRUE}.}
   \item{probs}{numeric vector of probabilities with values in
     \eqn{[0,1]}.  (As from \R 2.8.0 values up to 2e-14 outside that
     range are accepted and moved to the nearby endpoint.}
@@ -30,8 +31,8 @@ quantile(x, \dots)
     are removed from \code{x} before the quantiles are computed.}
   \item{names}{logical; if true, the result has a \code{\link{names}}
     attribute.  Set to \code{FALSE} for speedup with many \code{probs}.}
-    \item{type}{an integer between 1 and 9 selecting one of the
-         nine quantile algorithms detailed below to be used.}
+  \item{type}{an integer between 1 and 9 selecting one of the
+    nine quantile algorithms detailed below to be used.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
