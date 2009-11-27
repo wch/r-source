@@ -288,6 +288,9 @@ BUG FIXES
  	systems handle such a path correctly).  (Perhaps what was
  	meant by PR#14078.)
 
+    o	unsplit(drop = TRUE) applied to a data frame failed to pass
+	'drop' to the computation of row names.
+
 
 
 		CHANGES IN R VERSION 2.10.0

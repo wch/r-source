@@ -5933,3 +5933,13 @@ z <- eval(substitute(chisq.test(x,y), list(x=x)))
 z
 z$observed
 ## failed in 2.10.0
+
+
+## unsplit(drop = TRUE) on a data frame failed (PR#14084)
+dff <- data.frame(gr1 = factor(c(1,1,1,1,1,2,2,2,2,2,2), levels=1:4),
+                  gr2 = factor(c(1,2,1,2,1,2,1,2,1,2,3), levels=1:4),
+                  yy = rnorm(11), row.names = as.character(1:11))
+dff2 <- split(dff, list(dff$gr1, dff$gr2), drop=TRUE)
+dff3 <- unsplit(dff2, list(dff$gr1, dff$gr2), drop=TRUE)
+stopifnot(identical(dff, dff3))
+## failed in 2.10.0
