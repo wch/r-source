@@ -18,12 +18,10 @@
     \item \code{\link{pdf}} Write PDF graphics commands to a file
     \item \code{\link{pictex}} Writes LaTeX/PicTeX graphics commands to a
     file
-#ifdef windows
     \item \code{\link{png}} PNG bitmap device
     \item \code{\link{jpeg}} JPEG bitmap device
     \item \code{\link{bmp}} BMP bitmap device
     \item \code{\link{tiff}} TIFF bitmap device
-#endif
     \item \code{\link{xfig}} Device for XFIG graphics file format
     \item \code{\link{bitmap}} bitmap pseudo-device via
     \code{GhostScript} (if available).
@@ -33,10 +31,6 @@
   them (they exist but will return with a warning on other systems):
   \itemize{
     \item \code{\link{X11}} The graphics device for the X11 Window system
-    \item \code{\link{bmp}} Windows bitmap device
-    \item \code{\link{jpeg}} JPEG bitmap device
-    \item \code{\link{png}} PNG bitmap device
-    \item \code{\link{tiff}} TIFF bitmap device
     \item \code{\link{cairo_pdf}}, \code{cairo_ps} PDF and PostScript
     devices based on cairo graphics.
 

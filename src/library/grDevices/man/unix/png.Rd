@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/unix/png.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{png}
@@ -102,8 +102,8 @@ tiff(filename = "Rplot\%03d.tiff",
   the X11 display is available to the owner of the \R process.
   \code{type = "cairo"} requires cairo 1.2 or later.  \code{type =
   "quartz"} uses the \code{\link{quartz}} device and so is only
-  available where that is (on some Mac OS X) builds.  It is at present
-  experimental.
+  available where that is (on some Mac OS X builds: see
+  \code{\link{capabilities}("aqua")}).
 
   By default no resolution is recorded in the file.  Viewers will often
   assume a nominal resolution of 72dpi when none is recorded.  As
@@ -175,7 +175,7 @@ tiff(filename = "Rplot\%03d.tiff",
 
 \examples{
 ## these examples will work only if the devices are available
-## and either cairo or an X11 display is available.
+## and cairo or an X11 display or a Mac OS X display is available.
 
 ## copy current plot to a (large) PNG file
 \dontrun{dev.print(png, file="myplot.png", width=1024, height=768)}
