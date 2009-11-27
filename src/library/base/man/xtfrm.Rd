@@ -11,6 +11,7 @@
 \alias{xtfrm.Date}
 \alias{xtfrm.POSIXct}
 \alias{xtfrm.POSIXlt}
+\alias{xtfrm.difftime}
 \title{Auxiliary Function for Sorting and Ranking}
 \description{
   A generic auxiliary function that produces a numeric vector which

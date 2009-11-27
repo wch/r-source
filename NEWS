@@ -107,6 +107,8 @@ NEW FEATURES
 
     o	New function file_ext() in package 'tools'.
 
+    o	Added "difftime" method for xtfrm().
+
 
 DEPRECATED & DEFUNCT
 
