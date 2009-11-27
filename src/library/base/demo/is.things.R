@@ -6,7 +6,7 @@ bi <- ls.base[base.is.f]
 cat("\nNumber of base objects:\t\t", length(ls.base),
     "\nNumber of functions in base:\t", sum(base.is.f),
     "\n\t starting with 'is.' :\t  ",
-    length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n")
+    length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n", sep = "")
 ## 0.14  : 31
 ## 0.50  : 33
 ## 0.60  : 34
@@ -19,13 +19,13 @@ cat("\nNumber of base objects:\t\t", length(ls.base),
 ## Do we have a method (probably)?
 is.method <- function(fname) {
     isFun <- function(name) (exists(name, mode="function") &&
-                        is.na(match(name, c("is", "as"))))
+                             is.na(match(name, c("is", "as"))))
     np <- length(sp <- strsplit(fname, split = "\\.")[[1]])
     if(np <= 1 )
         FALSE
     else
         (isFun(paste(sp[1:(np-1)], collapse = '.')) ||
-         (np>=3 &&
+         (np >= 3 &&
           isFun(paste(sp[1:(np-2)], collapse = '.'))))
 }
 
