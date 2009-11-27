@@ -158,6 +158,9 @@ BUG FIXES
 
     o	The "difftime" method of mean() ignored its 'na.rm' argument.
 
+    o	tcltk::tk_select.list() is now more likely to remove the
+	widget immediately after selection is complete.
+
 
 
 		CHANGES IN R VERSION 2.10.0
