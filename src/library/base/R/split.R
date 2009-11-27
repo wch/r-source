@@ -59,13 +59,6 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
     x
 }
 
-
-#"split<-.data.frame" <- function(x, f, value)
-#{
-#    x[unlist(split(seq(length=nrow(x)), f)),] <- do.call("rbind", value)
-#    x
-#}
-
 "split<-.data.frame" <- function(x, f, drop = FALSE, ..., value)
 {
     ix <- split(seq_len(nrow(x)), f, drop = drop, ...)
@@ -82,11 +75,10 @@ unsplit <-function (value, f, drop = FALSE)
 {
     len <- length(if (is.list(f)) f[[1L]] else f)
     if (is.data.frame(value[[1L]])) {
-        x <- value[[1L]][rep(NA,len),, drop=FALSE]
-        rownames(x) <- unsplit(lapply(value, rownames), f)
-    }
-    else
-        x <- value[[1L]][rep(NA,len)]
+        x <- value[[1L]][rep(NA, len),, drop = FALSE]
+        rownames(x) <- unsplit(lapply(value, rownames), f, drop = drop)
+    } else
+        x <- value[[1L]][rep(NA, len)]
     split(x, f, drop = drop) <- value
     x
 }
