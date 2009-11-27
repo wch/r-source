@@ -297,6 +297,8 @@ BUG FIXES
     o	unsplit(drop = TRUE) applied to a data frame failed to pass
 	'drop' to the computation of row names.
 
+    o	The "difftime" method of mean() ignored its 'na.rm' argument.
+
 
 
 		CHANGES IN R VERSION 2.10.0

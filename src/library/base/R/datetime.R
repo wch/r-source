@@ -563,7 +563,7 @@ Math.difftime <- function (x, ...)
 }
 
 
-mean.difftime <- function (x, ..., na.rm = FALSE)
+mean.difftime <- function (x, ...)
     structure(mean(unclass(x), ...), units=attr(x, "units"), class="difftime")
 
 Summary.difftime <- function (..., na.rm)

@@ -5943,3 +5943,10 @@ dff2 <- split(dff, list(dff$gr1, dff$gr2), drop=TRUE)
 dff3 <- unsplit(dff2, list(dff$gr1, dff$gr2), drop=TRUE)
 stopifnot(identical(dff, dff3))
 ## failed in 2.10.0
+
+
+## mean.difftime ignored its na.rm argument
+z <- as.POSIXct(c("1980-01-01", "1980-02-01", NA, "1980-03-01", "1980-04-01"))
+zz <- diff(z)
+stopifnot(is.finite(mean(zz, na.rm=TRUE)))
+## was NA in 2.10.0
