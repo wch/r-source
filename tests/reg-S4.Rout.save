@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-08-27 r49475)
+R version 2.11.0 Under development (unstable) (2009-11-27 r50581)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -720,19 +720,21 @@ include omitted arguments in definition: mode = "missing"
 > setGeneric("order", signature="...",
 + 	   function (..., na.last=TRUE, decreasing=FALSE)
 + 	   standardGeneric("order"))
-Creating a generic for "order" in package  ".GlobalEnv"
+Creating a generic for "order" in package ".GlobalEnv"
     (the supplied definition differs from and overrides the implicit generic
     in package "base": Signatures differ:  (...), (na.last, decreasing))
 [1] "order"
 > stopifnot(identical(rbind(1), matrix(1,1,1)))
 > setGeneric("rbind", function(..., deparse.level=1)
 + 	   standardGeneric("rbind"), signature = "...")
-Creating a generic for "rbind" in package  ".GlobalEnv"
+Creating a generic for "rbind" in package ".GlobalEnv"
     (the supplied definition differs from and overrides the implicit generic
     in package "base": Signatures differ:  (...), (deparse.level))
 [1] "rbind"
 > stopifnot(identical(rbind(1), matrix(1,1,1)))
 > ## gave Error in .Method( .... in R 2.8.0
+> ## NB: setting a generic on order() is *not* the approved method
+> ## -- set xtfrm() methods instead
 > 
 > ## median.default( <simple S4> )
 > ## FIXME: if we use "C" instead of "L", this fails because of caching
@@ -755,10 +757,13 @@ Creating a generic for "rbind" in package  ".GlobalEnv"
 +           sort.L(x, decreasing, ...))
 Creating a new generic function for "sort" in ".GlobalEnv"
 [1] "sort"
-> ##FIXME:  it should not be necessary to define an a S3 method, but
-> ## defining S4 methods for sort() has no effect currently on calls to
-> ## sort() from functions in base; e.g., median.default.
-> sort.L <- function(x, ...) { x@.Data <- as.list(sort(unlist(x@.Data), ...)); x}
+> ## defining S4 methods for sort() has no effect on calls to
+> ## sort() from functions in a name space; e.g., median.default.
+> ## but setting an xtfrm() method works.
+> setMethod("xtfrm", "L", function(x) xtfrm(unlist(x@.Data)))
+[1] "xtfrm"
+> ## Alternatively, set an S3 method
+> # sort.L <- function(x, ...) { x@.Data <- as.list(sort(unlist(x@.Data), ...)); x}
 > 
 > ## NB: median is documented to use mean(), but was incorrectly changed
 > ## to use sum() in 2.8.1.  So we need an S3 mean method:
@@ -797,4 +802,19 @@ Creating a new generic function for "sort" in ".GlobalEnv"
 > as(structure(1:3, class = "foobar"), "vector")
 [1] 1 2 3
 > ## failed to work in R <= 2.9.0
+> 
+> ## S4 dispatch in the internal generic xtfrm (added in 2.11.0)
+> setClass("numWithId", representation(id = "character"), contains = "numeric")
+[1] "numWithId"
+> x <- new("numWithId", 1:3, id = "An Example")
+> xtfrm(x) # works as the base representation is numeric
+[1] 1 2 3
+attr(,"id")
+[1] "An Example"
+> setMethod('xtfrm', 'numWithId', function(x) x@.Data)
+[1] "xtfrm"
+> xtfrm(x)
+[1] 1 2 3
+> stopifnot(identical(xtfrm(x), 1:3))
+> ## new in 2.11.0
 > 

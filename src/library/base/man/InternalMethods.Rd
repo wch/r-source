@@ -54,10 +54,11 @@
   \code{\link{is.na}},%       % do_isna()            [coerce.c]
   \code{\link{is.nan}},%      % do_isnan()           [coerce.c]
   \code{\link{is.numeric}},
-  \code{\link{rep}} and%                             [seq.c]
+  \code{\link{rep}}%                                 [seq.c]
   \code{\link{seq.int}}
-  (which dispatches methods for \code{"seq"}).%      [seq.c]
-
+  (which dispatches methods for \code{"seq"}),%      [seq.c]
+  and \code{\link{xtfrm}}%                           [sort.c]
+  
   In addition, \code{is.name} is a synonym for \code{is.symbol} and
   dispatches methods for the latter.
 

@@ -107,7 +107,10 @@ NEW FEATURES
 
     o	New function file_ext() in package 'tools'.
 
-    o	Added "difftime" method for xtfrm().
+    o	xtfrm() is now primitive, as this allows S4 methods to be set
+	on it without name space scoping issues.
+
+	Added "difftime" method for xtfrm().
 
 
 DEPRECATED & DEFUNCT

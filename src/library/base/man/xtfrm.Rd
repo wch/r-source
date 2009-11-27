@@ -1,6 +1,6 @@
 % File src/library/base/man/xtfrm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008 R Core Development Team
+% Copyright 2008-9 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{xtfrm}
@@ -38,6 +38,9 @@ xtfrm(x)
   for the class of \code{x[i]} (for integers \code{i}), and the
   \code{is.na} method for the class of \code{x}, but might be rather
   slow when doing so.
+
+  This is a \link{primitive} function, so any argument name is ignored.
+  It is an \link{internal generic}, so S3 or S4 methods can be written for it. 
 }
 \value{
   A numeric (usually integer) vector of the same length as \code{x}.

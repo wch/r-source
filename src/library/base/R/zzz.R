@@ -74,7 +74,7 @@ assign("attr<-", function(x, which, value) NULL, envir = .ArgsEnv)
 assign("attributes", function(obj) NULL, envir = .ArgsEnv)
 assign("attributes<-", function(obj, value) NULL, envir = .ArgsEnv)
 assign("baseenv", function() NULL, envir = .ArgsEnv)
-assign("browser", function(text="", condition=NULL, expr = TRUE, 
+assign("browser", function(text="", condition=NULL, expr = TRUE,
 	skipCalls = 0L) NULL, envir = .ArgsEnv)
 assign("call", function(name, ...) NULL, envir = .ArgsEnv)
 assign("class", function(x) NULL, envir = .ArgsEnv)
@@ -137,7 +137,7 @@ assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
     "dim<-", "dimnames", "dimnames<-", "is.array", "is.finite",
     "is.infinite", "is.matrix",
     "is.na", "is.nan", "is.numeric", "length", "length<-", "levels<-",
-    "names", "names<-", "rep", "seq.int")
+    "names", "names<-", "rep", "seq.int", "xtfrm")
 
 .GenericArgsEnv <- local({
     env <- new.env(hash = TRUE, parent = emptyenv())
@@ -220,6 +220,7 @@ assign("seq.int", function(from, to, by, length.out, along.with, ...)
 assign("signif", function(x, digits=6) UseMethod("signif"),
        envir = .GenericArgsEnv)
 assign("trunc", function(x, ...) UseMethod("trunc"), envir = .GenericArgsEnv)
+assign("xtfrm", function(x) UseMethod("xtfrm"), envir = .GenericArgsEnv)
 
 ## make these the same object as as.double
 assign("as.numeric", get("as.double", envir = .GenericArgsEnv),

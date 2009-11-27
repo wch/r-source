@@ -465,6 +465,8 @@ setGeneric("rbind", function(..., deparse.level=1)
 	   standardGeneric("rbind"), signature = "...")
 stopifnot(identical(rbind(1), matrix(1,1,1)))
 ## gave Error in .Method( .... in R 2.8.0
+## NB: setting a generic on order() is *not* the approved method
+## -- set xtfrm() methods instead
 
 ## median.default( <simple S4> )
 ## FIXME: if we use "C" instead of "L", this fails because of caching
@@ -481,10 +483,12 @@ setMethod("[", signature(x="L", i="ANY", j="missing",drop="missing"),
 ## inherits S3 methods for "list"; i.e., sort.list
 setMethod("sort", signature = "L", function(x, decreasing = FALSE, ...)
           sort.L(x, decreasing, ...))
-##FIXME:  it should not be necessary to define an a S3 method, but
-## defining S4 methods for sort() has no effect currently on calls to
-## sort() from functions in base; e.g., median.default.
-sort.L <- function(x, ...) { x@.Data <- as.list(sort(unlist(x@.Data), ...)); x}
+## defining S4 methods for sort() has no effect on calls to
+## sort() from functions in a name space; e.g., median.default.
+## but setting an xtfrm() method works.
+setMethod("xtfrm", "L", function(x) xtfrm(unlist(x@.Data)))
+## Alternatively, set an S3 method
+# sort.L <- function(x, ...) { x@.Data <- as.list(sort(unlist(x@.Data), ...)); x}
 
 ## NB: median is documented to use mean(), but was incorrectly changed
 ## to use sum() in 2.8.1.  So we need an S3 mean method:
@@ -517,3 +521,12 @@ removeClass("myF")
 ## as(x, .)   when x is from an "unregistered" S3 class :
 as(structure(1:3, class = "foobar"), "vector")
 ## failed to work in R <= 2.9.0
+
+## S4 dispatch in the internal generic xtfrm (added in 2.11.0)
+setClass("numWithId", representation(id = "character"), contains = "numeric")
+x <- new("numWithId", 1:3, id = "An Example")
+xtfrm(x) # works as the base representation is numeric
+setMethod('xtfrm', 'numWithId', function(x) x@.Data)
+xtfrm(x)
+stopifnot(identical(xtfrm(x), 1:3))
+## new in 2.11.0

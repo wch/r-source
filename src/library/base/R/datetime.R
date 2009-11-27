@@ -915,3 +915,4 @@ function(x, f, drop = FALSE, ...)
 xtfrm.POSIXct <- function(x) as.numeric(x)
 xtfrm.POSIXlt <- function(x) as.double(x)  # has POSIXlt method
 xtfrm.difftime <- function(x) as.numeric(x)
+is.numeric.difftime <- function(x) FALSE

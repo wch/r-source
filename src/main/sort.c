@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2008   R Development Core Team
+ *  Copyright (C) 1998-2009   R Development Core Team
  *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1012,4 +1012,20 @@ SEXP attribute_hidden do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     UNPROTECT(1);
     return ans;
+}
+
+SEXP attribute_hidden do_xtfrm(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn, prargs, ans;
+
+    checkArity(op, args);
+    if(DispatchOrEval(call, op, "xtfrm", args, rho, &ans, 0, 1)) return ans;
+    /* otherwise dispatch the default method */
+    PROTECT(fn = findFun(install("xtfrm.default"), rho));
+    PROTECT(prargs = promiseArgs(args, R_GlobalEnv));
+    SET_PRVALUE(CAR(prargs), CAR(args));
+    ans = applyClosure(call, fn, prargs, rho, R_NilValue);
+    UNPROTECT(2);
+    return ans;
+    
 }
