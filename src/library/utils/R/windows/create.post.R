@@ -1,4 +1,4 @@
-#  File src/library/utils/R/windows/create.report.R
+#  File src/library/utils/R/windows/create.post.R
 #  Part of the R package, http://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -14,17 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-create.post <- function(instructions = "\\n",
-                        description = "post",
-                        subject = "",
-                        ccaddress = Sys.getenv("USER"),
-                        method = getOption("mailer"),
-                        address = "the relevant mailing list",
-                        file = "R.post")
-{
-    body <- paste(instructions,
-		  "--please do not edit the information below--\\n\\n",
-		  "Version:\\n ",
+bug.report.info <- function() {
+    paste("R Version:\\n ",
 		  paste(names(version), version, sep=" = ", collapse="\\n "),
                   "\\n\\n",
                   win.version(),
@@ -34,6 +25,22 @@ create.post <- function(instructions = "\\n",
 		  "\\n\\n",
 		  "Search Path:\\n ",
 		  paste(search(), collapse=", "),
+		  "\\n", sep="", collapse="")
+}
+
+create.post <- function(instructions = "\\n",
+                        description = "post",
+                        subject = "",
+                        ccaddress = Sys.getenv("USER"),
+                        method = getOption("mailer"),
+                        address = "the relevant mailing list",
+                        file = "R.post",
+                        info = NULL)
+{
+    body <- paste(instructions,
+		  "--please do not edit the information below--\\n\\n",
+		  info, 
+		  bug.report.info(),
 		  "\\n", sep="", collapse="")
 
     if (method == "none") {

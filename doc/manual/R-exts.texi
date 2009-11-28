@@ -252,6 +252,7 @@ Description: A short (one paragraph) description of what
   the package does and why it may be useful.
 License: GPL (>= 2)
 URL: http://www.r-project.org, http://www.another.url
+BugReports: http://pkgname.bugtracker.url
 @end smallexample
 @end cartouche
 @end quotation
@@ -261,8 +262,9 @@ The format is that of a `Debian Control File' (see the help for
 @samp{read.dcf}).  Continuation lines (for example, for descriptions
 longer than one line) start with a space or tab.  The @samp{Package},
 @samp{Version}, @samp{License}, @samp{Description}, @samp{Title},
-@samp{Author}, and @samp{Maintainer} fields are mandatory, the remaining
-fields (@samp{Date}, @samp{Depends}, @samp{URL}, @dots{}) are optional.
+@samp{Author}, and @samp{Maintainer} fields are mandatory, the
+remaining fields (@samp{Date}, @samp{Depends}, @samp{URL},
+@samp{BugReports}, @dots{}) are optional.
 
 The @file{DESCRIPTION} file should be written entirely in
 @acronym{ASCII} for maximal portability.
@@ -448,6 +450,11 @@ separated by commas or whitespace, for example the homepage of the
 author or a page where additional material describing the software can
 be found.  These @acronym{URL}s are converted to active hyperlinks in
 @acronym{CRAN} package listings.
+
+The optional @samp{BugReports} field may contain a single
+@acronym{URL} to which bug reports about the package should be
+submitted.  This @acronym{URL} will be used by @code{bug.reports}
+instead of sending an email to the maintainer.
 
 Base and recommended packages (i.e., packages contained in the @R{}
 source distribution or available from @acronym{CRAN} and recommended to

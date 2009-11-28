@@ -11,7 +11,9 @@ bug.report(subject = "",
            ccaddress = Sys.getenv("USER"),
            method = getOption("mailer"),
            address = "r-bugs@r-project.org",
-           file = "R.bug.report")
+           file = "R.bug.report",
+           package = NULL,
+           lib.loc = NULL)
 }
 \arguments{
   \item{subject}{Subject of the email. Please do not use single quotes
@@ -23,14 +25,30 @@ bug.report(subject = "",
   \item{address}{Recipient's email address.}
   \item{file}{File to use for setting up the email (or storing it when
     method is \code{"none"} or sending mail fails).}
+  \item{package}{Optional character vector naming a single package which is 
+    the subject of the bug report.}
+  \item{lib.loc}{A character vector describing the location of \R
+    library trees in which to search for the package, or \code{NULL}.
+    The default value of \code{NULL} corresponds to all libraries
+    currently known.}
 }
 \description{
-  Invokes an editor to write a bug report and optionally mail it to the
-  automated r-bugs repository at \email{r-bugs@r-project.org}.  Some standard
-  information on the current version and configuration of \R are
-  included automatically.
+  Invokes an editor to write a bug report or opens a web page for
+  bug submission.  Some standard information on the
+  current version and configuration of \R are included automatically.
 }
 \details{
+  If \code{package} is \code{NULL}, invokes an editor to write a bug
+  report and optionally mail it to the automated r-bugs repository at
+  \email{r-bugs@r-project.org}.  
+  
+  If \code{package} is specified, it is assumed that the bug report is
+  about that package, and parts of its \file{DESCRIPTION} file are
+  added to the standard information.  If the package has a
+  \code{BugReports} field in the \file{DESCRIPTION} file, that URL
+  will be opened using \code{\link{browseURL}}, otherwise an email
+  directed to the package maintainer will be generated.
+
   Currently direct submission of bug reports works only on Unix systems.
   If the submission method is \code{"mailx"}, then the default editor is
   used to write the bug report. Which editor is used can be controlled
@@ -145,7 +163,8 @@ bug.report(subject = "",
   submitted to the Web page at \url{http://bugs.r-project.org}.
 
   Bug reports on \strong{contributed packages} should be sent to the
-  package maintainer rather than to r-bugs.
+  package maintainer rather than to r-bugs, by specifying the \code{package}
+  argument to \code{bug.report()}.
 }
 \seealso{\code{\link{help.request}} which you possibly should try
   \emph{before} \code{bug.report}.
