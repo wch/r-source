@@ -107,13 +107,17 @@ NEW FEATURES
 
     o	New function file_ext() in package 'tools'.
 
-    o	xtfrm() is now primitive, as this allows S4 methods to be set
-	on it without name space scoping issues.
+    o	xtfrm() is now primitive and internally generic, as this allows
+	S4 methods to be set on it without name space scoping issues.
 
 	Added "difftime" method for xtfrm().
 
     o	is.numeric(x) is now false for a "difftime" object
 	(multiplication and division make no sense for such objects).
+
+    o	The default method of weighted.mean(x, w) coerces 'w' to be
+	numeric (aka double); previously only integer weights were
+	coerced.
 
 
 DEPRECATED & DEFUNCT
