@@ -1,6 +1,6 @@
 % File src/library/base/man/integer.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{integer}
@@ -20,11 +20,6 @@ is.integer(x)
   \item{length}{desired length.}
   \item{x}{object to be coerced or tested.}
   \item{\dots}{further arguments passed to or from other methods.}
-}
-\note{
-  \code{as.integer(x)} does \bold{not} test if \code{x} contains integer
-  numbers!  For that, do use \code{\link{round}}, e.g., as in a
-  variation of \code{is.wholenumber(x)}, see the examples.
 }
 \details{
   Integer vectors exist so that data can be passed to C or Fortran code
@@ -62,6 +57,11 @@ is.integer(x)
   whether its argument is of integer \link{type} or not, unless it is a
   factor when it returns \code{FALSE}.
 }
+\note{
+  \code{is.integer(x)} does \bold{not} test if \code{x} contains integer
+  numbers!  For that, use \code{\link{round}}, as in the function
+  \code{is.wholenumber(x)} in the examples.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
@@ -80,7 +80,8 @@ as.integer(x)
 
 is.integer(1) # is FALSE !
 
-is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol
+is.wholenumber <-
+    function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol
 is.wholenumber(1) # is TRUE
 (x <- seq(1,5, by=0.5) )
 is.wholenumber( x ) #-->  TRUE FALSE TRUE ...
