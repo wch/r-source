@@ -117,7 +117,10 @@ NEW FEATURES
 
     o	The default method of weighted.mean(x, w) coerces 'w' to be
 	numeric (aka double); previously only integer weights were
-	coerced.
+	coerced.  Zero weights are handled specially so an infinite
+	value with zero weight does not force an NaN value.
+
+	There is now a "difftime" method.
 
 
 DEPRECATED & DEFUNCT

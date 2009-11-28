@@ -5950,3 +5950,11 @@ z <- as.POSIXct(c("1980-01-01", "1980-02-01", NA, "1980-03-01", "1980-04-01"))
 zz <- diff(z)
 stopifnot(is.finite(mean(zz, na.rm=TRUE)))
 ## was NA in 2.10.0
+
+
+## weighted means with zero weights and infinite values
+x <- c(0, 1, 2, Inf)
+w <- c(1, 1, 1, 0)
+z <- weighted.mean(x, w)
+stopifnot(is.finite(z))
+## was NaN in 2.10.x
