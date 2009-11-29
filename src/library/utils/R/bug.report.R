@@ -14,7 +14,8 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
     	              " Maintainer: ", DESC$Maintainer, "\\n",
     	              " Built: ", DESC$Built, "\\n\\n", sep="", collapse="")
     	if (is.null(DESC$BugReports)) {
-    	    if (missing(address)) address <- DESC$Maintainer
+    	    if (missing(address) && !identical(DESC$Priority, "base")) 
+    	    	address <- DESC$Maintainer
     	} else {
     	    cat(gsub("\\\\n", "\n", c(info, bug.report.info())), sep="")
     	    cat("\nThis package has a bug submission web page, which we will now attempt\n",
