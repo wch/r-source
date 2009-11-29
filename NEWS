@@ -151,6 +151,10 @@ BUG FIXES
     o	Using with(), eval() etc with a list with some unnamed
 	elements now works. (PR#14035)
 
+    o	Adding/subtracting a "difftime" object to/from a "POSIXt" or
+	"Date" object works again (it was broken by the addition of
+	Ops.difftime).
+
 
 
 

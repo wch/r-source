@@ -5958,3 +5958,19 @@ w <- c(1, 1, 1, 0)
 z <- weighted.mean(x, w)
 stopifnot(is.finite(z))
 ## was NaN in 2.10.x
+
+
+## Arithmetic operations involving "difftime"
+z <- as.POSIXct(c("2009-12-01", "2009-12-02"), tz="UTC")
+(zz <- z[2] - z[1])
+(zzz <- z[1] + zz)
+stopifnot(identical(zzz, z[2]),
+          identical(zz + z[1], z[2]),
+          identical(z[2] - zz, z[1]))
+z <- as.Date(c("2009-12-01", "2009-12-02"))
+(zz <- z[2] - z[1])
+(zzz <- z[1] + zz)
+stopifnot(identical(zzz, z[2]),
+          identical(zz + z[1], z[2]),
+          identical(z[2] - zz, z[1]))
+## failed/gave wrong answers when Ops.difftime was introduced.

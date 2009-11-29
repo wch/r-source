@@ -2099,9 +2099,10 @@ static void findmethod(SEXP Class, const char *group, const char *generic,
 
     len = length(Class);
 
-    /* Need to interleave looking for group and generic methods */
-    /* eg if class(x) is "foo" "bar" then x>3 should invoke */
-    /* "Ops.foo" rather than ">.bar" */
+    /* Need to interleave looking for group and generic methods
+       e.g. if class(x) is c("foo", "bar)" then x > 3 should invoke
+       "Ops.foo" rather than ">.bar"
+    */
     for (whichclass = 0 ; whichclass < len ; whichclass++) {
 	const char *ss = translateChar(STRING_ELT(Class, whichclass));
 	if(strlen(generic) + strlen(ss) + 2 > 512)
@@ -2214,7 +2215,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	if(NAMED(value)) SET_NAMED(value, 2);
 	value = R_getS4DataSlot(value, S4SXP); /* the .S3Class obj. or NULL*/
 	if(value != R_NilValue) /* use the S3Part as the inherited object */
-	  SETCAR(args, value);
+	    SETCAR(args, value);
     }
 
     if( nargs == 2 )
@@ -2228,8 +2229,7 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
         value = CADR(args);
 	if(NAMED(value)) SET_NAMED(value, 2);
 	value = R_getS4DataSlot(value, S4SXP);
-	if(value != R_NilValue)
-	  SETCADR(args, value);
+	if(value != R_NilValue) SETCADR(args, value);
     }
 
     PROTECT(rgr);
@@ -2240,9 +2240,19 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     }
 
     if( lsxp != rsxp ) {
-	if( isFunction(lsxp) && isFunction(rsxp) ) {
+	/* special case some methods involving difftime */
+	const char *lname = CHAR(PRINTNAME(lmeth)),
+	    *rname = CHAR(PRINTNAME(rmeth));
+	if( streql(rname, "Ops.difftime") && 
+	    (streql(lname, "+.POSIXt") || streql(lname, "-.POSIXt") ||
+	     streql(lname, "+.Date") || streql(lname, "-.Date")) )
+	    rsxp = R_NilValue;
+	else if (streql(lname, "Ops.difftime") && 
+		 (streql(rname, "+.POSIXt") || streql(rname, "+.Date")) )
+	    lsxp = R_NilValue;
+	else if( isFunction(lsxp) && isFunction(rsxp) ) {
 	    warning(_("Incompatible methods (\"%s\", \"%s\") for \"%s\""),
-		    CHAR(PRINTNAME(lmeth)), CHAR(PRINTNAME(rmeth)), generic);
+		    lname, rname, generic);
 	    UNPROTECT(2);
 	    return 0;
 	}
