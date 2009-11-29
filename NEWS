@@ -182,7 +182,7 @@ INSTALLATION
 	needed to be linked explicitly against -ljpeg).
 
     o	Making refman.pdf works around a problem with the indexing
-	with hyperref 6.79f.
+	with hyperref 6.79d and later.
 
 
 DEPRECATED & DEFUNCT

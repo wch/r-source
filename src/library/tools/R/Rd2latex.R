@@ -318,7 +318,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     writeAlias <- function(block, tag) {
         alias <- as.character(block)
         aa <- "\\aliasA{"
-        ## some versions of hyperref (e.g. 6.79f) have trouble indexing these
+        ## some versions of hyperref (from 6.79d) have trouble indexing these
         if(alias %in% c("|", "||")) aa <- "\\aliasB{"
         if(is.na(currentAlias)) currentAlias <<- name
         if (pmatch(paste(currentAlias, ".", sep=""), alias, 0L)) {
@@ -339,8 +339,9 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                TEXT = of1(addParaBreaks(texify(block), blocktag)),
                COMMENT = {},
                LIST = writeContent(block, tag),
-               "\\describe"= { # Avoid the Rd.sty \describe, \Enumerate and \Itemize:
-               		       # They don't support verbatim arguments, which we might need.
+               ## Avoid Rd.sty's \describe, \Enumerate and \Itemize:
+               ## They don't support verbatim arguments, which we might need.
+               "\\describe"= {
                    of1("\\begin{description}\n")
                    writeContent(block, tag)
                    of1("\n\\end{description}\n")
