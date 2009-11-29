@@ -27,7 +27,7 @@ INSTALLATION
 	needed to be linked explicitly against -ljpeg).
 
     o	Making refman.pdf works around a problem with the indexing
-	with hyperref 6.79f.
+	with hyperref 6.79d and later.
 
 
 DEPRECATED & DEFUNCT
@@ -124,7 +124,7 @@ BUG FIXES
 	more accurate for probablilities very close to 1 (a series
 	expansion was truncated slightly too early).
 
-	pchisq(x, df, ncp) no longer can return values just larger
+	pchisq(x, df, ncp) can no longer return values just larger
 	than one for large values of ncp.
 
     o	intToUtf8() could fail when asked to produce 10Mb or more
@@ -154,7 +154,7 @@ BUG FIXES
  	meant by PR#14078.)
 
     o	unsplit(drop = TRUE) applied to a data frame failed to pass
-	'drop' to the computation of row names.
+	'drop' to the computation of row names. (PR#14084)
 
     o	The "difftime" method of mean() ignored its 'na.rm' argument.
 
