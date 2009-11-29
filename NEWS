@@ -118,7 +118,7 @@ NEW FEATURES
     o	The default method of weighted.mean(x, w) coerces 'w' to be
 	numeric (aka double); previously only integer weights were
 	coerced.  Zero weights are handled specially so an infinite
-	value with zero weight does not force an NaN value.
+	value with zero weight does not force an NaN result.
 
 	There is now a "difftime" method.
 	
@@ -279,7 +279,7 @@ BUG FIXES
 	more accurate for probablilities very close to 1 (a series
 	expansion was truncated slightly too early).
 
-	pchisq(x, df, ncp) no longer can return values just larger
+	pchisq(x, df, ncp) can no longer return values just larger
 	than one for large values of ncp.
 
     o	intToUtf8() could fail when asked to produce 10Mb or more
@@ -309,7 +309,7 @@ BUG FIXES
  	meant by PR#14078.)
 
     o	unsplit(drop = TRUE) applied to a data frame failed to pass
-	'drop' to the computation of row names.
+	'drop' to the computation of row names. (PR#14084)
 
     o	The "difftime" method of mean() ignored its 'na.rm' argument.
 
