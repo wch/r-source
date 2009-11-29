@@ -124,10 +124,12 @@ NEW FEATURES
 	
     o	bug.report() now has 'package' and 'lib.loc' arguments to
 	generate bug reports about packages.  When this is used, it
-	looks for a BugReports entry in the package DESCRIPTION file,
+	looks for a BugReports field in the package DESCRIPTION file,
 	which will be assumed to be a URL at which to submit the
 	report, and otherwise generates an email to the package
 	maintainer.  (Suggested by Barry Rowlingson.)
+
+    o	quantile() now has a method for the date-time class "POSIXt".
 
 
 DEPRECATED & DEFUNCT

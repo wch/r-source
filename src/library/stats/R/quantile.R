@@ -16,6 +16,11 @@
 
 quantile <- function(x, ...) UseMethod("quantile")
 
+quantile.POSIXt <- function(x, ...)
+    structure(quantile(unclass(as.POSIXct(x)), ...),
+              class = c("POSIXt", "POSIXct"),
+              tzone = attr(x, "tzone"))
+
 quantile.default <-
     function(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE,
              type = 7, ...)

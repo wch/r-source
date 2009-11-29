@@ -189,7 +189,7 @@ print.POSIXlt <- function(x, ...)
     invisible(x)
 }
 
-summary.POSIXct <- function(object, digits=15, ...)
+summary.POSIXct <- function(object, digits = 15, ...)
 {
     x <- summary.default(unclass(object), digits=digits, ...)[1L:6L]# no NA's
     class(x) <- oldClass(object)
@@ -203,7 +203,7 @@ summary.POSIXlt <- function(object, digits = 15, ...)
 
 "+.POSIXt" <- function(e1, e2)
 {
-    ## need to drop "unit" attribute here
+    ## need to drop "units" attribute here
     coerceTimeUnit <- function(x)
         as.vector(switch(attr(x,"units"),
                          secs = x, mins = 60*x, hours = 60*60*x,

@@ -44,10 +44,11 @@ quantile(x, \dots)
   
   The default method does not allow factors, but works with objects
   sufficiently like numeric vectors that \code{sort}, addition and
-  multiplication work correctly.  In principle only sorts and weighted
-  means are needed, so datatimes could have quantiles -- but this is not
-  implemented.  Note that as this is in a namespace, the copy of
-  \code{sort} in \pkg{base} will be used, not some S4 generic of that name.
+  multiplication work correctly. Note that as this is in a namespace,
+  the copy of \code{sort} in \pkg{base} will be used, not some S4
+  generic of that name.
+  
+  There is a method for the date-time classes (see \code{"\link{POSIXt}"}).
 }
 \section{Types}{
   \code{quantile} returns estimates of underlying distribution quantiles
