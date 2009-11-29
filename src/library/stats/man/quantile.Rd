@@ -25,7 +25,7 @@ quantile(x, \dots)
     \sQuote{details}). \code{\link{NA}} and \code{NaN} values are not
     allowed in numeric vectors unless \code{na.rm} is \code{TRUE}.}
   \item{probs}{numeric vector of probabilities with values in
-    \eqn{[0,1]}.  (As from \R 2.8.0 values up to 2e-14 outside that
+    \eqn{[0,1]}.  (As from \R 2.8.0 values up to \samp{2e-14} outside that
     range are accepted and moved to the nearby endpoint.}
   \item{na.rm}{logical; if true, any \code{\link{NA}} and \code{NaN}'s
     are removed from \code{x} before the quantiles are computed.}
@@ -42,13 +42,15 @@ quantile(x, \dots)
   \code{\link{NA}} and \code{\link{NaN}} values in \code{probs} are
   propagated to the result.
   
-  The default method does not allow factors, but works with objects
-  sufficiently like numeric vectors that \code{sort}, addition and
-  multiplication work correctly. Note that as this is in a namespace,
-  the copy of \code{sort} in \pkg{base} will be used, not some S4
-  generic of that name.
+  The default method works with objects sufficiently like numeric
+  vectors that \code{sort} and (not needed by types 1 and 3) addition of
+  elements and multiplication by a number work correctly.  Note that as
+  this is in a namespace, the copy of \code{sort} in \pkg{base} will be
+  used, not some S4 generic of that name.
   
-  There is a method for the date-time classes (see \code{"\link{POSIXt}"}).
+  There is a method for the date-time classes (see
+  \code{"\link{POSIXt}"}).  Types 1 and 3 can be used for class
+  \code{"\link{Date}"} and for ordered factors.
 }
 \section{Types}{
   \code{quantile} returns estimates of underlying distribution quantiles

@@ -5974,3 +5974,15 @@ stopifnot(identical(zzz, z[2]),
           identical(zz + z[1], z[2]),
           identical(z[2] - zz, z[1]))
 ## failed/gave wrong answers when Ops.difftime was introduced.
+
+
+## quantiles, new possibilities in 2.11.0
+x <- ordered(1:11, labels=letters[1:11])
+quantile(x, type = 1)
+quantile(x, type = 3)
+st <- as.Date("1998-12-17")
+en <- as.Date("2000-1-7")
+ll <- seq(as.Date("2000-1-7"), as.Date("1997-12-17"), by="-1 month")
+quantile(ll, type = 1)
+quantile(ll, type = 3)
+## failed prior to 2.11.0

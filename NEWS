@@ -129,7 +129,8 @@ NEW FEATURES
 	report, and otherwise generates an email to the package
 	maintainer.  (Suggested by Barry Rowlingson.)
 
-    o	quantile() now has a method for the date-time class "POSIXt".
+    o	quantile() now has a method for the date-time class "POSIXt",
+ 	and types 1 and 3 work for Dates and ordered factors.
 
 
 DEPRECATED & DEFUNCT

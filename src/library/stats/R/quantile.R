@@ -25,7 +25,11 @@ quantile.default <-
     function(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE,
              type = 7, ...)
 {
-    if(is.factor(x)) stop("need numeric data")
+    if(is.factor(x)) {
+        if(!is.ordered(x) || ! type %in% c(1L, 3L))
+            stop("factors are not allowed")
+        lx <- levels(x)
+    } else lx <- NULL
     if (na.rm)
 	x <- x[!is.na(x)]
     else if (any(is.na(x)))
@@ -62,7 +66,7 @@ quantile.default <-
                        h <- ifelse(nppm > j, 1, 0), # type 1
                        h <- ifelse(nppm > j, 1, 0.5), # type 2
                        h <- ifelse((nppm == j) &
-                                   ((j %% 2) == 0), 0, 1)) # type 3
+                                   ((j %% 2L) == 0L), 0, 1)) # type 3
             } else {
                 ## Types 4 through 9 are continuous sample qs.
                 switch(type - 3,
@@ -80,23 +84,27 @@ quantile.default <-
                 h <- ifelse(abs(h) < fuzz, 0, h)
             }
             x <- sort(x, partial =
-                      unique(c(1, j[j>0 & j<=n], (j+1)[j>0 & j<n], n))
+                      unique(c(1, j[j>0L & j<=n], (j+1)[j>0L & j<n], n))
                       )
             x <- c(x[1L], x[1L], x, x[n], x[n])
             ## h can be zero or one (types 1 to 3), and infinities matter
 ####        qs <- (1 - h) * x[j + 2] + h * x[j + 3]
-            qs <- ifelse(h == 0, x[j+2],
-                         ifelse(h == 1, x[j+3], (1-h)*x[j+2] + h*x[j+3]))
+            ## also h*x might be invalid ... e.g. Dates and ordered factors
+            qs <- x[j+2L]
+            qs[h == 1] <- x[j+3L][h == 1]
+            other <- (h > 0) && (h < 1)
+            if(any(other)) qs[other] <- ((1-h)*x[j+2L] + h*x[j+3L])[other]
         }
     } else {
 	qs <- rep(NA_real_, np)
     }
-    if(names && np > 0) {
-	dig <- max(2, getOption("digits"))
+    if(is.character(lx))
+        qs <- factor(qs, levels = seq_along(lx), labels = lx, ordered = TRUE)
+    if(names && np > 0L) {
+	dig <- max(2L, getOption("digits"))
 	names(qs) <- paste(## formatC is slow for long probs
-			   if(np < 100)
-			   formatC(100*probs, format="fg", width = 1, digits=dig)
-			   else format(100 * probs, trim=TRUE, digits=dig),
+			   if(np < 100) formatC(100*probs, format = "fg", width = 1, digits = dig)
+			   else format(100 * probs, trim = TRUE, digits = dig),
 			   "%", sep = "")
     }
     if(na.p) { # do this more elegantly (?!)
