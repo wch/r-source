@@ -2624,9 +2624,19 @@ static void doRaster(unsigned int *raster, int x, int y, int w, int h,
     int i;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     rect  sr, dr;
-    image img;
-    byte *imageData;
-    int anyAlpha = 0;
+    image img, mask;
+    byte *imageData, *maskData;
+    /* If there are any fully transparent pixels in the image
+     * then we will need to create a mask.
+     */
+    Rboolean fullTrans = FALSE; 
+    /* If there are any semitransparent pixels in the image
+     * then we will need to do alpha blending.
+     * NOTE though that we can only handle 1 level of semitransparency
+     * BUT we can handle some pixels fully transparent AND some
+     * pixels semitransparent.
+     */
+    Rboolean semiTrans = FALSE;
     /* Index to pixel that contains fixed alpha for image */
     int fixedAlpha = -1;
 
@@ -2644,25 +2654,24 @@ static void doRaster(unsigned int *raster, int x, int y, int w, int h,
     for (i=0; i<w*h; i++) {
         byte alpha = R_ALPHA(raster[i]);
         if (alpha < 255) {
-            /* Keep the image alpha for FULLY transparent pixels
-             * because we can also cope with FULLY transparent 
-             * areas in the image (?)
-             * BUT all other pixels must be made FULLY opaque
-             * because the conversion to bitmap (in 
-             * gdrawimage()) ONLY copies opaque pixels.
-             */
             if (alpha == 0) {
-                imageData[i*4 + 3] = 255;
+                /* Any fully transparent pixels will be masked out
+                 */
+                imageData[i*4 + 3] = 0;
                 imageData[i*4 + 2] = 255;
                 imageData[i*4 + 1] = 255;
                 imageData[i*4 + 0] = 255;
+                fullTrans = TRUE;
             } else {
+                /* We will draw semitransparent pixels opaque 
+                 * then alpha blend using fixedAlpha
+                 */
                 imageData[i*4 + 3] = 0;
                 imageData[i*4 + 2] = R_RED(raster[i]);
                 imageData[i*4 + 1] = R_GREEN(raster[i]);
                 imageData[i*4 + 0] = R_BLUE(raster[i]);
+                semiTrans = TRUE;
             }
-            anyAlpha = 1;
             /* The current implementation can only cope with
              * a single constant alpha across the image
              */
@@ -2674,6 +2683,7 @@ static void doRaster(unsigned int *raster, int x, int y, int w, int h,
                 warning("Per-pixel alpha not supported on this device");
             }
         } else {
+            /* These are opaque pixels */
             imageData[i*4 + 3] = 0;
             imageData[i*4 + 2] = R_RED(raster[i]);
             imageData[i*4 + 1] = R_GREEN(raster[i]);
@@ -2682,30 +2692,63 @@ static void doRaster(unsigned int *raster, int x, int y, int w, int h,
     }
 
     setpixels(img, imageData);
-
     /* Get the image rect */
     sr = getrect(img);
 
-    /* Draw the image */
-    if (!anyAlpha) {
-        DRAW(gdrawimage(_d, img, dr, sr));
-    } else if (xd->have_alpha) {
-        if (fixedAlpha < 0) {
-            /* This means we have an image with some FULLY transparent pixels
-             * but otherwise opaque
-             */
-            DRAW(gdrawimage(_d, img, dr, sr));
-        } else {
-            rect r = dr;
-            gsetcliprect(xd->bm, xd->clip);
-            gcopy(xd->bm2, xd->bm, r);
-            gdrawimage(xd->bm2, img, dr, sr);
-            DRAW2(raster[fixedAlpha]);
+    if (fullTrans) {
+        /* Create mask (b&w) */
+        mask = newimage(w, h, 32);
+        maskData = (byte *) R_alloc(4*w*h, sizeof(byte));
+        for (i=0; i<w*h; i++) {
+            byte alpha = R_ALPHA(raster[i]);
+            if (alpha == 0) {
+                /* Mask is black */
+                maskData[i*4 + 3] = 0;
+                maskData[i*4 + 2] = 0;
+                maskData[i*4 + 1] = 0;
+                maskData[i*4 + 0] = 0;
+            } else {
+                /* Mask is white */
+                maskData[i*4 + 3] = 0;
+                maskData[i*4 + 2] = 255;
+                maskData[i*4 + 1] = 255;
+                maskData[i*4 + 0] = 255;
+            }
         }
+        setpixels(mask, maskData);
+        
+        if (semiTrans) {
+            if (xd->have_alpha) {
+                rect r = dr;
+                gsetcliprect(xd->bm, xd->clip);
+                gcopy(xd->bm2, xd->bm, r);
+                gmaskimage(xd->bm2, img, dr, sr, mask);
+                DRAW2(raster[fixedAlpha]);
+            } else {
+                WARN_SEMI_TRANS;
+            }
+        } else {
+            DRAW(gmaskimage(_d, img, dr, sr, mask));            
+        }
+        delimage(mask);
     } else {
-        WARN_SEMI_TRANS;
+        /* No fully transparent pixels */
+        if (semiTrans) {
+            if (xd->have_alpha) {
+                rect r = dr;
+                gsetcliprect(xd->bm, xd->clip);
+                gcopy(xd->bm2, xd->bm, r);
+                gdrawimage(xd->bm2, img, dr, sr);
+                DRAW2(raster[fixedAlpha]);
+            } else {
+                WARN_SEMI_TRANS;
+            }
+        } else {
+            /* OPAQUE image! */
+            DRAW(gdrawimage(_d, img, dr, sr));
+        }
     }
-
+    
     /* Tidy up */
     delimage(img);
     SH;
@@ -2790,7 +2833,11 @@ static void GA_Raster(unsigned int *raster, int w, int h,
 
         rotatedRaster = (unsigned int *) R_alloc(newW * newH, 
                                                  sizeof(unsigned int));
-        R_GE_rasterRotate(resizedRaster, newW, newH, angle, rotatedRaster, gc);
+        R_GE_rasterRotate(resizedRaster, newW, newH, angle, rotatedRaster, gc,
+                          /* Threshold alpha to 
+                           * transparent/opaque only
+                           */
+                          FALSE);
 
         /* 
          * Adjust (x, y) for resized and rotated image

@@ -2011,7 +2011,8 @@ static void X11_Raster(unsigned int *raster, int w, int h,
 
         rotatedRaster = (unsigned int *) R_alloc(newW * newH, 
                                                  sizeof(unsigned int));
-        R_GE_rasterRotate(resizedRaster, newW, newH, angle, rotatedRaster, gc);
+        R_GE_rasterRotate(resizedRaster, newW, newH, angle, rotatedRaster, gc,
+                          FALSE);
 
         /* 
          * Adjust (x, y) for resized and rotated image

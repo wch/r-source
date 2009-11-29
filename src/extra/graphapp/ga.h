@@ -160,6 +160,7 @@ void  gdrawpolyline(drawing d, int width, int style, rgb c,
 void  gsetpolyfillmode(drawing d, int oddeven);
 void  gfillpolygon(drawing d, rgb fill, point *p, int n);
 void  gdrawimage(drawing d, image img, rect dr, rect sr);
+void  gmaskimage(drawing d, image img, rect dr, rect sr, image mask);
 int   gdrawstr(drawing d, font f, rgb c, point p, const char *s);
 void  gdrawstr1(drawing d, font f, rgb c, point p, const char *s, double hadj);
 rect  gstrrect(drawing d, font f, const char *s);

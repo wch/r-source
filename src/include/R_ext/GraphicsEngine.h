@@ -424,7 +424,8 @@ void R_GE_rasterResizeForRotation(unsigned int *sraster,
                                   int wnew, int hnew,
                                   const pGEcontext gc);
 void R_GE_rasterRotate(unsigned int *sraster, int w, int h, double angle,
-                       unsigned int *draster, const pGEcontext gc);
+                       unsigned int *draster, const pGEcontext gc,
+                       Rboolean perPixelAlpha);
 
 
 /* 

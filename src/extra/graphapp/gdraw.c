@@ -524,6 +524,8 @@ void gfillpolygon(drawing d, rgb fill, point *p, int n)
     DeleteObject(br);
 }
 
+/* Assumes all pixels in image are opaque 
+ */
 void gdrawimage(drawing d, image img, rect dr, rect sr)
 {
     HDC dc = GETHDC(d);
@@ -533,14 +535,58 @@ void gdrawimage(drawing d, image img, rect dr, rect sr)
     if (! img)
 	return;
     dr = rcanon(dr);
-    if ((dr.width != img->width) || (dr.height != img->height))
+    if ((dr.width != img->width) || (dr.height != img->height)) {
 	i = scaleimage(img, rect(0, 0, dr.width, dr.height), sr);
+    }
+
     b = imagetobitmap(i);
 
     BitBlt(dc, dr.x, dr.y, dr.width, dr.height, 
            get_context(b), sr.x, sr.y, SRCCOPY);
+
     if (i != img)
 	del(i);
+    del(b);
+}
+
+/* Use this to draw an image containing fully transparent pixels
+ * by using a mask based on the transparent pixels
+ * (you need to create the mask)
+ */
+void gmaskimage(drawing d, image img, rect dr, rect sr, image mask)
+{
+    HDC dc = GETHDC(d);
+    bitmap b, mb, mbw;
+    image i = img;
+    image m = mask;
+
+    if (! img  || ! mask)
+	return;
+    dr = rcanon(dr);
+    if ((dr.width != img->width) || (dr.height != img->height)) {
+	i = scaleimage(img, rect(0, 0, dr.width, dr.height), sr);
+        m = scaleimage(mask, rect(0, 0, dr.width, dr.height), sr);
+    }
+
+    b = imagetobitmap(i);
+    mb = imagetobitmap(m);
+
+    mbw = newbitmap(dr.width, dr.height, 1);
+    BitBlt(get_context(mbw), sr.x, sr.y, sr.width, sr.height, 
+           get_context(mb), sr.x, sr.y, SRCCOPY);
+    
+    MaskBlt(dc, dr.x, dr.y, dr.width, dr.height, 
+            get_context(b), sr.x, sr.y, 
+            (HBITMAP) mbw->handle, 0, 0,
+            MAKEROP4(SRCCOPY, SRCAND));
+
+    if (i != img)
+	del(i);
+    if (m != mask)
+        del(m);
+    del(b);
+    del(mb);
+    del(mbw);
 }
 
 /* For ordinary text, e.g. in console */

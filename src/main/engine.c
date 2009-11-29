@@ -3209,6 +3209,7 @@ void R_GE_rasterResizeForRotation(unsigned int *sraster,
     int i, j, inew, jnew;
     int xoff = (wnew - w)/2;
     int yoff = (hnew - h)/2;
+
     for (i=0; i<hnew; i++) {
         for (j=0; j<wnew; j++) {
             newRaster[i*wnew + j] = gc->fill;
@@ -3229,9 +3230,18 @@ void R_GE_rasterResizeForRotation(unsigned int *sraster,
  * Code based on rotateAMColorLow() from leptonica library
 
  * draster must be pre-allocated.
+ 
+ * smoothAlpha allows alpha channel to vary smoothly based on 
+ * interpolation.  If this is FALSE, then alpha values are 
+ * taken from MAX(alpha) of relevant pixels.  This means that
+ * areas of full transparency remain fully transparent, 
+ * areas of opacity remain opaque, edges between anything less than opacity
+ * and opacity are opaque, and edges between full transparency
+ * and semitransparency become semitransparent.
  */
 void R_GE_rasterRotate(unsigned int *sraster, int w, int h, double angle,
-                       unsigned int *draster, const pGEcontext gc) {
+                       unsigned int *draster, const pGEcontext gc,
+                       Rboolean smoothAlpha) {
     int i, j;
     int xcen, ycen, wm2, hm2;
     int xdif, ydif, xpm, ypm, xp, yp, xf, yf;
@@ -3286,7 +3296,15 @@ void R_GE_rasterRotate(unsigned int *sraster, int w, int h, double angle,
                     xf * (16 - yf) * R_BLUE(word10) +
                     (16 - xf) * yf * R_BLUE(word01) +
                     xf * yf * R_BLUE(word11) + 128) / 256;
-            aval = 255;
+            if (smoothAlpha) {
+                aval = ((16 - xf) * (16 - yf) * R_ALPHA(word00) +
+                        xf * (16 - yf) * R_ALPHA(word10) +
+                        (16 - xf) * yf * R_ALPHA(word01) +
+                        xf * yf * R_ALPHA(word11) + 128) / 256;
+            } else {
+                aval = fmax2(fmax2(R_ALPHA(word00), R_ALPHA(word10)),
+                             fmax2(R_ALPHA(word01), R_ALPHA(word11)));
+            }
             *(dline + j) = R_RGBA(rval, gval, bval, aval);
         }
     }
