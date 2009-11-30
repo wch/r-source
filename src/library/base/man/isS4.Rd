@@ -48,12 +48,6 @@ asS4(object, flag = TRUE, complete = TRUE)
   package, so in particular it can be used to detect the need to
   \code{\link{require}} that package.  (But \code{asS4} does depend on
   \pkg{methods}.)
-
-  Note that the S4 methods for primitive functions do not apply to S3
-  classes and that the methods for basic classes, such as the vector
-  types, are sealed.  To apply S4 methods reliably to an S3 object,
-  define an S4 class that extends the S3 class (see
-  \code{\link{setOldClass}}).
   
   When \code{asS4} is called with \code{flag == FALSE}, the value of
   \code{complete} controls whether an attempt is made to transform

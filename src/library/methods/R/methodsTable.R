@@ -215,6 +215,9 @@
              returnAll = !(doMtable || doExcluded),
              simpleOnly = .simpleInheritanceGeneric(fdef), verbose = FALSE)
 {
+    ## to avoid infinite recursion, and somewhat for speed, turn off S4 methods for primitives
+    primMethods <- .allowPrimitiveMethods(FALSE)
+    on.exit(.allowPrimitiveMethods(primMethods))
   ## classes is a list of the class(x) for each arg in generic
   ## signature, with "missing" for missing args
   if(!is.environment(table)) {

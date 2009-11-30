@@ -883,6 +883,13 @@ setPrimitiveMethods <-
   function(f, fdef, code, generic, mlist = get(".Methods", envir = environment(generic)))
     .Call("R_M_setPrimitiveMethods", f, fdef, code, generic, mlist, PACKAGE="methods")
 
+### utility to turn ALL primitive methods on or off (to avoid possible inf. recursion)
+.allowPrimitiveMethods <-
+  function(onOff) {
+      if(onOff) code <- "SET"
+      else code <- "CLEAR"
+      .Call("R_M_setPrimitiveMethods", "", NULL, code, NULL, NULL, PACKAGE = "methods")
+  }
 
 
 findUnique <- function(what, message, where = topenv(parent.frame()))

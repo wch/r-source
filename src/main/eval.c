@@ -1946,6 +1946,42 @@ static SEXP evalArgs(SEXP el, SEXP rho, SEXP op, int dropmissing)
 }
 
 
+/* A version of DispatchOrEval that checks for possible S4 methods for any argument, not just
+ * the first.  Used in the code for `[` in do_subset.  differs in that all arguments are evaluated
+ * immediately, rather than after the call to R_possible_dispatch.
+ */
+attribute_hidden
+int DispatchAnyOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
+		   SEXP rho, SEXP *ans, int dropmissing, int argsevald)
+{
+    if(R_has_methods(op)) {
+        SEXP argValue, el,  value; Rboolean hasS4 = FALSE; int nprotect = 0, dispatch;
+	if(!argsevald) {
+            PROTECT(argValue = evalArgs(args, rho, op, dropmissing));
+	    nprotect++;
+	    argsevald = TRUE;
+	}
+	else argValue = args;
+	for(el = argValue; el != R_NilValue; el = CDR(el)) {
+	    if(IS_S4_OBJECT(CAR(el))) {
+	        value = R_possible_dispatch(call, op, argValue, rho, TRUE);
+	        if(value) {
+		    *ans = value;
+		    UNPROTECT(nprotect);
+		    return 1;
+	        }
+		else break;
+	    }
+	}
+	 /* else, use the regular DispatchOrEval, but now with evaluated args */
+	dispatch = DispatchOrEval(call, op, generic, argValue, rho, ans, dropmissing, argsevald);
+	UNPROTECT(nprotect);
+	return dispatch;
+    }
+    return DispatchOrEval(call, op, generic, args, rho, ans, dropmissing, argsevald);
+}
+
+
 /* DispatchOrEval is used in internal functions which dispatch to
  * object methods (e.g. "[" or "[[").  The code either builds promises
  * and dispatches to the appropriate method, or it evaluates the

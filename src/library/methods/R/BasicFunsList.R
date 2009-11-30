@@ -26,20 +26,20 @@
 .BasicFunsList <-
 list(
 ### subset/subassignment ops are regarded as language elements
-"$" = function(x, name)
+"$" = structure(function(x, name)
 {
     name <- as.character(substitute(name))
     standardGeneric("$")
-}
-, "$<-" = function(x, name, value)
+}, signature = c("x"))
+, "$<-" = structure(function(x, name, value)
 {
     name <- as.character(substitute(name))
     standardGeneric("$<-")
-}
+}, signature = c("x", "value"))
 , "[" = function(x, i, j, ..., drop = TRUE) standardGeneric("[")
 , "[<-" = function(x, i, j, ..., value) standardGeneric("[<-")
-, "[[" = function(x, i, j, ...) standardGeneric("[[")
-, "[[<-" = function(x, i, j, ..., value) standardGeneric("[[<-")
+, "[[" = function(x, i, j, ..., exact = TRUE) standardGeneric("[[")
+, "[[<-" = function(x, i, j, ..., exact = TRUE, value) standardGeneric("[[<-")
 ### S4 generic via R_possible_dispatch in do_matprod
 , "%*%" = function(x, y) standardGeneric("%*%")
 , "xtfrm" = function(x) standardGeneric("xtfrm")
@@ -70,6 +70,7 @@ list(
 .addBasicGeneric <-
     function(funslist, f, fdef, group = list())
 {
+    signature <- attr(fdef, "signature") #typically NULL, but see the case for "$"
     deflt <- get(f, "package:base")
     ## use the arguments of the base package function
     ##FIXME:  should also deal with the functions having ... as the first
@@ -85,7 +86,8 @@ list(
             substitute(standardGeneric(FNAME), list(FNAME=f))
     }
     deflt <- .derivedDefaultMethod(deflt)
-    elNamed(funslist, f) <- makeGeneric(f, fdef, deflt, group = group, package = "base")
+    elNamed(funslist, f) <- makeGeneric(f, fdef, deflt, group = group, package = "base",
+                                        signature = signature)
     funslist
 }
 

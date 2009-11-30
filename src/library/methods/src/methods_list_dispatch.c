@@ -254,21 +254,45 @@ SEXP R_quick_method_check(SEXP args, SEXP mlist, SEXP fdef)
     return(retValue);
 }
 
-SEXP R_quick_dispatch(SEXP args, SEXP mtable, SEXP fdef)
+SEXP R_quick_dispatch(SEXP args, SEXP genericEnv, SEXP fdef)
 {
     /* Match the list of (evaluated) args to the methods table. */
-    SEXP object, value, retValue = R_NilValue;
-    const char *class; int nprotect = 0;
+    static SEXP  R_allmtable = NULL, R_siglength;
+    SEXP object, value, mtable;
+    const char *class; int nprotect = 0, nsig, nargs;
 #define NBUF 200
     char buf[NBUF]; char *ptr;
-    if(!mtable || TYPEOF(mtable) != ENVSXP)
+    if(!R_allmtable) {
+	R_allmtable = install(".AllMTable");
+	R_siglength = install(".SigLength");
+    }
+    if(!genericEnv || TYPEOF(genericEnv) != ENVSXP)
+	return R_NilValue; /* a bug or not initialized yet */
+    mtable = findVarInFrame(genericEnv, R_allmtable);
+    if(mtable == R_UnboundValue || TYPEOF(mtable) != ENVSXP)
 	return R_NilValue;
+    object = findVarInFrame(genericEnv, R_siglength);
+    if(object == R_UnboundValue)
+	return R_NilValue;
+    switch(TYPEOF(object)) {
+    case REALSXP:
+	if(LENGTH(object) > 0)
+	    nsig = (int) REAL(object)[0];
+	else
+	    return R_NilValue;
+	break;
+    case INTSXP:
+	if(LENGTH(object) > 0)
+	    nsig = (int) INTEGER(object)[0];
+	else
+	    return R_NilValue;
+	break;
+    default:
+	return R_NilValue;
+    }
     buf[0] = '\0'; ptr = buf;
-    /*  doesn't check for nargs() > .SigLength.
-	Could do so but the search will fail
-	in this case anyway, and the test is not clearly faster
-	on average */
-    while(!isNull(args)) {
+    nargs = 0;
+    while(!isNull(args) && nargs < nsig) {
 	object = CAR(args); args = CDR(args);
 	if(TYPEOF(object) == PROMSXP) {
 	    if(PRVALUE(object) == R_UnboundValue) {
@@ -280,7 +304,10 @@ SEXP R_quick_dispatch(SEXP args, SEXP mtable, SEXP fdef)
 	    else
 		object = PRVALUE(object);
 	}
-	class = CHAR(STRING_ELT(R_data_class(object, TRUE), 0));
+	if(object == R_MissingArg)
+	    class = "missing";
+	else
+	    class = CHAR(STRING_ELT(R_data_class(object, TRUE), 0));
 	if(ptr - buf + strlen(class) + 2 > NBUF) {
 	    UNPROTECT(nprotect);
 	    return R_NilValue;
@@ -291,14 +318,21 @@ SEXP R_quick_dispatch(SEXP args, SEXP mtable, SEXP fdef)
 	   Or, better, the two should use the same C code. */
 	if(ptr > buf) { ptr = strcpy(ptr, "#");  ptr += 1;}
 	ptr = strcpy(ptr, class); ptr += strlen(class);
-	value = findVarInFrame(mtable, install(buf));
-	if(value != R_UnboundValue) {
-	    retValue = value;
-	    break;
-	}
+	nargs++;
     }
+    for(; nargs < nsig; nargs++) {
+	if(ptr - buf + strlen("missing") + 2 > NBUF) {
+	    UNPROTECT(nprotect);
+	    return R_NilValue;
+	}
+	ptr = strcpy(ptr, "#"); ptr +=1;
+	ptr = strcpy(ptr, "missing"); ptr += strlen("missing");
+    }	    
+    value = findVarInFrame(mtable, install(buf));
+    if(value == R_UnboundValue)
+	value = R_NilValue;
     UNPROTECT(nprotect);
-    return(retValue);
+    return(value);
 }
 
 /* call some S language functions */

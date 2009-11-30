@@ -268,7 +268,6 @@ removeGeneric <-
     return(found)
 }
 
-
 getMethods <-
     ## The list of methods for the specified generic.  If the function is not
     ## a generic function, returns NULL.
@@ -286,7 +285,7 @@ getMethods <-
   ## return a methods list object, but now this is the metadata from where,
   ## or is converted from the internal table if where is missing.
 
-    function(f, where = topenv(parent.frame()))
+    function(f, where = topenv(parent.frame()), table = FALSE)
 {
     nowhere <- missing(where)
     if(is.character(f))
@@ -299,6 +298,8 @@ getMethods <-
         stop(gettextf("invalid argument \"f\", expected a function or its name, got an object of class \"%s\"",
                       class(f)), domain = NA)
     if(!is.null(fdef)) {
+        if(table)
+          return(getMethodsForDispatch(fdef, TRUE))
         value <-
             if(nowhere) {
                 if(is(fdef, "genericFunction"))
@@ -1169,6 +1170,10 @@ isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = whe
         signature <- matchSignature(signature, fdef)
     if(length(signature) == 0L)
         TRUE # default method for primitive
+    else if(f %in% .subsetFuns)
+        ## primitive dispatch requires some argument to be an S4 object.
+        ## This does not quite guarantee an S4 object; e.g., a class union might have only basic types in it.
+        !any(is.na(match(signature, .BasicClasses)))
     else {
         sealed <- !is.na(match(signature[[1L]], .BasicClasses))
         if(sealed &&
@@ -1180,6 +1185,8 @@ isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE, where = whe
         sealed
     }
 }
+
+.subsetFuns <- c("[", "[[","[<-","[[<-")
 
 .lockedForMethods <- function(fdef, env) {
     ## the env argument is NULL if setMethod is only going to assign into the

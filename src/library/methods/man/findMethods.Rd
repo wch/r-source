@@ -35,7 +35,9 @@
   \code{findMethods} , returning information in the form of an object of
   class \code{MethodsList}, previously used for method dispatch.  It is
   not recommended, since the object returned is usually less convenient
-  than the value of \code{findMethods}.  
+  than the value of \code{findMethods}.  To see the actual table used
+  for methods dispatch, either use the \code{table = TRUE} option to
+  \code{getMethods} or call \code{\link{getMethodsForDispatch}} instead.
 }
 \usage{
 findMethods(f, where, classes = character(), inherited = FALSE)
@@ -43,7 +45,7 @@ findMethodSignatures(..., target = TRUE, methods = )
 
 hasMethods(f, where, package)
 
-getMethods(f, where)
+getMethods(f, where, table = FALSE)
 }
 \arguments{
   \item{f}{A generic function or the character-string name of one.}
@@ -54,6 +56,12 @@ getMethods(f, where)
     table of methods in the generic function itself, and
     \code{hasMethods} looks for metadata anywhere in the search list.
   }
+  \item{table}{ If \code{TRUE} in a call to \code{getMethods} the
+      returned value is the table used for dispatch, including
+      inherited methods discovered to date.  Used internally, but
+      since the default result is the now unused \code{mlist} object,
+      the default will likely be changed at some point.
+    }
   \item{classes}{If supplied, only methods whose signatures contain at
     least one of the supplied classes will be included in the value
     returned.}
@@ -84,8 +92,9 @@ getMethods(f, where)
   
   The functions obtain a table of the defined methods, either from the
   generic function or from the stored metadata object in the environment
-  specified by \code{where}.  The information in the table is converted
-  as described above to produce the returned value.
+  specified by \code{where}.  In a call to \code{getMethods}, the information in the table is converted
+  as described above to produce the returned value, except with the
+  \code{table} argument.
 
   Note that the list returned may contain the primitive function itself,
   when the generic corresponds to a primitive.  (Basically, because

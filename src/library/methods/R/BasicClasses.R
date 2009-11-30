@@ -517,7 +517,7 @@
     eval.parent(call)
     x
   })
-  setMethod("[[<-", ".environment", function (x, i, j, ..., value) {
+  setMethod("[[<-", ".environment", function (x, i, j, ..., exact = TRUE, value) {
     call <- sys.call()
     call[[2]] <- x@.Data
     eval.parent(call)

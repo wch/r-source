@@ -212,12 +212,18 @@ x$name
   \code{exact} must be named).
 }
 \section{S4 methods}{
-  These operators are also S4 generic, but as primitives, S4 methods
-  will be dispatched only on S4 objects.
+  These operators are also implicit S4 generics, but the
+  implementation of the primitive functions will only dispatch S4
+  methods if one of the arguments is an S4 object (it
+  is no longer true that only the first argument is checked).  Method
+  signatures can include any formal argument, but the primitive evaluation
+  will only look for a method if \code{\link{isS4}} would return
+  \code{TRUE} for some argument.
 
-  S4 methods for \code{$} will be passed \code{name} as a character
-  vector: despite the message given by \code{getGeneric("$")} you cannot
-  usefully write methods based on the class of \code{name}.
+  The generic function for the \code{$} operator is an exception: It
+  does not have \code{name} in its signature
+  because the grammar only alows symbols or string constants for the
+  \code{name} argument.
 }
 \section{Character indices}{
   Character indices can in some circumstances be partially matched (see

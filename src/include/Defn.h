@@ -782,6 +782,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define deparse1s		Rf_deparse1s
 # define DispatchGroup		Rf_DispatchGroup
 # define DispatchOrEval		Rf_DispatchOrEval
+# define DispatchAnyOrEval      Rf_DispatchAnyOrEval
 # define dynamicfindVar		Rf_dynamicfindVar
 # define EncodeRaw              Rf_EncodeRaw
 # define EncodeString           Rf_EncodeString
@@ -971,6 +972,7 @@ SEXP ddfindVar(SEXP, SEXP);
 SEXP deparse1(SEXP,Rboolean,int);
 SEXP deparse1line(SEXP,Rboolean);
 SEXP deparse1s(SEXP call);
+int DispatchAnyOrEval(SEXP, SEXP, const char *, SEXP, SEXP, SEXP*, int, int);
 int DispatchOrEval(SEXP, SEXP, const char *, SEXP, SEXP, SEXP*, int, int);
 int DispatchGroup(const char *, SEXP,SEXP,SEXP,SEXP,SEXP*);
 SEXP duplicated(SEXP, Rboolean);
