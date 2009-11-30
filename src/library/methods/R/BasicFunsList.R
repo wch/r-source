@@ -38,8 +38,8 @@ list(
 }
 , "[" = function(x, i, j, ..., drop = TRUE) standardGeneric("[")
 , "[<-" = function(x, i, j, ..., value) standardGeneric("[<-")
-, "[[" = function(x, i, j, ..., exact = TRUE) standardGeneric("[[")
-, "[[<-" = function(x, i, j, ..., exact = TRUE, value) standardGeneric("[[<-")
+, "[[" = function(x, i, j, ...) standardGeneric("[[")
+, "[[<-" = function(x, i, j, ..., value) standardGeneric("[[<-")
 ### S4 generic via R_possible_dispatch in do_matprod
 , "%*%" = function(x, y) standardGeneric("%*%")
 , "xtfrm" = function(x) standardGeneric("xtfrm")
