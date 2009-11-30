@@ -26,16 +26,16 @@
 .BasicFunsList <-
 list(
 ### subset/subassignment ops are regarded as language elements
-"$" = structure(function(x, name)
+"$" = function(x, name)
 {
     name <- as.character(substitute(name))
     standardGeneric("$")
-}, signature = c("x"))
-, "$<-" = structure(function(x, name, value)
+}
+, "$<-" = function(x, name, value)
 {
     name <- as.character(substitute(name))
     standardGeneric("$<-")
-}, signature = c("x", "value"))
+}
 , "[" = function(x, i, j, ..., drop = TRUE) standardGeneric("[")
 , "[<-" = function(x, i, j, ..., value) standardGeneric("[<-")
 , "[[" = function(x, i, j, ..., exact = TRUE) standardGeneric("[[")

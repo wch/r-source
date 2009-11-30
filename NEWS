@@ -167,10 +167,6 @@ BUG FIXES
 	could cause an infinite recursion.  An internal switch was
 	added to turn off all such methods from findInheritedMethods.
 
-    o	The R grammar prevents using the argument "name" in signatures
-	of methods for "$" and "$<-".  The generic functions have been
-	changed to reflect this.
-
 
 
 	**************************************************
