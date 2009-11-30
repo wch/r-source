@@ -154,22 +154,18 @@ BUG FIXES
     o	Using with(), eval() etc with a list with some unnamed
 	elements now works. (PR#14035)
 
-    o	Adding/subtracting a "difftime" object to/from a "POSIXt" or
-	"Date" object works again (it was broken by the addition of
-	Ops.difftime).
-
     o	The "quick" dispatch of S4 methods for primitive functions was
-        not happening, forcing a search each time. (Dispatch for true
-        functions was not affected.)
+	not happening, forcing a search each time. (Dispatch for true
+	functions was not affected.)
 
     o	Trying to dispatch methods for primitives during the search
-        for inherited methods slows that search down and potentially
-        could cause an infinite recursion.  An internal switch was
-        added to turn off all such methods from findInheritedMethods.
+	for inherited methods slows that search down and potentially
+	could cause an infinite recursion.  An internal switch was
+	added to turn off all such methods from findInheritedMethods.
 
     o	The R grammar prevents using the argument "name" in signatures
-        of methods for "$" and "$<-".  The generic functions have been
-        changed to reflect this.
+	of methods for "$" and "$<-".  The generic functions have been
+	changed to reflect this.
 
 
 
@@ -334,6 +330,10 @@ BUG FIXES
 
     o	tcltk::tk_select.list() is now more likely to remove the
 	widget immediately after selection is complete.
+
+    o	Adding/subtracting a "difftime" object to/from a "POSIXt" or
+	"Date" object works again (it was broken by the addition of
+	Ops.difftime).
 
 
 
