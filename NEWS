@@ -121,7 +121,7 @@ NEW FEATURES
 	value with zero weight does not force an NaN result.
 
 	There is now a "difftime" method.
-	
+
     o	bug.report() now has 'package' and 'lib.loc' arguments to
 	generate bug reports about packages.  When this is used, it
 	looks for a BugReports field in the package DESCRIPTION file,
@@ -131,6 +131,10 @@ NEW FEATURES
 
     o	quantile() now has a method for the date-time class "POSIXt",
  	and types 1 and 3 work for Dates and ordered factors.
+
+    o	length(<POSIXlt>)  now returns the length of the corresponding
+	abstract timedate-vector rather than always 9 (the length of the
+	underlying list structure).  (Wish of PR#14073 and PR#10507.)
 
 
 DEPRECATED & DEFUNCT

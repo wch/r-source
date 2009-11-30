@@ -25,9 +25,11 @@
 	    dn1 <- value[[idmn]];	value <- value[-idmn] }
 	attributes(obj) <- value
         dm <- dim(obj)
-	if(h.nam && is.null(dm) && length(obj) == length(n1))
+	## for list-like objects with a length() method:
+	L <- length(if(is.list(obj)) unclass(obj) else obj)
+	if(h.nam && is.null(dm) && L == length(n1))
 	    names(obj) <- n1
-	if(h.dim && length(obj) == prod(d1))
+	if(h.dim && L == prod(d1))
 	    dim(obj) <- dm <- d1
 	if(h.dmn && !is.null(dm)) {
             ddn <- sapply(dn1, length)

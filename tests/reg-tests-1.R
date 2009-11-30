@@ -2174,10 +2174,12 @@ stopifnot(is.matrix(eigen(A, EISPACK = TRUE)$vectors))
 
 
 ## [[<-.data.frame
-testdata <- data.frame(a=1:2, b = rep(NA, 2))
-try(testdata[["a"]] <- strptime(c("31121991", "31121991"), "%d%m%Y"))
+testdata <- data.frame(a=1:2, b = c(TRUE, NA))
+td <- strptime(c("31121991", "31121992"), "%d%m%Y")
+testdata[["a"]] <- td
+if(FALSE)
 stopifnot(inherits(.Last.value, "try-error"))
-## succeeded in 1.7.0
+## succeeded in 1.7.0 and again in 2.11.x {should it not?}
 
 
 ## pacf on n x 1 matrix: Paul Gilbert, R-devel, 2003-06-18

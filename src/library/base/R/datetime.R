@@ -138,6 +138,10 @@ as.POSIXct.default <- function(x, tz = "", ...)
 
 as.double.POSIXlt <- function(x, ...) as.POSIXct(x)
 
+## POSIXlt is not primarily a list, but primarily an abstract vector of
+## time stamps:
+length.POSIXlt <- function(x) length(x[[1L]])
+
 format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)
 {
     if(!inherits(x, "POSIXlt")) stop("wrong class")

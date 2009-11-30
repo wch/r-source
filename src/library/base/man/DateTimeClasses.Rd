@@ -33,6 +33,7 @@
 \alias{c.POSIXct}
 \alias{c.POSIXlt}
 \alias{as.matrix.POSIXlt}
+\alias{length.POSIXlt}
 \alias{mean.POSIXct}
 \alias{mean.POSIXlt}
 \alias{str.POSIXt}
@@ -46,7 +47,7 @@
 \title{Date-Time Classes}
 \description{
   Description of the classes \code{"POSIXlt"} and \code{"POSIXct"}
-  representing calendar dates and times (to the nearest second). 
+  representing calendar dates and times (to the nearest second).
 }
 \usage{
 \method{print}{POSIXct}(x, \dots)
@@ -97,7 +98,10 @@
   \code{"POSIXct"} is more convenient for including in data frames, and
   \code{"POSIXlt"} is closer to human-readable forms.
   A virtual class \code{"POSIXt"} inherits from both of the classes: it
-  is used to allow operations such as subtraction to mix the two classes.
+  is used to allow operations such as subtraction to mix the two
+  classes.  Note that \code{\link{length}(x)} is the length of the
+  corresponding (abstract) date/time vector, also in the
+  \code{"POSIXlt"} case.
 
   Components \code{wday} and \code{yday} of \code{"POSIXlt"} are for
   information, and are not used in the conversion to calendar time.
@@ -108,7 +112,7 @@
   platform-dependent.
   % POSIX says used 'initially', so it should probably be ignored.
   % glibc has a complicated fixup.
-  
+
   Logical comparisons and limited arithmetic are available for both
   classes.  One can add or subtract a number of seconds
   from a date-time object,
@@ -176,7 +180,7 @@
 #endif
   report errors separately and so are able to handle that time as
   valid.
-} 
+}
 \section{Sub-second Accuracy}{
   Classes \code{"POSIXct"} and  \code{"POSIXlt"} are able to express
   fractions of a second.  (Conversion of fractions between the two forms
@@ -187,7 +191,7 @@
 }
 \seealso{
   \link{Dates} for dates without times.
-  
+
   \code{\link{as.POSIXct}} and \code{\link{as.POSIXlt}} for conversion
   between the classes.
 
