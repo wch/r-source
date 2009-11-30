@@ -2208,21 +2208,23 @@ int DispatchGroup(const char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     }
 
     if( lsxp != rsxp ) {
-	/* special case some methods involving difftime */
-	const char *lname = CHAR(PRINTNAME(lmeth)),
-	    *rname = CHAR(PRINTNAME(rmeth));
-	if( streql(rname, "Ops.difftime") && 
-	    (streql(lname, "+.POSIXt") || streql(lname, "-.POSIXt") ||
-	     streql(lname, "+.Date") || streql(lname, "-.Date")) )
-	    rsxp = R_NilValue;
-	else if (streql(lname, "Ops.difftime") && 
-		 (streql(rname, "+.POSIXt") || streql(rname, "+.Date")) )
-	    lsxp = R_NilValue;
-	else if( isFunction(lsxp) && isFunction(rsxp) ) {
-	    warning(_("Incompatible methods (\"%s\", \"%s\") for \"%s\""),
-		    lname, rname, generic);
-	    UNPROTECT(2);
-	    return 0;
+	if ( isFunction(lsxp) && isFunction(rsxp) ) {
+	    /* special-case some methods involving difftime */
+	    const char *lname = CHAR(PRINTNAME(lmeth)),
+		*rname = CHAR(PRINTNAME(rmeth));
+	    if( streql(rname, "Ops.difftime") && 
+		(streql(lname, "+.POSIXt") || streql(lname, "-.POSIXt") ||
+		 streql(lname, "+.Date") || streql(lname, "-.Date")) )
+		rsxp = R_NilValue;
+	    else if (streql(lname, "Ops.difftime") && 
+		     (streql(rname, "+.POSIXt") || streql(rname, "+.Date")) )
+		lsxp = R_NilValue;
+	    else {
+		warning(_("Incompatible methods (\"%s\", \"%s\") for \"%s\""),
+			lname, rname, generic);
+		UNPROTECT(2);
+		return 0;
+	    }
 	}
 	/* if the right hand side is the one */
 	if( !isFunction(lsxp) ) { /* copy over the righthand stuff */
