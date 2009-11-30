@@ -7450,13 +7450,13 @@ a test of a length-2 @code{"dim"} attribute.
 
 There are a series of small macros/functions to help construct pairlists
 and language objects (whose internal structures just differ by
-@code{SEXPTYPE}.  Function @code{CONS(u, v)} is the basic building
+@code{SEXPTYPE}).  Function @code{CONS(u, v)} is the basic building
 block: is constructs a pairlist from @code{u} followed by @code{v}
 (which is a pairlist or @code{R_NilValue}).  @code{LCONS} is a variant
 that constructs a language object.  Functions @code{list1} to
 @code{list4} construct a pairlist from one to four items, and
 @code{lang1} to @code{lang4} do the same for a language object (a
-function to call plus zero to three arguments).  Function @code{elt} and
+function to call plus zero to three arguments).  Functions @code{elt} and
 @code{lastElt} find the @var{i}th element and the last element of a
 pairlist, and @code{nthcdr} returns a pointer to the @var{n}th position
 in the pairlist (whose @code{CAR} is the @var{n}th item).
