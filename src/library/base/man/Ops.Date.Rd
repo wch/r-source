@@ -12,8 +12,9 @@
 \description{
   Operators for the \code{"\link{Date}"} class.
 
-  There is an \code{\link[=S3groupGeneric]{Ops}} method and specific
-  methods for \code{+} and \code{-} for the \code{\link{Date}} class.
+  There is a method for the \code{\link[=S3groupGeneric]{Ops}} group
+  generic handing the comparison operators and specific methods for
+  \code{+} and \code{-}.
 }
 \usage{
 \special{date + x}
@@ -23,16 +24,22 @@
 }
 \arguments{
   \item{date}{date objects}
-  \item{date1, date2}{date objects or character vectors.  (Character
-    vectors are converted by \code{\link{as.Date}}.)}
-  \item{x}{a numeric vector (in days).}
+  \item{date1, date2}{date objects.  One can be a character
+    vector which will be converted by \code{\link{as.Date}}.}
+  \item{x}{a numeric vector (in days) \emph{or} an object of class
+    \code{"\link{difftime}"}, rounded to the nearest whole day.}
   \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
+}
+\details{
+  \code{x} does not need to be integer if specified as a numeric vector,
+  but see the comments about fractional days in the help for
+  \code{\link{Dates}}.
 }
 \examples{
 (z <- Sys.Date())
 z + 10
-z < c("2006-06-01", "2007-01-01", "2010-01-01")
+z < c("2009-06-01", "2010-01-01", "2015-01-01")
 }
 \keyword{utilities}
 \keyword{chron}

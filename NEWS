@@ -161,6 +161,10 @@ BUG FIXES
     o	tcltk::tk_select.list() is now more likely to remove the
 	widget immediately after selection is complete.
 
+    o	Adding/subtracting a "difftime" object to/from a "POSIXt" or
+	"Date" object works again (it was broken by the addition of
+	Ops.difftime).
+
 
 
 		CHANGES IN R VERSION 2.10.0
