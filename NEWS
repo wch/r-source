@@ -193,6 +193,11 @@ NEW FEATURES
 	from the console now also applies also to parse(file="")
 	(which previously had a limit of around 1024 bytes).
 
+    o	A Bioconductor mirror can be set for use by setRepositories()
+	via the option "BioC_mirror", e.g. the European mirror can be
+	selected by
+	options(BioC_mirror="http://bioconductor.statistik.tu-dortmund.de")
+
 
 INSTALLATION
 

@@ -6,13 +6,14 @@
 ##
 ## BioC entries are version-specific, with %v getting expanded to the
 ## BioC version associated with the current R version.
+## Also, %bm is substituted from the setting of getOption("BioC_mirror")
 ##
 menu_name	URL	default	source	win.binary	mac.binary
 CRAN	CRAN	@CRAN@	TRUE	TRUE	TRUE	TRUE
 CRANextra	CRAN (extras)	"http://www.stats.ox.ac.uk/pub/RWin"	TRUE	FALSE	TRUE	TRUE
 Omegahat	Omegahat	http://www.omegahat.org/R	FALSE	TRUE	FALSE	FALSE
-BioCsoft	"BioC software"	http://www.bioconductor.org/packages/%v/bioc	FALSE	TRUE	TRUE	TRUE
-BioCann	"BioC annotation"	http://www.bioconductor.org/packages/%v/data/annotation	FALSE	TRUE	TRUE	TRUE
-BioCexp	"BioC experiment"	http://www.bioconductor.org/packages/%v/data/experiment	FALSE	TRUE	TRUE	TRUE
-BioCextra	"BioC extra"	http://www.bioconductor.org/packages/%v/extra	FALSE	TRUE	TRUE	TRUE
+BioCsoft	"BioC software"	%bm/packages/%v/bioc	FALSE	TRUE	TRUE	TRUE
+BioCann	"BioC annotation"	%bm/packages/%v/data/annotation	FALSE	TRUE	TRUE	TRUE
+BioCexp	"BioC experiment"	%bm/packages/%v/data/experiment	FALSE	TRUE	TRUE	TRUE
+BioCextra	"BioC extra"	%bm/packages/%v/extra	FALSE	TRUE	TRUE	TRUE
 R-Forge	R-Forge	http://R-Forge.R-project.org	FALSE	TRUE	TRUE	TRUE
