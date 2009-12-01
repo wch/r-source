@@ -1,6 +1,6 @@
 % File src/library/base/man/scan.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{scan}
@@ -210,6 +210,10 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   should be regarded as a comment and be discarded.  Lines beginning
   with a comment character (possibly after white space with the default
   separator) are treated as blank lines.
+
+  There is a line-length limit of 4095 bytes when reading from the
+  console (which may impose a lower limit: see \sQuote{An Introduction
+  to R}).
 
   There is a check for a user interrupt every 1000 lines if \code{what}
   is a list, otherwise every 10000 items.

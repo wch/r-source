@@ -1350,7 +1350,7 @@ attribute_hidden
 SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SEXP srcfile)
 {
     SEXP rval, t;
-    char *bufp, buf[1024];
+    char *bufp, buf[CONSOLE_BUFFER_SIZE];
     int c, i, prompt_type = 1;
     volatile int savestack;
 
@@ -1376,7 +1376,7 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
 	if(n >= 0 && i >= n) break;
 	if (!*bufp) {
 	    if(R_ReadConsole((char *) Prompt(prompt, prompt_type),
-			     (unsigned char *)buf, 1024, 1) == 0)
+			     (unsigned char *)buf, CONSOLE_BUFFER_SIZE, 1) == 0)
 		goto finish;
 	    bufp = buf;
 	}

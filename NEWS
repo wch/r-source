@@ -189,6 +189,10 @@ NEW FEATURES
 	intended for special purposes (e.g. building a database
 	of help pages without fully installing all packages).
 
+    o	The documented line-length limit of 4095 bytes when reading
+	from the console now also applies also to parse(file="")
+	(which previously had a limit of around 1024 bytes).
+
 
 INSTALLATION
 
