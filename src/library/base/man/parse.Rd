@@ -1,6 +1,6 @@
 % File src/library/base/man/parse.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{parse}
@@ -59,10 +59,10 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", srcfile,
   that can be parsed (by default).
 
   When input is taken from the console, \code{n = NULL} is equivalent to
-  \code{n = 1}, and \code{n < 0} will read until an EOF character is read.
-#ifdef windows
-  (The EOF character is Ctrl-Z for the Windows front-ends.)
-#endif
+  \code{n = 1}, and \code{n < 0} will read until an EOF character is
+  read.  (The EOF character is Ctrl-Z for the Windows front-ends.)  The
+  line-length limit is 4095 bytes when reading from the console (which
+  may impose a lower limit: see \sQuote{An Introduction to R}).
 
   The default for \code{srcfile} is set as follows.  If
   \code{options("keep.source")} is \code{FALSE}, \code{srcfile}
