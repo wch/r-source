@@ -26,6 +26,9 @@ install-R-framework:
 	 mkdir "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/PrivateHeaders"; fi
 	@(cd "$(R_FRAMEWORK_DIR)/Versions" && \
 	  ln -f -s -n $(FW_VERSION) Current)
+	@(if [ -e "$(R_FRAMEWORK_DIR)/Resources" -a ! -L "$(R_FRAMEWORK_DIR)/Resources" ]; then \
+	  rm -rf "$(R_FRAMEWORK_DIR)/Resources.old"; mv "$(R_FRAMEWORK_DIR)/Resources" "$(R_FRAMEWORK_DIR)/Resources.old"; \
+	  fi)
 	@(cd "$(R_FRAMEWORK_DIR)"  && \
 	  ln -f -s -n Versions/Current/PrivateHeaders PrivateHeaders&& \
 	  ln -f -s -n Versions/Current/Headers Headers&& \

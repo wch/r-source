@@ -167,6 +167,12 @@ BUG FIXES
 	could cause an infinite recursion.  An internal switch was
 	added to turn off all such methods from findInheritedMethods.
 
+    o	R framework installation would not work properly if a rogue
+	Resources directory is present at the top level. Such
+	non-symlink will now be renamed to Resources.old (and
+	anything previously named Resources.old removed) as part of
+	the framework installation process.
+
 
 
 	**************************************************
