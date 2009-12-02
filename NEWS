@@ -31,7 +31,7 @@ NEW FEATURES
 	time taken by the OS to find all the packages the first time
 	it is used can dominate the time).
 
-    o	R CMD check has a new option '--timings' for record
+    o	R CMD check has a new option '--timings' to record
 	per-example timings in file <pkg>.Rcheck/<pkg>-Ex.timings.
 
     o	The TRE library has been updated to version 0.8.0 (minor bugfixes).
@@ -39,8 +39,8 @@ NEW FEATURES
     o	grep[l], [g]sub and [g]regexpr now work in bytes in an 8-bit
 	locales if there is no marked UTF-8 input string: this will be
 	somewhat faster, and for [g]sub() give the result in the
-	native encoding rather than in UTF-8 (which was the behaviour
-	prior to R 2.10.0).
+	native encoding rather than in UTF-8 (which returns to the
+	behaviour prior to R 2.10.0).
 
     o	A new argument 'skipCalls' has been added to browser() so that
 	it can report the original context when called by other
@@ -57,9 +57,9 @@ NEW FEATURES
 	non-UTF-8 locales.
 
     o	The graphics engine now supports rendering of raster (bitmap)
-	images, though not all graphics devices can provide (full) support.
-	Graphics device packages, e.g., RSvgDevice, will need
-	to be reinstalled.
+	images, though not all graphics devices can provide (full)
+	support.  Packages providing graphics devices (e.g., Cairo,
+	RSvgDevice, cairoDevice) will need to be reinstalled.
 
 	There is also support in the graphics engine for capturing
 	raster images from graphics devices (again not supported
@@ -85,22 +85,25 @@ NEW FEATURES
     o	The [ method for class "AsIs" allows the next method to change
 	the underlying class.  (Wish of Jens Oehlschlägel.)
 
-    o	write.csv[2] no longer allow 'append' to be changed.
+    o	write.csv[2] no longer allow 'append' to be changed: as ever,
+	direct calls to write.table() give more flexibility as well as
+	more room for error.
 
     o	The index page for HTML help for a package now collapses
     	multiple signatures for S4 methods into a single entry.
 
-    o	The use of .required by require/detach has been replaced by
-	.Depends which is set from the 'Depends' field of a package
-	(even in packages with name spaces).  By default detach()
-	prevents such dependencies from being detached: this can be
-	overridden by the argument 'force'.
+    o	The use of '.required' by require() and detach() has been
+	replaced by '.Depends' which is set from the 'Depends' field
+	of a package (even in packages with name spaces).  By default
+	detach() prevents such dependencies from being detached: this
+	can be overridden by the argument 'force'.
 
     o	bquote() has been extended to work on function definitions
 	(wish of PR#14031).
 
     o	detach() when applied to an object other than a package
-	returns the environment that has been detached.
+	returns the environment that has been detached, to parallel
+	attach().
 
     o	readline() in non-interactive use returns "" and does not
 	attempt to read from the 'terminal'.
@@ -108,9 +111,12 @@ NEW FEATURES
     o	New function file_ext() in package 'tools'.
 
     o	xtfrm() is now primitive and internally generic, as this allows
-	S4 methods to be set on it without name space scoping issues.
+	S4 methods to be set on it without name-space scoping issues.
 
-	Added "difftime" method for xtfrm().
+	There is now a "difftime" method, and the default method uses
+	unclass(x) is is.numeric(x) is true (which will be faster but
+	relies on is.numeric() having been set correctly for the
+	class).
 
     o	is.numeric(x) is now false for a "difftime" object
 	(multiplication and division make no sense for such objects).
@@ -130,7 +136,8 @@ NEW FEATURES
 	maintainer.  (Suggested by Barry Rowlingson.)
 
     o	quantile() now has a method for the date-time class "POSIXt",
- 	and types 1 and 3 work for Dates and ordered factors.
+ 	and types 1 and 3 (which never interpolate) work for Dates and
+ 	ordered factors.
 
     o	length(<POSIXlt>)  now returns the length of the corresponding
 	abstract timedate-vector rather than always 9 (the length of the
@@ -165,13 +172,13 @@ BUG FIXES
     o	Trying to dispatch methods for primitives during the search
 	for inherited methods slows that search down and potentially
 	could cause an infinite recursion.  An internal switch was
-	added to turn off all such methods from findInheritedMethods.
+	added to turn off all such methods from findInheritedMethods().
 
-    o	R framework installation would not work properly if a rogue
-	Resources directory is present at the top level. Such
-	non-symlink will now be renamed to Resources.old (and
-	anything previously named Resources.old removed) as part of
-	the framework installation process.
+    o	R framework installation (on Mac OS X) would not work properly
+	if a rogue Resources directory was present at the top
+	level.  Such non-symlink will now be renamed to Resources.old
+	(and anything previously named Resources.old removed) as part
+	of the framework installation process.
 
 
 
