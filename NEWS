@@ -114,7 +114,7 @@ NEW FEATURES
 	S4 methods to be set on it without name-space scoping issues.
 
 	There is now a "difftime" method, and the default method uses
-	unclass(x) is is.numeric(x) is true (which will be faster but
+	unclass(x) if is.numeric(x) is true (which will be faster but
 	relies on is.numeric() having been set correctly for the
 	class).
 
@@ -142,6 +142,10 @@ NEW FEATURES
     o	length(<POSIXlt>)  now returns the length of the corresponding
 	abstract timedate-vector rather than always 9 (the length of the
 	underlying list structure).  (Wish of PR#14073 and PR#10507.)
+
+    o   The readline completion backend no longer sorts possible
+    	completions alphabetically (e.g., function argument names) if
+    	R is compiled with readline >= 6.
 
 
 DEPRECATED & DEFUNCT

@@ -684,8 +684,11 @@ static void initialize_rlcompletion(void)
     /* Tell the completer that we want a crack first. */
     rl_attempted_completion_function = R_custom_completion;
 
-    /* Don't want spaces appended at the end */
-    rl_completion_append_character = '\0';
+    /* Disable sorting of possible completions; only readline >= 6 */
+#if RL_READLINE_VERSION >= 0x0600
+    /* if (rl_readline_version >= 0x0600) */
+    rl_sort_completion_matches = 0;
+#endif
 
     /* token boundaries.  Includes *,+ etc, but not $,@ because those
        are easier to handle at the R level if the whole thing is
@@ -740,6 +743,10 @@ R_custom_completion(const char *text, int start, int end)
 				       mkString(rl_line_buffer))),
 	startCall = PROTECT(lang2(RComp_assignStartSym, ScalarInteger(start))),
 	endCall = PROTECT(lang2(RComp_assignEndSym,ScalarInteger(end)));
+
+    /* Don't want spaces appended at the end.  Need to do this
+       everytime, as readline>=6 resets it to ' ' */
+    rl_completion_append_character = '\0';
 
     eval(linebufferCall, rcompgen_rho);
     eval(startCall, rcompgen_rho);
