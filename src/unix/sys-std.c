@@ -684,9 +684,6 @@ static void initialize_rlcompletion(void)
     /* Tell the completer that we want a crack first. */
     rl_attempted_completion_function = R_custom_completion;
 
-    /* Don't want spaces appended at the end */
-    rl_completion_append_character = '\0';
-
     /* token boundaries.  Includes *,+ etc, but not $,@ because those
        are easier to handle at the R level if the whole thing is
        available.  However, this breaks filename completion if partial
@@ -740,6 +737,10 @@ R_custom_completion(const char *text, int start, int end)
 				       mkString(rl_line_buffer))),
 	startCall = PROTECT(lang2(RComp_assignStartSym, ScalarInteger(start))),
 	endCall = PROTECT(lang2(RComp_assignEndSym,ScalarInteger(end)));
+
+    /* Don't want spaces appended at the end.  Need to do this
+       everytime because readline (>5) resets it to space. */
+    rl_completion_append_character = '\0';
 
     eval(linebufferCall, rcompgen_rho);
     eval(startCall, rcompgen_rho);

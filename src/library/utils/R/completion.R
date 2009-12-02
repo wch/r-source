@@ -268,7 +268,8 @@ matchAvailableTopics <-
     function(text)
 {
     if (length(text) != 1L || text == "") return (character(0L))
-    ll <- installed.packages()[.packages(), "LibPath"]
+    ll <- installed.packages()
+    ll <- ll[intersect(rownames(ll), .packages()), "LibPath"]
     indexFiles <- file.path(ll, names(ll), "help", "AnIndex")
     unique(unlist(lapply(indexFiles,
                          function(f) {
