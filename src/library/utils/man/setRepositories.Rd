@@ -31,7 +31,11 @@ setRepositories(graphics = getOption("menu.graphics"), ind = NULL)
   \file{\var{\link{R_HOME}}/etc/repositories}.
   That file can be edited for a site, or a user can have a personal copy
   in \file{\var{HOME}/.R/repositories} which will take precedence.
-
+  
+  A Bioconductor mirror can be selected by setting
+  \code{options("BioC_mirror")}: the default value is
+  \samp{"http://www.bioconductor.org"}.
+  
   The items that are preselected are those that are currently in
   \code{options("repos")} plus those marked as default in the
   list of known repositories.
