@@ -87,7 +87,8 @@
     \item{\env{R_ENVIRON}:}{Optional.  The path to the site environment
       file: see \link{Startup}.  Consulted at startup.}
     \item{\env{R_GSCMD}:}{Optional.  The path to GhostScript, used by
-      \code{\link{dev2bitmap}}.}
+      \code{\link{dev2bitmap}}, \code{\link{bitmap}} and
+      \code{\link{embedFonts}}.  Consulted when those functions are invoked.}
     \item{\env{R_HISTFILE}:}{Optional.  The path of the history file:
       see \link{Startup}.  Consulted at startup and when the history is
       saved.}
@@ -124,7 +125,7 @@
       Defaults at startup to the value of \env{MAKEINDEX}, and if that
       is unset to a value determined when \R was built.
       Used by \command{R CMD Rd2dvi}.}
-    \item{\env{R_PAPERSIZE}:}{Optional.  Use to set the default for
+    \item{\env{R_PAPERSIZE}:}{Optional.  Used to set the default for
       \code{\link{options}("papersize")}, e.g. used by
       \code{\link{pdf}} and \code{\link{postscript}}.}
     \item{\env{R_PDFLATEXCMD}:}{The path to \command{pdflatex}.
@@ -154,11 +155,14 @@
 #endif
     }
     \item{\env{R_UNZIPCMD}:}{The path to \command{unzip}.  Sets the
-      default value for \code{\link{options}("unzip")}.}
-    \item{\env{R_ZIPCMD}:}{The path to \command{zip}.}
+      iniital value for \code{\link{options}("unzip")} on a Unix-alike
+      when package \pkg{utils} is loaded.}
+    \item{\env{R_ZIPCMD}:}{The path to \command{zip}.  Only used in \R
+      itself by \command{R CMD INSTALL --build} on Windows.}
     \item{\env{TMPDIR}, \env{TMP}, \env{TEMP}:}{Consulted (in that
-      order) when setting the temporary directory.  See
-      \code{\link{tempdir}}.}
+      order) when setting the temporary directory for the session: see
+      \code{\link{tempdir}}.  \env{TMPDIR} is also used by some of the
+      utilities see the help for \code{\link{build}}.}
     \item{\env{TZ}:}{Optional. The current timezone.  See
       \code{\link{Sys.timezone}} for the system-specific
       formats.  Consulted as needed.}
@@ -174,8 +178,12 @@
   \describe{
     \item{\env{DISPLAY}:}{Optional: used by \code{\link{X11}}, Tk (in
       package \pkg{tcltk}), the data editor and various packages.}
-    \item{\env{EDITOR}:}{The path to the default editor.}
-    \item{\env{PAGER}:}{The path to the default pager.}
+    \item{\env{EDITOR}:}{The path to the default editor: sets the
+      default for \code{\link{options}("editor")} when package
+      \pkg{utils} is loaded.}
+    \item{\env{PAGER}:}{The path to the pager with the default setting of
+      \code{\link{options}("pager")}. The default value is chosen at
+      configuration, usually as the path to \command{less}.}
     \item{\env{R_PRINTCMD}:}{Sets the default for
       \code{\link{options}("printcmd")}, which sets the default print
       command to be used by \code{\link{postscript}}.}

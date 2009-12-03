@@ -26,7 +26,7 @@ file.show(\dots, header = rep("", nfiles),
     and the file-specific header.}
   \item{delete.file}{should the files be deleted after display?  Used
     for temporary files.}
-  \item{pager}{the pager to be used.}
+  \item{pager}{the pager to be used: not used on all platforms}
   \item{encoding}{character string giving the encoding to be assumed for
     the file(s).}
 }
@@ -39,7 +39,11 @@ file.show(\dots, header = rep("", nfiles),
   The basic Unix version concatenates the files (using the headers) to a
   temporary file, and displays it in the pager selected by the
   \code{pager} argument, which is a character vector specifying a system
-  command (usually \code{less}) to run on the set of files.
+  command to run on the set of files.  The \sQuote{factory-fresh}
+  default is to use \file{R_HOME/bin/pager}, which is a shell script
+  running the command specified by the environment variable \env{PAGER}
+  whose default is set at configuration, usually to \command{less}.  On a
+  Unix-alike \command{more} is used if \code{pager} is empty.
 
   Most GUI systems will use a separate pager window for each file, and
   let the user leave it up while \R continues running.  The selection of
@@ -49,12 +53,13 @@ file.show(\dots, header = rep("", nfiles),
   function which will be called with the same first four arguments as
   \code{file.show} and take care of interfacing to the GUI.
 
-  Not all implementations will honour \code{delete.file}.
-#ifdef windows
-  In particular, using an external pager on Windows does not, as there
-  is no way to know when the external application has finished with
-  the file.
-#endif
+  The \command{R.app} Mac OS X GUI uses its internal pager irrespective
+  of the setting of \code{pager}.
+
+  Not all implementations will honour \code{delete.file}.  In
+  particular, using an external pager on Windows does not, as there is
+  no way to know when the external application has finished with the
+  file.
 }
 \author{Ross Ihaka, Brian Ripley.}
 \seealso{
