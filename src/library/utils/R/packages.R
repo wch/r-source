@@ -150,7 +150,7 @@ function(db)
     lens <- sapply(x, length)
     pos <- which(lens > 0L)
     if(!length(pos)) return(db)
-    lens <- lens[pos]    
+    lens <- lens[pos]
     ## Unlist.
     x <- unlist(x)
     pat <- "^R[[:space:]]*\\(([[<>=!]+)[[:space:]]+(.*)\\)[[:space:]]*"
@@ -281,23 +281,18 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     else if(!(is.matrix(oldPkgs) && is.character(oldPkgs)))
 	stop("invalid 'oldPkgs'; must be a result from old.packages()")
 
-    if(is.character(ask) && ask == "graphics") {
-        if(.Platform$OS.type == "unix" && .Platform$GUI != "AQUA"
-           && capabilities("tcltk") && capabilities("X11")) {
-            k <- tcltk::tk_select.list(oldPkgs[,1L], oldPkgs[,1L], multiple = TRUE,
-                                       title = "Packages to be updated")
-            update <- oldPkgs[match(k, oldPkgs[,1L]), , drop=FALSE]
-        } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
+    update <- if(is.character(ask) && ask == "graphics") {
+        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
+           || (capabilities("tcltk") && capabilities("X11"))) {
             k <- select.list(oldPkgs[,1L], oldPkgs[,1L], multiple = TRUE,
-                             title = "Packages to be updated")
-            update <- oldPkgs[match(k, oldPkgs[,1L]), , drop=FALSE]
-        } else update <- text.select(oldPkgs)
-        if(nrow(update) == 0L) return(invisible())
-    } else if(is.logical(ask) && ask) update <- text.select(oldPkgs)
-    else update <- oldPkgs
+                             title = "Packages to be updated", graphics = TRUE)
+            oldPkgs[match(k, oldPkgs[,1L]), , drop=FALSE]
+        } else text.select(oldPkgs)
+    } else if(is.logical(ask) && ask) text.select(oldPkgs)
+    else oldPkgs
 
 
-    if(!is.null(update)) {
+    if(length(update)) {
         if(is.null(instlib)) instlib <-  update[, "LibPath"]
         ## do this a library at a time, to handle dependencies correctly.
         libs <- unique(instlib)
@@ -383,19 +378,17 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
     update <- character(0L)
     if(is.character(ask) && ask == "graphics") {
-        if(.Platform$OS.type == "unix"
-           && capabilities("tcltk") && capabilities("X11")) {
-            k <- tcltk::tk_select.list(res, multiple = TRUE,
-                                       title = "New packages to be installed")
-            update <- res[match(k, res)]
-        } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
+        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
+           || (capabilities("tcltk") && capabilities("X11"))) {
             k <- select.list(res, multiple = TRUE,
-                             title = "New packages to be installed")
+                             title = "New packages to be installed",
+                             graphics = TRUE)
             update <- res[match(k, res)]
         }
     } else if(is.logical(ask) && ask)
         update <- res[match(select.list(res, multiple = TRUE,
-                                        title = "New packages to be installed")
+                                        title = "New packages to be installed",
+                                        graphics = FALSE)
                             , res)]
     if(length(update)) {
         install.packages(update, lib = lib.loc[1L], contriburl = contriburl,
@@ -707,14 +700,11 @@ setRepositories <-
         res <- integer(0L)
         if(graphics) {
             ## return a list of row numbers.
-            if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
-                res <- match(select.list(a[, 1L], a[default, 1L], multiple = TRUE,
-                                         "Repositories"), a[, 1L])
-            else if(.Platform$OS.type == "unix" &&
-                    capabilities("tcltk") && capabilities("X11"))
-                res <- match(tcltk::tk_select.list(a[, 1L], a[default, 1L],
-                                                   multiple = TRUE, "Repositories"),
-                             a[, 1L])
+            if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
+               || (capabilities("tcltk") && capabilities("X11")))
+                res <- match(select.list(a[, 1L], a[default, 1L],
+                                         multiple = TRUE, "Repositories",
+                                         graphics = TRUE), a[, 1L])
         } else {
             cat(gettext("--- Please select repositories for use in this session ---\n"))
             nc <- length(default)

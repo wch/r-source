@@ -21,9 +21,7 @@ menu <- function(choices, graphics = FALSE, title = "")
         if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
             res <- select.list(choices, multiple=FALSE, title=title)
             return(match(res, choices, nomatch = 0L))
-        } else if(.Platform$OS.type == "unix"
-                && capabilities("tcltk") && capabilities("X11")
-                && nzchar(Sys.getenv("DISPLAY"))) {
+        } else if(capabilities("tcltk") && capabilities("X11")) {
             res <- tcltk::tk_select.list(choices, multiple=FALSE, title=title)
             return(match(res, choices, nomatch = 0L))
         }

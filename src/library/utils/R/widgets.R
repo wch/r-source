@@ -14,11 +14,17 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
+select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL,
+                        graphics = getOption("menu.graphics"))
 {
     if(!interactive()) stop("select.list() cannot be used non-interactively")
-    if(.Platform$OS.type == "windows" | .Platform$GUI == "AQUA")
+    if(isTRUE(graphics)) {
+        if (.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
         return(.Internal(select.list(list, preselect, multiple, title)))
+        ## must be Unix here
+        else if(graphics && capabilities("tcltk") && capabilities("X11"))
+            return(tcltk::tk_select.list(list, preselect, multiple, title))
+    }
     ## simple text-based alternatives.
     if(!multiple) {
         res <- menu(list, , title)

@@ -147,6 +147,12 @@ NEW FEATURES
     	completions alphabetically (e.g., function argument names) if
     	R is compiled with readline >= 6.
 
+    o	select.list() gains a 'graphics' argument to allow Windows/Mac
+	users to choose the text interface.  This changes the behaviour
+	of new.packages(ask=T) to be like update.packages(ask=T) on
+	those platforms, to use a text menu: use ask="graphics" for a
+	graphical menu.
+
 
 DEPRECATED & DEFUNCT
 

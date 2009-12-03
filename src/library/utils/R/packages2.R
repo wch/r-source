@@ -168,11 +168,8 @@ install.packages <-
 
     if(missing(pkgs) || !length(pkgs)) {
         ## if no packages were specified, use a menu
-	if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
-	    SelectList <- select.list
-	} else if(.Platform$OS.type == "unix" &&
-		  capabilities("tcltk") && capabilities("X11")) {
-	    SelectList <- tcltk::tk_select.list
+	if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
+           || (capabilities("tcltk") && capabilities("X11"))) {
 	} else
 	    stop("no packages were specified")
 
@@ -180,10 +177,10 @@ install.packages <-
 	    available <- available.packages(contriburl = contriburl,
 					    method = method)
 	if(NROW(available)) {
-	    pkgs <- SelectList(rownames(available), multiple = TRUE, title = "Packages")
-            ## avoid duplicate entries in menus, since the latest will
-            ## be picked up
-            pkgs <- unique(pkgs)
+            ## avoid duplicate entries in menus, since the latest available
+            ## will be picked up
+	    pkgs <- select.list(unique(rownames(available)), multiple = TRUE,
+                                title = "Packages", graphics = TRUE)
 	}
 	if(!length(pkgs)) stop("no packages were specified")
     }
