@@ -148,10 +148,12 @@ NEW FEATURES
     	R is compiled with readline >= 6.
 
     o	select.list() gains a 'graphics' argument to allow Windows/Mac
-	users to choose the text interface.  This changes the behaviour
-	of new.packages(ask=T) to be like update.packages(ask=T) on
-	those platforms, to use a text menu: use ask="graphics" for a
-	graphical menu.
+	users to choose the text interface.  This changes the
+	behaviour of new.packages(ask=TRUE) to be like
+	update.packages(ask=TRUE) on those platforms in using a text
+	menu: use ask="graphics" for a graphical menu.
+
+    o	New function chooseBioCmirror() to set the "BioC_mirror" option.
 
 
 DEPRECATED & DEFUNCT

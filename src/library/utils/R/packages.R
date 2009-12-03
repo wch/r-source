@@ -663,6 +663,21 @@ chooseCRANmirror <- function(graphics = getOption("menu.graphics"))
     invisible()
 }
 
+chooseBioCmirror <- function(graphics = getOption("menu.graphics"))
+{
+    if(!interactive()) stop("cannot choose a BioC mirror non-interactively")
+    m <- c("http://www.bioconductor.org",
+           # format omits 'package' so does not work
+           #"http://watson.nci.nih.gov/bioc_mirror",
+           "http://bioconductor.statistik.tu-dortmund.de")
+    names(m) <- c("Seattle (USA)",
+                  #"Bethesda (USA)",
+                  "Dortmund (Germany)")
+    res <- menu(names(m), graphics, "BioC mirror")
+    if(res > 0L) options("BioC_mirror" = m[res])
+    invisible()
+}
+
 setRepositories <-
     function(graphics = getOption("menu.graphics"), ind = NULL)
 {

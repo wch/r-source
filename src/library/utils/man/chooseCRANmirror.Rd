@@ -17,9 +17,10 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
 }
 \arguments{
   \item{graphics}{Logical. If true, use a graphical list: on Windows or
-    Mac OS X GUI use a list box, and on a Unix-alike if \pkg{tcltk} and an X
-    server are available, use Tk widget. Otherwise use a text
-    \code{\link{menu}}.}
+    Mac OS X GUI use a list box, and on a Unix-alike if package
+    \pkg{tcltk} and an X server are available, use a Tk
+    widget. Otherwise use a text \code{\link{menu}}.}
+  
   \item{all}{Logical, get all known mirrors or only the ones flagged as OK.}
   \item{local.only}{Logical, try to get most recent list from CRAN or
     use file on local disk only.}
@@ -41,6 +42,7 @@ getCRANmirrors(all = FALSE, local.only = FALSE)
   \code{getCRANmirrors()} returns a data frame with mirror information.
 }
 \seealso{
-  \code{\link{setRepositories}}, \code{\link{contrib.url}}.
+  \code{\link{setRepositories}}, \code{\link{chooseBioCmirror}},
+  \code{\link{contrib.url}}.
 }
 \keyword{ utilities }
