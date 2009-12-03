@@ -31,12 +31,11 @@ options(papersize = as.vector(papersize),
 
 ## non standard settings for the R.app GUI of the Mac OS X port
 if(.Platform$GUI == "AQUA") {
-    ## this is set to let RAqua use both X11 device and
-    ## X11/TclTk
+    ## this is set to let RAqua use both X11 device and X11/TclTk
     if (Sys.getenv("DISPLAY") == "")
 	Sys.setenv("DISPLAY" = ":0")
 
-    ## this is to allow g77 compiler to work
+    ## this is to allow gfortran compiler to work
     Sys.setenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep = ""))
 }## end "Aqua"
 

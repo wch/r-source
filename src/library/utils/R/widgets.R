@@ -14,8 +14,9 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL,
-                        graphics = getOption("menu.graphics"))
+select.list <-
+    function(list, preselect = NULL, multiple = FALSE, title = NULL,
+             graphics = getOption("menu.graphics"))
 {
     if(!interactive()) stop("select.list() cannot be used non-interactively")
     if(isTRUE(graphics)) {
@@ -32,17 +33,17 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL,
         else return(list[res])
     } else {
         nc <- length(list)
-        cat(title, "\n")
+        cat(title, "\n", sep = "")
         def <- if(is.null(preselect)) rep(FALSE, nc)
         else list %in% preselect
         op <- paste(format(seq_len(nc)), ": ",
                     ifelse(def, "+", " "), " ", list, sep="")
         if(nc > 10L) {
             fop <- format(op)
-            nw <- nchar(fop[1L], "w") + 2
+            nw <- nchar(fop[1L], "w") + 2L
             ncol <- getOption("width") %/% nw
             if(ncol > 1L)
-                op <- paste(fop, c(rep("  ", ncol - 1), "\n"),
+                op <- paste(fop, c(rep("  ", ncol - 1L), "\n"),
                             sep ="", collapse="")
             cat("", op, sep="\n")
         } else cat("", op, "", sep="\n")
@@ -53,7 +54,7 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL,
 	    if(!inherits(res, "error")) break
 	    cat(gettext("Invalid input, please try again\n"))
 	}
-        if(!length(res) || (length(res) == 1L && !res[1L])) return(character(0L))
+        if(!length(res) || (length(res) == 1L && !res[1L])) return(character())
         res <- sort(res[1 <= res && res <= nc])
         return(list[res])
     }
