@@ -25,18 +25,24 @@
 
 #include <stdlib.h>
 
-#include "Defn.h"
-#include "Print.h"
-
 /* don't use X11 function prototypes (which tend to ...): */
 #define NeedFunctionPrototypes 0
+#ifndef _Xconst
+#define _Xconst const
+#endif
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
 #include <X11/cursorfont.h>
 
+#include "Defn.h"
+#include "Print.h"
+
+
+/* <FIXME> this is wrong  as KeySym is defined nowadays */
 #define KeySym int
+/* </FIXME> */
 #define DEEvent XEvent
 
 typedef enum { UP, DOWN, LEFT, RIGHT } DE_DIRECTION;
@@ -1244,7 +1250,7 @@ static KeySym GetKey(DEEvent * event)
     char text[1];
     KeySym iokey;
 
-    XLookupString(event, text, 10, &iokey, 0);
+    XLookupString((XKeyEvent *)event, text, 1, &iokey, 0);
     return iokey;
 }
 
@@ -1253,7 +1259,7 @@ static char GetCharP(DEEvent * event)
     char text[1];
     KeySym iokey;
 
-    XLookupString(event, text, 1, &iokey, 0);
+    XLookupString((XKeyEvent *)event, text, 1, &iokey, 0);
     return text[0];
 }
 
@@ -1274,7 +1280,7 @@ static void doControl(DEEvent * event)
     KeySym iokey;
 
     (*event).xkey.state = 0;
-    XLookupString(event, text, 1, &iokey, 0);
+    XLookupString((XKeyEvent *)event, text, 1, &iokey, 0);
     /* one row overlap when scrolling: top line <--> bottom line */
     switch (text[0]) {
 	case 'b':
@@ -1303,7 +1309,7 @@ static void doConfigure(DEEvent * event)
 
 static void RefreshKeyboardMapping(DEEvent * event)
 {
-    XRefreshKeyboardMapping(event);
+    XRefreshKeyboardMapping((XMappingEvent *)event);
 }
 
 /* Initialize/Close Windows */
@@ -1410,7 +1416,7 @@ static Rboolean initwin(void) /* TRUE = Error */
 	return TRUE;
 
     XSetStandardProperties(iodisplay, iowindow, ioname, ioname, None,
-			   ioname, 0, &iohint);
+			   (char **)NULL, 0, &iohint);
 
     winattr.backing_store = Always;
     XChangeWindowAttributes(iodisplay, iowindow, CWBackingStore, &winattr);
