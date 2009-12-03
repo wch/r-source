@@ -1,6 +1,6 @@
 % File src/library/base/man/Platform.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{.Platform}
@@ -37,9 +37,9 @@
     character string, giving the type of GUI in use, or \code{"unknown"}
     if no GUI can be assumed.  Possible values are for Unix-alikes the
     values given via the \option{-g} command-line flag (\code{"X11"},
-    \code{"Tk"}, \code{"GNOME"}), \code{"AQUA"} (running under
-    \code{R.app} on Mac OS X), \code{"Rgui"} and \code{"RTerm"}
-    (Windows) and perhaps others under alternative front-ends or embedded \R.
+    \code{"Tk"}), \code{"AQUA"} (running under \code{R.app} on Mac OS X),
+    \code{"Rgui"} and \code{"RTerm"} (Windows) and perhaps others under
+    alternative front-ends or embedded \R.
   }
   \item{endian}{
     character string, \code{"big"} or \code{"little"}, giving the
@@ -50,17 +50,33 @@
   \item{pkgType}{
     character string, the preferred setting for
     \code{\link{options}("pkgType")}.  Values \code{"source"},
-    \code{"mac.binary"} and \code{"win.binary"} are currently in use.
+    \code{"mac.binary"}, \code{"mac.binary.leopard"} and
+    \code{"win.binary"} are currently in use.
   }
   \item{path.sep}{
     character string, giving the \bold{path} \bold{sep}arator,
     used on your platform, e.g., \code{":"} on Unix-alikes and
-    \code{";"} on Windows.  Used to separate paths in variables
-    such as \code{PATH} and \code{TEXINPUTS}.
+    \code{";"} on Windows.  Used to separate paths in environment
+    variables such as \code{PATH} and \code{TEXINPUTS}.
   }
   \item{r_arch}{
     character string, possibly \code{""}.  The name of the
-    architecture-specific directories used in this build of \R.
+    architecture-specific directory used in this build of \R.
+  }
+}
+
+\section{AQUA}{
+  \code{.Platform$GUI} is set to \code{"AQUA"} under the Mac OS X GUI,
+  \code{R.app}. This has a number of consequences:
+  \itemize{
+    \item the \env{DISPLAY} environment variable is set.
+    \item appends \file{/usr/local/bin} to the \env{PATH} environment variable.
+    \item the default graphics device is set to \code{quartz}.
+    \item selects native (rather than Tk) widget for
+    \code{\link{menu}(graphics = TRUE)}.
+    \item HTML help is displayed in the internal browser.
+    \item The spreadsheet-like data editor/viewer uses a Quartz version
+    rather than the X11 one.
   }
 }
 \seealso{
