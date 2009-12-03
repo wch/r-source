@@ -69,8 +69,9 @@
   \code{.Platform$GUI} is set to \code{"AQUA"} under the Mac OS X GUI,
   \code{R.app}. This has a number of consequences:
   \itemize{
-    \item the \env{DISPLAY} environment variable is set
-    \item the default graphics device is set to \code{quartz}
+    \item the \env{DISPLAY} environment variable is set.
+    \item appends \file{/usr/local/bin} to the \env{PATH} environment variable.
+    \item the default graphics device is set to \code{quartz}.
     \item selects native (rather than Tk) widgets for the \code{graphics
       = TRUE} options of \code{\link{menu}} and \code{\link{select.list}}.
     \item HTML help is displayed in the internal browser.
