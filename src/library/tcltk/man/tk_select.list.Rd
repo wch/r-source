@@ -1,6 +1,6 @@
 % File src/library/tcltk/man/tk_select.list.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{tk_select.list}
@@ -26,7 +26,9 @@ tk_select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
   scrollbar if the list is too long to fit comfortably on the screen.
 
   The dialog box is \emph{modal}, so a selection must be made or
-  cancelled before the \R session can proceed.
+  cancelled before the \R session can proceed.  As from \R 2.10.1
+  double-clicking on an item is equivalent to selecting it and then
+  clicking \code{OK}.
 
   If Tk is version 8.5 or later, themed widgets will be used.
 }
