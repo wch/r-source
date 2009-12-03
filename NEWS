@@ -28,6 +28,10 @@ NEW FEATURES
 	selected by
 	options(BioC_mirror="http://bioconductor.statistik.tu-dortmund.de")
 
+    o	Double-clicking in a tk_select.list() list box now selects the
+	item and closes the list box (as happens on the Windows
+	select.list() widget).
+
 
 INSTALLATION
 

@@ -52,7 +52,7 @@ tk_select.list <-
     ## allow for win furniture and buttons, and for e.g. KDE panel
     ht <- min(length(list), scht %/% 20) # a guess of font height
     box <- tklistbox(dlg, height = ht,
-                     listvariable = lvar, bg = "white",
+                     listvariable = lvar, bg = "white", setgrid = 1,
                      selectmode = ifelse(multiple, "multiple", "single"))
     tmp <- tcl("font", "metrics", tkcget(box, font=NULL))
     ## fudge factor here seems to be 1 on Windows, 3 on X11.
@@ -63,7 +63,7 @@ tk_select.list <-
         scr <- if(have_ttk) ttkscrollbar(dlg, command = function(...) tkyview(box, ...))
         else tkscrollbar(dlg, repeatinterval=5, command = function(...) tkyview(box, ...))
         box <- tklistbox(dlg, height = ht, width = 0,
-                         listvariable = lvar, bg = "white",
+                         listvariable = lvar, bg = "white", setgrid = 1,
                          selectmode = ifelse(multiple, "multiple", "single"),
                          yscrollcommand = function(...)tkset(scr,...))
         tkpack(box, side="left", fill="both", expand=TRUE)
@@ -80,6 +80,7 @@ tk_select.list <-
         tkselection.set(box, i - 1L) # 0-based
 
     tkbind(dlg, "<Destroy>", onCancel)
+    tkbind(dlg, "<Double-ButtonPress-1>", onOK)
     tkfocus(box)
     tclServiceMode(oldmode)
     tkwait.window(dlg)
