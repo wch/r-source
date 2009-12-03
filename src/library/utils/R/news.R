@@ -12,7 +12,7 @@ function(query, package = "R", lib.loc = NULL,
         return(invisible())
 
     attr(db, "package") <- package
-            
+
     ## Is there a way to directly call/use subset.data.frame?
     ## E.g.,
     ##   subset(db, query)
@@ -89,7 +89,9 @@ function(x, ...)
             vchunk <- vchunks[[i]]
             if(all(!is.na(category <- vchunk$Category)
                    & nzchar(category))) {
-                cchunks <- split(vchunk, category)
+                ## need to preserve order of headings.
+                cchunks <- split(vchunk,
+                                 factor(category, levels=unique(category)))
                 cheaders <-
                     sprintf("%s%s\n\n",
                             c("", rep.int("\n", length(cchunks) - 1L)),

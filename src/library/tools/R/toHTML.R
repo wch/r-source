@@ -1,8 +1,5 @@
-toHTML <-
-function(x, ...)
-{
-    UseMethod("toHTML")
-}
+toHTML <- function(x, ...) UseMethod("toHTML")
+
 
 HTMLheader <-
 function(title="R", logo=TRUE, up=NULL, top=file.path(Rhome, "doc/html/index.html"),
@@ -108,7 +105,9 @@ function(x, ...)
                         vchunk <- vchunks[[i]]
                         if(all(!is.na(category <- vchunk$Category)
                                & nzchar(category))) {
-                            cchunks <- split(vchunk, category)
+                            ## need to preserve order of headings.
+                            cchunks <- split(vchunk,
+                                             factor(category, levels=unique(category)))
                             c(vheaders[i],
                               Map(function(h, t)
                                   c(h, print_items(t$Text)),
