@@ -650,11 +650,13 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     } else latexEncoding <- NA
 
     ## we know this has been ordered by prepare2_Rd, but
-    ## need to sort the aliases.
+    ## need to sort the aliases (if any)
     nm <- character(length(Rd))
     isAlias <- sections == "\\alias"
-    nm[isAlias] <- sapply(Rd[isAlias], as.character)
-    sortorder <- order(sectionOrder[sections], toupper(nm), nm)
+    sortorder <- if (any(isAlias)) {
+        nm[isAlias] <- sapply(Rd[isAlias], as.character)
+        order(sectionOrder[sections], toupper(nm), nm)
+    } else  order(sectionOrder[sections])
     Rd <- Rd[sortorder]
     sections <- sections[sortorder]
 

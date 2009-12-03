@@ -373,6 +373,8 @@ BUG FIXES
 	"Date" object works again (it was broken by the addition of
 	Ops.difftime).
 
+    o	Conversion to latex of an Rd file with no aliases failed.
+
 
 
 		CHANGES IN R VERSION 2.10.0
