@@ -80,6 +80,24 @@ function(x, ...)
 toHTML.news_db <-
 function(x, ...)
 {
+    ## local version
+    htmlify2 <- function(x) {
+        x <- psub("<([[:alnum:]._]+)>", "@VAR@\\1@EVAR@", x)
+        x <- fsub("&", "&amp;", x)
+        x <- fsub("---", "&mdash;", x)
+        ## usually a flag like --timing
+        ## x <- fsub("--", "&ndash;", x)
+        x <- fsub("``", "&ldquo;", x)
+        x <- fsub("''", "&rdquo;", x)
+        x <- psub("`([^']+)'", "&lsquo;\\1&rsquo;", x)
+        x <- fsub("`", "'", x)
+        x <- fsub("<", "&lt;", x)
+        x <- fsub(">", "&gt;", x)
+        x <- fsub("@VAR@", "<var>", x)
+        x <- fsub("@EVAR@", "</var>", x)
+        x
+    }
+
     ## For now, only do something if the NEWS file could be read without
     ## problems, see utils:::print.news_db():
     if(is.null(bad <- attr(x, "bad"))
@@ -88,7 +106,7 @@ function(x, ...)
         return(character())
 
     print_items <- function(x)
-        c("<ul>", sprintf("<li>%s</li>", htmlify(x)), "</ul>")
+        c("<ul>", sprintf("<li>%s</li>", htmlify2(x)), "</ul>")
 
     x$Text <- iconv(x$Text, to = "UTF-8")
 
