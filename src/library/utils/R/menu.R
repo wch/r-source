@@ -17,12 +17,11 @@
 menu <- function(choices, graphics = FALSE, title = "")
 {
     if(!interactive()) stop("menu() cannot be used non-interactively")
-    if(graphics) {
-        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
-            res <- select.list(choices, multiple=FALSE, title=title)
-            return(match(res, choices, nomatch = 0L))
-        } else if(capabilities("tcltk") && capabilities("X11")) {
-            res <- tcltk::tk_select.list(choices, multiple=FALSE, title=title)
+    if(isTRUE(graphics)) {
+        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
+           || (capabilities("tcltk") && capabilities("X11"))) {
+            res <- select.list(choices, multiple=FALSE, title=title,
+                               graphics = TRUE)
             return(match(res, choices, nomatch = 0L))
         }
     }

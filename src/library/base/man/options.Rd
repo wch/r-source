@@ -464,10 +464,11 @@ getOption(x, default = NULL)
       printed on URL downloads etc.  Default is 2, for failure causes.
       Set to 1 or 0 to get more information.}
 
-    \item{\code{menu.graphics}:}{Logical: should graphical menus be
-      used if available?.  Defaults to \code{TRUE}.  Currently applies
-      to \code{\link{chooseCRANmirror}}, \code{\link{setRepositories}}
-      and to select from multiple help files in \code{\link{help}}.}
+    \item{\code{menu.graphics}:}{Logical: should graphical menus be used
+      if available?.  Defaults to \code{TRUE}.  Currently applies to
+      \code{\link{select.list}}, \code{\link{chooseCRANmirror}},
+      \code{\link{setRepositories}} and to select from multiple (text)
+      help files in \code{\link{help}}.}
 
     \item{\code{pkgType}:}{The default type of packages to be downloaded
       and installed -- see \code{\link{install.packages}}.

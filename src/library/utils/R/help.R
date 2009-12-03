@@ -165,7 +165,7 @@ function(x, ...)
                     tmp[tools::file_path_sans_ext(tmp$File) == tp[i], "Title"]
                 }
                 txt <- paste(titles, " {", basename(paths), "}", sep="")
-                ## FIXME: use html page for HTML help.
+                ## the default on menu() is currtently graphics = FALSE
                 res <- menu(txt, title = gettext("Choose one"),
                             graphics = getOption("menu.graphics"))
                 if(res > 0) file <- p[res]

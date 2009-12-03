@@ -288,7 +288,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                              title = "Packages to be updated", graphics = TRUE)
             oldPkgs[match(k, oldPkgs[,1L]), , drop=FALSE]
         } else text.select(oldPkgs)
-    } else if(is.logical(ask) && ask) text.select(oldPkgs)
+    } else if(isTRUE(ask)) text.select(oldPkgs)
     else oldPkgs
 
 
@@ -377,18 +377,17 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     res <- setdiff(poss, installed)
 
     update <- character(0L)
+    graphics <- FALSE
     if(is.character(ask) && ask == "graphics") {
+        ask <- TRUE
         if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
-           || (capabilities("tcltk") && capabilities("X11"))) {
-            k <- select.list(res, multiple = TRUE,
-                             title = "New packages to be installed",
-                             graphics = TRUE)
-            update <- res[match(k, res)]
-        }
-    } else if(is.logical(ask) && ask)
+           || (capabilities("tcltk") && capabilities("X11")))
+            graphics <- TRUE
+    }
+    if(isTRUE(ask))
         update <- res[match(select.list(res, multiple = TRUE,
                                         title = "New packages to be installed",
-                                        graphics = FALSE)
+                                        graphics = graphics)
                             , res)]
     if(length(update)) {
         install.packages(update, lib = lib.loc[1L], contriburl = contriburl,
@@ -605,7 +604,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 {
     if(is.null(repos)) return(NULL)
     if("@CRAN@" %in% repos && interactive()) {
-        cat(gettext("--- Please select a CRAN mirror for use in this session ---\n"))
+        cat(gettext("--- Please select a CRAN mirror for use in this session ---"))
         flush.console()
         chooseCRANmirror()
         m <- match("@CRAN@", repos)
@@ -695,29 +694,11 @@ setRepositories <-
 
     default <- a[["default"]]
 
-    if(length(ind)) res <- as.integer(ind)
+    res <- if(length(ind)) as.integer(ind)
     else {
-        res <- integer(0L)
-        if(graphics) {
-            ## return a list of row numbers.
-            if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
-               || (capabilities("tcltk") && capabilities("X11")))
-                res <- match(select.list(a[, 1L], a[default, 1L],
-                                         multiple = TRUE, "Repositories",
-                                         graphics = TRUE), a[, 1L])
-        } else {
-            cat(gettext("--- Please select repositories for use in this session ---\n"))
-            nc <- length(default)
-            cat("", paste(seq_len(nc), ": ",
-                          ifelse(default, "+", " "), " ", a[, 1L],
-                          sep=""),
-                "", sep="\n")
-            cat(gettext("Enter one or more numbers separated by spaces, or an empty line to cancel\n"))
-            res <- scan("", what=0, quiet=TRUE, nlines=1L)
-            if(!length(res) || (length(res) == 1L && !res[1L]))
-                return(invisible())
-            res <- res[1 <= res && res <= nc]
-        }
+        title <- if(graphics) "Repositories" else gettext("--- Please select repositories for use in this session ---\n")
+        match(select.list(a[, 1L], a[default, 1L], multiple = TRUE, title,
+                           graphics = graphics), a[, 1L])
     }
     if(length(res)) {
         repos <- a[["URL"]]

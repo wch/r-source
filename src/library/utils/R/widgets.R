@@ -46,7 +46,7 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL,
                             sep ="", collapse="")
             cat("", op, sep="\n")
         } else cat("", op, "", sep="\n")
-	cat(gettext("Enter zero or more numbers separated by space\n"))
+        cat(gettext("Enter one or more numbers separated by spaces, or an empty line to cancel\n"))
 	repeat {
             res <- tryCatch(scan("", what=0, quiet=TRUE, nlines=1),
                             error = identity)
