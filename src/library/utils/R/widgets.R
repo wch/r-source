@@ -17,6 +17,8 @@
 select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
 {
     if(!interactive()) stop("select.list() cannot be used non-interactively")
+    if(!is.null(title) && (!is.character(title) || length(title) != 1))
+        stop("'title' must be NULL or a length-1 character vector")
     if(.Platform$OS.type == "windows" | .Platform$GUI == "AQUA")
         return(.Internal(select.list(list, preselect, multiple, title)))
     ## simple text-based alternatives.

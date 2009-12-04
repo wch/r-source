@@ -1,6 +1,6 @@
 % File src/library/utils/man/select.list.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{select.list}
@@ -13,12 +13,13 @@
 select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
 }
 \arguments{
-  \item{list}{character. A list of items.}
+  \item{list}{a character vector of items.}
   \item{preselect}{a character vector, or \code{NULL}.  If non-null and
     if the string(s) appear in the list, the item(s) are selected
     initially.}
   \item{multiple}{logical: can more than one item be selected?}
-  \item{title}{optional character string for window title.}
+  \item{title}{optional character string for window title, or
+    \code{NULL} for no title.}
 }
 \details{
 #ifdef windows
