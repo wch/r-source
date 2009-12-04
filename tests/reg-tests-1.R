@@ -5989,6 +5989,7 @@ quantile(ll, type = 1)
 quantile(ll, type = 3)
 ## failed prior to 2.11.0
 
+
 ## (asymptotic) point estimate in wilcox.test(*, conf.int=TRUE)
 alt <- eval(formals(stats:::wilcox.test.default)$alternative)
 Z <- c(-2, 0, 1, 1, 2, 2, 3, 5, 5, 5, 7)
@@ -6003,3 +6004,11 @@ E2 <- sapply(alt, function(a.)
 stopifnot(E1[-1] == E1[1],
 	  E2[-1] == E2[1])
 ## was continiuity corrected, dependent on 'alternative', prior to 2.10.1
+
+
+## read.table with embedded newlines in header (PR#14103)
+writeLines(c('"B1', 'B2"', 'B3'), "test.dat")
+z <- read.table("test.dat", header = TRUE)
+unlink("test.dat")
+stopifnot(identical(z, data.frame("B1.B2"="B3")))
+## Left part of header to be read as data in R < 2.11.0

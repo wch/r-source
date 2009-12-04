@@ -192,6 +192,9 @@ BUG FIXES
 	(and anything previously named Resources.old removed) as part
 	of the framework installation process.
 
+    o	Using read.table(header=TRUE) on a header with an embedded new
+    	line would copy part of the header into the data.  (PR#14103)
+
 
 
 	**************************************************
