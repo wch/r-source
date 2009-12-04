@@ -75,10 +75,14 @@ tk_select.list <-
         tkpack(box, side="left", fill="both")
     }
     preselect <- match(preselect, choices)
-    ans.select_list <- character() # avoid name conflicts
-    for(i in preselect[preselect > 0L])
-        tkselection.set(box, i - 1L) # 0-based
+    preselect <- preselect[preselect > 0L] - 1L # 0-based
+    if(length(preselect)) {
+        for(i in preselect) tkselection.set(box, i)
+        ## ensure first (and usally only) pre-selection is visible
+        tkyview(box, preselect[1L])
+    }
 
+    ans.select_list <- character() # avoid name conflicts
     tkbind(dlg, "<Destroy>", onCancel)
     tkbind(dlg, "<Double-ButtonPress-1>", onOK)
     tkfocus(box)
