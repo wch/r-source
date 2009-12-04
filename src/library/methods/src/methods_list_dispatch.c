@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2007   The R Development Core Team.
+ *  Copyright (C) 2001-2009   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -526,10 +526,14 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 */
 static Rboolean is_missing_arg(SEXP symbol, SEXP ev)
 {
-    R_varloc_t loc = R_findVarLocInFrame(ev, symbol);
+    R_varloc_t loc;
+
+    /* Sanity check, so don't translate */
+    if (!isSymbol(symbol)) error("'symbol' must be a SYMSXP");
+    loc = R_findVarLocInFrame(ev, symbol);
     if (loc == NULL)
 	error(_("could not find symbol '%s' in frame of call"),
-	      CHAR(asChar(symbol)));
+	      CHAR(PRINTNAME(symbol)));
     return R_GetVarLocMISSING(loc);
 }
 
@@ -852,7 +856,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
     static SEXP R_mtable = NULL, R_allmtable, R_sigargs, R_siglength;
     int nprotect = 0;
     SEXP mtable, classes, thisClass, sigargs, siglength, f_env = R_NilValue,
-	method, f, val=R_NilValue;
+	method, f, val = R_NilValue;
     char *buf, *bufptr;
     int nargs, i, lwidth = 0;
     Rboolean prim_case = FALSE;
@@ -892,6 +896,8 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	error(_("Generic \"%s\" seems not to have been initialized for table dispatch---need to have .SigArgs and .AllMtable assigned in its environment"));
     nargs = NUMERIC_VALUE(siglength);
     PROTECT(classes = NEW_LIST(nargs)); nprotect++;
+    if (nargs > LENGTH(sigargs))
+	error("'.SigArgs' is shorter than '.SigLength' says it should be");
     for(i = 0; i < nargs; i++) {
 	SEXP arg_sym = VECTOR_ELT(sigargs, i);
 	if(is_missing_arg(arg_sym, ev))
