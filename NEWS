@@ -375,6 +375,10 @@ BUG FIXES
 
     o	Conversion to latex of an Rd file with no aliases failed.
 
+    o	wilcox.test(*, conf.int=TRUE) has achieved.level corrected and, for
+	exact=FALSE, now gives an 'estimate' which does not depend on the
+	alternative used.
+
 
 
 		CHANGES IN R VERSION 2.10.0

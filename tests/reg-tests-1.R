@@ -5988,3 +5988,18 @@ ll <- seq(as.Date("2000-1-7"), as.Date("1997-12-17"), by="-1 month")
 quantile(ll, type = 1)
 quantile(ll, type = 3)
 ## failed prior to 2.11.0
+
+## (asymptotic) point estimate in wilcox.test(*, conf.int=TRUE)
+alt <- eval(formals(stats:::wilcox.test.default)$alternative)
+Z <- c(-2, 0, 1, 1, 2, 2, 3, 5, 5, 5, 7)
+E1 <- sapply(alt, function(a.)
+	     wilcox.test(Z, conf.int = TRUE,
+			 alternative = a., exact = FALSE)$estimate)
+X <- c(6.5, 6.8, 7.1, 7.3, 10.2)
+Y <- c(5.8, 5.8, 5.9, 6, 6, 6, 6.3, 6.3, 6.4, 6.5, 6.5)
+E2 <- sapply(alt, function(a.)
+	     wilcox.test(X,Y, conf.int = TRUE,
+			 alternative = a., exact = FALSE)$estimate)
+stopifnot(E1[-1] == E1[1],
+	  E2[-1] == E2[1])
+## was continiuity corrected, dependent on 'alternative', prior to 2.10.1

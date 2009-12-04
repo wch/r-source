@@ -121,7 +121,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ESTIMATE <- median(diffs)
                 names(ESTIMATE) <- "(pseudo)median"
             }
-        } else {
+        } else { ## not exact, maybe ties or zeroes
             NTIES <- table(r)
             z <- STATISTIC - n * (n + 1)/4
             SIGMA <- sqrt(n * (n + 1) * (2 * n + 1) / 24
@@ -134,15 +134,14 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                            "less" = -0.5)
                 METHOD <- paste(METHOD, "with continuity correction")
             }
-
-            PVAL <- pnorm((z - CORRECTION) / SIGMA)
-            if(alternative == "two.sided")
-                PVAL <- 2 * min(PVAL, 1 - PVAL)
-            if(alternative == "greater")
-                PVAL <- 1 - PVAL
-
+	    z <- (z - CORRECTION) / SIGMA
+	    PVAL <- switch(alternative,
+			   "less" = pnorm(z),
+			   "greater" = pnorm(z, lower.tail=FALSE),
+			   "two.sided" = 2 * min(pnorm(z),
+						 pnorm(z, lower.tail=FALSE)))
             if(conf.int) {
-                ## Asymptotic confidence intervale for the median in the
+                ## Asymptotic confidence interval for the median in the
                 ## one-sample case.  When used with paired values this
                 ## gives a confidence interval for mean(x) - mean(y).
                 ## Algorithm not published, thus better documented here.
@@ -156,25 +155,22 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ## the asymptotic Wilcoxon statistic of x - mu - d and
                 ## the quantile zq.
                 wdiff <- function(d, zq) {
-                    CORRECTION.CI <- 0
                     xd <- x - d
                     xd <- xd[xd != 0]
                     nx <- length(xd)
                     dr <- rank(abs(xd))
-                    zd <- sum(dr[xd > 0])
-                    NTIES.CI <- table(dr)
-                    zd <- zd - nx * (nx + 1)/4
-                    SIGMA.CI <- sqrt(nx * (nx + 1) * (2 * nx + 1) / 24
-                                     - sum(NTIES.CI^3 -  NTIES.CI) / 48)
-                    if(correct) {
-                        CORRECTION.CI <-
+		    zd <- sum(dr[xd > 0]) - nx * (nx + 1)/4
+		    NTIES.CI <- table(dr)
+		    SIGMA.CI <- sqrt(nx * (nx + 1) * (2 * nx + 1) / 24
+				     - sum(NTIES.CI^3 - NTIES.CI) / 48)
+		    CORRECTION.CI <-
+			if(correct) {
                             switch(alternative,
-                                   "two.sided" = sign(z) * 0.5,
+                                   "two.sided" = sign(zd) * 0.5,
                                    "greater" = 0.5,
                                    "less" = -0.5)
-                    }
-                    zd <- (zd - CORRECTION.CI) / SIGMA.CI
-                    zd - zq
+			} else 0
+		    (zd - CORRECTION.CI) / SIGMA.CI - zq
                 }
                 ## Here we optimize the function wdiff in d over the set
                 ## c(mumin, mumax).
@@ -226,6 +222,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                   c(-Inf, u)
                 })
                 attr(cint, "conf.level") <- conf.level
+		correct <- FALSE # no continuity correction for estimate
                 ESTIMATE <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
                                     zq = 0)$root
 		names(ESTIMATE) <- "(pseudo)median"
@@ -243,7 +240,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
             }
 	}
     }
-    else {
+    else { ##-------------------------- 2-sample case ---------------------------
         if(length(y) < 1)
             stop("not enough 'y' observations")
         METHOD <- "Wilcoxon rank sum test"
@@ -292,7 +289,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                            },
                            "less"= {
                                qu <- qwilcox(alpha, n.x, n.y)
-                               if(qu == 0 ) qu <- 1
+                               if(qu == 0) qu <- 1
                                ql <- n.x*n.y - qu
                                achieved.alpha <- pwilcox(trunc(qu)-1,n.x,n.y)
                                c(-Inf, diffs[ql + 1])
@@ -320,12 +317,12 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                      "less" = -0.5)
                 METHOD <- paste(METHOD, "with continuity correction")
             }
-            PVAL <- pnorm((z - CORRECTION)/SIGMA)
-            if(alternative == "two.sided")
-                PVAL <- 2 * min(PVAL, 1 - PVAL)
-            if(alternative == "greater")
-                PVAL <- 1 - PVAL
-
+	    z <- (z - CORRECTION) / SIGMA
+	    PVAL <- switch(alternative,
+			   "less" = pnorm(z),
+			   "greater" = pnorm(z, lower.tail=FALSE),
+			   "two.sided" = 2 * min(pnorm(z),
+						 pnorm(z, lower.tail=FALSE)))
             if(conf.int) {
                 ## Asymptotic confidence interval for the location
                 ## parameter mean(x) - mean(y) in the two-sample case
@@ -336,25 +333,23 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 alpha <- 1 - conf.level
                 mumin <- min(x) - max(y)
                 mumax <- max(x) - min(y)
-                CORRECTION.CI <- 0
                 wdiff <- function(d, zq) {
                     dr <- rank(c(x - d, y))
                     NTIES.CI <- table(dr)
                     dz <- (sum(dr[seq_along(x)])
                            - n.x * (n.x + 1) / 2 - n.x * n.y / 2)
-                    if(correct) {
-                        CORRECTION.CI <-
+		    CORRECTION.CI <-
+			if(correct) {
                             switch(alternative,
                                    "two.sided" = sign(dz) * 0.5,
                                    "greater" = 0.5,
                                    "less" = -0.5)
-                    }
+			} else 0
                     SIGMA.CI <- sqrt((n.x * n.y / 12) *
                                      ((n.x + n.y + 1)
                                       - sum(NTIES.CI^3 - NTIES.CI)
                                       / ((n.x + n.y) * (n.x + n.y - 1))))
-                    dz <- (dz - CORRECTION.CI) / SIGMA.CI
-                    dz - zq
+                    (dz - CORRECTION.CI) / SIGMA.CI - zq
                 }
                 root <- function(zq) {
                     ## in extreme cases we need to return endpoints,
@@ -379,6 +374,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                     c(-Inf, u)
                 })
                 attr(cint, "conf.level") <- conf.level
+		correct <- FALSE # no continuity correction for estimate
                 ESTIMATE <- uniroot(wdiff, c(mumin, mumax), tol=1e-4,
                                     zq=0)$root
                 names(ESTIMATE) <- "difference in location"
