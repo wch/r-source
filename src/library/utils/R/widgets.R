@@ -15,29 +15,32 @@
 #  http://www.r-project.org/Licenses/
 
 select.list <-
-    function(list, preselect = NULL, multiple = FALSE, title = NULL,
+    function(choices, preselect = NULL, multiple = FALSE, title = NULL,
              graphics = getOption("menu.graphics"))
 {
     if(!interactive()) stop("select.list() cannot be used non-interactively")
+    if(!is.null(title) && (!is.character(title) || length(title) != 1))
+        stop("'title' must be NULL or a length-1 character vector")
     if(isTRUE(graphics)) {
         if (.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
-        return(.Internal(select.list(list, preselect, multiple, title)))
+        return(.Internal(select.list(choices, preselect, multiple, title)))
         ## must be Unix here
         else if(graphics && capabilities("tcltk") && capabilities("X11"))
-            return(tcltk::tk_select.list(list, preselect, multiple, title))
+            return(tcltk::tk_select.list(choices, preselect, multiple, title))
     }
     ## simple text-based alternatives.
     if(!multiple) {
-        res <- menu(list, , title)
-        if(res < 1L || res > length(list)) return("")
-        else return(list[res])
+        res <- menu(choices, FALSE, title)
+        if(res < 1L || res > length(choices)) return("")
+        else return(choices[res])
     } else {
-        nc <- length(list)
-        cat(title, "\n", sep = "")
+        nc <- length(choices)
+        if (length(title) && nzchar(title[1L]))
+            cat(title, "\n", sep = "")
         def <- if(is.null(preselect)) rep(FALSE, nc)
-        else list %in% preselect
+        else choices %in% preselect
         op <- paste(format(seq_len(nc)), ": ",
-                    ifelse(def, "+", " "), " ", list, sep="")
+                    ifelse(def, "+", " "), " ", choices, sep="")
         if(nc > 10L) {
             fop <- format(op)
             nw <- nchar(fop[1L], "w") + 2L
@@ -56,7 +59,7 @@ select.list <-
 	}
         if(!length(res) || (length(res) == 1L && !res[1L])) return(character())
         res <- sort(res[1 <= res && res <= nc])
-        return(list[res])
+        return(choices[res])
     }
 }
 

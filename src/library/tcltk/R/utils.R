@@ -15,12 +15,12 @@
 #  http://www.r-project.org/Licenses/
 
 tk_select.list <-
-    function(list, preselect = NULL, multiple = FALSE, title = NULL)
+    function(choices, preselect = NULL, multiple = FALSE, title = NULL)
 {
     have_ttk <- as.character(tcl("info", "tclversion")) >= "8.5"
     if(!have_ttk) ttkbutton <- tkbutton
     lvar <- tclVar()
-    tclObj(lvar) <- list
+    tclObj(lvar) <- choices
     oldmode <- tclServiceMode(FALSE)
     dlg <- tktoplevel()
     tkwm.title(dlg, title)
@@ -34,7 +34,7 @@ tk_select.list <-
     }
     onOK <- function() {
         res <- 1L + as.integer(tkcurselection(box))
-        ans.select_list <<- list[res]
+        ans.select_list <<- choices[res]
         tkgrab.release(dlg)
         tkdestroy(dlg)
     }
@@ -50,16 +50,16 @@ tk_select.list <-
 
     scht <- as.numeric(tclvalue(tkwinfo("screenheight", dlg))) - 200L
     ## allow for win furniture and buttons, and for e.g. KDE panel
-    ht <- min(length(list), scht %/% 20) # a guess of font height
+    ht <- min(length(choices), scht %/% 20) # a guess of font height
     box <- tklistbox(dlg, height = ht,
                      listvariable = lvar, bg = "white", setgrid = 1,
                      selectmode = ifelse(multiple, "multiple", "single"))
     tmp <- tcl("font", "metrics", tkcget(box, font=NULL))
     ## fudge factor here seems to be 1 on Windows, 3 on X11.
     tmp <- as.numeric(sub(".*linespace ([0-9]+) .*", "\\1", tclvalue(tmp)))+3
-    ht <- min(length(list), scht %/% tmp)
+    ht <- min(length(choices), scht %/% tmp)
     tkdestroy(box)
-    if(ht < length(list)) {
+    if(ht < length(choices)) {
         scr <- if(have_ttk) ttkscrollbar(dlg, command = function(...) tkyview(box, ...))
         else tkscrollbar(dlg, repeatinterval=5, command = function(...) tkyview(box, ...))
         box <- tklistbox(dlg, height = ht, width = 0,
@@ -74,7 +74,7 @@ tk_select.list <-
                          selectmode = ifelse(multiple, "multiple", "single"))
         tkpack(box, side="left", fill="both")
     }
-    preselect <- match(preselect, list)
+    preselect <- match(preselect, choices)
     ans.select_list <- character() # avoid name conflicts
     for(i in preselect[preselect > 0L])
         tkselection.set(box, i - 1L) # 0-based

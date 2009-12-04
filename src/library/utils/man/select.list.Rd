@@ -1,6 +1,6 @@
 % File src/library/utils/man/select.list.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{select.list}
@@ -10,16 +10,17 @@
   Select item(s) from a character vector.
 }
 \usage{
-select.list(list, preselect = NULL, multiple = FALSE, title = NULL,
+select.list(choices, preselect = NULL, multiple = FALSE, title = NULL,
              graphics = getOption("menu.graphics"))
 }
 \arguments{
-  \item{list}{character. A list of items.}
+  \item{choices}{a character vector of items.}
   \item{preselect}{a character vector, or \code{NULL}.  If non-null and
     if the string(s) appear in the list, the item(s) are selected
     initially.}
   \item{multiple}{logical: can more than one item be selected?}
-  \item{title}{optional character string for window title.}
+  \item{title}{optional character string for window title, or
+    \code{NULL} for no title.}
   \item{graphics}{logical: should a graphical widget be used?}
 }
 \details{

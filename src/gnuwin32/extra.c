@@ -814,15 +814,15 @@ RECT *RgetMDIsize(void); /* in rui.c */
 
 SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP list, preselect, ans = R_NilValue;
+    SEXP choices, preselect, ans = R_NilValue;
     const char **clist;
     int i, j = -1, n, mw = 0, multiple, nsel = 0;
     int xmax, ymax, ylist, fht, h0;
     Rboolean haveTitle;
 
     checkArity(op, args);
-    list = CAR(args);
-    if(!isString(list)) error(_("invalid '%s' argument"), "list");
+    choices = CAR(args);
+    if(!isString(choices)) error(_("invalid '%s' argument"), "choices");
     preselect = CADR(args);
     if(!isNull(preselect) && !isString(preselect))
 	error(_("invalid '%s' argument"), "preselect");
@@ -832,10 +832,10 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!multiple && isString(preselect) && LENGTH(preselect) != 1)
 	error(_("invalid '%s' argument"), "preselect");
 
-    n = LENGTH(list);
+    n = LENGTH(choices);
     clist = (const char **) R_alloc(n + 1, sizeof(char *));
     for(i = 0; i < n; i++) {
-	clist[i] = translateChar(STRING_ELT(list, i));
+	clist[i] = translateChar(STRING_ELT(choices, i));
 	mw = max(mw, gstrwidth(NULL, SystemFont, clist[i]));
     }
     clist[n] = NULL;

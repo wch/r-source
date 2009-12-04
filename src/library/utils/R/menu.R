@@ -14,13 +14,13 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-menu <- function(choices, graphics = FALSE, title = "")
+menu <- function(choices, graphics = FALSE, title = NULL)
 {
     if(!interactive()) stop("menu() cannot be used non-interactively")
     if(isTRUE(graphics)) {
         if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
            || (capabilities("tcltk") && capabilities("X11"))) {
-            res <- select.list(choices, multiple=FALSE, title=title,
+            res <- select.list(choices, multiple = FALSE, title = title,
                                graphics = TRUE)
             return(match(res, choices, nomatch = 0L))
         }
