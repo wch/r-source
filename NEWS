@@ -171,6 +171,8 @@ DEPRECATED & DEFUNCT
     o	index.search() (which was deprecated in 2.10.0) is no longer
 	exported and has a different argument list.
 
+    o	Use of multiple arguments to return() is now defunct.
+
 
 BUG FIXES
 

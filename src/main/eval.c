@@ -1261,34 +1261,8 @@ SEXP attribute_hidden do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (CDR(args) == R_NilValue) /* one argument */
 	v = eval(CAR(args), rho);
     else {
-	SEXP a, vals;
-
-	/* We do the evaluation here so that we can tag any untagged
-	   return values if they are specified by symbols. */
-
-	/* this used to crash with missing args, so keep them and check later */
-	PROTECT(vals = evalListKeepMissing(args, rho));
-	a = args;
-	v = vals;
-	while (!isNull(a)) {
-	    if (CAR(a) == R_DotsSymbol)
-		error(_("'...' not allowed in return"));
-	    if (isNull(TAG(a)) && isSymbol(CAR(a)))
-		SET_TAG(v, CAR(a));
-	    a = CDR(a);
-	    v = CDR(v);
-	}
-
-	warningcall(call, _("multi-argument returns are deprecated"));
-
-	for (v = vals; v != R_NilValue; v = CDR(v)) {
-	    if (CAR(v) == R_MissingArg)
-		errorcall(call, _("empty expression in return value"));
-	    if (NAMED(CAR(v)))
-		SETCAR(v, duplicate(CAR(v)));
-	}
-	v = PairToVectorList(vals);
-	UNPROTECT(1);
+	v = R_NilValue; /* to avoid compiler warnings */
+	errorcall(call, _("multi-argument returns are not permitted"));
     }
 
     findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, v);
