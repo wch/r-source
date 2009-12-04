@@ -61,8 +61,9 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE,
 
   For a classed \R object, the sort order is taken from
   \code{\link{xtfrm}}: as its help page notes, this can be slow unless a
-  suitable method has been defined.  For factors, this sorts on the
-  internal codes and not on the printed representation.
+  suitable method has been defined or \code{\link{is.numeric}(x)} is
+  true.  For factors, this sorts on the internal codes, which is
+  particularly appropriate for ordered factors.
 }
 \note{
   \code{sort.list} can get called by mistake as a method for

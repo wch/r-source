@@ -48,7 +48,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   The default \code{sort} method makes use of \code{\link{order}} for
   classed objects, which in turn makes use of the generic function
   \code{\link{xtfrm}} (and can be slow unless a \code{xtfrm} method has
-  been defined).
+  been defined unless \code{\link{is.numeric}(x)} is true).
 
   If \code{partial} is not \code{NULL}, it is taken to contain indices
   of elements of the result which are to be placed in their correct
