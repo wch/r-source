@@ -1,6 +1,6 @@
 % File src/library/base/man/Special.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Special}
@@ -60,7 +60,7 @@ lfactorial(x)
   \eqn{\Gamma(x)} and the natural logarithm of \emph{the absolute value of} the
   gamma function.  The gamma function is defined by
   (Abramowitz and Stegun section 6.1.1, page 255)
-  \deqn{\Gamma(x) = \int_0^\infty t^{a-1} e^{-t} dt}{integral_0^Inf t^(a-1) exp(-t) dt}
+  \deqn{\Gamma(x) = \int_0^\infty t^{x-1} e^{-t} dt}{integral_0^Inf t^(x-1) exp(-t) dt}
   for all real \code{x} except zero and negative integers (when
   \code{NaN} is returned).
   \code{factorial(x)} (\eqn{x!} for non-negative integer \code{x})
