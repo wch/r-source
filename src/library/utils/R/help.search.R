@@ -166,7 +166,7 @@ help.search <-
 	    message("Packages {.readRDS() sequentially}:")
             flush.console()
         }
-        tot <- length(paths)
+        tot <- length(package_paths)
         incr <- 0L
         if(verbose && WINDOWS) {
             pb <- winProgressBar("R: creating the help.search() DB", max = tot)

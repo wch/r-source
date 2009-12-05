@@ -383,6 +383,9 @@ BUG FIXES
     o	wilcox.test(*, conf.int=TRUE) has achieved.level corrected and, for
 	exact=FALSE, now gives an 'estimate' which does not depend on the
 	alternative used.
+	
+    o	help.search() failed when the package argument was specified.
+    	(PR#14113)
 
 
 
