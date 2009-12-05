@@ -667,8 +667,7 @@ chooseBioCmirror <- function(graphics = getOption("menu.graphics"))
 {
     if(!interactive()) stop("cannot choose a BioC mirror non-interactively")
     m <- c("Seattle (USA)"="http://www.bioconductor.org",
-           # format omits 'package' so does not work
-           #"Bethesda (USA)"="http://watson.nci.nih.gov/bioc_mirror",
+           "Bethesda (USA)"="http://watson.nci.nih.gov/bioc_mirror",
            "Dortmund (Germany)"="http://bioconductor.statistik.tu-dortmund.de")
     res <- menu(names(m), graphics, "BioC mirror")
     if(res > 0L) options("BioC_mirror" = m[res])
