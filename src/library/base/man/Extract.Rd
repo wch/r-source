@@ -212,18 +212,20 @@ x$name
   \code{exact} must be named).
 }
 \section{S4 methods}{
-  These operators are also implicit S4 generics, but the
-  implementation of the primitive functions will only dispatch S4
-  methods if one of the arguments is an S4 object (it
-  is no longer true that only the first argument is checked).  Method
-  signatures can include any formal argument, but the primitive evaluation
-  will only look for a method if \code{\link{isS4}} would return
-  \code{TRUE} for some argument.
+  These operators are also implicit S4 generics, but as primitives, S4
+  methods will be dispatched only on S4 objects \code{x}.
+  
+%   not yet implemented
+%   These operators are also implicit S4 generics, but the implementation
+%   of the primitive functions will only dispatch S4 methods if one of the
+%   arguments is an S4 object (it is no longer true that only the first
+%   argument is checked).  Method signatures can include any formal
+%   argument, but the primitive evaluation will only look for a method if
+%   \code{\link{isS4}} would return \code{TRUE} for some argument.
 
-  The generic function for the \code{$} operator is an exception: It
-  does not have \code{name} in its signature
-  because the grammar only alows symbols or string constants for the
-  \code{name} argument.
+  The implicit generics for the \code{$} and \code{$<-} operators do not
+  have \code{name} in their signature because the grammar only alows
+  symbols or string constants for the \code{name} argument.
 }
 \section{Character indices}{
   Character indices can in some circumstances be partially matched (see
