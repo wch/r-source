@@ -193,8 +193,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   Empty input is an error unless \code{col.names} is specified, when a
   0-row data frame is returned: similarly giving just a header line if
-  \code{header = TRUE} results in a 0-row data frame.  Note that
-  in either case the columns will logical unless \code{colClasses} was
+  \code{header = TRUE} results in a 0-row data frame.  Note that in
+  either case the columns will be logical unless \code{colClasses} was
   supplied.
 
   Character strings in the result (including factor levels) will have a
