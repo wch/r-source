@@ -796,7 +796,7 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
                                                  package = packages[[i]])
 		    if(is.null(fdef))
 			warning(gettextf("Found methods to import for function \"%s\" but not the generic itself",
-					 genName))
+					 genName), call. = FALSE)
 		    else
 			methods:::.updateMethodsInTable(fdef, ns, TRUE)
 		}

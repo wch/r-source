@@ -287,18 +287,28 @@ doPrimitiveMethod <-
     eval(call, ev)
 }
 
+.renderSignature <- function(f, signature)
+{
+    nm <- names(signature)
+    nm[nzchar(nm)] <- paste(nm[nzchar(nm)], "=", sep = "")
+    msig <- paste(nm, '"', as.vector(signature), '"', sep = "")
+    msig <- paste(msig, collapse = ",")
+    gettextf("in method for %s with signature %s: ", sQuote(f), sQuote(msig))
+}
+
+## FIXME: this confuses argument lists and signatures
 conformMethod <- function(signature, mnames, fnames,
 			  f = "<unspecified>", fdef, method)
 {
     fsig <- fdef@signature
     if(is.na(match("...", mnames)) && !is.na(match("...", fnames)))
         fnames <- fnames[-match("...", fnames)]
-    label <- paste("In method for function \"", f,"\": ", sep="")
     omitted <- is.na(imf <- match(fnames, mnames))
     if(is.unsorted(imf[!omitted]))
 	## Should be an error, but the test was not triggering for such a long time :
-	warning(label,
-                "formal arguments in method and function do not appear in the same order")
+	warning(.renderSignature(f, signature),
+                "formal arguments in method and generic do not appear in the same order",
+                call. = FALSE)
     if(!any(omitted)) ## i.e. mnames contains all fnames
         return(signature)
 
@@ -313,20 +323,22 @@ conformMethod <- function(signature, mnames, fnames,
     ##              domain = NA)
     if(any(is.na(match(signature[omitted], c("ANY", "missing"))))) {
         bad <- omitted & is.na(match(signature[omitted], c("ANY", "missing")))
-        stop(label, gettextf("formal arguments omitted in the method definition cannot be in the signature (%s)",
-                             paste(fnames[bad], " = \"", signature[bad], "\"",
-                                   sep = "", collapse = ", ")), domain = NA)
+        bad2 <- paste(fnames[bad], " = \"", signature[bad], "\"", sep = "", collapse = ", ")
+        stop(.renderSignature(f, signature),
+             gettextf("formal arguments (%s) omitted in the method definition cannot be in the signature", bad2),
+             call. = TRUE, domain = NA)
     }
     else if(!all(signature[omitted] == "missing")) {
-        .message(label, gettextf("expanding the signature to include omitted arguments in definition: %s",
-                                 paste(fnames[omitted], "= \"missing\"",collapse = ", ")))
+        .message(.renderSignature(f, signature),
+                 gettextf("expanding the signature to include omitted arguments in definition: %s",
+                          paste(fnames[omitted], "= \"missing\"",collapse = ", ")))
         omitted <- seq_along(omitted)[omitted] # logical index will extend signature!
         signature[omitted] <- "missing"
     }
     ## remove trailing "ANY"'s
     n <- length(signature)
     while(.identC(signature[[n]], "ANY"))
-        n <- n - 1
+        n <- n - 1L
     length(signature) <- n
     length(fsig) <- n
     names(signature) <- fsig
@@ -344,7 +356,8 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature)
     }
     dotsPos <- match("...", fnames)
     if(added && is.na(dotsPos))
-        stop("methods can add arguments to the generic only if '...' is an argument to the generic")
+        stop(gettextf("methods can add arguments to the generic %s only if '...' is an argument to the generic", sQuote(generic@generic)),
+             call. = TRUE)
     ## pass down all the names in common between method & generic,
     ## plus "..."  even if the method doesn't have it.  But NOT any
     ## arguments having class "missing" implicitly (see conformMethod),
@@ -354,7 +367,9 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature)
 
     ## Should not be needed, if conformMethod() has already been called:
     if(is.unsorted(imf[!is.na(imf)]))
-	warning("Arguments of method and generic are not in the same order")
+	warning(.renderSignature(generic@generic, signature),
+                "formal arguments in method and generic do not appear in the same order",
+                call. = FALSE)
 
     ## leave newCall as a list while checking the trailing args
     if(keepsDots && dotsPos < length(fnames)) {
@@ -369,8 +384,9 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature)
 	trailingArgs <- fnames[seq.int(to = length(fnames), length.out = ntrail)]
 	if(!identical(	mnames[seq.int(to = length(mnames), length.out = ntrail)],
 		      trailingArgs))
-	    stop(gettextf("arguments after '...' in the generic (%s) must appear in the method, in the same place at the end of the argument list",
-			  paste(trailingArgs, collapse=", ")), domain = NA)
+	    stop(gettextf("arguments (%s) after '...' in the generic must appear in the method, in the same place at the end of the argument list",
+			  paste(trailingArgs, collapse=", ")),
+                 call. = TRUE, domain = NA)
 	newCallNames <- character(length(newCall))
 	newCallNames[seq.int(to = length(newCallNames), length.out = ntrail)] <-
 	    trailingArgs

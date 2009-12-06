@@ -1321,7 +1321,9 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
     value
 }
 
-.identicalGeneric <- function(f1, f2) {
+## only called from setGeneric, f1 = supplied, f2 = implicit
+.identicalGeneric <- function(f1, f2)
+{
     gpString <- function(gp) {
 	if(length(gp))
 	    paste(as.character(gp), collapse = ", ")
@@ -1329,44 +1331,49 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 	    "<none>"
     }
     if(identical(f2, FALSE))
-	return("Original function is prohibited as a generic function")
+	return(gettext("Original function is prohibited as a generic function"))
     if(!(is.function(f2) && is.function(f1)))
-	return("not both functions!")
+	return(gettext("not both functions!"))
     if(isS4(f2))
 	f2d <- f2@.Data
     if(isS4(f1))
 	f1d <- f1@.Data
     ## environments will be different
     if(!identical(class(f1), class(f2)))
-	return(sprintf("Classes: \"%s\", \"%s\"", class(f1), class(f2)))
+	return(gettextf("Classes: %s, %s",
+                        dQuote(class(f1)), dQuote(class(f2))))
     if(!identical(formals(f1d), formals(f2d))) {
 	a1 <- names(formals(f1d)); a2 <- names(formals(f2d))
 	if(identical(a1, a2))
-	    return("Formal arguments differ (in default values?)")
+	    return(gettext("Formal arguments differ (in default values?)"))
 	else
-	    return(sprintf("Formal arguments differ: (%s), (%s)",
-			   paste(a1, collapse = ", "), paste(a2, collapse = ", ")))
+	    return(gettextf("Formal arguments differ: (%s), (%s)",
+                            paste(a1, collapse = ", "),
+                            paste(a2, collapse = ", ")))
     }
     if(!identical(f1@valueClass, f2@valueClass))
-	return(sprintf("Value classes differ: \"%s\", \"%s\"",
-		       gpString(f1@valueClass), gpString(f2@valueClass)))
+	return(gettextf("Value classes differ: %s, %s",
+                        dQuote(gpString(f1@valueClass)),
+                        dQuote(gpString(f2@valueClass))))
     if(!identical(body(f1d), body(f2d)))
 	return("Function body differs")
     if(!identical(f1@signature, f2@signature))
-	return(sprintf("Signatures differ:  (%s), (%s)",
-		       paste(f1@signature, collapse = ", "),
-		       paste(f2@signature, collapse = ", ")))
+	return(gettextf("Signatures differ:  (%s), (%s)",
+                        paste(f1@signature, collapse = ", "),
+                        paste(f2@signature, collapse = ", ")))
     if(!identical(f1@package, f2@package))
-	return(sprintf("Package slots  differ: \"%s\", \"%s\"",
-		       gpString(f1@package), gpString(f2@package)))
+	return(gettextf("Package slots  differ: %s, %s",
+                        dQuote(gpString(f1@package)),
+                        dQuote(gpString(f2@package))))
     if(!identical(f1@group, f2@group)) {
-	return(sprintf("Groups differ: \"%s\", \"%s\"",
-		       gpString(f1@group), gpString(f2@group)))
+	return(gettextf("Groups differ: %s, %s",
+                        dQuote(gpString(f1@group)),
+                        dQuote(gpString(f2@group))))
     }
     if(!identical(as.character(f1@generic), as.character(f2@generic)))
-	return(sprintf("Generic names differ: \"%s\", \"%s\"",
-		       f1@generic, f2@generic))
-    return(TRUE)
+	return(gettextf("Generic names differ: %s, %s",
+                        dQuote(f1@generic), dQuote(f2@generic)))
+    TRUE
 }
 
 .ImplicitGroupMetaName <- ".__IGM__table"
