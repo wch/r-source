@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:41\n"
+"POT-Creation-Date: 2009-12-06 12:03\n"
 "PO-Revision-Date: 2009-10-07 14:24+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -107,8 +107,19 @@ msgstr "*** 'pos=1' wird in Zukunft einen Fehler erzeugen"
 msgid "file '%s' not found"
 msgstr "Datei '%s' nicht gefunden"
 
-msgid "invalid name"
-msgstr "ungültiger Name"
+#, fuzzy
+msgid "invalid 'name' argument"
+msgstr "ungültiges Argument für 'category'"
+
+#, fuzzy
+msgid "package %s is required by %s, which may no longer work correctly"
+msgstr ""
+"Paket '%s' wurde unter R Version %s gebaut und die Hilfe funktioniert evtl. "
+"nicht richtig"
+
+#, fuzzy
+msgid "package %s is required by %s so will not be detached"
+msgstr "Paket '%s' benötigt von '%s' nicht gefunden"
 
 msgid ""
 "%s failed in %s() for '%s', details:\n"
@@ -116,13 +127,8 @@ msgid ""
 "  error: %s"
 msgstr ""
 
-msgid "is required by"
-msgstr "wird benötigt von"
-
-msgid "(still attached)"
-msgstr "(noch eingebunden)"
-
-msgid "namespace cannot be unloaded"
+#, fuzzy
+msgid "name space cannot be unloaded:"
 msgstr "Namensraum kann nicht entladen werden"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -1093,8 +1099,9 @@ msgstr "nicht gefunden"
 msgid "not loading a name space"
 msgstr "lade keinen Namensraum"
 
-msgid "name space '%s' is still used by: %s"
-msgstr "Namensraum '%s' wird noch benutzt durch: %s"
+#, fuzzy
+msgid "name space %s is imported by %s so cannot be unloaded"
+msgstr "Namensraum kann nicht entladen werden"
 
 msgid "imperative name space directives are disabled"
 msgstr "imperative Namensraumdirektiven sind ausgeschaltet"
@@ -1575,6 +1582,18 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Warnmeldung:\n"
 msgstr[1] "Warnmeldungen:\n"
 
+#~ msgid "invalid name"
+#~ msgstr "ungültiger Name"
+
+#~ msgid "is required by"
+#~ msgstr "wird benötigt von"
+
+#~ msgid "(still attached)"
+#~ msgstr "(noch eingebunden)"
+
+#~ msgid "name space '%s' is still used by: %s"
+#~ msgstr "Namensraum '%s' wird noch benutzt durch: %s"
+
 #~ msgid "See the Note in ?library"
 #~ msgstr "Siehe unter Note in ?library"
 
@@ -1600,12 +1619,6 @@ msgstr[1] "Warnmeldungen:\n"
 #~ msgstr ""
 #~ "Paket '%s' wurde mit R Version %s erstellt und die Hilfe wird nicht "
 #~ "korrekt funktionieren: bitte Paket neu installieren"
-
-#~ msgid ""
-#~ "package '%s' was built under R version %s and help may not work correctly"
-#~ msgstr ""
-#~ "Paket '%s' wurde unter R Version %s gebaut und die Hilfe funktioniert "
-#~ "evtl. nicht richtig"
 
 #~ msgid "extra arguments ignored:"
 #~ msgstr "Zusätliche  Argumente ignoriert:"

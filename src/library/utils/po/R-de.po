@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:44\n"
+"POT-Creation-Date: 2009-12-06 12:05\n"
 "PO-Revision-Date: 2009-10-07 15:13+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -109,6 +109,13 @@ msgstr "Keine Vignetten gefunden durch"
 
 msgid "call"
 msgstr "Aufruf"
+
+#, fuzzy
+msgid "Package '"
+msgstr "Paket"
+
+msgid "' DESCRIPTION not found."
+msgstr ""
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file' muss NULL, eine Zeichenkette oder eine Verbindung sein"
@@ -547,17 +554,15 @@ msgstr "versuche CRAN ohne einen Spiegelserver zu nutzen"
 msgid "cannot choose a CRAN mirror non-interactively"
 msgstr "kann keinen CRAN-Spiegel nicht-interaktiv nutzen"
 
+#, fuzzy
+msgid "cannot choose a BioC mirror non-interactively"
+msgstr "kann keinen CRAN-Spiegel nicht-interaktiv nutzen"
+
 msgid "cannot set repositories non-interactively"
 msgstr "kann keine Repositories nicht-interaktiv setzen"
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Bitte Repositories für diese Sitzung auswählen ---"
-
-msgid ""
-"Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr ""
-"Bitte eine oder mehrere durch Leerstellen getrennte Zahlen oder eine leere "
-"Zeile eingeben, um abzubrechen"
 
 msgid "'%s' must be supplied"
 msgstr "'%s' muss angegeben werden"
@@ -827,6 +832,10 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 "'digits' und 'digits.d' sind beide angegeben und das letztere wird ignoriert"
 
+#, fuzzy
+msgid "no lines found in %s"
+msgstr "kein Hilfefile für '%s' gefunden"
+
 msgid "profile does not contain memory information"
 msgstr "Profil einthält keine Speicherinformation"
 
@@ -882,8 +891,15 @@ msgstr "Vignette '%s' enthält kein PDF"
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() kann nicht nicht-interaktiv benutzt werden"
 
-msgid "Enter zero or more numbers separated by space"
-msgstr "Geben Sie 0 oder mehr durch Leerstellen getrennte Zahlen ein"
+#, fuzzy
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr "'code_files' muss ein Charaktervektor sein"
+
+msgid ""
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
+msgstr ""
+"Bitte eine oder mehrere durch Leerstellen getrennte Zahlen oder eine leere "
+"Zeile eingeben, um abzubrechen"
 
 msgid "Invalid input, please try again"
 msgstr "Unzulässige Eingabe, bitte nochmal probieren"
@@ -1042,6 +1058,9 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "Paket '%s' wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete '%s' werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "Enter zero or more numbers separated by space"
+#~ msgstr "Geben Sie 0 oder mehr durch Leerstellen getrennte Zahlen ein"
 
 #~ msgid "more than one help file found: using package '%s'"
 #~ msgstr "mehr als ein Hilfefile gefunden: nutze Paket '%s'"

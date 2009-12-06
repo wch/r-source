@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:41\n"
+"POT-Creation-Date: 2009-12-06 12:03\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -106,8 +106,17 @@ msgstr "*** 请注意将来再用'pos=1'的话会引起错误信条"
 msgid "file '%s' not found"
 msgstr "没有'%s'文件"
 
-msgid "invalid name"
-msgstr "名字不对"
+#, fuzzy
+msgid "invalid 'name' argument"
+msgstr "'category'变元有错"
+
+#, fuzzy
+msgid "package %s is required by %s, which may no longer work correctly"
+msgstr "程辑包'%s'是用R版本%s 来建造的，与目前的帮助文件不相容"
+
+#, fuzzy
+msgid "package %s is required by %s so will not be detached"
+msgstr "找不到'%2$s'所需要的程辑包'%1$s'"
 
 msgid ""
 "%s failed in %s() for '%s', details:\n"
@@ -115,13 +124,8 @@ msgid ""
 "  error: %s"
 msgstr ""
 
-msgid "is required by"
-msgstr "需要"
-
-msgid "(still attached)"
-msgstr "(仍连接着)"
-
-msgid "namespace cannot be unloaded"
+#, fuzzy
+msgid "name space cannot be unloaded:"
 msgstr "无法载入名字空间"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -1070,8 +1074,9 @@ msgstr "不存在"
 msgid "not loading a name space"
 msgstr "不载入名字空间"
 
-msgid "name space '%s' is still used by: %s"
-msgstr "名字空间'%s'仍用于：'%s'"
+#, fuzzy
+msgid "name space %s is imported by %s so cannot be unloaded"
+msgstr "无法载入名字空间"
 
 msgid "imperative name space directives are disabled"
 msgstr "強制名字指令功能被关闭"
@@ -1538,6 +1543,18 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 
+#~ msgid "invalid name"
+#~ msgstr "名字不对"
+
+#~ msgid "is required by"
+#~ msgstr "需要"
+
+#~ msgid "(still attached)"
+#~ msgstr "(仍连接着)"
+
+#~ msgid "name space '%s' is still used by: %s"
+#~ msgstr "名字空间'%s'仍用于：'%s'"
+
 #~ msgid "See the Note in ?library"
 #~ msgstr "见?library 的Note部分"
 
@@ -1561,10 +1578,6 @@ msgstr[0] "警告信息：\n"
 #~ "correctly\n"
 #~ "Please re-install it"
 #~ msgstr "程辑包'%s'是在R版本%s之前建的，与目前的帮助文件不相容，请重新组装"
-
-#~ msgid ""
-#~ "package '%s' was built under R version %s and help may not work correctly"
-#~ msgstr "程辑包'%s'是用R版本%s 来建造的，与目前的帮助文件不相容"
 
 #~ msgid "extra arguments ignored:"
 #~ msgstr "忽略额外的变元"

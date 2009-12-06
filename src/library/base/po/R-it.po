@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:41\n"
+"POT-Creation-Date: 2009-12-06 12:03\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -113,8 +113,17 @@ msgstr "*** Si noti che 'pos=1' produrrà un errore in seguito"
 msgid "file '%s' not found"
 msgstr "file '%s' non trovato"
 
-msgid "invalid name"
-msgstr "nome non valido"
+#, fuzzy
+msgid "invalid 'name' argument"
+msgstr "argomento 'category' non valido"
+
+#, fuzzy
+msgid "package %s is required by %s, which may no longer work correctly"
+msgstr "il pacchetto '%s' è stato creato con R versione %s"
+
+#, fuzzy
+msgid "package %s is required by %s so will not be detached"
+msgstr "pacchetto '%s' richiesto da '%s' ma non trovato"
 
 msgid ""
 "%s failed in %s() for '%s', details:\n"
@@ -122,14 +131,8 @@ msgid ""
 "  error: %s"
 msgstr ""
 
-msgid "is required by"
-msgstr "richiesto da"
-
-msgid "(still attached)"
-msgstr "(ancora attaccato)"
-
 #, fuzzy
-msgid "namespace cannot be unloaded"
+msgid "name space cannot be unloaded:"
 msgstr "namespace '%s' caricato"
 
 #, fuzzy
@@ -1136,8 +1139,8 @@ msgid "not loading a name space"
 msgstr "non sto caricando un namespace"
 
 #, fuzzy
-msgid "name space '%s' is still used by: %s"
-msgstr "name space '%s' ancora in uso da:"
+msgid "name space %s is imported by %s so cannot be unloaded"
+msgstr "namespace '%s' caricato"
 
 msgid "imperative name space directives are disabled"
 msgstr "direttive imperative del namespace disabilitate"
@@ -1636,6 +1639,19 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
 
+#~ msgid "invalid name"
+#~ msgstr "nome non valido"
+
+#~ msgid "is required by"
+#~ msgstr "richiesto da"
+
+#~ msgid "(still attached)"
+#~ msgstr "(ancora attaccato)"
+
+#, fuzzy
+#~ msgid "name space '%s' is still used by: %s"
+#~ msgstr "name space '%s' ancora in uso da:"
+
 #~ msgid "See the Note in ?library"
 #~ msgstr "Si veda 'Note' in ?library"
 
@@ -1665,11 +1681,6 @@ msgstr[1] "Messaggi di avvertimento:\n"
 #~ msgstr ""
 #~ "il pacchetto '%s' è stato creato prima di R 2.0.0: si prega di re-"
 #~ "installarlo"
-
-#, fuzzy
-#~ msgid ""
-#~ "package '%s' was built under R version %s and help may not work correctly"
-#~ msgstr "il pacchetto '%s' è stato creato con R versione %s"
 
 #, fuzzy
 #~ msgid "extra arguments ignored:"

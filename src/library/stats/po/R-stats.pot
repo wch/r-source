@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:43\n"
+"POT-Creation-Date: 2009-12-06 12:04\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -255,6 +255,9 @@ msgid "'order.max' must be >= 1"
 msgstr ""
 
 msgid "'order.max' must be < 'n.used'"
+msgstr ""
+
+msgid "'n.ahead' must be at least 1"
 msgstr ""
 
 msgid "number of series in 'object' and 'newdata' do not match"
@@ -1773,6 +1776,9 @@ msgid "'y', 'groups' and 'blocks' must have the same length"
 msgstr ""
 
 msgid "'formula' missing"
+msgstr ""
+
+msgid "factors are not allowed"
 msgstr ""
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"

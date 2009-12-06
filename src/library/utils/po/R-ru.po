@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:44\n"
+"POT-Creation-Date: 2009-12-06 12:05\n"
 "PO-Revision-Date: 2009-10-15 02:50-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -115,6 +115,13 @@ msgstr "Не найдено миниатюр в"
 
 msgid "call"
 msgstr "вызов"
+
+#, fuzzy
+msgid "Package '"
+msgstr "Пакет"
+
+msgid "' DESCRIPTION not found."
+msgstr ""
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file' должен быть NULL, текстовой строкой или соединением"
@@ -549,17 +556,15 @@ msgstr "пробую использовать CRAN без установки зеркала"
 msgid "cannot choose a CRAN mirror non-interactively"
 msgstr "не могу выбрать зеркало CRAN неинтерактивно"
 
+#, fuzzy
+msgid "cannot choose a BioC mirror non-interactively"
+msgstr "не могу выбрать зеркало CRAN неинтерактивно"
+
 msgid "cannot set repositories non-interactively"
 msgstr "не могу установить хранилища неинтерактивно"
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- Пожалуйста, выберите хранилища для использования в этой сессии ---"
-
-msgid ""
-"Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr ""
-"Введите одну или более цифр, разделенных пробелами, или пустую строку для "
-"отмены"
 
 msgid "'%s' must be supplied"
 msgstr "надо указать '%s'"
@@ -831,6 +836,10 @@ msgstr "'str.default': 'le' -- это NA"
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr "определены и 'digits', и 'digits.d', последняя не используется"
 
+#, fuzzy
+msgid "no lines found in %s"
+msgstr "в '%s' не найдено файла помощи"
+
 msgid "profile does not contain memory information"
 msgstr "профиль не содержит информации о памяти"
 
@@ -886,8 +895,15 @@ msgstr "у миниатюры '%s' нет PDF"
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() нельзя использовать неинтерактивно"
 
-msgid "Enter zero or more numbers separated by space"
-msgstr "Введите ни одного или больше чисел, разделенных пробелом"
+#, fuzzy
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr "'code_files' должны быть текстовым вектором"
+
+msgid ""
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
+msgstr ""
+"Введите одну или более цифр, разделенных пробелами, или пустую строку для "
+"отмены"
 
 msgid "Invalid input, please try again"
 msgstr "Неправильный ввод, пожалуйста, попробуйте опять"
@@ -1055,6 +1071,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "Enter zero or more numbers separated by space"
+#~ msgstr "Введите ни одного или больше чисел, разделенных пробелом"
 
 #~ msgid "more than one help file found: using package '%s'"
 #~ msgstr "найдено более одного файла помощи: использую пакет '%s'"

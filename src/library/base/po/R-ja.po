@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:41\n"
+"POT-Creation-Date: 2009-12-06 12:03\n"
 "PO-Revision-Date: 2009-10-07 19:17+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -102,8 +102,20 @@ msgstr " *** 'pos=1' はいずれエラーを与えることを注意して下�
 msgid "file '%s' not found"
 msgstr " ファイル '%s' が見付かりません "
 
-msgid "invalid name"
-msgstr " 不当な名前です "
+#, fuzzy
+msgid "invalid 'name' argument"
+msgstr " 無効な 'category' 引数です "
+
+#, fuzzy
+msgid "package %s is required by %s, which may no longer work correctly"
+msgstr ""
+" パッケージ '%s' はバージョン %s の R の下で造られました。ヘルプは正しく機能"
+"しないかもしれません "
+
+#, fuzzy
+msgid "package %s is required by %s so will not be detached"
+msgstr ""
+" パッケージ '%s' が '%s' によって要求されましたが、見つけられませんでした "
 
 msgid ""
 "%s failed in %s() for '%s', details:\n"
@@ -111,13 +123,8 @@ msgid ""
 "  error: %s"
 msgstr ""
 
-msgid "is required by"
-msgstr " が以下により要求されました： "
-
-msgid "(still attached)"
-msgstr " (まだアタッチされています) "
-
-msgid "namespace cannot be unloaded"
+#, fuzzy
+msgid "name space cannot be unloaded:"
 msgstr " 名前空間をアンロード出来ません "
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -1098,8 +1105,9 @@ msgstr " 見つかりません "
 msgid "not loading a name space"
 msgstr " 名前空間をロードしません "
 
-msgid "name space '%s' is still used by: %s"
-msgstr " 名前空間 '%s' は以下によりまだ使用されています： %s "
+#, fuzzy
+msgid "name space %s is imported by %s so cannot be unloaded"
+msgstr " 名前空間をアンロード出来ません "
 
 msgid "imperative name space directives are disabled"
 msgstr ""
@@ -1583,6 +1591,18 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
 
+#~ msgid "invalid name"
+#~ msgstr " 不当な名前です "
+
+#~ msgid "is required by"
+#~ msgstr " が以下により要求されました： "
+
+#~ msgid "(still attached)"
+#~ msgstr " (まだアタッチされています) "
+
+#~ msgid "name space '%s' is still used by: %s"
+#~ msgstr " 名前空間 '%s' は以下によりまだ使用されています： %s "
+
 #~ msgid "See the Note in ?library"
 #~ msgstr " ?library でノートを見て下さい "
 
@@ -1602,12 +1622,6 @@ msgstr[0] " 警告メッセージ： \n"
 
 #~ msgid "%s failed in unloadNamespace(%s)"
 #~ msgstr " %s は unloadNamespace(%s) で失敗しました "
-
-#~ msgid ""
-#~ "package '%s' was built under R version %s and help may not work correctly"
-#~ msgstr ""
-#~ " パッケージ '%s' はバージョン %s の R の下で造られました。ヘルプは正しく機"
-#~ "能しないかもしれません "
 
 #~ msgid "extra arguments ignored:"
 #~ msgstr " 余計な引数は無視されました: "

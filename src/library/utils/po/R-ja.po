@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:44\n"
+"POT-Creation-Date: 2009-12-06 12:05\n"
 "PO-Revision-Date: 2009-10-09 09:12+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -103,6 +103,13 @@ msgstr " ビニエット(vignette)が見付かりません "
 
 msgid "call"
 msgstr " call "
+
+#, fuzzy
+msgid "Package '"
+msgstr " パッケージ "
+
+msgid "' DESCRIPTION not found."
+msgstr ""
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr " 'file' はconnectionか文字列か NULL でなければなりません "
@@ -549,17 +556,15 @@ msgstr " ミラーを設定することなくCRANを使おうとしています 
 msgid "cannot choose a CRAN mirror non-interactively"
 msgstr " CRANミラーの選択は対話的にしかできません "
 
+#, fuzzy
+msgid "cannot choose a BioC mirror non-interactively"
+msgstr " CRANミラーの選択は対話的にしかできません "
+
 msgid "cannot set repositories non-interactively"
 msgstr " リポジトリーの設定は対話的にしかできません "
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr " --- このセッションで使うリポジトリーを選んでください --- "
-
-msgid ""
-"Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr ""
-"スペースで区切られた1つ以上の数を入力するか、キャンセルするには空白行を入力し"
-"てください "
 
 msgid "'%s' must be supplied"
 msgstr " '%s' を与えてください "
@@ -846,6 +851,10 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 " 'digits'と'digits.d'の両方が指定されています。'digits.d'は使われません "
 
+#, fuzzy
+msgid "no lines found in %s"
+msgstr " '%s' に対するヘルプファイルが見つかりません "
+
 msgid "profile does not contain memory information"
 msgstr " プロファイルはメモリ情報を含んでいません "
 
@@ -901,8 +910,15 @@ msgstr " ビニエット '%s' は PDF ファイルを持ちません "
 msgid "select.list() cannot be used non-interactively"
 msgstr " select.list() は対話的にしか使えません "
 
-msgid "Enter zero or more numbers separated by space"
-msgstr " 0 を入力するか、空白で区切られたもっと多くの数値を入力して下さい "
+#, fuzzy
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr " 'code_files' は文字ベクトルでなければなりません "
+
+msgid ""
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
+msgstr ""
+"スペースで区切られた1つ以上の数を入力するか、キャンセルするには空白行を入力し"
+"てください "
 
 msgid "Invalid input, please try again"
 msgstr " 不正な入力です、もう一度試みて下さい "
@@ -1054,6 +1070,9 @@ msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリで�
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "Enter zero or more numbers separated by space"
+#~ msgstr " 0 を入力するか、空白で区切られたもっと多くの数値を入力して下さい "
 
 #~ msgid "more than one help file found: using package '%s'"
 #~ msgstr " 複数のヘルプファイルが見つかりました：'%s' 中のものを使います "

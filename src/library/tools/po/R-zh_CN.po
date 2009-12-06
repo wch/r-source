@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:44\n"
+"POT-Creation-Date: 2009-12-06 12:05\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -524,7 +524,10 @@ msgstr "程序包%s里的链结%s不存在"
 msgid "No docs found for package %s"
 msgstr "程序包%s里没有任何文件"
 
-msgid "Only help files, %s and files under %s in a package can be viewed"
+msgid "Only help files, %s, %s and files under %s in a package can be viewed"
+msgstr ""
+
+msgid "NEWS"
 msgstr ""
 
 #, fuzzy

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:41\n"
+"POT-Creation-Date: 2009-12-06 12:03\n"
 "PO-Revision-Date: 2009-10-15 02:15-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -110,8 +110,18 @@ msgstr "*** Заметьте, что в будущем 'pos=1' будет приводить к ошибке"
 msgid "file '%s' not found"
 msgstr "файл '%s' не найден"
 
-msgid "invalid name"
-msgstr "неправильное имя"
+#, fuzzy
+msgid "invalid 'name' argument"
+msgstr "неправильный аргумент 'category'"
+
+#, fuzzy
+msgid "package %s is required by %s, which may no longer work correctly"
+msgstr ""
+"пакет '%s' был собран под R версии %s и помощь не будет правильно работать"
+
+#, fuzzy
+msgid "package %s is required by %s so will not be detached"
+msgstr "пакет '%s', требуемый для '%s', не найден"
 
 msgid ""
 "%s failed in %s() for '%s', details:\n"
@@ -119,13 +129,8 @@ msgid ""
 "  error: %s"
 msgstr ""
 
-msgid "is required by"
-msgstr "требуется для"
-
-msgid "(still attached)"
-msgstr "(по-прежнему присоединен)"
-
-msgid "namespace cannot be unloaded"
+#, fuzzy
+msgid "name space cannot be unloaded:"
 msgstr "пространство имен  нельзя выгрузить"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -1086,8 +1091,9 @@ msgstr "не найден"
 msgid "not loading a name space"
 msgstr "не загружаю пространство имен"
 
-msgid "name space '%s' is still used by: %s"
-msgstr "пространство имен '%s' еще используется в: '%s'"
+#, fuzzy
+msgid "name space %s is imported by %s so cannot be unloaded"
+msgstr "пространство имен  нельзя выгрузить"
 
 msgid "imperative name space directives are disabled"
 msgstr "императивные директивы пространства имен отменены"
@@ -1577,6 +1583,18 @@ msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
 
+#~ msgid "invalid name"
+#~ msgstr "неправильное имя"
+
+#~ msgid "is required by"
+#~ msgstr "требуется для"
+
+#~ msgid "(still attached)"
+#~ msgstr "(по-прежнему присоединен)"
+
+#~ msgid "name space '%s' is still used by: %s"
+#~ msgstr "пространство имен '%s' еще используется в: '%s'"
+
 #~ msgid "See the Note in ?library"
 #~ msgstr "См. 'Note' в ?library"
 
@@ -1603,11 +1621,6 @@ msgstr[2] "Предупреждения:\n"
 #~ "пакет '%s' был собран до версии R %s и помощь не будет правильно "
 #~ "работать\n"
 #~ "Пожалуйста, переустановите его"
-
-#~ msgid ""
-#~ "package '%s' was built under R version %s and help may not work correctly"
-#~ msgstr ""
-#~ "пакет '%s' был собран под R версии %s и помощь не будет правильно работать"
 
 #~ msgid "extra arguments ignored:"
 #~ msgstr "дополнительные аргументы проигнорированы"

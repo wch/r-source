@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:43\n"
+"POT-Creation-Date: 2009-12-06 12:04\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -281,6 +281,10 @@ msgstr "'order.max' deve ser >= 1"
 #, fuzzy
 msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' deve ser >= 1"
+
+#, fuzzy
+msgid "'n.ahead' must be at least 1"
+msgstr "'lag.max' deve ser pelo menos 1"
 
 msgid "number of series in 'object' and 'newdata' do not match"
 msgstr "número de séries em óbjeto' e 'newdata' não igual"
@@ -1930,6 +1934,10 @@ msgstr "'y', 'groups' e 'blocks' devem ter o mesmo comprimento"
 
 msgid "'formula' missing"
 msgstr "'formula' faltante"
+
+#, fuzzy
+msgid "factors are not allowed"
+msgstr "interaçÕes não são permitidas"
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
 msgstr "valores faltantes e NaN's não permitidos se 'na.rm' é FALSE"

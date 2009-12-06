@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:44\n"
+"POT-Creation-Date: 2009-12-06 12:05\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,6 +87,12 @@ msgid "No vignettes found by"
 msgstr ""
 
 msgid "call"
+msgstr ""
+
+msgid "Package '"
+msgstr ""
+
+msgid "' DESCRIPTION not found."
 msgstr ""
 
 msgid "'file' must be NULL, a character string or a connection"
@@ -503,13 +509,13 @@ msgstr ""
 msgid "cannot choose a CRAN mirror non-interactively"
 msgstr ""
 
+msgid "cannot choose a BioC mirror non-interactively"
+msgstr ""
+
 msgid "cannot set repositories non-interactively"
 msgstr ""
 
 msgid "--- Please select repositories for use in this session ---"
-msgstr ""
-
-msgid "Enter one or more numbers separated by spaces, or an empty line to cancel"
 msgstr ""
 
 msgid "'%s' must be supplied"
@@ -746,6 +752,9 @@ msgstr ""
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 
+msgid "no lines found in %s"
+msgstr ""
+
 msgid "profile does not contain memory information"
 msgstr ""
 
@@ -797,7 +806,10 @@ msgstr ""
 msgid "select.list() cannot be used non-interactively"
 msgstr ""
 
-msgid "Enter zero or more numbers separated by space"
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr ""
+
+msgid "Enter one or more numbers separated by spaces, or an empty line to cancel"
 msgstr ""
 
 msgid "Invalid input, please try again"

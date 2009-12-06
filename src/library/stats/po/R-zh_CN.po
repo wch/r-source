@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:43\n"
+"POT-Creation-Date: 2009-12-06 12:04\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -265,6 +265,10 @@ msgstr "'order.max'必需大于等于一"
 
 msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max'必需小于'n.used'"
+
+#, fuzzy
+msgid "'n.ahead' must be at least 1"
+msgstr "'lag.max'至少必需为一"
 
 msgid "number of series in 'object' and 'newdata' do not match"
 msgstr "'object'和'newdata'里的序列数目不同"
@@ -1821,6 +1825,10 @@ msgstr "'y', 'groups'和'blocks'的长度必需相同"
 
 msgid "'formula' missing"
 msgstr "没有'formula'"
+
+#, fuzzy
+msgid "factors are not allowed"
+msgstr "不允许有交互作用项"
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
 msgstr "'na.rm'如果设为FALSE的话不允许有遺漏值和NaN"

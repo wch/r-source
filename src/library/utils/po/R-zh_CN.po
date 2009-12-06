@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:44\n"
+"POT-Creation-Date: 2009-12-06 12:05\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -107,6 +107,13 @@ msgstr "没有找到小文品"
 
 msgid "call"
 msgstr "调用"
+
+#, fuzzy
+msgid "Package '"
+msgstr "程序包"
+
+msgid "' DESCRIPTION not found."
+msgstr ""
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file'的值必需是NULL，字符串或联结"
@@ -533,15 +540,15 @@ msgstr "试试在不设定镜子的情况下用CRAN"
 msgid "cannot choose a CRAN mirror non-interactively"
 msgstr "无法在非互交的情况下选用CRAN镜子"
 
+#, fuzzy
+msgid "cannot choose a BioC mirror non-interactively"
+msgstr "无法在非互交的情况下选用CRAN镜子"
+
 msgid "cannot set repositories non-interactively"
 msgstr "无法在非互交情况下设定貯藏處"
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- 请选用一个貯藏處 ---"
-
-msgid ""
-"Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr "请输入一个或多个由空格分开的数字，或输入空行来好取消"
 
 msgid "'%s' must be supplied"
 msgstr "必需提供'%s'"
@@ -805,6 +812,10 @@ msgstr "'str.default': 'le'的值是NA"
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr "'digits'和'digits.d'两个都设定了，但后者没有用"
 
+#, fuzzy
+msgid "no lines found in %s"
+msgstr "找不到与'%s'有关的帮助文件"
+
 msgid "profile does not contain memory information"
 msgstr "程序资料不包含内存信息"
 
@@ -860,8 +871,13 @@ msgstr "小文品'%s'没有PDF文件"
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list()不能在非互交形式下使用"
 
-msgid "Enter zero or more numbers separated by space"
-msgstr "输入0个或多个由空格分开的数字"
+#, fuzzy
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr "'code_files'必需是字符向量"
+
+msgid ""
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
+msgstr "请输入一个或多个由空格分开的数字，或输入空行来好取消"
 
 msgid "Invalid input, please try again"
 msgstr "输入不对，请再试一试"
@@ -1012,6 +1028,9 @@ msgstr[0] "'lib'元素'%s'不是可写的目录"
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "Enter zero or more numbers separated by space"
+#~ msgstr "输入0个或多个由空格分开的数字"
 
 #~ msgid "more than one help file found: using package '%s'"
 #~ msgstr "找到了多个帮助文件：用程序包'%s'"

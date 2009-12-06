@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:41\n"
+"POT-Creation-Date: 2009-12-06 12:03\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -104,8 +104,17 @@ msgstr "*** 'pos=1'는 결국 에러를 제공하는것을 주의해주십시오
 msgid "file '%s' not found"
 msgstr "파일 '%s'가 검색되지 않습니다"
 
-msgid "invalid name"
-msgstr "부적절한 이름입니다"
+#, fuzzy
+msgid "invalid 'name' argument"
+msgstr "무효인 'category' 인수입니다"
+
+#, fuzzy
+msgid "package %s is required by %s, which may no longer work correctly"
+msgstr "패키지 '%s'는 버전 %s의 R미만에서 작성되어졌습니다"
+
+#, fuzzy
+msgid "package %s is required by %s so will not be detached"
+msgstr "'%s'가 요구한 패키지 '%s'는 검색해낼수 없었습니다"
 
 msgid ""
 "%s failed in %s() for '%s', details:\n"
@@ -113,14 +122,8 @@ msgid ""
 "  error: %s"
 msgstr ""
 
-msgid "is required by"
-msgstr "이하에 의해 요구되었습니다 :"
-
-msgid "(still attached)"
-msgstr "(아직 attached되어 있습니다)"
-
 #, fuzzy
-msgid "namespace cannot be unloaded"
+msgid "name space cannot be unloaded:"
 msgstr "name space '%s'가 적재 되었습니다"
 
 #, fuzzy
@@ -1126,8 +1129,8 @@ msgid "not loading a name space"
 msgstr "이름 공간을 적재하지 않습니다"
 
 #, fuzzy
-msgid "name space '%s' is still used by: %s"
-msgstr "이름 '%s' 여전히 이하에 의해 사용되어 있습니다"
+msgid "name space %s is imported by %s so cannot be unloaded"
+msgstr "name space '%s'가 적재 되었습니다"
 
 msgid "imperative name space directives are disabled"
 msgstr "명령적인 이름공간의 지령은 사용 불가능합니다"
@@ -1633,6 +1636,19 @@ msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
 
+#~ msgid "invalid name"
+#~ msgstr "부적절한 이름입니다"
+
+#~ msgid "is required by"
+#~ msgstr "이하에 의해 요구되었습니다 :"
+
+#~ msgid "(still attached)"
+#~ msgstr "(아직 attached되어 있습니다)"
+
+#, fuzzy
+#~ msgid "name space '%s' is still used by: %s"
+#~ msgstr "이름 '%s' 여전히 이하에 의해 사용되어 있습니다"
+
 #~ msgid "See the Note in ?library"
 #~ msgstr "라이브러리?의 노트를 보아주십시오"
 
@@ -1658,11 +1674,6 @@ msgstr[0] ""
 #~ "correctly\n"
 #~ "Please re-install it"
 #~ msgstr "패키지 '%s' R 2.0.0 이전 것입니다. 그것을 다시 인스톨을 해주십시오"
-
-#, fuzzy
-#~ msgid ""
-#~ "package '%s' was built under R version %s and help may not work correctly"
-#~ msgstr "패키지 '%s'는 버전 %s의 R미만에서 작성되어졌습니다"
 
 #, fuzzy
 #~ msgid "extra arguments ignored:"

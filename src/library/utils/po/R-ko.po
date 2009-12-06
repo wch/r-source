@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:44\n"
+"POT-Creation-Date: 2009-12-06 12:05\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -103,6 +103,13 @@ msgid "No vignettes found by"
 msgstr "vignette(당초무늬) '%s' *not*는 검색되어졌습니다"
 
 msgid "call"
+msgstr ""
+
+#, fuzzy
+msgid "Package '"
+msgstr "패키지"
+
+msgid "' DESCRIPTION not found."
 msgstr ""
 
 #, fuzzy
@@ -568,6 +575,10 @@ msgstr "mirror를 세트 하지 않고, CRAN를 사용하려고 하는것입니�
 msgid "cannot choose a CRAN mirror non-interactively"
 msgstr "CRAN mirrir을 non-interactively에 선택할 수가 없습니다"
 
+#, fuzzy
+msgid "cannot choose a BioC mirror non-interactively"
+msgstr "CRAN mirrir을 non-interactively에 선택할 수가 없습니다"
+
 msgid "cannot set repositories non-interactively"
 msgstr ""
 "repository를 non-interactively를 비대화식(non-interactively)에 세트 할 수 없"
@@ -575,11 +586,6 @@ msgstr ""
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- 이 세션에서 사용한 repository를 선택해주십시오 ---"
-
-#, fuzzy
-msgid ""
-"Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr "space에 의해서 분리된 1개이상의 수를 입력합니다"
 
 msgid "'%s' must be supplied"
 msgstr "'%s'는 제공하여야만 합니다"
@@ -860,6 +866,10 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 
 #, fuzzy
+msgid "no lines found in %s"
+msgstr "help file는 '%s'에 검색되어져 있지 않았습니다"
+
+#, fuzzy
 msgid "profile does not contain memory information"
 msgstr "유형 정보를 회복할 수 없었습니다"
 
@@ -919,8 +929,14 @@ msgstr "vignette '%s'는 PDF를 가지고 있지 않습니다"
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() non-interactively에 사용할수 없습니다"
 
-msgid "Enter zero or more numbers separated by space"
-msgstr "space에 의해서 분리된 0 이상의 수를 입력합니다"
+#, fuzzy
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr "'list'는 R를 오브젝트라고 명명하는 문자 벡터이어야만 합니다"
+
+#, fuzzy
+msgid ""
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
+msgstr "space에 의해서 분리된 1개이상의 수를 입력합니다"
 
 msgid "Invalid input, please try again"
 msgstr "무효의 입력 행렬입니다"
@@ -1099,6 +1115,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] ""
 "package '%s'는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages '%s'는 사용되고 있어 인스톨 되지 않을 것입니다"
+
+#~ msgid "Enter zero or more numbers separated by space"
+#~ msgstr "space에 의해서 분리된 0 이상의 수를 입력합니다"
 
 #~ msgid "more than one help file found: using package '%s'"
 #~ msgstr ""

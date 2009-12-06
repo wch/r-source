@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:43\n"
+"POT-Creation-Date: 2009-12-06 12:04\n"
 "PO-Revision-Date: 2009-10-15 02:29-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -280,6 +280,10 @@ msgstr "'order.max' должен быть >= 1"
 
 msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' должен быть < 'n.used'"
+
+#, fuzzy
+msgid "'n.ahead' must be at least 1"
+msgstr "'lag.max' должен быть по меньшей мере 1"
 
 msgid "number of series in 'object' and 'newdata' do not match"
 msgstr "количество серий в 'object' и 'newdata' не совпадают"
@@ -1885,6 +1889,10 @@ msgstr "'y', 'groups' и 'blocks' должны иметь одну длину"
 
 msgid "'formula' missing"
 msgstr "'formula' пропущена"
+
+#, fuzzy
+msgid "factors are not allowed"
+msgstr "взаимодействия не разрешены"
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
 msgstr "пропущенные значения и NaNs не разрешены если 'na.rm' = FALSE"

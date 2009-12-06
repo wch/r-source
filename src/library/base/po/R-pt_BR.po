@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:41\n"
+"POT-Creation-Date: 2009-12-06 12:03\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -110,8 +110,17 @@ msgstr "*** Note que 'pos=1' resultará em erro no futuro."
 msgid "file '%s' not found"
 msgstr "arquivo '%s' não encontrado"
 
-msgid "invalid name"
-msgstr "nome inválido"
+#, fuzzy
+msgid "invalid 'name' argument"
+msgstr "argumento 'category' inválido"
+
+#, fuzzy
+msgid "package %s is required by %s, which may no longer work correctly"
+msgstr "pacote '%s' foi compilado na versão do R %s"
+
+#, fuzzy
+msgid "package %s is required by %s so will not be detached"
+msgstr "pacote '%s' exigido por '%s' não pôde ser encontrado"
 
 msgid ""
 "%s failed in %s() for '%s', details:\n"
@@ -119,14 +128,8 @@ msgid ""
 "  error: %s"
 msgstr ""
 
-msgid "is required by"
-msgstr "é exigido por"
-
-msgid "(still attached)"
-msgstr "(ainda anexado)"
-
 #, fuzzy
-msgid "namespace cannot be unloaded"
+msgid "name space cannot be unloaded:"
 msgstr "espaço de nomes '%s' não carregado"
 
 #, fuzzy
@@ -1133,8 +1136,8 @@ msgid "not loading a name space"
 msgstr "não carregando um espaço de nomes"
 
 #, fuzzy
-msgid "name space '%s' is still used by: %s"
-msgstr "espaço de nomes '%s' ainda em uso por:"
+msgid "name space %s is imported by %s so cannot be unloaded"
+msgstr "espaço de nomes '%s' não carregado"
 
 msgid "imperative name space directives are disabled"
 msgstr "diretivas imperativas de espaço de nomes estão desabilitadas"
@@ -1630,6 +1633,19 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
 
+#~ msgid "invalid name"
+#~ msgstr "nome inválido"
+
+#~ msgid "is required by"
+#~ msgstr "é exigido por"
+
+#~ msgid "(still attached)"
+#~ msgstr "(ainda anexado)"
+
+#, fuzzy
+#~ msgid "name space '%s' is still used by: %s"
+#~ msgstr "espaço de nomes '%s' ainda em uso por:"
+
 #~ msgid "See the Note in ?library"
 #~ msgstr "Veja a observação em ?library"
 
@@ -1657,11 +1673,6 @@ msgstr[1] "Mensagens de aviso:\n"
 #~ "Please re-install it"
 #~ msgstr ""
 #~ "pacote '%s' foi compilado antes do R 2.0.0: por favor instale-o novamente"
-
-#, fuzzy
-#~ msgid ""
-#~ "package '%s' was built under R version %s and help may not work correctly"
-#~ msgstr "pacote '%s' foi compilado na versão do R %s"
 
 #, fuzzy
 #~ msgid "extra arguments ignored:"

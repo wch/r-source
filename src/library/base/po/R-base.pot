@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:41\n"
+"POT-Creation-Date: 2009-12-06 12:03\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,19 +101,19 @@ msgstr ""
 msgid "file '%s' not found"
 msgstr ""
 
-msgid "invalid name"
+msgid "invalid 'name' argument"
+msgstr ""
+
+msgid "package %s is required by %s, which may no longer work correctly"
+msgstr ""
+
+msgid "package %s is required by %s so will not be detached"
 msgstr ""
 
 msgid "%s failed in %s() for '%s', details:\n  call: %s\n  error: %s"
 msgstr ""
 
-msgid "is required by"
-msgstr ""
-
-msgid "(still attached)"
-msgstr ""
-
-msgid "namespace cannot be unloaded"
+msgid "name space cannot be unloaded:"
 msgstr ""
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
@@ -1025,7 +1025,7 @@ msgstr ""
 msgid "not loading a name space"
 msgstr ""
 
-msgid "name space '%s' is still used by: %s"
+msgid "name space %s is imported by %s so cannot be unloaded"
 msgstr ""
 
 msgid "imperative name space directives are disabled"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:44\n"
+"POT-Creation-Date: 2009-12-06 12:05\n"
 "PO-Revision-Date: 2009-10-10 15:40+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -112,6 +112,13 @@ msgstr "Aucune vignette n'est trouvée par"
 
 msgid "call"
 msgstr "appel"
+
+#, fuzzy
+msgid "Package '"
+msgstr "Package"
+
+msgid "' DESCRIPTION not found."
+msgstr ""
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file' doit être NULL, une chaîne de caractères ou une connexion"
@@ -561,17 +568,15 @@ msgstr "essai d'utilisation de CRAN sans fixer un miroir"
 msgid "cannot choose a CRAN mirror non-interactively"
 msgstr "impossible de choisir un miroir CRAN en mode non interactif"
 
+#, fuzzy
+msgid "cannot choose a BioC mirror non-interactively"
+msgstr "impossible de choisir un miroir CRAN en mode non interactif"
+
 msgid "cannot set repositories non-interactively"
 msgstr "impossible de fixer les entrepôts en mode non interactif"
 
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- SVP sélectionner les entrepôts à utiliser pour cette session ---"
-
-msgid ""
-"Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr ""
-"Entrer un ou plusieurs nombres séparés par des espaces, ou une ligne vide "
-"pour anuler"
 
 msgid "'%s' must be supplied"
 msgstr "'%s' doit être fourni"
@@ -851,6 +856,10 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 "'digits' et 'digits.d' sont tous deux spécifiés et le second est ignoré"
 
+#, fuzzy
+msgid "no lines found in %s"
+msgstr "fichier d'aide introuvable pour '%s'"
+
 msgid "profile does not contain memory information"
 msgstr "'profile' ne contient pas d'information sur la mémoire"
 
@@ -907,8 +916,15 @@ msgstr "la vignette '%s' n'a pas de PDF"
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() ne peut pas être utilisé en mode non-interactif"
 
-msgid "Enter zero or more numbers separated by space"
-msgstr "Entrez des nombres séparés par des espaces"
+#, fuzzy
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr "'code_files' devrait être un vecteur de type caractère"
+
+msgid ""
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
+msgstr ""
+"Entrer un ou plusieurs nombres séparés par des espaces, ou une ligne vide "
+"pour anuler"
 
 msgid "Invalid input, please try again"
 msgstr "entrée incorrecte, essayez a nouveau SVP"
@@ -1074,6 +1090,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "Enter zero or more numbers separated by space"
+#~ msgstr "Entrez des nombres séparés par des espaces"
 
 #~ msgid "more than one help file found: using package '%s'"
 #~ msgstr "plusieurs fichiers d'aide trouvés : le package '%s' est utilisé"
