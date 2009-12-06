@@ -300,6 +300,7 @@ doPrimitiveMethod <-
 conformMethod <- function(signature, mnames, fnames,
 			  f = "<unspecified>", fdef, method)
 {
+    sig0 <- signature
     fsig <- fdef@signature
     if(is.na(match("...", mnames)) && !is.na(match("...", fnames)))
         fnames <- fnames[-match("...", fnames)]
@@ -324,12 +325,12 @@ conformMethod <- function(signature, mnames, fnames,
     if(any(is.na(match(signature[omitted], c("ANY", "missing"))))) {
         bad <- omitted & is.na(match(signature[omitted], c("ANY", "missing")))
         bad2 <- paste(fnames[bad], " = \"", signature[bad], "\"", sep = "", collapse = ", ")
-        stop(.renderSignature(f, signature),
+        stop(.renderSignature(f, sig0),
              gettextf("formal arguments (%s) omitted in the method definition cannot be in the signature", bad2),
              call. = TRUE, domain = NA)
     }
     else if(!all(signature[omitted] == "missing")) {
-        .message(.renderSignature(f, signature),
+        .message(.renderSignature(f, sig0),
                  gettextf("expanding the signature to include omitted arguments in definition: %s",
                           paste(fnames[omitted], "= \"missing\"",collapse = ", ")))
         omitted <- seq_along(omitted)[omitted] # logical index will extend signature!
