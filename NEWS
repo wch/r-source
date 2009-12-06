@@ -155,6 +155,13 @@ NEW FEATURES
 
     o	New function chooseBioCmirror() to set the "BioC_mirror" option.
 
+    o	The R grammar prevents using the argument 'name' in signatures
+	of S4 methods for '$' and '$<-', since they will always be
+	called with a character string value for 'name'.  The implicit
+	S4 generic functions have been changed to reflect this:
+	packages which included 'name' in the signature of their
+	methods need to be updated and re-installed.
+
 
 DEPRECATED & DEFUNCT
 
@@ -180,8 +187,10 @@ BUG FIXES
 	elements now works. (PR#14035)
 
     o	The "quick" dispatch of S4 methods for primitive functions was
-	not happening, forcing a search each time. (Dispatch for true
-	functions was not affected.)
+	not happening, forcing a search each time.  (Dispatch for
+	closures was not affected.)  A side effect is that default
+	values for arguments in a method that do not have defaults in
+	the generic will now be ignored.
 
     o	Trying to dispatch methods for primitives during the search
 	for inherited methods slows that search down and potentially
@@ -189,13 +198,14 @@ BUG FIXES
 	added to turn off all such methods from findInheritedMethods().
 
     o	R framework installation (on Mac OS X) would not work properly
-	if a rogue Resources directory was present at the top
-	level.  Such non-symlink will now be renamed to Resources.old
-	(and anything previously named Resources.old removed) as part
-	of the framework installation process.
+	if a rogue Resources directory was present at the top level.
+	Such a non-symlink will now be renamed to Resources.old (and
+	anything previously named Resources.old removed) as part of
+	the framework installation process.
 
     o	Using read.table(header=TRUE) on a header with an embedded new
     	line would copy part of the header into the data.  (PR#14103)
+
 
 
 
