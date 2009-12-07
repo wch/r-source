@@ -206,6 +206,11 @@ BUG FIXES
     o	Using read.table(header=TRUE) on a header with an embedded new
     	line would copy part of the header into the data.  (PR#14103)
 
+    o	The checks for conforming S4 method arguments could fail when
+        the signature of the generic function omitted some of the
+        formal arguments (in addition to ...).  Arguments omitted from
+        the method definition but conforming (per the documentation)
+        should now be ignored (treated as "ANY") in dispatching.
 
 
 

@@ -296,7 +296,6 @@ doPrimitiveMethod <-
     gettextf("in method for %s with signature %s: ", sQuote(f), sQuote(msig))
 }
 
-## FIXME: this confuses argument lists and signatures
 conformMethod <- function(signature, mnames, fnames,
 			  f = "<unspecified>", fdef, method)
 {
@@ -304,7 +303,8 @@ conformMethod <- function(signature, mnames, fnames,
     fsig <- fdef@signature
     if(is.na(match("...", mnames)) && !is.na(match("...", fnames)))
         fnames <- fnames[-match("...", fnames)]
-    omitted <- is.na(imf <- match(fnames, mnames))
+    imf <- match(fnames, mnames)
+    omitted <- is.na(imf)
     if(is.unsorted(imf[!omitted]))
 	## Should be an error, but the test was not triggering for such a long time :
 	warning(.renderSignature(f, signature),
@@ -312,8 +312,8 @@ conformMethod <- function(signature, mnames, fnames,
                 call. = FALSE)
     if(!any(omitted)) ## i.e. mnames contains all fnames
         return(signature)
-
-    signature <- c(signature, rep("ANY", length(fsig)-length(signature)))
+    sigNames <- names(signature)
+    omittedSig <- sigNames %in% fnames[omitted] #  names in signature & generic but not in method defn
 ### FIXME:  the test below is too broad, with all.names().  Would be nice to have a test
 ### for something like assigning to one of the omitted arguments.
     ##     missingFnames <- fnames[omitted]
@@ -322,19 +322,22 @@ conformMethod <- function(signature, mnames, fnames,
     ##         warning(gettextf("%s function arguments omitted from method arguments, (%s), were found in method definition",
     ##                       label, paste(missingFnames[foundNames], collapse = ", ")),
     ##              domain = NA)
-    if(any(is.na(match(signature[omitted], c("ANY", "missing"))))) {
-        bad <- omitted & is.na(match(signature[omitted], c("ANY", "missing")))
+    if(!any(omittedSig))
+      return(signature)
+    if(any(is.na(match(signature[omittedSig], c("ANY", "missing"))))) {
+        bad <- omittedSig & is.na(match(signature[omittedSig], c("ANY", "missing")))
         bad2 <- paste(fnames[bad], " = \"", signature[bad], "\"", sep = "", collapse = ", ")
         stop(.renderSignature(f, sig0),
              gettextf("formal arguments (%s) omitted in the method definition cannot be in the signature", bad2),
              call. = TRUE, domain = NA)
     }
-    else if(!all(signature[omitted] == "missing")) {
+    else if(!all(signature[omittedSig] == "missing")) {
+        omittedSig <- omittedSig && (signature[omittedSig] != "missing")
         .message("Note: ", .renderSignature(f, sig0),
                  gettextf("expanding the signature to include omitted arguments in definition: %s",
-                          paste(fnames[omitted], "= \"missing\"",collapse = ", ")))
-        omitted <- seq_along(omitted)[omitted] # logical index will extend signature!
-        signature[omitted] <- "missing"
+                          paste(signames[omittedSig], "= \"missing\"",collapse = ", ")))
+        omittedSig <- seq_along(omittedSig)[omittedSig] # logical index will extend signature!
+        signature[omittedSig] <- "missing"
     }
     ## remove trailing "ANY"'s
     n <- length(signature)

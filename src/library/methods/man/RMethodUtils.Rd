@@ -301,14 +301,15 @@ addNextMethod(method, f, mlist, optional, envir)
       messages. The generic function, \code{fdef}, supplies the
       generic signature  for matching purposes.
 
-      The method assignment conforms if either method and function have
+      The method assignment conforms if method and generic function have
       identical formal argument lists.  It can also conform if the
       method omits some of the formal arguments of the function but: (1)
       the non-omitted arguments are a subset of the function arguments,
       appearing in the same order; (2) there are no arguments to the
-      method that are not arguments to the function;  (3) the omitted
+      method that are not arguments to the function; and (3) the omitted
       formal arguments do not appear as explicit classes in the
-      signature; and (4) the omitted arguments are not used as local
+      signature.  A future extension hopes to test also that the
+      omitted arguments are not assumed by being used as locally assigned 
       names or function names in the body of the method.
     }
 

@@ -1,5 +1,5 @@
 
-R version 2.11.0 Under development (unstable) (2009-12-06 r50679)
+R version 2.11.0 Under development (unstable) (2009-12-07 r50686)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -561,10 +561,7 @@ An object of class "foo"
 Creating a new generic function for "as.vector" in ".GlobalEnv"
 [1] "as.vector"
 > ## whereas this fails in R versions earlier than 2.6.0:
-> setMethod("as.vector", "foo", function(x) unclass(x)) # gives message
-Note: in method for 'as.vector' with signature 'x="foo"': expanding
-the signature to include omitted arguments in definition: mode =
-"missing"
+> setMethod("as.vector", "foo", function(x) unclass(x))
 [1] "as.vector"
 > 
 > ## stats4::AIC in R < 2.7.0 used to clobber stats::AIC

@@ -329,7 +329,7 @@ xx <- new("foo", FALSE)
 setMethod("as.vector", signature(x = "foo", mode = "missing"),
           function(x) unclass(x))
 ## whereas this fails in R versions earlier than 2.6.0:
-setMethod("as.vector", "foo", function(x) unclass(x)) # gives message
+setMethod("as.vector", "foo", function(x) unclass(x))
 
 ## stats4::AIC in R < 2.7.0 used to clobber stats::AIC
 pfit <- function(data) {
