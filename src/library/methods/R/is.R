@@ -183,7 +183,7 @@ setIs <-
       whereIs[[1L]]
     else {
         warning(gettextf("Class %s is defined (with package slot %s) but no metadata object found to revise %s information---not exported?  Making a copy in package %s",
-                         dQuote(class), sQuote(classDef@package), purpose,
+                         .dQ(class), sQuote(classDef@package), purpose,
                          sQuote(getPackageName(where, FALSE))),
                 call. = FALSE, domain = NA)
         where

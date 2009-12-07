@@ -128,7 +128,7 @@ as.data.frame <- function(x, row.names = NULL, optional = FALSE, ...)
 }
 
 as.data.frame.default <- function(x, ...)
-    stop(gettextf("cannot coerce class %s into a data.frame",
+    stop(gettextf("cannot coerce class '%s' into a data.frame",
                   deparse(class(x))),
          domain = NA)
 

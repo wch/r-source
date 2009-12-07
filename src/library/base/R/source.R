@@ -69,7 +69,8 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
         }
         if(is.na(encoding))
             stop("unable to find a plausible encoding")
-        if(verbose) cat("encoding =", dQuote(encoding), "chosen\n")
+        if(verbose)
+            cat(gettextf('encoding = "%s" chosen', encoding), "\n", sep = "")
         if(file == "") file <- stdin()
         else {
             if (isTRUE(keep.source))
