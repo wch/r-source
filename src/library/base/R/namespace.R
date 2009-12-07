@@ -871,12 +871,25 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
     ex <- .Internal(ls(exports, TRUE))
     if(!all(expnames %in% ex)) {
         miss <- expnames[! expnames %in% ex]
-        stop(sprintf(ngettext(length(miss),
-                              "object '%s' is not exported by 'namespace:%s'",
-                              "objects '%s' are not exported by 'namespace:%s'"),
-                     paste(sQuote(miss), collapse = ", "),
-                     getNamespaceName(expenv)),
-             domain = NA)
+        ## if called (indirectly) for namespaceImportClasses
+        ## these are all classes
+        if(all(grepl("^\\.__C__", miss))) {
+            miss <- sub("^\\.__C__", "", miss)
+            stop(sprintf(ngettext(length(miss),
+                                  "class %s is not exported by 'namespace:%s'",
+                                  "classes %s are not exported by 'namespace:%s'"),
+                         paste(paste('"', miss, '"', sep = ""),
+                               collapse = ", "),
+                         getNamespaceName(expenv)),
+                 call. = FALSE, domain = NA)
+        } else {
+            stop(sprintf(ngettext(length(miss),
+                                  "object %s is not exported by 'namespace:%s'",
+                                  "objects %s are not exported by 'namespace:%s'"),
+                         paste(sQuote(miss), collapse = ", "),
+                         getNamespaceName(expenv)),
+                 call. = FALSE, domain = NA)
+        }
     }
     expnames <- unlist(lapply(expnames, get, envir = exports, inherits = FALSE))
     if (is.null(impnames)) impnames <- character(0L)
