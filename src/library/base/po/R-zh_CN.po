@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:03\n"
+"POT-Creation-Date: 2009-12-07 07:59\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -239,7 +239,8 @@ msgstr "'row.names'里不允许有遗漏值"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "数据框的'dimnames'给得不对"
 
-msgid "cannot coerce class %s into a data.frame"
+#, fuzzy
+msgid "cannot coerce class '%s' into a data.frame"
 msgstr "不能把%s类别强迫变成数据框"
 
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
@@ -1047,10 +1048,14 @@ msgstr "不能分配NativeSymbolInfo给"
 msgid "package '%s' does not have a name space"
 msgstr "程辑包'%s'没有名字空间"
 
-msgid "exportClassPattern specified but no matching classes in %s"
+#, fuzzy
+msgid ""
+"exportClassPattern specified in NAMESPACE but no matching classes in package "
+"'%s'"
 msgstr "虽然exportClassPattern有设定但它与%s中的类别不配"
 
-msgid "in '%s' classes for export not defined: %s"
+#, fuzzy
+msgid "in package '%s' classes for export not defined: %s"
 msgstr "用于出口的'%s'类别不存在：%s"
 
 msgid "in '%s' methods for export not found: %s"
@@ -1326,6 +1331,9 @@ msgstr "'verbose'是TRUE，但'echo'不是；... 强迫'echo <- TRUE'"
 
 msgid "unable to find a plausible encoding"
 msgstr "找不到合理的编码"
+
+msgid "encoding = \"%s\" chosen"
+msgstr ""
 
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE'对URL来说没有意义"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:03\n"
+"POT-Creation-Date: 2009-12-07 07:59\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -247,7 +247,7 @@ msgid "invalid 'dimnames' given for data frame"
 msgstr "'dimnames' inválidos para um data frame"
 
 #, fuzzy
-msgid "cannot coerce class %s into a data.frame"
+msgid "cannot coerce class '%s' into a data.frame"
 msgstr "não é possível fazer coerção de classe \"%s\" para data.frame"
 
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
@@ -1108,10 +1108,13 @@ msgstr "falha na atribuição de NativeSymbolInfo para"
 msgid "package '%s' does not have a name space"
 msgstr "pacote '%s' não tem um espaõ de nomes"
 
-msgid "exportClassPattern specified but no matching classes in %s"
+msgid ""
+"exportClassPattern specified in NAMESPACE but no matching classes in package "
+"'%s'"
 msgstr ""
 
-msgid "in '%s' classes for export not defined: %s"
+#, fuzzy
+msgid "in package '%s' classes for export not defined: %s"
 msgstr "em '%s' classes para expor~tação não definidas: %s"
 
 msgid "in '%s' methods for export not found: %s"
@@ -1394,6 +1397,9 @@ msgstr "'verbose' é TRUE, 'echo' não; ... fazendo 'echo <- TRUE'"
 
 msgid "unable to find a plausible encoding"
 msgstr "não foi possível achar uma codificação plausível"
+
+msgid "encoding = \"%s\" chosen"
+msgstr ""
 
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE' não faz sentido para uma URL"

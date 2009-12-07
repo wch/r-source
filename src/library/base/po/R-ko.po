@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:03\n"
+"POT-Creation-Date: 2009-12-07 07:59\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -243,7 +243,7 @@ msgid "invalid 'dimnames' given for data frame"
 msgstr "데이터 프레임에 무효인 'dmnames'가 주어졌습니다"
 
 #, fuzzy
-msgid "cannot coerce class %s into a data.frame"
+msgid "cannot coerce class '%s' into a data.frame"
 msgstr "class \\\"%s\\\"는 데이터 프레임에 강제 변환할수가 없습니다"
 
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
@@ -1099,10 +1099,13 @@ msgstr ""
 msgid "package '%s' does not have a name space"
 msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
 
-msgid "exportClassPattern specified but no matching classes in %s"
+msgid ""
+"exportClassPattern specified in NAMESPACE but no matching classes in package "
+"'%s'"
 msgstr ""
 
-msgid "in '%s' classes for export not defined: %s"
+#, fuzzy
+msgid "in package '%s' classes for export not defined: %s"
 msgstr "'%s'에는 export를 위한 클래스는 검색되지 않습니다"
 
 msgid "in '%s' methods for export not found: %s"
@@ -1390,6 +1393,9 @@ msgstr ""
 
 msgid "unable to find a plausible encoding"
 msgstr "그럴듯한 인코딩을 검색할수가 없습니다"
+
+msgid "encoding = \"%s\" chosen"
+msgstr ""
 
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr ""

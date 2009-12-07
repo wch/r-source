@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:03\n"
+"POT-Creation-Date: 2009-12-07 07:59\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,7 +227,7 @@ msgstr ""
 msgid "invalid 'dimnames' given for data frame"
 msgstr ""
 
-msgid "cannot coerce class %s into a data.frame"
+msgid "cannot coerce class '%s' into a data.frame"
 msgstr ""
 
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
@@ -998,10 +998,10 @@ msgstr ""
 msgid "package '%s' does not have a name space"
 msgstr ""
 
-msgid "exportClassPattern specified but no matching classes in %s"
+msgid "exportClassPattern specified in NAMESPACE but no matching classes in package '%s'"
 msgstr ""
 
-msgid "in '%s' classes for export not defined: %s"
+msgid "in package '%s' classes for export not defined: %s"
 msgstr ""
 
 msgid "in '%s' methods for export not found: %s"
@@ -1269,6 +1269,9 @@ msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
 msgstr ""
 
 msgid "unable to find a plausible encoding"
+msgstr ""
+
+msgid "encoding = \"%s\" chosen"
 msgstr ""
 
 msgid "'chdir = TRUE' makes no sense for a URL"

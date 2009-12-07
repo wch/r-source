@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:03\n"
+"POT-Creation-Date: 2009-12-07 07:59\n"
 "PO-Revision-Date: 2009-10-15 02:15-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -244,7 +244,8 @@ msgstr "пропущенные значения в 'row.names' не разрешены"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "для таблицы данных предложены неправильные 'dimnames'"
 
-msgid "cannot coerce class %s into a data.frame"
+#, fuzzy
+msgid "cannot coerce class '%s' into a data.frame"
 msgstr "не могу поместить класс \"%s\" в data.frame"
 
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
@@ -1063,11 +1064,15 @@ msgstr "не удалось присвоить NativeSymbolInfo для"
 msgid "package '%s' does not have a name space"
 msgstr "пакет '%s' не имеет пространства имен"
 
-msgid "exportClassPattern specified but no matching classes in %s"
+#, fuzzy
+msgid ""
+"exportClassPattern specified in NAMESPACE but no matching classes in package "
+"'%s'"
 msgstr ""
 "Указан 'exportClassPattern', но отсутствуют соответствующие классы в %s"
 
-msgid "in '%s' classes for export not defined: %s"
+#, fuzzy
+msgid "in package '%s' classes for export not defined: %s"
 msgstr "в '%s' классы для экспорта не определены: %s"
 
 msgid "in '%s' methods for export not found: %s"
@@ -1347,6 +1352,9 @@ msgstr ""
 
 msgid "unable to find a plausible encoding"
 msgstr "не могу найти правдоподобную кодировку"
+
+msgid "encoding = \"%s\" chosen"
+msgstr ""
 
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE' не имеет смысла для URL"
