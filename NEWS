@@ -162,6 +162,10 @@ NEW FEATURES
 	packages which included 'name' in the signature of their
 	methods need to be updated and re-installed.
 
+    o	The handling of the 'method' argument of glm() has been
+	refined following suggestions by Ioannis Kosmidis and Heather
+	Turner.
+
 
 DEPRECATED & DEFUNCT
 

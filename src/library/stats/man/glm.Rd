@@ -20,15 +20,14 @@
 }
 \usage{
 glm(formula, family = gaussian, data, weights, subset,
-    na.action, start = NULL, etastart, mustart,
-    offset, control = glm.control(\dots), model = TRUE,
-    method = "glm.fit", x = FALSE, y = TRUE, contrasts = NULL,
-    \dots)
+    na.action, start = NULL, etastart, mustart, offset,
+    control = list(\dots), model = TRUE, method = "glm.fit",
+    x = FALSE, y = TRUE, contrasts = NULL, \dots)
 
 glm.fit(x, y, weights = rep(1, nobs),
         start = NULL, etastart = NULL, mustart = NULL,
         offset = rep(0, nobs), family = gaussian(),
-        control = glm.control(), intercept = TRUE)
+        control = list(), intercept = TRUE)
 
 \method{weights}{glm}(object, type = c("prior", "working"), \dots)
 }
@@ -77,16 +76,16 @@ glm.fit(x, y, weights = rep(1, nobs),
     specified their sum is used.  See \code{\link{model.offset}}.}
 
   \item{control}{a list of parameters for controlling the fitting
-    process.  See the documentation for \code{\link{glm.control}}
-    for details.}
+    process.  For \code{glm.fit} this is passed to
+    \code{\link{glm.control}}.}
 
   \item{model}{a logical value indicating whether \emph{model frame}
     should be included as a component of the returned value.}
 
   \item{method}{the method to be used in fitting the model.  The default
     method \code{"glm.fit"} uses iteratively reweighted least squares
-    (IWLS), and \code{"model.frame"} which returns the model frame and
-    does no fitting. User-supplied fitting functions can be supplied
+    (IWLS), whereas \code{"model.frame"} which returns the model frame and
+    does no fitting.  User-supplied fitting functions can be supplied
     either as a function or a character string naming a function, with a
     function which takes the same arguments as \code{glm.fit}.}
 
@@ -111,11 +110,10 @@ glm.fit(x, y, weights = rep(1, nobs),
     extract from the fitted model object.}
 
   \item{\dots}{
-    For \code{glm}: arguments to be passed by default to
-    \code{\link{glm.control}}: see argument \code{control}.
+    For \code{glm}: arguments to be used to form the default
+    \code{control} argument if it is not supplied directly.
     
-    For \code{weights}:
-    further arguments passed to or from other methods.
+    For \code{weights}: further arguments passed to or from other methods.
   }
 }
 \details{
@@ -169,10 +167,26 @@ glm.fit(x, y, weights = rep(1, nobs),
     numerically 0 or 1 occurred} for binomial GLMs, see Venables &
   Ripley (2002, pp. 197--8).
 }
+
+\section{Fitting functions}{
+  The argument \code{method} serves two purposes.  One is to allow the
+  model frame to be recreated with no fitting.  The other is to allow
+  the default fitting function \code{glm.fit} to be replaced by a
+  function which takes the same arguments and uses a different fitting
+  algorithm.  If \code{glm.fit} is supplied as a character string it is
+  used to search for a function of that name, starting in the
+  \pkg{stats} namespace.
+
+  The class of the object return by the fitter (if any) will be
+  prepended to the class returned by \code{glm}.
+}
+
 \value{
   \code{glm} returns an object of class inheriting from \code{"glm"}
   which inherits from the class \code{"lm"}. See later in this section.
-
+  If a non-standard \code{method} is used, the object will also inherit
+  from the class (if any) returned by that function.
+  
   The function \code{\link{summary}} (i.e., \code{\link{summary.glm}}) can
   be used to obtain or print a summary of the results and the function
   \code{\link{anova}} (i.e., \code{\link{anova.glm}})

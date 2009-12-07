@@ -1,14 +1,15 @@
 % File src/library/stats/man/glm.control.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{glm.control}
 \alias{glm.control}
 \title{Auxiliary for Controlling GLM Fitting}
 \description{
-  Auxiliary function as user interface for \code{\link{glm}} fitting.
-  Typically only used when calling \code{\link{glm}} or \code{\link{glm.fit}}.
+  Auxiliary function for \code{\link{glm}} fitting.
+  Typically only used internally by \code{\link{glm.fit}}, but may be
+  used to construct a \code{control} argument to either function.
 }
 \usage{
 glm.control(epsilon = 1e-8, maxit = 25, trace = FALSE)
@@ -22,15 +23,21 @@ glm.control(epsilon = 1e-8, maxit = 25, trace = FALSE)
     iteration.}
 }
 \details{
-  If \code{epsilon} is small, it is also used as the tolerance for the
+  The \code{control} argument of \code{\link{glm}} is by default passed
+  to the \code{control} argument of \code{\link{glm.fit}}, which uses
+  its elements as arguments to \code{glm.control}: the latter provides
+  defaults and sanity checking.
+  
+  If \code{epsilon} is small (less than \eqn{10^{-10}}{1e-10}) it is
+  also used as the tolerance for the detection of collinearity in the
   least squares solution.
 
   When \code{trace} is true, calls to \code{\link{cat}} produce the
-  output for each IWLS iteration. Hence, \code{\link{options}(digits = *)}
+  output for each IWLS iteration.  Hence, \code{\link{options}(digits = *)}
   can be used to increase the precision, see the example.
 }
 \value{
-  A list with the arguments as components.
+  A list with components named as the arguments.
 }
 \references{
   Hastie, T. J. and Pregibon, D. (1992)
@@ -38,8 +45,9 @@ glm.control(epsilon = 1e-8, maxit = 25, trace = FALSE)
   Chapter 6 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 }
-\seealso{\code{\link{glm.fit}}, the fitting procedure used by
-  \code{\link{glm}}.}
+\seealso{
+  \code{\link{glm.fit}}, the fitting procedure used by \code{\link{glm}}.
+}
 \examples{
 ### A variation on  example(glm) :
 

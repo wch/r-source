@@ -1,5 +1,5 @@
 
-R version 2.11.0 Under development (unstable) (2009-11-16 r50445)
+R version 2.11.0 Under development (unstable) (2009-12-07 r50686)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1795,10 +1795,8 @@ Warning messages:
 23: step size truncated: out of bounds
 24: step size truncated: out of bounds
 25: step size truncated: out of bounds
-26: In glm.fit(x = X, y = Y, weights = weights, start = start,  ... :
-  algorithm did not converge
-27: In glm.fit(x = X, y = Y, weights = weights, start = start,  ... :
-  algorithm stopped at boundary value
+26: glm.fit: algorithm did not converge
+27: glm.fit: algorithm stopped at boundary value
 > 
 > 
 > ## extending char arrrays
