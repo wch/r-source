@@ -446,7 +446,7 @@ matchSignature <-
                     sprintf(ngettext(length(unknown),
                                      "no definition for class %s",
                                      "no definition for classes %s"),
-                            paste(dQuote(unknown), collapse = ", ")),
+                            paste(.dQ(unknown), collapse = ", ")),
                     call. = FALSE, domain = NA)
         }
     }
