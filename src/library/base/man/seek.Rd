@@ -46,15 +46,6 @@ truncate(con, \dots)
   values can exceed the largest representable number in an \R
   \code{integer} on 64-bit OSes, and on some 32-bit OSes.
   
-#ifdef windows
-  Clipboard connections can seek too.
-
-  We have found so many errors in the Windows implementation of file
-  positioning that users are advised to use it only at their own risk,
-  and asked not to waste the \R developers' time with bug reports on Windows'
-  deficiencies.
-#endif
-  
   File connections can be open for both writing/appending, in which case
   \R keeps separate positions for reading and writing.  Which \code{seek}
   refers to can be set by its \code{rw} argument: the default is the
@@ -78,6 +69,12 @@ truncate(con, \dots)
   position.  It works only for \code{file} connections, and is not
   implemented on all platforms: on others (including Windows) it will
   not work for large (> 2Gb) files.
+}
+\section{Warning}{
+  Use of \code{seek} on Windows is discouraged.  We have found so many
+  errors in the Windows implementation of file positioning that users
+  are advised to use it only at their own risk, and asked not to waste
+  the \R developers' time with bug reports on Windows' deficiencies.
 }
 \value{
   \code{seek} returns the current position (before any move), as a
