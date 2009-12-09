@@ -1525,14 +1525,18 @@ SEXP attribute_hidden do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* Evaluate each expression in "el" in the environment "rho".  This is */
-/* a naturally recursive algorithm, but we use the iterative form below */
-/* because it is does not cause growth of the pointer protection stack, */
-/* and because it is a little more efficient. */
+/* Evaluate each expression in "el" in the environment "rho".  This is
+   a naturally recursive algorithm, but we use the iterative form below
+   because it is does not cause growth of the pointer protection stack,
+   and because it is a little more efficient.
+*/
 
 /* Used in eval and applyMethod (object.c) for builtin primitives,
    do_internal (names.c) for builtin .Internals
    and in evalArgs.
+
+   'n' is the number of arguments already evaluated and hence not
+   passed to evalArgs and hence here.
  */
 SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 {
@@ -1575,19 +1579,16 @@ SEXP attribute_hidden evalList(SEXP el, SEXP rho, SEXP call, int n)
 	    tail = CDR(tail);
 	    SET_TAG(tail, CreateTag(TAG(el)));
 	}
-	
 	el = CDR(el);
     }
     UNPROTECT(1);
     return CDR(ans);
-}/* evalList() */
+} /* evalList() */
 
 
 /* A slight variation of evaluating each expression in "el" in "rho". */
-/* This is a naturally recursive algorithm, but we use the iterative */
-/* form below because it is does not cause growth of the pointer */
-/* protection stack, and because it is a little more efficient. */
 
+/* used in evalArgs, arithmetic.c, seq.c */
 SEXP attribute_hidden evalListKeepMissing(SEXP el, SEXP rho)
 {
     SEXP ans, h, tail;
