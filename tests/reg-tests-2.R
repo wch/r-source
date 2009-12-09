@@ -2426,3 +2426,10 @@ ls.str(E)
 try(complete.cases())
 try(complete.cases(list(), list()))
 ## gave unhelpful messages in 2.10.0, silly results in pre-2.10.1
+
+
+## error messages from (C-level) evalList
+tst <- function(y) { stopifnot(is.numeric(y)); y+ 1 }
+try(tst())
+try(c(1,,2))
+## change in 2.8.0 made these less clear

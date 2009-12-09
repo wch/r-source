@@ -1,5 +1,5 @@
 
-R version 2.11.0 Under development (unstable) (2009-12-07 r50686)
+R version 2.11.0 Under development (unstable) (2009-12-08 r50689)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6489,4 +6489,13 @@ Error in complete.cases() : no input has determined the number of cases
 Error in complete.cases(list(), list()) : 
   no input has determined the number of cases
 > ## gave unhelpful messages in 2.10.0, silly results in pre-2.10.1
+> 
+> 
+> ## error messages from (C-level) evalList
+> tst <- function(y) { stopifnot(is.numeric(y)); y+ 1 }
+> try(tst())
+Error in is.numeric(y) : 'y' is missing
+> try(c(1,,2))
+Error in c(1, , 2) : argument 2 is empty
+> ## change in 2.8.0 made these less clear
 > 
