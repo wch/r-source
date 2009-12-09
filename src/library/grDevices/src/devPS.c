@@ -2670,23 +2670,29 @@ static void PostScriptSetFont(FILE *fp, int fontnum, double size)
 }
 
 static void
-PostScriptSetLineTexture(FILE *fp, const char *dashlist, int nlty, double lwd)
+PostScriptSetLineTexture(FILE *fp, const char *dashlist, int nlty, 
+			 double lwd, int lend)
 {
 /* use same macro for Postscript and PDF */
-#define PP_SetLineTexture(_CMD_)						\
-    double dash;								\
-    int i;									\
-    fprintf(fp,"[");								\
-    for (i = 0; i < nlty; i++) {						\
-	dash = (lwd >= 1 ? lwd: 1) *						\
-	    ((i % 2) ? dashlist[i] + 1						\
-	     :((nlty == 1 && dashlist[i] == 1.) ? 1. : dashlist[i] - 1));	\
-	if (dash < 0) dash = 0;							\
-	fprintf(fp," %.2f", dash);						\
-    }										\
+/* Historically the adjustment was 1 to allow for round end caps.
+   As from 2.11.0, no adjustment is done for butt endcaps.
+   The + 1 adjustment on the 'off' segments seems wrong, but it
+   has been left in for back-compatibility
+*/
+#define PP_SetLineTexture(_CMD_, adj)			       	\
+    double dash, a = adj;				       	\
+    int i;				       		       	\
+    fprintf(fp,"[");			       		       	\
+    for (i = 0; i < nlty; i++) {	       		       	\
+	dash = (lwd >= 1 ? lwd: 1) *	       		       	\
+	    ((i % 2) ? (dashlist[i] + a)       			\
+	     : ((nlty == 1 && dashlist[i] == 1.) ? 1. : dashlist[i] - a) ); \
+	if (dash < 0) dash = 0;		       		       	\
+	fprintf(fp," %.2f", dash);	       		       	\
+    }					       		       	\
     fprintf(fp,"] 0 %s\n", _CMD_)
 
-    PP_SetLineTexture("setdash");
+    PP_SetLineTexture("setdash", (lend == GE_BUTT_CAP) ? 0. : 1.);
 }
 
 
@@ -3506,7 +3512,7 @@ static void SetLineStyle(const pGEcontext gc, pDevDesc dd)
 	    dashlist[i] = newlty & 15;
 	    newlty = newlty >> 4;
 	}
-	PostScriptSetLineTexture(pd->psfp, dashlist, i, newlwd * 0.75);
+	PostScriptSetLineTexture(pd->psfp, dashlist, i, newlwd * 0.75, newlend);
     }
     if (pd->current.lend != newlend) {
 	pd->current.lend = newlend;
@@ -6259,9 +6265,9 @@ static void PDFSetLineJoin(FILE *fp, R_GE_linejoin ljoin)
 
 /* Note that the line texture is scaled by the line width.*/
 static void PDFSetLineTexture(FILE *fp, const char *dashlist, int nlty,
-			      double lwd)
+			      double lwd, int lend)
 {
-    PP_SetLineTexture("d");
+    PP_SetLineTexture("d", (lend == GE_BUTT_CAP) ? 0. : 1.);
 }
 
 static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
@@ -6284,7 +6290,7 @@ static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
 	    dashlist[i] = newlty & 15;
 	    newlty = newlty >> 4;
 	}
-	PDFSetLineTexture(pd->pdffp, dashlist, i, newlwd * 0.75);
+	PDFSetLineTexture(pd->pdffp, dashlist, i, newlwd * 0.75, newlend);
     }
     if (pd->current.lend != newlend) {
 	pd->current.lend = newlend;

@@ -166,6 +166,10 @@ NEW FEATURES
 	refined following suggestions by Ioannis Kosmidis and Heather
 	Turner.
 
+    o	The handling of line textures in the postscript() and pdf()
+	devices was set up for round end caps (the only type which
+	existed at the time): it has now been adjusted for butt endcaps.
+
 
 DEPRECATED & DEFUNCT
 
