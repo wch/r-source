@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2007  The R Development Core Team.
+ *  Copyright (C) 1999-2009  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -826,8 +826,8 @@ SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     x = CAR(args);
-    if( isObject(x) && DispatchOrEval(call, op, "length<-", args,
-				      rho, &ans, 0, 1))
+    if(isObject(x) && DispatchOrEval(call, op, "length<-", args,
+				     rho, &ans, 0, 1))
 	return(ans);
     if (!isVector(x) && !isVectorizable(x))
        error(_("invalid argument"));
@@ -880,6 +880,10 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isVector(x) || length(x) != 1)
 	error(_("switch: EXPR must return a length 1 vector"));
     PROTECT(w = switchList(CDR(args), rho));
+#define Return_NULL    UNPROTECT(1); return R_NilValue
+    if(w == R_MissingArg) {
+	Return_NULL;
+    }
     if (isString(x)) {
 	for (y = w; y != R_NilValue; y = CDR(y))
 	    if (TAG(y) != R_NilValue && pmatch(STRING_ELT(x, 0), TAG(y), 1)) {
@@ -893,13 +897,11 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 		UNPROTECT(1);
 		return (eval(CAR(y), rho));
 	    }
-	UNPROTECT(1);
-	return R_NilValue;
+	Return_NULL;
     }
     argval = asInteger(x);
-    if (argval <= 0 || argval > (length(w))) {
-	UNPROTECT(1);
-	return R_NilValue;
+    if (argval <= 0 || argval > length(w)) {
+	Return_NULL;
     }
     x = eval(CAR(nthcdr(w, argval - 1)), rho);
     UNPROTECT(1);

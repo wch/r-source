@@ -183,10 +183,12 @@ BUG FIXES
     o	wilcox.test(*, conf.int=TRUE) has achieved.level corrected and, for
 	exact=FALSE, now gives an 'estimate' which does not depend on the
 	alternative used.
-	
+
     o	help.search() failed when the package argument was specified.
     	(PR#14113)
 
+    o	switch(EXPR = "A")  now returns NULL, as switch(1) {which used to
+	signal an error}.
 
 
 		CHANGES IN R VERSION 2.10.0
