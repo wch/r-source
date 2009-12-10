@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-11-20 08:28+0000\n"
+"POT-Creation-Date: 2009-12-10 19:17+0000\n"
 "PO-Revision-Date: 2009-10-10 14:06+0100\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -223,7 +223,7 @@ msgstr " '%ls'の表示に問題があります "
 #: src/modules/X11/devX11.c:3043 src/modules/X11/devX11.c:3047
 #: src/modules/X11/devX11.c:3051 src/modules/X11/devX11.c:3055
 #: src/modules/X11/devX11.c:3066 src/modules/X11/devX11.c:3070
-#: src/unix/sys-std.c:1194 src/unix/sys-std.c:1217
+#: src/unix/sys-std.c:1195 src/unix/sys-std.c:1218
 #, c-format
 msgid "invalid '%s' argument"
 msgstr " '%s' 引数が不正です "
@@ -269,7 +269,7 @@ msgstr " 'savehistory' は Rgui または Rterm でのみ使えます "
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr " 'loadhistory' は Rgui と Rterm の中でだけ使えます "
 
-#: src/gnuwin32/extra.c:545 src/unix/sys-std.c:1248
+#: src/gnuwin32/extra.c:545 src/unix/sys-std.c:1249
 msgid "invalid timestamp"
 msgstr " タイムスタンプが不正です "
 
@@ -294,7 +294,7 @@ msgstr " タイムスタンプが不正です "
 #: src/modules/X11/devX11.c:2571 src/modules/X11/devX11.c:2576
 #: src/modules/X11/devX11.c:2581 src/modules/X11/devX11.c:2591
 #: src/modules/X11/devX11.c:2596 src/modules/X11/devX11.c:2600
-#: src/modules/X11/devX11.c:3059 src/unix/sys-std.c:1295
+#: src/modules/X11/devX11.c:3059 src/unix/sys-std.c:1296
 #, c-format
 msgid "invalid '%s' value"
 msgstr " '%s' の値が不正です "
@@ -494,12 +494,12 @@ msgstr " CPU時間が経過して上限に達しました "
 msgid "Fatal error: %s\n"
 msgstr " 致命的なエラーです： %s \n"
 
-#: src/gnuwin32/system.c:329 src/unix/sys-std.c:851
+#: src/gnuwin32/system.c:329 src/unix/sys-std.c:852
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr " '%s' というエンコーディングは認識できません "
 
-#: src/gnuwin32/system.c:335 src/unix/sys-std.c:857
+#: src/gnuwin32/system.c:335 src/unix/sys-std.c:858
 #, c-format
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr ""
@@ -578,7 +578,7 @@ msgid ""
 msgstr ""
 " 'reader thread' を作れません。システムのリソースを幾らか解放すべきです "
 
-#: src/include/Errormsg.h:25 src/main/eval.c:2863 src/main/subscript.c:309
+#: src/include/Errormsg.h:25 src/main/eval.c:2875 src/main/subscript.c:309
 #: src/main/subscript.c:418 src/main/subscript.c:518
 msgid "subscript out of bounds"
 msgstr " 添え字が許される範囲外です "
@@ -729,11 +729,11 @@ msgstr " DLL の名前 '%s' が長すぎます "
 msgid "could not allocate space for 'name'"
 msgstr " 'name' のための領域を割り当てられませんでした "
 
-#: src/main/Rdynload.c:888 src/main/Rdynload.c:904 src/main/util.c:671
+#: src/main/Rdynload.c:890 src/main/Rdynload.c:906 src/main/util.c:671
 msgid "character argument expected"
 msgstr " 文字引数が期待されています "
 
-#: src/main/Rdynload.c:894 src/main/Rdynload.c:927
+#: src/main/Rdynload.c:896 src/main/Rdynload.c:929
 #, c-format
 msgid ""
 "unable to load shared library '%s':\n"
@@ -742,46 +742,46 @@ msgstr ""
 " 共有ライブラリ '%s' を読み込めません \n"
 "  %s "
 
-#: src/main/Rdynload.c:907
+#: src/main/Rdynload.c:909
 #, c-format
 msgid "dynamic/shared library '%s' was not loaded"
 msgstr " dynamic/shared ライブラリ '%s' はロードされていません "
 
-#: src/main/Rdynload.c:967
+#: src/main/Rdynload.c:969
 #, c-format
 msgid "cannot allocate memory for registered native symbol (%d bytes)"
 msgstr ""
 " 登録されたネイティブのシンボルのためのメモリを割り当てることができません。(%"
 "d バイト) "
 
-#: src/main/Rdynload.c:1087
+#: src/main/Rdynload.c:1089
 msgid "must pass package name or DllInfo reference"
 msgstr " パッケージ名か DllInfo の参照を渡すべきです "
 
-#: src/main/Rdynload.c:1173 src/main/dotcode.c:128
+#: src/main/Rdynload.c:1175 src/main/dotcode.c:128
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr " createRSymbolObject には型 %d は未実装です "
 
-#: src/main/Rdynload.c:1255
+#: src/main/Rdynload.c:1257
 msgid "R_getRegisteredRoutines() expects a DllInfo reference"
 msgstr " R_getRegisteredRoutines() はある DllInfo の参照が期待されます "
 
-#: src/main/Rdynload.c:1258
+#: src/main/Rdynload.c:1260
 msgid "NULL value passed for DllInfo"
 msgstr " DlInfo にNULL 値が渡されました "
 
-#: src/main/Rdynload.c:1294 src/main/Rdynload.c:1300 src/main/Rdynload.c:1307
-#: src/main/Rdynload.c:1313 src/main/Rdynload.c:1319
+#: src/main/Rdynload.c:1296 src/main/Rdynload.c:1302 src/main/Rdynload.c:1309
+#: src/main/Rdynload.c:1315 src/main/Rdynload.c:1321
 msgid "no dyn.load support in this R version"
 msgstr " このバージョンの R は，dyn.load をサポートしていません "
 
-#: src/main/Rdynload.c:1364
+#: src/main/Rdynload.c:1366
 #, c-format
 msgid "function '%s' not provided by package '%s'"
 msgstr " 関数 '%s' はパッケージ '%s'では提供されていません "
 
-#: src/main/Rdynload.c:1366
+#: src/main/Rdynload.c:1368
 msgid "table entry must be an external pointer"
 msgstr " テーブルエントリは外部ポインタでなければなりません "
 
@@ -1211,7 +1211,7 @@ msgstr " 'use.names' 仮引数が繰り返されました "
 msgid "argument not a list"
 msgstr " 引数はリストではありません "
 
-#: src/main/bind.c:1024 src/main/eval.c:2076 src/main/eval.c:2085
+#: src/main/bind.c:1024 src/main/eval.c:2077 src/main/eval.c:2086
 #: src/main/objects.c:311 src/main/objects.c:363 src/main/objects.c:743
 #: src/main/objects.c:760 src/main/objects.c:767
 #, c-format
@@ -1260,7 +1260,7 @@ msgstr " 指定されたベクトルのサイズが長すぎます "
 #: src/main/envir.c:1792 src/main/envir.c:2463 src/main/envir.c:2522
 #: src/main/envir.c:2825 src/main/envir.c:2853 src/main/envir.c:2873
 #: src/main/envir.c:2895 src/main/envir.c:2929 src/main/envir.c:2949
-#: src/main/envir.c:3254 src/main/envir.c:3258 src/main/eval.c:3671
+#: src/main/envir.c:3254 src/main/envir.c:3258 src/main/eval.c:3683
 #: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2056
 #: src/main/saveload.c:2337 src/main/serialize.c:2244
 msgid "use of NULL environment is defunct"
@@ -1490,7 +1490,7 @@ msgstr " 非因子へ強制変換しようとしています "
 msgid "list argument expected"
 msgstr " リスト引数が期待されています "
 
-#: src/main/coerce.c:1428 src/main/eval.c:3668 src/main/eval.c:3675
+#: src/main/coerce.c:1428 src/main/eval.c:3680 src/main/eval.c:3687
 msgid "invalid environment"
 msgstr " 不正な環境です "
 
@@ -2456,7 +2456,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr " 'opts' は，小さな非負の整数でなくてはなりません "
 
 #: src/main/deparse.c:363 src/main/envir.c:1634 src/main/envir.c:1716
-#: src/main/eval.c:423 src/main/eval.c:909 src/main/eval.c:2730
+#: src/main/eval.c:423 src/main/eval.c:909 src/main/eval.c:2742
 #: src/main/saveload.c:1964 src/main/saveload.c:2281 src/main/serialize.c:2262
 #, c-format
 msgid "object '%s' not found"
@@ -2926,7 +2926,7 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr " ..%d は正しくない文脈で使われています，参照すべき ... がありません "
 
 #: src/main/envir.c:1300 src/main/envir.c:1712 src/main/eval.c:427
-#: src/main/eval.c:2733
+#: src/main/eval.c:2745
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr " 引数 \"%s\" がありませんし、省略時既定値もありません "
@@ -3315,15 +3315,15 @@ msgstr ""
 
 #: src/main/eval.c:417 src/main/eval.c:516 src/main/eval.c:1592
 #: src/main/eval.c:1654 src/main/eval.c:1709 src/main/eval.c:1960
-#: src/main/eval.c:3303 src/main/eval.c:3410
+#: src/main/eval.c:3315 src/main/eval.c:3422
 msgid "'...' used in an incorrect context"
 msgstr " '...' が不適切な文脈で使われました "
 
-#: src/main/eval.c:429 src/main/eval.c:2734
+#: src/main/eval.c:429 src/main/eval.c:2746
 msgid "argument is missing, with no default"
 msgstr " 引数がありませんし、省略時既定値もありません "
 
-#: src/main/eval.c:512 src/main/eval.c:3251
+#: src/main/eval.c:512 src/main/eval.c:3263
 msgid "attempt to apply non-function"
 msgstr " 関数でないものを適用しようとしました "
 
@@ -3454,151 +3454,151 @@ msgstr " クロージャの外部から 'Recall' が呼び出されました。 
 msgid "value in '...' is not a promise"
 msgstr " '...' の中の値は promise ではありません "
 
-#: src/main/eval.c:2138 src/main/objects.c:734
+#: src/main/eval.c:2139 src/main/objects.c:734
 #, c-format
 msgid "call name too long in '%s'"
 msgstr " '%s' 中の呼び出し名が長すぎます "
 
-#: src/main/eval.c:2159
+#: src/main/eval.c:2160
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr " '%s' の総称名が長すぎます "
 
-#: src/main/eval.c:2212
+#: src/main/eval.c:2223
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr " メソッド (\"%s\", \"%s\") は \"%s\" に対しては矛盾しています "
 
-#: src/main/eval.c:2275
+#: src/main/eval.c:2287
 msgid "dispatch error in group dispatch"
 msgstr "グループディスパッチにディスパッチエラーがあります "
 
-#: src/main/eval.c:2657
+#: src/main/eval.c:2669
 msgid "node stack overflow"
 msgstr " ノードスタックが溢れました "
 
-#: src/main/eval.c:2663
+#: src/main/eval.c:2675
 msgid "integer stack overflow"
 msgstr " 整数スタックが溢れました "
 
-#: src/main/eval.c:2716
+#: src/main/eval.c:2728
 msgid "Bad opcode"
 msgstr " opcode が不適当です "
 
-#: src/main/eval.c:2865
+#: src/main/eval.c:2877
 msgid "not a vector object"
 msgstr " ベクトルオブジェクトではありません "
 
-#: src/main/eval.c:2873 src/main/eval.c:2895 src/main/eval.c:2919
-#: src/main/eval.c:2943
+#: src/main/eval.c:2885 src/main/eval.c:2907 src/main/eval.c:2931
+#: src/main/eval.c:2955
 msgid "can only handle simple real vectors"
 msgstr " 単純な実数ベクトルだけを扱えます "
 
-#: src/main/eval.c:2882 src/main/eval.c:2929
+#: src/main/eval.c:2894 src/main/eval.c:2941
 msgid "not a simple vector"
 msgstr " 単一のベクトルではありません "
 
-#: src/main/eval.c:2899 src/main/eval.c:2947 src/main/subassign.c:975
+#: src/main/eval.c:2911 src/main/eval.c:2959 src/main/subassign.c:975
 #: src/main/subset.c:808
 msgid "incorrect number of subscripts"
 msgstr " 添え字の数が正しくありません "
 
-#: src/main/eval.c:2910 src/main/eval.c:2961
+#: src/main/eval.c:2922 src/main/eval.c:2973
 msgid "not a simple matrix"
 msgstr " 単一の行列ではありません "
 
-#: src/main/eval.c:2998
+#: src/main/eval.c:3010
 msgid "bytecode version mismatch; using eval"
 msgstr " バイトコードのバージョンが不一致です; eval を使います "
 
-#: src/main/eval.c:3003
+#: src/main/eval.c:3015
 msgid "bytecode version is too old"
 msgstr " バイトコードのバージョンが古すぎます "
 
-#: src/main/eval.c:3004
+#: src/main/eval.c:3016
 msgid "bytecode version is too new"
 msgstr " バイトコードのバージョンが新しすぎます "
 
-#: src/main/eval.c:3009
+#: src/main/eval.c:3021
 msgid "byte code version mismatch"
 msgstr " バイトコードのバージョンが不一致です "
 
-#: src/main/eval.c:3025
+#: src/main/eval.c:3037
 msgid "missing value where logical needed"
 msgstr " 論理値が必要なところが欠損値です "
 
-#: src/main/eval.c:3026
+#: src/main/eval.c:3038
 msgid "argument of if(*) is not interpretable as logical"
 msgstr " if 文の条件部分が論理値として解釈できません "
 
-#: src/main/eval.c:3060
+#: src/main/eval.c:3072
 msgid "invalid sequence argument in for loop"
 msgstr " for ループの範囲引数が不正です "
 
-#: src/main/eval.c:3213 src/main/eval.c:3234 src/main/eval.c:3348
+#: src/main/eval.c:3225 src/main/eval.c:3246 src/main/eval.c:3360
 msgid "not a BUILTIN function"
 msgstr " BUILTIN 関数ではありません "
 
-#: src/main/eval.c:3334
+#: src/main/eval.c:3346
 msgid "bad function"
 msgstr " 不正な関数です "
 
-#: src/main/eval.c:3374
+#: src/main/eval.c:3386
 msgid "not a SPECIAL function"
 msgstr " SPECIAL 関数ではありません "
 
-#: src/main/eval.c:3608
+#: src/main/eval.c:3620
 msgid "cannot find index for threaded code address"
 msgstr ""
 " スレッデッド・コード・アドレス（threaded code address）のインデックスを見つ"
 "けることができません "
 
-#: src/main/eval.c:3688
+#: src/main/eval.c:3700
 msgid "invalid symbol"
 msgstr " シンボル記号が不正です "
 
-#: src/main/eval.c:3732
+#: src/main/eval.c:3744
 msgid "argument is not a byte code object"
 msgstr " 引数がバイトコードオブジェクトではありません "
 
-#: src/main/eval.c:3753
+#: src/main/eval.c:3765
 msgid "bad file name"
 msgstr " 不正なファイル名です "
 
-#: src/main/eval.c:3757 src/main/eval.c:3778
+#: src/main/eval.c:3769 src/main/eval.c:3790
 msgid "unable to open 'file'"
 msgstr " 'file' を開くことができません "
 
-#: src/main/eval.c:3772 src/main/saveload.c:1928
+#: src/main/eval.c:3784 src/main/saveload.c:1928
 msgid "'file' must be non-empty string"
 msgstr " 'file' は空でない文字列でなければいけません "
 
-#: src/main/eval.c:3774 src/main/saveload.c:1930 src/main/saveload.c:2220
+#: src/main/eval.c:3786 src/main/saveload.c:1930 src/main/saveload.c:2220
 #: src/main/serialize.c:1788
 msgid "'ascii' must be logical"
 msgstr " 'ascii' は論理値でなければなりません "
 
-#: src/main/eval.c:3803 src/main/eval.c:3810
+#: src/main/eval.c:3815 src/main/eval.c:3822
 msgid "R_CompiledFileName: buffer too small"
 msgstr " R_CompiledFileName: バッファが小さすぎます "
 
-#: src/main/eval.c:3843
+#: src/main/eval.c:3855
 msgid "code must be a generic vector"
 msgstr " コードはジェネリックなベクトルでなければなりません "
 
-#: src/main/eval.c:3882
+#: src/main/eval.c:3894
 msgid "profile timer in use"
 msgstr " プロファイルタイマーは使用中です "
 
-#: src/main/eval.c:3884
+#: src/main/eval.c:3896
 msgid "already byte code profiling"
 msgstr " 既にバイトコードは分析されています "
 
-#: src/main/eval.c:3902
+#: src/main/eval.c:3914
 msgid "setting profile timer failed"
 msgstr " プロファイルタイマーの設定に失敗しました "
 
-#: src/main/eval.c:3919
+#: src/main/eval.c:3931
 msgid "not byte code profiling"
 msgstr " バイトコードのプロファイリングではありません "
 
@@ -7676,17 +7676,17 @@ msgstr " bessel_i(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. 引数が範囲外�
 msgid "bessel_i(%g,nu=%g): precision lost in result\n"
 msgstr " bessel_i(%g,nu=%g): 結果の精度が失われました \n"
 
-#: src/nmath/bessel_j.c:63
+#: src/nmath/bessel_j.c:65
 msgid "bessel_j allocation error"
 msgstr " bessel_j で割り当てエラーがありました "
 
-#: src/nmath/bessel_j.c:71
+#: src/nmath/bessel_j.c:73
 #, c-format
 msgid "bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
 msgstr ""
 " bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. 引数が範囲外か？ \n"
 
-#: src/nmath/bessel_j.c:74
+#: src/nmath/bessel_j.c:76
 #, c-format
 msgid "bessel_j(%g,nu=%g): precision lost in result\n"
 msgstr " bessel_j(%g,nu=%g): 結果の精度が失われました \n"
@@ -7705,21 +7705,21 @@ msgstr " bessel_k(%g): ncalc (=%ld) != nb (=%ld); alpha=%g.  範囲外の引数�
 msgid "bessel_k(%g,nu=%g): precision lost in result\n"
 msgstr " bessel_k(%g,nu=%g): 結果の精度が失われました \n"
 
-#: src/nmath/bessel_y.c:62
+#: src/nmath/bessel_y.c:64
 msgid "bessel_y allocation error"
 msgstr " bessel_y で割り当てエラーがありました "
 
-#: src/nmath/bessel_y.c:72
+#: src/nmath/bessel_y.c:74
 #, c-format
 msgid "bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
 msgstr " bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. 引数が範囲外？ \n"
 
-#: src/nmath/bessel_y.c:75
+#: src/nmath/bessel_y.c:77
 #, c-format
 msgid "bessel_y(%g,nu=%g): precision lost in result\n"
 msgstr " bessel_y(%g,nu=%g): 結果の精度が失われました \n"
 
-#: src/nmath/pnchisq.c:224
+#: src/nmath/pnchisq.c:231
 #, c-format
 msgid "pnchisq(x=%g, ..): not converged in %d iter."
 msgstr " pnchisq(x=%g, ..)：%d 回の繰り返し計算で収束しませんでした "
@@ -7841,12 +7841,12 @@ msgstr ""
 " readline 入力のネスティング中に普通でない状況が起こりました。bug.report 関数"
 "を使って報告して下さい "
 
-#: src/unix/sys-std.c:1058 src/unix/sys-std.c:1226
+#: src/unix/sys-std.c:1059 src/unix/sys-std.c:1227
 #, c-format
 msgid "problem in saving the history file '%s'"
 msgstr " 履歴ファイル '%s' の保存に問題があります "
 
-#: src/unix/sys-std.c:1133
+#: src/unix/sys-std.c:1134
 #, c-format
 msgid ""
 "Cannot open file '%s': %s\n"
@@ -7855,23 +7855,23 @@ msgstr ""
 " ファイル '%s' を開くことができません : %s \n"
 " \n"
 
-#: src/unix/sys-std.c:1197 src/unix/sys-std.c:1220
+#: src/unix/sys-std.c:1198 src/unix/sys-std.c:1221
 msgid "'file' argument is too long"
 msgstr " 'file' 引数が長過ぎます "
 
-#: src/unix/sys-std.c:1203 src/unix/sys-std.c:1205
+#: src/unix/sys-std.c:1204 src/unix/sys-std.c:1206
 msgid "no history mechanism available"
 msgstr " 利用できる履歴機構がありません "
 
-#: src/unix/sys-std.c:1232
+#: src/unix/sys-std.c:1233
 msgid "problem in truncating the history file"
 msgstr " 履歴ファイルの切り詰め中に問題がおきました "
 
-#: src/unix/sys-std.c:1234 src/unix/sys-std.c:1236
+#: src/unix/sys-std.c:1235 src/unix/sys-std.c:1237
 msgid "no history available to save"
 msgstr " 保存すべき履歴がありません "
 
-#: src/unix/sys-std.c:1342
+#: src/unix/sys-std.c:1343
 msgid "Sys.sleep is not implemented on this system"
 msgstr " Sys.sleep はこのシステムでは実装されていません "
 

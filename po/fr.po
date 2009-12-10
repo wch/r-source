@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-11-20 08:28+0000\n"
+"POT-Creation-Date: 2009-12-10 19:17+0000\n"
 "PO-Revision-Date: 2009-10-08 23:52+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -224,7 +224,7 @@ msgstr "problème lors de l'affichage de '%ls'"
 #: src/modules/X11/devX11.c:3043 src/modules/X11/devX11.c:3047
 #: src/modules/X11/devX11.c:3051 src/modules/X11/devX11.c:3055
 #: src/modules/X11/devX11.c:3066 src/modules/X11/devX11.c:3070
-#: src/unix/sys-std.c:1194 src/unix/sys-std.c:1217
+#: src/unix/sys-std.c:1195 src/unix/sys-std.c:1218
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argument '%s' incorrect"
@@ -272,7 +272,7 @@ msgstr "'savehistory' peut seulement être utilisé dans Rgui et Rterm"
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' peut seulement être utilisé dans Rgui et Rterm"
 
-#: src/gnuwin32/extra.c:545 src/unix/sys-std.c:1248
+#: src/gnuwin32/extra.c:545 src/unix/sys-std.c:1249
 msgid "invalid timestamp"
 msgstr "marque (timestamp) incorrecte"
 
@@ -297,7 +297,7 @@ msgstr "marque (timestamp) incorrecte"
 #: src/modules/X11/devX11.c:2571 src/modules/X11/devX11.c:2576
 #: src/modules/X11/devX11.c:2581 src/modules/X11/devX11.c:2591
 #: src/modules/X11/devX11.c:2596 src/modules/X11/devX11.c:2600
-#: src/modules/X11/devX11.c:3059 src/unix/sys-std.c:1295
+#: src/modules/X11/devX11.c:3059 src/unix/sys-std.c:1296
 #, c-format
 msgid "invalid '%s' value"
 msgstr "valeur '%s' incorrecte"
@@ -499,12 +499,12 @@ msgstr "limite de temps processeur atteinte"
 msgid "Fatal error: %s\n"
 msgstr "Erreur fatale : %s\n"
 
-#: src/gnuwin32/system.c:329 src/unix/sys-std.c:851
+#: src/gnuwin32/system.c:329 src/unix/sys-std.c:852
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr "l'encodage '%s' n'est pas reconnu"
 
-#: src/gnuwin32/system.c:335 src/unix/sys-std.c:857
+#: src/gnuwin32/system.c:335 src/unix/sys-std.c:858
 #, c-format
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<ERREUR : réencodage erroné pour l'encodage '%s'>\n"
@@ -582,7 +582,7 @@ msgstr ""
 "impossible de créer le 'reader thread' ; vous devez libérer des ressources "
 "système"
 
-#: src/include/Errormsg.h:25 src/main/eval.c:2863 src/main/subscript.c:309
+#: src/include/Errormsg.h:25 src/main/eval.c:2875 src/main/subscript.c:309
 #: src/main/subscript.c:418 src/main/subscript.c:518
 msgid "subscript out of bounds"
 msgstr "indice hors limites"
@@ -744,11 +744,11 @@ msgstr "Le nom de DLL '%s' est trop long"
 msgid "could not allocate space for 'name'"
 msgstr "impossible d'allouer de l'espace pour 'name'"
 
-#: src/main/Rdynload.c:888 src/main/Rdynload.c:904 src/main/util.c:671
+#: src/main/Rdynload.c:890 src/main/Rdynload.c:906 src/main/util.c:671
 msgid "character argument expected"
 msgstr "argument de type caractère attendu"
 
-#: src/main/Rdynload.c:894 src/main/Rdynload.c:927
+#: src/main/Rdynload.c:896 src/main/Rdynload.c:929
 #, c-format
 msgid ""
 "unable to load shared library '%s':\n"
@@ -757,46 +757,46 @@ msgstr ""
 "impossible de charger la bibliothèque partagée '%s':\n"
 "  %s"
 
-#: src/main/Rdynload.c:907
+#: src/main/Rdynload.c:909
 #, c-format
 msgid "dynamic/shared library '%s' was not loaded"
 msgstr "la bibliothèque dynamique / partagée '%s' n'a pas été chargée"
 
-#: src/main/Rdynload.c:967
+#: src/main/Rdynload.c:969
 #, c-format
 msgid "cannot allocate memory for registered native symbol (%d bytes)"
 msgstr ""
 "impossible d'allouer de la mémoire pour le symbole natif enregistré (%d "
 "bytes)"
 
-#: src/main/Rdynload.c:1087
+#: src/main/Rdynload.c:1089
 msgid "must pass package name or DllInfo reference"
 msgstr "le nom du package ou la référence DllInfo doit être fourni"
 
-#: src/main/Rdynload.c:1173 src/main/dotcode.c:128
+#: src/main/Rdynload.c:1175 src/main/dotcode.c:128
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr "Type %d non implémenté dans createRSymbolObject"
 
-#: src/main/Rdynload.c:1255
+#: src/main/Rdynload.c:1257
 msgid "R_getRegisteredRoutines() expects a DllInfo reference"
 msgstr "R_getRegisteredRoutines() attend une référence DllInfo"
 
-#: src/main/Rdynload.c:1258
+#: src/main/Rdynload.c:1260
 msgid "NULL value passed for DllInfo"
 msgstr "valeur NULL passée pour DllInfo"
 
-#: src/main/Rdynload.c:1294 src/main/Rdynload.c:1300 src/main/Rdynload.c:1307
-#: src/main/Rdynload.c:1313 src/main/Rdynload.c:1319
+#: src/main/Rdynload.c:1296 src/main/Rdynload.c:1302 src/main/Rdynload.c:1309
+#: src/main/Rdynload.c:1315 src/main/Rdynload.c:1321
 msgid "no dyn.load support in this R version"
 msgstr "utilisation de dyn.load impossible dans cette version de R"
 
-#: src/main/Rdynload.c:1364
+#: src/main/Rdynload.c:1366
 #, c-format
 msgid "function '%s' not provided by package '%s'"
 msgstr "la fonction '%s' n'existe pas dans le package '%s'"
 
-#: src/main/Rdynload.c:1366
+#: src/main/Rdynload.c:1368
 msgid "table entry must be an external pointer"
 msgstr "l'entrée de la table doit être un pointeur externe"
 
@@ -1233,7 +1233,7 @@ msgstr "argument formel 'use.names' répété"
 msgid "argument not a list"
 msgstr "l'argument n'est pas une liste"
 
-#: src/main/bind.c:1024 src/main/eval.c:2076 src/main/eval.c:2085
+#: src/main/bind.c:1024 src/main/eval.c:2077 src/main/eval.c:2086
 #: src/main/objects.c:311 src/main/objects.c:363 src/main/objects.c:743
 #: src/main/objects.c:760 src/main/objects.c:767
 #, c-format
@@ -1283,7 +1283,7 @@ msgstr "la longueur choisie pour le vecteur est trop grande"
 #: src/main/envir.c:1792 src/main/envir.c:2463 src/main/envir.c:2522
 #: src/main/envir.c:2825 src/main/envir.c:2853 src/main/envir.c:2873
 #: src/main/envir.c:2895 src/main/envir.c:2929 src/main/envir.c:2949
-#: src/main/envir.c:3254 src/main/envir.c:3258 src/main/eval.c:3671
+#: src/main/envir.c:3254 src/main/envir.c:3258 src/main/eval.c:3683
 #: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2056
 #: src/main/saveload.c:2337 src/main/serialize.c:2244
 msgid "use of NULL environment is defunct"
@@ -1517,7 +1517,7 @@ msgstr "tentative de conversion automatique d'autre chose qu'un facteur"
 msgid "list argument expected"
 msgstr "liste d'arguments attendue"
 
-#: src/main/coerce.c:1428 src/main/eval.c:3668 src/main/eval.c:3675
+#: src/main/coerce.c:1428 src/main/eval.c:3680 src/main/eval.c:3687
 msgid "invalid environment"
 msgstr "environnement incorrect"
 
@@ -2508,7 +2508,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr "'opts' doit être un petit entier positif ou nul"
 
 #: src/main/deparse.c:363 src/main/envir.c:1634 src/main/envir.c:1716
-#: src/main/eval.c:423 src/main/eval.c:909 src/main/eval.c:2730
+#: src/main/eval.c:423 src/main/eval.c:909 src/main/eval.c:2742
 #: src/main/saveload.c:1964 src/main/saveload.c:2281 src/main/serialize.c:2262
 #, c-format
 msgid "object '%s' not found"
@@ -2987,7 +2987,7 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d utilisé dans un mauvais contexte, aucun ... où chercher"
 
 #: src/main/envir.c:1300 src/main/envir.c:1712 src/main/eval.c:427
-#: src/main/eval.c:2733
+#: src/main/eval.c:2745
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "l'argument \"%s\" est manquant, avec aucune valeur par défaut"
@@ -3379,15 +3379,15 @@ msgstr ""
 
 #: src/main/eval.c:417 src/main/eval.c:516 src/main/eval.c:1592
 #: src/main/eval.c:1654 src/main/eval.c:1709 src/main/eval.c:1960
-#: src/main/eval.c:3303 src/main/eval.c:3410
+#: src/main/eval.c:3315 src/main/eval.c:3422
 msgid "'...' used in an incorrect context"
 msgstr "'...' utilisé dans un contexte incorrect"
 
-#: src/main/eval.c:429 src/main/eval.c:2734
+#: src/main/eval.c:429 src/main/eval.c:2746
 msgid "argument is missing, with no default"
 msgstr "argument manquant, sans valeur associée par défaut"
 
-#: src/main/eval.c:512 src/main/eval.c:3251
+#: src/main/eval.c:512 src/main/eval.c:3263
 msgid "attempt to apply non-function"
 msgstr "tentative d'appliquer un objet qui n'est pas une fonction"
 
@@ -3523,149 +3523,149 @@ msgstr "'Recall' appelé en dehors d'une fermeture (closure)"
 msgid "value in '...' is not a promise"
 msgstr "la valeur dans '...' n'est pas une promesse (promise)"
 
-#: src/main/eval.c:2138 src/main/objects.c:734
+#: src/main/eval.c:2139 src/main/objects.c:734
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "nom d'appel trop long dans '%s'"
 
-#: src/main/eval.c:2159
+#: src/main/eval.c:2160
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "nom générique trop long dans '%s'"
 
-#: src/main/eval.c:2212
+#: src/main/eval.c:2223
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "Méthodes incompatibles (\"%s\", \"%s\") pour \"%s\""
 
-#: src/main/eval.c:2275
+#: src/main/eval.c:2287
 msgid "dispatch error in group dispatch"
 msgstr "erreur de branchement de méthode du groupe"
 
-#: src/main/eval.c:2657
+#: src/main/eval.c:2669
 msgid "node stack overflow"
 msgstr "pile de noeuds débordée vers le haut"
 
-#: src/main/eval.c:2663
+#: src/main/eval.c:2675
 msgid "integer stack overflow"
 msgstr "pile d'entiers débordée vers le haut"
 
-#: src/main/eval.c:2716
+#: src/main/eval.c:2728
 msgid "Bad opcode"
 msgstr "Mauvais code d'opération (opcode)"
 
-#: src/main/eval.c:2865
+#: src/main/eval.c:2877
 msgid "not a vector object"
 msgstr "cet objet n'est pas un vecteur"
 
-#: src/main/eval.c:2873 src/main/eval.c:2895 src/main/eval.c:2919
-#: src/main/eval.c:2943
+#: src/main/eval.c:2885 src/main/eval.c:2907 src/main/eval.c:2931
+#: src/main/eval.c:2955
 msgid "can only handle simple real vectors"
 msgstr "ne peut traiter que des simples vecteurs de réels"
 
-#: src/main/eval.c:2882 src/main/eval.c:2929
+#: src/main/eval.c:2894 src/main/eval.c:2941
 msgid "not a simple vector"
 msgstr "ce n'est pas un simple vecteur"
 
-#: src/main/eval.c:2899 src/main/eval.c:2947 src/main/subassign.c:975
+#: src/main/eval.c:2911 src/main/eval.c:2959 src/main/subassign.c:975
 #: src/main/subset.c:808
 msgid "incorrect number of subscripts"
 msgstr "nombre d'indices incorrect"
 
-#: src/main/eval.c:2910 src/main/eval.c:2961
+#: src/main/eval.c:2922 src/main/eval.c:2973
 msgid "not a simple matrix"
 msgstr "ce n'est pas une simple matrice"
 
-#: src/main/eval.c:2998
+#: src/main/eval.c:3010
 msgid "bytecode version mismatch; using eval"
 msgstr "incohérence de version de pseudo-code ; utilisation de eval"
 
-#: src/main/eval.c:3003
+#: src/main/eval.c:3015
 msgid "bytecode version is too old"
 msgstr "la version du pseudo-code est trop longue"
 
-#: src/main/eval.c:3004
+#: src/main/eval.c:3016
 msgid "bytecode version is too new"
 msgstr "la version du pseudo-code est trop récente"
 
-#: src/main/eval.c:3009
+#: src/main/eval.c:3021
 msgid "byte code version mismatch"
 msgstr "incohérence de versions du pseudo-code"
 
-#: src/main/eval.c:3025
+#: src/main/eval.c:3037
 msgid "missing value where logical needed"
 msgstr "valeur manquante là où une valeur logique est attendue"
 
-#: src/main/eval.c:3026
+#: src/main/eval.c:3038
 msgid "argument of if(*) is not interpretable as logical"
 msgstr "l'argument de if(*) n'est pas interprétable comme une valeur logique"
 
-#: src/main/eval.c:3060
+#: src/main/eval.c:3072
 msgid "invalid sequence argument in for loop"
 msgstr "séquence d'arguments incorrecte dans une boucle for"
 
-#: src/main/eval.c:3213 src/main/eval.c:3234 src/main/eval.c:3348
+#: src/main/eval.c:3225 src/main/eval.c:3246 src/main/eval.c:3360
 msgid "not a BUILTIN function"
 msgstr "ce n'est pas une function BUILTIN"
 
-#: src/main/eval.c:3334
+#: src/main/eval.c:3346
 msgid "bad function"
 msgstr "mauvaise fonction"
 
-#: src/main/eval.c:3374
+#: src/main/eval.c:3386
 msgid "not a SPECIAL function"
 msgstr "ce n'est pas une fonction SPECIALE"
 
-#: src/main/eval.c:3608
+#: src/main/eval.c:3620
 msgid "cannot find index for threaded code address"
 msgstr "impossible de trouver l'indice pour l'adresse de code traitée"
 
-#: src/main/eval.c:3688
+#: src/main/eval.c:3700
 msgid "invalid symbol"
 msgstr "symbole non valide"
 
-#: src/main/eval.c:3732
+#: src/main/eval.c:3744
 msgid "argument is not a byte code object"
 msgstr "l'argument n'est pas un objet pseudo-code"
 
-#: src/main/eval.c:3753
+#: src/main/eval.c:3765
 msgid "bad file name"
 msgstr "mauvais nom de fichier"
 
-#: src/main/eval.c:3757 src/main/eval.c:3778
+#: src/main/eval.c:3769 src/main/eval.c:3790
 msgid "unable to open 'file'"
 msgstr "impossible d'ouvrir 'file'"
 
-#: src/main/eval.c:3772 src/main/saveload.c:1928
+#: src/main/eval.c:3784 src/main/saveload.c:1928
 msgid "'file' must be non-empty string"
 msgstr "'file' doit être une chaîne de caractères non vide"
 
-#: src/main/eval.c:3774 src/main/saveload.c:1930 src/main/saveload.c:2220
+#: src/main/eval.c:3786 src/main/saveload.c:1930 src/main/saveload.c:2220
 #: src/main/serialize.c:1788
 msgid "'ascii' must be logical"
 msgstr "'ascii' doit être une valeur logique"
 
-#: src/main/eval.c:3803 src/main/eval.c:3810
+#: src/main/eval.c:3815 src/main/eval.c:3822
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName : tampon trop petit"
 
-#: src/main/eval.c:3843
+#: src/main/eval.c:3855
 msgid "code must be a generic vector"
 msgstr "le code doit être un vecteur générique"
 
-#: src/main/eval.c:3882
+#: src/main/eval.c:3894
 msgid "profile timer in use"
 msgstr "temporisation de profilage en utilisation"
 
-#: src/main/eval.c:3884
+#: src/main/eval.c:3896
 msgid "already byte code profiling"
 msgstr "déjà en train de profiler du pseudo-code"
 
-#: src/main/eval.c:3902
+#: src/main/eval.c:3914
 msgid "setting profile timer failed"
 msgstr "le démarrage d'une temporisation de profilage a échoué"
 
-#: src/main/eval.c:3919
+#: src/main/eval.c:3931
 msgid "not byte code profiling"
 msgstr "profilage d'autre chose que du pseudo-code"
 
@@ -7821,18 +7821,18 @@ msgstr ""
 msgid "bessel_i(%g,nu=%g): precision lost in result\n"
 msgstr "bessel_i(%g,nu=%g) : perte de précision dans le résultat\n"
 
-#: src/nmath/bessel_j.c:63
+#: src/nmath/bessel_j.c:65
 msgid "bessel_j allocation error"
 msgstr "erreur d'allocation pour bessel_j"
 
-#: src/nmath/bessel_j.c:71
+#: src/nmath/bessel_j.c:73
 #, c-format
 msgid "bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
 msgstr ""
 "bessel_j(%g) : ncalc (=%ld) != nb (=%ld) ; alpha=%g. Argument hors "
 "limites ?\n"
 
-#: src/nmath/bessel_j.c:74
+#: src/nmath/bessel_j.c:76
 #, c-format
 msgid "bessel_j(%g,nu=%g): precision lost in result\n"
 msgstr "bessel_j(%g,nu=%g) : perte de précision dans le résultat\n"
@@ -7852,22 +7852,22 @@ msgstr ""
 msgid "bessel_k(%g,nu=%g): precision lost in result\n"
 msgstr "bessel_k(%g,nu=%g) : perte de précision dans le résultat\n"
 
-#: src/nmath/bessel_y.c:62
+#: src/nmath/bessel_y.c:64
 msgid "bessel_y allocation error"
 msgstr "erreur d'allocation pour bessel_y"
 
-#: src/nmath/bessel_y.c:72
+#: src/nmath/bessel_y.c:74
 #, c-format
 msgid "bessel_y(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"
 msgstr ""
 "bessel_y(%g) : ncalc (=%ld) != nb (=%ld); alpha=%g. Argument hors limites ?\n"
 
-#: src/nmath/bessel_y.c:75
+#: src/nmath/bessel_y.c:77
 #, c-format
 msgid "bessel_y(%g,nu=%g): precision lost in result\n"
 msgstr "bessel_y(%g,nu=%g) : perte de précision dans le résultat\n"
 
-#: src/nmath/pnchisq.c:224
+#: src/nmath/pnchisq.c:231
 #, c-format
 msgid "pnchisq(x=%g, ..): not converged in %d iter."
 msgstr "pnchisq(x=%g, ..) : absence de convergence en %d itérations."
@@ -7990,12 +7990,12 @@ msgstr ""
 "Une situation inhabituelle s'est produite dans l'imbrication des entrées "
 "readline. Veuillez signaler l'anomalie à l'aide de bug.report()"
 
-#: src/unix/sys-std.c:1058 src/unix/sys-std.c:1226
+#: src/unix/sys-std.c:1059 src/unix/sys-std.c:1227
 #, c-format
 msgid "problem in saving the history file '%s'"
 msgstr "problème lors de la sauvegarde du fichier historique '%s'"
 
-#: src/unix/sys-std.c:1133
+#: src/unix/sys-std.c:1134
 #, c-format
 msgid ""
 "Cannot open file '%s': %s\n"
@@ -8004,23 +8004,23 @@ msgstr ""
 "impossible d'ouvrir le fichier '%s' : %s\n"
 "\n"
 
-#: src/unix/sys-std.c:1197 src/unix/sys-std.c:1220
+#: src/unix/sys-std.c:1198 src/unix/sys-std.c:1221
 msgid "'file' argument is too long"
 msgstr "argument 'file' trop long"
 
-#: src/unix/sys-std.c:1203 src/unix/sys-std.c:1205
+#: src/unix/sys-std.c:1204 src/unix/sys-std.c:1206
 msgid "no history mechanism available"
 msgstr "aucun mécanisme d'historique des commandes disponible"
 
-#: src/unix/sys-std.c:1232
+#: src/unix/sys-std.c:1233
 msgid "problem in truncating the history file"
 msgstr "problème lors de la troncature du fichier d'historique des commandes"
 
-#: src/unix/sys-std.c:1234 src/unix/sys-std.c:1236
+#: src/unix/sys-std.c:1235 src/unix/sys-std.c:1237
 msgid "no history available to save"
 msgstr "aucun historique des commandes disponible pour la sauvegarde"
 
-#: src/unix/sys-std.c:1342
+#: src/unix/sys-std.c:1343
 msgid "Sys.sleep is not implemented on this system"
 msgstr "Sys.sleep n'est pas implémenté sur ce système"
 
