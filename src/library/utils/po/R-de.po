@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2009-10-07 15:13+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -291,8 +291,10 @@ msgstr ""
 msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
 msgstr "offline = TRUE ist veraltet: nutzen sie help_type=\"postscript\""
 
-msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
-msgstr "chmhelp = TRUE ist nicht mehr unterstützt: nutzen Sie help_type = \"text\""
+#, fuzzy
+msgid "chmhelp = TRUE is no longer supported: using help_type =\"text\""
+msgstr ""
+"chmhelp = TRUE ist nicht mehr unterstützt: nutzen Sie help_type = \"text\""
 
 msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
 msgstr "htmlhelp = TRUE ist veraltet: nutzen sei help_type = \"html\""
@@ -394,7 +396,8 @@ msgid "... database rebuilt"
 msgstr "... Datenbank erneuert"
 
 msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
-msgstr "keine Information in der Datenbank für Paket '%s': benötige 'rebuild = TRUE'?"
+msgstr ""
+"keine Information in der Datenbank für Paket '%s': benötige 'rebuild = TRUE'?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "falsche 'agrep' Spezifikation"
@@ -573,7 +576,9 @@ msgstr "--- Bitte Repositories für diese Sitzung auswählen ---"
 
 msgid ""
 "Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr "Bitte eine oder mehrere durch Leerstellen getrennte Zahlen oder eine leere Zeile eingeben, um abzubrechen"
+msgstr ""
+"Bitte eine oder mehrere durch Leerstellen getrennte Zahlen oder eine leere "
+"Zeile eingeben, um abzubrechen"
 
 msgid "'%s' must be supplied"
 msgstr "'%s' muss angegeben werden"
@@ -840,7 +845,12 @@ msgid "'str.default': 'le' is NA"
 msgstr "'str.default': 'le' is NA"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
-msgstr "'digits' und 'digits.d' sind beide angegeben und das letztere wird ignoriert"
+msgstr ""
+"'digits' und 'digits.d' sind beide angegeben und das letztere wird ignoriert"
+
+#, fuzzy
+msgid "no lines found in %s"
+msgstr "kein Hilfefile für '%s' gefunden"
 
 msgid "profile does not contain memory information"
 msgstr "Profil einthält keine Speicherinformation"
@@ -875,6 +885,9 @@ msgstr "File '%s' nicht gefunden"
 msgid "file path is too long"
 msgstr "Pfad ist zu lang"
 
+msgid "storing paths of more than 100 bytes is not portable:"
+msgstr ""
+
 msgid "linked path is too long"
 msgstr "verlinkter Pfad ist zu lang"
 
@@ -893,6 +906,10 @@ msgstr "Vignette '%s' enthält kein PDF"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() kann nicht nicht-interaktiv benutzt werden"
+
+#, fuzzy
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr "'code_files' muss ein Charaktervektor sein"
 
 msgid "Enter zero or more numbers separated by space"
 msgstr "Geben Sie 0 oder mehr durch Leerstellen getrennte Zahlen ein"
@@ -932,12 +949,6 @@ msgstr "keine Downloadmethode gefunden"
 
 msgid "download had nonzero exit status"
 msgstr "Download hatte Exit-Status ungleich 0"
-
-msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr "Nutze ungelinktes HTML Datei: Hyperlinks evtl. falsch"
-
-msgid "options(\"browser\") not set"
-msgstr "options(\"browser\") nicht gesetzt"
 
 msgid "running '%s' failed"
 msgstr "Ausführen von '%s' fehlgeschlagen"
@@ -1066,6 +1077,12 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "Paket '%s' wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete '%s' werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "Using non-linked HTML file: hyperlinks may be incorrect"
+#~ msgstr "Nutze ungelinktes HTML Datei: Hyperlinks evtl. falsch"
+
+#~ msgid "options(\"browser\") not set"
+#~ msgstr "options(\"browser\") nicht gesetzt"
 
 #~ msgid ""
 #~ "No HTML help for '%s' is available:\n"

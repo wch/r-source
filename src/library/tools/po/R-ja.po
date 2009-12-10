@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:04\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2009-10-10 00:17+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -560,6 +560,20 @@ msgstr ""
 msgid "No docs found for package %s"
 msgstr " package %s にドキュメントは見つけられませんでした "
 
+msgid "Only help files, %s and files under %s in a package can be viewed"
+msgstr ""
+
+#, fuzzy
+msgid "DESCRIPTION"
+msgstr " 不正な DESCRIPTION ファイルです "
+
+#, fuzzy
+msgid "doc/"
+msgstr " ドキュメント "
+
+msgid "unsupported URL %s"
+msgstr ""
+
 msgid "URL %s was not found"
 msgstr "URL '%s' は見つかりませんでした "
 
@@ -668,6 +682,12 @@ msgstr " エラー：ロックディレクトリを生成することが出来�
 
 msgid "building a fake installation is disallowed"
 msgstr " まがい物(fake)インストールの構築は許されていません "
+
+msgid "--no-help overrides"
+msgstr ""
+
+msgid "--"
+msgstr ""
 
 msgid "-o option without value"
 msgstr " 値のない -o オプションです "

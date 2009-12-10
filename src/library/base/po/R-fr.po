@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:02\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2009-10-10 13:35+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1116,10 +1116,14 @@ msgstr "impossible d'assigner NativeSymbolInfo pour"
 msgid "package '%s' does not have a name space"
 msgstr "le package '%s' n'a pas d'espace de noms"
 
-msgid "exportClassPattern specified but no matching classes in %s"
+#, fuzzy
+msgid ""
+"exportClassPattern specified in NAMESPACE but no matching classes in package "
+"'%s'"
 msgstr "exportClassPattern spécifié mais aucune classe ne correspond dans %s"
 
-msgid "in '%s' classes for export not defined: %s"
+#, fuzzy
+msgid "in package '%s' classes for export not defined: %s"
 msgstr "classes à exporter non définies dans '%s' : %s"
 
 msgid "in '%s' methods for export not found: %s"
@@ -1145,10 +1149,11 @@ msgstr "introuvable"
 msgid "not loading a name space"
 msgstr "un espace de noms n'est pas chargé"
 
-msgid "name space '%s' is loaded"
-msgstr "l'espace de noms '%s' est chargé"
-
-msgid "%s failed in unloadNamespace(%s)"
+#, fuzzy
+msgid ""
+"%s failed in unloadNamespace(\"%s\"), details:\n"
+"  call: %s\n"
+"  message: %s"
 msgstr "%s a échoué dans unloadNamespace(%s)"
 
 msgid "name space '%s' is still used by: %s"
@@ -1635,6 +1640,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "name space '%s' is loaded"
+#~ msgstr "l'espace de noms '%s' est chargé"
 
 #~ msgid "extra arguments ignored:"
 #~ msgstr "l'argument supplémentaire sera ignoré :"

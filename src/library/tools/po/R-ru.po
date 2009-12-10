@@ -9,14 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:04\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2009-10-15 02:41-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "argument 'package' must be of length 1"
 msgstr "аргумент 'package' должен быть единичной длины"
@@ -54,7 +55,8 @@ msgstr "папка '%s' не содержит кода R"
 msgid "directory '%s' does not contain Rd objects"
 msgstr "папка '%s' не содержит Rd-объектов"
 
-msgid "Functions/methods with usage in documentation object '%s' but not in code:"
+msgid ""
+"Functions/methods with usage in documentation object '%s' but not in code:"
 msgstr "Функции/методы использованы в объекте документации '%s', но не в коде:"
 
 msgid "Data sets with usage in documentation object '%s' but not in code:"
@@ -115,13 +117,15 @@ msgid "Duplicated \\argument entries in documentation object '%s':"
 msgstr "Двойные записи \\аргументов в объекте документации '%s':"
 
 msgid "Documented arguments not in \\usage in documentation object '%s':"
-msgstr "Документированные аргументы не \\используются в объекте документации '%s':"
+msgstr ""
+"Документированные аргументы не \\используются в объекте документации '%s':"
 
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr "Объекты \\используются без \\псевдонима в объекте документации '%s':"
 
 msgid "Bad \\usage lines found in documentation object '%s':"
-msgstr "Найдено неправильное \\использование строк в объекте документации '%s':"
+msgstr ""
+"Найдено неправильное \\использование строк в объекте документации '%s':"
 
 msgid "S3 methods shown with full name in documentation object '%s':"
 msgstr "Методы S3 показаны с полным именем в объектах документации '%s':"
@@ -167,7 +171,9 @@ msgid "found T/F in %s"
 msgstr "найден T/F в %s"
 
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
-msgstr "похоже, что имя пакета '%s' неправильное; вместо него использую имя папки '%s'"
+msgstr ""
+"похоже, что имя пакета '%s' неправильное; вместо него использую имя папки '%"
+"s'"
 
 msgid "Packages required but not available:"
 msgstr "Пакет требуется, но недоступен:"
@@ -176,13 +182,18 @@ msgid "Packages required and available but unsuitable version:"
 msgstr "Пакет требуется и доступен, но неподходящей версии:"
 
 msgid "Former standard packages required but now defunct:"
-msgstr "Бывший стандартный пакет требуется, который сейчас вышел из употребления:"
+msgstr ""
+"Бывший стандартный пакет требуется, который сейчас вышел из употребления:"
 
 msgid "Vignette dependencies not required:"
 msgstr "Зависимости очерка не требуются:"
 
-msgid "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries."
-msgstr "Зависимости очерка (элементы \\VignetteDepends{}) должны содержаться в пунктах 'Depends/Suggests/Imports' файла DESCRIPTION."
+msgid ""
+"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
+"DESCRIPTION Depends/Suggests/Imports entries."
+msgstr ""
+"Зависимости очерка (элементы \\VignetteDepends{}) должны содержаться в "
+"пунктах 'Depends/Suggests/Imports' файла DESCRIPTION."
 
 msgid "Namespace dependencies not required:"
 msgstr "Определения пространства имен не требуются:"
@@ -197,7 +208,8 @@ msgid "This is the name of a base package."
 msgstr "Это имя базового пакета."
 
 msgid "This name was used for a base package and is remapped by library()."
-msgstr "Это имя использовано базовым пакетом и связано заново посредством library()."
+msgstr ""
+"Это имя использовано базовым пакетом и связано заново посредством library()."
 
 msgid "Unknown encoding"
 msgstr "Неизвестная кодировка"
@@ -224,13 +236,18 @@ msgid "Malformed maintainer field."
 msgstr "Плохо сформированное поле разработчика."
 
 msgid "Malformed Depends or Suggests or Imports or Enhances field."
-msgstr "Плохо сформированное поле Depends, или Suggests, или Imports, или Enhances."
+msgstr ""
+"Плохо сформированное поле Depends, или Suggests, или Imports, или Enhances."
 
 msgid "Offending entries:"
 msgstr "Неправильные пункты:"
 
-msgid "Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."
-msgstr "Пункты должны быть именами пакетов, возможно, с последующими '<=' или '>=', пробелом, и правильным номером версии в скобках."
+msgid ""
+"Entries must be names of packages optionally followed by '<=' or '>=', white "
+"space, and a valid version number in parentheses."
+msgstr ""
+"Пункты должны быть именами пакетов, возможно, с последующими '<=' или '>=', "
+"пробелом, и правильным номером версии в скобках."
 
 msgid "Entries with infeasible comparison operator:"
 msgstr "Пункты с неправдоподобным оператором сравнения:"
@@ -241,8 +258,12 @@ msgstr "Возможны лишь операторы '<=' и '>='."
 msgid "Entries with infeasible version number:"
 msgstr "Пункты с неправдоподобным номером версии:"
 
-msgid "Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'."
-msgstr "Номера версии должны быть последовательностями по крайней мере двух неотрицательных целых, разделенных одной точкой или дефисом."
+msgid ""
+"Version numbers must be sequences of at least two non-negative integers, "
+"separated by single '.' or '-'."
+msgstr ""
+"Номера версии должны быть последовательностями по крайней мере двух "
+"неотрицательных целых, разделенных одной точкой или дефисом."
 
 msgid "Package name and namespace differ."
 msgstr "Имена пакета и пространства имен различаются."
@@ -250,11 +271,19 @@ msgstr "Имена пакета и пространства имен различаются."
 msgid "Invalid Priority field."
 msgstr "Неправильное поле привилегий."
 
-msgid "Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R."
-msgstr "Пакеты с привилегиями 'base' или 'recommended' или 'defunct-base' должны быть уже известны R."
+msgid ""
+"Packages with priorities 'base' or 'recommended' or 'defunct-base' must "
+"already be known to R."
+msgstr ""
+"Пакеты с привилегиями 'base' или 'recommended' или 'defunct-base' должны "
+"быть уже известны R."
 
-msgid "See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual."
-msgstr "См. информацию о файлах DESCRIPTION в секции  'Creating R пакетs' руководства 'Writing R Extensions'."
+msgid ""
+"See the information on DESCRIPTION files in section 'Creating R packages' of "
+"the 'Writing R Extensions' manual."
+msgstr ""
+"См. информацию о файлах DESCRIPTION в секции  'Creating R пакетs' "
+"руководства 'Writing R Extensions'."
 
 msgid "Encoding '%s' is not portable"
 msgstr "Кодировка '%s' не переносима"
@@ -292,8 +321,12 @@ msgstr "Неизвестные пакет(ы) %s в Rd xrefs"
 msgid "Missing link(s) in documentation object '%s':"
 msgstr "Пропущенные связ(и) с объектом документации '%s':"
 
-msgid "See the information in section 'Cross-references' of the 'Writing R Extensions' manual."
-msgstr "См. информацию в секции 'Cross-references' руководства 'Writing R Extensions'."
+msgid ""
+"See the information in section 'Cross-references' of the 'Writing R "
+"Extensions' manual."
+msgstr ""
+"См. информацию в секции 'Cross-references' руководства 'Writing R "
+"Extensions'."
 
 msgid "found %s"
 msgstr "найден %s"
@@ -343,18 +376,15 @@ msgstr ":"
 msgid "argument 'file' must be a character string or connection"
 msgstr "аргумент 'file' должен быть текстовой строкой  или соединением"
 
-msgid ""
-"missing/empty \\n"
-"ame field in '%s'"
+msgid "missing/empty \\name field in '%s'"
 msgstr "пропущенное/пустое поле \\имен в '%s'"
 
-msgid ""
-"Rd files must have a non-empty \\n"
-"ame."
+msgid "Rd files must have a non-empty \\name."
 msgstr "Rd-файлы должны иметь непустое \\имя."
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
-msgstr "См. главу 'Writing R documentation' в руководстве 'Writing R Extensions'."
+msgstr ""
+"См. главу 'Writing R documentation' в руководстве 'Writing R Extensions'."
 
 msgid "missing/empty \\title field in '%s'"
 msgstr "пропущенное/пустое поле \\заголовок в '%s'"
@@ -371,9 +401,7 @@ msgstr "Вы должны задать 'dir' или 'file'"
 msgid "cannot deal with Rd objects with missing/empty names"
 msgstr "не могу работать с Rd-объектами в пропущенными/пустыми именами"
 
-msgid ""
-"missing/empty \\n"
-"ame field in Rd file(s)"
+msgid "missing/empty \\name field in Rd file(s)"
 msgstr "пропущенное/пустое поле \\имя Rd-файлы"
 
 msgid "No help on %s found in RdDB %s"
@@ -419,8 +447,11 @@ msgstr "ПРЕДУПРЕЖДЕНИЕ: У 'Depends' множественные зависимости в R:"
 msgid "only the first will be used in R < 2.7.0"
 msgstr "только первый будет использован R < 2.7.0"
 
-msgid "WARNING: omitting pointless dependence on 'R' without a version requirement"
-msgstr "ПРЕДУПРЕЖДЕНИЕ: пробускаю бессмысленную зависимость от 'R' без указания требуемой версии"
+msgid ""
+"WARNING: omitting pointless dependence on 'R' without a version requirement"
+msgstr ""
+"ПРЕДУПРЕЖДЕНИЕ: пробускаю бессмысленную зависимость от 'R' без указания "
+"требуемой версии"
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr "не могу включить локаль-специфичную сортировку через LC_COLLATE"
@@ -517,6 +548,20 @@ msgstr "Не могу найти документ помощи %s в пакете %s"
 msgid "No docs found for package %s"
 msgstr "Не могу найти документации для пакета %s"
 
+msgid "Only help files, %s and files under %s in a package can be viewed"
+msgstr ""
+
+#, fuzzy
+msgid "DESCRIPTION"
+msgstr "Неправильный файл 'DESCRIPTION'"
+
+#, fuzzy
+msgid "doc/"
+msgstr "документы"
+
+msgid "unsupported URL %s"
+msgstr ""
+
 msgid "URL %s was not found"
 msgstr "URL %s не найден"
 
@@ -553,11 +598,18 @@ msgstr "пакетная установка"
 msgid "as"
 msgstr "как"
 
-msgid "'cleanup' exists but is not executable -- see the 'R Installation and Adminstration Manual'"
-msgstr "'cleanup' есть, но невыполним  -- смотрите 'R Installation and Adminstration Manual'"
+msgid ""
+"'cleanup' exists but is not executable -- see the 'R Installation and "
+"Adminstration Manual'"
+msgstr ""
+"'cleanup' есть, но невыполним  -- смотрите 'R Installation and Adminstration "
+"Manual'"
 
-msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
-msgstr "Включаемая папка R пуста -- возможно, надо установить R-devel.rpm или похожее"
+msgid ""
+"R include directory is empty -- perhaps need to install R-devel.rpm or "
+"similar"
+msgstr ""
+"Включаемая папка R пуста -- возможно, надо установить R-devel.rpm или похожее"
 
 msgid "running src/Makefile.win ..."
 msgstr "запускаю src/Makefile.win ..."
@@ -616,6 +668,12 @@ msgstr "ОШИБКА: не удалось создать блокированную папку"
 
 msgid "building a fake installation is disallowed"
 msgstr "сборка ложной установки не разрешается"
+
+msgid "--no-help overrides"
+msgstr ""
+
+msgid "--"
+msgstr ""
 
 msgid "-o option without value"
 msgstr "-o опция без значения"
@@ -865,10 +923,13 @@ msgstr[1] "Найдены возможные глобальные T или F в следующих функциях:"
 msgstr[2] "Найдены возможные глобальные T или F в следующих функциях:"
 
 msgid "Found possibly global 'T' or 'F' in the following Rd example file:"
-msgid_plural "Found possibly global 'T' or 'F' in the following Rd example files:"
+msgid_plural ""
+"Found possibly global 'T' or 'F' in the following Rd example files:"
 msgstr[0] "Найдены возможные глобальные T или F в следующем Rd-файле примеров:"
-msgstr[1] "Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
-msgstr[2] "Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
+msgstr[1] ""
+"Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
+msgstr[2] ""
+"Найдены возможные глобальные T или F в следующих Rd-файлах примеров:"
 
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
@@ -883,98 +944,138 @@ msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
 #, fuzzy
 #~ msgid "No package of named %s could be found"
 #~ msgstr "должен быть загружен пакет"
+
 #~ msgid "*** 'hhc.exe' not found: not building CHM help"
 #~ msgstr "*** 'hhc.exe' не найден: не собираю CHM помощь"
+
 #~ msgid "package '%s' has no .rda file"
 #~ msgstr "у пакета '%s' нет .rda-файлов"
+
 #~ msgid "Rd files with syntax errors:"
 #~ msgstr "Rd-файлы с синтаксическими ошибками:"
+
 #~ msgid "Rd files with likely Rd problems:"
 #~ msgstr "Rd-файлы, по-видимому, с проблемами Rd:"
+
 #~ msgid "Unaccounted top-level text in file '%s':"
 #~ msgstr "Неопределенный текст верхнего уровня в файле '%s':"
+
 #~ msgid "Following section '%s'"
 #~ msgstr "Следующий раздел '%s'"
+
 #~ msgid "Rd files with unknown encoding:"
 #~ msgstr "Rd-файлы неизвестной кодировки:"
+
 #~ msgid "Rd files with invalid non-ASCII metadata:"
 #~ msgstr "Rd-файлы с неправильными не-ASCII метаданными:"
+
 #~ msgid "Rd files with non-ASCII section titles:"
 #~ msgstr "Rd-файлы с не-ASCII заголовками разделов:"
+
 #~ msgid "Rd files with missing or empty '\\name':"
 #~ msgstr "Rd-файлы с пропущенными или пустыми именами '\\имя':"
+
 #~ msgid "Rd files with missing or empty '\\title':"
 #~ msgstr "Rd-файлы с пропущенными или пустыми \\title':"
+
 #~ msgid "Rd files without '%s':"
 #~ msgstr "Rd-файлы без '%s':"
+
 #~ msgid "These entries are required in an Rd file."
 #~ msgstr "Эти пункты требуются для Rd-файла."
+
 #~ msgid "These entries must be unique in an Rd file."
 #~ msgstr "Эти пункты в Rd-файле должны быть уникальными."
+
 #~ msgid "Rd files with unknown sections:"
 #~ msgstr "Rd-файлы с неизвестными разделами:"
+
 #~ msgid "Rd files with non-standard keywords:"
 #~ msgstr "Rd-файлы с нестандартными ключевыми словами:"
+
 #~ msgid ""
 #~ "Each '\\keyword' entry should specify one of the standard keywords (as "
 #~ "listed in file 'KEYWORDS' in the R documentation directory)."
 #~ msgstr ""
 #~ "Каждый вход '\\keyword' должен определять одно из стандартных ключевых "
 #~ "слов (как перечислено в файле 'KEYWORDS' в папке документации R)."
+
 #~ msgid "Rd files with empty sections:"
 #~ msgstr "Rd-файлы с пустыми разделами:"
 
 #, fuzzy
 #~ msgid "checkRd is designed for Rd version 2 or higher"
 #~ msgstr "Rd2HTML разработан для Rd версии 2 или выше."
+
 #~ msgid "there are no help pages in this package"
 #~ msgstr "в пакете нет файлов помощи"
+
 #~ msgid "skipping repeated alias(es)"
 #~ msgstr "пропускаю повторяющиеся имена-ссылк(и)"
+
 #~ msgid "in file"
 #~ msgstr "в файле"
+
 #~ msgid "directory '%s' does not contain Rd sources"
 #~ msgstr "папка '%s' не содержит Rd-исходников"
+
 #~ msgid "Package Rd sources were installed without preserving Rd file names."
 #~ msgstr "Rd-исходники пакета были установлены без сохранения имен Rd-файлов."
+
 #~ msgid "Please reinstall using a current version of R."
 #~ msgstr "Пожалуйста, переустановите, используя текущую версию R."
+
 #~ msgid "*** error on file"
 #~ msgstr "*** ошибка в файле"
+
 #~ msgid "argument 'lines' must be a character vector"
 #~ msgstr "аргумент 'lines' должен быть текстовым вектором"
+
 #~ msgid "encoding '%s' is not portable"
 #~ msgstr "кодировка '%s' не переносима"
+
 #~ msgid "unterminated section '%s'"
 #~ msgstr "незаконченный раздел '%s'"
+
 #~ msgid "incomplete section 'section{%s}'"
 #~ msgstr "неполный раздел 'section{%s}'"
+
 #~ msgid "unterminated section 'section{%s}'"
 #~ msgstr "незаконченный раздел 'section{%s}'"
+
 #~ msgid "argument 'txt' must be a character string"
 #~ msgstr "аргумент 'txt' должен быть текстовой строкой"
+
 #~ msgid "unmatched \\item name in '\\item{%s'"
 #~ msgstr "несоответствующее \\item имя в '\\item{%s'"
+
 #~ msgid "no \\item description for item '%s'"
 #~ msgstr "нет \\item описания для файла '%s'"
+
 #~ msgid "unmatched \\item description for item '%s'"
 #~ msgstr "несоответствующее определение \\item для пункта '%s'"
+
 #~ msgid "unclosed \\link"
 #~ msgstr "незакрытая \\link"
+
 #~ msgid "unclosed \\%s"
 #~ msgstr "незакрытое \\%s"
+
 #~ msgid "Rd syntax errors found"
 #~ msgstr "В Rd найдена ошибка синтаксиса"
+
 #~ msgid "Syntax error in documentation object '%s':"
 #~ msgstr "Синтаксическая ошибка в объекте документации '%s':"
+
 #~ msgid "should not get here"
 #~ msgstr "сюда не должно дойти"
 
 #, fuzzy
 #~ msgid "there is a 'man' dir but no help pages in this package"
 #~ msgstr "в пакете нет файлов помощи"
+
 #~ msgid "multiple \\encoding lines in file"
 #~ msgstr "несколько \\строк кодировок в файле"
+
 #~ msgid "no or more than one match"
 #~ msgstr "нет или более одного соответствия"
-

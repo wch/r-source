@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41+0100\n"
+"POT-Creation-Date: 2009-12-10 19:18+0000\n"
 "PO-Revision-Date: 2008-10-06 16:51-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -32,3 +32,7 @@ msgstr "md5 на файле '%s' не удался"
 #: text.c:65
 msgid "invalid argument type"
 msgstr "неправильный тип аргумента"
+
+#: text.c:189 text.c:208
+msgid "out of memory"
+msgstr ""

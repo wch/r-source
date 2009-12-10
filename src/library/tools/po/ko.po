@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41+0100\n"
+"POT-Creation-Date: 2009-12-10 19:18+0000\n"
 "PO-Revision-Date: 2005-05-20 16:47+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -29,3 +29,7 @@ msgstr "md5는 파일'%s'에서 실패했습니다"
 #: text.c:65
 msgid "invalid argument type"
 msgstr "부적절한 인수 유형입니다"
+
+#: text.c:189 text.c:208
+msgid "out of memory"
+msgstr ""

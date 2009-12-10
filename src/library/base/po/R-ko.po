@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:02\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1113,10 +1113,13 @@ msgstr ""
 msgid "package '%s' does not have a name space"
 msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
 
-msgid "exportClassPattern specified but no matching classes in %s"
+msgid ""
+"exportClassPattern specified in NAMESPACE but no matching classes in package "
+"'%s'"
 msgstr ""
 
-msgid "in '%s' classes for export not defined: %s"
+#, fuzzy
+msgid "in package '%s' classes for export not defined: %s"
 msgstr "'%s'에는 export를 위한 클래스는 검색되지 않습니다"
 
 msgid "in '%s' methods for export not found: %s"
@@ -1142,10 +1145,11 @@ msgstr "검색되지 않습니다"
 msgid "not loading a name space"
 msgstr "이름 공간을 적재하지 않습니다"
 
-msgid "name space '%s' is loaded"
-msgstr "name space '%s'가 적재 되었습니다"
-
-msgid "%s failed in unloadNamespace(%s)"
+#, fuzzy
+msgid ""
+"%s failed in unloadNamespace(\"%s\"), details:\n"
+"  call: %s\n"
+"  message: %s"
 msgstr "%s는 unloadNamespace(%s)에 실패했습니다"
 
 #, fuzzy
@@ -1649,6 +1653,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "name space '%s' is loaded"
+#~ msgstr "name space '%s'가 적재 되었습니다"
 
 #, fuzzy
 #~ msgid "extra arguments ignored:"

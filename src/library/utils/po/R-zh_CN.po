@@ -2,12 +2,12 @@
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2006.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -283,7 +283,8 @@ msgstr "'topic'的值必需是名字，长度为一的字符串或保留文字"
 msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
 msgstr "不推荐用offline = TRUE：请用help_type =\"postscript\""
 
-msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
+#, fuzzy
+msgid "chmhelp = TRUE is no longer supported: using help_type =\"text\""
 msgstr "不推荐用chmhelp = TRUE：请用help_type =\"text\""
 
 msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
@@ -824,6 +825,10 @@ msgstr "'str.default': 'le'的值是NA"
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr "'digits'和'digits.d'两个都设定了，但后者没有用"
 
+#, fuzzy
+msgid "no lines found in %s"
+msgstr "找不到与'%s'有关的帮助文件"
+
 msgid "profile does not contain memory information"
 msgstr "程序资料不包含内存信息"
 
@@ -857,6 +862,9 @@ msgstr "找不到'%s'这一文件"
 msgid "file path is too long"
 msgstr "文件通路太长"
 
+msgid "storing paths of more than 100 bytes is not portable:"
+msgstr ""
+
 msgid "linked path is too long"
 msgstr "链结的通路太长"
 
@@ -875,6 +883,10 @@ msgstr "小文品'%s'没有PDF文件"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list()不能在非互交形式下使用"
+
+#, fuzzy
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr "'code_files'必需是字符向量"
 
 msgid "Enter zero or more numbers separated by space"
 msgstr "输入0个或多个由空格分开的数字"
@@ -914,12 +926,6 @@ msgstr "没有下载方法"
 
 msgid "download had nonzero exit status"
 msgstr "下载退出状态不是零"
-
-msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr "用非联接文件：超联结有可能出错"
-
-msgid "options(\"browser\") not set"
-msgstr "options(\"browser\")没有设好"
 
 msgid "running '%s' failed"
 msgstr "执行'%s'失败"
@@ -1040,6 +1046,12 @@ msgstr[0] "'lib'元素'%s'不是可写的目录"
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "Using non-linked HTML file: hyperlinks may be incorrect"
+#~ msgstr "用非联接文件：超联结有可能出错"
+
+#~ msgid "options(\"browser\") not set"
+#~ msgstr "options(\"browser\")没有设好"
 
 #~ msgid ""
 #~ "No HTML help for '%s' is available:\n"
@@ -1173,4 +1185,3 @@ msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
 
 #~ msgid "Optionally other keywords from doc/KEYWORDS, one per line"
 #~ msgstr "可以从其他文件/KEYWORDS中任选其他关键字，每行一个"
-

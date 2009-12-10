@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:02\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1124,10 +1124,13 @@ msgstr "falha na atribuição de NativeSymbolInfo para"
 msgid "package '%s' does not have a name space"
 msgstr "pacote '%s' não tem um espaõ de nomes"
 
-msgid "exportClassPattern specified but no matching classes in %s"
+msgid ""
+"exportClassPattern specified in NAMESPACE but no matching classes in package "
+"'%s'"
 msgstr ""
 
-msgid "in '%s' classes for export not defined: %s"
+#, fuzzy
+msgid "in package '%s' classes for export not defined: %s"
 msgstr "em '%s' classes para expor~tação não definidas: %s"
 
 msgid "in '%s' methods for export not found: %s"
@@ -1151,10 +1154,11 @@ msgstr "não encontrado"
 msgid "not loading a name space"
 msgstr "não carregando um espaço de nomes"
 
-msgid "name space '%s' is loaded"
-msgstr "espaço de nomes '%s' não carregado"
-
-msgid "%s failed in unloadNamespace(%s)"
+#, fuzzy
+msgid ""
+"%s failed in unloadNamespace(\"%s\"), details:\n"
+"  call: %s\n"
+"  message: %s"
 msgstr "%s falhou em unloadNamespace(%s)"
 
 #, fuzzy
@@ -1648,6 +1652,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "name space '%s' is loaded"
+#~ msgstr "espaço de nomes '%s' não carregado"
 
 #, fuzzy
 #~ msgid "extra arguments ignored:"

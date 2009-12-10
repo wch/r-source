@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2009-10-10 15:40+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -20,7 +20,8 @@ msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
 "   a documentation file"
 msgstr ""
-"RShowDoc() doit être utilisé avec un argument de type chaîne de caractères spécifiant\n"
+"RShowDoc() doit être utilisé avec un argument de type chaîne de caractères "
+"spécifiant\n"
 "  un fichier de documentation"
 
 msgid "no documentation for '%s' found in package '%s'"
@@ -45,7 +46,8 @@ msgid "%d Sweave files for basename '%s' found:"
 msgstr "%d fichiers Sweave trouvés pour le nom de base '%s' :"
 
 msgid "more than one syntax specification found, using the first one"
-msgstr "plusieurs spécifications de syntaxe possibles ; la première est utilisée"
+msgstr ""
+"plusieurs spécifications de syntaxe possibles ; la première est utilisée"
 
 msgid "object '%s' does not have class \"SweaveSyntax\""
 msgstr "l'objet '%s' n'est pas de la classe \"SweaveSyntax\""
@@ -102,7 +104,8 @@ msgid ""
 " to list the vignettes in all <strong>available</strong> packages."
 msgstr ""
 "Utilisez <code> %s </code> \n"
-"  pour lister les vignettes dans tous les packages <strong>disponibles</strong>."
+"  pour lister les vignettes dans tous les packages <strong>disponibles</"
+"strong>."
 
 msgid "No vignettes found by"
 msgstr "Aucune vignette n'est trouvée par"
@@ -129,7 +132,8 @@ msgid "no date field in DESCRIPTION file of package '%s'"
 msgstr "pas de champ date dans le fichier DESCRIPTION du package '%s'"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
-msgstr "impossible de déterminer l'année de '%s' du fichier DESCRIPTION du package "
+msgstr ""
+"impossible de déterminer l'année de '%s' du fichier DESCRIPTION du package "
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -147,10 +151,14 @@ msgid "'package' must be a character string or NULL"
 msgstr "'package' doit être une chaîne de caratcères ou NULL"
 
 msgid "datasets have been moved from package 'base' to package 'datasets'"
-msgstr "les jeux de données ont été transférés du package 'base' au package 'datasets'"
+msgstr ""
+"les jeux de données ont été transférés du package 'base' au package "
+"'datasets'"
 
 msgid "datasets have been moved from package 'stats' to package 'datasets'"
-msgstr "les jeux de données ont été transférés du package 'stats' au package 'datasets'"
+msgstr ""
+"les jeux de données ont été transférés du package 'stats' au package "
+"'datasets'"
 
 msgid "data index for package '%s' is invalid and will be ignored"
 msgstr "l'index de données pour le package '%s' est incorrect et sera ignoré"
@@ -204,7 +212,9 @@ msgid "Enter an environment number, or 0 to exit"
 msgstr "Entrer un numéro d'environnement, ou 0 pour sortir"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
-msgstr "appel de recover non-interactif ; frames enregistrés, utiliser debugger() pour les visualiser"
+msgstr ""
+"appel de recover non-interactif ; frames enregistrés, utiliser debugger() "
+"pour les visualiser"
 
 msgid "No suitable frames for recover()"
 msgstr "Aucun frame ne convient pour recover()"
@@ -238,7 +248,8 @@ msgid "added factor levels in '%s'"
 msgstr "niveaux de facteur ajoutés dans '%s'"
 
 msgid "edited row names contain duplicates and will be ignored"
-msgstr "les noms de lignes modifiés contiennent des doublons et ils seront ignorés"
+msgstr ""
+"les noms de lignes modifiés contiennent des doublons et ils seront ignorés"
 
 msgid "invalid input matrix"
 msgstr "matrice d'entrée incorrecte"
@@ -277,28 +288,38 @@ msgid "'form' must be a two-sided formula"
 msgstr "'form' doit être une formule à deux membres"
 
 msgid "'form' must be a two-sided formula with one term on each side"
-msgstr "'form' doit être une formule à deux membres avec un terme de chaque côté"
+msgstr ""
+"'form' doit être une formule à deux membres avec un terme de chaque côté"
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
-msgstr "'topic' doit être un nom, une chaîne de caractères de longueur unitaire, ou un mot réservé"
+msgstr ""
+"'topic' doit être un nom, une chaîne de caractères de longueur unitaire, ou "
+"un mot réservé"
 
 msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
 msgstr "offline = TRUE est obsolète : utilisez help_type = \"postscript\""
 
-msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
+#, fuzzy
+msgid "chmhelp = TRUE is no longer supported: using help_type =\"text\""
 msgstr "chmhelp = TRUE n'est plus supporté : utilisez help_type = \"text\""
 
 msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
 msgstr "htmlhelp = TRUE est obsolète : utilisez help_type = \"html\""
 
 msgid "No documentation for '%s' in specified packages and libraries:"
-msgstr "Aucune documentation pour '%s' n'a été trouvée dans les packages et les bibliothèques :"
+msgstr ""
+"Aucune documentation pour '%s' n'a été trouvée dans les packages et les "
+"bibliothèques :"
 
 msgid "you could try '??%s'"
 msgstr "vous pourriez essayer '??%s'"
 
-msgid "Help for topic '%s' is not in any loaded package but can be found in the following packages:"
-msgstr "L'aide sur le thème '%s' n'est dans aucun des packages chargés mais peut être trouvée dans les packages suivants :"
+msgid ""
+"Help for topic '%s' is not in any loaded package but can be found in the "
+"following packages:"
+msgstr ""
+"L'aide sur le thème '%s' n'est dans aucun des packages chargés mais peut "
+"être trouvée dans les packages suivants :"
 
 msgid "Package"
 msgstr "Package"
@@ -375,7 +396,9 @@ msgid "done"
 msgstr "Terminé."
 
 msgid "removing all entries with invalid multi-byte character data"
-msgstr "suppression de toutes les entrées ayant des données de type caractère multi-octets incorrectes"
+msgstr ""
+"suppression de toutes les entrées ayant des données de type caractère multi-"
+"octets incorrectes"
 
 msgid "saving the database ..."
 msgstr "Sauvegarde de la base de données ..."
@@ -384,7 +407,9 @@ msgid "... database rebuilt"
 msgstr "... reconstruction de la base de donnée"
 
 msgid "no information in the database for package '%s': need 'rebuild = TRUE'?"
-msgstr "pas d'information dans la base de données pour le package '%s' : faut-il 'rebuild = TRUE' ?"
+msgstr ""
+"pas d'information dans la base de données pour le package '%s' : faut-il "
+"'rebuild = TRUE' ?"
 
 msgid "incorrect 'agrep' specification"
 msgstr "spécification 'agrep' incorrecte"
@@ -402,7 +427,9 @@ msgid "DESCRIPTION file of package '%s' is corrupt"
 msgstr "le fichier DESCRIPTION du package '%s' est incorrect"
 
 msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
-msgstr "le fichier 'DESCRIPTION' a un champ 'Encoding' et le réencodage est impossible"
+msgstr ""
+"le fichier 'DESCRIPTION' a un champ 'Encoding' et le réencodage est "
+"impossible"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "le fichier DESCRIPTION du package '%s' est manquant ou incorrect"
@@ -417,7 +444,8 @@ msgid "invalid query"
 msgstr "requête incorrecte"
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
-msgstr "'%s' est une fonction générique formelle ; probablement pas de méthode S3"
+msgstr ""
+"'%s' est une fonction générique formelle ; probablement pas de méthode S3"
 
 msgid "no function '%s' is visible"
 msgstr "aucune fonction '%s' n'est visible"
@@ -459,7 +487,9 @@ msgid "'list' must be a character vector naming R objects"
 msgstr "'list' devrait être un vecteur de type caractère nommant des objets R"
 
 msgid "cannot turn off locale-specific chars via LC_CTYPE"
-msgstr "impossible the transformer les caractères spécifiques de la localisation via LC_TYPE"
+msgstr ""
+"impossible the transformer les caractères spécifiques de la localisation via "
+"LC_TYPE"
 
 msgid "no R objects specified or available"
 msgstr "aucun objet R spécifié ou disponible"
@@ -557,8 +587,11 @@ msgstr "impossible de fixer les entrepôts en mode non interactif"
 msgid "--- Please select repositories for use in this session ---"
 msgstr "--- SVP sélectionner les entrepôts à utiliser pour cette session ---"
 
-msgid "Enter one or more numbers separated by spaces, or an empty line to cancel"
-msgstr "Entrer un ou plusieurs nombres séparés par des espaces, ou une ligne vide pour anuler"
+msgid ""
+"Enter one or more numbers separated by spaces, or an empty line to cancel"
+msgstr ""
+"Entrer un ou plusieurs nombres séparés par des espaces, ou une ligne vide "
+"pour anuler"
 
 msgid "'%s' must be supplied"
 msgstr "'%s' doit être fourni"
@@ -607,10 +640,12 @@ msgid "cannot install MacOS X binary packages on Windows"
 msgstr "impossible d'installer les packages MacOS X binaire sous Windows"
 
 msgid "cannot install MacOS X binary packages on this plaform"
-msgstr "impossible d'installer les packages MacOS X binaire sur cette architecture"
+msgstr ""
+"impossible d'installer les packages MacOS X binaire sur cette architecture"
 
 msgid "cannot install Windows binary packages on this plaform"
-msgstr "impossible d'installer les packages Windows binaire sur cette architecture"
+msgstr ""
+"impossible d'installer les packages Windows binaire sur cette architecture"
 
 msgid ""
 "This version of R is not set up to install source packages\n"
@@ -654,17 +689,28 @@ msgstr "Création du fichier '%s'"
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "Editez le fichier et déplacez-le dans le répertoire approprié"
 
-msgid "no documentation of type '%s' and topic '%s' (or error in processing help)"
-msgstr "pas de documentation de type '%s' et de thème '%s' (ou erreur de traitement de l'aide)"
+msgid ""
+"no documentation of type '%s' and topic '%s' (or error in processing help)"
+msgstr ""
+"pas de documentation de type '%s' et de thème '%s' (ou erreur de traitement "
+"de l'aide)"
 
-msgid "the object of class \"%s\" in the function call '%s' could not be used as a documentation topic"
-msgstr "l'objet de la classe \"%s\" dans l'appel de fonction '%s' n'a pas pu être utilisé comme thème de documentation"
+msgid ""
+"the object of class \"%s\" in the function call '%s' could not be used as a "
+"documentation topic"
+msgstr ""
+"l'objet de la classe \"%s\" dans l'appel de fonction '%s' n'a pas pu être "
+"utilisé comme thème de documentation"
 
 msgid "no methods for '%s' and no documentation for it as a function"
-msgstr "aucune méthode pour '%s' et aucune documentation à son sujet en tant que fonction"
+msgstr ""
+"aucune méthode pour '%s' et aucune documentation à son sujet en tant que "
+"fonction"
 
 msgid "error in trying to evaluate the expression for argument '%s' (%s)"
-msgstr "erreur lors de la tentative d'évaluation d'expression pour l'argument '%s' (%s)"
+msgstr ""
+"erreur lors de la tentative d'évaluation d'expression pour l'argument '%s' (%"
+"s)"
 
 msgid "no method defined for function '%s' and signature '%s'"
 msgstr "aucune méthode définie pour la fonction '%s' et pour la signature '%s'"
@@ -682,13 +728,17 @@ msgid "row and column counts not found"
 msgstr "nombres de lignes et de colonnes non trouvés"
 
 msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
-msgstr "Plus de lignes que spécifié dans l'entête ; utilisez peut-être 'transpose=TRUE'"
+msgstr ""
+"Plus de lignes que spécifié dans l'entête ; utilisez peut-être "
+"'transpose=TRUE'"
 
 msgid "Unrecognized special data value"
 msgstr "Valeur spéciale de données non reconnue"
 
 msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
-msgstr "Plus de colonnes que spécifié dans l'entête ; utilisez peut-être 'transpose=TRUE'"
+msgstr ""
+"Plus de colonnes que spécifié dans l'entête ; utilisez peut-être "
+"'transpose=TRUE'"
 
 msgid "Unrecognized value indicator"
 msgstr "Indicateur de données non reconnu"
@@ -765,8 +815,12 @@ msgstr "relist() demande des objets délistés de manière récursive."
 msgid "The flesh argument does not contain a skeleton attribute."
 msgstr "L'argument 'flesh' ne contient pas d'attribut 'skeleton'."
 
-msgid "Either ensure you unlist a relistable object, or specify the skeleton separately."
-msgstr "Faites en sorte de délister un objet relistable, ou spécifiez le squelette séparément."
+msgid ""
+"Either ensure you unlist a relistable object, or specify the skeleton "
+"separately."
+msgstr ""
+"Faites en sorte de délister un objet relistable, ou spécifiez le squelette "
+"séparément."
 
 msgid "cannot coerce 'x' to roman"
 msgstr "impossible de convertir 'x' en roman"
@@ -814,7 +868,12 @@ msgid "'str.default': 'le' is NA"
 msgstr "'str.default': 'le' est NA"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
-msgstr "'digits' et 'digits.d' sont tous deux spécifiés et le second est ignoré"
+msgstr ""
+"'digits' et 'digits.d' sont tous deux spécifiés et le second est ignoré"
+
+#, fuzzy
+msgid "no lines found in %s"
+msgstr "fichier d'aide introuvable pour '%s'"
 
 msgid "profile does not contain memory information"
 msgstr "'profile' ne contient pas d'information sur la mémoire"
@@ -823,7 +882,8 @@ msgid "no events were recorded"
 msgstr "aucun événement à enregistrer"
 
 msgid "'compressed' must be logical or character"
-msgstr "'compressed' devrait être un vecteur de type caractère ou booléen (logical)"
+msgstr ""
+"'compressed' devrait être un vecteur de type caractère ou booléen (logical)"
 
 msgid "untar: using cmd ="
 msgstr "untar : utilisation de cmd ="
@@ -849,6 +909,9 @@ msgstr "fichier '%s' introuvable"
 msgid "file path is too long"
 msgstr "le chemin d'accès au fichier est trop long"
 
+msgid "storing paths of more than 100 bytes is not portable:"
+msgstr ""
+
 msgid "linked path is too long"
 msgstr "le chemin de lien est trop long"
 
@@ -867,6 +930,10 @@ msgstr "la vignette '%s' n'a pas de PDF"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() ne peut pas être utilisé en mode non-interactif"
+
+#, fuzzy
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr "'code_files' devrait être un vecteur de type caractère"
 
 msgid "Enter zero or more numbers separated by space"
 msgstr "Entrez des nombres séparés par des espaces"
@@ -907,12 +974,6 @@ msgstr "impossible de trouver une méthode de téléchargement"
 msgid "download had nonzero exit status"
 msgstr "le téléchargement a a eu un statut de sortie non nul"
 
-msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr "Utilisation de fichiers HTML non liés : les hyperliens sont peut-être incorrects"
-
-msgid "options(\"browser\") not set"
-msgstr "options(\"browser\") non fixée"
-
 msgid "running '%s' failed"
 msgstr "l'exécution de '%s' a échoué"
 
@@ -931,8 +992,12 @@ msgstr "nom de navigateur incorrect, vérifiez options(\"browser\")."
 msgid "help.start() requires the HTTP server to be running"
 msgstr "help.start() nécessite que le serveur HTTP soit en cours d'exécution"
 
-msgid "If '%s' is already running, it is *not* restarted, and you must switch to its window."
-msgstr "Si '%s' est déjà lancé, il ne sera pas relancé, et vous devez passer à sa fenêtre."
+msgid ""
+"If '%s' is already running, it is *not* restarted, and you must switch to "
+"its window."
+msgstr ""
+"Si '%s' est déjà lancé, il ne sera pas relancé, et vous devez passer à sa "
+"fenêtre."
 
 msgid "Otherwise, be patient ..."
 msgstr "Sinon, soyez patient..."
@@ -953,13 +1018,17 @@ msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' a renvoyé un code de sortie non nul %d"
 
 msgid "package '%s' successfully unpacked and MD5 sums checked"
-msgstr "le package '%s' a été décompressé et les sommes MD5 ont été vérifiées avec succés"
+msgstr ""
+"le package '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
+"succés"
 
 msgid "malformed bundle DESCRIPTION file, no Contains field"
 msgstr "fichier DESCRIPTION du bundle erroné, pas de champ Contains"
 
 msgid "bundle '%s' successfully unpacked and MD5 sums checked"
-msgstr "le bundle '%s' a été décompressé et les sommes MD5 ont été vérifiées avec succès"
+msgstr ""
+"le bundle '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
+"succès"
 
 msgid "unable to move temporary installation '%s' to '%s'"
 msgstr "impossible de déplacer l'installation temporaire '%s' vers '%s'"
@@ -1031,13 +1100,24 @@ msgstr[1] "installation des dépendances %s"
 
 msgid "'lib' element '%s'  is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
-msgstr[0] "l'élément '%s' de 'lib' n'est pas un répertoire ouvrable en écriture"
-msgstr[1] "les éléments '%s' de 'lib' ne sont pas des répertoires ouvrables en écriture"
+msgstr[0] ""
+"l'élément '%s' de 'lib' n'est pas un répertoire ouvrable en écriture"
+msgstr[1] ""
+"les éléments '%s' de 'lib' ne sont pas des répertoires ouvrables en écriture"
 
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
-msgstr[1] "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+msgstr[1] ""
+"les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "Using non-linked HTML file: hyperlinks may be incorrect"
+#~ msgstr ""
+#~ "Utilisation de fichiers HTML non liés : les hyperliens sont peut-être "
+#~ "incorrects"
+
+#~ msgid "options(\"browser\") not set"
+#~ msgstr "options(\"browser\") non fixée"
 
 #~ msgid ""
 #~ "No HTML help for '%s' is available:\n"
@@ -1045,22 +1125,29 @@ msgstr[1] "les packages '%s' sont en cours d'utilisation et ne seront pas instal
 #~ msgstr ""
 #~ "Aucune aide HTML pour '%s' disponible :\n"
 #~ "le fichier correspondant est manquant"
+
 #~ msgid "Compiled HTML is not installed"
 #~ msgstr "L'aide au format HTML compilé n'est pas installée"
+
 #~ msgid "CHM file could not be displayed"
 #~ msgstr "Le fichier CHM n'a pas pu être affiché"
+
 #~ msgid ""
 #~ "No CHM help for '%s' in package '%s' is available:\n"
 #~ "the CHM file for the package is missing"
 #~ msgstr ""
 #~ "Aucune aide CHM disponible sur '%s' dans le package '%s' :\n"
 #~ "le fichier CHM pour ce package est manquant"
+
 #~ msgid "problems running R CMD Rdconv"
 #~ msgstr "problème d'exécution de R CMD Rdconv"
+
 #~ msgid "'latexcmd' is empty"
 #~ msgstr "'latexcmd' est vide"
+
 #~ msgid "'dvipscmd' is empty"
 #~ msgstr "'dvipscmd' est vide"
+
 #~ msgid ""
 #~ "Changing the default browser (as specified by the 'browser' option) to "
 #~ "the given browser so that it gets used for all future help requests."
@@ -1068,60 +1155,82 @@ msgstr[1] "les packages '%s' sont en cours d'utilisation et ne seront pas instal
 #~ "Changement du navigateur par défaut (spécifié dans l'option 'brower') "
 #~ "pour ce navigateur de façon qu'il soit utilisé dans toutes les requêtes "
 #~ "d'aide futures"
+
 #~ msgid "Making links in per-session dir ..."
 #~ msgstr "Création des liens dans le répertoire de session..."
+
 #~ msgid "cannot create HTML search index"
 #~ msgstr "impossible de créer l'index HTML de recherche"
+
 #~ msgid "unable to find the HTML help"
 #~ msgstr "aide HTML introuvable"
+
 #~ msgid "updating HTML package listing"
 #~ msgstr "mise à jour de la liste HTML des packages"
+
 #~ msgid "fixing URLs in non-standard libraries"
 #~ msgstr "correction des URL dans les librairies non standard"
+
 #~ msgid "cannot update '%s'"
 #~ msgstr "impossible de mettre à jour '%s'"
+
 #~ msgid "Found invalid multi-byte character data."
 #~ msgstr "Données caractère multi-octets incorrectes."
+
 #~ msgid "Cannot re-encode because 'iconv' is not available."
 #~ msgstr "Impossible de ré-encoder car 'iconv' n'est pas disponible"
+
 #~ msgid "Try running R in a single-byte locale."
 #~ msgstr "Essayez de lancer R dans un environnement linguistique uni-octet"
+
 #~ msgid "bundle '%s' is incompletely installed"
 #~ msgstr "le bundle '%s' n'est pas installé complètement"
+
 #~ msgid "bundle '%s' has extra contents %s"
 #~ msgstr "le bundle '%s' possède un contenu surnuméraire %s"
+
 #~ msgid "this function is intended to work with the Aqua GUI"
 #~ msgstr "cette fonction est conçue pour fontionner avec l'interface Aqua"
+
 #~ msgid "Maintainer:"
 #~ msgstr "Responsable :"
+
 #~ msgid "Index:"
 #~ msgstr "Index :"
+
 #~ msgid "Further information is available in the following vignettes:"
 #~ msgstr "Plus d'information disponible dans les vignettes suivantes :"
+
 #~ msgid "package title"
 #~ msgstr "titre du package"
+
 #~ msgid "A concise (1-5 lines) description of the package"
 #~ msgstr "Description concise (1-5 lignes) du package"
+
 #~ msgid ""
 #~ "An overview of how to use the package, including the most important "
 #~ "functions"
 #~ msgstr ""
 #~ "Une vue d'ensemble montrant comment utiliser le package, y compris ses "
 #~ "fonctions les plus importantes"
+
 #~ msgid "The author and/or maintainer of the package"
 #~ msgstr "L'auteur et/ou la personne responsable du package"
+
 #~ msgid "Literature or other references for background information"
 #~ msgstr ""
 #~ "Références bibliographiques ou autre références pour de l'information "
 #~ "générale"
+
 #~ msgid "Optional links to other man pages, e.g."
 #~ msgstr "Liens valides vers d'autres pages de manuel, par exemple"
+
 #~ msgid "simple examples of the most important functions"
 #~ msgstr "exemples simples des fonctions les plus importantes"
+
 #~ msgid ""
 #~ "Optionally other standard keywords, one per line, from file KEYWORDS in "
 #~ "the R documentation directory"
 #~ msgstr ""
 #~ "Eventuellement d'autres mots clés, un par ligne, issus du fichier "
 #~ "KEYWORDS du répertoire documentation de R"
-

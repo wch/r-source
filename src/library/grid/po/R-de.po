@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-08-06 09:09\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2009-10-07 14:27+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -498,6 +498,9 @@ msgstr "Mindestens 'x' oder 'xscale' muss angegeben werden"
 
 msgid "Must specify at least one of 'y' or 'yscale'"
 msgstr "Mindestens 'y' oder 'yscale' muss angegeben werden"
+
+msgid "shutting down all devices when unloading 'grid' name space"
+msgstr ""
 
 #~ msgid "Viewport '%s' was not found"
 #~ msgstr "Viewport '%s' nicht gefunden"

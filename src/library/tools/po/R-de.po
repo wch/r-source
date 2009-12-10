@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:04\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2009-10-07 14:56+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -543,6 +543,20 @@ msgstr "Kann das Hilfedokument %s in Paket %s nicht finden"
 msgid "No docs found for package %s"
 msgstr "Keine Dokumente zu Paket %s gefunden"
 
+msgid "Only help files, %s and files under %s in a package can be viewed"
+msgstr ""
+
+#, fuzzy
+msgid "DESCRIPTION"
+msgstr "Unzulässige DESCRIPTION Datei"
+
+#, fuzzy
+msgid "doc/"
+msgstr "Doku"
+
+msgid "unsupported URL %s"
+msgstr ""
+
 msgid "URL %s was not found"
 msgstr "URL '%s' nicht gefunden"
 
@@ -651,6 +665,12 @@ msgstr "Fehler: kann kein lock Verzeichnis erzeugen"
 
 msgid "building a fake installation is disallowed"
 msgstr "eine Scheininstallation ist nicht erlaubt"
+
+msgid "--no-help overrides"
+msgstr ""
+
+msgid "--"
+msgstr ""
 
 msgid "-o option without value"
 msgstr "-o Option ohne Wert"

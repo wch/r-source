@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.10.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:04\n"
-"PO-Revision-Date: 2009-10-09 08:04\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
+"PO-Revision-Date: 2009-12-10 19:18\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -555,6 +555,18 @@ msgstr "Unable to locate help document %s in package %s"
 msgid "No docs found for package %s"
 msgstr "No docs found for package %s"
 
+msgid "Only help files, %s and files under %s in a package can be viewed"
+msgstr "Only help files, %s and files under %s in a package can be viewed"
+
+msgid "DESCRIPTION"
+msgstr "DESCRIPTION"
+
+msgid "doc/"
+msgstr "doc/"
+
+msgid "unsupported URL %s"
+msgstr "unsupported URL %s"
+
 msgid "URL %s was not found"
 msgstr "URL %s was not found"
 
@@ -662,6 +674,12 @@ msgstr "ERROR: failed to create lock directory"
 
 msgid "building a fake installation is disallowed"
 msgstr "building a fake installation is disallowed"
+
+msgid "--no-help overrides"
+msgstr "--no-help overrides"
+
+msgid "--"
+msgstr "--"
 
 msgid "-o option without value"
 msgstr "-o option without value"

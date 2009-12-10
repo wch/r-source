@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-08 08:29\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -130,7 +130,7 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"\"%s\" is a primitive function;  methods can be defined, but the generic "
+"%s is a primitive function;  methods can be defined, but the generic "
 "function is implicit, and cannot be changed."
 msgstr ""
 "'%s' é uma função primitiva; métodos podem ser definidos, mas a função "
@@ -149,20 +149,20 @@ msgstr ""
 "de uma função existente"
 
 msgid ""
-"Restoring the implicit generic function for \"%s\" from package \"%s\"\n"
-"    into package \"%s\"; the generic differs from the default conversion (%s)"
+"Restoring the implicit generic function for %s from package %s\n"
+"    into package %s; the generic differs from the default conversion (%s)"
 msgstr ""
 
 msgid ""
-"Creating a generic for \"%s\" in package \"%s\"\n"
+"Creating a generic for %s in package %s\n"
 "    (the supplied definition differs from and overrides the implicit "
 "generic\n"
-"    in package \"%s\": %s)"
+"    in package %s: %s)"
 msgstr ""
 
 msgid ""
-"No generic version of \"%s\" on package \"%s\" is allowed;\n"
-"   a new generic will be assigned with package \"%s\""
+"No generic version of %s on package %s is allowed;\n"
+"   a new generic will be assigned with package %s"
 msgstr ""
 
 #, fuzzy
@@ -177,8 +177,8 @@ msgstr "função genérica '%s' não encontrada para remoção"
 
 #, fuzzy
 msgid ""
-"invalid argument \"f\", expected a function or its name, got an object of "
-"class \"%s\""
+"invalid argument 'f', expected a function or its name, got an object of "
+"class %s"
 msgstr ""
 "argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido um "
 "objeto de classe  \"%s\""
@@ -403,6 +403,42 @@ msgid "Must provide an environment table; got class \"%s\""
 msgstr "não foi possível encontrar um ambiente contendo a classe \"%s\""
 
 #, fuzzy
+msgid "Original function is prohibited as a generic function"
+msgstr ""
+"não foi possível restaurar '%s', a definição não é um objeto de função "
+"genérico"
+
+msgid "not both functions!"
+msgstr ""
+
+msgid "Classes: %s, %s"
+msgstr ""
+
+msgid "Formal arguments differ (in default values?)"
+msgstr ""
+
+msgid "Formal arguments differ: (%s), (%s)"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "Value classes differ: %s, %s"
+msgstr ""
+
+msgid "Signatures differ:  (%s), (%s)"
+msgstr ""
+
+msgid "Package slots  differ: %s, %s"
+msgstr ""
+
+msgid "Groups differ: %s, %s"
+msgstr ""
+
+msgid "Generic names differ: %s, %s"
+msgstr ""
+
+#, fuzzy
 msgid ""
 "argument \"f\" must be a generic function or a single character string; got "
 "an object of class \"%s\""
@@ -543,9 +579,6 @@ msgstr ""
 msgid "%d: target \"%s\": chose \"%s\" (others: %s)"
 msgstr ""
 
-msgid ","
-msgstr ","
-
 msgid "Notes: %s."
 msgstr ""
 
@@ -602,7 +635,8 @@ msgstr ""
 "ciclo potencial na herança de classe: \"%s\" tem duplicatas nas superclasses "
 "e subclasses (%s)"
 
-msgid "undefined slot classes in definition of \"%s\": %s"
+#, fuzzy
+msgid "undefined slot classes in definition of %s: %s"
 msgstr "classes de slot não definidas na definição de \"%s\": %s"
 
 msgid ""
@@ -711,12 +745,12 @@ msgstr ""
 "a lista '%s' para a classe \"%s\", incluí uma classe não definida \"%s\""
 
 msgid ""
-"Class \"%s\" is inheriting an inconsistent superclass structure from class "
-"\"%s\", inconsistent with %s"
+"class %s is inheriting an inconsistent superclass structure from class %s, "
+"inconsistent with %s"
 msgstr ""
 
 msgid ""
-"unable to find a consistent ordering of superclasses for class \"%s\": order "
+"unable to find a consistent ordering of superclasses for class %s: order "
 "chosen is inconsistent with the superclasses of %s"
 msgstr ""
 
@@ -732,14 +766,13 @@ msgstr "nenhum slot '.Data' definido para a classe \"%s\""
 msgid "class \"%s\" does not have a data part (a .Data slot) defined"
 msgstr "classe \"%s\" não tem uma parte de dados (um slot .Data) definida"
 
-msgid ""
-"more than one possible class for the data part: using \"%s\" rather than \"%s"
-"\""
+#, fuzzy
+msgid "more than one possible class for the data part: using %s rather than %s"
 msgstr ""
 "mais de uma possível classe para a parte de dados: usando \"%s\" ao invés de "
 "\"%s\""
 
-msgid "Class cannot have both an ordinary and hidden data type"
+msgid "class cannot have both an ordinary and hidden data type"
 msgstr ""
 
 msgid ""
@@ -756,26 +789,27 @@ msgstr "impossível encontrar o pacote necessário '%s'"
 msgid "unable to find an environment containing class \"%s\""
 msgstr "não foi possível encontrar um ambiente contendo a classe \"%s\""
 
-msgid "Undefined subclass, \"%s\", of class \"%s\"; definition not updated"
-msgstr ""
+#, fuzzy
+msgid "undefined subclass %s of class %s; definition not updated"
+msgstr "classes de slot não definidas na definição de \"%s\": %s"
 
 msgid ""
-"Subclass \"%s\" of class \"%s\" is not local and cannot be updated for new "
+"subclass %s of class %s is not local and cannot be updated for new "
 "inheritance information; consider setClassUnion()"
 msgstr ""
 
 msgid ""
-"No definition of inheritance from \"%s\" to \"%s\", though the relation was "
-"implied by the setIs() from \"%s\""
+"no definition of inheritance from %s to %s, though the relation was implied "
+"by the setIs() from %s"
 msgstr ""
 
 msgid ""
-"Couldn't find superclass \"%s\" to clean up when removing subclass "
-"references to class \"%s\""
+"could not find superclass %s to clean up when removing subclass references "
+"to class %s"
 msgstr ""
 
 #, fuzzy
-msgid "No class \"%s\" found as expected in removing subclass \"%s\""
+msgid "no class %s found as expected in removing subclass %s"
 msgstr "classe \"%s\" extende uma classe não definida, \"%s\""
 
 msgid ""
@@ -827,12 +861,17 @@ msgstr ""
 msgid "invalid call in method dispatch to \"%s\" (no default method)"
 msgstr ""
 
-msgid "formal arguments in method and function do not appear in the same order"
-msgstr ""
+#, fuzzy
+msgid "in method for %s with signature %s:"
+msgstr "nenhum método encontrado para a genérica '%s'"
+
+#, fuzzy
+msgid "formal arguments in method and generic do not appear in the same order"
+msgstr "argumentos 'names' e 'signature' devem ter o mesmo comprimento"
 
 msgid ""
-"formal arguments omitted in the method definition cannot be in the signature "
-"(%s)"
+"formal arguments (%s) omitted in the method definition cannot be in the "
+"signature"
 msgstr ""
 
 msgid "expanding the signature to include omitted arguments in definition: %s"
@@ -842,16 +881,12 @@ msgid "= \"missing\""
 msgstr ""
 
 msgid ""
-"methods can add arguments to the generic only if '...' is an argument to the "
-"generic"
+"methods can add arguments to the generic %s only if '...' is an argument to "
+"the generic"
 msgstr ""
 
-#, fuzzy
-msgid "Arguments of method and generic are not in the same order"
-msgstr "argumentos 'names' e 'signature' devem ter o mesmo comprimento"
-
 msgid ""
-"arguments after '...' in the generic (%s) must appear in the method, in the "
+"arguments (%s) after '...' in the generic must appear in the method, in the "
 "same place at the end of the argument list"
 msgstr ""
 
@@ -1186,9 +1221,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Class \"%s\" is defined (with package slot \"%s\") but no metadata object "
-"found to revise %s information---not exported?  Making a copy in package \"%s"
-"\""
+"Class %s is defined (with package slot %s) but no metadata object found to "
+"revise %s information---not exported?  Making a copy in package %s"
 msgstr ""
 
 msgid "class \"%s\" cannot extend class \"%s\""
@@ -1440,10 +1474,13 @@ msgstr ""
 msgid "An object of class \""
 msgstr "Um objeto de classe \""
 
+#, fuzzy
 msgid ""
 "invalid call to 'classLabel': expected a name or a class definition, got an "
-"object of class \"%s\""
+"object of class %s"
 msgstr ""
+"definição de método inválida: uma função era esperada, mas foi especificado "
+"um objeto de classe \"%s\""
 
 msgid "argument 'what' should be the name of a function"
 msgstr ""
@@ -1523,15 +1560,22 @@ msgid "move the file or remove the class/method"
 msgstr ""
 
 #, fuzzy
-msgid "in the method signature for function \"%s\" no definition for class: %s"
-msgid_plural ""
-"in the method signature for function \"%s\" no definition for classes: %s"
-msgstr[0] ""
-"na assinatura do método da função '%s' nomes de argumentos inválidos na "
-"assinatura: %s"
-msgstr[1] ""
-"na assinatura do método da função '%s' nomes de argumentos inválidos na "
-"assinatura: %s"
+msgid "no definition for class %s"
+msgid_plural "no definition for classes %s"
+msgstr[0] "nenhuma definição existente para função '%s'"
+msgstr[1] "nenhuma definição existente para função '%s'"
+
+#, fuzzy
+#~ msgid ""
+#~ "in the method signature for function \"%s\" no definition for class: %s"
+#~ msgid_plural ""
+#~ "in the method signature for function \"%s\" no definition for classes: %s"
+#~ msgstr[0] ""
+#~ "na assinatura do método da função '%s' nomes de argumentos inválidos na "
+#~ "assinatura: %s"
+#~ msgstr[1] ""
+#~ "na assinatura do método da função '%s' nomes de argumentos inválidos na "
+#~ "assinatura: %s"
 
 #, fuzzy
 #~ msgid "Some of the superclasses in the definition of class \""

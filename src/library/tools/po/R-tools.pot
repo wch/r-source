@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.10.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:04\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -488,6 +488,18 @@ msgstr ""
 msgid "No docs found for package %s"
 msgstr ""
 
+msgid "Only help files, %s and files under %s in a package can be viewed"
+msgstr ""
+
+msgid "DESCRIPTION"
+msgstr ""
+
+msgid "doc/"
+msgstr ""
+
+msgid "unsupported URL %s"
+msgstr ""
+
 msgid "URL %s was not found"
 msgstr ""
 
@@ -582,6 +594,12 @@ msgid "ERROR: failed to create lock directory"
 msgstr ""
 
 msgid "building a fake installation is disallowed"
+msgstr ""
+
+msgid "--no-help overrides"
+msgstr ""
+
+msgid "--"
 msgstr ""
 
 msgid "-o option without value"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41+0100\n"
+"POT-Creation-Date: 2009-12-10 19:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,4 +27,8 @@ msgstr ""
 
 #: text.c:65
 msgid "invalid argument type"
+msgstr ""
+
+#: text.c:189 text.c:208
+msgid "out of memory"
 msgstr ""

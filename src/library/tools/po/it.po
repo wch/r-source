@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41+0100\n"
+"POT-Creation-Date: 2009-12-10 19:18+0000\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -28,3 +28,7 @@ msgstr "md5 fallito sul file '%s'"
 #: text.c:65
 msgid "invalid argument type"
 msgstr "tipo argomento non valido"
+
+#: text.c:189 text.c:208
+msgid "out of memory"
+msgstr ""

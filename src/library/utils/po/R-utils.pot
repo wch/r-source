@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.10.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -260,7 +260,7 @@ msgstr ""
 msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
 msgstr ""
 
-msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
+msgid "chmhelp = TRUE is no longer supported: using help_type =\"text\""
 msgstr ""
 
 msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
@@ -761,6 +761,9 @@ msgstr ""
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 
+msgid "no lines found in %s"
+msgstr ""
+
 msgid "profile does not contain memory information"
 msgstr ""
 
@@ -794,6 +797,9 @@ msgstr ""
 msgid "file path is too long"
 msgstr ""
 
+msgid "storing paths of more than 100 bytes is not portable:"
+msgstr ""
+
 msgid "linked path is too long"
 msgstr ""
 
@@ -807,6 +813,9 @@ msgid "vignette '%s' has no PDF"
 msgstr ""
 
 msgid "select.list() cannot be used non-interactively"
+msgstr ""
+
+msgid "'title' must be NULL or a length-1 character vector"
 msgstr ""
 
 msgid "Enter zero or more numbers separated by space"
@@ -846,12 +855,6 @@ msgid "no download method found"
 msgstr ""
 
 msgid "download had nonzero exit status"
-msgstr ""
-
-msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr ""
-
-msgid "options(\"browser\") not set"
 msgstr ""
 
 msgid "running '%s' failed"

@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.10.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-09-25 12:13\n"
-"PO-Revision-Date: 2009-09-25 12:13\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
+"PO-Revision-Date: 2009-12-10 19:18\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -303,8 +303,8 @@ msgstr "‘topic’ should be a name, length-one character vector or reserved wo
 msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
 msgstr "offline = TRUE is deprecated: use help_type =“postscript”"
 
-msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
-msgstr "chmhelp = TRUE is no longer supported: use help_type =“text”"
+msgid "chmhelp = TRUE is no longer supported: using help_type =\"text\""
+msgstr "chmhelp = TRUE is no longer supported: using help_type =“text”"
 
 msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
 msgstr "htmhelp = TRUE is deprecated: use help_type =“html”"
@@ -852,6 +852,9 @@ msgstr "'str.default': ‘le’ is NA"
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr "‘digits’ and ‘digits.d’ are both specified and the latter is not used"
 
+msgid "no lines found in %s"
+msgstr "no lines found in %s"
+
 msgid "profile does not contain memory information"
 msgstr "profile does not contain memory information"
 
@@ -885,6 +888,9 @@ msgstr "file ‘%s’ not found"
 msgid "file path is too long"
 msgstr "file path is too long"
 
+msgid "storing paths of more than 100 bytes is not portable:"
+msgstr "storing paths of more than 100 bytes is not portable:"
+
 msgid "linked path is too long"
 msgstr "linked path is too long"
 
@@ -903,6 +909,9 @@ msgstr "vignette ‘%s’ has no PDF"
 
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() cannot be used non-interactively"
+
+msgid "'title' must be NULL or a length-1 character vector"
+msgstr "‘title’ must be NULL or a length-1 character vector"
 
 msgid "Enter zero or more numbers separated by space"
 msgstr "Enter zero or more numbers separated by space"
@@ -942,12 +951,6 @@ msgstr "no download method found"
 
 msgid "download had nonzero exit status"
 msgstr "download had nonzero exit status"
-
-msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-msgstr "Using non-linked HTML file: hyperlinks may be incorrect"
-
-msgid "options(\"browser\") not set"
-msgstr "options(“browser”) not set"
 
 msgid "running '%s' failed"
 msgstr "running ‘%s’ failed"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-05-08 17:33+0100\n"
+"POT-Creation-Date: 2009-12-10 19:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,116 +67,116 @@ msgstr ""
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr ""
 
-#: methods_list_dispatch.c:480 methods_list_dispatch.c:914
+#: methods_list_dispatch.c:480 methods_list_dispatch.c:920
 msgid "invalid object (non-function) used as method"
 msgstr ""
 
-#: methods_list_dispatch.c:497
+#: methods_list_dispatch.c:501
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
 msgstr ""
 
-#: methods_list_dispatch.c:505
+#: methods_list_dispatch.c:509
 #, c-format
 msgid ""
 "invalid symbol in checking for missing argument in method dispatch: expected "
 "a name, got an object of class \"%s\""
 msgstr ""
 
-#: methods_list_dispatch.c:508
+#: methods_list_dispatch.c:512
 msgid "use of NULL environment is defunct"
 msgstr ""
 
-#: methods_list_dispatch.c:512
+#: methods_list_dispatch.c:516
 #, c-format
 msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
 "dispatch: got an object of class \"%s\""
 msgstr ""
 
-#: methods_list_dispatch.c:538
+#: methods_list_dispatch.c:542
 #, c-format
 msgid ""
 "object of class \"%s\" used as methods list for function '%s' ( no "
 "'argument' slot)"
 msgstr ""
 
-#: methods_list_dispatch.c:549
+#: methods_list_dispatch.c:553
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') '...' and related variables cannot "
 "be used for methods dispatch"
 msgstr ""
 
-#: methods_list_dispatch.c:552
+#: methods_list_dispatch.c:556
 #, c-format
 msgid ""
 "(in selecting a method for function '%s') the 'environment' argument for "
 "dispatch must be an R environment; got an object of class \"%s\""
 msgstr ""
 
-#: methods_list_dispatch.c:566 methods_list_dispatch.c:577
-#: methods_list_dispatch.c:870
+#: methods_list_dispatch.c:570 methods_list_dispatch.c:581
+#: methods_list_dispatch.c:876
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function '%s'"
 msgstr ""
 
-#: methods_list_dispatch.c:584
+#: methods_list_dispatch.c:588
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
 msgstr ""
 
-#: methods_list_dispatch.c:591
+#: methods_list_dispatch.c:595
 #, c-format
 msgid ""
 "recursive use of function '%s' in method selection, with no default method"
 msgstr ""
 
-#: methods_list_dispatch.c:623
+#: methods_list_dispatch.c:627
 msgid ""
 "internal error in 'callNextMethod': '.nextMethod' was not assigned in the "
 "frame of the method call"
 msgstr ""
 
-#: methods_list_dispatch.c:654
+#: methods_list_dispatch.c:658
 msgid ""
 "in processing 'callNextMethod', found a '...' in the matched call, but no "
 "corresponding '...' argument"
 msgstr ""
 
-#: methods_list_dispatch.c:666
+#: methods_list_dispatch.c:670
 msgid "error in evaluating a 'primitive' next method"
-msgstr ""
-
-#: methods_list_dispatch.c:725
-#, c-format
-msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 
 #: methods_list_dispatch.c:729
 #, c-format
-msgid "'%s' must be a non-empty string; got an empty string"
+msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 
 #: methods_list_dispatch.c:733
 #, c-format
+msgid "'%s' must be a non-empty string; got an empty string"
+msgstr ""
+
+#: methods_list_dispatch.c:737
+#, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr ""
 
-#: methods_list_dispatch.c:839
+#: methods_list_dispatch.c:843
 #, c-format
 msgid "Failed to get the generic for the primitive \"%s\""
 msgstr ""
 
-#: methods_list_dispatch.c:846
+#: methods_list_dispatch.c:850
 #, c-format
 msgid ""
 "Expected a generic function or a primitive for dispatch, got an object of "
 "class \"%s\""
 msgstr ""
 
-#: methods_list_dispatch.c:858
+#: methods_list_dispatch.c:862
 #, c-format
 msgid ""
 "Generic \"%s\" seems not to have been initialized for table dispatch---need "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:04\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -543,6 +543,19 @@ msgstr ""
 msgid "No docs found for package %s"
 msgstr ""
 
+msgid "Only help files, %s and files under %s in a package can be viewed"
+msgstr ""
+
+#, fuzzy
+msgid "DESCRIPTION"
+msgstr "무효의 DESCRIPTION 파일입니다"
+
+msgid "doc/"
+msgstr ""
+
+msgid "unsupported URL %s"
+msgstr ""
+
 #, fuzzy
 msgid "URL %s was not found"
 msgstr "패키지 '%s'가 검색되지 않습니다"
@@ -650,6 +663,12 @@ msgid "ERROR: failed to create lock directory"
 msgstr "temp 디렉토리를 작성할수가 없습니다"
 
 msgid "building a fake installation is disallowed"
+msgstr ""
+
+msgid "--no-help overrides"
+msgstr ""
+
+msgid "--"
 msgstr ""
 
 msgid "-o option without value"

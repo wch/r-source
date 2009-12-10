@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:02\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1057,10 +1057,14 @@ msgstr "不能分配NativeSymbolInfo给"
 msgid "package '%s' does not have a name space"
 msgstr "程辑包'%s'没有名字空间"
 
-msgid "exportClassPattern specified but no matching classes in %s"
+#, fuzzy
+msgid ""
+"exportClassPattern specified in NAMESPACE but no matching classes in package "
+"'%s'"
 msgstr "虽然exportClassPattern有设定但它与%s中的类别不配"
 
-msgid "in '%s' classes for export not defined: %s"
+#, fuzzy
+msgid "in package '%s' classes for export not defined: %s"
 msgstr "用于出口的'%s'类别不存在：%s"
 
 msgid "in '%s' methods for export not found: %s"
@@ -1084,10 +1088,11 @@ msgstr "不存在"
 msgid "not loading a name space"
 msgstr "不载入名字空间"
 
-msgid "name space '%s' is loaded"
-msgstr "名字空间'%s'没有载入"
-
-msgid "%s failed in unloadNamespace(%s)"
+#, fuzzy
+msgid ""
+"%s failed in unloadNamespace(\"%s\"), details:\n"
+"  call: %s\n"
+"  message: %s"
 msgstr "%s出错：unloadNamespace(%s)"
 
 msgid "name space '%s' is still used by: %s"
@@ -1551,6 +1556,9 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "name space '%s' is loaded"
+#~ msgstr "名字空间'%s'没有载入"
 
 #~ msgid "extra arguments ignored:"
 #~ msgstr "忽略额外的变元"

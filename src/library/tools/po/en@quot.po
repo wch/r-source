@@ -27,10 +27,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.10.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-09-15 12:41+0100\n"
-"PO-Revision-Date: 2009-09-15 12:41+0100\n"
+"POT-Creation-Date: 2009-12-10 19:18+0000\n"
+"PO-Revision-Date: 2009-12-10 19:18+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -50,3 +50,7 @@ msgstr "md5 failed on file ‘%s’"
 #: text.c:65
 msgid "invalid argument type"
 msgstr "invalid argument type"
+
+#: text.c:189 text.c:208
+msgid "out of memory"
+msgstr "out of memory"

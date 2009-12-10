@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:02\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -1127,10 +1127,13 @@ msgstr ""
 msgid "package '%s' does not have a name space"
 msgstr "il pacchetto '%s' non ha un namespace"
 
-msgid "exportClassPattern specified but no matching classes in %s"
+msgid ""
+"exportClassPattern specified in NAMESPACE but no matching classes in package "
+"'%s'"
 msgstr ""
 
-msgid "in '%s' classes for export not defined: %s"
+#, fuzzy
+msgid "in package '%s' classes for export not defined: %s"
 msgstr "in '%s', classi da esportare non definite: %s"
 
 msgid "in '%s' methods for export not found: %s"
@@ -1154,10 +1157,11 @@ msgstr "non trovato"
 msgid "not loading a name space"
 msgstr "non sto caricando un namespace"
 
-msgid "name space '%s' is loaded"
-msgstr "namespace '%s' caricato"
-
-msgid "%s failed in unloadNamespace(%s)"
+#, fuzzy
+msgid ""
+"%s failed in unloadNamespace(\"%s\"), details:\n"
+"  call: %s\n"
+"  message: %s"
 msgstr "%s non riuscito in unloadNamespace(%s)"
 
 #, fuzzy
@@ -1654,6 +1658,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#~ msgid "name space '%s' is loaded"
+#~ msgstr "namespace '%s' caricato"
 
 #, fuzzy
 #~ msgid "extra arguments ignored:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-09 08:04\n"
+"POT-Creation-Date: 2009-12-10 19:18\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -528,6 +528,20 @@ msgstr "在程序包%s找不到%s这个帮助文件"
 msgid "No docs found for package %s"
 msgstr "程序包%s里没有任何文件"
 
+msgid "Only help files, %s and files under %s in a package can be viewed"
+msgstr ""
+
+#, fuzzy
+msgid "DESCRIPTION"
+msgstr "DESCRIPTION文件不对"
+
+#, fuzzy
+msgid "doc/"
+msgstr "文件"
+
+msgid "unsupported URL %s"
+msgstr ""
+
 msgid "URL %s was not found"
 msgstr "找不到%s这个URL"
 
@@ -632,6 +646,12 @@ msgstr "错误：无法建锁住的目录"
 
 msgid "building a fake installation is disallowed"
 msgstr "不充许伪造安装"
+
+msgid "--no-help overrides"
+msgstr ""
+
+msgid "--"
+msgstr ""
 
 msgid "-o option without value"
 msgstr "-o选项必需带值"
