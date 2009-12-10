@@ -48,6 +48,7 @@ Axis.default <- function(x=NULL, at=NULL, ..., side, labels=NULL)
 ## Note that axTicks() can be used without any graphics device
 ## when (axp, usr, log) are specified.  However, axTicks() should
 ## *really* just call .Internal(createAtVector(axp,usr,nint,log))
+## where nint is par("lab")[1 or 2]  (x or y)
 axTicks <- function(side, axp = NULL, usr = NULL, log = NULL)
 {
     ## Compute tickmark "at" values which axis(side) would use by default;

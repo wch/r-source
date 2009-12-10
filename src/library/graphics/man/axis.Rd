@@ -31,7 +31,7 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     same length.  If \code{labels} is of length zero after coercion,
     it has the same effect as supplying \code{TRUE}.}
   \item{tick}{a logical value specifying whether tickmarks and an axis line
-    should be drawn}.
+    should be drawn.}
   \item{line}{the number of lines into the margin at which the axis line
     will be drawn, if not \code{NA}.}
   \item{pos}{the coordinate at which the axis line is to be drawn:
