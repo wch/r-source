@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:04\n"
+"POT-Creation-Date: 2009-12-10 18:16\n"
 "PO-Revision-Date: 2009-10-10 14:50+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1018,11 +1018,9 @@ msgstr "'col.vars' manquant ou incorrect"
 msgid "'family' not recognized"
 msgstr "'family' non reconnu"
 
-msgid "invalid 'method': %s"
-msgstr "'method' incorrecte : %s"
-
-msgid "invalid 'method'"
-msgstr "'method' incorrecte"
+#, fuzzy
+msgid "invalid 'method' argument"
+msgstr "argument 'data' incorrect"
 
 msgid "'weights' must be a numeric vector"
 msgstr "'weights' doit être un vecteur numérique"
@@ -1067,7 +1065,8 @@ msgstr "NA dans d(mu)/d(eta)"
 msgid "no observations informative at iteration"
 msgstr "aucune observation informative à cette itération"
 
-msgid "non-finite coefficients at iteration"
+#, fuzzy
+msgid "non-finite coefficients at iteration %d"
 msgstr "coefficients indéfinis à cette itération"
 
 msgid "X matrix has rank %d, but only %d observations"
@@ -1091,16 +1090,20 @@ msgstr "le pas a été tronqué : hors limites"
 msgid "inner loop 2; cannot correct step size"
 msgstr "boucle interne 2 ; impossible de corriger le pas"
 
-msgid "algorithm did not converge"
+#, fuzzy
+msgid "glm.fit: algorithm did not converge"
 msgstr "l'algorithme n'a pas convergé"
 
-msgid "algorithm stopped at boundary value"
+#, fuzzy
+msgid "glm.fit: algorithm stopped at boundary value"
 msgstr "l'algorithme s'est arrêté à la valeur limite"
 
-msgid "fitted probabilities numerically 0 or 1 occurred"
+#, fuzzy
+msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
 msgstr "des probabilités ont été ajustées numériquement à 0 ou 1"
 
-msgid "fitted rates numerically 0 occurred"
+#, fuzzy
+msgid "glm.fit: fitted rates numerically 0 occurred"
 msgstr "des taux ont été ajustés numériquement à 0"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
@@ -1423,6 +1426,9 @@ msgstr "'start' et 'table' doivent avoir la même longueur"
 
 msgid "this should not happen"
 msgstr "ceci ne devrait pas se produire"
+
+msgid "algorithm did not converge"
+msgstr "l'algorithme n'a pas convergé"
 
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "spécification de 'table' ou de 'start' incorrecte"
@@ -2451,6 +2457,12 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "le paramètre %s n'apparaît pas dans la formule du modèle"
 msgstr[1] "les paramètres %s n'apparaîssent pas dans la formule du modèle"
+
+#~ msgid "invalid 'method': %s"
+#~ msgstr "'method' incorrecte : %s"
+
+#~ msgid "invalid 'method'"
+#~ msgstr "'method' incorrecte"
 
 #~ msgid "'newdata' does not contain the variables needed"
 #~ msgstr "'newdata' ne contient pas les variables névessaires"

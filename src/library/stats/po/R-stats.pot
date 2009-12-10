@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:04\n"
+"POT-Creation-Date: 2009-12-10 18:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -935,10 +935,7 @@ msgstr ""
 msgid "'family' not recognized"
 msgstr ""
 
-msgid "invalid 'method': %s"
-msgstr ""
-
-msgid "invalid 'method'"
+msgid "invalid 'method' argument"
 msgstr ""
 
 msgid "'weights' must be a numeric vector"
@@ -980,7 +977,7 @@ msgstr ""
 msgid "no observations informative at iteration"
 msgstr ""
 
-msgid "non-finite coefficients at iteration"
+msgid "non-finite coefficients at iteration %d"
 msgstr ""
 
 msgid "X matrix has rank %d, but only %d observations"
@@ -1001,16 +998,16 @@ msgstr ""
 msgid "inner loop 2; cannot correct step size"
 msgstr ""
 
-msgid "algorithm did not converge"
+msgid "glm.fit: algorithm did not converge"
 msgstr ""
 
-msgid "algorithm stopped at boundary value"
+msgid "glm.fit: algorithm stopped at boundary value"
 msgstr ""
 
-msgid "fitted probabilities numerically 0 or 1 occurred"
+msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
 msgstr ""
 
-msgid "fitted rates numerically 0 occurred"
+msgid "glm.fit: fitted rates numerically 0 occurred"
 msgstr ""
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
@@ -1296,6 +1293,9 @@ msgid "'start' and 'table' must be same length"
 msgstr ""
 
 msgid "this should not happen"
+msgstr ""
+
+msgid "algorithm did not converge"
 msgstr ""
 
 msgid "incorrect specification of 'table' or 'start'"

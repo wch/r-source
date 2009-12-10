@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:04\n"
+"POT-Creation-Date: 2009-12-10 18:16\n"
 "PO-Revision-Date: 2009-10-15 02:29-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -998,11 +998,9 @@ msgstr "'col.vars' пропущены или неправильные"
 msgid "'family' not recognized"
 msgstr "'family' не распознана"
 
-msgid "invalid 'method': %s"
-msgstr "неправильный 'method': %s"
-
-msgid "invalid 'method'"
-msgstr "неправильный 'method'"
+#, fuzzy
+msgid "invalid 'method' argument"
+msgstr "недопустимый аргумент 'data'"
 
 msgid "'weights' must be a numeric vector"
 msgstr "'weights' должны быть числовым вектором"
@@ -1044,7 +1042,8 @@ msgstr "NAs в d(mu)/d(eta)"
 msgid "no observations informative at iteration"
 msgstr "нет наблюдений, информативных для итерации"
 
-msgid "non-finite coefficients at iteration"
+#, fuzzy
+msgid "non-finite coefficients at iteration %d"
 msgstr "не-конечные коэффициенты в итерации"
 
 msgid "X matrix has rank %d, but only %d observations"
@@ -1068,16 +1067,20 @@ msgstr "размер шага уменьшен: выход за пределы"
 msgid "inner loop 2; cannot correct step size"
 msgstr "внутренний цикл 2; не могу исправить размер шага"
 
-msgid "algorithm did not converge"
+#, fuzzy
+msgid "glm.fit: algorithm did not converge"
 msgstr "алгоритм не сходится"
 
-msgid "algorithm stopped at boundary value"
+#, fuzzy
+msgid "glm.fit: algorithm stopped at boundary value"
 msgstr "алгоритм остановился на краевом значении"
 
-msgid "fitted probabilities numerically 0 or 1 occurred"
+#, fuzzy
+msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
 msgstr "подогнанные вероятности: возник 0 или 1"
 
-msgid "fitted rates numerically 0 occurred"
+#, fuzzy
+msgid "glm.fit: fitted rates numerically 0 occurred"
 msgstr "подогнанные доли: возник 0"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
@@ -1382,6 +1385,9 @@ msgstr "'start' и 'table' должны быть одной длины"
 
 msgid "this should not happen"
 msgstr "это не должно случиться"
+
+msgid "algorithm did not converge"
+msgstr "алгоритм не сходится"
 
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "неправильное указание 'table' или 'start'"
@@ -2378,6 +2384,12 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "параметр %s не встречается в формуле модели"
 msgstr[1] "параметры %s не встречаются в формуле модели"
 msgstr[2] "параметры %s не встречаются в формуле модели"
+
+#~ msgid "invalid 'method': %s"
+#~ msgstr "неправильный 'method': %s"
+
+#~ msgid "invalid 'method'"
+#~ msgstr "неправильный 'method'"
 
 #~ msgid "'newdata' does not contain the variables needed"
 #~ msgstr "'newdata' не содержит нужных переменных"

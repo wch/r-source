@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-12-07 07:59+0000\n"
+"POT-Creation-Date: 2009-12-10 18:16+0000\n"
 "PO-Revision-Date: 2005-02-27 14:01+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -37,7 +37,7 @@ msgstr ""
 msgid "unknown AFM entity encountered"
 msgstr "entità AFM sconosciuta"
 
-#: devPS.c:763 devPS.c:766 devPS.c:4326 devPS.c:7523 devPicTeX.c:504
+#: devPS.c:763 devPS.c:766 devPS.c:4332 devPS.c:7529 devPicTeX.c:504
 #: devPicTeX.c:506
 #, fuzzy, c-format
 msgid "invalid string in '%s'"
@@ -146,11 +146,11 @@ msgstr "Registrazione endocing device non riuscita"
 msgid "Object .ps.prolog is not a character vector"
 msgstr "L'ogetto .ps.prolog non è un vettore di caratteri"
 
-#: devPS.c:2636 devPS.c:6236 devWindows.c:726
+#: devPS.c:2636 devPS.c:6242 devWindows.c:726
 msgid "Invalid line end"
 msgstr "'line end' non valida"
 
-#: devPS.c:2655 devPS.c:6255 devWindows.c:739
+#: devPS.c:2655 devPS.c:6261 devWindows.c:739
 msgid "Invalid line join"
 msgstr "'line join' non valida"
 
@@ -158,82 +158,82 @@ msgstr "'line join' non valida"
 msgid "Invalid line mitre"
 msgstr "'line mitre' non valida"
 
-#: devPS.c:2859 devPS.c:3766 devPS.c:4124 devPS.c:4151 devPS.c:5180
-#: devPS.c:7376 devPS.c:7418
+#: devPS.c:2865 devPS.c:3772 devPS.c:4130 devPS.c:4157 devPS.c:5186
+#: devPS.c:7382 devPS.c:7424
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "tentativo di usare il font %d non valido sostituito con il font 1"
 
-#: devPS.c:2992
+#: devPS.c:2998
 msgid "only gray colors are allowed in this color model"
 msgstr ""
 
-#: devPS.c:3073
+#: devPS.c:3079
 msgid "filename too long in postscript"
 msgstr "nome file troppo lungo in postscript"
 
-#: devPS.c:3094 devPS.c:5725
+#: devPS.c:3100 devPS.c:5731
 msgid "encoding path is too long"
 msgstr "percorso encoding troppo lungo"
 
-#: devPS.c:3109 devPS.c:4688
+#: devPS.c:3115 devPS.c:4694
 msgid "failed to load encoding"
 msgstr "caricamento file encoding fallito"
 
-#: devPS.c:3152 devPS.c:3215 devPS.c:5784 devPS.c:5839 devPS.c:7257
+#: devPS.c:3158 devPS.c:3221 devPS.c:5790 devPS.c:5845 devPS.c:7263
 msgid "Invalid font type"
 msgstr "Specificazione font non valida"
 
-#: devPS.c:3177 devPS.c:5807
+#: devPS.c:3183 devPS.c:5813
 msgid "Failed to initialise default PostScript font"
 msgstr "Inizializzazione font PostScript fallita"
 
-#: devPS.c:3247 devPS.c:5866
+#: devPS.c:3253 devPS.c:5872
 msgid "Failed to initialise additional PostScript fonts"
 msgstr "Inizializzazione font PostScript aggiuntivi fallita"
 
-#: devPS.c:3268
+#: devPS.c:3274
 msgid "invalid foreground/background color (postscript)"
 msgstr "colore foreground/background non valida (postscript)"
 
-#: devPS.c:3278
+#: devPS.c:3284
 msgid "'command' is too long"
 msgstr "'command' è troppo lungo"
 
-#: devPS.c:3282
+#: devPS.c:3288
 msgid "postscript(print.it=TRUE) used with an empty print command"
 msgstr "postscript(print.it=TRUE) usato con un comando print vuoto"
 
-#: devPS.c:3335
+#: devPS.c:3341
 #, c-format
 msgid "invalid page type '%s' (postscript)"
 msgstr "tipo pagina '%s' non valida (postscript)"
 
-#: devPS.c:3457 devPS.c:4486 devWindows.c:2279
+#: devPS.c:3463 devPS.c:4492 devWindows.c:2279
 msgid ""
 "semi-transparency is not supported on this device: reported only once per "
 "page"
 msgstr ""
 
-#: devPS.c:3548
+#: devPS.c:3554
 msgid "printing via file = \"\" is not implemented in this version"
 msgstr "print su file = \"\" non implementato in questa versione"
 
-#: devPS.c:3556 devPS.c:3569
+#: devPS.c:3562 devPS.c:3575
 #, c-format
 msgid "cannot open 'postscript' pipe to '%s'"
 msgstr "non posso aprire pipe 'postscript' su '%s'"
 
-#: devPS.c:3562
+#: devPS.c:3568
 msgid "file = \"|cmd\" is not implemented in this version"
 msgstr "file = \"|cmd\" non implementato in questa versione"
 
-#: devPS.c:3580
+#: devPS.c:3586
 #, c-format
 msgid "cannot open 'postscript' file argument '%s'"
 msgstr "non posso aprire file '%s' in postscript"
 
-#: devPS.c:3704 devPS.c:3719
+#: devPS.c:3710 devPS.c:3725
 #, c-format
 msgid ""
 "error from postscript() in running:\n"
@@ -242,173 +242,173 @@ msgstr ""
 "errore esecuzione postscript() in:\n"
 "    %s"
 
-#: devPS.c:3754
+#: devPS.c:3760
 #, c-format
 msgid "CID family '%s' not included in PostScript device"
 msgstr "famiglia CID '%s' non inclusa nel dispositivo PostScript"
 
-#: devPS.c:3772 devPS.c:3783 devPS.c:4131 devPS.c:4161 devPS.c:4265
+#: devPS.c:3778 devPS.c:3789 devPS.c:4137 devPS.c:4167 devPS.c:4271
 #, c-format
 msgid "family '%s' not included in PostScript device"
 msgstr "famiglia '%s' non inclusa nel dispositivo PostScript"
 
-#: devPS.c:3999 devPS.c:5048 devPS.c:7067 devPicTeX.c:536 devPicTeX.c:541
+#: devPS.c:4005 devPS.c:5054 devPS.c:7073 devPicTeX.c:536 devPicTeX.c:541
 #, c-format
 msgid "%s not available for this device"
 msgstr ""
 
-#: devPS.c:4206
+#: devPS.c:4212
 #, c-format
 msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr ""
 
-#: devPS.c:4215
+#: devPS.c:4221
 #, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
 msgstr ""
 
-#: devPS.c:4294
+#: devPS.c:4300
 #, fuzzy, c-format
 msgid "failed open converter to encoding '%s'"
 msgstr "Caricamento file encoding '%s' fallito"
 
-#: devPS.c:4312 devPS.c:5225 devPS.c:7509
+#: devPS.c:4318 devPS.c:5231 devPS.c:7515
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr ""
 
-#: devPS.c:4500
+#: devPS.c:4506
 msgid "run out of colors in xfig()"
 msgstr "usati tutti i colori in xfig()"
 
-#: devPS.c:4529
+#: devPS.c:4535
 #, c-format
 msgid "unimplemented line texture %08x: using Dash-double-dotted"
 msgstr "'line texture' %08x non implementata: uso Dash-double-dotted"
 
-#: devPS.c:4604
+#: devPS.c:4610
 #, fuzzy, c-format
 msgid "unknown postscript font family '%s', using Helvetica"
 msgstr "famiglia font postscript sconosciuta, uso %s"
 
-#: devPS.c:4645
+#: devPS.c:4651
 msgid "filename too long in xfig"
 msgstr "nome file troppo lungo in xfig()"
 
-#: devPS.c:4673
+#: devPS.c:4679
 msgid "invalid foreground/background color (xfig)"
 msgstr "colore foreground/background non valido (xfig)"
 
-#: devPS.c:4706
+#: devPS.c:4712
 msgid "Only Type 1 fonts supported for XFig"
 msgstr ""
 
-#: devPS.c:4719
+#: devPS.c:4725
 msgid "Failed to initialise default XFig font"
 msgstr "Inizializzazione font XFig fallita"
 
-#: devPS.c:4756
+#: devPS.c:4762
 #, c-format
 msgid "invalid page type '%s' (xfig)"
 msgstr "typo pagina '%s' non valido (xfig)"
 
-#: devPS.c:4764
+#: devPS.c:4770
 #, c-format
 msgid "xfig(%s, onefile=FALSE) will only return the last plot"
 msgstr "xfig(%s, onefile=FALSE) restituirà solo l'ultimo grafico"
 
-#: devPS.c:4879
+#: devPS.c:4885
 msgid "empty file name"
 msgstr "nome file vuoto"
 
-#: devPS.c:4938 devPS.c:4990
+#: devPS.c:4944 devPS.c:4996
 msgid "write failed"
 msgstr ""
 
-#: devPS.c:5043
+#: devPS.c:5049
 #, fuzzy, c-format
 msgid "%s not yet implemented for this device"
 msgstr "file = \"|cmd\" non implementato in questa versione"
 
-#: devPS.c:5214
+#: devPS.c:5220
 #, fuzzy, c-format
 msgid "unable to use encoding '%s'"
 msgstr "Caricamento file encoding fallito"
 
-#: devPS.c:5460
+#: devPS.c:5466
 msgid "Too many raster images"
 msgstr ""
 
-#: devPS.c:5465
+#: devPS.c:5471
 #, fuzzy
 msgid "Unable to allocate raster image"
 msgstr "Impossibile allocare bitmap"
 
-#: devPS.c:5640
+#: devPS.c:5646
 msgid "Corrupt loaded encodings;  font not added"
 msgstr "Encoding caricato danneggiato; il font non viene aggiunto"
 
-#: devPS.c:5649
+#: devPS.c:5655
 msgid "Failed to record device encoding; font not added"
 msgstr ""
 "Registrazione encoding dispositivo non riuscita; il font non verrà aggiunto"
 
-#: devPS.c:5684
+#: devPS.c:5690
 msgid "filename too long in pdf"
 msgstr "nome fil etroppo lungo in pdf"
 
-#: devPS.c:5699
+#: devPS.c:5705
 msgid "cannot allocate pd->pos"
 msgstr "non posso allocare memoria per pd->pos"
 
-#: devPS.c:5704
+#: devPS.c:5710
 msgid "cannot allocate pd->pageobj"
 msgstr "non posso allocare memoria per pd->pageobj"
 
-#: devPS.c:5741
+#: devPS.c:5747
 msgid "failed to load default encoding"
 msgstr "caricamento file encoding fallito"
 
-#: devPS.c:5941
+#: devPS.c:5947
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr "tipo foglio '%s' non valido (pdf)"
 
-#: devPS.c:5971
+#: devPS.c:5977
 msgid "invalid foreground/background color (pdf)"
 msgstr "colore foreground/background non valido (pdf)"
 
-#: devPS.c:6105
+#: devPS.c:6111
 msgid "Invalid alpha value in PDF"
 msgstr "valore alpha non valido in PDF"
 
-#: devPS.c:6130
+#: devPS.c:6136
 msgid "increasing the PDF version to 1.4"
 msgstr ""
 
-#: devPS.c:6173 devPS.c:6211
+#: devPS.c:6179 devPS.c:6217
 msgid "unknown 'colormodel', using 'rgb'"
 msgstr ""
 
-#: devPS.c:6613
+#: devPS.c:6619
 msgid "Corrupt encodings in PDF device"
 msgstr "Encoding danneggiato nel dispositivo PDF"
 
-#: devPS.c:6694
+#: devPS.c:6700
 msgid "increasing the PDF version to 1.3"
 msgstr ""
 
-#: devPS.c:6815
+#: devPS.c:6821
 #, c-format
 msgid "cannot open 'pdf' file argument '%s'"
 msgstr "non posso aprire il file '%s' in 'pdf'"
 
-#: devPS.c:6876
+#: devPS.c:6882
 msgid "unable to increase page limit: please shutdown the pdf device"
 msgstr ""
 "non posso aumentare il limite pagina: si prega di chiudere il dispositivo pdf"
 
-#: devPS.c:6889
+#: devPS.c:6895
 #, fuzzy, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -417,40 +417,40 @@ msgstr ""
 "non posso aprire il file '%s' in 'pdf'\n"
 "  si prega di chiudere il dispositivo PDF"
 
-#: devPS.c:7282 devPS.c:7650 devPS.c:7697
+#: devPS.c:7288 devPS.c:7656 devPS.c:7703
 msgid "Failed to find or load PDF font"
 msgstr "Impossibile caricare o trovare il font PDF"
 
-#: devPS.c:7462 devPS.c:7605
+#: devPS.c:7468 devPS.c:7611
 msgid "Failed to find or load PDF CID font"
 msgstr "Impossibile caricare o trovare il font PDF CID"
 
-#: devPS.c:7836 devPS.c:7840 devPS.c:7997 devPS.c:8001
+#: devPS.c:7842 devPS.c:7846 devPS.c:8003 devPS.c:8007
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "parametro 'family' non valido in %s"
 
-#: devPS.c:7858 devPS.c:8013
+#: devPS.c:7864 devPS.c:8019
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "parametro 'fonts' non valido in %s"
 
-#: devPS.c:7864 devPS.c:8023 devWindows.c:3565 devWindows.c:3569
+#: devPS.c:7870 devPS.c:8029 devWindows.c:3565 devWindows.c:3569
 #: devWindows.c:3577 devWindows.c:3588 devWindows.c:3594 devWindows.c:3601
 #: devWindows.c:3608
 #, fuzzy, c-format
 msgid "invalid value of '%s'"
 msgstr "valore di 'bg' non valido in devWindows"
 
-#: devPS.c:7877
+#: devPS.c:7883
 msgid "unable to start device PostScript"
 msgstr "impossibile aprire dispositivo PostScript"
 
-#: devPS.c:7944
+#: devPS.c:7950
 msgid "unable to start device xfig"
 msgstr "impossibile aprire dispositivo xfig"
 
-#: devPS.c:8037
+#: devPS.c:8043
 msgid "unable to start device pdf"
 msgstr "impossibile aprire dispositivo pdf"
 

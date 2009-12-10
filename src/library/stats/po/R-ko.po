@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:04\n"
+"POT-Creation-Date: 2009-12-10 18:16\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1013,12 +1013,8 @@ msgid "'family' not recognized"
 msgstr "'family'를 확인 할수 없습니다"
 
 #, fuzzy
-msgid "invalid 'method': %s"
-msgstr "무효인 'method' 입니다:"
-
-#, fuzzy
-msgid "invalid 'method'"
-msgstr "무효인 'method' 입니다:"
+msgid "invalid 'method' argument"
+msgstr "무효인 'data'인수입니다"
 
 #, fuzzy
 msgid "'weights' must be a numeric vector"
@@ -1065,7 +1061,8 @@ msgstr "D(mu)/d(eta)에서 NA가 있습니다"
 msgid "no observations informative at iteration"
 msgstr "반복에 두고 의미가 있는 관측값이 없습니다"
 
-msgid "non-finite coefficients at iteration"
+#, fuzzy
+msgid "non-finite coefficients at iteration %d"
 msgstr "반복에 두고 유한하지 않는 계수를 얻을 수 있었습니다"
 
 msgid "X matrix has rank %d, but only %d observations"
@@ -1087,16 +1084,20 @@ msgstr "step size가 잘라졌습니다: 한계를 넘어갔습니다"
 msgid "inner loop 2; cannot correct step size"
 msgstr "내부 루프 2; step size를 정정할 수가 없습니다"
 
-msgid "algorithm did not converge"
+#, fuzzy
+msgid "glm.fit: algorithm did not converge"
 msgstr "알고리즘은 수렴하지 않았습니다"
 
-msgid "algorithm stopped at boundary value"
+#, fuzzy
+msgid "glm.fit: algorithm stopped at boundary value"
 msgstr "알고리즘은 경계값으로 정지했습니다"
 
-msgid "fitted probabilities numerically 0 or 1 occurred"
+#, fuzzy
+msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
 msgstr "수치적으로 0 또는 1인 확률이 초래해졌습니다"
 
-msgid "fitted rates numerically 0 occurred"
+#, fuzzy
+msgid "glm.fit: fitted rates numerically 0 occurred"
 msgstr "수치적으로 0인 적용시키고 비율이 초래해졌습니다"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
@@ -1408,6 +1409,9 @@ msgstr "'start'와 'table'는 동일 길이가 나오지 않으면 되지 않습
 
 msgid "this should not happen"
 msgstr "이것은 있을 수가 있지 않는 것입니다"
+
+msgid "algorithm did not converge"
+msgstr "알고리즘은 수렴하지 않았습니다"
 
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "'table' 또는 'start'의 부정확한 지정입니다"
@@ -2431,6 +2435,14 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#, fuzzy
+#~ msgid "invalid 'method': %s"
+#~ msgstr "무효인 'method' 입니다:"
+
+#, fuzzy
+#~ msgid "invalid 'method'"
+#~ msgstr "무효인 'method' 입니다:"
 
 #~ msgid "'newdata' does not contain the variables needed"
 #~ msgstr "'newdata'는 필요로 하는 변수를 포함하고 있지 않습니다"

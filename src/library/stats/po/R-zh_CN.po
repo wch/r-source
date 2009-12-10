@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:04\n"
+"POT-Creation-Date: 2009-12-10 18:16\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -960,11 +960,9 @@ msgstr "没有'col.vars'值或它设定得不对"
 msgid "'family' not recognized"
 msgstr "'family'设定得不对"
 
-msgid "invalid 'method': %s"
-msgstr "'method'有错: %s"
-
-msgid "invalid 'method'"
-msgstr "'method'不对"
+#, fuzzy
+msgid "invalid 'method' argument"
+msgstr "'data'变元不对"
 
 msgid "'weights' must be a numeric vector"
 msgstr "'weights'必需是数值矢量"
@@ -1006,7 +1004,8 @@ msgstr "d(mu)/d(eta) 里有NA"
 msgid "no observations informative at iteration"
 msgstr "观察量不含信息，于迭代"
 
-msgid "non-finite coefficients at iteration"
+#, fuzzy
+msgid "non-finite coefficients at iteration %d"
 msgstr "係數值无限大，于迭代"
 
 msgid "X matrix has rank %d, but only %d observations"
@@ -1028,16 +1027,20 @@ msgstr "縮短了步驟大小：在值域外"
 msgid "inner loop 2; cannot correct step size"
 msgstr "内循環二; 无法校正步驟大小"
 
-msgid "algorithm did not converge"
+#, fuzzy
+msgid "glm.fit: algorithm did not converge"
 msgstr "算法没有聚合"
 
-msgid "algorithm stopped at boundary value"
+#, fuzzy
+msgid "glm.fit: algorithm stopped at boundary value"
 msgstr "算法在边界值停止"
 
-msgid "fitted probabilities numerically 0 or 1 occurred"
+#, fuzzy
+msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
 msgstr "拟合機率算出来是数值零或一"
 
-msgid "fitted rates numerically 0 occurred"
+#, fuzzy
+msgid "glm.fit: fitted rates numerically 0 occurred"
 msgstr "拟合速率算出来是数值零"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
@@ -1333,6 +1336,9 @@ msgstr "'start'和'table'的长度必需相等"
 
 msgid "this should not happen"
 msgstr "这不应该发生"
+
+msgid "algorithm did not converge"
+msgstr "算法没有聚合"
 
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "当'table'或'start'正确地被设定时"
@@ -2283,6 +2289,12 @@ msgstr[0] "因为不存在，%d个观察量被删除了"
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
+
+#~ msgid "invalid 'method': %s"
+#~ msgstr "'method'有错: %s"
+
+#~ msgid "invalid 'method'"
+#~ msgstr "'method'不对"
 
 #~ msgid "'newdata' does not contain the variables needed"
 #~ msgstr "'newdata'不包含需要的变量"

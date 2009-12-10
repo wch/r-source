@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:04\n"
+"POT-Creation-Date: 2009-12-10 18:16\n"
 "PO-Revision-Date: 2009-10-07 19:29+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -987,11 +987,9 @@ msgstr " 'col.vars' が無いか不正確です "
 msgid "'family' not recognized"
 msgstr " 'family' が確認できません "
 
-msgid "invalid 'method': %s"
-msgstr " 無効な 'method' です: %s "
-
-msgid "invalid 'method'"
-msgstr " 無効な 'method' です "
+#, fuzzy
+msgid "invalid 'method' argument"
+msgstr " 無効な 'data' 引数です "
 
 msgid "'weights' must be a numeric vector"
 msgstr " 'weights' は数値ベクトルでなければなりません "
@@ -1036,7 +1034,8 @@ msgstr " D(mu)/d(eta) 中に NA があります "
 msgid "no observations informative at iteration"
 msgstr " 繰り返しにおいて意味のある観測値がありません "
 
-msgid "non-finite coefficients at iteration"
+#, fuzzy
+msgid "non-finite coefficients at iteration %d"
 msgstr " 繰り返しにおいて有限でない係数が得られました "
 
 msgid "X matrix has rank %d, but only %d observations"
@@ -1058,16 +1057,20 @@ msgstr " ステップサイズの切り詰め: 限界を越えました "
 msgid "inner loop 2; cannot correct step size"
 msgstr " 内部ループ 2; ステップサイズを訂正することができません "
 
-msgid "algorithm did not converge"
+#, fuzzy
+msgid "glm.fit: algorithm did not converge"
 msgstr " アルゴリズムは収束しませんでした "
 
-msgid "algorithm stopped at boundary value"
+#, fuzzy
+msgid "glm.fit: algorithm stopped at boundary value"
 msgstr " アルゴリズムは境界値で停止しました "
 
-msgid "fitted probabilities numerically 0 or 1 occurred"
+#, fuzzy
+msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
 msgstr " 数値的に 0 か 1 である確率が生じました "
 
-msgid "fitted rates numerically 0 occurred"
+#, fuzzy
+msgid "glm.fit: fitted rates numerically 0 occurred"
 msgstr " 数値的に 0 である当てはめ比率が生じました "
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
@@ -1367,6 +1370,9 @@ msgstr " 'strat' と 'table' は同じ長さでなければなりません "
 
 msgid "this should not happen"
 msgstr " これはあり得ないことです "
+
+msgid "algorithm did not converge"
+msgstr " アルゴリズムは収束しませんでした "
 
 msgid "incorrect specification of 'table' or 'start'"
 msgstr " 'table' または 'start' の不正確な指定です "
@@ -2341,6 +2347,12 @@ msgstr[0] " 欠損値のせいで %d 個の観測値が取り除かれました 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません "
+
+#~ msgid "invalid 'method': %s"
+#~ msgstr " 無効な 'method' です: %s "
+
+#~ msgid "invalid 'method'"
+#~ msgstr " 無効な 'method' です "
 
 #~ msgid "'newdata' does not contain the variables needed"
 #~ msgstr " 'newdata' は必要とされる変数を含んでいません "

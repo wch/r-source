@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:04\n"
+"POT-Creation-Date: 2009-12-10 18:16\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1011,12 +1011,8 @@ msgid "'family' not recognized"
 msgstr "'family' não reconhecido"
 
 #, fuzzy
-msgid "invalid 'method': %s"
-msgstr "'method' inválido:"
-
-#, fuzzy
-msgid "invalid 'method'"
-msgstr "'method' inválido:"
+msgid "invalid 'method' argument"
+msgstr "argumento 'data' inválido"
 
 #, fuzzy
 msgid "'weights' must be a numeric vector"
@@ -1062,7 +1058,8 @@ msgstr "NAs em d(mu)/d(eta)"
 msgid "no observations informative at iteration"
 msgstr "sem obervações informativas na iteração"
 
-msgid "non-finite coefficients at iteration"
+#, fuzzy
+msgid "non-finite coefficients at iteration %d"
 msgstr "coeficientes não finitos na iteração"
 
 msgid "X matrix has rank %d, but only %d observations"
@@ -1086,16 +1083,20 @@ msgstr "tamanho do passo truncado: fora de limites"
 msgid "inner loop 2; cannot correct step size"
 msgstr "laço interno 2; não é possível corrigir o tamanho do passo"
 
-msgid "algorithm did not converge"
+#, fuzzy
+msgid "glm.fit: algorithm did not converge"
 msgstr "algoritmo não convergiu"
 
-msgid "algorithm stopped at boundary value"
+#, fuzzy
+msgid "glm.fit: algorithm stopped at boundary value"
 msgstr "algoritmo parou no valor de fronteira"
 
-msgid "fitted probabilities numerically 0 or 1 occurred"
+#, fuzzy
+msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
 msgstr "probabilidades ajustadas numericamente iguais a 0 ou 1 ocorreram"
 
-msgid "fitted rates numerically 0 occurred"
+#, fuzzy
+msgid "glm.fit: fitted rates numerically 0 occurred"
 msgstr "taxas ajustadas numericamente iguais a 0 ocorreram"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
@@ -1406,6 +1407,9 @@ msgstr "'start e 'table' devem ter o mesmo comprimento"
 
 msgid "this should not happen"
 msgstr "isso não deveria acontecer"
+
+msgid "algorithm did not converge"
+msgstr "algoritmo não convergiu"
 
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "especificação de 'table' ou 'start' incorreta"
@@ -2434,6 +2438,14 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "parâmetro %s não ocorre na fórmula do modelo"
 msgstr[1] "parâmetros %s não ocorrem na fórmula do modelo"
+
+#, fuzzy
+#~ msgid "invalid 'method': %s"
+#~ msgstr "'method' inválido:"
+
+#, fuzzy
+#~ msgid "invalid 'method'"
+#~ msgstr "'method' inválido:"
 
 #~ msgid "'newdata' does not contain the variables needed"
 #~ msgstr "'newdata' não contem as variáveis necessárias"
