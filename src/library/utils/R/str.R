@@ -86,7 +86,7 @@ str.default <-
 	     indent.str= paste(rep.int(" ", max(0,nest.lev+1)), collapse= ".."),
 	     comp.str="$ ", no.list = FALSE, envir = baseenv(),
 	     strict.width = strO$strict.width,
-	     formatNum = strO$formatNum,
+	     formatNum = strO$formatNum, list.len = 99,
 	     ...)
 {
     ## Purpose: Display STRucture of any R - object (in a compact form).
@@ -208,7 +208,7 @@ str.default <-
 		    else { max.ncnam <- max(nchar(nam.ob, type="w"))
 			   format(nam.ob, width = max.ncnam, justify="left")
 		       }
-		for(i in seq_len(le)) {
+		for (i in seq_len(min(list.len,le) ) ) {
 		    cat(indent.str, comp.str, nam.ob[i], ":", sep="")
 		    envir <- # pass envir for 'promise' components:
 			if(typeof(object[[i]]) == "promise") {
@@ -219,9 +219,11 @@ str.default <-
                         nchar.max = nchar.max, max.level = max.level,
                         vec.len = vec.len, digits.d = digits.d,
                         give.attr = give.attr, give.head= give.head, give.length = give.length,
-                        width = width, envir = envir)
+                        width = width, envir = envir, list.len=list.len)
 		}
 	    }
+	    if(list.len < le)
+		cat(indent.str, "[list output truncated]\n")
 	}
     } else { #- not function, not list
 	if(is.vector(object)

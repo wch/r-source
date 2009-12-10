@@ -170,6 +170,10 @@ NEW FEATURES
 	devices was set up for round end caps (the only type which
 	existed at the time): it has now been adjusted for butt endcaps.
 
+    o	str() gains a new argument 'list.len' with default 99, limiting the
+	number of list() items (per level), thanks to suggestions from
+	David Winsenius.
+
 
 DEPRECATED & DEFUNCT
 
