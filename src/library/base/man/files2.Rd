@@ -8,6 +8,7 @@
 \alias{Sys.chmod}
 \alias{Sys.umask}
 \concept{directory}
+\concept{mkdir}
 \title{Manipulaton of Directories and file Permissions}
 \usage{
 dir.create(path, showWarnings = TRUE, recursive = FALSE, mode = "0777")
