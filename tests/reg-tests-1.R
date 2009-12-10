@@ -6012,3 +6012,8 @@ z <- read.table("test.dat", header = TRUE)
 unlink("test.dat")
 stopifnot(identical(z, data.frame("B1.B2"="B3")))
 ## Left part of header to be read as data in R < 2.11.0
+
+## switch() with  empty  '...'
+stopifnot(is.null(switch("A")),
+	  is.null(switch(1)), is.null(switch(3L)))
+## the first one hung, 2nd gave error, in R <= 2.10.1
