@@ -329,10 +329,10 @@
 \ifthenelse{\boolean{Rd@use@hyper}}
 {\newcommand{\aliasA}[3]{\hypertarget{Rfn.#3}{\index{#1@\texttt{#1} \textit{(\texttt{#2})}}}}}
 {\newcommand{\aliasA}[3]{\index{#1@\texttt{#1} \textit{(\texttt{#2})}}}}
-% \aliasB has no indexing.
+% \aliasB has no hyper-indexing.
 \ifthenelse{\boolean{Rd@use@hyper}}
-{\newcommand{\aliasB}[3]{\hypertarget{Rfn.#3}{#1@\texttt{#1} \textit{(\texttt{#2})}}}}
-{\newcommand{\aliasB}[3]{#1@\texttt{#1} \textit{(\texttt{#2})}}}
+{\newcommand{\aliasB}[3]{\hypertarget{Rfn.#3}{\relax}}}
+{\newcommand{\aliasB}[3]{\index{#1@\texttt{#1} \textit{(\texttt{#2})}}}}
 \ifthenelse{\boolean{Rd@use@hyper}}
 {\newcommand{\methaliasA}[3]{\hypertarget{Rfn.#3}{\relax}}}
 {\newcommand{\methaliasA}[3]{}}
