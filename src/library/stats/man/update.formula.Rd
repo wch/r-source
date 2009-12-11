@@ -1,6 +1,6 @@
 % File src/library/stats/man/update.formula.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{update.formula}
@@ -23,7 +23,7 @@
   Either or both of \code{old} and \code{new} can be objects such as
   length-one character vectors which can be coerced to a formula via
   \code{\link{as.formula}}.
-  
+
   The function works by first identifying the \emph{left-hand side}
   and \emph{right-hand side} of the \code{old} formula.
   It then examines the \code{new} formula and substitutes
@@ -34,7 +34,7 @@
   simplified \emph{via} \code{\link{terms.formula}(simplify = TRUE)}.
 }
 \value{
-  The updated formula is returned.  The environment of the result will
+  The updated formula is returned.  The environment of the result is
   that of \code{old}.
 }
 \seealso{
