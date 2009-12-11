@@ -223,7 +223,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     {
         x <- psub("([$#~_&])", "\\\\\\1", x) #- escape them
         x <- fsub("{", "\\textbraceleft{}", x)
-        x <- fsub("|", "\\textbraceright{}", x)
+        x <- fsub("}", "\\textbraceright{}", x)
         x <- fsub("^", "\\textasciicircum{}", x)
         x <- fsub("~", "\\textasciitilde{}", x)
         x <- fsub("%", "\\Rpercent{}", x)
