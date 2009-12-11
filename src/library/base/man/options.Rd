@@ -320,6 +320,9 @@ getOption(x, default = NULL)
       80.  (The limits on valid values are in file \file{Print.h} and can be
       changed by re-compiling \R.)  Some \R consoles automatically change
       the value when they are resized.
+
+      See the examples on \link{Startup} for one way to set this
+      automatically from the terminal width when \R is started.
     }
  }
 

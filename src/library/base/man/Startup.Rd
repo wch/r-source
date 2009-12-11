@@ -1,6 +1,6 @@
 % File src/library/base/man/Startup.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Startup}
@@ -199,6 +199,9 @@ local({
   old <- getOption("defaultPackages"); r <- getOption("repos")
   r["CRAN"] <- "http://my.local.cran"
   options(defaultPackages = c(old, "MASS"), repos = r)
+  ## (for Unix terminal users) set the width from COLUMNS if set
+  cols <- Sys.getenv("COLUMNS")
+  if(nzchar(cols)) options(width = as.integer(cols))
 })
 
 ## if .Renviron contains
