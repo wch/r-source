@@ -428,6 +428,11 @@ prepare2_Rd <- function(Rd, Rdfile)
     if (length(RdTags(Rd[[2L]])) > 1L)
         stopRd(RdTags(Rd[[2L]]), Rdfile,"\\name must only contain simple text")
 
+    ## R-exts points out that ! | @ cause problems in \name:
+    ## ggplot2 demonstrated it
+    name_text <- as.character(Rd[[2L]])
+    if(grepl("[!|@]", name_text))
+        warnRd(RdTags(Rd[[2L]]), Rdfile,"\\name should not contain !, | or @")
     structure(Rd, meta = list(docType = docTypes))
 }
 

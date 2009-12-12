@@ -3172,12 +3172,9 @@ on a case-insensitive file system.} is the basename of the Rd file
 containing the documentation.  It is the ``name'' of the Rd object
 represented by the file and has to be unique in a package.  To avoid
 problems with indexing the package manual, it may not contain @samp{!}
-@samp{|} nor @samp{@@}.
-@c and must not contain @LaTeX{}
-@c special characters (@samp{#}, @samp{$}, @samp{%}, @samp{&}, @samp{~},
-@c @samp{_}, @samp{^}, @samp{\}, @samp{@{}, @samp{@}}).
-There can only be one @code{\name} entry in a file, and it must not
-contain any markup.
+@samp{|} nor @samp{@@}.  (@LaTeX{} special characters are allowed, but
+may not be collated correctly in the index.)  There can only be one
+@code{\name} entry in a file, and it must not contain any markup.
 
 @item \alias@{@var{topic}@}
 @findex \alias
