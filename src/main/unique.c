@@ -133,6 +133,7 @@ static int shash(SEXP x, int indx, HashData *d)
 {
     unsigned int k;
     const char *p;
+    char *vmax = vmaxget();
     if(d->useUTF8)
 	p = translateCharUTF8(STRING_ELT(x, indx));
     else
@@ -140,6 +141,7 @@ static int shash(SEXP x, int indx, HashData *d)
     k = 0;
     while (*p++)
 	    k = 11 * k + *p; /* was 8 but 11 isn't a power of 2 */
+    vmaxset(vmax);
     return scatter(k, d);
 }
 
