@@ -6017,3 +6017,10 @@ stopifnot(identical(z, data.frame("B1.B2"="B3")))
 stopifnot(is.null(switch("A")),
 	  is.null(switch(1)), is.null(switch(3L)))
 ## the first one hung, 2nd gave error, in R <= 2.10.1
+
+
+## factors with NA levels
+V <- addNA(c(0,0,NA,0,1,1,0,NA,1,1))
+stopifnot(identical(V, V[, drop = TRUE]))
+stopifnot(identical(model.frame(~V), model.frame(~V, xlev = list(V=levels(V)))))
+## dropped NA levels (in two places) in 2.10.1

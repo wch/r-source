@@ -413,7 +413,7 @@ model.frame.default <-
 			stop(gettextf("factor '%s' has new level(s) %s",
                                       nm, paste(nxl[m], collapse=", ")),
                              domain = NA)
-		    data[[nm]] <- factor(xi, levels=xl)
+		    data[[nm]] <- factor(xi, levels=xl, exclude=NULL)
 		}
 	    }
     } else if(drop.unused.levels) {

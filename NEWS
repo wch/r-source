@@ -252,6 +252,8 @@ BUG FIXES
 
     o	qpois(p = 1, lambda = 0) now gives 0 as for all other p.  (PR#14135)
 
+    o	x[ , drop=TRUE] dropped an NA level, even if it was in use.
+
 
 
 		CHANGES IN R VERSION 2.10.1

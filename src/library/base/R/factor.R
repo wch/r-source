@@ -190,7 +190,7 @@ Ops.factor <- function(e1, e2)
     ## NB factor has levels before class in attribute list (PR#6799)
     attr(y,"levels") <- attr(x,"levels")
     class(y) <- oldClass(x)
-    if ( drop ) factor(y) else y
+    if ( drop ) factor(y, exclude = NULL) else y
 }
 
 "[<-.factor" <- function(x, ..., value)
