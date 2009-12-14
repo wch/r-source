@@ -996,6 +996,11 @@ foreach my $pkg (@ARGV) {
 		    my $warn_re = "Warning: The process for determining duplicated points";
 		    @lines = grep(!/$warn_re/, @lines);
 
+		    ## Correct S4 warning that MM wants suppressed in
+		    ## a patch release because it was broken in 2.10.0
+		    my $warn_re = "^Warning: in method for";
+		    @lines = grep(!/$warn_re/, @lines);
+
 		    if(scalar(@lines) > 0) {
 			$log->warning();
 			$log->print("Found the following " .
