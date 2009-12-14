@@ -170,6 +170,10 @@ NEW FEATURES
 	number of list() items (per level), thanks to suggestions from
 	David Winsenius.
 
+    o	Having formal arguments of an S4 method in a different order
+	from the generic is now an error (the warning having been
+	ignored by some package maintainers for a long time).
+
 
 DEPRECATED & DEFUNCT
 

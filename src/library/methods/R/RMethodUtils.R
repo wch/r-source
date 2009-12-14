@@ -306,10 +306,9 @@ conformMethod <- function(signature, mnames, fnames,
     imf <- match(fnames, mnames)
     omitted <- is.na(imf)
     if(is.unsorted(imf[!omitted]))
-	## Should be an error, but the test was not triggering for such a long time :
-	warning(.renderSignature(f, signature),
-                "formal arguments in method and generic do not appear in the same order",
-                call. = FALSE)
+	stop(.renderSignature(f, signature),
+             "formal arguments in method and generic do not appear in the same order",
+             call. = FALSE)
     if(!any(omitted)) ## i.e. mnames contains all fnames
         return(signature)
     sigNames <- names(signature)
@@ -371,9 +370,9 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature)
 
     ## Should not be needed, if conformMethod() has already been called:
     if(is.unsorted(imf[!is.na(imf)]))
-	warning(.renderSignature(generic@generic, signature),
-                "formal arguments in method and generic do not appear in the same order",
-                call. = FALSE)
+	stop(.renderSignature(generic@generic, signature),
+             "formal arguments in method and generic do not appear in the same order",
+             call. = FALSE)
 
     ## leave newCall as a list while checking the trailing args
     if(keepsDots && dotsPos < length(fnames)) {
