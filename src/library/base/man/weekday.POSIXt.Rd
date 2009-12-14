@@ -1,6 +1,6 @@
 % File src/library/base/man/weekday.POSIXt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{weekdays}
@@ -59,7 +59,8 @@ julian(x, \dots)
 \note{
   Other components such as the day of the month or the year are
   very easy to compute: just use \code{\link{as.POSIXlt}} and extract
-  the relevant component.
+  the relevant component.  Alternatively (especially if the components
+  are desired as character strings), use \code{\link{strftime}}.
 }
 
 \seealso{
