@@ -1270,6 +1270,9 @@ Warning messages:
 > ## qgamma() was wrong here, orders of magnitude up to R 2.10.0
 > ## pgamma() had inaccuracies, e.g.,
 > ## pgamma(x, shape = 2^-64, lower.tail=FALSE)  was discontinuous at x=1
+>
+> stopifnot(all(qpois((0:8)/8, lambda=0) == 0))
+> ## gave Inf as p==1 was checked *before* lambda==0
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
 Time elapsed:  4.908 0.044 5.058 0 0 

@@ -221,7 +221,7 @@ BUG FIXES
         formal arguments (in addition to ...).  Arguments omitted from
         the method definition but conforming (per the documentation)
         should now be ignored (treated as "ANY") in dispatching.
-        
+
     o	In some locales functions related to string comparison (e.g.
 	unique(), match(), etc.) could cause crashes (PR#14114 and
 	PR#14125).
@@ -249,6 +249,8 @@ BUG FIXES
 
     o	Using read.table(header=TRUE) on a header with an embedded new
     	line would copy part of the header into the data.  (PR#14103)
+
+    o	qpois(p = 1, lambda = 0) now gives 0 as for all other p.  (PR#14135)
 
 
 
