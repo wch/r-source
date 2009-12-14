@@ -749,11 +749,12 @@ static void* QuartzCocoa_Cap(QuartzDesc_t dev, void *userInfo) {
     if (!ci || !ci->view) {
         return (void*) raster;
     } else {
-        int i;
+        unsigned int i, pixels, stride, j = 0;
         unsigned int *rint;
         SEXP dim;
         NSSize size = [ci->view frame].size;
-
+	pixels = size.width * size.height;
+	
         if (![ci->view canDraw])
             warning("View not able to draw!?");
 
@@ -763,26 +764,39 @@ static void* QuartzCocoa_Cap(QuartzDesc_t dev, void *userInfo) {
                                         NSMakeRect(0, 0, 
                                                    size.width, size.height)];
 
-        unsigned char *screenData = [rep bitmapData];
-                                                                     
-        PROTECT(raster = allocVector(INTSXP, size.width*size.height));
+	int bpp = (int) [rep bitsPerPixel];
+	NSBitmapFormat bf = [rep bitmapFormat];
+	/* Rprintf("format: bpp=%d, bf=0x%x, bps=%d, planar=%s, colorspace=%s\n", bpp, (int) bf, [rep bitsPerSample], [rep isPlanar] ? "YES" : "NO", [[rep colorSpaceName] UTF8String]); */
+	/* we only support meshed (=interleaved) formats of 8 bits/component with 3 or 4 components. We should really check for RGB/RGBA as well.. */
+	if ([rep isPlanar] || [rep bitsPerSample] != 8 || (bf & NSFloatingPointSamplesBitmapFormat) || (bpp != 24 && bpp != 32)) {
+	    warning("Unsupported image format");
+	    return (void*) raster;
+	}
 
+        unsigned char *screenData = [rep bitmapData];
+
+        PROTECT(raster = allocVector(INTSXP, pixels));
+
+	/* FIXME: the current implementation of rasters seems to be endianness-dependent which is deadly (whether that is intentional or not). It needs to be fixed before it can work properly. The code below is sort of ok in little-endian machines, but the resulting raster is interpreted wrongly on big-endian machines. This needs to be discussed with Paul as all details are missing from his write-up... */
         /* Copy each byte of screen to an R matrix. 
          * The ARGB32 needs to be converted to an R ABGR32 */
         rint = (unsigned int *) INTEGER(raster);
-        for (i=0; i < size.width*size.height; i++) {
-            rint[i] = ((screenData[i*4 + 2]) |
-                       (screenData[i*4 + 1] << 8) |
-                       (screenData[i*4 + 0] << 16) |
-                       0xFF000000); 
-        }
-        PROTECT(dim = allocVector(INTSXP, 2));
+	stride = (bpp == 24) ? 3 : 4; /* convers bpp to stride in bytes */
+	for (i = 0; i < pixels; i++, j += stride)
+	    rint[i] = ((screenData[j + 0]) |
+		       (screenData[j + 1] << 8) |
+		       (screenData[j + 2] << 16) |
+		       0xFF000000); /* alpha is currently ignored and set to 1.0 (why?) */
+	
+	[rep release];
+	
+	PROTECT(dim = allocVector(INTSXP, 2));
         INTEGER(dim)[0] = size.height;
         INTEGER(dim)[1] = size.width;
         setAttrib(raster, R_DimSymbol, dim);
-        
+	
         UNPROTECT(2);
-        
+
         [ci->view unlockFocus];
     }
     
