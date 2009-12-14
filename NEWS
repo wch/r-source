@@ -166,10 +166,6 @@ NEW FEATURES
 	refined following suggestions by Ioannis Kosmidis and Heather
 	Turner.
 
-    o	The handling of line textures in the postscript() and pdf()
-	devices was set up for round end caps (the only type which
-	existed at the time): it has now been adjusted for butt endcaps.
-
     o	str() gains a new argument 'list.len' with default 99, limiting the
 	number of list() items (per level), thanks to suggestions from
 	David Winsenius.
@@ -204,19 +200,17 @@ BUG FIXES
 	values for arguments in a method that do not have defaults in
 	the generic will now be ignored.
 
-    o	Trying to dispatch methods for primitives during the search
+    o	Trying to dispatch S4 methods for primitives during the search
 	for inherited methods slows that search down and potentially
 	could cause an infinite recursion.  An internal switch was
-	added to turn off all such methods from findInheritedMethods().
+	added to turn off all such methods from
+	findInheritedMethods().
 
     o	R framework installation (on Mac OS X) would not work properly
 	if a rogue Resources directory was present at the top level.
 	Such a non-symlink will now be renamed to Resources.old (and
 	anything previously named Resources.old removed) as part of
 	the framework installation process.
-
-    o	Using read.table(header=TRUE) on a header with an embedded new
-    	line would copy part of the header into the data.  (PR#14103)
 
     o	The checks for conforming S4 method arguments could fail when
         the signature of the generic function omitted some of the
@@ -235,6 +229,23 @@ BUG FIXES
 	*	       2.10 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.10.1 patched
+
+
+NEW FEATURES
+
+    o	The handling of line textures in the postscript() and pdf()
+	devices was set up for round end caps (the only type which
+	existed at the time): it has now been adjusted for butt endcaps.
+
+
+BUG FIXES
+
+    o	Using read.table(header=TRUE) on a header with an embedded new
+    	line would copy part of the header into the data.  (PR#14103)
+
 
 
 		CHANGES IN R VERSION 2.10.1
@@ -420,6 +431,7 @@ BUG FIXES
 
     o	switch(EXPR = "A")  now returns NULL, as switch(1) {which used to
 	signal an error}.
+
 
 
 		CHANGES IN R VERSION 2.10.0
