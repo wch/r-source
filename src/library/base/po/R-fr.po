@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-07 07:59\n"
+"POT-Creation-Date: 2009-12-14 12:34\n"
 "PO-Revision-Date: 2009-10-10 13:35+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1065,11 +1065,9 @@ msgstr "le mode de stockage d'un objet \"factor\" ne peut être modifié"
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' n'est pas un objet exporté depuis 'namespace:%s'"
 
-msgid "package '%s' has no name space and"
+#, fuzzy
+msgid "package %s has no name space and is not on the search path"
 msgstr "le package '%s' n'a pas d'espace de noms et"
-
-msgid "is not on the search path"
-msgstr "n'est pas trouvé dans le chemin de recherche"
 
 msgid "name space is already attached"
 msgstr "l'espace de noms est déjà attaché"
@@ -1107,26 +1105,26 @@ msgstr "le package '%s' n'a pas d'espace de noms"
 #, fuzzy
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
-"'%s'"
+"%s"
 msgstr "exportClassPattern spécifié mais aucune classe ne correspond dans %s"
 
 #, fuzzy
-msgid "in package '%s' classes for export not defined: %s"
+msgid "in package %s classes %s were specified for export but not defined"
 msgstr "classes à exporter non définies dans '%s' : %s"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "méthodes à exporter non trouvées dans '%s' : %s"
 
-msgid "Multiple methods tables found for '"
+#, fuzzy
+msgid "multiple methods tables found for %s"
 msgstr "Tables de méthodes multiples trouvées pour '"
 
-msgid "'"
-msgstr "'"
-
-msgid "Failed to find metadata object for \"%s\""
+#, fuzzy
+msgid "failed to find metadata object for %s"
 msgstr "Objet métadonnées introuvable pour \"%s\""
 
-msgid "in '%s' methods specified for export, but none defined: %s"
+#, fuzzy
+msgid "in package %s methods %s were specified for export but not defined"
 msgstr ""
 "des méthodes sont spécifées à l'exportation dans '%s', mais aucune n'est "
 "définie : %s"
@@ -1175,12 +1173,14 @@ msgstr "cible d'importation incorrecte"
 msgid "got invalid index for importing"
 msgstr "index incorrect lors de l'importation"
 
-msgid "Found methods to import for function \"%s\" but not the generic itself"
+#, fuzzy
+msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 "Des méthodes sont à importer pour la fonction \"%s\", mais ce n'est pas une "
 "fonction générique"
 
-msgid "requested 'methods' objects not found in environment/package '%s': %s"
+#, fuzzy
+msgid "requested methods not found in environment/package %s: %s"
 msgstr ""
 "objets 'methods' demandés introuvables dans l'environnement / package '%s' : "
 "%s"
@@ -1197,14 +1197,9 @@ msgstr "le package '%s' n'a aucun fichier NAMESPACE"
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "nom vide dans la directive '%s' dans le fichier NAMESPACE"
 
-msgid "duplicated symbol names"
+#, fuzzy
+msgid "duplicated symbol names %s in useDynlib(\"%s\")"
 msgstr "noms de symboles dupliqués"
-
-msgid "in useDynLib("
-msgstr "dans useDynLib("
-
-msgid ")"
-msgstr ")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "mauvaise directive 'S3method' : %s"
@@ -1215,8 +1210,9 @@ msgstr "trop de directives 'S3method'"
 msgid "unknown namespace directive: %s"
 msgstr "directive inconnue dans l'espace de noms : %s"
 
-msgid "S3 method '%s' was declared in NAMESPACE but not found"
-msgstr "la méthode S3 '%s' est déclarée dans NAMESPACE mais est introuvable"
+#, fuzzy
+msgid "S3 method %s was declared but not found"
+msgstr "la méthode S3 %s est déclarée dans NAMESPACE mais est introuvable"
 
 msgid "bad method"
 msgstr "mauvaise méthode"
@@ -1225,7 +1221,8 @@ msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr ""
 "l'objet '%s' est introuvable pendant le chargement de l'espace de noms '%s'"
 
-msgid "found an S4 version of '%s' so it has not been imported correctly"
+#, fuzzy
+msgid "found an S4 version of %s so it has not been imported correctly"
 msgstr "une version S4 de '%s' est trouvée, donc l'importation est incorrecte"
 
 msgid "'%s' is not implemented yet"
@@ -1611,8 +1608,15 @@ msgid_plural "objects %s not found"
 msgstr[0] "objet %s introuvable"
 msgstr[1] "objets %s introuvables"
 
-msgid "object '%s' is not exported by 'namespace:%s'"
-msgid_plural "objects '%s' are not exported by 'namespace:%s'"
+#, fuzzy
+msgid "class %s is not exported by 'namespace:%s'"
+msgid_plural "classes %s are not exported by 'namespace:%s'"
+msgstr[0] "l'objet '%s' n'est pas exporté par 'namespace:%s'"
+msgstr[1] "les objets '%s' ne sont pas exportés par 'namespace:%s'"
+
+#, fuzzy
+msgid "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
 msgstr[0] "l'objet '%s' n'est pas exporté par 'namespace:%s'"
 msgstr[1] "les objets '%s' ne sont pas exportés par 'namespace:%s'"
 
@@ -1631,6 +1635,21 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "is not on the search path"
+#~ msgstr "n'est pas trouvé dans le chemin de recherche"
+
+#~ msgid "'"
+#~ msgstr "'"
+
+#~ msgid "in useDynLib("
+#~ msgstr "dans useDynLib("
+
+#~ msgid ")"
+#~ msgstr ")"
+
+#~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
+#~ msgstr "la méthode S3 '%s' est déclarée dans NAMESPACE mais est introuvable"
 
 #~ msgid "invalid name"
 #~ msgstr "nom incorrect"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-07 07:59\n"
+"POT-Creation-Date: 2009-12-14 12:34\n"
 "PO-Revision-Date: 2009-10-07 19:17+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1037,11 +1037,9 @@ msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr ""
 " '%s' は 'namespace:%s' からエクスポートされたオブジェクトではありません "
 
-msgid "package '%s' has no name space and"
+#, fuzzy
+msgid "package %s has no name space and is not on the search path"
 msgstr " パッケージ '%s' は名前空間を持っていませんし "
-
-msgid "is not on the search path"
-msgstr " 検索パス上にありません "
 
 msgid "name space is already attached"
 msgstr " 名前空間は既に付加されています "
@@ -1079,27 +1077,27 @@ msgstr " パッケージ '%s' は名前空間を持っていません "
 #, fuzzy
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
-"'%s'"
+"%s"
 msgstr ""
 " exportClassPattern が指定されましたが、%s 中には対応するクラスがありません "
 
 #, fuzzy
-msgid "in package '%s' classes for export not defined: %s"
+msgid "in package %s classes %s were specified for export but not defined"
 msgstr " '%s' 中にはエクスポートのためのクラスは見付かりません： %s "
 
 msgid "in '%s' methods for export not found: %s"
 msgstr " '%s' 中にはエクスポートのためのメソッドは見付かりません： %s "
 
-msgid "Multiple methods tables found for '"
+#, fuzzy
+msgid "multiple methods tables found for %s"
 msgstr " 複数のメソッドテーブルが以下に見付かりました ' "
 
-msgid "'"
-msgstr "’ "
-
-msgid "Failed to find metadata object for \"%s\""
+#, fuzzy
+msgid "failed to find metadata object for %s"
 msgstr " \"%s\" に対する metadata オブジェクトを見付けることができません "
 
-msgid "in '%s' methods specified for export, but none defined: %s"
+#, fuzzy
+msgid "in package %s methods %s were specified for export but not defined"
 msgstr ""
 " '%s' 中にエクスポートのためのメソッドが指定されていますが、定義されていませ"
 "ん： %s "
@@ -1148,12 +1146,14 @@ msgstr " 無効なインポート対象です "
 msgid "got invalid index for importing"
 msgstr "インポートに対する不正なインデックスです "
 
-msgid "Found methods to import for function \"%s\" but not the generic itself"
+#, fuzzy
+msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 " 関数 \"%s\" に対するインポートメソッドをみつけましたが、総称的ではありませ"
 "ん "
 
-msgid "requested 'methods' objects not found in environment/package '%s': %s"
+#, fuzzy
+msgid "requested methods not found in environment/package %s: %s"
 msgstr ""
 " 要求された 'methods' オブジェクトは環境もしくはパッケージ '%s' に見付かりま"
 "せん： %s "
@@ -1170,14 +1170,9 @@ msgstr " パッケージ '%s' は NAMESPACE ファイルを持っていません
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr " NAMESPACE ファイル中の directive '%s' 中には名前がありません "
 
-msgid "duplicated symbol names"
+#, fuzzy
+msgid "duplicated symbol names %s in useDynlib(\"%s\")"
 msgstr " 重複したシンボル名です "
-
-msgid "in useDynLib("
-msgstr " useDynLib( "
-
-msgid ")"
-msgstr " ) 中に "
 
 msgid "bad 'S3method' directive: %s"
 msgstr " 誤った 'S3method' 指令です：%s "
@@ -1188,8 +1183,9 @@ msgstr " 'S3method' 指令が多すぎます "
 msgid "unknown namespace directive: %s"
 msgstr " 未知の名前空間指令です： %s "
 
-msgid "S3 method '%s' was declared in NAMESPACE but not found"
-msgstr " S3 メソッド '%s' が名前空間中で宣言されましたが、見付かりません "
+#, fuzzy
+msgid "S3 method %s was declared but not found"
+msgstr "S3 メソッド %s は NAMESPACE で宣言されましたが、見つかりませんでした "
 
 msgid "bad method"
 msgstr " 誤ったメソッドです "
@@ -1199,7 +1195,8 @@ msgstr ""
 " オブジェクト '%s' を見つけることができませんでした(名前空間 '%s' のロード中"
 "に) "
 
-msgid "found an S4 version of '%s' so it has not been imported correctly"
+#, fuzzy
+msgid "found an S4 version of %s so it has not been imported correctly"
 msgstr ""
 " '%s' の S4 版が見付かりました。したがってそれは正しくインポートされていませ"
 "ん "
@@ -1581,8 +1578,15 @@ msgid "object %s not found"
 msgid_plural "objects %s not found"
 msgstr[0] " %s を見付けることができません "
 
-msgid "object '%s' is not exported by 'namespace:%s'"
-msgid_plural "objects '%s' are not exported by 'namespace:%s'"
+#, fuzzy
+msgid "class %s is not exported by 'namespace:%s'"
+msgid_plural "classes %s are not exported by 'namespace:%s'"
+msgstr[0] ""
+"オブジェクト '%s' は 'namespace:%s' によってエクスポートされていません "
+
+#, fuzzy
+msgid "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
 msgstr[0] ""
 "オブジェクト '%s' は 'namespace:%s' によってエクスポートされていません "
 
@@ -1598,6 +1602,21 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "is not on the search path"
+#~ msgstr " 検索パス上にありません "
+
+#~ msgid "'"
+#~ msgstr "’ "
+
+#~ msgid "in useDynLib("
+#~ msgstr " useDynLib( "
+
+#~ msgid ")"
+#~ msgstr " ) 中に "
+
+#~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
+#~ msgstr " S3 メソッド '%s' が名前空間中で宣言されましたが、見付かりません "
 
 #~ msgid "invalid name"
 #~ msgstr " 不当な名前です "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-07 07:59\n"
+"POT-Creation-Date: 2009-12-14 12:34\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1058,12 +1058,8 @@ msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'는 'namespace:%s' 로부터  export된 오브젝트가 아닙니다"
 
 #, fuzzy
-msgid "package '%s' has no name space and"
+msgid "package %s has no name space and is not on the search path"
 msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
-
-#, fuzzy
-msgid "is not on the search path"
-msgstr "'%s'는 탐색 패스에서는 검색되지 않았습니다. pos = 2를 사용합니다"
 
 msgid "name space is already attached"
 msgstr "name space는 이미 부가되어 있습니다"
@@ -1101,26 +1097,24 @@ msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
 
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
-"'%s'"
+"%s"
 msgstr ""
 
 #, fuzzy
-msgid "in package '%s' classes for export not defined: %s"
+msgid "in package %s classes %s were specified for export but not defined"
 msgstr "'%s'에는 export를 위한 클래스는 검색되지 않습니다"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "'%s'에는 export를 위한 메소드는 검색되지 않습니다"
 
-msgid "Multiple methods tables found for '"
+msgid "multiple methods tables found for %s"
 msgstr ""
 
-msgid "'"
+msgid "failed to find metadata object for %s"
 msgstr ""
 
-msgid "Failed to find metadata object for \"%s\""
-msgstr ""
-
-msgid "in '%s' methods specified for export, but none defined: %s"
+#, fuzzy
+msgid "in package %s methods %s were specified for export but not defined"
 msgstr ""
 "'%s'에 export를 위한 메소드가 지정되어 있습니다만, 어느것도 정의되지 않았습니"
 "다:%s"
@@ -1168,10 +1162,11 @@ msgstr "무효인 import target입니다"
 msgid "got invalid index for importing"
 msgstr ""
 
-msgid "Found methods to import for function \"%s\" but not the generic itself"
+msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 
-msgid "requested 'methods' objects not found in environment/package '%s': %s"
+#, fuzzy
+msgid "requested methods not found in environment/package %s: %s"
 msgstr "요구된 'methods' 오브젝트는 환경/패키지 '%s'에 검색되지 않습니다 :%s"
 
 msgid "cannot add to exports of a sealed name space"
@@ -1189,14 +1184,8 @@ msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "패키지 '%s'는 NAMESPACE 파일을 가지고 있지 않습니다"
 
 #, fuzzy
-msgid "duplicated symbol names"
+msgid "duplicated symbol names %s in useDynlib(\"%s\")"
 msgstr "중복한 import명입니다"
-
-msgid "in useDynLib("
-msgstr ""
-
-msgid ")"
-msgstr ""
 
 msgid "bad 'S3method' directive: %s"
 msgstr "잘못한 'S3method' 지령입니다: %s"
@@ -1207,8 +1196,11 @@ msgstr "너무 많는 'S3method' 지령입니다"
 msgid "unknown namespace directive: %s"
 msgstr "알수 없는 namespace 지령입니다: %s"
 
-msgid "S3 method '%s' was declared in NAMESPACE but not found"
-msgstr "S3 메소드 '%s'가 NAMESPACE안으로 정의되었습니다만, 검색되지 않습니다"
+#, fuzzy
+msgid "S3 method %s was declared but not found"
+msgstr ""
+"S3 메소드 %s는 NAMESPACE로 정의되었습니다만, 검색되지 않았습니다\n"
+"S3 메소드(복수) %s는 NAMESPACE로 정의되었습니만, 검색되지 않았습니다"
 
 msgid "bad method"
 msgstr "잘못한 메소드입니다"
@@ -1216,7 +1208,8 @@ msgstr "잘못한 메소드입니다"
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "namespace '%s'를 적대할 때에, 오브젝트 '%s'를 검색해낼수가 없었습니다"
 
-msgid "found an S4 version of '%s' so it has not been imported correctly"
+#, fuzzy
+msgid "found an S4 version of %s so it has not been imported correctly"
 msgstr ""
 "'%s'의 S4 버전이 검색되었습니다.그래서 그것이 올바르고 import되어 있지 않습니"
 "다"
@@ -1617,8 +1610,15 @@ msgid_plural "objects %s not found"
 msgstr[0] "%s를 검색해낼수가 없습니다"
 
 #, fuzzy
-msgid "object '%s' is not exported by 'namespace:%s'"
-msgid_plural "objects '%s' are not exported by 'namespace:%s'"
+msgid "class %s is not exported by 'namespace:%s'"
+msgid_plural "classes %s are not exported by 'namespace:%s'"
+msgstr[0] ""
+"오브젝트%s는 'namespace:%s'에 의해 export되지 않습니다 \n"
+"오브젝트(복수)%s는 'namespace:%s'에 의해 export되지 않습니다"
+
+#, fuzzy
+msgid "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
 msgstr[0] ""
 "오브젝트%s는 'namespace:%s'에 의해 export되지 않습니다 \n"
 "오브젝트(복수)%s는 'namespace:%s'에 의해 export되지 않습니다"
@@ -1641,6 +1641,14 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#, fuzzy
+#~ msgid "is not on the search path"
+#~ msgstr "'%s'는 탐색 패스에서는 검색되지 않았습니다. pos = 2를 사용합니다"
+
+#~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
+#~ msgstr ""
+#~ "S3 메소드 '%s'가 NAMESPACE안으로 정의되었습니다만, 검색되지 않습니다"
 
 #~ msgid "invalid name"
 #~ msgstr "부적절한 이름입니다"

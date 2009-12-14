@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-12-07 07:59+0000\n"
+"POT-Creation-Date: 2009-12-14 12:22+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -166,8 +166,8 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/envir.c:1834 src/main/envir.c:1838 src/main/envir.c:2054
 #: src/main/envir.c:2175 src/main/envir.c:2433 src/main/envir.c:2690
 #: src/main/envir.c:2704 src/main/envir.c:2711 src/main/envir.c:2724
-#: src/main/envir.c:3262 src/main/eval.c:281 src/main/eval.c:1766
-#: src/main/eval.c:1793 src/main/eval.c:1797 src/main/grep.c:707
+#: src/main/envir.c:3262 src/main/eval.c:281 src/main/eval.c:1762
+#: src/main/eval.c:1789 src/main/eval.c:1793 src/main/grep.c:707
 #: src/main/grep.c:712 src/main/grep.c:1054 src/main/grep.c:1058
 #: src/main/grep.c:1063 src/main/grep.c:1731 src/main/grep.c:1736
 #: src/main/memory.c:2978 src/main/model.c:1613 src/main/model.c:1621
@@ -205,8 +205,8 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/seq.c:400 src/main/seq.c:404 src/main/seq.c:410 src/main/seq.c:418
 #: src/main/sort.c:160 src/main/sysutils.c:557 src/main/sysutils.c:559
 #: src/main/sysutils.c:561 src/main/sysutils.c:566 src/main/sysutils.c:1505
-#: src/main/sysutils.c:1509 src/main/unique.c:800 src/main/unique.c:1075
-#: src/main/unique.c:1135 src/main/unique.c:1142 src/main/util.c:554
+#: src/main/sysutils.c:1509 src/main/unique.c:808 src/main/unique.c:1083
+#: src/main/unique.c:1143 src/main/unique.c:1150 src/main/util.c:554
 #: src/main/util.c:557 src/main/util.c:1632
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
 #: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
@@ -571,7 +571,7 @@ msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr "无法建立‘reader thread’，系统资源不够"
 
-#: src/include/Errormsg.h:25 src/main/eval.c:2918 src/main/subscript.c:309
+#: src/include/Errormsg.h:25 src/main/eval.c:2914 src/main/subscript.c:309
 #: src/main/subscript.c:418 src/main/subscript.c:518
 msgid "subscript out of bounds"
 msgstr "下标出界"
@@ -1227,7 +1227,7 @@ msgstr "不能有重复的正式变元'use.names' "
 msgid "argument not a list"
 msgstr "变元不是串列"
 
-#: src/main/bind.c:1024 src/main/eval.c:2120 src/main/eval.c:2129
+#: src/main/bind.c:1024 src/main/eval.c:2116 src/main/eval.c:2125
 #: src/main/objects.c:311 src/main/objects.c:363 src/main/objects.c:743
 #: src/main/objects.c:760 src/main/objects.c:767
 #, c-format
@@ -1276,7 +1276,7 @@ msgstr "矢量size设得太大了"
 #: src/main/envir.c:1792 src/main/envir.c:2463 src/main/envir.c:2522
 #: src/main/envir.c:2825 src/main/envir.c:2853 src/main/envir.c:2873
 #: src/main/envir.c:2895 src/main/envir.c:2929 src/main/envir.c:2949
-#: src/main/envir.c:3254 src/main/envir.c:3258 src/main/eval.c:3726
+#: src/main/envir.c:3254 src/main/envir.c:3258 src/main/eval.c:3722
 #: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2056
 #: src/main/saveload.c:2337 src/main/serialize.c:2244
 msgid "use of NULL environment is defunct"
@@ -1506,7 +1506,7 @@ msgstr "不能强迫改变非因子"
 msgid "list argument expected"
 msgstr "需要串列变元"
 
-#: src/main/coerce.c:1428 src/main/eval.c:3723 src/main/eval.c:3730
+#: src/main/coerce.c:1428 src/main/eval.c:3719 src/main/eval.c:3726
 msgid "invalid environment"
 msgstr "环境不对"
 
@@ -2447,7 +2447,7 @@ msgid "'opts' should be small non-negative integer"
 msgstr "'opts'必需是小的非负整数"
 
 #: src/main/deparse.c:363 src/main/envir.c:1634 src/main/envir.c:1716
-#: src/main/eval.c:423 src/main/eval.c:909 src/main/eval.c:2785
+#: src/main/eval.c:423 src/main/eval.c:909 src/main/eval.c:2781
 #: src/main/saveload.c:1964 src/main/saveload.c:2281 src/main/serialize.c:2262
 #, c-format
 msgid "object '%s' not found"
@@ -2910,7 +2910,7 @@ msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d所在的上下文出了错, 没有可以搜索的..."
 
 #: src/main/envir.c:1300 src/main/envir.c:1712 src/main/eval.c:427
-#: src/main/eval.c:2788
+#: src/main/eval.c:2784
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "缺少变元\"%s\",也没有缺省值"
@@ -3290,17 +3290,17 @@ msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr "评估嵌套太深：无穷递归/ options(expressions=)?"
 
-#: src/main/eval.c:417 src/main/eval.c:516 src/main/eval.c:1564
-#: src/main/eval.c:1626 src/main/eval.c:1681 src/main/eval.c:2003
-#: src/main/eval.c:3358 src/main/eval.c:3465
+#: src/main/eval.c:417 src/main/eval.c:516 src/main/eval.c:1569
+#: src/main/eval.c:1622 src/main/eval.c:1677 src/main/eval.c:1999
+#: src/main/eval.c:3354 src/main/eval.c:3461
 msgid "'...' used in an incorrect context"
 msgstr "'...'用在的上下文不对"
 
-#: src/main/eval.c:429 src/main/eval.c:2789
+#: src/main/eval.c:429 src/main/eval.c:2785
 msgid "argument is missing, with no default"
 msgstr "缺少变元, 也没有缺省值"
 
-#: src/main/eval.c:512 src/main/eval.c:3306
+#: src/main/eval.c:512 src/main/eval.c:3302
 msgid "attempt to apply non-function"
 msgstr "不适用于非函数"
 
@@ -3381,191 +3381,179 @@ msgstr "(do_set)赋值公式左手不对"
 msgid "invalid assignment left-hand side"
 msgstr "赋值公式左手不对"
 
-#: src/main/eval.c:1574
-#, c-format
-msgid ""
-"element %d is empty;\n"
-"   the part of the args list of a builtin being evaluated was:\n"
-"   %s"
-msgstr ""
-"%d元素是空的;\n"
-"   一部分内部函数变元串列评估为:\n"
-"   %s"
+#: src/main/eval.c:1573
+#, fuzzy, c-format
+msgid "argument %d is empty"
+msgstr "%d 元素是空的"
 
-#: src/main/eval.c:1578
+#: src/main/eval.c:1576
 #, c-format
-msgid ""
-"element %d is empty;\n"
-"   the part of the args list of '%s' being evaluated was:\n"
-"   %s"
+msgid "'%s' is missing"
 msgstr ""
-"%d元素是空的;\n"
-"   一部分'%s'变元串列评估为:\n"
-"   %s"
 
-#: src/main/eval.c:1712
+#: src/main/eval.c:1708
 msgid "invalid formal argument list for \"function\""
 msgstr "\"function\"正式变元串列不对"
 
-#: src/main/eval.c:1790
+#: src/main/eval.c:1786
 msgid "numeric 'envir' arg not of length one"
 msgstr "数值'envir'变元的长度不是一"
 
-#: src/main/eval.c:1812 src/main/eval.c:1831
+#: src/main/eval.c:1808 src/main/eval.c:1827
 msgid "restarts not supported in 'eval'"
 msgstr "'eval'不支持重新启动"
 
-#: src/main/eval.c:1896
+#: src/main/eval.c:1892
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall'在封閉包外调用"
 
-#: src/main/eval.c:1997
+#: src/main/eval.c:1993
 msgid "value in '...' is not a promise"
 msgstr "'... '里的值不是允諾"
 
-#: src/main/eval.c:2182 src/main/objects.c:734
+#: src/main/eval.c:2178 src/main/objects.c:734
 #, c-format
 msgid "call name too long in '%s'"
 msgstr "'%s'里调用的名字太长"
 
-#: src/main/eval.c:2203
+#: src/main/eval.c:2199
 #, c-format
 msgid "generic name too long in '%s'"
 msgstr "'%s'里的类属名字太长"
 
-#: src/main/eval.c:2266
+#: src/main/eval.c:2262
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "不可兼容的方法(\"%s\", \"%s\")和\"%s\""
 
-#: src/main/eval.c:2330
+#: src/main/eval.c:2326
 msgid "dispatch error in group dispatch"
 msgstr "组分派错误"
 
-#: src/main/eval.c:2712
+#: src/main/eval.c:2708
 msgid "node stack overflow"
 msgstr "节点堆叠上溢"
 
-#: src/main/eval.c:2718
+#: src/main/eval.c:2714
 msgid "integer stack overflow"
 msgstr "整数堆叠上溢"
 
-#: src/main/eval.c:2771
+#: src/main/eval.c:2767
 msgid "Bad opcode"
 msgstr "op代码不对"
 
-#: src/main/eval.c:2920
+#: src/main/eval.c:2916
 msgid "not a vector object"
 msgstr "非矢量对象"
 
-#: src/main/eval.c:2928 src/main/eval.c:2950 src/main/eval.c:2974
-#: src/main/eval.c:2998
+#: src/main/eval.c:2924 src/main/eval.c:2946 src/main/eval.c:2970
+#: src/main/eval.c:2994
 msgid "can only handle simple real vectors"
 msgstr "只能用简单的实数矢量"
 
-#: src/main/eval.c:2937 src/main/eval.c:2984
+#: src/main/eval.c:2933 src/main/eval.c:2980
 msgid "not a simple vector"
 msgstr "非简单矢量"
 
-#: src/main/eval.c:2954 src/main/eval.c:3002 src/main/subassign.c:975
+#: src/main/eval.c:2950 src/main/eval.c:2998 src/main/subassign.c:975
 #: src/main/subset.c:809
 msgid "incorrect number of subscripts"
 msgstr "下标数目不对"
 
-#: src/main/eval.c:2965 src/main/eval.c:3016
+#: src/main/eval.c:2961 src/main/eval.c:3012
 msgid "not a simple matrix"
 msgstr "非简单矩阵"
 
-#: src/main/eval.c:3053
+#: src/main/eval.c:3049
 msgid "bytecode version mismatch; using eval"
 msgstr "位元組碼版本不配; 用eval"
 
-#: src/main/eval.c:3058
+#: src/main/eval.c:3054
 msgid "bytecode version is too old"
 msgstr "位元組碼版本太旧"
 
-#: src/main/eval.c:3059
+#: src/main/eval.c:3055
 msgid "bytecode version is too new"
 msgstr "位元組碼版本太新"
 
-#: src/main/eval.c:3064
+#: src/main/eval.c:3060
 msgid "byte code version mismatch"
 msgstr "位元組碼版本不配"
 
-#: src/main/eval.c:3080
+#: src/main/eval.c:3076
 msgid "missing value where logical needed"
 msgstr "需要逻辑值的地方不能用缺少值"
 
-#: src/main/eval.c:3081
+#: src/main/eval.c:3077
 msgid "argument of if(*) is not interpretable as logical"
 msgstr "if(*)的变元不能作为逻辑值来用"
 
-#: src/main/eval.c:3115
+#: src/main/eval.c:3111
 msgid "invalid sequence argument in for loop"
 msgstr "循环里的顺序变元不对"
 
-#: src/main/eval.c:3268 src/main/eval.c:3289 src/main/eval.c:3403
+#: src/main/eval.c:3264 src/main/eval.c:3285 src/main/eval.c:3399
 msgid "not a BUILTIN function"
 msgstr "非BUILTIN函数"
 
-#: src/main/eval.c:3389
+#: src/main/eval.c:3385
 msgid "bad function"
 msgstr "函数不对"
 
-#: src/main/eval.c:3429
+#: src/main/eval.c:3425
 msgid "not a SPECIAL function"
 msgstr "非SPECIAL函数"
 
-#: src/main/eval.c:3663
+#: src/main/eval.c:3659
 msgid "cannot find index for threaded code address"
 msgstr "找不到线程代码地址的索引"
 
-#: src/main/eval.c:3743
+#: src/main/eval.c:3739
 msgid "invalid symbol"
 msgstr "符号不对"
 
-#: src/main/eval.c:3787
+#: src/main/eval.c:3783
 msgid "argument is not a byte code object"
 msgstr "变元不是位元组码对象"
 
-#: src/main/eval.c:3808
+#: src/main/eval.c:3804
 msgid "bad file name"
 msgstr "文件名字不对"
 
-#: src/main/eval.c:3812 src/main/eval.c:3833
+#: src/main/eval.c:3808 src/main/eval.c:3829
 msgid "unable to open 'file'"
 msgstr "无法打开'file'"
 
-#: src/main/eval.c:3827 src/main/saveload.c:1928
+#: src/main/eval.c:3823 src/main/saveload.c:1928
 msgid "'file' must be non-empty string"
 msgstr "'file'必需是非空字符串"
 
-#: src/main/eval.c:3829 src/main/saveload.c:1930 src/main/saveload.c:2220
+#: src/main/eval.c:3825 src/main/saveload.c:1930 src/main/saveload.c:2220
 #: src/main/serialize.c:1788
 msgid "'ascii' must be logical"
 msgstr "'ascii’必需是逻辑值"
 
-#: src/main/eval.c:3858 src/main/eval.c:3865
+#: src/main/eval.c:3854 src/main/eval.c:3861
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: 缓冲区太小"
 
-#: src/main/eval.c:3898
+#: src/main/eval.c:3894
 msgid "code must be a generic vector"
 msgstr "代码必需是矢量类属"
 
-#: src/main/eval.c:3937
+#: src/main/eval.c:3933
 msgid "profile timer in use"
 msgstr "程序概要分析计时器在运行中"
 
-#: src/main/eval.c:3939
+#: src/main/eval.c:3935
 msgid "already byte code profiling"
 msgstr "已经在进行位元组码程序概要分析"
 
-#: src/main/eval.c:3957
+#: src/main/eval.c:3953
 msgid "setting profile timer failed"
 msgstr "程序概要分析计时器设制失败"
 
-#: src/main/eval.c:3974
+#: src/main/eval.c:3970
 msgid "not byte code profiling"
 msgstr "非位元组码程序概要分析"
 
@@ -4530,32 +4518,32 @@ msgstr "'which'必需是长度为一的逻辑矢量"
 msgid "use 'is()' instead of 'inherits()' on S4 objects"
 msgstr "对S4目标对象请用'is()'而不是'inherits()'"
 
-#: src/main/objects.c:1015
+#: src/main/objects.c:1020
 #, c-format
 msgid "unable to find a non-generic version of function \"%s\""
 msgstr "无法找到函数\"%s\"非类属的版本"
 
-#: src/main/objects.c:1043
+#: src/main/objects.c:1048
 msgid ""
 "standardGeneric called without methods dispatch enabled (will be ignored)"
 msgstr "方法分派没有激活，因此不能调用standardGeneric(略过不用)"
 
-#: src/main/objects.c:1052
+#: src/main/objects.c:1057
 msgid "argument to standardGeneric must be a non-empty character string"
 msgstr "standardGeneric的变元必需是非空字符串"
 
-#: src/main/objects.c:1057
+#: src/main/objects.c:1062
 #, c-format
 msgid ""
 "call to standardGeneric(\"%s\") apparently not from the body of that generic "
 "function"
 msgstr "不能从非同屬函数体内调用standardGeneric(\"%s\") "
 
-#: src/main/objects.c:1080
+#: src/main/objects.c:1085
 msgid "argument 'code' must be a character string"
 msgstr "变元'code'必需是字符串"
 
-#: src/main/objects.c:1147
+#: src/main/objects.c:1152
 #, c-format
 msgid ""
 "invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", "
@@ -4563,59 +4551,59 @@ msgid ""
 msgstr ""
 "原始方法代码(\"%s\")有错：应该是\"clear\", \"reset\", \"set\", 或\"suppress\""
 
-#: src/main/objects.c:1155
+#: src/main/objects.c:1160
 msgid "invalid object: must be a primitive function"
 msgstr "对象不对: 必需是原始函数"
 
-#: src/main/objects.c:1202
+#: src/main/objects.c:1207
 #, c-format
 msgid ""
 "the formal definition of a primitive generic must be a function object (got "
 "type '%s')"
 msgstr "原始同属函数的正式定义必需是函数对象(不能是'%s'类)"
 
-#: src/main/objects.c:1232
+#: src/main/objects.c:1237
 #, c-format
 msgid "object returned as generic function \"%s\" doesn't appear to be one"
 msgstr ""
 
-#: src/main/objects.c:1330
+#: src/main/objects.c:1335
 msgid "invalid primitive operation given for dispatch"
 msgstr "不能分派原始运算"
 
-#: src/main/objects.c:1356 src/main/objects.c:1375
+#: src/main/objects.c:1361 src/main/objects.c:1380
 msgid "dispatch error"
 msgstr "分派错误"
 
-#: src/main/objects.c:1369
+#: src/main/objects.c:1374
 #, c-format
 msgid ""
 "primitive function \"%s\" has been set for methods but no generic function "
 "supplied"
 msgstr "原始函数\"%s\"有了设定的方法，但却没有同属函数 "
 
-#: src/main/objects.c:1394
+#: src/main/objects.c:1399
 msgid "C level MAKE_CLASS macro called with NULL string pointer"
 msgstr "调用C层的MAKE_TYPE宏时不能用NULL字符串指针"
 
-#: src/main/objects.c:1410
+#: src/main/objects.c:1415
 msgid "R_getClassDef(.) called with NULL string pointer"
 msgstr "调用R_getClassDef(.) 时不能用NULL字符串指针"
 
-#: src/main/objects.c:1430
+#: src/main/objects.c:1435
 msgid "C level NEW macro called with null class definition pointer"
 msgstr "调用C级的NEW宏时不能用null类别定义指针"
 
-#: src/main/objects.c:1434
+#: src/main/objects.c:1439
 #, c-format
 msgid "trying to generate an object from a virtual class (\"%s\")"
 msgstr "无法从虚拟类别(\"%s\")中产生对象"
 
-#: src/main/objects.c:1479
+#: src/main/objects.c:1484
 msgid "'R_get_primname' called on a non-primitive"
 msgstr "'R_get_primname'不能调用于非原始函数"
 
-#: src/main/objects.c:1509
+#: src/main/objects.c:1514
 #, c-format
 msgid "Object of class \"%s\" does not correspond to a valid S3 object"
 msgstr "类别为\"%s\"的目标对象没有对应于有效的S3目标对象"
@@ -6787,61 +6775,61 @@ msgstr "本系统没有实现setSessionTimelimit()"
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "本平台不支持'dirmark = TRUE'"
 
-#: src/main/unique.c:290
+#: src/main/unique.c:292
 #, c-format
 msgid "length %d is too large for hashing"
 msgstr "雜亂定址法的长度%d太大了"
 
-#: src/main/unique.c:389
+#: src/main/unique.c:391
 msgid "'duplicated' applies only to vectors"
 msgstr "'duplicated'只适用于矢量"
 
-#: src/main/unique.c:469
+#: src/main/unique.c:476
 msgid "any_duplicated3(., <0-length incomp>)"
 msgstr "any_duplicated3(., <0-length incomp>)"
 
-#: src/main/unique.c:523
+#: src/main/unique.c:530
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr "%s()只适用于矢量"
 
-#: src/main/unique.c:757
+#: src/main/unique.c:765
 msgid "'match' requires vector arguments"
 msgstr "'match'需要矢量变元"
 
-#: src/main/unique.c:804 src/main/unique.c:933
+#: src/main/unique.c:812 src/main/unique.c:941
 msgid "argument is not of mode character"
 msgstr "变元不是字符状态"
 
-#: src/main/unique.c:1037
+#: src/main/unique.c:1045
 msgid "... used in a situation where it doesn't exist"
 msgstr "... 用在它不存在的地方了"
 
-#: src/main/unique.c:1128
+#: src/main/unique.c:1136
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr "找不到调用'match.call'的闭合"
 
-#: src/main/unique.c:1285
+#: src/main/unique.c:1293
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr "rowsum()里出现了非数值矩阵：这不应该发生"
 
-#: src/main/unique.c:1319
+#: src/main/unique.c:1327
 msgid "non-numeric data frame in rowsum"
 msgstr "rowsum里不能有非数值数据框"
 
-#: src/main/unique.c:1345
+#: src/main/unique.c:1353
 msgid "this cannot happen"
 msgstr "这不应该发生"
 
-#: src/main/unique.c:1399
+#: src/main/unique.c:1408
 msgid "'names' must be a character vector"
 msgstr "'names'必需是字符矢量"
 
-#: src/main/unique.c:1403
+#: src/main/unique.c:1412
 msgid "'sep' must be a character string"
 msgstr "'sep'必需是字符串"
 
-#: src/main/unique.c:1482
+#: src/main/unique.c:1491
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated不能调用在STRSXP上"
 
@@ -7892,6 +7880,24 @@ msgstr "无法载入X11模块"
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
 
+#~ msgid ""
+#~ "element %d is empty;\n"
+#~ "   the part of the args list of a builtin being evaluated was:\n"
+#~ "   %s"
+#~ msgstr ""
+#~ "%d元素是空的;\n"
+#~ "   一部分内部函数变元串列评估为:\n"
+#~ "   %s"
+
+#~ msgid ""
+#~ "element %d is empty;\n"
+#~ "   the part of the args list of '%s' being evaluated was:\n"
+#~ "   %s"
+#~ msgstr ""
+#~ "%d元素是空的;\n"
+#~ "   一部分'%s'变元串列评估为:\n"
+#~ "   %s"
+
 #~ msgid "'...' not allowed in return"
 #~ msgstr "回覆值里不能有'...'"
 
@@ -8320,9 +8326,6 @@ msgstr "没有X11平台这一功能"
 
 #~ msgid "\\Uxxxxxxxx sequences are only valid in multibyte locales"
 #~ msgstr "\\Uxxxxxxxx这样的序列只在多字节的地点有用"
-
-#~ msgid "element %d is empty"
-#~ msgstr "%d 元素是空的"
 
 #~ msgid "failed to find symbols in iconv.dll"
 #~ msgstr "iconv.dll里找不到符号"

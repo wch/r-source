@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-07 07:59\n"
+"POT-Creation-Date: 2009-12-14 12:34\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1009,11 +1009,9 @@ msgstr "不能改变因子的存储状态"
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s'不是'namespace:%s'内的出口对象："
 
-msgid "package '%s' has no name space and"
+#, fuzzy
+msgid "package %s has no name space and is not on the search path"
 msgstr "程辑包'%s'没有名字空间"
-
-msgid "is not on the search path"
-msgstr "'%s'不在搜索路径上"
 
 msgid "name space is already attached"
 msgstr "已经连接上名字空间了"
@@ -1051,26 +1049,26 @@ msgstr "程辑包'%s'没有名字空间"
 #, fuzzy
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
-"'%s'"
+"%s"
 msgstr "虽然exportClassPattern有设定但它与%s中的类别不配"
 
 #, fuzzy
-msgid "in package '%s' classes for export not defined: %s"
+msgid "in package %s classes %s were specified for export but not defined"
 msgstr "用于出口的'%s'类别不存在：%s"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "用于出口的'%s'方法不存在：%s "
 
-msgid "Multiple methods tables found for '"
+#, fuzzy
+msgid "multiple methods tables found for %s"
 msgstr "存在多个方法串列为'"
 
-msgid "'"
-msgstr "'"
-
-msgid "Failed to find metadata object for \"%s\""
+#, fuzzy
+msgid "failed to find metadata object for %s"
 msgstr "找不到关于\"%s\"的隐喻数据对象"
 
-msgid "in '%s' methods specified for export, but none defined: %s"
+#, fuzzy
+msgid "in package %s methods %s were specified for export but not defined"
 msgstr "用于出口的'%s'方法有设定，但没有定義：%s "
 
 msgid "not found"
@@ -1116,10 +1114,12 @@ msgstr "进口目标有错"
 msgid "got invalid index for importing"
 msgstr "进口输入时得到的索引无效"
 
-msgid "Found methods to import for function \"%s\" but not the generic itself"
+#, fuzzy
+msgid "found methods to import for function %s but not the generic itself"
 msgstr "\"%s\"函数有可进口方法，但找不到函数用的方法"
 
-msgid "requested 'methods' objects not found in environment/package '%s': %s"
+#, fuzzy
+msgid "requested methods not found in environment/package %s: %s"
 msgstr "没有在环境/程辑包'%s': %s里找到所要求的'methods'对象"
 
 msgid "cannot add to exports of a sealed name space"
@@ -1134,14 +1134,9 @@ msgstr "程辑包'%s' 没有NAMESPACE这一文件"
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "NAMESPACE文件里'%s'指示中有空的名字"
 
-msgid "duplicated symbol names"
+#, fuzzy
+msgid "duplicated symbol names %s in useDynlib(\"%s\")"
 msgstr "重复字符名字"
-
-msgid "in useDynLib("
-msgstr "在useDynLib("
-
-msgid ")"
-msgstr ")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "不是'S3method'指令：%s"
@@ -1152,8 +1147,9 @@ msgstr "'S3method'指令太多"
 msgid "unknown namespace directive: %s"
 msgstr "未知名字空间指令：%s"
 
-msgid "S3 method '%s' was declared in NAMESPACE but not found"
-msgstr "S3方法'%s'在NAMESPACE里有声明但不存在"
+#, fuzzy
+msgid "S3 method %s was declared but not found"
+msgstr "S3方法%s在NAMESPACE里有声明但不存在"
 
 msgid "bad method"
 msgstr "方法有错"
@@ -1161,7 +1157,8 @@ msgstr "方法有错"
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "在载入名字空间的时候没有找到'%s'对象"
 
-msgid "found an S4 version of '%s' so it has not been imported correctly"
+#, fuzzy
+msgid "found an S4 version of %s so it has not been imported correctly"
 msgstr "找到了'%s' 的S4版本，因此它没有被正确地被进口"
 
 msgid "'%s' is not implemented yet"
@@ -1535,8 +1532,14 @@ msgid "object %s not found"
 msgid_plural "objects %s not found"
 msgstr[0] "目标对象%s不存在"
 
-msgid "object '%s' is not exported by 'namespace:%s'"
-msgid_plural "objects '%s' are not exported by 'namespace:%s'"
+#, fuzzy
+msgid "class %s is not exported by 'namespace:%s'"
+msgid_plural "classes %s are not exported by 'namespace:%s'"
+msgstr[0] "'namespace:%2$s'没有出口'%1$s'这个对象"
+
+#, fuzzy
+msgid "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
 msgstr[0] "'namespace:%2$s'没有出口'%1$s'这个对象"
 
 msgid "previous export '%s' is being replaced"
@@ -1550,6 +1553,21 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "is not on the search path"
+#~ msgstr "'%s'不在搜索路径上"
+
+#~ msgid "'"
+#~ msgstr "'"
+
+#~ msgid "in useDynLib("
+#~ msgstr "在useDynLib("
+
+#~ msgid ")"
+#~ msgstr ")"
+
+#~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
+#~ msgstr "S3方法'%s'在NAMESPACE里有声明但不存在"
 
 #~ msgid "invalid name"
 #~ msgstr "名字不对"
