@@ -1,5 +1,5 @@
 
-R version 2.10.0 Under development (unstable) (2009-08-27 r49475)
+R version 2.10.1 RC (2009-12-06 r50688)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -562,8 +562,9 @@ Creating a new generic function for "as.vector" in ".GlobalEnv"
 [1] "as.vector"
 > ## whereas this fails in R versions earlier than 2.6.0:
 > setMethod("as.vector", "foo", function(x) unclass(x))# gives message
-In method for function "as.vector": expanding the signature to
-include omitted arguments in definition: mode = "missing"
+Note: in method for 'as.vector' with signature 'x="foo"': expanding
+the signature to include omitted arguments in definition: mode =
+"missing"
 [1] "as.vector"
 > 
 > ## stats4::AIC in R < 2.7.0 used to clobber stats::AIC
@@ -720,16 +721,16 @@ include omitted arguments in definition: mode = "missing"
 > setGeneric("order", signature="...",
 + 	   function (..., na.last=TRUE, decreasing=FALSE)
 + 	   standardGeneric("order"))
-Creating a generic for "order" in package  ".GlobalEnv"
+Creating a generic for 'order' in package '.GlobalEnv'
     (the supplied definition differs from and overrides the implicit generic
-    in package "base": Signatures differ:  (...), (na.last, decreasing))
+    in package 'base': Signatures differ:  (...), (na.last, decreasing))
 [1] "order"
 > stopifnot(identical(rbind(1), matrix(1,1,1)))
 > setGeneric("rbind", function(..., deparse.level=1)
 + 	   standardGeneric("rbind"), signature = "...")
-Creating a generic for "rbind" in package  ".GlobalEnv"
+Creating a generic for 'rbind' in package '.GlobalEnv'
     (the supplied definition differs from and overrides the implicit generic
-    in package "base": Signatures differ:  (...), (deparse.level))
+    in package 'base': Signatures differ:  (...), (deparse.level))
 [1] "rbind"
 > stopifnot(identical(rbind(1), matrix(1,1,1)))
 > ## gave Error in .Method( .... in R 2.8.0
