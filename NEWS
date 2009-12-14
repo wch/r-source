@@ -21,6 +21,8 @@ BUG FIXES
     o	Using read.table(header=TRUE) on a header with an embedded new
     	line would copy part of the header into the data.  (PR#14103)
 
+    o	qpois(p = 1, lambda = 0) now gives 0 as for all other p.  (PR#14135)
+
 
 
 		CHANGES IN R VERSION 2.10.1
