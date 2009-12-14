@@ -1232,7 +1232,8 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
             delayedAssign(x, get(method, envir = home), assign.env = envir)
         }
         if(!exists(method, envir = envir)) {
-            warning(gettextf("S3 method %s was declared in NAMESPACE but not found",
+            ## need to avoid conflict with message at l.1298
+            warning(gettextf("S3 method %s was declared but not found",
                              sQuote(method)), call. = FALSE)
         } else {
 	    assignWrapped(paste(genname, class, sep = "."), method, home = envir,
