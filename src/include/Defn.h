@@ -979,7 +979,7 @@ int any_duplicated3(SEXP, SEXP, Rboolean);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
 int envlength(SEXP);
-SEXP evalList(SEXP, SEXP, SEXP);
+SEXP evalList(SEXP, SEXP, SEXP, int);
 SEXP evalListKeepMissing(SEXP, SEXP);
 int factorsConform(SEXP, SEXP);
 void findcontext(int, SEXP, SEXP);

@@ -442,12 +442,12 @@ matchSignature <-
         unknown <- !sapply(sigClasses, function(x, where)isClass(x, where=where), where = where)
         if(any(unknown)) {
             unknown <- unique(sigClasses[unknown])
-            warning(sprintf(ngettext(length(unknown),
-                                     "in the method signature for function \"%s\" no definition for class: %s",
-                                     "in the method signature for function \"%s\" no definition for classes: %s"),
-                            fun@generic,
-                            paste(dQuote(unknown), collapse = ", ")),
-                    domain = NA)
+            warning(.renderSignature(fun@generic, signature),
+                    sprintf(ngettext(length(unknown),
+                                     "no definition for class %s",
+                                     "no definition for classes %s"),
+                            paste(.dQ(unknown), collapse = ", ")),
+                    call. = FALSE, domain = NA)
         }
     }
     signature <- as.list(signature)

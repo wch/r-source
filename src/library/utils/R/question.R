@@ -98,8 +98,12 @@ topicName <- function(type, topic)
         paste(paste(topic, collapse = ","), type, sep = "-")
 }
 
-.helpForCall <- function(expr, envir, doEval = TRUE) {
-    f <- expr[[1L]]                      # the function specifier
+.helpForCall <- function(expr, envir, doEval = TRUE)
+{
+    ## want ASCII quotes, not fancy nor translated ones
+    dQ <- function (x) paste('"', x, '"', sep = '')
+
+    f <- expr[[1L]]                     # the function specifier
     where <- topenv(envir)              # typically .GlobalEnv
     if(is.name(f))
         f <- as.character(f)
@@ -153,18 +157,18 @@ topicName <- function(type, topic)
         if(methods::is(method, "MethodDefinition")) {
             sigClasses <- method@defined
             if(length(sigClasses) < length(sigNames))
-              sigClasses<- c(sigClasses, rep("ANY", length(sigNames)-length(sigClasses)))
+                sigClasses<- c(sigClasses, rep("ANY", length(sigNames)-length(sigClasses)))
         }
         else
             warning(gettextf("no method defined for function '%s' and signature '%s'",
-                             f, paste(sigNames, " = ", dQuote(sigClasses),
+                             f, paste(sigNames, " = ", dQ(sigClasses),
                                       sep = "", collapse = ", ")), domain = NA)
         topic <- topicName("method", c(f,sigClasses))
         h <- .tryHelp(topic)
         if(methods::is(h, "try-error"))
             stop(gettextf("no documentation for function '%s' and signature '%s'",
-                 f, paste(sigNames, " = ", dQuote(sigClasses), sep = "",
-                          collapse = ", ")), domain = NA)
+                          f, paste(sigNames, " = ", dQ(sigClasses), sep = "",
+                                   collapse = ", ")), domain = NA)
     }
 }
 

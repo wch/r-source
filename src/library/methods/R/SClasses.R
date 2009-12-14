@@ -67,7 +67,7 @@ setClass <-
             }
           }
         if(length(badContains)) {
-            msg <- paste(dQuote(badContains), collapse = ", ")
+            msg <- paste(.dQ(badContains), collapse = ", ")
             if(is(try(removeClass(Class, where)), "try-error"))
                 stop(gettextf("error in contained classes (%s) for class \"%s\" and unable to remove definition from \"%s\"",
                               msg, Class, getPackageName(where)), domain = NA)
@@ -112,7 +112,7 @@ representation <-
     includes <- as.character(value[!nzchar(anames)])
     if(anyDuplicated(includes))
         stop(gettextf("duplicate class names among superclasses: %s",
-                      paste(dQuote(includes[duplicated(includes)]),
+                      paste(.dQ(includes[duplicated(includes)]),
                             collapse = ", ")),
              domain = NA)
     slots <- anames[nzchar(anames)]

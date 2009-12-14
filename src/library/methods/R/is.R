@@ -182,8 +182,10 @@ setIs <-
     if(length(whereIs))
       whereIs[[1L]]
     else {
-        warning(gettextf("Class \"%s\" is defined (with package slot \"%s\") but no metadata object found to revise %s information---not exported?  Making a copy in package \"%s\"",
-                 class, classDef@package, purpose, getPackageName(where, FALSE)), domain = NA)
+        warning(gettextf("Class %s is defined (with package slot %s) but no metadata object found to revise %s information---not exported?  Making a copy in package %s",
+                         .dQ(class), sQuote(classDef@package), purpose,
+                         sQuote(getPackageName(where, FALSE))),
+                call. = FALSE, domain = NA)
         where
     }
 }
@@ -233,4 +235,4 @@ setIs <-
     }
     contains
 }
-        
+

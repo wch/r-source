@@ -424,14 +424,15 @@ loadNamespace <- function (package, lib.loc = NULL,
             pClasses <- unique(pClasses)
             if( length(pClasses) ) {
                 good <- sapply(pClasses, methods:::isClass, where = ns)
-                if( !any(good) ) warning(gettextf("exportClassPattern specified but no matching classes in %s", package))
+                if( !any(good) )
+                    warning(gettextf("exportClassPattern specified in NAMESPACE but no matching classes in package '%s'", package))
                 expClasses <- c(expClasses, pClasses[good])
             }
             if(length(expClasses)) {
                 missingClasses <-
                     !sapply(expClasses, methods:::isClass, where = ns)
                 if(any(missingClasses))
-                    stop(gettextf("in '%s' classes for export not defined: %s",
+                    stop(gettextf("in package '%s' classes for export not defined: %s",
                                   package,
                                   paste(expClasses[missingClasses],
                                         collapse = ", ")),
@@ -784,7 +785,7 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
                                                  package = packages[[i]])
 		    if(is.null(fdef))
 			warning(gettextf("Found methods to import for function \"%s\" but not the generic itself",
-					 genName))
+					 genName), call. = FALSE)
 		    else
 			methods:::.updateMethodsInTable(fdef, ns, TRUE)
 		}

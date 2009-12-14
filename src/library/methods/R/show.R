@@ -152,7 +152,7 @@ classLabel <- function(Class) {
             className <- Class@className
             packageName <- Class@package
         }
-        else stop(gettextf("invalid call to 'classLabel': expected a name or a class definition, got an object of class \"%s\"", classLabel(class(Class))), domain = NA)
+        else stop(gettextf("invalid call to 'classLabel': expected a name or a class definition, got an object of class %s", classLabel(class(Class))), domain = NA)
     }
 ### TODO:  implement a test for the class NOT directly visible OR multiple versions
 ### and include the from... phrase in this case
@@ -164,5 +164,5 @@ classLabel <- function(Class) {
 #         className <- paste("\"", className, "\"", fromString, sep="")
 #     }
 #     else
-    dQuote(className)
+    .dQ(className)
 }

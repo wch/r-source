@@ -48,7 +48,7 @@ setGeneric <-
         ## you can only conflict with a primitive if you supply
         ## useAsDefault to signal you really mean a different function
         if(!is.function(useAsDefault) && !identical(useAsDefault, FALSE)) {
-            msg <- gettextf("\"%s\" is a primitive function;  methods can be defined, but the generic function is implicit, and cannot be changed.", name)
+            msg <- gettextf("%s is a primitive function;  methods can be defined, but the generic function is implicit, and cannot be changed.", sQuote(name))
             stop(msg, domain = NA)
         }
     }
@@ -142,23 +142,25 @@ setGeneric <-
                 ## choose the implicit unless an explicit def was given
                 if(is.null(def) && is.null(signature)) {
                     message(gettextf(
-                       "Restoring the implicit generic function for \"%s\" from package \"%s\"\n    into package \"%s\"; the generic differs from the default conversion (%s)",
-                                     name, package, thisPackage, cmp), domain = NA)
+                       "Restoring the implicit generic function for %s from package %s\n    into package %s; the generic differs from the default conversion (%s)",
+                                     sQuote(name), sQuote(package),
+                                     sQuote(thisPackage), cmp), domain = NA)
                     fdef <- implicit
                 }
                 else {
                     message(gettextf(
-                         "Creating a generic for \"%s\" in package \"%s\"\n    (the supplied definition differs from and overrides the implicit generic\n    in package \"%s\": %s)",
-                                 name,  thisPackage, package,
-                                 cmp),
+                         "Creating a generic for %s in package %s\n    (the supplied definition differs from and overrides the implicit generic\n    in package %s: %s)",
+                                     sQuote(name), sQuote(thisPackage),
+                                     sQuote(package), cmp),
                         domain = NA)
                     fdef@package <- attr(fdef@generic, "package") <- thisPackage
                 }
             }
             else { # generic prohibited
                 warning(gettextf(
-			"No generic version of \"%s\" on package \"%s\" is allowed;\n   a new generic will be assigned with package \"%s\"",
-                                 name, package, thisPackage),
+			"No generic version of %s on package %s is allowed;\n   a new generic will be assigned with package %s",
+                                 sQuote(name), sQuote(package),
+                                 sQuote(thisPackage)),
                         domain = NA)
                 fdef@package <- attr(fdef@generic, "package") <- thisPackage
             }
@@ -296,8 +298,8 @@ getMethods <-
         f <- fdef@generic
     }
     else
-        stop(gettextf("invalid argument \"f\", expected a function or its name, got an object of class \"%s\"",
-                      class(f)), domain = NA)
+        stop(gettextf("invalid argument 'f', expected a function or its name, got an object of class %s",
+                      .dQ(class(f))), domain = NA)
     if(!is.null(fdef)) {
         value <-
             if(nowhere) {
@@ -567,7 +569,7 @@ removeMethod <- function(f, signature = character(), where = topenv(parent.frame
     if(is.null(getMethod(fdef, signature, optional=TRUE))) {
         warning(gettextf("no method found for function \"%s\" and signature %s",
                          fdef@generic,
-                         paste(dQuote(signature), collapse =", ")),
+                         paste(.dQ(signature), collapse =", ")),
                 domain = NA)
         return(FALSE)
     }
@@ -1314,7 +1316,9 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
     value
 }
 
-.identicalGeneric <- function(f1, f2) {
+## only called from setGeneric, f1 = supplied, f2 = implicit
+.identicalGeneric <- function(f1, f2)
+{
     gpString <- function(gp) {
 	if(length(gp))
 	    paste(as.character(gp), collapse = ", ")
@@ -1322,44 +1326,49 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 	    "<none>"
     }
     if(identical(f2, FALSE))
-	return("Original function is prohibited as a generic function")
+	return(gettext("Original function is prohibited as a generic function"))
     if(!(is.function(f2) && is.function(f1)))
-	return("not both functions!")
+	return(gettext("not both functions!"))
     if(isS4(f2))
 	f2d <- f2@.Data
     if(isS4(f1))
 	f1d <- f1@.Data
     ## environments will be different
     if(!identical(class(f1), class(f2)))
-	return(sprintf("Classes: \"%s\", \"%s\"", class(f1), class(f2)))
+	return(gettextf("Classes: %s, %s",
+                        .dQ(class(f1)), .dQ(class(f2))))
     if(!identical(formals(f1d), formals(f2d))) {
 	a1 <- names(formals(f1d)); a2 <- names(formals(f2d))
 	if(identical(a1, a2))
-	    return("Formal arguments differ (in default values?)")
+	    return(gettext("Formal arguments differ (in default values?)"))
 	else
-	    return(sprintf("Formal arguments differ: (%s), (%s)",
-			   paste(a1, collapse = ", "), paste(a2, collapse = ", ")))
+	    return(gettextf("Formal arguments differ: (%s), (%s)",
+                            paste(a1, collapse = ", "),
+                            paste(a2, collapse = ", ")))
     }
     if(!identical(f1@valueClass, f2@valueClass))
-	return(sprintf("Value classes differ: \"%s\", \"%s\"",
-		       gpString(f1@valueClass), gpString(f2@valueClass)))
+	return(gettextf("Value classes differ: %s, %s",
+                        .dQ(gpString(f1@valueClass)),
+                        .dQ(gpString(f2@valueClass))))
     if(!identical(body(f1d), body(f2d)))
 	return("Function body differs")
     if(!identical(f1@signature, f2@signature))
-	return(sprintf("Signatures differ:  (%s), (%s)",
-		       paste(f1@signature, collapse = ", "),
-		       paste(f2@signature, collapse = ", ")))
+	return(gettextf("Signatures differ:  (%s), (%s)",
+                        paste(f1@signature, collapse = ", "),
+                        paste(f2@signature, collapse = ", ")))
     if(!identical(f1@package, f2@package))
-	return(sprintf("Package slots  differ: \"%s\", \"%s\"",
-		       gpString(f1@package), gpString(f2@package)))
+	return(gettextf("Package slots  differ: %s, %s",
+                        .dQ(gpString(f1@package)),
+                        .dQ(gpString(f2@package))))
     if(!identical(f1@group, f2@group)) {
-	return(sprintf("Groups differ: \"%s\", \"%s\"",
-		       gpString(f1@group), gpString(f2@group)))
+	return(gettextf("Groups differ: %s, %s",
+                        .dQ(gpString(f1@group)),
+                        .dQ(gpString(f2@group))))
     }
     if(!identical(as.character(f1@generic), as.character(f2@generic)))
-	return(sprintf("Generic names differ: \"%s\", \"%s\"",
-		       f1@generic, f2@generic))
-    return(TRUE)
+	return(gettextf("Generic names differ: %s, %s",
+                        .dQ(f1@generic), .dQ(f2@generic)))
+    TRUE
 }
 
 .ImplicitGroupMetaName <- ".__IGM__table"
