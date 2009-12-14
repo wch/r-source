@@ -6,6 +6,23 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.10.1 patched
+
+
+NEW FEATURES
+
+    o	The handling of line textures in the postscript() and pdf()
+	devices was set up for round end caps (the only type which
+	existed at the time): it has now been adjusted for butt endcaps.
+
+
+BUG FIXES
+
+    o	Using read.table(header=TRUE) on a header with an embedded new
+    	line would copy part of the header into the data.  (PR#14103)
+
+
+
 		CHANGES IN R VERSION 2.10.1
 
 
@@ -189,6 +206,7 @@ BUG FIXES
 
     o	switch(EXPR = "A")  now returns NULL, as switch(1) {which used to
 	signal an error}.
+
 
 
 		CHANGES IN R VERSION 2.10.0
