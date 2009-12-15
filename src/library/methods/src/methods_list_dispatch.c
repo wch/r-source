@@ -837,18 +837,18 @@ static SEXP do_inherited_table(SEXP class_objs, SEXP fdef, SEXP mtable, SEXP ev)
 
 static SEXP dots_class(SEXP ev, int *checkerrP)
 {
-    static SEXP dotFind = NULL, f, R_dots; SEXP  e, ee;
-    if(dotFind == NULL) {
+    static SEXP call = NULL; SEXP  e, ee;
+    if(call == NULL) {
+	SEXP dotFind, f, R_dots;
 	dotFind = install(".dotsClass");
 	f = findFun(dotFind, R_MethodsNamespace);
 	R_dots = install("...");
+	call = allocVector(LANGSXP, 2);
+	R_PreserveObject(call);
+	SETCAR(call,f); ee = CDR(call);
+	SETCAR(ee, R_dots);
     }
-    PROTECT(e = allocVector(LANGSXP, 2));
-    SETCAR(e,f); ee = CDR(e);
-    SETCAR(ee, R_dots);
-    ee = R_tryEval(e, ev, checkerrP);
-    UNPROTECT(1);
-    return ee;
+    return R_tryEval(call, ev, checkerrP);
 }
 
 static SEXP do_mtable(SEXP fdef, SEXP ev)
