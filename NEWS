@@ -222,8 +222,6 @@ BUG FIXES
         the method definition but conforming (per the documentation)
         should now be ignored (treated as "ANY") in dispatching.
 
-    o	x[ , drop=TRUE] dropped an NA level, even if it was in use.
-
 
 
 
@@ -255,6 +253,8 @@ BUG FIXES
 	could cause crashes when used with strings not in the native
 	encoding, e.g. UTF-8 strings on Windows.
 	(PR#14114 and PR#14125)
+
+    o	x[ , drop=TRUE] dropped an NA level even if it was in use.
 
 
 
