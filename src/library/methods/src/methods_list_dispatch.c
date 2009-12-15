@@ -835,6 +835,22 @@ static SEXP do_inherited_table(SEXP class_objs, SEXP fdef, SEXP mtable, SEXP ev)
     return ee;
 }
 
+static SEXP dots_class(SEXP ev, int *checkerrP)
+{
+    static SEXP dotFind = NULL, f, R_dots; SEXP  e, ee;
+    if(dotFind == NULL) {
+	dotFind = install(".dotsClass");
+	f = findFun(dotFind, R_MethodsNamespace);
+	R_dots = install("...");
+    }
+    PROTECT(e = allocVector(LANGSXP, 2));
+    SETCAR(e,f); ee = CDR(e);
+    SETCAR(ee, R_dots);
+    ee = R_tryEval(e, ev, checkerrP);
+    UNPROTECT(1);
+    return ee;
+}
+
 static SEXP do_mtable(SEXP fdef, SEXP ev)
 {
     static SEXP dotFind = NULL, f; SEXP  e, ee;
@@ -853,7 +869,7 @@ static SEXP do_mtable(SEXP fdef, SEXP ev)
 
 SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 {
-    static SEXP R_mtable = NULL, R_allmtable, R_sigargs, R_siglength;
+    static SEXP R_mtable = NULL, R_allmtable, R_sigargs, R_siglength, R_dots, R_dots1;
     int nprotect = 0;
     SEXP mtable, classes, thisClass, sigargs, siglength, f_env = R_NilValue,
 	method, f, val = R_NilValue;
@@ -866,6 +882,8 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	R_allmtable = install(".AllMTable");
 	R_sigargs = install(".SigArgs");
 	R_siglength = install(".SigLength");
+	R_dots = install("...");
+	R_dots1 = install("..1");
     }
     switch(TYPEOF(fdef)) {
     case CLOSXP:
@@ -905,12 +923,17 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	else {
 	    /*  get its class */
 	    SEXP arg; int check_err;
-	    PROTECT(arg = R_tryEval(arg_sym, ev, &check_err));
+	    if(arg_sym == R_dots)
+		PROTECT(thisClass = dots_class(ev, &check_err));
+	    else {
+		PROTECT(arg = R_tryEval(arg_sym, ev, &check_err));
+		PROTECT(thisClass = R_data_class(arg, TRUE));
+		UNPROTECT(1); /* for arg */
+	    }
 	    if(check_err)
 		error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
 		      CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)));
-	    PROTECT(thisClass = R_data_class(arg, TRUE)); nprotect++;
-	    UNPROTECT(1); /* for arg */
+	    nprotect++; /* for this_class */
 	}
 	SET_VECTOR_ELT(classes, i, thisClass);
 	lwidth += strlen(STRING_VALUE(thisClass)) + 1;

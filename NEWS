@@ -222,8 +222,10 @@ BUG FIXES
         the method definition but conforming (per the documentation)
         should now be ignored (treated as "ANY") in dispatching.
 
-
-
+    o	The computations for S4 method evaluation when "..." was in
+        the signature could fail, treating `...` as an ordinary
+        symbol.  This has been fixed, for the known cases.
+	
 
 	**************************************************
 	*						 *

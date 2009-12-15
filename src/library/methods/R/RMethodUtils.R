@@ -1668,3 +1668,10 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
     else
         gettextf("single string; got an object of class \"%s\"", class(what)[[1]])
 }
+
+.dotsClass <- function(...) {
+    if(missing(..1))
+      "missing"
+    else
+      class(..1)
+}
