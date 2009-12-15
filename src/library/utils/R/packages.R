@@ -761,6 +761,7 @@ compareVersion <- function(a, b)
             x <- unique(sub("^[[:space:]]*(.*)", "\\1" , x))
             names(x) <- sub("^([[:alnum:].]+).*$", "\\1" , x)
             x <- x[names(x) != "R"]
+	    x <- x[nzchar(x)]
             ## FIXME: a better way to handle duplicates.
             ## However, there should not be any, and if there are
             ## Depends: should be the first.
