@@ -1231,7 +1231,7 @@ static SEXP listRemove(SEXP x, SEXP s, int ind)
 {
     SEXP a, pa, px;
     int i, ii, *indx, ns, nx, stretch=0;
-    void *vmax;
+    const void *vmax;
 
     vmax = vmaxget();
     nx = length(x);

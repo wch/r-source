@@ -1169,7 +1169,7 @@ static int clipCircleCode(double x, double y, double r,
  */
 void GECircle(double x, double y, double radius, const pGEcontext gc, pGEDevDesc dd)
 {
-    void *vmax;
+    const void *vmax;
     double *xc, *yc;
     int result;
 
@@ -1290,7 +1290,7 @@ static int clipRectCode(double x0, double y0, double x1, double y1,
 void GERect(double x0, double y0, double x1, double y1,
 	    const pGEcontext gc, pGEDevDesc dd)
 {
-    void *vmax;
+    const void *vmax;
     double *xc, *yc;
     int result;
 

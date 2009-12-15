@@ -3685,7 +3685,7 @@ SEXP attribute_hidden do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
     double pmax, pmin, inches, rx, ry;
     double xx, yy, p0, p1, p2, p3, p4;
     double *pp, *xp, *yp;
-    void *vmax;
+    const void *vmax;
 
     SEXP originalArgs = args;
     pGEDevDesc dd = GEcurrentDevice();
