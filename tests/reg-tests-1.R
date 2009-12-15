@@ -6023,4 +6023,8 @@ stopifnot(is.null(switch("A")),
 V <- addNA(c(0,0,NA,0,1,1,0,NA,1,1))
 stopifnot(identical(V, V[, drop = TRUE]))
 stopifnot(identical(model.frame(~V), model.frame(~V, xlev = list(V=levels(V)))))
-## dropped NA levels (in two places) in 2.10.1
+# dropped NA levels (in two places) in 2.10.1
+V <- c(0,0,NA,0,1,1,0,NA,1,1)
+stopifnot(identical(V, V[, drop = TRUE]))
+stopifnot(identical(model.frame(~V), model.frame(~V, xlev = list(V=levels(V)))))
+## check other cases have not been changed
