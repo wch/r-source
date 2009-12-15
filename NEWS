@@ -28,6 +28,8 @@ BUG FIXES
 	encoding, e.g. UTF-8 strings on Windows.
 	(PR#14114 and PR#14125)
 
+    o	x[ , drop=TRUE] dropped an NA level even if it was in use.
+
 
 
 		CHANGES IN R VERSION 2.10.1
