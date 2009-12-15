@@ -226,6 +226,10 @@ BUG FIXES
 	unique(), match(), etc.) could cause crashes (PR#14114 and
 	PR#14125).
 
+    o	x[ , drop=TRUE] dropped an NA level, even if it was in use.
+	(Several packages relied on this.)
+
+
 
 
 	**************************************************
@@ -251,8 +255,6 @@ BUG FIXES
     	line would copy part of the header into the data.  (PR#14103)
 
     o	qpois(p = 1, lambda = 0) now gives 0 as for all other p.  (PR#14135)
-
-    o	x[ , drop=TRUE] dropped an NA level, even if it was in use.
 
 
 
