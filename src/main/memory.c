@@ -3058,6 +3058,11 @@ int Seql(SEXP a, SEXP b)
     /* Leave this to compiler to optimize */
     if (IS_CACHED(a) && IS_CACHED(b) && ENC_KNOWN(a) == ENC_KNOWN(b))
 	return 0;
-    return !strcmp(translateChar(a), translateChar(b));
+    else {
+    	SEXP vmax = R_VStack;
+    	int result = !strcmp(translateCharUTF8(a), translateCharUTF8(b));
+    	R_VStack = vmax; /* discard any memory used by translateCharUTF8 */
+    	return result;
+    }
 }
 

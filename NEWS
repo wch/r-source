@@ -23,6 +23,11 @@ BUG FIXES
 
     o	qpois(p = 1, lambda = 0) now gives 0 as for all other p.  (PR#14135)
 
+    o	Functions related to string comparison (e.g. unique(), match())
+	could cause crashes when used with strings not in the native
+	encoding, e.g. UTF-8 strings on Windows.
+	(PR#14114 and PR#14125)
+
 
 
 		CHANGES IN R VERSION 2.10.1
