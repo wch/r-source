@@ -44,7 +44,13 @@ S3method("matchEncoding", "Type1Font")
 S3method("matchEncoding", "CIDFont")
 
 S3method("as.raster", "raster")
+S3method("as.raster", "logical")
+S3method("as.raster", "numeric")
+S3method("as.raster", "character")
 S3method("as.raster", "matrix")
+S3method("as.raster", "array")
+
+S3method("print", "raster")
 
 if(tools:::.OStype() == "windows") {
     export(bringToTop, msgWindow, win.graph, win.metafile, win.print,
