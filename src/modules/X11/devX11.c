@@ -1973,7 +1973,7 @@ static void X11_Raster(unsigned int *raster, int w, int h,
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     XImage *image;
     unsigned int *rasterImage;
-    char * vmax = vmaxget();
+    const void *vmax = vmaxget();
    
     if (imageHeight < 0) {
         imageHeight = -imageHeight;
@@ -2074,7 +2074,7 @@ static SEXP X11_Cap(pDevDesc dd)
         int i, j;
         SEXP dim;
         int size = xd->windowWidth * xd->windowHeight;
-        char *vmax = vmaxget();
+        const void *vmax = vmaxget();
         unsigned int *rint;
 
         PROTECT(raster = allocVector(INTSXP, size));
@@ -2153,7 +2153,7 @@ static void X11_Line(double x1, double y1, double x2, double y2,
 static void X11_Polyline(int n, double *x, double *y,
 			 const pGEcontext gc, pDevDesc dd)
 {
-    char *vmax = vmaxget();
+    const void *vmax = vmaxget();
     XPoint *points;
     int i, j;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
@@ -2184,7 +2184,7 @@ static void X11_Polyline(int n, double *x, double *y,
 static void X11_Polygon(int n, double *x, double *y,
 			const pGEcontext gc, pDevDesc dd)
 {
-    char *vmax = vmaxget();
+    const void *vmax = vmaxget();
     XPoint *points;
     int i;
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;

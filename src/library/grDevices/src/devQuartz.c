@@ -1199,7 +1199,7 @@ QuartzDesc_t Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create, int 
 	return NULL;
     }
     {
-        char    *vmax = vmaxget();
+        const void *vmax = vmaxget();
 	QuartzDesc_t qd = NULL;
 	R_GE_checkVersionOrDie(R_GE_version);
         R_CheckDeviceAvailable();
@@ -1243,7 +1243,7 @@ SEXP Quartz(SEXP args)
     const char *type, *mtype = 0, *file = 0, *family, *title;
     QuartzDesc_t qd = NULL;
 
-    char    *vmax = vmaxget();
+    const void *vmax = vmaxget();
     /* Get function arguments */
     args = CDR(args); /* Skip the call */
     if (TYPEOF(CAR(args)) != STRSXP || LENGTH(CAR(args)) < 1)

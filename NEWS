@@ -222,11 +222,6 @@ BUG FIXES
         the method definition but conforming (per the documentation)
         should now be ignored (treated as "ANY") in dispatching.
 
-    o	Functions related to string comparison (e.g. unique(), match())
-	could cause crashes when used with strings not in the native
-	encoding, e.g. UTF-8 strings on Windows.
-	(PR#14114 and PR#14125)
-
     o	x[ , drop=TRUE] dropped an NA level, even if it was in use.
 
 
@@ -255,6 +250,11 @@ BUG FIXES
     	line would copy part of the header into the data.  (PR#14103)
 
     o	qpois(p = 1, lambda = 0) now gives 0 as for all other p.  (PR#14135)
+
+    o	Functions related to string comparison (e.g. unique(), match())
+	could cause crashes when used with strings not in the native
+	encoding, e.g. UTF-8 strings on Windows.
+	(PR#14114 and PR#14125)
 
 
 

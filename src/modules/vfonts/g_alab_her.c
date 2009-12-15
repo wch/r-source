@@ -163,7 +163,7 @@ static double R_VF_VStrWidth (const char *s,
      vmaxget() ... vmaxset() instead of free()
   */
 
-  char *vmax = vmaxget();
+  const void *vmax = vmaxget();
 
   /* convert string to a codestring, including annotations */
   codestring = _controlify (dd, (const unsigned char *) s,
@@ -193,7 +193,7 @@ static double R_VF_VStrHeight (const char *s, const pGEcontext gc, pGEDevDesc dd
   double label_height;
   unsigned short *codestring;
 
-  char *vmax = vmaxget();
+  const void *vmax = vmaxget();
 
   /* convert string to a codestring, including annotations */
   codestring = _controlify (dd, (const unsigned char *) s,
@@ -232,7 +232,7 @@ static void R_VF_VText (double x, double y, const char *s,
      _controlify using R_alloc instead of xmalloc so need to do
      vmaxget() ... vmaxset() instead of free()
   */
-  char *vmax = vmaxget();
+  const void *vmax = vmaxget();
 
   /* PAUL MURRELL
      initialise the local currX and currY

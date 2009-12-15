@@ -3982,7 +3982,7 @@ static void PS_Raster(unsigned int *raster, int w, int h,
          * Assume a resolution for the new raster of 72 dpi
          * Ideally would allow user to set this.
          */
-        char *vmax;
+        const void *vmax;
         vmax = vmaxget();
         int newW = (int) width;
         int newH = (int) height;
@@ -7820,7 +7820,7 @@ static void PDF_MetricInfo(int c,
 SEXP PostScript(SEXP args)
 {
     pGEDevDesc gdd;
-    char *vmax;
+    const void *vmax;
     const char *file, *paper, *family=NULL, *bg, *fg, *cmd;
     const char *afms[5];
     const char *encoding, *title, call[] = "postscript", *colormodel;
@@ -7913,7 +7913,7 @@ SEXP PostScript(SEXP args)
 SEXP XFig(SEXP args)
 {
     pGEDevDesc gdd;
-    char *vmax;
+    const void *vmax;
     const char *file, *paper, *family, *bg, *fg, *encoding;
     int horizontal, onefile, pagecentre, defaultfont, textspecial;
     double height, width, ps;
@@ -7983,7 +7983,7 @@ SEXP XFig(SEXP args)
 SEXP PDF(SEXP args)
 {
     pGEDevDesc gdd;
-    char *vmax;
+    const void *vmax;
     const char *file, *paper, *encoding, *family = NULL /* -Wall */,
 	*bg, *fg, *title, call[] = "PDF", *colormodel;
     const char *afms[5];

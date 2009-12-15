@@ -39,7 +39,7 @@ double bessel_j(double x, double alpha)
     long nb, ncalc;
     double na, *bj;
 #ifndef MATHLIB_STANDALONE
-    char *vmax;
+    const void *vmax;
 #endif
 
 #ifdef IEEE_754

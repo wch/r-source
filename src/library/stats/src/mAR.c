@@ -69,7 +69,7 @@ static void matrix_prod(Array mat1, Array mat2, int trans1, int trans2,
 
    The Array structure contains pointers to arrays which are allocated
    using the R_alloc function.	Although the .C() interface cleans up
-   all memory assigned with R_alloc, judicious use of getvmax() setvmax()
+   all memory assigned with R_alloc, judicious use of vmaxget() vmaxset()
    to free this memory is probably wise. See memory.c in R core.
 
 */
@@ -272,7 +272,7 @@ static void copy_array (Array orig, Array ans)
 static void transpose_matrix(Array mat, Array ans)
 {
     int i,j;
-    char *vmax;
+    const void *vmax;
     Array tmp;
 
     tmp = init_array();
@@ -360,7 +360,7 @@ static void matrix_prod(Array mat1, Array mat2, int trans1, int trans2, Array an
 */
 {
     int i,j,k,K1,K2;
-    char *vmax;
+    const void *vmax;
     double m1, m2;
     Array tmp;
 
@@ -437,7 +437,7 @@ static void qr_solve(Array x, Array y, Array coef)
 */
 {
     int i, info = 0, rank, *pivot, n, p;
-    char *vmax;
+    const void *vmax;
     double tol = 1.0E-7, *qraux, *work;
     Array xt, yt, coeft;
 
@@ -482,7 +482,7 @@ static double ldet(Array x)
 /* Log determinant of square matrix */
 {
     int i, rank, *pivot, n, p;
-    char *vmax;
+    const void *vmax;
     double ll, tol = 1.0E-7, *qraux, *work;
     Array xtmp;
 
@@ -912,7 +912,7 @@ static void whittle(Array acf, int nlag, Array *A, Array *B, Array p_forward,
 {
 
     int lag, nser = DIM(acf)[1];
-    char *vmax;
+    const void *vmax;
     Array EA, EB;	/* prediction variance */
     Array KA, KB;	/* partial correlation coefficient */
     Array id, tmp;
@@ -960,7 +960,7 @@ static void whittle2 (Array acf, Array Aold, Array Bold, int lag,
 {
 
     int d, i, nser=DIM(acf)[1];
-    char *vmax;
+    const void *vmax;
     Array beta, tmp, id;
 
     d = strcmp(direction, "forward") == 0;

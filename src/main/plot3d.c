@@ -781,7 +781,7 @@ int addContourLines(double *x, int nx, double *y, int ny,
 SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 		    double *z, double *levels, int nl)
 {
-    void *vmax;
+    const void *vmax;
     int i, nlines, len;
     double atom, zmin, zmax;
     SEGP* segmentDB;
@@ -1347,7 +1347,8 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     rcolor colsave;
     double cexsave;
     double atom, zmin, zmax;
-    char *vmax, *vmax0, familysave[201];
+    const void *vmax, *vmax0;
+    char familysave[201];
     int method;
     Rboolean drawLabels;
     double labcex;

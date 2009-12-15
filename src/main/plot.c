@@ -1438,7 +1438,7 @@ SEXP attribute_hidden do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     double *x, *y, xold, yold, xx, yy, thiscex, thislwd;
     int i, n, npch, ncex, ncol, nbg, nlwd, type=0, start=0, thispch;
     rcolor thiscol, thisbg;
-    void *vmax = NULL /* -Wall */;
+    const void *vmax = NULL /* -Wall */;
 
     SEXP originalArgs = args;
     pGEDevDesc dd = GEcurrentDevice();
@@ -3514,7 +3514,7 @@ SEXP attribute_hidden do_dendwindow(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, imax, n;
     double pin, *ll, tmp, yval, *y, ymin, ymax, yrange, m;
     SEXP originalArgs, merge, height, llabels, str;
-    void *vmax;
+    const void *vmax;
     pGEDevDesc dd;
 
     dd = GEcurrentDevice();
@@ -3961,7 +3961,7 @@ SEXP attribute_hidden do_xspline(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean open, repEnds, draw;
     double *xx;
     double *yy;
-    void *vmaxsave;
+    const void *vmaxsave;
     R_GE_gcontext gc;
 
     SEXP originalArgs = args;

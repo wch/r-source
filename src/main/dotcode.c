@@ -763,7 +763,7 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     R_ExternalRoutine fun = NULL;
     SEXP retval;
     R_RegisteredNativeSymbol symbol = {R_EXTERNAL_SYM, {NULL}, NULL};
-    void *vmax = vmaxget();
+    const void *vmax = vmaxget();
     char buf[MaxSymbolBytes];
 
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
@@ -804,7 +804,7 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP retval, nm, cargs[MAX_ARGS], pargs;
     R_RegisteredNativeSymbol symbol = {R_CALL_SYM, {NULL}, NULL};
     int nargs;
-    void *vmax = vmaxget();
+    const void *vmax = vmaxget();
     char buf[MaxSymbolBytes];
 
     nm = CAR(args);

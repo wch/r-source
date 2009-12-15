@@ -282,7 +282,7 @@ static void Cairo_Raster(unsigned int *raster, int w, int h,
                          Rboolean interpolate,
                          const pGEcontext gc, pDevDesc dd)
 {
-    char *vmax = vmaxget();
+    const void *vmax = vmaxget();
     int i;
     cairo_surface_t *image;
     unsigned char *imageData;

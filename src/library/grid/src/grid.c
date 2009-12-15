@@ -1473,7 +1473,7 @@ static void hullEdge(double *x, double *y, int n,
 		     double theta,
 		     double *edgex, double *edgey) 
 {
-    char *vmax;
+    const void *vmax;
     int i, nh;
     double *hx, *hy;
     SEXP xin, yin, chullFn, R_fcall, hull;
@@ -1745,7 +1745,7 @@ SEXP L_lines(SEXP x, SEXP y, SEXP index, SEXP arrow)
     double xold, yold;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
-    char *vmax;
+    const void *vmax;
     LViewportContext vpc;
     R_GE_gcontext gc;
     LTransform transform;
@@ -1870,7 +1870,7 @@ SEXP gridXspline(SEXP x, SEXP y, SEXP s, SEXP o, SEXP a, SEXP rep, SEXP index,
     PROTECT(tracePts = allocVector(VECSXP, np));
     nloc = 0;
     for (i=0; i<np; i++) {
-	char *vmax;
+	const void *vmax;
 	SEXP indices = VECTOR_ELT(index, i);
 	SEXP points;
 	gcontextFromgpar(currentgp, i, &gc, dd);
@@ -2305,7 +2305,7 @@ SEXP L_polygon(SEXP x, SEXP y, SEXP index)
      */
     np = LENGTH(index);
     for (i=0; i<np; i++) {
-	char *vmax;
+	const void *vmax;
 	SEXP indices = VECTOR_ELT(index, i);
 	gcontextFromgpar(currentgp, i, &gc, dd);
 	/* 
@@ -2737,7 +2737,7 @@ SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust,
 SEXP L_raster(SEXP raster, SEXP x, SEXP y, SEXP w, SEXP h, 
               SEXP hjust, SEXP vjust, SEXP interpolate)
 {
-    char *vmax;
+    const void *vmax;
     int i, n;
     double xx, yy, ww, hh;
     double vpWidthCM, vpHeightCM;
@@ -2905,7 +2905,7 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust,
     LRect trect;
     int numBounds = 0;
     int overlapChecking = LOGICAL(checkOverlap)[0];
-    char *vmax;
+    const void *vmax;
     SEXP currentvp, currentgp;
     /* Get the current device 
      */
@@ -3134,7 +3134,7 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     double symbolSize;
-    char *vmax;
+    const void *vmax;
     LViewportContext vpc;
     R_GE_gcontext gc;
     LTransform transform;
@@ -3383,7 +3383,7 @@ SEXP L_locnBounds(SEXP x, SEXP y, SEXP theta)
     LTransform transform;
     SEXP currentvp, currentgp;
     SEXP result = R_NilValue;
-    char *vmax;
+    const void *vmax;
     double xmin = DOUBLE_XMAX;
     double xmax = -DOUBLE_XMAX;
     double ymin = DOUBLE_XMAX;
