@@ -130,11 +130,11 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
 
   For \code{sub} and \code{gsub} return a character vector of the same
   length and with the same attributes as \code{x} (after possible
-  coercion).  Elements of character vectors \code{x} which are not
-  substituted will be return unchanged (including any declared
-  encoding).  If \code{useBytes = FALSE} a non-ASCII result will often
-  be in UTF-8 with a marked encoding (e.g. if there is a UTF-8 input,
-  and in a multibyte locale unless \code{fixed = TRUE}).
+  coercion to character).  Elements of character vectors \code{x} which
+  are not substituted will be returned unchanged (including any declared
+  encoding).  If \code{useBytes = FALSE} a non-ASCII substituted result
+  will often be in UTF-8 with a marked encoding (e.g. if there is a
+  UTF-8 input, and in a multibyte locale unless \code{fixed = TRUE}).
 
   \code{regexpr} returns an integer vector of the same length as
   \code{text} giving the starting position of the first match or
