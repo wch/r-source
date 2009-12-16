@@ -924,7 +924,7 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	    /*  get its class */
 	    SEXP arg; int check_err;
 	    if(arg_sym == R_dots) {
-		thisClass = dots_class(ev, &check_err); nprotect++;
+		thisClass = dots_class(ev, &check_err);
 	    }
 	    else {
 		PROTECT(arg = R_tryEval(arg_sym, ev, &check_err));
