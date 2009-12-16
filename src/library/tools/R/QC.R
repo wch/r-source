@@ -398,7 +398,7 @@ function(package, dir, lib.loc = NULL,
     functions_in_code <-
         Filter(function(f) {
                    f <- get(f, envir = code_env)
-                   is.function(f) && (length(formals(f)) > 0L)
+                   typeof(f) == "closure"
                },
                objects_in_code)
     ## Sourcing all R code files in the package is a problem for base,

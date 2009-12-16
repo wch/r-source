@@ -33,6 +33,9 @@ BUG FIXES
     o	The dynamic HTML help system reported the wrong MIME type for the
     	style sheet.
 
+    o	tools::codoc() (used by R CMD check) was missing cases where the
+ 	function had no arguments but was documented to have some.
+
 
 
 		CHANGES IN R VERSION 2.10.1
