@@ -923,17 +923,18 @@ SEXP R_dispatchGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	else {
 	    /*  get its class */
 	    SEXP arg; int check_err;
-	    if(arg_sym == R_dots)
-		PROTECT(thisClass = dots_class(ev, &check_err));
+	    if(arg_sym == R_dots) {
+		thisClass = dots_class(ev, &check_err); nprotect++;
+	    }
 	    else {
 		PROTECT(arg = R_tryEval(arg_sym, ev, &check_err));
-		PROTECT(thisClass = R_data_class(arg, TRUE));
+		if(!check_err)
+		    thisClass = R_data_class(arg, TRUE);
 		UNPROTECT(1); /* for arg */
 	    }
 	    if(check_err)
 		error(_("error in evaluating the argument '%s' in selecting a method for function '%s'"),
 		      CHAR(PRINTNAME(arg_sym)),CHAR(asChar(fname)));
-	    nprotect++; /* for this_class */
 	}
 	SET_VECTOR_ELT(classes, i, thisClass);
 	lwidth += strlen(STRING_VALUE(thisClass)) + 1;
