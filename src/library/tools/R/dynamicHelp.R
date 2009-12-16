@@ -129,7 +129,8 @@ httpd <- function(path, query, ...)
                    sep = ""))
 
     if (grepl("R\\.css$", path))
-        return(list(file = file.path(R.home("doc"), "html", "R.css")))
+        return(list(file = file.path(R.home("doc"), "html", "R.css"),
+                    "content-type" = "text/css"))
     else if(path == "/favicon.ico")
         return(list(file = file.path(R.home("doc"), "html", "favicon.ico")))
     else if(!grepl("^/(doc|library)/", path))
