@@ -257,6 +257,9 @@ BUG FIXES
 	(PR#14114 and PR#14125)
 
     o	x[ , drop=TRUE] dropped an NA level even if it was in use.
+    
+    o	The dynamic HTML help system reported the wrong MIME type for the
+    	style sheet.
 
 
 
