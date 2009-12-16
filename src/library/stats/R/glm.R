@@ -48,7 +48,7 @@ glm <- function(formula, family = gaussian, data, weights,
     mf <- eval(mf, parent.frame())
     if(identical(method, "model.frame")) return(mf)
 
-    if (!is.character(method) && !is.funtion(method))
+    if (!is.character(method) && !is.function(method))
         stop("invalid 'method' argument")
     ## for back-compatibility in return result
     if (identical(method, "glm.fit"))
