@@ -76,6 +76,15 @@ mime_canonical_encoding <- function(encoding)
     encoding
 }
 
+# URL encode anything other than alphanumeric, . and _
+
+urlify <- function(x) { # make a string legal in a URL
+    chars <- unlist(strsplit(x, ""))
+    hex <- paste("%", as.character(charToRaw(x)), sep="")
+    mixed <- ifelse(nchar(sub("[0-9a-zA-Z._]", "", chars)), hex, chars)
+    paste(mixed, collapse="")
+}
+
 ## This gets used two ways:
 
 ## 1) With dynamic = TRUE from tools:::httpd()
@@ -258,7 +267,7 @@ Rd2HTML <-
             ## ---------------- \link{topic} and \link[=topic]{foo}
             topic <- parts$dest
     	    if (dynamic) { # never called with package=""
-                htmlfile <- paste("../../", package, "/help/", topic, sep="")
+                htmlfile <- paste("../../", urlify(package), "/help/", urlify(topic), sep="")
                 writeHref()
                 return()
             } else {
@@ -280,7 +289,7 @@ Rd2HTML <-
                 writeContent(block, tag)
             } else {
                 ## treat links in the same package specially -- was needed for CHM
-                pkg_regexp <- paste("^../../", package, "/html/", sep = "")
+                pkg_regexp <- paste("^../../", urlify(package), "/html/", sep = "")
                 if (grepl(pkg_regexp, htmlfile)) {
                     htmlfile <- sub(pkg_regexp, "", htmlfile)
                 }
@@ -288,7 +297,7 @@ Rd2HTML <-
             }
     	} else {
             ## ----------------- \link[pkg]{file} and \link[pkg:file]{bar}
-            htmlfile <- paste(parts$targetfile, ".html", sep="")
+            htmlfile <- paste(urlify(parts$targetfile), ".html", sep="")
             if (!dynamic && !no_links &&
                nzchar(pkgpath <- system.file(package = parts$pkg))) {
                 ## check the link, only if the package is found
@@ -322,7 +331,7 @@ Rd2HTML <-
                 writeHref()
             } else {
                 ## href = "../../pkg/html/file.html"
-                htmlfile <- paste("../../", parts$pkg, "/html/", htmlfile,
+                htmlfile <- paste("../../", urlify(parts$pkg), "/html/", htmlfile,
                                   sep="")
                 writeHref()
             }
