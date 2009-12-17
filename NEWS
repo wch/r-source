@@ -15,11 +15,14 @@ NEW FEATURES
 	devices was set up for round end caps (the only type which
 	existed at the time): it has now been adjusted for butt endcaps.
 
+    o	lchoose(a,k) is now defined as	log(abs(choose(a,k))), analogously
+	to lfactorial().
+
 
 BUG FIXES
 
     o	Using read.table(header=TRUE) on a header with an embedded new
-    	line would copy part of the header into the data.  (PR#14103)
+	line would copy part of the header into the data.  (PR#14103)
 
     o	qpois(p = 1, lambda = 0) now gives 0 as for all other p.  (PR#14135)
 
@@ -31,13 +34,18 @@ BUG FIXES
     o	x[ , drop=TRUE] dropped an NA level even if it was in use.
 
     o	The dynamic HTML help system reported the wrong MIME type for the
-    	style sheet.
+	style sheet.
 
     o	tools::codoc() (used by R CMD check) was missing cases where the
- 	function had no arguments but was documented to have some.
+	function had no arguments but was documented to have some.
  	
     o	Help links containing special characters (e.g. "?") were not 
     	generated correctly when rendered in HTML. (PR#14155)
+
+    o	Help links containing special characters (e.g. "?") were not
+	generated correctly when rendered in HTML. (PR#14155)
+
+    o	lchoose(a,k) no longer wrongly gives NaN for negative a.
 
 
 

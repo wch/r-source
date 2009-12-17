@@ -9270,8 +9270,9 @@ The (complete) Beta function and its natural logarithm.
 @deftypefun double choose (double @var{n}, double @var{k})
 @deftypefunx double lchoose (double @var{n}, double @var{k})
 The number of combinations of @var{k} items chosen from from @var{n} and
-its natural logarithm.  @var{k} is rounded to the nearest integer (with
-a warning if needed).
+the natural logarithm of its absolute value, generalized to arbitrary real
+@var{n}.  @var{k} is rounded to the nearest integer (with a warning if
+needed).
 @end deftypefun
 
 @findex bessel_i
