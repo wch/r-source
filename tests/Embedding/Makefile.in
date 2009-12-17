@@ -12,6 +12,9 @@ R_HOME=$(top_builddir)
 R_SHARE_DIR=$(R_HOME)/share
 R_INCLUDE_DIR=$(R_HOME)/include
 include $(top_builddir)/etc/Makeconf
+BUILDDIR_IS_SRCDIR = @BUILDDIR_IS_SRCDIR@
+INSTALL = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
 
 PACKAGE = @PACKAGE@
 VERSION = @VERSION@
