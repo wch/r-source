@@ -161,7 +161,6 @@ unlink("testbin")
 z <- writeBin(pi^{1:5}, raw(), size = 4)
 readBin(z, numeric(), 5, size = 4)
 z <- writeBin(c("a", "test", "of", "character"), raw())
-rawToChar(z)
 readBin(z, character(), 4)
 }
 \keyword{file}
