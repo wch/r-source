@@ -7,6 +7,8 @@
 \encoding{latin1}
 \alias{Encoding}
 \alias{Encoding<-}
+\alias{enc2native}
+\alias{enc2utf8}
 \concept{encoding}
 \title{Read or Set the Declared Encodings for a Character Vector}
 \description{
@@ -16,6 +18,9 @@
 Encoding(x)
 
 Encoding(x) <- value
+
+enc2native(x)
+enc2utf8(x)
 }
 \arguments{
   \item{x}{A character vector.}
@@ -29,6 +34,10 @@ Encoding(x) <- value
   recycled as needed and other values are silently treated as
   \code{"unknown"}.  ASCII strings will never be marked with a declared
   encoding, since their representation is the same in all encodings.
+
+  \code{enc2native} and \code{enc2utf8} convert elements of character
+  vectors to the natve encoding or UTF-8 respectively, taking any marked
+  encoding into account. They are designed to do minimal copying.
   
   There are other ways for character strings to acquire a declared
   encoding apart from explicitly setting it (and these have changed as

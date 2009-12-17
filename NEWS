@@ -174,6 +174,10 @@ NEW FEATURES
 	from the generic is now an error (the warning having been
 	ignored by some package maintainers for a long time).
 
+    o	New functions enc2native() and enc2utf8() convert character
+	vectors with possibly marked encodings to the current locale and
+	UTF-8 respectively.
+
 
 DEPRECATED & DEFUNCT
 
@@ -222,9 +226,11 @@ BUG FIXES
         the method definition but conforming (per the documentation)
         should now be ignored (treated as "ANY") in dispatching.
 
-    o	The computations for S4 method evaluation when "..." was in
-        the signature could fail, treating `...` as an ordinary
-        symbol.  This has been fixed, for the known cases.
+    o	The computations for S4 method evaluation when '...' was in the
+	signature could fail, treating '...' as an ordinary symbol.
+	This has been fixed, for the known cases.
+
+
 	
 
 	**************************************************

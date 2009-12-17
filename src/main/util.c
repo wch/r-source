@@ -1498,6 +1498,38 @@ double R_atof(const char *str)
     return R_strtod4(str, NULL, '.', FALSE);
 }
 
+/* enc2native and enc2utf8, but they are the same in a UTF-8 locale */
+SEXP do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, el;
+    int i;
+    Rboolean duped = FALSE;
+
+    checkArity(op, args);
+    if (!isString(CAR(args)))
+	errorcall(call, "argumemt is not a character vector");
+    ans = CAR(args);
+    for (i = 0; i < LENGTH(ans); i++) {
+	el = STRING_ELT(ans, i);
+	if(PRIMVAL(op) && !known_to_be_utf8) { /* enc2utf8 */
+	    if(!IS_UTF8(el) && !strIsASCII(CHAR(el))) {
+		if (!duped) { PROTECT(ans = duplicate(ans)); duped = TRUE; }
+		SET_STRING_ELT(ans, i, 
+			       mkCharCE(translateCharUTF8(el), CE_UTF8));
+	    }
+	} else { /* enc2native */
+	    if((known_to_be_latin1 && IS_UTF8(el)) ||
+	       (known_to_be_utf8 && IS_LATIN1(el)) ||
+	       ENC_KNOWN(el)) {
+		if (!duped) { PROTECT(ans = duplicate(ans)); duped = TRUE; }
+		SET_STRING_ELT(ans, i, mkChar(translateChar(el)));
+	    }
+	}
+    }
+    if(duped) UNPROTECT(1);
+    return ans;
+}
+
 #ifdef USE_ICU
 # ifdef HAVE_LOCALE_H
 #  include <locale.h>

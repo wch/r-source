@@ -204,9 +204,12 @@ gregexpr(pattern, text, ignore.case = FALSE, perl = FALSE,
 
   \code{\link{agrep}} for approximate matching.
 
+  \code{\link{enc2native}} to re-encode the result of \code{sub}.
+
   \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}
   for character translations.
   \code{\link{charmatch}}, \code{\link{pmatch}}, \code{\link{match}}.
+
   \code{\link{apropos}} uses regexps and has more examples.
 }
 \examples{

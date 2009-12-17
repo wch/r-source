@@ -203,6 +203,7 @@ SEXP do_eapply(SEXP, SEXP, SEXP, SEXP);
 SEXP do_edit(SEXP, SEXP, SEXP, SEXP);
 SEXP do_encoding(SEXP, SEXP, SEXP, SEXP);
 SEXP do_encodeString(SEXP, SEXP, SEXP, SEXP);
+SEXP do_enc2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envir(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envirgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_envirName(SEXP, SEXP, SEXP, SEXP);
