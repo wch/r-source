@@ -1130,7 +1130,7 @@ completeSubclasses <-
                            .dQ(className),
                            paste(.dQ(setdiff(newconflicts, conflicts)),
                                  collapse = ", ")),
-                  domain = NA)
+                  call. = FALSE, domain = NA)
         }
 
 
