@@ -82,9 +82,10 @@ lfactorial(x)
   \sQuote{tetragamma}, \sQuote{pentagamma}, and \sQuote{hexagamma}.
 
   The functions \code{choose} and \code{lchoose} return binomial
-  coefficients and their logarithms.  Note that \code{choose(n,k)} is
-  defined for all real numbers \eqn{n} and integer \eqn{k}.  For \eqn{k
-    \ge 1}{k >= 1} as \eqn{n(n-1)\cdots(n-k+1) / k!}{n(n-1)...(n-k+1) / k!},
+  coefficients and the logarithms of their absolute values.  Note that
+  \code{choose(n,k)} is defined for all real numbers \eqn{n} and integer
+  \eqn{k}.  For \eqn{k \ge 1}{k >= 1} as
+  \eqn{n(n-1)\cdots(n-k+1) / k!}{n(n-1)...(n-k+1) / k!},
   as \eqn{1} for \eqn{k = 0} and as \eqn{0} for negative \eqn{k}.
   Non-integer values of \code{k} are rounded to an integer, with a warning.
   \cr \code{choose(*,k)} uses direct arithmetic (instead of
@@ -181,8 +182,10 @@ sqrt(1.25)
 sum(choose(1/2, k)* .25^k)
 
 \dontshow{
-stopifnot(all.equal(  choose(1/2, -1:9),
-                    mychoose(1/2, -1:9)),
+k. <- 1:9
+stopifnot(all.equal( (choose(1/2, k.) -> ck.),
+                    mychoose(1/2, k.)),
+          all.equal(lchoose(1/2, k.), log(abs(ck.))),
           all.equal(sqrt(1.25),
                     sum(choose(1/2, k)* .25^k)))
 }

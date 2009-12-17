@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2004 The R Foundation
+ *  Copyright (C) 1998      Ross Ihaka
+ *  Copyright (C) 2004-2009 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,8 +28,9 @@
  *  DESCRIPTION
  *
  *	Binomial coefficients.
+ *	choose(n, k)   and  lchoose(n,k) := log(abs(choose(n,k))
  *
- *	These should work for the generalized binomial theorem,
+ *	These work for the *generalized* binomial theorem,
  *	i.e., are also defined for non-integer n  (integer k).
  *
  *  We use the simple explicit product formula for  k <= k_small_max
@@ -71,23 +72,22 @@ double lchoose(double n, double k)
 	if (k <	 0) return ML_NEGINF;
 	if (k == 0) return 0.;
 	/* else: k == 1 */
-	return log(n);
+	return log(fabs(n));
     }
     /* else: k >= 2 */
     if (n < 0) {
-	if (ODD(k)) return ML_NAN;/* log( <negative> ) */
 	return lchoose(-n+ k-1, k);
     }
     else if (R_IS_INT(n)) {
 	if(n < k) return ML_NEGINF;
+	/* k <= n :*/
 	if(n - k < 2) return lchoose(n, n-k); /* <- Symmetry */
+	/* else: n >= k+2 */
 	return lfastchoose(n, k);
     }
     /* else non-integer n >= 0 : */
     if (n < k-1) {
 	int s;
-	if (fmod(floor(n-k+1), 2.) == 0) /* choose() < 0 */
-	    return ML_NAN;
 	return lfastchoose2(n, k, &s);
     }
     return lfastchoose(n, k);
