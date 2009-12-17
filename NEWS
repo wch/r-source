@@ -178,6 +178,10 @@ NEW FEATURES
 	vectors with possibly marked encodings to the current locale and
 	UTF-8 respectively.
 
+    o	Unrecognized escapes and embedded nuls in character strings are
+	now an error, not just a warning.  Thus option "warnEscapes"
+	is no longer needed.
+
 
 DEPRECATED & DEFUNCT
 

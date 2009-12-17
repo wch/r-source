@@ -2,8 +2,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
- *                            R Development Core Team
+ *  Copyright (C) 1997--2009  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2044,7 +2043,6 @@ static SEXP mkStringUTF8(const ucs_t *wcs, int cnt)
 static int StringValue(int c, Rboolean forSymbol)
 {
     int quote = c;
-    int have_warned = 0;
     char currtext[1010], *ct = currtext;
     char st0[MAXELTSIZE];
     unsigned int nstext = MAXELTSIZE;
@@ -2094,11 +2092,8 @@ static int StringValue(int c, Rboolean forSymbol)
 			xxungetc(c);
 			CTEXT_POP();
 			if (i == 0) { /* was just \x */
-			    if(GenerateCode && R_WarnEscapes) {
-				have_warned++;
-				warningcall(R_NilValue, _("'\\x' used without hex digits"));
-			    }
-			    val = 'x';
+			    *ct = '\0';
+			    errorcall(R_NilValue, _("'\\x' used without hex digits in character string starting \"%s\""), currtext);
 			}
 			break;
 		    }
@@ -2124,12 +2119,9 @@ static int StringValue(int c, Rboolean forSymbol)
 		    else {
 			xxungetc(c);
 			CTEXT_POP();
-			if (i == 0) { /* was just \x */
-			    if(GenerateCode && R_WarnEscapes) {
-				have_warned++;
-				warningcall(R_NilValue, _("\\u used without hex digits"));
-			    }
-			    val = 'u';
+			if (i == 0) { /* was just \u */
+			    *ct = '\0';
+			    errorcall(R_NilValue, _("'\\u' used without hex digits in character string starting \"%s\""), currtext);
 			}
 			break;
 		    }
@@ -2162,12 +2154,9 @@ static int StringValue(int c, Rboolean forSymbol)
 		    else {
 			xxungetc(c);
 			CTEXT_POP();
-			if (i == 0) { /* was just \x */
-			    if(GenerateCode && R_WarnEscapes) {
-				have_warned++;
-				warningcall(R_NilValue, _("\\U used without hex digits"));
-			    }
-			    val = 'U';
+			if (i == 0) { /* was just \U */
+			    *ct = '\0';
+			    errorcall(R_NilValue, _("'\\U' used without hex digits in character string starting \"%s\""), currtext);
 			}
 			break;
 		    }
@@ -2214,11 +2203,8 @@ static int StringValue(int c, Rboolean forSymbol)
 		case '\n':
 		    break;
 		default:
-		    if(GenerateCode && R_WarnEscapes) {
-			have_warned++;
-			warningcall(R_NilValue, _("'\\%c' is an unrecognized escape in a character string"), c);
-		    }
-		    break;
+		    *ct = '\0';
+		    errorcall(R_NilValue, _("'\\%c' is an unrecognized escape in character string starting \"%s\""), c, currtext);
 		}
 	    }
 	} else if(mbcslocale) {
@@ -2272,19 +2258,6 @@ static int StringValue(int c, Rboolean forSymbol)
 	} else
 	    PROTECT(yylval = mkString2(stext,  bp - stext - 1));
 	if(stext != st0) free(stext);
-	if(have_warned) {
-	    *ct = '\0';
-#ifdef ENABLE_NLS
-	    warningcall(R_NilValue,
-			ngettext("unrecognized escape removed from \"%s\"",
-				 "unrecognized escapes removed from \"%s\"",
-				 have_warned),
-			currtext);
-#else
-	    warningcall(R_NilValue,
-			"unrecognized escape(s) removed from \"%s\"", currtext);
-#endif
-	}
 	return STR_CONST;
     }
 }

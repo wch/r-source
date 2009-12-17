@@ -3468,25 +3468,22 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
     case CE_ANY:
 	break;
     default:
-	error("unknown encoding: %d", enc);
+	error(_("unknown encoding: %d"), enc);
     }
     if (slen < len) {
 	SEXP c;
-	if (R_WarnEscapes) {
-	    /* This is tricky: we want to make a reasonable job of
-	       representing this string, and EncodeString() is the most
-	       comprehensive */
-	    c = allocCharsxp(len);
-	    memcpy(CHAR_RW(c), name, len);
-	    switch(enc) {
-	    case CE_UTF8: SET_UTF8(c); break;
-	    case CE_LATIN1: SET_LATIN1(c); break;
-	    default: break;
-	    }
-	    warning(_("truncating string with embedded nul: '%s'"),
-		    EncodeString(c, 0, 0, Rprt_adj_none));
+	/* This is tricky: we want to make a reasonable job of
+	   representing this string, and EncodeString() is the most
+	   comprehensive */
+	c = allocCharsxp(len);
+	memcpy(CHAR_RW(c), name, len);
+	switch(enc) {
+	case CE_UTF8: SET_UTF8(c); break;
+	case CE_LATIN1: SET_LATIN1(c); break;
+	default: break;
 	}
-	len = slen;
+	error(_("truncating string with embedded nul: '%s'"),
+	      EncodeString(c, 0, 0, Rprt_adj_none));
     }
 
     if (enc && IsASCII(name, len)) enc = CE_NATIVE;

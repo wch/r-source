@@ -769,15 +769,10 @@
 	    ## Something above, e.g. lazydata,  might have loaded the namespace
 	    if (pkg_name %in% loadedNamespaces())
 		unloadNamespace(pkg_name)
-	    ## suppress second round of parse warnings
-	    options(warnEscapes = FALSE)
 	    res <- try({.getRequiredPackages(quietly = TRUE)
 			makeLazyLoading(pkg_name, lib)})
-	    options(warnEscapes = TRUE)
 	    if (inherits(res, "try-error"))
 		pkgerrmsg("lazy loading failed", pkg_name)
-	    ## FIXME: still needed?  If so needs a pretest
-	    ## file.remove(file.path(instdir, "R", "all.rda"))
 	}
 
 	if (install_help) {
@@ -812,7 +807,7 @@
 	    if (inherits(res, "try-error"))
 		errmsg("installing package indices failed")
 	}
-	
+
 	## Install a dump of the parsed NAMESPACE file
 	if (install_R && file.exists("NAMESPACE") && !fake) {
 	    res <- try(.install_package_namespace_info(".", instdir))
@@ -880,7 +875,7 @@
     get_user_libPaths <- FALSE
     data_compress <- TRUE # FALSE (none), TRUE (gzip), 2 (bzip2), 3 (xz)
     resave_data <- FALSE
-    
+
     install_libs <- TRUE
     install_R <- TRUE
     install_data <- TRUE
@@ -888,8 +883,8 @@
     install_exec <- TRUE
     install_inst <- TRUE
     install_help <- TRUE
-    install_tests <- FALSE      
-    
+    install_tests <- FALSE
+
     while(length(args)) {
         a <- args[1L]
         if (a %in% c("-h", "--help")) {
@@ -965,7 +960,7 @@
         } else if (a == "--resave-data") {
             resave_data <- TRUE
         } else if (a == "--install-tests") {
-            install_tests <- TRUE        
+            install_tests <- TRUE
         } else if (a == "--no-inst") {
             install_inst <- FALSE
         } else if (a == "--no-R") {
@@ -1128,11 +1123,11 @@
     if (build_example) build_help_types <- c(build_help_types, "example")
     build_help <- length(build_help_types) > 0L
     if (build_help && !install_help) {
-	warning("--no-help overrides ", 
+	warning("--no-help overrides ",
 	        paste("--", build_help_types, sep="", collapse=" "),
                 call. = FALSE)
     }
-    
+
     if (debug)
         starsmsg(stars, "build_help_types=",
                  paste(build_help_types, collapse=" "))
@@ -1629,7 +1624,7 @@
             version, '</h2>\n\n', sep ='', file = conn)
 
 	cat('<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>\n', file=conn)
-	if (file.exists(file.path(outDir, "doc"))) 
+	if (file.exists(file.path(outDir, "doc")))
 	    cat('<li><a href="../doc/index.html">Overview of user guides and package vignettes</a>;',
 		'browse <a href="../doc">directory</a>.</li>\n', file=conn)
 	if (file.exists(file.path(outDir, "demo")))
@@ -1638,7 +1633,7 @@
 	if (file.exists(file.path(outDir, "NEWS")))
 	    cat('<li><a href="../NEWS">Package NEWS</a>.</li>\n',
 		 sep = '', file=conn)
-	
+
         cat('</ul>\n\n<h2>Help Pages</h2>\n\n\n',
             sep ='', file = conn)
     }
@@ -1723,13 +1718,13 @@
             ##N <- cbind(M$Topic, gen, c("", gen[-last]), skip)
             M <- M[!skip, ]
         }
-    } 
-    
+    }
+
     # Collapse method links into unique (generic, file) pairs
     M$Topic <- sub("^([^,]*),.*-method$", "\\1-method", M$Topic)
     M <- M[!duplicated(M[, c("Topic", "File")]),]
     M <- M[re(M[, 1L]), ]
-    
+
     ## encode some entries.
     htmlize <- function(x, backtick)
     {
