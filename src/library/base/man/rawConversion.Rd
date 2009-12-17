@@ -72,12 +72,8 @@ is.vector(y) # TRUE
 
 rawToChar(y)
 rawToChar(y, multiple = TRUE)
-(xx <- c(y, as.raw(0), charToRaw("more")))
+(xx <- c(y,  charToRaw("&"), charToRaw("more")))
 rawToChar(xx)
-xxx <- xx
-xxx[length(y)+1] <- charToRaw("&")
-xxx
-rawToChar(xxx)
 
 rawShift(y, 1)
 rawShift(y, -2)
