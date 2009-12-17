@@ -1119,7 +1119,7 @@ completeSubclasses <-
                 warning(gettextf("class %s is inheriting an inconsistent superclass structure from class %s, inconsistent with %s",
                                  .dQ(className), .dQ(by),
                                  paste(.dQ(coni), collapse = ", ")),
-                        domain = NA)
+                        call. = FALSE, domain = NA)
                 conflicts <- unique(c(conflicts, coni))
               }
           }
