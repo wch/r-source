@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:05\n"
+"POT-Creation-Date: 2009-12-17 11:57\n"
 "PO-Revision-Date: 2009-10-10 15:29+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -724,9 +724,6 @@ msgstr "l'espace de noms ne doit pas être chargé."
 msgid "package seems to be using lazy loading for data already"
 msgstr "le package semble déjà utiliser le chargement partiel pour les données"
 
-msgid "object(s) %s are created by more than one data call"
-msgstr "le(s) objet(s) %s sont créés par plus d'un appel aux données"
-
 msgid "source list must have names for all elements"
 msgstr "la liste de source doit avoir des noms pour tous ses éléments"
 
@@ -957,6 +954,12 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
 msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
+
+#, fuzzy
+msgid "object %s is created by more than one data call"
+msgid_plural "objects %s are created by more than one data call"
+msgstr[0] "le(s) objet(s) %s sont créés par plus d'un appel aux données"
+msgstr[1] "le(s) objet(s) %s sont créés par plus d'un appel aux données"
 
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr "Impossible de localiser le document d'aide %s dans le package %s"

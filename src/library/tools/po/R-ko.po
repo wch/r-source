@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:05\n"
+"POT-Creation-Date: 2009-12-17 11:57\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -707,10 +707,6 @@ msgid "package seems to be using lazy loading for data already"
 msgstr ""
 "패키지는 데이터를 위해서 나태한 로드를 이미 사용하고 있는 것처럼 보입니다"
 
-#, fuzzy
-msgid "object(s) %s are created by more than one data call"
-msgstr "하나를 넘어가는 데이터 호출에 의해 작성됩니다"
-
 msgid "source list must have names for all elements"
 msgstr "source 리스트는 모든 요소의 이름을 가지고 있어야만 합니다"
 
@@ -931,6 +927,11 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ""
+
+#, fuzzy
+msgid "object %s is created by more than one data call"
+msgid_plural "objects %s are created by more than one data call"
+msgstr[0] "하나를 넘어가는 데이터 호출에 의해 작성됩니다"
 
 #, fuzzy
 #~ msgid "Suspect link(s) in documentation object '%s':"

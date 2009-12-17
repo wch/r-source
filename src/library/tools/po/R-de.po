@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:05\n"
+"POT-Creation-Date: 2009-12-17 11:57\n"
 "PO-Revision-Date: 2009-10-07 14:56+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -708,9 +708,6 @@ msgstr "Namensraum darf nicht geladen werden"
 msgid "package seems to be using lazy loading for data already"
 msgstr "Paket scheint für Daten bereits lazyloading zu nutzen"
 
-msgid "object(s) %s are created by more than one data call"
-msgstr "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
-
 msgid "source list must have names for all elements"
 msgstr "Quellenliste muss Namen für alle Elemente besitzen"
 
@@ -932,6 +929,12 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
+
+#, fuzzy
+msgid "object %s is created by more than one data call"
+msgid_plural "objects %s are created by more than one data call"
+msgstr[0] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr "Kann das Hilfedokument %s in Paket %s nicht finden"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:05\n"
+"POT-Creation-Date: 2009-12-17 11:57\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -689,9 +689,6 @@ msgstr "绝不能载入名字空间."
 msgid "package seems to be using lazy loading for data already"
 msgstr "程辑包好象已经用数据延迟加载了"
 
-msgid "object(s) %s are created by more than one data call"
-msgstr "不能用多个数据调用来产生对象%s"
-
 msgid "source list must have names for all elements"
 msgstr "源列里所有单元都必需要带名字"
 
@@ -905,6 +902,11 @@ msgstr[0] "在下面的Rd例子文件中遇到了有可能是全局的T或F值:"
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "下面的函数调用了.Internal:"
+
+#, fuzzy
+msgid "object %s is created by more than one data call"
+msgid_plural "objects %s are created by more than one data call"
+msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr "在程序包%s找不到%s这个帮助文件"

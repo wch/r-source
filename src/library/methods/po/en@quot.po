@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:04+0000\n"
-"PO-Revision-Date: 2009-12-06 12:04+0000\n"
+"POT-Creation-Date: 2009-12-17 11:57+0000\n"
+"PO-Revision-Date: 2009-12-17 11:57+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -98,7 +98,7 @@ msgstr ""
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr "no direct or inherited method for function ‘%s’ for this call"
 
-#: methods_list_dispatch.c:514 methods_list_dispatch.c:954
+#: methods_list_dispatch.c:514 methods_list_dispatch.c:978
 msgid "invalid object (non-function) used as method"
 msgstr "invalid object (non-function) used as method"
 
@@ -157,7 +157,7 @@ msgstr ""
 "dispatch must be an R environment; got an object of class “%s”"
 
 #: methods_list_dispatch.c:604 methods_list_dispatch.c:615
-#: methods_list_dispatch.c:910
+#: methods_list_dispatch.c:936
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function '%s'"
@@ -211,12 +211,12 @@ msgstr "‘%s’ must be a non-empty string; got an empty string"
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "‘%s’ must be a single string (got an object of class “%s”)"
 
-#: methods_list_dispatch.c:877
+#: methods_list_dispatch.c:895
 #, c-format
 msgid "Failed to get the generic for the primitive \"%s\""
 msgstr "Failed to get the generic for the primitive “%s”"
 
-#: methods_list_dispatch.c:884
+#: methods_list_dispatch.c:902
 #, c-format
 msgid ""
 "Expected a generic function or a primitive for dispatch, got an object of "
@@ -225,7 +225,7 @@ msgstr ""
 "Expected a generic function or a primitive for dispatch, got an object of "
 "class “%s”"
 
-#: methods_list_dispatch.c:896
+#: methods_list_dispatch.c:914
 #, c-format
 msgid ""
 "Generic \"%s\" seems not to have been initialized for table dispatch---need "

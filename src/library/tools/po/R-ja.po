@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:05\n"
+"POT-Creation-Date: 2009-12-17 11:57\n"
 "PO-Revision-Date: 2009-10-10 00:17+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -723,9 +723,6 @@ msgid "package seems to be using lazy loading for data already"
 msgstr ""
 " パッケージは既にデータに対する遅延読み込みを使用しているように見えます "
 
-msgid "object(s) %s are created by more than one data call"
-msgstr " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
-
 msgid "source list must have names for all elements"
 msgstr " ソースリストには全ての要素の名前が含まれていなければなりません "
 
@@ -942,6 +939,11 @@ msgstr[0] ""
 msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
+
+#, fuzzy
+msgid "object %s is created by more than one data call"
+msgid_plural "objects %s are created by more than one data call"
+msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
 
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr ""

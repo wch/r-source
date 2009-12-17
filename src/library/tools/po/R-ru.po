@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:05\n"
+"POT-Creation-Date: 2009-12-17 11:57\n"
 "PO-Revision-Date: 2009-10-15 02:41-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -711,9 +711,6 @@ msgstr "должно быть загружено пространство имен."
 msgid "package seems to be using lazy loading for data already"
 msgstr "кажется, пакет уже использует ленивую загрузку данных"
 
-msgid "object(s) %s are created by more than one data call"
-msgstr "объект(ы) %s созданы больше чем за один вызов данных"
-
 msgid "source list must have names for all elements"
 msgstr "в списке исходников должны быть для всех элементов"
 
@@ -937,6 +934,13 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Найден вызов .Internal call в следующей функции:"
 msgstr[1] "Найдены вызовы .Internal в следующих функциях:"
 msgstr[2] "Найдены вызовы .Internal в следующих функциях:"
+
+#, fuzzy
+msgid "object %s is created by more than one data call"
+msgid_plural "objects %s are created by more than one data call"
+msgstr[0] "объект(ы) %s созданы больше чем за один вызов данных"
+msgstr[1] "объект(ы) %s созданы больше чем за один вызов данных"
+msgstr[2] "объект(ы) %s созданы больше чем за один вызов данных"
 
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr "Не могу найти документ помощи %s в пакете %s"

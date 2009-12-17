@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08\n"
+"POT-Creation-Date: 2009-12-17 11:57\n"
 "PO-Revision-Date: 2009-10-07 19:18+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -210,6 +210,19 @@ msgstr " 不正な出力書式です "
 
 msgid "status %d in running command '%s'"
 msgstr " 状態 %d が命令 '%s' 実行中に起きました "
+
+msgid "A raster matrix must be character, or numeric, or logical"
+msgstr ""
+
+#, fuzzy
+msgid "A raster array must be numeric"
+msgstr " rgb 行列は数値でなければなりません "
+
+msgid "A raster array must have exactly 3 dimensions"
+msgstr ""
+
+msgid "A raster array must have exactly 3 or 4 planes"
+msgstr ""
 
 msgid "no current device to record from"
 msgstr " 現在，以下のものから記録することが出来るデバイスはありません:  "

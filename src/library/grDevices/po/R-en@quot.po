@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08\n"
-"PO-Revision-Date: 2009-10-05 14:08\n"
+"POT-Creation-Date: 2009-12-17 11:57\n"
+"PO-Revision-Date: 2009-12-17 11:57\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -227,6 +227,18 @@ msgstr "Invalid output format"
 
 msgid "status %d in running command '%s'"
 msgstr "status %d in running command ‘%s’"
+
+msgid "A raster matrix must be character, or numeric, or logical"
+msgstr "A raster matrix must be character, or numeric, or logical"
+
+msgid "A raster array must be numeric"
+msgstr "A raster array must be numeric"
+
+msgid "A raster array must have exactly 3 dimensions"
+msgstr "A raster array must have exactly 3 dimensions"
+
+msgid "A raster array must have exactly 3 or 4 planes"
+msgstr "A raster array must have exactly 3 or 4 planes"
 
 msgid "no current device to record from"
 msgstr "no current device to record from"
