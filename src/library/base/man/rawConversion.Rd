@@ -40,9 +40,9 @@ packBits(x, type = c("raw", "integer"))
   \code{rawToChar} converts raw bytes either to a single character
   string or a character vector of single bytes (with \code{""} for
   \code{0}).  (Note that a single character string could contain
-  embedded nuls, in which case it will be truncated at the first nul
-  with a warning.)  In either case it is possible to create a result
-  which is invalid in a multibyte locale, e.g. one using UTF-8.
+  embedded nuls; only trailing nulls are allowed and will be removed) In
+  either case it is possible to create a result which is invalid in a
+  multibyte locale, e.g. one using UTF-8.
 
   \code{rawShift(x,n)} shift the bits in \code{x} by \code{n} positions
   to the right, see the argument \code{n}, above.
@@ -62,7 +62,7 @@ packBits(x, type = c("raw", "integer"))
 #ifdef unix
 
   Note that \sQuote{bytes} are not necessarily the same as characters,
-  e.g. in UTF-8 domains.
+  e.g. in UTF-8 locales.
 #endif
 }
 \examples{

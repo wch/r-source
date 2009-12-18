@@ -46,7 +46,7 @@ SEXP attribute_hidden do_charToRaw(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x = CAR(args);
-    int i, nc = LENGTH(x), multiple, len;
+    int i, j, nc = LENGTH(x), multiple, len;
     char buf[2];
 
     checkArity(op, args);
@@ -64,12 +64,13 @@ SEXP attribute_hidden do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	/* do we want to copy e.g. names here? */
     } else {
-	len = LENGTH(x);
+	/* String is not necessarily 0-terminated and may contain nuls.
+	   Strip trailing nuls */
+	for (i = 0, j = -1; i < nc; i++) if(RAW(x)[i]) j = i;
+	nc = j + 1;
 	PROTECT(ans = allocVector(STRSXP, 1));
-	/* String is not necessarily 0-terminated and may contain nuls
-	   so don't use mkString */
 	SET_STRING_ELT(ans, 0,
-		       mkCharLenCE((const char *)RAW(x), len, CE_NATIVE));
+		       mkCharLenCE((const char *)RAW(x), j+1, CE_NATIVE));
     }
     UNPROTECT(1);
     return ans;

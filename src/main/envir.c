@@ -3482,7 +3482,7 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 	case CE_LATIN1: SET_LATIN1(c); break;
 	default: break;
 	}
-	error(_("truncating string with embedded nul: '%s'"),
+	error(_("embedded nul in string: '%s'"),
 	      EncodeString(c, 0, 0, Rprt_adj_none));
     }
 
