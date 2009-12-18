@@ -102,7 +102,7 @@ vhtmlify <- function(x) { # code version
 urlify <- function(x) { # make a string legal in a URL
     chars <- unlist(strsplit(x, ""))
     hex <- paste("%", as.character(charToRaw(x)), sep="")
-    mixed <- ifelse(nchar(sub("[0-9a-zA-Z._]", "", chars)), hex, chars)
+    mixed <- ifelse(grepl("[0-9a-zA-Z._]", chars), chars, hex)
     paste(mixed, collapse="")
 }
 
