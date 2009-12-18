@@ -235,6 +235,10 @@ BUG FIXES
 	This has been fixed, for the known cases.
 
 
+    o   ks.test() could give a p-value that was off by one observation
+        due to rounding error in the C code. 
+        (reported by allwright@maths.ox.ac.uk)
+
 
 
 	**************************************************

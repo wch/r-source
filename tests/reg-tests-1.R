@@ -6028,3 +6028,11 @@ V <- c(0,0,NA,0,1,1,0,NA,1,1)
 stopifnot(identical(V, V[, drop = TRUE]))
 stopifnot(identical(model.frame(~V), model.frame(~V, xlev = list(V=levels(V)))))
 ## check other cases have not been changed
+
+## ks.test gave p=1 rather than p=0.9524 because abs(1/2-4/5)>3/10 was TRUE
+##
+
+stopifnot(all.equal(ks.test(1:5, c(2.5,4.5))$p.value, 20/21))
+
+
+
