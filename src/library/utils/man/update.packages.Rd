@@ -76,6 +76,7 @@ contrib.url(repos, type = getOption("pkgType"))
   \item{method}{Download method, see \code{\link{download.file}}.}
   \item{pkgs}{character vector of the short names of packages/bundles whose
     current versions should be downloaded from the repositories.
+    
     If \code{repos = NULL}, a character vector of file paths of
 #ifdef windows
     \file{.zip} files containing binary builds of packages.  With
@@ -88,6 +89,7 @@ contrib.url(repos, type = getOption("pkgType"))
     \command{R CMD build --binary}).
     Tilde-expansion will be done on the file paths.
 #endif
+    
     If this is a zero-length character vector, a listbox of available
     packages (including those contained in bundles) is presented where
     possible.
@@ -153,27 +155,22 @@ contrib.url(repos, type = getOption("pkgType"))
     format as returned by \code{installed.packages()}.
   }
   \item{\dots}{
-    (for \code{update.packages}).  Arguments such as \code{destdir},
-    \code{installWithVers} and \code{dependencies} to be passed to
+    For \code{update.packages} and \code{new.packages}: arguments
+    such as \code{destdir} and \code{dependencies} to be passed to
     \code{install.packages}.
 
-    (for \code{new.packages}).  Arguments such as \code{destdir}
-    and \code{dependencies} to be passed to \code{install.packages}.
-
-    (for \code{install.packages} and \code{download.packages}) arguments
+    For \code{install.packages} and \code{download.packages}: arguments
     to be passed to \code{\link{download.file}}.
   }
   \item{type}{character, indicating the type of package to download and
     install.
-    
-    Possible values except on Windows are \code{"source"} (the default
-    except under the CRAN Mac OS X build), \code{"mac.binary"} and
-    \code{"win.binary"} (which can be downloaded but not installed).
 
-    Possible values on Windows are \code{"win.binary"} (the default) and
-    \code{"source"} (for which suitable tools may need to be installed:
-    see the \sQuote{Details}).  Value \code{"mac.binary"} can be used to
-    explore and download Mac OS X binaries.
+    Possible values are \code{"source"}, \code{"mac.binary"} and
+    \code{"win.binary"}: the binary types can be listed and downloaded
+    but not installed on other platforms.
+
+    The default is the appropriate binary type on Windows and on the
+    CRAN Mac OS X build, otherwise \code{"source"}.
   }
   \item{clean}{a logical value indicating whether to specify
     to add the \option{--clean} flag to the call to
@@ -184,7 +181,7 @@ contrib.url(repos, type = getOption("pkgType"))
   \item{Ncpus}{The number of parallel processes to use for a parallel
     install of source packages.  Values greater than one are supported
     only if GNU \command{make} is in use (more precisely, if
-    \command{make -j \var{Ncpus}} works).  Defaults to \code{1} is the
+    \command{make -j \var{Ncpus}} works).  Defaults to \code{1} if the
     option is unset.
   }
   \item{fields}{a character vector giving the fields to extract from
@@ -266,7 +263,7 @@ contrib.url(repos, type = getOption("pkgType"))
   there.
 #ifdef windows
   Detection of a writeable directory is problematic on Windows: see the
-  Note section.
+  \sQuote{Note} section.
 #endif
   
 #ifdef unix
@@ -295,7 +292,7 @@ contrib.url(repos, type = getOption("pkgType"))
   the package contains no C/C++/Fortran code that needs compilation,
   Otherwise you will need to have installed the Rtools collection as
   described in the \sQuote{R for Windows FAQ} \emph{and} you must have the
-  \env{PATH} set up as required by the Rtools.
+  \env{PATH} set up as required by Rtools.
 #endif
 }
 \value{
@@ -373,8 +370,8 @@ contrib.url(repos, type = getOption("pkgType"))
   updated are in a single library, when that library will be used.
 
   You are advised to run \code{update.packages} before
-  \code{install.packages} to ensure that any installed dependencies have
-  their latest versions.
+  \code{install.packages} to ensure that any already installed
+  dependencies have their latest versions.
 }
 #ifdef unix
 \note{
@@ -389,9 +386,10 @@ contrib.url(repos, type = getOption("pkgType"))
   on the library directories specified, but Windows reports unreliably.
   If there is only one library directory (the default), \R even tries to
   find out by creating a test directory, but even this need not be the
-  whole story.  Under Windows Vista you may have permission to write in
-  a library directory but lack permission to write binary files (such as
-  \file{.dll} files) there.  See the \sQuote{R for Windows FAQ} for workarounds.
+  whole story.  Under Windows Vista and later you may have permission to
+  write in a library directory but lack permission to write binary files
+  (such as \file{.dll} files) there.  See the \sQuote{R for Windows FAQ}
+  for workarounds.
 }
 #endif
 \seealso{
