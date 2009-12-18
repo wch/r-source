@@ -5,17 +5,17 @@
 
 \name{update.packages}
 \alias{update.packages}
-\alias{available.packages}
 \alias{old.packages}
 \alias{new.packages}
-\alias{download.packages}
-\alias{install.packages}
-\alias{contrib.url}
-\title{Download Packages from CRAN-like repositories}
+\title{Compare Installed Packages with CRAN-like Repositories}
 \description{
-  These functions can be used to automatically compare the version
-  numbers of installed packages with the newest available version on
-  the repositories and update outdated packages on the fly.
+  \code{old.packages} indicates packages which have a (suitable) later
+  version on the repositories whereas \code{update.packages} offers to
+  download and install such packages.
+
+  \code{new.packages} looks for (suitable) packages on the respositories
+  that are not already installed, and optionally offers them for
+  installation.
 }
 \usage{
 update.packages(lib.loc = NULL, repos = getOption("repos"),
@@ -24,10 +24,6 @@ update.packages(lib.loc = NULL, repos = getOption("repos"),
                 ask = TRUE, available = NULL,
                 oldPkgs = NULL, \dots, checkBuilt = FALSE,
                 type = getOption("pkgType"))
-
-available.packages(contriburl = contrib.url(getOption("repos"), type),
-                   method, fields = NULL, type = getOption("pkgType"),
-                   filters = NULL)
 
 old.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
@@ -40,21 +36,6 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
              instPkgs = installed.packages(lib.loc = lib.loc),
              method, available = NULL, ask = FALSE, \dots,
              type = getOption("pkgType"))
-
-download.packages(pkgs, destdir, available = NULL,
-                  repos = getOption("repos"),
-                  contriburl = contrib.url(repos, type),
-                  method, type = getOption("pkgType"), \dots)
-
-install.packages(pkgs, lib, repos = getOption("repos"),
-                 contriburl = contrib.url(repos, type),
-                 method, available = NULL, destdir = NULL,
-                 dependencies = NA, type = getOption("pkgType"),
-                 configure.args = getOption("configure.args"),
-                 configure.vars = getOption("configure.vars"),
-                 clean = FALSE, Ncpus = getOption("Ncpus"), \dots)
-
-contrib.url(repos, type = getOption("pkgType"))
 }
 \arguments{
   \item{lib.loc}{character vector describing the location of R
@@ -70,76 +51,27 @@ contrib.url(repos, type = getOption("pkgType"))
   \item{contriburl}{URL(s) of the contrib sections of the
     repositories.  Use this argument only if your repository mirror is
     incomplete, e.g., because you burned only the \file{contrib} section on a
-    CD.  Overrides argument \code{repos}.
-    As \code{repos}, can also be \code{NULL} to install from local files.
+    CD.  Overrides argument \code{repos}.  As with \code{repos}, can
+    also be \code{NULL} to install from local files.
   }
   \item{method}{Download method, see \code{\link{download.file}}.}
-  \item{pkgs}{character vector of the short names of packages whose
-    current versions should be downloaded from the repositories.
-    If \code{repos = NULL}, a character vector of file paths of
-#ifdef windows
-    \file{.zip} files containing binary builds of packages.  With
-    suitable tools installed (see the \sQuote{Details} below) source directories
-    or \file{.tar.gz} archives may also be installed.
-#endif
-#ifdef unix
-    \file{.tar.gz} files.  These can be source archives or binary
-    package archive files (as created by \command{R CMD build --binary}).
-    Tilde-expansion will be done on the file paths.
-#endif
-    If this is a zero-length character vector, a listbox of available
-    packages is presented where possible.
+  \item{instlib}{character string giving the library directory where to
+    install the packages.}
+  \item{ask}{logical indicating whether to ask user before packages are
+    actually downloaded and installed, or the character string
+    \code{"graphics"}, which brings up a widget to allow the
+    user to (de-)select from the list of packages which could
+    be updated or added.  The latter value only works on
+    systems with a GUI version of \code{\link{select.list}},
+    and is otherwise equivalent to \code{ask = TRUE}.     
   }
-  \item{destdir}{directory where downloaded packages are stored.}
-  \item{available}{an object listing packages available at the repositories
-    as returned by \code{available.packages}.}
-  \item{lib}{character vector giving the library directories where to
-    install the packages.  Recycled as needed.  If missing, defaults to
-    \code{\link{.libPaths}()[1]}.}
-  \item{ask}{logical indicating whether to ask user before packages
-    are actually downloaded and installed, or the character string
-    \code{"graphics"}, which brings up a widget to allow the user to
-    (de-)select from the list of packages which could be updated.  The
-    latter only works on systems with a GUI version of
-    \code{\link{select.list}}, and is otherwise equivalent to \code{ask
-      = TRUE}.
+  \item{available}{
+    an object as returned by \code{\link{available.packages}}
+    listing packages available at the repositories, or \code{NULL} which
+    makes an internal call to \code{available.packages}.
   }
   \item{checkBuilt}{If \code{TRUE}, a package built under an earlier
     minor version of \R is considered to be \sQuote{old}.}
-  \item{instlib}{character string giving the library directory where to
-    install the packages.}
-  \item{dependencies}{logical indicating to also install uninstalled
-    packages on which these packages depend/suggest/import
-    (and so on recursively).  Not used if \code{repos = NULL}.
-    Can also be a character vector, a subset of
-    \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
-
-    Only supported if \code{lib} is of length one (or missing),
-    so it is unambiguous where to install the dependent packages.
-
-    The default, \code{NA}, means
-    \code{c("Depends", "Imports", "LinkingTo")}
-    if \code{lib} is unambiguous, and \code{FALSE} otherwise.
-  }
-  \item{configure.args}{(not Windows) a character vector or a named list.
-    If a character vector with no names is supplied, the elements are
-    concatenated into a single string (separated by a space) and used
-    as the value for the \option{--configure-args}
-    flag in the call to \command{R CMD INSTALL}.
-    If the character vector has names these are assumed to identify
-    values for \option{--configure-args} for individual packages.
-    This allows one to specify settings for an entire collection of packages
-    which will be used if any of those packages are to be installed.
-    (These settings can therefore be reused and act as default settings.)
-    
-    A named list can be used also to the same effect, and that
-    allows multi-element character strings for each package
-    which are concatenated to a single string to be used as the
-    value for \option{--configure-args}.
-  }
-  \item{configure.vars}{(not Windows) similar, for
-    \option{--configure-vars}, which is used to set environment variables
-    for the \command{configure} run.}
   \item{oldPkgs}{
     if specified as non-NULL, \code{update.packages()} only considers
     these packages for updating. 
@@ -151,151 +83,46 @@ contrib.url(repos, type = getOption("pkgType"))
     format as returned by \code{installed.packages()}.
   }
   \item{\dots}{
-    (for \code{update.packages}).  Arguments such as \code{destdir},
-    \code{installWithVers} and \code{dependencies} to be passed to
-    \code{install.packages}.
-
-    (for \code{new.packages}).  Arguments such as \code{destdir}
-    and \code{dependencies} to be passed to \code{install.packages}.
-
-    (for \code{install.packages} and \code{download.packages}) arguments
-    to be passed to \code{\link{download.file}}.
+    Arguments such as \code{destdir} and \code{dependencies} to be
+    passed to \code{\link{install.packages}}.
   }
   \item{type}{character, indicating the type of package to download and
-    install.
-    
-    Possible values except on Windowsare \code{"source"} (the default
-    except under the CRAN Mac OS X build), \code{"mac.binary"} and
-    \code{"win.binary"} (which can be downloaded but not installed).
-
-    Possible values on Windows are \code{"win.binary"} (the default) and
-    \code{"source"} (for which suitable tools may need to be installed:
-    see the \sQuote{Details}).  Value \code{"mac.binary"} can be used to
-    explore and download Mac OS X binaries.
-  }
-  \item{clean}{a logical value indicating whether to specify
-    to add the \option{--clean} flag to the call to
-    \command{R CMD INSTALL}.
-    This is sometimes used to perform additional operations at the end
-    of the package installation in addition to removing intermediate files.
-  }
-  \item{Ncpus}{The number of parallel processes to use for a parallel
-    install of source packages.  Values greater than one are supported
-    only if GNU \command{make} is in use (more precisely, if
-    \command{make -j \var{Ncpus}} works).  Defaults to \code{1} is the
-    option is unset.
-  }
-  \item{fields}{a character vector giving the fields to extract from
-    the \code{PACKAGES} file(s) in addition to the default ones, or
-    \code{NULL} (default).  Unavailable fields result in \code{NA}
-    values.
-  }
-  \item{filters}{a character vector or list or \code{NULL} (default).
-    See section \sQuote{Filters}.
+    install.  See \code{\link{install.packages}}.
   }
 }
 \details{
-  \code{available.packages} returns a matrix of details corresponding to
-  packages currently available at one or more repositories. The
-  current list of packages is downloaded over the internet (or copied
-  from a local mirror).  By default, it returns only packages whose
-  version and OS type requirements are met by the running version of \R,
-  and only information on the latest versions or packages.
-  
   \code{old.packages} compares the information from
-  \code{available.packages} with that from \code{instPkgs} (computed by
+  \code{\link{available.packages}} with that from \code{instPkgs} (computed by
   \code{\link{installed.packages}} by default) and reports installed
   packages that have newer versions on the repositories or, if
   \code{checkBuilt = TRUE}, that were built under an earlier minor
   version of \R (for example built under 2.8.x when running \R 2.9.0).
-#ifdef windows
-  (There is no check that the version on the repository was built under
-  the current minor version of \R, but it is advertised as being
-  suitable for this version.)
-#endif
+  (For binary package types here is no check that the version on the
+  repository was built under the current minor version of \R,
+  but it is advertised as being suitable for this version.) 
 
   \code{new.packages} does the same comparison but reports uninstalled
   packages that are available at the repositories.  If \code{ask !=
   FALSE} it asks which packages should be installed in the first element
   of \code{lib.loc}.
 
-  \code{download.packages} takes a list of package names and a
-  destination directory, downloads the newest versions and saves them in
-  \code{destdir}.  If the list of available packages is not given as
-  argument, it is obtained from repositories.  If a repository is local,
-  i.e. the URL starts with \code{"file:"}, then the packages are not
-  downloaded but used directly.  Both \code{"file:"} and
-  \code{"file:///"} are allowed as prefixes to a file path.  Use the
-  latter only for URLs: see \code{\link{url}} for their interpretation.
-  (Other forms of \samp{file://} URLs are not supported.)
-  
   The main function of the set is \code{update.packages}.  First a list
   of all packages found in \code{lib.loc} is created and compared with
   those available at the repositories.  If \code{ask = TRUE} (the
   default) packages with a newer version are reported and for each one
-  the user can specify if it should be updated.
-#ifdef unix
-  If so, the package sources are downloaded from the repositories and
-  installed in the respective library path (or \code{instlib}
-  if specified) using the \R \code{\link{INSTALL}} mechanism.
-#endif
-#ifdef windows
-  If so, the pre-compiled packages are downloaded from the repositories
-  and installed in the respective library path (or \code{instlib} if
-  specified).
-#endif
+  the user can specify if it should be updated.  If so the packages are
+  downloaded from the repositories and installed in the respective
+  library path (or \code{instlib} if specified).
 
-  \code{install.packages} can be used to install new packages. It takes
-  a vector of names and a destination library, downloads the packages
-  from the repositories and installs them.  (If the library is omitted
-  it defaults to the first directory in \code{.libPaths()}, with a
-  warning if there is more than one.)  If \code{lib} is omitted or is of
-  length one and is not a (group) writeable directory, the code offers
-  to create a personal library tree (the first element of
-  \code{Sys.getenv("R_LIBS_USER")}) and install there.
-#ifdef windows
-  Detection of a writeable directory is problematic on Windows: see the
-  Note section.
-#endif
-  
-#ifdef unix
-  If a repository is used (rather than local \file{.tar.gz} files),
-  an attempt is made to install the packages in an order that respects
-  their dependencies.  This does assume that all the entries in
-  \code{lib} are on the default library path for installs (set by
-  \env{R_LIBS}). 
-#endif
-
-  \code{contrib.url} adds the appropriate type-specific path within a
-  repository to each URL in \code{repos}.
-
-  For \code{install.packages}, \code{destdir}
-  is the directory to which packages will be downloaded.  If it is
-  \code{NULL} (the default) a directory \code{downloaded_packages} of
-  the session temporary directory will be used (and the files will be
-  deleted at the end of the session).
-  
-  If \code{repos} or \code{contriburl} is a vector of length greater than
-  one, the newest version of the package compatible with this version of \R
-  is fetched from the first repository on the list within which it is found.
-#ifdef windows
-  
-  Using packages with \code{type = "source"} works on Windows provided
-  the package contains no C/C++/Fortran code that needs compilation,
-  Otherwise you will need to have installed the Rtools collection as
-  described in the \sQuote{R for Windows FAQ} \emph{and} you must have the
-  \env{PATH} set up as required by the Rtools.
-#endif
+  For how the list of suitable available packages is determined see
+  \code{\link{available.packages}}.  \code{available = NULL} make a call
+  to \code{available.packages(contriburl = contriburl, method = method)}
+  and hence by default filters on \R version, OS type and removes
+  duplicates.
 }
 \value{
-  For \code{available.packages}, a matrix with one row per package, row
-  names the package names and column names \code{"Package"},
-  \code{"Version"}, \code{"Priority"}, \code{"Depends"},
-  \code{"Imports"}, \code{"LinkingTo"}, \code{"Suggests"},
-  \code{"Enhances"}, \code{"OS_type"}, \code{"License"}, \code{"File"}
-  and \code{"Repository"}.  Additional columns can be specified using
-  the \code{fields} argument.
-
+  \code{update.packages} returns \code{NULL} invisibly.
+  
   For \code{old.packages}, \code{NULL} or a matrix with one row per
   package, row names the package names and column names
   \code{"Package"}, \code{"LibPath"}, \code{"Installed"} (the version),
@@ -303,90 +130,24 @@ contrib.url(repos, type = getOption("pkgType"))
   \code{"Repository"}.
   
   For \code{new.packages} a character vector of package names,
-  \emph{after} any have been installed.
-
-  For \code{download.packages}, a two-column matrix of names and
-  destination file names, for those packages successfully downloaded.
-  If packages are not available or there is a problem with the download,
-  suitable warnings are given.
-
-  \code{install.packages} and \code{update.packages} have no return value.
-}
-\section{Filters}{
-  As from \R 2.10.0 \code{available.packages} has an argument
-  \code{filters} used to select which of the packages on the
-  repositories are reported.  It is called with its default value
-  (\code{NULL}) by functions such as \code{install.packages}: this value
-  corresponds to \code{\link{getOption}("available_packages_filters")} and
-  to \code{c("R_version", "OS_type", "duplicates")} if that is unset or
-  set to \code{NULL}.
-
-  The built-in filters are
-  \describe{
-    \item{\code{"R_version"}}{exclude packages whose \R version
-      requirements are not met}
-    \item{\code{"OS_type"}}{exclude packages whose OS requirement is
-      incompatible with this version of \R: that is exclude
-      Windows-only packages on a Unix-alike platform
-      and \emph{vice versa}.}
-    \item{\code{"duplicates"}}{only report the latest version where more
-      than one version is available, and only report the first-named
-      repository with the latest version is that is in more than one
-      repository.}
-    \item{\code{"license/FOSS"}}{include only packages for which
-      installation can proceed solely based on packages which can be
-      verified as Free or Open Source Software (FOSS, e.g.,
-      \url{http://en.wikipedia.org/wiki/FOSS}) employing the available
-      license specifications.  Thus both the package and any packages
-      that it depends on to load need to be \emph{known to be} FOSS.}
-  }
-  If all the filters are from this set they can be specified as a
-  character vector; otherwise \code{filters} should be a list with
-  elements which are character strings, user-defined function or
-  \code{add = TRUE}. 
-
-  User-defined filters are functions which take a single argument, a
-  matrix of the form returned by by \code{available.packages}, and
-  return a matrix with a subset of the rows of the argument.
-
-  The special \sQuote{filter} \code{add=TRUE} appends the other elements
-  of the filter list to the default filters.
+  \emph{after} any selected \emph{via} \code{ask} have been installed.
 }
 \section{Warning}{
-  Take care when using \code{dependencies} with \code{update.packages},
+  Take care when using \code{dependencies} (passed to
+  \code{\link{install.packages}}) with \code{update.packages},
   for it is unclear where new dependencies should be installed.  The
   current implementation will only allow it if all the packages to be
   updated are in a single library, when that library will be used.
-
-  You are advised to run \code{update.packages} before
-  \code{install.packages} to ensure that any installed dependencies have
-  their latest versions.
 }
-#ifdef unix
-\note{
-  Some binary distributions of \R have \code{INSTALL} in a separate
-  bundle, e.g. an \code{R-devel} RPM.  \code{install.packages} will
-  give an error if called with \code{type = "source"} on such a system.
-}
-#endif
-#ifdef windows
-\note{
-  \code{install.packages} tries to detect if you have write permission
-  on the library directories specified, but Windows reports unreliably.
-  If there is only one library directory (the default), \R even tries to
-  find out by creating a test directory, but even this need not be the
-  whole story.  Under Windows Vista you may have permission to write in
-  a library directory but lack permission to write binary files (such as
-  \file{.dll} files) there.  See the \sQuote{R for Windows FAQ} for workarounds.
-}
-#endif
 \seealso{
-  \code{\link{installed.packages}}, \code{\link{remove.packages}}
+  \code{\link{install.packages}},
+  \code{\link{available.packages}}, \code{\link{download.packages}},
+  \code{\link{installed.packages}}, \code{\link{contrib.url}}.
   
   See \code{\link{download.file}} for how to handle proxies and
   other options to monitor file transfers.
 
-  \code{\link{INSTALL}}, \code{\link{REMOVE}},
+  \code{\link{INSTALL}}, \code{\link{REMOVE}}, \code{\link{remove.packages}},
   \code{\link{library}}, \code{\link{.packages}}, \code{\link{read.dcf}}
 
   The \sQuote{R Installation and Administration} manual for how to 

@@ -58,7 +58,9 @@ installed.packages(lib.loc = NULL, priority = NULL,
   argument.
 }
 \seealso{
-  \code{\link{update.packages}}, \code{\link{INSTALL}}, \code{\link{REMOVE}}.
+  \code{\link{update.packages}},
+  \code{\link{install.packages}},
+  \code{\link{INSTALL}}, \code{\link{REMOVE}}.
 }
 \examples{
 str(ip <- installed.packages(priority = "high"))
