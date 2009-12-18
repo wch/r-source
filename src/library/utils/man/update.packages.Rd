@@ -166,7 +166,7 @@ contrib.url(repos, type = getOption("pkgType"))
   \item{type}{character, indicating the type of package to download and
     install.
     
-    Possible values except on Windowsare \code{"source"} (the default
+    Possible values except on Windows are \code{"source"} (the default
     except under the CRAN Mac OS X build), \code{"mac.binary"} and
     \code{"win.binary"} (which can be downloaded but not installed).
 
@@ -224,7 +224,7 @@ contrib.url(repos, type = getOption("pkgType"))
   current list of packages is downloaded over the internet (or copied
   from a local mirror).  By default, it returns only packages whose
   version and OS type requirements are met by the running version of \R,
-  and only information on the latest versions or packages.
+  and only information on the latest versions of packages.
   
   \code{old.packages} compares the information from
   \code{available.packages} with that from \code{instPkgs} (computed by
