@@ -42,9 +42,6 @@ BUG FIXES
     o	Help links containing special characters (e.g. "?") were not 
     	generated correctly when rendered in HTML. (PR#14155)
 
-    o	Help links containing special characters (e.g. "?") were not
-	generated correctly when rendered in HTML. (PR#14155)
-
     o	lchoose(a,k) no longer wrongly gives NaN for negative a.
 
 
