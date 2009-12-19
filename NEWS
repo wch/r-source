@@ -187,6 +187,8 @@ NEW FEATURES
 	package is attached are now more compact, using strwrap()
 	instead of one object per line.
 
+    o	print.rle() gains argument 'prefix'.
+
 
 DEPRECATED & DEFUNCT
 
@@ -239,10 +241,9 @@ BUG FIXES
 	signature could fail, treating '...' as an ordinary symbol.
 	This has been fixed, for the known cases.
 
-
-    o   ks.test() could give a p-value that was off by one observation
-        due to rounding error in the C code. 
-        (reported by allwright@maths.ox.ac.uk)
+    o	ks.test() could give a p-value that was off by one observation
+	due to rounding error in the C code.
+	(reported by allwright@maths.ox.ac.uk)
 
 
 

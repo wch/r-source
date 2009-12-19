@@ -1,6 +1,6 @@
 % File src/library/base/man/rle.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{rle}
@@ -16,11 +16,16 @@
 \usage{
 rle(x)
 inverse.rle(x, \dots)
+
+\method{print}{rle}(x, digits = getOption("digits"), prefix = "", ...)
 }
 \arguments{
   \item{x}{an atomic vector for \code{rle()}; an object of class
     \code{"rle"} for \code{inverse.rle()}.}
-  \item{\dots}{further arguments which are ignored in \R.}
+  \item{\dots}{further arguments; ignored here.}
+  \item{digits}{number of significant digits for printing, see
+    \code{\link{print.default}}.}
+  \item{prefix}{character string, prepended to each printed line.}
 }
 \details{
   Missing values are regarded as unequal to the previous value, even if
@@ -47,6 +52,7 @@ rle(x)
 z <- c(TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,TRUE,TRUE,TRUE)
 rle(z)
 rle(as.character(z))
+print(rle(z), sep = "..| ")
 
 stopifnot(x == inverse.rle(rle(x)),
           z == inverse.rle(rle(z)))
