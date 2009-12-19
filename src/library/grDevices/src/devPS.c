@@ -6281,9 +6281,11 @@ static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
     R_GE_linejoin newljoin = gc->ljoin;
     double newlmitre = gc->lmitre;
 
-    if (pd->current.lty != newlty || pd->current.lwd != newlwd) {
+    if (pd->current.lty != newlty || pd->current.lwd != newlwd ||
+        pd->current.lend != newlend) {
 	pd->current.lwd = newlwd;
 	pd->current.lty = newlty;
+        pd->current.lend = newlend;
 	fprintf(pd->pdffp, "%.2f w\n", newlwd * 0.75);
 	/* process lty : */
 	for(i = 0; i < 8 && newlty & 15 ; i++) {
