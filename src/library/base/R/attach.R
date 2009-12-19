@@ -58,10 +58,18 @@ attach <- function(what, pos = 2, name = deparse(substitute(what)),
                                         inherits = FALSE))
                 same <- same[is_fn1 == is_fn2]
                 if(length(same)) {
-                    cat("\n\tThe following object(s) are masked",
-                        if (i < db.pos) "_by_" else "from", sp[i],
-                        if (sum(sp == sp[i]) > 1L) paste("( position", i, ")"),
-                        ":\n\n\t", same, "\n\n")
+                    objs <- strwrap(paste(same, collapse=", "), indent=4,
+                                    exdent=4)
+                    pkg <-
+                        if (sum(sp == sp[i]) > 1L) {
+                            sprintf("%s (position %d)", sp[i], i)
+                        } else {
+                            sp[i]
+                        }
+                    msg <- sprintf("The following object(s) are masked %s '%s':\n\n%s\n",
+                                   if (i < db.pos) "_by_" else "from",
+                                   pkg, paste(objs, collapse="\n"))
+                    cat(msg)
                 }
             }
         }

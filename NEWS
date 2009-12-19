@@ -182,6 +182,10 @@ NEW FEATURES
 	now an error, not just a warning.  Thus option "warnEscapes"
 	is no longer needed.
 
+    o   Informational messages about masked objects displaying when a
+        package is attached are now more compact, using strwrap
+        instead of one object per line.
+
 
 DEPRECATED & DEFUNCT
 

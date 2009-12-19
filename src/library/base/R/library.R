@@ -159,10 +159,13 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                                        package),
                                               domain = NA)
                     }
-		    packageStartupMessage(paste(
-                                                "\n\tThe following object(s) are masked",
-                                                if (i < lib.pos) "_by_" else "from", sp[i],
-                                                ":\n\n\t", paste(same, collapse=",\n\t "), "\n"))
+
+                    objs <- strwrap(paste(same, collapse=", "), indent=4,
+                                    exdent=4)
+                    msg <- sprintf("The following object(s) are masked %s '%s':\n\n%s\n",
+                                   if (i < lib.pos) "_by_" else "from",
+                                   sp[i], paste(objs, collapse="\n"))
+		    packageStartupMessage(msg)
                 }
             }
         }
