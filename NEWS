@@ -180,11 +180,12 @@ NEW FEATURES
 
     o	Unrecognized escapes and embedded nuls in character strings are
 	now an error, not just a warning.  Thus option "warnEscapes"
-	is no longer needed.
+	is no longer needed.  rawToChar() now removes trailing nuls
+	silently, but other embedded nuls become errors.
 
-    o   Informational messages about masked objects displaying when a
-        package is attached are now more compact, using strwrap
-        instead of one object per line.
+    o	Informational messages about masked objects displayed when a
+	package is attached are now more compact, using strwrap()
+	instead of one object per line.
 
 
 DEPRECATED & DEFUNCT
