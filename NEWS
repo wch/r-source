@@ -189,6 +189,10 @@ NEW FEATURES
 
     o	print.rle() gains argument 'prefix'.
 
+    o	download.file() gains a "curl" method, mainly for use on
+	platforms which have curl but not wget, but also for some
+	hard-to-access URLs.
+
 
 DEPRECATED & DEFUNCT
 

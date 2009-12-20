@@ -22,7 +22,7 @@ download.file <- function(url, destfile, method,
                getOption("download.file.method"),
                "auto")
     else
-        match.arg(method, c("auto", "internal", "wget", "lynx"))
+        match.arg(method, c("auto", "internal", "wget", "curl", "lynx"))
 
     if(missing(mode) & length(grep("\\.(gz|bz2|tgz|zip)$", url))) mode <- "wb"
     if(method == "auto") {
@@ -33,6 +33,8 @@ download.file <- function(url, destfile, method,
             url <- URLdecode(url)
         } else if(system("wget --help", invisible=TRUE) == 0L)
             method <- "wget"
+        else if(system("curl --help", invisible=TRUE) == 0L)
+            method <- "curl"
         else if(shell("lynx -help", invisible=TRUE) == 0L)
             method <- "lynx"
         else
@@ -41,12 +43,16 @@ download.file <- function(url, destfile, method,
     if(method == "internal")
         status <- .Internal(download(url, destfile, quiet, mode, cacheOK))
     else if(method == "wget") {
-        extra <- if(quiet) " --quiet" else ""
+        extra <- if(quiet) "--quiet" else ""
         if(!cacheOK) extra <- paste(extra, "--cache=off")
-        status <- system(paste("wget", extra, url, "-O",
-                               path.expand(destfile)))
+        status <- system(paste("wget", extra, url,
+                               "-O", path.expand(destfile)))
+    } else if(method == "curl") {
+        extra <- if(quiet) "-s -S" else ""
+        status <- system(paste("curl", extra, url,
+                               " -o", path.expand(destfile)))
     } else if(method == "lynx")
-        status <- shell(paste("lynx -dump", url, ">",
+        status <- shell(paste("lynx -dump", shQuote(url), ">",
                               path.expand(destfile)))
 
     if(status > 0L)

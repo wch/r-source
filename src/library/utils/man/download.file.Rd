@@ -24,8 +24,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     file is saved.  Tilde-expansion is performed.}
 
   \item{method}{Method to be used for downloading files.  Currently
-    download methods \code{"internal"}, \code{"wget"} and \code{"lynx"}
-    are available, and there is a value \code{"auto"}: see
+    download methods \code{"internal"}, \code{"wget"}, \code{"curl"}
+    and \code{"lynx"} are available, and there is a value \code{"auto"}: see
     \sQuote{Details}.  The method can also be set through the option
     \code{"download.file.method"}: see \code{\link{options}()}.}
 
@@ -54,7 +54,8 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   If \code{method = "auto"} is chosen (the default), the internal method
   is chosen for \samp{file://} URLs, and for the others provided
   \code{\link{capabilities}("http/ftp")} is true (which it almost always
-  is).  Otherwise methods \code{"wget"} and \code{"lynx"} are tried in turn.
+  is).  Otherwise methods \code{"wget"}, \code{"curl"} and \code{"lynx"}
+  are tried in turn.
 #endif
 #ifdef windows
   If \code{method = "auto"} is chosen (the default), the internal method
@@ -111,7 +112,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 #endif
 #ifdef unix
   A progress bar tracks the transfer. If the file length is known, an
-  equals represents 2\% of the transfer completed: otherwise a dot
+  equals sign represents 2\% of the transfer completed: otherwise a dot
   represents 10Kb.
 #endif
 
@@ -120,12 +121,16 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   configuration file for \code{wget}.
 }
 \note{
-  Methods \code{"wget"} and \code{"lynx"} are for historical
-  compatibility.  They will block all other activity on the \R process.
+  Methods \code{"wget"} and \code{"lynx"} are mainly for historical
+  compatibility, but they and \code{"curl"} can be used for URLs
+  (e.g. \samp{https://} URLs or those than use cookies) which the
+  internal method does not support.  They will block all other activity
+  on the \R process.
 
-  For methods \code{"wget"} and \code{"lynx"} a system call is made to
-  the tool given by \code{method}, and the respective program must be
-  installed on your system and be in the search path for executables.
+  For methods \code{"wget"}, \code{"curl"}and \code{"lynx"} a system
+  call is made to the tool given by \code{method}, and the respective
+  program must be installed on your system and be in the search path for
+  executables.
 }
 \section{Setting Proxies}{
   This applies to the internal code only.
