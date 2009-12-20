@@ -46,8 +46,7 @@ SEXP attribute_hidden do_charToRaw(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, x = CAR(args);
-    int i, j, nc = LENGTH(x), multiple, len;
-    char buf[2];
+    int i, j, nc = LENGTH(x), multiple;
 
     checkArity(op, args);
     if (!isRaw(x))
@@ -56,6 +55,7 @@ SEXP attribute_hidden do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
     if (multiple == NA_LOGICAL)
 	error(_("argument 'multiple' must be TRUE or FALSE"));
     if (multiple) {
+	char buf[2];
 	buf[1] = '\0';
 	PROTECT(ans = allocVector(STRSXP, nc));
 	for (i = 0; i < nc; i++) {
