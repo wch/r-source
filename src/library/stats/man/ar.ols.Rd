@@ -76,7 +76,8 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action = na.fail,
     of the series used in fitting and for use in prediction.}
   \item{x.intercept}{The intercept in the model for
     \code{x - x.mean}, or zero if \code{intercept} is false.}
-  \item{aic}{The value of the \code{aic} argument.}
+  \item{aic}{The differences in AIC between each model and the
+    best-fitting model.  Note that the latter can have an AIC of \code{-Inf}.}
   \item{n.used}{The number of observations in the time series.}
   \item{order.max}{The value of the \code{order.max} argument.}
   \item{partialacf}{\code{NULL}.  For compatibility with \code{ar}.}
