@@ -15,7 +15,7 @@
     \item{\code{signature(object = "mle")}}{Print simple summary of
       \code{mle} object.  Just the coefficients and the call.}
     \item{\code{signature(object = "summary.mle")}}{Shows call, table of
-      coefficients and standard errors, and \eqn{-2 \log L}.}
+      coefficients and standard errors, and \eqn{-2 \log L}{-2 log L}.}
   }
 }
 \keyword{methods}

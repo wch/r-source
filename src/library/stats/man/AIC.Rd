@@ -12,7 +12,8 @@
   can be obtained, according to the formula
   \eqn{-2 \mbox{log-likelihood} + k n_{par}}{-2*log-likelihood + k*npar},
   where \eqn{n_{par}}{npar} represents the number of parameters in the
-  fitted model, and \eqn{k = 2} for the usual AIC, or \eqn{k = \log(n)}
+  fitted model, and \eqn{k = 2} for the usual AIC, or
+  \eqn{k = \log(n)}{k = log(n)}
   (\eqn{n} the number of observations) for the so-called BIC or SBC
   (Schwarz's Bayesian criterion).
 }
@@ -61,7 +62,7 @@ lm1 <- lm(Fertility ~ . , data = swiss)
 AIC(lm1)
 stopifnot(all.equal(AIC(lm1),
                     AIC(logLik(lm1))))
-## a version of BIC or Schwarz' BC :
+## a version of BIC or Schwarz's BC :
 AIC(lm1, k = log(nrow(swiss)))
 }
 \keyword{models}
