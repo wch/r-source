@@ -29,7 +29,7 @@ rexp(n, rate = 1)
   \item{rate}{vector of rates.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
-    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
+    \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
   \code{dexp} gives the density,
@@ -41,9 +41,8 @@ rexp(n, rate = 1)
   If \code{rate} is not specified, it assumes the default value of
   \code{1}.
 
-  The exponential distribution with rate \eqn{\lambda}{lambda} has density
-  \deqn{f(x) = \lambda {e}^{- \lambda x}}{f(x) = lambda e^(- lambda x)}
-  for \eqn{x \ge 0}{x >= 0}.
+  The exponential distribution with rate \eqn{\lambda} has density
+  \deqn{f(x) = \lambda {e}^{- \lambda x}} for \eqn{x \ge 0}.
 }
 \source{
   \code{dexp}, \code{pexp} and \code{qexp} are all calculated

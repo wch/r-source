@@ -63,8 +63,8 @@ quantile(x, \dots)
   consecutive order statistics. Sample quantiles of type \eqn{i} 
   are defined by:
   \deqn{Q_{i}(p) = (1 - \gamma)x_{j} + \gamma x_{j+1}}{Q[i](p) = (1 - gamma) x[j] + gamma x[j+1],}
-  where \eqn{1 \le i \le 9}{1 <= i <= 9},
-  \eqn{\frac{j - m}{n} \le p < \frac{j - m + 1}{n}}{(j-m)/n <= p < (j-m+1)/n},
+  where \eqn{1 \le i \le 9},
+  \eqn{\frac{j - m}{n} \le p < \frac{j - m + 1}{n}}{(j-m)/n \le p < (j-m+1)/n},
   \eqn{x_{j}}{x[j]} is the \eqn{j}th order statistic, \eqn{n} is the
   sample size, the value of \eqn{\gamma}{gamma} is a function of
   \eqn{j = \lfloor np + m\rfloor}{j = floor(np + m)} and \eqn{g = np + m - j}, 

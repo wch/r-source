@@ -29,7 +29,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
     See \sQuote{Details}.}
   \item{control}{a list with named components for low level algorithm
     control.  At present the only one used is \code{"mult"}, a positive
-    integer \eqn{>= 2} with default 30 used only for larger than
+    integer \eqn{\ge 2} with default 30 used only for larger than
     \eqn{2 \times 2}{2 by 2} tables.  This says how many times as much
     space should be allocated to paths as to keys: see file
     \file{fexact.c} in the sources of this package.}

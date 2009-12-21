@@ -90,10 +90,16 @@ htmlify <- function(x) {
     x
 }
 
-vhtmlify <- function(x) { # code version
+vhtmlify <- function(x, inEqn = FALSE) { # code version
     x <- fsub("&", "&amp;", x)
     x <- fsub("<", "&lt;", x)
     x <- fsub(">", "&gt;", x)
+    ## http://htmlhelp.com/reference/html40/entities/symbols.html
+    if(inEqn) {
+        x <- psub("\\\\(Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega|alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|le|ge|sum|prod)", "&\\1;", x)
+        x <- psub("\\\\(dots|ldots)", "&\\hellip;", x)
+        x <- fsub("\\infty", "&\\infin;", x)
+    }
     x
 }
 
@@ -179,6 +185,9 @@ Rd2HTML <-
 
     pendingClose <- pendingOpen <- character(0)  # Used for infix methods
 
+    inEqn <- FALSE		# Should we do edits needed in an eqn?
+
+
 ### These correspond to HTML wrappers
     HTMLTags <- c("\\bold"="B",
     	          "\\cite"="CITE",
@@ -227,19 +236,6 @@ Rd2HTML <-
 	if (isBlankLineRd(x)) "</p>\n<p>\n"
 	else if (start == 1) psub("^\\s+", "", x)
         else x
-    }
-
-    ## unused
-    HTMLeqn <- function(x)
-    {
-        x <- htmlify(x)
-        ## historical escapes for math
-        x <- psub("\\\\(Gamma|alpha|pi|mu|sigma|Sigma|lambda|beta|gamma|epsilon|phi|psi)", "&\\1;", x)
-        x <- fsub("\\left(", "(", x)
-        x <- fsub("\\right", ")", x)
-        x <- fsub("\\le", "&lt;=", x)
-        x <- fsub("\\ge", "&gt;=", x)
-        x
     }
 
     writeWrapped <- function(tag, block) {
@@ -367,7 +363,7 @@ Rd2HTML <-
     writeBlock <- function(block, tag, blocktag) {
 	switch(tag,
                UNKNOWN =,
-               VERB =,
+               VERB = of1(vhtmlify(block, inEqn)),
                RCODE = of1(vhtmlify(block)),
                TEXT = of1(if(blocktag == "\\command") vhtmlify(block) else addParaBreaks(htmlify(block), blocktag)),
                COMMENT = {},
@@ -418,17 +414,21 @@ Rd2HTML <-
                "\\dontrun"= writeDR(block, tag),
                "\\enc" = writeContent(block[[1L]], tag),
                "\\eqn" = {
+                   inEqn <<- TRUE
                    of1("<i>")
                    block <- block[[length(block)]];
                    ## FIXME: space stripping needed: see Special.html
                    writeContent(block, tag)
                    of1("</i>")
+                   inEqn <<- FALSE
                },
                "\\deqn" = {
+                   inEqn <<- TRUE
                    of1('</p><p align="center"><i>')
                    block <- block[[length(block)]];
                    writeContent(block, tag)
                    of1('</i></p><p>')
+                   inEqn <<- FALSE
                },
                "\\dontshow" =,
                "\\testonly" = {}, # do nothing

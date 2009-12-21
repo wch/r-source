@@ -29,7 +29,7 @@
   \item{na.print}{a character string which is used to indicate
     \code{\link{NA}} values in printed output, or \code{NULL}
     (see \sQuote{Details}).}
-  \item{print.gap}{a non-negative integer \eqn{\le 1024}{<= 1024},
+  \item{print.gap}{a non-negative integer \eqn{\le 1024},
     or \code{NULL} (meaning 1), giving the spacing between adjacent
     columns in printed vectors, matrices and arrays.}
   \item{right}{logical, indicating whether or not strings should be

@@ -84,7 +84,7 @@ lfactorial(x)
   The functions \code{choose} and \code{lchoose} return binomial
   coefficients and the logarithms of their absolute values.  Note that
   \code{choose(n,k)} is defined for all real numbers \eqn{n} and integer
-  \eqn{k}.  For \eqn{k \ge 1}{k >= 1} as
+  \eqn{k}.  For \eqn{k \ge 1} as
   \eqn{n(n-1)\cdots(n-k+1) / k!}{n(n-1)...(n-k+1) / k!},
   as \eqn{1} for \eqn{k = 0} and as \eqn{0} for negative \eqn{k}.
   Non-integer values of \code{k} are rounded to an integer, with a warning.

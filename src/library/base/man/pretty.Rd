@@ -40,12 +40,12 @@ pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
 \details{
   \code{pretty} ignores non-finite values in \code{x}.
   
-  Let \code{d <- max(x) - min(x)} \eqn{\ge 0}{>= 0}.
+  Let \code{d <- max(x) - min(x)} \eqn{\ge 0}.
   If \code{d} is not (very close) to 0, we let \code{c <- d/n},
   otherwise more or less \code{c <- max(abs(range(x)))*shrink.sml / min.n}.
   Then, the \emph{10 base} \code{b} is
   \eqn{10^{\lfloor{\log_{10}(c)}\rfloor}}{10^(floor(log10(c)))} such
-  that \eqn{b \le c < 10b}{b <= c < 10b}.
+  that \eqn{b \le c < 10b}.
 
   Now determine the basic \emph{unit} \eqn{u} as one of
   \eqn{\{1,2,5,10\} b}, depending on \eqn{c/b \in [1,10)} and the two

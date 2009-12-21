@@ -33,7 +33,7 @@ attr.all.equal(target, current,
   \item{current}{other \R object, to be compared with \code{target}.}
   \item{\dots}{Further arguments for different methods, notably the
     following two, for numerical comparison:}
-  \item{tolerance}{numeric \eqn{\ge}{>=} 0.  Differences smaller than
+  \item{tolerance}{numeric \eqn{\ge} 0.  Differences smaller than
     \code{tolerance} are not considered.}
   \item{scale}{numeric scalar > 0 (or \code{NULL}). See \sQuote{Details}.}
   \item{check.attributes}{logical indicating if the

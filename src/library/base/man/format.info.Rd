@@ -32,7 +32,7 @@ format.info(x, digits = NULL, nsmall = 0)
   For numeric vectors:
   \item{r[1]}{width (in characters) used by \code{format(x)}}
   \item{r[2]}{number of digits after decimal point.}
-  \item{r[3]}{in \code{0:2}; if \eqn{\ge}{>=}\code{1}, \emph{exponential}
+  \item{r[3]}{in \code{0:2}; if \eqn{\ge}\code{1}, \emph{exponential}
     representation would be used, with exponent length of \code{r[3]+1}.}
 
   For a complex vector the first three elements refer to the real parts,

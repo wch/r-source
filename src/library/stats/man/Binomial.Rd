@@ -30,7 +30,7 @@ rbinom(n, size, prob)
   \item{prob}{probability of success on each trial.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
-    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
+    \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
   \code{dbinom} gives the density, \code{pbinom} gives the distribution
@@ -51,7 +51,7 @@ rbinom(n, size, prob)
   \eqn{p(x)} is computed using Loader's algorithm, see the reference below.
 
   The quantile is defined as the smallest value \eqn{x} such that
-  \eqn{F(x) \ge p}{F(x) >= p}, where \eqn{F} is the distribution function.
+  \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
 }
 \seealso{
   \code{\link{dnbinom}} for the negative binomial, and

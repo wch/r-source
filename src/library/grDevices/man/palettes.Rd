@@ -22,7 +22,7 @@ topo.colors(n, alpha = 1)
 cm.colors(n, alpha = 1)
 }
 \arguments{
-  \item{n}{the number of colors (\eqn{\ge 1}{>= 1}) to be in the
+  \item{n}{the number of colors (\eqn{\ge 1}) to be in the
     palette.}
   \item{s,v}{the \sQuote{saturation} and \sQuote{value} to be used
     to complete the HSV color descriptions.}

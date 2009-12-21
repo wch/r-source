@@ -193,6 +193,9 @@ NEW FEATURES
 	platforms which have curl but not wget, but also for some
 	hard-to-access URLs.
 
+   o	\eqn and \deqn will render in HTML (and convert to text)
+	upper- and lower-case Greek letters, \ldots, \dots, \ge and \le.
+
 
 DEPRECATED & DEFUNCT
 

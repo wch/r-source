@@ -53,11 +53,11 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
     Yhat[t+h] = a[t] + h * b[t] + s[t + 1 + (h - 1) mod p],}
   where \eqn{a[t]}, \eqn{b[t]} and \eqn{s[t]} are given by
   \deqn{a[t] = \alpha (Y[t] - s[t-p])  + (1-\alpha) (a[t-1] + b[t-1])}{
-  a[t] = alpha (Y[t] - s[t-p])  + (1-alpha) (a[t-1] + b[t-1])}
+  a[t] = \alpha (Y[t] - s[t-p])  + (1-\alpha) (a[t-1] + b[t-1])}
   \deqn{b[t] = \beta (a[t] -a[t-1]) + (1-\beta)  b[t-1]}{
-  b[t] = beta (a[t] - a[t-1]) + (1-beta) b[t-1]}
+  b[t] = \beta (a[t] - a[t-1]) + (1-\beta) b[t-1]}
   \deqn{s[t] = \gamma (Y[t] - a[t])   + (1-\gamma) s[t-p]}{
-  s[t] = gamma (Y[t] - a[t]) + (1-gamma) s[t-p]}
+  s[t] = \gamma (Y[t] - a[t]) + (1-\gamma) s[t-p]}
 
   The multiplicative Holt-Winters prediction function (for time series
   with period length p) is
@@ -65,14 +65,14 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
     Yhat[t+h] = (a[t] + h * b[t]) * s[t + 1 + (h - 1) mod p],}
   where \eqn{a[t]}, \eqn{b[t]} and \eqn{s[t]} are given by
   \deqn{a[t] = \alpha (Y[t] / s[t-p])  + (1-\alpha) (a[t-1] + b[t-1])}{
-  a[t] = alpha (Y[t] / s[t-p])  + (1-alpha) (a[t-1] + b[t-1])}
+  a[t] = \alpha (Y[t] / s[t-p])  + (1-\alpha) (a[t-1] + b[t-1])}
   \deqn{b[t] = \beta (a[t] - a[t-1]) + (1-\beta) b[t-1]}{
-  b[t] = beta (a[t] - a[t-1]) + (1-beta) b[t-1]}
+  b[t] = \beta (a[t] - a[t-1]) + (1-\beta) b[t-1]}
   \deqn{s[t] = \gamma (Y[t] / a[t])   + (1-\gamma) s[t-p]}{
-  s[t] = gamma  (Y[t] / a[t])  + (1-gamma) s[t-p]}
+  s[t] = \gamma  (Y[t] / a[t])  + (1-\gamma) s[t-p]}
 
-  The function tries to find the optimal values of \eqn{\alpha}{alpha} and/or
-  \eqn{\beta}{beta} and/or \eqn{\gamma}{gamma} by minimizing the squared
+  The function tries to find the optimal values of \eqn{\alpha} and/or
+  \eqn{\beta} and/or \eqn{\gamma} by minimizing the squared
   one-step prediction error if they are omitted. \code{optimize} will be
   used for the univariate case, and \code{optim} else.
 

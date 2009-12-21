@@ -15,7 +15,7 @@ gray.colors(n, start = 0.3, end = 0.9, gamma = 2.2)
 grey.colors(n, start = 0.3, end = 0.9, gamma = 2.2)
 }
 \arguments{
-  \item{n}{the number of gray colors (\eqn{\ge 1}{>= 1}) to be in the
+  \item{n}{the number of gray colors (\eqn{\ge 1}) to be in the
     palette.}
   \item{start}{starting gray level in the palette (should be between
     \code{0} and \code{1} where zero indicates \code{"black"} and one

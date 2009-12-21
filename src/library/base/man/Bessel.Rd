@@ -24,7 +24,7 @@ besselY(x, nu)
   \eqn{I_{\nu}}{I(nu)} and \eqn{K_{\nu}}{K(nu)}.
 }
 \arguments{
-  \item{x}{numeric, \eqn{\ge 0}{>= 0}.}
+  \item{x}{numeric, \eqn{\ge 0}.}
 
   \item{nu}{numeric; The \emph{order} (maybe fractional!) of the
     corresponding Bessel function.}

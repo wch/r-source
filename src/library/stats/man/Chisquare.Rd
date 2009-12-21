@@ -31,7 +31,7 @@ rchisq(n, df, ncp=0)
   \item{ncp}{non-centrality parameter (non-negative).}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
-    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
+    \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
   \code{dchisq} gives the density, \code{pchisq} gives the distribution
@@ -41,29 +41,28 @@ rchisq(n, df, ncp=0)
   Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \details{
-  The chi-squared distribution with \code{df}\eqn{= n \ge 0}{= n >= 0}
+  The chi-squared distribution with \code{df}\eqn{= n \ge 0}
   degrees of freedom has density
   \deqn{f_n(x) = \frac{1}{{2}^{n/2} \Gamma (n/2)} {x}^{n/2-1} {e}^{-x/2}}{f_n(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
   for \eqn{x > 0}.  The mean and variance are \eqn{n} and \eqn{2n}.
 
   The non-central chi-squared distribution with \code{df}\eqn{= n}
   degrees of freedom and non-centrality parameter \code{ncp}
-  \eqn{= \lambda}{= lambda} has density
+  \eqn{= \lambda} has density
   \deqn{
     f(x) = e^{-\lambda / 2}
-      \sum_{r=0}^\infty \frac{(\lambda/2)^r}{r!}\, f_{n + 2r}(x)}{f(x) = exp(-lambda/2) SUM_{r=0}^infty ((lambda/2)^r / r!) dchisq(x, df + 2r)
+      \sum_{r=0}^\infty \frac{(\lambda/2)^r}{r!}\, f_{n + 2r}(x)}{f(x) = exp(-\lambda/2) SUM_{r=0}^\infty ((\lambda/2)^r / r!) dchisq(x, df + 2r)
   }
-  for \eqn{x \ge 0}{x >= 0}.  For integer \eqn{n}, this is the distribution of
+  for \eqn{x \ge 0}.  For integer \eqn{n}, this is the distribution of
   the sum of squares of \eqn{n} normals each with variance one,
   \eqn{\lambda} being the sum of squares of the normal means; further,
   \cr
-  \eqn{E(X) = n + \lambda}{E(X) = n + lambda},
-  \eqn{Var(X) = 2(n + 2*\lambda)}{Var(X) = 2(n + 2*lambda)}, and
-  \eqn{E((X - E(X))^3) = 8(n + 3*\lambda)}{E((X - E(X))^3) = 8(n + 3*lambda)}.
+  \eqn{E(X) = n + \lambda}, \eqn{Var(X) = 2(n + 2*\lambda)}, and
+  \eqn{E((X - E(X))^3) = 8(n + 3*\lambda)}.
 
   Note that the degrees of freedom \code{df}\eqn{= n}, can be
   non-integer, and also \eqn{n = 0} which is relevant for
-  non-centrality \eqn{\lambda > 0}{lambda > 0},
+  non-centrality \eqn{\lambda > 0},
   see Johnson et al. (1995, chapter 29).
 
   Note that \code{ncp} values larger than about 1e5 may give inaccurate

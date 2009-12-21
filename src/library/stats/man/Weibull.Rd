@@ -29,7 +29,7 @@ rweibull(n, shape, scale = 1)
   \item{shape, scale}{shape and scale parameters, the latter defaulting to 1.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
-    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
+    \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
   \code{dweibull} gives the density,
@@ -42,11 +42,10 @@ rweibull(n, shape, scale = 1)
 \details{
   The Weibull distribution with \code{shape} parameter \eqn{a} and
   \code{scale} parameter \eqn{\sigma}{b} has density given by
-  \deqn{f(x) = (a/\sigma) {(x/\sigma)}^{a-1} \exp (-{(x/\sigma)}^{a})}{f(x) = (a/b) (x/b)^(a-1) exp(- (x/b)^a)}
-  for \eqn{x \ge 0}{x >= 0}.
+  \deqn{f(x) = (a/\sigma) {(x/\sigma)}^{a-1} \exp (-{(x/\sigma)}^{a})}{f(x) = (a/b) (x/b)^(a-1) exp(- (x/b)^a)} for \eqn{x \ge 0}.
   The cumulative distribution function is
   \eqn{F(x) = 1 - \exp(-{(x/\sigma)}^a)}{F(x) = 1 - exp(- (x/b)^a)}
-  on \eqn{x \ge 0}{x >= 0}, the
+  on \eqn{x \ge 0}, the
   mean is \eqn{E(X) = \sigma \Gamma(1 + 1/a)}{E(X) = b Gamma(1 + 1/a)}, and
   the \eqn{Var(X) = \sigma^2(\Gamma(1 + 2/a)-(\Gamma(1 + 1/a))^2)}{Var(X) = b^2 * (Gamma(1 + 2/a) - (Gamma(1 + 1/a))^2)}.
 }

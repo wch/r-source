@@ -106,7 +106,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
   The lower triangle of the distance matrix stored by columns in a
   vector, say \code{do}. If \code{n} is the number of
   observations, i.e., \code{n <- attr(do, "Size")}, then
-  for \eqn{i < j <= n}, the dissimilarity between (row) i and j is
+  for \eqn{i < j \le n}, the dissimilarity between (row) i and j is
   \code{do[n*(i-1) - i*(i-1)/2 + j-i]}.
   The length of the vector is \eqn{n*(n-1)/2}, i.e., of order \eqn{n^2}.
 

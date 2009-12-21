@@ -35,7 +35,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \item{log, log.p}{logical; if \code{TRUE}, probabilities/densities \eqn{p}
     are returned as \eqn{log(p)}.}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
-    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
+    \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
   \code{dgamma} gives the density,
@@ -53,7 +53,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \deqn{
     f(x)= \frac{1}{{\sigma}^{\alpha}\Gamma(\alpha)} {x}^{\alpha-1} e^{-x/\sigma}%
   }{f(x)= 1/(s^a Gamma(a)) x^(a-1) e^-(x/s)}
-  for \eqn{x \ge 0}{x >= 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{s > 0}.
+  for \eqn{x \ge 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{s > 0}.
   (Here \eqn{\Gamma(\alpha)}{Gamma(a)} is the function implemented by \R's
   \code{\link{gamma}()} and defined in its help.  Note that \eqn{a=0}
   corresponds to the trivial distribution with all mass at point 0.)

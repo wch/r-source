@@ -54,9 +54,9 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   \item{x}{the doubly centered distance matrix if \code{x.ret} is true.}
   \item{GOF}{a numeric vector of length 2, equal to say
     \eqn{(g_1,g_2)}{(g.1,g.2)}, where
-    \eqn{g_i = (\sum_{j=1}^k \lambda_j)/ (\sum_{j=1}^n T_i(\lambda_j))}{g.i = (sum{j=1..k} lambda[j]) / (sum{j=1..n} T.i(lambda[j]))},
-    where \eqn{\lambda_j}{lambda[j]} are the eigenvalues (sorted
-    decreasingly),
+    \eqn{g_i = (\sum_{j=1}^k \lambda_j)/ (\sum_{j=1}^n T_i(\lambda_j))}{g.i = (sum{j=1..k} \lambda[j]) / (sum{j=1..n} T.i(\lambda[j]))},
+    where \eqn{\lambda_j}{\lambda[j]} are the eigenvalues (sorted in
+    decreasing order),
     \eqn{T_1(v) = \left| v \right|}{T.1(v) = abs(v)}, and
     \eqn{T_2(v) = max( v, 0 )}{T.2(v) = max(v, 0)}.
   }

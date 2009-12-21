@@ -26,7 +26,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
  \item{df}{the desired equivalent number of degrees of freedom (trace of
    the smoother matrix).}
  \item{spar}{smoothing parameter, typically (but not necessarily) in
-   \eqn{(0,1]}.  The coefficient \eqn{\lambda}{lambda} of the integral of the
+   \eqn{(0,1]}.  The coefficient \eqn{\lambda} of the integral of the
    squared second derivative in the fit (penalized log likelihood)
    criterion is a monotone function of \code{spar}, see the details
    below.}
@@ -76,9 +76,9 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   \code{unique(sort(signif(x, 6)))}, and \code{y} and \code{w} are
   pooled accordingly.
 
-  The computational \eqn{\lambda}{lambda} used (as a function of
+  The computational \eqn{\lambda} used (as a function of
   \eqn{s=spar}{\code{spar}}) is
-  \eqn{\lambda = r * 256^{3 s - 1}}{lambda = r * 256^(3*spar - 1)}
+  \eqn{\lambda = r * 256^{3 s - 1}}{\lambda = r * 256^(3*spar - 1)}
   where
   \eqn{r = tr(X' W X) / tr(\Sigma)},
   \eqn{\Sigma} is the matrix given by
@@ -98,7 +98,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   If \code{spar} is missing or \code{NULL}, the value of \code{df} is used to
   determine the degree of smoothing.  If both are missing, leave-one-out
   cross-validation (ordinary or \sQuote{generalized} as determined by
-  \code{cv}) is used to determine \eqn{\lambda}{lambda}.
+  \code{cv}) is used to determine \eqn{\lambda}.
   Note that from the above relation,
 %%  lam      = r * 256^(3s - 1)
 %%  log(lam) = log(r) + (3s - 1) * log(256)
@@ -107,10 +107,10 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
 %%   = 1/3 + {log(lam) - log(r)} / {24 log(2)}
 %%   = 1/3 - log(r)/{24 log(2)} +  log(lam) / {24 log(2)}
 %%   =               s0         + 0.0601 * log(lam)
-  \code{spar} is \eqn{s = s0 + 0.0601 * \bold{\log}\lambda}{spar = s0 + 0.0601 * log(lambda)},
+  \code{spar} is \eqn{s = s0 + 0.0601 * \bold{\log}\lambda}{spar = s0 + 0.0601 * log(\lambda)},
   which is intentionally \emph{different} from the S-PLUS implementation
   of \code{smooth.spline} (where \code{spar} is proportional to
-  \eqn{\lambda}).  In \R's (\eqn{\log \lambda}{log lambda}) scale, it makes more
+  \eqn{\lambda}).  In \R's (\eqn{\log \lambda}{log \lambda}) scale, it makes more
   sense to vary \code{spar} linearly.
 
   Note however that currently the results may become very unreliable
@@ -161,7 +161,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
     between and 1 and 2.
   }
   \item{spar}{the value of \code{spar} computed or given.}
-  \item{lambda}{the value of \eqn{\lambda}{lambda} corresponding to \code{spar},
+  \item{lambda}{the value of \eqn{\lambda} corresponding to \code{spar},
     see the details above.}
   \item{iparms}{named integer(3) vector where \code{..$ipars["iter"]}
     gives number of spar computing iterations used.}

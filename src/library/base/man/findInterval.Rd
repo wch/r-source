@@ -22,7 +22,7 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
 \description{
   Find the indices of \code{x} in \code{vec}, where \code{vec} must be
   sorted (non-decreasingly); i.e., if \code{i <- findInterval(x,v)},
-  we have \eqn{v_{i_j} \le x_j < v_{i_j + 1}}{v[i[j]] <= x[j] < v[i[j] + 1]}
+  we have \eqn{v_{i_j} \le x_j < v_{i_j + 1}}{v[i[j]] \le x[j] < v[i[j] + 1]}
   where \eqn{v_0 := -\infty}{v[0] := - Inf},
   \eqn{v_{N+1} := +\infty}{v[N+1] := + Inf}, and \code{N <- length(vec)}.
   At the two boundaries, the returned index may differ by 1, depending

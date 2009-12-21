@@ -28,7 +28,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
     They can be specified by keyword or in any way which is accepted by
     \code{\link{xy.coords}}: See \sQuote{Details}.}
   \item{legend}{a character or \link{expression} vector.
-    of length \eqn{\ge 1}{>= 1} to appear in the legend.  Other
+    of length \eqn{\ge 1} to appear in the legend.  Other
     objects will be coerced by \code{\link{as.graphicsAnnot}}.}
   \item{fill}{if specified, this argument will cause boxes filled
     with the specified colors (or shaded in the specified colors)

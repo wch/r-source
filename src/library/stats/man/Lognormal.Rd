@@ -30,7 +30,7 @@ rlnorm(n, meanlog = 0, sdlog = 1)
     on the log scale with default values of \code{0} and \code{1} respectively.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
-    \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
+    \eqn{P[X \le x]}, otherwise, \eqn{P[X > x]}.}
 }
 \value{
   \code{dlnorm} gives the density,

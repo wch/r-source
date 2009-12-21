@@ -88,8 +88,7 @@ strOptions(strict.width = "no", digits.d = 3, vec.len = 4,
     formatting numeric vectors.  It defaults to the \code{formatNum}
     component of option \code{"str"}, see \dQuote{Usage} of
     \code{strOptions()} above, which is almost back compatible to \R
-    version \eqn{\le}{<=} 2.7.x, however, using \code{\link{formatC}}
-    may be slightly better.}
+    <= 2.7.x, however, using \code{\link{formatC}} may be slightly better.}
   \item{list.len}{numeric; maximum number of list elements to display
     within a level.}
   \item{\dots}{potential further arguments (required for Method/Generic

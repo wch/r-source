@@ -14,7 +14,7 @@ power(lambda = 1)
 }
 \description{
   Creates a link object based on the link function
-  \eqn{\eta = \mu ^ \lambda}{eta = mu^lambda}.
+  \eqn{\eta = \mu ^ \lambda}.
 }
 \details{
     If \code{lambda} is non-positive, it is taken as zero, and the log
