@@ -53,7 +53,7 @@ rhyper(nn, m, n, k)
   for \eqn{x = 0, \ldots, k}{x = 0, ..., k}.
 
   The quantile is defined as the smallest value \eqn{x} such that
-  \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
+  \eqn{F(x) \ge p}{F(x) >= p}, where \eqn{F} is the distribution function.
 }
 \source{
   \code{dhyper} computes via binomial probabilities, using code

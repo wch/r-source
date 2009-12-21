@@ -60,8 +60,8 @@ spectrum(x, \dots, method = c("pgram", "ar"))
   The spectrum here is defined with scaling \code{1/\link{frequency}(x)},
   following S-PLUS.  This makes the spectral density a density over the
   range \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more common
-  scaling is \eqn{2\pi} and range \eqn{(-0.5, 0.5]} (e.g., Bloomfield)
-  or 1 and range \eqn{(-\pi, \pi]}.
+  scaling is \eqn{2\pi}{2pi} and range \eqn{(-0.5, 0.5]} (e.g., Bloomfield)
+  or 1 and range \eqn{(-\pi, \pi]}{(-pi, pi]}.
   
   If available, a confidence interval will be plotted by
   \code{plot.spec}: this is asymmetric, and the width of the centre

@@ -53,7 +53,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \deqn{
     f(x)= \frac{1}{{\sigma}^{\alpha}\Gamma(\alpha)} {x}^{\alpha-1} e^{-x/\sigma}%
   }{f(x)= 1/(s^a Gamma(a)) x^(a-1) e^-(x/s)}
-  for \eqn{x \ge 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{s > 0}.
+  for \eqn{x \ge 0}{x >= 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{s > 0}.
   (Here \eqn{\Gamma(\alpha)}{Gamma(a)} is the function implemented by \R's
   \code{\link{gamma}()} and defined in its help.  Note that \eqn{a=0}
   corresponds to the trivial distribution with all mass at point 0.)
@@ -90,7 +90,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   Karl Pearson in his 1922 tables) omit the normalizing factor,
   defining the incomplete gamma function as \code{pgamma(x, a) * gamma(a)}.
   A few use the \sQuote{upper} incomplete gamma function, the integral
-  from \eqn{x} to \eqn{\infty} which can be computed by
+  from \eqn{x} to \eqn{\infty}{infinity} which can be computed by
   \code{pgamma(x, a, lower=FALSE) * gamma(a)}, or its normalized
   version. See also
   \url{http://en.wikipedia.org/wiki/Incomplete_gamma_function}.

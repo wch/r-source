@@ -61,7 +61,7 @@
 \description{
   Six plots (selectable by \code{which}) are currently available: a plot
   of residuals against fitted values, a Scale-Location plot of
-  \eqn{\sqrt{| residuals |}} against fitted values, a Normal Q-Q plot, a
+  \eqn{\sqrt{| residuals |}}{sqrt{| residuals |}} against fitted values, a Normal Q-Q plot, a
   plot of Cook's distances versus row labels, a plot of residuals
   against leverages, and a plot of Cook's distances against
   leverage/(1-leverage).  By default, the first three and \code{5} are provided.
@@ -74,7 +74,7 @@
 
   The \sQuote{Scale-Location} plot, also called \sQuote{Spread-Location} or
   \sQuote{S-L} plot, takes the square root of the absolute residuals in
-  order to diminish skewness (\eqn{\sqrt{| E |}} is much less skewed
+  order to diminish skewness (\eqn{\sqrt{| E |}}{sqrt(|E|)}) is much less skewed
   than \eqn{| E |} for Gaussian zero-mean \eqn{E}).
 
   The \sQuote{S-L}, the Q-Q, and the Residual-Leverage plot, use

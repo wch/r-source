@@ -240,7 +240,7 @@ Rd2txt <-
         if(inEqn) txt <- txt_eqn(txt)
         txt <- fsub('"\\{"', '"{"', txt)
         ## \dots gets left in noquote.Rd
-        txt <-fsub("\\dots",  "....", txt)
+        txt <-fsub("\\dots",  "...", txt)
         put(txt)
     }
 
@@ -259,7 +259,7 @@ Rd2txt <-
     }
 
     txt_eqn <- function(x) {
-        x <- psub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilon|psi)", "\\1", x)
+        x <- psub("\\\\(Gamma|alpha|pi|mu|sigma|Sigma|lambda|beta|gamma|epsilon|phi|psi)", "\\1", x)
         x <- psub("\\\\(bold|strong|emph|var)\\{([^}]*)\\}", "\\2", x)
         x <- psub("\\\\(code|samp)\\{([^}]*)\\}", "'\\2'", x)
         x

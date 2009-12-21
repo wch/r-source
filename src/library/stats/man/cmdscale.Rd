@@ -17,7 +17,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
   \item{d}{a distance structure such as that returned by \code{dist}
     or a full symmetric matrix containing the dissimilarities.}
   \item{k}{the dimension of the space which the data are to be
-    represented in; must be in \eqn{\{1,2,\ldots,n-1\}}.}
+    represented in; must be in \eqn{\{1,2,\ldots,n-1\}}{{1, 2, ..., n-1}}.}
   \item{eig}{indicates whether eigenvalues should be returned.}
   \item{add}{logical indicating if an additive constant \eqn{c*} should
     be computed, and added to the non-diagonal dissimilarities such that

@@ -453,7 +453,7 @@ par(\dots, no.readonly = FALSE)
         right)} giving the size of the outer margins in lines of text.}
     \item{\code{omd}}{A vector of the form \code{c(x1, x2, y1, y2)}
       giving the region \emph{inside} outer margins in NDC (=
-      normalized device coordinates), i.e., as fraction (in \eqn{[0,1]})
+      normalized device coordinates), i.e., as fraction (in \eqn{[0, 1]})
       of the device region.}
     \item{\code{omi}}{A vector of the form \code{c(bottom, left, top,
         right)} giving the size of the outer margins in inches.}

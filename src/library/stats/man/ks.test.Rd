@@ -53,7 +53,8 @@ ks.test(x, y, \dots,
   case), respectively.  This is a comparison of cumulative distribution
   functions, and the test statistic is the maximum difference in value,
   with the statistic in the \code{"greater"} alternative being
-  \eqn{D^+ = \max_u [ F_x(u) - F_y(u) ]}.   Thus in the two-sample case
+  \eqn{D^+ = \max_u [ F_x(u) - F_y(u) ]}{D^+ = max[F_x(u) - F_y(u)]}.
+  Thus in the two-sample case
   \code{alternative="greater"} includes distributions for which \code{x}
   is stochastically \emph{smaller} than \code{y} (the CDF of \code{x} lies
   above and hence to the left of that for \code{y}), in contrast to

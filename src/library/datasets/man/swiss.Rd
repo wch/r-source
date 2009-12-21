@@ -14,7 +14,7 @@
 \usage{swiss}
 \format{
   A data frame with 47 observations on 6 variables, \emph{each} of which
-  is in percent, i.e., in \eqn{[0,100]}.
+  is in percent, i.e., in \eqn{[0, 100]}.
 
   \tabular{rll}{
     [,1] \tab Fertility \tab \eqn{I_g}{Ig}, \sQuote{common standardized
@@ -42,8 +42,8 @@
   The data collected are for 47 French-speaking \dQuote{provinces} at
   about 1888.
 
-  Here, all variables are scaled to \eqn{[0,100]}, where in the
-  original, all but \code{"Catholic"} were scaled to \eqn{[0,1]}.
+  Here, all variables are scaled to \eqn{[0, 100]}, where in the
+  original, all but \code{"Catholic"} were scaled to \eqn{[0, 1]}.
 }
 \source{
   Project \dQuote{16P5}, pages 549--551 in

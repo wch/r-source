@@ -48,7 +48,7 @@ rchisq(n, df, ncp=0)
 
   The non-central chi-squared distribution with \code{df}\eqn{= n}
   degrees of freedom and non-centrality parameter \code{ncp}
-  \eqn{= \lambda} has density
+  \eqn{= \lambda}{= lambda} has density
   \deqn{
     f(x) = e^{-\lambda / 2}
       \sum_{r=0}^\infty \frac{(\lambda/2)^r}{r!}\, f_{n + 2r}(x)}{f(x) = exp(-lambda/2) SUM_{r=0}^infty ((lambda/2)^r / r!) dchisq(x, df + 2r)
@@ -57,12 +57,14 @@ rchisq(n, df, ncp=0)
   the sum of squares of \eqn{n} normals each with variance one,
   \eqn{\lambda} being the sum of squares of the normal means; further,
   \cr
-  \eqn{E(X) = n + \lambda}, \eqn{Var(X) = 2(n + 2*\lambda)}, and
-  \eqn{E((X - E(X))^3) = 8(n + 3*\lambda)}.
+  \eqn{E(X) = n + \lambda}{E(X) = n + lambda},
+  \eqn{Var(X) = 2(n + 2*\lambda)}{Var(X) = 2(n + 2*lambda)}, and
+  \eqn{E((X - E(X))^3) = 8(n + 3*\lambda)}{E((X - E(X))^3) = 8(n + 3*lambda)}.
 
   Note that the degrees of freedom \code{df}\eqn{= n}, can be
   non-integer, and also \eqn{n = 0} which is relevant for
-  non-centrality \eqn{\lambda > 0}, see Johnson et al. (1995, chapter~29).
+  non-centrality \eqn{\lambda > 0}{lambda > 0},
+  see Johnson et al. (1995, chapter 29).
 
   Note that \code{ncp} values larger than about 1e5 may give inaccurate
   results with many warnings for \code{pchisq} and \code{qchisq}.

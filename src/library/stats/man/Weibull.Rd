@@ -46,7 +46,7 @@ rweibull(n, shape, scale = 1)
   for \eqn{x \ge 0}{x >= 0}.
   The cumulative distribution function is
   \eqn{F(x) = 1 - \exp(-{(x/\sigma)}^a)}{F(x) = 1 - exp(- (x/b)^a)}
-  on \eqn{x \ge 0}, the
+  on \eqn{x \ge 0}{x >= 0}, the
   mean is \eqn{E(X) = \sigma \Gamma(1 + 1/a)}{E(X) = b Gamma(1 + 1/a)}, and
   the \eqn{Var(X) = \sigma^2(\Gamma(1 + 2/a)-(\Gamma(1 + 1/a))^2)}{Var(X) = b^2 * (Gamma(1 + 2/a) - (Gamma(1 + 1/a))^2)}.
 }

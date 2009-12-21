@@ -62,8 +62,10 @@ optimise(f = , interval = ,  \dots, lower = min(interval),
 
   The first evaluation of \code{f} is always at
   \eqn{x_1 = a + (1-\phi)(b-a)} where \code{(a,b) = (lower, upper)} and
-  \eqn{\phi = (\sqrt 5 - 1)/2 = 0.61803..} is the golden section ratio.
-  Almost always, the second evaluation is at \eqn{x_2 = a + \phi(b-a)}.
+  \eqn{\phi = (\sqrt 5 - 1)/2 = 0.61803..}{phi = (sqrt(5) - 1)/2 = 0.61803..}
+  is the golden section ratio.
+  Almost always, the second evaluation is at
+  \eqn{x_2 = a + \phi(b-a)}{x_2 = a + phi(b-a)}.
   Note that a local minimum inside \eqn{[x_1,x_2]} will be found as
   solution, even when \code{f} is constant in there, see the last
   example.

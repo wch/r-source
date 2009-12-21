@@ -41,7 +41,7 @@ rnbinom(n, size, prob, mu)
   \code{prob} \eqn{= p} has density
   \deqn{
     p(x) = \frac{\Gamma(x+n)}{\Gamma(n) x!} p^n (1-p)^x}{p(x) = Gamma(x+n)/(Gamma(n) x!) p^n (1-p)^x}
-  for \eqn{x = 0, 1, 2, \ldots}, \eqn{n > 0} and
+  for \eqn{x = 0, 1, 2, \ldots}{x = 0, 1, 2, ...}, \eqn{n > 0} and
   \eqn{0 < p \le 1}{0 < p <= 1}.
 
   This represents the number of failures which occur in a sequence of
@@ -49,7 +49,7 @@ rnbinom(n, size, prob, mu)
 
   A negative binomial distribution can arise as a mixture of Poisson
   distributions with mean distributed as a
-  \eqn{\Gamma} (\code{\link{pgamma}}) distribution with scale parameter
+  \eqn{\Gamma}{Gamma} (\code{\link{pgamma}}) distribution with scale parameter
   \code{(1 - prob)/prob} and shape parameter \code{size}.  (This
   definition allows non-integer values of \code{size}.)
   In this model \code{prob} = \code{1/(1+size)}, and the mean is

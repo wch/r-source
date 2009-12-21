@@ -26,7 +26,7 @@ lcm(x)
     \eqn{N} figures on the output device.  Each value in the matrix must
     be \code{0} or a positive integer.  If \eqn{N} is the largest
     positive integer in the matrix, then the integers
-    \eqn{\{1,\dots,N-1\}} must also appear at least once in the matrix.}
+    \eqn{\{1, \dots, N-1\}}{{1, \dots, N-1}} must also appear at least once in the matrix.}
   \item{widths}{a vector of values for the widths of columns on the
     device.  Relative widths are specified with numeric values.    Absolute
     widths (in centimetres) are specified with the \code{lcm()} function (see

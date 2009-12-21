@@ -25,7 +25,7 @@ text(x, \dots)
     other classed objects to character vectors by \code{\link{as.character}}.
     If \code{labels} is longer than \code{x} and
     \code{y}, the coordinates are recycled to the length of \code{labels}.}
-  \item{adj}{one or two values in \eqn{[0,1]} which specify the x
+  \item{adj}{one or two values in \eqn{[0, 1]} which specify the x
     (and optionally y) adjustment of the labels.  On most devices values
     outside that interval will also work.}
   \item{pos}{a position specifier for the text.  If specified this
