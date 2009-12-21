@@ -55,7 +55,7 @@ rt(n, df, ncp)
   \deqn{
     f(x) = \frac{\Gamma ((\nu+1)/2)}{\sqrt{\pi \nu} \Gamma (\nu/2)}
     (1 + x^2/\nu)^{-(\nu+1)/2}%
-  }{f(x) = \Gamma((n+1)/2) / (sqrt(n \pi) \Gamma(n/2)) (1 + x^2/n)^-((n+1)/2)}
+  }{f(x) = \Gamma((n+1)/2) / (\sqrt(n \pi) \Gamma(n/2)) (1 + x^2/n)^-((n+1)/2)}
   for all real \eqn{x}.
   It has mean \eqn{0} (for \eqn{\nu > 1}{n > 1}) and
   variance \eqn{\frac{\nu}{\nu-2}}{n/(n-2)} (for \eqn{\nu > 2}{n > 2}).
@@ -63,10 +63,10 @@ rt(n, df, ncp)
   The general \emph{non-central} \eqn{t}
   with parameters \eqn{(\nu, \delta)}{(df, Del)} \code{= (df, ncp)}
   is defined as the distribution of
-  \eqn{T_{\nu}(\delta) := (U + \delta)/\sqrt{V/\nu}}{T(df, Del) := (U + Del) / sqrt(V/df) }
+  \eqn{T_{\nu}(\delta) := (U + \delta)/\sqrt{V/\nu}}{T(df, Del) := (U + Del) / \sqrt(V/df) }
   where \eqn{U} and \eqn{V}  are independent random
   variables, \eqn{U \sim {\cal N}(0,1)}{U ~ N(0,1)} and
-  \eqn{V \sim \chi^2_\nu}{V ~ Chi^2(df)} (see \link{Chisquare}).
+  \eqn{V \sim \chi^2_\nu}{V ~ \chi^2(df)} (see \link{Chisquare}).
 
   The most used applications are power calculations for \eqn{t}-tests:\cr
   Let \eqn{T = \frac{\bar{X} - \mu_0}{S/\sqrt{n}}}{T= (mX - m0) / (S/sqrt(n))}

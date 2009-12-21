@@ -61,7 +61,8 @@
 \description{
   Six plots (selectable by \code{which}) are currently available: a plot
   of residuals against fitted values, a Scale-Location plot of
-  \eqn{\sqrt{| residuals |}}{sqrt{| residuals |}} against fitted values, a Normal Q-Q plot, a
+  \eqn{\sqrt{| residuals |}}{sqrt(| residuals |)}
+  against fitted values, a Normal Q-Q plot, a
   plot of Cook's distances versus row labels, a plot of residuals
   against leverages, and a plot of Cook's distances against
   leverage/(1-leverage).  By default, the first three and \code{5} are provided.
@@ -80,7 +81,7 @@
   The \sQuote{S-L}, the Q-Q, and the Residual-Leverage plot, use
   \emph{standardized} residuals which have identical variance (under the
   hypothesis).  They are given as
-  \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s*sqrt(1 - h.ii))}
+  \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s * sqrt(1 - h.ii))}
   where \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
   \code{\link{influence}()$hat} (see also \code{\link{hat}}), and
   where the Residual-Leverage plot uses standardized Pearson residuals

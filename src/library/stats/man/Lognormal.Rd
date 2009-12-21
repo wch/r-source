@@ -46,7 +46,7 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   The log normal distribution has density
   \deqn{
     f(x) = \frac{1}{\sqrt{2\pi}\sigma x} e^{-(\log(x) - \mu)^2/2 \sigma^2}%
-  }{f(x) = 1/(sqrt(2 \pi) \sigma x) e^-((log x - \mu)^2 / (2 \sigma^2))}
+  }{f(x) = 1/(\sqrt(2 \pi) \sigma x) e^-((log x - \mu)^2 / (2 \sigma^2))}
   where \eqn{\mu} and \eqn{\sigma} are the mean and standard
   deviation of the logarithm.
   The mean is \eqn{E(X) = exp(\mu + 1/2 \sigma^2)},
