@@ -40,7 +40,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
     matrix are scaled independently so that the maximum value in each
     column is 1 and the minimum is 0.  If \code{FALSE}, the presumption
     is that the data have been scaled by some other algorithm to the
-    range \eqn{[0,1]}.}
+    range \eqn{[0, 1]}.}
   \item{radius}{logical flag: in \code{TRUE}, the radii corresponding to
     each variable in the data will be drawn.}
   \item{labels}{vector of character strings for labeling the plots.

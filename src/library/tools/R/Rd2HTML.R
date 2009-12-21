@@ -229,11 +229,12 @@ Rd2HTML <-
         else x
     }
 
+    ## unused
     HTMLeqn <- function(x)
     {
         x <- htmlify(x)
         ## historical escapes for math
-        x <- psub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilon)", "&\\1;", x)
+        x <- psub("\\\\(Gamma|alpha|pi|mu|sigma|Sigma|lambda|beta|gamma|epsilon|phi|psi)", "&\\1;", x)
         x <- fsub("\\left(", "(", x)
         x <- fsub("\\right", ")", x)
         x <- fsub("\\le", "&lt;=", x)

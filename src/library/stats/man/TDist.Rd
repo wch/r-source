@@ -29,7 +29,7 @@ rt(n, df, ncp)
     is taken to be the number required.}
   \item{df}{degrees of freedom (\eqn{> 0}, maybe non-integer).  \code{df
       = Inf} is allowed.}
-  \item{ncp}{non-centrality parameter \eqn{\delta};
+  \item{ncp}{non-centrality parameter \eqn{\delta}{delta};
     currently except for \code{rt()}, only for \code{abs(ncp) <= 37.62}.
     If omitted, use the central t distribution.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
@@ -65,8 +65,8 @@ rt(n, df, ncp)
   is defined as the distribution of
   \eqn{T_{\nu}(\delta) := (U + \delta)/\sqrt{V/\nu}}{T(df, Del) := (U + Del) / sqrt(V/df) }
   where \eqn{U} and \eqn{V}  are independent random
-  variables, \eqn{U \sim {\cal N}(0,1)}{U \~ N(0,1)} and
-  \eqn{V \sim \chi^2_\nu}{V \~ Chi^2(df)} (see \link{Chisquare}).
+  variables, \eqn{U \sim {\cal N}(0,1)}{U ~ N(0,1)} and
+  \eqn{V \sim \chi^2_\nu}{V ~ Chi^2(df)} (see \link{Chisquare}).
 
   The most used applications are power calculations for \eqn{t}-tests:\cr
   Let \eqn{T = \frac{\bar{X} - \mu_0}{S/\sqrt{n}}}{T= (mX - m0) / (S/sqrt(n))}

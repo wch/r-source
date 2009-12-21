@@ -36,8 +36,8 @@ SSasympOff(input, Asym, lrc, c0)
 \author{Jose Pinheiro and Douglas Bates}
 \seealso{\code{\link{nls}}, \code{\link{selfStart}};
   \code{example(SSasympOff)} gives graph showing the \code{SSasympOff}
-  parametrization, where \eqn{\phi_1} is \code{Asymp},
-  \eqn{\phi_3} is \code{c0}, and \eqn{t_{0.5}} is % FIXME
+  parametrization, where \eqn{\phi_1}{phi_1} is \code{Asymp},
+  \eqn{\phi_3}{phi_3} is \code{c0}.% , and \eqn{t_{0.5}} is FIXME
 }
 \examples{
 CO2.Qn1 <- CO2[CO2$Plant == "Qn1", ]

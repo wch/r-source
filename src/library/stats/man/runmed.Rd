@@ -31,7 +31,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
         at both ends, where \eqn{k_2}{k2} is the half-bandwidth
         \code{k2 = k \%/\% 2},
         i.e., \code{y[j] = x[j]} for \eqn{j \in \{1,\ldots,k_2;
-          n-k_2+1,\ldots,n\}}{j = 1,..,k2 and (n-k2+1),..,n};}
+          n-k_2+1,\ldots,n\}}{j = 1, .., k2 and (n-k2+1), .., n};}
       \item{\code{"constant"}}{copies \code{median(y[1:k2])} to the first
         values and analogously for the last ones making the smoothed ends
         \emph{constant};}

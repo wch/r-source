@@ -40,10 +40,11 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 \details{
   These functions work with a general univariate state-space model
   with state vector \samp{a}, transitions \samp{a <- T a + R e},
-  \eqn{e \sim {\cal N}(0, \kappa Q)}{e \~ N(0, kappa Q)} and observation
+  \eqn{e \sim {\cal N}(0, \kappa Q)}{e ~ N(0, kappa Q)} and observation
   equation \samp{y = Z'a + eta},
-  \eqn{(eta\equiv\eta), \eta \sim {\cal N}(0, \kappa h)}{eta ~ N(0, \kappa h)}.
-  The likelihood is a profile likelihood after estimation of \eqn{\kappa}.
+  \eqn{(eta\equiv\eta), \eta \sim {\cal N}(0, \kappa h)}{eta ~ N(0, kappa h)}.
+  The likelihood is a profile likelihood after estimation of
+  \eqn{\kappa}{kappa}.
 
   The model is specified as a list with at least components
   \describe{
@@ -65,7 +66,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 \value{
   For \code{KalmanLike}, a list with components \code{Lik} (the
   log-likelihood less some constants) and \code{s2}, the estimate of
-  of \eqn{\kappa}.
+  \eqn{\kappa}{kappa}.
 
   For \code{KalmanRun}, a list with components \code{values}, a vector
   of length 2 giving the output of \code{KalmanLike}, \code{resid} (the

@@ -21,12 +21,10 @@ mahalanobis(x, center, cov, inverted=FALSE, ...)
 }
 \description{
   Returns the squared Mahalanobis distance of all rows in \code{x} and the
-  vector \eqn{\mu=}\code{center} with respect to
-  \eqn{\Sigma=}\code{cov}.
+  vector \eqn{\mu}{mu} = \code{center} with respect to
+  \eqn{\Sigma}{Sigma} = \code{cov}.
   This is (for vector \code{x}) defined as
-  \deqn{
-    D^2 = (x - \mu)' \Sigma^{-1} (x - \mu)
-  }
+  \deqn{D^2 = (x - \mu)' \Sigma^{-1} (x - \mu)}{D^2 = (x - mu)' \Sigma^{-1} (x - mu)}
 }
 \seealso{\code{\link{cov}}, \code{\link{var}}}
 \examples{

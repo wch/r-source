@@ -43,9 +43,9 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
     X[1],..,X[n])} where \eqn{F_n}{Fn} is the empirical distribution
   function of \eqn{X_1,\dots,X_n}{X[1],..,X[n]}.
 
-  When \code{rightmost.closed = TRUE}, the result
-  for \code{x[j] = vec[N]} (\eqn{ = \max(vec)}), is \code{N - 1} as for
-  all other values in the last interval.
+  When \code{rightmost.closed = TRUE}, the result for \code{x[j] = vec[N]}
+  (\eqn{ = \max vec}{ = max(vec)}), is \code{N - 1} as for all other
+  values in the last interval.
 }
 \value{
   vector of length \code{length(x)} with values in \code{0:N} (and

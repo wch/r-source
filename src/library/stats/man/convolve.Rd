@@ -40,7 +40,8 @@ convolve(x, y, conj = TRUE, type = c("circular", "open", "filter"))
   If \code{r <- convolve(x,y, type = "open")}
   and \code{n <- length(x)}, \code{m <- length(y)}, then
   \deqn{r_k = \sum_{i} x_{k-m+i} y_{i}}{r[k] = sum(i; x[k-m+i] * y[i])}
-  where the sum is over all valid indices \eqn{i}, for \eqn{k = 1,\dots, n+m-1}
+  where the sum is over all valid indices \eqn{i}, for
+  \eqn{k = 1, \dots, n+m-1}.
 
   If \code{type == "circular"}, \eqn{n = m} is required, and the above is
   true for \eqn{i , k = 1,\dots,n} when

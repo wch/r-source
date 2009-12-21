@@ -53,7 +53,7 @@ rbeta(n, shape1, shape2, ncp = 0)
 
   \eqn{I_x(a,b)} is \code{pbeta(x,a,b)}.
 
-  The noncentral Beta distribution (with \code{ncp} \eqn{ = \lambda})
+  The noncentral Beta distribution (with \code{ncp} \eqn{ = \lambda}{ = lambda})
   is defined (Johnson et al, 1995, pp. 502) as the distribution of
   \eqn{X/(X+Y)} where \eqn{X \sim \chi^2_{2a}(\lambda)}{X ~ chi^2_2a(lambda)}
   and \eqn{Y \sim \chi^2_{2b}}{Y ~ chi^2_2b}.

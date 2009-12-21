@@ -42,8 +42,8 @@ rpois(n, lambda)
   The Poisson distribution has density
 %-- please leave the linebreaking for the next two ! --
   \deqn{p(x) = \frac{\lambda^x e^{-\lambda}}{x!}}{p(x) = lambda^x exp(-lambda)/x!}
-  for \eqn{x = 0, 1, 2, \ldots}.  The mean and variance are
-  \eqn{E(X) = Var(X) = \lambda}.
+  for \eqn{x = 0, 1, 2, \ldots}{x = 0, 1, 2, ...}.  The mean and variance are
+  \eqn{E(X) = Var(X) = \lambda}{E(X) = Var(X) = lambda}.
 
   If an element of \code{x} is not integer, the result of \code{dpois}
   is zero, with a warning.

@@ -41,15 +41,15 @@ as.stepfun(x, \dots)
   \item{\dots}{potentially further arguments (required by the generic).}
 }
 \description{
-  Given the vectors \eqn{(x_1,\ldots, x_n)}{(x[1],\ldots, x[n])} and
-  \eqn{(y_0,y_1,\ldots, y_n)}{(y[0],y[1],\ldots, y[n])} (one value
+  Given the vectors \eqn{(x_1,\ldots, x_n)}{(x[1], ..., x[n])} and
+  \eqn{(y_0,y_1,\ldots, y_n)}{(y[0], y[1], ..., y[n])} (one value
   more!), \code{stepfun(x,y,\dots)} returns an interpolating
   \sQuote{step} function, say \code{fn}. I.e., \eqn{fn(t) =
     c}\eqn{_i}{[i]} (constant) for \eqn{t \in (x_i, x_{i+1})}{t in (
     x[i], x[i+1])} and at the abscissa values, if (by default)
   \code{right = FALSE}, \eqn{fn(x_i) = y_i}{fn(x[i]) = y[i]} and for
   \code{right = TRUE}, \eqn{fn(x_i) = y_{i-1}}{fn(x[i]) = y[i-1]}, for
-  \eqn{i=1,\ldots,n}.
+  \eqn{i=1,\ldots,n}{i=1, ..., n}.
 
   The value of the constant \eqn{c_i}{c[i]} above depends on the
   \sQuote{continuity} parameter \code{f}.

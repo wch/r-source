@@ -14,12 +14,12 @@
 hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
 }
 \arguments{
-  \item{h,s,v}{numeric vectors of values in the range \code{[0,1]} for
+  \item{h,s,v}{numeric vectors of values in the range \code{[0, 1]} for
     \sQuote{hue}, \sQuote{saturation} and \sQuote{value} to be combined
     to form a vector of colors.  Values in shorter arguments are
     recycled.}
   \item{gamma}{a gamma-correction exponent, \eqn{\gamma}}
-  \item{alpha}{numeric vector of values in the range \code{[0,1]} for
+  \item{alpha}{numeric vector of values in the range \code{[0, 1]} for
     alpha transparency channel (0 means transparent and 1 means opaque).}
 }
 \details{
@@ -33,8 +33,8 @@ hsv(h = 1, s = 1, v = 1, gamma = 1, alpha)
   \code{par}.
 }
 \section{Gamma correction}{
-  For each color, \eqn{(r,g,b)} in RGB space (with all values in \eqn{[0,1]}),
-  the final color corresponds to
+  For each color, \eqn{(r ,g, b)} in RGB space (with all values in
+  \eqn{[0, 1]}), the final color corresponds to
   \eqn{(r^{\gamma}, g^{\gamma}, b^{\gamma})}{r^gamma, g^gamma, b^gamma)}.
 }
 \seealso{

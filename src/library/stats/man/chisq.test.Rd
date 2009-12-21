@@ -21,7 +21,7 @@ chisq.test(x, y = NULL, correct = TRUE,
   \item{y}{a vector; ignored if \code{x} is a matrix.}
   \item{correct}{a logical indicating whether to apply continuity
     correction when computing the test statistic for 2x2 tables: one
-    half is subtracted from all \eqn{|O-E|} differences.  No correction
+    half is subtracted from all \eqn{|O - E|} differences.  No correction
     is done if \code{simulate.p.value = TRUE}.}
   \item{p}{a vector of probabilities of the same length of \code{x}.
     An error is given if any entry of \code{p} is negative.}

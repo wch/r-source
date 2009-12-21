@@ -43,8 +43,8 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
   For \code{curve()}, if either of \code{from} or \code{to} is
   \code{NULL}, it defaults to the corresponding element of \code{xlim},
   and \code{xlim} defaults to the x-limits of the current plot.
-  For \code{plot(<function>, ..)}, the defaults for \eqn{(from,to)} are
-  \eqn{(0,1)}.
+  For \code{plot(<function>, ..)}, the defaults for \eqn{(from, to)} are
+  \eqn{(0, 1)}.
 
   \code{log} is taken from
   the current plot only when \code{add} is true, and otherwise

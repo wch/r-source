@@ -47,7 +47,7 @@ ecdf(x)
   i.e.,
   \deqn{F_n(t) = \#\{x_i\le t\}\ / n
                = \frac1 n\sum_{i=1}^n \mathbf{1}_{[x_i \le t]}.}{
-    Fn(t) = #\{x_i \le t\} / n  =  1/n sum(i=1,n) Indicator(xi <= t).}
+    Fn(t) = #{xi <= t}/n  =  1/n sum(i=1,n) Indicator(xi <= t).}
 
   The function \code{plot.ecdf} which implements the \code{\link{plot}}
   method for \code{ecdf} objects, is implemented via a call to
