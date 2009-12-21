@@ -3952,8 +3952,9 @@ for x = 0, 1, 2, ....
 @end quotation
 
 As from \R 2.11.0 Greek letters (both cases) will be rendered in HTML if
-preceded by a backslash, @code{\dots} and @code{\ldots} will be
-rendered as ellipses and @code{\ge} and @code{\le} as mathematical symbols.
+preceded by a backslash, @code{\dots} and @code{\ldots} will be rendered
+as ellipses and @code{\sqrt}, @code{\ge} and @code{\le} as mathematical
+symbols.
 
 See @ref{Back-compatibility issues} for earlier problems with @code{\eqn}
 with one argument immediately followed by a right brace.
