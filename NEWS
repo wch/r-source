@@ -245,6 +245,9 @@ BUG FIXES
 	signature could fail, treating '...' as an ordinary symbol.
 	This has been fixed, for the known cases.
 
+    o	Various ar() fitting methods have more protection for singular
+ 	fits.
+
 
 
 

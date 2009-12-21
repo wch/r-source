@@ -139,7 +139,8 @@ ar.yw.default <-
         partialacf <- array(diag(coefs), dim = c(order.max, 1L, 1L))
         var.pred <- c(r[1L], z$vars)
         xaic <- n.used * log(var.pred) + 2 * (0:order.max) + 2 * demean
-        xaic <- xaic - min(xaic)
+        maic <- min(aic)
+        xaic <- if(is.finite(maic)) xaic - min(xaic) else ifelse(xaic == maic, 0, Inf)
         names(xaic) <- 0:order.max
         order <- if (aic) (0:order.max)[xaic == 0L] else order.max
         ar <- if (order) coefs[order, seq_len(order)] else numeric()

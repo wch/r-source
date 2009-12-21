@@ -599,7 +599,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                "\\method" =,
                "\\S3method" =,
                "\\S4method" =
-                   warnRd(block, Rdfile, level = 7, "Tag ", tag,
+                   stopRd(block, Rdfile, "Tag ", tag,
                           " not valid outside a code block"),
                "\\enc" = {
                    checkContent(block[[1L]], tag)
@@ -628,7 +628,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     		   unknown <- allow[!(allow %in%
     		          c("", "latex", "example", "text", "html", "TRUE", "FALSE"))]
     		   if (length(unknown))
-    		       warnRd(block, Rdfile, "Unrecognized format: ", unknown)
+    		       stopRd(block, Rdfile, "Unrecognized format: ", unknown)
                    checkContent(block[[2L]])
                    if (tag == "\\ifelse")
                        checkContent(block[[3L]])
@@ -638,7 +638,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                	   if (!all(tags == "VERB"))
                	       stopRd(block, Rdfile, "Must contain verbatim text")
                },
-               warnRd(block, Rdfile, level = 7, "Tag ", tag, " not recognized"))
+               stopRd(block, Rdfile, "Tag ", tag, " not recognized"))
     }
 
     checkCodeBlock <- function(blocks, blocktag)
@@ -672,7 +672,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    "\\dots" = has_text <<- TRUE,
                    "\\ldots" = {
                        ## but it is rendered as ... in all converters
-                       warnRd(block, Rdfile, level = -3,
+                       stopRd(block, Rdfile,
                               "Tag ", tag, " is invalid in a code block")
                        has_text <<- TRUE
                    },
@@ -684,17 +684,17 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    "\\S4method" = if(blocktag == "\\usage") {
                        checkContent(block[[1L]], tag) # generic
                        checkContent(block[[2L]], tag) # class
-                   } else warnRd(block, Rdfile, level = 5,
+                   } else stopRd(block, Rdfile,
                                  "Tag ", tag, " is only valid in \\usage"),
                    "\\dontrun" =,
                    "\\donttest" =,
                    "\\dontshow" =,
                    "\\testonly" = if(blocktag == "\\examples")
                    checkCodeBlock(block, blocktag)
-                   else warnRd(block, Rdfile, level = 5,
+                   else stopRd(block, Rdfile,
                                "Tag ", tag, " is only valid in \\examples"),
                    {
-                       warnRd(block, Rdfile, level = 5,
+                       stopRd(block, Rdfile,
                               "Tag ", tag, " is invalid in a ",
                               blocktag, " block")
                        has_text <<- TRUE  # likely, e.g. \url
@@ -707,11 +707,11 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     	format <- table[[1L]]
     	content <- table[[2L]]
     	if (length(format) != 1 || RdTags(format) != "TEXT")
-    	    warnRd(table, Rdfile, level = 7,
+    	    stopRd(table, Rdfile,
                    "\\tabular format must be simple text")
     	format <- strsplit(format[[1L]], "", fixed=TRUE)[[1L]]
     	if (!all(format %in% c("l", "c", "r")))
-    	    warnRd(table, Rdfile, level = 7,
+    	    stopRd(table, Rdfile,
                    "Unrecognized \\tabular format: ", table[[1L]][[1L]])
         tags <- RdTags(content)
 
@@ -725,7 +725,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
             if (newcol) {
                 col <- col + 1
                 if (col > length(format))
-                    warnRd(table, Rdfile, level = 7,
+                    stopRd(table, Rdfile,
                            "Only ", length(format),
                            " columns allowed in this table")
             	newcol <- FALSE
@@ -800,10 +800,10 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     checkUnique <- function(tag) {
     	which <- which(sections == tag)
     	if (length(which) < 1L)
-    	    warnRd(Rd, Rdfile, level = 7, "Must have a ", tag)
+    	    stopRd(Rd, Rdfile, "Must have a ", tag)
     	else {
             if (length(which) > 1L)
-    	    warnRd(Rd[[which[2L]]], Rdfile, level = 7,
+    	    stopRd(Rd[[which[2L]]], Rdfile,
                    "Only one ", tag, " is allowed")
             empty <- TRUE
             for(block in Rd[[which]]) {
@@ -813,7 +813,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                        empty <- FALSE)
             }
             if(empty)
-                warnRd(Rd[[which]], Rdfile, level = 5,
+                stopRd(Rd[[which]], Rdfile,
                        "Tag ", tag, " must not be empty")
         }
     }
@@ -824,7 +824,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
         for (i in dt) {
             docType <- Rd[[i]]
             if(!identical(RdTags(docType), "TEXT"))
-        	warnRd(docType, Rdfile, level = 7,
+        	stopRd(docType, Rdfile,
                        "'docType' must be plain text")
             docTypes[i] <- docType[[1L]]
          }

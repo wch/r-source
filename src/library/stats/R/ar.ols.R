@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-## code by Adrian Trapletti
+## original code by Adrian Trapletti
 ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                     demean = TRUE, intercept = demean, series = NULL, ...)
 {
@@ -46,9 +46,10 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     A <- vector("list", order.max - order.min + 1L)
     varE <- vector("list", order.max - order.min + 1L)
     seA <- vector("list", order.max - order.min + 1L)
-    aic <- rep(Inf, order.max - order.min + 1L)
+    xaic <- rep(Inf, order.max - order.min + 1L)
 
-    det <- function(x) { prod(diag(qr(x)$qr))*(-1)^(ncol(x)-1) }
+    ## allow for rounding error
+    det <- function(x) max(0, prod(diag(qr(x)$qr))*(-1)^(ncol(x)-1))
 
     ## remove means for conditioning
     if(demean) {
@@ -73,25 +74,27 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         rank <- qr(XX)$rank
         if (rank != nrow(XX))
         {
-            warning ("model order: ", m,
+            warning(paste("model order: ", m,
 
-                     "singularities in the computation of the projection matrix",
-                     "results are only valid up to model order", m - 1L)
+                          "singularities in the computation of the projection matrix",
+                          "results are only valid up to model order", m - 1L),
+                    domain = NA)
             break
         }
         P <- if(ncol(XX) > 0) solve(XX) else XX
         A[[m - order.min + 1L]] <- Y %*% X %*% P
         YH <- A[[m - order.min + 1L]] %*% t(X)
         E <- (Y - YH)
-        varE[[m - order.min + 1L]] <- E %*% t(E)/N
+        varE[[m - order.min + 1L]] <- tcrossprod(E)/N
         varA <- P %x% (varE[[m - order.min + 1L]])
         seA[[m - order.min+1L]] <- if(ncol(varA) > 0) sqrt(diag(varA))
         else numeric()
-        aic[m - order.min+1L] <-
-            n.used*log(det(varE[[m-order.min+1L]]))+2*nser*(nser*m+intercept)
+        xaic[m - order.min+1L] <-
+            n.used*log(det(varE[[m-order.min+1L]])) + 2*nser*(nser*m+intercept)
     }
 
-    m <- which(aic==min(aic)) + order.min - 1L # Determine best model
+    # Determine best model
+    m <- if(aic) which(xaic == min(xaic))[1L] + order.min - 1L else order.max
 
     ## Recalculate residuals of best model
 
@@ -112,8 +115,9 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     YH <- AA %*% t(X)
     E <- drop(rbind(matrix(NA, m, nser), t(Y - YH)))
 
-    aic <- aic - min(aic)
-    names(aic) <- order.min:order.max
+    maic <- min(aic)
+    xaic <- if(is.finite(maic)) xaic - min(xaic) else ifelse(xaic == maic, 0, Inf)
+    names(xaic) <- order.min:order.max
     dim(ar) <- c(nser, nser, m)
     ar <- aperm(ar, c(3L,1L,2L))
     ses <- seA[[m - order.min + 1L]]
@@ -146,7 +150,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
             for(i in seq_len(m)) ses[i,,] <- ses[i,,]*aa
     }
     res <- list(order = m, ar = ar, var.pred = var.pred,
-                x.mean = xm, x.intercept = xint, aic = aic,
+                x.mean = xm, x.intercept = xint, aic = xaic,
                 n.used = n.used, order.max = order.max,
                 partialacf = NULL, resid = E, method = "Unconstrained LS",
                 series = series, frequency = xfreq, call = match.call(),

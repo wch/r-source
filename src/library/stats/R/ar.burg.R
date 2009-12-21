@@ -52,7 +52,8 @@ ar.burg.default <-
     partialacf <- array(diag(coefs), dim = c(order.max, 1L, 1L))
     var.pred <- if(var.method == 1L) z$var1 else z$var2
     xaic <- n.used * log(var.pred) + 2 * (0L:order.max) + 2 * demean
-    xaic <- xaic - min(xaic)
+    maic <- min(aic)
+    xaic <- if(is.finite(maic)) xaic - min(xaic) else ifelse(xaic == maic, 0, Inf)
     names(xaic) <- 0L:order.max
     order <- if (aic) (0L:order.max)[xaic == 0] else order.max
     ar <- if (order) coefs[order, 1L:order] else numeric()
