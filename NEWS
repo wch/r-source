@@ -245,9 +245,6 @@ BUG FIXES
 	signature could fail, treating '...' as an ordinary symbol.
 	This has been fixed, for the known cases.
 
-    o	ks.test() could give a p-value that was off by one observation
-	due to rounding error in the C code.
-	(reported by allwright@maths.ox.ac.uk)
 
 
 
@@ -295,6 +292,9 @@ BUG FIXES
 	generated correctly when rendered in HTML. (PR#14155)
 
     o	lchoose(a,k) no longer wrongly gives NaN for negative a.
+
+    o	ks.test() could give a p-value that was off by one observation
+	due to rounding error.  (PR#14145)
 
 
 
