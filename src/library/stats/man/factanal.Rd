@@ -60,7 +60,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
 }
 \details{
   The factor analysis model is
-  \deqn{x = \Lambda f + e}{ x = Lambda f + e}
+  \deqn{x = \Lambda f + e}
   for a \eqn{p}--element row-vector \eqn{x}, a \eqn{p \times k}{p x k}
   matrix of \emph{loadings}, a \eqn{k}--element vector of \emph{scores}
   and a \eqn{p}--element vector of errors.  None of the components
@@ -69,9 +69,9 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   independent with variances \eqn{\Phi}{Phi}, the
   \emph{uniquenesses}.  Thus factor analysis is in essence a model for
   the covariance matrix of \eqn{x},
-  \deqn{\Sigma = \Lambda^\prime\Lambda + \Psi}{Sigma = Lambda'Lambda + Psi}
+  \deqn{\Sigma = \Lambda^\prime\Lambda + \Psi}{\Sigma = \Lambda'\Lambda + \Psi}
   There is still some indeterminacy in the model for it is unchanged
-  if \eqn{\Lambda}{Lambda} is replaced by \eqn{G\Lambda}{G Lambda} for
+  if \eqn{\Lambda} is replaced by \eqn{G \Lambda} for
   any orthogonal matrix \eqn{G}.  Such matrices \eqn{G} are known as
   \emph{rotations} (although the term is applied also to non-orthogonal
   invertible matrices).
@@ -105,11 +105,11 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   second the weighted least squares method of Bartlett (1937, 8).
   Both are estimates of the unobserved scores \eqn{f}.  Thomson's method
   regresses (in the population) the unknown \eqn{f} on \eqn{x} to yield
-  \deqn{\hat f = \Lambda^\prime \Sigma^{-1} x}{hat f = Lambda' Sigma^-1 x}
+  \deqn{\hat f = \Lambda^\prime \Sigma^{-1} x}{hat f = \Lambda' \Sigma^-1 x}
   and then substitutes the sample estimates of the quantities on the
   right-hand side.  Bartlett's method minimizes the sum of squares of
   standardized errors over the choice of \eqn{f}, given (the fitted)
-  \eqn{\Lambda}{Lambda}.
+  \eqn{\Lambda}.
 
   If \code{x} is a formula then the standard NA-handling is applied to
   the scores (if requested): see \code{\link{napredict}}.

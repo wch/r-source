@@ -34,10 +34,10 @@ mad(x, center = median(x), constant = 1.4826, na.rm = FALSE,
   the arguments description for \code{low} and \code{high} above.
 
   The default \code{constant = 1.4826} (approximately
-  \eqn{1/\Phi^{-1}(\frac 3 4)}{1/ Phi^(-1)(3/4)} = \code{1/qnorm(3/4)})
+  \eqn{1/\Phi^{-1}(\frac 3 4)}{1/ \Phi^(-1)(3/4)} = \code{1/qnorm(3/4)})
   ensures consistency, i.e.,
-  \deqn{E[mad(X_1,\dots,X_n)] = \sigma}{E[mad(X_1, ..., X_n)] = sigma}
-  for \eqn{X_i} distributed as \eqn{N(\mu, \sigma^2)}{N(mu, sigma^2)}
+  \deqn{E[mad(X_1,\dots,X_n)] = \sigma}
+  for \eqn{X_i} distributed as \eqn{N(\mu, \sigma^2)}
   and large \eqn{n}.
 
   If \code{na.rm} is \code{TRUE} then \code{NA}

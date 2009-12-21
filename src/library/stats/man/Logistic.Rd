@@ -54,7 +54,7 @@ rlogis(n, location = 0, scale = 1)
   }{f(x) = 1/s exp((x-m)/s) (1 + exp((x-m)/s))^-2.}
 
   It is a long-tailed distribution with mean \eqn{\mu}{m} and variance
-  \eqn{\pi^2/3 \sigma^2}{pi^2 /3 s^2}.
+  \eqn{\pi^2/3 \sigma^2}{\pi^2 /3 s^2}.
 }
 \note{
   \code{qlogis(p)} is the same as the well known \sQuote{\emph{logit}}

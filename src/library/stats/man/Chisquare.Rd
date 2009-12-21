@@ -43,7 +43,7 @@ rchisq(n, df, ncp=0)
 \details{
   The chi-squared distribution with \code{df}\eqn{= n \ge 0}
   degrees of freedom has density
-  \deqn{f_n(x) = \frac{1}{{2}^{n/2} \Gamma (n/2)} {x}^{n/2-1} {e}^{-x/2}}{f_n(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
+  \deqn{f_n(x) = \frac{1}{{2}^{n/2} \Gamma (n/2)} {x}^{n/2-1} {e}^{-x/2}}{f_n(x) = 1 / (2^(n/2) \Gamma(n/2))  x^(n/2-1) e^(-x/2)}
   for \eqn{x > 0}.  The mean and variance are \eqn{n} and \eqn{2n}.
 
   The non-central chi-squared distribution with \code{df}\eqn{= n}

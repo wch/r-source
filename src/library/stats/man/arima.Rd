@@ -80,7 +80,7 @@ arima(x, order = c(0, 0, 0),
   Different definitions of ARMA models have different signs for the
   AR and/or MA coefficients.  The definition used here has
 
-  \deqn{X_t = a_1X_{t-1} + \cdots + a_pX_{t-p} + e_t + b_1e_{t-1} + \dots + b_qe_{t-q}}{\code{X[t] = a[1]X[t-1] + \dots + a[p]X[t-p] + e[t] + b[1]e[t-1] + \dots + b[q]e[t-q]}}
+  \deqn{X_t = a_1X_{t-1} + \cdots + a_pX_{t-p} + e_t + b_1e_{t-1} + \dots + b_qe_{t-q}}{X[t] = a[1]X[t-1] + \dots + a[p]X[t-p] + e[t] + b[1]e[t-1] + \dots + b[q]e[t-q]}
 
   and so the MA coefficients differ in sign from those of S-PLUS.
   Further, if \code{include.mean} is true (the default for an ARMA

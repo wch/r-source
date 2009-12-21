@@ -47,8 +47,8 @@ filter(x, filter, method = c("convolution", "recursive"),
 
   Note that there is an implied coefficient 1 at lag 0 in the
   recursive filter, which gives
-  \deqn{y_i = x_i + f_1y_{i-1} + \cdots + f_py_{i-p}}{\code{y[i] =
-      x[i] + f[1]*y[i-1] + \dots + f[p]*y[i-p]}}
+  \deqn{y_i = x_i + f_1y_{i-1} + \cdots + f_py_{i-p}}{y[i] =
+      x[i] + f[1]*y[i-1] + \dots + f[p]*y[i-p]}
   No check is made to see if recursive filter is invertible:
   the output may diverge if it is not.
 

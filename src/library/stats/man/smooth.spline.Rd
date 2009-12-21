@@ -82,7 +82,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   where
   \eqn{r = tr(X' W X) / tr(\Sigma)},
   \eqn{\Sigma} is the matrix given by
-  \eqn{\Sigma_{ij} = \int B_i''(t) B_j''(t) dt}{Sigma[i,j] = Integral B''[i](t) B''[j](t) dt},
+  \eqn{\Sigma_{ij} = \int B_i''(t) B_j''(t) dt}{\Sigma[i,j] = Integral B''[i](t) B''[j](t) dt},
   \eqn{X} is given by \eqn{X_{ij} = B_j(x_i)}{X[i,j] = B[j](x[i])},
   \eqn{W} is the diagonal matrix of weights (scaled such that
   its trace is \eqn{n}, the original number of observations)

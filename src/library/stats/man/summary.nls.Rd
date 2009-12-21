@@ -55,7 +55,7 @@
     corresponding (two-sided) p-value.}
   \item{sigma}{the square root of the estimated variance of the random
     error
-    \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{R_i^2},}{sigma^2 = 1/(n-p) Sum(R[i]^2),}
+    \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{R_i^2},}{\sigma^2 = 1/(n-p) Sum(R[i]^2),}
     where \eqn{R_i}{R[i]} is the \eqn{i}-th weighted residual.}
   \item{df}{degrees of freedom, a 2-vector \eqn{(p, n-p)}.  (Here and
     elsewhere \eqn{n} omits observations with zero weights.)}

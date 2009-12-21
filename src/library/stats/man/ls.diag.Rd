@@ -19,7 +19,7 @@ ls.diag(ls.out)
 \value{
   A \code{list} with the following numeric components.
   \item{std.dev}{The standard deviation of the errors, an estimate of
-    \eqn{\sigma}{sigma}.}
+    \eqn{\sigma}.}
   \item{hat}{diagonal entries \eqn{h_{ii}} of the hat matrix \eqn{H}}
   \item{std.res}{standardized residuals}
   \item{stud.res}{studentized residuals}

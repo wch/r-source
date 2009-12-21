@@ -62,11 +62,11 @@ quantile(x, \dots)
   All sample quantiles are defined as weighted averages of 
   consecutive order statistics. Sample quantiles of type \eqn{i} 
   are defined by:
-  \deqn{Q_{i}(p) = (1 - \gamma)x_{j} + \gamma x_{j+1}}{Q[i](p) = (1 - gamma) x[j] + gamma x[j+1],}
+  \deqn{Q_{i}(p) = (1 - \gamma)x_{j} + \gamma x_{j+1}}{Q[i](p) = (1 - \gamma) x[j] + \gamma x[j+1],}
   where \eqn{1 \le i \le 9},
   \eqn{\frac{j - m}{n} \le p < \frac{j - m + 1}{n}}{(j-m)/n \le p < (j-m+1)/n},
   \eqn{x_{j}}{x[j]} is the \eqn{j}th order statistic, \eqn{n} is the
-  sample size, the value of \eqn{\gamma}{gamma} is a function of
+  sample size, the value of \eqn{\gamma} is a function of
   \eqn{j = \lfloor np + m\rfloor}{j = floor(np + m)} and \eqn{g = np + m - j}, 
   and \eqn{m} is a constant determined by the sample quantile type. 
   
@@ -78,11 +78,11 @@ quantile(x, \dots)
 
   \describe{
     \item{Type 1}{Inverse of empirical distribution function.
-      \eqn{\gamma = 0}{gamma = 0} if \eqn{g = 0}, and 1 otherwise.}
+      \eqn{\gamma = 0} if \eqn{g = 0}, and 1 otherwise.}
     \item{Type 2}{Similar to type 1 but with averaging at discontinuities.
-      \eqn{\gamma = 0.5}{gamma = 0.5} if \eqn{g = 0}, and 1 otherwise.}
+      \eqn{\gamma = 0.5} if \eqn{g = 0}, and 1 otherwise.}
     \item{Type 3}{SAS definition: nearest even order statistic.
-      \eqn{\gamma = 0}{gamma = 0} if \eqn{g = 0} and \eqn{j} is even,
+      \eqn{\gamma = 0} if \eqn{g = 0} and \eqn{j} is even,
       and 1 otherwise.}
   }
 

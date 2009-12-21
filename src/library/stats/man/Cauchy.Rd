@@ -45,7 +45,7 @@ rcauchy(n, location = 0, scale = 1)
   density
   \deqn{f(x) = \frac{1}{\pi s}
     \left( 1 + \left(\frac{x - l}{s}\right)^2 \right)^{-1}%
-  }{f(x) = 1 / (pi s (1 + ((x-l)/s)^2))}
+  }{f(x) = 1 / (\pi s (1 + ((x-l)/s)^2))}
   for all \eqn{x}.
 }
 \source{

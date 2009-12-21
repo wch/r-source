@@ -119,7 +119,7 @@ quasipoisson(link = "log")
     for the quasi- families).  See \code{\link{logLik}} for the assumptions
       made about the dispersion parameter.}
   \item{mu.eta}{function: derivative \code{function(eta)}
-    \eqn{d\mu / d\eta}{dmu/deta}.}
+    \eqn{d\mu/d\eta}.}
   \item{initialize}{expression.  This needs to set up whatever data
     objects are needed for the family as well as \code{n} (needed for
     AIC in the binomial family) and \code{mustart} (see \code{\link{glm}}.}

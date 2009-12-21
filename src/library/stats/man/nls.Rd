@@ -90,9 +90,9 @@ nls(formula, data, start, control, algorithm,
   The \code{nls} function uses a relative-offset convergence criterion
   that compares the numerical imprecision at the current parameter
   estimates to the residual sum-of-squares.  This performs well on data of
-  the form \deqn{y=f(x,\theta)+\epsilon}{y = f(x, theta) + eps} (with
+  the form \deqn{y=f(x, \theta) + \epsilon}{y = f(x, \theta) + eps} (with
   \code{var(eps) > 0}).  It fails to indicate convergence on data of the form
-  \deqn{y=f(x,\theta)}{y = f(x, theta)} because the criterion amounts to
+  \deqn{y = f(x, \theta)} because the criterion amounts to
   comparing two components of the round-off error.  If you wish to test
   \code{nls} on artificial data please add a noise component, as shown
   in the example below.

@@ -41,11 +41,11 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
  The simplest model is the \emph{local level} model specified by
  \code{type = "level"}.  This has an underlying level \eqn{\mu_t}{m[t]} which
  evolves by
- \deqn{\mu_{t+1} = \mu_t + \xi_t,  \qquad \xi_t \sim N(0, \sigma^2_\xi)}{m[t+1] = m[t] + xi[t], xi[t] ~ N(0, sigma^2_xi)}
+ \deqn{\mu_{t+1} = \mu_t + \xi_t,  \qquad \xi_t \sim N(0, \sigma^2_\xi)}{m[t+1] = m[t] + xi[t], xi[t] ~ N(0, \sigma^2_\xi)}
  The observations are
- \deqn{x_t = \mu_t + \epsilon_t, \qquad \epsilon_t \sim  N(0, \sigma^2_\epsilon)}{x[t] = m[t] + eps[t], eps[t] ~  N(0, sigma^2_eps)}
- There are two parameters, \eqn{\sigma^2_\xi}{sigma^2_xi}
- and \eqn{\sigma^2_\epsilon}{sigma^2_eps}.  It is an ARIMA(0,1,1) model,
+ \deqn{x_t = \mu_t + \epsilon_t, \qquad \epsilon_t \sim  N(0, \sigma^2_\epsilon)}{x[t] = m[t] + eps[t], eps[t] ~  N(0, \sigma^2_\eps)}
+ There are two parameters, \eqn{\sigma^2_\xi}
+ and \eqn{\sigma^2_\epsilon}{\sigma^2_eps}.  It is an ARIMA(0,1,1) model,
  but with restrictions on the parameter set.
 
  The \emph{local linear trend model}, \code{type = "trend"}, has the same
@@ -53,25 +53,25 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
  \eqn{\mu_t}{m[t]}, given by
  \deqn{
    \mu_{t+1} = \mu_t + \nu_t + \xi_t, \qquad  \xi_t \sim N(0, \sigma^2_\xi)
- }{m[t+1] = m[t] + n[t] + xi[t], xi[t] ~ N(0, sigma^2_xi)}
+ }{m[t+1] = m[t] + n[t] + xi[t], xi[t] ~ N(0, \sigma^2_\xi)}
  \deqn{
    \nu_{t+1} = \nu_t + \zeta_t, \qquad \zeta_t \sim N(0, \sigma^2_\zeta)
- }{n[t+1] = n[t] + zeta[t],  zeta[t] ~ N(0, sigma^2_zeta)}
+ }{n[t+1] = n[t] + \zeta[t],  \zeta[t] ~ N(0, \sigma^2_\zeta)}
  with three variance parameters.  It is not uncommon to find
- \eqn{\sigma^2_\zeta = 0}{sigma^2_zeta = 0} (which reduces to the local
- level model) or \eqn{\sigma^2_\xi = 0}{sigma^2_xi = 0}, which ensures a
+ \eqn{\sigma^2_\zeta = 0} (which reduces to the local
+ level model) or \eqn{\sigma^2_\xi = 0}, which ensures a
  smooth trend.  This is a restricted ARIMA(0,2,2) model.
 
  The \emph{basic structural model}, \code{type = "BSM"}, is a local
  trend model with an additional seasonal component. Thus the measurement
  equation is
- \deqn{x_t = \mu_t + \gamma_t + \epsilon_t, \qquad \epsilon_t \sim  N(0, \sigma^2_\epsilon)}{x[t] = m[t] + s[t] + eps[t], eps[t] ~  N(0, sigma^2_eps)}
+ \deqn{x_t = \mu_t + \gamma_t + \epsilon_t, \qquad \epsilon_t \sim  N(0, \sigma^2_\epsilon)}{x[t] = m[t] + s[t] + eps[t], eps[t] ~  N(0, \sigma^2_eps)}
  where \eqn{\gamma_t}{s[t]} is a seasonal component with dynamics
  \deqn{
    \gamma_{t+1} = -\gamma_t + \cdots + \gamma_{t-s+2} + \omega_t, \qquad
    \omega_t \sim N(0, \sigma^2_\omega)
- }{s[t+1] = -s[t] - \dots - s[t - s + 2] + w[t],  w[t] ~ N(0, sigma^2_w)}
- The boundary case \eqn{\sigma^2_\omega = 0}{sigma^2_w = 0} corresponds
+ }{s[t+1] = -s[t] - \dots - s[t - s + 2] + w[t],  w[t] ~ N(0, \sigma^2_w)}
+ The boundary case \eqn{\sigma^2_\omega = 0}{\sigma^2_w = 0} corresponds
  to a deterministic (but arbitrary) seasonal pattern.  (This is
  sometimes known as the \sQuote{dummy variable} version of the BSM.)
 }

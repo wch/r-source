@@ -52,10 +52,10 @@ rnorm(n, mean = 0, sd = 1)
   \deqn{
     f(x) =
     \frac{1}{\sqrt{2\pi}\sigma} e^{-(x-\mu)^2/2\sigma^2}}{
-    f(x) = 1/(sqrt(2 pi) sigma) e^-((x - mu)^2/(2 sigma^2))
+    f(x) = 1/(sqrt(2 \pi) \sigma) e^-((x - \mu)^2/(2 \sigma^2))
   }
-  where \eqn{\mu}{mu} is the mean of the distribution and
-  \eqn{\sigma}{sigma} the standard deviation.
+  where \eqn{\mu} is the mean of the distribution and
+  \eqn{\sigma} the standard deviation.
 
   \code{qnorm} is based on Wichura's algorithm AS 241 which provides
   precise results up to about 16 digits.

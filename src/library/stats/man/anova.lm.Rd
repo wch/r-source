@@ -22,7 +22,7 @@ anova.lmlist(object, \dots, scale = 0, test = "F")
     used. Can be one of \code{"F"}, \code{"Chisq"} or \code{"Cp"},
     with partial matching allowed, or \code{NULL} for no test.}
   \item{scale}{numeric. An estimate of the noise variance
-    \eqn{\sigma^2}{sigma^2}. If zero this will be estimated from the
+    \eqn{\sigma^2}. If zero this will be estimated from the
     largest model considered.
   }
 }

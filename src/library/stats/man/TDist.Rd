@@ -55,7 +55,7 @@ rt(n, df, ncp)
   \deqn{
     f(x) = \frac{\Gamma ((\nu+1)/2)}{\sqrt{\pi \nu} \Gamma (\nu/2)}
     (1 + x^2/\nu)^{-(\nu+1)/2}%
-  }{f(x) = Gamma((n+1)/2) / (sqrt(n pi) Gamma(n/2)) (1 + x^2/n)^-((n+1)/2)}
+  }{f(x) = \Gamma((n+1)/2) / (sqrt(n \pi) \Gamma(n/2)) (1 + x^2/n)^-((n+1)/2)}
   for all real \eqn{x}.
   It has mean \eqn{0} (for \eqn{\nu > 1}{n > 1}) and
   variance \eqn{\frac{\nu}{\nu-2}}{n/(n-2)} (for \eqn{\nu > 2}{n > 2}).
@@ -73,11 +73,11 @@ rt(n, df, ncp)
   where
   \eqn{\bar{X}}{mX} is the \code{\link{mean}} and \eqn{S} the sample standard
   deviation (\code{\link{sd}}) of \eqn{X_1, X_2, \dots, X_n} which are
-  i.i.d. \eqn{{\cal N}(\mu, \sigma^2)}{N(mu, sigma^2)}
+  i.i.d. \eqn{{\cal N}(\mu, \sigma^2)}{N(\mu, \sigma^2)}
   Then \eqn{T} is distributed as non-central \eqn{t} with
-  \code{df}\eqn{{} = n-1}
+  \code{df}\eqn{{} = n-1}{= n - 1}
   degrees of freedom and \bold{n}on-\bold{c}entrality \bold{p}arameter
-  \code{ncp}\eqn{{} = (\mu - \mu_0) \sqrt{n}/\sigma}{ = (mu - m0) * sqrt(n)/sigma}.
+  \code{ncp}\eqn{{} = (\mu - \mu_0) \sqrt{n}/\sigma}{ = (\mu - m0) * sqrt(n)/\sigma}.
 }
 \source{
   The central \code{dt} is computed via an accurate formula

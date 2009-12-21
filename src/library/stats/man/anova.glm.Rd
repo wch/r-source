@@ -43,7 +43,7 @@
   dispersion estimated by moments (e.g., \code{gaussian},
   \code{quasibinomial} and \code{quasipoisson} fits) the F test is
   most appropriate.  Mallows' \eqn{C_p}{Cp} statistic is the residual
-  deviance plus twice the estimate of \eqn{\sigma^2}{sigma^2} times
+  deviance plus twice the estimate of \eqn{\sigma^2} times
   the residual degrees of freedom, which is closely related to AIC (and
   a multiple of it if the dispersion is known).
 

@@ -26,9 +26,7 @@ grey.colors(n, start = 0.3, end = 0.9, gamma = 2.2)
 \details{
   The function \code{gray.colors} chooses a series of \code{n}
   gamma-corrected gray levels between \code{start} and \code{end}:
-  \eqn{(\mathit{start}^\gamma, \dots,
-    \mathit{end}^\gamma)^(1/\gamma)}{seq(start^gamma, end^gamma, length
-    = n)^(1/gamma)}.
+  \code{seq(start^gamma, end^gamma, length = n)^(1/gamma)}.
   The returned palette contains the corresponding gray colors.
   This palette is used in \code{\link{barplot.default}}.
 
