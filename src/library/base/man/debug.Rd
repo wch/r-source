@@ -53,8 +53,8 @@ isdebugged(fun)
   and \code{ls()} lists the objects in the calling frame.  (If you want
   to look at an object with a name such as \code{n}, print it explicitly.)
 
-  If a function is defined inside a function, single-step though to the
-  end of its definition, and then call \code{debug} on its name.
+  To debug a function is defined inside a function, single-step though
+  to the end of its definition, and then call \code{debug} on its name.
 
   Using \code{debug} is persistent, and unless debugging is turned off
   the debugger will be entered on every invocation (note that if the
@@ -66,6 +66,10 @@ isdebugged(fun)
   need to use \code{\link{trace}}, typically calling \code{\link{browser}},
   e.g., as \cr
   \code{trace("plot", browser, exit=browser, signature = c("track", "missing"))}
+  
+  The number of lines printed for the deparsed call when a function is
+  entered for debugging can be limited by setting
+  \code{\link{options}(deparse.max.lines)}.  
 }
 \seealso{
   \code{\link{browser}}, \code{\link{trace}};

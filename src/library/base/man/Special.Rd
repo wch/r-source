@@ -57,7 +57,7 @@ lfactorial(x)
   if either is zero.
 
   The functions \code{gamma} and \code{lgamma} return the gamma function
-  \eqn{\Gamma(x)} and the natural logarithm of \emph{the absolute value of} the
+  \eqn{\Gamma(x)}{Gamma(x)} and the natural logarithm of \emph{the absolute value of} the
   gamma function.  The gamma function is defined by
   (Abramowitz and Stegun section 6.1.1, page 255)
   \deqn{\Gamma(x) = \int_0^\infty t^{x-1} e^{-t} dt}{integral_0^Inf t^(x-1) exp(-t) dt}

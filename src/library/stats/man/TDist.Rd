@@ -75,7 +75,7 @@ rt(n, df, ncp)
   deviation (\code{\link{sd}}) of \eqn{X_1, X_2, \dots, X_n} which are
   i.i.d. \eqn{{\cal N}(\mu, \sigma^2)}{N(mu, sigma^2)}
   Then \eqn{T} is distributed as non-central \eqn{t} with
-  \code{df}\eqn{{} = n-1}
+  \code{df}\eqn{{} = n-1}{= n - 1}
   degrees of freedom and \bold{n}on-\bold{c}entrality \bold{p}arameter
   \code{ncp}\eqn{{} = (\mu - \mu_0) \sqrt{n}/\sigma}{ = (mu - m0) * sqrt(n)/sigma}.
 }
