@@ -1,6 +1,6 @@
 % File src/library/stats/man/extractAIC.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 %-- This page by Martin Maechler,  improvements welcome!
@@ -42,15 +42,15 @@ extractAIC(fit, scale, k = 2, \dots)
   models) of \code{fit}.
 
   For linear models with unknown scale (i.e., for \code{\link{lm}} and
-  \code{\link{aov}}), \eqn{-2\log L} is computed from the
+  \code{\link{aov}}), \eqn{-2\log L}{-2 log L} is computed from the
   \emph{deviance} and uses a different additive constant to
   \code{\link{logLik}} and hence \code{\link{AIC}}.  If \eqn{RSS}
   denotes the (weighted) residual sum of squares then \code{extractAIC}
-  uses for \eqn{- 2\log L} the formulae \eqn{RSS/s - n} (corresponding
+  uses for \eqn{- 2\log L}{-2 log L} the formulae \eqn{RSS/s - n} (corresponding
   to Mallows' \eqn{C_p}{Cp}) in the case of known scale \eqn{s} and
-  \eqn{n \log (RSS/n)} for unknown scale. \code{\link{AIC}} only handles
-  unknown scale and uses the formula
-  \eqn{n \log (RSS/n) - n + n \log 2\pi - \sum \log w}
+  \eqn{n \log (RSS/n)}{n log (RSS/b)} for unknown scale.
+  \code{\link{AIC}} only handles unknown scale and uses the formula
+  \eqn{n \log (RSS/n) - n + n \log 2\pi - \sum \log w}{n log (RSS/n) - n + n log 2pi - sum(log w)}
   where \eqn{w} are the weights.
 
   For \code{glm} fits the family's \code{aic()} function to compute the
@@ -85,7 +85,7 @@ extractAIC(fit, scale, k = 2, \dots)
 }
 \examples{
 utils::example(glm)
-extractAIC(glm.D93)#>>  5  15.129
+extractAIC(glm.D93)  #>>  5  15.129
 }
 \keyword{models}
 

@@ -110,7 +110,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   \code{spar} is \eqn{s = s0 + 0.0601 * \bold{\log}\lambda}{spar = s0 + 0.0601 * log(lambda)},
   which is intentionally \emph{different} from the S-PLUS implementation
   of \code{smooth.spline} (where \code{spar} is proportional to
-  \eqn{\lambda}).  In \R's (\eqn{\log \lambda}) scale, it makes more
+  \eqn{\lambda}).  In \R's (\eqn{\log \lambda}{log lambda}) scale, it makes more
   sense to vary \code{spar} linearly.
 
   Note however that currently the results may become very unreliable

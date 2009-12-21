@@ -232,7 +232,7 @@ Rd2HTML <-
     {
         x <- htmlify(x)
         ## historical escapes for math
-        x <- psub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilaon)", "&\\1;", x)
+        x <- psub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilon)", "&\\1;", x)
         x <- fsub("\\left(", "(", x)
         x <- fsub("\\right", ")", x)
         x <- fsub("\\le", "&lt;=", x)

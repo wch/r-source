@@ -15,7 +15,7 @@
     \item{\code{signature(object = "ANY")}}{Generic function}
     \item{\code{signature(object = "mle")}}{Generate a summary as an
       object of class \code{"summary.mle"}, containing estimates,
-      asymptotic SE, and value of \eqn{-2 \log L}.}
+      asymptotic SE, and value of \eqn{-2 \log L}{-2 log L}.}
   }
 }
 \keyword{methods}

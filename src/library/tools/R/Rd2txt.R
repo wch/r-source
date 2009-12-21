@@ -259,9 +259,9 @@ Rd2txt <-
     }
 
     txt_eqn <- function(x) {
-        x <- psub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilaon|psi)", "\\1", x)
+        x <- psub("\\\\(Gamma|alpha|Alpha|pi|mu|sigma|Sigma|lambda|beta|epsilon|psi)", "\\1", x)
         x <- psub("\\\\(bold|strong|emph|var)\\{([^}]*)\\}", "\\2", x)
-        x <- psub("\\\\(ode|samp)\\{([^}]*)\\}", "'\\2'", x)
+        x <- psub("\\\\(code|samp)\\{([^}]*)\\}", "'\\2'", x)
         x
     }
 
