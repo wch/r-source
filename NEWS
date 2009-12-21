@@ -38,11 +38,14 @@ BUG FIXES
 
     o	tools::codoc() (used by R CMD check) was missing cases where the
 	function had no arguments but was documented to have some.
- 	
-    o	Help links containing special characters (e.g. "?") were not 
-    	generated correctly when rendered in HTML. (PR#14155)
+
+    o	Help links containing special characters (e.g. "?") were not
+	generated correctly when rendered in HTML. (PR#14155)
 
     o	lchoose(a,k) no longer wrongly gives NaN for negative a.
+
+    o	ks.test() could give a p-value that was off by one observation
+	due to rounding error.  (PR#14145)
 
 
 
