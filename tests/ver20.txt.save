@@ -15,7 +15,7 @@ _A_r_g_u_m_e_n_t_s:
 _D_e_t_a_i_l_s:
 
      R R \R alphabetaGamma
-  
+
      In code, all that needs to be escaped is percent, backslash and
      unpaired braces: '% \ {'. Unescaped: '$ # _ ^ ~ < > |', and as a
      pair, '{...}'.  If we escape: ' \_ \# \$ \& { } \ ' And some
@@ -23,7 +23,7 @@ _D_e_t_a_i_l_s:
      backslashes.
 
      How about \ (that is backslash space) in text?
-  
+
      Elsewhere, { } % \ need to be escaped, but not $ # _ ^ ~ < > | .
      Let's try that again in '\samp': ' { } % \ $ # _ ^ ~ < > |'.  And
      if we do escape: \$ \# \_ , and with three backslashes, \\#.
@@ -33,8 +33,7 @@ _D_e_t_a_i_l_s:
                            \$k > \#k, x_y, x\_y                      
      
      group-weighting from $[N_iP_i(1-P_i)]$
-  
-  
+
      
      
          % a
@@ -50,7 +49,7 @@ _U_R_L_s _a_n_d _e_m_a_i_l_s:
 
      Markus Kuhn, "ASCII and Unicode quotation marks".  <URL:
      http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html>
-  
+
      No escape is needed in <email: Micah_Altman@harvard.edu>
 
 _E_x_a_m_p_l_e_s:

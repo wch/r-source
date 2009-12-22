@@ -35,7 +35,7 @@ R = LANGUAGE=en LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bi
 R2 = R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla
 R3 = $(top_builddir)/bin/R CMD check
 RDIFF = $(top_builddir)/bin/R CMD Rdiff
-RDCONV = $(top_builddir)/bin/R CMD Rdconv
+RDCONV = LC_CTYPE=C $(top_builddir)/bin/R CMD Rdconv
 MK = $(MAKE)
 
 
