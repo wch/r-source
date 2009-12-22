@@ -44,7 +44,7 @@ rbinom(n, size, prob)
   \code{prob} \eqn{= p} has density
   \deqn{p(x) = {n \choose x} {p}^{x} {(1-p)}^{n-x}}{
     p(x) = choose(n,x) p^x (1-p)^(n-x)}
-  for \eqn{x = 0, \ldots, n}{x = 0, ..., n}.
+  for \eqn{x = 0, \ldots, n}.
 
   If an element of \code{x} is not integer, the result of \code{dbinom}
   is zero, with a warning.

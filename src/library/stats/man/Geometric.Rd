@@ -34,8 +34,7 @@ rgeom(n, prob)
 \details{
   The geometric distribution with \code{prob} \eqn{= p} has density
   \deqn{p(x) = p {(1-p)}^{x}}{p(x) = p (1-p)^x}
-  for \eqn{x = 0, 1, 2, \ldots}{x = 0, 1, 2, ...},
-  \eqn{0 < p \le 1}.
+  for \eqn{x = 0, 1, 2, \ldots}, \eqn{0 < p \le 1}.
 
   If an element of \code{x} is not integer, the result of \code{pgeom}
   is zero, with a warning.
