@@ -29,7 +29,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
     prediction, so \code{Pn} should not be computed at the first step.}
   \item{n.ahead}{The number of steps ahead for which prediction is
     required.}
-  \item{phi, theta}{numeric vectors of length \eqn{\ge 0}{>=0} giving AR
+  \item{phi, theta}{numeric vectors of length \eqn{\ge 0}{>= 0} giving AR
     and MA parameters.}
   \item{Delta}{vector of differencing coefficients, so an ARMA model is
     fitted to \code{y[t] - Delta[1]*y[t-1] - \dots}.}

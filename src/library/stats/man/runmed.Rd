@@ -31,7 +31,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
         at both ends, where \eqn{k_2}{k2} is the half-bandwidth
         \code{k2 = k \%/\% 2},
         i.e., \code{y[j] = x[j]} for \eqn{j \in \{1,\ldots,k_2;
-          n-k_2+1,\ldots,n\}}{j = 1, .., k2 and (n-k2+1), .., n};}
+          n-k_2+1,\ldots,n\}}{j = 1, ..., k2 and (n-k2+1), ..., n};}
       \item{\code{"constant"}}{copies \code{median(y[1:k2])} to the first
         values and analogously for the last ones making the smoothed ends
         \emph{constant};}
@@ -54,17 +54,17 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
 }
 \details{
   Apart from the end values, the result \code{y = runmed(x, k)} simply has
-  \code{y[j] = median(x[(j-k2):(j+k2)])} (k = 2*k2+1), computed very
+  \code{y[j] = median(x[(j-k2):(j+k2)])} (\code{k = 2*k2+1}), computed very
   efficiently.
 
   The two algorithms are internally entirely different:
   \describe{
-    \item{"Turlach"}{is the Härdle-Steiger
+    \item{\code{"Turlach"}}{is the \enc{Härdle}{Haerdle}--Steiger
       algorithm (see Ref.) as implemented by Berwin Turlach.
       A tree algorithm is used, ensuring performance \eqn{O(n \log
-        k)}{O(n * log(k))} where \code{n <- length(x)} which is
+        k)}{O(n * log(k))} where \code{n = length(x)} which is
       asymptotically optimal.}
-    \item{"Stuetzle"}{is the (older) Stuetzle-Friedman implementation
+    \item{\code{"Stuetzle"}}{is the (older) Stuetzle--Friedman implementation
       which makes use of median \emph{updating} when one observation
       enters and one leaves the smoothing window.  While this performs as
       \eqn{O(n \times k)}{O(n * k)} which is slower asymptotically, it is

@@ -60,7 +60,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
 }
 \details{
   The factor analysis model is
-  \deqn{x = \Lambda f + e}{ x = Lambda f + e}
+  \deqn{x = \Lambda f + e}{x = Lambda f + e}
   for a \eqn{p}--element row-vector \eqn{x}, a \eqn{p \times k}{p x k}
   matrix of \emph{loadings}, a \eqn{k}--element vector of \emph{scores}
   and a \eqn{p}--element vector of errors.  None of the components

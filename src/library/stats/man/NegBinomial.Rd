@@ -48,12 +48,11 @@ rnbinom(n, size, prob, mu)
   Bernoulli trials before a target number of successes is reached.
 
   A negative binomial distribution can arise as a mixture of Poisson
-  distributions with mean distributed as a
-  \eqn{\Gamma}{Gamma} (\code{\link{pgamma}}) distribution with scale parameter
-  \code{(1 - prob)/prob} and shape parameter \code{size}.  (This
-  definition allows non-integer values of \code{size}.)
-  In this model \code{prob} = \code{1/(1+size)}, and the mean is
-  \code{size * (1 - prob)/prob}.
+  distributions with mean distributed as a gamma distribution
+  (see\code{\link{pgamma}}) with scale parameter \code{(1 - prob)/prob}
+  and shape parameter \code{size}.  (This definition allows non-integer
+  values of \code{size}.)  In this model \code{prob} =
+  \code{1/(1+size)}, and the mean is \code{size * (1 - prob)/prob}.
 
   The alternative parametrization (often used in ecology) is by the
   \emph{mean} \code{mu}, and \code{size}, the \emph{dispersion parameter},
