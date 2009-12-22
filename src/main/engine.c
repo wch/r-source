@@ -3089,13 +3089,13 @@ void R_GE_rasterInterpolate(unsigned int *sraster, int sw, int sh,
 
     /* Iterate over the destination pixels */
     for (i = 0; i < dh; i++) {
-        ypm = (int) (scy * i);
+        ypm = (int) fmax2(scy * i - 8, 0);
         yp = ypm >> 4;
         yf = ypm & 0x0f;
         dline = draster + i * dw;
         sline = sraster + yp * sw;
         for (j = 0; j < dw; j++) {
-            xpm = (int) (scx * j);
+            xpm = (int) fmax2(scx * j - 8, 0);
             xp = xpm >> 4;
             xf = xpm & 0x0f;
 
