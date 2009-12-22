@@ -34,20 +34,20 @@ dmultinom(x, size = NULL, prob, log = FALSE)
 \details{
   If \code{x} is a $K$-component vector, \code{dmultinom(x, prob)} is
   the probability
-  \deqn{P(X_1=x_1,\ldots,X_K=x_k) = C \times \prod_{j=1}^K \pi_j^{x_j}}{P(X[1]=x[1], ... , X[K]=x[k]) = C * prod(j=1 ,.., K) p[j]^x[j]}
+  \deqn{P(X_1=x_1,\ldots,X_K=x_k) = C \times \prod_{j=1}^K \pi_j^{x_j}}{P(X[1]=x[1], \dots , X[K]=x[k]) = C * prod(j=1  \dots, K) p[j]^x[j]}
   where \eqn{C} is the \sQuote{multinomial coefficient}
   \eqn{C = N! / (x_1! \cdots x_K!)}{C = N! / (x[1]! * \dots * x[K]!)}
-  and \eqn{N = \sum_{j=1}^K x_j}{N = sum(j=1,..,K) x[j]}.
+  and \eqn{N = \sum_{j=1}^K x_j}{N = sum(j=1, \dots, K) x[j]}.
   \cr
   By definition, each component \eqn{X_j}{X[j]} is binomially distributed as
-  \code{Bin(size, prob[j])} for \eqn{j = 1,\ldots,K}{j = 1, ..., K}.
+  \code{Bin(size, prob[j])} for \eqn{j = 1, \ldots, K}.
 
   The \code{rmultinom()} algorithm draws binomials from
   \eqn{Bin(n_j,P_j)}{Bin(n[j], P[j])} sequentially, where
   \eqn{n_1 = N}{n[1] = N} (N := \code{size}),
   \eqn{P_1 = \pi_1}{P[1] = p[1]} (\eqn{\pi}{p} is \code{prob} scaled to sum 1),
   and for \eqn{j \ge 2}{j >= 2}, recursively
-  \eqn{n_j = N - \sum_{k=1}^{j-1} n_k}{n[j] = N - sum(k=1, .., j-1) n[k]}
+  \eqn{n_j = N - \sum_{k=1}^{j-1} n_k}{n[j] = N - sum(k=1, \dots, j-1) n[k]}
   and
   \eqn{P_j = \pi_j / (1 - \sum_{k=1}^{j-1} \pi_k)}{P[j] = p[j] / (1 - sum(p[1:(j-1)]))}.
 }

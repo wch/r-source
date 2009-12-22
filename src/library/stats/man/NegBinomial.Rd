@@ -41,7 +41,7 @@ rnbinom(n, size, prob, mu)
   \code{prob} \eqn{= p} has density
   \deqn{
     p(x) = \frac{\Gamma(x+n)}{\Gamma(n) x!} p^n (1-p)^x}{p(x) = Gamma(x+n)/(Gamma(n) x!) p^n (1-p)^x}
-  for \eqn{x = 0, 1, 2, \ldots}{x = 0, 1, 2, ...}, \eqn{n > 0} and
+  for \eqn{x = 0, 1, 2, \ldots}, \eqn{n > 0} and
   \eqn{0 < p \le 1}{0 < p <= 1}.
 
   This represents the number of failures which occur in a sequence of
