@@ -77,15 +77,15 @@ lfactorial(x)
   \deqn{\code{digamma(x)} = \psi(x) = \frac{d}{dx}\ln\Gamma(x) =
     \frac{\Gamma'(x)}{\Gamma(x)}}{digamma(x) = \psi(x) = d/dx{ln \Gamma(x)} = \Gamma'(x) / \Gamma(x)}
   This is often called the \sQuote{polygamma} function, e.g. in
-  Abramowitz and Stegun (section 6.4.1, page 260); and its higher
+  Abramowitz and Stegun (section 6.4.1, page 260); and higher
   derivatives (\code{deriv = 2:4}) have occasionally been called
   \sQuote{tetragamma}, \sQuote{pentagamma}, and \sQuote{hexagamma}.
 
   The functions \code{choose} and \code{lchoose} return binomial
   coefficients and the logarithms of their absolute values.  Note that
   \code{choose(n,k)} is defined for all real numbers \eqn{n} and integer
-  \eqn{k}.  For \eqn{k \ge 1} as
-  \eqn{n(n-1)\cdots(n-k+1) / k!}{n(n-1)...(n-k+1) / k!},
+  \eqn{k}.  For \eqn{k \ge 1} it is defined as
+  \eqn{n(n-1)\cdots(n-k+1) / k!}{n(n-1)\dots(n-k+1) / k!},
   as \eqn{1} for \eqn{k = 0} and as \eqn{0} for negative \eqn{k}.
   Non-integer values of \code{k} are rounded to an integer, with a warning.
   \cr \code{choose(*,k)} uses direct arithmetic (instead of
