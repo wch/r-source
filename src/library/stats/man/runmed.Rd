@@ -54,17 +54,17 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
 }
 \details{
   Apart from the end values, the result \code{y = runmed(x, k)} simply has
-  \code{y[j] = median(x[(j-k2):(j+k2)])} (k = 2*k2+1), computed very
+  \code{y[j] = median(x[(j-k2):(j+k2)])} (\code{k = 2*k2+1}), computed very
   efficiently.
 
   The two algorithms are internally entirely different:
   \describe{
-    \item{"Turlach"}{is the Härdle-Steiger
+    \item{\code{"Turlach"}}{is the \enc{Härdle}{Haerdle}--Steiger
       algorithm (see Ref.) as implemented by Berwin Turlach.
       A tree algorithm is used, ensuring performance \eqn{O(n \log
-        k)}{O(n * log(k))} where \code{n <- length(x)} which is
+        k)}{O(n * log(k))} where \code{n = length(x)} which is
       asymptotically optimal.}
-    \item{"Stuetzle"}{is the (older) Stuetzle-Friedman implementation
+    \item{\code{"Stuetzle"}}{is the (older) Stuetzle--Friedman implementation
       which makes use of median \emph{updating} when one observation
       enters and one leaves the smoothing window.  While this performs as
       \eqn{O(n \times k)}{O(n * k)} which is slower asymptotically, it is
