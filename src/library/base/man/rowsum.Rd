@@ -7,9 +7,7 @@
 \alias{rowsum}
 \alias{rowsum.default}
 \alias{rowsum.data.frame}
-\title{
-Give column sums of a matrix or data frame, based on a grouping variable
-}
+\title{Give Column Sums of a Matrix or Data Frame, Based on a Grouping Variable}
 \description{
   Compute column sums across rows of a matrix-like object for each level of a
   grouping variable.  \code{rowsum} is generic, with a method for data
