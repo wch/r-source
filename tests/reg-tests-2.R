@@ -2433,3 +2433,11 @@ tst <- function(y) { stopifnot(is.numeric(y)); y+ 1 }
 try(tst())
 try(c(1,,2))
 ## change in 2.8.0 made these less clear
+
+
+## empty levels from cut.Date (cosmetic, PR#14162)
+x <- as.Date(c("2009-03-21","2009-03-31"))
+cut(x, breaks= "quarter") # had two levels in 2.10.1
+cut(as.POSIXlt(x), breaks= "quarter")
+## remove empty final level
+

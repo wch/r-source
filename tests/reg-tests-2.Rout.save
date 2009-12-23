@@ -1,5 +1,5 @@
 
-R version 2.11.0 Under development (unstable) (2009-12-08 r50689)
+R version 2.11.0 Under development (unstable) (2009-12-23 r50820)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6498,4 +6498,16 @@ Error in is.numeric(y) : 'y' is missing
 > try(c(1,,2))
 Error in c(1, , 2) : argument 2 is empty
 > ## change in 2.8.0 made these less clear
+> 
+> 
+> ## empty levels from cut.Date (cosmetic, PR#14162)
+> x <- as.Date(c("2009-03-21","2009-03-31"))
+> cut(x, breaks= "quarter") # had two levels in 2.10.1
+[1] 2009-01-01 2009-01-01
+Levels: 2009-01-01
+> cut(as.POSIXlt(x), breaks= "quarter")
+[1] 2009-01-01 2009-01-01
+Levels: 2009-01-01
+> ## remove empty final level
+> 
 > 

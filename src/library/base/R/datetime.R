@@ -724,21 +724,21 @@ cut.POSIXt <-
 	if(valid > 1L) { start$sec <- 0L; incr <- 59.99 }
 	if(valid > 2L) { start$min <- 0L; incr <- 3600 - 1 }
 	if(valid > 3L) { start$hour <- 0L; incr <- 86400 - 1 }
-	if(valid == 5L) {
+	if(valid == 5L) { # weeks
 	    start$mday <- start$mday - start$wday
 	    if(start.on.monday)
 		start$mday <- start$mday + ifelse(start$wday > 0L, 1L, -6L)
 	    incr <- 7*86400
 	}
-    if(valid == 8L) incr <- 25*3600
-    if(valid == 6L) {
+    if(valid == 8L) incr <- 25*3600 # DSTdays
+    if(valid == 6L) { # months
         start$mday <- 1L
         end <- as.POSIXlt(max(x, na.rm = TRUE))
         step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
         end <- as.POSIXlt(end + (31 * step * 86400))
         end$mday <- 1L
         breaks <- seq(start, end, breaks)
-    } else if(valid == 7L) {
+    } else if(valid == 7L) { # years
         start$mon <- 0L
         start$mday <- 1L
         end <- as.POSIXlt(max(x, na.rm = TRUE))
@@ -747,17 +747,21 @@ cut.POSIXt <-
         end$mon <- 0L
         end$mday <- 1L
         breaks <- seq(start, end, breaks)
-    } else if(valid == 9L) {
+    } else if(valid == 9L) { # quarters
         qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
         start$mon <- qtr[start$mon + 1L]
         start$mday <- 1L
-        end <- as.POSIXlt(max(x, na.rm = TRUE))
+        maxx <- max(x, na.rm = TRUE)
+        end <- as.POSIXlt(maxx)
         step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
         end <- as.POSIXlt(end + (93 * step * 86400))
         end$mon <- qtr[end$mon + 1L]
         end$mday <- 1L
         breaks <- seq(start, end, paste(step * 3, "months"))
-    } else {
+        ## 93 days ahead could give an empty level, so
+        lb <- length(breaks)
+        if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
+    } else { # weeks or shorter
         if (length(by2) == 2L) incr <- incr * as.integer(by2[1L])
         maxx <- max(x, na.rm = TRUE)
         breaks <- seq.int(start, maxx + incr, breaks)
