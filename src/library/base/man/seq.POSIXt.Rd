@@ -5,7 +5,7 @@
 
 \name{seq.POSIXt}
 \alias{seq.POSIXt}
-\title{Generate Regular Sequences of Dates}
+\title{Generate Regular Sequences of Times}
 \description{
   The method for \code{\link{seq}} for date-time classes.
 }

@@ -6,7 +6,7 @@
 \name{Theoph}
 \docType{data}
 \alias{Theoph}
-\title{Pharmacokinetics of theophylline}
+\title{Pharmacokinetics of Theophylline}
 \description{
   The \code{Theoph} data frame has 132 rows and 5 columns of data from
   an experiment on the pharmacokinetics of theophylline.}

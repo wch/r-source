@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSasympOrig}
-\title{Asymptotic Regression Model through the Origin}
+\title{Self-Starting Nls Asymptotic Regression Model through the Origin}
 \usage{
 SSasympOrig(input, Asym, lrc)
 }

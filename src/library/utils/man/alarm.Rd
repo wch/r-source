@@ -1,13 +1,13 @@
 % File src/library/utils/man/alarm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{alarm}
 \alias{alarm}
 \concept{beep}
 \concept{bell}
-\title{Alert the user}
+\title{Alert the User}
 \description{
 Gives an audible or visual signal to the user.
 }

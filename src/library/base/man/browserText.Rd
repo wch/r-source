@@ -3,7 +3,7 @@
 \alias{browserCondition}
 \alias{browserSetDebug}
 \title{
-Functions to retrieve values supplied by calls to browser.
+Functions to Retrieve Values Supplied by Calls to the Browser
 }
 \description{
 A call to browser can provide context by supplying either a text

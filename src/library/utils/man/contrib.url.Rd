@@ -5,7 +5,7 @@
 
 \name{contrib.url}
 \alias{contrib.url}
-\title{Find Appropriate Paths in CRAN-like repositories}
+\title{Find Appropriate Paths in CRAN-like Repositories}
 \description{
   \code{contrib.url} adds the appropriate type-specific path within a
   repository to each URL in \code{repos}.

@@ -7,7 +7,7 @@
 \alias{is}
 \alias{extends}
 \alias{setIs}
-\title{Is an Object from a Class}
+\title{Is an Object from a Class?}
 \description{
   Functions to test inheritance relationships between an object and a
   class (\code{is}) or between two classes (\code{extends}), and to

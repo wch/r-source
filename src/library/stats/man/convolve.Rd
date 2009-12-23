@@ -5,7 +5,7 @@
 
 \name{convolve}
 \alias{convolve}
-\title{Fast Convolution}
+\title{Convolution of Sequences via FFT}
 \description{
   Use the Fast Fourier Transform to compute the several kinds of
   convolutions of two sequences.

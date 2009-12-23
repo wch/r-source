@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSbiexp}
-\title{Biexponential model}
+\title{Self-Starting Nls Biexponential model}
 \usage{
 SSbiexp(input, A1, lrc1, A2, lrc2)
 }

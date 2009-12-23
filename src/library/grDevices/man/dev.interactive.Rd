@@ -6,7 +6,7 @@
 \name{dev.interactive}
 \alias{dev.interactive}
 \alias{deviceIsInteractive}
-\title{Is the Current Graphics Device Interactive ?}
+\title{Is the Current Graphics Device Interactive?}
 \description{
   Test if the current graphics device (or that which would be opened) is
   interactive.

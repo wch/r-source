@@ -5,7 +5,7 @@
 
 \name{identity}
 \alias{identity}
-\title{Identity function}
+\title{Identity Function}
 \description{
   A trivial identity function returning its argument.
 }

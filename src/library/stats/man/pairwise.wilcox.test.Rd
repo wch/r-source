@@ -5,7 +5,7 @@
 
 \name{pairwise.wilcox.test}
 \alias{pairwise.wilcox.test}
-\title{ Pairwise Wilcoxon rank sum tests}
+\title{Pairwise Wilcoxon Rank Sum Tests}
 \description{
   Calculate pairwise comparisons between group levels with corrections
   for multiple testing.

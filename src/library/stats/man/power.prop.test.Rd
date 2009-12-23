@@ -6,7 +6,7 @@
 \name{power.prop.test}
 \alias{power.prop.test}
 \encoding{latin1}
-\title{Power calculations two sample test for proportions}
+\title{Power Calculations for Two-Sample Test for Proportions}
 \description{
   Compute power of test, or determine parameters to obtain target power.
 }

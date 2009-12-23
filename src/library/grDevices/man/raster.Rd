@@ -12,9 +12,7 @@
 \alias{as.raster.character}
 \alias{as.raster.matrix}
 \alias{as.raster.array}
-\title{
-  Create a raster object
-}
+\title{Create a Raster Object}
 \description{
   Functions to create a raster object (representing a bitmap
   image) and coerce other objects to a raster object.

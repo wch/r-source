@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSmicmen}
-\title{Michaelis-Menten Model}
+\title{Self-Starting Nls Michaelis-Menten Model}
 \usage{
 SSmicmen(input, Vm, K)
 }

@@ -5,7 +5,7 @@
 
 \name{cutree}
 \alias{cutree}
-\title{Cut a tree into groups of data}
+\title{Cut a Tree into Groups of Data}
 \description{
   Cuts a tree, e.g., as resulting from \code{\link{hclust}}, into several
   groups either by specifying the desired number(s) of groups or the cut

@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSfpl}
-\title{Four-parameter Logistic Model}
+\title{Self-Starting Nls Four-Parameter Logistic Model}
 \usage{
 SSfpl(input, A, B, xmid, scal)
 }

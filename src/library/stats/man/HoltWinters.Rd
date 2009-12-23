@@ -37,7 +37,7 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
   \item{l.start}{Start value for level (a[0]).}
   \item{b.start}{Start value for trend (b[0]).}
   \item{s.start}{Vector of start values for the seasonal component
-    (\eqn{s_1[0]...s_p[0]}{s_1[0]...s_p[0]})}
+    (\eqn{s_1[0] \ldots s_p[0]}{s_1[0] \dots s_p[0]})}
   \item{optim.start}{Vector with named components \code{alpha},
     \code{beta}, and \code{gamma} containing the starting values for the
     optimizer. Only the values needed must be specified.  Ignored in the

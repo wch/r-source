@@ -6,7 +6,7 @@
 \name{mapply}
 \alias{mapply}
 \alias{Vectorize}
-\title{Apply a function to multiple list or vector arguments }
+\title{Apply a Function to Multiple List or Vector Arguments}
 \description{
   \code{mapply} is a multivariate version of \code{\link{sapply}}.
   \code{mapply} applies \code{FUN} to the first elements of each \dots

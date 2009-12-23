@@ -6,7 +6,7 @@
 \name{stopifnot}
 \alias{stopifnot}
 \concept{assertion}
-\title{Ensure the `Truth' of R Expressions}
+\title{Ensure the Truth of R Expressions}
 \description{
   If any of the expressions in \code{\dots} are not \code{\link{all}}
   \code{TRUE}, \code{\link{stop}} is called, producing an error message

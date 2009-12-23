@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSgompertz}
-\title{Gompertz Growth Model}
+\title{Self-Starting Nls Gompertz Growth Model}
 \usage{
 SSgompertz(x, Asym, b2, b3)
 }

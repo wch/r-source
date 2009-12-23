@@ -5,7 +5,7 @@
 
 \name{taskCallbackManager}
 \alias{taskCallbackManager}
-\title{Create an R-level task callback manager}
+\title{Create an R-level Task Callback Manager}
 \description{
   This provides an entirely S-language mechanism
   for managing callbacks or actions  that are invoked at

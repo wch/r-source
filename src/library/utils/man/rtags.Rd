@@ -5,7 +5,7 @@
 
 \name{rtags}
 \alias{rtags}
-\title{ An etags-like a tagging utility for R }
+\title{ An Etags-like Tagging Utility for R }
 \description{
   \code{rtags} provides etags-like indexing capabilities for R code,
   using R's own parser.

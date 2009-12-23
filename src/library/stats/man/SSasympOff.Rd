@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSasympOff}
-\title{Asymptotic Regression Model with an Offset}
+\title{Self-Starting Nls Asymptotic Regression Model with an Offset}
 \usage{
 SSasympOff(input, Asym, lrc, c0)
 }
