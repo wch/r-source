@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSfol}
-\title{First-order Compartment Model}
+\title{Self-Starting Nls First-order Compartment Model}
 \usage{
 SSfol(Dose, input, lKe, lKa, lCl)
 }

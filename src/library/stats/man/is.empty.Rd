@@ -5,9 +5,12 @@
 
 \name{is.empty.model}
 \alias{is.empty.model}
-\title{Check if a Model is Empty}
+\title{Test if a Model's Formila is Empty}
 \description{
-\R model notation allows models with no intercept and no predictors. These require special handling internally.  \code{is.empty.model()} checks whether an object describes an empty model.
+  \R's formula notation allows models with no intercept and no
+  predictors. These require special handling internally.
+  \code{is.empty.model()} checks whether an object describes an empty
+  model.
 }
 \usage{
 is.empty.model(x)

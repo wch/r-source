@@ -6,7 +6,7 @@
 \name{taskCallback}
 \alias{addTaskCallback}
 \alias{removeTaskCallback}
-\title{Add or remove a top-level task callback}
+\title{Add or Remove a Top-Level Task Callback}
 \description{
   \code{addTaskCallback} registers an R function
   that is to be called each time a top-level task

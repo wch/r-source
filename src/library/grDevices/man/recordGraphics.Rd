@@ -5,7 +5,7 @@
 
 \name{recordGraphics}
 \alias{recordGraphics}
-\title{ Record graphics operations }
+\title{Record Graphics Operations}
 \description{
   Records arbitrary code on the graphics engine display list.
   Useful for encapsulating calculations with graphical output

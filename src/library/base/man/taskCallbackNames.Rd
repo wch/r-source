@@ -5,7 +5,7 @@
 
 \name{taskCallbackNames}
 \alias{getTaskCallbackNames}
-\title{Query the names of the current internal top-level task callbacks}
+\title{Query the Names of the Current Internal Top-Level Task Callbacks}
 \description{
   This provides a way to get the names (or identifiers)
   for the currently registered task callbacks

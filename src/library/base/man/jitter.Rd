@@ -5,7 +5,7 @@
 
 \name{jitter}
 \alias{jitter}
-\title{Add `Jitter' (Noise) to Numbers}
+\title{`Jitter' (Add Noise) to Numbers}
 \usage{
 jitter(x, factor=1, amount = NULL)
 }

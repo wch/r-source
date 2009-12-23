@@ -5,7 +5,7 @@
 
 \name{dotchart}
 \alias{dotchart}
-\title{Cleveland Dot Plots}
+\title{Cleveland's Dot Plots}
 \description{
   Draw a Cleveland dot plot.
 }

@@ -5,7 +5,7 @@
 
 \name{kronecker}
 
-\title{Kronecker products on arrays}
+\title{Kronecker Products on Arrays}
 
 \usage{
 kronecker(X, Y, FUN = "*", make.dimnames = FALSE, \dots)

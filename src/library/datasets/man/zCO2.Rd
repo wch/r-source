@@ -6,7 +6,7 @@
 \name{CO2}
 \docType{data}
 \alias{CO2}
-\title{Carbon Dioxide uptake in grass plants}
+\title{Carbon Dioxide Uptake in Grass Plants}
 \description{
   The \code{CO2} data frame has 84 rows and 5 columns of data from an
   experiment on the cold tolerance of the grass species

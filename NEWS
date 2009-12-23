@@ -18,6 +18,11 @@ NEW FEATURES
     o	lchoose(a,k) is now defined as	log(abs(choose(a,k))), analogously
 	to lfactorial().
 
+    o	Although \eqn{} in Rd files is defined as a 'verbatim' macro,
+	many packages expected \dots and \ldots to be interpreted
+	there (as was the case in R < 2.10.0), so this is now done
+	(using an ellipsis in HTML rendering).
+
 
 BUG FIXES
 

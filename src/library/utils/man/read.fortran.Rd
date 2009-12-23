@@ -1,11 +1,11 @@
 % File src/library/utils/man/read.fortran.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{read.fortran}
 \alias{read.fortran}
-\title{Read fixed-format data }
+\title{Read Fixed-Format Data}
 \description{
 Read fixed-format data files using Fortran-style format specifications.
 }

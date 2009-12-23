@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSlogis}
-\title{Logistic Model}
+\title{Self-Starting Nls Logistic Model}
 \usage{
 SSlogis(input, Asym, xmid, scal)
 }

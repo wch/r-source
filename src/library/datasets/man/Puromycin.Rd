@@ -6,7 +6,7 @@
 \name{Puromycin}
 \docType{data}
 \alias{Puromycin}
-\title{Reaction velocity of an enzymatic reaction}
+\title{Reaction Velocity of an Enzymatic Reaction}
 \description{
   The \code{Puromycin} data frame has 23 rows and 3 columns of the
   reaction velocity versus substrate concentration in an enzymatic

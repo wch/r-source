@@ -22,7 +22,8 @@ expand.grid <- function(..., KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
     if(nargs == 1L && is.list(a1 <- args[[1L]]))
 	nargs <- length(args <- a1)
     if(nargs == 0L) return(as.data.frame(list()))
-    cargs <- args
+    ## avoid classed args such as data frames: cargs <- args
+    cargs <- vector("list", nargs)
     iArgs <- seq_len(nargs)
     nmc <- paste("Var", iArgs, sep="")
     nm <- names(args)

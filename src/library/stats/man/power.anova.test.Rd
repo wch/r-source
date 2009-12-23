@@ -6,7 +6,7 @@
 \name{power.anova.test}
 \alias{power.anova.test}
 \encoding{latin1}
-\title{Power calculations for balanced one-way analysis of variance tests}
+\title{Power Calculations for Balanced One-Way Analysis of Variance Tests}
 \usage{
 power.anova.test(groups = NULL, n = NULL,
                  between.var = NULL, within.var = NULL,

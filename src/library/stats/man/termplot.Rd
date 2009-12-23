@@ -5,7 +5,7 @@
 
 \name{termplot}
 \alias{termplot}
-\title{Plot regression terms}
+\title{Plot Regression Terms}
 \description{
   Plots regression terms against their predictors, optionally with
   standard errors and partial residuals added.

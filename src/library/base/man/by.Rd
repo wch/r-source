@@ -8,7 +8,7 @@
 \alias{by.default}
 \alias{by.data.frame}
 \alias{print.by}
-\title{Apply a Function to a Data Frame split by Factors}
+\title{Apply a Function to a Data Frame Split by Factors}
 \description{
   Function \code{by} is an object-oriented wrapper for
   \code{\link{tapply}} applied to data frames.

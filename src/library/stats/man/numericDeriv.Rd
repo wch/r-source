@@ -5,7 +5,7 @@
 
 \name{numericDeriv}
 \alias{numericDeriv}
-\title{Evaluate derivatives numerically}
+\title{Evaluate Derivatives Numerically}
 \description{
     \code{numericDeriv} numerically evaluates the gradient of an expression.
 }

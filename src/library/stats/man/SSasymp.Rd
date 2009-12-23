@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSasymp}
-\title{Asymptotic Regression Model}
+\title{Self-Starting Nls Asymptotic Regression Model}
 \usage{
 SSasymp(input, Asym, R0, lrc)
 }

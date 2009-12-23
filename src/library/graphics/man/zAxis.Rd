@@ -5,7 +5,7 @@
 
 \name{Axis}
 \alias{Axis}
-\title{Generic function to add an Axis to a Plot}
+\title{Generic Function to Add an Axis to a Plot}
 \description{
   Generic function to add a suitable axis to the current plot.
 }
