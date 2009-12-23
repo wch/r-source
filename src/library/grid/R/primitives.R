@@ -35,6 +35,8 @@ arrow <- function(angle=30, length=unit(0.25, "inches"),
 
 # Method for subsetting "arrow" objects
 "[.arrow" <- function(x, index, ...) {
+    if (length(index) == 0)
+        return(NULL)
     maxn <- max(do.call("max", lapply(x, length)),
                 length(x$length))
     newa <- list(angle=rep(x$angle, length.out=maxn),
