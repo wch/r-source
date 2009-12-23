@@ -24,7 +24,7 @@
 These functions are for working with source files.
 }
 \usage{
-srcfile(filename, encoding = getOption("encoding"))
+srcfile(filename, encoding = getOption("encoding"), Enc = "unknown")
 srcfilecopy(filename, lines)
 getSrcLines(srcfile, first, last)
 srcref(srcfile, lloc)
@@ -38,14 +38,17 @@ srcref(srcfile, lloc)
 \arguments{
   \item{filename}{ The name of a file }
   \item{encoding}{ The character encoding to assume for the file }
-  \item{lines}{ A character vector of source lines.  Other \R objects will be coerced
-    to character. }
+  \item{Enc}{ The encoding with which to make strings: see the
+    \code{encoding} argument of \code{\link{parse}}.}
+  \item{lines}{ A character vector of source lines.  Other \R objects
+    will be coerced to character. }
   \item{srcfile}{ A \code{srcfile} object. }
   \item{first, last, line}{ Line numbers. }
   \item{lloc}{ A vector of four values giving a source location; see
     \sQuote{Details}.}
-  \item{x, con}{ An object of the appropriate type. }
-  \item{useSource}{ Whether to read the \code{srcfile} to obtain the text of a \code{srcref}. }
+  \item{x, con}{ An object of the appropriate class. }
+  \item{useSource}{ Whether to read the \code{srcfile} to obtain the
+    text of a \code{srcref}. }
   \item{\dots}{ Additional arguments to the methods; these will be ignored. }
 }
 \details{

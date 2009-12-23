@@ -16,7 +16,8 @@
 
 # a srcfile is a file with a timestamp
 
-srcfile <- function(filename, encoding = getOption("encoding")) {
+srcfile <- function(filename, encoding = getOption("encoding"), Enc = "unknown")
+{
     stopifnot(is.character(filename), length(filename) == 1L)
 
     e <- new.env(parent=emptyenv())
@@ -26,9 +27,10 @@ srcfile <- function(filename, encoding = getOption("encoding")) {
 
     # If filename is a URL, this will return NA
     e$timestamp <- file.info(filename)[1,"mtime"]
-    
+
     if (identical(encoding, "unknown")) encoding <- "native.enc"
     e$encoding <- encoding
+    e$Enc <- Enc
 
     class(e) <- "srcfile"
     return(e)
@@ -53,8 +55,8 @@ open.srcfile <- function(con, line, ...) {
 	    on.exit(setwd(olddir))
 	}
 	timestamp <- file.info(srcfile$filename)[1,"mtime"]
-	if (!is.null(srcfile$timestamp) 
-	    && !is.na(srcfile$timestamp) 
+	if (!is.null(srcfile$timestamp)
+	    && !is.na(srcfile$timestamp)
 	    && ( is.na(timestamp) || timestamp != srcfile$timestamp) )
 	    warning("Timestamp of '",srcfile$filename,"' has changed", call.=FALSE)
 	if (is.null(srcfile$encoding)) encoding <- getOption("encoding")
@@ -68,7 +70,7 @@ open.srcfile <- function(con, line, ...) {
 	oldline <- 1L
     }
     if (oldline < line) {
-	readLines(conn, line-oldline, warn=FALSE)
+	readLines(conn, line - oldline, warn = FALSE, encoding = srcfile$Enc)
 	srcfile$line <- line
     }
     invisible(conn)
@@ -117,7 +119,7 @@ open.srcfilecopy <- function(con, line, ...) {
 	oldline <- 1L
     }
     if (oldline < line) {
-	readLines(conn, line-oldline, warn=FALSE)
+	readLines(conn, line - oldline, warn = FALSE, encoding = srcfile$Enc)
 	srcfile$line <- line
     }
     invisible(conn)
@@ -129,10 +131,11 @@ open.srcfilecopy <- function(con, line, ...) {
 }
 
 getSrcLines <- function(srcfile, first, last) {
-    if (first > last) return(character(0L))
+    if (first > last) return(character())
     if (!.isOpen(srcfile)) on.exit(close(srcfile))
     conn <- open(srcfile, first)
-    lines <- readLines(conn, n=last-first+1L, warn=FALSE)
+    lines <- readLines(conn, n = last - first + 1L, warn = FALSE,
+                       encoding = srcfile$Enc)
     srcfile$line <- first + length(lines)
     return(lines)
 }
