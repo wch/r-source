@@ -9,7 +9,7 @@
 \alias{toBibtex.citation}
 \alias{toBibtex.citationList}
 \description{
-  How to cite R and R packages in publications.
+  How to cite \R and \R packages in publications.
 }
 \usage{
 citation(package = "base", lib.loc = NULL)
@@ -27,19 +27,18 @@ citation(package = "base", lib.loc = NULL)
   \item{\dots}{currently not used.}
 }
 \details{
-  The R core development team and the very active community of package
-  authors have invested a lot of time and effort in creating R as it is
-  today. Please give credit where credit is due and cite R and R
+  The \R core development team and the very active community of package
+  authors have invested a lot of time and effort in creating \R as it is
+  today. Please give credit where credit is due and cite \R and \R
   packages when you use them for data analysis.
   
   Execute function \code{citation()} for information on how to cite the
   base R system in publications. If the name of a non-base package is
-  given, the function
-  either returns the information contained in the \code{\link{CITATION}}
-  file of the package or auto-generates citation information. In the
-  latter case the package \file{DESCRIPTION} file is parsed, the
-  resulting citation object may be arbitrarily bad, but is quite useful
-  (at least as a starting point) in most cases.
+  given, the function either returns the information contained in the
+  \code{\link{CITATION}} file of the package or auto-generates citation
+  information. In the latter case the package \file{DESCRIPTION} file is
+  parsed, the resulting citation object may be arbitrarily bad, but is
+  quite useful (at least as a starting point) in most cases.
 
   If only one reference is given, the print method shows both a text
   version and a BibTeX entry for it, if a package has more than one
@@ -47,7 +46,7 @@ citation(package = "base", lib.loc = NULL)
   can be obtained using function \code{toBibtex} (see the examples below).
 }
 \value{
-  An object of class \code{"citationList"}.
+  An object of class \code{"citationList"}: see \code{\link{readCitationFile}}.
 }
 \seealso{\code{\link{citEntry}}}
 \keyword{misc}
