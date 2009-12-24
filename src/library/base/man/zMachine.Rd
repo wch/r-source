@@ -15,33 +15,36 @@
   double or integer and the machine's precision.
 }
 \value{
-  A list with components (for simplicity, the prefix \sQuote{double} is
-  omitted in the explanations)
+  A list with components
   \item{double.eps}{the smallest positive floating-point number
     \code{x} such that \code{1 + x != 1}.  It equals
-    \code{base^ulp.digits} if either \code{base} is 2 or \code{rounding}
-    is 0;  otherwise, it is \code{(base^ulp.digits) / 2}.  Normally
+    \code{double.base ^ ulp.digits} if either \code{double.base} is 2 or
+    \code{double.rounding} is 0;  otherwise, it is
+    \code{(double.base ^ double.ulp.digits) / 2}.  Normally
     \code{2.220446e-16}.}
   \item{double.neg.eps}{a small positive floating-point number \code{x}
-    such that \code{1 - x != 1}.  It equals \code{base^neg.ulp.digits}
-    if \code{base} is 2 or \code{round} is 0;  otherwise, it is
-    \code{(base^neg.ulp.digits) / 2}.  Normally \code{1.110223e-16}.
-    As \code{neg.ulp.digits} is bounded below by \code{-(digits + 3)},
-    \code{neg.eps} may not be the smallest number that can alter 1 by
-    subtraction.}
+    such that \code{1 - x != 1}.  It equals
+    \code{double.base ^ double.neg.ulp.digits} if \code{double.base} is 2
+    or \code{double.rounding} is 0;  otherwise, it is
+    \code{(double.base ^ double.neg.ulp.digits) / 2}.  Normally
+    \code{1.110223e-16}. As \code{double.neg.ulp.digits} is bounded
+    below by \code{-(double.digits + 3)}, \code{double.neg.eps} may not
+    be the smallest number that can alter 1 by subtraction.}
   \item{double.xmin}{the smallest non-vanishing normalized
-    floating-point power of the radix, i.e., \code{base^min.exp}.
-    Normally \code{2.225074e-308}.}
-  \item{double.xmax}{the largest finite floating-point number.
-    Typically, it is equal to \code{(1 - neg.eps) * base^max.exp}, but
-    on some machines it is only the second, or perhaps third, largest
+    floating-point power of the radix, i.e.,
+    \code{double.base ^ double.min.exp}. Normally \code{2.225074e-308}.}
+  \item{double.xmax}{the largest normalized floating-point number.
+    Typically, it is equal to \code{(1 - double.neg.eps) *
+      double.base ^ double.max.exp}, but
+    on some machines it is only the second or third largest such
     number, being too small by 1 or 2 units in the last digit of the
-    significand.  Normally \code{1.797693e+308}.}
+    significand.  Normally \code{1.797693e+308}.  Note that larger
+    unnormalized numbers can occur.}
   \item{double.base}{the radix for the floating-point representation:
     normally \code{2}.}
   \item{double.digits}{the number of base digits in the floating-point
     significand: normally \code{53}.}
-  \item{double.rounding}{the rounding action. \cr
+  \item{double.rounding}{the rounding action, one of. \cr
     0 if floating-point addition chops; \cr
     1 if floating-point addition rounds, but not in the IEEE style; \cr
     2 if floating-point addition rounds in the IEEE style; \cr
@@ -49,27 +52,28 @@
     4 if floating-point addition rounds, but not in the IEEE style, and
     there is partial underflow; \cr
     5 if floating-point addition rounds in the IEEE style, and there is
-    partial underflow.  Normally \code{5}.}
+    partial underflow.\cr
+    Normally \code{5}.}
   \item{double.guard}{the number of guard digits for multiplication
     with truncating arithmetic.  It is 1 if floating-point arithmetic
-    truncates and more than \code{digits} base \code{base} digits
+    truncates and more than \code{double digits} base-\code{double.base} digits
     participate in the post-normalization shift of the floating-point
     significand in multiplication, and 0 otherwise.}
   \item{double.ulp.digits}{the largest negative integer \code{i} such
-    that \code{1 + base^i != 1}, except that it is bounded below by
-    \code{-(digits + 3)}.  Normally \code{-52}.}
+    that \code{1 + double.base ^ i != 1}, except that it is bounded below by
+    \code{-(double.digits + 3)}.  Normally \code{-52}.}
   \item{double.neg.ulp.digits}{the largest negative integer \code{i}
-    such that \code{1 - base^i != 1}, except that it is bounded below by
-    \code{-(digits + 3)}. Normally \code{-53}.}
+    such that \code{1 - double.base ^ i != 1}, except that it is bounded
+    below by \code{-(double.digits + 3)}. Normally \code{-53}.} 
   \item{double.exponent}{
-    the number of bits (decimal places if \code{base} is 10) reserved
+    the number of bits (decimal places if \code{double.base} is 10) reserved
     for the representation of the exponent (including the bias or sign)
     of a floating-point number.  Normally \code{11}.}
   \item{double.min.exp}{
     the largest in magnitude negative integer \code{i} such that
-    \code{base ^ i} is positive and normalized.  Normally \code{-1022}.}
+    \code{double.base ^ i} is positive and normalized.  Normally \code{-1022}.}
   \item{double.max.exp}{
-    the smallest positive power of \code{base} that overflows.  Normally
+    the smallest positive power of \code{double.base} that overflows.  Normally
     \code{1024}.}
   \item{integer.max}{the largest integer which can be represented.
     Always \code{2147483647}.}
@@ -87,14 +91,22 @@
     builds of \R.}
 }
 \details{
-  The algorithm is based on Cody's (1988) subroutine MACHAR.  As almost
-  all current implementations of \R use 32-bit integers and IEC 60059
-  floating-point (double precision) arithmetic, most of these values are
-  the same for almost all \R builds.
+  The algorithm is based on Cody's (1988) subroutine MACHAR.  As
+  all current implementations of \R use 32-bit integers and almost all
+  use IEC 60059 floating-point (double precision) arithmetic, all but
+  the last two values are the same for almost all \R builds.
 
   Note that on most platforms smaller positive values than
   \code{.Machine$double.xmin} can occur.  On a typical \R platform the
   smallest positive double is about \code{5e-324}.
+}
+\note{
+  \code{sizeof.longdouble} only tells you the amount of storage
+  allocated for a long double (which are used internally by \R for
+  accumulators in e.g. \code{\link{sum}}, and can be read by
+  \code{\link{readBin}}).  Often what is stored is the 80-bit extended
+  double type of IEC 60059, padded to the double alignment used on the
+  platform.
 }
 \references{
   Cody, W. J. (1988)
