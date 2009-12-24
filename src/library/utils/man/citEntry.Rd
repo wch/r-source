@@ -1,6 +1,6 @@
 % File src/library/utils/man/citEntry.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{citEntry}
@@ -11,7 +11,7 @@
 \alias{citFooter}
 \alias{readCitationFile}
 \description{
-  The \file{CITATION} file of R packages contains an annotated list of
+  The \file{CITATION} file of \R packages contains an annotated list of
   references that should be used for citing the packages.
 }
 \usage{
@@ -27,9 +27,9 @@ readCitationFile(file, meta = NULL)
   \item{header}{a character string with optional header text}
   \item{footer}{a character string with optional footer text}
   \item{file}{a file name}
-  \item{\dots}{see details below}
+  \item{\dots}{see \sQuote{Details}}
   \item{meta}{a list of package metadata as obtained by
-    \code{\link{packageDescription}}, or \code{NULL} (default).}
+    \code{\link{packageDescription}}, or \code{NULL} (the default).}
 }
 \details{
   The \file{CITATION} file of an R package should be placed in the
@@ -44,6 +44,9 @@ readCitationFile(file, meta = NULL)
   calls to  \code{citFooter}. \code{citHeader} and \code{citFooter} are
   simply wrappers to \code{\link{paste}}, and their \code{\dots} argument
   is passed on to \code{\link{paste}} as is.
+
+  \code{readCitationFile} make use of the \code{encoding} element (if
+  any) of \code{meta} to determine the encoding of the file.
 }
 \section{Entry Types}{
   \code{citEntry} creates \code{"citation"} objects, which are modeled
@@ -109,8 +112,17 @@ readCitationFile(file, meta = NULL)
   }
 }
 \value{
-  \code{citEntry} returns an object of class \code{"citation"},
-  \code{readCitationFile} returns an object of class \code{"citationList"}.
+  \code{citEntry} returns an object of class \code{"citation"}, for
+  which there are \code{print} and \code{\link{toBibtex}} methods.  This
+  is a named list of entries with attributes \code{"entry"},
+  \code{"textversion"} and optionally \code{"header"} and
+  \code{"footer"}.
+  
+  \code{readCitationFile} returns an object of class
+  \code{"citationList"}, also with \code{print} and
+  \code{\link{toBibtex}} methods.  This is a list of one or more
+  elements of class \code{"citation"} with optional attributes
+  \code{"header"} and \code{"footer"}.
 }
 \keyword{misc}
 \examples{
