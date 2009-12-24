@@ -96,6 +96,7 @@ srcfilecopy <- function(filename, lines) {
     e$filename <- filename
     e$lines <- as.character(lines)
     e$timestamp <- Sys.time()
+    e$Enc <- "unknown"
 
     class(e) <- c("srcfilecopy", "srcfile")
     return(e)
