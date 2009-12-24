@@ -3246,9 +3246,10 @@ static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
  *
  *
  *	SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status, Rboolean first)
+ *   (used for R_ReplFile in main.c)
  *
  *	SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status, Rboolean first)
- *
+ *   (used for ReplIteration and R_ReplDLLdo1 in main.c)
  *
  *  The success of the parse is indicated as folllows:
  *
@@ -3264,10 +3265,16 @@ static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
  *  their values in a single expression vector.
  *
  *	SEXP R_ParseFile(FILE *fp, int n, ParseStatus *status, SEXP srcfile)
+ *    (used for do_edit in file edit.c)
  *
  *	SEXP R_ParseVector(SEXP *text, int n, ParseStatus *status, SEXP srcfile)
+ *    (public, and used by parse(text=) in file source.c)
  *
  *	SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SEXP srcfile)
+ *    (used by parse(file="") in file source.c)
+ *
+ *      SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status, SEXP srcfile)
+ *    (used by parse(file=) in file source.c)
  *
  *  Here, status is 1 for a successful parse and 0 if parsing failed
  *  for some reason.
@@ -3368,7 +3375,7 @@ static int file_getc(void)
     return R_fgetc(fp_parse);
 }
 
-/* used in main.c and this file */
+/* used in main.c */
 attribute_hidden
 SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status, SrcRefState *state)
 {
@@ -3390,9 +3397,10 @@ static int buffer_getc(void)
     return R_IoBufferGetc(iob);
 }
 
-/* Used only in main.c, rproxy_impl.c */
+/* Used only in main.c */
 attribute_hidden
-SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status, SrcRefState *state)
+SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status, 
+		    SrcRefState *state)
 {
     UseSrcRefState(state);
     ParseInit();
@@ -3534,7 +3542,8 @@ static const char *Prompt(SEXP prompt, int type)
 
 /* used in source.c */
 attribute_hidden
-SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SEXP srcfile)
+SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, 
+		   SEXP srcfile)
 {
     SEXP rval, t;
     char *bufp, buf[CONSOLE_BUFFER_SIZE];
@@ -3572,7 +3581,8 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, ParseStatus *status, SEXP prompt, SE
 	    if (c == ';' || c == '\n') break;
 	}
 
-	/* Was a call to R_Parse1Buffer, but we don't want to reset xxlineno and xxcolno */
+	/* Was a call to R_Parse1Buffer, but we don't want to reset
+	   xxlineno and xxcolno */
 	ParseInit();
 	ParseContextInit();
 	R_Parse1(status);
