@@ -20,29 +20,24 @@ BibTeX_entry_field_db <-
          )
 ## See e.g. lisp/textmodes/bibtex.el in the GNU Emacs sources.
 
+## Keep in step with utils::readCitationFile
 get_CITATION_entry_fields <-
 function(file, encoding = "unknown")
 {
     ## Assume that citEntry() only occurs at top level.
 
-    ## The usual encoding nightmare.
-    ## readCitationFile() uses the package encoding, or if this is
-    ## unset, latin1.  Let's simply try latin1 and UTF-8 if simple
-    ## parsing fails in case there is no given encoding.
+    ## To parallel readCitationFile, default to latin1.
+    if(encoding == "unknown") encoding <- "latin1"
 
-    exprs <- tryCatch(parse(file(file, encoding = encoding)),
-                      error = identity)
-    if(inherits(exprs, "error")) {
-        if(encoding != "unknown")
-            return()
-        exprs <- tryCatch(parse(file(file, encoding = "latin1")),
+    if(encoding %in% c("latin1", "UTF-8") && !l10n_info()$MBCS) {
+        exprs <- tryCatch(parse(file = file, encoding = encoding),
                           error = identity)
-        if(inherits(exprs, "error"))
-            exprs <- tryCatch(parse(file(file, encoding = "UTF-8")),
-                          error = identity)
-        if(inherits(exprs, "error"))
-            return()
+    } else {
+        con <- file(file, encoding = encoding)
+        on.exit(close(con))
+        exprs <- tryCatch(parse(con), error = identity)
     }
+    if(inherits(exprs, "error")) return()
 
     ## Argh.  citEntry() has formals
     ##   (entry, textVersion, header = NULL, footer = NULL, ...)

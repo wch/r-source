@@ -45,15 +45,29 @@ citFooter <- function(...)
     z
 }
 
+## Keep tools:::get_CITATION_entry_fields is step with this
 readCitationFile <- function(file, meta = NULL)
 {
     if(is.null(encoding <- meta$Encoding))
         ## Assume latin1 as a default for now, but maybe switch to
         ## "unknown" eventually ...
         encoding <- "latin1"
-    con <- file(file, encoding = encoding)
-    on.exit(close(con))
-    pcf <- parse(con)
+
+    ## The parser can only read valid strings, but single-byte locales
+    ## can mark their encoding.  The following allows latin1 and UTF-8
+    ## citation files to be read in UTF-8 and any single-byte locale
+    ## (including C).
+    ##
+    ##
+    ## FIXME: if parse() could be told to read strings bytewise,
+    ## we could simply convert to UTF-8.
+    if(encoding %in% c("latin1", "UTF-8") && !l10n_info()$MBCS) {
+        pcf <- parse(file = file, encoding = encoding)
+    } else {
+        con <- file(file, encoding = encoding)
+        on.exit(close(con))
+        pcf <- parse(con)
+    }
     z <- list()
     k <- 0L
     envir <- new.env()
@@ -280,7 +294,7 @@ function(package = "base", lib.loc = NULL)
                     domain = NA)
         }
     }
-        
+
     z <- list(title = paste(package, ": ", meta$Title, sep=""),
               author = as.personList(meta$Author),
               year = year,
@@ -300,7 +314,7 @@ function(package = "base", lib.loc = NULL)
         if(!is.null(rfr <- meta$"Repository/R-Forge/Revision"))
             z$note <- paste(z$note, rfr, sep = "/r")
     }
-    
+
     class(z) <- "citation"
     attr(z, "entry") <- "Manual"
     attr(z, "package") <- package
