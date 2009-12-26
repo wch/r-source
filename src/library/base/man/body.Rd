@@ -1,6 +1,6 @@
 % File src/library/base/man/body.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{body}
@@ -61,7 +61,7 @@ body(f)
 
 ## creating a multi-expression body
 e <- expression(y <- x^2, return(y)) # or a list
-body(f) <- as.call(c(as.name("\{"), e))
+body(f) <- as.call(c(as.name("{"), e))
 f
 f(8)
 }
