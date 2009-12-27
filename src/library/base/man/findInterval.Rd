@@ -1,6 +1,6 @@
 % File src/library/base/man/findInterval.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{findInterval}
@@ -16,8 +16,8 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE)
   \item{rightmost.closed}{logical; if true, the rightmost interval,
     \code{vec[N-1] .. vec[N]} is treated as \emph{closed}, see below.}
   \item{all.inside}{logical; if true, the returned indices are coerced
-    into \eqn{\{1,\dots,N-1\}}, i.e., 0 is mapped to 1 and \eqn{N} to
-    \eqn{N-1}.}
+    into \code{1,\dots,N-1}, i.e., \code{0} is mapped to \code{1}
+    and \code{N} to \code{N-1}.}
 }
 \description{
   Find the indices of \code{x} in \code{vec}, where \code{vec} must be
