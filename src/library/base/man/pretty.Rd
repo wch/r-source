@@ -48,9 +48,10 @@ pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
   that \eqn{b \le c < 10b}{b <= c < 10b}.
 
   Now determine the basic \emph{unit} \eqn{u} as one of
-  \eqn{\{1,2,5,10\} b}, depending on \eqn{c/b \in [1,10)} and the two
-  \sQuote{\emph{bias}} coefficients, \eqn{h =}\code{high.u.bias} and
-  \eqn{f =}\code{u5.bias}.
+  \eqn{\{1,2,5,10\} b}{{1,2,5,10} b}, depending on
+  \eqn{c/b \in [1,10)}{c/b in [1,10}
+  and the two \sQuote{\emph{bias}} coefficients, \eqn{h
+  =}\code{high.u.bias} and \eqn{f =}\code{u5.bias}.
   
   \dots\dots\dots
 }

@@ -515,8 +515,10 @@ par(\dots, no.readonly = FALSE)
       \describe{
         \item{n=1}{will produce tick marks at \eqn{10^j} for
           integer \eqn{j},}
-        \item{n=2}{gives marks  \eqn{k 10^j} with \eqn{k \in \{1, 5\}},}
-        \item{n=3}{gives marks  \eqn{k 10^j} with \eqn{k \in \{1, 2, 5\}}.}
+        \item{n=2}{gives marks  \eqn{k 10^j} with
+	  \eqn{k \in \{1, 5\}}{k in {1,5}},}
+        \item{n=3}{gives marks  \eqn{k 10^j} with
+	  \eqn{k \in \{1, 2, 5\}}{k in {1,2,5}}.}
       }
       See \code{\link{axTicks}()} for a pure \R implementation of this.
 
