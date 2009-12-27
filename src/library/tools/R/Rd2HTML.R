@@ -218,6 +218,7 @@ Rd2HTML <-
 	x <- fsub("`", "'", x)
 	x <- fsub("<", "&lt;", x)
 	x <- fsub(">", "&gt;", x)
+        x <- fsub('"\\{"', '"{"', x)
 	x
     }
 
@@ -225,6 +226,7 @@ Rd2HTML <-
 	x <- fsub("&", "&amp;", x)
 	x <- fsub("<", "&lt;", x)
 	x <- fsub(">", "&gt;", x)
+        x <- fsub('"\\{"', '"{"', x)
         ## \[d]eqn comes here
         x <- psub("\\\\(dots|ldots)", "&\\hellip;", x)
 	x
