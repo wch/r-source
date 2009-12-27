@@ -87,6 +87,7 @@ htmlify <- function(x) {
     x <- fsub("`", "'", x)
     x <- fsub("<", "&lt;", x)
     x <- fsub(">", "&gt;", x)
+    x <- fsub('"\\{"', '"{"', x)
     x
 }
 
@@ -94,6 +95,7 @@ vhtmlify <- function(x, inEqn = FALSE) { # code version
     x <- fsub("&", "&amp;", x)
     x <- fsub("<", "&lt;", x)
     x <- fsub(">", "&gt;", x)
+    x <- fsub('"\\{"', '"{"', x)
     ## http://htmlhelp.com/reference/html40/entities/symbols.html
     if(inEqn) {
         x <- psub("\\\\(Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega|alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|le|ge|sum|prod)", "&\\1;", x)
