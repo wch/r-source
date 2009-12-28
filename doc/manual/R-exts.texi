@@ -3995,15 +3995,14 @@ backslash.  (Note that @code{\cr} is used for generating line breaks.)
 
 The ``comment'' character @samp{%} and unpaired braces@footnote{See the
 examples section in the file @file{Paren.Rd} for an example.}
-@emph{almost always} need to be escaped by @samp{\}, and @samp{\\} can be used
-for backslash and needs to be when there two or more adjacent
-backslashes).  In @R{}-like code literal strings are slightly
-more forgiving; see 
-@uref{http://developer.r-project.org/parseRd.pdf, ``Parsing Rd files''}
-for details.
+@emph{almost always} need to be escaped by @samp{\}, and @samp{\\} can
+be used for backslash and needs to be when there two or more adjacent
+backslashes).  In @R{}-like code quoted strings are handled slightly
+differently; see @uref{http://developer.r-project.org/parseRd.pdf,
+``Parsing Rd files''} for details -- in particular braces should not be
+escaped in quoted strings.
 
-All of @samp{% @{ @} \} should be escaped in
-@LaTeX{}-like text.
+All of @samp{% @{ @} \} should be escaped in @LaTeX{}-like text.
 
 @findex \enc
 Text which might need to be represented differently in different

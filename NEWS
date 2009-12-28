@@ -23,6 +23,13 @@ NEW FEATURES
 	there (as was the case in R < 2.10.0), so this is now done
 	(using an ellipsis in HTML rendering).
 
+    o	Escaping of braces in quoted strings in R-code sections of Rd
+	files is allowed again.  This had been changed for the new Rd
+	format in R 2.10.0 but was only documented on the developer
+	site and was handled inconsistently by the converters: text
+	and example conversion removed the escapes but HTML conversion
+	did not.
+
 
 BUG FIXES
 
