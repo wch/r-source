@@ -10,7 +10,7 @@
 }
 \description{
   Find out if a file path is a symbolic link, and if so what it is
-  linked to, \emph{via} the system call \code{readink}.
+  linked to, \emph{via} the system call \code{readlink}.
 
   Symbolic links are a Unix concept, not implemented on Windows.
 }
