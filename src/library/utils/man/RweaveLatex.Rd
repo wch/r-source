@@ -66,9 +66,10 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   final document. 
   
   You can adjust the default value by including the
-  \samp{\\setkeys{Gin}{width=...}} directive in your .Rnw file after the
-  \samp{\\begin{document}} directive and changing the \code{width}
-  option value as you prefer, using standard LaTeX measurement values.
+  \samp{\\setkeys{Gin}{width=...}} directive in your \file{.Rnw} file
+  after the \samp{\\begin{document}} directive and changing the
+  \code{width} option value as you prefer, using standard LaTeX
+  measurement values.
  
   If you wish to override this default behavior entirely, you can add a
   \samp{\\usepackage[nogin]{Sweave}} directive in your preamble. In this
@@ -81,6 +82,14 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   suppresses the use of the \samp{ae} package, the use of which may
   interfere with certain encoding and typeface selections. If you have
   problems in the rendering of certain character sets, try this option.
+  
+  The use of fancy quotes (see \code{\link{sQuote}}) can cause problems
+  when setting \R output.  Either set
+  \code{\link{options}(useFancyQuotes = FALSE)} or arrange that LaTeX is
+  aware of the encoding used (by a \samp{\\usepackage[utf8]\{inputenc\}}
+  declaration: Windows users will need to replace \samp{utf8} by
+  \samp{cp1252} or similar) and ensure that typewriter fonts containing
+  directional quotes are used.
 }
 \section{Supported Options}{
   \code{RweaveLatex} supports the following options for code chunks (the values
@@ -95,11 +104,11 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
       evaluated, and hence no text or graphical output produced.}
     \item{results:}{character string (\code{verbatim}).
       If \code{verbatim}, the output of S commands is
-      included in the verbatim-like Soutput environment. If
+      included in the verbatim-like Soutput environment.  If
       \code{tex}, the output is taken to be already proper latex markup
-      and included as is. If \code{hide} then all output is
+      and included as is.  If \code{hide} then all output is
       completely suppressed (but the code executed during the weave).}
-    \item{print:}{logical (\code{FALSE})
+    \item{print:}{logical (\code{FALSE}).
       If \code{TRUE}, each expression in the
       code chunk is wrapped into a \code{print()} statement before evaluation,
       such that the values of all expressions become visible.}
