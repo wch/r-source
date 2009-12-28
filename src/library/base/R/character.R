@@ -175,3 +175,9 @@ dQuote <- function(x) {
     }
     paste(before, x, after, sep = "")
 }
+
+strtoi <-
+function(x, base = 0L)
+{
+    .Internal(strtoi(as.character(x), as.integer(base)))
+}

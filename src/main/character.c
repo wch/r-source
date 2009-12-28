@@ -1244,3 +1244,40 @@ SEXP attribute_hidden do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return s;
 }
+
+static int strtoi(SEXP s, int base)
+{
+    long res;
+    char *endp;
+
+    if(s == NA_STRING) return(NA_INTEGER);
+    res = strtol(CHAR(s), &endp, base);
+    if(*endp != '\0') res = NA_INTEGER;
+    if(res > INT_MAX || res < INT_MIN) res = NA_INTEGER;
+    return(res);
+}
+
+SEXP attribute_hidden do_strtoi(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, x, b;
+    int i, n, base;
+
+    checkArity(op, args);
+
+    x = CAR(args); args = CDR(args);
+    b = CAR(args);
+    
+    if(!isInteger(b) || (length(b) < 1))
+	error(_("invalid '%s' argument"), "base");
+    base = INTEGER(b)[0];
+    if((base != 0) && ((base < 2) || (base > 36)))
+	error(_("invalid '%s' argument"), "base");
+
+    PROTECT(ans = allocVector(INTSXP, n = LENGTH(x)));
+    for(i = 0; i < n; i++) {
+	INTEGER(ans)[i] = strtoi(STRING_ELT(x, i), base);
+    }
+    UNPROTECT(1);
+    
+    return ans;
+}
