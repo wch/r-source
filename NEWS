@@ -145,7 +145,7 @@ NEW FEATURES
 
     o	The readline completion backend no longer sorts possible
 	completions alphabetically (e.g., function argument names) if
-	R is compiled with readline >= 6.
+	R was built with readline >= 6.
 
     o	select.list() gains a 'graphics' argument to allow Windows/Mac
 	users to choose the text interface.  This changes the
@@ -193,8 +193,9 @@ NEW FEATURES
 	platforms which have curl but not wget, but also for some
 	hard-to-access URLs.
 
-    o	\eqn and \deqn will render in HTML (and convert to text)
-	upper- and lower-case Greek letters, \ldots, \dots, \ge and \le.
+    o	\eqn and \deqn will render in HTML (and convert to text) upper-
+	and lower-case Greek letters (entered as \alpha ...), \ldots,
+	\dots, \ge and \le.
 
 
 DEPRECATED & DEFUNCT
@@ -272,6 +273,13 @@ NEW FEATURES
 
     o	lchoose(a,k) is now defined as	log(abs(choose(a,k))), analogously
 	to lfactorial().
+
+    o	Escaping of braces in quoted strings in R-code sections of Rd
+	files is allowed again.  This had been changed for the new Rd
+	format in R 2.10.0 but was only documented on the developer
+	site and was handled inconsistently by the converters: text
+	and example conversion removed the escapes but HTML conversion
+	did not.
 
 
 BUG FIXES
