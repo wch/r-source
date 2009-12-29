@@ -1,4 +1,4 @@
-﻿
+
 	**************************************************
 	*	 Windows-specific changes to R		 *
 	*	 See the file NEWS for changes that	 *
@@ -58,6 +58,10 @@ BUG FIXES
     o	The HTML package index was not constructed properly when the
 	library path was specified with backslashes.  (Patch submitted
 	by Gabor Grothendieck.)
+	
+    o	Some of the MDI toolbar buttons (e.g. "Open Script") did not
+	return the focus to the console if the user cancelled the
+	action.
     	
 
 
