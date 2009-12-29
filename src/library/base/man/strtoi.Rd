@@ -12,13 +12,28 @@
 }
 \usage{strtoi(x, base = 0L)}
 \arguments{
-  \item{x}{a character vector, or something coercible to this.}
+  \item{x}{a character vector, or something coercible to this by
+    \code{\link{as.character}}.}
   \item{base}{an integer which is between 2 and 36 inclusive, or zero
     (default).}
 }
 \details{
-  Conversion is based on the C library function \code{strtol}: on
-  failure or integer overflow, \code{\link{NA_integer_}} is returned.
+  Conversion is based on the C library function \code{strtol}.
+
+  For the default \code{base = 0L}, the base chosen from the string
+  representation of the element of \code{x} by rules that might depend
+  on the platform.  The C99 rules are that octal constants (leading
+  \code{0}) and hexadecimal constants (prefix \code{0x} or \code{0X})
+  are interpreted as base \code{8} and \code{16}; all other strings are
+  interpreted as base \code{10}.
+
+  For a base greater than \code{10}, letters \code{a} to \code{z} (or
+  \code{A} to \code{Z}) are used to represent \code{10} to \code{35}
+}
+\value{
+  An integer vector of the same length as \code{x}.  Values which cannot
+  be interpreted as integers or would overflow are returned as
+  \code{\link{NA_integer_}}.
 }
 \examples{
 strtoi(c("0xff", "077", "123"))

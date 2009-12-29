@@ -102,7 +102,7 @@ x \%/\% y
   undocumented for many years.  It appears as an index entry in Becker
   \emph{et al} (1988), pointing to the help for \code{Deprecated} but
   is not actually mentioned on that page.  Even though it has been
-  deprecated in S for 20 years, it is still accepted.
+  deprecated in S for 20 years, it was still accepted in 2008.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
