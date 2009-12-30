@@ -67,24 +67,6 @@ struct Rconn {
     void *private;
 };
 
-/* used in dounzip.c */
-typedef struct fileconn {
-    FILE *fp;
-#if defined(HAVE_OFF_T) && defined(HAVE_FSEEKO)
-    off_t rpos, wpos;
-#else
-#ifdef Win32
-    off64_t rpos, wpos;
-#else
-    long rpos, wpos;
-#endif
-#endif
-    Rboolean last_was_write;
-#ifdef Win32
-    Rboolean anon_file;
-    char name[PATH_MAX+1];
-#endif
-} *Rfileconn;
 
 typedef enum {HTTPsh, FTPsh, HTTPSsh} UrlScheme;
 
@@ -109,12 +91,6 @@ typedef struct clpconn {
     int pos, len, last, sizeKB;
     Rboolean warned;
 } *Rclpconn;
-
-/* used in dounzip.c */
-typedef struct unzconn {
-    void *uf;
-} *Runzconn;
-
 
 #define init_con	Rf_init_con
 #define con_pushback	Rf_con_pushback

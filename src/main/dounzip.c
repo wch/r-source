@@ -313,6 +313,10 @@ SEXP attribute_hidden do_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #include <Rconnections.h>
 
+typedef struct unzconn {
+    void *uf;
+} *Runzconn;
+
 static Rboolean unz_open(Rconnection con)
 {
     unzFile uf;
@@ -436,7 +440,7 @@ R_newunz(const char *description, const char *const mode)
     new->fflush = &null_fflush;
     new->read = &unz_read;
     new->write = &null_write;
-    new->private = (void *) malloc(sizeof(struct fileconn));
+    new->private = (void *) malloc(sizeof(struct unzconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
 	error(_("allocation of unz connection failed"));

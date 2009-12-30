@@ -70,8 +70,8 @@ flush.connection <- function (con)
     invisible(.Internal(flush(con)))
 
 file <- function(description = "", open = "", blocking = TRUE,
-                 encoding = getOption("encoding"))
-    .Internal(file(description, open, blocking, encoding))
+                 encoding = getOption("encoding"), raw = FALSE)
+    .Internal(file(description, open, blocking, encoding, raw))
 
 pipe <- function(description, open = "", encoding = getOption("encoding"))
     .Internal(pipe(description, open, encoding))

@@ -39,7 +39,7 @@
 }
 \usage{
 file(description = "", open = "", blocking = TRUE,
-     encoding = getOption("encoding"))
+     encoding = getOption("encoding"), raw = FALSE)
 
 url(description, open = "", blocking = TRUE,
     encoding = getOption("encoding"))
@@ -85,6 +85,11 @@ isIncomplete(con)
   \item{blocking}{logical.  See the \sQuote{Blocking} section.}
   \item{encoding}{The name of the encoding to be used.  See the
     \sQuote{Encoding} section.}
+  \item{raw}{logical.  If true, a \sQuote{raw} interface is used which
+    will be more suitable for arguments which are not regular files,
+    e.g. character devices.  This suppresses the check for a compressed
+    file when opening for text-mode reading, and asserts that the
+    \sQuote{file} may not be seekable.}
   \item{compression}{integer in 0--9.  The amount of compression to be
     applied when writing, from none to maximal available.  For
     \code{xzfile} can also be negative: see the \sQuote{Compression}
@@ -117,7 +122,7 @@ isIncomplete(con)
 #ifdef windows
   in a console or embedded version of \R, and is not in \code{RGui}).
 #endif
-  (See also \code{\link{stdin}} for the subtly different R-level concept
+  (See also \code{\link{stdin}()} for the subtly different R-level concept
   of \code{stdin}.)
 
   For \code{url} the description is a complete URL, including scheme
@@ -148,11 +153,9 @@ isIncomplete(con)
   environment variable.)
 #endif
 
-  For \code{fifo} the description is the path of the fifo.
-#ifdef windows
-  (Windows does not have fifos, so attempts to use this function are an
+  For \code{fifo} the description is the path of the fifo.  (Windows
+  does not have fifos, so attempts to use this function there are an
   error.)
-#endif
 
   All platforms support \code{file}, \code{gzfile}, \code{bzfile},
   \code{xzfile} \code{unz} and \code{url("file://")} connections.  The
@@ -296,7 +299,7 @@ isIncomplete(con)
 
   For reading, the type of compression (if any) can be determined from
   the first few bytes of the file, and this is exploited as from \R
-  2.10.0.  Thus for \code{file} connections, if \code{open} is
+  2.10.0.  Thus for \code{file(raw = FALSE)} connections, if \code{open} is
   \code{""}, \code{"r"} or \code{"rt"} the connection can read any of
   the compressed file types as well as uncompressed files.  (Using
   \code{"rb"} will allow compressed files to be read byte-by-byte.)
