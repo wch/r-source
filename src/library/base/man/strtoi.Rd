@@ -21,14 +21,15 @@
   Conversion is based on the C library function \code{strtol}.
 
   For the default \code{base = 0L}, the base chosen from the string
-  representation of the element of \code{x} by rules that might depend
-  on the platform.  The C99 rules are that octal constants (leading
-  \code{0}) and hexadecimal constants (prefix \code{0x} or \code{0X})
-  are interpreted as base \code{8} and \code{16}; all other strings are
-  interpreted as base \code{10}.
+  representation of that element of \code{x}, so different elements can
+  have different bases (see the first example).  The standard C rules
+  for chosing the base are that octal constants (prefix \code{0} not
+  followed by \code{x} or \code{X}) and hexadecimal constants (prefix
+  \code{0x} or \code{0X}) are interpreted as base \code{8} and
+  \code{16}; all other strings are interpreted as base \code{10}.
 
   For a base greater than \code{10}, letters \code{a} to \code{z} (or
-  \code{A} to \code{Z}) are used to represent \code{10} to \code{35}
+  \code{A} to \code{Z}) are used to represent \code{10} to \code{35}.
 }
 \value{
   An integer vector of the same length as \code{x}.  Values which cannot
