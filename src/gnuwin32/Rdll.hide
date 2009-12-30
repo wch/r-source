@@ -960,6 +960,7 @@
  do_strheight
  do_strptime
  do_strsplit
+ do_strtoi
  do_strtrim
  do_strwidth
  do_subassign
