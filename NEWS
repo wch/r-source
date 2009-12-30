@@ -197,6 +197,11 @@ NEW FEATURES
 	and lower-case Greek letters (entered as \alpha ...), \ldots,
 	\dots, \ge and \le.
 
+    o	utf8ToInt() and intToUtf8() now map NA inputs to NA outputs.
+
+    o	file() has a new argument 'raw' which may help if it is used
+	with something other than a regular file, e.g. a character device.
+
 
 DEPRECATED & DEFUNCT
 

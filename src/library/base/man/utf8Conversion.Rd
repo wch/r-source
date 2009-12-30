@@ -1,6 +1,6 @@
 % File src/library/base/man/utf8Conversion.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{utf8Conversion}
@@ -33,6 +33,8 @@ intToUtf8(x, multiple = FALSE)
   omitted: otherwise \code{0} is mapped to \code{""}.  Non-integral
   numeric values are truncated to integers.)  The
   \code{\link{Encoding}} is declared as \code{"UTF-8"}.
+
+  As from \R 2.11.0 \code{NA} inputs are mapped to \code{NA} output.
 }
 \examples{\dontrun{
 ## will only display in some locales and fonts
