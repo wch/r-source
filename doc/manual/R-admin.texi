@@ -4275,10 +4275,10 @@ This item and the next are installed by the @file{Rtools.exe} installer.
 
 @c date is used when building base and tools
 @c find is used in building the installers
-@c comm, sort, uniq are use in producing .def files
+@c comm, sort, uniq are used in producing .def files
 @c cmp is used in src/include/Makefile.win
 @c cut is used to make RVER
-@c gzip and tar are needed to unpack recommended packages
+@c gzip and tar used to be needed to unpack recommended packages
 @c rsync is only needed if building from svn
 @c tr is used by Rdiff
 @c awk, egrep, head, rmdir, tail, wc are no longer used
