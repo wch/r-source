@@ -111,6 +111,9 @@ x != y
   \code{\link{factor}} for the behaviour with factor arguments.
   
   \code{\link{Syntax}} for operator precedence.
+
+  \code{\link{icuSetCollate}} to tune the string collation algorithm
+  when ICU is in use.
 }
 \examples{
 x <- stats::rnorm(20)

@@ -1,6 +1,6 @@
 % File src/library/base/man/icuSetCollate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008 R Core Development Team
+% Copyright 2008-9 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{icuSetCollate}
@@ -18,7 +18,7 @@ icuSetCollate(...)
 }
 \details{
   Optionally, \R can be built to collate character strings by ICU
-  (\url{http://www.icu-project.org}).  For such systems,
+  (\url{http://site.icu-project.org}).  For such systems,
   \code{icuSetCollate} can be used to tune the way collation is done.
   On other builds calling this function does nothing, with a warning.
   
@@ -53,18 +53,26 @@ icuSetCollate(...)
   }
   Only the first three are likely to be of interest except to those with a 
   detailed understanding of collation and specialized requirements.
-  
+
   Some examples are \code{case_level="on", strength="primary"} to ignore
-  accent differences, \code{alternate_handling="shifted"} to ignore
+  accent differences and \code{alternate_handling="shifted"} to ignore
   space and punctuation characters.
+
+  Note that these settings have no effect if collation is set to the
+  \code{C} locale, unless \code{locale} is specified.
+}
+\note{
+  As from \R 2.9.0, ICU is used by default wherever it is available:
+  this include Mac OS >= 10.4 and many Linux installations.
 }
 \seealso{
   \link{Comparison}, \code{\link{sort}}
   
   The ICU user guide chapter on collation
-  (\url{http://www.icu-project.org/userguide/Collate_Intro.html}).
+  (\url{http://userguide.icu-project.org/collation}).
 }
 \examples{\donttest{
+## these examples depend on having ICU available, and on the locale
 x <- c("Aarhus", "aarhus", "safe", "test", "Zoo")
 sort(x)
 icuSetCollate(case_first="upper"); sort(x)
