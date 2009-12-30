@@ -13,7 +13,18 @@
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.10.0 patched
+		CHANGES IN R VERSION 2.10.1 patched
+
+
+BUG FIXES
+
+    o	Some of the MDI toolbar buttons (e.g. "Open Script") did not
+	return the focus to the console if the user cancelled the
+	action.
+
+
+
+		CHANGES IN R VERSION 2.10.1
 
 
 BUG FIXES
@@ -28,10 +39,6 @@ BUG FIXES
 	library path was specified with backslashes.  (Patch submitted
 	by Gabor Grothendieck.)
 	
-    o	Some of the MDI toolbar buttons (e.g. "Open Script") did not
-	return the focus to the console if the user cancelled the
-	action.
-    	
 
 
     		CHANGES IN R VERSION 2.10.0
