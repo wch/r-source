@@ -58,7 +58,7 @@ iconvlist()
 }
 
 \section{Implementation Details}{
-  \code{iconv} was optional before \R 2.10.0, but it absence was
+  \code{iconv} was optional before \R 2.10.0, but its absence was
   deprecated in \R 2.5.0.
 
   There are three main implementations of \code{iconv} in use.

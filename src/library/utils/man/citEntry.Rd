@@ -45,7 +45,7 @@ readCitationFile(file, meta = NULL)
   simply wrappers to \code{\link{paste}}, and their \code{\dots} argument
   is passed on to \code{\link{paste}} as is.
 
-  \code{readCitationFile} makes use of the \code{encoding} element (if
+  \code{readCitationFile} makes use of the \code{Encoding} element (if
   any) of \code{meta} to determine the encoding of the file.
 }
 \section{Entry Types}{
