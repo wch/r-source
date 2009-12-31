@@ -144,23 +144,26 @@ dir.create <- function(path, showWarnings = TRUE, recursive = FALSE,
     invisible(.Internal(dir.create(path, showWarnings, recursive,
                                    as.octmode(mode))))
 
-format.octmode <- function(x, ...)
+format.octmode <- function(x, width = NULL, ...)
 {
     isna <- is.na(x)
     y <- x[!isna]
-    class(y) <- NULL
-    ans0 <- character(length(y))
-    z <- NULL
-    while(any(y > 0) || is.null(z)) {
-        z <- y%%8
-        y <- floor(y/8)
-        ans0 <- paste(z, ans0, sep="")
-    }
+    ## previous version padded with zeroes to a common field width
+    fmt <- if(!is.null(width)) paste("%0", width, "o", sep = "") else "%o"
     ans <- rep.int(NA_character_, length(x))
+    ans0 <- sprintf(fmt, x[!isna])
+    if(is.null(width)) {
+        nc <- max(nchar(ans0))
+        ans0 <- sprintf(paste("%0", nc, "o", sep = ""), x[!isna])
+    }
     ans[!isna] <- ans0
+    dim(ans) <- dim(x)
+    dimnames(ans) <- dimnames(x)
+    names(ans) <- names(x)
     ans
 }
-as.character.octmode <- format.octmode
+
+as.character.octmode <- function(x, ...) format.octmode(x, ...)
 
 print.octmode <- function(x, ...)
 {
@@ -179,39 +182,35 @@ print.octmode <- function(x, ...)
 as.octmode <- function(x)
 {
     if(inherits(x, "octmode")) return(x)
-    if(length(x) != 1L) stop("'x' must have length 1")
     if(is.double(x) && x == as.integer(x)) x <- as.integer(x)
     if(is.integer(x)) return(structure(x, class="octmode"))
     if(is.character(x)) {
-        xx <- strsplit(x, "")[[1L]]
-        if(!all(xx %in% 0:7)) stop("invalid digits")
-        z <- as.numeric(xx) * 8^(rev(seq_along(xx)-1))
-        return(structure(sum(z), class="octmode"))
+        z <- strtoi(x, 8L)
+        if(!any(is.na(z) | z < 0)) return(structure(z, class="octmode"))
     }
     stop("'x' cannot be coerced to 'octmode'")
 }
 
-format.hexmode <- function(x, upper.case = FALSE, ...)
+format.hexmode <- function(x, width = NULL, upper.case = FALSE, ...)
 {
     isna <- is.na(x)
-    y <- x[!isna]
-    class(y) <- NULL
-    ans0 <- character(length(y))
-    z <- NULL
-    while(any(y > 0) || is.null(z)) {
-        z <- y%%16
-        y <- floor(y/16)
-        ans0 <- paste(c(0:9, if(upper.case) LETTERS else letters)[1+z],
-                      ans0, sep = "")
-    }
+    ## previous version padded with zeroes to a common field width
+    fmt0 <- if(upper.case) "X" else "x"
+    fmt <- if(!is.null(width)) paste("%0", width, fmt0, sep = "") else paste("%", fmt0, sep = "")
     ans <- rep.int(NA_character_, length(x))
+    ans0 <- sprintf(fmt, x[!isna])
+    if(is.null(width)) {
+        nc <- max(nchar(ans0))
+        ans0 <- sprintf(paste("%0", nc, fmt0, sep = ""), x[!isna])
+    }
     ans[!isna] <- ans0
     dim(ans) <- dim(x)
     dimnames(ans) <- dimnames(x)
     names(ans) <- names(x)
     ans
 }
-as.character.hexmode <- format.hexmode
+
+as.character.hexmode <- function(x, ...) format.hexmode(x, ...)
 
 print.hexmode <- function(x, ...)
 {
@@ -227,19 +226,14 @@ print.hexmode <- function(x, ...)
     y
 }
 
-as.hexmode <-
-function(x)
+as.hexmode <- function(x)
 {
     if(inherits(x, "hexmode")) return(x)
-    if(length(x) != 1L) stop("'x' must be of length 1")
     if(is.double(x) && (x == as.integer(x))) x <- as.integer(x)
     if(is.integer(x)) return(structure(x, class = "hexmode"))
     if(is.character(x)) {
-        xx <- strsplit(tolower(x), "")[[1L]]
-        pos <- match(xx, c(0L:9L, letters[1L:6L]))
-        if(any(is.na(pos))) stop("invalid digits")
-        z <- (pos - 1L) * 16 ^ (rev(seq_along(xx) - 1))
-        return(structure(as.integer(sum(z)), class = "hexmode"))
+        z <- strtoi(x, 16L)
+        if(!any(is.na(z) | z < 0)) return(structure(z, class = "hexmode"))
     }
     stop("'x' cannot be coerced to hexmode")
 }

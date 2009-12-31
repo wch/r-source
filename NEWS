@@ -202,6 +202,17 @@ NEW FEATURES
     o	file() has a new argument 'raw' which may help if it is used
 	with something other than a regular file, e.g. a character device.
 
+    o	New function stroi(), a wrapper for the C function strtol.
+
+    o	as.octmode() and as.hexmode() now allow inputs of length other
+	than one.
+
+	The format() and print() methods for "octmode" now preserve
+	names and dimensions (as those for "hexmode" did).
+
+	The format() methods for classes "octmode" and "hexmode" gain
+	a 'width' argument.
+
 
 DEPRECATED & DEFUNCT
 

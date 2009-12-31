@@ -1,6 +1,6 @@
 % File src/library/base/man/octmode.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{octmode}
@@ -20,12 +20,14 @@ as.octmode(x)
 
 \method{as.character}{octmode}(x, \dots)
 
-\method{format}{octmode}(x, \dots)
+\method{format}{octmode}(x, width = NULL, \dots)
 
 \method{print}{octmode}(x, \dots)
 }
 \arguments{
   \item{x}{An object, for the methods inheriting from class \code{"octmode"}.}
+  \item{width}{\code{NULL} or a positive integer specifying the minimum
+    field width to be used, with padding by leading zeroes.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
@@ -34,17 +36,24 @@ as.octmode(x)
   notation, specifically for Unix-like file permissions such as
   \code{755}.  Subsetting (\code{\link{[}}) works too.
 
+  If \code{width = NULL} (the default), the output is padded with
+  leading zeroes to the smallest width needed for all the non-missing
+  elements.
+
   \code{as.octmode} can convert integers (of \link{type} \code{"integer"} or
-  \code{"double"}) and character strings to class \code{"octmode"}
+  \code{"double"}) and character vectors whose elements contain only
+  digits \code{0-7} (or are \code{NA}) to class \code{"octmode"}.
 }
 \seealso{
   These are auxiliary functions for \code{\link{file.info}}.
 
-  \code{\link{hexmode}}
+  \code{\link{hexmode}}, \code{\link{sprintf}} for other options in
+  converting integers to octal, \code{\link{strtoi}} to convert octal
+  strings to integers.
 }
 \examples{
-(on <- structure(c(16,32, 127:129),  class = "octmode")) #-> print.*()
-##-> "020" "040" "177" "200" "201"
+(on <- as.octmode(c(16,32, 127:129))) # "020" "040" "177" "200" "201"
 unclass(on[3:4]) # subsetting
 }
+\keyword{utilities}
 \keyword{print}

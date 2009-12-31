@@ -1,5 +1,5 @@
 
-R version 2.11.0 Under development (unstable) (2009-12-23 r50820)
+R version 2.11.0 Under development (unstable) (2009-12-30 r50860)
 Copyright (C) 2009 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1416,10 +1416,8 @@ Y    4   10   16   22
 > 
 > ## PR#1115 (saving strings with ascii=TRUE)
 > x <- y <- unlist(as.list(
-+     parse(text=paste("\"\\",
-+           as.character(structure(1:255,class="octmode")),
-+              "\"",sep=""))))
-> save(x, ascii=T, file=(fn <- tempfile()))
++     parse(text=paste("\"\\", as.character(as.octmode(1:255)), "\"",sep=""))))
+> save(x, ascii=TRUE, file=(fn <- tempfile()))
 > load(fn)
 > all(x==y)
 [1] TRUE

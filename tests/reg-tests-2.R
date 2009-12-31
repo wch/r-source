@@ -481,10 +481,8 @@ rowsum(matrix(1:12, 3,4), c("Y","X","Y"))
 
 ## PR#1115 (saving strings with ascii=TRUE)
 x <- y <- unlist(as.list(
-    parse(text=paste("\"\\",
-          as.character(structure(1:255,class="octmode")),
-             "\"",sep=""))))
-save(x, ascii=T, file=(fn <- tempfile()))
+    parse(text=paste("\"\\", as.character(as.octmode(1:255)), "\"",sep=""))))
+save(x, ascii=TRUE, file=(fn <- tempfile()))
 load(fn)
 all(x==y)
 unlink(fn)

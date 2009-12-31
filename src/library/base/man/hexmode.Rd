@@ -1,6 +1,6 @@
 % File src/library/base/man/hexmode.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2009 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{hexmode}
@@ -19,15 +19,16 @@
 \usage{
 as.hexmode(x)
 
-\method{as.character}{hexmode}(x, upper.case = FALSE, \dots)
+\method{as.character}{hexmode}(x, \dots)
 
-\method{format}{hexmode}(x, upper.case = FALSE, \dots)
+\method{format}{hexmode}(x, width = NULL, upper.case = FALSE, \dots)
 
 \method{print}{hexmode}(x, \dots)
 }
 \arguments{
-  \item{x}{An object, for the methods inheriting from class
-    \code{"hexmode"}.}
+  \item{x}{An object, for the methods inheriting from class \code{"hexmode"}.}
+  \item{width}{\code{NULL} or a positive integer specifying the minimum
+    field width to be used, with padding by leading zeroes.}
   \item{upper.case}{a logical indicating whether to use upper-case
     letters or lower-case letters (default).}
   \item{\dots}{further arguments passed to or from other methods.}
@@ -35,8 +36,20 @@ as.hexmode(x)
 \details{
   Class \code{"hexmode"} consists of integer vectors with that class
   attribute, used merely to ensure that they are printed in hex.
+
+  If \code{width = NULL} (the default), the output is padded with
+  leading zeroes to the smallest width needed for all the non-missing
+  elements.
+
+  \code{as.hexmode} can convert integers (of \link{type} \code{"integer"} or
+  \code{"double"}) and character vectors whose elements contain only
+  \code{0-9}, \code{a-f}, \code{A-F} (or are \code{NA}) to class
+  \code{"hexmode"}.
 }
 \seealso{
-  \code{\link{octmode}}
+  \code{\link{octmode}}, \code{\link{sprintf}} for other options in
+  converting integers to hex, \code{\link{strtoi}} to convert hex
+  strings to integers.
 }
+\keyword{utilities}
 \keyword{print}
