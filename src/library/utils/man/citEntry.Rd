@@ -21,13 +21,13 @@ citFooter(...)
 readCitationFile(file, meta = NULL)
 }
 \arguments{
-  \item{entry}{a character string with a BibTeX entry type}
+  \item{entry}{a character string with a BibTeX entry type.}
   \item{textVersion}{a character string with a text representation of
-    the reference}
-  \item{header}{a character string with optional header text}
-  \item{footer}{a character string with optional footer text}
-  \item{file}{a file name}
-  \item{\dots}{see \sQuote{Details}}
+    the reference.}
+  \item{header}{a character string with optional header text.}
+  \item{footer}{a character string with optional footer text.}
+  \item{file}{a file name.}
+  \item{\dots}{see \sQuote{Details}.}
   \item{meta}{a list of package metadata as obtained by
     \code{\link{packageDescription}}, or \code{NULL} (the default).}
 }
@@ -45,7 +45,7 @@ readCitationFile(file, meta = NULL)
   simply wrappers to \code{\link{paste}}, and their \code{\dots} argument
   is passed on to \code{\link{paste}} as is.
 
-  \code{readCitationFile} make use of the \code{encoding} element (if
+  \code{readCitationFile} makes use of the \code{encoding} element (if
   any) of \code{meta} to determine the encoding of the file.
 }
 \section{Entry Types}{

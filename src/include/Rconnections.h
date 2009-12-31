@@ -67,7 +67,6 @@ struct Rconn {
     void *private;
 };
 
-/* used in dounzip.c */
 typedef struct fileconn {
     FILE *fp;
 #if defined(HAVE_OFF_T) && defined(HAVE_FSEEKO)

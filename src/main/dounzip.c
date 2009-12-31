@@ -436,7 +436,7 @@ R_newunz(const char *description, const char *const mode)
     new->fflush = &null_fflush;
     new->read = &unz_read;
     new->write = &null_write;
-    new->private = (void *) malloc(sizeof(struct fileconn));
+    new->private = (void *) malloc(sizeof(struct unzconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
 	error(_("allocation of unz connection failed"));
