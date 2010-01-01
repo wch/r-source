@@ -164,6 +164,11 @@
 \newenvironment{Value}{%
   \begin{Rdsection}{Value}}{\end{Rdsection}}
 
+\newenvironment{SubSection}[1]{%
+  \begin{list}{}{\setlength{\leftmargin}{0.1in}}\item \textbf{#1: }}{\end{list}}
+\newenvironment{SubSubSection}[1]{%
+  \begin{list}{}{\setlength{\leftmargin}{0.1in}}\item \textit{#1: }}{\end{list}}
+
 \newenvironment{ExampleCode}{\small\verbatim}{\endverbatim}
 
 \ifx\textbackslash\undefined%-- e.g. for MM

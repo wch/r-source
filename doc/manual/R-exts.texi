@@ -3661,6 +3661,13 @@ the section title may cause problems with the latex conversion
 (depending on the version of macro packages such as @samp{hyperref}) and
 so should be avoided.
 
+The @code{\subsection} macro takes arguments in the same format as
+@code{\section}, but is used within a section, so it may be used to
+nest subsections within sections or other subsections.  There is no
+predefined limit on the nesting level, but formatting is not designed
+for more than 3 levels (i.e. subsections within subsections within
+sections).
+
 Note that additional named sections are always inserted at a fixed
 position in the output (before @code{\note}, @code{\seealso} and the
 examples), no matter where they appear in the input (but in the same

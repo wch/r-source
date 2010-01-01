@@ -3074,6 +3074,7 @@ static keywords[] = {
     { "\\S3method",LATEXMACRO2 },
     { "\\S4method",LATEXMACRO2 },
     { "\\tabular", LATEXMACRO2 },
+    { "\\subsection", LATEXMACRO2 },
     
     /* This macro takes three LaTeX-like arguments. */
     
@@ -3091,7 +3092,7 @@ static keywords[] = {
     { "\\donttest",RCODEMACRO },
     { "\\testonly",RCODEMACRO },
     
-    /* This macro take one optional bracketed option and one R-like argument */
+    /* This macro takes one optional bracketed option and one R-like argument */
     
     { "\\Sexpr",   SEXPR },
     

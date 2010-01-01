@@ -617,6 +617,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    if (length(block) > 1L) checkContent(block[[2L]])
                },
                "\\tabular" = checkTabular(block),
+               "\\subsection" = checkSection(block, tag),
                "\\if" =,
                "\\ifelse" = {
     		   condition <- block[[1L]]
@@ -777,7 +778,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
 
     has_text <- FALSE
     checkSection <- function(section, tag) {
-    	if (tag == "\\section") {
+    	if (tag == "\\section" || tag == "\\subsection") {
     	    title <- section[[1L]]
             ## should be simple text
             if(length(title) < 1L || attr(title[[1L]], "Rd_tag") != "TEXT") {

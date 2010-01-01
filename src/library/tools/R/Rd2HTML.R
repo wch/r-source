@@ -189,6 +189,7 @@ Rd2HTML <-
     pendingClose <- pendingOpen <- character(0)  # Used for infix methods
 
     inEqn <- FALSE		# Should we do edits needed in an eqn?
+    sectionLevel <- 0L		# How deeply nested within section/subsection
 
 
 ### These correspond to HTML wrappers
@@ -456,6 +457,7 @@ Rd2HTML <-
                        writeContent(block[[1L]], tag)
                },
                "\\tabular" = writeTabular(block),
+               "\\subsection" = writeSection(block, tag),
                "\\if" =,
                "\\ifelse" =
                	    if (testRdConditional("html", block, Rdfile))
@@ -613,8 +615,11 @@ Rd2HTML <-
     writeSection <- function(section, tag) {
         if (tag %in% c("\\alias", "\\concept", "\\encoding", "\\keyword"))
             return() ## \alias only used on CHM header
-    	of1("\n\n<h3>")
-    	if (tag == "\\section") {
+        save <- sectionLevel
+        sectionLevel <<- sectionLevel + 1L
+    	of1(paste("\n\n<h", sectionLevel+2L, ">", sep=""))
+    	
+    	if (tag == "\\section" || tag == "\\subsection") {
     	    title <- section[[1L]]
     	    section <- section[[2L]]
             ## FIXME: this needs trimming of whitespace
@@ -623,7 +628,7 @@ Rd2HTML <-
     	    of1(sectionTitles[tag])
     	if (tag %in% c("\\examples", "\\synopsis", "\\usage"))
     	    para <- "pre" else para <- "p"
-        of1("</h3>\n")
+        of1(paste("</h", sectionLevel+2L, ">\n", sep=""))
         ## \arguments is a single table, not a para
         if (tag == "\\arguments") para <- ""
     	if (nzchar(para)) of0("\n<", para, ">")
@@ -634,6 +639,7 @@ Rd2HTML <-
 	    writeContent(section, tag)
 	}
     	if (nzchar(para)) of0("</", para, ">\n")
+    	sectionLevel <<- save
     }
 
     if (is.character(out)) {

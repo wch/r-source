@@ -215,6 +215,9 @@ NEW FEATURES
 
     o	seq.int() returns an integer result in some further cases
 	where seq() does, e.g. seq.int(1L, 9L, by = 2L).
+	
+    o	Added \subsection{}{} macro to Rd syntax, for subsections
+    	within sections.
 
 
 DEPRECATED & DEFUNCT

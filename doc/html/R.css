@@ -23,6 +23,21 @@ H3{		background: white;
 		font-family: monospace;
 		font-size: large }
 
+H4{		background: white;
+		color: rgb(40%, 40%, 40%);
+		font-family: monospace;
+		font-style: italic;
+		font-size: large }
+
+H5{		background: white;
+		color: rgb(40%, 40%, 40%);
+		font-family: monospace }
+
+H6{		background: white;
+		color: rgb(40%, 40%, 40%);
+		font-family: monospace;
+		font-style: italic }
+		
 IMG.toplogo{	vertical-align: middle }
 
 IMG.arrow{	width: 30px;

@@ -93,6 +93,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     inCode <- FALSE
     inEqn <- FALSE
     inPre <- FALSE
+    sectionLevel <- 0
 
     addParaBreaks <- function(x, tag) {
         start <- attr(x, "srcref")[2L]
@@ -438,6 +439,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                    writeContent(block[[1L]], tag)
                },
                "\\tabular" = writeTabular(block),
+               "\\subsection" = writeSection(block, tag),
                "\\if" =,
                "\\ifelse" =
 		    if (testRdConditional("latex", block, Rdfile))
@@ -599,17 +601,20 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     writeSection <- function(section, tag) {
         if (tag %in% c("\\encoding", "\\concept"))
             return()
+        save <- sectionLevel
+        sectionLevel <<- sectionLevel + 1
         if (tag == "\\alias")
             writeAlias(section, tag)
         else if (tag == "\\keyword") {
             key <- trim(section)
             of0("\\keyword{", latex_escape_name(key), "}{", ltxname, "}\n")
-        } else if (tag == "\\section") {
-            of0("%\n\\begin{Section}{")
+        } else if (tag == "\\section" || tag == "\\subsection") {    	    
+            macro <- c("Section", "SubSection", "SubSubSection")[min(sectionLevel, 3)]
+    	    of0("%\n\\begin{", macro, "}{")
             writeContent(section[[1L]], tag)
             of1("}")
     	    writeSectionInner(section[[2L]], tag)
-            of1("\\end{Section}\n")
+            of0("\\end{", macro, "}\n")
     	} else {
             title <- envTitles[tag]
             of0("%\n\\begin{", title, "}")
@@ -624,6 +629,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
             if(!is.na(extra)) of0("\\end{", extra, "}\n")
             of0("\\end{", title, "}\n")
         }
+        sectionLevel <<- save
     }
 
     Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)

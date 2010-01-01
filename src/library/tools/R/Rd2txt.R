@@ -49,6 +49,7 @@ Rd2txt <-
     haveBlanks <- 0L		# How many blank lines have just been written?
     enumItem <- 0L		# Last enumeration item number
     inEqn <- FALSE		# Should we do edits needed in an eqn?
+    sectionLevel <- 0		# How deeply nested within sections/subsections
 
     startCapture <- function() {
     	save <- list(buffer=buffer, linestart=linestart, indent=indent,
@@ -402,6 +403,7 @@ Rd2txt <-
     		   blankLine()
                },
                "\\tabular" = writeTabular(block),
+               "\\subsection" = writeSection(block, tag),
                "\\if"=,
                "\\ifelse" =
                    if (testRdConditional("text", block, Rdfile))
@@ -759,12 +761,15 @@ Rd2txt <-
     writeSection <- function(section, tag) {
         if (tag %in% c("\\alias", "\\concept", "\\encoding", "\\keyword"))
             return()
-    	blankLine(0L)
-        indent <<- 5L
+    	save <- c(indent, sectionLevel, keepFirstIndent, dropBlank, wrapping)    	
+    	blankLine(min(sectionLevel, 1L))
+    	titlePrefix <- paste(rep("  ", sectionLevel), collapse="")
+        indent <<- 5L + 2L*sectionLevel
+        sectionLevel <<- sectionLevel + 1
         keepFirstIndent <<- TRUE
-        if (tag == "\\section") {
+        if (tag == "\\section" || tag == "\\subsection") {
             ## section header could have markup
-            putf(txt_header(toChar(section[[1L]])), ":")
+            putf(titlePrefix, txt_header(toChar(section[[1L]])), ":")
             blankLine()
             dropBlank <<- TRUE
             wrapping <<- TRUE
@@ -786,6 +791,12 @@ Rd2txt <-
             writeContent(section, tag)
         }
         blankLine()
+        
+        indent <<- save[1]
+        sectionLevel <<- save[2]
+        keepFirstIndent <<- save[3]
+        dropBlank <<- save[4]
+        wrapping <<- save[5]
     }
 
     if (is.character(out)) {
