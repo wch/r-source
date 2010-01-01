@@ -1032,6 +1032,8 @@ static void clipPolygon(int n, double *x, double *y,
 			const pGEcontext gc, int toDevice, pGEDevDesc dd)
 {
     double *xc = NULL, *yc = NULL;
+    const void *vmax = vmaxget();
+
     /* if bg not specified then draw as polyline rather than polygon
      * to avoid drawing line along border of clipping region
      * If bg was NA then it has been converted to fully transparent */
@@ -1058,6 +1060,7 @@ static void clipPolygon(int n, double *x, double *y,
 	    dd->dev->polygon(npts, xc, yc, gc, dd->dev);
 	}
     }
+    vmaxset(vmax);
 }
 
 /****************************************************************
@@ -1602,6 +1605,7 @@ void GEText(double x, double y, const char * const str, cetype_t enc,
 	    double xoff, yoff, hadj;
 	    double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */
 	    double xleft, ybottom;
+	    const void *vmax = vmaxget();
 
 	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : enc;
 	    if(enc2 != CE_SYMBOL)
@@ -1790,6 +1794,7 @@ void GEText(double x, double y, const char * const str, cetype_t enc,
 		else *sb++ = *s;
 		if (!*s) break;
 	    }
+	    vmaxset(vmax);
 	}
 	R_Visible = savevis;
     }
@@ -2370,6 +2375,7 @@ double GEStrWidth(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDesc
 	    char *sb;
 	    double wdash;
 	    cetype_t enc2;
+	    const void *vmax = vmaxget();
 
 	    enc2 = (gc->fontface == 5) ? CE_SYMBOL : enc;
 	    if(enc2 != CE_SYMBOL)
@@ -2392,6 +2398,7 @@ double GEStrWidth(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDesc
 		else *sb++ = *s;
 		if (!*s) break;
 	    }
+	    vmaxset(vmax);
 	}
 	return w;
     }

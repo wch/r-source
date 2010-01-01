@@ -3581,8 +3581,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(swap && size > 1)
 		for(i = 0; i < m; i++) swapb((char *)p+i*size, size);
 	} else {
-	    /* FIXME: why not buf[size] or even buf[16]? */
-	    char * buf = R_alloc(1, size);
+	    char buf[size];
 	    int s;
 	    if(mode == 1) {
 		for(i = 0, m = 0; i < n; i++) {
@@ -3898,12 +3897,15 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP
 readFixedString(Rconnection con, int len, int useBytes)
 {
+    SEXP ans;
     char *buf;
     int  pos, m;
+    const void *vmax = vmaxget();
 
     if(utf8locale && !useBytes) {
 	int i, clen;
 	char *p, *q;
+
 	p = buf = (char *) R_alloc(MB_CUR_MAX*len+1, sizeof(char));
 	memset(buf, 0, MB_CUR_MAX*len+1);
 	for(i = 0; i < len; i++) {
@@ -3930,7 +3932,9 @@ readFixedString(Rconnection con, int len, int useBytes)
     }
     /* String may contain nuls which we now (R >= 2.8.0) assume to be
        padding and ignore silently */
-    return mkChar(buf);
+    ans = mkChar(buf);
+    vmaxset(vmax);
+    return ans;
 }
 
 static SEXP
@@ -3938,6 +3942,7 @@ rawFixedString(Rbyte *bytes, int len, int nbytes, int *np, int useBytes)
 {
     char *buf;
     SEXP res;
+    const void *vmax = vmaxget();
 
     if(*np + len > nbytes) {
 	len = nbytes - *np;
@@ -3948,6 +3953,7 @@ rawFixedString(Rbyte *bytes, int len, int nbytes, int *np, int useBytes)
 	int i, clen, iread = *np;
 	char *p;
 	Rbyte *q;
+
 	p = buf = (char *) R_alloc(MB_CUR_MAX*len+1, sizeof(char));
 	for(i = 0; i < len; i++, p+=clen, iread += clen) {
 	    if (iread >= nbytes) break;
@@ -3960,7 +3966,7 @@ rawFixedString(Rbyte *bytes, int len, int nbytes, int *np, int useBytes)
 	clen = iread - (*np);
 	*np = iread;
 	*p = '\0';
-	return mkCharLenCE(buf, clen, CE_NATIVE);
+	res = mkCharLenCE(buf, clen, CE_NATIVE);
     } else {
 	/* no terminator */
 	buf = R_chk_calloc(len + 1, 1);
@@ -3969,6 +3975,7 @@ rawFixedString(Rbyte *bytes, int len, int nbytes, int *np, int useBytes)
 	res = mkCharLenCE(buf, len, CE_NATIVE);
 	Free(buf);
     }
+    vmaxset(vmax);
     return res;
 }
 
