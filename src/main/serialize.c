@@ -2197,7 +2197,7 @@ static SEXP readRawFromFile(SEXP file, SEXP key)
 	    /* fprintf(stderr, "adding file '%s' at pos %d in cache, length %d\n",
 	       cfile, icache, filelen); */
 	    p = (char *) malloc(filelen);
-	    if (ptr) {
+	    if (p) {
 		strcpy(names[icache], cfile);
 		ptr[icache] = p;
 		if (fseek(fp, 0, SEEK_SET) != 0) {
