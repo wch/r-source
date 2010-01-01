@@ -1634,6 +1634,8 @@ void GEText(double x, double y, const char * const str, cetype_t enc,
 		    double w = NA_REAL, h = NA_REAL;
 		    const char *str;
 		    *sb = '\0';
+		    /* This may R_alloc, but let's assume that
+		       there are not many lines of text per string */
 		    str = reEnc(sbuf, enc, enc2, 2);
 		    if (n > 1) {
 			/* first determine location of THIS line */
@@ -2387,6 +2389,8 @@ double GEStrWidth(const char *str, cetype_t enc, const pGEcontext gc, pGEDevDesc
 		if (*s == '\n' || *s == '\0') {
 		    const char *str;
 		    *sb = '\0';
+		    /* This may R_alloc, but let's assume that
+		       there are not many lines of text per string */
 		    str = reEnc(sbuf, enc, enc2, 2);
 		    if(dd->dev->hasTextUTF8 == TRUE && enc2 == CE_UTF8)
 			wdash = dd->dev->strWidthUTF8(str, gc, dd->dev);
