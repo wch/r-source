@@ -59,49 +59,46 @@ seq(length.out= )
   \code{to - from} and \code{by} of opposite signs is an error.  Note
   that the computed final value can go just beyond \code{to} to allow for
   rounding error, but (as from \R 2.9.0) is truncated to \code{to}.
+  (\sQuote{Just beyond} is by up to \eqn{10^{-7}}{1e-7} times
+  \code{abs(from - to)}.)
 
   The third generates a sequence of \code{length.out} equally spaced
   values from \code{from} to \code{to}.  (\code{length.out} is usually
   abbreviated to \code{length} or \code{len}, and \code{seq_len} is much
   faster.)
 
-  The fourth form generates the sequence \code{1, 2, \dots,
+  The fourth form generates the integer sequence \code{1, 2, \dots,
     length(along.with)}.  (\code{along.with} is usually abbreviated to
   \code{along}, and \code{seq_along} is much faster.)
 
   The fifth form generates the sequence \code{1, 2, \dots, length(from)}
-  (as if argument \code{along.with} had been specified),
-  \emph{unless} the argument is numeric of length 1 when it is
-  interpreted as \code{1:from} (even for \code{seq(0)} for
-  compatibility with S).
+  (as if argument \code{along.with} had been specified), \emph{unless}
+  the argument is numeric of length 1 when it is interpreted as
+  \code{1:from} (even for \code{seq(0)} for compatibility with S).
 
-  The final form generates \code{1, 2, \dots, length.out} unless
-  \code{length.out = 0}, when it generates \code{integer(0)}.
+  The final form generates the integer sequence \code{1, 2, \dots,
+  length.out} unless \code{length.out = 0}, when it generates
+  \code{integer(0)}.
 
   Very small sequences (with \code{from - to} of the order of \eqn{10^{-14}}
   times the larger of the ends) will return \code{from}.
 
-  For \code{seq}(only), up to two of \code{from}, \code{to} and \code{by} can
-  be supplied as complex values provided \code{length.out} or
-  \code{along.with} is specified.
+  For \code{seq} (only), up to two of \code{from}, \code{to} and
+  \code{by} can be supplied as complex values provided \code{length.out}
+  or \code{along.with} is specified.
 
   \code{seq.int}, \code{seq_along} and \code{seq_len} are
   \link{primitive}: the latter two ignore any argument name.
 }
+% We used to explain some of the circumstances when integer was
+% returned, but people read that carelessly, so no longer.
 \value{
-  Currently, \code{seq.int} and the default method of \code{seq}
-  return a result of type \code{"integer"} (if it is representable as
-  that and) if \code{from} is (numerically equal to an) integer and,
-  e.g., only \code{to} is specified, or also if only \code{length} or
-  only \code{along.with} is specified.  \strong{Note:} this may change
-  in the future and programmers should not rely on it.
+  \code{seq.int} and the default method of \code{seq} return a vector of
+  type \code{"integer"} or \code{"double"}: programmers should not rely
+  on which.
   
   \code{seq_along} and \code{seq_length} always return an integer vector.
 }
-%% well, for numeric from,   seq(from, to)  <==>  from:to
-%% which will *not* change in returning integer (when from is integer-valued)
-% MM: to specify all the conditions doesn't seem worth, nor should the
-% code be changed just for docu.purposes; e.g. str(seq(from=1L, to=8, by=3L))
 
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

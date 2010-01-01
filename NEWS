@@ -213,6 +213,9 @@ NEW FEATURES
 	The format() methods for classes "octmode" and "hexmode" gain
 	a 'width' argument.
 
+    o	seq.int() returns an integer result in some further cases
+	where seq() does, e.g. seq.int(1L, 9L, by = 2L).
+
 
 DEPRECATED & DEFUNCT
 
