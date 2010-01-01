@@ -59,8 +59,9 @@ BUG FIXES
     o	ks.test() could give a p-value that was off by one observation
 	due to rounding error.  (PR#14145)
 
-    o	readBin() when reading millions of character strings in a single
-	call used excessive amounts of memory (which also slowed it down).
+    o	readBin()/readChar() when reading millions of character strings
+	in a single call used excessive amounts of memory (which also
+	slowed them down).
 
 
 
