@@ -3358,10 +3358,9 @@ static void swapb(void *result, int size)
 
 static SEXP readOneString(Rconnection con)
 {
-    char *buf, *p, *new;
-    int ibfs = 500, pos, m;
+    char buf[10001], *p;
+    int pos, m;
 
-    buf = (char *) R_alloc(ibfs, sizeof(char));
     for(pos = 0; pos < 10000; pos++) {
 	p = buf + pos;
 	m = con->read(p, sizeof(char), 1, con);
@@ -3371,12 +3370,6 @@ static SEXP readOneString(Rconnection con)
 	    return R_NilValue;
 	}
 	if(*p == '\0') break;
-	if(pos >= ibfs - 1) {
-	    new = (char *) R_alloc(2*ibfs, sizeof(char));
-	    memcpy(new, buf, pos+1);
-	    buf = new;
-	    ibfs *= 2;
-	}
     }
     if(pos == 10000)
 	warning(_("null terminator not found: breaking string at 10000 bytes"));
@@ -3573,6 +3566,7 @@ SEXP attribute_hidden do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(swap && size > 1)
 		for(i = 0; i < m; i++) swapb((char *)p+i*size, size);
 	} else {
+	    /* FIXME: why not buf[size] or even buf[16]? */
 	    char * buf = R_alloc(1, size);
 	    int s;
 	    if(mode == 1) {
@@ -3769,7 +3763,7 @@ SEXP attribute_hidden do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	default:
 	    UNIMPLEMENTED_TYPE("writeBin", object);
 	}
-	buf = R_chk_calloc(len, size); /* R_alloc(len, size); */
+	buf = R_chk_calloc(len, size);
 	switch(TYPEOF(object)) {
 	case LGLSXP:
 	case INTSXP:
