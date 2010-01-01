@@ -1243,7 +1243,7 @@
         } else {
             ## a source file or something like -Ldir -lfoo
             base <- sub("\\.[[:alnum:]]*$", "", a)
-            ext <- sub(p0(base, "."),  "", a)
+            ext <- sub(p0(base, "."),  "", a, fixed = TRUE)
             nobj <- ""
             if (nzchar(ext)) {
                 if (ext %in% c("cc", "cpp", "C")) {

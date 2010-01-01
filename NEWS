@@ -335,6 +335,9 @@ BUG FIXES
 	in a single call used excessive amounts of memory (which also
 	slowed them down).
 
+    o	R CMD SHLIB could fail if used with paths that were not
+	alphanumeric, e.g. contained '+'.  (PR#14168)
+
 
 
 		CHANGES IN R VERSION 2.10.1
