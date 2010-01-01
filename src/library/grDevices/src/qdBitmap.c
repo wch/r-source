@@ -146,6 +146,7 @@ QuartzDesc_t QuartzBitmap_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPa
         size_t s = h*rb;
         /* QuartzDesc_t qd; */
         /* Allocate sufficient space */
+	/* FIXME: check allocations */
         QuartzBitmapDevice *dev = malloc(sizeof(QuartzBitmapDevice)+s);
         dev->length = s;
         dev->uti  = type ? strdup(type) : NULL;

@@ -844,6 +844,7 @@ QuartzDesc_t QuartzCocoa_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzPar
     scalex = dpi[0] / 72.0;
     scaley = dpi[1] / 72.0;
 
+    /* FIXME: check allocations */
     dev = malloc(sizeof(QuartzCocoaDevice));
     memset(dev, 0, sizeof(QuartzCocoaDevice));
 

@@ -184,6 +184,7 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	GPar *ddp;
 	sd = dd->gesd[baseRegisterIndex];
 	dev = dd->dev;
+	/* FIXME: what to do if this fails? */
 	bss = sd->systemSpecific = malloc(sizeof(baseSystemState));
 	ddp = &(bss->dp);
 	GInit(ddp);
