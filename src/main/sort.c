@@ -25,6 +25,7 @@
 
 #include <Defn.h> /* => Utils.h with the protos from here */
 #include <Rmath.h>
+#include <R_ext/RS.h>  /* for Calloc/Free */
 
 			/*--- Part I: Comparison Utilities ---*/
 
@@ -756,7 +757,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
 
     if(isNull(rho)) {
 	/* First sort NAs to one end */
-	isna = (int *) malloc(n * sizeof(int));
+	isna = Calloc(n, int);
 	switch (TYPEOF(key)) {
 	case LGLSXP:
 	case INTSXP:
@@ -852,7 +853,7 @@ orderVector1(int *indx, int n, SEXP key, Rboolean nalast, Rboolean decreasing,
 #undef less
 	}
     }
-    if(isna) free(isna);
+    if(isna) Free(isna);
 }
 
 /* FUNCTION order(...) */

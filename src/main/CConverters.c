@@ -74,6 +74,7 @@ R_toCConverter
     R_toCConverter *el;
     /* Create and populate the new entry. */
     el = (R_toCConverter *) malloc(sizeof(R_toCConverter));
+    if(!el) return (R_toCConverter*) NULL;
     el->matcher = matcher;
     el->converter = converter;
     el->userData = userData;

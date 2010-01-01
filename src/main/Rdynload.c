@@ -307,6 +307,8 @@ R_setPrimitiveArgTypes(const R_FortranMethodDef * const croutine,
 {
     sym->types = (R_NativePrimitiveArgType *)
 	malloc(sizeof(R_NativePrimitiveArgType) * croutine->numArgs);
+    if(!sym->types)
+	error("allocation failure in R_setPrimitiveArgTypes");
     if(sym->types)
 	memcpy(sym->types, croutine->types,
 	       sizeof(R_NativePrimitiveArgType) * croutine->numArgs);
@@ -319,6 +321,8 @@ R_setArgStyles(const R_FortranMethodDef * const croutine,
 {
     sym->styles = (R_NativeArgStyle *)
 	malloc(sizeof(R_NativeArgStyle) * croutine->numArgs);
+    if(!sym->styles)
+	error("allocation failure in R_setArgStyles");
     if(sym->styles)
 	memcpy(sym->styles, croutine->styles,
 	       sizeof(R_NativeArgStyle) * croutine->numArgs);
@@ -548,10 +552,12 @@ static DllInfo* AddDLL(const char *path, int asLocal, int now,
 #ifdef HAVE_NO_SYMBOL_UNDERSCORE
 	tmp = (char*) malloc(sizeof(char)*(strlen("R_init_") +
 					   strlen(info->name)+ 1));
+	if(!tmp) error("allocation failure in AddDLL");
 	sprintf(tmp, "%s%s","R_init_", info->name);
 #else
 	tmp = (char*) malloc(sizeof(char)*(strlen("R_init_") +
 					   strlen(info->name)+ 2));
+	if(!tmp) error("allocation failure in AddDLL");
 	sprintf(tmp, "_%s%s","R_init_", info->name);
 #endif
 	f = (DllInfoInitCall) R_osDynSymbol->dlsym(info, tmp);

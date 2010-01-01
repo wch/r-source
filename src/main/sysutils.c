@@ -1368,6 +1368,8 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
     if(!done)
 	error(_("cannot find unused tempfile name"));
     res = (char *) malloc((strlen(tm)+1) * sizeof(char));
+    if(!res)
+	error(_("allocation failed in R_tmpnam"));
     strcpy(res, tm);
     return res;
 }
