@@ -17,10 +17,9 @@
 format.octmode <- function(x, width = NULL, ...)
 {
     isna <- is.na(x)
-    y <- x[!isna]
     fmt <- if(!is.null(width)) paste("%0", width, "o", sep = "") else "%o"
     ans <- rep.int(NA_character_, length(x))
-    ans0 <- sprintf(fmt, x[!isna])
+    ans0 <- sprintf(fmt, as.integer(x[!isna]))
     if(is.null(width)) {
         ## previous version padded with zeroes to a common field width
         nc <- max(nchar(ans0))
@@ -61,13 +60,15 @@ as.octmode <- function(x)
     stop("'x' cannot be coerced to 'octmode'")
 }
 
+## BioC packages cellHTS2 and flowCore misuse this for doubles,
+## hence the as.integer() call
 format.hexmode <- function(x, width = NULL, upper.case = FALSE, ...)
 {
     isna <- is.na(x)
     fmt0 <- if(upper.case) "X" else "x"
     fmt <- if(!is.null(width)) paste("%0", width, fmt0, sep = "") else paste("%", fmt0, sep = "")
     ans <- rep.int(NA_character_, length(x))
-    ans0 <- sprintf(fmt, x[!isna])
+    ans0 <- sprintf(fmt, as.integer(x[!isna]))
     if(is.null(width)) {
         ## previous version padded with zeroes to a common field width
         nc <- max(nchar(ans0))
