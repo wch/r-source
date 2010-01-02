@@ -21,7 +21,7 @@ format.octmode <- function(x, width = NULL, ...)
     fmt <- if(!is.null(width)) paste("%0", width, "o", sep = "") else "%o"
     ans <- rep.int(NA_character_, length(x))
     ans0 <- sprintf(fmt, y)
-    if(is.null(width)) {
+    if(is.null(width) && length(y) > 1L) {
         ## previous version padded with zeroes to a common field width
         nc <- max(nchar(ans0))
         ans0 <- sprintf(paste("%0", nc, "o", sep = ""), y)
@@ -71,7 +71,7 @@ format.hexmode <- function(x, width = NULL, upper.case = FALSE, ...)
     fmt <- if(!is.null(width)) paste("%0", width, fmt0, sep = "") else paste("%", fmt0, sep = "")
     ans <- rep.int(NA_character_, length(x))
     ans0 <- sprintf(fmt, y)
-    if(is.null(width)) {
+    if(is.null(width) && length(y) > 1L) {
         ## previous version padded with zeroes to a common field width
         nc <- max(nchar(ans0))
         ans0 <- sprintf(paste("%0", nc, fmt0, sep = ""), y)

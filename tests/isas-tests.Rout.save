@@ -1,6 +1,6 @@
 
-R version 2.10.0 Under development (unstable) (2009-08-06 r49077)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.11.0 Under development (unstable) (2010-01-01 r50874)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -278,6 +278,7 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 > f <- try(as.hexmode( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.hexmode( f )))
+[1] TRUE
 > f <- try(as.integer( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.integer( f )))
 [1] TRUE
@@ -303,6 +304,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.octmode( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.octmode( f )))
+[1] TRUE
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 [1] TRUE
