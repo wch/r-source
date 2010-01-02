@@ -17,13 +17,14 @@
 format.octmode <- function(x, width = NULL, ...)
 {
     isna <- is.na(x)
+    y <- as.integer(x[!isna])
     fmt <- if(!is.null(width)) paste("%0", width, "o", sep = "") else "%o"
     ans <- rep.int(NA_character_, length(x))
-    ans0 <- sprintf(fmt, as.integer(x[!isna]))
+    ans0 <- sprintf(fmt, y)
     if(is.null(width)) {
         ## previous version padded with zeroes to a common field width
         nc <- max(nchar(ans0))
-        ans0 <- sprintf(paste("%0", nc, "o", sep = ""), x[!isna])
+        ans0 <- sprintf(paste("%0", nc, "o", sep = ""), y)
     }
     ans[!isna] <- ans0
     dim(ans) <- dim(x)
@@ -65,14 +66,15 @@ as.octmode <- function(x)
 format.hexmode <- function(x, width = NULL, upper.case = FALSE, ...)
 {
     isna <- is.na(x)
+    y <- as.integer(x[!isna])
     fmt0 <- if(upper.case) "X" else "x"
     fmt <- if(!is.null(width)) paste("%0", width, fmt0, sep = "") else paste("%", fmt0, sep = "")
     ans <- rep.int(NA_character_, length(x))
-    ans0 <- sprintf(fmt, as.integer(x[!isna]))
+    ans0 <- sprintf(fmt, y)
     if(is.null(width)) {
         ## previous version padded with zeroes to a common field width
         nc <- max(nchar(ans0))
-        ans0 <- sprintf(paste("%0", nc, fmt0, sep = ""), x[!isna])
+        ans0 <- sprintf(paste("%0", nc, fmt0, sep = ""), y)
     }
     ans[!isna] <- ans0
     dim(ans) <- dim(x)
