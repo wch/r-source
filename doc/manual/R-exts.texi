@@ -6597,7 +6597,7 @@ for that we can ask @R{} by something like
 
 @example
 PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
- | R --vanilla --slave`
+ | $@{R_HOME@}/bin/R --vanilla --slave`
 PKG_LIBS=$(PKGB_PATH)/libpackB.a
 @end example
 
@@ -6610,7 +6610,7 @@ For a dynamic library @file{packB/libs/libpackB.so}
 
 @example
 PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
- | R --vanilla --slave`
+ | $@{R_HOME@}/bin/R --vanilla --slave`
 PKG_LIBS=-L"$(PKGB_PATH)" -lpackB
 @end example
 
@@ -6629,7 +6629,7 @@ changed).  On systems with the GNU linker (e.g.@: Linux) and some others
 
 @example
 PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
- | R --vanilla --slave`
+ | $@{R_HOME@}/bin/R --vanilla --slave`
 PKG_LIBS=-L"$(PKGB_PATH)" -rpath "$(PKGB_PATH)" -lpackB
 @end example
 
