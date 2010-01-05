@@ -302,9 +302,9 @@ versions around if you wish.
 
 For those with a personal library (folder @file{R\win-library\@var{x.y}}
 of your home directory), you will need to update that too when the minor
-version of R changes (e.g.@: from 2.9.2 to 2.10.0).  A simple way
-to do so is to copy (say) @file{R\win-library\2.9} to
-@file{R\win-library\2.10} before running
+version of R changes (e.g.@: from 2.10.1 to 2.11.0).  A simple way
+to do so is to copy (say) @file{R\win-library\2.10} to
+@file{R\win-library\2.11} before running
 @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
 
@@ -620,9 +620,9 @@ one user reported that the virtual screen manager JSP2 caused this
 crash.
 
 These errors are essentially impossible for us to fix or work around
-beyond the measures already taken (which were increased in R 2.3.0).
-The only solution we know of is for the user to replace the buggy system
-component that is causing the error.
+beyond the measures already taken.  The only solution we know of is for
+the user to replace the buggy system component that is causing the
+error.
 
 
 @node Why does R never use more than 50% of my CPU?, Does R run under Windows Vista?, Other strange crashes., Installation and Usage
@@ -732,11 +732,11 @@ running under Administrator privileges when updating those.
 @end itemize
 
 
-Another issue with Vista is that the standard POSIX ways that R uses
+Another issue with Vista was that the standard POSIX ways that R uses
 (e.g.@: in @code{file.info} and @code{file.access}) to look at file
 permissions no longer work reliably.  @code{file.access} was re-written
-for R 2.5.1 to work with Windows NT-based security and the new version
-seems much more reliable with Vista (but still not 100% correct).
+to work with Windows NT-based security and the new version seems much
+more reliable with Vista (but still not 100% correct).
 
 On suitably recent hardware Vista can prevent the execution of code
 from data areas via `Data Execution Prevention' (from a tab in
@@ -986,6 +986,7 @@ handles internationalization slightly odd.
 * update.packages() fails::     
 * How do I add to the list of repositories?::  
 * Help is not shown for some of the packages::  
+* How do I get static HTML pages?::  
 @end menu
 
 
@@ -1004,7 +1005,7 @@ You can install pre-compiled packages either from CRAN or from a local
 There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  The packages for
 each minor (2.x) version will be stored in a separate area, so for R
-2.10.? the files are in @file{bin/windows/contrib/2.10}.  You can try
+2.11.? the files are in @file{bin/windows/contrib/2.11}.  You can try
 those compiled for earlier versions (but not before 2.10.0), at your own
 risk.
 
@@ -1178,10 +1179,40 @@ This reads from the tab-delimited file @file{R_HOME\etc\repositories},
 which you can edit, or put a modified copy at @file{.R\repositories}
 in your HOME directory (@pxref{What are HOME and working directories?}).
 
-@node Help is not shown for some of the packages,  , How do I add to the list of repositories?, Packages
+@node Help is not shown for some of the packages, How do I get static HTML pages?, How do I add to the list of repositories?, Packages
 @section Help is not shown for some of the packages
 
 This was about Compiled HTML help, which is not supported since R 2.10.0.
+
+@node How do I get static HTML pages?,  , Help is not shown for some of the packages, Packages
+@section How do I get static HTML pages?
+
+We presume you want to do this for some special purpose: R's help system
+will not make use of them, links across library directories will not
+work (unlike R < 2.10.0), ambiguous links will be resolved at install
+time and missing links will be broken (previous versions used
+JavaScript to look for them at run time).  But if you still want them,
+here is how to do it.
+
+Static HTML pages are not part of the binary distribution, so you will
+need to install R and/or packages from their sources.  To install just a
+few packages with static HTML pages use
+
+@example
+R CMD INSTALL --html @var{pkg1} @var{pkg2} \ldots
+@end example
+
+To install R itself with static HTML pages change the following line in
+file @file{MkRules}
+
+@example
+# set this to YES to build static HTML help
+BUILD_HTML = NO
+@end example
+
+@noindent
+and them all packages installed by that build of R will be installed
+with static HTML pages.
 
 
 @newchap{}
