@@ -261,15 +261,13 @@ will be the current working directory of the shell.)
 
 Yes, with care.  A basic R installation is relocatable, so you can burn
 an image of the R installation on your hard disc or install directly
-onto a removable storage device such as a flash-memory USB drive.  (If
-you have installed packages into a private library, their absolute paths
-will appear in the HTML packages list.)
+onto a removable storage device such as a flash-memory USB drive.
 
 Running R does need access to a writable temporary directory and to a
 home directory, and in the last resort these are taken to be the current
 directory.  This should be no problem on a properly configured version
 of Windows, but otherwise does mean that it may not be possible to run R
-without creating a shortcut in a writable folder.
+without creating a shortcut starting in a writable folder.
 
 
 @node How do I UNinstall R?, What's the best way to upgrade?, Can I run R from a CD or USB drive?, Installation and Usage
@@ -696,7 +694,7 @@ If you use an account in the local Administrators group in `admin
 approval mode' (which is the intended norm under Vista), installation
 will make use of `over-the-shoulder' credentials.  You will run into
 problems if you try installing (including updating) packages in the
-main R library.  (It would be nice if at that point R used
+main R library.  (It would be nice if at that point R could use
 over-the-shoulder credentials, but they apply to processes as a
 whole.  Vista disallows creating @code{.chm} and @code{.dll} files in
 the system area without credentials.)  There are several ways around
@@ -719,8 +717,8 @@ Install packages into a different library tree owned by the account used to
 install R.
 
 For an installation to be used by a single user, the simplest way is to
-make use of the `personal library' introduced in R 2.5.0: @xref{I don't
-have permission to write to the @RWVER@\library directory}.
+make use of a `personal library': @xref{I don't have permission to write
+to the @RWVER@\library directory}.
 
 For a site installation, you can create a site-wide library directory
 anywhere convenient, and add it to the default package search path for
@@ -759,13 +757,13 @@ Whether these are used in R output (from functions @code{sQuote} and
 @code{dQuote}) is controlled by @code{getOption("useFancyQuotes")} whose
 default is @code{FALSE} except for the @code{Rgui} console.  There are
 two potential problems with rendering directional quotes.  The first is
-that in European locales the `Windows Command Prompt' is by default set
-up to use MS-DOS and not Windows default encodings: this can be changed
-via @command{chcp}, with @command{chcp 1252} being appropriate for
-Western European (including English) locales.  The other is that the
-default raster fonts only include directional single quotes and not
-directional double quotes (which will probably be rendered as a filled
-rectangle).
+with running @code{Rterm}: in European locales the `Windows Command
+Prompt' is by default set up to use MS-DOS and not Windows default
+encodings: this can be changed via @command{chcp}, with @command{chcp
+1252} being appropriate for Western European (including English)
+locales.  The other is that the default raster fonts only include
+directional single quotes and not directional double quotes (which will
+probably be rendered as a filled rectangle).
 
 Directional quotes will also be used in text help which is normally
 displayed in R's internal pager: these may not be rendered correctly in
@@ -815,10 +813,10 @@ Accessories, Accessibility on XP).
 @node The installer does not offer my language, I want R in English!, Languages and Internationalization, Languages and Internationalization
 @section The installer does not offer my language.
 
-Two things may be happening.  First, in earlier version only languages
+Two things may be happening.  First, in earlier versions only languages
 which can be displayed using the current codepage were offered so you
 could install in Japanese unless running Windows in Japanese: this
-changed in mid-2009 in time for R 2.10.0
+changed for R 2.10.0.
 
 Second, only a limited range of languages is supported (but still wider
 than those for which R has translations), currently
@@ -853,11 +851,11 @@ Q2.15, or in the @file{Rconsole} file.
 @node I want to run R in Chinese/Japanese/Korean, I selected English for installation but R runs in Chinese, I want R in English!, Languages and Internationalization
 @section I want to run R in Chinese/Japanese/Korean.
 
-All recent Windows versions of R support `East Asian' languages
-(with a suitable version of Windows -- e.g.@: Western installations of
-Windows XP do not by default have such support).
+Windows versions of R support `East Asian' languages with a suitable
+copy of Windows -- e.g.@: Western installations of Windows often do not
+have such support.
 
-Both @command{Rterm.exe} and @command{RGui.exe} support single- and
+Both @command{Rterm.exe} and @command{Rgui.exe} support single- and
 double-width characters.  It will be necessary to select suitable fonts
 in files @file{Rconsole} and @file{Rdevga} (see @code{?Rconsole} or the
 comments in the files: the system versions are in the @file{etc}
