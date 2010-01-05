@@ -66,6 +66,9 @@ BUG FIXES
     o	R CMD SHLIB could fail if used with paths that were not
 	alphanumeric, e.g. contained '+'.  (PR#14168)
 
+    o	sprintf() was no re-entrant, which potentially caused problems
+	if an as.character() method called it.
+
 
 
 		CHANGES IN R VERSION 2.10.1
