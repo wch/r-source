@@ -1005,7 +1005,8 @@ There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  The packages for
 each minor (2.x) version will be stored in a separate area, so for R
 2.10.? the files are in @file{bin/windows/contrib/2.10}.  You can try
-those compiled for earlier versions, at your own risk.
+those compiled for earlier versions (but not before 2.10.0), at your own
+risk.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
 @uref{http://cran.r-project.org/bin/windows/contrib/ReadMe}, which also
