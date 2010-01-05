@@ -81,7 +81,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.5.0} or later).
+(@samp{2.10.0} or later).
 
 
 @newchap{}
@@ -201,9 +201,9 @@ the MSI installer.)
 @section Can I customize the installation?
 
 The normal way to customize the installation is by selecting components
-from the wizards shown.  However, sysadmins might like to install R from
-scripts, and the following command-line flags are available for use with
-the installer.
+from the wizards shown by the installer.  However, sysadmins might like
+to install R from scripts, and the following command-line flags are
+available for use with the installer.
 
 @table @samp
 @item /SILENT
@@ -275,12 +275,12 @@ without creating a shortcut starting in a writable folder.
 
 Normally you can do this from the R group on the Start Menu or from the
 @samp{Add/Remove Programs} or @samp{Programs and Features} group in the
-Control Panel.  If it does not appear there or if you want to remove an
-old version, run @file{unins000.exe} in the top-level installation
-directory.  (There should be a separate uninstall item in the R group on
-the Start Menu for each installed version of R.  On recent versions of
-Windows you may well be asked to confirm that you wish to run a program
-from an `unidentified publisher'.)
+Control Panel.  If it does not appear there, run @file{unins000.exe} in
+the top-level installation directory.  (There should be a separate
+uninstall item in the R group on the Start Menu for each installed
+version of R.  On recent versions of Windows you may well be asked to
+confirm that you wish to run a program from an `unidentified
+publisher'.)
 
 Uninstalling R only removes files from the initial installation, not
 (for example) packages you have installed or updated.
@@ -302,9 +302,9 @@ versions around if you wish.
 
 For those with a personal library (folder @file{R\win-library\@var{x.y}}
 of your home directory), you will need to update that too when the minor
-version of R changes (e.g.@: from 2.6.2 to 2.7.0).  A simple way
-to do so is to copy (say) @file{R\win-library\2.6} to
-@file{R\win-library\2.7} before running
+version of R changes (e.g.@: from 2.9.2 to 2.10.0).  A simple way
+to do so is to copy (say) @file{R\win-library\2.9} to
+@file{R\win-library\2.10} before running
 @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
 
@@ -328,7 +328,7 @@ of user address space per process under suitably enabled versions of
 @uref{http://msdn.microsoft.com/en-us/library/bb613473%28VS.85%29.aspx};
 this is not enabled by default).  On such systems, the default for
 @code{--max-mem-size} is the smaller of the amount of RAM and 2.5GB.  On
-some 64-bit versions of Windows the user address space for a 32-bit
+most 64-bit versions of Windows the user address space for a 32-bit
 process is 4GB, and there the default for @code{--max-mem-size} is the
 smaller of the amount of RAM and 3.5GB.
 
@@ -393,9 +393,8 @@ same file as normal output.
 @node Can I use @RWVER@ with ESS and (X)emacs?, What are HOME and working directories?, Can I use R CMD BATCH?, Installation and Usage
 @section Can I use @RWVER@ with ESS and (X)emacs?
 
-Yes.  All recent versions of ESS come with support for this version of
-R, and there is support for interrupting the R process from ESS (by
-@code{C-c C-c}).
+Yes.  ESS has for a long time supported R under Windows: it does so by
+running @code{Rterm.exe} without a visible console.
 
 For help with ESS, please send email to @email{ESS-help@@stat.ethz.ch},
 not the R mailing lists.
@@ -530,21 +529,20 @@ neither sets up nor removes the file associations.
 
 Directly, no.
 
-There is a (D)COM server written by Thomas Baier available on CRAN
+There is a (D)COM server written by Thomas Baier
 (@uref{http://cran.r-project.org/other-software.html}) which works with
-@file{Rproxy.dll} (in the R distribution) and @file{R.dll} to support
-transfer of data to and from R and remote execution of R commands, as
-well as embedding of an R graphics window.  An R-Excel interface making
-use of the (D)COM server is included in the distribution.
+CRAN package @code{rscproxy} to support transfer of data to and from R
+and remote execution of R commands, as well as embedding of an R
+graphics window.
 
-Thomas Baier also has a package @code{rcom} available on CRAN (in the
-usual way for a package) to provide COM client and server functionality
-from within R.
+Thomas Baier also has a CRAN package @code{rcom} available on CRAN to
+provide COM client and server functionality from within R.
 
-Another (D)COM server is available from @uref{http://www.omegahat.org/},
-which allows R objects to be exported as COM values.  That site also
-has packages @code{RDCOMClient} and @code{SWinTypeLibs} which allow R
-to act as a (D)COM client.  However, they are normally not available as
+Another (D)COM server, @code{RDCOMServer}, is available as a source
+package from @uref{http://www.omegahat.org/}, which allows R objects to
+be exported as COM values.  That site also has packages
+@code{RDCOMClient}, @code{RDCOMEvents} and @code{SWinTypeLibs} which
+allow R to act as a (D)COM client.  However, they are not available as
 pre-compiled packages for Windows.
 
 
@@ -559,9 +557,9 @@ We have had several reports of this, although they do work for us on
 (a) Use the alternative @file{internet2.dll} by starting R with the flag
 @option{--internet2} (@pxref{How do I install R for Windows?}) or
 calling @code{setInternet2(TRUE)}.  These cause R to use the Internet
-Explorer internals.@footnote{and so may need Internet Explorer installed,
-althought these are part of recent versions of Windows}.  Note that this
-does not work with proxies that need authentication.
+Explorer internals, which may already to configured for use with
+proxies.  Note that this does not work with proxies that need
+authentication.
 
 (b) A proxy needs to be set up: see @code{?download.file}.  Here are two
 versions of an example (a real one, but from a machine that is only
@@ -600,10 +598,10 @@ correct the action of some (non-R) DLL which has just been loaded and
 has changed the floating point control word (in its initialization code)
 to a setting incompatible with that needed for R.  This is not good
 practice on the part of the DLL, and often indicates that it needs to be
-updated.  (It was common with DLLs compiled in early versions of Visual C++.)
+updated.
 
-Unfortunately, because DLLs may load other DLLs it is not possible for R
-to track which DLL caused the problem.
+Unfortunately, because DLLs may themselves load other DLLs it is not
+possible for R to track which DLL caused the problem.
 
 See also @code{?dyn.load}.
 
@@ -636,7 +634,8 @@ What the task manager shows is not the usage in CPUs (as better written
 utilities do) but the usage as a percentage of the apparent total number
 of CPUs.  We say `apparent' as it treats so-called `hyperthreaded' CPUs
 as two CPUs even though there is only one physical CPU: dual-core CPUs
-will also show as two CPUs (which they genuinely are).
+will also show as two CPUs (which they genuinely are) or more (since
+each core can be hyperhreaded).
 
 Many benchmarks show hyperthreading reduces the overall workload, so you
 may want to experiment with disabling it.
@@ -665,9 +664,7 @@ installation to done by an account which is in the local Administrator
 group with `admin approval mode' turned on.  (The Administrator
 account by default has it turned off.)  Unlike (say) Windows XP, such
 accounts do not run programs with full administrator privileges, and
-this is where the issues arise.  (For background information consult
-@url{http://technet.microsoft.com/en-us/windowsvista/aa906021.aspx}
-and
+this is where the issues arise.  (For background information consult e.g.@:
 @url{http://windowsvistablog.com/blogs/windowsvista/archive/2007/01/23/security-features-vs-convenience.aspx}.)
 Vista has the concept of `over-the-shoulder' credentials: if you are
 running without full administrator privileges and do something which
@@ -750,8 +747,9 @@ this on for all programs.  R runs correctly with DEP enabled.
 @node Quotes don't come out right on the console/terminal/pager, There is no tilde on my keyboard, Does R run under Windows Vista?, Installation and Usage
 @section Quotes don't come out right on the console/terminal/pager.
 
-R version 2.6.0 and later will make use of directional quotes that are
-not always rendered correctly by Windows.
+R may make use of directional quotes that are not always rendered
+correctly by Windows: these are used by default only by @code{Rgui} in
+suitable locales (not Chinese/Japanese/Korean).
 
 Whether these are used in R output (from functions @code{sQuote} and
 @code{dQuote}) is controlled by @code{getOption("useFancyQuotes")} whose
@@ -779,12 +777,20 @@ New} on Vista).  Non-TrueType fonts such as @code{Courier} and
 @code{FixedSys} lack directional double quotes on all the systems we
 tried.
 
+There is a related problem with using @code{Sweave} output in
+@code{Rgui}, for LaTeX needs to be told about the encoding of
+directional quotes by including in the LaTeX preamble e.g.@: (for a
+Latin-1 locale)
+
+@example
+\usepackage[cp1252]@{inputenc@}
+@end example
+
+@noindent
+or their use suppressed by @code{options(useFancyQuotes=FALSE)}.
+
 @node There is no tilde on my keyboard,  , Quotes don't come out right on the console/terminal/pager, Installation and Usage
 @section There is no tilde on my keyboard!
-
-Often there is but it is not marked: also on all Windows versions you
-should be able to get tilde by holding the down the left Alt key and
-typing 0126 on the numeric keypad, then releasing the Alt key.
 
 Where tilde does not appear on the main keyboard, it can normally be
 accessed by pressing AltGr (the right Alt key) plus some other key.
@@ -795,6 +801,11 @@ some keyboards the uses of AltGr are at
 @url{http://office.microsoft.com/en-us/word/HP052590631033.aspx}: you
 can explore those for your keyboard via the `On-Screen Keyboard' (under
 Accessories, Accessibility on XP).
+
+On all Windows versions you should be able to get tilde by holding the
+down the left Alt key and typing 0126 on the numeric keypad, then
+releasing the Alt key.
+
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
@@ -813,12 +824,7 @@ Accessories, Accessibility on XP).
 @node The installer does not offer my language, I want R in English!, Languages and Internationalization, Languages and Internationalization
 @section The installer does not offer my language.
 
-Two things may be happening.  First, in earlier versions only languages
-which can be displayed using the current codepage were offered so you
-could install in Japanese unless running Windows in Japanese: this
-changed for R 2.10.0.
-
-Second, only a limited range of languages is supported (but still wider
+Only a limited range of languages is supported (but still wider
 than those for which R has translations), currently
 Brazilian Portuguese,
 Catalan,
@@ -839,6 +845,10 @@ Portuguese,
 Russian,
 Slovenian
 and Spanish (Spain).
+
+In earlier versions only languages which could be displayed using the
+current codepage were offered so you could only install in Japanese if
+running Windows in Japanese: this changed for R 2.10.0.
 
 @node I want R in English!, I want to run R in Chinese/Japanese/Korean, The installer does not offer my language, Languages and Internationalization
 @section I want R in English (and not in French/Chinese/...)!
@@ -872,9 +882,9 @@ for example for Lucida Console.
 You do need to ensure that R is running in a suitable locale: use
 @code{Sys.getlocale()} to find out.  (CJK users may be used to their
 language characters always being available, which is the case for
-so-called `Unicode' Windows applications.  However, R used to run on
-Windows 9x and is not therefore `Unicode'.)  You can find suitable
-locale names from
+so-called `Unicode' Windows applications.  However, R is primarily
+written for Unix-alikes and is not therefore `Unicode'.)  You can find
+suitable locale names from
 @uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/html/_crt_language_and_country_strings.asp}:
 beware that @code{"Chinese"} is Traditional Chinese (code page 950,
 Big5) and @code{"chs"} is needed for Simplified Chinese (code page 936,
@@ -956,8 +966,9 @@ the language used for `non-Unicode' programs.
 If you have Windows running completely in say French or Chinese these
 settings are likely to be consistent.  However, if you try to run
 Windows in one language and R in another, you may find the way Windows
-handles internationalization slightly odd.  For further details see
-@uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/intl/nls_0ddl.asp}.
+handles internationalization slightly odd.
+@c For further details see
+@c @uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/intl/nls_0ddl.asp}.
 
 @newchap{}
 @node Packages, Windows Features, Languages and Internationalization, Top
@@ -993,9 +1004,8 @@ You can install pre-compiled packages either from CRAN or from a local
 There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  The packages for
 each minor (2.x) version will be stored in a separate area, so for R
-2.7.? the files are in @file{bin/windows/contrib/2.7}.  You can try
-those compiled for earlier versions, at your own risk, but help may well
-not work correctly with those installed before R 2.10.0.
+2.10.? the files are in @file{bin/windows/contrib/2.10}.  You can try
+those compiled for earlier versions, at your own risk.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
 @uref{http://cran.r-project.org/bin/windows/contrib/ReadMe}, which also
@@ -1115,20 +1125,21 @@ Tcl/Tk 8.5.x installation with the path to its @file{bin} directory
 given by value of @env{MY_TCLTK}, and that this is set up correctly
 (with @env{TCL_LIBRARY} set if needed).  In that case you do not need
 the Tcl/Tk support files installed (but they can be).  Note that you do
-need 8.5.x and not 8.4.x or 8.6.0.
+need 8.5.x and not 8.4.x or (a pre-release of) 8.6.0.
 
 Several package authors have suggested using ActiveTcl
 (@uref{http://www.activestate.com/Products/activetcl/}) as a way to get
-Tcl/Tk extensions.  This could be used by setting (for a default install)
+Tcl/Tk extensions (but the support files do contain the most commonly
+used @code{TkTable} and @code{BWidget} extensions).  This could be used
+by setting (for a default install)
 
 @example
 MY_TCLTK=c:/Tcl/bin
 @end example
 
 @noindent
-@strong{but} current versions do not contain any extra extensions.  Some
-extensions can be copied over from an ActiveTcl install of Tcl/Tk 8.4 or
-downloaded via the @code{Teacup} facility.
+@strong{but} current versions do not contain any extra extensions
+(although they may be downloaded via the @code{Teacup} facility).
 
 
 @node  Hyperlinks in HTML do not work., update.packages() fails, Package TclTk does not work., Packages
@@ -1138,8 +1149,6 @@ This question was much more relevant prior to version 2.10.0.
 
 They may still not work between packages installed in different libraries
 if the HTTP server has been disabled: the remedy is not to do that!
-
-
 
 @node update.packages() fails, How do I add to the list of repositories?, Hyperlinks in HTML do not work., Packages
 @section @code{update.packages()} fails.
@@ -1171,7 +1180,7 @@ in your HOME directory (@pxref{What are HOME and working directories?}).
 @node Help is not shown for some of the packages,  , How do I add to the list of repositories?, Packages
 @section Help is not shown for some of the packages
 
-This was about Compiled HTML help, which is not longer supported.
+This was about Compiled HTML help, which is not supported since R 2.10.0.
 
 
 @newchap{}
@@ -1279,12 +1288,12 @@ act on it).
 @node What does TAB completion do?,  , How do I move focus to a graphics window or the console?, Windows Features
 @section What does TAB completion do?
 
-R 2.5.0 introduced @kbd{TAB} completion in both @command{Rgui} and
-@command{Rterm}.  Hitting @kbd{TAB} whilst entering a command line
-completes the current `word' as far as is unambiguously possible.
-Hitting @kbd{TAB} a second time then shows a list of possible
-completions (or the first few if there are many): the user can then
-enter one or more characters and hit @kbd{TAB} again.
+Both @command{Rgui} and @command{Rterm} support @kbd{TAB} completion.
+Hitting @kbd{TAB} whilst entering a command line completes the current
+`word' as far as is unambiguously possible.  Hitting @kbd{TAB} a second
+time then shows a list of possible completions (or the first few if
+there are many): the user can then enter one or more characters and hit
+@kbd{TAB} again.
 
 What is it `completing'?  There are two modes: within an unterminated
 (single- or double-) quoted expression it completes file paths.
@@ -1355,7 +1364,7 @@ Since R marks character data when it knows it to be in UTF-8 or Latin-1
 (including its Windows superset, CP1252), strings in those encodings are
 likely to be transferred correctly: fortunately this covers most of the
 common cases (Mac OS X normally uses UTF-8, and Linux users are likely
-to use UTF-8 or perhaps Latin-1 (which used to be used for English).)
+to use UTF-8 or perhaps Latin-1 (which used to be used for English)).
 
 
 @newchap{}
@@ -1418,10 +1427,11 @@ To build R on 32-bit Windows you will need the tools from
 others.  See the `R Installation and Administration' manual.
 
 To build a 64-bit version on 64-bit Windows you will need a suitable
-compiler, and experiments with the Mingw64 port of @code{binutils} and
-@code{gcc} have failed to produce a working version on R.  You are of
-course welcome to try a commercial compiler@footnote{such as those from
-Intel and PGI: there is no Fortran compiler in the Microsoft set, but
+compiler, and experiments in 2008/9 with the Mingw64 port of
+@code{binutils} and @code{gcc} failed to produce a working version of R.
+(There is some hope that this may work in 2010.) You are of course
+welcome to try a commercial compiler@footnote{such as those from Intel
+and PGI: there is no Fortran compiler in the Microsoft set, but
 @code{f2c} could be used.}, and pre-compiled versions using such
 compilers are available from R redistributors.
 
@@ -1652,7 +1662,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2009-02-04
+@set LASTEDIT 2010-01-05
 @ifhtml
 @html
 <hr WIDTH="100%">
