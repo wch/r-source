@@ -433,12 +433,19 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     /* If so, we manufacture a real subscript vector. */
 
     dim = getAttrib(x, R_DimSymbol);
-    if (isMatrix(s) && isArray(x) &&
-	    (isInteger(s) || isReal(s)) &&
-	    ncols(s) == length(dim)) {
-	s = mat2indsub(dim, s, R_NilValue);
-    }
     PROTECT(s);
+    if (isMatrix(s) && isArray(x) && ncols(s) == length(dim)) {
+        if (isString(s)) {
+            s = strmat2intmat(s, GetArrayDimnames(x), call);
+            UNPROTECT(1);
+            PROTECT(s);
+        }
+        if (isInteger(s) || isReal(s)) {
+            s = mat2indsub(dim, s, R_NilValue);
+            UNPROTECT(1);
+            PROTECT(s);
+        }
+    }
 
     stretch = 1;
     PROTECT(indx = makeSubscript(x, s, &stretch, R_NilValue));

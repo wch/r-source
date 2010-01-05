@@ -874,6 +874,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define StringFromReal		Rf_StringFromReal
 # define strIsASCII		Rf_strIsASCII
 # define StrToInternal		Rf_StrToInternal
+# define strmat2intmat		Rf_strmat2intmat
 # define substituteList		Rf_substituteList
 # define tsConform		Rf_tsConform
 # define tspgets		Rf_tspgets
@@ -1077,6 +1078,7 @@ void sortVector(SEXP, Rboolean);
 void SrcrefPrompt(const char *, SEXP);
 void ssort(SEXP*,int);
 int StrToInternal(const char *);
+SEXP strmat2intmat(SEXP, SEXP, SEXP);
 SEXP substituteList(SEXP, SEXP);
 SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);

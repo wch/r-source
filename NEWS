@@ -219,6 +219,13 @@ NEW FEATURES
     o	Added \subsection{}{} macro to Rd syntax, for subsections
     	within sections.
 
+    o	n-dimensional arrays with dimension names can now be indexed
+	by an n-column character matrix. The indices are matched
+	against the dimension names.  NA indices are propagated to the
+	result.  Unmatched values and "" are not allowed and result in
+	an error.
+
+
 
 DEPRECATED & DEFUNCT
 

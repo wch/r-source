@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Extract}
@@ -141,6 +141,14 @@ x$name
   rows of an index matrix containing a zero are ignored, whereas rows
   containing an \code{NA} produce an \code{NA} in the result.
 
+  Indexing via a character matrix with one column per dimensions is also
+  supported if the array has dimension names.  As with numeric matrix
+  indexing, each row of the index matrix selects a single element of the
+  array.  Indices are matched against the appropriate dimension names.
+  \code{NA} is allowed and will produce an \code{NA} in the result.
+  Unmatched indices as well as the empty string (\code{""}) are not
+  allowed and will result in an error.
+
   A vector obtained by matrix indexing will be unnamed unless \code{x}
   is one-dimensional when the row names (if any) will be indexed to
   provide names for the result.
@@ -272,13 +280,17 @@ x$name
 %% 'info' from ESS, see \url{http://cran.R-project.org/manuals.html}.
   
 \examples{
-x <- 1:12; m <- matrix(1:6, nrow=2); li <- list(pi=pi, e = exp(1))
+x <- 1:12
+m <- matrix(1:6, nrow=2, dimnames=list(c("a", "b"), LETTERS[1:3]))
+li <- list(pi=pi, e = exp(1))
 x[10]                 # the tenth element of x
 x <- x[-1]            # delete the 1st element of x
 m[1,]                 # the first row of matrix m
 m[1, , drop = FALSE]  # is a 1-row matrix
 m[,c(TRUE,FALSE,TRUE)]# logical indexing
-m[cbind(c(1,2,1),3:1)]# matrix index
+m[cbind(c(1,2,1),3:1)]# matrix numeric index
+ci <- cbind(c("a", "b", "a"), c("A", "C", "B"))
+m[ci]                 # matrix character index
 m <- m[,-1]           # delete the first column of m
 li[[1]]               # the first element of list li
 y <- list(1,2,a=4,5)

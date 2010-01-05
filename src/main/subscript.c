@@ -320,6 +320,42 @@ SEXP attribute_hidden mat2indsub(SEXP dims, SEXP s, SEXP call)
     return (rvec);
 }
 
+/*
+Special Matrix Subscripting: For the case x[i] where x is an n-way
+array and i is a character matrix with n columns, this code converts i
+to an integer matrix by matching against the dimnames of x. NA values
+in any row of i propagate to the result.  Unmatched entries result in
+a subscript out of bounds error.  */
+
+SEXP attribute_hidden strmat2intmat(SEXP s, SEXP dnamelist, SEXP call)
+{
+    /* XXX: assumes all args are protected */
+    int nr = nrows(s), i, j, v, idx;
+    SEXP dnames, snames, si, sicol, s_elt;
+    PROTECT(snames = allocVector(STRSXP, nr));
+    PROTECT(si = allocVector(INTSXP, length(s)));
+    dimgets(si, getAttrib(s, R_DimSymbol));
+    for (i = 0; i < length(dnamelist); i++) {
+        dnames = VECTOR_ELT(dnamelist, i);
+        for (j = 0; j < nr; j++) {
+            SET_STRING_ELT(snames, j, STRING_ELT(s, j + (i * nr)));
+        }
+        PROTECT(sicol = match(dnames, snames, 0));
+        for (j = 0; j < nr; j++) {
+            v = INTEGER(sicol)[j];
+            idx = j + (i * nr);
+            s_elt = STRING_ELT(s, idx);
+            if (s_elt == NA_STRING) v = NA_INTEGER;
+            if (!CHAR(s_elt)[0]) v = 0; /* disallow "" match */
+            if (v == 0) errorcall(call, _("subscript out of bounds"));
+            INTEGER(si)[idx] = v;
+        }
+        UNPROTECT(1);
+    }
+    UNPROTECT(2);
+    return si;
+}
+
 static SEXP nullSubscript(int n)
 {
     int i;

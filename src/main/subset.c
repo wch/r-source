@@ -145,11 +145,17 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
     /* Check to see if we have special matrix subscripting. */
     /* If we do, make a real subscript vector and protect it. */
 
-    if (isMatrix(s) && isArray(x) && (isInteger(s) || isReal(s)) &&
-	    ncols(s) == length(attrib)) {
-	s = mat2indsub(attrib, s, call);
-	UNPROTECT(1);
-	PROTECT(s);
+    if (isMatrix(s) && isArray(x) && ncols(s) == length(attrib)) {
+        if (isString(s)) {
+            s = strmat2intmat(s, GetArrayDimnames(x), call);
+            UNPROTECT(1);
+            PROTECT(s);
+        }
+        if (isInteger(s) || isReal(s)) {
+            s = mat2indsub(attrib, s, call);
+            UNPROTECT(1);
+            PROTECT(s);
+        }
     }
 
     /* Convert to a vector of integer subscripts */
