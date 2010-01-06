@@ -95,7 +95,7 @@ rbuild:
 	@$(MK) -C ../include -f Makefile.win
 	@$(MK) -C ../scripts -f Makefile.win
 ifdef USE_IMPLIBS
-	@$(MK) libiconv.dll.a
+	@$(MK) libRiconv.dll.a
 endif
 	@$(MK) libRblas.dll.a
 	@$(MK) ../../bin/R.dll
@@ -170,8 +170,8 @@ libR.dll.a: R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll \
 	  --input-def $< --output-lib $@
 
-libiconv.dll.a: unicode/iconv.def
-	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname iconv.dll \
+libRiconv.dll.a: unicode/iconv.def
+	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Riconv.dll \
 	  --input-def $< --output-lib $@
 
 

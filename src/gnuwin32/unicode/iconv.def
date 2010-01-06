@@ -1,4 +1,4 @@
-LIBRARY iconv.dll
+LIBRARY Riconv.dll
 EXPORTS
  libiconv
  libiconv_close
