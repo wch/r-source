@@ -31,61 +31,27 @@
 /* The mingw-runtime startup code has _argc and _argv as visible symbols,
    as do the MS compilers.  But the mingw-w64-crt is different */
 
-#ifdef WIN64
-extern int main(int, char**);
-extern int     __argc;
-extern char ** __argv;
-#endif
-
 extern void 
 GA_startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdShow);
 
-/*
- *  If PASS_ARGS is zero, the main function will be passed zero
- *  and NULL instead of argc and argv.
- *  If it is one, the argc and argv parameters will be passed.
- *  If it is two, the environ parameter will also be passed.
- *  We define the main function as returning void, so this
- *  method ignores any value returned from main.
- */
-
-#define PASS_ARGS 1 /* formerly in graphapp/internal.h */
 
 int PASCAL
 WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
 	 int CmdShow)
 {
 #ifdef WIN64
+    extern int     __argc;
+    extern char ** __argv;
+    extern int main(int, char**);
+
     main(__argc, __argv);
 #else
-#if (PASS_ARGS > 1) /* define argc, argv, environ */
-    extern int _argc;
-    extern char **_argv;
-    extern char **environ;
-    extern void AppMain(int argc, char **argv, char **envp);
-#elif (PASS_ARGS > 0) /* only define argc and argv */
     extern int _argc;
     extern char **_argv;
     extern void AppMain(int argc, char **argv);
-#else /* else pass zero and NULL to main */
-    extern void AppMain(int argc, char **argv);
-#endif /* end arg declarations */
 
     GA_startgraphapp(Instance, PrevInstance, CmdShow);
-    /*
-     *  Call the main function now.
-     */
-#if (PASS_ARGS > 1)		/* pass argc, argv, environ */
-    AppMain(_argc, _argv, environ);
-#elif (PASS_ARGS > 0)	/* only pass argc and argv */
     AppMain(_argc, _argv);
-#else			/* pass zero and NULL */
-    AppMain(0, NULL);
-#endif
-
-    /*
-     *  Call the mainloop function to handle events.
-     */
 #endif
 
     return 0;
