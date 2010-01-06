@@ -1459,13 +1459,13 @@ To build R on 32-bit Windows you will need the tools from
 others.  See the `R Installation and Administration' manual.
 
 To build a 64-bit version on 64-bit Windows you will need a suitable
-compiler, and experiments in 2008/9 with the Mingw64 port of
-@code{binutils} and @code{gcc} failed to produce a working version of R.
-(There is some hope that this may work in 2010.) You are of course
-welcome to try a commercial compiler@footnote{such as those from Intel
-and PGI: there is no Fortran compiler in the Microsoft set, but
-@code{f2c} could be used.}, and pre-compiled versions using such
-compilers are available from R redistributors.
+compiler, and the Mingw64 port of @code{binutils} and @code{gcc} is
+finally mature enough to produce a working version of R, so experimental
+support has been added as from R 2.11.0.  You are welcome to try a
+commercial compiler@footnote{such as those from Intel and PGI: there is
+no Fortran compiler in the Microsoft set, but @code{f2c} could be
+used.}, and pre-compiled versions using such compilers are available
+from R redistributors.
 
 @node Can I use a fast BLAS?, How do I include compiled C code?, How can I compile R from source?, Building from Source
 @section  Can I use a fast BLAS?

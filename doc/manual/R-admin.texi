@@ -868,6 +868,7 @@ Windows @acronym{FAQ}} for more details on the binary installer.
 @menu
 * Building from source::        
 * Testing a Windows Installation::  
+* Building R for 64-bit Windows::  
 @end menu
 
 @node Building from source, Testing a Windows Installation, Installing R under Windows, Installing R under Windows
@@ -1256,7 +1257,7 @@ for suggesting WiX and building a prototype installer.
 
 Support for cross-building was withdrawn at @R{} 2.9.0.
 
-@node Testing a Windows Installation,  , Building from source, Installing R under Windows
+@node Testing a Windows Installation, Building R for 64-bit Windows, Building from source, Installing R under Windows
 @section Testing an Installation
 
 The Windows installer contains a set of test files used when building
@@ -1284,6 +1285,34 @@ runs the basic tests and then all the tests on the standard and
 recommended packages.  These tests can be run from anywhere: they write
 their results in the @file{tests} folder of the @R{} home directory (as
 given by @code{R.home()}).
+
+@node Building R for 64-bit Windows,  , Testing a Windows Installation, Installing R under Windows
+@section Building R for 64-bit Windows
+
+Note that the standard 32-bit build of R runs perfectly well on 64-bit
+versions of Windows, with a limit on the total memory allocation of
+4GB.  Thus a native 64-bit build will be attractive to those wanting to
+work with large R objects, or many medium-sized ones.
+
+To build a 64-bit version of R you need a 64-bit toolchain: the only
+ones discussed here are those based on the work of the MinGW64 project
+(@url{http://sourceforge.net/projects/mingw-w64/}, a port of GNU
+@code{binutils} and @code{gcc}), but commercial compilers such as those
+from Intel and PGI could be used (and have been by R redistributors).
+
+Support of MinGW64 has been developed in the R sources over the period
+2008-10: it is still experimental and this section is intended merely as
+pointers for expert users.
+
+Several versions of the MinGW64 toolchain are available: use one of them
+to replace the @file{MinGW/bin} directory of @code{Rtools} in your path
+(but still have the Rtools @file{bin} directory and Perl in your path).
+Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64} and
+@code{BINPREF} appropriate to your toolchain, and make R in the usual
+way.  (At present the tcltk package is a dummy.)
+
+The assistance of Yu Gong in building R under MinGW64 is gratefully
+acknowledged.
 
 @node Installing R under Mac OS X, Running R, Installing R under Windows, Top
 @chapter Installing R under Mac OS X
@@ -2023,13 +2052,8 @@ objects is (when this was written in 2005) several years off.
 Currently the Windows build of @R{} from @acronym{CRAN} is a 32-bit
 executable.  This runs happily on Windows 64 on AMD64 and EM64T, but is
 limited to an address space of 2 to 4GB (see the `R for Windows FAQ' for
-details).  It will not be possible fro the @R{} project to provide a
-native version for Windows 64 until suitable non-commercial compilers
-are available, and currently (early 2009) the experimental version of
-MinGW for 64-bit Windows is not yet good enough to build a working @R{}.
-Commercial 64-bit compilers have been used, and @R{} can be be built
-with such compilers with minimal changes to the sources (and
-constructing suitable project files).
+details).  @ref{Building R for 64-bit Windows} for how a native 64-bit
+version might be built from the sources.
 
 
 @node The standalone Rmath library, Essential and useful other programs under Unix, Choosing between 32- and 64-bit builds, Top
