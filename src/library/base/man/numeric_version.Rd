@@ -24,6 +24,7 @@
 \alias{as.list.numeric_version}
 \alias{c.numeric_version}
 \alias{duplicated.numeric_version}
+\alias{format.numeric_version}
 \alias{is.na.numeric_version}
 \alias{print.numeric_version}
 \alias{rep.numeric_version}

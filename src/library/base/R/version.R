@@ -292,6 +292,9 @@ function(x, incomparables = FALSE, ...)
     NextMethod("duplicated")
 }
 
+format.numeric_version <-
+    as.character.numeric_version
+
 is.na.numeric_version <-
 function(x)
     is.na(.encode_numeric_version(x))
