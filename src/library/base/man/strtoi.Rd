@@ -7,7 +7,7 @@
 \alias{strtoi}
 \title{Convert Strings to Integers}
 \description{
-  Convert strings to integers accordings to the given base using the C
+  Convert strings to integers according to the given base using the C
   function \code{strtol}.
 }
 \usage{strtoi(x, base = 0L)}
@@ -23,7 +23,7 @@
   For the default \code{base = 0L}, the base chosen from the string
   representation of that element of \code{x}, so different elements can
   have different bases (see the first example).  The standard C rules
-  for chosing the base are that octal constants (prefix \code{0} not
+  for choosing the base are that octal constants (prefix \code{0} not
   followed by \code{x} or \code{X}) and hexadecimal constants (prefix
   \code{0x} or \code{0X}) are interpreted as base \code{8} and
   \code{16}; all other strings are interpreted as base \code{10}.

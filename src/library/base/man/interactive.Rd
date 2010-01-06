@@ -27,7 +27,7 @@ interactive()
   \option{--ess} (Windows, \command{Rterm.exe}) override the default
   assumption.
 #ifdef unix
-  (On a Unix-alike, whether the \code{readline} comamnd-line editor is
+  (On a Unix-alike, whether the \code{readline} command-line editor is
   used is \strong{not} overridden by \option{--interactive}.)
 #endif
 

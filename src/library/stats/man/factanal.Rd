@@ -115,7 +115,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   the scores (if requested): see \code{\link{napredict}}.
 
   The \code{print} method (documented under \code{\link{loadings}})
-  follows the facter analysis convention of drawing attention to the
+  follows the factor analysis convention of drawing attention to the
   patterns of the results, so the default precision is three decimal
   places, and small loadings are suppressed.
 }

@@ -19,7 +19,7 @@ xsplinePoints(x)
 }
 \arguments{
   \item{x}{
-    An Xspline grob, as produced by the xsplineGrob() function.
+    An Xspline grob, as produced by the \code{xsplineGrob()} function.
   }
 }
 \details{

@@ -232,7 +232,7 @@ x$name
 %   \code{\link{isS4}} would return \code{TRUE} for some argument.
 
   The implicit generics for the \code{$} and \code{$<-} operators do not
-  have \code{name} in their signature because the grammar only alows
+  have \code{name} in their signature because the grammar only allows
   symbols or string constants for the \code{name} argument.
 }
 \section{Character indices}{

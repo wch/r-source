@@ -155,7 +155,7 @@
 #endif
     }
     \item{\env{R_UNZIPCMD}:}{The path to \command{unzip}.  Sets the
-      iniital value for \code{\link{options}("unzip")} on a Unix-alike
+      initial value for \code{\link{options}("unzip")} on a Unix-alike
       when package \pkg{utils} is loaded.}
     \item{\env{R_ZIPCMD}:}{The path to \command{zip}.  Only used in \R
       itself by \command{R CMD INSTALL --build} on Windows.}

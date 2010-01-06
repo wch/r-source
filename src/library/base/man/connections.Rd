@@ -270,7 +270,7 @@ isIncomplete(con)
   For many connections there is little or no difference between text and
   binary modes. For file-like connections on Windows, translation of
   line endings (between LF and CRLF) is done in text mode only (but text
-  read operations on connectiions such as \code{\link{readLines}},
+  read operations on connections such as \code{\link{readLines}},
   \code{\link{scan}} and \code{\link{source}} work for any form of line
   ending).  Various \R operations are possible in only one of the modes:
   for example \code{\link{pushBack}} is text-oriented and is only
@@ -293,7 +293,7 @@ isIncomplete(con)
 
 \section{Compression}{
   \R has for a long time supported \command{gzip} and \command{bzip2}
-  compression, and support for \command{xz} compresssion (and read-only
+  compression, and support for \command{xz} compression (and read-only
   support for its precursor \code{lzma} compression) was added in \R
   2.10.0.
 
@@ -307,7 +307,7 @@ isIncomplete(con)
   compression and uncompressed files in any read mode.
 
   (The type of compression is determined when the connection is created
-  if \code{open} is unspecifed and a file of that name exists.  If the
+  if \code{open} is unspecified and a file of that name exists.  If the
   intention is to open the connection to write a file with a
   \emph{different} form of compression under that name, specify
   \code{open = "w"} when the connection is created or

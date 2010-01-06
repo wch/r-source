@@ -5,7 +5,7 @@
 
 \name{is.empty.model}
 \alias{is.empty.model}
-\title{Test if a Model's Formila is Empty}
+\title{Test if a Model's Formula is Empty}
 \description{
   \R's formula notation allows models with no intercept and no
   predictors. These require special handling internally.

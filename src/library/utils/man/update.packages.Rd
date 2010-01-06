@@ -13,7 +13,7 @@
   version on the repositories whereas \code{update.packages} offers to
   download and install such packages.
 
-  \code{new.packages} looks for (suitable) packages on the respositories
+  \code{new.packages} looks for (suitable) packages on the repositories
   that are not already installed, and optionally offers them for
   installation.
 }

@@ -338,7 +338,7 @@ copies of the package.  Do not use the @samp{License} field for
 copyright information: if needed, use a @samp{Copyright} field.
 
 Please ensure that the license you choose also covers any dependencies
-(including system depenencies) of your package: it is particularly
+(including system dependencies) of your package: it is particularly
 important that any restrictions on the use of such dependencies are
 evident to people reading your @file{DESCRIPTION} file.
 
@@ -1758,7 +1758,7 @@ R Installation and Administration},
 @end ifset
 
 @item
-Study the outout from running your examples, in file
+Study the output from running your examples, in file
 @file{@var{pkg}.Rcheck/@var{pkg}-Ex.Rout}.  Often warnings there
 indicate actual errors, and warnings about your mistakes (which the @R{}
 developers are warning you that they are working around for you) will

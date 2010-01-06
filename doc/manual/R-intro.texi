@@ -6931,7 +6931,7 @@ is useful when running @R{} from within Emacs using the @acronym{ESS}
 (``Emacs Speaks Statistics'') package.  @xref{The command-line editor},
 for more information.  Command-line editing is enabled by default
 interactive use (see @option{--interactive}).  This option also affects
-tilde-epansion: see the help for @code{path.expand}.
+tilde-expansion: see the help for @code{path.expand}.
 
 @item --min-vsize=@var{N}
 @itemx --max-vsize=@var{N}
