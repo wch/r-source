@@ -50,6 +50,10 @@ typedef enum {
     SA_SUICIDE
 } SA_TYPE;
 
+#ifndef R_SIZE_T_DEFINED
+# define R_size_t unsigned long
+#endif
+
 typedef struct
 {
     Rboolean R_Quiet;
@@ -61,12 +65,11 @@ typedef struct
     Rboolean DebugInitFile;
     SA_TYPE RestoreAction;
     SA_TYPE SaveAction;
-    /* FIXME should be R_size_t */
-    unsigned long vsize;
-    unsigned long nsize;
-    unsigned long max_vsize;
-    unsigned long max_nsize;
-    unsigned long ppsize;
+    R_size_t vsize;
+    R_size_t nsize;
+    R_size_t max_vsize;
+    R_size_t max_nsize;
+    R_size_t ppsize;
     int NoRenviron;
 
 #ifdef Win32

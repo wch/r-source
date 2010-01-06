@@ -194,6 +194,7 @@ typedef long R_long_t;
   typedef unsigned long R_size_t;
 # define R_SIZE_T_MAX ULONG_MAX
 #endif
+#define R_SIZE_T_DEFINED 1
 
 /* These are optional C99 types */
 #if !defined(HAVE_INTPTR_T) && !defined(intptr_t)
