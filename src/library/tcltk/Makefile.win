@@ -19,12 +19,19 @@ INSTALL_DATA = cp
 SHELL = sh
 USE_NLS = yes
 
+ifeq ($(strip $(WIN)),64)
+all:
+	@$(ECHO) "building package '$(pkg)'"
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
+	@$(MAKE) -f Makefile.win mkdesc
+	@cp $(srcdir)/R/unix/zzzstub.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+else
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) -f Makefile.win mkR mkdesc mkexec mkdemos mkpo
 	@$(MAKE) -f Makefile.win mksrc-win
 	@$(MAKE) -f Makefile.win mklazy
-
+endif
 
 include $(top_srcdir)/share/make/basepkg.mk
