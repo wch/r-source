@@ -682,7 +682,7 @@ struct mallinfo {
     MALLINFO_FIELD_TYPE fordblks; /* total free space */
     MALLINFO_FIELD_TYPE keepcost; /* top-most, releasable (via malloc_trim) space */
 };
-extern unsigned int R_max_memory;
+extern R_size_t R_max_memory;
 
 struct mallinfo mallinfo(void);
 #endif

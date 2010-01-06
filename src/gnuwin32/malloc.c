@@ -646,7 +646,7 @@ extern "C" {
 
 /* R Specific declarations here */
 
-    extern unsigned int R_max_memory;
+extern size_t R_max_memory;
 extern int R_Is_Running;
 static size_t R_used = 0;
 void Rf_warning(const char *, ...);
