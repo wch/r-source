@@ -1,4 +1,7 @@
 #-*- Makefile -*-
+
+## this is for Win32, no import libs
+
 include ../MkRules
 
 LINKFLAGS=-Wl,--stack=0xA00000
