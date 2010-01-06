@@ -2026,11 +2026,10 @@ executable.  This runs happily on Windows 64 on AMD64 and EM64T, but is
 limited to an address space of 2 to 4GB (see the `R for Windows FAQ' for
 details).  It will not be possible fro the @R{} project to provide a
 native version for Windows 64 until suitable non-commercial compilers
-are available, and currently (early 2009) the experimental version of
-MinGW for 64-bit Windows is not yet good enough to build a working @R{}.
-Commercial 64-bit compilers have been used, and @R{} can be be built
-with such compilers with minimal changes to the sources (and
-constructing suitable project files).
+are available, and the experimental support for MinGW for 64-bit Windows
+will be added in @R{} 2.11.0.  Commercial 64-bit compilers have been
+used, and @R{} can be be built with such compilers with minimal changes
+to the sources (and constructing suitable project files).
 
 
 @node The standalone Rmath library, Essential and useful other programs under Unix, Choosing between 32- and 64-bit builds, Top
@@ -4276,7 +4275,7 @@ This item and the next are installed by the @file{Rtools.exe} installer.
 
 @c date is used when building base and tools
 @c find is used in building the installers
-@c comm, sort, uniq are use in producing .def files
+@c comm, sort, uniq are used in producing .def files
 @c cmp is used in src/include/Makefile.win
 @c cut is used to make RVER
 @c gzip and tar are needed to unpack recommended packages
