@@ -63,7 +63,7 @@ the end of the interval.
 
 }
 \value{
-If \code{memory="none"},a  list with components
+If \code{memory="none"}, a list with components
   \item{by.self}{Timings sorted by \sQuote{self} time}
   \item{by.total}{Timings sorted by \sQuote{total} time}
   \item{sampling.time}{Total length of profiling run}
