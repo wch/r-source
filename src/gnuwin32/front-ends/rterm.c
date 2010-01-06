@@ -63,7 +63,7 @@ main
 realmain
 # endif
 #else
-Appmain
+AppMain
 #endif
 (int argc, char **argv)
 {
