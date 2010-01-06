@@ -29,9 +29,14 @@ stamp-src: $(SOURCES_NMATH)
 	$(CP) -p ../*.c .
 	touch $@
 
+ifdef USE_IMPLIBS
+## dynamic test not implemented yet
+test: test-static.exe
+else
 test: test.exe test-static.exe
-
+endif
 ## see R-admin for alternatives
+test.exe: test.c
 test.exe: test.c
 	$(CC) -I../../include -DRMATH_DLL -o $@ $< -L. Rmath.dll
 	./$@
@@ -88,7 +93,7 @@ DEPENDS = $(SOURCES_NMATH:.c=.d)
 libRmath.a: sunif.o $(SOURCES_NMATH:.c=.o)
 Rmath.def: sunif.o $(SOURCES_NMATH:.c=.o)
 	$(ECHO) EXPORTS > $@
-	$(NM) $^ | $(SED) -n 's/^........ [BCDRT] _/ /p' >> $@
+	$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' >> $@
 Rmath.dll: libRmath.a Rmath.def
 	$(DLL) $(DLLFLAGS) --shared -o $@ Rmath.def $^
 libRmath.dll.a: Rmath.def
