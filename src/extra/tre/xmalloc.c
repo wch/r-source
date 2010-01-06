@@ -82,7 +82,11 @@ hash_void_ptr(void *ptr)
   hash = 0;
   for (i = 0; i < (int)sizeof(ptr)*8 / TABLE_BITS; i++)
     {
+#ifdef WIN64
+      hash ^= (size_t)ptr >> i*8;
+#else
       hash ^= (unsigned long)ptr >> i*8;
+#endif
       hash += i * 17;
       hash &= TABLE_MASK;
     }

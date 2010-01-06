@@ -32,9 +32,9 @@
    as do the MS compilers.  But the mingw-w64-crt is different */
 
 #ifdef WIN64
-int _argc = 0;
-char **_argv = 0;
-extern void __getmainargs (int *, char ***, char ***, int);
+extern int main(int, char**);
+extern int     __argc;
+extern char ** __argv;
 #endif
 
 extern void 
@@ -55,6 +55,9 @@ int PASCAL
 WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
 	 int CmdShow)
 {
+#ifdef WIN64
+    main(__argc, __argv);
+#else
 #if (PASS_ARGS > 1) /* define argc, argv, environ */
     extern int _argc;
     extern char **_argv;
@@ -67,12 +70,6 @@ WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
 #else /* else pass zero and NULL to main */
     extern void AppMain(int argc, char **argv);
 #endif /* end arg declarations */
-
-#ifdef WIN64
-    char **dummy_environ;
-    /* '1' means globbing is enabled */
-    (void) __getmainargs (&_argc, &_argv, &dummy_environ, 1);
-#endif
 
     GA_startgraphapp(Instance, PrevInstance, CmdShow);
     /*
@@ -89,7 +86,7 @@ WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
     /*
      *  Call the mainloop function to handle events.
      */
-
+#endif
 
     return 0;
 }

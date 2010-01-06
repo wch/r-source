@@ -127,9 +127,10 @@ typedef enum { STR_WIDE, STR_BYTE, STR_MBS, STR_USER } tre_str_type_t;
 
 /* Returns number of bytes to add to (char *)ptr to make it
    properly aligned for the type. */
+/* was (long) but that is shorter than pointer on Win64 */
 #define ALIGN(ptr, type) \
-  ((((long)ptr) % sizeof(type)) \
-   ? (sizeof(type) - (((long)ptr) % sizeof(type))) \
+  ((((size_t)ptr) % sizeof(type)) \
+   ? (sizeof(type) - (((size_t)ptr) % sizeof(type))) \
    : 0)
 
 #undef MAX

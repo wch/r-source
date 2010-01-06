@@ -74,10 +74,15 @@ Rterm-LINKFLAGS=$(LARGE_ADDR) $(LARGE_STACK)
 Rscript-LINKFLAGS=$(LARGE_ADDR) $(LARGE_STACK)
 
 Rgui.exe: graphappmain.o  rgui.o rgico.o
-
 Rterm.exe: graphappmain.o rterm.o rtico.o
 
-Rcmd.exe: rcmd.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
+ifneq ($(strip $(WIN)),64)
+rcico.o: Rcmd.exe.manifest
+rgico.o: Rgui.exe.manifest
+rtico.o: Rterm.exe.manifest
+endif
+
+Rcmd.exe: rcmd.o ../rhome.o ../shext.o rcmdfn.o Renviron.o
 
 R.exe: R.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
 
@@ -98,9 +103,6 @@ Rpwd:
 Rpwd.exe: rpwd.o rcico.o
 
 rcmd.o R.o rgui.o rterm.o RSetReg.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
-rgico.o: Rgui.exe.manifest
-rtico.o: Rterm.exe.manifest
-rcico.o: Rcmd.exe.manifest
 
 open.o: open.c
 open.exe: open.o

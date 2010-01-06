@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-8  The R Development Core Team
+ *  Copyright (C) 2006-9  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -66,6 +66,7 @@ R --slave --no-restore --vanilla --file=foo [script_args]
 #ifndef WIN32
 static char rhome[] = R_HOME;
 #else
+# define FOR_Rscript
 # include "rterm.c"
 #endif
 
@@ -221,6 +222,8 @@ int main(int argc, char *argv[])
 #ifndef WIN32
     res = execv(cmd, av); /* will not return if R is launched */
     perror("Rscript execution error");
+#elif defined WIN64
+    realmain(ac, av);
 #else
     AppMain(ac, av);
 #endif

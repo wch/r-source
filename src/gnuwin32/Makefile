@@ -9,13 +9,13 @@ all:
 	  cp ../../SVN-REVISION ../../SVN-REVISION.bak ; \
 	fi
 	@$(MK) rbuild
-	@$(MK) -C ../library -f Makefile.win all
+	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN)
 	@$(MK) -C ../library -f Makefile.win docs
 	@$(MK) htmldocs
 	@$(MK)  -C ../../po -f Makefile.win
 
 rpackages:
-	@$(MK) -C ../library -f Makefile.win all
+	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN)
 	@$(MK) -C ../library -f Makefile.win docs
 
 ## must be absolute and space-free.  

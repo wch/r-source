@@ -61,6 +61,7 @@ typedef struct
     Rboolean DebugInitFile;
     SA_TYPE RestoreAction;
     SA_TYPE SaveAction;
+    /* FIXME should be R_size_t */
     unsigned long vsize;
     unsigned long nsize;
     unsigned long max_vsize;

@@ -34,8 +34,7 @@ int main (int argc, char **argv)
 	exit(0);
     }
     for(i = 1; i < argc; i++) {
-	ret = (unsigned int) ShellExecute(NULL, "open", argv[i], NULL, 
-					  ".", SW_SHOW);
+	ret = (size_t) ShellExecute(NULL, "open", argv[i], NULL, ".", SW_SHOW);
 	if(ret <= 32) { /* an error condition */
 	    status = 32 + ret;
 	    if(ret == ERROR_FILE_NOT_FOUND  || ret == ERROR_PATH_NOT_FOUND

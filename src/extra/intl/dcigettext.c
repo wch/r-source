@@ -179,6 +179,11 @@ static void *mempcpy (void *dest, const void *src, size_t n);
 # include "tsearch.h"
 #endif
 
+#ifdef WIN64
+extern void * tsearch (const void *key, void **vrootp,
+		       int (*compar) (const void *, const void *));
+#endif
+
 #ifdef _LIBC
 # define tsearch __tsearch
 #endif

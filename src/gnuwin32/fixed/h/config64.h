@@ -841,7 +841,7 @@
 #define R_ARCH ""
 
 /* Define this to be the name of the CPU of your system. */
-#define R_CPU "i386"
+#define R_CPU "x86_64"
 
 /* Define as `inline', or `__inline__' or `__inline' if that's what the C
    compiler calls it, or to nothing if it is not supported. */
@@ -851,10 +851,10 @@
 #define R_MEMORY_PROFILING 1
 
 /* Define this to be the name of the OS of your system. */
-#define R_OS "mingw32"
+#define R_OS "mingw64"
 
 /* Define this to be the canonical name (cpu-vendor-os) of your system. */
-#define R_PLATFORM "i386-pc-mingw32"
+#define R_PLATFORM "x86_64-pc-mingw64"
 
 /* Define this to be printing command on your system. */
 #define R_PRINTCMD ""
@@ -882,7 +882,7 @@
 #define SIZEOF_LONG 4
 
 /* The size of `long double', as computed by sizeof. */
-#define SIZEOF_LONG_DOUBLE 12
+#define SIZEOF_LONG_DOUBLE 16
 
 /* The size of `long long', as computed by sizeof. */
 #define SIZEOF_LONG_LONG 8

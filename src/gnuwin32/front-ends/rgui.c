@@ -44,7 +44,13 @@ char *getRVersion(void)
 
 #include <wincon.h>
 typedef BOOL (*AC)(DWORD);
-int AppMain (int argc, char **argv)
+int
+#ifdef WIN64
+main
+#else
+AppMain
+#endif
+(int argc, char **argv)
 {
     AC entry;
 
