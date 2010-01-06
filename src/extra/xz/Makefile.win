@@ -25,9 +25,9 @@ SOURCES = \
  subblock_decoder_helper.c vli_decoder.c vli_encoder.c vli_size.c x86.c
 
 ifeq ($(strip $(WIN)),64)
-OBJECTS = $(SOURCES:.c=.o) crc32_x86.o crc64_x86.o
-else
 OBJECTS = $(SOURCES:.c=.o) crc32_fast.o crc64_fast.o
+else
+OBJECTS = $(SOURCES:.c=.o) crc32_x86.o crc64_x86.o
 endif
 
 all:
