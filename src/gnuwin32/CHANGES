@@ -34,6 +34,9 @@ NEW FEATURES
     o	The main HTML help page now links to this CHANGES file.
 	(Suggested by Henrik Bengtsson.) 
 
+    o	It is possible to build for 64-bit Windows (set WIN=64 in
+	MkRules), thanks in part to changes suggested by Yu Gong.
+
 
 
 

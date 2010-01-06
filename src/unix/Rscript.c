@@ -222,8 +222,6 @@ int main(int argc, char *argv[])
 #ifndef WIN32
     res = execv(cmd, av); /* will not return if R is launched */
     perror("Rscript execution error");
-#elif defined WIN64
-    realmain(ac, av);
 #else
     AppMain(ac, av);
 #endif

@@ -38,7 +38,7 @@ TCL_VERSION = 85
 BINPREF=
 
 # 32- or 64-bit Windows?  For experiments with Mingw64.
-WIN=32
+WIN=64
 ifeq ($(strip $(WIN)),64)
 USE_IMPLIBS = YES
 DEFINES=-DW64

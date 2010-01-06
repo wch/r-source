@@ -55,13 +55,10 @@ static void my_onintr(int nSig)
   UserBreak = 1;
   PostThreadMessage(mainThreadId,0,0,0);
 }
+
 int
-#ifdef WIN64
-# ifndef FOR_Rscript
+#if defined(WIN64) && !defined(FOR_Rscript)
 main
-# else
-realmain
-# endif
 #else
 AppMain
 #endif
