@@ -147,7 +147,7 @@ static void Init_R_Platform(SEXP rho)
 #else
     SET_VECTOR_ELT(value, 4, mkString("little"));
 #endif
-#ifdef Win32
+#if defined(Win32) && !defined(W64)
     SET_VECTOR_ELT(value, 5, mkString("win.binary"));
 #else /* not Win32 */
 /* pkgType should be "mac.binary" for CRAN build *only*, not for all
