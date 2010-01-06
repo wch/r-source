@@ -8,8 +8,8 @@ SOURCES = \
  alone_decoder.c alone_encoder.c arm.c armthumb.c auto_decoder.c \
  block_buffer_decoder.c block_buffer_encoder.c block_decoder.c \
  block_encoder.c block_header_decoder.c block_header_encoder.c block_util.c \
- check.c common.c crc32_table.c crc32_tablegen.c \
- crc64_table.c crc64_tablegen.c delta_common.c delta_decoder.c \
+ check.c common.c crc32_table.c \
+ crc64_table.c delta_common.c delta_decoder.c \
  delta_encoder.c easy_buffer_encoder.c easy_decoder_memusage.c easy_encoder.c \
  easy_encoder_memusage.c easy_preset.c fastpos_table.c \
  filter_buffer_decoder.c filter_buffer_encoder.c filter_common.c \
