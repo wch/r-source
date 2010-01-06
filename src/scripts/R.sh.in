@@ -86,6 +86,7 @@ Options:
   --arch=NAME		Specify a sub-architecture
   --args                Skip the rest of the command line
   -f, --file=FILE       Take input from 'FILE'
+  -e EXPR               Execute 'EXPR' and exit
 
 Commands:
   BATCH			Run R in batch mode
