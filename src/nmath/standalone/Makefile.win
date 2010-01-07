@@ -30,13 +30,12 @@ stamp-src: $(SOURCES_NMATH)
 	touch $@
 
 ifdef USE_IMPLIBS
-## dynamic test not implemented yet
 test: test-static.exe
 else
-test: test.exe test-static.exe
+test: test-static.exe test.exe
 endif
+
 ## see R-admin for alternatives
-test.exe: test.c
 test.exe: test.c
 	$(CC) -I../../include -DRMATH_DLL -o $@ $< -L. Rmath.dll
 	./$@
