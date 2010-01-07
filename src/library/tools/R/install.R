@@ -992,9 +992,10 @@
         if (.file_test("-f", pkg)) {
             if (debug) message("a file", domain = NA)
             of <- dir(tmpdir, full.names = TRUE)
-            ## force the use of internal untar,
+            ## force the use of internal untar unless over-ridden
             ## so e.g. .tar.xz works everywhere
-            if (untar(pkg, exdir = tmpdir, tar = "internal"))
+            TAR <- Sys.getenv("R_INSTALL_TAR", "internal")
+            if (untar(pkg, exdir = tmpdir, tar = TAR))
                 errmsg("error unpacking tarball")
             ## Now see what we got
             nf <- dir(tmpdir, full.names = TRUE)
