@@ -30,8 +30,9 @@ TCL_VERSION = 85
 # checkout with no modifications).
 # USE_SVNVERSION = YES
 
-# We normally link against DLLs, but this macro forces the use of import libs
-# Needed if using other compilers, including Mingw64
+# We normally link directly against DLLs, 
+# but this macro forces the use of import libs
+# Needed if using other compilers, including _some_ versions of Mingw64
 # USE_IMPLIBS = YES
 
 # Some of the Mingw64 compilers are in fact cross-compilers and have prefixes
@@ -41,7 +42,8 @@ BINPREF=
 # 32- or 64-bit Windows?  For experiments with Mingw64.
 WIN=32
 ifeq ($(strip $(WIN)),64)
-USE_IMPLIBS = YES
+# Mainly -DWIN64 is used, but this define is used in a few places
+# for things specific to this compiler.
 DEFINES=-DW64
 # BINPREF=x86_64-w64-mingw32-
 endif
