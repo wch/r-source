@@ -42,7 +42,7 @@ WIN=32
 ifeq ($(strip $(WIN)),64)
 USE_IMPLIBS = YES
 DEFINES=-DW64
-# BINPREF=x86_64-pc-mingw32-
+# BINPREF=x86_64-w64-mingw32-
 endif
 
 # set to use ICU (experimental)
