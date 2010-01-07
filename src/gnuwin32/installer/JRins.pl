@@ -49,7 +49,13 @@ close ver;
 $SVN =~s/Revision: //;
 $RVER0 .= "." . $SVN;
 
-if($mode64bit) {$suffix = "win64";} else {$suffix = "win32";}
+if($mode64bit) {
+    $suffix = "win64";
+    $PF = "pf64";
+} else {
+    $suffix = "win32";
+    $PF = "pf32";
+}
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
 [Setup]
@@ -57,7 +63,7 @@ OutputBaseFilename=${RW}-${suffix}
 PrivilegesRequired=none
 MinVersion=0,5.0
 END
-print "ArchitecturesInstallIn64BitMode=x64\nArchitectures=x64Allowed" if $mode64bit;
+print insfile "ArchitecturesInstallIn64BitMode=x64\nArchitecturesAllowed=x64\n" if $mode64bit;
 
 my $lines=<<END;
 AppName=R for Windows $RVER
@@ -362,7 +368,7 @@ end;
 
 function UserPF(Param:String): String;
 begin
-  Result := ExpandConstant(\'{pf}\');
+  Result := ExpandConstant(\'{${PF}}\');
   if (not IsAdmin) then 
   begin
     try
