@@ -55,6 +55,11 @@
   \command{R CMD build --binary}) can be supplied.
 #endif
 
+  Tarballs are by default unpackaged by the internal \code{\link{tar}}
+  function: if needed an external \command{tar} command can be specified
+  by the environment variable \env{R_INSTALL_TAR}: please ensure that it
+  can handle the type of compression used on the tarball.
+
   The package sources can be cleaned up prior to installation by
   \option{--preclean} or after by \option{--clean}: cleaning is
   essential if the sources are to be used with more than one

@@ -26,8 +26,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     If \code{repos = NULL}, a character vector of file paths of
 #ifdef windows
     \file{.zip} files containing binary builds of packages.  With
-    suitable tools installed (see the \sQuote{Details} below) source directories
-    or \file{.tar.gz} archives may also be installed.
+    suitable tools installed (see the \sQuote{Details} below) source
+    directories or \file{.tar.gz} archives may also be installed.
 #endif
 #ifdef unix
     \file{.tar.gz} files.  These can be source archives or binary
