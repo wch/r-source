@@ -1,6 +1,7 @@
-; *** Inno Setup version 5.1.0+ Japanese messages ***
+; *** Inno Setup version 5.1.11+ Japanese messages ***
 ;
 ; Translated by Ryou Minakami (ryou32jp@yahoo.co.jp)
+; Fixes and updates: Koichi Shirasuka (shirasuka@eugrid.co.jp)
 ;
 ; $jrsoftware: issrc/Files/Default.isl,v 1.66 2005/02/25 20:23:48 mlaan Exp $
 
@@ -8,10 +9,14 @@
 LanguageName=Japanese
 LanguageID=$0411
 LanguageCodePage=932
+
+; If you don't need to support Windows 9x, commenting the following 4 lines gives better looking (banners not stretched).
 DialogFontName=ＭＳ Ｐゴシック
-DialogFontSize=8
+DialogFontSize=9
 TitleFontName=ＭＳ Ｐゴシック
 TitleFontSize=29
+
+; Required for Win2K/older to display the welcome message with correct font.
 WelcomeFontName=ＭＳ Ｐゴシック
 WelcomeFontSize=12
 
@@ -262,7 +267,7 @@ ErrorReplacingExistingFile=既存ファイルを置き換え中にエラーが発生しました。:
 ErrorRestartReplace=置き換え再開中にエラーが発生しました。:
 ErrorRenamingTemp=コピー先フォルダのファイル名を変更中にエラーが発生しました。:
 ErrorRegisterServer=DLL/OCXの登録に失敗しました。: %1
-ErrorRegisterServerMissingExport=DllRegisterServerエクスポートが見つかりません。
+ErrorRegSvr32Failed=RegSvr32はエラーコード %1 により失敗しました。
 ErrorRegisterTypeLib=タイプライブラリへの登録に失敗しました。: %1
 
 ; *** Post-installation errors
@@ -280,7 +285,7 @@ OnlyAdminCanUninstall=アンインストールするためには管理者権限が必要です。
 UninstallStatusLabel=ご使用のコンピュータから %1 を削除しています。しばらくお待ちください。
 UninstalledAll=%1 はご使用のコンピュータから正常に削除されました。
 UninstalledMost=%1 のアンインストールが完了しました。%n%nいくつかの項目が削除できませんでした。手動で削除してください。
-UninstalledAndNeedsRestart=[name] の削除を完了するためには、コンピュータを再起動する必要があります。すぐに再起動しますか？
+UninstalledAndNeedsRestart=%1 の削除を完了するためには、コンピュータを再起動する必要があります。すぐに再起動しますか？
 UninstallDataCorrupted=ファイル "%1" が壊れています。アンインストールを実行できません。
 
 ; *** Uninstallation phase messages

@@ -826,6 +826,7 @@ releasing the Alt key.
 
 Only a limited range of languages is supported (but still wider
 than those for which R has translations), currently
+Basque
 Brazilian Portuguese,
 Catalan,
 both Simplified and Traditional Chinese,
@@ -835,6 +836,7 @@ Dutch,
 Finnish,
 French,
 German,
+Hebrew
 Hungarian,
 Italian,
 Japanese,
@@ -843,6 +845,7 @@ Norwegian,
 Polish,
 Portuguese,
 Russian,
+Slovak,
 Slovenian
 and Spanish (Spain).
 
