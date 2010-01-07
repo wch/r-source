@@ -11,6 +11,11 @@
 #include "time.h"
 #undef _NO_OLDNAMES
 
+#ifdef W64
+/* tzname is in the headers as an import */
+#define tzname Rtzname
+#endif
+
 #include <errno.h>
 #ifndef EOVERFLOW
 # define EOVERFLOW 79
