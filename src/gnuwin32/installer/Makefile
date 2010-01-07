@@ -19,6 +19,13 @@ Internet = 0
 ## Used to set Registry entries
 Producer = R-core
 
+## Limit installation to 64-bit systems
+ifeq ($(strip $(WIN)),64)
+bit64 = 1;
+else
+bit64 = 0;
+endif
+
 FULLVERSION=`cat ../../../VERSION`
 RPREFIX = $(shell $(PERL) ../fixed/rwver.pl $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
@@ -108,7 +115,7 @@ fixups:
 
 R.iss: JRins.pl CustomMsg.txt imagedir fixups md5sums \
   ../../../VERSION ../../../SVN-REVISION
-	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
+	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer) $(bit64)
 
 $(RPREFIX)-win32.exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1

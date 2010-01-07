@@ -16,8 +16,6 @@
 
 # Send any bug reports to r-bugs@r-project.org
 
-# Define next as and when we have a 64-bit build
-# mode64bit = 1
 
 use Cwd;
 use File::Find;
@@ -31,7 +29,7 @@ my $MDISDI=$ARGV[2];
 my $HelpStyle=$ARGV[3];
 my $Internet=$ARGV[4];
 my $Producer = $ARGV[5];
-
+my $mode64bit = $ARGV[6];
 
 $SRCDIR =~ s+/+\\+g; # need DOS-style paths
 
@@ -51,10 +49,11 @@ close ver;
 $SVN =~s/Revision: //;
 $RVER0 .= "." . $SVN;
 
+if($mode64bit) {$suffix = "win64";} else {$suffix = "win32";}
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
 [Setup]
-OutputBaseFilename=${RW}-win32
+OutputBaseFilename=${RW}-${suffix}
 PrivilegesRequired=none
 MinVersion=0,5.0
 END
@@ -86,7 +85,6 @@ my $lines2=<<END;
 
 [Languages]
 Name: en; MessagesFile: "compiler:Default.isl"
-Name: ba; MessagesFile: "compiler:Languages\\Basque.isl"
 Name: br; MessagesFile: "compiler:Languages\\BrazilianPortuguese.isl"
 Name: ca; MessagesFile: "compiler:Languages\\Catalan.isl"
 Name: cz; MessagesFile: "compiler:Languages\\Czech.isl"
