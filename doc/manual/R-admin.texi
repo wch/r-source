@@ -1304,15 +1304,26 @@ Support of MinGW64 has been developed in the R sources over the period
 2008-10: it is still experimental and this section is intended merely as
 pointers for expert users.
 
-Several versions of the MinGW64 toolchain are available: use one of them
-to replace the @file{MinGW/bin} directory of @code{Rtools} in your path
-(but still have the Rtools @file{bin} directory and Perl in your path).
-Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64} and
-@code{BINPREF} appropriate to your toolchain, and make R in the usual
-way.  (At present the tcltk package is a dummy.)
+Several versions of the MinGW64 toolchain are available@footnote{at the
+time of writing native 64-bit compilers from
+@url{ftp://ftp.equation.com/gcc/} and
+@url{http://www.cadforte.com/downloads.html} and a 32-bit compiler
+targeting 64-bit from @url{ftp://ftp.equation.com/gcc/} packages with a
+name like @file{mingw-w64-bin_i686-mingw_20100106.zip/download}}: use
+one of them to replace the @file{MinGW/bin} directory of @code{Rtools}
+in your path (but still have the Rtools @file{bin} directory and Perl in
+your path).  Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64}
+and @code{BINPREF} (in both @file{MkRules} and @file{etc/Makeconf})
+appropriate to your toolchain, and make R in the usual way.  (At present
+the tcltk package is a dummy.)
 
-The assistance of Yu Gong in building R under MinGW64 is gratefully
-acknowledged.
+There is currently no binary package support for MinGW64 and the default
+is @code{options(pkgType="source")}.
+
+The default memory limit should be the amount of installed RAM.
+
+The assistance of Yu Gong at a crucial step in porting R to MinGW64 is
+gratefully acknowledged.
 
 @node Installing R under Mac OS X, Running R, Installing R under Windows, Top
 @chapter Installing R under Mac OS X
