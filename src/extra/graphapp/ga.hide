@@ -2,15 +2,15 @@
  GAI_add_context
  GAI_adjust_menu
  GAI_app_control_proc
- GAI_app_control_procedure@16
- GAI_app_doc_proc@16
+ GAI_app_control_procedure
+ GAI_app_doc_proc
  GAI_app_drawstate
  GAI_app_initialised
  GAI_app_name
  GAI_app_timer_proc
- GAI_app_timer_procedure@16
- GAI_app_win_proc@16
- GAI_app_work_proc@16
+ GAI_app_timer_procedure
+ GAI_app_win_proc
+ GAI_app_work_proc
  GAI_apply_to_list
  GAI_char_to_string
  GAI_child_id
