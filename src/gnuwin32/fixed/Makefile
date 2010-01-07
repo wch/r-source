@@ -30,15 +30,15 @@ fixhtml:  html/rwin.html
 fixetc: $(wildcard ./etc/*)
 	$(CP) -p $^ $(R_HOME)/etc
 	@$(ECHO) done > fixetc
-	
+
 fixdoc: $(wildcard ../CHANGES*)
 	$(CP) -p $^ $(R_HOME)/doc
 	@$(ECHO) done > fixdoc
-	
+
 svnonly:
 	@$(MAKE) -C ../../../doc/manual -f Makefile.win svnonly
 
 clean:
-	$(RM) *~ */*~ fixhtml fixbin fixetc fixshare
+	$(RM) *~ */*~ fixhtml fixbin fixetc fixshare fixdoc
 
 distclean:
