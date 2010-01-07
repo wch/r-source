@@ -1,6 +1,6 @@
 
-R version 2.9.0 Under development (unstable) (2008-12-02 r47034)
-Copyright (C) 2008 The R Foundation for Statistical Computing
+R version 2.11.0 Under development (unstable) (2010-01-07 r50925)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -729,11 +729,9 @@ Multiple R-squared: 0.922,	Adjusted R-squared: 0.918
 F-statistic:  214 on 1 and 18 DF,  p-value: 1.94e-11 
 
 > attach(dummy)
+The following object(s) are masked _by_ '.GlobalEnv':
 
-	The following object(s) are masked _by_ .GlobalEnv :
-
-	 x 
-
+    x
 > lrf <- lowess(x, y)
 > plot(x, y)
 > lines(x, lrf$y)
