@@ -35,6 +35,7 @@ TCL_VERSION = 85
 # USE_IMPLIBS = YES
 
 # Some of the Mingw64 compilers are in fact cross-compilers and have prefixes
+# This also needs to be set in etc/Makeconf
 BINPREF=
 
 # 32- or 64-bit Windows?  For experiments with Mingw64.
