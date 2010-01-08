@@ -1295,35 +1295,41 @@ versions of Windows, with a limit on the total memory allocation of
 work with large R objects, or many medium-sized ones.
 
 To build a 64-bit version of R you need a 64-bit toolchain: the only
-ones discussed here are those based on the work of the MinGW64 project
+ones discussed here are those based on the work of the MinGW-w64 project
 (@url{http://sourceforge.net/projects/mingw-w64/}, a port of GNU
 @code{binutils} and @code{gcc}), but commercial compilers such as those
 from Intel and PGI could be used (and have been by R redistributors).
 
-Support of MinGW64 has been developed in the R sources over the period
+Support of MinGW-w64 has been developed in the R sources over the period
 2008-10: it is still experimental and this section is intended merely as
 pointers for expert users.
 
-Several versions of the MinGW64 toolchain are available@footnote{at the
-time of writing native 64-bit compilers from
+Several versions of the MinGW-w 64 toolchain are available@footnote{at
+the time of writing native 64-bit compilers from
 @url{ftp://ftp.equation.com/gcc/} and
 @url{http://www.cadforte.com/downloads.html} and a 32-bit compiler
-targeting 64-bit from @url{ftp://ftp.equation.com/gcc/} packages with a
-name like @file{mingw-w64-bin_i686-mingw_20100106.zip/download}}: use
-one of them to replace the @file{MinGW/bin} directory of @code{Rtools}
-in your path (but still have the Rtools @file{bin} directory and Perl in
-your path).  Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64}
-and @code{BINPREF} (in both @file{MkRules} and @file{etc/Makeconf})
+targeting 64-bit from @url{http://sourceforge.net/projects/mingw-w64/}
+packages with a name like
+@file{mingw-w64-bin_i686-mingw_20100106.zip/download}}: use one of them
+to replace the @file{MinGW/bin} directory of @code{Rtools} in your path
+(but still have the Rtools @file{bin} directory and Perl in your path).
+Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64} and
+@code{BINPREF} (in both @file{MkRules} and @file{etc/Makeconf})
 appropriate to your toolchain, and make R in the usual way.  (At present
 the tcltk package is a dummy.)
 
-There is currently no binary package support for MinGW64 and the default
-is @code{options(pkgType="source")}.
+There is no binary package support for MinGW-w64 and the default is
+@code{options(pkgType="source")}.  Note that some of the toolchains,
+including that from SourceForge, use dynamic linking for language
+support: this means that you need the DLLs such as
+@file{libgfortran-3.dll} in the toolchain's @file{bin} directory in your
+path.
 
 The default memory limit should be the amount of installed RAM.
 
-The assistance of Yu Gong at a crucial step in porting R to MinGW64 is
-gratefully acknowledged.
+The assistance of Yu Gong at a crucial step in porting R to MinGW-w64 is
+gratefully acknowledged, as well as help from Kai Tietz, the lead
+developer of the MinGW-w64 project.
 
 @node Installing R under Mac OS X, Running R, Installing R under Windows, Top
 @chapter Installing R under Mac OS X

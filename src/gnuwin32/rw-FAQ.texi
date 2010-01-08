@@ -1461,7 +1461,7 @@ To build R on 32-bit Windows you will need the tools from
 others.  See the `R Installation and Administration' manual.
 
 To build a 64-bit version on 64-bit Windows you will need a suitable
-compiler, and the Mingw64 port of @code{binutils} and @code{gcc} is
+compiler, and the MinGW-w64 port of @code{binutils} and @code{gcc} is
 finally mature enough to produce a working version of R, so experimental
 support has been added as from R 2.11.0.  You are welcome to try a
 commercial compiler@footnote{such as those from Intel and PGI: there is
