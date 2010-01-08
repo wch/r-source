@@ -3408,7 +3408,9 @@ if test "$want_mbcs_support" = yes ; then
 ## These are all C99, but Cygwin lacks wcsftime & wcstod
   R_CHECK_FUNCS([mbrtowc wcrtomb wcscoll wcsftime wcstod], [#include <wchar.h>])
   R_CHECK_FUNCS([mbstowcs wcstombs], [#include <stdlib.h>])
-  R_CHECK_FUNCS([wctrans iswblank wctype iswctype], [#include <wctype.h>])
+  R_CHECK_FUNCS([wctrans iswblank wctype iswctype], 
+[#include <wchar.h>
+#include <wctype.h>])
   for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcstombs \
                  wctrans wctype iswctype
   do

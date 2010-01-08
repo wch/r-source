@@ -20798,7 +20798,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-## cross-compiling
+## cross-compiling: added May 2007, not actually used
 
 if test "${cross_compiling}" = yes; then
   { echo "$as_me:$LINENO: checking for build C compiler" >&5
@@ -39340,6 +39340,7 @@ _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
+#include <wchar.h>
 #include <wctype.h>
 
 #ifdef F77_DUMMY_MAIN
@@ -48274,11 +48275,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48277: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48278: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:48281: \$? = $ac_status" >&5
+   echo "$as_me:48282: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -48373,11 +48374,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48376: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48377: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:48380: \$? = $ac_status" >&5
+   echo "$as_me:48381: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -48425,11 +48426,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:48428: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:48429: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:48432: \$? = $ac_status" >&5
+   echo "$as_me:48433: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
