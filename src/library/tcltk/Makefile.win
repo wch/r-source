@@ -19,7 +19,7 @@ INSTALL_DATA = cp
 SHELL = sh
 USE_NLS = yes
 
-ifeq ($(strip $(WIN)),64)
+ifeq ($(strip $(BUILD_TCLTK)),NO)
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
