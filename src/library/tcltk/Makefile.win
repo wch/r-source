@@ -21,7 +21,7 @@ USE_NLS = yes
 
 ifeq ($(strip $(WIN)),64)
 all:
-	@$(ECHO) "building package '$(pkg)'"
+	@$(ECHO) "building stub package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@$(MAKE) -f Makefile.win mkdesc
 	@cp $(srcdir)/R/unix/zzzstub.R $(top_builddir)/library/$(pkg)/R/$(pkg)
