@@ -14,6 +14,7 @@
 \alias{[<-.Date}
 \alias{[[.Date}
 \alias{as.data.frame.Date}
+\alias{as.list.Date}
 \alias{c.Date}
 \alias{mean.Date}
 \alias{split.Date}
