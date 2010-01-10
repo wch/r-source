@@ -125,6 +125,7 @@ function(x, base = NULL)
     if(!is.numeric_version(x)) stop("wrong class")
     if(is.null(base)) base <- max(unlist(x), 0, na.rm = TRUE) + 1
     classes <- class(x)
+    x <- unclass(x)
     lens <- as.numeric(sapply(x, length))
     ## We store the lengths so that we know when to stop when decoding.
     ## Alternatively, we need to be smart about trailing zeroes.  One
@@ -242,8 +243,7 @@ function(..., na.rm)
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if(!ok)
         stop(.Generic, " not defined for numeric_version objects")
-    x <- list(...)
-    x <- do.call("c", lapply(x, as.numeric_version))
+    x <- do.call("c", lapply(list(...), as.numeric_version))
     v <- .encode_numeric_version(x)
     if(!na.rm && length(pos <- which(is.na(v)))) {
         y <- x[pos[1L]]
@@ -261,15 +261,18 @@ function(..., na.rm)
 
 as.character.numeric_version <-
 function(x, ...)
+{
+    x <- unclass(x)
     ifelse(as.numeric(sapply(x, length)) > 0,
            as.character(unlist(lapply(x, paste, collapse = "."))),
            NA_character_)
+}
 
 as.data.frame.numeric_version <- as.data.frame.vector
 
 as.list.numeric_version <-
 function(x, ...)
-    unclass(x)
+    lapply(seq_along(x), function(i) x[i])
 
 c.numeric_version <-
 function(..., recursive = FALSE)
@@ -335,17 +338,9 @@ function(x)
 function(x, name)
 {
     name <- pmatch(name, c("major", "minor", "patchlevel"))
+    x <- unclass(x)
     switch(name,
            major = as.integer(sapply(x, "[", 1L)),
            minor = as.integer(sapply(x, "[", 2L)),
            patchlevel = as.integer(sapply(x, "[", 3L)))
-    ## <NOTE>
-    ## Older versions used
-    ## patchlevel = {
-    ##   as.integer(sapply(x,
-    ##                     function(s) s[min(3, length(s))]))
-    ## }
-    ## apparently with the idea to always use the last component as the
-    ## patchlevel ...
-    ## </NOTE>
 }
