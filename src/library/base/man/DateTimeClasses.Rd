@@ -27,6 +27,7 @@
 \alias{[<-.POSIXlt}
 \alias{as.data.frame.POSIXct}
 \alias{as.data.frame.POSIXlt}
+\alias{as.list.POSIXct}
 \alias{.leap.seconds}
 \alias{is.na.POSIXlt}
 \alias{all.equal.POSIXct}

@@ -341,6 +341,12 @@ as.character.POSIXt <- function(x, ...) format(x, ...)
 
 as.data.frame.POSIXct <- as.data.frame.vector
 
+as.list.POSIXct <- function(x, ...)
+{
+    lapply(seq_along(x), function(i) x[i])
+}
+
+
 is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))
 
 ## <FIXME> check the argument validity
