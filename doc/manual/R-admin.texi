@@ -4261,9 +4261,12 @@ suitably; ensure you have the required fonts installed.
 @section The Inno Setup installer
 
 To make the installer package (@file{@value{RWVERSION}-win32.exe}) we
-require Inno Setup 5.1.11 or later from @uref{http://jrsoftware.org/}.
-As of this writing, we use the Unicode version of 5.3.7, and we recommend at 
-least this version be used.  This is @emph{not} included in @file{Rtools.exe}.
+currently require Inno Setup 5.3.7 or later from
+@uref{http://jrsoftware.org/}.  We use the Unicode version and recommend
+that version be used.  This is @emph{not} included in @file{Rtools.exe}.
+(Earlier versions can be used, but the set of languages will need to be
+edited in @file{src/gnuwin32/installer/JRins.pl}, at least to change the
+location of @file{Japanese.isl} or remove the reference to it.)
 
 Edit file @file{src/gnuwin32/MkRules} and change @code{ISDIR} to the
 location where Inno Setup was installed.

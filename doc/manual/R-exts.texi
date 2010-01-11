@@ -2149,14 +2149,14 @@ following registration information for a DLL named @code{myDLL}:
 
 @example
 R_CMethodDef cMethods[] = @{
-   @{"foo", &foo, 4, @{REALSXP, INTSXP, STRSXP, LGLSXP@}@},
-   @{"bar_sym", &bar, 0@},
+   @{"foo", (DL_FUNC) &foo, 4, @{REALSXP, INTSXP, STRSXP, LGLSXP@}@},
+   @{"bar_sym", (DL_FUNC) &bar, 0@},
    @{NULL, NULL, 0@}
 @};
 
 R_CallMethodDef callMethods[] = @{
-   @{"R_call_sym", &R_call, 4@},
-   @{"R_version_sym", &R_version, 0@},
+   @{"R_call_sym", (DL_FUNC) &R_call, 4@},
+   @{"R_version_sym", (DL_FUNC) &R_version, 0@},
    @{NULL, NULL, 0@}
 @};
 @end example
@@ -6157,7 +6157,7 @@ we would describe this as
 
 @example
 R_CallMethodDef callMethods[]  = @{
-  @{"myCall", &myCall, 3@},
+  @{"myCall", (DL_FUNC) &myCall, 3@},
   @{NULL, NULL, 0@}
 @};
 @end example
@@ -6197,7 +6197,7 @@ We would register it as
 
 @example
 R_CMethodDef cMethods[] = @{
-   @{"myC", &myC, 4, @{REALSXP, INTSXP, STRSXP, LGLSXP@}@},
+   @{"myC", (DL_FUNC) &myC, 4, @{REALSXP, INTSXP, STRSXP, LGLSXP@}@},
    @{NULL, NULL, 0@}
 @};
 @end example
