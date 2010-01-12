@@ -225,6 +225,8 @@ NEW FEATURES
 	result.	 Unmatched values and "" are not allowed and result in
 	an error.
 
+    o	interaction(drop=TRUE) uses less memory (related to PR#14121).
+
 
 DEPRECATED & DEFUNCT
 

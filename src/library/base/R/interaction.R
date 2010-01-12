@@ -15,7 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 ### This is almost like the Primitive ":" for factors
-### (that has no "drop = TRUE") --- it's not used anywhere in "standard R"
+### but with drop=TRUE, used in reshape
 interaction <- function(..., drop = FALSE, sep = ".", lex.order = FALSE)
 {
     args <- list(...)
@@ -25,34 +25,36 @@ interaction <- function(..., drop = FALSE, sep = ".", lex.order = FALSE)
 	narg <- length(args)
     }
     for(i in narg:1L) {
-        f <- args[[i]]
-	if (!is.factor(f)) f <- factor(f)
-	l <- levels(f)
+        f <- as.factor(args[[i]])[, drop = drop]
+        l <- levels(f)
         if1 <- as.integer(f) - 1L
-        if(i != narg) {
+        if(i == narg) {
+            ans <- if1
+            lvs <- l
+        } else {
             if(lex.order) {
                 ll <- length(lvs)
                 ans <- ans + ll * if1
-                lvs <- ## as.vector(t(outer(l, lvs, paste, sep=sep)))
-                    paste(rep(l, each= ll), rep(lvs, length(l)), sep=sep)
+                lvs <- paste(rep(l, each= ll), rep(lvs, length(l)), sep=sep)
             } else {
                 ans <- ans * length(l) + if1
-                lvs <- ## as.vector(outer(l, lvs, paste, sep=sep))
-                    paste(rep(l, length(lvs)), rep(lvs, each = length(l)), sep=sep)
+                lvs <- paste(rep(l, length(lvs)),
+                             rep(lvs, each = length(l)), sep=sep)
             }
-	    if(anyDuplicated(lvs)) { ## fix them up
-		ulvs <- unique(lvs)
-		while((i <- anyDuplicated(flv <- match(lvs, ulvs)))) {
-		    lvs <- lvs[-i]
-		    ans[ans+1L == i] <- match(flv[i], flv[1:(i-1)]) - 1L
-		}
-		lvs <- ulvs
-	    }
-        } else {
-            ans <- if1
-            lvs <- l
+            if(anyDuplicated(lvs)) { ## fix them up
+                ulvs <- unique(lvs)
+                while((i <- anyDuplicated(flv <- match(lvs, ulvs)))) {
+                    lvs <- lvs[-i]
+                    ans[ans+1L == i] <- match(flv[i], flv[1:(i-1)]) - 1L
+                }
+                lvs <- ulvs
+            }
+            if(drop) {
+                olvs <- lvs
+                lvs <- lvs[sort(unique(ans+1L))]
+                ans <- match(olvs[ans+1L], lvs) - 1L
+            }
         }
     }
-    ans <- structure(as.integer(ans+1L), levels=lvs, class = "factor")
-    ans[ , drop=drop]
+    structure(as.integer(ans+1L), levels=lvs, class = "factor")
 }
