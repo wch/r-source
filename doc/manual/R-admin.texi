@@ -1304,7 +1304,7 @@ Support of MinGW-w64 has been developed in the R sources over the period
 2008-10: it is still experimental and this section is intended merely as
 pointers for expert users.
 
-Several versions of the MinGW-w 64 toolchain are available@footnote{at
+Several versions of the MinGW-w64 toolchain are available@footnote{at
 the time of writing native 64-bit compilers from
 @url{ftp://ftp.equation.com/gcc/} and
 @url{http://www.cadforte.com/downloads.html} and a 32-bit compiler
@@ -1318,12 +1318,15 @@ Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64} and
 appropriate to your toolchain, and make R in the usual way.  (At present
 the tcltk package is a dummy.)
 
-There is no binary package support for MinGW-w64 and the default is
-@code{options(pkgType="source")}.  Note that some of the toolchains,
-including that from SourceForge, use dynamic linking for language
-support: this means that you need the DLLs such as
-@file{libgfortran-3.dll} in the toolchain's @file{bin} directory in your
-path.
+The default is @code{options(pkgType="source")}, that is to use source
+packages.  Note that some of the toolchains, including that from
+SourceForge, use dynamic linking for language support: this means that
+you need the DLLs such as @file{libgfortran-3.dll} in the toolchain's
+@file{bin} directory in your path.  There is some very experimental
+support for binary packages which you can select by
+@code{options(pkgType="win64.binary")}, and an experimental
+package-building service at
+@url{http://win-builder.r-project.org/upload.aspx}.
 
 The default memory limit should be the amount of installed RAM.
 
