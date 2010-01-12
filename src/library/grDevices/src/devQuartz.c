@@ -785,10 +785,17 @@ static void RQuartz_NewPage(CTXDESC)
             CGRect bounds = CGRectMake(0, 0,
 				       QuartzDevice_GetScaledWidth(xd) * 72.0,
 				       QuartzDevice_GetScaledHeight(xd) * 72.0);
+	    /* reset the clipping region by restoring the base GC.
+	       If there is no GC on the stack then the clipping region was never set. */
+	    if (xd->gstate > 0) {
+		CGContextRestoreGState(ctx);
+		CGContextSaveGState(ctx);
+		/* no need to modify gstate since we don't modify the stack */
+	    }
 	    /* The logic is to paint the canvas then gc->fill.
 	       (The canvas colour is set to 0 on non-screen devices.)
 	     */
-	    if (R_ALPHA(xd->canvas) >0 && !R_OPAQUE(gc->fill)) {
+	    if (R_ALPHA(xd->canvas) > 0 && !R_OPAQUE(gc->fill)) {
 		/* Paint the canvas colour. */
 		int savefill = gc->fill;
 		CGContextClearRect(ctx, bounds);
