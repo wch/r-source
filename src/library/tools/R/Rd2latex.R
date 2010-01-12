@@ -608,7 +608,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         else if (tag == "\\keyword") {
             key <- trim(section)
             of0("\\keyword{", latex_escape_name(key), "}{", ltxname, "}\n")
-        } else if (tag == "\\section" || tag == "\\subsection") {    	    
+        } else if (tag == "\\section" || tag == "\\subsection") {
             macro <- c("Section", "SubSection", "SubSubSection")[min(sectionLevel, 3)]
     	    of0("%\n\\begin{", macro, "}{")
             writeContent(section[[1L]], tag)
@@ -637,7 +637,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     sections <- RdTags(Rd)
 
     enc <- which(sections == "\\encoding")
-    if (length(enc)) outputEncoding <- as.character(Rd[[enc[1L]]][[1L]])
+    ## if (length(enc)) outputEncoding <- as.character(Rd[[enc[1L]]][[1L]])
 
     if (is.character(out)) {
         if(out == "") {

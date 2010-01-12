@@ -226,7 +226,6 @@ NEW FEATURES
 	an error.
 
 
-
 DEPRECATED & DEFUNCT
 
     o	Bundles of packages are defunct.
@@ -243,6 +242,12 @@ DEPRECATED & DEFUNCT
 	exported and has a different argument list.
 
     o	Use of multiple arguments to return() is now defunct.
+
+
+INSTALLATION
+
+    o	UTF-8 is now used for the reference manual and package
+	manuals.  This requires LaTeX '2005/12/01' or later.
 
 
 BUG FIXES

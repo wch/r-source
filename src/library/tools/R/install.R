@@ -1391,7 +1391,7 @@
 
 ## workhorse of .Rd2dvi
 .Rdfiles2tex <-
-    function(files, outfile, encoding = "unknown", outputEncoding = "latin1",
+    function(files, outfile, encoding = "unknown", outputEncoding = "UTF-8",
              append = FALSE, extraDirs = NULL, internals = FALSE,
              silent = FALSE)
 {
@@ -1432,7 +1432,7 @@
 ## and for directories from .Rdfiles2tex  (with asChapter = FALSE)
 .pkg2tex <-
     function(pkgdir, outfile, internals = FALSE, asChapter = TRUE,
-             encoding = "unknown", outputEncoding = "latin1",
+             encoding = "unknown", outputEncoding = "UTF-8",
              extraDirs = NULL, append = FALSE, silent = FALSE)
 {
     ## sort order for topics, a little tricky
@@ -1788,7 +1788,7 @@
 ## possible types are "html", "latex", "example"
 ## outenc is used as the default output encoding for latex conversion
 .convertRdfiles <-
-    function(dir, outDir, types = "html", silent = FALSE, outenc = "latin1")
+    function(dir, outDir, types = "html", silent = FALSE, outenc = "UTF-8")
 {
     showtype <- function(type) {
     	if (!shown) {
@@ -2071,7 +2071,7 @@ function(name="", version = "0.0")
                        outputEncoding = enc, no_links = TRUE)
            },
            "latex" = {
-               if (!nzchar(enc)) enc <- "latin1"
+               if (!nzchar(enc)) enc <- "UTF-8"
                Rd2latex(files, out, defines = os,
                         outputEncoding = enc)
            },
@@ -2091,7 +2091,7 @@ function(name="", version = "0.0")
 .Rd2dvi <-
 function(pkgdir, outfile, title, batch = FALSE,
          description = TRUE, only_meta = FALSE,
-         enc = "unknown", outputEncoding = "latin1", files_or_dir, OSdir,
+         enc = "unknown", outputEncoding = "UTF-8", files_or_dir, OSdir,
          internals = "no", index = "true")
 {
 

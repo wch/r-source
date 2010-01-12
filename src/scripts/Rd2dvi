@@ -26,7 +26,7 @@ or a single file, and 'Rd2' otherwise.
 The Rd sources are assumed to be ASCII unless they contain \encoding
 declarations (which take priority) or --encoding is supplied or if using
 package sources, if the package DESCRIPTION file has an Encoding field.
-The output encoding defaults to the package encoding then to 'latin1'.
+The output encoding defaults to the package encoding then to 'UTF-8'.
 
 Options:
   -h, --help		print short help message and exit

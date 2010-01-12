@@ -129,7 +129,7 @@ refman.dvi: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  $(ECHO) "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4DVI)"; \
 	  $(ECHO) "\\usepackage[$${opt}]{Rd}"; \
-	  $(ECHO) "\\usepackage[latin1]{inputenc}"; \
+	  $(ECHO) "\\usepackage[utf8]{inputenc}"; \
 	  cat $(srcdir)/refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
 	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
@@ -150,7 +150,7 @@ fullrefman.dvi: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  $(ECHO) "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4DVI)"; \
 	  $(ECHO) "\\usepackage[$${opt}]{Rd}"; \
-	  $(ECHO) "\\usepackage[latin1]{inputenc}"; \
+	  $(ECHO) "\\usepackage[utf8]{inputenc}"; \
 	  cat $(srcdir)/refman.top; \
 	  $(ECHO) "\\part{}"; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
@@ -187,7 +187,7 @@ refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  $(ECHO) "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4PDF)"; \
 	  $(ECHO) "\\usepackage[$${opt}]{Rd}"; \
-	  $(ECHO) "\\usepackage[latin1]{inputenc}"; \
+	  $(ECHO) "\\usepackage[utf8]{inputenc}"; \
 	  cat $(srcdir)/refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
 	    do $(ECHO) $${f}; done) | LC_COLLATE=C $(SORT)`; \
@@ -209,7 +209,7 @@ fullrefman.pdf: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  $(ECHO) "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4PDF)"; \
 	  $(ECHO) "\\usepackage[$${opt}]{Rd}"; \
-	  $(ECHO) "\\usepackage[latin1]{inputenc}"; \
+	  $(ECHO) "\\usepackage[utf8]{inputenc}"; \
 	  cat $(srcdir)/refman.top; \
 	  $(ECHO) "\\part{}"; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \

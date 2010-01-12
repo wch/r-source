@@ -2376,7 +2376,9 @@ part of the GNU @pkg{texinfo} distribution but is often made part of the
 
 @cindex Vignettes
 The DVI and PDF documentation and building vignettes needs @command{tex}
-and @command{latex}, or @command{pdftex} and @command{pdflatex}.
+and @command{latex}, or @command{pdftex} and @command{pdflatex}.  As
+from @R{} 2.11.0 we require @LaTeX{} version @code{2005/12/01} or later
+(for UTF-8 support).
 
 If you want to build from the R Subversion repository you need both
 @command{makeinfo} and @command{pdflatex}.
