@@ -1,6 +1,6 @@
 % File src/library/stats/man/p.adjust.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{p.adjust}
@@ -123,10 +123,13 @@ round(p.adjust(p,"BH"), 3)
 
 ## or all of them at once (dropping the "fdr" alias):
 p.adjust.M <- p.adjust.methods[p.adjust.methods != "fdr"]
-p.adj <- sapply(p.adjust.M, function(meth) p.adjust(p, meth))
+p.adj    <- sapply(p.adjust.M, function(meth) p.adjust(p, meth))
+p.adj.60 <- sapply(p.adjust.M, function(meth) p.adjust(p, meth, n = 60))
+stopifnot(identical(p.adj[,"none"], p), p.adj <= p.adj.60)
 round(p.adj, 3)
 ## or a bit nicer:
 noquote(apply(p.adj, 2, format.pval, digits = 3))
+
 
 ## and a graphic:
 matplot(p, p.adj, ylab="p.adjust(p, meth)", type = "l", asp=1, lty=1:6,
