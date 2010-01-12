@@ -4033,7 +4033,7 @@ BUG FIXES
     o	help(randu) had % unescaped in the example. (PR#2141)
 
     o	Making html links would fail if packages-head.html was not
-	writeable. (PR#2133)
+	writable. (PR#2133)
 
     o	Sweave.sty was not installed to $R_HOME/share/texmf when
 	builddir != srcdir. On Windows backslashes in latex paths have

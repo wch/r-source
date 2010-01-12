@@ -90,12 +90,13 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \item{type}{character, indicating the type of package to download and
     install.
 
-    Possible values are \code{"source"}, \code{"mac.binary"} and
-    \code{"win.binary"}: the binary types can be listed and downloaded
+    Possible values are \code{"source"}, \code{"mac.binary"},
+    \code{"mac.binary.leopard"}, \code{"win.binary"} and
+    \code{"win64.binary"}: the binary types can be listed and downloaded
     but not installed on other platforms.
 
-    The default is the appropriate binary type on Windows and on the
-    CRAN binary Mac OS X distribution, otherwise \code{"source"}.
+    The default is the appropriate binary type on 32-bit Windows and on
+    the CRAN binary Mac OS X distribution, otherwise \code{"source"}.
   }
   \item{configure.args}{
     (not used on Windows) a character vector or a named list.  If a
@@ -150,11 +151,11 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   from the repositories and installs them.  (If the library is omitted
   it defaults to the first directory in \code{.libPaths()}, with a
   warning if there is more than one.)  If \code{lib} is omitted or is of
-  length one and is not a (group) writeable directory, the code offers
+  length one and is not a (group) writable directory, the code offers
   to create a personal library tree (the first element of
   \code{Sys.getenv("R_LIBS_USER")}) and install there.
 #ifdef windows
-  Detection of a writeable directory is problematic on Windows: see the
+  Detection of a writable directory is problematic on Windows: see the
   \sQuote{Note} section.
 #endif
   

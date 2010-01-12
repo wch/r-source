@@ -362,7 +362,7 @@ The scrollbars on the data editor work better for very large matrices,
 and correctly for more than 65535 columns.
 
 The search for a directory for temporary files now checks that TMP and
-TEMP point to actual writeable directories.
+TEMP point to actual writable directories.
 
 PKG_FFLAGS is now used if provided.
 
