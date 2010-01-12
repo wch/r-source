@@ -1322,11 +1322,10 @@ The default is @code{options(pkgType="source")}, that is to use source
 packages.  Note that some of the toolchains, including that from
 SourceForge, use dynamic linking for language support: this means that
 you need the DLLs such as @file{libgfortran-3.dll} in the toolchain's
-@file{bin} directory in your path.  There is some very experimental
-support for binary packages which you can select by
+@file{bin} directory in your path.  There is some experimental support
+for binary packages which you can select by
 @code{options(pkgType="win64.binary")}, and an experimental
-package-building service at
-@url{http://win-builder.r-project.org/upload.aspx}.
+package-building service at @url{http://win-builder.r-project.org/}.
 
 The default memory limit should be the amount of installed RAM.
 
