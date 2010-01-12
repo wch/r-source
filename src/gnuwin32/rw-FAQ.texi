@@ -330,7 +330,8 @@ this is not enabled by default).  On such systems, the default for
 @code{--max-mem-size} is the smaller of the amount of RAM and 2.5GB.  On
 most 64-bit versions of Windows the user address space for a 32-bit
 process is 4GB, and there the default for @code{--max-mem-size} is the
-smaller of the amount of RAM and 3.5GB.
+smaller of the amount of RAM and 3.5GB.  For a 64-bit build (from the
+sources), the defailt is the amount of RAM.
 
 @c limits are documented at http://msdn.microsoft.com/en-us/library/aa366778%28VS.85%29.aspx
 
