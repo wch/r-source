@@ -217,12 +217,12 @@ NEW FEATURES
 	where seq() does, e.g. seq.int(1L, 9L, by = 2L).
 
     o	Added \subsection{}{} macro to Rd syntax, for subsections
-    	within sections.
+	within sections.
 
     o	n-dimensional arrays with dimension names can now be indexed
 	by an n-column character matrix. The indices are matched
 	against the dimension names.  NA indices are propagated to the
-	result.  Unmatched values and "" are not allowed and result in
+	result.	 Unmatched values and "" are not allowed and result in
 	an error.
 
 
@@ -284,7 +284,7 @@ BUG FIXES
 	This has been fixed, for the known cases.
 
     o	Various ar() fitting methods have more protection for singular
- 	fits.
+	fits.
 
 
 
@@ -314,7 +314,7 @@ NEW FEATURES
 	(using an ellipsis in HTML rendering).
 
     o	Escaping of braces in quoted strings in R-code sections of Rd
-	files is allowed again.  This had been changed for the new Rd
+	files is allowed again.	 This had been changed for the new Rd
 	format in R 2.10.0 but was only documented on the developer
 	site and was handled inconsistently by the converters: text
 	and example conversion removed the escapes but HTML conversion
@@ -347,7 +347,7 @@ BUG FIXES
     o	lchoose(a,k) no longer wrongly gives NaN for negative a.
 
     o	ks.test() could give a p-value that was off by one observation
-	due to rounding error.  (PR#14145)
+	due to rounding error.	(PR#14145)
 
     o	readBin()/readChar() when reading millions of character strings
 	in a single call used excessive amounts of memory (which also
@@ -359,9 +359,9 @@ BUG FIXES
     o	sprintf() was not re-entrant, which potentially caused problems
 	if an as.character() method called it.
 
-    o	p.adjust(*, method, n)  now works correctly for the rare case
-    	n > length(p), also when method differs from "bonferroni" or
-    	"none", thanks to a patch from Gordon Smyth.
+    o	p.adjust(*, method, n)	now works correctly for the rare case
+	n > length(p), also when method differs from "bonferroni" or
+	"none", thanks to a patch from Gordon Smyth.
 
 
 
@@ -505,7 +505,7 @@ BUG FIXES
 	(PR#14068)
 
     o	chisq.test() could fail when given argument 'x' or 'y' which
-	deparsed to more than one line.  (Reported by Laurent Gauthier.)
+	deparsed to more than one line.	 (Reported by Laurent Gauthier.)
 
     o	S4 methods are uncached whenever the name space containing
 	them is unloaded (by unloadNamespace() as well as by
@@ -519,11 +519,11 @@ BUG FIXES
 	is now correct, analogously to besselI(), see PR#13556, below.
 
     o	tools::file_path_as_absolute() doubled the file separator when
- 	applied to a file such as "/vmunix" or (on Windows) "d:/afile"
+	applied to a file such as "/vmunix" or (on Windows) "d:/afile"
 	in a directory for which getwd() would return a path with a
- 	trailing separator (largely cosmetic, as reasonable file
- 	systems handle such a path correctly).  (Perhaps what was
- 	meant by PR#14078.)
+	trailing separator (largely cosmetic, as reasonable file
+	systems handle such a path correctly).	(Perhaps what was
+	meant by PR#14078.)
 
     o	unsplit(drop = TRUE) applied to a data frame failed to pass
 	'drop' to the computation of row names. (PR#14084)
@@ -544,7 +544,7 @@ BUG FIXES
 	alternative used.
 
     o	help.search() failed when the package argument was specified.
-    	(PR#14113)
+	(PR#14113)
 
     o	switch(EXPR = "A")  now returns NULL, as switch(1) {which used to
 	signal an error}.
@@ -578,7 +578,7 @@ SIGNIFICANT USER-VISIBLE CHANGES
 
 	- Those worried about security implications of such a server
 	  can disable it by setting the environment variable
-	  R_DISABLE_HTTPD to a non-empty value.  This disables
+	  R_DISABLE_HTTPD to a non-empty value.	 This disables
 	  help.start() and HTML help (so text help is shown instead).
 
 	- The Java/Javascript search engine has been replaced by an
@@ -586,10 +586,10 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	  an argument 'searchEngine' as it is no longer needed.
 
 	- The HTML help can now locate cross-references of the form
-          \link[pkg]{foo} and \link[pkg:foo]{bar} where 'foo' is an
-          alias in the package, rather than the documented (basename
-          of a) filename (since the documentation has been much
-          ignored).
+	  \link[pkg]{foo} and \link[pkg:foo]{bar} where 'foo' is an
+	  alias in the package, rather than the documented (basename
+	  of a) filename (since the documentation has been much
+	  ignored).
 
 
 NEW FEATURES
@@ -688,7 +688,7 @@ NEW FEATURES
 	levels construction in factor() more consistent.
 
     o	codocClasses(), which checks consistency of the documentation of
-	S4 class slots, now does so in considerably more cases.  The
+	S4 class slots, now does so in considerably more cases.	 The
 	documentation of inherited slots (from superclasses) is now
 	optional.  This affects 'R CMD check <pkg>' when the package
 	defines S4 classes.
@@ -812,15 +812,15 @@ NEW FEATURES
 	thanks to a patch from Frederic Schutz.
 
     o	Indexing with a vector index to [[]] has now been extended to
-    	all recursive types.
+	all recursive types.
 
     o	Pairlists may now be assigned as elements of lists.  (Lists
-    	could always be created with pairlist elements, but [[<-
-    	didn't support assigning them.)
+	could always be created with pairlist elements, but [[<-
+	didn't support assigning them.)
 
     o	The parser now supports C-preprocessor-like #line directives,
-    	so error messages and source references may refer to the original
-    	file rather than an intermediate one.
+	so error messages and source references may refer to the original
+	file rather than an intermediate one.
 
     o	New functions findLineNum() and setBreakpoint() work with the
 	source references to find the location of source lines and set
@@ -833,11 +833,11 @@ NEW FEATURES
 	meaning as for library() or require().
 
     o	available.packages() gains a 'filters' argument for specifying
-    	the filtering operations performed on the packages found in the
+	the filtering operations performed on the packages found in the
 	repositories.  A new built-in 'license/FOSS' filter only
-    	retains packages for which installation can proceed solely based
-    	on packages which can be verified as Free or Open Source
-    	Software (FOSS) employing the available license specifications.
+	retains packages for which installation can proceed solely based
+	on packages which can be verified as Free or Open Source
+	Software (FOSS) employing the available license specifications.
 
     o	In registering an S3 class by a call to setOldClass(), the data
 	part (e.g., the object type) required for the class can be
@@ -878,8 +878,8 @@ NEW FEATURES
     o	stripchart() allows par 'bg' to be passed in for the
 	background colour for pch = 21 (wish of PR#13984).
 
-    o   New generic function .DollarNames() to enable class authors
-        to customize completion after the $ extractor.
+    o	New generic function .DollarNames() to enable class authors
+	to customize completion after the $ extractor.
 
     o	load(), save(), dput() and dump() now open a not-yet-open
 	connection in the appropriate mode (as other functions using
@@ -889,7 +889,7 @@ NEW FEATURES
 REGULAR EXPRESSIONS
 
     o	A different regular expression engine is used for basic and
-	extended regexps and is also for approximate matching.  This is
+	extended regexps and is also for approximate matching.	This is
 	based on the TRE library of Ville Laurikari, a modifed copy of
 	which is included in the R sources.
 
@@ -914,7 +914,7 @@ REGULAR EXPRESSIONS
 	support for UTF-8-encoded strings in non-UTF-8 locales.
 
     o	agrep() now has full support for MBCS locales with a modest
-	speed penalty.  This enables help.search() to use approximate
+	speed penalty.	This enables help.search() to use approximate
 	matching character-wise rather than byte-wise.
 
     o	[g]sub use a single-pass algorithm instead of matching twice
@@ -929,8 +929,8 @@ REGULAR EXPRESSIONS
     o	strsplit() gains a 'useBytes' argument.
 
     o	The algorithm used by strsplit() has been reordered to batch by
-    	elements of 'split': this can be much faster for fixed = FALSE
-    	(as multiple compilation of regexps is avoided).
+	elements of 'split': this can be much faster for fixed = FALSE
+	(as multiple compilation of regexps is avoided).
 
     o	The help pages, including ?regexp, have been updated and
 	should be consulted for details of the new implementations.
@@ -946,7 +946,7 @@ HELP & Rd FILE CHANGES
 	by the server.
 
     o	help.start() no longer sets options(htmlhelp = TRUE) (it used
-	to on Unix but not on Windows).  Nor does it on Unix reset the
+	to on Unix but not on Windows).	 Nor does it on Unix reset the
 	"browser" option if given an argument of that name.
 
 	Arguments 'update' and 'remote' are now available on all
@@ -956,7 +956,7 @@ HELP & Rd FILE CHANGES
     o	help() has a new argument 'help_type' (with default set by the
 	option of that name) to supersede 'offline', 'htmlhelp' and
 	'chmhelp' (although for now they still work if 'help_type' is
-	unset).  There is a new type, "PDF" to allow offline PDF
+	unset).	 There is a new type, "PDF" to allow offline PDF
 	(rather than PostScript).
 
 	A function offline_help_helper() will be used if this exists
@@ -977,7 +977,7 @@ HELP & Rd FILE CHANGES
 	supported.
 
     o	Tags \if, \ifelse and \out have been added to allow
-        format-specific (or more general, using \Sexpr) conditional
+	format-specific (or more general, using \Sexpr) conditional
 	text in man pages.
 
     o	The parse_Rd() parser has been made more tolerant of coding
@@ -1011,8 +1011,8 @@ HELP & Rd FILE CHANGES
 	R code strings, converting 4n+3 backslashes to 2n+1 instead
 	of 2n+2.
 
-    o   parse_Rd() now recognizes the \var tag within a quoted string
-    	in R-like text.
+    o	parse_Rd() now recognizes the \var tag within a quoted string
+	in R-like text.
 
     o	parse_Rd() now treats the argument of \command as LaTeX-like,
 	rather than verbatim.
@@ -1032,7 +1032,7 @@ COMPRESSION
     o	bzfile() has a 'compress' argument to select the amount of
 	effort put into compression when writing.
 
-    o	New function xzfile() for use with xz-compressed files.  (This
+    o	New function xzfile() for use with xz-compressed files.	 (This
 	can also read files compressed by some versions of 'lzma'.)
 
     o	gzfile() looks at the file header and so can now also read
@@ -1058,7 +1058,7 @@ COMPRESSION
 	compression at the expense of slower installation times, and
 	--data-compress=xz, often giving even better compression on
 	large datasets at the expense of much longer installation
-	times.  (The latter is used for the recommended packages: it is
+	times.	(The latter is used for the recommended packages: it is
 	particularly effective for 'survival'.)
 
     o	file() for open = "", "r" or "rt" will automagically detect
@@ -1084,7 +1084,7 @@ DEPRECATED & DEFUNCT
     o	Bundles of packages are deprecated.  See 'Writing R
 	Extensions' for the steps needed to unbundle a bundle.
 
-    o 	help() arguments 'offline', 'htmlhelp' and 'chmhelp' are
+    o	help() arguments 'offline', 'htmlhelp' and 'chmhelp' are
 	deprecated in favour of 'help_type'.
 
     o	clearNames() ('stats') is deprecated for unname().
@@ -1095,8 +1095,8 @@ DEPRECATED & DEFUNCT
 	it seems that in almost all cases package authors intended
 	fixed = TRUE when using extended = FALSE.
 
-    o	methods::trySilent() is deprecated for  try(*, silent=TRUE) or
-    	- more efficiently and flexibly - something like
+    o	methods::trySilent() is deprecated for	try(*, silent=TRUE) or
+	- more efficiently and flexibly - something like
 	tryCatch(*, error = function(e) e).
 
     o	index.search() is deprecated: there are no longer directories of
@@ -1170,14 +1170,14 @@ BUG FIXES
 	had been created based on an existing S3 generic.
 
     o	The check for consistent ordering of superclasses was not
-        ignoring all conditional relations (the symptom was usually
-        spurious warnings for classes extending "array").
+	ignoring all conditional relations (the symptom was usually
+	spurious warnings for classes extending "array").
 
     o	Trying to assign into a raw vector with an index vector
-        containing NAs could cause a segfault.  Reported by Hervé Pagès.
+	containing NAs could cause a segfault.	Reported by Hervé Pagès.
 
     o	Rscript could segfault if (by user error) its filename argument
-        was missing.  Reported by Martin Morgan.
+	was missing.  Reported by Martin Morgan.
 
     o	getAnywhere() (and functions that use it, including argument
 	completion in the console) did not handle special built-in
@@ -1222,8 +1222,8 @@ BUG FIXES
 NEW FEATURES
 
     o	On systems using ICU for collation (including Mac OS X), using
- 	Sys.setlocale() to change the LC_COLLATE setting is more
- 	likely to change the collation provided by ICU.
+	Sys.setlocale() to change the LC_COLLATE setting is more
+	likely to change the collation provided by ICU.
 
 
 BUG FIXES
@@ -1234,7 +1234,7 @@ BUG FIXES
 
     o	as.complex() sometimes warned about NAs on coercions and
 	sometimes not (when the C function asComplex was used, e.g. on
-	list elements).  (PR#13942)
+	list elements).	 (PR#13942)
 
     o	cat() on an unopened connection could close it twice, and
 	with file() connections segfaulted on some systems.
@@ -1267,7 +1267,7 @@ NEW FEATURES
     o	PCRE has been updated to version 7.9 (for bug fixes).
 
     o	agrep() uses 64-bit ints where available on 32-bit platforms
-    	and so may do a better job with complex matches.
+	and so may do a better job with complex matches.
 	(E.g. PR#13789, which failed only on 32-bit systems.)
 
 
@@ -1300,27 +1300,27 @@ BUG FIXES
 	R. (PR#13838, fix found by Olaf Mersmann.)
 
     o	gzcon() (used by load()) would re-open an open connection,
-    	leaking a file descriptor each time. (PR#13841)
+	leaking a file descriptor each time. (PR#13841)
 
     o	The checks for inconsistent inheritance reported by setClass()
 	now detect inconsistent superclasses and give better warning
 	messages.
 
     o	print.anova() failed to recognize the column labelled
-    	P(>|Chi|) from a Poisson/binomial GLM anova as a p-value
-    	column in order to format it appropriately (and as a
-    	consequence it gave no significance stars).
+	P(>|Chi|) from a Poisson/binomial GLM anova as a p-value
+	column in order to format it appropriately (and as a
+	consequence it gave no significance stars).
 
     o	A missing PROTECT caused rare segfaults during calls to
-    	load().  (PR#13880, fix found by Bill Dunlap.)
+	load().	 (PR#13880, fix found by Bill Dunlap.)
 
     o	gsub() in a non-UTF-8 locale with a marked UTF-8 input
 	could in rare circumstances overrun a buffer and so segfault.
 
     o	R CMD Rdconv --version was not working correctly.
 
-    o   Missing PROTECTs in nlm() caused "random" errors. (PR#13381 by
-        Adam D.I. Kramer, analysis and suggested fix by Bill Dunlap.)
+    o	Missing PROTECTs in nlm() caused "random" errors. (PR#13381 by
+	Adam D.I. Kramer, analysis and suggested fix by Bill Dunlap.)
 
     o	Some extreme cases of pbeta(log.p = TRUE) are more accurate
 	(finite values < -700 rather than -Inf).  (PR#13786)
@@ -1345,8 +1345,8 @@ BUG FIXES
 	valgrind, although --debugger=valgrind always worked)
 
     o	INSTALL with LazyData and Encoding declared in DESCRIPTION
- 	might have left options("encoding") set for the rest of the
- 	package installation.
+	might have left options("encoding") set for the rest of the
+	package installation.
 
 
 
@@ -1380,9 +1380,9 @@ NEW FEATURES
 
     o	S3 method dispatch will support S4 class inheritance for S3
 	methods, for primitives and via UseMethod(), if the argument
-	S3methods=TRUE is given to setClass().  S4 method dispatch
+	S3methods=TRUE is given to setClass().	S4 method dispatch
 	will use S3 per-object inheritance if S3Class() is set on the
-	object.  See ?Methods and the paper referenced there.
+	object.	 See ?Methods and the paper referenced there.
 
     o	R CMD INSTALL is more tolerant of (malformed) packages with a
 	'man' directory but no validly named .Rd files.
@@ -1494,7 +1494,7 @@ BUG FIXES
 	are of compatible dimensions.
 
     o	qbinom() now is accurate also in (large size, small prob)
-	cases.  (PR#13711)
+	cases.	(PR#13711)
 
     o	The calculation of the Spearman p-value in cor.test() is
 	slightly more accurate in some cases.  (PR#13574)
@@ -1509,7 +1509,7 @@ BUG FIXES
 	not sum() makes sense, so the change has been reverted.
 
     o	Assigning an extra 0-length column to a data frame by
-    	DF$foo <- value gave a corrupt data frame rather than failing.
+	DF$foo <- value gave a corrupt data frame rather than failing.
 	(PR#13724)  This also happened for DF[["foo"]] <- value.
 
     o	R CMD INSTALL no longer gives a spurious warning about old R
@@ -1517,7 +1517,7 @@ BUG FIXES
 	known to be satisfied.
 
     o	The test for setting dim() allowed a value with two or more
-	NAs to be set on a 0-length object.  (PR#13729)  Also, it
+	NAs to be set on a 0-length object.  (PR#13729)	 Also, it
 	allowed an even number of negative values.
 
     o	xtfrm(), rank(), sort() and order() did not always make use of
@@ -1533,7 +1533,7 @@ BUG FIXES
     o	Printing _NA_complex_ had a low-level thinko; patch thanks to
 	Bill Dunlap.
 
-    o	CP1257 encoding for postscript/PDF has been corrected.  (PR#13736)
+    o	CP1257 encoding for postscript/PDF has been corrected.	(PR#13736)
 
     o	aov() with an error term was evaluating the ... arguments in
 	2.9.0 whilst checking their names, so could fail by evaluating
@@ -1549,11 +1549,11 @@ BUG FIXES
     o	Constructing error messages about unused arguments in calls to
 	closures no longer evaluates the arguments.
 
-    o   qr(x, LAPACK=TRUE) did not coerce integer x to numeric.
+    o	qr(x, LAPACK=TRUE) did not coerce integer x to numeric.
 
-    o   qr.coef() misbehaved in the LAPACK case with a matrix RHS, so
-        that solve(qr(x, LAPACK=TRUE)) gave wrong results. (Found by
-        Avraham Adler, PR#13762 by Ravi Varadhan.)
+    o	qr.coef() misbehaved in the LAPACK case with a matrix RHS, so
+	that solve(qr(x, LAPACK=TRUE)) gave wrong results. (Found by
+	Avraham Adler, PR#13762 by Ravi Varadhan.)
 
 
 
@@ -1641,7 +1641,7 @@ NEW FEATURES
     o	option("pdfbrowser") is now set on Windows as well as on Unix-alikes.
 
     o	object.size() now returns an object of class "object_size" and
-    	has a print() method.
+	has a print() method.
 
     o	[col/row]Sums(), *Means() now have an additional '...' argument,
 	so that they can more easily be turned into generic functions.
@@ -1663,7 +1663,7 @@ NEW FEATURES
 
     o	grep() gains an 'invert' argument mimicking 'grep -v/--invert'.
 
-    o 	strwrap() now allows a separate prefix for the first line.
+    o	strwrap() now allows a separate prefix for the first line.
 
     o	grep() has a more efficient sibling grepl() that returns a
 	logical vector.
@@ -1702,9 +1702,9 @@ NEW FEATURES
 	archives.
 
     o	Replacement functions for class() and oldClass()  will unset
-        the S4 bit when the replacement can't be an S4 object;
-        oldClass() will return the S3 class for S4 objects with slot
-        .S3Class.
+	the S4 bit when the replacement can't be an S4 object;
+	oldClass() will return the S3 class for S4 objects with slot
+	.S3Class.
 
     o	clip() takes extra steps to avoid the next graphics call
 	resetting the clip region.
@@ -1714,24 +1714,24 @@ NEW FEATURES
 
     o	New version of withVisible() for better handling of cases like
 	withVisible(eval.parent(....)). Moved to package 'base' with a
-        view to replace .Internal(eval.with.vis) in source() later.
+	view to replace .Internal(eval.with.vis) in source() later.
 
     o	showClass() which is also used to auto-print class definitions, now
 	mentions the package where the class comes from, if there is one.
 
     o	simulate(obj) now also works for "glm" objects and for weighted
 	fits, thanks in part to contributions from Ben Bolker and
-	Heather Turner.  There is now a means to extend the methods
+	Heather Turner.	 There is now a means to extend the methods
 	available for "glm" objects, as glm families can have an
 	optional 'simulate' component.
 
     o	S4 classes that inherit from any of the "structure" classes or
-        from "vector" will turn on methods for all the "Ops" group of
-        functions when the package containing the classes is
-        loaded. See class?structure.
+	from "vector" will turn on methods for all the "Ops" group of
+	functions when the package containing the classes is
+	loaded. See class?structure.
 
     o	A mechanism now allows S4 classes to inherit from object types
-        "environment", "externalptr" and symbol ("name").  See ?setClass.
+	"environment", "externalptr" and symbol ("name").  See ?setClass.
 
     o	demo() gains 'echo' and 'ask' arguments, with defaults similar
 	to example().
@@ -1750,33 +1750,33 @@ NEW FEATURES
 
     o	Subsetting S4-objects (without an explicit "[" method) no longer
 	preserves the class in cases like setClass("C",
-	contains="list"); This reverts a "bug fix" activated in  R 2.8.0.
+	contains="list"); This reverts a "bug fix" activated in	 R 2.8.0.
 
     o	.packages() and .find.packages() no longer check the package
-    	info for installed packages with dumped metadata, since this
-    	was checked when the package was installed.  .packages() only
-    	considers such packages to be validly installed (any others
-    	were installed in a long-obsolete version of R).  Both changes
-    	speed up searches in libraries of thousands of packages.
+	info for installed packages with dumped metadata, since this
+	was checked when the package was installed.  .packages() only
+	considers such packages to be validly installed (any others
+	were installed in a long-obsolete version of R).  Both changes
+	speed up searches in libraries of thousands of packages.
 
     o	boxplot() uses butt line endings for its median line
 	(suggestion of Uwe Ligges, PR#13553).
 
     o	S4 objects passed to a non-default S3 method will be converted
- 	to a valid S3 object with the S3 class.  See the section on
- 	inheriting from non-S4 classes in ?Classes.
+	to a valid S3 object with the S3 class.	 See the section on
+	inheriting from non-S4 classes in ?Classes.
 
     o	A new class "nonStructure" has been defined; classes that extend
 	a vector class but that should lose their slots under Math or
-	Ops functions should extend this class.  See class?nonStructure.
+	Ops functions should extend this class.	 See class?nonStructure.
 
     o	axis.POSIXct() now plots in the timezone marked for its inputs
-	(if any) rather than in the local time.  The latter was a
+	(if any) rather than in the local time.	 The latter was a
 	deliberate choice, but is easy to select by removing the
 	'tzone' attribute.  (Suggestion of Dan Kelley.)
 
     o	A new function classesToAM() returns an adjacency matrix
-	representing the inheritance of the classes specified.  Allows
+	representing the inheritance of the classes specified.	Allows
 	better human examination of the patterns, e.g. by using the
 	matrix as input to one of the graph packages (see the
 	documentation).
@@ -1893,14 +1893,14 @@ Rd CONVERSION
 	- The warnings for \code{} inside example are suppressed.
 
 	- Whitespace between arguments in \item and \section is
-          accepted without a warning (see below).
+	  accepted without a warning (see below).
 
 	- $ is treated literally in text, even for latex conversions.
 
 	- \ is only an escape before % { } \ .
 
 	- \R, \dots and \ldots can be followed by {}, and it is
-          recommended that they when not followed by whitespace.
+	  recommended that they when not followed by whitespace.
 
 	- The obsolete interpretation of \Alpha etc is no longer done.
 
@@ -1924,11 +1924,11 @@ Rd CONVERSION
 	converters, have been added to package 'tools'.
 
     o	R CMD check runs the package's Rd files through parse_Rd() for a
-	stricter syntax check.  This can be suppressed by setting
+	stricter syntax check.	This can be suppressed by setting
 	_R_CHECK_RD_PARSE_ to FALSE.
 
     o	Added markup \verb, which displays like \code, but parses as
-	verbatim text.  Currently only supported by parse_Rd() and
+	verbatim text.	Currently only supported by parse_Rd() and
 	Rd2HTML().
 
 
@@ -1945,7 +1945,7 @@ INSTALLATION
 
     o	make install-tests can be used to install the test files,
 	to allowed an installed version of R to be tested -- see the
-	R-admin manual.  This is also supported by the function
+	R-admin manual.	 This is also supported by the function
 	testInstalledPackages() in package 'tools'.
 
     o	'make install' using a parallel make should now work.
@@ -1976,7 +1976,7 @@ PACKAGE INSTALLATION
 	for installed packages if it is not already part of
 	.libPaths() (as INSTALL already does).
 
- 	It has a new argument 'Ncpus' to support parallel installs of
+	It has a new argument 'Ncpus' to support parallel installs of
 	source packages.
 
     o	HTML links will be resolved first to the standard packages: this
@@ -2027,13 +2027,13 @@ BUG FIXES
 
     o	deparse(control="S_compatible") now never uses backticks.
 
-    o   X-spline drawing is improved for cases where the control
-        points are located well off the edges of the device.
+    o	X-spline drawing is improved for cases where the control
+	points are located well off the edges of the device.
 
-        The symptom of this problem is the error "reached MAXNUMPTS".
+	The symptom of this problem is the error "reached MAXNUMPTS".
 
-    o   exists() with mode= "any" will no longer run an active binding's
-        function.
+    o	exists() with mode= "any" will no longer run an active binding's
+	function.
 
     o	format(c(1 + 2i, NA)) no longer has extraneous space in "  NA".
 
@@ -2058,9 +2058,9 @@ BUG FIXES
     o	duplicated(<data frame>, incomparables = NA) now gives the
 	intended error message. (PR#13632)
 
-    o   name handling of as.data.frame() has been sanitized somewhat
+    o	name handling of as.data.frame() has been sanitized somewhat
 
-    o   Evaluating an assignment expression with a string on the left
+    o	Evaluating an assignment expression with a string on the left
 	hand side no longer destructively changes the string to a symbol
 	in the expression.
 
@@ -2084,10 +2084,10 @@ NEW FEATURES
 	Help Workshop is not installed.
 
     o	R-Forge has been added to R_HOME/etc/repositories, so it will
-    	be available interactively in setRepositories().
+	be available interactively in setRepositories().
 
     o	The compiled loess() code has been updated to the current
-	version of dloess from Netlib.  This includes patches from Ben
+	version of dloess from Netlib.	This includes patches from Ben
 	Tyner which correct some errors when degree = 0 and hence
 	solve PR#13570.
 
@@ -2095,7 +2095,7 @@ NEW FEATURES
 INSTALLATION
 
     o	--with-ICU is now supported (and recommended) on Mac OS X using
-	Apple's supplied port.  Note however that the locale category
+	Apple's supplied port.	Note however that the locale category
 	LC_COLLATE cannot be changed whilst R is running on Apple's
 	version of ICU.
 
@@ -2124,14 +2124,14 @@ BUG FIXES
 	object to a character vector does).
 
     o	When extracting part of a complex list structure using [[]]
-    	with a vector index, the extracted part was not marked for
-    	duplication on change. (PR#13411)
+	with a vector index, the extracted part was not marked for
+	duplication on change. (PR#13411)
 
     o	Assigning an additional element to a pairlist/language element
- 	by x[["foo"]] <- value did not name the additional element.
+	by x[["foo"]] <- value did not name the additional element.
 
     o	.Call() and .External() were not accepting "NativeSymbolInfo"
-	and "NativeSymbol" objects as claimed.  (Patch from Olaf
+	and "NativeSymbol" objects as claimed.	(Patch from Olaf
 	Mersmann.)
 
     o	codoc() was missing some default value mismatches with
@@ -2172,7 +2172,7 @@ BUG FIXES
 	'formatNum' set by strOptions().
 
     o	nls(algorithm = "port") did not accept the [factor] notation.
-    	(PR#13650)
+	(PR#13650)
 
     o	The relational (aka "comparison") operators are now binary, also in
 	a lower level sense, and an expression as  "<"(1)  is now erronous.
@@ -2239,7 +2239,7 @@ NEW FEATURES
 UTILITIES
 
     o	R_PDFLATEXCMD is added to the environment variables set by
-    	'R CMD' and is used by R CMD Rd2dvi.
+	'R CMD' and is used by R CMD Rd2dvi.
 
 	R_LATEXCMD, R_PDFLATEXCMD, R_MAKEINDEXCMD and R_DVIPSCMD
 	default to 'latex', 'pdflatex', 'makeindex' and 'dvips'
@@ -2281,10 +2281,10 @@ BUG FIXES
 	but only double was accepted.
 
     o	contrib.url() produced an incorrect URL for the type
-        "mac.binary".
+	"mac.binary".
 
-    o   pairwise.wilcox.test() did not pass on the 'paired' argument
-        (caught by Matthias Kohl)
+    o	pairwise.wilcox.test() did not pass on the 'paired' argument
+	(caught by Matthias Kohl)
 
     o	bmp(), jpeg(), and png() on unix with type="cairo" would segfault
 	on closure if the output file could not be opened.
@@ -2292,7 +2292,7 @@ BUG FIXES
     o	tiff() on unix would not write the output file for the first page
 	when multiple pages were plotted.
 
-    o   str(1 + structure(1, class = "test")) no longer recurses indefinitely.
+    o	str(1 + structure(1, class = "test")) no longer recurses indefinitely.
 
     o	pf(x, .., ncp, lower.tail=FALSE, log=TRUE) is much more accurate
 	for large x now.
@@ -2300,13 +2300,13 @@ BUG FIXES
     o	dev2bitmap() failed in 2.8.0 if 'taa' and 'gaa' were both NA.
 
     o	Under rare circumstances equality tests for character strings
-    	could fail to report equality in 2.8.0 in the same way as
-    	2.7.2.  (This needed a current encoding of Latin-1 or UTF-8,
-    	one string whose encoding was marked as that encoding and one
-    	that was marked as "unknown".  In that circumstance the two
-    	strings are not actually known to be equal, but earlier
-    	versions of R assumed that "unknown" meant the current
-    	encoding, and this is done once again.)
+	could fail to report equality in 2.8.0 in the same way as
+	2.7.2.	(This needed a current encoding of Latin-1 or UTF-8,
+	one string whose encoding was marked as that encoding and one
+	that was marked as "unknown".  In that circumstance the two
+	strings are not actually known to be equal, but earlier
+	versions of R assumed that "unknown" meant the current
+	encoding, and this is done once again.)
 
     o	R CMD config could echo messages from GNU make if called from
 	within a Makefile (as e.g. package Rcpp did), especially from
@@ -2352,9 +2352,9 @@ BUG FIXES
 	D contains a single package.  (PR#13332)
 
     o	legend(...., merge=TRUE) now warns and has no effect in the
-	case where no line segments are drawn.  (PR#13340)
+	case where no line segments are drawn.	(PR#13340)
 
-    o 	transform.data.frame() works better when two or more columns are
+    o	transform.data.frame() works better when two or more columns are
 	added.
 
     o	Deparsing argument lists with non-syntactic names (e.g. that for
@@ -2399,7 +2399,7 @@ BUG FIXES
 	MAXNUMPTS").
 
     o	In setClass("C", contains="list"); x <- new("C", 1:3), x[2:3] now
-        remains of class "C".  So does rep(x, 2) or rep.int(x, 3).
+	remains of class "C".  So does rep(x, 2) or rep.int(x, 3).
 	[NOTE: This "feature" has been reverted for R 2.9.0, see above]
 
     o	median.default() now also works for "numeric"-like vectors.
@@ -2421,29 +2421,29 @@ BUG FIXES
 	sort order.
 
     o	col(x, as.factor=TRUE) and row(x, as.factor=TRUE) would fail
-	if x had no column (row) names.  It was documented
+	if x had no column (row) names.	 It was documented
 	incorrectly, and now returns a matrix factor.
 
     o	setRepositories() failed if "pkgType" was set to
 	"mac.binary.leopard".
 
     o	formals<-() changed the body of the function if this was a
-    	length-one list.
+	length-one list.
 
     o	body<-() failed if the function had no arguments.  It now
 	warns if discarding elements from a 'value' of type "expression".
 
     o	qr.coef() failed in the complex case for non-square systems.
-    	(PR#13305)
+	(PR#13305)
 
     o	plot.dendrogram(horizontal=TRUE) did not not plot 'edgetext'
 	at the correct locations.  (PR#13313)
 
     o	The starting point for plot.acf(ci.type="ma") was lag 0 when it
-	should have been lag 1.  (PR#13071)
+	should have been lag 1.	 (PR#13071)
 
-    o   There was an obscure bug with srcrefs, which could put the
-        parser into a condition giving "Error: bad value" on any input
+    o	There was an obscure bug with srcrefs, which could put the
+	parser into a condition giving "Error: bad value" on any input
 
 
 
@@ -2646,7 +2646,7 @@ NEW FEATURES
 
     o	set.seed(kind=NULL) now takes 'kind' from a saved seed if the
 	workspace has been restored or .Random.seed has been set in
-	some other way.  Previously it took the 'currently used' value,
+	some other way.	 Previously it took the 'currently used' value,
 	which was "default" unless random numbers had been used in
 	the current session.  Similarly for the values reported by
 	RNGkind().  (Related to PR#12567.)
@@ -2686,7 +2686,7 @@ NEW FEATURES
     o	system.time() now uses lazy evaluation rather than
 	eval/substitute, which results in more natural scoping. (PR#11169)
 
-    o   In table(), 'exclude=NULL' now does something also for factor
+    o	In table(), 'exclude=NULL' now does something also for factor
 	arguments. A new 'useNA' argument allows you to control
 	whether to add NA levels unconditionally or only when present
 	in data. A new convenience function addNA() gives similar
@@ -2706,7 +2706,7 @@ NEW FEATURES
 
     o	New generic function xtfrm() as an auxiliary helper for
 	sort(), order() and rank().  This should return a numeric
-	vector that sorts in the same way as its input.  The default
+	vector that sorts in the same way as its input.	 The default
 	method supports any class with ==, > and is.na() methods but
 	specific methods can be much faster.
 
@@ -2783,9 +2783,9 @@ NEW FEATURES IN PACKAGE 'methods'
 	valid S3 inheritance from the stored definition.  See ?S3.
 
     o	S4 methods may now be defined corresponding to "...", by
-        creating a generic function that has "..." as its signature.
-        A method will be selected and called if all the arguments
-        matching "..." are from this class or a subclass.  See ?dotsMethods.
+	creating a generic function that has "..." as its signature.
+	A method will be selected and called if all the arguments
+	matching "..." are from this class or a subclass.  See ?dotsMethods.
 
     o	New functions S3Part() and S3Class() provide access to the
 	corresponding S3 object and class for S4 classes that extend
@@ -2869,7 +2869,7 @@ UTILITIES
 	available, else by name.
 
     o	R CMD check now also uses codetools' checks on the body of S4
-        methods.
+	methods.
 
 
 C-LEVEL FACILITIES
@@ -2890,7 +2890,7 @@ BUG FIXES
     o	@ now gives an error (and not just a warning) if it is being
 	applied to a non-S4 object.
 
-    o   R CMD appends (not prepends) R's texmf path to TEXINPUTS.
+    o	R CMD appends (not prepends) R's texmf path to TEXINPUTS.
 
     o	Objects generated by new() from S4 classes should now all
 	satisfy isS4(object).  Previously, prototypes not of object
@@ -2916,8 +2916,8 @@ BUG FIXES
 	are selected.
 
     o	on.exit() has been fixed to use lexical scope in determining
-        where to evaluate the exit action when the on.exit expression
-        appears in a function argument.
+	where to evaluate the exit action when the on.exit expression
+	appears in a function argument.
 
     o	rank() now consistently returns a double result for
 	ties.method = "average" and an integer result otherwise.
@@ -2946,10 +2946,10 @@ BUG FIXES
 	found.
 
     o	Class inheritance using explicit coerce= methods via setIs()
-        failed  to coerce the argument in method dispatch.  With this
-        fixed, a mechanism was needed to prohibit such inheritance
-        when it would break the generic function (e.g.,
-        initialize). See ?setIs and ?setGeneric.
+	failed	to coerce the argument in method dispatch.  With this
+	fixed, a mechanism was needed to prohibit such inheritance
+	when it would break the generic function (e.g.,
+	initialize). See ?setIs and ?setGeneric.
 
     o	RSiteSearch() encodes its query (it seems this is occasionally
 	needed on some platforms, but encoding other fields is harmful).
@@ -2966,7 +2966,7 @@ BUG FIXES
     o	pdf(family="Japan") [and other CIDfonts] no longer seg.faults
 	when writing "western" text strings.
 
-    o 	as.list() applied to an environment now forces promises and
+    o	as.list() applied to an environment now forces promises and
 	returns values.
 
     o	Promises capturing calls to sys.parent() and friends did not
@@ -2986,7 +2986,7 @@ BUG FIXES
     o	anova(glm(..., y=FALSE)) now works.  (PR#13098)
 
     o	cut.Date(x, "weeks") could fail if x has only one unique value
-	which fell on a week boundary.  (PR#13159)
+	which fell on a week boundary.	(PR#13159)
 
 
 
@@ -3007,15 +3007,15 @@ BUG FIXES
 	more than one column.
 
     o	Attempting to open an X11() device on a non-existent display
- 	when one is already open on another display now gives a
- 	warning rather than terminating R via a fatal X11 error.
+	when one is already open on another display now gives a
+	warning rather than terminating R via a fatal X11 error.
 	(PR#12628)
 
     o	source() did not respect the setting of options("keep.source")
 	when setting source references.
 
     o	seek() now clears the pushback on a text-mode connection if
- 	used to set a new position.  (PR#12640)
+	used to set a new position.  (PR#12640)
 
     o	quartz() would segfault if asked to create a file for bitmap
 	output which could not be created.  This applied also to the
@@ -3061,7 +3061,7 @@ BUG FIXES
 
     o	Plotmath computed the glyph metrics for the wrong character (and
 	perhaps for a non-existent one) if this was a single-byte
-	character with the top bit set.  An example was	symbol("\300").
+	character with the top bit set.	 An example was	symbol("\300").
 
     o	sink() and cat() could divert output to a non-writable connection.
 
@@ -3101,7 +3101,7 @@ BUG FIXES
 	calculation.
 
     o	dnbinom(x, size, mu=*, ..) is now more accurate for very large
-	'size'.  The same applies to pnbinom() and rnbinom().
+	'size'.	 The same applies to pnbinom() and rnbinom().
 
     o	axis() was ignoring par() mgp[3] if mgp was set in-line.
 
@@ -3110,7 +3110,7 @@ BUG FIXES
 
     o	Calling lapply() was not handling method dispatch correctly for
 	is.numeric(), is.matrix(), is.array(), log() and the Math2
-	group.  This affected data.matrix() which incorrectly regarded
+	group.	This affected data.matrix() which incorrectly regarded
 	"Date" and "POSIXct" objects as numeric, and has been adjusted
 	to do so as exceptions.
 
@@ -3154,7 +3154,7 @@ BUG FIXES
 	argument.  (PR#11585)
 
     o	pbeta() is more accurate in some cases with extreme values of
-	'ncp'.  (PR#11277).
+	'ncp'.	(PR#11277).
 
     o	edit.data.frame() no longer fails if called on a 0-column
 	data frame and no column is created.
@@ -3174,7 +3174,7 @@ BUG FIXES
 	the end of the line) in R code has been removed.
 
     o	qgamma() warns if used with shape < 1e-10, when it may be
- 	unreliable.  (PR#12324)
+	unreliable.  (PR#12324)
 
     o	Installing a source package was not using the package's declared
 	encoding (if any) as a default encoding for the help.search()
@@ -3210,7 +3210,7 @@ NEW FEATURES
 
     o	A field containing just a sign is no longer regarded as numeric
 	(it was on all platforms in 2.7.0, but not on most in earlier
-	versions of R).  Similarly, '.' is now always non-numeric.
+	versions of R).	 Similarly, '.' is now always non-numeric.
 
     o	CITATION files are now read in Latin-1: quite a few were
 	failing if used in a multibyte locale such as UTF-8.
@@ -3341,7 +3341,7 @@ BUG FIXES
 	CJK locales on Windows).
 
     o	conformMethod(), called by setMethod(), now checks better about
-	argument names in wrong order.  Whereas it only warns currently,
+	argument names in wrong order.	Whereas it only warns currently,
 	it is planned to become an error in the future.
 
     o	The predict() method for prcomp() had an incorrect check for
@@ -3593,7 +3593,7 @@ NEW FEATURES
 	one.
 
     o	Progress-bar functions txtProgressBar(), tkProgressBar() in
- 	package tcltk and winProgressBar() (Windows only).
+	package tcltk and winProgressBar() (Windows only).
 
     o	readChar() gains an argument 'useBytes' to allow it to read a
 	fixed number of bytes in an MBCS locale.
@@ -3694,9 +3694,9 @@ NEW FEATURES
 
     o	Creating new S4 class and method definitions in an environment
 	that could not be identified (as package, namespace or global)
-	previously generated an error.  It now results in creating and
+	previously generated an error.	It now results in creating and
 	using an artificial package name from the current date/time,
-	with a warning.  See ?getPackageName.
+	with a warning.	 See ?getPackageName.
 
     o	Unix-alikes now give a warning on startup if locale settings
 	fail.  (The Windows port has long done so.)
@@ -3716,8 +3716,8 @@ NEW FEATURES
 	not be installable nor loadable in R < 2.7.0.
 
 	There can be multiple mentions of R or a package in the Depends
- 	field in a DESCRIPTION file: only the first mention will be
- 	used in R < 2.7.0.
+	field in a DESCRIPTION file: only the first mention will be
+	used in R < 2.7.0.
 
 
 GRAPHICS CHANGES
@@ -3793,11 +3793,11 @@ GRAPHICS CHANGES
     o	There is a new version of the X11() device based on cairo
 	graphics which is selected by type "cairo" or "nbcairo", and
 	is available on machines with cairo installed and preferably
-	pango (which most machines with gtk+ >= 2.8 will have).  This
+	pango (which most machines with gtk+ >= 2.8 will have).	 This
 	version supports translucent colours and normally does a
 	better job of font selection so it has been possible to
-	display (e.g.)  English, Polish, Russian and Japanese text on
-	a single X11() window.  It is the default where available.
+	display (e.g.)	English, Polish, Russian and Japanese text on
+	a single X11() window.	It is the default where available.
 
 	There is a companion function, savePlot(), to save the current
 	plot to a PNG file.
@@ -4098,7 +4098,7 @@ BUG FIXES
 	'graphics input' mode by e.g. a change of cursor.
 
     o	Locales without encoding specification and non-UTF-8 locales
-	now work properly on Mac OS X.  Note that locales without
+	now work properly on Mac OS X.	Note that locales without
 	encoding specification always use UTF-8 encoding in Mac OS X
 	(except for specials "POSIX" and "C") - this is different from
 	other operating systems.
@@ -5051,7 +5051,7 @@ C-LEVEL FACILITIES
     o	The instructions for making and using standalone libRmath have
 	been moved to the R Installation and Administration manual.
 
-    o 	CHAR() now returns (const char *) since CHARSXPs should no
+    o	CHAR() now returns (const char *) since CHARSXPs should no
 	longer be modified in place.  This change allows compilers to
 	warn or error about improper modification.  Thanks to Hervé
 	Pagès for the suggestion.
@@ -11469,7 +11469,7 @@ BUG FIXES
 
 	*********************************************************
 	*							*
-	*	Older news is available in the sources:         *
+	*	Older news is available in the sources:		*
 	*	News of 1.x.y and 2.0.0 is in file `ONEWS'	*
 	*	News of 1.0.0 and earlier is in file `OONEWS'	*
 	*							*
