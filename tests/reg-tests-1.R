@@ -2152,14 +2152,6 @@ stopifnot(length(res) == 5)
 ## all length one in 1.7.0
 
 
-## PR#3035 problems with sep > ASCII(127)
-f <- tempfile()
-cat("x¦a¦b¦c¦d", "1¦7¦13¦19¦25", "2¦8¦14¦20¦26", "3¦9¦15¦21¦27",
-    "4¦10¦16¦22¦28", "5¦11¦17¦23¦29", "6¦12¦18¦24¦30", sep="\n", file=f)
-read.table(f, header = TRUE, sep ="¦")
-## failed in 1.7.0
-
-
 ## PR#2993 need to consider delta=NULL in power.t.test{ctest}
 power.t.test(n=10, delta=NULL, power=.9, alternative="two.sided")
 ## failed in 1.7.0
