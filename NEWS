@@ -368,6 +368,9 @@ BUG FIXES
     o	p.adjust(*, method, n)	now works correctly for the rare case
 	n > length(p), also when method differs from "bonferroni" or
 	"none", thanks to a patch from Gordon Smyth.
+	
+    o	tools::showNonASCII() failed to detect non-ASCII characters
+    	if iconv() converted them to ASCII.
 
 
 

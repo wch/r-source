@@ -165,12 +165,15 @@ function(x)
 {
     ## All that is needed here is an 8-bit encoding that includes ASCII.
     ## The only one we guarantee to exist is 'latin1'.
-    ## The default sub=NA is faster.
-    ind <- is.na(iconv(x, "latin1", "ASCII"))
+    ## The default sub=NA is faster, but on some platforms 
+    ## some characters just lose their accents, so two tests.
+    asc <- iconv(x, "latin1", "ASCII")
+    ind <- is.na(asc) | asc != x
     if(any(ind))
         cat(paste(which(ind), ": ",
                   iconv(x[ind], "latin1", "ASCII", sub="byte"), sep=""),
             sep="\n")
+    invisible(x[ind])
 }
 
 ### * Text utilities.

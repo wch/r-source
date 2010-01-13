@@ -24,7 +24,15 @@ showNonASCII(x)
   preceded by the line number and with non-ASCII bytes highlighted
   \emph{via} \code{\link{iconv}(sub = "byte")}.
 }
-
+\note{
+  On some platforms (including Windows), \code{\link{iconv}(sub = "byte")} 
+  will convert some accented characters to the unaccented ASCII equivalent, rather than 
+  highlighting them.
+}
+\value{
+  The elements of \code{x} containing non-ASCII characters will be returned 
+  invisibly.
+}
 \examples{
 out <- c(
 "fa\xE7ile test of showNonASCII():",
@@ -33,9 +41,10 @@ out <- c(
 "   This has an \xfcmlaut in it.",
 "   OK again.",
 "}")
-cat(out, file = "my.Rd", sep = "\n")
+f <- tempfile()
+cat(out, file = f, sep = "\n")
 
-showNonASCII(readLines("my.Rd"))
-unlink("my.Rd")
+showNonASCII(readLines(f))
+unlink(f)
 }
 \keyword{utilities}
