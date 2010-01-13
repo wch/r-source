@@ -5,7 +5,7 @@
 
 \name{assocplot}
 \alias{assocplot}
-\encoding{latin1}
+\encoding{UTF-8}
 \title{Association Plots}
 \description{
   Produce a Cohen-Friendly association plot indicating deviations from
@@ -70,7 +70,7 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   Meyer, D., Zeileis, A., and Hornik, K. (2005)
   The strucplot framework: Visualizing multi-way contingency tables with vcd.
   \emph{Report 22}, Department of Statistics and Mathematics, 
-  \enc{Wirtschaftsuniversit‰t}{Wirtschaftsuniversitaet} Wien, Research Report Series.
+  \enc{Wirtschaftsuniversit√§t}{Wirtschaftsuniversitaet} Wien, Research Report Series.
   \url{http://epub.wu-wien.ac.at/dyn/openURL?id=oai:epub.wu-wien.ac.at:epub-wu-01_8a1}
 }
 \examples{

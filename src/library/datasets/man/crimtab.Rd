@@ -6,7 +6,7 @@
 \name{crimtab}
 \alias{crimtab}
 \docType{data}
-\encoding{latin1}
+\encoding{UTF-8}
 \title{Student's 3000 Criminals Data}
 \description{
   Data of 3000 male criminals over 20 years old undergoing their
@@ -60,7 +60,7 @@
 }
 \source{
   \url{http://pbil.univ-lyon1.fr/R/donnees/criminals1902.txt}
-  thanks to Jean R. Lobry and \enc{Anne-Béatrice}{Anne-Beatrice} Dufour.
+  thanks to Jean R. Lobry and \enc{Anne-BÃ©atrice}{Anne-Beatrice} Dufour.
 }
 \references{
   Garson, J.G. (1900)

@@ -7,7 +7,7 @@
 \alias{mosaicplot}
 \alias{mosaicplot.default}
 \alias{mosaicplot.formula}
-\encoding{latin1}
+\encoding{UTF-8}
 \title{Mosaic Plots}
 \description{Plots a mosaic on the current graphics device.}
 \usage{
@@ -142,7 +142,7 @@ mosaicplot(x, \dots)
   Meyer, D., Zeileis, A., and Hornik, K. (2005)
   The strucplot framework: Visualizing multi-way contingency tables with vcd.
   \emph{Report 22}, Department of Statistics and Mathematics, 
-  \enc{Wirtschaftsuniversit‰t}{Wirtschaftsuniversitaet} Wien, Research Report Series.
+  \enc{Wirtschaftsuniversit√§t}{Wirtschaftsuniversitaet} Wien, Research Report Series.
   \url{http://epub.wu-wien.ac.at/dyn/openURL?id=oai:epub.wu-wien.ac.at:epub-wu-01_8a1}
 
   The home page of Michael Friendly

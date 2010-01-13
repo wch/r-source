@@ -4235,13 +4235,13 @@ could be UTF-8, Latin-1, Latin-9, KOI8-R, EUC-JP, @emph{etc}.  So the
 it is not @acronym{ASCII}.  (The @code{\encoding@{@}} directive must be
 on a line by itself, and in particular one containing no
 non-@acronym{ASCII} characters.  There should be only one
-@code{\encoding@{@}} directive per file, but only the first
-will be used.  As from @R{} 2.6.0 the encoding declared in the
+@code{\encoding@{@}} directive per file, but only the first will be
+used.  As from @R{} 2.6.0 the encoding declared in the
 @file{DESCRIPTION} file will be used if none is declared in the file.)
-This is for input: internally, the Rd files are converted to the UTF-8
-encoding.  It is also used for output in the case of @LaTeX{}
-conversions, while HTML is output in UTF-8 and text is output in the
-local encoding.
+This is for input: as from @R{} 2.10.0 the Rd files are converted to
+UTF-8 before parsing and so the preferred encoding for the files
+themselves is now UTF-8.  (Using Latin-1 will be slightly more portable
+for older versions of @R{}.)
 
 Wherever possible, avoid non-@acronym{ASCII} chars in Rd files, and
 even symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},

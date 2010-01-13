@@ -6,7 +6,7 @@
 \name{faithful}
 \docType{data}
 \alias{faithful}
-\encoding{latin1}
+\encoding{UTF-8}
 \title{Old Faithful Geyser Data}
 \description{
   Waiting time between eruptions and the duration of the eruption for
@@ -20,9 +20,9 @@
     eruption (in mins)\cr
   }
 }
-\source{W. Härdle.}
+\source{W. HÃ¤rdle.}
 \references{
-  \enc{Härdle}{Haerdle}, W. (1991)
+  \enc{HÃ¤rdle}{Haerdle}, W. (1991)
   \emph{Smoothing Techniques with Implementation in S}.
   New York: Springer.
 

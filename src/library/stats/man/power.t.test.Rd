@@ -5,7 +5,7 @@
 
 \name{power.t.test}
 \alias{power.t.test}
-\encoding{latin1}
+\encoding{UTF-8}
 \title{Power calculations for one and two sample t tests}
 \usage{
 power.t.test(n = NULL, delta = NULL, sd = 1, sig.level = 0.05,
@@ -47,7 +47,7 @@ power.t.test(n = NULL, delta = NULL, sd = 1, sig.level = 0.05,
 }
 
 \author{Peter Dalgaard.  Based on previous work by Claus
-  \enc{Ekstrøm}{Ekstroem}}
+  \enc{EkstrÃ¸m}{Ekstroem}}
 
 \note{
   \code{uniroot} is used to solve power equation for unknowns, so

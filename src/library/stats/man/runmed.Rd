@@ -6,7 +6,7 @@
 \name{runmed}
 \title{Running Medians -- Robust Scatter Plot Smoothing}
 \alias{runmed}
-\encoding{latin1}
+\encoding{UTF-8}
 \description{
   Compute running medians of odd span.  This is the \sQuote{most robust}
   scatter plot smoothing possible.  For efficiency (and historical
@@ -59,7 +59,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
 
   The two algorithms are internally entirely different:
   \describe{
-    \item{\code{"Turlach"}}{is the \enc{Härdle}{Haerdle}--Steiger
+    \item{\code{"Turlach"}}{is the \enc{HÃ¤rdle}{Haerdle}--Steiger
       algorithm (see Ref.) as implemented by Berwin Turlach.
       A tree algorithm is used, ensuring performance \eqn{O(n \log
         k)}{O(n * log(k))} where \code{n = length(x)} which is
@@ -72,7 +72,7 @@ runmed(x, k, endrule = c("median", "keep", "constant"),
   }
 }
 \references{
-  \enc{Härdle}{Haerdle}, W. and Steiger, W. (1995)
+  \enc{HÃ¤rdle}{Haerdle}, W. and Steiger, W. (1995)
   [Algorithm AS 296] Optimal median smoothing,
   \emph{Applied Statistics} \bold{44}, 258--264.
 

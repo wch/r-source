@@ -7,7 +7,7 @@
 \alias{nclass.Sturges}
 \alias{nclass.scott}
 \alias{nclass.FD}
-\encoding{latin1}
+\encoding{UTF-8}
 \title{Compute the Number of Classes for a Histogram}
 \description{
   Compute the number of classes for a histogram.
@@ -45,7 +45,7 @@ nclass.FD(x)
 
   Freedman, D. and Diaconis, P. (1981)
   On the histogram as a density estimator: \eqn{L_2} theory.
-  \emph{Zeitschrift \enc{für}{fuer} Wahrscheinlichkeitstheorie
+  \emph{Zeitschrift \enc{fÃ¼r}{fuer} Wahrscheinlichkeitstheorie
     und verwandte Gebiete} \bold{57}, 453--476.
 
   Scott, D. W. (1979) On optimal and data-based histograms.

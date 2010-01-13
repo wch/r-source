@@ -5,7 +5,7 @@
 
 \name{pdf}
 \alias{pdf}
-\encoding{latin1}
+\encoding{UTF-8}
 
 \title{PDF Graphics Device}
 %% The definitive doc is the source :-)
@@ -189,7 +189,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     \item Circles of any radius are allowed.  Unless \code{useDingbats =
     FALSE}, opaque circles of less than 10 big
     points radius are rendered using char 108 in the Dingbats font:
-    all semi-transparent and larger circles using a \enc{Bézier}{Bezier}
+    all semi-transparent and larger circles using a \enc{BÃ©zier}{Bezier}
     curve for each quadrant.
     \item Colours are interpreted by the viewing/printing application.
   }

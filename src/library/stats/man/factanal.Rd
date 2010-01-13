@@ -5,7 +5,7 @@
 
 \name{factanal}
 \alias{factanal}
-\encoding{latin1}
+\encoding{UTF-8}
 \title{Factor Analysis}
 \description{
   Perform maximum-likelihood factor analysis on a covariance matrix or
@@ -91,7 +91,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   p. 27).)  All the starting values supplied in \code{start} are tried
   in turn and the best fit obtained is used.  If \code{start = NULL}
   then the first fit is started at the value suggested by
-  \enc{Jöreskog}{Joreskog} (1963) and given by Lawley & Maxwell
+  \enc{JÃ¶reskog}{Joreskog} (1963) and given by Lawley & Maxwell
   (1971, p. 31), and then \code{control$nstart - 1} other values are
   tried, randomly selected as equal values of the uniquenesses.
 
@@ -159,7 +159,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   Bartlett, M. S. (1938) Methods of estimating mental
   factors. \emph{Nature}, \bold{141}, 609--610.
   
-  \enc{Jöreskog}{Joreskog}, K. G. (1963)
+  \enc{JÃ¶reskog}{Joreskog}, K. G. (1963)
   \emph{Statistical Estimation in Factor Analysis.}  Almqvist and Wicksell.
   
   Lawley, D. N. and Maxwell, A. E. (1971) \emph{Factor Analysis as a

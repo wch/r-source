@@ -8,7 +8,7 @@
 \alias{Stangle}
 \alias{SweaveSyntaxLatex}
 \alias{SweaveSyntaxNoweb}
-\encoding{latin1}
+\encoding{UTF-8}
 \title{Automatic Generation of Reports}
 \description{
   \code{Sweave} provides a flexible framework for mixing text and S code
@@ -77,8 +77,8 @@ Stangle(file, driver = Rtangle(),
 \author{Friedrich Leisch}
 \references{
   Friedrich Leisch: Dynamic generation of statistical reports using
-  literate data analysis. In W. \enc{Härdle}{Haerdle} and
-  B. \enc{Rönz}{Roenz}, editors, Compstat 2002 - Proceedings in Computational
+  literate data analysis. In W. \enc{HÃ¤rdle}{Haerdle} and
+  B. \enc{RÃ¶nz}{Roenz}, editors, Compstat 2002 - Proceedings in Computational
   Statistics, pages 575--580. Physika Verlag, Heidelberg, Germany,
   2002. ISBN 3-7908-1517-9.
   

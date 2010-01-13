@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{TDist}
-\encoding{latin1}
+\encoding{UTF-8}
 \alias{TDist}
 \alias{dt}
 \alias{pt}
@@ -84,7 +84,7 @@ rt(n, df, ncp)
   provided by Catherine Loader (see the reference in \code{\link{dbinom}}).
 
   For the non-central case of \code{dt}, C code contributed by
-  Claus \enc{Ekstrøm}{Ekstroem} based on the relationship (for
+  Claus \enc{EkstrÃ¸m}{Ekstroem} based on the relationship (for
   \eqn{x \neq 0}{x != 0}) to the cumulative distribution.
 
   For the central case of \code{pt}, a normal approximation in the

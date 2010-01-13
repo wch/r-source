@@ -1,11 +1,11 @@
 % File src/library/graphics/man/text.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{text}
 \title{Add Text to a Plot}
-\encoding{latin1}
+\encoding{UTF-8}
 \usage{
 text(x, \dots)
 
@@ -137,8 +137,8 @@ K <- 16; text(exp(1i * 2 * pi * (1:K) / K), col = 2)
 ## The following two examples use latin1 characters: these may not
 ## appear correctly (or be omitted entirely).
 plot(1:10, 1:10, main = "text(...) examples\n~~~~~~~~~~~~~~",
-     sub = "R is GNU ©, but not ® ...")
-mtext("«Latin-1 accented chars»: éè øØ å<Å æ<Æ", side=3)
+     sub = "R is GNU Â©, but not Â® ...")
+mtext("Â«Latin-1 accented charsÂ»: Ã©Ã¨ Ã¸Ã˜ Ã¥<Ã… Ã¦<Ã†", side=3)
 points(c(6,2), c(2,1), pch = 3, cex = 4, col = "red")
 text(6, 2, "the text is CENTERED around (x,y) = (6,2) by default",
      cex = .8)
@@ -151,8 +151,8 @@ text(4, 7, expression(bar(x) == sum(frac(x[i], n), i==1, n)))
 
 ## Two more latin1 examples
 text(5,10.2,
-     "Le français, c'est façile: Règles, Liberté, Egalité, Fraternité...")
+     "Le franÃ§ais, c'est faÃ§ile: RÃ¨gles, LibertÃ©, EgalitÃ©, FraternitÃ©...")
 text(5,9.8,
-     "Jetz no chli züritüütsch: (noch ein bißchen Zürcher deutsch)")
+     "Jetz no chli zÃ¼ritÃ¼Ã¼tsch: (noch ein biÃŸchen ZÃ¼rcher deutsch)")
 }
 \keyword{aplot}

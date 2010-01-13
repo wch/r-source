@@ -1,10 +1,9 @@
 % File src/library/base/man/Encoding.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Encoding}
-\encoding{latin1}
 \alias{Encoding}
 \alias{Encoding<-}
 \alias{enc2native}

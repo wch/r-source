@@ -5,7 +5,7 @@
 
 \name{hcl}
 \alias{hcl}
-\encoding{latin1}
+\encoding{UTF-8}
 \title{HCL Color Specification}
 \description{
   Create a vector of colors from vectors specifying hue,
@@ -62,7 +62,7 @@ packages which provide more general color space facilities.
 Ihaka, R. (2003).
 Colour for Presentation Graphics, Proceedings of the 3rd International
 Workshop on Distributed Statistical Computing (DSC 2003), March 20-22,
-2003, Technische Universit‰t Wien, Vienna, Austria.
+2003, Technische Universit√§t Wien, Vienna, Austria.
 \url{http://www.ci.tuwien.ac.at/Conferences/DSC-2003}.
 }
 \author{Ross Ihaka}

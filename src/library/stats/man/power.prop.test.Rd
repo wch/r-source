@@ -5,7 +5,7 @@
 
 \name{power.prop.test}
 \alias{power.prop.test}
-\encoding{latin1}
+\encoding{UTF-8}
 \title{Power Calculations for Two-Sample Test for Proportions}
 \description{
   Compute power of test, or determine parameters to obtain target power.
@@ -43,7 +43,7 @@ power.prop.test(n = NULL, p1 = NULL, p2 = NULL, sig.level = 0.05,
   \code{note} elements. 
 }
 \author{Peter Dalgaard.  Based on previous work by Claus
-  \enc{Ekstrøm}{Ekstroem}}
+  \enc{EkstrÃ¸m}{Ekstroem}}
 
 \note{
   \code{uniroot} is used to solve power equation for unknowns, so
