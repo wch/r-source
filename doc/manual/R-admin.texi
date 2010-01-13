@@ -1814,7 +1814,11 @@ Current builds of @R{} support all the character sets that the
 underlying OS can handle.  These are interpreted according to the
 @cindex Locale
 current @code{locale}, a sufficiently complicated topic to merit a
-separate section.
+separate section.  Note though that @R{} has no built-in support for
+right-to-left languages and bidirectional output, relying on the OS
+services.  For example, how character vectors in UTF-8 containing both
+English digits and Hebrew characters are printed is OS-dependent (and
+perhaps locale-dependent).
 
 The other aspect of the internationalization is support for the
 translation of messages.  This is enabled in almost all builds of @R{}.
