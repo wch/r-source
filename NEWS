@@ -288,6 +288,7 @@ BUG FIXES
     o	Various ar() fitting methods have more protection for singular
 	fits.
 
+    o	callNextMethod now works again with the drop= argument in `[`
 
 
 
