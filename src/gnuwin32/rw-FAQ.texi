@@ -81,7 +81,8 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.10.0} or later).
+(@samp{2.10.0} or later).  It is almost entirely about the 32-bit build,
+with some mentions of 64-bit builds.
 
 
 @newchap{}
@@ -301,11 +302,11 @@ are quite deliberately installed in parallel folders so you can keep old
 versions around if you wish.
 
 For those with a personal library (folder @file{R\win-library\@var{x.y}}
-of your home directory), you will need to update that too when the minor
-version of R changes (e.g.@: from 2.10.1 to 2.11.0).  A simple way
-to do so is to copy (say) @file{R\win-library\2.10} to
-@file{R\win-library\2.11} before running
-@code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
+of  your  home  directory,  @file{R\win64-library\@var{x.y}}  on  64-bit
+builds), you  will need to update that  too when the minor  version of R
+changes (e.g.@:  from 2.10.1 to  2.11.0).  A simple  way to do so  is to
+copy (say) @file{R\win-library\2.10} to @file{R\win-library\2.11} before
+running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
 
 @node There seems to be a limit on the memory it uses!, How can I keep workspaces for different projects in different directories?, What's the best way to upgrade?, Installation and Usage

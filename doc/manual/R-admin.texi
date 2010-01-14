@@ -1290,9 +1290,9 @@ given by @code{R.home()}).
 @section Building R for 64-bit Windows
 
 Note that the standard 32-bit build of R runs perfectly well on 64-bit
-versions of Windows, with a limit on the total memory allocation of
-4GB.  Thus a native 64-bit build will be attractive to those wanting to
-work with large R objects, or many medium-sized ones.
+versions of Windows, with a limit on the total memory allocation (and
+address space) of 4GB.  Thus a native 64-bit build will be attractive to
+those wanting to work with large R objects, or many medium-sized ones.
 
 To build a 64-bit version of R you need a 64-bit toolchain: the only
 ones discussed here are those based on the work of the MinGW-w64 project
@@ -1316,7 +1316,7 @@ to replace the @file{MinGW/bin} directory of @code{Rtools} in your path
 Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64} and
 @code{BINPREF} (in both @file{MkRules} and @file{etc/Makeconf})
 appropriate to your toolchain, and make R in the usual way.  (At present
-the tcltk package is a dummy.)
+the @code{tcltk} package is a dummy.)
 
 The default is @code{options(pkgType="source")}, that is to use source
 packages.  Note that some of the toolchains, including that from
@@ -1327,7 +1327,12 @@ for binary packages which you can select by
 @code{options(pkgType="win64.binary")}, and an experimental
 package-building service at @url{http://win-builder.r-project.org/}.
 
-The default memory limit should be the amount of installed RAM.
+The default memory limit will be the amount of installed RAM: it can
+be changed by (preferably) using @option{--max-mem-size=} at startup or
+@code{memory.limit} in a running R session.
+
+The personal library is (by default) folder
+@file{R\win64-library\@var{x.y}} of your home directory.
 
 The assistance of Yu Gong at a crucial step in porting R to MinGW-w64 is
 gratefully acknowledged, as well as help from Kai Tietz, the lead
