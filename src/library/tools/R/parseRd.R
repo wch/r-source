@@ -55,6 +55,7 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     	srcfile <- srcfile(file0)
     basename <- basename(srcfile$filename)
     srcfile$encoding <- encoding
+    srcfile$Enc <- "UTF-8"
 
     if (encoding == "ASCII") {
         if (any(is.na(iconv(lines, "", "ASCII"))))

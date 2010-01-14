@@ -12,10 +12,12 @@
 \alias{srcfilecopy-class}
 \alias{srcref-class}
 \alias{print.srcfile}
+\alias{summary.srcfile}
 \alias{open.srcfile}
 \alias{open.srcfilecopy}
 \alias{close.srcfile}
 \alias{print.srcref}
+\alias{summary.srcref}
 \alias{as.character.srcref}
 \alias{.isOpen}
 
@@ -29,9 +31,11 @@ srcfilecopy(filename, lines)
 getSrcLines(srcfile, first, last)
 srcref(srcfile, lloc)
 \method{print}{srcfile}(x, \dots)
+\method{summary}{srcfile}(object, \dots)
 \method{open}{srcfile}(con, line, \dots)
 \method{close}{srcfile}(con, \dots)
 \method{print}{srcref}(x, useSource = TRUE, \dots)
+\method{summary}{srcref}(object, useSource = FALSE, \dots)
 \method{as.character}{srcref}(x, useSource = TRUE, \dots)
 .isOpen(srcfile)
 }
@@ -44,9 +48,9 @@ srcref(srcfile, lloc)
     will be coerced to character. }
   \item{srcfile}{ A \code{srcfile} object. }
   \item{first, last, line}{ Line numbers. }
-  \item{lloc}{ A vector of four values giving a source location; see
+  \item{lloc}{ A vector of four or six values giving a source location; see
     \sQuote{Details}.}
-  \item{x, con}{ An object of the appropriate class. }
+  \item{x, object, con}{ An object of the appropriate class. }
   \item{useSource}{ Whether to read the \code{srcfile} to obtain the
     text of a \code{srcref}. }
   \item{\dots}{ Additional arguments to the methods; these will be ignored. }
@@ -68,21 +72,28 @@ srcref(srcfile, lloc)
   The \code{getSrcLines} function reads the specified lines from
   \code{srcfile}.
 
-  The \code{srcref} function produces an object of class \code{srcref},
-  which describes a range of characters in a \code{srcfile}.  The \code{lloc}
-  value gives the following values:  \code{c(first_line, first_column, last_line, last_column)}.
+  The \code{srcref} function produces an object of class
+  \code{srcref}, which describes a range of characters in a
+  \code{srcfile}.  The \code{lloc} value gives the following values:
+  \code{c(first_line, first_byte, last_line, last_byte, first_column,
+  last_column)}.  (Bytes and columns may be different due to multibyte
+  characters.  If only four values are given, the columns and
+  bytes are assumed to match.)
 
-  Methods are defined for \code{print}, \code{open}, and \code{close}
-  for classes \code{srcfile} and \code{srcfilecopy}. The \code{open}
-  method opens its internal \code{file} connection at a particular line;
-  if it was already open, it will be repositioned to that line.
+  Methods are defined for \code{print}, \code{summary}, \code{open},
+  and \code{close} for classes \code{srcfile} and \code{srcfilecopy}.
+  The \code{open} method opens its internal \code{file} connection at
+  a particular line; if it was already open, it will be repositioned
+  to that line.
 
-  Methods are defined for \code{print} and \code{as.character} for class
-  \code{srcref}.  The \code{as.character} method will read the associated
-  source file to obtain the text corresponding to the reference.  If an
-  error occurs (e.g. the file no longer exists), text like
-  \code{<srcref: "file" chars 1:1 to 2:10>} will be returned instead,
-  indicating the \code{line:column} ranges of the first and last character.
+  Methods are defined for \code{print}, \code{summary} and
+  \code{as.character} for class \code{srcref}.  The
+  \code{as.character} method will read the associated source file to
+  obtain the text corresponding to the reference.  If an error occurs
+  (e.g. the file no longer exists), text like \code{<srcref: "file"
+  chars 1:1 to 2:10>} will be returned instead, indicating the
+  \code{line:column} ranges of the first and last character.  The
+  \code{summary} method defaults to this type of display.
 
   Lists of \code{srcref} objects may be attached to expressions as the
   \code{"srcref"} attribute.  (The list of \code{srcref} objects should be the same
@@ -109,6 +120,7 @@ srcref(srcfile, lloc)
 
 \examples{
 src <- srcfile(system.file("DESCRIPTION", package = "base"))
+summary(src)
 getSrcLines(src, 1, 4)
 ref <- srcref(src, c(1, 1, 2, 1000))
 ref

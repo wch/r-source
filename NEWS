@@ -226,6 +226,10 @@ NEW FEATURES
 	an error.
 
     o	interaction(drop=TRUE) uses less memory (related to PR#14121).
+    
+    o	summary() methods have been added to the "srcref" and
+	"srcfile" classes, and various encoding issues have been
+	cleaned up.
 
     o	If option "checkPackageLicense" is set to TRUE (not currently
 	the default), users will be asked to agree to non-FOSS package
@@ -293,6 +297,9 @@ BUG FIXES
 	fits.
 
     o	callNextMethod now works again with the drop= argument in `[`
+    
+    o	parse() and parse_Rd() miscounted columns when multibyte UTF-8
+	characters were present.
 
 
 

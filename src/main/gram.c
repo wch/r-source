@@ -407,7 +407,7 @@ typedef struct YYLTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 412 "gram.c"
+#line 411 "gram.c"
 
 #ifdef short
 # undef short
@@ -734,16 +734,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   248,   248,   249,   250,   251,   252,   255,   256,   259,
-     262,   263,   264,   265,   267,   268,   270,   271,   272,   273,
-     274,   276,   277,   278,   279,   280,   281,   282,   283,   284,
-     285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
-     295,   297,   298,   299,   301,   302,   303,   304,   305,   306,
-     307,   308,   309,   310,   311,   312,   313,   314,   315,   316,
-     317,   318,   319,   320,   321,   322,   326,   329,   332,   336,
-     337,   338,   339,   340,   341,   344,   345,   348,   349,   350,
-     351,   352,   353,   354,   355,   358,   359,   360,   361,   362,
-     365
+       0,   247,   247,   248,   249,   250,   251,   254,   255,   258,
+     261,   262,   263,   264,   266,   267,   269,   270,   271,   272,
+     273,   275,   276,   277,   278,   279,   280,   281,   282,   283,
+     284,   285,   286,   287,   288,   289,   290,   291,   292,   293,
+     294,   296,   297,   298,   300,   301,   302,   303,   304,   305,
+     306,   307,   308,   309,   310,   311,   312,   313,   314,   315,
+     316,   317,   318,   319,   320,   321,   325,   328,   331,   335,
+     336,   337,   338,   339,   340,   343,   344,   347,   348,   349,
+     350,   351,   352,   353,   354,   357,   358,   359,   360,   361,
+     364
 };
 #endif
 
@@ -1884,453 +1884,453 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 248 "gram.y"
+#line 247 "gram.y"
     { return 0; ;}
     break;
 
   case 3:
-#line 249 "gram.y"
+#line 248 "gram.y"
     { return xxvalue(NULL,2,NULL); ;}
     break;
 
   case 4:
-#line 250 "gram.y"
+#line 249 "gram.y"
     { return xxvalue((yyvsp[(1) - (2)]),3,&(yylsp[(1) - (2)])); ;}
     break;
 
   case 5:
-#line 251 "gram.y"
+#line 250 "gram.y"
     { return xxvalue((yyvsp[(1) - (2)]),4,&(yylsp[(1) - (2)])); ;}
     break;
 
   case 6:
-#line 252 "gram.y"
+#line 251 "gram.y"
     { YYABORT; ;}
     break;
 
   case 7:
-#line 255 "gram.y"
+#line 254 "gram.y"
     { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 8:
-#line 256 "gram.y"
+#line 255 "gram.y"
     { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 9:
-#line 259 "gram.y"
+#line 258 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 10:
-#line 262 "gram.y"
+#line 261 "gram.y"
     { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 11:
-#line 263 "gram.y"
+#line 262 "gram.y"
     { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 12:
-#line 264 "gram.y"
+#line 263 "gram.y"
     { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 13:
-#line 265 "gram.y"
+#line 264 "gram.y"
     { (yyval) = (yyvsp[(1) - (1)]); ;}
     break;
 
   case 14:
-#line 267 "gram.y"
+#line 266 "gram.y"
     { (yyval) = xxexprlist((yyvsp[(1) - (3)]),&(yylsp[(1) - (3)]),(yyvsp[(2) - (3)])); ;}
     break;
 
   case 15:
-#line 268 "gram.y"
+#line 267 "gram.y"
     { (yyval) = xxparen((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)])); ;}
     break;
 
   case 16:
-#line 270 "gram.y"
+#line 269 "gram.y"
     { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); ;}
     break;
 
   case 17:
-#line 271 "gram.y"
+#line 270 "gram.y"
     { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); ;}
     break;
 
   case 18:
-#line 272 "gram.y"
+#line 271 "gram.y"
     { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); ;}
     break;
 
   case 19:
-#line 273 "gram.y"
+#line 272 "gram.y"
     { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); ;}
     break;
 
   case 20:
-#line 274 "gram.y"
+#line 273 "gram.y"
     { (yyval) = xxunary((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); ;}
     break;
 
   case 21:
-#line 276 "gram.y"
+#line 275 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 22:
-#line 277 "gram.y"
+#line 276 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 23:
-#line 278 "gram.y"
+#line 277 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 24:
-#line 279 "gram.y"
+#line 278 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 25:
-#line 280 "gram.y"
+#line 279 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 26:
-#line 281 "gram.y"
+#line 280 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 27:
-#line 282 "gram.y"
+#line 281 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 28:
-#line 283 "gram.y"
+#line 282 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 29:
-#line 284 "gram.y"
+#line 283 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 30:
-#line 285 "gram.y"
+#line 284 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 31:
-#line 286 "gram.y"
+#line 285 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 32:
-#line 287 "gram.y"
+#line 286 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 33:
-#line 288 "gram.y"
+#line 287 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 34:
-#line 289 "gram.y"
+#line 288 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 35:
-#line 290 "gram.y"
+#line 289 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 36:
-#line 291 "gram.y"
+#line 290 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 37:
-#line 292 "gram.y"
+#line 291 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 38:
-#line 293 "gram.y"
+#line 292 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 39:
-#line 294 "gram.y"
+#line 293 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 40:
-#line 295 "gram.y"
+#line 294 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 41:
-#line 297 "gram.y"
+#line 296 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 42:
-#line 298 "gram.y"
+#line 297 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(3) - (3)]),(yyvsp[(1) - (3)])); ;}
     break;
 
   case 43:
-#line 300 "gram.y"
+#line 299 "gram.y"
     { (yyval) = xxdefun((yyvsp[(1) - (6)]),(yyvsp[(3) - (6)]),(yyvsp[(6) - (6)])); ;}
     break;
 
   case 44:
-#line 301 "gram.y"
+#line 300 "gram.y"
     { (yyval) = xxfuncall((yyvsp[(1) - (4)]),(yyvsp[(3) - (4)])); ;}
     break;
 
   case 45:
-#line 302 "gram.y"
+#line 301 "gram.y"
     { (yyval) = xxif((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 46:
-#line 303 "gram.y"
+#line 302 "gram.y"
     { (yyval) = xxifelse((yyvsp[(1) - (5)]),(yyvsp[(2) - (5)]),(yyvsp[(3) - (5)]),(yyvsp[(5) - (5)])); ;}
     break;
 
   case 47:
-#line 304 "gram.y"
+#line 303 "gram.y"
     { (yyval) = xxfor((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 48:
-#line 305 "gram.y"
+#line 304 "gram.y"
     { (yyval) = xxwhile((yyvsp[(1) - (3)]),(yyvsp[(2) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 49:
-#line 306 "gram.y"
+#line 305 "gram.y"
     { (yyval) = xxrepeat((yyvsp[(1) - (2)]),(yyvsp[(2) - (2)])); ;}
     break;
 
   case 50:
-#line 307 "gram.y"
+#line 306 "gram.y"
     { (yyval) = xxsubscript((yyvsp[(1) - (5)]),(yyvsp[(2) - (5)]),(yyvsp[(3) - (5)])); ;}
     break;
 
   case 51:
-#line 308 "gram.y"
+#line 307 "gram.y"
     { (yyval) = xxsubscript((yyvsp[(1) - (4)]),(yyvsp[(2) - (4)]),(yyvsp[(3) - (4)])); ;}
     break;
 
   case 52:
-#line 309 "gram.y"
+#line 308 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 53:
-#line 310 "gram.y"
+#line 309 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 54:
-#line 311 "gram.y"
+#line 310 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 55:
-#line 312 "gram.y"
+#line 311 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 56:
-#line 313 "gram.y"
+#line 312 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 57:
-#line 314 "gram.y"
+#line 313 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 58:
-#line 315 "gram.y"
+#line 314 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 59:
-#line 316 "gram.y"
+#line 315 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 60:
-#line 317 "gram.y"
+#line 316 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 61:
-#line 318 "gram.y"
+#line 317 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 62:
-#line 319 "gram.y"
+#line 318 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 63:
-#line 320 "gram.y"
+#line 319 "gram.y"
     { (yyval) = xxbinary((yyvsp[(2) - (3)]),(yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 64:
-#line 321 "gram.y"
+#line 320 "gram.y"
     { (yyval) = xxnxtbrk((yyvsp[(1) - (1)])); ;}
     break;
 
   case 65:
-#line 322 "gram.y"
+#line 321 "gram.y"
     { (yyval) = xxnxtbrk((yyvsp[(1) - (1)])); ;}
     break;
 
   case 66:
-#line 326 "gram.y"
+#line 325 "gram.y"
     { (yyval) = xxcond((yyvsp[(2) - (3)])); ;}
     break;
 
   case 67:
-#line 329 "gram.y"
+#line 328 "gram.y"
     { (yyval) = xxifcond((yyvsp[(2) - (3)])); ;}
     break;
 
   case 68:
-#line 332 "gram.y"
+#line 331 "gram.y"
     { (yyval) = xxforcond((yyvsp[(2) - (5)]),(yyvsp[(4) - (5)])); ;}
     break;
 
   case 69:
-#line 336 "gram.y"
+#line 335 "gram.y"
     { (yyval) = xxexprlist0(); ;}
     break;
 
   case 70:
-#line 337 "gram.y"
+#line 336 "gram.y"
     { (yyval) = xxexprlist1((yyvsp[(1) - (1)]), &(yylsp[(1) - (1)])); ;}
     break;
 
   case 71:
-#line 338 "gram.y"
+#line 337 "gram.y"
     { (yyval) = xxexprlist2((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), &(yylsp[(3) - (3)])); ;}
     break;
 
   case 72:
-#line 339 "gram.y"
+#line 338 "gram.y"
     { (yyval) = (yyvsp[(1) - (2)]); ;}
     break;
 
   case 73:
-#line 340 "gram.y"
+#line 339 "gram.y"
     { (yyval) = xxexprlist2((yyvsp[(1) - (3)]), (yyvsp[(3) - (3)]), &(yylsp[(3) - (3)])); ;}
     break;
 
   case 74:
-#line 341 "gram.y"
+#line 340 "gram.y"
     { (yyval) = (yyvsp[(1) - (2)]);;}
     break;
 
   case 75:
-#line 344 "gram.y"
+#line 343 "gram.y"
     { (yyval) = xxsublist1((yyvsp[(1) - (1)])); ;}
     break;
 
   case 76:
-#line 345 "gram.y"
+#line 344 "gram.y"
     { (yyval) = xxsublist2((yyvsp[(1) - (4)]),(yyvsp[(4) - (4)])); ;}
     break;
 
   case 77:
-#line 348 "gram.y"
+#line 347 "gram.y"
     { (yyval) = xxsub0(); ;}
     break;
 
   case 78:
-#line 349 "gram.y"
+#line 348 "gram.y"
     { (yyval) = xxsub1((yyvsp[(1) - (1)]), &(yylsp[(1) - (1)])); ;}
     break;
 
   case 79:
-#line 350 "gram.y"
+#line 349 "gram.y"
     { (yyval) = xxsymsub0((yyvsp[(1) - (2)]), &(yylsp[(1) - (2)])); ;}
     break;
 
   case 80:
-#line 351 "gram.y"
+#line 350 "gram.y"
     { (yyval) = xxsymsub1((yyvsp[(1) - (3)]),(yyvsp[(3) - (3)]), &(yylsp[(1) - (3)])); ;}
     break;
 
   case 81:
-#line 352 "gram.y"
+#line 351 "gram.y"
     { (yyval) = xxsymsub0((yyvsp[(1) - (2)]), &(yylsp[(1) - (2)])); ;}
     break;
 
   case 82:
-#line 353 "gram.y"
+#line 352 "gram.y"
     { (yyval) = xxsymsub1((yyvsp[(1) - (3)]),(yyvsp[(3) - (3)]), &(yylsp[(1) - (3)])); ;}
     break;
 
   case 83:
-#line 354 "gram.y"
+#line 353 "gram.y"
     { (yyval) = xxnullsub0(&(yylsp[(1) - (2)])); ;}
     break;
 
   case 84:
-#line 355 "gram.y"
+#line 354 "gram.y"
     { (yyval) = xxnullsub1((yyvsp[(3) - (3)]), &(yylsp[(1) - (3)])); ;}
     break;
 
   case 85:
-#line 358 "gram.y"
+#line 357 "gram.y"
     { (yyval) = xxnullformal(); ;}
     break;
 
   case 86:
-#line 359 "gram.y"
+#line 358 "gram.y"
     { (yyval) = xxfirstformal0((yyvsp[(1) - (1)])); ;}
     break;
 
   case 87:
-#line 360 "gram.y"
+#line 359 "gram.y"
     { (yyval) = xxfirstformal1((yyvsp[(1) - (3)]),(yyvsp[(3) - (3)])); ;}
     break;
 
   case 88:
-#line 361 "gram.y"
+#line 360 "gram.y"
     { (yyval) = xxaddformal0((yyvsp[(1) - (3)]),(yyvsp[(3) - (3)]), &(yylsp[(3) - (3)])); ;}
     break;
 
   case 89:
-#line 362 "gram.y"
+#line 361 "gram.y"
     { (yyval) = xxaddformal1((yyvsp[(1) - (5)]),(yyvsp[(3) - (5)]),(yyvsp[(5) - (5)]),&(yylsp[(3) - (5)])); ;}
     break;
 
   case 90:
-#line 365 "gram.y"
+#line 364 "gram.y"
     { EatLines = 1; ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 2335 "gram.c"
+#line 2334 "gram.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2550,7 +2550,7 @@ yyreturn:
 }
 
 
-#line 367 "gram.y"
+#line 366 "gram.y"
 
 
 
@@ -2572,15 +2572,22 @@ static int prevbytes[PUSHBACK_BUFSIZE];
 
 static int xxgetc(void)
 {
-    int c;
+    int c, oldpos;
 
     if(npush) c = pushback[--npush]; else  c = ptr_getc();
 
+    oldpos = prevpos;
     prevpos = (prevpos + 1) % PUSHBACK_BUFSIZE;
-    prevcols[prevpos] = ParseState.xxcolno;
     prevbytes[prevpos] = ParseState.xxbyteno;
     prevlines[prevpos] = ParseState.xxlineno;    
-    
+
+    /* We only advance the column for the 1st byte in UTF-8, so handle later bytes specially */
+    if (0x80 <= (unsigned char)c && (unsigned char)c <= 0xBF && known_to_be_utf8)  {
+    	ParseState.xxcolno--;   
+    	prevcols[prevpos] = prevcols[oldpos];
+    } else 
+    	prevcols[prevpos] = ParseState.xxcolno;
+    	
     if (c == EOF) {
 	EndOfFile = 1;
 	return R_EOF;
@@ -2596,9 +2603,6 @@ static int xxgetc(void)
         ParseState.xxcolno++;
     	ParseState.xxbyteno++;
     }
-    /* only advance column for 1st byte in UTF-8 */
-    if (0x80 <= (unsigned char)c && (unsigned char)c <= 0xBF && known_to_be_utf8) 
-    	ParseState.xxcolno--;
 
     if (c == '\t') ParseState.xxcolno = ((ParseState.xxcolno + 7) & ~7);
     

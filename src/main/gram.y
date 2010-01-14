@@ -384,15 +384,22 @@ static int prevbytes[PUSHBACK_BUFSIZE];
 
 static int xxgetc(void)
 {
-    int c;
+    int c, oldpos;
 
     if(npush) c = pushback[--npush]; else  c = ptr_getc();
 
+    oldpos = prevpos;
     prevpos = (prevpos + 1) % PUSHBACK_BUFSIZE;
-    prevcols[prevpos] = ParseState.xxcolno;
     prevbytes[prevpos] = ParseState.xxbyteno;
     prevlines[prevpos] = ParseState.xxlineno;    
-    
+
+    /* We only advance the column for the 1st byte in UTF-8, so handle later bytes specially */
+    if (0x80 <= (unsigned char)c && (unsigned char)c <= 0xBF && known_to_be_utf8)  {
+    	ParseState.xxcolno--;   
+    	prevcols[prevpos] = prevcols[oldpos];
+    } else 
+    	prevcols[prevpos] = ParseState.xxcolno;
+    	
     if (c == EOF) {
 	EndOfFile = 1;
 	return R_EOF;
@@ -408,9 +415,6 @@ static int xxgetc(void)
         ParseState.xxcolno++;
     	ParseState.xxbyteno++;
     }
-    /* only advance column for 1st byte in UTF-8 */
-    if (0x80 <= (unsigned char)c && (unsigned char)c <= 0xBF && known_to_be_utf8) 
-    	ParseState.xxcolno--;
 
     if (c == '\t') ParseState.xxcolno = ((ParseState.xxcolno + 7) & ~7);
     
