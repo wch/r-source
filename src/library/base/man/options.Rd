@@ -60,8 +60,13 @@ getOption(x, default = NULL)
       \code{TRUE}.  Could also be set to an integer for specifying how
       many (simulated) smooths should be added.  This is currently only
       used by \code{\link{plot.lm}}.}
+    
+    \item{\code{checkPackageLicense}:}{logical, not set by default.  If
+      true, \code{\link{library}} asks a user to accept any non-standard
+      license at first use.
+    }
 
-      \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
+    \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
       true, a \link{warning} is produced whenever a
       vector (atomic or \code{\link{list}}) is extended, by something
       like \code{x <- 1:3; x[5] <- 6}.}

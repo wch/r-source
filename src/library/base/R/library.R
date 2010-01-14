@@ -95,6 +95,32 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         }
     }
 
+    checkLicense <- function(pkg, pkgInfo, pkgPath)
+    {
+        L <- tools:::analyze_license(pkgInfo$DESCRIPTION["License"])
+        if(!L$is_empty && !L$is_verified) {
+            lic_file <- path.expand("~/.R/licensed")
+            if(file.exists(lic_file)) {
+                known <- readLines(lic_file)
+                if(pkg %in% known) return()
+            } else known <- character()
+            if(!interactive())
+                stop(gettextf("package '%s' has a license that you need to accept in an interactive session", pkg), domain = NA)
+            message(gettextf("Package '%s' has a license that you need to accept after viewing", pkg), domain = NA)
+            readline("press RETURN to view license")
+            encoding <- pkgInfo$DESCRIPTION["Encoding"]
+            if(is.na(encoding)) encoding <- ""
+            file.show(file.path(pkgpath, "LICENSE"), encoding = encoding)
+            choice <- menu(c("accept", "decline"),
+                           title = paste("License for", sQuote(pkg)))
+            if(choice != 1)
+                stop(gettextf("License for package '%s' not accepted", package),
+                     domain = NA, call. = FALSE)
+            dir.create(dirname(lic_file), showWarnings=FALSE)
+            writeLines(c(known, pkg), lic_file)
+        }
+    }
+
     checkNoGenerics <- function(env, pkg)
     {
         nenv <- env
@@ -225,6 +251,12 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                               package), domain = NA)
             pkgInfo <- .readRDS(pfile)
             testRversion(pkgInfo, package, pkgpath)
+            ## avoid any bootstrapping issues by these exemptions
+            if(!package %in% c("datasets", "grDevices", "graphics", "methods",
+                               "splines", "stats", "stats4", "tcltk", "tools",
+                               "utils") &&
+               isTRUE(getOption("checkPackageLicense", FALSE)))
+                checkLicense(package, pkgInfo, pkgpath)
 
             ## The check for inconsistent naming is now in .find.package
 

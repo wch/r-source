@@ -151,6 +151,21 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \code{require} returns (invisibly) a logical indicating whether the required
   package is available.
 }
+\section{Licenses}{
+  Some packages have restrictive licenses, and as from \R 2.11.0 there
+  is a mechanism to ensure that users are aware of such licenses.  If
+  \code{\link{getOption}("checkPackageLicense") == TRUE}, then at first
+  use of a package with a not-known-to-be-FOSS (see below) license the
+  user is asked to view and accept the license: a list of accepted
+  licenses is stored in file \file{~/.R/licensed}.  In a non-interactive
+  session it is an error to use such a package whose license has not
+  already been accepted.
+
+  Free or Open Source Software (FOSS, e.g.,
+  \url{http://en.wikipedia.org/wiki/FOSS}) packages are determined by
+  the same filters used by \code{\link{available.packages}} but applied
+  to just the current package.
+}
 \section{Packages that require other packages}{
   The usual way for a package to require other packages is to list them
   in the \samp{Depends:} field of the \file{DESCRIPTION} file.  Such

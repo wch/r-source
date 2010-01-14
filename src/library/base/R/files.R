@@ -43,7 +43,7 @@ file.show <-
         for(i in seq_along(files)) {
             f <- files[i]
             tf <- tempfile()
-            tmp <- readLines(f)
+            tmp <- readLines(f, warn = FALSE)
             tmp2 <- try(iconv(tmp, encoding, "", "byte"))
             if(inherits(tmp2, "try-error")) file.copy(f, tf)
             else writeLines(tmp2, tf)

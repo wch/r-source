@@ -227,6 +227,10 @@ NEW FEATURES
 
     o	interaction(drop=TRUE) uses less memory (related to PR#14121).
 
+    o	If option "checkPackageLicense" is set to TRUE (not currently
+	the default), users will be asked to agree to non-FOSS package
+	licences at first use.
+
 
 DEPRECATED & DEFUNCT
 
