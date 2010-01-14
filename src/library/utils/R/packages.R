@@ -627,7 +627,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 		"source" = paste(gsub("/$", "", repos), "src", "contrib", sep="/"),
                 "mac.binary" = paste(gsub("/$", "", repos), "bin", "macosx", mac.subtype, "contrib", ver, sep = "/"),
                 "win.binary" = paste(gsub("/$", "", repos), "bin", "windows", "contrib", ver, sep="/"),
-                "win64.binary" = paste(gsub("/$", "", repos), "bin", "windows", "contrib", ver, sep="/")
+                "win64.binary" = paste(gsub("/$", "", repos), "bin", "windows64", "contrib", ver, sep="/")
                )
     res
 }
@@ -686,6 +686,7 @@ setRepositories <-
     a <- tools:::.read_repositories(p)
     pkgType <- getOption("pkgType")
     if(length(grep("^mac\\.binary", pkgType))) pkgType <- "mac.binary"
+    if(pkgType == "win64.binary") pkgType <- "win.binary"
     thisType <- a[[pkgType]]
     a <- a[thisType, 1L:3L]
     repos <- getOption("repos")
