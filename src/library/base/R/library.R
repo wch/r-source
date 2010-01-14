@@ -106,11 +106,20 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             } else known <- character()
             if(!interactive())
                 stop(gettextf("package '%s' has a license that you need to accept in an interactive session", pkg), domain = NA)
-            message(gettextf("Package '%s' has a license that you need to accept after viewing", pkg), domain = NA)
-            readline("press RETURN to view license")
-            encoding <- pkgInfo$DESCRIPTION["Encoding"]
-            if(is.na(encoding)) encoding <- ""
-            file.show(file.path(pkgpath, "LICENSE"), encoding = encoding)
+            lfiles <- file.path(pkgpath, c("LICENSE", "LICENCE"))
+            lfiles <- lfiles[file.exists(lfiles)]
+            if(length(lfiles)) {
+                message(gettextf("Package '%s' has a license that you need to accept after viewing", pkg), domain = NA)
+                readline("press RETURN to view license")
+                encoding <- pkgInfo$DESCRIPTION["Encoding"]
+                if(is.na(encoding)) encoding <- ""
+                ## difR and EVER have a cp1252 LICEN[CS]E file
+                if(encoding == "latin1") encoding <- "cp1252"
+                file.show(lfiles[1L], encoding = encoding)
+            } else {
+                message(gettextf("Package '%s' has a license that you need to accept:\naccording to the DESCRIPTION file it is", pkg), domain = NA)
+                message(pkgInfo$DESCRIPTION["License"])
+            }
             choice <- menu(c("accept", "decline"),
                            title = paste("License for", sQuote(pkg)))
             if(choice != 1)
