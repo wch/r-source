@@ -1,6 +1,6 @@
 
-R version 2.5.0 Under development (unstable) (2006-11-30 r40078)
-Copyright (C) 2006 The R Foundation for Statistical Computing
+R version 2.11.0 Under development (unstable) (2010-01-15 r50984)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -16,7 +16,9 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > #### Testing  UseMethod() and even more NextMethod()
-> ####
+> #### -------------------- 
+> #### i.e.,  S3 methods *only*. For S4, see  reg-S4.R
+> ##                                          ~~~~~~~~
 > 
 > ###-- Group methods
 > 
