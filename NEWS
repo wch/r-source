@@ -226,7 +226,7 @@ NEW FEATURES
 	an error.
 
     o	interaction(drop=TRUE) uses less memory (related to PR#14121).
-    
+
     o	summary() methods have been added to the "srcref" and
 	"srcfile" classes, and various encoding issues have been
 	cleaned up.
@@ -297,7 +297,7 @@ BUG FIXES
 	fits.
 
     o	callNextMethod now works again with the drop= argument in `[`
-    
+
     o	parse() and parse_Rd() miscounted columns when multibyte UTF-8
 	characters were present.
 
@@ -380,10 +380,13 @@ BUG FIXES
     o	p.adjust(*, method, n)now works correctly for the rare case
 	n > length(p), also when method differs from "bonferroni" or
 	"none", thanks to a patch from Gordon Smyth.
-	
+
     o	tools::showNonASCII() failed to detect non-ASCII characters
     	if iconv() (incorrectly) converted them to different ASCII
     	characters.  (Seen on Windows only.)
+
+    o	tcrossprod() wrongly failed in some cases, when one of the
+	arguments was a vector and the other a matrix.
 
 
 

@@ -6031,3 +6031,13 @@ stopifnot(identical(utf8ToInt(NA_character_), NA_integer_),
           identical(intToUtf8(NA_integer_), NA_character_),
           identical(intToUtf8(NA_integer_, multiple = TRUE), NA_character_))
 ## no NA-handling prior to 2.11.0
+
+## tcrossprod() for  matrix - vector combination
+u <- 1:3 ; v <- 1:5
+## would not work identically: names(u) <- LETTERS[seq_along(u)]
+U <- as.matrix(u)
+stopifnot(identical(tcrossprod(u,v), tcrossprod(U,v)),
+	  identical(tcrossprod(u,v), u %*% t(v)),
+	  identical(tcrossprod(v,u), tcrossprod(v,U)),
+	  identical(tcrossprod(v,u), v %*% t(u)))
+## tcrossprod(v,U) and (U,v) wrongly failed in R <= 2.10.1

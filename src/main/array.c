@@ -374,8 +374,8 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    if( isObject(CAR(args)) && DispatchOrEval(call, op, "length", args,
-					      rho, &ans, 0, 1))
+    if(isObject(CAR(args)) && DispatchOrEval(call, op, "length", args,
+					     rho, &ans, 0, 1))
       return(ans);
 
     len = length(CAR(args));
@@ -641,11 +641,17 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		nrx = nry; /* == LENGTH(x) */
 		ncx = 1;
 	    }
+	    /* else if (nry == 1) ... not being too tolerant
+	       to treat x as row vector, as t(x) *is* row vector */
 	}
 	else { /* tcrossprod */
 	    if (LENGTH(x) == ncy) {	/* x as row vector */
 		nrx = 1;
 		ncx = ncy; /* == LENGTH(x) */
+	    }
+	    else if (ncy == 1) {	/* x as col vector */
+		nrx = LENGTH(x);
+		ncx = 1;
 	    }
 	}
     }
@@ -656,7 +662,7 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ncy = 0;
 	if (PRIMVAL(op) == 0) {
 	    if (LENGTH(y) == ncx) {	/* y as col vector */
-		nry = ncx; /* == LENGTH(y) */
+		nry = ncx;
 		ncy = 1;
 	    }
 	    else if (ncx == 1) {	/* y as row vector */
@@ -664,11 +670,15 @@ SEXP attribute_hidden do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ncy = LENGTH(y);
 	    }
 	}
-	else { /* (t)crossprod */
+	else if (PRIMVAL(op) == 1) { /* crossprod() */
 	    if (LENGTH(y) == nrx) {	/* y is a col vector */
-		nry = nrx; /* == LENGTH(y) */
+		nry = nrx;
 		ncy = 1;
 	    }
+	}
+	else { /* tcrossprod --		y is a col vector */
+	    nry = LENGTH(y);
+	    ncy = 1;
 	}
     }
     else {				/* x and y matrices */
