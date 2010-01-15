@@ -116,6 +116,7 @@ with some mentions of 64-bit builds.
 * Does R run under Windows Vista?::  
 * Quotes don't come out right on the console/terminal/pager::  
 * There is no tilde on my keyboard::  
+* Can I use R on 64-bit Windows?::  
 @end menu
 
 
@@ -302,9 +303,9 @@ are quite deliberately installed in parallel folders so you can keep old
 versions around if you wish.
 
 For those with a personal library (folder @file{R\win-library\@var{x.y}}
-of  your  home  directory,  @file{R\win64-library\@var{x.y}}  on  64-bit
-builds), you  will need to update that  too when the minor  version of R
-changes (e.g.@:  from 2.10.1 to  2.11.0).  A simple  way to do so  is to
+of your home directory, @file{R\win64-library\@var{x.y}} on 64-bit
+builds), you will need to update that too when the minor version of R
+changes (e.g.@: from 2.10.1 to 2.11.0).  A simple way to do so is to
 copy (say) @file{R\win-library\2.10} to @file{R\win-library\2.11} before
 running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
@@ -791,7 +792,7 @@ Latin-1 locale)
 @noindent
 or their use suppressed by @code{options(useFancyQuotes=FALSE)}.
 
-@node There is no tilde on my keyboard,  , Quotes don't come out right on the console/terminal/pager, Installation and Usage
+@node There is no tilde on my keyboard, Can I use R on 64-bit Windows?, Quotes don't come out right on the console/terminal/pager, Installation and Usage
 @section There is no tilde on my keyboard!
 
 Where tilde does not appear on the main keyboard, it can normally be
@@ -807,6 +808,33 @@ Accessories, Accessibility on XP).
 On all Windows versions you should be able to get tilde by holding the
 down the left Alt key and typing 0126 on the numeric keypad, then
 releasing the Alt key.
+
+@node Can I use R on 64-bit Windows?,  , There is no tilde on my keyboard, Installation and Usage
+@section Can I use R on 64-bit Windows?
+
+The standard build of R for Windows (including the binary installer on
+CRAN) is a 32-bit executable that will run on both 32-bit and 64-bit
+versions of Windows. Current 64-bit versions of Windows (at least Server
+2003 and 2008, Vista and Windows 7) run 32-bit executables under the WOW
+(Windows on Windows) subsystem: they run in almost exactly the same way
+as on a 32-bit version of Windows, except that the address limit for the
+R process is 4GB (rather than 2GB or perhaps 3GB).
+
+The advantage of a native 64-bit application is that it gets a 64-bit
+address space and hence can address far more than 4GB (how much depends
+on the version of Windows, but in principle 8TB).  This allows a single
+process to take advantage of more than 4GB of RAM (if available) and for
+R's memory manager to more easily handle large objects (in particular
+those of 1GB or more).  The disadvantages are that all the pointers are
+8 rather than 4 bytes and so small objects are larger and more data has
+to be moved around, and that far less software is available for 64-bit
+versions of the OS.
+
+As from R 2.11.0 it will be possible to build a 64-bit version of R from
+the sources: see the `R Installation and Administration Manual'.  A
+quite wide of binary packages are available from CRAN, but fewer
+hard-to-install packages are available than for the standard 32-bit
+build since very few 64-bit DLLs are available.
 
 
 @newchap{}
