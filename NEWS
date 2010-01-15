@@ -373,16 +373,17 @@ BUG FIXES
     o	sprintf() was not re-entrant, which potentially caused problems
 	if an as.character() method called it.
 
-    o	Quartz device did not restore clipping region when filling
-	background for a new page. This could be observed in
+    o	The quartz() device did not restore clipping region when filling
+	background for a new page.  This could be observed in
 	multi-page bitmap output as stale outer regions of the plot.
 
-    o	p.adjust(*, method, n)	now works correctly for the rare case
+    o	p.adjust(*, method, n)now works correctly for the rare case
 	n > length(p), also when method differs from "bonferroni" or
 	"none", thanks to a patch from Gordon Smyth.
 	
     o	tools::showNonASCII() failed to detect non-ASCII characters
-    	if iconv() converted them to ASCII.
+    	if iconv() (incorrectly) converted them to different ASCII
+    	characters.  (Seen on Windows only.)
 
 
 
