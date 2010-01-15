@@ -137,3 +137,10 @@ Version: 1.02
 FSF: free_and_GPL_incompatible
 OSI: open
 URL: http://www.opensource.org/licenses/lucent1.02.php
+
+Name: European Union Public License
+Version: 1.1
+Abbrev: EUPL
+FSF: free_and_GPL_incompatible
+OSI: open
+URL: http://ec.europa.eu/idabc/eupl
