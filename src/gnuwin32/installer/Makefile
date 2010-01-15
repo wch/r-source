@@ -148,7 +148,7 @@ clean:
 	  uuidgen.o uuidgen.exe uuids
 
 distclean: clean
-	rm -f $(RPREFIX)-win32.*
+	rm -f $(RPREFIX)-win32.* $(RPREFIX)-win64.*
 
 myR:
 	echo "make.packages.html(.Library)" | $(IMAGEDIR)/bin/rterm --vanilla --slave LC_COLLATE=C
