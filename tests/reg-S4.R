@@ -330,6 +330,7 @@ setMethod("as.vector", signature(x = "foo", mode = "missing"),
           function(x) unclass(x))
 ## whereas this fails in R versions earlier than 2.6.0:
 setMethod("as.vector", "foo", function(x) unclass(x))
+xx <- removeClass("foo")
 
 ## stats4::AIC in R < 2.7.0 used to clobber stats::AIC
 pfit <- function(data) {
@@ -513,3 +514,18 @@ setMethod('xtfrm', 'numWithId', function(x) x@.Data)
 xtfrm(x)
 stopifnot(identical(xtfrm(x), 1:3))
 ## new in 2.11.0
+
+## [-dispatch using callNextMethod()
+setClass("C1", representation(a = "numeric"))
+setClass("C2", contains = "C1")
+setMethod("[", "C1", function(x,i,j,...,drop=TRUE)
+	  cat("drop in C1-[ :", drop, "\n"))
+setMethod("[", "C2", function(x,i,j,...,drop=TRUE) {
+    cat("drop in C2-[ :", drop, "\n")
+    callNextMethod()
+})
+x <- new("C1"); y <- new("C2")
+x[1, drop=FALSE]
+y[1, drop=FALSE]
+## the last gave TRUE on C1-level in R 2.10.x;
+## the value of drop was wrongly taken from the default.
