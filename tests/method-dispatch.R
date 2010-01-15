@@ -1,5 +1,7 @@
 #### Testing  UseMethod() and even more NextMethod()
-####
+#### -------------------- 
+#### i.e.,  S3 methods *only*. For S4, see  reg-S4.R
+##                                          ~~~~~~~~
 
 ###-- Group methods
 
