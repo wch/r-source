@@ -19,7 +19,9 @@ INSTALL_DATA = cp
 SHELL = sh
 USE_NLS = yes
 
-ifeq ($(strip $(WIN)),64)
+BUILD_TCLTK = yes
+
+ifneq ($(strip $(BUILD_TCLTK)),yes)
 all:
 	@$(ECHO) "building stub package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R

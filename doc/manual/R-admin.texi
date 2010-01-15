@@ -1315,17 +1315,24 @@ to replace the @file{MinGW/bin} directory of @code{Rtools} in your path
 (but still have the Rtools @file{bin} directory and Perl in your path).
 Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64} and
 @code{BINPREF} (in both @file{MkRules} and @file{etc/Makeconf})
-appropriate to your toolchain, and make R in the usual way.  (At present
-the @code{tcltk} package is a dummy.)
+appropriate to your toolchain, and make R in the usual way.
+
+To build package @pkg{tcltk} you need to unpack
+@url{http://www.stats.ox.ac.uk/pub/Rtools/R64_Tcl_8-5-8.zip} at the top
+of the source tree: otherwise edit @file{src/library/tcltk/Makefile.win}
+to make a stub package.
 
 The default is @code{options(pkgType="source")}, that is to use source
 packages.  Note that some of the toolchains, including that from
 SourceForge, use dynamic linking for language support: this means that
-you need the DLLs such as @file{libgfortran-3.dll} in the toolchain's
-@file{bin} directory in your path.  There is some experimental support
-for binary packages which you can select by
-@code{options(pkgType="win64.binary")}, and an experimental
-package-building service at @url{http://win-builder.r-project.org/}.
+you may need the DLLs in the toolchain's @file{bin} directory in your
+path when running @R{}.  There is experimental support for binary
+packages which you can select by @code{options(pkgType="win64.binary")},
+and both @acronym{CRAN} and @acronym{CRAN} extras contain some packages
+of that type.
+
+An experimental package-building service is available at
+@url{http://win-builder.r-project.org/}.
 
 The default memory limit will be the amount of installed RAM: it can
 be changed by (preferably) using @option{--max-mem-size=} at startup or
@@ -2514,7 +2521,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, setting the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk from 8.3.x to 8.5.7 have been used successfully.
+Versions of Tcl/Tk from 8.3.x to 8.5.8 have been used successfully.
 
 @node Java support,  , Tcl/Tk, Useful libraries and programs
 @subsection Java support
