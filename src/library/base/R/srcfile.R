@@ -177,10 +177,13 @@ as.character.srcref <- function(x, useSource = TRUE, ...)
     	lines <- paste("<srcref: file \"", srcfile$filename, "\" chars ",
                        x[1L],":",x[5L], " to ",x[3L],":",x[6L], ">", sep="")
     else {
+    	enc <- Encoding(lines)
+    	Encoding(lines) <- "latin1"  # so byte counting works
         if (length(lines) < x[3L] - x[1L] + 1L)
-            x[6L] <- .Machine$integer.max
-    	lines[length(lines)] <- substring(lines[length(lines)], 1L, x[6L])
-    	lines[1L] <- substring(lines[1L], x[5L])
+            x[4L] <- .Machine$integer.max
+    	lines[length(lines)] <- substring(lines[length(lines)], 1L, x[4L])
+    	lines[1L] <- substring(lines[1L], x[2L])
+    	Encoding(lines) <- enc
     }
     lines
 }
