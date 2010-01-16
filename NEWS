@@ -113,10 +113,10 @@ NEW FEATURES
     o	xtfrm() is now primitive and internally generic, as this allows
 	S4 methods to be set on it without name-space scoping issues.
 
-	There is now a "difftime" method, and the default method uses
-	unclass(x) if is.numeric(x) is true (which will be faster but
-	relies on is.numeric() having been set correctly for the
-	class).
+	There are now "AsIs" and "difftime" methods, and the default
+	method uses unclass(x) if is.numeric(x) is true (which will be
+	faster but relies on is.numeric() having been set correctly
+	for the class).
 
     o	is.numeric(x) is now false for a "difftime" object
 	(multiplication and division make no sense for such objects).
@@ -190,12 +190,12 @@ NEW FEATURES
     o	print.rle() gains argument 'prefix'.
 
     o	download.file() gains a "curl" method, mainly for use on
-	platforms which have curl but not wget, but also for some
+	platforms which have 'curl' but not 'wget', but also for some
 	hard-to-access URLs.
 
-    o	\eqn and \deqn will render in HTML (and convert to text) upper-
-	and lower-case Greek letters (entered as \alpha ...), \ldots,
-	\dots, \ge and \le.
+    o	In Rd, \eqn and \deqn will render in HTML (and convert to text)
+	upper- and lower-case Greek letters (entered as \alpha ...),
+	\ldots, \dots, \ge and \le.
 
     o	utf8ToInt() and intToUtf8() now map NA inputs to NA outputs.
 
