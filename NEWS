@@ -232,8 +232,8 @@ NEW FEATURES
 	cleaned up.
 
     o	If option "checkPackageLicense" is set to TRUE (not currently
-	the default), users will be asked to agree to non-FOSS package
-	licences at first use.
+	the default), users will be asked to agree to
+	non-known-to-be-FOSS package licences at first use.
 
 
 DEPRECATED & DEFUNCT

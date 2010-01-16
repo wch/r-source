@@ -99,11 +99,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     {
         L <- tools:::analyze_license(pkgInfo$DESCRIPTION["License"])
         if(!L$is_empty && !L$is_verified) {
-            lic_file <- path.expand("~/.R/licensed")
-            if(file.exists(lic_file)) {
-                known <- readLines(lic_file)
-                if(pkg %in% known) return()
-            } else known <- character()
+            site_file <- path.expand(file.path(R.home("etc"), "licensed.site"))
+            if(file.exists(site_file) &&
+               pkg %in% readLines(site_file)) return()
+            personal_file <- path.expand("~/.R/licensed")
+            if(file.exists(personal_file)) {
+                agreed <- readLines(personal_file)
+                if(pkg %in% agreed) return()
+            } else agreed <- character()
             if(!interactive())
                 stop(gettextf("package '%s' has a license that you need to accept in an interactive session", pkg), domain = NA)
             lfiles <- file.path(pkgpath, c("LICENSE", "LICENCE"))
@@ -113,7 +116,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 readline("press RETURN to view license")
                 encoding <- pkgInfo$DESCRIPTION["Encoding"]
                 if(is.na(encoding)) encoding <- ""
-                ## difR and EVER have a cp1252 LICEN[CS]E file
+                ## difR and EVER have a Windows' 'smart quote' LICEN[CS]E file
                 if(encoding == "latin1") encoding <- "cp1252"
                 file.show(lfiles[1L], encoding = encoding)
             } else {
@@ -125,8 +128,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if(choice != 1)
                 stop(gettextf("License for package '%s' not accepted", package),
                      domain = NA, call. = FALSE)
-            dir.create(dirname(lic_file), showWarnings=FALSE)
-            writeLines(c(known, pkg), lic_file)
+            dir.create(dirname(personal_file), showWarnings=FALSE)
+            writeLines(c(agreed, pkg), personal_file)
         }
     }
 

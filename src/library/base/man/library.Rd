@@ -164,7 +164,10 @@ require(package, lib.loc = NULL, quietly = FALSE,
   Free or Open Source Software (FOSS, e.g.,
   \url{http://en.wikipedia.org/wiki/FOSS}) packages are determined by
   the same filters used by \code{\link{available.packages}} but applied
-  to just the current package.
+  to just the current package, not its dependencies.
+
+  There can also be a site-wide file \file{R_HOME/etc/licensed.site} of
+  packages (one per line).
 }
 \section{Packages that require other packages}{
   The usual way for a package to require other packages is to list them
