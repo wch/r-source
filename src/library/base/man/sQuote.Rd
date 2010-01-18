@@ -80,7 +80,7 @@ dQuote(x)
   A character vector in the current locale's encoding.
 }
 \seealso{
-  \code{Quotes} for quoting \R code.
+  \link{Quotes} for quoting \R code.
 
   \code{\link{shQuote}} for quoting OS commands.
 }
