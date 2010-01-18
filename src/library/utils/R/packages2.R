@@ -248,7 +248,8 @@ install.packages <-
         if(type == "mac.binary")
             stop("cannot install MacOS X binary packages on Windows")
 
-        if(type == "win.binary") {      # include local .zip files
+        if(type %in% c("win.binary", "win64.binary")) {
+            ## include local .zip files
             .install.winbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
                                method = method, available = available,
                                destdir = destdir,

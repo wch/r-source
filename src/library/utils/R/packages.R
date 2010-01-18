@@ -552,6 +552,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 ok[ok][!keep] <- FALSE
             }
             if (substr(type, 1L, 10L) == "mac.binary") type <- "mac.binary"
+            if (type == "win64.binary") type <- "win.binary"
             ## in Oct 2009 we introduced file names in PACKAGES files
             File <- available[ok, "File"]
             fn <- paste(p, "_", available[ok, "Version"],
