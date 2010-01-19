@@ -110,9 +110,10 @@ function (clName, filename = NULL, type = "class",
     .name <- paste0("\\name{", fullName, "}")
     .type <- paste0("\\docType{", type, "}")
     .alias <- paste0("\\alias{", fullName, "}")
-    .title <- paste0("\\title{Class \"", clName, "\" ~~~ }")
-    .desc <- paste0("\\description{", "	 ~~ A concise (1-5 lines) description of what the class is.  ~~",
-	"}")
+    .title <- paste0("\\title{Class \"", clName, "\"}")
+    .desc <- paste0("\\description{",
+                    "\n%%  ~~ A concise (1-5 lines) description of what the class is. ~~",
+                    "\n}")
     slotclasses <- getSlots(clDef)
     slotnames <- names(slotclasses)
     slotclasses <- as.character(slotclasses)
@@ -127,10 +128,13 @@ function (clName, filename = NULL, type = "class",
 	argNames <- formalArgs(initMethod)
 	## but for new() the first argument is the class name
 	argNames[[1L]] <- clNameQ
-	.usage <- c(paste0(.usage,"{"),
-		    paste0("Objects can be created by calls of the form \\code{",
-                           .makeCallString(initMethod, "new", argNames), "}."),
-		    "	 ~~ describe objects here ~~ ", "}")
+	.usage <-
+            c(paste0(.usage,"{"),
+              paste0("Objects can be created by calls of the form \\code{",
+                     .makeCallString(initMethod, "new", argNames),
+                     "}."),
+              "%%  ~~ describe objects here ~~ ",
+              "}")
     }
     .slots <- if (nslots > 0) {
 	slotclasses <- slotClassWithSource(clName)
@@ -205,21 +209,21 @@ function (clName, filename = NULL, type = "class",
 	     "section{Extends}" = .extends,
 	     "section{Methods}" =
 	     c(.meths.head, .meths.body, .meths.tail),
-	     references = paste("\\references{ ~put references to the",
-	     "literature/web site here ~ }"),
-	     author = "\\author{ ~~who you are~~ }",
+	     references = paste("\\references{\n%%  ~~put references to the",
+	     "literature/web site here~~\n}"),
+	     author = "\\author{\n%%  ~~who you are~~\n}",
 	     note =
-	     c("\\note{ ~~further notes~~ }",
+	     c("\\note{\n%%  ~~further notes~~\n}",
 	       "",
-	       paste(" ~Make other sections like Warning with",
+	       paste("%% ~Make other sections like Warning with",
 		     "\\section{Warning }{....} ~"),
 	       ""),
 	     seealso =
 	     c("\\seealso{",
-	       paste("	~~objects to See Also as",
+	       paste("%%  ~~objects to See Also as",
 		     "\\code{\\link{~~fun~~}}, ~~~"),
-	       paste("	or \\code{\\linkS4class{CLASSNAME}}",
-		     "for links to other classes"),
+	       paste("%%  ~~or \\code{\\linkS4class{CLASSNAME}}",
+		     "for links to other classes ~~~"),
 	       "}"),
 	     examples = c("\\examples{",
 	     paste0("showClass(", clNameQ, ")"),

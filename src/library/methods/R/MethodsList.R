@@ -614,7 +614,8 @@ promptMethods <- function(f, filename = NULL, methods)
 		   utils:::topicName("method", c(f, signatures[i,])),
 		   "}")
     }
-    text <- paste0("\n\\item{", labels, "}{ ~~describe this method here }")
+    text <- paste0("\n\\item{", labels,
+                   "}{\n%%  ~~describe this method here~~\n}")
     text <- c("\\section{Methods}{\n\\describe{", text, "}}")
     aliasText <- c(paste0("\\alias{", escape(fullName), "}"), escape(aliases))
     if(identical(filename, FALSE))
@@ -627,14 +628,19 @@ promptMethods <- function(f, filename = NULL, methods)
         list(name = paste0("\\name{", fullName, "}"),
              type = "\\docType{methods}",
              aliases = aliasText,
+             ## <FIXME>
+             ## Title and description are ok as auto-generated: should
+             ## they be flagged as such (via '~~' which are quite often
+             ## left in by authors)?
              title = paste("\\title{ ~~ Methods for Function", f,
              packageString, "~~}"),
              description = paste0("\\description{\n ~~ Methods for function",
              " \\code{", f, "} ", packageString,
              " ~~\n}"),
+             ## </FIXME>
              "section{Methods}" = text,
              keywords = c("\\keyword{methods}",
-             "\\keyword{ ~~ other possible keyword(s)}"))
+             "\\keyword{ ~~ other possible keyword(s) ~~ }"))
 
     if(is.na(filename)) return(Rdtxt)
 
