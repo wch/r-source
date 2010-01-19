@@ -37,6 +37,7 @@ S3method("print", "xgettext")
 S3method("print", "xngettext")
 
 S3method("print", "checkRd")
+S3method("print", "check_Rd_contents")
 S3method("print", "check_Rd_metadata")
 S3method("print", "check_Rd_xrefs")
 S3method("print", "check_T_and_F")

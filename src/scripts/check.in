@@ -147,6 +147,9 @@ my $R_check_executables_exclusions =
 my $R_check_dot_internal =
     &R_getenv("_R_CHECK_DOT_INTERNAL_", "FALSE");
 
+my $R_check_Rd_contents =
+    &R_getenv("_R_CHECK_RD_CONTENTS_", "FALSE");
+
 ## Only relevant when the package is loaded, thus installed.
 my $R_check_suppress_RandR_message =
     ($opt_install &&
@@ -2172,6 +2175,31 @@ sub check_pkg {
 	$log->result("OK") unless($any);
     }
 
+    if($R_check_Rd_contents) {
+	$log->checking("Rd \\usage sections");
+
+	my $any;
+
+	my $Rcmd = "options(warn=1)\n";
+	if($opt_install) {
+	    $Rcmd .= "tools:::.check_Rd_contents(package = \"${pkgname}\")\n";
+	}
+	else {
+	    $Rcmd .= "tools:::.check_Rd_contents(dir = \"${pkgdir}\")\n";
+	}
+
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $any++;
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n");
+	}
+
+	$log->result("OK") unless($any);
+    }
+	
     if(!$is_base_pkg && (-d "data")) {
 	$log->checking("data for non-ASCII characters");
 	my @out = R_runR("tools:::.check_package_datasets('.')",
