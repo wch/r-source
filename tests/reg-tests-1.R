@@ -6041,3 +6041,8 @@ stopifnot(identical(tcrossprod(u,v), tcrossprod(U,v)),
 	  identical(tcrossprod(v,u), tcrossprod(v,U)),
 	  identical(tcrossprod(v,u), v %*% t(u)))
 ## tcrossprod(v,U) and (U,v) wrongly failed in R <= 2.10.1
+
+## det() and determinant() in NA cases
+m <- matrix(c(0, NA, 0, NA, NA, 0, 0, 0, 1), 3,3)
+stopifnot(is.na(det(m)), 0 == det(rbind(0, cbind(0, m))))
+## the first wrongly gave 0  in R <= 2.10.1

@@ -388,6 +388,9 @@ BUG FIXES
     o	tcrossprod() wrongly failed in some cases, when one of the
 	arguments was a vector and the other a matrix.
 
+    o	det(m) and determinant.matrix(m) now return NaN when m
+	contains NA or NaN's in crucial entries.
+
 
 
 		CHANGES IN R VERSION 2.10.1

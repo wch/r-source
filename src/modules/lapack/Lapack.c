@@ -1083,13 +1083,18 @@ static SEXP moddet_ge_real(SEXP Ain, SEXP logarithm)
     if (Adims[1] != n)
 	error(_("'a' must be a square matrix"));
     jpvt = (int *) R_alloc(n, sizeof(int));
+    /* LU factorization -->  diag(A) will be "sufficient" :*/
     F77_CALL(dgetrf)(&n, &n, REAL(A), &n, jpvt, &info);
     sign = 1;
     if (info < 0)
 	error(_("error code %d from Lapack routine '%s'"), info, "dgetrf");
-    else if (info > 0) { /* Singular matrix:  U[i,i] (i := info) is 0 */
+    else if (info > 0) { /* Singular or NA-deteterminant matrix:
+			    U[i,i] (i := info) is 0 */
 	/*warning("Lapack dgetrf(): singular matrix: U[%d,%d]=0", info,info);*/
-	modulus = (useLog ? R_NegInf : 0.);
+
+	modulus = (ISNAN(REAL(A)[info*n + info])) /* pivot is NA/NaN */
+	    ? R_NaN
+	    : (useLog ? R_NegInf : 0.);
     }
     else {
 	for (i = 0; i < n; i++) if (jpvt[i] != (i + 1))
