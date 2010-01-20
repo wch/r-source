@@ -2176,7 +2176,7 @@ sub check_pkg {
     }
 
     if($R_check_Rd_contents) {
-	$log->checking("Rd \\usage sections");
+	$log->checking("Rd contents");
 
 	my $any;
 
