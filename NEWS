@@ -25,7 +25,9 @@ NEW FEATURES
 
     o	R CMD INSTALL now uses the internal untar() in package utils:
 	this ensures that all platforms can install bzip2- and
-	xz-compressed tarballs.
+	xz-compressed tarballs.  In case this causes problems (as it
+	has on some Windows file systems) it can be overridden by the
+	environment variable R_INSTALL_TAR.
 
     o	help(try.all.packages = TRUE) is much faster (although the
 	time taken by the OS to find all the packages the first time
