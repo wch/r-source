@@ -369,7 +369,8 @@ model.frame.default <-
     if(is.null(predvars)) predvars <- vars
     varnames <- sapply(vars, deparse, width.cutoff=500)[-1L]
     variables <- eval(predvars, data, env)
-    if(is.null(rownames) && (resp <- attr(formula, "response")) > 0L) {
+    resp <- attr(formula, "response")
+    if(is.null(rownames) && resp > 0L) {
         ## see if we can get rownames from the response
         lhs <- variables[[resp]]
         rownames <- if(is.matrix(lhs)) rownames(lhs) else names(lhs)

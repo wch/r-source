@@ -6042,7 +6042,22 @@ stopifnot(identical(tcrossprod(u,v), tcrossprod(U,v)),
 	  identical(tcrossprod(v,u), v %*% t(u)))
 ## tcrossprod(v,U) and (U,v) wrongly failed in R <= 2.10.1
 
+
 ## det() and determinant() in NA cases
 m <- matrix(c(0, NA, 0, NA, NA, 0, 0, 0, 1), 3,3)
 stopifnot(is.na(det(m)), 0 == det(rbind(0, cbind(0, m))))
 ## the first wrongly gave 0  in R <= 2.10.1
+
+
+## c/rbind(deparse.level=2)
+attach(mtcars)
+(cn <- colnames(cbind(qsec, hp, disp)))
+stopifnot(identical(cn, c("qsec", "hp", "disp")))
+(cn <- colnames(cbind(qsec, hp, disp, deparse.level = 2)))
+stopifnot(identical(cn, c("qsec", "hp", "disp")))
+(cn <- colnames(cbind(qsec, log(hp), sqrt(disp))))
+stopifnot(identical(cn, c("qsec", "", "")))
+(cn <- colnames(cbind(qsec, log(hp), sqrt(disp), deparse.level = 2)))
+stopifnot(identical(cn, c("qsec", "log(hp)", "sqrt(disp)")))
+detach()
+## 2.10.1 gave no column names for deparse.level=2
