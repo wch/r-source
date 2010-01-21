@@ -207,9 +207,6 @@ Differences from Unix versions of R
 
 - Paths to files can be specified with "/" or "\\".
 
-- Using help.start() does not automatically send help requests to the
-  browser: use options(htmlhelp=TRUE) to turn this on.
-
 - system() is enhanced here and does not automatically use a shell.
   See its help page and that of shell().
 
