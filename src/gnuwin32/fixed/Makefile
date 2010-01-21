@@ -29,6 +29,9 @@ fixhtml:  html/rwin.html
 
 fixetc: $(wildcard ./etc/*)
 	$(CP) -p $^ $(R_HOME)/etc
+ifeq ($(strip $(WIN)),64)
+	$(SED) -e 's/WIN = 32/WIN = 64/' -e "s/BINPREF =/BINPREF = $(BINPREF)/" etc/Makeconf > $(R_HOME)/etc/Makeconf
+endif
 	@$(ECHO) done > fixetc
 
 fixdoc: $(wildcard ../CHANGES*)

@@ -11,6 +11,7 @@ else
   DEBUGFLAG=
 endif
 
+WIN = 32
 BINPREF =
 IMPDIR = bin
 

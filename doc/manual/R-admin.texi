@@ -1314,8 +1314,8 @@ packages with a name like
 to replace the @file{MinGW/bin} directory of @code{Rtools} in your path
 (but still have the Rtools @file{bin} directory and Perl in your path).
 Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64} and
-@code{BINPREF} (in both @file{MkRules} and @file{etc/Makeconf})
-appropriate to your toolchain, and make R in the usual way.
+@code{BINPREF} appropriate to your toolchain, and make R in the usual
+way.
 
 To build package @pkg{tcltk} you need to unpack
 @url{http://www.stats.ox.ac.uk/pub/Rtools/R64_Tcl_8-5-8.zip} at the top
