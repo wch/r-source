@@ -439,15 +439,20 @@ matchSignature <-
         return(character())
     sigClasses <- as.character(signature)
     if(!identical(where, baseenv())) {
-        unknown <- !sapply(sigClasses, function(x, where)isClass(x, where=where), where = where)
+        unknown <- !sapply(sigClasses, function(x, where)
+			   isClass(x, where=where), where = where)
         if(any(unknown)) {
             unknown <- unique(sigClasses[unknown])
-            warning(.renderSignature(fun@generic, signature),
-                    sprintf(ngettext(length(unknown),
-                                     "no definition for class %s",
-                                     "no definition for classes %s"),
-                            paste(.dQ(unknown), collapse = ", ")),
-                    call. = FALSE, domain = NA)
+            ## coerce(), i.e., setAs() may use *one* unknown class
+	    MSG <- if(identical(as.vector(coerce@generic), "coerce") &&
+		      length(unknown) == 1) message
+	    else function(...) warning(..., call. = FALSE)
+	    MSG(.renderSignature(fun@generic, signature),
+		sprintf(ngettext(length(unknown),
+				 "no definition for class %s",
+				 "no definition for classes %s"),
+			paste(.dQ(unknown), collapse = ", ")),
+		domain = NA)
         }
     }
     signature <- as.list(signature)

@@ -237,6 +237,9 @@ NEW FEATURES
 	the default), users will be asked to agree to
 	non-known-to-be-FOSS package licences at first use.
 
+    o	Checking setAs(a,b) methods only gives a message instead of a
+	warning, when one of a or b is unknown.
+
 
 DEPRECATED & DEFUNCT
 
