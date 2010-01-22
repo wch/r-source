@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002-2009	The R Development Core Team.
+ *  Copyright (C) 2002-2010	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -166,6 +166,7 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(La_svd, 7),
     CALLDEF(La_rs, 2),
     CALLDEF(La_rg, 2),
+    CALLDEF(La_dlange, 2),
     CALLDEF(La_dgecon, 2),
     CALLDEF(La_dtrcon, 2),
     CALLDEF(La_zgecon, 2),

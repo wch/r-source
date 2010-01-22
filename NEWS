@@ -240,6 +240,9 @@ NEW FEATURES
     o	Checking setAs(a,b) methods only gives a message instead of a
 	warning, when one of a or b is unknown.
 
+    o	New norm() to compute matrix norm.
+	norm() and backsolve() also have implicit generics now.
+
 
 DEPRECATED & DEFUNCT
 

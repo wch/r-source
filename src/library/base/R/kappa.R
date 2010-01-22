@@ -14,6 +14,10 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+norm <- function(x, type = c("O", "I", "F", "M")) {
+    .Call("La_dlange", x, type, PACKAGE="base")
+} ## and define it as implicitGeneric, so S4 methods are consistent
+
 kappa <- function(z, ...) UseMethod("kappa")
 
 ## Note that  all 4 Lapack version now work in the following

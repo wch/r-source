@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2008  The R Development Core Team.
- *  Copyright (C) 2003--2008  The R Foundation
+ *  Copyright (C) 2001--2010  The R Development Core Team.
+ *  Copyright (C) 2003--2010  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -299,6 +299,40 @@ static SEXP modLa_rg(SEXP x, SEXP only_values)
     UNPROTECT(2);
     return ret;
 }
+
+static SEXP modLa_dlange(SEXP A, SEXP type)
+{
+    SEXP x, val;
+    int *xdims, m, n, nprot = 1;
+    double *work;
+    char typNorm[] = {'\0', '\0'};
+
+    if (!isString(type))
+	error(_("'type' must be a character string"));
+    if (!isReal(A) && isNumeric(A)) {
+	x = PROTECT(coerceVector(A, REALSXP)); nprot++;
+    } else
+	x = A;
+    if (!(isMatrix(x) && isReal(x))) {
+	UNPROTECT(1);
+	error(_("'A' must be a numeric matrix"));
+    }
+
+    xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
+    m = xdims[0];
+    n = xdims[1]; /* m x n  matrix {using Lapack naming convention} */
+
+    typNorm[0] = La_norm_type(CHAR(asChar(type)));
+
+    val = PROTECT(allocVector(REALSXP, 1));
+    if(*typNorm == 'I')
+	work = (double *) R_alloc(m, sizeof(double));
+    REAL(val)[0] = F77_CALL(dlange)(typNorm, &m, &n, REAL(x), &m, work);
+
+    UNPROTECT(nprot);
+    return val;
+}
+
 
 /* ------------------------------------------------------------ */
 static SEXP modLa_dgecon(SEXP A, SEXP norm)
@@ -1143,6 +1177,7 @@ R_init_lapack(DllInfo *info)
     tmp->svd = modLa_svd;
     tmp->rs = modLa_rs;
     tmp->rg = modLa_rg;
+    tmp->dlange = modLa_dlange;
     tmp->dgecon = modLa_dgecon;
     tmp->dtrcon = modLa_dtrcon;
     tmp->zgecon = modLa_zgecon;

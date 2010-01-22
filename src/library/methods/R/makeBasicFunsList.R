@@ -177,6 +177,20 @@
 	       signature = c("x", "norm"), where = where)
     setGenericImplicit("rcond", where, FALSE)
 
+    setGeneric("norm", function(x, type, ...) standardGeneric("norm"),
+	       useAsDefault = function(x, type, ...) base::norm(x, type, ...),
+	       signature = c("x", "type"), where = where)
+    setGenericImplicit("norm", where, FALSE)
+
+    setGeneric("backsolve", function(r, x, k, upper.tri = TRUE, transpose = FALSE, ...)
+	       standardGeneric("backsolve"),
+	       useAsDefault =
+	       function(r, x, k = ncol(r), upper.tri = TRUE, transpose = FALSE, ...)
+	       base::backsolve(r, x, k = k,
+			       upper.tri = upper.tri, transpose = transpose, ...),
+	       signature = c("r", "x"), where = where)
+    setGenericImplicit("backsolve", where, FALSE)
+
     setGeneric("colMeans", function(x, na.rm = FALSE, dims = 1, ...)
 			standardGeneric("colMeans"),
 	       useAsDefault = function(x, na.rm = FALSE, dims = 1, ...)
