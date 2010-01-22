@@ -55,6 +55,9 @@ BUG FIXES
     o	Some of the MDI toolbar buttons (e.g. "Open Script") did not
 	return the focus to the console if the user cancelled the
 	action.
+	
+    o	system() (and hence shell()) did not set the standard file
+    	handles properly, so some programs would not run.
 
 
 
