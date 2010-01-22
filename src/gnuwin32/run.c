@@ -123,37 +123,59 @@ static char * expandcmd(const char *cmd)
 
 extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 
-static HANDLE pcreate(const char* cmd, cetype_t enc, const char *finput,
-		      int newconsole, int visible, int inpipe)
+static HANDLE pcreate(const char* cmd, cetype_t enc, 
+		      int newconsole, int visible, 
+		      HANDLE hIN, HANDLE hOUT, HANDLE hERR)
 {
     DWORD ret;
-    SECURITY_ATTRIBUTES sa;
     PROCESS_INFORMATION pi;
     STARTUPINFO si;
     STARTUPINFOW wsi;
-    HANDLE hIN = INVALID_HANDLE_VALUE,
-	hSAVED = INVALID_HANDLE_VALUE, hTHIS;
+    HANDLE dupIN, dupOUT, dupERR;
+    WORD showWindow = SW_SHOWDEFAULT;
+    int inpipe;
     char *ecmd;
     wchar_t *wcmd;
-
+    SECURITY_ATTRIBUTES sa;
     sa.nLength = sizeof(sa);
     sa.lpSecurityDescriptor = NULL;
     sa.bInheritHandle = TRUE;
 
     if (!(ecmd = expandcmd(cmd))) /* error message already set */
 	return NULL;
-    hTHIS = GetCurrentProcess();
-    if (finput && finput[0]) {
-	hSAVED = GetStdHandle(STD_INPUT_HANDLE) ;
-	hIN = CreateFile(finput, GENERIC_READ, 0,
-			 &sa, OPEN_EXISTING, 0, NULL);
-	if (hIN == INVALID_HANDLE_VALUE) {
-	    free(ecmd);
-	    strcpy(RunError, _("Impossible to redirect input"));
-	    return NULL;
-	}
-	SetStdHandle(STD_INPUT_HANDLE, hIN);
+
+    inpipe =    (hIN != INVALID_HANDLE_VALUE) 
+             || (hOUT != INVALID_HANDLE_VALUE) 
+             || (hERR != INVALID_HANDLE_VALUE);
+ 
+    if (inpipe) {         
+	HANDLE hNULL = CreateFile("NUL:", GENERIC_READ | GENERIC_WRITE, 0, 
+			   &sa, OPEN_EXISTING, 0, NULL);
+    	HANDLE hTHIS = GetCurrentProcess();			   
+
+	if (hIN == INVALID_HANDLE_VALUE) hIN = hNULL;
+	if (hOUT == INVALID_HANDLE_VALUE) hOUT = hNULL;
+	if (hERR == INVALID_HANDLE_VALUE) hERR = hNULL;
+	
+	DuplicateHandle(hTHIS, hIN,
+			hTHIS, &dupIN, 0, TRUE, DUPLICATE_SAME_ACCESS);
+	DuplicateHandle(hTHIS, hOUT,
+			hTHIS, &dupOUT, 0, TRUE, DUPLICATE_SAME_ACCESS);
+	DuplicateHandle(hTHIS, hERR,
+			hTHIS, &dupERR, 0, TRUE, DUPLICATE_SAME_ACCESS);	
+	CloseHandle(hTHIS);
+	CloseHandle(hNULL);
+    }   
+    
+    switch (visible) {
+    case -1:
+	showWindow = SW_HIDE;
+	break;
+    case 0:
+	showWindow = SW_SHOWMINIMIZED;
+	break;
     }
+    
     if(enc == CE_UTF8) {
 	wsi.cb = sizeof(wsi);
 	wsi.lpReserved = NULL;
@@ -161,26 +183,13 @@ static HANDLE pcreate(const char* cmd, cetype_t enc, const char *finput,
 	wsi.cbReserved2 = 0;
 	wsi.lpDesktop = NULL;
 	wsi.lpTitle = NULL;
-	if ((finput && finput[0]) || inpipe) {
-	    wsi.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
-	    DuplicateHandle(hTHIS, GetStdHandle(STD_INPUT_HANDLE),
-			    hTHIS, &wsi.hStdInput, 0, TRUE, DUPLICATE_SAME_ACCESS);
-	    DuplicateHandle(hTHIS, GetStdHandle(STD_OUTPUT_HANDLE),
-			    hTHIS, &wsi.hStdOutput, 0, TRUE, DUPLICATE_SAME_ACCESS);
-	    DuplicateHandle(hTHIS, GetStdHandle(STD_ERROR_HANDLE),
-			    hTHIS, &wsi.hStdError, 0, TRUE, DUPLICATE_SAME_ACCESS);
-	} else
-	    wsi.dwFlags = STARTF_USESHOWWINDOW;
-	switch (visible) {
-	case -1:
-	    wsi.wShowWindow = SW_HIDE;
-	    break;
-	case 0:
-	    wsi.wShowWindow = SW_SHOWMINIMIZED;
-	    break;
-	case 1:
-	    wsi.wShowWindow = SW_SHOWDEFAULT;
-	    break;
+	wsi.dwFlags = STARTF_USESHOWWINDOW;
+	wsi.wShowWindow = showWindow;	
+	if (inpipe) {
+	    wsi.dwFlags |= STARTF_USESTDHANDLES;
+	    wsi.hStdInput  = dupIN;
+	    wsi.hStdOutput = dupOUT;
+	    wsi.hStdError  = dupERR;
 	}
     } else {
 	si.cb = sizeof(si);
@@ -189,29 +198,15 @@ static HANDLE pcreate(const char* cmd, cetype_t enc, const char *finput,
 	si.cbReserved2 = 0;
 	si.lpDesktop = NULL;
 	si.lpTitle = NULL;
-	if ((finput && finput[0]) || inpipe) {
-	    si.dwFlags = STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
-	    DuplicateHandle(hTHIS, GetStdHandle(STD_INPUT_HANDLE),
-			    hTHIS, &si.hStdInput, 0, TRUE, DUPLICATE_SAME_ACCESS);
-	    DuplicateHandle(hTHIS, GetStdHandle(STD_OUTPUT_HANDLE),
-			    hTHIS, &si.hStdOutput, 0, TRUE, DUPLICATE_SAME_ACCESS);
-	    DuplicateHandle(hTHIS, GetStdHandle(STD_ERROR_HANDLE),
-			    hTHIS, &si.hStdError, 0, TRUE, DUPLICATE_SAME_ACCESS);
-	} else
-	    si.dwFlags = STARTF_USESHOWWINDOW;
-	switch (visible) {
-	case -1:
-	    si.wShowWindow = SW_HIDE;
-	    break;
-	case 0:
-	    si.wShowWindow = SW_SHOWMINIMIZED;
-	    break;
-	case 1:
-	    si.wShowWindow = SW_SHOWDEFAULT;
-	    break;
+	si.dwFlags = STARTF_USESHOWWINDOW;
+	si.wShowWindow = showWindow;	
+	if (inpipe) {
+	    si.dwFlags |= STARTF_USESTDHANDLES;
+	    si.hStdInput  = dupIN;
+	    si.hStdOutput = dupOUT;
+	    si.hStdError  = dupERR;
 	}
     }
-
 
     if(enc == CE_UTF8) {
 	int n = strlen(ecmd); /* max no of chars */
@@ -227,15 +222,10 @@ static HANDLE pcreate(const char* cmd, cetype_t enc, const char *finput,
 			    CREATE_NEW_CONSOLE : 0,
 			    NULL, NULL, &si, &pi);
 
-    CloseHandle(hTHIS);
-    if (finput && finput[0]) {
-	SetStdHandle(STD_INPUT_HANDLE, hSAVED);
-	CloseHandle(hIN);
-    }
-    if (si.dwFlags & STARTF_USESTDHANDLES) {
-	CloseHandle(si.hStdInput);
-	CloseHandle(si.hStdOutput);
-	CloseHandle(si.hStdError);
+    if (inpipe) {
+	CloseHandle(dupIN);
+	CloseHandle(dupOUT);
+	CloseHandle(dupERR);
     }
     if (!ret) {
 	strcpy(RunError, _("Impossible to run "));
@@ -275,6 +265,23 @@ char *runerror(void)
     return RunError;
 }
 
+static HANDLE getInputHandle(const char *finput)
+{
+    if (finput && finput[0]) {
+	SECURITY_ATTRIBUTES sa;
+	sa.nLength = sizeof(sa);
+	sa.lpSecurityDescriptor = NULL;
+	sa.bInheritHandle = TRUE;    
+	HANDLE hIN = CreateFile(finput, GENERIC_READ, 0,
+			 &sa, OPEN_EXISTING, 0, NULL);
+	if (hIN == INVALID_HANDLE_VALUE) {
+	    strcpy(RunError, _("Impossible to redirect input"));
+	    return NULL;
+	}
+	return hIN;
+    }
+    return INVALID_HANDLE_VALUE;
+}
 
 /*
    wait != 0 says wait for child to terminate before returning.
@@ -284,24 +291,27 @@ char *runerror(void)
  */
 int runcmd(const char *cmd, cetype_t enc, int wait, int visible, const char *finput)
 {
-    HANDLE p;
+    HANDLE p, hIN = getInputHandle(finput);
     int ret;
 
 /* I hope no program will use this as an error code */
-    if (!(p = pcreate(cmd, enc, finput, !wait, visible, 0))) return NOLAUNCH;
+    if (!(p = pcreate(cmd, enc, !wait, visible, 
+    		      hIN,
+    		      INVALID_HANDLE_VALUE,
+    		      INVALID_HANDLE_VALUE))) return NOLAUNCH;
     if (wait) {
 	ret = pwait(p);
 	sprintf(RunError, _("Exit code was %d"), ret);
 	ret &= 0xffff;
     } else ret = 0;
     CloseHandle(p);
+    if (hIN != INVALID_HANDLE_VALUE) CloseHandle(hIN);
     return ret;
 }
 
 /*
    finput is either NULL or the name of a file from which to
      redirect stdin for the child.
-   newconsole != 0 to use a new console (if not waiting)
    visible = -1, 0, 1 for hide, minimized, default
    io = 0 to read stdout from pipe, 1 to write to pipe,
    2 to read stdout and stderr from pipe.
@@ -310,7 +320,7 @@ rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
 		  const char *finput, int io)
 {
     rpipe *r;
-    HANDLE hIN, hOUT, hERR, hThread, hTHIS, hTemp;
+    HANDLE hThread, hTHIS, hIN, hReadPipe, hWritePipe;
     DWORD id;
     BOOL res;
 
@@ -319,44 +329,39 @@ rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
 	return NULL;
     }
     r->process = NULL;
-    if(io == 1) { /* pipe to write to */
-	res = CreatePipe(&(r->read), &hTemp, NULL, 0);
-	if (res == FALSE) {
-	    rpipeClose(r);
-	    strcpy(RunError, _("Impossible to create pipe"));
-	    return NULL;
-	}
-	hTHIS = GetCurrentProcess();
-	hIN = GetStdHandle(STD_INPUT_HANDLE);
-	DuplicateHandle(hTHIS, hTemp, hTHIS, &r->write,
-			0, FALSE, DUPLICATE_SAME_ACCESS);
-	CloseHandle(hTemp);
-	CloseHandle(hTHIS);
-	SetStdHandle(STD_INPUT_HANDLE, r->read);
-	r->process = pcreate(cmd, enc, NULL, 1, visible, 1);
-	r->active = 1;
-	SetStdHandle(STD_INPUT_HANDLE, hIN);
-	if (!r->process) return NULL; else return r;
-    }
-    res = CreatePipe(&hTemp, &(r->write), NULL, 0);
+    res = CreatePipe(&hReadPipe, &hWritePipe, NULL, 0);
     if (res == FALSE) {
 	rpipeClose(r);
 	strcpy(RunError, _("Impossible to create pipe"));
 	return NULL;
     }
+    if(io == 1) { /* pipe for R to write to */
+	hTHIS = GetCurrentProcess();
+	r->read = hReadPipe;
+	DuplicateHandle(hTHIS, hWritePipe, hTHIS, &r->write,
+			0, FALSE, DUPLICATE_SAME_ACCESS);
+	CloseHandle(hWritePipe);
+	CloseHandle(hTHIS);
+	r->process = pcreate(cmd, enc, 1, visible, 
+	                     r->read, INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE);
+	r->active = 1;
+	if (!r->process) return NULL; else return r;
+    }
+    /* pipe for R to read from */
     hTHIS = GetCurrentProcess();
-    hOUT = GetStdHandle(STD_OUTPUT_HANDLE) ;
-    hERR = GetStdHandle(STD_ERROR_HANDLE) ;
-    DuplicateHandle(hTHIS, hTemp, hTHIS, &r->read,
+    r->write = hWritePipe;
+    DuplicateHandle(hTHIS, hReadPipe, hTHIS, &r->read,
 		    0, FALSE, DUPLICATE_SAME_ACCESS);
-    CloseHandle(hTemp);
+    CloseHandle(hReadPipe);
     CloseHandle(hTHIS);
-    SetStdHandle(STD_OUTPUT_HANDLE, r->write);
-    if(io > 0) SetStdHandle(STD_ERROR_HANDLE, r->write);
-    r->process = pcreate(cmd, enc, finput, 0, visible, 1);
+    
+    hIN = getInputHandle(finput);
+    r->process = pcreate(cmd, enc, 0, visible, 
+                         hIN, r->write, 
+                         io > 0 ? r->write : INVALID_HANDLE_VALUE);
+    if (hIN != INVALID_HANDLE_VALUE) CloseHandle(hIN);
+    
     r->active = 1;
-    SetStdHandle(STD_OUTPUT_HANDLE, hOUT);
-    if(io > 0) SetStdHandle(STD_ERROR_HANDLE, hERR);
     if (!r->process)
 	return NULL;
     if (!(hThread = CreateThread(NULL, 0, threadedwait, r, 0, &id))) {
