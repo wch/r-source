@@ -2657,31 +2657,25 @@ way to use ACML.
 @subsubsection Goto BLAS
 
 Dr Kazushige Goto has written another tuned BLAS which is available for
-several processors and OSes.
+several processors and OSes.  The current version is known as GotoBLAS2
 
 This has been made available in several formats, but is currently
 available only as source code.  For @emph{academic use only} (after
 registering) it can be obtained via
-@uref{http://www.tacc.utexas.edu/@/resources/@/software/@/software.php}.
+@uref{http://www.tacc.utexas.edu/@/tacc-projects}.
 Once this is built and installed, it can be used by configuring with
 
 @example
---with-blas="-lgoto"
+--with-blas="-lgoto2"
 @end example
 
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
-way to use recent versions of the Goto BLAS.
+way to use it.
 
 Note that currently a multi-threaded Goto BLAS will be built by default
 if and only if the building is on a multi-processor system (counting
 multiple cores and hyperthreading), and at run time the default number
 of threads is the number of @acronym{CPU}s detected.
-
-It has been reported that on some RedHat-based Linux systems it is
-necessary to set @code{GOTO_NUM_THREADS=1} or @code{OMP_NUM_THREADS=1}
-(to disable multiple threads) in the environment when using a
-multi-threaded Goto BLAS, but ours run happily with multiple threads.
-
 
 @node MKL, Shared BLAS, Goto BLAS, BLAS
 @subsubsection Intel MKL
