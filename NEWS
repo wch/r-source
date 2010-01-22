@@ -83,6 +83,10 @@ BUG FIXES
     o	det(m) and determinant.matrix(m) now return NaN when m
 	contains NA or NaN's in crucial entries.
 
+    o	[cr]bind(..., deparse.level=2) was not always giving names
+	when documented to do so.  (Discovered whilst investigating
+	PR#14189.)
+
 
 
 		CHANGES IN R VERSION 2.10.1
