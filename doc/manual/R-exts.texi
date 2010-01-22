@@ -659,6 +659,12 @@ languages in a single package, and we do not support using both C++ and
 Fortran 9x. Because @R{} itself uses it, we know that C and FORTRAN 77
 can be used together and mixing C and C++ seems to be widely successful.
 
+If your code needs to depend on the platform there are certain defines
+which can used in C or C++.  On all Windows builds (even 64-bit ones)
+@samp{WIN32} will be defined: on 64-bit Windows builds also
+@samp{WIN64}, and on Mac OS X @samp{__APPLE__} and @samp{__APPLE_CC__}
+are defined.
+
 The default rules can be tweaked by setting macros in a file
 @file{src/Makevars} (@pxref{Using Makevars}).  Note that this mechanism
 should be general enough to eliminate the need for a package-specific
@@ -4412,7 +4418,7 @@ balance.  Use @code{\verb} (only in @R{} 2.10.0 or later) or @code{\samp} or
 @code{\preformatted} is verbatim, so @code{\var} is not interpreted.
 
 @item
-Both arguments of @code{\dean} and @code{\eqn} are verbatim, so for
+Both arguments of @code{\deqn} and @code{\eqn} are verbatim, so for
 example @code{\code} is not rendered there.
 
 @end itemize
