@@ -6061,3 +6061,9 @@ stopifnot(identical(cn, c("qsec", "", "")))
 stopifnot(identical(cn, c("qsec", "log(hp)", "sqrt(disp)")))
 detach()
 ## 2.10.1 gave no column names for deparse.level=2
+
+
+## Infinite-loops with match(incomparables=)
+match(c("A", "B", "C"), "A", incomparables=NA)
+match(c("A", "B", "C"), c("A", "B"), incomparables="A")
+## infinite-looped in 2.10.1

@@ -369,14 +369,13 @@ static void removeEntry(SEXP table, SEXP x, int indx, HashData *d)
 
     h = INTEGER(d->HashTable);
     i = d->hash(x, indx, d);
-    while (h[i] != NIL) {
+    while (h[i] >= 0) {
 	if (d->equal(table, h[i], x, indx)) {
 	    h[i] = NA_INTEGER;  /* < 0, only index values are inserted */
 	    return;
 	}
 	i = (i + 1) % d->M;
     }
-    h[i] = NA_INTEGER;
 }
 
 SEXP duplicated(SEXP x, Rboolean from_last)
@@ -740,7 +739,7 @@ SEXP match4(SEXP itable, SEXP ix, int nmatch, SEXP incomp)
     }
     PROTECT(data.HashTable);
     DoHashing(table, &data);
-    UndoHashing(incomp, itable, &data);
+    UndoHashing(incomp, table, &data);
     ans = HashLookup(table, x, &data);
     UNPROTECT(4);
     return ans;
