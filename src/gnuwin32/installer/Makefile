@@ -22,8 +22,10 @@ Producer = R-core
 ## Limit installation to 64-bit systems
 ifeq ($(strip $(WIN)),64)
 bit64 = 1;
+SUFF = win64
 else
 bit64 = 0;
+SUFF = win32
 endif
 
 FULLVERSION=`cat ../../../VERSION`
@@ -39,7 +41,7 @@ ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Makeconf Rcmd_env
 # we don't want share/{Makefile.in,sh} installed
 SHARE_DIRS = R licenses locale make perl texmf zoneinfo
 
-all: $(RPREFIX)-win32.exe
+all: $(RPREFIX)-$(SUFF).exe
 msi: $(RPREFIX)-win32.msi
 
 imagedir:
@@ -80,7 +82,7 @@ imagedir:
 #
 # files to make source packages
 	$(MKDIR) -p $(RPREFIX)/share \
-	  $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32 # $(RPREFIX)/share/sh
+	  $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32
 	$(CP) $(R_HOME)/doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) $(R_HOME)/doc/KEYWORDS* $(RPREFIX)/doc
 	$(CP) -pr $(R_HOME)/include $(RPREFIX)
@@ -117,7 +119,7 @@ R.iss: JRins.pl CustomMsg.txt imagedir fixups md5sums \
   ../../../VERSION ../../../SVN-REVISION
 	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer) $(bit64)
 
-$(RPREFIX)-win32.exe: R.iss
+$(RPREFIX)-$(SUFF).exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1
 
 

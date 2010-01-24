@@ -52,9 +52,13 @@ $RVER0 .= "." . $SVN;
 if($mode64bit) {
     $suffix = "win64";
     $PF = "pf64";
+    $QUAL = " x64"; # used for AppName
+    $SUFF = "-x64"; # used for default install dir
 } else {
     $suffix = "win32";
     $PF = "pf32";
+    $QUAL = "";
+    $SUFF = "";
 }
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
@@ -66,14 +70,14 @@ END
 print insfile "ArchitecturesInstallIn64BitMode=x64\nArchitecturesAllowed=x64\n" if $mode64bit;
 
 my $lines=<<END;
-AppName=R for Windows $RVER
-AppVerName=R for Windows $RVER
+AppName=R for Windows$QUAL $RVER
+AppVerName=R for Windows$QUAL $RVER
 AppPublisherURL=http://www.r-project.org
 AppSupportURL=http://www.r-project.org
 AppUpdatesURL=http://www.r-project.org
 AppVersion=${RVER}
 VersionInfoVersion=$RVER0
-DefaultDirName={code:UserPF}\\R\\${RW}
+DefaultDirName={code:UserPF}\\R\\${RW}${SUFF}
 DefaultGroupName=R
 AllowNoIcons=yes
 InfoBeforeFile=${SRCDIR}\\COPYING
@@ -124,10 +128,10 @@ Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries
 
 
 [Icons]
-Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
-Name: "{group}\\Uninstall R $RVER"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
-Name: "{userappdata}\\Microsoft\\Internet Explorer\\Quick Launch\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
+Name: "{group}\\R$QUAL $RVER"; Filename: "{app}\\bin\\Rgui.exe"; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
+Name: "{group}\\Uninstall R$QUAL $RVER"; Filename: "{uninstallexe}"
+Name: "{commondesktop}\\R$QUAL $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
+Name: "{userappdata}\\Microsoft\\Internet Explorer\\Quick Launch\\R$QUAL $RVER"; Filename: "{app}\\bin\\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
 
 
 [Registry] 
@@ -153,6 +157,9 @@ Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: "";
 Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\bin\\RGui.exe"" ""%1"""; Tasks: associate; Check: IsAdmin
 END
 
+## it is OK to use the same keys for 32- and 64-bit versions as the 
+## view of the Registry depends on the arch.
+
 print insfile $lines;
 if($Producer eq "R-core") {
     print insfile "AppPublisher=R Development Core Team\n";
@@ -163,7 +170,7 @@ print insfile $lines2;
 print insfile <<END;
 
 [Icons]
-Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\index.html"; Components: html
+Name: "{group}\\R$QUAL $RVER Help"; Filename: "{app}\\doc\\html\\index.html"; Components: html
 
 [Types]
 Name: "user"; Description: {cm:user}
