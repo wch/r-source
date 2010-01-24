@@ -23,11 +23,7 @@ all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MAKE) -f Makefile.win mkR mkdesc mkpo
-	@if test -d src; then \
-	  $(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDll RHOME=$(RHOME) DLLNAME=$(pkg) || exit 1; \
-	  mkdir -p $(top_builddir)/library/$(pkg)/libs; \
-	  cp src/$(pkg).dll $(top_builddir)/library/$(pkg)/libs; \
-	fi
+	@$(MAKE) -f Makefile.win mksrc-win
 	@$(MAKE) -f Makefile.win mklazy
 
 

@@ -26,7 +26,7 @@ all: R
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(MAKE) -C $${pkg} -f Makefile.win RHOME=$(RHOME) \
+	  $(MAKE) -C $${pkg} -f Makefile.win RHOME=$(RHOME) R_ARCH=$(R_ARCH) \
 		R_OSTYPE=windows VERSION=$(RVER) all install-tests || exit 1; \
 	done
 	@(cd base && $(MAKE) -f Makefile.win RHOME=$(RHOME) mkdesc)

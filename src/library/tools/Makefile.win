@@ -26,8 +26,8 @@ all:
 	@if test -d src; then \
 	  cp -p ../../gnuwin32/dllversion.rc src/tools_res.rc; \
 	  $(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDll RHOME=$(RHOME) DLLNAME=$(pkg) || exit 1; \
-	  mkdir -p $(top_builddir)/library/$(pkg)/libs; \
-	  cp src/$(pkg).dll $(top_builddir)/library/$(pkg)/libs; \
+	  mkdir -p $(top_builddir)/library/$(pkg)/libs$(R_ARCH); \
+	  cp src/$(pkg).dll $(top_builddir)/library/$(pkg)/libs$(R_ARCH); \
 	fi
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@(cat $(srcdir)/R/makeLazyLoad.R; \

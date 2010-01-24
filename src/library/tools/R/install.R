@@ -49,7 +49,9 @@
     GZIP <- Sys.getenv("R_GZIPCMD")
     if (!nzchar(GZIP)) GZIP <- "gzip"
     if (WINDOWS) zip <- "zip"
-    rarch <- Sys.getenv("R_ARCH")
+    rarch <- Sys.getenv("R_ARCH") # unix only
+    if (WINDOWS && nzchar(.Platform$r_arch))
+        rarch <- paste0("/", .Platform$r_arch)
 
     SHLIB_EXT <- if (WINDOWS) ".dll" else {
         ## can we do better?
@@ -361,6 +363,7 @@
             if (length(files)) {
                 libarch <- if (nzchar(arch)) paste0("libs", arch) else "libs"
                 dest <- file.path(instdir, libarch)
+                message('installing to ', dest)
                 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
                 file.copy(files, dest, overwrite = TRUE)
                 if (!WINDOWS)
@@ -547,12 +550,12 @@
                     message("  running src/Makefile.win ...")
                     res <- system(paste("make --no-print-directory",
                                         paste("-f", shQuote(makefiles), collapse = " ")))
-                    if (res == 0) shlib_install(instdir, "")
+                    if (res == 0) shlib_install(instdir, rarch)
                     else has_error <- TRUE
                 } else {
                     message("  making DLL ...")
                     srcs <- dir(pattern = "\\.([cfmCM]|cc|cpp|f90|f95|mm)$")
-                    has_error <- run_shlib(pkg_name, srcs, instdir, "")
+                    has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
                     message("  ... done")
                 }
                 setwd(owd)

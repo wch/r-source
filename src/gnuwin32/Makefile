@@ -117,6 +117,7 @@ rlibs:
 	done
 
 rmodules:
+	@$(MKDIR) -p ../../modules$(R_ARCH)
 	$(MK) -C ../modules -f Makefile.win \
 	  RHOME=$(RHOME) OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)'
 
@@ -157,8 +158,7 @@ Rdll: makeMakedeps libRblas.dll.a ../../bin/R.dll
 	@$(MK) makeMakedeps
 	@$(MK) R.dll
 	@$(MKDIR) -p ../../bin
-	$(CP) R.dll ../../bin/
-	@$(MKDIR) -p ./../modules/
+	$(CP) R.dll ../../bin
 
 FORCE:
 
@@ -367,12 +367,19 @@ rinstaller:
 	@$(MAKE) -C installer clean
 
 crandir:
-	$(CP) installer/$(RPREFIX)-win32.exe cran
 	$(CP) CHANGES cran/CHANGES.$(RPREFIX)
 	$(CP) ../../NEWS cran/NEWS.$(RPREFIX)
+ifeq ($(strip $(WIN)),64)
+	$(CP) installer/$(RPREFIX)-win64.exe cran
+	(cd cran;\
+	 $(ECHO) 'cat(md5sum("$(RPREFIX)-win64.exe"),"*$(RPREFIX)-win64.exe")' \
+         | $(REXE) R_DEFAULT_PACKAGES=tools >md5sum.txt)
+else
+	$(CP) installer/$(RPREFIX)-win32.exe cran
 	(cd cran;\
 	 $(ECHO) 'cat(md5sum("$(RPREFIX)-win32.exe"),"*$(RPREFIX)-win32.exe")' \
          | $(REXE) R_DEFAULT_PACKAGES=tools >md5sum.txt)
+endif
 	$(CP) ../../doc/html/rw-FAQ.html cran
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \

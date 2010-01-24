@@ -45,7 +45,10 @@ ifeq ($(strip $(WIN)),64)
 # Mainly -DWIN64 is used, but this define is used in a few places
 # for things specific to this compiler.
 DEFINES=-DW64
-# BINPREF=x86_64-w64-mingw32-
+BINPREF=x86_64-w64-mingw32-
+# for sub-architecture: currently uses etc/Makeconf, not etc/x64/Makeconf
+#R_ARCH=/x64
+#DEFINES=-DW64 -DR_ARCH='"x64"'
 endif
 
 # set to use ICU (experimental)

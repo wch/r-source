@@ -115,8 +115,8 @@ mksrc:
 mksrc-win:
 	@if test -d src; then \
 	  $(MAKE) -C src -f $(RHOME)/src/gnuwin32/MakeDLL RHOME=$(RHOME) DLLNAME=$(pkg) || exit 1; \
-	  mkdir -p $(top_builddir)/library/$(pkg)/libs; \
-	  cp src/$(pkg).dll $(top_builddir)/library/$(pkg)/libs; \
+	  mkdir -p $(top_builddir)/library/$(pkg)/libs$(R_ARCH); \
+	  cp src/$(pkg).dll $(top_builddir)/library/$(pkg)/libs$(R_ARCH); \
 	fi
 
 install-tests:

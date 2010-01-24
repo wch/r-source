@@ -2,7 +2,7 @@
 include ../../gnuwin32/MkRules
 
 MODULE=vfonts
-all: makeMakedeps ../../../modules/$(MODULE).dll
+all: makeMakedeps ../../../modules$(R_ARCH)/$(MODULE).dll
 
 CSOURCES=g_alab_her.c g_cntrlify.c g_fontdb.c g_her_glyph.c
 
@@ -11,7 +11,7 @@ CFLAGS=$(OPTFLAGS)
 FFLAGS=$(OPTFLAGS)
 OBJS=$(CSOURCES:.c=.o) dllversion.o
 
-../../../modules/$(MODULE).dll: $(OBJS)
+../../../modules$(R_ARCH)/$(MODULE).dll: $(OBJS)
 	$(MKDIR) -p ../../../modules
 	@$(ECHO) "EXPORTS" > vfonts.def
 	@$(ECHO) " R_init_vfonts" >> vfonts.def

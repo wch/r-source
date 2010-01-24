@@ -416,6 +416,9 @@
 /* Define to 1 if the system has the type `long long int'. */
 #define HAVE_LONG_LONG_INT 1
 
+/* Define if your system has lzma >= 4.999. */
+#define HAVE_LZMA
+
 /* Define to 1 if you have the `matherr' function. */
 /* #undef HAVE_MATHERR */
 
@@ -838,7 +841,9 @@
 #define RETSIGTYPE void
 
 /* Define this to use architecture-dependent subdirectories of this name. */
+#ifndef R_ARCH
 #define R_ARCH ""
+#endif
 
 /* Define this to be the name of the CPU of your system. */
 #define R_CPU "x86_64"
