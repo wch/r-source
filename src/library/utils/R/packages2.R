@@ -236,11 +236,13 @@ install.packages <-
     ## check if we should infer repos=NULL
     if(length(pkgs) == 1L && missing(repos) && missing(contriburl)) {
         if((type == "source" && length(grep("\\.tar.gz$", pkgs))) ||
-           (type == "win.binary" && length(grep("\\.zip$", pkgs))) ||
+           (type %in% c("win.binary", "win64.binary")
+            && length(grep("\\.zip$", pkgs))) ||
            (substr(type, 1L, 10L) == "mac.binary"
             && length(grep("\\.tgz$", pkgs)))) {
             repos <- NULL
             message("inferring 'repos = NULL' from the file name")
+
         }
     }
 
@@ -279,7 +281,7 @@ install.packages <-
             return(invisible())
         }
 
-        if(type == "win.binary")
+        if(type %in% c("win.binary", "win64.binary"))
             stop("cannot install Windows binary packages on this plaform")
 
         if(!file.exists(file.path(R.home("bin"), "INSTALL")))

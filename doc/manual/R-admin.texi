@@ -1322,14 +1322,17 @@ To build package @pkg{tcltk} you need to unpack
 of the source tree: otherwise edit @file{src/library/tcltk/Makefile.win}
 to make a stub package.
 
-The default is @code{options(pkgType="source")}, that is to use source
-packages.  Note that some of the toolchains, including that from
-SourceForge, use dynamic linking for language support: this means that
-you may need the DLLs in the toolchain's @file{bin} directory in your
-path when running @R{}.  There is experimental support for binary
-packages which you can select by @code{options(pkgType="win64.binary")},
-and both @acronym{CRAN} and @acronym{CRAN} extras contain some packages
-of that type.
+The default is @code{options(pkgType="win64.binary")}, supported so far
+on both @acronym{CRAN} and @acronym{CRAN}.  Note that some of the
+toolchains, including that from SourceForge, use dynamic linking for
+language support: this means that you may need the DLLs in the
+toolchain's @file{bin} directory in your path when running @R{}
+(expecially for packages using C++).  Packages using Gtk+ (@pkg{Cairo},
+@pkg{RGtk2}, @pkg{cairoDevice} and those@footnote{Note that these
+libraries do not iclude @code{libglade-2}, an optional part of
+@pkg{Rgtk2} and @pkg{rattle} depends on.} that depend on them) need the
+@file{bin} directory of the distribution at
+@url{http://www.gtk.org/download-windows-64bit.html} in the path.
 
 An experimental package-building service is available at
 @url{http://win-builder.r-project.org/}.

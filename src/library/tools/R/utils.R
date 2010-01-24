@@ -165,7 +165,7 @@ function(x)
 {
     ## All that is needed here is an 8-bit encoding that includes ASCII.
     ## The only one we guarantee to exist is 'latin1'.
-    ## The default sub=NA is faster, but on some platforms 
+    ## The default sub=NA is faster, but on some platforms
     ## some characters just lose their accents, so two tests.
     asc <- iconv(x, "latin1", "ASCII")
     ind <- is.na(asc) | asc != x
@@ -1166,6 +1166,8 @@ function(file)
                             colClasses =
                             c(rep.int("character", 3L),
                               rep.int("logical", 4L)))
+    if("win64.binary" %in% names(db))
+        db[["win64.binary"]] <- as.logical(db[["win64.binary"]])
     db[, "URL"] <- .expand_BioC_repository_URLs(db[, "URL"])
     db
 }

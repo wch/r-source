@@ -552,14 +552,14 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 ok[ok][!keep] <- FALSE
             }
             if (substr(type, 1L, 10L) == "mac.binary") type <- "mac.binary"
-            if (type == "win64.binary") type <- "win.binary"
             ## in Oct 2009 we introduced file names in PACKAGES files
             File <- available[ok, "File"]
             fn <- paste(p, "_", available[ok, "Version"],
                         switch(type,
                                "source" = ".tar.gz",
                                "mac.binary" = ".tgz",
-                               "win.binary" = ".zip"),
+                               "win.binary" = ".zip",
+                               "win64.binary" = ".zip"),
                         sep = "")
             have_fn <- !is.na(File)
             fn[have_fn] <- File[have_fn]
@@ -687,7 +687,6 @@ setRepositories <-
     a <- tools:::.read_repositories(p)
     pkgType <- getOption("pkgType")
     if(length(grep("^mac\\.binary", pkgType))) pkgType <- "mac.binary"
-    if(pkgType == "win64.binary") pkgType <- "win.binary"
     thisType <- a[[pkgType]]
     a <- a[thisType, 1L:3L]
     repos <- getOption("repos")
