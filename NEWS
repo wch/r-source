@@ -240,8 +240,11 @@ NEW FEATURES
     o	Checking setAs(a,b) methods only gives a message instead of a
 	warning, when one of a or b is unknown.
 
-    o	New norm() to compute matrix norm.
-	norm() and backsolve() also have implicit generics now.
+    o	New function norm() to compute a matrix norm.
+	norm() and also backsolve() have implicit S4 generics.
+
+    o	Renviron.site and Rprofile.site can have architecture-specific
+	versions on systems with sub-architectures.
 
 
 DEPRECATED & DEFUNCT

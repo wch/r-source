@@ -235,6 +235,10 @@ void process_system_Renviron()
 	R_ShowMessage("cannot find system Renviron");
 }
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h> /* for access, R_OK */
+#endif
+
 /* try site Renviron: R_ENVIRON, then R_HOME/etc/Renviron.site. */
 void process_site_Renviron ()
 {
@@ -244,6 +248,17 @@ void process_site_Renviron ()
 	process_Renviron(p);
 	return;
     }
+#ifdef R_ARCH
+    if(strlen(R_Home) + strlen("/etc/Renviron.site") + strlen(R_ARCH) > PATH_MAX - 2) {
+	R_ShowMessage("path to arch-specific Renviron.site is too long: skipping");
+    } else {
+	snprintf(buf, PATH_MAX, "%s/etc/%s/Renviron.site", R_Home, R_ARCH);
+	if(access(buf, R_OK) == 0) {
+	    process_Renviron(buf);
+	    return;
+	}
+    }
+#endif
     if(strlen(R_Home) + strlen("/etc/Renviron.site") > PATH_MAX - 1) {
 	R_ShowMessage("path to Renviron.site is too long: skipping");
 	return;
