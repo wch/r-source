@@ -23,7 +23,8 @@
 #include <windows.h>
 
 struct structRPIPE {
-    HANDLE process;
+    PROCESS_INFORMATION pi;
+    HANDLE thread;
     HANDLE read, write;
     int exitcode, active;
 };

@@ -108,24 +108,32 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 
 #ifdef windows
 \section{Interaction with the command}{
-  Precisely what is seen by the user depends on whether \code{Rgui} or
-  \code{Rterm} is being used.  For \code{Rgui} a new \sQuote{console}
-  will always be used, so a commands window will appear for the duration
-  of console applications unless \code{invisible} is true (which it is
-  by default). For \code{Rterm} a separate commands window will appear
+  Precisely what is seen by the user depends on the optional
+  parameters, whether \code{Rgui} or \code{Rterm} is being used, and whether
+  a console command or GUI application is run by the command.
+  
+  By default nothing will be seen in either system until the command finishes
+  and the output is displayed. 
+  
+  For console commands \code{Rgui} will open a new \sQuote{console}, so
+  if \code{invisible} is false, a commands window will appear for the duration
+  of the command. For \code{Rterm} a separate commands window will appear
   for console applications only if \code{wait = FALSE} and
-  \code{invisible = FALSE}.
+  \code{invisible = FALSE}.  
 
-  If the \R process is waiting for output from the command it is
-  possible to interrupt the running command from the keyboard or
-  \code{Rgui} menu: this should at least return control to the \R
-  console.  Otherwise it it not possible to interrupt the running
-  command.
+  GUI applications will not display in either system unless
+  \code{invisible} is true.
+  
+  It is possible to interrupt the running command from the keyboard
+  (using the \samp{Esc} key in \code{Rgui} or \samp{Ctrl-C} in
+  \code{Rterm}) or the \code{Rgui} menu: this should at least return
+  control to the \R console.  \R will attempt to shut down the process
+  cleanly, but may need to force it to terminate, with the possibility
+  of losing unsaved work, etc.  
 
   Do not try to run console applications that require user
   input from \code{Rgui} setting \code{intern = TRUE} and/or
-  \code{show.output.on.console = TRUE}.  They will not work,
-  may hang and then will probably hang \code{Rgui} too.
+  \code{show.output.on.console = TRUE}.  They will not work.
 }
 #endif
 
@@ -174,7 +182,8 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 
   Not all Windows executables properly respect redirection of output, or
   may only do so from a console application such as \code{Rterm} and not
-  from \code{Rgui}: known examples include \file{fc.exe}.
+  from \code{Rgui}: for example, \file{fc.exe} was among these in the past,
+  but we have had more success recently.
 #endif
 }
 
@@ -185,6 +194,8 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 
 #endif
   \code{\link{.Platform}} for platform-specific variables.
+  
+  \code{\link{pipe}} to set up a pipe connection.
 }
 #ifdef unix
 \examples{

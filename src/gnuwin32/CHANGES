@@ -37,6 +37,12 @@ NEW FEATURES
     o	It is possible to build for 64-bit Windows (set WIN=64 in
 	MkRules and read the R-admin manual for the tools required),
 	thanks in part to changes suggested by Yu Gong.
+	
+
+BUG FIXES
+
+    o	Using ESC to interrupt a system() call could cause R to become
+	unstable.
 
 
 
