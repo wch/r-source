@@ -545,6 +545,7 @@
                     makefiles <- f
                 else if (file.exists(f <- path.expand("~/.R/Makevars")))
                     makefiles <- f
+                if (nzchar(rarch)) Sys.setenv(R_ARCH = rarch)
                 if (file.exists("Makefile.win")) {
                     makefiles <- c("Makefile.wIn", makefiles)
                     message("  running src/Makefile.win ...")
