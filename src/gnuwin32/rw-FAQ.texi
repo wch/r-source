@@ -115,6 +115,7 @@ The information here applies only to recent versions of R for Windows,
 * Does R run under Windows Vista?::  
 * Quotes don't come out right on the console/terminal/pager::  
 * There is no tilde on my keyboard::  
+* Can I use R on 64-bit Windows?::  
 @end menu
 
 
@@ -138,12 +139,12 @@ release.
 @section How do I install R for Windows?
 
 Current binary versions of R run on Windows 2000 or later.@footnote{R
-2.6.2 was the last version for Windows 95. 98, ME and NT4.}  There is no
-specific binary@footnote{See @ref{How can I compile R from source?} for
-the possibility of building one from the sources.} version for x64
-Windows, but the standard 32-bit version works well enough.  We only
-test on versions of Windows currently supported by Microsoft, mainly on
-32-bit XP SP3 and 64-bit Vista and Windows Server 2008.
+2.6.2 was the last version for Windows 95. 98, ME and NT4.}  The
+standard 32-bit version works well on x64 Windows: @xref{Can I use R
+on 64-bit Windows?}.
+
+We only test on versions of Windows currently supported by Microsoft,
+mainly on 32-bit XP SP3 and 64-bit Vista and Windows Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical install
@@ -789,7 +790,7 @@ Latin-1 locale)
 @noindent
 or their use suppressed by @code{options(useFancyQuotes=FALSE)}.
 
-@node There is no tilde on my keyboard,  , Quotes don't come out right on the console/terminal/pager, Installation and Usage
+@node There is no tilde on my keyboard, Can I use R on 64-bit Windows?, Quotes don't come out right on the console/terminal/pager, Installation and Usage
 @section There is no tilde on my keyboard!
 
 Where tilde does not appear on the main keyboard, it can normally be
@@ -805,6 +806,37 @@ Accessories, Accessibility on XP).
 On all Windows versions you should be able to get tilde by holding the
 down the left Alt key and typing 0126 on the numeric keypad, then
 releasing the Alt key.
+
+@node Can I use R on 64-bit Windows?,  , There is no tilde on my keyboard, Installation and Usage
+@section Can I use R on 64-bit Windows?
+
+The standard build of R for Windows (including the binary installer on
+CRAN) is a 32-bit executable that will run on both 32-bit and 64-bit
+versions of Windows.  64-bit versions of Windows (at least XP, Server
+2003 and 2008, Vista and Windows 7) run 32-bit executables under the WOW
+(Windows on Windows) subsystem: they run in almost exactly the same way
+as on a 32-bit version of Windows, except that the address limit for the
+R process is 4GB (rather than 2GB or perhaps 3GB).
+
+The advantage of a native 64-bit application is that it gets a 64-bit
+address space and hence can address far more than 4GB (how much depends
+on the version of Windows, but in principle 8TB).  This allows a single
+process to take advantage of more than 4GB of RAM (if available) and for
+R's memory manager to more easily handle large objects (in particular
+those of 1GB or more).  The disadvantages are that all the pointers are
+8 rather than 4 bytes and so small objects are larger and more data has
+to be moved around, and that far less software is available for 64-bit
+versions of the OS.
+
+As from R 2.11.0 it will be possible to build a 64-bit version of R from
+the sources: see the `R Installation and Administration Manual'.  A
+snapshot build of a binary installer is available from
+@url{http://cran.r-project.org/bin/windows64/contrib/}.  Most binary
+packages are available from CRAN or CRANextras, but fewer
+hard-to-install packages are available than for the standard 32-bit
+build.  At the time of writing Bioconductor packages are not available
+in binary form for 64-bit Windows R (but installing source packages can
+be tried).
 
 
 @newchap{}
@@ -988,6 +1020,7 @@ handles internationalization slightly odd.
 * update.packages() fails::     
 * How do I add to the list of repositories?::  
 * Help is not shown for some of the packages::  
+* How do I get static HTML pages?::  
 @end menu
 
 
@@ -1179,10 +1212,40 @@ This reads from the tab-delimited file @file{R_HOME\etc\repositories},
 which you can edit, or put a modified copy at @file{.R\repositories}
 in your HOME directory (@pxref{What are HOME and working directories?}).
 
-@node Help is not shown for some of the packages,  , How do I add to the list of repositories?, Packages
+@node Help is not shown for some of the packages, How do I get static HTML pages?, How do I add to the list of repositories?, Packages
 @section Help is not shown for some of the packages
 
 This was about Compiled HTML help, which is not supported since R 2.10.0.
+
+@node How do I get static HTML pages?,  , Help is not shown for some of the packages, Packages
+@section How do I get static HTML pages?
+
+We presume you want to do this for some special purpose: R's help system
+will not make use of them, links across library directories will not
+work (unlike R < 2.10.0), ambiguous links will be resolved at install
+time and missing links will be broken (previous versions used
+JavaScript to look for them at run time).  But if you still want them,
+here is how to do it.
+
+Static HTML pages are not part of the binary distribution, so you will
+need to install R and/or packages from their sources.  To install just a
+few packages with static HTML pages use
+
+@example
+R CMD INSTALL --html @var{pkg1} @var{pkg2} \ldots
+@end example
+
+To install R itself with static HTML pages change the following line in
+file @file{MkRules}
+
+@example
+# set this to YES to build static HTML help
+BUILD_HTML = NO
+@end example
+
+@noindent
+and them all packages installed by that build of R will be installed
+with static HTML pages.
 
 
 @newchap{}
@@ -1429,12 +1492,14 @@ To build R on 32-bit Windows you will need the tools from
 others.  See the `R Installation and Administration' manual.
 
 To build a 64-bit version on 64-bit Windows you will need a suitable
-compiler, and experimental support for the MinGW-w64 port of
-@code{binutils} and @code{gcc} has been added for the upcoming R 2.11.0.
-You are welcome to try a commercial compiler@footnote{such as those from
-Intel and PGI: there is no Fortran compiler in the Microsoft set, but
-@code{f2c} could be used.}, and pre-compiled versions using such
-compilers are available from R redistributors.
+compiler, and the MinGW-w64 port of @code{binutils} and @code{gcc} is
+finally mature enough to produce a working version of R, so experimental
+support has been added as from the upcoming R 2.11.0: see the manual in
+that version.  You are welcome to try a commercial
+compiler@footnote{such as those from Intel and PGI: there is no Fortran
+compiler in the Microsoft set, but @code{f2c} could be used.}, and
+pre-compiled versions using such compilers are available from R
+redistributors.
 
 @node Can I use a fast BLAS?, How do I include compiled C code?, How can I compile R from source?, Building from Source
 @section  Can I use a fast BLAS?
