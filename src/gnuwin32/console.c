@@ -48,7 +48,7 @@ extern void R_ProcessEvents(void);
 #include "Startup.h" /* for UImode */
 #include <Fileio.h>
 
-#ifdef W64
+#ifdef WIN64
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
 #endif

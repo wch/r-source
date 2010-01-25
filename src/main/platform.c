@@ -147,7 +147,7 @@ static void Init_R_Platform(SEXP rho)
 #else
     SET_VECTOR_ELT(value, 4, mkString("little"));
 #endif
-#if defined(W64)
+#if defined(WIN64)
     SET_VECTOR_ELT(value, 5, mkString("win64.binary"));
 #elif defined(Win32)
     SET_VECTOR_ELT(value, 5, mkString("win.binary"));
