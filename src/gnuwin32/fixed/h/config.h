@@ -289,7 +289,9 @@
 /* #undef HAVE_GETTEXT */
 
 /* Define to 1 if you have the `gettimeofday' function. */
+#ifndef WIN64
 #define HAVE_GETTIMEOFDAY 1
+#endif
 
 /* Define to 1 if you have the `getuid' function. */
 /* #undef HAVE_GETUID */
@@ -667,7 +669,9 @@
 #define HAVE_TIME_H 1
 
 /* Define to 1 if you have the `tsearch' function. */
+#ifndef WIN64
 #define HAVE_TSEARCH 1
+#endif
 
 /* Define if you have the 'uintmax_t' type in <stdint.h> or <inttypes.h>. */
 #define HAVE_UINTMAX_T 1
@@ -841,10 +845,16 @@
 #define RETSIGTYPE void
 
 /* Define this to use architecture-dependent subdirectories of this name. */
+#ifndef R_ARCH
 #define R_ARCH ""
+#endif
 
 /* Define this to be the name of the CPU of your system. */
+#ifdef WIN64
+#define R_CPU "x86_64"
+#else
 #define R_CPU "i386"
+#endif
 
 /* Define as `inline', or `__inline__' or `__inline' if that's what the C
    compiler calls it, or to nothing if it is not supported. */
@@ -854,10 +864,18 @@
 #define R_MEMORY_PROFILING 1
 
 /* Define this to be the name of the OS of your system. */
+#ifdef WIN64
+#define R_OS "mingw64"
+#else
 #define R_OS "mingw32"
+#endif
 
 /* Define this to be the canonical name (cpu-vendor-os) of your system. */
+#ifdef WIN64
+#define R_PLATFORM "x86_64-pc-mingw64"
+#else
 #define R_PLATFORM "i386-pc-mingw32"
+#endif
 
 /* Define this to be printing command on your system. */
 #define R_PRINTCMD ""
@@ -885,7 +903,11 @@
 #define SIZEOF_LONG 4
 
 /* The size of `long double', as computed by sizeof. */
+#ifdef WIN64
+#define SIZEOF_LONG_DOUBLE 16
+#else
 #define SIZEOF_LONG_DOUBLE 12
+#endif
 
 /* The size of `long long', as computed by sizeof. */
 #define SIZEOF_LONG_LONG 8

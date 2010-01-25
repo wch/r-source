@@ -11,8 +11,11 @@ else
   DEBUGFLAG=
 endif
 
+## To be substituted
 WIN = 32
 BINPREF =
+R_ARCH =
+
 IMPDIR = bin
 
 AS = $(BINPREF)as

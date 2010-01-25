@@ -551,16 +551,19 @@ function(chname, package = NULL, lib.loc = NULL,
     ## libraries, although the docs clearly say they should not be
     ## added.
     nc_file_ext <- nchar(file.ext, "c")
-    if(substr(chname, nc_chname - nc_file_ext + 1L, nc_chname)
-       == file.ext)
+    if(substr(chname, nc_chname - nc_file_ext + 1L, nc_chname) == file.ext)
         chname <- substr(chname, 1L, nc_chname - nc_file_ext)
 
+    r_arch <- .Platform$r_arch
     for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
-        DLLpath <- if(nzchar(.Platform$r_arch))
-                file.path(pkg, "libs", .Platform$r_arch)
+        DLLpath <- if(nzchar(r_arch)) file.path(pkg, "libs", r_arch)
 	else    file.path(pkg, "libs")
         file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
         if(file.exists(file)) break else file <- ""
+        if(r_arch == "x64") { # 64-bit Windows, back-compatibility
+        file <- file.path(pkg, "libs", paste(chname, file.ext, sep = ""))
+        if(file.exists(file)) break else file <- ""
+        }
     }
     if(file == "")
         stop(gettextf("shared library '%s' not found", chname), domain = NA)

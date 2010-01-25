@@ -23,13 +23,8 @@ version: Rversion.h
 fixh: $(GW32_HEADERS) $(OBJ_HEADERS)
 	@$(ECHO) done > fixh
 
-ifeq ($(strip $(WIN)),64)
-config.h: ../gnuwin32/fixed/h/config64.h ../../VERSION
-	@$(SED) 's/@VERSION@/$(VER)/' $< > $@
-else
 config.h: ../gnuwin32/fixed/h/config.h ../../VERSION
 	@$(SED) 's/@VERSION@/$(VER)/' $< > $@
-endif
 
 iconv.h: ../gnuwin32/fixed/h/iconv.h
 	@cp $< $@
