@@ -32,9 +32,9 @@ fixetc: $(wildcard ./etc/*)
 ifeq ($(strip $(WIN)),64)
 	$(SED) -e 's/WIN = 32/WIN = 64/' \
 	  -e "s/BINPREF =/BINPREF = $(BINPREF)/" \
-	  -e "s/R_ARCH =/R_ARCH = $(R_ARCH)/" \
+	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
 	  etc/Makeconf > $(R_HOME)/etc/Makeconf
-	$(MKDIR) $(R_HOME)/etc/x64
+	$(MKDIR) -p $(R_HOME)/etc/x64
 	$(CP) -p $(R_HOME)/etc/Makeconf $(R_HOME)/etc/x64/Makeconf
 endif
 	@$(ECHO) done > fixetc

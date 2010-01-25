@@ -11,10 +11,8 @@ else
   DEBUGFLAG=
 endif
 
-## To be substituted
 WIN = 32
 BINPREF =
-R_ARCH =
 
 IMPDIR = bin
 
@@ -101,7 +99,7 @@ OBJC = $(CC)
 OBJCFLAGS = -O2
 OBJC_LIBS = -lobjc
 OBJCXX =
-R_ARCH = 
+R_ARCH =
 RANLIB = $(BINPREF)ranlib
 SAFE_FFLAGS = -O3 -ffloat-store
 SED = sed
