@@ -304,7 +304,7 @@ static SEXP modLa_dlange(SEXP A, SEXP type)
 {
     SEXP x, val;
     int *xdims, m, n, nprot = 1;
-    double *work;
+    double *work = NULL;
     char typNorm[] = {'\0', '\0'};
 
     if (!isString(type))
@@ -325,8 +325,7 @@ static SEXP modLa_dlange(SEXP A, SEXP type)
     typNorm[0] = La_norm_type(CHAR(asChar(type)));
 
     val = PROTECT(allocVector(REALSXP, 1));
-    if(*typNorm == 'I')
-	work = (double *) R_alloc(m, sizeof(double));
+    if(*typNorm == 'I') work = (double *) R_alloc(m, sizeof(double));
     REAL(val)[0] = F77_CALL(dlange)(typNorm, &m, &n, REAL(x), &m, work);
 
     UNPROTECT(nprot);
