@@ -8,7 +8,7 @@ all:
 ifdef USE_IMPLIBS
 	@$(MAKE) --no-print-directory -f Makefile.win implib
 endif
-	@$(MAKE) --no-print-directory -f Makefile.win ../../../modules$(R_ARCH)/$(MODULE).dll
+	@$(MAKE) --no-print-directory -f Makefile.win install
 
 CSOURCES = Lapack.c
 OBJS=$(CSOURCES:.c=.o) dllversion.o
@@ -24,9 +24,9 @@ CFLAGS=$(OPTFLAGS)
 FFLAGS=$(FOPTFLAGS)
 dlamch-FFLAGS=-ffloat-store
 
-../../../modules$(R_ARCH)/$(MODULE).dll: $(MODULE).dll
-	$(MKDIR) -p ../../../modules
-	$(CP) $< $@
+install: $(MODULE).dll
+	$(MKDIR) -p ../../../modules$(R_ARCH)
+	$(CP) $< ../../../modules$(R_ARCH)/$(MODULE).dll
 
 lapack-DLLLIBS=-L../../../$(IMPDIR) -lRlapack -lRblas -lR
 
