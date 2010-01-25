@@ -140,12 +140,12 @@ release.
 @section How do I install R for Windows?
 
 Current binary versions of R run on Windows 2000 or later.@footnote{R
-2.6.2 was the last version for Windows 95. 98, ME and NT4.}  There is no
-specific binary@footnote{See @ref{How can I compile R from source?} for
-the possibility of building one from the sources.} version for x64
-Windows, but the standard 32-bit version works well enough.  We only
-test on versions of Windows currently supported by Microsoft, mainly on
-32-bit XP SP3 and 64-bit Vista and Windows Server 2008.
+2.6.2 was the last version for Windows 95. 98, ME and NT4.}  The
+standard 32-bit version works well on x64 Windows: @xref{Can I use R
+on 64-bit Windows?}.
+
+We only test on versions of Windows currently supported by Microsoft,
+mainly on 32-bit XP SP3 and 64-bit Vista and Windows Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical install
@@ -814,7 +814,7 @@ releasing the Alt key.
 
 The standard build of R for Windows (including the binary installer on
 CRAN) is a 32-bit executable that will run on both 32-bit and 64-bit
-versions of Windows. Current 64-bit versions of Windows (at least Server
+versions of Windows.  64-bit versions of Windows (at least XP, Server
 2003 and 2008, Vista and Windows 7) run 32-bit executables under the WOW
 (Windows on Windows) subsystem: they run in almost exactly the same way
 as on a 32-bit version of Windows, except that the address limit for the
@@ -832,9 +832,13 @@ versions of the OS.
 
 As from R 2.11.0 it will be possible to build a 64-bit version of R from
 the sources: see the `R Installation and Administration Manual'.  A
-quite wide of binary packages are available from CRAN, but fewer
+snapshot build of a binary installer is available from
+@url{http://cran.r-project.org/bin/windows64/contrib/}.  Most binary
+packages are available from CRAN or CRANextras, but fewer
 hard-to-install packages are available than for the standard 32-bit
-build since very few 64-bit DLLs are available.
+build.  At the time of writing Bioconductor packages are not available
+in binary form for 64-bit Windows R (but installing source packages can
+be tried).
 
 
 @newchap{}
@@ -1493,11 +1497,11 @@ others.  See the `R Installation and Administration' manual.
 To build a 64-bit version on 64-bit Windows you will need a suitable
 compiler, and the MinGW-w64 port of @code{binutils} and @code{gcc} is
 finally mature enough to produce a working version of R, so experimental
-support has been added as from R 2.11.0.  You are welcome to try a
-commercial compiler@footnote{such as those from Intel and PGI: there is
-no Fortran compiler in the Microsoft set, but @code{f2c} could be
-used.}, and pre-compiled versions using such compilers are available
-from R redistributors.
+support has been added as from R 2.11.0: see the manual.  You are
+welcome to try a commercial compiler@footnote{such as those from Intel
+and PGI: there is no Fortran compiler in the Microsoft set, but
+@code{f2c} could be used.}, and pre-compiled versions using such
+compilers are available from R redistributors.
 
 @node Can I use a fast BLAS?, How do I include compiled C code?, How can I compile R from source?, Building from Source
 @section  Can I use a fast BLAS?
