@@ -55,12 +55,8 @@ function(dir, outDir)
                 call. = FALSE)
     }
 
-    OS <- Sys.getenv("R_OSTYPE")
-    OStype <- if(nzchar(OS) && OS == "windows")
-        "i386-pc-mingw32"
-    else
-        R.version$platform
-    if (length(grep("-apple-darwin",R.version$platform)) &&
+    OStype <- R.version$platform
+    if (length(grep("-apple-darwin", R.version$platform)) &&
         nzchar(Sys.getenv("R_ARCH")))
         OStype <- sub(".*-apple-darwin", "universal-apple-darwin", OStype)
     Built <-
