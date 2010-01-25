@@ -92,7 +92,12 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                               pkgname, r_arch),
                      call. = FALSE, domain = NA)
 
-        }
+        } else # Windows
+            if(nzchar(platform <- built$Platform) &&
+               platform != R.version$platform)
+                stop(gettextf("package '%s' was built for %s",
+                              pkgname, platform),
+                     call. = FALSE, domain = NA)
     }
 
     checkLicense <- function(pkg, pkgInfo, pkgPath)
