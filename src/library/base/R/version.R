@@ -263,9 +263,10 @@ as.character.numeric_version <-
 function(x, ...)
 {
     x <- unclass(x)
-    ifelse(as.numeric(sapply(x, length)) > 0,
-           as.character(unlist(lapply(x, paste, collapse = "."))),
-           NA_character_)
+    y <- rep.int(NA_character_, length(x))
+    ind <- as.integer(sapply(x, length)) > 0L
+    y[ind] <- unlist(lapply(x[ind], paste, collapse = "."))
+    y
 }
 
 as.data.frame.numeric_version <- as.data.frame.vector
