@@ -6043,6 +6043,15 @@ stopifnot(identical(tcrossprod(u,v), tcrossprod(U,v)),
 ## tcrossprod(v,U) and (U,v) wrongly failed in R <= 2.10.1
 
 
+## det() and determinant() in NA cases
+m <- matrix(c(0, NA, 0, NA, NA, 0, 0, 0, 1), 3,3)
+m0 <- rbind(0, cbind(0, m))
+if(FALSE) { ## ideally, we'd want -- FIXME --
+stopifnot(is.na(det(m)), 0 == det(m0))
+} else print(c(det.m = det(m), det.m0 = det(m0)))
+## the first wrongly gave 0  (still gives .. FIXME)
+
+
 ## c/rbind(deparse.level=2)
 attach(mtcars)
 (cn <- colnames(cbind(qsec, hp, disp)))
