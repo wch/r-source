@@ -2376,8 +2376,8 @@ stopifnot(identical(rd0, as.POSIXlt(d0)))
 
 
 ## New det() function
-stopifnot(det(m <- cbind(1, c(1, 1))) == 0,
-          determinant(m           )$mod == -Inf,
+m <- cbind(1, c(1, 1))
+stopifnot(det(m) == 0, determinant(m)$mod == -Inf,
           determinant(m, log=FALSE)$mod == 0)
 ## gave error for singular matrices in earlier Aug.2003
 
@@ -6041,12 +6041,6 @@ stopifnot(identical(tcrossprod(u,v), tcrossprod(U,v)),
 	  identical(tcrossprod(v,u), tcrossprod(v,U)),
 	  identical(tcrossprod(v,u), v %*% t(u)))
 ## tcrossprod(v,U) and (U,v) wrongly failed in R <= 2.10.1
-
-
-## det() and determinant() in NA cases
-m <- matrix(c(0, NA, 0, NA, NA, 0, 0, 0, 1), 3,3)
-stopifnot(is.na(det(m)), 0 == det(rbind(0, cbind(0, m))))
-## the first wrongly gave 0  in R <= 2.10.1
 
 
 ## c/rbind(deparse.level=2)
