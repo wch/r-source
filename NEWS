@@ -246,6 +246,10 @@ NEW FEATURES
     o	Renviron.site and Rprofile.site can have architecture-specific
 	versions on systems with sub-architectures.
 
+    o	R CMD check now (by default) also checks Rd files for
+    	auto-generated content in need of editing, and missing argument
+    	descriptions.
+
 
 DEPRECATED & DEFUNCT
 

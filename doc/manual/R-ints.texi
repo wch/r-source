@@ -3347,6 +3347,9 @@ building, R-exts, Writing R Extensions}):
 @vindex_R_CHECK_LATEX_VIGNETTES_
 @tab @code{$R_check_latex_vignettes}
 @item @code{_R_CHECK_RD_STYLE_}
+@vindex_R_CHECK_RD_CONTENTS_
+@tab @code{$R_check_Rd_contents}
+@item @code{_R_CHECK_RD_CONTENTS_}
 @vindex_R_CHECK_RD_STYLE_
 @tab @code{$R_check_Rd_style}
 @item @code{_R_CHECK_RD_XREFS_}

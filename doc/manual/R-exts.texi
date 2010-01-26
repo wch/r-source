@@ -1631,6 +1631,10 @@ If true, make use of the @pkg{codetools} package, which provides a
 detailed analysis of visibility of objects (but may give false
 positives).
 Default: true.
+@item $R_check_Rd_contents
+If true, check Rd files for auto-generated content which needs editing,
+and missing argument documentation.
+Default: true.
 @item $R_check_Rd_style
 If true, check whether Rd usage entries for S3 methods use the full
 function name rather than the appropriate @code{\method} markup.

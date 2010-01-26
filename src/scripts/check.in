@@ -148,7 +148,7 @@ my $R_check_dot_internal =
     &R_getenv("_R_CHECK_DOT_INTERNAL_", "FALSE");
 
 my $R_check_Rd_contents =
-    &R_getenv("_R_CHECK_RD_CONTENTS_", "FALSE");
+    &R_getenv("_R_CHECK_RD_CONTENTS_", "TRUE");
 
 ## Only relevant when the package is loaded, thus installed.
 my $R_check_suppress_RandR_message =
@@ -216,6 +216,8 @@ $R_check_force_suggests =
 $ENV{"_R_CHECK_FORCE_SUGGESTS_"} = $R_check_force_suggests;
 ## </FIXME>
 ## </NOTE>
+$R_check_Rd_contents =
+    &config_val_to_logical($R_check_Rd_contents);
 $R_check_suppress_RandR_message =
     &config_val_to_logical($R_check_suppress_RandR_message);
 
