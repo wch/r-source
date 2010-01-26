@@ -11,7 +11,7 @@
 #include "time.h"
 #undef _NO_OLDNAMES
 
-#ifdef W64
+#ifdef WIN64
 /* tzname is in the headers as an import */
 #define tzname Rtzname
 #endif
