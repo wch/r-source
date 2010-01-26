@@ -315,6 +315,10 @@ BUG FIXES
 
     o	parse() and parse_Rd() miscounted columns when multibyte UTF-8
 	characters were present.
+    	
+    o	Formatting of help pages has had minor improvements: extra
+	blank lines have been removed from the text format, and empty
+	package labels removed from HTML.	
 
 
 
@@ -412,7 +416,8 @@ BUG FIXES
 	when documented to do so.  (Discovered whilst investigating
 	PR#14189.)
 
-    o	match(incomparables=<non-NULL>) could in rare cases infinite-loop.
+    o	match(incomparables=<non-NULL>) could in rare cases infinite-
+    	loop.
 
 
 

@@ -676,9 +676,12 @@ Rd2HTML <-
     of0('<link rel="stylesheet" type="text/css" ',
         if (no_links) 'href="R.css">' else 'href="../../R.css">',
         '\n</head><body>\n\n',
-        '<table width="100%" summary="page for ', name, ' {', package,
-        '}"><tr><td>',name,' {', package,
-        '}</td><td align="right">R Documentation</td></tr></table>\n\n')
+        '<table width="100%" summary="page for ', name)
+    if (nchar(package))
+    	of0(' {', package, '}"><tr><td>',name,' {', package,'}')
+    else
+        of0('"><tr><td>',name)
+    of0('</td><td align="right">R Documentation</td></tr></table>\n\n')
 
     of0("<h2>", title,'</h2>\n')
 
@@ -689,10 +692,13 @@ Rd2HTML <-
         version <- paste('Package <em>', package,
                          '</em> version ', version,
                          ' ', sep='')
-    of0('\n',
-        '<hr><div align="center">[', version,
-        if (!no_links) '<a href="00Index.html">Index</a>',
-        ']</div>\n', '</body></html>\n')
+    of0('\n')
+    if (version != "")
+    	of0('<hr><div align="center">[', version,
+            if (!no_links) '<a href="00Index.html">Index</a>',
+            ']</div>')
+    of0('\n', 
+        '</body></html>\n')
     invisible(out)
 }
 

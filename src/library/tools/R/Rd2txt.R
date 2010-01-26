@@ -254,8 +254,8 @@ Rd2txt <-
 	if (n > haveBlanks) {
 	    buffer <<- rep("", n - haveBlanks)
 	    flushBuffer()
+	    haveBlanks <<- n
 	}
-	haveBlanks <<- n
 	dropBlank <<- TRUE
     }
 
