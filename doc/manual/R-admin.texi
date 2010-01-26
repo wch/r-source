@@ -1327,9 +1327,9 @@ on both @acronym{CRAN} and @acronym{CRAN}.  Note that some of the
 toolchains, including that from SourceForge, use dynamic linking for
 language support: this means that you may need the DLLs in the
 toolchain's @file{bin} directory in your path when running @R{}
-(expecially for packages using C++).  Packages using Gtk+ (@pkg{Cairo},
+(especially for packages using C++).  Packages using Gtk+ (@pkg{Cairo},
 @pkg{RGtk2}, @pkg{cairoDevice} and those@footnote{Note that these
-libraries do not iclude @code{libglade-2}, an optional part of
+libraries do not include @code{libglade-2}, an optional part of
 @pkg{Rgtk2} and @pkg{rattle} depends on.} that depend on them) need the
 @file{bin} directory of the distribution at
 @url{http://www.gtk.org/download-windows-64bit.html} in the path.
