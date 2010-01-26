@@ -31,6 +31,7 @@ fixetc: $(wildcard ./etc/*)
 	$(CP) -p $^ $(R_HOME)/etc
 ifeq ($(strip $(WIN)),64)
 	$(SED) -e 's/WIN = 32/WIN = 64/' \
+	  -e "s/-O3/-O2/" \
 	  -e "s/BINPREF =/BINPREF = $(BINPREF)/" \
 	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
 	  etc/Makeconf > $(R_HOME)/etc/Makeconf
