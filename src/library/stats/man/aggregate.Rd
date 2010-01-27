@@ -1,12 +1,13 @@
 % File src/library/stats/man/aggregate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{aggregate}
 \alias{aggregate}
 \alias{aggregate.default}
 \alias{aggregate.data.frame}
+\alias{aggregate.formula}
 \alias{aggregate.ts}
 \title{Compute Summary Statistics of Data Subsets}
 \usage{
@@ -15,6 +16,9 @@ aggregate(x, \dots)
 \method{aggregate}{default}(x, \dots)
 
 \method{aggregate}{data.frame}(x, by, FUN, \dots)
+
+\method{aggregate}{formula}(formula, data, FUN, subset,
+          na.action = na.omit, \dots)
 
 \method{aggregate}{ts}(x, nfrequency = 1, FUN = sum, ndeltat = 1,
           ts.eps = getOption("ts.eps"), \dots)
@@ -29,6 +33,17 @@ aggregate(x, \dots)
     in \code{x}.}
   \item{FUN}{a scalar function to compute the summary statistics which
     can be applied to all data subsets.}
+  \item{formula}{a \link{formula}, such as \code{y ~ x} or
+    \code{cbind(y1, y2) ~ x1 + x2}, where the \code{y} variables are
+    numeric data to be split into groups according to the grouping
+    \code{x} variables (usually factors).}
+  \item{data}{a data frame (or list) from which the variables in formula
+    should be taken.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used.}
+  \item{na.action}{a function which indicates what should happen when
+    the data contain \code{NA} values. The default is to ignore missing
+    values in the given variables.}
   \item{nfrequency}{new number of observations per unit of time; must
     be a divisor of the frequency of \code{x}.}
   \item{ndeltat}{new fraction of the sampling period between
@@ -52,17 +67,16 @@ aggregate(x, \dots)
   variables (columns) in \code{x} is split into subsets of cases
   (rows) of identical combinations of the components of \code{by}, and
   \code{FUN} is applied to each such subset with further arguments in
-  \code{\dots} passed to it.
-  (I.e., \code{tapply(VAR, by, FUN, \dots, simplify = FALSE)} is done
-  for each variable \code{VAR} in \code{x}, conveniently wrapped into
-  one call to \code{lapply()}.)
-  Empty subsets are removed, and the result is reformatted into a data
+  \code{\dots} passed to it.  The result is reformatted into a data
   frame containing the variables in \code{by} and \code{x}.  The ones
   arising from \code{by} contain the unique combinations of grouping
   values used for determining the subsets, and the ones arising from
   \code{x} the corresponding summary statistics for the subset of the
   respective variables in \code{x}.  Rows with missing values in any of
   the \code{by} variables will be omitted from the result.
+  
+  \code{aggregate.formula} is a standard formula interface to
+  \code{aggregate.data.frame}.
   
   \code{aggregate.ts} is the time series method.  If \code{x} is not a
   time series, it is coerced to one.  Then, the variables in \code{x}
@@ -95,7 +109,9 @@ aggregate(x, \dots)
   alphabetical order in the current locale.  Now the variable in the
   result is found by subsetting the original variable.
 }
-\author{Kurt Hornik}
+\author{
+  Kurt Hornik, with contributions by Arni Magnusson.
+}
 \seealso{
   \code{\link{apply}}, \code{\link{lapply}}, \code{\link{tapply}}.
 }
@@ -130,6 +146,21 @@ aggregate(x = testDF, by = list(by1, by2), FUN = "mean")
 fby1 <- factor(by1, exclude = "")
 fby2 <- factor(by2, exclude = "")
 aggregate(x = testDF, by = list(fby1, fby2), FUN = "mean")
+
+
+## Formulas, one ~ one, one ~ many, many ~ one, and many ~ many:
+aggregate(weight ~ feed, data = chickwts, mean)
+aggregate(breaks ~ wool + tension, data = warpbreaks, mean)
+aggregate(cbind(Ozone, Temp) ~ Month, data = airquality, mean)
+aggregate(cbind(ncases, ncontrols) ~ alcgp + tobgp, data = esoph, sum)
+
+## Dot notation:
+aggregate(. ~ Species, data = iris, mean)
+aggregate(len ~ ., data = ToothGrowth, mean)
+
+## Often followed by xtabs():
+ag <- aggregate(len ~ ., data = ToothGrowth, mean)
+xtabs(len ~ ., data = ag)
 
 
 ## Compute the average annual approval ratings for American presidents.

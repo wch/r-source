@@ -250,6 +250,9 @@ NEW FEATURES
     	auto-generated content in need of editing, and missing argument
     	descriptions.
 
+    o	aggregate() gains a formula method thanks to a contribution by
+    	Arni Magnusson.
+
 
 DEPRECATED & DEFUNCT
 

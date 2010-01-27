@@ -14,9 +14,12 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-aggregate <- function(x, ...) UseMethod("aggregate")
+aggregate <-
+function(x, ...)
+    UseMethod("aggregate")
 
-aggregate.default <- function(x, ...)
+aggregate.default <-
+function(x, ...)
 {
     if(is.ts(x))
         aggregate.ts(as.ts(x), ...)
@@ -24,15 +27,16 @@ aggregate.default <- function(x, ...)
         aggregate.data.frame(as.data.frame(x), ...)
 }
 
-aggregate.data.frame <- function(x, by, FUN, ...)
+aggregate.data.frame <-
+function(x, by, FUN, ...)
 {
     if(!is.data.frame(x)) x <- as.data.frame(x)
-    ## do this here to avoid masking by non-function (could happen)
+    ## Do this here to avoid masking by non-function (could happen)
     FUN <- match.fun(FUN)
-    if(NROW(x) == 0) stop("no rows to aggregate")
-    if(NCOL(x) == 0) {
+    if(NROW(x) == 0L) stop("no rows to aggregate")
+    if(NCOL(x) == 0L) {
         ## fake it
-        x <- data.frame(x=rep(1, NROW(x)))
+        x <- data.frame(x = rep(1, NROW(x)))
         return(aggregate.data.frame(x, by, function(x) 0L)[seq_along(by)])
     }
     if(!is.list(by))
@@ -44,34 +48,70 @@ aggregate.data.frame <- function(x, by, FUN, ...)
         ind <- which(!nzchar(nam))
         names(by)[ind] <- paste("Group", ind, sep = ".")
     }
-    y <- lapply(x, tapply, by, FUN, ..., simplify = FALSE)
-    ## not sapply as might be of length zero, and results will be of
-    ## length zero for an empty group.
-    lens <-  unlist(lapply(unlist(y, recursive = FALSE), length))
-    if(any(lens > 1L)) stop("'FUN' must always return a scalar")
-    z <- y[[1L]]
-    d <- dim(z)
-    w <- vector("list", length(d))
-    for (i in seq_along(d)) {
-        j <- rep.int(rep.int(seq_len(d[i]),
-                             prod(d[seq_len(i - 1L)]) * rep.int(1L, d[i])),
-                     prod(d[seq.int(from = i + 1L, length.out = length(d) - i)]))
-        zz <- dimnames(z)[[i]][j]
-        ## zz is character, so match to the levels created in tapply
-        ## and not to as.character(by[[i]])
-        w[[i]] <- by[[i]][match(zz, as.factor(by[[i]]))]
+
+    len <- NROW(x)
+    grp <- integer(len)
+    for(ind in rev(by)) {
+        if(length(ind) != len)
+            stop("arguments must have same length")
+        ind <- as.factor(ind)
+        grp <- grp * nlevels(ind) + (as.integer(ind) - 1L)
     }
-    ## this gives w row names that may not be consecutive.
-    w <- as.data.frame(w, stringsAsFactors = FALSE)[which(!unlist(lapply(z, is.null))), , drop = FALSE]
-    y <- data.frame(w, lapply(y, unlist, use.names = FALSE),
+    
+    y <- lapply(x, function(e) lapply(split(e, grp), FUN, ...))
+    if(any(unlist(lapply(unlist(y, recursive = FALSE), length)) != 1L))
+        stop("'FUN' must always return a scalar")
+    by <- as.data.frame(by, stringsAsFactors = FALSE)
+    y <- data.frame(by[match(sort(unique(grp)), grp, 0L), ], 
+                    lapply(y, unlist, use.names = FALSE),
                     stringsAsFactors = FALSE)
     names(y) <- c(names(by), names(x))
     row.names(y) <- NULL
+    
     y
 }
 
-aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
-                         ts.eps = getOption("ts.eps"), ...)
+aggregate.formula <-
+function(formula, data, FUN, subset, na.action = na.omit, ...)
+{
+    if(missing(formula) || !inherits(formula, "formula"))
+        stop("'formula' missing or incorrect")
+    if(length(formula) != 3L)
+        stop("'formula' must have both left and right hand sides")
+
+    m <- match.call(expand.dots = FALSE)
+    if(is.matrix(eval(m$data, parent.frame())))
+        m$data <- as.data.frame(data)
+    m$... <- m$FUN <- NULL
+    m[[1L]] <- as.name("model.frame")
+
+    if(as.character(formula[[2L]] == ".")) {
+        ## LHS is a dot, expand it ...
+        rhs <- unlist(strsplit(deparse(formula[[3L]]), " *[:+] *"))
+        ## <FIXME>
+        ## Note that this will not do quite the right thing in case the
+        ## RHS contains transformed variables, such that
+        ##   setdiff(rhs, names(data))
+        ## is non-empty ...
+        lhs <- sprintf("cbind(%s)",
+                       paste(setdiff(names(data), rhs), collapse = ","))
+        m[[2L]][[2L]] <- parse(text = lhs)[[1L]]
+    }
+    mf <- eval(m, parent.frame())
+
+    if(is.matrix(mf[[1L]])) {
+        ## LHS is a cbind() combo, convert to data frame and fix names.
+        lhs <- as.data.frame(mf[[1L]])
+        names(lhs) <- as.character(m[[2L]][[2L]])[-1L]
+        aggregate.data.frame(lhs, mf[-1L], FUN = FUN, ...)
+    }
+    else
+        aggregate.data.frame(mf[1L], mf[-1L], FUN = FUN, ...)
+}
+
+aggregate.ts <-
+function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
+         ts.eps = getOption("ts.eps"), ...)
 {
     x <- as.ts(x)
     ofrequency <- tsp(x)[3L]
@@ -111,3 +151,4 @@ aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
     else colnames(x) <- cn
     ts(x, start = nstart, frequency = nfrequency)
 }
+
