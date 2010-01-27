@@ -13,6 +13,7 @@ txtProgressBar <-
         if(style == 3L) width <- width - 10L
         width <- trunc(width/nw)
     }
+    if (max <= min) stop("must have max > min")
 
     up1 <- function(value) {
         if(!is.finite(value) || value < min || value > max) return()
