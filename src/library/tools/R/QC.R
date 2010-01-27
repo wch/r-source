@@ -4186,6 +4186,7 @@ function(dir)
     class(out) <- "check_package_CRAN_incoming"
 
     meta <- .get_package_metadata(dir, FALSE)
+    foss <- analyze_license(meta["License"])$is_verified
 
     urls <- .get_standard_repository_URLs()
     ## We do not want to use utils::available.packages() for now, as
@@ -4221,7 +4222,11 @@ function(dir)
     ## This assumes the CRAN URL comes first, and drops packages in
     ## version-specific subdirectories.  It also does not know about
     ## archived versions.
-    if(!NROW(db)) return(out)
+    if(!NROW(db)) {
+        if(!foss)
+            out$bad_license <- meta["License"]
+        return(out)
+    }
     ## For now, there should be no duplicates ...
 
     ## Package versions should be newer than what we already have on
@@ -4245,6 +4250,10 @@ function(dir)
     if(!all(m_m == m_d))
         out$new_maintainer <- list(m_m, m_d)
 
+    l_d <- db[db[, "Package"] == package, "License"]
+    if(!foss && analyze_license(l_d)$is_verified)
+        out$new_license <- list(meta["License"], l_d)
+
     out
 
 }
@@ -4262,6 +4271,16 @@ function(x, ...)
         writeLines(c("New maintainer:",
                      strwrap(y[[1L]], indent = 2L, exdent = 4L),
                      "Old maintainer(s):",
+                     strwrap(y[[2L]], indent = 2L, exdent = 4L)))
+    }
+    if(length(y <- x$bad_license)) {
+        writeLines(sprintf("Non-FOSS package license (%s)", y))
+    }
+    if(length(y <- x$new_license)) {
+        writeLines(c("Change to non-FOSS package license.",
+                     "New license:",
+                     strwrap(y[[1L]], indent = 2L, exdent = 4L),
+                     "Old license:",
                      strwrap(y[[2L]], indent = 2L, exdent = 4L)))
     }
     invisible(x)
