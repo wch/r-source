@@ -92,7 +92,11 @@ BUG FIXES
 	when documented to do so.  (Discovered whilst investigating
 	PR#14189.)
 
-    o	match(incomparables=<non-NULL>) could in rare cases infinite-loop.
+    o	match(incomparables=<non-NULL>) could in rare cases
+        infinite-loop.
+
+    o   poisson.test() needed to pass 'conf.level' to binom.test()
+        (PR#14195)
 
 
 
