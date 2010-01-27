@@ -105,12 +105,19 @@ void* GEsystemState(pGEDevDesc dd, int index)
  * system to a specific device.
  */
 static void registerOne(pGEDevDesc dd, int systemNumber, GEcallback cb) {
+    SEXP result;
     dd->gesd[systemNumber] =
 	(GESystemDesc*) calloc(1, sizeof(GESystemDesc));
     if (dd->gesd[systemNumber] == NULL)
 	error(_("unable to allocate memory (in GEregister)"));
-    cb(GE_InitState, dd, R_NilValue);
-    dd->gesd[systemNumber]->callback = cb;
+    result = cb(GE_InitState, dd, R_NilValue);
+    if (isNull(result)) {
+        /* tidy up */
+        free(dd->gesd[systemNumber]);
+	error(_("unable to allocate memory (in GEregister)"));
+    } else {
+        dd->gesd[systemNumber]->callback = cb;
+    }
 }
 
 /* Store the graphics system state and callback information

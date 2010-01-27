@@ -209,6 +209,8 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 	 * that it does not get garbage-collected
 	 */
 	globaliseState(gridState);
+        /* Indicate success */
+        result = R_BlankString;
 	UNPROTECT(1);
 	break;
     case GE_FinaliseState:

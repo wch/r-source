@@ -184,8 +184,10 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	GPar *ddp;
 	sd = dd->gesd[baseRegisterIndex];
 	dev = dd->dev;
-	/* FIXME: what to do if this fails? */
 	bss = sd->systemSpecific = malloc(sizeof(baseSystemState));
+        /* Bail out if necessary */
+        if (!bss)
+            return result;
 	ddp = &(bss->dp);
 	GInit(ddp);
 	/* For some things, the device sets the starting value at least.
@@ -203,6 +205,8 @@ static SEXP baseCallback(GEevent task, pGEDevDesc dd, SEXP data)
 	 * The device has not yet received any base output
 	 */
 	bss->baseDevice = FALSE;
+        /* Indicate success */
+        result = R_BlankString;
 	break;
     }
     case GE_CopyState:

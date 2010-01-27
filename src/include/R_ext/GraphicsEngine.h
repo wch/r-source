@@ -80,6 +80,9 @@ typedef enum {
 typedef enum {
     /* In response to this event, the registered graphics system
      * should allocate and initialise the systemSpecific structure
+     * 
+     * Should return R_NilValue on failure so that engine
+     * can tidy up memory allocation
      */
     GE_InitState = 0,
     /* This event gives the registered system a chance to undo
