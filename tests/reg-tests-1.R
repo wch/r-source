@@ -6070,3 +6070,6 @@ detach()
 match(c("A", "B", "C"), "A", incomparables=NA)
 match(c("A", "B", "C"), c("A", "B"), incomparables="A")
 ## infinite-looped in 2.10.1
+
+## path.expand did not propagate NA
+stopifnot(identical(c("foo", NA), path.expand(c("foo", NA))))

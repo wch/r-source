@@ -1613,8 +1613,10 @@ SEXP attribute_hidden do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     n = length(fn);
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
-	SEXP tmp = markKnown(R_ExpandFileName(translateChar(STRING_ELT(fn, i))),
-			     STRING_ELT(fn, i));
+        SEXP tmp = STRING_ELT(fn, i);
+        if (tmp != NA_STRING) {
+            tmp = markKnown(R_ExpandFileName(translateChar(tmp)), tmp);
+        }
 	SET_STRING_ELT(ans, i, tmp);
     }
     UNPROTECT(1);
