@@ -18,7 +18,7 @@
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width, height, onefile, family, title, fonts, version,
     paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
-    useDingbats, useKerning, fillOddEven)
+    useDingbats, useKerning, fillOddEven, maxRasters)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.
@@ -79,7 +79,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{useKerning}{logical.  Should kerning corrections be included in
     setting text and calculating string widths?  Defaults to \code{TRUE}.}
   \item{fillOddEven}{logical controlling the polygon fill mode:  see
-      \code{\link{polygon}} for details.  Default \code{FALSE}.}
+    \code{\link{polygon}} for details.  Default \code{FALSE}.}
+  \item{maxRasters}{integer.  The maximum number of raster images that
+    can be stored in this PDF document. }
 }
 \details{
   All arguments except \code{file} default to values given by
@@ -168,6 +170,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   Almost all PDF viewers will use a white canvas so the visual effect is
   if the background were white.  This will not be the case when printing
   onto coloured paper, though.
+
+  If you are planning to use a large number of raster images in your
+  output, you may need to specify a larger value for \code{maxRasters}.
 }
 \section{Color models}{
   The default color model is RGB, and model \code{"gray"} maps RGB

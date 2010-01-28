@@ -5292,8 +5292,6 @@ static void XFig_MetricInfo(int c,
    Flate encoding?
 */
 
-#define MAX_RASTERS 64
-
 typedef struct {
     rcolorPtr raster;
     int w;
@@ -5382,10 +5380,11 @@ typedef struct {
     Rboolean fontUsed[100];
 
     /* Raster images used on the device */
-    rasterImage rasters[MAX_RASTERS];
+    rasterImage *rasters;
     int numRasters;
+    int maxRasters;
     /* Soft masks for raster images */
-    int masks[MAX_RASTERS];
+    int *masks;
     int numMasks;
 }
 PDFDesc;
@@ -5447,11 +5446,15 @@ static void PDF_TextUTF8(double x, double y, const char *str,
  * Some stuff for recording raster images
  */
 /* Detect an image by non-NULL rasters[] */
-static void initRasterArray(rasterImage *rasters) {
+static rasterImage* initRasterArray(int numRasters) {
     int i;
-    for (i=0; i<MAX_RASTERS; i++) {
-        rasters[i].raster = NULL;
+    rasterImage* rasters = malloc(numRasters*sizeof(rasterImage));
+    if (rasters) {
+        for (i=0; i<numRasters; i++) {
+            rasters[i].raster = NULL;
+        }
     }
+    return rasters;
 }
 
 /* Add a raster (by making a copy) 
@@ -5462,7 +5465,7 @@ static int addRaster(rcolorPtr raster, int w, int h,
     int i, alpha = 0;
     rcolorPtr newRaster;
 
-    if (pd->numRasters == MAX_RASTERS)
+    if (pd->numRasters == pd->maxRasters)
         error(_("Too many raster images"));
 
     newRaster = malloc(w*h*sizeof(rcolor));
@@ -5492,9 +5495,9 @@ static int addRaster(rcolorPtr raster, int w, int h,
     return alpha;
 }
 
-static void killRasterArray(rasterImage *rasters) {
+static void killRasterArray(rasterImage *rasters, int numRasters) {
     int i;
-    for (i=0; i<MAX_RASTERS; i++) {
+    for (i=0; i<numRasters; i++) {
         if (rasters[i].raster != NULL) {
             free(rasters[i].raster);
         }
@@ -5502,11 +5505,15 @@ static void killRasterArray(rasterImage *rasters) {
 }
 
 /* Detect a mask by masks[] >= 0 */
-static void initMaskArray(int *masks) {
+static int* initMaskArray(int numRasters) {
     int i;
-    for (i=0; i<MAX_RASTERS; i++) {
-        masks[i] = -1;
+    int* masks = malloc(numRasters*sizeof(int));
+    if (masks) {
+        for (i=0; i<numRasters; i++) {
+            masks[i] = -1;
+        }
     }
+    return masks;
 }
 
 static void PDF_maskdata(rcolorPtr raster,
@@ -5659,6 +5666,28 @@ static Rboolean addPDFDevicefont(type1fontfamily family,
     return result;
 }
 
+static void PDFcleanup(int stage, PDFDesc *pd) {
+    switch (stage) {
+    case 6: /* Allocated masks */
+        free(pd->masks);
+    case 5: /* Allocated rasters */
+        free(pd->rasters);
+    case 4: /* Allocated fonts */
+	freeDeviceFontList(pd->fonts);
+	freeDeviceCIDFontList(pd->cidfonts);
+	freeDeviceEncList(pd->encodings);
+	pd->fonts = NULL;
+	pd->cidfonts = NULL;
+	pd->encodings = NULL;
+    case 3: /* Allocated pageobj */
+        free(pd->pageobj);
+    case 2: /* Allocated pos */
+        free(pd->pos);
+    case 1: /* Allocated PDFDesc */
+        free(pd);
+    }
+}
+
 Rboolean
 PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 		const char *family, const char **afmpaths,
@@ -5668,7 +5697,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 		const char *title, SEXP fonts,
 		int versionMajor, int versionMinor,
 		const char *colormodel, int dingbats, int useKern,
-		Rboolean fillOddEven)
+		Rboolean fillOddEven, int maxRasters)
 {
     /* If we need to bail out with some sort of "error" */
     /* then we must free(dd) */
@@ -5686,8 +5715,9 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     /* Check and extract the device parameters */
 
     if(strlen(file) > PATH_MAX - 1) {
-	free(dd);
-	error(_("filename too long in pdf"));
+        PDFcleanup(0, pd);
+        free(dd);
+        error(_("filename too long in pdf"));
     }
 
     /* allocate new PDF device description */
@@ -5701,13 +5731,15 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     pd->pos = (int *) calloc(1150, sizeof(int));
     if(!pd->pos) {
-	free(pd); free(dd);
-	error(_("cannot allocate pd->pos"));
+        PDFcleanup(1, pd);
+        free(dd);
+        error(_("cannot allocate pd->pos"));
     }
     pd->pageobj = (int *) calloc(100, sizeof(int));
     if(!pd->pageobj) {
-	free(pd->pos);free(pd); free(dd);
-	error(_("cannot allocate pd->pageobj"));
+        PDFcleanup(2, pd);
+        free(dd);
+        error(_("cannot allocate pd->pageobj"));
     }
     pd->pagemax = 100;
 
@@ -5726,9 +5758,9 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     pd->height = height;
 
     if(strlen(encoding) > PATH_MAX - 1) {
-	free(dd);
-	free(pd->pos); free(pd->pageobj); free(pd);
-	error(_("encoding path is too long"));
+        PDFcleanup(3, pd);
+        free(dd);
+        error(_("encoding path is too long"));
     }
     /*
      * Load the default encoding AS THE FIRST ENCODING FOR THIS DEVICE.
@@ -5742,9 +5774,9 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 					    pd->encodings))) {
 	pd->encodings = enclist;
     } else {
-	free(dd);
-	free(pd);
-	error(_("failed to load default encoding"));
+        PDFcleanup(3, pd);
+        free(dd);
+        error(_("failed to load default encoding"));
     }
 
     /*****************************
@@ -5808,9 +5840,9 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	}
     }
     if (!gotFont) {
-	free(dd);
-	free(pd);
-	error(_("Failed to initialise default PostScript font"));
+        PDFcleanup(3, pd);
+        free(dd);
+        error(_("Failed to initialise default PostScript font"));
     }
 
     /*
@@ -5863,13 +5895,9 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	    }
 	}
 	if (gotFonts < nfonts) {
-	    freeDeviceFontList(pd->fonts);
-	    freeDeviceEncList(pd->encodings);
-	    pd->fonts = NULL;
-	    pd->encodings = NULL;
-	    free(dd);
-	    free(pd);
-	    error(_("Failed to initialise additional PostScript fonts"));
+            PDFcleanup(4, pd);
+            free(dd);
+            error(_("Failed to initialise additional PostScript fonts"));
 	}
     }
     /*****************************
@@ -5877,8 +5905,19 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
      *****************************/
 
     pd->numRasters = 0;
-    initRasterArray(pd->rasters);
-    initMaskArray(pd->masks);
+    pd->maxRasters = maxRasters;
+    pd->rasters = initRasterArray(pd->maxRasters);
+    if (!pd->rasters) {
+        PDFcleanup(4, pd);
+        free(dd);
+        error(_("failed to allocate rasters"));
+    } 
+    pd->masks = initMaskArray(pd->maxRasters);
+    if (!pd->masks) {
+        PDFcleanup(5, pd);
+        free(dd);
+        error(_("failed to allocate masks"));
+    }
 
     setbg = R_GE_str2col(bg);
     setfg = R_GE_str2col(fg);
@@ -5938,13 +5977,9 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
       pd->pageheight = height;
     }
     else {
-	freeDeviceFontList(pd->fonts);
-	freeDeviceCIDFontList(pd->cidfonts);
-	pd->fonts = NULL;
-	pd->cidfonts = NULL;
-	free(dd);
-	free(pd);
-	error(_("invalid paper type '%s' (pdf)"), pd->papername);
+        PDFcleanup(6, pd);
+        free(dd);
+        error(_("invalid paper type '%s' (pdf)"), pd->papername);
     }
     pd->pagecentre = pagecentre;
     pd->paperwidth = 72 * pd->pagewidth;
@@ -5966,15 +6001,9 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     pointsize = floor(ps);
     if(R_TRANSPARENT(setbg) && R_TRANSPARENT(setfg)) {
-	freeDeviceFontList(pd->fonts);
-	freeDeviceCIDFontList(pd->cidfonts);
-	freeDeviceEncList(pd->encodings);
-	pd->fonts = NULL;
-	pd->cidfonts = NULL;
-	pd->encodings = NULL;
-	free(dd);
-	free(pd->pos); free(pd->pageobj); free(pd);
-	error(_("invalid foreground/background color (pdf)"));
+        PDFcleanup(6, pd);
+        free(dd);
+        error(_("invalid foreground/background color (pdf)"));
     }
 
     pd->onefile = onefile;
@@ -6027,14 +6056,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     /*	Start the driver */
 
     if(!PDF_Open(dd, pd)) {
-	freeDeviceFontList(pd->fonts);
-	freeDeviceCIDFontList(pd->cidfonts);
-	freeDeviceEncList(pd->encodings);
-	pd->fonts = NULL;
-	pd->cidfonts = NULL;
-	pd->encodings = NULL;
-	free(dd);
-	free(pd->pos); free(pd->pageobj); free(pd);
+        PDFcleanup(6, pd);
+        free(dd);
 	return 0;
     }
 
@@ -6929,12 +6952,8 @@ static void PDF_Close(pDevDesc dd)
 
     if(pd->pageno > 0) PDF_endpage(pd);
     PDF_endfile(pd);
-    killRasterArray(pd->rasters);
-    freeDeviceFontList(pd->fonts);
-    freeDeviceEncList(pd->encodings);
-    pd->fonts = NULL;
-    pd->encodings = NULL;
-    free(pd->pos); free(pd->pageobj); free(pd);
+    killRasterArray(pd->rasters, pd->maxRasters);
+    PDFcleanup(6, pd);
 }
 
 static void PDF_Activate(pDevDesc dd) {}
@@ -7990,7 +8009,7 @@ SEXP PDF(SEXP args)
 	*bg, *fg, *title, call[] = "PDF", *colormodel;
     const char *afms[5];
     double height, width, ps;
-    int i, onefile, pagecentre, major, minor, dingbats, useKern;
+    int i, onefile, pagecentre, major, minor, dingbats, useKern, maxRasters;
     SEXP fam, fonts;
     Rboolean fillOddEven;
 
@@ -8026,10 +8045,12 @@ SEXP PDF(SEXP args)
     if (dingbats == NA_LOGICAL) dingbats = 1;
     useKern = asLogical(CAR(args)); args = CDR(args);
     if (useKern == NA_LOGICAL) useKern = 1;
-    fillOddEven = asLogical(CAR(args));
+    fillOddEven = asLogical(CAR(args)); args = CDR(args);
     if (fillOddEven == NA_LOGICAL)
 	error(_("invalid value of '%s'"), "fillOddEven");
-
+    maxRasters = asInteger(CAR(args)); 
+    if (maxRasters == NA_INTEGER || maxRasters <= 0)
+        error(_("invalid 'maxRasters' parameter in %s"), call);
 
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
@@ -8040,7 +8061,7 @@ SEXP PDF(SEXP args)
 	if(!PDFDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			    width, height, ps, onefile, pagecentre,
 			    title, fonts, major, minor, colormodel,
-			    dingbats, useKern, fillOddEven)) {
+			    dingbats, useKern, fillOddEven, maxRasters)) {
 	    /* free(dev); PDFDeviceDriver now frees */
 	    error(_("unable to start device pdf"));
 	}

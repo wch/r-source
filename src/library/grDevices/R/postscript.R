@@ -291,7 +291,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                 width, height, onefile, family, title, fonts, version,
                 paper, encoding, bg, fg, pointsize, pagecentre, colormodel,
-                useDingbats, useKerning, fillOddEven)
+                useDingbats, useKerning, fillOddEven, maxRasters)
 {
     ## do initialization if needed
     initPSandPDFfonts()
@@ -314,6 +314,7 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     if(!missing(useDingbats)) new$useDingbats <- useDingbats
     if(!missing(useKerning)) new$useKerning <- useKerning
     if(!missing(fillOddEven)) new$fillOddEven <- fillOddEven
+    if(!missing(maxRasters)) new$maxRasters <- maxRasters
 
     old <- check.options(new, name.opt = ".PDF.Options", envir = .PSenv)
 
@@ -363,7 +364,8 @@ pdf <- function(file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
               file, old$paper, old$family, old$encoding, old$bg, old$fg,
               old$width, old$height, old$pointsize, onefile, old$pagecentre,
               old$title, old$fonts, version[1L], version[2L],
-              old$colormodel, old$useDingbats, old$useKerning, old$fillOddEven)
+              old$colormodel, old$useDingbats, old$useKerning,
+              old$fillOddEven, old$maxRasters)
     invisible()
 }
 
@@ -659,7 +661,8 @@ assign(".PDF.Options",
          colormodel = "rgb",
          useDingbats = TRUE,
          useKerning = TRUE,
-         fillOddEven = FALSE), envir = .PSenv)
+         fillOddEven = FALSE,
+         maxRasters = 64), envir = .PSenv)
 assign(".PDF.Options.default",
        get(".PDF.Options", envir = .PSenv),
        envir = .PSenv)
