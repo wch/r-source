@@ -296,26 +296,29 @@ SEXP attribute_hidden do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     h = (const char**) R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
 	SEXP el = STRING_ELT(fn, i);
-	if (!isNull(el))
+	if (!isNull(el) && el != NA_STRING)
 #ifdef Win32
 	    f[i] = acopy_string(reEnc(CHAR(el), getCharCE(el), CE_UTF8, 1));
 #else
 	    f[i] = acopy_string(translateChar(el));
 #endif
 	else
-	    f[i] = "";
-	if (!isNull(STRING_ELT(hd, i)))
+            error(_("invalid filename specification"));
+	if (STRING_ELT(hd, i) != NA_STRING)
 	    h[i] = acopy_string(translateChar(STRING_ELT(hd, i)));
 	else
-	    h[i] = "";
+            error(_("invalid '%s' argument"), "headers");
     }
-    if (length(tl) >= 1 || !isNull(STRING_ELT(tl, 0)))
+    if (isValidStringF(tl))
 	t = acopy_string(translateChar(STRING_ELT(tl, 0)));
     else
 	t = "";
-    if (length(pg) >= 1 || !isNull(STRING_ELT(pg, 0))) {
+    if (isValidStringF(pg)) {
 	SEXP pg0 = STRING_ELT(pg, 0);
-	pager = acopy_string(CHAR(pg0));
+        if (pg0 != NA_STRING)
+            pager = acopy_string(CHAR(pg0));
+        else
+            error(_("invalid '%s' argument"), "pager");
     } else
 	pager = "";
     R_ShowFiles(n, f, h, t, dl, pager);
