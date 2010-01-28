@@ -605,7 +605,8 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 {
     if(is.null(repos)) return(NULL)
     if("@CRAN@" %in% repos && interactive()) {
-        cat(gettext("--- Please select a CRAN mirror for use in this session ---"))
+        cat(gettext("--- Please select a CRAN mirror for use in this session ---"),
+            "\n", sep = "")
         flush.console()
         chooseCRANmirror()
         m <- match("@CRAN@", repos)

@@ -520,8 +520,6 @@
         }
 
         if (install_libs && dir.exists("src")) {
-            system_makefile <- file.path(R.home(), paste0("etc", rarch),
-                                         "Makeconf")
             starsmsg(stars, "libs")
             if (!file.exists(file.path(R.home("include"), "R.h")))
                 ## maybe even an error?  But installing Fortran-based packages should work
@@ -565,6 +563,8 @@
                     arch <- substr(rarch, 2, 1000)
                     starsmsg(stars, "arch - ", arch)
                     owd <- setwd("src")
+                    system_makefile <- file.path(R.home(), paste0("etc", rarch),
+                                                 "Makeconf")
                     makefiles <- c(system_makefile, "Makefile")
                     if (file.exists(f <- path.expand(paste("~/.R/Makevars",
                                                            Sys.getenv("R_PLATFORM"), sep="-"))))
