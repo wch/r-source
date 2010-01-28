@@ -77,26 +77,29 @@ BUG FIXES
 	in multi-page bitmap output as stale outer regions of the
 	plot.
 
-    o	p.adjust(*, method, n)	now works correctly for the rare case
+    o	p.adjust(*, method, n) now works correctly for the rare case
 	n > length(p), also when method differs from "bonferroni" or
 	"none", thanks to a patch from Gordon Smyth.
-	
+
     o	tools::showNonASCII() failed to detect non-ASCII characters
-    	if iconv() converted them to ASCII.
+    	if iconv() (incorrectly) converted them to different ASCII
+    	characters.  (Seen on Windows only.)
 
     o	tcrossprod() wrongly failed in some cases when one of the
 	arguments was a vector and the other a matrix.
-
 
     o	[cr]bind(..., deparse.level=2) was not always giving names
 	when documented to do so.  (Discovered whilst investigating
 	PR#14189.)
 
-    o	match(incomparables=<non-NULL>) could in rare cases
-        infinite-loop.
+    o	match(incomparables=<non-NULL>) could in rare cases infinite-
+    	loop.
 
     o   poisson.test() needed to pass 'conf.level' to binom.test()
         (PR#14195)
+
+    o	The "nls" method for df.residual() gave incorrect results for
+	models fitted with na.action = na.exclude.  (PR#14194)
 
 
 
