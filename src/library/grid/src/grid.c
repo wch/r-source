@@ -2587,44 +2587,40 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
 		 */
 		double xxx[5], yyy[5], xadj, yadj;
 		double dw, dh;
-		SEXP temp = unit(0, L_INCHES);
-		SEXP www, hhh;
+		SEXP zeroInches, xadjInches, yadjInches, wwInches, hhInches;
 		int tmpcol;
+                PROTECT(zeroInches = unit(0, L_INCHES));
 		/* Find bottom-left location */
 		justification(ww, hh, 
 			      REAL(hjust)[i % LENGTH(hjust)], 
 			      REAL(vjust)[i % LENGTH(vjust)], 
 			      &xadj, &yadj);
-		www = unit(xadj, L_INCHES);
-		hhh = unit(yadj, L_INCHES);
-		transformDimn(www, hhh, 0, vpc, &gc,
+		PROTECT(xadjInches = unit(xadj, L_INCHES));
+		PROTECT(yadjInches = unit(yadj, L_INCHES));
+		transformDimn(xadjInches, yadjInches, 0, vpc, &gc,
 			      vpWidthCM, vpHeightCM,
 			      dd, rotationAngle,
 			      &dw, &dh);
 		xxx[0] = xx + dw;
 		yyy[0] = yy + dh;
 		/* Find top-left location */
-		www = temp;
-		hhh = unit(hh, L_INCHES);
-		transformDimn(www, hhh, 0, vpc, &gc,
+		PROTECT(hhInches = unit(hh, L_INCHES));
+		transformDimn(zeroInches, hhInches, 0, vpc, &gc,
 			      vpWidthCM, vpHeightCM,
 			      dd, rotationAngle,
 			      &dw, &dh);
 		xxx[1] = xxx[0] + dw;
 		yyy[1] = yyy[0] + dh;
 		/* Find top-right location */
-		www = unit(ww, L_INCHES);
-		hhh = unit(hh, L_INCHES);
-		transformDimn(www, hhh, 0, vpc, &gc,
+		PROTECT(wwInches = unit(ww, L_INCHES));
+		transformDimn(wwInches, hhInches, 0, vpc, &gc,
 			      vpWidthCM, vpHeightCM,
 			      dd, rotationAngle,
 			      &dw, &dh);
 		xxx[2] = xxx[0] + dw;
 		yyy[2] = yyy[0] + dh;
 		/* Find bottom-right location */
-		www = unit(ww, L_INCHES);
-		hhh = temp;
-		transformDimn(www, hhh, 0, vpc, &gc,
+		transformDimn(wwInches, zeroInches, 0, vpc, &gc,
 			      vpWidthCM, vpHeightCM,
 			      dd, rotationAngle,
 			      &dw, &dh);
@@ -2657,6 +2653,7 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h,
 		    gc.fill = R_TRANWHITE;
 		    GEPolygon(5, xxx, yyy, &gc, dd);
 		}
+                UNPROTECT(5);
 	    }
 	} else { /* Just calculating boundary */
 	    xx = justifyX(xx, ww, REAL(hjust)[i % LENGTH(hjust)]);
@@ -2802,15 +2799,15 @@ SEXP L_raster(SEXP raster, SEXP x, SEXP y, SEXP w, SEXP h,
          */
         double xbl, ybl, xadj, yadj;
         double dw, dh;
-        SEXP www, hhh;
+        SEXP xadjInches, yadjInches;
         /* Find bottom-left location */
         justification(ww, hh, 
                       REAL(hjust)[0], 
                       REAL(vjust)[0], 
                       &xadj, &yadj);
-        www = unit(xadj, L_INCHES);
-        hhh = unit(yadj, L_INCHES);
-        transformDimn(www, hhh, 0, vpc, &gc,
+        PROTECT(xadjInches = unit(xadj, L_INCHES));
+        PROTECT(yadjInches = unit(yadj, L_INCHES));
+        transformDimn(xadjInches, yadjInches, 0, vpc, &gc,
                       vpWidthCM, vpHeightCM,
                       dd, rotationAngle,
                       &dw, &dh);
@@ -2828,6 +2825,7 @@ SEXP L_raster(SEXP raster, SEXP x, SEXP y, SEXP w, SEXP h,
                      xbl, ybl, ww, hh, rotationAngle, 
                      LOGICAL(interpolate)[0], &gc, dd);
         }
+        UNPROTECT(2);
     }
     GEMode(0, dd);
     vmaxset(vmax);
