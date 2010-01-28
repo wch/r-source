@@ -253,6 +253,13 @@ NEW FEATURES
     o	aggregate() gains a formula method thanks to a contribution by
     	Arni Magnusson.
 
+    o	path.expand now propagates NA values rather than converting them
+	to "NA".
+
+    o	file.show now disallows NA values for file names, headers, and
+	pager.
+
+
 
 DEPRECATED & DEFUNCT
 
