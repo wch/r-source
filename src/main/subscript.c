@@ -470,10 +470,9 @@ typedef SEXP (*StringEltGetter)(SEXP x, int i);
  * VectorAssign (in subassign.c).  If subscripting is used for
  * assignment, it is possible to extend a vector by supplying new
  * names, and we want to give the extended vector those names, so they
- * are returned as the attribute. Also, unset elements of the vector
+ * are returned as the use.names attribute. Also, unset elements of the vector
  * of new names (places where a match was found) are indicated by
- * setting the element of the newnames vector to NULL, even though it
- * is a character vector.
+ * setting the element of the newnames vector to NULL.
 */
 
 /* The original code (pre 2.0.0) used a ns x nx loop that was too
@@ -494,7 +493,7 @@ stringSubscript(SEXP s, int ns, int nx, SEXP names,
 
     PROTECT(s);
     PROTECT(names);
-    PROTECT(indexnames = allocVector(STRSXP, ns));
+    PROTECT(indexnames = allocVector(VECSXP, ns));
     nnames = nx;
     extra = nnames;
 
@@ -514,8 +513,7 @@ stringSubscript(SEXP s, int ns, int nx, SEXP names,
 	for (i = 0; i < ns; i++)
 	    if(STRING_ELT(s, i) == NA_STRING || !CHAR(STRING_ELT(s, i))[0])
 		INTEGER(indx)[i] = 0;
-	/* FIXME: this should not be allowed, CHARSXPs only */
-	for (i = 0; i < ns; i++) SET_STRING_ELT(indexnames, i, R_NilValue);
+	for (i = 0; i < ns; i++) SET_VECTOR_ELT(indexnames, i, R_NilValue);
     } else {
 	PROTECT(indx = allocVector(INTSXP, ns));
 	for (i = 0; i < ns; i++) {
@@ -528,8 +526,7 @@ stringSubscript(SEXP s, int ns, int nx, SEXP names,
 		    }
 		    if (NonNullStringMatch(STRING_ELT(s, i), names_j)) {
 			sub = j + 1;
-			/* FIXME: this should not be allowed, CHARSXPs only */
-			SET_STRING_ELT(indexnames, i, R_NilValue);
+			SET_VECTOR_ELT(indexnames, i, R_NilValue);
 			break;
 		    }
 		}
@@ -545,7 +542,7 @@ stringSubscript(SEXP s, int ns, int nx, SEXP names,
 	    for (j = 0 ; j < i ; j++)
 		if (NonNullStringMatch(STRING_ELT(s, i), STRING_ELT(s, j))) {
 		    sub = INTEGER(indx)[j];
-		    SET_STRING_ELT(indexnames, i, STRING_ELT(s, j));
+		    SET_VECTOR_ELT(indexnames, i, STRING_ELT(s, j));
 		    break;
 		}
 	}
@@ -555,14 +552,14 @@ stringSubscript(SEXP s, int ns, int nx, SEXP names,
 	    }
 	    extra += 1;
 	    sub = extra;
-	    SET_STRING_ELT(indexnames, i, STRING_ELT(s, i));
+	    SET_VECTOR_ELT(indexnames, i, STRING_ELT(s, i));
 	}
 	INTEGER(indx)[i] = sub;
     }
     /* We return the new names as the names attribute of the returned
        subscript vector. */
     if (extra != nnames)
-	setAttrib(indx, R_NamesSymbol, indexnames);
+	setAttrib(indx, R_UseNamesSymbol, indexnames);
     if (canstretch)
 	*stretch = extra;
     UNPROTECT(4);

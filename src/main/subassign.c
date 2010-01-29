@@ -666,18 +666,18 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	warningcall(call, "sub assignment (*[*] <- *) not done; __bug?__");
     }
     /* Check for additional named elements. */
-    /* Note makeSubscript passes the additional names back as the names
-       attribute of the generated subscript vector */
-    newnames = getAttrib(indx, R_NamesSymbol);
+    /* Note makeSubscript passes the additional names back as the use.names
+       attribute (a vector list) of the generated subscript vector */
+    newnames = getAttrib(indx, R_UseNamesSymbol);
     if (newnames != R_NilValue) {
 	SEXP oldnames = getAttrib(x, R_NamesSymbol);
 	if (oldnames != R_NilValue) {
 	    for (i = 0; i < n; i++) {
-		if (STRING_ELT(newnames, i) != R_NilValue) {
+		if (VECTOR_ELT(newnames, i) != R_NilValue) {
 		    ii = INTEGER(indx)[i];
 		    if (ii == NA_INTEGER) continue;
 		    ii = ii - 1;
-		    SET_STRING_ELT(oldnames, ii, STRING_ELT(newnames, i));
+		    SET_STRING_ELT(oldnames, ii, VECTOR_ELT(newnames, i));
 		}
 	    }
 	}
@@ -686,11 +686,11 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    for (i = 0; i < nx; i++)
 		SET_STRING_ELT(oldnames, i, R_BlankString);
 	    for (i = 0; i < n; i++) {
-		if (STRING_ELT(newnames, i) != R_NilValue) {
+		if (VECTOR_ELT(newnames, i) != R_NilValue) {
 		    ii = INTEGER(indx)[i];
 		    if (ii == NA_INTEGER) continue;
 		    ii = ii - 1;
-		    SET_STRING_ELT(oldnames, ii, STRING_ELT(newnames, i));
+		    SET_STRING_ELT(oldnames, ii, VECTOR_ELT(newnames, i));
 		}
 	    }
 	    setAttrib(x, R_NamesSymbol, oldnames);
