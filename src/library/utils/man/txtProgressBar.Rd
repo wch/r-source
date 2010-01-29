@@ -1,6 +1,6 @@
 % File src/library/utils/man/txtProgressBar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008 R Core Development Team
+% Copyright 2008-10 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{txtProgressBar}
@@ -22,7 +22,7 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
 }
 \arguments{
   \item{min, max}{(finite) numeric values for the extremes of the
-    progress bar.}
+    progress bar. Must have \code{min < max}.}
   \item{initial, value}{initial or new value for the progress bar.}
   \item{char}{the character (or character string) to form the progress bar.}
   \item{width}{the width of the progress bar, as a multiple of the width
@@ -66,7 +66,11 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
 #ifdef windows
   \code{\link{winProgressBar}},
 #endif
-  \code{\link{tkProgressBar}}
+  \code{\link{tkProgressBar}}.
+#ifdef unix
+  
+  Windows versions of \R also have \code{winProgressBar}.
+#endif
 }
 \examples{\donttest{ # slow
 testit <- function(x = sort(runif(20)), ...)
