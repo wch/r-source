@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-8  R Development Core Team
+ *  Copyright (C) 2000-10  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,10 @@
 #include <stdlib.h> /* for exit */
 #include <stdio.h>
 #include <Rversion.h>
+
+#ifndef BINDIR
+# define BINDIR "bin"
+#endif
 
 extern char *getRHOME(void), *getRUser(void); /* in ../rhome.c */
 
@@ -130,7 +134,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    return(0);
 	}
 	/* R --help */
-	snprintf(cmd, CMD_LEN, "%s/bin/Rterm.exe --help", getRHOME());
+	snprintf(cmd, CMD_LEN, "%s/%s/Rterm.exe --help", getRHOME(), BINDIR);
 	system(cmd);
 	fprintf(stderr, "%s", "\n\nOr: R CMD command args\n\n");
 	rcmdusage(RCMD);
@@ -219,8 +223,8 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    else strcat(outfile, ".Rout");
 	}
 
-	snprintf(cmd, CMD_LEN, "%s/bin/Rterm.exe -f \"%s\" --restore --save",
-		 getRHOME(), infile);
+	snprintf(cmd, CMD_LEN, "%s/%s/Rterm.exe -f \"%s\" --restore --save",
+		 getRHOME(), BINDIR, infile);
 	if(strlen(cmd) + strlen(cmd_extra) >= CMD_LEN) {
 	    fprintf(stderr, "command line too long\n");
 	    return(27);
@@ -265,8 +269,8 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	      strcmp(argv[cmdarg], "INSTALL") == 0) {
 	/* handle Rcmd INSTALL internally */
 	snprintf(cmd, CMD_LEN, 
-		 "%s/bin/Rterm.exe -e tools:::.install_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --slave --args ",
-		 getRHOME());
+		 "%s/%s/Rterm.exe -e tools:::.install_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --slave --args ",
+		 getRHOME(), BINDIR);
 	for (i = cmdarg + 1; i < argc; i++) {
 	    strcat(cmd, "nextArg");
 	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
@@ -281,8 +285,8 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	      strcmp(argv[cmdarg], "REMOVE") == 0) {
 	/* handle Rcmd REMOVE internally */
 	snprintf(cmd, CMD_LEN, 
-		 "%s/bin/Rterm.exe -f \"%s/share/R/REMOVE.R\" R_DEFAULT_PACKAGES=NULL --slave --args",
-		 getRHOME(), getRHOME());
+		 "%s/%s/Rterm.exe -f \"%s/share/R/REMOVE.R\" R_DEFAULT_PACKAGES=NULL --slave --args",
+		 getRHOME(), BINDIR, getRHOME());
 	for (i = cmdarg + 1; i < argc; i++){
 	    strcat(cmd, " ");
 	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
@@ -316,7 +320,10 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	putenv("R_CMD=R CMD");
 
 	strcpy(BUFFER, "PATH=");
-	strcat(BUFFER, RHome); strcat(BUFFER, "\\bin;");
+	strcat(BUFFER, RHome);
+	strcat(BUFFER, "\\"); 
+	strcat(BUFFER, BINDIR);
+	strcat(BUFFER, ";"); 
 	strcat(BUFFER, getenv("PATH"));
 	putenv(BUFFER);
 
@@ -350,49 +357,37 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	if (cmdarg > 0 && argc > cmdarg) {
 	    p = argv[cmdarg];
 	    if (strcmp(p, "Rd2dvi") == 0) {
-		strcpy(cmd, "sh ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2dvi.sh");
+		snprintf(cmd, CMD_LEN, "sh %s/%s/Rd2dvi.sh", RHome, BINDIR);
 	    } else if (strcmp(p, "Rdiff") == 0) {
-		strcpy(cmd, "sh ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/Rdiff.sh");
+		snprintf(cmd, CMD_LEN, "sh %s/%s/Rdiff.sh", RHome, BINDIR);
 	    } else if (strcmp(p, "Sweave") == 0) {
-		strcpy(cmd, "sh ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/Sweave.sh");
+		snprintf(cmd, CMD_LEN, "sh %s/%s/Sweave.sh", RHome, BINDIR);
 	    } else if (strcmp(p, "Stangle") == 0) {
-		strcpy(cmd, "sh ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/Stangle.sh");
+		snprintf(cmd, CMD_LEN, "sh %s/%s/Stangle.sh", RHome, BINDIR);
 	    } else if (strcmp(p, "rtags") == 0) {
-		strcpy(cmd, "sh ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/rtags.sh");
+		snprintf(cmd, CMD_LEN, "sh %s/%s/rtags.sh", RHome, BINDIR);
 	    } else if (strcmp(p, "config") == 0) {
-		strcpy(cmd, "sh ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/config.sh");
+		snprintf(cmd, CMD_LEN, "sh %s/%s/config.sh", RHome, BINDIR);
 	    } else if (strcmp(p, "SHLIB") == 0) {
-		strcpy(cmd, "sh ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/SHLIB.sh");
+		snprintf(cmd, CMD_LEN, "sh %s/%s/SHLIB.sh", RHome, BINDIR);
 	    } else if (strcmp(p, "Rdconv") == 0) {
-		strcpy(cmd, "sh ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/Rdconv.sh");
+		snprintf(cmd, CMD_LEN, "sh %s/%s/Rdconv.sh", RHome, BINDIR);
 	    } else if (strcmp(p, "Rd2txt") == 0) {
-		strcpy(cmd, "sh ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/Rdconv.sh -t txt");
+		snprintf(cmd, CMD_LEN, "sh %s/%s/Rdconv.sh -t txt", RHome, BINDIR);
 	    } else if (strcmp(p, "Rd2pdf") == 0) {
+		snprintf(cmd, CMD_LEN, "sh %s/%s/Rd2dvi.sh --pdf", RHome, BINDIR);
 		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2dvi.sh --pdf");
 	    } else if (strcmp(p, "build") == 0) {
-		strcpy(cmd, "perl ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/build.pl");
+		snprintf(cmd, CMD_LEN, "perl %s/%s/build.pl", RHome, BINDIR);
 	    } else if (strcmp(p, "check") == 0) {
-		strcpy(cmd, "perl ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/check.pl");
+		snprintf(cmd, CMD_LEN, "perl %s/%s/check.pl", RHome, BINDIR);
 	    } else if (strcmp(p, "Rprof") == 0) {
-		strcpy(cmd, "perl ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/Rprof.pl");
+		snprintf(cmd, CMD_LEN, "perl %s/%s/Rprof.pl", RHome, BINDIR);
 	    } else if (strcmp(p, "Sd2Rd") == 0) {
-		strcpy(cmd, "perl ");
-		strcat(cmd, RHome); strcat(cmd, "/bin/Sd2Rd.pl");
+		snprintf(cmd, CMD_LEN, "perl %s/%s/Sd2Rd.pl", RHome, BINDIR);
 	    } else if (strcmp(p, "open") == 0) {
-		strcpy(cmd, RHome); strcat(cmd, "/bin/open.exe");
+		snprintf(cmd, CMD_LEN, "%s/%s/open.exe", RHome, BINDIR);
 	    } else {
 		/* RHOME/bin is first in the path, so looks there first */
 		if (!strcmp(".sh", p + strlen(p) - 3)) strcpy(cmd, "sh ");
@@ -401,7 +396,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		strcat(cmd, p);
 	    }
 	} else
-	    snprintf(cmd, CMD_LEN, "%s/bin/Rterm.exe", getRHOME());
+	    snprintf(cmd, CMD_LEN, "%s/%s/Rterm.exe", getRHOME(), BINDIR);
 
 	for (i = cmdarg + 1; i < argc; i++){
 	    strcat(cmd, " ");

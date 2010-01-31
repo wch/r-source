@@ -66,6 +66,9 @@ R --slave --no-restore --vanilla --file=foo [script_args]
 #ifndef WIN32
 static char rhome[] = R_HOME;
 #else
+# ifndef BINDIR
+#  define BINDIR "bin"
+# endif
 # define FOR_Rscript
 # include "rterm.c"
 #endif
@@ -117,7 +120,7 @@ int main(int argc, char *argv[])
     p = getenv("RHOME");
 #ifdef WIN32
     if(p && strlen(p))
-	snprintf(cmd, PATH_MAX+1, "%s\\bin\\Rterm.exe",  p);
+	snprintf(cmd, PATH_MAX+1, "%s\\%s\\Rterm.exe",  p, BINDIR);
     else {
 	char rhome[MAX_PATH];
 	GetModuleFileName(NULL, rhome, MAX_PATH);
