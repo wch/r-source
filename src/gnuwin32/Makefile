@@ -281,6 +281,7 @@ distclean: clean
 		cran/md5sum.txt cran/*.$(RPREFIX) 
 	$(RM) -r .vignettes # it gets left behind if there is an error
 	$(RM) -r ../../share/locale
+	$(RM) ../../doc/CHANGES*
 	$(RM) Rpwd.exe # do this last of all
 
 veryclean: distclean

@@ -52,3 +52,4 @@ clean:
 	$(RM) *~ */*~ fixhtml fixbin fixetc fixshare fixdoc
 
 distclean:
+	$(RM) $(R_HOME)/doc/CHANGES*
