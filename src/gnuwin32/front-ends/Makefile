@@ -23,42 +23,42 @@ endif
 .PHONY : all makeMakedeps
 
 all: makeMakedeps \
-     $(R_HOME)/bin/Rgui.exe $(R_HOME)/bin/Rterm.exe \
-     $(R_HOME)/bin/Rcmd.exe  $(R_HOME)/bin/RSetReg.exe  \
-     $(R_HOME)/bin/R.exe \
-     $(R_HOME)/bin/md5check.exe $(R_HOME)/bin/Rscript.exe \
-     $(R_HOME)/bin/open.exe 
+     $(R_HOME)/$(BINDIR)/Rgui.exe $(R_HOME)/$(BINDIR)/Rterm.exe \
+     $(R_HOME)/$(BINDIR)/Rcmd.exe  $(R_HOME)/$(BINDIR)/RSetReg.exe  \
+     $(R_HOME)/$(BINDIR)/R.exe \
+     $(R_HOME)/$(BINDIR)/md5check.exe $(R_HOME)/$(BINDIR)/Rscript.exe \
+     $(R_HOME)/$(BINDIR)/open.exe 
 
-$(R_HOME)/bin/Rgui.exe: Rgui.exe
-	$(MKDIR) -p $(R_HOME)/bin
+$(R_HOME)/$(BINDIR)/Rgui.exe: Rgui.exe
+	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@
 
-$(R_HOME)/bin/Rterm.exe: Rterm.exe
-	$(MKDIR) -p $(R_HOME)/bin
+$(R_HOME)/$(BINDIR)/Rterm.exe: Rterm.exe
+	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@	
 
-$(R_HOME)/bin/Rcmd.exe: Rcmd.exe
-	$(MKDIR) -p $(R_HOME)/bin
+$(R_HOME)/$(BINDIR)/Rcmd.exe: Rcmd.exe
+	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@
 
-$(R_HOME)/bin/RSetReg.exe: RSetReg.exe
-	$(MKDIR) -p $(R_HOME)/bin
+$(R_HOME)/$(BINDIR)/RSetReg.exe: RSetReg.exe
+	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@
 
-$(R_HOME)/bin/R.exe: R.exe
-	$(MKDIR) -p $(R_HOME)/bin
+$(R_HOME)/$(BINDIR)/R.exe: R.exe
+	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@	
 
-$(R_HOME)/bin/md5check.exe: md5check.exe
-	$(MKDIR) -p $(R_HOME)/bin
+$(R_HOME)/$(BINDIR)/md5check.exe: md5check.exe
+	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@	
 
-$(R_HOME)/bin/Rscript.exe: Rscript.exe
-	$(MKDIR) -p $(R_HOME)/bin
+$(R_HOME)/$(BINDIR)/Rscript.exe: Rscript.exe
+	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@	
 
-$(R_HOME)/bin/open.exe: open.exe
-	$(MKDIR) -p $(R_HOME)/bin
+$(R_HOME)/$(BINDIR)/open.exe: open.exe
+	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@	
 
 rgui-CPPFLAGS=-DWin32

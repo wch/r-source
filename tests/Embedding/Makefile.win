@@ -5,7 +5,7 @@ PROGRAMS = Rtest.exe Rplot.exe Rpostscript.exe Rerror.exe RNamedCall.exe RParseE
 
 R_CMD_LINK=gcc
 CFLAGS=-I../../include -O3 -Wall -pedantic
-LIBR=-L../../bin -lR
+LIBR=-L../../$(BINDIR) -lR
 R_EXE=R_HOME=../..
 
 tests: $(PROGRAMS)

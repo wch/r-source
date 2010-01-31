@@ -5,7 +5,7 @@
 RHOME=../..
 ECHO = echo
 
-R_EXE = $(RHOME)/bin/Rterm --slave --vanilla
+R_EXE = $(RHOME)/$(BINDIR)/Rterm --slave --vanilla
 
 all: test-Examples-Base
 

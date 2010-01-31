@@ -15,7 +15,7 @@ SOURCES=$(wildcard *.c)
 OBJECTS=$(SOURCES:.c=.o)
 
 DLL: libR.dll.a Rgraphapp.dll
-	@cp Rgraphapp.dll ../../../bin
+	@cp Rgraphapp.dll ../../../$(BINDIR)
 
 
 ifdef USE_IMPLIBS

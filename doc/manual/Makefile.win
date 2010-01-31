@@ -15,7 +15,7 @@ R_TEXOPTS=
 TEXI2DVI=
 endif
 
-R_EXE=../../bin/Rterm
+R_EXE=../../$(BINDIR)/Rterm
 
 include ../../share/make/vars.mk
 

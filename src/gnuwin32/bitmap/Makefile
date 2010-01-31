@@ -48,7 +48,7 @@ rbitmap-CPPFLAGS=-DHAVE_PNG -DHAVE_JPEG -DHAVE_TIFF -I. -I../../extra/zlib -I./$
 CFLAGS=-O3 -Wall -pedantic 
 
 ../../../library/grDevices/libs/Rbitmap.dll: rbitmap.o $(TIFFDIR)/libtiff.a $(PNGDIR)/libpng.a $(JPEGDIR)/libjpeg.a
-	$(DLL) -shared -s -o $@ $^ -L../../../bin -lR -lRzlib
+	$(DLL) -shared -s -o $@ $^ -L../../../$(IMPDIR) -lR -lRzlib
 
 clean:
 	$(RM) *.o *.a *.dll *.def *~ \#*\#

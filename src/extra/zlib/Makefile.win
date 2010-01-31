@@ -12,7 +12,7 @@ CFLAGS=-I../../include -DHAVE_CONFIG_H $(OPTFLAGS)
 # libz.a: $(OBJECTS)
 
 DLL: Rzlib.dll
-	@cp Rzlib.dll ../../../bin
+	@cp Rzlib.dll ../../../$(BINDIR)
 
 Rzlib.dll: $(OBJECTS)
 

@@ -93,10 +93,12 @@ F77=sh $(RHOME)/src/scripts/f77_f2c
 FLIBS=-lf2c
 endif
 
+BINDIR=bin
+
 ifdef USE_IMPLIBS
 IMPDIR=lib
 else
-IMPDIR=bin
+IMPDIR=$(BINDIR)
 endif
 
 ## use in front-ends and internet module

@@ -6,7 +6,7 @@ all: makeMakedeps install
 
 
 install: Riconv.dll
-	@cp Riconv.dll ../../../bin/Riconv.dll
+	@cp Riconv.dll ../../../$(BINDIR)
 
 CPPFLAGS=-I../../include
 CFLAGS= $(OPTFLAGS)

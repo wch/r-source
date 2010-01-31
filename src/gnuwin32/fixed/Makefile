@@ -15,12 +15,13 @@ $(R_HOME)/library/base/R/Rprofile:  ../../library/profile/Common.R \
 fixbin:  cp2bin # iconv
 	@$(ECHO) done > fixbin
 
+## unused
 iconv:
-	@$(CP) ../unicode/iconv.dll ../../../bin
+	@$(CP) ../unicode/iconv.dll ../../../$(BINDIR)
 
 cp2bin: $(wildcard ./bin/*)
 	@zip -q bins $^
-	@unzip -oaq bins -d  $(R_HOME)
+	@unzip -oaqj bins -d  $(R_HOME)/$(BINDIR)
 	@$(RM) bins.zip
 
 fixhtml:  html/rwin.html

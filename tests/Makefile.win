@@ -17,13 +17,13 @@ top_builddir = $(RHOME)
 include Makefile.common
 
 RHOME = $(shell ../src/gnuwin32/Rpwd.exe ..)# must be absolute path
-R = $(RHOME)/bin/Rterm --vanilla LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
-R2 = $(RHOME)/bin/Rterm --vanilla SRCDIR=. R_DEFAULT_PACKAGES=
-R3 = $(RHOME)/bin/Rcmd check
-RDIFF = $(RHOME)/bin/R CMD Rdiff
+R = $(RHOME)/$(BINDIR)/Rterm --vanilla LC_ALL=C SRCDIR=. R_DEFAULT_PACKAGES=
+R2 = $(RHOME)/$(BINDIR)/Rterm --vanilla SRCDIR=. R_DEFAULT_PACKAGES=
+R3 = $(RHOME)/$(BINDIR)/Rcmd check
+RDIFF = $(RHOME)/$(BINDIR)/R CMD Rdiff
 RVAL_IF_DIFF=0
 ## suppress fancy quotes for diff-ing
-RDCONV = LC_ALL=C $(RHOME)/bin/Rcmd Rdconv
+RDCONV = LC_ALL=C $(RHOME)/$(BINDIR)/Rcmd Rdconv
 
 ECHO = echo
 ECHO_C = 
