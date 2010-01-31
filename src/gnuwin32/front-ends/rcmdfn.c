@@ -327,6 +327,10 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	strcat(BUFFER, getenv("PATH"));
 	putenv(BUFFER);
 
+	strcpy(BUFFER, "BINDIR=");
+	strcat(BUFFER, BINDIR);
+	putenv(BUFFER);
+
 	if ( (p = getenv("TMPDIR")) && isDir(p)) {
 	    /* TMPDIR is already set */
 	} else {

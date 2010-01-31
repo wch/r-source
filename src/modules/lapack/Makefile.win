@@ -4,7 +4,7 @@ include ../../gnuwin32/MkRules
 MODULE=lapack
 all: 
 	@$(MAKE) --no-print-directory -f Makefile.win -s makeMakedeps 
-	@$(MAKE) --no-print-directory -f Makefile.win ../../../bin/Rlapack.dll 
+	@$(MAKE) --no-print-directory -f Makefile.win ../../../$(BINDIR)/Rlapack.dll 
 ifdef USE_IMPLIBS
 	@$(MAKE) --no-print-directory -f Makefile.win implib
 endif
@@ -42,7 +42,7 @@ Rlapack.def: $(LIBOBJECTS)
 
 $(MODULE).dll: $(OBJS)
 
-../../../bin/Rlapack.dll: $(LIBOBJECTS)
+../../../$(BINDIR)/Rlapack.dll: $(LIBOBJECTS)
 	$(DLL) -shared -s -o $@ $^ -L../../../$(IMPDIR) -lR -lRblas $(FLIBS)
 
 clean:

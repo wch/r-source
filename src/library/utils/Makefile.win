@@ -9,7 +9,7 @@ top_builddir = ../../..
 
 pkg = utils
 
-R_EXE = $(top_builddir)/bin/Rterm.exe --vanilla --slave
+R_EXE = $(top_builddir)/$(BINDIR)/Rterm.exe --vanilla --slave
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
 INSTDIRS = Sweave misc

@@ -20,6 +20,8 @@ ifeq ($(strip $(WIN)),32)
 LARGE_ADDR=-Wl,--large-address-aware
 endif
 
+rcmdfn-CFLAGS=-DBINDIR='"$(BINDIR)"'
+
 .PHONY : all makeMakedeps
 
 all: makeMakedeps \
@@ -94,7 +96,7 @@ md5check-CPPFLAGS=-I../../../include -I../../library/tools/src
 md5check.exe : md5check.o md5ico.o ../../library/tools/src/md5.o
 
 Rscript.o: ../../unix/Rscript.c
-	$(CC) $(CFLAGS) -I. -I../../include -DHAVE_CONFIG_H -c $< -o $@
+	$(CC) $(CFLAGS) -DBINDIR='"$(BINDIR)"' -I. -I../../include -DHAVE_CONFIG_H -c $< -o $@
 
 Rscript.exe: Rscript.o rcico.o
 

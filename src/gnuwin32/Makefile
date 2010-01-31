@@ -22,7 +22,7 @@ rpackages:
 ## NB: will not be set correctly first time through.
 RHOME = $(shell ./Rpwd.exe ../..)
 
-REXE = $(RHOME)/bin/rterm.exe --vanilla --slave
+REXE = $(RHOME)/$(BINDIR)/rterm.exe --vanilla --slave
 
 RPREFIX = $(shell $(PERL) fixed/rwver.pl ../../VERSION)
 
@@ -98,7 +98,7 @@ ifdef USE_IMPLIBS
 	@$(MK) libRiconv.dll.a
 endif
 	@$(MK) libRblas.dll.a
-	@$(MK) ../../bin/R.dll
+	@$(MK) ../../$(BINDIR)/R.dll
 ifdef USE_IMPLIBS
 	@$(MK) implibs
 endif
@@ -126,7 +126,7 @@ COPYRIGHTS: ../../doc/COPYRIGHTS COPYRIGHTS.win
 
 
 fixfiles: docfiles 
-	@$(MKDIR) -p ../../bin
+	@$(MKDIR) -p ../../$(BINDIR)
 	@$(MK) -C ./fixed
 
 fixed/fixdesc:
@@ -149,16 +149,16 @@ R.exp: $(OBJS) $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 	@$(RM) R0.def
 
 
-Rdll: makeMakedeps libRblas.dll.a ../../bin/R.dll
+Rdll: makeMakedeps libRblas.dll.a ../../$(BINDIR)/R.dll
 
-../../bin/R.dll: FORCE
+../../$(BINDIR)/R.dll: FORCE
 	@$(MK) fixfiles
 	@$(MK) -C ../include -f Makefile.win
 	@$(MK) rlibs
 	@$(MK) makeMakedeps
 	@$(MK) R.dll
-	@$(MKDIR) -p ../../bin
-	$(CP) R.dll ../../bin
+	@$(MKDIR) -p ../../$(BINDIR)
+	$(CP) R.dll ../../$(BINDIR)
 
 FORCE:
 
@@ -249,7 +249,7 @@ distclean: clean
 	  $(MAKE) -C ../extra/$${d} -f Makefile.win distclean; \
 	done
 	@$(MAKE) -C ../../tests -f Makefile.win distclean RHOME=$(RHOME)
-	$(RM) -r ../../bin ../../include ../../lib ../../library ../../modules
+	$(RM) -r ../../$(BINDIR) ../../include ../../lib ../../library ../../modules
 	$(RM) ../include/config.h ../include/iconv.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h \
 	../include/libintl.h

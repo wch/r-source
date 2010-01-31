@@ -11,7 +11,7 @@ RHOME = ../../../..
 
 pkg = stats4
 
-R_EXE = $(top_builddir)/bin/Rterm.exe --vanilla --slave
+R_EXE = $(top_builddir)/$(BINDIR)/Rterm.exe --vanilla --slave
 
 ECHO = echo
 MKINSTALLDIRS = mkdir -p

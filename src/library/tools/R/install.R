@@ -581,6 +581,7 @@
                     srcs <- dir(pattern = "\\.([cfmCM]|cc|cpp|f90|f95|mm)$")
                     ## This allows Makevars to set OBJECTS or its own targets.
                     allfiles <- if (file.exists("Makevars")) c("Makevars", srcs) else srcs
+                    ## FIXME better R.home("bin") ?  Same for now.
                     wd2 <- setwd(file.path(R.home(), "bin", "exec"))
                     archs <- Sys.glob("*")
                     setwd(wd2)

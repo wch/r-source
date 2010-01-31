@@ -9,7 +9,7 @@ top_builddir = ../../..
 
 pkg = stats
 
-R_EXE = $(top_builddir)/bin/Rterm.exe --vanilla --slave
+R_EXE = $(top_builddir)/$(BINDIR)/Rterm.exe --vanilla --slave
 
 FRONTFILES = COPYRIGHTS.modreg SOURCES.ts
 

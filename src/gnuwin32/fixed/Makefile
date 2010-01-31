@@ -28,6 +28,7 @@ fixhtml:  html/rwin.html
 	$(CP) -p html/rwin.html $(R_HOME)/doc/html/index.html
 	@$(ECHO) done > fixhtml
 
+## FIXME: substitute IMPDIR
 fixetc: $(wildcard ./etc/*)
 	$(CP) -p $^ $(R_HOME)/etc
 ifeq ($(strip $(WIN)),64)

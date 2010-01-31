@@ -29,7 +29,7 @@ stamp-recommended: $(OBJECTS)
 INSTALL_OPTS=--pkglock --install-tests --data-compress="xz"
 
 
-RCMD = ../../../bin/Rcmd
+RCMD = ../../../$(BINDIR)/Rcmd
 
 .tgz.ts:
 	@echo

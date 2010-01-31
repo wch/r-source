@@ -3,7 +3,7 @@
 
 all:  makeMakedeps $(DLLNAME).dll
 
-R_EXE = $(RHOME)/bin/Rterm.exe
+R_EXE = $(RHOME)/$(BINDIR)/Rterm.exe
 
 .PHONY: all makeMakedeps
 

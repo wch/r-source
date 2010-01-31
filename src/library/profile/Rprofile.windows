@@ -30,7 +30,7 @@ if(nzchar(Sys.getenv("R_PAPERSIZE"))) {
 
 options(pager = if(length(grep("--ess", commandArgs()))) "console" else "internal")
 options(useFancyQuotes = (.Platform$GUI == "Rgui"))
-options(pdfviewer = file.path(R.home(), "bin", "open.exe"))
+options(pdfviewer = file.path(R.home("bin"), "open.exe"))
 
 if(.Platform$GUI == "Rgui") {
     Sys.setenv(GFORTRAN_STDOUT_UNIT= "-1")

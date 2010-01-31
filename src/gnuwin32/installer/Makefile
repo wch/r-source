@@ -47,7 +47,7 @@ msi: $(RPREFIX)-win32.msi
 imagedir:
 	$(RM) -r $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
-	$(CP) -pr $(R_HOME)/bin $(R_HOME)/modules $(RPREFIX)
+	$(CP) -pr $(R_HOME)/$(BINDIR) $(R_HOME)/modules $(RPREFIX)
 # copy base and recommended packages
 	$(MKDIR) -p $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
@@ -76,7 +76,7 @@ imagedir:
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" ../README > $(RPREFIX)/README.$(RPREFIX)
 	$(SED) -e 3,5d ../README.packages > $(RPREFIX)/doc/README.packages
 # convert docs and batch files to CRLF: might already be on Windows, though.
-	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/* $(RPREFIX)/bin/*.bat
+	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/* $(RPREFIX)/$(BINDIR)/*.bat
 	unzip -ao dosfiles.zip
 	$(RM) dosfiles.zip
 #
@@ -106,10 +106,10 @@ md5sums:
 	@echo "adding MD5 checksums"
 	@(cd $(RPREFIX); echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
-	  ../../../../bin/Rterm.exe --vanilla --slave)
+	  ../../../../$(BINDIR)/Rterm.exe --vanilla --slave)
 
 fixups:
-	echo "make.packages.html(.Library, verbose=FALSE)" | $(RPREFIX)/bin/rterm --vanilla --slave LC_COLLATE=C
+	echo "make.packages.html(.Library, verbose=FALSE)" | $(RPREFIX)/$(BINDIR)/rterm --vanilla --slave LC_COLLATE=C
 	$(CP) -pr $(R_HOME)/Tcl $(RPREFIX)
 
 
@@ -153,7 +153,7 @@ distclean: clean
 	rm -f $(RPREFIX)-win32.* $(RPREFIX)-win64.*
 
 myR:
-	echo "make.packages.html(.Library)" | $(IMAGEDIR)/bin/rterm --vanilla --slave LC_COLLATE=C
+	echo "make.packages.html(.Library)" | $(IMAGEDIR)/$(BINDIR)/rterm --vanilla --slave LC_COLLATE=C
 	@echo "adding MD5 checksums"
 	@(cd $(IMAGEDIR); echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
