@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2008  Guido Masarotto and the R Development Core Team
+ *  Copyright (C) 1999-2010  Guido Masarotto and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ int R_SaveAsPng(void  *d, int width, int height,
 #else
     if (setjmp(png_jmpbuf(png_ptr)))
 #endif
-{    
+{
 	/* If we get here, we had a problem writing the file */
 	free(scanline);
 	png_destroy_write_struct(&png_ptr, &info_ptr);
@@ -250,6 +250,9 @@ int R_SaveAsPng(void  *d, int width, int height,
 
 #ifdef HAVE_JPEG
 
+/* jconfig.h included by jpeglib.h may define these unconditionally */
+#undef HAVE_STDDEF_H
+#undef HAVE_STDLIB_H
 #include <jpeglib.h>
 
 /* Here's the extended error handler struct */
@@ -337,10 +340,10 @@ int R_SaveAsJpeg(void  *d, int width, int height,
     /* First we supply a description of the input image.
      * Four fields of the cinfo struct must be filled in:
      */
-    cinfo.image_width = width; 	/* image width and height, in pixels */
+    cinfo.image_width = width;	/* image width and height, in pixels */
     cinfo.image_height = height;
     cinfo.input_components = 3;		/* # of color components per pixel */
-    cinfo.in_color_space = JCS_RGB; 	/* colorspace of input image */
+    cinfo.in_color_space = JCS_RGB;	/* colorspace of input image */
     jpeg_set_defaults(&cinfo);
     if(res > 0) {
 	cinfo.density_unit = 1;  /* pixels per inch */
@@ -410,7 +413,7 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 	}
 #endif
     sampleperpixel = 3 + have_alpha;
-    
+
     out = TIFFOpen(outfile, "w");
     if (!out) {
 	warning("unable to open TIFF file '%s'", outfile);
@@ -432,7 +435,7 @@ int R_SaveAsTIFF(void  *d, int width, int height,
        COMPRESSION_LZW = 5;
        COMPRESSION_JPEG = 7;
        COMPRESSION_DEFLATE = 32946;
-       COMPRESSION_ADOBE_DEFLATE = 8;  
+       COMPRESSION_ADOBE_DEFLATE = 8;
     */
     TIFFSetField(out, TIFFTAG_COMPRESSION, COMPRESSION_NONE);
 #endif
@@ -450,7 +453,7 @@ int R_SaveAsTIFF(void  *d, int width, int height,
 	buf =(unsigned char *)_TIFFmalloc(linebytes);
     else
 	buf = (unsigned char *)_TIFFmalloc(TIFFScanlineSize(out));
- 
+
     for (i = 0; i < height; i++) {
 	pscanline = buf;
 	for(j = 0; j < width; j++) {
@@ -537,7 +540,7 @@ int R_SaveAsBmp(void  *d, int width, int height,
     }
 
     /* write the header */
-    
+
     BMPPUTC('B');BMPPUTC('M');
     BMPDW(bfSize); /*bfSize*/
     BMPW(0);BMPW(0); /* bfReserved1 and bfReserved2 must be 0*/
