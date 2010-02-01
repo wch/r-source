@@ -1,3 +1,11 @@
+#-*- Makefile -*-
+
+## comment from Guido's original version in the 1990's
+# jconfig.h and Makefile obtained running 'CC="gcc -mno-cygwin" ./configure'
+# under CYGWIN. They are here since the configure script doesn't run 
+# (I suspect) using the reduced set of tools we distribute.
+## 2006-01-15 checked under current tools.
+
 CC= gcc
 CFLAGS= -O3 -I.
 
@@ -7,16 +15,7 @@ CFLAGS= -O3 -I.
 SYSDEPMEM= jmemnobs.o
 
 # source files: JPEG library proper
-ifeq ($(strip $(JPEGDIR)),jpeg-7)
-LIBSOURCES= jaricom.c jcapimin.c jcapistd.c jcarith.c jccoefct.c jccolor.c \
-        jcdctmgr.c jchuff.c jcinit.c jcmainct.c jcmarker.c jcmaster.c \
-        jcomapi.c jcparam.c jcprepct.c jcsample.c jctrans.c jdapimin.c \
-        jdapistd.c jdarith.c jdatadst.c jdatasrc.c jdcoefct.c jdcolor.c \
-        jddctmgr.c jdhuff.c jdinput.c jdmainct.c jdmarker.c jdmaster.c \
-        jdmerge.c jdpostct.c jdsample.c jdtrans.c jerror.c jfdctflt.c \
-        jfdctfst.c jfdctint.c jidctflt.c jidctfst.c jidctint.c jquant1.c \
-        jquant2.c jutils.c jmemmgr.c 
-else
+ifeq ($(strip $(JPEGDIR)),jpeg-6b)
 LIBSOURCES= jcapimin.c jcapistd.c jccoefct.c jccolor.c jcdctmgr.c jchuff.c \
         jcinit.c jcmainct.c jcmarker.c jcmaster.c jcomapi.c jcparam.c \
         jcphuff.c jcprepct.c jcsample.c jctrans.c jdapimin.c jdapistd.c \
@@ -25,6 +24,15 @@ LIBSOURCES= jcapimin.c jcapistd.c jccoefct.c jccolor.c jcdctmgr.c jchuff.c \
         jdpostct.c jdsample.c jdtrans.c jerror.c jfdctflt.c jfdctfst.c \
         jfdctint.c jidctflt.c jidctfst.c jidctint.c jidctred.c jquant1.c \
         jquant2.c jutils.c jmemmgr.c
+else
+LIBSOURCES= jaricom.c jcapimin.c jcapistd.c jcarith.c jccoefct.c jccolor.c \
+        jcdctmgr.c jchuff.c jcinit.c jcmainct.c jcmarker.c jcmaster.c \
+        jcomapi.c jcparam.c jcprepct.c jcsample.c jctrans.c jdapimin.c \
+        jdapistd.c jdarith.c jdatadst.c jdatasrc.c jdcoefct.c jdcolor.c \
+        jddctmgr.c jdhuff.c jdinput.c jdmainct.c jdmarker.c jdmaster.c \
+        jdmerge.c jdpostct.c jdsample.c jdtrans.c jerror.c jfdctflt.c \
+        jfdctfst.c jfdctint.c jidctflt.c jidctfst.c jidctint.c jquant1.c \
+        jquant2.c jutils.c jmemmgr.c 
 endif
 
 # These objectfiles are included in libjpeg.a

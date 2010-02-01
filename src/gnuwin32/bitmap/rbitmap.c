@@ -65,7 +65,11 @@
 static void my_png_error(png_structp png_ptr, png_const_charp msg)
 {
     R_ShowMessage((char *) msg);
+#if PNG_LIBPNG_VER < 10400
     longjmp(png_ptr->jmpbuf,1);
+#else
+    longjmp(png_jmpbuf(png_ptr),1);
+#endif
 }
 
 static void my_png_warning(png_structp png_ptr, png_const_charp msg)
@@ -115,7 +119,12 @@ int R_SaveAsPng(void  *d, int width, int height,
     /* Set error handling.  REQUIRED if you aren't supplying your own
      * error handling functions in the png_create_write_struct() call.
      */
-    if (setjmp(png_ptr->jmpbuf)) {
+#if PNG_LIBPNG_VER < 10400
+    if (setjmp(png_ptr->jmpbuf))
+#else
+    if (setjmp(png_jmpbuf(png_ptr)))
+#endif
+{    
 	/* If we get here, we had a problem writing the file */
 	free(scanline);
 	png_destroy_write_struct(&png_ptr, &info_ptr);

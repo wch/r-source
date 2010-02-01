@@ -1,6 +1,6 @@
 #-*- Makefile -*-
 ## This file contains tabs: make sure your editor leaves them unchanged.
-## As from R 2.9.0 it is only used when building R itself.
+## As from R 2.9.0 it is only used when building R itself (and not packages)
 
 ## ===== configuration macros for building R  ===============
 
@@ -23,6 +23,8 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 # Support for the ACML and Goto BLASes has been withdrawn: see R-admin.html
 
 # Where does Tcl/Tk live? Spaces allowed.
+# If you alter this you cannot build the installer and will need to set
+# MY_TCLTK to use the package.
 TCL_HOME = $(RHOME)/Tcl
 TCL_VERSION = 85
 
@@ -30,14 +32,15 @@ TCL_VERSION = 85
 # checkout with no modifications).
 # USE_SVNVERSION = YES
 
-# We normally link against DLLs, but this macro forces the use of import libs
-# Needed if using other compilers, including Mingw64
+# We normally link directly against DLLs, 
+# but this macro forces the use of import libs
+# Needed if using other compilers, including _some_ versions of Mingw64
 # USE_IMPLIBS = YES
 
-# Some of the Mingw64 compilers are in fact cross-compilers and have prefixes
+# Some of the 64-bit compilers are in fact cross-compilers and have prefixes
 BINPREF=
 
-# 32- or 64-bit Windows?  For experiments with Mingw64.
+# 32- or 64-bit Windows?  For MinGW-w64.
 WIN=32
 ifeq ($(strip $(WIN)),64)
 USE_IMPLIBS = YES
@@ -58,7 +61,7 @@ ICU_PATH=/sources/icu
 
 ## ====== configuration macros for building installer ===========
 
-# location where Inno Setup 5.[123].x was installed. Spaces allowed.
+# location where Inno Setup 5.3.x was installed. Spaces allowed.
 ISDIR=C:/packages/Inno
 
 ## ====== configuration macros for building MSI installer ===========
@@ -70,14 +73,13 @@ WIXDIR=C:/packages/WiX
 
 ## c99 would force __STRICT_ANSI__ disabling strdup etc, and also alloca
 C99FLAG=-std=gnu99
+## for mingw-runtime <= 3.11
+# C99FLAG=-std=gnu99 -fgnu89-inline
 
 ifeq ($(strip $(BUILD)),GCC4)
 F77=$(BINPREF)gfortran$(GCC4_SUFF)
 FLIBS=-lgfortran
-## for mingw-runtime <= 3.11
-# C99FLAG=-std=gnu99 -fgnu89-inline
-## earlier Rtools needs -sjlj
-## an alternative is -dw2, which currently fails building R.
+## earlier Rtools needs -sjlj; the alternative is -dw2, which fails building R.
 GCC4_SUFF=
 endif
 
