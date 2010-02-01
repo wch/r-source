@@ -5,37 +5,37 @@ R_HOME = ../..
 ## BATCH, INSTALL and REMVOE are handled internally in Rcmd.exe
 
 all: \
- $(R_HOME)/$(BINDIR)/build.pl $(R_HOME)/$(BINDIR)/check.pl $(R_HOME)/$(BINDIR)/config.sh \
- $(R_HOME)/$(BINDIR)/Rdconv.sh $(R_HOME)/$(BINDIR)/Rd2dvi.sh $(R_HOME)/$(BINDIR)/Sd2Rd.pl \
- $(R_HOME)/$(BINDIR)/Rprof.pl $(R_HOME)/$(BINDIR)/SHLIB.sh \
- $(R_HOME)/$(BINDIR)/Stangle.sh $(R_HOME)/$(BINDIR)/Sweave.sh
+ $(R_HOME)/bin/build.pl $(R_HOME)/bin/check.pl $(R_HOME)/bin/config.sh \
+ $(R_HOME)/bin/Rdconv.sh $(R_HOME)/bin/Rd2dvi.sh $(R_HOME)/bin/Sd2Rd.pl \
+ $(R_HOME)/bin/Rprof.pl $(R_HOME)/bin/SHLIB.sh \
+ $(R_HOME)/bin/Stangle.sh $(R_HOME)/bin/Sweave.sh
 
-$(R_HOME)/$(BINDIR)/check.pl: check.in
+$(R_HOME)/bin/check.pl: check.in
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/$(BINDIR)/build.pl: build.in
+$(R_HOME)/bin/build.pl: build.in
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/$(BINDIR)/Sd2Rd.pl: Sd2Rd.in
+$(R_HOME)/bin/Sd2Rd.pl: Sd2Rd.in
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/$(BINDIR)/Rprof.pl: Rprof.in
+$(R_HOME)/bin/Rprof.pl: Rprof.in
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/$(BINDIR)/Rdconv.sh: Rdconv
+$(R_HOME)/bin/Rdconv.sh: Rdconv
 	@cp $< $@
 
-$(R_HOME)/$(BINDIR)/Rd2dvi.sh: Rd2dvi
+$(R_HOME)/bin/Rd2dvi.sh: Rd2dvi
 	@cp $< $@
 
-$(R_HOME)/$(BINDIR)/config.sh: config
+$(R_HOME)/bin/config.sh: config
 	@cp $< $@
 
-$(R_HOME)/$(BINDIR)/SHLIB.sh: SHLIB
+$(R_HOME)/bin/SHLIB.sh: SHLIB
 	@cp $< $@
 
-$(R_HOME)/$(BINDIR)/Stangle.sh: Stangle
+$(R_HOME)/bin/Stangle.sh: Stangle
 	@cp $< $@
 
-$(R_HOME)/$(BINDIR)/Sweave.sh: Sweave
+$(R_HOME)/bin/Sweave.sh: Sweave
 	@cp $< $@
