@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/DLL.version.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{DLL.version}
@@ -8,7 +8,7 @@
 \title{DLL Version Information}
 \description{
   Return the version of the package and the version of \R used to
-  build the DLL, if available (usually only since \R version 1.2.0).
+  build the DLL, if available.
 }
 \usage{
 DLL.version(path)
@@ -20,12 +20,12 @@ DLL.version(path)
 \value{
   If the DLL does not exist, \code{NULL}.
   
-  A character vector of two, giving the DLL version and the version of
+  A character vector of length two, giving the DLL version and the version of
   \R used to build the DLL.  If the information is not available, the
   corresponding string is empty.
 }
 \examples{
-DLL.version(file.path(R.home(), "bin/R.dll"))
-DLL.version(file.path(R.home(), "library/stats/libs/stats.dll"))
+DLL.version(file.path(R.home("bin"), "R.dll"))
+DLL.version(file.path(R.home(), "library/stats/libs", .Platform$r_arch, "stats.dll"))
 }
 \keyword{utilities}
