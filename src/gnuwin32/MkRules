@@ -91,7 +91,7 @@ F77=sh $(RHOME)/src/scripts/f77_f2c
 FLIBS=-lf2c
 endif
 
-## usually bin or bin/$(R_ARCH)
+## usually bin: other values are not yet completely accepted
 BINDIR=bin
 
 ifdef USE_IMPLIBS
