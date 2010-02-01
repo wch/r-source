@@ -23,6 +23,8 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 # Support for the ACML and Goto BLASes has been withdrawn: see R-admin.html
 
 # Where does Tcl/Tk live? Spaces allowed.
+# If you alter this you cannot build the installer and will need to set
+# MY_TCLTK to use the package.
 TCL_HOME = $(RHOME)/Tcl
 TCL_VERSION = 85
 
