@@ -50,8 +50,8 @@ rpois(n, lambda)
   \eqn{p(x)} is computed using Loader's algorithm, see the reference in
   \code{\link{dbinom}}.
 
-  The quantile is right continuous: \code{qpois(q, lambda)} is the smallest
-  integer \eqn{x} such that \eqn{P(X \le x) \ge q}.
+  The quantile is right continuous: \code{qpois(p, lambda)} is the smallest
+  integer \eqn{x} such that \eqn{P(X \le x) \ge p}.
 
   Setting \code{lower.tail = FALSE} allows to get much more precise
   results when the default, \code{lower.tail = TRUE} would return 1, see
