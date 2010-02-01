@@ -1,4 +1,5 @@
 #-*- Makefile -*-
+## may be overridden in MkRules
 JPEGDIR = jpeg-7
 include ../../MkRules
 

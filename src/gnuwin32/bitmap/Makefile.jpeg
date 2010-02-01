@@ -1,3 +1,11 @@
+#-*- Makefile -*-
+
+## comment from Guido's original version in the 1990's
+# jconfig.h and Makefile obtained running 'CC="gcc -mno-cygwin" ./configure'
+# under CYGWIN. They are here since the configure script doesn't run 
+# (I suspect) using the reduced set of tools we distribute.
+## 2006-01-15 checked under current tools.
+
 CC= gcc
 CFLAGS= -O3 -I.
 

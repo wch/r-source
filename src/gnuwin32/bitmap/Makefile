@@ -23,16 +23,13 @@ buildzlib:
 ## Neither the makefile.{mingw,std} build pnggccrd.c but it is needed if
 ## the compiler defines __MMX__ , which the win64 gcc does.
 ## So we need to explicitly disable it.
+## prefix=foo shuts up a warning
 buildpng:
 	$(MAKE) CC='$(CC)' AR='$(AR)' \
 	  CFLAGS="-O3 -I../../../extra/zlib -DPNG_NO_MMX_CODE" \
 	  RANLIB=$(RANLIB) ZLIBLIB=../../../extra/zlib -C $(PNGDIR) \
-	  -f scripts/makefile.mingw libpng.a
+	  -f scripts/makefile.mingw prefix=foo libpng.a
 
-# jconfig.h and Makefile obtained running 'CC="gcc -mno-cygwin" ./configure'
-# under CYGWIN. They are here since the configure script doesn't run 
-# (I suspect) using the reduced set of tools we distribute.
-## 2006-01-15 checked under current tools
 buildjpeg: $(JPEGDIR)/jconfig.h Makefile.jpeg
 	$(MAKE) CC='$(CC)' AR='$(AR) rc' RANLIB=$(RANLIB) JPEGDIR=$(JPEGDIR) -C $(JPEGDIR) \
 	  -f ../Makefile.jpeg libjpeg.a
