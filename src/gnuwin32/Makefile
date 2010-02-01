@@ -126,7 +126,7 @@ COPYRIGHTS: ../../doc/COPYRIGHTS COPYRIGHTS.win
 
 
 fixfiles: docfiles 
-	@$(MKDIR) -p ../../$(BINDIR)
+	@$(MKDIR) -p ../../$(BINDIR) ../../bin
 	@$(MK) -C ./fixed
 
 fixed/fixdesc:

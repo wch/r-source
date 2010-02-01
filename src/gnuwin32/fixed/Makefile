@@ -21,20 +21,21 @@ iconv:
 
 cp2bin: $(wildcard ./bin/*)
 	@zip -q bins $^
-	@unzip -oaqj bins -d  $(R_HOME)/$(BINDIR)
+	@unzip -oaqj bins -d  $(R_HOME)/bin
 	@$(RM) bins.zip
 
 fixhtml:  html/rwin.html
 	$(CP) -p html/rwin.html $(R_HOME)/doc/html/index.html
 	@$(ECHO) done > fixhtml
 
-## FIXME: substitute IMPDIR
+## FIXME: substitute IMPDIR in all cases
 fixetc: $(wildcard ./etc/*)
 	$(CP) -p $^ $(R_HOME)/etc
 ifeq ($(strip $(WIN)),64)
 	$(SED) -e 's/WIN = 32/WIN = 64/' \
 	  -e "s/-O3/-O2/" \
 	  -e "s/BINPREF =/BINPREF = $(BINPREF)/" \
+	  -e "s/IMPDIR = bin/IMPDIR = $(IMPDIR)/" \
 	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
 	  etc/Makeconf > $(R_HOME)/etc/Makeconf
 	$(MKDIR) -p $(R_HOME)/etc/x64

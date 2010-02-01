@@ -361,39 +361,39 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	if (cmdarg > 0 && argc > cmdarg) {
 	    p = argv[cmdarg];
 	    if (strcmp(p, "Rd2dvi") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/%s/Rd2dvi.sh", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "sh %s/bin/Rd2dvi.sh", RHome);
 	    } else if (strcmp(p, "Rdiff") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/%s/Rdiff.sh", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "sh %s/bin/Rdiff.sh", RHome);
 	    } else if (strcmp(p, "Sweave") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/%s/Sweave.sh", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "sh %s/bin/Sweave.sh", RHome);
 	    } else if (strcmp(p, "Stangle") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/%s/Stangle.sh", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "sh %s/bin/Stangle.sh", RHome);
 	    } else if (strcmp(p, "rtags") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/%s/rtags.sh", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "sh %s/bin/rtags.sh", RHome);
 	    } else if (strcmp(p, "config") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/%s/config.sh", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "sh %s/bin/config.sh", RHome);
 	    } else if (strcmp(p, "SHLIB") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/%s/SHLIB.sh", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "sh %s/bin/SHLIB.sh", RHome);
 	    } else if (strcmp(p, "Rdconv") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/%s/Rdconv.sh", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "sh %s/bin/Rdconv.sh", RHome);
 	    } else if (strcmp(p, "Rd2txt") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/%s/Rdconv.sh -t txt", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "sh %s/bin/Rdconv.sh -t txt", RHome);
 	    } else if (strcmp(p, "Rd2pdf") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/%s/Rd2dvi.sh --pdf", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "sh %s/bin/Rd2dvi.sh --pdf", RHome);
 		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2dvi.sh --pdf");
 	    } else if (strcmp(p, "build") == 0) {
-		snprintf(cmd, CMD_LEN, "perl %s/%s/build.pl", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "perl %s/bin/build.pl", RHome);
 	    } else if (strcmp(p, "check") == 0) {
-		snprintf(cmd, CMD_LEN, "perl %s/%s/check.pl", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "perl %s/bin/check.pl", RHome);
 	    } else if (strcmp(p, "Rprof") == 0) {
-		snprintf(cmd, CMD_LEN, "perl %s/%s/Rprof.pl", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "perl %s/bin/Rprof.pl", RHome);
 	    } else if (strcmp(p, "Sd2Rd") == 0) {
-		snprintf(cmd, CMD_LEN, "perl %s/%s/Sd2Rd.pl", RHome, BINDIR);
+		snprintf(cmd, CMD_LEN, "perl %s/bin/Sd2Rd.pl", RHome);
 	    } else if (strcmp(p, "open") == 0) {
 		snprintf(cmd, CMD_LEN, "%s/%s/open.exe", RHome, BINDIR);
 	    } else {
-		/* RHOME/bin is first in the path, so looks there first */
+		/* RHOME/BINDIR is first in the path, so looks there first */
 		if (!strcmp(".sh", p + strlen(p) - 3)) strcpy(cmd, "sh ");
 		else if (!strcmp(".pl", p + strlen(p) - 3)) strcpy(cmd, "perl ");
 		else strcpy(cmd, "");
