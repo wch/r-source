@@ -124,8 +124,8 @@ t.test.formula <-
 function(formula, data, subset, na.action, ...)
 {
     if(missing(formula)
-       || (length(formula) != 3)
-       || (length(attr(terms(formula[-2]), "term.labels")) != 1))
+       || (length(formula) != 3L)
+       || (length(attr(terms(formula[-2L]), "term.labels")) != 1L))
         stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
@@ -137,13 +137,13 @@ function(formula, data, subset, na.action, ...)
     names(mf) <- NULL
     response <- attr(attr(mf, "terms"), "response")
     g <- factor(mf[[-response]])
-    if(nlevels(g) != 2)
+    if(nlevels(g) != 2L)
         stop("grouping factor must have exactly 2 levels")
     DATA <- split(mf[[response]], g)
     names(DATA) <- c("x", "y")
     y <- do.call("t.test", c(DATA, list(...)))
     y$data.name <- DNAME
-    if(length(y$estimate) == 2)
+    if(length(y$estimate) == 2L)
         names(y$estimate) <- paste("mean in group", levels(g))
     y
 }

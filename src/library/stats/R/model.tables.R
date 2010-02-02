@@ -232,7 +232,7 @@ make.tables.aovprojlist <-
 	    if(length(terms) == 1L)
 		data <- projections[[strata.cols[i]]][, terms]/ eff[eff.i]
 	    else {
-		if(length(strata <- unique(strata.cols[terms])) == 1)
+		if(length(strata <- unique(strata.cols[terms])) == 1L)
 		    data <- projections[[strata]][, terms] %*%
 			as.matrix(1/eff[eff.i])
 		else {
@@ -364,7 +364,7 @@ print.tables_aov <- function(x, digits = 4, ...)
 		rownames(table) <- c("", "rep")
 		print(table, digits = digits, ...)
 	    } else {
-		ctable <- array(c(table, n), dim = c(dim(table), 2))
+		ctable <- array(c(table, n), dim = c(dim(table), 2L))
 		dim.t <- dim(ctable)
 		d <- length(dim.t)
 		ctable <- aperm(ctable, c(1, d, 2:(d - 1)))

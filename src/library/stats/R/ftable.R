@@ -19,7 +19,7 @@ ftable <- function(x, ...) UseMethod("ftable")
 ftable.default <- function(..., exclude = c(NA, NaN),
                            row.vars = NULL, col.vars = NULL) {
     args <- list(...)
-    if (length(args) == 0)
+    if (length(args) == 0L)
         stop("nothing to tabulate")
     x <- args[[1L]]
     if(is.list(x))
@@ -83,7 +83,7 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
 {
     if(missing(formula) || !inherits(formula, "formula"))
         stop("'formula' missing or incorrect")
-    if(length(formula) != 3)
+    if(length(formula) != 3L)
         stop("'formula' must have both left and right hand sides")
     ## need to cope with '.' in formula
     tt <- if(is.data.frame(data)) terms(formula, data=data)
@@ -91,8 +91,8 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
     if(any(attr(tt, "order") > 1))
         stop("interactions are not allowed")
     ## here we do NOT want '.' expanded
-    rvars <- attr(terms(formula[-2], allowDotAsName=TRUE), "term.labels")
-    cvars <- attr(terms(formula[-3], allowDotAsName=TRUE), "term.labels")
+    rvars <- attr(terms(formula[-2L], allowDotAsName=TRUE), "term.labels")
+    cvars <- attr(terms(formula[-3L], allowDotAsName=TRUE), "term.labels")
     rhs.has.dot <- any(rvars == ".")
     lhs.has.dot <- any(cvars == ".")
     if(lhs.has.dot && rhs.has.dot)
@@ -101,7 +101,7 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
     edata <- eval(m$data, parent.frame())
     if(inherits(edata, "ftable")
        || inherits(edata, "table")
-       || length(dim(edata)) > 2) {
+       || length(dim(edata)) > 2L) {
         if(inherits(edata, "ftable")) {
             data <- as.table(data)
         }
@@ -256,7 +256,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
     ## so there is exactly one line which does not start with a space
     ## and has n.row.vars fields (and it cannot be the first one).
     j <- i[grep("^[^[:space:]]", lines[i])]
-    if((length(j) == 1) && (j > 1)) {
+    if((length(j) == 1L) && (j > 1)) {
         ## An ftable: we can figure things out ourselves.
         n.col.vars <- j - 1
         col.vars <- vector("list", length = n.col.vars)

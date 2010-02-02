@@ -101,7 +101,7 @@ function (x, n, p.adjust.method = p.adjust.methods, ...)
     OK <- complete.cases(x, n)
     x <- x[OK]
     n <- n[OK]
-    if (length(x) < 2)
+    if (length(x) < 2L)
         stop("too few groups")
     compare.levels <- function(i, j) {
         prop.test(x[c(i,j)], n[c(i,j)], ...)$p.value

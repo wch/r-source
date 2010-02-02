@@ -530,7 +530,7 @@ nls <-
     ## This may fail (e.g. when LHS contains parameters):
     respLength <- length(eval(formula[[2L]], data, env))
 
-    if(length(n) > 0) {
+    if(length(n) > 0L) {
 	varIndex <- n %% respLength == 0
 	if(is.list(data) && diff(range(n[names(n) %in% names(data)])) > 0) {
 	    ## 'data' is a list that can not be coerced to a data.frame
@@ -834,7 +834,7 @@ vcov.nls <- function(object, ...)
 
 anova.nls <- function(object, ...)
 {
-    if(length(list(object, ...)) > 1) return(anovalist.nls(object, ...))
+    if(length(list(object, ...)) > 1L) return(anovalist.nls(object, ...))
     stop("anova is only defined for sequences of \"nls\" objects")
 }
 

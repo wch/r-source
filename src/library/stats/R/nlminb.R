@@ -73,18 +73,18 @@ nlminb <-
 
     ans <- list(par = get(".par", envir = rho))
     ans$objective <- v[10L]
-    ans$convergence <- as.integer(if (iv[1] %in% 3L:6L) 0L else 1L)
+    ans$convergence <- as.integer(if (iv[1L] %in% 3L:6L) 0L else 1L)
 
-    ans$message <- if (19 <= iv[1] && iv[1] <= 43) {
-	if(any(B <- iv[1] == cpos))
+    ans$message <- if (19 <= iv[1L] && iv[1L] <= 43) {
+	if(any(B <- iv[1L] == cpos))
 	    sprintf("'control' component '%s' = %g, is out of range",
-		    names(cpos)[B], v[iv[1]])
+		    names(cpos)[B], v[iv[1L]])
 	else
 	    sprintf("V[IV[1]] = V[%d] = %g is out of range (see PORT docu.)",
-		    iv[1], v[iv[1]])
+		    iv[1L], v[iv[1L]])
     }
     else
-	switch(as.character(iv[1]),
+	switch(as.character(iv[1L]),
                "3" = "X-convergence (3)",
                "4" = "relative convergence (4)",
                "5" = "both X-convergence and relative convergence (5)",
@@ -102,8 +102,8 @@ nlminb <-
                "65" = "gr cannot be computed at initial par (65)")
     if (is.null(ans$message))
         ans$message <-
-            paste("See PORT documentation.  Code (", iv[1], ")", sep = "")
-    ans$iterations <- iv[31]
-    ans$evaluations <- c("function" = iv[6], gradient = iv[30])
+            paste("See PORT documentation.  Code (", iv[1L], ")", sep = "")
+    ans$iterations <- iv[31L]
+    ans$evaluations <- c("function" = iv[6L], gradient = iv[30L])
     ans
 }

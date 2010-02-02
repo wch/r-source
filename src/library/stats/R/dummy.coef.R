@@ -46,9 +46,9 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     for(j in tl) {
 	i <- vars[facs[, j] > 0]
 	ifac <- i[nxl[i] > 1]
-	if(length(ifac) == 0) {		# quantitative factor
+	if(length(ifac) == 0L) {        # quantitative factor
 	    rnn[pos+1] <- j
-	} else if(length(ifac) == 1) {	# main effect
+	} else if(length(ifac) == 1L) {	# main effect
 	    dummy[ pos+1L:lterms[j], ifac ] <- xl[[ifac]]
 	    rnn[ pos+1L:lterms[j] ] <- as.character(xl[[ifac]])
 	} else {			# interaction
@@ -116,9 +116,9 @@ dummy.coef.aovlist <- function(object, use.na = FALSE, ...)
     for(j in tl) {
 	i <- vars[facs[, j] > 0]
 	ifac <- i[nxl[i] > 1]
-	if(length(ifac) == 0) {		# quantitative factor
+	if(length(ifac) == 0L) {        # quantitative factor
 	    rnn[pos + 1] <- j
-	} else if(length(ifac) == 1) {	# main effect
+	} else if(length(ifac) == 1L) {	# main effect
 	    dummy[ pos+1L:lterms[j], ifac ] <- xl[[ifac]]
 	    rnn[ pos+1L:lterms[j] ] <- as.character(xl[[ifac]])
 	} else {			# interaction

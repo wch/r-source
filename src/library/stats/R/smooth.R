@@ -74,7 +74,7 @@ print.tukeysmooth <- function(x, ...) {
     if(attr(x,"twiced"))		cat(" __twiced__ ")
     if(!is.null(it <- attr(x,"iter")))		cat(" used", it, "iterations\n")
     if(!is.null(ch <- attr(x,"changed")))	cat(if(!ch)"NOT", "changed\n")
-    if(length(oldClass(x)) > 1)
+    if(length(oldClass(x)) > 1L)
 	NextMethod()
     else {
 	y <- x
@@ -90,7 +90,7 @@ summary.tukeysmooth <- function(object, ...) {
     if(attr(object,"twiced"))		cat(" __twiced__ ")
     if(!is.null(it <- attr(object,"iter")))	cat(" used", it, "iterations\n")
     if(!is.null(ch <- attr(object,"changed")))	cat(if(!ch)" NOT", "changed\n")
-    if(length(oldClass(object)) > 1)
+    if(length(oldClass(object)) > 1L)
 	NextMethod()
     else {
 	y <- object

@@ -22,10 +22,10 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
          conf.int = FALSE, conf.level = 0.95, ...)
 {
     alternative <- match.arg(alternative)
-    if(!missing(mu) && ((length(mu) > 1) || !is.finite(mu)))
+    if(!missing(mu) && ((length(mu) > 1L) || !is.finite(mu)))
         stop("'mu' must be a single number")
     if(conf.int) {
-        if(!((length(conf.level) == 1)
+        if(!((length(conf.level) == 1L)
              && is.finite(conf.level)
              && (conf.level > 0)
              && (conf.level < 1)))
@@ -55,7 +55,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         x <- x[is.finite(x)]
     }
 
-    if(length(x) < 1)
+    if(length(x) < 1L)
         stop("not enough (finite) 'x' observations")
     CORRECTION <- 0
     if(is.null(y)) {
@@ -241,7 +241,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 	}
     }
     else { ##-------------------------- 2-sample case ---------------------------
-        if(length(y) < 1)
+        if(length(y) < 1L)
             stop("not enough 'y' observations")
         METHOD <- "Wilcoxon rank sum test"
         r <- rank(c(x - mu, y))
@@ -408,8 +408,8 @@ wilcox.test.formula <-
 function(formula, data, subset, na.action, ...)
 {
     if(missing(formula)
-       || (length(formula) != 3)
-       || (length(attr(terms(formula[-2]), "term.labels")) != 1))
+       || (length(formula) != 3L)
+       || (length(attr(terms(formula[-2L]), "term.labels")) != 1L))
         stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
@@ -421,7 +421,7 @@ function(formula, data, subset, na.action, ...)
     names(mf) <- NULL
     response <- attr(attr(mf, "terms"), "response")
     g <- factor(mf[[-response]])
-    if(nlevels(g) != 2)
+    if(nlevels(g) != 2L)
         stop("grouping factor must have exactly 2 levels")
     DATA <- split(mf[[response]], g)
     names(DATA) <- c("x", "y")

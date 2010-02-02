@@ -49,7 +49,7 @@ selfStart.formula <-
         }
         template <- function() {}
         argNams <- c( nm[ is.na( match(nm, parameters) ) ], parameters )
-        args <- rep( alist( a = , b = 3 )[-2], length( argNams ) )
+        args <- rep( alist( a = , b = 3 )[-2L], length( argNams ) )
         names(args) <- argNams
         formals(template) <- args
     }
@@ -129,11 +129,11 @@ sortedXyData.default <-
     ## works for x and y either numeric or language elements
     ## that can be evaluated in data
     #data <- as.data.frame(data)
-    if (is.language(x) || ((length(x) == 1) && is.character(x))) {
+    if (is.language(x) || ((length(x) == 1L) && is.character(x))) {
         x <- eval(asOneSidedFormula(x)[[2L]], data)
     }
     x <- as.numeric(x)
-    if (is.language(y) || ((length(y) == 1) && is.character(y))) {
+    if (is.language(y) || ((length(y) == 1L) && is.character(y))) {
         y <- eval(asOneSidedFormula(y)[[2L]], data)
     }
     y <- as.numeric(y)

@@ -33,7 +33,7 @@ contr.poly <- function (n, scores = 1:n, contrasts = TRUE, sparse = FALSE)
 	Z
     }
 
-    if (is.numeric(n) && length(n) == 1) levs <- seq_len(n)
+    if (is.numeric(n) && length(n) == 1L) levs <- seq_len(n)
     else {
 	levs <- n
 	n <- length(levs)
@@ -65,7 +65,7 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE)
 {
     dots <- list(...)
     if(nd <- length(dots)) {
-        if(nd == 1 && length(dots[[1L]]) == 1) # unnamed degree
+        if(nd == 1 && length(dots[[1L]]) == 1L) # unnamed degree
             degree <- dots[[1L]]
         else return(polym(x, ..., degree = degree, raw = raw))
     }

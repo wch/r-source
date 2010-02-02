@@ -40,7 +40,7 @@ cutree <- function(tree, k=NULL, h=NULL)
 
     ans <- .Call("R_cutree", tree$merge, k, PACKAGE = "stats")
 
-    if(length(k) == 1) {
+    if(length(k) == 1L) {
         ans <- as.vector(ans)
         names(ans) <- tree$labels
     }

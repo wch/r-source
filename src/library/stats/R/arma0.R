@@ -63,13 +63,13 @@ arima0 <- function(x, order = c(0, 0, 0),
     n <- length(x)
 
     if(!missing(order))
-        if(!is.numeric(order) || length(order) != 3 || any(order < 0))
+        if(!is.numeric(order) || length(order) != 3L || any(order < 0))
             stop("'order' must be a non-negative numeric vector of length 3")
     if(!missing(seasonal))
         if(is.list(seasonal)) {
             if(is.null(seasonal$order))
                 stop("'seasonal' must be a list with component 'order'")
-            if(!is.numeric(seasonal$order) || length(seasonal$order) != 3
+            if(!is.numeric(seasonal$order) || length(seasonal$order) != 3L
                || any(seasonal$order < 0))
                 stop("'seasonal$order' must be a non-negative numeric vector of length 3")
         } else if(is.numeric(order)) {
@@ -79,7 +79,7 @@ arima0 <- function(x, order = c(0, 0, 0),
 
     if(is.null(seasonal$period) || is.na(seasonal$period)
        || seasonal$period == 0) seasonal$period <- frequency(x)
-    arma <- c(order[-2], seasonal$order[-2], seasonal$period,
+    arma <- c(order[-2L], seasonal$order[-2L], seasonal$period,
               order[2L], seasonal$order[2L])
     narma <- sum(arma[1L:4L])
     if(d <- order[2L]) x <- diff(x, 1, d)
@@ -307,7 +307,7 @@ predict.arima0 <-
     on.exit(.Call(R_free_starma, G))
     .Call(R_Starma_method, G, TRUE)
     .Call(R_arma0fa, G, as.double(coefs))
-    z <- .Call(R_arma0_kfore, G, arma[6], arma[7], n.ahead)
+    z <- .Call(R_arma0_kfore, G, arma[6L], arma[7L], n.ahead)
     pred <- ts(z[[1L]] + xm, start = xtsp[2L] + deltat(data),
                frequency = xtsp[3L])
     if(se.fit) {

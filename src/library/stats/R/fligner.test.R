@@ -22,7 +22,7 @@ function(x, g, ...)
     ## FIXME: This is the same code as in kruskal.test(), and could also
     ## rewrite bartlett.test() accordingly ...
     if (is.list(x)) {
-        if (length(x) < 2)
+        if (length(x) < 2L)
             stop("'x' must be a list with at least 2 elements")
         DNAME <- deparse(substitute(x))
         x <- lapply(x, function(u) u <- u[complete.cases(u)])
@@ -77,7 +77,7 @@ function(x, g, ...)
 fligner.test.formula <-
 function(formula, data, subset, na.action, ...)
 {
-    if(missing(formula) || (length(formula) != 3))
+    if(missing(formula) || (length(formula) != 3L))
         stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))

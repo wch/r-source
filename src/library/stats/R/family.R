@@ -142,7 +142,7 @@ poisson <- function (link = "log")
 	if (linktemp == "link") {
             warning("use of poisson(link=link) is deprecated\n", domain = NA)
 	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1)
+            if(!is.character(linktemp) || length(linktemp) != 1L)
                 stop("'link' is invalid", domain=NA)
         }
     }
@@ -209,7 +209,7 @@ quasipoisson <- function (link = "log")
             warning("use of quasipoisson(link=link) is deprecated\n",
                     domain = NA)
 	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1)
+            if(!is.character(linktemp) || length(linktemp) != 1L)
                 stop("'link' is invalid", domain=NA)
         }
     }
@@ -266,7 +266,7 @@ gaussian <- function (link = "identity")
 	if (linktemp == "link") {
             warning("use of gaussian(link=link) is deprecated\n", domain = NA)
 	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1)
+            if(!is.character(linktemp) || length(linktemp) != 1L)
                 stop("'link' is invalid", domain=NA)
         }
     }
@@ -323,7 +323,7 @@ binomial <- function (link = "logit")
 	if (linktemp == "link") {
             warning("use of binomial(link=link) is deprecated\n", domain = NA)
 	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1)
+            if(!is.character(linktemp) || length(linktemp) != 1L)
                 stop("'link' is invalid", domain=NA)
         }
     }
@@ -433,7 +433,7 @@ quasibinomial <- function (link = "logit")
 	if (linktemp == "link") {
             warning("use of quasibinomial(link=link) is deprecated\n", domain = NA)
 	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1)
+            if(!is.character(linktemp) || length(linktemp) != 1L)
                 stop("'link' is invalid", domain=NA)
         }
     }
@@ -502,7 +502,7 @@ Gamma <- function (link = "inverse")
 	if (linktemp == "link") {
             warning("use of Gamma(link=link) is deprecated\n", domain = NA)
 	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1)
+            if(!is.character(linktemp) || length(linktemp) != 1L)
                 stop("'link' is invalid", domain=NA)
         }
     }
@@ -569,7 +569,7 @@ inverse.gaussian <- function(link = "1/mu^2")
             warning("use of inverse.gaussian(link=link) is deprecated\n",
                     domain = NA)
 	    linktemp <- eval(link)
-            if(!is.character(linktemp) || length(linktemp) != 1)
+            if(!is.character(linktemp) || length(linktemp) != 1L)
                 stop("'link' is invalid", domain=NA)
         }
     }

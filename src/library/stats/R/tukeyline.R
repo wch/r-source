@@ -28,7 +28,7 @@ line <- function(x, y=NULL)
 	    n,
 	    double(2),
 	    DUP=FALSE, PACKAGE="stats")
-    value <- list(call=sys.call(), coefficients = z[[6]],
+    value <- list(call=sys.call(), coefficients = z[[6L]],
                   residuals = z[[3L]], fitted.values = z[[4L]])
     class(value) <- "tukeyline"
     value

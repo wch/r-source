@@ -21,10 +21,10 @@ function(x, y = NULL, z = NULL,
 {
     DNAME <- deparse(substitute(x))
     if(is.array(x)) {
-        if(length(dim(x)) == 3) {
+        if(length(dim(x)) == 3L) {
             if(any(is.na(x)))
                 stop("NAs are not allowed")
-            if(any(dim(x) < 2))
+            if(any(dim(x) < 2L))
                 stop("each dimension in table must be >= 2")
         }
         else
@@ -42,7 +42,7 @@ function(x, y = NULL, z = NULL,
         OK <- complete.cases(x, y, z)
         x <- factor(x[OK])
         y <- factor(y[OK])
-        if((nlevels(x) < 2) || (nlevels(y) < 2))
+        if((nlevels(x) < 2L) || (nlevels(y) < 2L))
             stop("'x' and 'y' must have at least 2 levels")
         else
             x <- table(x, y, z[OK])

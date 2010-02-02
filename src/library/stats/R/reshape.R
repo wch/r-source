@@ -70,7 +70,7 @@ reshape <-
                                          idvar = idvar,timevar = timevar)
 
         ## multiple id variables
-        if (length(idvar)>1){
+        if (length(idvar) > 1L){
                repeat({
                    tempidname<-basename(tempfile("tempID"))
                    if (!(tempidname %in% names(data))) break
@@ -97,7 +97,7 @@ reshape <-
 
         rval <- d
 
-        if (length(times) == 1) {
+        if (length(times) == 1L) {
             if (drop.idvar)
                 rval[,idvar]<-NULL
             return(rval)
@@ -139,7 +139,7 @@ reshape <-
         undoInfo <- list(v.names = v.names,  timevar = timevar,idvar = idvar)
 
         orig.idvar<-idvar
-        if (length(idvar)>1){
+        if (length(idvar) > 1L){
             repeat({
                 tempidname<-basename(tempfile("tempID"))
                 if (!(tempidname %in% names(data))) break
@@ -176,7 +176,7 @@ reshape <-
                 really.constant <-
                     unlist(lapply(rval,
                                   function(a) all(tapply(a, as.vector(tmp),
-                                                         function(b) length(unique(b)) == 1))))
+                                                         function(b) length(unique(b)) == 1L))))
                 if (!all(really.constant))
                     warning(gettextf("some constant variables (%s) are really varying",
                                      paste(names(rval)[!really.constant],collapse = ",")), domain = NA)
@@ -209,7 +209,7 @@ reshape <-
 
     if (missing(direction)){
         undo <- c("wide","long")[c("reshapeLong","reshapeWide")%in% names(attributes(data))]
-        if (length(undo)==1) direction<-undo
+        if (length(undo)==1L) direction<-undo
     }
     direction <- match.arg(direction, c("wide", "long"))
 

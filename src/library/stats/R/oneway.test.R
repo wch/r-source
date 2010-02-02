@@ -17,10 +17,10 @@
 oneway.test <-
 function(formula, data, subset, na.action, var.equal = FALSE)
 {
-    if(missing(formula) || (length(formula) != 3))
+    if(missing(formula) || (length(formula) != 3L))
         stop("'formula' missing or incorrect")
     dp <- as.character(formula)
-    if(length(dp) != 3)
+    if(length(dp) != 3L)
         stop("a two-sided formula is required")
     DNAME <- paste(dp[[2L]], "and", dp[[3L]])
     m <- match.call(expand.dots = FALSE)
@@ -31,12 +31,12 @@ function(formula, data, subset, na.action, var.equal = FALSE)
     mf <- eval(m, parent.frame())
     response <- attr(attr(mf, "terms"), "response")
     y <- mf[[response]]
-    if(length(mf[-response]) > 1)
+    if(length(mf[-response]) > 1L)
         g <- factor(do.call("interaction", mf[-response]))
     else
         g <- factor(mf[[-response]])
     k <- nlevels(g)
-    if(k < 2)
+    if(k < 2L)
         stop("not enough groups")
     n.i <- tapply(y, g, length)
     if(any(n.i < 2))

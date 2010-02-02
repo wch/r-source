@@ -35,7 +35,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	OK <- complete.cases(x, y)
 	x <- factor(x[OK])
 	y <- factor(y[OK])
-	if ((nlevels(x) < 2) || (nlevels(y) < 2))
+	if ((nlevels(x) < 2L) || (nlevels(y) < 2L))
 	    stop("'x' and 'y' must have at least 2 levels")
 	## Could also call table() with 'deparse.level = 2', but we need
 	## to deparse ourselves for DNAME anyway ...
@@ -103,7 +103,7 @@ chisq.test <- function(x, y = NULL, correct = TRUE,
 	}
     }
     else {
-	if (length(x) == 1)
+	if (length(x) == 1L)
 	    stop("'x' must at least have 2 elements")
 	if (length(x) != length(p))
 	    stop("'x' and 'p' must have the same number of elements")

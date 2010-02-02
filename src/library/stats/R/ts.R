@@ -244,7 +244,7 @@ diff.ts <- function (x, lag = 1, differences = 1, ...)
 {
     if (lag < 1 | differences < 1)
         stop("bad value for 'lag' or 'differences'")
-    if (lag * differences >= NROW(x)) return(x[0])
+    if (lag * differences >= NROW(x)) return(x[0L])
     ## <FIXME>
     ## lag() and its default method are defined in package ts, so we
     ## need to provide our own implementation.

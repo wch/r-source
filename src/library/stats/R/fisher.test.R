@@ -25,7 +25,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
     if(is.data.frame(x))
         x <- as.matrix(x)
     if(is.matrix(x)) {
-        if(any(dim(x) < 2))
+        if(any(dim(x) < 2L))
             stop("'x' must have at least 2 rows and columns")
         if(!is.numeric(x) || any(x < 0) || any(is.na(x)))
             stop("all entries of 'x' must be nonnegative and finite")
@@ -48,7 +48,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
         OK <- complete.cases(x, y)
         x <- factor(x[OK])
         y <- factor(y[OK])
-        if((nlevels(x) < 2) || (nlevels(y) < 2))
+        if((nlevels(x) < 2L) || (nlevels(y) < 2L))
             stop("'x' and 'y' must have at least 2 levels")
         x <- table(x, y)
     }
@@ -64,12 +64,12 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
     if((nr == 2) && (nc == 2)) {
         alternative <- char.expand(alternative,
                                    c("two.sided", "less", "greater"))
-        if(length(alternative) > 1 || is.na(alternative))
+        if(length(alternative) > 1L || is.na(alternative))
             stop("alternative must be \"two.sided\", \"less\" or \"greater\"")
-        if(!((length(conf.level) == 1) && is.finite(conf.level) &&
+        if(!((length(conf.level) == 1L) && is.finite(conf.level) &&
              (conf.level > 0) && (conf.level < 1)))
             stop("'conf.level' must be a single number between 0 and 1")
-        if(!missing(or) && (length(or) > 1 || is.na(or) || or < 0))
+        if(!missing(or) && (length(or) > 1L || is.na(or) || or < 0))
             stop("'or' must be a single number between 0 and Inf")
     }
 

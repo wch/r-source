@@ -51,7 +51,7 @@ uniroot <- function(f, interval, ...,
                     f.lower = f(lower, ...), f.upper = f(upper, ...),
 		    tol = .Machine$double.eps^0.25, maxiter = 1000)
 {
-    if(!missing(interval) && length(interval) != 2)
+    if(!missing(interval) && length(interval) != 2L)
         stop("'interval' must be a vector of length 2")
     if(!is.numeric(lower) || !is.numeric(upper) || lower >= upper)
         stop("lower < upper  is not fulfilled")

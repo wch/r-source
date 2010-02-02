@@ -100,7 +100,7 @@ function(formula, data, subset, na.action, ...)
     names(mf) <- NULL
     response <- attr(attr(mf, "terms"), "response")
     g <- factor(mf[[-response]])
-    if(nlevels(g) != 2)
+    if(nlevels(g) != 2L)
         stop("grouping factor must have exactly 2 levels")
     DATA <- split(mf[[response]], g)
     names(DATA) <- c("x", "y")

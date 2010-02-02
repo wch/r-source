@@ -35,7 +35,7 @@ function(formula, data, weights, subset,
     X <- model.matrix(Terms, m, contrasts)
     Y <- model.response(m)
     w <- model.weights(m)
-    if(length(w) == 0) w <- rep(1, nrow(X))
+    if(length(w) == 0L) w <- rep(1, nrow(X))
     fit <- ppr.default(X, Y, w, ...)
     fit$na.action <- attr(m, "na.action")
     fit$terms <- Terms
@@ -165,7 +165,7 @@ plot.ppr <- function(x, ask, type="o", ...)
 	## cols for each term
 	p <- obj$p; q <- obj$q
 	sm <- obj$smod
-	n <- sm[4L]; mu <- sm[5]; m <- sm[1L]
+	n <- sm[4L]; mu <- sm[5L]; m <- sm[1L]
 	jf <- q+6+m*(p+q)
 	jt <- jf+m*n
 	f <- matrix(sm[jf+1L:(mu*n)],n, mu)

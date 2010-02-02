@@ -36,7 +36,7 @@ print.htest <- function(x, digits = 4, quote = TRUE, prefix = "", ...)
     if(!is.null(x$alternative)) {
 	cat("alternative hypothesis: ")
 	if(!is.null(x$null.value)) {
-	    if(length(x$null.value) == 1) {
+	    if(length(x$null.value) == 1L) {
 		alt.char <-
 		    switch(x$alternative,
 			   two.sided = "not equal to",

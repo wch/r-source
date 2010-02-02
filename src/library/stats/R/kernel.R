@@ -88,7 +88,7 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
     } else {
         if (!is.vector(coef))
             stop ("'coef' must be a vector")
-        if ((length(coef) != m+1) | (length(coef) <= 0))
+        if ((length(coef) != m+1) | (length(coef) <= 0L))
             stop ("'coef' does not have the correct length")
         kernel <- list (coef=coef, m=m)
         attr(kernel, "name") <- name

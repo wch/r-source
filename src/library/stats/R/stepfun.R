@@ -122,7 +122,7 @@ plot.stepfun <-
     if (missing(xlim)) {
         rx <- range(xval)
         dr <-
-            if(length(xval) > 1)
+            if(length(xval) > 1L)
                 max(0.08 * diff(rx), median(diff(xval)))
             else
                 abs(xval)/16

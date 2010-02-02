@@ -17,7 +17,7 @@
 predict.princomp <- function(object, newdata, ...)
 {
     if (missing(newdata)) return(object$scores)
-    if(length(dim(newdata)) != 2)
+    if(length(dim(newdata)) != 2L)
         stop("'newdata' must be a matrix or data frame")
     p <- NCOL(object$loadings)
     nm <- rownames(object$loadings)

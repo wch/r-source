@@ -190,7 +190,7 @@ function (x, which = c(1L:3L,5L), ## was which = 1L:4L,
         do.plot <- TRUE
         if(isConst.hat) { ## leverages are all the same
 	    if(missing(caption)) # set different default
-		caption[[5]] <- "Constant Leverage:\n Residuals vs Factor Levels"
+		caption[[5L]] <- "Constant Leverage:\n Residuals vs Factor Levels"
             ## plot against factor-level combinations instead
             aterms <- attributes(terms(x))
             ## classes w/o response

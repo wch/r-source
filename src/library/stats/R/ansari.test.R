@@ -33,10 +33,10 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
     x <- x[complete.cases(x)]
     y <- y[complete.cases(y)]
     m <- length(x)
-    if(m < 1)
+    if(m < 1L)
         stop("not enough 'x' observations")
     n <- length(y)
-    if(n < 1)
+    if(n < 1L)
         stop("not enough 'y' observations")
     N <- m + n
 
@@ -45,7 +45,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
     TIES <- (length(r) != length(unique(r)))
 
     if(is.null(exact))
-        exact <- ((m < 50) && (n < 50))
+        exact <- ((m < 50L) && (n < 50L))
 
     if(exact && !TIES) {
         pansari <- function(q, m, n) {
@@ -82,7 +82,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 rab <- rank(c(x/sig, y))
                 sum(pmin(rab, N - rab + 1)[seq_along(x)])
             }
-            ratio <- outer(x,y,"/")
+            ratio <- outer(x, y, "/")
             aratio <- ratio[ratio >= 0]
             sigma <- sort(aratio)
 
@@ -182,7 +182,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             alpha <- 1 - conf.level
             ab2 <- function(sig, zq) {
                 r <- rank(c(x / sig, y))
-                s <- sum(pmin(r, N -r + 1)[seq_along(x)])
+                s <- sum(pmin(r, N - r + 1)[seq_along(x)])
                 TIES <- (length(r) != length(unique(r)))
                 normalize(s, r, TIES, length(x), length(y)) - zq
             }
@@ -277,7 +277,7 @@ function(formula, data, subset, na.action, ...)
     names(mf) <- NULL
     response <- attr(attr(mf, "terms"), "response")
     g <- factor(mf[[-response]])
-    if(nlevels(g) != 2)
+    if(nlevels(g) != 2L)
         stop("grouping factor must have exactly 2 levels")
     DATA <- split(mf[[response]], g)
     names(DATA) <- c("x", "y")

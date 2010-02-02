@@ -17,7 +17,7 @@
 rect.hclust <- function(tree, k=NULL, which=NULL,
                         x=NULL, h=NULL, border=2, cluster=NULL)
 {
-    if(length(h)>1 | length(k)>1)
+    if(length(h) > 1L | length(k) > 1L)
         stop("'k' and 'h' must be a scalar")
 
     if(!is.null(h)){

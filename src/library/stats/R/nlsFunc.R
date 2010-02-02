@@ -35,7 +35,7 @@ asOneSidedFormula <-
         object <- eval(object)
     }
     if (inherits(object, "formula")) {
-        if (length(object) != 2) {
+        if (length(object) != 2L) {
             stop(gettextf("formula '%s' must be of the form '~expr'",
                           deparse(as.vector(object))), domain = NA)
         }

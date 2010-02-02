@@ -168,7 +168,7 @@ smooth.spline <-
 	} else weighted.mean((y - fit$ty[ox])^2, w)/
 	    (1 - (df.offset + penalty * df)/n)^2
     pen.crit <- sum(wbar * (ybar - fit$ty)^2)
-    fit.object <- list(knot = knot, nk = nk, min = ux[1], range = r.ux,
+    fit.object <- list(knot = knot, nk = nk, min = ux[1L], range = r.ux,
 		       coef = fit$coef)
     class(fit.object) <- "smooth.spline.fit"
     ## parms :  c(low = , high = , tol = , eps = )
@@ -275,7 +275,7 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 		y[extrap.left] <- end.object[1L] +
 		    end.slopes[1L] * (xs[extrap.left] - 0)
 	    if(any(extrap.right))
-		y[extrap.right] <- end.object[2] +
+		y[extrap.right] <- end.object[2L] +
 		    end.slopes[2L] * (xs[extrap.right] - 1)
 	} else if(deriv == 1) {
 	    end.slopes <- Recall(object, xrange, 1)$y * object$range

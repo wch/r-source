@@ -6,7 +6,7 @@ poisson.test <- function(x, T = 1, r = 1, alternative =
     DNAME <- deparse(substitute(x))
     DNAME <- paste(DNAME, "time base:", deparse(substitute(T)))
     if ((l <- length(x)) != length(T))
-        if (length(T) == 1)
+        if (length(T) == 1L)
             T <- rep(T, l)
         else
             stop("'x' and 'T' have incompatible length")
@@ -20,10 +20,10 @@ poisson.test <- function(x, T = 1, r = 1, alternative =
         stop("'T' must be nonnegative")
 
 
-    if ((k <- length(x)) < 1)
+    if ((k <- length(x)) < 1L)
         stop("not enough data")
 
-    if (k > 2)
+    if (k > 2L)
         stop("The case k > 2 is unimplemented")
 
     if(!missing(r) && (length(r) > 1 || is.na(r) || r < 0 ))
@@ -33,18 +33,18 @@ poisson.test <- function(x, T = 1, r = 1, alternative =
 
     if (k == 2) {
 
-        RVAL <- binom.test(x, sum(x), r * T[1]/(r * T[1] + T[2]),
+        RVAL <- binom.test(x, sum(x), r * T[1L]/(r * T[1L] + T[2L]),
                            alternative=alternative)
 
         RVAL$data.name <- DNAME
-        RVAL$statistic <- x[1]
-        RVAL$parameter <- sum(x) * r * T[1]/sum(T * c(1, r))
+        RVAL$statistic <- x[1L]
+        RVAL$parameter <- sum(x) * r * T[1L]/sum(T * c(1, r))
         names(RVAL$statistic) <- c("count1")
         names(RVAL$parameter) <- c("expected count1")
-        RVAL$estimate <- (x[1]/T[1])/(x[2]/T[2])
+        RVAL$estimate <- (x[1L]/T[1L])/(x[2L]/T[2L])
         names(RVAL$estimate) <- "rate ratio"
         pp <- RVAL$conf.int
-        RVAL$conf.int <- pp/(1 - pp)*T[2]/T[1]
+        RVAL$conf.int <- pp/(1 - pp)*T[2L]/T[1L]
         names(r) <- "rate ratio"
         RVAL$null.value <- r
 

@@ -63,13 +63,13 @@ termplot <- function(model, data = NULL,envir = environment(formula(model)),
     main <- rep(main, length.out = n.tms) # recycling
     pf <- envir
     carrier <- function(term) { # used for non-factor ones
-	if (length(term) > 1)
+	if (length(term) > 1L)
 	    carrier(term[[2L]])
 	else
 	    eval(term, data, enclos = pf)
     }
     carrier.name <- function(term){
-      	if (length(term) > 1)
+      	if (length(term) > 1L)
 	    carrier.name(term[[2L]])
 	else
 	    as.character(term)

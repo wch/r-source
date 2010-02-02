@@ -32,9 +32,9 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
     if (is.matrix(eval(m$data, parent.frame())))
 	m$data <- as.data.frame(data)
     m$... <- m$exclude <- m$drop.unused.levels <- m$sparse <- NULL
-    m[[1]] <- as.name("model.frame")
+    m[[1L]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
-    if(length(formula) == 2) {
+    if(length(formula) == 2L) {
 	by <- mf
 	y <- NULL
     }
@@ -51,13 +51,13 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 	x <-
 	    if(is.null(y))
 		do.call("table", by)
-	    else if(NCOL(y) == 1)
+	    else if(NCOL(y) == 1L)
 		tapply(y, by, sum)
 	    else {
 		z <- lapply(as.data.frame(y), tapply, by, sum)
 		array(unlist(z),
-		      dim = c(dim(z[[1]]), length(z)),
-		      dimnames = c(dimnames(z[[1]]), list(names(z))))
+		      dim = c(dim(z[[1L]]), length(z)),
+		      dimnames = c(dimnames(z[[1L]]), list(names(z))))
 	    }
 	x[is.na(x)] <- 0
 	class(x) <- c("xtabs", "table")
@@ -65,13 +65,13 @@ xtabs <- function(formula = ~., data = parent.frame(), subset, sparse = FALSE,
 	x
 
     } else { ## sparse
-	if (length(by) != 2)
+	if (length(by) != 2L)
 	    stop("xtabs(*, sparse=TRUE) applies only to two-way tables")
         ## loadNamespace(.) is very quick, once it *is* loaded:
 	if(is.null(tryCatch(loadNamespace("Matrix"), error= function(e)NULL)))
             stop("xtabs(*, sparse=TRUE) needs package \"Matrix\" correctly installed")
-	rows <- by[[1]]
-	cols <- by[[2]]
+	rows <- by[[1L]]
+	cols <- by[[2L]]
 	rl <- levels(rows)
 	cl <- levels(cols)
 	if (is.null(y))

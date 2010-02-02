@@ -78,10 +78,10 @@ profiler.nls <- function(fitted, ...)
                  getProfile = function(...)
              {
                  args <- list(...)
-                 if(length(args) == 0) {
+                 if(length(args) == 0L) {
                      vary <- defaultVary
                      startPars <- defaultPars
-                 } else if(length(args) == 2 && is.logical(args[[1L]])) {
+                 } else if(length(args) == 2L && is.logical(args[[1L]])) {
                      vary <- args[[1L]]
                      params <- unlist(args[[2L]])
                      startPars <- defaultPars

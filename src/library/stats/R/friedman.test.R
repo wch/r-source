@@ -74,11 +74,11 @@ function(formula, data, subset, na.action, ...)
     ## <FIXME>
     ## Maybe put this into an internal rewriteTwoWayFormula() when
     ## adding support for strata()
-    if((length(formula) != 3)
-       || (length(formula[[3L]]) != 3)
+    if((length(formula) != 3L)
+       || (length(formula[[3L]]) != 3L)
        || (formula[[3L]][[1L]] != as.name("|"))
-       || (length(formula[[3L]][[2L]]) != 1)
-       || (length(formula[[3L]][[3L]]) != 1))
+       || (length(formula[[3L]][[2L]]) != 1L)
+       || (length(formula[[3L]][[3L]]) != 1L))
         stop("incorrect specification for 'formula'")
     formula[[3L]][[1L]] <- as.name("+")
     ## </FIXME>

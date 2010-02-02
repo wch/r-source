@@ -67,7 +67,7 @@ function(formula, data, subset, na.action, ...)
 {
     if(missing(formula)
        || (length(formula) != 3L)
-       || (length(attr(terms(formula[-2]), "term.labels")) != 1L))
+       || (length(attr(terms(formula[-2L]), "term.labels")) != 1L))
         stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))

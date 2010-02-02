@@ -660,7 +660,7 @@ step <- function(object, scope, scale = 0,
 
     cut.string <- function(string)
     {
-	if(length(string) > 1)
+	if(length(string) > 1L)
 	    string[-1L] <- paste("\n", string[-1L], sep = "")
 	string
     }

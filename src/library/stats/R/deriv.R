@@ -21,7 +21,7 @@ deriv <- function(expr, ...) UseMethod("deriv")
 deriv.formula <- function(expr, namevec, function.arg=NULL, tag=".expr",
                           hessian = FALSE, ...)
 {
-    if((le <- length(expr)) > 1)
+    if((le <- length(expr)) > 1L)
 	.Internal(deriv.default(expr[[le]], namevec, function.arg, tag, hessian))
     else stop("invalid formula in deriv")
 }
@@ -35,7 +35,7 @@ deriv3 <- function(expr, ...) UseMethod("deriv3")
 deriv3.formula <- function(expr, namevec, function.arg=NULL, tag=".expr",
                           hessian = TRUE, ...)
 {
-    if((le <- length(expr)) > 1)
+    if((le <- length(expr)) > 1L)
 	.Internal(deriv.default(expr[[le]], namevec, function.arg, tag, hessian))
     else stop("invalid formula in deriv")
 }

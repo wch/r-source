@@ -36,9 +36,9 @@ na.omit.default <- function(object, ...)
     ## only handle vectors and matrices
     if (!is.atomic(object)) return(object)
     d <- dim(object)
-    if (length(d) > 2) return(object)
+    if (length(d) > 2L) return(object)
     omit <- seq_along(object)[is.na(object)]
-    if (length(omit) == 0) return(object)
+    if (length(omit) == 0L) return(object)
     if (length(d)){
         omit <- unique(((omit-1) %% d[1L]) + 1L)
         nm <- rownames(object)
@@ -67,7 +67,7 @@ na.omit.data.frame <- function(object, ...)
 	## variables are assumed to be either some sort of matrix, numeric,...
 	x <- is.na(x)
 	d <- dim(x)
-	if(is.null(d) || length(d) != 2)
+	if(is.null(d) || length(d) != 2L)
 	    omit <- omit | x
 	else # matrix
 	    for(ii in 1L:d[2L])
@@ -90,9 +90,9 @@ na.exclude.default <- function(object, ...)
     ## only handle vectors and matrices
     if (!is.atomic(object)) return(object)
     d <- dim(object)
-    if (length(d) > 2) return(object)
+    if (length(d) > 2L) return(object)
     omit <- seq_along(object)[is.na(object)]
-    if (length(omit) == 0) return(object)
+    if (length(omit) == 0L) return(object)
     if (length(d)){
         omit <- unique(((omit-1) %% d[1L]) + 1L)
         nm <- rownames(object)
@@ -121,7 +121,7 @@ na.exclude.data.frame <- function(object, ...)
 	## variables are assumed to be either some sort of matrix, numeric,...
 	x <- is.na(x)
 	d <- dim(x)
-	if(is.null(d) || length(d) != 2)
+	if(is.null(d) || length(d) != 2L)
 	    omit <- omit | x
 	else # matrix
 	    for(ii in 1L:d[2L])
@@ -145,7 +145,7 @@ naresid.exclude <- function(omit, x, ...)
 {
     if (length(omit) == 0 || !is.numeric(omit))
 	stop("invalid argument 'omit'")
-    if(length(x) == 0)## << FIXME? -- reconstructing all NA object
+    if(length(x) == 0L)      # << FIXME? -- reconstructing all NA object
         return(x)
 
     if (is.matrix(x)) {

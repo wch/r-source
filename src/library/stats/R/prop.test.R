@@ -20,19 +20,19 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 {
     DNAME <- deparse(substitute(x))
 
-    if (is.table(x) && length(dim(x))==1) {
-        if (dim(x) != 2)
+    if (is.table(x) && length(dim(x)) == 1L) {
+        if (dim(x) != 2L)
             stop("table 'x' should have 2 entries")
         l <- 1
         n <- sum(x)
-        x <- x[1]
+        x <- x[1L]
     }
     else if (is.matrix(x)) {
-	if (ncol(x) != 2)
+	if (ncol(x) != 2L)
 	    stop("'x' must have 2 columns")
 	l <- nrow(x)
 	n <- rowSums(x)
-	x <- x[, 1]
+	x <- x[, 1L]
     }
     else {
 	DNAME <- paste(DNAME, "out of", deparse(substitute(n)))
@@ -43,7 +43,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
     OK <- complete.cases(x, n)
     x <- x[OK]
     n <- n[OK]
-    if ((k <- length(x)) < 1)
+    if ((k <- length(x)) < 1L)
 	stop("not enough data")
     if (any(n <= 0))
 	stop("elements of 'n' must be positive")
@@ -69,7 +69,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
     if (k > 2 || (k == 2) && !is.null(p))
 	alternative <- "two.sided"
 
-    if ((length(conf.level) != 1) || is.na(conf.level) ||
+    if ((length(conf.level) != 1L) || is.na(conf.level) ||
 	(conf.level <= 0) || (conf.level >= 1))
 	stop("'conf.level' must be a single number between 0 and 1")
 

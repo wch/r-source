@@ -74,7 +74,7 @@ function(x, y=NULL, use="everything", method = c("pearson", "kendall", "spearman
          }
          ## vector/matrix x vector/matrix
          else {
-             if(length(x) == 0 || length(y) == 0)
+             if(length(x) == 0L || length(y) == 0L)
                  stop("both 'x' and 'y' must be non-empty")
              matrix_result <- is.matrix(x) || is.matrix(y)
 	     if (!is.matrix(x)) x <- matrix(x, ncol=1L)
@@ -120,7 +120,7 @@ function(x, y=NULL, use="everything", method = c("pearson", "kendall", "spearman
     else if (na.method != 3L) {
 	## Rank transform
 	Rank <- function(u) {
-	    if(length(u) == 0) u else
+	    if(length(u) == 0L) u else
 	    if(is.matrix(u)) apply(u, 2L, rank, na.last="keep")
 	    else rank(u, na.last="keep")
 	}

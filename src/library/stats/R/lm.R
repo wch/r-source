@@ -365,7 +365,7 @@ print.summary.lm <-
         "Residuals:\n", sep="")
     if (rdf > 5L) {
 	nam <- c("Min", "1Q", "Median", "3Q", "Max")
-	rq <- if (length(dim(resid)) == 2)
+	rq <- if (length(dim(resid)) == 2L)
 	    structure(apply(t(resid), 1L, quantile),
 		      dimnames = list(nam, dimnames(resid)[[2L]]))
 	else  structure(quantile(resid), names = nam)

@@ -79,7 +79,7 @@ function(x, centers, iter.max = 10, nstart = 1,
                     "Hartigan-Wong" = 1,
                     "Lloyd" = 2, "Forgy" = 2,
                     "MacQueen" = 3)
-    if(length(centers) == 1) {
+    if(length(centers) == 1L) {
 	k <- centers
         ## we need to avoid duplicates here
         if(nstart == 1)
