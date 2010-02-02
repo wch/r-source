@@ -307,7 +307,10 @@ print.numeric_version <-
 function(x, ...)
 {
     y <- as.character(x)
-    print(noquote(ifelse(is.na(y), NA_character_, sQuote(y))), ...)
+    if(!length(y))
+        writeLines(gettext("<0 elements>"))
+    else
+        print(noquote(ifelse(is.na(y), NA_character_, sQuote(y))), ...)
     invisible(x)
 }
 
