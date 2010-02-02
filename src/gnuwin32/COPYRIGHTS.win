@@ -30,7 +30,6 @@ src/gnuwin32/getline/*
 
 
 src/extra/graphapp/*
-src/gnuwin32/front-ends/graphappmain.c
 
 The files {arith, array, bitmap, buttons, context, controls, cursors,
 drawing, drawtext, events, fonts, image, init, menus, objects,
@@ -50,7 +49,7 @@ Based on files which are
 
 R_HOME/Tcl:
 
-Files compiled and installed from Tcl 8.5.6 and Tk 8.5.6.
+Files compiled and installed from Tcl 8.5.8 and Tk 8.5.8.
 see R_HOME/Tcl/license.terms for the license.
 
     This software is copyrighted by the Regents of the University of
@@ -128,9 +127,6 @@ contents.
 The build of Tcl/Tk contained in the binary installer is taken via
 Rtools from http://www.stats.ox.ac.uk/pub/Rtools/, which hosts the
 sources used and links to the scripts used for the build.
-
-Where liblzma from xz-utils is included, the binaries used and the
-sources can be found at http://www.stats.ox.ac.uk/pub/Rtools/goodies
 
 Rbitmap.dll is built against static libraries for libpng, jpeg and
 libtiff: the Makefiles and configuration headers used are in the
