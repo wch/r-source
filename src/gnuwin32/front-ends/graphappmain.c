@@ -2,8 +2,11 @@
 #include <windows.h>
 
 /* The mingw-runtime startup code has _argc and _argv as visible
-   symbols, as do the MS compilers.  But the mingw-w64-crt is
-   different, but this file is not used on mingw64 */
+   symbols, as do the MS compilers.
+
+   The mingw-w64-crt is different, but this file is not used on
+   mingw64
+*/
 
 extern void 
 GA_startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdShow);
