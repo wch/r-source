@@ -1358,6 +1358,7 @@ SEXP attribute_hidden do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (length(args) < 4)
 	error(_("too few arguments"));
+    PrintDefaults(R_GlobalEnv); /* prepare for labelformat */
 
     oargs = args;
 
@@ -1653,6 +1654,7 @@ SEXP attribute_hidden do_filledcontour(SEXP call, SEXP op, SEXP args, SEXP env)
     GCheckState(dd);
 
     checkArity(op,args);
+    PrintDefaults(R_GlobalEnv); /* prepare for labelformat */
     oargs = args;
 
     sx = CAR(args);

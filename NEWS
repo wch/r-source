@@ -101,6 +101,14 @@ BUG FIXES
     o	The "nls" method for df.residual() gave incorrect results for
 	models fitted with na.action = na.exclude.  (PR#14194)
 
+    o	A change to options(scipen=) was only implemented when printing
+	next occurred, even though it should have affected intervening
+	calls to axis(), contour() and filledcontour().
+
+    o	prettyNum(drop0trailing=TRUE) did not handle signs of imaginary
+	parts of complex numbers correctly (and this was used by str():
+	PR#14201).
+
 
 
 		CHANGES IN R VERSION 2.10.1

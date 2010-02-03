@@ -912,6 +912,8 @@ SEXP attribute_hidden do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("too few arguments"));
     GCheckState(dd);
 
+    PrintDefaults(env); /* prepare for labelformat */
+
     /* Required argument: "side" */
     /* Which side of the plot the axis is to appear on. */
     /* side = 1 | 2 | 3 | 4. */

@@ -334,7 +334,7 @@ prettyNum <-
 			      zero.print=zero.print, drop0trailing=drop0trailing,
 			      is.cmplx=FALSE, ...))
 	r[[2]][has.i] <- P0(r[[2]][has.i], "i")
-	return(paste(r[[1]], r[[2]], sep = sapply(z.sp, `[[`, 2L)))
+	return(paste(r[[1]], sapply(z.sp, `[[`, 2L), r[[2]], sep=""))
     }
     preserve.width <- match.arg(preserve.width)
     x.sp <- strsplit(x, ".", fixed=TRUE)
