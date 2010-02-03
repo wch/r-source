@@ -5475,9 +5475,8 @@ cut(d, "weeks")
 
 ## (Deliberate) overshot in seq(from, to, by) because of fuzz
 stopifnot(seq(0, 1, 0.00025+5e-16) <= 1, seq.int(0, 1, 0.00025+5e-16) <= 1)
-stopifnot(rev(seq(0, 1, 0.00025+5e-16))[1] == 1,
-          rev(seq.int(0, 1, 0.00025+5e-16))[1] == 1)
-# overshot by about 2e-12 in 2.8.x
+## overshot by about 2e-12 in 2.8.x
+## no longer reaches 1 in 2.11.0 (needed a fuzz of 8e-9)
 
 
 ## str() with an "invalid object"
@@ -6032,6 +6031,7 @@ stopifnot(identical(utf8ToInt(NA_character_), NA_integer_),
           identical(intToUtf8(NA_integer_, multiple = TRUE), NA_character_))
 ## no NA-handling prior to 2.11.0
 
+
 ## tcrossprod() for  matrix - vector combination
 u <- 1:3 ; v <- 1:5
 ## would not work identically: names(u) <- LETTERS[seq_along(u)]
@@ -6071,5 +6071,8 @@ match(c("A", "B", "C"), "A", incomparables=NA)
 match(c("A", "B", "C"), c("A", "B"), incomparables="A")
 ## infinite-looped in 2.10.1
 
+
 ## path.expand did not propagate NA
 stopifnot(identical(c("foo", NA), path.expand(c("foo", NA))))
+## 2.10.x gave "NA"
+

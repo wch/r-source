@@ -253,12 +253,16 @@ NEW FEATURES
     o	aggregate() gains a formula method thanks to a contribution by
     	Arni Magnusson.
 
-    o	path.expand now propagates NA values rather than converting them
+    o	path.expand() now propagates NA values rather than converting them
 	to "NA".
 
-    o	file.show now disallows NA values for file names, headers, and
+    o	file.show() now disallows NA values for file names, headers, and
 	pager.
 
+    o	The 'fuzz' used by seq() and seq.int() has been reduced from
+	1e-7 to 1e-10, which should be ample for the double-precision
+	calculations used in R.  It ensures that the fuzz never comes
+	into play with sequences of integers (wish of PR#14169).
 
 
 DEPRECATED & DEFUNCT

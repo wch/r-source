@@ -450,7 +450,7 @@ done:
    tries to evaluate language objects.
  */
 
-#define FEPS 1e-7
+#define FEPS 1e-10
 /* to match seq.default */
 SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -548,17 +548,24 @@ SEXP attribute_hidden do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 		errorcall(call, _("'by' argument is much too small"));
 	    if(n < - FEPS)
 		errorcall(call, _("wrong sign in 'by' argument"));
-	    nn = (int)(n + FEPS);
 	    if(TYPEOF(from) == INTSXP && 
 	       TYPEOF(to) == INTSXP && 
 	       TYPEOF(by) == INTSXP) {
 		int *ia, ifrom = asInteger(from), iby = asInteger(by);
-		/* seq.default gives integer result from from + (0:n)*by */
+		/* With the current limits on integers and FEPS
+		   reduced below 1/INT_MAX this is the same as the
+		   next, so this is future-proofing against longer integers.
+		*/
+		nn = (int)n;
+		/* seq.default gives integer result from 
+		   from + (0:n)*by 
+		*/
 		ans = allocVector(INTSXP, nn+1);
 		ia = INTEGER(ans);
 		for(i = 0; i <= nn; i++)
 		    ia[i] = ifrom + i * iby;
 	    } else {
+		nn = (int)(n + FEPS);
 		ans = allocVector(REALSXP, nn+1);
 		ra = REAL(ans);
 		for(i = 0; i <= nn; i++)

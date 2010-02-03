@@ -59,8 +59,9 @@ seq(length.out= )
   \code{to - from} and \code{by} of opposite signs is an error.  Note
   that the computed final value can go just beyond \code{to} to allow for
   rounding error, but (as from \R 2.9.0) is truncated to \code{to}.
-  (\sQuote{Just beyond} is by up to \eqn{10^{-7}}{1e-7} times
-  \code{abs(from - to)}.)
+  (\sQuote{Just beyond} is by up to \eqn{10^{-10}}{1e-10} times
+  \code{abs(from - to)} as from \R 2.11.0: previously it was
+  \eqn{10^{-7}}{1e-7} times.)
 
   The third generates a sequence of \code{length.out} equally spaced
   values from \code{from} to \code{to}.  (\code{length.out} is usually
