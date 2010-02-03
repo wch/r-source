@@ -6074,5 +6074,11 @@ match(c("A", "B", "C"), c("A", "B"), incomparables="A")
 
 ## path.expand did not propagate NA
 stopifnot(identical(c("foo", NA), path.expand(c("foo", NA))))
-## 2.10.x gave "NA"
+## 2.10.1 gave "NA"
 
+
+## prettyNum(drop0trailing=TRUE) mangled complex values (PR#14201)
+z <- c(1+2i, 1-3i)
+str(z) # a user
+stopifnot(identical(format(z, drop0trailing=TRUE), as.character(z)))
+## 2.10.1 gave 'cplx [1:2] 1+2i 1+3i'
