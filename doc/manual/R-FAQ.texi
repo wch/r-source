@@ -3,8 +3,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ_YEAR 2009
-@set FAQ_DATE @value{FAQ_YEAR}-12-10
+@set FAQ_YEAR 2010
+@set FAQ_DATE @value{FAQ_YEAR}-02-04
 @set REL_YEAR 2009
 @set REL_MAJOR 2
 @set REL_MINOR 10
@@ -557,12 +557,12 @@ packages.
 @item Red Hat  @tab i386/x86_64 @tab fedora8/fedora9/fedora10 @tab Martyn Plummer
 @item          @tab i386/x86_64 @tab el4/el5 @tab Bob Kinney
 @item SuSE     @tab i586/x86_64 @tab 10.3/11.0/11.1 @tab Detlef Steuer
-@item Ubuntu   @tab i386   @tab dapper/gutsy/hardy/intrepid @tab Vincent Goulet
-@item          @tab amd64  @tab dapper/gutsy/hardy/intrepid @tab Michael Rutter
+@item Ubuntu   @tab i386   @tab hardy/intrepid/jaunty/karmic @tab Vincent Goulet
+@item          @tab amd64  @tab hardy/intrepid/jaunty/karmic @tab Michael Rutter
 @end multitable
 @end quotation
 
-Debian packages, maintained by Dirk Eddelbuettel and Doug Bates, have
+Debian packages, maintained by Dirk Eddelbuettel Bates, have
 long been part of the Debian distribution, and can be accessed through
 APT, the Debian package maintenance tool.  Use e.g.@: @code{apt-get
 install r-base r-recommended} to install the R environment and
@@ -582,7 +582,7 @@ setting (e.g.)
 @example
 Protocol: HTTP
 Server name: software.openSUSE.org
-Directory: /download/home:/dsteuer/openSUSE_10.2/
+Directory: /download/home:/dsteuer/openSUSE_11.1/
 @end example
 
 With this setting, online updates will check for new versions of R.
@@ -607,15 +607,15 @@ Sridharan.
 No other binary distributions are currently publically available via
 @CRAN{}.
 
-A ``live'' Linux distribution with a particular focus on R is
-@dfn{Quantian}, which provides a directly bootable and self-configuring
-``Live DVD'' containing numerous applications of interests to scientists
-and researchers, including several hundred @CRAN{} and Bioconductor
-packages, the ``ESS'' extensions for Emacs, the ``JGR'' Java
-@acronym{GUI} for R, the Ggobi visualization tool as well as several
-other R interfaces. The @dfn{Quantian} website at
-@url{http://dirk.eddelbuettel.com/quantian/} contains more details as
-well download information.
+@c A ``live'' Linux distribution with a particular focus on R is
+@c @dfn{Quantian}, which provides a directly bootable and self-configuring
+@c ``Live DVD'' containing numerous applications of interests to scientists
+@c and researchers, including several hundred @CRAN{} and Bioconductor
+@c packages, the ``ESS'' extensions for Emacs, the ``JGR'' Java
+@c @acronym{GUI} for R, the Ggobi visualization tool as well as several
+@c other R interfaces. The @dfn{Quantian} website at
+@c @url{http://dirk.eddelbuettel.com/quantian/} contains more details as
+@c well download information.
 
 @node What documentation exists for R?, Citing R, Are there Unix binaries for R?, R Basics
 @section What documentation exists for R?
