@@ -3,7 +3,6 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode
 "Argentina (Mendoza)",Argentina,Mendoza,http://mirror.cricyt.edu.ar/r/,"CONICET, Mendoza","informatica # lab.cricyt.edu.ar",0,ar
 Australia,Australia,Melbourne,http://cran.ms.unimelb.edu.au/,"University of Melbourne","cran # ms.unimelb.edu.au",1,au
 Austria,Austria,Wien,http://cran.at.r-project.org/,"Wirtschaftsuniversitaet Wien","CRAN # R-project.org",1,at
-Belarus,Belarus,Minsk,http://cran.promotionalpro.com/,www.ehost.by,"admin # promotionalpro.com",1,by
 Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association","patrick # wessa.net",1,be
 "Brazil (PR)",Brazil,Curitiba,http://cran.br.r-project.org/,"Universidade Federal do Parana","Paulo J. Ribeiro Jr <paulojus # est.ufpr.br>",1,br
 "Brazil (RJ)",Brazil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro","oswaldo # fiocruz.br",1,br
