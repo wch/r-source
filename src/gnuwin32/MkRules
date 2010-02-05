@@ -1,8 +1,16 @@
 #-*- Makefile -*-
 ## This file contains tabs: make sure your editor leaves them unchanged.
-## As from R 2.9.0 it is only used when building R itself (and not packages)
+## As from R 2.9.0 it is only used when building R itself (and not packages),
+## but it does customize etc/Makeconf as from R 2.11.0
 
-## ===== configuration macros for building R  ===============
+## =========== configuration macros for building packages ================
+# Absolute path to '/usr/local' software collection.  The versions used
+# on CRAN can be found at
+# http://www.stats.ox.ac.uk/pub/Rtools/goodies/local.zip
+# http://www.stats.ox.ac.uk/pub/Rtools/goodies/Win64/local64.zip
+LOCAL_SOFT =
+
+## ============== configuration macros for building R ===================
 
 # Alternatives GCC4 or F2C (use suitable f2c rather than a Fortran compiler).
 
@@ -10,8 +18,6 @@ BUILD=GCC4
 
 # an alternative is to use -gstabs here, if the debugger supports only stabs.
 G_FLAG=-gdwarf-2
-
-## ============== configuration macros for building R ===================
 
 # Comment out if the msvcrt.dll malloc/free is required (not tested recently)
 LEA_MALLOC=YES
