@@ -1,6 +1,6 @@
 % File src/library/utils/man/RSiteSearch.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{RSiteSearch}
@@ -16,7 +16,7 @@
 }
 \usage{
 RSiteSearch(string,
-            restrict = c("Rhelp08", "functions", "views"),
+            restrict = c("functions", "vignettes", "views"),
             format = c("normal", "short"),
             sortby = c("score", "date:late", "date:early",
                        "subject", "subject:descending",
@@ -25,19 +25,20 @@ RSiteSearch(string,
             matchesPerPage = 20)
 }
 \arguments{
-  \item{string}{word(s) or phrase to search.  If the words are to be
-    searched as one entity, enclose all words in braces (see example).}
-  \item{restrict}{a character vector, typically of length larger than one:
-    What areas to search in:
-    \code{Rhelp08} for R-help mailing list archive from January 2008
-    \code{Rhelp02} for mailing list archive 2002-2007
-    \code{Rhelp01} for mailing list archive before 2002
-    \code{R-devel} for R-devel mailing list
-    \code{R-sig-mix} for R-devel mailing list    
-    \code{functions} for help pages
-    \code{views} for task views
-    \code{vignettes} for package vignettes
-    Use \code{c()} to specify more than one.}
+  \item{string}{A character string specifying word(s) or a phrase to
+    search.  If the words are to be searched as one entity, enclose all
+    words in braces (see the first example).}
+  \item{restrict}{a character vector, typically of length greater than one.
+    Possible areas to search in:
+    \code{Rhelp10} for R-help mailing list archive starting January 2010,
+    \code{Rhelp08} for mailing list archive 2008--2009,
+    \code{Rhelp02} for mailing list archive 2002--2007,
+    \code{Rhelp01} for mailing list archive before 2002,
+    \code{R-devel} for R-devel mailing list,
+    \code{R-sig-mix} for R-sig-mix mailing list,    
+    \code{functions} for help pages,
+    \code{views} for task views and
+    \code{vignettes} for package vignettes.}
   \item{format}{\code{normal} or \code{short} (no excerpts); can be
     abbreviated.}
   \item{sortby}{character string (can be abbreviated) indicating how to
@@ -51,10 +52,6 @@ RSiteSearch(string,
     \code{size} or \code{size:descending} for size.)}
   \item{matchesPerPage}{How many items to show per page.}
 }
-\value{
-  (Invisibly) the complete URL passed to the browser,
-  including the query string.
-}
 \details{
   This function is designed to work with the search site at
   \url{http://search.r-project.org}, and depends on that site
@@ -63,6 +60,10 @@ RSiteSearch(string,
 
   Unique partial matches will work for all arguments.  Each new
   browser window will stay open unless you close it.
+}
+\value{
+  (Invisibly) the complete URL passed to the browser,
+  including the query string.
 }
 \author{Andy Liaw and Jonathan Baron}
 \seealso{
@@ -74,9 +75,9 @@ RSiteSearch(string,
 RSiteSearch("{logistic regression}") # matches exact phrase
 Sys.sleep(5) # allow browser to open, take a quick look
 RSiteSearch("Baron Liaw", restrict = "Rhelp02")
-## Search in R-devel archive and recent mail (and store the query-string):
+## Search in R-devel archive and recent R-help (and store the query-string):
 Sys.sleep(5)
-fullquery <- RSiteSearch("S4", restrict = c("R-dev", "Rhelp08"))
+fullquery <- RSiteSearch("S4", restrict = c("R-dev", "Rhelp10", "Rhelp08"))
 fullquery # a string of ~ 116 characters
 ## the latest purported bug reports, responses ...
 %% FIXME: "/bug/ and other reg.exp.s seem to fail

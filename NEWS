@@ -264,6 +264,11 @@ NEW FEATURES
 	calculations used in R.  It ensures that the fuzz never comes
 	into play with sequences of integers (wish of PR#14169).
 
+    o	The default value of RSiteSearch(restrict=) has been changed
+	to include vignettes but to exclude R-help.  The R-help
+	archives available have been split, with a new option of
+	"Rhelp10" for those from 2010.
+
 
 DEPRECATED & DEFUNCT
 
