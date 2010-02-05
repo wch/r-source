@@ -607,7 +607,9 @@ foreach my $pkg (@ARGV) {
 		my $dir = &file_path($pkgdir, "src");
 		if(-d $dir) {
 		    chdir($dir);
-		    if(!(-f "Makefile") && !(-f "Makefile.win")) {
+		    if(!(-f "Makefile") &&
+		       !(-f "Makefile.win") &&
+		       !(-f "Makefile.in" && !$opt_install)) {
 			opendir(DIR, ".") or die "cannot opendir $dir: $!";
 			@srcfiles = grep {
 			    !(/\.$exts$/ || /^Makevars/ || /-win\.def$/ )
