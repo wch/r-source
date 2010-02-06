@@ -114,7 +114,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
 }
 \author{
   The R Core development team and Arni Magnusson
-  \email{arnima@u.washington.edu} who has provided most changes for the
+  (then at U Washington) who has provided most changes for the
   box*, med*, whisk*, staple*, and out* arguments.
 }
 \references{
