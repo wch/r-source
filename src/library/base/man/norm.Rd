@@ -64,7 +64,7 @@ stopifnot(all.equal(norm(x1, "F"),
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 h9 <- hilbert(9)
 ## all 4 types of norm:
-(nTyp <- eval(formals(norm)$type))
+(nTyp <- eval(formals(base::norm)$type))
 sapply(nTyp, norm, x=h9)
 }
 \keyword{math}
