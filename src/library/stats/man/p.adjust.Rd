@@ -29,8 +29,8 @@ p.adjust.methods
   number of comparisons.  Less conservative corrections are also
   included by Holm (1979) (\code{"holm"}), Hochberg (1988)
   (\code{"hochberg"}), Hommel (1988) (\code{"hommel"}), Benjamini &
-  Hochberg (1995) (\code{"BH"}), and Benjamini & Yekutieli (2001)
-  (\code{"BY"}), respectively.
+  Hochberg (1995) (\code{"BH"} or its alias \code{"fdr"}), and Benjamini &
+  Yekutieli (2001) (\code{"BY"}), respectively.
   A pass-through option (\code{"none"}) is also included.
   The set of methods are contained in the \code{p.adjust.methods} vector
   for the benefit of methods that need to have the method as an option
@@ -47,11 +47,12 @@ p.adjust.methods
   Hochberg's, but the difference is usually small and the Hochberg
   p-values are faster to compute.
 
-  The \code{"BH"} and \code{"BY"} method of Benjamini, Hochberg, and
-  Yekutieli control the false discovery rate, the expected proportion of
-  false discoveries amongst the rejected hypotheses.  The false
-  discovery rate is a less stringent condition than the family wise
-  error rate, so these methods are more powerful than the others.
+  The \code{"BH"} (aka \code{"fdr"}) and \code{"BY"} method of
+  Benjamini, Hochberg, and Yekutieli control the false discovery rate,
+  the expected proportion of false discoveries amongst the rejected
+  hypotheses.  The false discovery rate is a less stringent condition
+  than the family wise error rate, so these methods are more powerful
+  than the others.
 
   Note that you can set \code{n} larger than \code{length(p)} which
   means the unobserved p-values are assumed to be greater than all the
