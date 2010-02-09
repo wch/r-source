@@ -34,7 +34,7 @@ poisson.test <- function(x, T = 1, r = 1, alternative =
     if (k == 2) {
 
         RVAL <- binom.test(x, sum(x), r * T[1L]/(r * T[1L] + T[2L]),
-                           alternative=alternative)
+                           alternative=alternative, conf.level=conf.level)
 
         RVAL$data.name <- DNAME
         RVAL$statistic <- x[1L]
