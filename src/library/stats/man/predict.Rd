@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{predict}
@@ -20,13 +20,13 @@ predict (object, \dots)
   the first argument.
 }
 \details{
-  Most prediction methods which similar to fitting linear models have an
-  argument \code{newdata} specifying the first place to look for
-  explanatory variables to be used for prediction.
-  Some considerable attempts are made to match up
-  the columns in \code{newdata} to those used for fitting, for example
-  that they are of comparable types and that any factors have the same
-  level set in the same order (or can be transformed to be so).
+  Most prediction methods which are similar to those for linear models
+  have an argument \code{newdata} specifying the first place to look for
+  explanatory variables to be used for prediction.  Some considerable
+  attempts are made to match up the columns in \code{newdata} to those
+  used for fitting, for example that they are of comparable types and
+  that any factors have the same level set in the same order (or can be
+  transformed to be so).
 
   Time series prediction methods in package \pkg{stats} have an argument
   \code{n.ahead} specifying how many time steps ahead to predict.
@@ -47,6 +47,8 @@ predict (object, \dots)
   \code{\link{predict.poly}},
   \code{\link{predict.princomp}},
   \code{\link{predict.smooth.spline}}.
+
+  \link{SafePrediction} for prediction from polynomial and spline fits.
 
   For time-series prediction,
   \code{\link{predict.ar}},

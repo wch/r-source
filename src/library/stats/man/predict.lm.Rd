@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.lm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{predict.lm}
@@ -104,8 +104,9 @@
   not obtained from the fit. 
 }
 \seealso{
-  The model fitting function \code{\link{lm}}, \code{\link{predict}},
-  \code{\link{SafePrediction}}
+  The model fitting function \code{\link{lm}}, \code{\link{predict}}.
+  
+  \link{SafePrediction} for prediction from polynomial and spline fits.
 }
 \examples{
 require(graphics)
