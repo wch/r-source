@@ -1,6 +1,6 @@
 % File src/library/stats/man/makepredictcall.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{makepredictcall}
@@ -25,7 +25,7 @@ makepredictcall(var, call)
   \code{ns}: the default method handles \code{scale}.  If
   \code{model.frame.default} encounters such a term when
   creating a model frame, it modifies the \code{predvars} attribute of
-  the terms supplied to replace the term with one that will work for
+  the terms supplied by replacing the term with one which will work for
   predicting new data.  For example \code{makepredictcall.ns} adds
   arguments for the knots and intercept.
 
@@ -43,8 +43,9 @@ makepredictcall(var, call)
 }
 \seealso{
   \code{\link{model.frame}}, \code{\link{poly}}, \code{\link{scale}};
-  \code{\link{bs}} and \code{\link{ns}} in package \pkg{splines},
-  \code{\link{cars}}
+  \code{\link{bs}} and \code{\link{ns}} in package \pkg{splines}.
+  
+  \code{\link{cars}} for an example of prediction from a polynomial fit.
 }
 \examples{
 require(graphics)
