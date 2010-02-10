@@ -1310,7 +1310,7 @@ the time of writing native 64-bit compilers from
 @url{http://www.cadforte.com/downloads.html} and a 32-bit compiler
 targeting 64-bit from @url{http://sourceforge.net/projects/mingw-w64/}
 packages with a name like
-@file{mingw-w64-bin_i686-mingw_20100106.zip/download}}: use one of them
+@file{mingw-w64-bin_i686-mingw_20100208.zip}}: use one of them
 to replace the @file{MinGW/bin} directory of @code{Rtools} in your path
 (but still have the Rtools @file{bin} directory and Perl in your path).
 Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64} and
