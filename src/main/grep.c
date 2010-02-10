@@ -99,10 +99,12 @@ static SEXP mkCharWLen(const wchar_t *wc, int nc)
 static SEXP mkCharW(const wchar_t *wc)
 {
     int nb = wcstoutf8(NULL, wc, 0);
-    char *xi = (char *) alloca((nb+1)*sizeof(char));
-    R_CheckStack();
+    char *xi = (char *) Calloc(nb+1, char);
+    SEXP ans;
     wcstoutf8(xi, wc, nb + 1);
-    return mkCharCE(xi, CE_UTF8);
+    ans = mkCharCE(xi, CE_UTF8);
+    Free(xi);
+    return ans;
 }
 
 
