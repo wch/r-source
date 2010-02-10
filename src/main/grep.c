@@ -1214,11 +1214,13 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		cbuf = u = Calloc(ns + nr*(replen - patlen) + 1, char);
 		*u = '\0';
 		do {
-		    nr = strlen(u);
-		    strncat(u, s, st); u[nr+st] = '\0'; s += st+patlen;
-		    strcat(u, srep);
+                    strncpy(u, s, st);
+                    u += st;
+                    s += st+patlen;
+		    strncpy(u, srep, replen);
+                    u += replen;
 		} while(global && (st = fgrep_one_bytes(spat, s, useBytes, use_UTF8)) >= 0);
-		strcat(u, s);
+		strcpy(u, s);
 		if (useBytes)
 		    SET_STRING_ELT(ans, i, mkChar(cbuf));
 		else if (use_UTF8)
