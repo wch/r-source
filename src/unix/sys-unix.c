@@ -224,8 +224,8 @@ void R_getProcTime(double *data)
 	1e-3 * (self.ru_stime.tv_usec/1000);
     data[3] = (double) children.ru_utime.tv_sec +
 	1e-3 * (children.ru_utime.tv_usec/1000);
-    data[4] = (double) children.ru_utime.tv_sec +
-	1e-3 * (children.ru_utime.tv_usec/1000);
+    data[4] = (double) children.ru_stime.tv_sec +
+	1e-3 * (children.ru_stime.tv_usec/1000);
 #else
     data[0] = rround(timeinfo.tms_utime / clk_tck, 3);
     data[1] = rround(timeinfo.tms_stime / clk_tck, 3);
