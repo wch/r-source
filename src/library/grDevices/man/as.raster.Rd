@@ -1,10 +1,9 @@
-% File src/library/grid/man/unit.rep.Rd
+% File src/library/grid/man/as.raster.Rd
 % Part of the R package, http://www.R-project.org
 % Copyright 2009 R Core Development Team
 % Distributed under GPL 2 or later
 
-\name{raster}
-\alias{raster}
+\name{as.raster}
 \alias{is.raster}
 \alias{as.raster}
 \alias{as.raster.logical}
@@ -18,7 +17,6 @@
   image) and coerce other objects to a raster object.
 }
 \usage{
-raster(x, \dots)
 is.raster(x)
 as.raster(x, \dots)
 
@@ -46,36 +44,36 @@ as.raster(x, \dots)
   written to convert other R objects to a raster object.
 }
 \value{
-  For \code{raster()} and \code{as.raster()}, a raster object.
+  For \code{as.raster()}, a raster object.
 
   For \code{is.raster()}, a logical indicating whether
   \code{x} is a raster object.
 }
 \examples{
 # A red gradient
-raster(matrix(hcl(0, 80, seq(50, 80, 10)),
-              nrow=4, ncol=5))
+as.raster(matrix(hcl(0, 80, seq(50, 80, 10)),
+                 nrow=4, ncol=5))
 
 # Vectors are 1-column matrices ...
 #   character vectors are color names ...
-raster(hcl(0, 80, seq(50, 80, 10)))
+as.raster(hcl(0, 80, seq(50, 80, 10)))
 #   numeric vectors are greyscale ...
-raster(1:5, max=5)
+as.raster(1:5, max=5)
 #   locigal vectors are black and white ...
-raster(1:10 \%\% 2 == 0)
+as.raster(1:10 \%\% 2 == 0)
 
 # ... unless nrow/ncol are supplied ...
-raster(1:10 \%\% 2 == 0, nrow=1)
+as.raster(1:10 \%\% 2 == 0, nrow=1)
 
 # Matrix can also be logical or numeric ...
-raster(matrix(c(TRUE, FALSE), nrow=3, ncol=2))
-raster(matrix(1:3/4, nrow=3, ncol=4))
+as.raster(matrix(c(TRUE, FALSE), nrow=3, ncol=2))
+as.raster(matrix(1:3/4, nrow=3, ncol=4))
 
 # An array can be 3-plane numeric (R, G, B planes) ...
-raster(array(c(0:1, rep(0.5, 4)), c(2, 1, 3)))
+as.raster(array(c(0:1, rep(0.5, 4)), c(2, 1, 3)))
 
 # ... or 4-plane numeric (R, G, B, A planes)
-raster(array(c(0:1, rep(0.5, 6)), c(2, 1, 4)))
+as.raster(array(c(0:1, rep(0.5, 6)), c(2, 1, 4)))
 
 }
 \keyword{ dplot }

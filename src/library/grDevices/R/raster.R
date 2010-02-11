@@ -60,11 +60,6 @@ as.raster.array <- function(x, max=1, ...) {
     r
 }
 
-# For completeness ...
-raster <- function(x, ...) {
-    as.raster(x, ...)
-}
-
 print.raster <- function(x, ...) {
     dim <- dim(x)
     print(matrix(x, nrow=dim[1], ncol=dim[2], byrow=TRUE))

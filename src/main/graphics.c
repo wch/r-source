@@ -2906,6 +2906,22 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
     GERect(x0, y0, x1, y1, &gc, dd);
 }
 
+void GRaster(unsigned int* image, int w, int h, 
+             double x0, double y0, double x1, double y1, 
+             double angle, Rboolean interpolate, 
+             pGEDevDesc dd)
+{
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+
+    GERaster(image, w, h, x0, y0, x1, y1, angle, interpolate, 
+             &gc, dd);
+}
+
 /* Compute string width. */
 double GStrWidth(const char *str, cetype_t enc, GUnit units, pGEDevDesc dd)
 {

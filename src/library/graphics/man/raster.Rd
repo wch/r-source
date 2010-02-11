@@ -1,0 +1,55 @@
+% File src/library/graphics/man/raster.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 1995-2007 R Core Development Team
+% Distributed under GPL 2 or later
+
+\name{raster}
+\alias{raster}
+\title{Draw One or More Raster Images}
+\usage{
+raster(image,
+       xleft, ybottom, xright, ytop,
+       angle = 0, interpolate = TRUE, \dots)
+}
+\arguments{
+  \item{image}{a \code{raster} object, or an object that can be
+    coerced to one.}
+  \item{xleft}{a vector (or scalar) of left x positions.}
+  \item{ybottom}{a vector (or scalar) of bottom y positions.}
+  \item{xright}{a vector (or scalar) of right x positions.}
+  \item{ytop}{a vector (or scalar) of top y positions.}
+  \item{angle}{angle of rotation (in degrees, anti-clockwise
+    from positive x-axis, about the bottom-left corner).}
+  \item{interpolate}{a logical vector (or scalar) indicating
+    whether to apply linear interpolation to the image when drawing. }
+  \item{\dots}{graphical parameters.}
+}
+\description{
+  \code{raster} draws a raster image at the given locations and sizes.
+}
+\details{
+  The positions supplied, i.e., \code{xleft, \dots},
+  are relative to the current plotting region.  If the x-axis goes from
+  100 to 200 then \code{xleft} should be larger than 100 and \code{xright}
+  should be less than 200.  The position vectors will be recycled to the
+  length of the longest.
+}
+\seealso{
+  \code{\link{rect}},
+  \code{\link{polygon}}, and \code{\link{segments}} and others
+  for flexible ways to draw shapes.
+}
+\examples{
+require(grDevices)
+## set up the plot region:
+op <- par(bg = "thistle")
+plot(c(100, 250), c(300, 450), type = "n", xlab="", ylab="")
+image <- as.raster(matrix(0:1, ncol=5, nrow=3))
+raster(image, 100, 300, 150, 350, interpolate=FALSE)
+raster(image, 100, 400, 150, 450)
+raster(image, 200, 300, 200 + xinch(.5), 300 + yinch(.3),
+       interpolate=FALSE)
+raster(image, 200, 400, 250, 450, angle=15, interpolate=FALSE)
+par(op)
+}
+\keyword{aplot}

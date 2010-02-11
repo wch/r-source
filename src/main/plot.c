@@ -1904,6 +1904,74 @@ SEXP attribute_hidden do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+SEXP attribute_hidden do_raster(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    /* raster(image, xl, yb, xr, yt, angle, interpolate, ...) */
+    const void *vmax;
+    unsigned int *image;
+    SEXP raster, dim, sxl, sxr, syb, syt, angle, interpolate;
+    double *xl, *xr, *yb, *yt, x0, y0, x1, y1;
+    int i, n, nxl, nxr, nyb, nyt;
+    SEXP originalArgs = args;
+    pGEDevDesc dd = GEcurrentDevice();
+
+    if (length(args) < 7) error(_("too few arguments"));
+    GCheckState(dd);
+
+    raster = CAR(args); args = CDR(args);
+    n = LENGTH(raster);
+    dim = getAttrib(raster, R_DimSymbol);
+
+    vmax = vmaxget();
+    image = (unsigned int*) R_alloc(n, sizeof(unsigned int));
+    for (i=0; i<n; i++) {
+        image[i] = RGBpar3(raster, i, R_TRANWHITE);
+    }
+
+    xypoints(call, args, &n);
+    if(n == 0) return R_NilValue;
+
+    sxl = CAR(args); nxl = length(sxl); args = CDR(args);/* x_left */
+    syb = CAR(args); nyb = length(syb); args = CDR(args);/* y_bottom */
+    sxr = CAR(args); nxr = length(sxr); args = CDR(args);/* x_right */
+    syt = CAR(args); nyt = length(syt); args = CDR(args);/* y_top */
+
+    angle = CAR(args); args = CDR(args);
+    interpolate = CAR(args); args = CDR(args);
+
+    GSavePars(dd);
+    ProcessInlinePars(args, dd, call);
+
+    xl = REAL(sxl);
+    xr = REAL(sxr);
+    yb = REAL(syb);
+    yt = REAL(syt);
+
+    GMode(1, dd);
+    for (i = 0; i < n; i++) {
+	x0 = xl[i%nxl];
+	y0 = yb[i%nyb];
+	x1 = xr[i%nxr];
+	y1 = yt[i%nyt];
+	GConvert(&x0, &y0, USER, DEVICE, dd);
+	GConvert(&x1, &y1, USER, DEVICE, dd);
+	if (R_FINITE(x0) && R_FINITE(y0) && R_FINITE(x1) && R_FINITE(y1))
+           GRaster(image, INTEGER(dim)[1], INTEGER(dim)[0], 
+                   x0, y0, x1 - x0, y1 - y0,
+                   REAL(angle)[i % LENGTH(angle)],
+                   LOGICAL(interpolate)[i % LENGTH(interpolate)], dd);
+    }
+    GMode(0, dd);
+
+    GRestorePars(dd);
+    /* NOTE: only record operation if no "error"  */
+    if (GRecording(call, dd))
+	GErecordGraphicOperation(op, originalArgs, dd);
+
+    vmaxset(vmax);
+    return R_NilValue;
+}
+
 
 SEXP attribute_hidden do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 {

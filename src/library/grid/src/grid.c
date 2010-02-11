@@ -2735,7 +2735,7 @@ SEXP L_raster(SEXP raster, SEXP x, SEXP y, SEXP w, SEXP h,
               SEXP hjust, SEXP vjust, SEXP interpolate)
 {
     const void *vmax;
-    int i, n;
+    int i, n, ny, nw, nh, maxn;
     double xx, yy, ww, hh;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
@@ -2762,70 +2762,80 @@ SEXP L_raster(SEXP raster, SEXP x, SEXP y, SEXP w, SEXP h,
         image[i] = RGBpar3(raster, i, R_TRANWHITE);
     }
     dim = getAttrib(raster, R_DimSymbol);
+    maxn = unitLength(x); 
+    ny = unitLength(y); 
+    nw = unitLength(w); 
+    nh = unitLength(h); 
+    if (ny > maxn)
+	maxn = ny;
+    if (nw > maxn)
+	maxn = nw;
+    if (nh > maxn)
+	maxn = nh;
     GEMode(1, dd);
-    gcontextFromgpar(currentgp, 0, &gc, dd);
-    transformLocn(x, y, 0, vpc, &gc,
-                  vpWidthCM, vpHeightCM,
-                  dd,
-                  transform,
-                  &xx, &yy);
-    ww = transformWidthtoINCHES(w, 0, vpc, &gc,
-                                vpWidthCM, vpHeightCM,
-                                dd);
-    hh = transformHeighttoINCHES(h, 0, vpc, &gc,
-                                 vpWidthCM, vpHeightCM,
-                                 dd);
-    /* If the total rotation angle is zero then we can draw a 
-     * rectangle as the devices understand rectangles
-     * Otherwise we have to draw a polygon equivalent.
-     */
-    if (rotationAngle == 0) {
-        xx = justifyX(xx, ww, REAL(hjust)[0]);
-        yy = justifyY(yy, hh, REAL(vjust)[0]);
-        /* The graphics engine only takes device coordinates
-         */
-        xx = toDeviceX(xx, GE_INCHES, dd);
-        yy = toDeviceY(yy, GE_INCHES, dd);
-        ww = toDeviceWidth(ww, GE_INCHES, dd);
-        hh = toDeviceHeight(hh, GE_INCHES, dd);
-        if (R_FINITE(xx) && R_FINITE(yy) && 
-            R_FINITE(ww) && R_FINITE(hh))
-            GERaster(image, INTEGER(dim)[1], INTEGER(dim)[0],
-                     xx, yy, ww, hh, rotationAngle, 
-                     LOGICAL(interpolate)[0], &gc, dd);
-    } else {
-        /* We have to do a little bit of work to figure out where the 
-         * bottom-left corner of the image is.
-         */
-        double xbl, ybl, xadj, yadj;
-        double dw, dh;
-        SEXP xadjInches, yadjInches;
-        /* Find bottom-left location */
-        justification(ww, hh, 
-                      REAL(hjust)[0], 
-                      REAL(vjust)[0], 
-                      &xadj, &yadj);
-        PROTECT(xadjInches = unit(xadj, L_INCHES));
-        PROTECT(yadjInches = unit(yadj, L_INCHES));
-        transformDimn(xadjInches, yadjInches, 0, vpc, &gc,
+    for (i=0; i<maxn; i++) {
+        gcontextFromgpar(currentgp, i, &gc, dd);
+        transformLocn(x, y, i, vpc, &gc,
                       vpWidthCM, vpHeightCM,
-                      dd, rotationAngle,
-                      &dw, &dh);
-        xbl = xx + dw;
-        ybl = yy + dh;
-        xbl = toDeviceX(xbl, GE_INCHES, dd);
-        ybl = toDeviceY(ybl, GE_INCHES, dd);
-        ww = toDeviceWidth(ww, GE_INCHES, dd);
-        hh = toDeviceHeight(hh, GE_INCHES, dd);
-        if (R_FINITE(xbl) && R_FINITE(ybl) &&
-            R_FINITE(ww) && R_FINITE(hh)) {
+                      dd,
+                      transform,
+                      &xx, &yy);
+        ww = transformWidthtoINCHES(w, i, vpc, &gc,
+                                    vpWidthCM, vpHeightCM,
+                                    dd);
+        hh = transformHeighttoINCHES(h, i, vpc, &gc,
+                                     vpWidthCM, vpHeightCM,
+                                     dd);
+        if (rotationAngle == 0) {
+            xx = justifyX(xx, ww, REAL(hjust)[i % LENGTH(hjust)]);
+            yy = justifyY(yy, hh, REAL(vjust)[i % LENGTH(vjust)]);
             /* The graphics engine only takes device coordinates
              */
-            GERaster(image, INTEGER(dim)[1], INTEGER(dim)[0],
-                     xbl, ybl, ww, hh, rotationAngle, 
-                     LOGICAL(interpolate)[0], &gc, dd);
+            xx = toDeviceX(xx, GE_INCHES, dd);
+            yy = toDeviceY(yy, GE_INCHES, dd);
+            ww = toDeviceWidth(ww, GE_INCHES, dd);
+            hh = toDeviceHeight(hh, GE_INCHES, dd);
+            if (R_FINITE(xx) && R_FINITE(yy) && 
+                R_FINITE(ww) && R_FINITE(hh))
+                GERaster(image, INTEGER(dim)[1], INTEGER(dim)[0],
+                         xx, yy, ww, hh, rotationAngle, 
+                         LOGICAL(interpolate)[i % LENGTH(interpolate)], 
+                         &gc, dd);
+        } else {
+            /* We have to do a little bit of work to figure out where the 
+             * bottom-left corner of the image is.
+             */
+            double xbl, ybl, xadj, yadj;
+            double dw, dh;
+            SEXP xadjInches, yadjInches;
+            /* Find bottom-left location */
+            justification(ww, hh, 
+                          REAL(hjust)[i % LENGTH(hjust)], 
+                          REAL(vjust)[i % LENGTH(vjust)], 
+                          &xadj, &yadj);
+            PROTECT(xadjInches = unit(xadj, L_INCHES));
+            PROTECT(yadjInches = unit(yadj, L_INCHES));
+            transformDimn(xadjInches, yadjInches, 0, vpc, &gc,
+                          vpWidthCM, vpHeightCM,
+                          dd, rotationAngle,
+                          &dw, &dh);
+            xbl = xx + dw;
+            ybl = yy + dh;
+            xbl = toDeviceX(xbl, GE_INCHES, dd);
+            ybl = toDeviceY(ybl, GE_INCHES, dd);
+            ww = toDeviceWidth(ww, GE_INCHES, dd);
+            hh = toDeviceHeight(hh, GE_INCHES, dd);
+            if (R_FINITE(xbl) && R_FINITE(ybl) &&
+                R_FINITE(ww) && R_FINITE(hh)) {
+                /* The graphics engine only takes device coordinates
+                 */
+                GERaster(image, INTEGER(dim)[1], INTEGER(dim)[0],
+                         xbl, ybl, ww, hh, rotationAngle, 
+                         LOGICAL(interpolate)[i % LENGTH(interpolate)], 
+                         &gc, dd);
+            }
+            UNPROTECT(2);
         }
-        UNPROTECT(2);
     }
     GEMode(0, dd);
     vmaxset(vmax);

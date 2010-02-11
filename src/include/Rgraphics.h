@@ -84,6 +84,7 @@ typedef enum {
 #define GPolyline		Rf_GPolyline
 #define GPretty			Rf_GPretty
 #define GRect			Rf_GRect
+#define GRaster			Rf_GRaster
 #define GReset			Rf_GReset
 #define GRestore		Rf_GRestore
 #define GRestorePars		Rf_GRestorePars
@@ -185,6 +186,10 @@ void GPolygon(int, double*, double*, int, int, int, pGEDevDesc);
 void GPolyline(int, double*, double*, int, pGEDevDesc);
 /* Draw a rectangle given two opposite corners: */
 void GRect(double, double, double, double, int, int, int, pGEDevDesc);
+/* Draw a raster image given two opposite corners: */
+void GRaster(unsigned int*, int, int,
+             double, double, double, double, 
+             double, Rboolean, pGEDevDesc);
 /* Return the height of the specified string in the specified units: */
 double GStrHeight(const char *, cetype_t, GUnit, pGEDevDesc);
 /* Return the width of the specified string in the specified units */
