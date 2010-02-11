@@ -468,12 +468,18 @@ SEXP do_setwinprogressbar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    pbar->val = val;
 	}
 	if (!isNull(title)) {
-	    SEXP ctxt = STRING_ELT(title, 0);
+	    SEXP ctxt;
+	    if(!isString(title) || length(title) < 1)
+		errorcall(call, "invalid '%s' argument", "title");
+	    ctxt = STRING_ELT(title, 0);
 	    if (ctxt != NA_STRING)
 		settext(pbar->wprog, translateChar(ctxt));
 	}
 	if(pbar->lab && !isNull(label)) {
-	    SEXP clab = STRING_ELT(label, 0);
+	    SEXP clab;
+	    if(!isString(label) || length(label) < 1)
+		errorcall(call, "invalid '%s' argument", "label");
+	    clab = STRING_ELT(label, 0);
 	    if (clab != NA_STRING)
 		settext(pbar->lab, translateChar(clab));
 	}
