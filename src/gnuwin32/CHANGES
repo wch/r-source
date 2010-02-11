@@ -66,6 +66,10 @@ BUG FIXES
     o	system() (and hence shell()) did not set the standard file
     	handles properly, so some programs would not run.
 
+    o	setWinProgressBar() did not check the type of its 'title' and
+	'label' arguments and might have crashed if they were
+	mis-specified.  It now does, thanks to a report by Greg Snow.
+
 
 
 		CHANGES IN R VERSION 2.10.1

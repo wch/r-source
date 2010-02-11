@@ -52,10 +52,13 @@ winMenuNames <- function() .Internal(winMenuNames())
 
 winMenuItems <- function(menuname) .Internal(winMenuItems(menuname))
 
+## There is internal coercion, but using as.xxx here allows method dispatch
 winProgressBar <- function(title = "R progress bar", label = "",
-                           min = 0, max = 1, initial = 0, width = 300)
+                           min = 0, max = 1, initial = 0, width = 300L)
 {
-    res <- .Internal(winProgressBar(width, title, label, min, max, initial))
+    res <- .Internal(winProgressBar(as.integer(width), as.character(title),
+                                    as.character(label), as.double(min),
+                                    as.double(max), as.double(initial)))
     structure(list(pb=res), class = "winProgressBar")
 }
 
@@ -66,7 +69,9 @@ setWinProgressBar <- function(pb, value, title=NULL, label=NULL)
 {
     if(!inherits(pb, "winProgressBar"))
        stop("'pb' is not from class \"winProgressBar\"")
-    invisible(.Internal(setWinProgressBar(pb$pb, value, title, label)))
+    if(!is.null(title)) title <- as.character(title)
+    if(!is.null(label)) label <- as.character(label)
+    invisible(.Internal(setWinProgressBar(pb$pb, as.double(value), title, label)))
 }
 
 getWinProgressBar <- function(pb)
