@@ -28,7 +28,7 @@ function(x, ...)
 }
 
 aggregate.data.frame <-
-function(x, by, FUN, ...)
+function(x, by, FUN, ..., simplify = TRUE)
 {
     if(!is.data.frame(x)) x <- as.data.frame(x)
     ## Do this here to avoid masking by non-function (could happen)
@@ -49,23 +49,47 @@ function(x, by, FUN, ...)
         names(by)[ind] <- paste("Group", ind, sep = ".")
     }
 
-    len <- NROW(x)
-    grp <- integer(len)
+    ## Could also use interaction(drop = TRUE) ...
+    nrx <- NROW(x)
+    grp <- integer(nrx)
     for(ind in rev(by)) {
-        if(length(ind) != len)
+        if(length(ind) != nrx)
             stop("arguments must have same length")
         ind <- as.factor(ind)
         grp <- grp * nlevels(ind) + (as.integer(ind) - 1L)
     }
-    
-    y <- lapply(x, function(e) lapply(split(e, grp), FUN, ...))
-    if(any(unlist(lapply(unlist(y, recursive = FALSE), length)) != 1L))
-        stop("'FUN' must always return a scalar")
-    by <- as.data.frame(by, stringsAsFactors = FALSE)
-    y <- data.frame(by[match(sort(unique(grp)), grp, 0L), ], 
-                    lapply(y, unlist, use.names = FALSE),
-                    stringsAsFactors = FALSE)
-    names(y) <- c(names(by), names(x))
+
+    y <- as.data.frame(by, stringsAsFactors = FALSE)
+    y <- y[match(sort(unique(grp)), grp, 0L), , drop = FALSE]
+    names(y) <- names(by)
+    nry <- NROW(y)
+    z <- lapply(x,
+                function(e) {
+                    ## In case of a common length > 1, sapply() gives
+                    ## the transpose of what we need ...
+                    ans <- lapply(split(e, grp), FUN, ...)
+                    if(simplify &&
+                       length(len <- unique(sapply(ans, length))) == 1L) {
+                        if(len == 1L)
+                            ans <- unlist(ans, recursive = FALSE)
+                        else if(len > 1L)
+                            ans <- matrix(unlist(ans,
+                                                 recursive = FALSE),
+                                          nrow = nry,
+                                          ncol = len,
+                                          byrow = TRUE,
+                                          dimnames = {
+                                              if(!is.null(nms <-
+                                                          names(ans[[1L]])))
+                                                  list(NULL, nms)
+                                              else
+                                                  NULL
+                                          })
+                    }
+                    ans
+                })
+    for(i in seq_along(z))
+        y[[names(x)[i]]] <- z[[i]]
     row.names(y) <- NULL
     
     y
@@ -88,13 +112,14 @@ function(formula, data, FUN, subset, na.action = na.omit, ...)
     if(as.character(formula[[2L]] == ".")) {
         ## LHS is a dot, expand it ...
         rhs <- unlist(strsplit(deparse(formula[[3L]]), " *[:+] *"))
-        ## <FIXME>
+        ## <NOTE>
         ## Note that this will not do quite the right thing in case the
         ## RHS contains transformed variables, such that
         ##   setdiff(rhs, names(data))
         ## is non-empty ...
         lhs <- sprintf("cbind(%s)",
                        paste(setdiff(names(data), rhs), collapse = ","))
+        ## </NOTE>
         m[[2L]][[2L]] <- parse(text = lhs)[[1L]]
     }
     mf <- eval(m, parent.frame())
@@ -137,11 +162,11 @@ function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
     len <- ofrequency %/% nfrequency
     mat <- is.matrix(x)
     if(mat) cn <- colnames(x)
-#    nstart <- ceiling(tsp(x)[1L] * nfrequency) / nfrequency
-#    x <- as.matrix(window(x, start = nstart))
+    ##   nstart <- ceiling(tsp(x)[1L] * nfrequency) / nfrequency
+    ##   x <- as.matrix(window(x, start = nstart))
     nstart <- tsp(x)[1L]
-    # Can't use nstart <- start(x) as this causes problems if
-    # you get a vector of length 2.
+    ## Can't use nstart <- start(x) as this causes problems if
+    ## you get a vector of length 2.
     x <- as.matrix(x)
     nend <- floor(nrow(x) / len) * len
     x <- apply(array(c(x[1 : nend, ]),

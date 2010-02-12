@@ -251,7 +251,8 @@ NEW FEATURES
     	descriptions.
 
     o	aggregate() gains a formula method thanks to a contribution by
-    	Arni Magnusson.
+    	Arni Magnusson.  The data frame method now allows summary
+    	functions to return arbitrarily many values.
 
     o	path.expand() now propagates NA values rather than converting them
 	to "NA".
