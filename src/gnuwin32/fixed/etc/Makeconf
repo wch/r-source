@@ -196,7 +196,7 @@ lib%.dll.a: %.def
 
 %.a:
 	@$(RM) $@
-	$(BINPREF)$(AR) crs $@ $^
+	$(AR) crs $@ $^
 
 %.o: %.rc
-	$(BINPREF)$(RESCOMP) $(RESFLAGS) -i $< -o $@
+	$(RESCOMP) $(RESFLAGS) -i $< -o $@
