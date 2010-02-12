@@ -29,7 +29,11 @@ $(R_HOME)/bin/Rd2dvi.sh: Rd2dvi
 	@cp $< $@
 
 $(R_HOME)/bin/config.sh: config
+ifeq ($(strip $(WIN)),64)
+	@$(SED) -e "s|R_ARCH=|R_ARCH=$(R_ARCH)|" $< > $@
+else
 	@cp $< $@
+endif
 
 $(R_HOME)/bin/SHLIB.sh: SHLIB
 	@cp $< $@

@@ -5,9 +5,9 @@
 
 ifdef DEBUG
   DLLFLAGS=
-  DEBUGFLAG=-gdwarf-2
+  DEBUGFLAG=-gdwarf-2 -static-libgcc
 else
-  DLLFLAGS=-s
+  DLLFLAGS=-s -static-libgcc
   DEBUGFLAG=
 endif
 

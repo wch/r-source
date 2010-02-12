@@ -40,6 +40,7 @@ ifeq ($(strip $(WIN)),64)
 	  etc/Makeconf > $(R_HOME)/etc/Makeconf
 	$(MKDIR) -p $(R_HOME)/etc/x64
 	$(CP) -p $(R_HOME)/etc/Makeconf $(R_HOME)/etc/x64/Makeconf
+	$(RM) $(R_HOME)/etc/Makeconf
 else
 	$(SED) -e "s/IMPDIR = bin/IMPDIR = $(IMPDIR)/" \
 	  -e "s|LOCAL_SOFT =|LOCAL_SOFT = $(LOCAL_SOFT)|" \

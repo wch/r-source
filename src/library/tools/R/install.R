@@ -1197,6 +1197,9 @@
         SHLIB_EXT <- ".dll"
         SHLIB_LIBADD <- ""
         MAKE <- "make"
+        ## For winshlib.mk to pick up Makeconf
+        rarch <- .Platform$r_arch
+        if (nzchar(rarch)) Sys.setenv(R_ARCH = paste("/", rarch, sep=""))
     }
 
     OBJ_EXT <- ".o" # all currrent compilers, but not some on Windows

@@ -8,7 +8,7 @@
 # on CRAN can be found at
 # http://www.stats.ox.ac.uk/pub/Rtools/goodies/local.zip
 # http://www.stats.ox.ac.uk/pub/Rtools/goodies/Win64/local64.zip
-LOCAL_SOFT =
+LOCAL_SOFT = e:/R/W64/local
 
 ## ============== configuration macros for building R ===================
 
@@ -47,7 +47,7 @@ TCL_VERSION = 85
 BINPREF=
 
 # 32- or 64-bit Windows?  For MinGW-w64.
-WIN=32
+WIN=64
 ifeq ($(strip $(WIN)),64)
 # Mainly -DWIN64 is used, but this define is used in a few places
 DEFINES=-DW64
@@ -63,7 +63,7 @@ endif
 ICU_PATH=/sources/icu
 
 # optional overrides for making bitmapdll: names of source directories
-# JPEGDIR = jpeg-7
+JPEGDIR = jpeg-8
 # PNGDIR = libpng-1.2.35
 # TIFFDIR = libtiff
 
@@ -73,7 +73,7 @@ BUILD_HTML = NO
 ## ====== configuration macros for building installer ===========
 
 # location where Inno Setup 5.3.x was installed. Spaces allowed.
-ISDIR=C:/packages/Inno
+ISDIR=E:/packages/Inno
 
 ## ====== configuration macros for building MSI installer ===========
 
@@ -89,6 +89,7 @@ C99FLAG=-std=gnu99
 
 ifeq ($(strip $(BUILD)),GCC4)
 F77=$(BINPREF)gfortran$(GCC4_SUFF)
+FLIBS=E:/R/W64/i686c/mingw/lib64/libgfortran.a
 FLIBS=-lgfortran
 ## earlier Rtools needs -sjlj; the alternative is -dw2, which fails building R.
 GCC4_SUFF=
