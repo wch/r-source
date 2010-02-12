@@ -364,7 +364,7 @@ function(dir, control = list())
     if(is.na(encoding <- meta["Encoding"]))
         encoding <- "unknown"
 
-    defaults <- .aspell_package_defaults(dir, encoding)$Rd_files
+    defaults <- .aspell_package_defaults(dir, encoding)$vignettes
     if(!is.null(defaults)) {
         if(!is.null(d <- defaults$control))
             control <- d
