@@ -646,11 +646,14 @@ static int fgrep_one(const char *pat, const char *target,
     return -1;
 }
 
-/* Returns the match position in bytes, for use in [g]sub */
-static int fgrep_one_bytes(const char *pat, const char *target, 
+/* Returns the match position in bytes, for use in [g]sub.
+   len is the length of target.
+*/
+
+static int fgrep_one_bytes(const char *pat, const char *target, int len,
 			   Rboolean useBytes, Rboolean use_UTF8)
 {
-    int i = -1, plen=strlen(pat), len;
+    int i = -1, plen=strlen(pat);
     const char *p;
 
     if (plen == 0) return 0;
@@ -660,7 +663,6 @@ static int fgrep_one_bytes(const char *pat, const char *target,
 	    if (*p == pat[0]) return i;
 	return -1;
     }
-    len = strlen(target);
     if (!useBytes && mbcslocale) { /* skip along by chars */
 	mbstate_t mb_st;
 	int ib, used;
@@ -1193,10 +1195,9 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 
 	if (fixed_opt) {
-	    int st, nr;
-	    ns = strlen(s);
-
-	    st = fgrep_one_bytes(spat, s, useBytes, use_UTF8);
+	    int st, nr, slen = strlen(s);
+	    ns = slen;
+	    st = fgrep_one_bytes(spat, s, ns, useBytes, use_UTF8);
 	    if (st < 0)
 		SET_STRING_ELT(ans, i, STRING_ELT(text, i));
 	    else if (STRING_ELT(rep, 0) == NA_STRING)
@@ -1209,17 +1210,20 @@ SEXP attribute_hidden do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    do {
 			nr++;
 			ss += sst+patlen;
-		    } while((sst = fgrep_one_bytes(spat, ss, useBytes, use_UTF8)) >= 0);
+                        slen -= sst+patlen;
+		    } while((sst = fgrep_one_bytes(spat, ss, slen, useBytes, use_UTF8)) >= 0);
 		} else nr = 1;
 		cbuf = u = Calloc(ns + nr*(replen - patlen) + 1, char);
 		*u = '\0';
+                slen = ns;
 		do {
                     strncpy(u, s, st);
                     u += st;
                     s += st+patlen;
+                    slen -= st+patlen;
 		    strncpy(u, srep, replen);
                     u += replen;
-		} while(global && (st = fgrep_one_bytes(spat, s, useBytes, use_UTF8)) >= 0);
+		} while(global && (st = fgrep_one_bytes(spat, s, slen, useBytes, use_UTF8)) >= 0);
 		strcpy(u, s);
 		if (useBytes)
 		    SET_STRING_ELT(ans, i, mkChar(cbuf));
