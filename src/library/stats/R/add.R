@@ -814,9 +814,10 @@ extractAIC <- function(fit, scale, k = 2, ...) UseMethod("extractAIC")
 
 extractAIC.coxph <- function(fit, scale, k = 2, ...)
 {
+    ## fit$coefficients gives NAs for aliased terms
+    edf <- sum(!is.na(fit$coefficients))
     ## seems that coxph sometimes gives one and sometimes gives two values
-    ## for loglik
-    edf <- length(fit$coef)
+    ## for loglik: the latter is what is documented.
     loglik <- fit$loglik[length(fit$loglik)]
     c(edf, -2 * loglik + k * edf)
 }

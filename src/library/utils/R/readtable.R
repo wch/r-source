@@ -145,8 +145,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     names(what) <- col.names
 
     colClasses[colClasses %in% c("real", "double")] <- "numeric"
-    known <- colClasses %in%
-                c("logical", "integer", "numeric", "complex", "character")
+    known <- colClasses %in% c("logical", "integer", "numeric", "complex",
+                               "character", "raw")
     what[known] <- sapply(colClasses[known], do.call, list(0))
     what[colClasses %in% "NULL"] <- list(NULL)
     keep <- !sapply(what, is.null)

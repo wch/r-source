@@ -269,8 +269,11 @@ NEW FEATURES
 	archives available have been split, with a new option of
 	"Rhelp10" for those from 2010.
 
-    o   New function raster() in 'graphics' package for drawing 
+    o	New function raster() in the 'graphics' package for drawing
         raster images.
+
+    o	stats:::extractAIC.coxph() now omits aliased terms when computing
+	the degrees of freedom (suggestion of Terry Therneau).
 
 
 DEPRECATED & DEFUNCT
