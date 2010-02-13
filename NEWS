@@ -109,6 +109,11 @@ BUG FIXES
 	parts of complex numbers correctly (and this was used by str():
 	PR#14201).
 
+    o	Changing both line texture and line cap (end) resulted in the
+	latter to be ommitted form the PDF code. In additon, line cap
+	(end) and join are now set explicitly in PDF output to ensure
+	correct defaults.
+
 
 
 		CHANGES IN R VERSION 2.10.1

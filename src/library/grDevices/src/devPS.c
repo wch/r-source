@@ -5973,7 +5973,6 @@ static void PDF_SetLineStyle(const pGEcontext gc, pDevDesc dd)
         pd->current.lend != newlend) {
 	pd->current.lwd = newlwd;
 	pd->current.lty = newlty;
-        pd->current.lend = newlend;
 	fprintf(pd->pdffp, "%.2f w\n", newlwd * 0.75);
 	/* process lty : */
 	for(i = 0; i < 8 && newlty & 15 ; i++) {
@@ -6525,10 +6524,13 @@ static void PDF_NewPage(const pGEcontext gc,
     /*
      * Line end/join/mitre now controlled by user
      * Same old defaults
+     * .. but they are still needed because SetXXX produces the corresponding
+     * command only if the value changes - so we have to define base defaults
+     * according to the values reset by Invalidate.
      *
      * fprintf(pd->pdffp, "1 J 1 j 10 M q\n");
      */
-    fprintf(pd->pdffp, "q\n");
+    fprintf(pd->pdffp, "1 J 1 j q\n");
     PDF_Invalidate(dd);
     if(R_VIS(gc->fill)) {
 	PDF_SetFill(gc->fill, dd);
