@@ -16,22 +16,21 @@
 
 #### cor() , cov() and var() : Based on the same C code
 
-cor <-
-function(x, y=NULL, use="everything", method = c("pearson", "kendall", "spearman"))
+cor <- function(x, y = NULL, use = "everything",
+         method = c("pearson", "kendall", "spearman"))
 {
     na.method <-
 	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
 		      "everything", "na.or.complete"))
     method <- match.arg(method)
-    if(is.data.frame(y)) y <- as.matrix(y) else stopifnot(is.atomic(y))
+    if(is.data.frame(y)) y <- as.matrix(y)
     if(is.data.frame(x)) x <- as.matrix(x)
-    else {
-	stopifnot(is.atomic(x))
-	if(!is.matrix(x)) {
-	    if(is.null(y)) stop("supply both 'x' and 'y' or a matrix-like 'x'")
-	    x <- as.vector(x)
-	}
-    }
+    if(!is.matrix(x) && is.null(y))
+        stop("supply both 'x' and 'y' or a matrix-like 'x'")
+    ## non-atomic x should not be 'numeric', but in case a method messes up
+    stopifnot(is.numeric(x), is.atomic(x))
+    if(!is.null(y)) stopifnot(is.numeric(y), is.atomic(y))
+
     if(method == "pearson")
         .Internal(cor(x, y, na.method, FALSE))
     else if (na.method != 3L) {
@@ -99,22 +98,21 @@ function(x, y=NULL, use="everything", method = c("pearson", "kendall", "spearman
      }
 }
 
-cov <-
-function(x, y=NULL, use="everything", method = c("pearson", "kendall", "spearman"))
+cov <- function(x, y = NULL, use = "everything",
+                method = c("pearson", "kendall", "spearman"))
 {
     na.method <-
 	pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs",
 		      "everything", "na.or.complete"))
     method <- match.arg(method)
-    if(is.data.frame(y)) y <- as.matrix(y) else stopifnot(is.atomic(y))
+    if(is.data.frame(y)) y <- as.matrix(y)
     if(is.data.frame(x)) x <- as.matrix(x)
-    else {
-	stopifnot(is.atomic(x))
-	if(!is.matrix(x)) {
-	    if(is.null(y)) stop("supply both 'x' and 'y' or a matrix-like 'x'")
-	    x <- as.vector(x)
-	}
-    }
+    if(!is.matrix(x) && is.null(y))
+        stop("supply both 'x' and 'y' or a matrix-like 'x'")
+    ## non-atomic x should not be 'numeric', but in case a method messes up
+    stopifnot(is.numeric(x), is.atomic(x))
+    if(!is.null(y)) stopifnot(is.numeric(y), is.atomic(y))
+
     if(method == "pearson")
 	.Internal(cov(x, y, na.method, method == "kendall"))
     else if (na.method != 3L) {

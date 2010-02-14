@@ -276,6 +276,9 @@ NEW FEATURES
     o	stats:::extractAIC.coxph() now omits aliased terms when computing
 	the degrees of freedom (suggestion of Terry Therneau).
 
+    o	cor() and cov() now test for misuse with non-numeric
+	arguments, such as the non-bug report PR#14207.
+
 
 DEPRECATED & DEFUNCT
 
@@ -344,7 +347,12 @@ BUG FIXES
     	
     o	Formatting of help pages has had minor improvements: extra
 	blank lines have been removed from the text format, and empty
-	package labels removed from HTML.	
+	package labels removed from HTML.
+
+    o	cor(A, B) where A has n x 1 and B a 1-dimensional array
+	segfaulted or gave an internal error.
+	(The case cor(B, A) was PR#7116.)
+
 
 
 

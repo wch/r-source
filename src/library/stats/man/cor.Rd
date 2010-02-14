@@ -1,6 +1,6 @@
 % File src/library/stats/man/cor.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{cor}
@@ -54,7 +54,12 @@ cov2cor(V)
 \details{
   For \code{cov} and \code{cor} one must \emph{either} give a matrix or
   data frame for \code{x} \emph{or} give both \code{x} and \code{y}.
-
+  
+  The inputs much be numeric (as determined by
+  \code{\link{is.numeric}}): the \code{"kendall"}, or \code{"spearman"}
+  methods make sense for ordered inputs but \code{\link{xtfrm}} can be
+  used to find a suitable prior transformations to numbers.
+  
   \code{var} is just another interface to \code{cov}, where
   \code{na.rm} is used to determine the default for \code{use} when that
   is unspecified.  If \code{na.rm} is \code{TRUE} then the complete

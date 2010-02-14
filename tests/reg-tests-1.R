@@ -2962,8 +2962,11 @@ try(options(list('digits', 'width')))# give an error
 list.files('.', all.files = TRUE, recursive = TRUE)
 
 
-## PR#7116 seg faulted :
-cor(as.array(c(a=1,b=2)), cbind(1:2))
+## PR#7116 segfaulted on A, later versions segfaulted on B or gave different
+## dims for the results.
+A <- cor(as.array(c(a=1,b=2)), cbind(1:2))
+B <- cor(cbind(1:2), as.array(c(a=1,b=2)))
+stopifnot(identical(A, B))
 
 
 ## regression test for PR#7108
