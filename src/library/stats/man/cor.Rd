@@ -55,8 +55,9 @@ cov2cor(V)
   For \code{cov} and \code{cor} one must \emph{either} give a matrix or
   data frame for \code{x} \emph{or} give both \code{x} and \code{y}.
   
-  The inputs much be numeric (as determined by
-  \code{\link{is.numeric}}): the \code{"kendall"}, or \code{"spearman"}
+  The inputs must be numeric (as determined by
+  \code{\link{is.numeric}}: logical values are also allowed for historical
+  compatibility): the \code{"kendall"}, or \code{"spearman"}
   methods make sense for ordered inputs but \code{\link{xtfrm}} can be
   used to find a suitable prior transformations to numbers.
   

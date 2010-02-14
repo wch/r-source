@@ -28,8 +28,9 @@ cor <- function(x, y = NULL, use = "everything",
     if(!is.matrix(x) && is.null(y))
         stop("supply both 'x' and 'y' or a matrix-like 'x'")
     ## non-atomic x should not be 'numeric', but in case a method messes up
-    stopifnot(is.numeric(x), is.atomic(x))
-    if(!is.null(y)) stopifnot(is.numeric(y), is.atomic(y))
+    ## allow logicals for back-compatibility (package mice).
+    stopifnot(is.numeric(x) || is.logical(x), is.atomic(x))
+    if(!is.null(y)) stopifnot(is.numeric(y) || is.logical(y), is.atomic(y))
 
     if(method == "pearson")
         .Internal(cor(x, y, na.method, FALSE))
@@ -110,8 +111,8 @@ cov <- function(x, y = NULL, use = "everything",
     if(!is.matrix(x) && is.null(y))
         stop("supply both 'x' and 'y' or a matrix-like 'x'")
     ## non-atomic x should not be 'numeric', but in case a method messes up
-    stopifnot(is.numeric(x), is.atomic(x))
-    if(!is.null(y)) stopifnot(is.numeric(y), is.atomic(y))
+    stopifnot(is.numeric(x) || is.logical(x), is.atomic(x))
+    if(!is.null(y)) stopifnot(is.numeric(y) || is.logical(y), is.atomic(y))
 
     if(method == "pearson")
 	.Internal(cov(x, y, na.method, method == "kendall"))
