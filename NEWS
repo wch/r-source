@@ -353,6 +353,10 @@ BUG FIXES
 	segfaulted or gave an internal error.
 	(The case cor(B, A) was PR#7116.)
 
+    o	cut.POSIXt() applied to a start value after the DST transition
+	on a DST-change day could give the wrong time for 'breaks' in units
+	of days or longer.  (PR#14208)
+
 
 
 
