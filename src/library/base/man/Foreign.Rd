@@ -1,6 +1,6 @@
 % File src/library/base/man/Foreign.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Foreign}
@@ -120,7 +120,8 @@
 
   \emph{Note:} The C types corresponding to \code{integer} and
   \code{logical} are \code{int}, not \code{long} as in S.  This
-  difference matters on 64-bit platforms.
+  difference matters on most 64-bit platforms, where \code{int} is
+  32-bit and \code{long} is 64-bit (but not on 64-bit Windows).
 
   The first character string of a character vector is passed as a C
   character array to Fortran: that string may be usable as
@@ -132,7 +133,7 @@
   Missing (\code{NA}) string values are passed to \code{.C} as the string
   "NA". As the C \code{char} type can represent all possible bit patterns
   there appears to be no way to distinguish missing strings from the
-  string \code{"NA"}. If this distinction is important use \code{.Call}.
+  string \code{"NA"}.  If this distinction is important use \code{.Call}.
 
   Functions, expressions, environments and other language elements are
   passed as the internal \R pointer type \code{SEXP}.  This type is
@@ -152,7 +153,8 @@
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM,
 %%      edited by BDR for 1.2.0's non-moving garbage collector):
-\section{Warning}{\emph{\code{DUP=FALSE} is dangerous.}
+\section{Warning}{
+  \emph{\code{DUP=FALSE} is dangerous.}
 
   There are two dangers with using \code{DUP=FALSE}.
 
@@ -189,25 +191,22 @@
 }
 
 \section{Fortran symbol names}{
-  All compilers that can be used with \R map symbol names to lower case,
-  and so does \code{.Fortran}.
+  All Fortran compilers that can be used to compile \R map symbol names
+  to lower case, and so does \code{.Fortran}.
 
   Symbol names containing underscores are not valid Fortran 77 (although
-  they are valid in Fortran 9x).  Many Fortran 77 compilers (including
-  \code{g77}) will allow them but translate them in a different way to
-  names not containing underscores.  Such names will work with
-  \code{.Fortran}, but portable code should not use Fortran names
-  containing underscores.
+  they are valid in Fortran 9x).  Many Fortran 77 compilers will allow
+  them but may translate them in a different way to names not containing
+  underscores.  Such names will often work with \code{.Fortran} (since
+  how they are translated is detected when \R is built and the
+  information used by \code{.Fortran}), but portable code should not use
+  Fortran names containing underscores.
 
   Use \code{.Fortran} with care for compiled Fortran 9x code: it may not
   work if the Fortran 9x compiler used differs from the Fortran compiler
   used when configuring \R, especially if the subroutine name is not
-  lower-case or includes an underscore.
-#ifdef windows
-  This \emph{is} the case under Windows, where \code{gfortran} and
-  \code{g95} treat underscores differently from \code{g77} with which \R
-  is compiled.
-#endif
+  lower-case or includes an underscore.  It is also possible to use
+  \code{.C} and do any necessary symbol-name translation yourself.
 }
 
 \section{Header files for external code}{

@@ -374,7 +374,7 @@ supported prior to @R{} 2.7.0, and only @samp{>=} is supported for
 package versions by @code{install.packages}.}, whitespace and a valid
 version number).  You can also use the special package name @samp{R} if
 your package depends on a certain version of @R{}.  E.g., if the package
-works only with @R{} version 2.4.0 or newer, include @samp{R (>= 2.4.0)}
+works only with @R{} version 2.4.0 or later, include @samp{R (>= 2.4.0)}
 in the @samp{Depends} field.  Both @code{library} and the @R{} package
 checking facilities use this field, hence it is an error to use improper
 syntax or misuse the @samp{Depends} field for comments on other software
@@ -5839,11 +5839,8 @@ example C++ (@pxref{Interfacing C++ code}).
 The first argument to each function is a character string given the
 symbol name as known to C or FORTRAN, that is the function or subroutine
 name.  (That the symbol is loaded can be tested by, for example,
-@code{is.loaded("cg")}: it is no longer necessary nor correct to use
-@code{symbol.For}, which is defunct as from @R{} 2.5.0.)  (Note that the
-underscore is not a valid character in a FORTRAN 77 subprogram name, and
-on versions of @R{} prior to 2.4.0 @code{.Fortran} may not correctly
-translate names containing underscores.)
+@code{is.loaded("cg")}. Use the name you pass to @code{.C} or
+@code{.Fortran} rather than the translated symbol name.)
 
 There can be up to 65 further arguments giving @R{} objects to be passed
 to compiled code.  Normally these are copied before being passed in, and
