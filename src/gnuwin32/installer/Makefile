@@ -36,7 +36,11 @@ INFO_FILES = COPYING NEWS README
 DOC_INFO_FILES = AUTHORS COPYING COPYING.LIB FAQ RESOURCES THANKS CHANGES
 GW_INFO_FILES = COPYRIGHTS README.Rterm rw-FAQ
 
-ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Makeconf Rcmd_environ
+ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Rcmd_environ
+ifneq ($(strip $(WIN)),64)
+ETC_FILES += Makeconf
+endif
+
 
 # we don't want share/{Makefile.in,sh} installed
 SHARE_DIRS = R licenses locale make perl texmf zoneinfo

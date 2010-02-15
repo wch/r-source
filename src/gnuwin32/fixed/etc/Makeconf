@@ -1,15 +1,17 @@
 #-*- Makefile -*-
-# $(R_HOME}/etc/Makeconf
+# $(R_HOME}/etc$(R_ARCH)/Makeconf
 
 # Hand-edited version for gnuwin32.
 
 ifdef DEBUG
   DLLFLAGS=
-  DEBUGFLAG=-gdwarf-2 -static-libgcc
+  DEBUGFLAG=-gdwarf-2
 else
-  DLLFLAGS=-s -static-libgcc
+  DLLFLAGS=-s
   DEBUGFLAG=
 endif
+
+DLLFLAGS+= -static-libgcc
 
 WIN = 32
 BINPREF =
