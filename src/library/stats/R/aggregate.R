@@ -61,7 +61,6 @@ function(x, by, FUN, ..., simplify = TRUE)
 
     y <- as.data.frame(by, stringsAsFactors = FALSE)
     y <- y[match(sort(unique(grp)), grp, 0L), , drop = FALSE]
-    names(y) <- names(by)
     nry <- NROW(y)
     z <- lapply(x,
                 function(e) {
@@ -88,8 +87,10 @@ function(x, by, FUN, ..., simplify = TRUE)
                     }
                     ans
                 })
+    len <- length(y)
     for(i in seq_along(z))
-        y[[names(x)[i]]] <- z[[i]]
+        y[[len + i]] <- z[[i]]
+    names(y) <- c(names(by), names(x))
     row.names(y) <- NULL
     
     y
