@@ -357,6 +357,8 @@ BUG FIXES
 	on a DST-change day could give the wrong time for 'breaks' in units
 	of days or longer.  (PR#14208)
 
+    o   do_par() UNPROTECTed too early (PR#14214)
+ 
 
 
 
