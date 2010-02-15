@@ -27,6 +27,8 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 
     if(length(x) != length(y))
 	stop("'x' and 'y' must have the same length")
+    if(!is.numeric(x)) stop("'x' must be a numeric vector")
+    if(!is.numeric(y)) stop("'y' must be a numeric vector")
     OK <- complete.cases(x, y)
     x <- x[OK]
     y <- y[OK]
