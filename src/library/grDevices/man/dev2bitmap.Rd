@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/dev2bitmap.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dev2bitmap}
@@ -100,14 +100,18 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   None.
 }
 
-#ifdef windows
 \note{
+#ifdef windows
   Use of \code{bitmap} will leave a temporary file (with file name
-  starting \code{Rbit}).  Use of the \code{\link{pdf}}, \code{\link{bmp}},
-  \code{\link{png}}, \code{\link{tiff}} and \code{\link{jpeg}} devices
-  may be preferred to using these functions.
-}
+  starting \code{Rbit}).
+  
 #endif
+  Although using \code{type = "pdfwrite"} will work for simple plots, it
+  is not recommended.  Either use \code{\link{pdf}} to produce PDF
+  directly, or call \command{ps2pdf -dAutoRotatePages=/None} on the
+  output of \code{\link{postscript}}: that command is optimized to do
+  the conversion to PDF in ways that these functions are not.
+}
 
 \section{Conventions}{
   This section describes the implementation of the conventions for
