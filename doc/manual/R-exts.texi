@@ -2478,6 +2478,10 @@ CMD check} checks for.
 
 @end itemize
 
+Some notes on issues specific to porting to x64 Windows are available at
+@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
+
+
 @node Encoding issues,  , Writing portable packages, Writing portable packages
 @subsection Encoding issues
 

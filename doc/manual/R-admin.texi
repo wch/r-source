@@ -850,13 +850,19 @@ binaries for a base distribution and a large number of add-on packages
 from @acronym{CRAN} to run on Windows 2000 or later on ix86
 @acronym{CPU}s (including AMD64/EM64T chips and Windows x64).
 
+As from @R{} 2.11.0 there is also a 64-bit version for Windows x64 in
+the @file{bin/windows64} directory: this is primarily intended for users
+who require large amounts of memory and beginning users of @R{} should
+install the standard version even on a 64-bit Windows OS.
+
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-Installation is @emph{via} the installer @file{@value{RWVERSION}-win32.exe}.
-Just double-click on the icon and follow the instructions.  You can
-uninstall @R{} from the Control Panel or from the (optional) @R{}
-program group on the Start Menu.
+Installation is @emph{via} the installer
+@file{@value{RWVERSION}-win32.exe} (or
+@file{@value{RWVERSION}-win64.exe}).  Just double-click on the icon and
+follow the instructions.  You can uninstall @R{} from the Control Panel
+or from the (optional) @R{} program group on the Start Menu.
 
 Note that you will probably (depending on the Windows language settings)
 be asked to choose a language for installation, and that choice applies
@@ -1294,28 +1300,52 @@ versions of Windows, with a limit on the total memory allocation (and
 address space) of 4GB.  Thus a native 64-bit build will be attractive to
 those wanting to work with large R objects, or many medium-sized ones.
 
-To build a 64-bit version of R you need a 64-bit toolchain: the only
-ones discussed here are those based on the work of the MinGW-w64 project
+To build a 64-bit version of R you need a 64-bit toolchain: the only one
+discussed here is based on the work of the MinGW-w64 project
 (@url{http://sourceforge.net/projects/mingw-w64/}, a port of GNU
 @code{binutils} and @code{gcc}), but commercial compilers such as those
 from Intel and PGI could be used (and have been by R redistributors).
 
 Support of MinGW-w64 has been developed in the R sources over the period
-2008-10: it is still experimental and this section is intended merely as
-pointers for expert users.
+2008--10 and was first released as part of @R{} 2.11.0: it is regarded
+as still experimental.
 
-Several versions of the MinGW-w64 toolchain are available@footnote{at
-the time of writing native 64-bit compilers from
-@url{ftp://ftp.equation.com/gcc/} and
-@url{http://www.cadforte.com/downloads.html} and a 32-bit compiler
-targeting 64-bit from @url{http://sourceforge.net/projects/mingw-w64/}
-packages with a name like
-@file{mingw-w64-bin_i686-mingw_20100208.zip}}: use one of them
+Several versions of the MinGW-w64 toolchain are available: use one of them
 to replace the @file{MinGW/bin} directory of @code{Rtools} in your path
 (but still have the Rtools @file{bin} directory and Perl in your path).
 Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64} and
 @code{BINPREF} appropriate to your toolchain, and make R in the usual
 way.
+
+The toolchain used to build the CRAN distribution is technically a
+cross-compiler: the tools run under 32-bit Windows but produce code to
+run under 64-bit Windows.@footnote{As the @R{} build process itself runs
+@R{}, it has to be done under 64-bit Windows.  So does installation of
+source packages.} This comes from
+@url{http://sourceforge.net/projects/mingw-w64/files} and has a name
+like @file{mingw-w64-bin_i686-mingw_20100208.zip}.  (Care is needed:
+that site also has compilers targeting 32-bit Windows and running on
+other host OSes. At the time of writing the distribution we used was
+under `Toolchains targetting Win64' and then `Automated builds'.)  That
+toolchain by default uses dynamic linking to the compiler runtimes,
+which causes problems (see
+@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}), and can
+be converted to static linking by removing the files
+@example
+.../x86_64-w64-mingw32/lib64/*.dll.a
+.../mingw/lib64/*.dll.a
+.../bin/*.dll
+@end example
+
+@noindent
+where @code{...} is the top-level directory of the toolchain.  This has
+been done for the CRAN builds.  If you use an unmodified toolchain be
+sure to arrange to distribute the required run-time DLLs (and note the
+requirements that their GPL license imposes on re-distribution).
+
+@c Other toolchains are available: the time of writing native 64-bit
+@c compilers from @url{ftp://ftp.equation.com/gcc/} and formerly from
+@c @url{http://www.cadforte.com/downloads.html}.  Use at your own risk!
 
 To build package @pkg{tcltk} you need to unpack
 @url{http://www.stats.ox.ac.uk/pub/Rtools/R64_Tcl_8-5-8.zip} at the top
@@ -1323,22 +1353,20 @@ of the source tree: otherwise edit @file{src/library/tcltk/Makefile.win}
 to make a stub package.
 
 The default is @code{options(pkgType="win64.binary")}, supported so far
-on both @acronym{CRAN} and @acronym{CRAN}.  Note that some of the
-toolchains, including that from SourceForge, use dynamic linking for
-language support: this means that you may need the DLLs in the
-toolchain's @file{bin} directory in your path when running @R{}
-(especially for packages using C++).  Packages using Gtk+ (@pkg{Cairo},
-@pkg{RGtk2}, @pkg{cairoDevice} and those@footnote{Note that these
-libraries do not include @code{libglade-2}, an optional part of
-@pkg{Rgtk2} and @pkg{rattle} depends on.} that depend on them) need the
-@file{bin} directory of the distribution at
-@url{http://www.gtk.org/download-windows-64bit.html} in the path.
+on both @acronym{CRAN} and @acronym{CRANextras} but not for
+Bioconductor.  Packages using Gtk+ (@pkg{Cairo}, @pkg{RGtk2},
+@pkg{cairoDevice} and those that depend on them) need the @file{bin}
+directory of the distribution at
+@url{http://www.gtk.org/download-windows-64bit.html} in the path: note
+that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
+you need the correct one first in your path if using both.
 
 An experimental package-building service is available at
-@url{http://win-builder.r-project.org/}.
+@url{http://win-builder.r-project.org/}.  Notes on porting packages can
+be found at @url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
 
 The default memory limit will be the amount of installed RAM: it can
-be changed by (preferably) using @option{--max-mem-size=} at startup or
+be changed by using (preferably) @option{--max-mem-size=} at startup or
 @code{memory.limit} in a running R session.
 
 The personal library is (by default) folder
