@@ -480,6 +480,9 @@ BUG FIXES
 	(end) and join are now set explicitly in PDF output to ensure
 	correct defaults.
 
+    o	The suppression of auto-rotation in bitmap() and dev2bitmap()
+	with the 'pdfwrite' device was not working correctly.
+
 
 
 		CHANGES IN R VERSION 2.10.1

@@ -64,7 +64,7 @@ dev2bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
     if (!is.na(gaa)) extra <- paste(extra, " -dGraphicsAlphaBits=", gaa, sep="")
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,
-                 "-dAutoRotatePages=/None",
+                 " -dAutoRotatePages=/None",
                  " -g", ceiling(res*width), "x", ceiling(res*height),
                   extra,
                  " -sOutputFile=", file, " ", tmp, sep="")
@@ -104,7 +104,7 @@ bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
     tmp <- tempfile("Rbit")
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,
-                 "-dAutoRotatePages=/None",
+                 " -dAutoRotatePages=/None",
                  " -g", ceiling(res*width), "x", ceiling(res*height),
                  extra,
                  " -sOutputFile=", file, sep="")
