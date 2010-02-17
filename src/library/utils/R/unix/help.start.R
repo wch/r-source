@@ -32,7 +32,7 @@ help.start <-
     url <- paste(home, "/doc/html/index.html", sep = "")
 
     if (is.character(browser)) {
-        writeLines(strwrap(gettextf("If '%s' is already running, it is *not* restarted, and you must switch to its window.",
+        writeLines(strwrap(gettextf("If the browser launched by '%s' is already running, it is *not* restarted, and you must switch to its window.",
                                     browser),
                            exdent = 4L))
         writeLines(gettext("Otherwise, be patient ..."))
