@@ -1326,22 +1326,23 @@ source packages.} This comes from
 like @file{mingw-w64-bin_i686-mingw_20100208.zip}.  (Care is needed:
 that site also has compilers targeting 32-bit Windows and running on
 other host OSes. At the time of writing the distribution we used was
-under `Toolchains targetting Win64' and then `Automated builds'.)  That
-toolchain by default uses dynamic linking to the compiler runtimes,
+under `Toolchains targetting Win64' and then `Automated builds': there
+was a native x64 toolchain under `Personal builds'.)  Some versions of
+that toolchain by default use dynamic linking to the compiler runtimes,
 which causes problems (see
 @url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}), and can
-be converted to static linking by removing the files
+be converted to static linking by removing the files like
 @example
 .../x86_64-w64-mingw32/lib64/*.dll.a
-.../mingw/lib64/*.dll.a
 .../bin/*.dll
 @end example
 
 @noindent
 where @code{...} is the top-level directory of the toolchain.  This has
-been done for the CRAN builds.  If you use an unmodified toolchain be
-sure to arrange to distribute the required run-time DLLs (and note the
-requirements that their GPL license imposes on re-distribution).
+been done for the CRAN builds.  If you use a dynamically-linking
+toolchain be sure to arrange to distribute the required run-time DLLs
+(and note the requirements that their GPL license imposes on
+re-distribution).
 
 @c Other toolchains are available: the time of writing native 64-bit
 @c compilers from @url{ftp://ftp.equation.com/gcc/} and formerly from
