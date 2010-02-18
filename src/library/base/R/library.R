@@ -73,9 +73,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             warning(gettextf("package '%s' was built under R version %s",
                              pkgname, as.character(built$R)),
                     call. = FALSE, domain = NA)
+        platform <- built$Platform
+        r_arch <- .Platform$r_arch
         if(.Platform$OS.type == "unix") {
-            platform <- built$Platform
-            r_arch <- .Platform$r_arch
             ## allow mismatches if r_arch is in use, e.g.
             ## i386-gnu-linux vs x86-gnu-linux depending on
             ## build system.
@@ -84,20 +84,20 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 stop(gettextf("package '%s' was built for %s",
                               pkgname, platform),
                      call. = FALSE, domain = NA)
-            ## if using r_arch subdirs, check for presence
-            if(nzchar(r_arch)
-               && file.exists(file.path(pkgpath, "libs"))
-               && !file.exists(file.path(pkgpath, "libs", r_arch)))
-                stop(gettextf("package '%s' is not installed for 'arch=%s'",
-                              pkgname, r_arch),
+        } else {  # Windows
+            ## will need to expand this once we merge i386 and x86_64
+            if(nzchar(platform) && platform != R.version$platform)
+                stop(gettextf("package '%s' was built for %s",
+                              pkgname, platform),
                      call. = FALSE, domain = NA)
         }
-##        } else # Windows
-##             if(nzchar(platform <- built$Platform) &&
-##                platform != R.version$platform)
-##                 stop(gettextf("package '%s' was built for %s",
-##                               pkgname, platform),
-##                      call. = FALSE, domain = NA)
+        ## if using r_arch subdirs, check for presence
+        if(nzchar(r_arch)
+           && file.exists(file.path(pkgpath, "libs"))
+           && !file.exists(file.path(pkgpath, "libs", r_arch)))
+            stop(gettextf("package '%s' is not installed for 'arch=%s'",
+                          pkgname, r_arch),
+                 call. = FALSE, domain = NA)
     }
 
     checkLicense <- function(pkg, pkgInfo, pkgPath)
