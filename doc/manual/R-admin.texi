@@ -2443,22 +2443,23 @@ most likely needs @acronym{GNU} @code{gettext}: you do need this to work
 with new translations, but otherwise the version contained in the R
 sources will be used if no suitable external @code{gettext} is found.
 
-The `modern' version of @code{X11}, @code{jpeg()}, @code{png()} and
-@code{tiff()} uses the @code{cairo} and (optionally) @code{Pango}
-libraries.  Cairo version 1.2.0 or later is required.  Pango needs to be
-at least version 1.10, and 1.12 is the earliest version we have tested.
-(For Fedora users we believe the @code{pango-devel} RPM and its
-dependencies suffice.)  @R{} checks for @command{pkg-config}, and uses
-that to check first that the @samp{pangocairo} package is installed (and
-if not, @samp{cairo}) and if additional flags are needed for the
-@samp{cairo-xlib} package, then if suitable code can be compiled.  These
-tests will fail if @command{pkg-config} is not installed, and are likely
-to fail if @code{cairo} was built statically (unusual).  Most systems
-with @code{Gtk+} 2.8 or later installed will have suitable libraries,
-but some (e.g.@: Solaris 10) may need @code{cairo} added separately.
-Mac OS X comes with none of these libraries, but @code{cairo} support
-has been added to the binary distribution: @code{pkg-config} is still
-needed and can be compiled from the sources.
+The `modern' version of the @code{X11}, @code{jpeg()}, @code{png()} and
+@code{tiff()} graphics devices uses the @code{cairo} and (optionally)
+@code{Pango} libraries.  Cairo version 1.2.0 or later is required.
+Pango needs to be at least version 1.10, and 1.12 is the earliest
+version we have tested.  (For Fedora users we believe the
+@code{pango-devel} RPM and its dependencies suffice.)  @R{} checks for
+@command{pkg-config}, and uses that to check first that the
+@samp{pangocairo} package is installed (and if not, @samp{cairo}) and if
+additional flags are needed for the @samp{cairo-xlib} package, then if
+suitable code can be compiled.  These tests will fail if
+@command{pkg-config} is not installed, and are likely to fail if
+@code{cairo} was built statically (unusual).  Most systems with
+@code{Gtk+} 2.8 or later installed will have suitable libraries, but
+some (e.g.@: Solaris 10) may need @code{cairo} added separately.  Mac OS
+X comes with none of these libraries, but @code{cairo} support has been
+added to the binary distribution: @code{pkg-config} is still needed and
+can be installed from the sources.
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  Another
@@ -2485,7 +2486,7 @@ and are tested with @R{} you should not need to change this.  In
 particular, the version of @code{zlib} 1.2.3 in the @R{} sources has
 enhancements to work with large file systems on 32-bit platforms.
 
-@code{liblzma} from @code{xv-utils} version 4.999 or later will be used
+@code{liblzma} from @code{xz-utils} version 4.999 or later will be used
 if installed: the version in the @R{} sources can be selected instead by
 configuring with @option{--with-system-xz=no}.
 
@@ -2503,7 +2504,8 @@ provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
 Linux distributions, Solaris 9/10, AIX and Windows, usually as
 @code{libicu} or @code{icu4c}.  It will be used by default where
-available (including on Mac OS X >= 10.4).
+available (including on Mac OS X >= 10.4): should a broken version of
+ICU be found this can be suppressed by @option{--without-ICU}.
 
 Code developers will need Perl version 5.8.0 or later, available via
 @uref{http://www.perl.com/CPAN/}.  This is used to package and check
