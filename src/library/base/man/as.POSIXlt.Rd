@@ -1,6 +1,6 @@
 % File src/library/base/man/as.POSIXlt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{as.POSIX*}
@@ -103,7 +103,7 @@ as.POSIXlt(x, tz = "", \dots)
 \examples{
 (z <- Sys.time())             # the current datetime, as class "POSIXct"
 unclass(z)                    # a large integer
-floor(unclass(z)/86400)       # the number of days since 1970-01-01
+floor(unclass(z)/86400)       # the number of days since 1970-01-01 (UTC)
 (z <- as.POSIXlt(Sys.time())) # the current datetime, as class "POSIXlt"
 unlist(unclass(z))            # a list shown as a named vector
 

@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -77,8 +77,8 @@
 \details{
   There are two basic classes of date/times.  Class \code{"POSIXct"}
   represents the (signed) number of seconds since the beginning of 1970
-  as a numeric vector.  Class \code{"POSIXlt"} is a named list of
-  vectors representing
+  (in the UTC timezone) as a numeric vector.  Class \code{"POSIXlt"} is
+  a named list of vectors representing
   \describe{
     \item{\code{sec}}{0--61: seconds}
     \item{\code{min}}{0--59: minutes}
