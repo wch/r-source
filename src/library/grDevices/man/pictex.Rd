@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pictex.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{pictex}
@@ -19,20 +19,22 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   \item{fg}{the foreground color for the plot.  Ignored.}
 }
 \description{
-  This function produces graphics suitable for inclusion in TeX and
-  LaTeX documents.
+  This function produces simple graphics suitable for inclusion in TeX
+  and LaTeX documents.  It dates from the very early days of \R and is
+  for historical interest only.
 }
 \details{
-  This driver does not have any font metric information, so the use of
-  \code{\link{plotmath}} is not supported.
-
-  Multiple plots will be placed as separate environments in the output file.
+  This driver is much more basic than the other graphics drivers
+  included in \R.  It does not have any font metric information, so the
+  use of \code{\link{plotmath}} is not supported.
 
   Line widths are ignored except when setting the spacing of line textures.
   \code{pch="."} corresponds to a square of side 1pt.
 
   This device does not support colour (nor does the PicTeX package),
   and all colour settings are ignored.
+  
+  Multiple plots will be placed as separate environments in the output file.  
 }
 \references{
   Knuth, D. E. (1984)
@@ -48,8 +50,7 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   Reading, MA: Addison-Wesley.
 }
 \author{
-  This driver was provided by Valerio Aimale
-  \email{valerio@svpop.com.dist.unige.it}
+  This driver was provided around 1996--7 by Valerio Aimale
   of the Department of Internal Medicine, University of Genoa, Italy.
 }
 \section{Conventions}{
@@ -57,7 +58,7 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   graphics devices set out in the \dQuote{R Internals Manual}.
 
   \itemize{
-    \item The default device size is 5 inches by 5 inches.
+    \item The default device size is 5 inches by 4 inches.
     \item There is no \code{pointsize} argument: the default size is
     interpreted as 10 point.
     \item The only font family is \code{cmss10}.
@@ -67,7 +68,11 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   }
 }
 \seealso{
-  \code{\link{postscript}}, \code{\link{Devices}}.
+  \code{\link{postscript}}, \code{\link{pdf}}, \code{\link{Devices}}.
+
+  The \code{tikzDevice} in the CRAN package of that name for more modern
+  LaTeX-based graphics (although including PDF figures is most common in
+  LaTeX documents).
 }
 \examples{
 require(graphics)
@@ -80,6 +85,7 @@ dev.off()
 \%\% LaTeX Example
 \\documentclass{article}
 \\usepackage{pictex}
+\\usepackage{graphics} \% for \\rotatebox
 \\begin{document}
 \%...
 \\begin{figure}[h]
@@ -88,10 +94,6 @@ dev.off()
 \\end{figure}
 \%...
 \\end{document}
-
-\%\%-- plain TeX Example --
-\\input pictex
-$$ \\input Rplots.tex $$
 }
 ##--------------------
 unlink("Rplots.tex")
