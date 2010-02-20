@@ -16,3 +16,14 @@ default and seems not to work on x86_64 platforms.
 
 Performance optimizations are only used on Windows: it is assumed that on
 other systems an optimized system liblzma is or could be made available.
+
+common/vli_encoder.c,
+common/vli_decoder.c,
+api/lzma/api.h:
+  Remove incorrect use of restrict keyword. See commit
+  49cfc8d392cf535f8dd10233225b1fc726fec9ef in the XZ-Utils git
+  repository. This is a temporary fix until the next version of
+  XZ-Utils is released and integrated. Without this small change both
+  Intels C compiler as well as gcc 4.4 (and possibly others) generate
+  broken code.
+
