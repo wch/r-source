@@ -87,11 +87,11 @@ static char *findRbrace(char *s)
     return pr;
 }
 
-
+#define BUF_SIZE 10000
 static char *findterm(char *s)
 {
     char *p, *q, *r, *r2, *ss=s;
-    static char ans[1000];
+    static char ans[BUF_SIZE];
     int nans;
 
     if(!strlen(s)) return "";
@@ -109,11 +109,11 @@ static char *findterm(char *s)
 	strncpy(r, p, q - p + 1);
 	r[q - p + 1] = '\0';
 	r2 = subterm(r);
-	if(strlen(ans) + strlen(r2) < 1000) strcat(ans, r2); else return ss;
+	if(strlen(ans) + strlen(r2) < BUF_SIZE) strcat(ans, r2); else return ss;
 	/* now repeat on the tail */
 	s = q+1;
     }
-    if(strlen(ans) + strlen(s) < 1000) strcat(ans, s); else return ss;
+    if(strlen(ans) + strlen(s) < BUF_SIZE) strcat(ans, s); else return ss;
     return ans;
 }
 
@@ -171,7 +171,6 @@ static void Putenv(char *a, char *b)
 }
 
 
-#define BUF_SIZE 255
 #define MSG_SIZE 2000
 static int process_Renviron(const char *filename)
 {
@@ -268,7 +267,7 @@ void process_user_Renviron()
 #endif
 #ifdef Win32
     {
-	char buf[1024];
+	char buf[1024]; /* MAX_PATH is less than this */
 	/* R_USER is not necessarily set yet, so we have to work harder */
 	s = getenv("R_USER");
 	if(!s) s = getenv("HOME");
