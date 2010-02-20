@@ -14,8 +14,9 @@ All the files from xz-utils are in the public domain.
 The subblock encoder is not used: it is not configured in by
 default and seems not to work on x86_64 platforms.
 
-Performance optimizations are only used on Windows: it is assumed that on
-other systems an optimized system liblzma is or could be made available.
+Performance optimizations are only used on (32-bit) Windows: 
+it is assumed that on other OSes an optimized system liblzma is or 
+could be made available.
 
 common/vli_encoder.c,
 common/vli_decoder.c,
@@ -23,7 +24,7 @@ api/lzma/api.h:
   Remove incorrect use of restrict keyword. See commit
   49cfc8d392cf535f8dd10233225b1fc726fec9ef in the XZ-Utils git
   repository. This is a temporary fix until the next version of
-  XZ-Utils is released and integrated. Without this small change both
-  Intels C compiler as well as gcc 4.4 (and possibly others) generate
+  XZ-Utils is released and integrated. Without this small change
+  Intels C compiler and gcc 4.4.x (and possibly others) may generate
   broken code.
 
