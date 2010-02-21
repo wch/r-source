@@ -358,6 +358,10 @@ BUG FIXES
 	of days or longer.  (PR#14208)
 
     o   do_par() UNPROTECTed too early (PR#14214)
+
+    o   subassignment x[[....]] <- y didn't check for a zero-length
+        right hand side, and inserted rubbish value. (PR#14217)
+  
  
 
 

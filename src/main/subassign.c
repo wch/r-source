@@ -1524,6 +1524,8 @@ do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
     
     stretch = 0;
     if (isVector(x)) {
+	if (!isVectorList(x) && LENGTH(y) == 0)
+	    error(_("replacement has length zero"));
 	if (!isVectorList(x) && LENGTH(y) > 1)
 	    error(_("more elements supplied than there are to replace"));
 	if (nsubs == 0 || CAR(subs) == R_MissingArg)
