@@ -5,7 +5,7 @@
    symbols, as do the MS compilers.
 
    The mingw-w64-crt is different, but this file is not used on
-   mingw64
+   MinGW-w64
 */
 
 extern void 

@@ -23,8 +23,8 @@ that differs only in that
  - MinGW gcc 4.2.1 supports pthreads, but I left that undefined.
 
 Also, watch out for versions of the header files.  For example,
-<strings.h> was in mingw-runtime-1.2 and later, but not in the
-Mingw-1.1 bundle.  These days we insist on a current MinGW.
+<strings.h> was in mingw-runtime-1.2 and later, but not (long ago) in
+the mingw-1.1 bundle.  These days we insist on a current MinGW.
 
 BDR 2002-04-15, 2003-02-10, 2004-06-28, 2005-11-25, 2006-07-06, 2007-08-09, 
     2009-07-08
@@ -45,7 +45,7 @@ See the directory R-Tcl-win in the R-packages SVN repository.
 
 4) Linking to DLLs.
 
-Mingw's ld.exe takes the internal name of the DLL as the object to
+MinGW's ld.exe takes the internal name of the DLL as the object to
 link to, and hence for DLLs which are to be linked to (rather than
 loaded), the internal names need to be dllname.dll.  This was not being
 done by the %.dll rule used in 2.2.1, which builds via a .def file
@@ -307,7 +307,7 @@ gcc -shared  .libs/iconv.o .libs/localcharset.o .libs/relocatable.o \
   .libs/iconv-exports.o -export-all-symbols -o Riconv.dll
 
 We now use a modified version of win-iconv, but the libiconv version
-can still be use by replacing bin/Riconv.dll.
+can still be used by replacing bin/Riconv.dll.
 
 
 BDR 2009-02-08

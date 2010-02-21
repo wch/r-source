@@ -1632,14 +1632,14 @@ Fortran symbols need an underline appended.
 @item
 Windows has little support for signals, so the Unix idea of running a
 program under a debugger and sending it a signal to interrupt it and
-drop control back to the debugger does not work with a @code{mingw}
-version of @command{gdb}.  It does often work with the @code{cygwin} version.
+drop control back to the debugger does not work with a MinGW version of
+@command{gdb}.  It does often work with the @code{cygwin} version.
 
 @item
 Other debuggers than @command{gdb} can be used.  We have successfully
 used the @command{insight} front-end to @command{gdb} (see
-@uref{http://sources.redhat.com/insight/}: there is a @code{mingw} port
-on their site), and Borland's debugger with a DLL compiled in a Borland
+@uref{http://sources.redhat.com/insight/}: there is a MinGW port on
+their site), and Borland's debugger with a DLL compiled in a Borland
 compiler.
 
 @end itemize

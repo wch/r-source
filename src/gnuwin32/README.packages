@@ -113,7 +113,7 @@ of C++ I/O may or may not work, and has been seen to crash R.
 To use F90 or F95, see `Writing R Extensions'.
 
 For other compilers you will need to arrange to produce a DLL with
-cdecl (also known as _cdecl or __cdecl) linkage.  The mingw port (and
+cdecl (also known as _cdecl or __cdecl) linkage.  The MinGW port (and
 VC++) uses no `name mangling' at all, so that if for example your
 compiler adds leading or trailing underscores you will need to use the
 transformed symbol in the call to .C in your R code.  Many compilers
@@ -123,11 +123,12 @@ DLL.
 
 If you use .Fortran this appends an underscore and does no case
 conversion at all to the symbol name.  It is normally best to use
-.C with compilers other than g77 and map the name manually if necessary.
+.C with compilers other than gfortran and map the name manually if necessary.
 
 Care is needed in passing character strings to and from a DLL by .C:
 they must be equivalent to the C type char** and null-terminated.  Not
-even the mingw g77 Fortran uses null-terminated strings.
+even the MinGW g77 Fortran used null-terminated strings. (g77 was in
+GCC 3.x.y, superseded by gfortran.)
 
 WARNING: DLLs made with some compilers reset the FPU in their startup
 code (Delphi has been one), and this will cause operations such as

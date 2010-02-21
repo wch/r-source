@@ -28,7 +28,7 @@ endif
 
 libRgraphapp.dll.a: Rgraphapp.def
 
-## mingw symbols have trailing @, mingw64 do not
+## MinGW symbols have trailing @, MinGW-w64 do not
 Rgraphapp.def: $(OBJECTS)
 	@$(ECHO) EXPORTS > $@
 	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' | $(SED) -e 's/@16//' | $(SORT) | uniq > g.def

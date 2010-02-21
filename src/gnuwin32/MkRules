@@ -40,7 +40,8 @@ TCL_VERSION = 85
 
 # We normally link directly against DLLs, 
 # but this macro forces the use of import libs
-# Needed if using other compilers, including _some_ versions of Mingw64
+# Needed if using other compilers, 
+# including some versions of MinGW-w64 (but not the ones we use)
 # USE_IMPLIBS = YES
 
 # Some of the 64-bit compilers are in fact cross-compilers and have prefixes
@@ -179,6 +180,6 @@ lib%.dll.a: %.def
 	@$(RM) $@
 	$(AR) crs $@ $^
 
-## Mingw64 at one time needed --use-temp-file
+## MinGW-w64 at one time needed --use-temp-file
 %.o: %.rc
 	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@
