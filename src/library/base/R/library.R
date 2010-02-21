@@ -85,9 +85,10 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                               pkgname, platform),
                      call. = FALSE, domain = NA)
         } else {  # Windows
-            ## will need to expand this once we merge i386 and x86_64
-            ## a check for 'mingw' should suffice
-            if(nzchar(platform) && platform != R.version$platform)
+            ## a check for 'mingw' suffices, since i386 and x86_64
+            ## have DLLs in different places.  This allows binary packages
+            ## to be merged.
+            if(nzchar(platform) && !grepl("mingw", platform))
                 stop(gettextf("package '%s' was built for %s",
                               pkgname, platform),
                      call. = FALSE, domain = NA)
