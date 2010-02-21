@@ -863,6 +863,8 @@
 /* Define this to enable memory profiling. */
 #define R_MEMORY_PROFILING 1
 
+/* NOTE: there is no unanimity on this.  Currently most autoconf-based
+   systems need mingw32 */
 /* Define this to be the name of the OS of your system. */
 #ifdef WIN64
 #define R_OS "mingw64"
