@@ -1,7 +1,7 @@
 ## These can be overridden in MkRules
 
 ## must be jpeg-6b or jpeg-7 or jpeg-8
-JPEGDIR = jpeg-7
+JPEGDIR = jpeg-8
 PNGDIR = libpng
 TIFFDIR = libtiff
 
