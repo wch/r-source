@@ -28,3 +28,14 @@ On Windows (MinGW?), iswctype is missing 'blank'.
 
 REG_LITERAL was not matching "" in some cases, hence a change at
 line 1652 of tre-parse.c.
+
+We commented out in tre-match-approx.c
+
+/* These seem compiler/OS-specific, but unexplained
+On Linux the first is intended to be used only with GCC.
+#define __USE_STRING_INLINES
+#undef __NO_INLINE__
+*/
+
+since it failed on clang
+https://stat.ethz.ch/pipermail/r-devel/2010-February/056728.html

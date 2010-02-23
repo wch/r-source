@@ -27,8 +27,11 @@ char *alloca ();
 #endif
 #endif /* TRE_USE_ALLOCA */
 
+/* These seem compiler/OS-specific, but unexplained
+On Linux the first is intended to be used only with GCC.
 #define __USE_STRING_INLINES
 #undef __NO_INLINE__
+*/
 
 #include <assert.h>
 #include <stdlib.h>

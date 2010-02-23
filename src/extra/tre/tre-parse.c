@@ -185,7 +185,7 @@ int tre_isascii_func(tre_cint_t c) { return !(c >> 7); }
 #endif /* !tre_isascii */
 
 
-/* has the function but not the declaration */
+/* R addition:  this platform has the function but not the declaration */
 #ifdef WIN64
 int iswblank(wint_t wc);
 #endif
