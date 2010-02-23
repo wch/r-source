@@ -1,6 +1,6 @@
 /* lib/tre-config.h.  Generated from tre-config.h.in by configure.  */
 /* tre-config.h.in.  This file has all definitions that are needed in
-   `regex.h'.  Note that this file must contain only the bare minimum
+   `tre.h'.  Note that this file must contain only the bare minimum
    of definitions without the TRE_ prefix to avoid conflicts between
    definitions here and definitions included from somewhere else. */
 
@@ -22,4 +22,4 @@
 #define TRE_WCHAR 1
 
 /* TRE version string. */
-#define TRE_VERSION "0.7.6"
+#define TRE_VERSION "0.8.0"
