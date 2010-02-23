@@ -1,6 +1,6 @@
 #-*- Makefile -*-
 ## may be overridden in MkRules
-JPEGDIR = jpeg-7
+JPEGDIR = jpeg-8
 include ../../MkRules
 
 all: makeMakedeps libtiff.a
