@@ -17,8 +17,8 @@ aggregate(x, \dots)
 
 \method{aggregate}{data.frame}(x, by, FUN, \dots, simplify = TRUE)
 
-\method{aggregate}{formula}(formula, data, FUN, subset,
-          na.action = na.omit, \dots)
+\method{aggregate}{formula}(formula, data, FUN, \dots,
+          subset, na.action = na.omit)
 
 \method{aggregate}{ts}(x, nfrequency = 1, FUN = sum, ndeltat = 1,
           ts.eps = getOption("ts.eps"), \dots)

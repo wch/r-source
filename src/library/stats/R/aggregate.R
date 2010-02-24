@@ -97,7 +97,7 @@ function(x, by, FUN, ..., simplify = TRUE)
 }
 
 aggregate.formula <-
-function(formula, data, FUN, subset, na.action = na.omit, ...)
+function(formula, data, FUN, ..., subset, na.action = na.omit)
 {
     if(missing(formula) || !inherits(formula, "formula"))
         stop("'formula' missing or incorrect")
