@@ -68,7 +68,7 @@ local(expr, envir = new.env())
   defined in the environment are not visible from the outside.
 }
 \value{
-  The result of evaluating the object: for an expression vector this it
+  The result of evaluating the object: for an expression vector this is
   the result of evaluating the last elements.
 }
 \references{
@@ -88,7 +88,7 @@ local(expr, envir = new.env())
   between \R and S in this area.  In particular, the default enclosure
   in S is the global environment.
 
-  When evaluating expressions in data frames that has been passed as
+  When evaluating expressions in a data frame that has been passed as an
   argument to a function, the relevant enclosure is often the caller's
   environment, i.e., one needs
   \code{eval(x, data, parent.frame())}.
