@@ -158,7 +158,13 @@ all.equal.formula <- function(target, current, ...)
 	return(paste("target, current differ in having response: ",
 		     length(target) == 3L, ", ",
                      length(current) == 3L, sep=""))
-    if(all(deparse(target) != deparse(current)))
+    ## <NOTE>
+    ## This takes same-length formulas as all equal if they deparse
+    ## identically.  As of 2010-02-24, deparsing strips attributes; if
+    ## this is changed, the all equal behavior will change unless the
+    ## test is changed.
+    ## </NOTE>
+    if(!identical(deparse(target), deparse(current)))
 	"formulas differ in contents"
     else TRUE
 }
