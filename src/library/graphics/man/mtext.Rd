@@ -22,8 +22,10 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   \item{side}{on which side of the plot (1=bottom, 2=left, 3=top, 4=right).}
   \item{line}{on which MARgin line, starting at 0 counting outwards.}
   \item{outer}{use outer margins if available.}
-  \item{at}{give location in user coordinates.  If \code{length(at)==0}
-    (the default), the location will be determined by \code{adj}.}
+  \item{at}{give location of each string in user coordinates.  If the
+     component of \code{at} corresponding to a particular text item is
+     not a finite value (the default), the location will be determined
+     by \code{adj}.}
   \item{adj}{adjustment for each string in reading direction.  For
     strings parallel to the axes, \code{adj = 0} means left or bottom
     alignment, and \code{adj = 1} means right or top alignment.
