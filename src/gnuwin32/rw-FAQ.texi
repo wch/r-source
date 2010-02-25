@@ -82,7 +82,8 @@ that version.  The main R FAQ can be found at
 
 The information here applies only to recent versions of R for Windows,
 (@samp{2.10.0} or later).  It is almost entirely about the 32-bit build,
-with some mentions of 64-bit builds.
+with some mentions of 64-bit builds (only relevant to @samp{2.11.0} or
+later).
 
 
 @newchap{}
@@ -332,8 +333,8 @@ this is not enabled by default).  On such systems, the default for
 @code{--max-mem-size} is the smaller of the amount of RAM and 2.5GB.  On
 most 64-bit versions of Windows the user address space for a 32-bit
 process is 4GB, and there the default for @code{--max-mem-size} is the
-smaller of the amount of RAM and 3.5GB.  For a 64-bit build (from the
-sources), the defailt is the amount of RAM.
+smaller of the amount of RAM and 3.5GB.  For a 64-bit build, the defailt
+is the amount of RAM.
 
 @c limits are documented at http://msdn.microsoft.com/en-us/library/aa366778%28VS.85%29.aspx
 
@@ -492,7 +493,8 @@ tried to make R work on paths with spaces in, but many people writing
 packages for Unix do not bother.  So it is worth trying the alternative
 short name (something like @samp{PROGRA~1}; you can get it as the
 `MS-DOS name' from the Properties of the file on some versions of
-Windows, and from @command{dir /X} in a @samp{Command Prompt} window).
+Windows, and from @command{dir /X} in a @samp{Command Prompt} window),
+and using the function @code{shortPathName} from R code.
 
 
 @node Does R use the Registry?, Does R support automation?, R can't find my file, Installation and Usage
@@ -650,8 +652,6 @@ may want to experiment with disabling it.
 It does.  A few issues have been reported that related to the way
 accounts and file permissions work.  (These are not specifically R
 issues, but changes in user experiences.)
-
-The comments here apply to Windows Vista, Server 2008 and Windows 7.
 
 Earlier versions of Windows had user and Administrator accounts, and
 user accounts could be give administrative privileges (by being added to
@@ -882,17 +882,19 @@ Slovak,
 Slovenian
 and Spanish (Spain).
 
-In earlier versions only languages which could be displayed using the
-current codepage were offered so you could only install in Japanese if
-running Windows in Japanese: this changed for R 2.10.0.
+@c In earlier versions only languages which could be displayed using the
+@c current codepage were offered so you could only install in Japanese if
+@c running Windows in Japanese: this changed for R 2.10.0.
 
 @node I want R in English!, I want to run R in Chinese/Japanese/Korean, The installer does not offer my language, Languages and Internationalization
 @section I want R in English (and not in French/Chinese/...)!
 
 The default behaviour of R is to try to run in the language you run
-Windows in.  Apparently some users want Windows in their native language,
-but not R.  To do so, set @code{LANGUAGE=en} as discussed in Q2.2 and
-Q2.15, or in the @file{Rconsole} file.
+Windows in.
+
+Apparently some users want Windows in their native language, but not R.
+To do so, set @code{LANGUAGE=en} as discussed in Q2.2 and Q2.15, or in
+the @file{Rconsole} file.
 
 @node I want to run R in Chinese/Japanese/Korean, I selected English for installation but R runs in Chinese, I want R in English!, Languages and Internationalization
 @section I want to run R in Chinese/Japanese/Korean.
@@ -944,10 +946,10 @@ is completely standard Windows practice (and necessary as different
 users of the computer may use different languages).
 
 The language R uses for menus and messages is determined by the
-@emph{locale}: please read the appropriate manual (the @emph{R
-Installation and Administration Manual}) for the details.  You can
-ensure that R uses English messages by appending @code{LANGUAGE=en} to
-the shortcut you use to start R, or setting it in the @file{Rconsole} file.
+@emph{locale}: please read the appropriate manual (`R Installation and
+Administration') for the details.  You can ensure that R uses English
+messages by appending @code{LANGUAGE=en} to the shortcut you use to
+start R, or setting it in the @file{Rconsole} file.
 
 @node I would like to be able to use Japanese fonts, I don't see characters with accents at the R console, I selected English for installation but R runs in Chinese, Languages and Internationalization
 @section I would like to be able to use Japanese fonts.
@@ -1143,6 +1145,15 @@ You can tell the version the package was compiled for by looking at the
 tab of the @samp{Properties}, or use the @code{DLL.version} function
 inside R.)
 
+For a small number of binary packages you need to install additional
+software and have its DLLs in your @code{PATH}.  Windows will normally
+give an informative message about a certain DLL not being found (except
+on Windows 2000).  See
+@uref{http://cran.r-project.org/bin/windows/contrib/2.11/ReadMe} for a
+listing of some of these packages (notably @code{RGtk2}, @code{rggobi},
+@code{rJava}, @code{rjags} and some of the packages connecting to
+databases).
+
 
 @node Package TclTk does not work., Hyperlinks in HTML do not work., Loading a package fails., Packages
 @section Package TclTk does not work.
@@ -1163,7 +1174,7 @@ Tcl/Tk 8.5.x installation with the path to its @file{bin} directory
 given by value of @env{MY_TCLTK}, and that this is set up correctly
 (with @env{TCL_LIBRARY} set if needed).  In that case you do not need
 the Tcl/Tk support files installed (but they can be).  Note that you do
-need 8.5.x and not 8.4.x or (a pre-release of) 8.6.0.
+need 8.5.x and not 8.4.x nor (a pre-release of) 8.6.0.
 
 Several package authors have suggested using ActiveTcl
 (@uref{http://www.activestate.com/Products/activetcl/}) as a way to get
@@ -1519,9 +1530,9 @@ neither will run at all on a PII.
 BLAS support is supplied by the single DLL @file{R_HOME\bin\Rblas.dll},
 and you can add a fast BLAS just by replacing that.  Replacements for
 some of the more common chips are available on CRAN in directory
-@file{bin/windows/contrib/ATLAS}.  See the  @emph{R
-Installation and Administration Manual} for how to build an ATLAS
-@file{Rblas.dll} tuned to your system using the R sources.
+@file{bin/windows/contrib/ATLAS}.  See the R Installation and
+Administration' manual for how to build an ATLAS @file{Rblas.dll} tuned
+to your system using the R sources.
 
 @node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, Can I use a fast BLAS?, Building from Source
 @section How do I include compiled C code?
@@ -1530,7 +1541,7 @@ We strongly encourage you to do this @emph{via} building an R package:
 see the @emph{`Writing R Extensions'} manual.  In any event you should
 install the parts of the R system for building R packages (installed by
 default), and get and install the tools and compilers mentioned in the
-@emph{`R Installation and Administration'} manual.  Then you can use
+`R Installation and Administration' manual.  Then you can use
 @example
 ...\bin\R CMD SHLIB foo.c bar.f
 @end example
@@ -1730,7 +1741,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2010-01-05
+@set LASTEDIT 2010-02-25
 @ifhtml
 @html
 <hr WIDTH="100%">
