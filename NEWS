@@ -279,6 +279,10 @@ NEW FEATURES
     o	cor() and cov() now test for misuse with non-numeric
 	arguments, such as the non-bug report PR#14207.
 
+    o	pchisq(ncp =, log.p = TRUE) is more accurate for probabilities
+	near one.  E.g. pchisq(80, 4, ncp=1, log.p=TRUE).  (Maybe what
+	was meant in PR#14126.)
+
 
 DEPRECATED & DEFUNCT
 

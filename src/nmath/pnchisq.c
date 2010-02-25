@@ -49,7 +49,11 @@ double pnchisq(double x, double df, double ncp, int lower_tail, int log_p)
 	    ans = fmax2(ans, 0.0);  /* Precaution PR#7099 */
 	}
     }
-    return log_p ? log(ans) : ans;
+    if (!log_p) return ans;
+    /* if ans is near one, we can do better using the other tail */
+    if (ncp >= 80 || ans < 1 - 1e-8) return log(ans);
+    ans = pnchisq_raw(x, df, ncp, 1e-12, 8*DBL_EPSILON, 1000000, !lower_tail);
+    return log1p(-ans);
 }
 
 double attribute_hidden
