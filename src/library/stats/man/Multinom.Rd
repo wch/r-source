@@ -43,12 +43,12 @@ dmultinom(x, size = NULL, prob, log = FALSE)
   By definition, each component \eqn{X_j}{X[j]} is binomially distributed as
   \code{Bin(size, prob[j])} for \eqn{j = 1, \ldots, K}.
 
-  The \code{rmultinom()} algorithm draws binomials from
+  The \code{rmultinom()} algorithm draws binomials \eqn{X_j}{X[j]} from
   \eqn{Bin(n_j,P_j)}{Bin(n[j], P[j])} sequentially, where
   \eqn{n_1 = N}{n[1] = N} (N := \code{size}),
   \eqn{P_1 = \pi_1}{P[1] = p[1]} (\eqn{\pi}{p} is \code{prob} scaled to sum 1),
-  and for \eqn{j \ge 2}, recursively
-  \eqn{n_j = N - \sum_{k=1}^{j-1} n_k}{n[j] = N - sum(k=1, \dots, j-1) n[k]}
+  and for \eqn{j \ge 2}, recursively,
+  \eqn{n_j = N - \sum_{k=1}^{j-1} X_k}{n[j] = N - sum(k=1, \dots, j-1) X[k]}
   and
   \eqn{P_j = \pi_j / (1 - \sum_{k=1}^{j-1} \pi_k)}{P[j] = p[j] / (1 - sum(p[1:(j-1)]))}.
 }
