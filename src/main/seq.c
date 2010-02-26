@@ -670,7 +670,7 @@ SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     len = asInteger(CAR(args));
     if(len == NA_INTEGER || len < 0)
-	errorcall(call, _("argument must be non-negative"));
+	errorcall(call, _("argument must be coercible to non-negative integer"));
     ans = allocVector(INTSXP, len);
     p = INTEGER(ans);
     for(i = 0; i < len; i++) p[i] = i+1;
