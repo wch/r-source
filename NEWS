@@ -109,6 +109,9 @@ BUG FIXES
 	parts of complex numbers correctly (and this was used by str():
 	PR#14201).
 
+    o   system.time() had sys.child component wrong (copied user.child
+        instead) on systems with HAVE_GETRUSAGE (PR#14210)
+
     o	Changing both line texture and line cap (end) resulted in the
 	latter to be ommitted form the PDF code. In additon, line cap
 	(end) and join are now set explicitly in PDF output to ensure
@@ -116,6 +119,8 @@ BUG FIXES
 
     o	The suppression of auto-rotation in bitmap() and dev2bitmap()
 	with the 'pdfwrite' device was not working correctly.
+
+    o	plot(ecdf(), log="x") no longer gives a wrong warning.
 
 
 
