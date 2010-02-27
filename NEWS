@@ -308,6 +308,13 @@ INSTALLATION
 	manuals.  This requires LaTeX '2005/12/01' or later.
 
 
+PACKAGE INSTALLATION
+
+    o	Characters in R source which are not translatable to the
+	current locale are now handled more tolerantly:  these will be
+	converted to hex codes with a warning.
+    	
+
 BUG FIXES
 
     o	Using with(), eval() etc with a list with some unnamed

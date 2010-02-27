@@ -304,9 +304,13 @@ function(dir, outDir)
         on.exit(close(con))  # Windows does not like files left open
         for(f in codeFiles) {
             tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "")
-            if(any(is.na(tmp)))
-               stop(gettextf("unable to re-encode '%s'", basename(f)),
+            if(length(bad <- which(is.na(tmp)))) {
+               warning(gettextf("unable to re-encode '%s' line(s) %s", 
+                                basename(f), paste(bad, collapse=",")),
                     domain = NA, call. = FALSE)
+               tmp <- iconv(readLines(f, warn = FALSE), from = enc, to = "", 
+                            sub = "byte")
+            }
             writeLines(paste("#line 1 \"", f, "\"", sep=""), con)
             writeLines(tmp, con)
         }
