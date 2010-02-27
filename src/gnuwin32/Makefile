@@ -337,6 +337,12 @@ rw-FAQ: rw-FAQ.texi ../../VERSION
 	@$(SED) $(SEDVER) $< | \
 	  makeinfo --no-headers --number-sections -o $@
 
+rw-FAQ.pdf: rw-FAQ.texi ../../VERSION
+	@$(SED) $(SEDVER) $< > tmp.texi
+	@$(TEXI2DVI) --pdf tmp.texi
+	@$(TEXI2DVI) --pdf tmp.texi
+	@mv tmp.pdf $@
+	@rm tmp.*
 
 bitmapdll:
 	$(MAKE) -C bitmap
