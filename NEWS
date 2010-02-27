@@ -348,7 +348,7 @@ BUG FIXES
 
     o	parse() and parse_Rd() miscounted columns when multibyte UTF-8
 	characters were present.
-    	
+
     o	Formatting of help pages has had minor improvements: extra
 	blank lines have been removed from the text format, and empty
 	package labels removed from HTML.
@@ -365,8 +365,8 @@ BUG FIXES
 
     o   subassignment x[[....]] <- y didn't check for a zero-length
         right hand side, and inserted rubbish value. (PR#14217)
-  
- 
+
+
 
 
 
@@ -481,7 +481,7 @@ BUG FIXES
 	PR#14201).
 
     o   system.time() had sys.child component wrong (copied user.child
-        instead) on systems with HAVE_GETRUSAGE (PR#14210)  
+        instead) on systems with HAVE_GETRUSAGE (PR#14210)
 
     o	Changing both line texture and line cap (end) resulted in the
 	latter to be ommitted form the PDF code. In additon, line cap
@@ -490,6 +490,8 @@ BUG FIXES
 
     o	The suppression of auto-rotation in bitmap() and dev2bitmap()
 	with the 'pdfwrite' device was not working correctly.
+
+    o	plot(ecdf(), log="x") no longer gives a wrong warning.
 
 
 
