@@ -105,6 +105,7 @@
             "      --data-compress=	none, gzip (default), bzip2 or xz compression",
             "			to be used for lazy-loading of data",
             "      --resave-data	re-save data files as compactly as possible",
+            "      --no-test-load	skip test of loading installed package",
            "\nfor Unix",
             "      --configure-args=ARGS",
             "			set arguments for the configure scripts (if any)",
@@ -367,8 +368,8 @@
                 message('installing to ', dest)
                 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
                 file.copy(files, dest, overwrite = TRUE)
-                if (!WINDOWS)
-                    Sys.chmod(Sys.glob(file.path(dest, "*")), "755")
+                ## not clear if this is still necessary, but sh version did so
+                if (!WINDOWS) Sys.chmod(file.path(dest, files), "755")
             }
         }
 
@@ -840,6 +841,14 @@
             .installMD5sums(instdir)
         }
 
+        if (test_load) {
+	    starsmsg(stars, "testing if installed package can be loaded")
+            res <- try(library(pkg_name, lib.loc = lib,
+                               character.only = TRUE,
+                               logical.return = TRUE))
+            if (inherits(res, "try-error") || !res)
+                errmsg("loading failed")
+        }
     }
 
     options(showErrorCalls=FALSE)
@@ -876,6 +885,7 @@
     tar_up <- zip_up <- FALSE
     shargs <- character(0)
     multiarch <- TRUE
+    test_load <- TRUE
 
     get_user_libPaths <- FALSE
     data_compress <- TRUE # FALSE (none), TRUE (gzip), 2 (bzip2), 3 (xz)
@@ -980,6 +990,8 @@
             install_exec <- FALSE
         } else if (a == "--no-help") {
             install_help <- FALSE
+        } else if (a == "--no-test-load") {
+            test_load <- FALSE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
@@ -1089,6 +1101,7 @@
 	install_help <- FALSE
     }
     more_than_libs <- !libs_only
+    if(!more_than_libs) test_load <- FALSE
 
 
     if (lock) {
@@ -1199,7 +1212,7 @@
         MAKE <- "make"
         ## For winshlib.mk to pick up Makeconf
         rarch <- .Platform$r_arch
-        if (nzchar(rarch)) Sys.setenv(R_ARCH = paste("/", rarch, sep=""))
+        if (nzchar(rarch)) Sys.setenv(R_ARCH = p0("/", rarch))
     }
 
     OBJ_EXT <- ".o" # all currrent compilers, but not some on Windows

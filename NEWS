@@ -313,6 +313,13 @@ PACKAGE INSTALLATION
     o	Characters in R source which are not translatable to the
 	current locale are now handled more tolerantly:  these will be
 	converted to hex codes with a warning.
+
+    o	R CMD INSTALL now tests that the installed package can be loaded
+	(and backs out the installation if it cannot): this can be
+	suppressed by --no-test-load.  This avoids installing/updating
+	a package that cannot be used: common causes of failures to
+	load are missing/incompatible external software and
+	missing/broken dependent packages.
     	
 
 BUG FIXES
