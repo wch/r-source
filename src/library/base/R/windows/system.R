@@ -19,6 +19,19 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
                    show.output.on.console = TRUE, minimized = FALSE,
                    invisible = TRUE)
 {
+    if(!is.logical(intern) || is.na(intern))
+        stop("'intern' must be TRUE or FALSE")
+    if(!is.logical(ignore.stderr) || is.na(ignore.stderr))
+        stop("'ignore.stderr' must be TRUE or FALSE")
+    if(!is.logical(wait) || is.na(wait))
+        stop("'wait' must be TRUE or FALSE")
+    if(!is.logical(show.output.on.console) || is.na(show.output.on.console))
+        stop("'show.output.on.console' must be TRUE or FALSE")
+    if(!is.logical(minimized) || is.na(minimized))
+        stop("'minimized' must be TRUE or FALSE")
+    if(!is.logical(invisible) || is.na(invisible))
+        stop("'invisible' must be TRUE or FALSE")
+
     f <- ""
     if (!is.null(input)) {
         f <- tempfile()

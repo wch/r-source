@@ -23,6 +23,13 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
        || !missing(invisible))
         warning("arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only")
 
+    if(!is.logical(intern) || is.na(intern))
+        stop("'intern' must be TRUE or FALSE")
+    if(!is.logical(ignore.stderr) || is.na(ignore.stderr))
+        stop("'ignore.stderr' must be TRUE or FALSE")
+    if(!is.logical(wait) || is.na(wait))
+        stop("'wait' must be TRUE or FALSE")
+
     if(ignore.stderr) command <- paste(command, "2>/dev/null")
     if(!is.null(input)) {
         if(!is.character(input))

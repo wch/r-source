@@ -1,6 +1,6 @@
 % File src/library/base/man/system.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{system}
@@ -19,32 +19,33 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   \item{intern}{a logical (not \code{NA}) which indicates whether to
     make the output of the command an \R object.
 #ifdef unix
-    Not available unless \code{popen} is supported on the platform.
+    Not available unless \code{popen} is supported on the platform
+    (which it almost always is).
 #endif
   }
-  \item{ignore.stderr}{a logical indicating whether error messages written
-    to \file{stderr} should be ignored.}
-  \item{wait}{a logical indicating whether the \R interpreter should
-    wait for the command to finish, or run it asynchronously.
-    This will be ignored (and the interpreter will always wait) if
-    \code{intern = TRUE}.}
+  \item{ignore.stderr}{a logical (not \code{NA}) indicating whether
+    error messages written to \file{stderr} should be ignored.}
+  \item{wait}{a logical (not \code{NA}) indicating whether the \R
+    interpreter should wait for the command to finish, or run it
+    asynchronously.  This will be ignored (and the interpreter will
+    always wait) if \code{intern = TRUE}.}
   \item{input}{if a character vector is supplied, this is copied one
     string per line to a temporary file, and the standard input of
     \code{command} is redirected to the file.}
 #ifdef unix
   \item{show.output.on.console, minimized, invisible}{arguments
-    that are accepted on other platforms but ignored on this one, with a
+    that are accepted on Windows but ignored on this platform, with a
     warning.}
 #endif
 #ifdef windows
-  \item{show.output.on.console}{a logical, indicates whether to capture
-    the output of the command and show it on the \R console (not used
-    by \code{Rterm}, which captures the output unless \code{wait}
-    is false).}
-  \item{minimized}{a logical, indicates whether the command window
-    should be initially displayed as a minimized window.}
-  \item{invisible}{a logical, indicates whether the command window
-    should be visible on the screen.}
+  \item{show.output.on.console}{logical (not \code{NA}), indicates
+    whether to capture the output of the command and show it on the \R
+    console (not used by \code{Rterm}, which captures the output unless
+    \code{wait} is false).}
+  \item{minimized}{logical (not \code{NA}), indicates whether the
+    command window should be initially displayed as a minimized window.}
+  \item{invisible}{logical (not \code{NA}), indicates whether the
+    command window should be visible on the screen.}
 #endif
 }
 \details{
@@ -52,7 +53,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   So if the path to the command (or a filepath argument) contains
   spaces, it must be quoted e.g. by \code{\link{shQuote}}.
 #ifdef windows
-  Only double quotes are allowed on Windows: see the examples. (Note: a
+  Only double quotes are allowed on Windows: see the examples.  (Note: a
   Windows path name cannot contain a double quote, so we do not need to
   worry about escaping embedded quotes.)
 #endif
@@ -65,7 +66,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 #ifdef windows
   (These extensions are tried in turn if none is supplied.)
   This means that redirection, pipes, \dots cannot be used: see
-  \code{\link{shell}}. (To use DOS internal commands use
+  \code{\link{shell}}.  (To use DOS internal commands use
   \code{paste(Sys.getenv("COMSPEC"),"/c", cmd)}.)
   
   The search path for \code{command} may be system-dependent: it will
