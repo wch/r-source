@@ -322,7 +322,7 @@ PACKAGE INSTALLATION
 	load are missing/incompatible external software and
 	missing/broken dependent packages.
 
-   o	Package installation on Windows for a package with a src
+    o	Package installation on Windows for a package with a src
 	directory now checks if a DLL is created unless there is a
 	src/Makefile.win file: this helps catch broken installations
 	where the toolchain has not reported problems in building the DLL.
