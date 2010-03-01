@@ -373,6 +373,8 @@
             }
         }
 
+        ## This is only called for Makevars[.win], so assume it
+        ## does create a shlib: not so reliably reported on Windows
         run_shlib <- function(pkg_name, srcs, instdir, arch)
         {
             args <- c(shargs, "-o", paste0(pkg_name, SHLIB_EXT), srcs)
@@ -380,6 +382,8 @@
                                "R CMD SHLIB ", paste(args, collapse= " "),
                                domain = NA)
             if (.shlib_internal(args) == 0L) {
+                if(WINDOWS &&
+                   !file.exists(paste0(pkg_name, SHLIB_EXT))) return(TRUE)
                 shlib_install(instdir, arch)
                 return(FALSE)
             } else return(TRUE)
