@@ -324,8 +324,6 @@ S3method("dim", "layout")
 
 # S3 method for generic rep (in base)
 S3method("rep", "unit")
-S3method("rep", "unit.arithmetic")
-S3method("rep", "unit.list")
 
 # S3 method for generic length (in base)
 S3method("length", "unit")

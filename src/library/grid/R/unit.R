@@ -526,24 +526,6 @@ rep.unit <- function(x, times=1, length.out=NA, each=1, ...) {
     x[repIndex, top=FALSE]
 }
 
-rep.unit.arithmetic <- function(x, times=1, length.out=NA, each=1, ...) {
-    if (length(x) == 0)
-        stop("Invalid unit object")
-
-    # Determine an approprite index, then call subsetting code
-    repIndex <- rep(1:length(x), times=times, length.out=length.out, each=each)
-    x[repIndex, top=FALSE]
-}
-
-rep.unit.list <- function(x, times=1, length.out=NA, each=1, ...) {
-    if (length(x) == 0)
-        stop("Invalid unit object")
-
-    # Determine an approprite index, then call subsetting code
-    repIndex <- rep(1:length(x), times=times, length.out=length.out, each=each)
-    x[repIndex, top=FALSE]
-}
-
 # Vestige from when rep() was not generic
 unit.rep <- function (x, ...)
 {
