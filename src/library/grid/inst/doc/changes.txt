@@ -14,6 +14,9 @@ Changes from grid_2.10.0 to grid_2.11.0:
 4.  Fixed PROTECT() bug in grid.rect() PR#14199
     Thanks to Andrew Runnalls for the bug report.
 
+5.  Fixed multiple problems in rep.unit() and unit subsetting.
+    Motivated by PR#14170.  Thanks to Bert Gunter.
+    
 
 Changes from grid_2.9.0 to grid_2.10.0:
 --------------------------------------

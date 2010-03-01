@@ -422,6 +422,13 @@ print.unit <- function(x, ...) {
   }
   if (top && any(index > this.length))
     stop("Index out of bounds (unit arithmetic subsetting)")
+  
+  repSummaryUnit <- function(x, n) {
+      newUnits <- lapply(1:n, function(z) { get(x$fname)(x$arg1) })
+      class(newUnits) <- c("unit.list", "unit")
+      newUnits
+  }
+  
   switch(x$fname,
          "+"="["(x$arg1, (index - 1) %% this.length + 1, top=FALSE) +
              "["(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
@@ -430,9 +437,9 @@ print.unit <- function(x, ...) {
          # Recycle multiplier if necessary
          "*"=x$arg1[(index - 1) %% length(x$arg1) + 1] *
              "["(x$arg2, (index - 1) %% this.length + 1, top=FALSE),
-         "min"=x,
-         "max"=x,
-         "sum"=x)
+         "min"=repSummaryUnit(x, length(index)),
+         "max"=repSummaryUnit(x, length(index)),
+         "sum"=repSummaryUnit(x, length(index)))
 }
 
 "[.unit.list" <- function(x, index, top=TRUE, ...) {
@@ -510,44 +517,31 @@ unit.list.from.list <- function(x) {
 # rep'ing unit objects
 #########################
 
-rep.unit.arithmetic <- function(x, times=1, length.out, ...) {
+rep.unit <- function(x, times=1, length.out=NA, each=1, ...) {
     if (length(x) == 0)
-        return(x)
-    if (!missing(length.out))
-        times <- ceiling(length.out/length(x))
+        stop("Invalid unit object")
 
-    switch(x$fname,
-           "+"=rep(x$arg1, times) + rep(x$arg2, times),
-           "-"=rep(x$arg1, times) - rep(x$arg2, times),
-           "*"=x$arg1 * rep(x$arg2, times),
-           "min"=rep(unit.list(x), times),
-           "max"=rep(unit.list(x), times),
-           "sum"=rep(unit.list(x), times))
+    # Determine an approprite index, then call subsetting code
+    repIndex <- rep(1:length(x), times=times, length.out=length.out, each=each)
+    x[repIndex, top=FALSE]
 }
 
-rep.unit.list <- function(x, times=1, length.out, ...) {
+rep.unit.arithmetic <- function(x, times=1, length.out=NA, each=1, ...) {
     if (length(x) == 0)
-        return(x)
-    if (!missing(length.out))
-        times <- ceiling(length.out/length(x))
+        stop("Invalid unit object")
 
-    # Make use of the subsetting code to replicate the unit list
-    # top=FALSE allows the subsetting to go beyond the original length
-    "["(x, 1L:(length(x)*times), top=FALSE)
+    # Determine an approprite index, then call subsetting code
+    repIndex <- rep(1:length(x), times=times, length.out=length.out, each=each)
+    x[repIndex, top=FALSE]
 }
 
-rep.unit <- function(x, ...) {
+rep.unit.list <- function(x, times=1, length.out=NA, each=1, ...) {
     if (length(x) == 0)
-        return(x)
-    values <- rep(unclass(x), ...)
-    # Do I need to replicate the "unit"s?
-    units <- attr(x, "unit")
-    # If there are any data then they must be explicitly replicated
-    # because the list of data must be the same length as the
-    # vector of values
-    data <- recycle.data(attr(x, "data"), TRUE, length(values), units)
-    unit <- unit(values, units, data=data)
-    unit
+        stop("Invalid unit object")
+
+    # Determine an approprite index, then call subsetting code
+    repIndex <- rep(1:length(x), times=times, length.out=length.out, each=each)
+    x[repIndex, top=FALSE]
 }
 
 # Vestige from when rep() was not generic
