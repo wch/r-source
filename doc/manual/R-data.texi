@@ -90,17 +90,25 @@ principal authors of the packages mentioned are
 @quotation
 @multitable {foreign  xxxx} {A longggggggggggggggggggggggggggggggggg description}
 @item @pkg{CORBA} @tab Duncan Temple Lang
+@item @pkg{DBI} David A. James
+@item @pkg{dataframes2xls} Guido van Steen
 @item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates, Duncan Murdoch and Roger Bivand
+@item @pkg{gdata} @tab Gregory R. Warnes
 @item @pkg{hdf5} @tab Marcus Daniels
 @item @pkg{ncdf} @tab David Pierce
-@item @pkg{ncvar} @tab Juerg Schmidli
 @item @pkg{rJava} @tab Simon Urbanek
 @item @pkg{RMySQL} @tab David James and Saikat DebRoy
 @item @pkg{RNetCDF} @tab Pavel Michna
 @item @pkg{RODBC} @tab Michael Lapsley and Brian Ripley
+@item @pkg{RMySQL} @tab David A, James and Saikat DebRoy
+@item @pkg{ROracle} @tab David A, James
+@item @pkg{RPostgreSQL} @tab Sameer Kumar Prayaga
 @item @pkg{RSPerl} @tab Duncan Temple Lang
 @item @pkg{RSPython} @tab Duncan Temple Lang
+@item @pkg{RSQLite} @tab David A, James
 @item @pkg{SJava} @tab John Chambers and Duncan Temple Lang
+@item @pkg{WriteXLS} @tab Hans-Peter Suter
+@item @pkg{xlsReadWrite} @tab Marc Schwartz
 @item @pkg{XML} @tab Duncan Temple Lang
 @end multitable
 @end quotation
@@ -1189,10 +1197,8 @@ towards a unified `front-end' package @pkg{DBI}
 @pkg{RSQLite} (which works with the bundled DBMS @code{SQLite},
 @uref{http://www.sqlite.org}).
 
-Two earlier packages @pkg{RmSQL} and @pkg{RPgSQL} are now unsupported
-and in the archive area on @acronym{CRAN}: the BioConductor project has updated
-@pkg{RdbiPgSQL} (formerly on @acronym{CRAN}).  @pkg{PL/R}
-(@uref{http://www.joeconway.com/plr/,
+The BioConductor project has updated @pkg{RdbiPgSQL} (formerly on
+@acronym{CRAN}).  @pkg{PL/R} (@uref{http://www.joeconway.com/plr/,
 @code{http://@/www.joeconway.com/@/plr/}}) is a project to embed R into
 PostgreSQL.
 
@@ -1599,12 +1605,6 @@ ways, including descriptions, labels, formats, units, @dots{}.  HDF5 also
 allows @emph{groups} of arrays, and the @R{} interface maps lists
 to HDF5 groups, and can write numeric and character vectors and
 matrices.
-
-Package @pkg{ncvar} on @acronym{CRAN} provides a higher-level @R{}
-interface to netCDF data files @emph{via} @pkg{RNetCDF}.
-
-There is also a package @pkg{rhdf5} available from
-@uref{http://www.bioconductor.org}.
 
 
 @node dBase files (DBF),  , Binary data formats, Binary files
@@ -2163,9 +2163,9 @@ provides a basic wrapper in its @code{read.xls} function.
 
 @findex xlsReadWrite
 Windows-only package @pkg{xlsReadWrite} from
-@uref{http://treetron.googlepages.com/} has a function @code{read.xls}
-to read @file{.xls} files (based on a third-party non-Open Source Delphi
-component).
+@uref{http://treetron.googlepages.com/} and CRAN has a function
+@code{read.xls} to read @file{.xls} files (based on a third-party
+non-Open Source Delphi component).
 
 @findex dataframes2xls
 @findex WriteXLS
