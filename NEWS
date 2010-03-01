@@ -312,7 +312,8 @@ PACKAGE INSTALLATION
 
     o	Characters in R source which are not translatable to the
 	current locale are now handled more tolerantly:  these will be
-	converted to hex codes with a warning.
+	converted to hex codes with a warning.  Such characters are
+	only really portable if they appear in comments.
 
     o	R CMD INSTALL now tests that the installed package can be loaded
 	(and backs out the installation if it cannot): this can be
@@ -320,6 +321,11 @@ PACKAGE INSTALLATION
 	a package that cannot be used: common causes of failures to
 	load are missing/incompatible external software and
 	missing/broken dependent packages.
+
+   o	Package installation on Windows for a package with a src
+	directory now checks if a DLL is created unless there is a
+	src/Makefile.win file: this helps catch broken installations
+	where the toolchain has not reported problems in building the DLL.
     	
 
 BUG FIXES
@@ -498,14 +504,14 @@ BUG FIXES
         instead) on systems with HAVE_GETRUSAGE (PR#14210)
 
     o	Changing both line texture and line cap (end) resulted in the
-	latter to be ommitted form the PDF code. In additon, line cap
+	latter to be ommitted form the PDF code.  In additon, line cap
 	(end) and join are now set explicitly in PDF output to ensure
 	correct defaults.
 
     o	The suppression of auto-rotation in bitmap() and dev2bitmap()
 	with the 'pdfwrite' device was not working correctly.
 
-    o	plot(ecdf(), log="x") no longer gives a wrong warning.
+    o	plot(ecdf(), log="x") no longer gives an incorrect warning.
 
 
 

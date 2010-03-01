@@ -685,6 +685,11 @@ platform-specific file names on Windows: @file{src/Makevars.win} takes
 precedence over @file{src/Makevars} and @file{src/Makefile.win} must be
 used.
 
+A few packages use the @file{src} directory for purposes other than
+making a shared object (e.g.@: to create executables).  Such packages
+should have files @file{src/Makefile} and @file{src/Makefile.win}
+(unless intended for only Unix or only Windows).
+
 The @file{data} subdirectory is for data files: @xref{Data in packages}.
 
 The @file{demo} subdirectory is for @R{} scripts (for running @emph{via}
@@ -1056,10 +1061,6 @@ SHLIB} setting them: in particular if @file{Makevars} sets
 @samp{OBJECTS} it will not be set on the @command{make} command line.
 This can be useful in conjunction with implicit rules to allow other
 types of source code to be compiled and included in the shared object.
-Also, as from @R{} 2.9.0 setting an empty value for @samp{OBJECTS} will
-prevent the shared object / DLL from being made (possibly useful in
-conjunction with an @code{all} target as described in the next
-paragraph).
 
 Note that @file{Makevars} should not normally contain targets, as it is
 included before the default makefile and @command{make} is called with
@@ -1113,6 +1114,12 @@ Be careful to create all the necessary dependencies, as there is a no
 guarantee that the dependencies of @code{all} will be run in a
 particular order (and some of the @acronym{CRAN} build machines use
 multiple CPUs and parallel makes).
+
+Note that on Windows it is required that @file{Makevars[.win]} does
+create a DLL named @file{@var{pkg}.dll}: this is needed as it is the
+only reliable way to ensure that building a DLL succeeded.  If you want
+to use the @file{src} directory for some purpose other than building a
+DLL, use a @file{Makefile.win} file.
 
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
 or @file{Makevars.win}: this will be used by @command{R CMD build}.
