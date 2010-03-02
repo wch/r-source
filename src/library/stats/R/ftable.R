@@ -161,8 +161,7 @@ as.table.ftable <- function(x, ...)
                dimnames = c(xrv, xcv))
     nrv <- length(xrv)
     ncv <- length(xcv)
-    x <- aperm(x, c(seq.int(from = nrv, to = 1),
-                    seq.int(from = nrv + ncv, to = nrv + 1)))
+    x <- aperm(x, c(rev(seq_len(nrv)), rev(seq_len(ncv) + nrv)))
     class(x) <- "table"
     x
 }
@@ -351,5 +350,6 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
               class = "ftable")
 }
 
-as.data.frame.ftable <- function(x, row.names = NULL, optional = FALSE, ...)
+as.data.frame.ftable <-
+function(x, row.names = NULL, optional = FALSE, ...)
     as.data.frame(as.table(x), row.names, optional)
