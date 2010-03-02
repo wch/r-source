@@ -53,15 +53,15 @@ as.single(x, \dots)
   \code{double} creates a double-precision vector of the specified
   length.  The elements of the vector are all equal to \code{0}.
 
-  \code{as.double} attempts to coerce its argument to be of double
-  type: like \code{\link{as.vector}} it strips attributes including
-  names.  (To ensure that an object is of double type without
-  stripping attributes, use \code{\link{storage.mode}}.)
-  Character strings containing either a decimal representation or a
-  hexadecimal representation (starting with \code{0x} or \code{0X}) can
-  be converted. \code{as.double} for factors yields the codes underlying
-  the factor levels, not the numeric representation of the labels, see
-  also \code{\link{factor}}.
+  \code{as.double} attempts to coerce its argument to be of double type:
+  like \code{\link{as.vector}} it strips attributes including names.
+  (To ensure that an object is of double type without stripping
+  attributes, use \code{\link{storage.mode}}.)  Character strings
+  containing optional whitespace followed by either a decimal
+  representation or a hexadecimal representation (starting with
+  \code{0x} or \code{0X}) can be converted.  \code{as.double} for
+  factors yields the codes underlying the factor levels, not the numeric
+  representation of the labels, see also \code{\link{factor}}.
 
   \code{is.double} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of double \link{type} or not.

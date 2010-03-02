@@ -1,6 +1,6 @@
 % File src/library/utils/man/read.table.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{read.table}
@@ -120,13 +120,13 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     the columns.  Recycled as necessary, or if the character vector is
     named, unspecified values are taken to be \code{NA}.
 
-    Possible values are \code{NA} (when \code{\link{type.convert}} is
-    used), \code{"NULL"} (when the column is skipped), one of the atomic
-    vector classes (logical, integer, numeric, complex, character, raw),
-    or \code{"factor"}, \code{"Date"} or \code{"POSIXct"}.  Otherwise
-    there needs to be an \code{as} method (from package \pkg{methods})
-    for conversion from \code{"character"} to the specified formal
-    class.
+    Possible values are \code{NA} (the default, when
+    \code{\link{type.convert}} is used), \code{"NULL"} (when the column
+    is skipped), one of the atomic vector classes (logical, integer,
+    numeric, complex, character, raw), or \code{"factor"}, \code{"Date"}
+    or \code{"POSIXct"}.  Otherwise there needs to be an \code{as}
+    method (from package \pkg{methods}) for conversion from
+    \code{"character"} to the specified formal class.
 
     Note that \code{colClasses} is specified per column (not per
     variable) and so includes the column of row names (if any).
@@ -204,6 +204,13 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 \details{
   This function is the principal means of reading tabular data into \R.
 
+  Unless \code{colClasses} is specified, all columns are read as
+  character columns and then converted using \code{\link{type.convert}}
+  to logical, integer, numeric, complex or (depending on \code{as.is})
+  factor as appropriate.  Quotes are (by default) interpreted in all
+  fields, so a column of values like \code{"42"} will result in an
+  integer column.
+
   A field or line is \sQuote{blank} if it contains nothing (except
   whitespace if no separator is specified) before a comment character or
   the end of the field or line.
@@ -239,11 +246,6 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   Quoted fields with embedded newlines are supported except after a
   comment character.
-
-  Note that unless \code{colClasses} is specified, all columns are read
-  as character columns and then converted.  This means that quotes are
-  interpreted in all fields and that a column of values like \code{"42"}
-  will result in an integer column.
 }
 \note{
   The columns referred to in \code{as.is} and \code{colClasses} include

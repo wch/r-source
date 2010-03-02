@@ -40,18 +40,19 @@ is.integer(x)
   Each element of the vector is equal to \code{0}.
 
   \code{as.integer} attempts to coerce its argument to be of integer
-  type. The answer will be \code{NA} unless the coercion succeeds.
-  Real values larger in modulus than the largest integer are coerced to
-  \code{NA} (unlike S which gives the most extreme integer of the same sign).
-  Non-integral numeric values are truncated towards zero (i.e.,
+  type. The answer will be \code{NA} unless the coercion succeeds.  Real
+  values larger in modulus than the largest integer are coerced to
+  \code{NA} (unlike S which gives the most extreme integer of the same
+  sign).  Non-integral numeric values are truncated towards zero (i.e.,
   \code{as.integer(x)} equals \code{\link{trunc}(x)} there), and
   imaginary parts of complex numbers are discarded (with a warning).
-  Character strings containing either a decimal representation or a
-  hexadecimal representation (starting with \code{0x} or \code{0X}) can
-  be converted, as well as any allowed by the platform for real numbers.
-  Like \code{\link{as.vector}} it strips attributes including names.
-  (To ensure that an object \code{x} is of integer type without stripping
-  attributes, use \code{\link{storage.mode}(x) <- "integer"}.)
+  Character strings containing optional whitespace followed by either a
+  decimal representation or a hexadecimal representation (starting with
+  \code{0x} or \code{0X}) can be converted, as well as any allowed by
+  the platform for real numbers.  Like \code{\link{as.vector}} it strips
+  attributes including names.  (To ensure that an object \code{x} is of
+  integer type without stripping attributes, use
+  \code{\link{storage.mode}(x) <- "integer"}.)
 
   \code{is.integer} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of integer \link{type} or not, unless it is a
