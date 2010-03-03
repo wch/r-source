@@ -858,9 +858,9 @@ Just double-click on the icon and follow the instructions.  You can
 uninstall @R{} from the Control Panel or from the (optional) @R{}
 program group on the Start Menu.
 
-Note that you will probably (depending on the Windows language settings)
-be asked to choose a language for installation, and that choice applies
-to both installation and un-installation but not to running @R{} itself.
+Note that you will be asked to choose a language for installation, and
+that choice applies to both installation and un-installation but not to
+running @R{} itself.
 
 See the @uref{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R
 Windows @acronym{FAQ}} for more details on the binary installer.
@@ -1055,7 +1055,7 @@ make -j4 recommended
 
 @noindent
 but this is only likely to be worthwhile on a multi-core machine with
-ample memory, and is less than 100% reliable.
+ample memory, and is not 100% reliable.
 
 @end itemize
 
@@ -1595,10 +1595,13 @@ interface to @code{install.packages}, @code{update.packages} and
 
 @command{R CMD INSTALL} works in Windows to install source packages if
 you have set up the tools needed (see @ref{The Windows toolset}).
-Installation of binary packages must be done by @code{install.packages}.
 @command{R CMD INSTALL --help} will tell you the current options under
-Windows (which differ from those on a Unix-alike): in particular there
-is a choice of the types of documentation to be installed.
+Windows (which differ from those on a Unix-alike).
+Installation of binary packages must be done by @code{install.packages}.
+
+We have seen permission problems after unpacking source packages on some
+Vista/Windows 7/Server 2008 systems: these have been circumvented by
+setting the environment variable @env{R_INSTALL_TAR} to @samp{tar.exe}.
 
 If you have only a source package that is known to work with current
 @R{} and just want a binary Windows build of it, you could make use of
@@ -1767,7 +1770,11 @@ Current builds of @R{} support all the character sets that the
 underlying OS can handle.  These are interpreted according to the
 @cindex Locale
 current @code{locale}, a sufficiently complicated topic to merit a
-separate section.
+separate section.  Note though that @R{} has no built-in support for
+right-to-left languages and bidirectional output, relying on the OS
+services.  For example, how character vectors in UTF-8 containing both
+English digits and Hebrew characters are printed is OS-dependent (and
+perhaps locale-dependent).
 
 The other aspect of the internationalization is support for the
 translation of messages.  This is enabled in almost all builds of @R{}.
@@ -2024,12 +2031,12 @@ objects is (when this was written in 2005) several years off.
 Currently the Windows build of @R{} from @acronym{CRAN} is a 32-bit
 executable.  This runs happily on Windows 64 on AMD64 and EM64T, but is
 limited to an address space of 2 to 4GB (see the `R for Windows FAQ' for
-details).  It will not be possible fro the @R{} project to provide a
-native version for Windows 64 until suitable non-commercial compilers
-are available, and the experimental support for MinGW for 64-bit Windows
-will be added in @R{} 2.11.0.  Commercial 64-bit compilers have been
-used, and @R{} can be be built with such compilers with minimal changes
-to the sources (and constructing suitable project files).
+details).  It was not possible for the @R{} project to provide a native
+version for Windows 64 until suitable non-commercial compilers were
+available, and the support for MinGW-w64 will be added in @R{} 2.11.0.
+Commercial 64-bit compilers have been used, and @R{} can be be built
+with such compilers with minimal changes to the sources (and
+constructing suitable project files).
 
 
 @node The standalone Rmath library, Essential and useful other programs under Unix, Choosing between 32- and 64-bit builds, Top
@@ -2350,22 +2357,23 @@ most likely needs @acronym{GNU} @code{gettext}: you do need this to work
 with new translations, but otherwise the version contained in the R
 sources will be used if no suitable external @code{gettext} is found.
 
-The `modern' version of @code{X11}, @code{jpeg()}, @code{png()} and
-@code{tiff()} uses the @code{cairo} and (optionally) @code{Pango}
-libraries.  Cairo version 1.2.0 or later is required.  Pango needs to be
-at least version 1.10, and 1.12 is the earliest version we have tested.
-(For Fedora users we believe the @code{pango-devel} RPM and its
-dependencies suffice.)  @R{} checks for @command{pkg-config}, and uses
-that to check first that the @samp{pangocairo} package is installed (and
-if not, @samp{cairo}) and if additional flags are needed for the
-@samp{cairo-xlib} package, then if suitable code can be compiled.  These
-tests will fail if @command{pkg-config} is not installed, and are likely
-to fail if @code{cairo} was built statically (unusual).  Most systems
-with @code{Gtk+} 2.8 or later installed will have suitable libraries,
-but some (e.g.@: Solaris 10) may need @code{cairo} added separately.
-Mac OS X comes with none of these libraries, but @code{cairo} support
-has been added to the binary distribution: @code{pkg-config} is still
-needed and can be compiled from the sources.
+The `modern' version of the @code{X11}, @code{jpeg()}, @code{png()} and
+@code{tiff()} graphics devices uses the @code{cairo} and (optionally)
+@code{Pango} libraries.  Cairo version 1.2.0 or later is required.
+Pango needs to be at least version 1.10, and 1.12 is the earliest
+version we have tested.  (For Fedora users we believe the
+@code{pango-devel} RPM and its dependencies suffice.)  @R{} checks for
+@command{pkg-config}, and uses that to check first that the
+@samp{pangocairo} package is installed (and if not, @samp{cairo}) and if
+additional flags are needed for the @samp{cairo-xlib} package, then if
+suitable code can be compiled.  These tests will fail if
+@command{pkg-config} is not installed, and are likely to fail if
+@code{cairo} was built statically (unusual).  Most systems with
+@code{Gtk+} 2.8 or later installed will have suitable libraries, but
+some (e.g.@: Solaris 10) may need @code{cairo} added separately.  Mac OS
+X comes with none of these libraries, but @code{cairo} support has been
+added to the binary distribution: @code{pkg-config} is still needed and
+can be installed from the sources.
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  Another
@@ -2392,7 +2400,7 @@ and are tested with @R{} you should not need to change this.  In
 particular, the version of @code{zlib} 1.2.3 in the @R{} sources has
 enhancements to work with large file systems on 32-bit platforms.
 
-@code{liblzma} from @code{xv-utils} version 4.999 or later will be used
+@code{liblzma} from @code{xz-utils} version 4.999 or later will be used
 if installed: the version in the @R{} sources can be selected instead by
 configuring with @option{--with-system-xz=no}.
 
@@ -2410,7 +2418,8 @@ provides much more precise control over collation on all systems.  ICU
 is available as sources and as binary distributions for (at least) most
 Linux distributions, Solaris 9/10, AIX and Windows, usually as
 @code{libicu} or @code{icu4c}.  It will be used by default where
-available (including on Mac OS X >= 10.4).
+available (including on Mac OS X >= 10.4): should a broken version of
+ICU be found this can be suppressed by @option{--without-ICU}.
 
 Code developers will need Perl version 5.8.0 or later, available via
 @uref{http://www.perl.com/CPAN/}.  This is used to package and check
@@ -2461,7 +2470,7 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, setting the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk from 8.3.x to 8.5.7 have been used successfully.
+Versions of Tcl/Tk from 8.3.x to 8.5.8 have been used successfully.
 
 @node Java support,  , Tcl/Tk, Useful libraries and programs
 @subsection Java support
@@ -4293,11 +4302,12 @@ Info-ZIP project (@uref{http://www.info-zip.org/}).  All of these tools
 are in @file{Rtools.exe}.
 
 @strong{Beware}: `Native' ports of make are @strong{not} suitable
-(including that at the mingw site).  There were also problems with
-several earlier versions of the cygwin tools and DLLs.  To avoid
-frustration, please use our tool set, and make sure it is at the front
-of your path (including before the Windows system directories).  If you
-are using a Windows shell, type @code{PATH} at the prompt to find out.
+(including that called `MinGW make' at the MinGW SourceForge site).
+There were also problems with several earlier versions of the Cygwin
+tools and DLLs.  To avoid frustration, please use our tool set, and make
+sure it is at the front of your path (including before the Windows
+system directories).  If you are using a Windows shell, type @code{PATH}
+at the prompt to find out.
 
 @node The MinGW compilers, Useful additional programs, The command line tools, The Windows toolset
 @section The MinGW compilers
