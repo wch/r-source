@@ -864,9 +864,9 @@ Installation is @emph{via} the installer
 follow the instructions.  You can uninstall @R{} from the Control Panel
 or from the (optional) @R{} program group on the Start Menu.
 
-Note that you will probably (depending on the Windows language settings)
-be asked to choose a language for installation, and that choice applies
-to both installation and un-installation but not to running @R{} itself.
+Note that you will be asked to choose a language for installation, and
+that choice applies to both installation and un-installation but not to
+running @R{} itself.
 
 See the @uref{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R
 Windows @acronym{FAQ}} for more details on the binary installer.
@@ -1039,6 +1039,12 @@ Notes:
 @itemize
 
 @item
+We have seen permission problems after unpacking the recommended
+packages on some Vista/Windows 7/Server 2008 systems: these have been
+circumvented by setting the environment variable @env{R_INSTALL_TAR} to
+@samp{tar.exe}.
+
+@item
 We have had reports that earlier versions of anti-virus software locking
 up the machine, but not for several years.  However, aggressive
 anti-virus checking such as the on-access scanning of Sophos can slow
@@ -1062,7 +1068,7 @@ make -j4 recommended
 
 @noindent
 but this is only likely to be worthwhile on a multi-core machine with
-ample memory, and is less than 100% reliable.
+ample memory, and is not 100% reliable.
 
 @end itemize
 
@@ -1687,10 +1693,13 @@ interface to @code{install.packages}, @code{update.packages} and
 
 @command{R CMD INSTALL} works in Windows to install source packages if
 you have set up the tools needed (see @ref{The Windows toolset}).
-Installation of binary packages must be done by @code{install.packages}.
 @command{R CMD INSTALL --help} will tell you the current options under
-Windows (which differ from those on a Unix-alike): in particular there
-is a choice of the types of documentation to be installed.
+Windows (which differ from those on a Unix-alike).
+Installation of binary packages must be done by @code{install.packages}.
+
+We have seen permission problems after unpacking source packages on some
+Vista/Windows 7/Server 2008 systems: these have been circumvented by
+setting the environment variable @env{R_INSTALL_TAR} to @samp{tar.exe}.
 
 If you have only a source package that is known to work with current
 @R{} and just want a binary Windows build of it, you could make use of
