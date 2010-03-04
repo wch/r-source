@@ -1,6 +1,6 @@
 % File src/library/base/man/sample.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sample}
@@ -19,7 +19,7 @@ sample.int(n, size, replace = FALSE, prob = NULL)
 \arguments{
   \item{x}{Either a (numeric, complex, character or logical) vector of
     more than one element from which to choose, or a positive integer.}
-  \item{n}{a non-negative integer, the number of items to choose from.}
+  \item{n}{a positive integer, the number of items to choose from.}
   \item{size}{positive integer giving the number of items to choose.}
   \item{replace}{Should sampling be with replacement?}
   \item{prob}{A vector of probability weights for obtaining the elements
@@ -30,12 +30,12 @@ sample.int(n, size, replace = FALSE, prob = NULL)
   \code{\link{is.numeric}}) and \code{x >= 1}, sampling \emph{via}
   \code{sample} takes place from
   \code{1:x}.  \emph{Note} that this convenience feature may lead to
-  undesired behaviour when \code{x} is of varying length
+  undesired behaviour when \code{x} is of varying length in calls such as
   \code{sample(x)}.  See the \code{resample()} example below.
 
-  By default \code{size} is equal to \code{length(x)}
-  so that \code{sample(x)} generates a random permutation
-  of the elements of \code{x} (or \code{1:x}).
+  By default \code{size} is equal to the number of items inferred from
+  the first argument, so that \code{sample(x)} generates a random
+  permutation of the elements of \code{x} (or \code{1:x}).
 
   The optional \code{prob} argument can be used to give a vector
   of weights for obtaining the elements of the vector being
@@ -78,8 +78,8 @@ sample.int(n, size, replace = FALSE, prob = NULL)
 x <- 1:12
 # a random permutation
 sample(x)
-# bootstrap sampling -- only if length(x) > 1 !
-sample(x,replace=TRUE)
+# bootstrap resampling -- only if length(x) > 1 !
+sample(x, replace=TRUE)
 
 # 100 Bernoulli trials
 sample(c(0,1), 100, replace = TRUE)
@@ -98,8 +98,11 @@ resample <- function(x, size, ...)
   if(length(x) <= 1) { if(!missing(size) && size == 0) x[FALSE] else x
   } else sample(x, size, ...)
 
-resample(x[x >  8])# length 2
-resample(x[x >  9])# length 1
-resample(x[x > 10])# length 0
+resample(x[x >  8]) # length 2
+resample(x[x >  9]) # length 1
+resample(x[x > 10]) # length 0
+## but
+resample(x[x > 9], size=10, replace=TRUE)  # length 1
+resample(x[x > 10], size=10, replace=TRUE) # length 0
 }
 \keyword{distribution}
