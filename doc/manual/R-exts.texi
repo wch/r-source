@@ -1116,10 +1116,10 @@ particular order (and some of the @acronym{CRAN} build machines use
 multiple CPUs and parallel makes).
 
 Note that on Windows it is required that @file{Makevars[.win]} does
-create a DLL named @file{@var{pkg}.dll}: this is needed as it is the
-only reliable way to ensure that building a DLL succeeded.  If you want
-to use the @file{src} directory for some purpose other than building a
-DLL, use a @file{Makefile.win} file.
+create a DLL: this is needed as it is the only reliable way to ensure
+that building a DLL succeeded.  If you want to use the @file{src}
+directory for some purpose other than building a DLL, use a
+@file{Makefile.win} file.
 
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
 or @file{Makevars.win}: this will be used by @command{R CMD build}.

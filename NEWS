@@ -326,6 +326,7 @@ PACKAGE INSTALLATION
 	directory now checks if a DLL is created unless there is a
 	src/Makefile.win file: this helps catch broken installations
 	where the toolchain has not reported problems in building the DLL.
+	(Note: this can be any DLL, not just one named <pkg-name>.dll.)
 
 
 BUG FIXES
