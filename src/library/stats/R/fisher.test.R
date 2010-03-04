@@ -137,7 +137,8 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
                        as.integer(workspace),
                        mult = as.integer(mult),
                        PACKAGE = "stats")$p
-        RVAL <- list(p.value = PVAL)
+
+        RVAL <- list(p.value = max(0, min(1, PVAL)))
     }
 
     if((nr == 2) && (nc == 2)) {## conf.int and more only in  2 x 2 case
@@ -173,29 +174,19 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             sum(support * dnhyper(ncp))
         }
         pnhyper <- function(q, ncp = 1, upper.tail = FALSE) {
-            if(ncp == 1) {
-                if(upper.tail)
-                    return(phyper(x - 1, m, n, k, lower.tail = FALSE))
-                else
-                    return(phyper(x, m, n, k))
-            }
-            if(ncp == 0) {
-                if(upper.tail)
-                    return(as.numeric(q <= lo))
-                else
-                    return(as.numeric(q >= lo))
-            }
-            if(ncp == Inf) {
-                if(upper.tail)
-                    return(as.numeric(q <= hi))
-                else
-                    return(as.numeric(q >= hi))
-            }
-            d <- dnhyper(ncp)
-            if(upper.tail)
-                sum(d[support >= q])
-            else
-                sum(d[support <= q])
+	    if(ncp == 1) {
+		return(if(upper.tail)
+		       phyper(x - 1, m, n, k, lower.tail = FALSE) else
+		       phyper(x,     m, n, k))
+	    }
+	    if(ncp == 0) {
+		return(as.numeric(if(upper.tail) q <= lo else q >= lo))
+	    }
+	    if(ncp == Inf) {
+		return(as.numeric(if(upper.tail) q <= hi else q >= hi))
+	    }
+	    ## else
+	    sum(dnhyper(ncp)[if(upper.tail) support >= q else support <= q])
         }
 
         ## Determine the p-value (if still necessary).

@@ -6085,3 +6085,10 @@ z <- c(1+2i, 1-3i)
 str(z) # a user
 stopifnot(identical(format(z, drop0trailing=TRUE), as.character(z)))
 ## 2.10.1 gave 'cplx [1:2] 1+2i 1+3i'
+
+## "exact" fisher.test
+dd <- data.frame(group=1, score=c(rep(0,14), rep(1,29), rep(2, 16)))[rep(1:59, 2),]
+dd[,"group"] <- c(rep("DOG", 59), rep("kitty", 59))
+Pv <- with(dd, fisher.test(score, group)$p.value)
+stopifnot(0 <= Pv, Pv <= 1)
+## gave P-value 1 + 1.17e-13  in R < 2.11.0

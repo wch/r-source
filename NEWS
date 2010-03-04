@@ -386,6 +386,9 @@ BUG FIXES
     o   subassignment x[[....]] <- y didn't check for a zero-length
         right hand side, and inserted rubbish value. (PR#14217)
 
+    o	fisher.test() no longer gives a P-value *very* slightly > 1,
+	in some borderline cases.
+
 
 
 
