@@ -216,6 +216,13 @@
     setGenericImplicit("rowMeans", where, FALSE)
     setGenericImplicit("rowSums",  where, FALSE)
 
+    setGeneric("sample", function(x, size, replace = FALSE, prob = NULL, ...)
+			standardGeneric("sample"),
+	       useAsDefault = function(x, size, replace = FALSE, prob = NULL, ...)
+			base::sample(x, size, replace=replace, prob=prob, ...),
+	       signature = c("x", "size"), where = where)
+    setGenericImplicit("sample", where, FALSE)
+
     ## not implicitGeneric() which is not yet available "here"
     registerImplicitGenerics(where = where)
 }

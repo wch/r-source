@@ -14,7 +14,7 @@
 showMethods(f = character(), where = topenv(parent.frame()),
             classes = NULL, includeDefs = FALSE,
             inherited = !includeDefs,
-            showEmpty, printTo = stdout(), fdef =)
+            showEmpty, printTo = stdout(), fdef)
 }
 \arguments{
   \item{f}{one or more function names.  If omitted, all functions

@@ -241,7 +241,7 @@ NEW FEATURES
 	warning, when one of a or b is unknown.
 
     o	New function norm() to compute a matrix norm.
-	norm() and also backsolve() have implicit S4 generics.
+	norm() and also backsolve() and sample() have implicit S4 generics.
 
     o	Renviron.site and Rprofile.site can have architecture-specific
 	versions on systems with sub-architectures.
@@ -326,7 +326,7 @@ PACKAGE INSTALLATION
 	directory now checks if a DLL is created unless there is a
 	src/Makefile.win file: this helps catch broken installations
 	where the toolchain has not reported problems in building the DLL.
-    	
+
 
 BUG FIXES
 
