@@ -452,9 +452,9 @@ void FixupProb(double *p, int n, int require_k, Rboolean replace)
 	p[i] /= sum;
 }
 
-/* do_sample - equal probability sampling with/without replacement. */
-/* Implements sample(n, k, r) - choose k elements from 1 to n */
-/* with/without replacement according to r. */
+/* do_sample - probability sampling with/without replacement.
+   .Internal(sample(n, size, replace, prob))
+*/
 SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, y, prob, sreplace;
@@ -463,7 +463,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     n = asInteger(CAR(args)); args = CDR(args);
-    k = asInteger(CAR(args)); args = CDR(args);
+    k = asInteger(CAR(args)); args = CDR(args); /* size */
     sreplace = CAR(args); args = CDR(args);
     if(length(sreplace) != 1)
 	 error(_("invalid '%s' argument"), "replace");
@@ -471,7 +471,7 @@ SEXP attribute_hidden do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     prob = CAR(args);
     if (replace == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "replace");
-    if (n == NA_INTEGER || n < 1)
+    if (n == NA_INTEGER || n < 0 || (k > 0 && n == 0))
 	error(_("invalid first argument"));
     if (k == NA_INTEGER || k < 0)
 	error(_("invalid '%s' argument"), "size");

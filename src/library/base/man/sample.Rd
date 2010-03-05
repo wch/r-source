@@ -18,9 +18,11 @@ sample.int(n, size, replace = FALSE, prob = NULL)
 }
 \arguments{
   \item{x}{Either a (numeric, complex, character or logical) vector of
-    more than one element from which to choose, or a positive integer.}
-  \item{n}{a positive integer, the number of items to choose from.}
-  \item{size}{positive integer giving the number of items to choose.}
+    more than one element from which to choose, or a positive
+    integer.  See \sQuote{Details.}}
+  \item{n}{a positive number, the number of items to choose from.  See
+    \sQuote{Details.}}
+  \item{size}{a non-negative integer giving the number of items to choose.}
   \item{replace}{Should sampling be with replacement?}
   \item{prob}{A vector of probability weights for obtaining the elements
     of the vector being sampled.}
@@ -28,23 +30,31 @@ sample.int(n, size, replace = FALSE, prob = NULL)
 \details{
   If \code{x} has length 1, is numeric (in the sense of
   \code{\link{is.numeric}}) and \code{x >= 1}, sampling \emph{via}
-  \code{sample} takes place from
-  \code{1:x}.  \emph{Note} that this convenience feature may lead to
-  undesired behaviour when \code{x} is of varying length in calls such as
-  \code{sample(x)}.  See the \code{resample()} example below.
+  \code{sample} takes place from \code{1:x}.  \emph{Note} that this
+  convenience feature may lead to undesired behaviour when \code{x} is
+  of varying length in calls such as \code{sample(x)}.  See the
+  \code{resample()} example below.
 
-  By default \code{size} is equal to the number of items inferred from
-  the first argument, so that \code{sample(x)} generates a random
-  permutation of the elements of \code{x} (or \code{1:x}).
+  For \code{sample} the default for \code{size} is the number of items
+  inferred from the first argument, so that \code{sample(x)} generates a
+  random permutation of the elements of \code{x} (or \code{1:x}).
+  
+  As from \R 2.11.0
+  it is allowed to ask for \code{size = 0} samples with \code{n = 0} or
+  a length-zero \code{x}, but otherwise \code{n > 0} or positive
+  \code{length(x)} is required.
 
-  The optional \code{prob} argument can be used to give a vector
-  of weights for obtaining the elements of the vector being
-  sampled. They need not sum to one, but they should be nonnegative
-  and not all zero.  If \code{replace} is true, Walker's alias method
-  (Ripley, 1987) is used when there are more than 250 reasonably
-  probable values: this gives results incompatible with those from \R <
-  2.2.0, and there will be a warning the first time this happens in a
-  session.
+  Non-integer positive numerical values of \code{n} or \code{x} will be
+  truncated to the next smallest integer, which has to be no larger than
+  \code{\link{.Machine}$integer.max}. 
+  
+  The optional \code{prob} argument can be used to give a vector of
+  weights for obtaining the elements of the vector being sampled.  They
+  need not sum to one, but they should be non-negative and not all zero.
+  If \code{replace} is true, Walker's alias method (Ripley, 1987) is
+  used when there are more than 250 reasonably probable values: this
+  gives results incompatible with those from \R < 2.2.0, and there will
+  be a warning the first time this happens in a session.
 
   If \code{replace} is false, these probabilities are applied
   sequentially, that is the probability of choosing the next item is
@@ -104,5 +114,9 @@ resample(x[x > 10]) # length 0
 ## but
 resample(x[x > 9], size=10, replace=TRUE)  # length 1
 resample(x[x > 10], size=10, replace=TRUE) # length 0
+
+## From R 2.11.0 we can use the better-behaved
+resample <- function(x, size=length(x), ...)
+  x[sample.int(length(x), size, ...)]
 }
 \keyword{distribution}
