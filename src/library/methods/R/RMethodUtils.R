@@ -259,6 +259,8 @@ mergeMethods <-
     methods <- el(tmp, 2)
     for(i in seq_along(sigs)) {
         sigi <- el(sigs, i)
+        if(.noMlists() && !identical(unique(sigi), "ANY"))
+          next
         args <- names(sigi)
         m1 <- insertMethod(m1, as.character(sigi), args, el(methods, i), FALSE)
     }
@@ -693,6 +695,11 @@ getMethodsMetaData <- function(f, where = topenv(parent.frame()))
     fdef <- getGeneric(f, where = where)
     if(is.null(fdef))
         return(NULL)
+    if(.noMlists()) {
+        warning(gettextf("Methods list objects are not maintained in this version of R:  request for function %s may return incorrect information",
+                         dQuote(fdef@generic)),
+                domain = NA)
+    }
     mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)
     if (exists(mname, where = where, inherits = missing(where)))
         get(mname, where)
@@ -700,17 +707,19 @@ getMethodsMetaData <- function(f, where = topenv(parent.frame()))
 
 assignMethodsMetaData <-
   ## assign value to be the methods metadata for generic f on database where.
-  ## as of R 2.7.0 the mlist metadata is deprecated.  This function will
-  ## either disappear or deal only with primitives & groups in l
-  function(f, value, fdef, where, deflt = finalDefaultMethod(value))
+  ## as of R 2.7.0 the mlist metadata is deprecated.  
+  ## If value is not a MethodsList,  only turns on primitives & groups
+  function(f, value, fdef, where, deflt)
 {
     where <- as.environment(where)
-    mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)
-    if(exists(mname, envir = where, inherits = FALSE) &&
-       bindingIsLocked(mname, where))
-    {}        # may be called from trace() with locked binding; ignore
-    else
-        assign(mname, value, where)
+    if(is(value, "MethodsList")) {
+        mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)
+        if(exists(mname, envir = where, inherits = FALSE) &&
+           bindingIsLocked(mname, where))
+          {}        # may be called from trace() with locked binding; ignore
+        else
+          assign(mname, value, where)
+    }
     if(is.primitive(deflt))
         setPrimitiveMethods(f, deflt, "reset", fdef, NULL)
     if(is(fdef, "groupGenericFunction")) # reset or turn on members of group

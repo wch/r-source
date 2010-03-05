@@ -44,6 +44,11 @@ MethodsList <-
 makeMethodsList <- function(object, level=1)
 {
     mnames <- allNames(object)
+    if(.noMlists()) {
+        keep <- mnames %in% c("", "ANY")
+        mnames <- mnames[keep]
+        object <- object[keep]
+    }
     value <- new("MethodsList")
     i <- match("", mnames)
     if(!is.na(i)) {
@@ -100,6 +105,8 @@ insertMethod <-
   ## the signature, and return the modified MethodsList.
   function(mlist, signature, args, def, cacheOnly = FALSE)
 {
+    if(.noMlists() && !identical(unique(signature), "ANY"))
+      return(mlist)
     ## Checks for assertions about valid calls.
     ## See rev. 1.17 for the code before the assertions added.
     if(identical(args[1L], "...") && !identical(names(signature), "...")) {
@@ -782,3 +789,13 @@ asMethodDefinition <- function(def, signature = list(), sealed = FALSE, fdef = d
   mlist@allMethods <- mlist@allMethods[fromClass]
   mlist
 }
+
+.noMlistsFlag <- TRUE
+.noMlists <- function() {
+   ## if this were to be dynamically variable, but
+  ## it can't, IMO
+  ## identical(getOption("noMlists"), TRUE)
+  ## so instead
+  .noMlistsFlag
+}
+    

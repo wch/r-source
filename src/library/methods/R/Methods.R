@@ -187,7 +187,7 @@ setGeneric <-
     assign(name, fdef, where)
     .cacheGeneric(name, fdef)
     methods <- fdef@default # empty or containing the default
-    assignMethodsMetaData(name, methods, fdef, where) # MethodsList, eventually will go away
+    assignMethodsMetaData(name, methods, fdef, where, finalDefaultMethod(fdef@default))
     .assignMethodsTableMetaData(name, fdef, where)
     name
 }
@@ -285,7 +285,8 @@ getMethods <-
 
   ##  The function getMethods continues to
   ## return a methods list object, but now this is the metadata from where,
-  ## or is converted from the internal table if where is missing.
+  ## or is converted from the internal table if where is missing
+  ## or Mlists are dummies.
 
     function(f, where = topenv(parent.frame()), table = FALSE)
 {
@@ -303,11 +304,14 @@ getMethods <-
         if(table)
           return(getMethodsForDispatch(fdef, TRUE))
         value <-
-            if(nowhere) {
+            (if(nowhere) {
                 if(is(fdef, "genericFunction"))
                     .makeMlistFromTable(fdef) # else NULL
             }
+            else if(.noMlists())
+                  .makeMlistFromTable(fdef, where)
             else getMethodsMetaData(f, where = where)
+             )
 
         if(is.null(value)) ## return empty methods list
             new("MethodsList", argument = fdef@default@argument)
@@ -535,9 +539,13 @@ setMethod <-
         definition@generic <- fdef@generic
     }
     is.not.base <- !identical(where, baseenv())
-    if(is.not.base)
+##    do.mlist <- is.not.base && (!.noMlists() || all(signature == "ANY"))
+    do.mlist <- is.not.base && !.noMlists()
+    if(do.mlist)
         whereMethods <- insertMethod(.getOrMakeMethodsList(f, where, fdef),
                                      signature, margs, definition)
+    else
+        whereMethods <- NULL
     allMethods <- getMethodsForDispatch(fdef)
     ## cache in both direct and inherited tables
     .cacheMethodInTable(fdef, signature, definition, allMethods) #direct
@@ -547,8 +555,7 @@ setMethod <-
     resetGeneric(f, fdef, allMethods, gwhere, deflt) # Note: gwhere not used by resetGeneric
     ## assigns the methodslist object
     ## and deals with flags for primitives & for updating group members
-    if(is.not.base)
-        assignMethodsMetaData(f, whereMethods, fdef, where, deflt)
+    assignMethodsMetaData(f, whereMethods, fdef, where, deflt)
     f
 }
 
@@ -665,6 +672,7 @@ getMethod <-
       return(mlist)
     ## the rest of the code will be executed only if a methods list object is supplied
     ## as an argument.  Should be deleted from 2.8.0
+    message("Warning:  using defunct methods list search")
     i <- 1
     argNames <- fdef@signature
     signature <- matchSignature(signature, fdef)
@@ -700,7 +708,7 @@ getMethod <-
         }
         else
             Classes <- "\"ANY\""
-        stop(gettextf("no method defined for function \"%s\" and signature %s",
+        stop(gettextf("no method defined in methods list object for function \"%s\" and signature %s",
                       .genericName(f), Classes), domain = NA)
     }
 }

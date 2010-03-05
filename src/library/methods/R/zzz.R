@@ -37,6 +37,11 @@
               else
               NA)
     if(identical(saved, FALSE)) {
+        ## optionally turn off old-style mlists
+        mopt <- Sys.getenv("R_MLIST")
+        .noMlistsFlag <<- (is.character(mopt) && all(mopt == "NO"))
+        if(.noMlistsFlag) 
+            message("Initializing with no methods list objects")
         cat("initializing class and method definitions ...")
         on.exit(assign(".saveImage", NA, envir = where))
         ## set up default prototype (uses .Call so has be at load time)
