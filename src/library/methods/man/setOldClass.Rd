@@ -80,7 +80,7 @@ setOldClass(Classes, prototype, where, test = FALSE, S4Class)
     source for a package, the class definitions will be included in the
     package's environment by default.)
   }
-  \item{test}{flag, if \code{TRUE}, arrange to test inheritance 
+  \item{test}{flag, if \code{TRUE}, arrange to test inheritance
     explicitly for each object, needed if the S3 class can have a
     different set of class strings, with the same first string.
     This is a different mechanism in implementation and should be
@@ -144,9 +144,9 @@ which can sometimes lead to confusion.
   are needed.
 
   The list \code{.OldClassesList} contains the old-style classes that
-  are defined by the methods package.  Each element of the list is an
-  old-style list, with multiple character strings if inheritance is
-  included.
+  are defined by the methods package.  Each element of the list is a
+  character vector, with multiple strings if inheritance is included.
+  %%
   Each element of the list was passed to \code{setOldClass} when
   creating the \pkg{methods} package; therefore, these classes can be used
   in \code{\link{setMethod}} calls, with the inheritance as implied by
@@ -191,7 +191,7 @@ circumstances described below.
 
 Suppose \code{"A"} is any class extending \code{"oldClass"}. then
 
- \code{setOldClass(c("B", "A"))} 
+ \code{setOldClass(c("B", "A"))}
 
 creates a new class \code{"B"} whose S3 class
 concatenates \code{"B"}  with \code{S3Class("A")}.  The new class is a
@@ -242,7 +242,7 @@ S3 objects.  See \code{\link{Classes}} for details.
   attributes can be specified in the representation of the S4 class.
   The usual technique will be to create an S4 class with the desired
   structure, and then supply the class name or definition as the
-  argument \code{S4Class} to \code{setOldClass()}. 
+  argument \code{S4Class} to \code{setOldClass()}.
 
   See the definition of class \code{"ts"} in the examples below.  The
   call to \code{\link{setClass}} to create the S4 class can use the same class name, as here,
@@ -299,7 +299,6 @@ For another example, look at the S4 class definition for \code{"data.frame"}.
 }
 
 \examples{
-
 require(stats)
 setOldClass(c("mlm", "lm"))
 setGeneric("dfResidual", function(model)standardGeneric("dfResidual"))
@@ -309,11 +308,15 @@ setMethod("dfResidual", "lm", function(model)model$df.residual)
 myData <- data.frame(time = 1:10, y = (1:10)^.5)
 myLm <- lm(cbind(y, y^3)  ~ time, myData)
 
+showClass("data.frame")# to see the predefined S4 "oldClass"
+
 ## two examples extending S3 class "lm", class "xlm"  directly and "ylm" indirectly
 setClass("xlm", representation(eps = "numeric"), contains = "lm")
 setClass("ylm", representation(header = "character"), contains = "xlm")
 ym1 = new("ylm", myLm, header = "Example", eps = 0.)
 ## for more examples, see ?\link{S3Class}.
+
+utils::str(.OldClassesList)
 
 \dontshow{
 stopifnot(identical(dfResidual(myLm), myLm$df.residual))
@@ -352,7 +355,7 @@ removeClass("stamped4")
 set.seed(113)}
 someLetters <- stamped(sample(letters, 10),  ISOdatetime(2008, 10, 15, 12, 0, 0))
 
-st <- new("stamped", someLetters)  
+st <- new("stamped", someLetters)
 st  # show() method prints the object's class, then calls the S3 print method.
 
 stopifnot(identical(S3Part(st, TRUE), someLetters))
@@ -362,12 +365,12 @@ new("stamped", 1:10, date = ISOdatetime(1976, 5, 5, 15, 10, 0))
 
 \dontrun{
 ## The code in R that defines "ts" as an S4 class
-setClass("ts", contains = "structure", 
-      representation(tsp = "numeric"), 
+setClass("ts", contains = "structure",
+      representation(tsp = "numeric"),
       prototype(NA, tsp = rep(1,3))) # prototype to be a legal S3 time-series
 ## and now registers it as an S3 class
     setOldClass("ts", S4Class = "ts", where = envir)
- }
+}
 
 \dontshow{
   removeClass("stamped")
