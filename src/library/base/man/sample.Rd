@@ -14,12 +14,11 @@
 \usage{
 sample(x, size, replace = FALSE, prob = NULL)
 
-sample.int(n, size, replace = FALSE, prob = NULL)
+sample.int(n, size = n, replace = FALSE, prob = NULL)
 }
 \arguments{
-  \item{x}{Either a (numeric, complex, character or logical) vector of
-    more than one element from which to choose, or a positive
-    integer.  See \sQuote{Details.}}
+  \item{x}{Either a vector of one or more elements from which to choose,
+    or a positive integer.  See \sQuote{Details.}}
   \item{n}{a positive number, the number of items to choose from.  See
     \sQuote{Details.}}
   \item{size}{a non-negative integer giving the number of items to choose.}
@@ -32,17 +31,19 @@ sample.int(n, size, replace = FALSE, prob = NULL)
   \code{\link{is.numeric}}) and \code{x >= 1}, sampling \emph{via}
   \code{sample} takes place from \code{1:x}.  \emph{Note} that this
   convenience feature may lead to undesired behaviour when \code{x} is
-  of varying length in calls such as \code{sample(x)}.  See the
-  \code{resample()} example below.
-
+  of varying length in calls such as \code{sample(x)}.  See the examples.
+  
+  Otherwise \code{x} can be any \R object for which \code{length} and
+  subsetting by integers make sense: S3 or S4 methods for these
+  operations will be dispatched as appropriate.
+  
   For \code{sample} the default for \code{size} is the number of items
   inferred from the first argument, so that \code{sample(x)} generates a
   random permutation of the elements of \code{x} (or \code{1:x}).
   
-  As from \R 2.11.0
-  it is allowed to ask for \code{size = 0} samples with \code{n = 0} or
-  a length-zero \code{x}, but otherwise \code{n > 0} or positive
-  \code{length(x)} is required.
+  As from \R 2.11.0 it is allowed to ask for \code{size = 0} samples
+  with \code{n = 0} or a length-zero \code{x}, but otherwise \code{n >
+  0} or positive \code{length(x)} is required.
 
   Non-integer positive numerical values of \code{n} or \code{x} will be
   truncated to the next smallest integer, which has to be no larger than
@@ -67,7 +68,7 @@ sample.int(n, size, replace = FALSE, prob = NULL)
 
 \value{
   For \code{sample} a vector of length \code{size} with elements
-  drawn from either \code{x} or from \code{1:x}.
+  drawn from either \code{x} or from the integers \code{1:x}.
 
   For \code{sample.int}, an integer vector of length \code{size} with
   elements from \code{1:n},
@@ -101,22 +102,12 @@ sample(c(0,1), 100, replace = TRUE)
 x <- 1:10
     sample(x[x >  8]) # length 2
     sample(x[x >  9]) # oops -- length 10!
-try(sample(x[x > 10]))# error!
+    sample(x[x > 10]) # length 0
 
-## This is safer, but only for sampling without replacement
-resample <- function(x, size, ...)
-  if(length(x) <= 1) { if(!missing(size) && size == 0) x[FALSE] else x
-  } else sample(x, size, ...)
-
+## For R >= 2.11.0 only
+resample <- function(x, ...) x[sample.int(length(x), ...)]
 resample(x[x >  8]) # length 2
 resample(x[x >  9]) # length 1
 resample(x[x > 10]) # length 0
-## but
-resample(x[x > 9], size=10, replace=TRUE)  # length 1
-resample(x[x > 10], size=10, replace=TRUE) # length 0
-
-## From R 2.11.0 we can use the better-behaved
-resample <- function(x, size=length(x), ...)
-  x[sample.int(length(x), size, ...)]
 }
 \keyword{distribution}

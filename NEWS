@@ -284,7 +284,8 @@ NEW FEATURES
 	was meant in PR#14126.)
 
     o	sample() and sample.int() allow zero items to be sampled from
-	a zero-length input.
+	a zero-length input.  sample.int() gains a default value
+	'size=n' to be more similar to sample().
 
 
 DEPRECATED & DEFUNCT
