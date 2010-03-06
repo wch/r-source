@@ -10785,11 +10785,10 @@ currently available that interface directly with @R{} and provide a
 There is a (D)COM server called @code{StatConnector} written by Thomas
 Baier available on @acronym{CRAN}
 (@uref{http://@/cran.r-project.org/@/other-software.html}) which works
-with @file{Rproxy.dll} (in the @R{} distribution) and @file{R.dll} to
-support transfer of data to and from @R{} and remote execution of R
-commands, as well as embedding of an @R{} graphics window.  The
-@pkg{rcom} package on @acronym{CRAN} provides a (D)COM server in a
-running @R{} session.
+with package @pkg{rscproxy} to support transfer of data to and from @R{}
+and remote execution of R commands, as well as embedding of an @R{}
+graphics window.  The @pkg{rcom} package on @acronym{CRAN} provides a
+(D)COM server in a running @R{} session.
 
 @item
 Another (D)COM server, @code{RDCOMServer}, is available from
