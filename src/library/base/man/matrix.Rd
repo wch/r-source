@@ -50,15 +50,15 @@ is.matrix(x)
   made to infer it from the length of \code{data} and the other
   parameter.  If neither is given, a one-column matrix is returned.
 
-  If there are too few elements in \code{data} to fill the array,
+  If there are too few elements in \code{data} to fill the matrix,
   then the elements in \code{data} are recycled.  If \code{data} has
   length zero, \code{NA} of an appropriate type is used for atomic
   vectors (\code{0} for raw vectors) and \code{NULL} for lists.
 
-  \code{is.matrix} returns \code{TRUE} if \code{x} is a matrix and has a
-  \code{\link{dim}} attribute of length 2) and \code{FALSE} otherwise.
+  \code{is.matrix} returns \code{TRUE} if \code{x} is a vector and has a
+  \code{"\link{dim}"} attribute of length 2) and \code{FALSE} otherwise.
   Note that a \code{\link{data.frame}} is \strong{not} a matrix by this
-  test.  It is generic: you can write methods to handle
+  test.  The function is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
 
   \code{as.matrix} is a generic function.  The method for data frames
@@ -73,7 +73,7 @@ is.matrix(x)
   promotes the names (if any) of the vector to the rownames of the matrix.
   
   \code{is.matrix} is a \link{primitive} function so any argument name is
-  ignored.    
+  ignored.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -81,7 +81,10 @@ is.matrix(x)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{data.matrix}}, which attempts to convert to a numeric matrix.
+  \code{\link{data.matrix}}, which attempts to convert to a numeric
+  matrix.
+
+  A matrix is the special case of a two-dimensional \code{\link{array}}.
 }
 \examples{
 is.matrix(as.matrix(1:10))

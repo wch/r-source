@@ -1,6 +1,6 @@
 % File src/library/base/man/array.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{array}
@@ -23,7 +23,7 @@ is.array(x)
     vector of length one or more giving the maximal indices in
     each dimension.}
   \item{dimnames}{either \code{NULL} or the names for the
-    dimensions. This is a list with one component for each dimension,
+    dimensions.  This is a list with one component for each dimension,
     either \code{NULL} or a character vector of the length given by
     \code{dim} for that dimension.  The list can be named, and the list names
     will be used as names for the dimensions.  If the list is shorter
@@ -31,6 +31,27 @@ is.array(x)
     length required}
   \item{x}{an \R object.}
   \item{\dots}{additional arguments to be passed to or from methods.}
+}
+\details{
+  An array in \R can have one, two or more dimensions.  It is simply a
+  vector which is stored with additional \link{attributes} giving the
+  dimensions (attribute \code{"dim"}) and optionally names for those
+  dimensions (attribute \code{"dimnames"}).
+
+  A two-dimensional array is the same thing as a \code{\link{matrix}}.
+  
+  One-dimensional arrays often look like vectors, but may be handled
+  differently by some functions: \code{\link{str}} does distinguish
+  them in recent versions of \R.
+
+  The \code{"dim"} attribute is an integer vector of length one or more
+  containing non-negative values: the product of the values must match
+  the length of the array.
+
+  The \code{"dimnames"} attribute is optional: if present it is a list
+  with one component for each dimension, either \code{NULL} or a
+  character vector of the length given by the element of the
+  \code{"dim"} attribute for that dimension.  
 }
 \value{
   \code{array} returns an array with the extents specified in \code{dim}
@@ -45,7 +66,7 @@ is.array(x)
   default method does so by attaching a \code{\link{dim}} attribute to
   it.  It also attaches \code{\link{dimnames}} if \code{x} has
   \code{\link{names}}.  The sole purpose of this is to make it possible
-  to access the \code{dim}[names] attribute at a later time.
+  to access the \code{dim[names]} attribute at a later time.
 
   \code{is.array} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is an array (i.e., has a \code{dim} attribute of
