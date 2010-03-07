@@ -1,6 +1,6 @@
 % File src/library/base/man/apply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{apply}
@@ -8,13 +8,13 @@
 \title{Apply Functions Over Array Margins}
 \description{
   Returns a vector or array or list of values obtained by applying a
-  function to margins of an array.
+  function to margins of an array or matrix.
 }
 \usage{
 apply(X, MARGIN, FUN, \dots)
 }
 \arguments{
-  \item{X}{the array to be used.}
+  \item{X}{an array, including a matrix.}
   \item{MARGIN}{a vector giving the subscripts which the function will
     be applied over.
     \code{1} indicates rows, \code{2} indicates columns,
@@ -25,7 +25,7 @@ apply(X, MARGIN, FUN, \dots)
   \item{\dots}{optional arguments to \code{FUN}.}
 }
 \details{
-  If \code{X} is not an array but has a dimension attribute,
+  If \code{X} is not an array but has a non-null \code{\link{dim}} value,
   \code{apply} attempts to coerce it to an array via \code{as.matrix}
   if it is two-dimensional (e.g., data frames) or via \code{as.array}.
 
