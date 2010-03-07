@@ -282,6 +282,10 @@ NEW FEATURES
     o	pchisq(ncp =, log.p = TRUE) is more accurate for probabilities
 	near one.  E.g. pchisq(80, 4, ncp=1, log.p=TRUE).  (Maybe what
 	was meant in PR#14126.)
+	
+    o	maintainer() has been added, to give convenient access to the
+	name of the maintainer of a package (contributed by David
+	Scott).
 
     o	sample() and sample.int() allow zero items to be sampled from
 	a zero-length input.  sample.int() gains a default value

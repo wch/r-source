@@ -122,6 +122,13 @@ print.packageDescription <- function(x, ...)
     invisible(x)
 }
 
+# Simple convenience function 
+
+maintainer <- function(pkg){
+  pkg # force evaluation
+  return(packageDescription(pkg)$Maintainer)
+}
+
 ## used with firstOnly = TRUE for example()
 ## used with firstOnly = FALSE in help()
 index.search <- function(topic, paths, firstOnly = FALSE)
