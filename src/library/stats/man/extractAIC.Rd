@@ -48,13 +48,14 @@ extractAIC(fit, scale, k = 2, \dots)
   denotes the (weighted) residual sum of squares then \code{extractAIC}
   uses for \eqn{- 2\log L}{-2 log L} the formulae \eqn{RSS/s - n} (corresponding
   to Mallows' \eqn{C_p}{Cp}) in the case of known scale \eqn{s} and
-  \eqn{n \log (RSS/n)}{n log (RSS/b)} for unknown scale.
+  \eqn{n \log (RSS/n)}{n log (RSS/n)} for unknown scale.
   \code{\link{AIC}} only handles unknown scale and uses the formula
   \eqn{n \log (RSS/n) - n + n \log 2\pi - \sum \log w}{n log (RSS/n) - n + n log 2pi - sum(log w)}
   where \eqn{w} are the weights.
 
-  For \code{glm} fits the family's \code{aic()} function to compute the
-  AIC: see the note under \code{logLik} about the assumptions this makes.
+  For \code{glm} fits the family's \code{aic()} function is used to
+  compute the AIC: see the note under \code{logLik} about the
+  assumptions this makes.
 
   \code{k = 2} corresponds to the traditional AIC, using \code{k =
     log(n)} provides the BIC (Bayesian IC) instead.
@@ -88,4 +89,3 @@ utils::example(glm)
 extractAIC(glm.D93)  #>>  5  15.129
 }
 \keyword{models}
-
