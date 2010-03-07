@@ -30,7 +30,10 @@ RfilesLazy: $(top_builddir)/library/$(pkg)/R/$(pkg).rdb
 ## loadNamespace() depends on the NAMESPACE file.  We remove the
 ## dumped copy (it is rebuilt later), and we have already installed
 ## NAMESPACE in the library tree.
-$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE
+## This depends many other things, including the list of primitives.
+## Depending on names.c at least catches the latter.
+$(top_builddir)/library/$(pkg)/R/$(pkg).rdb: all.R  $(srcdir)/NAMESPACE \
+  $(top_srcdir)/src/main/names.c
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds $@
 	@$(ECHO) "dumping R code in package '$(pkg)'"
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
