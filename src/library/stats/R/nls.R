@@ -819,7 +819,7 @@ logLik.nls <- function(object, REML = FALSE, ...)
 df.residual.nls <- function(object, ...)
 {
     w <- object$weights
-    n <- if(!is.null(w)) sum(w != 0) else length(object$m$lhs())
+    n <- if(!is.null(w)) sum(w != 0) else length(object$m$resid())
     n - length(coef(object))
 }
 
