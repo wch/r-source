@@ -71,7 +71,8 @@ next
 }
 \value{
   \code{if} returns the value of the expression evaluated, or
-  \code{NULL} if none was (which may happen if there is no \code{else}).
+  \code{NULL} invisibly if none was (which may happen if there is no
+  \code{else}).
 
   \code{for}, \code{while} and \code{repeat} return \code{NULL} invisibly.
   \code{for} sets \code{var} to the last used element of \code{seq},

@@ -1,6 +1,6 @@
 % File src/library/base/man/switch.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{switch}
@@ -16,26 +16,47 @@ switch(EXPR, \dots)
 \arguments{
   \item{EXPR}{an expression evaluating to a number or a character
     string.}
-  \item{\dots}{the list of alternatives, given explicitly.}
+  \item{\dots}{the list of alternatives.  If it is intended that
+    \code{EXPR} has a character-string value these will be
+    named, perhaps except for one alternative to be used as a
+    \sQuote{default} value.}
 }
 \details{
-  If the value of \code{EXPR} is an integer between 1 and
-  \code{nargs()-1} then the corresponding element of \code{\dots} is
-  evaluated and the result returned.
+  \code{switch} works in two distinct ways depending whether the first
+  argument evaluates to a character string or a number.
+  
+  If the value of \code{EXPR} is not a character string it is coerced to
+  integer.  If this is between 1 and \code{nargs()-1} then the
+  corresponding element of \code{\dots} is evaluated and the result
+  returned: thus if \code{EXPR=3} is the first argument then the fourth
+  argument is evaluated and returned.
 
-  If \code{EXPR} returns a character string then that string is used to
-  match the names of the elements in \code{\dots}.  If there is an exact
-  match then that element is evaluated and returned if there is one,
-   otherwise the next element is chosen, e.g.,
-  \code{switch("cc", a=1, cc=, d=2)} evaluates to \code{2}.
-
-  In the case of no match, if there's a further argument in \code{switch}
-  that one is returned, otherwise \code{NULL}.
+  If \code{EXPR} evaluates to a character string then that string is
+  matched to the names of the elements in \code{\dots}.  If there is an
+  exact match then that element is evaluated unless it is missing, in
+  which case the next non-missing element is evaluated, so for example
+  \code{switch("cc", a=1, cc=, cd=, d=2)} evaluates to \code{2}.  In the
+  case of no match, if there is a unnamed argument (apart from an unnamed
+  argument matched to \code{EXPR}) in \code{switch} its value is
+  returned.  (If there is more than one such argument the first one
+  will be used.)
 }
 \section{Warning}{
   Beware of partial matching: an alternative \code{E = foo} will match
-  the first argument \code{EXPR} unless that is named. See the examples
-  for good practice in naming the first argument.
+  the first argument \code{EXPR} unless that is named.
+
+  It is possible to write calls to \code{switch} that can be confusing
+  and may not work in the same way in future versions of \R.  For clarity,
+  always have \code{EXPR} as the first argument, naming it if partial
+  matching is a possibility.  For the character-string form, have a
+  single unnamed argument as the default after the named values.
+}
+\value{
+  The value of one of the elements of \code{\dots}, or \code{NULL},
+  visibly (for all error conditions).
+
+  The result has the visibility (see \code{\link{invisible}}) of the
+  element evaluated.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -46,9 +67,9 @@ switch(EXPR, \dots)
 require(stats)
 centre <- function(x, type) {
   switch(type,
-        mean = mean(x),
-        median = median(x),
-        trimmed = mean(x, trim = .1))
+         mean = mean(x),
+         median = median(x),
+         trimmed = mean(x, trim = .1))
 }
 x <- rcauchy(10)
 centre(x, "mean")
@@ -56,12 +77,18 @@ centre(x, "median")
 centre(x, "trimmed")
 
 ccc <- c("b","QQ","a","A","bb")
+# note the cat() produces no output for NULL
 for(ch in ccc)
-    cat(ch,":",switch(EXPR = ch, a=1,     b=2:3), "\n")
+    cat(ch,":", switch(EXPR = ch, a=1,     b=2:3), "\n")
 for(ch in ccc)
-    cat(ch,":",switch(EXPR = ch, a=, A=1, b=2:3, "Otherwise: last"),"\n")
+    cat(ch,":", switch(EXPR = ch, a=, A=1, b=2:3, "Otherwise: last"),"\n")
 
-## Numeric EXPR don't allow an 'otherwise':
+## Numeric EXPR does not allow a default value to be specified
+## -- it is always NULL
 for(i in c(-1:3,9))  print(switch(i, 1,2,3,4))
+
+## visibility
+switch(1, invisible(pi), pi)
+switch(2, invisible(pi), pi)
 }
 \keyword{programming}
