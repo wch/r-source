@@ -291,6 +291,14 @@ NEW FEATURES
 	a zero-length input.  sample.int() gains a default value
 	'size=n' to be more similar to sample().
 
+    o	switch() returns NULL on error (not previously documented on
+	the help page): it now does so invisibly, analogously to
+	if-without-else.
+
+	It is now primitive: this means that EXPR is always matched to
+	the first argument and there is no danger of partial matching
+	to later named arguments.
+
 
 DEPRECATED & DEFUNCT
 

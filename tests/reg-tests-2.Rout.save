@@ -1,6 +1,6 @@
 
-R version 2.11.0 Under development (unstable) (2009-12-30 r50860)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.11.0 Under development (unstable) (2010-03-07 r51216)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -6508,4 +6508,15 @@ Levels: 2009-01-01
 Levels: 2009-01-01
 > ## remove empty final level
 > 
+> 
+> ## tests of error conditions in switch()
+> switch("a", a=, b=, c=, 4)
+[1] 4
+> switch("a", a=, b=, c=, )
+> .Last.value
+NULL
+> switch("a", a=, b=, c=, invisible(4))
+> .Last.value
+[1] 4
+> ## visiblilty changed in 2.11.0
 > 

@@ -536,11 +536,12 @@ SEXP attribute_hidden do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (iobj != 0 && !isNull(s))
 	    cat_printsep(sepr, 0);
 	n = length(s);
+	/* 0-length objects are ignored */
 	if (n > 0) {
 	    if (labs != R_NilValue && (iobj == 0)
 		&& (asInteger(fill) > 0)) {
 		Rprintf("%s ", trChar(STRING_ELT(labs, nlines % lablen)));
-		/* FIXME -- Rstrlen allows for embedded nuls, double-width chars */
+		/* FIXME -- Rstrlen allows for double-width chars */
 		width += Rstrlen(STRING_ELT(labs, nlines % lablen), 0) + 1;
 		nlines++;
 	    }
@@ -840,73 +841,105 @@ SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     return lengthgets(x, len);
 }
 
-
-
-/* For switch, evaluate the first arg, if it is a character then try */
-/* to match the name with the remaining args, and evaluate the match, */
-/* if there is no match then evaluate the first unnamed arg.  If the */
-/* value of the first arg is not a character string then coerce it to */
-/* an integer k and choose the kth argument from those that remain */
-/* provided 0 < k < (nargs-1). For character matching, if the value */
-/* is missing then take the next non-missing arg as the value. Then */
-/* things like switch(as.character(answer), yes=, YES=1, no=, NO=2, 3) */
-/* will work. */
-
-static SEXP switchList(SEXP el, SEXP rho)
+/* Expand dots in args, but do not evaluate */
+static SEXP expandDots(SEXP el, SEXP rho)
 {
-    SEXP h;
-    if (CAR(el) == R_DotsSymbol) {
-	h = findVar(CAR(el), rho);
-	if (h == R_NilValue)
-	    return R_NilValue;
-	if (TYPEOF(h) != DOTSXP) {
-	    if (h == R_MissingArg)
-		return R_MissingArg;
-	    error(_("... used in an incorrect context"));
+    SEXP ans, tail;
+
+    PROTECT(el); /* in do_switch, this is already protected */
+    PROTECT(ans = tail = CONS(R_NilValue, R_NilValue));
+
+    while (el != R_NilValue) {
+	if (CAR(el) == R_DotsSymbol) {
+	    SEXP h = findVar(CAR(el), rho);
+	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
+		while (h != R_NilValue) {
+		    SETCDR(tail, CONS(CAR(h), R_NilValue));
+		    tail = CDR(tail);
+		    if(TAG(h) != R_NilValue) SET_TAG(tail, TAG(h));
+		    h = CDR(h);
+		}
+	    } else if (h != R_MissingArg)
+		error(_("'...' used in an incorrect context"));
+	} else {
+	    SETCDR(tail, CONS(CAR(el), R_NilValue));
+	    tail = CDR(tail);
+	    if(TAG(el) != R_NilValue) SET_TAG(tail, TAG(el));
 	}
-	return h;
+	el = CDR(el);
     }
-    else {
-	error(_("invalid parameter in 'switch()'"));
-	return R_NilValue;/* for -Wall */
-    }
+    UNPROTECT(2);
+    return CDR(ans);
 }
 
-/* This is a SPECIALSXP */
+
+/* For switch, evaluate the first arg, if it is a character then try
+ to match the name with the remaining args, and evaluate the match, if
+ there is no match then evaluate the first unnamed arg (apart from the
+ first arg).  If the value of the first arg is not a character string
+ then coerce it to an integer k and choose the kth argument from those
+ that remain provided 1 < k < nargs.  For character matching, if
+ the value is missing then take the next non-missing arg as the
+ value. Then things like switch(as.character(answer), yes=, YES=1,
+ no=, NO=2, 3) will work.  But it there is no 'next', return NULL.
+
+ Changed in 2.11.0 to be primitive, so the wrapper does not partially
+ match to EXPR, and to return NULL invisibly if it is an error
+ condition.
+
+ This is a SPECIALSXP, so arguments need to be evaluated as needed.
+  And (see names.c) X=2, so it defaults to a visible value.
+*/
+
 SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int argval;
-    SEXP x, y, w;
-    x = eval(CAR(args), rho);
+    int argval, nargs = length(args);
+    SEXP x, y, w, ans;
+
+    if (nargs < 1) errorcall(call, _("EXPR is missing"));
+    PROTECT(x = eval(CAR(args), rho));
     if (!isVector(x) || length(x) != 1)
-	error(_("switch: EXPR must return a length 1 vector"));
-    PROTECT(w = switchList(CDR(args), rho));
-#define Return_NULL    UNPROTECT(1); return R_NilValue
-    if(w == R_MissingArg) {
-	Return_NULL;
-    }
-    if (isString(x)) {
-	for (y = w; y != R_NilValue; y = CDR(y))
-	    if (TAG(y) != R_NilValue && pmatch(STRING_ELT(x, 0), TAG(y), 1)) {
-		/* Find the next non-missing argument.
-		   (If there is none, return NULL.) */
-		while (CAR(y) == R_MissingArg && y != R_NilValue) y = CDR(y);
-		UNPROTECT(1);
-		return eval(CAR(y), rho);
+	errorcall(call, _("EXPR must be a length 1 vector"));
+    if (nargs > 1) {
+	/* There is a complication: if called from lapply
+	   there may be a ... argument */
+	PROTECT(w = expandDots(CDR(args), rho));
+	if (isString(x)) {
+	    for (y = w; y != R_NilValue; y = CDR(y))
+		if (TAG(y) != R_NilValue && 
+		    pmatch(STRING_ELT(x, 0), TAG(y), 1 /* exact */)) {
+		    /* Find the next non-missing argument.
+		       (If there is none, return NULL.) */
+		    while (CAR(y) == R_MissingArg && y != R_NilValue) y = CDR(y);
+		    if (y == R_NilValue) {
+			R_Visible = FALSE; 
+			UNPROTECT(2);
+			return R_NilValue;
+		    }
+		    ans =  eval(CAR(y), rho);
+		    UNPROTECT(2);
+		    return ans;
+		}
+	    for (y = w; y != R_NilValue; y = CDR(y))
+		if (TAG(y) == R_NilValue) {
+		    ans =  eval(CAR(y), rho);
+		    UNPROTECT(2);
+		    return ans;
+		}   
+	    /* fall through to error */
+	} else { /* Treat as numeric */
+	    argval = asInteger(x);
+	    if (argval != NA_INTEGER && argval >= 1 && argval <= length(w)) {
+		ans =  eval(CAR(nthcdr(w, argval - 1)), rho);
+		UNPROTECT(2);
+		return ans;
 	    }
-	for (y = w; y != R_NilValue; y = CDR(y))
-	    if (TAG(y) == R_NilValue) {
-		UNPROTECT(1);
-		return eval(CAR(y), rho);
-	    }
-	Return_NULL;
-    } else { /* Treat as numeric */
-	argval = asInteger(x);
-	if (argval == NA_INTEGER || argval <= 0 || argval > length(w)) {
-	    Return_NULL;
+	    /* fall through to error */
 	}
-	x = eval(CAR(nthcdr(w, argval - 1)), rho);
-	UNPROTECT(1);
-	return x;
+	UNPROTECT(1); /* w */
     }
+    /* an error */
+    UNPROTECT(1); /* x */
+    R_Visible = FALSE;
+    return R_NilValue;
 }

@@ -2439,3 +2439,11 @@ cut(x, breaks= "quarter") # had two levels in 2.10.1
 cut(as.POSIXlt(x), breaks= "quarter")
 ## remove empty final level
 
+
+## tests of error conditions in switch()
+switch("a", a=, b=, c=, 4)
+switch("a", a=, b=, c=, )
+.Last.value
+switch("a", a=, b=, c=, invisible(4))
+.Last.value
+## visiblilty changed in 2.11.0

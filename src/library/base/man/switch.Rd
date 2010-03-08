@@ -28,32 +28,34 @@ switch(EXPR, \dots)
   If the value of \code{EXPR} is not a character string it is coerced to
   integer.  If this is between 1 and \code{nargs()-1} then the
   corresponding element of \code{\dots} is evaluated and the result
-  returned: thus if \code{EXPR=3} is the first argument then the fourth
+  returned: thus if the first argument is \code{3} then the fourth
   argument is evaluated and returned.
 
   If \code{EXPR} evaluates to a character string then that string is
-  matched to the names of the elements in \code{\dots}.  If there is an
-  exact match then that element is evaluated unless it is missing, in
-  which case the next non-missing element is evaluated, so for example
-  \code{switch("cc", a=1, cc=, cd=, d=2)} evaluates to \code{2}.  In the
-  case of no match, if there is a unnamed argument (apart from an unnamed
-  argument matched to \code{EXPR}) in \code{switch} its value is
-  returned.  (If there is more than one such argument the first one
-  will be used.)
+  matched (exactly)to the names of the elements in \code{\dots}.  If
+  there is a match then that element is evaluated unless it is missing,
+  in which case the next non-missing element is evaluated, so for
+  example \code{switch("cc", a=1, cc=, cd=, d=2)} evaluates to \code{2}.
+  If there is more than one match, the first matching element is used.
+  In the case of no match, if there is a unnamed element of \code{\dots}
+  its value is returned.  (If there is more than one such argument the
+  first one will be used.)
 }
 \section{Warning}{
-  Beware of partial matching: an alternative \code{E = foo} will match
-  the first argument \code{EXPR} unless that is named.
+  Before \R 2.11.0 it was necessary to avoid partial matching: an
+  alternative \code{E = foo} matched the first argument \code{EXPR}
+  unless that was named.
 
   It is possible to write calls to \code{switch} that can be confusing
-  and may not work in the same way in future versions of \R.  For clarity,
-  always have \code{EXPR} as the first argument, naming it if partial
-  matching is a possibility.  For the character-string form, have a
-  single unnamed argument as the default after the named values.
+  and may not work in the same way in earlier versions of \R.  For
+  compatibility (and clarity), always have \code{EXPR} as the first
+  argument, naming it if partial matching is a possibility.  For the
+  character-string form, have a single unnamed argument as the default
+  after the named values.
 }
 \value{
   The value of one of the elements of \code{\dots}, or \code{NULL},
-  visibly (for all error conditions).
+  invisibly (whenever no element is selected).
 
   The result has the visibility (see \code{\link{invisible}}) of the
   element evaluated.
@@ -77,7 +79,7 @@ centre(x, "median")
 centre(x, "trimmed")
 
 ccc <- c("b","QQ","a","A","bb")
-# note the cat() produces no output for NULL
+# note: cat() produces no output for NULL
 for(ch in ccc)
     cat(ch,":", switch(EXPR = ch, a=1,     b=2:3), "\n")
 for(ch in ccc)

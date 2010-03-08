@@ -14,5 +14,6 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-switch <- function(EXPR,...)
-    .Internal(switch(EXPR,...))
+## primitive in 2.11.0
+## switch <- function(EXPR,...)
+##    .Internal(switch(EXPR,...))
