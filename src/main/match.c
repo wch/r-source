@@ -183,15 +183,24 @@ SEXP attribute_hidden matchArgExact(SEXP tag, SEXP * list)
 
 SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 {
-    int i, seendots;
+    int i, seendots, arg_i = 0;
     SEXP f, a, b, dots, actuals;
 
     actuals = R_NilValue;
-    for (f = formals ; f != R_NilValue ; f = CDR(f)) {
+    for (f = formals ; f != R_NilValue ; f = CDR(f), arg_i++) {
 	actuals = CONS(R_MissingArg, actuals);
 	SET_MISSING(actuals, 1);
-	SET_ARGUSED(f, 0);
     }
+    /* We use fargused instead of ARGUSED/SET_ARGUSED on elements of
+       formals to avoid modification of the formals SEXPs.  A gc can
+       cause matchArgs to be called from finalizer code, resulting in
+       another matchArgs call with the same formals.  In R-2.10, this
+       corrupted the ARGUSED data of the formals and resulted in an
+       incorrect "formal argument 'foo' matched by multiple actual
+       arguments" error.
+     */
+    int fargused[arg_i];
+    memset(fargused, 0, sizeof(fargused));
 
     for(b = supplied; b != R_NilValue; b=CDR(b))
 	SET_ARGUSED(b, 0);
@@ -204,12 +213,13 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 
     f = formals;
     a = actuals;
+    arg_i = 0;
     while (f != R_NilValue) {
 	if (TAG(f) != R_DotsSymbol) {
 	    i = 1;
 	    for (b = supplied; b != R_NilValue; b = CDR(b)) {
 		if (TAG(b) != R_NilValue && pmatch(TAG(f), TAG(b), 1)) {
-		    if (ARGUSED(f) == 2)
+		    if (fargused[arg_i] == 2)
 			error(_("formal argument \"%s\" matched by multiple actual arguments"),
 			      CHAR(PRINTNAME(TAG(f))));
 		    if (ARGUSED(b) == 2)
@@ -218,13 +228,14 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 		    if(CAR(b) != R_MissingArg)
 			SET_MISSING(a, 0);	/* not missing this arg */
 		    SET_ARGUSED(b, 2);
-		    SET_ARGUSED(f, 2);
+		    fargused[arg_i] = 2;
 		}
 		i++;
 	    }
 	}
 	f = CDR(f);
 	a = CDR(a);
+        arg_i++;
     }
 
     /* Second pass: partial matches based on tags */
@@ -235,8 +246,9 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
     seendots = 0;
     f = formals;
     a = actuals;
+    arg_i = 0;
     while (f != R_NilValue) {
-	if (ARGUSED(f) == 0) {
+	if (fargused[arg_i] == 0) {
 	    if (TAG(f) == R_DotsSymbol && !seendots) {
 		/* Record where ... value goes */
 		dots = a;
@@ -249,7 +261,7 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 			pmatch(TAG(f), TAG(b), seendots)) {
 			if (ARGUSED(b))
 			    error(_("argument %d matches multiple formal arguments"), i);
-			if (ARGUSED(f) == 1)
+			if (fargused[arg_i] == 1)
 			    error(_("formal argument \"%s\" matched by multiple actual arguments"),
 				  CHAR(PRINTNAME(TAG(f))));
 			if (R_warn_partial_match_args) {
@@ -262,7 +274,7 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 			if (CAR(b) != R_MissingArg)
 			    SET_MISSING(a, 0);       /* not missing this arg */
 			SET_ARGUSED(b, 1);
-			SET_ARGUSED(f, 1);
+			fargused[arg_i] = 1;
 		    }
 		    i++;
 		}
@@ -270,6 +282,7 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
 	}
 	f = CDR(f);
 	a = CDR(a);
+        arg_i++;
     }
 
     /* Third pass: matches based on order */
