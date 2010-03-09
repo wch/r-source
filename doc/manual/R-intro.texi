@@ -573,7 +573,7 @@ To remove objects the function @code{rm} is available:
 @findex rm
 @cindex Removing objects
 
-All objects created during an @R{} sessions can be stored permanently in
+All objects created during an @R{} session can be stored permanently in
 a file for use in future @R{} sessions.  At the end of each @R{} session
 you are given the opportunity to save all the currently available
 objects.  If you indicate that you want to do this, the objects are
@@ -637,7 +637,7 @@ Notice that the assignment operator (@samp{@code{<-}}), which consists
 of the two characters @samp{@code{<}} (``less than'') and
 @samp{@code{-}} (``minus'') occurring strictly side-by-side and it
 `points' to the object receiving the value of the expression.
-In most contexts the @samp{@code{=}} operator can be used as a alternative.
+In most contexts the @samp{@code{=}} operator can be used as an alternative.
 @c In this text, the assignment operator is printed as @samp{<-}, rather
 @c than ``@code{<-}''.
 @cindex Assignment
