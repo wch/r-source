@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2008   The R Development Core Team
+ *  Copyright (C) 1998-2010   The R Development Core Team
  *  Copyright (C) 2002-2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -862,9 +862,9 @@ void setup_Rmainloop(void)
     }
 
     if (strcmp(R_GUIType, "Tk") == 0) {
-	char buf[256];
+	char buf[PATH_MAX];
 
-	snprintf(buf, 256, "%s/library/tcltk/exec/Tk-frontend.R", R_Home);
+	snprintf(buf, PATH_MAX, "%s/library/tcltk/exec/Tk-frontend.R", R_Home);
 	R_LoadProfile(R_fopen(buf, "r"), R_GlobalEnv);
     }
 

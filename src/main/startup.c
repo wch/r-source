@@ -1,7 +1,7 @@
 /*
   R : A Computer Language for Statistical Data Analysis
   Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
-  Copyright (C) 1997-2004   Robert Gentleman, Ross Ihaka
+  Copyright (C) 1997-2010   Robert Gentleman, Ross Ihaka
 			    and the R Development Core Team
 
   This program is free software; you can redistribute it and/or modify
@@ -52,10 +52,10 @@ void attribute_hidden R_InitialData(void)
 attribute_hidden
 FILE *R_OpenLibraryFile(const char *file)
 {
-    char buf[256];
+    char buf[PATH_MAX];
     FILE *fp;
 
-    snprintf(buf, 256, "%s/library/base/R/%s", R_Home, file);
+    snprintf(buf, PATH_MAX, "%s/library/base/R/%s", R_Home, file);
     fp = R_fopen(buf, "r");
     return fp;
 }
@@ -71,10 +71,10 @@ char *R_LibraryFileName(const char *file, char *buf, size_t bsize)
 attribute_hidden
 FILE *R_OpenSysInitFile(void)
 {
-    char buf[256];
+    char buf[PATH_MAX];
     FILE *fp;
 
-    snprintf(buf, 256, "%s/library/base/R/Rprofile", R_Home);
+    snprintf(buf, PATH_MAX, "%s/library/base/R/Rprofile", R_Home);
     fp = R_fopen(buf, "r");
     return fp;
 }
@@ -82,7 +82,7 @@ FILE *R_OpenSysInitFile(void)
 attribute_hidden
 FILE *R_OpenSiteFile(void)
 {
-    char buf[256];
+    char buf[PATH_MAX];
     FILE *fp;
 
     fp = NULL;
@@ -90,10 +90,10 @@ FILE *R_OpenSiteFile(void)
 	if ((fp = R_fopen(getenv("R_PROFILE"), "r"))) return fp;
 	if ((fp = R_fopen(getenv("RPROFILE"), "r"))) return fp;
 #ifdef R_ARCH
-	snprintf(buf, 256, "%s/etc/%s/Rprofile.site", R_Home, R_ARCH);
+	snprintf(buf, PATH_MAX, "%s/etc/%s/Rprofile.site", R_Home, R_ARCH);
 	if ((fp = R_fopen(buf, "r"))) return fp;
 #endif
-	snprintf(buf, 256, "%s/etc/Rprofile.site", R_Home);
+	snprintf(buf, PATH_MAX, "%s/etc/Rprofile.site", R_Home);
 	if ((fp = R_fopen(buf, "r"))) return fp;
     }
     return fp;
