@@ -406,6 +406,11 @@ BUG FIXES
     o	fisher.test() no longer gives a P-value *very* slightly > 1,
 	in some borderline cases.
 
+    o	Internal function matchArgs no longer modifies the general
+	purpose bits of the SEXPs that make up the formals list of R
+	functions.  This fixes an invalid error message that would
+	occur when a garbage collection triggered a second call to
+	matchArgs for the same function via a finalizer.
 
 
 
