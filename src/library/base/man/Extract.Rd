@@ -26,6 +26,10 @@ x[i, j, \dots , drop = TRUE]
 x[[i, exact = TRUE]]
 x[[i, j, \dots, exact = TRUE]]
 x$name
+
+x[i] <- value
+x[i, j, \dots] <- value
+x$i <- value
 }
 \arguments{
   \item{x}{
@@ -70,6 +74,8 @@ x$name
     \code{NA} allows partial matching but issues a warning when it
     occurs.  Value \code{FALSE} allows partial matching without any
     warning.}
+  \item{value}{typically an array-like \R object of a similar class as
+    \code{x}.}
 }
 \details{
   These operators are generic.  You can write methods to handle indexing
@@ -105,13 +111,14 @@ x$name
   adjusted suitably).  Subassignment is done sequentially, so if an
   index is specified more than once the latest assigned value for an
   index will result.
-  
+
   It is an error to apply any of these operators to an object which is
   not subsettable (e.g. a function).
 }
 \section{Atomic vectors}{
   The usual form of indexing is \code{"["}.  \code{"[["} can be used to
-  select a single element, but \code{"["} can also do so.
+  select a single element \emph{dropping} \code{\link{names}}, whereas
+  \code{"["} keeps them, e.g., in \code{c(abc = 123)[1]}.
 
   The index object \code{i} can be numeric, logical, character or empty.
   Indexing by factors is allowed and is equivalent to indexing by the
@@ -222,7 +229,7 @@ x$name
 \section{S4 methods}{
   These operators are also implicit S4 generics, but as primitives, S4
   methods will be dispatched only on S4 objects \code{x}.
-  
+
 %   not yet implemented
 %   These operators are also implicit S4 generics, but the implementation
 %   of the primitive functions will only dispatch S4 methods if one of the
@@ -278,7 +285,7 @@ x$name
 }
 %% Fixme: Link (to html in 'help.start()', pdf from 'ref manual',
 %% 'info' from ESS, see \url{http://cran.R-project.org/manuals.html}.
-  
+
 \examples{
 x <- 1:12
 m <- matrix(1:6, nrow=2, dimnames=list(c("a", "b"), LETTERS[1:3]))
@@ -301,6 +308,15 @@ y$a                   # the element of y named a
 (i <- 3.999999999) # "4" is printed
 (1:5)[i]  # 3
 
+## named atomic vectors, compare "[" and "[[" :
+nx <- c(Abc = 123, pi = pi)
+nx[1] ; nx["pi"] # keeps names, whereas "[[" does not:
+nx[[1]] ; nx[["pi"]]
+\dontshow{
+stopifnot(identical(names(nx[1]), "Abc"),
+        identical(names(nx["pi"]), "pi"),
+        is.null(names(nx[["Abc"]])), is.null(names(nx[[2]])))
+}
 ## recursive indexing into lists
 z <- list( a=list( b=9, c='hello'), d=1:5)
 unlist(z)
