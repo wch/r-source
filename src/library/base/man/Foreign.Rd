@@ -71,13 +71,16 @@
 
   \code{.Call} and \code{.Call.graphics} can be used to call compiled code
   which makes use of internal \R objects.  The arguments are passed to
-  the C code as a sequence of \R objects.  It is included to provide
-  compatibility with S version 4.
+  the C code as a sequence of \R objects.
 
   Specifying \code{ENCODING} overrides any declared encodings (see
   \code{\link{Encoding}}) which are otherwise used to translate to the
   current locale before passing the strings to the compiled code.
-
+  
+  These functions are all \link{primitive}, so \code{name} is always
+  matched to the first argument supplied.  The other named arguments
+  follow \code{\dots} and so cannot be abbreviated.
+  
   For details about how to write code to use with \code{.Call} and
   \code{.External}, see the chapter on \dQuote{System and foreign language
     interfaces} in the \dQuote{Writing \R Extensions} manual.
