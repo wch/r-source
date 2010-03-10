@@ -3836,10 +3836,10 @@ in the default linking path, so something like
 @cputype{x86}) using the (zero cost) Sun Studio (aka Ceres) 12
 compilers: there has been some success with
 @command{gcc}@tie{}4/@command{gfortran}, mainly on Sparc.  Sun packages
-for @R{} are available from @uref{http://www.sunfreeware.com/} for both
-architectures, but have not been updated recently.  (Recent Sun machines
-are Opterons (@cputype{amd64}) rather than @cputype{x86}, but 32-bit
-@cputype{x86} executables are the default.)
+for @R{} used to be available from @uref{http://www.sunfreeware.com/}
+for both architectures, but have not been updated recently.  (Recent Sun
+machines are Opterons (@cputype{amd64}) rather than @cputype{x86}, but
+32-bit @cputype{x86} executables are the default.)
 
 There are also reports of success on OpenSolaris (also known as Solaris
 Express Community Edition, and sometimes as Solaris 11) on
@@ -3848,7 +3848,8 @@ Express Community Edition, and sometimes as Solaris 11) on
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
 @file{/usr/ccs/bin}, so if using those tools ensure this is in your
-path.
+path.  Also, a version of the preferred GNU tar is (if installed) in
+@file{/usr/sfw/bin}, as are tools like @command{makeinfo}.
 
 Modern Solaris systems allow a large selection of Open Source software
 to be installed from @url{http://www.opencsw.org} (formerly
