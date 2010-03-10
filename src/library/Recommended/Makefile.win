@@ -31,10 +31,12 @@ INSTALL_OPTS=--pkglock --install-tests --data-compress="xz"
 
 RCMD = ../../../$(BINDIR)/Rcmd
 
+## force tar.exe, as internal tar gets wrong permissions on >= Vista
+## when run from Cygwin
 .tgz.ts:
 	@echo
 	@echo "----- installing recommended package" `basename $< .tgz`
-	@$(RCMD) INSTALL $(INSTALL_OPTS) -l $(RHOME)/library `basename $< .tgz`_*.tar.gz
+	@R_INSTALL_TAR=tar.exe $(RCMD) INSTALL $(INSTALL_OPTS) -l $(RHOME)/library `basename $< .tgz`_*.tar.gz
 	@touch $@
 
 clean:

@@ -1039,12 +1039,6 @@ Notes:
 @itemize
 
 @item
-We have seen permission problems after unpacking the recommended
-packages on some Vista/Windows 7/Server 2008 systems: these have been
-circumvented by setting the environment variable @env{R_INSTALL_TAR} to
-@samp{tar.exe}.
-
-@item
 We have had reports that earlier versions of anti-virus software locking
 up the machine, but not for several years.  However, aggressive
 anti-virus checking such as the on-access scanning of Sophos can slow
@@ -1329,7 +1323,7 @@ run under 64-bit Windows.@footnote{As the @R{} build process itself runs
 @R{}, it has to be done under 64-bit Windows.  So does installation of
 source packages.} This comes from
 @url{http://sourceforge.net/projects/mingw-w64/files} and has a name
-like @file{mingw-w64-bin_i686-mingw_20100208.zip}.  (Care is needed:
+like @file{mingw-w64-bin_i686-mingw_20100309.zip}.  (Care is needed:
 that site also has compilers targeting 32-bit Windows and running on
 other host OSes. At the time of writing the distribution we used was
 under `Toolchains targetting Win64' and then `Automated builds': there
