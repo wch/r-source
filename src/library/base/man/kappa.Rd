@@ -1,7 +1,7 @@
 % File src/library/base/man/kappa.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
-% Copyright 2008 The R Foundation
+% Copyright 1995-2010 R Core Development Team
+% Copyright 2008-2010 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{kappa}
@@ -28,10 +28,10 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
     a class inheriting from \code{"lm"}.}
   \item{exact}{logical.  Should the result be exact?}
   \item{norm}{character string, specifying the matrix norm with respect
-    to which the condition number is to be computed.  For \code{rcond},
-    the default is \code{"O"}, meaning the \bold{O}ne- or 1-norm.  The
-    (currently only) other possible value is \code{"I"} for the infinity
-    norm.}
+    to which the condition number is to be computed, see also
+    \code{\link{norm}}.  For \code{rcond}, the default is \code{"O"},
+    meaning the \bold{O}ne- or 1-norm. The (currently only) other
+    possible value is \code{"I"} for the infinity norm.}
   \item{method}{character string, specifying the method to be used;
     \code{"qr"} is default for back-compatibility, mainly.}
   \item{triangular}{logical.  If true, the matrix used is just the lower
@@ -90,6 +90,7 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, \dots)
 }
 
 \seealso{
+  \code{\link{norm}};
   \code{\link{svd}} for the singular value decomposition and
   \code{\link{qr}} for the \eqn{QR} one.
 }
