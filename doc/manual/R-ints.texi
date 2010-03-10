@@ -1979,7 +1979,10 @@ accessed directly.  Note that primitive functions make no use of @R{}
 code, and hence are very different from the usual interpreted functions.
 In particular, @code{args}, @code{formals} and @code{body} return
 @code{NULL} for such objects, and argument matching is purely positional
-(with a few exceptions described below).  
+(with a few exceptions described below).  For several of these functions
+(including @code{call}, @code{switch}, @code{.C} and @code{.subset})
+positional matching is important to avoid partial matching of the first
+argument.
 
 The list of primitive functions is subject to change; currently, it
 includes the following.
