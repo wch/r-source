@@ -538,6 +538,8 @@ BUG FIXES
 
     o	plot(ecdf(), log="x") no longer gives an incorrect warning.
 
+    o	read.fwf() works again when 'file' is a connection.
+
 
 
 		CHANGES IN R VERSION 2.10.1

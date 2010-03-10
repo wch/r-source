@@ -41,10 +41,10 @@ function(file, widths, header = FALSE, sep = "\t",
     on.exit(close(FILE),add=TRUE)
 
     if (is.character(file)) {
-        file <- file(file, "r")
+        file <- file(file, "rt")
         on.exit(close(file), add=TRUE)
     } else if (!isOpen(file)) {
-        file <- open(file, "r")
+        open(file, "rt")
         on.exit(close(file), add=TRUE)
     }
 
