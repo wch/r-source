@@ -108,7 +108,7 @@ replicate(n, expr, simplify = TRUE)
   unevaluated, and code has been written (e.g. \code{bquote}) that
   relies on this.  This means that the recorded call is always of the
   form \code{FUN(X[[0L]], ...)}, with \code{0L} replaced by the current
-  integer index.  This not normally a problem, but it can be if
+  integer index.  This is not normally a problem, but it can be if
   \code{FUN} uses \code{\link{sys.call}} or \code{\link{match.call}} or
   if it is a primitive function that makes use of the call.  This means
   that it is often safer to call primitive functions with a wrapper, so
