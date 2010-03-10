@@ -694,7 +694,7 @@ climb   1 320.99
 + }
 Loading required package: Matrix
 Loading required package: lattice
-5 x 4 sparse Matrix of class "dgTMatrix"
+5 x 4 sparse Matrix of class "dgCMatrix"
   1 2 3 4
 1 1 . . .
 2 . 1 . .
