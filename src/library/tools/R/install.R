@@ -851,9 +851,7 @@
 
         if (test_load) {
 	    starsmsg(stars, "testing if installed package can be loaded")
-            res <- try(library(pkg_name, lib.loc = lib,
-                               character.only = TRUE,
-                               logical.return = TRUE))
+            res <- try(suppressPackageStartupMessages(library(pkg_name, lib.loc = lib, character.only = TRUE, logical.return = TRUE)))
             if (inherits(res, "try-error") || !res)
                 errmsg("loading failed")
         }
