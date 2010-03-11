@@ -299,6 +299,10 @@ NEW FEATURES
 	the first argument and there is no danger of partial matching
 	to later named arguments.
 
+    o	Functions interactive() and nargs() now check that they are
+	called with no arguments rather than ignoring any arguments
+	supplied.
+
 
 DEPRECATED & DEFUNCT
 
