@@ -689,9 +689,6 @@ getGroup <-
 
 getMethodsMetaData <- function(f, where = topenv(parent.frame()))
 {
-    ## Deprecate for 2.8.0? {currently would give 22 warnings when loading methods:} _FIXME_
-    ##     .methodsDeprecated("getMethodsMetaData",
-    ##                        "Methods list objects are no longer used and will not be generated in future versions; see findMethods() for alternatives")
     fdef <- getGeneric(f, where = where)
     if(is.null(fdef))
         return(NULL)
@@ -703,6 +700,10 @@ getMethodsMetaData <- function(f, where = topenv(parent.frame()))
     mname <- methodsPackageMetaName("M",fdef@generic, fdef@package)
     if (exists(mname, where = where, inherits = missing(where)))
         get(mname, where)
+    else if(missing(where))
+        .makeMlistFromTable(fdef)
+    else
+        .makeMlistFromTable(fdef, where)
 }
 
 assignMethodsMetaData <-
@@ -1485,31 +1486,6 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
            warn = , stop = , once = , ignore =  .deprecatedActions[[f]] <<- what,
            warning('"', what, '" is not a known action (warn, stop, once, ignore); no action recorded for function "', f, '"')
            )
-
-.deprecatedActions <- list(mlistMetaName = "once")
-.deprecatedVisited <- character()
-
-.methodsDeprecated <- function(f, msg)
-{
-    message <- paste("function \"", f, "\" is deprecated: ",msg, sep = "")
-    i <- match(f, names(.deprecatedActions))
-    if(is.na(i))
-        action <- "warn"
-    else
-        action <- .deprecatedActions[[i]]
-    switch(action,
-           warn =  {.Deprecated(msg = message)},
-           stop = stop(message),
-           once = {
-               if(is.na(match(f, .deprecatedVisited))) {
-                   message <- paste(message, " (this message will appear only once)")
-                   .Deprecated(msg = message)
-                   .assignOverBinding(".deprecatedVisited",  c(.deprecatedVisited, f), .methodsNamespace, FALSE)
-               }
-           },
-           ignore =
-           )
-}
 
 .NamespaceOrPackage <- function(what)
 {

@@ -317,6 +317,11 @@ DEPRECATED & DEFUNCT
 
     o	Use of multiple arguments to return() is now defunct.
 
+    o	The old MethodsList metadata objects have been superceded
+        since 2.8 by hash tables (environments) and are being phased
+        out for efficiency.  In the present stage only stubs are generated and a
+        warning issued if these are accessed.  Shortly none will be generated.
+
 
 INSTALLATION
 
