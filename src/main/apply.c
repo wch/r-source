@@ -25,9 +25,8 @@
 
 /* .Internal(lapply(X, FUN)) */
 
-/* This is a special, so has unevaluated arguments.  It is called from a
-   closure wrapper, so X and FUN are promises. */
-
+/* This is a special .Internal, so has unevaluated arguments.  It is
+   called from a closure wrapper, so X and FUN are promises. */
 SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP R_fcall, ans, names, X, XX, FUN;
@@ -81,7 +80,7 @@ SEXP attribute_hidden do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* .Internal(vapply(X, FUN, FUN.VALUE, USE.NAMES)) */
 
-
+/* This is a special .Internal */
 SEXP attribute_hidden do_vapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP R_fcall, ans, names=R_NilValue, rowNames=R_NilValue, X, XX, FUN, value;

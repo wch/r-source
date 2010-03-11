@@ -200,9 +200,10 @@ char *R_HomeDir(void)
     return getenv("R_HOME");
 }
 
-
+/* This is a primitive (with no arguments) */
 SEXP attribute_hidden do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    checkArity(op, args);
     return ScalarLogical( (R_Interactive) ? 1 : 0 );
 }
 

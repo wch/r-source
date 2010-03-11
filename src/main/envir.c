@@ -1930,7 +1930,7 @@ R_isMissing(SEXP symbol, SEXP rho)
     return 0;
 }
 
-/* this is primitive */
+/* this is primitive and a SPECIALSXP */
 SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int ddv=0;
@@ -2509,6 +2509,7 @@ SEXP attribute_hidden do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)
  * results in a list.
  * Equivalent to lapply(as.list(env, all.names=all.names), FUN, ...)
  */
+/* This is a special .Internal */
 SEXP attribute_hidden do_eapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP env, ans, R_fcall, FUN, tmp, tmp2, ind;

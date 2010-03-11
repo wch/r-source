@@ -895,9 +895,20 @@ calls but specials are not.} between special and builtin functions is
 that the arguments of specials are not evaluated before the C code is
 called, and those of builtins are.  In each case positional matching of
 arguments is used.  Note that being a special/builtin is separate from
-being primitive or @code{.Internal}: @code{function} is a special
-primitive, @code{+} is a builtin primitive, @code{switch} is a special
+being primitive or @code{.Internal}: @code{quote} is a special
+primitive, @code{+} is a builtin primitive, @code{cbind} is a special
 @code{.Internal} and @code{grep} is a builtin @code{.Internal}.
+
+Special functions are much rarer than builtins: the special primitives
+are (aparts from language elements implemented as primitives) currently
+@code{.Internal}, @code{UseMethod}, @code{c}, @code{call},
+@code{expression}, @code{log}, @code{missing}, @code{on.exit},
+@code{quote}, @code{rep}, @code{round}, @code{seq.int}, @code{signif}
+and @code{substitute}, and the special @code{.Internals} are
+@code{NextMthod}, @code{Recall}, @code{cbind}, @code{eapply},
+@code{lapply}, @code{rbind}, @code{withVisible} and @code{vapply}.
+(Some of these primitives, e.g.@: @code{log}, are special to allow
+default values to be given to missing arguments.)
 
 @cindex generic, internal
 @findex DispatchOrEval

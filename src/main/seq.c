@@ -346,6 +346,8 @@ SEXP attribute_hidden do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* We are careful to use evalListKeepMissing here (inside
    DispatchOrEval) to avoid dropping missing arguments so e.g.
    rep(1:3,,8) matches length.out */
+
+/* This is a primitive SPECIALSXP with internal argument matching */
 SEXP attribute_hidden do_rep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, ap, times = R_NilValue /* -Wall */, ind;
@@ -446,6 +448,9 @@ done:
 
 
 /*
+  This is a primitive SPECIALSXP with internal argument matching,
+  implementing seq.int.
+
    'along' has to be used on an unevaluated argument, and evalList
    tries to evaluate language objects.
  */

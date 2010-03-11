@@ -387,10 +387,12 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     return 0;
 }
 
-/* Note: "do_usemethod" is not the only entry point to */
-/* "usemethod". Things like [ and [[ call usemethod directly, */
-/* hence do_usemethod should just be an interface to usemethod. */
+/* Note: "do_usemethod" is not the only entry point to
+   "usemethod". Things like [ and [[ call usemethod directly,
+   hence do_usemethod should just be an interface to usemethod. 
+*/
 
+/* This is a primitive SPECIALSXP */
 SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, generic = R_NilValue /* -Wall */, obj, val;
@@ -526,6 +528,7 @@ static SEXP fixcall(SEXP call, SEXP args)
 
 #define ARGUSED(x) LEVELS(x)
 
+/* This is a special .Internal */
 SEXP attribute_hidden do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[512], b[512], bb[512], tbuf[10];

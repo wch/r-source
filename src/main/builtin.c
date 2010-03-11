@@ -117,6 +117,7 @@ SEXP attribute_hidden do_makelazy(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+/* This is a primtive SPECIALSXP */
 SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *ctxt;
@@ -644,6 +645,7 @@ SEXP attribute_hidden do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
     return list;
 }
 
+/* This is a primitive SPECIALSXP */
 SEXP attribute_hidden do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, ans, nms;
