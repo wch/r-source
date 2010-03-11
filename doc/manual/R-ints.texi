@@ -900,7 +900,7 @@ primitive, @code{+} is a builtin primitive, @code{cbind} is a special
 @code{.Internal} and @code{grep} is a builtin @code{.Internal}.
 
 Special functions are much rarer than builtins: the special primitives
-are (aparts from language elements implemented as primitives) currently
+are (apart from language elements implemented as primitives) currently
 @code{.Internal}, @code{UseMethod}, @code{c}, @code{call},
 @code{expression}, @code{log}, @code{missing}, @code{on.exit},
 @code{quote}, @code{rep}, @code{round}, @code{seq.int}, @code{signif}
@@ -2110,6 +2110,9 @@ browser  proc.time  gc.time
 tracemem retracemem untracemem
 @end group
 @end example
+@noindent
+@code{browser} manages its own argument matching and so works in the
+standard way.
 
 @end enumerate
 

@@ -15,10 +15,12 @@ browser(text="", condition=NULL, expr=TRUE, skipCalls=0L)
 }
 \arguments{
   \item{text}{a text string that can be retrieved once the browser is invoked.}
-  \item{condition}{a condition that can be retrieved once the browser is invoked.}
+  \item{condition}{a condition that can be retrieved once the browser is
+    invoked.}
   \item{expr}{An expression, which if it evaluates to \code{TRUE} the
     debugger will invoked, otherwise control is returned directly.}
-  \item{skipCalls}{how many previous calls to skip when reporting the calling context.}
+  \item{skipCalls}{how many previous calls to skip when reporting the
+    calling context.}
 }
 \details{
   A call to \code{browser} can be included in the body of a function.
@@ -68,6 +70,9 @@ browser(text="", condition=NULL, expr=TRUE, skipCalls=0L)
 
   The number of lines printed for the deparsed call can be limited by
   setting \code{\link{options}(deparse.max.lines)}.
+  
+  This is a primitive function but does argument matching in the
+  standard way.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
