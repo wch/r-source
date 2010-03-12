@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2007  Robert Gentleman, Ross Ihaka and the
- *			     R Development Core Team
+ *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997-2010  The R Development Core Team
  *  Copyright (C) 2003-2009 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2343,12 +2343,19 @@ SEXP attribute_hidden substituteList(SEXP el, SEXP rho)
 /* This is a primitive SPECIALSXP */
 SEXP attribute_hidden do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP env, s, t;
+    SEXP ap, argList, env, s, t;
+
+    /* argument matching */
+    PROTECT(ap = list2(R_NilValue, R_NilValue));
+    SET_TAG(ap,  install("expr"));
+    SET_TAG(CDR(ap), install("env"));
+    PROTECT(argList = matchArgs(ap, args, call));
+
     /* set up the environment for substitution */
-    if (length(args) == 1)
+    if (CADR(argList) == R_MissingArg)
 	env = rho;
     else
-	env = eval(CADR(args), rho);
+	env = eval(CADR(argList), rho);
     if (env == R_GlobalEnv)	/* For historical reasons, don't substitute in R_GlobalEnv */
 	env = R_NilValue;
     else if (TYPEOF(env) == VECSXP)
@@ -2359,10 +2366,9 @@ SEXP attribute_hidden do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("invalid environment specified"));
 
     PROTECT(env);
-    PROTECT(t = duplicate(args));
-    SETCDR(t, R_NilValue);
+    PROTECT(t = CONS(duplicate(CAR(argList)), R_NilValue));
     s = substituteList(t, env);
-    UNPROTECT(2);
+    UNPROTECT(4);
     return CAR(s);
 }
 

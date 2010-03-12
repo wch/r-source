@@ -53,8 +53,8 @@ assign("%*%", function(x, y) NULL, envir = .ArgsEnv)
 assign(".C", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE,
                       ENCODING) NULL,
        envir = .ArgsEnv)
-assign(".Fortran", function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE,
-                            ENCODING) NULL,
+assign(".Fortran",
+       function(name, ..., NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING) NULL,
        envir = .ArgsEnv)
 assign(".Call", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
 assign(".Call.graphics", function(name, ..., PACKAGE) NULL, envir = .ArgsEnv)
@@ -74,8 +74,9 @@ assign("attr<-", function(x, which, value) NULL, envir = .ArgsEnv)
 assign("attributes", function(obj) NULL, envir = .ArgsEnv)
 assign("attributes<-", function(obj, value) NULL, envir = .ArgsEnv)
 assign("baseenv", function() NULL, envir = .ArgsEnv)
-assign("browser", function(text="", condition=NULL, expr = TRUE,
-	skipCalls = 0L) NULL, envir = .ArgsEnv)
+assign("browser",
+       function(text="", condition=NULL, expr = TRUE, skipCalls = 0L) NULL,
+       envir = .ArgsEnv)
 assign("call", function(name, ...) NULL, envir = .ArgsEnv)
 assign("class", function(x) NULL, envir = .ArgsEnv)
 assign("class<-", function(x, value) NULL, envir = .ArgsEnv)
@@ -117,7 +118,7 @@ assign("nargs", function() NULL, envir = .ArgsEnv)
 assign("nzchar", function(x) NULL, envir = .ArgsEnv)
 assign("oldClass", function(x) NULL, envir = .ArgsEnv)
 assign("oldClass<-", function(x, value) NULL, envir = .ArgsEnv)
-assign("on.exit", function(expr, add = FALSE) NULL, envir = .ArgsEnv)
+assign("on.exit", function(expr = NULL, add = FALSE) NULL, envir = .ArgsEnv)
 assign("pos.to.env", function(x) NULL, envir = .ArgsEnv)
 assign("proc.time", function() NULL, envir = .ArgsEnv)
 assign("quote", function(expr) NULL, envir = .ArgsEnv)

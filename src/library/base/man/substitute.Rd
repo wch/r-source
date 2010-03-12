@@ -1,6 +1,6 @@
 % File src/library/base/man/substitute.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{substitute}
@@ -40,9 +40,8 @@ quote(expr)
   ordinary variable, its value is substituted, unless \code{env} is
   \code{\link{.GlobalEnv}} in which case the symbol is left unchanged.
 
-  \code{substitute} and \code{quote} are both \link{primitive} functions so
-  positional matching is used and names of supplied arguments are
-  ignored.
+  These are both \link{primitive} functions but \code{substitute} uses
+  standard argument matching.
 }
 \value{
   The \code{\link{mode}} of the result is generally \code{"call"} but

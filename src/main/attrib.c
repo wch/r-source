@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2009  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2010  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1205,7 +1205,7 @@ fairly minor.  LT */
 
 SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s, t, tag = R_NilValue, alist;
+    SEXP ap, argList, s, t, tag = R_NilValue, alist, ans;
     const char *str;
     int n, nargs = length(args), exact = 0;
     enum { NONE, PARTIAL, PARTIAL2, FULL } match = NONE;
@@ -1213,19 +1213,31 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (nargs < 2 || nargs > 3)
 	errorcall(call, "either 2 or 3 arguments are required");
 
-    s = CAR(args);
-    t = CADR(args);
-    if(nargs == 3) {
-	exact = asLogical(CADDR(args));
-	if(exact == NA_LOGICAL) exact = 0;
-    }
-
+    /* argument matching */
+    PROTECT(ap = list3(R_NilValue, R_NilValue, R_NilValue));
+    SET_TAG(ap,  install("x"));
+    SET_TAG(CDR(ap), install("which"));
+    SET_TAG(CDDR(ap), install("exact"));
+    argList = matchArgs(ap, args, call);
+    UNPROTECT(1); /* ap */
+    PROTECT(argList);
+    s = CAR(argList);
+    t = CADR(argList);
     if (!isString(t))
 	errorcall(call, _("'which' must be of mode character"));
     if (length(t) != 1)
 	errorcall(call, _("exactly one attribute 'which' must be given"));
 
-    if(STRING_ELT(t, 0) == NA_STRING) return R_NilValue;
+    if(nargs == 3) {
+	exact = asLogical(CADDR(args));
+	if(exact == NA_LOGICAL) exact = 0;
+    }
+
+
+    if(STRING_ELT(t, 0) == NA_STRING) {
+	UNPROTECT(1);
+	return R_NilValue;
+    }
     str = translateChar(STRING_ELT(t, 0));
     n = strlen(str);
 
@@ -1251,7 +1263,10 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    if (match == PARTIAL2) return R_NilValue;
+    if (match == PARTIAL2) {
+	UNPROTECT(1);
+	return R_NilValue;
+    }
 
     /* Unless a full match has been found, check for a "names" attribute.
        This is stored via TAGs on pairlists, and via rownames on 1D arrays.
@@ -1271,6 +1286,7 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(t != R_NilValue && R_warn_partial_match_attr)
 		warningcall(call, _("partial match of '%s' to '%s'"), str,
 			    CHAR(PRINTNAME(tag)));
+	    UNPROTECT(1);
 	    return t;
 	}
 	else if (match == PARTIAL && strcmp(CHAR(PRINTNAME(tag)), "names")) {
@@ -1279,24 +1295,30 @@ SEXP attribute_hidden do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 	       query is ambiguous and we return R_NilValue.  If there is no
 	       "names" attribute, then the partially matched one, which is
 	       the current value of tag, can be used. */
-	    if (getAttrib(s, R_NamesSymbol) != R_NilValue)
+	    if (getAttrib(s, R_NamesSymbol) != R_NilValue) {
+		UNPROTECT(1);
 		return R_NilValue;
+	    }
 	}
     }
 
-    if (match == NONE  || (exact && match != FULL))
+    if (match == NONE  || (exact && match != FULL)) {
+	UNPROTECT(1);
 	return R_NilValue;
+    }
     if (match == PARTIAL && R_warn_partial_match_attr)
 	warningcall(call, _("partial match of '%s' to '%s'"), str,
 		    CHAR(PRINTNAME(tag)));
 
-    return getAttrib(s, tag);
+    ans =  getAttrib(s, tag);
+    UNPROTECT(1);
+    return ans;
 }
 
 SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /*  attr(obj, "<name>")  <-  value  */
-    SEXP obj, name;
+    SEXP obj, name, ap, argList;
 
     obj = CAR(args);
     if (NAMED(obj) == 2)
@@ -1304,7 +1326,16 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	PROTECT(obj);
 
-    name = CADR(args);
+    /* argument matching */
+    PROTECT(ap = list3(R_NilValue, R_NilValue, R_NilValue));
+    SET_TAG(ap,  install("x"));
+    SET_TAG(CDR(ap), install("which"));
+    SET_TAG(CDDR(ap), install("value"));
+    UNPROTECT(1); /* ap */
+    argList = matchArgs(ap, args, call);
+    PROTECT(argList);
+
+    name = CADR(argList);
     if (!isValidString(name) || STRING_ELT(name, 0) == NA_STRING)
 	error(_("'name' must be non-null character string"));
     /* TODO?  if (isFactor(obj) && !strcmp(asChar(name), "levels"))
@@ -1312,7 +1343,7 @@ SEXP attribute_hidden do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
      *                  error(.....)
      */
     setAttrib(obj, name, CADDR(args));
-    UNPROTECT(1);
+    UNPROTECT(2);
     return obj;
 }
 

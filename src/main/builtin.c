@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2009  The R Development Core Team.
+ *  Copyright (C) 1999-2010  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -121,27 +121,25 @@ SEXP attribute_hidden do_makelazy(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *ctxt;
-    SEXP code, add, oldcode, tmp;
-    int addit = 0;
+    SEXP code, add, oldcode, tmp, ap, argList;
+    int addit;
 
-    switch (length(args)) {
-    case 0:
-	code = R_NilValue;
-	break;
-    case 1:
-	code = CAR(args);
-	break;
-    case 2:
-	code = CAR(args);
-	add = eval(CADR(args), rho);
-	if ( TYPEOF(add) != LGLSXP || length(add) != 1 ||
-	     LOGICAL(add)[0] == NA_INTEGER)
-	    errorcall(call, _("invalid '%s' argument"), "add");
-	addit = (LOGICAL(add)[0] == 1);
-	break;
-    default:
+    if(length(args) > 2)
 	errorcall_return(call, _("invalid number of arguments"));
-    }
+
+    PROTECT(ap = list2(R_NilValue, R_NilValue));
+    SET_TAG(ap,  install("expr"));
+    SET_TAG(CDR(ap), install("add"));
+    PROTECT(argList =  matchArgs(ap, args, call));
+    if(CAR(argList) == R_MissingArg) SETCAR(argList, R_NilValue);
+    if(CADR(argList) == R_MissingArg) SETCAR(CDR(argList), ScalarLogical(0));
+    code = CAR(argList);
+    PROTECT(add = eval(CADR(argList), rho));
+    addit = asLogical(add);
+    if (addit == NA_INTEGER)
+	errorcall(call, _("invalid '%s' argument"), "add");
+    UNPROTECT(1);
+
     ctxt = R_GlobalContext;
     /* Search for the context to which the on.exit action is to be
        attached. Lexical scoping is implemented by searching for the
@@ -165,7 +163,7 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else
 	    {
-		PROTECT(tmp=allocList(1));
+		PROTECT(tmp = allocList(1));
 		SETCAR(tmp, code);
 		ctxt->conexit = listAppend(duplicate(oldcode),tmp);
 		UNPROTECT(1);
@@ -174,6 +172,7 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    ctxt->conexit = code;
     }
+    UNPROTECT(2);
     return R_NilValue;
 }
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2007   The R Development Core Team.
+ *  Copyright (C) 1998-2010   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -194,7 +194,7 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
     /* We use fargused instead of ARGUSED/SET_ARGUSED on elements of
        formals to avoid modification of the formals SEXPs.  A gc can
        cause matchArgs to be called from finalizer code, resulting in
-       another matchArgs call with the same formals.  In R-2.10, this
+       another matchArgs call with the same formals.  In R-2.10.x, this
        corrupted the ARGUSED data of the formals and resulted in an
        incorrect "formal argument 'foo' matched by multiple actual
        arguments" error.
@@ -386,7 +386,7 @@ SEXP attribute_hidden matchArgs(SEXP formals, SEXP supplied, SEXP call)
                     SET_TAG(last, tagB);
                 }
             }
-	    errorcall(R_GlobalContext->call,
+	    errorcall(call /* R_GlobalContext->call */,
 		      _("unused argument(s) %s"),
 		      CHAR(STRING_ELT(deparse1line(unusedForError, 0), 0)) + 4);
                       /* '+ 4' is to remove 'list' from 'list(badTag1,...)' */

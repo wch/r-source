@@ -299,9 +299,16 @@ NEW FEATURES
 	the first argument and there is no danger of partial matching
 	to later named arguments.
 
-    o	Functions interactive() and nargs() now check that they are
-	called with no arguments rather than ignoring any arguments
-	supplied.
+    o	Primitive functions attr(), attr<-(), on.exit(), retracemem()
+	and substitute() now use standard argument matching (rather
+	than positional matching).  This means that all multi-argument
+	primitives which are not internal now use standard argument
+	matching except where positional matching is desirable (as for
+	switch(), call(), .C() ...).
+
+    o	Functions interactive(), nargs() and proc.time() now check that
+	they are called with no arguments rather than ignoring any
+	arguments supplied.
 
 
 DEPRECATED & DEFUNCT
