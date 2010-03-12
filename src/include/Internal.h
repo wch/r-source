@@ -511,6 +511,7 @@ SEXP do_vapply(SEXP, SEXP, SEXP, SEXP);
 SEXP do_version(SEXP, SEXP, SEXP, SEXP);
 SEXP do_warning(SEXP, SEXP, SEXP, SEXP);
 SEXP do_while(SEXP, SEXP, SEXP, SEXP);
+SEXP do_which(SEXP, SEXP, SEXP, SEXP);
 SEXP do_withVisible(SEXP, SEXP, SEXP, SEXP);
 SEXP do_writetable(SEXP, SEXP, SEXP, SEXP);
 SEXP do_xspline(SEXP, SEXP, SEXP, SEXP);

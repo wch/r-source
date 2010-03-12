@@ -786,6 +786,42 @@ SEXP attribute_hidden do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* which(x) : indices of non-NA TRUE values in x */
+SEXP attribute_hidden do_which(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP v, v_nms, ans, ans_nms = R_NilValue;
+    int i, j = 0, len, *buf;
+
+    checkArity(op, args);
+    v = CAR(args);
+    if (!isLogical(v))
+        error(_("argument to 'which' is not logical"));
+    len = length(v);
+    buf = (int *) R_alloc(len, sizeof(int));
+
+    for (i = 0; i < len; i++) {
+        if (LOGICAL(v)[i] == TRUE) {
+            buf[j] = i + 1;
+            j++;
+        }
+    }
+
+    len = j;
+    PROTECT(ans = allocVector(INTSXP, len));
+    memcpy(INTEGER(ans), buf, sizeof(int) * len);
+
+    if ((v_nms = getAttrib(v, R_NamesSymbol)) != R_NilValue) {
+        PROTECT(ans_nms = allocVector(STRSXP, len));
+        for (i = 0; i < len; i++) {
+            SET_STRING_ELT(ans_nms, i,
+                           STRING_ELT(v_nms, INTEGER(ans)[i] - 1));
+        }
+        setAttrib(ans, R_NamesSymbol, ans_nms);
+        UNPROTECT(1);
+    }
+    UNPROTECT(1);
+    return ans;
+}
 
 /* complete.cases(.) */
 SEXP attribute_hidden do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)

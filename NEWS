@@ -310,6 +310,10 @@ NEW FEATURES
 	they are called with no arguments rather than ignoring any
 	arguments supplied.
 
+    o	base::which() uses a new .Internal function when arr.ind is
+	FALSE resulting in a 10x speedup.  Thanks to Patrick Aboyoun
+	for implementation suggestions.
+
 
 DEPRECATED & DEFUNCT
 
