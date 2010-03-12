@@ -1,6 +1,6 @@
 % File src/library/base/man/trace.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{trace}
@@ -9,9 +9,6 @@
 \alias{untrace}
 \alias{tracingState}
 \alias{.doTrace}
-%% internal
-\alias{.primTrace}
-\alias{.primUntrace}
 \description{
   A call to \code{trace} allows you to insert debugging code (e.g., a
   call to \code{\link{browser}} or \code{\link{recover}}) at chosen
