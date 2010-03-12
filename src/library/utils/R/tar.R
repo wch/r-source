@@ -75,18 +75,22 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     if (list) {
         cmd <- paste(TAR, " -", cflag, "tf ", shQuote(tarfile), sep = "")
         if (length(extras)) cmd <- paste(cmd, extras, collapse = " ")
-        if (verbose) message("untar: using cmd = ", sQuote(cmd))
+        if (verbose) message("untar: using cmd = ", sQuote(cmd), domain = NA)
         system(cmd, intern = TRUE)
     } else {
         cmd <- paste(TAR, " -", cflag, "xf ", shQuote(tarfile), sep = "")
         if (!missing(exdir)) {
             dir.create(exdir, showWarnings = FALSE, recursive = TRUE)
-            cmd <- paste(cmd, "-C", shQuote(exdir))
+            cmd <- if(.Platform$OS.type == "windows")
+                ## some versions of tar.exe need / here
+                paste(cmd, "-C", gsub("\\", "/", exdir, fixed=TRUE))
+            else
+                paste(cmd, "-C", shQuote(exdir))
         }
         if (length(extras)) cmd <- paste(cmd, extras, collapse = " ")
         if (length(files))
             cmd <- paste(cmd, paste(shQuote(files), collapse = " "))
-        if (verbose) message("untar: using cmd = ", sQuote(cmd))
+        if (verbose) message("untar: using cmd = ", sQuote(cmd), domain = NA)
         res <- system(cmd)
         if (res) warning(sQuote(cmd), " returned error code ", res,
                          domain = NA)
@@ -269,7 +273,7 @@ tar <- function(tarfile, files = NULL,
             if(is.infinite(s) || s+100 < length(name))
                 stop("file path is too long")
             warning("storing paths of more than 100 bytes is not portable:\n  ",
-                    sQuote(f))
+                    sQuote(f), domain = NA)
             prefix <- name[1:(s-1)]
             name <- name[-(1:s)]
             header[345+seq_along(prefix)] <- prefix
