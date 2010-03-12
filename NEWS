@@ -433,7 +433,9 @@ BUG FIXES
 	occur when a garbage collection triggered a second call to
 	matchArgs for the same function via a finalizer.
 
-
+    o	gsub could crash from a stack overflow for very long strings due
+	to temporary data being allocated on the stack.  Also, gsub
+	with fixed=TRUE is now considerably faster.
 
 
 	**************************************************
