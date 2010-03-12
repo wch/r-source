@@ -109,7 +109,7 @@ R_current_trace_state() { return GET_TRACE_STATE; }
 /* memory tracing */
 /* report when a traced object is duplicated */
 
-SEXP attribute_hidden do_memtrace(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_tracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef R_MEMORY_PROFILING
     SEXP object;
@@ -143,7 +143,7 @@ SEXP attribute_hidden do_memtrace(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-SEXP attribute_hidden do_memuntrace(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_untracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef R_MEMORY_PROFILING
     SEXP object;
@@ -195,15 +195,18 @@ void attribute_hidden memtrace_report(void * old, void * _new)
 
 #endif /* R_MEMORY_PROFILING */
 
-SEXP attribute_hidden do_memretrace(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP attribute_hidden do_retracemem(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef R_MEMORY_PROFILING
-    SEXP object, origin, ans;
+    SEXP object, previous, ans, ap, argList;
     char buffer[20];
 
-    /* checkArity(op, args); */
-    if(length(args) < 1 || length(args) > 2)
-	errorcall(call, _("invalid number of arguments"));
+    PROTECT(ap = list2(R_NilValue, R_NilValue));
+    SET_TAG(ap,  install("x"));
+    SET_TAG(CDR(ap), install("previous"));
+    PROTECT(argList =  matchArgs(ap, args, call));
+    if(CAR(argList) == R_MissingArg) SETCAR(argList, R_NilValue);
+    if(CADR(argList) == R_MissingArg) SETCAR(CDR(argList), R_NilValue);
 
     object = CAR(args);
     if (TYPEOF(object) == CLOSXP ||
@@ -211,25 +214,29 @@ SEXP attribute_hidden do_memretrace(SEXP call, SEXP op, SEXP args, SEXP rho)
 	TYPEOF(object) == SPECIALSXP)
 	errorcall(call, _("argument must not be a function"));
 
-    if(length(args) >= 2) {
-	origin = CADR(args);
-	if(!isString(origin))
-	    errorcall(call, _("invalid '%s' argument"), "origin");
-    } else origin = R_NilValue;
+    previous = CADR(args);
+    if(!isNull(previous) && !isString(previous))
+	    errorcall(call, _("invalid '%s' argument"), "previous");
 
     if (RTRACE(object)){
 	snprintf(buffer, 20, "<%p>", (void *) object);
 	ans = mkString(buffer);
-    } else ans = R_NilValue;
+    } else {
+	R_Visible = 0;
+	ans = R_NilValue;
+    }
 
-    if (origin != R_NilValue){
+    if (previous != R_NilValue){
 	SET_RTRACE(object, 1);
 	if (R_current_trace_state()) {
+	    /* FIXME: previous will have <0x....> whereas other values are
+	       without the < > */
 	    Rprintf("tracemem[%s -> %p]: ",
-		    translateChar(STRING_ELT(origin, 0)), (void *) object);
+		    translateChar(STRING_ELT(previous, 0)), (void *) object);
 	    memtrace_stack_dump();
 	}
     }
+    UNPROTECT(2);
     return ans;
 #else
     return R_NilValue;

@@ -1,6 +1,6 @@
 % File src/library/base/man/tracemem.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{tracemem}
@@ -49,13 +49,11 @@ retracemem(x, previous = NULL)
   environments, promises, weak references, or external pointer objects, as
   these are not duplicated.
   
-  These functions are \link{primitive} and use positional matching of
-  arguments.
+  These functions are \link{primitive}.
 }
 \value{
   A character string for identifying the object in the trace output (an
-  address in hex enclosed in angle brackets), or \code{NULL} (invisibly
-  for \code{untracemem}).
+  address in hex enclosed in angle brackets), or \code{NULL} (invisibly).
 }
 
 \seealso{
