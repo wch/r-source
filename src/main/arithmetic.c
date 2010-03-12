@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2010	    The R Development Core Team
+ *  Copyright (C) 1998--2007	    The R Development Core Team.
  *  Copyright (C) 2003-4	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1367,8 +1367,6 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
     return res;
 }
 
-/* This needs to be a primitive SPECIALSXP to pass an unevaluated
-   arg to log(): or log2(quote(1:10)) works */
 SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP res, Call, tmp = R_NilValue /* -Wall */;
