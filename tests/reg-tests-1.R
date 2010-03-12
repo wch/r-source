@@ -6098,3 +6098,8 @@ stopifnot(0 <= Pv, Pv <= 1)
 ## Use of switch inside lapply (from BioC package ChromHeatMap)
 lapply("forward", switch, forward = "posS", reverse = "negS")
 ## failed  when first converted to primitive.
+
+
+## evaluation of arguments of log2
+assertError(try(log2(quote(1:10))))
+## worked in 2.10.x

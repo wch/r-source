@@ -902,13 +902,14 @@ primitive, @code{+} is a builtin primitive, @code{cbind} is a special
 Special functions are much rarer than builtins: the special primitives
 are (apart from language elements implemented as primitives) currently
 @code{.Internal}, @code{UseMethod}, @code{c}, @code{call},
-@code{expression}, @code{log}, @code{missing}, @code{on.exit},
-@code{quote}, @code{rep}, @code{round}, @code{seq.int}, @code{signif}
-and @code{substitute}, and the special @code{.Internals} are
-@code{NextMthod}, @code{Recall}, @code{cbind}, @code{eapply},
+@code{expression}, @code{log}, @code{log2}, @code{log10}, @code{missing},
+@code{on.exit}, @code{quote}, @code{rep}, @code{round}, @code{seq.int},
+@code{signif} and @code{substitute}, and the special @code{.Internals}
+are @code{NextMthod}, @code{Recall}, @code{cbind}, @code{eapply},
 @code{lapply}, @code{rbind}, @code{withVisible} and @code{vapply}.
 (Some of these primitives, e.g.@: @code{log}, are special to allow
-default values to be given to missing arguments.)
+default values to be given to missing arguments, and for @code{log2} and
+@code{log10} to allow unevaluated arguments to be passed to @code{log}.)
 
 @cindex generic, internal
 @findex DispatchOrEval
@@ -2161,10 +2162,11 @@ lazyLoadDBfetch
 @end example
 
 @noindent
-@code{round}, @code{signif}, @code{rep} and @code{seq.int} manage their
-own argument matching and so do work in the standard way.  Note that
-@code{.C} (and the other interface functions) always match @code{name}
-to their first argument, and so need to avoid partial matching.
+@code{round}, @code{signif}, @code{rep}, @code{seq.int} and
+@code{substitute} manage their own argument matching and so do work in
+the standard way.  Note that @code{.C} (and the other interface
+functions) always match @code{name} to their first argument, and so need
+to avoid partial matching.
 
 @end enumerate
 
