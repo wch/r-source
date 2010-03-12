@@ -2007,14 +2007,9 @@ exist as ``primitive'' functions in @R{}:
 @example
 @group
 @{       (         if     for      while  repeat  break  next
-return  function  quote  on.exit   switch
+return  function  quote  switch
 @end group
 @end example
-
-@noindent
-@code{switch} was made primitive in @R{} 2.11.0 to ensure that
-@code{EXPR} was always matched to its first argument.
-
 
 @item
 Language elements and basic @emph{operator}s (i.e., functions usually
@@ -2084,7 +2079,7 @@ inside other functions), such as
 
 @example
 @group
-nargs        missing
+nargs        missing      on.exit
 interactive  is.@var{xxx}
 as.call      as.character as.complex  as.double
 as.environment
@@ -2159,14 +2154,35 @@ round      signif      rep        seq.int
 lazyLoadDBfetch
 @end group
 @end example
+@end enumerate
+
+The multi-argument primitives
+@example
+@group
+call       switch
+.C         .Fortran   .Call       .External
+.Call.graphics        .External.graphics
+.subset    .subset2
+@end group
+@end example
 
 @noindent
-@code{round}, @code{signif}, @code{rep} and @code{seq.int} manage their
-own argument matching and so do work in the standard way.  Note that
-@code{.C} (and the other interface functions) always match @code{name}
-to their first argument, and so need to avoid partial matching.
+intentionally use positional matching, and need to do so to avoid
+partial matching to their first argument.  On the other hand,
 
-@end enumerate
+@example
+@group
+browser    attr        attr<-     rememtrace substitute
+log        round      signif      rep        seq.int
+@end group
+@end example
+
+@noindent
+manage their own argument matching and so do work in the standard way.
+
+The remaining primitives have only zero or one named arguments or (for
+replacement functions) are normally called with one argument, or are
+internal or language elements.
 
 @menu
 * Special primitives::          

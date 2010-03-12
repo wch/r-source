@@ -117,28 +117,24 @@ SEXP attribute_hidden do_makelazy(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-/* This is a primtive SPECIALSXP */
+/* This is a primitive SPECIALSXP */
 SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *ctxt;
-    SEXP code, add, oldcode, tmp, ap, argList;
-    int addit;
-
-    if(length(args) > 2)
-	errorcall_return(call, _("invalid number of arguments"));
+    SEXP code, oldcode, tmp, ap, argList;
+    int addit = 0;
 
     PROTECT(ap = list2(R_NilValue, R_NilValue));
     SET_TAG(ap,  install("expr"));
     SET_TAG(CDR(ap), install("add"));
     PROTECT(argList =  matchArgs(ap, args, call));
-    if(CAR(argList) == R_MissingArg) SETCAR(argList, R_NilValue);
-    if(CADR(argList) == R_MissingArg) SETCAR(CDR(argList), ScalarLogical(0));
-    code = CAR(argList);
-    PROTECT(add = eval(CADR(argList), rho));
-    addit = asLogical(add);
-    if (addit == NA_INTEGER)
-	errorcall(call, _("invalid '%s' argument"), "add");
-    UNPROTECT(1);
+    if (CAR(argList) == R_MissingArg) code = R_NilValue; 
+    else code = CAR(argList);
+    if (CADR(argList) != R_MissingArg) {
+	addit = asLogical(eval(CADR(args), rho));
+	if (addit == NA_INTEGER)
+	    errorcall(call, _("invalid '%s' argument"), "add");
+    }
 
     ctxt = R_GlobalContext;
     /* Search for the context to which the on.exit action is to be
