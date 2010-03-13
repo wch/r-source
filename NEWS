@@ -299,12 +299,12 @@ NEW FEATURES
 	the first argument and there is no danger of partial matching
 	to later named arguments.
 
-    o	Primitive functions attr(), attr<-(), on.exit(), retracemem()
-	and substitute() now use standard argument matching (rather
-	than positional matching).  This means that all multi-argument
-	primitives which are not internal now use standard argument
-	matching except where positional matching is desirable (as for
-	switch(), call(), .C() ...).
+    o	Primitive functions UseMethod(), attr(), attr<-(), on.exit(),
+	retracemem() and substitute() now use standard argument
+	matching (rather than positional matching).  This means that
+	all multi-argument primitives which are not internal now use
+	standard argument matching except where positional matching is
+	desirable (as for switch(), call(), .C() ...).
 
     o	Functions interactive(), nargs() and proc.time() now check that
 	they are called with no arguments rather than ignoring any
@@ -331,6 +331,8 @@ DEPRECATED & DEFUNCT
 	exported and has a different argument list.
 
     o	Use of multiple arguments to return() is now defunct.
+
+    o	The use of UseMethod() with more than two arguments is now defunct.
 
     o	In the 'methods' package, the old MethodsList metadata objects
 	have been superseded since R 2.8.0 by hash tables
@@ -436,6 +438,7 @@ BUG FIXES
     o	gsub could crash from a stack overflow for very long strings due
 	to temporary data being allocated on the stack.  Also, gsub
 	with fixed=TRUE is now considerably faster.
+
 
 
 	**************************************************

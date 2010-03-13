@@ -2887,22 +2887,18 @@ other function calls.  The syntax of a call to it is
 @code{UseMethod(@var{generic}, @var{object})}, where @var{generic} is
 the name of the generic function, @var{object} is the object used to
 determine which method should be chosen.  @code{UseMethod} can only be
-called from inside a function.  The @Sl{} definition of @code{UseMethod}
-contains an additional argument of @samp{...} that can affect the
-default values for subsequent methods.  @R{} produces a warning if there
-are more than two arguments to @code{UseMethod} and ignores these
-additional arguments.
+called from the body of a function.
 
 @cindex evaluation
 @code{UseMethod} changes the evaluation model in two ways.  First, when
 it is invoked it determines the next method (function) to be called.  It
 then invokes that function using the current evaluation
 @cindex environment
-environment;
-this process will be described shortly.  The second way in which
-@code{UseMethod} changes the evaluation environment is that it does not
-return control to the calling function.  This means, that any statements
-after a call to @code{UseMethod} are guaranteed not to be executed.
+environment; this process will be described shortly.  The second way in
+which @code{UseMethod} changes the evaluation environment is that it
+does not return control to the calling function.  This means, that any
+statements after a call to @code{UseMethod} are guaranteed not to be
+executed.
 
 When @code{UseMethod} is invoked the generic function is the specified
 value in the call to @code{UseMethod}.  The object to dispatch on is

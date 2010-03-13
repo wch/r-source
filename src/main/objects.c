@@ -397,13 +397,20 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, generic = R_NilValue /* -Wall */, obj, val;
     SEXP callenv, defenv;
-    int nargs;
+    SEXP ap, argList;
     RCNTXT *cptr;
 
-    nargs = length(args);
+    PROTECT(ap = list2(R_NilValue, R_NilValue));
+    SET_TAG(ap,  install("generic"));
+    SET_TAG(CDR(ap), install("object"));
+    PROTECT(argList =  matchArgs(ap, args, call));
+    if (CAR(argList) == R_MissingArg)
+	errorcall(call, _("there must be a 'generic' argument"));	
+    else 
+	PROTECT(generic = eval(CAR(argList), env));
+    if(!isString(generic) || length(generic) != 1)
+	errorcall(call, _("'generic' argument must be a character string"));
 
-    if (nargs < 0)
-	errorcall(call, _("corrupt internals!"));
 
     /* get environments needed for dispatching.
        callenv = environment from which the generic was called
@@ -412,12 +419,6 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if ( !(cptr->callflag & CTXT_FUNCTION) || cptr->cloenv != env)
 	errorcall(call, _("'UseMethod' used in an inappropriate fashion"));
     callenv = cptr->sysparent;
-    if (nargs)
-	PROTECT(generic = eval(CAR(args), env));
-    else
-	errorcall(call, _("there must be a first argument"));
-    if(!isString(generic) || length(generic) != 1)
-	errorcall(call, _("first argument must be a character string"));
     /* We need to find the generic to find out where it is defined.
        This is set up to avoid getting caught by things like
 
@@ -434,18 +435,9 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 		   ENCLOS(env), FUNSXP, TRUE); /* That has evaluated promises */
     if(TYPEOF(val) == CLOSXP) defenv = CLOENV(val);
     else defenv = R_BaseNamespace;
-/*
-    if(defenv !=  ENCLOS(env)) {
-	printf("*** problem ***\n");
-	PrintValue(generic);
-	PrintValue(ENCLOS(env));
-    }
-*/
 
-    if (nargs > 2)  /* R-lang says there should be a warning */
-	warningcall(call, _("arguments after the first two are ignored"));
-    if (nargs >= 2)
-	PROTECT(obj = eval(CADR(args), env));
+    if (CADR(argList) != R_MissingArg)
+	PROTECT(obj = eval(CADR(argList), env));
     else {
 	cptr = R_GlobalContext;
 	while (cptr != NULL) {
@@ -455,8 +447,6 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if (cptr == NULL)
 	    errorcall(call, _("'UseMethod' called from outside a closure"));
-	/* if (generic == R_MissingArg)
-	   PROTECT(generic = mkString(CHAR(PRINTNAME(CAR(cptr->call))))); */
 	PROTECT(obj = GetObject(cptr));
     }
 
@@ -467,10 +457,9 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (usemethod(translateChar(STRING_ELT(generic, 0)), obj, call, CDR(args),
 		  env, callenv, defenv, &ans) == 1) {
-	UNPROTECT(1); /* obj */
+	UNPROTECT(3); /* obj, ap, argList */
 	PROTECT(ans);
 	findcontext(CTXT_RETURN, env, ans); /* does not return */
-	UNPROTECT(1);
     }
     else {
 	SEXP klass;
@@ -491,9 +480,9 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	errorcall(call, _("no applicable method for '%s' applied to an object of class \"%s\""),
 		  translateChar(STRING_ELT(generic, 0)), cl);
-	UNPROTECT(1); /* NOT Used */
     }
-    return R_NilValue; /* NOT Used */
+    /* Not reached */
+    return R_NilValue;
 }
 
 /*

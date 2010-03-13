@@ -365,18 +365,6 @@ it is guaranteed that they will not be set for CHARSXPs created by @R{}
 itself.)  As from @R{} 2.8.0 bit 5 is used to indicate that a CHARSXP
 is hashed by its address, that is NA_STRING or in the CHARSXP cache.
 
-
-As for @R{} 2.6.0, but 5 is for a @code{CHARSXP} is used to indicate
-that it is part of the @code{CHARSXP} cache.
-
-@c Finally, @code{SETLEVELS} and @code{LEVELS} are used by that name for
-@c the internal code for @code{terms.formula} to compute the @code{order}
-@c attribute of the result.  This is computed on an internal pairlist, and
-@c marks the order of the interaction.  This is in principle unlimited
-@c (although no test is done) and could in principle exceed 15.  (This
-@c usage could easily be replaced by one not making use of @code{gp}.)
-
-
 @node The 'data', Allocation classes, Rest of header, SEXPs
 @subsection The `data'
 
@@ -434,8 +422,8 @@ the last is a pointer to the appropriate @code{SEXPREC}.)  Many symbols
 have @code{SYMVALUE} @code{R_UnboundValue}.
 
 @item LISTSXP
-Pointers to the CAR, CDR (usually a @code{LISTSXP} or @code{NULL}) and TAG
-(usually a @code{SYMSXP}).
+Pointers to the CAR, CDR (usually a @code{LISTSXP} or @code{NULL}) and
+TAG (a @code{SYMSXP} or @code{NULL}).
 
 @item CLOSXP
 Pointers to the formals (a pairlist), the body and the environment.
@@ -608,7 +596,7 @@ terminate at either the base environment or the empty environment.  (It
 can be conceptually simpler to think of the search always terminating at
 the empty environment, but with an optimization to stop at the base
 environment.)  So the `search path' describes the chain of environments
-which is taken once the search reaches the global environment.
+which is traversed once the search reaches the global environment.
 
 @node Name spaces,  , Search paths, Environments and variable lookup
 @subsection Name spaces
@@ -815,9 +803,8 @@ jump to a specific context via @code{R_JumpToContext}.
 @code{R_ToplevelContext} is the `idle' state (normally the command
 prompt), and @code{R_GlobalContext} is the top of the stack.
 
-Note that whilst all calls to closures set a context, those to special
-internal functions never do, and those to builtin internal functions
-have done so only recently (and prior to that only when profiling).
+Note that whilst calls to closures and builtins set a context, those to special
+internal functions never do.
 
 @findex UseMethod
 @cindex method dispatch
@@ -827,9 +814,9 @@ equivalent) or calling @code{NextMethod} sets the context type to
 method call to that of the @code{generic}, so the method appears to have
 been called in place of the generic rather than from the generic.
 
-The @R{} @code{sys.frame} and @code{sys.call} work by counting calls to
-closures (type @code{CTXT_FUNCTION}) from either end of the context
-stack.
+The @R{} @code{sys.frame} and @code{sys.call} functions work by counting
+calls to closures (type @code{CTXT_FUNCTION}) from either end of the
+context stack.
 
 Note that the @code{sysparent} element of the structure is not the same
 thing as @code{sys.parent()}.  Element @code{sysparent} is primarily
@@ -898,17 +885,6 @@ arguments is used.  Note that being a special/builtin is separate from
 being primitive or @code{.Internal}: @code{quote} is a special
 primitive, @code{+} is a builtin primitive, @code{cbind} is a special
 @code{.Internal} and @code{grep} is a builtin @code{.Internal}.
-
-Special functions are much rarer than builtins: the special primitives
-are (apart from language elements implemented as primitives) currently
-@code{.Internal}, @code{UseMethod}, @code{c}, @code{call},
-@code{expression}, @code{log}, @code{missing}, @code{on.exit},
-@code{quote}, @code{rep}, @code{round}, @code{seq.int}, @code{signif}
-and @code{substitute}, and the special @code{.Internals} are
-@code{NextMthod}, @code{Recall}, @code{cbind}, @code{eapply},
-@code{lapply}, @code{rbind}, @code{withVisible} and @code{vapply}.
-(Some of these primitives, e.g.@: @code{log}, are special to allow
-default values to be given to missing arguments.)
 
 @cindex generic, internal
 @findex DispatchOrEval
@@ -1903,10 +1879,11 @@ compiling the @R{} sources on Windows.
 @section Lazy loading
 
 Lazy loading was introduced in @R{} 2.0.0, for code in packages and for
-datasets in packages (both are optional).  When a package/name space
-which uses it is loaded, the package/name space environment is populated
-with promises for all the named objects: when these promises are
-evaluated they load the actual code from a database.
+datasets in packages (both are optional, but it is the default for
+code).  When a package/name space which uses it is loaded, the
+package/name space environment is populated with promises for all the
+named objects: when these promises are evaluated they load the actual
+code from a database.
 
 There are separate databases for code and data, stored in the @file{R}
 and @file{data} subdirectories.  The database consists of two files,
@@ -1957,23 +1934,21 @@ to @code{tools:::fetchRdDB}.
 
 @findex .Internal
 @findex .Primitive
-C code compiled into @R{} at build time can be called ``directly'' or
-via the @code{.Internal} interface, which is very similar to the
-@code{.External} interface except in syntax.  More precisely, @R{}
-maintains a table of R function names and corresponding C functions to
-call, which by convention all start with @samp{do_} and return a SEXP.
-Via this table (@code{R_FunTab} in file @file{src/main/names.c}) one can
-also specify how many arguments to a function are required or allowed,
-whether the arguments are to be evaluated before calling or not, and
-whether the function is ``internal'' in the sense that it must be
-accessed via the @code{.Internal} interface, or directly accessible in
-which case it is printed in @R{} as @code{.Primitive}.
+C code compiled into @R{} at build time can be called directly in what
+are termed @emph{primitives} or via the @code{.Internal} interface,
+which is very similar to the @code{.External} interface except in
+syntax.  More precisely, @R{} maintains a table of R function names and
+corresponding C functions to call, which by convention all start with
+@samp{do_} and return a @code{SEXP}.  This table (@code{R_FunTab} in
+file @file{src/main/names.c}) also specifies how many arguments to a
+function are required or allowed, whether or not the arguments are to be
+evaluated before calling, and whether the function is `internal' in
+the sense that it must be accessed via the @code{.Internal} interface,
+or directly accessible in which case it is printed in @R{} as
+@code{.Primitive}.
 
-@R{}'s functionality can also be extended by providing corresponding C
-code and adding to this function table.
-
-In general, all such functions use @code{.Internal()} as this is safer
-and in particular allows for transparent handling of named and default
+Functions using @code{.Internal()} wrapped in a closure are in general
+preferred as this allows for transparent handling of named and default
 arguments.  For example, @code{axis} is defined as
 
 @example
@@ -1988,12 +1963,11 @@ some overhead in using the @code{.Internal} interface wrapped in a
 function closure), the primitive functions are exceptions that can be
 accessed directly.  Note that primitive functions make no use of @R{}
 code, and hence are very different from the usual interpreted functions.
-In particular, @code{args}, @code{formals} and @code{body} return
-@code{NULL} for such objects, and argument matching is purely positional
-(with a few exceptions described below).  For several of these functions
-(including @code{call}, @code{switch}, @code{.C} and @code{.subset})
-positional matching is important to avoid partial matching of the first
-argument.
+In particular, @code{formals} and @code{body} return @code{NULL} for
+such objects, and argument matching is purely positional (with several
+exceptions described below).  For several of these functions (including
+@code{call}, @code{switch}, @code{.C} and @code{.subset}) positional
+matching is important to avoid partial matching of the first argument.
 
 The list of primitive functions is subject to change; currently, it
 includes the following.
@@ -2002,7 +1976,7 @@ includes the following.
 
 @item
 ``Special functions'' which really are @emph{language} elements, however
-exist as ``primitive'' functions in @R{}:
+implemented as primitive functions:
 
 @example
 @group
@@ -2066,8 +2040,7 @@ Im  Re  Arg  Conj  Mod
 @end example
 
 @code{log} is a function of one or two arguments, but was made
-primitive as from @R{} 2.6.0 and so has named rather than positional
-matching for back compatibility.
+primitive in @R{} 2.6.0 with named argument matching.
 
 @code{trunc} is a difficult case: it is a primitive that can have zero
 or more arguments: the default method handled in the primitive has
@@ -2105,9 +2078,6 @@ browser  proc.time  gc.time
 tracemem retracemem untracemem
 @end group
 @end example
-@noindent
-@code{browser} manages its own argument matching and so works in the
-standard way.
 
 @end enumerate
 
@@ -2139,7 +2109,7 @@ hence replacement functions should where possible be primitive to avoid
 copying (at least in their default methods).
 
 @item
-The following few @math{N}-argument functions are ``primitive'' for
+The following @math{N}-argument functions are ``primitive'' for
 efficiency reasons:
 
 @example
@@ -2148,13 +2118,23 @@ efficiency reasons:
 call       expression substitute
 UseMethod  standardGeneric
 .C         .Fortran   .Call       .External
+round      signif      rep        seq.int
+@end group
+@end example
+
+@noindent
+as well as the following intenal-use-only functions
+
+@example
+@group
 .Call.graphics        .External.graphics
 .subset    .subset2   .primTrace  .primUntrace
-round      signif      rep        seq.int
 lazyLoadDBfetch
 @end group
 @end example
+
 @end enumerate
+
 
 The multi-argument primitives
 @example
@@ -2172,7 +2152,7 @@ partial matching to their first argument.  On the other hand,
 
 @example
 @group
-browser    attr        attr<-     rememtrace substitute
+browser    attr       attr<-      rememtrace substitute  UseMethod
 log        round      signif      rep        seq.int
 @end group
 @end example
@@ -2197,12 +2177,16 @@ A small number of primitives are @emph{specials} rather than
 @emph{builtins}, that is they are entered with unevaluated arguments.
 This is clearly necessary for the language constructs and the assignment
 operators.  @code{&&} and @code{||} conditionally evaluate their second
-argument, and  @code{~}, @code{.Internal}, @code{call}, @code{expression}
-and @code{missing} do not evaluate their arguments.
+argument, and @code{~}, @code{.Internal}, @code{call}, @code{expression}
+@code{missing}, @code{on.exit}, @code{quote} and @code{substitute} do
+not evaluate some of their arguments.
 
 @code{rep} and @code{seq.int} are special as they evaluate some of their
 arguments conditional on which are non-missing.  @code{c} is special to
 allow it to be used with language objects.
+
+@code{log}, @code{round} and @code{signif} are special to allow default
+values to be given to missing arguments.
 
 The subsetting, subassignment and @code{@@} operators are all special.
 (For both extraction and replacement forms, @code{$} and @code{@@}
@@ -2210,21 +2194,21 @@ take a symbol argument, and @code{[} and @code{[[} allow missing
 arguments.)
 
 @code{UseMethod} is special to avoid the additional contexts added to
-calls to builtins when profiling (via @code{Rprof}).
+calls to builtins.
 
 @node Special internals, Prototypes for primitives, Special primitives, .Internal vs .Primitive
 @section Special internals
 
-There are also special @code{.Internal} functions: @code{switch},
-@code{Recall}, @code{cbind}, @code{rbind} (to allow for the
-@code{deparse.level} argument), @code{lapply}, @code{eapply} and
-@code{NextMethod}.
+There are also special @code{.Internal} functions: @code{NextMethod}
+@code{Recall}, @code{withVisiblle}, @code{cbind}, @code{rbind} (to allow
+for the @code{deparse.level} argument), @code{lapply}, @code{eapply} and
+@code{vapply}.  .
 
 @node Prototypes for primitives,  , Special internals, .Internal vs .Primitive
 @section Prototypes for primitives
 
 As from @R{} 2.5.0, prototypes are available for the primitive functions
-and operators, and there are used for printing, @code{args} and package
+and operators, and these are used for printing, @code{args} and package
 checking (e.g.@: by @code{tools::checkS3methods} and by package
 @pkg{codetools}).  There are two environments in the @pkg{base} package
 (and name space), @samp{.GenericArgsEnv} for those primitives which are
