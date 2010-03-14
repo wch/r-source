@@ -2066,9 +2066,10 @@ seq_along    seq_len
 @end example
 
 @noindent
-(where @emph{xxx} stands for 27 different notions, such as
-@code{function}, @code{vector}, @code{numeric}, and so forth, but not
-@code{is.loaded}).
+(where @emph{xxx} stands for 27 different notions, such as @code{na},
+@code{function}, @code{numeric}, and so forth, but not @code{is.loaded})
+nor @code{is.vector}.
+@c is.na, is.nan, is.finite, is.infinite + do_is
 
 @item
 The programming and session management utilities
