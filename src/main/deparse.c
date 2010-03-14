@@ -2,8 +2,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2008  Robert Gentleman, Ross Ihaka and the
- *			      R Development Core Team
+ *  Copyright (C) 1997--2009  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +21,7 @@
  *
  *  IMPLEMENTATION NOTES:
  *
- *  Deparsing, has 3 layers.  The user interface, do_deparse, should
+ *  Deparsing has 3 layers.  The user interface, do_deparse, should
  *  not be called from an internal function, the actual deparsing needs
  *  to be done twice, once to count things up and a second time to put
  *  them into the string vector for return.  Printing this to a file
