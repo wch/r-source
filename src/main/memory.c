@@ -2179,12 +2179,13 @@ static Rboolean gctime_enabled = FALSE;
 SEXP attribute_hidden do_gctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    check1arg(args, call, "on");
 
     if (args == R_NilValue)
 	gctime_enabled = TRUE;
-    else
+    else {
+	check1arg(args, call, "on");
 	gctime_enabled = asLogical(CAR(args));
+    }
     ans = allocVector(REALSXP, 5);
     REAL(ans)[0] = gctimes[0];
     REAL(ans)[1] = gctimes[1];
