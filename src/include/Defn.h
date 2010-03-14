@@ -766,6 +766,7 @@ extern0 Rboolean known_to_be_utf8 INI_as(FALSE);
 # define allocCharsxp		Rf_allocCharsxp
 # define begincontext		Rf_begincontext
 # define check_stack_balance	Rf_check_stack_balance
+# define check1arg		Rf_check1arg
 # define CheckFormals		Rf_CheckFormals
 # define CleanEd		Rf_CleanEd
 # define CoercionWarning       	Rf_CoercionWarning
@@ -961,6 +962,7 @@ SEXP Rf_EnsureString(SEXP);
 SEXP Rf_allocCharsxp(R_len_t);
 SEXP Rf_append(SEXP, SEXP); /* apparently unused now */
 void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP, SEXP);
+void check1arg(SEXP, SEXP, const char *);
 void Rf_checkArityCall(SEXP, SEXP, SEXP);
 void CheckFormals(SEXP);
 void R_check_locale(void);
@@ -968,7 +970,7 @@ void check_stack_balance(SEXP op, int save);
 void CleanEd(void);
 void copyListMatrix(SEXP, SEXP, Rboolean);
 void copyMostAttribNoTs(SEXP, SEXP);
-void CustomPrintValue(SEXP,SEXP);
+void CustomPrintValue(SEXP, SEXP);
 void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
 SEXP deparse1(SEXP,Rboolean,int);

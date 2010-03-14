@@ -1,6 +1,6 @@
 % File src/library/base/man/nchar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{nchar}
@@ -47,8 +47,6 @@ nzchar(x)
   \code{\link{as.character}} is performed on \code{x} (so there is no
   method dispatch).  If you want to operate on non-vector objects
   passing them through \code{\link{deparse}} first will be required.
-  
-  \code{nzchar} is \link{primitive} and so will ignore any argument name.
 }
 \value{
   For \code{nchar}, an integer vector giving the sizes of each element,

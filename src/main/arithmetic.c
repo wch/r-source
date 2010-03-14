@@ -983,6 +983,7 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP s;
 
     checkArity(op, args);
+    check1arg(args, call, "x");
 
     if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
@@ -1043,26 +1044,43 @@ SEXP attribute_hidden do_trunc(SEXP call, SEXP op, SEXP args, SEXP env)
     return math1(CAR(args), trunc, call);
 }
 
+/* FIXME: why did this check arity only for the default method? */
+/*
+   Note that this is slightly different from the do_math1 set, 
+   both for integer/logical inputs and what it dispatches to for complex ones.
+*/
+
 SEXP attribute_hidden do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s;
+    SEXP x, s = R_NilValue /* -Wall */;
+
+    checkArity(op, args);
+    check1arg(args, call, "x");
+    x = CAR(args);
+
     if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
-    checkArity(op, args);
-    if (isComplex(CAR(args)) || !(isInteger(CAR(args)) || isLogical(CAR(args))))
-	return do_cmathfuns(call, op, args, env);
-    else { /* integer or logical ==> return integer */
-	SEXP x = CAR(args);
-	int i, n;
-	n = length(x);
+
+    if (isInteger(x) || isLogical(x)) {
+	/* integer or logical ==> return integer,
+	   factor was covered by Math.factor. */
+	int i, n = length(x);
 	PROTECT(s = allocVector(INTSXP, n));
 	/* Note: relying on INTEGER(.) === LOGICAL(.) : */
 	for(i = 0 ; i < n ; i++)
 	    INTEGER(s)[i] = abs(INTEGER(x)[i]);
-	DUPLICATE_ATTRIB(s, x);
-	UNPROTECT(1);
-	return s;
-    }
+    } else if (TYPEOF(x) == REALSXP) {
+	int i, n = length(x);
+	PROTECT(s = allocVector(REALSXP, n));
+	for(i = 0 ; i < n ; i++)
+	    REAL(s)[i] = fabs(REAL(x)[i]);
+    } else if (isComplex(x)) {
+	return do_cmathfuns(call, op, args, env);
+    } else
+	errorcall(call, R_MSG_NONNUM_MATH);
+    DUPLICATE_ATTRIB(s, x);
+    UNPROTECT(1);
+    return s;
 }
 
 /* Mathematical Functions of Two Numeric Arguments (plus 1 int) */
@@ -1293,7 +1311,8 @@ SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     return op;			/* never used; to keep -Wall happy */
 }
 
-
+/* FIXME: this could be merged with do_math1 now
+   and why does it not check arity before dispatch? */
 SEXP attribute_hidden do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
@@ -1303,6 +1322,7 @@ SEXP attribute_hidden do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 
     switch (n = length(args)) {
     case 1:
+	check1arg(args, call, "x");
 	if (isComplex(CAR(args)))
 	    return complex_math1(call, op, args, env);
 	else
@@ -1372,6 +1392,7 @@ SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP res, Call, tmp = R_NilValue /* -Wall */;
 
     checkArity(op, args);
+    check1arg(args, call, "x");
 
     if (DispatchGroup("Math", call, op, args, env, &res)) return res;
 

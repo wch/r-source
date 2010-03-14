@@ -14,9 +14,6 @@
 
   If no expression is provided, i.e., the call is \code{on.exit()}, then
   the current \code{on.exit} code is removed.
-
-  \code{on.exit} is a primitive function so positional matching is
-  used and names of supplied arguments are ignored.
 }
 \usage{
 on.exit(expr = NULL, add = FALSE)

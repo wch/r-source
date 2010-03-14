@@ -1,6 +1,6 @@
 % File src/library/base/man/length.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{length}
@@ -46,9 +46,6 @@ length(x) <- value
   a vector is shortened, extra values are discarded and when a vector is
   lengthened, it is padded out to its new length with \code{\link{NA}}s
   (\code{nul} for raw vectors).
-  
-  These functions are \link{primitive}, so argument names are ignored
-  (but this might not be true of their methods).
 }
 \seealso{\code{nchar} for counting the number of characters in
   character vectors.

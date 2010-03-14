@@ -649,6 +649,7 @@ SEXP attribute_hidden do_seq_along(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, len, *p;
 
     checkArity(op, args);
+    check1arg(args, call, "along.with");
 #ifdef R_291_and_less
     len = length(CAR(args));
 #else
@@ -673,6 +674,7 @@ SEXP attribute_hidden do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, len, *p;
 
     checkArity(op, args);
+    check1arg(args, call, "length.out");
     len = asInteger(CAR(args));
     if(len == NA_INTEGER || len < 0)
 	errorcall(call, _("argument must be coercible to non-negative integer"));

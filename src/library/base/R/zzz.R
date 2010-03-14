@@ -67,6 +67,7 @@ assign(".primTrace", function(obj) NULL, envir = .ArgsEnv)
 assign(".primUntrace", function(obj) NULL, envir = .ArgsEnv)
 assign(".subset", function(x, ...) NULL, envir = .ArgsEnv)
 assign(".subset2", function(x, ...) NULL, envir = .ArgsEnv)
+assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
 assign("as.call", function(x) NULL, envir = .ArgsEnv)
 assign("as.environment", function(object) NULL, envir = .ArgsEnv)
 assign("attr", function(x, which, exact = FALSE) NULL, envir = .ArgsEnv)
@@ -132,19 +133,19 @@ assign("switch", function(EXPR, ...) NULL, envir = .ArgsEnv)
 assign("tracemem", function(x) NULL, envir = .ArgsEnv)
 assign("unclass", function(x) NULL, envir = .ArgsEnv)
 assign("untracemem", function(x) NULL, envir = .ArgsEnv)
-assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
 
 
 .S3PrimitiveGenerics <-
     c("as.character", "as.complex", "as.double", "as.integer",
     "as.logical", "as.numeric", "as.raw", "as.real", "c", "dim",
     "dim<-", "dimnames", "dimnames<-", "is.array", "is.finite",
-    "is.infinite", "is.matrix",
-    "is.na", "is.nan", "is.numeric", "length", "length<-", "levels<-",
-    "names", "names<-", "rep", "seq.int", "xtfrm")
+    "is.infinite", "is.matrix", "is.na", "is.nan", "is.numeric",
+    "length", "length<-", "levels<-", "names", "names<-", "rep",
+    "seq.int", "xtfrm")
 
 .GenericArgsEnv <- local({
     env <- new.env(hash = TRUE, parent = emptyenv())
+    ## those with different arglists are overridden below.
     for(f in .S3PrimitiveGenerics) {
         fx <- function(x) {}
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
@@ -201,10 +202,10 @@ assign("as.integer", function(x, ...) UseMethod("as.integer"),
        envir = .GenericArgsEnv)
 assign("as.logical", function(x, ...) UseMethod("as.logical"),
        envir = .GenericArgsEnv)
-assign("as.raw", function(x) UseMethod("as.raw"), envir = .GenericArgsEnv)
+#assign("as.raw", function(x) UseMethod("as.raw"), envir = .GenericArgsEnv)
 assign("c", function(..., recursive = FALSE) UseMethod("c"),
        envir = .GenericArgsEnv)
-assign("dimnames", function(x) UseMethod("dimnames"), envir = .GenericArgsEnv)
+#assign("dimnames", function(x) UseMethod("dimnames"), envir = .GenericArgsEnv)
 assign("dim<-", function(x, value) UseMethod("dim<-"), envir = .GenericArgsEnv)
 assign("dimnames<-", function(x, value) UseMethod("dimnames<-"),
        envir = .GenericArgsEnv)
@@ -224,7 +225,7 @@ assign("seq.int", function(from, to, by, length.out, along.with, ...)
 assign("signif", function(x, digits=6) UseMethod("signif"),
        envir = .GenericArgsEnv)
 assign("trunc", function(x, ...) UseMethod("trunc"), envir = .GenericArgsEnv)
-assign("xtfrm", function(x) UseMethod("xtfrm"), envir = .GenericArgsEnv)
+#assign("xtfrm", function(x) UseMethod("xtfrm"), envir = .GenericArgsEnv)
 
 ## make these the same object as as.double
 assign("as.numeric", get("as.double", envir = .GenericArgsEnv),

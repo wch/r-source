@@ -8,7 +8,7 @@
 \title{Formal Method System -- Creating Generic Functions}
 % and other Placeholders
 \description{
-  This help page is for Routines which are primitives used with the
+  This help page is for routines which are primitives used with the
   \pkg{methods} package.  They should not be used without it.
 }
   % was "and do not need to be called directly in any case."

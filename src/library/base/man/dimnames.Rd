@@ -1,6 +1,6 @@
 % File src/library/base/man/dimnames.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{dimnames}
@@ -44,9 +44,6 @@ dimnames(x) <- value
 
   For a 1D matrix the \code{\link{names}} are the same thing as the
   (only) component of the \code{dimnames}.
-  
-  These functions are \link{primitive}, so argument names are ignored
-  (but this might not be true of their methods).
 }
 \value{
   The dimnames of a matrix or array can be \code{NULL} or a list of the

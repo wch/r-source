@@ -1964,10 +1964,11 @@ function closure), the primitive functions are exceptions that can be
 accessed directly.  Note that primitive functions make no use of @R{}
 code, and hence are very different from the usual interpreted functions.
 In particular, @code{formals} and @code{body} return @code{NULL} for
-such objects, and argument matching is purely positional (with several
-exceptions described below).  For several of these functions (including
-@code{call}, @code{switch}, @code{.C} and @code{.subset}) positional
-matching is important to avoid partial matching of the first argument.
+such objects, and argument matching is purely positional unless managed
+by the C code (which in recent versions of @R{} it often is).  For
+several of these functions (including @code{call}, @code{switch},
+@code{.C} and @code{.subset}) positional matching is important to avoid
+partial matching of the first argument.
 
 The list of primitive functions is subject to change; currently, it
 includes the following.
@@ -2160,9 +2161,10 @@ log        round      signif      rep        seq.int
 @noindent
 manage their own argument matching and so do work in the standard way.
 
-The remaining primitives have only zero or one named arguments or (for
-replacement functions) are normally called with one argument, or are
-internal or language elements.
+All the one-argument primitives check that is they are called with a
+named argument that this (partially) matches the name given in the
+documentation: this is also done for replacement functions with one
+argument plus @code{value}.
 
 @menu
 * Special primitives::          

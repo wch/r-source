@@ -1300,6 +1300,7 @@ SEXP attribute_hidden do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
     int type = STRSXP, op0 = PRIMVAL(op);
     char *name = NULL /* -Wall */;
 
+    check1arg(args, call, "x");
     switch(op0) {
 	case 0:
 	    name = "as.character"; break;
@@ -1462,11 +1463,15 @@ SEXP attribute_hidden do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+/* primitive */
 SEXP attribute_hidden do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ap, ans, names;
     int i, n;
+
     checkArity(op, args);
+    check1arg(args, call, "x");
+
     args = CAR(args);
     switch (TYPEOF(args)) {
     case LANGSXP:
@@ -1651,6 +1656,7 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     checkArity(op, args);
+    check1arg(args, call, "x");
 
     /* These are all builtins, so we do not need to worry about
        evaluating arguments in DispatchOrEval */
@@ -1844,6 +1850,8 @@ SEXP attribute_hidden do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, n;
 
     checkArity(op, args);
+    check1arg(args, call, "x");
+
     if (DispatchOrEval(call, op, "is.na", args, rho, &ans, 1, 1))
 	return(ans);
     PROTECT(args = ans);
@@ -1955,6 +1963,8 @@ SEXP attribute_hidden do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, n;
 
     checkArity(op, args);
+    check1arg(args, call, "x");
+
     if (DispatchOrEval(call, op, "is.nan", args, rho, &ans, 1, 1))
 	return(ans);
 
@@ -2051,7 +2061,10 @@ SEXP attribute_hidden do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, names, dims;
     int i, n;
+
     checkArity(op, args);
+    check1arg(args, call, "x");
+
     if (DispatchOrEval(call, op, "is.finite", args, rho, &ans, 0, 1))
 	return(ans);
 #ifdef stringent_is
@@ -2103,7 +2116,10 @@ SEXP attribute_hidden do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, x, names, dims;
     double xr, xi;
     int i, n;
+
     checkArity(op, args);
+    check1arg(args, call, "x");
+
     if (DispatchOrEval(call, op, "is.infinite", args, rho, &ans, 0, 1))
 	return(ans);
 #ifdef stringent_is
@@ -2376,7 +2392,7 @@ SEXP attribute_hidden do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_quote(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
-
+    check1arg(args, call, "expr");
     return(CAR(args));
 }
 
@@ -2522,9 +2538,12 @@ static SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 SEXP attribute_hidden R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
+    check1arg(args, call, "x");
+
     return R_set_class(CAR(args), CADR(args), call);
 }
 
+/* primitive */
 SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 /* storage.mode(obj) <- value */
@@ -2532,6 +2551,8 @@ SEXP attribute_hidden do_storage_mode(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXPTYPE type;
 
     checkArity(op, args);
+    check1arg(args, call, "x");
+
     obj = CAR(args);
 
     value = CADR(args);

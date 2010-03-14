@@ -80,12 +80,15 @@ static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 /* Functions to perform analogues of the standard C string library. */
 /* Most are vectorized */
 
+/* primitive */
 SEXP attribute_hidden do_nzchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, ans;
     int i, len;
 
     checkArity(op, args);
+    check1arg(args, call, "x");
+
     PROTECT(x = coerceVector(CAR(args), STRSXP));
     if (!isString(x))
 	error(_("'%s' requires a character vector"), "nzchar()");

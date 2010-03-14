@@ -1937,6 +1937,7 @@ SEXP attribute_hidden do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP rval, t, sym, s;
 
     checkArity(op, args);
+    check1arg(args, call, "x");
     s = sym = CAR(args);
     if( isString(sym) && length(sym)==1 )
 	s = sym = install(translateChar(STRING_ELT(CAR(args), 0)));
@@ -2719,6 +2720,9 @@ SEXP attribute_hidden do_pos2env(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP env, pos;
     int i, npos;
+    checkArity(op, args);
+    check1arg(args, call, "x");
+
     PROTECT(pos = coerceVector(CAR(args), INTSXP));
     npos = length(pos);
     if (npos <= 0)
@@ -2755,6 +2759,7 @@ do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP arg = CAR(args);
     checkArity(op, args);
+    check1arg(args, call, "object");
     if(isEnvironment(arg))
 	return arg;
     switch(TYPEOF(arg)) {

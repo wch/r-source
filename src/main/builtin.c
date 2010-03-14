@@ -264,7 +264,10 @@ SEXP attribute_hidden do_envir(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP env, s = CAR(args);
+
     checkArity(op, args);
+    check1arg(args, call, "x");
+
     env = CADR(args);
 
     if (TYPEOF(CAR(args)) == CLOSXP
@@ -823,6 +826,8 @@ SEXP attribute_hidden do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP x, ans;
 
     checkArity(op, args);
+    check1arg(args, call, "x");
+
     x = CAR(args);
     if(isObject(x) && DispatchOrEval(call, op, "length<-", args,
 				     rho, &ans, 0, 1))

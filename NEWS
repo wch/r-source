@@ -306,9 +306,10 @@ NEW FEATURES
 	standard argument matching except where positional matching is
 	desirable (as for switch(), call(), .C() ...).
 
-    o	Functions interactive(), nargs() and proc.time() now check that
-	they are called with no arguments rather than ignoring any
-	arguments supplied.
+    o	All the one-argument primitives now check that any name
+	supplied for their first argument is a partial match to the
+	argument name as documented on the help page: this also
+	applies to replacement functions of two arguments.
 
     o	base::which() uses a new .Internal function when arr.ind is
 	FALSE resulting in a 10x speedup.  Thanks to Patrick Aboyoun
@@ -435,9 +436,15 @@ BUG FIXES
 	occur when a garbage collection triggered a second call to
 	matchArgs for the same function via a finalizer.
 
-    o	gsub could crash from a stack overflow for very long strings due
-	to temporary data being allocated on the stack.  Also, gsub
-	with fixed=TRUE is now considerably faster.
+    o	gsub() in 2.10.x could fail from stack overflow for extremely
+	long strings due to temporary data being allocated on the
+	stack.  Also, gsub() with fixed=TRUE is in some circumstances
+	considerably faster.
+
+    o	Several primitives, including attributes(), attr<-()
+	interactive(), nargs() and proc.time(), did not check that
+	they were called with the correct number of arguments.
+
 
 
 

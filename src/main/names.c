@@ -210,7 +210,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"dim",		do_dim,		0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"dim<-",	do_dimgets,	0,	1,	2,	{PP_FUNCALL, PREC_LEFT,	1}},
 {"attributes",	do_attributes,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"attributes<-",do_attributesgets,0,	1,	1,	{PP_FUNCALL, PREC_LEFT,	1}},
+{"attributes<-",do_attributesgets,0,	1,	2,	{PP_FUNCALL, PREC_LEFT,	1}},
 {"attr",	do_attr,	0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"attr<-",	do_attrgets,	0,	1,	3,	{PP_FUNCALL, PREC_LEFT,	1}},
 {"comment",	do_comment,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},

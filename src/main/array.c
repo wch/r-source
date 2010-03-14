@@ -373,6 +373,7 @@ SEXP attribute_hidden do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_len_t len;
 
     checkArity(op, args);
+    check1arg(args, call, "x");
 
     if(isObject(CAR(args)) && DispatchOrEval(call, op, "length", args,
 					     rho, &ans, 0, 1))

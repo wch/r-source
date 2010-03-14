@@ -1,6 +1,6 @@
 % File src/library/base/man/class.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{class}
@@ -68,9 +68,6 @@ oldClass(x) <- value
   no match. If \code{which} is \code{FALSE} then \code{TRUE} is 
   returned by \code{inherits} if any of the names in \code{what} match
   with any \code{class}.
-  
-  These functions with the exception of \code{inherits} are
-  \link{primitive}, so argument names are ignored.
 }
 
 \note{

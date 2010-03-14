@@ -429,6 +429,18 @@ void Rf_checkArityCall(SEXP op, SEXP args, SEXP call)
     }
 }
 
+void attribute_hidden Rf_check1arg(SEXP arg, SEXP call, const char *formal)
+{
+    SEXP tag = TAG(arg);
+    const char *supplied;
+    int ns;
+    if (tag == R_NilValue) return;
+    supplied = CHAR(PRINTNAME(tag)); ns = strlen(supplied);
+    if (ns > strlen(formal) || strncmp(supplied, formal, ns))
+	errorcall(call, "argument name does not match");
+}
+
+
 SEXP nthcdr(SEXP s, int n)
 {
     if (isList(s) || isLanguage(s) || isFrame(s) || TYPEOF(s) == DOTSXP ) {
@@ -1502,6 +1514,7 @@ double R_atof(const char *str)
 }
 
 /* enc2native and enc2utf8, but they are the same in a UTF-8 locale */
+/* primitive */
 SEXP do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, el;
@@ -1509,6 +1522,8 @@ SEXP do_enc2(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean duped = FALSE;
 
     checkArity(op, args);
+    check1arg(args, call, "x");
+
     if (!isString(CAR(args)))
 	errorcall(call, "argumemt is not a character vector");
     ans = CAR(args);

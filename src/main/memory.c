@@ -2175,9 +2175,12 @@ void R_getProcTime(double *data);
 static double gctimes[5], gcstarttimes[5];
 static Rboolean gctime_enabled = FALSE;
 
+/* this is primitive */
 SEXP attribute_hidden do_gctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
+    check1arg(args, call, "on");
+
     if (args == R_NilValue)
 	gctime_enabled = TRUE;
     else

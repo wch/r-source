@@ -1,6 +1,6 @@
 % File src/library/base/man/names.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{names}
@@ -50,9 +50,6 @@ names(x) <- value
 
   A name can be character \code{NA}, but such a name will never be
   matched and is likely to lead to confusion.
-  
-  These functions are \link{primitive}, so argument names are ignored
-  (but this might not be true of their methods).
 }
 \note{
   For vectors, the names are one of the \link{attributes} with

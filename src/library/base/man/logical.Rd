@@ -1,6 +1,6 @@
 % File src/library/base/man/logical.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{logical}
@@ -35,10 +35,6 @@ is.logical(x)
   numerical value is required, with \code{TRUE} being mapped to
   \code{1L}, \code{FALSE} to \code{0L} and \code{NA_LOGICAL_} to
   \code{NA_INTEGER_}.
-
-  \code{as.logical} and \code{is.logical} are \link{primitive}, so
-  positional matching is used and any names of supplied arguments are
-  ignored. This may not be true of methods for \code{is.logical}. 
 }
 \arguments{
   \item{length}{desired length.}
