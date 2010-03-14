@@ -9,8 +9,6 @@
 \alias{.Fortran}
 \alias{.External}
 \alias{.Call}
-\alias{.External.graphics}
-\alias{.Call.graphics}
 \title{Foreign Function Interface}
 \description{
   Functions to make calls to compiled code that has been loaded into \R.
@@ -20,9 +18,6 @@
  .Fortran(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE, ENCODING)
 .External(name, \dots, PACKAGE)
     .Call(name, \dots, PACKAGE)
-
-.External.graphics(name, \dots, PACKAGE)
-    .Call.graphics(name, \dots, PACKAGE)
 }
 \arguments{
   \item{name}{a character string giving the name of a C function or
@@ -50,28 +45,22 @@
   the \code{\dots} list of arguments passed in, but reflecting any
   changes made by the C or Fortran code.
 
-  \code{.External}, \code{.Call}, \code{.External.graphics},
-  and \code{.Call.graphics} return an \R object.
+  \code{.External} and \code{.Call} return an (arbitrary) \R object.
 
   These calls are typically made in conjunction with
   \code{\link{dyn.load}} which links DLLs to \R.
-
-  The \code{.graphics} versions of \code{.Call} and \code{.External}
-  are used when calling code which makes low-level graphics calls.
-  They take additional steps to ensure that the device driver display
-  lists are updated correctly.
 }
 \details{
   The functions \code{.C} and \code{.Fortran} can be used to make calls
   to compiled C and Fortran code.
 
-  \code{.External} and \code{.External.graphics} can be used to call
-  compiled code that uses \R objects in the same way as internal
-  \R functions.
-
-  \code{.Call} and \code{.Call.graphics} can be used to call compiled code
-  which makes use of internal \R objects.  The arguments are passed to
+  \code{.Call} can be used to call compiled code
+  which makes use of internal \R objects, passing the arguments to
   the C code as a sequence of \R objects.
+
+  \code{.External} can be used to call compiled code that uses \R
+  objects in the same way as internal \R functions: this allows for a
+  variable number of arguments.
 
   Specifying \code{ENCODING} overrides any declared encodings (see
   \code{\link{Encoding}}) which are otherwise used to translate to the
