@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2007	    The R Development Core Team.
+ *  Copyright (C) 1998--2010	    The R Development Core Team.
  *  Copyright (C) 2003-4	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1007,6 +1007,7 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 22: return MATH1(tan);
     case 23: return MATH1(acos);
     case 24: return MATH1(asin);
+    case 25: return MATH1(atan);
 
     case 30: return MATH1(cosh);
     case 31: return MATH1(sinh);
@@ -1033,18 +1034,18 @@ SEXP attribute_hidden do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     return s; /* never used; to keep -Wall happy */
 }
 
+/* methods are allowed to have more than one arg */
 SEXP attribute_hidden do_trunc(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s;
     if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
-    checkArity(op, args);
+    checkArity(op, args); /* but is -1 in names.c */
     if (isComplex(CAR(args)))
 	errorcall(call, _("unimplemented complex function"));
     return math1(CAR(args), trunc, call);
 }
 
-/* FIXME: why did this check arity only for the default method? */
 /*
    Note that this is slightly different from the do_math1 set, 
    both for integer/logical inputs and what it dispatches to for complex ones.
@@ -1311,30 +1312,6 @@ SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     return op;			/* never used; to keep -Wall happy */
 }
 
-/* FIXME: this could be merged with do_math1 now
-   and why does it not check arity before dispatch? */
-SEXP attribute_hidden do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP s;
-    int n;
-    if (DispatchGroup("Math", call, op, args, env, &s))
-	return s;
-
-    switch (n = length(args)) {
-    case 1:
-	check1arg(args, call, "x");
-	if (isComplex(CAR(args)))
-	    return complex_math1(call, op, args, env);
-	else
-	    return math1(CAR(args), atan, call);
-    /* prior to 2.3.0, 2 args were allowed,
-       but this was never documented */
-    default:
-	errorcall(call,_("%d arguments passed to 'atan' which requires 1"), n);
-    }
-    return s;			/* never used; to keep -Wall happy */
-}
-
 
 /* The S4 Math2 group, round and signif */
 /* This is a primitive SPECIALSXP with internal argument matching */
@@ -1387,9 +1364,10 @@ SEXP attribute_hidden do_Math2(SEXP call, SEXP op, SEXP args, SEXP env)
     return res;
 }
 
+/* log{2,10} are builtins */
 SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP res, Call, tmp = R_NilValue /* -Wall */;
+    SEXP res, call2, args2, tmp = R_NilValue /* -Wall */;
 
     checkArity(op, args);
     check1arg(args, call, "x");
@@ -1399,12 +1377,18 @@ SEXP attribute_hidden do_log1arg(SEXP call, SEXP op, SEXP args, SEXP env)
     if(PRIMVAL(op) == 10) tmp = ScalarReal(10.0);
     if(PRIMVAL(op) == 2)  tmp = ScalarReal(2.0);
 
-    PROTECT(Call = lang3(install("log"), CAR(args), tmp));
-    res = eval(Call, env);
-    UNPROTECT(1);
+    PROTECT(call2 = lang3(install("log"), CAR(args), tmp));
+    PROTECT(args2 = lang2(CAR(args), tmp));
+    if (! DispatchGroup("Math", call2, op, args2, env, &res)) {
+	if (isComplex(CAR(args)))
+	    res = complex_math2(call2, op, args2, env);
+	else
+	    res = math2(CAR(args), tmp, logbase, call);
+    }
+    UNPROTECT(2);
     return res;
-
 }
+
 
 /* This is a primitive SPECIALSXP with internal argument matching */
 SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)

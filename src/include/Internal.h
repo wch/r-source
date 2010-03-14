@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2009  Robert Gentleman, Ross Ihaka and the
- *                            R Development Core Team
+ *  Copyright (C) 1997--2009  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +21,7 @@
 /* Names of  .Internal(.) and .Primitive(.)  R functions
  *
  * Must all return SEXP because of CCODE in Defn.h.
- * The do_math.(), etc are in ../main/arithmetic.h
+ * do_math*() and do_cmathfuns are in ../main/arithmetic.h
  */
 
 #ifndef R_INTERNAL_H
@@ -111,7 +110,6 @@ SEXP do_assign(SEXP, SEXP, SEXP, SEXP);
 SEXP do_asvector(SEXP, SEXP, SEXP, SEXP);
 SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP do_AT_assign(SEXP call, SEXP op, SEXP args, SEXP env);
-SEXP do_atan(SEXP, SEXP, SEXP, SEXP);
 SEXP do_attach(SEXP,SEXP,SEXP,SEXP);
 SEXP do_attr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_attrgets(SEXP, SEXP, SEXP, SEXP);
@@ -303,7 +301,6 @@ SEXP do_logic2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_logic3(SEXP, SEXP, SEXP, SEXP);
 SEXP do_ls(SEXP, SEXP, SEXP, SEXP);
 SEXP do_l10n_info(SEXP, SEXP, SEXP, SEXP);
-/* R_lsInternal -> ./Rinternals.h */
 SEXP do_machine(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makelazy(SEXP, SEXP, SEXP, SEXP);
 SEXP do_makelist(SEXP, SEXP, SEXP, SEXP);
@@ -463,7 +460,6 @@ SEXP do_subassign_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign2_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassign3(SEXP, SEXP, SEXP, SEXP);
-/* R_subassign3_dflt -> ./Rinternals.h */
 SEXP do_subassigndf(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subassigndf2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subset(SEXP, SEXP, SEXP, SEXP);
@@ -471,7 +467,6 @@ SEXP do_subset_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subset2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subset2_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subset3(SEXP, SEXP, SEXP, SEXP);
-/* R_subset3_dflt -> ./Rinternals.h */
 SEXP do_subsetdf(SEXP, SEXP, SEXP, SEXP);
 SEXP do_subsetdf2(SEXP, SEXP, SEXP, SEXP);
 SEXP do_substitute(SEXP, SEXP, SEXP, SEXP);

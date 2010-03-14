@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000-6	    The R Development Core Team.
+ *  Copyright (C) 2000-10	    The R Development Core Team.
  *  Copyright (C) 2005		    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -892,7 +892,6 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(y = allocVector(CPLXSXP, n));
 
     switch (PRIMVAL(op)) {
-    case 10002: naflag = cmath1(z_atan, COMPLEX(x), COMPLEX(y), n); break;
     case 10003: naflag = cmath1(z_log, COMPLEX(x), COMPLEX(y), n); break;
 
     case 3: naflag = cmath1(z_sqrt, COMPLEX(x), COMPLEX(y), n); break;
@@ -904,6 +903,7 @@ SEXP attribute_hidden complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 22: naflag = cmath1(z_tan, COMPLEX(x), COMPLEX(y), n); break;
     case 23: naflag = cmath1(z_acos, COMPLEX(x), COMPLEX(y), n); break;
     case 24: naflag = cmath1(z_asin, COMPLEX(x), COMPLEX(y), n); break;
+    case 25: naflag = cmath1(z_atan, COMPLEX(x), COMPLEX(y), n); break;
 
     case 30: naflag = cmath1(z_cosh, COMPLEX(x), COMPLEX(y), n); break;
     case 31: naflag = cmath1(z_sinh, COMPLEX(x), COMPLEX(y), n); break;
@@ -985,6 +985,8 @@ SEXP attribute_hidden complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     case 10002:
 	return cmath2(op, CAR(args), CADR(args), z_atan2);
     case 10003:
+    case 2: /* passed from do_log1arg */
+    case 10:
 	return cmath2(op, CAR(args), CADR(args), z_logbase);
     case 10004:
 	return cmath2(op, CAR(args), CADR(args), z_prec);
