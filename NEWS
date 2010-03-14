@@ -14,6 +14,10 @@ SIGNIFICANT USER-VISIBLE CHANGES
     o	Packages must have been installed under R 2.10.0 or later, as
 	the current help system is the only one now supported.
 
+    o	A port to 64-bit Windows is now available as well as binary
+	package repositiories: see the 'R Administration and
+	Installation Manual'.
+
 
 NEW FEATURES
 
