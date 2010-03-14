@@ -2125,7 +2125,7 @@ round      signif      rep        seq.int
 @end example
 
 @noindent
-as well as the following intenal-use-only functions
+as well as the following internal-use-only functions
 
 @example
 @group
