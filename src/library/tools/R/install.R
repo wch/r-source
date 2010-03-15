@@ -831,10 +831,10 @@
 
         ## <NOTE>
         ## Remove stuff we should not have installed in the first place.
-        ## When installing from a source directory under version control, we
-        ## should really exclude the subdirs CVS, .svn (Subversion) and
-        ## .arch-ids (arch).
-        for(d in c("CVS", ".svn", ".arch-ids", ".git")) {
+        ## When installing from a source directory under version
+        ## control, we should really exclude the subdirs CVS, .svn
+        ## (Subversion), .arch-ids (arch), .git and .hg (mercurial).
+        for(d in c("CVS", ".svn", ".arch-ids", ".git", ".hg")) {
             ## FIXME
             if (!WINDOWS)
                 system(paste("find",  shQuote(instdir), "-name", d,

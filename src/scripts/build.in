@@ -173,6 +173,7 @@ foreach my $pkg (@ARGV) {
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.arch-ids$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.bzr$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.git$/);
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.hg$/);
 	## some authors managed to create ..Rcheck as well as pkgname.Rcheck
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /\.Rcheck$/);
 	## some authors have problems with 'Read-and-delete-me'
