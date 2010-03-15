@@ -17,7 +17,7 @@
 rle(x)
 inverse.rle(x, \dots)
 
-\method{print}{rle}(x, digits = getOption("digits"), prefix = "", ...)
+\method{print}{rle}(x, digits = getOption("digits"), prefix = "", \dots)
 }
 \arguments{
   \item{x}{an atomic vector for \code{rle()}; an object of class
@@ -52,9 +52,11 @@ rle(x)
 z <- c(TRUE,TRUE,FALSE,FALSE,TRUE,FALSE,TRUE,TRUE,TRUE)
 rle(z)
 rle(as.character(z))
-print(rle(z), sep = "..| ")
+print(rle(z), prefix = "..| ")
 
+N <- integer(0)
 stopifnot(x == inverse.rle(rle(x)),
+          identical(N, inverse.rle(rle(N))),
           z == inverse.rle(rle(z)))
 }
 \keyword{manip}
