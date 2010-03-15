@@ -1,6 +1,6 @@
 % File src/library/utils/man/windows/memory.size.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{memory.size}
@@ -33,8 +33,9 @@ memory.limit(size = NA)
   overhead).  This cannot exceed 3Gb on 32-bit Windows, and most versions of
   Windows are limited to 2Gb.  The minimum is currently 32Mb.
 
-  If 32-bit \R is run on some 64-bit versions of Windows the maximum
-  value of obtainable memory is just under 4GB.
+  If 32-bit \R is run on most 64-bit versions of Windows the maximum
+  value of obtainable memory is just under 4Gb.  For a 64-bit versions
+  of \R under 64-bit Windows the limit is currently 8Tb.
 
   Memory limits can only be increased.
 }

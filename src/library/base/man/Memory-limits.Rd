@@ -1,6 +1,6 @@
 % File src/library/base/man/Memory-limits.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Memory-limits}
@@ -45,7 +45,7 @@
   The address-space limit is system-specific: 32-bit OSes
   imposes a limit of no more than 4Gb: it is often 3Gb or less.  Running
   32-bit executables on a 64-bit OS will have the similar limits: 64-bit
-  executables will have an essentially infinite  system-specific limit.
+  executables will have an essentially infinite system-specific limit.
 
   See the OS/shell's help on commands such as \code{limit} or
   \code{ulimit} for how to impose limitations on the resources available
@@ -66,8 +66,9 @@ to limit a process to 10 minutes of CPU time and (around) 2GB of memory.
  \url{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx}
  and
  \url{http://msdn.microsoft.com/en-us/library/bb613473\%28VS.85\%29.aspx}.
- Under most 64-bit versions of Windows the limit is 4Gb: for some older
- ones it is 2Gb.
+ Under most 64-bit versions of Windows the limit is for a 32-bit version
+ of \R is 4Gb: for some older ones it is 2Gb.  The limit for a 64-bit
+ version of \R is 8Tb.
  
  Under Windows, \R imposes limits on the total memory allocation
  available to a single session as the OS provides no way to do so: see

@@ -1,6 +1,6 @@
 % File src/library/base/man/Memory.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Memory}
@@ -55,8 +55,8 @@ mem.limits(nsize = NA, vsize = NA)
   the inputs \code{vl} and \code{vu} are rounded up to the next
   multiple of 8.
 
-  Each cons cell occupies 28 bytes on a 32-bit machine, (usually) 56 bytes
-  on a 64-bit machine.
+  Each cons cell occupies 28 bytes on a 32-bit build of \R, (usually) 56
+  bytes on a 64-bit build.
 
   The \option{--*-nsize} options can be used to specify the number of
   cons cells and the \option{--*-vsize} options specify the size of the
@@ -72,11 +72,11 @@ mem.limits(nsize = NA, vsize = NA)
   usage, but never exceeding the limits set by the \option{--max-*}
   options nor decreasing below the initial values.
 
-  The default values are currently minima of 350k cons cells,
-  6Mb of vector heap
-  and no maxima (other than machine resources).  The maxima can be
-  changed during an \R session by calling \code{mem.limits}. (If this is
-  called with the default values, it reports the current settings.)
+  The default values are currently minima of 350k cons cells, 6Mb of
+  vector heap and no maxima (other than machine resources).  The maxima
+  can be changed during an \R session by calling
+  \code{\link{mem.limits}}. (If this is called with the default values,
+  it reports the current settings.)
 
 
   You can find out the current memory consumption (the heap and cons
@@ -89,7 +89,7 @@ mem.limits(nsize = NA, vsize = NA)
   The command-line option \option{--max-ppsize} controls the maximum
   size of the pointer protection stack.  This defaults to 50000, but can
   be increased to allow deep recursion or large and complicated
-  calculations to be done. \emph{Note} that parts of the garbage
+  calculations to be done.  \emph{Note} that parts of the garbage
   collection process goes through the full reserved pointer protection
   stack and hence becomes slower when the size is increased.  Currently
   the maximum value accepted is 500000.

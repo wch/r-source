@@ -1,6 +1,6 @@
 % File src/library/utils/man/object.size.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{object.size}
@@ -38,7 +38,7 @@ object.size(x)
   pointer in a \code{EXTPTRSXP} points to) is not included in the
   calculation.
 
-  Object sizes are larger on 64-bit platforms than 32-bit ones, but will
+  Object sizes are larger on 64-bit builds than 32-bit ones, but will
   very likely be the same on different platforms with the same word
   length and pointer size.
 }

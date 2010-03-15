@@ -1,6 +1,6 @@
 % File src/library/base/man/zMachine.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{.Machine}
@@ -84,8 +84,8 @@
     \code{8}.}
   \item{sizeof.longdouble}{the number of bytes in a C \code{long double}
     type.  Will be zero if there is no such type, otherwise possibly
-    \code{12} (Windows, 32-bit Linux/Solaris) or \code{16} (64-bit
-    Linux/Solaris, Intel Mac OS X).}
+    \code{12} (Windows, 32-bit builds on Linux/Solaris) or \code{16} (64-bit
+    builds on Linux/Solaris, Intel Mac OS X).}
   \item{sizeof.pointer}{the number of bytes in a C \code{SEXP}
     type.  Will be \code{4} on 32-bit builds and \code{8} on 64-bit
     builds of \R.}

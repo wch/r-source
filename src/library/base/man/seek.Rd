@@ -1,6 +1,6 @@
 % File src/library/base/man/seek.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{seek}
@@ -44,7 +44,7 @@ truncate(con, \dots)
   \code{where} is stored as a real but should represent an integer:
   non-integer values are likely to be truncated.  Note that the possible
   values can exceed the largest representable number in an \R
-  \code{integer} on 64-bit OSes, and on some 32-bit OSes.
+  \code{integer} on 64-bit builds, and on some 32-bit builds.
   
   File connections can be open for both writing/appending, in which case
   \R keeps separate positions for reading and writing.  Which \code{seek}
@@ -80,8 +80,8 @@ truncate(con, \dots)
   \code{seek} returns the current position (before any move), as a
   (numeric) byte offset from the origin, if relevant, or \code{0} if
   not.  Note that the position can exceed the largest representable
-  number in an \R \code{integer} on 64-bit OSes, and on some 32-bit
-  OSes.
+  number in an \R \code{integer} on 64-bit builds, and on some 32-bit
+  builds.
 
   \code{truncate} returns \code{NULL}: it stops with an error if
   it fails (or is not implemented).
