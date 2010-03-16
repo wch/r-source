@@ -40,6 +40,9 @@ switch(EXPR, \dots)
   In the case of no match, if there is a unnamed element of \code{\dots}
   its value is returned.  (If there is more than one such argument the
   first one will be used.)
+  
+  The first argument is always taken to be \code{EXPR}: if it is named
+  its name must (partially) match.
 }
 \section{Warning}{
   Before \R 2.11.0 it was necessary to avoid partial matching: an

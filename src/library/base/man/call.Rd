@@ -1,6 +1,6 @@
 % File src/library/base/man/call.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{call}
@@ -28,10 +28,10 @@ as.call(x)
   the name of a function to be called).  Note that although the call is
   unevaluated, the arguments \code{\dots} are evaluated.
 
-  \code{call} is a primitive, so the first argument (named or not) is
+  \code{call} is a primitive, so the first argument is
   taken as \code{name} and the remaining arguments as arguments for the
-  constructed call: \code{call(x="c", 1,3, name="foo")} is a call to
-  \code{c} and not to \code{foo}.
+  constructed call: if the first argument is named the name must
+  partially match \code{name}.
   
   \code{is.call} is used to determine whether \code{x} is a call (i.e.,
   of mode \code{"call"}).

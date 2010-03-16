@@ -66,9 +66,10 @@
   \code{\link{Encoding}}) which are otherwise used to translate to the
   current locale before passing the strings to the compiled code.
   
-  These functions are all \link{primitive}, so \code{name} is always
-  matched to the first argument supplied.  The other named arguments
-  follow \code{\dots} and so cannot be abbreviated.
+  These functions are all \link{primitive}, and \code{name} is always
+  matched to the first argument supplied (which if named must partially
+  match \code{name}).  The other named arguments follow \code{\dots} and
+  so cannot be abbreviated.
   
   For details about how to write code to use with \code{.Call} and
   \code{.External}, see the chapter on \dQuote{System and foreign language

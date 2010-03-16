@@ -2145,24 +2145,24 @@ The multi-argument primitives
 @group
 call       switch
 .C         .Fortran   .Call       .External
-.Call.graphics        .External.graphics
-.subset    .subset2
 @end group
 @end example
 
 @noindent
 intentionally use positional matching, and need to do so to avoid
-partial matching to their first argument.  On the other hand,
+partial matching to their first argument.  They do check that the first
+argument (partially) matched the formal argument name.  On the other
+hand,
 
 @example
 @group
-browser    attr       attr<-      rememtrace substitute  UseMethod
+attr       attr<-     browser     rememtrace substitute  UseMethod
 log        round      signif      rep        seq.int
 @end group
 @end example
 
 @noindent
-manage their own argument matching and so do work in the standard way.
+manage their own argument matching and do work in the standard way.
 
 All the one-argument primitives check that if they are called with a
 named argument that this (partially) matches the name given in the
