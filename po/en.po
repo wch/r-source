@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:18+0000\n"
+"POT-Creation-Date: 2010-03-16 17:40+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -207,7 +207,7 @@ msgstr ""
 #: src/main/sysutils.c:559 src/main/sysutils.c:561 src/main/sysutils.c:566
 #: src/main/sysutils.c:1509 src/main/sysutils.c:1513 src/main/unique.c:806
 #: src/main/unique.c:1085 src/main/unique.c:1145 src/main/unique.c:1152
-#: src/main/util.c:569 src/main/util.c:572 src/main/util.c:1682
+#: src/main/util.c:570 src/main/util.c:573 src/main/util.c:1683
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
 #: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
 #: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
@@ -285,8 +285,8 @@ msgstr ""
 #: src/main/plot3d.c:2532 src/main/plot3d.c:2534 src/main/seq.c:166
 #: src/main/seq.c:264 src/main/seq.c:267 src/main/sort.c:869
 #: src/main/sort.c:969 src/main/source.c:205 src/main/summary.c:1026
-#: src/main/sysutils.c:229 src/main/util.c:882 src/main/util.c:887
-#: src/main/util.c:894 src/main/util.c:897 src/modules/X11/devX11.c:2698
+#: src/main/sysutils.c:229 src/main/util.c:883 src/main/util.c:888
+#: src/main/util.c:895 src/main/util.c:898 src/modules/X11/devX11.c:2698
 #: src/modules/X11/devX11.c:2725 src/modules/X11/devX11.c:2730
 #: src/modules/X11/devX11.c:2735 src/modules/X11/devX11.c:2745
 #: src/modules/X11/devX11.c:2750 src/modules/X11/devX11.c:2754
@@ -723,7 +723,7 @@ msgstr ""
 msgid "could not allocate space for 'name'"
 msgstr ""
 
-#: src/main/Rdynload.c:896 src/main/Rdynload.c:912 src/main/util.c:686
+#: src/main/Rdynload.c:896 src/main/Rdynload.c:912 src/main/util.c:687
 msgid "character argument expected"
 msgstr ""
 
@@ -6836,73 +6836,78 @@ msgid_plural "%d arguments passed to '%s' which requires %d"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/main/util.c:449
+#: src/main/util.c:440
+#, c-format
+msgid "supplied argument name '%s' does not match '%s'"
+msgstr ""
+
+#: src/main/util.c:450
 #, c-format
 msgid "'nthcdr' list shorter than %d"
 msgstr ""
 
-#: src/main/util.c:454
+#: src/main/util.c:455
 msgid "'nthcdr' needs a list to CDR down"
 msgstr ""
 
-#: src/main/util.c:574
+#: src/main/util.c:575
 msgid "'all.x' must be TRUE or FALSE"
 msgstr ""
 
-#: src/main/util.c:576
+#: src/main/util.c:577
 msgid "'all.y' must be TRUE or FALSE"
 msgstr ""
 
-#: src/main/util.c:688
+#: src/main/util.c:689
 msgid "missing value is invalid"
 msgstr ""
 
-#: src/main/util.c:697 src/main/util.c:706
+#: src/main/util.c:698 src/main/util.c:707
 msgid "cannot change working directory"
 msgstr ""
 
-#: src/main/util.c:725 src/main/util.c:759 src/main/util.c:800
-#: src/main/util.c:840 src/main/util.c:877 src/main/util.c:927
-#: src/main/util.c:948
+#: src/main/util.c:726 src/main/util.c:760 src/main/util.c:801
+#: src/main/util.c:841 src/main/util.c:878 src/main/util.c:928
+#: src/main/util.c:949
 msgid "a character vector argument expected"
 msgstr ""
 
-#: src/main/util.c:732 src/main/util.c:767 src/main/util.c:808
-#: src/main/util.c:848
+#: src/main/util.c:733 src/main/util.c:768 src/main/util.c:809
+#: src/main/util.c:849
 msgid "path too long"
 msgstr ""
 
-#: src/main/util.c:891
+#: src/main/util.c:892
 msgid "only the first character of 'quote' will be used"
 msgstr ""
 
-#: src/main/util.c:950
+#: src/main/util.c:951
 msgid "a character vector 'value' expected"
 msgstr ""
 
-#: src/main/util.c:953
+#: src/main/util.c:954
 msgid "'value' must be of positive length"
 msgstr ""
 
-#: src/main/util.c:1079 src/main/util.c:1087
+#: src/main/util.c:1080 src/main/util.c:1088
 #, c-format
 msgid "invalid input '%s' in 'utf8towcs'"
 msgstr ""
 
-#: src/main/util.c:1172
+#: src/main/util.c:1173
 #, c-format
 msgid "invalid multibyte string at '%s'"
 msgstr ""
 
-#: src/main/util.c:1280
+#: src/main/util.c:1281
 msgid "error message truncated to 255 chars"
 msgstr ""
 
-#: src/main/util.c:1293
+#: src/main/util.c:1294
 msgid "warning message truncated to 255 chars"
 msgstr ""
 
-#: src/main/util.c:1748
+#: src/main/util.c:1749
 msgid "ICU is not supported on this build"
 msgstr ""
 

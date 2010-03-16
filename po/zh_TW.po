@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:18+0000\n"
+"POT-Creation-Date: 2010-03-16 17:40+0000\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -211,7 +211,7 @@ msgstr ""
 #: src/main/sysutils.c:559 src/main/sysutils.c:561 src/main/sysutils.c:566
 #: src/main/sysutils.c:1509 src/main/sysutils.c:1513 src/main/unique.c:806
 #: src/main/unique.c:1085 src/main/unique.c:1145 src/main/unique.c:1152
-#: src/main/util.c:569 src/main/util.c:572 src/main/util.c:1682
+#: src/main/util.c:570 src/main/util.c:573 src/main/util.c:1683
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
 #: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
 #: src/modules/internet/internet.c:302 src/modules/lapack/Lapack.c:151
@@ -289,8 +289,8 @@ msgstr "時間截記不正確"
 #: src/main/plot3d.c:2532 src/main/plot3d.c:2534 src/main/seq.c:166
 #: src/main/seq.c:264 src/main/seq.c:267 src/main/sort.c:869
 #: src/main/sort.c:969 src/main/source.c:205 src/main/summary.c:1026
-#: src/main/sysutils.c:229 src/main/util.c:882 src/main/util.c:887
-#: src/main/util.c:894 src/main/util.c:897 src/modules/X11/devX11.c:2698
+#: src/main/sysutils.c:229 src/main/util.c:883 src/main/util.c:888
+#: src/main/util.c:895 src/main/util.c:898 src/modules/X11/devX11.c:2698
 #: src/modules/X11/devX11.c:2725 src/modules/X11/devX11.c:2730
 #: src/modules/X11/devX11.c:2735 src/modules/X11/devX11.c:2745
 #: src/modules/X11/devX11.c:2750 src/modules/X11/devX11.c:2754
@@ -733,7 +733,7 @@ msgstr "DLLname '%s' 太長"
 msgid "could not allocate space for 'name'"
 msgstr "無法為 'name' 指派空間"
 
-#: src/main/Rdynload.c:896 src/main/Rdynload.c:912 src/main/util.c:686
+#: src/main/Rdynload.c:896 src/main/Rdynload.c:912 src/main/util.c:687
 msgid "character argument expected"
 msgstr "需要字元引數"
 
@@ -7019,77 +7019,82 @@ msgid "%d argument passed to '%s' which requires %d"
 msgid_plural "%d arguments passed to '%s' which requires %d"
 msgstr[0] "給了 'log'%d 個引數，但它最多只能用兩個引數"
 
-#: src/main/util.c:449
+#: src/main/util.c:440
+#, c-format
+msgid "supplied argument name '%s' does not match '%s'"
+msgstr ""
+
+#: src/main/util.c:450
 #, fuzzy, c-format
 msgid "'nthcdr' list shorter than %d"
 msgstr "\"nthcdr\" 串列比 %d 要短"
 
-#: src/main/util.c:454
+#: src/main/util.c:455
 #, fuzzy
 msgid "'nthcdr' needs a list to CDR down"
 msgstr "\"nthcdr\" 需要 CDR 串列"
 
-#: src/main/util.c:574
+#: src/main/util.c:575
 msgid "'all.x' must be TRUE or FALSE"
 msgstr "'all.x' 必須是 TRUE 或 FALSE"
 
-#: src/main/util.c:576
+#: src/main/util.c:577
 msgid "'all.y' must be TRUE or FALSE"
 msgstr "'all.y' 必須是 TRUE 或 FALSE"
 
-#: src/main/util.c:688
+#: src/main/util.c:689
 #, fuzzy
 msgid "missing value is invalid"
 msgstr "參數中不能有缺值"
 
-#: src/main/util.c:697 src/main/util.c:706
+#: src/main/util.c:698 src/main/util.c:707
 msgid "cannot change working directory"
 msgstr "無法變更工作目錄"
 
-#: src/main/util.c:725 src/main/util.c:759 src/main/util.c:800
-#: src/main/util.c:840 src/main/util.c:877 src/main/util.c:927
-#: src/main/util.c:948
+#: src/main/util.c:726 src/main/util.c:760 src/main/util.c:801
+#: src/main/util.c:841 src/main/util.c:878 src/main/util.c:928
+#: src/main/util.c:949
 msgid "a character vector argument expected"
 msgstr "需要字元向量引數"
 
-#: src/main/util.c:732 src/main/util.c:767 src/main/util.c:808
-#: src/main/util.c:848
+#: src/main/util.c:733 src/main/util.c:768 src/main/util.c:809
+#: src/main/util.c:849
 msgid "path too long"
 msgstr "路徑太長"
 
-#: src/main/util.c:891
+#: src/main/util.c:892
 msgid "only the first character of 'quote' will be used"
 msgstr "只用了 'quote' 的第一個字元"
 
-#: src/main/util.c:950
+#: src/main/util.c:951
 #, fuzzy
 msgid "a character vector 'value' expected"
 msgstr "需要字元向量引數"
 
-#: src/main/util.c:953
+#: src/main/util.c:954
 #, fuzzy
 msgid "'value' must be of positive length"
 msgstr "引數的長度必須是正數"
 
-#: src/main/util.c:1079 src/main/util.c:1087
+#: src/main/util.c:1080 src/main/util.c:1088
 #, fuzzy, c-format
 msgid "invalid input '%s' in 'utf8towcs'"
 msgstr "Rmbstowcs 中的輸入無效"
 
-#: src/main/util.c:1172
+#: src/main/util.c:1173
 #, fuzzy, c-format
 msgid "invalid multibyte string at '%s'"
 msgstr "多位元組字串 %d 不正確"
 
-#: src/main/util.c:1280
+#: src/main/util.c:1281
 msgid "error message truncated to 255 chars"
 msgstr "錯誤訊息截短到 255 個位元組"
 
-#: src/main/util.c:1293
+#: src/main/util.c:1294
 msgid "warning message truncated to 255 chars"
 msgstr "警告訊息截短到 255 個位元組"
 
-#: src/main/util.c:1748
+#: src/main/util.c:1749
 #, fuzzy
 msgid "ICU is not supported on this build"
 msgstr "本平台不支援 nsl()"
