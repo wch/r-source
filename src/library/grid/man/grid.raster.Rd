@@ -82,7 +82,7 @@ rasterGrob(image,
   Paul Murrell
 }
 \seealso{
-\code{\link{raster}}.
+\code{\link{as.raster}}.
 }
 \examples{
 redGradient <- matrix(hcl(0, 80, seq(50, 80, 10)),

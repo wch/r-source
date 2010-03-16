@@ -14,8 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-raster <- function (image, xleft, ybottom, xright, ytop,
-                    angle = 0, interpolate = TRUE, ...)
+rasterImage <- function (image, xleft, ybottom, xright, ytop,
+                         angle = 0, interpolate = TRUE, ...)
 {
     .Internal(raster(as.raster(image),
                      as.double(xleft), as.double(ybottom),
