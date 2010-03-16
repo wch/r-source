@@ -578,8 +578,9 @@ BUG FIXES
 
     o	read.fwf() works again when 'file' is a connection.
 
-    o	R now works correctly with filesystem paths longer than 255
-	characters on platforms that support it (PATH_MAX; PR#14228).
+    o	Starting R in a directory whose name is longer than 255 bytes
+	finds the startup files on platforms that support it
+	(PATH_MAX; PR#14228).
 
 
 
