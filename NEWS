@@ -578,7 +578,7 @@ BUG FIXES
 
     o	read.fwf() works again when 'file' is a connection.
 
-    o	Startup files will now be found if there paths exceed 255 bytes.
+    o	Startup files will now be found if their paths exceed 255 bytes.
 	(PR#14228)
 
 
