@@ -567,7 +567,7 @@ BUG FIXES
         instead) on systems with HAVE_GETRUSAGE (PR#14210)
 
     o	Changing both line texture and line cap (end) resulted in the
-	latter to be ommitted form the PDF code.  In additon, line cap
+	latter to be ommitted form the PDF code.  In addition, line cap
 	(end) and join are now set explicitly in PDF output to ensure
 	correct defaults.
 
@@ -578,9 +578,8 @@ BUG FIXES
 
     o	read.fwf() works again when 'file' is a connection.
 
-    o	Starting R in a directory whose name is longer than 255 bytes
-	finds the startup files on platforms that support it
-	(PATH_MAX; PR#14228).
+    o	Startup files will now be found if there paths exceed 255 bytes.
+	(PR#14228)
 
 
 
