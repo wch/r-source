@@ -449,7 +449,8 @@ BUG FIXES
 	interactive(), nargs() and proc.time(), did not check that
 	they were called with the correct number of arguments.
 
-
+    o	A race condition in list.files() has been fixed to prevent
+	code from writing beyond an allocated vector.
 
 
 	**************************************************

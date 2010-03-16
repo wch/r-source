@@ -873,7 +873,7 @@ static SEXP filename(const char *dir, const char *file)
 
 static void count_files(const char *dnp, int *count,
 			Rboolean allfiles, Rboolean recursive,
-			int pattern, regex_t reg)
+			const regex_t *reg)
 {
     DIR *dir;
     struct dirent *de;
@@ -908,13 +908,12 @@ static void count_files(const char *dnp, int *count,
 #endif
 		    if ((sb.st_mode & S_IFDIR) > 0) {
 			if (strcmp(de->d_name, ".") && strcmp(de->d_name, ".."))
-				count_files(p, count, allfiles, recursive,
-					    pattern, reg);
+				count_files(p, count, allfiles, recursive, reg);
 			continue;
 		    }
 		}
-		if (pattern) {
-		    if (tre_regexec(&reg, de->d_name, 0, NULL, 0) == 0) (*count)++;
+		if (reg) {
+		    if (tre_regexec(reg, de->d_name, 0, NULL, 0) == 0) (*count)++;
 		} else (*count)++;
 	    }
 	}
@@ -924,8 +923,9 @@ static void count_files(const char *dnp, int *count,
 
 static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 		       Rboolean allfiles, Rboolean recursive,
-		       int pattern, regex_t reg)
+                       const regex_t *reg)
 {
+    int ans_len = length(ans);
     DIR *dir;
     struct dirent *de;
     char p[PATH_MAX], stem2[PATH_MAX];
@@ -971,13 +971,15 @@ static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 			    } else
 				strcpy(stem2, de->d_name);
 			    list_files(p, stem2, count, ans, allfiles,
-				       recursive, pattern, reg);
+				       recursive, reg);
 			}
 			continue;
 		    }
 		}
-		if (pattern) {
-		    if (tre_regexec(&reg, de->d_name, 0, NULL, 0) == 0)
+                /* number of files could have changed since call to count_files */
+                if (*count >= ans_len) break;
+		if (reg) {
+		    if (tre_regexec(reg, de->d_name, 0, NULL, 0) == 0)
 			SET_STRING_ELT(ans, (*count)++,
 				       filename(stem, de->d_name));
 		} else
@@ -1021,7 +1023,7 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < ndir ; i++) {
 	if (STRING_ELT(d, i) == NA_STRING) continue;
 	dnp = R_ExpandFileName(translateChar(STRING_ELT(d, i)));
-	count_files(dnp, &count, allfiles, recursive, pattern, reg);
+	count_files(dnp, &count, allfiles, recursive, pattern ? &reg : NULL);
     }
     PROTECT(ans = allocVector(STRSXP, count));
     count = 0;
@@ -1029,7 +1031,7 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (STRING_ELT(d, i) == NA_STRING) continue;
 	dnp = R_ExpandFileName(translateChar(STRING_ELT(d, i)));
 	list_files(dnp, fullnames ? dnp : NULL, &count, ans, allfiles,
-		   recursive, pattern, reg);
+		   recursive, pattern ? &reg : NULL);
     }
     if (pattern)
 	tre_regfree(&reg);
