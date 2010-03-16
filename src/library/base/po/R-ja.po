@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-14 12:34\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
 "PO-Revision-Date: 2009-10-07 19:17+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -660,21 +660,6 @@ msgstr " リンクすべきファイルがありません "
 msgid "no files/directory to link to"
 msgstr " リンクすべきファイルもしくはディレクトリがありません "
 
-msgid "'x' must have length 1"
-msgstr " 'x' は長さ 1 でなければなりません "
-
-msgid "invalid digits"
-msgstr " 無効な桁数です "
-
-msgid "'x' cannot be coerced to 'octmode'"
-msgstr " 'x' は 'octmode' に強制変換できません "
-
-msgid "'x' must be of length 1"
-msgstr " 'x' は長さ 1 でなければなりません "
-
-msgid "'x' cannot be coerced to hexmode"
-msgstr " 'x' は hexmode に強制変換できません "
-
 msgid "'package' must be of length 1"
 msgstr " 'package' は長さ 1 でなければなりません "
 
@@ -783,20 +768,26 @@ msgstr " パッケージ '%s' は %s に対して造られました "
 msgid "package '%s' is not installed for 'arch=%s'"
 msgstr " パッケージ '%s' は 'arch=%s' に対してインストールされていません "
 
+msgid ""
+"package '%s' has a license that you need to accept in an interactive session"
+msgstr ""
+
+msgid "Package '%s' has a license that you need to accept after viewing"
+msgstr ""
+
+msgid ""
+"Package '%s' has a license that you need to accept:\n"
+"according to the DESCRIPTION file it is"
+msgstr ""
+
+msgid "License"
+msgstr ""
+
+msgid "License for package '%s' not accepted"
+msgstr ""
+
 msgid "Attaching package: '%s'"
 msgstr " 次のパッケージを付け加えます: '%s' "
-
-msgid "The following object(s) are masked"
-msgstr " 次のオブジェクトは "
-
-msgid "_by_"
-msgstr " 以下により "
-
-msgid "from"
-msgstr " 以下からマスクされています "
-
-msgid ":"
-msgstr "  :  "
 
 msgid "invalid package name"
 msgstr " 不当なパッケージ名です "
@@ -1207,6 +1198,12 @@ msgstr " '%s' はまだ実装されていません "
 msgid "argument '%s' is not used (yet)"
 msgstr " 引数 '%s' は(まだ)使用されていません "
 
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr " 'x' は 'octmode' に強制変換できません "
+
+msgid "'x' cannot be coerced to hexmode"
+msgstr " 'x' は hexmode に強制変換できません "
+
 msgid "no arguments"
 msgstr " 引数がありません "
 
@@ -1503,8 +1500,8 @@ msgstr " '%s'はnumeric_version オブジェクトに対しては定義されて
 msgid "not defined for numeric_version objects"
 msgstr " numeric_version オブジェクトに対しては定義されていません "
 
-msgid "argument to 'which' is not logical"
-msgstr " 'which' への引数は論理値ではありません "
+msgid "<0 elements>"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr " 無効な 'digits' です "
@@ -1516,8 +1513,32 @@ msgstr ""
 " 引数 'show.output.on.console', 'minimized' そして 'invisible' は Windows 専"
 "用です "
 
+#, fuzzy
+msgid "'intern' must be TRUE or FALSE"
+msgstr " 'fromLast' は 'TRUE' か 'FALSE' でなければなりません "
+
+#, fuzzy
+msgid "'ignore.stderr' must be TRUE or FALSE"
+msgstr " 'fromLast' は 'TRUE' か 'FALSE' でなければなりません "
+
+#, fuzzy
+msgid "'wait' must be TRUE or FALSE"
+msgstr " 'fromLast' は 'TRUE' か 'FALSE' でなければなりません "
+
 msgid "'input' must be a character vector or 'NULL'"
 msgstr " 'input' は文字ベクトルまたは NULL でなければなりません "
+
+#, fuzzy
+msgid "'show.output.on.console' must be TRUE or FALSE"
+msgstr " 'fromLast' は 'TRUE' か 'FALSE' でなければなりません "
+
+#, fuzzy
+msgid "'minimized' must be TRUE or FALSE"
+msgstr " 'fromLast' は 'TRUE' か 'FALSE' でなければなりません "
+
+#, fuzzy
+msgid "'invisible' must be TRUE or FALSE"
+msgstr " 'fromLast' は 'TRUE' か 'FALSE' でなければなりません "
 
 msgid "'%s' could not be run"
 msgstr " '%s' を実行できませんでした "
@@ -1602,6 +1623,30 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "'x' must have length 1"
+#~ msgstr " 'x' は長さ 1 でなければなりません "
+
+#~ msgid "invalid digits"
+#~ msgstr " 無効な桁数です "
+
+#~ msgid "'x' must be of length 1"
+#~ msgstr " 'x' は長さ 1 でなければなりません "
+
+#~ msgid "The following object(s) are masked"
+#~ msgstr " 次のオブジェクトは "
+
+#~ msgid "_by_"
+#~ msgstr " 以下により "
+
+#~ msgid "from"
+#~ msgstr " 以下からマスクされています "
+
+#~ msgid ":"
+#~ msgstr "  :  "
+
+#~ msgid "argument to 'which' is not logical"
+#~ msgstr " 'which' への引数は論理値ではありません "
 
 #~ msgid "is not on the search path"
 #~ msgstr " 検索パス上にありません "

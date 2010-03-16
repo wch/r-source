@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-10 18:16\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2009-10-07 14:33+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -146,8 +146,15 @@ msgstr "keine Zeile für die Aggragation"
 msgid "'by' must be a list"
 msgstr "'by' muss eine Liste sein"
 
-msgid "'FUN' must always return a scalar"
-msgstr "'FUN' muss immer einen Skalar zurückgeben"
+#, fuzzy
+msgid "arguments must have same length"
+msgstr "Argumente müssen dieselbe Länge haben"
+
+msgid "'formula' missing or incorrect"
+msgstr "'formula' fehlt oder ist falsch"
+
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula' benötigt sowohl eine linke als auch eine rechte Seite"
 
 msgid "cannot change frequency from %g to %g"
 msgstr "kann die Frequenz nicht von %g nach %g ändern"
@@ -198,9 +205,6 @@ msgstr "kann bei Bindungen keinen exakten p-Wert Berechnen"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "Kann kein exaktes Konfidenzinterval bei Bindungen berechnen"
-
-msgid "'formula' missing or incorrect"
-msgstr "'formula' fehlt oder ist falsch"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "Gruppierender Faktor muss genau zwei Stufen haben"
@@ -292,15 +296,6 @@ msgstr "MLE nur für univariate Zeitreihen implementiert"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max' muss >= 0 sein"
-
-msgid "model order:"
-msgstr "Modellordnung:"
-
-msgid "singularities in the computation of the projection matrix"
-msgstr "singlularitäten in der Berechnung der Projektionsmatrix"
-
-msgid "results are only valid up to model order"
-msgstr "Resultate nur valide bis zur Modellordnung"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order' muss ein nicht-negativer numerischer Vektor der Länge 3 sein"
@@ -537,6 +532,9 @@ msgstr "Basisgruppenanzahl liegt außerhalb des Bereichs"
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "'x' und 'y' oder ein matrixähnliches 'x' müssen angegeben werden"
 
+msgid "'y' must be numeric"
+msgstr "'y' muss numerisch sein"
+
 msgid "'x' is empty"
 msgstr "'x' ist leer"
 
@@ -551,6 +549,14 @@ msgstr "'V' ist keine quadratische, numerische Matrix"
 
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
 msgstr "Einträge 0 oder NA in diag(.): nicht-endliches Ergebniss zweifelhaft"
+
+#, fuzzy
+msgid "'x' must be a numeric vector"
+msgstr "'y' muss ein numerischer Vektor sein"
+
+#, fuzzy
+msgid "'y' must be a numeric vector"
+msgstr "'y' muss ein numerischer Vektor sein"
 
 msgid "not enough finite observations"
 msgstr "zu wenig endliche Beobachtungen"
@@ -954,9 +960,6 @@ msgstr "falsche Spezifikation für 'row.vars'"
 
 msgid "incorrect specification for 'col.vars'"
 msgstr "falsche Spezifikation für 'col.vars'"
-
-msgid "'formula' must have both left and right hand sides"
-msgstr "'formula' benötigt sowohl eine linke als auch eine rechte Seite"
 
 msgid "interactions are not allowed"
 msgstr "Wechselwirkungen sind nicht erlaubt"
@@ -2279,9 +2282,6 @@ msgstr "'ratio' muss eine einzelne positive Zahl sein"
 msgid "'x' and 'w' must have the same length"
 msgstr "'x' und 'w' müssen die selbe Länge haben"
 
-msgid "'y' must be numeric"
-msgstr "'y' muss numerisch sein"
-
 msgid "not enough (finite) 'x' observations"
 msgstr "nicht genug (endliche) 'x' Beobachtungen"
 
@@ -2375,6 +2375,18 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "Parameter %s kommt in der Modellgleichung nicht vor"
 msgstr[1] "Parameter %s kommen in der Modellgleichung nicht vor"
+
+#~ msgid "'FUN' must always return a scalar"
+#~ msgstr "'FUN' muss immer einen Skalar zurückgeben"
+
+#~ msgid "model order:"
+#~ msgstr "Modellordnung:"
+
+#~ msgid "singularities in the computation of the projection matrix"
+#~ msgstr "singlularitäten in der Berechnung der Projektionsmatrix"
+
+#~ msgid "results are only valid up to model order"
+#~ msgstr "Resultate nur valide bis zur Modellordnung"
 
 #~ msgid "invalid 'method': %s"
 #~ msgstr "unzulässige 'method': %s"

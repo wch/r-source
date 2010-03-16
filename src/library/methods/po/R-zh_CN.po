@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-10 18:16\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -262,6 +262,9 @@ msgstr "找不到\"%s\"同屬函数"
 msgid "No method found for function \"%s\" and signature %s"
 msgstr "找不到适用于函数'%s'和标记%s的方法"
 
+msgid "Warning:  using defunct methods list search"
+msgstr ""
+
 msgid ""
 "apparent inconsistency in the methods for function \"%s\"; argument \"%s\" "
 "in the signature corresponds to \"%s\" in the methods list object"
@@ -273,7 +276,9 @@ msgid ""
 msgstr ""
 "函数'%s'和标记%s没有设定S4方法；如果你要用S3方法的话，请用getS3method()"
 
-msgid "no method defined for function \"%s\" and signature %s"
+#, fuzzy
+msgid ""
+"no method defined in methods list object for function \"%s\" and signature %s"
 msgstr "函数'%s'和标记%s没有设定方法"
 
 msgid "'file' must be a character string or a connection"
@@ -806,6 +811,11 @@ msgstr "为'%s'找不到同屬函数"
 
 msgid "Empty function name in .getGeneric"
 msgstr ".getGeneric里不能有空的函数名字"
+
+msgid ""
+"Methods list objects are not maintained in this version of R:  request for "
+"function %s may return incorrect information"
+msgstr ""
 
 msgid ""
 "Package \"%s\" seems to have out-of-date methods; need to reinstall from "

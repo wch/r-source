@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:05\n"
-"PO-Revision-Date: 2009-12-06 12:05\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
+"PO-Revision-Date: 2010-03-16 09:20\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -653,6 +653,9 @@ msgstr ""
 msgid "no object named '%s' to show"
 msgstr "no object named ‘%s’ to show"
 
+msgid "must have max > min"
+msgstr "must have max > min"
+
 msgid "'pb' is not from class \"txtProgressBar\""
 msgstr "‘pb’ is not from class “txtProgressBar”"
 
@@ -849,9 +852,6 @@ msgstr "no events were recorded"
 msgid "'compressed' must be logical or character"
 msgstr "‘compressed’ must be logical or character"
 
-msgid "untar: using cmd ="
-msgstr "untar: using cmd ="
-
 msgid "invalid octal digit"
 msgstr "invalid octal digit"
 
@@ -872,9 +872,6 @@ msgstr "file ‘%s’ not found"
 
 msgid "file path is too long"
 msgstr "file path is too long"
-
-msgid "storing paths of more than 100 bytes is not portable:"
-msgstr "storing paths of more than 100 bytes is not portable:"
 
 msgid "linked path is too long"
 msgstr "linked path is too long"
@@ -958,11 +955,11 @@ msgid "help.start() requires the HTTP server to be running"
 msgstr "help.start() requires the HTTP server to be running"
 
 msgid ""
-"If '%s' is already running, it is *not* restarted, and you must switch to "
-"its window."
+"If the browser launched by '%s' is already running, it is *not* restarted, "
+"and you must switch to its window."
 msgstr ""
-"If ‘%s’ is already running, it is *not* restarted, and you must switch to "
-"its window."
+"If the browser launched by ‘%s’ is already running, it is *not* restarted, "
+"and you must switch to its window."
 
 msgid "Otherwise, be patient ..."
 msgstr "Otherwise, be patient ..."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-17 11:57\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2009-10-10 15:29+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -357,6 +357,13 @@ msgstr "Fichiers Rd avec nom dupliqué '%s' :"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Fichiers Rd avec alias '%s' dupliqué :"
 
+#, fuzzy
+msgid "Argument items with no description in Rd object '%s':"
+msgstr "Noms d'arguments dans le code mais pas dans la doc :"
+
+msgid "Auto-generated content requiring editing in Rd object '%s':"
+msgstr ""
+
 msgid "Generics g in env ="
 msgstr "Les génériques g dans env ="
 
@@ -483,7 +490,8 @@ msgstr "les fichiers dans '%s' sont manquants dans le champ '%s' :"
 msgid "unable to create '%s'"
 msgstr "impossible de créer '%s'"
 
-msgid "unable to re-encode '%s'"
+#, fuzzy
+msgid "unable to re-encode '%s' line(s) %s"
 msgstr "impossible de réencoder '%s'"
 
 msgid "unable to copy INDEX to '%s'"
@@ -618,6 +626,9 @@ msgid ""
 msgstr ""
 "'cleanup' existe mais n'est pas exécutable -- voyez le manuel d'installation "
 "et d'administration de R"
+
+msgid "installing to"
+msgstr ""
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "

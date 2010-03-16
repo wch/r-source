@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-17 11:57\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -334,6 +334,13 @@ msgstr "有重复名字'%s'的Rd文件:"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd文件不能有重复的别名'%s':"
 
+#, fuzzy
+msgid "Argument items with no description in Rd object '%s':"
+msgstr "变元名字在编码里有记录但不在文件里:"
+
+msgid "Auto-generated content requiring editing in Rd object '%s':"
+msgstr ""
+
 msgid "Generics g in env ="
 msgstr "同属函数g在env="
 
@@ -453,7 +460,8 @@ msgstr "'%2$s' 域里没有'%1$s'里的文件:"
 msgid "unable to create '%s'"
 msgstr "无法建立'%s'"
 
-msgid "unable to re-encode '%s'"
+#, fuzzy
+msgid "unable to re-encode '%s' line(s) %s"
 msgstr "无法重新编码'%s'"
 
 msgid "unable to copy INDEX to '%s'"
@@ -584,6 +592,9 @@ msgid ""
 "'cleanup' exists but is not executable -- see the 'R Installation and "
 "Adminstration Manual'"
 msgstr "有'cleanup'但它不是执行文件--请参考'R安装和管理手册'"
+
+msgid "installing to"
+msgstr ""
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "

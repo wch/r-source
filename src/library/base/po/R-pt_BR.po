@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-14 12:34\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -680,26 +680,6 @@ msgstr "nenhum arquivo para onde fazer a vinculação"
 msgid "no files/directory to link to"
 msgstr "nenhum arquivo/diretório para onde fazer a vinculação"
 
-#, fuzzy
-msgid "'x' must have length 1"
-msgstr "'input' deve ter comprimento 1"
-
-#, fuzzy
-msgid "invalid digits"
-msgstr "'digits' inválido"
-
-#, fuzzy
-msgid "'x' cannot be coerced to 'octmode'"
-msgstr "não é possível fazer coerção para tabela"
-
-#, fuzzy
-msgid "'x' must be of length 1"
-msgstr "'to' deve ter comprimento 1"
-
-#, fuzzy
-msgid "'x' cannot be coerced to hexmode"
-msgstr "não é possível fazer coerção para tabela"
-
 msgid "'package' must be of length 1"
 msgstr "'package' deve ter comprimento 1"
 
@@ -809,20 +789,26 @@ msgstr "pacote '%s' foi compilado para %s"
 msgid "package '%s' is not installed for 'arch=%s'"
 msgstr "pacote '%s' não foi instalado corretamente"
 
+msgid ""
+"package '%s' has a license that you need to accept in an interactive session"
+msgstr ""
+
+msgid "Package '%s' has a license that you need to accept after viewing"
+msgstr ""
+
+msgid ""
+"Package '%s' has a license that you need to accept:\n"
+"according to the DESCRIPTION file it is"
+msgstr ""
+
+msgid "License"
+msgstr ""
+
+msgid "License for package '%s' not accepted"
+msgstr ""
+
 msgid "Attaching package: '%s'"
 msgstr "Anexando pacote: '%s'"
-
-msgid "The following object(s) are masked"
-msgstr ""
-
-msgid "_by_"
-msgstr ""
-
-msgid "from"
-msgstr ""
-
-msgid ":"
-msgstr ""
 
 #, fuzzy
 msgid "invalid package name"
@@ -1227,6 +1213,14 @@ msgid "argument '%s' is not used (yet)"
 msgstr "argumento '%s' (ainda) não é usado"
 
 #, fuzzy
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "não é possível fazer coerção para tabela"
+
+#, fuzzy
+msgid "'x' cannot be coerced to hexmode"
+msgstr "não é possível fazer coerção para tabela"
+
+#, fuzzy
 msgid "no arguments"
 msgstr "argumento errado"
 
@@ -1524,8 +1518,8 @@ msgstr "não definido para objetos package_version"
 msgid "not defined for numeric_version objects"
 msgstr "não definido para objetos package_version"
 
-msgid "argument to 'which' is not logical"
-msgstr "argumento para 'which' não é lógico"
+msgid "<0 elements>"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "'digits' inválido"
@@ -1535,9 +1529,27 @@ msgid ""
 "Windows only"
 msgstr ""
 
+msgid "'intern' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'ignore.stderr' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'wait' must be TRUE or FALSE"
+msgstr ""
+
 #, fuzzy
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' e 'target' devem ser vetores de caracteres"
+
+msgid "'show.output.on.console' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'minimized' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'invisible' must be TRUE or FALSE"
+msgstr ""
 
 #, fuzzy
 msgid "'%s' could not be run"
@@ -1636,6 +1648,21 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#, fuzzy
+#~ msgid "'x' must have length 1"
+#~ msgstr "'input' deve ter comprimento 1"
+
+#, fuzzy
+#~ msgid "invalid digits"
+#~ msgstr "'digits' inválido"
+
+#, fuzzy
+#~ msgid "'x' must be of length 1"
+#~ msgstr "'to' deve ter comprimento 1"
+
+#~ msgid "argument to 'which' is not logical"
+#~ msgstr "argumento para 'which' não é lógico"
 
 #, fuzzy
 #~ msgid "is not on the search path"

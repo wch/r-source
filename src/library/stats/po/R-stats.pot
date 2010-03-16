@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-10 18:16\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,7 +134,13 @@ msgstr ""
 msgid "'by' must be a list"
 msgstr ""
 
-msgid "'FUN' must always return a scalar"
+msgid "arguments must have same length"
+msgstr ""
+
+msgid "'formula' missing or incorrect"
+msgstr ""
+
+msgid "'formula' must have both left and right hand sides"
 msgstr ""
 
 msgid "cannot change frequency from %g to %g"
@@ -183,9 +189,6 @@ msgid "cannot compute exact p-value with ties"
 msgstr ""
 
 msgid "cannot compute exact confidence intervals with ties"
-msgstr ""
-
-msgid "'formula' missing or incorrect"
 msgstr ""
 
 msgid "grouping factor must have exactly 2 levels"
@@ -273,15 +276,6 @@ msgid "MLE only implemented for univariate series"
 msgstr ""
 
 msgid "'order.max' must be >= 0"
-msgstr ""
-
-msgid "model order:"
-msgstr ""
-
-msgid "singularities in the computation of the projection matrix"
-msgstr ""
-
-msgid "results are only valid up to model order"
 msgstr ""
 
 msgid "'order' must be a non-negative numeric vector of length 3"
@@ -512,6 +506,9 @@ msgstr ""
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr ""
 
+msgid "'y' must be numeric"
+msgstr ""
+
 msgid "'x' is empty"
 msgstr ""
 
@@ -525,6 +522,12 @@ msgid "'V' is not a square numeric matrix"
 msgstr ""
 
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
+msgstr ""
+
+msgid "'x' must be a numeric vector"
+msgstr ""
+
+msgid "'y' must be a numeric vector"
 msgstr ""
 
 msgid "not enough finite observations"
@@ -900,9 +903,6 @@ msgid "incorrect specification for 'row.vars'"
 msgstr ""
 
 msgid "incorrect specification for 'col.vars'"
-msgstr ""
-
-msgid "'formula' must have both left and right hand sides"
 msgstr ""
 
 msgid "interactions are not allowed"
@@ -2148,9 +2148,6 @@ msgid "'ratio' must be a single positive number"
 msgstr ""
 
 msgid "'x' and 'w' must have the same length"
-msgstr ""
-
-msgid "'y' must be numeric"
 msgstr ""
 
 msgid "not enough (finite) 'x' observations"

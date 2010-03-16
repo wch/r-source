@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-10 18:16\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -280,6 +280,9 @@ msgstr "'%s'를 위해서 검색되어진 generic 함수가 아닙니다"
 msgid "No method found for function \"%s\" and signature %s"
 msgstr "함수'%s' 그리고 기호 %s 때문에 검색되는 메소드가 아닙니다"
 
+msgid "Warning:  using defunct methods list search"
+msgstr ""
+
 #, fuzzy
 msgid ""
 "apparent inconsistency in the methods for function \"%s\"; argument \"%s\" "
@@ -299,7 +302,8 @@ msgstr ""
 "고려해야합니다"
 
 #, fuzzy
-msgid "no method defined for function \"%s\" and signature %s"
+msgid ""
+"no method defined in methods list object for function \"%s\" and signature %s"
 msgstr "함수 '%s'와 기호 %s를 위해서 정해지는 메소드가 아닙니다"
 
 msgid "'file' must be a character string or a connection"
@@ -923,6 +927,11 @@ msgid "no generic function found for \"%s\""
 msgstr "'%s'를 위해서 검색되어진 generic 함수가 아닙니다"
 
 msgid "Empty function name in .getGeneric"
+msgstr ""
+
+msgid ""
+"Methods list objects are not maintained in this version of R:  request for "
+"function %s may return incorrect information"
 msgstr ""
 
 msgid ""

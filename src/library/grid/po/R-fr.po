@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:04\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
 "PO-Revision-Date: 2009-10-10 13:39+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -445,6 +445,10 @@ msgstr "Indice hors plage (indiçage de liste d'unités)"
 
 msgid "It is invalid to combine unit objects with other types"
 msgstr "Il n'est pas permi de combiner des objets unités avec d'autres types"
+
+#, fuzzy
+msgid "Invalid unit object"
+msgstr "'theta' incorrect"
 
 msgid ""
 "unit.rep has been deprecated in favour of a unit method for the generic rep "

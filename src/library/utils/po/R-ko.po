@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:05\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -674,6 +674,9 @@ msgstr ""
 "'%s' 라는\n"
 " 이름의 오브젝트가 없습니다"
 
+msgid "must have max > min"
+msgstr ""
+
 msgid "'pb' is not from class \"txtProgressBar\""
 msgstr ""
 
@@ -880,9 +883,6 @@ msgstr "events는 기록되지 않았습니다"
 msgid "'compressed' must be logical or character"
 msgstr "'list'는 R를 오브젝트라고 명명하는 문자 벡터이어야만 합니다"
 
-msgid "untar: using cmd ="
-msgstr ""
-
 #, fuzzy
 msgid "invalid octal digit"
 msgstr "무효의 format입니다"
@@ -905,9 +905,6 @@ msgid "file '%s' not found"
 msgstr "검색되지 않는 zip파일'%s'입니다"
 
 msgid "file path is too long"
-msgstr ""
-
-msgid "storing paths of more than 100 bytes is not portable:"
 msgstr ""
 
 msgid "linked path is too long"
@@ -998,9 +995,10 @@ msgstr "무효의 browser명, 체크 옵션(\"browser\")입니다"
 msgid "help.start() requires the HTTP server to be running"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"If '%s' is already running, it is *not* restarted, and you must switch to "
-"its window."
+"If the browser launched by '%s' is already running, it is *not* restarted, "
+"and you must switch to its window."
 msgstr ""
 "'%s'가 이미 실행하고 있는 경우, 그것은 재개된 *not*입니다. \n"
 "또, 그 window로 변경하지 않으면 안됩니다"

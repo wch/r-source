@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-10 18:16\n"
-"PO-Revision-Date: 2009-12-10 18:16\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
+"PO-Revision-Date: 2010-03-16 09:20\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -160,8 +160,14 @@ msgstr "no rows to aggregate"
 msgid "'by' must be a list"
 msgstr "‘by’ must be a list"
 
-msgid "'FUN' must always return a scalar"
-msgstr "‘FUN’ must always return a scalar"
+msgid "arguments must have same length"
+msgstr "arguments must have same length"
+
+msgid "'formula' missing or incorrect"
+msgstr "‘formula’ missing or incorrect"
+
+msgid "'formula' must have both left and right hand sides"
+msgstr "‘formula’ must have both left and right hand sides"
 
 msgid "cannot change frequency from %g to %g"
 msgstr "cannot change frequency from %g to %g"
@@ -211,9 +217,6 @@ msgstr "cannot compute exact p-value with ties"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "cannot compute exact confidence intervals with ties"
-
-msgid "'formula' missing or incorrect"
-msgstr "‘formula’ missing or incorrect"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "grouping factor must have exactly 2 levels"
@@ -301,15 +304,6 @@ msgstr "MLE only implemented for univariate series"
 
 msgid "'order.max' must be >= 0"
 msgstr "‘order.max’ must be >= 0"
-
-msgid "model order:"
-msgstr "model order:"
-
-msgid "singularities in the computation of the projection matrix"
-msgstr "singularities in the computation of the projection matrix"
-
-msgid "results are only valid up to model order"
-msgstr "results are only valid up to model order"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "‘order’ must be a non-negative numeric vector of length 3"
@@ -543,6 +537,9 @@ msgstr "baseline group number out of range"
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "supply both ‘x’ and ‘y’ or a matrix-like ‘x’"
 
+msgid "'y' must be numeric"
+msgstr "‘y’ must be numeric"
+
 msgid "'x' is empty"
 msgstr "‘x’ is empty"
 
@@ -557,6 +554,12 @@ msgstr "‘V’ is not a square numeric matrix"
 
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
 msgstr "diag(.) had 0 or NA entries; non-finite result is doubtful"
+
+msgid "'x' must be a numeric vector"
+msgstr "‘x’ must be a numeric vector"
+
+msgid "'y' must be a numeric vector"
+msgstr "‘y’ must be a numeric vector"
 
 msgid "not enough finite observations"
 msgstr "not enough finite observations"
@@ -948,9 +951,6 @@ msgstr "incorrect specification for ‘row.vars’"
 
 msgid "incorrect specification for 'col.vars'"
 msgstr "incorrect specification for ‘col.vars’"
-
-msgid "'formula' must have both left and right hand sides"
-msgstr "‘formula’ must have both left and right hand sides"
 
 msgid "interactions are not allowed"
 msgstr "interactions are not allowed"
@@ -2239,9 +2239,6 @@ msgstr "‘ratio’ must be a single positive number"
 
 msgid "'x' and 'w' must have the same length"
 msgstr "‘x’ and ‘w’ must have the same length"
-
-msgid "'y' must be numeric"
-msgstr "‘y’ must be numeric"
 
 msgid "not enough (finite) 'x' observations"
 msgstr "not enough (finite) ‘x’ observations"

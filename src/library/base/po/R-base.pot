@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-14 12:34\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -614,21 +614,6 @@ msgstr ""
 msgid "no files/directory to link to"
 msgstr ""
 
-msgid "'x' must have length 1"
-msgstr ""
-
-msgid "invalid digits"
-msgstr ""
-
-msgid "'x' cannot be coerced to 'octmode'"
-msgstr ""
-
-msgid "'x' must be of length 1"
-msgstr ""
-
-msgid "'x' cannot be coerced to hexmode"
-msgstr ""
-
 msgid "'package' must be of length 1"
 msgstr ""
 
@@ -725,19 +710,22 @@ msgstr ""
 msgid "package '%s' is not installed for 'arch=%s'"
 msgstr ""
 
+msgid "package '%s' has a license that you need to accept in an interactive session"
+msgstr ""
+
+msgid "Package '%s' has a license that you need to accept after viewing"
+msgstr ""
+
+msgid "Package '%s' has a license that you need to accept:\naccording to the DESCRIPTION file it is"
+msgstr ""
+
+msgid "License"
+msgstr ""
+
+msgid "License for package '%s' not accepted"
+msgstr ""
+
 msgid "Attaching package: '%s'"
-msgstr ""
-
-msgid "The following object(s) are masked"
-msgstr ""
-
-msgid "_by_"
-msgstr ""
-
-msgid "from"
-msgstr ""
-
-msgid ":"
 msgstr ""
 
 msgid "invalid package name"
@@ -1103,6 +1091,12 @@ msgstr ""
 msgid "argument '%s' is not used (yet)"
 msgstr ""
 
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr ""
+
+msgid "'x' cannot be coerced to hexmode"
+msgstr ""
+
 msgid "no arguments"
 msgstr ""
 
@@ -1388,7 +1382,7 @@ msgstr ""
 msgid "not defined for numeric_version objects"
 msgstr ""
 
-msgid "argument to 'which' is not logical"
+msgid "<0 elements>"
 msgstr ""
 
 msgid "invalid 'digits'"
@@ -1397,7 +1391,25 @@ msgstr ""
 msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
 msgstr ""
 
+msgid "'intern' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'ignore.stderr' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'wait' must be TRUE or FALSE"
+msgstr ""
+
 msgid "'input' must be a character vector or 'NULL'"
+msgstr ""
+
+msgid "'show.output.on.console' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'minimized' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'invisible' must be TRUE or FALSE"
 msgstr ""
 
 msgid "'%s' could not be run"

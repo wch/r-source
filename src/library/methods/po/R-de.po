@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-10 18:16\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
 "PO-Revision-Date: 2009-10-07 14:27+0200\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -307,6 +307,9 @@ msgstr "keine generische Funktion für \"%s\" gefunden"
 msgid "No method found for function \"%s\" and signature %s"
 msgstr "Keine Methode für Funktion \"%s\" und Signatur %s gefunden"
 
+msgid "Warning:  using defunct methods list search"
+msgstr ""
+
 msgid ""
 "apparent inconsistency in the methods for function \"%s\"; argument \"%s\" "
 "in the signature corresponds to \"%s\" in the methods list object"
@@ -321,7 +324,9 @@ msgstr ""
 "keine S4 Methode für Funktion \"%s\" und Signatur %s; beachten Sie "
 "getS3method(), falls S3 Methode gesucht"
 
-msgid "no method defined for function \"%s\" and signature %s"
+#, fuzzy
+msgid ""
+"no method defined in methods list object for function \"%s\" and signature %s"
 msgstr "keine Methode für Funktion \"%s\" und Signatur %s definiert"
 
 msgid "'file' must be a character string or a connection"
@@ -954,6 +959,11 @@ msgstr "keine generische Funktion für \"%s\" gefunden"
 
 msgid "Empty function name in .getGeneric"
 msgstr "Leerer Funktionsname in .getGeneric"
+
+msgid ""
+"Methods list objects are not maintained in this version of R:  request for "
+"function %s may return incorrect information"
+msgstr ""
 
 msgid ""
 "Package \"%s\" seems to have out-of-date methods; need to reinstall from "

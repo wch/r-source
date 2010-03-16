@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-17 11:57\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2009-10-10 00:17+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -353,6 +353,13 @@ msgstr " 名前 '%s' が重複する Rd ファイル: "
 msgid "Rd files with duplicated alias '%s':"
 msgstr " 重複するエイリアス '%s' を持ったRdファイル： "
 
+#, fuzzy
+msgid "Argument items with no description in Rd object '%s':"
+msgstr " コード中にはあるがドキュメント中には無い引数名: "
+
+msgid "Auto-generated content requiring editing in Rd object '%s':"
+msgstr ""
+
 msgid "Generics g in env ="
 msgstr " 総称的な g (以下の環境中） "
 
@@ -480,7 +487,8 @@ msgstr " '%s' 中のファイルが '%s' 欄から欠損しています: "
 msgid "unable to create '%s'"
 msgstr " '%s' を生成することが出来ません "
 
-msgid "unable to re-encode '%s'"
+#, fuzzy
+msgid "unable to re-encode '%s' line(s) %s"
 msgstr " '%s' 再エンコード出来ません "
 
 msgid "unable to copy INDEX to '%s'"
@@ -615,6 +623,9 @@ msgid ""
 msgstr ""
 " 'cleanup' は存在しますが実行できません -- 参照 'R Installation and "
 "Adminstration Manual' "
+
+msgid "installing to"
+msgstr ""
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "

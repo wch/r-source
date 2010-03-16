@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-10 18:16\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2009-10-15 02:29-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -153,8 +153,15 @@ msgstr "отсутствуют строки для агрегирования"
 msgid "'by' must be a list"
 msgstr "'by' должен быть списком"
 
-msgid "'FUN' must always return a scalar"
-msgstr "'FUN' должен всегда возвращать скаляр"
+#, fuzzy
+msgid "arguments must have same length"
+msgstr "аргументы должны иметь одну длину"
+
+msgid "'formula' missing or incorrect"
+msgstr "'formula' пропущена или неправильная"
+
+msgid "'formula' must have both left and right hand sides"
+msgstr "'формула' должна иметь и левую, и правую стороны"
 
 msgid "cannot change frequency from %g to %g"
 msgstr "не могу изменить частоту с %g на %g"
@@ -208,9 +215,6 @@ msgid "cannot compute exact confidence intervals with ties"
 msgstr ""
 "не могу подсчитать точные доверительные интервалы при наличии повторяющихся "
 "наблюдений"
-
-msgid "'formula' missing or incorrect"
-msgstr "'formula' пропущена или неправильная"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "группирующий фактор должен иметь в точности 2 уровня"
@@ -299,15 +303,6 @@ msgstr "MLE разработан только для одномерных серий"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max' должен быть >= 0"
-
-msgid "model order:"
-msgstr "порядок модели:"
-
-msgid "singularities in the computation of the projection matrix"
-msgstr "сингулярности при вычислении матрицы проекции"
-
-msgid "results are only valid up to model order"
-msgstr "результаты действительны только для порядка модели"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order' должен быть неотрицательным числовым вектором длины 3"
@@ -547,6 +542,9 @@ msgstr "номер базовой группы -- вне диапазона"
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "укажите и 'x', и 'y' или матрице-подобный 'x'"
 
+msgid "'y' must be numeric"
+msgstr "'y' должен быть числом"
+
 msgid "'x' is empty"
 msgstr "'x' пусто"
 
@@ -561,6 +559,14 @@ msgstr "'V' не является квадратной числовой матрицей"
 
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
 msgstr "у diag(.) 0 или NA вхождений; не-конечный результат сомнителен"
+
+#, fuzzy
+msgid "'x' must be a numeric vector"
+msgstr "'y' должен быть числовым вектором"
+
+#, fuzzy
+msgid "'y' must be a numeric vector"
+msgstr "'y' должен быть числовым вектором"
 
 msgid "not enough finite observations"
 msgstr "недостаточно конечных наблюдений"
@@ -964,9 +970,6 @@ msgstr "неправильное указание 'row.vars'"
 
 msgid "incorrect specification for 'col.vars'"
 msgstr "неправильное указание 'col.vars'"
-
-msgid "'formula' must have both left and right hand sides"
-msgstr "'формула' должна иметь и левую, и правую стороны"
 
 msgid "interactions are not allowed"
 msgstr "взаимодействия не разрешены"
@@ -2281,9 +2284,6 @@ msgstr "'ratio' должно быть одним положительным числом."
 msgid "'x' and 'w' must have the same length"
 msgstr "'x' и 'w' должны иметь одинаковую длину"
 
-msgid "'y' must be numeric"
-msgstr "'y' должен быть числом"
-
 msgid "not enough (finite) 'x' observations"
 msgstr "недостаточно (конечных) данных 'x'"
 
@@ -2384,6 +2384,18 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "параметр %s не встречается в формуле модели"
 msgstr[1] "параметры %s не встречаются в формуле модели"
 msgstr[2] "параметры %s не встречаются в формуле модели"
+
+#~ msgid "'FUN' must always return a scalar"
+#~ msgstr "'FUN' должен всегда возвращать скаляр"
+
+#~ msgid "model order:"
+#~ msgstr "порядок модели:"
+
+#~ msgid "singularities in the computation of the projection matrix"
+#~ msgstr "сингулярности при вычислении матрицы проекции"
+
+#~ msgid "results are only valid up to model order"
+#~ msgstr "результаты действительны только для порядка модели"
 
 #~ msgid "invalid 'method': %s"
 #~ msgstr "неправильный 'method': %s"

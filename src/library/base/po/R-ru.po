@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-14 12:34\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
 "PO-Revision-Date: 2009-10-15 02:15-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -657,21 +657,6 @@ msgstr "нет файлов для ссылки с"
 msgid "no files/directory to link to"
 msgstr "нет файлов/папок для ссылки на"
 
-msgid "'x' must have length 1"
-msgstr "'x' должен иметь длину 1"
-
-msgid "invalid digits"
-msgstr "неправильное количество знаков после запятой"
-
-msgid "'x' cannot be coerced to 'octmode'"
-msgstr "'x' нельзя преобразовать в 'octmode'"
-
-msgid "'x' must be of length 1"
-msgstr "'x' должен быть длиной 1"
-
-msgid "'x' cannot be coerced to hexmode"
-msgstr "'x' нельзя преобразовать в 'hexmode'"
-
 msgid "'package' must be of length 1"
 msgstr "'пакет' должен быть длиной 1"
 
@@ -775,20 +760,26 @@ msgstr "пакет '%s' был собран для %s"
 msgid "package '%s' is not installed for 'arch=%s'"
 msgstr "пакет '%s' не установлен для 'arch=%s'"
 
+msgid ""
+"package '%s' has a license that you need to accept in an interactive session"
+msgstr ""
+
+msgid "Package '%s' has a license that you need to accept after viewing"
+msgstr ""
+
+msgid ""
+"Package '%s' has a license that you need to accept:\n"
+"according to the DESCRIPTION file it is"
+msgstr ""
+
+msgid "License"
+msgstr ""
+
+msgid "License for package '%s' not accepted"
+msgstr ""
+
 msgid "Attaching package: '%s'"
 msgstr "Присоединяю пакет: '%s'"
-
-msgid "The following object(s) are masked"
-msgstr "Следующие объект(ы) скрыты"
-
-msgid "_by_"
-msgstr "_по_"
-
-msgid "from"
-msgstr "из"
-
-msgid ":"
-msgstr ":"
 
 msgid "invalid package name"
 msgstr "неправильное имя пакета"
@@ -1184,6 +1175,12 @@ msgstr "'%s' пока не разработан"
 msgid "argument '%s' is not used (yet)"
 msgstr "аргумент '%s' не используется (пока)"
 
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "'x' нельзя преобразовать в 'octmode'"
+
+msgid "'x' cannot be coerced to hexmode"
+msgstr "'x' нельзя преобразовать в 'hexmode'"
+
 msgid "no arguments"
 msgstr "нет аргументов"
 
@@ -1479,8 +1476,8 @@ msgstr "'%s' не определено для объектов \"numeric_version\""
 msgid "not defined for numeric_version objects"
 msgstr "не определено для объектов numeric_version"
 
-msgid "argument to 'which' is not logical"
-msgstr "аргумент 'which' не является логическим"
+msgid "<0 elements>"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "неправильные 'digits'"
@@ -1492,8 +1489,32 @@ msgstr ""
 "аргументы у 'show.output.on.console', 'minimized' и 'invisible' только для "
 "Windows"
 
+#, fuzzy
+msgid "'intern' must be TRUE or FALSE"
+msgstr "'fromLast' должен быть TRUE или FALSE"
+
+#, fuzzy
+msgid "'ignore.stderr' must be TRUE or FALSE"
+msgstr "'fromLast' должен быть TRUE или FALSE"
+
+#, fuzzy
+msgid "'wait' must be TRUE or FALSE"
+msgstr "'fromLast' должен быть TRUE или FALSE"
+
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' должен быть текстовым вектором либо 'NULL'"
+
+#, fuzzy
+msgid "'show.output.on.console' must be TRUE or FALSE"
+msgstr "'fromLast' должен быть TRUE или FALSE"
+
+#, fuzzy
+msgid "'minimized' must be TRUE or FALSE"
+msgstr "'fromLast' должен быть TRUE или FALSE"
+
+#, fuzzy
+msgid "'invisible' must be TRUE or FALSE"
+msgstr "'fromLast' должен быть TRUE или FALSE"
 
 msgid "'%s' could not be run"
 msgstr "'%s' не запускается"
@@ -1595,6 +1616,30 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "'x' must have length 1"
+#~ msgstr "'x' должен иметь длину 1"
+
+#~ msgid "invalid digits"
+#~ msgstr "неправильное количество знаков после запятой"
+
+#~ msgid "'x' must be of length 1"
+#~ msgstr "'x' должен быть длиной 1"
+
+#~ msgid "The following object(s) are masked"
+#~ msgstr "Следующие объект(ы) скрыты"
+
+#~ msgid "_by_"
+#~ msgstr "_по_"
+
+#~ msgid "from"
+#~ msgstr "из"
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "argument to 'which' is not logical"
+#~ msgstr "аргумент 'which' не является логическим"
 
 #~ msgid "is not on the search path"
 #~ msgstr "не найден в пути поиска"

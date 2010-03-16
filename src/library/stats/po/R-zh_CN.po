@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-10 18:16\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -143,8 +143,15 @@ msgstr "没有可用来聚合的行"
 msgid "'by' must be a list"
 msgstr "'by'必需是串列"
 
-msgid "'FUN' must always return a scalar"
-msgstr "'FUN'必需回覆纯量"
+#, fuzzy
+msgid "arguments must have same length"
+msgstr "变元的长度必需一样"
+
+msgid "'formula' missing or incorrect"
+msgstr "没有'formula'或有错"
+
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula'的公式左右两边都必需存在"
 
 msgid "cannot change frequency from %g to %g"
 msgstr "无法将頻率从%g改到%g"
@@ -193,9 +200,6 @@ msgstr "无法精確計算带连结的p值"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "无法精確計算带连结的置信区间"
-
-msgid "'formula' missing or incorrect"
-msgstr "没有'formula'或有错"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "分组因子只能有两层"
@@ -284,15 +288,6 @@ msgstr "MLE只为单变量序列实现"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max'必需大于等于零"
-
-msgid "model order:"
-msgstr "模型顺序:"
-
-msgid "singularities in the computation of the projection matrix"
-msgstr "计算投影矩阵时出现了奇异点"
-
-msgid "results are only valid up to model order"
-msgstr "计算结果只适用于模型顺序"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order'必需是长度为三的非负数值矢量"
@@ -524,6 +519,9 @@ msgstr "基線组在值域外"
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "要么同时设定'x'和'y'，要么只设定矩阵式的'x'"
 
+msgid "'y' must be numeric"
+msgstr "'y'必需是数值"
+
 msgid "'x' is empty"
 msgstr "'x'是空的"
 
@@ -538,6 +536,14 @@ msgstr "'V'不是正方形的数值矩阵"
 
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
 msgstr "diag(.)内有0或NA值；无限值的可靠性不高"
+
+#, fuzzy
+msgid "'x' must be a numeric vector"
+msgstr "'y'必需是数值矢量"
+
+#, fuzzy
+msgid "'y' must be a numeric vector"
+msgstr "'y'必需是数值矢量"
 
 msgid "not enough finite observations"
 msgstr "有限值的观察量不够"
@@ -926,9 +932,6 @@ msgstr "'row.vars'设定不对"
 
 msgid "incorrect specification for 'col.vars'"
 msgstr "'col.vars'设定不对"
-
-msgid "'formula' must have both left and right hand sides"
-msgstr "'formula'的公式左右两边都必需存在"
 
 msgid "interactions are not allowed"
 msgstr "不允许有交互作用项"
@@ -2209,9 +2212,6 @@ msgstr "'ratio'必需是单一的正数"
 msgid "'x' and 'w' must have the same length"
 msgstr "'x'和'w'的长度必需相同"
 
-msgid "'y' must be numeric"
-msgstr "'y'必需是数值"
-
 msgid "not enough (finite) 'x' observations"
 msgstr "(有限)'x'观察量数目不够"
 
@@ -2289,6 +2289,18 @@ msgstr[0] "因为不存在，%d个观察量被删除了"
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
+
+#~ msgid "'FUN' must always return a scalar"
+#~ msgstr "'FUN'必需回覆纯量"
+
+#~ msgid "model order:"
+#~ msgstr "模型顺序:"
+
+#~ msgid "singularities in the computation of the projection matrix"
+#~ msgstr "计算投影矩阵时出现了奇异点"
+
+#~ msgid "results are only valid up to model order"
+#~ msgstr "计算结果只适用于模型顺序"
 
 #~ msgid "invalid 'method': %s"
 #~ msgstr "'method'有错: %s"

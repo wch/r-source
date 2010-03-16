@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-14 12:34\n"
-"PO-Revision-Date: 2009-12-14 12:34\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
+"PO-Revision-Date: 2010-03-16 09:19\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -664,21 +664,6 @@ msgstr "no files to link from"
 msgid "no files/directory to link to"
 msgstr "no files/directory to link to"
 
-msgid "'x' must have length 1"
-msgstr "‘x’ must have length 1"
-
-msgid "invalid digits"
-msgstr "invalid digits"
-
-msgid "'x' cannot be coerced to 'octmode'"
-msgstr "‘x’ cannot be coerced to ‘octmode’"
-
-msgid "'x' must be of length 1"
-msgstr "‘x’ must be of length 1"
-
-msgid "'x' cannot be coerced to hexmode"
-msgstr "‘x’ cannot be coerced to hexmode"
-
 msgid "'package' must be of length 1"
 msgstr "‘package’ must be of length 1"
 
@@ -779,20 +764,29 @@ msgstr "package ‘%s’ was built for %s"
 msgid "package '%s' is not installed for 'arch=%s'"
 msgstr "package ‘%s’ is not installed for ‘arch=%s’"
 
+msgid ""
+"package '%s' has a license that you need to accept in an interactive session"
+msgstr ""
+"package ‘%s’ has a license that you need to accept in an interactive session"
+
+msgid "Package '%s' has a license that you need to accept after viewing"
+msgstr "Package ‘%s’ has a license that you need to accept after viewing"
+
+msgid ""
+"Package '%s' has a license that you need to accept:\n"
+"according to the DESCRIPTION file it is"
+msgstr ""
+"Package ‘%s’ has a license that you need to accept:\n"
+"according to the DESCRIPTION file it is"
+
+msgid "License"
+msgstr "License"
+
+msgid "License for package '%s' not accepted"
+msgstr "License for package ‘%s’ not accepted"
+
 msgid "Attaching package: '%s'"
 msgstr "Attaching package: ‘%s’"
-
-msgid "The following object(s) are masked"
-msgstr "The following object(s) are masked"
-
-msgid "_by_"
-msgstr "_by_"
-
-msgid "from"
-msgstr "from"
-
-msgid ":"
-msgstr ":"
 
 msgid "invalid package name"
 msgstr "invalid package name"
@@ -1177,6 +1171,12 @@ msgstr "‘%s’ is not implemented yet"
 msgid "argument '%s' is not used (yet)"
 msgstr "argument ‘%s’ is not used (yet)"
 
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "‘x’ cannot be coerced to ‘octmode’"
+
+msgid "'x' cannot be coerced to hexmode"
+msgstr "‘x’ cannot be coerced to hexmode"
+
 msgid "no arguments"
 msgstr "no arguments"
 
@@ -1470,8 +1470,8 @@ msgstr "‘%s’ not defined for “numeric_version” objects"
 msgid "not defined for numeric_version objects"
 msgstr "not defined for numeric_version objects"
 
-msgid "argument to 'which' is not logical"
-msgstr "argument to ‘which’ is not logical"
+msgid "<0 elements>"
+msgstr "<0 elements>"
 
 msgid "invalid 'digits'"
 msgstr "invalid ‘digits’"
@@ -1483,8 +1483,26 @@ msgstr ""
 "arguments 'show.output.on.console', ‘minimized’ and ‘invisible’ are for "
 "Windows only"
 
+msgid "'intern' must be TRUE or FALSE"
+msgstr "‘intern’ must be TRUE or FALSE"
+
+msgid "'ignore.stderr' must be TRUE or FALSE"
+msgstr "‘ignore.stderr’ must be TRUE or FALSE"
+
+msgid "'wait' must be TRUE or FALSE"
+msgstr "‘wait’ must be TRUE or FALSE"
+
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "‘input’ must be a character vector or ‘NULL’"
+
+msgid "'show.output.on.console' must be TRUE or FALSE"
+msgstr "‘show.output.on.console’ must be TRUE or FALSE"
+
+msgid "'minimized' must be TRUE or FALSE"
+msgstr "‘minimized’ must be TRUE or FALSE"
+
+msgid "'invisible' must be TRUE or FALSE"
+msgstr "‘invisible’ must be TRUE or FALSE"
 
 msgid "'%s' could not be run"
 msgstr "‘%s’ could not be run"

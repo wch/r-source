@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:04\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
 "PO-Revision-Date: 2009-10-15 02:19-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -428,6 +428,10 @@ msgstr "Индекс за пределами (списковое подмножество единиц)"
 
 msgid "It is invalid to combine unit objects with other types"
 msgstr "Нельзя комбинировать объекты-единицы с другими типами"
+
+#, fuzzy
+msgid "Invalid unit object"
+msgstr "Неправильная theta"
 
 msgid ""
 "unit.rep has been deprecated in favour of a unit method for the generic rep "

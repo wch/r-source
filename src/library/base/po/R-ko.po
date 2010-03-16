@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-14 12:34\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -667,26 +667,6 @@ msgstr "link 해야할 파일이 없습니다"
 msgid "no files/directory to link to"
 msgstr "link 해야할 파일 또는 디렉토리가 없습니다"
 
-#, fuzzy
-msgid "'x' must have length 1"
-msgstr "'input'는 길이 1 이 나오지 않으면 되지 않습니다"
-
-#, fuzzy
-msgid "invalid digits"
-msgstr "무효인 'digits'입니다"
-
-#, fuzzy
-msgid "'x' cannot be coerced to 'octmode'"
-msgstr "테이블에 강제 변환 할수 없습니다"
-
-#, fuzzy
-msgid "'x' must be of length 1"
-msgstr "'to'는 길이 1이 나오지 않으면 되지 않습니다"
-
-#, fuzzy
-msgid "'x' cannot be coerced to hexmode"
-msgstr "테이블에 강제 변환 할수 없습니다"
-
 msgid "'package' must be of length 1"
 msgstr "'package'는 길이 1이 나오지 않으면 되지 않습니다"
 
@@ -799,20 +779,26 @@ msgstr "패키지 '%s'는 %s에 대해서 작성되었습니다"
 msgid "package '%s' is not installed for 'arch=%s'"
 msgstr "패키지 '%s'는 올바르고 인스톨 되지 않았습니다"
 
+msgid ""
+"package '%s' has a license that you need to accept in an interactive session"
+msgstr ""
+
+msgid "Package '%s' has a license that you need to accept after viewing"
+msgstr ""
+
+msgid ""
+"Package '%s' has a license that you need to accept:\n"
+"according to the DESCRIPTION file it is"
+msgstr ""
+
+msgid "License"
+msgstr ""
+
+msgid "License for package '%s' not accepted"
+msgstr ""
+
 msgid "Attaching package: '%s'"
 msgstr "다음의 패키지를 첨가합니다: '%s'"
-
-msgid "The following object(s) are masked"
-msgstr ""
-
-msgid "_by_"
-msgstr ""
-
-msgid "from"
-msgstr ""
-
-msgid ":"
-msgstr ""
 
 #, fuzzy
 msgid "invalid package name"
@@ -1221,6 +1207,14 @@ msgid "argument '%s' is not used (yet)"
 msgstr "인수'%s'는 사용되어 있지 않습니다"
 
 #, fuzzy
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "테이블에 강제 변환 할수 없습니다"
+
+#, fuzzy
+msgid "'x' cannot be coerced to hexmode"
+msgstr "테이블에 강제 변환 할수 없습니다"
+
+#, fuzzy
 msgid "no arguments"
 msgstr "잘못된 인수입니다"
 
@@ -1521,8 +1515,8 @@ msgstr "(은)는 package_version 오브젝트에 대해서는 정의 되어 있�
 msgid "not defined for numeric_version objects"
 msgstr "(은)는 package_version 오브젝트에 대해서는 정의 되어 있지 않습니다"
 
-msgid "argument to 'which' is not logical"
-msgstr "'which'에서 인수는 논리값이 아닙니다"
+msgid "<0 elements>"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "무효인 'digits'입니다"
@@ -1532,9 +1526,27 @@ msgid ""
 "Windows only"
 msgstr ""
 
+msgid "'intern' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'ignore.stderr' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'wait' must be TRUE or FALSE"
+msgstr ""
+
 #, fuzzy
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' 그리고 'target'는 문자 벡터가 아니면 되지 않습니다"
+
+msgid "'show.output.on.console' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'minimized' must be TRUE or FALSE"
+msgstr ""
+
+msgid "'invisible' must be TRUE or FALSE"
+msgstr ""
 
 #, fuzzy
 msgid "'%s' could not be run"
@@ -1641,6 +1653,21 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#, fuzzy
+#~ msgid "'x' must have length 1"
+#~ msgstr "'input'는 길이 1 이 나오지 않으면 되지 않습니다"
+
+#, fuzzy
+#~ msgid "invalid digits"
+#~ msgstr "무효인 'digits'입니다"
+
+#, fuzzy
+#~ msgid "'x' must be of length 1"
+#~ msgstr "'to'는 길이 1이 나오지 않으면 되지 않습니다"
+
+#~ msgid "argument to 'which' is not logical"
+#~ msgstr "'which'에서 인수는 논리값이 아닙니다"
 
 #, fuzzy
 #~ msgid "is not on the search path"

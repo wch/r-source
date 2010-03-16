@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-17 11:57\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2009-10-15 02:41-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -351,6 +351,13 @@ msgstr "Rd-файлы с повторяющимся именем '%s':"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd-файлы с двойным псевдонимом '%s':"
 
+#, fuzzy
+msgid "Argument items with no description in Rd object '%s':"
+msgstr "Имена аргументов в коде, но не в документации:"
+
+msgid "Auto-generated content requiring editing in Rd object '%s':"
+msgstr ""
+
 msgid "Generics g in env ="
 msgstr "Общие 'g' в env ="
 
@@ -473,7 +480,8 @@ msgstr "файлы в '%s' пропущены в поле '%s':"
 msgid "unable to create '%s'"
 msgstr "не могу создать '%s'"
 
-msgid "unable to re-encode '%s'"
+#, fuzzy
+msgid "unable to re-encode '%s' line(s) %s"
 msgstr "не могу перекодировать '%s'"
 
 msgid "unable to copy INDEX to '%s'"
@@ -606,6 +614,9 @@ msgid ""
 msgstr ""
 "'cleanup' есть, но невыполним  -- смотрите 'R Installation and Adminstration "
 "Manual'"
+
+msgid "installing to"
+msgstr ""
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "

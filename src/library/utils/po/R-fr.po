@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:05\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2009-10-10 15:40+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -662,6 +662,9 @@ msgstr ""
 msgid "no object named '%s' to show"
 msgstr "aucun objet de nom '%s' à afficher"
 
+msgid "must have max > min"
+msgstr ""
+
 msgid "'pb' is not from class \"txtProgressBar\""
 msgstr "'pb' n'est pas un objet de classe \"txtProgressBar\""
 
@@ -870,9 +873,6 @@ msgid "'compressed' must be logical or character"
 msgstr ""
 "'compressed' devrait être un vecteur de type caractère ou booléen (logical)"
 
-msgid "untar: using cmd ="
-msgstr "untar : utilisation de cmd ="
-
 msgid "invalid octal digit"
 msgstr "nombre octal incorrect"
 
@@ -893,9 +893,6 @@ msgstr "fichier '%s' introuvable"
 
 msgid "file path is too long"
 msgstr "le chemin d'accès au fichier est trop long"
-
-msgid "storing paths of more than 100 bytes is not portable:"
-msgstr ""
 
 msgid "linked path is too long"
 msgstr "le chemin de lien est trop long"
@@ -980,9 +977,10 @@ msgstr "nom de navigateur incorrect, vérifiez options(\"browser\")."
 msgid "help.start() requires the HTTP server to be running"
 msgstr "help.start() nécessite que le serveur HTTP soit en cours d'exécution"
 
+#, fuzzy
 msgid ""
-"If '%s' is already running, it is *not* restarted, and you must switch to "
-"its window."
+"If the browser launched by '%s' is already running, it is *not* restarted, "
+"and you must switch to its window."
 msgstr ""
 "Si '%s' est déjà lancé, il ne sera pas relancé, et vous devez passer à sa "
 "fenêtre."
@@ -1090,6 +1088,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "untar: using cmd ="
+#~ msgstr "untar : utilisation de cmd ="
 
 #~ msgid "Enter zero or more numbers separated by space"
 #~ msgstr "Entrez des nombres séparés par des espaces"

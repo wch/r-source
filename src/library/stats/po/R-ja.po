@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-10 18:16\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2009-10-07 19:29+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -142,8 +142,15 @@ msgstr " 合体すべき行がありません "
 msgid "'by' must be a list"
 msgstr " 'by' はリストでなければなりません "
 
-msgid "'FUN' must always return a scalar"
-msgstr " 'FUN' は常にスカラを返さねばなりません "
+#, fuzzy
+msgid "arguments must have same length"
+msgstr " 引数は同じ長さでなければなりません "
+
+msgid "'formula' missing or incorrect"
+msgstr " モデル式('formula')が無いか、不正確です "
+
+msgid "'formula' must have both left and right hand sides"
+msgstr " モデル式('formula')は左辺と右辺の双方を持たなければなりません "
 
 msgid "cannot change frequency from %g to %g"
 msgstr " 頻度を %g から %g に変更できません "
@@ -193,9 +200,6 @@ msgstr " タイがあるため、正確な p 値を計算することができ�
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr " タイがあるため、正確な信頼区間を計算することができません "
-
-msgid "'formula' missing or incorrect"
-msgstr " モデル式('formula')が無いか、不正確です "
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr " グループ化因子は丁度二つの水準を持たなければなりません "
@@ -286,15 +290,6 @@ msgstr " MLE は一変量系列にだけ実装されています "
 
 msgid "'order.max' must be >= 0"
 msgstr " 'order.max' は >= 0 でなければなりません "
-
-msgid "model order:"
-msgstr " モデルの次数: "
-
-msgid "singularities in the computation of the projection matrix"
-msgstr " 特異値が射影行列の計算中に生じました。 "
-
-msgid "results are only valid up to model order"
-msgstr " 結果はモデル次数までしか適正ではありません： "
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr " 'order' は長さ 3 の非負の数値ベクトルでなければなりません "
@@ -532,6 +527,9 @@ msgstr " ベースラインのグループ数が範囲を越えています "
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr " 'x' to 'y' の両方を与えるか、行列形の 'x' を与えてください "
 
+msgid "'y' must be numeric"
+msgstr " 'y' は数値でなければなりません "
+
 msgid "'x' is empty"
 msgstr " x は空です "
 
@@ -546,6 +544,14 @@ msgstr " 'V'は数値正方行列ではありません "
 
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
 msgstr " diag(.)が0またはNAを含んでいます; 有限でない結果は疑問です "
+
+#, fuzzy
+msgid "'x' must be a numeric vector"
+msgstr " 'y' は数値ベクトルでなければなりません "
+
+#, fuzzy
+msgid "'y' must be a numeric vector"
+msgstr " 'y' は数値ベクトルでなければなりません "
 
 msgid "not enough finite observations"
 msgstr " 有限な観測値が十分にありません "
@@ -953,9 +959,6 @@ msgstr " 'row.vars' の指定が不正確です "
 
 msgid "incorrect specification for 'col.vars'"
 msgstr " 'col.vars' の指定が不正確です "
-
-msgid "'formula' must have both left and right hand sides"
-msgstr " モデル式('formula')は左辺と右辺の双方を持たなければなりません "
 
 msgid "interactions are not allowed"
 msgstr " 交互作用は許されません "
@@ -2264,9 +2267,6 @@ msgstr " 比率('ratio')は単一の正値でなければなりません "
 msgid "'x' and 'w' must have the same length"
 msgstr " 'x' と 'w' は同じ長さでなければなりません "
 
-msgid "'y' must be numeric"
-msgstr " 'y' は数値でなければなりません "
-
 msgid "not enough (finite) 'x' observations"
 msgstr " (有限な) 'x' の観察値の数が十分ではありません "
 
@@ -2347,6 +2347,18 @@ msgstr[0] " 欠損値のせいで %d 個の観測値が取り除かれました 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません "
+
+#~ msgid "'FUN' must always return a scalar"
+#~ msgstr " 'FUN' は常にスカラを返さねばなりません "
+
+#~ msgid "model order:"
+#~ msgstr " モデルの次数: "
+
+#~ msgid "singularities in the computation of the projection matrix"
+#~ msgstr " 特異値が射影行列の計算中に生じました。 "
+
+#~ msgid "results are only valid up to model order"
+#~ msgstr " 結果はモデル次数までしか適正ではありません： "
 
 #~ msgid "invalid 'method': %s"
 #~ msgstr " 無効な 'method' です: %s "

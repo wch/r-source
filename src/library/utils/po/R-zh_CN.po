@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:05\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -632,6 +632,9 @@ msgstr ""
 msgid "no object named '%s' to show"
 msgstr "找不到名字为'%s'的对象"
 
+msgid "must have max > min"
+msgstr ""
+
 msgid "'pb' is not from class \"txtProgressBar\""
 msgstr "'pb'不属于\"txtProgressBar\"这一类别"
 
@@ -825,9 +828,6 @@ msgstr "没有记录下任何事件"
 msgid "'compressed' must be logical or character"
 msgstr "'compressed'必需是字符向量"
 
-msgid "untar: using cmd ="
-msgstr "untar：用cmd="
-
 msgid "invalid octal digit"
 msgstr "八进制数字格式不对"
 
@@ -848,9 +848,6 @@ msgstr "找不到'%s'这一文件"
 
 msgid "file path is too long"
 msgstr "文件通路太长"
-
-msgid "storing paths of more than 100 bytes is not portable:"
-msgstr ""
 
 msgid "linked path is too long"
 msgstr "链结的通路太长"
@@ -933,9 +930,10 @@ msgstr "浏览器的名字不对，请检查options(\"browser\")的设置。"
 msgid "help.start() requires the HTTP server to be running"
 msgstr "help.start()需要用HTTP服务器"
 
+#, fuzzy
 msgid ""
-"If '%s' is already running, it is *not* restarted, and you must switch to "
-"its window."
+"If the browser launched by '%s' is already running, it is *not* restarted, "
+"and you must switch to its window."
 msgstr ""
 "如果'%s'已经在运行的话，它不会被重新启动，因此你必需人工地转换到它的窗口。"
 
@@ -1028,6 +1026,9 @@ msgstr[0] "'lib'元素'%s'不是可写的目录"
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "untar: using cmd ="
+#~ msgstr "untar：用cmd="
 
 #~ msgid "Enter zero or more numbers separated by space"
 #~ msgstr "输入0个或多个由空格分开的数字"

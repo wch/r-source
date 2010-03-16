@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-10 18:16\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -149,8 +149,15 @@ msgstr "비교해야할 모델이 없습니다"
 msgid "'by' must be a list"
 msgstr "'by'는 list가 아니면 되지 않습니다"
 
-msgid "'FUN' must always return a scalar"
-msgstr "'FUN'는 항상 sclalar를 돌려주지 않으면 되지 않습니다"
+#, fuzzy
+msgid "arguments must have same length"
+msgstr "인수는 동일 길이가 나오지 않으면 되지 않습니다"
+
+msgid "'formula' missing or incorrect"
+msgstr "'formula'가 없거나 부정확합니다"
+
+msgid "'formula' must have both left and right hand sides"
+msgstr "모델식('formula')은 좌변과 우변의 쌍방을 가지지 않으면 안됩니다"
 
 msgid "cannot change frequency from %g to %g"
 msgstr "빈도를 %g로부터 %g까지 변경 할수 없습니다"
@@ -200,9 +207,6 @@ msgstr "ties가 있기때문에, 정확한 p값을 돌려줍니다"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "ties가 있기때문에, 정확한 신뢰 구간을 계산할 수가 없습니다"
-
-msgid "'formula' missing or incorrect"
-msgstr "'formula'가 없거나 부정확합니다"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "그룹화 인자는 꼭 2 levels을 가지지 않으면 안됩니다"
@@ -294,15 +298,6 @@ msgstr "MLE는 일변양계열에만 실제 적용되어 있습니다"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max'는 non-negative이어야만 합니다"
-
-msgid "model order:"
-msgstr "모델의 차수:"
-
-msgid "singularities in the computation of the projection matrix"
-msgstr "개의 특이값이 투영 행렬의 계산중에 발생했습니다"
-
-msgid "results are only valid up to model order"
-msgstr "결과는 이하의 모델 차수까지만 적정이 아닙니다"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order'는 길이 3의 non-negative 수치 벡터가 아니면 되지 않습니다"
@@ -538,6 +533,9 @@ msgstr "baseline의 그룹수가 범위를 넘어가고 있습니다"
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "'x' 그리고 'y'의 양쪽 모두를 주어지거나, 행렬형태의 'x'를 주어집니다"
 
+msgid "'y' must be numeric"
+msgstr "'y'는 수치가 아니면 되지 않습니다"
+
 msgid "'x' is empty"
 msgstr "'x'는 비어 있습니다"
 
@@ -553,6 +551,14 @@ msgstr "'V'는 수치 정방 행렬이 아닙니다"
 
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
 msgstr ""
+
+#, fuzzy
+msgid "'x' must be a numeric vector"
+msgstr "'y' 수치 벡터가 아니면 되지 않습니다"
+
+#, fuzzy
+msgid "'y' must be a numeric vector"
+msgstr "'y' 수치 벡터가 아니면 되지 않습니다"
 
 msgid "not enough finite observations"
 msgstr "유한한 관측값이 충분히 없습니다"
@@ -978,9 +984,6 @@ msgstr "'row.vars'의 지정이 부정확합니다"
 
 msgid "incorrect specification for 'col.vars'"
 msgstr "'col.vars'의 지정이 부정확합니다"
-
-msgid "'formula' must have both left and right hand sides"
-msgstr "모델식('formula')은 좌변과 우변의 쌍방을 가지지 않으면 안됩니다"
 
 msgid "interactions are not allowed"
 msgstr "상호작용은 허용되지 않습니다"
@@ -2349,9 +2352,6 @@ msgstr "'ratio'는 단일의 positive의 수가 아니면 되지 않습니다"
 msgid "'x' and 'w' must have the same length"
 msgstr "'x'와 'w'는 동일 길이가 나오지 않으면 되지 않습니다"
 
-msgid "'y' must be numeric"
-msgstr "'y'는 수치가 아니면 되지 않습니다"
-
 msgid "not enough (finite) 'x' observations"
 msgstr "(유한한）'x'의 관측값이 충분하지는 않습니다"
 
@@ -2435,6 +2435,18 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid "'FUN' must always return a scalar"
+#~ msgstr "'FUN'는 항상 sclalar를 돌려주지 않으면 되지 않습니다"
+
+#~ msgid "model order:"
+#~ msgstr "모델의 차수:"
+
+#~ msgid "singularities in the computation of the projection matrix"
+#~ msgstr "개의 특이값이 투영 행렬의 계산중에 발생했습니다"
+
+#~ msgid "results are only valid up to model order"
+#~ msgstr "결과는 이하의 모델 차수까지만 적정이 아닙니다"
 
 #, fuzzy
 #~ msgid "invalid 'method': %s"

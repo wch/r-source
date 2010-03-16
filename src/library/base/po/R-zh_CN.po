@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-14 12:34\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -646,21 +646,6 @@ msgstr "鏈結时没有可以读的文件"
 msgid "no files/directory to link to"
 msgstr "鏈結时没有可以写的文件/目錄"
 
-msgid "'x' must have length 1"
-msgstr "'x'的长度一定得为一"
-
-msgid "invalid digits"
-msgstr "数字无效"
-
-msgid "'x' cannot be coerced to 'octmode'"
-msgstr "不能强迫把'x'改变成'octmode'"
-
-msgid "'x' must be of length 1"
-msgstr "'x'的长度必需为一"
-
-msgid "'x' cannot be coerced to hexmode"
-msgstr "不能强迫把'x'改变成'hexmode'"
-
 msgid "'package' must be of length 1"
 msgstr "'package'的长度必需为一"
 
@@ -763,20 +748,26 @@ msgstr "程辑包'%s'是为%s建造的"
 msgid "package '%s' is not installed for 'arch=%s'"
 msgstr "程辑包'%s'没有安装在'arch=%s'中"
 
+msgid ""
+"package '%s' has a license that you need to accept in an interactive session"
+msgstr ""
+
+msgid "Package '%s' has a license that you need to accept after viewing"
+msgstr ""
+
+msgid ""
+"Package '%s' has a license that you need to accept:\n"
+"according to the DESCRIPTION file it is"
+msgstr ""
+
+msgid "License"
+msgstr ""
+
+msgid "License for package '%s' not accepted"
+msgstr ""
+
 msgid "Attaching package: '%s'"
 msgstr "载入程辑包：'%s'"
-
-msgid "The following object(s) are masked"
-msgstr "以下的对象被遮蔽"
-
-msgid "_by_"
-msgstr "_by_"
-
-msgid "from"
-msgstr "从"
-
-msgid ":"
-msgstr ":"
 
 msgid "invalid package name"
 msgstr "程辑包名字不对"
@@ -1167,6 +1158,12 @@ msgstr "'%s'还没有编程实现"
 msgid "argument '%s' is not used (yet)"
 msgstr "'%s' 变元现在还没有用"
 
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "不能强迫把'x'改变成'octmode'"
+
+msgid "'x' cannot be coerced to hexmode"
+msgstr "不能强迫把'x'改变成'hexmode'"
+
 msgid "no arguments"
 msgstr "没有变元"
 
@@ -1458,8 +1455,8 @@ msgstr "'%s'对numeric_version对象没有定义"
 msgid "not defined for numeric_version objects"
 msgstr "对numeric_version对象没有定义"
 
-msgid "argument to 'which' is not logical"
-msgstr "'which'的变元不是逻辑值"
+msgid "<0 elements>"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "'digits'的值不对"
@@ -1470,8 +1467,32 @@ msgid ""
 msgstr ""
 "变元'show.output.on.console', 'minimized' 和'invisible'只适用在Windows上"
 
+#, fuzzy
+msgid "'intern' must be TRUE or FALSE"
+msgstr "'fromLast'的值必需是'TRUE'或'FALSE'值"
+
+#, fuzzy
+msgid "'ignore.stderr' must be TRUE or FALSE"
+msgstr "'fromLast'的值必需是'TRUE'或'FALSE'值"
+
+#, fuzzy
+msgid "'wait' must be TRUE or FALSE"
+msgstr "'fromLast'的值必需是'TRUE'或'FALSE'值"
+
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input'只能为字符矢量或NULL值"
+
+#, fuzzy
+msgid "'show.output.on.console' must be TRUE or FALSE"
+msgstr "'fromLast'的值必需是'TRUE'或'FALSE'值"
+
+#, fuzzy
+msgid "'minimized' must be TRUE or FALSE"
+msgstr "'fromLast'的值必需是'TRUE'或'FALSE'值"
+
+#, fuzzy
+msgid "'invisible' must be TRUE or FALSE"
+msgstr "'fromLast'的值必需是'TRUE'或'FALSE'值"
 
 msgid "'%s' could not be run"
 msgstr "无法運行'%s'"
@@ -1553,6 +1574,30 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#~ msgid "'x' must have length 1"
+#~ msgstr "'x'的长度一定得为一"
+
+#~ msgid "invalid digits"
+#~ msgstr "数字无效"
+
+#~ msgid "'x' must be of length 1"
+#~ msgstr "'x'的长度必需为一"
+
+#~ msgid "The following object(s) are masked"
+#~ msgstr "以下的对象被遮蔽"
+
+#~ msgid "_by_"
+#~ msgstr "_by_"
+
+#~ msgid "from"
+#~ msgstr "从"
+
+#~ msgid ":"
+#~ msgstr ":"
+
+#~ msgid "argument to 'which' is not logical"
+#~ msgstr "'which'的变元不是逻辑值"
 
 #~ msgid "is not on the search path"
 #~ msgstr "'%s'不在搜索路径上"

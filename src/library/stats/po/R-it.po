@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-10 18:16\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -152,8 +152,15 @@ msgstr "nessun modello da confrontare"
 msgid "'by' must be a list"
 msgstr "'by' deve essere di tipo list"
 
-msgid "'FUN' must always return a scalar"
-msgstr "'FUN' deve sempre restituire uno scalare"
+#, fuzzy
+msgid "arguments must have same length"
+msgstr "gli argomenti devono avere la stessa lunghezza"
+
+msgid "'formula' missing or incorrect"
+msgstr "'formula' mancante o sbagliata"
+
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula' deve avere sia il membro di destra che quello di sinistra"
 
 msgid "cannot change frequency from %g to %g"
 msgstr "impossibile cambiare la frequenza fa %g a %g"
@@ -205,9 +212,6 @@ msgstr "impossibile calcolare p-value esatto in presenza di ties"
 msgid "cannot compute exact confidence intervals with ties"
 msgstr ""
 "impossibile calcolare intervalli di confidenza esatti in presenza di ties"
-
-msgid "'formula' missing or incorrect"
-msgstr "'formula' mancante o sbagliata"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "la variabile di gruppo deve avere esattamente 2 livelli"
@@ -299,15 +303,6 @@ msgstr "MLE implementato solo per serie unidimensionali"
 
 msgid "'order.max' must be >= 0"
 msgstr "'order.max' deve essere >= 0"
-
-msgid "model order:"
-msgstr "ordine modello:"
-
-msgid "singularities in the computation of the projection matrix"
-msgstr "singolarità nel calcolo della matrice proiezione"
-
-msgid "results are only valid up to model order"
-msgstr "risultati attendibili fino all'ordine del modello"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
 msgstr "'order' deve essere un vettore numerico non negativo di lunghezza 3"
@@ -546,6 +541,9 @@ msgstr "numero gruppo di base fuori range"
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
 msgstr "fornire sia 'x' che 'y' o una 'x' in forma matriciale"
 
+msgid "'y' must be numeric"
+msgstr "'y' deve essere numerica"
+
 msgid "'x' is empty"
 msgstr "'x' è vuota"
 
@@ -561,6 +559,14 @@ msgstr "'V' non è una matrice quadrata numerica"
 
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
 msgstr ""
+
+#, fuzzy
+msgid "'x' must be a numeric vector"
+msgstr "'y' deve essere un vettore numerico"
+
+#, fuzzy
+msgid "'y' must be a numeric vector"
+msgstr "'y' deve essere un vettore numerico"
 
 msgid "not enough finite observations"
 msgstr "non ci sono abbastanza osservazioni finite"
@@ -982,9 +988,6 @@ msgstr "specificazione di 'row'vars' non corretta"
 
 msgid "incorrect specification for 'col.vars'"
 msgstr "specificazione di 'col.vars' non corretta"
-
-msgid "'formula' must have both left and right hand sides"
-msgstr "'formula' deve avere sia il membro di destra che quello di sinistra"
 
 msgid "interactions are not allowed"
 msgstr "le interazioni non sono ammesse"
@@ -2344,9 +2347,6 @@ msgstr "'ratio' deve essere un numero positivo"
 msgid "'x' and 'w' must have the same length"
 msgstr "'x' e 'w' devono avere la stessa lunghezza"
 
-msgid "'y' must be numeric"
-msgstr "'y' deve essere numerica"
-
 msgid "not enough (finite) 'x' observations"
 msgstr "osservazioni 'x' (finite) insufficienti"
 
@@ -2445,6 +2445,18 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "'FUN' must always return a scalar"
+#~ msgstr "'FUN' deve sempre restituire uno scalare"
+
+#~ msgid "model order:"
+#~ msgstr "ordine modello:"
+
+#~ msgid "singularities in the computation of the projection matrix"
+#~ msgstr "singolarità nel calcolo della matrice proiezione"
+
+#~ msgid "results are only valid up to model order"
+#~ msgstr "risultati attendibili fino all'ordine del modello"
 
 #, fuzzy
 #~ msgid "invalid 'method': %s"

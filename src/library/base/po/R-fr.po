@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-14 12:34\n"
+"POT-Creation-Date: 2010-03-16 09:19\n"
 "PO-Revision-Date: 2009-10-10 13:35+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -683,21 +683,6 @@ msgstr "aucun fichier vers où pointer un lien"
 msgid "no files/directory to link to"
 msgstr "aucun fichier / répertoire vers où pointer un lien"
 
-msgid "'x' must have length 1"
-msgstr "'x' doit être de longueur 1"
-
-msgid "invalid digits"
-msgstr "nombre de chiffres incorrect"
-
-msgid "'x' cannot be coerced to 'octmode'"
-msgstr "impossible de convertir automatiquement 'x' en 'octmode'"
-
-msgid "'x' must be of length 1"
-msgstr "'x' doit être de longeur 1"
-
-msgid "'x' cannot be coerced to hexmode"
-msgstr "impossible de convertir automatiquement 'x' en mode hexadécimal"
-
 msgid "'package' must be of length 1"
 msgstr "'package' doit être de longueur unaire"
 
@@ -809,20 +794,26 @@ msgstr "le package '%s' a été compilé pour %s"
 msgid "package '%s' is not installed for 'arch=%s'"
 msgstr "le package '%s' n'a pas été installé pour 'arch=%s'"
 
+msgid ""
+"package '%s' has a license that you need to accept in an interactive session"
+msgstr ""
+
+msgid "Package '%s' has a license that you need to accept after viewing"
+msgstr ""
+
+msgid ""
+"Package '%s' has a license that you need to accept:\n"
+"according to the DESCRIPTION file it is"
+msgstr ""
+
+msgid "License"
+msgstr ""
+
+msgid "License for package '%s' not accepted"
+msgstr ""
+
 msgid "Attaching package: '%s'"
 msgstr "Attachement du package : '%s'"
-
-msgid "The following object(s) are masked"
-msgstr "Objet(s) masqués : "
-
-msgid "_by_"
-msgstr "_par_"
-
-msgid "from"
-msgstr "de"
-
-msgid ":"
-msgstr " : "
 
 msgid "invalid package name"
 msgstr "nom de package incorrect"
@@ -1231,6 +1222,12 @@ msgstr "'%s' n'est pas encore implémenté"
 msgid "argument '%s' is not used (yet)"
 msgstr "l'argument '%s' n'est pas (encore) utilisé"
 
+msgid "'x' cannot be coerced to 'octmode'"
+msgstr "impossible de convertir automatiquement 'x' en 'octmode'"
+
+msgid "'x' cannot be coerced to hexmode"
+msgstr "impossible de convertir automatiquement 'x' en mode hexadécimal"
+
 msgid "no arguments"
 msgstr "pas d'arguments"
 
@@ -1527,8 +1524,8 @@ msgstr "'%s' non défini pour des objets \"numeric_version\""
 msgid "not defined for numeric_version objects"
 msgstr "non défini pour des objets numeric_version"
 
-msgid "argument to 'which' is not logical"
-msgstr "l'argument pour 'which' n'est pas une valeur logique"
+msgid "<0 elements>"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "'digits' incorrect"
@@ -1540,8 +1537,32 @@ msgstr ""
 "les arguments 'show.output.on.console', 'minimized' et 'invisible' sont "
 "seulement pour Windows"
 
+#, fuzzy
+msgid "'intern' must be TRUE or FALSE"
+msgstr "'fromLast' doit être TRUE ou FALSE"
+
+#, fuzzy
+msgid "'ignore.stderr' must be TRUE or FALSE"
+msgstr "'fromLast' doit être TRUE ou FALSE"
+
+#, fuzzy
+msgid "'wait' must be TRUE or FALSE"
+msgstr "'fromLast' doit être TRUE ou FALSE"
+
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' doit être un vecteur de chaînes de caractères ou 'NULL'"
+
+#, fuzzy
+msgid "'show.output.on.console' must be TRUE or FALSE"
+msgstr "'fromLast' doit être TRUE ou FALSE"
+
+#, fuzzy
+msgid "'minimized' must be TRUE or FALSE"
+msgstr "'fromLast' doit être TRUE ou FALSE"
+
+#, fuzzy
+msgid "'invisible' must be TRUE or FALSE"
+msgstr "'fromLast' doit être TRUE ou FALSE"
 
 msgid "'%s' could not be run"
 msgstr "'%s' ne peut être exécuté"
@@ -1635,6 +1656,30 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Message d'avis :\n"
 msgstr[1] "Messages d'avis :\n"
+
+#~ msgid "'x' must have length 1"
+#~ msgstr "'x' doit être de longueur 1"
+
+#~ msgid "invalid digits"
+#~ msgstr "nombre de chiffres incorrect"
+
+#~ msgid "'x' must be of length 1"
+#~ msgstr "'x' doit être de longeur 1"
+
+#~ msgid "The following object(s) are masked"
+#~ msgstr "Objet(s) masqués : "
+
+#~ msgid "_by_"
+#~ msgstr "_par_"
+
+#~ msgid "from"
+#~ msgstr "de"
+
+#~ msgid ":"
+#~ msgstr " : "
+
+#~ msgid "argument to 'which' is not logical"
+#~ msgstr "l'argument pour 'which' n'est pas une valeur logique"
 
 #~ msgid "is not on the search path"
 #~ msgstr "n'est pas trouvé dans le chemin de recherche"

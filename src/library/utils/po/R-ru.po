@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-06 12:05\n"
+"POT-Creation-Date: 2010-03-16 09:20\n"
 "PO-Revision-Date: 2009-10-15 02:50-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -648,6 +648,9 @@ msgstr ""
 msgid "no object named '%s' to show"
 msgstr "нет объекта с именем '%s' для показа"
 
+msgid "must have max > min"
+msgstr ""
+
 msgid "'pb' is not from class \"txtProgressBar\""
 msgstr "'pb' не из класса \"txtProgressBar\""
 
@@ -849,9 +852,6 @@ msgstr "события не записаны"
 msgid "'compressed' must be logical or character"
 msgstr "'compressed' должен быть логическим или текстовым вектором"
 
-msgid "untar: using cmd ="
-msgstr "untar: использую cmd ="
-
 msgid "invalid octal digit"
 msgstr "неправильное восьмеричное число"
 
@@ -872,9 +872,6 @@ msgstr "файл '%s' не найден"
 
 msgid "file path is too long"
 msgstr "путь к файлу слишком длинный"
-
-msgid "storing paths of more than 100 bytes is not portable:"
-msgstr ""
 
 msgid "linked path is too long"
 msgstr "путь ссылки слишком длинный"
@@ -959,9 +956,10 @@ msgstr "неправильное имя броузера, проверьте options(\"browser\")."
 msgid "help.start() requires the HTTP server to be running"
 msgstr "help.start() требует запуска сервера HTTP"
 
+#, fuzzy
 msgid ""
-"If '%s' is already running, it is *not* restarted, and you must switch to "
-"its window."
+"If the browser launched by '%s' is already running, it is *not* restarted, "
+"and you must switch to its window."
 msgstr ""
 "Если '%s' уже запущен, он *not* перезагрузился, и Вы должны перейти в его "
 "окно."
@@ -1071,6 +1069,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "untar: using cmd ="
+#~ msgstr "untar: использую cmd ="
 
 #~ msgid "Enter zero or more numbers separated by space"
 #~ msgstr "Введите ни одного или больше чисел, разделенных пробелом"
