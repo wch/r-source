@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2007  The R Development Core Team
+ *  Copyright (C) 1997--2010  The R Development Core Team
  *  Copyright (C) 2003	      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -472,15 +472,13 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
     case RAWSXP:
     s = allocVector(type, n);
     rawptr = (Rbyte *)p;
-    for (i = 0; i < n; i++)
-	RAW(s)[i] = rawptr[i];
+    for (i = 0; i < n; i++) RAW(s)[i] = rawptr[i];
     break;
     case LGLSXP:
     case INTSXP:
 	s = allocVector(type, n);
 	iptr = (int*)p;
-	for(i=0 ; i<n ; i++)
-	    INTEGER(s)[i] = iptr[i];
+	for(i = 0 ; i < n ; i++) INTEGER(s)[i] = iptr[i];
 	break;
     case REALSXP:
     case SINGLESXP:
@@ -490,15 +488,13 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 	    for(i=0 ; i<n ; i++) REAL(s)[i] = (double) sptr[i];
 	} else {
 	    rptr = (double*) p;
-	    for(i=0 ; i<n ; i++) REAL(s)[i] = rptr[i];
+	    for(i = 0 ; i < n ; i++) REAL(s)[i] = rptr[i];
 	}
 	break;
     case CPLXSXP:
 	s = allocVector(type, n);
 	zptr = (Rcomplex*)p;
-	for(i=0 ; i<n ; i++) {
-	    COMPLEX(s)[i] = zptr[i];
-	}
+	for(i = 0 ; i < n ; i++) COMPLEX(s)[i] = zptr[i];
 	break;
     case STRSXP:
 	if(Fort) {
@@ -547,15 +543,13 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
     case VECSXP:
 	PROTECT(s = allocVector(VECSXP, n));
 	lptr = (SEXP*)p;
-	for (i = 0 ; i < n ; i++) {
-	    SET_VECTOR_ELT(s, i, lptr[i]);
-	}
+	for (i = 0 ; i < n ; i++) SET_VECTOR_ELT(s, i, lptr[i]);
 	UNPROTECT(1);
 	break;
     case LISTSXP:
 	PROTECT(t = s = allocList(n));
 	lptr = (SEXP*)p;
-	for(i=0 ; i<n ; i++) {
+	for(i = 0 ; i < n ; i++) {
 	    SETCAR(t, lptr[i]);
 	    t = CDR(t);
 	}
@@ -766,6 +760,8 @@ SEXP attribute_hidden do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     const void *vmax = vmaxget();
     char buf[MaxSymbolBytes];
 
+    if (length(args) < 1) errorcall(call, _("'name' is missing"));
+    check1arg(args, call, "name");
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call);
     fun = (R_ExternalRoutine) ofun;
@@ -807,6 +803,8 @@ SEXP attribute_hidden do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     const void *vmax = vmaxget();
     char buf[MaxSymbolBytes];
 
+    if (length(args) < 1) errorcall(call, _("'name' is missing"));
+    check1arg(args, call, "name");
     nm = CAR(args);
     args = resolveNativeRoutine(args, &ofun, &symbol, buf, NULL, NULL,
 				NULL, call);
@@ -1629,6 +1627,8 @@ SEXP attribute_hidden do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     void *vmax;
     char symName[MaxSymbolBytes], encname[101];
 
+    if (length(args) < 1) errorcall(call, _("'name' is missing"));
+    check1arg(args, call, "name");
     if (NaokSymbol == NULL || DupSymbol == NULL || PkgSymbol == NULL) {
 	NaokSymbol = install("NAOK");
 	DupSymbol = install("DUP");

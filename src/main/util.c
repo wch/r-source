@@ -390,6 +390,7 @@ Rboolean StringFalse(const char *name)
     return FALSE;
 }
 
+/* used in bind.c and options.c */
 SEXP attribute_hidden EnsureString(SEXP s)
 {
     switch(TYPEOF(s)) {

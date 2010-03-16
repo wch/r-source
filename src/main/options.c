@@ -364,12 +364,12 @@ SEXP attribute_hidden do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	switch (TYPEOF(args)) {
 	case LISTSXP:
 	    argi = CAR(args);
-	    namei = EnsureString(TAG(args));
+	    namei = EnsureString(TAG(args)); /* gives "" for no tag */
 	    args = CDR(args);
 	    break;
 	case VECSXP:
 	    argi = VECTOR_ELT(args, i);
-	    namei = EnsureString(STRING_ELT(argnames, i));
+	    namei = STRING_ELT(argnames, i);
 	    break;
 	default: /* already checked, but be safe here */
 	    UNIMPLEMENTED_TYPE("options", args);

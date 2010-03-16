@@ -2177,6 +2177,8 @@ SEXP attribute_hidden do_call(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rest, evargs, rfun;
 
+    if (length(args) < 1) errorcall(call, _("'name' is missing"));
+    check1arg(args, call, "name");
     PROTECT(rfun = eval(CAR(args), rho));
     /* zero-length string check used to be here but install gives
        better error message.
