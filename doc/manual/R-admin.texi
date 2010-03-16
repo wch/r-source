@@ -585,7 +585,7 @@ If you want the @R{} home to be something other than
 @file{@var{libdir}/R}, use @option{rhome}: for example
 
 @example
-make install rhome=/usr/local/lib64/R-2.10.0
+make install rhome=/usr/local/lib64/R-2.11.0
 @end example
 
 @noindent
@@ -680,8 +680,8 @@ Some platforms can support closely related builds of @R{} which can
 share all but the executables and dynamic objects.  Examples include
 builds under Solaris for different chips (in particular, 32- and 64-bit
 builds), 64- and 32- bit builds on @cputype{x86_64} Linux and different
-@acronym{CPU}s (e.g.@: @cputype{ppc}, @cputype{ppc64}, @cputype{i386}
-and @cputype{x86_64}) under Mac OS >= 10.4.
+@acronym{CPU}s (e.g.@: @cputype{ppc}, @cputype{i386} and
+@cputype{x86_64}) under Mac OS >= 10.4.
 
 @R{} supports the idea of architecture-specific builds, specified by
 adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
@@ -1304,17 +1304,16 @@ To build a 64-bit version of R you need a 64-bit toolchain: the only one
 discussed here is based on the work of the MinGW-w64 project
 (@url{http://sourceforge.net/projects/mingw-w64/}, a port of GNU
 @code{binutils} and @code{gcc}), but commercial compilers such as those
-from Intel and PGI could be used (and have been by R redistributors).
+from Intel and PGI could be used (and have been by @R{} redistributors).
 
 Support of MinGW-w64 has been developed in the R sources over the period
-2008--10 and was first released as part of @R{} 2.11.0: it is regarded
-as still experimental.
+2008--10 and was first released as part of @R{} 2.11.0.
 
 Several versions of the MinGW-w64 toolchain are available: use one of them
 to replace the @file{MinGW/bin} directory of @code{Rtools} in your path
 (but still have the Rtools @file{bin} directory and Perl in your path).
 Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64} and
-@code{BINPREF} appropriate to your toolchain, and make R in the usual
+@code{BINPREF} appropriate to your toolchain, and make @R{} in the usual
 way.
 
 The toolchain used to build the CRAN distribution is technically a
@@ -1362,9 +1361,10 @@ directory of the distribution at
 that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
 you need the correct one first in your path if using both.
 
-An experimental package-building service is available at
+A package-building service is available at
 @url{http://win-builder.r-project.org/}.  Notes on porting packages can
-be found at @url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
+be found at
+@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
 
 The default memory limit will be the amount of installed RAM: it can
 be changed by using (preferably) @option{--max-mem-size=} at startup or
@@ -2053,12 +2053,13 @@ prepare and install translation catalogues.
 
 Many current @acronym{CPU}s have both 32- and 64-bit sets of
 instructions: this has long been true for UltraSparc and more recently
-for MIPS, PPC and @cputype{x86_64} (AMD Opteron and Athlon64, Intel Xeon
-and Pentium/'Core' supporting EM64T).  Many OSes running on such
-@acronym{CPU}s offer the choice of building a 32-bit or a 64-bit version
-of R (and details are given below under specific OSes).  For most a
-32-bit version is the default, but for some (e.g., @cputype{x86_64}
-Linux) 64-bit is.
+for MIPS, PPC and @cputype{x86_64} (sometimes known as @cputype{amd64}
+and @cputype{Intel64}: all but a few low-power current @cputype{ix86}
+CPUs support this chipset).  Many OSes running on such @acronym{CPU}s
+offer the choice of building a 32-bit or a 64-bit version of R (and
+details are given below under specific OSes).  For most a 32-bit version
+is the default, but for some (e.g., @cputype{x86_64} Linux and Mac OS
+10.6) 64-bit is.
 
 All current versions of @R{} use 32-bit integers and
 @acronym{IEC}@tie{}60559@footnote{also known as @acronym{IEC}@tie{}559
@@ -2074,7 +2075,8 @@ pointers.
 The total virtual memory space made available to a 32-bit
 process@footnote{until recently this limit applied to all processes, not
 just to one process} is limited to 4GB, and on most OSes to 3GB (or even
-2GB).  The limits for 64-bit processes are much larger.
+2GB).  The limits for 64-bit processes are much larger (e.g.@:
+8--128TB).
 
 @R{} allocates memory for large objects as needed, and removes any
 unused ones at garbage collection.  When the sizes of objects become an
@@ -2087,25 +2089,26 @@ issue with objects more than 10% of the size of the address space
 third (around 1Gb).
 
 @item
-32-bit OSes by default limit file sizes to 2GB.  This can often be
-worked around: and @command{configure} selects suitable defines if this
-is possible.  (We have also largely worked around that limit on
-Windows.)  64-bit builds have much larger limits.
+32-bit OSes by default limit file sizes to 2GB (and this may also apply
+to 32-bit builds on 64-bit OSes).  This can often be worked around: and
+@command{configure} selects suitable defines if this is possible.  (We
+have also largely worked around that limit on 32-bit Windows.)  64-bit
+builds have much larger limits.
 
 @item
 Because the pointers are larger, @R{}'s basic structure (the cons cell)
 is larger (normally twice the size).  This means that @R{} objects take
-more space and (usually) more time to manipulate.  So 64-bit versions of
-@R{} will typically run slower than 32-bit versions.  (On Sparc Solaris
-the difference was 15-20%, on Linux on Opteron around 10%.  The pattern
-is not universal, as on Intel Core 2 Duo the vanilla 64-bit version is
-around 10% faster on both Linux and Mac OS X --- this can be reduced by
-tuning the compile to that chip.)
+more space and (usually) more time to manipulate.  So 64-bit builds of
+@R{} will typically run slower than 32-bit builds.  (On Sparc Solaris
+the difference was 15-20%, on Linux on AMD Opteron around 10%.  The
+pattern is not universal, as on Intel Core 2 Duo the vanilla 64-bit
+version is around 10% faster on both Linux and Mac OS X --- this can be
+reduced by tuning the compile to that chip.)
 @end itemize
 
 So, for speed you may want to use a 32-bit build, but to handle large
-datasets (and perhaps large files) a 64-bit build.  You can build both
-and install them in the same place: @xref{Sub-architectures}.
+datasets (and perhaps large files) a 64-bit build.  You can often build
+both and install them in the same place: @xref{Sub-architectures}.
 
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
 objects (see @code{help("Memory-limits")}, some of which stem from the
@@ -2119,12 +2122,12 @@ objects is (when this was written in 2005) several years off.
 @node Windows,  , Choosing between 32- and 64-bit builds, Choosing between 32- and 64-bit builds
 @section Windows
 
-Currently the Windows build of @R{} from @acronym{CRAN} is a 32-bit
-executable.  This runs happily on Windows 64 on AMD64 and EM64T, but is
-limited to an address space of 2 to 4GB (see the `R for Windows FAQ' for
-details).  @ref{Building R for 64-bit Windows} for how a native 64-bit
-version might be built from the sources.
-
+Currently the main Windows build of @R{} from @acronym{CRAN} is a 32-bit
+executable.  This runs happily on Windows x64, but is limited to an
+address space of 2 to 4GB (see the `R for Windows FAQ' for details).
+As from @R{} 2.11.0 a 64-bit build is also available from
+@acronym{CRAN}, and a different build has been available from commercial
+@R{} redistributors since 2009.
 
 @node The standalone Rmath library, Essential and useful other programs under Unix, Choosing between 32- and 64-bit builds, Top
 @chapter The standalone Rmath library
@@ -2142,7 +2145,7 @@ is the current working directory (in the build directory tree on Unix if
 that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
-string containing the current @R{} version, for example @code{"2.6.0"}.
+string containing the current @R{} version, for example @code{"2.11.0"}.
 
 There is full access to @R{}'s handling of @code{NaN}s, @code{Inf} and
 @code{-Inf} via special versions of the macros and functions
@@ -4226,8 +4229,7 @@ locations and other updates to these instructions.  (Most Windows users
 will not need to build add-on packages from source; see @ref{Add-on
 packages} for details.)
 
-Only building with MinGW @command{gcc 4.2.1} is supported, and that
-compiler set works out-of-the-box on Windows Vista.
+Only building with MinGW @command{gcc 4.2.1} is supported.
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
@@ -4443,7 +4445,7 @@ should work on Windows Vista without any workarounds.
 
 Note that @code{mingw-runtime-3.13.tar.gz} or later and @code{gcc-4.2.1}
 or later are needed to get a correct build of @R{} itself.  There are
-known problems with using other compiler sets on Windows Vista and later
+known problems with using earlier compiler sets on Windows Vista and later
 (@uref{http://www.nabble.com/@/environment-@/hosed-@/during-@/upgrade-@/tf3305745@/.html#a9195667})
 and the workaround is to set @code{PATH} to include the path to
 @file{cc1}.

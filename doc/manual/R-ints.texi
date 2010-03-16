@@ -2129,8 +2129,10 @@ as well as the following internal-use-only functions
 
 @example
 @group
-.Call.graphics        .External.graphics
-.subset    .subset2   .primTrace  .primUntrace
+.Call.graphics
+.External.graphics
+.subset     .subset2
+.primTrace  .primUntrace
 lazyLoadDBfetch
 @end group
 @end example
@@ -2162,7 +2164,7 @@ log        round      signif      rep        seq.int
 @noindent
 manage their own argument matching and so do work in the standard way.
 
-All the one-argument primitives check that is they are called with a
+All the one-argument primitives check that if they are called with a
 named argument that this (partially) matches the name given in the
 documentation: this is also done for replacement functions with one
 argument plus @code{value}.
@@ -2205,7 +2207,7 @@ calls to builtins.
 There are also special @code{.Internal} functions: @code{NextMethod}
 @code{Recall}, @code{withVisiblle}, @code{cbind}, @code{rbind} (to allow
 for the @code{deparse.level} argument), @code{lapply}, @code{eapply} and
-@code{vapply}.  .
+@code{vapply}.
 
 @node Prototypes for primitives,  , Special internals, .Internal vs .Primitive
 @section Prototypes for primitives
