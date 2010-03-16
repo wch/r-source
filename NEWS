@@ -113,16 +113,19 @@ BUG FIXES
         instead) on systems with HAVE_GETRUSAGE (PR#14210)
 
     o	Changing both line texture and line cap (end) resulted in the
-	latter to be ommitted form the PDF code. In additon, line cap
+	latter to be ommitted form the PDF code.  In addition, line cap
 	(end) and join are now set explicitly in PDF output to ensure
 	correct defaults.
 
     o	The suppression of auto-rotation in bitmap() and dev2bitmap()
 	with the 'pdfwrite' device was not working correctly.
 
-    o	plot(ecdf(), log="x") no longer gives a wrong warning.
+    o	plot(ecdf(), log="x") no longer gives an incorrect warning.
 
     o	read.fwf() works again when 'file' is a connection.
+
+    o	Startup files will now be found if there paths exceed 255 bytes.
+	(PR#14228)
 
 
 
