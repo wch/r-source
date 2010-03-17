@@ -24,8 +24,11 @@
                      "Class must be an empty virtual class with NULL prototype"
              }, where = where)
     ## some classes in methods package are unions--now they can be officially
-    setClassUnion("OptionalFunction", c("function", "NULL"))
-    setClassUnion("PossibleMethod", c("function", "MethodDefinition"))
+    setClassUnion("OptionalFunction", c("function", "NULL"), where)
+    setClassUnion("PossibleMethod", c("function", "MethodDefinition"), where)
+    clList <- c("ClassUnionRepresentation", "OptionalFunction",
+                "PossibleMethod")
+    assign(".SealedClasses", c(get(".SealedClasses", where), clList), where)
 }
 
 setClassUnion <- function(name, members = character(), where = topenv(parent.frame())) {

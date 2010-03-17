@@ -8,43 +8,51 @@
 \alias{findMethodSignatures}
 \alias{hasMethods}
 \alias{getMethods}
-\title{Descriptions of the Methods Defined for a Generic Function}
+\alias{listOfMethods-class}
+\title{Description of the Methods Defined for a Generic Function}
 \description{
-  These functions convert the methods defined in a table for a generic
+  The function \code{findMethods} converts the methods defined in a table for a generic
   function (as used for selection of methods) into a list, for study or
-  display, or provide other information summarizing the methods.
+  display.  The list is actually from the class \code{listOfMethods}
+  (see the section describing the class, below).  
 
-  The function \code{findMethods} returns a list of the method
-  definitions currently existing for generic function \code{f}, limited
+ 
+  The list will be limited
   to the methods defined in environment \code{where} if that argument is
-  supplied and possibly limited to those including one or more of the
-  specified \code{classes} in the method signature.
+  supplied and limited to those including one or more of the
+  specified \code{classes} in the method signature if that argument is
+  supplied.
+
+To see the actual table (an environment) used
+  for methods dispatch, call \code{\link{getMethodsForDispatch}}.
+The names of the list returned by \code{findMethods} are the names of
+the objects in the table.
 
   The function \code{findMethodSignatures} returns a character matrix
   whose rows are the class names from the signature of the corresponding
   methods; it operates either from a list returned by
   \code{findMethods}, or by computing such a list itself, given the same
-  arguments as \code{findMethods} .
+  arguments as \code{findMethods} .  
 
   The function \code{hasMethods} returns \code{TRUE} or \code{FALSE}
   according to whether there is a non-empty table of methods for
   function \code{f} in the environment or search position \code{where}
-  (or anywhere on the search list if \code{where} is missing).
+  (or for the generic function generally if \code{where} is missing).
 
-  The function \code{getMethods} is an older alternative to
+  The deprecated function \code{getMethods} is an older alternative to
   \code{findMethods} , returning information in the form of an object of
   class \code{MethodsList}, previously used for method dispatch.  It is
-  not recommended, since the object returned is usually less convenient
-  than the value of \code{findMethods}.  To see the actual table used
-  for methods dispatch, either use the \code{table = TRUE} option to
-  \code{getMethods} or call \code{\link{getMethodsForDispatch}} instead.
+  not recommended, since this class of objects is deprecated generally
+  and will disappear in a future version of R.
 }
 \usage{
 findMethods(f, where, classes = character(), inherited = FALSE)
+
 findMethodSignatures(..., target = TRUE, methods = )
 
 hasMethods(f, where, package)
 
+### DEPRECATED
 getMethods(f, where, table = FALSE)
 }
 \arguments{
@@ -96,25 +104,69 @@ getMethods(f, where, table = FALSE)
   as described above to produce the returned value, except with the
   \code{table} argument.
 
-  Note that the list returned may contain the primitive function itself,
-  when the generic corresponds to a primitive.  (Basically, because
-  primitive functions are abnormal R objects, which cannot currently be
-  extended as method definitions.)  Computations that use the returned
-  list to derive other information need to take account of this
-  possibility.  See the implementation of \code{findMethodSignatures}
-  for an example.
-
+ 
   Note that \code{hasMethods}, but not the other functions, can be used
   even if no generic function of this name is currently found.  In this
   case \code{package} must either be supplied as an argument or included
   as an attribute of \code{f}, since the package name is part of the
   identification of the methods tables.
 
-  These functions should be used in searching for or summarizing
-  methods, rather than using information about how the metadata for
-  methods is stored.
+ }
+\section{The Class for lists of methods}{
+The class \code{"listOfMethods"} returns the methods as a named list
+of method definitions (or a primitive function, see the slot
+documentation below).  The names
+are the strings used to store the corresponding objects in the
+environment from which method dispatch is computed.
+The current implementation uses the names of the corresponding classes
+in the method signature, separated by \code{"#"} if more than one
+argument is involved in the signature.
 }
-\seealso{ \code{\link{showMethods}}, \code{\link{MethodsList-class}} }
+\section{Slots}{
+
+  \describe{
+    \item{\code{.Data}:}{Object of class \code{"list"} The method
+        definitions.
+
+ Note that these may include the primitive function
+  itself as  default method,
+  when the generic corresponds to a primitive. (Basically, because
+  primitive functions are abnormal R objects, which cannot currently be
+  extended as method definitions.) Computations that use the returned
+  list to derive other information need to take account of this
+  possibility. See the implementation of \code{findMethodSignatures}
+  for an example.
+ }
+    \item{\code{arguments}:}{Object of class \code{"character"}.  The
+        names of the formal arguments in the signature of the generic function. }
+    \item{\code{signatures}:}{Object of class \code{"list"}. A list of
+      the signatures of the individual methods.  This is currently the
+    result of splitting the \code{names} according to the \code{"#"}
+    separator.
+
+  If the object has been constructed from a table, as when returned by
+\code{findMethods}, the signatures will all have the same length.
+However, a list rather than a character matrix is used for
+generality.  Calling \code{findMethodSignatures} as in the example
+below will always convert to the matrix form.}
+    \item{\code{generic}:}{Object of class \code{"genericFunction"}.
+        The generic function corresponding to these methods.  There
+        are plans to generalize this slot to allow reference to the function.}
+    \item{\code{names}:}{Object of class \code{"character"}.  The
+        names as noted are the class names separated by \code{"#"} .}
+  }
+}
+\section{Extends}{
+
+Class \code{"\linkS4class{namedList}"}, directly.
+
+Class \code{"\linkS4class{list}"}, by class "namedList", distance 2.
+
+Class \code{"\linkS4class{vector}"}, by class "namedList", distance 3.
+}
+
+
+\seealso{ \code{\link{showMethods}}, \code{\link{selectMethod}}, \link{Methods} }
 \examples{
 mm <-  findMethods("Ops")
 findMethodSignatures(methods = mm)

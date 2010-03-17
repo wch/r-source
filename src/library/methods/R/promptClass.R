@@ -18,41 +18,33 @@ promptClass <-
 function (clName, filename = NULL, type = "class",
 	  keywords = "classes", where = topenv(parent.frame()))
 {
-    classesInSig <- function(g, where) {
-    ## given a generic g, obtain list of all classes
-    ## named among its signatures
-	mlist <- getMethods(g, where) # TODO: change this to findMethods()
-	if(is.null(mlist))
-	    return(NULL)
-	tmp <- listFromMlist(mlist)
-	if ((lt <- length(tmp[[1L]])) == 0L)
-	    NULL
-	else if (lt == 1)
-	    unlist(tmp[[1L]])
-	else { ## lt >= 2
-	    lapply(tmp[[1L]], unlist)
-	}
+    classInSig <- function(g, where, cl) {
+        ## given a generic g, is class cl in one of the method
+        ## signatures for the class?
+	cl %in% unique(unlist(findMethods(g, where)@signatures))
     }
     genWithClass <- function(cl, where) {
     ## given a class cl
     ## obtain list of all generics with cl in
     ## one of its signatures
 	allgen <- getGenerics(where = where)
-	o <- sapply(allgen, classesInSig, where = where, simplify = FALSE)
-	genl <- NULL
-	nmok <- names(o)
-	for (i in seq_along(o)) {
-	    if (!all(is.na(match(unlist(o[[i]]), cl))))
-		genl <- c(genl, nmok[i])
-	}
-	genl
+	ok <- sapply(allgen, classInSig, cl = cl, where = where)
+        allgen[ok]
     }
 
     sigsList <- function (g, where)
-    ## given a generic g, obtain list with one element per signature
+      ## given a generic g, obtain list with one element per signature,
+      ## with argument names inserted
     {
-	tmp <- listFromMlist(getMethods(g, where)) # TODO: change this to findMethods()
-	if (length(tmp[[1L]])) tmp[[1L]] # else NULL
+        methods <- findMethods(g, where)
+	value <- methods@signatures
+        args <- methods@arguments
+        if(length(value)) {
+            ## name the individual signature elements for output
+            length(args) <- length(value[[1]]) # all sigs are same length
+            value <- lapply(value, function(x){names(x) <- args; x})
+        }
+        value
     }
     slotClassWithSource <- function(clname) {
 	clDef <- getClassDef(clname)
@@ -72,7 +64,8 @@ function (clName, filename = NULL, type = "class",
     }
     paste0 <- function(...) paste(..., sep = "")
     pastePar <- function(x) {
-	xn <- names(x); x <- as.character(x)
+        xn <- names(x)
+	x <- as.character(x)
 	xn <- if(length(xn) == length(x)) paste(xn, "= ") else ""
 	paste("(", paste(xn, "\"", x, "\"", sep = "", collapse = ", "),
 	")", sep = "")

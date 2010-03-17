@@ -132,9 +132,12 @@ getGenerics(where, searchForm = FALSE)
   \item{signature}{ The class signature of the relevant method.  A
     signature is a named or unnamed vector of character strings.  If
     named, the names must be formal argument names for the generic
-    function.  If \code{signature} is unnamed, the default is to use
-    the first \code{length(signature)} formal arguments of the
-    function. }
+    function.  Signatures are matched to the arguments specified in
+    the signature slot of the generic function (see the Details
+    section of the \code{\link{setMethod}} documentation). 
+
+  The \code{signature} argument to \code{dumpMethods} is ignored (it
+  was used internally in previous implementations).}
 
   \item{file}{ The file or connection on which to dump method definitions. }
 

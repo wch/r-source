@@ -336,7 +336,7 @@ conformMethod <- function(signature, mnames, fnames,
         omittedSig <- omittedSig && (signature[omittedSig] != "missing")
         .message("Note: ", .renderSignature(f, sig0),
                  gettextf("expanding the signature to include omitted arguments in definition: %s",
-                          paste(signames[omittedSig], "= \"missing\"",collapse = ", ")))
+                          paste(sigNames[omittedSig], "= \"missing\"",collapse = ", ")))
         omittedSig <- seq_along(omittedSig)[omittedSig] # logical index will extend signature!
         signature[omittedSig] <- "missing"
     }

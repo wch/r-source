@@ -23,6 +23,7 @@
 \alias{VIRTUAL-class}
 \alias{missing-class}
 \alias{S4-class}
+\alias{namedList-class}
 \title{Classes Corresponding to Basic Data Types }
 \description{
   Formal classes exist corresponding to the basic R object types, allowing
@@ -60,6 +61,8 @@
 "ANY"  # virtual classes used by the methods package itself
 "VIRTUAL"
 "missing"
+
+"namedList" # the alternative to "list" that preserves the names attribute
 }
 \section{Objects from the Classes}{
   Objects can be created by calls of the form \code{new(Class, ...)},
@@ -70,14 +73,42 @@
   The class \code{"expression"} is slightly odd, in that the \dots
   arguments will \emph{not} be evaluated; therefore, don't enclose them
   in a call to \code{quote()}.
+
+  Note that class \code{"list"} is a pure vector.  Although lists with
+  names go back to the earliest versions of S, they are an extension
+  of the vector concept in that they have an attribute (which can now
+  be a slot) and which is either \code{NULL} or a character vector of
+  the same length as the vector.  If you want to guarantee that list
+  names are preserved, use class \code{"namedList"}, rather than
+  \code{"list"}.  Objects from this class must have a names attribute,
+  corresponding to slot \code{"names"},
+  of type \code{"character"}.  Internally, R treats names for
+  lists  specially, which makes it impractical to have the corresponding slot in
+  class \code{"namedList"} be a union of character names and \code{NULL}.
+
 }
+
+\section{Classes and Types}{
+The basic classes include classes for the basic R types.  Note that
+objects of these types will not usually be S4 objects
+(\code{\link{isS4}} will return \code{FALSE}), although objects from
+classes that contain the basic class will be S4 objects, still with
+the same type.  The type as
+returned by \code{\link{typeof}} will sometimes differ from the class,
+either just from a choice of terminology (type \code{"symbol"} and
+class \code{"name"}, for example) or because there is not a one-to-one
+correspondence between class and type (most of the classes that
+inherit from class \code{"language"} have type \code{"language"}, for example).
+}
+
+
 \section{Extends}{
-  Class \code{"vector"}, directly.
+  The vector classes extend \code{"vector"}, directly.
 }
 \section{Methods}{
   \describe{
     \item{coerce}{Methods are defined to coerce arbitrary objects to
-      these classes, by calling the corresponding basic function, for
+      the vector classes, by calling the corresponding basic function, for
       example, \code{as(x, "numeric")} calls \code{as.numeric(x)}. }
   }
 }

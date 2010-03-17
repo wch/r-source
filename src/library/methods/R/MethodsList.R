@@ -798,4 +798,24 @@ asMethodDefinition <- function(def, signature = list(), sealed = FALSE, fdef = d
   ## so instead
   .noMlistsFlag
 }
-    
+
+.MlistDepTable <- new.env()
+.MlistDeprecated <- function(this = "<default>", instead) {
+    if(is.character(this)) {
+        if(exists(this, envir = .MlistDepTable, inherits = FALSE))
+            return()
+        else
+            assign(this, TRUE, envir = .MlistDepTable)
+    }
+    if(missing(this)) 
+        msg <-"Use of the \"MethodsList\" meta data objects is deprecated."
+    else if(is.character(this))
+        msg <- gettextf("%s, along with other use of the \"MethodsList\" metadata objects, is deprecated.", dQuote(this))
+    else
+        msg <- gettextf("In %s: use of \"MethodsList\" metadata objects is deprecated.", deparse(this))
+    if(!missing(instead))
+      msg <- paste(msg, gettextf("Use %s instead.", dQuote(instead)))
+    msg <- paste(msg, "See ?MethodsList. (This warning is shown once per session.)")
+    base::.Deprecated(msg = msg)
+}
+

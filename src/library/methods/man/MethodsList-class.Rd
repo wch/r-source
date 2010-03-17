@@ -7,9 +7,17 @@
 \alias{MethodsList-class}
 \alias{body<-,MethodDefinition-method}
 \docType{class}
-\title{Class MethodsList, Representation of Methods for a Generic Function }
-\description{ Objects from this class are generated and revised by the
-  definition of methods for a generic function.}
+\title{Class MethodsList, Deprecated Representation of Methods }
+\description{ This class of objects was used in the original
+  implementation of the package to control method dispatch.  Its use
+  is now deprecated, but object appear as the default method slot in
+  generic functions.  This and any other remaining uses will be
+  removed in the future.
+
+ For the modern alternative, see \linkS4class{listOfMethods}.
+
+The details in this documentation are retained to allow analysis of
+old-style objects. }
 \section{Slots}{\describe{
 
   \item{\code{argument}:}{Object of class \code{"name"}.  The name of the
@@ -45,13 +53,6 @@
   another methods list and then selecting class \code{"numeric"} for
   \code{y} would produce a method associated with the signature
   \code{x = "track", y = "numeric"}.
-
-  You can see the methods
-  arranged by signature by calling the function
-  \code{\link{showMethods}}, 
-  A methods list can be converted into an ordinary list with the methods arranged this
-  way (in two different forms)  by calling the functions
-  \code{\link{listFromMlist}} and \code{\link{linearizeMlist}}.
 
 }
 

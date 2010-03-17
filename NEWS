@@ -322,8 +322,12 @@ NEW FEATURES
     o	any() and all() return early if possible speeding up results
 	when operating on long vectors.
 
-    o	Help conversion to text now uses the first part of a \enc{}{}
+   o	Help conversion to text now uses the first part of a \enc{}{}
 	if it is representable in the current output encoding.
+
+    o	A new class "listOfMethods" has been introduced to represent
+        the methods in a methods table, to replace the deprecated
+        class "MethodsList".
 
 
 DEPRECATED & DEFUNCT
@@ -350,6 +354,9 @@ DEPRECATED & DEFUNCT
 	(environments) and are being phased out for efficiency.  In
 	the present stage only stubs are generated and a warning
 	issued if these are accessed: shortly none will be generated.
+
+    o	Continuing the last item, getMethods() is now deprecated, with
+        its internal use replaced by findMethods() and other changes.
 
 
 INSTALLATION

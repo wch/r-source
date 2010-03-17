@@ -290,16 +290,11 @@ getMethods <-
 
     function(f, where = topenv(parent.frame()), table = FALSE)
 {
+    if(!table)
+      .MlistDeprecated("getMethods", "findMethods")
     nowhere <- missing(where)
-    if(is.character(f))
-        fdef <- getGeneric(f, where = where)
-    else if(is(f, "genericFunction")) {
-        fdef <- f
-        f <- fdef@generic
-    }
-    else
-        stop(gettextf("invalid argument 'f', expected a function or its name, got an object of class %s",
-                      .dQ(class(f))), domain = NA)
+    fdef <- getGeneric(f, where = where)
+    f <- fdef@generic
     if(!is.null(fdef)) {
         if(table)
           return(getMethodsForDispatch(fdef, TRUE))
@@ -604,7 +599,7 @@ findMethod <- function(f, signature, where = topenv(parent.frame())) {
     else
       fdef <- getGeneric(f, where = where)
     if(is.null(fdef)) {
-        warning(gettextf("no generic function \"%s\" found", f), domain = NA)
+        warning(gettextf("no generic function \"%s\" found", f), domai.n = NA)
         return(character())
     }
     fM <- .TableMetaName(fdef@generic, fdef@package)
@@ -741,15 +736,14 @@ dumpMethod <-
     invisible(file)
 }
 
-dumpMethods <- function(f, file = "", signature = character(), methods,
+dumpMethods <- function(f, file = "", signature = NULL, methods= findMethods(f, where = where),
                         where = topenv(parent.frame()) )
 {
-    ## Dump all the methods for this generic.
-    ##
-    ## If `signature' is supplied only the methods matching this initial signature
-    ## are dumped.
-    if(missing(methods))
-        methods <- getMethods(f, where = where)@methods
+    ## The signature argument was used in recursive calls to dumpMethods()
+    ## using the old MethodsList objects.  It is not meaningful with
+    ## the current listOfMethods class
+    if(length(signature) > 0)
+        warning("argument \"signature\" is not meaningful with the current implmentation and is ignored \n(extract a subset of the methods list instead)")
 
     ## sink() handling as general as possible -- unbelievably unpretty coding:
     closeit <- TRUE ; isSTDOUT <- FALSE
@@ -761,15 +755,9 @@ dumpMethods <- function(f, file = "", signature = character(), methods,
 	if (!isOpen(file)) open(file, "w") else closeit <- FALSE
     } else stop("'file' must be a character string or a connection")
     if(!isSTDOUT){ sink(file); on.exit({sink(); if(closeit) close(file)}) }
-
-    for(what in names(methods)) {
-        el <- methods[[what]]
-        if(is.function(el))
-            dumpMethod(f, c(signature, what), file = "", def = el)
-        else
-            dumpMethods(f, "", c(signature, what), el, where)
-    }
-    invisible()
+    sigs <- methods@signatures
+    for(i in seq_along(methods))
+        dumpMethod(f, sigs[[i]], file = "", def = methods[[i]])
 }
 
 
@@ -1427,6 +1415,8 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE) {
                 domain = NA)
         return(list())
     }
+    object <- new("listOfMethods", arguments = fdef@signature,
+                  generic = fdef) # empty list of methods
     if(missing(where))
       table <- get(if(inherited) ".AllMTable" else ".MTable", envir = environment(fdef))
     else {
@@ -1437,7 +1427,7 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE) {
         if(exists(what, envir = where, inherits = FALSE))
           table <- get(what, envir = where)
         else
-          return(list())
+          return(object)
     }
     objNames <- objects(table, all.names = TRUE)
     if(length(classes)) {
@@ -1445,46 +1435,44 @@ findMethods <- function(f, where, classes = character(), inherited = FALSE) {
         which <- grep(classesPattern, paste("#",objNames,"#", sep=""))
         objNames <- objNames[which]
     }
-    if(length(objNames)) {
-        value <- lapply(objNames, function(x)get(x, envir = table))
-        names(value) <- objNames
-        value
-    }
-    else
-      list()
+    object@.Data <- lapply(objNames, function(x)get(x, envir = table))
+    object@names <- objNames
+    object@signatures <- strsplit(objNames, "#", fixed = TRUE)
+    object
 }
 
 findMethodSignatures <- function(..., target = TRUE, methods = findMethods(...))
 {
-    ## unless target is FALSE, the signatures are just the names from the table
-    ## unscrambled.
-    if(length(methods) < 1L)
-        return(methods)
-    ## find the argument names
-    prims <- sapply(methods, is.primitive)
-    if(!all(prims)) {
-        what <- lapply(methods[!prims], function(x)  names(x@target))
-        lens <- sapply(what, length)
-        if(length(unique(lens)) == 1L) # asserted to be true for legit. method tables
-            what <- what[[1L]]
-        else
-            what <- what[lens == max(lens)][[1L]]
-    }
-    else
-        ## uses the hack that args() returns a function if its argument is a primitve!
-        what <- names(formals(args(methods[[1L]])))
+    what <- methods@arguments
     if(target)
-        sigs <- strsplit(names(methods), "#", fixed = TRUE)
+      sigs <- methods@signatures
     else {
         anySig <- rep("ANY", length(what))
+        ## something of a kludge for the case of some primitive
+        ## default methods to get a vector of "ANY" of right length
+        for(m in methods)
+          if(!is.primitive(m)) {
+              length(anySig) <- length(m@defined)
+              break
+          }
         sigs <- lapply(methods, function(x)
                        if(is.primitive(x)) anySig else as.character(x@defined))
     }
     lens <- unique(sapply(sigs, length))
-    if(length(lens) > 1L)
-        sigs
-    else
-        t(matrix(unlist(sigs), nrow = lens, dimnames = list(what, NULL)))
+    if(length(lens) == 0)
+        return(matrix(character(), 0, length(methods@arguments)))
+    if(length(lens) > 1L) {
+        lens <- max(lens)
+        anys <- rep("ANY", lens)
+        sigs <- lapply(sigs, function(x) {
+            if(length(x) < lens) {
+              anys[seq_along(x)] <- x
+              anys
+          } else x
+        })
+    }
+    length(what) <- lens # if not all possible arguments used
+    t(matrix(unlist(sigs), nrow = lens, dimnames = list(what, NULL)))
 }
 
 hasMethods <- function(f, where, package)

@@ -1165,16 +1165,21 @@ testInheritedMethods <- function(f, signatures, test = TRUE,  virtual = FALSE,
   fname <- f@generic
   if(missing(signatures)) {
     mdefs <- findMethods(f)
+    mnames <- names(mdefs)
+    sigs <-  findMethodSignatures(methods = mdefs)
     if(groupMethods) {
       groups <- getGroup(f, recursive = TRUE)
       for(group in groups) {
         fg <- getGeneric(group)
         mg <- findMethods(fg)
-        mg <- mg[is.na(match(names(mg), names(mdefs)))]
-        mdefs <- c(mdefs, mg)
+        sigsg <- findMethodSignatures(methods = mg)
+        newSigs <- is.na(match(names(mg), mnames))
+        mg <- mg[newSigs]
+        mdefs <- c(mdefs, mg[newSigs])
+        sigs <- rbind(sigs, sigsg[newSigs,])
+        mnames <- c(mnames, names(mg)[newSigs])
       }
     }
-    sigs <-  findMethodSignatures(methods = mdefs)
     if(length(sigs) == 0)
       return(new("MethodSelectionReport", generic = fname))
     ## possible selection of which args to include with inheritance
