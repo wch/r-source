@@ -11,7 +11,8 @@ test-src-gct = \
 	lm-tests.R \
 	ok-errors.R \
 	method-dispatch.R \
-	array-subset.R
+	array-subset.R \
+	any-all.R
 test-src-strict-1 = \
 	$(test-src-gct) \
 	d-p-q-r-tests.R

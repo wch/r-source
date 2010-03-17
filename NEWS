@@ -319,6 +319,9 @@ NEW FEATURES
 	FALSE resulting in a 10x speedup.  Thanks to Patrick Aboyoun
 	for implementation suggestions.
 
+    o	any() and all() return early if possible speeding up results
+	when operating on long vectors.
+
 
 DEPRECATED & DEFUNCT
 
