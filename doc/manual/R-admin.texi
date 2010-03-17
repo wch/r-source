@@ -2072,9 +2072,8 @@ pointers.
 64-bit builds have both advantages and disadvantages:
 @itemize
 @item
-The total virtual memory space made available to a 32-bit
-process@footnote{until recently this limit applied to all processes, not
-just to one process} is limited to 4GB, and on most OSes to 3GB (or even
+The total virtual memory space made available to a 32-bit process is
+limited by the pointer size to 4GB, and on most OSes to 3GB (or even
 2GB).  The limits for 64-bit processes are much larger (e.g.@:
 8--128TB).
 
@@ -2096,14 +2095,20 @@ have also largely worked around that limit on 32-bit Windows.)  64-bit
 builds have much larger limits.
 
 @item
-Because the pointers are larger, @R{}'s basic structure (the cons cell)
-is larger (normally twice the size).  This means that @R{} objects take
-more space and (usually) more time to manipulate.  So 64-bit builds of
-@R{} will typically run slower than 32-bit builds.  (On Sparc Solaris
-the difference was 15-20%, on Linux on AMD Opteron around 10%.  The
-pattern is not universal, as on Intel Core 2 Duo the vanilla 64-bit
-version is around 10% faster on both Linux and Mac OS X --- this can be
-reduced by tuning the compile to that chip.)
+Because the pointers are larger, @R{}'s basic structures are larger.
+This means that @R{} objects take more space and (usually) more time to
+manipulate.  So 64-bit builds of @R{} will, all other things being
+equal, run slower than 32-bit builds.  (On Sparc Solaris the difference
+was 15-20%.)
+
+@item
+However, `other things' may not be equal.  In the specific case of
+@cputype{x864_64} @emph{vs} @cputype{ix86}, the 64-bit CPU has features
+which are guaranteed to be present but are optional on the 32-bit CPU,
+and also has more general-purpose registers.  This means that on chips
+like Intel Core 2 Duo the vanilla 64-bit version of @R{} is around 10%
+faster on both Linux and Mac OS X --- this can be reduced by tuning the
+compilation to the chip.
 @end itemize
 
 So, for speed you may want to use a 32-bit build, but to handle large
@@ -2112,9 +2117,9 @@ both and install them in the same place: @xref{Sub-architectures}.
 
 Even on 64-bit builds of @R{} there are limits on the size of @R{}
 objects (see @code{help("Memory-limits")}, some of which stem from the
-use of 32-bit integers (especially in FORTRAN code).  On all versions of
+use of 32-bit integers (especially in FORTRAN code).  On all builds of
 @R{}, the maximum length (number of elements) of a vector is
-@math{2^{31}-1}, about 2 billion, and on 64-bit systems the size of a
+@math{2^{31}-1}, about 2 billion, and on 64-bit builds the size of a
 block of memory allocated is limited to @math{2^{34}-1} bytes (8GB).  It
 is anticipated these will be raised eventually but routine use of 8GB
 objects is (when this was written in 2005) several years off.
@@ -2124,10 +2129,10 @@ objects is (when this was written in 2005) several years off.
 
 Currently the main Windows build of @R{} from @acronym{CRAN} is a 32-bit
 executable.  This runs happily on Windows x64, but is limited to an
-address space of 2 to 4GB (see the `R for Windows FAQ' for details).
-As from @R{} 2.11.0 a 64-bit build is also available from
-@acronym{CRAN}, and a different build has been available from commercial
-@R{} redistributors since 2009.
+address space of 4GB (see the `R for Windows FAQ' for details).  As from
+@R{} 2.11.0 a 64-bit build is also available from @acronym{CRAN}, and a
+different build has been available from commercial @R{} redistributors
+since 2009.
 
 @node The standalone Rmath library, Essential and useful other programs under Unix, Choosing between 32- and 64-bit builds, Top
 @chapter The standalone Rmath library
