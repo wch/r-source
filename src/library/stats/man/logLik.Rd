@@ -60,7 +60,7 @@ logLik(object, \dots)
   There may be other attributes depending on the method used: see the
   appropriate documentation.  One that is used by several methods is
   \code{"nobs"}, the number of observations used in estimation (after
-  the restrictions if \code{REML = TRUE}.
+  the restrictions if \code{REML = TRUE}).
 }
 \seealso{
   \code{\link[nlme:logLik.lme]{logLik.gls}}, \code{\link[nlme]{logLik.lme}}, in

@@ -4034,8 +4034,9 @@ encodings should be marked by @code{\enc}, e.g.@:
 @code{\enc@{J@"oreskog@}@{Joreskog@}} (with no whitespace between the
 braces) where the first argument will be used where encodings are
 allowed and the second should be @acronym{ASCII} (and is used for e.g.@:
-the text conversion).  (This is intended to be used for individual words,
-not whole sentences or paragraphs.)
+the text conversion in locales that cannot represent the encoded form).
+(This is intended to be used for individual words, not whole sentences
+or paragraphs.)
 
 @node Indices, Platform-specific sections, Insertions, Writing R documentation files
 @section Indices

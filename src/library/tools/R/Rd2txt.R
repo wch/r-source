@@ -380,7 +380,9 @@ Rd2txt <-
                "\\ldots" = put("..."),
                "\\R" = put("R"),
                "\\enc" = {
-                   txt <- as.character(block[[2L]])
+                   ## Test to see if we can convert the encoded version
+                   test <- iconv(x, "UTF-8", outputEncoding, mark = FALSE)
+                   txt <- if(!is.na(test)) as.character(block[[1L]]) else as.character(block[[2L]])
                    put(txt)
                } ,
                "\\eqn" = {
@@ -761,7 +763,7 @@ Rd2txt <-
     writeSection <- function(section, tag) {
         if (tag %in% c("\\alias", "\\concept", "\\encoding", "\\keyword"))
             return()
-    	save <- c(indent, sectionLevel, keepFirstIndent, dropBlank, wrapping)    	
+    	save <- c(indent, sectionLevel, keepFirstIndent, dropBlank, wrapping)
     	blankLine(min(sectionLevel, 1L))
     	titlePrefix <- paste(rep("  ", sectionLevel), collapse="")
         indent <<- 5L + 2L*sectionLevel
@@ -791,7 +793,7 @@ Rd2txt <-
             writeContent(section, tag)
         }
         blankLine()
-        
+
         indent <<- save[1]
         sectionLevel <<- save[2]
         keepFirstIndent <<- save[3]
