@@ -325,7 +325,7 @@ NEW FEATURES
    o	Help conversion to text now uses the first part of a \enc{}{}
 	if it is representable in the current output encoding.
 
-   o	A new class "listOfMethods" has been introduced to represent
+    o	A new class "listOfMethods" has been introduced to represent
         the methods in a methods table, to replace the deprecated
         class "MethodsList".
 
