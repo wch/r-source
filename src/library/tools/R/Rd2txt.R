@@ -381,8 +381,9 @@ Rd2txt <-
                "\\R" = put("R"),
                "\\enc" = {
                    ## Test to see if we can convert the encoded version
-                   test <- iconv(x, "UTF-8", outputEncoding, mark = FALSE)
-                   txt <- if(!is.na(test)) as.character(block[[1L]]) else as.character(block[[2L]])
+                   txt <- as.character(block[[1L]])
+                   test <- iconv(txt, "UTF-8", outputEncoding, mark = FALSE)
+                   txt <- if(!is.na(test)) txt else as.character(block[[2L]])
                    put(txt)
                } ,
                "\\eqn" = {
