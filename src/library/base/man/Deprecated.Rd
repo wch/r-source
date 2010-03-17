@@ -1,6 +1,6 @@
 % File src/library/base/man/Deprecated.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Deprecated}
@@ -38,7 +38,7 @@
 \seealso{
   \code{\link{Defunct}}
 
-  \code{\link{base-deprecated}} and so on which list the deprecated functions
+  \code{base-deprecated} and so on which list the deprecated functions
   in the packages.
 }
 \keyword{documentation}

@@ -1,6 +1,6 @@
 % File src/library/base/man/base-deprecated.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{base-deprecated}
@@ -29,6 +29,7 @@ Sys.putenv(\dots)
   \code{\link{Sys.setenv}}.
 }
 \seealso{
-  \code{\link{Deprecated}}, \code{\link{base-defunct}}
+  \code{\link{Deprecated}}
 }
+\keyword{internal}
 \keyword{misc}
