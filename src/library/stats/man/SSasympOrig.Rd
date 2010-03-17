@@ -1,9 +1,10 @@
 % File src/library/stats/man/SSasympOrig.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{SSasympOrig}
+\encoding{UTF-8}
 \title{Self-Starting Nls Asymptotic Regression Model through the Origin}
 \usage{
 SSasympOrig(input, Asym, lrc)
@@ -28,7 +29,7 @@ SSasympOrig(input, Asym, lrc)
   names of objects, the gradient matrix with respect to these names is
   attached as an attribute named \code{gradient}.
 }
-\author{Jose Pinheiro and Douglas Bates}
+\author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{

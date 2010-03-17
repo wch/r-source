@@ -4,6 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{SSlogis}
+\encoding{UTF-8}
 \title{Self-Starting Nls Logistic Model}
 \usage{
 SSlogis(input, Asym, xmid, scal)
@@ -30,7 +31,7 @@ SSlogis(input, Asym, xmid, scal)
   names of objects the gradient matrix with respect to these names is attached as
   an attribute named \code{gradient}.
 }
-\author{Jose Pinheiro and Douglas Bates}
+\author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{

@@ -1,9 +1,10 @@
 % File src/library/stats/man/NLSstRtAsymptote.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{NLSstRtAsymptote}
+\encoding{UTF-8}
 \title{Horizontal Asymptote on the Right Side}
 \alias{NLSstRtAsymptote}
 \alias{NLSstRtAsymptote.sortedXyData}
@@ -24,7 +25,7 @@ NLSstRtAsymptote(xy)
   A single numeric value estimating the horizontal asymptote for large
   \code{x}.
 }
-\author{Jose Pinheiro and Douglas Bates}
+\author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 \seealso{
   \code{\link{sortedXyData}},
   \code{\link{NLSstClosestX}},

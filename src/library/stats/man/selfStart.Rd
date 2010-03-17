@@ -1,9 +1,10 @@
 % File src/library/stats/man/selfStart.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{selfStart}
+\encoding{UTF-8}
 \alias{selfStart}
 \alias{selfStart.default}
 \alias{selfStart.formula}
@@ -46,7 +47,7 @@ selfStart(model, initial, parameters, template)
   added to the function to calculate starting estimates for the
   parameters in the model automatically.
 }
-\author{Jose Pinheiro and Douglas Bates}
+\author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 
 \seealso{
   \code{\link{nls}}

@@ -1,9 +1,10 @@
 % File src/library/stats/man/AIC.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{AIC}
+\encoding{UTF-8}
 \alias{AIC}
 \title{Akaike's An Information Criterion}
 \description{
@@ -53,7 +54,9 @@ AIC(object, \dots, k = 2)
   \emph{Akaike Information Criterion Statistics}.
   D. Reidel Publishing Company.
 }
-\author{Jose Pinheiro and Douglas Bates}
+\author{
+  \enc{José}{Jose} Pinheiro and Douglas Bates
+}
 \seealso{
   \code{\link{extractAIC}}, \code{\link{logLik}}.
 }

@@ -1,9 +1,10 @@
 % File src/library/stats/man/SSbiexp.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{SSbiexp}
+\encoding{UTF-8}
 \title{Self-Starting Nls Biexponential model}
 \usage{
 SSbiexp(input, A1, lrc1, A2, lrc2)
@@ -34,7 +35,7 @@ SSbiexp(input, A1, lrc1, A2, lrc2)
   \code{lrc2} are names of objects, the gradient matrix with respect to
   these names is attached as an attribute named \code{gradient}.
 }
-\author{Jose Pinheiro and Douglas Bates}
+\author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{

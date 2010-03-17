@@ -1,12 +1,13 @@
 % File src/library/stats/man/NLSstAsymptotic.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{NLSstAsymptotic}
-\title{Fit the Asymptotic Regression Model}
+\encoding{UTF-8}
 \alias{NLSstAsymptotic}
 \alias{NLSstAsymptotic.sortedXyData}
+\title{Fit the Asymptotic Regression Model}
 \usage{
 NLSstAsymptotic(xy)
 }
@@ -26,7 +27,7 @@ NLSstAsymptotic(xy)
   asymptote and the \code{y}-intercept, and \code{lrc} is the estimated
   logarithm of the rate constant.
 }
-\author{Jose Pinheiro and Douglas Bates}
+\author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 \seealso{\code{\link{SSasymp}}}
 \examples{
 Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]

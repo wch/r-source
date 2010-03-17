@@ -1,9 +1,10 @@
 % File src/library/stats/man/getInitial.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{getInitial}
+\encoding{UTF-8}
 \title{Get Initial Parameter Estimates}
 \alias{getInitial}
 \alias{getInitial.default}
@@ -33,7 +34,7 @@ getInitial(object, data, \dots)
     that these "starting" estimates are, in fact, the converged parameter
     estimates.
 }
-\author{Jose Pinheiro and Douglas Bates}
+\author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 \seealso{\code{\link{nls}}, %\code{\link{nlsList}},
     \code{\link{selfStart}},
     \code{\link{selfStart.default}}, \code{\link{selfStart.formula}}

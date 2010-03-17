@@ -1,9 +1,10 @@
 % File src/library/stats/man/SSfpl.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{SSfpl}
+\encoding{UTF-8}
 \title{Self-Starting Nls Four-Parameter Logistic Model}
 \usage{
 SSfpl(input, A, B, xmid, scal)
@@ -33,7 +34,7 @@ SSfpl(input, A, B, xmid, scal)
   names of objects, the gradient matrix with respect to these names is
   attached as an attribute named \code{gradient}.
 }
-\author{Jose Pinheiro and Douglas Bates}
+\author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{

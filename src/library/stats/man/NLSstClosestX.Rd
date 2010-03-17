@@ -1,9 +1,10 @@
 % File src/library/stats/man/NLSstClosestX.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{NLSstClosestX}
+\encoding{UTF-8}
 \title{Inverse Interpolation}
 \alias{NLSstClosestX}
 \alias{NLSstClosestX.sortedXyData}
@@ -21,7 +22,7 @@ NLSstClosestX(xy, yval)
 \value{
   A single numeric value on the \code{x} scale.
 }
-\author{Jose Pinheiro and Douglas Bates}
+\author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 \seealso{\code{\link{sortedXyData}}, \code{\link{NLSstLfAsymptote}},
   \code{\link{NLSstRtAsymptote}}, \code{\link{selfStart}}}
 \examples{

@@ -1,9 +1,10 @@
 % File src/library/stats/man/formula.nls.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{formula.nls}
+\encoding{UTF-8}
 \alias{formula.nls}
 \title{Extract Model Formula from nls Object}
 \usage{
@@ -20,7 +21,7 @@
 \value{
   a formula representing the model used to obtain \code{object}.
 }
-\author{Jose Pinheiro and Douglas Bates}
+\author{\enc{José}{Jose} Pinheiro and Douglas Bates}
 \seealso{\code{\link{nls}}, \code{\link{formula}}}
 \examples{
 fm1 <- nls(circumference ~ A/(1+exp((B-age)/C)), Orange,
