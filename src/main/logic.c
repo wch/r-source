@@ -338,18 +338,29 @@ static SEXP binaryLogic2(int code, SEXP s1, SEXP s2)
     return ans;
 }
 
-static void checkValues(int * x, int n, Rboolean *haveFalse,
-			Rboolean *haveTrue, Rboolean *haveNA)
+#define _OP_ALL 1
+#define _OP_ANY 2
+
+static int checkValues(int op, int na_rm, int * x, int n)
 {
     int i;
+    int has_na = 0;
     for (i = 0; i < n; i++) {
-	if (x[i] == NA_LOGICAL)
-	    *haveNA = TRUE;
-	else if (x[i])
-	    *haveTrue = TRUE;
-	else
-	    *haveFalse = TRUE;
+        if (!na_rm && x[i] == NA_LOGICAL) has_na = 1;
+        else {
+            if (x[i] == TRUE && op == _OP_ANY) return TRUE;
+            if (x[i] == FALSE && op == _OP_ALL) return FALSE;
+        }
     }
+    switch (op) {
+    case _OP_ANY:
+        return has_na ? NA_LOGICAL : FALSE;
+    case _OP_ALL:
+        return has_na ? NA_LOGICAL : TRUE;
+    default:
+        error("bad op value for do_logic3");
+    }
+    return NA_LOGICAL; /* -Wall */
 }
 
 extern SEXP fixup_NaRm(SEXP args); /* summary.c */
@@ -358,10 +369,12 @@ extern SEXP fixup_NaRm(SEXP args); /* summary.c */
 SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, s, t, call2;
-    int narm;
-    Rboolean haveTrue;
-    Rboolean haveFalse;
-    Rboolean haveNA;
+    int narm, has_na = 0;
+    /* initialize for behavior on empty vector
+       all(logical(0)) -> TRUE
+       any(logical(0)) -> FALSE
+     */
+    Rboolean val = PRIMVAL(op) == _OP_ALL ? TRUE : FALSE;
 
     PROTECT(args = fixup_NaRm(args));
     PROTECT(call2 = duplicate(call));
@@ -374,9 +387,6 @@ SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 
     ans = matchArgExact(R_NaRmSymbol, &args);
     narm = asLogical(ans);
-    haveTrue = FALSE;
-    haveFalse = FALSE;
-    haveNA = FALSE;
 
     for (s = args; s != R_NilValue; s = CDR(s)) {
 	t = CAR(s);
@@ -396,17 +406,17 @@ SEXP attribute_hidden do_logic3(SEXP call, SEXP op, SEXP args, SEXP env)
 			    type2char(TYPEOF(t)));
 	    t = coerceVector(t, LGLSXP);
 	}
-	checkValues(LOGICAL(t), LENGTH(t), &haveFalse, &haveTrue, &haveNA);
-    }
-    if (narm)
-	haveNA = FALSE;
-
-    s = allocVector(LGLSXP, 1L);
-    if (PRIMVAL(op) == 1) {	/* ALL */
-	LOGICAL(s)[0] = haveNA ? (haveFalse ? FALSE : NA_LOGICAL) : !haveFalse;
-    } else {			/* ANY */
-	LOGICAL(s)[0] = haveNA ? (haveTrue  ? TRUE  : NA_LOGICAL) : haveTrue;
+	val = checkValues(PRIMVAL(op), narm, LOGICAL(t), LENGTH(t));
+        if (val != NA_LOGICAL) {
+            if ((PRIMVAL(op) == _OP_ANY && val)
+                || (PRIMVAL(op) == _OP_ALL && !val)) {
+                has_na = 0;
+                break;
+            }
+        } else has_na = 1;
     }
     UNPROTECT(2);
-    return s;
+    return has_na ? ScalarLogical(NA_LOGICAL) : ScalarLogical(val);
 }
+#undef _OP_ALL
+#undef _OP_ANY

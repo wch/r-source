@@ -328,6 +328,9 @@ NEW FEATURES
         the methods in a methods table, to replace the deprecated
         class "MethodsList".
 
+    o	any() and all() return early if possible.  This speeds up results
+	when operating on long vectors.
+
 
 DEPRECATED & DEFUNCT
 
