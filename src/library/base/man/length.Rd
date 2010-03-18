@@ -46,6 +46,8 @@ length(x) <- value
   a vector is shortened, extra values are discarded and when a vector is
   lengthened, it is padded out to its new length with \code{\link{NA}}s
   (\code{nul} for raw vectors).
+  
+  Both are \link{primitive} functions.
 }
 \seealso{\code{nchar} for counting the number of characters in
   character vectors.

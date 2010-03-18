@@ -1,6 +1,6 @@
 % File src/library/base/man/sign.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sign}
@@ -20,8 +20,9 @@ sign(x)
   Note that \code{sign} does not operate on complex vectors.
 }
 \details{
-  This is a generic function: methods can be defined for it
-  directly or via the \code{\link[=S3groupGeneric]{Math}} group generic.
+  This is an \link{internal generic} \link{primitive} function: methods
+  can be defined for it directly or via the
+  \code{\link[=S3groupGeneric]{Math}} group generic.
 }
 \seealso{
   \code{\link{abs}}

@@ -1,6 +1,6 @@
 % File src/library/utils/man/withVisible.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{withVisible}
@@ -18,6 +18,8 @@ withVisible(x)
 }
 \details{
   The argument is evaluated in the caller's context.
+  
+  This is a \link{primitive} function.
 }
 \value{
   \item{value }{The value of \code{x} after evaluation.}

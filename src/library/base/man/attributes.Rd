@@ -51,6 +51,8 @@ mostattributes(obj) <- value
 
   The names of a pairlist are not stored as attributes, but are reported
   as if they were (and can be set by the replacement method for attributes).
+  
+  Both forms of \code{attributes} are \link{primitive} functions.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

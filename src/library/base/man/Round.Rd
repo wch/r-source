@@ -63,10 +63,7 @@ signif(x, digits = 6)
   the specified number of digits in the larger of the components.  Each
   element of the vector is rounded individually, unlike printing.
 
-  These are all primitive functions, but arguments are matched by
-  name in \code{round} and \code{signif} (whereas the default methods
-  for \code{ceiling}, \code{floor} and \code{trunc} ignore argument
-  names).
+  These are all primitive functions.
 }
 \section{S4 methods}{
   These are all (internally) S4 generic.

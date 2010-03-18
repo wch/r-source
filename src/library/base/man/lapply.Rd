@@ -1,6 +1,6 @@
 % File src/library/base/man/lapply.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{lapply}
@@ -79,6 +79,8 @@ replicate(n, expr, simplify = TRUE)
   coercion is done by the system \code{as.list} in the base namespace
   and not one defined by a user (e.g. by setting S4 methods on the
   system function).
+  
+  \code{lapply} and \code{vapply} are \link{primitive} functions.
 }
 \value{
   For \code{lapply} and \code{sapply(simplify=FALSE)}, a list.

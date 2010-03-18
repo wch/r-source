@@ -50,6 +50,8 @@ names(x) <- value
 
   A name can be character \code{NA}, but such a name will never be
   matched and is likely to lead to confusion.
+  
+  Both are \link{primitive} functions.
 }
 \note{
   For vectors, the names are one of the \link{attributes} with

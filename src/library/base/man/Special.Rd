@@ -1,6 +1,6 @@
 % File src/library/base/man/Special.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Special}
@@ -94,8 +94,9 @@ lfactorial(x)
   \pkg{utils}) for enumeration of all possible combinations.
 
   The \code{gamma}, \code{lgamma}, \code{digamma} and \code{trigamma}
-  functions are generic: methods can be defined for them individually or
-  via the \code{\link[=S3groupGeneric]{Math}} group generic.
+  functions are \link{internal generic} \link{primitive} functions: methods can be
+  defined for them individually or via the
+  \code{\link[=S3groupGeneric]{Math}} group generic.
 }
 \source{
   \code{gamma}, \code{lgamma}, \code{beta} and \code{lbeta} are based on

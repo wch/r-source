@@ -21,7 +21,8 @@ dim(x) <- value
     a numeric vector, which is coerced to integer (by truncation).}
 }
 \details{
-  The functions \code{dim} and \code{dim<-} are generic.
+  The functions \code{dim} and \code{dim<-} are \link{internal generic}
+  \link{primitive} functions.
 
   \code{dim} has a method for \code{\link{data.frame}}s, which returns
   the lengths of the \code{row.names} attribute of \code{x} and

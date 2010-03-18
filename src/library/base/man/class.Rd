@@ -68,6 +68,8 @@ oldClass(x) <- value
   no match. If \code{which} is \code{FALSE} then \code{TRUE} is 
   returned by \code{inherits} if any of the names in \code{what} match
   with any \code{class}.
+  
+  All but \code{inherits} are \link{primitive} functions.
 }
 
 \note{

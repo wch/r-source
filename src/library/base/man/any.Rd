@@ -1,6 +1,6 @@
 % File src/library/base/man/any.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{any}
@@ -27,6 +27,8 @@ any(\dots, na.rm = FALSE)
 
   Coercion of types other than integer (raw, double, complex, character,
   list) gives a warning as this is often unintentional.
+  
+  This is a \link{primitive} function.  
 }
 \value{
   The value is a logical vector of length one.

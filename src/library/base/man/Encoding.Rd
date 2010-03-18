@@ -36,8 +36,8 @@ enc2utf8(x)
 
   \code{enc2native} and \code{enc2utf8} convert elements of character
   vectors to the native encoding or UTF-8 respectively, taking any
-  marked encoding into account.  They are designed to do minimal
-  copying.
+  marked encoding into account.  They are \link{primitive} functions,
+  designed to do minimal copying.
   
   There are other ways for character strings to acquire a declared
   encoding apart from explicitly setting it (and these have changed as

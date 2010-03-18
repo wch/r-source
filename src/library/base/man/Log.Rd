@@ -67,6 +67,8 @@ expm1(x)
   \code{logb} is a wrapper for \code{log} for compatibility with S.  If
   (S3 or S4) methods are set for \code{log} they will be dispatched.
   Do not set S4 methods on \code{logb} itself.
+  
+  All except \code{log} are \link{primitive} functions.
 }
 \section{S4 methods}{
   \code{exp}, \code{expm1}, \code{log}, \code{log10}, \code{log2} and

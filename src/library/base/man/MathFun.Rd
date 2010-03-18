@@ -1,6 +1,6 @@
 % File src/library/base/man/Math.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{MathFun}
@@ -20,10 +20,11 @@ sqrt(x)
   \item{x}{a numeric or \code{\link{complex}} vector or array.}
 }
 \details{
-  These are generic functions: methods can be defined for them
-  individually or via the \code{\link[=S3groupGeneric]{Math}}
-  group generic.  For complex arguments (and the default method), \code{z},
-  \code{abs(z) == \link{Mod}(z)} and \code{sqrt(z) == z^0.5}.
+  These are \link{internal generic} \link{primitive} functions: methods
+  can be defined for them individually or via the
+  \code{\link[=S3groupGeneric]{Math}} group generic.  For complex
+  arguments (and the default method), \code{z}, \code{abs(z) ==
+  \link{Mod}(z)} and \code{sqrt(z) == z^0.5}.
 
   \code{abs(x)} returns an \code{\link{integer}} vector when \code{x} is
   \code{integer} or \code{\link{logical}}.

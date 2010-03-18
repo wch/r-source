@@ -36,6 +36,8 @@ on.exit(expr = NULL, add = FALSE)
   expression will be looked for in the function and its environment at
   the time of exit: to capture the current value in \code{expr} use
   \code{\link{substitute}} or similar.
+  
+  This is a \link{primitive} function.
 }
 \value{
   Invisible \code{NULL}.

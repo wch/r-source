@@ -61,9 +61,10 @@ Conj(z)
   coordinates}.  If \eqn{z = x + i y} with real \eqn{x} and \eqn{y}, for
   \eqn{r = Mod(z) = \sqrt{x^2 + y^2}}{r = Mod(z) = \sqrt(x^2 + y^2)},
   and \eqn{\phi = Arg(z)}, \eqn{x = r*\cos(\phi)}{x = r*cos(\phi)} and
-  \eqn{y = r*\sin(\phi)}{y = r*sin(\phi)}.  They are all generic
-  functions: methods can be defined for them individually or \emph{via} the
-  \code{\link[=S3groupGeneric]{Complex}} group generic.
+  \eqn{y = r*\sin(\phi)}{y = r*sin(\phi)}.  They are all \link{internal
+  generic} \link{primitive} functions: methods can be defined for them
+  individually or \emph{via} the \code{\link[=S3groupGeneric]{Complex}}
+  group generic.
 
   In addition, the elementary trigonometric, logarithmic and exponential
   functions are available for complex values.
