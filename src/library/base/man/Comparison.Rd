@@ -48,7 +48,11 @@ x != y
   in an 8-bit locale, or in Unicode point order for a UTF-8 locale (and
   may not sort in the same order for the same language in different
   character sets).  Collation of non-letters (spaces, punctuation signs,
-  hyphens, fractions and so on) is even more problematic. 
+  hyphens, fractions and so on) is even more problematic.
+  
+  Character strings can be compared  with different marked encodings
+  (see \code{\link{Encoding}}): they are translated to UTF-8 before
+  comparison.
 
   At least one of \code{x} and \code{y} must be an atomic vector, but if
   the other is a list \R attempts to coerce it to the type of the atomic
