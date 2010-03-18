@@ -1503,7 +1503,8 @@
                                                   file.path(latexdir, out),
                                                   encoding = encoding,
                                                   outputEncoding = outputEncoding,
-                                                  defines = NULL),
+                                                  defines = NULL,
+                                                  writeEncoding = !asChapter),
                                          "latexEncoding"))
             }
             if (!silent) message(domain = NA)

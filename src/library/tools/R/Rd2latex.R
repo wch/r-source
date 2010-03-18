@@ -42,7 +42,8 @@ latex_canonical_encoding  <- function(encoding)
 
 ## 'encoding' is passed to parse_Rd, as the input encoding
 Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
-		     outputEncoding = "ASCII", ...)
+		     outputEncoding = "ASCII", ...,
+                     writeEncoding = TRUE)
 {
     encode_warn <- FALSE
     WriteLines <-
@@ -637,7 +638,6 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     sections <- RdTags(Rd)
 
     enc <- which(sections == "\\encoding")
-    ## if (length(enc)) outputEncoding <- as.character(Rd[[enc[1L]]][[1L]])
 
     if (is.character(out)) {
         if(out == "") {
@@ -653,7 +653,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
    if (outputEncoding != "ASCII") {
         latexEncoding <- latex_canonical_encoding(outputEncoding)
-        of0("\\inputencoding{", latexEncoding, "}\n")
+        if(writeEncoding) of0("\\inputencoding{", latexEncoding, "}\n")
     } else latexEncoding <- NA
 
     ## we know this has been ordered by prepare2_Rd, but

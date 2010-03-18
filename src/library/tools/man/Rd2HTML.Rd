@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rd2HTML.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-9 R Core Development Team
+% Copyright 2008-10 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Rd2HTML}
@@ -25,7 +25,8 @@ Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
        width = getOption("help_text_width", 80L), ...)
 
 Rd2latex(Rd, out = "", defines = .Platform$OS.type,
-         stages = "render", outputEncoding = "ASCII", ...)
+         stages = "render", outputEncoding = "ASCII", ...,
+         writeEncoding = TRUE)
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       stages = "render", outputEncoding = "UTF-8", ...)
@@ -49,13 +50,13 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       text rendering should be designed.}
   \item{...}{ additional parameters to pass to \code{\link{parse_Rd}} when
     \code{Rd} is a filename. }
+  \item{writeEncoding}{should \verb{\inputencoding} lines be written in
+      the file for non-ASCII encodings?}
 }
 \details{
-  These functions convert help pages: \code{Rd2HTML} produces HTML (or
-  compiled HTML, for Windows), \code{Rd2txt} produces plain text,
-  \code{Rd2latex} produces LaTeX input.  By default,
-  \code{outputEncoding} is set to \code{""} and the native character
-  encoding (shown by \code{\link{localeToCharset}}) is used.
+  These functions convert help documents: \code{Rd2HTML} produces HTML,
+  \code{Rd2txt} produces plain text, \code{Rd2latex} produces LaTeX
+  a input file.
 
   \code{Rd2ex} extracts the examples in the format used by
   \code{\link{example}} and \R utilities.  it reproduces the previous
@@ -97,10 +98,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 
   For output, the \code{outputEncoding} argument will be used:
   \code{outputEncoding = ""} will choose the native encoding for the
-  current system.  The \code{Rd2latex} function is an exception to this
-  rule, because UTF-8 is not a viable universal choice for LaTeX: if an
-  input file contains an \samp{encoding} section, \code{Rd2latex} will
-  use that for the output encoding.
+  current system.
 
   If the text cannot be converted to the \code{outputEncoding}, byte
   substitution will be used (see \code{\link{iconv}}): \code{Rd2latex}
