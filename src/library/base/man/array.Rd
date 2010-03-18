@@ -74,8 +74,7 @@ is.array(x)
   specific classes of objects, see \link{InternalMethods}.
 }
 \note{
-  \code{is.array} is a \link{primitive} function so any argument name is
-  ignored.  
+  \code{is.array} is a \link{primitive} function.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

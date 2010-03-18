@@ -32,7 +32,7 @@ gc.time(on = TRUE)
   The timings are rounded up by the sampling interval for timing
   processes, and so are likely to be over-estimates.
   
-  It is a \link{primitive} and so ignores any argument name.
+  It is a \link{primitive}.
 }
 \seealso{\code{\link{gc}},
   \code{\link{proc.time}} for the timings for the session.}

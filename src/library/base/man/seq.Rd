@@ -89,7 +89,7 @@ seq(length.out= )
   or \code{along.with} is specified.
 
   \code{seq.int}, \code{seq_along} and \code{seq_len} are
-  \link{primitive}: the latter two ignore any argument name.
+  \link{primitive}.
 }
 % We used to explain some of the circumstances when integer was
 % returned, but people read that carelessly, so no longer.

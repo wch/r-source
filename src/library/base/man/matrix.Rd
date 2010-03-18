@@ -1,6 +1,6 @@
 % File src/library/base/man/matrix.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{matrix}
@@ -72,8 +72,7 @@ is.matrix(x)
   When coercing a vector, it produces a one-column matrix, and
   promotes the names (if any) of the vector to the rownames of the matrix.
   
-  \code{is.matrix} is a \link{primitive} function so any argument name is
-  ignored.
+  \code{is.matrix} is a \link{primitive} function.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

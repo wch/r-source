@@ -1,6 +1,6 @@
 % File src/library/base/man/levels.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{levels}
@@ -39,8 +39,7 @@ levels(x) <- value
   \code{levels(x) <- value} is not the same as (and is preferred to)
   \code{attr(x, "levels") <- value}.
 
-  The replacement function is \link{primitive}, so argument names are
-  ignored (but this might not be true of its methods).
+  The replacement function is \link{primitive}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

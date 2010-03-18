@@ -19,13 +19,10 @@
 }
 \details{
   The advantage of \code{.Primitive} over \code{\link{.Internal}}
-  functions is the potential efficiency of argument passing.  However,
-  this is done by ignoring argument names and using positional matching
-  of arguments (unless arranged differently for specific primitives such
-  as \code{\link{log}}, \code{\link{round}}, \code{\link{signif}},
-  \code{\link{rep}} and \code{\link{seq.int}}), so this is discouraged
-  for functions of more than one argument.
-
+  functions is the potential efficiency of argument passing, and that
+  positional matching can be use where desirable,
+  e.g. \code{\link{switch}}.
+  
   All primitive functions are in the base name space.
 }
 \seealso{

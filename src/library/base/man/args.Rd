@@ -23,9 +23,8 @@ args(name)
   empty (\code{NULL}) body.
   
   For a primitive, a closure with the documented usage and \code{NULL}
-  body.  Note that in almost all cases primitives do not make use of
-  named arguments and match by position rather than name.  (\code{rep}
-  and \code{seq.int} are exceptions.)
+  body.  Note that some primitives do not make use of named arguments
+  and match by position rather than name.
 
   \code{NULL} in case of a non-function.
 }
