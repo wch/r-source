@@ -1,6 +1,6 @@
 % File src/library/base/man/numeric.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{numeric}
@@ -34,16 +34,17 @@ is.numeric(x)
   written for \code{\link{as.double}}.  It is identical to
   \code{as.double} (and \code{as.real}).
 
-  \code{is.numeric} is generic: you can write methods to handle specific
-  classes of objects, see \link{InternalMethods}.  It is \strong{not}
-  the same as \code{\link{is.double}}.  Factors are handled by the
-  default method, and there are methods for classes
-  \code{"\link{Date}"}, \code{"\link{POSIXt}"} and
-  \code{"\link{difftime}"} (all of which return false).  Methods for
-  \code{is.numeric} should only return true if the base type of the
-  class is \code{double} or \code{integer} \emph{and} values can
-  reasonably be regarded as numeric (e.g. arithmetic on them makes
-  sense, and comparison should be done via the base type).
+  \code{is.numeric} is an \link{internal generic} \code{primitive}
+  function: you can write methods to handle specific classes of objects,
+  see \link{InternalMethods}.  It is \strong{not} the same as
+  \code{\link{is.double}}.  Factors are handled by the default method,
+  and there are methods for classes \code{"\link{Date}"},
+  \code{"\link{POSIXt}"} and \code{"\link{difftime}"} (all of which
+  return false).  Methods for \code{is.numeric} should only return true
+  if the base type of the class is \code{double} or \code{integer}
+  \emph{and} values can reasonably be regarded as numeric
+  (e.g. arithmetic on them makes sense, and comparison should be done
+  via the base type).
 }
 \value{
   for \code{numeric} and \code{as.numeric} see \code{\link{double}}.

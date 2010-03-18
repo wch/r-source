@@ -52,6 +52,8 @@ is.array(x)
   with one component for each dimension, either \code{NULL} or a
   character vector of the length given by the element of the
   \code{"dim"} attribute for that dimension.  
+  
+  \code{is.array} is a \link{primitive} function.
 }
 \value{
   \code{array} returns an array with the extents specified in \code{dim}

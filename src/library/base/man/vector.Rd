@@ -1,6 +1,6 @@
 % File src/library/base/man/vector.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{vector}
@@ -46,6 +46,8 @@ is.vector(x, mode = "any")
   Note that factors are \emph{not} vectors;  \code{is.vector} returns
   \code{FALSE} and \code{as.vector} converts to a character vector for
   \code{mode = "any"}.
+  
+  \code{is.vector} is a \link{primitive} function.  
 }
 \value{
   For \code{vector}, a vector of the given length and mode.  Logical
