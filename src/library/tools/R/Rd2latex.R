@@ -414,10 +414,13 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\R" = of0(tag, "{}"),
                "\\donttest" = writeContent(block, tag),
                "\\dontrun"= writeDR(block, tag),
-               "\\enc" = { # some people put more things in \enc than a word.
-                   writeContent(block[[1L]], tag)
-                   ##txt <- as.character(block[[1L]])
-                   ##of1(txt)
+               "\\enc" = {
+                   ## some people put more things in \enc than a word,
+                   ## but Rd2txt does not cover that case ....
+                   if (outputEncoding == "ASCII")
+                       writeContent(block[[2L]], tag)
+                   else
+                       writeContent(block[[1L]], tag)
                } ,
                "\\eqn" =,
                "\\deqn" = {

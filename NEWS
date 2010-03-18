@@ -319,8 +319,10 @@ NEW FEATURES
 	FALSE resulting in a 10x speedup.  Thanks to Patrick Aboyoun
 	for implementation suggestions.
 
-    o	Help conversion to text now uses the first part of a \enc{}{}
-	if it is representable in the current output encoding.
+    o	Help conversion to text now uses the first part of \enc{}{}
+	markup if it is representable in the current output encoding.
+	On the other hand, conversion to LaTeX with the default
+	outputEncoding = "ASCII" uses the second part.
 
     o	A new class "listOfMethods" has been introduced to represent
         the methods in a methods table, to replace the deprecated

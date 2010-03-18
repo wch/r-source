@@ -55,17 +55,10 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 }
 \details{
   These functions convert help documents: \code{Rd2HTML} produces HTML,
-  \code{Rd2txt} produces plain text, \code{Rd2latex} produces LaTeX
-  a input file.
-
+  \code{Rd2txt} produces plain text, \code{Rd2latex} produces LaTeX.
   \code{Rd2ex} extracts the examples in the format used by
-  \code{\link{example}} and \R utilities.  it reproduces the previous
-  version up to
-  \itemize{
-    \item The parser does not interpret markup in \R comments: this used
-    to be done.
-    \item Small improvements in layout.
-  }
+  \code{\link{example}} and \R utilities.
+
   Each of the functions accepts a filename for an Rd file, and
   will use \code{\link{parse_Rd}} to parse it before applying the
   conversions or checks.
@@ -73,6 +66,13 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   The difference between arguments \code{Link} and \code{Link2} is that
   links are looked in them in turn, so lazy-evaluation can be used to
   only do a second-level search for links if required.
+
+  Note that the default for \code{Rd2latex} is to output ASCII,
+  including using the second option of \verb{\enc} markup.  This was
+  chosen because use of UTF-8 in LaTeX requires version
+  \sQuote{2005/12/01} or later, and even with that version the coverage
+  of UTF-8 glyphs is not extensive (and not even as complete as
+  Latin-1).
   
   \code{Rd2txt} will format text paragraphs to a width determined by
   \code{width}, with appropriate margins.  The default is to be close to
