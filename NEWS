@@ -319,9 +319,6 @@ NEW FEATURES
 	FALSE resulting in a 10x speedup.  Thanks to Patrick Aboyoun
 	for implementation suggestions.
 
-    o	any() and all() return early if possible speeding up results
-	when operating on long vectors.
-
     o	Help conversion to text now uses the first part of a \enc{}{}
 	if it is representable in the current output encoding.
 

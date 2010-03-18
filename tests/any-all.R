@@ -5,6 +5,8 @@ all_tests <- list(
                   list(NA, all(rep(TRUE, 2), c(TRUE, NA))),
                   list(TRUE, all(rep(TRUE, 2), c(TRUE, NA), na.rm = TRUE)),
                   list(FALSE, all(FALSE)),
+                  list(NA, all(c(NA, TRUE))),
+                  list(FALSE, all(c(NA, FALSE))),
                   list(FALSE, all(rep(TRUE, 2), c(TRUE, FALSE))),
                   list(FALSE, all(c(TRUE, FALSE), c(TRUE, NA)), na.rm = TRUE))
 
@@ -17,6 +19,7 @@ any_tests <- list(
                   list(TRUE, any(c(TRUE, NA, FALSE))),
                   list(TRUE, any(c(TRUE, NA, FALSE), na.rm = TRUE)),
                   list(NA, any(c(NA, FALSE))),
+                  list(TRUE, any(c(NA, TRUE))),
                   list(FALSE, any(c(NA, FALSE), na.rm = TRUE)))
 
 test_list <- function(L)
