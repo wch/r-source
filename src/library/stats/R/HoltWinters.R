@@ -44,8 +44,8 @@ function (x,
         any(c(alpha, beta, gamma) < 0 || c(alpha, beta, gamma) > 1))
         stop ("'alpha', 'beta' and 'gamma' must be within the unit interval.")
     if((is.null(gamma) || gamma > 0)) {
-        if (seasonal == "multiplicative" && any(x <= 0))
-            stop ("data must be strictly non-negative for multiplicative Holt-Winters.")
+        if (seasonal == "multiplicative" && any(x == 0))
+            stop ("data must be non-zero for multiplicative Holt-Winters.")
         if (start.periods < 2)
             stop ("need at least 2 periods to compute seasonal start values.")
     }
