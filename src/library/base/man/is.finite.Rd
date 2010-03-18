@@ -1,6 +1,6 @@
 % File src/library/base/man/is.finite.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{is.finite}
@@ -14,13 +14,13 @@
 \description{
   \code{is.finite} and \code{is.infinite} return a vector of the same
   length as \code{x}, indicating which elements are finite (not infinite
-  and not missing).
+  and not missing) or infinite.
 
   \code{Inf} and \code{-Inf} are positive and negative infinity
   whereas \code{NaN} means \sQuote{Not a Number}.  (These apply to numeric
   values and real and imaginary parts of complex values but not to
-  values of integer vectors.)  All are \link{reserved} words in the \R
-  language.
+  values of integer vectors.)  \code{Inf} and \code{NaN} are
+  \link{reserved} words in the \R language.
 }
 \usage{
 is.finite(x)
@@ -30,34 +30,37 @@ NaN
 is.nan(x)
 }
 \arguments{
-  \item{x}{(numerical) object to be tested.}
+  \item{x}{\R object to be tested: the default methods handle atomic
+    vectors, lists and pairlists.}
 }
 \details{
   \code{is.finite} returns a vector of the same length as \code{x} the
   jth element of which is \code{TRUE} if \code{x[j]} is finite (i.e., it
   is not one of the values \code{NA}, \code{NaN}, \code{Inf} or
-  \code{-Inf}).  All elements of types other than logical, integer,
-  numeric and complex vectors are false.  Complex numbers are finite if
-  both the real and imaginary parts are.
+  \code{-Inf}) and \code{FALSE} otherwise.  All elements of types other
+  than logical, integer, numeric and complex vectors are false.  Complex
+  numbers are finite if both the real and imaginary parts are.
 
-  \code{is.infinite} returns a vector of the same length as \code{x}
-  the jth element of which is \code{TRUE} if \code{x[j]} is
-  infinite (i.e., equal to one of \code{Inf} or \code{-Inf}). This will
-  be false unless \code{x} is numeric or complex.  Complex numbers are
-  infinite if either the real and imaginary part is.
+  \code{is.infinite} returns a vector of the same length as \code{x} the
+  jth element of which is \code{TRUE} if \code{x[j]} is infinite (i.e.,
+  equal to one of \code{Inf} or \code{-Inf}) and \code{FALSE}
+  otherwise.  This will be false unless \code{x} is numeric or complex.
+  Complex numbers are infinite if either the real or the imaginary part is.
 
   \code{is.nan} tests if a numeric value is \code{NaN}.  Do not test
   equality to \code{NaN}, or even use \code{\link{identical}}, since
-  systems typically have many different NaN values.  One of these is used
-  for the numeric missing value \code{NA}, and \code{is.nan} is false
-  for that value.  A complex number is regarded
-  as \code{NaN} if either the real or imaginary part is \code{NaN} but
-  not \code{NA}.
-
+  systems typically have many different NaN values.  One of these is
+  used for the numeric missing value \code{NA}, and \code{is.nan} is
+  false for that value.  A complex number is regarded as \code{NaN} if
+  either the real or imaginary part is \code{NaN} but not \code{NA}.
+  All elements of logical, integer and raw vectors are considered not to
+  be NaN, and elements of lists and pairlists are also unless the
+  element is a length-one numeric or complex vector whose single element
+  is NaN.
+  
   All three functions are generic: you can write methods to handle
-  specific classes of objects, see \link{InternalMethods}.  The
-  default methods handle real and complex vectors.  They are
-  \link{primitive}, so any argument names are ignored..
+  specific classes of objects, see \link{InternalMethods}.  The default
+  methods handle atomic vectors.
 }
 \note{
   In \R, basically all mathematical functions (including basic
@@ -66,6 +69,10 @@ is.nan(x)
 
   The basic rule should be that calls and relations with \code{Inf}s
   really are statements with a proper mathematical \emph{limit}.
+}
+\value{
+  A logical vector of the same length as \code{x}: \code{dim},
+  \code{dimnames} and \code{names} attributes are preserved.
 }
 \seealso{
   \code{\link{NA}}, \sQuote{\emph{Not Available}} which is not a number
