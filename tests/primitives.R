@@ -110,3 +110,41 @@ for(f in S4gen) {
     ## might have created a generic, so redo 'get'
     stopifnot(identical(getGeneric(f)(xx), "testit"))
 }
+
+## check that they do argument matching, or at least check names
+except <- c("call", "switch", ".C", ".Fortran", ".Call", ".External",
+            ".Call.graphics", ".External.graphics", ".subset", ".subset2",
+            ".primTrace", ".primUntrace", "lazyLoadDBfetch",
+            ".Internal", ".Primitive", "^", "|", "%*%", "rep", "seq.int")
+
+for(f in ls(.GenericArgsEnv, all.names=TRUE)[-(1:15)])
+{
+    if (f %in% except) next
+    g <- get(f, envir = .GenericArgsEnv)
+    an <- names(formals(args(g)))
+    if(length(an) >0 && an[1] == "...") next
+    an <- an[an != "..."]
+    a <- rep(list(NULL), length(an))
+    names(a) <- c("zZ", an[-1])
+    res <- try(do.call(f, a), silent = TRUE)
+    m <- geterrmessage()
+    if(!grepl('does not match|unused argument', m))
+        stop("failure on ", f)
+}
+
+for(f in ls(.ArgsEnv, all.names=TRUE))
+{
+    if (f %in% except) next
+    g <- get(f, envir = .ArgsEnv)
+    an <- names(formals(args(g)))
+    if(length(an) >0 && an[1] == "...") next
+    an <- an[an != "..."]
+    if(length(an)) {
+        a <- rep(list(NULL), length(an))
+        names(a) <- c("zZ", an[-1])
+    } else a <- list(zZ=NULL)
+    res <- try(do.call(f, a), silent = TRUE)
+    m <- geterrmessage()
+    if(!grepl('does not match|unused argument|requires 0', m))
+        stop("failure on ", f)
+}

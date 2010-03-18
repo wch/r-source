@@ -386,6 +386,7 @@ SEXP attribute_hidden do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, n;
 
     checkArity(op, args);
+    check1arg(args, call, "z");
     if (DispatchGroup("Complex", call, op, args, env, &x))
 	return x;
     x = CAR(args);

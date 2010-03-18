@@ -1041,6 +1041,7 @@ SEXP attribute_hidden do_trunc(SEXP call, SEXP op, SEXP args, SEXP env)
     if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
     checkArity(op, args); /* but is -1 in names.c */
+    check1arg(args, call, "x");
     if (isComplex(CAR(args)))
 	errorcall(call, _("unimplemented complex function"));
     return math1(CAR(args), trunc, call);
