@@ -1,6 +1,6 @@
 % File src/library/base/man/mean.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{mean}
@@ -37,7 +37,7 @@ mean(x, \dots)
   If \code{trim} is zero (the default), the arithmetic mean of the
   values in \code{x} is computed, as a numeric or complex vector of
   length one.  If \code{x} is not logical (coerced to numeric), numeric
-  (including integer) or complex, \code{NA} is returned, with a warning.
+  (including integer) or complex, \code{NA_real_} is returned, with a warning.
 
   If \code{trim} is non-zero, a symmetrically trimmed mean is computed
   with a fraction of \code{trim} observations deleted from each end

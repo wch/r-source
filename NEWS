@@ -295,7 +295,7 @@ NEW FEATURES
 	a zero-length input.  sample.int() gains a default value
 	'size=n' to be more similar to sample().
 
-    o	switch() returns NULL on error (not previously documented on
+    o	switch() returned NULL on error (not previously documented on
 	the help page): it now does so invisibly, analogously to
 	if-without-else.
 
@@ -461,8 +461,12 @@ BUG FIXES
 	interactive(), nargs() and proc.time(), did not check that
 	they were called with the correct number of arguments.
 
-    o	A race condition in list.files() has been fixed to prevent
-	code from writing beyond an allocated vector.
+    o	A potential race condition in list.files() when other processes
+	are operating on the directory has been fixed.
+
+    o	mean(x, trim=, na.rm = FALSE) failed to return NA if 'x'
+	contained missing values.  (Reported by Bill Dunlap.)
+
 
 
 	**************************************************

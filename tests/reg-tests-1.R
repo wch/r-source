@@ -6102,4 +6102,11 @@ lapply("forward", switch, forward = "posS", reverse = "negS")
 
 ## evaluation of arguments of log2
 assertError(try(log2(quote(1:10))))
-## worked in 2.10.x
+## 'worked' in 2.10.x by evaluting the arg twice.
+
+
+## mean with NAs and trim (Bill Dunlap,
+## https://stat.ethz.ch/pipermail/r-devel/2010-March/056982.html)
+stopifnot(is.na(mean(c(1,10,100,NA), trim=0.1)),
+          is.na(mean(c(1,10,100,NA), trim=0.26)))
+## gave error, real value respectively in R <= 2.10.1
