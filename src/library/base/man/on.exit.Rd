@@ -37,7 +37,8 @@ on.exit(expr = NULL, add = FALSE)
   the time of exit: to capture the current value in \code{expr} use
   \code{\link{substitute}} or similar.
   
-  This is a \link{primitive} function.
+  This is a \sQuote{special} \link{primitive} function: it only
+  evaluates the argumnt \code{add}.
 }
 \value{
   Invisible \code{NULL}.

@@ -2053,31 +2053,28 @@ inside other functions), such as
 
 @example
 @group
-nargs        missing      on.exit
-interactive  is.@var{xxx}
-as.call      as.character as.complex  as.double
-as.environment
-as.integer   as.logical   as.raw
-.Primitive   .Internal
-globalenv    baseenv      emptyenv     pos.to.env
-unclass      invisible
-seq_along    seq_len
+nargs          missing        on.exit        interactive
+as.call        as.character   as.complex     as.double
+as.environment as.integer     as.logical     as.raw
+is.array       is.atomic      is.call        is.character  
+is.complex     is.double      is.environment is.expression 
+is.finite      is.function    is.infinite    is.integer    
+is.language    is.list        is.logical     is.matrix     
+is.na          is.name        is.nan         is.null       
+is.numeric     is.object      is.pairlist    is.raw        
+is.real        is.recursive   is.single      is.symbol     
+.Primitive    .Internal
+globalenv      baseenv        emptyenv       pos.to.env
+unclass        invisible      seq_along      seq_len
 @end group
 @end example
-
-@noindent
-(where @emph{xxx} stands for 27 different notions, such as @code{na},
-@code{function}, @code{numeric}, and so forth, but not @code{is.loaded})
-nor @code{is.vector}.
-@c is.na, is.nan, is.finite, is.infinite + do_is
 
 @item
 The programming and session management utilities
 
 @example
 @group
-browser  proc.time  gc.time
-tracemem retracemem untracemem
+browser  proc.time  gc.time tracemem retracemem untracemem
 @end group
 @end example
 

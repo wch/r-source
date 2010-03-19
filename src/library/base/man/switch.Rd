@@ -43,6 +43,9 @@ switch(EXPR, \dots)
   
   The first argument is always taken to be \code{EXPR}: if it is named
   its name must (partially) match.
+  
+  This is implemented as a \link{primitive} function that only evaluates
+  its first argument and one other if one is selected.
 }
 \section{Warning}{
   Before \R 2.11.0 it was necessary to avoid partial matching: an

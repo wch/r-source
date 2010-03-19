@@ -30,7 +30,8 @@ as an argument to a function.
   the function that defines the argument, not in the body of a nested
   function or a \code{local} call.  This may change in the future.
   
-  This is a \link{primitive} function.
+  This is a \sQuote{special} \link{primitive} function: it must not
+  evaluate its argument.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

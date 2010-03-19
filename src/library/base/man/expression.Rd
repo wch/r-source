@@ -35,6 +35,7 @@ as.expression(x, \dots)
   individual calls etc.
   
   \code{expression} and \code{is.expression} are \link{primitive} functions.
+  \code{expression} is \sQuote{special}: it does not evaluate its arguments.
 }
 \value{
   \code{expression} returns a vector of type \code{"expression"}

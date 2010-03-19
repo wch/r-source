@@ -40,7 +40,8 @@ quote(expr)
   ordinary variable, its value is substituted, unless \code{env} is
   \code{\link{.GlobalEnv}} in which case the symbol is left unchanged.
 
-  These are both \link{primitive} functions.
+  These are both \sQuote{special} \link{primitive} functions, which do
+  not evaluate their arguments.
 }
 \value{
   The \code{\link{mode}} of the result is generally \code{"call"} but
