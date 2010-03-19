@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 17:40+0000\n"
+"POT-Creation-Date: 2010-03-19 11:16+0000\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -835,7 +835,7 @@ msgstr "read error입니다"
 msgid "input string %d is invalid in this locale"
 msgstr "입력 문자열%d는 locale에서 부적절합니다"
 
-#: src/main/apply.c:41 src/main/apply.c:101 src/main/complex.c:1007
+#: src/main/apply.c:41 src/main/apply.c:101 src/main/complex.c:1008
 msgid "invalid length"
 msgstr "부적절한 길이입니다"
 
@@ -918,32 +918,32 @@ msgstr "정수의 자리수 오버플로우에 의해 NA가 작성되었습니�
 msgid "unimplemented real function of 1 argument"
 msgstr "한개의 인수를 가지는 실제 적용되지 않는 수치함수입니다"
 
-#: src/main/arithmetic.c:1045 src/main/complex.c:922 src/main/complex.c:996
+#: src/main/arithmetic.c:1046 src/main/complex.c:923 src/main/complex.c:997
 msgid "unimplemented complex function"
 msgstr "실제 적용되는 않는 복소수 연산입니다"
 
-#: src/main/arithmetic.c:1310 src/main/arithmetic.c:1687
-#: src/main/arithmetic.c:1869 src/main/arithmetic.c:1991
+#: src/main/arithmetic.c:1311 src/main/arithmetic.c:1688
+#: src/main/arithmetic.c:1870 src/main/arithmetic.c:1992
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d개의 수치 인수를 가지는 실제 적용되지 않는 수치함수입니다"
 
-#: src/main/arithmetic.c:1340
+#: src/main/arithmetic.c:1341
 #, fuzzy, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr ""
 "'log'함수에 %d 개의 인수가 건네받았습니다만, 1개 또는 2개가 아니면 안됩니다"
 
-#: src/main/arithmetic.c:1359
+#: src/main/arithmetic.c:1360
 msgid "invalid second argument of length 0"
 msgstr "두번째의 길이 0의 인수가 부적절합니다"
 
-#: src/main/arithmetic.c:1429
+#: src/main/arithmetic.c:1430
 #, fuzzy
 msgid "invalid argument 'base' of length 0"
 msgstr "두번째의 길이 0의 인수가 부적절합니다"
 
-#: src/main/arithmetic.c:1437
+#: src/main/arithmetic.c:1438
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
@@ -1212,26 +1212,26 @@ msgstr ""
 msgid "'name' must be non-null character string"
 msgstr "'name'는 NULL아닌 문자열이어야만 합니다"
 
-#: src/main/attrib.c:1485 src/main/attrib.c:1547 src/main/attrib.c:1575
+#: src/main/attrib.c:1485 src/main/attrib.c:1550 src/main/attrib.c:1578
 msgid "invalid type or length for slot name"
 msgstr "축 라벨의 유형이 부적절합니다"
 
-#: src/main/attrib.c:1512
+#: src/main/attrib.c:1515
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "형태 \"%s\"의 오브젝트로부터 슬롯(\"%s\")을 받을수가 없습니다"
 
-#: src/main/attrib.c:1523
+#: src/main/attrib.c:1526
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 "이름 \"%s\" 라고 하는 slot이 클래스\"%s\"의  오브젝트에는 존재하지 않습니다"
 
-#: src/main/attrib.c:1570
+#: src/main/attrib.c:1573
 msgid "formal classes cannot be used without the methods package"
 msgstr "메소드 패키지 없이 (formal class)는 사용할수 없습니다"
 
-#: src/main/attrib.c:1582
+#: src/main/attrib.c:1585
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1240,7 +1240,7 @@ msgstr ""
 "slot \"%s\"를 slot를 가지지 않는 기본 클래스(\"%s\")의 오브젝트로부터 얻으려"
 "고 했습니다"
 
-#: src/main/attrib.c:1586
+#: src/main/attrib.c:1589
 #, fuzzy, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1777,15 +1777,15 @@ msgstr "부적절한 복소수 단항 연산자입니다"
 msgid "unimplemented complex operation"
 msgstr "실제 적용되지 않는 복소수 연산자입니다"
 
-#: src/main/complex.c:479
+#: src/main/complex.c:480
 msgid "non-numeric argument to function"
 msgstr "함수의 인수는 수치가 아닙니다"
 
-#: src/main/complex.c:1068
+#: src/main/complex.c:1069
 msgid "invalid polynomial coefficient"
 msgstr "다항식의 계수가 부적절합니다"
 
-#: src/main/complex.c:1073
+#: src/main/complex.c:1074
 msgid "root finding code failed"
 msgstr "근원(root)를 검색하는 코드가 실패하였습니다"
 
@@ -4163,7 +4163,7 @@ msgstr "'x %s y'에서 'y'의 유형이 부적절합니다"
 msgid "Unary operator `!' called with two arguments"
 msgstr "2항연산에는 두개 인수가 필요합니다"
 
-#: src/main/logic.c:395
+#: src/main/logic.c:405
 #, c-format
 msgid "coercing argument of type '%s' to logical"
 msgstr ""

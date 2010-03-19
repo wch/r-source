@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 17:40+0000\n"
+"POT-Creation-Date: 2010-03-19 11:16+0000\n"
 "PO-Revision-Date: 2006-04-14 22:49+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -827,7 +827,7 @@ msgstr "讀取錯誤"
 msgid "input string %d is invalid in this locale"
 msgstr "輸入的字串 %d 不適用於此語言環境"
 
-#: src/main/apply.c:41 src/main/apply.c:101 src/main/complex.c:1007
+#: src/main/apply.c:41 src/main/apply.c:101 src/main/complex.c:1008
 msgid "invalid length"
 msgstr "長度不正確"
 
@@ -910,31 +910,31 @@ msgstr "整數向上溢位產生了 NA"
 msgid "unimplemented real function of 1 argument"
 msgstr "單引數的實數函數目前還沒有實作"
 
-#: src/main/arithmetic.c:1045 src/main/complex.c:922 src/main/complex.c:996
+#: src/main/arithmetic.c:1046 src/main/complex.c:923 src/main/complex.c:997
 msgid "unimplemented complex function"
 msgstr "尚未實作複數功能"
 
-#: src/main/arithmetic.c:1310 src/main/arithmetic.c:1687
-#: src/main/arithmetic.c:1869 src/main/arithmetic.c:1991
+#: src/main/arithmetic.c:1311 src/main/arithmetic.c:1688
+#: src/main/arithmetic.c:1870 src/main/arithmetic.c:1992
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d 個數值引數的實數函數尚未實作"
 
-#: src/main/arithmetic.c:1340
+#: src/main/arithmetic.c:1341
 #, fuzzy, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "給了 'log'%d 個引數，但它最多只能用兩個引數"
 
-#: src/main/arithmetic.c:1359
+#: src/main/arithmetic.c:1360
 msgid "invalid second argument of length 0"
 msgstr "第二引數長度為 0，不正確"
 
-#: src/main/arithmetic.c:1429
+#: src/main/arithmetic.c:1430
 #, fuzzy
 msgid "invalid argument 'base' of length 0"
 msgstr "第二引數長度為 0，不正確"
 
-#: src/main/arithmetic.c:1437
+#: src/main/arithmetic.c:1438
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "給了 'log'%d 個引數，但它最多只能用兩個引數"
@@ -1200,32 +1200,32 @@ msgstr ""
 msgid "'name' must be non-null character string"
 msgstr "'name' 必須為非空字元"
 
-#: src/main/attrib.c:1485 src/main/attrib.c:1547 src/main/attrib.c:1575
+#: src/main/attrib.c:1485 src/main/attrib.c:1550 src/main/attrib.c:1578
 msgid "invalid type or length for slot name"
 msgstr "名稱插槽的類型或長度不正確"
 
-#: src/main/attrib.c:1512
+#: src/main/attrib.c:1515
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "類型 \"%2$s\" 的目的物件中沒有 \"%1$s\" 這樣一個插槽"
 
-#: src/main/attrib.c:1523
+#: src/main/attrib.c:1526
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "\"%1$s\" 插槽名不存在於 \"%2$s\" 類型目的物件中"
 
-#: src/main/attrib.c:1570
+#: src/main/attrib.c:1573
 msgid "formal classes cannot be used without the methods package"
 msgstr "一定要有方法套件才能使用正式類別"
 
-#: src/main/attrib.c:1582
+#: src/main/attrib.c:1585
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr "無法從沒有插槽的基本類別 (\"%2$s\") 的目的物件中取得 \"%1$s\" 插槽"
 
-#: src/main/attrib.c:1586
+#: src/main/attrib.c:1589
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1754,15 +1754,15 @@ msgstr "單一複數運算子不正確"
 msgid "unimplemented complex operation"
 msgstr "複數運算目前還沒有實作"
 
-#: src/main/complex.c:479
+#: src/main/complex.c:480
 msgid "non-numeric argument to function"
 msgstr "函數不能有非數值引數"
 
-#: src/main/complex.c:1068
+#: src/main/complex.c:1069
 msgid "invalid polynomial coefficient"
 msgstr "多項式係數不正確"
 
-#: src/main/complex.c:1073
+#: src/main/complex.c:1074
 msgid "root finding code failed"
 msgstr "求根運算執行失敗"
 
@@ -4104,7 +4104,7 @@ msgstr "'x %s y' 中的 'y' 類型不正確"
 msgid "Unary operator `!' called with two arguments"
 msgstr "呼叫一元運算「!」時用了兩個引數"
 
-#: src/main/logic.c:395
+#: src/main/logic.c:405
 #, c-format
 msgid "coercing argument of type '%s' to logical"
 msgstr ""

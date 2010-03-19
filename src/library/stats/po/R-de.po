@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:20\n"
+"POT-Creation-Date: 2010-03-19 11:18\n"
 "PO-Revision-Date: 2009-10-07 14:33+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -32,7 +32,8 @@ msgstr ""
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
 msgstr "'alpha', 'beta' und 'gamma' müssen im Einheitsintervall liegen"
 
-msgid "data must be strictly non-negative for multiplicative Holt-Winters."
+#, fuzzy
+msgid "data must be non-zero for multiplicative Holt-Winters."
 msgstr ""
 "Daten müssen für den multiplikativen Holt-Winters strikt nicht-negativ sein"
 

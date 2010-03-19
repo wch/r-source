@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:20\n"
+"POT-Creation-Date: 2010-03-19 11:18\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -31,7 +31,8 @@ msgstr "无法拟合没有层次的模型('alpha'不能为0或FALSE) 。"
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
 msgstr "'alpha', 'beta'和'gamma'必需在单位区间内。"
 
-msgid "data must be strictly non-negative for multiplicative Holt-Winters."
+#, fuzzy
+msgid "data must be non-zero for multiplicative Holt-Winters."
 msgstr "乘法Holt-Winters的数据不能有负值"
 
 msgid "need at least 2 periods to compute seasonal start values."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 17:40+0000\n"
+"POT-Creation-Date: 2010-03-19 11:16+0000\n"
 "PO-Revision-Date: 2009-10-10 14:06+0100\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -829,7 +829,7 @@ msgstr " regcompのエラー: '%s' "
 msgid "input string %d is invalid in this locale"
 msgstr " 入力文字列 %d はこのロケールでは不適切です "
 
-#: src/main/apply.c:41 src/main/apply.c:101 src/main/complex.c:1007
+#: src/main/apply.c:41 src/main/apply.c:101 src/main/complex.c:1008
 msgid "invalid length"
 msgstr " 長さが不正です "
 
@@ -911,31 +911,31 @@ msgstr " 整数の桁あふれにより NA が生成されました "
 msgid "unimplemented real function of 1 argument"
 msgstr " 1個の引数を持つ未実装の数値関数 "
 
-#: src/main/arithmetic.c:1045 src/main/complex.c:922 src/main/complex.c:996
+#: src/main/arithmetic.c:1046 src/main/complex.c:923 src/main/complex.c:997
 msgid "unimplemented complex function"
 msgstr " 未実装の複素関数です "
 
-#: src/main/arithmetic.c:1310 src/main/arithmetic.c:1687
-#: src/main/arithmetic.c:1869 src/main/arithmetic.c:1991
+#: src/main/arithmetic.c:1311 src/main/arithmetic.c:1688
+#: src/main/arithmetic.c:1870 src/main/arithmetic.c:1992
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr " %d 個の数値引数を持つ未実装の数値関数 "
 
-#: src/main/arithmetic.c:1340
+#: src/main/arithmetic.c:1341
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr ""
 " '%d' 個の引数が '%s' に渡されましたが，1つまたは2つが必要とされています "
 
-#: src/main/arithmetic.c:1359
+#: src/main/arithmetic.c:1360
 msgid "invalid second argument of length 0"
 msgstr " 二番目の長さ 0 の引数が不正です "
 
-#: src/main/arithmetic.c:1429
+#: src/main/arithmetic.c:1430
 msgid "invalid argument 'base' of length 0"
 msgstr "長さ 0 の 'base ' 引数です "
 
-#: src/main/arithmetic.c:1437
+#: src/main/arithmetic.c:1438
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
@@ -1190,28 +1190,28 @@ msgstr " '%s' の '%s'　への部分的マッチ "
 msgid "'name' must be non-null character string"
 msgstr " 'name' は NULL でない文字列でなければなりません "
 
-#: src/main/attrib.c:1485 src/main/attrib.c:1547 src/main/attrib.c:1575
+#: src/main/attrib.c:1485 src/main/attrib.c:1550 src/main/attrib.c:1578
 msgid "invalid type or length for slot name"
 msgstr " スロット名の型または長さが不正です "
 
-#: src/main/attrib.c:1512
+#: src/main/attrib.c:1515
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr ""
 " 型 \"%s\" のオブジェクトからはスロット (\"%s\") を得ることは出来ません "
 
-#: src/main/attrib.c:1523
+#: src/main/attrib.c:1526
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 " 名前 \"%s\" というスロットが、クラス \"%s\" のこのオブジェクトには存在しませ"
 "ん "
 
-#: src/main/attrib.c:1570
+#: src/main/attrib.c:1573
 msgid "formal classes cannot be used without the methods package"
 msgstr " メソッドパッケージなしにフォーマルクラス（formal class）は使えません "
 
-#: src/main/attrib.c:1582
+#: src/main/attrib.c:1585
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1220,7 +1220,7 @@ msgstr ""
 " スロット \"%s\"を、スロットを持たない基本クラス(\"%s\")のオブジェクトから得"
 "ようとしました "
 
-#: src/main/attrib.c:1586
+#: src/main/attrib.c:1589
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1743,15 +1743,15 @@ msgstr " 不正な複素単項演算子です "
 msgid "unimplemented complex operation"
 msgstr " 未実装の複素演算です "
 
-#: src/main/complex.c:479
+#: src/main/complex.c:480
 msgid "non-numeric argument to function"
 msgstr " 関数の引数が数値ではありません "
 
-#: src/main/complex.c:1068
+#: src/main/complex.c:1069
 msgid "invalid polynomial coefficient"
 msgstr " 多項式の係数が不正です "
 
-#: src/main/complex.c:1073
+#: src/main/complex.c:1074
 msgid "root finding code failed"
 msgstr " 根を見つけるコードが失敗しました "
 
@@ -4087,7 +4087,7 @@ msgstr " 'x %s y' の 'y' の型が不正です "
 msgid "Unary operator `!' called with two arguments"
 msgstr " 単項演算子 '!' が2つの引数で呼び出されました "
 
-#: src/main/logic.c:395
+#: src/main/logic.c:405
 #, c-format
 msgid "coercing argument of type '%s' to logical"
 msgstr " '%s'型の引数を論理型に変換します "

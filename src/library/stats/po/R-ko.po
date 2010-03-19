@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:20\n"
+"POT-Creation-Date: 2010-03-19 11:18\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -29,7 +29,7 @@ msgstr ""
 "'alpha', 'beta' 그리고 'gamma'는 단위 사이의 내부에 있을 필요가 있습니다"
 
 #, fuzzy
-msgid "data must be strictly non-negative for multiplicative Holt-Winters."
+msgid "data must be non-zero for multiplicative Holt-Winters."
 msgstr ""
 "곱셈적 Holt-Winters 모델에서 데이터는 non-negative가 아니면 되지 않습니다"
 

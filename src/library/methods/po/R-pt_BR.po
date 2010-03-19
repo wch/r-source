@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:19\n"
+"POT-Creation-Date: 2010-03-19 11:17\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -177,14 +177,6 @@ msgstr "função genérica '%s' não encontrada para remoção"
 
 #, fuzzy
 msgid ""
-"invalid argument 'f', expected a function or its name, got an object of "
-"class %s"
-msgstr ""
-"argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido um "
-"objeto de classe  \"%s\""
-
-#, fuzzy
-msgid ""
 "internal error: did not get a valid generic function object for function \"%s"
 "\""
 msgstr ""
@@ -314,6 +306,12 @@ msgid ""
 msgstr "nenhum método definido para a função '%s' e assinatura %s"
 
 msgid "'file' must be a character string or a connection"
+msgstr ""
+
+msgid ""
+"argument \"signature\" is not meaningful with the current implmentation and "
+"is ignored \n"
+"(extract a subset of the methods list instead)"
 msgstr ""
 
 msgid "No method for \"...\" matches class \"%s\""
@@ -560,6 +558,17 @@ msgstr "nenhuma função genérica '%s' encontrada"
 msgid "skipping methods list element %s of unexpected class \"%s\""
 msgstr ""
 "pulando o elemento %s da lista de métodos por ser de classe inesperada \"%s\""
+
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is "
+"deprecated."
+msgstr ""
+
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
+msgstr ""
+
+msgid "Use %s instead."
+msgstr ""
 
 msgid "invalid object for formal method definition: type \"%s\""
 msgstr "objeto inválido para definição formal do método: tipo \"%s\""
@@ -1480,6 +1489,14 @@ msgid ""
 "on : %s"
 msgstr ""
 
+#, fuzzy
+msgid ""
+"invalid ignore= argument; should be a class defintion or a character vector, "
+"got an object of class %s"
+msgstr ""
+"argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido um "
+"objeto de classe  \"%s\""
+
 msgid "An object of class \""
 msgstr "Um objeto de classe \""
 
@@ -1573,6 +1590,14 @@ msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "nenhuma definição existente para função '%s'"
 msgstr[1] "nenhuma definição existente para função '%s'"
+
+#, fuzzy
+#~ msgid ""
+#~ "invalid argument 'f', expected a function or its name, got an object of "
+#~ "class %s"
+#~ msgstr ""
+#~ "argumento 'f' inválido, esperada uma função ou seu nome, mas foi obtido "
+#~ "um objeto de classe  \"%s\""
 
 #, fuzzy
 #~ msgid ""

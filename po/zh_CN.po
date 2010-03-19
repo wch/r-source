@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 17:40+0000\n"
+"POT-Creation-Date: 2010-03-19 11:16+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -818,7 +818,7 @@ msgstr "regcomp出错：'%s'"
 msgid "input string %d is invalid in this locale"
 msgstr "输入的字符串%d不适用于此语言环境"
 
-#: src/main/apply.c:41 src/main/apply.c:101 src/main/complex.c:1007
+#: src/main/apply.c:41 src/main/apply.c:101 src/main/complex.c:1008
 msgid "invalid length"
 msgstr "长度不对"
 
@@ -900,30 +900,30 @@ msgstr "整数上溢产生了NA"
 msgid "unimplemented real function of 1 argument"
 msgstr "一变元的实数函数目前还没有实现"
 
-#: src/main/arithmetic.c:1045 src/main/complex.c:922 src/main/complex.c:996
+#: src/main/arithmetic.c:1046 src/main/complex.c:923 src/main/complex.c:997
 msgid "unimplemented complex function"
 msgstr "目前没有实现复数功能"
 
-#: src/main/arithmetic.c:1310 src/main/arithmetic.c:1687
-#: src/main/arithmetic.c:1869 src/main/arithmetic.c:1991
+#: src/main/arithmetic.c:1311 src/main/arithmetic.c:1688
+#: src/main/arithmetic.c:1870 src/main/arithmetic.c:1992
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "%d数值变元的实数函数目前没有实现"
 
-#: src/main/arithmetic.c:1340
+#: src/main/arithmetic.c:1341
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "给了%d个变元到'%s'，但它最多只能用两个变元"
 
-#: src/main/arithmetic.c:1359
+#: src/main/arithmetic.c:1360
 msgid "invalid second argument of length 0"
 msgstr "第二变元长度为零是不对的"
 
-#: src/main/arithmetic.c:1429
+#: src/main/arithmetic.c:1430
 msgid "invalid argument 'base' of length 0"
 msgstr "不能有长度为零的'base'变元"
 
-#: src/main/arithmetic.c:1437
+#: src/main/arithmetic.c:1438
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "给了'log'%d个变元，但它最多只能用两个变元"
@@ -1174,32 +1174,32 @@ msgstr "'%s'部分匹配到'%s'"
 msgid "'name' must be non-null character string"
 msgstr "'name'必需为非空字符"
 
-#: src/main/attrib.c:1485 src/main/attrib.c:1547 src/main/attrib.c:1575
+#: src/main/attrib.c:1485 src/main/attrib.c:1550 src/main/attrib.c:1578
 msgid "invalid type or length for slot name"
 msgstr "名字槽的类别或长度不对"
 
-#: src/main/attrib.c:1512
+#: src/main/attrib.c:1515
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "类别\"%2$s\"的对象中没有\"%1$s\"这样一个槽"
 
-#: src/main/attrib.c:1523
+#: src/main/attrib.c:1526
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "\"%1$s\"槽名不存在于\"%2$s\"类别对象中"
 
-#: src/main/attrib.c:1570
+#: src/main/attrib.c:1573
 msgid "formal classes cannot be used without the methods package"
 msgstr "一定要有方法程序包才能用正式类别"
 
-#: src/main/attrib.c:1582
+#: src/main/attrib.c:1585
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
 "slots"
 msgstr "无法从没有槽的基本类别(\"%2$s\") 的对象中取得\"%1$s\"槽"
 
-#: src/main/attrib.c:1586
+#: src/main/attrib.c:1589
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1710,15 +1710,15 @@ msgstr "复数一进列运算符有错"
 msgid "unimplemented complex operation"
 msgstr "复数运算目前还没有实现"
 
-#: src/main/complex.c:479
+#: src/main/complex.c:480
 msgid "non-numeric argument to function"
 msgstr "函数不能有非数值变元"
 
-#: src/main/complex.c:1068
+#: src/main/complex.c:1069
 msgid "invalid polynomial coefficient"
 msgstr "多项式系数不对"
 
-#: src/main/complex.c:1073
+#: src/main/complex.c:1074
 msgid "root finding code failed"
 msgstr "寻根码运行失败"
 
@@ -4022,7 +4022,7 @@ msgstr "'x %s y'里的'y'种类不对"
 msgid "Unary operator `!' called with two arguments"
 msgstr "单进列运算`!'不能有两个变元"
 
-#: src/main/logic.c:395
+#: src/main/logic.c:405
 #, c-format
 msgid "coercing argument of type '%s' to logical"
 msgstr "将种类为'%s'的变元强迫转化为逻辑值"

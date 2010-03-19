@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 17:40+0000\n"
+"POT-Creation-Date: 2010-03-19 11:16+0000\n"
 "PO-Revision-Date: 2009-10-05 19:09+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -829,7 +829,7 @@ msgstr "regcomp-feil: «%s»"
 msgid "input string %d is invalid in this locale"
 msgstr "innteksten «%d» er ugyldig i dette lokalet"
 
-#: src/main/apply.c:41 src/main/apply.c:101 src/main/complex.c:1007
+#: src/main/apply.c:41 src/main/apply.c:101 src/main/complex.c:1008
 msgid "invalid length"
 msgstr "ugyldig lengd"
 
@@ -913,30 +913,30 @@ msgstr "NA-verdiar produsert av heiltalsoverflyt"
 msgid "unimplemented real function of 1 argument"
 msgstr "ikkje-implementert reell funksjon med 1 argument"
 
-#: src/main/arithmetic.c:1045 src/main/complex.c:922 src/main/complex.c:996
+#: src/main/arithmetic.c:1046 src/main/complex.c:923 src/main/complex.c:997
 msgid "unimplemented complex function"
 msgstr "ikkje-implementert kompleks funksjon"
 
-#: src/main/arithmetic.c:1310 src/main/arithmetic.c:1687
-#: src/main/arithmetic.c:1869 src/main/arithmetic.c:1991
+#: src/main/arithmetic.c:1311 src/main/arithmetic.c:1688
+#: src/main/arithmetic.c:1870 src/main/arithmetic.c:1992
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "ikkje-implementert reell funksjon med %d numeriske argument"
 
-#: src/main/arithmetic.c:1340
+#: src/main/arithmetic.c:1341
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "%d argument sende til «%s», som tek 1 eller 2 argument"
 
-#: src/main/arithmetic.c:1359
+#: src/main/arithmetic.c:1360
 msgid "invalid second argument of length 0"
 msgstr "ugyldig andreargument av lengd 0"
 
-#: src/main/arithmetic.c:1429
+#: src/main/arithmetic.c:1430
 msgid "invalid argument 'base' of length 0"
 msgstr "ugyldig argument «base» av lengd 0"
 
-#: src/main/arithmetic.c:1437
+#: src/main/arithmetic.c:1438
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "%d argument sende til «log», som tek 1 eller 2 argument"
@@ -1192,26 +1192,26 @@ msgstr "«%s» vert tolka som «%s»"
 msgid "'name' must be non-null character string"
 msgstr "«name» må vera ein teiknstreng ulik null"
 
-#: src/main/attrib.c:1485 src/main/attrib.c:1547 src/main/attrib.c:1575
+#: src/main/attrib.c:1485 src/main/attrib.c:1550 src/main/attrib.c:1578
 msgid "invalid type or length for slot name"
 msgstr "ugyldig type eller lengd på slot-namn"
 
-#: src/main/attrib.c:1512
+#: src/main/attrib.c:1515
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "klarte ikkje henta slot («%s») frå eit objekt av typen «%s»"
 
-#: src/main/attrib.c:1523
+#: src/main/attrib.c:1526
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr ""
 "det finst ikkje ein slot med namnet «%s» for dette objektet av klassen «%s»"
 
-#: src/main/attrib.c:1570
+#: src/main/attrib.c:1573
 msgid "formal classes cannot be used without the methods package"
 msgstr "formelle klassar kan ikkje brukast utan «methods»-pakken"
 
-#: src/main/attrib.c:1582
+#: src/main/attrib.c:1585
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1219,7 +1219,7 @@ msgid ""
 msgstr ""
 "prøver å henta slot «%s» frå eit objekt av ein grunnklasse («%s») utan slot-ar"
 
-#: src/main/attrib.c:1586
+#: src/main/attrib.c:1589
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1741,15 +1741,15 @@ msgstr "ugyldig kompleks unæroperator"
 msgid "unimplemented complex operation"
 msgstr "ikkje-implementert kompleks operasjon"
 
-#: src/main/complex.c:479
+#: src/main/complex.c:480
 msgid "non-numeric argument to function"
 msgstr "ikkje-numerisk argument til funksjon"
 
-#: src/main/complex.c:1068
+#: src/main/complex.c:1069
 msgid "invalid polynomial coefficient"
 msgstr "ugyldig polynomkoeffisient"
 
-#: src/main/complex.c:1073
+#: src/main/complex.c:1074
 msgid "root finding code failed"
 msgstr "feil ved rotfinning"
 
@@ -4072,7 +4072,7 @@ msgstr "ugyldig «y»-type i «x %s y»"
 msgid "Unary operator `!' called with two arguments"
 msgstr "kalla unæroperatoren «!» med to argument"
 
-#: src/main/logic.c:395
+#: src/main/logic.c:405
 #, c-format
 msgid "coercing argument of type '%s' to logical"
 msgstr "gjer om argument av typen «%s» til logisk verdi"

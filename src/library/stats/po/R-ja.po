@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:20\n"
+"POT-Creation-Date: 2010-03-19 11:18\n"
 "PO-Revision-Date: 2009-10-07 19:29+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -29,7 +29,8 @@ msgstr ""
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
 msgstr " 'alpha', 'beta' そして 'gamma' は単位区間の内部にある必要があります "
 
-msgid "data must be strictly non-negative for multiplicative Holt-Winters."
+#, fuzzy
+msgid "data must be non-zero for multiplicative Holt-Winters."
 msgstr " 乗法的 Holt-Winters モデルではデータは正値でなければなりません "
 
 msgid "need at least 2 periods to compute seasonal start values."

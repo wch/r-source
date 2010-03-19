@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:19\n"
+"POT-Creation-Date: 2010-03-19 11:17\n"
 "PO-Revision-Date: 2009-10-09 13:09+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -197,14 +197,6 @@ msgstr ""
 msgid "generic function \"%s\" not found for removal"
 msgstr " 除去のための総称的関数 \"%s\" が見付かりません  "
 
-#, fuzzy
-msgid ""
-"invalid argument 'f', expected a function or its name, got an object of "
-"class %s"
-msgstr ""
-" 不正な引数 \"f\" です。関数かその名前が期待されていますが、クラス \"%s\" の"
-"オブジェクトが得られました "
-
 msgid ""
 "internal error: did not get a valid generic function object for function \"%s"
 "\""
@@ -325,6 +317,12 @@ msgstr ""
 
 msgid "'file' must be a character string or a connection"
 msgstr " 'file' は文字列かコネクションでなければなりません "
+
+msgid ""
+"argument \"signature\" is not meaningful with the current implmentation and "
+"is ignored \n"
+"(extract a subset of the methods list instead)"
+msgstr ""
 
 msgid "No method for \"...\" matches class \"%s\""
 msgstr "クラス \"%s\" には \"...\" にあてはまるメソッドがありません "
@@ -556,6 +554,17 @@ msgstr " \"%s\" に対する総称的関数は見付かりません "
 msgid "skipping methods list element %s of unexpected class \"%s\""
 msgstr ""
 " メソッドリスト要素 %s をスキップします(予期しないクラス \"%s\" でした) "
+
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is "
+"deprecated."
+msgstr ""
+
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
+msgstr ""
+
+msgid "Use %s instead."
+msgstr ""
 
 msgid "invalid object for formal method definition: type \"%s\""
 msgstr " 形式的なメソッド定義に対する不正なオブジェクト：タイプ \"%s\" "
@@ -1588,6 +1597,14 @@ msgid ""
 msgstr ""
 " クラス \"%s\" の定義は指定された位置 %s にありません、%s に関する定義です "
 
+#, fuzzy
+msgid ""
+"invalid ignore= argument; should be a class defintion or a character vector, "
+"got an object of class %s"
+msgstr ""
+"クラス \"%s\" のオブジェクトを得ましたが、引数 'f' は総称的関数か単一の文字列"
+"でなければなりません; "
+
 msgid "An object of class \""
 msgstr " オブジェクトのクラスは \" "
 
@@ -1689,6 +1706,14 @@ msgstr "ファイルを移動するか、クラスまたはメソッドを削除
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] " クラス \"%s\" の定義はありません "
+
+#, fuzzy
+#~ msgid ""
+#~ "invalid argument 'f', expected a function or its name, got an object of "
+#~ "class %s"
+#~ msgstr ""
+#~ " 不正な引数 \"f\" です。関数かその名前が期待されていますが、クラス \"%s\" "
+#~ "のオブジェクトが得られました "
 
 #~ msgid "Arguments of method and generic are not in the same order"
 #~ msgstr " メソッドと総称関数の引数が同じ順序で現れていません "

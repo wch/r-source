@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:19\n"
+"POT-Creation-Date: 2010-03-19 11:17\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -173,14 +173,6 @@ msgstr "제거를 위해서 검색되지 않은 generic 함수 '%s' 입니다"
 
 #, fuzzy
 msgid ""
-"invalid argument 'f', expected a function or its name, got an object of "
-"class %s"
-msgstr ""
-"무효의 인수 'f', 함수 또는 그 이름에 예측한 클래스 \n"
-"\"%s\"의 오브젝트를 얻었습니다"
-
-#, fuzzy
-msgid ""
 "internal error: did not get a valid generic function object for function \"%s"
 "\""
 msgstr ""
@@ -307,6 +299,12 @@ msgid ""
 msgstr "함수 '%s'와 기호 %s를 위해서 정해지는 메소드가 아닙니다"
 
 msgid "'file' must be a character string or a connection"
+msgstr ""
+
+msgid ""
+"argument \"signature\" is not meaningful with the current implmentation and "
+"is ignored \n"
+"(extract a subset of the methods list instead)"
 msgstr ""
 
 msgid "No method for \"...\" matches class \"%s\""
@@ -554,6 +552,17 @@ msgstr "'%s'를 위해서 검색되어진 generic 함수가 아닙니다"
 msgid "skipping methods list element %s of unexpected class \"%s\""
 msgstr ""
 "skip 하고 있는 메소드는 예상외의 클래스 \"%s\"의 요소 %s로 리스트합니다"
+
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is "
+"deprecated."
+msgstr ""
+
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
+msgstr ""
+
+msgid "Use %s instead."
+msgstr ""
 
 msgid "invalid object for formal method definition: type \"%s\""
 msgstr "정식적 메소드 정의의 무효인 오브젝트: 유형 \"%s\""
@@ -1599,6 +1608,15 @@ msgid ""
 "on : %s"
 msgstr "지정된 위치의 클래스 \"%s\", %s,(s) 정의가 없습니다: %s"
 
+#, fuzzy
+msgid ""
+"invalid ignore= argument; should be a class defintion or a character vector, "
+"got an object of class %s"
+msgstr ""
+"인수'classDef'는 문자열 또는 클래스는 representation가 아니면 안됩니다; 클래"
+"스 \"%s\"\n"
+"의 오브젝트를 얻었습니다"
+
 msgid "An object of class \""
 msgstr ""
 
@@ -1697,6 +1715,14 @@ msgstr ""
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "검색되는 클래스 \"%s\"의 정의가 아닙니다"
+
+#, fuzzy
+#~ msgid ""
+#~ "invalid argument 'f', expected a function or its name, got an object of "
+#~ "class %s"
+#~ msgstr ""
+#~ "무효의 인수 'f', 함수 또는 그 이름에 예측한 클래스 \n"
+#~ "\"%s\"의 오브젝트를 얻었습니다"
 
 #, fuzzy
 #~ msgid "Arguments of method and generic are not in the same order"

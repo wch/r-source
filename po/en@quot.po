@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 17:40+0000\n"
-"PO-Revision-Date: 2010-03-16 17:40+0000\n"
+"POT-Creation-Date: 2010-03-19 11:16+0000\n"
+"PO-Revision-Date: 2010-03-19 11:16+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -841,7 +841,7 @@ msgstr "regcomp error:  ‘%s’"
 msgid "input string %d is invalid in this locale"
 msgstr "input string %d is invalid in this locale"
 
-#: src/main/apply.c:41 src/main/apply.c:101 src/main/complex.c:1007
+#: src/main/apply.c:41 src/main/apply.c:101 src/main/complex.c:1008
 msgid "invalid length"
 msgstr "invalid length"
 
@@ -925,30 +925,30 @@ msgstr "NAs produced by integer overflow"
 msgid "unimplemented real function of 1 argument"
 msgstr "unimplemented real function of 1 argument"
 
-#: src/main/arithmetic.c:1045 src/main/complex.c:922 src/main/complex.c:996
+#: src/main/arithmetic.c:1046 src/main/complex.c:923 src/main/complex.c:997
 msgid "unimplemented complex function"
 msgstr "unimplemented complex function"
 
-#: src/main/arithmetic.c:1310 src/main/arithmetic.c:1687
-#: src/main/arithmetic.c:1869 src/main/arithmetic.c:1991
+#: src/main/arithmetic.c:1311 src/main/arithmetic.c:1688
+#: src/main/arithmetic.c:1870 src/main/arithmetic.c:1992
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
 msgstr "unimplemented real function of %d numeric arguments"
 
-#: src/main/arithmetic.c:1340
+#: src/main/arithmetic.c:1341
 #, c-format
 msgid "%d arguments passed to '%s' which requires 1 or 2"
 msgstr "%d arguments passed to ‘%s’ which requires 1 or 2"
 
-#: src/main/arithmetic.c:1359
+#: src/main/arithmetic.c:1360
 msgid "invalid second argument of length 0"
 msgstr "invalid second argument of length 0"
 
-#: src/main/arithmetic.c:1429
+#: src/main/arithmetic.c:1430
 msgid "invalid argument 'base' of length 0"
 msgstr "invalid argument ‘base’ of length 0"
 
-#: src/main/arithmetic.c:1437
+#: src/main/arithmetic.c:1438
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr "%d arguments passed to ‘log’ which requires 1 or 2"
@@ -1202,25 +1202,25 @@ msgstr "partial match of ‘%s’ to ‘%s’"
 msgid "'name' must be non-null character string"
 msgstr "‘name’ must be non-null character string"
 
-#: src/main/attrib.c:1485 src/main/attrib.c:1547 src/main/attrib.c:1575
+#: src/main/attrib.c:1485 src/main/attrib.c:1550 src/main/attrib.c:1578
 msgid "invalid type or length for slot name"
 msgstr "invalid type or length for slot name"
 
-#: src/main/attrib.c:1512
+#: src/main/attrib.c:1515
 #, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "cannot get a slot (“%s”) from an object of type “%s”"
 
-#: src/main/attrib.c:1523
+#: src/main/attrib.c:1526
 #, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "no slot of name “%s” for this object of class “%s”"
 
-#: src/main/attrib.c:1570
+#: src/main/attrib.c:1573
 msgid "formal classes cannot be used without the methods package"
 msgstr "formal classes cannot be used without the methods package"
 
-#: src/main/attrib.c:1582
+#: src/main/attrib.c:1585
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object of a basic class (\"%s\") with no "
@@ -1228,7 +1228,7 @@ msgid ""
 msgstr ""
 "trying to get slot “%s” from an object of a basic class (“%s”) with no slots"
 
-#: src/main/attrib.c:1586
+#: src/main/attrib.c:1589
 #, c-format
 msgid ""
 "trying to get slot \"%s\" from an object (class \"%s\") that is not an S4 "
@@ -1747,15 +1747,15 @@ msgstr "invalid complex unary operator"
 msgid "unimplemented complex operation"
 msgstr "unimplemented complex operation"
 
-#: src/main/complex.c:479
+#: src/main/complex.c:480
 msgid "non-numeric argument to function"
 msgstr "non-numeric argument to function"
 
-#: src/main/complex.c:1068
+#: src/main/complex.c:1069
 msgid "invalid polynomial coefficient"
 msgstr "invalid polynomial coefficient"
 
-#: src/main/complex.c:1073
+#: src/main/complex.c:1074
 msgid "root finding code failed"
 msgstr "root finding code failed"
 
@@ -4065,7 +4065,7 @@ msgstr "invalid ‘y’ type in ‘x %s y’"
 msgid "Unary operator `!' called with two arguments"
 msgstr "Unary operator ‘!’ called with two arguments"
 
-#: src/main/logic.c:395
+#: src/main/logic.c:405
 #, c-format
 msgid "coercing argument of type '%s' to logical"
 msgstr "coercing argument of type ‘%s’ to logical"

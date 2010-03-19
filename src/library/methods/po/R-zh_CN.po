@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:19\n"
+"POT-Creation-Date: 2010-03-19 11:17\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -176,12 +176,6 @@ msgstr "函数'%s'好象是同屬函数，却有'%s'的同屬名字"
 msgid "generic function \"%s\" not found for removal"
 msgstr "没有'%s'这样的同屬函数，因此不能将之删除"
 
-#, fuzzy
-msgid ""
-"invalid argument 'f', expected a function or its name, got an object of "
-"class %s"
-msgstr "变元'f'不对，应该是函数或函数的名字，但得到的却是类别为\"%s\"的对象"
-
 msgid ""
 "internal error: did not get a valid generic function object for function \"%s"
 "\""
@@ -283,6 +277,12 @@ msgstr "函数'%s'和标记%s没有设定方法"
 
 msgid "'file' must be a character string or a connection"
 msgstr "'file'必需是字符串或联结"
+
+msgid ""
+"argument \"signature\" is not meaningful with the current implmentation and "
+"is ignored \n"
+"(extract a subset of the methods list instead)"
+msgstr ""
 
 msgid "No method for \"...\" matches class \"%s\""
 msgstr "\"...\"没有与\"%s\"类别对得上的方法"
@@ -482,6 +482,17 @@ msgstr "为\"%s\"找不到同屬函数"
 
 msgid "skipping methods list element %s of unexpected class \"%s\""
 msgstr "因为其类别\"%2$s\"没有定义，忽略%1$s这一方法串列單元"
+
+msgid ""
+"%s, along with other use of the \"MethodsList\" metadata objects, is "
+"deprecated."
+msgstr ""
+
+msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
+msgstr ""
+
+msgid "Use %s instead."
+msgstr ""
 
 msgid "invalid object for formal method definition: type \"%s\""
 msgstr "正式方法定义的对象不对: \"%s\"种类"
@@ -1379,6 +1390,14 @@ msgid ""
 "on : %s"
 msgstr "在指定的%2$s这个位置不存在类别\"%1$s\"的定义, 定义在: %3$s"
 
+#, fuzzy
+msgid ""
+"invalid ignore= argument; should be a class defintion or a character vector, "
+"got an object of class %s"
+msgstr ""
+"变元\"f\"要么是同屬函数要么是单一字符串；现在得到的却是类别为\"%s\"的目标对象"
+"对象"
+
 msgid "An object of class \""
 msgstr "对象为类别"
 
@@ -1467,6 +1486,12 @@ msgstr "移动文件或删除类别/方法"
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "类别\"%s\"的定义不存在"
+
+#, fuzzy
+#~ msgid ""
+#~ "invalid argument 'f', expected a function or its name, got an object of "
+#~ "class %s"
+#~ msgstr "变元'f'不对，应该是函数或函数的名字，但得到的却是类别为\"%s\"的对象"
 
 #~ msgid "Arguments of method and generic are not in the same order"
 #~ msgstr "方法里的变元和同属函数里的变元之顺序不同"
