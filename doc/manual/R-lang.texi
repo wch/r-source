@@ -134,8 +134,8 @@ preferred usage.
 
 Some familiarity with @R{} is assumed.  This is not an introduction to
 @R{} but rather a programmers' reference manual.  Other manuals provide
-complementary information: in particular @ref{Preface, , , R-intro, R
-Introduction} provides an introduction to @R{} and @ref{System and
+complementary information: in particular @ref{Preface, , , R-intro, An
+Introduction to R} provides an introduction to @R{} and @ref{System and
 foreign language interfaces, , , R-exts, Writing R Extensions} details
 how to extend @R{} using compiled code.
 
@@ -504,9 +504,8 @@ their arguments evaluated and passed to the internal function, in
 accordance with @emph{call-by-value}, whereas special functions pass the
 unevaluated arguments to the internal function.
 
-From the @R{} language, these objects are just another kind of function,
-except that their definition cannot be listed.  The @code{typeof}
-function can distinguish them from interpreted
+From the @R{} language, these objects are just another kind of function.
+The @code{is.primitive} function can distinguish them from interpreted
 @cindex function
 functions.
 
@@ -535,13 +534,11 @@ of the expression slot.  This allows the programmer to
 access either the value or the expression associated with the promise.
 
 Within the @R{} language, promise objects are almost only seen
-implicitly.  (In an upcoming release they will never be visible to
-@R{} code, as they will always be evaluated when accessed.) 
-Actual function arguments are of this type.
-There is also a @code{delayedAssign} function
-that will make a promise out of an expression.  There is generally no 
-way in @R{} code to check whether an object is a promise or not, nor is there a
-way to use @R{} code to determine the environment of a promise.
+implicitly: actual function arguments are of this type.  There is also a
+@code{delayedAssign} function that will make a promise out of an
+expression.  There is generally no way in @R{} code to check whether an
+object is a promise or not, nor is there a way to use @R{} code to
+determine the environment of a promise.
 
 @node Dot-dot-dot, Environment objects, Promise objects, Basic types
 @subsection Dot-dot-dot
@@ -741,10 +738,11 @@ printing arrays.
 @node Classes, Time series attributes, Dimnames, Attributes
 @subsection Classes
 
-@R{} has an elaborate class system, controlled via the @code{class}
-attribute.  This attribute is a character vector containing the list of
-classes that an object inherits from.  This forms the basis of the
-``generic methods'' functionality in @R{}.
+@R{} has an elaborate class system@footnote{actally two, but this draft
+manual predates the @pkg{methods} package.}, principally controlled via
+the @code{class} attribute.  This attribute is a character vector
+containing the list of classes that an object inherits from.  This forms
+the basis of the ``generic methods'' functionality in @R{}.
 
 This attribute can be accessed and manipulated virtually without
 restriction by users.  There is no checking that an object actually
