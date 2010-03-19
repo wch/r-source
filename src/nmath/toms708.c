@@ -19,7 +19,7 @@
 /**----------- DEBUGGING -------------
  *
  *	make CFLAGS='-DDEBUG_bratio  ...'
- *MM: (cd ~/R/D/r-devel/Linux-inst/src/nmath ; gcc -std=gnu99 -I. -I../../src/include -I../../../R/src/include -I/usr/local/include -DHAVE_CONFIG_H -DDEBUG_bratio -g  -c ../../../R/src/nmath/toms708.c -o toms708.o)
+ *MM: (cd `R-devel RHOME`/src/nmath ; gcc -std=gnu99 -I. -I../../src/include -I../../../R/src/include -I/usr/local/include -DHAVE_CONFIG_H -DDEBUG_bratio -g  -c ../../../R/src/nmath/toms708.c -o toms708.o; cd ../..; make R)
 */
 #ifdef DEBUG_bratio
 # include <R_ext/PrtUtil.h>
@@ -126,7 +126,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
     if (fabs(z) > eps * 3.0) { *ierr = 5; return; }
 
 #ifdef DEBUG_bratio
-    REprintf("bratio(a=%g, b=%g, x=%g, y=%g, .., log_p=%d): ", a,b,x,y, log_p);
+    REprintf("bratio(a=%g, b=%g, x=%9g, y=%9g, .., log_p=%d): ", a,b,x,y, log_p);
 #endif
 
     *ierr = 0;
@@ -176,7 +176,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	    *w = fpser(a0, b0, x0, eps, log_p);
 	    *w1 = log_p ? R_Log1_Exp(*w) : 0.5 - *w + 0.5;
 #ifdef DEBUG_bratio
-	    REprintf("  b0 small -> w := fpser(*) = %g\n", *w);
+	    REprintf("  b0 small -> w := fpser(*) = %15g\n", *w);
 #endif
 	    goto L_end_after_log;
 	}
@@ -184,7 +184,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	if (a0 < min(eps, eps * b0) && b0 * x0 <= 1.0) { /* L90: */
 	    *w1 = apser(a0, b0, x0, eps);
 #ifdef DEBUG_bratio
-	    REprintf("  a0 small -> w1 := apser(*) = %g\n", *w1);
+	    REprintf("  a0 small -> w1 := apser(*) = %15g\n", *w1);
 #endif
 	    goto L_end_from_w1;
 	}
@@ -219,14 +219,14 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	n = 20; /* goto L130; */
 	*w1 = bup(b0, a0, y0, x0, n, eps);
 #ifdef DEBUG_bratio
-	REprintf("  ... n=20 and *w1 := bup(*) = %g; ");
+	REprintf("  ... n=20 and *w1 := bup(*) = %15g; ");
 #endif
 	b0 += n;
     L131:
 	bgrat(b0, a0, y0, x0, w1, 15*eps, &ierr1);
 
 #ifdef DEBUG_bratio
-	REprintf(" L131: bgrat(*, w1) ==> w1 = %g\n", *w1);
+	REprintf(" L131: bgrat(*, w1) ==> w1 = %15g\n", *w1);
 #endif
 	goto L_end_from_w1;
     }
@@ -246,7 +246,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	}
 
 #ifdef DEBUG_bratio
-	REprintf("  L30:  both  a, b > 1; |lambda| = %g, do_swap = %d\n",
+	REprintf("  L30:  both  a, b > 1; |lambda| = %#g, do_swap = %d\n",
 		 lambda, do_swap);
 #endif
 
@@ -254,7 +254,8 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 #ifdef DEBUG_bratio
 	    REprintf("  b0 < 40; ");
 #endif
-	    if (b0 * x0 <= 0.7)
+	    if (b0 * x0 <= 0.7
+		|| (log_p && lambda > 650.)) /* << added 2010-03-18 */
 		goto L100;
 	    else
 		goto L140;
@@ -263,8 +264,8 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 #ifdef DEBUG_bratio
 	    REprintf("  a0 > b0 >= 40; ");
 #endif
-	    if (b0 <= 100.0)	goto L120;
-	    if (lambda > b0 * 0.03) goto L120;
+	    if (b0 <= 100.0 || lambda > b0 * 0.03)
+		goto L120;
 
 	} else if (a0 <= 100.0) {
 #ifdef DEBUG_bratio
@@ -283,7 +284,7 @@ bratio(double a, double b, double x, double y, double *w, double *w1,
 	*w = basym(a0, b0, lambda, eps * 100.0, log_p);
 	*w1 = log_p ? R_Log1_Exp(*w) : 0.5 - *w + 0.5;
 #ifdef DEBUG_bratio
-	REprintf("  b0 >= a0 > 100; lambda <= a0 * 0.03: *w := basym(*) = %g\n",
+	REprintf("  b0 >= a0 > 100; lambda <= a0 * 0.03: *w := basym(*) = %15g\n",
 		 *w);
 #endif
 	goto L_end_after_log;
@@ -296,7 +297,7 @@ L100:
     *w = bpser(a0, b0, x0, eps, log_p);
     *w1 = log_p ? R_Log1_Exp(*w) : 0.5 - *w + 0.5;
 #ifdef DEBUG_bratio
-    REprintf(" L100: *w := bpser(*) = %g\n", *w);
+    REprintf(" L100: *w := bpser(*) = %15g\n", *w);
 #endif
     goto L_end_after_log;
 
@@ -304,7 +305,7 @@ L110:
     *w1 = bpser(b0, a0, y0, eps, log_p);
     *w  = log_p ? R_Log1_Exp(*w1) : 0.5 - *w1 + 0.5;
 #ifdef DEBUG_bratio
-    REprintf(" L110: *w1 := bpser(*) = %g\n", *w1);
+    REprintf(" L110: *w1 := bpser(*) = %15g\n", *w1);
 #endif
     goto L_end_after_log;
 
@@ -327,13 +328,17 @@ L140:
     *w = bup(b0, a0, y0, x0, n, eps);
 
 #ifdef DEBUG_bratio
-    REprintf(" L140: *w := bup(b0=%g, *) = %g; ", b0, *w);
+    REprintf(" L140: *w := bup(b0=%g, *) = %15g; ", b0, *w);
 #endif
+    if(*w < DBL_MIN && log_p) { /* do not believe it; try bpser() : */
+	/*revert: */ b0 += n;
+	goto L100;
+    }
     if (x0 <= 0.7) {
 	/* log_p :  TODO:  w = bup(.) + bpser(.)  -- not so easy to use log-scale */
 	*w += bpser(a0, b0, x0, eps, /* log_p = */ FALSE);
 #ifdef DEBUG_bratio
-	REprintf(" x0 <= 0.7: *w := *w + bpser(*) = %g\n", *w);
+	REprintf(" x0 <= 0.7: *w := *w + bpser(*) = %15g\n", *w);
 #endif
 	goto L_end_from_w;
     }
@@ -342,7 +347,7 @@ L140:
 	n = 20;
 	*w += bup(a0, b0, x0, y0, n, eps);
 #ifdef DEBUG_bratio
-	REprintf("\n a0 <= 15: *w := *w + bup(*) = %g;", *w);
+	REprintf("\n a0 <= 15: *w := *w + bup(*) = %15g;", *w);
 #endif
 	a0 += n;
     }

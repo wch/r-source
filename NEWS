@@ -482,6 +482,10 @@ BUG FIXES
     o	mean(x, trim=, na.rm = FALSE) failed to return NA if 'x'
 	contained missing values.  (Reported by Bill Dunlap.)
 
+    o	extreme tail behavior of, pbeta() {and hence pf()}, e.g.,
+	pbeta(x, 3, 2200, lower.tail=FALSE, log.p=TRUE) now returns
+	finite values instead of jumping to -Inf too early (PR#14230).
+
 
 
 	**************************************************
