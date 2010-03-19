@@ -115,7 +115,9 @@ for(f in S4gen) {
 except <- c("call", "switch", ".C", ".Fortran", ".Call", ".External",
             ".Call.graphics", ".External.graphics", ".subset", ".subset2",
             ".primTrace", ".primUntrace", "lazyLoadDBfetch",
-            ".Internal", ".Primitive", "^", "|", "%*%", "rep", "seq.int")
+            ".Internal", ".Primitive", "^", "|", "%*%", "rep", "seq.int",
+            ## these may not be enabled
+            "tracemen", "retracemem", "untracemem")
 
 for(f in ls(.GenericArgsEnv, all.names=TRUE)[-(1:15)])
 {
