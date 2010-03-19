@@ -18,6 +18,15 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	package repositiories: see the 'R Administration and
 	Installation Manual'.
 
+    o	Argument matching for primitive functions is now done in the
+	same way as for interpreted functions exept for the deliberate
+	exceptions
+
+	    call switch .C .Fortran .Call .External
+
+	all of which use positional matching for their first argument,
+	and some internal-use-only primitives.
+
 
 NEW FEATURES
 
@@ -30,8 +39,11 @@ NEW FEATURES
     o	R CMD INSTALL now uses the internal untar() in package utils:
 	this ensures that all platforms can install bzip2- and
 	xz-compressed tarballs.  In case this causes problems (as it
-	has on some Windows file systems) it can be overridden by the
-	environment variable R_INSTALL_TAR.
+	has on some Windows file systems when run from Cygwin tools)
+	it can be overridden by the environment variable
+	R_INSTALL_TAR: setting this to a modern external tar program
+	will speed up unpacking of large (tens of Mb or more)
+	tarballs.
 
     o	help(try.all.packages = TRUE) is much faster (although the
 	time taken by the OS to find all the packages the first time
@@ -328,8 +340,8 @@ NEW FEATURES
         the methods in a methods table, to replace the deprecated
         class "MethodsList".
 
-    o	any() and all() return early if possible.  This speeds up results
-	when operating on long vectors.
+    o	any() and all() return early if possible.  This speeds up
+	results when operating on long vectors.
 
 
 DEPRECATED & DEFUNCT

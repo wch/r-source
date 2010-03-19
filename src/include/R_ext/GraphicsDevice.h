@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-8 The R Development Core Team.
+ *  Copyright (C) 2001-10 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -332,7 +332,7 @@ struct _DevDesc {
     /*
      * device_Mode is called whenever the graphics engine
      * starts drawing (mode=1) or stops drawing (mode=0)
-     * GMode (in graphics.c) also ways that 
+     * GMode (in graphics.c) also says that 
      * mode = 2 (graphical input on) exists.
      * The device is not required to do anything
      * An example is ...

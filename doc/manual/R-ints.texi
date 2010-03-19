@@ -1948,7 +1948,7 @@ or directly accessible in which case it is printed in @R{} as
 @code{.Primitive}.
 
 Functions using @code{.Internal()} wrapped in a closure are in general
-preferred as this allows for transparent handling of named and default
+preferred as this ensures standard handling of named and default
 arguments.  For example, @code{axis} is defined as
 
 @example
@@ -1961,14 +1961,14 @@ axis <- function(side, at = NULL, labels = NULL, ...)
 However, for reasons of convenience and also efficiency (as there is
 some overhead in using the @code{.Internal} interface wrapped in a
 function closure), the primitive functions are exceptions that can be
-accessed directly.  Note that primitive functions make no use of @R{}
-code, and hence are very different from the usual interpreted functions.
-In particular, @code{formals} and @code{body} return @code{NULL} for
-such objects, and argument matching is purely positional unless managed
-by the C code (which in recent versions of @R{} it often is).  For
-several of these functions (including @code{call}, @code{switch},
-@code{.C} and @code{.subset}) positional matching is important to avoid
-partial matching of the first argument.
+accessed directly.  And of course, primitive functions are needed to
+basic operations---for example @code{.Internal} is itself a primitive.
+Note that primitive functions make no use of @R{} code, and hence are
+very different from the usual interpreted functions.  In particular,
+@code{formals} and @code{body} return @code{NULL} for such objects, and
+argument matching can be handled differently.  For primitives (including
+@code{call}, @code{switch}, @code{.C} and @code{.subset}) positional
+matching is important to avoid partial matching of the first argument.
 
 The list of primitive functions is subject to change; currently, it
 includes the following.
@@ -1976,7 +1976,7 @@ includes the following.
 @enumerate
 
 @item
-``Special functions'' which really are @emph{language} elements, however
+``Special functions'' which really are @emph{language} elements, but
 implemented as primitive functions:
 
 @example
@@ -1989,8 +1989,7 @@ return  function  quote  switch
 @item
 Language elements and basic @emph{operator}s (i.e., functions usually
 @emph{not} called as @code{foo(a, b, ...)}) for subsetting, assignment,
-arithmetic and logic.  These are the following 1-, 2-, and
-@math{N}-argument functions:
+arithmetic and logic:
 
 @example
 @group
@@ -2030,7 +2029,6 @@ acosh   asinh   atanh
 gamma   lgamma  digamma trigamma
 @end group
 
-
 @group
 cumsum  cumprod cummax  cummin
 @end group
@@ -2043,7 +2041,7 @@ Im  Re  Arg  Conj  Mod
 @code{log} is a function of one or two arguments, but was made
 primitive in @R{} 2.6.0 with named argument matching.
 
-@code{trunc} is a difficult case: it is a primitive that can have zero
+@code{trunc} is a difficult case: it is a primitive that can have one
 or more arguments: the default method handled in the primitive has
 only one.
 
@@ -2063,7 +2061,6 @@ is.language    is.list        is.logical     is.matrix
 is.na          is.name        is.nan         is.null       
 is.numeric     is.object      is.pairlist    is.raw        
 is.real        is.recursive   is.single      is.symbol     
-.Primitive    .Internal
 globalenv      baseenv        emptyenv       pos.to.env
 unclass        invisible      seq_along      seq_len
 @end group
@@ -2108,8 +2105,7 @@ hence replacement functions should where possible be primitive to avoid
 copying (at least in their default methods).
 
 @item
-The following @math{N}-argument functions are ``primitive'' for
-efficiency reasons:
+The following functions are primitive for efficiency reasons:
 
 @example
 @group
@@ -2126,10 +2122,10 @@ as well as the following internal-use-only functions
 
 @example
 @group
-.Call.graphics
-.External.graphics
-.subset     .subset2
-.primTrace  .primUntrace
+.Primitive     .Internal
+.Call.graphics .External.graphics
+.subset        .subset2
+.primTrace     .primUntrace
 lazyLoadDBfetch
 @end group
 @end example
@@ -2166,6 +2162,11 @@ named argument that this (partially) matches the name given in the
 documentation: this is also done for replacement functions with one
 argument plus @code{value}.
 
+The net effect is that from @R{} 2.11.0 argument matching for primitives
+intended for end-user user is done in the same way as for interpreted
+functions except for the six exceptions where positional matching is
+required.
+
 @menu
 * Special primitives::          
 * Special internals::           
@@ -2178,10 +2179,11 @@ argument plus @code{value}.
 A small number of primitives are @emph{specials} rather than
 @emph{builtins}, that is they are entered with unevaluated arguments.
 This is clearly necessary for the language constructs and the assignment
-operators.  @code{&&} and @code{||} conditionally evaluate their second
-argument, and @code{~}, @code{.Internal}, @code{call}, @code{expression}
-@code{missing}, @code{on.exit}, @code{quote} and @code{substitute} do
-not evaluate some of their arguments.
+operators, as well as for @code{&&} and @code{||} which conditionally
+evaluate their second argument, and @code{~}, @code{.Internal},
+@code{call}, @code{expression}, @code{missing}, @code{on.exit},
+@code{quote} and @code{substitute} which do not evaluate some of their
+arguments.
 
 @code{rep} and @code{seq.int} are special as they evaluate some of their
 arguments conditional on which are non-missing.  @code{c} is special to
@@ -2202,8 +2204,8 @@ calls to builtins.
 @section Special internals
 
 There are also special @code{.Internal} functions: @code{NextMethod}
-@code{Recall}, @code{withVisiblle}, @code{cbind}, @code{rbind} (to allow
-for the @code{deparse.level} argument), @code{lapply}, @code{eapply} and
+@code{Recall}, @code{withVisible}, @code{cbind}, @code{rbind} (to allow
+for the @code{deparse.level} argument), @code{eapply}, @code{lapply} and
 @code{vapply}.
 
 @node Prototypes for primitives,  , Special internals, .Internal vs .Primitive
@@ -2259,7 +2261,7 @@ allow one argument when used as the default method (and @code{round} and
 @code{signif} allow two as default methods): again fix-ups are used.
 
 Those primitives which are in @code{.GenericArgsEnv} are checked (via
-@file{tests/primitives.R} to be generic @emph{via} defining methods for
+@file{tests/primitives.R}) to be generic @emph{via} defining methods for
 them, and a check is made that the remaining primitives are probably not
 generic, by setting a method and checking it is not dispatched to (but
 this can fail for other reasons).  However, there is no certain way to
@@ -2425,7 +2427,7 @@ Function @code{library} looks for a name space and if one is found
 passes control to @code{loadNamespace}.  Then @code{library} or
 @code{loadNamespace} looks for file @file{R/@var{pkgname}}, warns if it
 is not found and otherwise sources the code (using @code{sys.source})
-into the package's environment, then lazy-load a database
+into the package's environment, then lazy-loads a database
 @file{R/sysdata} if present.  So how @R{} code gets loaded depends on
 the contents of  @file{R/@var{pkgname}}: standard templates to load
 lazy-load databases are provided in @file{share/R/[ns]packloader.R}.
@@ -2459,7 +2461,7 @@ catalogs.
 @section Metadata
 
 Directory @file{Meta} contains several files in @code{.rds} format, that
-is saved @R{} objects.  All packages have @file{Rd.rds},
+is serialized @R{} objects.  All packages have @file{Rd.rds},
 @file{hsearch.rds}, @file{links.rds} and @file{package.rds}.  Packages
 with name spaces have a file @file{nsInfo.rds}, and those with data,
 demos or vignettes have @file{data.rds}, @file{demo.rds} or
@@ -2559,7 +2561,7 @@ faster access by @R{} >= 2.11.0.
 for 2.7.0).  This was to enable multiple graphics systems to be
 installed on top on the graphics `engine' -- currently there are two
 such systems, one supporting `base' graphics (based on that in S and
-whose @R{} code@footnote{The C code is in files @file{base.c},
+whose @R{} code@footnote{The C code is in files @code{base.c},
 @code{graphics.c}, @code{par.c}, @code{plot.c} and @code{plot3d.c} in
 directory @file{src/main}.} is in package @pkg{graphics}) and one
 implemented in package @pkg{grid}.
@@ -3058,7 +3060,7 @@ the header as
 @example
      * device_Mode is called whenever the graphics engine
      * starts drawing (mode=1) or stops drawing (mode=0)
-     * GMode (in graphics.c) also ways that 
+     * GMode (in graphics.c) also says that 
      * mode = 2 (graphical input on) exists.
      * The device is not required to do anything
 @end example
@@ -3231,7 +3233,7 @@ Colors can be created in C via the macro @code{R_RGBA}, and a set of
 macros are defined in @file{R_ext/GraphicsDevice.h} to extract the
 various components.
 
-Colours in the base graphics system were originally borrowed from S (and
+Colours in the base graphics system were originally adopted from S (and
 before that the GRZ library from Bell Labs), with the concept of a
 (variable-sized) palette of colours referenced by numbers
 @samp{1...@var{N}} plus @samp{0} (the background colour).  @R{}
@@ -3549,10 +3551,8 @@ In addition, the following tools are needed for certain tasks.
 
 @itemize @bullet
 @item
-Perl version 5 is needed for converting documentation written in Rd
-format to plain text, @HTML{}, @LaTeX{}, and to extract the examples.
-In addition, several other tools, in particular @command{check} and
-@command{build} require Perl.
+Perl version 5 is needed for several tools, in particular
+@command{check} and @command{build}.
 @findex Perl
 
 The @R{} Core Team has decided that Perl (version 5) can safely be
