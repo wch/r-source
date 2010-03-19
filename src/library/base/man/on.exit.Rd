@@ -38,7 +38,7 @@ on.exit(expr = NULL, add = FALSE)
   \code{\link{substitute}} or similar.
   
   This is a \sQuote{special} \link{primitive} function: it only
-  evaluates the argumnt \code{add}.
+  evaluates the argument \code{add}.
 }
 \value{
   Invisible \code{NULL}.

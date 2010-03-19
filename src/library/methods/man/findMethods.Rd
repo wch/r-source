@@ -160,9 +160,9 @@ below will always convert to the matrix form.}
 
 Class \code{"\linkS4class{namedList}"}, directly.
 
-Class \code{"\linkS4class{list}"}, by class "namedList", distance 2.
+Class \code{"\linkS4class{list}"}, by class \code{"namedList"}, distance 2.
 
-Class \code{"\linkS4class{vector}"}, by class "namedList", distance 3.
+Class \code{"\linkS4class{vector}"}, by class \code{"namedList"}, distance 3.
 }
 
 

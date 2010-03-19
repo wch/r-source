@@ -738,7 +738,7 @@ printing arrays.
 @node Classes, Time series attributes, Dimnames, Attributes
 @subsection Classes
 
-@R{} has an elaborate class system@footnote{actally two, but this draft
+@R{} has an elaborate class system@footnote{actually two, but this draft
 manual predates the @pkg{methods} package.}, principally controlled via
 the @code{class} attribute.  This attribute is a character vector
 containing the list of classes that an object inherits from.  This forms
