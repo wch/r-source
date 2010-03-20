@@ -57,8 +57,11 @@ imagedir:
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 	$(RM) $(RPREFIX)/library/*/MD5
 	$(RM) $(RPREFIX)/*/Makefile.in
-	$(MKDIR) -p $(RPREFIX)/etc
+	$(MKDIR) -p $(RPREFIX)/etc$(R_ARCH)
 	$(CP) -p $(foreach i,$(ETC_FILES),$(R_HOME)/etc/$i) $(RPREFIX)/etc
+ifeq ($(strip $(WIN)),64)
+	$(CP) -p $(R_HOME)/etc/x86/Makeconf $(RPREFIX)/etc$(R_ARCH)
+endif
 # copy info and documentation files
 	$(MKDIR) -p $(RPREFIX)/doc
 	$(CP) -p $(R_HOME)/doc/CRAN_mirrors.csv $(RPREFIX)/doc
