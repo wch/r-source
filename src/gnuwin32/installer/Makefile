@@ -60,7 +60,7 @@ imagedir:
 	$(MKDIR) -p $(RPREFIX)/etc$(R_ARCH)
 	$(CP) -p $(foreach i,$(ETC_FILES),$(R_HOME)/etc/$i) $(RPREFIX)/etc
 ifeq ($(strip $(WIN)),64)
-	$(CP) -p $(R_HOME)/etc/x86/Makeconf $(RPREFIX)/etc$(R_ARCH)
+	$(CP) -p $(R_HOME)/etc$(R_ARCH)/Makeconf $(RPREFIX)/etc$(R_ARCH)
 endif
 # copy info and documentation files
 	$(MKDIR) -p $(RPREFIX)/doc
