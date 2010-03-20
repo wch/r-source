@@ -1041,7 +1041,8 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	}
     }
     else
-	error(_("(list) object cannot be coerced to type '%s'"), type2char(type));
+	error(_("(list) object cannot be coerced to type '%s'"), 
+	      type2char(type));
 
     if (warn) CoercionWarning(warn);
     names = getAttrib(v, R_NamesSymbol);
@@ -1058,7 +1059,13 @@ static SEXP coerceSymbol(SEXP v, SEXPTYPE type)
 	PROTECT(rval = allocVector(type, 1));
 	SET_VECTOR_ELT(rval, 0, v);
 	UNPROTECT(1);
-    }
+    } else if (type == CHARSXP)
+	rval = PRINTNAME(v);	
+    else if (type == STRSXP)
+	rval = ScalarString(PRINTNAME(v));
+    else
+	warning(_("(symbol) object cannot be coerced to type '%s'"), 
+		type2char(type));
     return rval;
 }
 

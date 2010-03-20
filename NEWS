@@ -340,8 +340,8 @@ NEW FEATURES
         the methods in a methods table, to replace the deprecated
         class "MethodsList".
 
-    o	any() and all() return early if possible.  This speeds up
-	results when operating on long vectors.
+    o	any() and all() return early if possible.  This may speed up
+	operations on long vectors.
 
 
 DEPRECATED & DEFUNCT
@@ -489,6 +489,12 @@ BUG FIXES
     o	parse(text=x) misbehaved for objects 'x' that were not coerced
 	internally to character, notably symbols.  (Reported to
 	R-devel by Bill Dunlap.)
+
+    o	The internal C function 'coerceSymbol' now handles coercion to
+	character, and warns if coercion fails (rather than silently
+	returning NULL).  This allows a name to be given where a
+	character vector is required in functions which coerce
+	internally.
 
 
 
