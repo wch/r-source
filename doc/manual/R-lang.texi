@@ -3854,7 +3854,7 @@ compiled code (primarily compiled @C{} code) to manipulate @R{} objects.
 
 The @code{.Internal} and @code{.Primitive} interfaces are used to call
 @C{} code compiled into @R{} at build time.
-@xref{.Internal and .Primitive, , , R-exts, Writing R Extensions}.
+@xref{.Internal vs .Primitive, , , R-ints, R Internals}.
 
 
 @node Exception handling, Debugging, System and foreign language interfaces, Top
@@ -4112,8 +4112,6 @@ function is evaluated the call to it is printed out.  This mechanism is
 removed by calling @code{untrace} with the function as an argument.
 
 @example
-> get("[<-")
-.Primitive("[<-")
 > trace("[<-")
 > x <- 1:10
 > x[3] <- 4

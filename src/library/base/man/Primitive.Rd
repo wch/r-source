@@ -1,14 +1,14 @@
 % File src/library/base/man/Primitive.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Primitive}
 \alias{.Primitive}
 \alias{primitive}
-\title{Call a ``Primitive'' Internal Function}
+\title{Look Up a Primitive Function}
 \description{
-  \code{.Primitive} returns an entry point to a \sQuote{primitive}
+  \code{.Primitive} looks up by name a \sQuote{primitive}
   (internally implemented) function.
 }
 \usage{
@@ -20,10 +20,16 @@
 \details{
   The advantage of \code{.Primitive} over \code{\link{.Internal}}
   functions is the potential efficiency of argument passing, and that
-  positional matching can be use where desirable,
-  e.g. \code{\link{switch}}.
+  positional matching can be used where desirable, e.g. in
+  \code{\link{switch}}. For more details, see the \sQuote{R Internals
+    Manual}.
   
   All primitive functions are in the base name space.
+
+  This function is almost never used:
+  \code{\link{get}(name, envir=basenv())} works equally well and does
+  not depend on knowing which functions are primitive (which does change
+  as \R evolves).
 }
 \seealso{
   \code{\link{.Internal}}.
