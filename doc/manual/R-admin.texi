@@ -107,11 +107,11 @@ tar xf R-@var{x}.@var{y}.@var{z}.tar.gz
 @end example
 
 @noindent
-on systems that have a suitable@footnote{GNU @command{tar} version 1.15
-or later, or that from the @samp{libarchive} (as used on Mac OS 10.6) or
-`Heirloom Toolchest' distributions.} @command{tar} installed.  On other
-systems you need to have the @command{gzip} program installed, when you
-can use
+on systems that have a suitable@footnote{e.g.@: GNU @command{tar}
+version 1.15 or later, or that from the @samp{libarchive} (as used on
+Mac OS 10.6) or `Heirloom Toolchest' distributions.} @command{tar}
+installed.  On other systems you need to have the @command{gzip} program
+installed, when you can use
 
 @example
 gzip -dc R-@var{x}.@var{y}.@var{z}.tar.gz | tar xf -
@@ -155,8 +155,8 @@ built in exactly the same way as distributions of R releases.
 Sources are also available via @uref{https://svn.R-project.org/R/}, the
 R Subversion repository.  If you have a Subversion client (see
 @uref{http://subversion.tigris.org/}), you can check out and update the
-current r-devel from @uref{https://svn.r-project.org/R/trunk/} and the
-current r-patched from
+current @samp{r-devel} from @uref{https://svn.r-project.org/R/trunk/} and the
+current @samp{r-patched} from
 @samp{https://svn.r-project.org/R/branches/R-@var{x}-@var{y}-branch/}
 (where @var{x} and @var{y} are the major and minor number of the current
 released version of R).  E.g., use
@@ -315,7 +315,7 @@ make check-all
 @end example
 
 @noindent
-see @file{tests/README}.
+see file @file{tests/README}.
 
 If the command @command{configure} and @command{make} commands execute
 successfully, a shell-script front-end called @file{R} will be created
@@ -341,7 +341,7 @@ make
 
 @noindent
 and so on, as described further below.  This has the advantage of
-always keeping your source tree ``clean'' and is particularly
+always keeping your source tree clean and is particularly
 recommended when you work with a version of @R{} from Subversion.
 (You may need @acronym{GNU} @command{make} to allow this, and the
 pathname of the build directory should not contain spaces.)
@@ -378,7 +378,7 @@ option to continue to build @HTML{} pages at when packages are installed
 @command{R CMD INSTALL} (and hence @code{install.packages}) pre-builds
 @HTML{} pages is determined by looking at the @R{} installation and is
 reported by @command{R CMD INSTALL --help}: it can be overridden by
-specifying the one of the @command{INSTALL} options @option{--html} or
+specifying one of the @command{INSTALL} options @option{--html} or
 @option{-no-html}.
 
 The server is disabled by setting the environment variable
@@ -386,9 +386,9 @@ The server is disabled by setting the environment variable
 @env{R_DISABLE_HTTPD} to a non-empty value, either before @R{} is
 started or within the @R{} session before @HTML{} help (including
 @code{help.start}) is used.  It is also possible that system security
-measures will prevent the server from being started, for example if
-the loopback interface has been disabled.  The @option{"help.ports"}
-option can be set to control the port used by the server.
+measures will prevent the server from being started, for example if the
+loopback interface has been disabled.  See
+@code{?tools::startDynamicHelp} for more details.
 
 @node Making the manuals, Installation, Help options, Installing R under Unix-alikes
 @section Making the manuals
@@ -398,7 +398,7 @@ There is a set of manuals that can be built from the sources,
 
 @table @samp
 @item refman
-Printed versions of the help pages for the most commonly used packages.
+Printed versions of the help pages for the commonly-used packages.
 @item fullrefman
 Printed versions of all the help pages.
 @item R-FAQ
@@ -665,8 +665,8 @@ optionally specifying @code{prefix} etc in the same way as specified for
 installation.
 
 This will also uninstall any installed manuals.  There are specific
-targets to uninstall DVI, info and PDF manuals in
-@file{doc/manual/Makefile}.  
+targets to uninstall DVI, info and PDF manuals in file
+@file{doc/manual/Makefile}.
 
 Target @code{uninstall-tests} will uninstall any installed tests, as
 well as removing the directory @file{tests} containing the test results.
@@ -686,9 +686,10 @@ builds), 64- and 32- bit builds on @cputype{x86_64} Linux and different
 @R{} supports the idea of architecture-specific builds, specified by
 adding @samp{r_arch=@var{name}} to the @command{configure} line.  Here
 @var{name} can be anything non-empty, and is used to name subdirectories
-of @file{lib}, @file{etc}, @file{include} and @file{libs}.  Example
-names from other systems are the use of @file{sparcv9} on Sparc Solaris
-and @file{32} by @code{gcc} on @cputype{x86_64} Linux.
+of @file{lib}, @file{etc}, @file{include} and the package @file{libs}
+subdirectories.  Example names from other systems are the use of
+@file{sparcv9} on Sparc Solaris and @file{32} by @code{gcc} on
+@cputype{x86_64} Linux.
 
 If you have two or more such builds you can install them over each other
 (and for 32/64-bit builds on one architecture, one build can be done
@@ -848,7 +849,8 @@ package-specific tests) by @code{testInstalledPackages} even if
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
 from @acronym{CRAN} to run on Windows 2000 or later on ix86
-@acronym{CPU}s (including AMD64/EM64T chips and Windows x64).
+@acronym{CPU}s (including AMD64/Intel64@footnote{formerly EM64T.} chips
+and Windows x64).
 
 As from @R{} 2.11.0 there is also a 64-bit version for Windows x64 in
 the @file{bin/windows64} directory: this is primarily intended for users
@@ -989,15 +991,15 @@ The Tcl/Tk support files are in a zip file at
 @item
 You need @code{libpng} and @code{jpeg} sources (available, e.g., from
 @uref{http://www.libpng.org/}, @uref{http://www.ijg.org},
-@uref{http://www.libtiff.org/})@footnote{but the current versions are at
+@uref{http://www.libtiff.org/}.@footnote{but the current versions are at
 @uref{ftp://ftp.remotesensing.org/pub/libtiff/}: we used
-@file{tiff-3.9.1.tar.gz}}.  You will need files
+@file{tiff-3.9.1.tar.gz}.}  You will need files
 @file{libpng-1.2.18.tar.gz}, @file{jpegsrc.v6b.tar.gz},
 @file{tiff-3.8.0.tar.gz} or later.
 
 Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
 install the @code{libpng} and @code{jpeg} sources in sub-directories.
-The @code{jpeg} sub-directory for version 8 is named @file{jpeg-8}; if
+The @code{jpeg} sub-directory for version 8a is named @file{jpeg-8a}; if
 you use a different version (e.g.@: @file{jpeg-6b} or @file{jpeg-7}),
 edit @file{src/gnuwin32/MkRules} and change the definition of
 @code{JPEGDIR}: the names of the @file{libpng} and @file{libtiff}
@@ -1008,7 +1010,7 @@ Example:
 @example
 > tar zxf libpng-1.2.40.tar.gz
 > mv libpng-1.2.40 libpng
-> tar zxf jpegsrc.v8.tar.gz
+> tar zxf jpegsrc.v8a.tar.gz
 > tar zxf tiff-3.9.1.tar.gz
 > mv tiff-3.9.1/libtiff .
 > rm -rf tiff-3.9.1
@@ -1092,6 +1094,7 @@ The recommended packages can be  checked by
 make check-recommended
 @end example
 
+@noindent
 Other levels of checking are
 
 @example
@@ -1164,7 +1167,7 @@ building all the parts in the sequence:
 Rpwd.exe @r{(a utility needed in the build)}
 rbuild @r{(the executables, the @acronym{FAQ} docs etc.)}
 rpackage @r{(the base packages)}
-htmldocs @r{(the @HTML{} documentation)}
+htmldocs @r{(the HTML documentation)}
 bitmapdll @r{(the bitmap support files)}
 recommended @r{(the recommended packages)}
 vignettes @r{(the vignettes in package @strong{grid}:}
@@ -1306,7 +1309,7 @@ discussed here is based on the work of the MinGW-w64 project
 @code{binutils} and @code{gcc}), but commercial compilers such as those
 from Intel and PGI could be used (and have been by @R{} redistributors).
 
-Support of MinGW-w64 has been developed in the R sources over the period
+Support for MinGW-w64 was developed in the R sources over the period
 2008--10 and was first released as part of @R{} 2.11.0.
 
 Several versions of the MinGW-w64 toolchain are available: use one of them
@@ -1383,12 +1386,13 @@ developer of the MinGW-w64 project.
 
 The @file{bin/macosx} directory of a @acronym{CRAN} site contains
 binaries for Mac OS X for a base distribution and a large number of
-add-on packages from @acronym{CRAN} to run on Mac OS X version 10.4.4 or
-higher.
+add-on packages from @acronym{CRAN} to run on Mac OS X 10.5/6 (with a
+different build for version 10.4.4 or higher).
 
-The simplest way is to use @file{R-@value{VERSIONno}.dmg}.  Just
-double-click on the icon and the disk image file will be mounted. Read
-the @file{ReadMe.txt} inside the disk image and follow the instructions.
+The simplest way is to use @file{R-@value{VERSIONno}.pkg}: just
+double-click on the icon.  Note that Tcl/Tk and the Fortran compiler
+need to be installed separately if needed (unlike for @R{} 2.9.x and
+eariier).
 
 See the @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
@@ -1400,11 +1404,10 @@ for Mac OS X @acronym{FAQ}} for more details.
 @node Building from source on Mac OS X,  , Installing R under Mac OS X, Installing R under Mac OS X
 @section Building from source on Mac OS X
 
-If you want to build this port from the sources, you can read the above
-mentioned @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
-for Mac OS X @acronym{FAQ}} for full details.  You will need to collect
-and install some tools as explained in the document.  Then you have to
-expand the @R{} sources and configure @R{} appropriately, for example
+If you want to build this port from the sources, you can read the FAQ
+for full details.  You will need to collect and install some tools as
+explained in the document.  Then you have to expand the @R{} sources and
+configure @R{} appropriately, for example
 
 @example
 tar zxvf R-@value{VERSIONno}.tar.gz
@@ -1557,7 +1560,7 @@ collection.
 @R{} will automatically make use of a site-specific library
 @file{@var{R_HOME}/site-library} if this exists (it does not in a
 vanilla @R{} installation).  This location can be overridden by
-setting@footnote{its binding is looked once that files has been read, so
+setting@footnote{its binding is locked once that files has been read, so
 users cannot easily change it.} @samp{.Library.site} in
 @file{@var{R_HOME}/etc/Rprofile.site}, or (not recommended) by setting
 the
@@ -2103,7 +2106,7 @@ was 15-20%.)
 
 @item
 However, `other things' may not be equal.  In the specific case of
-@cputype{x864_64} @emph{vs} @cputype{ix86}, the 64-bit CPU has features
+@cputype{x86_64} @emph{vs} @cputype{ix86}, the 64-bit CPU has features
 which are guaranteed to be present but are optional on the 32-bit CPU,
 and also has more general-purpose registers.  This means that on chips
 like Intel Core 2 Duo the vanilla 64-bit version of @R{} is around 10%
@@ -2405,7 +2408,7 @@ current encoding and to translate to and from the Unicode wide-character
 formats @code{"UCS-[24][BL]E"} --- this is true for @code{glibc} but not
 of most commercial Unixes.  However, you can make use of @acronym{GNU}
 @code{libiconv} (possibly as a plug-in replacement: see
-@uref{http://www.gnu.org/@/software/@/libiconv/}.  
+@uref{http://www.gnu.org/@/software/@/libiconv/}).  
 
 The OS needs to have enough support@footnote{specifically, the C99
 functionality of headers @file{wchar.h} and @file{wctype.h}, types
@@ -2578,18 +2581,20 @@ finds it sets some settings which are useful for Java-using packages.
 @env{JAVA_HOME} can be set during the @command{configure} run to point
 to a specific JRE/JDK.
 
-Principal amongst these are some library paths to the Java libraries and
-JVM, which are stored in environment variable
+Principal amongst these are setting some library paths to the Java
+libraries and JVM, which are stored in environment variable
 @enindex R_JAVA_LD_LIBRARY_PATH
 @env{R_JAVA_LD_LIBRARY_PATH} in file @file{@var{R_HOME}/etc/ldpaths} (or
-a sub-architecture-specific version).  A typical setting for Sun Java is
+a sub-architecture-specific version).  A typical setting for
+@cputype{x86_64} Linux is
 
 @smallexample
-/usr/java/jdk1.5.0_06/jre/lib/amd64/server:/usr/java/jdk1.5.0_06/jre/lib/amd64
+JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre
+R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server:$@{JAVA_HOME@}/lib/amd64
 @end smallexample
 
 Note that this unfortunately depends on the exact version of the JRE/JDK
-installed, and so will need updating if the Java installation is
+installed, and so may need updating if the Java installation is
 updated.  This can be done by running @code{R CMD javareconf}. The
 script re-runs Java detection in a manner similar to that of the
 @code{configure} script and updates settings in both @file{Makeconf} and
