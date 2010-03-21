@@ -499,6 +499,10 @@ BUG FIXES
 	character vector is required in functions which coerce
 	internally.
 
+    o	The interpretation by strptime() of %c was non-standard (not
+	that is it ever advisable to use locale- and system-specific
+	input formats).
+
 
 
 

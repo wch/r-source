@@ -34,7 +34,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \item{tz}{A timezone specification to be used for the conversion.
     System-specific (see \code{\link{as.POSIXlt}}), but \code{""} is the
     current time zone, and \code{"GMT"} is UTC.}
-  \item{format}{A character string.  The default is
+  \item{format}{A character string.  The default for the \code{format}
+    methods is
     \code{"\%Y-\%m-\%d \%H:\%M:\%S"} if any component has a time
     component which is not midnight, and \code{"\%Y-\%m-\%d"}
     otherwise.  If \code{\link{options}("digits.secs")} is set, up to
@@ -89,7 +90,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       locale. (Also matches full name on input.)}
     \item{\code{\%B}}{Full month name in the current locale.  (Also
       matches abbreviated name on input.)}
-    \item{\code{\%c}}{Date and time, locale-specific.}
+    \item{\code{\%c}}{Date and time.   Locale-specific on output,
+      \code{"\%a \%b \%e \%H:\%M:\%S \%Y"} on input.}
     \item{\code{\%d}}{Day of the month as decimal number (01--31).}
     \item{\code{\%H}}{Hours as decimal number (00--23).}
     \item{\code{\%I}}{Hours as decimal number (01--12).}
@@ -100,8 +102,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       conjunction with \code{\%I} and \bold{not} with \code{\%H}.  An
       empty string in some locales.}
     \item{\code{\%S}}{Second as decimal number (00--61), allowing for
-      up to two leap-seconds (but POSIX-compliant OSes will ignore leap
-      seconds).}
+      up to two leap-seconds (but POSIX-compliant implementations
+      will ignore leap seconds).}
     % see http://en.wikipedia.org/wiki/Week_number#Week_number
     \item{\code{\%U}}{Week of the year as decimal number (00--53) using
       Sunday as the first day 1 of the week (and typically with the
@@ -110,8 +112,10 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%W}}{Week of the year as decimal number (00--53) using
       Monday as the first day of week (and typically with the
       first Monday of the year as day 1 of week 1). The UK convention.}
-    \item{\code{\%x}}{Date, locale-specific.}
-    \item{\code{\%X}}{Time, locale-specific.}
+    \item{\code{\%x}}{Date.  Locale-specific on output,
+      \code{"\%y/\%m/\%d"} on input.}
+    \item{\code{\%X}}{Time.  Locale-specific on output,
+      \code{"\%H:\%M:\%S"} on input.}
     \item{\code{\%y}}{Year without century (00--99). Values 00 to 68 are
       prefixed by 20 and 69 to 99 by 19 -- that is the behaviour specified
       by the 2004 POSIX standard, but it does also say \sQuote{it is
@@ -144,16 +148,16 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \describe{
     \item{\code{\%C}}{Century (00--99): the integer part of the year
       divided by 100.}
-    \item{\code{\%D}}{Locale-specific date format such as
-      \code{\%m/\%d/\%y}: ISO C99 says it should be that exact format.}
+    \item{\code{\%D}}{Date format such as \code{\%m/\%d/\%y}: ISO C99
+      says it should be that exact format.}
     \item{\code{\%e}}{Day of the month as decimal number (1--31), with
       a leading space for a single-digit number.}
     \item{\code{\%F}}{Equivalent to \%Y-\%m-\%d (the ISO 8601 date
       format).}
     \item{\code{\%g}}{The last two digits of the week-based year
-      (see \code{\%V}).  (Typically accepted but ignored on input.)}
+      (see \code{\%V}).  (Accepted but ignored on input.)}
     \item{\code{\%G}}{The week-based year (see \code{\%V}) as a decimal
-      number.  (Typically accepted but ignored on input.)}
+      number.  (Accepted but ignored on input.)}
     \item{\code{\%h}}{Equivalent to \code{\%b}.}
     \item{\code{\%k}}{The 24-hour clock time with single digits preceded
       by a blank.}
@@ -170,7 +174,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       If the week (starting on Monday) containing 1 January has four or
       more days in the new year, then it is considered week 1.  Otherwise, it
       is the last week of the previous year, and the next week is week
-      1.  (Typically accepted but ignored on input.)}
+      1.  (Accepted but ignored on input.)}
   }
   For output there are also \code{\%O[dHImMUVwWy]} which may emit
   numbers in an alternative locale-dependent format (e.g. roman
@@ -218,15 +222,11 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   standard which expresses a day as \code{"2001-02-28"} and a time as
   \code{"14:01:02"} using leading zeroes as here.  The ISO form uses no
   space to separate dates and times.
-
-  If the date string does not specify the date completely, the returned
-  answer may be system-specific.  The most common behaviour is to assume
-  that unspecified seconds, minutes or hours are zero, and a missing
-  year, month or day is the current one.  If it specifies a date
-  incorrectly, reliable implementations will give an error and the date
-  is reported as \code{NA}.  Unfortunately some common implementations
-  (such as \samp{glibc}) are unreliable and guess at the intended meaning.
-
+  
+  For \code{strptime} the input string need not specify the date
+  completely: it is assumed that unspecified seconds, minutes or hours
+  are zero, and an unspecified year, month or day is the current one.
+  
   If the timezone specified is invalid on your system, what happens is
   system-specific but it will probably be ignored.
 
@@ -238,7 +238,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   those cases is OS-specific.
 }
 \references{
-  International Organization for Standardization (2004, 1988, 1997,
+  International Organization for Standardization (2004, 2000, 1988, 1997,
   \dots)
   \emph{ISO 8601. Data elements and interchange formats --
     Information interchange -- Representation of dates and times.}

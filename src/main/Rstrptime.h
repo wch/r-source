@@ -298,7 +298,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 	    break;
 	case L'c':
 	    /* Match locale's date and time format.  */
-	    if (!w_recursive (L"%I:%M:%S %p"))
+	    if (!w_recursive (L"%a %b %e %H:%M:%S %Y")) /* HERE_D_T_FMT */
 		return NULL;
 	    break;
 	case L'C':
@@ -324,7 +324,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 	  /* Fall through.  */
 	case L'D':
 	  /* Match standard day format.  */
-	  if (!w_recursive (L"%y/%m/%d"))
+	    if (!w_recursive (L"%y/%m/%d")) /* HERE_D_FMT */
 	    return NULL;
 	  want_xday = 1;
 	  break;
@@ -377,8 +377,8 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 	  }
 	  break;
 	case L'r':
-	  if (!w_recursive (L"%I:%M:%S %p"))
-	    return NULL;
+	    if (!w_recursive (L"%I:%M:%S %p")) /* HERE_T_FMT_AMPM */
+		return NULL;
 	  break;
 	case L'R':
 	    if (!w_recursive (L"%H:%M"))
@@ -414,7 +414,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 	case L'X':
 	    /* Fall through.  */
 	case L'T':
-	    if (!w_recursive (L"%H:%M:%S"))
+	    if (!w_recursive (L"%H:%M:%S")) /* HERE_T_FMT */
 		return NULL;
 	    break;
 	case L'u':
@@ -761,7 +761,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 	    break;
 	case 'c':
 	    /* Match locale's date and time format.  */
-	    if (!recursive (HERE_T_FMT_AMPM))
+	    if (!recursive (HERE_D_T_FMT))
 		return NULL;
 	    break;
 	case 'C':
