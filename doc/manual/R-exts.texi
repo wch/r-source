@@ -372,7 +372,7 @@ supported prior to @R{} 2.7.0, and only @samp{>=} is supported for
 package versions by @code{install.packages}.}, whitespace and a valid
 version number).  You can also use the special package name @samp{R} if
 your package depends on a certain version of @R{}.  E.g., if the package
-works only with @R{} version 2.4.0 or later, include @samp{R (>= 2.4.0)}
+works only with @R{} version 2.11.0 or later, include @samp{R (>= 2.11.0)}
 in the @samp{Depends} field.  Both @code{library} and the @R{} package
 checking facilities use this field, hence it is an error to use improper
 syntax or misuse the @samp{Depends} field for comments on other software
@@ -489,11 +489,11 @@ should contain an @samp{Encoding} field specifying an encoding.  This is
 used as the encoding of the @file{DESCRIPTION} file itself and of the
 @file{R} and @file{NAMESPACE} files, and as the default encoding of
 @file{.Rd} files.  The examples are assumed to be in this encoding when
-running @command{R CMD check}.  As from @R{} 2.8.0 it is used for the
-encoding of the @code{CITATION} file.  Only encoding names
-@code{latin1}, @code{latin2} and @code{UTF-8} are known to be portable.
-(Do not specify an encoding unless one is actually needed: doing so
-makes the package @emph{less} portable.)
+running @command{R CMD check}, and it is used for the encoding of the
+@code{CITATION} file.  Only encoding names @code{latin1}, @code{latin2}
+and @code{UTF-8} are known to be portable.  (Do not specify an encoding
+unless one is actually needed: doing so makes the package @emph{less}
+portable.)
 
 The optional @samp{OS_type} field specifies the OS(es) for which the
 package is intended.  If present, it should be one of @code{unix} or
@@ -708,12 +708,12 @@ interfere with those used by @R{} (currently, @file{R}, @file{data},
 the @file{inst} happens after @file{src} is built so its @file{Makefile}
 can create files to be installed.  Note that with the exceptions of
 @file{INDEX}, @file{LICENSE}/@file{LICENCE}, @file{COPYING} and
-@file{NEWS} (from @R{} 2.7.0), information files at the top level of the
-package will @emph{not} be installed and so not be known to users of
-Windows and Mac OS X compiled packages (and not seen by those who use
-@command{R CMD INSTALL} or @command{install.packages} on the tarball).
-So any information files you wish an end user to see should be included
-in @file{inst}.
+@file{NEWS}, information files at the top level of the package will
+@emph{not} be installed and so not be known to users of Windows and Mac
+OS X compiled packages (and not seen by those who use @command{R CMD
+INSTALL} or @command{install.packages} on the tarball).  So any
+information files you wish an end user to see should be included in
+@file{inst}.
 
 Note that if the named exceptions also occur in @file{inst}, the version
 in @file{inst} will be that seen in the installed package.
@@ -753,8 +753,7 @@ Subdirectory @file{po} is used for files related to @emph{localization}:
 @subsection Package bundles
 @cindex Package bundles
 
-Package bundles were deprecated in @R{} 2.10.0 and all support for them
-was removed in @R{} 2.11.0.
+Support for package bundles was removed in @R{} 2.11.0.
 
 @node Data in packages,  , Package bundles, Package structure
 @subsection Data in packages
@@ -909,14 +908,9 @@ in order to use the correct version of @R{} when running the script as
 part of @code{R CMD INSTALL}.)
 
 @findex R CMD config
-Note that earlier versions of this document recommended obtaining the
-configure information by direct extraction (using @command{grep} and
-@command{sed}) from @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}, which
-only works for variables recorded there as literals.  You can use
-@code{R CMD config} for getting the value of the basic configuration
-variables, or the header and library flags necessary for linking against
-@R{}, see @kbd{R CMD config --help} for details.  (This works on Windows
-as from @R{} 2.6.0.)
+You can use @code{R CMD config} for getting the value of the basic
+configuration variables, or the header and library flags necessary for
+linking against @R{}, see @kbd{R CMD config --help} for details.
 
 To check for an external BLAS library using the @code{ACX_BLAS} macro
 from the official Autoconf Macro Archive, one can simply do
@@ -1485,9 +1479,7 @@ specified in that directory are run.  (Typically they will consist of a
 set of @file{.R} source files and target output files
 @file{.Rout.save}.)  Please note that the comparison will be done in the
 end user's locale, so the target output files should be ASCII if at all
-possible -- this may require using@footnote{this is done automatically
-as from @R{} 2.9.0.}  @code{options(useFancyQuotes=FALSE)} in the source
-files.
+possible.
 
 @item
 The code in package vignettes (@pxref{Writing package vignettes}) is
@@ -1544,15 +1536,6 @@ starting and ending with @samp{#}, or ending in @samp{~}, @samp{.bak} or
 @samp{.swp}, are excluded by default.  In addition, those files in the
 @file{R}, @file{demo} and @file{man} directories which are flagged by
 @code{R CMD check} as having invalid names will be excluded.
-
-@c <FIXME>
-@c From 1.8.0 on, the build code removes exclude files itself, rather
-@c than relying on tar for doing do, when building *source* packages.
-@c @quotation Note
-@c File exclusion does not work correctly with @acronym{GNU}
-@c @code{tar} 1.13 but does work with later versions (e.g., version
-@c 1.13.17).
-@c @end quotation
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
@@ -2490,11 +2473,7 @@ Some notes on issues specific to porting to x64 Windows are available at
 Care is needed if your package contains non-@acronym{ASCII} text, and in
 particular if it is intended to be used in more than one locale.  It is
 possible to mark the encoding used in the @file{DESCRIPTION} file and in
-@file{.Rd} files, as discussed elsewhere in this manual.  What was not
-possible before @R{} 2.5.0 was to mark the encoding used by character
-strings in @R{}: if you want your package to work with earlier versions
-of @R{} please consult the advice in the @R{} 2.4.x version of this
-manual.
+@file{.Rd} files, as discussed elsewhere in this manual.
 
 First, consider carefully if you really need non-@acronym{ASCII} text.  Most
 users of @R{} will only be able to view correctly text in their native
@@ -2514,55 +2493,37 @@ Windows, for example).  In that case it is likely that text will be
 rendered correctly in the terminal/console used to run @R{}, and files
 written will be readable by other UTF-8-aware applications.  However,
 plotting will be problematic.  On-screen plotting using the @samp{X11()}
-device needs to find a font that covers the glyphs used, and
-this will be machine-dependent: you may have Russian or Japanese fonts
-installed but your users may not.  Using @samp{postscript} or @samp{pdf}
-will choose a default 8-bit encoding depending on the language of the
-UTF-8 locale, and your users would need to be told how to select the
-@samp{encoding} argument.  As from @R{} 2.7.0 UTF-8-encoded text works
-reasonably well on Windows using the @code{Rgui} console and the
-@code{windows} family of devices, since they work internally in Unicode
-(UCS-2).
+device needs to find a font that covers the glyphs used, and this will
+be machine-dependent: you may have Russian or Japanese fonts installed
+but your users may not.  Using @samp{postscript} or @samp{pdf} will
+choose a default 8-bit encoding depending on the language of the UTF-8
+locale, and your users would need to be told how to select the
+@samp{encoding} argument.  UTF-8-encoded text works reasonably well on
+Windows using the @code{Rgui} console and the @code{windows} family of
+devices, since they work internally in Unicode (UCS-2).
 
 Another fairly common scenario is where a package will only be used in
 one language, e.g.@: French.  It is not very safe to assume that all
 such users would have their computers set to a French locale, but let us
 assume so.  The problem then is that there are several possible
 encodings for French locales, the most common ones being @samp{CP1252}
-(Windows), @samp{ISO 8859-1} (latin-1), @samp{ISO 8859-15} (latin-9
+(Windows), @samp{ISO 8859-1} (Latin-1), @samp{ISO 8859-15} (Latin-9
 which includes the Euro), and @samp{UTF-8}.  For characters in the
 French language the first three agree, but they do not agree with
 @samp{UTF-8}.  Further, you (or different users of your machine) can run
 @R{} in different locales in different sessions, say @samp{fr_CA.utf8}
 one day and @samp{fr_CH.iso88591} the next.  Declaring the encoding as
 either @samp{latin1} or @samp{UTF-8} in the @file{DESCRIPTION} file will
-enable this to work.  If you have character data in @file{.rda} files
-(for use by @code{data} or LazyData) these need to have been prepared
-and @code{save}d in @R{} 2.5.0 or later in an appropriate locale (or
-marked @emph{via} @code{Encoding}).  For example (from package @pkg{FactoMineR}
-version @code{1.02}):
+enable this to work.
 
-@example
-> library(FactoMineR)
-> data(wine)
-> Encoding(names(wine)) <- "latin1"
-> Encoding(levels(wine$Terroir)) <- "latin1"
-> save(wine, file="wine.rda")
-@end example
-
-@noindent
-was used to update a @file{.rda} file.
-
-From @R{} 2.10.0 there is a fairly portable@footnote{this has worked on
-Windows since @R{} 2.7.0, and works now on all platforms.} way to have
-arbitrary text in character strings (only) in your @R{} code, which is
-to supply them in Unicode as @code{\uxxxx} escapes.  If there are any
-characters not in the current encoding the parser will encode the
-character string as UTF-8 and mark it as such.  A variation of this
-approach that has worked for Latin-1 text since @R{} 2.5.0 is to enter
-the text with @code{\x} escapes and using @code{Encoding(x) <- "latin1"}
-to declare its encoding, but that may not work in future versions of
-@R{}.
+From @R{} 2.10.0 there is a fairly portable way to have arbitrary text
+in character strings (only) in your @R{} code, which is to supply them
+in Unicode as @code{\uxxxx} escapes.  If there are any characters not in
+the current encoding the parser will encode the character string as
+UTF-8 and mark it as such.  A variation of this approach that has worked
+for Latin-1 text since @R{} 2.5.0 is to enter the text with @code{\x}
+escapes and using @code{Encoding(x) <- "latin1"} to declare its
+encoding, but that may not work in future versions of @R{}.
 
 If you want to run @command{R CMD check} on a Unix-alike over a package
 that sets the encoding you may need to specify a suitable locale
@@ -2743,8 +2704,8 @@ dngettext(("@var{pkg}", @var{<singular string>}, @var{<plural string>}, n)
 @end example
 
 @noindent
-(This is only supported as from @R{} 2.10.0, and will not work on
-Windows for earlier versions of @R{}.)
+(This is only supported from @R{} 2.10.0, so packages which use it need
+to depend on @code{R (>= 2.10)}.)
 
 @item
 In the package's @file{src} directory run
@@ -2838,9 +2799,8 @@ useful validity checks, and @option{--statistics} notes the coverage.
 @node Makefile support,  , Installing translations, Internationalization
 @subsection Makefile support
 
-As from @R{} 2.10.0 there is some makefile support in the @file{po}
-directory of the @R{} sources.  To use this to create the template
-files, use
+There is some makefile support in the @file{po} directory of the @R{}
+sources.  To use this to create the template files, use
 
 @example
 mkdir -p @var{pkgdir}/po
@@ -2897,8 +2857,8 @@ An installed file named @file{CITATION} will be used by the
 
 The @file{CITATION} file is parsed as @R{} code (in the package's
 declared encoding@footnote{as from @R{} 2.8.0: @R{} 2.7.x read it in
-latin-1, and earlier versions in the current encoding of the @R{}
-session}, defaulting to latin-1).  If no such file is present,
+Latin-1, and earlier versions in the current encoding of the @R{}
+session}, defaulting to Latin-1).  If no such file is present,
 @code{citation} generates a standard contents, and an example of what
 that would look like as a @file{CITATION} file can be seen in
 recommended package @pkg{nlme} (see below): recommended packages
@@ -3023,13 +2983,12 @@ R-Forge (@uref{http://R-Forge.r-project.org, R-Forge.r-project.org}) and
 RForge (@uref{http://www.rforge.net, www.rforge.net}) are similar
 services with similar names.  Both provide source-code management
 through SVN, daily building and checking, mailing lists and a repository
-that can be accessed @emph{via} @code{install.packages} (and as from
-@R{} 2.9.0, R-Forge can be selected by @code{setRepositories} and the
-GUI menus that use it).  Package developers have the opportunity to
-present their work on the basis of project websites or news
-announcements.  Mailing lists, forums or wikis provide useRs with
-convenient instruments for discussions and for exchanging information
-between developers and/or interested useRs.
+that can be accessed @emph{via} @code{install.packages} (R-Forge can be
+selected by @code{setRepositories} and the GUI menus that use it).
+Package developers have the opportunity to present their work on the
+basis of project websites or news announcements.  Mailing lists, forums
+or wikis provide useRs with convenient instruments for discussions and
+for exchanging information between developers and/or interested useRs.
 
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
@@ -3140,16 +3099,15 @@ years, which can be important if a package is intended to be used with
 earlier versions of @R{}.  See @ref{Back-compatibility issues} for notes
 on earlier versions of the @file{Rd} format.
 
-As of @R{} 2.10.0, the syntax of @file{Rd} files consists of three types of
-text input.  The most common is @LaTeX{}-like, with the backslash used
-as a prefix on markup (e.g. @code{\alias}), and
-braces used to indicate arguments (e.g. @code{@{load@}}).
-The least common type of text is verbatim text, where
-no markup is processed. The third type is @R{}-like, intended for @R{}
-code, but allowing some embedded macros.  Quoted strings within
+@file{Rd} files consists of three types of text input.  The most common
+is @LaTeX{}-like, with the backslash used as a prefix on markup
+(e.g. @code{\alias}), and braces used to indicate arguments
+(e.g. @code{@{load@}}).  The least common type of text is verbatim text,
+where no markup is processed. The third type is @R{}-like, intended for
+@R{} code, but allowing some embedded macros.  Quoted strings within
 @R{}-like text are handled specially: regular character escapes such as
-@code{\n} may be entered as-is.  Only markup starting with @code{\l} (e.g.
-@code{\link}) or @code{\v} (e.g. @code{\var}) will be recognized
+@code{\n} may be entered as-is.  Only markup starting with @code{\l}
+(e.g.  @code{\link}) or @code{\v} (e.g. @code{\var}) will be recognized
 within quoted strings.  The rarely used vertical tab @code{\v} must be
 entered as @code{\\v}.
 
@@ -3198,8 +3156,8 @@ The @code{\alias} entries specify all ``topics'' the file documents.
 This information is collected into index data bases for lookup by the
 on-line (plain text and @HTML{}) help systems.  The @var{topic} can
 contain spaces, but (for historical reasons) leading and trailing spaces
-will be stripped.  Percent has always needed to be escaped by backslash,
-and as from @R{} 2.9.0 a left brace should be.
+will be stripped.  Percent and left brace need to be escaped by
+a backslash.
 
 There may be several @code{\alias} entries.  Quite often it is
 convenient to document several @R{} objects in one file.  For example,
@@ -3341,8 +3299,7 @@ Usage:
 @end example
 
 @findex \S3method
-Versions of @R{} since at least 2.0.0 accept @code{\S3method} as an
-alternative to @code{\method}.
+@code{\S3method} is accepted as an alternative to @code{\method}.
 
 @item \arguments@{@dots{}@}
 @findex \arguments
@@ -3378,7 +3335,7 @@ form
 @noindent
 for each component of the list returned.  Optional text may
 precede@footnote{Text between or after list items was discarded prior to
-@R{} 2.10.0, and is discouraged.}  this list (see for example the help
+@R{} 2.10.0, and is discouraged.} this list (see for example the help
 for @code{rle}).  Note that @code{\value} is implicitly a
 @code{\describe} environment, so that environment should not be used for
 listing components, just individual @code{\item@{@}@{@}} entries.
@@ -3672,10 +3629,9 @@ For example
 For consistency with the pre-assigned sections, the section name (the
 first argument to @code{\section}) should be capitalized (but not all
 upper case).  Whitespace between the first and second braced expressions
-is not allowed as from @R{} 2.10.0.  Markup (e.g.@: @code{\code}) within
-the section title may cause problems with the latex conversion
-(depending on the version of macro packages such as @samp{hyperref}) and
-so should be avoided.
+is not allowed.  Markup (e.g.@: @code{\code}) within the section title
+may cause problems with the latex conversion (depending on the version
+of macro packages such as @samp{hyperref}) and so should be avoided.
 
 The @code{\subsection} macro takes arguments in the same format as
 @code{\section}, but is used within a section, so it may be used to
@@ -3937,7 +3893,7 @@ is used for ``inline'' formulae (corresponding to @TeX{}'s
 Both commands can also be used as @code{\eqn@{@var{latexascii}@}} (only
 @emph{one} argument) which then is used for both @var{latex} and
 @var{ascii}.  No whitespace is allowed between command and the first
-argument, nor (prior to @file{Rd} version 1.1) between the first and second arguments.
+argument, nor between the first and second arguments.
 
 The following example is from @file{Poisson.Rd}:
 
@@ -7340,16 +7296,15 @@ R character vectors are stored as @code{STRSXP}s, a vector type like
 @code{CHARSXP} elements of @code{STRSXP}s are accessed using
 @code{STRING_ELT} and @code{SET_STRING_ELT}.
 
-As of @R{} 2.6.0, @code{CHARSXP}s are read-only objects and must never
-be modified.  In particular, the C-style string contained in a
-@code{CHARSXP} should be treated as read-only and for this reason the
-@code{CHAR} function used to access the character data of a
-@code{CHARSXP} returns @code{(const char *)} (this also allows compilers
-to issue warnings about improper use).  Since @code{CHARSXP}s are
-immutable, the same @code{CHARSXP} can be shared by any @code{STRSXP}
-needing an element representing the same string.  As of @R{} 2.6.0, @R{}
-maintains a global cache of @code{CHARSXP}s so that there is only ever
-one @code{CHARSXP} representing a given string in memory.
+@code{CHARSXP}s are read-only objects and must never be modified.  In
+particular, the C-style string contained in a @code{CHARSXP} should be
+treated as read-only and for this reason the @code{CHAR} function used
+to access the character data of a @code{CHARSXP} returns @code{(const
+char *)} (this also allows compilers to issue warnings about improper
+use).  Since @code{CHARSXP}s are immutable, the same @code{CHARSXP} can
+be shared by any @code{STRSXP} needing an element representing the same
+string. @R{} maintains a global cache of @code{CHARSXP}s so that there
+is only ever one @code{CHARSXP} representing a given string in memory.
 
 @findex mkChar
 @findex mkCharLen
@@ -8549,27 +8504,26 @@ provides a stricter test that the accessors have been used correctly.
 
 @findex translateChar
 @findex translateCharUTF8
-As from @R{} 2.5.0 @code{CHARSXP}s can be marked as coming from a known
-encoding (Latin-1 or UTF-8).  This is mainly intended for human-readable
-output, and most packages can just treat such @code{CHARSXP}s as a
-whole.  However, if they need to be interpreted as characters or output
-at C level then it would normally be correct to ensure that they are
-converted to the encoding of the current locale: this can be done by
-accessing the data in the @code{CHARSXP} by @code{translateChar} rather
-than by @code{CHAR}.  If re-encoding is needed this allocates memory
-with @code{R_alloc} which thus persists to the end of the
+@code{CHARSXP}s can be marked as coming from a known encoding (Latin-1
+or UTF-8).  This is mainly intended for human-readable output, and most
+packages can just treat such @code{CHARSXP}s as a whole.  However, if
+they need to be interpreted as characters or output at C level then it
+would normally be correct to ensure that they are converted to the
+encoding of the current locale: this can be done by accessing the data
+in the @code{CHARSXP} by @code{translateChar} rather than by
+@code{CHAR}.  If re-encoding is needed this allocates memory with
+@code{R_alloc} which thus persists to the end of the
 @code{.Call}/@code{.External} call unless @code{vmaxset} is used.
 
-As from @R{} 2.7.0 there is a similar function @code{translateCharUTF8}
-which converts to UTF-8: this has the advantage that a faithful
-translation is almost always possible (whereas only a few languages can
-be represented in the encoding of the current locale unless that is
-UTF-8).
+There is a similar function @code{translateCharUTF8} which converts to
+UTF-8: this has the advantage that a faithful translation is almost
+always possible (whereas only a few languages can be represented in the
+encoding of the current locale unless that is UTF-8).
 
 @findex getCharCE
 @findex mkCharCE
-As from @R{} 2.7.0 there is a public interface to the encoding marked on
-@code{CHARXSXPs} @emph{via}
+There is a public interface to the encoding marked on @code{CHARXSXPs}
+@emph{via}
 
 @example
 typedef enum @{CE_NATIVE, CE_UTF8, CE_LATIN1, CE_SYMBOL, CE_ANY@} cetype_t;
@@ -8606,7 +8560,7 @@ output hex of the form @code{<a0>}, and @code{2} to replace by @code{.},
 with any other value causing the byte to produce no output.
 
 @findex mkCharLenCE
-@R{} 2.8.0 added
+There is also
 
 @example
 SEXP mkCharLenCE(const char *, int, cetype_t);
@@ -8659,7 +8613,7 @@ should be regarded as undocumented and unstable.
 
 An alternative is to include the header file @file{S.h}, which may be
 useful when porting code from @Sl{}.  This includes rather less than
-@file{R.h}, and has extra some compatibility definitions (for example
+@file{R.h}, and has some extra compatibility definitions (for example
 the @code{S_complex} type from @Sl{}).
 
 The defines used for compatibility with @Sl{} sometimes causes
@@ -9336,8 +9290,7 @@ even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
 This may be provided by your platform, in which case it is not included
 in @file{Rmath.h}, but is (probably) in @file{math.h} which
-@file{Rmath.h} includes.  For backwards compatibility with @R{} versions
-prior to 1.5.0, the entry point @code{Rf_log1p} is still provided.
+@file{Rmath.h} includes.
 @end deftypefun
 
 @deftypefun double log1pmx (double @var{x})
@@ -9756,8 +9709,7 @@ this is defined.
 @R{} has its own C-level interface to the encoding conversion
 capabilities provided by @code{iconv} because there are
 incompatibilities between the declarations in different implementations
-of @code{iconv} (and before @R{} 2.10.0 they provided a dummy interface
-when @code{iconv} was not supported).
+of @code{iconv}.
 
 These are declared in header file @file{R_ext/Riconv.h}.
 
@@ -10247,13 +10199,13 @@ part of the @pkg{rJava} package on @acronym{CRAN}).
 @section Embedding R under Unix-alikes
 
 @R{} can be built as a shared library@footnote{In the parlance of Mac OS
-X this is a @emph{dynamic} library, and is the normal way to build @R{} on
-that platform.} if configured with @option{--enable-R-shlib}.  This
+X this is a @emph{dynamic} library, and is the normal way to build @R{}
+on that platform.} if configured with @option{--enable-R-shlib}.  This
 shared library can be used to run @R{} from alternative front-end
 programs.  We will assume this has been done for the rest of this
-section.  In addition, from @R{} 2.7.0 it can be built as a static
-library if configured with @option{--enable-R-static-lib}, and this can
-be used in a very similar way.
+section.  Also, it can be built as a static library if configured with
+@option{--enable-R-static-lib}, and this can be used in a very similar
+way.
 
 The command-line @R{} front-end, @file{@var{R_HOME}/bin/exec/R} is one
 such example, and the former @acronym{GNOME} (see package @pkg{gnomeGUI}
