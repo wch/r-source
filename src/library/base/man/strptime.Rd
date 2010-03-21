@@ -123,20 +123,8 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 	century inferred from a 2-digit year will change}.
     }
     \item{\code{\%Y}}{Year with century.}
-#ifdef unix
     \item{\code{\%z}}{Offset from Greenwich, so \code{-0800} is 8 hours
       west of Greenwich. This is read but ignored on input, with a warning.}
-#endif
-#ifdef windows
-    \item{\code{\%z}}{For input: offset from Greenwich so \code{-0800}
-      is 8 hours west of Greenwich: this is read but ignored, with a
-      warning.
-      
-      For output: the same as \code{\%Z}: note that this differs
-      from POSIX.  Also, this is done by a Windows C function and so
-      will use Windows' idea of the timezone names, not that used by
-      other date-time functions.}
-#endif
     \item{\code{\%Z}}{(output only.) Time zone as a character
       string (empty if not available).}
   }

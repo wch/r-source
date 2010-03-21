@@ -736,8 +736,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "usetz");
     tz = getAttrib(x, install("tzone"));
 
-    /* workaround for glibc & MacOS X bugs in strftime: they have
-       undocumented and non-POSIX/C99 time zone components
+    /* workaround for glibc/FreeBSD/MacOS X bugs in strftime: they have
+       non-POSIX/C99 time zone components
      */
     memset(&tm, 0, sizeof(tm));
 
@@ -770,10 +770,21 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(validate_tm(&tm) < 0) SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		const char *q = CHAR(STRING_ELT(sformat, i%m));
-		char buf2[500];
-		strcpy(buf2,  q);
+		int n = strlen(q) + 50;
+		char *buf2 = alloca(n);
+#ifdef WIN32
+		/* We want to override Windows' TZ names */
+		p = strstr(q, "%Z");
+		if (p) {
+		    memset(buf2, 0, n);
+		    strncpy(buf2, q, p - q);
+		    strcat(buf2, tm.tm_isdst > 0 ? tzname[1] : tzname[0]);
+		    strcat(buf2, p+2);
+		} else strcpy(buf2,  q);
+#endif
 		p = strstr(q, "%OS");
 		if(p) {
+		    /* FIXME some of this should be outside the loop */
 		    int ns, nused = 4;
 		    char *p2 = strstr(buf2, "%OS");
 		    *p2 = '\0';

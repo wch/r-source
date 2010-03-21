@@ -37,6 +37,9 @@ NEW FEATURES
     o	It is possible to build for 64-bit Windows (set WIN=64 in
 	MkRules and read the R-admin manual for the tools required),
 	thanks in part to changes suggested by Yu Gong.
+
+    o	strftime(format = "%z") now gives the timezone names used by
+	the Olson database and not those used by Windows.
 	
 
 BUG FIXES
