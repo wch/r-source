@@ -343,6 +343,9 @@ NEW FEATURES
     o	any() and all() return early if possible.  This may speed up
 	operations on long vectors.
 
+    o	strptime() now parses "%z" (for the offset from UTC in the
+	RFC822 format of +/-mmmm) but does not yet make use of it.
+
 
 DEPRECATED & DEFUNCT
 

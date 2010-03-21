@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -42,7 +42,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \item{\dots}{Further arguments to be passed from or to other methods.}
   \item{usetz}{logical.  Should the timezone be appended to the output?
     This is used in printing times, and as a workaround for problems with
-    using \code{"\%Z"} on most Linux systems.}
+    using \code{"\%Z"} on some Linux systems.}
   \item{year, month, day}{numerical values to specify a day.}
   \item{hour, min, sec}{numerical values for a time within a day.
     Fractional seconds are allowed.}
@@ -112,36 +112,31 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       first Monday of the year as day 1 of week 1). The UK convention.}
     \item{\code{\%x}}{Date, locale-specific.}
     \item{\code{\%X}}{Time, locale-specific.}
-    \item{\code{\%y}}{Year without century (00--99). If you use this on
-      input, which century you get is system-specific.  So don't!  Most often
-      values 00 to 68 are prefixed by 20 and 69 to 99 by 19 -- that is
-      the behaviour specified by the 2001 POSIX standard, but it does
-      also say \sQuote{it is expected that in a future version of IEEE
-	Std 1003.1-2001 the default century inferred from a 2-digit year will
-	change}. 
+    \item{\code{\%y}}{Year without century (00--99). Values 00 to 68 are
+      prefixed by 20 and 69 to 99 by 19 -- that is the behaviour specified
+      by the 2004 POSIX standard, but it does also say \sQuote{it is
+	expected that in a future version of IEEE Std 1003.1-2001 the default
+	century inferred from a 2-digit year will change}.
     }
     \item{\code{\%Y}}{Year with century.}
 #ifdef unix
-    \item{\code{\%z}}{(output only.) Offset from Greenwich, so
-      \code{-0800} is 8 hours west of Greenwich.}
-    \item{\code{\%Z}}{(output only.) Time zone as a character
-      string (empty if not available).}
+    \item{\code{\%z}}{Offset from Greenwich, so \code{-0800} is 8 hours
+      west of Greenwich. This is read but ignored on input, with a warning.}
 #endif
 #ifdef windows
-    \item{\code{\%z}, \code{\%Z}}{(output only.)  Time zone as a character
-      string (empty if not available).  For \code{\%z} this differs
+    \item{\code{\%z}}{(For input, offset from Greenwich so \code{-0800}
+      is 8 hours west of Greenwich: this is read but ignored, with a
+      warning.\cr
+      For output, the same as \code{\%Z}: note that this differs
       from POSIX.  Also, this is done by a Windows C function and so
       will use Windows' idea of the timezone names, not that used by
       other date-time functions.}
 #endif
+    \item{\code{\%Z}}{(output only.) Time zone as a character
+      string (empty if not available).}
   }
   Where leading zeros are shown they will be used on output but are
   optional on input.
-#ifdef windows
-  Windows allows the modifier \code{#} in conversion specifications for
-  output: \code{\%#c} and \code{\%#x} use longer forms, and for
-  \code{dHIjmMSUwWyY} leading zeros are suppressed.
-#endif
 
   Also defined in the current standards but less widely implemented
   (e.g. not for output on Windows) are
@@ -176,11 +171,12 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       is the last week of the previous year, and the next week is week
       1.  (Typically accepted but ignored on input.)}
   }
-  For output (and possibly input) there are also \code{\%O[dHImMUVwWy]}
-  which may emit numbers in an alternative locale-dependent format
-  (e.g. roman numerals), and \code{\%E[cCyYxX]} which can use an
-  alternative \sQuote{era} (e.g. a different religious calendar).  Which
-  of these are supported is OS-dependent.
+  For output there are also \code{\%O[dHImMUVwWy]} which may emit
+  numbers in an alternative locale-dependent format (e.g. roman
+  numerals), and \code{\%E[cCyYxX]} which can use an alternative
+  \sQuote{era} (e.g. a different religious calendar).  Which of these
+  are supported is OS-dependent.  These are accepted for input, but with
+  the standard interpretation.
 
   Specific to \R is \code{\%OSn}, which for output gives the
   seconds to \code{0 <= n <= 6} decimal places (and if \code{\%OS} is
