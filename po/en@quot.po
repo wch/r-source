@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-19 11:16+0000\n"
-"PO-Revision-Date: 2010-03-19 11:16+0000\n"
+"POT-Creation-Date: 2010-03-21 17:00+0000\n"
+"PO-Revision-Date: 2010-03-21 17:00+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -308,7 +308,7 @@ msgstr "invalid timestamp"
 #: src/main/plot.c:3405 src/main/plot3d.c:1399 src/main/plot3d.c:2528
 #: src/main/plot3d.c:2532 src/main/plot3d.c:2534 src/main/seq.c:166
 #: src/main/seq.c:264 src/main/seq.c:267 src/main/sort.c:869
-#: src/main/sort.c:969 src/main/source.c:205 src/main/summary.c:1026
+#: src/main/sort.c:969 src/main/source.c:209 src/main/summary.c:1026
 #: src/main/sysutils.c:229 src/main/util.c:883 src/main/util.c:888
 #: src/main/util.c:895 src/main/util.c:898 src/modules/X11/devX11.c:2698
 #: src/modules/X11/devX11.c:2725 src/modules/X11/devX11.c:2730
@@ -802,19 +802,29 @@ msgstr "function ‘%s’ not provided by package ‘%s’"
 msgid "table entry must be an external pointer"
 msgstr "table entry must be an external pointer"
 
-#: src/main/Rstrptime.h:1164
+#: src/main/Rstrptime.h:477 src/main/Rstrptime.h:944
+#, c-format
+msgid "%s for input is read but ignored"
+msgstr "%s for input is read but ignored"
+
+#: src/main/Rstrptime.h:501 src/main/Rstrptime.h:968
+#, c-format
+msgid "use of %s for input is not supported"
+msgstr "use of %s for input is not supported"
+
+#: src/main/Rstrptime.h:1221
 msgid "input string is too long"
 msgstr "input string is too long"
 
-#: src/main/Rstrptime.h:1166
+#: src/main/Rstrptime.h:1223
 msgid "invalid multibyte input string"
 msgstr "invalid multibyte input string"
 
-#: src/main/Rstrptime.h:1169
+#: src/main/Rstrptime.h:1226
 msgid "format string is too long"
 msgstr "format string is too long"
 
-#: src/main/Rstrptime.h:1171
+#: src/main/Rstrptime.h:1228
 msgid "invalid multibyte format string"
 msgstr "invalid multibyte format string"
 
@@ -1301,7 +1311,7 @@ msgstr "vector size specified is too large"
 
 #: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:276
 #: src/main/builtin.c:304 src/main/builtin.c:341 src/main/builtin.c:350
-#: src/main/coerce.c:1427 src/main/connections.c:2733 src/main/engine.c:2806
+#: src/main/coerce.c:1434 src/main/connections.c:2733 src/main/engine.c:2806
 #: src/main/envir.c:921 src/main/envir.c:974 src/main/envir.c:1064
 #: src/main/envir.c:1518 src/main/envir.c:1610 src/main/envir.c:1677
 #: src/main/envir.c:1792 src/main/envir.c:2464 src/main/envir.c:2524
@@ -1380,7 +1390,7 @@ msgid "invalid argument"
 msgstr "invalid argument"
 
 #: src/main/builtin.c:838 src/main/builtin.c:842 src/main/character.c:335
-#: src/main/coerce.c:2571
+#: src/main/coerce.c:2578
 msgid "invalid value"
 msgstr "invalid value"
 
@@ -1519,89 +1529,94 @@ msgstr "‘pairlist’ object cannot be coerced to type ‘%s’"
 msgid "(list) object cannot be coerced to type '%s'"
 msgstr "(list) object cannot be coerced to type ‘%s’"
 
-#: src/main/coerce.c:1076 src/main/coerce.c:1375
+#: src/main/coerce.c:1067
+#, c-format
+msgid "(symbol) object cannot be coerced to type '%s'"
+msgstr "(symbol) object cannot be coerced to type ‘%s’"
+
+#: src/main/coerce.c:1083 src/main/coerce.c:1382
 msgid "no method for coercing this S4 class to a vector"
 msgstr "no method for coercing this S4 class to a vector"
 
-#: src/main/coerce.c:1135
+#: src/main/coerce.c:1142
 msgid "environments cannot be coerced to other types"
 msgstr "environments cannot be coerced to other types"
 
-#: src/main/coerce.c:1278
+#: src/main/coerce.c:1285
 msgid "attempting to coerce non-factor"
 msgstr "attempting to coerce non-factor"
 
-#: src/main/coerce.c:1423
+#: src/main/coerce.c:1430
 msgid "list argument expected"
 msgstr "list argument expected"
 
-#: src/main/coerce.c:1431 src/main/eval.c:3726 src/main/eval.c:3733
+#: src/main/coerce.c:1438 src/main/eval.c:3726 src/main/eval.c:3733
 msgid "invalid environment"
 msgstr "invalid environment"
 
-#: src/main/coerce.c:1435
+#: src/main/coerce.c:1442
 msgid "argument must have length at least 1"
 msgstr "argument must have length at least 1"
 
-#: src/main/coerce.c:1460
+#: src/main/coerce.c:1467
 msgid "invalid body for function"
 msgstr "invalid body for function"
 
-#: src/main/coerce.c:1483
+#: src/main/coerce.c:1490
 msgid "invalid length 0 argument"
 msgstr "invalid length 0 argument"
 
-#: src/main/coerce.c:1498
+#: src/main/coerce.c:1505
 msgid "invalid argument list"
 msgstr "invalid argument list"
 
-#: src/main/coerce.c:1797
+#: src/main/coerce.c:1804
 msgid "type \"single\" unimplemented in R"
 msgstr "type “single” unimplemented in R"
 
-#: src/main/coerce.c:1799
+#: src/main/coerce.c:1806
 msgid "unimplemented predicate"
 msgstr "unimplemented predicate"
 
-#: src/main/coerce.c:1940 src/main/coerce.c:2040
+#: src/main/coerce.c:1947 src/main/coerce.c:2047
 #, c-format
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr "%s() applied to non-(list or vector) of type ‘%s’"
 
-#: src/main/coerce.c:2180 src/main/dotcode.c:763 src/main/dotcode.c:806
+#: src/main/coerce.c:2187 src/main/dotcode.c:763 src/main/dotcode.c:806
 #: src/main/dotcode.c:1630
 msgid "'name' is missing"
 msgstr "‘name’ is missing"
 
-#: src/main/coerce.c:2187
+#: src/main/coerce.c:2194
 msgid "first argument must be a character string"
 msgstr "first argument must be a character string"
 
-#: src/main/coerce.c:2214
+#: src/main/coerce.c:2221
 msgid "'what' must be a character string or a function"
 msgstr "‘what’ must be a character string or a function"
 
-#: src/main/coerce.c:2217
+#: src/main/coerce.c:2224
 msgid "'args' must be a list"
 msgstr "‘args’ must be a list"
 
-#: src/main/coerce.c:2220
+#: src/main/coerce.c:2227
 msgid "'envir' must be an environment"
 msgstr "‘envir’ must be an environment"
 
-#: src/main/coerce.c:2295 src/main/coerce.c:2336
+#: src/main/coerce.c:2302 src/main/coerce.c:2343
 msgid "... used in an incorrect context"
 msgstr "... used in an incorrect context"
 
-#: src/main/coerce.c:2384
+#: src/main/coerce.c:2391
 msgid "invalid environment specified"
 msgstr "invalid environment specified"
 
-#: src/main/coerce.c:2445
+#: src/main/coerce.c:2452
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr "Setting class(x) to NULL;   result will no longer be an S4 object"
 
-#: src/main/coerce.c:2448
+#: src/main/coerce.c:2455
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
@@ -1610,7 +1625,7 @@ msgstr ""
 "Setting class(x) to multiple strings (“%s”, “%s”, ...); result will no "
 "longer be an S4 object"
 
-#: src/main/coerce.c:2450
+#: src/main/coerce.c:2457
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
@@ -1619,18 +1634,18 @@ msgstr ""
 "Setting class(x) to “%s” sets attribute to NULL; result will no longer be an "
 "S4 object"
 
-#: src/main/coerce.c:2480
+#: src/main/coerce.c:2487
 msgid "invalid replacement object to be a class string"
 msgstr "invalid replacement object to be a class string"
 
-#: src/main/coerce.c:2500
+#: src/main/coerce.c:2507
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr ""
 "“%s” can only be set as the class if the object has this type; found “%s”"
 
-#: src/main/coerce.c:2518
+#: src/main/coerce.c:2525
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1639,17 +1654,17 @@ msgstr ""
 "invalid to set the class to matrix unless the dimension attribute is of "
 "length 2 (was %d)"
 
-#: src/main/coerce.c:2526
+#: src/main/coerce.c:2533
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
 "cannot set class to “array” unless the dimension attribute has length > 0"
 
-#: src/main/coerce.c:2562
+#: src/main/coerce.c:2569
 msgid "'value' must be non-null character string"
 msgstr "‘value’ must be non-null character string"
 
-#: src/main/coerce.c:2575
+#: src/main/coerce.c:2582
 msgid "invalid to change the storage mode of a factor"
 msgstr "invalid to change the storage mode of a factor"
 
@@ -1886,7 +1901,7 @@ msgstr ""
 #: src/main/connections.c:4333 src/main/connections.c:4676 src/main/dcf.c:52
 #: src/main/deparse.c:305 src/main/deparse.c:389 src/main/saveload.c:2243
 #: src/main/saveload.c:2327 src/main/scan.c:900 src/main/scan.c:1011
-#: src/main/scan.c:1516 src/main/scan.c:1710 src/main/source.c:250
+#: src/main/scan.c:1516 src/main/scan.c:1710 src/main/source.c:254
 msgid "cannot open the connection"
 msgstr "cannot open the connection"
 
@@ -2107,7 +2122,7 @@ msgstr "Line longer than buffer size"
 #: src/main/connections.c:4001 src/main/connections.c:4021 src/main/dcf.c:49
 #: src/main/dcf.c:55 src/main/saveload.c:2320 src/main/scan.c:903
 #: src/main/scan.c:907 src/main/scan.c:1014 src/main/scan.c:1018
-#: src/main/serialize.c:1647 src/main/source.c:253 src/main/source.c:256
+#: src/main/serialize.c:1647 src/main/source.c:257 src/main/source.c:260
 msgid "cannot read from this connection"
 msgstr "cannot read from this connection"
 
@@ -6402,7 +6417,11 @@ msgstr ""
 "\"%s\n"
 "%s\""
 
-#: src/main/source.c:216
+#: src/main/source.c:204
+msgid "coercion of 'text' to character was unsuccessful"
+msgstr "coercion of ‘text’ to character was unsuccessful"
+
+#: src/main/source.c:220
 #, c-format
 msgid "argument '%s = \"%s\"' will be ignored"
 msgstr "argument ‘%s = “%s”’ will be ignored"
