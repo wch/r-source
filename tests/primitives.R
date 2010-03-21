@@ -117,7 +117,7 @@ except <- c("call", "switch", ".C", ".Fortran", ".Call", ".External",
             ".primTrace", ".primUntrace", "lazyLoadDBfetch",
             ".Internal", ".Primitive", "^", "|", "%*%", "rep", "seq.int",
             ## these may not be enabled
-            "tracemen", "retracemem", "untracemem")
+            "tracemem", "retracemem", "untracemem")
 
 for(f in ls(.GenericArgsEnv, all.names=TRUE)[-(1:15)])
 {
