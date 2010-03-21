@@ -124,10 +124,11 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       west of Greenwich. This is read but ignored on input, with a warning.}
 #endif
 #ifdef windows
-    \item{\code{\%z}}{(For input, offset from Greenwich so \code{-0800}
+    \item{\code{\%z}}{For input: offset from Greenwich so \code{-0800}
       is 8 hours west of Greenwich: this is read but ignored, with a
-      warning.\cr
-      For output, the same as \code{\%Z}: note that this differs
+      warning.
+      
+      For output: the same as \code{\%Z}: note that this differs
       from POSIX.  Also, this is done by a Windows C function and so
       will use Windows' idea of the timezone names, not that used by
       other date-time functions.}
