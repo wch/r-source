@@ -1,5 +1,8 @@
-/* For inclusion by datetime.c if needed. A slightly modified version of
-   code from the GNU C library with locale support removed. */
+/* For inclusion by datetime.c. 
+
+   A modified version of code from the GNU C library with locale
+   support removed and wchar support added.
+*/
 
 /* Convert a string representation of time to a time value.
    Copyright (C) 1996, 1997, 1998, 1999, 2000 Free Software Foundation, Inc.
