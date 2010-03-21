@@ -1,6 +1,6 @@
 
-R version 2.11.0 Under development (unstable) (2009-11-27 r50581)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.11.0 Under development (unstable) (2010-03-21 r51349)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -61,8 +61,8 @@ Type 'q()' to quit R.
 +     "\n\t starting with 'is.' :\t  ",
 +     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n", sep = "")
 
-Number of base objects:		1213
-Number of functions in base:	1184
+Number of base objects:		1221
+Number of functions in base:	1192
 	 starting with 'is.' :	  50
 
 > ## 0.14  : 31
@@ -1457,5 +1457,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  1.791 0.116 2.856 0 0 
+Time elapsed:  1.448 0.086 1.537 0 0 
 > 
