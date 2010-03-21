@@ -154,7 +154,7 @@ built in exactly the same way as distributions of R releases.
 
 Sources are also available via @uref{https://svn.R-project.org/R/}, the
 R Subversion repository.  If you have a Subversion client (see
-@uref{http://subversion.tigris.org/}), you can check out and update the
+@uref{http://subversion.apache.org/}), you can check out and update the
 current @samp{r-devel} from @uref{https://svn.r-project.org/R/trunk/} and the
 current @samp{r-patched} from
 @samp{https://svn.r-project.org/R/branches/R-@var{x}-@var{y}-branch/}
