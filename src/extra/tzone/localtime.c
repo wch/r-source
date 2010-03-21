@@ -278,13 +278,13 @@ static struct tm  tm;
 static long
 detzcode(const char * const codep)
 {
-	long	result;
-	int	i;
+    long result;
+    int	i;
 
-	result = (codep[0] & 0x80) ? ~0L : 0;
-	for (i = 0; i < 4; ++i)
-		result = (result << 8) | (codep[i] & 0xff);
-	return result;
+    result = (codep[0] & 0x80) ? ~0L : 0;
+    for (i = 0; i < 4; ++i)
+	result = (result << 8) | (codep[i] & 0xff);
+    return result;
 }
 
 static time_t
