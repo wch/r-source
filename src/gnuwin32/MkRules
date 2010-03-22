@@ -8,7 +8,7 @@
 # on CRAN can be found at
 # http://www.stats.ox.ac.uk/pub/Rtools/goodies/local.zip
 # http://www.stats.ox.ac.uk/pub/Rtools/goodies/Win64/local64.zip
-LOCAL_SOFT =
+LOCAL_SOFT = d:/R/local
 
 ## ============== configuration macros for building R ===================
 

@@ -15,12 +15,7 @@
    http://code.google.com/p/win-iconv/source/checkout
 
    This version is from http://www.gtk.org/download-windows.html
- */
-
-/* for WC_NO_BEST_FIT_CHARS */
-#ifndef WINVER
-# define WINVER 0x0500
-#endif
+*/
 
 #include <windows.h>
 #include <errno.h>
@@ -56,7 +51,6 @@
 #define xmax(a, b) ((a) > (b) ? (a) : (b))
 
 #define STATIC_STRLEN(arr) (sizeof(arr) - 1)
-
 
 typedef unsigned char uchar;
 typedef unsigned short ushort;
@@ -850,9 +844,6 @@ win_iconv(iconv_t _cd, const char **inbuf, size_t *inbytesleft,
     return 0;
 }
 
-#define FLAG_TRANSLIT 2
-#define FLAG_IGNORE 4
-
 static csconv_t
 make_csconv(const char *_name)
 {
@@ -860,7 +851,6 @@ make_csconv(const char *_name)
     csconv_t cv = {0, 0}; /* -Wall */
     int use_compat = TRUE;
     char name[128];
-    int flag = 0;
     char *p;
 
     xstrlcpy(name, _name, sizeof(name));
@@ -870,15 +860,11 @@ make_csconv(const char *_name)
     {
 	if (_stricmp(p + 2, "nocompat") == 0)
 	    use_compat = FALSE;
-        else if (_stricmp(p + 2, "translit") == 0)
-            flag |= FLAG_TRANSLIT;
-        else if (_stricmp(p + 2, "ignore") == 0)
-            flag |= FLAG_IGNORE;
 	*p = 0;
     }
 
     cv.mode = 0;
-    cv.flags = flag;
+    cv.flags = 0;
     cv.mblen = NULL;
     cv.flush = NULL;
     cv.compat = NULL;
@@ -1192,15 +1178,11 @@ static int
 kernel_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
 {
     BOOL usedDefaultChar = 0;
-    int flags = 0;
     int len;
 
     if (bufsize == 0)
 	return_error(E2BIG);
-#ifdef WC_NO_BEST_FIT_CHARS
-    if (!(cv->flags & FLAG_TRANSLIT)) flags |= WC_NO_BEST_FIT_CHARS;
-#endif
-    len = WideCharToMultiByte(cv->codepage, flags,
+    len = WideCharToMultiByte(cv->codepage, 0,
 	    (const wchar_t *)wbuf, wbufsize, (char *)buf, bufsize, NULL,
 	    must_use_null_useddefaultchar(cv->codepage) ? NULL : &usedDefaultChar);
     if (len == 0)
