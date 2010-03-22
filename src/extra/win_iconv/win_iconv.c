@@ -15,7 +15,12 @@
    http://code.google.com/p/win-iconv/source/checkout
 
    This version is from http://www.gtk.org/download-windows.html
-*/
+ */
+
+/* for WC_NO_BEST_FIT_CHARS */
+#ifndef WINVER
+# define WINVER 0x0500
+#endif
 
 #include <windows.h>
 #include <errno.h>
@@ -51,6 +56,9 @@
 #define xmax(a, b) ((a) > (b) ? (a) : (b))
 
 #define STATIC_STRLEN(arr) (sizeof(arr) - 1)
+
+#define FLAG_TRANSLIT           2 /* //TRANSLIT */
+#define FLAG_IGNORE             4 /* //IGNORE (not implemented) */
 
 typedef unsigned char uchar;
 typedef unsigned short ushort;
@@ -851,6 +859,7 @@ make_csconv(const char *_name)
     csconv_t cv = {0, 0}; /* -Wall */
     int use_compat = TRUE;
     char name[128];
+    int flag = 0;
     char *p;
 
     xstrlcpy(name, _name, sizeof(name));
@@ -860,11 +869,15 @@ make_csconv(const char *_name)
     {
 	if (_stricmp(p + 2, "nocompat") == 0)
 	    use_compat = FALSE;
+        else if (_stricmp(p + 2, "translit") == 0)
+            flag |= FLAG_TRANSLIT;
+        else if (_stricmp(p + 2, "ignore") == 0)
+            flag |= FLAG_IGNORE;
 	*p = 0;
     }
 
     cv.mode = 0;
-    cv.flags = 0;
+    cv.flags = flag;
     cv.mblen = NULL;
     cv.flush = NULL;
     cv.compat = NULL;
@@ -1178,11 +1191,21 @@ static int
 kernel_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
 {
     BOOL usedDefaultChar = 0;
+    int flags = 0;
     int len;
 
     if (bufsize == 0)
 	return_error(E2BIG);
-    len = WideCharToMultiByte(cv->codepage, 0,
+#ifdef WC_NO_BEST_FIT_CHARS
+	/* http://msdn.microsoft.com/en-us/library/dd374130%28VS.85%29.aspx
+	   says this cannot be used for 65001 and 54936, but it also
+	   says 'for Vista only', and 65001 fails on XP.
+	   We definitely want this for ASCII, which is 20127.
+	 */
+    if ( !(cv->flags & FLAG_TRANSLIT) && (cv->codepage == 20127) )
+	flags |= WC_NO_BEST_FIT_CHARS;
+#endif
+    len = WideCharToMultiByte(cv->codepage, flags,
 	    (const wchar_t *)wbuf, wbufsize, (char *)buf, bufsize, NULL,
 	    must_use_null_useddefaultchar(cv->codepage) ? NULL : &usedDefaultChar);
     if (len == 0)

@@ -1,6 +1,6 @@
 % File src/library/base/man/iconv.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{iconv}
@@ -68,7 +68,8 @@ iconvlist()
   based on Windows' codepages (but \samp{libiconv} can be used by
   swapping a DLL).  All three have \code{iconvlist}, ignore case in
   encoding names and support \samp{//TRANSLIT} (but with different
-  results).
+  results, and for \samp{win_iconv} currently a \sQuote{best fit}
+  strategy is used except for \code{to = "ASCII"}).
 
   Most commercial Unixes contain an implemetation of \code{iconv} but
   none we have encountered have supported the encoding names we need:

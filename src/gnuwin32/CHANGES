@@ -40,6 +40,10 @@ NEW FEATURES
 
     o	strftime(format = "%z") now gives the timezone names used by
 	the Olson database and not those used by Windows.
+
+    o	iconv(to = "ASCII") no longer transliterates, but
+	iconv(to = "ASCII//TRANSLIT") will.  This makes
+	tools::showNonASCII() work the same way as on other platforms.
 	
 
 BUG FIXES
