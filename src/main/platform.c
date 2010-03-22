@@ -871,61 +871,10 @@ static SEXP filename(const char *dir, const char *file)
 
 #include <tre/tre.h>
 
-static void count_files(const char *dnp, int *count,
-			Rboolean allfiles, Rboolean recursive,
-			const regex_t *reg)
-{
-    DIR *dir;
-    struct dirent *de;
-    char p[PATH_MAX];
-#ifdef Windows
-    /* For consistency with other functions */
-    struct _stati64 sb;
-#else
-    struct stat sb;
-#endif
-
-    if (strlen(dnp) >= PATH_MAX)  /* should not happen! */
-	error(_("directory/folder path name too long"));
-    if ((dir = opendir(dnp)) == NULL) {
-	warning(_("list.files: '%s' is not a readable directory"), dnp);
-    } else {
-	while ((de = readdir(dir))) {
-	    if (allfiles || !R_HiddenFile(de->d_name)) {
-		if (recursive) {
-#ifdef Win32
-		    if (strlen(dnp) == 2 && dnp[1] == ':')
-			snprintf(p, PATH_MAX, "%s%s", dnp, de->d_name);
-		    else
-			snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
-#else
-		    snprintf(p, PATH_MAX, "%s%s%s", dnp, R_FileSep, de->d_name);
-#endif		    
-#ifdef Windows
-		    _stati64(p, &sb);
-#else
-		    stat(p, &sb);
-#endif
-		    if ((sb.st_mode & S_IFDIR) > 0) {
-			if (strcmp(de->d_name, ".") && strcmp(de->d_name, ".."))
-				count_files(p, count, allfiles, recursive, reg);
-			continue;
-		    }
-		}
-		if (reg) {
-		    if (tre_regexec(reg, de->d_name, 0, NULL, 0) == 0) (*count)++;
-		} else (*count)++;
-	    }
-	}
-	closedir(dir);
-    }
-}
-
-static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
+static void list_files(const char *dnp, const char *stem, int *count, SEXP *pans,
 		       Rboolean allfiles, Rboolean recursive,
-                       const regex_t *reg)
+                       const regex_t *reg, int *countmax, PROTECT_INDEX idx)
 {
-    int ans_len = length(ans);
     DIR *dir;
     struct dirent *de;
     char p[PATH_MAX], stem2[PATH_MAX];
@@ -935,7 +884,7 @@ static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 #else
     struct stat sb;
 #endif
-
+    R_CheckUserInterrupt();
     if ((dir = opendir(dnp)) != NULL) {
 	while ((de = readdir(dir))) {
 	    if (allfiles || !R_HiddenFile(de->d_name)) {
@@ -970,21 +919,20 @@ static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 #endif
 			    } else
 				strcpy(stem2, de->d_name);
-			    list_files(p, stem2, count, ans, allfiles,
-				       recursive, reg);
+			    list_files(p, stem2, count, pans, allfiles,
+				       recursive, reg, countmax, idx);
 			}
 			continue;
 		    }
 		}
-                /* number of files could have changed since call to count_files */
-                if (*count >= ans_len) break;
-		if (reg) {
-		    if (tre_regexec(reg, de->d_name, 0, NULL, 0) == 0)
-			SET_STRING_ELT(ans, (*count)++,
-				       filename(stem, de->d_name));
-		} else
-		    SET_STRING_ELT(ans, (*count)++,
-				   filename(stem, de->d_name));
+		if (!reg || tre_regexec(reg, de->d_name, 0, NULL, 0) == 0) {
+                    if (*count == *countmax - 1) {
+                        *countmax *= 2;
+                        REPROTECT(*pans = lengthgets(*pans, *countmax), idx);
+                    }
+                    SET_STRING_ELT(*pans, (*count)++,
+                                   filename(stem, de->d_name));
+                }
 	    }
 	}
 	closedir(dir);
@@ -993,11 +941,13 @@ static void list_files(const char *dnp, const char *stem, int *count, SEXP ans,
 
 SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    PROTECT_INDEX idx;
     SEXP d, p, ans;
     int allfiles, fullnames, count, pattern, recursive, igcase, flags;
     int i, ndir;
     const char *dnp;
     regex_t reg;
+    int countmax = 128;
 
     checkArity(op, args);
     d = CAR(args);  args = CDR(args);
@@ -1019,20 +969,15 @@ SEXP attribute_hidden do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (pattern && tre_regcomp(&reg, translateChar(STRING_ELT(p, 0)), flags))
 	error(_("invalid 'pattern' regular expression"));
+    PROTECT_WITH_INDEX(ans = allocVector(STRSXP, countmax), &idx);
     count = 0;
     for (i = 0; i < ndir ; i++) {
 	if (STRING_ELT(d, i) == NA_STRING) continue;
 	dnp = R_ExpandFileName(translateChar(STRING_ELT(d, i)));
-	count_files(dnp, &count, allfiles, recursive, pattern ? &reg : NULL);
+	list_files(dnp, fullnames ? dnp : NULL, &count, &ans, allfiles,
+		   recursive, pattern ? &reg : NULL, &countmax, idx);
     }
-    PROTECT(ans = allocVector(STRSXP, count));
-    count = 0;
-    for (i = 0; i < ndir ; i++) {
-	if (STRING_ELT(d, i) == NA_STRING) continue;
-	dnp = R_ExpandFileName(translateChar(STRING_ELT(d, i)));
-	list_files(dnp, fullnames ? dnp : NULL, &count, ans, allfiles,
-		   recursive, pattern ? &reg : NULL);
-    }
+    REPROTECT(ans = lengthgets(ans, count), idx);
     if (pattern)
 	tre_regfree(&reg);
     ssort(STRING_PTR(ans), count);

@@ -483,7 +483,9 @@ BUG FIXES
 	they were called with the correct number of arguments.
 
     o	A potential race condition in list.files() when other processes
-	are operating on the directory has been fixed.
+	are operating on the directory has been fixed; the code now
+	dynamically allocates memory for file listings in a single
+	pass instead of making an initial count pass.
 
     o	mean(x, trim=, na.rm = FALSE) failed to return NA if 'x'
 	contained missing values.  (Reported by Bill Dunlap.)
