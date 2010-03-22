@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:19\n"
+"POT-Creation-Date: 2010-03-22 15:15\n"
 "PO-Revision-Date: 2009-10-10 13:35+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -491,6 +491,10 @@ msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' et 'differences' doivent être des entiers >= 1"
 
 msgid "do not know how to convert '%s' to class \"POSIXlt\""
+msgstr "incapable de convertir automatiquement '%s' dans la classe \"POSIXlt\""
+
+#, fuzzy
+msgid "do not know how to convert '%s' to class \"POSIXct\""
 msgstr "incapable de convertir automatiquement '%s' dans la classe \"POSIXlt\""
 
 msgid "wrong class"

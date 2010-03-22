@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:19\n"
+"POT-Creation-Date: 2010-03-22 15:15\n"
 "PO-Revision-Date: 2009-10-07 19:17+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -472,6 +472,10 @@ msgid "'lag' and 'differences' must be integers >= 1"
 msgstr " 'lag' そして 'differences' は 1 以上の整数でなければなりません "
 
 msgid "do not know how to convert '%s' to class \"POSIXlt\""
+msgstr " '%s' をクラス \"POSIXlt\" へ変換する方法が分かりません "
+
+#, fuzzy
+msgid "do not know how to convert '%s' to class \"POSIXct\""
 msgstr " '%s' をクラス \"POSIXlt\" へ変換する方法が分かりません "
 
 msgid "wrong class"
