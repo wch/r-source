@@ -1,6 +1,6 @@
 % File src/library/base/man/seq.POSIXt.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{seq.POSIXt}
@@ -37,8 +37,9 @@
   period of 144 hours), but \code{"7 DSTdays"}) can be used as an
   alternative.  \code{"month"} and \code{"year"} allow for DST.)
 
-  The timezone of the result is taken from \code{from}: remember than
-  GMT does not have daylight savings time.
+  The \link{timezone} of the result is taken from \code{from}: remember
+  that GMT means UTC (and not the timezone of Greenwich, England) and so
+  does not have daylight savings time.
 
   Using \code{"month"} first advances the month without changing the
   day: if this results in an invalid day of the month, it is counted

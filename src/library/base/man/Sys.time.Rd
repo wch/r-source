@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.time.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Sys.time}
@@ -18,19 +18,24 @@ Sys.Date()
 }
 \details{
   \code{Sys.time} returns an absolute date-time value which can be
-  converted in various time zones and may return different days.
+  converted to various time zones and may return different days.
 
-  \code{Sys.Date} returns the day in the current timezone.
+  \code{Sys.Date} returns the current day in the current \link{timezone}.
 }
 \value{
   \code{Sys.time} returns an object of class \code{"POSIXct"} (see
-  \link{DateTimeClasses}).  On some systems it will have sub-second
-  accuracy, but on others it will increment in seconds.  On systems
-  conforming to POSIX 1003.1-2001 the time will be reported in
-  microsecond increments.  On Windows, it increments in clock ticks
-  (1/60 of a second) reported to millisecond accuracy.
+  \link{DateTimeClasses}).  On almost all systems it will have
+  sub-second accuracy: on systems conforming to POSIX 1003.1-2001 the
+  time will be reported in microsecond increments.  On Windows it
+  increments in clock ticks (1/60 of a second) reported to millisecond
+  accuracy.
 
   \code{Sys.Date} returns an object of class \code{"Date"} (see \link{Date}).
+}
+\note{
+  \code{Sys.time} may return fractional seconds, but they are ignored by
+  the default conversions (e.g. printing) for class \code{"POSIXct"}.
+  See the examples and \code{\link{format.POSIXct}} for ways to reveal them.
 }
 \seealso{
   \code{\link{date}} for the system time in a fixed-format character
