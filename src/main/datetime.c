@@ -781,6 +781,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    strcat(buf2, tm.tm_isdst > 0 ? tzname[1] : tzname[0]);
 		    strcat(buf2, p+2);
 		} else strcpy(buf2,  q);
+#else
+                strcpy(buf2, q);
 #endif
 		p = strstr(q, "%OS");
 		if(p) {
