@@ -780,7 +780,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		    strncpy(buf2, q, p - q);
 		    strcat(buf2, tm.tm_isdst > 0 ? tzname[1] : tzname[0]);
 		    strcat(buf2, p+2);
-		} else strcpy(buf2,  q);
+		} else
 #else
                 strcpy(buf2, q);
 #endif
