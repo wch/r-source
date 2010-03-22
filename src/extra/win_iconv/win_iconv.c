@@ -11,6 +11,17 @@
  * be used for encoding validation purpose.
  */
 
+/* Primary source is apparently
+   http://code.google.com/p/win-iconv/source/checkout
+
+   This version is from http://www.gtk.org/download-windows.html
+ */
+
+/* for WC_NO_BEST_FIT_CHARS */
+#ifndef WINVER
+# define WINVER 0x0500
+#endif
+
 #include <windows.h>
 #include <errno.h>
 #include <string.h>
@@ -45,6 +56,7 @@
 #define xmax(a, b) ((a) > (b) ? (a) : (b))
 
 #define STATIC_STRLEN(arr) (sizeof(arr) - 1)
+
 
 typedef unsigned char uchar;
 typedef unsigned short ushort;
@@ -845,6 +857,7 @@ make_csconv(const char *_name)
     csconv_t cv = {0, 0}; /* -Wall */
     int use_compat = TRUE;
     char name[128];
+    int flag = 0;
     char *p;
 
     xstrlcpy(name, _name, sizeof(name));
@@ -854,11 +867,15 @@ make_csconv(const char *_name)
     {
 	if (_stricmp(p + 2, "nocompat") == 0)
 	    use_compat = FALSE;
+        else if (_stricmp(p + 2, "translit") == 0)
+            flag |= FLAG_TRANSLIT;
+        else if (_stricmp(p + 2, "ignore") == 0)
+            flag |= FLAG_IGNORE;
 	*p = 0;
     }
 
     cv.mode = 0;
-    cv.flags = 0;
+    cv.flags = flag;
     cv.mblen = NULL;
     cv.flush = NULL;
     cv.compat = NULL;
@@ -1172,11 +1189,15 @@ static int
 kernel_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
 {
     BOOL usedDefaultChar = 0;
+    int flags = 0;
     int len;
 
     if (bufsize == 0)
 	return_error(E2BIG);
-    len = WideCharToMultiByte(cv->codepage, 0,
+#ifdef WC_NO_BEST_FIT_CHARS
+    if (!(cv->flags & FLAG_TRANSLIT)) flags |= WC_NO_BEST_FIT_CHARS;
+#endif
+    len = WideCharToMultiByte(cv->codepage, flags,
 	    (const wchar_t *)wbuf, wbufsize, (char *)buf, bufsize, NULL,
 	    must_use_null_useddefaultchar(cv->codepage) ? NULL : &usedDefaultChar);
     if (len == 0)

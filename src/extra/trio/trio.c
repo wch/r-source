@@ -4,7 +4,7 @@
  *
  * $Id: trio.c,v 1.112 2008/11/09 10:52:26 breese Exp $
  *
- * Copyright (C) 1998 Bjorn Reese and Daniel Stenberg.
+ * Copyright (C) 1998, 2009 Bjorn Reese and Daniel Stenberg.
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -3046,7 +3046,16 @@ TRIO_ARGS6((self, number, flags, width, precision, base),
 	  workNumber = number * trio_pow(dblBase, (trio_long_double_t)-exponent);
 	  if (trio_isinf(workNumber))
 	    {
-	      workNumber = number / trio_pow(dblBase, (trio_long_double_t)exponent);
+	      /*
+	       * Ported from trio 1.14:
+	       *
+	       * Scaling is done in two steps to avoid problems with subnormal
+	       * numbers.
+	       */
+	      workNumber = number;
+	      workNumber /= trio_pow(dblBase, (trio_long_double_t)(exponent / 2));
+	      workNumber /= trio_pow(dblBase, (trio_long_double_t)(exponent - (exponent / 2)));
+	      //workNumber = number / trio_pow(dblBase, (trio_long_double_t)exponent);
 	    }
 	  number = workNumber;
 	  isExponentNegative = (exponent < 0);
