@@ -107,7 +107,7 @@ tar xf R-@var{x}.@var{y}.@var{z}.tar.gz
 @end example
 
 @noindent
-on systems that have a suitable@footnote{e.g.@: GNU @command{tar}
+on systems that have a suitable@footnote{e.g.@: @acronym{GNU} @command{tar}
 version 1.15 or later, or that from the @samp{libarchive} (as used on
 Mac OS 10.6) or `Heirloom Toolchest' distributions.} @command{tar}
 installed.  On other systems you need to have the @command{gzip} program
@@ -427,8 +427,8 @@ make info     @r{to create info files (not @samp{refman}).}
 You will not be able to build any of these unless you have
 @command{makeinfo} version 4.7 or later installed, and for DVI or PDF
 you must have @command{texi2dvi} and @file{texinfo.tex} installed (which
-are part of the GNU @pkg{texinfo} distribution but are, especially
-@file{texinfo.tex}, often made part of the @TeX{} package in
+are part of the @acronym{GNU} @pkg{texinfo} distribution but are,
+especially @file{texinfo.tex}, often made part of the @TeX{} package in
 re-distributions).
 
 The DVI versions can be previewed and printed using standard programs
@@ -553,7 +553,8 @@ make prefix=/path/to/here install
 @end example
 
 @noindent
-at least with GNU @command{make} (but not e.g.@: Solaris 8's @command{make}).
+at least with @acronym{GNU} @command{make} (but not e.g.@: Solaris 8's
+@command{make}).
 
 More precise control is available at configure time via options: see
 @command{configure --help} for details.  (However, most of the `Fine
@@ -570,8 +571,8 @@ architecture-dependent files, defaults to @var{prefix}, and can be set
 via the configure option @option{--exec-prefix}.
 
 Each of @code{bindir}, @code{mandir} and @code{libdir} can also be
-specified on the @command{make install} command line (at least for GNU
-@command{make}).
+specified on the @command{make install} command line (at least for
+@acronym{GNU} @command{make}).
 
 The @command{configure} or @command{make} variables @code{rdocdir} and
 @code{rsharedir} can be used to install the system-independent
@@ -1305,9 +1306,10 @@ those wanting to work with large R objects, or many medium-sized ones.
 
 To build a 64-bit version of R you need a 64-bit toolchain: the only one
 discussed here is based on the work of the MinGW-w64 project
-(@url{http://sourceforge.net/projects/mingw-w64/}, a port of GNU
-@code{binutils} and @code{gcc}), but commercial compilers such as those
-from Intel and PGI could be used (and have been by @R{} redistributors).
+(@url{http://sourceforge.net/projects/mingw-w64/}, a port of
+@acronym{GNU} @code{binutils} and @code{gcc}), but commercial compilers
+such as those from Intel and PGI could be used (and have been by @R{}
+redistributors).
 
 Support for MinGW-w64 was developed in the R sources over the period
 2008--10 and was first released as part of @R{} 2.11.0.
@@ -2382,10 +2384,13 @@ possible.  @R{} tries to choose suitable flags for the C compilers it
 knows about, but you may have to set @code{CC} or @code{CFLAGS}
 suitably.  For recent versions of @command{gcc} with @code{glibc} this
 means including @option{-std=gnu99}@footnote{@option{-std=c99} excludes
-POSIX functionality, but @file{config.h} will turn on all GNU extensions
-to include the POSIX functionality.}.  If the compiler is detected as
-@command{gcc}, @option{-std=gnu99} will be appended to @code{CC} unless
-it conflicts with a setting of @code{CFLAGS}.
+POSIX functionality, but @file{config.h} will turn on all @acronym{GNU}
+extensions to include the POSIX functionality.}.  If the compiler is
+detected as @command{gcc}, @option{-std=gnu99} will be appended to
+@code{CC} unless it conflicts with a setting of @code{CFLAGS}.  (Note
+that options essential to run the compiler even for linking, such as
+those to set the architecture, should be part of @code{CC} rather than
+of @code{CFLAGS}.)
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries. For recent Fedora
@@ -2418,8 +2423,8 @@ functionality of headers @file{wchar.h} and @file{wctype.h}, types
 types: this is checked at configuration.
 
 A @command{tar} program is needed to unpack the sources and packages
-(including the recommended packages).  A version@footnote{Such as GNU
-@command{tar} 1.15 or later, @command{bsdtar} (from
+(including the recommended packages).  A version@footnote{Such as
+@acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
 @uref{http://code.google.com/p/libarchive/}, as used by Mac OS 10.6) or
 @command{tar} from the Heirloom Toolchest
 (@uref{http://heirloom.sourceforge.net/tools.html}.} that can
@@ -2433,8 +2438,9 @@ You will not be able to build most of the manuals unless you have
 the @HTML{} manuals will be linked to @acronym{CRAN}.  (Version 4.6 is
 known to create incorrect @HTML{} files.)  To make DVI or PDF versions
 of the manuals you will also need @file{texinfo.tex} installed (which is
-part of the GNU @pkg{texinfo} distribution but is often made part of the
-@TeX{} package in re-distributions) as well as @command{texi2dvi}.
+part of the @acronym{GNU} @pkg{texinfo} distribution but is often made
+part of the @TeX{} package in re-distributions) as well as
+@command{texi2dvi}.
 
 @cindex Vignettes
 The DVI and PDF documentation and building vignettes needs @command{tex}
@@ -2797,17 +2803,17 @@ For Intel processors under Linux, there is Intel's Math Kernel Library
 strongly encouraged to read the MKL User's Guide, which is installed
 with the library, before attempting to link to MKL.
 
-Version 10 of MKL supports two linking models: the default model,
-which is backward compatible with version 9 (see below),  and the pure
-layered model.  The layered model gives the user fine-grained control
-over four different library layers: interface, threading, computation,
-and run-time library support. Some examples of linking to MKL using this
+Version 10 of MKL supports two linking models: the default model, which
+is backward compatible with version 9 (see below), and the pure layered
+model.  The layered model gives the user fine-grained control over four
+different library layers: interface, threading, computation, and
+run-time library support. Some examples of linking to MKL using this
 layered model are given below. These examples are for GCC compilers on
 @cputype{x86_64}.  The choice of interface layer is important on
-@cputype{x86_64} since the Intel Fortran compiler returns complex
-values differently from the GNU Fortran compiler. You must therefore
-use the interface layer that matches your compiler (@code{mkl_intel*}
-or @code{mkl_gf*}).
+@cputype{x86_64} since the Intel Fortran compiler returns complex values
+differently from the @acronym{GNU} Fortran compiler. You must therefore
+use the interface layer that matches your compiler (@code{mkl_intel*} or
+@code{mkl_gf*}).
 
 R can be linked to a sequential version of MKL by
 
@@ -3064,10 +3070,10 @@ If you need to re-configure @R{} with different options you may need to run
 @node Internationalization support, Configuration variables, Configuration options, Configuration on Unix
 @section Internationalization support
 
-Translation of messages is supported via GNU @code{gettext} unless
-disabled by the configure option @option{--disable-nls} or the
+Translation of messages is supported via @acronym{GNU} @code{gettext}
+unless disabled by the configure option @option{--disable-nls} or the
 underlying OS has insufficiently standard C functions to support it.
-The @code{configure} report will show @code{NLS} as one of the 
+The @code{configure} report will show @code{NLS} as one of the
 `Additional capabilities' if support has been compiled in, and running
 in an English locale (but not the @code{C} locale) will include
 
@@ -3182,13 +3188,14 @@ front end shell script which does the re-ordering).
 These flags can also be used to build a faster-running version of @R{}.
 On most platforms using @command{gcc}, having @samp{-O3} in
 @code{CFLAGS} produces worthwhile performance gains.  On systems using
-the GNU linker (especially those using @R{} as a shared library), it is
-likely that including @samp{-Wl,-O1} in @code{LDFLAGS} is worthwhile,
-and on recent systems @samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is
-recommended at @uref{http://lwn.net/@/Articles/@/192624/}.  Tuning
-compilation to a specific @acronym{CPU} family (e.g.@:
-@samp{-mtune=native} for @command{gcc}) can give worthwhile performance
-gains, especially on older architectures such as @cputype{ix86}.
+the @acronym{GNU} linker (especially those using @R{} as a shared
+library), it is likely that including @samp{-Wl,-O1} in @code{LDFLAGS}
+is worthwhile, and on recent systems
+@samp{'-Bdirect,--hash-style=both,-Wl,-O1'} is recommended at
+@uref{http://lwn.net/@/Articles/@/192624/}.  Tuning compilation to a
+specific @acronym{CPU} family (e.g.@: @samp{-mtune=native} for
+@command{gcc}) can give worthwhile performance gains, especially on
+older architectures such as @cputype{ix86}.
 
 @node Making manuals,  , Compilation flags, Configuration variables
 @subsection Making manuals
@@ -3213,10 +3220,10 @@ path to a shell, e.g. @file{/usr/local/bin/bash}).
 @section Using make
 @findex make
 
-To compile @R{}, you will most likely find it easiest to use GNU
-@command{make}, although the Sun @command{make} works on Solaris.  The
-native @command{make} has been reported to fail on SGI Irix 6.5 and
-Alpha/OSF1 (aka Tru64).
+To compile @R{}, you will most likely find it easiest to use
+@acronym{GNU} @command{make}, although the Sun @command{make} works on
+Solaris.  The native @command{make} has been reported to fail on SGI
+Irix 6.5 and Alpha/OSF1 (aka Tru64).
 
 To build in a separate directory you need a @command{make} that uses the
 @code{VPATH} variable, for example @acronym{GNU} @command{make}, or Sun
@@ -3329,12 +3336,12 @@ in @code{example(eigen)} hanging or segfaulting under external BLASs
 built under @command{g77}.  This should be detected by a
 @command{configure} test.
 
-The default @code{FFLAGS} chosen (by @command{autoconf}) for a GNU
-FORTRAN compiler is @samp{-g -O2}.  This seems not to be documented for
-@command{gfortran}, and has caused problems (segfaults and infinite
-loops) on @cputype{x86_64} Linux (and the optimizer will be shared with
-other platforms on that @acronym{CPU} type).  A maximum optimization of
-@samp{-O} is recommended there.
+The default @code{FFLAGS} chosen (by @command{autoconf}) for a
+@acronym{GNU} FORTRAN compiler is @samp{-g -O2}.  This seems not to be
+documented for @command{gfortran}, and has caused problems (segfaults
+and infinite loops) on @cputype{x86_64} Linux (and the optimizer will be
+shared with other platforms on that @acronym{CPU} type).  A maximum
+optimization of @samp{-O} is recommended there.
 
 
 @node Compile and load flags,  , Using FORTRAN, Configuration on Unix
@@ -3750,7 +3757,7 @@ FreeBSD we find testing on Darwin tends to pick up any potential
 problems on FreeBSD problems quite early.
 
 The native BSD @command{make} suffices to build @R{} but a number of
-packages require GNU @command{make}.  (The BSD version is
+packages require @acronym{GNU} @command{make}.  (The BSD version is
 @command{bsdmake} on Darwin.)
 
 @node Mac OS X, Solaris, FreeBSD, Platform notes
@@ -3858,15 +3865,16 @@ Express Community Edition, and sometimes as Solaris 11) on
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
 @file{/usr/ccs/bin}, so if using those tools ensure this is in your
-path.  Also, a version of the preferred GNU tar is (if installed) in
-@file{/usr/sfw/bin}, as are tools like @command{makeinfo}.
+path.  Also, a version of the preferred @acronym{GNU} @command{tar} is
+(if installed) in @file{/usr/sfw/bin}, as are tools like
+@command{makeinfo}.
 
 Modern Solaris systems allow a large selection of Open Source software
 to be installed from @url{http://www.opencsw.org} (formerly
 @url{http://www.blastwave.org}) via @command{pkg-get}, by default
-installed under @file{/opt/csw}.  You will need GNU @code{libiconv} and
-@code{readline}: the Solaris version of @code{iconv} is not sufficiently
-powerful.
+installed under @file{/opt/csw}.  You will need @acronym{GNU}
+@code{libiconv} and @code{readline}: the Solaris version of @code{iconv}
+is not sufficiently powerful.
 
 Some people have reported that the Solaris @code{libintl} needs to be
 avoided, for example by using @option{--disable-nls} or
@@ -3885,8 +3893,8 @@ from Sun.} do @emph{not} specify @option{-fast}, as this disables
 @acronym{IEEE} arithmetic and @command{make check} will fail.
 
 For the Sun Studio compilers a little juggling of paths was needed to
-ensure GNU @code{libiconv} is used rather than the Solaris @code{iconv}:
-at one time we used
+ensure @acronym{GNU} @code{libiconv} is used rather than the Solaris
+@code{iconv}: at one time we used
 
 @example
 CC="cc -xc99"
@@ -3906,9 +3914,9 @@ SHLIB_CXXLDFLAGS="-G -lCstd"
 to ensure that the @code{libiconv} version of @file{iconv.h} was found,
 and later used self-compiled versions of @code{libiconv} and
 @code{readline} from @file{/usr/local} (replacing @file{/opt/csw} in the
-flags).  For a 64-bit target add @option{-m64} and use something like
-@code{LDFLAGS=-L/opt/csw/lib/sparcv9} or
-@code{LDFLAGS=-L/usr/local/lib/amd64} as appropriate.  
+flags).  For a 64-bit target add @option{-m64} to the compiler macros
+and use something like @code{LDFLAGS=-L/opt/csw/lib/sparcv9} or
+@code{LDFLAGS=-L/usr/local/lib/amd64} as appropriate.
 
 By default the Sun Studio compilers do not conform to the C99 standard
 (appendix F 8.9) on the return values of functions such as @code{log}:
@@ -4026,8 +4034,8 @@ be invoked as @command{xlf_r}.
 @c http://publib.boulder.ibm.com/infocenter/comphelp/v7v91/index.jsp?topic=/com.ibm.xlf91a.doc/xlfug/hu00465.htm
 
 The AIX native @code{iconv} does not support encodings @samp{latin1} nor
-@samp{""} and so cannot be used.  (As far as we know GNU @code{libiconv}
-could be installed.)
+@samp{""} and so cannot be used.  (As far as we know @acronym{GNU}
+@code{libiconv} could be installed.)
 
 Fan Long reports success on AIX 5.3 using
 @c https://stat.ethz.ch/pipermail/r-devel/2008-August/050318.html
@@ -4082,10 +4090,10 @@ distribution using the @code{tlmgr} update manager.  For 64-bit R builds
 supporting Tcl/Tk this needs to installed from the sources as available
 pre-compiled binaries supply only 32-bit shared objects.
 
-The recent WU testing was done using compilers from both the GNU
-Compiler Collection (version 4.2.4) which is available from one of the
-above OSS repositories, and the IBM C/C++ (XL C/C++ 10.01) as well as
-FORTRAN (XL Fortran 12.01) compilers
+The recent WU testing was done using compilers from both the
+@acronym{GNU} Compiler Collection (version 4.2.4) which is available
+from one of the above OSS repositories, and the IBM C/C++ (XL C/C++
+10.01) as well as FORTRAN (XL Fortran 12.01) compilers
 (@url{http://www14.software.ibm.com/webapp/download/byproduct.jsp#X}).
 
 To compile for a 64-bit @cputype{powerpc} (Power6 @acronym{CPU}) target

@@ -181,7 +181,7 @@ the copies on @url{http://www.r-project.org/Licenses/} and included in
 the @R{} distribution (in directory @file{share/licenses}).
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
-GNU project see
+@acronym{GNU} project see
 @uref{http://@/www.gnu.org/prep/standards/standards.html#Documentation}.
 
 The package subdirectory should be given the same name as the package.
@@ -1347,9 +1347,10 @@ directly.
 Using @code{R CMD check}, the @R{} package checker, one can test whether
 @emph{source} @R{} packages work correctly.  It can be run on one or
 more directories, or gzipped package @command{tar}
-archives@footnote{This may require GNU @command{tar}: the command used
-can be set with environment variable @env{TAR}.}  with extension
-@file{.tar.gz} or @file{.tgz}.  This runs a series of checks, including
+archives@footnote{This may require @acronym{GNU} @command{tar}: the
+command used can be set with environment variable @env{TAR}.}  with
+extension @file{.tar.gz} or @file{.tgz}.  This runs a series of checks,
+including
 
 @enumerate
 @item
@@ -1746,7 +1747,7 @@ package will install and will run its examples, and that the
 documentation is complete and can be processed.  If the package contains
 code that needs to be compiled, try to enable a reasonable amount of
 diagnostic messaging (``warnings'') when compiling, such as e.g.@:
-@option{-Wall -pedantic} for tools from GCC, the Gnu Compiler
+@option{-Wall -pedantic} for tools from GCC, the @acronym{GNU} Compiler
 Collection.  If @R{} was not configured accordingly, one can achieve
 this @emph{via} personal @file{Makevars} files.
 @ifset UseExternalXrefs
@@ -1802,15 +1803,16 @@ message to @email{CRAN@@R-project.org} about it.  The @acronym{CRAN}
 maintainers will run these tests before putting a submission in the main
 archive.
 
-Note also that for running @LaTeX{}, the Debian GNU/Linux @acronym{CRAN}
-check systems use reasonably recent versions of the Debian TexLive
-distribution (@uref{http://packages.debian.org/de/sid/texlive}); for the
-Windows @acronym{CRAN} server, a reasonably recent version of MikTeX
-(including all packages available directly for MikTeX) is employed: the
-Mac OS X builders use a current full version of MacTeX.  Developers
-wanting to have their vignettes use @TeX{} packages or style files not
-(yet) included in these distributions should add the corresponding style
-files to the @file{inst/doc} subdirectory of their package.
+Note also that for running @LaTeX{}, the Debian @acronym{GNU}/Linux
+@acronym{CRAN} check systems use reasonably recent versions of the
+Debian TexLive distribution
+(@uref{http://packages.debian.org/de/sid/texlive}); for the Windows
+@acronym{CRAN} server, a reasonably recent version of MikTeX (including
+all packages available directly for MikTeX) is employed: the Mac OS X
+builders use a current full version of MacTeX.  Developers wanting to
+have their vignettes use @TeX{} packages or style files not (yet)
+included in these distributions should add the corresponding style files
+to the @file{inst/doc} subdirectory of their package.
 
 Note that @acronym{CRAN} does not accept submissions of precompiled
 binaries due to security concerns, and does not allow binary executables
@@ -6590,11 +6592,11 @@ directory is not in the @command{ld.so}@footnote{@command{dyld} on Mac
 OS X, and @env{DYLD_LIBRARY_PATHS} below.}  search path.  You can
 arrange to put it there @strong{before} @R{} is launched by setting (on
 some platforms) @env{LD_RUN_PATH} or @env{LD_LIBRARY_PATH} or adding to
-the @command{ld.so} cache (see @command{man ldconfig}).  On platforms that
-support it, the path to the dynamic library can be hardcoded at install
-time (which assumes that the location of package @pkg{packB} will not be
-changed).  On systems with the GNU linker (e.g.@: Linux) and some others
-(e.g.@: Mac OS X) this can be done by
+the @command{ld.so} cache (see @command{man ldconfig}).  On platforms
+that support it, the path to the dynamic library can be hardcoded at
+install time (which assumes that the location of package @pkg{packB}
+will not be changed).  On systems with the @acronym{GNU} linker (e.g.@:
+Linux) and some others (e.g.@: Mac OS X) this can be done by
 
 @example
 PKGB_PATH=`echo 'library(packB); cat(system.file("libs", package="packB"))' \
