@@ -9,8 +9,6 @@
 \alias{strftime}
 \alias{strptime}
 \alias{as.character.POSIXt}
-\alias{ISOdatetime}
-\alias{ISOdate}
 \title{Date-time Conversion Functions to and from Character}
 \description{
   Functions to convert between character representations and objects of
@@ -25,9 +23,6 @@
 
 strftime(x, format="", tz = "", usetz = FALSE, \dots)
 strptime(x, format, tz = "")
-
-ISOdatetime(year, month, day, hour, min, sec, tz = "")
-ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 }
 \arguments{
   \item{x}{An object to be converted.}
@@ -44,9 +39,6 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \item{usetz}{logical.  Should the timezone be appended to the output?
     This is used in printing times, and as a workaround for problems with
     using \code{"\%Z"} on some Linux systems.}
-  \item{year, month, day}{numerical values to specify a day.}
-  \item{hour, min, sec}{numerical values for a time within a day.
-    Fractional seconds are allowed.}
 }
 \details{
   The \code{format} and \code{as.character} methods and \code{strftime}
@@ -74,7 +66,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \code{LC_TIME} locale category).
 
   The details of the formats are system-specific, but the following are
-  defined by the ISO C / POSIX standard for \code{strftime} and are
+  defined by the ISO C99 / POSIX standard for \code{strftime} and are
   likely to be widely available.  A \emph{conversion specification} is
   introduced by \code{\%}, usually followed by a single letter or
   \code{O} or \code{E} and then a single letter.
@@ -187,11 +179,6 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   optionally followed by \code{#} and then by a single letter.  Any
   conversion specification which is unimplemented is ignored.
 #endif
-
-  \code{ISOdatetime} and \code{ISOdate} are convenience wrappers for
-  \code{strptime}, that differ only in their defaults and that
-  \code{ISOdate} sets a timezone.  (For dates without times it would be
-  better to use the \code{"\link{Date}"} class.)
 }
 \value{
   The \code{format} methods and \code{strftime} return character vectors
@@ -201,9 +188,6 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   class \code{"\link{POSIXlt}"}.  The timezone is used to set the
   \code{isdst} component and to set the \code{"tzone"} attribute if
   \code{tz != ""}.
-
-  \code{ISOdatetime} and \code{ISOdate} return an object of class
-  \code{"\link{POSIXct}"}.
 }
 \note{
   The default formats follow the rules of the ISO 8601 international
