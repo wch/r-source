@@ -670,8 +670,7 @@ static SEXP EncodeVars(SEXP formula)
 /* Returns 1 if variable ``whichBit'' in ``thisTerm'' */
 /* is to be encoded by contrasts and 2 if it is to be */
 /* encoded by dummy variables.  This is decided using */
-/* the heuristic of Chambers and Heiberger described */
-/* in Statistical Models in S, Page 38. */
+/* the heuristic described in Statistical Models in S, page 38. */
 
 static int TermCode(SEXP termlist, SEXP thisterm, int whichbit, SEXP term)
 {
