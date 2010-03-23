@@ -639,6 +639,9 @@ BUG FIXES
     o	Startup files will now be found if their paths exceed 255 bytes.
 	(PR#14228)
 
+    o	contrasts<- (in the 'stats' package) no longer has an
+	undeclared dependence on 'methods' (introduced in 2.10.0).
+
 
 
 		CHANGES IN R VERSION 2.10.1

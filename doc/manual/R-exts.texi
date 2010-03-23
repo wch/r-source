@@ -1756,6 +1756,12 @@ Customizing package compilation, R-admin,
 R Installation and Administration},
 @end ifset
 
+Note that it is particularly important to use @option{-Wall -pedantic}
+with C++ code: the @acronym{GNU} C++ compiler has many extensions which
+are not supported by other compilers, and this will report @emph{some}
+of them (such as the misuse of variable-length arrays).  If possible,
+check C++ code on a standards-conformant compiler.
+
 @item
 Study the output from running your examples, in file
 @file{@var{pkg}.Rcheck/@var{pkg}-Ex.Rout}.  Often warnings there
