@@ -50,7 +50,7 @@
 # include <sys/stat.h>
 #endif
 
-#if HAVE_AQUA
+#ifdef HAVE_AQUA
 extern int (*ptr_CocoaSystem)(char*);
 extern	Rboolean useaqua;
 #endif
