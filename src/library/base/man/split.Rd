@@ -1,6 +1,6 @@
 % File src/library/base/man/split.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{split}
@@ -66,7 +66,9 @@ unsplit(value, f, drop = FALSE)
 
 }
 \seealso{
-  \code{\link{cut}}
+  \code{\link{cut}} to categorize numeric values.
+
+  \code{\link{strsplit}} to split strings.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -76,7 +78,7 @@ unsplit(value, f, drop = FALSE)
 \examples{
 require(stats); require(graphics)
 n <- 10; nn <- 100
-g <- factor(round(n * stats::runif(n * nn)))
+g <- factor(round(n * runif(n * nn)))
 x <- rnorm(n * nn) + sqrt(as.numeric(g))
 xg <- split(x, g)
 boxplot(xg, col = "lavender", notch = TRUE, varwidth = TRUE)
