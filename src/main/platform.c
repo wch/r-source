@@ -1663,7 +1663,7 @@ SEXP attribute_hidden do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("X11"));
 #ifdef HAVE_X11
-# if defined(Unix) && !defined(__APPLE_CC__)
+# if defined(Unix) /*  && !defined(__APPLE_CC__) removed in 2.11.0 */
     LOGICAL(ans)[i++] = X11;
 # else
     LOGICAL(ans)[i++] = TRUE;

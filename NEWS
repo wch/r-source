@@ -508,8 +508,12 @@ BUG FIXES
 	internally.
 
     o	The interpretation by strptime() of %c was non-standard (not
-	that is it ever advisable to use locale- and system-specific
+	that it is ever advisable to use locale- and system-specific
 	input formats).
+
+    o	capabilities("X11") now works the same way on Mac OS X as on
+	other platforms (it was always true for R built with
+	--with-aqua, as the CRAN builds are).
 
 
 
