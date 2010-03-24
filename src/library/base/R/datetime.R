@@ -267,7 +267,7 @@ check_tzones <- function(...)
 {
     tzs <- unique(sapply(list(...), function(x) {
         y <- attr(x, "tzone")
-        if(is.null(y)) "" else y
+        if(is.null(y)) "" else y[1L]
     }))
     tzs <- tzs[tzs != ""]
     if(length(tzs) > 1L)
