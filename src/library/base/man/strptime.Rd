@@ -115,8 +115,8 @@ strptime(x, format, tz = "")
 	century inferred from a 2-digit year will change}.
     }
     \item{\code{\%Y}}{Year with century.}
-    \item{\code{\%z}}{Offset from Greenwich, so \code{-0800} is 8 hours
-      west of Greenwich. This is read but ignored on input, with a warning.}
+    \item{\code{\%z}}{Signed offset in hours and minutes from UTC, so
+      \code{-0800} is 8 hours behind UTC.}
     \item{\code{\%Z}}{(output only.) Time zone as a character
       string (empty if not available).}
   }
@@ -271,6 +271,9 @@ options(op)
 (x <- strptime(c("2006-01-08 10:07:52", "2006-08-07 19:33:02"),
                "\%Y-\%m-\%d \%H:\%M:\%S", tz="EST5EDT"))
 attr(x, "tzone")
+
+## An RFC 822 header (Eastern Canada, during DST)
+strptime("Tue, 23 Mar 2010 14:36:38 -0400",  "\%a, \%d \%b \%Y \%H:\%M:\%S \%z")
 }
 \keyword{utilities}
 \keyword{chron}

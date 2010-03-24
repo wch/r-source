@@ -74,7 +74,7 @@
   get_number(from, to, n)
 #define recursive(new_fmt) \
   (*(new_fmt) != '\0'							      \
-   && (rp = strptime_internal (rp, (new_fmt), tm, decided, psecs)) != NULL)
+   && (rp = strptime_internal (rp, (new_fmt), tm, decided, psecs, poffset)) != NULL)
 
 /* This version: may overwrite these with versions for the locale,
  * hence the extra length of the fields
@@ -201,11 +201,12 @@ static int Rwcsncasecmp(const wchar_t *cs1, const wchar_t *s2)
 
 #define w_recursive(new_fmt) \
   (*(new_fmt) != '\0'							      \
-   && (rp = w_strptime_internal (rp, (new_fmt), tm, decided, psecs)) != NULL)
+   && (rp = w_strptime_internal (rp, (new_fmt), tm, decided, psecs, poffset)) != NULL)
 
 static wchar_t *
 w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
-		     enum locale_status *decided, double *psecs)
+		     enum locale_status *decided, double *psecs, 
+		     int *poffset)
 {
     const wchar_t *rp_backup;
     int cnt;
@@ -474,7 +475,6 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 	    want_xday = 1;
 	    break;
 	case L'z':
-	    warning(_("%s for input is read but ignored"), "%z");
 	    {
 		int n = 0, neg, off = 0;
 		val = 0;
@@ -494,7 +494,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 		if (val > 1200) return NULL;
 		off = (val * 3600) / 100;
 		if (neg) off = -off;
-		/* off as yet unused */
+		*poffset = off;
 	    }
 	    break;
 	case L'Z':
@@ -668,7 +668,8 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, struct tm *tm,
 
 static char *
 strptime_internal (const char *rp, const char *fmt, struct tm *tm,
-		   enum locale_status *decided, double *psecs)
+		   enum locale_status *decided, double *psecs,
+		   int *poffset)
 {
     const char *rp_backup;
     int cnt;
@@ -941,7 +942,6 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 	    break;
 	case 'z':
 	    /* Only recognize RFC 822 form */
-	    warning(_("%s for input is read but ignored"), "%z");
 	    {
 		int n = 0, neg, off = 0;
 		val = 0;
@@ -961,7 +961,7 @@ strptime_internal (const char *rp, const char *fmt, struct tm *tm,
 		if (val > 1200) return NULL;
 		off = (val * 3600) / 100;
 		if (neg) off = -off;
-		/* off as yet unused */
+		*poffset = off;
 	    }
 	    break;
 	case 'Z':
@@ -1207,7 +1207,8 @@ static void get_locale_w_strings(void)
 
 /* We only care if the result is null or not */
 static char *
-R_strptime (const char *buf, const char *format, struct tm *tm, double *psecs)
+R_strptime (const char *buf, const char *format, struct tm *tm, 
+	    double *psecs, int *poffset)
 {
     enum locale_status decided;
     decided = raw;
@@ -1226,13 +1227,13 @@ R_strptime (const char *buf, const char *format, struct tm *tm, double *psecs)
 	if(n > 1000) error(_("format string is too long"));
 	n = mbstowcs(wfmt, format, 1000);
 	if(n == -1) error(_("invalid multibyte format string"));
-	return (char *) w_strptime_internal (wbuf, wfmt, tm, &decided, psecs);
+	return (char *) w_strptime_internal (wbuf, wfmt, tm, &decided, psecs, poffset);
     } else
 #endif
     {
 #ifdef HAVE_LOCALE_H
     get_locale_strings();
 #endif
-    return strptime_internal (buf, format, tm, &decided, psecs);
+    return strptime_internal (buf, format, tm, &decided, psecs, poffset);
     }
 }
