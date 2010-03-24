@@ -27,6 +27,9 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	all of which use positional matching for their first argument,
 	and also some internal-use-only primitives.
 
+    o	The default device for command-line R at the console on Mac OS X
+	is now quartz() and not X11().
+
 
 NEW FEATURES
 
