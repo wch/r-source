@@ -1,14 +1,14 @@
 # German translation of 
 # src/library/grDevices/po/grDevices.pot
-# Copyright (C) 2005-2009 The R Foundation
+# Copyright (C) 2005-2010 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2009.
+# Detlef Steuer <steuer@hsu-hh.de>, 2009-1010.
 msgid ""
 msgstr ""
-"Project-Id-Version: R-2.10.0\n"
+"Project-Id-Version: R-2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-03-16 09:19+0000\n"
-"PO-Revision-Date: 2009-10-07 14:25+0200\n"
+"PO-Revision-Date: 2010-03-24 12:29+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -263,7 +263,7 @@ msgstr "Die Familie '%s' ist nicht im PostScript-Gerät enthalten<"
 #: devPS.c:4005 devPS.c:5054 devPS.c:7098 devPicTeX.c:536 devPicTeX.c:541
 #, c-format
 msgid "%s not available for this device"
-msgstr ""
+msgstr "%s für dieses Gerät nicht verfügbar"
 
 #: devPS.c:4212
 #, c-format
@@ -273,7 +273,7 @@ msgstr "unbekannte Kodierung '%s' in 'mbcsToSbcs'"
 #: devPS.c:4221
 #, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
-msgstr "Konvertierungsfheler für '%s' in 'mbcsToSbcs': Punkt ersetzt <%02x>"
+msgstr "Konvertierungsfehler für '%s' in 'mbcsToSbcs': Punkt ersetzt <%02x>"
 
 #: devPS.c:4300
 #, c-format
@@ -334,9 +334,9 @@ msgid "write failed"
 msgstr "Schreiben fehlgeschlagen"
 
 #: devPS.c:5049
-#, fuzzy, c-format
+#, c-format
 msgid "%s not yet implemented for this device"
-msgstr "file = \"|cmd\" ist in dieser Version nicht implementiert"
+msgstr "%s ist für dieses Gerät noch nicht implementiert"
 
 #: devPS.c:5220
 #, c-format
@@ -345,12 +345,11 @@ msgstr "kann Kodierung '%s' nicht nutzen"
 
 #: devPS.c:5469
 msgid "Too many raster images"
-msgstr ""
+msgstr "zu viele Rasterbilder"
 
 #: devPS.c:5474
-#, fuzzy
 msgid "Unable to allocate raster image"
-msgstr "kann Bitmap nicht allozieren"
+msgstr "kann Rasterimage nicht allokieren"
 
 #: devPS.c:5653
 msgid "Corrupt loaded encodings;  font not added"
@@ -377,14 +376,12 @@ msgid "failed to load default encoding"
 msgstr "konnte Standardkodierung nicht laden"
 
 #: devPS.c:5913
-#, fuzzy
 msgid "failed to allocate rasters"
-msgstr "konnte Zeichensatzliste nicht allozieren"
+msgstr "konnte Raster nicht allozieren"
 
 #: devPS.c:5919
-#, fuzzy
 msgid "failed to allocate masks"
-msgstr "konnte Zeichensatzliste nicht allozieren"
+msgstr "konnte Masken nicht allozieren"
 
 #: devPS.c:5982
 #, c-format
@@ -468,9 +465,9 @@ msgid "unable to start device xfig"
 msgstr "konnte Gerät xfig nicht starten<"
 
 #: devPS.c:8057
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'maxRasters' parameter in %s"
-msgstr "ungültiger 'fonts' Parameter in %s<"
+msgstr "ungültiger 'maxRasters' Parameter in %s"
 
 #: devPS.c:8070
 msgid "unable to start device pdf"

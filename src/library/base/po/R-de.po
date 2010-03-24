@@ -1,14 +1,14 @@
 # Translation of src/library/base/R-base.pot to German
-# Copyright (C) 2005-2009 The R Foundation
+# Copyright (C) 2005-2010 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2009.
+# Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-03-22 15:15\n"
-"PO-Revision-Date: 2009-10-07 14:24+0200\n"
+"PO-Revision-Date: 2010-03-23 11:26+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -107,29 +107,26 @@ msgstr "*** 'pos=1' wird in Zukunft einen Fehler erzeugen"
 msgid "file '%s' not found"
 msgstr "Datei '%s' nicht gefunden"
 
-#, fuzzy
 msgid "invalid 'name' argument"
-msgstr "ungültiges Argument für 'category'"
+msgstr "ungültiges 'name'Argument"
 
-#, fuzzy
 msgid "package %s is required by %s, which may no longer work correctly"
-msgstr ""
-"Paket '%s' wurde unter R Version %s gebaut und die Hilfe funktioniert evtl. "
-"nicht richtig"
+msgstr "Paket '%s' wird von %s benötigt, welches evtl nicht mehr korrekt arbeitet"
 
-#, fuzzy
 msgid "package %s is required by %s so will not be detached"
-msgstr "Paket '%s' benötigt von '%s' nicht gefunden"
+msgstr "Paket %s wird von %s benötigt, wird deshalb nicht detached"
 
 msgid ""
 "%s failed in %s() for '%s', details:\n"
 "  call: %s\n"
 "  error: %s"
 msgstr ""
+"%s in %s() fehlgechlagen, Details:\n"
+"  Aufruf: %s\n"
+"  Fehler: %s"
 
-#, fuzzy
 msgid "name space cannot be unloaded:"
-msgstr "Namensraum kann nicht entladen werden"
+msgstr "Namensraum kann nicht entladen werden:"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "reguläres Ausdruckmuster '[' durch '\\\\[' ersetzt"
@@ -242,9 +239,8 @@ msgstr "fehlende Werte in 'row.names' nicht zulässig"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "ungültige 'dimnames' für data frame gegeben"
 
-#, fuzzy
 msgid "cannot coerce class '%s' into a data.frame"
-msgstr "kann Klasse %s nicht in data.frame umwandeln"
+msgstr "kann Klasse '%s' nicht in data.frame umwandeln"
 
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
 msgstr "ungültige 'row.names', Länge %d für data frame mit %d Zeilen"
@@ -478,9 +474,8 @@ msgstr "'lag' and 'differences' müssen ganze Zahlen >=1 sein"
 msgid "do not know how to convert '%s' to class \"POSIXlt\""
 msgstr "weiss nicht, wie '%s' in Klasse \"POSIXlt\" umgewandelt wird"
 
-#, fuzzy
 msgid "do not know how to convert '%s' to class \"POSIXct\""
-msgstr "weiss nicht, wie '%s' in Klasse \"POSIXlt\" umgewandelt wird"
+msgstr "weiss nicht, wie '%s' in Klasse \"POSIXct\" umgewandelt wird"
 
 msgid "wrong class"
 msgstr "falsche Klasse"
@@ -745,17 +740,13 @@ msgstr "'object' muss eine Liste sein"
 msgid "package '%s' has not been installed properly"
 msgstr "Paket '%s' wurde nicht ordentlich installiert"
 
-#, fuzzy
 msgid "package '%s' was built before R 2.10.0: please re-install it"
-msgstr "Paket '%s' wurde vor R 2.0.0 gebaut: bitte Paket neu installieren"
+msgstr "Paket '%s' wurde vor R 2.10.0 gebaut: bitte Paket neu installieren"
 
-#, fuzzy
 msgid ""
 "package '%s' claims to be built under R version %s but is missing some help "
 "files and needs to be re-installed"
-msgstr ""
-"Paket '%s' wurde mit R Version %s erstellt und die Hilfe wird nicht korrekt "
-"funktionieren: bitte Paket neu installieren"
+msgstr "Paket '%s' behauptet mit R Version %s erstellt zu sein, es fehlen aber einige Hilfeseiten und es muss neu installiert werden"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "Dies ist R %s, Paket '%s' benötigt %s %s"
@@ -771,21 +762,23 @@ msgstr "Paket '%s' wurde nicht für 'arch=%s' installiert"
 
 msgid ""
 "package '%s' has a license that you need to accept in an interactive session"
-msgstr ""
+msgstr "Paket '%s' unterliegt einer Lizenz, die in einer interaktiven Sitzung akzeptiert werden muss"
 
 msgid "Package '%s' has a license that you need to accept after viewing"
-msgstr ""
+msgstr "Paket '%s' unterliegt einer Lizenz, die nach Ansicht akzeptiert werden muss"
 
 msgid ""
 "Package '%s' has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
+"Paket '%s' unterliegt einer Lizenz, die akzeptiert werden muss:\n"
+"Gemäß DESCRIPTION handelt es sich um"
 
 msgid "License"
-msgstr ""
+msgstr "Lizenz"
 
 msgid "License for package '%s' not accepted"
-msgstr ""
+msgstr "Lizenz für Paket '%s' nicht akzeptiert"
 
 msgid "Attaching package: '%s'"
 msgstr "Attache Paket: '%s'"
@@ -1028,9 +1021,8 @@ msgstr "unzulässig den Speichermodus eines Faktors zu ändern"
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' ist kein von 'namespace:%s' exportiertes Objekt"
 
-#, fuzzy
 msgid "package %s has no name space and is not on the search path"
-msgstr "Paket '%s' hat keinen Namensraum und"
+msgstr "Paket '%s' hat keinen Namensraum und ist nicht im Suchpfad"
 
 msgid "name space is already attached"
 msgstr "Namensraum ist bereits angehängt"
@@ -1065,31 +1057,25 @@ msgstr "Zuweisung von nativeSymbolInfo gescheitert für"
 msgid "package '%s' does not have a name space"
 msgstr "Paket '%s' hat keinen Namensraum"
 
-#, fuzzy
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
 "%s"
-msgstr "exportClassPattern angegeben, aber keine passenden Klassen in %s"
+msgstr "exportClassPattern im NAMESPACE angegeben, aber keine passenden Klassen in Paket %s"
 
-#, fuzzy
 msgid "in package %s classes %s were specified for export but not defined"
-msgstr "in '%s' sind Klassen nicht für den Export definiert: %s"
+msgstr "in Paket %s sind Klassen %s für den Export vorgesehen, aber nicht definiert"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "in '%s' sind Methoden nicht für den Export definiert: %s"
 
-#, fuzzy
 msgid "multiple methods tables found for %s"
-msgstr "Multiple Methodentabellen gefunden für '"
+msgstr "Multiple Methodentabellen gefunden für %s"
 
-#, fuzzy
 msgid "failed to find metadata object for %s"
 msgstr "Konnte Metadatenobjekt für \"%s\" nicht finden"
 
-#, fuzzy
 msgid "in package %s methods %s were specified for export but not defined"
-msgstr ""
-"in '%s' sind Methoden für den Export spezifiziert, aber nicht definiert: %s"
+msgstr "in Paket '%s' sind Methoden %s für den Export vorgesehen, aber nicht definiert %s"
 
 msgid "not found"
 msgstr "nicht gefunden"
@@ -1097,9 +1083,8 @@ msgstr "nicht gefunden"
 msgid "not loading a name space"
 msgstr "lade keinen Namensraum"
 
-#, fuzzy
 msgid "name space %s is imported by %s so cannot be unloaded"
-msgstr "Namensraum kann nicht entladen werden"
+msgstr "Namensraum %s ist importiert von %s und kann deshalb nicht entladen werden"
 
 msgid "imperative name space directives are disabled"
 msgstr "imperative Namensraumdirektiven sind ausgeschaltet"
@@ -1120,13 +1105,13 @@ msgid "duplicate import names"
 msgstr "doppelte Importnamen"
 
 msgid "replacing local value with import %s when loading %s"
-msgstr ""
+msgstr "lokaler Wert durch import %s ersetzt, während %s geladen wurde"
 
 msgid "cannot import into a sealed name space"
 msgstr "kann nicht in einen versiegelten Namensraum importieren"
 
 msgid "replacing previous import %s when loading %s"
-msgstr ""
+msgstr "vorhergehender Import %s während des Ladens von %s ersetzt"
 
 msgid "invalid import target"
 msgstr "ungültiges Ziel für Import"
@@ -1134,15 +1119,11 @@ msgstr "ungültiges Ziel für Import"
 msgid "got invalid index for importing"
 msgstr "ungültigen Index für Import bekommen "
 
-#, fuzzy
 msgid "found methods to import for function %s but not the generic itself"
-msgstr ""
-"Methoden gefunden für den Import der Funktion \"%s\", aber nicht die "
-"Generische selbst"
+msgstr "Methoden gefunden für den Import für Funktion %s, aber nicht die Generische selbst"
 
-#, fuzzy
 msgid "requested methods not found in environment/package %s: %s"
-msgstr "verlangte 'methods' Objekte nicht gefunden in Umgebung/Paket '%s': %s"
+msgstr "verlangte Methoden nicht gefunden in Umgebung/Paket %s: %s"
 
 msgid "cannot add to exports of a sealed name space"
 msgstr "kann keine Exporte von versiegeltem Namensraum hinzufügen"
@@ -1156,9 +1137,8 @@ msgstr "Paket '%s' hat keine NAMESPACE Datei"
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "leerer Name in der Direktive  '%s' in der NAMESPACE Datei"
 
-#, fuzzy
 msgid "duplicated symbol names %s in useDynlib(\"%s\")"
-msgstr "doppelte Symbolnamen"
+msgstr "doppelte Symbolnamen %s in useDynlib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "unbrauchbare 'S3method' Direktive: %s"
@@ -1169,9 +1149,8 @@ msgstr "zu viele 'S3method' Direktiven"
 msgid "unknown namespace directive: %s"
 msgstr "unbekannte Namensraum Direktive: %s"
 
-#, fuzzy
 msgid "S3 method %s was declared but not found"
-msgstr "S3 Methode %s wurde in NAMESPACE deklariert, aber nicht gefunden"
+msgstr "S3 Methode %s wurde deklariert, aber nicht gefunden"
 
 msgid "bad method"
 msgstr "unbrauchbare Methode"
@@ -1179,9 +1158,8 @@ msgstr "unbrauchbare Methode"
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "Objekt '%s' nicht gefunden während Namensraum '%s' geladen wurde"
 
-#, fuzzy
 msgid "found an S4 version of %s so it has not been imported correctly"
-msgstr "S4 Version von '%s' gefunden, wurde also nicht korrekt importiert"
+msgstr "S4 Version von '%s' gefunden, diese war also nicht korrekt importiert"
 
 msgid "'%s' is not implemented yet"
 msgstr "'%s' ist bisher nicht implementiert"
@@ -1360,7 +1338,7 @@ msgid "unable to find a plausible encoding"
 msgstr "kann keine plausible Kodierung finden"
 
 msgid "encoding = \"%s\" chosen"
-msgstr ""
+msgstr "encoding = %s gewählt"
 
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE' ist für eine URL sinnlos"
@@ -1489,7 +1467,7 @@ msgid "not defined for numeric_version objects"
 msgstr "für numeric_version Objekte nicht definiert"
 
 msgid "<0 elements>"
-msgstr ""
+msgstr "<0 Elemente>"
 
 msgid "invalid 'digits'"
 msgstr "ungültige 'digits'"
@@ -1501,32 +1479,26 @@ msgstr ""
 "Argumente 'show.output.on.console', 'minimized' und 'invisible' sind nur für "
 "Windows"
 
-#, fuzzy
 msgid "'intern' must be TRUE or FALSE"
-msgstr "'fromLast' muss TRUE oder FALSE sein"
+msgstr "'intern' muss TRUE oder FALSE sein"
 
-#, fuzzy
 msgid "'ignore.stderr' must be TRUE or FALSE"
-msgstr "'fromLast' muss TRUE oder FALSE sein"
+msgstr "'ignore.stderr' muss TRUE oder FALSE sein"
 
-#, fuzzy
 msgid "'wait' must be TRUE or FALSE"
-msgstr "'fromLast' muss TRUE oder FALSE sein"
+msgstr "'wait' muss TRUE oder FALSE sein"
 
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input'  muss ein Zeichenkettenvektor oder 'NULL' sein"
 
-#, fuzzy
 msgid "'show.output.on.console' must be TRUE or FALSE"
-msgstr "'fromLast' muss TRUE oder FALSE sein"
+msgstr "'show.output.on.console' muss TRUE oder FALSE sein"
 
-#, fuzzy
 msgid "'minimized' must be TRUE or FALSE"
-msgstr "'fromLast' muss TRUE oder FALSE sein"
+msgstr "'minimized' muss TRUE oder FALSE sein"
 
-#, fuzzy
 msgid "'invisible' must be TRUE or FALSE"
-msgstr "'fromLast' muss TRUE oder FALSE sein"
+msgstr "'invisible' muss TRUE oder FALSE sein"
 
 msgid "'%s' could not be run"
 msgstr "'%s' konnte nicht ausgeführt werden"
@@ -1592,17 +1564,15 @@ msgid_plural "objects %s not found"
 msgstr[0] "Objekt %s nicht gefunden"
 msgstr[1] "Objekte %s nicht gefunden"
 
-#, fuzzy
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
-msgstr[0] "Objekt '%s' wird nicht von 'namespace:%s' exportiert"
-msgstr[1] "Objekte '%s' werden nicht von 'namespace:%s' exportiert"
+msgstr[0] "Klasse '%s' ist nicht von 'namespace:%s' exportiert"
+msgstr[1] "Klassen '%s' sind nicht von 'namespace:%s' exportiert"
 
-#, fuzzy
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
-msgstr[0] "Objekt '%s' wird nicht von 'namespace:%s' exportiert"
-msgstr[1] "Objekte '%s' werden nicht von 'namespace:%s' exportiert"
+msgstr[0] "Objekt %s ist nicht von 'namespace:%s' exportiert"
+msgstr[1] "Objekte %s sind nicht von 'namespace:%s' exportiert"
 
 msgid "previous export '%s' is being replaced"
 msgid_plural "previous exports '%s' are being replaced"

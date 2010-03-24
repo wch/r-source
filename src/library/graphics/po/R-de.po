@@ -1,14 +1,14 @@
 # German translation of 
 # src/library/graphics/po/R-graphics.pot
-# Copyright (C) 2005-2009 The R Foundation
+# Copyright (C) 2005-2010 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2009.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-10-05 14:08\n"
-"PO-Revision-Date: 2009-10-07 14:25+0200\n"
+"PO-Revision-Date: 2010-03-24 10:52+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgid "'a' and 'b' are overridden by 'coef'"
 msgstr "'a' und 'b' werden überschrieben durch 'coef'"
 
 msgid "one of 'x1' and 'y1' must be given"
-msgstr ""
+msgstr "entweder 'x1' oder 'y1' müssen angegeben werden"
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x' muss eine 2-D Kontingenztafel sein"

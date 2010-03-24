@@ -1,14 +1,14 @@
 # German translation of src/library/utils/po/R-utils.pot
-# Copyright (C) 2008-2009 The R Foundation
+# Copyright (C) 2008-2010 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2009.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-03-16 09:20\n"
-"PO-Revision-Date: 2009-10-07 15:13+0200\n"
+"PO-Revision-Date: 2010-03-24 12:26+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -110,12 +110,11 @@ msgstr "Keine Vignetten gefunden durch"
 msgid "call"
 msgstr "Aufruf"
 
-#, fuzzy
 msgid "Package '"
-msgstr "Paket"
+msgstr "Paket '"
 
 msgid "' DESCRIPTION not found."
-msgstr ""
+msgstr "DESCRIPTION nicht gefunden"
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file' muss NULL, eine Zeichenkette oder eine Verbindung sein"
@@ -259,9 +258,8 @@ msgstr "Klasse(n) von 'name' wird verworfen"
 msgid "cannot edit NULL row names"
 msgstr "kann NULL Zeilennamen nicht editieren"
 
-#, fuzzy
 msgid "no help found for '%s'"
-msgstr "kein Hilfefile für '%s' gefunden"
+msgstr "kein Hilfe für '%s' gefunden"
 
 msgid "test '%s' is not available"
 msgstr "test '%s' ist nicht verfügbar"
@@ -324,14 +322,13 @@ msgstr "HTML Hilfe ist nicht verfügbar"
 msgid "R Help on '%s'"
 msgstr "R Hilfe zu '%s'"
 
-#, fuzzy
 msgid "invalid '%s' argument"
-msgstr "unzulässiges 'x' Argument"
+msgstr "unzulässiges '%s' Argument"
 
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so help cannot be "
 "accessed"
-msgstr ""
+msgstr "Paket %s exisitiert, wurde aber nicht unter R >= 2.10.0 installiert, weshalb die Hilfe nicht genutzt werden kann"
 
 msgid "argument '%s' must be a single character string"
 msgstr "Argument '%s' muss einzelne Zeichkette sein"
@@ -554,9 +551,8 @@ msgstr "versuche CRAN ohne einen Spiegelserver zu nutzen"
 msgid "cannot choose a CRAN mirror non-interactively"
 msgstr "kann keinen CRAN-Spiegel nicht-interaktiv nutzen"
 
-#, fuzzy
 msgid "cannot choose a BioC mirror non-interactively"
-msgstr "kann keinen CRAN-Spiegel nicht-interaktiv nutzen"
+msgstr "kann keinen BioC-Spiegel nicht-interaktiv wählen"
 
 msgid "cannot set repositories non-interactively"
 msgstr "kann keine Repositories nicht-interaktiv setzen"
@@ -647,7 +643,7 @@ msgid "no object named '%s' to show"
 msgstr "kein Objket namens '%s' anzuzeigen"
 
 msgid "must have max > min"
-msgstr ""
+msgstr "es muss max > min sein"
 
 msgid "'pb' is not from class \"txtProgressBar\""
 msgstr "'pb' ist nicht aus Klasse \"txtProgressBar\""
@@ -835,9 +831,8 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 "'digits' und 'digits.d' sind beide angegeben und das letztere wird ignoriert"
 
-#, fuzzy
 msgid "no lines found in %s"
-msgstr "kein Hilfefile für '%s' gefunden"
+msgstr "kein Zeilen in  '%s'"
 
 msgid "profile does not contain memory information"
 msgstr "Profil einthält keine Speicherinformation"
@@ -888,9 +883,8 @@ msgstr "Vignette '%s' enthält kein PDF"
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() kann nicht nicht-interaktiv benutzt werden"
 
-#, fuzzy
 msgid "'title' must be NULL or a length-1 character vector"
-msgstr "'code_files' muss ein Charaktervektor sein"
+msgstr "'title' muss NULL oder ein Charaktervektor mit Länge 1 sein"
 
 msgid ""
 "Enter one or more numbers separated by spaces, or an empty line to cancel"
@@ -952,13 +946,10 @@ msgstr "ungültiger Browsername, überprüfen Sie options(\"browser\")."
 msgid "help.start() requires the HTTP server to be running"
 msgstr "help.start() benötigt den laufenden HTTP Server"
 
-#, fuzzy
 msgid ""
 "If the browser launched by '%s' is already running, it is *not* restarted, "
 "and you must switch to its window."
-msgstr ""
-"Wenn '%s' bereits ausgeführt wird, wird er nicht neu gestartet, sondern Sie "
-"müssen in sein Fenster wechseln"
+msgstr "Wenn der Browser '%s' bereits ausgeführt wird, wird er nicht neu gestartet, sondern Sie müssen in sein Fenster wechseln"
 
 msgid "Otherwise, be patient ..."
 msgstr "Ansonsten: Geduld ..."

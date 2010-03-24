@@ -1,13 +1,13 @@
 # German translation of src/library/tools/po/R-tools.pot
-# Copyright (C) 2008-2009 The R Foundation
+# Copyright (C) 2008-2010 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2009.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-03-16 09:20\n"
-"PO-Revision-Date: 2009-10-07 14:56+0200\n"
+"PO-Revision-Date: 2010-03-24 12:16+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -307,7 +307,7 @@ msgstr "Paket muss geladen werden"
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
-msgstr ""
+msgstr "Paket %s existiert, wurde aber nicht mit R >= 2.10.0 installiert, weshalb Querverweise nicht überprüft werden können"
 
 msgid "Obsolete package(s) %s in Rd xrefs"
 msgstr "Veraltete(s) Paket(e) %s in Rd Kreusreferenzen"
@@ -346,12 +346,11 @@ msgstr "Rd-Dateien mit doppeltem Namen '%s':"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd-Dateien mit doppeltem Alias '%s':"
 
-#, fuzzy
 msgid "Argument items with no description in Rd object '%s':"
-msgstr "Argumentnamen im Code (ohne Doku):"
+msgstr "Argumente ohne Beschreibung im Rd Objekt '%s':"
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
-msgstr ""
+msgstr "Automatisch generierter Inhalt benötigt noch Nacharbeit in Rd Objekt '%s':"
 
 msgid "Generics g in env ="
 msgstr "Generische g in env ="
@@ -473,9 +472,8 @@ msgstr "fehlende Dateien in '%s' im Feld '%s':"
 msgid "unable to create '%s'"
 msgstr "kann '%s' nicht erzeugen"
 
-#, fuzzy
 msgid "unable to re-encode '%s' line(s) %s"
-msgstr "kann '%s' nicht rekodieren"
+msgstr "kann '%s' Zeile(n) %s nicht rekodieren"
 
 msgid "unable to copy INDEX to '%s'"
 msgstr "kann INDEX nicht nach '%s' kopieren"
@@ -548,21 +546,19 @@ msgid "No docs found for package %s"
 msgstr "Keine Dokumente zu Paket %s gefunden"
 
 msgid "Only help files, %s, %s and files under %s in a package can be viewed"
-msgstr ""
+msgstr "Nur Hilfeseiten, %s, %s und Dateien unter %s in einem Paket können angeschaut werden"
 
 msgid "NEWS"
-msgstr ""
+msgstr "Neuigkeiten"
 
-#, fuzzy
 msgid "DESCRIPTION"
-msgstr "Unzulässige DESCRIPTION Datei"
+msgstr "DESCRIPTION"
 
-#, fuzzy
 msgid "doc/"
-msgstr "Doku"
+msgstr "doc/"
 
 msgid "unsupported URL %s"
-msgstr ""
+msgstr "nicht unterstützte URL %s"
 
 msgid "URL %s was not found"
 msgstr "URL '%s' nicht gefunden"
@@ -595,7 +591,7 @@ msgid "ERROR:"
 msgstr "Fehler:"
 
 msgid "this seems to be a bundle -- and they are defunct"
-msgstr ""
+msgstr "sieht aus wie ein Bundle --  und diese sind veraltet"
 
 msgid "packaged installation of"
 msgstr "gepackte Installation von"
@@ -611,7 +607,7 @@ msgstr ""
 "and Administration Manual' nachlesen"
 
 msgid "installing to"
-msgstr ""
+msgstr "installiert nach"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -635,7 +631,6 @@ msgstr "kein Quellkode gefunden"
 msgid "empty 'data' directory"
 msgstr "leeres 'data' Verzeichnis"
 
-#, fuzzy
 msgid "'--auto-zip' is for Windows only"
 msgstr "'--auto-zip'ist nur für Windows"
 
@@ -651,9 +646,8 @@ msgstr "kann  temporäres Verzeichnis nicht erzeugen"
 msgid "invalid package"
 msgstr "ungültiges Paket"
 
-#, fuzzy
 msgid "--pkglock applies only to a single package"
-msgstr "--pkglock bezieht sich nur auf eine einzelnes Bündel bzw. Paket"
+msgstr "--pkglock bezieht sich nur auf eine einzelnes Paket"
 
 msgid "ERROR: no packages specified"
 msgstr "Fehler: keine Pakete angegeben"
@@ -681,10 +675,10 @@ msgid "building a fake installation is disallowed"
 msgstr "eine Scheininstallation ist nicht erlaubt"
 
 msgid "--no-help overrides"
-msgstr ""
+msgstr "--no-help übersteuert"
 
 msgid "--"
-msgstr ""
+msgstr "--"
 
 msgid "-o option without value"
 msgstr "-o Option ohne Wert"
@@ -708,7 +702,7 @@ msgid "no 'type' specified"
 msgstr "kein 'type' angegeben"
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
-msgstr ""
+msgstr "'type' muss entweder 'txt', 'html', 'latex' oder 'example' sein"
 
 msgid "there is no package called '%s'"
 msgstr "es gibt kein Paket names '%s'"
@@ -903,9 +897,8 @@ msgstr "Datei 'DESCRIPTION' fehlt."
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
 msgstr "Dateien 'DESCRIPTION' und 'DESCRIPTION.in' fehlen."
 
-#, fuzzy
 msgid "invalid package layout"
-msgstr "ungültiges Paket"
+msgstr "ungültige Paketstruktur"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "Datei '%s' liegt nicht in gültigem DCF Format vor"
@@ -941,10 +934,9 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] ".Internal Aufruf in folgender Funktion gefunden:"
 msgstr[1] ".Internal Aufrufe in folgenden Funktionen gefunden:"
 
-#, fuzzy
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
-msgstr[0] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
 
 #~ msgid "Unable to locate help document %s in package %s"

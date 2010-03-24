@@ -1,14 +1,14 @@
 # German translation of 
 # src/library/grDevices/po/R-grDevices.pot
-# Copyright (C) 2005-2009 The R Foundation
+# Copyright (C) 2005-2010 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2007-2009.
+# Detlef Steuer <steuer@hsu-hh.de>, 2007-2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-12-17 11:57\n"
-"PO-Revision-Date: 2009-10-07 14:26+0200\n"
+"PO-Revision-Date: 2010-03-24 11:02+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -213,17 +213,16 @@ msgid "status %d in running command '%s'"
 msgstr "Status %d im laufenden Kommando '%s'"
 
 msgid "A raster matrix must be character, or numeric, or logical"
-msgstr ""
+msgstr "Eine Rastermatrix muss entweder character, nummerisch oder boole'sch sein"
 
-#, fuzzy
 msgid "A raster array must be numeric"
-msgstr "RGB Matrix muss nummerisch sein"
+msgstr "Ein Raster-Array muss nummerisch sein"
 
 msgid "A raster array must have exactly 3 dimensions"
-msgstr ""
+msgstr "Ein Raster-Array muss genau 3 Dimensionen haben"
 
 msgid "A raster array must have exactly 3 or 4 planes"
-msgstr ""
+msgstr "Ein Rater-Array muss genau 3 oder 4 Ebenen haben"
 
 msgid "no current device to record from"
 msgstr "kein aktuelles Device, von dem aufgenommen werden kann"

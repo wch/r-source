@@ -1,14 +1,14 @@
 # Translation of /src/library/stats/po/R-stats.pot
-# Copyright (C) 2008-2009 The R Foundation
+# Copyright (C) 2008-2010 The R Foundation
 # This file is distributed under the same license as the R package.
-# Detlef Steuer <steuer@hsu-hh.de>, 2008-2009.
+# Detlef Steuer <steuer@hsu-hh.de>, 2008-2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-03-19 11:18\n"
-"PO-Revision-Date: 2009-10-07 14:33+0200\n"
+"PO-Revision-Date: 2010-03-23 13:36+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -32,10 +32,8 @@ msgstr ""
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
 msgstr "'alpha', 'beta' und 'gamma' müssen im Einheitsintervall liegen"
 
-#, fuzzy
 msgid "data must be non-zero for multiplicative Holt-Winters."
-msgstr ""
-"Daten müssen für den multiplikativen Holt-Winters strikt nicht-negativ sein"
+msgstr "Daten müssen für den multiplikativen Holt-Winters ungleich 0  sein"
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr "benötige zumindest 2 Perioden, um saisonale Startwerte zu berechnen"
@@ -147,7 +145,6 @@ msgstr "keine Zeile für die Aggragation"
 msgid "'by' must be a list"
 msgstr "'by' muss eine Liste sein"
 
-#, fuzzy
 msgid "arguments must have same length"
 msgstr "Argumente müssen dieselbe Länge haben"
 
@@ -279,9 +276,8 @@ msgstr "'order.max' muss >= 1 sein"
 msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' muss kleiner sein als 'n.used'"
 
-#, fuzzy
 msgid "'n.ahead' must be at least 1"
-msgstr "'lag.max' muss mindestens 1 sein"
+msgstr "'n.ahead' muss mindestens 1 sein"
 
 msgid "number of series in 'object' and 'newdata' do not match"
 msgstr "Anzahl von Reihen in 'object' und 'newdata' passen nicht"
@@ -551,11 +547,9 @@ msgstr "'V' ist keine quadratische, numerische Matrix"
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
 msgstr "Einträge 0 oder NA in diag(.): nicht-endliches Ergebniss zweifelhaft"
 
-#, fuzzy
 msgid "'x' must be a numeric vector"
-msgstr "'y' muss ein numerischer Vektor sein"
+msgstr "'x' muss ein numerischer Vektor sein"
 
-#, fuzzy
 msgid "'y' must be a numeric vector"
 msgstr "'y' muss ein numerischer Vektor sein"
 
@@ -853,7 +847,6 @@ msgstr ""
 msgid "non-positive values not allowed for the gamma family"
 msgstr "nicht-positive Werte sind für die Gamma-Familie nicht zulässig"
 
-#, fuzzy
 msgid "using weights as shape parameters"
 msgstr "nutze Gewichte als Gestaltparameter"
 
@@ -992,9 +985,8 @@ msgstr "'col.vars' fehlt oder falsch"
 msgid "'family' not recognized"
 msgstr "'family' nicht erkannt"
 
-#, fuzzy
 msgid "invalid 'method' argument"
-msgstr "unzulässiges 'data' Argument"
+msgstr "unzulässiges 'method' Argument"
 
 msgid "'weights' must be a numeric vector"
 msgstr "'weights' muss ein numerischer Vektor sein"
@@ -1039,9 +1031,8 @@ msgstr "NAs in d(mu)/d(eta)"
 msgid "no observations informative at iteration"
 msgstr "keine informativen Beobachtungen bei Iteration"
 
-#, fuzzy
 msgid "non-finite coefficients at iteration %d"
-msgstr "nicht-endliche Koeffizienten bei Iteration"
+msgstr "nicht-endliche Koeffizienten bei Iteration %d"
 
 msgid "X matrix has rank %d, but only %d observations"
 msgstr "X Matrix hat Rang %d, aber nur %d Beobachtungen"
@@ -1062,22 +1053,17 @@ msgstr "Schrittweite abgeschnitten: Überlauf"
 msgid "inner loop 2; cannot correct step size"
 msgstr "innere Schleife 2; kann Schrittweite nicht korrigieren"
 
-#, fuzzy
 msgid "glm.fit: algorithm did not converge"
-msgstr "Algorithmus konvergierte nicht"
+msgstr "glm.fit: Algorithmus konvergierte nicht"
 
-#, fuzzy
 msgid "glm.fit: algorithm stopped at boundary value"
-msgstr "Algortihmus stoppte am Rand"
+msgstr "glm.fit: Algortihmus stoppte am Rand"
 
-#, fuzzy
 msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
-msgstr ""
-"angepasste Wahrscheinlichkeiten mit numerischem Wert 0 oder 1 aufgetreten"
+msgstr "glm.fit: Angepasste Wahrscheinlichkeiten mit numerischem Wert 0 oder 1 aufgetreten"
 
-#, fuzzy
 msgid "glm.fit: fitted rates numerically 0 occurred"
-msgstr "angepasste Raten, die numerich 0 sind, aufgetreten"
+msgstr "glm.fit: angepasste Raten, die numerisch 0 sind, aufgetreten"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr ""
@@ -1869,7 +1855,7 @@ msgid "'proj' is not implemented for multiple responses"
 msgstr "'proj' ist für multiple Zielgrößen nicht implementiert"
 
 msgid "table 'x' should have 2 entries"
-msgstr ""
+msgstr "Tabelle 'x' sollte 2 Einträge haben"
 
 msgid "elements of 'n' must be positive"
 msgstr "Elemente von 'n' müsse positiv sein"
@@ -1898,9 +1884,8 @@ msgstr "'y', 'groups' und 'blocks' müssen gleich lang sein"
 msgid "'formula' missing"
 msgstr "'formula' fehlt"
 
-#, fuzzy
 msgid "factors are not allowed"
-msgstr "Wechselwirkungen sind nicht erlaubt"
+msgstr "Faktoren sind nicht erlaubt"
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
 msgstr "fehlende Werte und NaNs sind nicht erlaubt, wenn 'na.rm' = FALSE"
