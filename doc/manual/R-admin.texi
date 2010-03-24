@@ -2143,7 +2143,7 @@ since 2009.
 @chapter The standalone Rmath library
 
 The routines supporting the distribution and
-special@footnote{e.g.@: Bessel, beta and gamma function} functions in @R{}
+special@footnote{e.g.@: Bessel, beta and gamma functions} functions in @R{}
 and a few others are declared in C header file @file{Rmath.h}.  These
 can be compiled into a standalone library for linking to other
 applications.  (Note that they are not a separate library when @R{} is

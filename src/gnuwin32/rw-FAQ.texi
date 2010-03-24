@@ -813,12 +813,13 @@ releasing the Alt key.
 @section Can I use R on 64-bit Windows?
 
 The standard build of R for Windows (including the binary installer on
-CRAN) is a 32-bit executable that will run on both 32-bit and 64-bit
-versions of Windows.  64-bit versions of Windows (at least XP, Server
-2003 and 2008, Vista and Windows 7) run 32-bit executables under the WOW
-(Windows on Windows) subsystem: they run in almost exactly the same way
-as on a 32-bit version of Windows, except that the address limit for the
-R process is 4GB (rather than 2GB or perhaps 3GB).
+CRAN) is a 32-bit executable that will run on both 32-bit and
+64-bit@footnote{what Windows calls x64 for x86-64 CPUs, not the very
+rare ia64 Windows for Itanium CPUs.} versions of Windows.  64-bit
+versions of Windows run 32-bit executables under the WOW (Windows on
+Windows) subsystem: they run in almost exactly the same way as on a
+32-bit version of Windows, except that the address limit for the R
+process is 4GB (rather than 2GB or perhaps 3GB).
 
 The advantage of a native 64-bit application is that it gets a 64-bit
 address space and hence can address far more than 4GB (how much depends
@@ -827,18 +828,30 @@ process to take advantage of more than 4GB of RAM (if available) and for
 R's memory manager to more easily handle large objects (in particular
 those of 1GB or more).  The disadvantages are that all the pointers are
 8 rather than 4 bytes and so small objects are larger and more data has
-to be moved around, and that far less software is available for 64-bit
-versions of the OS.
+to be moved around, and that far less external software is available for
+64-bit versions of the OS.
 
-As from R 2.11.0 it will be possible to build a 64-bit version of R from
-the sources: see the `R Installation and Administration Manual'.  A
-build of a binary installer is available from
-@url{http://cran.r-project.org/bin/windows64/contrib/}.  Most binary
-packages are available from CRAN or CRANextras, but fewer
+As from R 2.11.0 there is a native 64-bit version of R: see the `R
+Installation and Administration Manual'.  A binary installer is
+available from @url{http://cran.r-project.org/bin/windows64/contrib/}.
+Most binary packages are available from CRAN or CRANextras, but fewer
 hard-to-install packages are available than for the standard 32-bit
 build.  At the time of writing Bioconductor packages are not available
 in binary form for 64-bit Windows R (but installing source packages can
 be tried).
+
+It is planned to merge the 32- and 64-bit builds into a common
+distribution (including binary packages) from R 2.12.0.  For R 2.11.x it
+is possible to have both builds installed on a machine: the installers
+will put the builds into different directories, and the 64-bit build
+will have name suffixed by 'x64' on the Start menus.  The default
+personal library directories are different.  If you set the library path
+in a personal (rather than site) startup file it will need to choose a
+build, e.g.@:
+
+@example
+.libPaths(if(.Machine$sizeof.pointer == 8) "~/Rlibs/x64" else "~/Rlibs")
+@end example
 
 
 @newchap{}
