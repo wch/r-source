@@ -176,18 +176,22 @@
   The fonts used are taken from the current font family, and so can be
   set by \code{\link{par}(family=)} in base graphics, and
   \code{\link{gpar}(fontfamily=)} in package \pkg{grid}.
+
+  Note that \code{bold}, \code{italic} and \code{bolditalic} do not
+  apply to symbols, and hence not to the Greek \emph{symbols} such as
+  \code{mu} which are displayed in the symbol font.
 }
 \section{Other symbols}{
-  On many OSes and some graphics devices many other symbols are available as
-  part of the standard text font, and all of the symbols in the Adobe
-  Symbol encoding are in principle available \emph{via} changing the
-  font face or (see \sQuote{Details}) plotmath: see the examples section
-  of \code{\link{points}} for a function to display them.  (\sQuote{In
-    principle} because some of the glyphs are missing from some
-  implementations of the symbol font.)  Unfortunately,
+  On many OSes and some graphics devices many other symbols are
+  available as part of the standard text font, and all of the symbols in
+  the Adobe Symbol encoding are in principle available \emph{via}
+  changing the font face or (see \sQuote{Details}) plotmath: see the
+  examples section of \code{\link{points}} for a function to display
+  them.  (\sQuote{In principle} because some of the glyphs are missing
+  from some implementations of the symbol font.)  Unfortunately,
   \code{\link{postscript}} and \code{\link{pdf}} have support for little
-  more than European and CJK characters and the Adobe Symbol encoding
-  (and in a few fonts, also Cyrillic characters).
+  more than European (not Greek) and CJK characters and the Adobe Symbol
+  encoding (and in a few fonts, also Cyrillic characters).
 
 #ifdef unix
   In a UTF-8 locale any Unicode character can be entered, perhaps as a
@@ -195,7 +199,8 @@
   whether the graphics device is able to display the character.  The
   widest range of characters is likely to be available in the
   \code{\link{X11}} device using cairo: see its help page for how
-  installing additional fonts can help.
+  installing additional fonts can help.  This can often be used to
+  display Greek \emph{letters} in bold or italic.
 
   In non-UTF-8 locales there is normally no support for symbols not in
   the languages for which the current encoding was intended.
@@ -204,13 +209,15 @@
   Any Unicode character can be entered into a text string \emph{via} a
   \samp{\\uxxxx} escape, or used by number in a call to
   \code{\link{points}}.  The \code{\link{windows}} family of devices can
-  display such characters if they are available in the font in use.  A good
-  way to both find out which characters are available in a font and to
-  determine the Unicode number is to use the \sQuote{Character Map}
-  accessory (usually on the \sQuote{Start} menu under
+  display such characters if they are available in the font in use.
+  This can often be used to display Greek \emph{letters} in bold or italic.
+ 
+  A good way to both find out which characters are available in a font
+  and to determine the Unicode number is to use the \sQuote{Character
+  Map} accessory (usually on the \sQuote{Start} menu under
   \sQuote{Accessories->System Tools}).  You can also copy-and-paste
-  characters from the \sQuote{Character Map} window to \code{Rgui} (but
-  not to \code{Rterm}).
+  characters from the \sQuote{Character Map} window to the \code{Rgui}
+  console (but not to \code{Rterm}).
 #endif
 }
 \references{
