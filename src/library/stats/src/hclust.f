@@ -64,26 +64,26 @@ C  Note NN and DISNN are the nearest neighbour and its distance
 C  TO THE RIGHT of I.
 C
       DO 30 I=1,N-1
-	 DMIN=INF
-	 DO 20 J=I+1,N
-	    IND=IOFFST(N,I,J)
-	    IF (DISS(IND).GE.DMIN) GOTO 20
-	       DMIN=DISS(IND)
-	       JM=J
+         DMIN=INF
+         DO 20 J=I+1,N
+            IND=IOFFST(N,I,J)
+            IF (DISS(IND).GE.DMIN) GOTO 20
+               DMIN=DISS(IND)
+               JM=J
  20         CONTINUE
-	 NN(I)=JM
-	 DISNN(I)=DMIN
+         NN(I)=JM
+         DISNN(I)=DMIN
  30      CONTINUE
 C
   400 CONTINUE
 C     Next, determine least diss. using list of NNs
       DMIN=INF
       DO 600 I=1,N-1
-	 IF (.NOT.FLAG(I)) GOTO 600
-	 IF (DISNN(I).GE.DMIN) GOTO 600
-	    DMIN=DISNN(I)
-	    IM=I
-	    JM=NN(I)
+         IF (.NOT.FLAG(I)) GOTO 600
+         IF (DISNN(I).GE.DMIN) GOTO 600
+            DMIN=DISNN(I)
+            IM=I
+            JM=NN(I)
   600    CONTINUE
       NCL=NCL-1
 C
@@ -100,67 +100,67 @@ C  Update dissimilarities from new cluster.
 C
       DMIN=INF
       DO 50 K=1,N
-	 IF (.NOT.FLAG(K)) GOTO 50
-	 IF (K.EQ.I2) GOTO 50
-	 IF (I2.LT.K) THEN
-			   IND1=IOFFST(N,I2,K)
-		      ELSE
-			   IND1=IOFFST(N,K,I2)
-	 ENDIF
-	 IF (J2.LT.K) THEN
-			   IND2=IOFFST(N,J2,K)
-		      ELSE
-			   IND2=IOFFST(N,K,J2)
-	 ENDIF
-	 IND3=IOFFST(N,I2,J2)
-	 D12=DISS(IND3)
+         IF (.NOT.FLAG(K)) GOTO 50
+         IF (K.EQ.I2) GOTO 50
+         IF (I2.LT.K) THEN
+                           IND1=IOFFST(N,I2,K)
+                      ELSE
+                           IND1=IOFFST(N,K,I2)
+         ENDIF
+         IF (J2.LT.K) THEN
+                           IND2=IOFFST(N,J2,K)
+                      ELSE
+                           IND2=IOFFST(N,K,J2)
+         ENDIF
+         IND3=IOFFST(N,I2,J2)
+         D12=DISS(IND3)
 C
 C  WARD'S MINIMUM VARIANCE METHOD - IOPT=1.
 C
-	 IF (IOPT.EQ.1) THEN
-	    DISS(IND1)=(MEMBR(I2)+MEMBR(K))*DISS(IND1)+
+         IF (IOPT.EQ.1) THEN
+            DISS(IND1)=(MEMBR(I2)+MEMBR(K))*DISS(IND1)+
      X                 (MEMBR(J2)+MEMBR(K))*DISS(IND2) - MEMBR(K)*D12
-	    DISS(IND1)=DISS(IND1) / (MEMBR(I2)+MEMBR(J2)+MEMBR(K))
-	 ENDIF
+            DISS(IND1)=DISS(IND1) / (MEMBR(I2)+MEMBR(J2)+MEMBR(K))
+         ENDIF
 C
 C  SINGLE LINK METHOD - IOPT=2.
 C
-	 IF (IOPT.EQ.2) THEN
-	    DISS(IND1)=MIN(DISS(IND1),DISS(IND2))
-	 ENDIF
+         IF (IOPT.EQ.2) THEN
+            DISS(IND1)=MIN(DISS(IND1),DISS(IND2))
+         ENDIF
 C
 C  COMPLETE LINK METHOD - IOPT=3.
 C
-	 IF (IOPT.EQ.3) THEN
-	    DISS(IND1)=MAX(DISS(IND1),DISS(IND2))
-	 ENDIF
+         IF (IOPT.EQ.3) THEN
+            DISS(IND1)=MAX(DISS(IND1),DISS(IND2))
+         ENDIF
 C
 C  AVERAGE LINK (OR GROUP AVERAGE) METHOD - IOPT=4.
 C
-	 IF (IOPT.EQ.4) THEN
-	    DISS(IND1)=(MEMBR(I2)*DISS(IND1)+MEMBR(J2)*DISS(IND2))/
+         IF (IOPT.EQ.4) THEN
+            DISS(IND1)=(MEMBR(I2)*DISS(IND1)+MEMBR(J2)*DISS(IND2))/
      X                 (MEMBR(I2)+MEMBR(J2))
-	 ENDIF
+         ENDIF
 C
 C  MCQUITTY'S METHOD - IOPT=5.
 C
-	 IF (IOPT.EQ.5) THEN
-	    DISS(IND1)=0.5D0*DISS(IND1)+0.5D0*DISS(IND2)
-	 ENDIF
+         IF (IOPT.EQ.5) THEN
+            DISS(IND1)=0.5D0*DISS(IND1)+0.5D0*DISS(IND2)
+         ENDIF
 C
 C  MEDIAN (GOWER'S) METHOD - IOPT=6.
 C
-	 IF (IOPT.EQ.6) THEN
-	    DISS(IND1)=0.5D0*DISS(IND1)+0.5D0*DISS(IND2)-0.25D0*D12
-	 ENDIF
+         IF (IOPT.EQ.6) THEN
+            DISS(IND1)=0.5D0*DISS(IND1)+0.5D0*DISS(IND2)-0.25D0*D12
+         ENDIF
 C
 C  CENTROID METHOD - IOPT=7.
 C
-	 IF (IOPT.EQ.7) THEN
-	    DISS(IND1)=(MEMBR(I2)*DISS(IND1)+MEMBR(J2)*DISS(IND2)-
+         IF (IOPT.EQ.7) THEN
+            DISS(IND1)=(MEMBR(I2)*DISS(IND1)+MEMBR(J2)*DISS(IND2)-
      X                  MEMBR(I2)*MEMBR(J2)*D12/(MEMBR(I2)+MEMBR(J2)))/
      X          (MEMBR(I2)+MEMBR(J2))
-	    ENDIF
+            ENDIF
 C
  50      CONTINUE
       MEMBR(I2)=MEMBR(I2)+MEMBR(J2)
@@ -168,18 +168,18 @@ C
 C  Update list of NNs
 C
       DO 900 I=1,N-1
-	 IF (.NOT.FLAG(I)) GOTO 900
+         IF (.NOT.FLAG(I)) GOTO 900
 C        (Redetermine NN of I:)
-	 DMIN=INF
-	 DO 870 J=I+1,N
-	    IF (.NOT.FLAG(J)) GOTO 870
-	    IND=IOFFST(N,I,J)
-	    IF (DISS(IND).GE.DMIN) GOTO 870
-	       DMIN=DISS(IND)
-	       JJ=J
+         DMIN=INF
+         DO 870 J=I+1,N
+            IF (.NOT.FLAG(J)) GOTO 870
+            IND=IOFFST(N,I,J)
+            IF (DISS(IND).GE.DMIN) GOTO 870
+               DMIN=DISS(IND)
+               JJ=J
   870       CONTINUE
-	 NN(I)=JJ
-	 DISNN(I)=DMIN
+         NN(I)=JJ
+         DISNN(I)=DMIN
   900    CONTINUE
 C
 C  Repeat previous steps until N-1 agglomerations carried out.
@@ -233,33 +233,33 @@ C     I coded clusters as lowest seq. no. of constituents; S's `hclust' codes
 C     singletons as -ve numbers, and non-singletons with their seq. nos.
 C
       DO 912 I=1,N
-	 IIA(I)=IA(I)
-	 IIB(I)=IB(I)
+         IIA(I)=IA(I)
+         IIB(I)=IB(I)
   912 CONTINUE
       DO 915 I=1,N-2
 C        In the following, smallest (+ve or -ve) seq. no. wanted
-	 K=MIN(IA(I),IB(I))
-	 DO 913 J=I+1, N-1
-	    IF(IA(J).EQ.K) IIA(J)=-I
-	    IF(IB(J).EQ.K) IIB(J)=-I
+         K=MIN(IA(I),IB(I))
+         DO 913 J=I+1, N-1
+            IF(IA(J).EQ.K) IIA(J)=-I
+            IF(IB(J).EQ.K) IIB(J)=-I
   913    CONTINUE
   915 CONTINUE
       DO 916 I=1,N-1
-	 IIA(I)=-IIA(I)
-	 IIB(I)=-IIB(I)
+         IIA(I)=-IIA(I)
+         IIB(I)=-IIB(I)
   916 CONTINUE
       DO 917 I=1,N-1
-	 IF (IIA(I).GT.0.AND.IIB(I).LT.0) THEN
-	    K = IIA(I)
-	    IIA(I) = IIB(I)
-	    IIB(I) = K
-	 ENDIF
-	 IF (IIA(I).GT.0.AND.IIB(I).GT.0) THEN
-	    K1 = MIN(IIA(I),IIB(I))
-	    K2 = MAX(IIA(I),IIB(I))
-	    IIA(I) = K1
-	    IIB(I) = K2
-	 ENDIF
+         IF (IIA(I).GT.0.AND.IIB(I).LT.0) THEN
+            K = IIA(I)
+            IIA(I) = IIB(I)
+            IIB(I) = K
+         ENDIF
+         IF (IIA(I).GT.0.AND.IIB(I).GT.0) THEN
+            K1 = MIN(IIA(I),IIB(I))
+            K2 = MAX(IIA(I),IIB(I))
+            IIA(I) = K1
+            IIB(I) = K2
+         ENDIF
   917 CONTINUE
 C
 C
@@ -269,22 +269,22 @@ C
       IORDER(2) =IIB(N-1)
       LOC=2
       DO 175 I=N-2,1,-1
-	DO 169 J=1,LOC
-	  IF(IORDER(J).EQ.I) THEN
+        DO 169 J=1,LOC
+          IF(IORDER(J).EQ.I) THEN
 C           REPLACE IORDER(J) WITH IIA(I) AND IIB(I)
-	    IORDER(J)=IIA(I)
-	    IF (J.EQ.LOC) THEN
-		LOC=LOC+1
-		IORDER(LOC)=IIB(I)
-		GOTO 171
-	    ENDIF
-	    LOC=LOC+1
-	    DO 95 K=LOC,J+2,-1
-	       IORDER(K)=IORDER(K-1)
+            IORDER(J)=IIA(I)
+            IF (J.EQ.LOC) THEN
+                LOC=LOC+1
+                IORDER(LOC)=IIB(I)
+                GOTO 171
+            ENDIF
+            LOC=LOC+1
+            DO 95 K=LOC,J+2,-1
+               IORDER(K)=IORDER(K-1)
   95        CONTINUE
-	    IORDER(J+1)=IIB(I)
-	    GOTO 171
-	  ENDIF
+            IORDER(J+1)=IIB(I)
+            GOTO 171
+          ENDIF
  169    CONTINUE
 C       SHOULD NEVER REACH HERE
  171    CONTINUE
@@ -292,7 +292,7 @@ C       SHOULD NEVER REACH HERE
 C
 C
       DO 181 I=1,N
-	 IORDER(I) = -IORDER(I)
+         IORDER(I) = -IORDER(I)
  181  CONTINUE
 C
 C

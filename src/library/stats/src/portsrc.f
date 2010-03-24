@@ -181,12 +181,12 @@ C
       IF (IV(1) .EQ. 0) CALL DIVSET(1, IV, LIV, LV, V)
       IV1 = IV(1)
       IF (IV1 .GT. 2) GO TO 10
-	 NN = N2 - N1 + 1
-	 IV(RESTOR) = 0
-	 I = IV1 + 4
-	 IF (IV(TOOBIG) .EQ. 0) GO TO (150, 130, 150, 120, 120, 150), I
-	 IF (I .NE. 5) IV(1) = 2
-	 GO TO 40
+         NN = N2 - N1 + 1
+         IV(RESTOR) = 0
+         I = IV1 + 4
+         IF (IV(TOOBIG) .EQ. 0) GO TO (150, 130, 150, 120, 120, 150), I
+         IF (I .NE. 5) IV(1) = 2
+         GO TO 40
 C
 C  ***  FRESH START OR RESTART -- CHECK INPUT INTEGERS  ***
 C
@@ -265,9 +265,9 @@ C
       IF (N1 .NE. 1) GO TO 90
       IF (IV(MODE) .LT. 0) GO TO 100
       IF (IV(NF1) .EQ. IV(NFGCAL)) GO TO 70
-	 IF (IV(NF0) .NE. IV(NFGCAL)) GO TO 90
-	    CALL DV7CPY(N, R, RD)
-	    GO TO 80
+         IF (IV(NF0) .NE. IV(NFGCAL)) GO TO 90
+            CALL DV7CPY(N, R, RD)
+            GO TO 80
  70   CALL DV7CPY(N, RD, R)
  80   CALL DQ7APL(ND, N, P, DR, RD, 0)
       CALL DL7VML(P, V(Y1), V(RMAT1), RD)
@@ -293,13 +293,13 @@ C
  130  Y1 = IV(Y)
       YI = Y1
       DO 140 L = 1, P
-	 V(YI) = V(YI) + DD7TPR(NN, DR(1,L), R)
-	 YI = YI + 1
+         V(YI) = V(YI) + DD7TPR(NN, DR(1,L), R)
+         YI = YI + 1
  140     CONTINUE
       IF (N2 .LT. N) GO TO 270
-	 IV(1) = 2
-	 IF (N1 .GT. 1) IV(1) = -3
-	 GO TO 260
+         IV(1) = 2
+         IF (N1 .GT. 1) IV(1) = -3
+         GO TO 260
 C
 C  ***  COMPUTE GRADIENT INFORMATION  ***
 C
@@ -314,17 +314,17 @@ C  ***  COMPUTE GRADIENT ONLY (FOR USE IN COVARIANCE COMPUTATION)  ***
 C
       GI = G1
       DO 160 L = 1, P
-	 V(GI) = V(GI) + DD7TPR(NN, R, DR(1,L))
-	 GI = GI + 1
+         V(GI) = V(GI) + DD7TPR(NN, R, DR(1,L))
+         GI = GI + 1
  160     CONTINUE
       GO TO 190
 C
 C  *** COMPUTE INITIAL FUNCTION VALUE WHEN ND .LT. N ***
 C
  170  IF (N .LE. ND) GO TO 180
-	 T = DV2NRM(NN, R)
-	 IF (T .GT. V(RLIMIT)) GO TO 200
-	 V(F) = V(F)  +  HALF * T**2
+         T = DV2NRM(NN, R)
+         IF (T .GT. V(RLIMIT)) GO TO 200
+         V(F) = V(F)  +  HALF * T**2
 C
 C  ***  UPDATE D IF DESIRED  ***
 C
@@ -392,8 +392,8 @@ C
       IV(NGCOV) = IV(NGCOV) + 1
       IV(CNVCOD) = IV(1)
       IF (I .LT. 2) GO TO 230
-	 L = IABS(IV(H))
-	 CALL DV7SCP(LH, V(L), ZERO)
+         L = IABS(IV(H))
+         CALL DV7SCP(LH, V(L), ZERO)
  230  IV(NFCOV) = IV(NFCOV) + 1
       IV(NFCALL) = IV(NFCALL) + 1
       IV(NFGCAL) = IV(NFCALL)
@@ -463,21 +463,21 @@ C
       NP1 = N + 1
       I0 = N*(N+1)/2
       DO 30 II = 1, N
-	 I = NP1 - II
-	 IP1 = I + 1
-	 I0 = I0 - I
-	 J0 = I*(I+1)/2
-	 DO 20 JJ = 1, I
-	      J = IP1 - JJ
-	      J0 = J0 - J
-	      T = 0.0D0
-	      DO 10 K = 1, J
-		   IK = I0 + K
-		   JK = J0 + K
-		   T = T + L(IK)*L(JK)
+         I = NP1 - II
+         IP1 = I + 1
+         I0 = I0 - I
+         J0 = I*(I+1)/2
+         DO 20 JJ = 1, I
+              J = IP1 - JJ
+              J0 = J0 - J
+              T = 0.0D0
+              DO 10 K = 1, J
+                   IK = I0 + K
+                   JK = J0 + K
+                   T = T + L(IK)*L(JK)
  10                CONTINUE
-	      IJ = I0 + J
-	      A(IJ) = T
+              IJ = I0 + J
+              A(IJ) = T
  20           CONTINUE
  30      CONTINUE
       RETURN
@@ -627,16 +627,16 @@ C
       IF (IV(1) .EQ. 0) CALL DIVSET(2, IV, LIV, LV, V)
       IF (IV(1) .LT. 12) GO TO 10
       IF (IV(1) .GT. 13) GO TO 10
-	 IV(VNEED) = IV(VNEED) + N*(N+27)/2 + 7
-	 IV(IVNEED) = IV(IVNEED) + 3*N
+         IV(VNEED) = IV(VNEED) + N*(N+27)/2 + 7
+         IV(IVNEED) = IV(IVNEED) + 3*N
  10   CALL DPARCK(2, D, IV, LIV, LV, N, V)
       I = IV(1) - 2
       IF (I .GT. 12) GO TO 999
       NN1O2 = N * (N + 1) / 2
       IF (LH .GE. NN1O2) GO TO (250,250,250,250,250,250,190,150,190,
      1                          20,20,30), I
-	 IV(1) = 81
-	 GO TO 440
+         IV(1) = 81
+         GO TO 440
 C
 C  ***  STORAGE ALLOCATION  ***
 C
@@ -648,8 +648,8 @@ C
       IV(NEXTV) = IV(W) + 4*N + 7
       IV(NEXTIV) = IV(PERM) + 3*N
       IF (IV(1) .NE. 13) GO TO 30
-	 IV(1) = 14
-	 GO TO 999
+         IV(1) = 14
+         GO TO 999
 C
 C  ***  INITIALIZATION  ***
 C
@@ -676,9 +676,9 @@ C  ***  CHECK CONSISTENCY OF B AND INITIALIZE IP ARRAY  ***
 C
       IPI = IV(PERM)
       DO 40 I = 1, N
-	 IV(IPI) = I
-	 IPI = IPI + 1
-	 IF (B(1,I) .GT. B(2,I)) GO TO 420
+         IV(IPI) = I
+         IPI = IPI + 1
+         IF (B(1,I) .GT. B(2,I)) GO TO 420
  40      CONTINUE
 C
 C  ***  GET INITIAL FUNCTION VALUE  ***
@@ -691,14 +691,14 @@ C
       V(F0) = FX
       IV(1) = 2
       IF (IV(TOOBIG) .EQ. 0) GO TO 999
-	 IV(1) = 63
-	 GO TO 440
+         IV(1) = 63
+         GO TO 440
 C
 C  ***  MAKE SURE GRADIENT COULD BE COMPUTED  ***
 C
  60   IF (IV(TOOBIG) .EQ. 0) GO TO 70
-	 IV(1) = 65
-	 GO TO 440
+         IV(1) = 65
+         GO TO 440
 C
 C  ***  UPDATE THE SCALE VECTOR D  ***
 C
@@ -707,9 +707,9 @@ C
       K = DG1
       J = 0
       DO 80 I = 1, N
-	 J = J + I
-	 V(K) = H(J)
-	 K = K + 1
+         J = J + I
+         V(K) = H(J)
+         K = K + 1
  80      CONTINUE
       CALL DD7DUP(D, V(DG1), IV, LIV, LV, N, V)
 C
@@ -722,10 +722,10 @@ C  ***  COMPUTE SCALED HESSIAN  ***
 C
       K = 1
       DO 110 I = 1, N
-	 T = ONE / D(I)
-	 DO 100 J = 1, I
-	      H(K) = T * H(K) / D(J)
-	      K = K + 1
+         T = ONE / D(I)
+         DO 100 J = 1, I
+              H(K) = T * H(K) / D(J)
+              K = K + 1
  100          CONTINUE
  110     CONTINUE
 C
@@ -738,19 +738,19 @@ C     *** INVERT OLD PERMUTATION ARRAY ***
       CALL I7PNVR(N, IV(IPN), IV(IPI))
       K = IV(NC)
       DO 130 I = 1, N
-	 IF (B(1,I) .GE. B(2,I)) GO TO 120
-	 XI = X(I)
-	 GI = G(I)
-	 IF (XI .LE. B(1,I) .AND. GI .GT. ZERO) GO TO 120
-	 IF (XI .GE. B(2,I) .AND. GI .LT. ZERO) GO TO 120
-	    IV(IPI) = I
-	    IPI = IPI + 1
-	    J = IPIV2 + I
+         IF (B(1,I) .GE. B(2,I)) GO TO 120
+         XI = X(I)
+         GI = G(I)
+         IF (XI .LE. B(1,I) .AND. GI .GT. ZERO) GO TO 120
+         IF (XI .GE. B(2,I) .AND. GI .LT. ZERO) GO TO 120
+            IV(IPI) = I
+            IPI = IPI + 1
+            J = IPIV2 + I
 C           *** DISALLOW CONVERGENCE IF X(I) HAS JUST BEEN FREED ***
-	    IF (IV(J) .GT. K) IV(CNVCOD) = 0
-	    GO TO 130
+            IF (IV(J) .GT. K) IV(CNVCOD) = 0
+            GO TO 130
  120     IPN = IPN - 1
-	 IV(IPN) = I
+         IV(IPN) = I
  130     CONTINUE
       IV(NC) = IPN - IV(PERM)
 C
@@ -780,8 +780,8 @@ C
  140  CALL DITSUM(D, G, IV, LIV, LV, N, V, X)
  150  K = IV(NITER)
       IF (K .LT. IV(MXITER)) GO TO 160
-	 IV(1) = 10
-	 GO TO 440
+         IV(1) = 10
+         GO TO 440
 C
  160  IV(NITER) = K + 1
 C
@@ -802,8 +802,8 @@ C
       STEP1 = IV(STEP)
       K = STEP1
       DO 170 I = 1, N
-	 V(K) = D(I) * V(K)
-	 K = K + 1
+         V(K) = D(I) * V(K)
+         K = K + 1
  170     CONTINUE
       T = V(RADFAC) * DV2NRM(N, V(STEP1))
       IF (V(RADFAC) .LT. ONE .OR. T .GT. V(RADIUS)) V(RADIUS) = T
@@ -811,25 +811,25 @@ C
 C  ***  CHECK STOPX AND FUNCTION EVALUATION LIMIT  ***
 C
  180  IF (.NOT. STOPX(DUMMY)) GO TO 200
-	 IV(1) = 11
-	 GO TO 210
+         IV(1) = 11
+         GO TO 210
 C
 C     ***  COME HERE WHEN RESTARTING AFTER FUNC. EVAL. LIMIT OR STOPX.
 C
  190  IF (V(F) .GE. V(F0)) GO TO 200
-	 V(RADFAC) = ONE
-	 K = IV(NITER)
-	 GO TO 160
+         V(RADFAC) = ONE
+         K = IV(NITER)
+         GO TO 160
 C
  200  IF (IV(NFCALL) .LT. IV(MXFCAL)) GO TO 220
-	 IV(1) = 9
+         IV(1) = 9
  210     IF (V(F) .GE. V(F0)) GO TO 440
 C
 C        ***  IN CASE OF STOPX OR FUNCTION EVALUATION LIMIT WITH
 C        ***  IMPROVED V(F), EVALUATE THE GRADIENT AT X.
 C
-	      IV(CNVCOD) = IV(1)
-	      GO TO 370
+              IV(CNVCOD) = IV(1)
+              GO TO 370
 C
 C. . . . . . . . . . . . .  COMPUTE CANDIDATE STEP  . . . . . . . . . .
 C
@@ -847,9 +847,9 @@ C
      1            V(L), LV, N, IV(N0), IV(NC), V(STEP1), V(TD1), V(TG1),
      2            V, V(W1), V(X11), V(X01))
       IF (IV(IRC) .NE. 6) GO TO 230
-	 IF (IV(RESTOR) .NE. 2) GO TO 250
-	 RSTRST = 2
-	 GO TO 260
+         IF (IV(RESTOR) .NE. 2) GO TO 250
+         RSTRST = 2
+         GO TO 260
 C
 C  ***  CHECK WHETHER EVALUATING F(X0 + STEP) LOOKS WORTHWHILE  ***
 C
@@ -858,9 +858,9 @@ C
       IF (IV(IRC) .NE. 5) GO TO 240
       IF (V(RADFAC) .LE. ONE) GO TO 240
       IF (V(PREDUC) .GT. ONEP2 * V(FDIF)) GO TO 240
-	 IF (IV(RESTOR) .NE. 2) GO TO 250
-	 RSTRST = 0
-	 GO TO 260
+         IF (IV(RESTOR) .NE. 2) GO TO 250
+         RSTRST = 0
+         GO TO 260
 C
 C  ***  COMPUTE F(X0 + STEP)  ***
 C
@@ -884,9 +884,9 @@ C
  280   CALL DV7CPY(N, V(LSTGST), X)
        GO TO 300
  290     CALL DV7CPY(N, X, V(LSTGST))
-	 CALL DV2AXY(N, V(STEP1), NEGONE, V(X01), X)
-	 V(RELDX) = DRLDST(N, D, X, V(X01))
-	 IV(RESTOR) = RSTRST
+         CALL DV2AXY(N, V(STEP1), NEGONE, V(X01), X)
+         V(RELDX) = DRLDST(N, D, X, V(X01))
+         IV(RESTOR) = RSTRST
 C
  300  K = IV(IRC)
       GO TO (310,340,340,340,310,320,330,330,330,330,330,330,410,380), K
@@ -894,7 +894,7 @@ C
 C     ***  RECOMPUTE STEP WITH NEW RADIUS  ***
 C
  310     V(RADIUS) = V(RADFAC) * V(DSTNRM)
-	 GO TO 180
+         GO TO 180
 C
 C  ***  COMPUTE STEP OF LENGTH V(LMAXS) FOR SINGULAR CONVERGENCE TEST.
 C
@@ -905,38 +905,38 @@ C  ***  CONVERGENCE OR FALSE CONVERGENCE  ***
 C
  330  IV(CNVCOD) = K - 4
       IF (V(F) .GE. V(F0)) GO TO 430
-	 IF (IV(XIRC) .EQ. 14) GO TO 430
-	      IV(XIRC) = 14
+         IF (IV(XIRC) .EQ. 14) GO TO 430
+              IV(XIRC) = 14
 C
 C. . . . . . . . . . . .  PROCESS ACCEPTABLE STEP  . . . . . . . . . . .
 C
  340  IF (IV(IRC) .NE. 3) GO TO 370
-	 TEMP1 = LSTGST
+         TEMP1 = LSTGST
 C
 C     ***  PREPARE FOR GRADIENT TESTS  ***
 C     ***  SET  TEMP1 = HESSIAN * STEP + G(X0)
 C     ***             = DIAG(D) * (H * STEP + G(X0))
 C
-	 K = TEMP1
-	 STEP0 = STEP1 - 1
-	 IPI = IV(PERM)
-	 DO 350 I = 1, N
-	      J = IV(IPI)
-	      IPI = IPI + 1
-	      STEP1 = STEP0 + J
-	      V(K) = D(J) * V(STEP1)
-	      K = K + 1
+         K = TEMP1
+         STEP0 = STEP1 - 1
+         IPI = IV(PERM)
+         DO 350 I = 1, N
+              J = IV(IPI)
+              IPI = IPI + 1
+              STEP1 = STEP0 + J
+              V(K) = D(J) * V(STEP1)
+              K = K + 1
  350          CONTINUE
 C        USE X0 VECTOR AS TEMPORARY.
-	 CALL DS7LVM(N, V(X01), H, V(TEMP1))
-	 TEMP0 = TEMP1 - 1
-	 IPI = IV(PERM)
-	 DO 360 I = 1, N
-	      J = IV(IPI)
-	      IPI = IPI + 1
-	      TEMP1 = TEMP0 + J
-	      V(TEMP1) = D(J) * V(X01) + G(J)
-	      X01 = X01 + 1
+         CALL DS7LVM(N, V(X01), H, V(TEMP1))
+         TEMP0 = TEMP1 - 1
+         IPI = IV(PERM)
+         DO 360 I = 1, N
+              J = IV(IPI)
+              IPI = IPI + 1
+              TEMP1 = TEMP0 + J
+              V(TEMP1) = D(J) * V(X01) + G(J)
+              X01 = X01 + 1
  360          CONTINUE
 C
 C  ***  COMPUTE GRADIENT AND HESSIAN  ***
@@ -959,17 +959,17 @@ C     ***  SET  TEMP1 = DIAG(D)**-1 * (HESSIAN*STEP + (G(X0)-G(X)))  ***
 C
       K = TEMP1
       DO 390 I = 1, N
-	 V(K) = (V(K) - G(I)) / D(I)
-	 K = K + 1
+         V(K) = (V(K) - G(I)) / D(I)
+         K = K + 1
  390     CONTINUE
 C
 C     ***  DO GRADIENT TESTS  ***
 C
       IF (DV2NRM(N, V(TEMP1)) .LE. V(DGNORM) * V(TUNER4)) GO TO 400
-	   IF (DD7TPR(N, G, V(STEP1))
+           IF (DD7TPR(N, G, V(STEP1))
      1               .GE. V(GTSTEP) * V(TUNER5))  GO TO 140
  400            V(RADFAC) = V(INCFAC)
-		GO TO 140
+                GO TO 140
 C
 C. . . . . . . . . . . . . .  MISC. DETAILS  . . . . . . . . . . . . . .
 C
@@ -993,8 +993,8 @@ C
 C  ***  PROJECT X INTO FEASIBLE REGION (PRIOR TO COMPUTING F OR G)  ***
 C
  450  DO 460 I = 1, N
-	 IF (X(I) .LT. B(1,I)) X(I) = B(1,I)
-	 IF (X(I) .GT. B(2,I)) X(I) = B(2,I)
+         IF (X(I) .LT. B(1,I)) X(I) = B(1,I)
+         IF (X(I) .GT. B(2,I)) X(I) = B(2,I)
  460     CONTINUE
 C
  999  RETURN
@@ -1146,8 +1146,8 @@ C
       NN1O2 = N * (N + 1) / 2
       IF (LH .GE. NN1O2) GO TO (220,220,220,220,220,220,160,120,160,
      1                          10,10,20), I
-	 IV(1) = 66
-	 GO TO 400
+         IV(1) = 66
+         GO TO 400
 C
 C  ***  STORAGE ALLOCATION  ***
 C
@@ -1159,8 +1159,8 @@ C
       IV(W) = IV(DG) + N
       IV(NEXTV) = IV(W) + 4*N + 7
       IF (IV(1) .NE. 13) GO TO 20
-	 IV(1) = 14
-	 GO TO 999
+         IV(1) = 14
+         GO TO 999
 C
 C  ***  INITIALIZATION  ***
 C
@@ -1189,14 +1189,14 @@ C
       V(F0) = FX
       IV(1) = 2
       IF (IV(TOOBIG) .EQ. 0) GO TO 999
-	 IV(1) = 63
-	 GO TO 400
+         IV(1) = 63
+         GO TO 400
 C
 C  ***  MAKE SURE GRADIENT COULD BE COMPUTED  ***
 C
  40   IF (IV(TOOBIG) .EQ. 0) GO TO 50
-	 IV(1) = 65
-	 GO TO 400
+         IV(1) = 65
+         GO TO 400
 C
 C  ***  UPDATE THE SCALE VECTOR D  ***
 C
@@ -1205,9 +1205,9 @@ C
       K = DG1
       J = 0
       DO 60 I = 1, N
-	 J = J + I
-	 V(K) = H(J)
-	 K = K + 1
+         J = J + I
+         V(K) = H(J)
+         K = K + 1
  60      CONTINUE
       CALL DD7DUP(D, V(DG1), IV, LIV, LV, N, V)
 C
@@ -1216,8 +1216,8 @@ C
  70   DG1 = IV(DG)
       K = DG1
       DO 80 I = 1, N
-	 V(K) = G(I) / D(I)
-	 K = K + 1
+         V(K) = G(I) / D(I)
+         K = K + 1
  80      CONTINUE
       V(DGNORM) = DV2NRM(N, V(DG1))
 C
@@ -1225,10 +1225,10 @@ C  ***  COMPUTE SCALED HESSIAN  ***
 C
       K = 1
       DO 100 I = 1, N
-	 T = ONE / D(I)
-	 DO 90 J = 1, I
-	      H(K) = T * H(K) / D(J)
-	      K = K + 1
+         T = ONE / D(I)
+         DO 90 J = 1, I
+              H(K) = T * H(K) / D(J)
+              K = K + 1
  90           CONTINUE
  100     CONTINUE
 C
@@ -1250,8 +1250,8 @@ C
  110  CALL DITSUM(D, G, IV, LIV, LV, N, V, X)
  120  K = IV(NITER)
       IF (K .LT. IV(MXITER)) GO TO 130
-	 IV(1) = 10
-	 GO TO 400
+         IV(1) = 10
+         GO TO 400
 C
  130  IV(NITER) = K + 1
 C
@@ -1273,33 +1273,33 @@ C
       STEP1 = IV(STEP)
       K = STEP1
       DO 140 I = 1, N
-	 V(K) = D(I) * V(K)
-	 K = K + 1
+         V(K) = D(I) * V(K)
+         K = K + 1
  140     CONTINUE
       V(RADIUS) = V(RADFAC) * DV2NRM(N, V(STEP1))
 C
 C  ***  CHECK STOPX AND FUNCTION EVALUATION LIMIT  ***
 C
  150  IF (.NOT. STOPX(DUMMY)) GO TO 170
-	 IV(1) = 11
-	 GO TO 180
+         IV(1) = 11
+         GO TO 180
 C
 C     ***  COME HERE WHEN RESTARTING AFTER FUNC. EVAL. LIMIT OR STOPX.
 C
  160  IF (V(F) .GE. V(F0)) GO TO 170
-	 V(RADFAC) = ONE
-	 K = IV(NITER)
-	 GO TO 130
+         V(RADFAC) = ONE
+         K = IV(NITER)
+         GO TO 130
 C
  170  IF (IV(NFCALL) .LT. IV(MXFCAL)) GO TO 190
-	 IV(1) = 9
+         IV(1) = 9
  180     IF (V(F) .GE. V(F0)) GO TO 400
 C
 C        ***  IN CASE OF STOPX OR FUNCTION EVALUATION LIMIT WITH
 C        ***  IMPROVED V(F), EVALUATE THE GRADIENT AT X.
 C
-	      IV(CNVCOD) = IV(1)
-	      GO TO 340
+              IV(CNVCOD) = IV(1)
+              GO TO 340
 C
 C. . . . . . . . . . . . .  COMPUTE CANDIDATE STEP  . . . . . . . . . .
 C
@@ -1309,9 +1309,9 @@ C
       W1 = IV(W)
       CALL DG7QTS(D, V(DG1), H, IV(KAGQT), V(L), N, V(STEP1), V, V(W1))
       IF (IV(IRC) .NE. 6) GO TO 200
-	 IF (IV(RESTOR) .NE. 2) GO TO 220
-	 RSTRST = 2
-	 GO TO 230
+         IF (IV(RESTOR) .NE. 2) GO TO 220
+         RSTRST = 2
+         GO TO 230
 C
 C  ***  CHECK WHETHER EVALUATING F(X0 + STEP) LOOKS WORTHWHILE  ***
 C
@@ -1320,9 +1320,9 @@ C
       IF (IV(IRC) .NE. 5) GO TO 210
       IF (V(RADFAC) .LE. ONE) GO TO 210
       IF (V(PREDUC) .GT. ONEP2 * V(FDIF)) GO TO 210
-	 IF (IV(RESTOR) .NE. 2) GO TO 220
-	 RSTRST = 0
-	 GO TO 230
+         IF (IV(RESTOR) .NE. 2) GO TO 220
+         RSTRST = 0
+         GO TO 230
 C
 C  ***  COMPUTE F(X0 + STEP)  ***
 C
@@ -1348,9 +1348,9 @@ C
  250   CALL DV7CPY(N, V(LSTGST), V(STEP1))
        GO TO 270
  260     CALL DV7CPY(N, V(STEP1), V(LSTGST))
-	 CALL DV2AXY(N, X, ONE, V(STEP1), V(X01))
-	 V(RELDX) = DRLDST(N, D, X, V(X01))
-	 IV(RESTOR) = RSTRST
+         CALL DV2AXY(N, X, ONE, V(STEP1), V(X01))
+         V(RELDX) = DRLDST(N, D, X, V(X01))
+         IV(RESTOR) = RSTRST
 C
  270  K = IV(IRC)
       GO TO (280,310,310,310,280,290,300,300,300,300,300,300,380,350), K
@@ -1358,7 +1358,7 @@ C
 C     ***  RECOMPUTE STEP WITH NEW RADIUS  ***
 C
  280     V(RADIUS) = V(RADFAC) * V(DSTNRM)
-	 GO TO 150
+         GO TO 150
 C
 C  ***  COMPUTE STEP OF LENGTH V(LMAXS) FOR SINGULAR CONVERGENCE TEST.
 C
@@ -1369,29 +1369,29 @@ C  ***  CONVERGENCE OR FALSE CONVERGENCE  ***
 C
  300  IV(CNVCOD) = K - 4
       IF (V(F) .GE. V(F0)) GO TO 390
-	 IF (IV(XIRC) .EQ. 14) GO TO 390
-	      IV(XIRC) = 14
+         IF (IV(XIRC) .EQ. 14) GO TO 390
+              IV(XIRC) = 14
 C
 C. . . . . . . . . . . .  PROCESS ACCEPTABLE STEP  . . . . . . . . . . .
 C
  310  IF (IV(IRC) .NE. 3) GO TO 340
-	 TEMP1 = LSTGST
+         TEMP1 = LSTGST
 C
 C     ***  PREPARE FOR GRADIENT TESTS  ***
 C     ***  SET  TEMP1 = HESSIAN * STEP + G(X0)
 C     ***             = DIAG(D) * (H * STEP + G(X0))
 C
 C        USE X0 VECTOR AS TEMPORARY.
-	 K = X01
-	 DO 320 I = 1, N
-	      V(K) = D(I) * V(STEP1)
-	      K = K + 1
-	      STEP1 = STEP1 + 1
+         K = X01
+         DO 320 I = 1, N
+              V(K) = D(I) * V(STEP1)
+              K = K + 1
+              STEP1 = STEP1 + 1
  320          CONTINUE
-	 CALL DS7LVM(N, V(TEMP1), H, V(X01))
-	 DO 330 I = 1, N
-	      V(TEMP1) = D(I) * V(TEMP1) + G(I)
-	      TEMP1 = TEMP1 + 1
+         CALL DS7LVM(N, V(TEMP1), H, V(X01))
+         DO 330 I = 1, N
+              V(TEMP1) = D(I) * V(TEMP1) + G(I)
+              TEMP1 = TEMP1 + 1
  330          CONTINUE
 C
 C  ***  COMPUTE GRADIENT AND HESSIAN  ***
@@ -1413,17 +1413,17 @@ C     ***  SET  TEMP1 = DIAG(D)**-1 * (HESSIAN*STEP + (G(X0)-G(X)))  ***
 C
       K = TEMP1
       DO 360 I = 1, N
-	 V(K) = (V(K) - G(I)) / D(I)
-	 K = K + 1
+         V(K) = (V(K) - G(I)) / D(I)
+         K = K + 1
  360     CONTINUE
 C
 C     ***  DO GRADIENT TESTS  ***
 C
       IF (DV2NRM(N, V(TEMP1)) .LE. V(DGNORM) * V(TUNER4)) GO TO 370
-	   IF (DD7TPR(N, G, V(STEP1))
+           IF (DD7TPR(N, G, V(STEP1))
      1               .GE. V(GTSTEP) * V(TUNER5))  GO TO 110
  370            V(RADFAC) = V(INCFAC)
-		GO TO 110
+                GO TO 110
 C
 C. . . . . . . . . . . . . .  MISC. DETAILS  . . . . . . . . . . . . . .
 C
@@ -1471,29 +1471,29 @@ C
       PM1 = P - 1
       J1 = K1 + KM1
       DO 50 J = K, PM1
-	 JM1 = J - 1
-	 JP1 = J + 1
-	 IF (JM1 .GT. 0) CALL DV7CPY(JM1, R(K1+1), R(J1+2))
-	 J1 = J1 + JP1
-	 K1 = K1 + J
-	 A = R(J1)
-	 B = R(J1+1)
-	 IF (B .NE. ZERO) GO TO 10
-	      R(K1) = A
-	      X = ZERO
-	      Z = ZERO
-	      GO TO 40
+         JM1 = J - 1
+         JP1 = J + 1
+         IF (JM1 .GT. 0) CALL DV7CPY(JM1, R(K1+1), R(J1+2))
+         J1 = J1 + JP1
+         K1 = K1 + J
+         A = R(J1)
+         B = R(J1+1)
+         IF (B .NE. ZERO) GO TO 10
+              R(K1) = A
+              X = ZERO
+              Z = ZERO
+              GO TO 40
  10      R(K1) = DH2RFG(A, B, X, Y, Z)
-	 IF (J .EQ. PM1) GO TO 30
-	 I1 = J1
-	 DO 20 I = JP1, PM1
-	      I1 = I1 + I
-	      CALL DH2RFA(1, R(I1), R(I1+1), X, Y, Z)
+         IF (J .EQ. PM1) GO TO 30
+         I1 = J1
+         DO 20 I = JP1, PM1
+              I1 = I1 + I
+              CALL DH2RFA(1, R(I1), R(I1+1), X, Y, Z)
  20           CONTINUE
  30      IF (HAVQTR) CALL DH2RFA(1, QTR(J), QTR(JP1), X, Y, Z)
  40      T = X * WJ
-	 W(J) = WJ + T
-	 WJ = T * Z
+         W(J) = WJ + T
+         WJ = T * Z
  50      CONTINUE
       W(P) = WJ
       CALL DV7CPY(P, R(K1+1), W)
@@ -1605,9 +1605,9 @@ C
       J = IV(LMAT)
       K = G1 - N
       DO 40 I = 1, N
-	 V(K) = DD7TPR(I, V(J), V(J))
-	 K = K + 1
-	 J = J + I
+         V(K) = DD7TPR(I, V(J), V(J))
+         K = K + 1
+         J = J + I
  40      CONTINUE
 C     ***  UNDO INCREMENT OF IV(NGCALL) DONE BY DRMNG  ***
       IV(NGCALL) = IV(NGCALL) - 1
@@ -1626,8 +1626,8 @@ C
       W = ALPHA - 6
       CALL DS7GRD(V(ALPHA), D, V(ETA0), FX, V(G1), IV(SGIRC), N, V(W),X)
       IF (IV(SGIRC) .EQ. 0) GO TO 10
-	 IV(NGCALL) = IV(NGCALL) + 1
-	 GO TO 999
+         IV(NGCALL) = IV(NGCALL) + 1
+         GO TO 999
 C
  70   IF (IV(1) .NE. 14) GO TO 999
 C
@@ -1656,14 +1656,14 @@ C
       NP1 = N + 1
       I0 = N*(N+1)/2
       DO 20 II = 1, N
-	 I = NP1 - II
-	 I0 = I0 - I
-	 T = ZERO
-	 DO 10 J = 1, I
-	      IJ = I0 + J
-	      T = T + L(IJ)*Y(J)
+         I = NP1 - II
+         I0 = I0 - I
+         T = ZERO
+         DO 10 J = 1, I
+              IJ = I0 + J
+              T = T + L(IJ)*Y(J)
  10           CONTINUE
-	 X(I) = T
+         X(I) = T
  20      CONTINUE
       RETURN
 C  ***  LAST CARD OF DL7VML FOLLOWS  ***
@@ -1919,8 +1919,8 @@ C
       I = IV(IRC)
       IF (I .GE. 1 .AND. I .LE. 12)
      1             GO TO (20,30,10,10,40,280,220,220,220,220,220,170), I
-	 IV(IRC) = 13
-	 GO TO 999
+         IV(IRC) = 13
+         GO TO 999
 C
 C  ***  INITIALIZE FOR NEW ITERATION  ***
 C
@@ -1928,9 +1928,9 @@ C
       IV(RADINC) = 0
       V(FLSTGD) = V(F0)
       IF (IV(TOOBIG) .EQ. 0) GO TO 110
-	 IV(STAGE) = -1
-	 IV(XIRC) = I
-	 GO TO 60
+         IV(STAGE) = -1
+         IV(XIRC) = I
+         GO TO 60
 C
 C  ***  STEP WAS RECOMPUTED WITH NEW MODEL OR SMALLER RADIUS  ***
 C  ***  FIRST DECIDE WHICH  ***
@@ -1938,9 +1938,9 @@ C
  20   IF (IV(MODEL) .NE. IV(MLSTGD)) GO TO 30
 C        ***  OLD MODEL RETAINED, SMALLER RADIUS TRIED  ***
 C        ***  DO NOT CONSIDER ANY MORE NEW MODELS THIS ITERATION  ***
-	 IV(STAGE) = IV(STGLIM)
-	 IV(RADINC) = -1
-	 GO TO 110
+         IV(STAGE) = IV(STGLIM)
+         IV(RADINC) = -1
+         GO TO 110
 C
 C  ***  A NEW MODEL IS BEING TRIED.  DECIDE WHETHER TO KEEP IT.  ***
 C
@@ -1953,13 +1953,13 @@ C
 C
 C        ***  STEP WAS RECOMPUTED BECAUSE IT WAS TOO BIG.  ***
 C
-	 IF (IV(TOOBIG) .NE. 0) GO TO 60
+         IF (IV(TOOBIG) .NE. 0) GO TO 60
 C
 C        ***  RESTORE IV(STAGE) AND PICK UP WHERE WE LEFT OFF.  ***
 C
-	 IV(STAGE) = -IV(STAGE)
-	 I = IV(XIRC)
-	 GO TO (20, 30, 110, 110, 70), I
+         IV(STAGE) = -IV(STAGE)
+         I = IV(XIRC)
+         GO TO (20, 30, 110, 110, 70), I
 C
  50   IF (IV(TOOBIG) .EQ. 0) GO TO 70
 C
@@ -1967,51 +1967,51 @@ C  ***  HANDLE OVERSIZE STEP  ***
 C
       IV(TOOBIG) = 0
       IF (IV(RADINC) .GT. 0) GO TO 80
-	 IV(STAGE) = -IV(STAGE)
-	 IV(XIRC) = IV(IRC)
+         IV(STAGE) = -IV(STAGE)
+         IV(XIRC) = IV(IRC)
 C
  60      IV(TOOBIG) = 0
-	 V(RADFAC) = V(DECFAC)
-	 IV(RADINC) = IV(RADINC) - 1
-	 IV(IRC) = 5
-	 IV(RESTOR) = 1
-	 V(F) = V(FLSTGD)
-	 GO TO 999
+         V(RADFAC) = V(DECFAC)
+         IV(RADINC) = IV(RADINC) - 1
+         IV(IRC) = 5
+         IV(RESTOR) = 1
+         V(F) = V(FLSTGD)
+         GO TO 999
 C
  70   IF (V(F) .LT. V(FLSTGD)) GO TO 110
 C
 C     *** THE NEW STEP IS A LOSER.  RESTORE OLD MODEL.  ***
 C
       IF (IV(MODEL) .EQ. IV(MLSTGD)) GO TO 80
-	 IV(MODEL) = IV(MLSTGD)
-	 IV(SWITCH) = 1
+         IV(MODEL) = IV(MLSTGD)
+         IV(SWITCH) = 1
 C
 C     ***  RESTORE STEP, ETC. ONLY IF A PREVIOUS STEP DECREASED V(F).
 C
  80   IF (V(FLSTGD) .GE. V(F0)) GO TO 110
-	 IF (IV(STAGE) .LT. IV(STGLIM)) THEN
-	    GOODX = .FALSE.
-	 ELSE IF (NFC .LT. IV(NFGCAL) + IV(STGLIM) + 2) THEN
-	    GOODX = .FALSE.
-	 ELSE IF (IV(SWITCH) .NE. 0) THEN
-	    GOODX = .FALSE.
-	    ENDIF
-	 IV(RESTOR) = 3
-	 V(F) = V(FLSTGD)
-	 V(PREDUC) = V(PLSTGD)
-	 V(GTSTEP) = V(GTSLST)
-	 IF (IV(SWITCH) .EQ. 0) RFAC1 = V(DSTNRM) / V(DSTSAV)
-	 V(DSTNRM) = V(DSTSAV)
-	 IF (GOODX) THEN
+         IF (IV(STAGE) .LT. IV(STGLIM)) THEN
+            GOODX = .FALSE.
+         ELSE IF (NFC .LT. IV(NFGCAL) + IV(STGLIM) + 2) THEN
+            GOODX = .FALSE.
+         ELSE IF (IV(SWITCH) .NE. 0) THEN
+            GOODX = .FALSE.
+            ENDIF
+         IV(RESTOR) = 3
+         V(F) = V(FLSTGD)
+         V(PREDUC) = V(PLSTGD)
+         V(GTSTEP) = V(GTSLST)
+         IF (IV(SWITCH) .EQ. 0) RFAC1 = V(DSTNRM) / V(DSTSAV)
+         V(DSTNRM) = V(DSTSAV)
+         IF (GOODX) THEN
 C
 C     ***  ACCEPT PREVIOUS SLIGHTLY REDUCING STEP ***
 C
-	    V(FDIF) = V(F0) - V(F)
-	    IV(IRC) = 4
-	    V(RADFAC) = RFAC1
-	    GO TO 999
-	    ENDIF
-	 NFC = IV(NFGCAL)
+            V(FDIF) = V(F0) - V(F)
+            IV(IRC) = 4
+            V(RADFAC) = RFAC1
+            GO TO 999
+            ENDIF
+         NFC = IV(NFGCAL)
 C
  110  V(FDIF) = V(F0) - V(F)
       IF (V(FDIF) .GT. V(TUNER2) * V(PREDUC)) GO TO 140
@@ -2020,18 +2020,18 @@ C
 C        ***  NO (OR ONLY A TRIVIAL) FUNCTION DECREASE
 C        ***  -- SO TRY NEW MODEL OR SMALLER RADIUS
 C
-	 IF (V(F) .LT. V(F0)) GO TO 120
-	      IV(MLSTGD) = IV(MODEL)
-	      V(FLSTGD) = V(F)
-	      V(F) = V(F0)
-	      IV(RESTOR) = 1
-	      GO TO 130
+         IF (V(F) .LT. V(F0)) GO TO 120
+              IV(MLSTGD) = IV(MODEL)
+              V(FLSTGD) = V(F)
+              V(F) = V(F0)
+              IV(RESTOR) = 1
+              GO TO 130
  120     IV(NFGCAL) = NFC
  130     IV(IRC) = 1
-	 IF (IV(STAGE) .LT. IV(STGLIM)) GO TO 160
-	      IV(IRC) = 5
-	      IV(RADINC) = IV(RADINC) - 1
-	      GO TO 160
+         IF (IV(STAGE) .LT. IV(STGLIM)) GO TO 160
+              IV(IRC) = 5
+              IV(RADINC) = IV(RADINC) - 1
+              GO TO 160
 C
 C  ***  NONTRIVIAL FUNCTION DECREASE ACHIEVED  ***
 C
@@ -2045,8 +2045,8 @@ C  ***  OR ACCEPT STEP WITH DECREASED RADIUS.
 C
       IF (IV(STAGE) .GE. IV(STGLIM)) GO TO 150
 C        ***  CONSIDER SWITCHING MODELS  ***
-	 IV(IRC) = 2
-	 GO TO 160
+         IV(IRC) = 2
+         GO TO 160
 C
 C     ***  ACCEPT STEP WITH DECREASED RADIUS  ***
 C
@@ -2063,9 +2063,9 @@ C
 C  ***  DO FALSE CONVERGENCE TEST  ***
 C
  170  IF (V(RELDX) .LE. V(XFTOL)) GO TO 180
-	 IV(IRC) = IV(XIRC)
-	 IF (V(F) .LT. V(F0)) GO TO 200
-	      GO TO 230
+         IV(IRC) = IV(XIRC)
+         IF (V(F) .LT. V(F0)) GO TO 200
+              GO TO 230
 C
  180  IV(IRC) = 12
       GO TO 240
@@ -2085,18 +2085,18 @@ C
 C        ***  WE DID NOT.  TRY A LONGER STEP UNLESS THIS WAS A NEWTON
 C        ***  STEP.
 C
-	 V(RADFAC) = V(RDFCMX)
-	 GTS = V(GTSTEP)
-	 IF (V(FDIF) .LT. (HALF/V(RADFAC) - ONE) * GTS)
+         V(RADFAC) = V(RDFCMX)
+         GTS = V(GTSTEP)
+         IF (V(FDIF) .LT. (HALF/V(RADFAC) - ONE) * GTS)
      1            V(RADFAC) = DMAX1(V(INCFAC), HALF*GTS/(GTS + V(FDIF)))
-	 IV(IRC) = 4
-	 IF (V(STPPAR) .EQ. ZERO) GO TO 230
-	 IF (V(DST0) .GE. ZERO .AND. (V(DST0) .LT. TWO*V(DSTNRM)
+         IV(IRC) = 4
+         IF (V(STPPAR) .EQ. ZERO) GO TO 230
+         IF (V(DST0) .GE. ZERO .AND. (V(DST0) .LT. TWO*V(DSTNRM)
      1             .OR. V(NREDUC) .LT. ONEP2*V(FDIF)))  GO TO 230
 C             ***  STEP WAS NOT A NEWTON STEP.  RECOMPUTE IT WITH
 C             ***  A LARGER RADIUS.
-	      IV(IRC) = 5
-	      IV(RADINC) = IV(RADINC) + 1
+              IV(IRC) = 5
+              IV(RADINC) = IV(RADINC) + 1
 C
 C  ***  SAVE VALUES CORRESPONDING TO GOOD STEP  ***
 C
@@ -2119,8 +2119,8 @@ C  ***  COME HERE FOR A RESTART AFTER CONVERGENCE  ***
 C
  220  IV(IRC) = IV(XIRC)
       IF (V(DSTSAV) .GE. ZERO) GO TO 240
-	 IV(IRC) = 12
-	 GO TO 240
+         IV(IRC) = 12
+         GO TO 240
 C
 C  ***  PERFORM CONVERGENCE TESTS  ***
 C
@@ -2146,10 +2146,10 @@ C
  250  IF (IV(IRC) .GT. 5 .AND. IV(IRC) .NE. 12) GO TO 999
       IF (V(STPPAR) .EQ. ZERO) GO TO 999
       IF (V(DSTNRM) .GT. V(LMAXS)) GO TO 260
-	 IF (V(PREDUC) .GE. EMAXS) GO TO 999
-	      IF (V(DST0) .LE. ZERO) GO TO 270
-		   IF (HALF * V(DST0) .LE. V(LMAXS)) GO TO 999
-			GO TO 270
+         IF (V(PREDUC) .GE. EMAXS) GO TO 999
+              IF (V(DST0) .LE. ZERO) GO TO 270
+                   IF (HALF * V(DST0) .LE. V(LMAXS)) GO TO 999
+                        GO TO 270
  260  IF (HALF * V(DSTNRM) .LE. V(LMAXS)) GO TO 999
       XMAX = V(LMAXS) / V(DSTNRM)
       IF (XMAX * (TWO - XMAX) * V(PREDUC) .GE. EMAXS) GO TO 999
@@ -2206,8 +2206,8 @@ C
       T = X(N)
       NM1 = N - K1
       DO 30 II = 1, NM1
-	 I = N - II
-	 X(I+1) = X(I)
+         I = N - II
+         X(I+1) = X(I)
  30      CONTINUE
       X(K1) = T
  999  RETURN
@@ -2275,33 +2275,33 @@ C
 C     DETERMINE THE NUMBER OF NON-ZEROES IN THE ROWS.
 C
       DO 10 IR = 1, M
-	 IWA(IR) = 0
+         IWA(IR) = 0
    10    CONTINUE
       NNZ = JPNTR(N+1) - 1
       DO 20 JP = 1, NNZ
-	 IR = INDROW(JP)
-	 IWA(IR) = IWA(IR) + 1
+         IR = INDROW(JP)
+         IWA(IR) = IWA(IR) + 1
    20    CONTINUE
 C
 C     SET POINTERS TO THE START OF THE ROWS IN INDCOL.
 C
       IPNTR(1) = 1
       DO 30 IR = 1, M
-	 IPNTR(IR+1) = IPNTR(IR) + IWA(IR)
-	 IWA(IR) = IPNTR(IR)
+         IPNTR(IR+1) = IPNTR(IR) + IWA(IR)
+         IWA(IR) = IPNTR(IR)
    30    CONTINUE
 C
 C     FILL INDCOL.
 C
       DO 60 JCOL = 1, N
-	 JPL = JPNTR(JCOL)
-	 JPU = JPNTR(JCOL+1) - 1
-	 IF (JPU .LT. JPL) GO TO 50
-	 DO 40 JP = JPL, JPU
-	    IR = INDROW(JP)
-	    L = IWA(IR)
-	    INDCOL(L) = JCOL
-	    IWA(IR) = IWA(IR) + 1
+         JPL = JPNTR(JCOL)
+         JPU = JPNTR(JCOL+1) - 1
+         IF (JPU .LT. JPL) GO TO 50
+         DO 40 JP = JPL, JPU
+            IR = INDROW(JP)
+            L = IWA(IR)
+            INDCOL(L) = JCOL
+            IWA(IR) = IWA(IR) + 1
    40       CONTINUE
    50    CONTINUE
    60    CONTINUE
@@ -2343,9 +2343,9 @@ C+++++++++++++++++++++++++++++++  BODY  ++++++++++++++++++++++++++++++++
 C
       P1 = PC
       IF (KA .LT. 0) GO TO 10
-	 NRED = V(NREDUC)
-	 DS0 = V(DST0)
-	 GO TO 20
+         NRED = V(NREDUC)
+         DS0 = V(DST0)
+         GO TO 20
  10   P0 = 0
       KA = -1
 C
@@ -2357,10 +2357,10 @@ C
       KB = -1
       V(DSTNRM) = ZERO
       IF (P1 .GT. 0) GO TO 30
-	 NRED = ZERO
-	 DS0 = ZERO
-	 CALL DV7SCP(P, STEP, ZERO)
-	 GO TO 60
+         NRED = ZERO
+         DS0 = ZERO
+         CALL DV7SCP(P, STEP, ZERO)
+         GO TO 60
 C
  30   CALL DV7CPY(P, TD, D)
       CALL DV7IPR(P, IPIV, TD)
@@ -2372,8 +2372,8 @@ C
       CALL DG7QTS(TD, TG, DIHDI, K, L, P1, STEP, V, W)
       P0 = P1
       IF (KA .GE. 0) GO TO 50
-	 NRED = V(NREDUC)
-	 DS0 = V(DST0)
+         NRED = V(NREDUC)
+         DS0 = V(DST0)
 C
  50   KA = K
       V(RADIUS) = RAD
@@ -2496,8 +2496,8 @@ C
       X(P) = B * L(JJ)
       IF (P .LE. 1) GO TO 40
       DO 10 I = 1, PM1
-	 JI = J0 + I
-	 X(I) = B * L(JI)
+         JI = J0 + I
+         X(I) = B * L(JI)
  10      CONTINUE
 C
 C  ***  COMPUTE X = (L**T)*B, WHERE THE COMPONENTS OF B HAVE RANDOMLY
@@ -2505,25 +2505,25 @@ C  ***  CHOSEN MAGNITUDES IN (.5,1) WITH SIGNS CHOSEN TO MAKE X LARGE.
 C
 C     DO J = P-1 TO 1 BY -1...
       DO 30 JJJ = 1, PM1
-	 J = P - JJJ
+         J = P - JJJ
 C       ***  DETERMINE X(J) IN THIS ITERATION. NOTE FOR I = 1,2,...,J
 C       ***  THAT X(I) HOLDS THE CURRENT PARTIAL SUM FOR ROW I.
-	 IX = MOD(3432*IX, 9973)
-	 B = HALF*(ONE + DBLE(IX)/R9973)
-	 JM1 = J - 1
-	 J0 = J*JM1/2
-	 SPLUS = ZERO
-	 SMINUS = ZERO
-	 DO 20 I = 1, J
-	      JI = J0 + I
-	      BLJI = B * L(JI)
-	      SPLUS = SPLUS + DABS(BLJI + X(I))
-	      SMINUS = SMINUS + DABS(BLJI - X(I))
+         IX = MOD(3432*IX, 9973)
+         B = HALF*(ONE + DBLE(IX)/R9973)
+         JM1 = J - 1
+         J0 = J*JM1/2
+         SPLUS = ZERO
+         SMINUS = ZERO
+         DO 20 I = 1, J
+              JI = J0 + I
+              BLJI = B * L(JI)
+              SPLUS = SPLUS + DABS(BLJI + X(I))
+              SMINUS = SMINUS + DABS(BLJI - X(I))
  20           CONTINUE
-	 IF (SMINUS .GT. SPLUS) B = -B
-	 X(J) = ZERO
+         IF (SMINUS .GT. SPLUS) B = -B
+         X(J) = ZERO
 C        ***  UPDATE PARTIAL SUMS  ***
-	 CALL DV2AXY(J, X, B, L(J0+1), X)
+         CALL DV2AXY(J, X, B, L(J0+1), X)
  30      CONTINUE
 C
 C  ***  NORMALIZE X  ***
@@ -2537,9 +2537,9 @@ C
 C  ***  COMPUTE L*X = Y AND RETURN SVMAX = TWONORM(Y)  ***
 C
       DO 60 JJJ = 1, P
-	 J = PPLUS1 - JJJ
-	 JI = J*(J-1)/2 + 1
-	 Y(J) = DD7TPR(J, L(JI), X)
+         J = PPLUS1 - JJJ
+         JI = J*(J-1)/2 + 1
+         Y(J) = DD7TPR(J, L(JI), X)
  60      CONTINUE
 C
 C  ***  NORMALIZE Y AND SET X = (L**T)*Y  ***
@@ -2547,10 +2547,10 @@ C
       T = ONE / DV2NRM(P, Y)
       JI = 1
       DO 70 I = 1, P
-	 YI = T * Y(I)
-	 X(I) = ZERO
-	 CALL DV2AXY(I, X, YI, L(JI), X)
-	 JI = JI + I
+         YI = T * Y(I)
+         X(I) = ZERO
+         CALL DV2AXY(I, X, YI, L(JI), X)
+         JI = JI + I
  70      CONTINUE
       DL7SVX = DV2NRM(P, X)
       GO TO 999
@@ -2588,17 +2588,17 @@ C-------------------------------  BODY  --------------------------------
 C
       I = IV(DTYPE)
       IF (I .EQ. 1) GO TO 10
-	 IF (IV(NITER) .GT. 0) GO TO 999
+         IF (IV(NITER) .GT. 0) GO TO 999
 C
  10   DTOLI = IV(DTOL)
       D0I = DTOLI + N
       VDFAC = V(DFAC)
       DO 20 I = 1, N
-	 T = DMAX1(DSQRT(DABS(HDIAG(I))), VDFAC*D(I))
-	 IF (T .LT. V(DTOLI)) T = DMAX1(V(DTOLI), V(D0I))
-	 D(I) = T
-	 DTOLI = DTOLI + 1
-	 D0I = D0I + 1
+         T = DMAX1(DSQRT(DABS(HDIAG(I))), VDFAC*D(I))
+         IF (T .LT. V(DTOLI)) T = DMAX1(V(DTOLI), V(D0I))
+         D(I) = T
+         DTOLI = DTOLI + 1
+         D0I = D0I + 1
  20      CONTINUE
 C
  999  RETURN
@@ -2675,49 +2675,49 @@ C
 C     DETERMINE THE NUMBER OF NON-ZEROES IN THE COLUMNS.
 C
       DO 10 J = 1, N
-	 IWA(J) = 0
+         IWA(J) = 0
    10    CONTINUE
       DO 20 K = 1, NNZ
-	 J = INDCOL(K)
-	 IWA(J) = IWA(J) + 1
+         J = INDCOL(K)
+         IWA(J) = IWA(J) + 1
    20    CONTINUE
 C
 C     SET POINTERS TO THE START OF THE COLUMNS IN INDROW.
 C
       JPNTR(1) = 1
       DO 30 J = 1, N
-	 JPNTR(J+1) = JPNTR(J) + IWA(J)
-	 IWA(J) = JPNTR(J)
+         JPNTR(J+1) = JPNTR(J) + IWA(J)
+         IWA(J) = JPNTR(J)
    30    CONTINUE
       K = 1
 C
 C     BEGIN IN-PLACE SORT.
 C
    40 CONTINUE
-	 J = INDCOL(K)
-	 IF (K .LT. JPNTR(J) .OR. K .GE. JPNTR(J+1)) GO TO 50
+         J = INDCOL(K)
+         IF (K .LT. JPNTR(J) .OR. K .GE. JPNTR(J+1)) GO TO 50
 C
 C           CURRENT ELEMENT IS IN POSITION. NOW EXAMINE THE
 C           NEXT ELEMENT OR THE FIRST UN-SORTED ELEMENT IN
 C           THE J-TH GROUP.
 C
-	    K = MAX0(K+1,IWA(J))
-	    GO TO 60
+            K = MAX0(K+1,IWA(J))
+            GO TO 60
    50    CONTINUE
 C
 C           CURRENT ELEMENT IS NOT IN POSITION. PLACE ELEMENT
 C           IN POSITION AND MAKE THE DISPLACED ELEMENT THE
 C           CURRENT ELEMENT.
 C
-	    L = IWA(J)
-	    IWA(J) = IWA(J) + 1
-	    I = INDROW(K)
-	    INDROW(K) = INDROW(L)
-	    INDCOL(K) = INDCOL(L)
-	    INDROW(L) = I
-	    INDCOL(L) = J
+            L = IWA(J)
+            IWA(J) = IWA(J) + 1
+            I = INDROW(K)
+            INDROW(K) = INDROW(L)
+            INDCOL(K) = INDCOL(L)
+            INDROW(L) = I
+            INDCOL(L) = J
    60    CONTINUE
-	 IF (K .LE. NNZ) GO TO 40
+         IF (K .LE. NNZ) GO TO 40
       RETURN
 C
 C     LAST CARD OF SUBROUTINE S7RTDT.
@@ -2753,29 +2753,29 @@ C  ***  BODY  ***
 C
       I0 = N1 * (N1 - 1) / 2
       DO 50 I = N1, N
-	 TD = ZERO
-	 IF (I .EQ. 1) GO TO 40
-	 J0 = 0
-	 IM1 = I - 1
-	 DO 30 J = 1, IM1
-	      T = ZERO
-	      IF (J .EQ. 1) GO TO 20
-	      JM1 = J - 1
-	      DO 10 K = 1, JM1
-		   IK = I0 + K
-		   JK = J0 + K
-		   T = T + L(IK)*L(JK)
+         TD = ZERO
+         IF (I .EQ. 1) GO TO 40
+         J0 = 0
+         IM1 = I - 1
+         DO 30 J = 1, IM1
+              T = ZERO
+              IF (J .EQ. 1) GO TO 20
+              JM1 = J - 1
+              DO 10 K = 1, JM1
+                   IK = I0 + K
+                   JK = J0 + K
+                   T = T + L(IK)*L(JK)
  10                CONTINUE
  20           IJ = I0 + J
-	      J0 = J0 + J
-	      T = (A(IJ) - T) / L(J0)
-	      L(IJ) = T
-	      TD = TD + T*T
+              J0 = J0 + J
+              T = (A(IJ) - T) / L(J0)
+              L(IJ) = T
+              TD = TD + T*T
  30           CONTINUE
  40      I0 = I0 + I
-	 T = A(I0) - TD
-	 IF (T .LE. ZERO) GO TO 60
-	 L(I0) = DSQRT(T)
+         T = A(I0) - TD
+         IF (T .LE. ZERO) GO TO 60
+         L(I0) = DSQRT(T)
  50      CONTINUE
 C
       IRC = 0
@@ -2898,10 +2898,10 @@ C
       X(P) = XPLUS
       IF (P .LE. 1) GO TO 60
       DO 10 I = 1, PM1
-	 II = II + I
-	 IF (L(II) .EQ. ZERO) GO TO 110
-	 JI = J0 + I
-	 X(I) = XPLUS * L(JI)
+         II = II + I
+         IF (L(II) .EQ. ZERO) GO TO 110
+         JI = J0 + I
+         X(I) = XPLUS * L(JI)
  10      CONTINUE
 C
 C  ***  SOLVE (L**T)*X = B, WHERE THE COMPONENTS OF B HAVE RANDOMLY
@@ -2909,30 +2909,30 @@ C  ***  CHOSEN MAGNITUDES IN (.5,1) WITH SIGNS CHOSEN TO MAKE X LARGE.
 C
 C     DO J = P-1 TO 1 BY -1...
       DO 50 JJJ = 1, PM1
-	 J = P - JJJ
+         J = P - JJJ
 C       ***  DETERMINE X(J) IN THIS ITERATION. NOTE FOR I = 1,2,...,J
 C       ***  THAT X(I) HOLDS THE CURRENT PARTIAL SUM FOR ROW I.
-	 IX = MOD(3432*IX, 9973)
-	 B = HALF*(ONE + DBLE(IX)/R9973)
-	 XPLUS = (B - X(J))
-	 XMINUS = (-B - X(J))
-	 SPLUS = DABS(XPLUS)
-	 SMINUS = DABS(XMINUS)
-	 JM1 = J - 1
-	 J0 = J*JM1/2
-	 JJ = J0 + J
-	 XPLUS = XPLUS/L(JJ)
-	 XMINUS = XMINUS/L(JJ)
-	 IF (JM1 .EQ. 0) GO TO 30
-	 DO 20 I = 1, JM1
-	      JI = J0 + I
-	      SPLUS = SPLUS + DABS(X(I) + L(JI)*XPLUS)
-	      SMINUS = SMINUS + DABS(X(I) + L(JI)*XMINUS)
+         IX = MOD(3432*IX, 9973)
+         B = HALF*(ONE + DBLE(IX)/R9973)
+         XPLUS = (B - X(J))
+         XMINUS = (-B - X(J))
+         SPLUS = DABS(XPLUS)
+         SMINUS = DABS(XMINUS)
+         JM1 = J - 1
+         J0 = J*JM1/2
+         JJ = J0 + J
+         XPLUS = XPLUS/L(JJ)
+         XMINUS = XMINUS/L(JJ)
+         IF (JM1 .EQ. 0) GO TO 30
+         DO 20 I = 1, JM1
+              JI = J0 + I
+              SPLUS = SPLUS + DABS(X(I) + L(JI)*XPLUS)
+              SMINUS = SMINUS + DABS(X(I) + L(JI)*XMINUS)
  20           CONTINUE
  30      IF (SMINUS .GT. SPLUS) XPLUS = XMINUS
-	 X(J) = XPLUS
+         X(J) = XPLUS
 C       ***  UPDATE PARTIAL SUMS  ***
-	 IF (JM1 .GT. 0) CALL DV2AXY(JM1, X, XPLUS, L(J0+1), X)
+         IF (JM1 .GT. 0) CALL DV2AXY(JM1, X, XPLUS, L(J0+1), X)
  50      CONTINUE
 C
 C  ***  NORMALIZE X  ***
@@ -2944,12 +2944,12 @@ C
 C  ***  SOLVE L*Y = X AND RETURN DL7SVN = 1/TWONORM(Y)  ***
 C
       DO 100 J = 1, P
-	 JM1 = J - 1
-	 J0 = J*JM1/2
-	 JJ = J0 + J
-	 T = ZERO
-	 IF (JM1 .GT. 0) T = DD7TPR(JM1, L(J0+1), Y)
-	 Y(J) = (X(J) - T) / L(JJ)
+         JM1 = J - 1
+         J0 = J*JM1/2
+         JJ = J0 + J
+         T = ZERO
+         IF (JM1 .GT. 0) T = DD7TPR(JM1, L(J0+1), Y)
+         Y(J) = (X(J) - T) / L(JJ)
  100     CONTINUE
 C
       DL7SVN = ONE/DV2NRM(P, Y)
@@ -2986,19 +2986,19 @@ C-----------------------------------------------------------------------
 C
       J = 1
       DO 10 I = 1, P
-	 Y(I) = DD7TPR(I, S(J), X)
-	 J = J + I
+         Y(I) = DD7TPR(I, S(J), X)
+         J = J + I
  10      CONTINUE
 C
       IF (P .LE. 1) GO TO 999
       J = 1
       DO 40 I = 2, P
-	 XI = X(I)
-	 IM1 = I - 1
-	 J = J + 1
-	 DO 30 K = 1, IM1
-	      Y(K) = Y(K) + S(J)*XI
-	      J = J + 1
+         XI = X(I)
+         IM1 = I - 1
+         J = J + 1
+         DO 30 K = 1, IM1
+              Y(K) = Y(K) + S(J)*XI
+              J = J + 1
  30           CONTINUE
  40      CONTINUE
 C
@@ -3024,11 +3024,11 @@ C
 C  ***  BODY  ***
 C
       IF (B .NE. ZERO) GO TO 10
-	 X = ZERO
-	 Y = ZERO
-	 Z = ZERO
-	 DH2RFG = A
-	 GO TO 999
+         X = ZERO
+         Y = ZERO
+         Z = ZERO
+         DH2RFG = A
+         GO TO 999
  10   T = DABS(A) + DABS(B)
       A1 = A / T
       B1 = B / T
@@ -3064,23 +3064,23 @@ C
       NP1 = N + 1
       J0 = N*NP1/2
       DO 30 II = 1, N
-	 I = NP1 - II
-	 LIN(J0) = ONE/L(J0)
-	 IF (I .LE. 1) GO TO 999
-	 J1 = J0
-	 IM1 = I - 1
-	 DO 20 JJ = 1, IM1
-	      T = ZERO
-	      J0 = J1
-	      K0 = J1 - JJ
-	      DO 10 K = 1, JJ
-		   T = T - L(K0)*LIN(J0)
-		   J0 = J0 - 1
-		   K0 = K0 + K - I
+         I = NP1 - II
+         LIN(J0) = ONE/L(J0)
+         IF (I .LE. 1) GO TO 999
+         J1 = J0
+         IM1 = I - 1
+         DO 20 JJ = 1, IM1
+              T = ZERO
+              J0 = J1
+              K0 = J1 - JJ
+              DO 10 K = 1, JJ
+                   T = T - L(K0)*LIN(J0)
+                   J0 = J0 - 1
+                   K0 = K0 + K - I
  10                CONTINUE
-	      LIN(J0) = T/L(K0)
+              LIN(J0) = T/L(K0)
  20           CONTINUE
-	 J0 = J0 - 1
+         J0 = J0 - 1
  30      CONTINUE
  999  RETURN
 C  ***  LAST CARD OF DL7NVR FOLLOWS  ***
@@ -3205,14 +3205,14 @@ C
 C
 C        ***  THE NEWTON STEP IS INSIDE THE TRUST REGION  ***
 C
-	 V(STPPAR) = ZERO
-	 V(DSTNRM) = NWTNRM
-	 V(GTSTEP) = -GHINVG
-	 V(PREDUC) = V(NREDUC)
-	 V(NWTFAC) = -ONE
-	 DO 20 I = 1, N
+         V(STPPAR) = ZERO
+         V(DSTNRM) = NWTNRM
+         V(GTSTEP) = -GHINVG
+         V(PREDUC) = V(NREDUC)
+         V(NWTFAC) = -ONE
+         DO 20 I = 1, N
  20           STEP(I) = -NWTSTP(I)
-	 GO TO 999
+         GO TO 999
 C
  30   V(DSTNRM) = V(RADIUS)
       CFACT = (GNORM / V(GTHG))**2
@@ -3223,28 +3223,28 @@ C     ***  CAUCHY STEP = -CFACT * G.
 C
 C        ***  STEP IS BETWEEN RELAXED NEWTON AND FULL NEWTON STEPS  ***
 C
-	 V(STPPAR)  =  ONE  -  (RLAMBD - RELAX) / (ONE - RELAX)
-	 T = -RLAMBD
-	 V(GTSTEP) = T * GHINVG
-	 V(PREDUC) = RLAMBD * (ONE - HALF*RLAMBD) * GHINVG
-	 V(NWTFAC) = T
-	 DO 40 I = 1, N
+         V(STPPAR)  =  ONE  -  (RLAMBD - RELAX) / (ONE - RELAX)
+         T = -RLAMBD
+         V(GTSTEP) = T * GHINVG
+         V(PREDUC) = RLAMBD * (ONE - HALF*RLAMBD) * GHINVG
+         V(NWTFAC) = T
+         DO 40 I = 1, N
  40           STEP(I) = T * NWTSTP(I)
-	 GO TO 999
+         GO TO 999
 C
  50   IF (CNORM .LT. V(RADIUS)) GO TO 70
 C
 C        ***  THE CAUCHY STEP LIES OUTSIDE THE TRUST REGION --
 C        ***  STEP = SCALED CAUCHY STEP  ***
 C
-	 T = -V(RADIUS) / GNORM
-	 V(GRDFAC) = T
-	 V(STPPAR) = ONE  +  CNORM / V(RADIUS)
-	 V(GTSTEP) = -V(RADIUS) * GNORM
+         T = -V(RADIUS) / GNORM
+         V(GRDFAC) = T
+         V(STPPAR) = ONE  +  CNORM / V(RADIUS)
+         V(GTSTEP) = -V(RADIUS) * GNORM
       V(PREDUC) = V(RADIUS)*(GNORM - HALF*V(RADIUS)*(V(GTHG)/GNORM)**2)
-	 DO 60 I = 1, N
+         DO 60 I = 1, N
  60           STEP(I) = T * DIG(I)
-	 GO TO 999
+         GO TO 999
 C
 C     ***  COMPUTE DOGLEG STEP BETWEEN CAUCHY AND RELAXED NEWTON  ***
 C     ***  FEMUR = RELAXED NEWTON STEP MINUS CAUCHY STEP  ***
@@ -3292,59 +3292,59 @@ C
 C ***  BODY  ***
 C
       DO 90 I = 1, P
-	 J = IP(I)
-	 IF (J .EQ. I) GO TO 90
-	 IP(I) = IABS(J)
-	 IF (J .LT. 0) GO TO 90
-	 K = I
+         J = IP(I)
+         IF (J .EQ. I) GO TO 90
+         IP(I) = IABS(J)
+         IF (J .LT. 0) GO TO 90
+         K = I
  10         J1 = J
-	    K1 = K
-	    IF (J .LE. K) GO TO 20
-	       J1 = K
-	       K1 = J
+            K1 = K
+            IF (J .LE. K) GO TO 20
+               J1 = K
+               K1 = J
  20         KMJ = K1-J1
-	    L = J1-1
-	    JM = J1*L/2
-	    KM = K1*(K1-1)/2
-	    IF (L .LE. 0) GO TO 40
-	       DO 30 M = 1, L
-		  JM = JM+1
-		  T = H(JM)
-		  KM = KM+1
-		  H(JM) = H(KM)
-		  H(KM) = T
+            L = J1-1
+            JM = J1*L/2
+            KM = K1*(K1-1)/2
+            IF (L .LE. 0) GO TO 40
+               DO 30 M = 1, L
+                  JM = JM+1
+                  T = H(JM)
+                  KM = KM+1
+                  H(JM) = H(KM)
+                  H(KM) = T
  30               CONTINUE
  40         KM = KM+1
-	    KK = KM+KMJ
-	    JM = JM+1
-	    T = H(JM)
-	    H(JM) = H(KK)
-	    H(KK) = T
-	    J1 = L
-	    L = KMJ-1
-	    IF (L .LE. 0) GO TO 60
-	       DO 50 M = 1, L
-		  JM = JM+J1+M
-		  T = H(JM)
-		  KM = KM+1
-		  H(JM) = H(KM)
-		  H(KM) = T
+            KK = KM+KMJ
+            JM = JM+1
+            T = H(JM)
+            H(JM) = H(KK)
+            H(KK) = T
+            J1 = L
+            L = KMJ-1
+            IF (L .LE. 0) GO TO 60
+               DO 50 M = 1, L
+                  JM = JM+J1+M
+                  T = H(JM)
+                  KM = KM+1
+                  H(JM) = H(KM)
+                  H(KM) = T
  50               CONTINUE
  60         IF (K1 .GE. P) GO TO 80
-	       L = P-K1
-	       K1 = K1-1
-	       KM = KK
-	       DO 70 M = 1, L
-		  KM = KM+K1+M
-		  JM = KM-KMJ
-		  T = H(JM)
-		  H(JM) = H(KM)
-		  H(KM) = T
+               L = P-K1
+               K1 = K1-1
+               KM = KK
+               DO 70 M = 1, L
+                  KM = KM+K1+M
+                  JM = KM-KMJ
+                  T = H(JM)
+                  H(JM) = H(KM)
+                  H(KM) = T
  70               CONTINUE
  80         K = J
-	    J = IP(K)
-	    IP(K) = -J
-	    IF (J .GT. I) GO TO 10
+            J = IP(K)
+            IP(K) = -J
+            IF (J .GT. I) GO TO 10
  90      CONTINUE
       RETURN
 C  ***  LAST LINE OF DS7IPR FOLLOWS  ***
@@ -3359,9 +3359,9 @@ C
       INTEGER I
       DOUBLE PRECISION T
       DO 10 I = 1, N
-	 T = A(I)*X + B(I)*Y
-	 A(I) = A(I) + T
-	 B(I) = B(I) + T*Z
+         T = A(I)*X + B(I)*Y
+         A(I) = A(I) + T
+         B(I) = B(I) + T*Z
  10      CONTINUE
       RETURN
 C  ***  LAST LINE OF DH2RFA FOLLOWS  ***
@@ -3436,8 +3436,8 @@ C
 C         IF (PU .NE. 0) WRITE(PU,10) ALG, IV(ALGSAV)
 C 10      FORMAT(/40H THE FIRST PARAMETER TO DIVSET SHOULD BE,I3,
 C     1          12H RATHER THAN,I3)
-	 IV(1) = 67
-	 GO TO 999
+         IV(1) = 67
+         GO TO 999
  20   IF (ALG .LT. 1 .OR. ALG .GT. 4) GO TO 340
       MIV1 = MINIV(ALG)
       IF (IV(1) .EQ. 15) GO TO 360
@@ -3455,35 +3455,35 @@ C     1          12H RATHER THAN,I3)
       IF (LIV .LT. MIV2) GO TO 300
       IF (LV .LT. IV(LASTV)) GO TO 320
  30   IF (IV1 .LT. 12 .OR. IV1 .GT. 14) GO TO 60
-	 IF (N .GE. 1) GO TO 50
-	      IV(1) = 81
-	      IF (PU .EQ. 0) GO TO 999
+         IF (N .GE. 1) GO TO 50
+              IV(1) = 81
+              IF (PU .EQ. 0) GO TO 999
 C              WRITE(PU,40) VARNM(ALG1), N
 C 40           FORMAT(/8H /// BAD,A1,2H =,I5)
-	      GO TO 999
+              GO TO 999
  50      IF (IV1 .NE. 14) IV(NEXTIV) = IV(PERM)
-	 IF (IV1 .NE. 14) IV(NEXTV) = IV(LMAT)
-	 IF (IV1 .EQ. 13) GO TO 999
-	 K = IV(PARSAV) - EPSLON
-	 CALL DV7DFL(ALG1, LV-K, V(K+1))
-	 IV(DTYPE0) = 2 - ALG1
-	 IV(OLDN) = N
-	 WHICH(1) = DFLT(1)
-	 WHICH(2) = DFLT(2)
-	 WHICH(3) = DFLT(3)
-	 GO TO 110
+         IF (IV1 .NE. 14) IV(NEXTV) = IV(LMAT)
+         IF (IV1 .EQ. 13) GO TO 999
+         K = IV(PARSAV) - EPSLON
+         CALL DV7DFL(ALG1, LV-K, V(K+1))
+         IV(DTYPE0) = 2 - ALG1
+         IV(OLDN) = N
+         WHICH(1) = DFLT(1)
+         WHICH(2) = DFLT(2)
+         WHICH(3) = DFLT(3)
+         GO TO 110
  60   IF (N .EQ. IV(OLDN)) GO TO 80
-	 IV(1) = 17
-	 IF (PU .EQ. 0) GO TO 999
+         IV(1) = 17
+         IF (PU .EQ. 0) GO TO 999
 C         WRITE(PU,70) VARNM(ALG1), IV(OLDN), N
 C 70      FORMAT(/5H /// ,1A1,14H CHANGED FROM ,I5,4H TO ,I5)
-	 GO TO 999
+         GO TO 999
 C
  80   IF (IV1 .LE. 11 .AND. IV1 .GE. 1) GO TO 100
-	 IV(1) = 80
+         IV(1) = 80
 C         IF (PU .NE. 0) WRITE(PU,90) IV1
 C 90      FORMAT(/13H ///  IV(1) =,I5,28H SHOULD BE BETWEEN 0 AND 14.)
-	 GO TO 999
+         GO TO 999
 C
  100  WHICH(1) = CNGD(1)
       WHICH(2) = CNGD(2)
@@ -3491,72 +3491,72 @@ C
 C
  110  IF (IV1 .EQ. 14) IV1 = 12
       IF (BIG .GT. TINY) GO TO 120
-	 TINY = DR7MDC(1)
-	 MACHEP = DR7MDC(3)
-	 BIG = DR7MDC(6)
-	 VM(12) = MACHEP
-	 VX(12) = BIG
-	 VX(13) = BIG
-	 VM(14) = MACHEP
-	 VM(17) = TINY
-	 VX(17) = BIG
-	 VM(18) = TINY
-	 VX(18) = BIG
-	 VX(20) = BIG
-	 VX(21) = BIG
-	 VX(22) = BIG
-	 VM(24) = MACHEP
-	 VM(25) = MACHEP
-	 VM(26) = MACHEP
-	 VX(28) = DR7MDC(5)
-	 VM(29) = MACHEP
-	 VX(30) = BIG
-	 VM(33) = MACHEP
+         TINY = DR7MDC(1)
+         MACHEP = DR7MDC(3)
+         BIG = DR7MDC(6)
+         VM(12) = MACHEP
+         VX(12) = BIG
+         VX(13) = BIG
+         VM(14) = MACHEP
+         VM(17) = TINY
+         VX(17) = BIG
+         VM(18) = TINY
+         VX(18) = BIG
+         VX(20) = BIG
+         VX(21) = BIG
+         VX(22) = BIG
+         VM(24) = MACHEP
+         VM(25) = MACHEP
+         VM(26) = MACHEP
+         VX(28) = DR7MDC(5)
+         VM(29) = MACHEP
+         VX(30) = BIG
+         VM(33) = MACHEP
  120  M = 0
       I = 1
       J = JLIM(ALG1)
       K = EPSLON
       NDFALT = NDFLT(ALG1)
       DO 150 L = 1, NDFALT
-	 VK = V(K)
-	 IF (VK .GE. VM(I) .AND. VK .LE. VX(I)) GO TO 140
-	      M = K
+         VK = V(K)
+         IF (VK .GE. VM(I) .AND. VK .LE. VX(I)) GO TO 140
+              M = K
 C              IF (PU .NE. 0) WRITE(PU,130) VN(1,I), VN(2,I), K, VK,
 C     1                                    VM(I), VX(I)
 C 130          FORMAT(/6H ///  ,2A4,5H.. V(,I2,3H) =,D11.3,7H SHOULD,
 C     1               11H BE BETWEEN,D11.3,4H AND,D11.3)
  140     K = K + 1
-	 I = I + 1
-	 IF (I .EQ. J) I = IJMP
+         I = I + 1
+         IF (I .EQ. J) I = IJMP
  150     CONTINUE
 C
       IF (IV(NVDFLT) .EQ. NDFALT) GO TO 170
-	 IV(1) = 51
-	 IF (PU .EQ. 0) GO TO 999
+         IV(1) = 51
+         IF (PU .EQ. 0) GO TO 999
 C         WRITE(PU,160) IV(NVDFLT), NDFALT
 C 160     FORMAT(/13H IV(NVDFLT) =,I5,13H RATHER THAN ,I5)
-	 GO TO 999
+         GO TO 999
  170  IF ((IV(DTYPE) .GT. 0 .OR. V(DINIT) .GT. ZERO) .AND. IV1 .EQ. 12)
      1                  GO TO 200
       DO 190 I = 1, N
-	 IF (D(I) .GT. ZERO) GO TO 190
-	      M = 18
+         IF (D(I) .GT. ZERO) GO TO 190
+              M = 18
 C              IF (PU .NE. 0) WRITE(PU,180) I, D(I)
 C 180     FORMAT(/8H ///  D(,I3,3H) =,D11.3,19H SHOULD BE POSITIVE)
  190     CONTINUE
  200  IF (M .EQ. 0) GO TO 210
-	 IV(1) = M
-	 GO TO 999
+         IV(1) = M
+         GO TO 999
 C
  210  IF (PU .EQ. 0 .OR. IV(PARPRT) .EQ. 0) GO TO 999
       IF (IV1 .NE. 12 .OR. IV(INITS) .EQ. ALG1-1) GO TO 230
-	 M = 1
+         M = 1
 C         WRITE(PU,220) SH(ALG1), IV(INITS)
 C 220     FORMAT(/22H NONDEFAULT VALUES..../5H INIT,A1,14H..... IV(25) =,
 C     1          I3)
  230  IF (IV(DTYPE) .EQ. IV(DTYPE0)) GO TO 250
 C         IF (M .EQ. 0) WRITE(PU,260) WHICH
-	 M = 1
+         M = 1
 C         WRITE(PU,240) IV(DTYPE)
 C 240     FORMAT(20H DTYPE..... IV(16) =,I3)
  250  I = 1
@@ -3565,16 +3565,16 @@ C 240     FORMAT(20H DTYPE..... IV(16) =,I3)
       L = IV(PARSAV)
       NDFALT = NDFLT(ALG1)
       DO 290 II = 1, NDFALT
-	 IF (V(K) .EQ. V(L)) GO TO 280
+         IF (V(K) .EQ. V(L)) GO TO 280
 C              IF (M .EQ. 0) WRITE(PU,260) WHICH
 C 260          FORMAT(/1H ,3A4,9HALUES..../)
-	      M = 1
+              M = 1
 C              WRITE(PU,270) VN(1,I), VN(2,I), K, V(K)
 C 270          FORMAT(1X,2A4,5H.. V(,I2,3H) =,D15.7)
  280     K = K + 1
-	 L = L + 1
-	 I = I + 1
-	 IF (I .EQ. J) I = IJMP
+         L = L + 1
+         I = I + 1
+         IF (I .EQ. J) I = IJMP
  290     CONTINUE
 C
       IV(DTYPE0) = IV(DTYPE)
@@ -3689,8 +3689,8 @@ C
       IF ( K .EQ. 0) GO TO 999
 C
       DO 20 L = 1, K
-	 NL1 = N - L + 1
-	 CALL DV2AXY(NL1, R(L), -DD7TPR(NL1,J(L,L),R(L)), J(L,L), R(L))
+         NL1 = N - L + 1
+         CALL DV2AXY(NL1, R(L), -DD7TPR(NL1,J(L,L),R(L)), J(L,L), R(L))
  20   CONTINUE
 C
  999  RETURN
@@ -3811,9 +3811,9 @@ C
       EXTERNAL D1MACH
       DATA BIG/0.D+0/, ETA/0.D+0/, MACHEP/0.D+0/, ZERO/0.D+0/
       IF (BIG .GT. ZERO) GO TO 1
-	 BIG = D1MACH(2)
-	 ETA = D1MACH(1)
-	 MACHEP = D1MACH(4)
+         BIG = D1MACH(2)
+         ETA = D1MACH(1)
+         MACHEP = D1MACH(4)
  1    CONTINUE
 C
 C-------------------------------  BODY  --------------------------------
@@ -4063,8 +4063,8 @@ C
 C
       IF (I .LT. 12) GO TO 10
       IF (I .GT. 13) GO TO 10
-	 IV(VNEED) = IV(VNEED) + P*(3*P + 25)/2 + 7
-	 IV(IVNEED) = IV(IVNEED) + 4*P
+         IV(VNEED) = IV(VNEED) + P*(3*P + 25)/2 + 7
+         IV(IVNEED) = IV(IVNEED) + 4*P
  10   CALL DPARCK(1, D, IV, LIV, LV, P, V)
       I = IV(1) - 2
       IF (I .GT. 12) GO TO 999
@@ -4083,8 +4083,8 @@ C
       IV(IPIVOT) = IV(PERM) + 3*P
       IV(NEXTIV) = IV(IPIVOT) + P
       IF (IV(1) .NE. 13) GO TO 30
-	 IV(1) = 14
-	 GO TO 999
+         IV(1) = 14
+         GO TO 999
 C
 C  ***  INITIALIZATION  ***
 C
@@ -4109,9 +4109,9 @@ C  ***  CHECK CONSISTENCY OF B AND INITIALIZE IP ARRAY  ***
 C
       IPI = IV(IPIVOT)
       DO 40 I = 1, P
-	 IV(IPI) = I
-	 IPI = IPI + 1
-	 IF (B(1,I) .GT. B(2,I)) GO TO 680
+         IV(IPI) = I
+         IPI = IPI + 1
+         IF (B(1,I) .GT. B(2,I)) GO TO 680
  40      CONTINUE
 C
 C  ***  SET INITIAL MODEL AND S MATRIX  ***
@@ -4131,14 +4131,14 @@ C
       IF (IV(MODE) .GT. 0) GO TO 590
 C
       IF (IV(TOOBIG) .EQ. 0) GO TO 690
-	 IV(1) = 63
-	 GO TO 999
+         IV(1) = 63
+         GO TO 999
 C
 C  ***  MAKE SURE GRADIENT COULD BE COMPUTED  ***
 C
  60   IF (IV(TOOBIG) .EQ. 0) GO TO 70
-	 IV(1) = 65
-	 GO TO 999
+         IV(1) = 65
+         GO TO 999
 C
 C  ***  NEW GRADIENT  ***
 C
@@ -4165,21 +4165,21 @@ C     *** MAKE SURE V(QTR1) IS LEGAL (EVEN WHEN NOT REFERENCED) ***
       IF (.NOT. HAVQTR) QTR1 = W1 + P
 C
       DO 100 I = 1, P
-	 I1 = IV(IPN)
-	 IPN = IPN - 1
-	 IF (B(1,I1) .GE. B(2,I1)) GO TO 80
-	 XI = X(I1)
-	 GI = G(I1)
-	 IF (XI .LE. B(1,I1) .AND. GI .GT. ZERO) GO TO 80
-	 IF (XI .GE. B(2,I1) .AND. GI .LT. ZERO) GO TO 80
+         I1 = IV(IPN)
+         IPN = IPN - 1
+         IF (B(1,I1) .GE. B(2,I1)) GO TO 80
+         XI = X(I1)
+         GI = G(I1)
+         IF (XI .LE. B(1,I1) .AND. GI .GT. ZERO) GO TO 80
+         IF (XI .GE. B(2,I1) .AND. GI .LT. ZERO) GO TO 80
 C           *** DISALLOW CONVERGENCE IF X(I1) HAS JUST BEEN FREED ***
-	    J = IPIV2 + I1
-	    IF (IV(J) .GT. K) IV(CNVCOD) = 0
-	    GO TO 100
+            J = IPIV2 + I1
+            IF (IV(J) .GT. K) IV(CNVCOD) = 0
+            GO TO 100
  80      IF (I1 .GE. P1) GO TO 90
-	    I1 = PP1 - I
-	    CALL I7SHFT(P1, I1, IV(IPI))
-	    IF (HAVRM)
+            I1 = PP1 - I
+            CALL I7SHFT(P1, I1, IV(IPI))
+            IF (HAVRM)
      1          CALL DQ7RSH(I1, P1, HAVQTR, V(QTR1), V(RMAT1), V(W1))
  90      P1 = P1 - 1
  100     CONTINUE
@@ -4220,8 +4220,8 @@ C
       PP1O2 = PS * (PS + 1) / 2
       HC1 = IV(HC)
       IF (HC1 .LE. 0) GO TO 130
-	 CALL DV2AXY(PP1O2, V(S1), NEGONE, V(HC1), V(H1))
-	 GO TO 140
+         CALL DV2AXY(PP1O2, V(S1), NEGONE, V(HC1), V(H1))
+         GO TO 140
  130  RMAT1 = IV(RMAT)
       LMAT1 = IV(LMAT)
       CALL DL7SQR(P, V(LMAT1), V(RMAT1))
@@ -4234,15 +4234,15 @@ C
 C     *** ZERO PORTION OF S CORRESPONDING TO FIXED X COMPONENTS ***
 C
  140  DO 160 I = 1, P
-	 IF (B(1,I) .LT. B(2,I)) GO TO 160
-	 K = S1 + I*(I-1)/2
-	 CALL DV7SCP(I, V(K), ZERO)
-	 IF (I .GE. P) GO TO 170
-	 K = K + 2*I - 1
-	 I1 = I + 1
-	 DO 150 J = I1, P
-	    V(K) = ZERO
-	    K = K + J
+         IF (B(1,I) .LT. B(2,I)) GO TO 160
+         K = S1 + I*(I-1)/2
+         CALL DV7SCP(I, V(K), ZERO)
+         IF (I .GE. P) GO TO 170
+         K = K + 2*I - 1
+         I1 = I + 1
+         DO 150 J = I1, P
+            V(K) = ZERO
+            K = K + J
  150        CONTINUE
  160     CONTINUE
 C
@@ -4257,8 +4257,8 @@ C
  180  CALL DITSUM(D, G, IV, LIV, LV, P, V, X)
  190  K = IV(NITER)
       IF (K .LT. IV(MXITER)) GO TO 200
-	 IV(1) = 10
-	 GO TO 999
+         IV(1) = 10
+         GO TO 999
  200  IV(NITER) = K + 1
 C
 C  ***  UPDATE RADIUS  ***
@@ -4266,8 +4266,8 @@ C
       IF (K .EQ. 0) GO TO 220
       STEP1 = IV(STEP)
       DO 210 I = 1, P
-	 V(STEP1) = D(I) * V(STEP1)
-	 STEP1 = STEP1 + 1
+         V(STEP1) = D(I) * V(STEP1)
+         STEP1 = STEP1 + 1
  210     CONTINUE
       STEP1 = IV(STEP)
       T = V(RADFAC) * DV2NRM(P, V(STEP1))
@@ -4288,25 +4288,25 @@ C
 C  ***  CHECK STOPX AND FUNCTION EVALUATION LIMIT  ***
 C
  230  IF (.NOT. STOPX(DUMMY)) GO TO 250
-	 IV(1) = 11
-	 GO TO 260
+         IV(1) = 11
+         GO TO 260
 C
 C     ***  COME HERE WHEN RESTARTING AFTER FUNC. EVAL. LIMIT OR STOPX.
 C
  240  IF (V(F) .GE. V(F0)) GO TO 250
-	 V(RADFAC) = ONE
-	 K = IV(NITER)
-	 GO TO 200
+         V(RADFAC) = ONE
+         K = IV(NITER)
+         GO TO 200
 C
  250  IF (IV(NFCALL) .LT. IV(MXFCAL) + IV(NFCOV)) GO TO 270
-	 IV(1) = 9
+         IV(1) = 9
  260     IF (V(F) .GE. V(F0)) GO TO 999
 C
 C        ***  IN CASE OF STOPX OR FUNCTION EVALUATION LIMIT WITH
 C        ***  IMPROVED V(F), EVALUATE THE GRADIENT AT X.
 C
-	      IV(CNVCOD) = IV(1)
-	      GO TO 500
+              IV(CNVCOD) = IV(1)
+              GO TO 500
 C
 C. . . . . . . . . . . . .  COMPUTE CANDIDATE STEP  . . . . . . . . . .
 C
@@ -4325,53 +4325,53 @@ C
 C
 C        ***  COMPUTE LEVENBERG-MARQUARDT STEP IF POSSIBLE...
 C
-	 RMAT1 = IV(RMAT)
-	 IF (RMAT1 .LE. 0) GO TO 280
-	 QTR1 = IV(QTR)
-	 IF (QTR1 .LE. 0) GO TO 280
-	 LMAT1 = IV(LMAT)
-	 WLM1 = W1 + P
-	 CALL DL7MSB(B, D, G, IV(IERR), IV(IPIV0), IV(IPIV1),
+         RMAT1 = IV(RMAT)
+         IF (RMAT1 .LE. 0) GO TO 280
+         QTR1 = IV(QTR)
+         IF (QTR1 .LE. 0) GO TO 280
+         LMAT1 = IV(LMAT)
+         WLM1 = W1 + P
+         CALL DL7MSB(B, D, G, IV(IERR), IV(IPIV0), IV(IPIV1),
      1               IV(IPIV2), IV(KALM), V(LMAT1), LV, P, IV(P0),
      2               IV(PC), V(QTR1), V(RMAT1), V(STEP1), V(TD1),
      3               V(TG1), V, V(W1), V(WLM1), X, V(X01))
 C        *** H IS STORED IN THE END OF W AND HAS JUST BEEN OVERWRITTEN,
 C        *** SO WE MARK IT INVALID...
-	 IV(H) = -IABS(H1)
+         IV(H) = -IABS(H1)
 C        *** EVEN IF H WERE STORED ELSEWHERE, IT WOULD BE NECESSARY TO
 C        *** MARK INVALID THE INFORMATION DG7QTS MAY HAVE STORED IN V...
-	 IV(KAGQT) = -1
-	 GO TO 330
+         IV(KAGQT) = -1
+         GO TO 330
 C
  280  IF (H1 .GT. 0) GO TO 320
 C
 C     ***  SET H TO  D**-1 * (HC + T1*S) * D**-1.  ***
 C
-	 P1LEN = P1*(P1+1)/2
-	 H1 = -H1
-	 IV(H) = H1
-	 IV(FDH) = 0
-	 IF (P1 .LE. 0) GO TO 320
+         P1LEN = P1*(P1+1)/2
+         H1 = -H1
+         IV(H) = H1
+         IV(FDH) = 0
+         IF (P1 .LE. 0) GO TO 320
 C        *** MAKE TEMPORARY PERMUTATION ARRAY ***
-	 CALL I7COPY(P, IV(IPI), IV(IPIV0))
-	 J = IV(HC)
-	 IF (J .GT. 0) GO TO 290
-	    J = H1
-	    RMAT1 = IV(RMAT)
-	    CALL DL7SQR(P1, V(H1), V(RMAT1))
-	    GO TO 300
+         CALL I7COPY(P, IV(IPI), IV(IPIV0))
+         J = IV(HC)
+         IF (J .GT. 0) GO TO 290
+            J = H1
+            RMAT1 = IV(RMAT)
+            CALL DL7SQR(P1, V(H1), V(RMAT1))
+            GO TO 300
  290     CALL DV7CPY(P*(P+1)/2, V(H1), V(J))
-	 CALL DS7IPR(P, IV(IPI), V(H1))
+         CALL DS7IPR(P, IV(IPI), V(H1))
  300     IF (IV(MODEL) .EQ. 1) GO TO 310
-	    LMAT1 = IV(LMAT)
-	    S1 = IV(S)
-	    CALL DV7CPY(P*(P+1)/2, V(LMAT1), V(S1))
-	    CALL DS7IPR(P, IV(IPI), V(LMAT1))
-	    CALL DV2AXY(P1LEN, V(H1), ONE, V(LMAT1), V(H1))
+            LMAT1 = IV(LMAT)
+            S1 = IV(S)
+            CALL DV7CPY(P*(P+1)/2, V(LMAT1), V(S1))
+            CALL DS7IPR(P, IV(IPI), V(LMAT1))
+            CALL DV2AXY(P1LEN, V(H1), ONE, V(LMAT1), V(H1))
  310     CALL DV7CPY(P, V(TD1), D)
-	 CALL DV7IPR(P, IV(IPI), V(TD1))
-	 CALL DS7DMP(P1, V(H1), V(H1), V(TD1), -1)
-	 IV(KAGQT) = -1
+         CALL DV7IPR(P, IV(IPI), V(TD1))
+         CALL DS7DMP(P1, V(H1), V(H1), V(TD1), -1)
+         IV(KAGQT) = -1
 C
 C  ***  COMPUTE ACTUAL GOLDFELD-QUANDT-TROTTER STEP  ***
 C
@@ -4382,9 +4382,9 @@ C
       IF (IV(KALM) .GT. 0) IV(KALM) = 0
 C
  330  IF (IV(IRC) .NE. 6) GO TO 340
-	 IF (IV(RESTOR) .NE. 2) GO TO 360
-	 RSTRST = 2
-	 GO TO 370
+         IF (IV(RESTOR) .NE. 2) GO TO 360
+         RSTRST = 2
+         GO TO 370
 C
 C  ***  CHECK WHETHER EVALUATING F(X0 + STEP) LOOKS WORTHWHILE  ***
 C
@@ -4393,12 +4393,12 @@ C
       IF (IV(IRC) .NE. 5) GO TO 350
       IF (V(RADFAC) .LE. ONE) GO TO 350
       IF (V(PREDUC) .GT. ONEP2 * V(FDIF)) GO TO 350
-	 STEP1 = IV(STEP)
-	 X01 = IV(X0)
-	 CALL DV2AXY(P, V(STEP1), NEGONE, V(X01), X)
-	 IF (IV(RESTOR) .NE. 2) GO TO 360
-	 RSTRST = 0
-	 GO TO 370
+         STEP1 = IV(STEP)
+         X01 = IV(X0)
+         CALL DV2AXY(P, V(STEP1), NEGONE, V(X01), X)
+         IF (IV(RESTOR) .NE. 2) GO TO 360
+         RSTRST = 0
+         GO TO 370
 C
 C  ***  COMPUTE F(X0 + STEP)  ***
 C
@@ -4424,17 +4424,17 @@ C
  390   CALL DV7CPY(P, V(LSTGST), V(STEP1))
        GO TO 410
  400     CALL DV7CPY(P, V(STEP1), V(LSTGST))
-	 CALL DV2AXY(P, X, ONE, V(STEP1), V(X01))
-	 V(RELDX) = DRLDST(P, D, X, V(X01))
-	 IV(RESTOR) = RSTRST
+         CALL DV2AXY(P, X, ONE, V(STEP1), V(X01))
+         V(RELDX) = DRLDST(P, D, X, V(X01))
+         IV(RESTOR) = RSTRST
 C
 C  ***  IF NECESSARY, SWITCH MODELS  ***
 C
  410  IF (IV(SWITCH) .EQ. 0) GO TO 420
-	 IV(H) = -IABS(IV(H))
-	 IV(SUSED) = IV(SUSED) + 2
-	 L = IV(VSAVE)
-	 CALL DV7CPY(NVSAVE, V, V(L))
+         IV(H) = -IABS(IV(H))
+         IV(SUSED) = IV(SUSED) + 2
+         L = IV(VSAVE)
+         CALL DV7CPY(NVSAVE, V, V(L))
  420  L = IV(IRC) - 4
       STPMOD = IV(MODEL)
       IF (L .GT. 0) GO TO (440,450,460,460,460,460,460,460,570,510), L
@@ -4450,13 +4450,13 @@ C
 C
 C     ***  SWITCH MODELS  ***
 C
-	 IV(MODEL) = 3 - IV(MODEL)
-	 IF (-2 .LT. L) GO TO 470
-	      IV(H) = -IABS(IV(H))
-	      IV(SUSED) = IV(SUSED) + 2
-	      L = IV(VSAVE)
-	      CALL DV7CPY(NVSAVE, V(L), V)
-	      GO TO 230
+         IV(MODEL) = 3 - IV(MODEL)
+         IF (-2 .LT. L) GO TO 470
+              IV(H) = -IABS(IV(H))
+              IV(SUSED) = IV(SUSED) + 2
+              L = IV(VSAVE)
+              CALL DV7CPY(NVSAVE, V(L), V)
+              GO TO 230
 C
  430  IF (-3 .LT. L) GO TO 470
 C
@@ -4474,8 +4474,8 @@ C  ***  CONVERGENCE OR FALSE CONVERGENCE  ***
 C
  460  IV(CNVCOD) = L
       IF (V(F) .GE. V(F0)) GO TO 580
-	 IF (IV(XIRC) .EQ. 14) GO TO 580
-	      IV(XIRC) = 14
+         IF (IV(XIRC) .EQ. 14) GO TO 580
+              IV(XIRC) = 14
 C
 C. . . . . . . . . . . .  PROCESS ACCEPTABLE STEP  . . . . . . . . . . .
 C
@@ -4485,30 +4485,30 @@ C
 C  ***  SEE WHETHER TO SET V(RADFAC) BY GRADIENT TESTS  ***
 C
       IF (IV(IRC) .NE. 3) GO TO 500
-	 STEP1 = IV(STEP)
-	 TEMP1 = STEP1 + P
-	 TEMP2 = IV(X0)
+         STEP1 = IV(STEP)
+         TEMP1 = STEP1 + P
+         TEMP2 = IV(X0)
 C
 C     ***  SET  TEMP1 = HESSIAN * STEP  FOR USE IN GRADIENT TESTS  ***
 C
-	 HC1 = IV(HC)
-	 IF (HC1 .LE. 0) GO TO 480
-	      CALL DS7LVM(P, V(TEMP1), V(HC1), V(STEP1))
-	      GO TO 490
+         HC1 = IV(HC)
+         IF (HC1 .LE. 0) GO TO 480
+              CALL DS7LVM(P, V(TEMP1), V(HC1), V(STEP1))
+              GO TO 490
  480     RMAT1 = IV(RMAT)
-	 IPIV0 = IV(IPIVOT)
-	 CALL DV7CPY(P, V(TEMP1), V(STEP1))
-	 CALL DV7IPR(P, IV(IPIV0), V(TEMP1))
-	 CALL DL7TVM(P, V(TEMP1), V(RMAT1), V(TEMP1))
-	 CALL DL7VML(P, V(TEMP1), V(RMAT1), V(TEMP1))
-	 IPIV1 = IV(PERM) + P
-	 CALL I7PNVR(P, IV(IPIV1), IV(IPIV0))
-	 CALL DV7IPR(P, IV(IPIV1), V(TEMP1))
+         IPIV0 = IV(IPIVOT)
+         CALL DV7CPY(P, V(TEMP1), V(STEP1))
+         CALL DV7IPR(P, IV(IPIV0), V(TEMP1))
+         CALL DL7TVM(P, V(TEMP1), V(RMAT1), V(TEMP1))
+         CALL DL7VML(P, V(TEMP1), V(RMAT1), V(TEMP1))
+         IPIV1 = IV(PERM) + P
+         CALL I7PNVR(P, IV(IPIV1), IV(IPIV0))
+         CALL DV7IPR(P, IV(IPIV1), V(TEMP1))
 C
  490     IF (STPMOD .EQ. 1) GO TO 500
-	      S1 = IV(S)
-	      CALL DS7LVM(PS, V(TEMP2), V(S1), V(STEP1))
-	      CALL DV2AXY(PS, V(TEMP1), ONE, V(TEMP2), V(TEMP1))
+              S1 = IV(S)
+              CALL DS7LVM(PS, V(TEMP2), V(S1), V(STEP1))
+              CALL DV2AXY(PS, V(TEMP1), ONE, V(TEMP2), V(TEMP1))
 C
 C  ***  SAVE OLD GRADIENT AND COMPUTE NEW ONE  ***
 C
@@ -4530,18 +4530,18 @@ C  ***  SET V(RADFAC) BY GRADIENT TESTS  ***
 C
 C     ***  SET  TEMP1 = D**-1 * (HESSIAN * STEP  +  (G(X0) - G(X)))  ***
 C
-	 K = TEMP1
-	 L = G01
-	 DO 520 I = 1, P
-	      V(K) = (V(K) - V(L)) / D(I)
-	      K = K + 1
-	      L = L + 1
+         K = TEMP1
+         L = G01
+         DO 520 I = 1, P
+              V(K) = (V(K) - V(L)) / D(I)
+              K = K + 1
+              L = L + 1
  520          CONTINUE
 C
 C        ***  DO GRADIENT TESTS  ***
 C
-	 IF (DV2NRM(P, V(TEMP1)) .LE. V(DGNORM) * V(TUNER4))  GO TO 530
-	      IF (DD7TPR(P, G, V(STEP1))
+         IF (DV2NRM(P, V(TEMP1)) .LE. V(DGNORM) * V(TUNER4))  GO TO 530
+              IF (DD7TPR(P, G, V(STEP1))
      1                  .GE. V(GTSTEP) * V(TUNER5))  GO TO 540
  530               V(RADFAC) = V(INCFAC)
 C
@@ -4564,8 +4564,8 @@ C  ***  SET G0 TO WCHMTD CHOICE OF FLETCHER AND AL-BAALI  ***
 C
       HC1 = IV(HC)
       IF (HC1 .LE. 0) GO TO 550
-	 CALL DS7LVM(PS, V(G01), V(HC1), V(STEP1))
-	 GO TO 560
+         CALL DS7LVM(PS, V(G01), V(HC1), V(STEP1))
+         GO TO 560
 C
  550  RMAT1 = IV(RMAT)
       IPIV0 = IV(IPIVOT)
@@ -4630,8 +4630,8 @@ C
       IV(H) = -H1
       HC1 = IV(HC)
       IF (HC1 .LE. 0) GO TO 650
-	   CALL DV7CPY(P*(P+1)/2, V(H1), V(HC1))
-	   GO TO 660
+           CALL DV7CPY(P*(P+1)/2, V(H1), V(HC1))
+           GO TO 660
  650  RMAT1 = IV(RMAT)
       CALL DL7SQR(P, V(H1), V(RMAT1))
 C
@@ -4658,15 +4658,15 @@ C
       IPI = IV(PERM)
       CALL I7PNVR(P, IV(IPI), IV(J))
       DO 700 I = 1, P
-	 IV(J) = I
-	 J = J + 1
+         IV(J) = I
+         J = J + 1
  700     CONTINUE
 C
 C  ***  PROJECT X INTO FEASIBLE REGION (PRIOR TO COMPUTING F OR G)  ***
 C
  710  DO 720 I = 1, P
-	 IF (X(I) .LT. B(1,I)) X(I) = B(1,I)
-	 IF (X(I) .GT. B(2,I)) X(I) = B(2,I)
+         IF (X(I) .LT. B(1,I)) X(I) = B(1,I)
+         IF (X(I) .GT. B(2,I)) X(I) = B(2,I)
  720     CONTINUE
       IV(TOOBIG) = 0
 C
@@ -4817,8 +4817,8 @@ C
       JLEN = N*P
       I = L + P
       IF (IV(1) .NE. 13) GO TO 10
-	 IV(IVNEED) = IV(IVNEED) + L
-	 IV(VNEED) = IV(VNEED) + P + 2*N + JLEN + LL1O2 + L
+         IV(IVNEED) = IV(IVNEED) + L
+         IV(VNEED) = IV(VNEED) + P + 2*N + JLEN + LL1O2 + L
  10   IF (IV(PERM) .LE. AR) IV(PERM) = AR + 1
       CALL DRN2GB(B, V, V, IV, LIV, LV, N, N, N1, NML, P, V, V, V, ALF)
       IF (IV(1) .NE. 14) GO TO 999
@@ -4871,9 +4871,9 @@ C
  50   IV(1) = IV(IV1SAV)
       MD = IV(MODE)
       IF (MD .LE. 0) GO TO 60
-	 NML = N
-	 DR1L = DR1
-	 R1L = R1
+         NML = N
+         DR1L = DR1
+         R1L = R1
  60   IF (IV(TOOBIG) .NE. 0) GO TO 30
       IF (IABS(IV1) .EQ. 2) GO TO 170
 C
@@ -4895,18 +4895,18 @@ C
       K = L
       IF (IER .NE. 0) K = IER - 1
  70   IF (K .LE. 0) GO TO 90
-	 T = DL7SVX(K, V(AR1), C, C)
-	 IF (T .GT. ZERO) T = DL7SVN(K, V(AR1), C, C) / T
-	 IF (T .GT. SINGTL) GO TO 80
-	 K = K - 1
-	 GO TO 70
+         T = DL7SVX(K, V(AR1), C, C)
+         IF (T .GT. ZERO) T = DL7SVN(K, V(AR1), C, C) / T
+         IF (T .GT. SINGTL) GO TO 80
+         K = K - 1
+         GO TO 70
 C
 C *** RECORD RANK IN IV(IERS)... IV(IERS) = 0 MEANS FULL RANK,
 C *** IV(IERS) .GT. 0 MEANS RANK IV(IERS) - 1.
 C
  80   IF (K .GE. L) GO TO 100
  90      IER = K + 1
-	 CALL DV7SCP(L-K, C(K+1), ZERO)
+         CALL DV7SCP(L-K, C(K+1), ZERO)
  100  IV(IERS) = IER
       IF (K .LE. 0) GO TO 110
 C
@@ -4930,8 +4930,8 @@ C
       DO 130 I = 1, L
  130     CALL DV2AXY(N, V(R1), -C(I), A(1,I), V(R1))
  140  IF (IV(1) .GT. 0) GO TO 30
-	 IV(1) = 2
-	 GO TO 160
+         IV(1) = 2
+         GO TO 160
 C
 C  ***  NEW GRADIENT (JACOBIAN) NEEDED  ***
 C
@@ -4944,17 +4944,17 @@ C  ***  COMPUTE NEW JACOBIAN  ***
 C
  170  IF (NDA .LE. 0) GO TO 240
       DO 180 I = 1, NDA
-	 I1 = IN(1,I) - 1
-	 IF (I1 .LT. 0) GO TO 180
-	 J1 = IN(2,I)
-	 K = DR1 + I1*N
-	 T = NEGONE
-	 IF (J1 .LE. L) T = -C(J1)
-	 CALL DV2AXY(N, V(K), T, DA(1,I), V(K))
+         I1 = IN(1,I) - 1
+         IF (I1 .LT. 0) GO TO 180
+         J1 = IN(2,I)
+         K = DR1 + I1*N
+         T = NEGONE
+         IF (J1 .LE. L) T = -C(J1)
+         CALL DV2AXY(N, V(K), T, DA(1,I), V(K))
  180     CONTINUE
       IF (IV1 .EQ. 2) GO TO 190
-	 IV(1) = IV1
-	 GO TO 999
+         IV(1) = IV1
+         GO TO 999
  190  IF (L .LE. 0) GO TO 30
       IF (MD .GT. 0) GO TO 30
       K = DR1
@@ -4963,19 +4963,19 @@ C
       IF (IER .GT. 0) NRAN = IER - 1
       IF (NRAN .LE. 0) GO TO 210
       DO 200 I = 1, P
-	 CALL DQ7APL(LA, N, NRAN, A, V(K), IER)
-	 K = K + N
+         CALL DQ7APL(LA, N, NRAN, A, V(K), IER)
+         K = K + N
  200     CONTINUE
  210  CALL DV7CPY(L, V(CSAVE1), C)
  220  IF (IER .EQ. 0) GO TO 30
 C
 C     *** ADJUST SUBSCRIPTS DESCRIBING R AND DR...
 C
-	 NRAN = IER - 1
-	 DR1L = DR1 + NRAN
-	 NML = N - NRAN
-	 R1L = R1 + NRAN
-	 GO TO 30
+         NRAN = IER - 1
+         DR1L = DR1 + NRAN
+         NML = N - NRAN
+         R1L = R1 + NRAN
+         GO TO 30
 C
 C  ***  CONVERGENCE OR LIMIT REACHED  ***
 C
@@ -5037,11 +5037,11 @@ C  ***  SET  A = A + U*(W**T) + W*(U**T)  ***
 C
       K = 1
       DO 40 I = 1, P
-	 UI = U(I)
-	 WI = W(I)
-	 DO 30 J = 1, I
-	      A(K) = SIZE*A(K) + UI*W(J) + WI*U(J)
-	      K = K + 1
+         UI = U(I)
+         WI = W(I)
+         DO 30 J = 1, I
+              A(K) = SIZE*A(K) + UI*W(J) + WI*U(J)
+              K = K + 1
  30           CONTINUE
  40      CONTINUE
 C
@@ -5263,7 +5263,7 @@ C
       IF (IERR .NE. 0) GO TO 90
       T = DL7SVN(P, R, STEP, W(RES))
       IF (T .GE. ONE) GO TO 30
-	 IF (DV2NRM(P, QTR) .GE. BIG*T) GO TO 90
+         IF (DV2NRM(P, QTR) .GE. BIG*T) GO TO 90
 C
 C  ***  COMPUTE GAUSS-NEWTON STEP  ***
 C
@@ -5274,8 +5274,8 @@ C     ***  TREAT IT AS SUCH WHEN USING DL7ITV AND DL7IVM.
  30   CALL DL7ITV(P, W, R, QTR)
 C     ***  TEMPORARILY STORE PERMUTED -D*STEP IN STEP.
       DO 60 I = 1, P
-	 J1 = IPIVOT(I)
-	 STEP(I) = D(J1)*W(I)
+         J1 = IPIVOT(I)
+         STEP(I) = D(J1)*W(I)
  60      CONTINUE
       DST = DV2NRM(P, STEP)
       V(DST0) = DST
@@ -5287,8 +5287,8 @@ C
 C  ***  GAUSS-NEWTON STEP WAS UNACCEPTABLE.  COMPUTE L0  ***
 C
       DO 70 I = 1, P
-	 J1 = IPIVOT(I)
-	 STEP(I) = D(J1)*(STEP(I)/DST)
+         J1 = IPIVOT(I)
+         STEP(I) = D(J1)*(STEP(I)/DST)
  70      CONTINUE
       CALL DL7IVM(P, STEP, R, STEP)
       T = ONE / DV2NRM(P, STEP)
@@ -5330,103 +5330,103 @@ C
       DO 270 I = 1, P
 C        ***  GENERATE, APPLY 1ST GIVENS TRANS. FOR ROW I OF ALPHAK*D.
 C        ***  (USE STEP TO STORE TEMPORARY ROW)  ***
-	 L = I*(I+1)/2 + RMAT0
-	 WL = W(L)
-	 D2 = ONE
-	 D1 = W(I)
-	 J1 = IPIVOT(I)
-	 ADI = SQRTAK*D(J1)
-	 IF (ADI .GE. DABS(WL)) GO TO 150
+         L = I*(I+1)/2 + RMAT0
+         WL = W(L)
+         D2 = ONE
+         D1 = W(I)
+         J1 = IPIVOT(I)
+         ADI = SQRTAK*D(J1)
+         IF (ADI .GE. DABS(WL)) GO TO 150
  130     A = ADI/WL
-	 B = D2*A/D1
-	 T = A*B + ONE
-	 IF (T .GT. TTOL) GO TO 150
-	 W(I) = D1/T
-	 D2 = D2/T
-	 W(L) = T*WL
-	 A = -A
-	 DO 140 J1 = I, P
-	      L = L + J1
-	      STEP(J1) = A*W(L)
+         B = D2*A/D1
+         T = A*B + ONE
+         IF (T .GT. TTOL) GO TO 150
+         W(I) = D1/T
+         D2 = D2/T
+         W(L) = T*WL
+         A = -A
+         DO 140 J1 = I, P
+              L = L + J1
+              STEP(J1) = A*W(L)
  140          CONTINUE
-	 GO TO 170
+         GO TO 170
 C
  150     B = WL/ADI
-	 A = D1*B/D2
-	 T = A*B + ONE
-	 IF (T .GT. TTOL) GO TO 130
-	 W(I) = D2/T
-	 D2 = D1/T
-	 W(L) = T*ADI
-	 DO 160 J1 = I, P
-	      L = L + J1
-	      WL = W(L)
-	      STEP(J1) = -WL
-	      W(L) = A*WL
+         A = D1*B/D2
+         T = A*B + ONE
+         IF (T .GT. TTOL) GO TO 130
+         W(I) = D2/T
+         D2 = D1/T
+         W(L) = T*ADI
+         DO 160 J1 = I, P
+              L = L + J1
+              WL = W(L)
+              STEP(J1) = -WL
+              W(L) = A*WL
  160          CONTINUE
 C
  170     IF (I .EQ. P) GO TO 280
 C
 C        ***  NOW USE GIVENS TRANS. TO ZERO ELEMENTS OF TEMP. ROW  ***
 C
-	 IP1 = I + 1
-	 DO 260 I1 = IP1, P
-	      SI = STEP(I1-1)
-	      IF (SI .EQ. ZERO) GO TO 260
-	      L = I1*(I1+1)/2 + RMAT0
-	      WL = W(L)
-	      D1 = W(I1)
+         IP1 = I + 1
+         DO 260 I1 = IP1, P
+              SI = STEP(I1-1)
+              IF (SI .EQ. ZERO) GO TO 260
+              L = I1*(I1+1)/2 + RMAT0
+              WL = W(L)
+              D1 = W(I1)
 C
 C             ***  RESCALE ROW I1 IF NECESSARY  ***
 C
-	      IF (D1 .GE. DTOL) GO TO 190
-		   D1 = D1*DFACSQ
-		   WL = WL/DFAC
-		   K = L
-		   DO 180 J1 = I1, P
-			K = K + J1
-			W(K) = W(K)/DFAC
+              IF (D1 .GE. DTOL) GO TO 190
+                   D1 = D1*DFACSQ
+                   WL = WL/DFAC
+                   K = L
+                   DO 180 J1 = I1, P
+                        K = K + J1
+                        W(K) = W(K)/DFAC
  180                    CONTINUE
 C
 C             ***  USE GIVENS TRANS. TO ZERO NEXT ELEMENT OF TEMP. ROW
 C
  190          IF (DABS(SI) .GT. DABS(WL)) GO TO 220
  200          A = SI/WL
-	      B = D2*A/D1
-	      T = A*B + ONE
-	      IF (T .GT. TTOL) GO TO 220
-	      W(L) = T*WL
-	      W(I1) = D1/T
-	      D2 = D2/T
-	      DO 210 J1 = I1, P
-		   L = L + J1
-		   WL = W(L)
-		   SJ = STEP(J1)
-		   W(L) = WL + B*SJ
-		   STEP(J1) = SJ - A*WL
+              B = D2*A/D1
+              T = A*B + ONE
+              IF (T .GT. TTOL) GO TO 220
+              W(L) = T*WL
+              W(I1) = D1/T
+              D2 = D2/T
+              DO 210 J1 = I1, P
+                   L = L + J1
+                   WL = W(L)
+                   SJ = STEP(J1)
+                   W(L) = WL + B*SJ
+                   STEP(J1) = SJ - A*WL
  210               CONTINUE
-	      GO TO 240
+              GO TO 240
 C
  220          B = WL/SI
-	      A = D1*B/D2
-	      T = A*B + ONE
-	      IF (T .GT. TTOL) GO TO 200
-	      W(I1) = D2/T
-	      D2 = D1/T
-	      W(L) = T*SI
-	      DO 230 J1 = I1, P
-		   L = L + J1
-		   WL = W(L)
-		   SJ = STEP(J1)
-		   W(L) = A*WL + SJ
-		   STEP(J1) = B*SJ - WL
+              A = D1*B/D2
+              T = A*B + ONE
+              IF (T .GT. TTOL) GO TO 200
+              W(I1) = D2/T
+              D2 = D1/T
+              W(L) = T*SI
+              DO 230 J1 = I1, P
+                   L = L + J1
+                   WL = W(L)
+                   SJ = STEP(J1)
+                   W(L) = A*WL + SJ
+                   STEP(J1) = B*SJ - WL
  230               CONTINUE
 C
 C             ***  RESCALE TEMP. ROW IF NECESSARY  ***
 C
  240          IF (D2 .GE. DTOL) GO TO 260
-		   D2 = D2*DFACSQ
-		   DO 250 K = I1, P
+                   D2 = D2*DFACSQ
+                   DO 250 K = I1, P
  250                    STEP(K) = STEP(K)/DFAC
  260          CONTINUE
  270     CONTINUE
@@ -5436,11 +5436,11 @@ C
  280  CALL DL7ITV(P, W(RES), W(RMAT), W(RES))
 C     ***  RECOVER STEP AND STORE PERMUTED -D*STEP AT W(RES)  ***
       DO 290 I = 1, P
-	 J1 = IPIVOT(I)
-	 K = RES0 + I
-	 T = W(K)
-	 STEP(J1) = -T
-	 W(K) = T*D(J1)
+         J1 = IPIVOT(I)
+         K = RES0 + I
+         T = W(K)
+         STEP(J1) = -T
+         W(K) = T*D(J1)
  290     CONTINUE
       DST = DV2NRM(P, W(RES))
       PHI = DST - RAD
@@ -5451,11 +5451,11 @@ C
 C  ***  CHECK FOR (AND HANDLE) SPECIAL CASE  ***
 C
       IF (PHI .GT. ZERO) GO TO 310
-	 IF (KA .GE. KALIM) GO TO 430
-	      TWOPSI = ALPHAK*DST*DST - DD7TPR(P, STEP, G)
-	      IF (ALPHAK .GE. TWOPSI*PSIFAC) GO TO 310
-		   V(STPPAR) = -ALPHAK
-		   GO TO 440
+         IF (KA .GE. KALIM) GO TO 430
+              TWOPSI = ALPHAK*DST*DST - DD7TPR(P, STEP, G)
+              IF (ALPHAK .GE. TWOPSI*PSIFAC) GO TO 310
+                   V(STPPAR) = -ALPHAK
+                   GO TO 440
 C
 C  ***  UNACCEPTABLE STEP -- UPDATE LK, UK, ALPHAK, AND TRY AGAIN  ***
 C
@@ -5463,9 +5463,9 @@ C
       GO TO 320
  310  IF (PHI .LT. ZERO) UK = ALPHAK
  320  DO 330 I = 1, P
-	 J1 = IPIVOT(I)
-	 K = RES0 + I
-	 STEP(I) = D(J1) * (W(K)/DST)
+         J1 = IPIVOT(I)
+         K = RES0 + I
+         STEP(I) = D(J1) * (W(K)/DST)
  330     CONTINUE
       CALL DL7IVM(P, STEP, W(RMAT), STEP)
       DO 340 I = 1, P
@@ -5488,10 +5488,10 @@ C
       IF (RAD .GT. V(RAD0)) GO TO 380
 C
 C        ***  SMALLER RADIUS  ***
-	 UK = T
-	 IF (ALPHAK .LE. ZERO) LK = ZERO
-	 IF (V(DST0) .GT. ZERO) LK = DMAX1(LK, (V(DST0)-RAD)*W(PHIPIN))
-	 GO TO 300
+         UK = T
+         IF (ALPHAK .LE. ZERO) LK = ZERO
+         IF (V(DST0) .GT. ZERO) LK = DMAX1(LK, (V(DST0)-RAD)*W(PHIPIN))
+         GO TO 300
 C
 C     ***  BIGGER RADIUS  ***
  380  IF (ALPHAK .LE. ZERO .OR. UK .GT. T) UK = T
@@ -5515,8 +5515,8 @@ C  ***  ACCEPTABLE GAUSS-NEWTON STEP -- RECOVER STEP FROM W  ***
 C
  410  ALPHAK = ZERO
       DO 420 I = 1, P
-	 J1 = IPIVOT(I)
-	 STEP(J1) = -W(I)
+         J1 = IPIVOT(I)
+         STEP(J1) = -W(I)
  420     CONTINUE
 C
 C  ***  SAVE VALUES FOR USE IN A POSSIBLE RESTART  ***
@@ -5641,10 +5641,10 @@ C
       ALPHA0 = G1 - P - 1
       IPI = IV(PERM)
       DO 40 I = 1, P
-	 K = ALPHA0 + IV(IPI)
-	 V(K) = DD7TPR(I, V(J), V(J))
-	 IPI = IPI + 1
-	 J = J + I
+         K = ALPHA0 + IV(IPI)
+         V(K) = DD7TPR(I, V(J), V(J))
+         IPI = IPI + 1
+         J = J + I
  40      CONTINUE
 C     ***  UNDO INCREMENT OF IV(NGCALL) DONE BY DRMNGB  ***
       IV(NGCALL) = IV(NGCALL) - 1
@@ -5666,8 +5666,8 @@ C
       I = IV(SGIRC)
       IF (I .EQ. 0) GO TO 10
       IF (I .LE. P) GO TO 70
-	 IV(TOOBIG) = 1
-	 GO TO 10
+         IV(TOOBIG) = 1
+         GO TO 10
 C
  70   IV(NGCALL) = IV(NGCALL) + 1
       GO TO 999
@@ -5754,8 +5754,8 @@ C
 C     INITIALIZATION BLOCK.
 C
       DO 10 JP = 1, N
-	 NDEG(JP) = 0
-	 BWA(JP) = .FALSE.
+         NDEG(JP) = 0
+         BWA(JP) = .FALSE.
    10    CONTINUE
 C
 C     COMPUTE THE DEGREE SEQUENCE BY DETERMINING THE CONTRIBUTIONS
@@ -5764,36 +5764,36 @@ C     COLUMNS WHICH HAVE NOT YET BEEN CONSIDERED.
 C
       IF (N .LT. 2) GO TO 90
       DO 80 JCOL = 2, N
-	 BWA(JCOL) = .TRUE.
-	 DEG = 0
+         BWA(JCOL) = .TRUE.
+         DEG = 0
 C
 C        DETERMINE ALL POSITIONS (IR,JCOL) WHICH CORRESPOND
 C        TO NON-ZEROES IN THE MATRIX.
 C
-	 JPL = JPNTR(JCOL)
-	 JPU = JPNTR(JCOL+1) - 1
-	 IF (JPU .LT. JPL) GO TO 50
-	 DO 40 JP = JPL, JPU
-	    IR = INDROW(JP)
+         JPL = JPNTR(JCOL)
+         JPU = JPNTR(JCOL+1) - 1
+         IF (JPU .LT. JPL) GO TO 50
+         DO 40 JP = JPL, JPU
+            IR = INDROW(JP)
 C
 C           FOR EACH ROW IR, DETERMINE ALL POSITIONS (IR,IC)
 C           WHICH CORRESPOND TO NON-ZEROES IN THE MATRIX.
 C
-	    IPL = IPNTR(IR)
-	    IPU = IPNTR(IR+1) - 1
-	    DO 30 IP = IPL, IPU
-	       IC = INDCOL(IP)
+            IPL = IPNTR(IR)
+            IPU = IPNTR(IR+1) - 1
+            DO 30 IP = IPL, IPU
+               IC = INDCOL(IP)
 C
 C              ARRAY BWA MARKS COLUMNS WHICH HAVE CONTRIBUTED TO
 C              THE DEGREE COUNT OF COLUMN JCOL. UPDATE THE DEGREE
 C              COUNTS OF THESE COLUMNS. ARRAY IWA RECORDS THE
 C              MARKED COLUMNS.
 C
-	       IF (BWA(IC)) GO TO 20
-	       BWA(IC) = .TRUE.
-	       NDEG(IC) = NDEG(IC) + 1
-	       DEG = DEG + 1
-	       IWA(DEG) = IC
+               IF (BWA(IC)) GO TO 20
+               BWA(IC) = .TRUE.
+               NDEG(IC) = NDEG(IC) + 1
+               DEG = DEG + 1
+               IWA(DEG) = IC
    20          CONTINUE
    30          CONTINUE
    40       CONTINUE
@@ -5802,12 +5802,12 @@ C
 C        UN-MARK THE COLUMNS RECORDED BY IWA AND FINALIZE THE
 C        DEGREE COUNT OF COLUMN JCOL.
 C
-	 IF (DEG .LT. 1) GO TO 70
-	 DO 60 JP = 1, DEG
-	    IC = IWA(JP)
-	    BWA(IC) = .FALSE.
+         IF (DEG .LT. 1) GO TO 70
+         DO 60 JP = 1, DEG
+            IC = IWA(JP)
+            BWA(IC) = .FALSE.
    60       CONTINUE
-	 NDEG(JCOL) = NDEG(JCOL) + DEG
+         NDEG(JCOL) = NDEG(JCOL) + DEG
    70    CONTINUE
    80    CONTINUE
    90 CONTINUE
@@ -5975,8 +5975,8 @@ C
       IV(DG) = IV(NWTSTP) + N
       IV(NEXTV) = IV(DG) + N
       IF (IV(1) .NE. 13) GO TO 20
-	 IV(1) = 14
-	 GO TO 999
+         IV(1) = 14
+         GO TO 999
 C
 C  ***  INITIALIZATION  ***
 C
@@ -5996,14 +5996,14 @@ C
 C
 C     ***  SET THE INITIAL HESSIAN APPROXIMATION TO DIAG(D)**-2  ***
 C
-	 L = IV(LMAT)
-	 CALL DV7SCP(N*(N+1)/2, V(L), ZERO)
-	 K = L - 1
-	 DO 30 I = 1, N
-	      K = K + I
-	      T = D(I)
-	      IF (T .LE. ZERO) T = ONE
-	      V(K) = T
+         L = IV(LMAT)
+         CALL DV7SCP(N*(N+1)/2, V(L), ZERO)
+         K = L - 1
+         DO 30 I = 1, N
+              K = K + I
+              T = D(I)
+              IF (T .LE. ZERO) T = ONE
+              V(K) = T
  30           CONTINUE
 C
 C  ***  COMPUTE INITIAL FUNCTION VALUE  ***
@@ -6016,14 +6016,14 @@ C
       V(F0) = FX
       IV(1) = 2
       IF (IV(TOOBIG) .EQ. 0) GO TO 999
-	 IV(1) = 63
-	 GO TO 350
+         IV(1) = 63
+         GO TO 350
 C
 C  ***  MAKE SURE GRADIENT COULD BE COMPUTED  ***
 C
  60   IF (IV(TOOBIG) .EQ. 0) GO TO 70
-	 IV(1) = 65
-	 GO TO 350
+         IV(1) = 65
+         GO TO 350
 C
  70   DG1 = IV(DG)
       CALL DV7VMP(N, V(DG1), G, D, -1)
@@ -6047,8 +6047,8 @@ C
  80   CALL DITSUM(D, G, IV, LIV, LV, N, V, X)
  90   K = IV(NITER)
       IF (K .LT. IV(MXITER)) GO TO 100
-	 IV(1) = 10
-	 GO TO 350
+         IV(1) = 10
+         GO TO 350
 C
 C  ***  UPDATE RADIUS  ***
 C
@@ -6071,25 +6071,25 @@ C
 C  ***  CHECK STOPX AND FUNCTION EVALUATION LIMIT  ***
 C
  110  IF (.NOT. STOPX(DUMMY)) GO TO 130
-	 IV(1) = 11
-	 GO TO 140
+         IV(1) = 11
+         GO TO 140
 C
 C     ***  COME HERE WHEN RESTARTING AFTER FUNC. EVAL. LIMIT OR STOPX.
 C
  120  IF (V(F) .GE. V(F0)) GO TO 130
-	 V(RADFAC) = ONE
-	 K = IV(NITER)
-	 GO TO 100
+         V(RADFAC) = ONE
+         K = IV(NITER)
+         GO TO 100
 C
  130  IF (IV(NFCALL) .LT. IV(MXFCAL)) GO TO 150
-	 IV(1) = 9
+         IV(1) = 9
  140     IF (V(F) .GE. V(F0)) GO TO 350
 C
 C        ***  IN CASE OF STOPX OR FUNCTION EVALUATION LIMIT WITH
 C        ***  IMPROVED V(F), EVALUATE THE GRADIENT AT X.
 C
-	      IV(CNVCOD) = IV(1)
-	      GO TO 290
+              IV(CNVCOD) = IV(1)
+              GO TO 290
 C
 C. . . . . . . . . . . . .  COMPUTE CANDIDATE STEP  . . . . . . . . . .
 C
@@ -6097,21 +6097,21 @@ C
       DG1 = IV(DG)
       NWTST1 = IV(NWTSTP)
       IF (IV(KAGQT) .GE. 0) GO TO 160
-	 L = IV(LMAT)
-	 CALL DL7IVM(N, V(NWTST1), V(L), G)
-	 V(NREDUC) = HALF * DD7TPR(N, V(NWTST1), V(NWTST1))
-	 CALL DL7ITV(N, V(NWTST1), V(L), V(NWTST1))
-	 CALL DV7VMP(N, V(STEP1), V(NWTST1), D, 1)
-	 V(DST0) = DV2NRM(N, V(STEP1))
-	 CALL DV7VMP(N, V(DG1), V(DG1), D, -1)
-	 CALL DL7TVM(N, V(STEP1), V(L), V(DG1))
-	 V(GTHG) = DV2NRM(N, V(STEP1))
-	 IV(KAGQT) = 0
+         L = IV(LMAT)
+         CALL DL7IVM(N, V(NWTST1), V(L), G)
+         V(NREDUC) = HALF * DD7TPR(N, V(NWTST1), V(NWTST1))
+         CALL DL7ITV(N, V(NWTST1), V(L), V(NWTST1))
+         CALL DV7VMP(N, V(STEP1), V(NWTST1), D, 1)
+         V(DST0) = DV2NRM(N, V(STEP1))
+         CALL DV7VMP(N, V(DG1), V(DG1), D, -1)
+         CALL DL7TVM(N, V(STEP1), V(L), V(DG1))
+         V(GTHG) = DV2NRM(N, V(STEP1))
+         IV(KAGQT) = 0
  160  CALL DD7DOG(V(DG1), LV, N, V(NWTST1), V(STEP1), V)
       IF (IV(IRC) .NE. 6) GO TO 170
-	 IF (IV(RESTOR) .NE. 2) GO TO 190
-	 RSTRST = 2
-	 GO TO 200
+         IF (IV(RESTOR) .NE. 2) GO TO 190
+         RSTRST = 2
+         GO TO 200
 C
 C  ***  CHECK WHETHER EVALUATING F(X0 + STEP) LOOKS WORTHWHILE  ***
 C
@@ -6120,9 +6120,9 @@ C
       IF (IV(IRC) .NE. 5) GO TO 180
       IF (V(RADFAC) .LE. ONE) GO TO 180
       IF (V(PREDUC) .GT. ONEP2 * V(FDIF)) GO TO 180
-	 IF (IV(RESTOR) .NE. 2) GO TO 190
-	 RSTRST = 0
-	 GO TO 200
+         IF (IV(RESTOR) .NE. 2) GO TO 190
+         RSTRST = 0
+         GO TO 200
 C
 C  ***  COMPUTE F(X0 + STEP)  ***
 C
@@ -6148,9 +6148,9 @@ C
  220   CALL DV7CPY(N, V(LSTGST), V(STEP1))
        GO TO 240
  230     CALL DV7CPY(N, V(STEP1), V(LSTGST))
-	 CALL DV2AXY(N, X, ONE, V(STEP1), V(X01))
-	 V(RELDX) = DRLDST(N, D, X, V(X01))
-	 IV(RESTOR) = RSTRST
+         CALL DV2AXY(N, X, ONE, V(STEP1), V(X01))
+         V(RELDX) = DRLDST(N, D, X, V(X01))
+         IV(RESTOR) = RSTRST
 C
  240  K = IV(IRC)
       GO TO (250,280,280,280,250,260,270,270,270,270,270,270,330,300), K
@@ -6158,7 +6158,7 @@ C
 C     ***  RECOMPUTE STEP WITH CHANGED RADIUS  ***
 C
  250     V(RADIUS) = V(RADFAC) * V(DSTNRM)
-	 GO TO 110
+         GO TO 110
 C
 C  ***  COMPUTE STEP OF LENGTH V(LMAXS) FOR SINGULAR CONVERGENCE TEST.
 C
@@ -6169,20 +6169,20 @@ C  ***  CONVERGENCE OR FALSE CONVERGENCE  ***
 C
  270  IV(CNVCOD) = K - 4
       IF (V(F) .GE. V(F0)) GO TO 340
-	 IF (IV(XIRC) .EQ. 14) GO TO 340
-	      IV(XIRC) = 14
+         IF (IV(XIRC) .EQ. 14) GO TO 340
+              IV(XIRC) = 14
 C
 C. . . . . . . . . . . .  PROCESS ACCEPTABLE STEP  . . . . . . . . . . .
 C
  280  IF (IV(IRC) .NE. 3) GO TO 290
-	 STEP1 = IV(STEP)
-	 TEMP1 = IV(STLSTG)
+         STEP1 = IV(STEP)
+         TEMP1 = IV(STLSTG)
 C
 C     ***  SET  TEMP1 = HESSIAN * STEP  FOR USE IN GRADIENT TESTS  ***
 C
-	 L = IV(LMAT)
-	 CALL DL7TVM(N, V(TEMP1), V(L), V(STEP1))
-	 CALL DL7VML(N, V(TEMP1), V(L), V(TEMP1))
+         L = IV(LMAT)
+         CALL DL7TVM(N, V(TEMP1), V(L), V(STEP1))
+         CALL DL7VML(N, V(TEMP1), V(L), V(TEMP1))
 C
 C  ***  COMPUTE GRADIENT  ***
 C
@@ -6202,14 +6202,14 @@ C  ***  SET V(RADFAC) BY GRADIENT TESTS  ***
 C
 C     ***  SET  TEMP1 = DIAG(D)**-1 * (HESSIAN*STEP + (G(X0)-G(X)))  ***
 C
-	 CALL DV2AXY(N, V(TEMP1), NEGONE, V(G01), V(TEMP1))
-	 CALL DV7VMP(N, V(TEMP1), V(TEMP1), D, -1)
+         CALL DV2AXY(N, V(TEMP1), NEGONE, V(G01), V(TEMP1))
+         CALL DV7VMP(N, V(TEMP1), V(TEMP1), D, -1)
 C
 C        ***  DO GRADIENT TESTS  ***
 C
-	 IF (DV2NRM(N, V(TEMP1)) .LE. V(DGNORM) * V(TUNER4))
+         IF (DV2NRM(N, V(TEMP1)) .LE. V(DGNORM) * V(TUNER4))
      1                  GO TO 310
-	      IF (DD7TPR(N, G, V(STEP1))
+              IF (DD7TPR(N, G, V(STEP1))
      1                  .GE. V(GTSTEP) * V(TUNER5))  GO TO 320
  310               V(RADFAC) = V(INCFAC)
 C
@@ -6362,12 +6362,12 @@ C     THEN LIST(JCOL) IS THE INCIDENCE-DEGREE ORDER OF COLUMN JCOL.
 C
       MAXINC = 0
       DO 10 JP = 1, N
-	 LIST(JP) = 0
-	 BWA(JP) = .FALSE.
-	 IWA1(JP) = 0
-	 L = IWA4(JP)
-	 IF (JP .NE. 1) IWA2(L) = IWA4(JP-1)
-	 IF (JP .NE. N) IWA3(L) = IWA4(JP+1)
+         LIST(JP) = 0
+         BWA(JP) = .FALSE.
+         IWA1(JP) = 0
+         L = IWA4(JP)
+         IF (JP .NE. 1) IWA2(L) = IWA4(JP-1)
+         IF (JP .NE. N) IWA3(L) = IWA4(JP+1)
    10    CONTINUE
       IWA1(1) = IWA4(1)
       L = IWA4(1)
@@ -6380,7 +6380,7 @@ C     OF COLUMNS OF MAXIMAL INCIDENCE.
 C
       MAXLST = 0
       DO 20 IR = 1, M
-	 MAXLST = MAXLST + (IPNTR(IR+1) - IPNTR(IR))**2
+         MAXLST = MAXLST + (IPNTR(IR+1) - IPNTR(IR))**2
    20    CONTINUE
       MAXLST = MAXLST/N
       MAXCLQ = 1
@@ -6392,72 +6392,72 @@ C
 C        CHOOSE A COLUMN JCOL OF MAXIMAL DEGREE AMONG THE
 C        COLUMNS OF MAXIMAL INCIDENCE.
 C
-	 JP = IWA1(MAXINC+1)
-	 NUMLST = 1
-	 NUMWGT = -1
+         JP = IWA1(MAXINC+1)
+         NUMLST = 1
+         NUMWGT = -1
    30    CONTINUE
-	    IF (NDEG(JP) .LE. NUMWGT) GO TO 40
-	    NUMWGT = NDEG(JP)
-	    JCOL = JP
+            IF (NDEG(JP) .LE. NUMWGT) GO TO 40
+            NUMWGT = NDEG(JP)
+            JCOL = JP
    40       CONTINUE
-	    JP = IWA3(JP)
-	    NUMLST = NUMLST + 1
-	    IF (JP .GT. 0 .AND. NUMLST .LE. MAXLST) GO TO 30
-	 LIST(JCOL) = NUMORD
+            JP = IWA3(JP)
+            NUMLST = NUMLST + 1
+            IF (JP .GT. 0 .AND. NUMLST .LE. MAXLST) GO TO 30
+         LIST(JCOL) = NUMORD
 C
 C        DELETE COLUMN JCOL FROM THE LIST OF COLUMNS OF
 C        MAXIMAL INCIDENCE.
 C
-	 L = IWA2(JCOL)
-	 IF (L .EQ. 0) IWA1(MAXINC+1) = IWA3(JCOL)
-	 IF (L .GT. 0) IWA3(L) = IWA3(JCOL)
-	 L = IWA3(JCOL)
-	 IF (L .GT. 0) IWA2(L) = IWA2(JCOL)
+         L = IWA2(JCOL)
+         IF (L .EQ. 0) IWA1(MAXINC+1) = IWA3(JCOL)
+         IF (L .GT. 0) IWA3(L) = IWA3(JCOL)
+         L = IWA3(JCOL)
+         IF (L .GT. 0) IWA2(L) = IWA2(JCOL)
 C
 C        UPDATE THE SIZE OF THE LARGEST CLIQUE
 C        FOUND DURING THE ORDERING.
 C
-	 IF (MAXINC .EQ. 0) NCOMP = 0
-	 NCOMP = NCOMP + 1
-	 IF (MAXINC + 1 .EQ. NCOMP) MAXCLQ = MAX0(MAXCLQ,NCOMP)
+         IF (MAXINC .EQ. 0) NCOMP = 0
+         NCOMP = NCOMP + 1
+         IF (MAXINC + 1 .EQ. NCOMP) MAXCLQ = MAX0(MAXCLQ,NCOMP)
 C
 C        UPDATE THE MAXIMAL INCIDENCE COUNT.
 C
    50    CONTINUE
-	    IF (IWA1(MAXINC+1) .GT. 0) GO TO 60
-	    MAXINC = MAXINC - 1
-	    IF (MAXINC .GE. 0) GO TO 50
+            IF (IWA1(MAXINC+1) .GT. 0) GO TO 60
+            MAXINC = MAXINC - 1
+            IF (MAXINC .GE. 0) GO TO 50
    60    CONTINUE
 C
 C        FIND ALL COLUMNS ADJACENT TO COLUMN JCOL.
 C
-	 BWA(JCOL) = .TRUE.
-	 DEG = 0
+         BWA(JCOL) = .TRUE.
+         DEG = 0
 C
 C        DETERMINE ALL POSITIONS (IR,JCOL) WHICH CORRESPOND
 C        TO NON-ZEROES IN THE MATRIX.
 C
-	 JPL = JPNTR(JCOL)
-	 JPU = JPNTR(JCOL+1) - 1
-	 IF (JPU .LT. JPL) GO TO 100
-	 DO 90 JP = JPL, JPU
-	    IR = INDROW(JP)
+         JPL = JPNTR(JCOL)
+         JPU = JPNTR(JCOL+1) - 1
+         IF (JPU .LT. JPL) GO TO 100
+         DO 90 JP = JPL, JPU
+            IR = INDROW(JP)
 C
 C           FOR EACH ROW IR, DETERMINE ALL POSITIONS (IR,IC)
 C           WHICH CORRESPOND TO NON-ZEROES IN THE MATRIX.
 C
-	    IPL = IPNTR(IR)
-	    IPU = IPNTR(IR+1) - 1
-	    DO 80 IP = IPL, IPU
-	       IC = INDCOL(IP)
+            IPL = IPNTR(IR)
+            IPU = IPNTR(IR+1) - 1
+            DO 80 IP = IPL, IPU
+               IC = INDCOL(IP)
 C
 C              ARRAY BWA MARKS COLUMNS WHICH ARE ADJACENT TO
 C              COLUMN JCOL. ARRAY IWA4 RECORDS THE MARKED COLUMNS.
 C
-	       IF (BWA(IC)) GO TO 70
-	       BWA(IC) = .TRUE.
-	       DEG = DEG + 1
-	       IWA4(DEG) = IC
+               IF (BWA(IC)) GO TO 70
+               BWA(IC) = .TRUE.
+               DEG = DEG + 1
+               IWA4(DEG) = IC
    70          CONTINUE
    80          CONTINUE
    90       CONTINUE
@@ -6465,37 +6465,37 @@ C
 C
 C        UPDATE THE POINTERS TO THE INCIDENCE LISTS.
 C
-	 IF (DEG .LT. 1) GO TO 130
-	 DO 120 JP = 1, DEG
-	    IC = IWA4(JP)
-	    IF (LIST(IC) .GT. 0) GO TO 110
-	    NUMINC = -LIST(IC) + 1
-	    LIST(IC) = -NUMINC
-	    MAXINC = MAX0(MAXINC,NUMINC)
+         IF (DEG .LT. 1) GO TO 130
+         DO 120 JP = 1, DEG
+            IC = IWA4(JP)
+            IF (LIST(IC) .GT. 0) GO TO 110
+            NUMINC = -LIST(IC) + 1
+            LIST(IC) = -NUMINC
+            MAXINC = MAX0(MAXINC,NUMINC)
 C
 C           DELETE COLUMN IC FROM THE NUMINC-1 LIST.
 C
-	    L = IWA2(IC)
-	    IF (L .EQ. 0) IWA1(NUMINC) = IWA3(IC)
-	    IF (L .GT. 0) IWA3(L) = IWA3(IC)
-	    L = IWA3(IC)
-	    IF (L .GT. 0) IWA2(L) = IWA2(IC)
+            L = IWA2(IC)
+            IF (L .EQ. 0) IWA1(NUMINC) = IWA3(IC)
+            IF (L .GT. 0) IWA3(L) = IWA3(IC)
+            L = IWA3(IC)
+            IF (L .GT. 0) IWA2(L) = IWA2(IC)
 C
 C           ADD COLUMN IC TO THE NUMINC LIST.
 C
-	    HEAD = IWA1(NUMINC+1)
-	    IWA1(NUMINC+1) = IC
-	    IWA2(IC) = 0
-	    IWA3(IC) = HEAD
-	    IF (HEAD .GT. 0) IWA2(HEAD) = IC
+            HEAD = IWA1(NUMINC+1)
+            IWA1(NUMINC+1) = IC
+            IWA2(IC) = 0
+            IWA3(IC) = HEAD
+            IF (HEAD .GT. 0) IWA2(HEAD) = IC
   110       CONTINUE
 C
 C           UN-MARK COLUMN IC IN THE ARRAY BWA.
 C
-	    BWA(IC) = .FALSE.
+            BWA(IC) = .FALSE.
   120       CONTINUE
   130    CONTINUE
-	 BWA(JCOL) = .FALSE.
+         BWA(JCOL) = .FALSE.
 C
 C        END OF ITERATION LOOP.
 C
@@ -6504,11 +6504,11 @@ C
 C     INVERT THE ARRAY LIST.
 C
       DO 150 JCOL = 1, N
-	 NUMORD = LIST(JCOL)
-	 IWA1(NUMORD) = JCOL
+         NUMORD = LIST(JCOL)
+         IWA1(NUMORD) = JCOL
   150    CONTINUE
       DO 160 JP = 1, N
-	 LIST(JP) = IWA1(JP)
+         LIST(JP) = IWA1(JP)
   160    CONTINUE
       RETURN
 C
@@ -6605,10 +6605,10 @@ C     INITIALIZATION BLOCK.
 C
       MINDEG = N
       DO 10 JP = 1, N
-	 IWA1(JP) = 0
-	 BWA(JP) = .FALSE.
-	 LIST(JP) = NDEG(JP)
-	 MINDEG = MIN0(MINDEG,NDEG(JP))
+         IWA1(JP) = 0
+         BWA(JP) = .FALSE.
+         LIST(JP) = NDEG(JP)
+         MINDEG = MIN0(MINDEG,NDEG(JP))
    10    CONTINUE
 C
 C     CREATE A DOUBLY-LINKED LIST TO ACCESS THE DEGREES OF THE
@@ -6635,12 +6635,12 @@ C     COLUMNS. IF JCOL IS AN ORDERED COLUMN, THEN LIST(JCOL)
 C     IS THE SMALLEST-LAST ORDER OF COLUMN JCOL.
 C
       DO 20 JP = 1, N
-	 NUMDEG = NDEG(JP)
-	 HEAD = IWA1(NUMDEG+1)
-	 IWA1(NUMDEG+1) = JP
-	 IWA2(JP) = 0
-	 IWA3(JP) = HEAD
-	 IF (HEAD .GT. 0) IWA2(HEAD) = JP
+         NUMDEG = NDEG(JP)
+         HEAD = IWA1(NUMDEG+1)
+         IWA1(NUMDEG+1) = JP
+         IWA2(JP) = 0
+         IWA3(JP) = HEAD
+         IF (HEAD .GT. 0) IWA2(HEAD) = JP
    20    CONTINUE
       MAXCLQ = 0
       NUMORD = N
@@ -6652,59 +6652,59 @@ C
 C        MARK THE SIZE OF THE LARGEST CLIQUE
 C        FOUND DURING THE ORDERING.
 C
-	 IF (MINDEG + 1 .EQ. NUMORD .AND. MAXCLQ .EQ. 0)
+         IF (MINDEG + 1 .EQ. NUMORD .AND. MAXCLQ .EQ. 0)
      *       MAXCLQ = NUMORD
 C
 C        CHOOSE A COLUMN JCOL OF MINIMAL DEGREE MINDEG.
 C
    40    CONTINUE
-	    JCOL = IWA1(MINDEG+1)
-	    IF (JCOL .GT. 0) GO TO 50
-	    MINDEG = MINDEG + 1
-	    GO TO 40
+            JCOL = IWA1(MINDEG+1)
+            IF (JCOL .GT. 0) GO TO 50
+            MINDEG = MINDEG + 1
+            GO TO 40
    50    CONTINUE
-	 LIST(JCOL) = NUMORD
-	 NUMORD = NUMORD - 1
+         LIST(JCOL) = NUMORD
+         NUMORD = NUMORD - 1
 C
 C        TERMINATION TEST.
 C
-	 IF (NUMORD .EQ. 0) GO TO 120
+         IF (NUMORD .EQ. 0) GO TO 120
 C
 C        DELETE COLUMN JCOL FROM THE MINDEG LIST.
 C
-	 L = IWA3(JCOL)
-	 IWA1(MINDEG+1) = L
-	 IF (L .GT. 0) IWA2(L) = 0
+         L = IWA3(JCOL)
+         IWA1(MINDEG+1) = L
+         IF (L .GT. 0) IWA2(L) = 0
 C
 C        FIND ALL COLUMNS ADJACENT TO COLUMN JCOL.
 C
-	 BWA(JCOL) = .TRUE.
-	 DEG = 0
+         BWA(JCOL) = .TRUE.
+         DEG = 0
 C
 C        DETERMINE ALL POSITIONS (IR,JCOL) WHICH CORRESPOND
 C        TO NON-ZEROES IN THE MATRIX.
 C
-	 JPL = JPNTR(JCOL)
-	 JPU = JPNTR(JCOL+1) - 1
-	 IF (JPU .LT. JPL) GO TO 90
-	 DO 80 JP = JPL, JPU
-	    IR = INDROW(JP)
+         JPL = JPNTR(JCOL)
+         JPU = JPNTR(JCOL+1) - 1
+         IF (JPU .LT. JPL) GO TO 90
+         DO 80 JP = JPL, JPU
+            IR = INDROW(JP)
 C
 C           FOR EACH ROW IR, DETERMINE ALL POSITIONS (IR,IC)
 C           WHICH CORRESPOND TO NON-ZEROES IN THE MATRIX.
 C
-	    IPL = IPNTR(IR)
-	    IPU = IPNTR(IR+1) - 1
-	    DO 70 IP = IPL, IPU
-	       IC = INDCOL(IP)
+            IPL = IPNTR(IR)
+            IPU = IPNTR(IR+1) - 1
+            DO 70 IP = IPL, IPU
+               IC = INDCOL(IP)
 C
 C              ARRAY BWA MARKS COLUMNS WHICH ARE ADJACENT TO
 C              COLUMN JCOL. ARRAY IWA4 RECORDS THE MARKED COLUMNS.
 C
-	       IF (BWA(IC)) GO TO 60
-	       BWA(IC) = .TRUE.
-	       DEG = DEG + 1
-	       IWA4(DEG) = IC
+               IF (BWA(IC)) GO TO 60
+               BWA(IC) = .TRUE.
+               DEG = DEG + 1
+               IWA4(DEG) = IC
    60          CONTINUE
    70          CONTINUE
    80       CONTINUE
@@ -6712,48 +6712,48 @@ C
 C
 C        UPDATE THE POINTERS TO THE CURRENT DEGREE LISTS.
 C
-	 IF (DEG .LT. 1) GO TO 110
-	 DO 100 JP = 1, DEG
-	    IC = IWA4(JP)
-	    NUMDEG = LIST(IC)
-	    LIST(IC) = LIST(IC) - 1
-	    MINDEG = MIN0(MINDEG,LIST(IC))
+         IF (DEG .LT. 1) GO TO 110
+         DO 100 JP = 1, DEG
+            IC = IWA4(JP)
+            NUMDEG = LIST(IC)
+            LIST(IC) = LIST(IC) - 1
+            MINDEG = MIN0(MINDEG,LIST(IC))
 C
 C           DELETE COLUMN IC FROM THE NUMDEG LIST.
 C
-	    L = IWA2(IC)
-	    IF (L .EQ. 0) IWA1(NUMDEG+1) = IWA3(IC)
-	    IF (L .GT. 0) IWA3(L) = IWA3(IC)
-	    L = IWA3(IC)
-	    IF (L .GT. 0) IWA2(L) = IWA2(IC)
+            L = IWA2(IC)
+            IF (L .EQ. 0) IWA1(NUMDEG+1) = IWA3(IC)
+            IF (L .GT. 0) IWA3(L) = IWA3(IC)
+            L = IWA3(IC)
+            IF (L .GT. 0) IWA2(L) = IWA2(IC)
 C
 C           ADD COLUMN IC TO THE NUMDEG-1 LIST.
 C
-	    HEAD = IWA1(NUMDEG)
-	    IWA1(NUMDEG) = IC
-	    IWA2(IC) = 0
-	    IWA3(IC) = HEAD
-	    IF (HEAD .GT. 0) IWA2(HEAD) = IC
+            HEAD = IWA1(NUMDEG)
+            IWA1(NUMDEG) = IC
+            IWA2(IC) = 0
+            IWA3(IC) = HEAD
+            IF (HEAD .GT. 0) IWA2(HEAD) = IC
 C
 C           UN-MARK COLUMN IC IN THE ARRAY BWA.
 C
-	    BWA(IC) = .FALSE.
+            BWA(IC) = .FALSE.
   100       CONTINUE
   110    CONTINUE
 C
 C        END OF ITERATION LOOP.
 C
-	 GO TO 30
+         GO TO 30
   120 CONTINUE
 C
 C     INVERT THE ARRAY LIST.
 C
       DO 130 JCOL = 1, N
-	 NUMORD = LIST(JCOL)
-	 IWA1(NUMORD) = JCOL
+         NUMORD = LIST(JCOL)
+         IWA1(NUMORD) = JCOL
   130    CONTINUE
       DO 140 JP = 1, N
-	 LIST(JP) = IWA1(JP)
+         LIST(JP) = IWA1(JP)
   140    CONTINUE
       RETURN
 C
@@ -6775,19 +6775,19 @@ C
       L = 1
       IF (K .GE. 0) GO TO 30
       DO 20 I = 1, N
-	 T = ONE / Z(I)
-	 DO 10 J = 1, I
-	    X(L) = T * Y(L) / Z(J)
-	    L = L + 1
+         T = ONE / Z(I)
+         DO 10 J = 1, I
+            X(L) = T * Y(L) / Z(J)
+            L = L + 1
  10         CONTINUE
  20      CONTINUE
       GO TO 999
 C
  30   DO 50 I = 1, N
-	 T = Z(I)
-	 DO 40 J = 1, I
-	    X(L) = T * Y(L) * Z(J)
-	    L = L + 1
+         T = Z(I)
+         DO 40 J = 1, I
+            X(L) = T * Y(L) * Z(J)
+            L = L + 1
  40         CONTINUE
  50      CONTINUE
  999  RETURN
@@ -6836,8 +6836,8 @@ C
       P0 = P1
       NS = 0
       DO 10 I = 1, P
-	 IPIV1(I) = I
-	 IPIV2(I) = I
+         IPIV1(I) = I
+         IPIV2(I) = I
  10      CONTINUE
       DO 20 I = 1, P1
  20      W(I) = -STEP(I) * TD(I)
@@ -6854,18 +6854,18 @@ C
  30   T = ONE
       K = 0
       DO 60 I = 1, P1
-	 J = IPIV(I)
-	 DX = W(I) / D(J)
-	 XI = X(J) - DX
-	 IF (XI .LT. B(1,J)) GO TO 40
-	 IF (XI .LE. B(2,J)) GO TO 60
-	      TI = ( X(J)  -  B(2,J) ) / DX
-	      K = I
-	      GO TO 50
+         J = IPIV(I)
+         DX = W(I) / D(J)
+         XI = X(J) - DX
+         IF (XI .LT. B(1,J)) GO TO 40
+         IF (XI .LE. B(2,J)) GO TO 60
+              TI = ( X(J)  -  B(2,J) ) / DX
+              K = I
+              GO TO 50
  40      TI = ( X(J)  -  B(1,J) ) / DX
-	      K = -I
+              K = -I
  50      IF (T .LE. TI) GO TO 60
-	      T = TI
+              T = TI
  60      CONTINUE
 C
       IF (P .GT. P1) CALL DV7CPY(P-P1, STEP(P1+1), DST(P1+1))
@@ -6877,8 +6877,8 @@ C  ***  CHECK FOR OVERSIZE STEP  ***
 C
       IF (DST1 .LE. DSTMAX) GO TO 80
       IF (P1 .GE. P0) GO TO 70
-	 IF (DST0 .LT. DSTMIN) KB = 0
-	 GO TO 110
+         IF (DST0 .LT. DSTMIN) KB = 0
+         GO TO 110
 C
  70   K = 0
 C
@@ -6899,13 +6899,13 @@ C
       P1M1 = P1 - 1
       J = IABS(K)
       IF (J .EQ. P1) GO TO 100
-	 NS = NS + 1
-	 IPIV2(P1) = J
-	 CALL DQ7RSH(J, P1, .FALSE., TG, L, W)
-	 CALL I7SHFT(P1, J, IPIV)
-	 CALL I7SHFT(P1, J, IPIV1)
-	 CALL DV7SHF(P1, J, TG)
-	 CALL DV7SHF(P1, J, DST)
+         NS = NS + 1
+         IPIV2(P1) = J
+         CALL DQ7RSH(J, P1, .FALSE., TG, L, W)
+         CALL I7SHFT(P1, J, IPIV)
+         CALL I7SHFT(P1, J, IPIV1)
+         CALL DV7SHF(P1, J, TG)
+         CALL DV7SHF(P1, J, DST)
  100  IF (K .LT. 0) IPIV(P1) = -IPIV(P1)
       P1 = P1M1
       IF (P1 .LE. 0) GO TO 110
@@ -6917,8 +6917,8 @@ C
 C     ***  UNSCALE STEP  ***
 C
  110  DO 120 I = 1, P
-	 J = IABS(IPIV(I))
-	 STEP(J) = DST(I) / D(J)
+         J = IABS(IPIV(I))
+         STEP(J) = DST(I) / D(J)
  120     CONTINUE
 C
 C  ***  FUDGE STEP TO ENSURE THAT IT FORCES APPROPRIATE COMPONENTS
@@ -6927,14 +6927,14 @@ C
       IF (P1 .GE. P0) GO TO 150
       K = P1 + 1
       DO 140 I = K, P0
-	 J = IPIV(I)
-	 T = MEPS2
-	 IF (J .GT. 0) GO TO 130
-	    T = -T
-	    J = -J
-	    IPIV(I) = J
+         J = IPIV(I)
+         T = MEPS2
+         IF (J .GT. 0) GO TO 130
+            T = -T
+            J = -J
+            IPIV(I) = J
  130     T = T * DMAX1(DABS(X(J)), DABS(X0(J)))
-	 STEP(J) = STEP(J) + T
+         STEP(J) = STEP(J) + T
  140     CONTINUE
 C
  150  CALL DV2AXY(P, X, ONE, STEP, X0)
@@ -7015,12 +7015,12 @@ C     DETERMINE THE ARRAYS NEXT AND LAST.
 C
       NMAXP1 = NMAX + 1
       DO 10 I = 1, NMAXP1
-	 LAST(I) = 0
+         LAST(I) = 0
    10    CONTINUE
       DO 20 K = 1, N
-	 L = NUM(K)
-	 NEXT(K) = LAST(L+1)
-	 LAST(L+1) = K
+         L = NUM(K)
+         NEXT(K) = LAST(L+1)
+         LAST(L+1) = K
    20    CONTINUE
       IF (MODE .EQ. 0) GO TO 60
 C
@@ -7029,15 +7029,15 @@ C
       I = 1
       NMAXP2 = NMAXP1 + 1
       DO 50 J = 1, NMAXP1
-	 JP = J
-	 IF (MODE .LT. 0) JP = NMAXP2 - J
-	 K = LAST(JP)
+         JP = J
+         IF (MODE .LT. 0) JP = NMAXP2 - J
+         K = LAST(JP)
    30    CONTINUE
-	    IF (K .EQ. 0) GO TO 40
-	    INDEX(I) = K
-	    I = I + 1
-	    K = NEXT(K)
-	    GO TO 30
+            IF (K .EQ. 0) GO TO 40
+            INDEX(I) = K
+            I = I + 1
+            K = NEXT(K)
+            GO TO 30
    40    CONTINUE
    50    CONTINUE
    60 CONTINUE
@@ -7273,8 +7273,8 @@ C
       IV(H) = IV(W) + 4*P + 7
       IV(NEXTV) = IV(H) + PP1O2
       IF (IV(1) .NE. 13) GO TO 20
-	 IV(1) = 14
-	 GO TO 999
+         IV(1) = 14
+         GO TO 999
 C
 C  ***  INITIALIZATION  ***
 C
@@ -7308,8 +7308,8 @@ C
       J = IV(IPIVOT)
       IF (J .LE. 0) GO TO 999
       DO 30 I = 1, P
-	 IV(J) = I
-	 J = J + 1
+         IV(J) = I
+         J = J + 1
  30      CONTINUE
       GO TO 999
 C
@@ -7320,8 +7320,8 @@ C
 C
       IV(1) = 2
       IF (IV(TOOBIG) .EQ. 0) GO TO 999
-	 IV(1) = 63
-	 GO TO 999
+         IV(1) = 63
+         GO TO 999
 C
 C  ***  NEW GRADIENT  ***
 C
@@ -7333,8 +7333,8 @@ C
 C  ***  MAKE SURE GRADIENT COULD BE COMPUTED  ***
 C
       IF (IV(TOOBIG) .EQ. 0) GO TO 60
-	 IV(1) = 65
-	 GO TO 999
+         IV(1) = 65
+         GO TO 999
  60   IF (IV(HC) .LE. 0 .AND. IV(RMAT) .LE. 0) GO TO 610
 C
 C  ***  COMPUTE  D**-1 * GRADIENT  ***
@@ -7342,8 +7342,8 @@ C
       DIG1 = IV(DIG)
       K = DIG1
       DO 70 I = 1, P
-	 V(K) = G(I) / D(I)
-	 K = K + 1
+         V(K) = G(I) / D(I)
+         K = K + 1
  70      CONTINUE
       V(DGNORM) = DV2NRM(P, V(DIG1))
 C
@@ -7372,8 +7372,8 @@ C
       PP1O2 = PS * (PS + 1) / 2
       HC1 = IV(HC)
       IF (HC1 .LE. 0) GO TO 90
-	 CALL DV2AXY(PP1O2, V(S1), NEGONE, V(HC1), V(H1))
-	 GO TO 100
+         CALL DV2AXY(PP1O2, V(S1), NEGONE, V(HC1), V(H1))
+         GO TO 100
  90   RMAT1 = IV(RMAT)
       CALL DL7SQR(PS, V(S1), V(RMAT1))
       CALL DV2AXY(PP1O2, V(S1), NEGONE, V(S1), V(H1))
@@ -7388,8 +7388,8 @@ C
  110  CALL DITSUM(D, G, IV, LIV, LV, P, V, X)
  120  K = IV(NITER)
       IF (K .LT. IV(MXITER)) GO TO 130
-	 IV(1) = 10
-	 GO TO 999
+         IV(1) = 10
+         GO TO 999
  130  IV(NITER) = K + 1
 C
 C  ***  UPDATE RADIUS  ***
@@ -7397,8 +7397,8 @@ C
       IF (K .EQ. 0) GO TO 150
       STEP1 = IV(STEP)
       DO 140 I = 1, P
-	 V(STEP1) = D(I) * V(STEP1)
-	 STEP1 = STEP1 + 1
+         V(STEP1) = D(I) * V(STEP1)
+         STEP1 = STEP1 + 1
  140     CONTINUE
       STEP1 = IV(STEP)
       T = V(RADFAC) * DV2NRM(P, V(STEP1))
@@ -7419,25 +7419,25 @@ C
 C  ***  CHECK STOPX AND FUNCTION EVALUATION LIMIT  ***
 C
  160  IF (.NOT. STOPX(DUMMY)) GO TO 180
-	 IV(1) = 11
-	 GO TO 190
+         IV(1) = 11
+         GO TO 190
 C
 C     ***  COME HERE WHEN RESTARTING AFTER FUNC. EVAL. LIMIT OR STOPX.
 C
  170  IF (V(F) .GE. V(F0)) GO TO 180
-	 V(RADFAC) = ONE
-	 K = IV(NITER)
-	 GO TO 130
+         V(RADFAC) = ONE
+         K = IV(NITER)
+         GO TO 130
 C
  180  IF (IV(NFCALL) .LT. IV(MXFCAL) + IV(NFCOV)) GO TO 200
-	 IV(1) = 9
+         IV(1) = 9
  190     IF (V(F) .GE. V(F0)) GO TO 999
 C
 C        ***  IN CASE OF STOPX OR FUNCTION EVALUATION LIMIT WITH
 C        ***  IMPROVED V(F), EVALUATE THE GRADIENT AT X.
 C
-	      IV(CNVCOD) = IV(1)
-	      GO TO 430
+              IV(CNVCOD) = IV(1)
+              GO TO 430
 C
 C. . . . . . . . . . . . .  COMPUTE CANDIDATE STEP  . . . . . . . . . .
 C
@@ -7446,49 +7446,49 @@ C
       H1 = IV(H)
       T1 = ONE
       IF (IV(MODEL) .EQ. 2) GO TO 210
-	 T1 = ZERO
+         T1 = ZERO
 C
 C        ***  COMPUTE LEVENBERG-MARQUARDT STEP IF POSSIBLE...
 C
-	 RMAT1 = IV(RMAT)
-	 IF (RMAT1 .LE. 0) GO TO 210
-	 QTR1 = IV(QTR)
-	 IF (QTR1 .LE. 0) GO TO 210
-	 IPIV1 = IV(IPIVOT)
-	 CALL DL7MST(D, G, IV(IERR), IV(IPIV1), IV(KALM), P, V(QTR1),
+         RMAT1 = IV(RMAT)
+         IF (RMAT1 .LE. 0) GO TO 210
+         QTR1 = IV(QTR)
+         IF (QTR1 .LE. 0) GO TO 210
+         IPIV1 = IV(IPIVOT)
+         CALL DL7MST(D, G, IV(IERR), IV(IPIV1), IV(KALM), P, V(QTR1),
      1               V(RMAT1), V(STEP1), V, V(W1))
 C        *** H IS STORED IN THE END OF W AND HAS JUST BEEN OVERWRITTEN,
 C        *** SO WE MARK IT INVALID...
-	 IV(H) = -IABS(H1)
+         IV(H) = -IABS(H1)
 C        *** EVEN IF H WERE STORED ELSEWHERE, IT WOULD BE NECESSARY TO
 C        *** MARK INVALID THE INFORMATION DG7QTS MAY HAVE STORED IN V...
-	 IV(KAGQT) = -1
-	 GO TO 260
+         IV(KAGQT) = -1
+         GO TO 260
 C
  210  IF (H1 .GT. 0) GO TO 250
 C
 C     ***  SET H TO  D**-1 * (HC + T1*S) * D**-1.  ***
 C
-	 H1 = -H1
-	 IV(H) = H1
-	 IV(FDH) = 0
-	 J = IV(HC)
-	 IF (J .GT. 0) GO TO 220
-	    J = H1
-	    RMAT1 = IV(RMAT)
-	    CALL DL7SQR(P, V(H1), V(RMAT1))
+         H1 = -H1
+         IV(H) = H1
+         IV(FDH) = 0
+         J = IV(HC)
+         IF (J .GT. 0) GO TO 220
+            J = H1
+            RMAT1 = IV(RMAT)
+            CALL DL7SQR(P, V(H1), V(RMAT1))
  220     S1 = IV(S)
-	 DO 240 I = 1, P
-	      T = ONE / D(I)
-	      DO 230 K = 1, I
-		   V(H1) = T * (V(J) + T1*V(S1)) / D(K)
-		   J = J + 1
-		   H1 = H1 + 1
-		   S1 = S1 + 1
+         DO 240 I = 1, P
+              T = ONE / D(I)
+              DO 230 K = 1, I
+                   V(H1) = T * (V(J) + T1*V(S1)) / D(K)
+                   J = J + 1
+                   H1 = H1 + 1
+                   S1 = S1 + 1
  230               CONTINUE
  240          CONTINUE
-	 H1 = IV(H)
-	 IV(KAGQT) = -1
+         H1 = IV(H)
+         IV(KAGQT) = -1
 C
 C  ***  COMPUTE ACTUAL GOLDFELD-QUANDT-TROTTER STEP  ***
 C
@@ -7499,9 +7499,9 @@ C
       IF (IV(KALM) .GT. 0) IV(KALM) = 0
 C
  260  IF (IV(IRC) .NE. 6) GO TO 270
-	 IF (IV(RESTOR) .NE. 2) GO TO 290
-	 RSTRST = 2
-	 GO TO 300
+         IF (IV(RESTOR) .NE. 2) GO TO 290
+         RSTRST = 2
+         GO TO 300
 C
 C  ***  CHECK WHETHER EVALUATING F(X0 + STEP) LOOKS WORTHWHILE  ***
 C
@@ -7510,12 +7510,12 @@ C
       IF (IV(IRC) .NE. 5) GO TO 280
       IF (V(RADFAC) .LE. ONE) GO TO 280
       IF (V(PREDUC) .GT. ONEP2 * V(FDIF)) GO TO 280
-	 STEP1 = IV(STEP)
-	 X01 = IV(X0)
-	 CALL DV2AXY(P, V(STEP1), NEGONE, V(X01), X)
-	 IF (IV(RESTOR) .NE. 2) GO TO 290
-	 RSTRST = 0
-	 GO TO 300
+         STEP1 = IV(STEP)
+         X01 = IV(X0)
+         CALL DV2AXY(P, V(STEP1), NEGONE, V(X01), X)
+         IF (IV(RESTOR) .NE. 2) GO TO 290
+         RSTRST = 0
+         GO TO 300
 C
 C  ***  COMPUTE F(X0 + STEP)  ***
 C
@@ -7541,17 +7541,17 @@ C
  320   CALL DV7CPY(P, V(LSTGST), V(STEP1))
        GO TO 340
  330     CALL DV7CPY(P, V(STEP1), V(LSTGST))
-	 CALL DV2AXY(P, X, ONE, V(STEP1), V(X01))
-	 V(RELDX) = DRLDST(P, D, X, V(X01))
-	 IV(RESTOR) = RSTRST
+         CALL DV2AXY(P, X, ONE, V(STEP1), V(X01))
+         V(RELDX) = DRLDST(P, D, X, V(X01))
+         IV(RESTOR) = RSTRST
 C
 C  ***  IF NECESSARY, SWITCH MODELS  ***
 C
  340  IF (IV(SWITCH) .EQ. 0) GO TO 350
-	 IV(H) = -IABS(IV(H))
-	 IV(SUSED) = IV(SUSED) + 2
-	 L = IV(VSAVE)
-	 CALL DV7CPY(NVSAVE, V, V(L))
+         IV(H) = -IABS(IV(H))
+         IV(SUSED) = IV(SUSED) + 2
+         L = IV(VSAVE)
+         CALL DV7CPY(NVSAVE, V, V(L))
  350  L = IV(IRC) - 4
       STPMOD = IV(MODEL)
       IF (L .GT. 0) GO TO (370,380,390,390,390,390,390,390,500,440), L
@@ -7567,13 +7567,13 @@ C
 C
 C     ***  SWITCH MODELS  ***
 C
-	 IV(MODEL) = 3 - IV(MODEL)
-	 IF (-2 .LT. L) GO TO 400
-	      IV(H) = -IABS(IV(H))
-	      IV(SUSED) = IV(SUSED) + 2
-	      L = IV(VSAVE)
-	      CALL DV7CPY(NVSAVE, V(L), V)
-	      GO TO 160
+         IV(MODEL) = 3 - IV(MODEL)
+         IF (-2 .LT. L) GO TO 400
+              IV(H) = -IABS(IV(H))
+              IV(SUSED) = IV(SUSED) + 2
+              L = IV(VSAVE)
+              CALL DV7CPY(NVSAVE, V(L), V)
+              GO TO 160
 C
  360  IF (-3 .LT. L) GO TO 400
 C
@@ -7591,8 +7591,8 @@ C  ***  CONVERGENCE OR FALSE CONVERGENCE  ***
 C
  390  IV(CNVCOD) = L
       IF (V(F) .GE. V(F0)) GO TO 510
-	 IF (IV(XIRC) .EQ. 14) GO TO 510
-	      IV(XIRC) = 14
+         IF (IV(XIRC) .EQ. 14) GO TO 510
+              IV(XIRC) = 14
 C
 C. . . . . . . . . . . .  PROCESS ACCEPTABLE STEP  . . . . . . . . . . .
 C
@@ -7602,24 +7602,24 @@ C
 C  ***  SEE WHETHER TO SET V(RADFAC) BY GRADIENT TESTS  ***
 C
       IF (IV(IRC) .NE. 3) GO TO 430
-	 STEP1 = IV(STEP)
-	 TEMP1 = IV(STLSTG)
-	 TEMP2 = IV(W)
+         STEP1 = IV(STEP)
+         TEMP1 = IV(STLSTG)
+         TEMP2 = IV(W)
 C
 C     ***  SET  TEMP1 = HESSIAN * STEP  FOR USE IN GRADIENT TESTS  ***
 C
-	 HC1 = IV(HC)
-	 IF (HC1 .LE. 0) GO TO 410
-	      CALL DS7LVM(P, V(TEMP1), V(HC1), V(STEP1))
-	      GO TO 420
+         HC1 = IV(HC)
+         IF (HC1 .LE. 0) GO TO 410
+              CALL DS7LVM(P, V(TEMP1), V(HC1), V(STEP1))
+              GO TO 420
  410     RMAT1 = IV(RMAT)
-	 CALL DL7TVM(P, V(TEMP1), V(RMAT1), V(STEP1))
-	 CALL DL7VML(P, V(TEMP1), V(RMAT1), V(TEMP1))
+         CALL DL7TVM(P, V(TEMP1), V(RMAT1), V(STEP1))
+         CALL DL7VML(P, V(TEMP1), V(RMAT1), V(TEMP1))
 C
  420     IF (STPMOD .EQ. 1) GO TO 430
-	      S1 = IV(S)
-	      CALL DS7LVM(PS, V(TEMP2), V(S1), V(STEP1))
-	      CALL DV2AXY(PS, V(TEMP1), ONE, V(TEMP2), V(TEMP1))
+              S1 = IV(S)
+              CALL DS7LVM(PS, V(TEMP2), V(S1), V(STEP1))
+              CALL DV2AXY(PS, V(TEMP1), ONE, V(TEMP2), V(TEMP1))
 C
 C  ***  SAVE OLD GRADIENT AND COMPUTE NEW ONE  ***
 C
@@ -7643,18 +7643,18 @@ C  ***  SET V(RADFAC) BY GRADIENT TESTS  ***
 C
 C     ***  SET  TEMP1 = D**-1 * (HESSIAN * STEP  +  (G(X0) - G(X)))  ***
 C
-	 K = TEMP1
-	 L = G01
-	 DO 450 I = 1, P
-	      V(K) = (V(K) - V(L)) / D(I)
-	      K = K + 1
-	      L = L + 1
+         K = TEMP1
+         L = G01
+         DO 450 I = 1, P
+              V(K) = (V(K) - V(L)) / D(I)
+              K = K + 1
+              L = L + 1
  450          CONTINUE
 C
 C        ***  DO GRADIENT TESTS  ***
 C
-	 IF (DV2NRM(P, V(TEMP1)) .LE. V(DGNORM) * V(TUNER4))  GO TO 460
-	      IF (DD7TPR(P, G, V(STEP1))
+         IF (DV2NRM(P, V(TEMP1)) .LE. V(DGNORM) * V(TUNER4))  GO TO 460
+              IF (DD7TPR(P, G, V(STEP1))
      1                  .GE. V(GTSTEP) * V(TUNER5))  GO TO 470
  460               V(RADFAC) = V(INCFAC)
 C
@@ -7677,8 +7677,8 @@ C  ***  SET G0 TO WCHMTD CHOICE OF FLETCHER AND AL-BAALI  ***
 C
       HC1 = IV(HC)
       IF (HC1 .LE. 0) GO TO 480
-	 CALL DS7LVM(PS, V(G01), V(HC1), V(STEP1))
-	 GO TO 490
+         CALL DS7LVM(PS, V(G01), V(HC1), V(STEP1))
+         GO TO 490
 C
  480  RMAT1 = IV(RMAT)
       CALL DL7TVM(PS, V(G01), V(RMAT1), V(STEP1))
@@ -7733,10 +7733,10 @@ C
       PP1O2 = P * (P + 1) / 2
       RMAT1 = IV(RMAT)
       IF (RMAT1 .LE. 0) GO TO 570
-	   LMAT1 = IV(LMAT)
-	   CALL DV7CPY(PP1O2, V(LMAT1), V(RMAT1))
-	   V(RCOND) = ZERO
-	   GO TO 590
+           LMAT1 = IV(LMAT)
+           CALL DV7CPY(PP1O2, V(LMAT1), V(RMAT1))
+           V(RCOND) = ZERO
+           GO TO 590
  570  HC1 = IV(HC)
       IV(FDH) = H1
       CALL DV7CPY(P*(P+1)/2, V(H1), V(HC1))
@@ -7810,9 +7810,9 @@ C+++++++++++++++++++++++++++++++  BODY  ++++++++++++++++++++++++++++++++
 C
       P1 = PC
       IF (KA .LT. 0) GO TO 10
-	 NRED = V(NREDUC)
-	 DS0 = V(DST0)
-	 GO TO 20
+         NRED = V(NREDUC)
+         DS0 = V(DST0)
+         GO TO 20
  10   P0 = 0
       KA = -1
 C
@@ -7828,10 +7828,10 @@ C     *** USE STEP(1,3) AS TEMP. COPY OF QTR ***
       KB = -1
       V(DSTNRM) = ZERO
       IF (P1 .GT. 0) GO TO 30
-	 NRED = ZERO
-	 DS0 = ZERO
-	 CALL DV7SCP(P, STEP, ZERO)
-	 GO TO 90
+         NRED = ZERO
+         DS0 = ZERO
+         CALL DV7SCP(P, STEP, ZERO)
+         GO TO 90
 C
  30   CALL DV7VMP(P, TG, G, D, -1)
       CALL DV7IPR(P, IPIV, TG)
@@ -7848,8 +7848,8 @@ C
       CALL DV7VMP(P1, TG, TG, TD, -1)
       P0 = P1
       IF (KA .GE. 0) GO TO 60
-	 NRED = V(NREDUC)
-	 DS0 = V(DST0)
+         NRED = V(NREDUC)
+         DS0 = V(DST0)
 C
  60   KA = K
       V(RADIUS) = RAD
@@ -7867,9 +7867,9 @@ C
       P11 = P1 + 1
       L = P10 + P11
       DO 70 K = P11, P10
-	 J = L - K
-	 I = IPIV2(J)
-	 IF (I .LT. J) CALL DQ7RSH(I, J, .TRUE., QTR, RMAT, W)
+         J = L - K
+         I = IPIV2(J)
+         IF (I .LT. J) CALL DQ7RSH(I, J, .TRUE., QTR, RMAT, W)
  70      CONTINUE
 C
  80   IF (KB .GT. 0) GO TO 90
@@ -7938,18 +7938,18 @@ C
       IF (V(F) .NE. ZERO) FF = ONE / DSQRT(DABS(V(F)))
       CALL DV7SCP(NN, RD, NEGONE)
       DO 20 I = 1, NN
-	 A = R(I)**2
-	 M = STEP1
-	 DO 10 J = 1, P
-	    V(M) = DR(I,J)
-	    M = M + 1
+         A = R(I)**2
+         M = STEP1
+         DO 10 J = 1, P
+            V(M) = DR(I,J)
+            M = M + 1
  10         CONTINUE
-	 CALL DL7IVM(P, V(STEP1), L, V(STEP1))
-	 S = DD7TPR(P, V(STEP1), V(STEP1))
-	 T = ONE - S
-	 IF (T .LE. ZERO) GO TO 20
-	 A = A * S / T
-	 RD(I) = DSQRT(A) * FF
+         CALL DL7IVM(P, V(STEP1), L, V(STEP1))
+         S = DD7TPR(P, V(STEP1), V(STEP1))
+         T = ONE - S
+         IF (T .LE. ZERO) GO TO 20
+         A = A * S / T
+         RD(I) = DSQRT(A) * FF
  20      CONTINUE
 C
  30   IF (IV(MODE) - P .LT. 2) GO TO 999
@@ -7958,14 +7958,14 @@ C  ***  COMPUTE DEFAULT COVARIANCE MATRIX  ***
 C
       COV = IABS(IV(H))
       DO 50 I = 1, NN
-	 M = STEP1
-	 DO 40 J = 1, P
-	    V(M) = DR(I,J)
-	    M = M + 1
+         M = STEP1
+         DO 40 J = 1, P
+            V(M) = DR(I,J)
+            M = M + 1
  40         CONTINUE
-	 CALL DL7IVM(P, V(STEP1), L, V(STEP1))
-	 CALL DL7ITV(P, V(STEP1), L, V(STEP1))
-	 CALL DO7PRD(1, LH, P, V(COV), ONEV, V(STEP1), V(STEP1))
+         CALL DL7IVM(P, V(STEP1), L, V(STEP1))
+         CALL DL7ITV(P, V(STEP1), L, V(STEP1))
+         CALL DO7PRD(1, LH, P, V(COV), ONEV, V(STEP1), V(STEP1))
  50      CONTINUE
 C
  999  RETURN
@@ -7994,10 +7994,10 @@ C
       PL = MIN0(N, P)
       PP1 = PL + 1
       DO 10 II = 1, PL
-	 I = PP1 - II
-	 T = X(I) * D(I)
-	 IF (I .GT. 1) T = T + DD7TPR(I-1, U(1,I), X)
-	 Y(I) = T
+         I = PP1 - II
+         T = X(I) * D(I)
+         IF (I .GT. 1) T = T + DD7TPR(I-1, U(1,I), X)
+         Y(I) = T
  10      CONTINUE
       RETURN
 C  ***  LAST LINE OF DR7TVM FOLLOWS  ***
@@ -8030,106 +8030,106 @@ C
 C------------------------------ BODY -----------------------------------
 C
       IF (TINY .GT. ZERO) GO TO 10
-	 TINY = DR7MDC(1)
-	 BIG = DR7MDC(6)
-	 IF (TINY*BIG .LT. ONE) TINY = ONE / BIG
+         TINY = DR7MDC(1)
+         BIG = DR7MDC(6)
+         IF (TINY*BIG .LT. ONE) TINY = ONE / BIG
  10   K = 1
       NK = N
       II = 0
       DO 180 I = 1, P
-	 II = II + I
-	 IP1 = I + 1
-	 IJ = II + I
-	 IF (NK .LE. 1) T = DABS(W(K,I))
-	 IF (NK .GT. 1) T = DV2NRM(NK, W(K,I))
-	 IF (T .LT. TINY) GOTO  180
-	 RI = RMAT(II)
-	 IF (RI .NE. ZERO) GO TO 100
-	    IF (NK .GT. 1) GO TO 30
-	       IJ = II
-	       DO 20 J = I, P
-		  RMAT(IJ) = W(K,J)
-		  IJ = IJ + J
+         II = II + I
+         IP1 = I + 1
+         IJ = II + I
+         IF (NK .LE. 1) T = DABS(W(K,I))
+         IF (NK .GT. 1) T = DV2NRM(NK, W(K,I))
+         IF (T .LT. TINY) GOTO  180
+         RI = RMAT(II)
+         IF (RI .NE. ZERO) GO TO 100
+            IF (NK .GT. 1) GO TO 30
+               IJ = II
+               DO 20 J = I, P
+                  RMAT(IJ) = W(K,J)
+                  IJ = IJ + J
  20               CONTINUE
-	       IF (QTRSET) QTR(I) = Y(K)
-	       W(K,I) = ZERO
-	       GO TO 999
+               IF (QTRSET) QTR(I) = Y(K)
+               W(K,I) = ZERO
+               GO TO 999
  30         WI = W(K,I)
-	    IF (BIGRT .GT. ZERO) GO TO 40
-	       BIGRT = DR7MDC(5)
-	       TINYRT = DR7MDC(2)
+            IF (BIGRT .GT. ZERO) GO TO 40
+               BIGRT = DR7MDC(5)
+               TINYRT = DR7MDC(2)
  40         IF (T .LE. TINYRT) GO TO 50
-	    IF (T .GE. BIGRT) GO TO 50
-	       IF (WI .LT. ZERO) T = -T
-	       WI = WI + T
-	       S = DSQRT(T * WI)
-	       GO TO 70
+            IF (T .GE. BIGRT) GO TO 50
+               IF (WI .LT. ZERO) T = -T
+               WI = WI + T
+               S = DSQRT(T * WI)
+               GO TO 70
  50         S = DSQRT(T)
-	    IF (WI .LT. ZERO) GO TO 60
-	       WI = WI + T
-	       S = S * DSQRT(WI)
-	       GO TO 70
+            IF (WI .LT. ZERO) GO TO 60
+               WI = WI + T
+               S = S * DSQRT(WI)
+               GO TO 70
  60         T = -T
-	    WI = WI + T
-	    S = S * DSQRT(-WI)
+            WI = WI + T
+            S = S * DSQRT(-WI)
  70         W(K,I) = WI
-	    CALL DV7SCL(NK, W(K,I), ONE/S, W(K,I))
-	    RMAT(II) = -T
-	    IF (.NOT. QTRSET) GO TO 80
-	    CALL DV2AXY(NK, Y(K), -DD7TPR(NK,Y(K),W(K,I)), W(K,I), Y(K))
-	    QTR(I) = Y(K)
+            CALL DV7SCL(NK, W(K,I), ONE/S, W(K,I))
+            RMAT(II) = -T
+            IF (.NOT. QTRSET) GO TO 80
+            CALL DV2AXY(NK, Y(K), -DD7TPR(NK,Y(K),W(K,I)), W(K,I), Y(K))
+            QTR(I) = Y(K)
  80         IF (IP1 .GT. P) GO TO 999
-	    DO 90 J = IP1, P
-	       CALL DV2AXY(NK, W(K,J), -DD7TPR(NK,W(K,J),W(K,I)),
+            DO 90 J = IP1, P
+               CALL DV2AXY(NK, W(K,J), -DD7TPR(NK,W(K,J),W(K,I)),
      1                    W(K,I), W(K,J))
-	       RMAT(IJ) = W(K,J)
-	       IJ = IJ + J
+               RMAT(IJ) = W(K,J)
+               IJ = IJ + J
  90            CONTINUE
-	    IF (NK .LE. 1) GO TO 999
-	    K = K + 1
-	    NK = NK - 1
-	    GO TO 180
+            IF (NK .LE. 1) GO TO 999
+            K = K + 1
+            NK = NK - 1
+            GO TO 180
 C
  100     ARI = DABS(RI)
-	 IF (ARI .GT. T) GO TO 110
-	    T = T * DSQRT(ONE + (ARI/T)**2)
-	    GO TO 120
+         IF (ARI .GT. T) GO TO 110
+            T = T * DSQRT(ONE + (ARI/T)**2)
+            GO TO 120
  110     T = ARI * DSQRT(ONE + (T/ARI)**2)
  120     IF (RI .LT. ZERO) T = -T
-	 RI = RI + T
-	 RMAT(II) = -T
-	 S = -RI / T
-	 IF (NK .LE. 1) GO TO 150
-	 CALL DV7SCL(NK, W(K,I), ONE/RI, W(K,I))
-	 IF (.NOT. QTRSET) GO TO 130
-	    QRI = QTR(I)
-	    T = S * ( QRI  +  DD7TPR(NK, Y(K), W(K,I)) )
-	    QTR(I) = QRI + T
+         RI = RI + T
+         RMAT(II) = -T
+         S = -RI / T
+         IF (NK .LE. 1) GO TO 150
+         CALL DV7SCL(NK, W(K,I), ONE/RI, W(K,I))
+         IF (.NOT. QTRSET) GO TO 130
+            QRI = QTR(I)
+            T = S * ( QRI  +  DD7TPR(NK, Y(K), W(K,I)) )
+            QTR(I) = QRI + T
  130     IF (IP1 .GT. P) GO TO 999
-	 IF (QTRSET) CALL DV2AXY(NK, Y(K), T, W(K,I), Y(K))
-	 DO 140 J = IP1, P
-	    RI = RMAT(IJ)
-	    T = S * ( RI  +  DD7TPR(NK, W(K,J), W(K,I)) )
-	    CALL DV2AXY(NK, W(K,J), T, W(K,I), W(K,J))
-	    RMAT(IJ) = RI + T
-	    IJ = IJ + J
+         IF (QTRSET) CALL DV2AXY(NK, Y(K), T, W(K,I), Y(K))
+         DO 140 J = IP1, P
+            RI = RMAT(IJ)
+            T = S * ( RI  +  DD7TPR(NK, W(K,J), W(K,I)) )
+            CALL DV2AXY(NK, W(K,J), T, W(K,I), W(K,J))
+            RMAT(IJ) = RI + T
+            IJ = IJ + J
  140        CONTINUE
-	 GO TO 180
+         GO TO 180
 C
  150     WI = W(K,I) / RI
-	 W(K,I) = WI
-	 IF (.NOT. QTRSET) GO TO 160
-	    QRI = QTR(I)
-	    T = S * ( QRI + Y(K)*WI )
-	    QTR(I) = QRI + T
+         W(K,I) = WI
+         IF (.NOT. QTRSET) GO TO 160
+            QRI = QTR(I)
+            T = S * ( QRI + Y(K)*WI )
+            QTR(I) = QRI + T
  160     IF (IP1 .GT. P) GO TO 999
-	 IF (QTRSET) Y(K) = T*WI + Y(K)
-	 DO 170 J = IP1, P
-	    RI = RMAT(IJ)
-	    T = S * (RI + W(K,J)*WI)
-	    W(K,J) = W(K,J) + T*WI
-	    RMAT(IJ) = RI + T
-	    IJ = IJ + J
+         IF (QTRSET) Y(K) = T*WI + Y(K)
+         DO 170 J = IP1, P
+            RI = RMAT(IJ)
+            T = S * (RI + W(K,J)*WI)
+            W(K,J) = W(K,J) + T*WI
+            RMAT(IJ) = RI + T
+            IJ = IJ + J
  170        CONTINUE
  180     CONTINUE
 C
@@ -8186,10 +8186,10 @@ C
       KIND = IV(COVREQ)
       M = IV(MODE)
       IF (M .GT. 0) GO TO 10
-	 IV(H) = -IABS(IV(H))
-	 IV(FDH) = 0
-	 IV(KAGQT) = -1
-	 V(FX) = V(F)
+         IV(H) = -IABS(IV(H))
+         IV(FDH) = 0
+         IV(KAGQT) = -1
+         V(FX) = V(F)
  10   IF (M .GT. P) GO TO 999
       IF (KIND .LT. 0) GO TO 110
 C
@@ -8199,9 +8199,9 @@ C
       GSAVE1 = IV(W) + P
       IF (M .GT. 0) GO TO 20
 C        ***  FIRST CALL ON DF7HES.  SET GSAVE = G, TAKE FIRST STEP  ***
-	 CALL DV7CPY(P, V(GSAVE1), G)
-	 IV(SWITCH) = IV(NFGCAL)
-	 GO TO 90
+         CALL DV7CPY(P, V(GSAVE1), G)
+         IV(SWITCH) = IV(NFGCAL)
+         GO TO 90
 C
  20   DEL = V(DELTA)
       X(M) = V(XMSAVE)
@@ -8209,22 +8209,22 @@ C
 C
 C     ***  HANDLE OVERSIZE V(DELTA)  ***
 C
-	 IF (DEL*X(M) .GT. ZERO) GO TO 30
+         IF (DEL*X(M) .GT. ZERO) GO TO 30
 C             ***  WE ALREADY TRIED SHRINKING V(DELTA), SO QUIT  ***
-	      IV(FDH) = -2
-	      GO TO 220
+              IV(FDH) = -2
+              GO TO 220
 C
 C        ***  TRY SHRINKING V(DELTA)  ***
  30      DEL = NEGPT5 * DEL
-	 GO TO 100
+         GO TO 100
 C
  40   HES = -IV(H)
 C
 C  ***  SET  G = (G - GSAVE)/DEL  ***
 C
       DO 50 I = 1, P
-	 G(I) = (G(I) - V(GSAVE1)) / DEL
-	 GSAVE1 = GSAVE1 + 1
+         G(I) = (G(I) - V(GSAVE1)) / DEL
+         GSAVE1 = GSAVE1 + 1
  50      CONTINUE
 C
 C  ***  ADD G AS NEW COL. TO FINITE-DIFF. HESSIAN MATRIX  ***
@@ -8237,16 +8237,16 @@ C  ***  SET  H(I,M) = 0.5 * (H(I,M) + G(I))  FOR I = 1 TO M-1  ***
 C
       MM1 = M - 1
       DO 60 I = 1, MM1
-	 V(K) = HALF * (V(K) + G(I))
-	 K = K + 1
+         V(K) = HALF * (V(K) + G(I))
+         K = K + 1
  60      CONTINUE
 C
 C  ***  ADD  H(I,M) = G(I)  FOR I = M TO P  ***
 C
  70   L = L + 1
       DO 80 I = M, P
-	 V(L) = G(I)
-	 L = L + I
+         V(L) = G(I)
+         L = L + I
  80      CONTINUE
 C
  90   M = M + 1
@@ -8270,8 +8270,8 @@ C
       MM1O2 = M*MM1/2
       IF (M .GT. 0) GO TO 120
 C        ***  FIRST CALL ON DF7HES.  ***
-	 IV(SAVEI) = 0
-	 GO TO 200
+         IV(SAVEI) = 0
+         GO TO 200
 C
  120  I = IV(SAVEI)
       HES = -IV(H)
@@ -8280,19 +8280,19 @@ C
 C
 C     ***  HANDLE OVERSIZE STEP  ***
 C
-	 STPM = STP0 + M
-	 DEL = V(STPM)
-	 IF (DEL*X(XMSAVE) .GT. ZERO) GO TO 130
+         STPM = STP0 + M
+         DEL = V(STPM)
+         IF (DEL*X(XMSAVE) .GT. ZERO) GO TO 130
 C             ***  WE ALREADY TRIED SHRINKING THE STEP, SO QUIT  ***
-	      IV(FDH) = -2
-	      GO TO 220
+              IV(FDH) = -2
+              GO TO 220
 C
 C        ***  TRY SHRINKING THE STEP  ***
  130     DEL = NEGPT5 * DEL
-	 X(M) = X(XMSAVE) + DEL
-	 V(STPM) = DEL
-	 IRT = 1
-	 GO TO 999
+         X(M) = X(XMSAVE) + DEL
+         V(STPM) = DEL
+         IRT = 1
+         GO TO 999
 C
 C  ***  SAVE F(X + STP(M)*E(M)) IN H(P,M)  ***
 C
@@ -8306,9 +8306,9 @@ C
       IF (MM1 .EQ. 0) GO TO 160
       HPI = HES + PP1O2
       DO 150 I = 1, MM1
-	 V(HMI) = V(FX) - (V(F) + V(HPI))
-	 HMI = HMI + 1
-	 HPI = HPI + 1
+         V(HMI) = V(FX) - (V(F) + V(HPI))
+         HMI = HMI + 1
+         HPI = HPI + 1
  150     CONTINUE
  160  V(HMI) = V(F) - TWO*V(FX)
 C
@@ -8327,8 +8327,8 @@ C
  180  X(I) = V(DELTA)
       IF (IV(TOOBIG) .EQ. 0) GO TO 190
 C        ***  PUNT IN THE EVENT OF AN OVERSIZE STEP  ***
-	 IV(FDH) = -2
-	 GO TO 220
+         IV(FDH) = -2
+         GO TO 220
 C
 C  ***  FINISH COMPUTING H(M,I)  ***
 C
@@ -8364,10 +8364,10 @@ C
  220  V(F) = V(FX)
       IRT = 3
       IF (KIND .LT. 0) GO TO 999
-	 IV(NFGCAL) = IV(SWITCH)
-	 GSAVE1 = IV(W) + P
-	 CALL DV7CPY(P, G, V(GSAVE1))
-	 GO TO 999
+         IV(NFGCAL) = IV(SWITCH)
+         GSAVE1 = IV(W) + P
+         CALL DV7CPY(P, G, V(GSAVE1))
+         GO TO 999
 C
  999  RETURN
 C  ***  LAST CARD OF DF7HES FOLLOWS  ***
@@ -8531,8 +8531,8 @@ C
       I = L + P
       IF (IV(RDREQ) .GT. 0 .AND. IV(COVREQ) .NE. 0) JLEN = I*(N + I + 1)
       IF (IV(1) .NE. 13) GO TO 10
-	 IV(IVNEED) = IV(IVNEED) + L
-	 IV(VNEED) = IV(VNEED) + P + 2*N + JLEN + LL1O2 + L
+         IV(IVNEED) = IV(IVNEED) + L
+         IV(VNEED) = IV(VNEED) + P + 2*N + JLEN + LL1O2 + L
  10   IF (IV(PERM) .LE. AR) IV(PERM) = AR + 1
       CALL  DRN2G(V, V, IV, LIV, LV, N, N, N1, NML, P, V, V, V, ALF)
       IF (IV(1) .NE. 14) GO TO 999
@@ -8595,9 +8595,9 @@ C
  50   IV(1) = IV(IV1SAV)
       MD = IV(MODE)
       IF (MD .LE. 0) GO TO 60
-	 NML = N
-	 DR1L = DR1
-	 R1L = R1
+         NML = N
+         DR1L = DR1
+         R1L = R1
  60   IF (IV(TOOBIG) .NE. 0) GO TO 30
       IF (IABS(IV1) .EQ. 2) GO TO 170
 C
@@ -8619,18 +8619,18 @@ C
       K = L
       IF (IER .NE. 0) K = IER - 1
  70   IF (K .LE. 0) GO TO 90
-	 T = DL7SVX(K, V(AR1), C, C)
-	 IF (T .GT. ZERO) T = DL7SVN(K, V(AR1), C, C) / T
-	 IF (T .GT. SINGTL) GO TO 80
-	 K = K - 1
-	 GO TO 70
+         T = DL7SVX(K, V(AR1), C, C)
+         IF (T .GT. ZERO) T = DL7SVN(K, V(AR1), C, C) / T
+         IF (T .GT. SINGTL) GO TO 80
+         K = K - 1
+         GO TO 70
 C
 C *** RECORD RANK IN IV(IERS)... IV(IERS) = 0 MEANS FULL RANK,
 C *** IV(IERS) .GT. 0 MEANS RANK IV(IERS) - 1.
 C
  80   IF (K .GE. L) GO TO 100
  90      IER = K + 1
-	 CALL DV7SCP(L-K, C(K+1), ZERO)
+         CALL DV7SCP(L-K, C(K+1), ZERO)
  100  IV(IERS) = IER
       IF (K .LE. 0) GO TO 110
 C
@@ -8654,8 +8654,8 @@ C
       DO 130 I = 1, L
  130     CALL DV2AXY(N, V(R1), -C(I), A(1,I), V(R1))
  140  IF (IV(1) .GT. 0) GO TO 30
-	 IV(1) = 2
-	 GO TO 160
+         IV(1) = 2
+         GO TO 160
 C
 C  ***  NEW GRADIENT (JACOBIAN) NEEDED  ***
 C
@@ -8670,24 +8670,24 @@ C
       FDH0 = DR1 + N*(P+L)
       IF (NDA .LE. 0) GO TO 370
       DO 180 I = 1, NDA
-	 I1 = IN(1,I) - 1
-	 IF (I1 .LT. 0) GO TO 180
-	 J1 = IN(2,I)
-	 K = DR1 + I1*N
-	 T = NEGONE
-	 IF (J1 .LE. L) T = -C(J1)
-	 CALL DV2AXY(N, V(K), T, DA(1,I), V(K))
-	 IF (NOCOV) GO TO 180
-	 IF (J1 .GT. L) GO TO 180
+         I1 = IN(1,I) - 1
+         IF (I1 .LT. 0) GO TO 180
+         J1 = IN(2,I)
+         K = DR1 + I1*N
+         T = NEGONE
+         IF (J1 .LE. L) T = -C(J1)
+         CALL DV2AXY(N, V(K), T, DA(1,I), V(K))
+         IF (NOCOV) GO TO 180
+         IF (J1 .GT. L) GO TO 180
 C        ***  ADD IN (L,P) PORTION OF SECOND-ORDER PART OF HESSIAN
 C        ***  FOR COVARIANCE OR REG. DIAG. COMPUTATIONS...
-	 J1 = J1 + P
-	 K = FDH0 + J1*(J1-1)/2 + I1
-	 V(K) = V(K) - DD7TPR(N, V(R1), DA(1,I))
+         J1 = J1 + P
+         K = FDH0 + J1*(J1-1)/2 + I1
+         V(K) = V(K) - DD7TPR(N, V(R1), DA(1,I))
  180     CONTINUE
       IF (IV1 .EQ. 2) GO TO 190
-	 IV(1) = IV1
-	 GO TO 999
+         IV(1) = IV1
+         GO TO 999
  190  IF (L .LE. 0) GO TO 30
       IF (MD .GT. P) GO TO 240
       IF (MD .GT. 0) GO TO 30
@@ -8697,19 +8697,19 @@ C        ***  FOR COVARIANCE OR REG. DIAG. COMPUTATIONS...
       IF (IER .GT. 0) NRAN = IER - 1
       IF (NRAN .LE. 0) GO TO 210
       DO 200 I = 1, P
-	 CALL DQ7APL(LA, N, NRAN, A, V(K), IER)
-	 K = K + N
+         CALL DQ7APL(LA, N, NRAN, A, V(K), IER)
+         K = K + N
  200     CONTINUE
  210  CALL DV7CPY(L, V(CSAVE1), C)
  220  IF (IER .EQ. 0) GO TO 30
 C
 C     *** ADJUST SUBSCRIPTS DESCRIBING R AND DR...
 C
-	 NRAN = IER - 1
-	 DR1L = DR1 + NRAN
-	 NML = N - NRAN
-	 R1L = R1 + NRAN
-	 GO TO 30
+         NRAN = IER - 1
+         DR1L = DR1 + NRAN
+         NML = N - NRAN
+         R1L = R1 + NRAN
+         GO TO 30
 C
 C  ***  CONVERGENCE OR LIMIT REACHED  ***
 C
@@ -8749,8 +8749,8 @@ C  ***  FINISH COVARIANCE COMPUTATION  ***
 C
  240  I = DR1 + N*P
       DO 250 I1 = 1, L
-	 CALL DV7SCL(N, V(I), NEGONE, A(1,I1))
-	 I = I + N
+         CALL DV7SCL(N, V(I), NEGONE, A(1,I1))
+         I = I + N
  250     CONTINUE
       PP = L + P
       HSAVE = IV(H)
@@ -8774,13 +8774,13 @@ C
       DRI = DR1 + N*P
       LI = K + P*PP1/2
       DO 290 I = PP1, PP
-	 DRI1 = DR1
-	 DO 280 I1 = 1, I
-	    V(LI) = V(LI) + DD7TPR(N, V(DRI), V(DRI1))
-	    LI = LI + 1
-	    DRI1 = DRI1 + N
+         DRI1 = DR1
+         DO 280 I1 = 1, I
+            V(LI) = V(LI) + DD7TPR(N, V(DRI), V(DRI1))
+            LI = LI + 1
+            DRI1 = DRI1 + N
  280        CONTINUE
-	 DRI = DRI + N
+         DRI = DRI + N
  290     CONTINUE
       CALL DL7SRT(PP1, PP, V(K), V(K), I)
       IF (I .NE. 0) GO TO 310
@@ -8791,14 +8791,14 @@ C
       V(RCOND) = T
       IF (T .GT. DR7MDC(4)) GO TO 320
  310     IV(REGD) = -1
-	 IV(COVMAT) = -1
-	 IV(FDH) = -1
-	 GO TO 340
+         IV(COVMAT) = -1
+         IV(FDH) = -1
+         GO TO 340
  320  IV(H) = TEMP1
       IV(FDH) = IABS(HSAVE)
       IF (IV(MODE) - PP .LT. 2) GO TO 330
-	 I = IV(H)
-	 CALL DV7SCP(LH, V(I), ZERO)
+         I = IV(H)
+         CALL DV7SCP(LH, V(I), ZERO)
  330  CALL DN2LRD(V(DR1), IV, V(K), LH, LIV, LV, N, N, PP, V(R1),
      1            V(RD1), V)
  340  CALL DC7VFN(IV, V(K), LH, LIV, LV, N, PP, V)
@@ -8807,9 +8807,9 @@ C
  350  IF (IV(REGD) .EQ. 1) IV(REGD) = RD1
  360  IF (IV(1) .LE. 11) CALL DS7CPR(C, IV, L, LIV)
       IF (IV(1) .GT. 6) GO TO 999
-	 CALL DN2CVP(IV, LIV, LV, P+L, V)
-	 CALL DN2RDP(IV, LIV, LV, N, V(RD1), V)
-	 GO TO 999
+         CALL DN2CVP(IV, LIV, LV, P+L, V)
+         CALL DN2RDP(IV, LIV, LV, N, V(RD1), V)
+         GO TO 999
 C
  370  IV(1) = 66
       CALL DITSUM(V, V, IV, LIV, LV, P, V, ALF)
@@ -8833,13 +8833,13 @@ C     DIMENSION L(N*(N+1)/2)
 C
       I0 = 0
       DO 20 I = 1, N
-	 YI = Y(I)
-	 X(I) = ZERO
-	 DO 10 J = 1, I
-	      IJ = I0 + J
-	      X(J) = X(J) + YI*L(IJ)
+         YI = Y(I)
+         X(I) = ZERO
+         DO 10 J = 1, I
+              IJ = I0 + J
+              X(J) = X(J) + YI*L(IJ)
  10           CONTINUE
-	 I0 = I0 + I
+         I0 = I0 + I
  20      CONTINUE
       RETURN
 C  ***  LAST CARD OF DL7TVM FOLLOWS  ***
@@ -8861,16 +8861,16 @@ C
       NP1 = N + 1
       I0 = N*(N+1)/2
       DO 30 II = 1, N
-	 I = NP1 - II
-	 XI = X(I)/L(I0)
-	 X(I) = XI
-	 IF (I .LE. 1) GO TO 999
-	 I0 = I0 - I
-	 IF (XI .EQ. ZERO) GO TO 30
-	 IM1 = I - 1
-	 DO 20 J = 1, IM1
-	      IJ = I0 + J
-	      X(J) = X(J) - XI*L(IJ)
+         I = NP1 - II
+         XI = X(I)/L(I0)
+         X(I) = XI
+         IF (I .LE. 1) GO TO 999
+         I0 = I0 - I
+         IF (XI .EQ. ZERO) GO TO 30
+         IM1 = I - 1
+         DO 20 J = 1, IM1
+              IJ = I0 + J
+              X(J) = X(J) - XI*L(IJ)
  20           CONTINUE
  30      CONTINUE
  999  RETURN
@@ -9023,8 +9023,8 @@ C
       IF (IV(1) .EQ. 0) CALL DIVSET(2, IV, LIV, LV, V)
       IF (IV(1) .LT. 12) GO TO 10
       IF (IV(1) .GT. 13) GO TO 10
-	 IV(VNEED) = IV(VNEED) + N*(N+19)/2
-	 IV(IVNEED) = IV(IVNEED) + N
+         IV(VNEED) = IV(VNEED) + N*(N+19)/2
+         IV(IVNEED) = IV(IVNEED) + N
  10   CALL DPARCK(2, D, IV, LIV, LV, N, V)
       I = IV(1) - 2
       IF (I .GT. 12) GO TO 999
@@ -9041,8 +9041,8 @@ C
       IV(NEXTV) = IV(DG) + 2*N
       IV(NEXTIV) = IV(PERM) + N
       IF (IV(1) .NE. 13) GO TO 30
-	 IV(1) = 14
-	 GO TO 999
+         IV(1) = 14
+         GO TO 999
 C
 C  ***  INITIALIZATION  ***
 C
@@ -9063,9 +9063,9 @@ C  ***  CHECK CONSISTENCY OF B AND INITIALIZE IP ARRAY  ***
 C
       IPI = IV(PERM)
       DO 40 I = 1, N
-	 IV(IPI) = I
-	 IPI = IPI + 1
-	 IF (B(1,I) .GT. B(2,I)) GO TO 410
+         IV(IPI) = I
+         IPI = IPI + 1
+         IF (B(1,I) .GT. B(2,I)) GO TO 410
  40      CONTINUE
 C
       IF (V(DINIT) .GE. ZERO) CALL DV7SCP(N, D, V(DINIT))
@@ -9073,14 +9073,14 @@ C
 C
 C     ***  SET THE INITIAL HESSIAN APPROXIMATION TO DIAG(D)**-2  ***
 C
-	 L = IV(LMAT)
-	 CALL DV7SCP(N*(N+1)/2, V(L), ZERO)
-	 K = L - 1
-	 DO 50 I = 1, N
-	      K = K + I
-	      T = D(I)
-	      IF (T .LE. ZERO) T = ONE
-	      V(K) = T
+         L = IV(LMAT)
+         CALL DV7SCP(N*(N+1)/2, V(L), ZERO)
+         K = L - 1
+         DO 50 I = 1, N
+              K = K + I
+              T = D(I)
+              IF (T .LE. ZERO) T = ONE
+              V(K) = T
  50           CONTINUE
 C
 C  ***  GET INITIAL FUNCTION VALUE  ***
@@ -9093,14 +9093,14 @@ C
       V(F0) = FX
       IV(1) = 2
       IF (IV(TOOBIG) .EQ. 0) GO TO 999
-	 IV(1) = 63
-	 GO TO 430
+         IV(1) = 63
+         GO TO 430
 C
 C  ***  MAKE SURE GRADIENT COULD BE COMPUTED  ***
 C
  80   IF (IV(TOOBIG) .EQ. 0) GO TO 90
-	 IV(1) = 65
-	 GO TO 430
+         IV(1) = 65
+         GO TO 430
 C
 C  ***  CHOOSE INITIAL PERMUTATION  ***
 C
@@ -9112,30 +9112,30 @@ C
       W1 = IV(NWTSTP) + N
       K = N - IV(NC)
       DO 120 I = 1, N
-	 IPN = IPN - 1
-	 J = IV(IPN)
-	 IF (B(1,J) .GE. B(2,J)) GO TO 100
-	 XI = X(J)
-	 GI = G(J)
-	 IF (XI .LE. B(1,J) .AND. GI .GT. ZERO) GO TO 100
-	 IF (XI .GE. B(2,J) .AND. GI .LT. ZERO) GO TO 100
+         IPN = IPN - 1
+         J = IV(IPN)
+         IF (B(1,J) .GE. B(2,J)) GO TO 100
+         XI = X(J)
+         GI = G(J)
+         IF (XI .LE. B(1,J) .AND. GI .GT. ZERO) GO TO 100
+         IF (XI .GE. B(2,J) .AND. GI .LT. ZERO) GO TO 100
 C           *** DISALLOW CONVERGENCE IF X(J) HAS JUST BEEN FREED ***
-	    IF (I .LE. K) IV(CNVCOD) = 0
-	    GO TO 120
+            IF (I .LE. K) IV(CNVCOD) = 0
+            GO TO 120
  100     I1 = NP1 - I
-	 IF (I1 .GE. N1) GO TO 110
-	    CALL I7SHFT(N1, I1, IV(IPI))
-	    CALL DQ7RSH(I1, N1, .FALSE., G, V(L), V(W1))
+         IF (I1 .GE. N1) GO TO 110
+            CALL I7SHFT(N1, I1, IV(IPI))
+            CALL DQ7RSH(I1, N1, .FALSE., G, V(L), V(W1))
  110        N1 = N1 - 1
  120     CONTINUE
 C
       IV(NC) = N1
       V(DGNORM) = ZERO
       IF (N1 .LE. 0) GO TO 130
-	 DG1 = IV(DG)
-	 CALL DV7VMP(N, V(DG1), G, D, -1)
-	 CALL DV7IPR(N, IV(IPI), V(DG1))
-	 V(DGNORM) = DV2NRM(N1, V(DG1))
+         DG1 = IV(DG)
+         CALL DV7VMP(N, V(DG1), G, D, -1)
+         CALL DV7IPR(N, IV(IPI), V(DG1))
+         V(DGNORM) = DV2NRM(N1, V(DG1))
  130  IF (IV(CNVCOD) .NE. 0) GO TO 420
       IF (IV(MODE) .EQ. 0) GO TO 370
 C
@@ -9154,8 +9154,8 @@ C
  140  CALL DITSUM(D, G, IV, LIV, LV, N, V, X)
  150  K = IV(NITER)
       IF (K .LT. IV(MXITER)) GO TO 160
-	 IV(1) = 10
-	 GO TO 430
+         IV(1) = 10
+         GO TO 430
 C
 C  ***  UPDATE RADIUS  ***
 C
@@ -9178,25 +9178,25 @@ C
 C  ***  CHECK STOPX AND FUNCTION EVALUATION LIMIT  ***
 C
  180  IF (.NOT. STOPX(DUMMY)) GO TO 200
-	 IV(1) = 11
-	 GO TO 210
+         IV(1) = 11
+         GO TO 210
 C
 C     ***  COME HERE WHEN RESTARTING AFTER FUNC. EVAL. LIMIT OR STOPX.
 C
  190  IF (V(F) .GE. V(F0)) GO TO 200
-	 V(RADFAC) = ONE
-	 K = IV(NITER)
-	 GO TO 160
+         V(RADFAC) = ONE
+         K = IV(NITER)
+         GO TO 160
 C
  200  IF (IV(NFCALL) .LT. IV(MXFCAL)) GO TO 220
-	 IV(1) = 9
+         IV(1) = 9
  210     IF (V(F) .GE. V(F0)) GO TO 430
 C
 C        ***  IN CASE OF STOPX OR FUNCTION EVALUATION LIMIT WITH
 C        ***  IMPROVED V(F), EVALUATE THE GRADIENT AT X.
 C
-	      IV(CNVCOD) = IV(1)
-	      GO TO 360
+              IV(CNVCOD) = IV(1)
+              GO TO 360
 C
 C. . . . . . . . . . . . .  COMPUTE CANDIDATE STEP  . . . . . . . . . .
 C
@@ -9214,9 +9214,9 @@ C
      1            V(L), LV, N, IV(NC), V(NWTST1), V(STEP1), V(TD1),
      2            V(TG1), V, V(W1), V(X01))
       IF (IV(IRC) .NE. 6) GO TO 230
-	 IF (IV(RESTOR) .NE. 2) GO TO 250
-	 RSTRST = 2
-	 GO TO 260
+         IF (IV(RESTOR) .NE. 2) GO TO 250
+         RSTRST = 2
+         GO TO 260
 C
 C  ***  CHECK WHETHER EVALUATING F(X0 + STEP) LOOKS WORTHWHILE  ***
 C
@@ -9225,9 +9225,9 @@ C
       IF (IV(IRC) .NE. 5) GO TO 240
       IF (V(RADFAC) .LE. ONE) GO TO 240
       IF (V(PREDUC) .GT. ONEP2 * V(FDIF)) GO TO 240
-	 IF (IV(RESTOR) .NE. 2) GO TO 250
-	 RSTRST = 0
-	 GO TO 260
+         IF (IV(RESTOR) .NE. 2) GO TO 250
+         RSTRST = 0
+         GO TO 260
 C
 C  ***  COMPUTE F(X0 + STEP)  ***
 C
@@ -9251,9 +9251,9 @@ C
  280   CALL DV7CPY(N, V(LSTGST), X)
        GO TO 300
  290     CALL DV7CPY(N, X, V(LSTGST))
-	 CALL DV2AXY(N, V(STEP1), NEGONE, V(X01), X)
-	 V(RELDX) = DRLDST(N, D, X, V(X01))
-	 IV(RESTOR) = RSTRST
+         CALL DV2AXY(N, V(STEP1), NEGONE, V(X01), X)
+         V(RELDX) = DRLDST(N, D, X, V(X01))
+         IV(RESTOR) = RSTRST
 C
  300  K = IV(IRC)
       GO TO (310,340,340,340,310,320,330,330,330,330,330,330,400,370), K
@@ -9261,7 +9261,7 @@ C
 C     ***  RECOMPUTE STEP WITH CHANGED RADIUS  ***
 C
  310     V(RADIUS) = V(RADFAC) * V(DSTNRM)
-	 GO TO 180
+         GO TO 180
 C
 C  ***  COMPUTE STEP OF LENGTH V(LMAXS) FOR SINGULAR CONVERGENCE TEST.
 C
@@ -9272,8 +9272,8 @@ C  ***  CONVERGENCE OR FALSE CONVERGENCE  ***
 C
  330  IV(CNVCOD) = K - 4
       IF (V(F) .GE. V(F0)) GO TO 420
-	 IF (IV(XIRC) .EQ. 14) GO TO 420
-	      IV(XIRC) = 14
+         IF (IV(XIRC) .EQ. 14) GO TO 420
+              IV(XIRC) = 14
 C
 C. . . . . . . . . . . .  PROCESS ACCEPTABLE STEP  . . . . . . . . . . .
 C
@@ -9286,23 +9286,23 @@ C     ***  SET  TEMP1 = HESSIAN * STEP  FOR USE IN GRADIENT TESTS  ***
 C
 C     ***  USE X0 AS TEMPORARY...
 C
-	 IPI = IV(PERM)
-	 CALL DV7CPY(N, V(X01), V(STEP1))
-	 CALL DV7IPR(N, IV(IPI), V(X01))
-	 L = IV(LMAT)
-	 CALL DL7TVM(N, V(X01), V(L), V(X01))
-	 CALL DL7VML(N, V(X01), V(L), V(X01))
+         IPI = IV(PERM)
+         CALL DV7CPY(N, V(X01), V(STEP1))
+         CALL DV7IPR(N, IV(IPI), V(X01))
+         L = IV(LMAT)
+         CALL DL7TVM(N, V(X01), V(L), V(X01))
+         CALL DL7VML(N, V(X01), V(L), V(X01))
 C
 C        *** UNPERMUTE X0 INTO TEMP1 ***
 C
-	 TEMP1 = IV(STLSTG)
-	 TEMP0 = TEMP1 - 1
-	 DO 350 I = 1, N
-	    J = IV(IPI)
-	    IPI = IPI + 1
-	    K = TEMP0 + J
-	    V(K) = V(X01)
-	    X01 = X01 + 1
+         TEMP1 = IV(STLSTG)
+         TEMP0 = TEMP1 - 1
+         DO 350 I = 1, N
+            J = IV(IPI)
+            IPI = IPI + 1
+            K = TEMP0 + J
+            V(K) = V(X01)
+            X01 = X01 + 1
  350        CONTINUE
 C
 C  ***  SAVE OLD GRADIENT, COMPUTE NEW ONE  ***
@@ -9326,14 +9326,14 @@ C  ***  SET V(RADFAC) BY GRADIENT TESTS  ***
 C
 C     ***  SET  TEMP1 = DIAG(D)**-1 * (HESSIAN*STEP + (G(X0)-G(X)))  ***
 C
-	 CALL DV2AXY(N, V(TEMP1), NEGONE, V(G01), V(TEMP1))
-	 CALL DV7VMP(N, V(TEMP1), V(TEMP1), D, -1)
+         CALL DV2AXY(N, V(TEMP1), NEGONE, V(G01), V(TEMP1))
+         CALL DV7VMP(N, V(TEMP1), V(TEMP1), D, -1)
 C
 C        ***  DO GRADIENT TESTS  ***
 C
-	 IF (DV2NRM(N, V(TEMP1)) .LE. V(DGNORM) * V(TUNER4))
+         IF (DV2NRM(N, V(TEMP1)) .LE. V(DGNORM) * V(TUNER4))
      1                  GO TO 380
-	      IF (DD7TPR(N, G, V(STEP1))
+              IF (DD7TPR(N, G, V(STEP1))
      1                  .GE. V(GTSTEP) * V(TUNER5))  GO TO 390
  380               V(RADFAC) = V(INCFAC)
 C
@@ -9375,8 +9375,8 @@ C
 C  ***  PROJECT X INTO FEASIBLE REGION (PRIOR TO COMPUTING F OR G)  ***
 C
  440  DO 450 I = 1, N
-	 IF (X(I) .LT. B(1,I)) X(I) = B(1,I)
-	 IF (X(I) .GT. B(2,I)) X(I) = B(2,I)
+         IF (X(I) .LT. B(1,I)) X(I) = B(1,I)
+         IF (X(I) .GT. B(2,I)) X(I) = B(2,I)
  450     CONTINUE
 C
  999  RETURN
@@ -9509,33 +9509,33 @@ C     ***  INCREMENT  I  AND START COMPUTING  G(I)  ***
 C
  110  I = IABS(IRC) + 1
       IF (I .GT. N) GO TO 300
-	 IRC = I
-	 AFX = DABS(W(FX0))
-	 MACHEP = W(1)
-	 H0 = W(2)
-	 HMIN = HMIN0 * MACHEP
-	 W(XISAVE) = X(I)
-	 AXI = DABS(X(I))
-	 AXIBAR = DMAX1(AXI, ONE/D(I))
-	 GI = G(I)
-	 AGI = DABS(GI)
-	 ETA = DABS(ETA0)
-	 IF (AFX .GT. ZERO) ETA = DMAX1(ETA, AGI*AXI*MACHEP/AFX)
-	 ALPHAI = ALPHA(I)
-	 IF (ALPHAI .EQ. ZERO) GO TO 170
-	 IF (GI .EQ. ZERO .OR. FX .EQ. ZERO) GO TO 180
-	 AFXETA = AFX*ETA
-	 AAI = DABS(ALPHAI)
+         IRC = I
+         AFX = DABS(W(FX0))
+         MACHEP = W(1)
+         H0 = W(2)
+         HMIN = HMIN0 * MACHEP
+         W(XISAVE) = X(I)
+         AXI = DABS(X(I))
+         AXIBAR = DMAX1(AXI, ONE/D(I))
+         GI = G(I)
+         AGI = DABS(GI)
+         ETA = DABS(ETA0)
+         IF (AFX .GT. ZERO) ETA = DMAX1(ETA, AGI*AXI*MACHEP/AFX)
+         ALPHAI = ALPHA(I)
+         IF (ALPHAI .EQ. ZERO) GO TO 170
+         IF (GI .EQ. ZERO .OR. FX .EQ. ZERO) GO TO 180
+         AFXETA = AFX*ETA
+         AAI = DABS(ALPHAI)
 C
 C        *** COMPUTE H = STEWART*S FORWARD-DIFFERENCE STEP SIZE.
 C
-	 IF (GI**2 .LE. AFXETA*AAI) GO TO 120
-	      H = TWO*DSQRT(AFXETA/AAI)
-	      H = H*(ONE - AAI*H/(THREE*AAI*H + FOUR*AGI))
-	      GO TO 130
+         IF (GI**2 .LE. AFXETA*AAI) GO TO 120
+              H = TWO*DSQRT(AFXETA/AAI)
+              H = H*(ONE - AAI*H/(THREE*AAI*H + FOUR*AGI))
+              GO TO 130
 C120     H = TWO*(AFXETA*AGI/(AAI**2))**(ONE/THREE)
  120     H = TWO * (AFXETA*AGI)**(ONE/THREE) * AAI**(-TWO/THREE)
-	 H = H*(ONE - TWO*AGI/(THREE*AAI*H + FOUR*AGI))
+         H = H*(ONE - TWO*AGI/(THREE*AAI*H + FOUR*AGI))
 C
 C        ***  ENSURE THAT  H  IS NOT INSIGNIFICANTLY SMALL  ***
 C
@@ -9544,51 +9544,51 @@ C
 C        *** USE FORWARD DIFFERENCE IF BOUND ON TRUNCATION ERROR IS AT
 C        *** MOST 10**-3.
 C
-	 IF (AAI*H .LE. P002*AGI) GO TO 160
+         IF (AAI*H .LE. P002*AGI) GO TO 160
 C
 C        *** COMPUTE H = STEWART*S STEP FOR CENTRAL DIFFERENCE.
 C
-	 DISCON = C2000*AFXETA
-	 H = DISCON/(AGI + DSQRT(GI**2 + AAI*DISCON))
+         DISCON = C2000*AFXETA
+         H = DISCON/(AGI + DSQRT(GI**2 + AAI*DISCON))
 C
 C        ***  ENSURE THAT  H  IS NEITHER TOO SMALL NOR TOO BIG  ***
 C
-	 H = DMAX1(H, HMIN*AXIBAR)
-	 IF (H .GE. HMAX0*AXIBAR) H = AXIBAR * H0**(TWO/THREE)
+         H = DMAX1(H, HMIN*AXIBAR)
+         IF (H .GE. HMAX0*AXIBAR) H = AXIBAR * H0**(TWO/THREE)
 C
 C        ***  COMPUTE CENTRAL DIFFERENCE  ***
 C
-	 IRC = -I
-	 GO TO 200
+         IRC = -I
+         GO TO 200
 C
  140     H = -W(HSAVE)
-	 I = IABS(IRC)
-	 IF (H .GT. ZERO) GO TO 150
-	 W(FH) = FX
-	 GO TO 200
+         I = IABS(IRC)
+         IF (H .GT. ZERO) GO TO 150
+         W(FH) = FX
+         GO TO 200
 C
  150     G(I) = (W(FH) - FX) / (TWO * H)
-	 X(I) = W(XISAVE)
-	 GO TO 110
+         X(I) = W(XISAVE)
+         GO TO 110
 C
 C     ***  COMPUTE FORWARD DIFFERENCES IN VARIOUS CASES  ***
 C
  160     IF (H .GE. HMAX0*AXIBAR) H = H0 * AXIBAR
-	 IF (ALPHAI*GI .LT. ZERO) H = -H
-	 GO TO 200
+         IF (ALPHAI*GI .LT. ZERO) H = -H
+         GO TO 200
  170     H = AXIBAR
-	 GO TO 200
+         GO TO 200
  180     H = H0 * AXIBAR
 C
  200     X(I) = W(XISAVE) + H
-	 W(HSAVE) = H
-	 GO TO 999
+         W(HSAVE) = H
+         GO TO 999
 C
 C     ***  COMPUTE ACTUAL FORWARD DIFFERENCE  ***
 C
  210     G(IRC) = (FX - W(FX0)) / W(HSAVE)
-	 X(IRC) = W(XISAVE)
-	 GO TO 110
+         X(IRC) = W(XISAVE)
+         GO TO 110
 C
 C  ***  RESTORE FX AND INDICATE THAT G HAS BEEN COMPUTED  ***
 C
@@ -9842,9 +9842,9 @@ C     ***  STORE DIAG(DIHDI) IN W(DIAG0+1),...,W(DIAG0+P)  ***
 C
       J = 0
       DO 10 I = 1, P
-	 J = J + I
-	 K1 = DIAG0 + I
-	 W(K1) = DIHDI(J)
+         J = J + I
+         K1 = DIAG0 + I
+         W(K1) = DIHDI(J)
  10      CONTINUE
 C
 C     ***  DETERMINE W(DGGDMX), THE LARGEST ELEMENT OF DIHDI  ***
@@ -9852,8 +9852,8 @@ C
       T1 = ZERO
       J = P * (P + 1) / 2
       DO 20 I = 1, J
-	 T = DABS(DIHDI(I))
-	 IF (T1 .LT. T) T1 = T
+         T = DABS(DIHDI(I))
+         IF (T1 .LT. T) T1 = T
  20      CONTINUE
       W(DGGDMX) = T1
 C
@@ -9863,24 +9863,24 @@ C
       IF (IRC .EQ. 0) GO TO 50
 C        ***  INDEF. H -- UNDERESTIMATE SMALLEST EIGENVALUE, USE THIS
 C        ***  ESTIMATE TO INITIALIZE LOWER BOUND LK ON ALPHA.
-	 J = IRC*(IRC+1)/2
-	 T = L(J)
-	 L(J) = ONE
-	 DO 40 I = 1, IRC
+         J = IRC*(IRC+1)/2
+         T = L(J)
+         L(J) = ONE
+         DO 40 I = 1, IRC
  40           W(I) = ZERO
-	 W(IRC) = ONE
-	 CALL DL7ITV(IRC, W, L, W)
-	 T1 = DV2NRM(IRC, W)
-	 LK = -T / T1 / T1
-	 V(DST0) = -LK
-	 IF (RESTRT) GO TO 210
-	 GO TO 70
+         W(IRC) = ONE
+         CALL DL7ITV(IRC, W, L, W)
+         T1 = DV2NRM(IRC, W)
+         LK = -T / T1 / T1
+         V(DST0) = -LK
+         IF (RESTRT) GO TO 210
+         GO TO 70
 C
 C     ***  POSITIVE DEFINITE H -- COMPUTE UNMODIFIED NEWTON STEP.  ***
  50   LK = ZERO
       T = DL7SVN(P, L, W(Q), W(Q))
       IF (T .GE. ONE) GO TO 60
-	 IF (V(DGNORM) .GE. T*T*BIG) GO TO 70
+         IF (V(DGNORM) .GE. T*T*BIG) GO TO 70
  60   CALL DL7IVM(P, W(Q), L, DIG)
       GTSTA = DD7TPR(P, W(Q), W(Q))
       V(NREDUC) = HALF * GTSTA
@@ -9896,17 +9896,17 @@ C  ***  SMALLEST) EIGENVALUES.  ***
 C
  70   K = 0
       DO 100 I = 1, P
-	 WI = ZERO
-	 IF (I .EQ. 1) GO TO 90
-	 IM1 = I - 1
-	 DO 80 J = 1, IM1
-	      K = K + 1
-	      T = DABS(DIHDI(K))
-	      WI = WI + T
-	      W(J) = W(J) + T
+         WI = ZERO
+         IF (I .EQ. 1) GO TO 90
+         IM1 = I - 1
+         DO 80 J = 1, IM1
+              K = K + 1
+              T = DABS(DIHDI(K))
+              WI = WI + T
+              W(J) = W(J) + T
  80           CONTINUE
  90      W(I) = WI
-	 K = K + 1
+         K = K + 1
  100     CONTINUE
 C
 C  ***  (UNDER-)ESTIMATE SMALLEST EIGENVALUE OF (D**-1)*H*(D**-1)  ***
@@ -9915,11 +9915,11 @@ C
       T1 = W(DIAG) - W(1)
       IF (P .LE. 1) GO TO 120
       DO 110 I = 2, P
-	 J = DIAG0 + I
-	 T = W(J) - W(I)
-	 IF (T .GE. T1) GO TO 110
-	      T1 = T
-	      K = I
+         J = DIAG0 + I
+         T = W(J) - W(I)
+         IF (T .GE. T1) GO TO 110
+              T1 = T
+              K = I
  110     CONTINUE
 C
  120  SK = W(K)
@@ -9929,14 +9929,14 @@ C
       INC = 1
       T = ZERO
       DO 150 I = 1, P
-	 IF (I .EQ. K) GO TO 130
-	 AKI = DABS(DIHDI(K1))
-	 SI = W(I)
-	 J = DIAG0 + I
-	 T1 = HALF * (AKK - W(J) + SI - AKI)
-	 T1 = T1 + DSQRT(T1*T1 + SK*AKI)
-	 IF (T .LT. T1) T = T1
-	 IF (I .LT. K) GO TO 140
+         IF (I .EQ. K) GO TO 130
+         AKI = DABS(DIHDI(K1))
+         SI = W(I)
+         J = DIAG0 + I
+         T1 = HALF * (AKK - W(J) + SI - AKI)
+         T1 = T1 + DSQRT(T1*T1 + SK*AKI)
+         IF (T .LT. T1) T = T1
+         IF (I .LT. K) GO TO 140
  130     INC = I
  140     K1 = K1 + INC
  150     CONTINUE
@@ -9952,11 +9952,11 @@ C
       T1 = W(DIAG) + W(1)
       IF (P .LE. 1) GO TO 170
       DO 160 I = 2, P
-	 J = DIAG0 + I
-	 T = W(J) + W(I)
-	 IF (T .LE. T1) GO TO 160
-	      T1 = T
-	      K = I
+         J = DIAG0 + I
+         T = W(J) + W(I)
+         IF (T .LE. T1) GO TO 160
+              T1 = T
+              K = I
  160     CONTINUE
 C
  170  SK = W(K)
@@ -9966,14 +9966,14 @@ C
       INC = 1
       T = ZERO
       DO 200 I = 1, P
-	 IF (I .EQ. K) GO TO 180
-	 AKI = DABS(DIHDI(K1))
-	 SI = W(I)
-	 J = DIAG0 + I
-	 T1 = HALF * (W(J) + SI - AKI - AKK)
-	 T1 = T1 + DSQRT(T1*T1 + SK*AKI)
-	 IF (T .LT. T1) T = T1
-	 IF (I .LT. K) GO TO 190
+         IF (I .EQ. K) GO TO 180
+         AKI = DABS(DIHDI(K1))
+         SI = W(I)
+         J = DIAG0 + I
+         T1 = HALF * (W(J) + SI - AKI - AKK)
+         T1 = T1 + DSQRT(T1*T1 + SK*AKI)
+         IF (T .LT. T1) T = T1
+         IF (I .LT. K) GO TO 190
  180     INC = I
  190     K1 = K1 + INC
  200     CONTINUE
@@ -10004,9 +10004,9 @@ C
       IF (ALPHAK .LE. ZERO) ALPHAK = UK
       K = 0
       DO 220 I = 1, P
-	 K = K + I
-	 J = DIAG0 + I
-	 DIHDI(K) = W(J) + ALPHAK
+         K = K + I
+         J = DIAG0 + I
+         DIHDI(K) = W(J) + ALPHAK
  220     CONTINUE
 C
 C  ***  TRY COMPUTING CHOLESKY DECOMPOSITION  ***
@@ -10076,8 +10076,8 @@ C
 C  ***  SUCCESSFUL STEP IN GENERAL.  COMPUTE STEP = -(D**-1)*Q  ***
 C
  270  DO 280 I = 1, P
-	 J = Q0 + I
-	 STEP(I) = -W(J)/D(I)
+         J = Q0 + I
+         STEP(I) = -W(J)/D(I)
  280     CONTINUE
       V(GTSTEP) = -GTSTA
       V(PREDUC) = HALF * (DABS(ALPHAK)*DST*DST + GTSTA)
@@ -10090,16 +10090,16 @@ C
 C
 C     ***  PREPARE TO RETURN NEWTON STEP  ***
 C
-	 RESTRT = .TRUE.
-	 KA = KA + 1
-	 K = 0
-	 DO 300 I = 1, P
-	      K = K + I
-	      J = DIAG0 + I
-	      DIHDI(K) = W(J)
+         RESTRT = .TRUE.
+         KA = KA + 1
+         K = 0
+         DO 300 I = 1, P
+              K = K + I
+              J = DIAG0 + I
+              DIHDI(K) = W(J)
  300          CONTINUE
-	 UK = NEGONE
-	 GO TO 30
+         UK = NEGONE
+         GO TO 30
 C
  310  KAMIN = KA + 3
       IF (V(DGNORM) .EQ. ZERO) KAMIN = 0
@@ -10115,11 +10115,11 @@ C
       IF (RAD .GT. V(RAD0)) GO TO 320
 C
 C        ***  SMALLER RADIUS  ***
-	 LK = ZERO
-	 IF (ALPHAK .GT. ZERO) LK = W(LK0)
-	 LK = DMAX1(LK, T - W(EMAX))
-	 IF (V(DST0) .GT. ZERO) LK = DMAX1(LK, (V(DST0)-RAD)*W(PHIPIN))
-	 GO TO 250
+         LK = ZERO
+         IF (ALPHAK .GT. ZERO) LK = W(LK0)
+         LK = DMAX1(LK, T - W(EMAX))
+         IF (V(DST0) .GT. ZERO) LK = DMAX1(LK, (V(DST0)-RAD)*W(PHIPIN))
+         GO TO 250
 C
 C     ***  BIGGER RADIUS  ***
  320  IF (ALPHAK .GT. ZERO) UK = DMIN1(UK, W(UK0))
@@ -10185,7 +10185,7 @@ C     ***  IF NOT YET AVAILABLE, OBTAIN MACHINE DEPENDENT VALUE DGXFAC.
  370  IF (DGXFAC .EQ. ZERO) DGXFAC = EPSFAC * DR7MDC(3)
 C
       IF (DELTA .GT. DGXFAC*W(DGGDMX)) GO TO 250
-	 GO TO 270
+         GO TO 270
 C
 C  ***  SPECIAL CASE DETECTED... NEGATE ALPHAK TO INDICATE SPECIAL CASE
 C
@@ -10198,13 +10198,13 @@ C
       T1 = ZERO
       T = SI*(ALPHAK*SW - HALF*SI*(ALPHAK + T*DD7TPR(P,W(X),W)))
       IF (T .LT. EPS*TWOPSI/SIX) GO TO 390
-	 V(PREDUC) = V(PREDUC) + T
-	 DST = RAD
-	 T1 = -SI
+         V(PREDUC) = V(PREDUC) + T
+         DST = RAD
+         T1 = -SI
  390  DO 400 I = 1, P
-	 J = Q0 + I
-	 W(J) = T1*W(I) - W(J)
-	 STEP(I) = W(J) / D(I)
+         J = Q0 + I
+         W(J) = T1*W(I) - W(J)
+         STEP(I) = W(J) / D(I)
  400     CONTINUE
       V(GTSTEP) = DD7TPR(P, DIG, W(Q))
 C
@@ -10221,9 +10221,9 @@ C     ***  RESTORE DIAGONAL OF DIHDI  ***
 C
       J = 0
       DO 420 I = 1, P
-	 J = J + I
-	 K = DIAG0 + I
-	 DIHDI(J) = W(K)
+         J = J + I
+         K = DIAG0 + I
+         DIHDI(J) = W(K)
  420     CONTINUE
 C
       RETURN
@@ -10296,11 +10296,11 @@ C
       SHS = DD7TPR(N, W, W)
       YS = DD7TPR(N, Y, S)
       IF (YS .GE. EPS*SHS) GO TO 10
-	 THETA = (ONE - EPS) * SHS / (SHS - YS)
-	 EPSRT = DSQRT(EPS)
-	 CY = THETA / (SHS * EPSRT)
-	 CS = (ONE + (THETA-ONE)/EPSRT) / SHS
-	 GO TO 20
+         THETA = (ONE - EPS) * SHS / (SHS - YS)
+         EPSRT = DSQRT(EPS)
+         CY = THETA / (SHS * EPSRT)
+         CS = (ONE + (THETA-ONE)/EPSRT) / SHS
+         GO TO 20
  10   CY = ONE / (DSQRT(YS) * DSQRT(SHS))
       CS = ONE / SHS
  20   CALL DL7IVM(N, Z, L, Y)
@@ -10350,8 +10350,8 @@ C
 C
       IF (IV(COVMAT) .NE. 0) GO TO 999
       IF (I .GE. 2) GO TO 10
-	 CALL DL7NVR(P, V(COV), L)
-	 CALL DL7TSQ(P, V(COV), V(COV))
+         CALL DL7NVR(P, V(COV), L)
+         CALL DL7TSQ(P, V(COV), V(COV))
 C
  10   CALL DV7SCL(LH, V(COV), V(F)/(HALF * DBLE(MAX0(1,N-P))), V(COV))
       IV(COVMAT) = COV
@@ -10374,19 +10374,19 @@ C
       L = 1
       IF (K .GE. 0) GO TO 30
       DO 20 I = 1, N
-	 T = ONE / Y(I)
-	 DO 10 J = 1, I
-	    X(L) = T * Z(L)
-	    L = L + 1
+         T = ONE / Y(I)
+         DO 10 J = 1, I
+            X(L) = T * Z(L)
+            L = L + 1
  10         CONTINUE
  20      CONTINUE
       GO TO 999
 C
  30   DO 50 I = 1, N
-	 T = Y(I)
-	 DO 40 J = 1, I
-	    X(L) = T * Z(L)
-	    L = L + 1
+         T = Y(I)
+         DO 40 J = 1, I
+            X(L) = T * Z(L)
+            L = L + 1
  40         CONTINUE
  50      CONTINUE
  999  RETURN
@@ -10407,8 +10407,8 @@ C
       PARAMETER (ZERO=0.D+0)
 C
       DO 10 K = 1, N
-	 IF (Y(K) .NE. ZERO) GO TO 20
-	 X(K) = ZERO
+         IF (Y(K) .NE. ZERO) GO TO 20
+         X(K) = ZERO
  10      CONTINUE
       GO TO 999
  20   J = K*(K+1)/2
@@ -10416,9 +10416,9 @@ C
       IF (K .GE. N) GO TO 999
       K = K + 1
       DO 30 I = K, N
-	 T = DD7TPR(I-1, L(J+1), X)
-	 J = J + I
-	 X(I) = (Y(I) - T)/L(J)
+         T = DD7TPR(I-1, L(J+1), X)
+         J = J + I
+         X(I) = (Y(I) - T)/L(J)
  30      CONTINUE
  999  RETURN
 C  ***  LAST CARD OF DL7IVM FOLLOWS  ***
@@ -10466,14 +10466,14 @@ C
       JCN1 = IV(JCN)
       JCN0 = IABS(JCN1) - 1
       IF (JCN1 .LT. 0) GO TO 10
-	 IV(JCN) = -JCN1
-	 CALL DV7SCP(P, V(JCN1), ZERO)
+         IV(JCN) = -JCN1
+         CALL DV7SCP(P, V(JCN1), ZERO)
  10   DO 30 I = 1, P
-	 JCNI = JCN0 + I
-	 T  = V(JCNI)
-	 DO 20 K = 1, NN
+         JCNI = JCN0 + I
+         T  = V(JCNI)
+         DO 20 K = 1, NN
  20           T = DMAX1(T, DABS(DR(K,I)))
-	 V(JCNI) = T
+         V(JCNI) = T
  30      CONTINUE
       IF (N2 .LT. N) GO TO 999
       VDFAC = V(DFAC)
@@ -10481,14 +10481,14 @@ C
       D0 = JTOL0 + P
       SII = IV(S) - 1
       DO 50 I = 1, P
-	 SII = SII + I
-	 JCNI = JCN0 + I
-	 T = V(JCNI)
-	 IF (V(SII) .GT. ZERO) T = DMAX1(DSQRT(V(SII)), T)
-	 JTOLI = JTOL0 + I
-	 D0 = D0 + 1
-	 IF (T .LT. V(JTOLI)) T = DMAX1(V(D0), V(JTOLI))
-	 D(I) = DMAX1(VDFAC*D(I), T)
+         SII = SII + I
+         JCNI = JCN0 + I
+         T = V(JCNI)
+         IF (V(SII) .GT. ZERO) T = DMAX1(DSQRT(V(SII)), T)
+         JTOLI = JTOL0 + I
+         D0 = D0 + 1
+         IF (T .LT. V(JTOLI)) T = DMAX1(V(D0), V(JTOLI))
+         D(I) = DMAX1(VDFAC*D(I), T)
  50      CONTINUE
 C
  999  RETURN
@@ -10648,37 +10648,37 @@ C     ***  INCREMENT  I  AND START COMPUTING  G(I)  ***
 C
  20   I = IABS(IRC) + 1
       IF (I .GT. P) GO TO 220
-	 IRC = I
-	 IF (B(1,I) .LT. B(2,I)) GO TO 30
-	    G(I) = ZERO
-	    GO TO 20
+         IRC = I
+         IF (B(1,I) .LT. B(2,I)) GO TO 30
+            G(I) = ZERO
+            GO TO 20
  30      AFX = DABS(W(FX0))
-	 MACHEP = W(1)
-	 H0 = W(2)
-	 HMIN = HMIN0 * MACHEP
-	 XI = X(I)
-	 W(XISAVE) = XI
-	 AXI = DABS(XI)
-	 AXIBAR = DMAX1(AXI, ONE/D(I))
-	 GI = G(I)
-	 AGI = DABS(GI)
-	 ETA = DABS(ETA0)
-	 IF (AFX .GT. ZERO) ETA = DMAX1(ETA, AGI*AXI*MACHEP/AFX)
-	 ALPHAI = ALPHA(I)
-	 IF (ALPHAI .EQ. ZERO) GO TO 130
-	 IF (GI .EQ. ZERO .OR. FX .EQ. ZERO) GO TO 140
-	 AFXETA = AFX*ETA
-	 AAI = DABS(ALPHAI)
+         MACHEP = W(1)
+         H0 = W(2)
+         HMIN = HMIN0 * MACHEP
+         XI = X(I)
+         W(XISAVE) = XI
+         AXI = DABS(XI)
+         AXIBAR = DMAX1(AXI, ONE/D(I))
+         GI = G(I)
+         AGI = DABS(GI)
+         ETA = DABS(ETA0)
+         IF (AFX .GT. ZERO) ETA = DMAX1(ETA, AGI*AXI*MACHEP/AFX)
+         ALPHAI = ALPHA(I)
+         IF (ALPHAI .EQ. ZERO) GO TO 130
+         IF (GI .EQ. ZERO .OR. FX .EQ. ZERO) GO TO 140
+         AFXETA = AFX*ETA
+         AAI = DABS(ALPHAI)
 C
 C        *** COMPUTE H = STEWART*S FORWARD-DIFFERENCE STEP SIZE.
 C
-	 IF (GI**2 .LE. AFXETA*AAI) GO TO 40
-	      H = TWO*DSQRT(AFXETA/AAI)
-	      H = H*(ONE - AAI*H/(THREE*AAI*H + FOUR*AGI))
-	      GO TO 50
+         IF (GI**2 .LE. AFXETA*AAI) GO TO 40
+              H = TWO*DSQRT(AFXETA/AAI)
+              H = H*(ONE - AAI*H/(THREE*AAI*H + FOUR*AGI))
+              GO TO 50
 C40      H = TWO*(AFXETA*AGI/(AAI**2))**(ONE/THREE)
  40      H = TWO * (AFXETA*AGI)**(ONE/THREE) * AAI**(-TWO/THREE)
-	 H = H*(ONE - TWO*AGI/(THREE*AAI*H + FOUR*AGI))
+         H = H*(ONE - TWO*AGI/(THREE*AAI*H + FOUR*AGI))
 C
 C        ***  ENSURE THAT  H  IS NOT INSIGNIFICANTLY SMALL  ***
 C
@@ -10687,95 +10687,95 @@ C
 C        *** USE FORWARD DIFFERENCE IF BOUND ON TRUNCATION ERROR IS AT
 C        *** MOST 10**-3.
 C
-	 IF (AAI*H .LE. P002*AGI) GO TO 120
+         IF (AAI*H .LE. P002*AGI) GO TO 120
 C
 C        *** COMPUTE H = STEWART*S STEP FOR CENTRAL DIFFERENCE.
 C
-	 DISCON = C2000*AFXETA
-	 H = DISCON/(AGI + DSQRT(GI**2 + AAI*DISCON))
+         DISCON = C2000*AFXETA
+         H = DISCON/(AGI + DSQRT(GI**2 + AAI*DISCON))
 C
 C        ***  ENSURE THAT  H  IS NEITHER TOO SMALL NOR TOO BIG  ***
 C
-	 H = DMAX1(H, HMIN*AXIBAR)
-	 IF (H .GE. HMAX0*AXIBAR) H = AXIBAR * H0**(TWO/THREE)
+         H = DMAX1(H, HMIN*AXIBAR)
+         IF (H .GE. HMAX0*AXIBAR) H = AXIBAR * H0**(TWO/THREE)
 C
 C        ***  COMPUTE CENTRAL DIFFERENCE  ***
 C
-	 XIH = XI + H
-	 IF (XI - H .LT. B(1,I)) GO TO 60
-	 IRC = -I
-	 IF (XIH .LE. B(2,I)) GO TO 200
-	    H = -H
-	    XIH = XI + H
-	    IF (XI + TWO*H .LT. B(1,I)) GO TO 190
-	    GO TO 70
+         XIH = XI + H
+         IF (XI - H .LT. B(1,I)) GO TO 60
+         IRC = -I
+         IF (XIH .LE. B(2,I)) GO TO 200
+            H = -H
+            XIH = XI + H
+            IF (XI + TWO*H .LT. B(1,I)) GO TO 190
+            GO TO 70
  60      IF (XI + TWO*H .GT. B(2,I)) GO TO 190
 C        *** MUST DO OFF-SIDE CENTRAL DIFFERENCE ***
  70      IRC = -(I + P)
-	 GO TO 200
+         GO TO 200
 C
  80      I = -IRC
-	 IF (I .LE. P) GO TO 100
-	 I = I - P
-	 IF (I .GT. P) GO TO 90
-	 W(FH) = FX
-	 H = TWO * W(HSAVE)
-	 XIH = W(XISAVE) + H
-	 IRC = IRC - P
-	 GO TO 200
+         IF (I .LE. P) GO TO 100
+         I = I - P
+         IF (I .GT. P) GO TO 90
+         W(FH) = FX
+         H = TWO * W(HSAVE)
+         XIH = W(XISAVE) + H
+         IRC = IRC - P
+         GO TO 200
 C
 C    *** FINISH OFF-SIDE CENTRAL DIFFERENCE ***
 C
  90      I = I - P
-	 G(I) = (FOUR*W(FH) - FX - THREE*W(FX0)) / W(HSAVE)
-	 IRC = I
-	 X(I) = W(XISAVE)
-	 GO TO 20
+         G(I) = (FOUR*W(FH) - FX - THREE*W(FX0)) / W(HSAVE)
+         IRC = I
+         X(I) = W(XISAVE)
+         GO TO 20
 C
  100     H = -W(HSAVE)
-	 IF (H .GT. ZERO) GO TO 110
-	 W(FH) = FX
-	 XIH = W(XISAVE) + H
-	 GO TO 200
+         IF (H .GT. ZERO) GO TO 110
+         W(FH) = FX
+         XIH = W(XISAVE) + H
+         GO TO 200
 C
  110     G(I) = (W(FH) - FX) / (TWO * H)
-	 X(I) = W(XISAVE)
-	 GO TO 20
+         X(I) = W(XISAVE)
+         GO TO 20
 C
 C     ***  COMPUTE FORWARD DIFFERENCES IN VARIOUS CASES  ***
 C
  120     IF (H .GE. HMAX0*AXIBAR) H = H0 * AXIBAR
-	 IF (ALPHAI*GI .LT. ZERO) H = -H
-	 GO TO 150
+         IF (ALPHAI*GI .LT. ZERO) H = -H
+         GO TO 150
  130     H = AXIBAR
-	 GO TO 150
+         GO TO 150
  140     H = H0 * AXIBAR
 C
  150     HIT = .FALSE.
  160     XIH = XI + H
-	 IF (H .GT. ZERO) GO TO 170
-	    IF (XIH .GE. B(1,I)) GO TO 200
-	    GO TO 180
+         IF (H .GT. ZERO) GO TO 170
+            IF (XIH .GE. B(1,I)) GO TO 200
+            GO TO 180
  170     IF (XIH .LE. B(2,I)) GO TO 200
  180        IF (HIT) GO TO 190
-	    HIT = .TRUE.
-	    H = -H
-	    GO TO 160
+            HIT = .TRUE.
+            H = -H
+            GO TO 160
 C
 C        *** ERROR RETURN...
  190     IRC = I + P
-	 GO TO 230
+         GO TO 230
 C
 C        *** RETURN FOR NEW FUNCTION VALUE...
  200     X(I) = XIH
-	 W(HSAVE) = H
-	 GO TO 999
+         W(HSAVE) = H
+         GO TO 999
 C
 C     ***  COMPUTE ACTUAL FORWARD DIFFERENCE  ***
 C
  210     G(IRC) = (FX - W(FX0)) / W(HSAVE)
-	 X(IRC) = W(XISAVE)
-	 GO TO 20
+         X(IRC) = W(XISAVE)
+         GO TO 20
 C
 C  ***  RESTORE FX AND INDICATE THAT G HAS BEEN COMPUTED  ***
 C
@@ -10869,26 +10869,26 @@ C  ***  LAMBDA(J).
 C
       S = ZERO
       DO 10 I = 1, NM1
-	 J = N - I
-	 S = S + W(J+1)**2
-	 LAMBDA(J) = S
+         J = N - I
+         S = S + W(J+1)**2
+         LAMBDA(J) = S
  10      CONTINUE
 C
 C  ***  COMPUTE LAMBDA, GAMMA, AND BETA BY GOLDFARB*S RECURRENCE 3.
 C
       DO 20 J = 1, NM1
-	 WJ = W(J)
-	 A = NU*Z(J) - ETA*WJ
-	 THETA = ONE + A*WJ
-	 S = A*LAMBDA(J)
-	 LJ = DSQRT(THETA**2 + A*S)
-	 IF (THETA .GT. ZERO) LJ = -LJ
-	 LAMBDA(J) = LJ
-	 B = THETA*WJ + S
-	 GAMMA(J) = B * NU / LJ
-	 BETA(J) = (A - B*ETA) / LJ
-	 NU = -NU / LJ
-	 ETA = -(ETA + (A**2)/(THETA - LJ)) / LJ
+         WJ = W(J)
+         A = NU*Z(J) - ETA*WJ
+         THETA = ONE + A*WJ
+         S = A*LAMBDA(J)
+         LJ = DSQRT(THETA**2 + A*S)
+         IF (THETA .GT. ZERO) LJ = -LJ
+         LAMBDA(J) = LJ
+         B = THETA*WJ + S
+         GAMMA(J) = B * NU / LJ
+         BETA(J) = (A - B*ETA) / LJ
+         NU = -NU / LJ
+         ETA = -(ETA + (A**2)/(THETA - LJ)) / LJ
  20      CONTINUE
  30   LAMBDA(N) = ONE + (NU*Z(N) - ETA*W(N))*W(N)
 C
@@ -10897,25 +10897,25 @@ C
       NP1 = N + 1
       JJ = N * (N + 1) / 2
       DO 60 K = 1, N
-	 J = NP1 - K
-	 LJ = LAMBDA(J)
-	 LJJ = L(JJ)
-	 LPLUS(JJ) = LJ * LJJ
-	 WJ = W(J)
-	 W(J) = LJJ * WJ
-	 ZJ = Z(J)
-	 Z(J) = LJJ * ZJ
-	 IF (K .EQ. 1) GO TO 50
-	 BJ = BETA(J)
-	 GJ = GAMMA(J)
-	 IJ = JJ + J
-	 JP1 = J + 1
-	 DO 40 I = JP1, N
-	      LIJ = L(IJ)
-	      LPLUS(IJ) = LJ*LIJ + BJ*W(I) + GJ*Z(I)
-	      W(I) = W(I) + LIJ*WJ
-	      Z(I) = Z(I) + LIJ*ZJ
-	      IJ = IJ + I
+         J = NP1 - K
+         LJ = LAMBDA(J)
+         LJJ = L(JJ)
+         LPLUS(JJ) = LJ * LJJ
+         WJ = W(J)
+         W(J) = LJJ * WJ
+         ZJ = Z(J)
+         Z(J) = LJJ * ZJ
+         IF (K .EQ. 1) GO TO 50
+         BJ = BETA(J)
+         GJ = GAMMA(J)
+         IJ = JJ + J
+         JP1 = J + 1
+         DO 40 I = JP1, N
+              LIJ = L(IJ)
+              LPLUS(IJ) = LJ*LIJ + BJ*W(I) + GJ*Z(I)
+              W(I) = W(I) + LIJ*WJ
+              Z(I) = Z(I) + LIJ*ZJ
+              IJ = IJ + I
  40           CONTINUE
  50      JJ = JJ - J
  60      CONTINUE
@@ -10937,14 +10937,14 @@ C
       DATA ZERO/0.D+0/
 C
       DO 30 K = 1, L
-	 WK = W(K)
-	 IF (WK .EQ. ZERO) GO TO 30
-	 M = 1
-	 DO 20 I = 1, P
-	      YI = WK * Y(I,K)
-	      DO 10 J = 1, I
-		   S(M) = S(M) + YI*Z(J,K)
-		   M = M + 1
+         WK = W(K)
+         IF (WK .EQ. ZERO) GO TO 30
+         M = 1
+         DO 20 I = 1, P
+              YI = WK * Y(I,K)
+              DO 10 J = 1, I
+                   S(M) = S(M) + YI*Z(J,K)
+                   M = M + 1
  10                CONTINUE
  20           CONTINUE
  30      CONTINUE
@@ -11090,8 +11090,8 @@ C
       IF (M .LT. 1 .OR. N .LT. 1 .OR. NPAIRS .LT. 1 .OR.
      *    LIWA .LT. MAX0(M,6*N)) GO TO 130
       DO 10 K = 1, NPAIRS
-	 INFO = -K
-	 IF (INDROW(K) .LT. 1 .OR. INDROW(K) .GT. M .OR.
+         INFO = -K
+         IF (INDROW(K) .LT. 1 .OR. INDROW(K) .GT. M .OR.
      *       INDCOL(K) .LT. 1 .OR. INDCOL(K) .GT. N) GO TO 130
    10    CONTINUE
       INFO = 1
@@ -11104,26 +11104,26 @@ C     COMPRESS THE DATA AND DETERMINE THE NUMBER OF
 C     NON-ZERO ELEMENTS OF A.
 C
       DO 20 I = 1, M
-	 IWA(I) = 0
+         IWA(I) = 0
    20    CONTINUE
       NNZ = 0
       DO 70 J = 1, N
-	 JPL = JPNTR(J)
-	 JPU = JPNTR(J+1) - 1
-	 JPNTR(J) = NNZ + 1
-	 IF (JPU .LT. JPL) GO TO 60
-	 DO 40 JP = JPL, JPU
-	    IR = INDROW(JP)
-	    IF (IWA(IR) .NE. 0) GO TO 30
-	    NNZ = NNZ + 1
-	    INDROW(NNZ) = IR
-	    IWA(IR) = 1
+         JPL = JPNTR(J)
+         JPU = JPNTR(J+1) - 1
+         JPNTR(J) = NNZ + 1
+         IF (JPU .LT. JPL) GO TO 60
+         DO 40 JP = JPL, JPU
+            IR = INDROW(JP)
+            IF (IWA(IR) .NE. 0) GO TO 30
+            NNZ = NNZ + 1
+            INDROW(NNZ) = IR
+            IWA(IR) = 1
    30       CONTINUE
    40       CONTINUE
-	 JPL = JPNTR(J)
-	 DO 50 JP = JPL, NNZ
-	    IR = INDROW(JP)
-	    IWA(IR) = 0
+         JPL = JPNTR(J)
+         DO 50 JP = JPL, NNZ
+            IR = INDROW(JP)
+            IWA(IR) = 0
    50       CONTINUE
    60    CONTINUE
    70    CONTINUE
@@ -11137,7 +11137,7 @@ C     DETERMINE A LOWER BOUND FOR THE NUMBER OF GROUPS.
 C
       MINGRP = 0
       DO 80 I = 1, M
-	 MINGRP = MAX0(MINGRP,IPNTR(I+1)-IPNTR(I))
+         MINGRP = MAX0(MINGRP,IPNTR(I+1)-IPNTR(I))
    80    CONTINUE
 C
 C     DETERMINE THE DEGREE SEQUENCE FOR THE INTERSECTION
@@ -11166,7 +11166,7 @@ C
       IF (NUMGRP .GE. MAXGRP) GO TO 100
       MAXGRP = NUMGRP
       DO 90 J = 1, N
-	 NGRP(J) = IWA(J)
+         NGRP(J) = IWA(J)
    90    CONTINUE
       IF (MAXGRP .EQ. MINGRP) GO TO 130
   100 CONTINUE
@@ -11180,7 +11180,7 @@ C
       IF (NUMGRP .GE. MAXGRP) GO TO 120
       MAXGRP = NUMGRP
       DO 110 J = 1, N
-	 NGRP(J) = IWA(J)
+         NGRP(J) = IWA(J)
   110    CONTINUE
   120 CONTINUE
 C
@@ -11282,46 +11282,46 @@ C     INITIALIZATION BLOCK.
 C
       MAXGRP = 0
       DO 10 JP = 1, N
-	 NGRP(JP) = N
-	 BWA(JP) = .FALSE.
+         NGRP(JP) = N
+         BWA(JP) = .FALSE.
    10    CONTINUE
       BWA(N) = .TRUE.
 C
 C     BEGINNING OF ITERATION LOOP.
 C
       DO 100 J = 1, N
-	 JCOL = LIST(J)
+         JCOL = LIST(J)
 C
 C        FIND ALL COLUMNS ADJACENT TO COLUMN JCOL.
 C
-	 DEG = 0
+         DEG = 0
 C
 C        DETERMINE ALL POSITIONS (IR,JCOL) WHICH CORRESPOND
 C        TO NON-ZEROES IN THE MATRIX.
 C
-	 JPL = JPNTR(JCOL)
-	 JPU = JPNTR(JCOL+1) - 1
-	 IF (JPU .LT. JPL) GO TO 50
-	 DO 40 JP = JPL, JPU
-	    IR = INDROW(JP)
+         JPL = JPNTR(JCOL)
+         JPU = JPNTR(JCOL+1) - 1
+         IF (JPU .LT. JPL) GO TO 50
+         DO 40 JP = JPL, JPU
+            IR = INDROW(JP)
 C
 C           FOR EACH ROW IR, DETERMINE ALL POSITIONS (IR,IC)
 C           WHICH CORRESPOND TO NON-ZEROES IN THE MATRIX.
 C
-	    IPL = IPNTR(IR)
-	    IPU = IPNTR(IR+1) - 1
-	    DO 30 IP = IPL, IPU
-	       IC = INDCOL(IP)
-	       L = NGRP(IC)
+            IPL = IPNTR(IR)
+            IPU = IPNTR(IR+1) - 1
+            DO 30 IP = IPL, IPU
+               IC = INDCOL(IP)
+               L = NGRP(IC)
 C
 C              ARRAY BWA MARKS THE GROUP NUMBERS OF THE
 C              COLUMNS WHICH ARE ADJACENT TO COLUMN JCOL.
 C              ARRAY IWA RECORDS THE MARKED GROUP NUMBERS.
 C
-	       IF (BWA(L)) GO TO 20
-	       BWA(L) = .TRUE.
-	       DEG = DEG + 1
-	       IWA(DEG) = L
+               IF (BWA(L)) GO TO 20
+               BWA(L) = .TRUE.
+               DEG = DEG + 1
+               IWA(DEG) = L
    20          CONTINUE
    30          CONTINUE
    40       CONTINUE
@@ -11329,20 +11329,20 @@ C
 C
 C        ASSIGN THE SMALLEST UN-MARKED GROUP NUMBER TO JCOL.
 C
-	 DO 60 JP = 1, N
-	    NUMGRP = JP
-	    IF (.NOT. BWA(JP)) GO TO 70
+         DO 60 JP = 1, N
+            NUMGRP = JP
+            IF (.NOT. BWA(JP)) GO TO 70
    60       CONTINUE
    70    CONTINUE
-	 NGRP(JCOL) = NUMGRP
-	 MAXGRP = MAX0(MAXGRP,NUMGRP)
+         NGRP(JCOL) = NUMGRP
+         MAXGRP = MAX0(MAXGRP,NUMGRP)
 C
 C        UN-MARK THE GROUP NUMBERS.
 C
-	 IF (DEG .LT. 1) GO TO 90
-	 DO 80 JP = 1, DEG
-	    L = IWA(JP)
-	    BWA(L) = .FALSE.
+         IF (DEG .LT. 1) GO TO 90
+         DO 80 JP = 1, DEG
+            L = IWA(JP)
+            BWA(L) = .FALSE.
    80       CONTINUE
    90    CONTINUE
   100    CONTINUE
@@ -11370,20 +11370,20 @@ C
 C
       II = 0
       DO 50 I = 1, N
-	 I1 = II + 1
-	 II = II + I
-	 M = 1
-	 IF (I .EQ. 1) GO TO 30
-	 IIM1 = II - 1
-	 DO 20 J = I1, IIM1
-	      LJ = L(J)
-	      DO 10 K = I1, J
-		   A(M) = A(M) + LJ*L(K)
-		   M = M + 1
+         I1 = II + 1
+         II = II + I
+         M = 1
+         IF (I .EQ. 1) GO TO 30
+         IIM1 = II - 1
+         DO 20 J = I1, IIM1
+              LJ = L(J)
+              DO 10 K = I1, J
+                   A(M) = A(M) + LJ*L(K)
+                   M = M + 1
  10                CONTINUE
  20           CONTINUE
  30      LII = L(II)
-	 DO 40 J = I1, II
+         DO 40 J = I1, II
  40           A(J) = LII * L(J)
  50      CONTINUE
 C
@@ -11407,10 +11407,10 @@ C
       EMAX = ZERO
       XMAX = ZERO
       DO 10 I = 1, P
-	 T = DABS(D(I) * (X(I) - X0(I)))
-	 IF (EMAX .LT. T) EMAX = T
-	 T = D(I) * (DABS(X(I)) + DABS(X0(I)))
-	 IF (XMAX .LT. T) XMAX = T
+         T = DABS(D(I) * (X(I) - X0(I)))
+         IF (EMAX .LT. T) EMAX = T
+         T = D(I) * (DABS(X(I)) + DABS(X0(I)))
+         IF (XMAX .LT. T) XMAX = T
  10      CONTINUE
       DRLDST = ZERO
       IF (XMAX .GT. ZERO) DRLDST = EMAX / XMAX
@@ -11510,12 +11510,12 @@ C
       IF (IV(1) .EQ. 0) CALL DIVSET(1, IV, LIV, LV, V)
       IV1 = IV(1)
       IF (IV1 .GT. 2) GO TO 10
-	 NN = N2 - N1 + 1
-	 IV(RESTOR) = 0
-	 I = IV1 + 4
-	 IF (IV(TOOBIG) .EQ. 0) GO TO (150, 130, 150, 120, 120, 150), I
-	 IF (I .NE. 5) IV(1) = 2
-	 GO TO 40
+         NN = N2 - N1 + 1
+         IV(RESTOR) = 0
+         I = IV1 + 4
+         IF (IV(TOOBIG) .EQ. 0) GO TO (150, 130, 150, 120, 120, 150), I
+         IF (I .NE. 5) IV(1) = 2
+         GO TO 40
 C
 C  ***  FRESH START OR RESTART -- CHECK INPUT INTEGERS  ***
 C
@@ -11593,9 +11593,9 @@ C
       IF (N1 .NE. 1) GO TO 90
       IF (IV(MODE) .LT. 0) GO TO 100
       IF (IV(NF1) .EQ. IV(NFGCAL)) GO TO 70
-	 IF (IV(NF0) .NE. IV(NFGCAL)) GO TO 90
-	    CALL DV7CPY(N, R, RD)
-	    GO TO 80
+         IF (IV(NF0) .NE. IV(NFGCAL)) GO TO 90
+            CALL DV7CPY(N, R, RD)
+            GO TO 80
  70   CALL DV7CPY(N, RD, R)
  80   CALL DQ7APL(ND, N, P, DR, RD, 0)
       CALL DR7TVM(ND, MIN0(N,P), V(Y1), V(RD1), DR, RD)
@@ -11622,13 +11622,13 @@ C
  130  Y1 = IV(G) + P
       YI = Y1
       DO 140 L = 1, P
-	 V(YI) = V(YI) + DD7TPR(NN, DR(1,L), R)
-	 YI = YI + 1
+         V(YI) = V(YI) + DD7TPR(NN, DR(1,L), R)
+         YI = YI + 1
  140     CONTINUE
       IF (N2 .LT. N) GO TO 250
-	 IV(1) = 2
-	 IF (N1 .GT. 1) IV(1) = -3
-	 GO TO 240
+         IV(1) = 2
+         IF (N1 .GT. 1) IV(1) = -3
+         GO TO 240
 C
 C  ***  COMPUTE GRADIENT INFORMATION  ***
 C
@@ -11642,17 +11642,17 @@ C  ***  COMPUTE GRADIENT ONLY (FOR USE IN COVARIANCE COMPUTATION)  ***
 C
       GI = G1
       DO 160 L = 1, P
-	 V(GI) = V(GI) + DD7TPR(NN, R, DR(1,L))
-	 GI = GI + 1
+         V(GI) = V(GI) + DD7TPR(NN, R, DR(1,L))
+         GI = GI + 1
  160     CONTINUE
       GO TO 200
 C
 C  *** COMPUTE INITIAL FUNCTION VALUE WHEN ND .LT. N ***
 C
  170  IF (N .LE. ND) GO TO 180
-	 T = DV2NRM(NN, R)
-	 IF (T .GT. V(RLIMIT)) GO TO 210
-	 V(F) = V(F)  +  HALF * T**2
+         T = DV2NRM(NN, R)
+         IF (T .GT. V(RLIMIT)) GO TO 210
+         V(F) = V(F)  +  HALF * T**2
 C
 C  ***  UPDATE D IF DESIRED  ***
 C
@@ -11673,9 +11673,9 @@ C
       RD1 = QTR1 + P
       L = RMAT1 - 1
       DO 190 I = 1, P
-	 L = L + I
-	 V(RD1) = V(L)
-	 RD1 = RD1 + 1
+         L = L + I
+         V(RD1) = V(L)
+         RD1 = RD1 + 1
  190     CONTINUE
 C
  200  IF (N2 .LT. N) GO TO 250
@@ -11732,7 +11732,7 @@ C
  999  RETURN
 C  ***  LAST CARD OF DRN2GB FOLLOWS  ***
       END
-	SUBROUTINE DD7DGB(B, D, DIG, DST, G, IPIV, KA, L, LV, P, PC,
+        SUBROUTINE DD7DGB(B, D, DIG, DST, G, IPIV, KA, L, LV, P, PC,
      1                    NWTST, STEP, TD, TG, V, W, X0)
 C
 C  ***  COMPUTE DOUBLE-DOGLEG STEP, SUBJECT TO SIMPLE BOUNDS ON X  ***
@@ -11775,15 +11775,15 @@ C
       GNORM0 = V(DGNORM)
       V(DSTNRM) = ZERO
       IF (KA .LT. 0) GO TO 10
-	 DNWTST = V(DST0)
-	 NRED = V(NREDUC)
+         DNWTST = V(DST0)
+         NRED = V(NREDUC)
  10   PRED = ZERO
       V(STPPAR) = ZERO
       RAD = V(RADIUS)
       IF (PC .GT. 0) GO TO 20
-	 DNWTST = ZERO
-	 CALL DV7SCP(P, STEP, ZERO)
-	 GO TO 140
+         DNWTST = ZERO
+         CALL DV7SCP(P, STEP, ZERO)
+         GO TO 140
 C
  20   P1 = PC
       CALL DV7CPY(P, TD, D)
@@ -11799,9 +11799,9 @@ C
       CALL DV7VMP(P1, STEP, NWTST, TD, 1)
       V(DST0) = DV2NRM(PC, STEP)
       IF (KA .GE. 0) GO TO 40
-	 KA = 0
-	 DNWTST = V(DST0)
-	 NRED = V(NREDUC)
+         KA = 0
+         DNWTST = V(DST0)
+         NRED = V(NREDUC)
  40   V(RADIUS) = RAD - V(DSTNRM)
       IF (V(RADIUS) .LE. ZERO) GO TO 100
       CALL DV7VMP(P1, DIG, TG, TD, -1)
@@ -11819,19 +11819,19 @@ C
       T = ONE
       K = 0
       DO 70 I = 1, P1
-	 J = IPIV(I)
-	 X0I = X0(J) + DST(I)/TD(I)
-	 XI = X0I + STEP(I)
-	 IF (XI .LT. B(1,J)) GO TO 50
-	 IF (XI .LE. B(2,J)) GO TO 70
-	      TI = (B(2,J) - X0I) / STEP(I)
-	      J = I
-	      GO TO 60
+         J = IPIV(I)
+         X0I = X0(J) + DST(I)/TD(I)
+         XI = X0I + STEP(I)
+         IF (XI .LT. B(1,J)) GO TO 50
+         IF (XI .LE. B(2,J)) GO TO 70
+              TI = (B(2,J) - X0I) / STEP(I)
+              J = I
+              GO TO 60
  50      TI = (B(1,J) - X0I) / STEP(I)
-	 J = -I
+         J = -I
  60      IF (T .LE. TI) GO TO 70
-	      K = J
-	      T = TI
+              K = J
+              T = TI
  70      CONTINUE
 C
 C  ***  UPDATE DST, TG, AND PRED  ***
@@ -11855,11 +11855,11 @@ C
       P1M1 = P1 - 1
       J = IABS(K)
       IF (J .EQ. P1) GO TO 90
-	 CALL DQ7RSH(J, P1, .FALSE., TG, L, W)
-	 CALL I7SHFT(P1, J, IPIV)
-	 CALL DV7SHF(P1, J, TG)
-	 CALL DV7SHF(P1, J, TD)
-	 CALL DV7SHF(P1, J, DST)
+         CALL DQ7RSH(J, P1, .FALSE., TG, L, W)
+         CALL I7SHFT(P1, J, IPIV)
+         CALL DV7SHF(P1, J, TG)
+         CALL DV7SHF(P1, J, TD)
+         CALL DV7SHF(P1, J, DST)
  90   IF (K .LT. 0) IPIV(P1) = -IPIV(P1)
       P1 = P1M1
       IF (P1 .GT. 0) GO TO 30
@@ -11868,8 +11868,8 @@ C     ***  UNSCALE STEP, UPDATE X AND DIHDI  ***
 C
  100  CALL DV7SCP(P, STEP, ZERO)
       DO 110 I = 1, PC
-	 J = IABS(IPIV(I))
-	 STEP(J) = DST(I) / TD(I)
+         J = IABS(IPIV(I))
+         STEP(J) = DST(I) / TD(I)
  110     CONTINUE
 C
 C  ***  FUDGE STEP TO ENSURE THAT IT FORCES APPROPRIATE COMPONENTS
@@ -11879,14 +11879,14 @@ C
       CALL DV2AXY(P, TD, ONE, STEP, X0)
       K = P1 + 1
       DO 130 I = K, PC
-	 J = IPIV(I)
-	 T = MEPS2
-	 IF (J .GT. 0) GO TO 120
-	    T = -T
-	    J = -J
-	    IPIV(I) = J
+         J = IPIV(I)
+         T = MEPS2
+         IF (J .GT. 0) GO TO 120
+            T = -T
+            J = -J
+            IPIV(I) = J
  120     T = T * DMAX1(DABS(TD(J)), DABS(X0(J)))
-	 STEP(J) = STEP(J) + T
+         STEP(J) = STEP(J) + T
  130     CONTINUE
 C
  140  V(DGNORM) = GNORM0
@@ -11955,26 +11955,26 @@ C+++++++++++++++++++++++++++++++  BODY  ++++++++++++++++++++++++++++++++
 C
       IERR = 0
       IF (MEPS10 .GT. ZERO) GO TO 10
-	  BIGRT = DR7MDC(5)
-	  MEPS10 = TEN * DR7MDC(3)
-	  TINYRT = DR7MDC(2)
-	  TINY = DR7MDC(1)
-	  BIG = DR7MDC(6)
-	  IF (TINY*BIG .LT. ONE) TINY = ONE / BIG
+          BIGRT = DR7MDC(5)
+          MEPS10 = TEN * DR7MDC(3)
+          TINYRT = DR7MDC(2)
+          TINY = DR7MDC(1)
+          BIG = DR7MDC(6)
+          IF (TINY*BIG .LT. ONE) TINY = ONE / BIG
  10   SINGTL = DBLE(MAX0(N,P)) * MEPS10
 C
 C  ***  INITIALIZE W, IPIVOT, AND DIAG(R)  ***
 C
       J = 0
       DO 40 I = 1, P
-	 IPIVOT(I) = I
-	 T = DV2NRM(N, Q(1,I))
-	 IF (T .GT. ZERO) GO TO 20
-	      W(I) = ONE
-	      GO TO 30
+         IPIVOT(I) = I
+         T = DV2NRM(N, Q(1,I))
+         IF (T .GT. ZERO) GO TO 20
+              W(I) = ONE
+              GO TO 30
  20      W(I) = ZERO
  30      J = J + I
-	 R(J) = T
+         R(J) = T
  40      CONTINUE
 C
 C  ***  MAIN LOOP  ***
@@ -11982,101 +11982,101 @@ C
       KK = 0
       NK1 = N + 1
       DO 130 K = 1, P
-	 IF (NK1 .LE. 1) GO TO 999
-	 NK1 = NK1 - 1
-	 KK = KK + K
-	 KP1 = K + 1
-	 IF (K .LE. NOPIVK) GO TO 60
-	 IF (K .GE. P) GO TO 60
+         IF (NK1 .LE. 1) GO TO 999
+         NK1 = NK1 - 1
+         KK = KK + K
+         KP1 = K + 1
+         IF (K .LE. NOPIVK) GO TO 60
+         IF (K .GE. P) GO TO 60
 C
 C        ***  FIND COLUMN WITH MINIMUM WEIGHT LOSS  ***
 C
-	      T = W(K)
-	      IF (T .LE. ZERO) GO TO 60
-	      J = K
-	      DO 50 I = KP1, P
-		   IF (W(I) .GE. T) GO TO 50
-			T = W(I)
-			J = I
+              T = W(K)
+              IF (T .LE. ZERO) GO TO 60
+              J = K
+              DO 50 I = KP1, P
+                   IF (W(I) .GE. T) GO TO 50
+                        T = W(I)
+                        J = I
  50                CONTINUE
-	      IF (J .EQ. K) GO TO 60
+              IF (J .EQ. K) GO TO 60
 C
 C             ***  INTERCHANGE COLUMNS K AND J  ***
 C
-		   I = IPIVOT(K)
-		   IPIVOT(K) = IPIVOT(J)
-		   IPIVOT(J) = I
-		   W(J) = W(K)
-		   W(K) = T
-		   I = J*(J+1)/2
-		   T1 = R(I)
-		   R(I) = R(KK)
-		   R(KK) = T1
-		   CALL DV7SWP(N, Q(1,K), Q(1,J))
-		   IF (K .LE. 1) GO TO 60
-			I = I - J + 1
-			J = KK - K + 1
-			CALL DV7SWP(K-1, R(I), R(J))
+                   I = IPIVOT(K)
+                   IPIVOT(K) = IPIVOT(J)
+                   IPIVOT(J) = I
+                   W(J) = W(K)
+                   W(K) = T
+                   I = J*(J+1)/2
+                   T1 = R(I)
+                   R(I) = R(KK)
+                   R(KK) = T1
+                   CALL DV7SWP(N, Q(1,K), Q(1,J))
+                   IF (K .LE. 1) GO TO 60
+                        I = I - J + 1
+                        J = KK - K + 1
+                        CALL DV7SWP(K-1, R(I), R(J))
 C
 C        ***  COLUMN K OF Q SHOULD BE NEARLY ORTHOGONAL TO THE PREVIOUS
 C        ***  COLUMNS.  NORMALIZE IT, TEST FOR SINGULARITY, AND DECIDE
 C        ***  WHETHER TO REORTHOGONALIZE IT.
 C
  60      AK = R(KK)
-	 IF (AK .LE. ZERO) GO TO 140
-	 WK = W(K)
+         IF (AK .LE. ZERO) GO TO 140
+         WK = W(K)
 C
 C        *** SET T TO THE NORM OF (Q(K,K),...,Q(N,K))
 C        *** AND CHECK FOR SINGULARITY.
 C
-	 IF (WK .LT. WTOL) GO TO 70
-	    T = DV2NRM(NK1, Q(K,K))
-	    IF (T / AK .LE. SINGTL) GO TO 140
-	    GO TO 80
+         IF (WK .LT. WTOL) GO TO 70
+            T = DV2NRM(NK1, Q(K,K))
+            IF (T / AK .LE. SINGTL) GO TO 140
+            GO TO 80
  70      T = DSQRT(ONE - WK)
-	 IF (T .LE. SINGTL) GO TO 140
-	 T = T * AK
+         IF (T .LE. SINGTL) GO TO 140
+         T = T * AK
 C
 C        *** DETERMINE HOUSEHOLDER TRANSFORMATION ***
 C
  80      QKK = Q(K,K)
-	 IF (T .LE. TINYRT) GO TO 90
-	 IF (T .GE. BIGRT) GO TO 90
-	    IF (QKK .LT. ZERO) T = -T
-	    QKK = QKK + T
-	    S = DSQRT(T * QKK)
-	    GO TO 110
+         IF (T .LE. TINYRT) GO TO 90
+         IF (T .GE. BIGRT) GO TO 90
+            IF (QKK .LT. ZERO) T = -T
+            QKK = QKK + T
+            S = DSQRT(T * QKK)
+            GO TO 110
  90       S = DSQRT(T)
-	  IF (QKK .LT. ZERO) GO TO 100
-	     QKK = QKK + T
-	     S = S * DSQRT(QKK)
-	     GO TO 110
+          IF (QKK .LT. ZERO) GO TO 100
+             QKK = QKK + T
+             S = S * DSQRT(QKK)
+             GO TO 110
  100      T = -T
-	  QKK = QKK + T
-	  S = S * DSQRT(-QKK)
+          QKK = QKK + T
+          S = S * DSQRT(-QKK)
  110      Q(K,K) = QKK
 C
 C         ***  SCALE (Q(K,K),...,Q(N,K)) TO HAVE NORM SQRT(2)  ***
 C
-	  IF (S .LE. TINY) GO TO 140
-	  CALL DV7SCL(NK1, Q(K,K), ONE/S, Q(K,K))
+          IF (S .LE. TINY) GO TO 140
+          CALL DV7SCL(NK1, Q(K,K), ONE/S, Q(K,K))
 C
-	  R(KK) = -T
+          R(KK) = -T
 C
 C        ***  COMPUTE R(K,I) FOR I = K+1,...,P AND UPDATE Q  ***
 C
-	 IF (K .GE. P) GO TO 999
-	 J = KK + K
-	 II = KK
-	 DO 120 I = KP1, P
-	      II = II + I
-	      CALL DV2AXY(NK1, Q(K,I), -DD7TPR(NK1,Q(K,K),Q(K,I)),
+         IF (K .GE. P) GO TO 999
+         J = KK + K
+         II = KK
+         DO 120 I = KP1, P
+              II = II + I
+              CALL DV2AXY(NK1, Q(K,I), -DD7TPR(NK1,Q(K,K),Q(K,I)),
      1                   Q(K,K), Q(K,I))
-	      T = Q(K,I)
-	      R(J) = T
-	      J = J + I
-	      T1 = R(II)
-	      IF (T1 .GT. ZERO)  W(I) = W(I) + (T/T1)**2
+              T = Q(K,I)
+              R(J) = T
+              J = J + I
+              T1 = R(II)
+              IF (T1 .GT. ZERO)  W(I) = W(I) + (T/T1)**2
  120          CONTINUE
  130     CONTINUE
 C
@@ -12086,8 +12086,8 @@ C
       KM1 = K - 1
       J = KK
       DO 150 I = K, P
-	 CALL DV7SCP(I-KM1, R(J), ZERO)
-	 J = J + I
+         CALL DV7SCP(I-KM1, R(J), ZERO)
+         J = J + I
  150     CONTINUE
 C
  999  RETURN
@@ -12146,13 +12146,13 @@ C
       KIND = IV(COVREQ)
       M = IV(MODE)
       IF (M .GT. 0) GO TO 10
-	 HES = IABS(IV(H))
-	 IV(H) = -HES
-	 IV(FDH) = 0
-	 IV(KAGQT) = -1
-	 V(FX) = V(F)
+         HES = IABS(IV(H))
+         IV(H) = -HES
+         IV(FDH) = 0
+         IV(KAGQT) = -1
+         V(FX) = V(F)
 C        *** SUPPLY ZEROS IN CASE B(1,I) = B(2,I) FOR SOME I ***
-	 CALL DV7SCP(P*(P+1)/2, V(HES), ZERO)
+         CALL DV7SCP(P*(P+1)/2, V(HES), ZERO)
  10   IF (M .GT. P) GO TO 999
       IF (KIND .LT. 0) GO TO 120
 C
@@ -12162,9 +12162,9 @@ C
       GSAVE1 = IV(W) + P
       IF (M .GT. 0) GO TO 20
 C        ***  FIRST CALL ON DF7DHB.  SET GSAVE = G, TAKE FIRST STEP  ***
-	 CALL DV7CPY(P, V(GSAVE1), G)
-	 IV(SWITCH) = IV(NFGCAL)
-	 GO TO 80
+         CALL DV7CPY(P, V(GSAVE1), G)
+         IV(SWITCH) = IV(NFGCAL)
+         GO TO 80
 C
  20   DEL = V(DELTA)
       X(M) = V(XMSAVE)
@@ -12172,9 +12172,9 @@ C
 C
 C     ***  HANDLE OVERSIZE V(DELTA)  ***
 C
-	 DEL0 = V(DELTA0) * DMAX1(ONE/D(M), DABS(X(M)))
-	 DEL = HALF * DEL
-	 IF (DABS(DEL/DEL0) .LE. HLIM) GO TO 140
+         DEL0 = V(DELTA0) * DMAX1(ONE/D(M), DABS(X(M)))
+         DEL = HALF * DEL
+         IF (DABS(DEL/DEL0) .LE. HLIM) GO TO 140
 C
  30   HES = -IV(H)
 C
@@ -12182,8 +12182,8 @@ C  ***  SET  G = (G - GSAVE)/DEL  ***
 C
       DEL = ONE / DEL
       DO 40 I = 1, P
-	 G(I) = DEL * (G(I) - V(GSAVE1))
-	 GSAVE1 = GSAVE1 + 1
+         G(I) = DEL * (G(I) - V(GSAVE1))
+         GSAVE1 = GSAVE1 + 1
  40      CONTINUE
 C
 C  ***  ADD G AS NEW COL. TO FINITE-DIFF. HESSIAN MATRIX  ***
@@ -12196,16 +12196,16 @@ C  ***  SET  H(I,M) = 0.5 * (H(I,M) + G(I))  FOR I = 1 TO M-1  ***
 C
       MM1 = M - 1
       DO 50 I = 1, MM1
-	 IF (B(1,I) .LT. B(2,I)) V(K) = HALF * (V(K) + G(I))
-	 K = K + 1
+         IF (B(1,I) .LT. B(2,I)) V(K) = HALF * (V(K) + G(I))
+         K = K + 1
  50      CONTINUE
 C
 C  ***  ADD  H(I,M) = G(I)  FOR I = M TO P  ***
 C
  60   L = L + 1
       DO 70 I = M, P
-	 IF (B(1,I) .LT. B(2,I)) V(L) = G(I)
-	 L = L + I
+         IF (B(1,I) .LT. B(2,I)) V(L) = G(I)
+         L = L + I
  70      CONTINUE
 C
  80   M = M + 1
@@ -12218,11 +12218,11 @@ C
       DEL = V(DELTA0) * DMAX1(ONE/D(M), DABS(X(M)))
       XM = X(M)
       IF (XM .LT. ZERO) GO TO 90
-	 XM1 = XM + DEL
-	 IF (XM1 .LE. B(2,M)) GO TO 110
-	   XM1 = XM - DEL
-	   IF (XM1 .GE. B(1,M)) GO TO 100
-	   GO TO 280
+         XM1 = XM + DEL
+         IF (XM1 .LE. B(2,M)) GO TO 110
+           XM1 = XM - DEL
+           IF (XM1 .GE. B(1,M)) GO TO 100
+           GO TO 280
  90    XM1 = XM - DEL
        IF (XM1 .GE. B(1,M)) GO TO 100
        XM1 = XM + DEL
@@ -12244,13 +12244,13 @@ C
       HES = -IV(H)
       IF (M .GT. 0) GO TO 130
 C        ***  FIRST CALL ON DF7DHB.  ***
-	 IV(SAVEI) = 0
-	 GO TO 240
+         IV(SAVEI) = 0
+         GO TO 240
 C
  130  IF (IV(TOOBIG) .EQ. 0) GO TO 150
 C        ***  PUNT IN THE EVENT OF AN OVERSIZE STEP  ***
  140     IV(FDH) = -2
-	 GO TO 350
+         GO TO 350
  150  I = IV(SAVEI)
       IF (I .GT. 0) GO TO 190
 C
@@ -12268,11 +12268,11 @@ C
       IF (MM1 .EQ. 0) GO TO 180
       HPI = HES + PP1O2
       DO 170 I = 1, MM1
-	 T = ZERO
-	 IF (B(1,I) .LT. B(2,I)) T = V(FX) - (V(F) + V(HPI))
-	 V(HMI) = T
-	 HMI = HMI + 1
-	 HPI = HPI + 1
+         T = ZERO
+         IF (B(1,I) .LT. B(2,I)) T = V(FX) - (V(F) + V(HPI))
+         V(HMI) = T
+         HMI = HMI + 1
+         HPI = HPI + 1
  170     CONTINUE
  180  V(HMI) = V(F) - TWO*V(FX)
       IF (OFFSID) V(HMI) = V(FX) - TWO*V(F)
@@ -12292,8 +12292,8 @@ C
       V(HMI) = (V(HMI) + V(F)) / (V(STPI)*V(STPM))
  200  I = I + 1
       IF (I .GT. M) GO TO 230
-	 IF (B(1,I) .LT. B(2,I)) GO TO 210
-	 GO TO 200
+         IF (B(1,I) .LT. B(2,I)) GO TO 210
+         GO TO 200
 C
  210  IV(SAVEI) = I
       STPI = STP0 + I
@@ -12327,10 +12327,10 @@ C
       XM1 = XM + DEL
       OFFSID = .FALSE.
       IF (XM1 .LE. B(2,M)) GO TO 270
-	 OFFSID = .TRUE.
-	 XM1 = XM - DEL
-	 IF (XM - TWO*DEL .GE. B(1,M)) GO TO 300
-	 GO TO 280
+         OFFSID = .TRUE.
+         XM1 = XM - DEL
+         IF (XM - TWO*DEL .GE. B(1,M)) GO TO 300
+         GO TO 280
  270   IF (XM-DEL .GE. B(1,M)) GO TO 290
        OFFSID = .TRUE.
        IF (XM + TWO*DEL .LE. B(2,M)) GO TO 310
@@ -12352,8 +12352,8 @@ C  ***  HANDLE SPECIAL CASE OF B(1,P) = B(2,P) -- CLEAR SCRATCH VALUES
 C  ***  FROM LAST ROW OF FDH...
 C
  330  IF (B(1,P) .LT. B(2,P)) GO TO 340
-	 I = HES + P*(P-1)/2
-	 CALL DV7SCP(P, V(I), ZERO)
+         I = HES + P*(P-1)/2
+         CALL DV7SCP(P, V(I), ZERO)
 C
 C  ***  RESTORE V(F), ETC.  ***
 C
@@ -12361,10 +12361,10 @@ C
  350  V(F) = V(FX)
       IRT = 3
       IF (KIND .LT. 0) GO TO 999
-	 IV(NFGCAL) = IV(SWITCH)
-	 GSAVE1 = IV(W) + P
-	 CALL DV7CPY(P, G, V(GSAVE1))
-	 GO TO 999
+         IV(NFGCAL) = IV(SWITCH)
+         GSAVE1 = IV(W) + P
+         CALL DV7CPY(P, G, V(GSAVE1))
+         GO TO 999
 C
  999  RETURN
 C  ***  LAST LINE OF DF7DHB FOLLOWS  ***
