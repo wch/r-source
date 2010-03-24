@@ -343,8 +343,8 @@ NEW FEATURES
     o	any() and all() return early if possible.  This may speed up
 	operations on long vectors.
 
-    o	strptime() now parses "%z" (for the offset from UTC in the
-	RFC822 format of +/-mmmm) but does not yet make use of it.
+    o	strptime() now accepts "%z" (for the offset from UTC in the
+	RFC822 format of +/-hhmm).
 
     o	The PCRE library has been updated to version 8.02, a bug-fix
 	release which also updates tables to Unicode 5.02.
