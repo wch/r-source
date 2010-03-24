@@ -2109,11 +2109,11 @@ was 15-20%.)
 @item
 However, `other things' may not be equal.  In the specific case of
 @cputype{x86_64} @emph{vs} @cputype{ix86}, the 64-bit CPU has features
-which are guaranteed to be present but are optional on the 32-bit CPU,
-and also has more general-purpose registers.  This means that on chips
-like Intel Core 2 Duo the vanilla 64-bit version of @R{} is around 10%
-faster on both Linux and Mac OS X --- this can be reduced by tuning the
-compilation to the chip.
+(such as SSE2 instructions) which are guaranteed to be present but are
+optional on the 32-bit CPU, and also has more general-purpose registers.
+This means that on chips like Intel Core 2 Duo the vanilla 64-bit
+version of @R{} is around 10% faster on both Linux and Mac OS X --- this
+can be reduced by tuning the compilation to the chip.
 @end itemize
 
 So, for speed you may want to use a 32-bit build, but to handle large

@@ -11,8 +11,8 @@
 
 SIGNIFICANT USER-VISIBLE CHANGES
 
-    o	Packages must have been installed under R 2.10.0 or later, as
-	the current help system is the only one now supported.
+    o	Packages must have been installed under R >= 2.10.0, as the
+	current help system is the only one now supported.
 
     o	A port to 64-bit Windows is now available as well as binary
 	package repositiories: see the 'R Administration and
@@ -25,7 +25,7 @@ SIGNIFICANT USER-VISIBLE CHANGES
 	    call switch .C .Fortran .Call .External
 
 	all of which use positional matching for their first argument,
-	and some internal-use-only primitives.
+	and also some internal-use-only primitives.
 
 
 NEW FEATURES
@@ -369,14 +369,14 @@ DEPRECATED & DEFUNCT
 
     o	The use of UseMethod() with more than two arguments is now defunct.
 
-    o	In the 'methods' package, the old MethodsList metadata objects
-	have been superseded since R 2.8.0 by hash tables
-	(environments) and are being phased out for efficiency.  In
-	the present stage only stubs are generated and a warning
-	issued if these are accessed: shortly none will be generated.
+    o	In the 'methods' package, the MethodsList metadata objects which
+	had been superseded since R 2.8.0 by hash tables
+	(environments) are being phased out.  In the present stage
+	stub objects are generated and a warning issued if these are
+	accessed: shortly none will be generated.
 
-    o	Continuing the last item, getMethods() is now deprecated, with
-        its internal use replaced by findMethods() and other changes.
+	getMethods() is now deprecated, with its internal use replaced
+        by findMethods() and other changes.
 
 
 INSTALLATION

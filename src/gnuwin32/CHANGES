@@ -18,6 +18,10 @@
 
 NEW FEATURES
 
+    o	There is now a native x64 Windows port, with a binary installer
+	and binaries of packages available on CRAN.  See the 'R
+	Administration and Installation Manual' and the 'R for Windows FAQ'.
+
     o	'Rcmd cmd' (or 'R CMD cmd') now runs an arbitrary 'cmd' if 'cmd'
 	is not one of the builtin commands, and does not have
 	extension '.sh' or '.pl' (when it is run as a shell or Perl
@@ -33,10 +37,6 @@ NEW FEATURES
     
     o	The main HTML help page now links to this CHANGES file.
 	(Suggested by Henrik Bengtsson.) 
-
-    o	It is possible to build for 64-bit Windows (set WIN=64 in
-	MkRules and read the R-admin manual for the tools required),
-	thanks in part to changes suggested by Yu Gong.
 
     o	strftime(format = "%z") now gives the timezone names used by
 	the Olson database and not those used by Windows.

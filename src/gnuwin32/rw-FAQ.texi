@@ -331,10 +331,10 @@ of user address space per process under suitably enabled versions of
 @uref{http://msdn.microsoft.com/en-us/library/bb613473%28VS.85%29.aspx};
 this is not enabled by default).  On such systems, the default for
 @code{--max-mem-size} is the smaller of the amount of RAM and 2.5GB.  On
-most 64-bit versions of Windows the user address space for a 32-bit
-process is 4GB, and there the default for @code{--max-mem-size} is the
-smaller of the amount of RAM and 3.5GB.  For a 64-bit build, the defailt
-is the amount of RAM.
+all but the earliest 64-bit versions of Windows the user address space
+for a 32-bit process is 4GB, and there the default for
+@code{--max-mem-size} is the smaller of the amount of RAM and 3.5GB.
+For a 64-bit build, the defailt is the amount of RAM.
 
 @c limits are documented at http://msdn.microsoft.com/en-us/library/aa366778%28VS.85%29.aspx
 
@@ -832,7 +832,7 @@ versions of the OS.
 
 As from R 2.11.0 it will be possible to build a 64-bit version of R from
 the sources: see the `R Installation and Administration Manual'.  A
-snapshot build of a binary installer is available from
+build of a binary installer is available from
 @url{http://cran.r-project.org/bin/windows64/contrib/}.  Most binary
 packages are available from CRAN or CRANextras, but fewer
 hard-to-install packages are available than for the standard 32-bit
