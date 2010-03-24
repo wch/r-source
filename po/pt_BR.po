@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-21 17:00+0000\n"
+"POT-Creation-Date: 2010-03-24 10:29+0000\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -158,8 +158,8 @@ msgstr ""
 #: src/main/connections.c:4579 src/main/connections.c:4583
 #: src/main/context.c:597 src/main/context.c:606 src/main/context.c:610
 #: src/main/datetime.c:655 src/main/datetime.c:730 src/main/datetime.c:732
-#: src/main/datetime.c:736 src/main/datetime.c:869 src/main/datetime.c:871
-#: src/main/datetime.c:1017 src/main/debug.c:223 src/main/deparse.c:348
+#: src/main/datetime.c:736 src/main/datetime.c:882 src/main/datetime.c:884
+#: src/main/datetime.c:1044 src/main/debug.c:223 src/main/deparse.c:348
 #: src/main/devices.c:580 src/main/dotcode.c:729 src/main/dotcode.c:733
 #: src/main/dotcode.c:738 src/main/dounzip.c:250 src/main/dounzip.c:257
 #: src/main/dounzip.c:267 src/main/dounzip.c:272 src/main/dounzip.c:276
@@ -174,21 +174,21 @@ msgstr ""
 #: src/main/eval.c:1798 src/main/grep.c:726 src/main/grep.c:731
 #: src/main/grep.c:1076 src/main/grep.c:1080 src/main/grep.c:1085
 #: src/main/grep.c:1760 src/main/grep.c:1765 src/main/memory.c:2981
-#: src/main/model.c:1612 src/main/model.c:1620 src/main/optim.c:225
+#: src/main/model.c:1611 src/main/model.c:1619 src/main/optim.c:225
 #: src/main/paste.c:86 src/main/paste.c:353 src/main/paste.c:360
 #: src/main/paste.c:367 src/main/paste.c:372 src/main/paste.c:377
 #: src/main/paste.c:382 src/main/paste.c:385 src/main/paste.c:393
 #: src/main/paste.c:541 src/main/paste.c:546 src/main/platform.c:290
 #: src/main/platform.c:292 src/main/platform.c:294 src/main/platform.c:310
-#: src/main/platform.c:321 src/main/platform.c:1005 src/main/platform.c:1011
-#: src/main/platform.c:1066 src/main/platform.c:1123 src/main/platform.c:1126
-#: src/main/platform.c:1287 src/main/platform.c:1290 src/main/platform.c:1326
-#: src/main/platform.c:1329 src/main/platform.c:1402 src/main/platform.c:1420
-#: src/main/platform.c:1461 src/main/platform.c:1463 src/main/platform.c:1523
-#: src/main/platform.c:1614 src/main/platform.c:1874 src/main/platform.c:1915
-#: src/main/platform.c:2036 src/main/platform.c:2039 src/main/platform.c:2042
-#: src/main/platform.c:2045 src/main/platform.c:2162 src/main/platform.c:2190
-#: src/main/platform.c:2238 src/main/plot.c:3030 src/main/plot.c:4169
+#: src/main/platform.c:321 src/main/platform.c:955 src/main/platform.c:961
+#: src/main/platform.c:1011 src/main/platform.c:1068 src/main/platform.c:1071
+#: src/main/platform.c:1232 src/main/platform.c:1235 src/main/platform.c:1271
+#: src/main/platform.c:1274 src/main/platform.c:1347 src/main/platform.c:1365
+#: src/main/platform.c:1406 src/main/platform.c:1408 src/main/platform.c:1468
+#: src/main/platform.c:1559 src/main/platform.c:1819 src/main/platform.c:1860
+#: src/main/platform.c:1981 src/main/platform.c:1984 src/main/platform.c:1987
+#: src/main/platform.c:1990 src/main/platform.c:2107 src/main/platform.c:2135
+#: src/main/platform.c:2183 src/main/plot.c:3030 src/main/plot.c:4169
 #: src/main/plot.c:4173 src/main/plot.c:4176 src/main/plot3d.c:2450
 #: src/main/plot3d.c:2454 src/main/plot3d.c:2459 src/main/plot3d.c:2463
 #: src/main/plot3d.c:2467 src/main/plot3d.c:2471 src/main/print.c:230
@@ -277,12 +277,12 @@ msgstr "etiqueta de tempo inválida"
 #: src/gnuwin32/extra.c:1955 src/gnuwin32/extra.c:1958
 #: src/gnuwin32/extra.c:1961 src/main/character.c:561 src/main/colors.c:365
 #: src/main/connections.c:3211 src/main/context.c:643 src/main/context.c:662
-#: src/main/datetime.c:591 src/main/datetime.c:657 src/main/datetime.c:873
+#: src/main/datetime.c:591 src/main/datetime.c:657 src/main/datetime.c:886
 #: src/main/dotcode.c:197 src/main/errors.c:867 src/main/errors.c:898
 #: src/main/errors.c:999 src/main/errors.c:1024 src/main/errors.c:1029
 #: src/main/optimize.c:94 src/main/optimize.c:101 src/main/optimize.c:110
 #: src/main/optimize.c:179 src/main/optimize.c:185 src/main/optimize.c:194
-#: src/main/platform.c:2210 src/main/plot.c:275 src/main/plot.c:469
+#: src/main/platform.c:2155 src/main/plot.c:275 src/main/plot.c:469
 #: src/main/plot.c:474 src/main/plot.c:2204 src/main/plot.c:2211
 #: src/main/plot.c:3243 src/main/plot.c:3245 src/main/plot.c:3247
 #: src/main/plot.c:3405 src/main/plot3d.c:1399 src/main/plot3d.c:2528
@@ -409,7 +409,7 @@ msgstr "objeto '%s' não encontrado"
 msgid "invalid input in Rmbstowcs"
 msgstr "entrada inválida em Rmbstowcs"
 
-#: src/gnuwin32/extra.c:2059 src/main/platform.c:1098
+#: src/gnuwin32/extra.c:2059 src/main/platform.c:1043
 msgid "file choice cancelled"
 msgstr "escolha de arquivo cancelada"
 
@@ -793,29 +793,24 @@ msgstr ""
 msgid "table entry must be an external pointer"
 msgstr "não é possível remover a classe de um ponteiro externo"
 
-#: src/main/Rstrptime.h:477 src/main/Rstrptime.h:944
-#, c-format
-msgid "%s for input is read but ignored"
-msgstr ""
-
 #: src/main/Rstrptime.h:501 src/main/Rstrptime.h:968
 #, fuzzy, c-format
 msgid "use of %s for input is not supported"
 msgstr "modo '%s' não é suportado em call_R"
 
-#: src/main/Rstrptime.h:1221
+#: src/main/Rstrptime.h:1222
 msgid "input string is too long"
 msgstr "string de entrada é muito longa"
 
-#: src/main/Rstrptime.h:1223
+#: src/main/Rstrptime.h:1224
 msgid "invalid multibyte input string"
 msgstr "string de entrada multibyte inválida"
 
-#: src/main/Rstrptime.h:1226
+#: src/main/Rstrptime.h:1227
 msgid "format string is too long"
 msgstr "string de formato é muito longa"
 
-#: src/main/Rstrptime.h:1228
+#: src/main/Rstrptime.h:1229
 msgid "invalid multibyte format string"
 msgstr "string de formato multibyte inválida"
 
@@ -2479,8 +2474,8 @@ msgstr "não é possível especificar fuso horários nesse sistema"
 msgid "problem with unsetting timezone"
 msgstr "problema na execução do editor %s"
 
-#: src/main/datetime.c:675 src/main/datetime.c:677 src/main/datetime.c:1025
-#: src/main/datetime.c:1027
+#: src/main/datetime.c:675 src/main/datetime.c:677 src/main/datetime.c:1052
+#: src/main/datetime.c:1054
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "componente de comprimento zero em estrutura POSIXlt não vazia"
 
@@ -2605,7 +2600,7 @@ msgstr "apenas o primeiro elemento é usado como nome da variável"
 msgid "invalid expression in '%s'"
 msgstr "expressão inválida em \"%s\""
 
-#: src/main/deriv.c:931 src/main/model.c:1321
+#: src/main/deriv.c:931 src/main/model.c:1320
 msgid "invalid variable names"
 msgstr "nomes inválidos de variável"
 
@@ -4413,109 +4408,109 @@ msgstr "nome duplicado '%s' em data frame usando '.'"
 msgid "invalid model formula in EncodeVars"
 msgstr "fórmula de modelo inválida em EncodeVars"
 
-#: src/main/model.c:756
+#: src/main/model.c:755
 msgid "argument is not a valid model"
 msgstr "argumento não é um modelo válido"
 
-#: src/main/model.c:777
+#: src/main/model.c:776
 msgid "'data' argument is of the wrong type"
 msgstr "argumento 'data' é do tipo errado"
 
-#: src/main/model.c:1042
+#: src/main/model.c:1041
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' na fórmula e nenhum argumento 'data'"
 
-#: src/main/model.c:1190
+#: src/main/model.c:1189
 msgid "invalid formula in 'update'"
 msgstr "fórmula inválida em 'update'"
 
-#: src/main/model.c:1228
+#: src/main/model.c:1227
 msgid "formula expected"
 msgstr "fórmula esperada"
 
-#: src/main/model.c:1319
+#: src/main/model.c:1318
 msgid "invalid variables"
 msgstr "variáveis inválidas"
 
-#: src/main/model.c:1323 src/main/model.c:1328
+#: src/main/model.c:1322 src/main/model.c:1327
 msgid "number of variables != number of variable names"
 msgstr "número de variáveis != número de nomes de variáveis"
 
-#: src/main/model.c:1326
+#: src/main/model.c:1325
 msgid "invalid extra variables"
 msgstr "variáveis extra inválidas"
 
-#: src/main/model.c:1330
+#: src/main/model.c:1329
 msgid "invalid extra variable names"
 msgstr "nomes de variáveis extras inválidos"
 
-#: src/main/model.c:1351
+#: src/main/model.c:1350
 #, c-format
 msgid "overlong names in '%s'"
 msgstr "nomes longos demais em '%s'"
 
-#: src/main/model.c:1378
+#: src/main/model.c:1377
 #, fuzzy, c-format
 msgid "invalid type (%s) for variable '%s'"
 msgstr "tipo inválido para rótulos dos eixos"
 
-#: src/main/model.c:1383
+#: src/main/model.c:1382
 #, c-format
 msgid "variable lengths differ (found for '%s')"
 msgstr "comprimentos das variáveis diferem (encontradas em '%s')"
 
-#: src/main/model.c:1437
+#: src/main/model.c:1436
 msgid "invalid result from na.action"
 msgstr "resultado inválido de na.action"
 
-#: src/main/model.c:1631
+#: src/main/model.c:1630
 msgid "invalid model frame"
 msgstr "estrutura de modelo inválida"
 
-#: src/main/model.c:1633
+#: src/main/model.c:1632
 msgid "do not know how many cases"
 msgstr "não é possível determinar o número de casos"
 
-#: src/main/model.c:1656
+#: src/main/model.c:1655
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "comprimentos das variáveis diferem (encontrados para a variável %d)"
 
-#: src/main/model.c:1660 src/main/model.c:1667
+#: src/main/model.c:1659 src/main/model.c:1666
 #, c-format
 msgid "variable %d has no levels"
 msgstr "variável %d não tem níveis"
 
-#: src/main/model.c:1779
+#: src/main/model.c:1778
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "a resposta apareceu no lado direito e foi descartada"
 
-#: src/main/model.c:1799
+#: src/main/model.c:1798
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr ""
 
-#: src/main/model.c:1803
+#: src/main/model.c:1802
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr ""
 
-#: src/main/model.c:1814
+#: src/main/model.c:1813
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 "problema com o termo %d na matriz do modelo: nenhuma coluna foi atribuida"
 
-#: src/main/model.c:1863 src/main/model.c:1868 src/main/model.c:1874
-#: src/main/model.c:1885 src/main/model.c:1891 src/main/model.c:1897
+#: src/main/model.c:1862 src/main/model.c:1867 src/main/model.c:1873
+#: src/main/model.c:1884 src/main/model.c:1890 src/main/model.c:1896
 msgid "term names will be truncated"
 msgstr "nomes dos termos serão truncados"
 
-#: src/main/model.c:1877
+#: src/main/model.c:1876
 msgid "complex variables are not currently allowed in model matrices"
 msgstr ""
 
-#: src/main/model.c:1901
+#: src/main/model.c:1900
 #, fuzzy, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "valores negativos não são permitidos na subscrição de matriz"
@@ -5250,83 +5245,74 @@ msgstr "nome do destino extendido muito longo"
 msgid "cannot rename file '%s' to '%s', reason '%s'"
 msgstr "não foi possível criar fifo '%s', motivo '%s'"
 
-#: src/main/platform.c:889
-msgid "directory/folder path name too long"
-msgstr "caminho de diretório/pasta muito longo"
-
-#: src/main/platform.c:891
-#, c-format
-msgid "list.files: '%s' is not a readable directory"
-msgstr "list.files: '%s' não é um diretório legível"
-
-#: src/main/platform.c:1021
+#: src/main/platform.c:971
 msgid "invalid 'pattern' regular expression"
 msgstr "expressão regular inválida em 'pattern'"
 
-#: src/main/platform.c:1048
+#: src/main/platform.c:993
 msgid "unable to determine R home location"
 msgstr "não foi possível determinar a localização do diretório inicial do R"
 
-#: src/main/platform.c:1100
+#: src/main/platform.c:1045
 msgid "file name too long"
 msgstr "nome de arquivo muito longo"
 
-#: src/main/platform.c:1148
+#: src/main/platform.c:1093
 msgid "file.access() is not implemented on this system"
 msgstr "file.access() não está implementado nesse sistema"
 
-#: src/main/platform.c:1297 src/main/platform.c:1341 src/main/sysutils.c:1528
+#: src/main/platform.c:1242 src/main/platform.c:1286 src/main/sysutils.c:1528
 #: src/main/sysutils.c:1542
 msgid "internal out-of-memory condition"
 msgstr ""
 
-#: src/main/platform.c:1337 src/main/sysutils.c:1538
+#: src/main/platform.c:1282 src/main/sysutils.c:1538
 #, fuzzy, c-format
 msgid "read error on '%s'"
 msgstr "erro de leitura"
 
-#: src/main/platform.c:1495
+#: src/main/platform.c:1440
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "espeficação de 'LC_NUMERIC' pode fazer o R funcionar de forma estranha"
 
-#: src/main/platform.c:1529
+#: src/main/platform.c:1474
 #, fuzzy, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "SO informa que a requisição não pode ser cumprida"
 
-#: src/main/platform.c:1829
+#: src/main/platform.c:1774
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' deve ser um vetor de caracteres de comprimento 1"
 
-#: src/main/platform.c:1835
+#: src/main/platform.c:1780
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "resolução de máquina '%s' impossível em nsl()"
 
-#: src/main/platform.c:1842
+#: src/main/platform.c:1787
 msgid "unknown format returned by gethostbyname"
 msgstr "formato desconhecido retornado por gethostbyname"
 
-#: src/main/platform.c:1851
+#: src/main/platform.c:1796
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() não é suportado nessa plataforma"
 
-#: src/main/platform.c:1898
+#: src/main/platform.c:1843
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' já existe"
 
-#: src/main/platform.c:1901
+#: src/main/platform.c:1846
 #, fuzzy, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "não foi possível criar fifo '%s', motivo '%s'"
 
-#: src/main/platform.c:1944
+#: src/main/platform.c:1889
 #, fuzzy, c-format
 msgid "'%ls' already exists"
 msgstr "'%s' já existe"
 
-#: src/main/platform.c:2217
+#: src/main/platform.c:2162
 #, fuzzy
 msgid "insufficient OS support on this platform"
 msgstr "nsl() não é suportado nessa plataforma"
@@ -8206,6 +8192,12 @@ msgstr "módulo X11 não pode ser carregado"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 não está disponível"
+
+#~ msgid "directory/folder path name too long"
+#~ msgstr "caminho de diretório/pasta muito longo"
+
+#~ msgid "list.files: '%s' is not a readable directory"
+#~ msgstr "list.files: '%s' não é um diretório legível"
 
 #~ msgid "%d arguments passed to 'atan' which requires 1"
 #~ msgstr "%d argumentos passados para 'atan', que requer 1"

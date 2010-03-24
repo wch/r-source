@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-21 17:00+0000\n"
+"POT-Creation-Date: 2010-03-24 10:29+0000\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -156,8 +156,8 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/connections.c:4579 src/main/connections.c:4583
 #: src/main/context.c:597 src/main/context.c:606 src/main/context.c:610
 #: src/main/datetime.c:655 src/main/datetime.c:730 src/main/datetime.c:732
-#: src/main/datetime.c:736 src/main/datetime.c:869 src/main/datetime.c:871
-#: src/main/datetime.c:1017 src/main/debug.c:223 src/main/deparse.c:348
+#: src/main/datetime.c:736 src/main/datetime.c:882 src/main/datetime.c:884
+#: src/main/datetime.c:1044 src/main/debug.c:223 src/main/deparse.c:348
 #: src/main/devices.c:580 src/main/dotcode.c:729 src/main/dotcode.c:733
 #: src/main/dotcode.c:738 src/main/dounzip.c:250 src/main/dounzip.c:257
 #: src/main/dounzip.c:267 src/main/dounzip.c:272 src/main/dounzip.c:276
@@ -172,21 +172,21 @@ msgstr "在显示'%ls'时出了问题"
 #: src/main/eval.c:1798 src/main/grep.c:726 src/main/grep.c:731
 #: src/main/grep.c:1076 src/main/grep.c:1080 src/main/grep.c:1085
 #: src/main/grep.c:1760 src/main/grep.c:1765 src/main/memory.c:2981
-#: src/main/model.c:1612 src/main/model.c:1620 src/main/optim.c:225
+#: src/main/model.c:1611 src/main/model.c:1619 src/main/optim.c:225
 #: src/main/paste.c:86 src/main/paste.c:353 src/main/paste.c:360
 #: src/main/paste.c:367 src/main/paste.c:372 src/main/paste.c:377
 #: src/main/paste.c:382 src/main/paste.c:385 src/main/paste.c:393
 #: src/main/paste.c:541 src/main/paste.c:546 src/main/platform.c:290
 #: src/main/platform.c:292 src/main/platform.c:294 src/main/platform.c:310
-#: src/main/platform.c:321 src/main/platform.c:1005 src/main/platform.c:1011
-#: src/main/platform.c:1066 src/main/platform.c:1123 src/main/platform.c:1126
-#: src/main/platform.c:1287 src/main/platform.c:1290 src/main/platform.c:1326
-#: src/main/platform.c:1329 src/main/platform.c:1402 src/main/platform.c:1420
-#: src/main/platform.c:1461 src/main/platform.c:1463 src/main/platform.c:1523
-#: src/main/platform.c:1614 src/main/platform.c:1874 src/main/platform.c:1915
-#: src/main/platform.c:2036 src/main/platform.c:2039 src/main/platform.c:2042
-#: src/main/platform.c:2045 src/main/platform.c:2162 src/main/platform.c:2190
-#: src/main/platform.c:2238 src/main/plot.c:3030 src/main/plot.c:4169
+#: src/main/platform.c:321 src/main/platform.c:955 src/main/platform.c:961
+#: src/main/platform.c:1011 src/main/platform.c:1068 src/main/platform.c:1071
+#: src/main/platform.c:1232 src/main/platform.c:1235 src/main/platform.c:1271
+#: src/main/platform.c:1274 src/main/platform.c:1347 src/main/platform.c:1365
+#: src/main/platform.c:1406 src/main/platform.c:1408 src/main/platform.c:1468
+#: src/main/platform.c:1559 src/main/platform.c:1819 src/main/platform.c:1860
+#: src/main/platform.c:1981 src/main/platform.c:1984 src/main/platform.c:1987
+#: src/main/platform.c:1990 src/main/platform.c:2107 src/main/platform.c:2135
+#: src/main/platform.c:2183 src/main/plot.c:3030 src/main/plot.c:4169
 #: src/main/plot.c:4173 src/main/plot.c:4176 src/main/plot3d.c:2450
 #: src/main/plot3d.c:2454 src/main/plot3d.c:2459 src/main/plot3d.c:2463
 #: src/main/plot3d.c:2467 src/main/plot3d.c:2471 src/main/print.c:230
@@ -275,12 +275,12 @@ msgstr "时间标签不对"
 #: src/gnuwin32/extra.c:1955 src/gnuwin32/extra.c:1958
 #: src/gnuwin32/extra.c:1961 src/main/character.c:561 src/main/colors.c:365
 #: src/main/connections.c:3211 src/main/context.c:643 src/main/context.c:662
-#: src/main/datetime.c:591 src/main/datetime.c:657 src/main/datetime.c:873
+#: src/main/datetime.c:591 src/main/datetime.c:657 src/main/datetime.c:886
 #: src/main/dotcode.c:197 src/main/errors.c:867 src/main/errors.c:898
 #: src/main/errors.c:999 src/main/errors.c:1024 src/main/errors.c:1029
 #: src/main/optimize.c:94 src/main/optimize.c:101 src/main/optimize.c:110
 #: src/main/optimize.c:179 src/main/optimize.c:185 src/main/optimize.c:194
-#: src/main/platform.c:2210 src/main/plot.c:275 src/main/plot.c:469
+#: src/main/platform.c:2155 src/main/plot.c:275 src/main/plot.c:469
 #: src/main/plot.c:474 src/main/plot.c:2204 src/main/plot.c:2211
 #: src/main/plot.c:3243 src/main/plot.c:3245 src/main/plot.c:3247
 #: src/main/plot.c:3405 src/main/plot3d.c:1399 src/main/plot3d.c:2528
@@ -403,7 +403,7 @@ msgstr "找不到寄存器键'%ls'"
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs里的输入不对"
 
-#: src/gnuwin32/extra.c:2059 src/main/platform.c:1098
+#: src/gnuwin32/extra.c:2059 src/main/platform.c:1043
 msgid "file choice cancelled"
 msgstr "撤消文件选择"
 
@@ -779,29 +779,24 @@ msgstr "程序包'%s'不提供'%s'这样的函数"
 msgid "table entry must be an external pointer"
 msgstr "桌项必需是外部指针"
 
-#: src/main/Rstrptime.h:477 src/main/Rstrptime.h:944
-#, c-format
-msgid "%s for input is read but ignored"
-msgstr ""
-
 #: src/main/Rstrptime.h:501 src/main/Rstrptime.h:968
 #, fuzzy, c-format
 msgid "use of %s for input is not supported"
 msgstr "call_R不支持'%s'状态"
 
-#: src/main/Rstrptime.h:1221
+#: src/main/Rstrptime.h:1222
 msgid "input string is too long"
 msgstr "输入字符串太长"
 
-#: src/main/Rstrptime.h:1223
+#: src/main/Rstrptime.h:1224
 msgid "invalid multibyte input string"
 msgstr "多字节输入字符串不对"
 
-#: src/main/Rstrptime.h:1226
+#: src/main/Rstrptime.h:1227
 msgid "format string is too long"
 msgstr "格式字符串太长"
 
-#: src/main/Rstrptime.h:1228
+#: src/main/Rstrptime.h:1229
 msgid "invalid multibyte format string"
 msgstr "多字节格式字符串不对"
 
@@ -2381,8 +2376,8 @@ msgstr "无法为本系统设时差区"
 msgid "problem with unsetting timezone"
 msgstr "取消时区设制时出了问题"
 
-#: src/main/datetime.c:675 src/main/datetime.c:677 src/main/datetime.c:1025
-#: src/main/datetime.c:1027
+#: src/main/datetime.c:675 src/main/datetime.c:677 src/main/datetime.c:1052
+#: src/main/datetime.c:1054
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "非空的POSIXlt结构里含长度为零的部件"
 
@@ -2503,7 +2498,7 @@ msgstr "只用了第一个元素作为变数名"
 msgid "invalid expression in '%s'"
 msgstr "'%s'的表达式不对"
 
-#: src/main/deriv.c:931 src/main/model.c:1321
+#: src/main/deriv.c:931 src/main/model.c:1320
 msgid "invalid variable names"
 msgstr "变数名字不对"
 
@@ -4276,108 +4271,108 @@ msgstr "在数据框里用'.'时不能有重复的名字’%s'"
 msgid "invalid model formula in EncodeVars"
 msgstr "EncodeVars中的模型公式不对"
 
-#: src/main/model.c:756
+#: src/main/model.c:755
 msgid "argument is not a valid model"
 msgstr "变元不是正确的模型"
 
-#: src/main/model.c:777
+#: src/main/model.c:776
 msgid "'data' argument is of the wrong type"
 msgstr "'data'变元种类有错"
 
-#: src/main/model.c:1042
+#: src/main/model.c:1041
 msgid "'.' in formula and no 'data' argument"
 msgstr "公式里有'.'，而没有'data'这一变元"
 
-#: src/main/model.c:1190
+#: src/main/model.c:1189
 msgid "invalid formula in 'update'"
 msgstr "'update'里的公式不对"
 
-#: src/main/model.c:1228
+#: src/main/model.c:1227
 msgid "formula expected"
 msgstr "需要公式"
 
-#: src/main/model.c:1319
+#: src/main/model.c:1318
 msgid "invalid variables"
 msgstr "变数不对"
 
-#: src/main/model.c:1323 src/main/model.c:1328
+#: src/main/model.c:1322 src/main/model.c:1327
 msgid "number of variables != number of variable names"
 msgstr "变数数目不等于变数名字数目"
 
-#: src/main/model.c:1326
+#: src/main/model.c:1325
 msgid "invalid extra variables"
 msgstr "額外变数不对"
 
-#: src/main/model.c:1330
+#: src/main/model.c:1329
 msgid "invalid extra variable names"
 msgstr "额外变数名字不对"
 
-#: src/main/model.c:1351
+#: src/main/model.c:1350
 #, c-format
 msgid "overlong names in '%s'"
 msgstr "'%s'里的名字太长"
 
-#: src/main/model.c:1378
+#: src/main/model.c:1377
 #, c-format
 msgid "invalid type (%s) for variable '%s'"
 msgstr "变元'%2$s'的种类(%1$s)不对"
 
-#: src/main/model.c:1383
+#: src/main/model.c:1382
 #, c-format
 msgid "variable lengths differ (found for '%s')"
 msgstr "变数的长度不一样('%s')"
 
-#: src/main/model.c:1437
+#: src/main/model.c:1436
 msgid "invalid result from na.action"
 msgstr "na.action的结果有错"
 
-#: src/main/model.c:1631
+#: src/main/model.c:1630
 msgid "invalid model frame"
 msgstr "模型框不对"
 
-#: src/main/model.c:1633
+#: src/main/model.c:1632
 msgid "do not know how many cases"
 msgstr "案例数目不清"
 
-#: src/main/model.c:1656
+#: src/main/model.c:1655
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "变数的长度不一样(变数%d)"
 
-#: src/main/model.c:1660 src/main/model.c:1667
+#: src/main/model.c:1659 src/main/model.c:1666
 #, c-format
 msgid "variable %d has no levels"
 msgstr "变数%d没有因子层"
 
-#: src/main/model.c:1779
+#: src/main/model.c:1778
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "在公式右手的反应略过不用"
 
-#: src/main/model.c:1799
+#: src/main/model.c:1798
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr "%d项需要%.0g个列"
 
-#: src/main/model.c:1803
+#: src/main/model.c:1802
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr "矩阵需要%.0g个列"
 
-#: src/main/model.c:1814
+#: src/main/model.c:1813
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr "模型矩阵的%d项有问题: 没有指定的列"
 
-#: src/main/model.c:1863 src/main/model.c:1868 src/main/model.c:1874
-#: src/main/model.c:1885 src/main/model.c:1891 src/main/model.c:1897
+#: src/main/model.c:1862 src/main/model.c:1867 src/main/model.c:1873
+#: src/main/model.c:1884 src/main/model.c:1890 src/main/model.c:1896
 msgid "term names will be truncated"
 msgstr "项名字太长，被缩短了"
 
-#: src/main/model.c:1877
+#: src/main/model.c:1876
 msgid "complex variables are not currently allowed in model matrices"
 msgstr "模型矩阵里目前不能有复数"
 
-#: src/main/model.c:1901
+#: src/main/model.c:1900
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "模型矩阵里不能有种类为'%s'的变元"
@@ -5089,83 +5084,74 @@ msgstr "扩展后目的名太长"
 msgid "cannot rename file '%s' to '%s', reason '%s'"
 msgstr "由于'%3$s'的原因，无法将文件名字'%1$s'改成'%2$s'"
 
-#: src/main/platform.c:889
-msgid "directory/folder path name too long"
-msgstr "目录/文件夹路径太长"
-
-#: src/main/platform.c:891
-#, c-format
-msgid "list.files: '%s' is not a readable directory"
-msgstr "list.files: '%s'目录不可读"
-
-#: src/main/platform.c:1021
+#: src/main/platform.c:971
 msgid "invalid 'pattern' regular expression"
 msgstr "'pattern'正规表现不对"
 
-#: src/main/platform.c:1048
+#: src/main/platform.c:993
 msgid "unable to determine R home location"
 msgstr "无法确定R本录位置"
 
-#: src/main/platform.c:1100
+#: src/main/platform.c:1045
 msgid "file name too long"
 msgstr "文件名太长"
 
-#: src/main/platform.c:1148
+#: src/main/platform.c:1093
 msgid "file.access() is not implemented on this system"
 msgstr "本系统没有实现file.access()"
 
-#: src/main/platform.c:1297 src/main/platform.c:1341 src/main/sysutils.c:1528
+#: src/main/platform.c:1242 src/main/platform.c:1286 src/main/sysutils.c:1528
 #: src/main/sysutils.c:1542
 msgid "internal out-of-memory condition"
 msgstr "内部出现了内存不够情况"
 
-#: src/main/platform.c:1337 src/main/sysutils.c:1538
+#: src/main/platform.c:1282 src/main/sysutils.c:1538
 #, c-format
 msgid "read error on '%s'"
 msgstr "读取'%s'时出了错"
 
-#: src/main/platform.c:1495
+#: src/main/platform.c:1440
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr "设定'LC_NUMERIC'后有可能会使R运转出现问题"
 
-#: src/main/platform.c:1529
+#: src/main/platform.c:1474
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr "操作系统报告说无法执行将本地化设成\"%s\"的请求"
 
-#: src/main/platform.c:1829
+#: src/main/platform.c:1774
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname'必需是长度为一的字符矢量"
 
-#: src/main/platform.c:1835
+#: src/main/platform.c:1780
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl()无法分辨主机'%s'"
 
-#: src/main/platform.c:1842
+#: src/main/platform.c:1787
 msgid "unknown format returned by gethostbyname"
 msgstr "gethostbyname回覆了错误的格式"
 
-#: src/main/platform.c:1851
+#: src/main/platform.c:1796
 msgid "nsl() is not supported on this platform"
 msgstr "本平台不支持nsl()"
 
-#: src/main/platform.c:1898
+#: src/main/platform.c:1843
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s'已存在"
 
-#: src/main/platform.c:1901
+#: src/main/platform.c:1846
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "由于'%2$s'的原因，无法建立'%1$s'文件目录"
 
-#: src/main/platform.c:1944
+#: src/main/platform.c:1889
 #, c-format
 msgid "'%ls' already exists"
 msgstr "'%ls'已存在"
 
-#: src/main/platform.c:2217
+#: src/main/platform.c:2162
 msgid "insufficient OS support on this platform"
 msgstr "本平台操作系统支持不够"
 
@@ -7923,6 +7909,12 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
+
+#~ msgid "directory/folder path name too long"
+#~ msgstr "目录/文件夹路径太长"
+
+#~ msgid "list.files: '%s' is not a readable directory"
+#~ msgstr "list.files: '%s'目录不可读"
 
 #~ msgid "%d arguments passed to 'atan' which requires 1"
 #~ msgstr "给了'atan'%d个变元，但它最多只能用一个变元"
