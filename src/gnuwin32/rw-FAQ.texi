@@ -185,9 +185,9 @@ environment variables at the end of the Target field, for example
 @code{R_LIBS=p:/myRlib}, and if you want to ensure that menus and
 messages are in (American) English, @code{LANGUAGE=en}.
 
-It is also possible to install from an MSI file, which will be of
-interest only for system administrators.  For how to build an MSI file,
-see the `R Installation and Administration Manual'.
+It is also possible (32-bit only) to install from an MSI file, which
+will be of interest only for system administrators.  For how to build an
+MSI file, see the `R Installation and Administration Manual'.
 
 
 @node How do I check an installation?, Can I customize the installation?, How do I install R for Windows?, Installation and Usage
