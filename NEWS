@@ -378,10 +378,10 @@ DEPRECATED & DEFUNCT
     o	The use of UseMethod() with more than two arguments is now defunct.
 
     o	In the 'methods' package, the MethodsList metadata objects which
-	had been superseded since R 2.8.0 by hash tables
-	(environments) are being phased out.  In the present stage
-	stub objects are generated and a warning issued if these are
-	accessed: shortly none will be generated.
+	had been superseded by hash tables (environments) since R
+	2.8.0 are being phased out.  At the present stage stub objects
+	are generated and a warning issued if these are accessed:
+	shortly none will be generated.
 
 	getMethods() is now deprecated, with its internal use replaced
         by findMethods() and other changes.
@@ -517,8 +517,8 @@ BUG FIXES
 	input formats).
 
     o	capabilities("X11") now works the same way on Mac OS X as on
-	other platforms (it was always true for R built with
-	--with-aqua, as the CRAN builds are).
+	other platforms (and as documented: it was always true for R
+	built with --with-aqua, as the CRAN builds are).
 
 
 
