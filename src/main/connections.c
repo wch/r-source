@@ -531,7 +531,7 @@ static Rboolean file_open(Rconnection con)
 #ifdef Win32
 	if(con->enc == CE_UTF8) {
 	    int n = strlen(name);
-	    wchar_t *wname = (wchar_t *) alloca(2 * (n+1)), wmode[10];
+	    wchar_t wname[2 * (n+1)], wmode[10];
 	    R_CheckStack();
 	    Rf_utf8towcs(wname, name, n+1);
 	    mbstowcs(wmode, con->mode, 10);
@@ -1025,7 +1025,7 @@ static Rboolean pipe_open(Rconnection con)
 #ifdef Win32
     if(con->enc == CE_UTF8) {
 	int n = strlen(con->description);
-	wchar_t *wname = (wchar_t *) alloca(2 * (n+1)), wmode[10];
+	wchar_t wname[2 * (n+1)], wmode[10];
 	R_CheckStack();
 	Rf_utf8towcs(wname, con->description, n+1);
 	mbstowcs(wmode, con->mode, 10);

@@ -3,7 +3,7 @@
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
- *  Copyright (C) 2004-8      The R Development Core Team
+ *  Copyright (C) 2004-10     The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2936,10 +2936,8 @@ static void GA_Text0(double x, double y, const char *str, int enc,
     if (R_OPAQUE(gc->col)) {
 	if(gc->fontface != 5) {
 	    /* As from 2.7.0 can use Unicode always */
-	    wchar_t *wc;
 	    int n = strlen(str), cnt;
-	    wc = alloca((n+1) * sizeof(wchar_t)); /* only need terminator to
-						     debug */
+	    wchar_t wc[n+1];/* only need terminator to debug */
 	    R_CheckStack();
 	    cnt = (enc == CE_UTF8) ?
 		Rf_utf8towcs(wc, str, n+1): mbstowcs(wc, str, n);
@@ -2957,9 +2955,8 @@ static void GA_Text0(double x, double y, const char *str, int enc,
 	    gsetcliprect(xd->bm, xd->clip);
 	    gcopy(xd->bm2, xd->bm, r);
 	    if(gc->fontface != 5) {
-		wchar_t *wc;
 		int n = strlen(str), cnt;
-		wc = alloca((n+1) * sizeof(wchar_t));
+		wchar_t wc[n+1];
 		R_CheckStack();
 		cnt = (enc == CE_UTF8) ?
 		    Rf_utf8towcs(wc, str, n+1): mbstowcs(wc, str, n);

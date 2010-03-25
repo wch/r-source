@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2009  The R Development Core Team
+ *  Copyright (C) 1997--2010  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -723,7 +723,6 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP a, ans, v, pattern, formula, varnames, term, termlabs, ord;
     SEXP specials, t, data, rhs;
     int i, j, k, l, n, keepOrder, allowDot;
-    char *cbuf;
 
     Rboolean hadFrameNames = FALSE;
 
@@ -959,7 +958,7 @@ SEXP attribute_hidden do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 		l += strlen(CHAR(STRING_ELT(varnames, i - 1)));
 	    }
 	}
-	cbuf = (char *) alloca(l+1);
+	char cbuf[l+1];
 	cbuf[0] = '\0';
 	l = 0;
 	for (i = 1; i <= nvar; i++) {

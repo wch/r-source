@@ -1402,7 +1402,7 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP names, sep, ans, dup, newx;
     int i, n, cnt, len, maxlen = 0, *cnts, dp;
     HashData data;
-    const char *csep, *ss; char *buf;
+    const char *csep, *ss; 
     void *vmax;
 
     checkArity(op, args);
@@ -1424,7 +1424,7 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(n > 1) {
 	/* +2 for terminator and rounding error */
-	buf = (char *) alloca(maxlen + strlen(csep) + (int) (log((double)n)/log(10.0)) + 2);
+	char buf[maxlen + strlen(csep) + (int) (log((double)n)/log(10.0)) + 2];
 	if(n < 10000) {
 	    cnts = (int *) alloca(n * sizeof(int));
 	} else {
