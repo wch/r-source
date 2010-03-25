@@ -391,6 +391,9 @@ NEW FEATURES
 	Tk can be started (and not just
 	capabilities("tcltk") && capabilities("X11")).
 
+    o	The parser no longer marks strings containing octal or hex
+	escapes as being in UTF-8 when entered in a UTF-8 locale.
+
 
 DEPRECATED & DEFUNCT
 
@@ -419,6 +422,9 @@ DEPRECATED & DEFUNCT
 
 	getMethods() is now deprecated, with its internal use replaced
         by findMethods() and other changes.
+
+    o 	Parsing strings containing both octal/hex and Unicode escapes
+	now gives a warning and will become an error in R 2.12.0.
 
 
 INSTALLATION

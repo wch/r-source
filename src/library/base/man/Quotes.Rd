@@ -52,14 +52,16 @@
     \samp{\\unnnn}\tab Unicode character with given code (1--4 hex digits)\cr
     \samp{\\Unnnnnnnn}\tab Unicode character with given code (1--8 hex digits)\cr
   }
-  The last two are only supported on versions of \R built with MBCS
-  support: they are an error on other versions.  Alternative forms are
-  \samp{\\u\{nnnn\}} and \samp{\\U\{nnnnnnnn\}}.  All except the Unicode
-  escape sequences are also supported when reading character strings by
-  \code{\link{scan}} and \code{\link{read.table}} if
-  \code{allowEscapes = TRUE}.  On most platforms they can be used to
-  enter Unicode characters not in the current locale (which will be
-  stored internally in UTF-8).
+  Alternative forms for the last two are \samp{\\u\{nnnn\}} and
+  \samp{\\U\{nnnnnnnn\}}.  All except the Unicode escape sequences are
+  also supported when reading character strings by \code{\link{scan}}
+  and \code{\link{read.table}} if \code{allowEscapes = TRUE}.  Unicode
+  esapes can be used to enter Unicode characters not in the current
+  locale (which will be stored internally in UTF-8).
+
+  It is not advisable to use both octal/hex and Unicode escapes in a
+  single string: the results can be unintended and this will be
+  disallowed in future versions of \R.
 
   These forms will also be used by \code{\link{print.default}}
   when outputting non-printable characters (including backslash).
