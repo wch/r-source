@@ -2267,7 +2267,7 @@ static int StringValue(int c, Rboolean forSymbol)
     } else {
 	if(use_wcs) {
 	    if(oct_or_hex)
-		warning("mixing Unicode and octal/hex escapes in a string is discouraged");
+		error(_("mixing Unicode and octal/hex escapes in a string is not allowed"));
 	    if(wcnt < 10000)
 		PROTECT(yylval = mkStringUTF8(wcs, wcnt)); /* include terminator */
 	    else

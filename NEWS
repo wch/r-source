@@ -21,6 +21,12 @@ NEW FEATURES
 	by the default for the 'tz' argument.  (Wish of PR#14182.)
 
 
+DEPRECATED & DEFUNCT
+
+    o   Supplying the parser with a string containing both octal/hex and
+	Unicode escapes is now an error.
+
+
 INSTALLATION
 
     o	A C99 compiler is now required, and more C99 language features

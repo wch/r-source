@@ -59,9 +59,8 @@
   esapes can be used to enter Unicode characters not in the current
   locale (which will be stored internally in UTF-8).
 
-  It is not advisable to use both octal/hex and Unicode escapes in a
-  single string: the results can be unintended and this will be
-  disallowed in future versions of \R.
+  The parser does not allow the use of both octal/hex and Unicode
+  escapes in a single string.
 
   These forms will also be used by \code{\link{print.default}}
   when outputting non-printable characters (including backslash).
