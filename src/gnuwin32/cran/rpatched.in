@@ -33,17 +33,17 @@
 
 <body>
 
-<h1>R-@FULLVERSION@ build for Windows</h1>
+<h1>R-@FULLVERSION@ build for Windows (@BITSIZE@ bit)</h1>
 
 <div class="download">
-  <p><a href="@RWVER@-win32.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(32 megabytes)</span></p>
+  <p><a href="@RWVER@-win@BITSIZE@.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(33 megabytes, @BITSIZE@ bit)</span></p>
   <ul>
-    <li><a href="README.@RWVER@">Installation and other instructions</a></li>
-    <li>New features in this version: <a href="CHANGES.@RWVER@">Windows specific</a>, <a href="NEWS.@RWVER@">all platforms</a>.</li>
+    <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
+    <li>New features in this version: <a href="../../windows/base/CHANGES.@RWVER@">Windows specific</a>, <a href="../../windows/base/NEWS.@RWVER@">all platforms</a>.</li>
   </ul>
 </div>
 
-<p>This is a Windows binary build of R including
+<p>This is a Windows @BITSIZE@ bit binary build of R including
 patches up to @DATE@ (r@SVNREVISION@).</p>
 
 <p>This is not an official release of R. Please check bugs
@@ -52,13 +52,14 @@ in this version against the official release before reporting them. </p>
 <h2>Frequently asked questions</h2>
 
 <ul>
-  <li><a href="rw-FAQ.html#Does-R-run-under-Windows-Vista_003f">How do I install R when using Windows Vista?</a></li>
-  <li><a href="rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
+  <li><a href="../../windows/base/rw-FAQ.html#Does-R-run-under-Windows-Vista_003f">How do I install R when using Windows Vista?</a></li>
+  <li><a href="../../windows/base/rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
+  <li><a href="../../windows/base/rw-FAQ.html#Should-I-run-32-bit-or-64-bit-R_003f">Should I run 32 bit or 64 bit R?</a></li>
 </ul>
   
 <p>Please see the <a
 href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
-general information about R and the <a href="rw-FAQ.html">R Windows
+general information about R and the <a href="../../windows/base/rw-FAQ.html">R Windows
 FAQ</a> for Windows-specific information.</p>
 
 
@@ -68,7 +69,8 @@ FAQ</a> for Windows-specific information.</p>
   <li><a href="index.html">The current official release.</a></li>
   <li>A build of the development version (which will eventually become
 the next major release of R) is available in the <a href="rdevel.html">r-devel snapshot build</a>.
-  <li><a href="old/">Previous releases</a></li>
+  <li><a href="../../windows@OTHERBITSUFFIX@/base">@OTHERBITSIZE@ bit builds for Windows</a></li>
+  <li><a href="../../windows/base/old/">Previous releases</a></li>
 </ul>
 
 <hr>

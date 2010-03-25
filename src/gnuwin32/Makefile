@@ -374,48 +374,44 @@ rinstaller:
 	@$(MAKE) -C installer EXTRA_PKGS='$(EXTRA_PKGS)'
 	@$(MAKE) -C installer clean
 
+ifeq ($(strip $(WIN)),64)
+BITSIZE=64
+BITSUFFIX=64
+OTHERBITSIZE=32
+OTHERBITSUFFIX=
+else
+BITSIZE=32
+BITSUFFIX=
+OTHERBITSIZE=64
+OTHERBITSUFFIX=64
+endif
+
 crandir:
 	$(CP) CHANGES cran/CHANGES.$(RPREFIX)
 	$(CP) ../../NEWS cran/NEWS.$(RPREFIX)
-ifeq ($(strip $(WIN)),64)
-	$(CP) installer/$(RPREFIX)-win64.exe cran
+	$(CP) installer/$(RPREFIX)-win$(BITSIZE).exe cran
 	(cd cran;\
-	 $(ECHO) 'cat(md5sum("$(RPREFIX)-win64.exe"),"*$(RPREFIX)-win64.exe")' \
+	 $(ECHO) 'cat(md5sum("$(RPREFIX)-win$(BITSIZE).exe"),"*$(RPREFIX)-win$(BITSIZE).exe")' \
          | $(REXE) R_DEFAULT_PACKAGES=tools >md5sum.txt)
-else
-	$(CP) installer/$(RPREFIX)-win32.exe cran
-	(cd cran;\
-	 $(ECHO) 'cat(md5sum("$(RPREFIX)-win32.exe"),"*$(RPREFIX)-win32.exe")' \
-         | $(REXE) R_DEFAULT_PACKAGES=tools >md5sum.txt)
-endif
-	$(CP) ../../doc/html/rw-FAQ.html cran
+	$(CP) ../../doc/html/rw-FAQ.html cran	
+	@for page in index rdevel rpatched rtest release; do \
+	  $(SED) -e s/@RWVER@/$(RPREFIX)/g \
+	    -e s/@RVER@/$(RVER)/g \
+	    -e "s/@DATE@/$(DATE)/g" \
+	    -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
+	    -e "s/@FULLVERSION@/$(FULLVERSION)/g" \
+	    -e "s/@BITSIZE@/$(BITSIZE)/g" \
+	    -e "s/@BITSUFFIX@/$(BITSUFFIX)/g" \
+	    -e "s/@OTHERBITSIZE@/$(OTHERBITSIZE)/g" \
+	    -e "s/@OTHERBITSUFFIX@/$(OTHERBITSUFFIX)/g" \cran/$${page}.in > cran/$${page}.html; \
+	done
+	$(CP) cran/release.html cran/release.htm
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" README > cran/README.$(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/ReadMe.in > cran/ReadMe	  
-	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
-	  -e s/@RVER@/$(RVER)/g \
-	  -e "s/@DATE@/$(DATE)/g" \
-	  -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
-	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/index.in > cran/index.html
-	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
-	  -e s/@RVER@/$(RVER)/g \
-	  -e "s/@DATE@/$(DATE)/g" \
-	  -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
-	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/rdevel.in > cran/rdevel.html
-	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
-	  -e s/@RVER@/$(RVER)/g \
-	  -e "s/@DATE@/$(DATE)/g" \
-	  -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
-	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/rpatched.in > cran/rpatched.html	  
-	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
-	  -e s/@RVER@/$(RVER)/g \
-	  -e "s/@DATE@/$(DATE)/g" \
-	  -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
-	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/rtest.in > cran/rtest.html	  	  
-	$(SED) -e s/@RWVER@/$(RPREFIX)/g cran/release.in > cran/release.htm
 	(cd cran;\
 	 zip dosfiles.zip CHANGES.$(RPREFIX) NEWS.$(RPREFIX) README.$(RPREFIX) ReadMe;\
 	 unzip -ao dosfiles.zip;\
