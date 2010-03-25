@@ -1,10 +1,9 @@
 % File src/library/grDevices/man/unix/x11.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{x11}
-\Rdversion{1.1}
 \alias{x11}
 \alias{X11}
 \alias{X11.options}
@@ -152,6 +151,11 @@ X11.options(\dots, reset = FALSE)
   usually in Type 1 or TrueType formats: see the \dQuote{R Installation
   and Administration Manual} for advice on how to obtain and install
   such fonts.
+  
+  Because of known problems with font selection on Mac OS X without
+  Pango, \code{type="cairo"} is not the default (as from \R 2.11.0)
+  unless Pango is available.  These problems include mixing up bold and
+  italic and selecting incorrect glyphs.
 }
 
 \section{Resources}{
