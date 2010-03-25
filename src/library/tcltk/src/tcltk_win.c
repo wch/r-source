@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2007  The R Development Core Team
+ *  Copyright (C) 2000--2010  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,8 +25,6 @@
 
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
 
-void tcltk_init();
-
 /* We don't need a re-entrancy guard on Windows as Tcl_ServiceAll
    has one -- it uses serviceMode, setting it to TCL_SERVICE_NONE
    whilst it is running.  Unlike TclDoOneEvent, it checks on entry.
@@ -48,9 +46,10 @@ extern void unset_R_Tcldo(DO_FUNC ptr);
 
 void tcltk_start(void)
 {
+    int TkUp;
     HWND active = GetForegroundWindow(); /* ActiveTCL steals the focus */
 
-    tcltk_init(); /* won't return on error */
+    tcltk_init(&TkUp); /* won't return on error */
     set_R_Tcldo(&_R_tcldo);
     _R_tcldo();  /* one call to trigger the focus stealing bug */
     SetForegroundWindow(active); /* and fix it */

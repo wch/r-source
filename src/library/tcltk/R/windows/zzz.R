@@ -14,6 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+.TkUp <- TRUE
+
 .onLoad <- function(lib, pkg)
 {
     packageStartupMessage("Loading Tcl/Tk interface ...",

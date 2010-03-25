@@ -169,7 +169,9 @@ install.packages <-
     if(missing(pkgs) || !length(pkgs)) {
         ## if no packages were specified, use a menu
 	if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA"
-           || (capabilities("tcltk") && capabilities("X11"))) {
+           || (capabilities("tcltk")
+               && capabilities("X11")&& suppressWarnings(tcltk:::.TkUp)) ) {
+            ## this is the condition for a graphical select.list()
 	} else
 	    stop("no packages were specified")
 

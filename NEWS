@@ -352,6 +352,11 @@ NEW FEATURES
     o	The PCRE library has been updated to version 8.02, a bug-fix
 	release which also updates tables to Unicode 5.02.
 
+    o	Functions which may use a graphical select.list() (including
+	menu() and install.packages()) now check on a Unix-alike that
+	Tk can be started (and not just
+	capabilities("tcltk") && capabilities("X11")).
+
 
 DEPRECATED & DEFUNCT
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000--2008  The R Development Core Team
+ *  Copyright (C) 2000--2010  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -620,9 +620,12 @@ SEXP dotTclcallback(SEXP args)
 #include <tk.h>
 
 
-void tcltk_init(void)
+void tcltk_init(int *TkUp)
 {
     int code;
+    char *p;
+
+    *TkUp = 0;
 
     /* Absence of the following line is said to be an error with
      * tcl 8.4 on all platforms, and is known to cause crashes under
@@ -640,8 +643,12 @@ void tcltk_init(void)
     if (code != TCL_OK)
 	error(Tcl_GetStringResult(RTcl_interp));
 
+/* HAVE_AQUA is not really right here.
+   On Mac OS X we might be using Aqua Tcl/Tk or X11 Tcl/Tk, and that
+   is in principle independent of whether we want quartz() built.
+*/
 #if !defined(Win32) && !defined(HAVE_AQUA)
-    if(getenv("DISPLAY")) 
+    if((p = getenv("DISPLAY")) && p[0])  /* exclude DISPLAY = "" */
 #endif
     {
 	code = Tk_Init(RTcl_interp);  /* Load Tk into interpreter */
@@ -653,6 +660,7 @@ void tcltk_init(void)
 	    code = Tcl_Eval(RTcl_interp, "wm withdraw .");  /* Hide window */
 	    if (code != TCL_OK)
 		error(Tcl_GetStringResult(RTcl_interp));
+	    *TkUp = 1;
 	}
     }
 #if !defined(Win32) && !defined(HAVE_AQUA)
