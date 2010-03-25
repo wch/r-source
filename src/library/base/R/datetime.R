@@ -391,11 +391,17 @@ mean.POSIXlt <- function (x, ...)
 ## ----- difftime -----
 
 difftime <-
-    function(time1, time2, tz = "",
+    function(time1, time2, tz,
              units = c("auto", "secs", "mins", "hours", "days", "weeks"))
 {
-    time1 <- as.POSIXct(time1, tz = tz)
-    time2 <- as.POSIXct(time2, tz = tz)
+    if (missing(tz)) {
+        time1 <- as.POSIXct(time1)
+        time2 <- as.POSIXct(time2)
+    } else {
+        ## Wishlist PR#14182
+        time1 <- as.POSIXct(time1, tz = tz)
+        time2 <- as.POSIXct(time2, tz = tz)
+    }
     z <- unclass(time1) - unclass(time2)
     units <- match.arg(units)
     if(units == "auto") {

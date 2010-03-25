@@ -1,6 +1,6 @@
 % File src/library/base/man/difftime.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{difftime}
@@ -29,7 +29,7 @@
 \usage{
 \special{time1 - time2}
 
-difftime(time1, time2, tz = "",
+difftime(time1, time2, tz,
          units = c("auto", "secs", "mins", "hours",
                    "days", "weeks"))
 
@@ -46,12 +46,11 @@ as.difftime(tim, format = "\%X", units = "auto")
 }
 \arguments{
   \item{time1, time2}{\link{date-time} or \link[=Dates]{date} objects.}
-  \item{tz}{a timezone specification to be used for the conversion.
-    System-specific, but \code{""} is the current time zone, and
-    \code{"GMT"} is UTC.}
-  \item{units}{character.  Units in which the results are desired. Can
-    be abbreviated.}
-  \item{value}{character.  Like \code{units} above, except that
+  \item{tz}{an optional \link{timezone} specification to be used for the
+    conversion, mainly for \code{"POSIXlt"} objects.}
+  \item{units}{character string.  Units in which the results are
+    desired.  Can be abbreviated.}
+  \item{value}{character string.  Like \code{units}, except that
     abbreviations are not allowed.}
   \item{tim}{character string or numeric value specifying a time interval.}
   \item{format}{character specifying the format of \code{tim}: see
@@ -100,6 +99,11 @@ as.difftime(tim, format = "\%X", units = "auto")
 
   The \code{format} method simply formats the numeric value and appends
   the units as a text string.
+  
+  The default behaviour when \code{time1} or \code{time2} was a
+  \code{"POSIXlt"} object changed in \R 2.12.0: previously such objects
+  were regarded as in the timezone given by \code{tz} which defaulted to
+  the current timezone.
 }
 \seealso{
   \code{\link{DateTimeClasses}}.

@@ -46,13 +46,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         if(R_version_built_under < "2.10.0")
             stop(gettextf("package '%s' was built before R 2.10.0: please re-install it",
                           pkgname), call. = FALSE, domain = NA)
-        ## check that this was not under pre-2.10.0,
-        ## but beware of bootstrapping base packages
-        if(file.exists(file.path(pkgpath, "help")) &&
-           !file.exists(file.path(pkgpath, "help", "paths.rds")))
-            warning(gettextf("package '%s' claims to be built under R version %s but is missing some help files and needs to be re-installed",
-                             pkgname, as.character(built$R)),
-                    call. = FALSE, domain = NA)
 
         current <- getRversion()
         ## depends on R version?

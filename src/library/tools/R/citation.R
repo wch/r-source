@@ -26,9 +26,6 @@ function(file, encoding = "unknown")
 {
     ## Assume that citEntry() only occurs at top level.
 
-    ## To parallel readCitationFile, default to latin1.
-    if(encoding == "unknown") encoding <- "latin1"
-
     if(encoding %in% c("latin1", "UTF-8") && !l10n_info()$MBCS) {
         exprs <- tryCatch(parse(file = file, encoding = encoding),
                           error = identity)

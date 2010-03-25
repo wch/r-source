@@ -49,9 +49,7 @@ citFooter <- function(...)
 readCitationFile <- function(file, meta = NULL)
 {
     if(is.null(encoding <- meta$Encoding))
-        ## Assume latin1 as a default for now, but maybe switch to
-        ## "unknown" eventually ...
-        encoding <- "latin1"
+        encoding <- "ASCII"
 
     ## The parser can only read valid strings, but single-byte locales
     ## can mark their encoding.  The following allows latin1 and UTF-8
