@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:43+0000\n"
-"PO-Revision-Date: 2009-11-12 09:43+0000\n"
+"POT-Creation-Date: 2010-03-25 09:45+0000\n"
+"PO-Revision-Date: 2010-03-25 09:45+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "parse error in R expression"
 msgid "tcl error.\n"
 msgstr "tcl error.\n"
 
-#: tcltk.c:187 tcltk.c:701
+#: tcltk.c:187 tcltk.c:704
 msgid "invalid argument"
 msgstr "invalid argument"
 
@@ -63,7 +63,7 @@ msgstr ""
 msgid "argument is not of correct type"
 msgstr "argument is not of correct type"
 
-#: tcltk.c:660
+#: tcltk.c:663
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "no DISPLAY variable so Tk is not available"
 
