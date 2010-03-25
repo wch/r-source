@@ -360,6 +360,11 @@ NEW FEATURES
     o	The parser no longer marks strings containing octal or hex
 	escapes as being in UTF-8 when entered in a UTF-8 locale.
 
+    o	On platforms with cairo but not Pango (notably Mac OS X) the
+	initial default X11() type is set to "Xlib": this avoids
+	several problems with font selection when done by cairo rather
+	than Pango (at least on Mac OS X).
+
 
 DEPRECATED & DEFUNCT
 
@@ -525,6 +530,10 @@ BUG FIXES
     o	capabilities("X11") now works the same way on Mac OS X as on
 	other platforms (and as documented: it was always true for R
 	built with --with-aqua, as the CRAN builds are).
+
+    o	The X11() device with cairo but not Pango (notably Mac OS X)
+	now checks validity of text strings in UTF-8 locales (since
+	Pango does but cairo it seems does not).
 
 
 

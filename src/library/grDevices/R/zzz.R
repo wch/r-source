@@ -21,7 +21,8 @@
     op <- options()
     extras <- if(.Platform$OS.type == "windows")
         list(windowsTimeouts = c(100L,500L)) else
-    list(bitmapType = if(capabilities("aqua")) "quartz" else if(capabilities("cairo")) "cairo" else "Xlib")
+    list(bitmapType = if(capabilities("aqua")) "quartz"
+    else if(.Call("cairoProps", 2L, PACKAGE="grDevices")) "cairo" else "Xlib")
     defdev <- as.vector(Sys.getenv("R_DEFAULT_DEVICE"))
     ## Use devices rather than names to make it harder to get masked.
     if(!nzchar(defdev)) defdev <- pdf
@@ -39,6 +40,7 @@
         }
     } else defdev
 
+    if (!.Call("cairoProps", 2L, PACKAGE="grDevices")) X11.options(type = "Xlib")
     op.grDevices <- c(list(locatorBell = TRUE, device.ask.default = FALSE),
                   extras, device = device)
     toset <- !(names(op.grDevices) %in% names(op))

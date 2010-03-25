@@ -748,6 +748,7 @@ static double Cairo_StrWidth(const char *str, pGEcontext gc, pDevDesc dd)
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
     cairo_text_extents_t exts;
 
+    if (!utf8Valid(str)) error("invalid string in Cairo_StrWidth");
     FT_getFont(gc, dd, xd->fontscale);
     cairo_text_extents(xd->cc, str, &exts);
     return exts.x_advance;
@@ -759,6 +760,7 @@ static void Cairo_Text(double x, double y,
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
+    if (!utf8Valid(str)) error("invalid string in Cairo_Text");
     if (R_ALPHA(gc->col) > 0) {
 	cairo_save(xd->cc);
 	FT_getFont(gc, dd, xd->fontscale);
