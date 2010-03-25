@@ -34,13 +34,13 @@
 
 <body>
 
-<h1>R-@RVER@ for Windows</h1>
+<h1>R-@RVER@ for Windows (@BITSIZE@ bit build)</h1>
 
 <div class="download">
-  <p><a href="@RWVER@-win32.exe">Download R @RVER@ for Windows</a> <span>(32 megabytes)</span></p>
+  <p><a href="@RWVER@-win@BITSIZE@.exe">Download R @RVER@ for Windows</a> <span>(33 megabytes, @BITSIZE@ bits)</span></p>
   <ul>
-    <li><a href="README.@RWVER@">Installation and other instructions</a></li>
-    <li>New features in this version: <a href="CHANGES.@RWVER@">Windows specific</a>, <a href="NEWS.@RWVER@">all platforms</a>.</li>
+    <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
+    <li>New features in this version: <a href="../../windows/base/CHANGES.@RWVER@">Windows specific</a>, <a href="../../windows/base/NEWS.@RWVER@">all platforms</a>.</li>
   </ul>
 </div>
 
@@ -49,13 +49,14 @@
 <h2>Frequently asked questions</h2>
 
 <ul>
-  <li><a href="rw-FAQ.html#Does-R-run-under-Windows-Vista_003f">How do I install R when using Windows Vista?</a></li>
-  <li><a href="rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
+  <li><a href="../../windows/base/rw-FAQ.html#Does-R-run-under-Windows-Vista_003f">How do I install R when using Windows Vista?</a></li>
+  <li><a href="../../windows/base/rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
+  <li><a href="../../windows/base/rw-FAQ.html#Should-I-run-32-bit-or-64-bit-R_003f">Should I run 32 bit or 64 bit R?</a></li>
 </ul>
   
 <p>Please see the <a
 href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
-general information about R and the <a href="rw-FAQ.html">R Windows
+general information about R and the <a href="../../windows/base/rw-FAQ.html">R Windows
 FAQ</a> for Windows-specific information.</p>
 
 <h2>Other builds</h2>
@@ -64,12 +65,13 @@ FAQ</a> for Windows-specific information.</p>
   <li>Patches to this release are incorporated in the <a href="rpatched.html">r-patched snapshot build</a>.</li>
   <li>A build of the development version (which will eventually become
 the next major release of R) is available in the <a href="rdevel.html">r-devel snapshot build</a>.</li>
-  <li><a href="old/">Previous releases</a></li>
+  <li><a href="../../windows@OTHERBITSUFFIX@/base">@OTHERBITSIZE@ bit builds for Windows</a> are also available.</li>
+  <li><a href="../../windows/base/old/">Previous releases</a></li>
 </ul>
 
 <p>Note to webmasters: A stable link which will redirect to the
-current Windows binary release is<br>
-<a href="release.htm">&lt;CRAN MIRROR&gt/bin/windows/base/release.htm</a>.</p>
+current Windows @BITSIZE@ bit binary release is<br>
+<a href="release.htm">&lt;CRAN MIRROR&gt/bin/windows@BITSUFFIX@/base/release.htm</a>.</p>
 
 <hr>
 
