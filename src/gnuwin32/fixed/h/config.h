@@ -866,15 +866,11 @@
 /* NOTE: there is no unanimity on this.  Currently most autoconf-based
    systems need mingw32 */
 /* Define this to be the name of the OS of your system. */
-#ifdef WIN64
-#define R_OS "mingw64"
-#else
 #define R_OS "mingw32"
-#endif
 
 /* Define this to be the canonical name (cpu-vendor-os) of your system. */
 #ifdef WIN64
-#define R_PLATFORM "x86_64-pc-mingw64"
+#define R_PLATFORM "x86_64-pc-mingw32"
 #else
 #define R_PLATFORM "i386-pc-mingw32"
 #endif
