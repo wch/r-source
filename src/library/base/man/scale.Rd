@@ -39,15 +39,19 @@ scale(x, center = TRUE, scale = TRUE)
   The value of \code{scale} determines how column scaling is performed
   (after centering).  If \code{scale} is a numeric vector with length
   equal to the number of columns of \code{x}, then each column of
-  \code{x} is divided by the corresponding value from \code{scale}.  If
-  \code{scale} is \code{TRUE} then scaling is done by dividing the
-  (centered) columns of \code{x} by their standard deviations, and if
-  \code{scale} is \code{FALSE}, no scaling is done.
+  \code{x} is divided by the corresponding value from \code{scale}.
+  If \code{scale} is \code{TRUE} then scaling is done by dividing the
+  (centered) columns of \code{x} by their standard deviations if
+  \code{center} is \code{TRUE}, and the root mean square otherwise.
+  If \code{scale} is \code{FALSE}, no scaling is done.
 
-  The standard deviation for a column is obtained by computing the
-  square-root of the sum-of-squares of the non-missing values in the
-  column divided by the number of non-missing values minus one (whether
-  or not centering was done).
+  The root-mean-square for a (possibly centered) column is defined as
+  \eqn{\sqrt{\sum(x^2)/(n-1)}}{sqrt(sum(x^2)/(n-1))}, where \eqn{x} is
+  a vector of the non-missing values and \eqn{n} is the number of
+  non-missing values.  In the case \code{center=TRUE}, this is the
+  same as the standard deviation, but in general it is not.  (To scale
+  by the standard deviations without centering, use
+  \code{scale(x,center=FALSE,scale=apply(x,2,sd,na.rm=TRUE))}.)
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
