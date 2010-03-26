@@ -1,6 +1,6 @@
 % File src/library/base/man/NumericConstants.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{NumericConstants}
@@ -57,6 +57,18 @@
   Note that a leading plus or minus is not regarded by the parser as
   part of a numeric constant but as a unary operator applied to the constant.
 }
+\note{
+  When a string is parsed to input a numeric constant, the number may or
+  may not be representable exactly in the C double type used.  If not
+  one of the nearest representable numbers will be returned.
+  
+  Since \R 2.7.0 \R's own C code has been used to parse constants, so
+  the effect can be expected to be the same on all platforms
+  implementing full IEC 600559 arithmetic (the most likely area of
+  difference being the handling of numbers less than
+  \code{\link{.Machine}$double.xmin}).  The same code is used by
+  \code{\link{scan}}.
+}
 \seealso{
   \code{\link{Syntax}}.
 
@@ -70,6 +82,6 @@ utils::str(0xA0)
 identical(1L, as.integer(1))
 
 ## You can combine the "0x" prefix with the "L" suffix :
-identical(0xFL, as.integer(15)) # (with a regard to Fritz :-)
+identical(0xFL, as.integer(15))
 }
 \keyword{documentation}

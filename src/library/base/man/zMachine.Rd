@@ -30,8 +30,8 @@
     \code{1.110223e-16}. As \code{double.neg.ulp.digits} is bounded
     below by \code{-(double.digits + 3)}, \code{double.neg.eps} may not
     be the smallest number that can alter 1 by subtraction.}
-  \item{double.xmin}{the smallest non-vanishing normalized
-    floating-point power of the radix, i.e.,
+  \item{double.xmin}{the smallest non-zero normalized
+    floating-point number, a power of the radix, i.e.,
     \code{double.base ^ double.min.exp}. Normally \code{2.225074e-308}.}
   \item{double.xmax}{the largest normalized floating-point number.
     Typically, it is equal to \code{(1 - double.neg.eps) *
@@ -84,8 +84,7 @@
     \code{8}.}
   \item{sizeof.longdouble}{the number of bytes in a C \code{long double}
     type.  Will be zero if there is no such type, otherwise possibly
-    \code{12} (Windows, 32-bit builds on Linux/Solaris) or \code{16} (64-bit
-    builds on Linux/Solaris, Intel Mac OS X).}
+    \code{12} (most 32-bit builds) or \code{16} (most 64-bit builds).}
   \item{sizeof.pointer}{the number of bytes in a C \code{SEXP}
     type.  Will be \code{4} on 32-bit builds and \code{8} on 64-bit
     builds of \R.}
@@ -106,7 +105,8 @@
   accumulators in e.g. \code{\link{sum}}, and can be read by
   \code{\link{readBin}}).  Often what is stored is the 80-bit extended
   double type of IEC 60059, padded to the double alignment used on the
-  platform.
+  platform --- this seems to be the case for the common \R platforms
+  using ix86 and x86_64 chips.
 }
 \references{
   Cody, W. J. (1988)
