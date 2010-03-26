@@ -1,10 +1,11 @@
 % File src/library/base/man/which.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{which}
 \alias{which}
+\alias{arrayInd}
 \title{Which indices are TRUE?}
 \description{
   Give the \code{TRUE} indices of a logical object, allowing for array
@@ -12,22 +13,31 @@
 }
 \usage{
 which(x, arr.ind = FALSE)
+arrayInd(ind, .dim, .dimnames = NULL)
 }
 \arguments{
  \item{x}{a \code{\link{logical}} vector or array.  \code{\link{NA}}s
    are allowed and omitted (treated as if \code{FALSE}).}
  \item{arr.ind}{logical; should \bold{arr}ay \bold{ind}ices be returned
    when \code{x} is an array?}
+
+ \item{ind}{integer-valued index vector, as resulting from
+   \code{which(x)}.}
+ \item{.dim}{\code{\link{dim}(.)} integer vector}
+ \item{.dimnames}{optional list of character \code{\link{dimnames}(.)},
+   of which only \code{.dimnames[[1]]} is used.}
 }
 \value{
   If \code{arr.ind == FALSE} (the default), an integer vector with
   \code{length} equal to \code{sum(x)}, i.e., to the number of
   \code{TRUE}s in \code{x}; Basically, the result is
   \code{(1:length(x))[x]}.
-  
+
   If \code{arr.ind == TRUE} and \code{x} is an \code{\link{array}} (has
-  a \code{\link{dim}} attribute), the result is a matrix whose rows each
-  are the indices of one element of \code{x}; see Examples below.
+  a \code{\link{dim}} attribute), the result is
+  \code{arrayInd(which(x), dim(x), dimnames(x))}, namely a matrix
+  whose rows each are the indices of one element of \code{x}; see
+  Examples below.
 }
 \author{Werner Stahel and Peter Holzer \email{holzer@stat.math.ethz.ch},
   for the array case.}

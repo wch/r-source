@@ -405,6 +405,9 @@ NEW FEATURES
 	several problems with font selection when done by cairo rather
 	than Pango (at least on Mac OS X).
 
+    o	New arrayInd() such that which(x, arr.ind = TRUE) for an array
+	'x' is now equivalent to arrayInd(which(x), dim(x), dimnames(x)).
+
 
 DEPRECATED & DEFUNCT
 
