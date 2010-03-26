@@ -1,6 +1,6 @@
 % File src/library/utils/man/rcompgen.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2008-2009 R Core Development Team
+% Copyright 2008-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{rcompgen}
@@ -13,6 +13,8 @@
 \alias{.DollarNames.default}
 \alias{.DollarNames.list}
 \alias{.DollarNames.environment}
+\alias{completion}
+
 \title{A Completion Generator for R}
 
 \description{
@@ -92,13 +94,15 @@ rc.options(\dots)
         unexported function \code{.addFunctionInfo} (see below).
       }
       
-      \item{\code{files}:}{ enables filename completion in R code.  This
+      \item{\code{files}:}{ enables filename completion in \R code.  This
         is initially set to \code{FALSE}, in which case the underlying
         completion front-end can take over (and hopefully do a better
         job than we would have done).  For systems where no such
         facilities exist, this can be set to \code{TRUE} if file name
-        completion is desired.  This is currently experimental and may
-        not work very well.  }
+        completion is desired.  This is used on Windows (where file
+	paths including spaces do work): on Unix-alikes
+        \code{readline}'s filename completion is normally used.
+      }
 
     }
 
@@ -113,7 +117,7 @@ rc.options(\dots)
       \item{\code{funarg.suffix}:}{ default \code{" = "} }
       \item{\code{package.suffix}}{ default \code{"::"} }
     }
-    See \code{\link{options}} for detailed usage description
+    See \code{\link{options}} for detailed usage description.
   }
 
   \item{x}{ An R object for which valid names after \code{"$"}
