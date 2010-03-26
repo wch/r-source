@@ -58,17 +58,17 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     }
     tarfile <- path.expand(tarfile)
     if (!gzOK && cflag == "z" && nzchar(ZIP <- Sys.getenv("R_GZIPCMD"))) {
-        TAR <- paste(ZIP, "-dc", tarfile, "|", TAR)
+        TAR <- paste(ZIP, "-dc", shQuote(tarfile), "|", TAR)
         tarfile <- "-"
         cflag <- ""
     }
     if (!gzOK && cflag == "j" && nzchar(ZIP <- Sys.getenv("R_BZIPCMD"))) {
-        TAR <- paste(ZIP,  "-dc", tarfile, "|", TAR)
+        TAR <- paste(ZIP,  "-dc", shQuote(tarfile), "|", TAR)
         tarfile < "-"
         cflag <- ""
     }
     if (cflag == "J") {
-        TAR <- paste("xz -dc", tarfile, "|", TAR)
+        TAR <- paste("xz -dc", shQuote(tarfile), "|", TAR)
         tarfile < "-"
         cflag <- ""
     }
