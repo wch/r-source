@@ -3303,7 +3303,7 @@ AC_CACHE_CHECK(for iconv, ac_cv_func_iconv, [
 if test "$ac_cv_func_iconv" != no; then
   AC_DEFINE(HAVE_ICONV, 1, [Define if you have the `iconv' function.])
 
-  AC_CACHE_CHECK([whether iconv accepts "UTF-8", "latin1" and "UCS-*"],
+  AC_CACHE_CHECK([whether iconv accepts "UTF-8", "latin1", "ASCII" and "UCS-*"],
   [r_cv_iconv_latin1],
   [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include "confdefs.h"
@@ -3330,6 +3330,9 @@ int main () {
   if(cd == (iconv_t)(-1)) exit(1);
   iconv_close(cd);
   cd = iconv_open("UTF-8","");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("ASCII","");
   if(cd == (iconv_t)(-1)) exit(1);
   iconv_close(cd);
   cd = iconv_open("UCS-2LE","");
