@@ -1,15 +1,18 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-03-22 15:15\n"
-"PO-Revision-Date: 2005-05-31 09:39+0900\n"
-"Last-Translator: Korean <uiami@hanmail.com>\n"
-"Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2010-03-25 14:27-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team: Open Statistics Group Korea <gnustats@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 msgid "'%s' is defunct."
 msgstr "'%s'는 없어져 버렸습니다"
@@ -24,10 +27,10 @@ msgid "See help(\"Defunct\")"
 msgstr "help(\\\"Defunct\\\")를 보아 주십시오"
 
 msgid "'symbol.C' is not needed: please remove it"
-msgstr ""
+msgstr "'symbol.C' 은 필요하지 않습니다. 삭제하세요."
 
 msgid "'symbol.For' is not needed: please remove it"
-msgstr ""
+msgstr "'symbol.For' 은 필요하지 않습니다. 삭제하세요."
 
 msgid "'%s' is deprecated."
 msgstr "'%s'는 없어져 버릴 예정입니다"
@@ -116,11 +119,12 @@ msgstr "패키지 '%s'는 버전 %s의 R미만에서 작성되어졌습니다"
 msgid "package %s is required by %s so will not be detached"
 msgstr "'%s'가 요구한 패키지 '%s'는 검색해낼수 없었습니다"
 
+#, fuzzy
 msgid ""
 "%s failed in %s() for '%s', details:\n"
 "  call: %s\n"
 "  error: %s"
-msgstr ""
+msgstr "%s는 unloadNamespace(%s)에 실패했습니다"
 
 #, fuzzy
 msgid "name space cannot be unloaded:"
@@ -254,7 +258,7 @@ msgid "supplied %d row names for %d rows"
 msgstr "%d개의 행명이 %d개의 행에 제공되었습니다"
 
 msgid "options('stringsAsFactors') not set to TRUE or FALSE"
-msgstr ""
+msgstr "옵션 ('stringsAsFactors') 은 참 또는 거짓으로 설정되지 않았습니다."
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "'data.frame'의 인수에 행명(항목 &d)가 적당하지 않습니다"
@@ -369,16 +373,16 @@ msgid "names do not match previous names"
 msgstr "전이 이하와 같은 이전의 이름과 match하지 않습니다 :"
 
 msgid "numbers of columns of arguments do not match"
-msgstr ""
+msgstr "인자의 열의 수가 일치하지 않습니다"
 
 msgid "invalid list argument: all variables should have the same length"
 msgstr "무효인 리스트의 인수입니다. 모든 변수는 동일길이를 가져야 합니다"
 
 msgid "data frame with 0 columns and %d rows"
-msgstr ""
+msgstr "데이터 프레임이 0개의 열수와 %d의 행수를 가집니다"
 
 msgid "<0 rows> (or 0-length row.names)"
-msgstr ""
+msgstr "행의 수가 0 입니다"
 
 msgid "non-numeric variable in data frame:"
 msgstr "아래의 데이터 프레임중에 수치가 아닌 변수가 있습니다"
@@ -511,7 +515,7 @@ msgid "'%s' not defined for \"POSIXt\" objects"
 msgstr "\"POSIXt\" 오브젝트에 대해서는 정의 되어 있지 않습니다"
 
 msgid "'tzone' attributes are inconsistent"
-msgstr ""
+msgstr "'tzone' 속성이 일치하지 않습니다"
 
 #, fuzzy
 msgid "'tim' is not character or numeric"
@@ -568,7 +572,7 @@ msgid "determinant not currently defined for complex matrices"
 msgstr "행렬식은 현재 복소행열에는 정의 되어있지 않습니다"
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
-msgstr ""
+msgstr "'x' 가 행렬일ㅇ때 'nrow' 또는 'ncol' 이 설정될 수 없습니다"
 
 #, fuzzy
 msgid "'x' is an array, but not 1D."
@@ -581,7 +585,7 @@ msgid "replacement diagonal has wrong length"
 msgstr "치환대각 성분의 길이가 잘못되어 있습니다"
 
 msgid "'fromLast' must be TRUE or FALSE"
-msgstr ""
+msgstr "'fromLast' 은 반드시 TRUE 또는 FALSE 이어야 합니다"
 
 msgid "MARGIN ="
 msgstr "MARGIN ="
@@ -697,7 +701,7 @@ msgstr ""
 "니다"
 
 msgid "'digits' reduced to"
-msgstr ""
+msgstr "'digits' 이 감소"
 
 msgid "'flag' can contain only '0+- #'"
 msgstr "'flag'는 '0+- #'만을 포함합니다"
@@ -941,13 +945,13 @@ msgid "can only save to a binary connection"
 msgstr "binary connection만 저장할수가 없습니다"
 
 msgid "image could not be renamed and is left in"
-msgstr ""
+msgstr "이미지는 재이름을 줄 수 없고, 그대로 둡니다"
 
 msgid "[Previously saved workspace restored]"
 msgstr "[이전에 저장된 workspace를 복귀합니다]"
 
 msgid "Attempting to load the environment '%s'"
-msgstr ""
+msgstr "'%s'라는 환경변수를 불러오려고 합니다"
 
 msgid "not found: using .GlobalEnv instead"
 msgstr ""
@@ -956,7 +960,7 @@ msgid "invalid 'category' argument"
 msgstr "무효인 'category' 인수입니다"
 
 msgid "must specify formal argument names to vectorize"
-msgstr ""
+msgstr "벡터화하기 위해서는 인자의 이름을 반드시 명시해야합니다"
 
 #, fuzzy
 msgid "'arg' must be NULL or a character vector"
@@ -1025,7 +1029,7 @@ msgid "'by.x' and 'by.y' specify different numbers of columns"
 msgstr "'by.x' 그리고 'by.y'는 다른 열수를 지정하고 있습니다"
 
 msgid "additional arguments ignored in message()"
-msgstr ""
+msgstr " message() 에서 무시된 추가적인 인자"
 
 msgid "(loaded the methods namespace)"
 msgstr ""
@@ -1064,23 +1068,23 @@ msgid "namespace '%s' is already sealed in loadNamespace"
 msgstr "%s는 '%s'때문에 'loadNamespace'에 이미 밀폐되었습니다"
 
 msgid "failed to assign RegisteredNativeSymbol for"
-msgstr ""
+msgstr "RegisteredNativeSymbol 을 할당하는데 실패했습니다"
 
 msgid "to"
 msgstr ""
 
 msgid "since"
-msgstr ""
+msgstr "왜냐하면 "
 
 msgid "is already defined in the"
-msgstr ""
+msgstr "이미 정의되어 있는"
 
 #, fuzzy
 msgid "namespace"
 msgstr "이름 공간이 아닙니다"
 
 msgid "failed to assign NativeSymbolInfo for"
-msgstr ""
+msgstr "NativeSymbolInfo 를 할당하는데 실패했습니다"
 
 msgid "package '%s' does not have a name space"
 msgstr "패키지 '%s'는 이름 공간을 가지고 있지 않습니다"
@@ -1392,7 +1396,7 @@ msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr ""
 
 msgid "cannot 'chdir' as current directory is unknown"
-msgstr ""
+msgstr "현재디렉토리를 알 수 없기 때문에 'chdir' 를 사용할수없습니다"
 
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr ""
@@ -1404,23 +1408,23 @@ msgid "Timestamp of '"
 msgstr ""
 
 msgid "' has changed"
-msgstr ""
+msgstr "변경되었습니다"
 
 msgid "additional arguments ignored in stop()"
-msgstr ""
+msgstr " stop() 에서 무시된 추가적인 인자입니다"
 
 #, fuzzy
 msgid "is not"
 msgstr "(은)는 TRUE가 아닙니다"
 
 msgid "all"
-msgstr ""
+msgstr "전부"
 
 msgid "TRUE"
-msgstr ""
+msgstr "참"
 
 msgid "additional arguments ignored in warning()"
-msgstr ""
+msgstr "warning() 에서 무신된 추가적 인자입니다"
 
 msgid "incorrect value for 'x'"
 msgstr "'x'에 대한 정확하지 않는 값입니다"
@@ -1483,13 +1487,13 @@ msgid "Registering evaluate as low-level callback"
 msgstr "Registering는 low-level의 callback으로 평가됩니다"
 
 msgid "user"
-msgstr ""
+msgstr "사용자"
 
 msgid "system"
-msgstr ""
+msgstr "시스템"
 
 msgid "elapsed"
-msgstr ""
+msgstr "초과된"
 
 msgid "'width' must be positive"
 msgstr "'width'는 positive이 아니면 되지 않습니다"
@@ -1529,28 +1533,36 @@ msgid ""
 "arguments 'show.output.on.console', 'minimized' and 'invisible' are for "
 "Windows only"
 msgstr ""
+"'show.output.on.console', 'minimized' and 'invisible' 은 윈도우즈에서만 사용"
+"가능합니다"
 
+#, fuzzy
 msgid "'intern' must be TRUE or FALSE"
-msgstr ""
+msgstr "'fromLast' 은 반드시 TRUE 또는 FALSE 이어야 합니다"
 
+#, fuzzy
 msgid "'ignore.stderr' must be TRUE or FALSE"
-msgstr ""
+msgstr "'fromLast' 은 반드시 TRUE 또는 FALSE 이어야 합니다"
 
+#, fuzzy
 msgid "'wait' must be TRUE or FALSE"
-msgstr ""
+msgstr "'fromLast' 은 반드시 TRUE 또는 FALSE 이어야 합니다"
 
 #, fuzzy
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' 그리고 'target'는 문자 벡터가 아니면 되지 않습니다"
 
+#, fuzzy
 msgid "'show.output.on.console' must be TRUE or FALSE"
-msgstr ""
+msgstr "'fromLast' 은 반드시 TRUE 또는 FALSE 이어야 합니다"
 
+#, fuzzy
 msgid "'minimized' must be TRUE or FALSE"
-msgstr ""
+msgstr "'fromLast' 은 반드시 TRUE 또는 FALSE 이어야 합니다"
 
+#, fuzzy
 msgid "'invisible' must be TRUE or FALSE"
-msgstr ""
+msgstr "'fromLast' 은 반드시 TRUE 또는 FALSE 이어야 합니다"
 
 #, fuzzy
 msgid "'%s' could not be run"
@@ -1568,22 +1580,22 @@ msgid "ERROR: no packages specified"
 msgstr "어떠한 패키지도 검색되지 않았습니다"
 
 msgid "Removing from library"
-msgstr ""
+msgstr "라이브러리로부터 삭제되었습니다"
 
 msgid "ERROR: cannot cd to directory"
-msgstr ""
+msgstr "에러: 디렉토리를 변경할 수 없습니다"
 
 msgid "ERROR: no permission to remove from directory"
-msgstr ""
+msgstr "에러: 디렉토리를 제거할 권한이 없습니다"
 
 msgid "T used instead of TRUE"
-msgstr ""
+msgstr "TRUE 대신에 T 가 사용되었습니다"
 
 msgid "F used instead of FALSE"
-msgstr ""
+msgstr "FALSE 대신에 F 가 사용되었습니다"
 
 msgid "items"
-msgstr ""
+msgstr "항목들"
 
 #, fuzzy
 msgid "have been removed from the search path"
@@ -1658,6 +1670,15 @@ msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
 
+#~ msgid "invalid name"
+#~ msgstr "부적절한 이름입니다"
+
+#~ msgid "is required by"
+#~ msgstr "이하에 의해 요구되었습니다 :"
+
+#~ msgid "(still attached)"
+#~ msgstr "(아직 attached되어 있습니다)"
+
 #, fuzzy
 #~ msgid "'x' must have length 1"
 #~ msgstr "'input'는 길이 1 이 나오지 않으면 되지 않습니다"
@@ -1670,29 +1691,12 @@ msgstr[0] ""
 #~ msgid "'x' must be of length 1"
 #~ msgstr "'to'는 길이 1이 나오지 않으면 되지 않습니다"
 
-#~ msgid "argument to 'which' is not logical"
-#~ msgstr "'which'에서 인수는 논리값이 아닙니다"
-
 #, fuzzy
-#~ msgid "is not on the search path"
-#~ msgstr "'%s'는 탐색 패스에서는 검색되지 않았습니다. pos = 2를 사용합니다"
-
-#~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
-#~ msgstr ""
-#~ "S3 메소드 '%s'가 NAMESPACE안으로 정의되었습니다만, 검색되지 않습니다"
-
-#~ msgid "invalid name"
-#~ msgstr "부적절한 이름입니다"
-
-#~ msgid "is required by"
-#~ msgstr "이하에 의해 요구되었습니다 :"
-
-#~ msgid "(still attached)"
-#~ msgstr "(아직 attached되어 있습니다)"
-
-#, fuzzy
-#~ msgid "name space '%s' is still used by: %s"
-#~ msgstr "이름 '%s' 여전히 이하에 의해 사용되어 있습니다"
+#~ msgid ""
+#~ "package '%s' was built under R version %s and help will not work "
+#~ "correctly\n"
+#~ "Please re-install it"
+#~ msgstr "패키지 '%s' R 2.0.0 이전 것입니다. 그것을 다시 인스톨을 해주십시오"
 
 #~ msgid "See the Note in ?library"
 #~ msgstr "라이브러리?의 노트를 보아주십시오"
@@ -1701,24 +1705,29 @@ msgstr[0] ""
 #~ msgid "package was installed prior to 2.4.0 and must be re-installed"
 #~ msgstr "패키지 '%s' R 2.0.0 이전 것입니다. 그것을 다시 인스톨을 해주십시오"
 
+#, fuzzy
+#~ msgid "is not on the search path"
+#~ msgstr "'%s'는 탐색 패스에서는 검색되지 않았습니다. pos = 2를 사용합니다"
+
 #~ msgid "%s failed in 'attachNamespace'"
 #~ msgstr "%s는 'attachNamespace'에 실패했습니다"
 
 #~ msgid "%s failed in 'loadNamespace' for '%s'"
 #~ msgstr "%s는 '%s'때문에 'loadNamespace'에 실패했습니다"
 
+#, fuzzy
+#~ msgid "name space '%s' is still used by: %s"
+#~ msgstr "이름 '%s' 여전히 이하에 의해 사용되어 있습니다"
+
+#~ msgid "S3 method '%s' was declared in NAMESPACE but not found"
+#~ msgstr ""
+#~ "S3 메소드 '%s'가 NAMESPACE안으로 정의되었습니다만, 검색되지 않습니다"
+
+#~ msgid "argument to 'which' is not logical"
+#~ msgstr "'which'에서 인수는 논리값이 아닙니다"
+
 #~ msgid "name space '%s' is loaded"
 #~ msgstr "name space '%s'가 적재 되었습니다"
-
-#~ msgid "%s failed in unloadNamespace(%s)"
-#~ msgstr "%s는 unloadNamespace(%s)에 실패했습니다"
-
-#, fuzzy
-#~ msgid ""
-#~ "package '%s' was built under R version %s and help will not work "
-#~ "correctly\n"
-#~ "Please re-install it"
-#~ msgstr "패키지 '%s' R 2.0.0 이전 것입니다. 그것을 다시 인스톨을 해주십시오"
 
 #, fuzzy
 #~ msgid "extra arguments ignored:"

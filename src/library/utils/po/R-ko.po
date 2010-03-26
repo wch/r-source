@@ -1,16 +1,18 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-03-16 09:20\n"
-"PO-Revision-Date: 2005-05-31 09:50+0900\n"
-"Last-Translator: Korean <uiami@hanmail.com>\n"
-"Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2010-03-25 14:30-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team: Open Statistics Group Korea <gnustats@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: Korea, Republic of\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 msgid ""
 "RShowDoc() should be used with a character string argument specifying\n"
@@ -86,12 +88,12 @@ msgid "Invalid 'filter' argument."
 msgstr "무효의 'data' 인수입니다"
 
 msgid "Could not find aspell or ispell executable."
-msgstr ""
+msgstr "실행할 수 있는 aspell 또는 ispell 찾지 못했습니다."
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
 "%s"
-msgstr ""
+msgstr "aspell 실행이 다음과 같은 이유로 실패했습니다."
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -103,7 +105,7 @@ msgid "No vignettes found by"
 msgstr "vignette(당초무늬) '%s' *not*는 검색되어졌습니다"
 
 msgid "call"
-msgstr ""
+msgstr "호출"
 
 #, fuzzy
 msgid "Package '"
@@ -135,17 +137,17 @@ msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "패키지 DESCRIPTION 파일로부터'%s'때문에 year를 결정할수 없었습니다"
 
 msgid "m < 0"
-msgstr ""
+msgstr "m 이 0 보다 작습니다"
 
 msgid "n < m"
-msgstr ""
+msgstr "n 이 m 보다 큽니다"
 
 #, fuzzy
 msgid "'FUN' must be a function or NULL"
 msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 
 msgid "Can't handle S4 methods yet"
-msgstr ""
+msgstr "아직 S4 method 를 다룰수 없습니다."
 
 msgid "'package' must be a character string or NULL"
 msgstr "'package'는 문자열이나 NULL이어야만 합니다"
@@ -261,7 +263,7 @@ msgid "class(es) of 'name' will be discarded"
 msgstr ""
 
 msgid "cannot edit NULL row names"
-msgstr ""
+msgstr "행이름을 편집할 수 없습니다"
 
 #, fuzzy
 msgid "no help found for '%s'"
@@ -281,10 +283,10 @@ msgid "'fix' requires a name"
 msgstr "'fix'는 이름을 요구합니다"
 
 msgid "too many list items (at most up to number 26)"
-msgstr ""
+msgstr "list 의 최대 목록 26 개를 초과했습니다"
 
 msgid "too many list items (at most up to number 3899)"
-msgstr ""
+msgstr "최대 3899 개까지만 허용합니다"
 
 msgid "'form' must be a two-sided formula"
 msgstr ""
@@ -320,7 +322,7 @@ msgid "Help on topic '%s' was found in the following packages:"
 msgstr "topic '%s'에서 help는 다음의 패키지로 검색되었습니다"
 
 msgid "Choose one"
-msgstr ""
+msgstr "하나만 선택하십시요"
 
 msgid "Using the first match ..."
 msgstr "첫번째 match를 사용해주십시오..."
@@ -356,10 +358,10 @@ msgid "argument 'help.db' is deprecated"
 msgstr "인수 'help.db'는 반대합니다"
 
 msgid "Rebuilding the help.search() database"
-msgstr ""
+msgstr "help.search 명령어를 재설치 하십시요"
 
 msgid "..."
-msgstr ""
+msgstr "입력인자"
 
 msgid "Packages {.readRDS() sequentially}:"
 msgstr ""
@@ -380,7 +382,7 @@ msgid "reencoding ..."
 msgstr ""
 
 msgid "done"
-msgstr ""
+msgstr "성공적으로 마쳤습니다"
 
 msgid "removing all entries with invalid multi-byte character data"
 msgstr "무효의 다중 바이트 문자 데이터를 갖춘 엔트리가 모두 제거하였습니다"
@@ -486,28 +488,28 @@ msgid "no R objects specified or available"
 msgstr "지정된 R 오브젝트는 없거나 이용가능합니다"
 
 msgid "Creating directories ..."
-msgstr ""
+msgstr "디렉토리를 생성중입니다"
 
 msgid "directory '%s' already exists"
 msgstr "디렉토리 '%s'는 이미 존재합니다"
 
 msgid "Creating DESCRIPTION ..."
-msgstr ""
+msgstr "해당설명을 생성중입니다"
 
 msgid "Creating NAMESPACE ..."
-msgstr ""
+msgstr "NAMESPACE를 생성중입니다"
 
 msgid "Creating Read-and-delete-me ..."
 msgstr ""
 
 msgid "Saving functions and data ..."
-msgstr ""
+msgstr "함수와 데이터를 저장중입니다"
 
 msgid "Copying code files ..."
-msgstr ""
+msgstr "코드파일을 복사중입니다"
 
 msgid "Invalid file name(s) for R code in"
-msgstr ""
+msgstr "부적절한 파일이름입니다"
 
 msgid ":"
 msgstr ""
@@ -523,7 +525,7 @@ msgid "Making help files ..."
 msgstr "첫번째 match를 사용해주십시오..."
 
 msgid "Done."
-msgstr ""
+msgstr "성공적으로 마쳤습니다"
 
 msgid "Further steps are described in '%s'."
 msgstr ""
@@ -620,7 +622,7 @@ msgid ""
 "Would you like to create a personal library\n"
 "'%s'\n"
 "to install packages into?"
-msgstr ""
+msgstr "패키지를 설치를 위하여 개인 라이브러리를 생성하고 싶으십니까?"
 
 #, fuzzy
 msgid "unable to install packages"
@@ -736,10 +738,10 @@ msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
 msgstr ""
 
 msgid "Unrecognized value indicator"
-msgstr ""
+msgstr "알수없는 값의 지시자입니다"
 
 msgid "no lines available in input"
-msgstr ""
+msgstr "아무것도 입력되지 않았습니다"
 
 msgid "header and 'col.names' are of different lengths"
 msgstr ""
@@ -748,7 +750,7 @@ msgid "more columns than column names"
 msgstr ""
 
 msgid "more column names than columns"
-msgstr ""
+msgstr "열수보다 열의 이름이 더 많습니다"
 
 msgid "rows are empty: giving up"
 msgstr ""
@@ -774,10 +776,10 @@ msgid "invalid 'row.names' length"
 msgstr "'agrep' 명세는 적적하지 않습니다"
 
 msgid "duplicate 'row.names' are not allowed"
-msgstr ""
+msgstr "중복된 'row.names' 를 사용할 수 없습니다"
 
 msgid "missing values in 'row.names' are not allowed"
-msgstr ""
+msgstr " 'row.names' 에 값이 미어있습니다"
 
 msgid "missing lengths for some fields"
 msgstr "몇개의 필드가 잘못되어진 길이입니다"
@@ -803,7 +805,7 @@ msgid "'file' must be a character string or connection"
 msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 
 msgid "empty beginning of file"
-msgstr ""
+msgstr "파일의 시작이 비어있습니다"
 
 msgid "first five rows are empty: giving up"
 msgstr ""
@@ -829,7 +831,7 @@ msgid "length mismatch: bug in code!"
 msgstr ""
 
 msgid "Processing file"
-msgstr ""
+msgstr "파일 실행중입니다"
 
 #, fuzzy
 msgid "no valid packages were specified"
@@ -905,10 +907,10 @@ msgid "file '%s' not found"
 msgstr "검색되지 않는 zip파일'%s'입니다"
 
 msgid "file path is too long"
-msgstr ""
+msgstr "파일경로가 너무 깁니다"
 
 msgid "linked path is too long"
-msgstr ""
+msgstr "경로가 너무 깁니다"
 
 msgid ""
 "vignette '%s' found more than once,\n"
@@ -942,7 +944,7 @@ msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
 msgstr ""
 
 msgid "invalid numbers in 'quote'"
-msgstr ""
+msgstr "'quote' 안에 부적절한 수치입니다"
 
 #, fuzzy
 msgid "invalid 'quote' specification"
@@ -976,7 +978,7 @@ msgid "download had nonzero exit status"
 msgstr "다운로드는 non-zreo인 exit 상태를 가지고 있었습니다"
 
 msgid "running '%s' failed"
-msgstr ""
+msgstr " '%s' 실행에 실패했습니다. "
 
 msgid "'%s' produced no output file: sent to printer?"
 msgstr ""
@@ -1035,10 +1037,10 @@ msgid "cannot remove prior installation of package"
 msgstr "패키지의 전의 설치를 삭제할 수 없습니다"
 
 msgid "'memory.size()' is Windows-specific"
-msgstr ""
+msgstr "'memory.size()' 은 윈도우에서만 사용가능합니다"
 
 msgid "'memory.limit()' is Windows-specific"
-msgstr ""
+msgstr "'memory.limit()' 은 윈도우에서만 사용가능합니다"
 
 #, fuzzy
 msgid ""
@@ -1114,15 +1116,9 @@ msgstr[0] ""
 "package '%s'는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages '%s'는 사용되고 있어 인스톨 되지 않을 것입니다"
 
-#~ msgid "Enter zero or more numbers separated by space"
-#~ msgstr "space에 의해서 분리된 0 이상의 수를 입력합니다"
-
 #~ msgid "more than one help file found: using package '%s'"
 #~ msgstr ""
 #~ "하나의 help를 넘는 지원 파일은 검색되었습니다: 패키지 '%s'의 사용입니다"
-
-#~ msgid "options(\"browser\") not set"
-#~ msgstr "세트 되지않는 옵션(\"browser\")입니다"
 
 #, fuzzy
 #~ msgid "'%s' has a help file but no examples"
@@ -1142,11 +1138,20 @@ msgstr[0] ""
 #~ "'%s'의 offline help는 얻을 수 없습니다:\n"
 #~ "대응하는 파일은 잘못되었습니다"
 
+#~ msgid "untar: using cmd ="
+#~ msgstr "다음 명령어를 이용하여 압축을 푸세요"
+
+#~ msgid "Enter zero or more numbers separated by space"
+#~ msgstr "space에 의해서 분리된 0 이상의 수를 입력합니다"
+
 #~ msgid "malformed bundle DESCRIPTION file, no Contains field"
 #~ msgstr "기형의 다발 DESCRIPTION 파일, Contains 필드가 없습니다"
 
 #~ msgid "bundle '%s' successfully unpacked and MD5 sums checked"
 #~ msgstr "다발 '%s'는 성공적으로 unpack 하였고 MD5 합계가 체크되었습니다"
+
+#~ msgid "options(\"browser\") not set"
+#~ msgstr "세트 되지않는 옵션(\"browser\")입니다"
 
 #~ msgid ""
 #~ "No HTML help for '%s' is available:\n"

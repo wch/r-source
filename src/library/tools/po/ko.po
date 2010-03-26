@@ -1,21 +1,18 @@
-# Korean translations for R package
-# R 패키지에 대한 한국어 번역문.
-# Copyright (C) 2005 The R Foundation
-# This file is distributed under the same license as the R package.
-# Korean <uiami@hanmail.com>, 2005.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:44+0000\n"
-"PO-Revision-Date: 2005-05-20 16:47+0900\n"
-"Last-Translator: Korean <uiami@hanmail.com>\n"
-"Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
+"POT-Creation-Date: 2009-12-10 19:18+0000\n"
+"PO-Revision-Date: 2010-03-25 14:30-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team: Open Statistics Group Korea <gnustats@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: Korea, Republic Of\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: Rmd5.c:36
 msgid "argument 'files' must be character"
@@ -30,6 +27,8 @@ msgstr "md5는 파일'%s'에서 실패했습니다"
 msgid "invalid argument type"
 msgstr "부적절한 인수 유형입니다"
 
-#: text.c:189 text.c:208
+#: text.c:189
+#: text.c:208
 msgid "out of memory"
-msgstr ""
+msgstr "메모리가 부족합니다"
+

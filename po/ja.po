@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-24 10:29+0000\n"
+"POT-Creation-Date: 2010-03-26 08:22+0000\n"
 "PO-Revision-Date: 2009-10-10 14:06+0100\n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -3793,48 +3793,48 @@ msgstr " 整数リテラル %sL は不要な小数点を含んでいます "
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "文字列が長すぎるためメモリ確保ができません  (%d行) "
 
-#: src/main/gram.y:2110
+#: src/main/gram.y:2111
 #, fuzzy, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr " 8進文字なしに'\\x'が使われています "
 
-#: src/main/gram.y:2123
+#: src/main/gram.y:2125
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr " \\uxxxx シーケンスはバックチック内ではサポートされません   (%d 行) "
 
-#: src/main/gram.y:2138
+#: src/main/gram.y:2140
 #, fuzzy, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr " 8進文字なしに'\\x'が使われています "
 
-#: src/main/gram.y:2146
+#: src/main/gram.y:2148
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr " 不正な \\u{xxxx} 系列です  (%d行) "
 
-#: src/main/gram.y:2158
+#: src/main/gram.y:2160
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 " \\Uxxxxxxxx シーケンスはバックチック内ではサポートされません  (%d 行) "
 
-#: src/main/gram.y:2173
+#: src/main/gram.y:2175
 #, fuzzy, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr " 8進文字なしに'\\x'が使われています "
 
-#: src/main/gram.y:2181
+#: src/main/gram.y:2183
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr " 不正な \\U{xxxxxxxx} 系列です  (%d行) "
 
-#: src/main/gram.y:2221
+#: src/main/gram.y:2223
 #, fuzzy, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr " '\\%c' は文字列で認識されないエスケープです "
 
-#: src/main/gram.y:2271
+#: src/main/gram.y:2275
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3843,13 +3843,13 @@ msgstr ""
 " このロケールにはないUnicodeエスケープを含む %d 行の文字列は\n"
 " 長すぎます(最大1000文字です)  "
 
-#: src/main/gram.y:2370
+#: src/main/gram.y:2374
 #, c-format
 msgid "functions nested too deeply in source code at line %d"
 msgstr "ソースコードにおいて関数が過度にネストしています  (%d行) "
 
-#: src/main/gram.y:2796 src/main/gram.y:2803 src/main/gram.y:2809
-#: src/main/gram.y:2816
+#: src/main/gram.y:2800 src/main/gram.y:2807 src/main/gram.y:2813
+#: src/main/gram.y:2820
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "コンテクストスタックが溢れました  (%d行) "

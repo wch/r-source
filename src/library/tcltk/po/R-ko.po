@@ -1,15 +1,18 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-03-17 19:27\n"
-"PO-Revision-Date: 2005-05-26 16:24+0900\n"
-"Last-Translator: Korean <uiami@hanmail.com>\n"
-"Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2010-03-25 14:29-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team: Open Statistics Group Korea <gnustats@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: Korea, Republic Of\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 msgid "cannot handle object of mode '%s'"
 msgstr "'%s' mode의 오브젝트를 취급할 수가 없습니다"
@@ -24,43 +27,43 @@ msgid "Tcl package '%s' not found"
 msgstr "Tcl 패키지 '%s'는 검색되지 않습니다"
 
 msgid "The tkGUI is not available under Windows"
-msgstr ""
+msgstr "윈도우에서는 tkGUI 를 실행할 수 없습니다"
 
 msgid "File"
-msgstr ""
+msgstr "파일명"
 
 msgid "Demos"
-msgstr ""
+msgstr "데모"
 
 msgid "Packages"
-msgstr ""
+msgstr "패키지"
 
 msgid "Help"
-msgstr ""
+msgstr "도움말"
 
 msgid "Source R code"
-msgstr ""
+msgstr "R 코드의 소스입니다"
 
 msgid "Quit"
-msgstr ""
+msgstr "종료"
 
 msgid "Save workspace"
-msgstr ""
+msgstr "workspace 를 저장합니다"
 
 msgid "Don't save workspace"
-msgstr ""
+msgstr "workspace를 저장하지 마세요"
 
 msgid "t test"
-msgstr ""
+msgstr "t-테스트"
 
 msgid "Density"
-msgstr ""
+msgstr "확률값"
 
 msgid "Interactive linear fitting"
 msgstr ""
 
 msgid "R FAQ"
-msgstr ""
+msgstr "자주하는 질문"
 
 msgid "Load"
 msgstr ""
@@ -69,22 +72,22 @@ msgid "Go get them!"
 msgstr ""
 
 msgid "Load packages"
-msgstr ""
+msgstr "패키지 불러오기"
 
 msgid "Install packages from CRAN"
-msgstr ""
+msgstr "CRAN으로부터 패키지를 설치"
 
 msgid "Help topic:"
-msgstr ""
+msgstr "도움말 주제"
 
 msgid "Manuals in PDF format"
-msgstr ""
+msgstr "pdf 형식의 매뉴얼입니다"
 
 msgid "OK"
-msgstr ""
+msgstr "확인"
 
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 msgid "'pb' is not from class \"tkProgressBar\""
 msgstr ""
@@ -93,10 +96,10 @@ msgid "'filters' must be a 2-column character matrix"
 msgstr ""
 
 msgid "Loading Tcl/Tk interface ..."
-msgstr ""
+msgstr "Tcl/Tk 화면을 불러오는 중입니다"
 
 msgid "done"
-msgstr ""
+msgstr "실행이 끝났습니다"
 
 #, fuzzy
 msgid "Tcl/Tk support is not available on this system"
@@ -104,3 +107,4 @@ msgstr "Tcl/Tk 지원 파일은 인스톨 되지 않았습니다"
 
 msgid "Tcl/Tk support files were not installed"
 msgstr "Tcl/Tk 지원 파일은 인스톨 되지 않았습니다"
+

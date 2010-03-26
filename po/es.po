@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-24 10:29+0000\n"
+"POT-Creation-Date: 2010-03-26 08:22+0000\n"
 "PO-Revision-Date: 2009-10-09 12:46+0100\n"
 "Last-Translator: Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -3798,51 +3798,51 @@ msgstr "%sL contiene un punto decimal innecesario"
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "no se puede asignar memoria para una cadena larga en la linea %d"
 
-#: src/main/gram.y:2110
+#: src/main/gram.y:2111
 #, fuzzy, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr "'\\x' utilizado sin dígitos hexadecimales"
 
-#: src/main/gram.y:2123
+#: src/main/gram.y:2125
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 "\\uxxxx secuencias no soportada dentro de comillas simples invertidas (línea "
 "%d)"
 
-#: src/main/gram.y:2138
+#: src/main/gram.y:2140
 #, fuzzy, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "'\\x' utilizado sin dígitos hexadecimales"
 
-#: src/main/gram.y:2146
+#: src/main/gram.y:2148
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "secuencia \\u{xxxx} inválida (linea %d)"
 
-#: src/main/gram.y:2158
+#: src/main/gram.y:2160
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 "\\Uxxxxxxxx secuencias no soportada dentro de comillas simples invertidas "
 "(línea %d)"
 
-#: src/main/gram.y:2173
+#: src/main/gram.y:2175
 #, fuzzy, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr "'\\x' utilizado sin dígitos hexadecimales"
 
-#: src/main/gram.y:2181
+#: src/main/gram.y:2183
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "inválido \\U{xxxxxxxx} secuencia (línea %d)"
 
-#: src/main/gram.y:2221
+#: src/main/gram.y:2223
 #, fuzzy, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr "'\\%c' es un escape no reconocido en una cadena de caracteres"
 
-#: src/main/gram.y:2271
+#: src/main/gram.y:2275
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3851,14 +3851,14 @@ msgstr ""
 "cadena en la línea %d contiene escapes Unicode en esta localidad\n"
 "es demasiado largo (máximo 10000 caracteres) "
 
-#: src/main/gram.y:2370
+#: src/main/gram.y:2374
 #, c-format
 msgid "functions nested too deeply in source code at line %d"
 msgstr ""
 "funciones anidadas demasiado profundamente en el código fuente en la línea %d"
 
-#: src/main/gram.y:2796 src/main/gram.y:2803 src/main/gram.y:2809
-#: src/main/gram.y:2816
+#: src/main/gram.y:2800 src/main/gram.y:2807 src/main/gram.y:2813
+#: src/main/gram.y:2820
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "desbordamiento contextstack en la línea %d"

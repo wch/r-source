@@ -1,15 +1,18 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-12-17 11:57\n"
-"PO-Revision-Date: 2005-05-25 14:17+0900\n"
-"Last-Translator: Korean <uiami@hanmail.com>\n"
-"Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2010-03-25 14:28-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team: Open Statistics Group Korea <gnustats@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 msgid "'coef' must not be negative"
 msgstr "'coef'는 negative로는 될수 없습니다"
@@ -101,7 +104,7 @@ msgid "can only print from screen device"
 msgstr "screen 디바이스로부터만 print가 할수 없습니다"
 
 msgid "need to specify one of 'width' and 'height'"
-msgstr ""
+msgstr "'width' 또는 'height'  중 하나가 지정되어야 합니다"
 
 #, fuzzy
 msgid "can only print from a screen device"
@@ -187,7 +190,7 @@ msgid "invalid encoding in font specification"
 msgstr "부적절한 X11 폰트의 지정방법입니다"
 
 msgid "Not a CID font"
-msgstr ""
+msgstr "CID 폰트가 아닙니다"
 
 #, fuzzy
 msgid "invalid CMap name in font specification"
@@ -212,7 +215,7 @@ msgid "invalid arguments in '%s' (must be font names)"
 msgstr "'%s' 에서 부적절한 인수입니다(폰트명이 필요합니다)"
 
 msgid "unknown font"
-msgstr ""
+msgstr "알수없는 font 입니다"
 
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr ""
@@ -221,7 +224,7 @@ msgid "'file' must be a non-empty character string"
 msgstr "'file'는 비어 있지 않은 문자열이 아니면 되지 않습니다"
 
 msgid "Invalid output format"
-msgstr ""
+msgstr "출력포뱃이 부적절합니다"
 
 msgid "status %d in running command '%s'"
 msgstr ""
@@ -252,7 +255,7 @@ msgid "loading snapshot from different R version"
 msgstr "다른 R 버전으로부터 snapshot가 적재되고 있습니다"
 
 msgid "'nbin' must be numeric of length 1 or 2"
-msgstr ""
+msgstr "'nbin' 은 반드시 1 또는 2 인 숫자여야 합니다"
 
 #, fuzzy
 msgid "'bandwidth' must be numeric"
@@ -266,13 +269,13 @@ msgid "'r' must be a \"range\", hence of length 2"
 msgstr ""
 
 msgid "invalid first argument"
-msgstr ""
+msgstr "부적절한 첫번째 인자입니다"
 
 msgid "'x' and 'y' lengths differ"
 msgstr "'x' 그리고 'y'의 길이가 다릅니다"
 
 msgid "invalid first argument [bad language object]"
-msgstr ""
+msgstr "부적절한 첫번째 값입니다"
 
 msgid "at least 2 columns needed"
 msgstr "적어도 두개의 열이 필요합니다"
@@ -323,13 +326,13 @@ msgid "can only copy from 'X11(type=\"*cairo\")' devices"
 msgstr "'windows' 디바이스로부터만 복사할수 없습니다"
 
 msgid "invalid value for 'rescale'"
-msgstr ""
+msgstr "'rescale' 에 부적절한 값입니다"
 
 msgid "can only bring windows devices to the front"
 msgstr "windows 디바이스만을 그 전방으로 가져 올수가 없습니다"
 
 msgid "'type' not applicable to the R console"
-msgstr ""
+msgstr "'type' 은 R 콘솔에서 사용할수없습니다"
 
 #, fuzzy
 msgid "can only manipulate windows devices"

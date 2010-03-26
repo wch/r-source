@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-24 10:29+0000\n"
-"PO-Revision-Date: 2010-03-24 10:29+0000\n"
+"POT-Creation-Date: 2010-03-26 08:22+0000\n"
+"PO-Revision-Date: 2010-03-26 08:22+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -3776,47 +3776,47 @@ msgstr "integer literal %sL contains unnecessary decimal point"
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "unable to allocate buffer for long string at line %d"
 
-#: src/main/gram.y:2110
+#: src/main/gram.y:2111
 #, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr "‘\\x’ used without hex digits in character string starting “%s”"
 
-#: src/main/gram.y:2123
+#: src/main/gram.y:2125
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\uxxxx sequences not supported inside backticks (line %d)"
 
-#: src/main/gram.y:2138
+#: src/main/gram.y:2140
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr "‘\\u’ used without hex digits in character string starting “%s”"
 
-#: src/main/gram.y:2146
+#: src/main/gram.y:2148
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr "invalid \\u{xxxx} sequence (line %d)"
 
-#: src/main/gram.y:2158
+#: src/main/gram.y:2160
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 
-#: src/main/gram.y:2173
+#: src/main/gram.y:2175
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr "‘\\U’ used without hex digits in character string starting “%s”"
 
-#: src/main/gram.y:2181
+#: src/main/gram.y:2183
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "invalid \\U{xxxxxxxx} sequence (line %d)"
 
-#: src/main/gram.y:2221
+#: src/main/gram.y:2223
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr "‘\\%c’ is an unrecognized escape in character string starting “%s”"
 
-#: src/main/gram.y:2271
+#: src/main/gram.y:2275
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
@@ -3825,13 +3825,13 @@ msgstr ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 10000 chars)"
 
-#: src/main/gram.y:2370
+#: src/main/gram.y:2374
 #, c-format
 msgid "functions nested too deeply in source code at line %d"
 msgstr "functions nested too deeply in source code at line %d"
 
-#: src/main/gram.y:2796 src/main/gram.y:2803 src/main/gram.y:2809
-#: src/main/gram.y:2816
+#: src/main/gram.y:2800 src/main/gram.y:2807 src/main/gram.y:2813
+#: src/main/gram.y:2820
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr "contextstack overflow at line %d"

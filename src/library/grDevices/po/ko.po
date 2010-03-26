@@ -1,21 +1,18 @@
-# Korean translations for R package
-# R 패키지에 대한 한국어 번역문.
-# Copyright (C) 2005 The R Foundation
-# This file is distributed under the same license as the R package.
-# Korean <uiami@hanmail.com>, 2005.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-03-16 09:19+0000\n"
-"PO-Revision-Date: 2005-05-31 10:31+0900\n"
-"Last-Translator: Korean <uiami@hanmail.com>\n"
-"Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2010-03-25 14:27-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team: Open Statistics Group <gnustats@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: devNull.c:42 devNull.c:45
 msgid "unable to start NULL device"
@@ -28,7 +25,7 @@ msgstr "'%s' metafile 하는것을 작성할 수 없습니다"
 
 #: devPS.c:603
 msgid "FontBBox could not be parsed"
-msgstr ""
+msgstr "FontBBox 가 파싱 될 수 없습니다"
 
 #: devPS.c:611
 #, fuzzy
@@ -53,7 +50,7 @@ msgstr "문자 0x%x에는 알수 없는 font폭 입니다"
 #: devPS.c:855
 #, c-format
 msgid "unknown encoding '%s' in 'PostScriptMetricInfo'"
-msgstr ""
+msgstr "'PostScriptMetricInfo' 에 '%s' 를 인코딩 할 수 없습니다"
 
 #: devPS.c:871 devPS.c:882
 #, fuzzy, c-format
@@ -178,7 +175,7 @@ msgstr "font 1과 변경할 수 있던 무효의 font %d를 사용하기 위하�
 
 #: devPS.c:2998
 msgid "only gray colors are allowed in this color model"
-msgstr ""
+msgstr "단순 흑백 만 이 색상에 지정되었습니다"
 
 #: devPS.c:3079
 msgid "filename too long in postscript"
@@ -275,7 +272,7 @@ msgstr ""
 #: devPS.c:4212
 #, c-format
 msgid "unknown encoding '%s' in 'mbcsToSbcs'"
-msgstr ""
+msgstr "'mbcsToSbcs' 에 '%s'은 알 수 없는 인코딩입니다"
 
 #: devPS.c:4221
 #, c-format
@@ -341,7 +338,7 @@ msgstr "비어 있는 파일명입니다"
 
 #: devPS.c:4944 devPS.c:4996
 msgid "write failed"
-msgstr ""
+msgstr "쓰기에 실패했습니다"
 
 #: devPS.c:5049
 #, fuzzy, c-format
@@ -412,11 +409,11 @@ msgstr "PDF에서 무효의 alpha 값입니다"
 
 #: devPS.c:6159
 msgid "increasing the PDF version to 1.4"
-msgstr ""
+msgstr "pdf 버전을 1.4 로 올립니다"
 
 #: devPS.c:6202 devPS.c:6240
 msgid "unknown 'colormodel', using 'rgb'"
-msgstr ""
+msgstr " 'rgb' 에 알수없는  'colormodel' 입니다"
 
 #: devPS.c:6643
 msgid "Corrupt encodings in PDF device"
@@ -424,7 +421,7 @@ msgstr "PDF 디바이스에서의 Corrupt가 있는 encode 입니다"
 
 #: devPS.c:6724
 msgid "increasing the PDF version to 1.3"
-msgstr ""
+msgstr "pdf 버전을 1.3 으로 올립니다"
 
 #: devPS.c:6845
 #, c-format
@@ -542,7 +539,7 @@ msgstr "복사 graphics 윈도우에 이용 가능한 디바이스가 없습니�
 #: devWindows.c:336 devWindows.c:406
 #, c-format
 msgid "'%%' is not allowed in file name"
-msgstr ""
+msgstr "'%%' 은 파일명에 허락되지 않습니다"
 
 #: devWindows.c:549
 msgid "Invalid font specification"
@@ -572,7 +569,7 @@ msgstr "Rbitmap.dll를 적재 할수가 없습니다"
 #: devWindows.c:1751 devWindows.c:1790 devWindows.c:1824
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
-msgstr ""
+msgstr "'width=%d, height=%d'  은 픽셀에서 사용하지 않는 값입니다"
 
 #: devWindows.c:1759 devWindows.c:1764 devWindows.c:1793 devWindows.c:1798
 #: devWindows.c:1827 devWindows.c:1832

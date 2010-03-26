@@ -1,24 +1,27 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.3.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-03-19 11:17\n"
-"PO-Revision-Date: 2005-05-30 21:04+0900\n"
-"Last-Translator: Korean <uiami@hanmail.com>\n"
-"Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2010-03-25 14:28-0600\n"
+"Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
+"Language-Team: Open Statistics Group Korea <gnustats@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: Korea, Republic Of\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 msgid "replacement value is not a matrix"
 msgstr "치환값은 행렬이 아닙니다"
 
 msgid "OOPS: something wrong with line"
-msgstr ""
+msgstr "라인안에 어떤 잘 못 된 것이 있습니다"
 
 msgid "in .OldClassesPrototypes"
-msgstr ""
+msgstr "OldClassesPrototypes 입니다"
 
 msgid ""
 "unnamed argument to initialize() for S3 class must have a class defintion; "
@@ -403,13 +406,13 @@ msgid "Original function is prohibited as a generic function"
 msgstr "'%s'는 일반적인 함수(또는 여기서 보이지 않습니다)가 아닙니다"
 
 msgid "not both functions!"
-msgstr ""
+msgstr "모두 함수가 아닙니다"
 
 msgid "Classes: %s, %s"
 msgstr ""
 
 msgid "Formal arguments differ (in default values?)"
-msgstr ""
+msgstr "기본값과 다릅니다"
 
 msgid "Formal arguments differ: (%s), (%s)"
 msgstr ""
@@ -1499,7 +1502,7 @@ msgid "Something weird:  inconsistent number of args in methods table strings:"
 msgstr ""
 
 msgid "(using the largest value)"
-msgstr ""
+msgstr "가장 큰 값을 이용하여 "
 
 msgid ""
 "No methods table for generic \"%s\" from package \"%s\" in package \"%s\""
@@ -1510,12 +1513,12 @@ msgid "Undefined classes ("
 msgstr "\"%s\"는 정의가 끝난 상태 클래스가 아닙니다"
 
 msgid ") will be ignored, for argument"
-msgstr ""
+msgstr "인자값에 대해서 무시되었습니다"
 
 msgid ""
 "Argument \"signatures\" must be a character matrix whose rows are method "
 "signatures"
-msgstr ""
+msgstr "\"signatures\" 인자는 반드시 문자형 행렬이여야 합니다"
 
 msgid "not allowed to have test==TRUE and an S4Class definition"
 msgstr ""
@@ -1632,10 +1635,10 @@ msgid "argument 'what' should be the name of a function"
 msgstr "인수'what' 함수의 이름이어야 합니다"
 
 msgid "Tracing the internal function \"%s\" is not allowed"
-msgstr ""
+msgstr "내부함수인 \"%s\" 은 추적할 수 없습니다"
 
 msgid ".TraceWithMethods: after computing what, whereF"
-msgstr ""
+msgstr "컴퓨팅을 한 후에 .TraceWithMethods 로 추적합니다"
 
 #, fuzzy
 msgid "no function definition for \"%s\" found"
@@ -1647,7 +1650,7 @@ msgid ""
 msgstr "이 기호와 일치하고 있는 특별한 메소드가 아닙니다"
 
 msgid ".TraceWithMethods: untrace case"
-msgstr ""
+msgstr "추적할 수 없는 케이스 입니다"
 
 msgid "the method for \"%s\" for this signature was not being traced"
 msgstr "이 signature의 \"%s\" 메소드는 영향이 되고 있지 않았습니다"
@@ -1709,7 +1712,7 @@ msgid "apparently bad method or class metadata in saved environment;"
 msgstr "기호는 클래스 또는 환경의 벡터가 아니면 되지 않습니다"
 
 msgid "move the file or remove the class/method"
-msgstr ""
+msgstr " 파일을 이동하거나 메소드 혹은 클래스를 삭제합니다 "
 
 #, fuzzy
 msgid "no definition for class %s"
