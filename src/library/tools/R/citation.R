@@ -22,12 +22,9 @@ BibTeX_entry_field_db <-
 
 ## Keep in step with utils::readCitationFile
 get_CITATION_entry_fields <-
-function(file, encoding = "unknown")
+function(file, encoding = "ASCII")
 {
     ## Assume that citEntry() only occurs at top level.
-
-    ## To parallel readCitationFile, default to ASCII.
-    if(encoding == "unknown") encoding <- "ASCII"
 
     if(encoding %in% c("latin1", "UTF-8") && !l10n_info()$MBCS) {
         exprs <- tryCatch(parse(file = file, encoding = encoding),
