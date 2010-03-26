@@ -30,6 +30,13 @@
     ## functions (esp. primitives) are methods
     setIs("function", "PossibleMethod", where = envir)
 
+    ## the default slot of a generic function can be a method, primitive or NULL
+    setClass("optionalMethod", where = envir); clList <- c(clList, "optionalMethod")
+    setIs("PossibleMethod", "optionalMethod", where = envir)
+    setIs("NULL", "optionalMethod", where = envir)
+    ## prior to 2.11.0, the default slot in generic function objects was a MethodsList or NULL
+    setIs("MethodsList", "optionalMethod", where = envir) #only until MethodsList class is defunct
+
     ## signatures -- used mainly as named character vectors
     setClass("signature", representation("character", names = "character"), where = envir); clList <- c(clList, "signature")
 
@@ -46,7 +53,7 @@
     setClass("genericFunction", contains = "function",
              representation( generic = "character", package = "character",
                             group = "list", valueClass = "character",
-                            signature = "character", default = "MethodsList",
+                            signature = "character", default = "optionalMethod",
                             skeleton = "call"), where = envir); clList <- c(clList, "genericFunction")
     ## standard generic function -- allows immediate dispatch
     setClass("standardGeneric",  contains = "genericFunction")
@@ -171,6 +178,12 @@
                       assign(what, elNamed(args, what), envir = value)
                   value
               }, where = envir)
+    ## from 2.11.0, the MethodsList classs is deprecated
+    setMethod("initialize", "MethodsList", function(.Object, ...) {
+        .MlistDeprecated()
+        callNextMethod()
+    }, where = envir)
+              
     ## make sure body(m) <- .... leaves a method as a method
     setGeneric("body<-", where = envir)
     setMethod("body<-", "MethodDefinition", function (fun, envir, value) {

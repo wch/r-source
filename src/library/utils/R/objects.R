@@ -132,7 +132,7 @@ methods <- function (generic.function, class)
             genfun <- get(generic.function, mode = "function",
                           envir = parent.frame())
             if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
-                genfun <- methods::slot(genfun, "default")@methods$ANY
+                genfun <- methods::finalDefaultMethod(genfun@default)
             if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
         }

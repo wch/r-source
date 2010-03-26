@@ -90,7 +90,7 @@
     value@signature <- signature
     name <- signature[[1L]]
     if(is.null(fdefault))
-        methods <- MethodsList(name)
+        {} # pre 2.11.0: methods <- MethodsList(name)
     else {
         fdefault <- checkTrace(fdefault)
         if(!identical(formalArgs(fdefault), formalArgs(fdef)) &&
@@ -102,10 +102,10 @@
         fdefault <- asMethodDefinition(fdefault, fdef = value)
         if(is(fdefault, "MethodDefinition"))
             fdefault@generic <- value@generic
-        methods <- MethodsList(name, fdefault)
+        ## pre 2.11.0 methods <- MethodsList(name, fdefault)
     }
-    value@default <- methods
-    assign(".Methods", methods, envir = ev)
+    value@default <- fdefault # pre 2.11.0 methods
+    assign(".Methods", fdefault, envir = ev) ## ? why
     .setupMethodsTables(value, TRUE)
     value@skeleton <- generic.skeleton(f, fdef, fdefault)
     value
@@ -169,12 +169,15 @@ makeGeneric <-
 ###--------
     name <- signature[[1L]]
     if(is.null(fdefault))
-        methods <- MethodsList(name)
+      {}
     else
-        methods <- MethodsList(name, asMethodDefinition(fdefault, fdef = value))
+        fdefault <- asMethodDefinition(fdefault, fdef = value)
+        if(is(fdefault, "MethodDefinition"))
+            fdefault@generic <- value@generic
+        ## pre 2.11.0 methods <- MethodsList(name, fdefault)
 ###--------
-    assign(".Methods", methods, envir = ev)
-    slot(value, "default", FALSE) <- methods
+    assign(".Methods", fdefault, envir = ev)
+    slot(value, "default", FALSE) <- fdefault
     slot(value, "skeleton", FALSE) <- generic.skeleton(f, fdef, fdefault)
 ###--------
     value

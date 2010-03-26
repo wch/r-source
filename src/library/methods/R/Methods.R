@@ -309,7 +309,7 @@ getMethods <-
              )
 
         if(is.null(value)) ## return empty methods list
-            new("MethodsList", argument = fdef@default@argument)
+            new("MethodsList", argument = fdef@default@argument) # but deprecated from 2.11.0
         else
             value
     }

@@ -49,8 +49,9 @@
         it is all the formal arguments, except for \dots.  Order
         matters for efficiency:  the most commonly used arguments in
         specifying methods should come first. }
-    \item{\code{default}:}{Object of class \code{"OptionalMethods"},
-        the default method for this function.  Generated
+    \item{\code{default}:}{Object of class \code{"optionalMethod"}
+        (a union of classes \code{"function"} and \code{"NULL"}), containing
+        the default method for this function if any.  Generated
         automatically and used to initialize method dispatch. }
     \item{\code{skeleton}:}{Object of class \code{"call"}, a slot used
         internally in method dispatch.  Don't expect to use it

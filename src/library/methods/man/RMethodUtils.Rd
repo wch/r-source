@@ -13,6 +13,7 @@
 \alias{nonstandardGroupGenericFunction-class}
 \alias{OptionalFunction-class}
 \alias{PossibleMethod-class}
+\alias{optionalMethod-class}
 \alias{derivedDefaultMethod-class}
 %%
 \alias{substituteFunctionArgs}

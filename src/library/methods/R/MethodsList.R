@@ -187,7 +187,7 @@ MethodsListSelect <-
     function(f, env,
              mlist = NULL,
              fEnv = if(is(fdef, "genericFunction")) environment(fdef) else baseenv(),
-             finalDefault = finalDefaultMethod(mlist, f),
+             finalDefault = finalDefaultMethod(mlist),
              evalArgs = TRUE,
              useInherited = TRUE,  ## supplied when evalArgs is FALSE
              fdef = getGeneric(f, where = env), # MUST BE SAFE FROM RECUSIVE METHOD SELECTION
@@ -362,15 +362,23 @@ insertMethodInEmptyList <- function(mlist, def) {
 
 
 finalDefaultMethod <-
-  ## The real default method of this `MethodsList' object,
-  ## found by going down the default branch (i.e., class `"ANY"')
-  ## until either `NULL' or a function definition is found.
-  function(mlist, fname = "NULL")
+  ## Return the default method from the generic (it may be NULL, a method object or a primitive.
+  ## this previously searched in a MethodsList object.  Once those are gone, the loop should
+  ## be irrelevant except as an error check.
+  function(method)
 {
-    value <- NULL
-    while(is(mlist, "MethodsList"))
-            mlist <- value <- elNamed(slot(mlist, "methods"), "ANY")
-    value
+    repeat {
+        if(is.function(method) #somewhat liberal, but catches both methods and primitives
+           || is.null(method))
+          break
+        value <- NULL
+        if(is(method, "MethodsList"))
+            method <-  elNamed(slot(method, "methods"), "ANY")
+        else
+          stop(gettextf("Default method must be a method definition, a primitive or NULL: got an object of class %s", dQuote(class(method))),
+               domain = NA)
+    }
+    method
 }
 
 

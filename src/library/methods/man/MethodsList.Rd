@@ -55,7 +55,7 @@ listFromMlist(mlist, prefix = list(), sigs. = TRUE, methods. = TRUE)
 
 linearizeMlist(mlist, inherited = TRUE)
 
-finalDefaultMethod(mlist, fname = "NULL")
+finalDefaultMethod(method)
 
 mergeMethods(m1, m2, genericLabel)
 
@@ -144,12 +144,9 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
     }
 
     \item{\code{finalDefaultMethod}:}{
-      The true default method for the methods list object \code{mlist}
-      (the method that matches class \code{"ANY"} for as many arguments
-      as are used in methods matching for this generic function).  If
-      \code{mlist} is null or no matching method is found, returns the
-      function called \code{fname}, or \code{NULL} if there is no such
-      function.
+      The default method or NULL.  With the demise of
+      \code{"MethodsList"} objects, this function only checks that the
+      value given it is a method definition, primitive or NULL.
     }
 
     \item{\code{mergeMethods}:}{
