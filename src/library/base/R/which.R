@@ -17,29 +17,31 @@
 which <- function(x, arr.ind = FALSE)
 {
     wh <- .Internal(which(x))
-    dl <- dim(x)
-    if (!is.null(dl) && arr.ind) {
-        ##-- return a matrix  length(wh) x rank
-        m <- length(wh)
-        rank <- length(dl)
-        wh1 <- wh - 1L
-        wh <- 1L + wh1 %% dl[1L]
-        wh <- matrix(wh, nrow = m, ncol = rank,
-                     dimnames =
-                     list(dimnames(x)[[1L]][wh],
-                          if(rank == 2L) c("row", "col")# for matrices
-                          else paste("dim", seq_len(rank), sep="")))
-        if(rank >= 2L) {
-            denom <- 1L
-            for (i in 2L:rank) {
-                denom <- denom * dl[i-1L]
-                nextd1 <- wh1 %/% denom # (next dim of elements) - 1
-                wh[,i] <- 1L + nextd1 %% dl[i]
-            }
-        }
-        storage.mode(wh) <- "integer"
+    if (!is.null(d <- dim(x)) && arr.ind)
+	arrayInd(wh, d, dimnames(x)) else wh
+}
+
+arrayInd <- function(ind, .dim, .dimnames = NULL) {
+    ##-- return a matrix  length(ind) x rank == length(ind) x length(.dim)
+    m <- length(ind)
+    rank <- length(.dim)
+    wh1 <- ind - 1L
+    ind <- 1L + wh1 %% .dim[1L]
+    ind <- matrix(ind, nrow = m, ncol = rank,
+		  dimnames =
+		  list(.dimnames[[1L]][ind],
+		       if(rank == 2L) c("row", "col") # for matrices
+		       else paste("dim", seq_len(rank), sep="")))
+    if(rank >= 2L) {
+	denom <- 1L
+	for (i in 2L:rank) {
+	    denom <- denom * .dim[i-1L]
+	    nextd1 <- wh1 %/% denom	# (next dim of elements) - 1
+	    ind[,i] <- 1L + nextd1 %% .dim[i]
+	}
     }
-    wh
+    storage.mode(ind) <- "integer"
+    ind
 }
 
 which.min <- function(x) .Internal(which.min(x))
