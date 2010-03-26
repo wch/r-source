@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:21+0000\n"
+"POT-Creation-Date: 2010-03-26 08:43+0000\n"
 "PO-Revision-Date: 2009-10-11 05:33-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian <dactylorhiza at gmail>\n"
@@ -1021,7 +1021,7 @@ msgid "Enhanced metafiles"
 msgstr "Улучшенные метафайлы Windows"
 
 #: ../library/grDevices/src/devWindows.c:935
-#: ../library/grDevices/src/devWindows.c:3315
+#: ../library/grDevices/src/devWindows.c:3312
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "выбранный файловый путь слишком длинный: можно только 512 байт"
 
@@ -1166,15 +1166,15 @@ msgstr "Сохранить как метафайл..."
 msgid "Save as postscript..."
 msgstr "Сохранить как PostScript..."
 
-#: ../library/grDevices/src/devWindows.c:3037
+#: ../library/grDevices/src/devWindows.c:3034
 msgid "Locator is active"
 msgstr "Локатор активен"
 
-#: ../library/grDevices/src/devWindows.c:3659
+#: ../library/grDevices/src/devWindows.c:3656
 msgid "Waiting to confirm page change..."
 msgstr "Ожидаю подтверждения смены страницы..."
 
-#: ../library/grDevices/src/devWindows.c:3671
+#: ../library/grDevices/src/devWindows.c:3668
 msgid "Click or hit ENTER for next page"
 msgstr "Следующая страница: щелкните или нажмите ENTER "
 

@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.11.0\n"
+"Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-22 15:15\n"
-"PO-Revision-Date: 2010-03-22 15:15\n"
+"POT-Creation-Date: 2010-03-26 08:42\n"
+"PO-Revision-Date: 2010-03-26 08:42\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -747,13 +747,6 @@ msgstr "package ‘%s’ has not been installed properly"
 
 msgid "package '%s' was built before R 2.10.0: please re-install it"
 msgstr "package ‘%s’ was built before R 2.10.0: please re-install it"
-
-msgid ""
-"package '%s' claims to be built under R version %s but is missing some help "
-"files and needs to be re-installed"
-msgstr ""
-"package ‘%s’ claims to be built under R version %s but is missing some help "
-"files and needs to be re-installed"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "This is R %s, package ‘%s’ needs %s %s"

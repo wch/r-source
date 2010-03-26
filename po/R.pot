@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-24 10:29+0000\n"
+"POT-Creation-Date: 2010-03-26 08:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -173,21 +173,21 @@ msgstr ""
 #: src/main/eval.c:1798 src/main/grep.c:726 src/main/grep.c:731
 #: src/main/grep.c:1076 src/main/grep.c:1080 src/main/grep.c:1085
 #: src/main/grep.c:1760 src/main/grep.c:1765 src/main/memory.c:2981
-#: src/main/model.c:1611 src/main/model.c:1619 src/main/optim.c:225
+#: src/main/model.c:1610 src/main/model.c:1618 src/main/optim.c:225
 #: src/main/paste.c:86 src/main/paste.c:353 src/main/paste.c:360
 #: src/main/paste.c:367 src/main/paste.c:372 src/main/paste.c:377
 #: src/main/paste.c:382 src/main/paste.c:385 src/main/paste.c:393
-#: src/main/paste.c:541 src/main/paste.c:546 src/main/platform.c:290
+#: src/main/paste.c:542 src/main/paste.c:547 src/main/platform.c:290
 #: src/main/platform.c:292 src/main/platform.c:294 src/main/platform.c:310
 #: src/main/platform.c:321 src/main/platform.c:955 src/main/platform.c:961
 #: src/main/platform.c:1011 src/main/platform.c:1068 src/main/platform.c:1071
-#: src/main/platform.c:1232 src/main/platform.c:1235 src/main/platform.c:1271
-#: src/main/platform.c:1274 src/main/platform.c:1347 src/main/platform.c:1365
-#: src/main/platform.c:1406 src/main/platform.c:1408 src/main/platform.c:1468
-#: src/main/platform.c:1559 src/main/platform.c:1819 src/main/platform.c:1860
-#: src/main/platform.c:1981 src/main/platform.c:1984 src/main/platform.c:1987
-#: src/main/platform.c:1990 src/main/platform.c:2107 src/main/platform.c:2135
-#: src/main/platform.c:2183 src/main/plot.c:3030 src/main/plot.c:4169
+#: src/main/platform.c:1231 src/main/platform.c:1234 src/main/platform.c:1270
+#: src/main/platform.c:1273 src/main/platform.c:1346 src/main/platform.c:1364
+#: src/main/platform.c:1405 src/main/platform.c:1407 src/main/platform.c:1467
+#: src/main/platform.c:1558 src/main/platform.c:1818 src/main/platform.c:1859
+#: src/main/platform.c:1980 src/main/platform.c:1983 src/main/platform.c:1986
+#: src/main/platform.c:1989 src/main/platform.c:2106 src/main/platform.c:2134
+#: src/main/platform.c:2182 src/main/plot.c:3030 src/main/plot.c:4169
 #: src/main/plot.c:4173 src/main/plot.c:4176 src/main/plot3d.c:2450
 #: src/main/plot3d.c:2454 src/main/plot3d.c:2459 src/main/plot3d.c:2463
 #: src/main/plot3d.c:2467 src/main/plot3d.c:2471 src/main/print.c:230
@@ -206,9 +206,9 @@ msgstr ""
 #: src/main/scan.c:1726 src/main/scan.c:1727 src/main/scan.c:1728
 #: src/main/scan.c:1729 src/main/scan.c:1730 src/main/seq.c:380
 #: src/main/seq.c:384 src/main/seq.c:402 src/main/seq.c:406 src/main/seq.c:412
-#: src/main/seq.c:420 src/main/sort.c:161 src/main/sysutils.c:557
-#: src/main/sysutils.c:559 src/main/sysutils.c:561 src/main/sysutils.c:566
-#: src/main/sysutils.c:1509 src/main/sysutils.c:1513 src/main/unique.c:806
+#: src/main/seq.c:420 src/main/sort.c:161 src/main/sysutils.c:555
+#: src/main/sysutils.c:557 src/main/sysutils.c:559 src/main/sysutils.c:564
+#: src/main/sysutils.c:1507 src/main/sysutils.c:1511 src/main/unique.c:806
 #: src/main/unique.c:1085 src/main/unique.c:1145 src/main/unique.c:1152
 #: src/main/util.c:570 src/main/util.c:573 src/main/util.c:1683
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
@@ -281,13 +281,13 @@ msgstr ""
 #: src/main/errors.c:999 src/main/errors.c:1024 src/main/errors.c:1029
 #: src/main/optimize.c:94 src/main/optimize.c:101 src/main/optimize.c:110
 #: src/main/optimize.c:179 src/main/optimize.c:185 src/main/optimize.c:194
-#: src/main/platform.c:2155 src/main/plot.c:275 src/main/plot.c:469
+#: src/main/platform.c:2154 src/main/plot.c:275 src/main/plot.c:469
 #: src/main/plot.c:474 src/main/plot.c:2204 src/main/plot.c:2211
 #: src/main/plot.c:3243 src/main/plot.c:3245 src/main/plot.c:3247
 #: src/main/plot.c:3405 src/main/plot3d.c:1399 src/main/plot3d.c:2528
 #: src/main/plot3d.c:2532 src/main/plot3d.c:2534 src/main/seq.c:166
 #: src/main/seq.c:264 src/main/seq.c:267 src/main/sort.c:869
-#: src/main/sort.c:969 src/main/source.c:209 src/main/summary.c:1026
+#: src/main/sort.c:968 src/main/source.c:209 src/main/summary.c:1026
 #: src/main/sysutils.c:229 src/main/util.c:883 src/main/util.c:888
 #: src/main/util.c:895 src/main/util.c:898 src/modules/X11/devX11.c:2698
 #: src/modules/X11/devX11.c:2725 src/modules/X11/devX11.c:2730
@@ -510,8 +510,8 @@ msgstr ""
 #: src/gnuwin32/system.c:542 src/gnuwin32/system.c:1021
 #: src/gnuwin32/system.c:1033 src/main/connections.c:546
 #: src/main/connections.c:551 src/main/dounzip.c:114 src/main/saveload.c:1947
-#: src/main/serialize.c:2103 src/main/serialize.c:2108
-#: src/main/serialize.c:2189 src/main/serialize.c:2234 src/unix/system.c:312
+#: src/main/serialize.c:2104 src/main/serialize.c:2109
+#: src/main/serialize.c:2190 src/main/serialize.c:2235 src/unix/system.c:312
 #: src/unix/system.c:323
 #, c-format
 msgid "cannot open file '%s': %s"
@@ -1281,7 +1281,7 @@ msgstr ""
 #: src/main/envir.c:2901 src/main/envir.c:2935 src/main/envir.c:2955
 #: src/main/envir.c:3260 src/main/envir.c:3264 src/main/eval.c:3729
 #: src/main/objects.c:190 src/main/objects.c:196 src/main/saveload.c:2056
-#: src/main/saveload.c:2337 src/main/serialize.c:2256
+#: src/main/saveload.c:2337 src/main/serialize.c:2257
 msgid "use of NULL environment is defunct"
 msgstr ""
 
@@ -1315,7 +1315,7 @@ msgstr ""
 #: src/main/connections.c:4130 src/main/connections.c:4337
 #: src/main/connections.c:4341 src/main/connections.c:4701
 #: src/main/deparse.c:309 src/main/deparse.c:312 src/main/deparse.c:393
-#: src/main/deparse.c:396 src/main/scan.c:1706 src/main/serialize.c:1655
+#: src/main/deparse.c:396 src/main/scan.c:1706 src/main/serialize.c:1656
 msgid "cannot write to this connection"
 msgstr ""
 
@@ -1745,9 +1745,9 @@ msgstr ""
 msgid "closing unused connection %d (%s)\n"
 msgstr ""
 
-#: src/main/connections.c:182 src/main/sysutils.c:584 src/main/sysutils.c:723
-#: src/main/sysutils.c:738 src/main/sysutils.c:822 src/main/sysutils.c:891
-#: src/main/sysutils.c:901 src/main/sysutils.c:914 src/main/sysutils.c:1203
+#: src/main/connections.c:182 src/main/sysutils.c:582 src/main/sysutils.c:721
+#: src/main/sysutils.c:736 src/main/sysutils.c:820 src/main/sysutils.c:889
+#: src/main/sysutils.c:899 src/main/sysutils.c:912 src/main/sysutils.c:1201
 #, c-format
 msgid "unsupported conversion from '%s' to '%s'"
 msgstr ""
@@ -2062,7 +2062,7 @@ msgid "cannot close messages sink connection"
 msgstr ""
 
 #: src/main/connections.c:3058 src/main/connections.c:4700
-#: src/main/serialize.c:1645 src/main/serialize.c:1653
+#: src/main/serialize.c:1646 src/main/serialize.c:1654
 msgid "connection is not open"
 msgstr ""
 
@@ -2075,7 +2075,7 @@ msgstr ""
 #: src/main/connections.c:4001 src/main/connections.c:4021 src/main/dcf.c:49
 #: src/main/dcf.c:55 src/main/saveload.c:2320 src/main/scan.c:903
 #: src/main/scan.c:907 src/main/scan.c:1014 src/main/scan.c:1018
-#: src/main/serialize.c:1647 src/main/source.c:257 src/main/source.c:260
+#: src/main/serialize.c:1648 src/main/source.c:257 src/main/source.c:260
 msgid "cannot read from this connection"
 msgstr ""
 
@@ -2461,7 +2461,7 @@ msgstr ""
 
 #: src/main/deparse.c:362 src/main/envir.c:1634 src/main/envir.c:1716
 #: src/main/eval.c:423 src/main/eval.c:909 src/main/eval.c:2788
-#: src/main/saveload.c:1964 src/main/saveload.c:2281 src/main/serialize.c:2274
+#: src/main/saveload.c:1964 src/main/saveload.c:2281 src/main/serialize.c:2275
 #, c-format
 msgid "object '%s' not found"
 msgstr ""
@@ -2492,7 +2492,7 @@ msgstr ""
 msgid "invalid expression in '%s'"
 msgstr ""
 
-#: src/main/deriv.c:931 src/main/model.c:1320
+#: src/main/deriv.c:931 src/main/model.c:1319
 msgid "invalid variable names"
 msgstr ""
 
@@ -3543,7 +3543,7 @@ msgid "'file' must be non-empty string"
 msgstr ""
 
 #: src/main/eval.c:3832 src/main/saveload.c:1930 src/main/saveload.c:2220
-#: src/main/serialize.c:1788
+#: src/main/serialize.c:1789
 msgid "'ascii' must be logical"
 msgstr ""
 
@@ -3725,55 +3725,59 @@ msgstr ""
 msgid "'\\x' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2123
+#: src/main/gram.y:2124
 #, c-format
 msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2138
+#: src/main/gram.y:2139
 #, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2146
+#: src/main/gram.y:2147
 #, c-format
 msgid "invalid \\u{xxxx} sequence (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2158
+#: src/main/gram.y:2159
 #, c-format
 msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2173
+#: src/main/gram.y:2174
 #, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2181
+#: src/main/gram.y:2182
 #, c-format
 msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr ""
 
-#: src/main/gram.y:2221
+#: src/main/gram.y:2222
 #, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
 msgstr ""
 
-#: src/main/gram.y:2271
+#: src/main/gram.y:2270
+msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
+msgstr ""
+
+#: src/main/gram.y:2274
 #, c-format
 msgid ""
 "string at line %d containing Unicode escapes not in this locale\n"
 "is too long (max 10000 chars)"
 msgstr ""
 
-#: src/main/gram.y:2370
+#: src/main/gram.y:2373
 #, c-format
 msgid "functions nested too deeply in source code at line %d"
 msgstr ""
 
-#: src/main/gram.y:2796 src/main/gram.y:2803 src/main/gram.y:2809
-#: src/main/gram.y:2816
+#: src/main/gram.y:2799 src/main/gram.y:2806 src/main/gram.y:2812
+#: src/main/gram.y:2819
 #, c-format
 msgid "contextstack overflow at line %d"
 msgstr ""
@@ -4251,108 +4255,108 @@ msgstr ""
 msgid "invalid model formula in EncodeVars"
 msgstr ""
 
-#: src/main/model.c:755
+#: src/main/model.c:754
 msgid "argument is not a valid model"
 msgstr ""
 
-#: src/main/model.c:776
+#: src/main/model.c:775
 msgid "'data' argument is of the wrong type"
 msgstr ""
 
-#: src/main/model.c:1041
+#: src/main/model.c:1040
 msgid "'.' in formula and no 'data' argument"
 msgstr ""
 
-#: src/main/model.c:1189
+#: src/main/model.c:1188
 msgid "invalid formula in 'update'"
 msgstr ""
 
-#: src/main/model.c:1227
+#: src/main/model.c:1226
 msgid "formula expected"
 msgstr ""
 
-#: src/main/model.c:1318
+#: src/main/model.c:1317
 msgid "invalid variables"
 msgstr ""
 
-#: src/main/model.c:1322 src/main/model.c:1327
+#: src/main/model.c:1321 src/main/model.c:1326
 msgid "number of variables != number of variable names"
 msgstr ""
 
-#: src/main/model.c:1325
+#: src/main/model.c:1324
 msgid "invalid extra variables"
 msgstr ""
 
-#: src/main/model.c:1329
+#: src/main/model.c:1328
 msgid "invalid extra variable names"
 msgstr ""
 
-#: src/main/model.c:1350
+#: src/main/model.c:1349
 #, c-format
 msgid "overlong names in '%s'"
 msgstr ""
 
-#: src/main/model.c:1377
+#: src/main/model.c:1376
 #, c-format
 msgid "invalid type (%s) for variable '%s'"
 msgstr ""
 
-#: src/main/model.c:1382
+#: src/main/model.c:1381
 #, c-format
 msgid "variable lengths differ (found for '%s')"
 msgstr ""
 
-#: src/main/model.c:1436
+#: src/main/model.c:1435
 msgid "invalid result from na.action"
 msgstr ""
 
-#: src/main/model.c:1630
+#: src/main/model.c:1629
 msgid "invalid model frame"
 msgstr ""
 
-#: src/main/model.c:1632
+#: src/main/model.c:1631
 msgid "do not know how many cases"
 msgstr ""
 
-#: src/main/model.c:1655
+#: src/main/model.c:1654
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr ""
 
-#: src/main/model.c:1659 src/main/model.c:1666
+#: src/main/model.c:1658 src/main/model.c:1665
 #, c-format
 msgid "variable %d has no levels"
 msgstr ""
 
-#: src/main/model.c:1778
+#: src/main/model.c:1777
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr ""
 
-#: src/main/model.c:1798
+#: src/main/model.c:1797
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr ""
 
-#: src/main/model.c:1802
+#: src/main/model.c:1801
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr ""
 
-#: src/main/model.c:1813
+#: src/main/model.c:1812
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr ""
 
-#: src/main/model.c:1862 src/main/model.c:1867 src/main/model.c:1873
-#: src/main/model.c:1884 src/main/model.c:1890 src/main/model.c:1896
+#: src/main/model.c:1861 src/main/model.c:1866 src/main/model.c:1872
+#: src/main/model.c:1883 src/main/model.c:1889 src/main/model.c:1895
 msgid "term names will be truncated"
 msgstr ""
 
-#: src/main/model.c:1876
+#: src/main/model.c:1875
 msgid "complex variables are not currently allowed in model matrices"
 msgstr ""
 
-#: src/main/model.c:1900
+#: src/main/model.c:1899
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr ""
@@ -4972,11 +4976,11 @@ msgstr ""
 msgid "first argument must be atomic"
 msgstr ""
 
-#: src/main/paste.c:503
+#: src/main/paste.c:504
 msgid "Impossible mode ( x )"
 msgstr ""
 
-#: src/main/paste.c:588
+#: src/main/paste.c:589
 msgid "atomic vector arguments only"
 msgstr ""
 
@@ -5072,58 +5076,58 @@ msgstr ""
 msgid "file.access() is not implemented on this system"
 msgstr ""
 
-#: src/main/platform.c:1242 src/main/platform.c:1286 src/main/sysutils.c:1528
-#: src/main/sysutils.c:1542
+#: src/main/platform.c:1241 src/main/platform.c:1285 src/main/sysutils.c:1526
+#: src/main/sysutils.c:1540
 msgid "internal out-of-memory condition"
 msgstr ""
 
-#: src/main/platform.c:1282 src/main/sysutils.c:1538
+#: src/main/platform.c:1281 src/main/sysutils.c:1536
 #, c-format
 msgid "read error on '%s'"
 msgstr ""
 
-#: src/main/platform.c:1440
+#: src/main/platform.c:1439
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr ""
 
-#: src/main/platform.c:1474
+#: src/main/platform.c:1473
 #, c-format
 msgid "OS reports request to set locale to \"%s\" cannot be honored"
 msgstr ""
 
-#: src/main/platform.c:1774
+#: src/main/platform.c:1773
 msgid "'hostname' must be a character vector of length 1"
 msgstr ""
 
-#: src/main/platform.c:1780
+#: src/main/platform.c:1779
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr ""
 
-#: src/main/platform.c:1787
+#: src/main/platform.c:1786
 msgid "unknown format returned by gethostbyname"
 msgstr ""
 
-#: src/main/platform.c:1796
+#: src/main/platform.c:1795
 msgid "nsl() is not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:1843
+#: src/main/platform.c:1842
 #, c-format
 msgid "'%s' already exists"
 msgstr ""
 
-#: src/main/platform.c:1846
+#: src/main/platform.c:1845
 #, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr ""
 
-#: src/main/platform.c:1889
+#: src/main/platform.c:1888
 #, c-format
 msgid "'%ls' already exists"
 msgstr ""
 
-#: src/main/platform.c:2162
+#: src/main/platform.c:2161
 msgid "insufficient OS support on this platform"
 msgstr ""
 
@@ -5679,7 +5683,7 @@ msgstr ""
 #: src/main/saveload.c:243 src/main/saveload.c:252 src/main/saveload.c:1368
 #: src/main/saveload.c:1373 src/main/saveload.c:1417 src/main/saveload.c:1485
 #: src/main/saveload.c:1494 src/main/serialize.c:329 src/main/serialize.c:336
-#: src/main/serialize.c:1951 src/main/serialize.c:1959
+#: src/main/serialize.c:1952 src/main/serialize.c:1960
 msgid "read error"
 msgstr ""
 
@@ -5816,8 +5820,8 @@ msgstr ""
 msgid "an xdr complex data read error occurred"
 msgstr ""
 
-#: src/main/saveload.c:1770 src/main/serialize.c:1607
-#: src/main/serialize.c:2119 src/modules/internet/internet.c:349
+#: src/main/saveload.c:1770 src/main/serialize.c:1608
+#: src/main/serialize.c:2120 src/modules/internet/internet.c:349
 #: src/modules/internet/internet.c:407 src/modules/internet/internet.c:512
 msgid "write failed"
 msgstr ""
@@ -5872,7 +5876,7 @@ msgstr ""
 msgid "cannot save data -- unable to open '%s': %s"
 msgstr ""
 
-#: src/main/saveload.c:2230 src/main/serialize.c:1800
+#: src/main/saveload.c:2230 src/main/serialize.c:1801
 #, c-format
 msgid "cannot save to connections in version %d format"
 msgstr ""
@@ -5885,9 +5889,9 @@ msgstr ""
 msgid "cannot save XDR format to a text-mode connection"
 msgstr ""
 
-#: src/main/saveload.c:2267 src/main/serialize.c:1715
-#: src/main/serialize.c:1729 src/main/serialize.c:1849
-#: src/main/serialize.c:1871
+#: src/main/saveload.c:2267 src/main/serialize.c:1716
+#: src/main/serialize.c:1730 src/main/serialize.c:1850
+#: src/main/serialize.c:1872
 msgid "error writing to connection"
 msgstr ""
 
@@ -6110,108 +6114,108 @@ msgstr ""
 msgid "names in persistent strings are not supported yet"
 msgstr ""
 
-#: src/main/serialize.c:1380
+#: src/main/serialize.c:1381
 msgid "this version of R cannot read byte code objects"
 msgstr ""
 
-#: src/main/serialize.c:1383
+#: src/main/serialize.c:1384
 msgid "this version of R cannot read class references"
 msgstr ""
 
-#: src/main/serialize.c:1385
+#: src/main/serialize.c:1386
 msgid "this version of R cannot read generic function references"
 msgstr ""
 
-#: src/main/serialize.c:1396
+#: src/main/serialize.c:1397
 #, c-format
 msgid "ReadItem: unknown type %i, perhaps written by later version of R"
 msgstr ""
 
-#: src/main/serialize.c:1531
+#: src/main/serialize.c:1532
 #, c-format
 msgid ""
 "cannot read unreleased workspace version %d written by experimental R %d.%d.%"
 "d"
 msgstr ""
 
-#: src/main/serialize.c:1535
+#: src/main/serialize.c:1536
 #, c-format
 msgid ""
 "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or "
 "newer"
 msgstr ""
 
-#: src/main/serialize.c:1614
+#: src/main/serialize.c:1615
 msgid "read failed"
 msgstr ""
 
-#: src/main/serialize.c:1677
+#: src/main/serialize.c:1678
 msgid "error reading from ascii connection"
 msgstr ""
 
-#: src/main/serialize.c:1679
+#: src/main/serialize.c:1680
 msgid "unexpected format in ascii connection"
 msgstr ""
 
-#: src/main/serialize.c:1684 src/main/serialize.c:1698
+#: src/main/serialize.c:1685 src/main/serialize.c:1699
 msgid "error reading from connection"
 msgstr ""
 
-#: src/main/serialize.c:1739
+#: src/main/serialize.c:1740
 msgid "only ascii format can be written to text mode connections"
 msgstr ""
 
-#: src/main/serialize.c:1753
+#: src/main/serialize.c:1754
 msgid "only ascii format can be read from text mode connections"
 msgstr ""
 
-#: src/main/serialize.c:1798
+#: src/main/serialize.c:1799
 msgid "bad version value"
 msgstr ""
 
-#: src/main/serialize.c:1919 src/main/serialize.c:1941
-#: src/main/serialize.c:2002
+#: src/main/serialize.c:1920 src/main/serialize.c:1942
+#: src/main/serialize.c:2003
 msgid "serialization is too large to store in a raw vector"
 msgstr ""
 
-#: src/main/serialize.c:1923
+#: src/main/serialize.c:1924
 msgid "cannot allocate buffer"
 msgstr ""
 
-#: src/main/serialize.c:2097 src/main/serialize.c:2166
+#: src/main/serialize.c:2098 src/main/serialize.c:2167
 msgid "not a proper file name"
 msgstr ""
 
-#: src/main/serialize.c:2099
+#: src/main/serialize.c:2100
 msgid "not a proper raw vector"
 msgstr ""
 
-#: src/main/serialize.c:2120
+#: src/main/serialize.c:2121
 msgid "could not determine file position"
 msgstr ""
 
-#: src/main/serialize.c:2168
+#: src/main/serialize.c:2169
 msgid "bad offset/length argument"
 msgstr ""
 
-#: src/main/serialize.c:2192 src/main/serialize.c:2205
-#: src/main/serialize.c:2214 src/main/serialize.c:2224
-#: src/main/serialize.c:2237
+#: src/main/serialize.c:2193 src/main/serialize.c:2206
+#: src/main/serialize.c:2215 src/main/serialize.c:2225
+#: src/main/serialize.c:2238
 #, c-format
 msgid "seek failed on %s"
 msgstr ""
 
-#: src/main/serialize.c:2209 src/main/serialize.c:2218
-#: src/main/serialize.c:2228 src/main/serialize.c:2241
+#: src/main/serialize.c:2210 src/main/serialize.c:2219
+#: src/main/serialize.c:2229 src/main/serialize.c:2242
 #, c-format
 msgid "read failed on %s"
 msgstr ""
 
-#: src/main/serialize.c:2260
+#: src/main/serialize.c:2261
 msgid "bad environment"
 msgstr ""
 
-#: src/main/serialize.c:2262
+#: src/main/serialize.c:2263
 msgid "bad variable names"
 msgstr ""
 
@@ -6219,7 +6223,7 @@ msgstr ""
 msgid "only atomic vectors can be tested to be sorted"
 msgstr ""
 
-#: src/main/sort.c:309 src/main/sort.c:873 src/main/sort.c:972
+#: src/main/sort.c:309 src/main/sort.c:873 src/main/sort.c:971
 msgid "'decreasing' must be TRUE or FALSE"
 msgstr ""
 
@@ -6253,11 +6257,11 @@ msgstr ""
 msgid "invalid ties.method for rank() [should never happen]"
 msgstr ""
 
-#: src/main/sort.c:979
+#: src/main/sort.c:978
 msgid "negative value in 'x'"
 msgstr ""
 
-#: src/main/sort.c:990
+#: src/main/sort.c:989
 msgid "too large a range of values in 'x'"
 msgstr ""
 
@@ -6678,74 +6682,74 @@ msgstr ""
 msgid "no 'tempdir'"
 msgstr ""
 
-#: src/main/sysutils.c:314 src/main/sysutils.c:317 src/main/sysutils.c:409
-#: src/main/sysutils.c:411 src/main/sysutils.c:447
+#: src/main/sysutils.c:314 src/main/sysutils.c:317 src/main/sysutils.c:408
+#: src/main/sysutils.c:410 src/main/sysutils.c:446
 msgid "wrong type for argument"
 msgstr ""
 
-#: src/main/sysutils.c:413
+#: src/main/sysutils.c:412
 msgid "wrong length for argument"
 msgstr ""
 
-#: src/main/sysutils.c:434
+#: src/main/sysutils.c:433
 msgid "'Sys.setenv' is not available on this system"
 msgstr ""
 
-#: src/main/sysutils.c:479
+#: src/main/sysutils.c:477
 msgid "this system cannot unset environment variables: setting to \"\""
 msgstr ""
 
-#: src/main/sysutils.c:490
+#: src/main/sysutils.c:488
 msgid "'Sys.unsetenv' is not available on this system"
 msgstr ""
 
-#: src/main/sysutils.c:555
+#: src/main/sysutils.c:553
 msgid "'x' must be a character vector"
 msgstr ""
 
-#: src/main/sysutils.c:648 src/main/sysutils.c:708 src/main/sysutils.c:811
-#: src/main/sysutils.c:885
+#: src/main/sysutils.c:646 src/main/sysutils.c:706 src/main/sysutils.c:809
+#: src/main/sysutils.c:883
 #, c-format
 msgid "'%s' must be called on a CHARSXP"
 msgstr ""
 
-#: src/main/sysutils.c:1312
+#: src/main/sysutils.c:1310
 msgid "cannot mkdir R_TempDir"
 msgstr ""
 
-#: src/main/sysutils.c:1316 src/main/sysutils.c:1323 src/main/sysutils.c:1326
+#: src/main/sysutils.c:1314 src/main/sysutils.c:1321 src/main/sysutils.c:1324
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr ""
 
-#: src/main/sysutils.c:1335
+#: src/main/sysutils.c:1333
 msgid "cannot allocate R_TempDir"
 msgstr ""
 
-#: src/main/sysutils.c:1354
+#: src/main/sysutils.c:1352
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr ""
 
-#: src/main/sysutils.c:1369
+#: src/main/sysutils.c:1367
 msgid "cannot find unused tempfile name"
 msgstr ""
 
-#: src/main/sysutils.c:1372
+#: src/main/sysutils.c:1370
 msgid "allocation failed in R_tmpnam"
 msgstr ""
 
-#: src/main/sysutils.c:1398
+#: src/main/sysutils.c:1396
 msgid "proc.time() is not implemented on this system"
 msgstr ""
 
-#: src/main/sysutils.c:1450
+#: src/main/sysutils.c:1448
 msgid "setTimelimit() is not implemented on this system"
 msgstr ""
 
-#: src/main/sysutils.c:1478
+#: src/main/sysutils.c:1476
 msgid "setSessionTimelimit() is not implemented on this system"
 msgstr ""
 
-#: src/main/sysutils.c:1516
+#: src/main/sysutils.c:1514
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr ""
 

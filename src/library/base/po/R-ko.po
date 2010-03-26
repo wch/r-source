@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-22 15:15\n"
+"POT-Creation-Date: 2010-03-26 08:42\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -762,12 +762,6 @@ msgstr "패키지 '%s'는 올바르고 인스톨 되지 않았습니다"
 
 #, fuzzy
 msgid "package '%s' was built before R 2.10.0: please re-install it"
-msgstr "패키지 '%s' R 2.0.0 이전 것입니다. 그것을 다시 인스톨을 해주십시오"
-
-#, fuzzy
-msgid ""
-"package '%s' claims to be built under R version %s but is missing some help "
-"files and needs to be re-installed"
 msgstr "패키지 '%s' R 2.0.0 이전 것입니다. 그것을 다시 인스톨을 해주십시오"
 
 msgid "This is R %s, package '%s' needs %s %s"
@@ -1657,6 +1651,12 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "package '%s' claims to be built under R version %s but is missing some "
+#~ "help files and needs to be re-installed"
+#~ msgstr "패키지 '%s' R 2.0.0 이전 것입니다. 그것을 다시 인스톨을 해주십시오"
 
 #, fuzzy
 #~ msgid "'x' must have length 1"

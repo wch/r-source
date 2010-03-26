@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-22 15:15\n"
+"POT-Creation-Date: 2010-03-26 08:42\n"
 "PO-Revision-Date: 2009-10-07 19:17+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -751,14 +751,6 @@ msgstr " パッケージ '%s' は正しくインストールされませんで�
 msgid "package '%s' was built before R 2.10.0: please re-install it"
 msgstr ""
 " パッケージ '%s' は R 2.0.0 以前に造らました。新しくインストールして下さい "
-
-#, fuzzy
-msgid ""
-"package '%s' claims to be built under R version %s but is missing some help "
-"files and needs to be re-installed"
-msgstr ""
-"パッケージ '%s' はバージョン %s の R の下で造られました。ヘルプは正しく機能し"
-"ません。新しくインストールしてください "
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr " これは R %s です。パッケージ '%s' は %s %s を必要とします "
@@ -1627,6 +1619,14 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#, fuzzy
+#~ msgid ""
+#~ "package '%s' claims to be built under R version %s but is missing some "
+#~ "help files and needs to be re-installed"
+#~ msgstr ""
+#~ "パッケージ '%s' はバージョン %s の R の下で造られました。ヘルプは正しく機"
+#~ "能しません。新しくインストールしてください "
 
 #~ msgid "'x' must have length 1"
 #~ msgstr " 'x' は長さ 1 でなければなりません "

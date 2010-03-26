@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-11-12 09:43+0000\n"
+"POT-Creation-Date: 2010-03-26 08:42+0000\n"
 "PO-Revision-Date: 2009-10-15 02:30-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -28,7 +28,7 @@ msgstr "ошибка разбора выражения R"
 msgid "tcl error.\n"
 msgstr "ошибка tcl.\n"
 
-#: tcltk.c:187 tcltk.c:701
+#: tcltk.c:187 tcltk.c:702
 msgid "invalid argument"
 msgstr "неправильный аргумент"
 
@@ -46,7 +46,7 @@ msgstr ""
 msgid "argument is not of correct type"
 msgstr "аргументы неправильного типа"
 
-#: tcltk.c:660
+#: tcltk.c:661
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "нет переменной DISPLAY, поэтому Tk недоступен"
 

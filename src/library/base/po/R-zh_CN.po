@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-22 15:15\n"
+"POT-Creation-Date: 2010-03-26 08:42\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -733,12 +733,6 @@ msgstr "程辑包'%s'没有正确安装"
 #, fuzzy
 msgid "package '%s' was built before R 2.10.0: please re-install it"
 msgstr "程辑包'%s'是在R版本2.0.0之前建的：你得重新组装"
-
-#, fuzzy
-msgid ""
-"package '%s' claims to be built under R version %s but is missing some help "
-"files and needs to be re-installed"
-msgstr "程辑包'%s'是在R版本%s之前建的，与目前的帮助文件不相容，请重新组装"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "这是R%s，程辑包'%s'需要%s %s "
@@ -1578,6 +1572,12 @@ msgstr[0] "S3方法%s在NAMESPACE里有声明但不存在"
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "package '%s' claims to be built under R version %s but is missing some "
+#~ "help files and needs to be re-installed"
+#~ msgstr "程辑包'%s'是在R版本%s之前建的，与目前的帮助文件不相容，请重新组装"
 
 #~ msgid "'x' must have length 1"
 #~ msgstr "'x'的长度一定得为一"
