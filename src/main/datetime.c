@@ -487,14 +487,11 @@ SEXP attribute_hidden do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-#ifdef WIN64
+#ifdef Win32
 extern void tzset(void);
-/* tzname is in the headers as an import */
+/* tzname is in the headers as an import on MinGW-w64 */
 #define tzname Rtzname
 extern char *Rtzname[2];
-#elif defined Win32
-extern void tzset(void);
-extern char *tzname[2];
 #elif defined(__CYGWIN__)
 extern __declspec(dllimport) char *tzname[2];
 #else

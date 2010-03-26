@@ -41,17 +41,14 @@ BSD and Linux did.
 #include "time.h"
 #undef _NO_OLDNAMES
 
-#ifdef WIN64
-/* tzname is in the headers as an import */
-#define tzname Rtzname
-#endif
-
 #include <errno.h>
 #ifndef EOVERFLOW
 # define EOVERFLOW 79
 #endif
 
 #ifdef WIN32
+/* tzname is in the headers as an import in MinGW-w64 */
+#define tzname Rtzname
 #define gmtime R_gmtime
 #define localtime R_localtime
 #define mktime R_mktime
