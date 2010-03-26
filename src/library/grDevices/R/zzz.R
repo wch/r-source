@@ -40,7 +40,9 @@
         }
     } else defdev
 
-    if (!.Call("cairoProps", 2L, PACKAGE="grDevices")) X11.options(type = "Xlib")
+    if (.Platform$OS.type != "windows"
+        && !.Call("cairoProps", 2L, PACKAGE="grDevices"))
+        X11.options(type = "Xlib")
     op.grDevices <- c(list(locatorBell = TRUE, device.ask.default = FALSE),
                   extras, device = device)
     toset <- !(names(op.grDevices) %in% names(op))
