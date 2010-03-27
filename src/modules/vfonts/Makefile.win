@@ -12,7 +12,7 @@ FFLAGS=$(OPTFLAGS)
 OBJS=$(CSOURCES:.c=.o) dllversion.o
 
 ../../../modules$(R_ARCH)/$(MODULE).dll: $(OBJS)
-	$(MKDIR) -p ../../../modules
+	@$(MKDIR) -p ../../../modules$(R_ARCH)
 	@$(ECHO) "EXPORTS" > vfonts.def
 	@$(ECHO) " R_init_vfonts" >> vfonts.def
 	$(DLL) -shared  -o $@ $^ vfonts.def -L../../../$(IMPDIR) -lR

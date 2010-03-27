@@ -25,7 +25,7 @@ FFLAGS=$(FOPTFLAGS)
 dlamch-FFLAGS=-ffloat-store
 
 install: $(MODULE).dll
-	$(MKDIR) -p ../../../modules$(R_ARCH)
+	@$(MKDIR) -p ../../../modules$(R_ARCH)
 	$(CP) $< ../../../modules$(R_ARCH)/$(MODULE).dll
 
 lapack-DLLLIBS=-L../../../$(IMPDIR) -lRlapack -lRblas -lR
