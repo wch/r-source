@@ -117,7 +117,8 @@ later).
 * Does R run under Windows Vista?::  
 * Quotes don't come out right on the console/terminal/pager::  
 * There is no tilde on my keyboard::  
-* Can I use R on 64-bit Windows?::  
+* Can I use R on 64-bit Windows?::
+* Should I run 32 bit or 64 bit R?::
 @end menu
 
 
@@ -146,7 +147,7 @@ standard 32-bit version works well on x64 Windows: @xref{Can I use R
 on 64-bit Windows?}.
 
 We only test on versions of Windows currently supported by Microsoft,
-mainly on 32-bit XP SP3 and 64-bit Vista and Windows Server 2008.
+mainly on 32-bit XP SP3 and 64-bit Windows 7 and Windows Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical install
@@ -809,7 +810,7 @@ On all Windows versions you should be able to get tilde by holding the
 down the left Alt key and typing 0126 on the numeric keypad, then
 releasing the Alt key.
 
-@node Can I use R on 64-bit Windows?,  , There is no tilde on my keyboard, Installation and Usage
+@node Can I use R on 64-bit Windows?,  Should I run 32 bit or 64 bit R?, There is no tilde on my keyboard, Installation and Usage
 @section Can I use R on 64-bit Windows?
 
 The standard build of R for Windows (including the binary installer on
@@ -821,19 +822,9 @@ Windows) subsystem: they run in almost exactly the same way as on a
 32-bit version of Windows, except that the address limit for the R
 process is 4GB (rather than 2GB or perhaps 3GB).
 
-The advantage of a native 64-bit application is that it gets a 64-bit
-address space and hence can address far more than 4GB (how much depends
-on the version of Windows, but in principle 8TB).  This allows a single
-process to take advantage of more than 4GB of RAM (if available) and for
-R's memory manager to more easily handle large objects (in particular
-those of 1GB or more).  The disadvantages are that all the pointers are
-8 rather than 4 bytes and so small objects are larger and more data has
-to be moved around, and that far less external software is available for
-64-bit versions of the OS.
-
 As from R 2.11.0 there is a native 64-bit version of R: see the `R
 Installation and Administration Manual'.  A binary installer is
-available from @url{http://cran.r-project.org/bin/windows64/contrib/}.
+available from @url{http://cran.r-project.org/bin/windows64/base/}.
 Most binary packages are available from CRAN or CRANextras, but fewer
 hard-to-install packages are available than for the standard 32-bit
 build.  At the time of writing Bioconductor packages are not available
@@ -853,6 +844,20 @@ build, e.g.@:
 .libPaths(if(.Machine$sizeof.pointer == 8) "~/Rlibs/x64" else "~/Rlibs")
 @end example
 
+@node Should I run 32 bit or 64 bit R?, , Can I use R on 64-bit Windows?,  Installation and Usage
+@section Should I run 32 bit or 64 bit R?
+
+For most users (especially beginners) we would recommend using the 32 bit build.
+
+The advantage of a native 64-bit application is that it gets a 64-bit
+address space and hence can address far more than 4GB (how much depends
+on the version of Windows, but in principle 8TB).  This allows a single
+process to take advantage of more than 4GB of RAM (if available) and for
+R's memory manager to more easily handle large objects (in particular
+those of 1GB or more).  The disadvantages are that all the pointers are
+8 rather than 4 bytes and so small objects are larger and more data has
+to be moved around, and that far less external software is available for
+64-bit versions of the OS.
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
