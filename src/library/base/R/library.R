@@ -560,9 +560,9 @@ function(chname, package = NULL, lib.loc = NULL,
 	else    file.path(pkg, "libs")
         file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
         if(file.exists(file)) break else file <- ""
-        if(r_arch == "x64") { # 64-bit Windows, back-compatibility
-        file <- file.path(pkg, "libs", paste(chname, file.ext, sep = ""))
-        if(file.exists(file)) break else file <- ""
+##         if(r_arch == "x64") { # 64-bit Windows, back-compatibility
+##         file <- file.path(pkg, "libs", paste(chname, file.ext, sep = ""))
+##         if(file.exists(file)) break else file <- ""
         }
     }
     if(file == "")
