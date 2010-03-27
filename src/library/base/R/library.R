@@ -563,7 +563,7 @@ function(chname, package = NULL, lib.loc = NULL,
 ##         if(r_arch == "x64") { # 64-bit Windows, back-compatibility
 ##         file <- file.path(pkg, "libs", paste(chname, file.ext, sep = ""))
 ##         if(file.exists(file)) break else file <- ""
-        }
+##        }
     }
     if(file == "")
         stop(gettextf("shared library '%s' not found", chname), domain = NA)
