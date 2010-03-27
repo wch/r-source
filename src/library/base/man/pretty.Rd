@@ -6,11 +6,14 @@
 \name{pretty}
 \title{Pretty Breakpoints}
 \usage{
-pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
+pretty(x, \dots)
+
+\method{pretty}{default}(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
        high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
-       eps.correct = 0)
+       eps.correct = 0, \dots)
 }
 \alias{pretty}
+\alias{pretty.default}
 \arguments{
   \item{x}{an object coercible to numeric by \code{\link{as.numeric}}.}
   \item{n}{integer giving the \emph{desired} number of
@@ -31,6 +34,7 @@ pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
     \emph{epsilon correction} is made at the boundaries such that
     the result boundaries will be outside \code{range(x)}; in the
     \emph{small} case, the correction is only done if \code{eps.correct >=2}.}
+  \item{\dots}{further arguments for methods.}
 }
 \description{
   Compute a  sequence of about \code{n+1} equally spaced \sQuote{round}

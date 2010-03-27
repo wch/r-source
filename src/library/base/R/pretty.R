@@ -14,9 +14,13 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-pretty <- function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
-                   high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
-                   eps.correct = 0)
+pretty <- function(x, ...) UseMethod("pretty")
+
+
+pretty.default <-
+    function(x, n=5, min.n= n %/% 3, shrink.sml = 0.75,
+             high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
+             eps.correct = 0, ...)
 {
     x <- as.numeric(x)
     if(length(x)==0L)

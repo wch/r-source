@@ -52,6 +52,10 @@ S3method("as.raster", "array")
 
 S3method("print", "raster")
 
+S3method(pretty, Date)
+S3method(pretty, POSIXt)
+
+
 if(tools:::.OStype() == "windows") {
     export(bringToTop, msgWindow, win.graph, win.metafile, win.print,
            windows, windows.options, windowsFont, windowsFonts)

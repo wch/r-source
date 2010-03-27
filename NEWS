@@ -368,6 +368,9 @@ NEW FEATURES
     o	New arrayInd() such that which(x, arr.ind = TRUE) for an array
 	'x' is now equivalent to arrayInd(which(x), dim(x), dimnames(x)).
 
+    o   pretty() is now generic, with new methods for "Date" and
+     	"POSIXt" classes (based on code contributed by Felix Andrews).
+
 
 DEPRECATED & DEFUNCT
 
