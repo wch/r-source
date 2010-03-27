@@ -50,6 +50,11 @@ iconvlist()
   Most versions of \code{iconv} will allow transliteration by appending
   \samp{//TRANSLIT} to the \code{to} encoding: see the examples.
 
+  
+  Encoding \code{"ASCII"} is also accepted, but prior to \R 2.10.0
+  conversion to \code{"ASCII"} on Windows might have involved dropping
+  accents.
+  
   Any encoding bits (see \code{\link{Encoding}}) on elements of \code{x}
   are ignored: they will always be translated as if from \code{from}
   even if declared otherwise.
