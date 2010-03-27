@@ -50,12 +50,10 @@ BINPREF=
 # 32- or 64-bit Windows?  For MinGW-w64.
 WIN=32
 ifeq ($(strip $(WIN)),64)
-# Mainly -DWIN64 is used, but this define is used in a few places
-DEFINES=-DW64
-BINPREF=x86_64-w64-mingw32-
+BINPREF = x86_64-w64-mingw32-
 # for sub-architecture
-R_ARCH="/x64"
-DEFINES=-DW64 -DR_ARCH='"x64"'
+R_ARCH = /x64
+DEFINES = -DR_ARCH='"x64"'
 endif
 
 # set to use ICU (experimental)
