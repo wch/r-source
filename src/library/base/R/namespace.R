@@ -1216,10 +1216,10 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
     defenv <- if(genname %in% groupGenerics) .BaseNamespaceEnv
     else {
         genfun <- get(genname, envir = envir)
-        if(.isMethodsDispatchOn() && methods:::is(genfun, "genericFunction"))
-            genfun <- methods:::slot(genfun, "default")@methods$ANY
+        if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
+	    genfun <- methods::slot(genfun, "default")
         if (typeof(genfun) == "closure") environment(genfun)
-        else .BaseNamespaceEnv
+	else .BaseNamespaceEnv
     }
     if (! exists(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))
         assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = baseenv()),
