@@ -58,7 +58,7 @@ them on the r-devel mailing list---but only if they persist for a day or more.</
 <ul>
   <li><a href="../../windows/base/rw-FAQ.html#Does-R-run-under-Windows-Vista_003f">How do I install R when using Windows Vista?</a></li>
   <li><a href="../../windows/base/rw-FAQ.html#What_0027s-the-best-way-to-upgrade_003f">How do I update packages in my previous version of R?</a></li>
-  <li><a href="../../windows/base/rw-FAQ.html#Should-I-run-32-bit-or-64-bit-R_003f">Should I run 32 bit or 64 bit R?</a></li>
+  <li><a href="../../windows/base/rw-FAQ.html#Should-I-run-32-bit-or-64-bit-R_003f">Should I run 32-bit or 64-bit R?</a></li>
 </ul>
   
 <p>Please see the <a
