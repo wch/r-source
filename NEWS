@@ -20,6 +20,9 @@ NEW FEATURES
 	"POSIXlt" objects rather than to the current timezone as set
 	by the default for the 'tz' argument.  (Wish of PR#14182.)
 
+    o   pretty() is now generic, with new methods for "Date" and
+     	"POSIXt" classes (based on code contributed by Felix Andrews).
+
 
 DEPRECATED & DEFUNCT
 
@@ -407,9 +410,6 @@ NEW FEATURES
 
     o	New arrayInd() such that which(x, arr.ind = TRUE) for an array
 	'x' is now equivalent to arrayInd(which(x), dim(x), dimnames(x)).
-
-    o   pretty() is now generic, with new methods for "Date" and
-     	"POSIXt" classes (based on code contributed by Felix Andrews).
 
 
 DEPRECATED & DEFUNCT
