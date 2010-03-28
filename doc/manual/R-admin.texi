@@ -1313,7 +1313,9 @@ such as those from Intel and PGI could be used (and have been by @R{}
 redistributors).
 
 Support for MinGW-w64 was developed in the R sources over the period
-2008--10 and was first released as part of @R{} 2.11.0.
+2008--10 and was first released as part of @R{} 2.11.0.  The binary
+version available from @acronym{CRAN} was built with the MinGW-w64
+toolchain described in this section, using static linking.
 
 Several versions of the MinGW-w64 toolchain are available: use one of them
 to replace the @file{MinGW/bin} directory of @code{Rtools} in your path
@@ -1322,15 +1324,15 @@ Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64} and
 @code{BINPREF} appropriate to your toolchain, and make @R{} in the usual
 way.
 
-The toolchain used to build the CRAN distribution is technically a
-cross-compiler: the tools run under 32-bit Windows but produce code to
-run under 64-bit Windows.@footnote{As the @R{} build process itself runs
-@R{}, it has to be done under 64-bit Windows.  So does installation of
-source packages.} This comes from
+The toolchain we use is technically a cross-compiler: the tools run
+under 32-bit Windows but produce code to run under 64-bit
+Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
+be done under 64-bit Windows.  So does installation of source packages.}
+This comes from
 @url{http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Automated%20Builds/}
 and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100322.zip}.
 (Care is needed: that site also has compilers targeting 32-bit Windows
-and running on other host OSes.  You do want the version with
+and running on other host OSes.  You do want the `release' version with
 @code{-1.0-} in the name.  There was a native x64 toolchain under
 `Personal builds'.)  Some versions of that toolchain by default use
 dynamic linking to the compiler runtimes, which causes problems (see
@@ -1342,11 +1344,10 @@ be converted to static linking by removing the files like
 @end example
 
 @noindent
-where @code{...} is the top-level directory of the toolchain.  This has
-been done for the CRAN builds.  If you use a dynamically-linking
-toolchain be sure to arrange to distribute the required run-time DLLs
-(and note the requirements that their GPL license imposes on
-re-distribution).
+where @code{...} is the top-level directory of the toolchain. If do you
+use a dynamically-linking toolchain be sure to arrange to distribute the
+required run-time DLLs (and note the requirements that their GPL license
+imposes on re-distribution).
 
 @c Other toolchains are available: the time of writing native 64-bit
 @c compilers from @url{ftp://ftp.equation.com/gcc/} and from
@@ -1357,19 +1358,22 @@ To build package @pkg{tcltk} you need to unpack
 of the source tree: otherwise edit @file{src/library/tcltk/Makefile.win}
 to make a stub package.
 
-The default is @code{options(pkgType="win64.binary")}, supported so far
-on both @acronym{CRAN} and @acronym{CRANextras} but not for
-Bioconductor.  Packages using Gtk+ (@pkg{Cairo}, @pkg{RGtk2},
-@pkg{cairoDevice} and those that depend on them) need the @file{bin}
-directory of the distribution at
+The default is @code{options(pkgType="win64.binary")}, supported for
+@R{} 2.11.x on both @acronym{CRAN} and @acronym{CRANextras}.  Packages
+using Gtk+ (@pkg{Cairo}, @pkg{RGtk2}, @pkg{cairoDevice} and those that
+depend on them) need the @file{bin} directory of the distribution at
 @url{http://www.gtk.org/download-windows-64bit.html} in the path: note
 that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
 you need the correct one first in your path if using both.
 
 A package-building service is available at
-@url{http://win-builder.r-project.org/}.  Notes on porting packages can
-be found at
-@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
+@url{http://win-builder.r-project.org/}, and some notes on porting
+packages can be found at
+@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.  A port
+of Bioconductor package @pkg{Rgraphviz} is available on
+@acronym{CRANextras} (see the previous URL for sources for GraphViz),
+but other Bioconductor will at present need to be installed as source
+packages.
 
 The default memory limit will be the amount of installed RAM: it can
 be changed by using (preferably) @option{--max-mem-size=} at startup or
