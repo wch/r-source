@@ -393,12 +393,12 @@ DEPRECATED & DEFUNCT
 
     o	In the 'methods' package, the MethodsList metadata objects which
 	had been superseded by hash tables (environments) since R
-	2.8.0 are being phased out.  At the present stage stub objects
-	are generated and a warning issued if these are accessed:
-	shortly none will be generated.
+	2.8.0 are being phased out.  Objects of this class are no
+	longer assigned or used as metadata by the package.
 
 	getMethods() is now deprecated, with its internal use replaced
-        by findMethods() and other changes.
+        by findMethods() and other changes.  Creating objects from the
+        MethodsList class is also deprecated.
 
     o 	Parsing strings containing both octal/hex and Unicode escapes
 	now gives a warning and will become an error in R 2.12.0.

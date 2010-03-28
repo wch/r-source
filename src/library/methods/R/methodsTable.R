@@ -116,9 +116,16 @@
 }
 
 .storeMlist <- function(table, sig, mlist, i, add, fenv) {
+    ## once generic functions are installed from 2.11.0 or later, this should
+    ## only be called with mlist a method or NULL.
+    if(is.null(mlist)) return(table)
+    m <- (if(is(mlist, "MethodsList")) mlist@methods
+        else list(ANY=mlist)
+        )
+  ## once MethodsList is defunct, this should be rewritten (and renamed!)
+        
   ## the methods slot is a list named by class, with elements either
   ## method definitions or mlists
-  m <- mlist@methods
   classes <- names(m)
   for(j in seq_along(m)) {
     el <- m[[j]]
@@ -614,7 +621,7 @@
     argSyms <- lapply(generic@signature, as.name)
     assign(".SigArgs", argSyms, envir = env)
     if(initialize) {
-        mlist <- generic@default # either a list with the default or an empty list
+        mlist <- generic@default # from 2.11.0: method, primitive or NULL, not MethodsList 
         mtable <- .mlistAddToTable(generic, mlist) # by default, adds to an empty table
         assign(".MTable", mtable, envir = env)
     }
@@ -936,10 +943,12 @@ outerLabels <- function(labels, new) {
   .cacheMethodInTable(fdef, signature, definition, table)
 }
 
+## Assertion: following is unused
 .assignMethodsMetaTable <- function(mlist, generic, where, overwrite = TRUE) {
+    .MlistDeprecated(".assignMethodsMetaTable")
     tname <- .TableMetaName(generic@generic, generic@package)
     if(overwrite || !exists(tname, envir = where, inherits = FALSE)) {
-        table <- .mlistAddToTable(generic, mlist)
+        table <- .mlistAddToTable(generic, mlist) # asserted never to be called.
         assign(tname, table, envir = where)
     }
 }
@@ -1058,7 +1067,7 @@ listFromMethods <- function(generic, where, table) {
         table <- get(what, envir = where)
     else
         table <- new.env()
-    value <- new("MethodsList", argument = generic@default@argument)
+    value <- new("MethodsList", argument = as.name(generic@signature[[1]]))
     allNames <- objects(table, all.names = TRUE)
     if(length(allNames) == 0L)
       return(value)

@@ -17,6 +17,10 @@
 ## give the base namespace a table for registered methods
 ".__S3MethodsTable__." <- new.env(hash = TRUE, parent = baseenv())
 
+## NOTA BENE:
+##  1) This code should work also when methods is not yet loaded
+##  2) We use  ':::' instead of '::' inside the code below, for efficiency only
+
 getNamespace <- function(name) {
     ns <- .Internal(getRegisteredNamespace(as.name(name)))
     if (! is.null(ns)) ns
@@ -814,7 +818,7 @@ namespaceImportFrom <- function(self, ns, vars, generics, packages)
 	    if (.isMethodsDispatchOn() && methods:::isGeneric(n, ns)) {
 		## warn only if generic overwrites a function which
 		## it was not derived from
-		genNs <- methods:::slot(get(n, envir = ns), "package")
+		genNs <- get(n, envir = ns)@package
 		genImpenv <- environmentName(environment(get(n, envir = impenv)))
 		if (!identical(genNs, genImpenv) ||
 		    ## warning if generic overwrites another generic
@@ -1216,10 +1220,10 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
     defenv <- if(genname %in% groupGenerics) .BaseNamespaceEnv
     else {
         genfun <- get(genname, envir = envir)
-        if(.isMethodsDispatchOn() && methods:::is(genfun, "genericFunction"))
-            genfun <- methods:::slot(genfun, "default")@methods$ANY
+        if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
+	    genfun <- methods::slot(genfun, "default")
         if (typeof(genfun) == "closure") environment(genfun)
-        else .BaseNamespaceEnv
+	else .BaseNamespaceEnv
     }
     if (! exists(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))
         assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = baseenv()),
@@ -1274,7 +1278,7 @@ registerS3methods <- function(info, package, env)
                               genname, package), call. = FALSE, domain = NA)
             genfun <- get(genname, envir = parent.env(envir))
             if(.isMethodsDispatchOn() && methods:::is(genfun, "genericFunction")) {
-                genfun <- methods:::slot(genfun, "default")@methods$ANY
+                genfun <- genfun@default
                 warning(gettextf("found an S4 version of %s so it has not been imported correctly",
                                  sQuote(genname)), call. = FALSE, domain = NA)
             }
