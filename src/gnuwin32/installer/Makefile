@@ -117,8 +117,10 @@ md5sums:
 
 fixups:
 	echo "make.packages.html(.Library, verbose=FALSE)" | $(RPREFIX)/$(BINDIR)/rterm --vanilla --slave LC_COLLATE=C
-	$(CP) -pr $(R_HOME)/Tcl $(RPREFIX)
-
+ifeq ($(strip $(WIN)),64)
+else
+	$(CP) -pr $(R_HOME)/Tcl64 $(RPREFIX)
+endif
 
 ## for Inno Setup installer
 

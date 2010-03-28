@@ -1355,8 +1355,9 @@ imposes on re-distribution).
 
 To build package @pkg{tcltk} you need to unpack
 @url{http://www.stats.ox.ac.uk/pub/Rtools/R64_Tcl_8-5-8.zip} at the top
-of the source tree: otherwise edit @file{src/library/tcltk/Makefile.win}
-to make a stub package.
+of the source tree and @emph{rename the top-level directory} as @file{Tcl64}:
+otherwise edit @file{src/library/tcltk/Makefile.win} to make a stub
+package.
 
 The default is @code{options(pkgType="win64.binary")}, supported for
 @R{} 2.11.x on both @acronym{CRAN} and @acronym{CRANextras}.  Packages

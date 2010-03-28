@@ -437,6 +437,10 @@ sub listFiles {
 	    $component = "tcl/chm";
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
+	} elsif (m/^Tcl64\\doc\\.*chm$/) {
+	    $component = "tcl/chm";
+	} elsif (m/^Tcl64/) {
+	    $component = "tcl";
 	} elsif (m/^library\\grid\\doc/ || m/^library\\Matrix\\doc/) {
 	    $component = "libdocs";
 	} elsif (m/^share\\locale/ 
