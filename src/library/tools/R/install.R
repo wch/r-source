@@ -287,6 +287,7 @@
                     sQuote(pkg_name), " as ", filename)
         }
 
+        message("")  # ensure next starts on a new line
         starsmsg(stars, "DONE (", pkg_name, ")")
 
         curPkg <<- character()
@@ -852,6 +853,7 @@
         if (test_load) {
 	    starsmsg(stars, "testing if installed package can be loaded")
             res <- try(suppressPackageStartupMessages(library(pkg_name, lib.loc = lib, character.only = TRUE, logical.return = TRUE)))
+            ## this does sometimes have an incomplete last line.
             if (inherits(res, "try-error") || !res)
                 errmsg("loading failed")
         }
