@@ -2,6 +2,8 @@
 
 include ../MkRules
 R_HOME = ../../..
+## for TCL_HOME
+RHOME = ../../..
 include $(R_HOME)/share/make/vars.mk
 
 ## use next to install other packages from main library
