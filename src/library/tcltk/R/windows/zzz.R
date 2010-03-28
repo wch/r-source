@@ -21,7 +21,9 @@
     packageStartupMessage("Loading Tcl/Tk interface ...",
                           domain = "R-tcltk", appendLF = FALSE)
     if(!nzchar(tclbin <- Sys.getenv("MY_TCLTK"))) {
-        tclbin <- file.path(R.home(), "Tcl/bin")
+        tclbin <- file.path(R.home(),
+                            if(.Machine$sizeof.pointer == 8) "Tcl64" else "Tcl",
+                            "bin")
         if(!file.exists(tclbin))
             stop("Tcl/Tk support files were not installed", call.=FALSE)
     }
