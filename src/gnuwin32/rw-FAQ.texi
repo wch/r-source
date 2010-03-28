@@ -828,7 +828,7 @@ available from @url{http://cran.r-project.org/bin/windows64/base/}.
 Most binary packages are available from CRAN or CRANextras, but fewer
 hard-to-install packages are available than for the standard 32-bit
 build.  At the time of writing Bioconductor packages apart from
-@pkg{Rgraphviz} are not available in binary form for 64-bit Windows R
+@code{Rgraphviz} are not available in binary form for 64-bit Windows R
 (but installing source packages can be tried).
 
 It is planned to merge the 32- and 64-bit builds into a common
