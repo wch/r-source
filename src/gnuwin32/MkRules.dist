@@ -1,7 +1,7 @@
 #-*- Makefile -*-
-## This file contains tabs: make sure your editor leaves them unchanged.
-## As from R 2.9.0 it is only used when building R itself (and not packages),
-## but it does customize etc/Makeconf as from R 2.11.0
+
+## This is only used when building R itself but it does customize
+## etc/Makeconf using LOCAL_SOFT, BINPREF[64], IMPLIB and R_ARCH
 
 ## =========== configuration macros for building packages ================
 # Absolute path to '/usr/local' software collection.  The versions used
@@ -40,18 +40,17 @@ TCL_VERSION = 85
 
 # We normally link directly against DLLs, 
 # but this macro forces the use of import libs
-# Needed if using other compilers, 
-# including some versions of MinGW-w64 (but not the ones we use)
+# Needed if using other compilers, including some versions of MinGW-w64
 # USE_IMPLIBS = YES
 
-# Some of the 64-bit compilers are in fact cross-compilers and have prefixes
-BINPREF=
+# Some of the compilers are in fact cross-compilers and have prefixes
+# prefix for 32-bit compiler
+BINPREF =
+# prefix for 64-bit compiler
+BINPREF64 = x86_64-w64-mingw32-
 
 # 32- or 64-bit Windows?  For MinGW-w64.
 WIN = 32
-
-# prefix for 64-bit compiler
-BINPREF64 = x86_64-w64-mingw32-
 
 # set to use ICU (experimental)
 # USE_ICU=YES

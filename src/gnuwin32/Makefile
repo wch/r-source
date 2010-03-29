@@ -237,7 +237,6 @@ libRblas.dll.a:  ../extra/blas/Rblas.def
 PKGDIR=../library
 pkgclean-%:
 	@(cd $(PKGDIR)/$*/src; rm -f *.d *.o *.dll *_res.rc Makedeps)
-	@rm -rf $(PKGDIR)/$*/chm
 
 EXTRA_DIRS = blas bzip2 graphapp intl pcre tre trio tzone xdr xz win_iconv zlib
 
@@ -255,7 +254,6 @@ clean: cleanwin
 	$(RM) -f ../library/methods/all.R
 
 distclean: clean
-	$(RM) -r ../library/*/chm
 	@for d in $(EXTRA_DIRS); do \
 	  $(MAKE) -C ../extra/$${d} -f Makefile.win distclean; \
 	done
