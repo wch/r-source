@@ -1,10 +1,17 @@
-include MkRules
+## first time through MkRules will not exist.
+ifeq ($(wildcard MkRules?local),MkRules.local)
+include MkRules.local
+else
+include MkRules.dist
+endif
+include MkRules.rules
+
 include ../../share/make/vars.mk
 
 MK = $(MAKE) --no-print-directory
 
 all:
-	@$(MK) Rpwd.exe
+	@$(MK) MkRules Rpwd.exe
 	@if test -f  ../../SVN-REVISION ; then \
 	  cp ../../SVN-REVISION ../../SVN-REVISION.bak ; \
 	fi
@@ -17,6 +24,13 @@ all:
 rpackages:
 	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN)
 	@$(MK) -C ../library -f Makefile.win docs
+
+MkRules:
+	@if test -f MkRules.local ; then \
+	  cat MkRules.local MkRules.rules > MkRules; \
+	else \
+	  cat MkRules.dist MkRules.rules > MkRules; \
+	fi
 
 ## must be absolute and space-free.  
 ## NB: will not be set correctly first time through.
@@ -239,9 +253,6 @@ clean: cleanwin
 	-$(MK) -C ../../tests -f Makefile.win clean
 	-$(MK) -C ../library/Recommended -f Makefile.win clean
 	$(RM) -f ../library/methods/all.R
-	for p in $(R_PKGS_RECOMMENDED); do \
-	  $(RM) -rf ../library/$$p; \
-	done
 
 distclean: clean
 	$(RM) -r ../library/*/chm
@@ -282,7 +293,7 @@ distclean: clean
 	$(RM) -r .vignettes # it gets left behind if there is an error
 	$(RM) -r ../../share/locale
 	$(RM) ../../doc/CHANGES*
-	$(RM) Rpwd.exe # do this last of all
+	$(RM) MkRules Rpwd.exe # do this last of all
 
 veryclean: distclean
 	$(RM) ../../doc/FAQ ../../doc/RESOURCES ../../doc/html/resources.html \
