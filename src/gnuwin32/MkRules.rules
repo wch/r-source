@@ -1,0 +1,105 @@
+#-*- Makefile -*-
+
+ifeq ($(strip $(WIN)),64)
+BINPREF = $(BINPREF64)
+# for sub-architecture
+R_ARCH = /x64
+DEFINES = -DR_ARCH='"x64"'
+endif
+
+## c99 would force __STRICT_ANSI__ disabling strdup etc, and also alloca
+C99FLAG=-std=gnu99
+## for mingw-runtime <= 3.11
+# C99FLAG=-std=gnu99 -fgnu89-inline
+
+ifeq ($(strip $(BUILD)),GCC4)
+F77=$(BINPREF)gfortran$(GCC4_SUFF)
+FLIBS=-lgfortran
+## earlier Rtools needs -sjlj; the alternative is -dw2, which fails building R.
+GCC4_SUFF=
+endif
+
+ifeq ($(strip $(BUILD)),F2C)
+F77=sh $(RHOME)/src/scripts/f77_f2c
+FLIBS=-lf2c
+endif
+
+## usually bin: other values are not yet completely accepted
+BINDIR=bin
+
+ifdef USE_IMPLIBS
+IMPDIR=lib
+else
+IMPDIR=$(BINDIR)
+endif
+
+## use in front-ends and internet module
+GRAPHAPP_LIB=-lRgraphapp
+## used in stats/src/Makevars.win
+BLAS_LIBS=-L$(RHOME)/$(IMPDIR) -lRblas
+
+AR=$(BINPREF)ar
+AS=$(BINPREF)as
+# AWK=gawk
+CAT=cat
+CC=$(BINPREF)gcc$(GCC4_SUFF) $(C99FLAG)
+CP=cp
+# as set by make
+CPP=$(CC) -E
+DLL=$(CC)
+DLLTOOL=$(BINPREF)dlltool
+## some versions have trouble with paths, so we always need this
+## even for native builds
+DLLTOOLFLAGS=--as $(AS) -k
+ECHO=echo
+## FIND is only used in installer/Makefile
+FIND=find
+LINKER=$(MAIN_LD)
+MAIN_LD=$(CC)
+MKDIR=mkdir
+NM=$(BINPREF)nm
+PERL=perl
+RANLIB=$(BINPREF)ranlib
+RESCOMP=$(BINPREF)windres
+# as set by make
+RM=rm -f
+SED=sed
+SORT=sort
+
+## from etc/Renviron.site on Unix
+# EGREP=grep -e
+# LN_S=cp -p
+# TAR=tar
+
+.SUFFIXES:
+.SUFFIXES: .c .cc .cpp .C .f .o .a .def .exp .dll .exe .d .f90 .f95 .m .S
+
+.c.d:
+	@echo "making $@ from $<"
+	@$(CC) -MM $(CPPFLAGS) $($*-CPPFLAGS) $(DEFINES) $< -o $@
+
+.c.o:
+	$(CC) $(CPPFLAGS) $($*-CPPFLAGS) $(CFLAGS) $($*-CFLAGS) $(DEFINES) -c $< -o $@
+
+.f.o:
+	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
+
+%.exe:
+	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
+
+%.dll:
+	@$(ECHO) EXPORTS > $*.def
+	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' >> $*.def
+	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
+	@$(RM) $*.def
+
+lib%.dll.a: %.def
+	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --input-def $*.def --output-lib $@
+
+%.a:
+#	@$(ECHO) -------- Building $@ from $^ --------
+	@$(RM) $@
+	$(AR) crs $@ $^
+
+%.o: %.rc
+	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@

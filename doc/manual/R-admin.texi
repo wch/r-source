@@ -955,7 +955,8 @@ Optionally, you can install a version of ATLAS
 fast linear algebra routines. Pre-built @file{Rblas.dll} for various
 @acronym{CPU}s are available in the @file{windows/contrib/ATLAS} area on
 @acronym{CRAN}.  If you are building R from source, there are macros
-@code{USE_ATLAS} and @code{ATLAS_PATH} in the file @file{MkRules}.  Set
+@code{USE_ATLAS} and @code{ATLAS_PATH} in the file @file{MkRules.dist}.
+Copy file @file{MkRules.dist} to @file{MkRules.local} and edit it to set
 @code{USE_ATLAS = YES} and @code{ATLAS_PATH} to where the ATLAS
 libraries are located.  You will need to make the libraries
 yourself@footnote{We do this using the Cygwin compilers, often with some
@@ -1002,7 +1003,8 @@ Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
 install the @code{libpng} and @code{jpeg} sources in sub-directories.
 The @code{jpeg} sub-directory for version 8a is named @file{jpeg-8a}; if
 you use a different version (e.g.@: @file{jpeg-6b} or @file{jpeg-7}),
-edit @file{src/gnuwin32/MkRules} and change the definition of
+copy file @file{src/gnuwin32/MkRules.dist} to
+@file{src/gnuwin32/MkRules.local} and edit the definition of
 @code{JPEGDIR}: the names of the @file{libpng} and @file{libtiff}
 directories can also be set there.
 
@@ -1026,10 +1028,9 @@ You may need to compile under a case-honouring file system: we found
 that a @command{samba}-mounted file system (which maps all file names to
 lower case) did not work.
 
-Open a command window at @file{@var{R_HOME}/src/gnuwin32}.  Edit
-@file{MkRules} to set the appropriate paths as needed.  @strong{Beware}:
-@file{MkRules} contains tabs and some editors (e.g., WinEdt) silently
-remove them.  Then run
+Open a command window at @file{@var{R_HOME}/src/gnuwin32}.  Look at
+@file{MkRules.dist} and if settings need to be altered, copy it to
+@file{MkRules.local} and edit the settings there.  Then run
 
 @example
 make all recommended
@@ -1050,8 +1051,8 @@ the build down several-fold.
 @item
 By default Doug Lea's @code{malloc} in the file
 @file{@var{R_HOME}/src/gnuwin32/malloc.c} is used for R's internal
-memory allocations.  You can opt out of this by commenting the line
-@code{LEA_MALLOC=YES} in @file{MkRules}, in which case the @code{malloc}
+memory allocations.  You can opt out of this by setting
+@code{LEA_MALLOC=NO} in @file{MkRules.dist}, in which case the @code{malloc}
 in @file{msvcrt.dll} is used.  This does impose a considerable
 performance penalty and has not been tested recently.
 
@@ -1242,7 +1243,7 @@ It makes use of the Windows Installer XML (WiX) toolkit @emph{version
 machine. Unfortunately the file format has been changed within the same
 version: currently our code works with releases 2.0.4221.0 and
 2.0.5805.0 -- the latter is now said to be `production/stable'.)  Once
-WiX is installed, set the path to its home directory in @file{MkRules}.
+WiX is installed, set the path to its home directory in @file{MkRules.local}.
 
 You need to have the files for a complete R build, including bitmap and
 Tcl/Tk support and the manuals, as well as the recommended packages.
@@ -1317,12 +1318,13 @@ Support for MinGW-w64 was developed in the R sources over the period
 version available from @acronym{CRAN} was built with the MinGW-w64
 toolchain described in this section, using static linking.
 
-Several versions of the MinGW-w64 toolchain are available: use one of them
-to replace the @file{MinGW/bin} directory of @code{Rtools} in your path
-(but still have the Rtools @file{bin} directory and Perl in your path).
-Then edit @file{src/gnuwin32/MkRules} to set @code{WIN=64} and
-@code{BINPREF} appropriate to your toolchain, and make @R{} in the usual
-way.
+Several versions of the MinGW-w64 toolchain are available: use one of
+them to replace the @file{MinGW/bin} directory of @code{Rtools} in your
+path (but still have the Rtools @file{bin} directory and Perl in your
+path).  Then copy @file{src/gnuwin32/MkRules.dist} to
+@file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64} and
+@code{BINPREF64} appropriate to your toolchain, then make @R{} in the
+usual way.
 
 The toolchain we use is technically a cross-compiler: the tools run
 under 32-bit Windows but produce code to run under 64-bit
@@ -4324,11 +4326,6 @@ tools in other directories, and they will @strong{not} work.  The
 ordering of the other directories is less important, but if in doubt,
 use the order above.
 
-
-Edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to set the appropriate
-paths as needed.  @strong{Beware}: @file{MkRules} contains tabs and some
-editors (e.g., WinEdt) silently remove them.
- 
 Our toolset contains copies of Cygwin DLLs that may conflict with other
 ones on your system if both are in the path at once.  The normal
 recommendation is to delete the older ones; however, at one time we
@@ -4390,7 +4387,8 @@ that version be used.  This is @emph{not} included in @file{Rtools.exe}.
 edited in @file{src/gnuwin32/installer/JRins.pl}, at least to change the
 location of @file{Japanese.isl} or remove the reference to it.)
 
-Edit file @file{src/gnuwin32/MkRules} and change @code{ISDIR} to the
+Copy file @file{src/gnuwin32/MkRules.dist} to
+@file{src/gnuwin32/MkRules.local} and edit it to set @code{ISDIR} to the
 location where Inno Setup was installed.
 
 @node The command line tools, The MinGW compilers, The Inno Setup installer, The Windows toolset
