@@ -117,6 +117,7 @@ int IS_UTF8(SEXP x);
 void SET_UTF8(SEXP x);
 int ENC_KNOWN(SEXP x);
 int SET_CACHED(SEXP x);
+int IS_CACHED(SEXP x);
 #endif
 /* macros and declarations for managing CHARSXP cache */
 #define USE_ATTRIB_FIELD_FOR_CHARSXP_CACHE_CHAINS
