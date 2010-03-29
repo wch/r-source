@@ -40,6 +40,7 @@ struct _HashData {
 
     int nomatch;
     Rboolean useUTF8;
+    Rboolean useCache;
 };
 
 
@@ -128,15 +129,25 @@ static int chash(SEXP x, int indx, HashData *d)
 #endif
 }
 
+/* Hash CHARSXP by address.  Hash values are int, For 64bit pointers,
+ * we do (upper ^ lower) */
+static int cshash(SEXP x, int indx, HashData *d)
+{
+    intptr_t z = (intptr_t) STRING_ELT(x, indx);
+    unsigned int z1 = z & 0xffffffff, z2 = 0;
+#if SIZEOF_LONG == 8
+    z2 = z/0x100000000L;
+#endif
+    return scatter(z1 ^ z2, d);
+}
+
 static int shash(SEXP x, int indx, HashData *d)
 {
     unsigned int k;
     const char *p;
     const void *vmax = vmaxget();
-    if(d->useUTF8)
-	p = translateCharUTF8(STRING_ELT(x, indx));
-    else
-	p = translateChar(STRING_ELT(x, indx));
+    if(!d->useUTF8 && d->useCache) return cshash(x, indx, d);
+    p = translateCharUTF8(STRING_ELT(x, indx));
     k = 0;
     while (*p++)
 	    k = 11 * k + *p; /* was 8 but 11 isn't a power of 2 */
@@ -392,8 +403,11 @@ SEXP duplicated(SEXP x, Rboolean from_last)
     HashTableSetup(x, &data);					\
     h = INTEGER(data.HashTable);				\
     if(TYPEOF(x) == STRSXP) {					\
-	for(i = 0; i < length(x); i++) 				\
+	data.useUTF8 = FALSE; data.useCache = TRUE;		\
+	for(i = 0; i < length(x); i++) {			\
 	    if(ENC_KNOWN(STRING_ELT(x, i))) {data.useUTF8 = TRUE; break;} \
+	    if(!IS_CACHED(STRING_ELT(x, i))) {data.useCache = FALSE; break;} \
+	}							\
     }
 
     DUPLICATED_INIT;
@@ -1461,18 +1475,7 @@ SEXP attribute_hidden do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* Use hashing to improve object.size. Here we want equal CHARSXPs,
-   not equal contents.  This only uses the bottom 32 bits of the pointer,
-   but for now that's almost certainly OK */
-
-static int cshash(SEXP x, int indx, HashData *d)
-{
-    intptr_t z = (intptr_t) STRING_ELT(x, indx);
-    unsigned int z1 = z & 0xffffffff, z2 = 0;
-#if SIZEOF_LONG == 8
-    z2 = z/0x100000000L;
-#endif
-    return scatter(z1 ^ z2, d);
-}
+   not equal contents. */
 
 static int csequal(SEXP x, int i, SEXP y, int j)
 {
