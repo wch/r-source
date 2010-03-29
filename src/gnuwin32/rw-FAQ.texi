@@ -222,7 +222,7 @@ set the default Start-menu group name
 set the initial list of components: Components are named @samp{main},
 @samp{html}, @samp{manuals}, @samp{manuals/basic},
 @samp{manuals/technical}, @samp{manuals/refman}, @samp{libdocs},
-@samp{tcl}, @samp{tcl/chm}, @samp{trans} and @code{tests}.
+@samp{tcl}, @samp{tcl/tzdata}, @samp{tcl/chm}, @samp{trans} and @code{tests}.
 @end table
 
 @noindent
@@ -240,7 +240,7 @@ after having checked the command line.
 
 A successful installation has exit code 0: unsuccessful ones may give 1,
 2, 3, 4 or 5.  See the help for Inno Setup
-(@uref{http://jrsoftware.org/isinfo.php}) for details.
+(@uref{http://jrsoftware.org/ishelp.php}) for details.
 
 We have some facilities for building a customized installer, in
 particular to add packages to the installer.  See the `R Installation

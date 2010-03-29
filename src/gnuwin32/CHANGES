@@ -48,6 +48,9 @@ NEW FEATURES
 
 INSTALLATION
 
+    o	The Tcl timezone files (3Mb on disc) are now an optional part
+	of the installation: they would be very rarely used with R.
+
     o	When building R, the recommended way is now to supply a file
 	R_HOME/src/gnuwin32/MkRules.local instead of editing MkRules:
 	there is now no MkRules file in the distribution, but one is
