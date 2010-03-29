@@ -182,6 +182,7 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
 Name: "html"; Description: "HTML Files"; Types: user full custom; Flags: checkablealone
 Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom; Flags: checkablealone
+Name: "tcl/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
 Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
 Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
 Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom; Flags: dontinheritcheck
@@ -435,6 +436,8 @@ sub listFiles {
 	    	$component = "tests";
 	} elsif (m/^Tcl\\doc\\.*chm$/) {
 	    $component = "tcl/chm";
+	} elsif (m/^Tcl\\lib\\tcl8.5\\tzdata/) {
+	    $component = "tcl/tzdata";
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
 	} elsif (m/^Tcl64\\doc\\.*chm$/) {
