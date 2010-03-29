@@ -5,6 +5,7 @@ BINPREF = $(BINPREF64)
 # for sub-architecture
 R_ARCH = /x64
 DEFINES = -DR_ARCH='"x64"'
+TCL_HOME = $(TCL_HOME64)
 endif
 
 ## c99 would force __STRICT_ANSI__ disabling strdup etc, and also alloca
