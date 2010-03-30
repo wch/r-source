@@ -16,7 +16,7 @@ read.fortran(file, format, ..., as.is = TRUE, colClasses = NA)
   \item{file}{File or connection to read from}
   \item{format}{Character vector or list of vectors.  See
     \sQuote{Details} below.}
-  \item{\dots}{Other arguments for \code{read.table}}
+  \item{\dots}{Other arguments for \code{\link{read.fwf}}}
   \item{as.is}{Keep characters as characters?}
   \item{colClasses}{Variable classes to override defaults. See
     \code{\link{read.table}} for details.}
@@ -35,15 +35,15 @@ read.fortran(file, format, ..., as.is = TRUE, colClasses = NA)
   vector. For a multiline record it should be a list with a character
   vector for each line.
   
-  Skipped (\code{X}) columns are not passed to \code{read.table}, so
+  Skipped (\code{X}) columns are not passed to \code{read.fwf}, so
   \code{colClasses}, \code{col.names}, and similar arguments passed to
-  \code{read.table} should not reference these columns.
+  \code{read.fwf} should not reference these columns.
 }
 \value{
   A data frame
 }
 
-\seealso{\code{\link{read.fwf}}, \code{\link{read.csv}}}
+\seealso{\code{\link{read.fwf}}, \code{\link{read.table}}, \code{\link{read.csv}}}
 \examples{
 ff <- tempfile()
 cat(file=ff, "123456", "987654", sep="\n")
