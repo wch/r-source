@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2001-9 R Development Core Team
+# Copyright (C) 2001-10 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -51,12 +51,12 @@ $RVER0 .= "." . $SVN;
 
 if($mode64bit) {
     $suffix = "win64";
-    $PF = "pf64";
+    $PF = "pf64"; # "pf" should do
     $QUAL = " x64"; # used for AppName
     $SUFF = "-x64"; # used for default install dir
 } else {
     $suffix = "win32";
-    $PF = "pf32";
+    $PF = "pf32"; # "pf" should do
     $QUAL = "";
     $SUFF = "";
 }
@@ -428,8 +428,6 @@ sub listFiles {
 	    $component = "manuals/refman";
 	} elsif (m/^doc\\manual/ && $_ ne "doc\\manual\\R-FAQ.pdf") {
 	    $component = "manuals";
-	} elsif (m/^library\\[^\\]*\\latex/) {
-	    	$component = "latex";
 	} elsif (m/^library\\[^\\]*\\tests/) {
 	    	$component = "tests";
 	} elsif (m/^tests/) {
