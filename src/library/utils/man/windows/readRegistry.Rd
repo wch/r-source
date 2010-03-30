@@ -11,7 +11,7 @@
 }
 \usage{
 readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
-             maxdepth = 1)
+             maxdepth = 1, view = c("default", "32-bit", "64-bit"))
 }
 \arguments{
   \item{key}{character string, the path to the key in the Windows Registry.}
@@ -23,6 +23,8 @@ readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
   \item{maxdepth}{How far to recurse into the subkeys of the key.  By
     default only the values of the key and the names of subkeys are
     returned.}
+  \item{view}{On 64-bit Windows, the view of the Registry to be used:
+    see \sQuote{Details}.}
 }
 \details{
   Registry access is done using the security settings of the current \R
@@ -30,8 +32,9 @@ readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
   if they exist.  This may result in \code{NULL} values in the object
   return, and, possibly, empty element names.
   
-  On 64-bit Windows, this will read the 32-bit view of the Registry when
-  run from 32-bit \R, and the 64-bit view when run from 64-bit \R: see
+  On 64-bit Windows, this will by default read the 32-bit view of the
+  Registry when run from 32-bit \R, and the 64-bit view when run from
+  64-bit \R: see
   \url{http://msdn.microsoft.com/en-us/library/aa384232(VS.85).aspx}.
 }
 \value{
@@ -40,10 +43,15 @@ readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
   precede subkeys, and both the latter sets are sorted alphabetically.
 }
 \examples{\donttest{
+## only in HLM if set in an admin-mode install.
 readRegistry("SOFTWARE\\\\R-core", maxdepth = 3)
+
 gmt <- file.path("SOFTWARE", "Microsoft", "Windows NT",
                  "CurrentVersion", "Time Zones",
                  "GMT Standard Time", fsep="\\\\")
 readRegistry(gmt, "HLM")
+
+## on a 64-bit R need this to find 32-bit JAGS
+readRegistry("SOFTWARE\\\\JAGS-1.0.3", maxdepth = 3, view="32")
 }}
 \keyword{ utilities }

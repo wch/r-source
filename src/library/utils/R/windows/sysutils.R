@@ -70,7 +70,7 @@ getWindowsHandles <- function(which = "R", pattern="", minimized=FALSE) {
     result <- list()
     for (i in seq_along(which)) {
 	res <- .Internal(getWindowHandles(which[i], minimized))
-	if (nzchar(pattern[i])) 
+	if (nzchar(pattern[i]))
     	    res <- res[grep(pattern[i], names(res))]
     	result <- c(result, res)
     }
@@ -78,13 +78,13 @@ getWindowsHandles <- function(which = "R", pattern="", minimized=FALSE) {
     result[!dup]
 }
 
-arrangeWindows <- function(action=c("vertical", "horizontal","cascade",  
+arrangeWindows <- function(action=c("vertical", "horizontal","cascade",
                                     "minimize", "restore"),
                            windows, preserve=TRUE, outer=FALSE) {
     action <- match.arg(action)
     action <- which(action == c("cascade", "horizontal", "vertical", "minimize", "restore"))
     stopifnot(length(action) == 1 && !is.na(action))
-    
+
     if (missing(windows)) {
     	if (exists(".arrangeWindowsDefaults", globalenv()))
             args <- get(".arrangeWindowsDefaults", globalenv())
@@ -95,7 +95,7 @@ arrangeWindows <- function(action=c("vertical", "horizontal","cascade",
     	windows <- do.call(getWindowsHandles, args)
     }
    .Internal(arrangeWindows(windows, action, preserve, outer))
-}                                        
+}
 
 menuShowCRAN <- function()
 {
@@ -108,8 +108,12 @@ menuShowCRAN <- function()
 shortPathName <- function(path) .Internal(shortPathName(path))
 
 readRegistry <-
-    function(key, hive=c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"), maxdepth = 1)
-    .Internal(readRegistry(key, match.arg(hive), maxdepth))
-    
-setInternet2 <- function(use = TRUE) 
+    function(key, hive=c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
+             maxdepth = 1, view = c("default", "32-bit", "64-bit"))
+{
+    view <- match(match.arg(view), c("default", "32-bit", "64-bit"))
+    .Internal(readRegistry(key, match.arg(hive), maxdepth, view))
+}
+
+setInternet2 <- function(use = TRUE)
     .Internal(useInternet2(use))
