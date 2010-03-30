@@ -1,3 +1,8 @@
+% File src/library/utils/man/windows/shortPathName.Rd
+% Part of the R package, http://www.R-project.org
+% Copyright 2008-10 R Core Development Team
+% Distributed under GPL 2 or later
+
 \name{readRegistry}
 \alias{readRegistry}
 \title{Read a Windows Registy Hive}
@@ -24,6 +29,10 @@ readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
   session: this means that some Registry keys may not be accessible even
   if they exist.  This may result in \code{NULL} values in the object
   return, and, possibly, empty element names.
+  
+  On 64-bit Windows, this will read the 32-bit view of the Registry when
+  run from 32-bit \R, and the 64-bit view when run from 64-bit \R: see
+  \url{http://msdn.microsoft.com/en-us/library/aa384232%28VS.85%29.aspx}.
 }
 \value{
   A named list of values and subkeys (which may themselves be named

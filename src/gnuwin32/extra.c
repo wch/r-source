@@ -1960,6 +1960,10 @@ SEXP do_readRegistry(SEXP call, SEXP op, SEXP args, SEXP env)
     if(maxdepth == NA_INTEGER || maxdepth < 1)
 	error(_("invalid '%s' value"),  "maxdepth");
     hive = find_hive(CHAR(STRING_ELT(CADR(args), 0)));
+    /* Or KEY_READ with KEY_WOW64_64KEY or KEY_WOW64_32KEY to
+       explicitly access the 64- or 32- bit registry view.  See
+       http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx
+    */
     res = RegOpenKeyExW(hive, key, 0, KEY_READ, &hkey);
     if (res == ERROR_FILE_NOT_FOUND)
 	error(_("Registry key '%ls' not found"), key);
