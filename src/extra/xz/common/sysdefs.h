@@ -123,9 +123,10 @@
 #	include <stdbool.h>
 #else
 #	if ! HAVE__BOOL
-typedef unsigned char _Bool;
+/* _Bool gave problems on one Solaris system */
+typedef unsigned char _Bool8;
 #	endif
-#	define bool _Bool
+#	define bool _Bool8
 #	define false 0
 #	define true 1
 #	define __bool_true_false_are_defined 1
