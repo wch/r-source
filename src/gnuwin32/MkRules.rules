@@ -6,6 +6,9 @@ BINPREF = $(BINPREF64)
 R_ARCH = /x64
 DEFINES = -DR_ARCH='"x64"'
 TCL_HOME = $(TCL_HOME64)
+else
+R_ARCH = /i386
+DEFINES = -DR_ARCH='"i386"'
 endif
 
 ## c99 would force __STRICT_ANSI__ disabling strdup etc, and also alloca
@@ -25,8 +28,7 @@ F77=sh $(RHOME)/src/scripts/f77_f2c
 FLIBS=-lf2c
 endif
 
-## usually bin: other values are not yet completely accepted
-BINDIR=bin
+BINDIR=bin$(R_ARCH)
 
 ifdef USE_IMPLIBS
 IMPDIR=lib

@@ -16,6 +16,19 @@
     		CHANGES IN R VERSION 2.12.0
 
 
+NEW FEATURES
+
+     o	A sub-architecture is used for 32-bit (i386) as well as
+	64-bit (x64) builds.
+
+	Architecture-specific files (such as Rgui.exe) are now in
+	R_HOME/bin/i386 or R_HOME/bin/x64.
+
+	For now, 32-bit packages with compiled code built under
+	2.{10,11}.x can be used, but this will be disabled before
+	release.
+
+
 INSTALLATION
 
      o	The 64-bit Tcl installation is now in directory R_HOME/Tcl64.

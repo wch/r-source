@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2001-9 R Development Core Team
+# Copyright (C) 2001-10 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -54,11 +54,13 @@ if($mode64bit) {
     $PF = "pf64";
     $QUAL = " x64"; # used for AppName
     $SUFF = "-x64"; # used for default install dir
+    $bindir = "bin/x64";
 } else {
     $suffix = "win32";
     $PF = "pf32";
     $QUAL = "";
     $SUFF = "";
+    $bindir = "bin/i386";
 }
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
@@ -128,10 +130,10 @@ Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries
 
 
 [Icons]
-Name: "{group}\\R$QUAL $RVER"; Filename: "{app}\\bin\\Rgui.exe"; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
+Name: "{group}\\R$QUAL $RVER"; Filename: "{app}\\${bindir}\\Rgui.exe"; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
 Name: "{group}\\Uninstall R$QUAL $RVER"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\\R$QUAL $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
-Name: "{userappdata}\\Microsoft\\Internet Explorer\\Quick Launch\\R$QUAL $RVER"; Filename: "{app}\\bin\\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
+Name: "{commondesktop}\\R$QUAL $RVER"; Filename: "{app}\\${bindir}\\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
+Name: "{userappdata}\\Microsoft\\Internet Explorer\\Quick Launch\\R$QUAL $RVER"; Filename: "{app}\\${bindir}\\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
 
 
 [Registry] 
@@ -153,12 +155,13 @@ Root: HKCU; Subkey: "Software\\$Producer\\R\\${RVER}"; ValueType: string; ValueN
 
 Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue; Tasks: associate; Check: IsAdmin
 Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey; Tasks: associate; Check: IsAdmin
-Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\RGui.exe,0"; Tasks: associate; Check: IsAdmin 
-Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\bin\\RGui.exe"" ""%1"""; Tasks: associate; Check: IsAdmin
+Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\${bindir}\\RGui.exe,0"; Tasks: associate; Check: IsAdmin 
+Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\${bindir}\\RGui.exe"" ""%1"""; Tasks: associate; Check: IsAdmin
 END
 
-## it is OK to use the same keys for 32- and 64-bit versions as the 
+## It is OK to use the same keys for 32- and 64-bit versions as the 
 ## view of the Registry depends on the arch.
+## But this will have to be different for a combined installer.
 
 print insfile $lines;
 if($Producer eq "R-core") {

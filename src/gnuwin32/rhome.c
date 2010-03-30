@@ -52,6 +52,7 @@ char *getRHOMElong(void)
     nc = GetModuleFileName(NULL, rhomebuf, MAX_PATH);
     GOBACKONESLASH;
     GOBACKONESLASH;
+    GOBACKONESLASH; /* when we have bin$R_ARCH */
     return (rhomebuf);
 }
 

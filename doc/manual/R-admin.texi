@@ -737,6 +737,10 @@ R --arch=@var{name} CMD make check[-devel|all]
 @noindent
 to select a sub-architecture to check.
 
+Sub-architectures are also used on Windows, but by selecting the
+appropriate @file{bin} directory, @file{@var{R_HOME}/bin/i386} or
+@file{@var{R_HOME}/bin/x64}.
+
 @menu
 * Multilib::                    
 @end menu

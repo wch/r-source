@@ -39,9 +39,6 @@ DOC_INFO_FILES = AUTHORS COPYING COPYING.LIB FAQ RESOURCES THANKS CHANGES
 GW_INFO_FILES = COPYRIGHTS README.Rterm rw-FAQ
 
 ETC_FILES = Rprofile.site Rconsole Rdevga rgb.txt repositories Rcmd_environ
-ifneq ($(strip $(WIN)),64)
-ETC_FILES += Makeconf
-endif
 
 
 # we don't want share/{Makefile.in,sh} installed
@@ -53,7 +50,7 @@ msi: $(RPREFIX)-win32.msi
 imagedir:
 	$(RM) -r $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
-	$(CP) -pr $(R_HOME)/$(BINDIR) $(R_HOME)/modules $(RPREFIX)
+	$(CP) -pr $(R_HOME)/bin $(R_HOME)/modules $(RPREFIX)
 # copy base and recommended packages
 	$(MKDIR) -p $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
@@ -61,9 +58,7 @@ imagedir:
 	$(RM) $(RPREFIX)/*/Makefile.in
 	$(MKDIR) -p $(RPREFIX)/etc$(R_ARCH)
 	$(CP) -p $(foreach i,$(ETC_FILES),$(R_HOME)/etc/$i) $(RPREFIX)/etc
-ifeq ($(strip $(WIN)),64)
 	$(CP) -p $(R_HOME)/etc$(R_ARCH)/Makeconf $(RPREFIX)/etc$(R_ARCH)
-endif
 # copy info and documentation files
 	$(MKDIR) -p $(RPREFIX)/doc
 	$(CP) -p $(R_HOME)/doc/CRAN_mirrors.csv $(RPREFIX)/doc
@@ -85,7 +80,7 @@ endif
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" ../README > $(RPREFIX)/README.$(RPREFIX)
 	$(SED) -e 3,5d ../README.packages > $(RPREFIX)/doc/README.packages
 # convert docs and batch files to CRLF: might already be on Windows, though.
-	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/* $(RPREFIX)/$(BINDIR)/*.bat
+	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/*
 	unzip -ao dosfiles.zip
 	$(RM) dosfiles.zip
 #
@@ -108,8 +103,6 @@ endif
 #
 	$(FIND) $(RPREFIX) -name .svn -prune -exec rm -rf \{\} \;
 	$(FIND) $(RPREFIX) -name \*~ -delete
-#
-	$(RM) -r $(RPREFIX)/library/*/man
 
 md5sums:
 	@echo "adding MD5 checksums"
@@ -118,7 +111,7 @@ md5sums:
 	  ../../../../$(BINDIR)/Rterm.exe --vanilla --slave)
 
 fixups:
-	echo "make.packages.html(.Library, verbose=FALSE)" | $(RPREFIX)/$(BINDIR)/rterm --vanilla --slave LC_COLLATE=C
+	echo "make.packages.html(.Library, verbose=FALSE)" | $(RPREFIX)/$(BINDIR)/Rterm.exe --vanilla --slave LC_COLLATE=C
 	$(CP) -pr "$(TCL_HOME)" $(RPREFIX)
 
 ## for Inno Setup installer
@@ -161,10 +154,10 @@ distclean: clean
 	rm -f $(RPREFIX)-win32.* $(RPREFIX)-win64.*
 
 myR:
-	echo "make.packages.html(.Library)" | $(IMAGEDIR)/$(BINDIR)/rterm --vanilla --slave LC_COLLATE=C
+	echo "make.packages.html(.Library)" | $(IMAGEDIR)/$(BINDIR)/Rterm.exe --vanilla --slave LC_COLLATE=C
 	@echo "adding MD5 checksums"
 	@(cd $(IMAGEDIR); echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
-	  bin/Rterm.exe --vanilla --slave)
+	  $(BINDIR)/Rterm.exe --vanilla --slave)
 	$(PERL) JRins.pl $(RPREFIX) $(IMAGEDIR) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
 	"$(ISDIR)/iscc" R.iss > myR.log
