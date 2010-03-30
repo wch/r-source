@@ -1863,15 +1863,20 @@ static SEXP readRegistryKey1(HKEY hkey, const wchar_t *name)
     return ans;
 }
 
-static SEXP readRegistryKey(HKEY hkey, int depth)
+static SEXP readRegistryKey(HKEY hkey, int depth, int view)
 {
     int i, k = 0, size0, *indx;
     SEXP ans, nm, ans0, nm0, tmp, sind;
     DWORD res, nsubkeys, maxsubkeylen, nval, maxvalnamlen, size;
     wchar_t *name;
     HKEY sub;
+    REGSAM acc = KEY_READ;
 
     if (depth <= 0) return mkString("<subkey>");
+
+    if(view == 2) acc |= KEY_WOW64_32KEY;
+    else if(view == 3) acc |= KEY_WOW64_64KEY;
+
     res = RegQueryInfoKey(hkey, NULL, NULL, NULL,
 			  &nsubkeys, &maxsubkeylen, NULL, &nval,
 			  &maxvalnamlen, NULL, NULL, NULL);
@@ -1920,9 +1925,9 @@ static SEXP readRegistryKey(HKEY hkey, int depth)
 	    res = RegEnumKeyExW(hkey, i, (LPWSTR) name, &size,
 				NULL, NULL, NULL, NULL);
 	    if (res != ERROR_SUCCESS) break;
-	    res = RegOpenKeyExW(hkey, (LPWSTR) name, 0, KEY_READ, &sub);
+	    res = RegOpenKeyExW(hkey, (LPWSTR) name, 0, acc, &sub);
 	    if (res != ERROR_SUCCESS) break;
-	    SET_VECTOR_ELT(ans0, i, readRegistryKey(sub, depth-1));
+	    SET_VECTOR_ELT(ans0, i, readRegistryKey(sub, depth-1, view));
 	    SET_STRING_ELT(nm0, i, mkCharUcs(name));
 	    RegCloseKey(sub);
 	}
@@ -1948,7 +1953,8 @@ SEXP do_readRegistry(SEXP call, SEXP op, SEXP args, SEXP env)
     HKEY hive, hkey;
     LONG res;
     const wchar_t *key;
-    int maxdepth;
+    int maxdepth, view;
+    REGSAM acc = KEY_READ;
 
     checkArity(op, args);
     if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
@@ -1960,16 +1966,20 @@ SEXP do_readRegistry(SEXP call, SEXP op, SEXP args, SEXP env)
     if(maxdepth == NA_INTEGER || maxdepth < 1)
 	error(_("invalid '%s' value"),  "maxdepth");
     hive = find_hive(CHAR(STRING_ELT(CADR(args), 0)));
+    view = asInteger(CADDDR(args));
     /* Or KEY_READ with KEY_WOW64_64KEY or KEY_WOW64_32KEY to
        explicitly access the 64- or 32- bit registry view.  See
        http://msdn.microsoft.com/en-us/library/aa384129(VS.85).aspx
     */
-    res = RegOpenKeyExW(hive, key, 0, KEY_READ, &hkey);
+    if(view == 2) acc |= KEY_WOW64_32KEY;
+    else if(view == 3) acc |= KEY_WOW64_64KEY;
+
+    res = RegOpenKeyExW(hive, key, 0, acc, &hkey);
     if (res == ERROR_FILE_NOT_FOUND)
 	error(_("Registry key '%ls' not found"), key);
     if (res != ERROR_SUCCESS)
 	error("RegOpenKeyEx error code %d: '%s'", (int) res, formatError(res));
-    ans = readRegistryKey(hkey, maxdepth);
+    ans = readRegistryKey(hkey, maxdepth, view);
     RegCloseKey(hkey);
     return ans;
 }

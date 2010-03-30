@@ -78,6 +78,9 @@ NEW FEATURES
 	iconv(to = "ASCII//TRANSLIT") will.  This makes
 	tools::showNonASCII() work the same way as on other platforms.
 
+    o	readRegistry() can look at either the 32- or 64-bit view
+	of the Registry on 64-bit Windows.
+
 
 INSTALLATION
 
