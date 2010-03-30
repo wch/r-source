@@ -73,9 +73,7 @@ PrivilegesRequired=none
 MinVersion=0,5.0
 END
 
-if ($have32bit) {
-    print insfile "ArchitecturesInstallIn64BitMode=x64\n";
-} elsif ($mode64bit) {
+if ($mode64bit) {
     print insfile "ArchitecturesInstallIn64BitMode=x64\nArchitecturesAllowed=x64\n";
 }
 
@@ -193,14 +191,15 @@ Name: "user32"; Description: 32-bit user installation
 Name: "user64"; Description: 64-bit user installation
 Name: "compact"; Description: {cm:compact}
 Name: "full"; Description: {cm:full}
+Name: "add64"; Description: Add 64-bit components
 Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
-Name: "main"; Description: "Main Files"; Types: user user32 user64 compact full custom; Flags: fixed
-Name: "main/32"; Description: "i386 Files"; Types: user user32 compact full custom;
-Name: "main/64"; Description: "x64 Files"; Types: user user64 compact full custom;
-Name: "html"; Description: "HTML Files"; Types: user user32 user64 full custom; Flags: checkablealone
-Name: "tcl64"; Description: "x64 Files for Package tcltk"; Types: user user64 full custom; Flags: checkablealone
+Name: "main"; Description: "Main Files"; Types: user user32 user64 compact full custom;
+Name: "i386"; Description: "i386 Files"; Types: user user32 compact full custom;
+Name: "x64"; Description: "x64 Files"; Types: user user64 add64 compact full custom;
+Name: "html"; Description: "HTML Files"; Types: user user32 user64 full custom; Flags:
+Name: "tcl64"; Description: "x64 Files for Package tcltk"; Types: user user64 add64 full custom; Flags: checkablealone
 Name: "tcl64/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
 Name: "tcl64/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
 Name: "tcl"; Description: "i386 Files for Package tcltk"; Types: user32 full custom; Flags: checkablealone
@@ -221,13 +220,14 @@ print insfile <<END;
 Name: "user"; Description: {cm:user}
 Name: "compact"; Description: {cm:compact}
 Name: "full"; Description: {cm:full}
+Name: "add64"; Description: Add 64-bit components
 Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
-Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
-Name: "main/64"; Description: "x64 Files"; Types: user compact full custom;
-Name: "html"; Description: "HTML Files"; Types: user full custom; Flags: checkablealone
-Name: "tcl64"; Description: "x64 Files for Package tcltk"; Types: user full custom; Flags: checkablealone
+Name: "main"; Description: "Main Files"; Types: user compact full custom;
+Name: "x64"; Description: "x64 Files"; Types: user add64 compact full custom;
+Name: "html"; Description: "HTML Files"; Types: user full custom;
+Name: "tcl64"; Description: "x64 Files for Package tcltk"; Types: user add64 full custom; Flags: checkablealone
 Name: "tcl64/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
 Name: "tcl64/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
 Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
@@ -249,8 +249,8 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
 Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
-Name: "main/32"; Description: "i386 Files"; Types: user compact full custom; Flags: fixed
-Name: "html"; Description: "HTML Files"; Types: user full custom; Flags: checkablealone
+Name: "i386"; Description: "i386 Files"; Types: user compact full custom; Flags: fixed
+Name: "html"; Description: "HTML Files"; Types: user full custom;
 Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom; Flags: checkablealone
 Name: "tcl/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
 Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
@@ -523,9 +523,9 @@ sub listFiles {
 		 || m/^library\\[^\\]*\\po/) {
 	    $component = "trans";
 	} elsif (m/\\i386\\/) {
-	    $component = "main/32";
+	    $component = "i386";
 	} elsif (m/\\x64\\/) {
-	    $component = "main/64";
+	    $component = "x64";
 	} else {
 	    $component = "main";
 	}
