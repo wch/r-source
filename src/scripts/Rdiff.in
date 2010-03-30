@@ -68,7 +68,7 @@ tmpfile=${TMPDIR-/tmp}/${bfile}-d.${$}
 ${SED} -e "${scriptold}" -e "${scriptnew}" -e "${s1}" -e "${s2}" ${ffile} | ${EGREP} -v "${pattern}" > ${tmpfile}
 ## some packages ship .Rout.save with CRLF endings
 ## OTOH, Solaris's /usr/ucb/tr strips 'r' here
-(tr -d '\r' <  ${tfile} | ${SED} -e "${scriptold}" -e "${scriptnew}" -e "${s1}" -e "${s2}" | \
+(${TR} -d '\r' <  ${tfile} | ${SED} -e "${scriptold}" -e "${scriptnew}" -e "${s1}" -e "${s2}" | \
   ${EGREP} -v "${pattern}" | \
   diff -bw ${tmpfile} - ) && exitstatus=0
 

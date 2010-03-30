@@ -40,6 +40,9 @@ INSTALLATION
     o	A C99 compiler is now required, and more C99 language features
 	will be used in the R sources.
 
+    o	configure looks for a POSIX compliant tr, Solaris's
+	/usr/ucb/tr having been found to cause Rdiff to malfunction.
+
 
 BUG FIXES
 
