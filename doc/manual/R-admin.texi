@@ -4005,9 +4005,13 @@ selected as LAPACK via
 @end example
 
 @noindent
-However, our tests were none too successful.  Sparc 32-bit builds
-worked, but 64-bit Sparc builds failed in @code{example(eigen)},
-and @cputype{x86} builds failed in @code{example(bw.SJ)}.
+@c However, our tests were none too successful.  Sparc 32-bit builds
+@c worked, but 64-bit Sparc builds failed in @code{example(eigen)},
+@c and @cputype{x86} builds failed in @code{example(bw.SJ)}.
+This has often given test failures in the past, in several different
+places.  For Solaris 10 in early 2010 this worked with 32-bit Sparc and
+32-bit Opteron, but failed on both 64-bit Sparc and Opteron in
+@code{example(eigen)}.
 
 
 @node AIX, Cygwin, Solaris, Platform notes
