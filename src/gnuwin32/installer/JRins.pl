@@ -52,10 +52,10 @@ $RVER0 .= "." . $SVN;
 my $have32bit = 0;
 if($mode64bit) {
     $suffix = "win64";
-    $PF = "pf64";
+    $PF = "pf"; # 32- or 64-bit Program Files
     $QUAL = " x64"; # used for AppName
     $SUFF = "-x64"; # used for default install dir
-    $bindir = "bin/x64";
+    $bindir = "bin/x64"; # used for shortcuts, change for combined installer
     $have32bit = 1 if -d "$SRCDIR\\bin\\i386";
 } else {
     $suffix = "win32";
@@ -78,6 +78,8 @@ if ($have32bit) {
 } elsif ($mode64bit) {
     print insfile "ArchitecturesInstallIn64BitMode=x64\nArchitecturesAllowed=x64\n";
 }
+
+## When installing in 64-bit mode, Is64BitInstallMode returns true
 
 print insfile <<END;
 AppName=R for Windows$QUAL $RVER
@@ -499,8 +501,6 @@ sub listFiles {
 	    $component = "manuals/refman";
 	} elsif (m/^doc\\manual/ && $_ ne "doc\\manual\\R-FAQ.pdf") {
 	    $component = "manuals";
-	} elsif (m/^library\\[^\\]*\\latex/) {
-	    	$component = "latex";
 	} elsif (m/^library\\[^\\]*\\tests/) {
 	    	$component = "tests";
 	} elsif (m/^tests/) {
