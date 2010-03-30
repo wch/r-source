@@ -27,6 +27,8 @@
 #define CONST84
 #endif
 
+typedef CONST84 char Cchar;
+
 #include <Rinternals.h>
 #include <R_ext/PrtUtil.h>
 #include <R_ext/Parse.h>

@@ -3878,7 +3878,7 @@ The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
 @file{/usr/ccs/bin}, so if using those tools ensure this is in your
 path.  Also, a version of the preferred @acronym{GNU} @command{tar} is
-(if installed) in @file{/usr/sfw/bin}, as are tools like
+(if installed) in @file{/usr/sfw/bin}, as sometimes are tools like
 @command{makeinfo}.
 
 Modern Solaris systems allow a large selection of Open Source software
