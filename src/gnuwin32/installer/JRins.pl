@@ -49,12 +49,14 @@ close ver;
 $SVN =~s/Revision: //;
 $RVER0 .= "." . $SVN;
 
+my $have32bit = 0;
 if($mode64bit) {
     $suffix = "win64";
     $PF = "pf64";
     $QUAL = " x64"; # used for AppName
     $SUFF = "-x64"; # used for default install dir
     $bindir = "bin/x64";
+    $have32bit = 1 if -d "$SRCDIR\\bin\\i386";
 } else {
     $suffix = "win32";
     $PF = "pf32";
@@ -62,6 +64,7 @@ if($mode64bit) {
     $SUFF = "";
     $bindir = "bin/i386";
 }
+
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
 [Setup]
@@ -69,9 +72,14 @@ OutputBaseFilename=${RW}-${suffix}
 PrivilegesRequired=none
 MinVersion=0,5.0
 END
-print insfile "ArchitecturesInstallIn64BitMode=x64\nArchitecturesAllowed=x64\n" if $mode64bit;
 
-my $lines=<<END;
+if ($have32bit) {
+    print insfile "ArchitecturesInstallIn64BitMode=x64\n";
+} elsif ($mode64bit) {
+    print insfile "ArchitecturesInstallIn64BitMode=x64\nArchitecturesAllowed=x64\n";
+}
+
+print insfile <<END;
 AppName=R for Windows$QUAL $RVER
 AppVerName=R for Windows$QUAL $RVER
 AppPublisherURL=http://www.r-project.org
@@ -93,7 +101,15 @@ Compression=lzma/ultra
 SolidCompression=yes
 END
 
-my $lines2=<<END;
+
+print insfile $lines;
+if($Producer eq "R-core") {
+    print insfile "AppPublisher=R Development Core Team\n";
+} else {
+    print insfile "AppPublisher=$Producer\n";
+}
+
+print insfile <<END;
 
 [Languages]
 Name: en; MessagesFile: "compiler:Default.isl"
@@ -157,23 +173,47 @@ Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWor
 Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey; Tasks: associate; Check: IsAdmin
 Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\${bindir}\\RGui.exe,0"; Tasks: associate; Check: IsAdmin 
 Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\${bindir}\\RGui.exe"" ""%1"""; Tasks: associate; Check: IsAdmin
+
+[Icons]
+Name: "{group}\\R$QUAL $RVER Help"; Filename: "{app}\\doc\\html\\index.html"; Components: html
 END
 
 ## It is OK to use the same keys for 32- and 64-bit versions as the 
 ## view of the Registry depends on the arch.
 ## But this will have to be different for a combined installer.
 
-print insfile $lines;
-if($Producer eq "R-core") {
-    print insfile "AppPublisher=R Development Core Team\n";
-} else {
-    print insfile "AppPublisher=$Producer\n";
-}
-print insfile $lines2;
+if ($have32bit) { # necessarily 64-bit
 print insfile <<END;
 
-[Icons]
-Name: "{group}\\R$QUAL $RVER Help"; Filename: "{app}\\doc\\html\\index.html"; Components: html
+[Types]
+Name: "user"; Description: {cm:user}
+Name: "user32"; Description: 32-bit user installation
+Name: "user64"; Description: 64-bit user installation
+Name: "compact"; Description: {cm:compact}
+Name: "full"; Description: {cm:full}
+Name: "custom"; Description: {cm:custom}; Flags: iscustom
+
+[Components]
+Name: "main"; Description: "Main Files"; Types: user user32 user64 compact full custom; Flags: fixed
+Name: "main/32"; Description: "i386 Files"; Types: user user32 compact full custom;
+Name: "main/64"; Description: "x64 Files"; Types: user user64 compact full custom;
+Name: "html"; Description: "HTML Files"; Types: user user32 user64 full custom; Flags: checkablealone
+Name: "tcl64"; Description: "x64 Files for Package tcltk"; Types: user user64 full custom; Flags: checkablealone
+Name: "tcl64/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
+Name: "tcl64/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
+Name: "tcl"; Description: "i386 Files for Package tcltk"; Types: user32 full custom; Flags: checkablealone
+Name: "tcl/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
+Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
+Name: "manuals"; Description: "On-line PDF Manuals"; Types: user user32 user64 full custom
+Name: "manuals/basic"; Description: "Basic Manuals"; Types: user user32 user64 full custom; Flags: dontinheritcheck
+Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom; Flags: dontinheritcheck
+Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom; Flags: dontinheritcheck
+Name: "libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
+Name: "trans"; Description: "Message Translations"; Types: user user32 user64 full custom
+Name: "tests"; Description: "Test files"; Types: full custom
+END
+} elsif ($mode64bit) {
+print insfile <<END;
 
 [Types]
 Name: "user"; Description: {cm:user}
@@ -183,6 +223,31 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
 Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
+Name: "main/64"; Description: "x64 Files"; Types: user compact full custom;
+Name: "html"; Description: "HTML Files"; Types: user full custom; Flags: checkablealone
+Name: "tcl64"; Description: "x64 Files for Package tcltk"; Types: user full custom; Flags: checkablealone
+Name: "tcl64/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
+Name: "tcl64/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
+Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
+Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom; Flags: dontinheritcheck
+Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom; Flags: dontinheritcheck
+Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom; Flags: dontinheritcheck
+Name: "libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
+Name: "trans"; Description: "Message Translations"; Types: user full custom
+Name: "tests"; Description: "Test files"; Types: full custom
+END
+} else {
+print insfile <<END;
+
+[Types]
+Name: "user"; Description: {cm:user}
+Name: "compact"; Description: {cm:compact}
+Name: "full"; Description: {cm:full}
+Name: "custom"; Description: {cm:custom}; Flags: iscustom
+
+[Components]
+Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
+Name: "main/32"; Description: "i386 Files"; Types: user compact full custom; Flags: fixed
 Name: "html"; Description: "HTML Files"; Types: user full custom; Flags: checkablealone
 Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom; Flags: checkablealone
 Name: "tcl/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
@@ -194,6 +259,9 @@ Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types:
 Name: "libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "tests"; Description: "Test files"; Types: full custom
+END
+}
+print insfile <<END;
 
 
 [Code]
@@ -437,21 +505,27 @@ sub listFiles {
 	    	$component = "tests";
 	} elsif (m/^tests/) {
 	    	$component = "tests";
+	} elsif (m/^Tcl64\\doc\\.*chm$/) {
+	    $component = "tcl64/chm";
+	} elsif (m/^Tcl64\\lib\\tcl8.5\\tzdata/) {
+	    $component = "tcl64/tzdata";
+	} elsif (m/^Tcl64/) {
+	    $component = "tcl64";
 	} elsif (m/^Tcl\\doc\\.*chm$/) {
 	    $component = "tcl/chm";
 	} elsif (m/^Tcl\\lib\\tcl8.5\\tzdata/) {
 	    $component = "tcl/tzdata";
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
-	} elsif (m/^Tcl64\\doc\\.*chm$/) {
-	    $component = "tcl/chm";
-	} elsif (m/^Tcl64/) {
-	    $component = "tcl";
 	} elsif (m/^library\\grid\\doc/ || m/^library\\Matrix\\doc/) {
 	    $component = "libdocs";
 	} elsif (m/^share\\locale/ 
 		 || m/^library\\[^\\]*\\po/) {
 	    $component = "trans";
+	} elsif (m/\\i386\\/) {
+	    $component = "main/32";
+	} elsif (m/\\x64\\/) {
+	    $component = "main/64";
 	} else {
 	    $component = "main";
 	}

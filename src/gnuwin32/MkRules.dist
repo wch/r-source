@@ -70,6 +70,9 @@ BUILD_HTML = NO
 # location where Inno Setup 5.3.x was installed. Spaces allowed.
 ISDIR=C:/packages/Inno
 
+# home of 32-bit files for combined installer on 64-bit build
+HOME32=
+
 ## ====== configuration macros for building MSI installer ===========
 
 # location where WiX was installed. Spaces allowed, slashes required.

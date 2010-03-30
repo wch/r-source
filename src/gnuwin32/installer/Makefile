@@ -6,7 +6,7 @@ R_HOME = ../../..
 RHOME = ../../..
 include $(R_HOME)/share/make/vars.mk
 
-## use next to install other packages from main library
+## use this to install other packages from main library
 EXTRA_PKGS =
 
 ## Default display mode, 0=MDI, 1=SDI
@@ -80,8 +80,8 @@ imagedir:
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" ../README > $(RPREFIX)/README.$(RPREFIX)
 	$(SED) -e 3,5d ../README.packages > $(RPREFIX)/doc/README.packages
 # convert docs and batch files to CRLF: might already be on Windows, though.
-	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/*
-	unzip -ao dosfiles.zip
+	zip -q dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/*
+	unzip -qao dosfiles.zip
 	$(RM) dosfiles.zip
 #
 # files to make source packages
@@ -113,10 +113,24 @@ md5sums:
 fixups:
 	echo "make.packages.html(.Library, verbose=FALSE)" | $(RPREFIX)/$(BINDIR)/Rterm.exe --vanilla --slave LC_COLLATE=C
 	$(CP) -pr "$(TCL_HOME)" $(RPREFIX)
+	$(RM) $(RPREFIX)/Tcl*/lib/*.lib
+
+32bit:
+ifeq ($(strip $(WIN)),64)
+ifneq ($(strip $(HOME32)),)
+	@echo "including 32-bit files"
+	(cd $(HOME32); zip -qr9X 32bit */i386 library/*/libs/i386)
+	unzip -q $(HOME32)/32bit -d $(RPREFIX)
+	rm $(HOME32)/32bit.zip
+	cp -pr $(HOME32)/Tcl $(RPREFIX)
+else
+	@echo "not including 32-bit files"
+endif
+endif
 
 ## for Inno Setup installer
 
-R.iss: JRins.pl CustomMsg.txt imagedir fixups md5sums \
+R.iss: JRins.pl CustomMsg.txt imagedir 32bit fixups md5sums \
   ../../../VERSION ../../../SVN-REVISION
 	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer) $(bit64)
 
