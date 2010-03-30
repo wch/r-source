@@ -25,12 +25,13 @@ rpackages:
 	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN)
 	@$(MK) -C ../library -f Makefile.win docs
 
-MkRules:
-	@if test -f MkRules.local ; then \
-	  cat MkRules.local MkRules.rules > MkRules; \
-	else \
-	  cat MkRules.dist MkRules.rules > MkRules; \
-	fi
+ifeq ($(wildcard MkRules?local),MkRules.local)
+MkRules: MkRules.local MkRules.rules
+	cat MkRules.local MkRules.rules > MkRules
+else
+MkRules: MkRules.dist MkRules.rules
+	cat MkRules.dist MkRules.rules > MkRules
+endif
 
 ## must be absolute and space-free.  
 ## NB: will not be set correctly first time through.
