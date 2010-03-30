@@ -3881,6 +3881,9 @@ path.  Also, a version of the preferred @acronym{GNU} @command{tar} is
 (if installed) in @file{/usr/sfw/bin}, as sometimes are tools like
 @command{makeinfo}.
 
+It is neccessary to avoid the tools in @file{/usr/ucb}: in particular
+@file{/usr/ucb/tr} causes @command{R CMD Rdiff} to malfunction.
+
 Modern Solaris systems allow a large selection of Open Source software
 to be installed from @url{http://www.opencsw.org} (formerly
 @url{http://www.blastwave.org}) via @command{pkg-get}, by default
