@@ -311,6 +311,7 @@ static void MKsetup(int n, HashData *d)
 static void HashTableSetup(SEXP x, HashData *d)
 {
     d->useUTF8 = FALSE;
+    d->useCache = TRUE;
     switch (TYPEOF(x)) {
     case LGLSXP:
 	d->hash = lhash;
