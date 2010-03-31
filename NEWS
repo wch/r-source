@@ -409,6 +409,9 @@ INSTALLATION
     o	configure looks for a POSIX compliant tr, Solaris's
 	/usr/ucb/tr having been found to cause Rdiff to malfunction.
 
+    o	configure is now generated with autoconf-2.65, which works
+	better on recent systems and on Mac OS X.
+
 
 PACKAGE INSTALLATION
 
