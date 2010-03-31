@@ -2486,19 +2486,18 @@ additional flags are needed for the @samp{cairo-xlib} package, then if
 suitable code can be compiled.  These tests will fail if
 @command{pkg-config} is not installed, and are likely to fail if
 @code{cairo} was built statically (unusual).  Most systems with
-@code{Gtk+} 2.8 or later installed will have suitable libraries, but
-some (e.g.@: Solaris 10) may need @code{cairo} added separately.  Mac OS
-X comes with none of these libraries, but @code{cairo} support has been
-added to the binary distribution: @code{pkg-config} is still needed and
-can be installed from the sources.
+@code{Gtk+} 2.8 or later installed will have suitable libraries.  Mac OS
+X comes with none of these libraries, but @code{cairo} support (without
+@code{Pango}) has been added to the binary distribution:
+@code{pkg-config} is still needed and can be installed from the sources.
 
 For the best font experience with these devices you need suitable fonts
 installed: Linux users will want the @code{urw-fonts} package.  Another
 useful set of fonts is the `liberation' truetype fonts available at
-@uref{https://www.redhat.com/@/promo/@/fonts/}, which cover the Latin,
-Greek and Cyrillic alphabets plus a fair range of signs.  These share
-metrics with Arial, Times New Roman and Courier New, and contain fonts
-rather similar to the first two
+@uref{https://www.redhat.com/@/promo/@/fonts/},@footnote{@code{ttf-liberation}
+in Debian/Ubuntu.} which cover the Latin, Greek and Cyrillic alphabets
+plus a fair range of signs.  These share metrics with Arial, Times New
+Roman and Courier New, and contain fonts rather similar to the first two
 (@uref{http://en.wikipedia.org/@/wiki/@/Liberation_fonts}).
 
 The bitmapped graphics devices @code{jpeg()}, @code{png()} and
@@ -3994,13 +3993,10 @@ optimized for Sparc (using technology from Sun's compilers) is available
 from
 Sun.@footnote{@uref{http://www.sun.com/download/index.jsp?@/cat=Application%20Development&tab=3&subcat=Development%20Tools}}
 
-Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4 
-(@command{gcc}@tie{}4.3.3 but @command{gfortran}@tie{}4.0.2) needed
+Compilation for a 32-bit Sparc target with @command{gcc}@tie{}4.3.3 needed
 
 @example
 CPPFLAGS=-I/opt/csw/include
-FPICFLAGS=-fPIC
-FCPICFLAGS=-fPIC
 LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib"
 @end example
 
@@ -4008,12 +4004,10 @@ LDFLAGS="-L/opt/csw/gcc4/lib -L/opt/csw/lib"
 and for a 64-bit Sparc target
 @example
 CC="gcc -m64"
-CPPFLAGS=-I/opt/csw/include
 F77="gfortran -m64"
-FPICFLAGS=-fPIC
 CXX="g++ -m64"
-FC="gfortran -m64"
-FCPICFLAGS=-fPIC
+FC=$F77
+CPPFLAGS=-I/opt/csw/include
 LDFLAGS="-L/opt/csw/gcc4/lib/sparcv9 -L/opt/csw/lib/sparcv9"
 @end example
 
@@ -4023,11 +4017,13 @@ be in the
 @enindex LD_LIBRARY_PATH
 @env{LD_LIBRARY_PATH} during configuration.
 
-Tests with @command{gcc} on @cputype{x86} and @cputype{amd64} have been
-less successful: @cputype{x86} builds have failed on tests using complex
-arithmetic@footnote{these can often be resolved by turning off
-optimization}, whereas on @cputype{amd64} the builds have failed to
-complete in several different ways.
+Tests with @command{gcc}@footnote{specifically @command{gcc}@tie{}4.3.3
+from OpenCSW.} on @cputype{x86} and @cputype{amd64} have been less
+successful: @cputype{x86} builds have failed on tests using complex
+arithmetic@footnote{such as those of @code{fft}: these can often be
+resolved by turning off optimization}, whereas on @cputype{amd64} the
+builds have failed to complete in several different ways, most recently
+with relocation errors for @file{libRblas.so}.
 
 
 @node AIX, Cygwin, Solaris, Platform notes
@@ -4038,7 +4034,7 @@ We no longer support AIX prior to 4.2, and @command{configure} will
 throw an error on such systems.
 
 Ei-ji Nakama was able to build under AIX 5.2 on @cputype{powerpc} with
-GCC 4.0.3 in several configurations.  32-bit bit versions could be
+GCC 4.0.3 in several configurations.  32-bit versions could be
 configured with @option{--without-iconv} as well as
 @option{--enable-R-shlib}.  For 64-bit versions he used
 
