@@ -40,9 +40,6 @@ INSTALLATION
     o	A C99 compiler is now required, and more C99 language features
 	will be used in the R sources.
 
-    o	configure looks for a POSIX compliant tr, Solaris's
-	/usr/ucb/tr having been found to cause Rdiff to malfunction.
-
 
 BUG FIXES
 
@@ -456,6 +453,9 @@ INSTALLATION
 
     o	UTF-8 is now used for the reference manual and package
 	manuals.  This requires LaTeX '2005/12/01' or later.
+
+    o	configure looks for a POSIX compliant tr, Solaris's
+	/usr/ucb/tr having been found to cause Rdiff to malfunction.
 
 
 PACKAGE INSTALLATION
