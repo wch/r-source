@@ -2,7 +2,7 @@
 include ../gnuwin32/MkRules
 R_HOME = ../..
 
-## BATCH, INSTALL and REMVOE are handled internally in Rcmd.exe
+## BATCH, INSTALL and REMOVE are handled internally in Rcmd.exe
 
 all: \
  $(R_HOME)/bin/build.pl $(R_HOME)/bin/check.pl $(R_HOME)/bin/config.sh \

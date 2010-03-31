@@ -406,6 +406,9 @@ INSTALLATION
     o	UTF-8 is now used for the reference manual and package
 	manuals.  This requires LaTeX '2005/12/01' or later.
 
+    o	configure looks for a POSIX compliant tr, Solaris's
+	/usr/ucb/tr having been found to cause Rdiff to malfunction.
+
 
 PACKAGE INSTALLATION
 
