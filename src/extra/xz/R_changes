@@ -28,3 +28,6 @@ api/lzma/api.h:
   Intels C compiler and gcc 4.4.x (and possibly others) may generate
   broken code.
 
+common/sysdefs.h:
+  Change _Bool to _Bool8 to avoid clashes on one Solaris 10 system.
+  (Solaris 10 has stdbool.h, but it was not being found.)

@@ -10,9 +10,10 @@
 #undef max
 #define max(a,b) ((a > b)?a:b)
 
-#include <limits.h>
 #include "nmath.h"
 #include "dpq.h"
+/* after config.h to avoid warning on Solaris */
+#include <limits.h>
 /* <math.h> is included by above, with suitable defines in glibc systems
    to make log1p and expm1 declared */
 
