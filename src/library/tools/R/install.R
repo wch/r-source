@@ -215,6 +215,14 @@
     ## 'pkg' is the absolute path to package sources.
     do_install <- function(pkg)
     {
+        if (WINDOWS && grepl("\\.zip$", pkg)) {
+            pkg_name <- basename(pkg)
+            pkg_name <- sub("\\.zip$", "", pkg_name)
+            pkg_name <- sub("_[0-9.-]+$", "", pkg_name)
+            utils:::unpackPkgZip(pkg, pkg_name, lib, libs_only)
+            return()
+        }
+
         setwd(pkg)
         desc <- read.dcf(file.path(pkg, "DESCRIPTION"))[1, ]
         ## Let's see if we have a bundle
@@ -1017,6 +1025,14 @@
     for(pkg in pkgs) {
         if (debug) message("processing ", sQuote(pkg), domain = NA)
         if (.file_test("-f", pkg)) {
+            if (WINDOWS && grepl("\\.zip$", pkg)) {
+                if (debug) message("a zip file", domain = NA)
+                pkgname <- basename(pkg)
+                pkgname <- sub("\\.zip$", "", pkgname)
+                pkgname <- sub("_[0-9.-]+$", "", pkgname)
+                allpkgs <- c(allpkgs, pkg)
+                next
+            }
             if (debug) message("a file", domain = NA)
             of <- dir(tmpdir, full.names = TRUE)
             ## force the use of internal untar unless over-ridden
