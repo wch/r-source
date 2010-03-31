@@ -3881,7 +3881,7 @@ path.  Also, a version of the preferred @acronym{GNU} @command{tar} is
 
 It is neccessary to avoid the tools in @file{/usr/ucb}: in particular
 @file{/usr/ucb/tr} causes @command{R CMD Rdiff} to malfunction.
-@command(configure} looks for a POSIX-compliant @command{tr}, e.g. in
+@command{configure} looks for a POSIX-compliant @command{tr}, e.g. in
 @file{/usr/xpg4/bin}.
 
 Modern Solaris systems allow a large selection of Open Source software
