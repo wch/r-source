@@ -671,56 +671,12 @@ static SEXP HashLookup(SEXP table, SEXP x, HashData *d)
     return ans;
 }
 
-SEXP match(SEXP itable, SEXP ix, int nmatch)
-{
-    SEXP ans, x, table;
-    SEXPTYPE type;
-    HashData data;
-    int i, n = length(ix);
-
-    /* handle zero length arguments */
-    if (n == 0) return allocVector(INTSXP, 0);
-    if (length(itable) == 0) {
-	ans = allocVector(INTSXP, n);
-	for (i = 0; i < n; i++) INTEGER(ans)[i] = nmatch;
-	return ans;
-    }
-
-    /* Coerce to a common type; type == NILSXP is ok here.
-     * Note that R's match() does only coerce factors (to character).
-     * Hence, coerce to character or to `higher' type
-     * (given that we have "Vector" or NULL) */
-    if(TYPEOF(ix)  >= STRSXP || TYPEOF(itable) >= STRSXP) type = STRSXP;
-    else type = TYPEOF(ix) < TYPEOF(itable) ? TYPEOF(itable) : TYPEOF(ix);
-    PROTECT(x = coerceVector(ix, type));
-    PROTECT(table = coerceVector(itable, type));
-
-    data.nomatch = nmatch;
-    HashTableSetup(table, &data);
-    data.nomatch = nmatch;
-    HashTableSetup(table, &data);
-    if(type == STRSXP) {
-	Rboolean useUTF8 = FALSE;
-	for(i = 0; i < length(x); i++)
-	    if(ENC_KNOWN(STRING_ELT(x, i))) {useUTF8 = TRUE; break;}
-	if (!useUTF8)
-	    for(i = 0; i < length(table); i++)
-		if(ENC_KNOWN(STRING_ELT(table, i))) {useUTF8 = TRUE; break;}
-	data.useUTF8 = useUTF8;
-    }
-    PROTECT(data.HashTable);
-    DoHashing(table, &data);
-    ans = HashLookup(table, x, &data);
-    UNPROTECT(3);
-    return ans;
-}
-
 SEXP match4(SEXP itable, SEXP ix, int nmatch, SEXP incomp)
 {
     SEXP ans, x, table;
     SEXPTYPE type;
     HashData data;
-    int i, n = length(ix);
+    int i, n = length(ix), nprot = 0;
 
     /* handle zero length arguments */
     if (n == 0) return allocVector(INTSXP, 0);
@@ -736,29 +692,41 @@ SEXP match4(SEXP itable, SEXP ix, int nmatch, SEXP incomp)
      * (given that we have "Vector" or NULL) */
     if(TYPEOF(ix)  >= STRSXP || TYPEOF(itable) >= STRSXP) type = STRSXP;
     else type = TYPEOF(ix) < TYPEOF(itable) ? TYPEOF(itable) : TYPEOF(ix);
-    PROTECT(x = coerceVector(ix, type));
-    PROTECT(table = coerceVector(itable, type));
-    PROTECT(incomp = coerceVector(incomp, type));
-
+    PROTECT(x = coerceVector(ix, type)); nprot++;
+    PROTECT(table = coerceVector(itable, type)); nprot++;
+    if (incomp) { PROTECT(incomp = coerceVector(incomp, type)); nprot++; }
     data.nomatch = nmatch;
     HashTableSetup(table, &data);
     if(type == STRSXP) {
 	Rboolean useUTF8 = FALSE;
-	for(i = 0; i < length(x); i++)
-	    if(ENC_KNOWN(STRING_ELT(x, i))) {useUTF8 = TRUE; break;}
-	if (!useUTF8)
-	    for(i = 0; i < length(table); i++)
-		if(ENC_KNOWN(STRING_ELT(table, i))) {useUTF8 = TRUE; break;}
+        Rboolean useCache = TRUE;
+	for(i = 0; i < length(x); i++) {
+            SEXP s = STRING_ELT(x, i);
+	    if(ENC_KNOWN(s)) {useUTF8 = TRUE; break;}
+            if(!IS_CACHED(s)) {useCache = FALSE; break;}
+        }
+	if (!useUTF8 || useCache) {
+	    for(i = 0; i < length(table); i++) {
+                SEXP s = STRING_ELT(table, i);
+		if(ENC_KNOWN(s)) {useUTF8 = TRUE; break;}
+		if(!IS_CACHED(s)) {useCache = FALSE; break;}
+            }
+        }
 	data.useUTF8 = useUTF8;
+        data.useCache = useCache;
     }
-    PROTECT(data.HashTable);
+    PROTECT(data.HashTable); nprot++;
     DoHashing(table, &data);
-    UndoHashing(incomp, table, &data);
+    if (incomp) UndoHashing(incomp, table, &data);
     ans = HashLookup(table, x, &data);
-    UNPROTECT(4);
+    UNPROTECT(nprot);
     return ans;
 }
 
+SEXP match(SEXP itable, SEXP ix, int nmatch)
+{
+    return match4(itable, ix, nmatch, NULL);
+}
 
 SEXP attribute_hidden do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 {

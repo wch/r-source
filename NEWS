@@ -23,10 +23,11 @@ NEW FEATURES
     o   pretty() is now generic, with new methods for "Date" and
      	"POSIXt" classes (based on code contributed by Felix Andrews).
 
-    o	unique() is now faster on character vectors where all elements
-	are in the global CHARSXP cache and have unmarked encoding
-	(ASCII).  Thanks to Matthew Dowle for suggesting improvements
-	to the way the hash code is generated in unique.c.
+    o	unique() and match() are now faster on character vectors where
+	all elements are in the global CHARSXP cache and have unmarked
+	encoding (ASCII).  Thanks to Matthew Dowle for suggesting
+	improvements to the way the hash code is generated in
+	unique.c.
 
     o	install.packages() has a new argument 'libs_only' to optionally
 	pass --libs-only to INSTALL and works analogously for Windows
