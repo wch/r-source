@@ -24,7 +24,7 @@
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos),
              method, available = NULL, destdir = NULL,
-             dependencies = FALSE, ...)
+             dependencies = FALSE, libs_only = FALSE, ...)
 {
     unpackPkg <- function(pkg, pkgname, lib)
     {
@@ -94,28 +94,41 @@
             }
         } else {
             ## We can't use CHM help -- this works even if not there.
+            ## CHM help was last shipped in Aug 2009, prior to 2.10.0
             unlink(file.path(tmpDir, pkgname, "chtml"), recursive = TRUE)
             instPath <- file.path(lib, pkgname)
-
-            ## If the package is already installed, remove it.  If it
-            ## isn't there, the unlink call will still return success.
-            ret <- unlink(instPath, recursive=TRUE)
-            if (ret == 0) {
-                ## Move the new package to the install lib and
-                ## remove our temp dir
-                ret <- file.rename(file.path(tmpDir, pkgname), instPath)
-                if(!ret)
-                    warning(gettextf("unable to move temporary installation '%s' to '%s'",
-                                     normalizePath(file.path(tmpDir, pkgname)),
-                                     normalizePath(instPath)),
-                            domain = NA, call. = FALSE, immediate. = TRUE)
+            if(libs_only) {
+                ## copy over the subdirs of the libs dir,
+                ## removing if already there
+                for(sub in c("i386", "x64"))
+                    if (file_test("-d", file.path(tmpDir, pkgname, "libs", sub))) {
+                        unlink(file.path(instPath, "libs", sub), recursive = TRUE)
+                        ## test result ?
+                        file.copy(file.path(tmpDir, pkgname, "libs", sub),
+                                  file.path(instPath, "libs"),
+                                  recursive = TRUE)
+                    }
             } else {
-                warning(gettextf("cannot remove prior installation of package '%s'",
-                                 pkgname),
-                        domain = NA, call. = FALSE, immediate. = TRUE)
+                ## If the package is already installed, remove it.  If it
+                ## isn't there, the unlink call will still return success.
+                ret <- unlink(instPath, recursive=TRUE)
+                if (ret == 0) {
+                    ## Move the new package to the install lib
+                    ret <- file.rename(file.path(tmpDir, pkgname), instPath)
+                    if(!ret)
+                        warning(gettextf("unable to move temporary installation '%s' to '%s'",
+                                         normalizePath(file.path(tmpDir, pkgname)),
+                                         normalizePath(instPath)),
+                                domain = NA, call. = FALSE, immediate. = TRUE)
+                } else {
+                    warning(gettextf("cannot remove prior installation of package '%s'",
+                                     pkgname),
+                            domain = NA, call. = FALSE, immediate. = TRUE)
+                }
             }
         }
         setwd(cDir)
+        ## remove our temp dir
         unlink(tmpDir, recursive=TRUE)
     }
 

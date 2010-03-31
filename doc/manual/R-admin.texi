@@ -2451,7 +2451,9 @@ known to create incorrect @HTML{} files.)  To make DVI or PDF versions
 of the manuals you will also need @file{texinfo.tex} installed (which is
 part of the @acronym{GNU} @pkg{texinfo} distribution but is often made
 part of the @TeX{} package in re-distributions) as well as
-@command{texi2dvi}.
+@command{texi2dvi}.@footnote{@command{texi2dvi} is normally a shell
+script.  Some versions, e.g.@: that from @pkg{texinfo} 4.13a, need to be
+run under @command{bash} rather than a Bourne shell as on, say, Solaris.}
 
 @cindex Vignettes
 The DVI and PDF documentation and building vignettes needs @command{tex}

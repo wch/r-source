@@ -3061,7 +3061,8 @@ function(package, lib.loc = NULL)
                    function(pkgs, lib, repos = getOption("repos"),
                             contriburl = contrib.url(repos),
                             method, available = NULL, destdir = NULL,
-                            dependencies = FALSE, ...) {}, envir = compat)
+                            dependencies = FALSE, libs_only = FALSE,
+                            ...) {}, envir = compat)
         }
         attach(compat, name="compat", pos = length(search()),
                warn.conflicts = FALSE)

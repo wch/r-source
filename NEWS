@@ -28,6 +28,10 @@ NEW FEATURES
 	(ASCII).  Thanks to Matthew Dowle for suggesting improvements
 	to the way the hash code is generated in unique.c.
 
+    o	install.packages() has a new argument 'libs_only' to optionally
+	pass --libs-only to INSTALL and works analogously for Windows
+	binary installs (to add support for 64- or 32-bit Windows).
+
 
 DEPRECATED & DEFUNCT
 

@@ -562,6 +562,9 @@
                     if (res == 0) shlib_install(instdir, rarch)
                     else has_error <- TRUE
                 } else {
+                    ## Future: NB, not R.home("bin")
+                    ## f <- dir(file.path(R.home(), "bin"))
+                    ## archs <- archs[f %in% c("i386", "x64")]
                     message("  making DLL ...")
                     srcs <- dir(pattern = "\\.([cfmCM]|cc|cpp|f90|f95|mm)$")
                     has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
@@ -591,8 +594,7 @@
                     srcs <- dir(pattern = "\\.([cfmCM]|cc|cpp|f90|f95|mm)$")
                     ## This allows Makevars to set OBJECTS or its own targets.
                     allfiles <- if (file.exists("Makevars")) c("Makevars", srcs) else srcs
-                    ## FIXME better R.home("bin") ?  Same for now.
-                    wd2 <- setwd(file.path(R.home(), "bin", "exec"))
+                    wd2 <- setwd(file.path(R.home("bin"), "exec"))
                     archs <- Sys.glob("*")
                     setwd(wd2)
                     if (length(allfiles)) {
