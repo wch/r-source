@@ -24,9 +24,11 @@ NEW FEATURES
 	Architecture-specific files (such as Rgui.exe) are now in
 	R_HOME/bin/i386 or R_HOME/bin/x64.
 
-	For now, 32-bit packages with compiled code built under
-	2.{10,11}.x can be used, but this will be disabled before
-	release.
+	For now, almost all 32-bit packages with compiled code built
+	under 2.{10,11}.x can be used, but this will be disabled
+	before release.
+
+    o	R CMD INSTALL can install zipfiles as binary packages.
 
 
 INSTALLATION
