@@ -1,7 +1,7 @@
-## These can be overridden in MkRules
+## These can be overridden in MkRules.dist or MkRules.local
 
-## must be jpeg-6b or jpeg-7 or jpeg-8
-JPEGDIR = jpeg-8
+## must be jpeg-6b or jpeg-7 or jpeg-8 or jpeg-8a
+JPEGDIR = jpeg-8a
 PNGDIR = libpng
 TIFFDIR = libtiff
 
