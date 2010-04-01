@@ -83,8 +83,8 @@ endif
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" ../README > $(RPREFIX)/README.$(RPREFIX)
 	$(SED) -e 3,5d ../README.packages > $(RPREFIX)/doc/README.packages
 # convert docs and batch files to CRLF: might already be on Windows, though.
-	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/* $(RPREFIX)/$(BINDIR)/*.bat
-	unzip -ao dosfiles.zip
+	zip -q dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/* $(RPREFIX)/$(BINDIR)/*.bat
+	unzip -qao dosfiles.zip
 	$(RM) dosfiles.zip
 #
 # files to make source packages
@@ -94,7 +94,6 @@ endif
 	$(CP) $(R_HOME)/doc/KEYWORDS* $(RPREFIX)/doc
 	$(CP) -pr $(R_HOME)/include $(RPREFIX)
 	$(CP) -pr $(foreach i,$(SHARE_DIRS),$(R_HOME)/share/$i) $(RPREFIX)/share
-#	$(CP) -p $(R_HOME)/share/sh/dcf.sh $(RPREFIX)/share/sh
 # This is odd -- better to clean the copy
 	(cd ..; $(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs)
 	$(CP) -pr ../windlgs $(RPREFIX)/src/library

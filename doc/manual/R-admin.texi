@@ -1234,8 +1234,8 @@ values that can be set.
 
 It is also possible to build an installer for use with Microsoft
 Installer.  This is intended for use by sysadmins doing automated
-installs, and is not recommended for casual use.  (It is only supported
-for 32-bit Windows in R 2.11.x.)
+installs, and is not recommended for casual use.  It is only supported
+for 32-bit Windows at present.
 
 It makes use of the Windows Installer XML (WiX) toolkit @emph{version
 2.0} available from @uref{http://wix.sourceforge.net/}.  (This needs the
