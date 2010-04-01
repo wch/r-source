@@ -59,7 +59,7 @@ function(file, widths, header = FALSE, sep = "\t",
         if (n == -1L)
             thisblock <- buffersize
         else
-            thisblock <- min(buffersize,n)
+            thisblock <- min(buffersize,n*recordlength)
 
         raw <- readLines(file, n = thisblock)
         nread <- length(raw)
