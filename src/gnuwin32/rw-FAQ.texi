@@ -777,9 +777,9 @@ default font in the @code{Rgui} console and internal pager is
 @code{Courier New}, which has directional quotes on all the systems we
 tried.  @code{Lucida Console} has elegant glyphs for directional quotes,
 but seems rather light on Windows XP (it looks better than @code{Courier
-New} on Vista).  Non-TrueType fonts such as @code{Courier} and
-@code{FixedSys} lack directional double quotes on all the systems we
-tried.
+New} on Vista): @code{Consolas} is another font which we often select.
+Non-TrueType fonts such as @code{Courier} and @code{FixedSys} lack
+directional double quotes on all the systems we tried.
 
 There is a related problem with using @code{Sweave} output in
 @code{Rgui}, for LaTeX needs to be told about the encoding of
@@ -860,13 +860,14 @@ those of 1GB or more).  The disadvantages are that all the pointers are
 to be moved around, and that far less external software is available for
 64-bit versions of the OS.
 
-The toolchain (compilers, linkers, ...) use to build 64-bit R are far
-less mature than those for 32-bit R, but testing so far (all the CRAN
-packages provide an extensive test suite) suggests that they are mature
-enough for production use.  The compilers are more recent versions of
-@acronym{GCC} with better optimization and are able to take advantage of
-extra features of all x86-64 chips (more registers, SSE2/3 instructions)
-and so the code may run faster despite using larger pointers.
+The toolchain (compilers, linkers, @dots{}) used to build 64-bit R are far
+less mature than those for 32-bit R, but testing so far (and all the
+CRAN packages provide an extensive test suite) suggests that they are
+mature enough for production use.  The compilers are more recent
+versions of @acronym{GCC} with better optimization and are able to take
+advantage of extra features of all x86-64 chips (more registers, SSE2/3
+instructions, @dots{}) and so the code may run faster despite using larger
+pointers.
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
@@ -942,7 +943,7 @@ graphics devices and not, say, to @code{pdf}.)
 Note that it is important that the console font uses double-width
 characters for all CJK characters (as that is what the width table used
 assumes): this is true for the fonts intended for CJK locales but not
-for example for Lucida Console.
+for example for Lucida Console or Consolas.
 
 You do need to ensure that R is running in a suitable locale: use
 @code{Sys.getlocale()} to find out.  (CJK users may be used to their
@@ -1534,12 +1535,12 @@ others.  See the `R Installation and Administration' manual.
 
 To build a 64-bit version on 64-bit Windows you will need a suitable
 compiler, and the MinGW-w64 port of @code{binutils} and @code{gcc} is
-finally mature enough to produce a working version of R, so experimental
-support has been added as from R 2.11.0: see the manual.  You are
-welcome to try a commercial compiler@footnote{such as those from Intel
-and PGI: there is no Fortran compiler in the Microsoft set, but
-@code{f2c} could be used.}, and pre-compiled versions using such
-compilers are available from R redistributors.
+finally mature enough to produce a working version of R, so support has
+been added as from R 2.11.0: see the manual.  You are welcome to try a
+commercial compiler@footnote{such as those from Intel and PGI: there is
+no Fortran compiler in the Microsoft set, but @code{f2c} could be
+used.}, and pre-compiled versions using such compilers are available
+from R redistributors.
 
 @node Can I use a fast BLAS?, How do I include compiled C code?, How can I compile R from source?, Building from Source
 @section  Can I use a fast BLAS?
@@ -1556,10 +1557,11 @@ neither will run at all on a PII.
 
 BLAS support is supplied by the single DLL @file{R_HOME\bin\Rblas.dll},
 and you can add a fast BLAS just by replacing that.  Replacements for
-some of the more common chips are available on CRAN in directory
+some of the older common chips are available on CRAN in directory
 @file{bin/windows/contrib/ATLAS}.  See the R Installation and
 Administration' manual for how to build an ATLAS @file{Rblas.dll} tuned
-to your system using the R sources.
+to your system using the R sources.  Unfortunately the process has been
+less successful when tried for the common current chips such as Core 2.
 
 @node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, Can I use a fast BLAS?, Building from Source
 @section How do I include compiled C code?
