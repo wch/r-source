@@ -2771,14 +2771,13 @@ the @command{gcc} version we could use
 @noindent
 if the appropriate library directory (such as
 @enindex LD_LIBRARY_PATH
-@file{/opt/acml4.3.0/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.
+@file{/opt/acml4.4.0/gfortran64/lib}) is in the @env{LD_LIBRRARY_PATH}.
 For other compilers, see the ACML documentation.  There is a
-multithreaded Linux version of ACML available for @command{gfortran}
-which needs @command{gcc} >= 4.2.0 (or some RedHat versions of 4.1.x).
-To make use of this you will need something like
+multithreaded Linux version of ACML available for recent versions of
+@command{gfortran}.  To make use of this you will need something like
 
 @example
---with-blas="-L/opt/acml4.3.0/gfortran64_mp/lib -lacml_mp"
+--with-blas="-L/opt/acml4.4.0/gfortran64_mp/lib -lacml_mp"
 @end example
 
 See @pxref{Shared BLAS} for an alternative (and in many ways preferable)
@@ -2788,7 +2787,7 @@ way to use ACML.
 @subsubsection Goto BLAS
 
 Dr Kazushige Goto has written another tuned BLAS which is available for
-several processors and OSes.  The current version is known as GotoBLAS2
+several processors and OSes.  The current version is known as GotoBLAS2.
 
 This has been made available in several formats, but is currently
 available only as source code.  For @emph{academic use only} (after
@@ -2931,7 +2930,7 @@ For example, just
 
 @example
 mv @var{R_HOME}/lib/libRblas.so @var{R_HOME}/lib/libRblas.so.keep
-ln -s /opt/acml4.3.0/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
+ln -s /opt/acml4.4.0/gfortran64_mp/lib/libacml_mp.so @var{R_HOME}/lib/libRblas.so
 @end example
 
 will change the BLAS in use to multithreaded ACML.  A similar link works

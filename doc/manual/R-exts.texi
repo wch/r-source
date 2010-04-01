@@ -938,7 +938,13 @@ please give enough information for a user on a non-Unix platform to
 configure it manually, or provide a @file{configure.win} script to be
 used on that platform.  (Optionally, there can be a @file{cleanup.win}
 script.  Both should be shell scripts to be executed by @command{ash},
-which is a minimal version of Bourne-style @command{sh}.)
+which is a minimal version of Bourne-style @command{sh}.)  When
+@file{configure.win} is run the environment variables
+@env{R_HOME}@footnote{and also @env{RHOME} for backwards compatiblity,
+but this will be removed in future.} and @env{R_ARCH} will be set.
+Use @env{R_ARCH} to decide if this is a 64-bit build (its value there is
+@samp{/x64} and to install DLLs to the correct place
+(@code{$@{R_HOME@}/libs$@{R_ARCH@}}).
 
 In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An
@@ -955,12 +961,14 @@ data structure at installation time. (This happens with the Java Archive
 files in the @pkg{SJava} package.)
 @vindex R_LIBRARY_DIR
 @vindex R_PACKAGE_DIR
-The names of the top-level library directory (i.e., specifiable @emph{via} the
-@samp{-l} argument) and the directory of the package itself are made
-available to the installation scripts @emph{via} the two shell/environment
-variables @env{R_LIBRARY_DIR} and @env{R_PACKAGE_DIR}.  Additionally,
-the name of the package (e.g., @samp{survival} or @samp{MASS}) being
-installed is available from the shell variable @env{R_PACKAGE_NAME}.
+@vindex R_PACKAGE_NAME
+The names of the top-level library directory (i.e., specifiable
+@emph{via} the @samp{-l} argument) and the directory of the package
+itself are made available to the installation scripts @emph{via} the two
+shell/environment variables @env{R_LIBRARY_DIR} and @env{R_PACKAGE_DIR}.
+Additionally, the name of the package (e.g., @samp{survival} or
+@samp{MASS}) being installed is available from the environment variable
+@env{R_PACKAGE_NAME}.
 
 @menu
 * Using Makevars::              
