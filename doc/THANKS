@@ -1,63 +1,20 @@
 R would not be what it is today without the invaluable help of these
 people, who contributed by donating code, bug fixes and documentation:
 
-Valerio Aimale		<valerio.aimale@biosgroup.com>
-Thomas Baier		<Thomas.Baier@ci.tuwien.ac.at>
-Roger Bivand		<Roger.Bivand@nhh.no>
-Ben Bolker		<ben@zoo.ufl.edu>
-David Brahm		<brahm@alum.mit.edu>
-Goran Brostrom		<gb@stat.umu.se>
-Patrick Burns		<pburns@pburns.seanet.com>
-Vince Carey		<stvjc@channing.harvard.edu>
-Saikat DebRoy		<saikat@stat.wisc.edu>
-Brian D'Urso		<durso@hussle.harvard.edu>
-Lyndon Drake		<lyndon@stat.auckland.ac.nz>
-Dirk Eddelbuettel	<edd@debian.org>
-Claus Ekstrom		<ekstrom@dina.kvl.dk>
-Sebastian Fischmeister	<sfischme@uwaterloo.ca>
-John Fox		<jfox@mcmaster.ca>
-Paul Gilbert		<pgilbert@bank-banque-canada.ca>
-Yu Gong			<armgong@yahoo.com>
-Gabor Grothendieck	<ggrothendieck@gmail.com>
-Frank E Harrell Jr	<f.harrell@vanderbilt.edu>
-Torsten Hothorn		<Torsten.Hothorn@rzmail.uni-erlangen.de>
-Robert King		<robert.king@mailbox.gu.edu.au>
-Kjetil Kjernsmo		<kjetikj@astro.uio.no>
-Roger Koenker		<rkoenker@uiuc.edu>
-Philippe Lambert	<lambert@stat.ucl.ac.be>
-Jan de Leeuw		<deleeuw@stat.ucla.edu>
-Uwe Ligges		<ligges@statistik.uni-dortmund.de>
-Jim Lindsey		<jlindsey@luc.ac.be>
-Patrick Lindsey		<plindsey@luc.ac.be>
-Catherine Loader	<catherine@research.bell-labs.com>
-Gordon Maclean		<maclean@atd.ucar.edu>
-John Maindonald		<john.maindonald@anu.edu.au>
-David Meyer		<David.Meyer@wu-wien.ac.at>
-Ei-ji Nakama		<nakama@ki.rim.or.jp>
-Jens Oehlschaegel	<joehl@web.de>
-Steve Oncley		<oncley@atd.ucar.edu>
-Richard O'Keefe		<ok@cs.otago.ac.nz>
-Hubert Palme		<palme@uni-wuppertal.de>
-Roger D. Peng		<rpeng@jhsph.edu>
-Jose' C. Pinheiro	<jose.pinheiro@pharma.novartis.com>
-Tony Plate		<tplate@blackmesacapital.com>
-Anthony Rossini		<blindglobe@gmail.com>
-Jonathan Rougier	<J.C.Rougier@durham.ac.uk>
-Guenther Sawitzki	<gs@statlib.uni-heidelberg.de>
-Marc Schwartz		<marc_schwartz@comcast.net>
-Detlef Steuer		<steuer@hsu-hh.de>
-Bill Simpson		<wsi@gcal.ac.uk>
-Gordon Smyth		<smyth@wehi.edu.au>
-Adrian Trapletti	<a.trapletti@bluewin.ch>
-Terry Therneau		<therneau.terry@mayo.edu>
-Rolf Turner 		<rolf@math.unb.ca>
-Bill Venables		<William.Venables@csiro.au>
-Gregory R. Warnes	<warnes@biostat.washington.edu>
-Andreas Weingessel	<Andreas.Weingessel@ci.tuwien.ac.at>
-Morten Welinder		<terra@gnome.org>
-James Wettenhall	<wettenhall@wehi.edu.au>
-Simon Wood		<snw@mcs.st-and.ac.uk>
-Achim Zeileis		<Achim.Zeileis@wu-wien.ac.at>
+Valerio Aimale, Thomas Baier, Roger Bivand, Ben Bolker, David Brahm,
+Goran Brostrom, Patrick Burns, Vince Carey, Saikat DebRoy, Brian
+D'Urso, Lyndon Drake, Dirk Eddelbuettel, Claus Ekstrom, Sebastian
+Fischmeister, John Fox, Paul Gilbert, Yu Gong, Gabor Grothendieck,
+Frank E Harrell Jr, Torsten Hothorn, Robert King, Kjetil Kjernsmo,
+Roger Koenker, Philippe Lambert, Jan de Leeuw, Uwe Ligges, Jim
+Lindsey, Patrick Lindsey, Catherine Loader, Gordon Maclean, John
+Maindonald, David Meyer, Ei-ji Nakama, Jens Oehlschaegel, Steve
+Oncley, Richard O'Keefe, Hubert Palme, Roger D. Peng, Jose'
+C. Pinheiro, Tony Plate, Anthony Rossini, Jonathan Rougier, Guenther
+Sawitzki, Marc Schwartz, Detlef Steuer, Bill Simpson, Gordon Smyth,
+Adrian Trapletti, Terry Therneau, Rolf Turner, Bill Venables, Gregory
+R. Warnes, Andreas Weingessel, Morten Welinder, James Wettenhall,
+Simon Wood, and Achim Zeileis
 
 We have probably omitted some important names here because of incomplete
 record keeping.	 If we have overlooked you, please let us know and we'll
