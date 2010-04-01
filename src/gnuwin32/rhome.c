@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2007  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1999--2010  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,27 +44,25 @@ static char rhomebuf[MAX_PATH];
     *p = '\0'
 
 /* get R_HOME from the module path: used in RSetReg */
-char *getRHOMElong(void)
+char *getRHOMElong(int m)
 {
     DWORD nc;
     char *p;
 
     nc = GetModuleFileName(NULL, rhomebuf, MAX_PATH);
-    GOBACKONESLASH;
-    GOBACKONESLASH;
-    GOBACKONESLASH; /* when we have bin$R_ARCH */
+    for(int i=0; i < m; i++) {GOBACKONESLASH;}
     return (rhomebuf);
 }
 
 /* get no-spaces version of R_HOME from the module path: 
    used in Rgui, Rterm and Rcmd
 */
-char *getRHOME(void)
+char *getRHOME(int m)
 {
     char *p;
     int hasspace = 0;
 
-    getRHOMElong();
+    getRHOMElong(m);
     /* make sure no spaces in path */
     for (p = rhomebuf; *p; p++)
 	if (isspace(*p)) { hasspace = 1; break; }

@@ -24,7 +24,7 @@
 
 #define PRODUCER "R-core"
 
-extern char *getRHOMElong(void); /* in ../rhome.c */
+extern char *getRHOMElong(int m); /* in ../rhome.c */
 
 int main (int argc, char **argv)
 {
@@ -69,7 +69,7 @@ int main (int argc, char **argv)
 	    status = 1;
 	}
     } else {
-    	RHome = getRHOMElong();
+    	RHome = getRHOMElong(3);
 	if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, keyname, 0, 
 			       KEY_ALL_ACCESS, &hkey)) != ERROR_SUCCESS) {
 	    /* failed to open key, so try to create it */

@@ -119,7 +119,7 @@ fixups:
 ifeq ($(strip $(WIN)),64)
 ifneq ($(strip $(HOME32)),)
 	@echo "including 32-bit files"
-	(cd $(HOME32); zip -qr9X 32bit */i386 library/*/libs/i386)
+	(cd $(HOME32); zip -qr9X 32bit */i386 library/*/libs/i386 bin/R.exe)
 	unzip -q $(HOME32)/32bit -d $(RPREFIX)
 	rm $(HOME32)/32bit.zip
 	cp -pr $(HOME32)/Tcl $(RPREFIX)

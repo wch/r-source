@@ -661,7 +661,7 @@ static int char_YesNoCancel(const char *s)
 
 static char RHome[MAX_PATH + 7];
 static char UserRHome[MAX_PATH + 7];
-extern char *getRHOME(void), *getRUser(void); /* in rhome.c */
+extern char *getRHOME(int), *getRUser(void); /* in rhome.c */
 void R_setStartTime(void);
 
 
@@ -848,7 +848,7 @@ int cmdlineoptions(int ac, char **av)
     Rboolean usedRdata = FALSE, processing = TRUE;
 
     /* ensure R_Home gets set early: we are in rgui or rterm here */
-    R_Home = getRHOME();
+    R_Home = getRHOME(3);
     /* need this for moduleCdynload for iconv.dll */
     InitFunctionHashing();
     sprintf(RHome, "R_HOME=%s", R_Home);
