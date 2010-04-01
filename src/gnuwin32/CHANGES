@@ -21,8 +21,11 @@ NEW FEATURES
      o	A sub-architecture is used for 32-bit (i386) as well as
 	64-bit (x64) builds.
 
-	Architecture-specific files (such as Rgui.exe) are now in
-	R_HOME/bin/i386 or R_HOME/bin/x64.
+	Architecture-specific files (such as Rgui.exe and Rscript.exe)
+	are now in R_HOME/bin/i386 or R_HOME/bin/x64. 
+	Package installation, including 'configure.win' scripts, can
+	use ${R_HOME}/bin${R_ARCH_BIN} as a portable way to find
+	these.
 
 	For now, almost all 32-bit packages with compiled code built
 	under 2.{10,11}.x can be used, but this will be disabled
@@ -37,6 +40,12 @@ INSTALLATION
 
      o	The 64-bit installer (which runs only on a 64-bit system) can
 	be used to add 64-bit components to a 32-bit install.
+
+
+PACKAGE INSTALLATION
+
+    o	Environment variable RHOME is no longer set when a package is
+	installed: use R_HOME instead (and depend on R (>= 2.9) ).
 
 
 

@@ -940,11 +940,13 @@ used on that platform.  (Optionally, there can be a @file{cleanup.win}
 script.  Both should be shell scripts to be executed by @command{ash},
 which is a minimal version of Bourne-style @command{sh}.)  When
 @file{configure.win} is run the environment variables
-@env{R_HOME}@footnote{and also @env{RHOME} for backwards compatiblity,
-but this will be removed in future.} and @env{R_ARCH} will be set.
-Use @env{R_ARCH} to decide if this is a 64-bit build (its value there is
-@samp{/x64} and to install DLLs to the correct place
-(@code{$@{R_HOME@}/libs$@{R_ARCH@}}).
+@env{R_HOME}@footnote{formerly also @env{RHOME}, but this was removed
+in @R{} 2.12.0.} (which uses @code{/} as the file separator) and
+@env{R_ARCH} will be set.  Use @env{R_ARCH} to decide if this is a
+64-bit build (its value there is @samp{/x64} and to install DLLs to the
+correct place (@code{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use
+@env{R_ARCH_BIN} to find the correct place under the @file{bin}
+directory, e.g.@: @code{$@{R_HOME@}/bin$@{R_ARCH_BIN@}/Rscript.exe}.
 
 In some rare circumstances, the configuration and cleanup scripts need
 to know the location into which the package is being installed.  An

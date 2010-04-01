@@ -67,9 +67,10 @@
         ## These might be needed for configure.win and Make{file,vars}.win
         ## Some people have *assumed* that R_HOME uses /
         Sys.setenv(R_HOME = rhome)
-        ## and others have assumed that RHOME is set:
-        Sys.setenv(RHOME = rhome)
-        if (nzchar(rarch)) Sys.setenv(R_ARCH = rarch)
+        if (nzchar(rarch)) {
+            Sys.setenv(R_ARCH = rarch)
+            Sys.setenv(R_ARCH_BIN = rarch)
+        }
     }
 
     Usage <- function() {
