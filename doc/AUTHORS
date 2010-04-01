@@ -6,25 +6,27 @@ Statistics Department of the University of Auckland.
 Since mid-1997 there has been a core group with write access to the R
 source, currently consisting of
 
-Douglas Bates		<bates@stat.wisc.edu>
-John Chambers		<jmc@R-project.org>
-Peter Dalgaard		<pd.mes@cbs.dk>
-Seth Falcon		<seth@userprimary.net>
-Robert Gentleman	<rgentlem@gene.com>
-Kurt Hornik		<Kurt.Hornik@wu.ac.at>
-Stefano Iacus		<stefano.iacus@unimi.it>
-Ross Ihaka		<ihaka@stat.auckland.ac.nz>
-Friedrich Leisch	<friedrich.leisch@stat.uni-muenchen.de>
-Thomas Lumley		<tlumley@u.washington.edu>
-Martin Maechler		<maechler@stat.math.ethz.ch>
-Duncan Murdoch		<murdoch@stats.uwo.ca>
-Paul Murrell		<paul@stat.auckland.ac.nz>
-Martyn Plummer		<plummer@iarc.fr>
-Brian Ripley		<ripley@stats.ox.ac.uk>
-Deepayan Sarkar		<deepayan.sarkar@gmail.com>
-Duncan Temple Lang	<duncan@wald.ucdavis.edu>
-Luke Tierney		<luke@stat.uiowa.edu>
-Simon Urbanek		<urbanek@research.att.com>
+Douglas Bates
+John Chambers
+Peter Dalgaard
+Seth Falcon
+Robert Gentleman
+Kurt Hornik
+Stefano Iacus
+Ross Ihaka
+Friedrich Leisch
+Thomas Lumley
+Martin Maechler
+Duncan Murdoch
+Paul Murrell
+Martyn Plummer
+Brian Ripley
+Deepayan Sarkar
+Duncan Temple Lang
+Luke Tierney
+Simon Urbanek
 
-plus Heiner Schwarte <h.schwarte@bluewin.ch> up to October 1999
-and Guido Masarotto <guido@hal.stat.unipd.it> up to June 2003.
+plus Heiner Schwarte up to October 1999 and Guido Masarotto up to June 2003.
+
+Current R-core members can be contacted via email to R-project.org
+with name made up by replacing space by dots in the name listed above.
