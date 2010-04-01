@@ -198,18 +198,18 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 Name: "main"; Description: "Main Files"; Types: user user32 user64 compact full custom;
 Name: "i386"; Description: "i386 Files"; Types: user user32 compact full custom;
 Name: "x64"; Description: "x64 Files"; Types: user user64 add64 compact full custom;
-Name: "html"; Description: "HTML Files"; Types: user user32 user64 full custom; Flags:
+Name: "html"; Description: "HTML Manuals"; Types: user user32 user64 full custom; Flags:
+Name: "manuals"; Description: "On-line PDF Manuals"; Types: user user32 user64 full custom
+Name: "manuals/basic"; Description: "Basic Manuals"; Types: user user32 user64 full custom
+Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom
+Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom
+Name: "manuals/libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
 Name: "tcl64"; Description: "x64 Files for Package tcltk"; Types: user user64 add64 full custom; Flags: checkablealone
 Name: "tcl64/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
 Name: "tcl64/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
 Name: "tcl"; Description: "i386 Files for Package tcltk"; Types: user32 full custom; Flags: checkablealone
 Name: "tcl/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
 Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
-Name: "manuals"; Description: "On-line PDF Manuals"; Types: user user32 user64 full custom
-Name: "manuals/basic"; Description: "Basic Manuals"; Types: user user32 user64 full custom; Flags: dontinheritcheck
-Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom; Flags: dontinheritcheck
-Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom; Flags: dontinheritcheck
-Name: "libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
 Name: "trans"; Description: "Message Translations"; Types: user user32 user64 full custom
 Name: "tests"; Description: "Test files"; Types: full custom
 END
@@ -226,15 +226,15 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 [Components]
 Name: "main"; Description: "Main Files"; Types: user compact full custom;
 Name: "x64"; Description: "x64 Files"; Types: user add64 compact full custom;
-Name: "html"; Description: "HTML Files"; Types: user full custom;
+Name: "html"; Description: "HTML Manuals"; Types: user full custom;
+Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
+Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom
+Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom
+Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom
+Name: "manuals/libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
 Name: "tcl64"; Description: "x64 Files for Package tcltk"; Types: user add64 full custom; Flags: checkablealone
 Name: "tcl64/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
 Name: "tcl64/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
-Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
-Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom; Flags: dontinheritcheck
-Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom; Flags: dontinheritcheck
-Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom; Flags: dontinheritcheck
-Name: "libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "tests"; Description: "Test files"; Types: full custom
 END
@@ -250,15 +250,15 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 [Components]
 Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
 Name: "i386"; Description: "i386 Files"; Types: user compact full custom; Flags: fixed
-Name: "html"; Description: "HTML Files"; Types: user full custom;
+Name: "html"; Description: "HTML Manuals"; Types: user full custom;
+Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
+Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom
+Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom
+Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom
+Name: "manuals/libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
 Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom; Flags: checkablealone
 Name: "tcl/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
 Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
-Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
-Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom; Flags: dontinheritcheck
-Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom; Flags: dontinheritcheck
-Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom; Flags: dontinheritcheck
-Name: "libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "tests"; Description: "Test files"; Types: full custom
 END
@@ -479,15 +479,16 @@ sub listFiles {
 	$dir =~ s/\\$//;
 	$_ = $fn;
 	
+	## These manuals are on the Rgui menu, so should always be installed
 	if ($_ eq "doc\\manual\\R-FAQ.html"
 		 || $_ eq "doc\\html\\rw-FAQ.html"
 		 || $_ eq "share\\texmf\\Sweave.sty") {
 	    $component = "main";
-	} elsif (m/^library\\[^\\]*\\html/
-		 || $_ eq "library\\R.css") {
-	    $component = "html";
 	} elsif (m/^doc\\html/
-		 || m/^doc\\manual\\[^\\]*\.html/ ) {
+		 || m/^library\\[^\\]*\\html/
+		 || $_ eq "library\\R.css") {
+	    $component = "main";
+	} elsif (m/^doc\\manual\\[^\\]*\.html/ ) {
 	    $component = "html";
 	} elsif ($_ eq "doc\\manual\\R-data.pdf"
 		 || $_ eq "doc\\manual\\R-intro.pdf") {
@@ -518,7 +519,7 @@ sub listFiles {
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
 	} elsif (m/^library\\grid\\doc/ || m/^library\\Matrix\\doc/) {
-	    $component = "libdocs";
+	    $component = "manuals/libdocs";
 	} elsif (m/^share\\locale/ 
 		 || m/^library\\[^\\]*\\po/) {
 	    $component = "trans";
