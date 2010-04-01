@@ -187,7 +187,8 @@ strptime(x, format, tz = "")
   \code{strptime} turns character representations into an object of
   class \code{"\link{POSIXlt}"}.  The timezone is used to set the
   \code{isdst} component and to set the \code{"tzone"} attribute if
-  \code{tz != ""}.
+  \code{tz != ""}.  If the specified time is invalid (in the specified
+  timezone) all the components of the result are \code{NA}.
 }
 \note{
   The default formats follow the rules of the ISO 8601 international
