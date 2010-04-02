@@ -157,12 +157,14 @@ static struct sockaddr *build_sin(struct sockaddr_in *sa, const char *ip, int po
 #define METHOD_HEAD 3
 
 /* attributes of a connection/worker */
-#define CONNECTION_CLOSE 0x01 /* Connection: close response behavior is requested */
-#define HOST_HEADER      0x02 /* headers contained Host: header (required for HTTP/1.1) */
-#define HTTP_1_0         0x04 /* the client requested HTTP/1.0 */
-#define CONTENT_LENGTH   0x08 /* Content-length: was specified in the headers */
-#define THREAD_OWNED     0x10 /* the worker is owned by a thread and cannot removed */
-#define THREAD_DISPOSE   0x20 /* the thread should dispose of the worker */
+#define CONNECTION_CLOSE  0x01 /* Connection: close response behavior is requested */
+#define HOST_HEADER       0x02 /* headers contained Host: header (required for HTTP/1.1) */
+#define HTTP_1_0          0x04 /* the client requested HTTP/1.0 */
+#define CONTENT_LENGTH    0x08 /* Content-length: was specified in the headers */
+#define THREAD_OWNED      0x10 /* the worker is owned by a thread and cannot removed */
+#define THREAD_DISPOSE    0x20 /* the thread should dispose of the worker */
+#define CONTENT_TYPE      0x40 /* message has a specific content type set */
+#define CONTENT_FORM_UENC 0x80 /* message content type is application/x-www-form-urlencoded */
 
 /* --- connection/worker structure holding all data for an active connection --- */
 typedef struct httpd_conn {
@@ -175,16 +177,17 @@ typedef struct httpd_conn {
 #endif
     char line_buf[LINE_BUF_SIZE];  /* line buffer (used for request and headers) */
     char *url, *body;              /* URL and request body */
+    char *content_type;            /* content type (if set) */
     unsigned int line_pos, body_pos, content_length; /* positions in the buffers and desired content length */
     char part, method, attr;       /* request part, method and connection attributes */
 } httpd_conn_t;
 
-/* returns the HTTP/x.x string for a given connection - we support 1.0 and 1.1 only */
-#define HTTP_SIG(C) ((((C)->attr & HTTP_1_0) == 0) ? "HTTP/1.1" : "HTTP/1.0")
-
 #define IS_HTTP_1_1(C) (((C)->attr & HTTP_1_0) == 0)
 
-/* --- static list of currently activbe workers --- */
+/* returns the HTTP/x.x string for a given connection - we support 1.0 and 1.1 only */
+#define HTTP_SIG(C) (IS_HTTP_1_1(C) ? "HTTP/1.1" : "HTTP/1.0")
+
+/* --- static list of currently active workers --- */
 static httpd_conn_t *workers[MAX_WORKERS];
 
 /* --- flag determining whether one-time initialization is yet to be performed --- */
@@ -236,6 +239,11 @@ static void finalize_worker(httpd_conn_t *c)
 	c->body = NULL;
     }
 
+    if (c->content_type) {
+	free(c->content_type);
+	c->content_type = NULL;
+    }
+    
     if (c->sock != INVALID_SOCKET) {
 	closesocket(c->sock);
 	c->sock = INVALID_SOCKET;
@@ -300,7 +308,15 @@ static int send_response(SOCKET s, const char *buf, unsigned int len)
 
 /* sends HTTP/x.x plus the text (which should be of the form " XXX ...") */
 static int send_http_response(httpd_conn_t *c, const char *text) {
+    char buf[96];
     const char *s = HTTP_SIG(c);
+    int l = strlen(text);
+    /* reduce the number of packets by sending the payload en-block from buf */
+    if (l < sizeof(buf) - 10) {
+	strcpy(buf, s);
+	strcpy(buf + 8, text);
+	return send_response(c->sock, buf, l + 8);
+    }
     if (send(c->sock, s, 8, 0) < 8) return -1;
     return send_response(c->sock, text, strlen(text));
 }
@@ -383,6 +399,26 @@ static SEXP parse_query(char *query)
     return res;
 }
 
+/* create an object representing the request body. It is NULL if the body is empty (or zero length).
+ * In the case of a URL encoded form it will have the same shape as the query string (named string vector).
+ * In all other cases it will be a raw vector with a "content-type" attribute (if specified in the headers) */
+static SEXP parse_request_body(httpd_conn_t *c) {
+    if (!c || !c->body) return R_NilValue;
+
+    if (c->attr & CONTENT_FORM_UENC) { /* URL encoded form - return parsed form */
+	c->body[c->content_length] = 0; /* the body is guaranteed to have an extra byte for the termination */
+	return parse_query(c->body);
+    } else { /* something else - pass it as a raw vector */
+	SEXP res = PROTECT(Rf_allocVector(RAWSXP, c->content_length));
+	if (c->content_length)
+	    memcpy(RAW(res), c->body, c->content_length);
+	if (c->content_type) /* attach the content type so it can be interpreted */
+	    setAttrib(res, install("content-type"), mkString(c->content_type));
+	UNPROTECT(1);
+	return res;
+    }
+}
+
 #ifdef WIN32
 /* on Windows we have to guarantee that process_request is performed
  * on the main thread, so we have to dispatch it through a message */
@@ -422,11 +458,17 @@ static void process_request(httpd_conn_t *c)
 	query = s;
     }
     uri_decode(c->url); /* decode the path part */
-    { /* construct try(httpd(url, query), silent=TRUE) */
+    {   /* construct "try(httpd(url, query, body), silent=TRUE)" */
 	SEXP sTrue = PROTECT(ScalarLogical(TRUE));
-	SEXP y, x = PROTECT(lang3(install("try"), LCONS(install("httpd"), CONS(mkString(c->url), CONS(query ? parse_query(query) : R_NilValue, R_NilValue))), sTrue));
+	SEXP y, x = PROTECT(lang3(
+				  install("try"),
+				  LCONS(install("httpd"),
+					list3(mkString(c->url), query ? parse_query(query) : R_NilValue, parse_request_body(c))),
+				  sTrue));
 	SET_TAG(CDR(CDR(x)), install("silent"));
 	DBG(Rprintf("eval(try(httpd('%s'),silent=TRUE))\n", c->url));
+
+	/* evaluate the above in the tools namespace */
 	x = PROTECT(eval(x, R_FindNamespace(mkString("tools"))));
 
 	/* the result is expected to have one of the following forms:
@@ -517,18 +559,24 @@ static void process_request(httpd_conn_t *c)
 		    send_response(c->sock, buf, strlen(buf));
 		    if (c->method != METHOD_HEAD) {
 			fbuf = (char*) malloc(32768);
-			while (fsz > 0 && !feof(f)) {
-			    int rd = (fsz > 32768) ? 32768 : fsz;
-			    if (fread(fbuf, 1, rd, f) != rd) {
-				free(fbuf);
-				UNPROTECT(3);
-				c->attr |= CONNECTION_CLOSE;
-				return;
+			if (fbuf) {
+			    while (fsz > 0 && !feof(f)) {
+				int rd = (fsz > 32768) ? 32768 : fsz;
+				if (fread(fbuf, 1, rd, f) != rd) {
+				    free(fbuf);
+				    UNPROTECT(3);
+				    c->attr |= CONNECTION_CLOSE;
+				    return;
+				}
+				send_response(c->sock, fbuf, rd);
+				fsz -= rd;
 			    }
-			    send_response(c->sock, fbuf, rd);
-			    fsz -= rd;
+			    free(fbuf);
+			} else { /* allocation error - get out */
+			    UNPROTECT(3);
+			    c->attr |= CONNECTION_CLOSE;
+			    return;
 			}
-			free(fbuf);
 		    }
 		    fclose(f);
 		    UNPROTECT(3);
@@ -626,11 +674,14 @@ static void worker_input_handler(void *data) {
 		    send_http_response(c, " 400 Bad Request (Host: missing)\r\nConnection: close\r\n\r\n");
 		    remove_worker(c);
 		    return;
-
 		}
-		if (c->attr & CONTENT_LENGTH) {
-		    if (c->content_length)
-			c->body = (char*) malloc(c->content_length);
+		if (c->attr & CONTENT_LENGTH && c->content_length) {
+		    c->body = (char*) malloc(c->content_length + 1); /* allocate an extra termination byte */
+		    if (!c->body) { /* uh oh - out of memory - refuse */
+			send_http_response(c, " 413 Request Entity Too Large (request body too big)\r\nConnection: close\r\n\r\n");
+			remove_worker(c);
+			return;
+		    }
 		}
 		c->body_pos = 0;
 		c->part = PART_BODY;
@@ -653,6 +704,7 @@ static void worker_input_handler(void *data) {
 		    /* keep-alive - reset the worker so it can process a new request */
 		    if (c->url) { free(c->url); c->url = NULL; }
 		    if (c->body) { free(c->body); c->body = NULL; }
+		    if (c->content_type) { free(c->content_type); c->content_type = NULL; }
 		    c->body_pos = 0;
 		    c->method = 0;
 		    c->part = PART_REQUEST;
@@ -721,6 +773,15 @@ static void worker_input_handler(void *data) {
 				c->attr |= CONTENT_LENGTH;
 				c->content_length = atoi(k);
 			    }
+			    if (!strcmp(bol, "content-type")) {
+				char *l = k;
+				while (*l) { if (*l >= 'A' && *l <= 'Z') *l |= 0x20; l++; }
+				c->attr |= CONTENT_TYPE;
+				if (c->content_type) free(c->content_type);
+				c->content_type = strdup(k);
+				if (!strncmp(k, "application/x-www-form-urlencoded", 33))
+				    c->attr |= CONTENT_FORM_UENC;
+			    }
 			    if (!strcmp(bol, "host"))
 				c->attr |= HOST_HEADER;
 			    if (!strcmp(bol, "connection")) {
@@ -760,6 +821,7 @@ static void worker_input_handler(void *data) {
 	    /* keep-alive - reset the worker so it can process a new request */
 	    if (c->url) { free(c->url); c->url = NULL; }
 	    if (c->body) { free(c->body); c->body = NULL; }
+	    if (c->content_type) { free(c->content_type); c->content_type = NULL; }
 	    c->line_pos = 0; c->body_pos = 0;
 	    c->method = 0;
 	    c->part = PART_REQUEST;
@@ -795,6 +857,7 @@ static void worker_input_handler(void *data) {
 		/* keep-alive - reset the worker so it can process a new request */
 		if (c->url) { free(c->url); c->url = NULL; }
 		if (c->body) { free(c->body); c->body = NULL; }
+		if (c->content_type) { free(c->content_type); c->content_type = NULL; }
 		c->body_pos = 0;
 		c->method = 0;
 		c->part = PART_REQUEST;
@@ -804,7 +867,7 @@ static void worker_input_handler(void *data) {
 	    }
 	}
 	n = recv(c->sock, c->line_buf + c->line_pos, LINE_BUF_SIZE - c->line_pos - 1, 0);
-	if (n < 0) { /* error, scrape this worker */
+	if (n < 0) { /* error, scrap this worker */
 	    remove_worker(c);
 	    return;
 	}
