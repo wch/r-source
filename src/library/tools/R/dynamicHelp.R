@@ -406,3 +406,6 @@ startDynamicHelp <- function(start=TRUE)
     lockBinding("httpdPort", env)
     invisible(httpdPort)
 }
+
+## environment holding potential custom httpd handlers
+.httpd.handlers.env <- new.env()
