@@ -1,6 +1,6 @@
 % File src/library/tools/man/writePACKAGES.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{write_PACKAGES}
@@ -29,7 +29,8 @@ write_PACKAGES(dir = ".", fields = NULL,
     \code{"Package"}, \code{"Version"}, \code{"Priority"},
     \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
     \code{"Suggests"}, \code{"Enhances"}, \code{"OS_type"},
-    and \code{"License"} and those fields will always be included, plus
+    \code{"License"} and \code{"Archs"}, and those fields will always
+    be included, plus
     the file name in field \code{"File"} if \code{addFile = TRUE}
     and the path to the subdirectory in field \code{"Path"} if subdirectories
     are used.

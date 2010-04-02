@@ -639,6 +639,21 @@
             }
             if (has_error)
                 pkgerrmsg("compilation failed", pkg_name)
+
+            ## if we have subarchs, update DESCRIPTION
+            fi <- file.info(Sys.glob(file.path(instdir, "libs", "*")))
+            dirs <- row.names(fi[fi$isdir %in% TRUE])
+            if (length(dirs)) {
+                descfile <- file.path(instdir, "DESCRIPTION")
+                olddesc <- readLines(descfile)
+                olddesc <- grep("^Archs:", olddesc,
+                                invert = TRUE, value = TRUE, useBytes = TRUE)
+                newdesc <- c(olddesc,
+                             paste("Archs:",
+                                   paste(basename(dirs), collapse=", "))
+                             )
+                writeLines(newdesc, descfile, useBytes = TRUE)
+            }
         }                               # end of src dir
 
 	if (install_R && dir.exists("R")) {
