@@ -1220,8 +1220,8 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
     defenv <- if(genname %in% groupGenerics) .BaseNamespaceEnv
     else {
         genfun <- get(genname, envir = envir)
-        if(.isMethodsDispatchOn() && methods::is(genfun, "genericFunction"))
-	    genfun <- methods::slot(genfun, "default")
+        if(.isMethodsDispatchOn() && methods:::is(genfun, "genericFunction"))
+            genfun <- methods:::finalDefaultMethod(genfun@default)
         if (typeof(genfun) == "closure") environment(genfun)
 	else .BaseNamespaceEnv
     }
@@ -1278,7 +1278,7 @@ registerS3methods <- function(info, package, env)
                               genname, package), call. = FALSE, domain = NA)
             genfun <- get(genname, envir = parent.env(envir))
             if(.isMethodsDispatchOn() && methods:::is(genfun, "genericFunction")) {
-                genfun <- genfun@default
+		genfun <- methods:::finalDefaultMethod(genfun@default)
                 warning(gettextf("found an S4 version of %s so it has not been imported correctly",
                                  sQuote(genname)), call. = FALSE, domain = NA)
             }
