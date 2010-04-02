@@ -26,8 +26,8 @@
   
   All primitive functions are in the base name space.
 
-  This function is almost never used:
-  \code{\link{get}(name, envir=basenv())} works equally well and does
+  This function is almost never used: \code{`name`} or, more carefully,
+  \code{\link{get}(name, envir=baseenv())} work equally well and do
   not depend on knowing which functions are primitive (which does change
   as \R evolves).
 }
@@ -38,6 +38,6 @@
 mysqrt <- .Primitive("sqrt")
 c
 .Internal # this one *must* be primitive!
-get("if") # just 'if' or 'print(if)' are not syntactically ok.
+`if` # need backticks
 }
 \keyword{interface}
