@@ -21,11 +21,15 @@
     packageStartupMessage("Loading Tcl/Tk interface ...",
                           domain = "R-tcltk", appendLF = FALSE)
     if(!nzchar(tclbin <- Sys.getenv("MY_TCLTK"))) {
-        tclbin <- file.path(R.home(),
-                            if(.Machine$sizeof.pointer == 8) "Tcl64" else "Tcl",
-                            "bin")
+        tclbin <- file.path(R.home(), "Tcl",
+                            if(.Machine$sizeof.pointer == 8) "bin64" else "bin")
         if(!file.exists(tclbin))
             stop("Tcl/Tk support files were not installed", call.=FALSE)
+        if(.Machine$sizeof.pointer == 8) {
+            lib64 <- gsub("\\", "/", file.path(R.home(), "Tcl", "lib64"),
+                          fixed=TRUE)
+            Sys.setenv(TCLLIBPATH = lib64)
+        }
     }
     library.dynam("tcltk", pkg, lib, DLLpath = tclbin)
     .C("tcltk_start", PACKAGE="tcltk")
@@ -39,7 +43,7 @@
     if(is.loaded("tcltk_end", PACKAGE="tcltk")) {
         .C("tcltk_end", PACKAGE="tcltk")
         ## unloading the DLL used to work with 8.3,
-        ## but it seems Tcl/Tk 8.4.x does not like being reinitialized
+        ## but it seems Tcl/Tk >= 8.4 does not like being reinitialized
         ## library.dynam.unload("tcltk", libpath)
     }
 }

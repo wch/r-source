@@ -1360,10 +1360,10 @@ imposes on re-distribution).
 @c @url{http://www.cadforte.com/downloads.html}.  Use at your own risk!
 
 To build package @pkg{tcltk} you need to unpack
-@url{http://www.stats.ox.ac.uk/pub/Rtools/R64_Tcl_8-5-8.zip} at the top
-of the source tree and @emph{rename the top-level directory} as @file{Tcl64}:
-otherwise edit @file{src/library/tcltk/Makefile.win} to make a stub
-package.
+@url{http://www.stats.ox.ac.uk/pub/Rtools/R64a_Tcl_8-5-8.zip}
+(@strong{NB} this is not the same file as for @R{} 2.11.x) at the top of
+the source tree: otherwise edit @file{src/library/tcltk/Makefile.win} to
+make a stub package.
 
 The default is @code{options(pkgType="win64.binary")}, supported for
 @R{} 2.11.x on both @acronym{CRAN} and @acronym{CRANextras}.  Packages

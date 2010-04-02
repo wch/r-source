@@ -204,10 +204,9 @@ Name: "manuals/basic"; Description: "Basic Manuals"; Types: user user32 user64 f
 Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom
 Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom
 Name: "manuals/libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
-Name: "tcl64"; Description: "x64 Files for Package tcltk"; Types: user user64 add64 full custom; Flags: checkablealone
-Name: "tcl64/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
-Name: "tcl64/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
-Name: "tcl"; Description: "i386 Files for Package tcltk"; Types: user32 full custom; Flags: checkablealone
+Name: "tcl"; Description: "SupportFiles for Package tcltk"; Types: user full custom; Flags: checkablealone
+Name: "tcl/32"; Description: "i386 Files for Package tcltk"; Types: user user32 user64 full custom
+Name: "tcl/64"; Description: "x64 Files for Package tcltk"; Types: user user64 add64 full custom
 Name: "tcl/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
 Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
 Name: "trans"; Description: "Message Translations"; Types: user user32 user64 full custom
@@ -224,17 +223,19 @@ Name: "add64"; Description: Add 64-bit components
 Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
-Name: "main"; Description: "Main Files"; Types: user compact full custom;
-Name: "x64"; Description: "x64 Files"; Types: user add64 compact full custom;
+Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
+Name: "x64"; Description: "x64 Files"; Types: user add64 compact full custom; Flags: fixed
 Name: "html"; Description: "HTML Manuals"; Types: user full custom;
 Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
 Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom
 Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom
 Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom
 Name: "manuals/libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
-Name: "tcl64"; Description: "x64 Files for Package tcltk"; Types: user add64 full custom; Flags: checkablealone
-Name: "tcl64/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
-Name: "tcl64/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
+Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom
+Name: "tcl/noarch"; Description: "Base files (for both i386 and x64)"; Types: user full custom
+Name: "tcl/64"; Description: "x64 Files"; Types: user add64 full custom
+Name: "tcl/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
+Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "tests"; Description: "Test files"; Types: full custom
 END
@@ -256,7 +257,8 @@ Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom
 Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom
 Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom
 Name: "manuals/libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
-Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom; Flags: checkablealone
+Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom
+Name: "tcl/noarch"; Description: "Base files (for both i386 and x64)"; Types: user full custom
 Name: "tcl/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
 Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
@@ -506,18 +508,14 @@ sub listFiles {
 	    	$component = "tests";
 	} elsif (m/^tests/) {
 	    	$component = "tests";
-	} elsif (m/^Tcl64\\doc\\.*chm$/) {
-	    $component = "tcl64/chm";
-	} elsif (m/^Tcl64\\lib\\tcl8.5\\tzdata/) {
-	    $component = "tcl64/tzdata";
-	} elsif (m/^Tcl64/) {
-	    $component = "tcl64";
+	} elsif (m/^Tcl\\(bin|lib)64/) {
+	    $component = "tcl/64";
 	} elsif (m/^Tcl\\doc\\.*chm$/) {
 	    $component = "tcl/chm";
 	} elsif (m/^Tcl\\lib\\tcl8.5\\tzdata/) {
 	    $component = "tcl/tzdata";
 	} elsif (m/^Tcl/) {
-	    $component = "tcl";
+	    $component = "tcl/noarch";
 	} elsif (m/^library\\grid\\doc/ || m/^library\\Matrix\\doc/) {
 	    $component = "manuals/libdocs";
 	} elsif (m/^share\\locale/ 

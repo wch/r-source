@@ -40,7 +40,9 @@ NEW FEATURES
 
 INSTALLATION
 
-     o	The 64-bit Tcl installation is now in directory R_HOME/Tcl64.
+     o	The 64-bit Tcl binary is now in file R64a_Tcl_8-5-8.zip: when
+	you unpack it ensure you have directory Tcl/bin64 and not
+	Tcl/bin.
 
      o	The 64-bit installer (which runs only on a 64-bit system) can
 	be used to add 64-bit components to a 32-bit install.

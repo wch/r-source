@@ -2,10 +2,8 @@
 
 ifeq ($(strip $(WIN)),64)
 BINPREF = $(BINPREF64)
-# for sub-architecture
 R_ARCH = /x64
 DEFINES = -DR_ARCH='"x64"'
-TCL_HOME = $(TCL_HOME64)
 else
 R_ARCH = /i386
 DEFINES = -DR_ARCH='"i386"'
