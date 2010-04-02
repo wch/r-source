@@ -28,4 +28,4 @@ bquote <- function(expr, where=parent.frame())
 }
 
 ## utility we've used ourselves
-enquote <- function(x) as.call(list(as.name("quote"), x))
+enquote <- function(cl) as.call(list(as.name("quote"), cl))

@@ -8,7 +8,7 @@
 \usage{
 substitute(expr, env)
 quote(expr)
-enquote(call)
+enquote(cl)
 }
 \alias{substitute}
 \alias{quote}
@@ -28,9 +28,9 @@ enquote(call)
 }
 \arguments{
   \item{expr}{any syntactically valid \R expression}
-  \item{call}{a \code{\link{call}}, i.e., an \R object of
-  \code{\link{class}} (and \code{\link{mode}}) \code{"call"}.}
-  \item{env}{An environment or a list object.  Defaults to the
+  \item{cl}{a \code{\link{call}}, i.e., an \R object of
+    \code{\link{class}} (and \code{\link{mode}}) \code{"call"}.}
+  \item{env}{an environment or a list object.  Defaults to the
     current evaluation environment.}
 }
 \details{
