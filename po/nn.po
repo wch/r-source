@@ -1,16 +1,14 @@
-# translation of nn.po to Norwegian Nynorsk
-# Translation of nn to Norwegian Nynorsk
+# Translation of R to Norwegian Nynorsk
 # Copyright (C) YEAR The R Foundation
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the R package.
 #
-# Karl Ove Hufthammer <karl@huftis.org>, 2006, 2008, 2009.
-# Karl Ove Hufthammer <Karl.Hufthammer@math.uib.no>, 2009.
+# Karl Ove Hufthammer <karl@huftis.org>, 2006, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-26 08:41+0000\n"
-"PO-Revision-Date: 2009-10-05 19:09+0200\n"
+"POT-Creation-Date: 2010-04-02 13:54+0100\n"
+"PO-Revision-Date: 2010-04-02 14:30+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -158,9 +156,9 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/connections.c:4571 src/main/connections.c:4575
 #: src/main/connections.c:4579 src/main/connections.c:4583
 #: src/main/context.c:597 src/main/context.c:606 src/main/context.c:610
-#: src/main/datetime.c:655 src/main/datetime.c:730 src/main/datetime.c:732
-#: src/main/datetime.c:736 src/main/datetime.c:882 src/main/datetime.c:884
-#: src/main/datetime.c:1044 src/main/debug.c:223 src/main/deparse.c:348
+#: src/main/datetime.c:652 src/main/datetime.c:727 src/main/datetime.c:729
+#: src/main/datetime.c:733 src/main/datetime.c:879 src/main/datetime.c:881
+#: src/main/datetime.c:1041 src/main/debug.c:223 src/main/deparse.c:348
 #: src/main/devices.c:580 src/main/dotcode.c:729 src/main/dotcode.c:733
 #: src/main/dotcode.c:738 src/main/dounzip.c:250 src/main/dounzip.c:257
 #: src/main/dounzip.c:267 src/main/dounzip.c:272 src/main/dounzip.c:276
@@ -174,7 +172,7 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/eval.c:281 src/main/eval.c:1767 src/main/eval.c:1794
 #: src/main/eval.c:1798 src/main/grep.c:726 src/main/grep.c:731
 #: src/main/grep.c:1076 src/main/grep.c:1080 src/main/grep.c:1085
-#: src/main/grep.c:1760 src/main/grep.c:1765 src/main/memory.c:2981
+#: src/main/grep.c:1760 src/main/grep.c:1765 src/main/memory.c:2982
 #: src/main/model.c:1610 src/main/model.c:1618 src/main/optim.c:225
 #: src/main/paste.c:86 src/main/paste.c:353 src/main/paste.c:360
 #: src/main/paste.c:367 src/main/paste.c:372 src/main/paste.c:377
@@ -210,8 +208,8 @@ msgstr "feil ved vising av «%ls»"
 #: src/main/seq.c:384 src/main/seq.c:402 src/main/seq.c:406 src/main/seq.c:412
 #: src/main/seq.c:420 src/main/sort.c:161 src/main/sysutils.c:555
 #: src/main/sysutils.c:557 src/main/sysutils.c:559 src/main/sysutils.c:564
-#: src/main/sysutils.c:1507 src/main/sysutils.c:1511 src/main/unique.c:806
-#: src/main/unique.c:1085 src/main/unique.c:1145 src/main/unique.c:1152
+#: src/main/sysutils.c:1507 src/main/sysutils.c:1511 src/main/unique.c:789
+#: src/main/unique.c:1068 src/main/unique.c:1128 src/main/unique.c:1135
 #: src/main/util.c:570 src/main/util.c:573 src/main/util.c:1683
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
 #: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
@@ -275,10 +273,10 @@ msgid "invalid timestamp"
 msgstr "ugyldig tidsstempel"
 
 #: src/gnuwin32/extra.c:666 src/gnuwin32/extra.c:1779
-#: src/gnuwin32/extra.c:1955 src/gnuwin32/extra.c:1958
-#: src/gnuwin32/extra.c:1961 src/main/character.c:561 src/main/colors.c:365
+#: src/gnuwin32/extra.c:1961 src/gnuwin32/extra.c:1964
+#: src/gnuwin32/extra.c:1967 src/main/character.c:561 src/main/colors.c:365
 #: src/main/connections.c:3211 src/main/context.c:643 src/main/context.c:662
-#: src/main/datetime.c:591 src/main/datetime.c:657 src/main/datetime.c:886
+#: src/main/datetime.c:588 src/main/datetime.c:654 src/main/datetime.c:883
 #: src/main/dotcode.c:197 src/main/errors.c:867 src/main/errors.c:898
 #: src/main/errors.c:999 src/main/errors.c:1024 src/main/errors.c:1029
 #: src/main/optimize.c:94 src/main/optimize.c:101 src/main/optimize.c:110
@@ -397,16 +395,16 @@ msgstr "ugyldig nummer på grafisk eining"
 msgid "bad device"
 msgstr "ubrukbar eining"
 
-#: src/gnuwin32/extra.c:1965
+#: src/gnuwin32/extra.c:1979
 #, c-format
 msgid "Registry key '%ls' not found"
 msgstr "Fann ikkje registernøkkelen «%ls»"
 
-#: src/gnuwin32/extra.c:2029 src/gnuwin32/extra.c:2037
+#: src/gnuwin32/extra.c:2043 src/gnuwin32/extra.c:2051
 msgid "invalid input in Rmbstowcs"
 msgstr "ugyldig inndata i «Rmbstowcs»"
 
-#: src/gnuwin32/extra.c:2059 src/main/platform.c:1043
+#: src/gnuwin32/extra.c:2073 src/main/platform.c:1043
 msgid "file choice cancelled"
 msgstr "filval avbrote"
 
@@ -432,7 +430,7 @@ msgstr "Klarte ikkje vidaresenda inndata"
 
 #: src/gnuwin32/run.c:311
 msgid "Child process not responding.  R will terminate it."
-msgstr ""
+msgstr "Barneprosessen svarar ikkje. R vil derfor avslutta han."
 
 #: src/gnuwin32/run.c:354
 #, c-format
@@ -790,9 +788,9 @@ msgid "table entry must be an external pointer"
 msgstr "tabelloppføringa må vera ein ekstern peikar"
 
 #: src/main/Rstrptime.h:501 src/main/Rstrptime.h:968
-#, fuzzy, c-format
+#, c-format
 msgid "use of %s for input is not supported"
-msgstr "modusen «%s» er ikkje støtta i call_R"
+msgstr "bruk av «%s» i inndata er ikkje støtta"
 
 #: src/main/Rstrptime.h:1222
 msgid "input string is too long"
@@ -816,7 +814,7 @@ msgstr "ugyldig multibyte-formateringstekst"
 #, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
 msgstr ""
-"argumentet '%s' har lengd større enn 1 (berre første element vert brukt)"
+"argumentet «%s» har lengd større enn 1 (berre første elementet vert brukt)"
 
 #: src/main/agrep.c:93 src/main/grep.c:783 src/main/grep.c:1804
 msgid "regular expression is invalid in this locale"
@@ -839,14 +837,12 @@ msgid "invalid length"
 msgstr "ugyldig lengd"
 
 #: src/main/apply.c:96
-#, fuzzy
 msgid "FUN.VALUE must be a vector"
-msgstr "«code» må vera ein generisk vektor"
+msgstr "«FUN.VALUE» må vera ein vektor"
 
 #: src/main/apply.c:98
-#, fuzzy
 msgid "invalid USE.NAMES value"
-msgstr "ugyldig verdi"
+msgstr "ugyldig «USE.NAMES»-verdi"
 
 #: src/main/apply.c:144
 #, c-format
@@ -854,6 +850,8 @@ msgid ""
 "values must be length %d,\n"
 " but FUN(X[[%d]]) result is length %d"
 msgstr ""
+"verdiar må ha lengda %d,\n"
+" men resultatet av «FUN(X[[%d]])» har lengd %d"
 
 #: src/main/apply.c:156
 #, c-format
@@ -861,15 +859,17 @@ msgid ""
 "values must be type '%s',\n"
 " but FUN(X[[%d]]) result is type '%s'"
 msgstr ""
+"verdiar må ha typen «%s»,\n"
+" men resultatet av «FUN(X[[%d]])» har typen «%s»"
 
 #: src/main/apply.c:174
-#, fuzzy, c-format
+#, c-format
 msgid "type '%s' is not supported"
-msgstr "modusen «%s» er ikkje støtta i call_R"
+msgstr "typen «%s» er ikkje støtta"
 
 #: src/main/arithmetic.c:35
 msgid "NaNs produced"
-msgstr "NaN-verdiar laga"
+msgstr "NaN-verdiar vart laga"
 
 #: src/main/arithmetic.c:36
 msgid "Non-numeric argument to mathematical function"
@@ -1393,12 +1393,11 @@ msgstr "«...» brukt i feil samanheng"
 
 #: src/main/builtin.c:901
 msgid "'EXPR' is missing"
-msgstr ""
+msgstr "«EXPR» manglar"
 
 #: src/main/builtin.c:905
-#, fuzzy
 msgid "EXPR must be a length 1 vector"
-msgstr "switch: EXPR må returnera ein vektor av lengd 1"
+msgstr "«EXPR» må vera ein vektor av lengd 1"
 
 #: src/main/character.c:93 src/main/character.c:116
 #, c-format
@@ -1518,9 +1517,9 @@ msgid "(list) object cannot be coerced to type '%s'"
 msgstr "(liste-)objekt kan ikkje gjerast om til typen «%s»"
 
 #: src/main/coerce.c:1067
-#, fuzzy, c-format
+#, c-format
 msgid "(symbol) object cannot be coerced to type '%s'"
-msgstr "(liste-)objekt kan ikkje gjerast om til typen «%s»"
+msgstr "(symbol-)objekt kan ikkje gjerast om til typen «%s»"
 
 #: src/main/coerce.c:1083 src/main/coerce.c:1382
 msgid "no method for coercing this S4 class to a vector"
@@ -1574,7 +1573,7 @@ msgstr "%s() brukt på ikkje-(liste eller vektor) av typen «%s»"
 #: src/main/coerce.c:2187 src/main/dotcode.c:763 src/main/dotcode.c:806
 #: src/main/dotcode.c:1630
 msgid "'name' is missing"
-msgstr ""
+msgstr "«name» manglar"
 
 #: src/main/coerce.c:2194
 msgid "first argument must be a character string"
@@ -1614,7 +1613,7 @@ msgstr ""
 "lenger vera eit S4-objekt."
 
 #: src/main/coerce.c:2457
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
 "an S4 object"
@@ -2403,21 +2402,21 @@ msgstr "min/max er ikkje definert for komplekse tal"
 msgid "unknown cumxxx function"
 msgstr "ukjend cumxxx-funksjon"
 
-#: src/main/datetime.c:513 src/main/datetime.c:519 src/main/datetime.c:533
-#: src/main/datetime.c:538
+#: src/main/datetime.c:510 src/main/datetime.c:516 src/main/datetime.c:530
+#: src/main/datetime.c:535
 msgid "problem with setting timezone"
 msgstr "feil ved setjing av tidssone"
 
-#: src/main/datetime.c:523
+#: src/main/datetime.c:520
 msgid "cannot set timezones on this system"
 msgstr "kan ikkje setja tidssonar på dette systemet"
 
-#: src/main/datetime.c:545 src/main/datetime.c:547
+#: src/main/datetime.c:542 src/main/datetime.c:544
 msgid "problem with unsetting timezone"
 msgstr "feil ved avsetjing av tidssone"
 
-#: src/main/datetime.c:675 src/main/datetime.c:677 src/main/datetime.c:1052
-#: src/main/datetime.c:1054
+#: src/main/datetime.c:672 src/main/datetime.c:674 src/main/datetime.c:1049
+#: src/main/datetime.c:1051
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "komponent av lengd null i ikkje-tom POSIXlt-struktur"
 
@@ -3079,7 +3078,7 @@ msgstr "elementet «%s» finst ikkje i søkjelista"
 
 #: src/main/envir.c:2772
 msgid "using 'as.environment(NULL)' is defunct"
-msgstr "brukar «as.environment(NULL)» er ikkje lenger mogleg"
+msgstr "bruk av «as.environment(NULL)» er ikkje lenger mogleg"
 
 #: src/main/envir.c:2777
 msgid "S4 object does not extend class \"environment\""
@@ -3160,14 +3159,14 @@ msgid "exported symbol '%s' has no value"
 msgstr "det eksporterte symbolet «%s» har ikkje nokon verdi"
 
 #: src/main/envir.c:3477
-#, fuzzy, c-format
+#, c-format
 msgid "unknown encoding: %d"
-msgstr "ikkje-støtta koding «%s»"
+msgstr "ukjend koding: %d"
 
 #: src/main/envir.c:3491
 #, c-format
 msgid "embedded nul in string: '%s'"
-msgstr ""
+msgstr "nul inni streng: «%s»"
 
 #: src/main/errors.c:181 src/main/errors.c:218
 msgid "interrupts suspended; signal ignored"
@@ -3393,7 +3392,7 @@ msgstr "symbolet «%s» finst ikkje i omgjevnaden til metoden"
 
 #: src/main/eval.c:964
 msgid "the condition has length > 1 and only the first element will be used"
-msgstr "vilkåret har lengd større 1 (berre første element vert brukt)"
+msgstr "vilkåret har lengd større 1 enn (berre første elementet vert brukt)"
 
 #: src/main/eval.c:981
 msgid "missing value where TRUE/FALSE needed"
@@ -3416,10 +3415,8 @@ msgid "invalid for() loop sequence"
 msgstr "ugyldig for()-lykkje"
 
 #: src/main/eval.c:1265
-#, fuzzy
 msgid "multi-argument returns are not permitted"
-msgstr ""
-"bruk av fleire argument til «returns» er utdatert syntaks og ikkje tilrådd"
+msgstr "fleire returverdiar er ikkje mogleg"
 
 #: src/main/eval.c:1313
 msgid "invalid (NULL) left side of assignment"
@@ -3455,14 +3452,14 @@ msgid "invalid assignment left-hand side"
 msgstr "ugyldig venstreside i tildeling"
 
 #: src/main/eval.c:1578
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d is empty"
-msgstr "argumentet %d er ikkje ein vektor"
+msgstr "argumentet %d er tomt"
 
 #: src/main/eval.c:1581
 #, c-format
 msgid "'%s' is missing"
-msgstr ""
+msgstr "«%s» manglar"
 
 #: src/main/eval.c:1713
 msgid "invalid formal argument list for \"function\""
@@ -3781,9 +3778,9 @@ msgid "unable to allocate buffer for long string at line %d"
 msgstr "klarte ikkje tildela buffer til lang streng på linje %d"
 
 #: src/main/gram.y:2110
-#, fuzzy, c-format
+#, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
-msgstr "«\\x» brukt utan heksadesimalsiffer"
+msgstr "«\\x» brukt utan heksadesimalsiffer i teiknstreng som startar med «%s»"
 
 #: src/main/gram.y:2124
 #, c-format
@@ -3791,9 +3788,9 @@ msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\uxxxx-følgjer er ikkje støtta mellom `-teikn (linje %d)"
 
 #: src/main/gram.y:2139
-#, fuzzy, c-format
+#, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
-msgstr "«\\x» brukt utan heksadesimalsiffer"
+msgstr "«\\u» brukt utan heksadesimalsiffer i teiknstreng som startar med «%s»"
 
 #: src/main/gram.y:2147
 #, c-format
@@ -3806,9 +3803,9 @@ msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\Uxxxxxxxx-følgjer er ikkje støtta mellom `-teikn (linje %d)"
 
 #: src/main/gram.y:2174
-#, fuzzy, c-format
+#, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
-msgstr "«\\x» brukt utan heksadesimalsiffer"
+msgstr "«\\U» brukt utan heksadesimalsiffer i teiknstreng som startar med «%s»"
 
 #: src/main/gram.y:2182
 #, c-format
@@ -3816,9 +3813,9 @@ msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "ugyldig \\U{xxxxxxxx}-følgje (linje %d)"
 
 #: src/main/gram.y:2222
-#, fuzzy, c-format
+#, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
-msgstr "ukjent verneteikn «\\%c» i teiknstreng"
+msgstr "«\\%c» er eit ukjent verneteikn i tekststreng som startar med «%s»"
 
 #: src/main/gram.y:2270
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
@@ -3932,19 +3929,19 @@ msgstr "argumentet «%s» vert ikkje brukt"
 
 #: src/main/grep.c:190 src/main/grep.c:277 src/main/grep.c:381
 #: src/main/grep.c:827 src/main/grep.c:1853
-#, fuzzy, c-format
+#, c-format
 msgid "input string %d is invalid UTF-8"
-msgstr "innteksten «%d» er ugyldig i dette lokalet"
+msgstr "innteksten «%d» er ugyldig UTF-8"
 
 #: src/main/grep.c:255 src/main/grep.c:348
-#, fuzzy, c-format
+#, c-format
 msgid "'split' string %d is invalid UTF-8"
-msgstr "innteksten «%d» er ugyldig i dette lokalet"
+msgstr "«split»-teksten «%d» er ugyldig UTF-8"
 
 #: src/main/grep.c:259 src/main/grep.c:352 src/main/grep.c:521
-#, fuzzy, c-format
+#, c-format
 msgid "'split' string %d is invalid in this locale"
-msgstr "innteksten «%d» er ugyldig i dette lokalet"
+msgstr "«split»-teksten «%d» er ugyldig i dette lokalet"
 
 #: src/main/grep.c:360 src/main/grep.c:796 src/main/grep.c:1151
 #: src/main/grep.c:1817
@@ -3970,21 +3967,20 @@ msgid ""
 "PCRE pattern study error\n"
 "\t'%s'\n"
 msgstr ""
+"studiefeil i PCRE-mønster\n"
+"\t«%s»\n"
 
 #: src/main/grep.c:779 src/main/grep.c:1800
-#, fuzzy
 msgid "regular expression is invalid UTF-8"
-msgstr "det regulære uttrykket er ugyldig i dette lokalet"
+msgstr "det regulære uttrykket er ugyldig UTF-8"
 
 #: src/main/grep.c:1126
-#, fuzzy
 msgid "'pattern' is invalid UTF-8"
-msgstr "«pattern» er ugyldig i dette lokalet"
+msgstr "«pattern» er ugyldig UTF-8"
 
 #: src/main/grep.c:1128
-#, fuzzy
 msgid "'replacement' is invalid UTF-8"
-msgstr "«replacement» er ugyldig i dette lokalet"
+msgstr "«replacement» er ugyldig UTF-8"
 
 #: src/main/grep.c:1132
 msgid "'pattern' is invalid in this locale"
@@ -4000,9 +3996,8 @@ msgstr "mønster av lengd 0"
 
 #: src/main/grep.c:1280 src/main/grep.c:1296 src/main/grep.c:1344
 #: src/main/grep.c:1360 src/main/grep.c:1407 src/main/grep.c:1423
-#, fuzzy
 msgid "result string is too long"
-msgstr "innteksten er for lang"
+msgstr "resultatteksten er for lang"
 
 #: src/main/internet.c:90
 msgid "internet routines cannot be accessed in module"
@@ -4241,7 +4236,7 @@ msgstr "kan ikkje ha vektorar av negativ lengd"
 #: src/main/memory.c:1983
 #, c-format
 msgid "cannot allocate vector of length %d"
-msgstr "kan ikkje tildela vektor av lengd %d"
+msgstr "kan ikkje reservera vektor av lengd %d"
 
 #: src/main/memory.c:1996
 #, c-format
@@ -4294,11 +4289,11 @@ msgstr "Realloc klarte ikkje omtildela (storleik %d) minne"
 msgid "not safe to return vector pointer"
 msgstr "ikkje trygt å returnera vektorpeikar"
 
-#: src/main/memory.c:2902
+#: src/main/memory.c:2903
 msgid "memory profiling is not available on this system"
 msgstr "minneprofilering er ikkje tilgjengeleg på dette systemet"
 
-#: src/main/memory.c:2967
+#: src/main/memory.c:2968
 #, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprofmem: klarte ikkje opna utfila «%s»"
@@ -4493,14 +4488,12 @@ msgid "Invalid generic function in 'usemethod'"
 msgstr "Ugyldig generisk funksjon i «usemethod»"
 
 #: src/main/objects.c:408
-#, fuzzy
 msgid "there must be a 'generic' argument"
-msgstr "det må vera eit førsteargument"
+msgstr "det må vera eit «generic»-argument"
 
 #: src/main/objects.c:412
-#, fuzzy
 msgid "'generic' argument must be a character string"
-msgstr "det andre argumentet må vera ein teiknstreng"
+msgstr "«generic»-argumentet må vera ein tekststreng"
 
 #: src/main/objects.c:449
 msgid "'UseMethod' called from outside a closure"
@@ -4643,6 +4636,8 @@ msgstr ""
 #, c-format
 msgid "object returned as generic function \"%s\" doesn't appear to be one"
 msgstr ""
+"objekt returnert som den generiske funksjonen «%s» ser ikkje ut til å vera "
+"ein generisk funksjon"
 
 #: src/main/objects.c:1334
 msgid "invalid primitive operation given for dispatch"
@@ -6152,9 +6147,8 @@ msgid "'by' must be finite"
 msgstr "«by» må vera endeleg"
 
 #: src/main/seq.c:680
-#, fuzzy
 msgid "argument must be coercible to non-negative integer"
-msgstr "argumentet må vera ikkje-negativt"
+msgstr "argumentet må kunna gjerast om til eit ikkje-negativt heiltal"
 
 #: src/main/serialize.c:223 src/main/serialize.c:253 src/main/serialize.c:276
 msgid "unknown or inappropriate output format"
@@ -6426,7 +6420,7 @@ msgstr ""
 
 #: src/main/source.c:204
 msgid "coercion of 'text' to character was unsuccessful"
-msgstr ""
+msgstr "klarte ikkje gjera «text» om til ein tekststreng"
 
 #: src/main/source.c:220
 #, c-format
@@ -6754,13 +6748,12 @@ msgid "no non-missing arguments to max; returning -Inf"
 msgstr "ingen ikkje-manglande argument til max – returnerer -Inf"
 
 #: src/main/summary.c:798
-#, fuzzy
 msgid "argument to 'which' is not logical"
-msgstr "argumentet «logarithm» må vera logisk"
+msgstr "argumentet til «which» må vera logisk"
 
 #: src/main/summary.c:907
 msgid "no input has determined the number of cases"
-msgstr ""
+msgstr "ingen inndata har fastsett talet på tilfelle"
 
 #: src/main/summary.c:1010
 msgid "not all arguments have the same length"
@@ -6855,9 +6848,8 @@ msgid "cannot find unused tempfile name"
 msgstr "finn ikkje ubrukt «tempfile»-namn"
 
 #: src/main/sysutils.c:1370
-#, fuzzy
 msgid "allocation failed in R_tmpnam"
-msgstr "Klarte ikkje opna fila «%s»"
+msgstr "reserveringsfeil i «R_tmpnam»"
 
 #: src/main/sysutils.c:1396
 msgid "proc.time() is not implemented on this system"
@@ -6875,61 +6867,61 @@ msgstr "setSessionTimelimit() er ikkje implementert på dette systemet"
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "«dirmark = TRUE» er ikkje støtta på denne plattforma"
 
-#: src/main/unique.c:291
+#: src/main/unique.c:302
 #, c-format
 msgid "length %d is too large for hashing"
 msgstr "lengda %d er for lang for hashing"
 
-#: src/main/unique.c:389
+#: src/main/unique.c:401
 msgid "'duplicated' applies only to vectors"
 msgstr "«duplicated» gjeld berre vektorar"
 
-#: src/main/unique.c:474
+#: src/main/unique.c:489
 msgid "any_duplicated3(., <0-length incomp>)"
 msgstr "any_duplicated3(., <0-length incomp>)"
 
-#: src/main/unique.c:528
+#: src/main/unique.c:543
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr "%s() gjeld berre vektorar"
 
-#: src/main/unique.c:763
+#: src/main/unique.c:746
 msgid "'match' requires vector arguments"
 msgstr "«match» tek berre vektorargument"
 
-#: src/main/unique.c:810 src/main/unique.c:940
+#: src/main/unique.c:793 src/main/unique.c:923
 msgid "argument is not of mode character"
 msgstr "argumentet har ikkje modus «character»"
 
-#: src/main/unique.c:1047
+#: src/main/unique.c:1030
 msgid "... used in a situation where it doesn't exist"
 msgstr "... brukt i ein situasjon der han ikkje eksisterer"
 
-#: src/main/unique.c:1138
+#: src/main/unique.c:1121
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr "klarte ikkje finna omslutting innanfrå der «match.call» vart kalla"
 
-#: src/main/unique.c:1295
+#: src/main/unique.c:1278
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr "ikkje-numerisk matrise i rowsum(): dette kan ikkje skje"
 
-#: src/main/unique.c:1329
+#: src/main/unique.c:1312
 msgid "non-numeric data frame in rowsum"
 msgstr "ikkje-numerisk data i rowsum"
 
-#: src/main/unique.c:1355
+#: src/main/unique.c:1338
 msgid "this cannot happen"
 msgstr "dette kan ikkje skje"
 
-#: src/main/unique.c:1411
+#: src/main/unique.c:1394
 msgid "'names' must be a character vector"
 msgstr "«names» må vera ein teiknvektor"
 
-#: src/main/unique.c:1415
+#: src/main/unique.c:1398
 msgid "'sep' must be a character string"
 msgstr "«sep» må vera ein teiknvektor"
 
-#: src/main/unique.c:1498
+#: src/main/unique.c:1470
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated ikkje kalla på ein STRSXP"
 
@@ -6973,7 +6965,7 @@ msgstr[1] "%d argument sende til «%s», som tek %d argument"
 #: src/main/util.c:440
 #, c-format
 msgid "supplied argument name '%s' does not match '%s'"
-msgstr ""
+msgstr "den oppgjevne argumentnamnet «%s» passar ikkje til «%s»"
 
 #: src/main/util.c:450
 #, c-format
@@ -7147,12 +7139,12 @@ msgstr "prøver adressa «%s»\n"
 
 #: src/modules/internet/internet.c:382 src/modules/internet/internet.c:484
 msgid "opened URL\n"
-msgstr "opna adresse\n"
+msgstr "opna adressa\n"
 
 #: src/modules/internet/internet.c:454 src/modules/internet/internet.c:559
 #, c-format
 msgid "downloaded length %d != reported length %d"
-msgstr "nedlastingslengda %d != rapporter lengd %d"
+msgstr "nedlastingslengda %d var ikkje lik den rapporterte lengda %d"
 
 #: src/modules/internet/internet.c:458 src/modules/internet/internet.c:563
 #, c-format
@@ -7320,9 +7312,8 @@ msgid "'x' must be a square numeric matrix"
 msgstr "«x» må vera ei kvadratisk, numerisk matrise"
 
 #: src/modules/lapack/Lapack.c:311
-#, fuzzy
 msgid "'type' must be a character string"
-msgstr "«text» må vera ein teiknstreng"
+msgstr "«type» må vera ein teiknstreng"
 
 #: src/modules/lapack/Lapack.c:318 src/modules/lapack/Lapack.c:352
 #: src/modules/lapack/Lapack.c:409
@@ -7640,9 +7631,8 @@ msgid "could not open file '%s'"
 msgstr "klarte ikkje opna fila «%s»"
 
 #: src/modules/X11/devX11.c:2041
-#, fuzzy
 msgid "Unable to create XImage"
-msgstr "klarte ikkje laga pixmap"
+msgstr "klarte ikkje laga XImage"
 
 #: src/modules/X11/devX11.c:2339
 msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
@@ -7705,9 +7695,9 @@ msgid "unable to contact X11 display"
 msgstr "fekk ikkje kontakt med X11-display"
 
 #: src/modules/X11/devX11.c:3337
-#, fuzzy, c-format
+#, c-format
 msgid "clipboard cannot be read (error code %d)"
-msgstr "utklippstavla kan ikkje opnast, eller inneheld ikkje noko tekst"
+msgstr "utklippstavla kan ikkje opnast (feilkode: %d)"
 
 #: src/modules/X11/devX11.c:3371
 msgid "cannot allocate memory for X11Routines structure"
@@ -7778,29 +7768,29 @@ msgid "bessel_y(%g,nu=%g): precision lost in result\n"
 msgstr "bessel_y(%g,nu=%g): tapt presisjon i resultat\n"
 
 #: src/nmath/nmath.h:132
-#, fuzzy, c-format
+#, c-format
 msgid "argument out of domain in '%s'\n"
-msgstr "verdien til «perm» er utanfor gyldig verdiområde"
+msgstr "argumentet er utanfor gyldig definisjonområde i «%s»\n"
 
 #: src/nmath/nmath.h:135
-#, fuzzy, c-format
+#, c-format
 msgid "value out of range in '%s'\n"
-msgstr "verdien til «perm» er utanfor gyldig verdiområde"
+msgstr "verdien til «%s» er utanfor gyldig verdiområde\n"
 
 #: src/nmath/nmath.h:138
-#, fuzzy, c-format
+#, c-format
 msgid "convergence failed in '%s'\n"
-msgstr "for langt namn i «%s»"
+msgstr "konvergerte ikkje i «%s»\n"
 
 #: src/nmath/nmath.h:141
 #, c-format
 msgid "full precision may not have been achieved in '%s'\n"
-msgstr ""
+msgstr "full presisjon vart kanskje ikkje oppnådd i «%s»\n"
 
 #: src/nmath/nmath.h:144
 #, c-format
 msgid "underflow occurred in '%s'\n"
-msgstr ""
+msgstr "det oppstod underflyt i «%s»\n"
 
 #: src/nmath/pnchisq.c:233
 #, c-format
@@ -7968,9 +7958,9 @@ msgid "'intern' must be logical and not NA"
 msgstr "«intern» må vera logisk og ikkje NA"
 
 #: src/unix/sys-unix.c:277
-#, fuzzy, c-format
+#, c-format
 msgid "cannot popen '%s', probable reason '%s'"
-msgstr "klarte ikkje opna bzip2-komprimert fil «%s», truleg av grunnen «%s»"
+msgstr "klarte ikkje køyra «popen» på «%s», truleg av grunnen «%s»"
 
 #: src/unix/sys-unix.c:282
 #, c-format
@@ -8025,328 +8015,3 @@ msgstr "X11-modulen kan ikkje lastast"
 #: src/unix/X11.c:188 src/unix/X11.c:194 src/unix/X11.c:200
 msgid "X11 is not available"
 msgstr "X11 er ikkje tilgjengeleg"
-
-#~ msgid "directory/folder path name too long"
-#~ msgstr "stignamn til katalog/mappe er for langt"
-
-#~ msgid "list.files: '%s' is not a readable directory"
-#~ msgstr "list.files: «%s» er ikkje ei lesbar mappe"
-
-#~ msgid "%d arguments passed to 'atan' which requires 1"
-#~ msgstr "%d argument sende til «atan», som tek 1 argument"
-
-#~ msgid "invalid parameter in 'switch()'"
-#~ msgstr "ugyldig parameter i switch()"
-
-#~ msgid "truncating string with embedded nul: '%s'"
-#~ msgstr "trunkerer streng med innebygd NUL: «%s»"
-
-#~ msgid "\\u used without hex digits"
-#~ msgstr "\\u brukt utan heksadesimalsiffer"
-
-#~ msgid "\\U used without hex digits"
-#~ msgstr "\\U brukt utan heksadesimalsiffer"
-
-#~ msgid "unrecognized escape removed from \"%s\""
-#~ msgid_plural "unrecognized escapes removed from \"%s\""
-#~ msgstr[0] "fjerna ukjent verneteikn frå «%s»"
-#~ msgstr[1] "fjerna ukjende verneteikn frå «%s»"
-
-#~ msgid "duplicate '%s' argument"
-#~ msgstr "dobbelt «%s»-argument"
-
-#~ msgid "corrupt internals!"
-#~ msgstr "øydelagde interndata!"
-
-#~ msgid "arguments after the first two are ignored"
-#~ msgstr "argument etter dei to første vert ikkje brukte"
-
-#~ msgid ""
-#~ "element %d is empty;\n"
-#~ "   the part of the args list of a builtin being evaluated was:\n"
-#~ "   %s"
-#~ msgstr ""
-#~ "element %d er tomt.\n"
-#~ "   Delen av argumentlista til den innebygde funksjonen som vart evaluert "
-#~ "er:\n"
-#~ "   %s"
-
-#~ msgid ""
-#~ "element %d is empty;\n"
-#~ "   the part of the args list of '%s' being evaluated was:\n"
-#~ "   %s"
-#~ msgstr ""
-#~ "element %d er tomt.\n"
-#~ "   Delen av argumentlista til «%s» som vart evaluert er:\n"
-#~ "   %s"
-
-#~ msgid "'...' not allowed in return"
-#~ msgstr "«return» tek ikkje «...»-argument"
-
-#~ msgid "empty expression in return value"
-#~ msgstr "tomt uttrykk i returverdi"
-
-#, fuzzy
-#~ msgid "%s not yet implemented for this device"
-#~ msgstr "gc.time() er ikkje implementert på dette systemet"
-
-#~ msgid "first argument must be a list"
-#~ msgstr "det første argumentet må vera ei liste"
-
-#~ msgid "second argument must be a list"
-#~ msgstr "det andre argumentet må vera ei liste"
-
-#~ msgid "'size' must be a positive integer"
-#~ msgstr "«size» må vera eit positivt heiltal"
-
-#~ msgid "perl = TRUE is only fully implemented in UTF-8 locales"
-#~ msgstr "«perl = TRUE» er berre fullstendig implementert for UTF-8-lokale"
-
-#~ msgid ""
-#~ "ignore.case = TRUE, perl = TRUE, useBytes = TRUE\n"
-#~ "  in UTF-8 locales only works caselessly for ASCII patterns"
-#~ msgstr ""
-#~ "«ignore.case = TRUE, perl = TRUE, useBytes = TRUE»\n"
-#~ "  i UTF-8-lokale vil skilja mellom store/små bokstavar for ikkje-ASCII-"
-#~ "mønster"
-
-#~ msgid "invalid backreference %d in regular expression"
-#~ msgstr "ugyldig tilbakereferanse i regulært uttrykk: %d"
-
-#~ msgid "invalid (NA) arguments."
-#~ msgstr "ugyldige argument (NA)"
-
-#~ msgid "could not allocate memory for approximate matching"
-#~ msgstr "klarte ikkje setja av minne til omtrentleg søk"
-
-#~ msgid "could not perform case insensitive matching"
-#~ msgstr "klarte ikkje utføra søk utan skilje mellom store og små bokstavar"
-
-#~ msgid "argument must be a character vector of length 1"
-#~ msgstr "argumentet må vera ein teiknvektor av lengd 1"
-
-#~ msgid ""
-#~ "argument should be a character vector of length 1\n"
-#~ "all but the first element will be ignored"
-#~ msgstr ""
-#~ "argumentet bør vera ein teiknvektor av lengd 1\n"
-#~ "(berre det første argument vert no brukt)"
-
-#~ msgid "argument 'x' must be a raw vector"
-#~ msgstr "argumentet «x» må vera ein råvektor"
-
-#~ msgid "argument 'multiple' must be TRUE or FALSE"
-#~ msgstr "argumentet «multiple» må vera TRUE eller FALSE"
-
-#~ msgid "argument 'shift' must be a small integer"
-#~ msgstr "argumentet «shift» må vera eit lite heiltal"
-
-#~ msgid "argument 'x' must be an integer vector"
-#~ msgstr "argumentet «x» må vera ein heiltalsvektor"
-
-#~ msgid "argument 'x' must be raw, integer or logical"
-#~ msgstr "argumentet «x» må vera rå, heiltal eller logisk"
-
-#~ msgid "argument 'type' must be a character string"
-#~ msgstr "argumentet «type» må vera ein teiknstreng"
-
-#~ msgid "argument 'x' must be a multiple of %d long"
-#~ msgstr "argumentet «x» må ha lengd lik eit multiplum av %d"
-
-#~ msgid "argument 'x' must not contain NAs"
-#~ msgstr "argumentet «x» kan ikkje innehelda NA-verdiar"
-
-#~ msgid "R_decompress1 requires a raw vector"
-#~ msgstr "R_decompress1 tek berre ein råvektor"
-
-#~ msgid "internal error in R_compress1"
-#~ msgstr "internfeil i R_compress1"
-
-#~ msgid "internal error in R_decompress1"
-#~ msgstr "internfeil i R_decompress1"
-
-#~ msgid "re-encoding is not supported on this system"
-#~ msgstr "omkoding er ikkje støtta på dette systemet"
-
-#~ msgid "invalid \\uxxxx sequence (line %d)"
-#~ msgstr "ugyldig \\uxxxx-følgje (linje %d)"
-
-#~ msgid "invalid \\Uxxxxxxxx sequence (line %d)"
-#~ msgstr "ugyldig \\Uxxxxxxxx-følgje (linje %d)"
-
-#~ msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
-#~ msgstr "ÅTVARING: UTF-8-lokale er ikkje støtta i denne R-byggversjon\n"
-
-#~ msgid "WARNING: multibyte locales are not supported in this build of R\n"
-#~ msgstr "ÅTVARING: Multibyte-lokale er ikkje støtta i denne R-byggversjon\n"
-
-#~ msgid "Success"
-#~ msgstr "Vellukka"
-
-#~ msgid "No match"
-#~ msgstr "Ingen treff"
-
-#~ msgid "Invalid regular expression"
-#~ msgstr "Ugyldig regulært uttrykk"
-
-#~ msgid "Invalid collation character"
-#~ msgstr "Ugyldig sorteringsteikn"
-
-#~ msgid "Invalid character class name"
-#~ msgstr "Ugyldig teiknklassenamn"
-
-#~ msgid "Trailing backslash"
-#~ msgstr "Etterfølgjande omvend skråstrek"
-
-#~ msgid "Invalid back reference"
-#~ msgstr "Ugyldig tilbakereferanse"
-
-#~ msgid "Unmatched [ or [^"
-#~ msgstr "Upara [ eller [^"
-
-#~ msgid "Unmatched ( or \\("
-#~ msgstr "Upara ( eller \\("
-
-#~ msgid "Unmatched \\{"
-#~ msgstr "Upara \\{"
-
-#~ msgid "Invalid content of \\{\\}"
-#~ msgstr "Ugyldig innhald i \\{\\}"
-
-#~ msgid "Invalid range end"
-#~ msgstr "Ugyldig områdeslutt"
-
-#~ msgid "Memory exhausted"
-#~ msgstr "Slapp opp for minne"
-
-#~ msgid "Invalid preceding regular expression"
-#~ msgstr "Ugyldig føregåande regulært uttrykk"
-
-#~ msgid "Premature end of regular expression"
-#~ msgstr "For tidleg slutt på regulært uttrykk"
-
-#~ msgid "Regular expression too big"
-#~ msgstr "Det regulære uttrykket er for stort"
-
-#~ msgid "Unmatched ) or \\)"
-#~ msgstr "Upara ) eller \\)"
-
-#~ msgid "No previous regular expression"
-#~ msgstr "Ingen tiledgare regulære uttrykk"
-
-#~ msgid "unrecognised format at end of string"
-#~ msgstr "ukjent format på slutten av strengen"
-
-#~ msgid "'iconv' is not available on this system"
-#~ msgstr "«iconv» er ikkje tilgjengeleg på dette systemet"
-
-#~ msgid "invalid input in wtransChar"
-#~ msgstr "ugyldig inndata i wtransChar"
-
-#~ msgid "type = \"%s\" requires cairo >= 1.2: try \"png\""
-#~ msgstr "type = \"%s\" krev cairo >= 1.2: prøv \"png\""
-
-#~ msgid "'type = \"cairo\"' requires cairo >= 1.2 : try 'type = \"cairo1\"'"
-#~ msgstr "«type = \"cairo\"» krev cairo >= 1.2: prøv «type = \"cairo1\"»"
-
-#~ msgid "device '%s' requires cairo >= 1.2"
-#~ msgstr "eininga «%s» krev cairo >= 1.2"
-
-#~ msgid "re-encoding is not available on this system"
-#~ msgstr "omkoding er ikkje støtta på dette systemet"
-
-#~ msgid "first argument is not a matrix"
-#~ msgstr "det første argumentet er ikkje ei matrise"
-
-#~ msgid "Object \"%s\" not found"
-#~ msgstr "Fann ikkje objektet «%s»"
-
-#~ msgid "variable \"%s\" was not found"
-#~ msgstr "fann ikkje variabelen «%s»"
-
-#, fuzzy
-#~ msgid "invalid input '%s' in mbcsToLatin1: omitted"
-#~ msgstr "Ugyldig inndata i Rmbstowcs"
-
-#~ msgid "unable to coerce .Random.seed to an integer vector"
-#~ msgstr "klarte ikkje omgjera .Random.seed til heiltalsvektor"
-
-#~ msgid "nchar() requires a character vector"
-#~ msgstr "nchar() tek berre ein teiknvektor"
-
-#~ msgid "argument 'x' must be a integer vector"
-#~ msgstr "argumentet «x» må vera ein heiltalsvektor"
-
-#~ msgid "polynomial degree too high (49 max)"
-#~ msgstr "polynomgrad for høg (49 er maks)"
-
-#~ msgid "conversion from encoding '%s' is unsupported"
-#~ msgstr "omforming frå kodinga «%s» er ikkje støtta"
-
-#~ msgid "conversion to encoding '%s' is unsupported"
-#~ msgstr "omforming til kodinga «%s» er ikkje støtta"
-
-#~ msgid "cannot create fifo '%s'"
-#~ msgstr "klarte ikkje laga fifo «%s»"
-
-#~ msgid "cannot open pipe() cmd '%s'"
-#~ msgstr "klarte ikkje opna pipe()-kommandoen «%s»"
-
-#~ msgid "cannot open compressed file '%s'"
-#~ msgstr "klarte ikkje opna komprimert fil «%s»"
-
-#~ msgid "cannot open bzip2-ed file '%s'"
-#~ msgstr "klarte ikkje opna bzip2-komprimert fil «%s»"
-
-#, fuzzy
-#~ msgid "unable to allocate space for source line %d"
-#~ msgstr "Klarte ikkje finna ledig plass til «name»"
-
-#, fuzzy
-#~ msgid "cannot create dir '%s'"
-#~ msgstr "Kan ikkje redusera minnegrense"
-
-#~ msgid "cannot obtain size for the null device"
-#~ msgstr "kan ikkje fastsetja storleik på nulleininga"
-
-#~ msgid "approx(): invalid f value"
-#~ msgstr "approx(): Ugyldig f-verdi"
-
-#~ msgid "approx(): invalid interpolation method"
-#~ msgstr "approx(): Ugyldig interpoleringsmetode"
-
-#~ msgid "approx(): attempted to interpolate NA values"
-#~ msgstr "approx(): Forsøk på å interpolera NA-verdiar"
-
-#~ msgid "invalid 'names' in 'R_unlink'"
-#~ msgstr "Ugyldige «names» i «R_unlink»"
-
-#~ msgid "'loadRconsole' can only be used in Rgui"
-#~ msgstr "«loadRconsole» kan berre brukast i Rgui"
-
-#~ msgid "WARNING: no 'vsize' given\n"
-#~ msgstr "ÅTVARING: ingen «vsize»-verdi gjeven\n"
-
-#~ msgid "WARNING: '--vsize' value is invalid: ignored\n"
-#~ msgstr "ÅTVARING: «--vsize»-verdien er ugyldig (vert ikkje brukt)\n"
-
-#~ msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
-#~ msgstr "ÅTVARING: «--vsize=%ld'%c'»: for høg verdi (vert ikkje brukt)\n"
-
-#~ msgid "WARNING: no 'nsize' given\n"
-#~ msgstr "ÅTVARING: ingen «nsize»-verdi gjeven\n"
-
-#~ msgid "WARNING: '--nsize' value is invalid: ignored\n"
-#~ msgstr "ÅTVARING: «--nsize»-verdien er ugyldig (vert ikkje brukt)\n"
-
-#~ msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
-#~ msgstr "WARNING: «--nsize=%lu'%c'»: for høg verdi (vert ikkje brukt)\n"
-
-#~ msgid "matrix: invalid 'byrow' value"
-#~ msgstr "Matrise: Ugyldig «byrow»-verdi"
-
-#~ msgid "unknown URL scheme"
-#~ msgstr "ukjent URL-format"
-
-#~ msgid "<ERROR: invalid input in encoding> "
-#~ msgstr "<FEIL: ugyldig inndata i teiknkoding> "

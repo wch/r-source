@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-26 08:41+0000\n"
+"POT-Creation-Date: 2010-04-02 13:54+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -163,9 +163,9 @@ msgstr ""
 #: src/main/connections.c:4571 src/main/connections.c:4575
 #: src/main/connections.c:4579 src/main/connections.c:4583
 #: src/main/context.c:597 src/main/context.c:606 src/main/context.c:610
-#: src/main/datetime.c:655 src/main/datetime.c:730 src/main/datetime.c:732
-#: src/main/datetime.c:736 src/main/datetime.c:882 src/main/datetime.c:884
-#: src/main/datetime.c:1044 src/main/debug.c:223 src/main/deparse.c:348
+#: src/main/datetime.c:652 src/main/datetime.c:727 src/main/datetime.c:729
+#: src/main/datetime.c:733 src/main/datetime.c:879 src/main/datetime.c:881
+#: src/main/datetime.c:1041 src/main/debug.c:223 src/main/deparse.c:348
 #: src/main/devices.c:580 src/main/dotcode.c:729 src/main/dotcode.c:733
 #: src/main/dotcode.c:738 src/main/dounzip.c:250 src/main/dounzip.c:257
 #: src/main/dounzip.c:267 src/main/dounzip.c:272 src/main/dounzip.c:276
@@ -179,7 +179,7 @@ msgstr ""
 #: src/main/eval.c:281 src/main/eval.c:1767 src/main/eval.c:1794
 #: src/main/eval.c:1798 src/main/grep.c:726 src/main/grep.c:731
 #: src/main/grep.c:1076 src/main/grep.c:1080 src/main/grep.c:1085
-#: src/main/grep.c:1760 src/main/grep.c:1765 src/main/memory.c:2981
+#: src/main/grep.c:1760 src/main/grep.c:1765 src/main/memory.c:2982
 #: src/main/model.c:1610 src/main/model.c:1618 src/main/optim.c:225
 #: src/main/paste.c:86 src/main/paste.c:353 src/main/paste.c:360
 #: src/main/paste.c:367 src/main/paste.c:372 src/main/paste.c:377
@@ -215,8 +215,8 @@ msgstr ""
 #: src/main/seq.c:384 src/main/seq.c:402 src/main/seq.c:406 src/main/seq.c:412
 #: src/main/seq.c:420 src/main/sort.c:161 src/main/sysutils.c:555
 #: src/main/sysutils.c:557 src/main/sysutils.c:559 src/main/sysutils.c:564
-#: src/main/sysutils.c:1507 src/main/sysutils.c:1511 src/main/unique.c:806
-#: src/main/unique.c:1085 src/main/unique.c:1145 src/main/unique.c:1152
+#: src/main/sysutils.c:1507 src/main/sysutils.c:1511 src/main/unique.c:789
+#: src/main/unique.c:1068 src/main/unique.c:1128 src/main/unique.c:1135
 #: src/main/util.c:570 src/main/util.c:573 src/main/util.c:1683
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
 #: src/modules/internet/internet.c:295 src/modules/internet/internet.c:298
@@ -281,10 +281,10 @@ msgid "invalid timestamp"
 msgstr "'tag' non valido"
 
 #: src/gnuwin32/extra.c:666 src/gnuwin32/extra.c:1779
-#: src/gnuwin32/extra.c:1955 src/gnuwin32/extra.c:1958
-#: src/gnuwin32/extra.c:1961 src/main/character.c:561 src/main/colors.c:365
+#: src/gnuwin32/extra.c:1961 src/gnuwin32/extra.c:1964
+#: src/gnuwin32/extra.c:1967 src/main/character.c:561 src/main/colors.c:365
 #: src/main/connections.c:3211 src/main/context.c:643 src/main/context.c:662
-#: src/main/datetime.c:591 src/main/datetime.c:657 src/main/datetime.c:886
+#: src/main/datetime.c:588 src/main/datetime.c:654 src/main/datetime.c:883
 #: src/main/dotcode.c:197 src/main/errors.c:867 src/main/errors.c:898
 #: src/main/errors.c:999 src/main/errors.c:1024 src/main/errors.c:1029
 #: src/main/optimize.c:94 src/main/optimize.c:101 src/main/optimize.c:110
@@ -408,16 +408,16 @@ msgstr "numero di dispositivo non valido"
 msgid "bad device"
 msgstr "dispositivo errato"
 
-#: src/gnuwin32/extra.c:1965
+#: src/gnuwin32/extra.c:1979
 #, fuzzy, c-format
 msgid "Registry key '%ls' not found"
 msgstr "oggetto \"%s\" non trovato"
 
-#: src/gnuwin32/extra.c:2029 src/gnuwin32/extra.c:2037
+#: src/gnuwin32/extra.c:2043 src/gnuwin32/extra.c:2051
 msgid "invalid input in Rmbstowcs"
 msgstr "input non valido per Rmbstowcs"
 
-#: src/gnuwin32/extra.c:2059 src/main/platform.c:1043
+#: src/gnuwin32/extra.c:2073 src/main/platform.c:1043
 msgid "file choice cancelled"
 msgstr "scelta del file annullata"
 
@@ -2471,23 +2471,23 @@ msgstr "min/max non sono definite per i numeri complessi"
 msgid "unknown cumxxx function"
 msgstr "la funzione cumxxx è ignota"
 
-#: src/main/datetime.c:513 src/main/datetime.c:519 src/main/datetime.c:533
-#: src/main/datetime.c:538
+#: src/main/datetime.c:510 src/main/datetime.c:516 src/main/datetime.c:530
+#: src/main/datetime.c:535
 #, fuzzy
 msgid "problem with setting timezone"
 msgstr "problema nello scrivere sulla connessione"
 
-#: src/main/datetime.c:523
+#: src/main/datetime.c:520
 msgid "cannot set timezones on this system"
 msgstr "non è possibile istanziare timezones su questo sistema"
 
-#: src/main/datetime.c:545 src/main/datetime.c:547
+#: src/main/datetime.c:542 src/main/datetime.c:544
 #, fuzzy
 msgid "problem with unsetting timezone"
 msgstr "è sorto un problema nel lanciare l'editor %s"
 
-#: src/main/datetime.c:675 src/main/datetime.c:677 src/main/datetime.c:1052
-#: src/main/datetime.c:1054
+#: src/main/datetime.c:672 src/main/datetime.c:674 src/main/datetime.c:1049
+#: src/main/datetime.c:1051
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "un componente di lunghezza zero è nella struttura POSIXIt"
 
@@ -4392,12 +4392,12 @@ msgstr "Realloc non può riallocare memoria (dimensione %d)"
 msgid "not safe to return vector pointer"
 msgstr "non è sicuro restituire puntatori vettoriali"
 
-#: src/main/memory.c:2902
+#: src/main/memory.c:2903
 #, fuzzy
 msgid "memory profiling is not available on this system"
 msgstr "Il profiling di R non è disponibile su questo sistema"
 
-#: src/main/memory.c:2967
+#: src/main/memory.c:2968
 #, fuzzy, c-format
 msgid "Rprofmem: cannot open output file '%s'"
 msgstr "Rprof: non posso aprire il file di profile '%s'"
@@ -7046,62 +7046,62 @@ msgstr "gc.time() non è implementata su questo sistema"
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'recursive = TRUE' non è supportato su questa piattaforma"
 
-#: src/main/unique.c:291
+#: src/main/unique.c:302
 #, c-format
 msgid "length %d is too large for hashing"
 msgstr "la lunghezza %d è troppo lunga per l'indirizzamento"
 
-#: src/main/unique.c:389
+#: src/main/unique.c:401
 msgid "'duplicated' applies only to vectors"
 msgstr "'duplicated' si applica a non vettori"
 
-#: src/main/unique.c:474
+#: src/main/unique.c:489
 msgid "any_duplicated3(., <0-length incomp>)"
 msgstr ""
 
-#: src/main/unique.c:528
+#: src/main/unique.c:543
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr "%s() si applica solo a vettori"
 
-#: src/main/unique.c:763
+#: src/main/unique.c:746
 msgid "'match' requires vector arguments"
 msgstr "'match' richiede argomenti vettoriali"
 
-#: src/main/unique.c:810 src/main/unique.c:940
+#: src/main/unique.c:793 src/main/unique.c:923
 msgid "argument is not of mode character"
 msgstr "l'argomento non è in modalità carattere"
 
-#: src/main/unique.c:1047
+#: src/main/unique.c:1030
 msgid "... used in a situation where it doesn't exist"
 msgstr "... usato in un contesto dove non esiste"
 
-#: src/main/unique.c:1138
+#: src/main/unique.c:1121
 msgid "unable to find a closure from within which 'match.call' was called"
 msgstr ""
 
-#: src/main/unique.c:1295
+#: src/main/unique.c:1278
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr ""
 "matrice di tipo differente da numeric in rowsum(): questo non deve accadere"
 
-#: src/main/unique.c:1329
+#: src/main/unique.c:1312
 msgid "non-numeric data frame in rowsum"
 msgstr "data frame non numeri in rowsum"
 
-#: src/main/unique.c:1355
+#: src/main/unique.c:1338
 msgid "this cannot happen"
 msgstr "questo non deve accadere"
 
-#: src/main/unique.c:1411
+#: src/main/unique.c:1394
 msgid "'names' must be a character vector"
 msgstr "'names' deve essere un vettore di tipo character"
 
-#: src/main/unique.c:1415
+#: src/main/unique.c:1398
 msgid "'sep' must be a character string"
 msgstr "'sep' deve essere una stringa di tipo character"
 
-#: src/main/unique.c:1498
+#: src/main/unique.c:1470
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated non chiamato su un STRSXP"
 
