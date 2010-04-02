@@ -18,7 +18,7 @@
 
 NEW FEATURES
 
-     o	A sub-architecture is used for 32-bit (i386) as well as
+    o	A sub-architecture is used for 32-bit (i386) as well as
 	64-bit (x64) builds.
 
 	Architecture-specific files (such as Rgui.exe and Rscript.exe)
@@ -38,14 +38,25 @@ NEW FEATURES
     o	R CMD INSTALL can install zipfiles as binary packages.
 
 
-INSTALLATION
+64-bit NEWS
 
-     o	The 64-bit Tcl binary is now in file R64a_Tcl_8-5-8.zip: when
+    o   The plan is to merge the 32- and 64-bit distributions and have
+	a common repository of packages.  This process has been
+	started, and some of the steps are recorded here.
+
+    o	The 64-bit Tcl binary is now in file R64a_Tcl_8-5-8.zip: when
 	you unpack it ensure you have directory Tcl/bin64 and not
 	Tcl/bin.
 
-     o	The 64-bit installer (which runs only on a 64-bit system) can
-	be used to add 64-bit components to a 32-bit install.
+    o	The 64-bit installer (which runs only on a 64-bit system) can
+	be used to add 64-bit components to a 32-bit install by
+	selecting the existing 32-bit installation directory and
+	installation type 'Add 64-bit components'.
+
+    o	The 32-bit CRANextras repository is a prototype of a merged
+	repository. All the packages are available from a 32-bit
+	build, and those appropriate to a 64-bit build (e.g. not
+	BRugs) with type="win.binary".
 
 
 PACKAGE INSTALLATION
