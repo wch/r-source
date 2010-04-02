@@ -442,6 +442,37 @@ static void fin_request(httpd_conn_t *c) {
 	c->attr |= CONNECTION_CLOSE;
 }
 
+static SEXP custom_handlers_env;
+
+/* returns a httpd handler (closure) for a given path. As a special case
+ * it can return a symbol that will be resolved in the "tools" namespace.
+ * currently it allows custom handlers for paths of the form
+ * /custom/<name>[/.*] where <name> must less than 64 characters long
+ * and is matched against closures in tools:::.httpd.handlers.env */
+static SEXP handler_for_path(const char *path) {
+    if (path && !strncmp(path, "/custom/", 8)) { /* starts with /custom/ ? */
+	const char *c = path + 8, *e = c;
+	while (*c && *c != '/') c++; /* find out the name */
+	if (c - e > 0 && c - e < 64) { /* if it's 1..63 chars long, proceed */
+	    char fn[64];
+	    memcpy(fn, e, c - e); /* create a local C string with the name for the install() call */
+	    fn[c - e] = 0;
+	    DBG(Rprintf("handler_for_path('%s'): looking up custom handler '%s'\n", path, fn));
+	    /* we cache custom_handlers_env so in case it has not been loaded yet, fetch it */
+	    if (!custom_handlers_env)
+		custom_handlers_env = eval(install(".httpd.handlers.env"), R_FindNamespace(mkString("tools")));
+	    /* we only proceed if .httpd.handlers.env really exists */
+	    if (TYPEOF(custom_handlers_env) == ENVSXP) {
+		SEXP cl = findVarInFrame3(custom_handlers_env, install(fn), TRUE);
+		if (cl != R_UnboundValue && TYPEOF(cl) == CLOSXP) /* we need a closure */
+		    return cl;
+	    }
+	}
+    }
+    DBG(Rprintf(" - falling back to default httpd\n"));
+    return install("httpd");
+}
+
 /* process a request by calling the httpd() function in R */
 static void process_request(httpd_conn_t *c)
 {
@@ -462,7 +493,7 @@ static void process_request(httpd_conn_t *c)
 	SEXP sTrue = PROTECT(ScalarLogical(TRUE));
 	SEXP y, x = PROTECT(lang3(
 				  install("try"),
-				  LCONS(install("httpd"),
+				  LCONS(handler_for_path(c->url),
 					list3(mkString(c->url), query ? parse_query(query) : R_NilValue, parse_request_body(c))),
 				  sTrue));
 	SET_TAG(CDR(CDR(x)), install("silent"));
