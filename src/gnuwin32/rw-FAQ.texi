@@ -147,13 +147,13 @@ standard 32-bit version works well on x64 Windows: @xref{Can I use R
 on 64-bit Windows?}.
 
 We only test on versions of Windows currently supported by Microsoft,
-mainly on 32-bit XP SP3 and 64-bit Windows 7 and Windows Server 2008.
+mainly on 32-bit XP SP3 and 64-bit Windows 7 and Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical install
 takes 45Mb of disk space, a full installation about 70Mb and a
 minimal one about 30Mb.
-@c: 70Mb is for 64-bit
+@c : 70Mb is for 64-bit
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
