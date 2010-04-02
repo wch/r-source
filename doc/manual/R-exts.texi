@@ -968,9 +968,13 @@ The names of the top-level library directory (i.e., specifiable
 @emph{via} the @samp{-l} argument) and the directory of the package
 itself are made available to the installation scripts @emph{via} the two
 shell/environment variables @env{R_LIBRARY_DIR} and @env{R_PACKAGE_DIR}.
-Additionally, the name of the package (e.g., @samp{survival} or
+Additionally, the name of the package (e.g.@: @samp{survival} or
 @samp{MASS}) being installed is available from the environment variable
-@env{R_PACKAGE_NAME}.
+@env{R_PACKAGE_NAME}.  (Currently the value of @env{R_PACKAGE_DIR} is
+always @code{$@{R_LIBRARY_DIR@}/$@{R_PACKAGE_NAME@}}, but this used not to
+be the case when versioned installs were allowed.  Its main use is in
+@file{configure.win} scripts for the installation path of external
+software's DLLs.)
 
 @menu
 * Using Makevars::              
