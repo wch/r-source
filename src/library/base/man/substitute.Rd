@@ -12,6 +12,7 @@ enquote(call)
 }
 \alias{substitute}
 \alias{quote}
+\alias{enquote}
 \description{
   \code{substitute} returns the parse tree for the (unevaluated)
   expression \code{expr}, substituting any variables bound in
