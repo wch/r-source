@@ -87,20 +87,37 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE)
         unlink(file.path(tmpDir, pkgname, "chtml"), recursive = TRUE)
         instPath <- file.path(lib, pkgname)
         if(libs_only) {
-            ## copy over the subdirs of the libs dir,
-            ## removing if already there
+            if (!file_test("-d", file.path(instPath, "libs")))
+                warning(gettextf("there is no 'libs' directory in package '%s'",
+                                 pkgname),
+                        domain = NA, call. = FALSE, immediate. = TRUE)
+            ## copy over the subdirs of 'libs', removing if already there
             for(sub in c("i386", "x64"))
                 if (file_test("-d", file.path(tmpDir, pkgname, "libs", sub))) {
                     unlink(file.path(instPath, "libs", sub), recursive = TRUE)
                     ret <- file.copy(file.path(tmpDir, pkgname, "libs", sub),
                                      file.path(instPath, "libs"),
                                      recursive = TRUE)
-                    if(any(ret))
+                    if(any(!ret))
                         warning(gettextf("unable to move temporary installation '%s' to '%s'",
                                          normalizePath(file.path(tmpDir, pkgname, "libs", sub)),
-                                         normalizePath(instPath)),
+                                         normalizePath(file.path(instPath, "libs"))),
                                 domain = NA, call. = FALSE, immediate. = TRUE)
                 }
+            ## update 'Archs': copied from tools:::.install.packages
+            fi <- file.info(Sys.glob(file.path(instPath, "libs", "*")))
+            dirs <- row.names(fi[fi$isdir %in% TRUE])
+            if (length(dirs)) {
+                descfile <- file.path(instPath, "DESCRIPTION")
+                olddesc <- readLines(descfile)
+                olddesc <- grep("^Archs:", olddesc,
+                                invert = TRUE, value = TRUE, useBytes = TRUE)
+                newdesc <- c(olddesc,
+                             paste("Archs:",
+                                   paste(basename(dirs), collapse=", "))
+                             )
+                writeLines(newdesc, descfile, useBytes = TRUE)
+            }
         } else {
             ## If the package is already installed, remove it.  If it
             ## isn't there, the unlink call will still return success.
