@@ -52,8 +52,8 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
   default value (\code{NULL}) by functions such as
   \code{install.packages}: this value corresponds to
   \code{\link{getOption}("available_packages_filters")} and to
-  \code{c("R_version", "OS_type", "duplicates")} if that is unset or set
-  to \code{NULL}.
+  \code{c("R_version", "OS_type", "subarch", "duplicates")} if that is
+  unset or set to \code{NULL}.
 
   The built-in filters are
   \describe{
@@ -63,6 +63,10 @@ available.packages(contriburl = contrib.url(getOption("repos"), type),
       incompatible with this version of \R: that is exclude
       Windows-only packages on a Unix-alike platform
       and \emph{vice versa}.}
+    \item{\code{"subarch"}}{for binary packages, exclude those with
+      compiled code that is not available for the current
+      sub-architecture, e.g. exclude packages only compiled for 32-bit
+      Windows on a 64-bit Windows \R.}
     \item{\code{"duplicates"}}{only report the latest version where more
       than one version is available, and only report the first-named
       repository (in \code{contriburl}) with the latest version if that

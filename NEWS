@@ -44,6 +44,8 @@ PACKAGE INSTALLATION
 
     o	When sub-architectures are in use, the installed architectures
 	are recorded in the 'Archs' field of the DESCRIPTION file.
+	There is a new default filter, "subarch", in
+	available.packages() to make use of this.
 
 
 INSTALLATION

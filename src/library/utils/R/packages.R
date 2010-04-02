@@ -133,7 +133,7 @@ function(contriburl = contrib.url(getOption("repos"), type), method,
 }
 
 available_packages_filters_default <-
-    c("R_version", "OS_type", "duplicates")
+    c("R_version", "OS_type", "subarch", "duplicates")
 
 available_packages_filters_db <- new.env()
 
@@ -176,6 +176,23 @@ function(db)
     ## Ignore packages that do not fit our OS.
     OS_type <- db[, "OS_type"]
     db[is.na(OS_type) | (OS_type == .Platform$OS.type), , drop = FALSE]
+}
+
+available_packages_filters_db$subarch <-
+function(db)
+{
+    ## Ignore packages that do not fit our sub-architecture.
+    ## Applies only to Mac and Windows binary repositories.
+    current <- .Platform$r_arch
+    if(!nzchar(current)) return(db)
+    archs <- db[, "Archs"]
+    if(all(is.na(archs))) return(db)
+    OK <- unlist(lapply(archs, function(x) {
+        if(is.na(x)) return(TRUE)
+        this <- strsplit(x, "[[:space:]]*,[[:space:]]*")[[1L]]
+        current %in% this
+    }))
+    db[OK, , drop = FALSE]
 }
 
 available_packages_filters_db$duplicates <-
