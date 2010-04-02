@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-26 08:22+0000\n"
+"POT-Creation-Date: 2010-04-02 13:53+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -272,8 +272,8 @@ msgid "invalid timestamp"
 msgstr "时间标签不对"
 
 #: src/gnuwin32/extra.c:666 src/gnuwin32/extra.c:1779
-#: src/gnuwin32/extra.c:1955 src/gnuwin32/extra.c:1958
-#: src/gnuwin32/extra.c:1961 src/main/character.c:561 src/main/colors.c:365
+#: src/gnuwin32/extra.c:1961 src/gnuwin32/extra.c:1964
+#: src/gnuwin32/extra.c:1967 src/main/character.c:561 src/main/colors.c:365
 #: src/main/connections.c:3211 src/main/context.c:643 src/main/context.c:662
 #: src/main/datetime.c:591 src/main/datetime.c:657 src/main/datetime.c:886
 #: src/main/dotcode.c:197 src/main/errors.c:867 src/main/errors.c:898
@@ -394,16 +394,16 @@ msgstr "图形设备号不对"
 msgid "bad device"
 msgstr "设备有错"
 
-#: src/gnuwin32/extra.c:1965
+#: src/gnuwin32/extra.c:1979
 #, c-format
 msgid "Registry key '%ls' not found"
 msgstr "找不到寄存器键'%ls'"
 
-#: src/gnuwin32/extra.c:2029 src/gnuwin32/extra.c:2037
+#: src/gnuwin32/extra.c:2043 src/gnuwin32/extra.c:2051
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs里的输入不对"
 
-#: src/gnuwin32/extra.c:2059 src/main/platform.c:1043
+#: src/gnuwin32/extra.c:2073 src/main/platform.c:1043
 msgid "file choice cancelled"
 msgstr "撤消文件选择"
 
