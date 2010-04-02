@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-
+## quote() is .Primitive
 
 bquote <- function(expr, where=parent.frame())
 {
@@ -27,3 +27,5 @@ bquote <- function(expr, where=parent.frame())
     unquote(substitute(expr))
 }
 
+## utility we've used ourselves
+enquote <- function(x) as.call(list(as.name("quote"), x))

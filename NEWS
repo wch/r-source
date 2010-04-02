@@ -29,6 +29,8 @@ NEW FEATURES
 	improvements to the way the hash code is generated in
 	unique.c.
 
+    o	The enquote() utility, in use internally, is exported now.
+
 
 DEPRECATED & DEFUNCT
 
@@ -604,7 +606,7 @@ BUG FIXES
     o	The X11() device with cairo but not Pango (notably Mac OS X)
 	now checks validity of text strings in UTF-8 locales (since
 	Pango does but cairo it seems does not).
-	
+
     o	read.fwf() misread multi-line records when n was specified.
         (PR#14241)
 

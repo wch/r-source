@@ -8,6 +8,7 @@
 \usage{
 substitute(expr, env)
 quote(expr)
+enquote(call)
 }
 \alias{substitute}
 \alias{quote}
@@ -18,9 +19,16 @@ quote(expr)
 
   \code{quote} simply returns its argument. The argument is not evaluated
   and can be any R expression.
+
+  \code{enquote} is a simple one-line utility which transforms a call of
+  the form \code{Foo(....)} into the call \code{quote(Foo(....))}.  This
+  is typically only used to protect a \code{\link{call}} from early
+  evaluation.
 }
 \arguments{
-  \item{expr}{Any syntactically valid \R expression}
+  \item{expr}{any syntactically valid \R expression}
+  \item{call}{a \code{\link{call}}, i.e., an \R object of
+  \code{\link{class}} (and \code{\link{mode}}) \code{"call"}.}
   \item{env}{An environment or a list object.  Defaults to the
     current evaluation environment.}
 }

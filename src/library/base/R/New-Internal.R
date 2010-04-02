@@ -126,10 +126,8 @@ do.call <- function(what, args, quote = FALSE, envir = parent.frame())
 {
     if (!is.list(args))
 	stop("second argument must be a list")
-    if (quote) {
-	enquote <- function(x) as.call(list(as.name("quote"), x))
+    if (quote)
 	args <- lapply(args, enquote)
-    }
     .Internal(do.call(what, args, envir))
 }
 
