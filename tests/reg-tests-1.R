@@ -6110,3 +6110,11 @@ assertError(try(log2(quote(1:10))))
 stopifnot(is.na(mean(c(1,10,100,NA), trim=0.1)),
           is.na(mean(c(1,10,100,NA), trim=0.26)))
 ## gave error, real value respectively in R <= 2.10.1
+
+
+## all.equal(*, tol) for objects with numeric attributes
+a <- structure(1:17, xtras = c(pi, exp(1)))
+b <- a * (II <- (1 + 1e-7))
+attr(b,"xtras") <- attr(a,"xtras") * II
+stopifnot(all.equal(a,b, tol=2e-7))
+## gave  "Attributes: .... relative difference: 1e-07"  in R <= 2.10.x

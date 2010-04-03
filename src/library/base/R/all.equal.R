@@ -45,7 +45,8 @@ all.equal.numeric <-
     function(target, current, tolerance = .Machine$double.eps ^ .5,
              scale = NULL, check.attributes = TRUE, ...)
 {
-    msg <- if(check.attributes) attr.all.equal(target, current, ...)
+    msg <- if(check.attributes)
+	attr.all.equal(target, current, tolerance=tolerance, scale=scale, ...)
     if(data.class(target) != data.class(current)) {
 	msg <- c(msg, paste("target is ", data.class(target), ", current is ",
 			    data.class(current), sep = ""))
