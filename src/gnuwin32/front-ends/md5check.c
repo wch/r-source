@@ -46,6 +46,12 @@ void read_unist_file(char* fname)
        5.0.6 is 33 5.1.3 is 42 5.1.11 is 46 5.1.13 is 47
        5.2.0 is 48
      */
+    if(Version > 1000) {
+	/* Unicode 5.3.0 seems to be 1048 */
+	fprintf(stderr, "Version %d of the uninst format is not supported\n", Version);
+	exit(1);
+    }
+    
     if(Version > 48)
 	fprintf(stderr, "Version %d of the uninst format is new and may not be supported\n", Version);
     fread(&NumRecs, 4, 1, fp);
