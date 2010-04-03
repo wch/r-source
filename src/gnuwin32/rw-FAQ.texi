@@ -882,7 +882,7 @@ different directories: the installer will suggest that the 64-bit build
 is installed into, say, @file{R-2.11.0-x64} and Administrator installs
 will default to different paths (e.g.@: @file{C:\Program Files (x86)\R}
 for 32-bit, @file{C:\Program Files\R} for 64-bit).  The Start Menu,
-desktop and quick lauch icons will be named differently, and the
+desktop and quick launch icons will be named differently, and the
 versions can be uninstalled independently.
 
 For many Registry items, 32- and 64-bit programs have different views of
