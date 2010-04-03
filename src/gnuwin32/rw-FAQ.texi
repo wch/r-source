@@ -81,9 +81,8 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.10.0} or later).  It is almost entirely about the 32-bit build,
-with some mentions of 64-bit builds (only relevant to @samp{2.11.0} or
-later).
+(@samp{2.11.0} or later).  It is mainly about the 32-bit build, with
+some mentions of 64-bit builds.
 
 
 @newchap{}
@@ -119,6 +118,7 @@ later).
 * There is no tilde on my keyboard::  
 * Can I use R on 64-bit Windows?::  
 * Should I run 32-bit or 64-bit R?::  
+* Can both 32- and 64-bit R be installed on the same machine?::  
 @end menu
 
 
@@ -147,7 +147,7 @@ standard 32-bit version works well on x64 Windows: @xref{Can I use R
 on 64-bit Windows?}.
 
 We only test on versions of Windows currently supported by Microsoft,
-mainly on 32-bit XP SP3 and 64-bit Windows 7 and Server 2008.
+mainly on 32-bit XP SP3 and 64-bit Windows 7 and Windows Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical install
@@ -200,7 +200,7 @@ This compares checksums on all the installed files with those put into
 the installer, and will report any changed or missing files.
 
 (It only works if R was installed from the Inno Setup installer, and not
-the MSI installer.)
+the MSI installer, and does not work with the Unicode Inno Setup installer.)
 
 @node Can I customize the installation?, How do I run it?, How do I check an installation?, Installation and Usage
 @section Can I customize the installation?
@@ -505,9 +505,9 @@ and using the function @code{shortPathName} from R code.
 
 No, not when R itself is running.
 
-When you run the R installer, there are options (under `Select Additional
-Tasks') to `Save version number in registry' and `Associate R with .RData
-files'.
+When you run the R installer, there are options (under `Select
+Additional Tasks') to `Save version number in registry' and (for
+Administrator installs) `Associate R with .RData files'.
 
 If you tick the first option, the following string entries are added to the
 Windows registry:
@@ -521,8 +521,8 @@ Windows registry:
 If you do not have administrative privileges on the machine while running
 the installer, then the entries are created under @code{HKEY_CURRENT_USER}.
 
-If you tick the second option (`Associate R with .RData files') and have
-administrative privileges, then entries are created under
+If you tick the second option (shown with administrative privileges
+only) (`Associate R with .RData files') then entries are created under
 @code{HKEY_CLASSES_ROOT\.RData} and @code{HKEY_CLASSES_ROOT\RWorkspace}.
 
 After installation you can add the Registry entries in
@@ -846,7 +846,7 @@ build, e.g.@:
 .libPaths(if(.Machine$sizeof.pointer == 8) "~/Rlibs/x64" else "~/Rlibs")
 @end example
 
-@node Should I run 32-bit or 64-bit R?,  , Can I use R on 64-bit Windows?, Installation and Usage
+@node Should I run 32-bit or 64-bit R?, Can both 32- and 64-bit R be installed on the same machine?, Can I use R on 64-bit Windows?, Installation and Usage
 @section Should I run 32-bit or 64-bit R?
 
 For most users (especially beginners) we would recommend using the
@@ -870,6 +870,38 @@ versions of @acronym{GCC} with better optimization and are able to take
 advantage of extra features of all x86-64 chips (more registers, SSE2/3
 instructions, @dots{}) and so the code may run faster despite using larger
 pointers.
+
+@node Can both 32- and 64-bit R be installed on the same machine?,  , Should I run 32-bit or 64-bit R?, Installation and Usage
+@section Can both 32- and 64-bit R be installed on the same machine?
+
+Obviously, only relevant if the machine is running a 64-bit version of
+Windows.
+
+Yes, with a little care.
+The details here are for R 2.12.0, and may change before release.
+
+The 32- and 64-bit installers will suggest that the 64-bit build
+is installed into, say, @file{R-@RVER@-x64} and Administrator installs
+will default to different paths (e.g.@: @file{C:\Program Files (x86)\R}
+for 32-bit, @file{C:\Program Files\R} for 64-bit).  The Start Menu,
+desktop and quick launch icons will be named differently, and the
+versions can be uninstalled independently.
+
+It is also possible to install the two builds to the same directory.
+First install the 32-bit build, then the 64-bit one choosing the path
+chosen for the 32-bit build and selecting the type @emph{Add 64-bit
+components}.  This will give separate icons for the two builds.
+
+For many Registry items, 32- and 64-bit programs have different views of
+the Registry, but clashes can occur.  The most obvious problem is the
+file association, which will use the last installation for which this
+option is selected.  The situation with (optionally) recording the
+version and install path is complex and may vary by the version of
+Windows.  But generally we find that with Administrator installs that
+the 32-bit view of the Registry shows the last recorded 32-bit install,
+and analogously for the 64-bit view, whereas for a user install the 32-
+and 64-bit views are shared and so show the latest recorded
+installation.
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
@@ -1772,7 +1804,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2010-04-01
+@set LASTEDIT 2010-04-03
 @ifhtml
 @html
 <hr WIDTH="100%">

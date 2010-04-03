@@ -178,9 +178,9 @@ Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; Value
 Name: "{group}\\R$QUAL $RVER Help"; Filename: "{app}\\doc\\html\\index.html"; Components: html
 END
 
-## It is OK to use the same keys for 32- and 64-bit versions as the 
+## It is OK to use the same keys HKLM for 32- and 64-bit versions as the 
 ## view of the Registry depends on the arch.
-## But this will have to be different for a combined installer.
+## But not for HLCU (and file associations are necessarily for both).
 
 if ($have32bit) { # necessarily 64-bit
 print insfile <<END;
