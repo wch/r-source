@@ -1,13 +1,13 @@
 % File src/library/graphics/man/plot.design.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{plot.design}
 \alias{plot.design}
 \title{Plot Univariate Effects of a `Design' or Model}
 \description{
-  Plot univariate effects of one ore more \code{\link{factor}}s,
+  Plot univariate effects of one or more \code{\link{factor}}s,
   typically for a designed experiment as analyzed by \code{\link{aov}()}.
   Further, in S this a method of the \code{\link{plot}} generic function
   for \code{design} objects.
