@@ -547,6 +547,9 @@ BUG FIXES
     o	read.fwf() misread multi-line records when n was specified.
         (PR#14241)
 
+    o	all.equal(*, tolerance = e) passes the numeric tolerance also to
+	the comparison of the attributes.
+
 
 
 
