@@ -58,7 +58,9 @@ INSTALLATION
 
 BUG FIXES
 
-    o	Placeholder
+    o	Calls to selectMethod() by default no longer cache inherited
+        methods.  This could previously corrupt methods used by as().
+
 
 
 
