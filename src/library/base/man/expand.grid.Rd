@@ -1,6 +1,6 @@
 % File src/library/base/man/expand.grid.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{expand.grid}
@@ -32,7 +32,7 @@ expand.grid(\dots, KEEP.OUT.ATTRS = TRUE, stringsAsFactors = TRUE)
 }
 %% currently, from "base R", only predict.loess() makes use of it.
 \note{
-  Character vectors have always been converted to factors: this because
+  Character vectors have always been converted to factors: this became
   optional in \R 2.9.1.  Conversion is done with levels in the order
   they occur in the character vectors (and not alphabetically, as is
   most common when converting to factors).

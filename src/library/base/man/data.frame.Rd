@@ -1,6 +1,6 @@
 % File src/library/base/man/data.frame.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{data.frame}
@@ -49,7 +49,7 @@ default.stringsAsFactors()
   argument names give the column names.  For an unnamed simple argument,
   a deparsed version of the argument is used as the name (with an
   enclosing \code{I(...)} removed).  For a named matrix/list/data frame
-  argument with ore than one named column, the names of the columns are
+  argument with more than one named column, the names of the columns are
   the name of the argument followed by a dot and the column name inside
   the argument: if the argument is unnamed, the argument's column names
   are used.  For a named or unnamed matrix/list/data frame argument that

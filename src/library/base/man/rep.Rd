@@ -1,6 +1,6 @@
 % File src/library/base/man/rep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{rep}
@@ -87,7 +87,7 @@ rep.int(x, times)
 
   Function \code{rep} is a primitive, but (partial)
   matching of argument names is performed as for normal functions.
-  You can no longer pass a missing argument to. e.g. \code{length.out}.
+  You can no longer pass a missing argument to e.g. \code{length.out}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -1,6 +1,6 @@
 % File src/library/base/man/table.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{table}
@@ -33,7 +33,7 @@ is.table(x)
               responseName = "Freq", stringsAsFactors = TRUE)
 }
 \arguments{
-  \item{\dots}{one of more objects which can be interpreted as factors
+  \item{\dots}{one or more objects which can be interpreted as factors
     (including character strings), or a list (or data frame) whose
     components can be so interpreted.  (For \code{as.table} and
     \code{as.data.frame}, arguments passed to specific methods.)}
