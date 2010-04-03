@@ -119,6 +119,7 @@ later).
 * There is no tilde on my keyboard::  
 * Can I use R on 64-bit Windows?::  
 * Should I run 32-bit or 64-bit R?::  
+* Can both 32- and 64-bit R be installed on the same machine?::  
 @end menu
 
 
@@ -157,13 +158,13 @@ minimal one about 29Mb.
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
 with spaces in will probably work, but is little-tested.)  Users of
-Vista/Windows 7 installing for a single user using an account with
-administrator rights@footnote{Non-administrator accounts will
-automatically be offered a default installation directory in the user
-area.} should consider installing into a non-system area (such as
-@file{C:\R}).  Installing to a network share (a filepath starting
-with @code{\\machine\...}) is not supported: such paths will need to
-mapped to a network drive.
+Vista/Windows 7/Server 2008 installing for a single user using an
+account with administrator rights@footnote{Non-administrator accounts
+will automatically be offered a default installation directory in the
+user area.} should consider installing into a non-system area (such as
+@file{C:\R}).  Installing to a network share (a filepath starting with
+@code{\\machine\...}) is not supported: such paths will need to mapped
+to a network drive.
 
 To install use @samp{@RWVER@-win32.exe}.  Just double-click on the icon
 and follow the instructions.  If you have an account with Administrator
@@ -319,7 +320,8 @@ Indeed there is.  It is set by the command-line flag
 @option{--max-mem-size} (@pxref{How do I install R for Windows?}) and
 defaults to the smaller of the amount of physical RAM in the machine and
 0.5GB less than the limit of user virtual memory for a process (most
-often 2GB).  It can be set to any amount between 32Mb and 4095Mb.
+often 2GB on a 32-bit build).  It can be set to any amount between 32Mb
+and 4095Mb (on a 32-bit build).
 
 Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} within a
@@ -503,9 +505,9 @@ and using the function @code{shortPathName} from R code.
 
 No, not when R itself is running.
 
-When you run the R installer, there are options (under `Select Additional
-Tasks') to `Save version number in registry' and `Associate R with .RData
-files'.
+When you run the R installer, there are options (under `Select
+Additional Tasks') to `Save version number in registry' and (for
+Administrator installs) `Associate R with .RData files'.
 
 If you tick the first option, the following string entries are added to the
 Windows registry:
@@ -519,8 +521,8 @@ Windows registry:
 If you do not have administrative privileges on the machine while running
 the installer, then the entries are created under @code{HKEY_CURRENT_USER}.
 
-If you tick the second option (`Associate R with .RData files') and have
-administrative privileges, then entries are created under
+If you tick the second option (shown with administrative privileges
+only) (`Associate R with .RData files') then entries are created under
 @code{HKEY_CLASSES_ROOT\.RData} and @code{HKEY_CLASSES_ROOT\RWorkspace}.
 
 After installation you can add the Registry entries in
@@ -844,7 +846,7 @@ build, e.g.@:
 .libPaths(if(.Machine$sizeof.pointer == 8) "~/Rlibs/x64" else "~/Rlibs")
 @end example
 
-@node Should I run 32-bit or 64-bit R?,  , Can I use R on 64-bit Windows?, Installation and Usage
+@node Should I run 32-bit or 64-bit R?, Can both 32- and 64-bit R be installed on the same machine?, Can I use R on 64-bit Windows?, Installation and Usage
 @section Should I run 32-bit or 64-bit R?
 
 For most users (especially beginners) we would recommend using the
@@ -868,6 +870,31 @@ versions of @acronym{GCC} with better optimization and are able to take
 advantage of extra features of all x86-64 chips (more registers, SSE2/3
 instructions, @dots{}) and so the code may run faster despite using larger
 pointers.
+
+@node Can both 32- and 64-bit R be installed on the same machine?,  , Should I run 32-bit or 64-bit R?, Installation and Usage
+@section Can both 32- and 64-bit R be installed on the same machine?
+
+Obviously, only relevant if the machine is running a 64-bit version of
+Windows.
+
+Yes, with a little care. For R 2.11.x they should be installed into
+different directories: the installer will suggest that the 64-bit build
+is installed into, say, @file{R-2.11.0-x64} and Administrator installs
+will default to different paths (e.g.@: @file{C:\Program Files (x86)\R}
+for 32-bit, @file{C:\Program Files\R} for 64-bit).  The Start Menu,
+desktop and quick lauch icons will be named differently, and the
+versions can be uninstalled independently.
+
+For many Registry items, 32- and 64-bit programs have different views of
+the Registry, but clashes can occur.  The most obvious problem is the
+file association, which will use the last installation for which this
+option is selected.  The situation with (optionally) recording the
+version and install path is complex and may vary by the version of
+Windows.  But generally we find that with Administrator installs that
+the 32-bit view of the Registry shows the last recorded 32-bit install,
+and analogously for the 64-bit view, whereas for a user install the 32-
+and 64-bit views are shared and so show the latest recorded
+installation.
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
@@ -1426,7 +1453,7 @@ which also explains how the various types of completion work.
 
 This feature is very similar to the completion available in the
 @code{readline}-based command line interface on Unix-alikes: the Mac OS
-X Gui has a different completion scheme.
+X GUI @code{R.app} has a different completion scheme.
 
 @newchap{}
 @node Workspaces, The R Console, Windows Features, Top
@@ -1770,7 +1797,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2010-02-25
+@set LASTEDIT 2010-04-03
 @ifhtml
 @html
 <hr WIDTH="100%">
