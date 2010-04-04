@@ -1,3 +1,4 @@
+
 # Translation of R-utils.pot to French
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the utils R package.
@@ -5,11 +6,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.1\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-03-16 09:20\n"
-"PO-Revision-Date: 2009-10-10 15:40+0100\n"
-"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"PO-Revision-Date: 2010-03-26 13:32-0400\n"
+"Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -113,12 +114,11 @@ msgstr "Aucune vignette n'est trouvée par"
 msgid "call"
 msgstr "appel"
 
-#, fuzzy
 msgid "Package '"
-msgstr "Package"
+msgstr "Package '"
 
 msgid "' DESCRIPTION not found."
-msgstr ""
+msgstr "' : DESCRIPTION non trouvé."
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr "'file' doit être NULL, une chaîne de caractères ou une connexion"
@@ -267,7 +267,6 @@ msgstr "la(les) classe(s) de 'name' sera écartées"
 msgid "cannot edit NULL row names"
 msgstr "impossible d'éditer des noms de lignes NULL"
 
-#, fuzzy
 msgid "no help found for '%s'"
 msgstr "fichier d'aide introuvable pour '%s'"
 
@@ -334,14 +333,13 @@ msgstr "aide HTML non disponible"
 msgid "R Help on '%s'"
 msgstr "R Help sur '%s'"
 
-#, fuzzy
 msgid "invalid '%s' argument"
-msgstr "argument 'x' incorrect"
+msgstr "argument '%s' incorrect"
 
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so help cannot be "
 "accessed"
-msgstr ""
+msgstr "le package %s existe, mais il n'a pas été installé sous R >= 2.10.0 et donc l'aide n'est pas accessible"
 
 msgid "argument '%s' must be a single character string"
 msgstr "l'argument '%s' doit être une seule chaîne de caractères"
@@ -568,9 +566,8 @@ msgstr "essai d'utilisation de CRAN sans fixer un miroir"
 msgid "cannot choose a CRAN mirror non-interactively"
 msgstr "impossible de choisir un miroir CRAN en mode non interactif"
 
-#, fuzzy
 msgid "cannot choose a BioC mirror non-interactively"
-msgstr "impossible de choisir un miroir CRAN en mode non interactif"
+msgstr "impossible de choisir un miroir BioC en mode non interactif"
 
 msgid "cannot set repositories non-interactively"
 msgstr "impossible de fixer les entrepôts en mode non interactif"
@@ -663,7 +660,7 @@ msgid "no object named '%s' to show"
 msgstr "aucun objet de nom '%s' à afficher"
 
 msgid "must have max > min"
-msgstr ""
+msgstr "doit avoir max > min"
 
 msgid "'pb' is not from class \"txtProgressBar\""
 msgstr "'pb' n'est pas un objet de classe \"txtProgressBar\""
@@ -859,9 +856,8 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 "'digits' et 'digits.d' sont tous deux spécifiés et le second est ignoré"
 
-#, fuzzy
 msgid "no lines found in %s"
-msgstr "fichier d'aide introuvable pour '%s'"
+msgstr "aucune ligne trouvée dans %s"
 
 msgid "profile does not contain memory information"
 msgstr "'profile' ne contient pas d'information sur la mémoire"
@@ -913,9 +909,8 @@ msgstr "la vignette '%s' n'a pas de PDF"
 msgid "select.list() cannot be used non-interactively"
 msgstr "select.list() ne peut pas être utilisé en mode non-interactif"
 
-#, fuzzy
 msgid "'title' must be NULL or a length-1 character vector"
-msgstr "'code_files' devrait être un vecteur de type caractère"
+msgstr "'title' doit être NULL ou un vecteur de type caractère de longueur 1"
 
 msgid ""
 "Enter one or more numbers separated by spaces, or an empty line to cancel"
@@ -977,7 +972,6 @@ msgstr "nom de navigateur incorrect, vérifiez options(\"browser\")."
 msgid "help.start() requires the HTTP server to be running"
 msgstr "help.start() nécessite que le serveur HTTP soit en cours d'exécution"
 
-#, fuzzy
 msgid ""
 "If the browser launched by '%s' is already running, it is *not* restarted, "
 "and you must switch to its window."
@@ -1088,170 +1082,3 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
-
-#~ msgid "untar: using cmd ="
-#~ msgstr "untar : utilisation de cmd ="
-
-#~ msgid "Enter zero or more numbers separated by space"
-#~ msgstr "Entrez des nombres séparés par des espaces"
-
-#~ msgid "more than one help file found: using package '%s'"
-#~ msgstr "plusieurs fichiers d'aide trouvés : le package '%s' est utilisé"
-
-#~ msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
-#~ msgstr "offline = TRUE est obsolète : utilisez help_type = \"postscript\""
-
-#~ msgid "chmhelp = TRUE is no longer supported: use help_type =\"text\""
-#~ msgstr "chmhelp = TRUE n'est plus supporté : utilisez help_type = \"text\""
-
-#~ msgid "htmhelp = TRUE is deprecated: use help_type =\"html\""
-#~ msgstr "htmlhelp = TRUE est obsolète : utilisez help_type = \"html\""
-
-#~ msgid "Using non-linked HTML file: hyperlinks may be incorrect"
-#~ msgstr ""
-#~ "Utilisation de fichiers HTML non liés : les hyperliens sont peut-être "
-#~ "incorrects"
-
-#~ msgid "options(\"browser\") not set"
-#~ msgstr "options(\"browser\") non fixée"
-
-#~ msgid "'%s' has a help file but no examples"
-#~ msgstr "'%s' a un fichier d'aide mais pas de fichier d'exemples"
-
-#~ msgid ""
-#~ "No text help for '%s' is available:\n"
-#~ "corresponding file is missing"
-#~ msgstr ""
-#~ "Aucune aide texte disponible pour '%s':\n"
-#~ "le fichier correspondant est manquant"
-
-#~ msgid ""
-#~ "No offline help for '%s' is available:\n"
-#~ "corresponding file is missing"
-#~ msgstr ""
-#~ "Aucune aide hors-ligne disponible pour '%s' :\n"
-#~ "le fichier correspondant est manquant"
-
-#~ msgid "malformed bundle DESCRIPTION file, no Contains field"
-#~ msgstr "fichier DESCRIPTION du bundle erroné, pas de champ Contains"
-
-#~ msgid "bundle '%s' successfully unpacked and MD5 sums checked"
-#~ msgstr ""
-#~ "le bundle '%s' a été décompressé et les sommes MD5 ont été vérifiées avec "
-#~ "succès"
-
-#~ msgid ""
-#~ "No HTML help for '%s' is available:\n"
-#~ "corresponding file is missing"
-#~ msgstr ""
-#~ "Aucune aide HTML pour '%s' disponible :\n"
-#~ "le fichier correspondant est manquant"
-
-#~ msgid "Compiled HTML is not installed"
-#~ msgstr "L'aide au format HTML compilé n'est pas installée"
-
-#~ msgid "CHM file could not be displayed"
-#~ msgstr "Le fichier CHM n'a pas pu être affiché"
-
-#~ msgid ""
-#~ "No CHM help for '%s' in package '%s' is available:\n"
-#~ "the CHM file for the package is missing"
-#~ msgstr ""
-#~ "Aucune aide CHM disponible sur '%s' dans le package '%s' :\n"
-#~ "le fichier CHM pour ce package est manquant"
-
-#~ msgid "problems running R CMD Rdconv"
-#~ msgstr "problème d'exécution de R CMD Rdconv"
-
-#~ msgid "'latexcmd' is empty"
-#~ msgstr "'latexcmd' est vide"
-
-#~ msgid "'dvipscmd' is empty"
-#~ msgstr "'dvipscmd' est vide"
-
-#~ msgid ""
-#~ "Changing the default browser (as specified by the 'browser' option) to "
-#~ "the given browser so that it gets used for all future help requests."
-#~ msgstr ""
-#~ "Changement du navigateur par défaut (spécifié dans l'option 'brower') "
-#~ "pour ce navigateur de façon qu'il soit utilisé dans toutes les requêtes "
-#~ "d'aide futures"
-
-#~ msgid "Making links in per-session dir ..."
-#~ msgstr "Création des liens dans le répertoire de session..."
-
-#~ msgid "cannot create HTML search index"
-#~ msgstr "impossible de créer l'index HTML de recherche"
-
-#~ msgid "unable to find the HTML help"
-#~ msgstr "aide HTML introuvable"
-
-#~ msgid "updating HTML package listing"
-#~ msgstr "mise à jour de la liste HTML des packages"
-
-#~ msgid "fixing URLs in non-standard libraries"
-#~ msgstr "correction des URL dans les librairies non standard"
-
-#~ msgid "cannot update '%s'"
-#~ msgstr "impossible de mettre à jour '%s'"
-
-#~ msgid "Found invalid multi-byte character data."
-#~ msgstr "Données caractère multi-octets incorrectes."
-
-#~ msgid "Cannot re-encode because 'iconv' is not available."
-#~ msgstr "Impossible de ré-encoder car 'iconv' n'est pas disponible"
-
-#~ msgid "Try running R in a single-byte locale."
-#~ msgstr "Essayez de lancer R dans un environnement linguistique uni-octet"
-
-#~ msgid "bundle '%s' is incompletely installed"
-#~ msgstr "le bundle '%s' n'est pas installé complètement"
-
-#~ msgid "bundle '%s' has extra contents %s"
-#~ msgstr "le bundle '%s' possède un contenu surnuméraire %s"
-
-#~ msgid "this function is intended to work with the Aqua GUI"
-#~ msgstr "cette fonction est conçue pour fontionner avec l'interface Aqua"
-
-#~ msgid "Maintainer:"
-#~ msgstr "Responsable :"
-
-#~ msgid "Index:"
-#~ msgstr "Index :"
-
-#~ msgid "Further information is available in the following vignettes:"
-#~ msgstr "Plus d'information disponible dans les vignettes suivantes :"
-
-#~ msgid "package title"
-#~ msgstr "titre du package"
-
-#~ msgid "A concise (1-5 lines) description of the package"
-#~ msgstr "Description concise (1-5 lignes) du package"
-
-#~ msgid ""
-#~ "An overview of how to use the package, including the most important "
-#~ "functions"
-#~ msgstr ""
-#~ "Une vue d'ensemble montrant comment utiliser le package, y compris ses "
-#~ "fonctions les plus importantes"
-
-#~ msgid "The author and/or maintainer of the package"
-#~ msgstr "L'auteur et/ou la personne responsable du package"
-
-#~ msgid "Literature or other references for background information"
-#~ msgstr ""
-#~ "Références bibliographiques ou autre références pour de l'information "
-#~ "générale"
-
-#~ msgid "Optional links to other man pages, e.g."
-#~ msgstr "Liens valides vers d'autres pages de manuel, par exemple"
-
-#~ msgid "simple examples of the most important functions"
-#~ msgstr "exemples simples des fonctions les plus importantes"
-
-#~ msgid ""
-#~ "Optionally other standard keywords, one per line, from file KEYWORDS in "
-#~ "the R documentation directory"
-#~ msgstr ""
-#~ "Eventuellement d'autres mots clés, un par ligne, issus du fichier "
-#~ "KEYWORDS du répertoire documentation de R"

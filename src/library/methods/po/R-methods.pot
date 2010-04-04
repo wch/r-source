@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-19 11:17\n"
+"POT-Creation-Date: 2010-04-04 14:31\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -324,6 +324,9 @@ msgid "'%f' is not a valid generic function: methods list was an object of class
 msgstr ""
 
 msgid "'useInherited' must be TRUE, FALSE, or a named logical vector of those values; got an object of class \"%s\""
+msgstr ""
+
+msgid "Default method must be a method definition, a primitive or NULL: got an object of class %s"
 msgstr ""
 
 msgid "trying to match a method signature to an object (of class \"%s\") that is not a generic function"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:21+0000\n"
+"POT-Creation-Date: 2010-04-04 14:28+0100\n"
 "PO-Revision-Date: 2009-10-07 14:23+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -563,7 +563,7 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: extra.c:2057 rui.c:1237
+#: extra.c:2071 rui.c:1237
 msgid "Select file"
 msgstr "Wähle Datei"
 

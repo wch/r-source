@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-04-02 13:53+0100\n"
-"PO-Revision-Date: 2009-10-08 23:52+0100\n"
+"PO-Revision-Date: 2010-03-28 15:14+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -437,7 +437,7 @@ msgstr "Impossible de rediriger l'entrée"
 
 #: src/gnuwin32/run.c:311
 msgid "Child process not responding.  R will terminate it."
-msgstr ""
+msgstr "Le processus fils ne répond pas, R va s'arrêter."
 
 #: src/gnuwin32/run.c:354
 #, c-format
@@ -806,9 +806,9 @@ msgid "table entry must be an external pointer"
 msgstr "l'entrée de la table doit être un pointeur externe"
 
 #: src/main/Rstrptime.h:501 src/main/Rstrptime.h:968
-#, fuzzy, c-format
+#, c-format
 msgid "use of %s for input is not supported"
-msgstr "mode '%s' non supporté dans call_R"
+msgstr "l'utilisation de %s pour entrée n'est pas permise"
 
 #: src/main/Rstrptime.h:1222
 msgid "input string is too long"
@@ -857,14 +857,12 @@ msgid "invalid length"
 msgstr "taille incorrecte"
 
 #: src/main/apply.c:96
-#, fuzzy
 msgid "FUN.VALUE must be a vector"
-msgstr "le code doit être un vecteur générique"
+msgstr "FUN.VALUE doit être un vecteur"
 
 #: src/main/apply.c:98
-#, fuzzy
 msgid "invalid USE.NAMES value"
-msgstr "valeur incorrecte"
+msgstr "valeur incorrecte de USE.NAMES"
 
 #: src/main/apply.c:144
 #, c-format
@@ -872,6 +870,8 @@ msgid ""
 "values must be length %d,\n"
 " but FUN(X[[%d]]) result is length %d"
 msgstr ""
+"les valeurs doivent être d'une longueur %d,\n"
+" mais FUN(X[[%d]]) a une longueur %d"
 
 #: src/main/apply.c:156
 #, c-format
@@ -879,11 +879,13 @@ msgid ""
 "values must be type '%s',\n"
 " but FUN(X[[%d]]) result is type '%s'"
 msgstr ""
+"les valeurs doivent être de type '%s',\n"
+" mais FUN(X[[%d]]) est de type '%s'"
 
 #: src/main/apply.c:174
-#, fuzzy, c-format
+#, c-format
 msgid "type '%s' is not supported"
-msgstr "mode '%s' non supporté dans call_R"
+msgstr "le type '%s' n'est pas supporté"
 
 #: src/main/arithmetic.c:35
 msgid "NaNs produced"
@@ -1419,12 +1421,11 @@ msgstr "'...' utilisé dans un contexte incorrect"
 
 #: src/main/builtin.c:901
 msgid "'EXPR' is missing"
-msgstr ""
+msgstr "'EXPR' est manquant"
 
 #: src/main/builtin.c:905
-#, fuzzy
 msgid "EXPR must be a length 1 vector"
-msgstr "switch : EXPR doit renvoyer un vecteur de longueur 1"
+msgstr "EXPR doit être un vecteur de longueur 1"
 
 #: src/main/character.c:93 src/main/character.c:116
 #, c-format
@@ -1547,9 +1548,9 @@ msgid "(list) object cannot be coerced to type '%s'"
 msgstr "l'objet (list) ne peut être couverti automatiquement en un type '%s'"
 
 #: src/main/coerce.c:1067
-#, fuzzy, c-format
+#, c-format
 msgid "(symbol) object cannot be coerced to type '%s'"
-msgstr "l'objet (list) ne peut être couverti automatiquement en un type '%s'"
+msgstr "l'objet (symbol) ne peut être couverti automatiquement en un type '%s'"
 
 #: src/main/coerce.c:1083 src/main/coerce.c:1382
 msgid "no method for coercing this S4 class to a vector"
@@ -1605,7 +1606,7 @@ msgstr ""
 #: src/main/coerce.c:2187 src/main/dotcode.c:763 src/main/dotcode.c:806
 #: src/main/dotcode.c:1630
 msgid "'name' is missing"
-msgstr ""
+msgstr "'name' est manquant"
 
 #: src/main/coerce.c:2194
 msgid "first argument must be a character string"
@@ -3235,14 +3236,14 @@ msgid "exported symbol '%s' has no value"
 msgstr "le symbole exporté '%s' n'a pas de valeur associée"
 
 #: src/main/envir.c:3477
-#, fuzzy, c-format
+#, c-format
 msgid "unknown encoding: %d"
-msgstr "encodage '%s' indisponible"
+msgstr "encodage inconnu : %d"
 
 #: src/main/envir.c:3491
 #, c-format
 msgid "embedded nul in string: '%s'"
-msgstr ""
+msgstr "caractère nul au milieu de la chaîne : '%s'"
 
 #: src/main/errors.c:181 src/main/errors.c:218
 msgid "interrupts suspended; signal ignored"
@@ -3496,9 +3497,8 @@ msgid "invalid for() loop sequence"
 msgstr "séquence de boucle for() incorrecte"
 
 #: src/main/eval.c:1265
-#, fuzzy
 msgid "multi-argument returns are not permitted"
-msgstr "les renvois multi-arguments sont obsolètes"
+msgstr "les renvois multi-arguments sont inderdits"
 
 #: src/main/eval.c:1313
 msgid "invalid (NULL) left side of assignment"
@@ -3538,14 +3538,14 @@ msgid "invalid assignment left-hand side"
 msgstr "membre gauche de l'assignation incorrect"
 
 #: src/main/eval.c:1578
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d is empty"
-msgstr "l'argument %d n'est pas un vecteur"
+msgstr "l'argument %d est vide"
 
 #: src/main/eval.c:1581
 #, c-format
 msgid "'%s' is missing"
-msgstr ""
+msgstr "'%s' est manquant"
 
 #: src/main/eval.c:1713
 msgid "invalid formal argument list for \"function\""
@@ -3871,9 +3871,11 @@ msgstr ""
 "ligne %d"
 
 #: src/main/gram.y:2111
-#, fuzzy, c-format
+#, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
-msgstr "'\\x' non suivi de chiffres hexadécimaux"
+msgstr ""
+"'\\x' non suivi de chiffres hexadécimaux dans la chaîne de caractères "
+"débutant \"%s\""
 
 #: src/main/gram.y:2125
 #, c-format
@@ -3881,9 +3883,11 @@ msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\uxxxx séquences non supportées dans les 'backticks' (ligne %d)"
 
 #: src/main/gram.y:2140
-#, fuzzy, c-format
+#, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
-msgstr "'\\x' non suivi de chiffres hexadécimaux"
+msgstr ""
+"'\\u' non suivi de chiffres hexadécimaux dans la chaîne de caractères "
+"débutant \"%s\""
 
 #: src/main/gram.y:2148
 #, c-format
@@ -3896,9 +3900,11 @@ msgid "\\Uxxxxxxxx sequences not supported inside backticks (line %d)"
 msgstr "\\Uxxxxxxxx séquences non supportées dans les 'backticks' (ligne %d)"
 
 #: src/main/gram.y:2175
-#, fuzzy, c-format
+#, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
-msgstr "'\\x' non suivi de chiffres hexadécimaux"
+msgstr ""
+"'\\U' non suivi de chiffres hexadécimaux dans la chaîne de caractères "
+"débutant \"%s\""
 
 #: src/main/gram.y:2183
 #, c-format
@@ -3906,9 +3912,11 @@ msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "séquence \\U{xxxxxxxx} incorrecte (ligne %d)"
 
 #: src/main/gram.y:2223
-#, fuzzy, c-format
+#, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
-msgstr "'\\%c' est un code escape non reconnu dans une chaîne de caractères"
+msgstr ""
+"'\\%c' est un code escape non reconnu dans une chaîne de caractères débutant "
+"\"%s\""
 
 #: src/main/gram.y:2275
 #, c-format
@@ -4021,24 +4029,20 @@ msgstr "l'argument '%s' sera ignoré"
 
 #: src/main/grep.c:190 src/main/grep.c:277 src/main/grep.c:381
 #: src/main/grep.c:827 src/main/grep.c:1853
-#, fuzzy, c-format
+#, c-format
 msgid "input string %d is invalid UTF-8"
-msgstr ""
-"la chaîne de caractères entrée %d est incorrecte dans cet environnement "
-"linguistique"
+msgstr "la chaîne de caractères entrée %d est incorrecte comme encodage UTF-8"
 
 #: src/main/grep.c:255 src/main/grep.c:348
-#, fuzzy, c-format
+#, c-format
 msgid "'split' string %d is invalid UTF-8"
-msgstr ""
-"la chaîne de caractères entrée %d est incorrecte dans cet environnement "
-"linguistique"
+msgstr "la chaîne de caractères 'split' %d est incorrecte comme encodage UTF-8"
 
 #: src/main/grep.c:259 src/main/grep.c:352 src/main/grep.c:521
-#, fuzzy, c-format
+#, c-format
 msgid "'split' string %d is invalid in this locale"
 msgstr ""
-"la chaîne de caractères entrée %d est incorrecte dans cet environnement "
+"la chaîne de caractères 'split' %d est incorrecte dans cet environnement "
 "linguistique"
 
 #: src/main/grep.c:360 src/main/grep.c:796 src/main/grep.c:1151
@@ -4069,19 +4073,16 @@ msgstr ""
 "\t'%s'\n"
 
 #: src/main/grep.c:779 src/main/grep.c:1800
-#, fuzzy
 msgid "regular expression is invalid UTF-8"
-msgstr "expression régulière incorrecte dans cet environnement linguistique"
+msgstr "expression régulière incorrecte comme encodage UTF-8"
 
 #: src/main/grep.c:1126
-#, fuzzy
 msgid "'pattern' is invalid UTF-8"
-msgstr "'pattern' est incorrect dans cet environnement linguistique"
+msgstr "'pattern' est incorrect comme encodage UTF-8"
 
 #: src/main/grep.c:1128
-#, fuzzy
 msgid "'replacement' is invalid UTF-8"
-msgstr "'replacement' est incorrect dans cet environnement linguistique"
+msgstr "'replacement' est incorrect comme encodage UTF-8"
 
 #: src/main/grep.c:1132
 msgid "'pattern' is invalid in this locale"
@@ -4097,9 +4098,8 @@ msgstr "motif de longueur nulle"
 
 #: src/main/grep.c:1280 src/main/grep.c:1296 src/main/grep.c:1344
 #: src/main/grep.c:1360 src/main/grep.c:1407 src/main/grep.c:1423
-#, fuzzy
 msgid "result string is too long"
-msgstr "chaîne de caractères en entrée trop longue"
+msgstr "chaîne de caractères résultat trop longue"
 
 #: src/main/internet.c:90
 msgid "internet routines cannot be accessed in module"
@@ -4602,14 +4602,12 @@ msgid "Invalid generic function in 'usemethod'"
 msgstr "function générique incorrecte dans 'UseMethod'"
 
 #: src/main/objects.c:408
-#, fuzzy
 msgid "there must be a 'generic' argument"
-msgstr "premier argument indispensable"
+msgstr "un argument doit être 'generic'"
 
 #: src/main/objects.c:412
-#, fuzzy
 msgid "'generic' argument must be a character string"
-msgstr "le second argument doit être une chaîne de caractères"
+msgstr "l'argument 'generic' doit être une chaîne de caractères"
 
 #: src/main/objects.c:449
 msgid "'UseMethod' called from outside a closure"
@@ -4756,6 +4754,7 @@ msgstr ""
 #, c-format
 msgid "object returned as generic function \"%s\" doesn't appear to be one"
 msgstr ""
+"l'objet renvoyé comme fonction générique \"%s\" ne semble pas en être une"
 
 #: src/main/objects.c:1334
 msgid "invalid primitive operation given for dispatch"
@@ -6304,9 +6303,9 @@ msgid "'by' must be finite"
 msgstr "'by' doit être fini"
 
 #: src/main/seq.c:680
-#, fuzzy
 msgid "argument must be coercible to non-negative integer"
-msgstr "l'argument ne peut être négatif"
+msgstr ""
+"l'argument doit être convertible automatiquement en un entier non négatif"
 
 #: src/main/serialize.c:223 src/main/serialize.c:253 src/main/serialize.c:276
 msgid "unknown or inappropriate output format"
@@ -6583,6 +6582,7 @@ msgstr ""
 #: src/main/source.c:204
 msgid "coercion of 'text' to character was unsuccessful"
 msgstr ""
+"la conversion automatique de 'text' vers une chaîne de caractères a échoué"
 
 #: src/main/source.c:220
 #, c-format
@@ -6920,13 +6920,12 @@ msgid "no non-missing arguments to max; returning -Inf"
 msgstr "aucun argument pour max ; -Inf est renvoyé"
 
 #: src/main/summary.c:798
-#, fuzzy
 msgid "argument to 'which' is not logical"
-msgstr "l'argument 'logarithm' doit être de type logique"
+msgstr "l'argument 'which' doit être de type logique"
 
 #: src/main/summary.c:907
 msgid "no input has determined the number of cases"
-msgstr ""
+msgstr "aucune entrée n'a déterminé le nombre de cas"
 
 #: src/main/summary.c:1010
 msgid "not all arguments have the same length"
@@ -7023,9 +7022,8 @@ msgid "cannot find unused tempfile name"
 msgstr "aucun nom de fichier temporaire disponible"
 
 #: src/main/sysutils.c:1372
-#, fuzzy
 msgid "allocation failed in R_tmpnam"
-msgstr "erreur d'affectation mémoire dans '%s'"
+msgstr "erreur d'affectation mémoire dans R_tmpnam"
 
 #: src/main/sysutils.c:1398
 msgid "proc.time() is not implemented on this system"
@@ -7143,7 +7141,7 @@ msgstr[1] "%d arguments passés à '%s' qui en exige %d"
 #: src/main/util.c:440
 #, c-format
 msgid "supplied argument name '%s' does not match '%s'"
-msgstr ""
+msgstr "le nom d'argument fourni '%s' ne correspond pas à '%s'"
 
 #: src/main/util.c:450
 #, c-format
@@ -7492,9 +7490,8 @@ msgid "'x' must be a square numeric matrix"
 msgstr "'x' doit être une matrice carrée numérique"
 
 #: src/modules/lapack/Lapack.c:311
-#, fuzzy
 msgid "'type' must be a character string"
-msgstr "'text' doit être une chaîne de caractères"
+msgstr "'type' doit être une chaîne de caractères"
 
 #: src/modules/lapack/Lapack.c:318 src/modules/lapack/Lapack.c:352
 #: src/modules/lapack/Lapack.c:409
@@ -7820,9 +7817,8 @@ msgid "could not open file '%s'"
 msgstr "impossible d'ouvrir le fichier '%s'"
 
 #: src/modules/X11/devX11.c:2041
-#, fuzzy
 msgid "Unable to create XImage"
-msgstr "impossible de créer un pixmap"
+msgstr "impossible de créer un 'XImage'"
 
 #: src/modules/X11/devX11.c:2339
 msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
@@ -7888,9 +7884,9 @@ msgid "unable to contact X11 display"
 msgstr "incapable de rentrer en contact avec l'affichage X11"
 
 #: src/modules/X11/devX11.c:3337
-#, fuzzy, c-format
+#, c-format
 msgid "clipboard cannot be read (error code %d)"
-msgstr "presse-papier impossible à ouvrir ou ne contenant aucun texte"
+msgstr "presse-papier impossible à ouvrir en lecture (code d'erreur %d)"
 
 #: src/modules/X11/devX11.c:3371
 msgid "cannot allocate memory for X11Routines structure"
@@ -7958,29 +7954,29 @@ msgid "bessel_y(%g,nu=%g): precision lost in result\n"
 msgstr "bessel_y(%g,nu=%g) : perte de précision dans le résultat\n"
 
 #: src/nmath/nmath.h:132
-#, fuzzy, c-format
+#, c-format
 msgid "argument out of domain in '%s'\n"
-msgstr "valeur de 'perm' hors intervalle"
+msgstr "valeur d'argument hors domaine dans '%s'\n"
 
 #: src/nmath/nmath.h:135
-#, fuzzy, c-format
+#, c-format
 msgid "value out of range in '%s'\n"
-msgstr "valeur de 'perm' hors intervalle"
+msgstr "valeur d'argument hors intervalle dans '%s'\n"
 
 #: src/nmath/nmath.h:138
-#, fuzzy, c-format
+#, c-format
 msgid "convergence failed in '%s'\n"
-msgstr "nom trop long dans '%s'"
+msgstr "non convergence dans '%s'\n"
 
 #: src/nmath/nmath.h:141
 #, c-format
 msgid "full precision may not have been achieved in '%s'\n"
-msgstr ""
+msgstr "la précision complète ne sera peut être pas atteinte dans '%s'\n"
 
 #: src/nmath/nmath.h:144
 #, c-format
 msgid "underflow occurred in '%s'\n"
-msgstr ""
+msgstr "dépassement de mémoire vers le bas dans '%s'\n"
 
 #: src/nmath/pnchisq.c:233
 #, c-format
@@ -8148,9 +8144,9 @@ msgid "'intern' must be logical and not NA"
 msgstr "'intern' doit être une valeur logique et non NA"
 
 #: src/unix/sys-unix.c:277
-#, fuzzy, c-format
+#, c-format
 msgid "cannot popen '%s', probable reason '%s'"
-msgstr "impossible d'ouvrir le fichier bzip-2 '%s', cause probable : '%s'"
+msgstr "popen impossible pour '%s', cause probable : '%s'"
 
 #: src/unix/sys-unix.c:282
 #, c-format
