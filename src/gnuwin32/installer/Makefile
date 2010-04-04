@@ -147,10 +147,16 @@ R.wxs: WIXins.pl uuids files.wxs
 ## To change compression with Wix 3.0 use
 ## light -dcl:high
 ## http://www.joyofsetup.com/2008/01/28/new-wix-feature-defaultcompressionlevel/
+ifeq ($(strip $(WIN)),64)
+$(RPREFIX)-win32.msi:
+	@echo "MSI installs for 64-bit builds are not yet supported"
+	@exit 1
+else
 $(RPREFIX)-win32.msi: R.wxs License.rtf
 	"$(WIXDIR)/candle" R.wxs > $(RPREFIX).log 2>&1
 	"$(WIXDIR)/light" -out $@ R.wixobj $(WIXDIR)/wixui.wixlib \
 	  -loc $(WIXDIR)/WixUI_en-us.wxl >> $(RPREFIX).log 2>&1
+endif
 
 
 
