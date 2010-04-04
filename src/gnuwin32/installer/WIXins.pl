@@ -57,10 +57,13 @@ $nc = 920;
 ## see http://blogs.msdn.com/astebner/archive/2007/08/09/4317654.aspx
 ## and change the product ....
 ## Or something like
+
 ##<Condition Message='This application is for x64 Windows.'>
 ##  VersionNT64
 ##</Condition>
-##
+
+## In Wix 3.0 the Version has to be something like 2.11.0.51588
+## and the xmlns is 2006/wi
 
 ## ALLUSERS = 1 for per-machine, blank for default.
 ## http://wix.mindcapers.com/wiki/Allusers_Install_vs._Per_User_Install
@@ -107,7 +110,7 @@ while(<tfile>) {
     if(/<Component Id=\"([^\"]*)\"/) {
 	$id = $1;
     }
-    ## WiX 2.0.4221 uses 'src', 2.0.5805 uses 'Source'
+    ## tallow in WiX 2.0.4221 uses 'src', in 2.0.5805 uses 'Source'
     if(/<File Id=\"([^\"]*).* (src|Source)=\"([^\"]*)\"/) {
 	$fn = $1;
 	$src = $3;
