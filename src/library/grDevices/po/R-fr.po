@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-17 11:57\n"
-"PO-Revision-Date: 2009-10-10 13:38+0100\n"
+"POT-Creation-Date: 2010-04-04 14:38\n"
+"PO-Revision-Date: 2010-03-28 14:27+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -214,18 +214,22 @@ msgstr "Format de sortie incorrect"
 msgid "status %d in running command '%s'"
 msgstr "statut %d dans la commande en cours d'exécution '%s'"
 
+msgid "range too small for min.n"
+msgstr ""
+
 msgid "A raster matrix must be character, or numeric, or logical"
 msgstr ""
+"Une matrice de pixels doit contenir des chaînes de caractères, des nombres "
+"ou des valeurs logiques"
 
-#, fuzzy
 msgid "A raster array must be numeric"
-msgstr "la matrice 'rgb' doit être numérique"
+msgstr "Une matrice de pixels doit être numérique"
 
 msgid "A raster array must have exactly 3 dimensions"
-msgstr ""
+msgstr "Une matrice de pixels doit avoir exactement 3 dimensions"
 
 msgid "A raster array must have exactly 3 or 4 planes"
-msgstr ""
+msgstr "Une matrice de pixels doit avoir exactement 3 ou 4 plans"
 
 msgid "no current device to record from"
 msgstr "aucun périphérique à partir duquel enregistrer"

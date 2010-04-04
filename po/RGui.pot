@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-26 08:43+0000\n"
+"POT-Creation-Date: 2010-04-04 14:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -514,7 +514,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: extra.c:2057 rui.c:1237
+#: extra.c:2071 rui.c:1237
 msgid "Select file"
 msgstr ""
 

@@ -1,3 +1,5 @@
+
+
 # Translation of R-tools.pot to French
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the tools R package.
@@ -5,11 +7,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.2.1\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-03-16 09:20\n"
-"PO-Revision-Date: 2009-10-10 15:29+0100\n"
-"Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
+"PO-Revision-Date: 2010-03-26 13:32-0400\n"
+"Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -318,7 +320,7 @@ msgstr "le package doit être chargé"
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
-msgstr ""
+msgstr "le package %s existe, mais il n'a pas été installé sous R >= 2.10.0 et donc vérification de xrefs impossible"
 
 msgid "Obsolete package(s) %s in Rd xrefs"
 msgstr "Package(s) obsolètes %s dans les xrefs Rd"
@@ -357,12 +359,11 @@ msgstr "Fichiers Rd avec nom dupliqué '%s' :"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Fichiers Rd avec alias '%s' dupliqué :"
 
-#, fuzzy
 msgid "Argument items with no description in Rd object '%s':"
-msgstr "Noms d'arguments dans le code mais pas dans la doc :"
+msgstr "Arguments sans description dans l'objet Rd '%s' :"
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
-msgstr ""
+msgstr "Contenu automatique de l'objet Rd '%s' à éditer :"
 
 msgid "Generics g in env ="
 msgstr "Les génériques g dans env ="
@@ -490,9 +491,8 @@ msgstr "les fichiers dans '%s' sont manquants dans le champ '%s' :"
 msgid "unable to create '%s'"
 msgstr "impossible de créer '%s'"
 
-#, fuzzy
 msgid "unable to re-encode '%s' line(s) %s"
-msgstr "impossible de réencoder '%s'"
+msgstr "impossible de réencoder la (les) ligne(s) %2$s de '%1$s'"
 
 msgid "unable to copy INDEX to '%s'"
 msgstr "impossible de copier INDEX vers '%s'"
@@ -565,21 +565,19 @@ msgid "No docs found for package %s"
 msgstr "Pas de docs trouvés pour le package %s"
 
 msgid "Only help files, %s, %s and files under %s in a package can be viewed"
-msgstr ""
+msgstr "Visualisation possible seulement pour les fichiers d'aide, %s, %s et les fichiers dans %s"
 
 msgid "NEWS"
-msgstr ""
+msgstr "NEWS"
 
-#, fuzzy
 msgid "DESCRIPTION"
-msgstr "Fichier DESCRIPTION incorrect"
+msgstr "DESCRIPTION"
 
-#, fuzzy
 msgid "doc/"
-msgstr "docs"
+msgstr "doc/"
 
 msgid "unsupported URL %s"
-msgstr ""
+msgstr "URL %s non supportée"
 
 msgid "URL %s was not found"
 msgstr "l'URL %s est introuvable"
@@ -612,7 +610,7 @@ msgid "ERROR:"
 msgstr "ERREUR :"
 
 msgid "this seems to be a bundle -- and they are defunct"
-msgstr ""
+msgstr "ceci semble être un bundle -- ils ne sont plus supportés"
 
 msgid "packaged installation of"
 msgstr "installation packagée de"
@@ -628,7 +626,7 @@ msgstr ""
 "et d'administration de R"
 
 msgid "installing to"
-msgstr ""
+msgstr "installation dans"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -667,9 +665,8 @@ msgstr "impossible de créer un répertoire temporaire"
 msgid "invalid package"
 msgstr "package incorrect"
 
-#, fuzzy
 msgid "--pkglock applies only to a single package"
-msgstr "--pkglock est utilisé seulement pour un seul bundle/package"
+msgstr "--pkglock est valide pour un seul package"
 
 msgid "ERROR: no packages specified"
 msgstr "ERREUR : aucun package spécifié"
@@ -697,10 +694,10 @@ msgid "building a fake installation is disallowed"
 msgstr "construire une installation fantôme n'est pas permise"
 
 msgid "--no-help overrides"
-msgstr ""
+msgstr "--no-help a priorité sur"
 
 msgid "--"
-msgstr ""
+msgstr "--"
 
 msgid "-o option without value"
 msgstr "option -o sans valeur"
@@ -921,9 +918,8 @@ msgstr "Le fichier 'DESCRIPTION' est manquant."
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
 msgstr "Les fichiers 'DESCRIPTION' et 'DESCRIPTION.in' sont manquants."
 
-#, fuzzy
 msgid "invalid package layout"
-msgstr "package incorrect"
+msgstr "structure de package incorrecte"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "le fichier '%s' n'est pas d'un format DCF valide"
@@ -966,171 +962,7 @@ msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "Appel .Internal trouvé dans la fonction suivante :"
 msgstr[1] "Appels .Internal trouvés dans les fonctions suivantes :"
 
-#, fuzzy
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
-msgstr[0] "le(s) objet(s) %s sont créés par plus d'un appel aux données"
-msgstr[1] "le(s) objet(s) %s sont créés par plus d'un appel aux données"
-
-#~ msgid "Unable to locate help document %s in package %s"
-#~ msgstr "Impossible de localiser le document d'aide %s dans le package %s"
-
-#~ msgid "missing 'DESCRIPTION.in' for package '%s'"
-#~ msgstr "'DESCRIPTION.in' manquant pour le package '%s'"
-
-#~ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
-#~ msgstr ""
-#~ "ERREUR : cette version de R est %s, le bundle '%s' nécessite R %s %s "
-
-#~ msgid "Bundle package:"
-#~ msgstr "Package du bundle :"
-
-#~ msgid "Bundle 'DESCRIPTION' is missing."
-#~ msgstr "Le fichier 'DESCRIPTION' du \"bundle\" est manquant."
-
-#, fuzzy
-#~ msgid "Suspect link(s) in documentation object '%s':"
-#~ msgstr "Lien(s) manquant(s) dans la documentation de l'objet '%s' :"
-
-#, fuzzy
-#~ msgid "No package of named %s could be found"
-#~ msgstr "le package doit être chargé"
-
-#~ msgid "*** 'hhc.exe' not found: not building CHM help"
-#~ msgstr "*** 'hhc.exe' introuvable : l'aide CHM ne peut être générée"
-
-#~ msgid "package '%s' has no .rda file"
-#~ msgstr "le package '%s' n'a aucun fichier .rda"
-
-#~ msgid "Rd files with syntax errors:"
-#~ msgstr "Fichiers Rd avec des erreurs de syntaxe :"
-
-#~ msgid "Rd files with likely Rd problems:"
-#~ msgstr "Fichiers Rd ayant probablement des problèmes :"
-
-#~ msgid "Unaccounted top-level text in file '%s':"
-#~ msgstr "Text de haut niveau non prévu dans le fichier '%s' :"
-
-#~ msgid "Following section '%s'"
-#~ msgstr "Section suivante '%s'"
-
-#~ msgid "Rd files with unknown encoding:"
-#~ msgstr "Fichiers Rd dont le type d'encodage est inconnu :"
-
-#~ msgid "Rd files with invalid non-ASCII metadata:"
-#~ msgstr "Fichiers Rd avec des métadonnées non-ASCII incorrectes :"
-
-#~ msgid "Rd files with non-ASCII section titles:"
-#~ msgstr "Fichiers Rd avec des titres de section non-ASCII :"
-
-#~ msgid "Rd files with missing or empty '\\name':"
-#~ msgstr "Fichiers Rd avec '\\name' manquant ou vide :"
-
-#~ msgid "Rd files with missing or empty '\\title':"
-#~ msgstr "Fichiers Rd avec '\\title' manquant ou vide :"
-
-#~ msgid "Rd files without '%s':"
-#~ msgstr "Fichiers Rd sans '%s' :"
-
-#~ msgid "These entries are required in an Rd file."
-#~ msgstr "Ces entrées sont obligatoires dans un fichier Rd."
-
-#~ msgid "These entries must be unique in an Rd file."
-#~ msgstr "Ces entrées doivent être uniques dans un fichier Rd."
-
-#~ msgid "Rd files with unknown sections:"
-#~ msgstr "Fichiers Rd avec des sections inconnues :"
-
-#~ msgid "Rd files with non-standard keywords:"
-#~ msgstr "Fichiers Rd ayant des mots clefs non standards :"
-
-#~ msgid ""
-#~ "Each '\\keyword' entry should specify one of the standard keywords (as "
-#~ "listed in file 'KEYWORDS' in the R documentation directory)."
-#~ msgstr ""
-#~ "Chaque entrée '\\keyword' doit spécifier un des mots clefs standards "
-#~ "(tels que listés dans le fichier 'KEYWORDS' du sous-répertoire "
-#~ "documentation de R)."
-
-#~ msgid "Rd files with empty sections:"
-#~ msgstr "Fichiers Rd avec des sections vides :"
-
-#, fuzzy
-#~ msgid "checkRd is designed for Rd version 2 or higher"
-#~ msgstr "Rd2HTML est conçu pour des Rd version 2 ou plus."
-
-#~ msgid "there are no help pages in this package"
-#~ msgstr "il n'y a pas de pages d'aide dans ce package"
-
-#~ msgid "skipping repeated alias(es)"
-#~ msgstr "alias(es) répétitifs ignorés"
-
-#~ msgid "in file"
-#~ msgstr "dans le fichier"
-
-#~ msgid "directory '%s' does not contain Rd sources"
-#~ msgstr "le répertoire '%s' ne contient pas de sources Rd"
-
-#~ msgid "Package Rd sources were installed without preserving Rd file names."
-#~ msgstr ""
-#~ "Les sources Rd du package ont été installées sans préserver les noms de "
-#~ "fichiers Rd."
-
-#~ msgid "Please reinstall using a current version of R."
-#~ msgstr "Veuillez réinstaller en utilisant la dernière version de R."
-
-#~ msgid "*** error on file"
-#~ msgstr "*** erreur dans le fichier"
-
-#~ msgid "argument 'lines' must be a character vector"
-#~ msgstr "l'argument 'lines' doit être un vecteur de chaînes de caractères"
-
-#~ msgid "encoding '%s' is not portable"
-#~ msgstr "l'encodage '%s' n'est pas portable"
-
-#~ msgid "unterminated section '%s'"
-#~ msgstr "section non terminée '%s'"
-
-#~ msgid "incomplete section 'section{%s}'"
-#~ msgstr "section incomplète 'section{%s}'"
-
-#~ msgid "unterminated section 'section{%s}'"
-#~ msgstr "section non terminée 'section{%s}'"
-
-#~ msgid "argument 'txt' must be a character string"
-#~ msgstr "l'argument 'txt' doit être une chaîne de caractères"
-
-#~ msgid "unmatched \\item name in '\\item{%s'"
-#~ msgstr "nom \\item ne correspondant à rien dans '\\item{%s'"
-
-#~ msgid "no \\item description for item '%s'"
-#~ msgstr "pas de description \\item pour l'élément de liste '%s'"
-
-#~ msgid "unmatched \\item description for item '%s'"
-#~ msgstr ""
-#~ "description \\item ne correspondant à rien pour l'élément de liste '%s'"
-
-#~ msgid "unclosed \\link"
-#~ msgstr "\\link non terminé"
-
-#~ msgid "unclosed \\%s"
-#~ msgstr "\\%s non terminé"
-
-#~ msgid "Rd syntax errors found"
-#~ msgstr "Erreurs de syntaxe Rd détectées"
-
-#~ msgid "Syntax error in documentation object '%s':"
-#~ msgstr "Erreur de syntaxe dans la documentation de l'objet '%s' :"
-
-#~ msgid "should not get here"
-#~ msgstr "ne devrait pas être là"
-
-#, fuzzy
-#~ msgid "there is a 'man' dir but no help pages in this package"
-#~ msgstr "il n'y a pas de pages d'aide dans ce package"
-
-#~ msgid "multiple \\encoding lines in file"
-#~ msgstr "lignes \\encoding multiples dans le fichier "
-
-#~ msgid "no or more than one match"
-#~ msgstr "soit aucune, soit plus d'une correspondance"
+msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
+msgstr[1] "les objets %s sont créés par plus d'un appel aux données"

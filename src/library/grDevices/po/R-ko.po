@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2009-12-17 11:57\n"
+"POT-Creation-Date: 2010-04-04 14:38\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -224,6 +224,9 @@ msgid "Invalid output format"
 msgstr ""
 
 msgid "status %d in running command '%s'"
+msgstr ""
+
+msgid "range too small for min.n"
 msgstr ""
 
 msgid "A raster matrix must be character, or numeric, or logical"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:20\n"
+"POT-Creation-Date: 2010-04-04 14:39\n"
 "PO-Revision-Date: 2009-10-15 02:50-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -1006,6 +1006,9 @@ msgstr ""
 
 msgid "failed to create '%s'"
 msgstr "не удалось создать '%s'"
+
+msgid "there is no 'libs' directory in package '%s'"
+msgstr ""
 
 msgid "cannot remove prior installation of package '%s'"
 msgstr "не могу удалить прежнюю установку пакета '%s'"

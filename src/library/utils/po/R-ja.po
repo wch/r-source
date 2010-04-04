@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:20\n"
+"POT-Creation-Date: 2010-04-04 14:39\n"
 "PO-Revision-Date: 2009-10-09 09:12+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1019,6 +1019,9 @@ msgstr " もし何も起きなければ、自分で '%s' を開いてくださ�
 
 msgid "failed to create '%s'"
 msgstr " '%s' を生成できませんでした "
+
+msgid "there is no 'libs' directory in package '%s'"
+msgstr ""
 
 msgid "cannot remove prior installation of package '%s'"
 msgstr " パッケージ '%s' の前のインストールを取り除くことが出来ませんでした "

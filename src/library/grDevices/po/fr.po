@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grDevices 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-03-26 08:42+0000\n"
-"PO-Revision-Date: 2009-03-29 21:33+0100\n"
+"PO-Revision-Date: 2010-03-28 14:29+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -261,7 +261,7 @@ msgstr "famille '%s' non incluse dans le périphérique PostScript"
 #: devPS.c:4003 devPS.c:5051 devPS.c:7095 devPicTeX.c:535 devPicTeX.c:540
 #, c-format
 msgid "%s not available for this device"
-msgstr ""
+msgstr "%s n'est pas disponible pour ce périphérique graphique"
 
 #: devPS.c:4210
 #, c-format
@@ -334,9 +334,9 @@ msgid "write failed"
 msgstr "écriture non exécutée"
 
 #: devPS.c:5046
-#, fuzzy, c-format
+#, c-format
 msgid "%s not yet implemented for this device"
-msgstr "file = \"|cmd\" n'est pas implémenté dans cette version"
+msgstr "%s n'est pas implémenté pour ce périphérique graphique"
 
 #: devPS.c:5217
 #, c-format
@@ -345,12 +345,11 @@ msgstr "Impossible d'utiliser l'encodage '%s'"
 
 #: devPS.c:5466
 msgid "Too many raster images"
-msgstr ""
+msgstr "Trop d'images en mode pixel"
 
 #: devPS.c:5471
-#, fuzzy
 msgid "Unable to allocate raster image"
-msgstr "Impossible d'allouer un bitmap"
+msgstr "Impossible d'allouer une image en mode pixel"
 
 #: devPS.c:5650
 msgid "Corrupt loaded encodings;  font not added"
@@ -378,14 +377,12 @@ msgid "failed to load default encoding"
 msgstr "Echec de chargement du fichier d'encodage par défaut"
 
 #: devPS.c:5910
-#, fuzzy
 msgid "failed to allocate rasters"
-msgstr "Echec d'allocation de la liste de polices"
+msgstr "Echec d'allocation d'images en mode pixel"
 
 #: devPS.c:5916
-#, fuzzy
 msgid "failed to allocate masks"
-msgstr "Echec d'allocation de la liste de polices"
+msgstr "Echec d'allocation pour des masques"
 
 #: devPS.c:5979
 #, c-format
@@ -468,9 +465,9 @@ msgid "unable to start device xfig"
 msgstr "impossible de démarrer le périphérique xfig"
 
 #: devPS.c:8053
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'maxRasters' parameter in %s"
-msgstr "paramètre 'fonts' incorrect dans %s"
+msgstr "paramètre 'maxRasters' incorrect dans %s"
 
 #: devPS.c:8066
 msgid "unable to start device pdf"

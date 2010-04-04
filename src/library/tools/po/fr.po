@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: tools 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2009-11-12 09:44+0000\n"
-"PO-Revision-Date: 2007-04-13 12:34+0100\n"
+"PO-Revision-Date: 2010-03-28 14:17+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,6 +29,8 @@ msgstr "md5 a échoué sur le fichier '%s'"
 msgid "invalid argument type"
 msgstr "type d'argument incorrect"
 
-#: text.c:189 text.c:208
+#: text.c:189
+#: text.c:208
 msgid "out of memory"
-msgstr ""
+msgstr "plus de mémoire disponible"
+
