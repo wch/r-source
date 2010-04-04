@@ -30,7 +30,7 @@ readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
   Registry access is done using the security settings of the current \R
   session: this means that some Registry keys may not be accessible even
   if they exist.  This may result in \code{NULL} values in the object
-  return, and, possibly, empty element names.
+  returned, and, possibly, empty element names.
   
   On 64-bit Windows, this will by default read the 32-bit view of the
   Registry when run from 32-bit \R, and the 64-bit view when run from
@@ -53,5 +53,8 @@ readRegistry(gmt, "HLM")
 
 ## on a 64-bit R need this to find 32-bit JAGS
 readRegistry("SOFTWARE\\\\JAGS-1.0.3", maxdepth = 3, view="32")
+
+## See if there is a 64-bit user install
+readRegistry("SOFTWARE\\\\R-core\\\\R64", "HCU", maxdepth = 2)
 }}
 \keyword{ utilities }
