@@ -56,6 +56,11 @@ $nc = 920;
 ## for x64 add InstallerVersion="200" Platforms="x64"
 ## see http://blogs.msdn.com/astebner/archive/2007/08/09/4317654.aspx
 ## and change the product ....
+## Or something like
+##<Condition Message='This application is for x64 Windows.'>
+##  VersionNT64
+##</Condition>
+##
 
 ## ALLUSERS = 1 for per-machine, blank for default.
 ## http://wix.mindcapers.com/wiki/Allusers_Install_vs._Per_User_Install
@@ -90,6 +95,9 @@ print insfile <<END;
         <Directory Id='R' Name='R'>
           <Directory Id='INSTALLDIR' Name = '$sRW' LongName='$RW'>
 END
+## The standard folder names are listed at
+## http://msdn.microsoft.com/en-us/library/aa372057.aspx
+## They include ProgramFiles64Folder: this one is 32-bit
 
 my $rgui, $rhelp;
 my %comp;
@@ -106,7 +114,7 @@ while(<tfile>) {
 	$src =~ s+.*\\$SRCDIR\\++;
 	$src =~ s+\\+/+g;
 	$comp{$src} = $id;
-	$rgui = "$fn" if $src eq "bin/Rgui.exe";
+	$rgui = "$fn" if $src eq "bin/i386/Rgui.exe";
 	$rhelp = "$fn" if $src eq "doc/html/index.html";
     }
     if(/PUT-GUID-HERE/) {
@@ -386,6 +394,7 @@ print insfile <<END;
   </Product>
 </Wix>
 END
+## maybe better to use "WixUI_FeatureTree": always custom
 
 close insfile;
 

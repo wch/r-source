@@ -152,7 +152,8 @@ files.wxs: imagedir fixups md5sums
 R.wxs: WIXins.pl uuids files.wxs
 	$(PERL) WIXins.pl $(RPREFIX) $(RPREFIX)
 
-## To change compression with Wix 3.0 use
+## for WiX 3.0 light uses -ext WixUIExtension
+## To change compression with WiX 3.0 use
 ## light -dcl:high
 ## http://www.joyofsetup.com/2008/01/28/new-wix-feature-defaultcompressionlevel/
 ifeq ($(strip $(WIN)),64)
