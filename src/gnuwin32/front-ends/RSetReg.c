@@ -34,8 +34,6 @@ int main (int argc, char **argv)
     char *RHome, version[40], keyname[60];
     LONG rc;
     HKEY hkey, hkey2;
-    
-    snprintf(keyname, 60, "Software\\%s\\R", PRODUCER);
 
     /* Needs to match JRins.pl */
     if(strncmp(R_STATUS, "Under ", 6) == 0)
@@ -44,7 +42,17 @@ int main (int argc, char **argv)
 	snprintf(version, 40, "%s.%s %s", R_MAJOR, R_MINOR, R_STATUS);
 
     if(argc > 1) { /* remove the keys */
-	printf("unregistering R ... ");
+	printf("unregistering R %s ... ", version);
+
+	snprintf(keyname, 60, "Software\\%s\\R\\%s", PRODUCER, version);
+	if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, keyname, 0, 
+			       KEY_SET_VALUE, &hkey)) == ERROR_SUCCESS) {
+	    RegDeleteValue(hkey, "InstallPath");
+	    RegDeleteKey(hkey, version);
+	    RegCloseKey(hkey);
+	}
+	
+	snprintf(keyname, 60, "Software\\%s\\R", PRODUCER);
 	if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, keyname, 0, 
 			       KEY_SET_VALUE, &hkey)) == ERROR_SUCCESS) {
 	    RegDeleteValue(hkey, "InstallPath");
@@ -53,23 +61,27 @@ int main (int argc, char **argv)
 	    RegQueryInfoKey(hkey, NULL, NULL, NULL, &subkeys, NULL, NULL, NULL, NULL, NULL,
 	                    NULL, NULL);
 	    RegCloseKey(hkey);
-	   if (!subkeys && (rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\R-core", 0, 
-				  KEY_SET_VALUE, &hkey)) == ERROR_SUCCESS) {
-	       RegDeleteKey(hkey, "R");
-	       RegCloseKey(hkey);
-	       if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software", 0, 
-				      KEY_SET_VALUE, &hkey)) == ERROR_SUCCESS) {
-		   RegDeleteKey(hkey, PRODUCER);
-		   RegCloseKey(hkey);
-	       }
-	   }
-	   printf("succeeded\n");
+#if 0
+	    if (!subkeys && (rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\R-core", 0, 
+					       KEY_SET_VALUE, &hkey)) == ERROR_SUCCESS) {
+		RegDeleteKey(hkey, "R");
+		RegCloseKey(hkey);
+		if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software", 0, 
+				       KEY_SET_VALUE, &hkey)) == ERROR_SUCCESS) {
+		    RegDeleteKey(hkey, PRODUCER);
+		    RegCloseKey(hkey);
+		}
+	    }
+#endif
+	    printf("succeeded\n");
 	} else {
 	    printf("was not registered\n");
 	    status = 1;
 	}
     } else {
+	printf("registering R %s ... ", version);
     	RHome = getRHOMElong(3);
+	snprintf(keyname, 60, "Software\\%s\\R", PRODUCER);
 	if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, keyname, 0, 
 			       KEY_ALL_ACCESS, &hkey)) != ERROR_SUCCESS) {
 	    /* failed to open key, so try to create it */
@@ -91,6 +103,19 @@ int main (int argc, char **argv)
 	    	RegCloseKey(hkey2);
 	    }
 	    RegCloseKey(hkey);	
+
+	    snprintf(keyname, 60, "Software\\%s\\R\\%s", PRODUCER, version);
+	    if ((rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, keyname, 0, 
+				   KEY_ALL_ACCESS, &hkey)) != ERROR_SUCCESS) {
+		/* failed to open key, so try to create it */
+		rc = RegCreateKey(HKEY_LOCAL_MACHINE, keyname, &hkey);
+	    }
+	    if(rc == ERROR_SUCCESS) {
+		rc = RegSetValueEx(hkey, "InstallPath", 0, REG_SZ,
+				   (CONST BYTE *)RHome, lstrlen(RHome)+1);
+		RegCloseKey(hkey);
+	    }
+	    printf("succeeded\n");
 	} else {
 	    status = 1;
 	}
