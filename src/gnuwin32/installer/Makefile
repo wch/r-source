@@ -146,8 +146,10 @@ uuidgen.exe: uuidgen.o
 uuids: uuidgen.exe
 	uuidgen 10000 > $@
 
-files.wxs: imagedir fixups md5sums
-	"$(WIXDIR)/tallow" -1 -d $(RPREFIX) > $@
+WIX3DIR=E:/packages/WiX3.0
+
+files.wxs:
+	"$(WIX3DIR)/heat" dir $(RPREFIX) -sw5150 -o $@
 
 R.wxs: WIXins.pl uuids files.wxs
 	$(PERL) WIXins.pl $(RPREFIX) $(RPREFIX)
@@ -162,9 +164,9 @@ $(RPREFIX)-win32.msi:
 	@exit 1
 else
 $(RPREFIX)-win32.msi: R.wxs License.rtf
-	"$(WIXDIR)/candle" R.wxs > $(RPREFIX).log 2>&1
-	"$(WIXDIR)/light" -out $@ R.wixobj $(WIXDIR)/wixui.wixlib \
-	  -loc $(WIXDIR)/WixUI_en-us.wxl >> $(RPREFIX).log 2>&1
+	"$(WIX3DIR)/candle" R.wxs > $(RPREFIX).log 2>&1
+	"$(WIX3DIR)/light" -ext WixUIExtension -out $@ \
+	  R.wixobj >> $(RPREFIX).log 2>&1
 endif
 
 

@@ -72,14 +72,14 @@ $nc = 920;
 open insfile, "> R.wxs" or die "Cannot open R.wxs\n";
 print insfile <<END;
 <?xml version="1.0" encoding="windows-1252"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Manufacturer="R Development Core Team" 
    Id="3AF9DA8E-B4DB-49B2-802D-A279667F44E5"
    Language="1033"
    Name="R $RVER for Windows"
-   Version="$RVER" 
+   Version="2.12.0.1" 
    UpgradeCode="309E663C-CA7A-40B9-8822-5D466F1E2AF9">
-    <Package Id="????????-????-????-????-????????????" 
+    <Package Id="*" 
      Keywords="R $RVER for Windows Installer" 
      Description="R $RVER for Windows Installer" 
      Comments="R Language and Environment" 
@@ -96,7 +96,7 @@ print insfile <<END;
 
       <Directory Id='ProgramFilesFolder' Name='PFiles'>
         <Directory Id='R' Name='R'>
-          <Directory Id='INSTALLDIR' Name = '$sRW' LongName='$RW'>
+          <Directory Id='INSTALLDIR' Name = '$RW'>
 END
 ## The standard folder names are listed at
 ## http://msdn.microsoft.com/en-us/library/aa372057.aspx
@@ -107,22 +107,24 @@ my %comp;
 open tfile, "<files.wxs" or die "Cannot open files.wxs\n";
 while(<tfile>) {
     next unless /^        /;
+    next if /DirectoryRef/;
     if(/<Component Id=\"([^\"]*)\"/) {
 	$id = $1;
     }
-    ## tallow in WiX 2.0.4221 uses 'src', in 2.0.5805 uses 'Source'
-    if(/<File Id=\"([^\"]*).* (src|Source)=\"([^\"]*)\"/) {
+    if(/<File Id=\"([^\"]*).* Source=\"([^\"]*)\"/) {
 	$fn = $1;
-	$src = $3;
-	$src =~ s+.*\\$SRCDIR\\++;
+	$src = $2;
 	$src =~ s+\\+/+g;
+	$src =~ s+^SourceDir/++;
 	$comp{$src} = $id;
 	$rgui = "$fn" if $src eq "bin/i386/Rgui.exe";
 	$rhelp = "$fn" if $src eq "doc/html/index.html";
+	
     }
     if(/PUT-GUID-HERE/) {
 	s/PUT-GUID-HERE/$uuids{$nc++}/;
     }
+    s+SourceDir+${SRCDIR}+;
     print insfile "    ", $_;
 }
 close tfile;
@@ -146,20 +148,20 @@ print insfile <<END;
           <Directory Id="RMENU" Name="R">
             <Component Id="shortcut0" 
              Guid="$uuids{910}" KeyPath="yes">
-              <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU" Name="R" 
-               LongName="R $RVER" Target="[!$rgui]" 
+              <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU"
+               Name="R $RVER" Target="[!$rgui]" 
                WorkingDirectory="INSTALLDIR" />
             </Component>
             <Component Id="shortcut1" 
              Guid="$uuids{911}" KeyPath="yes">
               <Shortcut Id="HelpStartMenuShortcut" Directory="RMENU" 
-               Name="RHelp" LongName="R $RVER Help" Target="[!$rhelp]" 
+                Name="R $RVER Help" Target="[!$rhelp]" 
                WorkingDirectory="INSTALLDIR" />
             </Component>
             <Component Id="shortcut2" 
              Guid="$uuids{912}" KeyPath="yes">
               <Shortcut Id="UninstallStartMenuShortcut" Directory="RMENU" 
-               Name="RUninst" LongName="Uninstall R $RVER" 
+               Name="Uninstall R $RVER" 
                Target="[SystemFolder]\msiexec.exe" 
                Arguments="/x [ProductCode]" Icon="shell32.dll" 
                IconIndex="32" WorkingDirectory="INSTALLDIR" />
@@ -169,17 +171,19 @@ print insfile <<END;
       </Directory>
       <Directory Id="DesktopFolder" Name="Desktop">
         <Component Id="desktopshortcut0" DiskId="1" Guid="$uuids{907}">
-          <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R" LongName="R $RVER"
+          <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder"
+           Name="R $RVER"
            WorkingDirectory="INSTALLDIR" Target="[!$rgui]" />
         </Component>
       </Directory>
 
       <Directory Id="AppDataFolder" Name="AppData">
-        <Directory Id="Microsoft" Name="MS" LongName="Microsoft">
-          <Directory Id="InternetExplorer" Name="IE" LongName="Internet Explorer">
-            <Directory Id="QuickLaunch" Name="QLaunch" LongName="Quick Launch">
+        <Directory Id="Microsoft" Name="Microsoft">
+          <Directory Id="InternetExplorer" Name="Internet Explorer">
+            <Directory Id="QuickLaunch" Name="Quick Launch">
               <Component Id="quickshortcut0" DiskId="1" Guid="$uuids{908}">
-                <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" Name="R" LongName="R $RVER"
+                <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" 
+                 Name="R $RVER"
                  WorkingDirectory="INSTALLDIR" Target="[!$rgui]" />
               </Component>
             </Directory>
@@ -377,6 +381,7 @@ print insfile <<END;
     </Feature>
     <Feature Id="registryversion" Title="Save Version in Registry"
      Description="Save the R version and install path in the Registry" Level="1" InstallDefault="local" AllowAdvertise="no">
+      <ComponentRef Id='registry0' />
       <ComponentRef Id='registry1' />
       <ComponentRef Id='registry7' />
       <ComponentRef Id='registry2' />
