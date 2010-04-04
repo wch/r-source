@@ -144,6 +144,9 @@ files.wxs: imagedir fixups md5sums
 R.wxs: WIXins.pl uuids files.wxs
 	$(PERL) WIXins.pl $(RPREFIX) $(RPREFIX)
 
+## To change compression with Wix 3.0 use
+## light -dcl:high
+## http://www.joyofsetup.com/2008/01/28/new-wix-feature-defaultcompressionlevel/
 $(RPREFIX)-win32.msi: R.wxs License.rtf
 	"$(WIXDIR)/candle" R.wxs > $(RPREFIX).log 2>&1
 	"$(WIXDIR)/light" -out $@ R.wixobj $(WIXDIR)/wixui.wixlib \

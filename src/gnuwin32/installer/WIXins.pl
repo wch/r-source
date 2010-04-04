@@ -56,6 +56,11 @@ $nc = 920;
 ## for x64 add InstallerVersion="200" Platforms="x64"
 ## see http://blogs.msdn.com/astebner/archive/2007/08/09/4317654.aspx
 ## and change the product ....
+
+## ALLUSERS = 1 for per-machine, blank for default.
+## http://wix.mindcapers.com/wiki/Allusers_Install_vs._Per_User_Install
+## For non-elevation (Wix 3.0?) see
+## http://blogs.msdn.com/astebner/archive/2007/11/18/6385121.aspx
 open insfile, "> R.wxs" or die "Cannot open R.wxs\n";
 print insfile <<END;
 <?xml version="1.0" encoding="windows-1252"?>
@@ -77,6 +82,7 @@ print insfile <<END;
      SummaryCodepage="1252" />
     <Media Id='1' Cabinet='Sample.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
     <Property Id='DiskPrompt' Value="R for Windows Installation [1]" />
+    <Property Id="ALLUSERS">1</Property>
 
     <Directory Id='TARGETDIR' Name='SourceDir'>
 
@@ -114,6 +120,10 @@ $path="${SRCDIR}";chdir($path);
 my %main;
 
 find(\&listFiles, ".");
+
+## Note: Root="HKMU" resolves to HKLM for an all-users install,
+## HKCU for a personal one
+## http://wix.mindcapers.com/wiki/HKMU_registry_key
 
 print insfile <<END;
           </Directory>
@@ -171,13 +181,18 @@ print insfile <<END;
         <Registry Id="RInstallPath" Root="HKMU" Key="Software\\R-core\\R" 
          Name="InstallPath" Type="string" KeyPath="yes" Value="[INSTALLDIR]" />
       </Component>
+      <Component Id="registry7" Guid="$uuids{913}">
+        <Registry Id="RVerInstallPath" Root="HKMU" 
+         Key="Software\\R-core\\R" Name="InstallPath"
+         Type="string" KeyPath="yes" Value="[INSTALLDIR]" />
+      </Component>
       <Component Id="registry1" Guid="$uuids{901}">
         <Registry Id="RCurrentVersion" Root="HKMU" Key="Software\\R-core\\R" 
          Name="Current Version" Type="string" KeyPath="yes" 
          Value="[ProductVersion]" />
       </Component>
       <Component Id="registry2" Guid="$uuids{902}">
-        <Registry Id="RVerInstallPath" Root="HKMU" 
+        <Registry Id="RCurrentVerInstallPath" Root="HKMU" 
          Key="Software\\R-core\\R\\[ProductVersion]" Name="InstallPath"
          Type="string" KeyPath="yes" Value="[INSTALLDIR]" />
       </Component>
@@ -205,11 +220,6 @@ print insfile <<END;
      ConfigurableDirectory="INSTALLDIR"
      Display="expand" InstallDefault="local" AllowAdvertise="no" 
      Absent="disallow">
-      <ComponentRef Id='registry0' />
-      <ComponentRef Id='registry3' />
-      <ComponentRef Id='registry4' />
-      <ComponentRef Id='registry5' />
-      <ComponentRef Id='registry6' />
 END
     
 foreach $n (sort values %main) {
@@ -355,9 +365,17 @@ print insfile <<END;
       </Feature>
     </Feature>
     <Feature Id="registryversion" Title="Save Version in Registry"
-     Description="Save the product version in the Registry" Level="1" InstallDefault="local" AllowAdvertise="no">
+     Description="Save the R version and install path in the Registry" Level="1" InstallDefault="local" AllowAdvertise="no">
       <ComponentRef Id='registry1' />
+      <ComponentRef Id='registry7' />
       <ComponentRef Id='registry2' />
+    </Feature>
+    <Feature Id="associate" Title="Associate with .RData files"
+     Description="Associate R with .RData files" Level="1" InstallDefault="local" AllowAdvertise="no">
+      <ComponentRef Id='registry3' />
+      <ComponentRef Id='registry4' />
+      <ComponentRef Id='registry5' />
+      <ComponentRef Id='registry6' />
     </Feature>
 
     <UIRef Id="WixUI_Mondo" />
