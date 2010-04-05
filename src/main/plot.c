@@ -1922,9 +1922,14 @@ SEXP attribute_hidden do_raster(SEXP call, SEXP op, SEXP args, SEXP env)
     dim = getAttrib(raster, R_DimSymbol);
 
     vmax = vmaxget();
-    image = (unsigned int*) R_alloc(n, sizeof(unsigned int));
-    for (i=0; i<n; i++) {
-        image[i] = RGBpar3(raster, i, R_TRANWHITE);
+    /* raster is rather inefficient so allow a native representation as
+       an integer array which requires no conversion */
+    if (inherits(raster, "nativeRaster") && isInteger(raster))
+	image = (unsigned int*) INTEGER(raster);
+    else {
+	image = (unsigned int*) R_alloc(n, sizeof(unsigned int));
+	for (i=0; i<n; i++)
+	    image[i] = RGBpar3(raster, i, R_TRANWHITE);
     }
 
     xypoints(call, args, &n);
