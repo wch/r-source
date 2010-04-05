@@ -28,8 +28,7 @@ all: makeMakedeps \
      $(R_HOME)/$(BINDIR)/Rgui.exe $(R_HOME)/$(BINDIR)/Rterm.exe \
      $(R_HOME)/$(BINDIR)/Rcmd.exe  $(R_HOME)/$(BINDIR)/RSetReg.exe  \
      $(R_HOME)/$(BINDIR)/R.exe \
-     $(R_HOME)/$(BINDIR)/md5check.exe $(R_HOME)/$(BINDIR)/Rscript.exe \
-     $(R_HOME)/$(BINDIR)/open.exe 
+     $(R_HOME)/$(BINDIR)/Rscript.exe $(R_HOME)/$(BINDIR)/open.exe 
 
 $(R_HOME)/$(BINDIR)/Rgui.exe: Rgui.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)
@@ -48,10 +47,6 @@ $(R_HOME)/$(BINDIR)/RSetReg.exe: RSetReg.exe
 	$(CP) $^ $@
 
 $(R_HOME)/$(BINDIR)/R.exe: R.exe
-	$(MKDIR) -p $(R_HOME)/$(BINDIR)
-	$(CP) $^ $@	
-
-$(R_HOME)/$(BINDIR)/md5check.exe: md5check.exe
 	$(MKDIR) -p $(R_HOME)/$(BINDIR)
 	$(CP) $^ $@	
 
@@ -91,9 +86,6 @@ Rcmd.exe: rcmd.o ../rhome.o ../shext.o rcmdfn.o Renviron.o
 R.exe: R.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
 
 RSetReg.exe: RSetReg.o ../rhome.o rcico.o
-
-md5check-CPPFLAGS=-I../../../include -I../../library/tools/src
-md5check.exe : md5check.o md5ico.o ../../library/tools/src/md5.o
 
 Rscript.o: ../../unix/Rscript.c
 	$(CC) $(CFLAGS) -DBINDIR='"$(BINDIR)"' -I. -I../../include -DHAVE_CONFIG_H -c $< -o $@

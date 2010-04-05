@@ -81,7 +81,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.10.0} or later).  It is almost entirely about the 32-bit build,
+(@samp{2.10.0} or later).  It is mainly about the 32-bit build,
 with some mentions of 64-bit builds (only relevant to @samp{2.11.0} or
 later).
 
@@ -152,7 +152,7 @@ mainly on 32-bit XP SP3 and 64-bit Windows 7 and Windows Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical install
-takes 50Mb of disk space, a full installation about 65Mb and a
+takes 45Mb of disk space, a full installation about 65Mb and a
 minimal one about 29Mb.
 
 If you want to be able to build packages from sources, we recommend that
@@ -195,12 +195,7 @@ MSI file, see the `R Installation and Administration Manual'.
 @node How do I check an installation?, Can I customize the installation?, How do I install R for Windows?, Installation and Usage
 @section How do I check an installation is not corrupt?
 
-Run the program @file{bin\md5check.exe}.
-This compares checksums on all the installed files with those put into
-the installer, and will report any changed or missing files.
-
-(It only works if R was installed from the Inno Setup installer, and not
-the MSI installer, and does not work with the Unicode Inno Setup installer.)
+Relates to earlier installers, removed in R 2.11.0.
 
 @node Can I customize the installation?, How do I run it?, How do I check an installation?, Installation and Usage
 @section Can I customize the installation?
@@ -503,7 +498,7 @@ and using the function @code{shortPathName} from R code.
 @node Does R use the Registry?, Does R support automation?, R can't find my file, Installation and Usage
 @section Does R use the Registry?
 
-No, not when R itself is running.
+Not when R itself is running.
 
 When you run the R installer, there are options (under `Select
 Additional Tasks') to `Save version number in registry' and (for
@@ -535,23 +530,9 @@ neither sets up nor removes the file associations.
 @node Does R support automation?, The Internet download functions fail., Does R use the Registry?, Installation and Usage
 @section Does R support automation (OLE, COM)?
 
-Directly, no.
-
-There is a (D)COM server written by Thomas Baier
-(@uref{http://cran.r-project.org/other-software.html}) which works with
-CRAN package @code{rscproxy} to support transfer of data to and from R
-and remote execution of R commands, as well as embedding of an R
-graphics window.
-
-Thomas Baier also has a CRAN package @code{rcom} available on CRAN to
-provide COM client and server functionality from within R.
-
-Another (D)COM server, @code{RDCOMServer}, is available as a source
-package from @uref{http://www.omegahat.org/}, which allows R objects to
-be exported as COM values.  That site also has packages
-@code{RDCOMClient}, @code{RDCOMEvents} and @code{SWinTypeLibs} which
-allow R to act as a (D)COM client.  However, they are not available as
-pre-compiled packages for Windows.
+Directly, no.  See CRAN packages @code{rscproxy} and @code{rcom} as well
+as @code{RDCOMServer}, @code{RDCOMClient}, @code{RDCOMEvents} and
+@code{SWinTypeLibs} from @uref{http://www.omegahat.org/}.
 
 
 @node The Internet download functions fail., Entering certain characters crashes Rgui., Does R support automation?, Installation and Usage
@@ -894,7 +875,9 @@ Windows.  But generally we find that with Administrator installs that
 the 32-bit view of the Registry shows the last recorded 32-bit install,
 and analogously for the 64-bit view, whereas for a user install the 32-
 and 64-bit views are shared and so show the latest recorded
-installation.
+installation.  To circumvent the latter, version information is added
+(for user installs only) at @code{HKEY_CURRENT_USER\Software\R-code\R32} or
+@code{HKEY_CURRENT_USER\Software\R-code\R64} as from R 2.11.0.
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top
