@@ -19,13 +19,13 @@ msgstr ""
 
 
 msgid "some named arguments in 'fixed' are not arguments to the supplied log-likelihood"
-msgstr "'fixed'里的一些带名变元不是给所提供的对数似然作为变元来用的"
+msgstr "'fixed'里的一些带名参数不是给所提供的对数似然作为参数来用的"
 
 msgid "'start' must be a named list"
 msgstr "'start'必需是带名串列"
 
 msgid "some named arguments in 'start' are not arguments to the supplied log-likelihood"
-msgstr "'start'里的一些带名变元不是给所提供的对数似然作为变元来用的"
+msgstr "'start'里的一些带名参数不是给所提供的对数似然作为参数来用的"
 
 msgid "profiling has found a better solution, so original fit had not converged"
 msgstr "通过靠模切削找到了一个更好的答案，因此原来的拟合没有收敛"
@@ -34,5 +34,6 @@ msgid "levels truncated to positive values only"
 msgstr "阶层截为正数值"
 
 msgid "extra arguments discarded"
-msgstr "多余的变元略过不用"
+msgstr "多余的参数略过不用"
+
 

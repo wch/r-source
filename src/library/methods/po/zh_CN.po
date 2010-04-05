@@ -2,7 +2,7 @@
 # Copyright (C) 2006 The R Foundation
 # This file is distributed under the same license as the PACKAGE package.
 # 陈斐 <feic@avaya.com>, 2007.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
@@ -50,7 +50,7 @@ msgstr "在为函数'%s'进行内部調度时S语言方法选择出了错"
 #: methods_list_dispatch.c:433
 #, c-format
 msgid "no generic function definition found for '%s'"
-msgstr "没有为'%s'找到适用的同屬函数"
+msgstr "没有为'%s'找到适用的泛型函数"
 
 #: methods_list_dispatch.c:436
 #, c-format
@@ -87,7 +87,7 @@ msgid ""
 "invalid symbol in checking for missing argument in method dispatch: expected "
 "a name, got an object of class \"%s\""
 msgstr ""
-"方法调度在检查短少变元时符号出了错：需要的是个名字，得到的却是类别为\"%s\"的"
+"方法调度在检查短少参数时符号出了错：需要的是个名字，得到的却是类别为\"%s\"的"
 "对象"
 
 #: methods_list_dispatch.c:546
@@ -99,7 +99,7 @@ msgstr "NULL环境不再有用"
 msgid ""
 "invalid environment in checking for missing argument, '%s', in methods "
 "dispatch: got an object of class \"%s\""
-msgstr "方法调度在检查短少变元'%s'时环境出了错：不需要类别为\"%s\"的对象"
+msgstr "方法调度在检查短少参数'%s'时环境出了错：不需要类别为\"%s\"的对象"
 
 #: methods_list_dispatch.c:576
 #, c-format
@@ -122,7 +122,7 @@ msgid ""
 "(in selecting a method for function '%s') the 'environment' argument for "
 "dispatch must be an R environment; got an object of class \"%s\""
 msgstr ""
-"(在为'%s'函数选择方法时) 调度时的'environment'变元必需是R环境；不需要类别为"
+"(在为'%s'函数选择方法时) 调度时的'environment'参数必需是R环境；不需要类别为"
 "\"%s\"的对象"
 
 #: methods_list_dispatch.c:604 methods_list_dispatch.c:615
@@ -130,12 +130,12 @@ msgstr ""
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function '%s'"
-msgstr "在为'%2$s'函数选择方法时评估'%1$s'变元出了错"
+msgstr "在为'%2$s'函数选择方法时评估'%1$s'参数出了错"
 
 #: methods_list_dispatch.c:622
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
-msgstr "找不到与'%s'函数相配的方法(变元是'%s'，类别为\"%s\")"
+msgstr "找不到与'%s'函数相配的方法(参数是'%s'，类别为\"%s\")"
 
 #: methods_list_dispatch.c:629
 #, c-format
@@ -154,7 +154,7 @@ msgid ""
 "in processing 'callNextMethod', found a '...' in the matched call, but no "
 "corresponding '...' argument"
 msgstr ""
-"在处理'callNextMethod'时，吻合的调用里有'...'，但与之相应的'...'变元却不存在"
+"在处理'callNextMethod'时，吻合的调用里有'...'，但与之相应的'...'参数却不存在"
 
 #: methods_list_dispatch.c:704
 msgid "error in evaluating a 'primitive' next method"

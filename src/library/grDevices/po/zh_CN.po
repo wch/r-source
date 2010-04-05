@@ -230,7 +230,7 @@ msgstr "本版本没有实现file = \"|cmd\" 这一功能"
 #: devPS.c:3586
 #, c-format
 msgid "cannot open 'postscript' file argument '%s'"
-msgstr "无法打开'postscript'文本变元'%s'"
+msgstr "无法打开'postscript'文本参数'%s'"
 
 #: devPS.c:3710 devPS.c:3725
 #, c-format
@@ -254,7 +254,7 @@ msgstr "PostScript装置里没有'%s'系列"
 #: devPS.c:4005 devPS.c:5054 devPS.c:7098 devPicTeX.c:536 devPicTeX.c:541
 #, c-format
 msgid "%s not available for this device"
-msgstr ""
+msgstr "这个装置没有%s这个功能"
 
 #: devPS.c:4212
 #, c-format
@@ -325,9 +325,9 @@ msgid "write failed"
 msgstr "讀寫失败"
 
 #: devPS.c:5049
-#, fuzzy, c-format
+#, c-format
 msgid "%s not yet implemented for this device"
-msgstr "本版本没有实现file = \"|cmd\" 这一功能"
+msgstr "还没有为这个装置实现%s功能"
 
 #: devPS.c:5220
 #, c-format
@@ -336,12 +336,11 @@ msgstr "无法用编码'%s'"
 
 #: devPS.c:5469
 msgid "Too many raster images"
-msgstr ""
+msgstr "光栅图像太多了"
 
 #: devPS.c:5474
-#, fuzzy
 msgid "Unable to allocate raster image"
-msgstr "无法分配bitmap"
+msgstr "无法分配光栅图像"
 
 #: devPS.c:5653
 msgid "Corrupt loaded encodings;  font not added"
@@ -368,14 +367,12 @@ msgid "failed to load default encoding"
 msgstr "无法载入默认编码"
 
 #: devPS.c:5913
-#, fuzzy
 msgid "failed to allocate rasters"
-msgstr "无法分配字体列"
+msgstr "无法分配栅格"
 
 #: devPS.c:5919
-#, fuzzy
 msgid "failed to allocate masks"
-msgstr "无法分配字体列"
+msgstr "无法分配面具"
 
 #: devPS.c:5982
 #, c-format
@@ -409,7 +406,7 @@ msgstr "增加PDF版本到1.3"
 #: devPS.c:6845
 #, c-format
 msgid "cannot open 'pdf' file argument '%s'"
-msgstr "无法打开'pdf'文本变元'%s'"
+msgstr "无法打开'pdf'文本参数'%s'"
 
 #: devPS.c:6906
 msgid "unable to increase page limit: please shutdown the pdf device"
@@ -421,7 +418,7 @@ msgid ""
 "cannot open 'pdf' file argument '%s'\n"
 "  please shut down the PDF device"
 msgstr ""
-"无法打开'pdf'文本变元'%s'\n"
+"无法打开'pdf'文本参数'%s'\n"
 "  请关闭PDF装置"
 
 #: devPS.c:7313 devPS.c:7681 devPS.c:7728
@@ -458,9 +455,9 @@ msgid "unable to start device xfig"
 msgstr "无法启动xfig装置"
 
 #: devPS.c:8057
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'maxRasters' parameter in %s"
-msgstr "%s里的'fonts'参数不对"
+msgstr "%s里的'maxRasters'参数不对"
 
 #: devPS.c:8070
 msgid "unable to start device pdf"
@@ -486,7 +483,7 @@ msgstr "字体家族\"%s\"没有字体"
 
 #: devQuartz.c:1271
 msgid "invalid 'file' argument"
-msgstr "'file'变元不对"
+msgstr "'file'参数不对"
 
 #: devQuartz.c:1299
 msgid "invalid Quartz device size"
@@ -613,11 +610,11 @@ msgstr "'savePlot'装置出错"
 
 #: devWindows.c:3293
 msgid "invalid filename argument in savePlot"
-msgstr "savePlot文本名字变元不对"
+msgstr "savePlot文本名字参数不对"
 
 #: devWindows.c:3298
 msgid "invalid type argument in 'savePlot'"
-msgstr "'savePlot'类别变元不对"
+msgstr "'savePlot'类别参数不对"
 
 #: devWindows.c:3325
 msgid "unknown type in savePlot"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-04-02 13:53+0100\n"
+"POT-Creation-Date: 2010-04-05 17:38+0100\n"
 "PO-Revision-Date: 2006-01-16 09:11+0100\n"
 "Last-Translator: Daniele Medri <daniele.medri2@unibo.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -194,8 +194,8 @@ msgstr ""
 #: src/main/platform.c:1559 src/main/platform.c:1819 src/main/platform.c:1860
 #: src/main/platform.c:1981 src/main/platform.c:1984 src/main/platform.c:1987
 #: src/main/platform.c:1990 src/main/platform.c:2107 src/main/platform.c:2135
-#: src/main/platform.c:2183 src/main/plot.c:3030 src/main/plot.c:4169
-#: src/main/plot.c:4173 src/main/plot.c:4176 src/main/plot3d.c:2450
+#: src/main/platform.c:2183 src/main/plot.c:3035 src/main/plot.c:4174
+#: src/main/plot.c:4178 src/main/plot.c:4181 src/main/plot3d.c:2450
 #: src/main/plot3d.c:2454 src/main/plot3d.c:2459 src/main/plot3d.c:2463
 #: src/main/plot3d.c:2467 src/main/plot3d.c:2471 src/main/print.c:230
 #: src/main/print.c:236 src/main/print.c:258 src/main/print.c:264
@@ -290,9 +290,9 @@ msgstr "'tag' non valido"
 #: src/main/optimize.c:94 src/main/optimize.c:101 src/main/optimize.c:110
 #: src/main/optimize.c:179 src/main/optimize.c:185 src/main/optimize.c:194
 #: src/main/platform.c:2155 src/main/plot.c:275 src/main/plot.c:469
-#: src/main/plot.c:474 src/main/plot.c:2204 src/main/plot.c:2211
-#: src/main/plot.c:3243 src/main/plot.c:3245 src/main/plot.c:3247
-#: src/main/plot.c:3405 src/main/plot3d.c:1399 src/main/plot3d.c:2528
+#: src/main/plot.c:474 src/main/plot.c:2209 src/main/plot.c:2216
+#: src/main/plot.c:3248 src/main/plot.c:3250 src/main/plot.c:3252
+#: src/main/plot.c:3410 src/main/plot3d.c:1399 src/main/plot3d.c:2528
 #: src/main/plot3d.c:2532 src/main/plot3d.c:2534 src/main/seq.c:166
 #: src/main/seq.c:264 src/main/seq.c:267 src/main/sort.c:869
 #: src/main/sort.c:969 src/main/source.c:209 src/main/summary.c:1026
@@ -2538,10 +2538,10 @@ msgstr ""
 
 #: src/main/deparse.c:149 src/main/plot.c:911 src/main/plot.c:1450
 #: src/main/plot.c:1773 src/main/plot.c:1841 src/main/plot.c:1917
-#: src/main/plot.c:1988 src/main/plot.c:2086 src/main/plot.c:2164
-#: src/main/plot.c:2445 src/main/plot.c:2623 src/main/plot.c:2842
-#: src/main/plot.c:3386 src/main/plot.c:3514 src/main/plot.c:3593
-#: src/main/plot.c:3764 src/main/plot.c:4041 src/main/plot3d.c:1361
+#: src/main/plot.c:1993 src/main/plot.c:2091 src/main/plot.c:2169
+#: src/main/plot.c:2450 src/main/plot.c:2628 src/main/plot.c:2847
+#: src/main/plot.c:3391 src/main/plot.c:3519 src/main/plot.c:3598
+#: src/main/plot.c:3769 src/main/plot.c:4046 src/main/plot3d.c:1361
 #: src/main/sprintf.c:211 src/main/sprintf.c:243
 msgid "too few arguments"
 msgstr "argomenti insufficienti"
@@ -5406,7 +5406,7 @@ msgstr "numero asse %d non valido"
 msgid "'hadj' must be of length one"
 msgstr "'hadj' deve essere di lunghezza 1"
 
-#: src/main/plot.c:1019 src/main/plot.c:2498
+#: src/main/plot.c:1019 src/main/plot.c:2503
 msgid "zero length 'padj' specified"
 msgstr "specificato 'padj' di lunghezza zero"
 
@@ -5437,7 +5437,7 @@ msgstr "lunghezza di 'x' e 'y' differenti in %s()"
 msgid "plot type '%s' will be truncated to first character"
 msgstr "tipo lpot '%s' verrà troncato al primo carattere"
 
-#: src/main/plot.c:1483 src/main/plot.c:3108
+#: src/main/plot.c:1483 src/main/plot.c:3113
 msgid "invalid plot type"
 msgstr "tipo grafico non valido"
 
@@ -5458,181 +5458,181 @@ msgstr "quarto argomento non valido"
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr ""
 
-#: src/main/plot.c:2001
+#: src/main/plot.c:2006
 msgid "invalid arrow head length"
 msgstr "lunghezza punta della freccia non valida"
 
-#: src/main/plot.c:2006
+#: src/main/plot.c:2011
 msgid "invalid arrow head angle"
 msgstr "angolazione della punta-freccia non valida"
 
-#: src/main/plot.c:2011
+#: src/main/plot.c:2016
 msgid "invalid arrow head specification"
 msgstr "specificazione della punta-freccia non valida"
 
-#: src/main/plot.c:2176 src/main/plot.c:3250
+#: src/main/plot.c:2181 src/main/plot.c:3255
 msgid "zero length 'labels'"
 msgstr "'labels' di lunghezza zero"
 
-#: src/main/plot.c:2250
+#: src/main/plot.c:2255
 msgid "no coordinates were supplied"
 msgstr "non sono state fornite coordinate"
 
-#: src/main/plot.c:2456
+#: src/main/plot.c:2461
 msgid "zero length 'text' specified"
 msgstr "specificato 'text' di lunghezza zero"
 
-#: src/main/plot.c:2462
+#: src/main/plot.c:2467
 msgid "zero length 'side' specified"
 msgstr "specificato 'side' di lunghezza zero"
 
-#: src/main/plot.c:2469
+#: src/main/plot.c:2474
 msgid "zero length 'line' specified"
 msgstr "specificato 'line' di lunghezza zero"
 
-#: src/main/plot.c:2477
+#: src/main/plot.c:2482
 msgid "zero length 'outer' specified"
 msgstr "specificato 'outer' di lunghezza zero"
 
-#: src/main/plot.c:2484
+#: src/main/plot.c:2489
 msgid "zero length 'at' specified"
 msgstr "specificato un 'at' di lunghezza zero"
 
-#: src/main/plot.c:2491
+#: src/main/plot.c:2496
 msgid "zero length 'adj' specified"
 msgstr "specificato 'adj' di lunghezza zero"
 
-#: src/main/plot.c:2505
+#: src/main/plot.c:2510
 msgid "zero length 'cex' specified"
 msgstr "specificato 'cex' di lunghezza zero"
 
-#: src/main/plot.c:2513
+#: src/main/plot.c:2518
 msgid "zero length 'col' specified"
 msgstr "specificato 'col' di lunghezza zero"
 
-#: src/main/plot.c:2520
+#: src/main/plot.c:2525
 msgid "zero length 'font' specified"
 msgstr "specificato 'font' di lunghezza zero"
 
-#: src/main/plot.c:2883
+#: src/main/plot.c:2888
 msgid "invalid a=, b= specification"
 msgstr "specificazione a=, b= non valida"
 
-#: src/main/plot.c:2892
+#: src/main/plot.c:2897
 msgid "'a' and 'b' must be finite"
 msgstr "'a' e 'b' devono essere finiti"
 
-#: src/main/plot.c:3103
+#: src/main/plot.c:3108
 msgid "invalid number of points in locator()"
 msgstr "numero di punti non valido in locator()"
 
-#: src/main/plot.c:3239
+#: src/main/plot.c:3244
 msgid "invalid number of points in identify()"
 msgstr "numero di punti non valido in identify()"
 
-#: src/main/plot.c:3241
+#: src/main/plot.c:3246
 msgid "incorrect argument type"
 msgstr "tipo argomento non valido"
 
-#: src/main/plot.c:3253
+#: src/main/plot.c:3258
 msgid "different argument lengths"
 msgstr "argomenti di lunghezza diversa"
 
-#: src/main/plot.c:3255
+#: src/main/plot.c:3260
 msgid "more 'labels' than points"
 msgstr ""
 
-#: src/main/plot.c:3308
+#: src/main/plot.c:3313
 #, fuzzy, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr "attenzione: nessun punto nell'intorno di %.2f pollici\n"
 
-#: src/main/plot.c:3314
+#: src/main/plot.c:3319
 msgid "warning: nearest point already identified\n"
 msgstr "attenzione: il punto più vicino è già stato identificato\n"
 
-#: src/main/plot.c:3398
+#: src/main/plot.c:3403
 msgid "invalid units"
 msgstr "unità non valide"
 
-#: src/main/plot.c:3577 src/main/plot.c:3687
+#: src/main/plot.c:3582 src/main/plot.c:3692
 msgid "invalid dendrogram input"
 msgstr "dengrogramma in input non valido"
 
-#: src/main/plot.c:3746
+#: src/main/plot.c:3751
 msgid "invalid symbol parameter vector"
 msgstr "vettore parametro simbolo non valido"
 
-#: src/main/plot.c:3769
+#: src/main/plot.c:3774
 msgid "invalid symbol coordinates"
 msgstr "coordinate simbolo non valide"
 
-#: src/main/plot.c:3777
+#: src/main/plot.c:3782
 msgid "x/y/parameter length mismatch"
 msgstr "lunghezze parametro x/y discordanti"
 
-#: src/main/plot.c:3796
+#: src/main/plot.c:3801
 msgid "invalid circles data"
 msgstr "dati cerchi non validi"
 
-#: src/main/plot.c:3798 src/main/plot.c:3817 src/main/plot.c:3841
-#: src/main/plot.c:3870
+#: src/main/plot.c:3803 src/main/plot.c:3822 src/main/plot.c:3846
+#: src/main/plot.c:3875
 msgid "invalid symbol parameter"
 msgstr "parametro 'symbol' non valido"
 
-#: src/main/plot.c:3815
+#: src/main/plot.c:3820
 msgid "invalid squares data"
 msgstr "dati quadrati non validi"
 
-#: src/main/plot.c:3839
+#: src/main/plot.c:3844
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "dati rettangoli non validi (richieste 2 colonne)"
 
-#: src/main/plot.c:3868
+#: src/main/plot.c:3873
 msgid "invalid stars data"
 msgstr "dati 'stars' non validi"
 
-#: src/main/plot.c:3909
+#: src/main/plot.c:3914
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "dati termometri non validi (richieste 3 o 4 colonne)"
 
-#: src/main/plot.c:3912
+#: src/main/plot.c:3917
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "termometri non validi [,%s]"
 
-#: src/main/plot.c:3915
+#: src/main/plot.c:3920
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "termometri[.%s] non in [0,1] - sembreranno buffi"
 
-#: src/main/plot.c:3918
+#: src/main/plot.c:3923
 msgid "invalid thermometers[,1:2]"
 msgstr "termometri[,1:2] non validi"
 
-#: src/main/plot.c:3957
+#: src/main/plot.c:3962
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "dati boxplot nonv alidi (richieste 5 colonne)"
 
-#: src/main/plot.c:3966
+#: src/main/plot.c:3971
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5] fuori da [0,1] - sembreranno buffi"
 
-#: src/main/plot.c:3968
+#: src/main/plot.c:3973
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplots[,1:4] non validi"
 
-#: src/main/plot.c:4014
+#: src/main/plot.c:4019
 msgid "invalid symbol type"
 msgstr "tipo simbolo non valido"
 
-#: src/main/plot.c:4054 src/main/plot.c:4056 src/main/plot.c:4061
-#: src/main/plot.c:4063
+#: src/main/plot.c:4059 src/main/plot.c:4061 src/main/plot.c:4066
+#: src/main/plot.c:4068
 #, fuzzy, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "lunghezza sbagliata dell'argomento 'mode'"
 
-#: src/main/plot.c:4080
+#: src/main/plot.c:4085
 #, fuzzy
 msgid "unable to allocate memory (in do_xspline)"
 msgstr "impossibile allocare memoria (in GPolygon)"
