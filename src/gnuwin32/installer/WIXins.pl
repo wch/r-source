@@ -366,6 +366,7 @@ print insfile <<END;
     </Feature>
     <Feature Id="registryversion" Title="Save Version in Registry"
      Description="Save the R version and install path in the Registry" Level="1" InstallDefault="local" AllowAdvertise="no">
+      <ComponentRef Id='registry0' />
       <ComponentRef Id='registry1' />
       <ComponentRef Id='registry7' />
       <ComponentRef Id='registry2' />
