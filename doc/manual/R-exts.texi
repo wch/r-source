@@ -10896,9 +10896,11 @@ front-ends may allow a looser match.
 
 @item
 Find and set the @R{} home directory and the user's home directory.  The
-former may be available from the Windows Registry: it will normally be
-in @code{HKEY_LOCAL_MACHINE\Software\R-core\R\InstallPath} and can be
-set there by running the program @file{@var{R_HOME}\bin\RSetReg.exe}.
+former may be available from the Windows Registry: it will be in
+@code{HKEY_LOCAL_MACHINE\Software\R-core\R\InstallPath} from an
+adminstrative install and
+@code{HKEY_CURRENT_USER\Software\R-core\R\InstallPath} otherwise, if
+selected during installation (as it is by default).
 
 @item
 Define startup conditions and callbacks @emph{via} the @code{Rstart} structure.

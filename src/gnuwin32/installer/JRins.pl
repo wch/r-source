@@ -54,11 +54,13 @@ if($mode64bit) {
     $PF = "pf64"; # "pf" should do
     $QUAL = " x64"; # used for AppName
     $SUFF = "-x64"; # used for default install dir
+    $RK = "R64"; # arch-specific key
 } else {
     $suffix = "win32";
     $PF = "pf32"; # "pf" should do
     $QUAL = "";
     $SUFF = "";
+    $RK = "R32";
 }
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
@@ -142,12 +144,24 @@ Root: HKLM; Subkey: "Software\\$Producer\\R"; Flags: uninsdeletevalue; ValueType
 Root: HKLM; Subkey: "Software\\$Producer\\R\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: IsAdmin
 Root: HKLM; Subkey: "Software\\$Producer\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: recordversion; Check: IsAdmin
 
+Root: HKLM; Subkey: "Software\\$Producer\\${RK}"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\$Producer\\${RK}"; Flags: uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: recordversion; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\$Producer\\${RK}"; Flags: uninsdeletevalue; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Tasks: recordversion; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\$Producer\\${RK}\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\$Producer\\${RK}\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: recordversion; Check: IsAdmin
+
 Root: HKCU; Subkey: "Software\\$Producer"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdmin
 Root: HKCU; Subkey: "Software\\$Producer\\R"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdmin
 Root: HKCU; Subkey: "Software\\$Producer\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: recordversion; Check: NonAdmin
 Root: HKCU; Subkey: "Software\\$Producer\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Tasks: recordversion; Check: NonAdmin
 Root: HKCU; Subkey: "Software\\$Producer\\R\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: NonAdmin
 Root: HKCU; Subkey: "Software\\$Producer\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: recordversion; Check: NonAdmin
+
+Root: HKCU; Subkey: "Software\\$Producer\\${RK}"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\$Producer\\${RK}"; Flags: uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: recordversion; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\$Producer\\${RK}"; Flags: uninsdeletevalue; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Tasks: recordversion; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\$Producer\\${RK}\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\$Producer\\${RK}\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Tasks: recordversion; Check: NonAdmin
 
 Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue; Tasks: associate; Check: IsAdmin
 Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey; Tasks: associate; Check: IsAdmin

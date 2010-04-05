@@ -58,7 +58,7 @@ WIN = 32
 ICU_PATH=/sources/icu
 
 # optional overrides for making bitmapdll: names of source directories
-# JPEGDIR = jpeg-8
+# JPEGDIR = jpeg-8a
 # PNGDIR = libpng-1.2.35
 # TIFFDIR = libtiff
 
@@ -72,7 +72,10 @@ ISDIR=C:/packages/Inno
 
 ## ====== configuration macros for building MSI installer ===========
 
-# location where WiX was installed. Spaces allowed, slashes required.
+# location where WiX 2.0 was installed. Spaces allowed, slashes required.
 WIXDIR=C:/packages/WiX
+
+# set to 1 for a non-elevated per-user installer
+WIX_PERSONAL=0
 
 ## =============== end of user-customizable parts  ===================

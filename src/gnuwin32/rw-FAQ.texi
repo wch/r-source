@@ -515,16 +515,19 @@ Windows registry:
 @end itemize
 If you do not have administrative privileges on the machine while running
 the installer, then the entries are created under @code{HKEY_CURRENT_USER}.
+As from R 2.11.0 the same entries are also created under
+@code{Software\R-core\R32} or @code{Software\R-core\R64}, for 32- and
+64-bit R respectively.
 
 If you tick the second option (shown with administrative privileges
 only) (`Associate R with .RData files') then entries are created under
 @code{HKEY_CLASSES_ROOT\.RData} and @code{HKEY_CLASSES_ROOT\RWorkspace}.
 
-After installation you can add the Registry entries in
-@code{HKEY_LOCAL_MACHINE} by running @code{RSetReg.exe} in the
-@code{bin} folder, and remove them by running this with argument
-@code{/U}.  Note that this requires administrative privileges and
-neither sets up nor removes the file associations.
+After installation you can add the Registry entries in by running
+@code{RSetReg.exe} in the @code{bin} folder, and remove them by running
+this with argument @code{/U}.  Note that this requires administrative
+privileges un;ess run with argument @code{/Personal} and neither sets up
+nor removes the file associations.
 
 
 @node Does R support automation?, The Internet download functions fail., Does R use the Registry?, Installation and Usage
@@ -875,9 +878,9 @@ Windows.  But generally we find that with Administrator installs that
 the 32-bit view of the Registry shows the last recorded 32-bit install,
 and analogously for the 64-bit view, whereas for a user install the 32-
 and 64-bit views are shared and so show the latest recorded
-installation.  To circumvent the latter, version information is added
-(for user installs only) at @code{HKEY_CURRENT_USER\Software\R-code\R32} or
-@code{HKEY_CURRENT_USER\Software\R-code\R64} as from R 2.11.0.
+installation.  To circumvent the latter, version information is also
+recorded at @code{Software\R-code\R32} or @code{Software\R-code\R64} as
+from R 2.11.0.
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top

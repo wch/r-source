@@ -55,7 +55,9 @@ INSTALLATION
 	of the installation: they would be very rarely used with R.
 
     o	RSetReg.exe has been updated to (un)set the version-specific
-	keys in the same way as the main installer.
+	keys in the same way as the main installer, and to have the
+	optional argument /Personal to (un)set the per-user rather
+	than the per-machine keys (which need administrative access).
 
     o	When building R, the recommended way is now to supply a file
 	R_HOME/src/gnuwin32/MkRules.local instead of editing MkRules:
@@ -66,7 +68,9 @@ INSTALLATION
 	MkRules.dist.
 
     o	The MSI installer defaults to an all-user (per machine)
-	install (by setting the ALLUSERS property to 1).
+	install (by setting the ALLUSERS property to 1).  This can be
+	changed at installation, and if can be built for a user-mode
+	install (see MkRules.dist).
 
 
 BUG FIXES
