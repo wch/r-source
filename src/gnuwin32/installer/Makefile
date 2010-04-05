@@ -142,7 +142,7 @@ $(RPREFIX)-$(SUFF).exe: R.iss
 uuidgen.exe: uuidgen.o
 	$(CC) -o $@ $< -lole32
 
-# currently use about 4200
+# currently use about 3200
 uuids: uuidgen.exe
 	uuidgen 10000 > $@
 
@@ -150,7 +150,7 @@ files.wxs: imagedir fixups md5sums
 	"$(WIXDIR)/tallow" -1 -d $(RPREFIX) > $@
 
 R.wxs: WIXins.pl uuids files.wxs
-	$(PERL) WIXins.pl $(RPREFIX) $(RPREFIX)
+	$(PERL) WIXins.pl $(RPREFIX) $(RPREFIX) $(WIX_PERSONAL)
 
 ## for WiX 3.0 light uses -ext WixUIExtension
 ## To change compression with WiX 3.0 use

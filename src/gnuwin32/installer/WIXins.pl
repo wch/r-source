@@ -25,6 +25,7 @@ my $startdir=cwd();
 my $RVER, $RVER0;
 my $RW=$ARGV[0];
 my $SRCDIR=$ARGV[1];
+my $PERSONAL=$ARGV[2];
 
 $SRCDIR =~ s+/+\\+g; # need DOS-style paths
 
@@ -39,19 +40,22 @@ $RVER0 =~ s/ .*$//;
 
 my $sRW = Win32::GetShortPathName($SRCDIR);
 
+## 32-bit only
+my $RK = "R32";
+
 my %uuids;
 
 ## we could use Win32::Guidgen, but it is not normally installed
 ## so it is easier to use C code.
 
-my $nc = 900;
-open guidfile, "<uuids" or die "Cannot open uuids\n";
+my $nc = 1;
+open guidfile, "<uuids" or die "Cannot open file 'uuids'\n";
 while (<guidfile>) {
     chomp;
     $uuids{$nc++} = $_;
 }
 close guidfile;
-$nc = 920;
+$nc = 1;
 
 ## for x64 add InstallerVersion="200" Platforms="x64"
 ## see http://blogs.msdn.com/astebner/archive/2007/08/09/4317654.aspx
@@ -67,8 +71,10 @@ $nc = 920;
 
 ## ALLUSERS = 1 for per-machine, blank for default.
 ## http://wix.mindcapers.com/wiki/Allusers_Install_vs._Per_User_Install
-## For non-elevation (Wix 3.0?) see
+## For non-elevation  see
 ## http://blogs.msdn.com/astebner/archive/2007/11/18/6385121.aspx
+$elevate = "InstallPrivileges=\"limited\"" if $PERSONAL;
+$allusers = "1" unless $PERSONAL;
 open insfile, "> R.wxs" or die "Cannot open R.wxs\n";
 print insfile <<END;
 <?xml version="1.0" encoding="windows-1252"?>
@@ -87,10 +93,11 @@ print insfile <<END;
      InstallerVersion="100" 
      Languages="1033" 
      Compressed="yes" 
+     $elevate 
      SummaryCodepage="1252" />
     <Media Id='1' Cabinet='Sample.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
     <Property Id='DiskPrompt' Value="R for Windows Installation [1]" />
-    <Property Id="ALLUSERS">1</Property>
+    <Property Id="ALLUSERS">$allusers</Property>
 
     <Directory Id='TARGETDIR' Name='SourceDir'>
 
@@ -104,7 +111,7 @@ END
 
 my $rgui, $rhelp;
 my %comp;
-open tfile, "<files.wxs" or die "Cannot open files.wxs\n";
+open tfile, "<files.wxs" or die "Cannot open 'files.wxs'\n";
 while(<tfile>) {
     next unless /^        /;
     if(/<Component Id=\"([^\"]*)\"/) {
@@ -145,19 +152,19 @@ print insfile <<END;
         <Directory Id="ProgramMenuFolder" Name="Programs">
           <Directory Id="RMENU" Name="R">
             <Component Id="shortcut0" 
-             Guid="$uuids{910}" KeyPath="yes">
+             Guid="$uuids{$nc++}" KeyPath="yes">
               <Shortcut Id="RguiStartMenuShortcut" Directory="RMENU" Name="R" 
                LongName="R $RVER" Target="[!$rgui]" 
                WorkingDirectory="INSTALLDIR" />
             </Component>
             <Component Id="shortcut1" 
-             Guid="$uuids{911}" KeyPath="yes">
+             Guid="$uuids{$nc++}" KeyPath="yes">
               <Shortcut Id="HelpStartMenuShortcut" Directory="RMENU" 
                Name="RHelp" LongName="R $RVER Help" Target="[!$rhelp]" 
                WorkingDirectory="INSTALLDIR" />
             </Component>
             <Component Id="shortcut2" 
-             Guid="$uuids{912}" KeyPath="yes">
+             Guid="$uuids{$nc++}" KeyPath="yes">
               <Shortcut Id="UninstallStartMenuShortcut" Directory="RMENU" 
                Name="RUninst" LongName="Uninstall R $RVER" 
                Target="[SystemFolder]\msiexec.exe" 
@@ -168,7 +175,7 @@ print insfile <<END;
         </Directory>
       </Directory>
       <Directory Id="DesktopFolder" Name="Desktop">
-        <Component Id="desktopshortcut0" DiskId="1" Guid="$uuids{907}">
+        <Component Id="desktopshortcut0" DiskId="1" Guid="$uuids{$nc++}">
           <Shortcut Id="RguiDesktopShortcut" Directory="DesktopFolder" Name="R" LongName="R $RVER"
            WorkingDirectory="INSTALLDIR" Target="[!$rgui]" />
         </Component>
@@ -178,7 +185,7 @@ print insfile <<END;
         <Directory Id="Microsoft" Name="MS" LongName="Microsoft">
           <Directory Id="InternetExplorer" Name="IE" LongName="Internet Explorer">
             <Directory Id="QuickLaunch" Name="QLaunch" LongName="Quick Launch">
-              <Component Id="quickshortcut0" DiskId="1" Guid="$uuids{908}">
+              <Component Id="quickshortcut0" DiskId="1" Guid="$uuids{$nc++}">
                 <Shortcut Id="RguiQuickShortcut" Directory="QuickLaunch" Name="R" LongName="R $RVER"
                  WorkingDirectory="INSTALLDIR" Target="[!$rgui]" />
               </Component>
@@ -188,39 +195,59 @@ print insfile <<END;
       </Directory>
 
 
-      <Component Id="registry0" Guid="$uuids{900}">
+      <Component Id="registry0" Guid="$uuids{$nc++}">
         <Registry Id="RInstallPath" Root="HKMU" Key="Software\\R-core\\R" 
          Name="InstallPath" Type="string" KeyPath="yes" Value="[INSTALLDIR]" />
       </Component>
-      <Component Id="registry7" Guid="$uuids{913}">
+      <Component Id="registry7" Guid="$uuids{$nc++}">
         <Registry Id="RVerInstallPath" Root="HKMU" 
          Key="Software\\R-core\\R" Name="InstallPath"
          Type="string" KeyPath="yes" Value="[INSTALLDIR]" />
       </Component>
-      <Component Id="registry1" Guid="$uuids{901}">
+      <Component Id="registry1" Guid="$uuids{$nc++}">
         <Registry Id="RCurrentVersion" Root="HKMU" Key="Software\\R-core\\R" 
          Name="Current Version" Type="string" KeyPath="yes" 
          Value="[ProductVersion]" />
       </Component>
-      <Component Id="registry2" Guid="$uuids{902}">
+      <Component Id="registry2" Guid="$uuids{$nc++}">
         <Registry Id="RCurrentVerInstallPath" Root="HKMU" 
          Key="Software\\R-core\\R\\[ProductVersion]" Name="InstallPath"
          Type="string" KeyPath="yes" Value="[INSTALLDIR]" />
       </Component>
-      <Component Id="registry3" Guid="$uuids{903}">
+      <Component Id="registry20" Guid="$uuids{$nc++}">
+        <Registry Id="RXInstallPath" Root="HKMU" Key="Software\\R-core\\${RK}" 
+         Name="InstallPath" Type="string" KeyPath="yes" Value="[INSTALLDIR]" />
+      </Component>
+      <Component Id="registry21" Guid="$uuids{$nc++}">
+        <Registry Id="RXVerInstallPath" Root="HKMU" 
+         Key="Software\\R-core\\${RK}" Name="InstallPath"
+         Type="string" KeyPath="yes" Value="[INSTALLDIR]" />
+      </Component>
+      <Component Id="registry22" Guid="$uuids{$nc++}">
+        <Registry Id="RXCurrentVersion" Root="HKMU" Key="Software\\R-core\\${RK}" 
+         Name="Current Version" Type="string" KeyPath="yes" 
+         Value="[ProductVersion]" />
+      </Component>
+      <Component Id="registry23" Guid="$uuids{$nc++}">
+        <Registry Id="RXCurrentVerInstallPath" Root="HKMU" 
+         Key="Software\\R-core\\${RK}\\[ProductVersion]" Name="InstallPath"
+         Type="string" KeyPath="yes" Value="[INSTALLDIR]" />
+      </Component>
+
+      <Component Id="registry3" Guid="$uuids{$nc++}">
         <Registry Id="RData" Root="HKCR" Key=".RData" Type="string"
          KeyPath="yes" Value="RWorkspace" />
       </Component>
-      <Component Id="registry4" Guid="$uuids{904}">
+      <Component Id="registry4" Guid="$uuids{$nc++}">
         <Registry Id="RWorkspace" Root="HKCR" Key="RWorkspace" Type="string" 
          KeyPath="yes" Value="R Workspace" />
       </Component>
-      <Component Id="registry5" Guid="$uuids{905}">
+      <Component Id="registry5" Guid="$uuids{$nc++}">
         <Registry Id="RDataCommand" Root="HKCR" 
          Key="RWorkspace\\shell\\open\\command" Type="string" KeyPath="yes" 
          Value="&quot;[!$rgui]&quot; &quot;%1&quot;" />
       </Component>
-      <Component Id="registry6" Guid="$uuids{906}">
+      <Component Id="registry6" Guid="$uuids{$nc++}">
         <Registry Id="RDataDefaultIcon" Root="HKCR" 
          Key="RWorkspace\\DefaultIcon" Type="string" KeyPath="yes" 
          Value="[!$rgui],0" />
@@ -315,18 +342,27 @@ foreach $n (sort values %tcl) {
     print insfile "      <ComponentRef Id='$n' />\n";
 }
 
-print insfile <<END;
-
-      <Feature Id="tcl1" Title="Timezone files for Tcl" Description="Timezone files for Tcl" Level="1000"
-       InstallDefault="local" AllowAdvertise="no">
-END
 
 print insfile <<END;
       </Feature>
 
-      <Feature Id="tcl2" Title="Tcl/Tk Help (Compiled HTML)" Description="Tcl/Tk Help (Compiled HTML)" Level="1000"
+      <Feature Id="tcl1" Title="Tcl/Tk Help (Compiled HTML)" Description="Tcl/Tk Help (Compiled HTML)" Level="1000"
        InstallDefault="local" AllowAdvertise="no">
 END
+
+foreach $n (sort values %tcl1) {
+    print insfile "      <ComponentRef Id='$n' />\n";
+}
+
+print insfile <<END;
+
+      <Feature Id="tcl2" Title="Timezone files for Tcl" Description="Timezone files for Tcl" Level="1000"
+       InstallDefault="local" AllowAdvertise="no">
+END
+
+foreach $n (sort values %tcl2) {
+    print insfile "      <ComponentRef Id='$n' />\n";
+}
 
 print insfile <<END;
       </Feature>
@@ -380,6 +416,10 @@ print insfile <<END;
       <ComponentRef Id='registry1' />
       <ComponentRef Id='registry7' />
       <ComponentRef Id='registry2' />
+      <ComponentRef Id='registry20' />
+      <ComponentRef Id='registry21' />
+      <ComponentRef Id='registry22' />
+      <ComponentRef Id='registry23' />
     </Feature>
     <Feature Id="associate" Title="Associate with .RData files"
      Description="Associate R with .RData files" Level="1" InstallDefault="local" AllowAdvertise="no">
@@ -389,7 +429,7 @@ print insfile <<END;
       <ComponentRef Id='registry6' />
     </Feature>
 
-    <UIRef Id="WixUI_Mondo" />
+    <UIRef Id="WixUI_FeatureTree" />
     <UIRef Id="WixUI_ErrorProgressText" />
 
     <Icon Id="shell32.dll" SourceFile="$WINDOWS\\shell32.dll" />
