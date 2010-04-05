@@ -564,7 +564,7 @@
                 else if (file.exists(f <- path.expand("~/.R/Makevars")))
                     makefiles <- f
                 if (file.exists("Makefile.win")) {
-                    makefiles <- c("Makefile.wIn", makefiles)
+                    makefiles <- c("Makefile.win", makefiles)
                     message("  running src/Makefile.win ...")
                     res <- system(paste("make --no-print-directory",
                                         paste("-f", shQuote(makefiles), collapse = " ")))
