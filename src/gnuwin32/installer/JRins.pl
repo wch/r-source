@@ -263,7 +263,7 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 [Components]
 Name: "main"; Description: "Main Files"; Types: user compact full custom; Flags: fixed
 Name: "i386"; Description: "i386 Files"; Types: user compact full custom; Flags: fixed
-Name: "html"; Description: "HTML Manuals"; Types: user full custom;
+Name: "html"; Description: "HTML Manuals"; Types: user full custom
 Name: "manuals"; Description: "On-line PDF Manuals"; Types: user full custom
 Name: "manuals/basic"; Description: "Basic Manuals"; Types: user full custom
 Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom
