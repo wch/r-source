@@ -17,17 +17,12 @@
  *  http://www.r-project.org/Licenses/
  */
 
+/* Ouch! - do we *really* need this? */
 #define _GNU_SOURCE
+
 #include <tcl.h>
 #include <stdio.h>
 #include <string.h>
-
-/* TclCmdProc was redefined to include const in Tcl 8.4 */
-#ifndef CONST84
-#define CONST84
-#endif
-
-typedef CONST84 char Cchar;
 
 #include <Rinternals.h>
 #include <R_ext/PrtUtil.h>

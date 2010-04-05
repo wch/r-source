@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2009 R Core Team
+### Copyright (C) 1998-2010 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -2202,7 +2202,7 @@ AC_DEFUN([_R_HEADER_TCL],
 [#include <tcl.h>
 /* Revise if 9.x ever appears (and 8.x seems to increment only
    every few years). */
-#if (TCL_MAJOR_VERSION >= 8) && (TCL_MINOR_VERSION >= 3)
+#if (TCL_MAJOR_VERSION >= 8) && (TCL_MINOR_VERSION >= 4)
   yes
 #endif
 ],
@@ -2220,7 +2220,7 @@ AC_DEFUN([_R_HEADER_TK],
 [#include <tk.h>
 /* Revise if 9.x ever appears (and 8.x seems to increment only
    every few years). */
-#if (TK_MAJOR_VERSION >= 8) && (TK_MINOR_VERSION >= 3)
+#if (TK_MAJOR_VERSION >= 8) && (TK_MINOR_VERSION >= 4)
   yes
 #endif
 ],

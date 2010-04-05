@@ -31629,7 +31629,7 @@ else
 #include <tcl.h>
 /* Revise if 9.x ever appears (and 8.x seems to increment only
    every few years). */
-#if (TCL_MAJOR_VERSION >= 8) && (TCL_MINOR_VERSION >= 3)
+#if (TCL_MAJOR_VERSION >= 8) && (TCL_MINOR_VERSION >= 4)
   yes
 #endif
 
@@ -31717,7 +31717,7 @@ else
 #include <tk.h>
 /* Revise if 9.x ever appears (and 8.x seems to increment only
    every few years). */
-#if (TK_MAJOR_VERSION >= 8) && (TK_MINOR_VERSION >= 3)
+#if (TK_MAJOR_VERSION >= 8) && (TK_MINOR_VERSION >= 4)
   yes
 #endif
 

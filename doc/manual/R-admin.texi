@@ -2582,7 +2582,7 @@ environment variable @env{R_GSCMD} at that time.
 @node Tcl/Tk, Java support, Useful libraries and programs, Useful libraries and programs
 @subsection Tcl/Tk
 
-The @pkg{tcltk} package needs Tcl/Tk >= 8.3 installed: the sources are
+The @pkg{tcltk} package needs Tcl/Tk >= 8.4 installed: the sources are
 available at @uref{http://@/www.tcl.tk/}.  To specify the locations of the
 Tcl/Tk files you may need the configuration options
 
@@ -2603,7 +2603,8 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, setting the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk from 8.3.x to 8.5.8 have been used successfully.
+Versions of Tcl/Tk up to 8.5.8 have been tested (including most versions
+of 8.4.x, but not recently).
 
 @node Java support,  , Tcl/Tk, Useful libraries and programs
 @subsection Java support
@@ -2762,8 +2763,8 @@ multi-threaded version of ATLAS, by specifying
 @end example
 
 Consult its file @file{INSTALL.txt} for how to build ATLAS with
-position-independent code (at least on version 3.8.0 and later): this
-also describes how to build ATLAS as a shared library.
+position-independent code (at least on version 3.8.0 and later): that
+file also describes how to build ATLAS as a shared library.
 
 ATLAS can also be used on Windows: see @pxref{Getting the source files}
 when building from source, and

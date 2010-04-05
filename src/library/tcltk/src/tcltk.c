@@ -47,7 +47,7 @@ static SEXP makeRTclObject(Tcl_Obj *tclobj)
 static int R_eval(ClientData clientData,
 		  Tcl_Interp *interp,
 		  int argc,
-		  CONST84 char *argv[])
+		  const char *argv[])
 {
     ParseStatus status;
     int i;
@@ -95,7 +95,7 @@ static int R_eval(ClientData clientData,
 static int R_call(ClientData clientData,
 		  Tcl_Interp *interp,
 		  int argc,
-		  CONST84 char *argv[])
+		  const char *argv[])
 {
     int i;
     SEXP expr, alist, ans;
@@ -125,7 +125,7 @@ static int R_call(ClientData clientData,
 static int R_call_lang(ClientData clientData,
 		       Tcl_Interp *interp,
 		       int argc,
-		       CONST84 char *argv[])
+		       const char *argv[])
 {
     void *expr, *env; 
     SEXP ans;
@@ -253,7 +253,7 @@ SEXP RTcl_ObjFromVar(SEXP args)
     Tcl_Obj *tclobj;
 
     tclobj = Tcl_GetVar2Ex(RTcl_interp,
-                           (Cchar *) translateChar(STRING_ELT(CADR(args), 0)),
+                           translateChar(STRING_ELT(CADR(args), 0)),
                            NULL,
                            0);
     return makeRTclObject(tclobj);
@@ -264,7 +264,7 @@ SEXP RTcl_AssignObjToVar(SEXP args)
     Tcl_Obj *tclobj;
 
     tclobj = Tcl_SetVar2Ex(RTcl_interp,
-                           (Cchar *) translateChar(STRING_ELT(CADR(args), 0)),
+                           translateChar(STRING_ELT(CADR(args), 0)),
                            NULL,
                            (Tcl_Obj *) R_ExternalPtrAddr(CADDR(args)),
                            0);
@@ -340,7 +340,7 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
     if (count == 1 && LOGICAL(drop)[0]) {
 	Tcl_DStringInit(&s_ds);
 	s = Tcl_ExternalToUtfDString(encoding,
-				     (Cchar *) translateCharUTF8(STRING_ELT(val, 0)), 
+				     translateCharUTF8(STRING_ELT(val, 0)), 
 				     -1, &s_ds);
 	Tcl_SetStringObj(tclobj, s, -1);
 	Tcl_DStringFree(&s_ds);
@@ -349,7 +349,7 @@ SEXP RTcl_ObjFromCharVector(SEXP args)
 	    elem = Tcl_NewObj();
 	    Tcl_DStringInit(&s_ds);
 	    s = Tcl_ExternalToUtfDString(encoding, 
-					 (Cchar *) translateChar(STRING_ELT(val, i)),
+					 translateChar(STRING_ELT(val, i)),
 					 -1, &s_ds);
 	    Tcl_SetStringObj(elem, s, -1);
 	    Tcl_DStringFree(&s_ds);
@@ -519,7 +519,7 @@ SEXP RTcl_GetArrayElem(SEXP args)
 
     xstr = translateChar(STRING_ELT(x, 0));
     istr = translateChar(STRING_ELT(i, 0));
-    tclobj = Tcl_GetVar2Ex(RTcl_interp, (Cchar *)xstr, (Cchar *)istr, 0);
+    tclobj = Tcl_GetVar2Ex(RTcl_interp, xstr, istr, 0);
 
     if (tclobj == NULL)
 	return R_NilValue;
@@ -539,7 +539,7 @@ SEXP RTcl_SetArrayElem(SEXP args)
 
     xstr = translateChar(STRING_ELT(x, 0));
     istr = translateChar(STRING_ELT(i, 0));
-    Tcl_SetVar2Ex(RTcl_interp, (Cchar *)xstr, (Cchar *)istr, value, 0);
+    Tcl_SetVar2Ex(RTcl_interp, xstr, istr, value, 0);
 
     return R_NilValue;
 }
@@ -554,7 +554,7 @@ SEXP RTcl_RemoveArrayElem(SEXP args)
 
     xstr = translateChar(STRING_ELT(x, 0));
     istr = translateChar(STRING_ELT(i, 0));
-    Tcl_UnsetVar2(RTcl_interp, (Cchar *)xstr, (Cchar *)istr, 0);
+    Tcl_UnsetVar2(RTcl_interp, xstr, istr, 0);
 
     return R_NilValue;
 }
