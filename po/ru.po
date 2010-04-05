@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-04-02 13:54+0100\n"
+"POT-Creation-Date: 2010-04-05 17:41+0100\n"
 "PO-Revision-Date: 2009-10-15 02:08-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian\n"
@@ -193,8 +193,8 @@ msgstr "проблема при отображении '%ls'"
 #: src/main/platform.c:1558 src/main/platform.c:1818 src/main/platform.c:1859
 #: src/main/platform.c:1980 src/main/platform.c:1983 src/main/platform.c:1986
 #: src/main/platform.c:1989 src/main/platform.c:2106 src/main/platform.c:2134
-#: src/main/platform.c:2182 src/main/plot.c:3030 src/main/plot.c:4169
-#: src/main/plot.c:4173 src/main/plot.c:4176 src/main/plot3d.c:2450
+#: src/main/platform.c:2182 src/main/plot.c:3035 src/main/plot.c:4174
+#: src/main/plot.c:4178 src/main/plot.c:4181 src/main/plot3d.c:2450
 #: src/main/plot3d.c:2454 src/main/plot3d.c:2459 src/main/plot3d.c:2463
 #: src/main/plot3d.c:2467 src/main/plot3d.c:2471 src/main/print.c:230
 #: src/main/print.c:236 src/main/print.c:258 src/main/print.c:264
@@ -288,9 +288,9 @@ msgstr "неправильная временная метка"
 #: src/main/optimize.c:94 src/main/optimize.c:101 src/main/optimize.c:110
 #: src/main/optimize.c:179 src/main/optimize.c:185 src/main/optimize.c:194
 #: src/main/platform.c:2154 src/main/plot.c:275 src/main/plot.c:469
-#: src/main/plot.c:474 src/main/plot.c:2204 src/main/plot.c:2211
-#: src/main/plot.c:3243 src/main/plot.c:3245 src/main/plot.c:3247
-#: src/main/plot.c:3405 src/main/plot3d.c:1399 src/main/plot3d.c:2528
+#: src/main/plot.c:474 src/main/plot.c:2209 src/main/plot.c:2216
+#: src/main/plot.c:3248 src/main/plot.c:3250 src/main/plot.c:3252
+#: src/main/plot.c:3410 src/main/plot3d.c:1399 src/main/plot3d.c:2528
 #: src/main/plot3d.c:2532 src/main/plot3d.c:2534 src/main/seq.c:166
 #: src/main/seq.c:264 src/main/seq.c:267 src/main/sort.c:869
 #: src/main/sort.c:968 src/main/source.c:209 src/main/summary.c:1026
@@ -2459,10 +2459,10 @@ msgstr "R не был скомпилирован с поддержкой профилирования памяти"
 
 #: src/main/deparse.c:149 src/main/plot.c:911 src/main/plot.c:1450
 #: src/main/plot.c:1773 src/main/plot.c:1841 src/main/plot.c:1917
-#: src/main/plot.c:1988 src/main/plot.c:2086 src/main/plot.c:2164
-#: src/main/plot.c:2445 src/main/plot.c:2623 src/main/plot.c:2842
-#: src/main/plot.c:3386 src/main/plot.c:3514 src/main/plot.c:3593
-#: src/main/plot.c:3764 src/main/plot.c:4041 src/main/plot3d.c:1361
+#: src/main/plot.c:1993 src/main/plot.c:2091 src/main/plot.c:2169
+#: src/main/plot.c:2450 src/main/plot.c:2628 src/main/plot.c:2847
+#: src/main/plot.c:3391 src/main/plot.c:3519 src/main/plot.c:3598
+#: src/main/plot.c:3769 src/main/plot.c:4046 src/main/plot3d.c:1361
 #: src/main/sprintf.c:211 src/main/sprintf.c:243
 msgid "too few arguments"
 msgstr "слишком мало аргументов"
@@ -5303,7 +5303,7 @@ msgstr "неправильное количество осей %d"
 msgid "'hadj' must be of length one"
 msgstr "'hadj' должен быть единичной длины"
 
-#: src/main/plot.c:1019 src/main/plot.c:2498
+#: src/main/plot.c:1019 src/main/plot.c:2503
 msgid "zero length 'padj' specified"
 msgstr "указан 'padj' нулевой длины"
 
@@ -5334,7 +5334,7 @@ msgstr "длины 'x' и 'y' в %s() различаются"
 msgid "plot type '%s' will be truncated to first character"
 msgstr "тип графика '%s' будет обрезан до первого знака"
 
-#: src/main/plot.c:1483 src/main/plot.c:3108
+#: src/main/plot.c:1483 src/main/plot.c:3113
 msgid "invalid plot type"
 msgstr "неправильный тип графика"
 
@@ -5355,181 +5355,181 @@ msgstr "неправильный четвертый аргумент"
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "не могу смешивать координаты нулевой длины с ненулевыми"
 
-#: src/main/plot.c:2001
+#: src/main/plot.c:2006
 msgid "invalid arrow head length"
 msgstr "неправильная длина наконечника стрелки"
 
-#: src/main/plot.c:2006
+#: src/main/plot.c:2011
 msgid "invalid arrow head angle"
 msgstr "неправильный угол наконечника стрелки"
 
-#: src/main/plot.c:2011
+#: src/main/plot.c:2016
 msgid "invalid arrow head specification"
 msgstr "неправильное определение наконечника стрелки"
 
-#: src/main/plot.c:2176 src/main/plot.c:3250
+#: src/main/plot.c:2181 src/main/plot.c:3255
 msgid "zero length 'labels'"
 msgstr "нулевые 'labels'"
 
-#: src/main/plot.c:2250
+#: src/main/plot.c:2255
 msgid "no coordinates were supplied"
 msgstr "не указаны координаты"
 
-#: src/main/plot.c:2456
+#: src/main/plot.c:2461
 msgid "zero length 'text' specified"
 msgstr "указана нулевая длина 'text'"
 
-#: src/main/plot.c:2462
+#: src/main/plot.c:2467
 msgid "zero length 'side' specified"
 msgstr "указана нулевая длина 'side'"
 
-#: src/main/plot.c:2469
+#: src/main/plot.c:2474
 msgid "zero length 'line' specified"
 msgstr "указан нулевая длина 'line'"
 
-#: src/main/plot.c:2477
+#: src/main/plot.c:2482
 msgid "zero length 'outer' specified"
 msgstr "указана нулевая длина 'outer'"
 
-#: src/main/plot.c:2484
+#: src/main/plot.c:2489
 msgid "zero length 'at' specified"
 msgstr "указана нулевая длина 'at'"
 
-#: src/main/plot.c:2491
+#: src/main/plot.c:2496
 msgid "zero length 'adj' specified"
 msgstr "указана нулевая длина 'adj'"
 
-#: src/main/plot.c:2505
+#: src/main/plot.c:2510
 msgid "zero length 'cex' specified"
 msgstr "указана нулевая длина 'cex'"
 
-#: src/main/plot.c:2513
+#: src/main/plot.c:2518
 msgid "zero length 'col' specified"
 msgstr "указана нулевая длина 'col'"
 
-#: src/main/plot.c:2520
+#: src/main/plot.c:2525
 msgid "zero length 'font' specified"
 msgstr "указана нулевая длина 'font'"
 
-#: src/main/plot.c:2883
+#: src/main/plot.c:2888
 msgid "invalid a=, b= specification"
 msgstr "неправильное указание a=, b="
 
-#: src/main/plot.c:2892
+#: src/main/plot.c:2897
 msgid "'a' and 'b' must be finite"
 msgstr "'a' и 'b' должны быть конечными"
 
-#: src/main/plot.c:3103
+#: src/main/plot.c:3108
 msgid "invalid number of points in locator()"
 msgstr "неправильное количество точек в locator()"
 
-#: src/main/plot.c:3239
+#: src/main/plot.c:3244
 msgid "invalid number of points in identify()"
 msgstr "неправильное количество точек в identify()"
 
-#: src/main/plot.c:3241
+#: src/main/plot.c:3246
 msgid "incorrect argument type"
 msgstr "неправильный аргумент 'type'"
 
-#: src/main/plot.c:3253
+#: src/main/plot.c:3258
 msgid "different argument lengths"
 msgstr "различные длины аргументов"
 
-#: src/main/plot.c:3255
+#: src/main/plot.c:3260
 msgid "more 'labels' than points"
 msgstr "'labels' больше чем точек"
 
-#: src/main/plot.c:3308
+#: src/main/plot.c:3313
 #, c-format
 msgid "warning: no point within %.2f inches\n"
 msgstr "предупреждение: нет точки в пределах %.2f дюйма\n"
 
-#: src/main/plot.c:3314
+#: src/main/plot.c:3319
 msgid "warning: nearest point already identified\n"
 msgstr "предупреждение: ближайшая точка уже определена\n"
 
-#: src/main/plot.c:3398
+#: src/main/plot.c:3403
 msgid "invalid units"
 msgstr "неправильные единицы"
 
-#: src/main/plot.c:3577 src/main/plot.c:3687
+#: src/main/plot.c:3582 src/main/plot.c:3692
 msgid "invalid dendrogram input"
 msgstr "неправильный ввод дендрограммы"
 
-#: src/main/plot.c:3746
+#: src/main/plot.c:3751
 msgid "invalid symbol parameter vector"
 msgstr "неправильный вектор символьных параметров"
 
-#: src/main/plot.c:3769
+#: src/main/plot.c:3774
 msgid "invalid symbol coordinates"
 msgstr "неправильные символьные координаты"
 
-#: src/main/plot.c:3777
+#: src/main/plot.c:3782
 msgid "x/y/parameter length mismatch"
 msgstr "несоответствие длин x/y/параметров"
 
-#: src/main/plot.c:3796
+#: src/main/plot.c:3801
 msgid "invalid circles data"
 msgstr "неправильные данные о кругах"
 
-#: src/main/plot.c:3798 src/main/plot.c:3817 src/main/plot.c:3841
-#: src/main/plot.c:3870
+#: src/main/plot.c:3803 src/main/plot.c:3822 src/main/plot.c:3846
+#: src/main/plot.c:3875
 msgid "invalid symbol parameter"
 msgstr "неправильный символьный параметр"
 
-#: src/main/plot.c:3815
+#: src/main/plot.c:3820
 msgid "invalid squares data"
 msgstr "неправильные данные о квадратах"
 
-#: src/main/plot.c:3839
+#: src/main/plot.c:3844
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "неправильные данные о прямоугольниках (нужны 2 колонки)"
 
-#: src/main/plot.c:3868
+#: src/main/plot.c:3873
 msgid "invalid stars data"
 msgstr "неправильные данные о звездочках"
 
-#: src/main/plot.c:3909
+#: src/main/plot.c:3914
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "неправильные данные о градусниках (нужно 3 или 4 колонки)"
 
-#: src/main/plot.c:3912
+#: src/main/plot.c:3917
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "неправильные 'thermometers[,%s]'"
 
-#: src/main/plot.c:3915
+#: src/main/plot.c:3920
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "'thermometers[,%s]' вне [0,1] -- может странно выглядеть"
 
-#: src/main/plot.c:3918
+#: src/main/plot.c:3923
 msgid "invalid thermometers[,1:2]"
 msgstr "неправильные 'thermometers[,1:2]'"
 
-#: src/main/plot.c:3957
+#: src/main/plot.c:3962
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "неправильные данные о ящиках-с-усами (нужно 5 колонок)"
 
-#: src/main/plot.c:3966
+#: src/main/plot.c:3971
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "'boxplots[,5]' вне [0,1] -- может странно выглядеть"
 
-#: src/main/plot.c:3968
+#: src/main/plot.c:3973
 msgid "invalid boxplots[, 1:4]"
 msgstr "неправильные 'boxplots[, 1:4]'"
 
-#: src/main/plot.c:4014
+#: src/main/plot.c:4019
 msgid "invalid symbol type"
 msgstr "неправильный тип символа"
 
-#: src/main/plot.c:4054 src/main/plot.c:4056 src/main/plot.c:4061
-#: src/main/plot.c:4063
+#: src/main/plot.c:4059 src/main/plot.c:4061 src/main/plot.c:4066
+#: src/main/plot.c:4068
 #, c-format
 msgid "incorrect length for '%s' argument"
 msgstr "неправильная длина аргумента '%s''"
 
-#: src/main/plot.c:4080
+#: src/main/plot.c:4085
 msgid "unable to allocate memory (in do_xspline)"
 msgstr "не могу разместить память (в do_xspline)"
 
