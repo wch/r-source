@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:31\n"
+"POT-Creation-Date: 2010-04-06 07:17\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -26,7 +26,7 @@ msgid "in .OldClassesPrototypes"
 msgstr "在.OldClassesPrototypes里"
 
 msgid ""
-"unnamed argument to initialize() for S3 class must have a class defintion; "
+"unnamed argument to initialize() for S3 class must have a class definition; "
 "\"%s\" does not"
 msgstr ""
 "给S3类别用的initialize()函数中参数没有名字的话则必需具有类别室定义； \"%s\"没"
@@ -1177,7 +1177,7 @@ msgid ""
 "\"%s\""
 msgstr "元方法表里\"%1$s\"的对象有问题，\"%2$s\"标签的类别不应该是\"%3$s\""
 
-msgid "Invalid mlist element  for signature \""
+msgid "Invalid mlist element for signature \""
 msgstr "标记的mlist单元不对"
 
 msgid "\" at level"
@@ -1374,8 +1374,8 @@ msgid ""
 msgstr "在指定的%2$s这个位置不存在类别\"%1$s\"的定义, 定义在: %3$s"
 
 msgid ""
-"invalid ignore= argument; should be a class defintion or a character vector, "
-"got an object of class %s"
+"invalid ignore= argument; should be a class definition or a character "
+"vector, got an object of class %s"
 msgstr ""
 "ignore=参数不对，它要么是类别定义，要么是字符串；现在得到的却是类别为%s的目标"
 "对象"
@@ -1466,184 +1466,3 @@ msgstr "移动文件或删除类别/方法"
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "类别%s的定义不存在"
-
-#, fuzzy
-#~ msgid ""
-#~ "invalid argument 'f', expected a function or its name, got an object of "
-#~ "class %s"
-#~ msgstr "参数'f'不对，应该是函数或函数的名字，但得到的却是类别为\"%s\"的对象"
-
-#~ msgid "Arguments of method and generic are not in the same order"
-#~ msgstr "方法里的参数和泛型函数里的参数之顺序不同"
-
-#~ msgid ""
-#~ "in the method signature for function \"%s\" no definition for class: %s"
-#~ msgid_plural ""
-#~ "in the method signature for function \"%s\" no definition for classes: %s"
-#~ msgstr[0] "函数'%s'的方法标记中没有类别定义：%s"
-
-#, fuzzy
-#~ msgid "Some of the superclasses in the definition of class \""
-#~ msgstr "在定义\"%2$s\"里不存在母类别\"%1$s\"的定义"
-
-#~ msgid "signature must be a vector of classes or an environment"
-#~ msgstr "标记要么是个含类别的矢量，要么是个环境"
-
-#~ msgid "selectMethod(): .SelectMethodOn - old stuff - please report"
-#~ msgstr "selectMethod():.SelectMethodOn - 过时了的东西 - 请报告"
-
-#~ msgid "no unique method corresponding to this signature"
-#~ msgstr "这一标记没有与之相对应的唯一方法"
-
-#~ msgid "unable to match signature to methods"
-#~ msgstr "无法将标记同方法歸併匹配"
-
-#~ msgid "class \"%s\" cannot be used as the data part of another class"
-#~ msgstr "无法把类别\"%s\"当作另外一个类别的数据部分来用"
-
-#~ msgid "internal error: bad code for 'setPrimitiveMethods': %s"
-#~ msgstr "内部出错: 'setPrimitiveMethods'的编码不对: %s"
-
-#~ msgid "Ambiguous method selection for \"%s\", target \"%s\""
-#~ msgstr "\"%s\"的方法选择不明确，目标\"%s\""
-
-#~ msgid ""
-#~ "(the first of the signatures shown will be used)\n"
-#~ "%s"
-#~ msgstr ""
-#~ "(使用显示的第一个标记)\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Couldn't find methods table for \"%s\", package \"%s\" may be out of date"
-#~ msgstr "\"%s\"找不到方法列表，\"%s\"程序包可能过时了"
-
-#~ msgid "The class to be removed  (\""
-#~ msgstr "将被删除的类别(\""
-
-#~ msgid "\") has defined subclasses that should also be removed: ("
-#~ msgstr "\")带定义了的子类别，这些子类别也应该被删除：("
-
-#~ msgid ")"
-#~ msgstr ")"
-
-#~ msgid ""
-#~ "'NextMethod' not defined because the current method is not a "
-#~ "'MethodDefinition' object"
-#~ msgstr "'NextMethod'没有设定，因为目前的方法不是'MethodDefinition'这种对象"
-
-#~ msgid "expected a list of signature objects, got \"%s\""
-#~ msgstr "需要的是标记对象串列，得到的却是\"%s\""
-
-#~ msgid ""
-#~ "New generic for \"%s\" does not agree with implicit generic from package "
-#~ "\"%s\"; a new generic will be assigned with package \"%s\""
-#~ msgstr ""
-#~ "\"%s\"的新泛型函数与程序包\"%s\"里所隐含的泛型函数不相符合；一个新的泛型函"
-#~ "数将会同程序包\"%s\"一起被分配"
-
-#~ msgid "Function \"%s\" may not be used as a generic (implicitly prohibited)"
-#~ msgstr "函数\"%s\"不能当作泛型函数来用"
-
-#~ msgid ""
-#~ "Implicit generic exists for \"%s\", but will be overriden by explicit "
-#~ "call to setGeneric()"
-#~ msgstr "\"%s\"有隐含泛型，但明确调用用setGeneric()会将之置換"
-
-#~ msgid ""
-#~ "Unable to find package environment for class \"%s\" to revise subclass "
-#~ "information"
-#~ msgstr "找不到包含类别\"%s\"的环境，因此无法改变信息子类别"
-
-#~ msgid ""
-#~ "No generic function found for \"%s\"; no action taken in "
-#~ "removeMethodsObject"
-#~ msgstr "找不到为\"%s\"设的泛型函数；因此removeMethodsObject没有效果"
-
-#~ msgid ""
-#~ "the environment/package \"%s\" is locked; cannot remove methods data for "
-#~ "\"%s\""
-#~ msgstr "环境/程輯包'%s'被锁住了； 无法为'%s'删除方法信息"
-
-#~ msgid ""
-#~ "the methods object name for \"%s\" must include the name of the package "
-#~ "that contains the generic function, but no generic function of this name "
-#~ "was found"
-#~ msgstr ""
-#~ "'%s'的方法对象名字必需有包含了泛型函数的程輯包的名字，但有这个名字的泛型函"
-#~ "数却不存在"
-
-#~ msgid ""
-#~ "no way to associate a generic function with an object of class \"%s\""
-#~ msgstr "无法将泛型函数与类别为\"%s\"的对象联系起来"
-
-#~ msgid "Could not find generic function \"%s\" to initialize cached methods"
-#~ msgstr "找不到用于初始贮藏方法的泛型函数\"%s\" "
-
-#~ msgid ""
-#~ "trying to change the argument list of %s with %d arguments to have "
-#~ "arguments (%s)"
-#~ msgstr "无法将带%d参数函数%s的参数串列改成带(%s) 参数"
-
-#~ msgid ""
-#~ "get rid of variables in definition %s (%s); they conflict with the needed "
-#~ "change to argument names (%s)"
-#~ msgstr "删除定义(%s)里的变量；它们与需要改变的参数名字(%s)有矛盾"
-
-#~ msgid "arguments in definition %s changed from (%s) to (%s)"
-#~ msgstr "定义%s里的参数从(%s)改为(%s)"
-
-#~ msgid "no methods found for generic \"%s\""
-#~ msgstr "泛型'%s'里不存在任何方法"
-
-#~ msgid "\"%s\" is not one of the basic functions"
-#~ msgstr "'%s'不是基本函数"
-
-#~ msgid "cannot reset \"%s\", the definition is not a generic function object"
-#~ msgstr "无法重置'%s'的定义，其定义不是泛型函数这样的对象"
-
-#~ msgid "No nongeneric version of function \"%s\" exists to be restored"
-#~ msgstr "没有非泛型版本的'%s'这一函数，因此不能恢复原状"
-
-#~ msgid "\"%s\" from \"%s\" is a non-generic function; no methods available"
-#~ msgstr "'%2$s'里的'%1$s'是非泛型函数；没有可以用的方法"
-
-#~ msgid ""
-#~ "invalid 'fdef' for \"%s\" in 'getAllMethods'; expected either a "
-#~ "'genericFunction object' or a primitive function, got an object of class "
-#~ "\"%s\""
-#~ msgstr ""
-#~ "'getAllMethods'里为'%s'用的'fdef'不对；需要的是'genericFunction object'或"
-#~ "基元函数，现在得到的却是类别为\"%s\"的对象"
-
-#~ msgid "Methods list for generic \""
-#~ msgstr "方法串列于泛型"
-
-#~ msgid "\" not found"
-#~ msgstr "\"找不到"
-
-#~ msgid ".UsingMethodsTables: 'onOff' is not TRUE or FALSE"
-#~ msgstr ".UsingMethodsTables: 'onOff'的值只能是TRUE或FALSE"
-
-#~ msgid "Package \"%s\" is not loaded"
-#~ msgstr "没有载入程辑包\"%s\""
-
-#~ msgid ""
-#~ "The special case of printTo=FALSE only works when a single generic "
-#~ "function is specified"
-#~ msgstr "printTo=FALSE是特别的，只能在设定了单元泛型函数以后才有用"
-
-#~ msgid "Undefined member, \"%s\", of union \"%s\" (not added during attach)"
-#~ msgstr "成员没有被定义，集\"%2$s\"的\"%s\"，(配属时没有被加上)"
-
-#~ msgid "no generic function '%s' found"
-#~ msgstr "不存在'%s'这一泛型函数"
-
-#~ msgid "no method found for function '%s' and signature %s"
-#~ msgstr "函数'%s'和标记%s没有方法"
-
-#~ msgid "'%s' is not a function visible from '%s'"
-#~ msgstr "'%s'不是可以从'%s'看得见的函数"
-
-#~ msgid "trying to use new() on a virtual class"
-#~ msgstr "不能在虛擬类别上用new()这一函数"
