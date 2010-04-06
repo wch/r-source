@@ -1,5 +1,5 @@
 
-R version 2.11.0 Under development (unstable) (2010-03-18 r51319)
+R version 2.12.0 Under development (unstable) (2010-04-06 r51610)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1203,9 +1203,9 @@ Warning messages:
 > ## was wrongly == 'log.p=FALSE' up to R <= 2.7.1 (PR#11867)
 > 
 > 
-> ## pchisq(df=0) was wrong in 2.7.1
-> stopifnot(pchisq(c(-1,0,1), df=0) == c(0,1,1),
-+           pchisq(c(-1,0,1), df=0, lower.tail=FALSE) == c(1,0,0),
+> ## pchisq(df=0) was wrong in 2.7.1; then, upto 2.10.1, P*(0,0) gave 1
+> stopifnot(pchisq(c(-1,0,1), df=0) == c(0,0,1),
++           pchisq(c(-1,0,1), df=0, lower.tail=FALSE) == c(1,1,0),
 + 	  ## for ncp >= 80, gave values >= 1 in 2.10.0
 + 	  pchisq(500:700, 1.01, ncp = 80) <= 1)
 > 
@@ -1280,5 +1280,5 @@ Warning messages:
 > ## gave Inf as p==1 was checked *before* lambda==0
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.477 0.009 1.498 0 0 
+Time elapsed:  1.56 0.01 1.582 0 0 
 > 

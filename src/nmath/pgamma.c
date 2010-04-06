@@ -1,8 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 2005-6 Morten Welinder <terra@gnome.org>
- *  Copyright (C) 2005-9 The R Foundation
- *  Copyright (C) 2006	 The R Core Development Team
+ *  Copyright (C) 2005-10 The R Foundation
+ *  Copyright (C) 2006-10 The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -358,7 +358,7 @@ pd_upper_series (double x, double y, int log_p)
 static double
 pd_lower_cf (double y, double d)
 {
-    double f = 0, of;
+    double f, of, f0;
     double i, c2, c3, c4,  a1, b1,  a2, b2;
 
 #define	NEEDED_SCALE				\
@@ -375,14 +375,17 @@ pd_lower_cf (double y, double d)
     REprintf("pd_lower_cf(y=%.14g, d=%.14g)", y, d);
 #endif
     if (y == 0) return 0;
+
+    f0 = y/d;
     /* Needed, e.g. for  pgamma(10^c(100,295), shape= 1.1, log=TRUE): */
     if(fabs(y - 1) < fabs(d) * DBL_EPSILON) { /* includes y < d = Inf */
 #ifdef DEBUG_p
 	REprintf(" very small 'y' -> returning (y/d)\n");
 #endif
-	return (y/d);
+	return (f0);
     }
 
+    if(f0 > 1.) f0 = 1.;
     c2 = y;
     c4 = d; /* original (y,d), *not* potentially scaled ones!*/
 
@@ -391,7 +394,7 @@ pd_lower_cf (double y, double d)
 
     while NEEDED_SCALE
 
-    i = 0;
+    i = 0; of = -1.; /* far away */
     while (i < max_it) {
 
 	i++;	c2--;	c3 = i * c2;	c4 += 2;
@@ -407,19 +410,15 @@ pd_lower_cf (double y, double d)
 	if NEEDED_SCALE
 
 	if (b2 != 0) {
-	    of = f;
 	    f = a2 / b2;
-#ifdef UP_TO_2009_11_07__NO_LONGER
-	    /* convergence check: relative; absolute for small f : */
-	    if (fabs (f - of) <= DBL_EPSILON * fmax2(1., fabs(f))) { .. }
-#endif
-	    /* convergence check */
-	    if (fabs(f - of) <= DBL_EPSILON * fabs(f)) {
+ 	    /* convergence check: relative; "absolute" for very small f : */
+	    if (fabs (f - of) <= DBL_EPSILON * fmax2(f0, fabs(f))) {
 #ifdef DEBUG_p
 		REprintf(" %g iter.\n", i);
 #endif
 		return f;
 	    }
+	    of = f;
 	}
     }
 
@@ -703,7 +702,7 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 	return x;
 #endif
     if(alph == 0.) /* limit case; useful e.g. in pnchisq() */
-	return (x < 0) ? R_DT_0: R_DT_1;
+	return (x <= 0) ? R_DT_0: R_DT_1; /* <= assert  pgamma(0,0) ==> 0 */
     return pgamma_raw (x, alph, lower_tail, log_p);
 }
 /* From: terra@gnome.org (Morten Welinder)

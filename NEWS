@@ -617,6 +617,9 @@ BUG FIXES
     o	all.equal(*, tolerance = e) passes the numeric tolerance also to
 	the comparison of the attributes.
 
+    o	pgamma(0,0), a boundary case, now returns 0, its limit from the
+	left, rather than the limit from the right.
+
 
 
 
