@@ -56,7 +56,7 @@ if($mode64bit) {
     $QUAL = " x64"; # used for AppName
     $SUFF = "-x64"; # used for default install dir
     $bindir = "bin/x64"; # used for shortcuts, change for combined installer
-    $have32bit = 1 if -d "$SRCDIR\\bin\\i386";
+#    $have32bit = 1 if -d "$SRCDIR\\bin\\i386"; # disabled for now
     $RK = "R64"; # arch-specific key
 } else {
     $suffix = "win32";
@@ -217,6 +217,7 @@ Name: "manuals/technical"; Description: "Technical Manuals"; Types: full custom
 Name: "manuals/refman"; Description: "PDF help pages (reference manual)"; Types: full custom
 Name: "manuals/libdocs"; Description: "Docs for Packages grid and Matrix"; Types: full custom
 Name: "tcl"; Description: "SupportFiles for Package tcltk"; Types: user full custom; Flags: checkablealone
+Name: "tcl/noarch"; Description: "Base files (for both i386 and x64)"; Types: user full custom
 Name: "tcl/32"; Description: "i386 Files for Package tcltk"; Types: user user32 user64 full custom
 Name: "tcl/64"; Description: "x64 Files for Package tcltk"; Types: user user64 add64 full custom
 Name: "tcl/tzdata"; Description: "Timezone files for Tcl"; Types: full custom
