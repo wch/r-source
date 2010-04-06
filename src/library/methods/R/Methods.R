@@ -743,7 +743,7 @@ dumpMethods <- function(f, file = "", signature = NULL, methods= findMethods(f, 
     ## using the old MethodsList objects.  It is not meaningful with
     ## the current listOfMethods class
     if(length(signature) > 0)
-        warning("argument \"signature\" is not meaningful with the current implmentation and is ignored \n(extract a subset of the methods list instead)")
+        warning("argument \"signature\" is not meaningful with the current implementation and is ignored \n(extract a subset of the methods list instead)")
 
     ## sink() handling as general as possible -- unbelievably unpretty coding:
     closeit <- TRUE ; isSTDOUT <- FALSE
