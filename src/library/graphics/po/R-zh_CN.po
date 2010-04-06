@@ -27,7 +27,7 @@ msgid "'a' and 'b' are overridden by 'coef'"
 msgstr "'a'和'b'被' coef'覆盖"
 
 msgid "one of 'x1' and 'y1' must be given"
-msgstr ""
+msgstr "至少需要设定'x1'和'y1'中的一个"
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x'必需是二维列联表"
@@ -75,7 +75,7 @@ msgid "incorrect number of names"
 msgstr "名字数目不对"
 
 msgid "invalid first argument"
-msgstr "第一个变元不对"
+msgstr "第一个参数不对"
 
 msgid "'formula' missing or incorrect"
 msgstr "要么是缺少'formula'，要么是它的设定不对"
@@ -201,7 +201,7 @@ msgid "'x' is wrongly structured"
 msgstr "'x'的结构不对"
 
 msgid "argument must be matrix-like"
-msgstr "变元必需类似于矩阵"
+msgstr "参数必需类似于矩阵"
 
 msgid "'x' and 'y' values must be finite and non-missing"
 msgstr "'x'和'y'的值不能是无限的，而且不能有缺少"
@@ -269,7 +269,7 @@ msgid "'x' must not have 0 dimensionality"
 msgstr "'x'不能为零维数"
 
 msgid "extra argument(s) %s will be disregarded"
-msgstr "多余的变元%s略过不用"
+msgstr "多余的参数%s略过不用"
 
 msgid "invalid 'shade' specification"
 msgstr "'shade'定义不对"
@@ -278,10 +278,10 @@ msgid "length of 'sort' does not conform to 'dim(x)'"
 msgstr "'sort'的长度同'dim(x)'不相匹配"
 
 msgid "non-numeric argument to 'pairs'"
-msgstr "非数值变元不能适用于'pairs'"
+msgstr "非数值参数不能适用于'pairs'"
 
 msgid "only one column in the argument to 'pairs'"
-msgstr "变元里只有一个列用在'pairs'上"
+msgstr "参数里只有一个列用在'pairs'上"
 
 msgid "the 'panel' function made a new plot"
 msgstr "'panel'函数画了一个新的图"
@@ -406,7 +406,7 @@ msgstr[0] "boxplot%2$d里没有画离群值(%1$s)"
 
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
-msgstr[0] "没有用%s这个变元"
+msgstr[0] "没有用%s这个参数"
 
 #~ msgid "regression coefficients"
 #~ msgstr "回归系数"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-26 08:42+0000\n"
+"POT-Creation-Date: 2010-04-05 17:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -477,23 +477,23 @@ msgstr ""
 msgid "no font could be found for family \"%s\""
 msgstr ""
 
-#: devQuartz.c:1271
+#: devQuartz.c:1276
 msgid "invalid 'file' argument"
 msgstr ""
 
-#: devQuartz.c:1299
+#: devQuartz.c:1304
 msgid "invalid Quartz device size"
 msgstr ""
 
-#: devQuartz.c:1327
+#: devQuartz.c:1332
 msgid "Unable to create device description."
 msgstr ""
 
-#: devQuartz.c:1377
+#: devQuartz.c:1382
 msgid "Unable to create Quartz device target, given type may not be supported."
 msgstr ""
 
-#: devQuartz.c:1463
+#: devQuartz.c:1468
 msgid "Quartz device is not available on this platform"
 msgstr ""
 

@@ -110,7 +110,7 @@ msgid "dev.control() called without an open graphics device"
 msgstr "在没有打开图形装置前是不能调用dev.control()的"
 
 msgid "argument is missing with no default"
-msgstr "没有设定变元，也没有默认值"
+msgstr "没有设定参数，也没有默认值"
 
 msgid "dev.displaylist() called without an open graphics device"
 msgstr "在没有打开图形装置前是不能调用dev.displaylist()的"
@@ -134,7 +134,7 @@ msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new():用postscript(file=\"%s\")"
 
 msgid "invalid arguments in '%s' (need named args)"
-msgstr "'%s'里的变元不对(需要有带名变元)"
+msgstr "'%s'里的参数不对(需要有带名参数)"
 
 msgid "'name.opt' must be character, name of an existing list"
 msgstr "'name.opt'的值必需是字符串，当前存在的串列的名字"
@@ -155,7 +155,7 @@ msgid "unknown family '%s'"
 msgstr "没有'%s'这样的系列"
 
 msgid "invalid 'family' argument"
-msgstr "'family'变元不对"
+msgstr "'family'参数不对"
 
 msgid "invalid 'file'"
 msgstr "'file'不对"
@@ -194,7 +194,7 @@ msgid "font %s already in use"
 msgstr "字体%s已经在用了"
 
 msgid "invalid arguments in '%s' (must be font names)"
-msgstr "'%s'里的变元不对(必需是字体名称)"
+msgstr "'%s'里的参数不对(必需是字体名称)"
 
 msgid "unknown font"
 msgstr "没有这样的字体"
@@ -215,23 +215,22 @@ msgid "range too small for min.n"
 msgstr ""
 
 msgid "A raster matrix must be character, or numeric, or logical"
-msgstr ""
+msgstr "光栅矩阵必需是字符，数字或逻辑"
 
-#, fuzzy
 msgid "A raster array must be numeric"
-msgstr "rgb矩阵必需是数字"
+msgstr "栅格阵列必需是数字"
 
 msgid "A raster array must have exactly 3 dimensions"
-msgstr ""
+msgstr "栅格阵列必需是三维的"
 
 msgid "A raster array must have exactly 3 or 4 planes"
-msgstr ""
+msgstr "栅格阵列必需有三个或四个平面"
 
 msgid "no current device to record from"
 msgstr "没有可用来记载的装置"
 
 msgid "argument is not of class \"recordedplot\""
-msgstr "变元的类别必需为\"recorded plot\""
+msgstr "参数的类别必需为\"recorded plot\""
 
 msgid "loading snapshot from pre-2.0.0 R version"
 msgstr "从前-2.0.0 R版本载入快照"
@@ -252,13 +251,13 @@ msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r'的值应该为\"range\"，因此它的长度必需为二"
 
 msgid "invalid first argument"
-msgstr "第一个变元不对"
+msgstr "第一个参数不对"
 
 msgid "'x' and 'y' lengths differ"
 msgstr "'x'和'y'的长度不一样"
 
 msgid "invalid first argument [bad language object]"
-msgstr "第一个变元不对[语言对象出了错]"
+msgstr "第一个参数不对[语言对象出了错]"
 
 msgid "at least 2 columns needed"
 msgstr "至少需要两列"
@@ -285,10 +284,10 @@ msgid "invalid Quartz font:  must be 4 strings"
 msgstr "石英字体不对： 必需有四条字符串"
 
 msgid "invalid arguments in quartzFonts (must be font names)"
-msgstr "石英字体里的变元不对(必需为字体名称)"
+msgstr "石英字体里的参数不对(必需为字体名称)"
 
 msgid "invalid arguments in quartzFonts (need named args)"
-msgstr "石英字体里的变元不对(需要带名变元)"
+msgstr "石英字体里的参数不对(需要带名参数)"
 
 msgid "invalid 'filename'"
 msgstr "'filename'不对"
@@ -327,14 +326,14 @@ msgid "invalid Windows font:  must be a single font family name"
 msgstr "窗户字体不对：必需为单个字体系列名称"
 
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
-msgstr "'windows fonts'里的变元不对(必需为字体名称)"
+msgstr "'windows fonts'里的参数不对(必需为字体名称)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr "'windows fonts'里的变元不对(需要带名变元)"
+msgstr "'windows fonts'里的参数不对(需要带名参数)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
-msgstr[0] "'%2$s'里的%1$s变元名字不对"
+msgstr[0] "'%2$s'里的%1$s参数名字不对"
 
 msgid "differs between new and previous"
 msgid_plural "differ between new and previous"

@@ -38,7 +38,7 @@ msgstr "approx(): 不能内插NA值"
 
 #: arima.c:69 arima.c:183 arima.c:359
 msgid "invalid argument type"
-msgstr "变元种类不对"
+msgstr "参数种类不对"
 
 #: arima.c:418 arima.c:502 pacf.c:308 pacf.c:348
 msgid "can only transform 100 pars in arima0"
@@ -68,12 +68,12 @@ msgstr "%d个值出界在(0, 1)外"
 #: family.c:42 family.c:56 family.c:74
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
-msgstr "变元%s必需为非空数字向量"
+msgstr "参数%s必需为非空数字向量"
 
 #: family.c:107 family.c:110
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
-msgstr "变元%s必需为长度为一或长度为%d的数字向量"
+msgstr "参数%s必需为长度为一或长度为%d的数字向量"
 
 #: ksmooth.c:65
 msgid "only 2500 rows are allowed for sm.method=\"spline\""

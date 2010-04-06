@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "argument 'package' must be of length 1"
-msgstr "变元'package'的长度必需为一"
+msgstr "参数'package'的长度必需为一"
 
 msgid "you must specify 'package' or 'dir'"
 msgstr "你必需指定'package'或'dir'的值"
@@ -60,22 +60,22 @@ msgid "Data sets with usage in documentation object '%s' but not in code:"
 msgstr "数据集的使用方法在使用手冊对象'%s'里有记录但不在编码里:"
 
 msgid "Argument names in code not in docs:"
-msgstr "变元名字在编码里有记录但不在文件里:"
+msgstr "参数名字在编码里有记录但不在文件里:"
 
 msgid "Argument names in docs not in code:"
-msgstr "变元名字在文件里有记录但不在编码里:"
+msgstr "参数名字在文件里有记录但不在编码里:"
 
 msgid "Mismatches in argument names (first 3):"
-msgstr "变元名字配合错误(开头三个):"
+msgstr "参数名字配合错误(开头三个):"
 
 msgid "Mismatches in argument names:"
-msgstr "变元名字配合错误:"
+msgstr "参数名字配合错误:"
 
 msgid "Mismatches in argument default values (first 3):"
-msgstr "变元默认值配合错误(开头三个):"
+msgstr "参数默认值配合错误(开头三个):"
 
 msgid "Mismatches in argument default values:"
-msgstr "变元默认配合错误:"
+msgstr "参数默认配合错误:"
 
 msgid "Codoc mismatches from documentation object '%s':"
 msgstr "使用手冊对象'%s'里的Codoc配合错误:"
@@ -108,13 +108,13 @@ msgid "docs"
 msgstr "文件"
 
 msgid "Undocumented arguments in documentation object '%s'"
-msgstr "使用手冊对象'%s'有未公开的变元"
+msgstr "使用手冊对象'%s'有未公开的参数"
 
 msgid "Duplicated \\argument entries in documentation object '%s':"
 msgstr "使用手冊对象'%s'里有重复的\\argument条目:"
 
 msgid "Documented arguments not in \\usage in documentation object '%s':"
-msgstr "使用手冊对象'%s'里入档的文件变元没有在\\usage里提到:"
+msgstr "使用手冊对象'%s'里入档的文件参数没有在\\usage里提到:"
 
 msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr "使用手冊对象'%s'里的\\usage对象没有\\alias这条目:"
@@ -145,7 +145,7 @@ msgstr ""
 "%s"
 
 msgid "Foreign function calls without 'PACKAGE' argument:"
-msgstr "外函数调用时没有设定'package'这一变元:"
+msgstr "外函数调用时没有设定'package'这一参数:"
 
 msgid "declared S3 method '%s' not found"
 msgstr "找不到公布了的S3方法'%s'"
@@ -298,6 +298,7 @@ msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
 msgstr ""
+"%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs进行检查"
 
 msgid "Obsolete package(s) %s in Rd xrefs"
 msgstr "Rd xrefs里程序包%s过时了"
@@ -334,12 +335,11 @@ msgstr "有重复名字'%s'的Rd文件:"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Rd文件不能有重复的别名'%s':"
 
-#, fuzzy
 msgid "Argument items with no description in Rd object '%s':"
-msgstr "变元名字在编码里有记录但不在文件里:"
+msgstr "Rd对象'%s'里存在没有描述的参数："
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
-msgstr ""
+msgstr "在Rd对象'%s'里自动产生的内容需要修改："
 
 msgid "Generics g in env ="
 msgstr "同属函数g在env="
@@ -369,7 +369,7 @@ msgid ":"
 msgstr "："
 
 msgid "argument 'file' must be a character string or connection"
-msgstr "变元'document'必需是字符串或联结"
+msgstr "参数'document'必需是字符串或联结"
 
 msgid "missing/empty \\name field in '%s'"
 msgstr "'%s'里缺少或有空白的\\name域"
@@ -387,7 +387,7 @@ msgid "Rd files must have a non-empty \\title."
 msgstr "Rd文件必需要有非空白的\\title."
 
 msgid "argument 'outFile' must be a character string or connection"
-msgstr "变元'outfile'必需是字符串或联结"
+msgstr "参数'outfile'必需是字符串或联结"
 
 msgid "you must specify 'dir' or 'files'"
 msgstr "你必需在'dir'或'files'中选一个"
@@ -421,7 +421,7 @@ msgid "running 'make' failed"
 msgstr "调用'make'失败"
 
 msgid "argument 'vignette' must be of length 1"
-msgstr "变元'vignette'的长度必需为一"
+msgstr "参数'vignette'的长度必需为一"
 
 msgid "file '%s' not found"
 msgstr "找不到'%s'这个文件"
@@ -460,9 +460,8 @@ msgstr "'%2$s' 域里没有'%1$s'里的文件:"
 msgid "unable to create '%s'"
 msgstr "无法建立'%s'"
 
-#, fuzzy
 msgid "unable to re-encode '%s' line(s) %s"
-msgstr "无法重新编码'%s'"
+msgstr "无法重新编码'%s'%s行"
 
 msgid "unable to copy INDEX to '%s'"
 msgstr "无法拷贝索引至'%s'"
@@ -533,21 +532,19 @@ msgid "No docs found for package %s"
 msgstr "程序包%s里没有任何文件"
 
 msgid "Only help files, %s, %s and files under %s in a package can be viewed"
-msgstr ""
+msgstr "能够查看的文件限制于帮助文件，%s, %s 和程序包里%s下面的文件"
 
 msgid "NEWS"
-msgstr ""
+msgstr "NEWS"
 
-#, fuzzy
 msgid "DESCRIPTION"
-msgstr "DESCRIPTION文件不对"
+msgstr "DESCRIPTION"
 
-#, fuzzy
 msgid "doc/"
-msgstr "文件"
+msgstr "doc/"
 
 msgid "unsupported URL %s"
-msgstr ""
+msgstr "不支持URL %s"
 
 msgid "URL %s was not found"
 msgstr "找不到%s这个URL"
@@ -580,7 +577,7 @@ msgid "ERROR:"
 msgstr "错误："
 
 msgid "this seems to be a bundle -- and they are defunct"
-msgstr ""
+msgstr "这看起来好象是捆绑软件--已经不存在了"
 
 msgid "packaged installation of"
 msgstr "程辑包安装"
@@ -594,7 +591,7 @@ msgid ""
 msgstr "有'cleanup'但它不是执行文件--请参考'R安装和管理手册'"
 
 msgid "installing to"
-msgstr ""
+msgstr "安装至"
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -616,7 +613,6 @@ msgstr "找不到源程序文件"
 msgid "empty 'data' directory"
 msgstr "空的'data'目录"
 
-#, fuzzy
 msgid "'--auto-zip' is for Windows only"
 msgstr "'--auto-zip'只在Windows上有用"
 
@@ -632,7 +628,6 @@ msgstr "无法建立临时性目录"
 msgid "invalid package"
 msgstr "程辑包无效."
 
-#, fuzzy
 msgid "--pkglock applies only to a single package"
 msgstr "--pkglock只适用于单独程序包"
 
@@ -662,10 +657,10 @@ msgid "building a fake installation is disallowed"
 msgstr "不充许伪造安装"
 
 msgid "--no-help overrides"
-msgstr ""
+msgstr "--no-help覆盖"
 
 msgid "--"
-msgstr ""
+msgstr "--"
 
 msgid "-o option without value"
 msgstr "-o选项必需带值"
@@ -689,7 +684,7 @@ msgid "no 'type' specified"
 msgstr "没有设定'type'"
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
-msgstr ""
+msgstr "'type'值必需在'txt', 'html', 'latex'或'example'取一个"
 
 msgid "there is no package called '%s'"
 msgstr "没有叫'%s'的程辑包"
@@ -738,7 +733,7 @@ msgid "found encoding"
 msgstr "找到编码"
 
 msgid "argument 'pkg' must be of length 1"
-msgstr "变元'pkg'的长度必需是一"
+msgstr "参数'pkg'的长度必需是一"
 
 msgid "package '%s' was not found"
 msgstr "找不到程辑包'%s'"
@@ -750,10 +745,10 @@ msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr "程辑包'%s'的从属被减低成最小集."
 
 msgid "argument '%s' must be a character string or connection"
-msgstr "变元'%s'必需是字符串或联结"
+msgstr "参数'%s'必需是字符串或联结"
 
 msgid "'file' must be a character string or connection"
-msgstr "变元'file'必需是字符串或联结"
+msgstr "参数'file'必需是字符串或联结"
 
 msgid "unimplemented encoding"
 msgstr "还没有实现的编码"
@@ -858,10 +853,10 @@ msgid "test '%s' is not available"
 msgstr "不存在'%s'这个测试"
 
 msgid "argument 'x' must be a character vector"
-msgstr "变元'x'必需是字符矢量"
+msgstr "参数'x'必需是字符矢量"
 
 msgid "argument 'delim' must specify two characters"
-msgstr "变元'delim'必需指定两个字符"
+msgstr "参数'delim'必需指定两个字符"
 
 msgid "only Rd syntax is currently supported"
 msgstr "目前只支持Rd语法"
@@ -881,9 +876,8 @@ msgstr "缺少'DESCRIPTION'这个文件"
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
 msgstr "缺少'DESCRIPTION'和'DESCRIPTION.in'这两个文件"
 
-#, fuzzy
 msgid "invalid package layout"
-msgstr "程辑包无效."
+msgstr "程辑包布局不对"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "文件'%s'不含正确的DCF格式"
@@ -914,7 +908,6 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] "下面的函数调用了.Internal:"
 
-#, fuzzy
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
@@ -1018,7 +1011,7 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 #~ msgstr "文件'%s'里句法分析有错:"
 
 #~ msgid "argument 'lines' must be a character vector"
-#~ msgstr "变元'lines'必需是字符矢量"
+#~ msgstr "参数'lines'必需是字符矢量"
 
 #~ msgid "encoding '%s' is not portable"
 #~ msgstr "非便携编码'%s' "
@@ -1033,7 +1026,7 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 #~ msgstr "'section{%s}'这一段没有结局"
 
 #~ msgid "argument 'txt' must be a character string"
-#~ msgstr "变元'txt'必需为字符串"
+#~ msgstr "参数'txt'必需为字符串"
 
 #~ msgid "unmatched \\item name in '\\item{%s'"
 #~ msgstr "在'\\item{%s'里的\\item名字对不上"
@@ -1058,3 +1051,4 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "no or more than one match"
 #~ msgstr "没有成对的，或多于一双"
+

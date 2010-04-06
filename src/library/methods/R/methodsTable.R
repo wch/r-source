@@ -146,7 +146,7 @@
       Recall(table, sig, el, i1, add, fenv)
     }
     else
-      stop("Invalid mlist element  for signature \"", classes[[j]],
+      stop("Invalid mlist element for signature \"", classes[[j]],
 	   "\" at level ", i,
            "( should be methods list or method, had class \"",
            class(el), "\")")

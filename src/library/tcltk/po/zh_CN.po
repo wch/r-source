@@ -26,7 +26,7 @@ msgstr "tcl错误。\n"
 
 #: tcltk.c:187 tcltk.c:702
 msgid "invalid argument"
-msgstr "变元不对"
+msgstr "参数不对"
 
 #: tcltk.c:284 tcltk.c:302 tcltk.c:372 tcltk.c:435 tcltk.c:487
 msgid "invalid tclObj -- perhaps saved from another session?"
@@ -34,11 +34,11 @@ msgstr "tclObj无效--是不是因此它是由另外一个对话期间保存的�
 
 #: tcltk.c:577
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
-msgstr "tcltk内部函数'callback_closure'的变元串列太长"
+msgstr "tcltk内部函数'callback_closure'的参数串列太长"
 
 #: tcltk.c:610
 msgid "argument is not of correct type"
-msgstr "变元的种类不对"
+msgstr "参数的种类不对"
 
 #: tcltk.c:661
 msgid "no DISPLAY variable so Tk is not available"
