@@ -10679,7 +10679,7 @@ front-ends may allow a looser match.
 Find and set the @R{} home directory and the user's home directory.  The
 former may be available from the Windows Registry: it will be in
 @code{HKEY_LOCAL_MACHINE\Software\R-core\R\InstallPath} from an
-adminstrative install and
+administrative install and
 @code{HKEY_CURRENT_USER\Software\R-core\R\InstallPath} otherwise, if
 selected during installation (as it is by default).
 

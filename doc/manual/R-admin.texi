@@ -1405,7 +1405,7 @@ different build for version 10.4.4 or higher).
 The simplest way is to use @file{R-@value{VERSIONno}.pkg}: just
 double-click on the icon.  Note that Tcl/Tk and the Fortran compiler
 need to be installed separately if needed (unlike for @R{} 2.9.x and
-eariier).
+earlier).
 
 See the @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
@@ -2472,7 +2472,7 @@ from @R{} 2.11.0 we require @LaTeX{} version @code{2005/12/01} or later
 (for UTF-8 support).  Building PDF package manuals (including the @R{}
 reference manual) and vignettes is sensitive to the version of the
 @LaTeX{} package @pkg{hyperref} and we recommend that the @TeX{}
-distibution used is keep up-to-date.
+distribution used is keep up-to-date.
 
 
 If you want to build from the R Subversion repository you need both
@@ -3894,7 +3894,7 @@ path.  Also, a version of the preferred @acronym{GNU} @command{tar} is
 (if installed) in @file{/usr/sfw/bin}, as sometimes are tools like
 @command{makeinfo}.
 
-It is neccessary to avoid the tools in @file{/usr/ucb}: in particular
+It is necessary to avoid the tools in @file{/usr/ucb}: in particular
 @file{/usr/ucb/tr} causes @command{R CMD Rdiff} to malfunction.
 @command{configure} looks for a POSIX-compliant @command{tr}, e.g. in
 @file{/usr/xpg4/bin}.
