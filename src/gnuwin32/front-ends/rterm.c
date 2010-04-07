@@ -57,7 +57,7 @@ static void my_onintr(int nSig)
 }
 
 int
-#if defined(WIN64) && !defined(FOR_Rscript)
+#if defined(W64) && !defined(FOR_Rscript)
 main
 #else
 AppMain

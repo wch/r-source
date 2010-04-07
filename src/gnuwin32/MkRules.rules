@@ -3,10 +3,10 @@
 ifeq ($(strip $(WIN)),64)
 BINPREF = $(BINPREF64)
 R_ARCH = /x64
-DEFINES = -DR_ARCH='"x64"'
+DEFINES = -DR_ARCH='"x64"' -DW64
 else
 R_ARCH = /i386
-DEFINES = -DR_ARCH='"i386"'
+DEFINES = -DR_ARCH='"i386"' $(DEFS_W64)
 endif
 
 ## c99 would force __STRICT_ANSI__ disabling strdup etc, and also alloca

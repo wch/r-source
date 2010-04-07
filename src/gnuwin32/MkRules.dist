@@ -42,13 +42,16 @@ TCL_VERSION = 85
 # USE_IMPLIBS = YES
 
 # Some of the compilers are in fact cross-compilers and have prefixes
-# prefix for 32-bit compiler
+# prefix for 32-bit compiler, i686-w64-mingw32- for MinGW-w64's
 BINPREF =
 # prefix for 64-bit compiler
 BINPREF64 = x86_64-w64-mingw32-
 
 # 32- or 64-bit Windows?  For MinGW-w64.
 WIN = 32
+
+# define to -DW64 if using MinGW-w64 (32- or 64-bit)
+DEFS_W64 =
 
 # set to use ICU (experimental)
 # USE_ICU=YES

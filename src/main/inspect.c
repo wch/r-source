@@ -77,7 +77,7 @@ static void inspect(int pre, SEXP v, int deep, int pvec) {
     pp(pre);
     /* the use of %lx is deliberate because I hate the output of %p,
        but if this causes portability issues, it could be changed. */
-#ifdef WIN64
+#ifdef W64
     Rprintf("@%p %02d %s g%dc%d [", v, TYPEOF(v), typename(v), v->sxpinfo.gcgen, v->sxpinfo.gccls);
 #else
     Rprintf("@%lx %02d %s g%dc%d [", (long) v, TYPEOF(v), typename(v), v->sxpinfo.gcgen, v->sxpinfo.gccls);

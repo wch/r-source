@@ -4528,7 +4528,11 @@ and the workaround is to set @code{PATH} to include the path to
 @file{cc1}.
 
 The MinGW build of @code{gcc-4.4.0} current in September 2009 failed to
-build a properly functioning @R{}.
+build a properly functioning @R{}. However, we have tested using the
+32-bit compilers from the @code{mingw-w64} project, which are currently
+pre-releases of @command{gcc 4.4.4}, and flags to use those are provided
+in file @file{MkRules.dist}.
+
 
 @node Useful additional programs,  , The MinGW compilers, The Windows toolset
 @section Useful additional programs

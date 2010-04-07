@@ -3,6 +3,7 @@
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004-8      The R Foundation
+ *  Copyright (C) 2004-10     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,10 +49,7 @@ extern void R_ProcessEvents(void);
 #include "Startup.h" /* for UImode */
 #include <Fileio.h>
 
-#ifdef WIN64
-typedef unsigned short uint16_t;
-typedef unsigned int uint32_t;
-#endif
+#include <stdint.h>
 
 /* Surrogate Pairs Macro */
 #define SURROGATE_PAIRS_HI_MIN  ((uint16_t)0xd800)

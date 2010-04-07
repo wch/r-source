@@ -77,7 +77,7 @@ int vsnprintf(char *buffer, size_t bufferSize, const char *format, va_list args)
     return trio_vsnprintf(buffer, bufferSize, format, args);
 }
 
-#ifndef WIN64
+#ifndef W64
 /* This is needed as MinGW's stdio.h has an inline vnsprintf mapping to
    _vsnprintf */
 int _vsnprintf(char *buffer, size_t bufferSize, const char *format, va_list args)
