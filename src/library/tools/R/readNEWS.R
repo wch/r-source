@@ -100,7 +100,7 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 	## Arguments: ll: lines of text (character vector)
 	##	     ver: version number of version, e.g., '2.2.1 patched'
 	if(trace) cat("	 parseVersion(*, ver =", ver,"),")
-	s.pre <- "^[A-Z]+"
+	s.pre <- "^[A-Z0-9]+"
 	iC <- grep(s.pre, ll)
 	if(trace) cat("	 with ", length(iC), "sections\n")
 	sections <- as.list(iC)
