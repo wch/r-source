@@ -52,7 +52,7 @@
   \command{xz} or \command{compress}.
 #ifdef unix
   Finally, binary package archive files (as created by
-  \command{R CMD build --binary}) can be supplied.
+  \command{R CMD INSTALL --binary}) can be supplied.
 #endif
 
   Tarballs are by default unpackaged by the internal \code{\link{tar}}

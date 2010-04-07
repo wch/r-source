@@ -2467,7 +2467,7 @@ from @R{} 2.11.0 we require @LaTeX{} version @code{2005/12/01} or later
 (for UTF-8 support).  Building PDF package manuals (including the @R{}
 reference manual) and vignettes is sensitive to the version of the
 @LaTeX{} package @pkg{hyperref} and we recommend that the @TeX{}
-distibution used is keep up-to-date.
+distribution used is keep up-to-date.
 
 
 If you want to build from the R Subversion repository you need both
@@ -2757,8 +2757,8 @@ multi-threaded version of ATLAS, by specifying
 @end example
 
 Consult its file @file{INSTALL.txt} for how to build ATLAS with
-position-independent code (at least on version 3.8.0 and later): this
-also describes how to build ATLAS as a shared library.
+position-independent code (at least on version 3.8.0 and later): that
+file also describes how to build ATLAS as a shared library.
 
 ATLAS can also be used on Windows: see @pxref{Getting the source files}
 when building from source, and
@@ -3889,7 +3889,7 @@ path.  Also, a version of the preferred @acronym{GNU} @command{tar} is
 (if installed) in @file{/usr/sfw/bin}, as sometimes are tools like
 @command{makeinfo}.
 
-It is neccessary to avoid the tools in @file{/usr/ucb}: in particular
+It is necessary to avoid the tools in @file{/usr/ucb}: in particular
 @file{/usr/ucb/tr} causes @command{R CMD Rdiff} to malfunction.
 @command{configure} looks for a POSIX-compliant @command{tr}, e.g. in
 @file{/usr/xpg4/bin}.
