@@ -63,6 +63,10 @@ BUG FIXES
     o	Calls to selectMethod() by default no longer cache inherited
         methods.  This could previously corrupt methods used by as().
 
+    o	The print() methods for 'glm' and 'lm' objects now break long
+	calls in the same way that print(summary(.)) has done already.
+	(PR#14250)
+
 
 
 
@@ -656,7 +660,7 @@ NEW FEATURES
 
     o	The PCRE library has been updated to version 8.01, a bug-fix
 	release.
-	
+
     o	tools::readNEWS() now accepts a digit as the first character
     	of a news section.
 

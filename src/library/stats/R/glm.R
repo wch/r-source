@@ -381,7 +381,8 @@ glm.fit <-
 
 print.glm <- function(x, digits= max(3, getOption("digits") - 3), ...)
 {
-    cat("\nCall: ", deparse(x$call), "\n\n")
+    cat("\nCall:  ",
+	paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
     if(length(coef(x))) {
         cat("Coefficients")
         if(is.character(co <- x$contrasts))
@@ -657,8 +658,8 @@ print.summary.glm <-
 	      symbolic.cor = x$symbolic.cor,
 	      signif.stars = getOption("show.signif.stars"), ...)
 {
-    cat("\nCall:\n")
-    cat(paste(deparse(x$call), sep="\n", collapse="\n"), "\n\n", sep="")
+    cat("\nCall:\n",
+	paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
     cat("Deviance Residuals: \n")
     if(x$df.residual > 5) {
 	x$deviance.resid <- quantile(x$deviance.resid,na.rm=TRUE)

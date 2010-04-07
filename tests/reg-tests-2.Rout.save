@@ -1,5 +1,5 @@
 
-R version 2.11.0 Under development (unstable) (2010-03-07 r51216)
+R version 2.12.0 Under development (unstable) (2010-04-07 r51633)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -985,7 +985,7 @@ $B$subset
 > detg1.m0 <- glm(cbind(X,M)~1,binomial,detg1)
 > detg1.m0
 
-Call:  glm(formula = cbind(X, M) ~ 1, family = binomial, data = detg1) 
+Call:  glm(formula = cbind(X, M) ~ 1, family = binomial, data = detg1)
 
 Coefficients:
 (Intercept)  
@@ -1031,7 +1031,8 @@ cbind(X, M) ~ M.user + Temp + M.user:Temp
 - M.user:Temp  1   8.4440 72.142
 + Soft         2   5.4952 75.193
 
-Call:  glm(formula = cbind(X, M) ~ M.user + Temp + M.user:Temp, family = binomial,      data = detg1) 
+Call:  glm(formula = cbind(X, M) ~ M.user + Temp + M.user:Temp, family = binomial, 
+    data = detg1)
 
 Coefficients:
     (Intercept)          M.userY          TempLow  M.userY:TempLow  
@@ -1739,7 +1740,8 @@ In log(ifelse(y == 0, 1, y/mu)) : NaNs produced
 > ## now gives useful error message
 > glm(y ~ x, family = poisson(identity), start = c(1,0))
 
-Call:  glm(formula = y ~ x, family = poisson(identity), start = c(1,      0)) 
+Call:  glm(formula = y ~ x, family = poisson(identity), start = c(1, 
+    0))
 
 Coefficients:
 (Intercept)            x  
@@ -1756,7 +1758,8 @@ Warning messages:
 > y <- rpois(100, pmax(3*x, 0))
 > glm(y ~ x, family = poisson(identity), start = c(1,0))
 
-Call:  glm(formula = y ~ x, family = poisson(identity), start = c(1,      0)) 
+Call:  glm(formula = y ~ x, family = poisson(identity), start = c(1, 
+    0))
 
 Coefficients:
 (Intercept)            x  
@@ -2365,7 +2368,7 @@ x3  0.81       -0.97
 
 > (fit <- glm(y ~ x1 + x2 + x3))
 
-Call:  glm(formula = y ~ x1 + x2 + x3) 
+Call:  glm(formula = y ~ x1 + x2 + x3)
 
 Coefficients:
 (Intercept)           x1           x2           x3  
@@ -2743,7 +2746,7 @@ attr(,"assign")
 > 
 > (fit <- glm(y ~ 0))
 
-Call:  glm(formula = y ~ 0) 
+Call:  glm(formula = y ~ 0)
 
 No coefficients
 
@@ -2830,7 +2833,7 @@ $residual.scale
 > 
 > (fit <- glm(y ~ x + 0))
 
-Call:  glm(formula = y ~ x + 0) 
+Call:  glm(formula = y ~ x + 0)
 
 Coefficients:
  x  
