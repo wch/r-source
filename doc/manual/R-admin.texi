@@ -3966,7 +3966,7 @@ The SunStudio compilers provide several implementations of the C++
 standard which select both the set of headers and a C++ runtime library.
 These are selected by the @option{-library} flag, which as it is needed
 for both compiling and linking is best specified as part of the
-compiler.  The examples about use @samp{stlport4}, currently the most
+compiler.  The examples above use @samp{stlport4}, currently the most
 modern of the options: the default (but still needed to be specified as
 it is needed for linking) is @samp{Cstd} which dates from 1998: see
 @uref{http://developers.sun.com/solaris/articles/cmp_stlport_libCstd.html}.
