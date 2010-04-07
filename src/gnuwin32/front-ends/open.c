@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2008  R Development Core Team
+ *  Copyright (C) 2008-10  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ int main (int argc, char **argv)
 	    status = 32 + ret;
 	    if(ret == ERROR_FILE_NOT_FOUND  || ret == ERROR_PATH_NOT_FOUND
 	       || ret == SE_ERR_FNF || ret == SE_ERR_PNF)
-		fprintf(stderr, "'%s' not found", argv[i]);
+		fprintf(stderr, "'%s' not found\n", argv[i]);
 	    else if(ret == SE_ERR_ASSOCINCOMPLETE || ret == SE_ERR_NOASSOC)
 		fprintf(stderr, 
 			"file association for '%s' not available or invalid\n",

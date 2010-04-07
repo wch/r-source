@@ -10512,6 +10512,7 @@ easier to use the indirect route @emph{via} @acronym{(D)COM}.
 @menu
 * Using (D)COM::                
 * Calling R.dll directly::      
+* Finding R_HOME::              
 @end menu
 
 @node Using (D)COM, Calling R.dll directly, Embedding R under Windows, Embedding R under Windows
@@ -10545,7 +10546,7 @@ Another (D)COM server, @code{RDCOMServer}, is available from
 @uref{http://www.omegahat.org/RDCOMServer/Docs/Paradigm.html} and is
 very different from the purpose of this section.
 @end itemize
-@node Calling R.dll directly,  , Using (D)COM, Embedding R under Windows
+@node Calling R.dll directly, Finding R_HOME, Using (D)COM, Embedding R under Windows
 @subsection Calling R.dll directly
 
 The @code{R} DLL is mainly written in C and has @code{_cdecl} entry
@@ -10750,7 +10751,72 @@ stack sizes are too small for a number of @R{} applications, so
 general-purpose front-ends should use a larger stack size.
 
 
+@node Finding R_HOME,  , Calling R.dll directly, Embedding R under Windows
+@subsection Finding R_HOME
 
+Both applications which embed @R{} and those which use a @code{system}
+call to invoke @R{} (as @command{Rscript.exe}, @command{Rterm.exe} or
+@command{R.exe}) need to be able to find the @R{} @file{bin} directory.
+The simplest way to do so is the ask the user to set an environment
+variable @env{R_HOME} and use that, but naive users may be fluxommed as
+to how to do so or what value to use.
+
+The @R{} for Windows installers have for a long time allowed the value
+of @code{R_HOME} to be recorded in the Windows Registry: this is
+optional but the default. Where is it is recorded has changed over the
+years to allow for multiple versions of @R{} to be installed at once,
+and as from @R{} 2.11.0, to allow 32- and 64-bit versions of @R{} to be
+installed on the same machine.
+
+The basic Registry location is @code{Software\R-core\R}.  For an
+administrative install this is under @code{HKEY_LOCAL_MACHINE} and on a
+64-bit OS @code{HKEY_LOCAL_MACHINE\Software\R-core\R} is by default
+redirected for a 32-bit application, so a 32-bit application will see
+the information for the last 32-bit install, and a 64-bit application
+that for the last 64-bit install.  For a personal install, the
+information is under @code{HKEY_CURRENT_USER\Software\R-core\R} which is
+seen by both 32-bit and 64-bit applications and so records the last
+install of either architecture.  To circumvent this, as from @R{} 2.11.0
+there are locations @code{Software\R-core\R32} and @code{Software\R-core\R64}
+which always refer to one architecture.
+
+When @R{} is installed and recording is not disabled then two string
+values are written at that location for keys @code{InstallPath} and
+@code{Current Version}, and these keys are removed when @R{} is
+uninstalled.  To allow information about other installed versions to be
+retained, there is also a key named something like @code{2.11.0} or
+@code{2.11.0 patched} or @code{2.12.0 Pre-release} with a value for
+@code{InstallPath}.
+
+So a comprehensive algorithm to search to @code{R_HOME} is something
+like
+
+@itemize
+@item
+Decide which of personal or administrative installs should have
+precedence.  There are arguments both ways: we find that with roaming
+profiles that @code{HKEY_CURRENT_USER\Software} often gets reverted to
+an earlier version.  Do the following for one or both of
+@code{HKEY_CURRENT_USER} and @code{HKEY_LOCAL_MACHINE}.
+
+@item
+If the desired architecture is known, look in @code{Software\R-core\R32}
+or @code{Software\R-core\R64}, and if that does not exist or the
+architecture is immaterial, in @code{Software\R-core\R}.
+
+@item
+If key @code{InstallPath} exists then this is @code{R_HOME} (recorded
+using backslashes).  If it does not, look for version-specific keys like
+@code{2.11.0 alpha}, pick the latest (which is of itself a complicated
+algorithm as @code{2.11.0 patched > 2.11.0 > 2.11.0 alpha > 2.8.1}) and
+use its value for @code{InstallPath}.
+@end itemize
+
+Prior to @R{} 2.12.0 @file{R.dll} and the various front-end executables
+are in @file{R_HOME\bin}, but this will not be so from @R{} 2.12.0, when
+they are in @file{R_HOME\bin\i386} or @file{R_HOME\bin\x64}.  So you
+need to arrange to look first in the architecture-specific subdirectory
+and then in @file{R_HOME\bin}.
 
 @node Function and variable index, Concept index, Linking GUIs and other front-ends to R, Top
 @unnumbered Function and variable index
