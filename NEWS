@@ -589,6 +589,9 @@ NEW FEATURES
 
     o	The PCRE library has been updated to version 8.01, a bug-fix
 	release.
+	
+    o	tools::readNEWS() now accepts a digit as the first character
+    	of a news section.
 
 
 BUG FIXES
