@@ -358,7 +358,7 @@ pd_upper_series (double x, double y, int log_p)
 static double
 pd_lower_cf (double y, double d)
 {
-    double f, of, f0;
+    double f= 0.0 /* -Wall */, of, f0;
     double i, c2, c3, c4,  a1, b1,  a2, b2;
 
 #define	NEEDED_SCALE				\
