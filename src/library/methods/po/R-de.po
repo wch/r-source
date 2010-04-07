@@ -326,7 +326,7 @@ msgid "'file' must be a character string or a connection"
 msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
 
 msgid ""
-"argument \"signature\" is not meaningful with the current implmentation and "
+"argument \"signature\" is not meaningful with the current implementation and "
 "is ignored \n"
 "(extract a subset of the methods list instead)"
 msgstr ""
