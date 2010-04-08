@@ -81,7 +81,7 @@ Rgui.exe: rgui.o rgico64.o
 Rterm.exe: rterm.o rtico.o
 endif
 
-Rcmd.exe: rcmd.o ../rhome.o ../shext.o rcmdfn.o Renviron.o
+Rcmd.exe: rcmd.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
 
 R.exe: R.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
 
