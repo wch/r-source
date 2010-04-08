@@ -111,6 +111,11 @@
   availability of a mapping of \code{complex} to Fortran may be compiler
   dependent.
 
+  Logical values are sent as \code{0} (\code{FALSE}), \code{1}
+  (\code{TRUE}) or \code{INT_MIN = -2147483648} (\code{NA}, but only if
+  \code{NAOK = TRUE}), and the compiled code should return one of these
+  three values.
+
   \emph{Note:} The C types corresponding to \code{integer} and
   \code{logical} are \code{int}, not \code{long} as in S.  This
   difference matters on most 64-bit platforms, where \code{int} is
