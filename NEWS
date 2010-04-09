@@ -639,6 +639,9 @@ BUG FIXES
     o	Issuing POST requests to the internal web server could stall
 	the request under certain circumstances.
 
+    o	gzcon( <textConnection> ), an error, no longer damages the
+	connection (in a way to have it seg.fault). (PR#14237)
+
 
 
 

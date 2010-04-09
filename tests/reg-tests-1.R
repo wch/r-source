@@ -6118,3 +6118,17 @@ b <- a * (II <- (1 + 1e-7))
 attr(b,"xtras") <- attr(a,"xtras") * II
 stopifnot(all.equal(a,b, tol=2e-7))
 ## gave  "Attributes: .... relative difference: 1e-07"  in R <= 2.10.x
+
+
+## Misuse of gzcon() [PR# 14237]
+(ac <- getAllConnections())
+tc <- textConnection("x", "w")
+f <- gzcon(tc)# -> error.. but did *damage* tc
+newConn <- function(){ A <- getAllConnections(); A[is.na(match(A,ac))] }
+(newC <- newConn())
+gg <- tryCatch(getConnection(newC), error=identity)
+stopifnot(identical(gg, tc))
+close(tc)
+stopifnot(length(newConn()) == 0)
+## getConn..(*) seg.faulted in R <= 2.10.x
+
