@@ -743,6 +743,12 @@ static void worker_input_handler(void *data) {
 		    c->content_length = 0;
 		    return;
 		}
+		/* copy body content (as far as available) */
+		c->body_pos = (c->content_length < c->line_pos) ? c->content_length : c->line_pos;
+		if (c->body_pos) {
+		    memcpy(c->body, c->line_buf, c->body_pos);
+		    c->line_pos -= c->body_pos; /* NOTE: we are NOT moving the buffer since non-zero left-over causes connection close */
+		}
 		/* POST will continue into the BODY part */
 		break;
 	    }
@@ -826,26 +832,32 @@ static void worker_input_handler(void *data) {
 		}
 	    }
 	}
-	/* we end here if we processed a buffer of exactly one line */
-	c->line_pos = 0;
-	return;
-    } else if (c->part == PART_BODY && c->body) { /* BODY  - this branch always returns */
-	DBG(printf("BODY: body_pos=%d, content_length=%d\n", c->body_pos, c->content_length));
-	n = recv(c->sock, c->body + c->body_pos, c->content_length - c->body_pos, 0);
-	DBG(printf("      [recv n=%d - had %u of %u]\n", n, c->body_pos, c->content_length));
-	if (n < 0) { /* error, scrap this worker */
-	    remove_worker(c);
+	if (c->part < PART_BODY) {
+	    /* we end here if we processed a buffer of exactly one line */
+	    c->line_pos = 0;
 	    return;
 	}
-	if (n == 0) { /* connection closed -> try to process and then remove */
-	    process_request(c);
+    }
+    if (c->part == PART_BODY && c->body) { /* BODY  - this branch always returns */
+	if (c->body_pos < c->content_length) { /* need to receive more ? */
+	    DBG(printf("BODY: body_pos=%d, content_length=%d\n", c->body_pos, c->content_length));
+	    n = recv(c->sock, c->body + c->body_pos, c->content_length - c->body_pos, 0);
+	    DBG(printf("      [recv n=%d - had %u of %u]\n", n, c->body_pos, c->content_length));
+	    c->line_pos = 0;
+	    if (n < 0) { /* error, scrap this worker */
+		remove_worker(c);
+		return;
+	    }
+	    if (n == 0) { /* connection closed -> try to process and then remove */
+		process_request(c);
 	    remove_worker(c);
-	    return;
+		return;
+	    }
+	    c->body_pos += n;
 	}
-	c->body_pos += n;
 	if (c->body_pos == c->content_length) { /* yay! we got the whole body */
 	    process_request(c);
-	    if (c->attr & CONNECTION_CLOSE) {
+	    if (c->attr & CONNECTION_CLOSE || c->line_pos) { /* we have to close the connection if there was a double-hit */
 		remove_worker(c);
 		return;
 	    }
