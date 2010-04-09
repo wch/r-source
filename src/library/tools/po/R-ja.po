@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:20\n"
-"PO-Revision-Date: 2009-10-10 00:17+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"POT-Creation-Date: 2010-03-26 08:42\n"
+"PO-Revision-Date: 2010-04-03 10:33+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=utf-8 \n"
@@ -314,6 +314,8 @@ msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
 msgstr ""
+"パッケージ%sは存在しますが、R >= 2.10.0 でインストールされていないので xrefs"
+"をチェックできません "
 
 msgid "Obsolete package(s) %s in Rd xrefs"
 msgstr " もう使われていない %s が Rd xrefs　中にあります "
@@ -353,12 +355,11 @@ msgstr " 名前 '%s' が重複する Rd ファイル: "
 msgid "Rd files with duplicated alias '%s':"
 msgstr " 重複するエイリアス '%s' を持ったRdファイル： "
 
-#, fuzzy
 msgid "Argument items with no description in Rd object '%s':"
-msgstr " コード中にはあるがドキュメント中には無い引数名: "
+msgstr "Rdオブジェクト '%s' に説明のない引数: "
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
-msgstr ""
+msgstr "Rdオブジェクト '%s' に編集する必要のある自動生成された項目: "
 
 msgid "Generics g in env ="
 msgstr " 総称的な g (以下の環境中） "
@@ -487,9 +488,8 @@ msgstr " '%s' 中のファイルが '%s' 欄から欠損しています: "
 msgid "unable to create '%s'"
 msgstr " '%s' を生成することが出来ません "
 
-#, fuzzy
 msgid "unable to re-encode '%s' line(s) %s"
-msgstr " '%s' 再エンコード出来ません "
+msgstr " '%s' ('%s'行')を再エンコード出来ません "
 
 msgid "unable to copy INDEX to '%s'"
 msgstr " INDEX を '%s' にコピーすることが出来ません "
@@ -562,21 +562,19 @@ msgid "No docs found for package %s"
 msgstr " package %s にドキュメントは見つけられませんでした "
 
 msgid "Only help files, %s, %s and files under %s in a package can be viewed"
-msgstr ""
+msgstr "ヘルプファイル%s, %s, パッケージの%s以下のファイルだけが閲覧できます "
 
 msgid "NEWS"
-msgstr ""
+msgstr "NEWS "
 
-#, fuzzy
 msgid "DESCRIPTION"
-msgstr " 不正な DESCRIPTION ファイルです "
+msgstr "DESCRIPTION "
 
-#, fuzzy
 msgid "doc/"
-msgstr " ドキュメント "
+msgstr " doc/ "
 
 msgid "unsupported URL %s"
-msgstr ""
+msgstr "未サポートのURL %s "
 
 msgid "URL %s was not found"
 msgstr "URL '%s' は見つかりませんでした "
@@ -609,7 +607,7 @@ msgid "ERROR:"
 msgstr "エラー: "
 
 msgid "this seems to be a bundle -- and they are defunct"
-msgstr ""
+msgstr "バンドルされているようですが、現在は用いられていません "
 
 msgid "packaged installation of"
 msgstr " 以下のパッケージ化されたインストール "
@@ -625,7 +623,7 @@ msgstr ""
 "Adminstration Manual' "
 
 msgid "installing to"
-msgstr ""
+msgstr "にインストールしています "
 
 msgid ""
 "R include directory is empty -- perhaps need to install R-devel.rpm or "
@@ -649,7 +647,6 @@ msgstr "ソースファイルが見つかりません "
 msgid "empty 'data' directory"
 msgstr " 'data' ディレクトリが空です "
 
-#, fuzzy
 msgid "'--auto-zip' is for Windows only"
 msgstr " --auto-zip'  は Windows 専用です "
 
@@ -665,9 +662,8 @@ msgstr " 一時ディレクトリを生成することが出来ません "
 msgid "invalid package"
 msgstr " 不正なパッケージです "
 
-#, fuzzy
 msgid "--pkglock applies only to a single package"
-msgstr " --pkglock は単一のバンドル/パッケージだけに適用されます "
+msgstr " --pkglock は単一のパッケージだけに適用されます "
 
 msgid "ERROR: no packages specified"
 msgstr "パッケージが特定できません "
@@ -695,10 +691,10 @@ msgid "building a fake installation is disallowed"
 msgstr " まがい物(fake)インストールの構築は許されていません "
 
 msgid "--no-help overrides"
-msgstr ""
+msgstr " --no-help が優先されます "
 
 msgid "--"
-msgstr ""
+msgstr " -- "
 
 msgid "-o option without value"
 msgstr " 値のない -o オプションです "
@@ -723,6 +719,7 @@ msgstr "指定された 'type' ではありません "
 
 msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
 msgstr ""
+" 'type'は'txt', 'html', 'latex', 'example'のいずれかである必要があります "
 
 msgid "there is no package called '%s'"
 msgstr " '%s' という名前のパッケージが見当たりません "
@@ -917,9 +914,8 @@ msgstr "ファイル'DESCRIPTION'が見当たりません。 "
 msgid "Files 'DESCRIPTION' and 'DESCRIPTION.in' are missing."
 msgstr "ファイル'DESCRIPTION'と'DESCRIPTION.in'が見当たりません。 "
 
-#, fuzzy
 msgid "invalid package layout"
-msgstr " 不正なパッケージです "
+msgstr " 不正なパッケージ構成です "
 
 msgid "file '%s' is not in valid DCF format"
 msgstr " ファイル '%s' は有効な DCF フォーマットではありません "
@@ -951,7 +947,6 @@ msgid "Found .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
 msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました "
 
-#, fuzzy
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "

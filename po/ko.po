@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-04-05 17:41+0100\n"
+"POT-Creation-Date: 2010-04-09 06:34+0100\n"
 "PO-Revision-Date: 2010-03-25 14:26-0600\n"
 "Last-Translator: Chel Hee Lee <chl948@mail.usask.ca>\n"
 "Language-Team: Open Statistics Group <gnustats@gmail.com>\n"
@@ -159,8 +159,8 @@ msgstr "'%ls' 를 표시하는데 문제가 생겼습니다"
 #: src/main/datetime.c:652 src/main/datetime.c:727 src/main/datetime.c:729
 #: src/main/datetime.c:733 src/main/datetime.c:879 src/main/datetime.c:881
 #: src/main/datetime.c:1041 src/main/debug.c:223 src/main/deparse.c:348
-#: src/main/devices.c:580 src/main/dotcode.c:729 src/main/dotcode.c:733
-#: src/main/dotcode.c:738 src/main/dounzip.c:250 src/main/dounzip.c:257
+#: src/main/devices.c:580 src/main/dotcode.c:730 src/main/dotcode.c:734
+#: src/main/dotcode.c:739 src/main/dounzip.c:250 src/main/dounzip.c:257
 #: src/main/dounzip.c:267 src/main/dounzip.c:272 src/main/dounzip.c:276
 #: src/main/envir.c:1520 src/main/envir.c:1523 src/main/envir.c:1612
 #: src/main/envir.c:1617 src/main/envir.c:1683 src/main/envir.c:1699
@@ -1604,8 +1604,8 @@ msgstr "실제 적용 되지 않는 [술어]입니다"
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr "%s()는 벡터, 리스트 이외에만 사용할수가 있습니다"
 
-#: src/main/coerce.c:2187 src/main/dotcode.c:763 src/main/dotcode.c:806
-#: src/main/dotcode.c:1630
+#: src/main/coerce.c:2187 src/main/dotcode.c:764 src/main/dotcode.c:807
+#: src/main/dotcode.c:1631
 msgid "'name' is missing"
 msgstr ""
 
@@ -2639,7 +2639,7 @@ msgstr "DLL의 이름 '%s'이(가) 너무 깁니다"
 msgid "'name' must be a string (of length 1) or native symbol reference"
 msgstr "'name'는 (길이 1) 문자열 또는 native 기호가 되어야만 합니다"
 
-#: src/main/dotcode.c:199 src/main/dotcode.c:816
+#: src/main/dotcode.c:199 src/main/dotcode.c:817
 msgid "too many arguments in foreign function call"
 msgstr "외부 함수의 호출로 인수가 너무 많습니다"
 
@@ -2686,7 +2686,7 @@ msgstr "C/.Fortran에 문자열 변수는 중복하여야만 합니다"
 msgid "only first string in char vector used in .Fortran"
 msgstr "Fortran에 대한 문자 벡터으로서 최초의 문자열만을 사용했습니다"
 
-#: src/main/dotcode.c:397 src/main/dotcode.c:516
+#: src/main/dotcode.c:397 src/main/dotcode.c:517
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr "'%s'라고 하는 인코딩은 서포트 되어있지 않습니다"
@@ -2706,91 +2706,91 @@ msgstr "C/.Fortran에 문자열 변수는 중복하여야만 합니다"
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "Fortran에 건네진 인수%d의 모드가 부적절합니다"
 
-#: src/main/dotcode.c:530
+#: src/main/dotcode.c:531
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr "'%s'로부터의 다시 인코딩한 변환문제가 발생했습니다"
 
-#: src/main/dotcode.c:596
+#: src/main/dotcode.c:597
 msgid "NAOK used more than once"
 msgstr "NAOK가 2회이상 사용되었습니다"
 
-#: src/main/dotcode.c:600
+#: src/main/dotcode.c:601
 msgid "DUP used more than once"
 msgstr "DUP가 2회이상 사용되었습니다"
 
-#: src/main/dotcode.c:606
+#: src/main/dotcode.c:607
 msgid "DLL name is too long"
 msgstr "DLL 이름은 너무 깁니다"
 
-#: src/main/dotcode.c:609 src/main/dotcode.c:669 src/main/dotcode.c:675
+#: src/main/dotcode.c:610 src/main/dotcode.c:670 src/main/dotcode.c:676
 msgid "PACKAGE used more than once"
 msgstr "패키지가 2회이상 사용되었습니다"
 
-#: src/main/dotcode.c:648
+#: src/main/dotcode.c:649
 msgid "PACKAGE argument must be a single character string"
 msgstr "패키지 인수는 단일 문자열이어야만 합니다"
 
-#: src/main/dotcode.c:654
+#: src/main/dotcode.c:655
 msgid "PACKAGE argument is too long"
 msgstr "패키지 인수가 너무 깁니다"
 
-#: src/main/dotcode.c:698 src/main/dotcode.c:706
+#: src/main/dotcode.c:699 src/main/dotcode.c:707
 msgid "ENCODING used more than once"
 msgstr "ENCODING가 2회이상 사용되었습니다"
 
-#: src/main/dotcode.c:700 src/main/dotcode.c:708
+#: src/main/dotcode.c:701 src/main/dotcode.c:709
 msgid "ENCODING argument must be a single character string"
 msgstr "ENCODING 인수는 단일 문자열이어야만 합니다"
 
-#: src/main/dotcode.c:725
+#: src/main/dotcode.c:726
 msgid "no arguments supplied"
 msgstr "인수가 제공되어 있지 않습니다"
 
-#: src/main/dotcode.c:726 src/main/seq.c:639
+#: src/main/dotcode.c:727 src/main/seq.c:639
 msgid "too many arguments"
 msgstr "인수의 수가 너무 많습니다"
 
-#: src/main/dotcode.c:779 src/main/dotcode.c:823 src/main/dotcode.c:1651
+#: src/main/dotcode.c:780 src/main/dotcode.c:824 src/main/dotcode.c:1652
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr "인수의 개수(%d)가 부적절합니다. %d개가 %s개에 대해서는 필요합니다"
 
-#: src/main/dotcode.c:1480 src/main/dotcode.c:2283
+#: src/main/dotcode.c:1481 src/main/dotcode.c:2284
 msgid "too many arguments, sorry"
 msgstr "인수가 너무 많습니다(죄송합니다)"
 
-#: src/main/dotcode.c:1512 src/main/dotcode.c:1529
+#: src/main/dotcode.c:1513 src/main/dotcode.c:1530
 msgid "Invalid graphics state"
 msgstr "무효한 graphics 상태입니다"
 
-#: src/main/dotcode.c:1602
+#: src/main/dotcode.c:1603
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "DLL를  검색하고 있을때, DLLInfoReference에 NULL값이 검색되었습니다"
 
-#: src/main/dotcode.c:1676
+#: src/main/dotcode.c:1677
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "%d 인수의 유형가 부적절합니다(%s의 호출에 의해서)"
 
-#: src/main/dotcode.c:2377
+#: src/main/dotcode.c:2378
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "언어 사이의 함수 호출에 두고 \"%s\" 형태는 서포트 되어있지 않습니다"
 
-#: src/main/dotcode.c:2389
+#: src/main/dotcode.c:2390
 msgid "invalid function in call_R"
 msgstr "call_R 함수가 부적절합니다"
 
-#: src/main/dotcode.c:2391
+#: src/main/dotcode.c:2392
 msgid "invalid argument count in call_R"
 msgstr "call_R 인수 개수가 부적절합니다"
 
-#: src/main/dotcode.c:2393
+#: src/main/dotcode.c:2394
 msgid "invalid return value count in call_R"
 msgstr "call_R의 반환값의 개수가 부적절합니다"
 
-#: src/main/dotcode.c:2436
+#: src/main/dotcode.c:2437
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R에서 \"%s'\"라고 하는 모드는 서포트되어있지 않습니다"

@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-04-05 17:41+0100\n"
-"PO-Revision-Date: 2009-10-10 14:06+0100\n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"POT-Creation-Date: 2010-04-09 06:34+0100\n"
+"PO-Revision-Date: 2010-04-03 09:42+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
@@ -161,8 +161,8 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/datetime.c:652 src/main/datetime.c:727 src/main/datetime.c:729
 #: src/main/datetime.c:733 src/main/datetime.c:879 src/main/datetime.c:881
 #: src/main/datetime.c:1041 src/main/debug.c:223 src/main/deparse.c:348
-#: src/main/devices.c:580 src/main/dotcode.c:729 src/main/dotcode.c:733
-#: src/main/dotcode.c:738 src/main/dounzip.c:250 src/main/dounzip.c:257
+#: src/main/devices.c:580 src/main/dotcode.c:730 src/main/dotcode.c:734
+#: src/main/dotcode.c:739 src/main/dounzip.c:250 src/main/dounzip.c:257
 #: src/main/dounzip.c:267 src/main/dounzip.c:272 src/main/dounzip.c:276
 #: src/main/envir.c:1520 src/main/envir.c:1523 src/main/envir.c:1612
 #: src/main/envir.c:1617 src/main/envir.c:1683 src/main/envir.c:1699
@@ -432,7 +432,7 @@ msgstr " 入力をリダイレクトすることができません "
 
 #: src/gnuwin32/run.c:311
 msgid "Child process not responding.  R will terminate it."
-msgstr ""
+msgstr " 子プロセスが応答しないため, 強制終了させます. "
 
 #: src/gnuwin32/run.c:354
 #, c-format
@@ -791,9 +791,9 @@ msgid "table entry must be an external pointer"
 msgstr " テーブルエントリは外部ポインタでなければなりません "
 
 #: src/main/Rstrptime.h:501 src/main/Rstrptime.h:968
-#, fuzzy, c-format
+#, c-format
 msgid "use of %s for input is not supported"
-msgstr " call_R では \"%s\" というモードはサポートされていません "
+msgstr "入力に %s を使用することはサポートされていません "
 
 #: src/main/Rstrptime.h:1222
 msgid "input string is too long"
@@ -816,7 +816,7 @@ msgstr " マルチバイト文字列が不正です "
 #: src/main/grep.c:1762
 #, c-format
 msgid "argument '%s' has length > 1 and only the first element will be used"
-msgstr ""
+msgstr " 引数 '%s' は 1を超える長さなので, 最初の要素だけが使われます "
 
 #: src/main/agrep.c:93 src/main/grep.c:783 src/main/grep.c:1804
 msgid "regular expression is invalid in this locale"
@@ -839,14 +839,12 @@ msgid "invalid length"
 msgstr " 長さが不正です "
 
 #: src/main/apply.c:96
-#, fuzzy
 msgid "FUN.VALUE must be a vector"
-msgstr " コードはジェネリックなベクトルでなければなりません "
+msgstr "FUN.VALUE はベクタでなければなりません "
 
 #: src/main/apply.c:98
-#, fuzzy
 msgid "invalid USE.NAMES value"
-msgstr "値が不正です "
+msgstr "USE.NAMESの値が不正です "
 
 #: src/main/apply.c:144
 #, c-format
@@ -854,6 +852,8 @@ msgid ""
 "values must be length %d,\n"
 " but FUN(X[[%d]]) result is length %d"
 msgstr ""
+"値の長さは %d でなければなりません, \n"
+"しかし、FUN(X[[%d]]) の結果の長さが %d です "
 
 #: src/main/apply.c:156
 #, c-format
@@ -861,11 +861,13 @@ msgid ""
 "values must be type '%s',\n"
 " but FUN(X[[%d]]) result is type '%s'"
 msgstr ""
+"値の型は '%s' でなければなりません, \n"
+"しかし、FUN(X[[%d]]) の結果の型が '%s' です "
 
 #: src/main/apply.c:174
-#, fuzzy, c-format
+#, c-format
 msgid "type '%s' is not supported"
-msgstr " call_R では \"%s\" というモードはサポートされていません "
+msgstr " '%s' という型はサポートされていません "
 
 #: src/main/arithmetic.c:35
 msgid "NaNs produced"
@@ -1394,12 +1396,11 @@ msgstr " '...' が不適切な文脈で使われました "
 
 #: src/main/builtin.c:901
 msgid "'EXPR' is missing"
-msgstr ""
+msgstr " 'EXPR' がありません "
 
 #: src/main/builtin.c:905
-#, fuzzy
 msgid "EXPR must be a length 1 vector"
-msgstr " switch：EXPRは長さ1のベクトルを返すべきです "
+msgstr "EXPRは長さ1のベクトルでなければなりません "
 
 #: src/main/character.c:93 src/main/character.c:116
 #, c-format
@@ -1519,9 +1520,9 @@ msgid "(list) object cannot be coerced to type '%s'"
 msgstr "  (list)オブジェクトは '%s' に変換できません "
 
 #: src/main/coerce.c:1067
-#, fuzzy, c-format
+#, c-format
 msgid "(symbol) object cannot be coerced to type '%s'"
-msgstr "  (list)オブジェクトは '%s' に変換できません "
+msgstr "  (symbol)オブジェクトは '%s' に変換できません "
 
 #: src/main/coerce.c:1083 src/main/coerce.c:1382
 msgid "no method for coercing this S4 class to a vector"
@@ -1572,10 +1573,10 @@ msgstr " 未実装の「述語」です "
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr " %s() は型 '%s' のベクトル、リスト以外に適用されます "
 
-#: src/main/coerce.c:2187 src/main/dotcode.c:763 src/main/dotcode.c:806
-#: src/main/dotcode.c:1630
+#: src/main/coerce.c:2187 src/main/dotcode.c:764 src/main/dotcode.c:807
+#: src/main/dotcode.c:1631
 msgid "'name' is missing"
-msgstr ""
+msgstr " 'name'が見つかりません "
 
 #: src/main/coerce.c:2194
 msgid "first argument must be a character string"
@@ -2589,7 +2590,7 @@ msgstr ""
 " 'name' は（長さ1の）文字列またはネイティブなシンボル参照でなければなりませ"
 "ん "
 
-#: src/main/dotcode.c:199 src/main/dotcode.c:816
+#: src/main/dotcode.c:199 src/main/dotcode.c:817
 msgid "too many arguments in foreign function call"
 msgstr " 外部関数の呼び出しで引数が多すぎます "
 
@@ -2635,7 +2636,7 @@ msgstr " .C/.Fortran 中に文字列変数は重複していなければなり�
 msgid "only first string in char vector used in .Fortran"
 msgstr " .Fortran に対する文字ベクトルとして，最初の文字列だけを使いました "
 
-#: src/main/dotcode.c:397 src/main/dotcode.c:516
+#: src/main/dotcode.c:397 src/main/dotcode.c:517
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr " '%s' というエンコーディングはサポートされていません "
@@ -2654,91 +2655,91 @@ msgstr " .C 中ではリストは重複していなければなりません "
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr " Fortran に渡された引数 %d のモードが不正です "
 
-#: src/main/dotcode.c:530
+#: src/main/dotcode.c:531
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr " '%s' からの再エンコーディング中に変換問題が生じました "
 
-#: src/main/dotcode.c:596
+#: src/main/dotcode.c:597
 msgid "NAOK used more than once"
 msgstr " NAOK が二回以上使われました "
 
-#: src/main/dotcode.c:600
+#: src/main/dotcode.c:601
 msgid "DUP used more than once"
 msgstr " DUP が二回以上使われました "
 
-#: src/main/dotcode.c:606
+#: src/main/dotcode.c:607
 msgid "DLL name is too long"
 msgstr " DLL の名前が長すぎます "
 
-#: src/main/dotcode.c:609 src/main/dotcode.c:669 src/main/dotcode.c:675
+#: src/main/dotcode.c:610 src/main/dotcode.c:670 src/main/dotcode.c:676
 msgid "PACKAGE used more than once"
 msgstr " PACKAGE が二回以上使われました "
 
-#: src/main/dotcode.c:648
+#: src/main/dotcode.c:649
 msgid "PACKAGE argument must be a single character string"
 msgstr " PACKAGE 引数は単一の文字列でなければなりません "
 
-#: src/main/dotcode.c:654
+#: src/main/dotcode.c:655
 msgid "PACKAGE argument is too long"
 msgstr " PACKAGE 引数が長すぎます "
 
-#: src/main/dotcode.c:698 src/main/dotcode.c:706
+#: src/main/dotcode.c:699 src/main/dotcode.c:707
 msgid "ENCODING used more than once"
 msgstr " ENCODING が二回以上使われました "
 
-#: src/main/dotcode.c:700 src/main/dotcode.c:708
+#: src/main/dotcode.c:701 src/main/dotcode.c:709
 msgid "ENCODING argument must be a single character string"
 msgstr " ENCODING 引数は単一の文字列でなければなりません "
 
-#: src/main/dotcode.c:725
+#: src/main/dotcode.c:726
 msgid "no arguments supplied"
 msgstr " 引数が与えられていません "
 
-#: src/main/dotcode.c:726 src/main/seq.c:639
+#: src/main/dotcode.c:727 src/main/seq.c:639
 msgid "too many arguments"
 msgstr " 引数の数が多すぎます "
 
-#: src/main/dotcode.c:779 src/main/dotcode.c:823 src/main/dotcode.c:1651
+#: src/main/dotcode.c:780 src/main/dotcode.c:824 src/main/dotcode.c:1652
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr " 引数の個数(%d)が不正です。%d 個が %s に対しては必要です "
 
-#: src/main/dotcode.c:1480 src/main/dotcode.c:2283
+#: src/main/dotcode.c:1481 src/main/dotcode.c:2284
 msgid "too many arguments, sorry"
 msgstr " 引数が多すぎます（すみません…） "
 
-#: src/main/dotcode.c:1512 src/main/dotcode.c:1529
+#: src/main/dotcode.c:1513 src/main/dotcode.c:1530
 msgid "Invalid graphics state"
 msgstr " 無効なグラフィックス状態です "
 
-#: src/main/dotcode.c:1602
+#: src/main/dotcode.c:1603
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr " DLL を探している際に，DLLInfoReference に NULL 値が見つかりました "
 
-#: src/main/dotcode.c:1676
+#: src/main/dotcode.c:1677
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr " %d 引数の型が不正です（%s の呼び出しにおいて） "
 
-#: src/main/dotcode.c:2377
+#: src/main/dotcode.c:2378
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr " 言語間の関数呼び出しにおいて \"%s\" 型はサポートされていません "
 
-#: src/main/dotcode.c:2389
+#: src/main/dotcode.c:2390
 msgid "invalid function in call_R"
 msgstr " call_R 中の関数が不正です "
 
-#: src/main/dotcode.c:2391
+#: src/main/dotcode.c:2392
 msgid "invalid argument count in call_R"
 msgstr " call_R の引数の個数が不正です "
 
-#: src/main/dotcode.c:2393
+#: src/main/dotcode.c:2394
 msgid "invalid return value count in call_R"
 msgstr " call_R の戻り値の個数が不正です "
 
-#: src/main/dotcode.c:2436
+#: src/main/dotcode.c:2437
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr " call_R では \"%s\" というモードはサポートされていません "
@@ -3172,14 +3173,14 @@ msgid "exported symbol '%s' has no value"
 msgstr " エクスポートされたシンボル \"%s\" が値を持っていません "
 
 #: src/main/envir.c:3477
-#, fuzzy, c-format
+#, c-format
 msgid "unknown encoding: %d"
-msgstr " '%s' というエンコーディングはサポートされていません "
+msgstr "未知のエンコーディングです: '%d' "
 
 #: src/main/envir.c:3491
 #, c-format
 msgid "embedded nul in string: '%s'"
-msgstr ""
+msgstr "文字列の中にnulが埋め込まれています: '%s' "
 
 #: src/main/errors.c:181 src/main/errors.c:218
 msgid "interrupts suspended; signal ignored"
@@ -3429,9 +3430,8 @@ msgid "invalid for() loop sequence"
 msgstr " for() ループが不正です "
 
 #: src/main/eval.c:1265
-#, fuzzy
 msgid "multi-argument returns are not permitted"
-msgstr " 複数の結果を返す return は廃止されました "
+msgstr " 複数の結果を返す return は許されません "
 
 #: src/main/eval.c:1313
 msgid "invalid (NULL) left side of assignment"
@@ -3467,14 +3467,14 @@ msgid "invalid assignment left-hand side"
 msgstr " 左辺への代入が不正です "
 
 #: src/main/eval.c:1578
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d is empty"
-msgstr " 引数 %d がベクトルではありません "
+msgstr " 引数 %d が空です "
 
 #: src/main/eval.c:1581
 #, c-format
 msgid "'%s' is missing"
-msgstr ""
+msgstr " '%s'が見つかりません "
 
 #: src/main/eval.c:1713
 msgid "invalid formal argument list for \"function\""
@@ -3794,9 +3794,9 @@ msgid "unable to allocate buffer for long string at line %d"
 msgstr "文字列が長すぎるためメモリ確保ができません  (%d行) "
 
 #: src/main/gram.y:2110
-#, fuzzy, c-format
+#, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
-msgstr " 8進文字なしに'\\x'が使われています "
+msgstr " \"%s\"で始まる文字列の中で8進文字なしに'\\x'が使われています "
 
 #: src/main/gram.y:2124
 #, c-format
@@ -3804,9 +3804,9 @@ msgid "\\uxxxx sequences not supported inside backticks (line %d)"
 msgstr " \\uxxxx シーケンスはバックチック内ではサポートされません   (%d 行) "
 
 #: src/main/gram.y:2139
-#, fuzzy, c-format
+#, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
-msgstr " 8進文字なしに'\\x'が使われています "
+msgstr " \"%s\"で始まる文字列の中で8進文字なしに'\\u'が使われています "
 
 #: src/main/gram.y:2147
 #, c-format
@@ -3820,9 +3820,9 @@ msgstr ""
 " \\Uxxxxxxxx シーケンスはバックチック内ではサポートされません  (%d 行) "
 
 #: src/main/gram.y:2174
-#, fuzzy, c-format
+#, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
-msgstr " 8進文字なしに'\\x'が使われています "
+msgstr " \"%s\"で始まる文字列の中で8進文字なしに'\\U'が使われています "
 
 #: src/main/gram.y:2182
 #, c-format
@@ -3830,9 +3830,10 @@ msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr " 不正な \\U{xxxxxxxx} 系列です  (%d行) "
 
 #: src/main/gram.y:2222
-#, fuzzy, c-format
+#, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
-msgstr " '\\%c' は文字列で認識されないエスケープです "
+msgstr ""
+" \"%2$s\"で始まる文字列の中で '\\%1$c' は文字列で認識されないエスケープです "
 
 #: src/main/gram.y:2270
 msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
@@ -3946,19 +3947,19 @@ msgstr " 引数 '%s' は無視されます  "
 
 #: src/main/grep.c:190 src/main/grep.c:277 src/main/grep.c:381
 #: src/main/grep.c:827 src/main/grep.c:1853
-#, fuzzy, c-format
+#, c-format
 msgid "input string %d is invalid UTF-8"
-msgstr " 入力文字列 %d はこのロケールでは不適切です "
+msgstr " 入力文字列 %d は不正なUTF-8文字列です "
 
 #: src/main/grep.c:255 src/main/grep.c:348
-#, fuzzy, c-format
+#, c-format
 msgid "'split' string %d is invalid UTF-8"
-msgstr " 入力文字列 %d はこのロケールでは不適切です "
+msgstr " \"分割された\"文字列%dは不正なUTF-8文字列です "
 
 #: src/main/grep.c:259 src/main/grep.c:352 src/main/grep.c:521
-#, fuzzy, c-format
+#, c-format
 msgid "'split' string %d is invalid in this locale"
-msgstr " 入力文字列 %d はこのロケールでは不適切です "
+msgstr " \"分割された\"文字列%dはこのロケールでは不適切です "
 
 #: src/main/grep.c:360 src/main/grep.c:796 src/main/grep.c:1151
 #: src/main/grep.c:1817
@@ -3988,19 +3989,16 @@ msgstr ""
 " \t'%s' \n"
 
 #: src/main/grep.c:779 src/main/grep.c:1800
-#, fuzzy
 msgid "regular expression is invalid UTF-8"
-msgstr " このロケールでは，正規表現は無効です "
+msgstr " 正規表現は不正なUTF-8文字列です "
 
 #: src/main/grep.c:1126
-#, fuzzy
 msgid "'pattern' is invalid UTF-8"
-msgstr " 'pattern' は現在のロケールでは不正です "
+msgstr " 'pattern' は不正なUTF-8文字列です "
 
 #: src/main/grep.c:1128
-#, fuzzy
 msgid "'replacement' is invalid UTF-8"
-msgstr " 'replacement' は現在のロケールでは不正です "
+msgstr " 'replacement' は不正なUTF-8文字列です "
 
 #: src/main/grep.c:1132
 msgid "'pattern' is invalid in this locale"
@@ -4016,9 +4014,8 @@ msgstr " 長さゼロのパターン "
 
 #: src/main/grep.c:1280 src/main/grep.c:1296 src/main/grep.c:1344
 #: src/main/grep.c:1360 src/main/grep.c:1407 src/main/grep.c:1423
-#, fuzzy
 msgid "result string is too long"
-msgstr " 入力文字列が長すぎます "
+msgstr " 結果の文字列が長すぎます "
 
 #: src/main/internet.c:90
 msgid "internet routines cannot be accessed in module"
@@ -4509,14 +4506,12 @@ msgid "Invalid generic function in 'usemethod'"
 msgstr " 'usemethod' 中に無効な総称関数があります "
 
 #: src/main/objects.c:408
-#, fuzzy
 msgid "there must be a 'generic' argument"
-msgstr " 最初の引数がなければなりません "
+msgstr " 'generic'引数が必要です "
 
 #: src/main/objects.c:412
-#, fuzzy
 msgid "'generic' argument must be a character string"
-msgstr " 最初の引数は文字列でなくてはなりません "
+msgstr " 'generic'引数は文字列でなくてはなりません "
 
 #: src/main/objects.c:449
 msgid "'UseMethod' called from outside a closure"
@@ -4660,7 +4655,7 @@ msgstr ""
 #: src/main/objects.c:1236
 #, c-format
 msgid "object returned as generic function \"%s\" doesn't appear to be one"
-msgstr ""
+msgstr " 総称的関数\"%s\"として返されたオブジェクトがひとつではないようです "
 
 #: src/main/objects.c:1334
 msgid "invalid primitive operation given for dispatch"
@@ -6181,9 +6176,8 @@ msgid "'by' must be finite"
 msgstr " 'by' は有限でなければなりません "
 
 #: src/main/seq.c:680
-#, fuzzy
 msgid "argument must be coercible to non-negative integer"
-msgstr " 引数は非負でなければなりません "
+msgstr " 引数は非負の整数に変換できなければなりません "
 
 #: src/main/serialize.c:223 src/main/serialize.c:253 src/main/serialize.c:276
 msgid "unknown or inappropriate output format"
@@ -6453,13 +6447,13 @@ msgid ""
 "\"%s\n"
 "%s\""
 msgstr ""
-" %s 以下中: \n"
+" %s 以下の部分: \n"
 " \"%s \n"
 " %s\" "
 
 #: src/main/source.c:204
 msgid "coercion of 'text' to character was unsuccessful"
-msgstr ""
+msgstr " 'text'から文字列への変換に失敗しました "
 
 #: src/main/source.c:220
 #, c-format
@@ -6485,7 +6479,7 @@ msgstr " データの長さが分割変数の倍数ではありません "
 #: src/main/sprintf.c:93
 #, c-format
 msgid "required resulting string length %d is > maximal %d"
-msgstr ""
+msgstr " 要求された結果の文字列長 %d が上限 %d を超えています "
 
 #: src/main/sprintf.c:101
 msgid "'fmt' is not a character vector"
@@ -6494,7 +6488,7 @@ msgstr " 'fmt' は文字ベクトルではありません "
 #: src/main/sprintf.c:106
 #, c-format
 msgid "only %d arguments are allowed"
-msgstr ""
+msgstr " %d 引数だけが許されます "
 
 #: src/main/sprintf.c:113
 #, c-format
@@ -6786,13 +6780,12 @@ msgid "no non-missing arguments to max; returning -Inf"
 msgstr " max の引数に有限な値がありません：-Inf を返します "
 
 #: src/main/summary.c:798
-#, fuzzy
 msgid "argument to 'which' is not logical"
-msgstr " 引数 'logarithm' は論理型でなくてはなりません "
+msgstr " 'which'へ渡す引数が論理型ではありません "
 
 #: src/main/summary.c:907
 msgid "no input has determined the number of cases"
-msgstr ""
+msgstr "ケースの数を決定する入力がありません "
 
 #: src/main/summary.c:1010
 msgid "not all arguments have the same length"
@@ -6889,9 +6882,8 @@ msgid "cannot find unused tempfile name"
 msgstr " 未使用の一時ファイル名を探すことができません "
 
 #: src/main/sysutils.c:1370
-#, fuzzy
 msgid "allocation failed in R_tmpnam"
-msgstr " R_tmpnam において 'tempdir' が不正です "
+msgstr " R_tmpnam においてメモリ割り当てが失敗しました "
 
 #: src/main/sysutils.c:1396
 msgid "proc.time() is not implemented on this system"
@@ -7008,7 +7000,7 @@ msgstr[0] " '%d' 個の引数が '%s' に渡されましたが，%d が必要と
 #: src/main/util.c:440
 #, c-format
 msgid "supplied argument name '%s' does not match '%s'"
-msgstr ""
+msgstr " 使われた引数名'%s'が'%s'と一致しません "
 
 #: src/main/util.c:450
 #, c-format
@@ -7357,9 +7349,8 @@ msgid "'x' must be a square numeric matrix"
 msgstr " 'x' は数値の正方行列でなければなりません "
 
 #: src/modules/lapack/Lapack.c:311
-#, fuzzy
 msgid "'type' must be a character string"
-msgstr " 'text' は文字列でなければなりません "
+msgstr " 'type' は文字列でなければなりません "
 
 #: src/modules/lapack/Lapack.c:318 src/modules/lapack/Lapack.c:352
 #: src/modules/lapack/Lapack.c:409
@@ -7678,9 +7669,8 @@ msgid "could not open file '%s'"
 msgstr " ファイル '%s' を開けませんでした "
 
 #: src/modules/X11/devX11.c:2041
-#, fuzzy
 msgid "Unable to create XImage"
-msgstr " pixmap を作れません "
+msgstr " XImage を作れません "
 
 #: src/modules/X11/devX11.c:2339
 msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
@@ -7745,7 +7735,7 @@ msgstr " X11ディスプレイに接続できません "
 #: src/modules/X11/devX11.c:3337
 #, c-format
 msgid "clipboard cannot be read (error code %d)"
-msgstr ""
+msgstr "クリップボードの内容を読み込めません(エラーコード %d) "
 
 #: src/modules/X11/devX11.c:3371
 msgid "cannot allocate memory for X11Routines structure"
@@ -7809,29 +7799,29 @@ msgid "bessel_y(%g,nu=%g): precision lost in result\n"
 msgstr " bessel_y(%g,nu=%g): 結果の精度が失われました \n"
 
 #: src/nmath/nmath.h:132
-#, fuzzy, c-format
+#, c-format
 msgid "argument out of domain in '%s'\n"
-msgstr " 'perm' 中の値が範囲を超えています "
+msgstr " '%s'の中で引数が範囲外です \n"
 
 #: src/nmath/nmath.h:135
-#, fuzzy, c-format
+#, c-format
 msgid "value out of range in '%s'\n"
-msgstr " 'perm' 中の値が範囲を超えています "
+msgstr " '%s' 中の値が範囲を超えています \n"
 
 #: src/nmath/nmath.h:138
-#, fuzzy, c-format
+#, c-format
 msgid "convergence failed in '%s'\n"
-msgstr " '%s' の名前が長すぎます "
+msgstr " '%s' の中で収束しませんでした \n"
 
 #: src/nmath/nmath.h:141
 #, c-format
 msgid "full precision may not have been achieved in '%s'\n"
-msgstr ""
+msgstr " '%s'の中で最大限の精度は満たされないかもしれません \n"
 
 #: src/nmath/nmath.h:144
 #, c-format
 msgid "underflow occurred in '%s'\n"
-msgstr ""
+msgstr " '%s'でアンダーフローが起こりました \n"
 
 #: src/nmath/pnchisq.c:233
 #, c-format
@@ -7998,10 +7988,9 @@ msgid "'intern' must be logical and not NA"
 msgstr " 'intern' は論理値であり NA であってはなりません "
 
 #: src/unix/sys-unix.c:277
-#, fuzzy, c-format
+#, c-format
 msgid "cannot popen '%s', probable reason '%s'"
-msgstr ""
-" bzip2により圧縮されたファイル '%s' を開くことができません, 理由は '%s' です "
+msgstr " '%s'をpopenすることができません。理由はおそらく'%s'です "
 
 #: src/unix/sys-unix.c:282
 #, c-format

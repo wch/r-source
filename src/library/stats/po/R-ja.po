@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-19 11:18\n"
-"PO-Revision-Date: 2009-10-07 19:29+0900 \n"
+"POT-Creation-Date: 2010-03-26 08:42\n"
+"PO-Revision-Date: 2010-04-03 10:39+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
@@ -29,9 +29,8 @@ msgstr ""
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
 msgstr " 'alpha', 'beta' そして 'gamma' は単位区間の内部にある必要があります "
 
-#, fuzzy
 msgid "data must be non-zero for multiplicative Holt-Winters."
-msgstr " 乗法的 Holt-Winters モデルではデータは正値でなければなりません "
+msgstr " 乗法的 Holt-Winters モデルではデータは非ゼロでなければなりません "
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr " 季節的な開始値を計算するには少なくとも 2 期間が必要です "
@@ -143,7 +142,6 @@ msgstr " 合体すべき行がありません "
 msgid "'by' must be a list"
 msgstr " 'by' はリストでなければなりません "
 
-#, fuzzy
 msgid "arguments must have same length"
 msgstr " 引数は同じ長さでなければなりません "
 
@@ -273,9 +271,8 @@ msgstr " 'order.max' は 1 以上でなければなりません "
 msgid "'order.max' must be < 'n.used'"
 msgstr " 'order.max' は 'n.used' より小さくなければなりません "
 
-#, fuzzy
 msgid "'n.ahead' must be at least 1"
-msgstr " 'lag.max' は少なくとも 1 です "
+msgstr " 'n.ahead' は少なくとも 1 です "
 
 msgid "number of series in 'object' and 'newdata' do not match"
 msgstr " 'object' 中の系列の数と 'newdata' が一致しません "
@@ -546,11 +543,9 @@ msgstr " 'V'は数値正方行列ではありません "
 msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
 msgstr " diag(.)が0またはNAを含んでいます; 有限でない結果は疑問です "
 
-#, fuzzy
 msgid "'x' must be a numeric vector"
-msgstr " 'y' は数値ベクトルでなければなりません "
+msgstr " 'x' は数値ベクトルでなければなりません "
 
-#, fuzzy
 msgid "'y' must be a numeric vector"
 msgstr " 'y' は数値ベクトルでなければなりません "
 
@@ -852,9 +847,8 @@ msgstr ""
 msgid "non-positive values not allowed for the gamma family"
 msgstr " 正でない値はガンマファミリには許されません "
 
-#, fuzzy
 msgid "using weights as shape parameters"
-msgstr "シェイプパラメータとして重みを使います "
+msgstr " shapeパラメータとして重み(weights)を使います "
 
 msgid ""
 "link \"%s\" not available for inverse.gaussian family; available links are %s"
@@ -991,9 +985,8 @@ msgstr " 'col.vars' が無いか不正確です "
 msgid "'family' not recognized"
 msgstr " 'family' が確認できません "
 
-#, fuzzy
 msgid "invalid 'method' argument"
-msgstr " 無効な 'data' 引数です "
+msgstr " 無効な 'method' 引数です "
 
 msgid "'weights' must be a numeric vector"
 msgstr " 'weights' は数値ベクトルでなければなりません "
@@ -1038,9 +1031,8 @@ msgstr " D(mu)/d(eta) 中に NA があります "
 msgid "no observations informative at iteration"
 msgstr " 繰り返しにおいて意味のある観測値がありません "
 
-#, fuzzy
 msgid "non-finite coefficients at iteration %d"
-msgstr " 繰り返しにおいて有限でない係数が得られました "
+msgstr " 繰り返し%dにおいて有限でない係数が得られました "
 
 msgid "X matrix has rank %d, but only %d observations"
 msgstr " X 行列はランク %d を持ちますが、観測値は %d 個だけです　 "
@@ -1061,21 +1053,17 @@ msgstr " ステップサイズの切り詰め: 限界を越えました "
 msgid "inner loop 2; cannot correct step size"
 msgstr " 内部ループ 2; ステップサイズを訂正することができません "
 
-#, fuzzy
 msgid "glm.fit: algorithm did not converge"
-msgstr " アルゴリズムは収束しませんでした "
+msgstr " glm.fit: アルゴリズムは収束しませんでした "
 
-#, fuzzy
 msgid "glm.fit: algorithm stopped at boundary value"
-msgstr " アルゴリズムは境界値で停止しました "
+msgstr " glm.fit: アルゴリズムは境界値で停止しました "
 
-#, fuzzy
 msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
-msgstr " 数値的に 0 か 1 である確率が生じました "
+msgstr " glm.fit: 数値的に 0 か 1 である確率が生じました "
 
-#, fuzzy
 msgid "glm.fit: fitted rates numerically 0 occurred"
-msgstr " 数値的に 0 である当てはめ比率が生じました "
+msgstr " glm.fit: 数値的に 0 である当てはめ比率が生じました "
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr " 'anova.glm' への次の引数は無効であり、除去されました： "
@@ -1853,7 +1841,7 @@ msgid "'proj' is not implemented for multiple responses"
 msgstr " 'proj' は多重応答に対しては実装されていません "
 
 msgid "table 'x' should have 2 entries"
-msgstr ""
+msgstr "テーブル'x'には二つのエントリが必要です "
 
 msgid "elements of 'n' must be positive"
 msgstr " 'n' の要素は正でなければなりません "
@@ -1882,9 +1870,8 @@ msgstr " 'y', 'groups' 及び 'blocks' は同じ長さでなければなりま�
 msgid "'formula' missing"
 msgstr " モデル式('formula')がありません "
 
-#, fuzzy
 msgid "factors are not allowed"
-msgstr " 交互作用は許されません "
+msgstr " 要因(factor)は許されません "
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
 msgstr " 'na.rm ' が FALSE なら、欠測値及び NaN は許されません "

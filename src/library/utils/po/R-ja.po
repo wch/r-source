@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-04-04 14:39\n"
-"PO-Revision-Date: 2009-10-09 09:12+0900 \n"
-"Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
+"PO-Revision-Date: 2010-04-03 09:55+0900 \n"
+"Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
 "Content-Type: text/plain; charset=UTF-8 \n"
@@ -104,12 +104,11 @@ msgstr " ビニエット(vignette)が見付かりません "
 msgid "call"
 msgstr " call "
 
-#, fuzzy
 msgid "Package '"
-msgstr " パッケージ "
+msgstr " パッケージ ' "
 
 msgid "' DESCRIPTION not found."
-msgstr ""
+msgstr "DESCRIPTION が見つかりません "
 
 msgid "'file' must be NULL, a character string or a connection"
 msgstr " 'file' はconnectionか文字列か NULL でなければなりません "
@@ -257,7 +256,6 @@ msgstr " 'name'のクラスは破棄されます "
 msgid "cannot edit NULL row names"
 msgstr " NULLの行の名前は編集できません "
 
-#, fuzzy
 msgid "no help found for '%s'"
 msgstr " '%s' に対するヘルプファイルが見つかりません "
 
@@ -322,14 +320,15 @@ msgstr "HTMLヘルプは利用できません "
 msgid "R Help on '%s'"
 msgstr " '%s' に対する R ヘルプ "
 
-#, fuzzy
 msgid "invalid '%s' argument"
-msgstr " 不正な 'x' 引数 "
+msgstr " 不正な '%s' 引数 "
 
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so help cannot be "
 "accessed"
 msgstr ""
+"パッケージ%sは存在しますが、R >= 2.10.0 でインストールされていないためヘルプ"
+"ファイルにアクセスできません "
 
 msgid "argument '%s' must be a single character string"
 msgstr " 引数 '%s' は単一の文字列でなければなりません "
@@ -556,9 +555,8 @@ msgstr " ミラーを設定することなくCRANを使おうとしています 
 msgid "cannot choose a CRAN mirror non-interactively"
 msgstr " CRANミラーの選択は対話的にしかできません "
 
-#, fuzzy
 msgid "cannot choose a BioC mirror non-interactively"
-msgstr " CRANミラーの選択は対話的にしかできません "
+msgstr "BioCミラーの選択は対話的にしかできません "
 
 msgid "cannot set repositories non-interactively"
 msgstr " リポジトリーの設定は対話的にしかできません "
@@ -655,7 +653,7 @@ msgid "no object named '%s' to show"
 msgstr " 表示すべき '%s' という名前のオブジェクトがありません "
 
 msgid "must have max > min"
-msgstr ""
+msgstr " max > minである必要があります "
 
 msgid "'pb' is not from class \"txtProgressBar\""
 msgstr " 'pb'はクラス\"txtProgressBar\"からではありません "
@@ -854,9 +852,8 @@ msgid "'digits' and 'digits.d' are both specified and the latter is not used"
 msgstr ""
 " 'digits'と'digits.d'の両方が指定されています。'digits.d'は使われません "
 
-#, fuzzy
 msgid "no lines found in %s"
-msgstr " '%s' に対するヘルプファイルが見つかりません "
+msgstr " %sには一行も存在しません "
 
 msgid "profile does not contain memory information"
 msgstr " プロファイルはメモリ情報を含んでいません "
@@ -907,9 +904,8 @@ msgstr " ビニエット '%s' は PDF ファイルを持ちません "
 msgid "select.list() cannot be used non-interactively"
 msgstr " select.list() は対話的にしか使えません "
 
-#, fuzzy
 msgid "'title' must be NULL or a length-1 character vector"
-msgstr " 'code_files' は文字ベクトルでなければなりません "
+msgstr " 'title'はNULLか長さ1の文字ベクトルでなければなりません "
 
 msgid ""
 "Enter one or more numbers separated by spaces, or an empty line to cancel"
@@ -971,13 +967,12 @@ msgstr " 不正なブラウザー名です、 options(\"browser\") をチェッ�
 msgid "help.start() requires the HTTP server to be running"
 msgstr " help.start()にはHTTPサーバが実行されている必要があります "
 
-#, fuzzy
 msgid ""
 "If the browser launched by '%s' is already running, it is *not* restarted, "
 "and you must switch to its window."
 msgstr ""
-" もし '%s' が既に実行中なら、それは再起動されません。そのウィンドウへ切替える"
-"必要があります "
+"もし'%s'で起動したブラウザが既に実行中なら、それは再起動されません。そのウィ"
+"ンドウへ切替える必要があります "
 
 msgid "Otherwise, be patient ..."
 msgstr " さもなければ、じっと待って ... "

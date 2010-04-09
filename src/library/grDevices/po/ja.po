@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-04-05 17:42+0100\n"
-"PO-Revision-Date: 2009-03-31 20:52+0900 \n"
+"PO-Revision-Date: 2010-04-03 20:14+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
 "MIME-Version: 1.0 \n"
@@ -265,7 +265,7 @@ msgstr " ポストスクリプトデバイス中にフォントファミリ '%s'
 #: devPS.c:4003 devPS.c:5051 devPS.c:7095 devPicTeX.c:535 devPicTeX.c:540
 #, c-format
 msgid "%s not available for this device"
-msgstr ""
+msgstr " %s はこのデバイスに対しては使用できません "
 
 #: devPS.c:4210
 #, c-format
@@ -337,9 +337,9 @@ msgid "write failed"
 msgstr " 書き込みに失敗しました "
 
 #: devPS.c:5046
-#, fuzzy, c-format
+#, c-format
 msgid "%s not yet implemented for this device"
-msgstr " file = \"|cmd\" はこのバージョンでは実装されていません "
+msgstr " %s はこのデバイスに対してはまだ実装されていません "
 
 #: devPS.c:5217
 #, c-format
@@ -348,12 +348,11 @@ msgstr " エンコーディング '%s' を使うことができません "
 
 #: devPS.c:5466
 msgid "Too many raster images"
-msgstr ""
+msgstr "ラスター画像が多すぎます "
 
 #: devPS.c:5471
-#, fuzzy
 msgid "Unable to allocate raster image"
-msgstr " ビットマップを割り当てられません "
+msgstr "ラスター画像を割り当てられません "
 
 #: devPS.c:5650
 msgid "Corrupt loaded encodings;  font not added"
@@ -382,14 +381,12 @@ msgid "failed to load default encoding"
 msgstr " 既定のエンコーディングのロードに失敗しました "
 
 #: devPS.c:5910
-#, fuzzy
 msgid "failed to allocate rasters"
-msgstr " フォントリストを割り当てることができませんでした "
+msgstr "ラスターを割り当てることができませんでした "
 
 #: devPS.c:5916
-#, fuzzy
 msgid "failed to allocate masks"
-msgstr " フォントリストを割り当てることができませんでした "
+msgstr "マスクを割り当てることができませんでした "
 
 #: devPS.c:5979
 #, c-format
@@ -472,9 +469,9 @@ msgid "unable to start device xfig"
 msgstr " xfig デバイスを開始できませんでした "
 
 #: devPS.c:8053
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'maxRasters' parameter in %s"
-msgstr " %s 中に不正な 'fonts' パラメータ "
+msgstr " %s 中に不正な 'maxRasters パラメータがあります "
 
 #: devPS.c:8066
 msgid "unable to start device pdf"
