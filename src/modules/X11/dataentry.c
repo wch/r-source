@@ -1048,19 +1048,11 @@ static Rboolean getccol(DEstruct DE)
     return newcol;
 }
 
-static SEXP lang5(SEXP s, SEXP t, SEXP u, SEXP v, SEXP w)
-{
-    PROTECT(s);
-    s = LCONS(s, list4(t, u, v, w));
-    UNPROTECT(1);
-    return s;
-}
-
 static SEXP processEscapes(SEXP x)
 {
     SEXP newval, pattern, replacement, expr;
     ParseStatus status;
-    
+
     /* We process escape sequences in a scalar string by escaping
        unescaped quotes, then quoting the whole thing and parsing it.  This
        is supposed to be equivalent to the R code
@@ -1072,7 +1064,7 @@ static SEXP processEscapes(SEXP x)
        We do it this way to avoid extracting the escape handling
        code from the parser.  We need it in C code because this may be executed
        numerous times from C in dataentry.c */
-    	
+
     PROTECT( pattern = mkString("(?<!\\\\)((\\\\\\\\)*)\"") );
     PROTECT( replacement = mkString("\\1\\\\\"") );
     PROTECT( expr = lang5(install("gsub"), ScalarLogical(1), pattern, replacement, x) );
@@ -1084,10 +1076,10 @@ static SEXP processEscapes(SEXP x)
     PROTECT( expr = lang4(install("sub"), pattern, replacement, newval) );
     PROTECT( newval = eval(expr, R_BaseEnv) );
     PROTECT( expr = R_ParseVector( newval, 1, &status, R_NilValue) );
-    
+
     /* We only handle the first entry. If this were available more generally,
        we'd probably want to loop over all of expr */
-       
+
     if (status == PARSE_OK && length(expr))
 	PROTECT( newval = eval(VECTOR_ELT(expr, 0), R_BaseEnv) );
     else
@@ -1666,7 +1658,7 @@ static void doSpreadKey(DEstruct DE, int key, DEEvent * event)
 	    jumpwin(DE, DE->colmin, DE->rowmax);
 	else {
 	    int i = DE->ymaxused - DE->nhigh + 2;
-            jumpwin(DE, DE->colmin, min(i, DE->rowmax));	    
+            jumpwin(DE, DE->colmin, min(i, DE->rowmax));
 	}
 	cell_cursor_init(DE);
     }
@@ -1676,7 +1668,7 @@ static void doSpreadKey(DEstruct DE, int key, DEEvent * event)
 	    jumpwin(DE, DE->colmin, DE->rowmax);
 	else {
 	    int i = DE->ymaxused - DE->nhigh + 2;
-            jumpwin(DE, DE->colmin, min(i, DE->rowmax));	    
+            jumpwin(DE, DE->colmin, min(i, DE->rowmax));
 	}
 	cell_cursor_init(DE);
     }

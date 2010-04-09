@@ -932,6 +932,8 @@ int R_system(const char *);
 #define lang2			Rf_lang2
 #define lang3			Rf_lang3
 #define lang4			Rf_lang4
+#define lang5			Rf_lang5
+#define lang6			Rf_lang6
 #define lastElt			Rf_lastElt
 #define lcons			Rf_lcons
 #define length(x)		Rf_length(x)
@@ -940,6 +942,7 @@ int R_system(const char *);
 #define list2			Rf_list2
 #define list3			Rf_list3
 #define list4			Rf_list4
+#define list5			Rf_list5
 #define listAppend		Rf_listAppend
 #define match			Rf_match
 #define mkChar			Rf_mkChar
@@ -1024,6 +1027,8 @@ SEXP	 Rf_lang1(SEXP);
 SEXP	 Rf_lang2(SEXP, SEXP);
 SEXP	 Rf_lang3(SEXP, SEXP, SEXP);
 SEXP	 Rf_lang4(SEXP, SEXP, SEXP, SEXP);
+SEXP	 Rf_lang5(SEXP, SEXP, SEXP, SEXP, SEXP);
+SEXP	 Rf_lang6(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP	 Rf_lastElt(SEXP);
 SEXP	 Rf_lcons(SEXP, SEXP);
 R_len_t  Rf_length(SEXP);
@@ -1031,8 +1036,9 @@ SEXP	 Rf_list1(SEXP);
 SEXP	 Rf_list2(SEXP, SEXP);
 SEXP	 Rf_list3(SEXP, SEXP, SEXP);
 SEXP	 Rf_list4(SEXP, SEXP, SEXP, SEXP);
+SEXP	 Rf_list5(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP	 Rf_listAppend(SEXP, SEXP);
-SEXP	 Rf_mkNamed(int, const char **);
+SEXP	 Rf_mkNamed(SEXPTYPE, const char **);
 SEXP	 Rf_mkString(const char *);
 int	 Rf_nlevels(SEXP);
 SEXP	 Rf_ScalarComplex(Rcomplex);

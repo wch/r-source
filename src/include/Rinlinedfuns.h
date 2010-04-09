@@ -183,6 +183,14 @@ INLINE_FUN SEXP list4(SEXP s, SEXP t, SEXP u, SEXP v)
     return s;
 }
 
+INLINE_FUN SEXP list5(SEXP s, SEXP t, SEXP u, SEXP v, SEXP w)
+{
+    PROTECT(s);
+    s = CONS(s, list4(t, u, v, w));
+    UNPROTECT(1);
+    return s;
+}
+
 
 /* Destructive list append : See also ``append'' */
 
@@ -236,6 +244,22 @@ INLINE_FUN SEXP lang4(SEXP s, SEXP t, SEXP u, SEXP v)
 {
     PROTECT(s);
     s = LCONS(s, list3(t, u, v));
+    UNPROTECT(1);
+    return s;
+}
+
+INLINE_FUN SEXP lang5(SEXP s, SEXP t, SEXP u, SEXP v, SEXP w)
+{
+    PROTECT(s);
+    s = LCONS(s, list4(t, u, v, w));
+    UNPROTECT(1);
+    return s;
+}
+
+INLINE_FUN SEXP lang6(SEXP s, SEXP t, SEXP u, SEXP v, SEXP w, SEXP x)
+{
+    PROTECT(s);
+    s = LCONS(s, list5(t, u, v, w, x));
     UNPROTECT(1);
     return s;
 }
@@ -556,7 +580,7 @@ INLINE_FUN Rboolean isVectorizable(SEXP s)
  *
  * @return (pointer to a) named vector of type TYP
  */
-INLINE_FUN SEXP mkNamed(int TYP, const char **names)
+INLINE_FUN SEXP mkNamed(SEXPTYPE TYP, const char **names)
 {
     SEXP ans, nms;
     int i, n;

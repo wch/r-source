@@ -54,6 +54,14 @@ PACKAGE INSTALLATION
 	available.packages() to make use of this.
 
 
+C-LEVEL FACILITIES
+
+    o	lang5() and lang6() {in addition to pre-existing lang[1-4]()}
+	convenience functions for easier construction of eval() calls.
+	If you have your own definition, do wrap it inside
+	'#ifndef lang5 .... #endif' to keep it working with old and new R.
+
+
 INSTALLATION
 
     o	A C99 compiler is now required, and more C99 language features

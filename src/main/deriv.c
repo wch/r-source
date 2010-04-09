@@ -843,14 +843,6 @@ static SEXP DerivAssign(SEXP name, SEXP expr)
     return ans;
 }
 
-static SEXP lang5(SEXP s, SEXP t, SEXP u, SEXP v, SEXP w)
-{
-    PROTECT(s);
-    s = LCONS(s, list4(t, u, v, w));
-    UNPROTECT(1);
-    return s;
-}
-
 static SEXP HessAssign1(SEXP name, SEXP expr)
 {
     SEXP ans, newname;
