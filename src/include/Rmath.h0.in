@@ -203,6 +203,10 @@ double  Rlog1p(double);
 #define bessel_j	Rf_bessel_j
 #define bessel_k	Rf_bessel_k
 #define bessel_y	Rf_bessel_y
+#define bessel_i_ex	Rf_bessel_i_ex
+#define bessel_j_ex	Rf_bessel_j_ex
+#define bessel_k_ex	Rf_bessel_k_ex
+#define bessel_y_ex	Rf_bessel_y_ex
 #define beta		Rf_beta
 #define choose		Rf_choose
 #define dbeta		Rf_dbeta
@@ -560,6 +564,10 @@ double	bessel_i(double, double, double);
 double	bessel_j(double, double);
 double	bessel_k(double, double, double);
 double	bessel_y(double, double);
+double	bessel_i_ex(double, double, double, double *);
+double	bessel_j_ex(double, double, double *);
+double	bessel_k_ex(double, double, double, double *);
+double	bessel_y_ex(double, double, double *);
 
 
 	/* General Support Functions */

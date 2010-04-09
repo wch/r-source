@@ -85,6 +85,44 @@ double bessel_j(double x, double alpha)
     return x;
 }
 
+/* modified version of bessel_j that accepts a work array instead of
+   allocating one. */
+double bessel_j_ex(double x, double alpha, double *bj)
+{
+    long nb, ncalc;
+    double na;
+
+#ifdef IEEE_754
+    /* NaNs propagated correctly */
+    if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
+#endif
+    if (x < 0) {
+	ML_ERROR(ME_RANGE, "bessel_j");
+	return ML_NAN;
+    }
+    na = floor(alpha);
+    if (alpha < 0) {
+	/* Using Abramowitz & Stegun  9.1.2
+	 * this may not be quite optimal (CPU and accuracy wise) */
+	return(bessel_j_ex(x, -alpha, bj) * cos(M_PI * alpha) +
+	       ((alpha == na) ? 0 :
+		bessel_y_ex(x, -alpha, bj) * sin(M_PI * alpha)));
+    }
+    nb = 1 + (long)na; /* nb-1 <= alpha < nb */
+    alpha -= (nb-1);
+    J_bessel(&x, &alpha, &nb, bj, &ncalc);
+    if(ncalc != nb) {/* error input */
+      if(ncalc < 0)
+	MATHLIB_WARNING4(_("bessel_j(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"),
+			 x, ncalc, nb, alpha);
+      else
+	MATHLIB_WARNING2(_("bessel_j(%g,nu=%g): precision lost in result\n"),
+			 x, alpha+nb-1);
+    }
+    x = bj[nb-1];
+    return x;
+}
+
 static void J_bessel(double *x, double *alpha, long *nb,
 		     double *b, long *ncalc)
 {

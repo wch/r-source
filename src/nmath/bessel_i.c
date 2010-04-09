@@ -87,6 +87,46 @@ double bessel_i(double x, double alpha, double expo)
     return x;
 }
 
+/* modified version of bessel_i that accepts a work array instead of
+   allocating one. */
+double bessel_i_ex(double x, double alpha, double expo, double *bi)
+{
+    long nb, ncalc, ize;
+    double na;
+
+#ifdef IEEE_754
+    /* NaNs propagated correctly */
+    if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
+#endif
+    if (x < 0) {
+	ML_ERROR(ME_RANGE, "bessel_i");
+	return ML_NAN;
+    }
+    ize = (long)expo;
+    na = floor(alpha);
+    if (alpha < 0) {
+	/* Using Abramowitz & Stegun  9.6.2 & 9.6.6
+	 * this may not be quite optimal (CPU and accuracy wise) */
+	return(bessel_i_ex(x, -alpha, expo, bi) +
+	       ((alpha == na) ? 0 :
+		bessel_k_ex(x, -alpha, expo, bi) *
+		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sin(-M_PI * alpha)));
+    }
+    nb = 1 + (long)na;/* nb-1 <= alpha < nb */
+    alpha -= (nb-1);
+    I_bessel(&x, &alpha, &nb, &ize, bi, &ncalc);
+    if(ncalc != nb) {/* error input */
+	if(ncalc < 0)
+	    MATHLIB_WARNING4(_("bessel_i(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n"),
+			     x, ncalc, nb, alpha);
+	else
+	    MATHLIB_WARNING2(_("bessel_i(%g,nu=%g): precision lost in result\n"),
+			     x, alpha+nb-1);
+    }
+    x = bi[nb-1];
+    return x;
+}
+
 static void I_bessel(double *x, double *alpha, long *nb,
 		     long *ize, double *bi, long *ncalc)
 {

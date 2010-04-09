@@ -1254,9 +1254,68 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2,
     return sy;
 } /* math2_2() */
 
+static SEXP math2B(SEXP sa, SEXP sb, double (*f)(double, double, double *),
+		   SEXP lcall)
+{
+    SEXP sy;
+    int i, ia, ib, n, na, nb;
+    double ai, bi, *a, *b, *y;
+    int naflag;
+    double amax, *work;
+    long nw;
+
+    if (!isNumeric(sa) || !isNumeric(sb))
+	errorcall(lcall, R_MSG_NONNUM_MATH);
+
+    /* for 0-length a we want the attributes of a, not those of b
+       as no recycling will occur */
+    SETUP_Math2;
+
+#ifdef R_MEMORY_PROFILING
+    if (RTRACE(sa) || RTRACE(sb)){
+       if (RTRACE(sa) && RTRACE(sb)){
+	  if (na>nb)
+	      memtrace_report(sa, sy);
+	  else
+	      memtrace_report(sb, sy);
+       } else if (RTRACE(sa))
+	   memtrace_report(sa, sy);
+       else /* only s2 */
+	   memtrace_report(sb, sy);
+       SET_RTRACE(sy, 1);
+    }
+#endif
+
+    /* allocate work array for BesselJ, BesselY large enough for all
+       arguments */
+    amax = 0.0;
+    for (i = 0; i < nb; i++) {
+	double av = b[i] < 0 ? -b[i] : b[i];
+	if (av > amax) amax = av;
+    }
+    nw = 1 + (long)floor(amax);
+    work = (double *) R_alloc(nw, sizeof(double));
+
+    mod_iterate(na, nb, ia, ib) {
+	ai = a[ia];
+	bi = b[ib];
+	if_NA_Math2_set(y[i], ai, bi)
+	else {
+	    y[i] = f(ai, bi, work);
+	    if (ISNAN(y[i])) naflag = 1;
+	}
+    }
+
+
+    FINISH_Math2;
+
+    return sy;
+} /* math2B() */
+
 #define Math2(A, FUN)	  math2(CAR(A), CADR(A), FUN, call);
 #define Math2_1(A, FUN)	math2_1(CAR(A), CADR(A), CADDR(A), FUN, call);
 #define Math2_2(A, FUN) math2_2(CAR(A), CADR(A), CADDR(A), CADDDR(A), FUN, call)
+#define Math2B(A, FUN)	  math2B(CAR(A), CADR(A), FUN, call);
 
 SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1302,8 +1361,8 @@ SEXP attribute_hidden do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     case 22: return Math2_2(args, psignrank);
     case 23: return Math2_2(args, qsignrank);
 
-    case 24: return Math2(args, bessel_j);
-    case 25: return Math2(args, bessel_y);
+    case 24: return Math2B(args, bessel_j_ex);
+    case 25: return Math2B(args, bessel_y_ex);
     case 26: return Math2(args, psigamma);
 
     default:
@@ -1610,9 +1669,60 @@ static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ,
     return sy;
 } /* math3_2 */
 
+static SEXP math3B(SEXP sa, SEXP sb, SEXP sc,
+		   double (*f)(double, double, double, double *), SEXP lcall)
+{
+    SEXP sy;
+    int i, ia, ib, ic, n, na, nb, nc;
+    double ai, bi, ci, *a, *b, *c, *y;
+    int naflag;
+    double amax, *work;
+    long nw;
+
+    SETUP_Math3;
+
+#ifdef R_MEMORY_PROFILING
+    if (RTRACE(sa) || RTRACE(sb) || RTRACE(sc)){
+       if (RTRACE(sa))
+	  memtrace_report(sa,sy);
+       else if (RTRACE(sb))
+	  memtrace_report(sb, sy);
+       else if (RTRACE(sc))
+	  memtrace_report(sc,sy);
+       SET_RTRACE(sy, 1);
+    }
+#endif
+
+    /* allocate work array for BesselI, BesselK large enough for all
+       arguments */
+    amax = 0.0;
+    for (i = 0; i < nb; i++) {
+	double av = b[i] < 0 ? -b[i] : b[i];
+	if (av > amax) amax = av;
+    }
+    nw = 1 + (long)floor(amax);
+    work = (double *) R_alloc(nw, sizeof(double));
+
+    mod_iterate3 (na, nb, nc, ia, ib, ic) {
+	ai = a[ia];
+	bi = b[ib];
+	ci = c[ic];
+	if_NA_Math3_set(y[i], ai,bi,ci)
+	else {
+	    y[i] = f(ai, bi, ci, work);
+	    if (ISNAN(y[i])) naflag = 1;
+	}
+    }
+
+    FINISH_Math3;
+
+    return sy;
+} /* math3B */
+
 #define Math3(A, FUN)   math3  (CAR(A), CADR(A), CADDR(A), FUN, call);
 #define Math3_1(A, FUN)	math3_1(CAR(A), CADR(A), CADDR(A), CADDDR(A), FUN, call);
 #define Math3_2(A, FUN) math3_2(CAR(A), CADR(A), CADDR(A), CADDDR(A), CAD4R(A), FUN, call)
+#define Math3B(A, FUN)  math3B (CAR(A), CADR(A), CADDR(A), FUN, call);
 
 SEXP attribute_hidden do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1676,8 +1786,8 @@ SEXP attribute_hidden do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
     case 41:  return Math3_2(args, pwilcox);
     case 42:  return Math3_2(args, qwilcox);
 
-    case 43:  return Math3(args, bessel_i);
-    case 44:  return Math3(args, bessel_k);
+    case 43:  return Math3B(args, bessel_i_ex);
+    case 44:  return Math3B(args, bessel_k_ex);
 
     case 45:  return Math3_1(args, dnbinom_mu);
     case 46:  return Math3_2(args, pnbinom_mu);
