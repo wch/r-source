@@ -475,7 +475,13 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
     for (i = 0; i < n; i++) RAW(s)[i] = rawptr[i];
     break;
     case LGLSXP:
-	/* FIXME: should this not force 0, 1, NA_LOGICAL? */
+	s = allocVector(type, n);
+	iptr = (int*)p;
+	for(i = 0 ; i < n ; i++) {
+	    int tmp =  iptr[i];
+	    LOGICAL(s)[i] = (tmp == NA_INTEGER || tmp == 0) ? tmp : 1;
+	}
+	break;
     case INTSXP:
 	s = allocVector(type, n);
 	iptr = (int*)p;
@@ -486,7 +492,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 	s = allocVector(REALSXP, n);
 	if(type == SINGLESXP || asLogical(getAttrib(arg, CSingSymbol)) == 1) {
 	    sptr = (float*) p;
-	    for(i=0 ; i<n ; i++) REAL(s)[i] = (double) sptr[i];
+	    for(i = 0 ; i < n ; i++) REAL(s)[i] = (double) sptr[i];
 	} else {
 	    rptr = (double*) p;
 	    for(i = 0 ; i < n ; i++) REAL(s)[i] = rptr[i];

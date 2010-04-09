@@ -31,6 +31,10 @@ NEW FEATURES
 
     o	The enquote() utility, in use internally, is exported now.
 
+    o	.C and .Fortran now map non-zero return values (other than
+	NA_LOGICAL) for logical vectors to TRUE: it has been an
+	implicit assumption that they are treated as true.
+
 
 DEPRECATED & DEFUNCT
 

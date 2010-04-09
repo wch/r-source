@@ -114,13 +114,18 @@
   Logical values are sent as \code{0} (\code{FALSE}), \code{1}
   (\code{TRUE}) or \code{INT_MIN = -2147483648} (\code{NA}, but only if
   \code{NAOK = TRUE}), and the compiled code should return one of these
-  three values.
+  three values: however non-zero value other than \code{INT_MIN} are
+  mapped to \code{TRUE} as from \R 2.12.0.
 
   \emph{Note:} The C types corresponding to \code{integer} and
   \code{logical} are \code{int}, not \code{long} as in S.  This
   difference matters on most 64-bit platforms, where \code{int} is
   32-bit and \code{long} is 64-bit (but not on 64-bit Windows).
-
+  
+  \emph{Note:} The Fortran type corresponding to \code{logical} is
+  \code{integer}, not \code{logical}: the difference matters on some
+  older Fortran compilers.
+  
   The first character string of a character vector is passed as a C
   character array to Fortran: that string may be usable as
   \code{character*255} if its true length is passed separately.  Only up
