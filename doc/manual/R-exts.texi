@@ -2387,12 +2387,32 @@ does not build without intervention it is unlikely to be easily
 available to a high proportion of @R{} users.
 
 @item
+If your package has a @file{Makevars} or @file{Makefile} file, make sure
+that you use only portable make features.  Such files should be
+LF-terminated (including the final line of the file) and not make use of
+GNU extensions.  Commonly misused GNU extensions are conditional
+inclusions (@code{ifeq} and the like), @code{$@{shell ...@}} and
+@code{$@{wildcard ...@}}, and the use of @code{+=} and @code{:=}.
+Unfortunately makefiles which use GNU features often run on other
+platforms but have unintended results.
+
+If you really must assume GNU make, declare it in the @file{DESCRIPTON}
+file by
+
+@example
+SystemRequirements: GNU make
+@end example
+
+@item
 Make use of the abilities of your compilers to check the
 standards-conformance of your code.  For example, @code{gcc} can be used
 with options @option{-Wall -pedantic} to alert you to potential
 problems.  Do not be tempted to assume that these are pure pedantry: for
 example @R{} is still used on platforms where the C compiler does not
-accept C++/C99 comments (starting @code{//}).
+accept C++/C99 comments (starting @code{//}).  This is particularly
+important for C++, where @code{g++ -Wall -pedantic} will alert you to
+the use of GNU extensions which fail to compile on most other C++
+compilers.
 
 If you use FORTRAN, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/~ftnchek/}) provides thorough testing
@@ -2406,10 +2426,12 @@ on most @R{} platforms (including those mostly used by the
 platforms.  It is rather unlikely that the use of @code{long} in C code
 has been thought through: if you need a longer type than @code{int} you
 should use a configure test for a C99 type such as @code{int_fast64_t}
-(and failing that, @code{long long}) and typedef your own type to be
-@code{long} or @code{long long}, or use another suitable type (such as
-@code{size_t}).  Note that @code{integer} in @acronym{FORTRAN}
-corresponds to @code{int} in C on all @R{} platforms.
+(and failing that, @code{long long}, but not that @code{long long} is
+not a standard C++ type, and C++ compilers set up for strict checking
+will reject it) and typedef your own type to be @code{long} or
+@code{long long}, or use another suitable type (such as @code{size_t}).
+Note that @code{integer} in @acronym{FORTRAN} corresponds to @code{int}
+in C on all @R{} platforms.
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
@@ -5704,9 +5726,8 @@ For @code{.C} and @code{.Fortran} you can specify an @code{ENCODING}
 argument: this requests that (unless @code{DUP = FALSE}) character
 vectors be re-encoded to the requested encoding before being passed in,
 and re-encoded from the requested encoding when passed back.  Note that
-encoding names are not standardized, and not all @R{} builds support
-re-encoding.  But this can be useful to allow code to work in a UTF-8
-locale by specifying @code{ENCODING = "latin1"}.
+encoding names are not standardized: but this can be useful to allow
+code to work in a UTF-8 locale by specifying @code{ENCODING = "latin1"}.
 
 Note that the compiled code should not return anything except through
 its arguments: C functions should be of type @code{void} and FORTRAN
