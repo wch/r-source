@@ -56,7 +56,7 @@ double bessel_i(double x, double alpha, double expo)
 	/* Using Abramowitz & Stegun  9.6.2 & 9.6.6
 	 * this may not be quite optimal (CPU and accuracy wise) */
 	return(bessel_i(x, -alpha, expo) +
-	       ((alpha == na) ? 0 :
+	       ((alpha == na) ? /* sin(pi * alpha) = 0 */ 0 :
 		bessel_k(x, -alpha, expo) *
 		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sin(-M_PI * alpha)));
     }
@@ -254,7 +254,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
 	    return;
 	}
 	intx = (long) (*x);/* fine, since *x <= xlrg_BESS_IJ <<< LONG_MAX */
-	if (*x >= rtnsig_BESS) { /* "non-small" x */
+	if (*x >= rtnsig_BESS) { /* "non-small" x ( >= 1e-4 ) */
 /* -------------------------------------------------------------------
    Initialize the forward sweep, the P-sequence of Olver
    ------------------------------------------------------------------- */
@@ -476,33 +476,33 @@ L230:
 		    bi[n] /= sum;
 	    }
 	    return;
-	} else {
+	} else { /* small x  < 1e-4 */
 	    /* -----------------------------------------------------------
 	       Two-term ascending series for small X.
 	       -----------------------------------------------------------*/
 	    aa = 1.;
 	    empal = 1. + nu;
-	    if (*x > enmten_BESS)
+#ifdef IEEE_754
+	    /* No need to check for underflow */
+	    halfx = .5 * *x;
+#else
+	    if (*x > enmten_BESS) */
 		halfx = .5 * *x;
 	    else
-		halfx = 0.;
+	    	halfx = 0.;
+#endif
 	    if (nu != 0.)
 		aa = pow(halfx, nu) / gamma_cody(empal);
 	    if (*ize == 2)
 		aa *= exp(-(*x));
-	    if (*x + 1. > 1.)
-		bb = halfx * halfx;
-	    else
-		bb = 0.;
-
+	    bb = halfx * halfx;
 	    bi[1] = aa + aa * bb / empal;
 	    if (*x != 0. && bi[1] == 0.)
 		*ncalc = 0;
 	    if (*nb > 1) {
 		if (*x == 0.) {
-		    for (n = 2; n <= *nb; ++n) {
+		    for (n = 2; n <= *nb; ++n)
 			bi[n] = 0.;
-		    }
 		} else {
 		    /* -------------------------------------------------
 		       Calculate higher-order functions.
