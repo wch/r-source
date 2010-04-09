@@ -71,9 +71,6 @@ BUG FIXES
 	calls in the same way that print(summary(.)) has done already.
 	(PR#14250)
 
-    o	Issuing POST requests to the internal web server could stall
-	the request under certain circumstances.
-
 
 
 
@@ -630,6 +627,9 @@ BUG FIXES
 
     o	pgamma(0,0), a boundary case, now returns 0, its limit from the
 	left, rather than the limit from the right.
+
+    o	Issuing POST requests to the internal web server could stall
+	the request under certain circumstances.
 
 
 
