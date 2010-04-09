@@ -3972,10 +3972,10 @@ it is needed for linking) is @samp{Cstd} which dates from 1998: see
 @uref{http://developers.sun.com/solaris/articles/cmp_stlport_libCstd.html}.
 Note though that most external Solaris C++ libraries will have been
 built with @samp{Cstd} and so an @R{} package using such a package also
-needs to be.
+needs to be.  Occasionally the library flag @option{-lCrun} is needed.
 
 Several CRAN packages using C++ need the more liberal interpretation
-given by
+given by adding
 
 @example
 CXXFLAGS="-features=tmplrefstatic"
