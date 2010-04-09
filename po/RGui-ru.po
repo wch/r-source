@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:28+0100\n"
+"POT-Creation-Date: 2010-04-09 06:27+0100\n"
 "PO-Revision-Date: 2009-10-11 05:33-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
 "Language-Team: Russian <dactylorhiza at gmail>\n"
@@ -18,24 +18,24 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: console.c:1132 console.c:1174
+#: console.c:1130 console.c:1172
 msgid "Not enough memory"
 msgstr "Недостаточно памяти"
 
-#: console.c:1221 console.c:1225
+#: console.c:1219 console.c:1223
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "Недостаточно памяти: текст не скопирован в буфер обмена"
 
-#: console.c:1261 ../extra/graphapp/clipboard.c:53
+#: console.c:1259 ../extra/graphapp/clipboard.c:53
 #: ../extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "Не могу открыть буфер обмена"
 
-#: console.c:1877
+#: console.c:1875
 msgid "Insufficient memory. Please close the console"
 msgstr "Недостаточно памяти. Пожалуйста, закройте консоль"
 
-#: console.c:1931 console.c:1983 preferences.c:322
+#: console.c:1929 console.c:1981 preferences.c:322
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
@@ -44,23 +44,23 @@ msgstr ""
 "Шрифт %s-%d-%d  не найден.\n"
 "Используется системный шрифт"
 
-#: console.c:2088
+#: console.c:2086
 msgid "Save selection to"
 msgstr "Сохранить выделение в"
 
-#: console.c:2090
+#: console.c:2088
 msgid "Save console contents to"
 msgstr "Сохранить содержимое консоли в"
 
-#: console.c:2189
+#: console.c:2187
 msgid "Scrolling.\n"
 msgstr "Прокрутка.\n"
 
-#: console.c:2190
+#: console.c:2188
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "Клавиатура: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 
-#: console.c:2191
+#: console.c:2189
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -68,74 +68,74 @@ msgstr ""
 "  Мышь: использовать полос(ы) прокрутки.\n"
 "\n"
 
-#: console.c:2192
+#: console.c:2190
 msgid "Editing.\n"
 msgstr "Редактирование.\n"
 
-#: console.c:2193
+#: console.c:2191
 msgid "  Moving the cursor: \n"
 msgstr "  Перемещение курсора: \n"
 
-#: console.c:2194
+#: console.c:2192
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "     Левая стрелка или Ctrl+B: назад на один символ;\n"
 
-#: console.c:2195
+#: console.c:2193
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     Стрелка вправо или Ctrl+F: вперед на один символ;\n"
 
-#: console.c:2196
+#: console.c:2194
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Home или Ctrl+A: к началу строки;\n"
 
-#: console.c:2197
+#: console.c:2195
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     End или Ctrl+E: в конец строки;\n"
 
-#: console.c:2198
+#: console.c:2196
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  История: стрелки вверх и вниз, Ctrl+P, Ctrl+N\n"
 
-#: console.c:2199
+#: console.c:2197
 msgid "  Deleting:\n"
 msgstr "  Удаление:\n"
 
-#: console.c:2200
+#: console.c:2198
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     Del или Ctrl+D: удалить текущий символ или выделение;\n"
 
-#: console.c:2201
+#: console.c:2199
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: удалить предыдущий символ;\n"
 
-#: console.c:2202
+#: console.c:2200
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr ""
 "     Ctrl+Del или Ctrl+K: удалить текст от текущего символа до конца "
 "строки.\n"
 
-#: console.c:2203
+#: console.c:2201
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U: удалить весь текст текущей строки.\n"
 
-#: console.c:2204
+#: console.c:2202
 msgid "  Copy and paste.\n"
 msgstr "  Копирование и вставка:\n"
 
-#: console.c:2205
+#: console.c:2203
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr ""
 "     Использовать мышь (с нажатой левой кнопкой) для выделения текста.\n"
 
-#: console.c:2206
+#: console.c:2204
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
 "     Использовать Shift+Del (или Ctrl+C) для копирования выделения в буфер\n"
 
-#: console.c:2207
+#: console.c:2205
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
@@ -143,27 +143,27 @@ msgstr ""
 "     Shift+Ins (или Ctrl+V или Ctrl+Y) для вставки содержимого буфера (если "
 "есть)  \n"
 
-#: console.c:2208
+#: console.c:2206
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr "     на консоль, Ctrl+X сначала копирует, потом вставляет.\n"
 
-#: console.c:2209
+#: console.c:2207
 msgid "  Misc:\n"
 msgstr "  Разное:\n"
 
-#: console.c:2210
+#: console.c:2208
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: Очистить консоль.\n"
 
-#: console.c:2211
+#: console.c:2209
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr "     Ctrl+O: Переключить замену/вставку символов: вначале отключена.\n"
 
-#: console.c:2212
+#: console.c:2210
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     Ctrl+T: Поменять текущий символ с предыдущим.\n"
 
-#: console.c:2213
+#: console.c:2211
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -171,7 +171,7 @@ msgstr ""
 "\n"
 "Внимание: Консоль обновляется только когда нужен ввод.\n"
 
-#: console.c:2214
+#: console.c:2212
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -179,7 +179,7 @@ msgstr ""
 "  Используйте Ctrl+W для включения/выключения этого свойства.\n"
 "\n"
 
-#: console.c:2215
+#: console.c:2213
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -187,7 +187,7 @@ msgstr ""
 "Используйте Esc для остановки интерпретатора.\n"
 "\n"
 
-#: console.c:2216
+#: console.c:2214
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
@@ -195,11 +195,11 @@ msgstr ""
 "TAB осуществляет дополнение текущего слова.\n"
 "\n"
 
-#: console.c:2217
+#: console.c:2215
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "Стандартные клавиши Windows можно использовать для перехода к\n"
 
-#: console.c:2218
+#: console.c:2216
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr "окну графики (Ctrl+Tab или Ctrl+F6 в MDI, Alt+Tab в SDI)"
 

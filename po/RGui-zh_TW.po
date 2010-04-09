@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:28+0100\n"
+"POT-Creation-Date: 2010-04-09 06:27+0100\n"
 "PO-Revision-Date: 2006-04-14 22:50+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@pcmail.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -17,24 +17,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: console.c:1132 console.c:1174
+#: console.c:1130 console.c:1172
 msgid "Not enough memory"
 msgstr "記憶體不足"
 
-#: console.c:1221 console.c:1225
+#: console.c:1219 console.c:1223
 msgid "Insufficient memory: text not copied to the clipboard"
 msgstr "記憶體不足: 文字並未複製到剪貼簿"
 
-#: console.c:1261 ../extra/graphapp/clipboard.c:53
+#: console.c:1259 ../extra/graphapp/clipboard.c:53
 #: ../extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
 msgstr "無法開啟剪貼簿"
 
-#: console.c:1877
+#: console.c:1875
 msgid "Insufficient memory. Please close the console"
 msgstr "記憶體不足。請關閉主控台"
 
-#: console.c:1931 console.c:1983 preferences.c:322
+#: console.c:1929 console.c:1981 preferences.c:322
 #, c-format
 msgid ""
 "Font %s-%d-%d  not found.\n"
@@ -43,23 +43,23 @@ msgstr ""
 "找不到 %s-%d-%d 字型。\n"
 "使用系統定寬字型"
 
-#: console.c:2088
+#: console.c:2086
 msgid "Save selection to"
 msgstr "儲存所選部份到"
 
-#: console.c:2090
+#: console.c:2088
 msgid "Save console contents to"
 msgstr "儲存主控台內容到"
 
-#: console.c:2189
+#: console.c:2187
 msgid "Scrolling.\n"
 msgstr "捲動。\n"
 
-#: console.c:2190
+#: console.c:2188
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
 msgstr "  鍵盤: PgUp、PgDown、Ctrl+方向鍵、Ctrl+Home、Ctrl+End、\n"
 
-#: console.c:2191
+#: console.c:2189
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
@@ -67,99 +67,99 @@ msgstr ""
 "  滑鼠: 使用捲動軸。\n"
 "\n"
 
-#: console.c:2192
+#: console.c:2190
 msgid "Editing.\n"
 msgstr "編輯中。\n"
 
-#: console.c:2193
+#: console.c:2191
 msgid "  Moving the cursor: \n"
 msgstr "  移動游標: \n"
 
-#: console.c:2194
+#: console.c:2192
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
 msgstr "     左箭頭或 Ctrl+B: 左移一字元；\n"
 
-#: console.c:2195
+#: console.c:2193
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
 msgstr "     右箭頭或Ctrl+F: 右移一字元；\n"
 
-#: console.c:2196
+#: console.c:2194
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
 msgstr "     Home 或 Ctrl+A: 移到列首；\n"
 
-#: console.c:2197
+#: console.c:2195
 msgid "     End or Ctrl+E: go to end of line;\n"
 msgstr "     End 或 Ctrl+E: 移到列尾；\n"
 
-#: console.c:2198
+#: console.c:2196
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
 msgstr "  命令歷程: 上、下箭頭、Ctrl+P、Ctrl+N\n"
 
-#: console.c:2199
+#: console.c:2197
 msgid "  Deleting:\n"
 msgstr "  刪除中:\n"
 
-#: console.c:2200
+#: console.c:2198
 #, fuzzy
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
 msgstr "     Del 或 Ctrl+D: 刪除目前位置所在字元；\n"
 
-#: console.c:2201
+#: console.c:2199
 msgid "     Backspace: delete preceding character;\n"
 msgstr "     Backspace: 刪除目前位置之前的字元；\n"
 
-#: console.c:2202
+#: console.c:2200
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
 msgstr "     Ctrl+Del 或 Ctrl+K: 刪除目前位置到列尾的所有文字。\n"
 
-#: console.c:2203
+#: console.c:2201
 msgid "     Ctrl+U: delete all text from current line.\n"
 msgstr "     Ctrl+U: 從目前所在列開始刪除所有的文字。\n"
 
-#: console.c:2204
+#: console.c:2202
 msgid "  Copy and paste.\n"
 msgstr "  複製和貼上。\n"
 
-#: console.c:2205
+#: console.c:2203
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
 msgstr "     用滑鼠 (持續按著左鍵) 來選擇文字。\n"
 
-#: console.c:2206
+#: console.c:2204
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr "     用 Shift+Del (或 Ctrl+C) 把選擇好的文字複製到剪貼簿以及\n"
 
-#: console.c:2207
+#: console.c:2205
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
 msgstr ""
 "     用 Shift+Ins (或 Ctrl+V 或 Ctrl+Y) 來貼上剪貼簿的內容 (如果有的話)  \n"
 
-#: console.c:2208
+#: console.c:2206
 msgid "     to the console, Ctrl+X first copy then paste\n"
 msgstr "     到主控台，Ctrl+X 先複製再貼上\n"
 
-#: console.c:2209
+#: console.c:2207
 msgid "  Misc:\n"
 msgstr "  其它:\n"
 
-#: console.c:2210
+#: console.c:2208
 msgid "     Ctrl+L: Clear the console.\n"
 msgstr "     Ctrl+L: 清除主控台。\n"
 
-#: console.c:2211
+#: console.c:2209
 #, fuzzy
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
 msgstr "     Ctrl+O: 切換覆寫狀態: 最初是關掉的。\n"
 
-#: console.c:2212
+#: console.c:2210
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
 msgstr "     Ctrl+T: 將目前所在位置的字元與其左方的字元交換。\n"
 
-#: console.c:2213
+#: console.c:2211
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
@@ -167,7 +167,7 @@ msgstr ""
 "\n"
 "注意: 只有在要求輸入時主控台才會被更新。\n"
 
-#: console.c:2214
+#: console.c:2212
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
@@ -175,7 +175,7 @@ msgstr ""
 "  使用 Ctrl+W 來開關此一功能。\n"
 "\n"
 
-#: console.c:2215
+#: console.c:2213
 msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
@@ -183,17 +183,17 @@ msgstr ""
 "使用 ESC 來停止解譯器。\n"
 "\n"
 
-#: console.c:2216
+#: console.c:2214
 msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
 msgstr ""
 
-#: console.c:2217
+#: console.c:2215
 msgid "Standard Windows hotkeys can be used to switch to the\n"
 msgstr "可以用 Windows 的標準快捷鍵來轉換\n"
 
-#: console.c:2218
+#: console.c:2216
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
 msgstr "繪圖裝置 (MDI 用 Ctrl+Tab 或 Ctrl+F6，SDI 用 Alt+Tab)"
 

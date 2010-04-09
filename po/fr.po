@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-04-05 17:38+0100\n"
+"POT-Creation-Date: 2010-04-09 06:27+0100\n"
 "PO-Revision-Date: 2010-03-28 15:14+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -162,8 +162,8 @@ msgstr "problème lors de l'affichage de '%ls'"
 #: src/main/datetime.c:655 src/main/datetime.c:730 src/main/datetime.c:732
 #: src/main/datetime.c:736 src/main/datetime.c:882 src/main/datetime.c:884
 #: src/main/datetime.c:1044 src/main/debug.c:223 src/main/deparse.c:348
-#: src/main/devices.c:580 src/main/dotcode.c:729 src/main/dotcode.c:733
-#: src/main/dotcode.c:738 src/main/dounzip.c:250 src/main/dounzip.c:257
+#: src/main/devices.c:580 src/main/dotcode.c:730 src/main/dotcode.c:734
+#: src/main/dotcode.c:739 src/main/dounzip.c:250 src/main/dounzip.c:257
 #: src/main/dounzip.c:267 src/main/dounzip.c:272 src/main/dounzip.c:276
 #: src/main/envir.c:1520 src/main/envir.c:1523 src/main/envir.c:1612
 #: src/main/envir.c:1617 src/main/envir.c:1683 src/main/envir.c:1699
@@ -1603,8 +1603,8 @@ msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr ""
 "%s() appliqué à un objet de type '%s' qui n'est ni une liste, ni un vecteur"
 
-#: src/main/coerce.c:2187 src/main/dotcode.c:763 src/main/dotcode.c:806
-#: src/main/dotcode.c:1630
+#: src/main/coerce.c:2187 src/main/dotcode.c:764 src/main/dotcode.c:807
+#: src/main/dotcode.c:1631
 msgid "'name' is missing"
 msgstr "'name' est manquant"
 
@@ -2645,7 +2645,7 @@ msgstr ""
 "'name' doit être une chaîne de caractères (de longueur 1) ou une référence à "
 "un symbole natif"
 
-#: src/main/dotcode.c:199 src/main/dotcode.c:816
+#: src/main/dotcode.c:199 src/main/dotcode.c:817
 msgid "too many arguments in foreign function call"
 msgstr "trop d'arguments dans l'appel de fonction externe"
 
@@ -2696,7 +2696,7 @@ msgid "only first string in char vector used in .Fortran"
 msgstr ""
 "seule la première chaîne du vecteur de caractères est utilisée dans .Fortran"
 
-#: src/main/dotcode.c:397 src/main/dotcode.c:516
+#: src/main/dotcode.c:397 src/main/dotcode.c:517
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr "encodage '%s' indisponible"
@@ -2715,91 +2715,91 @@ msgstr "les listes doivent être dupliquées en .C"
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "mode incorrect à passer vers le Fortran (argument %d)"
 
-#: src/main/dotcode.c:530
+#: src/main/dotcode.c:531
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr "problème de conversion lors du réencodage depuis '%s'"
 
-#: src/main/dotcode.c:596
+#: src/main/dotcode.c:597
 msgid "NAOK used more than once"
 msgstr "NAOK utilisé plus d'une fois"
 
-#: src/main/dotcode.c:600
+#: src/main/dotcode.c:601
 msgid "DUP used more than once"
 msgstr "DUP utilisé plus d'une fois"
 
-#: src/main/dotcode.c:606
+#: src/main/dotcode.c:607
 msgid "DLL name is too long"
 msgstr "nom de DLL trop long"
 
-#: src/main/dotcode.c:609 src/main/dotcode.c:669 src/main/dotcode.c:675
+#: src/main/dotcode.c:610 src/main/dotcode.c:670 src/main/dotcode.c:676
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE utilisé plus d'une fois"
 
-#: src/main/dotcode.c:648
+#: src/main/dotcode.c:649
 msgid "PACKAGE argument must be a single character string"
 msgstr "l'argument PACKAGE doit être une chaîne de caractères unique"
 
-#: src/main/dotcode.c:654
+#: src/main/dotcode.c:655
 msgid "PACKAGE argument is too long"
 msgstr "argument PACKAGE trop long"
 
-#: src/main/dotcode.c:698 src/main/dotcode.c:706
+#: src/main/dotcode.c:699 src/main/dotcode.c:707
 msgid "ENCODING used more than once"
 msgstr "ENCODING utilisé plus d'une fois"
 
-#: src/main/dotcode.c:700 src/main/dotcode.c:708
+#: src/main/dotcode.c:701 src/main/dotcode.c:709
 msgid "ENCODING argument must be a single character string"
 msgstr "l'argument ENCODING doit être une chaîne de caractères unique"
 
-#: src/main/dotcode.c:725
+#: src/main/dotcode.c:726
 msgid "no arguments supplied"
 msgstr "aucun argument fourni"
 
-#: src/main/dotcode.c:726 src/main/seq.c:639
+#: src/main/dotcode.c:727 src/main/seq.c:639
 msgid "too many arguments"
 msgstr "trop d'arguments"
 
-#: src/main/dotcode.c:779 src/main/dotcode.c:823 src/main/dotcode.c:1651
+#: src/main/dotcode.c:780 src/main/dotcode.c:824 src/main/dotcode.c:1652
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr "Nombre d'arguments incorrect (%d), attendu %d pour %s"
 
-#: src/main/dotcode.c:1480 src/main/dotcode.c:2283
+#: src/main/dotcode.c:1481 src/main/dotcode.c:2284
 msgid "too many arguments, sorry"
 msgstr "trop d'arguments, désolé"
 
-#: src/main/dotcode.c:1512 src/main/dotcode.c:1529
+#: src/main/dotcode.c:1513 src/main/dotcode.c:1530
 msgid "Invalid graphics state"
 msgstr "État des graphiques incorrect"
 
-#: src/main/dotcode.c:1602
+#: src/main/dotcode.c:1603
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "valeur NULL pour DLLInfoReference lors de la recherche de la DLL"
 
-#: src/main/dotcode.c:1676
+#: src/main/dotcode.c:1677
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "Mauvais type pour l'argument %d dans l'appel à %s"
 
-#: src/main/dotcode.c:2377
+#: src/main/dotcode.c:2378
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "type \"%s\" indisponible dans les appels entre langages"
 
-#: src/main/dotcode.c:2389
+#: src/main/dotcode.c:2390
 msgid "invalid function in call_R"
 msgstr "fonction incorrecte dans call_R"
 
-#: src/main/dotcode.c:2391
+#: src/main/dotcode.c:2392
 msgid "invalid argument count in call_R"
 msgstr "mauvais nombre d'arguments dans call_R"
 
-#: src/main/dotcode.c:2393
+#: src/main/dotcode.c:2394
 msgid "invalid return value count in call_R"
 msgstr "mauvais nombre de valeurs renvoyées par call_R"
 
-#: src/main/dotcode.c:2436
+#: src/main/dotcode.c:2437
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "mode '%s' non supporté dans call_R"
