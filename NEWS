@@ -71,6 +71,9 @@ BUG FIXES
 	calls in the same way that print(summary(.)) has done already.
 	(PR#14250)
 
+    o	Issuing POST requests to the internal web server could stall
+	the request under certain circumstances.
+
 
 
 
