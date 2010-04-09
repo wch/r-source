@@ -5662,6 +5662,12 @@ attribute @code{Csingle}, most conveniently by using the @R{} functions
 @code{as.single}, @code{single} or @code{mode}.  This is intended only
 to be used to aid interfacing to existing C or FORTRAN code.
 
+Logical values are sent as @code{0} (@code{FALSE}), @code{1}
+(@code{TRUE}) or @code{INT_MIN = -2147483648} (@code{NA}, but only if
+@code{NAOK} is true), and the compiled code should return one of these
+three values.  (At present this is not checked, but non-zero values will
+be almost everywhere regarded as true.)
+
 Unless formal argument @code{NAOK} is true, all the other arguments are
 checked for missing values @code{NA} and for the @acronym{IEEE} special
 values @code{NaN}, @code{Inf} and @code{-Inf}, and the presence of any
