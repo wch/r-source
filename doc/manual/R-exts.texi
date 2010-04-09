@@ -2451,7 +2451,7 @@ SystemRequirements: GNU make
 
 @item
 Make use of the abilities of your compilers to check the
-standards-conformance of your code.  For example, @code{gcc} can be used
+standards-conformance of your code.  For example, @command{gcc} can be used
 with options @option{-Wall -pedantic} to alert you to potential
 problems.  Do not be tempted to assume that these are pure pedantry: for
 example @R{} is still used on platforms where the C compiler does not
@@ -4264,12 +4264,10 @@ it is not @acronym{ASCII}.  (The @code{\encoding@{@}} directive must be
 on a line by itself, and in particular one containing no
 non-@acronym{ASCII} characters.  There should be only one
 @code{\encoding@{@}} directive per file, but only the first will be
-used.  As from @R{} 2.6.0 the encoding declared in the
-@file{DESCRIPTION} file will be used if none is declared in the file.)
-This is for input: as from @R{} 2.10.0 the @file{Rd} files are converted to
+used.  The encoding declared in the @file{DESCRIPTION} file will be used
+if none is declared in the file.)  The @file{Rd} files are converted to
 UTF-8 before parsing and so the preferred encoding for the files
-themselves is now UTF-8.  (Using Latin-1 will be slightly more portable
-for older versions of @R{}.)
+themselves is now UTF-8.
 
 Wherever possible, avoid non-@acronym{ASCII} chars in @file{Rd} files, and
 even symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},
@@ -5892,7 +5890,7 @@ match as given in the table above.
 C type @code{Rcomplex} is a structure with @code{double} members
 @code{r} and @code{i} defined in the header file @file{R_ext/Complex.h}
 included by @file{R.h}.  (On most platforms which have it, this is
-compatible withe C99 @code{double complex} type.)  Only a single
+compatible with the C99 @code{double complex} type.)  Only a single
 character string can be passed to or from FORTRAN, and the success of
 this is compiler-dependent.  Other @R{} objects can be passed to
 @code{.C}, but it is better to use one of the other interfaces.  An
@@ -9864,7 +9862,7 @@ version includes the patchlevel (as in @samp{9.0}).
 @section Inlining C functions
 @findex R_INLINE
 
-The C99 keyword @code{inline} is recognized by some compilers used to
+The C99 keyword @code{inline} is recognized by most compilers used to
 build @R{} whereas others need @code{__inline__} or do not support
 inlining.  Portable code can be written using the macro @code{R_INLINE}
 (defined in file @file{Rconfig.h} included by @file{R.h}), as for
@@ -10938,7 +10936,7 @@ front-ends may allow a looser match.
 Find and set the @R{} home directory and the user's home directory.  The
 former may be available from the Windows Registry: it will be in
 @code{HKEY_LOCAL_MACHINE\Software\R-core\R\InstallPath} from an
-adminstrative install and
+administrative install and
 @code{HKEY_CURRENT_USER\Software\R-core\R\InstallPath} otherwise, if
 selected during installation (as it is by default).
 
