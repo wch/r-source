@@ -429,6 +429,13 @@ getOption(x, default = NULL)
   These will be set when package \pkg{utils} (or its name space)
   is loaded if not already set.
   \describe{
+    \item{\code{BioC_mirror}:}{The URL of a Bioconductor mirror
+      for use by \code{\link{setRepositories}},
+      e.g. the default \samp{"http://www.bioconductor.org"}
+      or the European mirror
+      \samp{"http://bioconductor.statistik.tu-dortmund.de"}.  Can be set
+      by \code{\link{chooseBioCmirror}}.}
+
     \item{\code{browser}:}{default HTML browser used by
       \code{\link{help.start}()} and \code{\link{browseURL}} on UNIX, or
       a non-default browser on Windows.  Alternatively, an \R function that

@@ -1,6 +1,6 @@
 % File src/library/utils/man/setRepositories.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{setRepositories}
@@ -28,7 +28,7 @@ setRepositories(graphics = getOption("menu.graphics"), ind = NULL)
   in \file{\var{HOME}/.R/repositories} which will take precedence.
   
   A Bioconductor mirror can be selected by setting
-  \code{options("BioC_mirror")}: the default value is
+  \code{\link{options}("BioC_mirror")}: the default value is
   \samp{"http://www.bioconductor.org"}.
   
   The items that are preselected are those that are currently in
@@ -38,6 +38,8 @@ setRepositories(graphics = getOption("menu.graphics"), ind = NULL)
   The list of repositories offered depends on the setting of option
   \code{"pkgType"} as some repositories only offer a subset of types
   (e.g. only source packages or not Mac OS X binary packages).
+  Further, for binary packages some repositories (notably R-Forge) only
+  offer packages for the current or recent versions of \R.
 
   This function requires the \R session to be interactive unless
   \code{ind} is supplied.

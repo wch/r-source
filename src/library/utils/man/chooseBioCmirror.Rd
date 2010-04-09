@@ -23,14 +23,15 @@ chooseBioCmirror(graphics = getOption("menu.graphics"))
   This sets the option \code{"BioC_mirror"}: it needs to be used before
   a call to \code{\link{setRepositories}}.
 
-  Currently the Bioconductor master site (in Seattle, USA) and the
-  European mirror in Dortmund, Germany are available to select from.
+  Currently the Bioconductor master site (in Seattle, USA), NIH
+  (Bethesda, USA) and the European mirror in Dortmund, Germany are
+  available to select from.
 }
 \value{
   None: this function is invoked for its
   side effect of updating \code{options("BioC_mirror")}.
 }
 \seealso{
-  \code{\link{setRepositories}}, \code{\link{chooseBioCmirror}}.
+  \code{\link{setRepositories}}, \code{\link{chooseCRANmirror}}.
 }
 \keyword{ utilities }

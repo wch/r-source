@@ -3807,6 +3807,18 @@ The text following each @code{\item} is formatted as one or more
 paragraphs, suitably indented and with the first paragraph marked with a
 bullet point (@code{\itemize}) or a number (@code{\enumerate}).
 
+Note that unlike argument lists, @code{\item} in these formats is
+followed by a space and the text (not enclosed in braces).  For example
+
+@example
+  \enumerate@{
+    \item A database consists of one or more records, each with one or
+    more named fields.
+    \item Regular lines start with a non-whitespace character.
+    \item Records are separated by one or more empty lines.
+  @}
+@end example
+
 @code{\itemize} and @code{\enumerate} commands may be nested.
 
 @findex \describe
