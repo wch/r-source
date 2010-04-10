@@ -7,11 +7,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2010-03-26 08:42\n"
-"PO-Revision-Date: 2009-10-15 02:15-0500\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
+"PO-Revision-Date: 2010-04-09 16:49-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
@@ -110,28 +110,26 @@ msgstr "*** Заметьте, что в будущем 'pos=1' будет приводить к ошибке"
 msgid "file '%s' not found"
 msgstr "файл '%s' не найден"
 
-#, fuzzy
 msgid "invalid 'name' argument"
-msgstr "неправильный аргумент 'category'"
+msgstr "неправильный аргумент 'name'"
 
-#, fuzzy
 msgid "package %s is required by %s, which may no longer work correctly"
-msgstr ""
-"пакет '%s' был собран под R версии %s и помощь не будет правильно работать"
+msgstr "пакет '%s' требуется для %s, что может не работать правильно"
 
-#, fuzzy
 msgid "package %s is required by %s so will not be detached"
-msgstr "пакет '%s', требуемый для '%s', не найден"
+msgstr "пакет '%s' требуется для '%s', и поэтому не будет отсоединен"
 
 msgid ""
 "%s failed in %s() for '%s', details:\n"
 "  call: %s\n"
 "  error: %s"
 msgstr ""
+"%s не удалось в %s() для '%s', подробности:\n"
+"  вызов: %s\n"
+"  ошибка: %s"
 
-#, fuzzy
 msgid "name space cannot be unloaded:"
-msgstr "пространство имен  нельзя выгрузить"
+msgstr "пространство имен  нельзя выгрузить:"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr "образец регулярного выражения '[' заменен на  '\\\\['"
@@ -244,9 +242,8 @@ msgstr "пропущенные значения в 'row.names' не разрешены"
 msgid "invalid 'dimnames' given for data frame"
 msgstr "для таблицы данных предложены неправильные 'dimnames'"
 
-#, fuzzy
 msgid "cannot coerce class '%s' into a data.frame"
-msgstr "не могу поместить класс \"%s\" в data.frame"
+msgstr "не могу перевести класс '%s' в data.frame"
 
 msgid "invalid 'row.names', length %d for a data frame with %d rows"
 msgstr "неправильные 'row.names', длиной %d для таблицы данных с %d строками"
@@ -477,9 +474,8 @@ msgstr "'lag' и 'differences' должны быть целыми >= 1"
 msgid "do not know how to convert '%s' to class \"POSIXlt\""
 msgstr "не знаю как конвертировать '%s' в класс \"POSIXlt\""
 
-#, fuzzy
 msgid "do not know how to convert '%s' to class \"POSIXct\""
-msgstr "не знаю как конвертировать '%s' в класс \"POSIXlt\""
+msgstr "не знаю как конвертировать '%s' в класс \"POSIXct\""
 
 msgid "wrong class"
 msgstr "неправильный класс"
@@ -741,9 +737,9 @@ msgstr "'object' должен быть списком"
 msgid "package '%s' has not been installed properly"
 msgstr "пакет '%s' как следует не установлен"
 
-#, fuzzy
 msgid "package '%s' was built before R 2.10.0: please re-install it"
-msgstr "пакет '%s' был собран до R 2.0.0: пожалуйста, инсталлируйте его заново"
+msgstr ""
+"пакет '%s' был собран до R 2.10.0: пожалуйста, инсталлируйте его заново"
 
 msgid "This is R %s, package '%s' needs %s %s"
 msgstr "Это -- R %s, а пакету '%s' нужен %s %s"
@@ -760,20 +756,23 @@ msgstr "пакет '%s' не установлен для 'arch=%s'"
 msgid ""
 "package '%s' has a license that you need to accept in an interactive session"
 msgstr ""
+"у пакета '%s' есть лицензия, которую Вам нужно принять в инерактивной сессии"
 
 msgid "Package '%s' has a license that you need to accept after viewing"
-msgstr ""
+msgstr "Пакет '%s' имеет лицензию, которую Вам нужно принять после просмотра"
 
 msgid ""
 "Package '%s' has a license that you need to accept:\n"
 "according to the DESCRIPTION file it is"
 msgstr ""
+"Пакет '%s' имеет лицензию, которую надо принять::\n"
+"в соответствии с файлом DESCRIPTION это"
 
 msgid "License"
-msgstr ""
+msgstr "Лицензия"
 
 msgid "License for package '%s' not accepted"
-msgstr ""
+msgstr "Лицензия для пакета '%s' не принята"
 
 msgid "Attaching package: '%s'"
 msgstr "Присоединяю пакет: '%s'"
@@ -1013,9 +1012,8 @@ msgstr "неправильно менять тип хранения фактора"
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "'%s' не является объектом, экспортированным из 'namespace:%s'"
 
-#, fuzzy
 msgid "package %s has no name space and is not on the search path"
-msgstr "пакет '%s' не имеет пространства имен и"
+msgstr "пакет '%s' не имеет пространства имен и не находится в пути поиска"
 
 msgid "name space is already attached"
 msgstr "пространство имен уже присоединено"
@@ -1050,31 +1048,27 @@ msgstr "не удалось присвоить NativeSymbolInfo для"
 msgid "package '%s' does not have a name space"
 msgstr "пакет '%s' не имеет пространства имен"
 
-#, fuzzy
 msgid ""
 "exportClassPattern specified in NAMESPACE but no matching classes in package "
 "%s"
 msgstr ""
-"Указан 'exportClassPattern', но отсутствуют соответствующие классы в %s"
+"в NAMESPACE указан 'exportClassPattern', но отсутствуют соответствующие "
+"классы в %s"
 
-#, fuzzy
 msgid "in package %s classes %s were specified for export but not defined"
-msgstr "в '%s' классы для экспорта не определены: %s"
+msgstr "в пакете '%s' классы %s указаны для экспорта, но не определены"
 
 msgid "in '%s' methods for export not found: %s"
 msgstr "в '%s' методы для экспорта не найдены: %s"
 
-#, fuzzy
 msgid "multiple methods tables found for %s"
-msgstr "Множественные таблицы методов найдены для '"
+msgstr "множественные таблицы методов найдены для %s"
 
-#, fuzzy
 msgid "failed to find metadata object for %s"
-msgstr "Не удалось найти объект метаданных для \"%s\""
+msgstr "не удалось найти объект метаданных для %s"
 
-#, fuzzy
 msgid "in package %s methods %s were specified for export but not defined"
-msgstr "в '%s' указаны методы для экспорта, но ни один не определен: %s"
+msgstr "в пакете '%s' указаны методы %s для экспорта, но не определены"
 
 msgid "not found"
 msgstr "не найден"
@@ -1082,9 +1076,9 @@ msgstr "не найден"
 msgid "not loading a name space"
 msgstr "не загружаю пространство имен"
 
-#, fuzzy
 msgid "name space %s is imported by %s so cannot be unloaded"
-msgstr "пространство имен  нельзя выгрузить"
+msgstr ""
+"пространство имен %s импортировано из %s и поэтому его нельзя выгрузить"
 
 msgid "imperative name space directives are disabled"
 msgstr "императивные директивы пространства имен отменены"
@@ -1105,13 +1099,13 @@ msgid "duplicate import names"
 msgstr "одинаковые импортированные имена"
 
 msgid "replacing local value with import %s when loading %s"
-msgstr ""
+msgstr "заменяю локальное значение на импортированное %s во время загрузки %s"
 
 msgid "cannot import into a sealed name space"
 msgstr "не могу импортировать во включенное пространство имен"
 
 msgid "replacing previous import %s when loading %s"
-msgstr ""
+msgstr "заменяю предыдущий импорт %s во время загрузки %s"
 
 msgid "invalid import target"
 msgstr "неправильное место назначения для импорта"
@@ -1119,13 +1113,11 @@ msgstr "неправильное место назначения для импорта"
 msgid "got invalid index for importing"
 msgstr "получен неправильный индекс для импорта"
 
-#, fuzzy
 msgid "found methods to import for function %s but not the generic itself"
-msgstr "Найдены методы импорта для функции \"%s\", но они сами не общие"
+msgstr "найдены методы импорта для функции %s но они сами не общие"
 
-#, fuzzy
 msgid "requested methods not found in environment/package %s: %s"
-msgstr "запрошенные объекты 'methods' не найдены в окружении/пакете '%s': %s"
+msgstr "запрошенные методы не найдены в окружении/пакете %s: %s"
 
 msgid "cannot add to exports of a sealed name space"
 msgstr "не могу добавить к экспорту из включенного пространства имен"
@@ -1139,9 +1131,8 @@ msgstr "у пакета '%s' нет файла NAMESPACE"
 msgid "empty name in directive '%s' in NAMESPACE file"
 msgstr "пустое имя в директиве '%s' из файла NAMESPACE"
 
-#, fuzzy
 msgid "duplicated symbol names %s in useDynlib(\"%s\")"
-msgstr "одинаковые имена символов"
+msgstr "повторяющиеся имена символов %s в useDynlib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
 msgstr "неправильная директива 'S3method': %s"
@@ -1152,9 +1143,8 @@ msgstr "слишком много директив 'S3method'"
 msgid "unknown namespace directive: %s"
 msgstr "неизвестная директива пространства имен: %s"
 
-#, fuzzy
 msgid "S3 method %s was declared but not found"
-msgstr "S3 метод %s объявлен в NAMESPACE но не найден"
+msgstr "S3 метод %s объявлен, но не найден"
 
 msgid "bad method"
 msgstr "неправильный метод"
@@ -1162,9 +1152,8 @@ msgstr "неправильный метод"
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr "в процессе загрузки пространства имен '%s' объект '%s' не найден"
 
-#, fuzzy
 msgid "found an S4 version of %s so it has not been imported correctly"
-msgstr "найдена S4-версия '%s' и поэтому она не загружена правильно"
+msgstr "найдена S4-версия %s и поэтому она не загружена правильно"
 
 msgid "'%s' is not implemented yet"
 msgstr "'%s' пока не разработан"
@@ -1345,7 +1334,7 @@ msgid "unable to find a plausible encoding"
 msgstr "не могу найти правдоподобную кодировку"
 
 msgid "encoding = \"%s\" chosen"
-msgstr ""
+msgstr "выбрана кодировка = \"%s\""
 
 msgid "'chdir = TRUE' makes no sense for a URL"
 msgstr "'chdir = TRUE' не имеет смысла для URL"
@@ -1474,7 +1463,7 @@ msgid "not defined for numeric_version objects"
 msgstr "не определено для объектов numeric_version"
 
 msgid "<0 elements>"
-msgstr ""
+msgstr "<0 элементов>"
 
 msgid "invalid 'digits'"
 msgstr "неправильные 'digits'"
@@ -1486,32 +1475,26 @@ msgstr ""
 "аргументы у 'show.output.on.console', 'minimized' и 'invisible' только для "
 "Windows"
 
-#, fuzzy
 msgid "'intern' must be TRUE or FALSE"
-msgstr "'fromLast' должен быть TRUE или FALSE"
+msgstr "'intern' должен быть TRUE или FALSE"
 
-#, fuzzy
 msgid "'ignore.stderr' must be TRUE or FALSE"
-msgstr "'fromLast' должен быть TRUE или FALSE"
+msgstr "'ignore.stderr' должен быть TRUE или FALSE"
 
-#, fuzzy
 msgid "'wait' must be TRUE or FALSE"
-msgstr "'fromLast' должен быть TRUE или FALSE"
+msgstr "'wait' должен быть TRUE или FALSE"
 
 msgid "'input' must be a character vector or 'NULL'"
 msgstr "'input' должен быть текстовым вектором либо 'NULL'"
 
-#, fuzzy
 msgid "'show.output.on.console' must be TRUE or FALSE"
-msgstr "'fromLast' должен быть TRUE или FALSE"
+msgstr "'show.output.on.console' должен быть TRUE или FALSE"
 
-#, fuzzy
 msgid "'minimized' must be TRUE or FALSE"
-msgstr "'fromLast' должен быть TRUE или FALSE"
+msgstr "'minimized' должен быть TRUE или FALSE"
 
-#, fuzzy
 msgid "'invisible' must be TRUE or FALSE"
-msgstr "'fromLast' должен быть TRUE или FALSE"
+msgstr "'invisible' должен быть TRUE или FALSE"
 
 msgid "'%s' could not be run"
 msgstr "'%s' не запускается"
@@ -1582,19 +1565,17 @@ msgstr[0] "%s не найден"
 msgstr[1] "%s не найден"
 msgstr[2] "%s не найден"
 
-#, fuzzy
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
-msgstr[0] "объект %s не экспортирован 'namespace:%s'"
-msgstr[1] "объекты %s не экспортированы 'namespace:%s'"
-msgstr[2] "объекты %s не экспортированы 'namespace:%s'"
+msgstr[0] "класс %s не экспортирован из 'namespace:%s'"
+msgstr[1] "классы %s не экспортированы из 'namespace:%s'"
+msgstr[2] "классы %s не экспортированы из 'namespace:%s'"
 
-#, fuzzy
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
-msgstr[0] "объект %s не экспортирован 'namespace:%s'"
-msgstr[1] "объекты %s не экспортированы 'namespace:%s'"
-msgstr[2] "объекты %s не экспортированы 'namespace:%s'"
+msgstr[0] "объект %s не экспортирован из 'namespace:%s'"
+msgstr[1] "объекты %s не экспортированы из 'namespace:%s'"
+msgstr[2] "объекты %s не экспортированы из 'namespace:%s'"
 
 msgid "previous export '%s' is being replaced"
 msgid_plural "previous exports '%s' are being replaced"

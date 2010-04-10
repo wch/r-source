@@ -3,14 +3,14 @@
 #
 # Copyright (C) 2008 The R Foundation
 # This file is distributed under the same license as the R package.
-# Alexey Shipunov <dactylorhiza at gmail.com> 2008
+# Alexey Shipunov <dactylorhiza at gmail dot com> 2010
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.9.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-04-05 17:42+0100\n"
-"PO-Revision-Date: 2009-03-28 22:25-0500\n"
+"PO-Revision-Date: 2010-04-09 16:53-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -263,7 +263,7 @@ msgstr "семейство '%s' не включено в PostScript-устройство"
 #: devPS.c:4003 devPS.c:5051 devPS.c:7095 devPicTeX.c:535 devPicTeX.c:540
 #, c-format
 msgid "%s not available for this device"
-msgstr ""
+msgstr "%s недоступен для этого устройства"
 
 #: devPS.c:4210
 #, c-format
@@ -334,9 +334,9 @@ msgid "write failed"
 msgstr "запись не удалась"
 
 #: devPS.c:5046
-#, fuzzy, c-format
+#, c-format
 msgid "%s not yet implemented for this device"
-msgstr "file = \"|cmd\" недоступен в этой версии"
+msgstr "%s для этого устройства еще ре создан"
 
 #: devPS.c:5217
 #, c-format
@@ -345,12 +345,11 @@ msgstr "не могу использовать кодировку '%s'"
 
 #: devPS.c:5466
 msgid "Too many raster images"
-msgstr ""
+msgstr "Слишком много растровых картинок"
 
 #: devPS.c:5471
-#, fuzzy
 msgid "Unable to allocate raster image"
-msgstr "Не могу разместить bitmap"
+msgstr "Не могу разместить растровое изображение"
 
 #: devPS.c:5650
 msgid "Corrupt loaded encodings;  font not added"
@@ -377,14 +376,12 @@ msgid "failed to load default encoding"
 msgstr "не могу загрузить кодировку по умолчанию"
 
 #: devPS.c:5910
-#, fuzzy
 msgid "failed to allocate rasters"
-msgstr "не могу разместить список шрифтов"
+msgstr "не могу разместить растры"
 
 #: devPS.c:5916
-#, fuzzy
 msgid "failed to allocate masks"
-msgstr "не могу разместить список шрифтов"
+msgstr "не могу разместить маски"
 
 #: devPS.c:5979
 #, c-format
@@ -467,9 +464,9 @@ msgid "unable to start device xfig"
 msgstr "не могу запустить устройство xfig"
 
 #: devPS.c:8053
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'maxRasters' parameter in %s"
-msgstr "неправильный параметр 'fonts' в %s"
+msgstr "неправильный параметр 'maxRasters' в %s"
 
 #: devPS.c:8066
 msgid "unable to start device pdf"
