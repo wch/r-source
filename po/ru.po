@@ -2,17 +2,17 @@
 # Русский перевод для пакета R
 #
 # Copyright (C) 2005 Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net>
-# Copyright (C) 2009 Alexey Shipunov <dactylorhiza at gmail>
 # Copyright (C) 2009 Anton Korobeynikov <asl at math dot spbu dot ru>
+# Copyright (C) 2010 Alexey Shipunov <dactylorhiza at gmail>
 #
 # This file is distributed under the same license as the R package.
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-04-09 06:27+0100\n"
-"PO-Revision-Date: 2009-10-15 02:08-0500\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
+"POT-Creation-Date: 2010-04-10 08:20+0100\n"
+"PO-Revision-Date: 2010-04-09 02:06-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
@@ -436,7 +436,7 @@ msgstr "Невозможно перенаправить вывод"
 
 #: src/gnuwin32/run.c:311
 msgid "Child process not responding.  R will terminate it."
-msgstr ""
+msgstr "Дочерний процесс не отвечает. R закроет его."
 
 #: src/gnuwin32/run.c:354
 #, c-format
@@ -790,9 +790,9 @@ msgid "table entry must be an external pointer"
 msgstr "вход таблицы должен быть внешним указателем"
 
 #: src/main/Rstrptime.h:501 src/main/Rstrptime.h:968
-#, fuzzy, c-format
+#, c-format
 msgid "use of %s for input is not supported"
-msgstr "режим '%s' не поддерживается в call_R"
+msgstr "использование '%s' для ввода не поддерживается"
 
 #: src/main/Rstrptime.h:1222
 msgid "input string is too long"
@@ -838,14 +838,12 @@ msgid "invalid length"
 msgstr "неправильная длина"
 
 #: src/main/apply.c:96
-#, fuzzy
 msgid "FUN.VALUE must be a vector"
-msgstr "код должен быть общим вектором"
+msgstr "FUN.VALUE должно быть вектором"
 
 #: src/main/apply.c:98
-#, fuzzy
 msgid "invalid USE.NAMES value"
-msgstr "неправильное значение"
+msgstr "неправльное значение USE.NAMES"
 
 #: src/main/apply.c:144
 #, c-format
@@ -853,6 +851,8 @@ msgid ""
 "values must be length %d,\n"
 " but FUN(X[[%d]]) result is length %d"
 msgstr ""
+"значения должны иметь длину %d,\n"
+" но результат FUN(X[[%d]]) имеет длину %d"
 
 #: src/main/apply.c:156
 #, c-format
@@ -860,11 +860,13 @@ msgid ""
 "values must be type '%s',\n"
 " but FUN(X[[%d]]) result is type '%s'"
 msgstr ""
+"начения должны иметь тип '%s',\n"
+" но результат FUN(X[[%d]]) имеет тип '%s'"
 
 #: src/main/apply.c:174
-#, fuzzy, c-format
+#, c-format
 msgid "type '%s' is not supported"
-msgstr "режим '%s' не поддерживается в call_R"
+msgstr "тип '%s' не поддерживается"
 
 #: src/main/arithmetic.c:35
 msgid "NaNs produced"
@@ -1385,12 +1387,11 @@ msgstr "'...' использовано в неправильном контексте"
 
 #: src/main/builtin.c:901
 msgid "'EXPR' is missing"
-msgstr ""
+msgstr "'EXPR' отсутствует"
 
 #: src/main/builtin.c:905
-#, fuzzy
 msgid "EXPR must be a length 1 vector"
-msgstr "switch: EXPR должно вернуть вектор единичной длины"
+msgstr "EXPR должно быть вектором единичной длины"
 
 #: src/main/character.c:93 src/main/character.c:116
 #, c-format
@@ -1510,9 +1511,9 @@ msgid "(list) object cannot be coerced to type '%s'"
 msgstr "объект (список) не может быть преобразован в тип '%s'"
 
 #: src/main/coerce.c:1067
-#, fuzzy, c-format
+#, c-format
 msgid "(symbol) object cannot be coerced to type '%s'"
-msgstr "объект (список) не может быть преобразован в тип '%s'"
+msgstr "(символ) объект не может быть преобразован в тип '%s'"
 
 #: src/main/coerce.c:1083 src/main/coerce.c:1382
 msgid "no method for coercing this S4 class to a vector"
@@ -1566,7 +1567,7 @@ msgstr "%s() применен к не-списку/вектору типа '%s'"
 #: src/main/coerce.c:2187 src/main/dotcode.c:764 src/main/dotcode.c:807
 #: src/main/dotcode.c:1631
 msgid "'name' is missing"
-msgstr ""
+msgstr "'name' отсутствует"
 
 #: src/main/coerce.c:2194
 msgid "first argument must be a character string"
@@ -1940,7 +1941,7 @@ msgstr "включить архивирование bzip2 для файла '%s' не удалось"
 msgid "allocation of bzfile connection failed"
 msgstr "выделение bzfile-соединения не удалось"
 
-#: src/main/connections.c:1493 src/main/connections.c:5488
+#: src/main/connections.c:1493 src/main/connections.c:5491
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "не могу включить декодер lzma, ошибка %d"
@@ -2282,24 +2283,30 @@ msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
 "использование текстового соединения 'file' может не работать как положено"
 
-#: src/main/connections.c:5013 src/main/connections.c:5017
-#: src/main/connections.c:5024 src/main/connections.c:5038
+#: src/main/connections.c:5013
+msgid ""
+"cannot create a gzcon connection from a writable textConnection; maybe use "
+"rawConnection"
+msgstr ""
+
+#: src/main/connections.c:5016 src/main/connections.c:5020
+#: src/main/connections.c:5027 src/main/connections.c:5041
 msgid "allocation of 'gzcon' connection failed"
 msgstr "выделить gzcon-соединение не удалось"
 
-#: src/main/connections.c:5198
+#: src/main/connections.c:5201
 msgid "not a list of sockets"
 msgstr "не является списком сокетов"
 
-#: src/main/connections.c:5203
+#: src/main/connections.c:5206
 msgid "bad write indicators"
 msgstr "плохие индикаторы записи"
 
-#: src/main/connections.c:5214
+#: src/main/connections.c:5217
 msgid "not a socket connection"
 msgstr "не сокет-соединение"
 
-#: src/main/connections.c:5435
+#: src/main/connections.c:5438
 msgid "unknown compression, assuming none"
 msgstr "неизвестный архиватор, предполагаю, что архивации не было"
 
@@ -3154,15 +3161,16 @@ msgstr "длины экспортируемых и импортируемых имен должны совпадать"
 msgid "exported symbol '%s' has no value"
 msgstr "экспортируемый символ '%s' не имеет значения"
 
+# fuzzy, c-format
 #: src/main/envir.c:3477
 #, fuzzy, c-format
 msgid "unknown encoding: %d"
-msgstr "не поддерживаемая кодировка '%s'"
+msgstr "неизвестная кодировка '%s'"
 
 #: src/main/envir.c:3491
 #, c-format
 msgid "embedded nul in string: '%s'"
-msgstr ""
+msgstr "внутреннее nul в строке: '%s'"
 
 #: src/main/errors.c:181 src/main/errors.c:218
 msgid "interrupts suspended; signal ignored"
@@ -3417,9 +3425,8 @@ msgid "invalid for() loop sequence"
 msgstr "неправильная циклическая последовательность for()"
 
 #: src/main/eval.c:1265
-#, fuzzy
 msgid "multi-argument returns are not permitted"
-msgstr "многоаргументные возвраты не рекомендуются"
+msgstr "многоаргументные возвраты не разрешены"
 
 #: src/main/eval.c:1313
 msgid "invalid (NULL) left side of assignment"
@@ -3455,14 +3462,14 @@ msgid "invalid assignment left-hand side"
 msgstr "неправильная левая сторона присвоения"
 
 #: src/main/eval.c:1578
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d is empty"
-msgstr "элемент %d пуст"
+msgstr "аргумент %d пуст"
 
 #: src/main/eval.c:1581
 #, c-format
 msgid "'%s' is missing"
-msgstr ""
+msgstr "'%s' отсутствует"
 
 #: src/main/eval.c:1713
 msgid "invalid formal argument list for \"function\""
@@ -3780,9 +3787,10 @@ msgid "unable to allocate buffer for long string at line %d"
 msgstr "не могу разместить буфер для длинной подстроки на строке %d"
 
 #: src/main/gram.y:2111
-#, fuzzy, c-format
+#, c-format
 msgid "'\\x' used without hex digits in character string starting \"%s\""
-msgstr "'\\x' использовано без шестнадцатиричных цифр"
+msgstr ""
+"'\\x' использовано без шестнадцатиричных цифр в строке начинающейся с \"%s\""
 
 #: src/main/gram.y:2125
 #, c-format
@@ -3792,9 +3800,10 @@ msgstr ""
 "%d)"
 
 #: src/main/gram.y:2140
-#, fuzzy, c-format
+#, c-format
 msgid "'\\u' used without hex digits in character string starting \"%s\""
-msgstr "'\\x' использовано без шестнадцатиричных цифр"
+msgstr ""
+"'\\x' использовано без шестнадцатиричных цифр в строке начинающейся с \"%s\""
 
 #: src/main/gram.y:2148
 #, c-format
@@ -3809,9 +3818,10 @@ msgstr ""
 "(строка %d)"
 
 #: src/main/gram.y:2175
-#, fuzzy, c-format
+#, c-format
 msgid "'\\U' used without hex digits in character string starting \"%s\""
-msgstr "'\\x' использовано без шестнадцатиричных цифр"
+msgstr ""
+"'\\x' использовано без шестнадцатиричных цифр в строке начинающейся с \"%s\""
 
 #: src/main/gram.y:2183
 #, c-format
@@ -3819,9 +3829,10 @@ msgid "invalid \\U{xxxxxxxx} sequence (line %d)"
 msgstr "неправильная \\U{xxxxxxxx} последовательность (строка %d)"
 
 #: src/main/gram.y:2223
-#, fuzzy, c-format
+#, c-format
 msgid "'\\%c' is an unrecognized escape in character string starting \"%s\""
-msgstr "'\\%c' -- нераспознаваемый префикс в командной строке"
+msgstr ""
+"'\\%c' -- нераспознаваемый префикс в строке в строке начинающейся с \"%s\""
 
 #: src/main/gram.y:2275
 #, c-format
@@ -3931,19 +3942,19 @@ msgstr "аргумент '%s' будет проигнорирован"
 
 #: src/main/grep.c:190 src/main/grep.c:277 src/main/grep.c:381
 #: src/main/grep.c:827 src/main/grep.c:1853
-#, fuzzy, c-format
+#, c-format
 msgid "input string %d is invalid UTF-8"
-msgstr "неправильная входная строка %d для этой локали"
+msgstr "входная строка %d -- это неправильный UTF-8"
 
 #: src/main/grep.c:255 src/main/grep.c:348
-#, fuzzy, c-format
+#, c-format
 msgid "'split' string %d is invalid UTF-8"
-msgstr "неправильная входная строка %d для этой локали"
+msgstr "строка 'split' %d -- это неправильный UTF-8"
 
 #: src/main/grep.c:259 src/main/grep.c:352 src/main/grep.c:521
-#, fuzzy, c-format
+#, c-format
 msgid "'split' string %d is invalid in this locale"
-msgstr "неправильная входная строка %d для этой локали"
+msgstr "строка 'split' %d для этой локали неправильная"
 
 #: src/main/grep.c:360 src/main/grep.c:796 src/main/grep.c:1151
 #: src/main/grep.c:1817
@@ -3973,19 +3984,16 @@ msgstr ""
 "\t'%s'\n"
 
 #: src/main/grep.c:779 src/main/grep.c:1800
-#, fuzzy
 msgid "regular expression is invalid UTF-8"
-msgstr "неправильное регулярное выражение для этой локали"
+msgstr "регулярное выражение -- это неправильный UTF-8"
 
 #: src/main/grep.c:1126
-#, fuzzy
 msgid "'pattern' is invalid UTF-8"
-msgstr "неправильный 'pattern' для этой локали"
+msgstr "'pattern' -- это неправильный UTF-8"
 
 #: src/main/grep.c:1128
-#, fuzzy
 msgid "'replacement' is invalid UTF-8"
-msgstr "неправильный 'replacement' для этой локали"
+msgstr "'replacement' -- это неправильный UTF-8"
 
 #: src/main/grep.c:1132
 msgid "'pattern' is invalid in this locale"
@@ -4001,9 +4009,8 @@ msgstr "нулевой образец"
 
 #: src/main/grep.c:1280 src/main/grep.c:1296 src/main/grep.c:1344
 #: src/main/grep.c:1360 src/main/grep.c:1407 src/main/grep.c:1423
-#, fuzzy
 msgid "result string is too long"
-msgstr "введенная строка слишком длинна"
+msgstr "строка результата слишком длинна"
 
 #: src/main/internet.c:90
 msgid "internet routines cannot be accessed in module"
@@ -4494,14 +4501,12 @@ msgid "Invalid generic function in 'usemethod'"
 msgstr "Неправильная общая функция в 'usemethod'"
 
 #: src/main/objects.c:408
-#, fuzzy
 msgid "there must be a 'generic' argument"
-msgstr "тут должен быть первый аргумент"
+msgstr "тут должен быть 'generic' аргумент"
 
 #: src/main/objects.c:412
-#, fuzzy
 msgid "'generic' argument must be a character string"
-msgstr "второй аргумент должен быть текстовой строкой"
+msgstr "'generic' аргумент должен быть текстовой строкой"
 
 #: src/main/objects.c:449
 msgid "'UseMethod' called from outside a closure"
@@ -4641,7 +4646,7 @@ msgstr ""
 #: src/main/objects.c:1236
 #, c-format
 msgid "object returned as generic function \"%s\" doesn't appear to be one"
-msgstr ""
+msgstr "объект, возвращенный как общая функция \"%s\", похоже, ею не является"
 
 #: src/main/objects.c:1334
 msgid "invalid primitive operation given for dispatch"
@@ -6157,9 +6162,8 @@ msgid "'by' must be finite"
 msgstr "'by' должен быть конечным"
 
 #: src/main/seq.c:680
-#, fuzzy
 msgid "argument must be coercible to non-negative integer"
-msgstr "аргумент должен быть неотрицательным числом"
+msgstr "аргумент должен быть преобразовываем в неотрицательное целое число"
 
 #: src/main/serialize.c:223 src/main/serialize.c:253 src/main/serialize.c:276
 msgid "unknown or inappropriate output format"
@@ -6432,7 +6436,7 @@ msgstr ""
 
 #: src/main/source.c:204
 msgid "coercion of 'text' to character was unsuccessful"
-msgstr ""
+msgstr "конверсия 'text' в символы не удалась"
 
 #: src/main/source.c:220
 #, c-format
@@ -6761,13 +6765,12 @@ msgid "no non-missing arguments to max; returning -Inf"
 msgstr "у 'max' нет не пропущенных аргументов; возвращаю -Inf"
 
 #: src/main/summary.c:798
-#, fuzzy
 msgid "argument to 'which' is not logical"
-msgstr "аргумент 'logarithm' должен быть логическим"
+msgstr "аргумент 'which' -- не логический"
 
 #: src/main/summary.c:907
 msgid "no input has determined the number of cases"
-msgstr ""
+msgstr "ввод не определил количество классов"
 
 #: src/main/summary.c:1010
 msgid "not all arguments have the same length"
@@ -6863,9 +6866,8 @@ msgid "cannot find unused tempfile name"
 msgstr "не могу найти неиспользованное имя временного файла"
 
 #: src/main/sysutils.c:1372
-#, fuzzy
 msgid "allocation failed in R_tmpnam"
-msgstr "неудачное размещение в 'GVText'"
+msgstr "размещение в R_tmpnam не удалось"
 
 #: src/main/sysutils.c:1398
 msgid "proc.time() is not implemented on this system"
@@ -6983,7 +6985,7 @@ msgstr[2] "%d аргументов переданы '%s', а требуется %d"
 #: src/main/util.c:440
 #, c-format
 msgid "supplied argument name '%s' does not match '%s'"
-msgstr ""
+msgstr "предложенное имя аргумента '%s' не соответствует '%s'"
 
 #: src/main/util.c:450
 #, c-format
@@ -7329,9 +7331,8 @@ msgid "'x' must be a square numeric matrix"
 msgstr "'x' должен быть квадратной числовой матрицей"
 
 #: src/modules/lapack/Lapack.c:311
-#, fuzzy
 msgid "'type' must be a character string"
-msgstr "'text' должен быть текстовой строкой"
+msgstr "'type' должен быть текстовой строкой"
 
 #: src/modules/lapack/Lapack.c:318 src/modules/lapack/Lapack.c:352
 #: src/modules/lapack/Lapack.c:409
@@ -7651,9 +7652,8 @@ msgid "could not open file '%s'"
 msgstr "не могу открыть файл '%s'"
 
 #: src/modules/X11/devX11.c:2041
-#, fuzzy
 msgid "Unable to create XImage"
-msgstr "не могу создать 'pixmap'"
+msgstr "Не могу создать XImage"
 
 #: src/modules/X11/devX11.c:2339
 msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
@@ -7784,29 +7784,29 @@ msgid "bessel_y(%g,nu=%g): precision lost in result\n"
 msgstr "bessel_y(%g,nu=%g): потеряна точность результата\n"
 
 #: src/nmath/nmath.h:132
-#, fuzzy, c-format
+#, c-format
 msgid "argument out of domain in '%s'\n"
-msgstr "'perm': значение за пределами"
+msgstr "значение в '%s' -- за областью\n"
 
 #: src/nmath/nmath.h:135
-#, fuzzy, c-format
+#, c-format
 msgid "value out of range in '%s'\n"
-msgstr "'perm': значение за пределами"
+msgstr "значение в '%s' -- за пределами\n"
 
 #: src/nmath/nmath.h:138
-#, fuzzy, c-format
+#, c-format
 msgid "convergence failed in '%s'\n"
-msgstr "на %s не удалось открыть "
+msgstr "схождение в '%s' не удалось\n"
 
 #: src/nmath/nmath.h:141
 #, c-format
 msgid "full precision may not have been achieved in '%s'\n"
-msgstr ""
+msgstr "полная точность в '%s' не может дыть достигнута\n"
 
 #: src/nmath/nmath.h:144
 #, c-format
 msgid "underflow occurred in '%s'\n"
-msgstr ""
+msgstr "'%s' недозаполнен\n"
 
 #: src/nmath/pnchisq.c:233
 #, c-format
@@ -7974,9 +7974,9 @@ msgid "'intern' must be logical and not NA"
 msgstr "'intern' должно быть логическим и не NA"
 
 #: src/unix/sys-unix.c:277
-#, fuzzy, c-format
+#, c-format
 msgid "cannot popen '%s', probable reason '%s'"
-msgstr "не могу открыть bzip2-файл '%s', возможная причина -- '%s'"
+msgstr "не могу popen '%s', возможная причина -- '%s'"
 
 #: src/unix/sys-unix.c:282
 #, c-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nn\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-04-09 06:27+0100\n"
+"POT-Creation-Date: 2010-04-10 08:20+0100\n"
 "PO-Revision-Date: 2010-04-02 14:30+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -1945,7 +1945,7 @@ msgstr "klarte ikkje starta bzip2-komprimering av fila «%s»"
 msgid "allocation of bzfile connection failed"
 msgstr "feil ved tildeling av bzfile-samband"
 
-#: src/main/connections.c:1493 src/main/connections.c:5488
+#: src/main/connections.c:1493 src/main/connections.c:5491
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "klarte ikkje starta lzma-dekodaren (feil %d)"
@@ -2288,24 +2288,30 @@ msgstr "kan berre bruka lese- eller skrive-binærsamband"
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "bruk av tekstmodus-«file»-samband vil kanskje ikkje fungera skikkeleg"
 
-#: src/main/connections.c:5013 src/main/connections.c:5017
-#: src/main/connections.c:5024 src/main/connections.c:5038
+#: src/main/connections.c:5013
+msgid ""
+"cannot create a gzcon connection from a writable textConnection; maybe use "
+"rawConnection"
+msgstr ""
+
+#: src/main/connections.c:5016 src/main/connections.c:5020
+#: src/main/connections.c:5027 src/main/connections.c:5041
 msgid "allocation of 'gzcon' connection failed"
 msgstr "feil ved tildeling av gzcon-samband"
 
-#: src/main/connections.c:5198
+#: src/main/connections.c:5201
 msgid "not a list of sockets"
 msgstr "ikkje ei liste over soklar"
 
-#: src/main/connections.c:5203
+#: src/main/connections.c:5206
 msgid "bad write indicators"
 msgstr "ugyldig skriveindikatorar"
 
-#: src/main/connections.c:5214
+#: src/main/connections.c:5217
 msgid "not a socket connection"
 msgstr "ikkje eit sokkelsamband"
 
-#: src/main/connections.c:5435
+#: src/main/connections.c:5438
 msgid "unknown compression, assuming none"
 msgstr "ukjend komprimering – antek ukomprimerte data"
 

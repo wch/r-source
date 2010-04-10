@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.6.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-04-09 06:27+0100\n"
+"POT-Creation-Date: 2010-04-10 08:20+0100\n"
 "PO-Revision-Date: 2010-03-28 15:14+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -1985,7 +1985,7 @@ msgstr "l'initialisation de la compression bzip2 pour le fichier '%s' a échoué"
 msgid "allocation of bzfile connection failed"
 msgstr "l'allocation d'une connexion bzfile a échoué"
 
-#: src/main/connections.c:1493 src/main/connections.c:5488
+#: src/main/connections.c:1493 src/main/connections.c:5491
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "impossible d'initialiser le décodeur lzma, erreur %d"
@@ -2343,24 +2343,30 @@ msgstr ""
 "l'utilisation d'un 'fichier' en mode texte peut ne pas fonctionner "
 "correctement"
 
-#: src/main/connections.c:5013 src/main/connections.c:5017
-#: src/main/connections.c:5024 src/main/connections.c:5038
+#: src/main/connections.c:5013
+msgid ""
+"cannot create a gzcon connection from a writable textConnection; maybe use "
+"rawConnection"
+msgstr ""
+
+#: src/main/connections.c:5016 src/main/connections.c:5020
+#: src/main/connections.c:5027 src/main/connections.c:5041
 msgid "allocation of 'gzcon' connection failed"
 msgstr "l'allocation d'une connexion 'gzcon' a échoué"
 
-#: src/main/connections.c:5198
+#: src/main/connections.c:5201
 msgid "not a list of sockets"
 msgstr "ceci n'est pas une liste de connecteurs logiciels (sockets)"
 
-#: src/main/connections.c:5203
+#: src/main/connections.c:5206
 msgid "bad write indicators"
 msgstr "mauvais indicateurs d'écriture"
 
-#: src/main/connections.c:5214
+#: src/main/connections.c:5217
 msgid "not a socket connection"
 msgstr "ceci n'est pas un connecteur logiciel (socket)"
 
-#: src/main/connections.c:5435
+#: src/main/connections.c:5438
 msgid "unknown compression, assuming none"
 msgstr "mode de compression inconnu, considéré comme non compressé"
 

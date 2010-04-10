@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-04-09 06:27+0100\n"
+"POT-Creation-Date: 2010-04-10 08:20+0100\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1986,7 +1986,7 @@ msgstr ""
 msgid "allocation of bzfile connection failed"
 msgstr "alocação de conexão bzfile falhou"
 
-#: src/main/connections.c:1493 src/main/connections.c:5488
+#: src/main/connections.c:1493 src/main/connections.c:5491
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr ""
@@ -2340,24 +2340,30 @@ msgstr "só é possível usar conexões binárias read- ou write-"
 msgid "using a text-mode 'file' connection may not work correctly"
 msgstr "uso de uma conexão 'file' em modo texto pode não funcionar"
 
-#: src/main/connections.c:5013 src/main/connections.c:5017
-#: src/main/connections.c:5024 src/main/connections.c:5038
+#: src/main/connections.c:5013
+msgid ""
+"cannot create a gzcon connection from a writable textConnection; maybe use "
+"rawConnection"
+msgstr ""
+
+#: src/main/connections.c:5016 src/main/connections.c:5020
+#: src/main/connections.c:5027 src/main/connections.c:5041
 msgid "allocation of 'gzcon' connection failed"
 msgstr "alocação de conexão 'gzcon' falhou"
 
-#: src/main/connections.c:5198
+#: src/main/connections.c:5201
 msgid "not a list of sockets"
 msgstr "não é uma lista de soquetes"
 
-#: src/main/connections.c:5203
+#: src/main/connections.c:5206
 msgid "bad write indicators"
 msgstr "indicadores de escrita defeituosos"
 
-#: src/main/connections.c:5214
+#: src/main/connections.c:5217
 msgid "not a socket connection"
 msgstr "não é uma conexão soquete"
 
-#: src/main/connections.c:5435
+#: src/main/connections.c:5438
 msgid "unknown compression, assuming none"
 msgstr ""
 

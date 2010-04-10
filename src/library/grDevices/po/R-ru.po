@@ -7,18 +7,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.10.0\n"
+"Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2009-12-17 11:57\n"
-"PO-Revision-Date: 2009-10-15 02:18-0500\n"
-"Last-Translator: Alexey Shipunov <dactylorhiza at gmail>\n"
+"PO-Revision-Date: 2010-04-09 16:51-0500\n"
+"Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "'coef' must not be negative"
 msgstr "'coef'  не должен быть отрицательным"
@@ -153,8 +152,7 @@ msgid "NOT changing"
 msgstr "НЕ изменяется"
 
 msgid "argment 'append' is for back-compatibility and will be ignored"
-msgstr ""
-"аргумент 'append' предназначен для обратной совместимости и будет пропущен"
+msgstr "аргумент 'append' предназначен для обратной совместимости и будет пропущен"
 
 msgid "unknown family '%s'"
 msgstr "неизвестное семейство '%s'"
@@ -217,17 +215,16 @@ msgid "status %d in running command '%s'"
 msgstr "статус %d выполняющейся команды '%s'"
 
 msgid "A raster matrix must be character, or numeric, or logical"
-msgstr ""
+msgstr "Растровая матрица должна быть символом, числом или логическим выражением"
 
-#, fuzzy
 msgid "A raster array must be numeric"
-msgstr "rgb-матрица должна быть числовой"
+msgstr "Растровая многомерная матрица должна быть числовой"
 
 msgid "A raster array must have exactly 3 dimensions"
-msgstr ""
+msgstr "Растровая многомерная матрица должна быть в точности трехмерной"
 
 msgid "A raster array must have exactly 3 or 4 planes"
-msgstr ""
+msgstr "Растровая многомерная матрица должна иметь в точности 3 или 4 плоскости "
 
 msgid "no current device to record from"
 msgstr "нет устройства, которое надо записывать"
@@ -366,8 +363,8 @@ msgstr[2] "%d значения z <= 0 пропущены на логарифмическом графике"
 
 #~ msgid "invalid value for 'antialias'"
 #~ msgstr "неправильное значение 'antialias'"
-
 #~ msgid "quartz() device interactivity reduced without an event loop manager"
 #~ msgstr ""
 #~ "устройство quartz() интерактивно сокращено без использования обработчика "
 #~ "циклов"
+

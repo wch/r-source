@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-04-09 06:27+0100\n"
+"POT-Creation-Date: 2010-04-10 08:20+0100\n"
 "PO-Revision-Date: 2009-10-09 12:46+0100\n"
 "Last-Translator: Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
@@ -1954,7 +1954,7 @@ msgstr "inicialización de la compresión bzip2 para el archivo '%s' falló "
 msgid "allocation of bzfile connection failed"
 msgstr "falla en la asignación de la conección bzfile"
 
-#: src/main/connections.c:1493 src/main/connections.c:5488
+#: src/main/connections.c:1493 src/main/connections.c:5491
 #, c-format
 msgid "cannot initialize lzma decoder, error %d"
 msgstr "No se puede inicializar decodificador lzma, error% d"
@@ -2300,24 +2300,30 @@ msgid "using a text-mode 'file' connection may not work correctly"
 msgstr ""
 "la conección puede fallar si se usa un argumento en modo texto en 'file'"
 
-#: src/main/connections.c:5013 src/main/connections.c:5017
-#: src/main/connections.c:5024 src/main/connections.c:5038
+#: src/main/connections.c:5013
+msgid ""
+"cannot create a gzcon connection from a writable textConnection; maybe use "
+"rawConnection"
+msgstr ""
+
+#: src/main/connections.c:5016 src/main/connections.c:5020
+#: src/main/connections.c:5027 src/main/connections.c:5041
 msgid "allocation of 'gzcon' connection failed"
 msgstr "la conexión de asignación 'gzcon' falló"
 
-#: src/main/connections.c:5198
+#: src/main/connections.c:5201
 msgid "not a list of sockets"
 msgstr "no es una lista de sockets"
 
-#: src/main/connections.c:5203
+#: src/main/connections.c:5206
 msgid "bad write indicators"
 msgstr "indicadores de escritura defectuosos"
 
-#: src/main/connections.c:5214
+#: src/main/connections.c:5217
 msgid "not a socket connection"
 msgstr "no es una  conexión socket"
 
-#: src/main/connections.c:5435
+#: src/main/connections.c:5438
 msgid "unknown compression, assuming none"
 msgstr "compresión desconocido, en el supuesto ninguno"
 
