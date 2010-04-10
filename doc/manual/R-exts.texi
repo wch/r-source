@@ -10798,7 +10798,7 @@ Both applications which embed @R{} and those which use a @code{system}
 call to invoke @R{} (as @command{Rscript.exe}, @command{Rterm.exe} or
 @command{R.exe}) need to be able to find the @R{} @file{bin} directory.
 The simplest way to do so is the ask the user to set an environment
-variable @env{R_HOME} and use that, but naive users may be fluxommed as
+variable @env{R_HOME} and use that, but naive users may be flummoxed as
 to how to do so or what value to use.
 
 The @R{} for Windows installers have for a long time allowed the value
