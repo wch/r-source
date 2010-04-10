@@ -187,10 +187,18 @@ while test -n "${1}"; do
       else
         error "option '${1}' requires an argument"
       fi
+      ## check sub-architecture here for a better error message
+      if ! test -d ${R_HOME}/etc${R_ARCH}; then
+        error "sub-architecture '${1}' is not installed"
+      fi
       ;;
     --arch=*)
       r_arch=`echo "${1}" | ${SED} -e 's/[^=]*=//'`
       R_ARCH="/${r_arch}"
+      ## check sub-architecture here for a better error message
+      if ! test -d ${R_HOME}/etc${R_ARCH}; then
+        error "sub-architecture '${r_arch}' is not installed"
+      fi
       ;;
     -e)
       if test -n "`echo ${2} | ${SED} 's/^-.*//'`"; then      
