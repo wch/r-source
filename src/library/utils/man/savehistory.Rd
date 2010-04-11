@@ -1,6 +1,6 @@
 % File src/library/utils/man/savehistory.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{savehistory}
@@ -50,9 +50,9 @@ timestamp(stamp = date(),
   The history mechanism is controlled by two environment
 #endif
 #ifdef unix
-  This works under the \code{readline} command-line interface and the
-  \file{R.app} Mac OS X GUI, but not otherwise (for example, in
-  batch use or in an embedded application).
+  This works under the \code{readline} command-line interface but not
+  otherwise (for example, in batch use or in an embedded application,
+  nor currently in \code{R.app}).
 
   The \code{readline} history mechanism is controlled by two environment
 #endif

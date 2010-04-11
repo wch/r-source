@@ -1542,7 +1542,7 @@ ensures that only package @pkg{base} is loaded.
 
 Changing the set of default packages is normally used to reduce the set
 for speed when scripting: in particular not using @pkg{methods} will
-reduce the start-up time by a factor of two or more (and this is done by
+reduce the start-up time by a factor of up to two (and this is done by
 @command{Rscript}).  But it can also be used to customize @R{}, e.g.@:
 for class use.
 
@@ -1676,6 +1676,9 @@ character vector by the argument @code{repos}: these can include a
 @acronym{CRAN} mirror, Bioconductor, Omegahat, local archives, local
 files, @dots{}).  Function @code{setRepositories()} can select amongst
 those repositories that the @R{} installation is aware of.
+
+Naive users sometimes forget that as well as installing a package, they
+have to use @code{library} to make its functionality available.
 
 @node Windows packages, Mac OS X packages, Installing packages, Installing packages
 @subsection Windows

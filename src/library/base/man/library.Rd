@@ -1,6 +1,6 @@
 % File src/library/base/man/library.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{library}
@@ -222,6 +222,9 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \code{\link{install.packages}} and
   \code{\link{installed.packages}};
   \code{\link{INSTALL}}, \code{\link{REMOVE}}.
+
+  The initial set of packages loaded is set by
+  \code{\link{options}(defaultPackages=)}: see also \code{\link{Startup}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

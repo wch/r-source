@@ -566,6 +566,10 @@ BUG FIXES
 	slightly for one of the extreme bins.  (Based on a report by
 	Martin Becker.)
 
+    o	If xy[z].coords (used internally by many graphics functions) are
+	given a list as 'x', they now check that the list has suitable
+	names and give a more informative error message.  (PR#13936)
+
 
 
 

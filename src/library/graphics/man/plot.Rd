@@ -65,6 +65,9 @@ plot(x, y, \dots)
 \seealso{
   \code{\link{plot.default}}, \code{\link{plot.formula}} and other
   methods; \code{\link{points}}, \code{\link{lines}}, \code{\link{par}}.
+  
+  For X-Y-Z plotting see \code{\link{contour}}, \code{\link{persp}} and
+  \code{\link{image}}.
 }
 \examples{
 require(stats)
