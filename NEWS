@@ -75,8 +75,9 @@ BUG FIXES
     o	Calls to selectMethod() by default no longer cache inherited
         methods.  This could previously corrupt methods used by as().
 
-    o	The print() methods for 'glm' and 'lm' objects now break long
-	calls in the same way that print(summary(.)) has done already.
+    o	The print() methods for "glm" and "lm" objects now insert
+	linebreaks in long calls in the same way that the print()
+	methods for "summary.[g]lm" objects have long done.
 	(PR#14250)
 
     o	The C function mkCharLenCE now no longer reads past 'len' bytes
