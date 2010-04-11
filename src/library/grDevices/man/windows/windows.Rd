@@ -190,7 +190,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "",
   There is support for semi-transparent colours of lines, fills and text
   on the \code{windows()} device.  These work for saving (from the
   \sQuote{File} menu) to PDF, PNG, BMP, JPEG and TIFF, but will be ignored if
-  saving to Metafile, PDF and PostScript.
+  saving to Metafile and PostScript.
 }
 \section{Conventions}{
   This section describes the implementation of the conventions for
