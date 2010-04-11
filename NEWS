@@ -35,6 +35,15 @@ NEW FEATURES
 	NA_LOGICAL) for logical vectors to TRUE: it has been an
 	implicit assumption that they are treated as true.
 
+    o	constrOptim() can now be used with method "SANN".  (PR#14245)
+
+	It gains an argument 'hessian' to be passed to optim(), which
+    	allows all the ... arguments to be intended to f() and grad().
+	(PR14071)
+
+    o	curve() now allows 'expr' to be an object of mode "expression"
+	as well as "call" and "function".
+
 
 DEPRECATED & DEFUNCT
 
@@ -87,6 +96,13 @@ BUG FIXES
 	in some cases in the extreme tails, e.g. dchisq(2000, 2,
 	1000), as a series expansion was truncated too early.
 	(PR#14105)
+
+    o	On systems without any default LD_LIBRARY_PATH (not even
+	/usr/local/lib), [DY]LIB_LIBRARY_PATH is now set without a
+	trailing colon.  (PR#13637)
+
+    o	pt() is more accurate in the left tail for ncp large, e.g.
+	pt(-1000, 3, 200).  (PR#14069)
 
 
 

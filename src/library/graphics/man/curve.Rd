@@ -1,6 +1,6 @@
 % File src/library/graphics/man/curve.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{curve}
@@ -14,7 +14,7 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
 \method{plot}{function}(x, y = 0, to = 1, from = y, xlim = NULL, \dots)
 }
 \arguments{
-  \item{expr}{an expression written as a function of \code{x}, or
+  \item{expr}{a call or an  expression written as a function of \code{x}, or
     alternatively the name of a function which will be plotted.}
   \item{x}{a \sQuote{vectorizing} numeric \R function.}
   \item{from,to}{the range over which the function will be plotted.}

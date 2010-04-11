@@ -70,6 +70,9 @@ double pnt(double t, double df, double ncp, int lower_tail, int log_p)
 	negdel = FALSE; tt = t;	 del = ncp;
     }
     else {
+	/* We deal quickly with left tail if extreme,
+	   since pt(q, df, ncp) <= pt(0, df, ncp) = \Phi(-ncp) */
+	if (ncp > 40 && (!log_p || !lower_tail)) return R_DT_0;
 	negdel = TRUE;	tt = -t; del = -ncp;
     }
 

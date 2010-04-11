@@ -23,8 +23,9 @@ curve <- function(expr, from=NULL, to=NULL, n=101, add=FALSE, type="l",
 	expr <- parse(text=fcall)
 	if(is.null(ylab)) ylab <- fcall
     } else {
-	if(!(is.call(sexpr) && match("x", all.vars(sexpr), nomatch=0L)))
-	    stop("'expr' must be a function or an expression containing 'x'")
+	if(!((is.call(sexpr) || is.expression(sexpr))
+             && match("x", all.vars(sexpr), nomatch=0L)))
+	    stop("'expr' must be a function, call or an expression containing 'x'")
 	expr <- sexpr
 	if(is.null(ylab)) ylab <- deparse(sexpr)
     }
