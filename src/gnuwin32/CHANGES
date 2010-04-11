@@ -130,7 +130,7 @@ INSTALLATION
 
     o	The MSI installer defaults to an all-user (per machine)
 	install (by setting the ALLUSERS property to 1).  This can be
-	changed at installation, and if can be built for a user-mode
+	changed at installation, and it can be built for a user-mode
 	install (see MkRules.dist).
 
 
