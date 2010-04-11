@@ -1,6 +1,6 @@
 % File src/library/stats/man/TDist.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{TDist}
@@ -48,6 +48,10 @@ rt(n, df, ncp)
   Setting \code{ncp = 0} is \emph{not} equivalent to omitting
   \code{ncp}.  \R uses the non-centrality functionality whenever \code{ncp}
   is specified which provides continuous behavior at \eqn{ncp = 0}.
+
+  The code for non-zero \code{ncp} is principally intended to be used
+  for moderate values of \code{ncp}: it will not be highly accurate,
+  especially in the tails, for large values.
 }
 \details{
   The \eqn{t} distribution with \code{df} \eqn{= \nu}{= n} degrees of

@@ -1,6 +1,6 @@
 % File src/library/stats/man/Fdist.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{FDist}
@@ -86,6 +86,11 @@ rf(n, df1, df2, ncp)
   Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
   \emph{Continuous Univariate Distributions}, volume 2, chapters 27 and 30.
   Wiley, New York.
+}
+\note{
+  The code for non-zero \code{ncp} is principally intended to be used
+  for moderate values of \code{ncp}: it will not be highly accurate,
+  especially in the tails, for large values.
 }
 \seealso{
   \code{\link{dchisq}} for chi-squared and \code{\link{dt}} for Student's

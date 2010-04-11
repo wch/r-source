@@ -1,6 +1,6 @@
 % File src/library/stats/man/Chisquare.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Chisquare}
@@ -96,6 +96,11 @@ rchisq(n, df, ncp=0)
   Johnson, N. L., Kotz, S. and Balakrishnan, N. (1995)
   \emph{Continuous Univariate Distributions}, chapters 18 (volume 1)
   and 29 (volume 2). Wiley, New York.
+}
+\note{
+  The code for non-zero \code{ncp} is principally intended to be used
+  for moderate values of \code{ncp}: it will not be highly accurate,
+  especially in the tails, for large values.
 }
 \seealso{
   A central chi-squared distribution with \eqn{n} degrees of freedom
