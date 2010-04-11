@@ -1366,7 +1366,7 @@ the source tree: otherwise edit @file{src/library/tcltk/Makefile.win} to
 make a stub package.
 
 The default is @code{options(pkgType="win64.binary")}, supported for
-@R{} 2.11.x on both @acronym{CRAN} and @acronym{CRANextras}.  Packages
+@R{} 2.@{11,12@}.x on both @acronym{CRAN} and @acronym{CRANextras}.  Packages
 using Gtk+ (@pkg{Cairo}, @pkg{RGtk2}, @pkg{cairoDevice} and those that
 depend on them) need the @file{bin} directory of the distribution at
 @url{http://www.gtk.org/download-windows-64bit.html} in the path: note
@@ -1379,8 +1379,8 @@ packages can be found at
 @url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.  A port
 of Bioconductor package @pkg{Rgraphviz} is available on
 @acronym{CRANextras} (see the previous URL for sources for GraphViz),
-but other Bioconductor will at present need to be installed as source
-packages.
+but other Bioconductor packages will at present need to be installed as
+source packages.
 
 The default memory limit will be the amount of installed RAM: it can
 be changed by using (preferably) @option{--max-mem-size=} at startup or
