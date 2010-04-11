@@ -16,7 +16,8 @@
 
 ## Both xy.coords() and xyz.coords()  --- should be kept in sync!
 
-xy.coords <- function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
+xy.coords <-
+    function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 {
     if(is.null(y)) {
 	ylab <- xlab
@@ -62,10 +63,13 @@ xy.coords <- function(x, y=NULL, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE
 	    }
 	}
 	else if(is.list(x)) {
-	    xlab <- paste(ylab, "$x", sep="")
-	    ylab <- paste(ylab, "$y", sep="")
-	    y <- x[["y"]]
-	    x <- x[["x"]]
+            if (all(c("x", "y") %in% names(x))) {
+                xlab <- paste(ylab, "$x", sep="")
+                ylab <- paste(ylab, "$y", sep="")
+                y <- x[["y"]]
+                x <- x[["x"]]
+            } else
+                stop("'x' is a list, but does not have components 'x' and 'y'")
 	}
 	else {
 	    if(is.factor(x)) x <- as.numeric(x)
@@ -155,13 +159,16 @@ xyz.coords <- function(x, y=NULL, z=NULL, xlab=NULL, ylab=NULL, zlab=NULL,
 	    }
 	}
 	else if(is.list(x)) {
-	    zlab <- paste(xlab,"$z",sep="")
-	    ylab <- paste(xlab,"$y",sep="")
-	    xlab <- paste(xlab,"$x",sep="")
-	    y <- x[["y"]]
-	    z <- x[["z"]]
-	    x <- x[["x"]]
-	}
+            if (all(c("x", "y", "z") %in% names(x))) {
+                zlab <- paste(xlab,"$z",sep="")
+                ylab <- paste(xlab,"$y",sep="")
+                xlab <- paste(xlab,"$x",sep="")
+                y <- x[["y"]]
+                z <- x[["z"]]
+                x <- x[["x"]]
+            } else
+                stop("'x' is a list, but does not have components 'x', 'y'  and 'z'")
+        }
     }
 
     ## Only x, y
