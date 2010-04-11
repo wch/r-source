@@ -1374,8 +1374,8 @@ packages can be found at
 @url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.  A port
 of Bioconductor package @pkg{Rgraphviz} is available on
 @acronym{CRANextras} (see the previous URL for sources for GraphViz),
-but other Bioconductor will at present need to be installed as source
-packages.
+but other Bioconductor packages will at present need to be installed as
+source packages.
 
 The default memory limit will be the amount of installed RAM: it can
 be changed by using (preferably) @option{--max-mem-size=} at startup or
@@ -2598,7 +2598,8 @@ the Tcl and Tk libraries and for finding the @file{tcl.h} and
 versions of Tcl/Tk installed, setting the paths to the correct config
 files may be necessary to avoid confusion between them.
 
-Versions of Tcl/Tk from 8.3.x to 8.5.8 have been used successfully.
+Versions of Tcl/Tk up to 8.5.8 have been tested (including most versions
+of 8.4.x, but not recently).
 
 @node Java support,  , Tcl/Tk, Useful libraries and programs
 @subsection Java support
