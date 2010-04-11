@@ -79,18 +79,19 @@ double dnchisq(double x, double df, double ncp, int give_log)
 
     /* upper tail */
     term = mid; df = dfmid; i = imax;
+    double x2 = x * ncp2;
     do {
 	i++;
-	q = x * ncp2 / i / df;
+	q = x2 / i / df;
 	df += 2;
 	term *= q;
 	sum += term;
-    } while (q >= 1 || term * q > (1-q)*eps);
+    } while (q >= 1 || term * q > (1-q)*eps || term > 1e-10*sum);
     /* lower tail */
     term = mid; df = dfmid; i = imax;
-    while ( i ){
+    while (i) {
 	df -= 2;
-	q = i * df / x / ncp2;
+	q = i * df / x2;
 	i--;
 	term *= q;
 	sum += term;

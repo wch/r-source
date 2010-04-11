@@ -83,6 +83,11 @@ BUG FIXES
     o	The C function mkCharLenCE now no longer reads past 'len' bytes
 	(unlikely to be a problem except in user code). (PR# 14246)
 
+    o	The densities of non-central chi-squared are now more accurate
+	in some cases in the extreme tails, e.g. dchisq(2000, 2,
+	1000), as a series expansion was truncated too early.
+	(PR#14105)
+
 
 
 
