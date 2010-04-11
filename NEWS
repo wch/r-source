@@ -79,6 +79,9 @@ BUG FIXES
 	calls in the same way that print(summary(.)) has done already.
 	(PR#14250)
 
+    o	The C function mkCharLenCE now no longer reads past 'len' bytes
+	(unlikely to be a problem except in user code). (PR# 14246)
+
 
 
 
