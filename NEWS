@@ -559,6 +559,13 @@ BUG FIXES
     o	gzcon( <textConnection> ), an error, no longer damages the
 	connection (in a way to have it seg.fault). (PR#14237)
 
+    o	All the results from hist() now use the nominal 'breaks' not
+	those adjusted by the numeric 'fuzz": in recent versions the
+	nominal 'breaks' were reported but the 'density' referred to
+	the intervals used in the calculation -- which mattered very
+	slightly for one of the extreme bins.  (Based on a report by
+	Martin Becker.)
+
 
 
 

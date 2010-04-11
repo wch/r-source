@@ -43,7 +43,7 @@ hist(x, \dots)
     the \code{breaks} value will be included in the first (or last, for
     \code{right = FALSE}) bar.  This will be ignored (with a warning)
     unless \code{breaks} is a vector.}
-  \item{right}{logical; if \code{TRUE}, the histograms cells are
+  \item{right}{logical; if \code{TRUE}, the histogram cells are
     right-closed (left open) intervals.}
 
   \item{density}{the density of shading lines, in lines per inch.
@@ -103,7 +103,9 @@ hist(x, \dots)
   and \code{include.lowest} means \sQuote{\emph{include highest}}.
 
   A numerical tolerance of \eqn{10^{-7}}{1e-7} times the median bin size
-  is applied when counting entries on the edges of bins.
+  is applied when counting entries on the edges of bins.  This is not
+  included in the reported \code{breaks} nor (as from \R 2.11.0) in the
+  calculation of \code{density}.
 
   The default for \code{breaks} is \code{"Sturges"}: see
   \code{\link{nclass.Sturges}}.  Other names for which algorithms
@@ -117,7 +119,7 @@ hist(x, \dots)
 \value{
   an object of class \code{"histogram"} which is a list with components:
   \item{breaks}{the \eqn{n+1} cell boundaries (= \code{breaks} if that
-  was a vector).}
+    was a vector). These are the nominal breaks, not with the boundary fuzz.}
   \item{counts}{\eqn{n} integers; for each cell, the number of
     \code{x[]} inside.}
   \item{density}{values \eqn{\hat f(x_i)}{f^(x[i])}, as estimated

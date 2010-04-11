@@ -111,7 +111,7 @@ hist.default <-
 	stop("negative 'counts'. Internal Error in C-code for \"bincount\"")
     if (sum(counts) < n)
 	stop("some 'x' not counted; maybe 'breaks' do not span range of 'x'")
-    dens <- counts/(n*h)
+    dens <- counts/(n*diff(breaks)) # use un-fuzzed intervals
     mids <- 0.5 * (breaks[-1L] + breaks[-nB])
     r <- structure(list(breaks = breaks, counts = counts,
 			intensities = dens,
