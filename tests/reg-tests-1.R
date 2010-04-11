@@ -6123,7 +6123,7 @@ stopifnot(all.equal(a,b, tol=2e-7))
 ## Misuse of gzcon() [PR# 14237]
 (ac <- getAllConnections())
 tc <- textConnection("x", "w")
-f <- gzcon(tc)# -> error.. but did *damage* tc
+try(f <- gzcon(tc)) # -> error.. but did *damage* tc
 newConn <- function(){ A <- getAllConnections(); A[is.na(match(A,ac))] }
 (newC <- newConn())
 gg <- tryCatch(getConnection(newC), error=identity)
