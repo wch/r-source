@@ -43,10 +43,14 @@ split.data.frame <- function(x, f, drop = FALSE, ...)
 {
     inds <- split(seq_len(nrow(x)), f, drop = drop, ...)
     rn <- row.names(x)
+    cl <- class(x)
     class(x) <- NULL
+    a <- attributes(x)
+    a <- a[names(a) != "row.names"]
     lapply(inds, function(i) {
         z <- lapply(x, "[", i)
-        class(z) <- "data.frame"
+        if(length(a)) attributes(z) <- a
+        class(z) <- cl
         attr(z, "row.names") <- rn[i]
         z
     })
