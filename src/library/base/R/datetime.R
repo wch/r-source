@@ -929,3 +929,15 @@ xtfrm.POSIXct <- function(x) as.numeric(x)
 xtfrm.POSIXlt <- function(x) as.double(x)  # has POSIXlt method
 xtfrm.difftime <- function(x) as.numeric(x)
 is.numeric.difftime <- function(x) FALSE
+
+
+# class generators added in 2.11.0
+.POSIXct <- function(xx, tz = NULL)
+    structure(xx, class = c("POSIXt", "POSIXct"), tzone = tz)
+
+.POSIXlt <- function(xx, tz = NULL)
+    structure(xx, class = c("POSIXt", "POSIXlt"), tzone = tz)
+
+.difftime <- function(xx, units)
+    structure(xx, units = units, class = "difftime")
+
