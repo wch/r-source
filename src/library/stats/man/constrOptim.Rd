@@ -13,8 +13,8 @@ adaptive barrier algorithm.
 \usage{
 constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
             method = if(is.null(grad)) "Nelder-Mead" else "BFGS",
-            hessian = FALSE,
-            outer.iterations = 100, outer.eps = 1e-05, \dots)
+            outer.iterations = 100, outer.eps = 1e-05, \dots,
+            hessian = FALSE)
 }
 \arguments{
   \item{theta}{Starting value: must be in the feasible region.}

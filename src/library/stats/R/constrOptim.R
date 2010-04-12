@@ -18,7 +18,7 @@
 constrOptim <-
     function(theta, f, grad, ui, ci, mu = 0.0001, control = list(),
              method = if(is.null(grad)) "Nelder-Mead" else "BFGS",
-             hessian = FALSE, outer.iterations = 100, outer.eps = 0.00001, ...)
+             outer.iterations = 100, outer.eps = 0.00001, ..., hessian = FALSE)
 {
 
     if (!is.null(control$fnscale) && control$fnscale < 0)
