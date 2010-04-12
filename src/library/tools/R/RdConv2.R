@@ -685,17 +685,17 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    "\\S4method" = if(blocktag == "\\usage") {
                        checkContent(block[[1L]], tag) # generic
                        checkContent(block[[2L]], tag) # class
-                   } else warnRd(block, Rdfile, level = 5,
+                   } else warnRd(block, Rdfile, level = 7,
                                  "Tag ", tag, " is only valid in \\usage"),
                    "\\dontrun" =,
                    "\\donttest" =,
                    "\\dontshow" =,
                    "\\testonly" = if(blocktag == "\\examples")
                    checkCodeBlock(block, blocktag)
-                   else warnRd(block, Rdfile, level = 5,
+                   else warnRd(block, Rdfile, level = 7,
                                "Tag ", tag, " is only valid in \\examples"),
                    {
-                       warnRd(block, Rdfile, level = 5,
+                       warnRd(block, Rdfile, level = 7,
                               "Tag ", tag, " is invalid in a ",
                               blocktag, " block")
                        has_text <<- TRUE  # likely, e.g. \url
@@ -801,10 +801,10 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     checkUnique <- function(tag) {
     	which <- which(sections == tag)
     	if (length(which) < 1L)
-    	    warnRd(Rd, Rdfile, level = 7, "Must have a ", tag)
+    	    warnRd(Rd, Rdfile, level = 5, "Must have a ", tag)
     	else {
             if (length(which) > 1L)
-    	    warnRd(Rd[[which[2L]]], Rdfile, level = 7,
+    	    warnRd(Rd[[which[2L]]], Rdfile, level = 5,
                    "Only one ", tag, " is allowed")
             empty <- TRUE
             for(block in Rd[[which]]) {
