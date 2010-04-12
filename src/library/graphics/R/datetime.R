@@ -86,8 +86,10 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
     axis(side, at = z, labels = labels, ...)
 }
 
-plot.POSIXct <- function(x, y, xlab = "", ...)
+plot.POSIXct <- function(x, y = NULL, xlab = "", ...)
 {
+    ## some people tried to use this with a single argument 'x'.
+    if(is.null(y)) return(plot.default(x, xlab = xlab, ...))
     ## trick to remove arguments intended for title() or plot.default()
     axisInt <- function(x, type, main, sub, xlab, ylab, col, lty, lwd,
                         xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)
@@ -104,8 +106,10 @@ plot.POSIXct <- function(x, y, xlab = "", ...)
     if(axes && xaxt != "n") axisInt(x, ...)
 }
 
-plot.POSIXlt <- function(x, y, xlab = "", ...)
+plot.POSIXlt <- function(x, y = NULL, xlab = "", ...)
 {
+    ## some people tried to use this with a single argument 'x'.
+    if(is.null(y)) return(plot.default(x, xlab = xlab, ...))
     ## trick to remove arguments intended for title() or plot.default()
     axisInt <- function(x, type, main, sub, xlab, ylab, col, lty, lwd,
                         xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)
@@ -267,8 +271,9 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
     axis(side, at = z, labels = labels, ...)
 }
 
-plot.Date <- function(x, y, xlab = "", ...)
+plot.Date <- function(x, y = NULL, xlab = "", ...)
 {
+    if(is.null(y)) return(plot.default(x, xlab = xlab, ...))
     ## trick to remove arguments intended for title() or plot.default()
     axisInt <- function(x, type, main, sub, xlab, ylab, col, lty, lwd,
                         xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)

@@ -1,6 +1,6 @@
 % File src/library/graphics/man/axis.POSIXct.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{axis.POSIXct}
@@ -18,9 +18,9 @@
 axis.POSIXct(side, x, at, format, labels = TRUE, \dots)
 axis.Date(side, x, at, format, labels = TRUE, \dots)
 
-\method{plot}{POSIXct}(x, y, xlab = "", \dots)
-\method{plot}{POSIXlt}(x, y, xlab = "", \dots)
-\method{plot}{Date}(x, y, xlab = "", \dots)
+\method{plot}{POSIXct}(x, y = NULL, xlab = "", \dots)
+\method{plot}{POSIXlt}(x, y = NULL, xlab = "", \dots)
+\method{plot}{Date}(x, y = NULL, xlab = "", \dots)
 }
 \arguments{
   \item{x, at}{A date-time or date object.}
@@ -37,7 +37,10 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
     \code{format}.}
 }
 \details{
-  The functions plot against an x-axis of date-times.
+  The functions plot against an x-axis of date-times, although for
+  consistency with the default method, if \code{y = NULL} they plot
+  \code{x} on the y-axis against the index vector.
+  
   \code{axis.POSIXct} and \code{axis.Date} work quite hard to choose
   suitable time units (years, months, days, hours, minutes or seconds)
   and a sensible output format, but this can be overridden by supplying
