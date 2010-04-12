@@ -27,7 +27,7 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
   \item{outer.iterations}{Iterations of the barrier algorithm.}
   \item{outer.eps}{Criterion for relative convergence of the barrier
     algorithm.}
-  \item{\dots}{Other arguments to be passed to \code{f} and \code{grad}:
+  \item{\dots}{Other named arguments to be passed to \code{f} and \code{grad}:
     needs to be passed through \code{\link{optim}} so should not match its
     argument names.}
 }
