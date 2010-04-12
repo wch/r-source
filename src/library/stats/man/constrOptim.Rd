@@ -1,11 +1,11 @@
 % File src/library/stats/man/constrOptim.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{constrOptim}
 \alias{constrOptim}
-\title{Linearly constrained optimisation}
+\title{Linearly Constrained Optimization}
 \description{
 Minimise a function subject to linear inequality constraints using an
 adaptive barrier algorithm.  
@@ -27,8 +27,9 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
   \item{outer.iterations}{Iterations of the barrier algorithm.}
   \item{outer.eps}{Criterion for relative convergence of the barrier
     algorithm.}
-  \item{\dots}{ Other arguments passed to \code{\link{optim}}, which
-    will pass them to \code{f} and \code{grad} if it does not use them.}
+  \item{\dots}{Other named arguments to be passed to \code{f} and \code{grad}:
+    needs to be passed through \code{\link{optim}} so should not match its
+    argument names.}
 }
 \details{
   The feasible region is defined by \code{ui \%*\% theta - ci >= 0}. The
