@@ -60,7 +60,7 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
         zz$year <- c(m, m+1)
         zz <- lapply(zz, function(x) rep(x, length.out = M))
         class(zz) <- c("POSIXt", "POSIXlt")
-        attr(z, "tzone") <- attr(x, "tzone")
+        attr(zz, "tzone") <- attr(x, "tzone")
         z <- as.POSIXct(zz)
         if(missing(format)) format <- "%b"
     } else { # years
