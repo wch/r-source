@@ -128,8 +128,9 @@ file.symlink <- function(from, to) {
 file.info <- function(...)
 {
     res <- .Internal(file.info(fn <- c(...)))
-    class(res$mtime) <- class(res$ctime) <- class(res$atime) <-
-        c("POSIXt", "POSIXct")
+    res$mtime <- .POSIXct(res$mtime)
+    res$ctime <- .POSIXct(res$ctime)
+    res$atime <- .POSIXct(res$atime)
     class(res) <- "data.frame"
     attr(res, "row.names") <- fn # not row.names<- as that does a length check
     res

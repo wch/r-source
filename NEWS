@@ -54,6 +54,12 @@ NEW FEATURES
     o	The date.frame method of split() is faster.  (Wish of PR#14123)
 
 
+    o	Classes "POSIXct", "POSIXlt" and "difftime" have generators
+	.POSIXct(), .POSIXlt() and .difftime().  Package authors are
+	advised to make use of them (they are available from R 2.11.0)
+	to proof against planned future changes to the classes.
+
+
 DEPRECATED & DEFUNCT
 
     o   Supplying the parser with a string containing both octal/hex and
