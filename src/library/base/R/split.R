@@ -35,17 +35,25 @@ split.default <- function(x, f, drop = FALSE, ...)
     y
 }
 
+## split.data.frame <- function(x, f, drop = FALSE, ...)
+##     lapply(split(seq_len(nrow(x)), f, drop = drop, ...),
+##            function(ind) x[ind, , drop = FALSE])
+
 split.data.frame <- function(x, f, drop = FALSE, ...)
-    lapply(split(seq_len(nrow(x)), f, drop = drop, ...),
-           function(ind) x[ind, , drop = FALSE])
+{
+    inds <- split(seq_len(nrow(x)), f, drop = drop, ...)
+    rn <- row.names(x)
+    class(x) <- NULL
+    lapply(inds, function(i) {
+        z <- lapply(x, "[", i)
+        class(z) <- "data.frame"
+        attr(z, "row.names") <- rn[i]
+        z
+    })
+}
+
 
 "split<-" <- function(x, f, drop = FALSE, ..., value) UseMethod("split<-")
-
-#"split<-.default" <- function(x, f, value)
-#{
-#    x[unlist(split(seq_along(x), f))] <- unlist(value)
-#    x
-#}
 
 "split<-.default" <- function(x, f, drop = FALSE, ..., value)
 {

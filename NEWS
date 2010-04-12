@@ -51,6 +51,8 @@ NEW FEATURES
 	the style of plot.default().  This was not previously
 	documented to work.  (PR#14016)
 
+    o	The date.frame method of split() is faster.  (Wish of PR#14123)
+
 
 DEPRECATED & DEFUNCT
 
