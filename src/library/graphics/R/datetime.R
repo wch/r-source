@@ -86,10 +86,11 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
     axis(side, at = z, labels = labels, ...)
 }
 
-plot.POSIXct <- function(x, y = NULL, xlab = "", ...)
+## This and plot.Date are barely needed nowadays: the default method also works
+plot.POSIXt <- function(x, y = NULL, xlab = "", ...)
 {
     ## some people tried to use this with a single argument 'x'.
-    if(is.null(y)) return(plot.default(x, xlab = xlab, ...))
+    if(is.null(y)) return(plot.default(as.POSIXct(x), xlab = xlab, ...))
     ## trick to remove arguments intended for title() or plot.default()
     axisInt <- function(x, type, main, sub, xlab, ylab, col, lty, lwd,
                         xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)
@@ -98,26 +99,7 @@ plot.POSIXct <- function(x, y = NULL, xlab = "", ...)
     dots <- list(...)
     Call <- match.call()
     Call[[1L]] <- as.name("plot.default")
-    Call$xaxt <- "n"
-    Call$xlab <- xlab
-    eval.parent(Call)
-    axes <- if("axes" %in% names(dots)) dots$axes else TRUE
-    xaxt <- if("xaxt" %in% names(dots)) dots$xaxt else par("xaxt")
-    if(axes && xaxt != "n") axisInt(x, ...)
-}
-
-plot.POSIXlt <- function(x, y = NULL, xlab = "", ...)
-{
-    ## some people tried to use this with a single argument 'x'.
-    if(is.null(y)) return(plot.default(x, xlab = xlab, ...))
-    ## trick to remove arguments intended for title() or plot.default()
-    axisInt <- function(x, type, main, sub, xlab, ylab, col, lty, lwd,
-                        xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)
-        axis.POSIXct(1, x, ...)
-    dots <- list(...)
-    Call <- match.call()
-    Call[[1L]] <- as.name("plot.default")
-    Call$x <- as.POSIXct(x)
+    if(!inherits(x, "POSIXct")) Call$x <- x <- as.POSIXct(x)
     Call$xaxt <- "n"
     Call$xlab <- xlab
     eval.parent(Call)
@@ -381,12 +363,6 @@ hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
 Axis.Date <- function(x=NULL, at=NULL, ..., side, labels=TRUE)
     axis.Date(side=side, x=x, at=at, labels=labels, ...)
 
-Axis.POSIXct <- function(x=NULL, at=NULL, ..., side, labels=TRUE)
+Axis.POSIXt <- function(x=NULL, at=NULL, ..., side, labels=TRUE)
     axis.POSIXct(side=side, x=x, at=at, labels=labels, ...)
 
-Axis.POSIXlt <- function(x=NULL, at=NULL, ..., side, labels=TRUE)
-{
-    if(inherits(x, "POSIXlt")) x <- as.POSIXct(x)
-    if(inherits(at, "POSIXlt")) at <- as.POSIXct(at)
-    axis.POSIXct(side=side, x=x, at=at, labels=labels, ...)
-}

@@ -5,8 +5,7 @@
 
 \name{axis.POSIXct}
 \alias{axis.POSIXct}
-\alias{plot.POSIXct}
-\alias{plot.POSIXlt}
+\alias{plot.POSIXt}
 \alias{axis.Date}
 \alias{plot.Date}
 \title{Date and Date-time Plotting Functions}
@@ -18,8 +17,7 @@
 axis.POSIXct(side, x, at, format, labels = TRUE, \dots)
 axis.Date(side, x, at, format, labels = TRUE, \dots)
 
-\method{plot}{POSIXct}(x, y = NULL, xlab = "", \dots)
-\method{plot}{POSIXlt}(x, y = NULL, xlab = "", \dots)
+\method{plot}{POSIXt}(x, y = NULL, xlab = "", \dots)
 \method{plot}{Date}(x, y = NULL, xlab = "", \dots)
 }
 \arguments{

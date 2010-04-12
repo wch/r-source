@@ -1,6 +1,6 @@
 % File src/library/graphics/man/zAxis.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Axis}
@@ -50,9 +50,9 @@ Axis(x = NULL, at = NULL, \dots, side, labels = NULL)
   \code{\link{stripchart}}) will set up user coordinates and \code{Axis}
   will be called to label them appropriately.
 
-  There are \code{"Date"}, \code{"POSIXct"} and \code{"POSIXlt"}
-  methods which can pass an argument \code{format} onto the
-  appropriate \code{axis} method (see \code{\link{axis.POSIXct}}).
+  There are \code{"Date"} and \code{"POSIXt"} methods which can pass an
+  argument \code{format} onto the appropriate \code{axis} method (see
+  \code{\link{axis.POSIXct}}).
 }
 \seealso{
   \code{\link{axis}}.

@@ -44,7 +44,10 @@ NEW FEATURES
     o	curve() now allows 'expr' to be an object of mode "expression"
 	as well as "call" and "function".
 
-    o	The date-time methods for plot() now accept a single argument in
+    o	The "POSIX[cl]t" methods for plot() and Axis() have been
+	replaced by a single method for "POSIXt".
+
+    	The date-time methods for plot() now accept a single argument in
 	the style of plot.default().  This was not previously
 	documented to work.  (PR#14016)
 
