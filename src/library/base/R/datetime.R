@@ -916,7 +916,7 @@ sort.POSIXlt <- function(x, decreasing = FALSE, na.last = NA, ...)
 
 is.numeric.POSIXt <- function(x) FALSE
 
-## ---- additions in 2.6.0 -----
+## ---- additions in 2.8.0 -----
 
 split.POSIXct <-
 function(x, f, drop = FALSE, ...)
