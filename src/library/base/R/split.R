@@ -35,26 +35,26 @@ split.default <- function(x, f, drop = FALSE, ...)
     y
 }
 
-## split.data.frame <- function(x, f, drop = FALSE, ...)
-##     lapply(split(seq_len(nrow(x)), f, drop = drop, ...),
-##            function(ind) x[ind, , drop = FALSE])
-
 split.data.frame <- function(x, f, drop = FALSE, ...)
-{
-    inds <- split(seq_len(nrow(x)), f, drop = drop, ...)
-    rn <- row.names(x)
-    cl <- class(x)
-    class(x) <- NULL
-    a <- attributes(x)
-    a <- a[names(a) != "row.names"]
-    lapply(inds, function(i) {
-        z <- lapply(x, "[", i)
-        if(length(a)) attributes(z) <- a
-        class(z) <- cl
-        attr(z, "row.names") <- rn[i]
-        z
-    })
-}
+    lapply(split(seq_len(nrow(x)), f, drop = drop, ...),
+           function(ind) x[ind, , drop = FALSE])
+
+## split.data.frame <- function(x, f, drop = FALSE, ...)
+## {
+##     inds <- split(seq_len(nrow(x)), f, drop = drop, ...)
+##     rn <- row.names(x)
+##     cl <- class(x)
+##     class(x) <- NULL
+##     a <- attributes(x)
+##     a <- a[names(a) != "row.names"]
+##     lapply(inds, function(i) {
+##         z <- lapply(x, "[", i)
+##         if(length(a)) attributes(z) <- a
+##         class(z) <- cl
+##         attr(z, "row.names") <- rn[i]
+##         z
+##     })
+## }
 
 
 "split<-" <- function(x, f, drop = FALSE, ..., value) UseMethod("split<-")
