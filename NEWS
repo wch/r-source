@@ -116,7 +116,8 @@ BUG FIXES
     o	pt() is more accurate in the left tail for ncp large, e.g.
 	pt(-1000, 3, 200).  (PR#14069)
 
-
+   o	The default C code (R_binary) for binary ops now sets the S4
+        bit in the result if either argument is an S4 object.
 
 
 	**************************************************
