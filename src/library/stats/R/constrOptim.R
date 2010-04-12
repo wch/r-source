@@ -56,7 +56,7 @@ constrOptim <-
         theta.old <- theta
 
         a <- optim(theta.old, fun, gradient, control = control,
-                   method = method, hessian = hessian)
+                   method = method, hessian = hessian, ...)
         r <- a$value
         if (is.finite(r) && is.finite(r.old) &&
             abs(r-r.old)/(outer.eps+abs(r-r.old)) < outer.eps) break
