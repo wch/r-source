@@ -491,8 +491,8 @@
 # These relations sometimes hold, sometimes not:  have to look in the S3
 # class attribute to test.
 .OldIsList <- list(
-                   c("POSIXt", "POSIXct"),
-                   c("POSIXt", "POSIXlt"),
+                   c("POSIXct", "POSIXt"),
+                   c("POSIXlt", "POSIXt"),
                    c("aov","mlm")
                    )
 

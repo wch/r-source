@@ -914,7 +914,7 @@ sort.POSIXlt <- function(x, decreasing = FALSE, na.last = NA, ...)
 
 is.numeric.POSIXt <- function(x) FALSE
 
-## ---- additions in 2.6.0 -----
+## ---- additions in 2.8.0 -----
 
 split.POSIXct <-
 function(x, f, drop = FALSE, ...)
@@ -927,12 +927,12 @@ xtfrm.difftime <- function(x) as.numeric(x)
 is.numeric.difftime <- function(x) FALSE
 
 
-# class generators added in 2.11.0
+# class generators added in 2.11.0, class order changed in 2.12.0
 .POSIXct <- function(xx, tz = NULL)
-    structure(xx, class = c("POSIXt", "POSIXct"), tzone = tz)
+    structure(xx, class = c("POSIXct", "POSIXt"), tzone = tz)
 
 .POSIXlt <- function(xx, tz = NULL)
-    structure(xx, class = c("POSIXt", "POSIXlt"), tzone = tz)
+    structure(xx, class = c("POSIXlt", "POSIXt"), tzone = tz)
 
 .difftime <- function(xx, units)
     structure(xx, units = units, class = "difftime")

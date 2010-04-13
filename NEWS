@@ -65,6 +65,9 @@ NEW FEATURES
 	advised to make use of them (they are available from R 2.11.0)
 	to proof against planned future changes to the classes.
 
+	The ordering of the classes has been changed, so "POSIXt" is
+	now the second class.
+
 
 DEPRECATED & DEFUNCT
 
