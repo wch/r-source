@@ -35,6 +35,12 @@ NEW FEATURES
 	NA_LOGICAL) for logical vectors to TRUE: it has been an
 	implicit assumption that they are treated as true.
 
+    o	The print() methods for "glm" and "lm" objects now insert
+	linebreaks in long calls in the same way that the print()
+	methods for "summary.[g]lm" objects have long done.  This does
+	change the layout of the examples for a number of packages,
+	e.g. MASS.  (PR#14250)
+
     o	constrOptim() can now be used with method "SANN".  (PR#14245)
 
 	It gains an argument 'hessian' to be passed to optim(), which
@@ -96,11 +102,6 @@ BUG FIXES
     o	Calls to selectMethod() by default no longer cache inherited
         methods.  This could previously corrupt methods used by as().
 
-    o	The print() methods for "glm" and "lm" objects now insert
-	linebreaks in long calls in the same way that the print()
-	methods for "summary.[g]lm" objects have long done.
-	(PR#14250)
-
     o	The C function mkCharLenCE now no longer reads past 'len' bytes
 	(unlikely to be a problem except in user code). (PR# 14246)
 
@@ -117,7 +118,8 @@ BUG FIXES
 	pt(-1000, 3, 200).  (PR#14069)
 
    o	The default C code (R_binary) for binary ops now sets the S4
-        bit in the result if either argument is an S4 object.
+        bit in the result if either argument is an S4 object. (PR#13209)
+
 
 
 	**************************************************
