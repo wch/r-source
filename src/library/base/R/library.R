@@ -41,14 +41,17 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                  call. = FALSE, domain = NA)
 
         ## which version was this package built under?
-        ## must be >= 2.10.0 (new help system)
+        ## must be >= 2.10.0 (new help system), but R-devel
+        ## reported 2.10.0 for a long time before the help system
+        ## was finished.
         R_version_built_under <- as.numeric_version(built$R)
         if(R_version_built_under < "2.10.0")
             stop(gettextf("package '%s' was built before R 2.10.0: please re-install it",
                           pkgname), call. = FALSE, domain = NA)
-        ## check that this was not under pre-2.10.0,
+        ## check that this was not under pre-release 2.10.0,
         ## but beware of bootstrapping base packages
-        if(file.exists(file.path(pkgpath, "help")) &&
+        if(R_version_built_under == "2.10.0" &&
+           file.exists(file.path(pkgpath, "help")) &&
            !file.exists(file.path(pkgpath, "help", "paths.rds")))
             warning(gettextf("package '%s' claims to be built under R version %s but is missing some help files and needs to be re-installed",
                              pkgname, as.character(built$R)),
