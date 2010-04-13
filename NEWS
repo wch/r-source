@@ -50,12 +50,15 @@ NEW FEATURES
     o	curve() now allows 'expr' to be an object of mode "expression"
 	as well as "call" and "function".
 
-    o	The "POSIX[cl]t" methods for plot() and Axis() have been
-	replaced by a single method for "POSIXt".
+    o	The "POSIX[cl]t" methods for Axis() have been replaced by a
+	single method for "POSIXt".
 
-    	The date-time methods for plot() now accept a single argument in
-	the style of plot.default().  This was not previously
-	documented to work.  (PR#14016)
+	There are no longer separate plot() methods for "POSIX[cl]t"
+	and "Date": the default method has been able to handle those
+	classes for a long time.  This iter alia allows a single
+	date-time object to be supplied, the wish of PR#14016.
+
+	The methods had a different default ("") for xlab.
 
     o	Classes "POSIXct", "POSIXlt" and "difftime" have generators
 	.POSIXct(), .POSIXlt() and .difftime().  Package authors are

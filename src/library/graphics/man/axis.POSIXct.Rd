@@ -5,9 +5,7 @@
 
 \name{axis.POSIXct}
 \alias{axis.POSIXct}
-\alias{plot.POSIXt}
 \alias{axis.Date}
-\alias{plot.Date}
 \title{Date and Date-time Plotting Functions}
 \description{
   Functions to plot objects of classes \code{"POSIXlt"},
@@ -16,29 +14,18 @@
 \usage{
 axis.POSIXct(side, x, at, format, labels = TRUE, \dots)
 axis.Date(side, x, at, format, labels = TRUE, \dots)
-
-\method{plot}{POSIXt}(x, y = NULL, xlab = "", \dots)
-\method{plot}{Date}(x, y = NULL, xlab = "", \dots)
 }
 \arguments{
   \item{x, at}{A date-time or date object.}
-  \item{y}{numeric values to be plotted against \code{x}.}
-  \item{xlab}{a character string giving the label for the x axis.}
   \item{side}{See \code{\link{axis}}.}
   \item{format}{See \code{\link{strptime}}.}
   \item{labels}{Either a logical value specifying whether
     annotations are to be made at the tickmarks, or a vector of character
     strings to be placed at the tickpoints.}
   \item{\dots}{Further arguments to be passed from or to other methods,
-    typically graphical parameters or arguments of
-    \code{\link{plot.default}}.  For the \code{plot} methods, also
-    \code{format}.}
+    typically graphical parameters.}
 }
 \details{
-  The functions plot against an x-axis of date-times, although for
-  consistency with the default method, if \code{y = NULL} they plot
-  \code{x} on the y-axis against the index vector.
-  
   \code{axis.POSIXct} and \code{axis.Date} work quite hard to choose
   suitable time units (years, months, days, hours, minutes or seconds)
   and a sensible output format, but this can be overridden by supplying
@@ -53,6 +40,11 @@ axis.Date(side, x, at, format, labels = TRUE, \dots)
   interpreted in the timezone give by the \code{"tzone"} attribute it
   there is one, otherwise the current timezone.  (Earlier versions always
   used the current timezone.)
+  
+  These functions are the workhorse for methods for \code{\link{Axis}}.
+  Prior to \R 2.12.0 there were also \code{plot} methods for the
+  data-time classes, but the default method has also handled those for a
+  long time.
 }
 \value{
   The locations on the axis scale at which tick marks were drawn.

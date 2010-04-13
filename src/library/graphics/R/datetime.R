@@ -81,28 +81,6 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
     axis(side, at = z, labels = labels, ...)
 }
 
-## This and plot.Date are barely needed nowadays: the default method also works
-plot.POSIXt <- function(x, y = NULL, xlab = "", ...)
-{
-    ## some people tried to use this with a single argument 'x'.
-    if(is.null(y)) return(plot.default(as.POSIXct(x), xlab = xlab, ...))
-    ## trick to remove arguments intended for title() or plot.default()
-    axisInt <- function(x, type, main, sub, xlab, ylab, col, lty, lwd,
-                        xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)
-        axis.POSIXct(1, x, ...)
-
-    dots <- list(...)
-    Call <- match.call()
-    Call[[1L]] <- as.name("plot.default")
-    if(!inherits(x, "POSIXct")) Call$x <- x <- as.POSIXct(x)
-    Call$xaxt <- "n"
-    Call$xlab <- xlab
-    eval.parent(Call)
-    axes <- if("axes" %in% names(dots)) dots$axes else TRUE
-    xaxt <- if("xaxt" %in% names(dots)) dots$xaxt else par("xaxt")
-    if(axes && xaxt != "n") axisInt(x, ...)
-}
-
 hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                         plot = TRUE, freq = FALSE,
                         start.on.monday = TRUE, format)
@@ -248,24 +226,6 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
     axis(side, at = z, labels = labels, ...)
 }
 
-plot.Date <- function(x, y = NULL, xlab = "", ...)
-{
-    if(is.null(y)) return(plot.default(x, xlab = xlab, ...))
-    ## trick to remove arguments intended for title() or plot.default()
-    axisInt <- function(x, type, main, sub, xlab, ylab, col, lty, lwd,
-                        xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)
-        axis.Date(1, x, ...)
-
-    dots <- list(...)
-    Call <- match.call()
-    Call[[1L]] <- as.name("plot.default")
-    Call$xaxt <- "n"
-    Call$xlab <- xlab
-    eval.parent(Call)
-    axes <- if("axes" %in% names(dots)) dots$axes else TRUE
-    xaxt <- if("xaxt" %in% names(dots)) dots$xaxt else par("xaxt")
-    if(axes && xaxt != "n") axisInt(x, ...)
-}
 
 hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
                       plot = TRUE, freq = FALSE,
