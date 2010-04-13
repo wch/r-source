@@ -938,7 +938,11 @@ possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
 		i <- as.logical(anyDuplicated(c(class1, unique(nm1),
 						names(ext))))
             else {
+                ## class1 could be multiple classes here.
+                ## I think we want to know if any extend
                 i <- match(class1, names(ext))
+                ii <- i[!is.na(i)]
+                i <- if(length(ii))  ii[1L] else i[1L]
             }
         }
     }
