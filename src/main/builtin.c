@@ -128,7 +128,7 @@ SEXP attribute_hidden do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_TAG(ap,  install("expr"));
     SET_TAG(CDR(ap), install("add"));
     PROTECT(argList =  matchArgs(ap, args, call));
-    if (CAR(argList) == R_MissingArg) code = R_NilValue; 
+    if (CAR(argList) == R_MissingArg) code = R_NilValue;
     else code = CAR(argList);
     if (CADR(argList) != R_MissingArg) {
 	addit = asLogical(eval(CADR(args), rho));
@@ -290,6 +290,10 @@ SEXP attribute_hidden do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+/** do_newenv() :  .Internal(new.env(hash, parent, size))
+ *
+ * @return a newly created environment()
+ */
 SEXP attribute_hidden do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP enclos, size, ans;
@@ -317,7 +321,6 @@ SEXP attribute_hidden do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else
 	ans = NewEnvironment(R_NilValue, R_NilValue, enclos);
     return ans;
-
 }
 
 SEXP attribute_hidden do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -909,13 +912,13 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(w = expandDots(CDR(args), rho));
 	if (isString(x)) {
 	    for (y = w; y != R_NilValue; y = CDR(y))
-		if (TAG(y) != R_NilValue && 
+		if (TAG(y) != R_NilValue &&
 		    pmatch(STRING_ELT(x, 0), TAG(y), 1 /* exact */)) {
 		    /* Find the next non-missing argument.
 		       (If there is none, return NULL.) */
 		    while (CAR(y) == R_MissingArg && y != R_NilValue) y = CDR(y);
 		    if (y == R_NilValue) {
-			R_Visible = FALSE; 
+			R_Visible = FALSE;
 			UNPROTECT(2);
 			return R_NilValue;
 		    }
@@ -928,7 +931,7 @@ SEXP attribute_hidden do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    ans =  eval(CAR(y), rho);
 		    UNPROTECT(2);
 		    return ans;
-		}   
+		}
 	    /* fall through to error */
 	} else { /* Treat as numeric */
 	    argval = asInteger(x);

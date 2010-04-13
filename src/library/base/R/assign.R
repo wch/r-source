@@ -18,3 +18,12 @@ assign <-
     function (x, value, pos = -1, envir = as.environment(pos),
               inherits = FALSE, immediate = TRUE)
     .Internal(assign(x, value, envir, inherits))
+
+## FIXME (fails because as.environment() does not dispatch (in C)):
+## as.environment.list <-
+list2env <- function(x, envir = NULL, parent = parent.frame(),
+		     hash = FALSE, size = 29L, inherits = FALSE)
+{
+    ## do_list2env in ../../../main/envir.c
+    .Internal(list2env(x, envir, parent, hash, size, inherits))
+}

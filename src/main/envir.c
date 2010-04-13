@@ -1530,6 +1530,68 @@ SEXP attribute_hidden do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+/**
+ * do_list2env : .Internal(list2env(x, envir, parent, hash, size, inherits))
+ *
+ * 2 cases: 1) envir = NULL -->  create new environment from list
+ *             elements, using parent, assuming part of new.env() functionality.
+ *
+ *          2) envir = environment --> assign x entries to names(x) in
+ *             *existing* envir --> use 'inherits'
+ * @return a newly created environment() or envir {with new content}
+ */
+SEXP attribute_hidden do_list2env(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP x, xnms, envir;
+    Rboolean ginherits = FALSE;
+    int n;
+    checkArity(op, args);
+
+    if (TYPEOF(CAR(args)) != VECSXP)
+	error(_("first argument must be a named list"));
+    x = CAR(args); args = CDR(args);
+    n = LENGTH(x);
+    xnms = getAttrib(x, R_NamesSymbol);
+    if (TYPEOF(xnms) != STRSXP || LENGTH(xnms) != n)
+	error(_("names(x) must be valid character(length(x))."));
+    envir = CAR(args);  args = CDR(args);
+    if (TYPEOF(envir) == NILSXP) {
+	SEXP enclos = CAR(args);
+	int hash = asInteger(CADR(args));
+	if( !isEnvironment(enclos) )
+	    error(_("'%s' must be an environment"), "parent");
+	if (hash) {
+	    SEXP size;
+	    PROTECT(size = coerceVector(CADDR(args), INTSXP));
+	    if (INTEGER(size)[0] == NA_INTEGER)
+		INTEGER(size)[0] = 0; /* so it will use the internal default */
+	    envir = R_NewHashedEnv(enclos, size);
+	    UNPROTECT(1);
+	} else
+	    envir = NewEnvironment(R_NilValue, R_NilValue, enclos);
+
+    } else {
+	if (TYPEOF(envir) != ENVSXP)
+	    error(_("invalid '%s' argument: must be NULL or environment"), "envir");
+	int inherits = asLogical(CADDDR(args));
+	if (inherits == NA_LOGICAL)
+	    error(_("invalid '%s' argument"), "inherits");
+	ginherits = inherits;
+    }
+
+    for(int i = 0; i < n ; i++) {
+	SEXP val = VECTOR_ELT(x, i),
+	    name = install(translateChar(STRING_ELT(xnms, i)));
+	if (ginherits)
+	    setVar(name, val, envir);
+	else
+	    defineVar(name, val, envir);
+    }
+
+    return envir;
+}
+
+
 /*----------------------------------------------------------------------
 
   do_remove
@@ -1764,7 +1826,13 @@ static SEXP gfind(const char *name, SEXP env, SEXPTYPE mode,
     return rval;
 }
 
-/* get multiple values from an environment */
+
+/** mget(): get multiple values from an environment
+ *
+ * .Internal(mget(x, envir, mode, ifnotfound, inherits))
+ *
+ * @return  a list of the same length as x, a character vector (of names).
+ */
 SEXP attribute_hidden do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, env, x, mode, ifnotfound, ifnfnd;
