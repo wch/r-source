@@ -98,12 +98,11 @@
   integer vectors, except \code{sec}.
 
   \code{"POSIXct"} is more convenient for including in data frames, and
-  \code{"POSIXlt"} is closer to human-readable forms.
-  A virtual class \code{"POSIXt"} inherits from both of the classes: it
-  is used to allow operations such as subtraction to mix the two
-  classes.  Note that \code{\link{length}(x)} is the length of the
-  corresponding (abstract) date/time vector, also in the
-  \code{"POSIXlt"} case.
+  \code{"POSIXlt"} is closer to human-readable forms.  A virtual class
+  \code{"POSIXt"} exists from which both of the classes inherit: it is
+  used to allow operations such as subtraction to mix the two classes.
+  Note that \code{\link{length}(x)} is the length of the corresponding
+  (abstract) date/time vector, also in the \code{"POSIXlt"} case.
 
   Components \code{wday} and \code{yday} of \code{"POSIXlt"} are for
   information, and are not used in the conversion to calendar time.
