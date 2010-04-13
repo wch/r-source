@@ -66,7 +66,9 @@ NEW FEATURES
 	to proof against planned future changes to the classes.
 
 	The ordering of the classes has been changed, so "POSIXt" is
-	now the second class.
+	now the second class.  See the document 'Updating packages for
+	changes in R 2.12.x' on developer.r-project.org for the
+	consequences for a handful of CRAN packages.
 
 
 DEPRECATED & DEFUNCT
