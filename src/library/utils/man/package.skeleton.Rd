@@ -59,14 +59,16 @@ package.skeleton(name = "anRpackage", list,
   The file names in \code{code_files} should  have suffix \code{".R"} and
   be in the current working directory.
   
-  The  filenames created for source and documentation try to be valid
-  for all OSes known to run R.  Invalid characters are replaced by
-  \samp{_}, invalid names are preceded by \samp{zz}, and finally the
-  converted names are made unique by \code{\link{make.unique}(sep =
-    "_")}.  This can be done for code and help files but not data files
-  (which are looked for by name). Also, the code and help files should
-  have names starting with an ASCII letter or digit, and this is
-  checked and if necessary \code{z} prepended.
+  The filenames created for source and documentation try to be valid for
+  all OSes known to run R.  Invalid characters are replaced by \samp{_},
+  invalid names are preceded by \samp{zz}, names are converted to lower
+  case (to avoid case collisions on case-insensitive file systems) and
+  finally the converted names are made unique by
+  \code{\link{make.unique}(sep = "_")}.  This can be done for code and
+  help files but not data files (which are looked for by name). Also,
+  the code and help files should have names starting with an ASCII
+  letter or digit, and this is checked and if necessary \code{z}
+  prepended.
 
   When you are done, delete the \file{Read-and-delete-me} file, as it
   should not be distributed.
