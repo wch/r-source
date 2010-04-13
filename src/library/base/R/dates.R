@@ -204,9 +204,7 @@ as.character.Date <- function(x, ...) format(x, ...)
 as.data.frame.Date <- as.data.frame.vector
 
 as.list.Date <- function(x, ...)
-{
     lapply(seq_along(x), function(i) x[i])
-}
 
 c.Date <- function(..., recursive=FALSE)
     structure(c(unlist(lapply(list(...), unclass))), class="Date")
@@ -392,7 +390,7 @@ round.Date <- function(x, ...)
     val
 }
 
-## must avoid truncating forards dates prior to 1970-01-01.
+## must avoid truncating forwards dates prior to 1970-01-01.
 trunc.Date <- function(x, ...) round(x - 0.4999999)
 
 rep.Date <- function(x, ...)
