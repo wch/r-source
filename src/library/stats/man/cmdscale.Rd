@@ -105,6 +105,6 @@ plot(x, y, type="n", xlab="", ylab="", main="cmdscale(eurodist)")
 text(x, y, rownames(loc), cex=0.8)
 
 cmdsE <- cmdscale(eurodist, k=20, add = TRUE, eig = TRUE, x.ret = TRUE)
-utils::str(cmdsE)
+\donttest{utils::str(cmdsE)}
 }
 \keyword{multivariate}

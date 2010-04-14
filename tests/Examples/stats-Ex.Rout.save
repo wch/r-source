@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51728)
+R version 2.12.0 Under development (unstable) (2010-04-14 r51730)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -671,11 +671,6 @@ c    3    2    1    0    2    1    0    1    0     0
 > 126 /  dnbinom(0:8, size  = 2, prob  = 1/2) #- theoretically integer
 [1]   504.0   504.0   672.0  1008.0  1612.8  2688.0  4608.0  8064.0 14336.0
 > 
-> ## Cumulative ('p') = Sum of discrete prob.s ('d');  Relative error :
-> summary(1 - cumsum(dnbinom(x, size = 2, prob = 1/2)) /
-+                   pnbinom(x, size  = 2, prob = 1/2))
-      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
--2.220e-16 -2.220e-16  0.000e+00 -7.401e-17  0.000e+00  0.000e+00 
 > 
 > x <- 0:15
 > size <- (1:20)/4
@@ -1774,9 +1769,6 @@ Variances:
  [1] 6.079637 4.500659 3.926503 3.635351 3.460456 3.344084 3.261182 3.199173
  [9] 3.151064 3.112663
 > ## The precision may be not much more than about 8 digits:
-> summary(abs(.95 - ptukey(qtt,2, df = 2:11)))
-     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-1.020e-13 3.100e-12 7.766e-11 1.419e-09 6.330e-10 1.175e-08 
 > 
 > 
 > 
@@ -2067,10 +2059,13 @@ Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798
 F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16 
 
 
+lm> ## No test: 
 lm> summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical
       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
 -7.772e-16 -3.608e-16  0.000e+00 -1.110e-17  0.000e+00  3.220e-15 
 
+lm> ## End(No test)
+lm> 
 lm> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 
 lm> plot(lm.D9, las = 1)      # Residuals, Fitted, ...
@@ -2263,12 +2258,12 @@ Deviance Residuals:
 -0.96656  
 
 Coefficients:
-              Estimate Std. Error  z value Pr(>|z|)    
-(Intercept)  3.045e+00  1.709e-01   17.815   <2e-16 ***
-outcome2    -4.543e-01  2.022e-01   -2.247   0.0246 *  
-outcome3    -2.930e-01  1.927e-01   -1.520   0.1285    
-treatment2   1.338e-15  2.000e-01 6.69e-15   1.0000    
-treatment3   1.421e-15  2.000e-01 7.11e-15   1.0000    
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  3.045e+00  1.709e-01  17.815   <2e-16 ***
+outcome2    -4.543e-01  2.022e-01  -2.247   0.0246 *  
+outcome3    -2.930e-01  1.927e-01  -1.520   0.1285    
+treatment2   1.338e-15  2.000e-01   0.000   1.0000    
+treatment3   1.421e-15  2.000e-01   0.000   1.0000    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
@@ -2388,10 +2383,10 @@ Single term deletions
 
 Model:
 counts ~ outcome + treatment
-          Df Deviance    AIC   F value  Pr(F)
-<none>         5.1291 56.761                 
-outcome    2  10.5814 58.214     2.126 0.2350
-treatment  2   5.1291 52.761 3.463e-15 1.0000
+          Df Deviance    AIC F value  Pr(F)
+<none>         5.1291 56.761               
+outcome    2  10.5814 58.214   2.126 0.2350
+treatment  2   5.1291 52.761   0.000 1.0000
 > 
 > 
 > 
@@ -3263,7 +3258,7 @@ N            1 189.28 189.282 12.2587 0.004372 **
 P            1   8.40   8.402  0.5441 0.474904   
 K            1  95.20  95.202  6.1657 0.028795 * 
 N:P          1  21.28  21.282  1.3783 0.263165   
-N:K          1  33.13  33.135  2.1460 0.168648   
+N:K          1  33.14  33.135  2.1460 0.168648   
 P:K          1   0.48   0.482  0.0312 0.862752   
 Residuals   12 185.29  15.441                    
 ---
@@ -4600,16 +4595,6 @@ X-squared = 4.3, df = 4, p-value = 0.3669
 > text(x, y, rownames(loc), cex=0.8)
 > 
 > cmdsE <- cmdscale(eurodist, k=20, add = TRUE, eig = TRUE, x.ret = TRUE)
-> utils::str(cmdsE)
-List of 5
- $ points: num [1:21, 1:20] -2716.56 1453.75 -217.43 -1.68 461.88 ...
-  ..- attr(*, "dimnames")=List of 2
-  .. ..$ : NULL
-  .. ..$ : NULL
- $ eig   : num [1:20] 42274974 31666186 16687778 8915635 6374453 ...
- $ x     : num [1:21, 1:21] 0 29655414 25965939 28171451 29939266 ...
- $ ac    : num 2133
- $ GOF   : num [1:2] 1 1
 > 
 > 
 > 
@@ -7100,12 +7085,12 @@ Deviance Residuals:
 -0.96656  
 
 Coefficients:
-              Estimate Std. Error  z value Pr(>|z|)    
-(Intercept)  3.045e+00  1.709e-01   17.815   <2e-16 ***
-outcome2    -4.543e-01  2.022e-01   -2.247   0.0246 *  
-outcome3    -2.930e-01  1.927e-01   -1.520   0.1285    
-treatment2   1.338e-15  2.000e-01 6.69e-15   1.0000    
-treatment3   1.421e-15  2.000e-01 7.11e-15   1.0000    
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  3.045e+00  1.709e-01  17.815   <2e-16 ***
+outcome2    -4.543e-01  2.022e-01  -2.247   0.0246 *  
+outcome3    -2.930e-01  1.927e-01  -1.520   0.1285    
+treatment2   1.338e-15  2.000e-01   0.000   1.0000    
+treatment3   1.421e-15  2.000e-01   0.000   1.0000    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
@@ -7531,10 +7516,10 @@ Response: counts
 Terms added sequentially (first to last)
 
 
-          Df Deviance Resid. Df Resid. Dev         F Pr(>F)
-NULL                          8    10.5814                 
-outcome    2   5.4523         6     5.1291    2.1079 0.2370
-treatment  2   0.0000         4     5.1291 3.434e-15 1.0000
+          Df Deviance Resid. Df Resid. Dev      F Pr(>F)
+NULL                          8    10.5814              
+outcome    2   5.4523         6     5.1291 2.1079 0.2370
+treatment  2   0.0000         4     5.1291 0.0000 1.0000
 > summary(glm.qD93)
 
 Call:
@@ -7547,12 +7532,12 @@ Deviance Residuals:
 -0.96656  
 
 Coefficients:
-              Estimate Std. Error  t value Pr(>|t|)    
-(Intercept)  3.045e+00  1.944e-01   15.665  9.7e-05 ***
-outcome2    -4.543e-01  2.299e-01   -1.976    0.119    
-outcome3    -2.930e-01  2.192e-01   -1.337    0.252    
-treatment2   1.338e-15  2.274e-01 5.88e-15    1.000    
-treatment3   1.421e-15  2.274e-01 6.25e-15    1.000    
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  3.045e+00  1.944e-01  15.665  9.7e-05 ***
+outcome2    -4.543e-01  2.299e-01  -1.976    0.119    
+outcome3    -2.930e-01  2.192e-01  -1.337    0.252    
+treatment2   1.338e-15  2.274e-01   0.000    1.000    
+treatment3   1.421e-15  2.274e-01   0.000    1.000    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
@@ -7593,12 +7578,12 @@ Deviance Residuals:
 -0.96656  
 
 Coefficients:
-              Estimate Std. Error  z value Pr(>|z|)    
-(Intercept)  3.045e+00  1.709e-01   17.815   <2e-16 ***
-outcome2    -4.543e-01  2.022e-01   -2.247   0.0246 *  
-outcome3    -2.930e-01  1.927e-01   -1.520   0.1285    
-treatment2   1.338e-15  2.000e-01 6.69e-15   1.0000    
-treatment3   1.421e-15  2.000e-01 7.11e-15   1.0000    
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  3.045e+00  1.709e-01  17.815   <2e-16 ***
+outcome2    -4.543e-01  2.022e-01  -2.247   0.0246 *  
+outcome3    -2.930e-01  1.927e-01  -1.520   0.1285    
+treatment2   1.338e-15  2.000e-01   0.000   1.0000    
+treatment3   1.421e-15  2.000e-01   0.000   1.0000    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
@@ -8378,12 +8363,12 @@ Deviance Residuals:
 -0.96656  
 
 Coefficients:
-              Estimate Std. Error  z value Pr(>|z|)    
-(Intercept)  3.045e+00  1.709e-01   17.815   <2e-16 ***
-outcome2    -4.543e-01  2.022e-01   -2.247   0.0246 *  
-outcome3    -2.930e-01  1.927e-01   -1.520   0.1285    
-treatment2   1.338e-15  2.000e-01 6.69e-15   1.0000    
-treatment3   1.421e-15  2.000e-01 7.11e-15   1.0000    
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  3.045e+00  1.709e-01  17.815   <2e-16 ***
+outcome2    -4.543e-01  2.022e-01  -2.247   0.0246 *  
+outcome3    -2.930e-01  1.927e-01  -1.520   0.1285    
+treatment2   1.338e-15  2.000e-01   0.000   1.0000    
+treatment3   1.421e-15  2.000e-01   0.000   1.0000    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
@@ -9655,9 +9640,6 @@ Residual standard error: 0.6964 on 18 degrees of freedom
 Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798 
 F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16 
 
-> summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical
-      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
--7.772e-16 -3.608e-16  0.000e+00 -1.110e-17  0.000e+00  3.220e-15 
 > 
 > opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 > plot(lm.D9, las = 1)      # Residuals, Fitted, ...
@@ -10927,7 +10909,7 @@ Grand mean
  block 
 block
     1     2     3     4     5     6 
-54.03 57.45 60.77 50.12 50.52 56.35 
+54.02 57.45 60.77 50.12 50.52 56.35 
 
  N 
 N
@@ -11912,10 +11894,10 @@ Intializing ‘Const’, ‘A’, ‘B’ to '1.'.
 Consider specifying 'start' or using a selfStart model
 1017671 :  1 1 1 
 756693 :  13.419511  1.969442  0.046553 
-165432 :   64.2991 -25.6300   1.0191 
+165432 :   64.2992 -25.6301   1.0191 
 42656 :  82.3345 -8.4716  1.1754 
 459.14 :  100.4759   8.1126   2.5211 
-177.94 :  100.61505   6.93187   0.94692 
+177.94 :  100.61505   6.93187   0.94691 
 25.354 :  100.46601   7.93795   0.47219 
 0.90115 :  100.02659   9.99740   0.50931 
 0.82518 :  100.02180  10.00804   0.50261 
@@ -14819,7 +14801,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### ** Examples
 > 
 > ## Don't show: 
-> od <- options(digits = 5)
+> od <- options(digits = 4)
 > ## End Don't show
 > # obtain the fitted object
 > fm1 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
@@ -14827,35 +14809,35 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > pr1 <- profile(fm1, alpha = 0.05)
 > # profiled values for the two parameters
 > pr1$A
-        tau par.vals.A par.vals.lrc
-1  -3.08726  13.597514     0.140326
-2  -2.49570  14.468843     0.016070
-3  -1.89058  15.418359    -0.117866
-4  -1.26335  16.490882    -0.268771
-5  -0.60803  17.756622    -0.445532
-6   0.00000  19.142578    -0.632822
-7   0.49975  20.528534    -0.807497
-8   0.94652  22.068508    -0.982333
-9   1.37805  23.982528    -1.171035
-10  1.79077  26.445517    -1.374311
-11  2.18406  29.759280    -1.595991
-12  2.55588  34.438037    -1.842091
-13  2.90282  41.425423    -2.121759
+       tau par.vals.A par.vals.lrc
+1  -3.0873   13.59751      0.14033
+2  -2.4957   14.46884      0.01607
+3  -1.8906   15.41836     -0.11787
+4  -1.2634   16.49088     -0.26877
+5  -0.6080   17.75662     -0.44553
+6   0.0000   19.14258     -0.63282
+7   0.4998   20.52853     -0.80750
+8   0.9465   22.06851     -0.98233
+9   1.3780   23.98253     -1.17103
+10  1.7908   26.44552     -1.37431
+11  2.1841   29.75928     -1.59599
+12  2.5559   34.43804     -1.84209
+13  2.9028   41.42542     -2.12176
 > pr1$lrc
-        tau par.vals.A par.vals.lrc
-1  -2.95499 42.3950764   -2.1841529
-2  -2.52013 33.4466830   -1.8369261
-3  -2.05700 28.1242053   -1.5473259
-4  -1.57101 24.6569894   -1.2938714
-5  -1.06527 22.2458471   -1.0630302
-6  -0.54117 20.4828865   -0.8451566
-7   0.00000 19.1425781   -0.6328217
-8   0.55391 18.0950154   -0.4204867
-9   1.10225 17.2734136   -0.2076229
-10  1.62976 16.6215329    0.0079385
-11  2.13345 16.0868029    0.2348504
-12  2.60521 15.6388066    0.4850086
-13  3.02757 15.2654092    0.7794583
+       tau par.vals.A par.vals.lrc
+1  -2.9550  42.395076    -2.184153
+2  -2.5201  33.446683    -1.836926
+3  -2.0570  28.124205    -1.547326
+4  -1.5710  24.656989    -1.293871
+5  -1.0653  22.245847    -1.063030
+6  -0.5412  20.482887    -0.845157
+7   0.0000  19.142578    -0.632822
+8   0.5539  18.095015    -0.420487
+9   1.1022  17.273414    -0.207623
+10  1.6298  16.621533     0.007939
+11  2.1335  16.086803     0.234850
+12  2.6052  15.638807     0.485009
+13  3.0276  15.265409     0.779458
 > # see also example(plot.profile.nls)
 > ## Don't show: 
 > options(od)
@@ -17113,10 +17095,13 @@ Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798
 F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16 
 
 
+lm> ## No test: 
 lm> summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical
       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
 -7.772e-16 -3.608e-16  0.000e+00 -1.110e-17  0.000e+00  3.220e-15 
 
+lm> ## End(No test)
+lm> 
 lm> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 
 lm> plot(lm.D9, las = 1)      # Residuals, Fitted, ...
@@ -17416,12 +17401,12 @@ Residual standard error: 3.929447
 Estimated effects may be unbalanced
 > summary(npk.aov)
             Df Sum Sq Mean Sq F value   Pr(>F)   
-block        5 343.30  68.659  4.4467 0.015939 * 
+block        5 343.29  68.659  4.4467 0.015939 * 
 N            1 189.28 189.282 12.2587 0.004372 **
 P            1   8.40   8.402  0.5441 0.474904   
 K            1  95.20  95.202  6.1657 0.028795 * 
 N:P          1  21.28  21.282  1.3783 0.263165   
-N:K          1  33.14  33.135  2.1460 0.168648   
+N:K          1  33.13  33.135  2.1460 0.168648   
 P:K          1   0.48   0.482  0.0312 0.862752   
 Residuals   12 185.29  15.441                    
 ---
@@ -17529,12 +17514,12 @@ Deviance Residuals:
 -0.96656  
 
 Coefficients:
-              Estimate Std. Error  z value Pr(>|z|)    
-(Intercept)  3.045e+00  1.709e-01   17.815   <2e-16 ***
-outcome2    -4.543e-01  2.022e-01   -2.247   0.0246 *  
-outcome3    -2.930e-01  1.927e-01   -1.520   0.1285    
-treatment2   1.338e-15  2.000e-01 6.69e-15   1.0000    
-treatment3   1.421e-15  2.000e-01 7.11e-15   1.0000    
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  3.045e+00  1.709e-01  17.815   <2e-16 ***
+outcome2    -4.543e-01  2.022e-01  -2.247   0.0246 *  
+outcome3    -2.930e-01  1.927e-01  -1.520   0.1285    
+treatment2   1.338e-15  2.000e-01   0.000   1.0000    
+treatment3   1.421e-15  2.000e-01   0.000   1.0000    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
@@ -19046,10 +19031,13 @@ Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798
 F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16 
 
 
+lm> ## No test: 
 lm> summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical
       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
 -7.772e-16 -3.608e-16  0.000e+00 -1.110e-17  0.000e+00  3.220e-15 
 
+lm> ## End(No test)
+lm> 
 lm> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 
 lm> plot(lm.D9, las = 1)      # Residuals, Fitted, ...
@@ -19728,7 +19716,7 @@ Number of Fisher Scoring iterations: 6
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  32.373 0.96 34.583 0.008 0.014 
+Time elapsed:  18.819 0.403 19.255 0.001 0.022 
 > grDevices::dev.off()
 null device 
           1 

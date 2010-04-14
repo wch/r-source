@@ -112,6 +112,7 @@ printCoefmat <-
     if(any(r.ind <- !((1L:nc) %in%
                       c(cs.ind, tst.ind, if(has.Pvalue) nc))))
 	for(i in which(r.ind)) Cf[, i] <- format(xm[, i], digits=digits)
+    ok[, tst.ind] <- FALSE
     okP <- if(has.Pvalue) ok[, -nc] else ok
     ## we need to find out where Cf is zero.  We can't use as.numeric
     ## directly as OutDec could have been set.
@@ -161,15 +162,13 @@ print.anova <- function(x, digits = max(getOption("digits") - 2, 3),
     zap.i <- 1L:(if(has.P) nc-1 else nc)
     i <- which(substr(cn,2,7) == " value")
     i <- c(i, which(!is.na(match(cn, c("F", "Cp", "Chisq")))))
-    if(length(i))
-	zap.i <- zap.i[!(zap.i %in% i)]
+    if(length(i)) zap.i <- zap.i[!(zap.i %in% i)]
     tst.i <- i
-    if(length(i <- grep("Df$", cn)))
-	zap.i <- zap.i[!(zap.i %in% i)]
+    if(length(i <- grep("Df$", cn))) zap.i <- zap.i[!(zap.i %in% i)]
 
     printCoefmat(x, digits = digits, signif.stars = signif.stars,
                  has.Pvalue = has.P, P.values = has.P,
-                 cs.ind = NULL, zap.ind = zap.i, tst.ind= tst.i,
+                 cs.ind = NULL, zap.ind = zap.i, tst.ind = tst.i,
                  na.print = "", # not yet in print.matrix:  print.gap = 2,
                  ...)
     invisible(x)
