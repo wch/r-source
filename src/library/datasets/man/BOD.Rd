@@ -34,7 +34,8 @@
   M.Sc. Thesis, University of Wisconsin -- Madison.
 }
 \examples{
-\testonly{options(show.nls.convergence=FALSE)}
+\testonly{options(show.nls.convergence=FALSE)
+old <- options(digits = 5)}
 require(stats)
 # simplest form of fitting a first-order model to these data
 fm1 <- nls(demand ~ A*(1-exp(-exp(lrc)*Time)), data = BOD,
@@ -47,5 +48,6 @@ fm2 <- nls(demand ~ (1-exp(-exp(lrc)*Time)), data = BOD,
 # using a self-starting model
 fm3 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 summary( fm3 )
+\testonly{options(old)}
 }
 \keyword{datasets}

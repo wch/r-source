@@ -164,21 +164,20 @@ coef(summary(fm1DNase1))
 fm2DNase1 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),
                  data = DNase1,
                  start = list(xmid = 0, scal = 1),
-                 algorithm = "plinear", trace = TRUE)
+                 algorithm = "plinear")
 summary(fm2DNase1)
 
 ## without conditional linearity
 fm3DNase1 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
                  data = DNase1,
-                 start = list(Asym = 3, xmid = 0, scal = 1),
-                 trace = TRUE)
+                 start = list(Asym = 3, xmid = 0, scal = 1))
 summary(fm3DNase1)
 
 ## using Port's nl2sol algorithm
 fm4DNase1 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
                  data = DNase1,
                  start = list(Asym = 3, xmid = 0, scal = 1),
-                 trace = TRUE, algorithm = "port")
+                 algorithm = "port")
 summary(fm4DNase1)
 
 ## weighted nonlinear regression
@@ -197,8 +196,7 @@ weighted.MM <- function(resp, conc, Vm, K)
 }
 
 Pur.wt <- nls( ~ weighted.MM(rate, conc, Vm, K), data = Treated,
-              start = list(Vm = 200, K = 0.1),
-              trace = TRUE)
+              start = list(Vm = 200, K = 0.1))
 summary(Pur.wt)
 
 ## Passing arguments using a list that can not be coerced to a data.frame
@@ -250,19 +248,17 @@ rbind(coef(Pur.wt), coef(Pur.wt1), coef(Pur.wt.grad))
 x <- 1:10
 y <- 2*x + 3                            # perfect fit
 yeps <- y + rnorm(length(y), sd = 0.01) # added noise
-nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
-    trace = TRUE)
+nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321))
 \dontrun{
 ## terminates in an error, because convergence cannot be confirmed:
-nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
-     trace = TRUE)
+nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321))
 }
 
 ## the nls() internal cheap guess for starting values can be sufficient:
 
 x <- -(1:100)/10
 y <- 100 + 10 * exp(x / 2) + rnorm(x)/10
-nlmod <- nls(y ~  Const + A * exp(B * x), trace=TRUE)
+nlmod <- nls(y ~  Const + A * exp(B * x))
 
 plot(x,y, main = "nls(*), data, true function and fit, n=100")
 curve(100 + 10 * exp(x / 2), col=4, add = TRUE)

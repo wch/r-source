@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-07 r51633)
+R version 2.12.0 Under development (unstable) (2010-04-14 r51730)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -2561,8 +2561,8 @@ Call:
 lm(formula = y ~ 0)
 
 Residuals:
-      Min        1Q    Median        3Q       Max 
--1.369192 -0.210726  0.008405  0.084366  0.552922 
+     Min       1Q   Median       3Q      Max 
+-1.36919 -0.21073  0.00840  0.08437  0.55292 
 
 No Coefficients
 
@@ -2657,8 +2657,8 @@ Call:
 lm(formula = y ~ x + 0)
 
 Residuals:
-      Min        1Q    Median        3Q       Max 
--1.369192 -0.210726  0.008405  0.084366  0.552922 
+     Min       1Q   Median       3Q      Max 
+-1.36919 -0.21073  0.00840  0.08437  0.55292 
 
 Coefficients: (1 not defined because of singularities)
   Estimate Std. Error t value Pr(>|t|)
@@ -2760,8 +2760,8 @@ Call:
 glm(formula = y ~ 0)
 
 Deviance Residuals: 
-      Min         1Q     Median         3Q        Max  
--1.369192  -0.210726   0.008405   0.084366   0.552922  
+     Min        1Q    Median        3Q       Max  
+-1.36919  -0.21073   0.00840   0.08437   0.55292  
 
 No Coefficients
 
@@ -2848,8 +2848,8 @@ Call:
 glm(formula = y ~ x + 0)
 
 Deviance Residuals: 
-      Min         1Q     Median         3Q        Max  
--1.369192  -0.210726   0.008405   0.084366   0.552922  
+     Min        1Q    Median        3Q       Max  
+-1.36919  -0.21073   0.00840   0.08437   0.55292  
 
 Coefficients: (1 not defined because of singularities)
   Estimate Std. Error t value Pr(>|t|)
@@ -5514,8 +5514,8 @@ Call:
 lm(formula = y1 ~ 1, na.action = "na.exclude")
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--3.28057 -0.90572  0.04996  0.80200  2.54584 
+    Min      1Q  Median      3Q     Max 
+-3.2806 -0.9057  0.0500  0.8020  2.5458 
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    

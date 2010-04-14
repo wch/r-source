@@ -665,8 +665,8 @@ print.summary.glm <-
 	x$deviance.resid <- quantile(x$deviance.resid,na.rm=TRUE)
 	names(x$deviance.resid) <- c("Min", "1Q", "Median", "3Q", "Max")
     }
-    print.default(x$deviance.resid, digits=digits, na.print = "",
-                  print.gap = 2)
+    xx <- zapsmall(x$deviance.resid, digits + 1)
+    print.default(xx, digits=digits, na.print = "", print.gap = 2)
 
     if(length(x$aliased) == 0L) {
         cat("\nNo Coefficients\n")

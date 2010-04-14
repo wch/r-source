@@ -369,7 +369,10 @@ print.summary.lm <-
 	rq <- if (length(dim(resid)) == 2L)
 	    structure(apply(t(resid), 1L, quantile),
 		      dimnames = list(nam, dimnames(resid)[[2L]]))
-	else  structure(quantile(resid), names = nam)
+	else  {
+            zz <- zapsmall(quantile(resid), digits + 1)
+            structure(zz, names = nam)
+        }
 	print(rq, digits = digits, ...)
     }
     else if (rdf > 0L) {

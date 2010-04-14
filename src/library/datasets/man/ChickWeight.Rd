@@ -51,14 +51,15 @@
   Pinheiro, J. C. and Bates, D. M. (2000) \emph{Mixed-effects Models in
     S and S-PLUS}, Springer.
 }
-\examples{
+% tested as stats/man/SSlogis.Rd
+\examples{\donttest{
 require(stats); require(graphics)
-\testonly{options(show.nls.convergence=FALSE)}
+options(show.nls.convergence=FALSE)
 coplot(weight ~ Time | Chick, data = ChickWeight,
     type = "b", show.given = FALSE)
 ## fit a representative chick
 fm1 <- nls(weight ~ SSlogis( Time, Asym, xmid, scal ),
     data = ChickWeight, subset = Chick == 1)
 summary( fm1 )
-}
+}}
 \keyword{datasets}

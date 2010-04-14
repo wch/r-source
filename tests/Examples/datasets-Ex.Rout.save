@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51724)
+R version 2.12.0 Under development (unstable) (2010-04-14 r51730)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -80,28 +80,29 @@ Type 'q()' to quit R.
 > 
 > ## Don't show: 
 > options(show.nls.convergence=FALSE)
+> old <- options(digits = 5)
 > ## End Don't show
 > require(stats)
 > # simplest form of fitting a first-order model to these data
 > fm1 <- nls(demand ~ A*(1-exp(-exp(lrc)*Time)), data = BOD,
 +    start = c(A = 20, lrc = log(.35)))
 > coef(fm1)
-         A        lrc 
-19.1425770 -0.6328215 
+       A      lrc 
+19.14258 -0.63282 
 > print(fm1)
 Nonlinear regression model
   model:  demand ~ A * (1 - exp(-exp(lrc) * Time)) 
    data:  BOD 
-      A     lrc 
-19.1426 -0.6328 
- residual sum-of-squares: 25.99
+     A    lrc 
+19.143 -0.633 
+ residual sum-of-squares: 26
 > # using the plinear algorithm
 > fm2 <- nls(demand ~ (1-exp(-exp(lrc)*Time)), data = BOD,
 +    start = c(lrc = log(.35)), algorithm = "plinear", trace = TRUE)
-32.94622 : -1.049822 22.126001 
-25.99248 : -0.6257161 19.1031883 
-25.99027 : -0.6327039 19.1419223 
-25.99027 : -0.6328192 19.1425644 
+32.946 : -1.0498 22.1260 
+25.992 : -0.62572 19.10319 
+25.990 : -0.6327 19.1419 
+25.990 : -0.63282 19.14256 
 > # using a self-starting model
 > fm3 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 > summary( fm3 )
@@ -110,13 +111,16 @@ Formula: demand ~ SSasympOrig(Time, A, lrc)
 
 Parameters:
     Estimate Std. Error t value Pr(>|t|)   
-A    19.1426     2.4959   7.670  0.00155 **
-lrc  -0.6328     0.3824  -1.655  0.17328   
+A     19.143      2.496    7.67   0.0016 **
+lrc   -0.633      0.382   -1.65   0.1733   
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
-Residual standard error: 2.549 on 4 degrees of freedom
+Residual standard error: 2.55 on 4 degrees of freedom
 
+> ## Don't show: 
+> options(old)
+> ## End Don't show
 > 
 > 
 > 
@@ -132,31 +136,6 @@ Residual standard error: 2.549 on 4 degrees of freedom
 > ### Keywords: datasets
 > 
 > ### ** Examples
-> 
-> require(stats); require(graphics)
-> ## Don't show: 
-> options(show.nls.convergence=FALSE)
-> ## End Don't show
-> coplot(weight ~ Time | Chick, data = ChickWeight,
-+     type = "b", show.given = FALSE)
-> ## fit a representative chick
-> fm1 <- nls(weight ~ SSlogis( Time, Asym, xmid, scal ),
-+     data = ChickWeight, subset = Chick == 1)
-> summary( fm1 )
-
-Formula: weight ~ SSlogis(Time, Asym, xmid, scal)
-
-Parameters:
-     Estimate Std. Error t value Pr(>|t|)    
-Asym 937.0215   465.8579   2.011  0.07516 .  
-xmid  35.2228     8.3119   4.238  0.00218 ** 
-scal  11.4052     0.9052  12.599 5.08e-07 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 2.919 on 9 degrees of freedom
-
-> 
 > 
 > 
 > cleanEx()
@@ -2899,7 +2878,7 @@ glm(formula = Freq ~ origin + destination + Diag + Rscore:Cscore,
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
--2.6522  -0.6267   0.0000   0.5913   2.0964  
+-2.6521  -0.6267   0.0000   0.5913   2.0964  
 
 Coefficients:
               Estimate Std. Error z value Pr(>|z|)    

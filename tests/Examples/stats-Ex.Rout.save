@@ -2045,7 +2045,7 @@ lm(formula = weight ~ group - 1)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--1.0710 -0.4937  0.0685  0.2462  1.3690 
+-1.0710 -0.4938  0.0685  0.2462  1.3690 
 
 Coefficients:
          Estimate Std. Error t value Pr(>|t|)    
@@ -2348,7 +2348,7 @@ glm(formula = lot2 ~ log(u), family = Gamma, data = clotting)
 
 Deviance Residuals: 
      Min        1Q    Median        3Q       Max  
--0.05574  -0.02925   0.01030   0.01714   0.06372  
+-0.05574  -0.02925   0.01030   0.01714   0.06371  
 
 Coefficients:
               Estimate Std. Error t value Pr(>|t|)    
@@ -4429,8 +4429,8 @@ Call:
 lm(formula = y ~ x + I(x^2) + I(x^3) + I((x - 10)^2), weights = ww)
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--6.71598 -0.70475  0.07279  1.01744  3.99474 
+    Min      1Q  Median      3Q     Max 
+-6.7160 -0.7047  0.0728  1.0174  3.9947 
 
 Coefficients: (1 not defined because of singularities)
                 Estimate Std. Error t value Pr(>|t|)    
@@ -7175,7 +7175,7 @@ glm(formula = lot2 ~ log(u), family = Gamma, data = clotting)
 
 Deviance Residuals: 
      Min        1Q    Median        3Q       Max  
--0.05574  -0.02925   0.01030   0.01714   0.06372  
+-0.05574  -0.02925   0.01030   0.01714   0.06371  
 
 Coefficients:
               Estimate Std. Error t value Pr(>|t|)    
@@ -7484,7 +7484,7 @@ List of 12
 > gf$linkinv
 function (eta) 
 1/eta
-<environment: 0x3d3f390>
+<environment: 0x105f232e0>
 > gf$variance(-3:4) #- == (.)^2
 [1]  9  4  1  0  1  4  9 16
 > 
@@ -8450,7 +8450,7 @@ glm(formula = lot2 ~ log(u), family = Gamma, data = clotting)
 
 Deviance Residuals: 
      Min        1Q    Median        3Q       Max  
--0.05574  -0.02925   0.01030   0.01714   0.06372  
+-0.05574  -0.02925   0.01030   0.01714   0.06371  
 
 Coefficients:
               Estimate Std. Error t value Pr(>|t|)    
@@ -9627,7 +9627,7 @@ lm(formula = weight ~ group - 1)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--1.0710 -0.4937  0.0685  0.2462  1.3690 
+-1.0710 -0.4938  0.0685  0.2462  1.3690 
 
 Coefficients:
          Estimate Std. Error t value Pr(>|t|)    
@@ -11696,13 +11696,7 @@ scal   1.0415   0.032271  32.272 8.5069e-14
 > fm2DNase1 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),
 +                  data = DNase1,
 +                  start = list(xmid = 0, scal = 1),
-+                  algorithm = "plinear", trace = TRUE)
-0.71393 : 0.0000 1.0000 1.4539 
-0.14453 : 1.6402 1.3902 2.4618 
-0.0083022 : 1.6209 1.0542 2.4784 
-0.0047942 : 1.4852 1.0437 2.3473 
-0.0047896 : 1.4831 1.0415 2.3452 
-0.0047896 : 1.4831 1.0415 2.3452 
++                  algorithm = "plinear")
 > summary(fm2DNase1)
 
 Formula: density ~ 1/(1 + exp((xmid - log(conc))/scal))
@@ -11721,15 +11715,7 @@ Residual standard error: 0.0192 on 13 degrees of freedom
 > ## without conditional linearity
 > fm3DNase1 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
 +                  data = DNase1,
-+                  start = list(Asym = 3, xmid = 0, scal = 1),
-+                  trace = TRUE)
-14.323 :  3 0 1 
-0.45427 :  2.11525 0.84102 1.20006 
-0.058696 :  2.4464 1.7475 1.1895 
-0.0056635 :  2.2941 1.4122 1.0205 
-0.0047915 :  2.3414 1.4797 1.0408 
-0.0047896 :  2.3451 1.4830 1.0414 
-0.0047896 :  2.3452 1.4831 1.0415 
++                  start = list(Asym = 3, xmid = 0, scal = 1))
 > summary(fm3DNase1)
 
 Formula: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
@@ -11749,15 +11735,7 @@ Residual standard error: 0.0192 on 13 degrees of freedom
 > fm4DNase1 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
 +                  data = DNase1,
 +                  start = list(Asym = 3, xmid = 0, scal = 1),
-+                  trace = TRUE, algorithm = "port")
-  0:     7.1613933:  3.00000  0.00000  1.00000
-  1:    0.37198838:  2.26943 0.880517  1.27015
-  2:   0.027258764:  2.52218  1.81384  1.22219
-  3:  0.0030307851:  2.26435  1.38062  1.01366
-  4:  0.0023998789:  2.33835  1.47749  1.04053
-  5:  0.0023947848:  2.34511  1.48302  1.04143
-  6:  0.0023947845:  2.34518  1.48309  1.04145
-  7:  0.0023947845:  2.34518  1.48309  1.04145
++                  algorithm = "port")
 > summary(fm4DNase1)
 
 Formula: density ~ Asym/(1 + exp((xmid - log(conc))/scal))
@@ -11791,14 +11769,7 @@ Algorithm "port", convergence message: relative convergence (4)
 + }
 > 
 > Pur.wt <- nls( ~ weighted.MM(rate, conc, Vm, K), data = Treated,
-+               start = list(Vm = 200, K = 0.1),
-+               trace = TRUE)
-112.60 :  200.0   0.1 
-17.338 :  205.675888   0.046929 
-14.610 :  206.330873   0.053873 
-14.597 :  206.798835   0.054571 
-14.597 :  206.832913   0.054609 
-14.597 :  206.834682   0.054611 
++               start = list(Vm = 200, K = 0.1))
 > summary(Pur.wt)
 
 Formula: 0 ~ weighted.MM(rate, conc, Vm, K)
@@ -11866,11 +11837,7 @@ Residual standard error: 1.21 on 10 degrees of freedom
 > x <- 1:10
 > y <- 2*x + 3                            # perfect fit
 > yeps <- y + rnorm(length(y), sd = 0.01) # added noise
-> nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
-+     trace = TRUE)
-1361.2 :  0.12345 0.54321 
-0.00052367 :  2.9983 2.0005 
-0.00052367 :  2.9983 2.0005 
+> nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321))
 Nonlinear regression model
   model:  yeps ~ a + b * x 
    data:  parent.frame() 
@@ -11879,29 +11846,18 @@ a b
  residual sum-of-squares: 0.000524
 > ## Not run: 
 > ##D ## terminates in an error, because convergence cannot be confirmed:
-> ##D nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
-> ##D      trace = TRUE)
+> ##D nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321))
 > ## End(Not run)
 > 
 > ## the nls() internal cheap guess for starting values can be sufficient:
 > 
 > x <- -(1:100)/10
 > y <- 100 + 10 * exp(x / 2) + rnorm(x)/10
-> nlmod <- nls(y ~  Const + A * exp(B * x), trace=TRUE)
-Warning in nls(y ~ Const + A * exp(B * x), trace = TRUE) :
+> nlmod <- nls(y ~  Const + A * exp(B * x))
+Warning in nls(y ~ Const + A * exp(B * x)) :
   No starting values specified for some parameters.
 Intializing ‘Const’, ‘A’, ‘B’ to '1.'.
 Consider specifying 'start' or using a selfStart model
-1017671 :  1 1 1 
-756693 :  13.419511  1.969442  0.046553 
-165432 :   64.2992 -25.6301   1.0191 
-42656 :  82.3345 -8.4716  1.1754 
-459.14 :  100.4759   8.1126   2.5211 
-177.94 :  100.61505   6.93187   0.94691 
-25.354 :  100.46601   7.93795   0.47219 
-0.90115 :  100.02659   9.99740   0.50931 
-0.82518 :  100.02180  10.00804   0.50261 
-0.82517 :  100.02155  10.00846   0.50265 
 > 
 > plot(x,y, main = "nls(*), data, true function and fit, n=100")
 > curve(100 + 10 * exp(x / 2), col=4, add = TRUE)
@@ -17081,7 +17037,7 @@ lm(formula = weight ~ group - 1)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--1.0710 -0.4937  0.0685  0.2462  1.3690 
+-1.0710 -0.4938  0.0685  0.2462  1.3690 
 
 Coefficients:
          Estimate Std. Error t value Pr(>|t|)    
@@ -17562,7 +17518,7 @@ lm(formula = weight ~ group - 1)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--1.0710 -0.4937  0.0685  0.2462  1.3690 
+-1.0710 -0.4938  0.0685  0.2462  1.3690 
 
 Coefficients:
          Estimate Std. Error t value Pr(>|t|)    
@@ -18801,7 +18757,7 @@ lm(formula = weight ~ group - 1)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--1.0710 -0.4937  0.0685  0.2462  1.3690 
+-1.0710 -0.4938  0.0685  0.2462  1.3690 
 
 Coefficients:
          Estimate Std. Error t value Pr(>|t|)    
@@ -19017,7 +18973,7 @@ lm(formula = weight ~ group - 1)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--1.0710 -0.4937  0.0685  0.2462  1.3690 
+-1.0710 -0.4938  0.0685  0.2462  1.3690 
 
 Coefficients:
          Estimate Std. Error t value Pr(>|t|)    

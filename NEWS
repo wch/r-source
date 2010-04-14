@@ -70,8 +70,13 @@ NEW FEATURES
 	changes in R 2.12.x' on developer.r-project.org for the
 	consequences for a handful of CRAN packages.
 
-    o	*Experimental*	list2env()  utility as inverse of as.list(<environment>)
+    o	*Experimental*	list2env()  utility as inverse of
+ 	as.list(<environment>)
 	and for fast multi-assign() to existing environment.
+
+    o	There are several small changes to output which 'zap' small
+	numbers, e.g. in printing quantiled of residuals in summaries
+	from lm annd glm fits, and in test statisions in anovas.
 
 
 DEPRECATED & DEFUNCT
