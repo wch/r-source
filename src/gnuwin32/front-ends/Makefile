@@ -84,6 +84,8 @@ rtico.o: Rterm.exe.manifest
 else
 Rgui.exe: rgui.o rgico64.o
 Rterm.exe: rterm.o rtico.o
+rtico.o: Rterm64.manifest
+rgico64.o: Rgui64.manifest
 endif
 
 Rcmd.exe: rcmd.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o
