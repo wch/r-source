@@ -24,7 +24,7 @@ is.name <- is.symbol
 
     ## include the S3 group generics here
     baseGenerics <- c("Math", "Ops", "Summary", "Complex",
-        "as.character", "as.data.frame", "as.matrix", "as.vector",
+        "as.character", "as.data.frame", "as.environment", "as.matrix", "as.vector",
         "cbind", "labels", "print", "rbind", "rep", "seq", "seq.int",
         "solve", "summary", "t")
 
@@ -69,7 +69,6 @@ assign(".subset", function(x, ...) NULL, envir = .ArgsEnv)
 assign(".subset2", function(x, ...) NULL, envir = .ArgsEnv)
 assign("UseMethod", function(generic, object) NULL, envir = .ArgsEnv)
 assign("as.call", function(x) NULL, envir = .ArgsEnv)
-assign("as.environment", function(object) NULL, envir = .ArgsEnv)
 assign("attr", function(x, which, exact = FALSE) NULL, envir = .ArgsEnv)
 assign("attr<-", function(x, which, value) NULL, envir = .ArgsEnv)
 assign("attributes", function(obj) NULL, envir = .ArgsEnv)
@@ -136,9 +135,10 @@ assign("untracemem", function(x) NULL, envir = .ArgsEnv)
 
 
 .S3PrimitiveGenerics <-
-    c("as.character", "as.complex", "as.double", "as.integer",
-    "as.logical", "as.numeric", "as.raw", "as.real", "c", "dim",
-    "dim<-", "dimnames", "dimnames<-", "is.array", "is.finite",
+  c("as.character", "as.complex", "as.double", "as.environment",
+    "as.integer", "as.logical", "as.numeric", "as.raw", "as.real",
+    "c", "dim", "dim<-", "dimnames", "dimnames<-",
+    "is.array", "is.finite",
     "is.infinite", "is.matrix", "is.na", "is.nan", "is.numeric",
     "length", "length<-", "levels<-", "names", "names<-", "rep",
     "seq.int", "xtfrm")

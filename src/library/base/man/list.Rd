@@ -1,6 +1,6 @@
 % File src/library/base/man/list.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{list}
@@ -77,13 +77,15 @@ alist(\dots)
   depends on the order of creation of objects and whether the
   environment is hashed).  No parent environments are searched.  (Objects
   copied are duplicated so this can be an expensive operation.)
+  Note that there is an inverse operation, the
+  \code{\link{as.environment}()} method for list objects.
 
   An empty pairlist, \code{pairlist()} is the same as \code{NULL}.  This
   is different from \code{list()}.
 
   \code{as.pairlist} is implemented as \code{\link{as.vector}(x, "pairlist")},
   and hence will dispatch methods for the generic function \code{as.vector}.
-  
+
   \code{list}, \code{is.list} and \code{is.pairlist} are
   \link{primitive} functions.
 }

@@ -1,5 +1,5 @@
 
-R version 2.11.0 Under development (unstable) (2010-01-01 r50874)
+R version 2.12.0 Under development (unstable) (2010-04-14 r51722)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -2019,6 +2019,7 @@ IS: [1] TRUE
 [1] TRUE
 > res <- try(as.environment( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.environment(res))
+[1] TRUE
 > res <- try(as.expression( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.expression(res))
 [1] TRUE
@@ -2112,6 +2113,7 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.environment(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.expression( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.expression(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -2242,6 +2244,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.environment( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.environment( f )))
+[1] TRUE
 > f <- try(as.expression( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.expression( f )))
 [1] TRUE
@@ -2338,6 +2341,7 @@ IS: [1] TRUE
 [1] TRUE
 > res <- try(as.environment( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.environment(res))
+[1] TRUE
 > res <- try(as.expression( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.expression(res))
 [1] TRUE
@@ -2432,6 +2436,7 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.environment(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.expression( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.expression(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -2565,6 +2570,7 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.environment( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.environment( f )))
+[1] TRUE
 > f <- try(as.expression( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.expression( f )))
 [1] TRUE
@@ -2644,6 +2650,6 @@ In as.dist.default(x) : non-square matrix
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.292 0.028 0.318 0 0 
+Time elapsed:  0.181 0.015 0.198 0 0 
 > 
 > 

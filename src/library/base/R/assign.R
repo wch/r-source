@@ -19,11 +19,9 @@ assign <-
               inherits = FALSE, immediate = TRUE)
     .Internal(assign(x, value, envir, inherits))
 
-## FIXME (fails because as.environment() does not dispatch (in C)):
-## as.environment.list <-
 list2env <- function(x, envir = NULL, parent = parent.frame(),
-		     hash = FALSE, size = 29L, inherits = FALSE)
+		     hash = FALSE, size = 29L)
 {
     ## do_list2env in ../../../main/envir.c
-    .Internal(list2env(x, envir, parent, hash, size, inherits))
+    .Internal(list2env(x, envir, parent, hash, size))
 }
