@@ -6145,6 +6145,7 @@ paste("Today is", date()) # from paste.Rd
 trunc(Sys.time(), "day") # from round.POSIXt.Rd
 example(srcref)
 example(strptime)
+example(sys.parent)
 example(tempfile)
 example(weekdays)
 ##

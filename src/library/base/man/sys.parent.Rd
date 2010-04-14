@@ -108,7 +108,7 @@ parent.frame(n = 1)
 \seealso{
   \code{\link{eval}} for a usage of \code{sys.frame} and \code{parent.frame}.
 }
-\examples{
+\examples{\donttest{
 require(utils)
 
 ## Note: the first two examples will give different results
@@ -164,6 +164,6 @@ as.double.foo <- function(x)
 t2 <- function(x) as.double(x)
 a <- structure(pi, class = "foo")
 t2(a)
-}
+}}
 \keyword{programming}
 \keyword{data}
