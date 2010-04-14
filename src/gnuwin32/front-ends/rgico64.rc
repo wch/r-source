@@ -1,5 +1,0 @@
-Rgui  ICON  R.ico
-
-#include <windows.h>
-
-CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "Rgui64.manifest"

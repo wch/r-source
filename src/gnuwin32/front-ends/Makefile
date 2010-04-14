@@ -21,7 +21,6 @@ LARGE_ADDR=-Wl,--large-address-aware
 endif
 
 rcmdfn-CFLAGS=-DBINDIR='"$(BINDIR)"'
-Rfe-CFLAGS=-DR_ARCH='"$(R_ARCH)"'
 
 .PHONY : all makeMakedeps
 
@@ -82,10 +81,10 @@ rcico.o: Rcmd.exe.manifest
 rgico.o: Rgui.exe.manifest
 rtico.o: Rterm.exe.manifest
 else
-Rgui.exe: rgui.o rgico64.o
+Rgui.exe: rgui.o rgico.o
 Rterm.exe: rterm.o rtico.o
 rtico.o: Rterm64.manifest
-rgico64.o: Rgui64.manifest
+rgico.o: Rgui64.manifest
 endif
 
 Rcmd.exe: rcmd.o ../rhome.o ../shext.o rcico.o rcmdfn.o Renviron.o

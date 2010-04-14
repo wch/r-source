@@ -3,7 +3,7 @@ Rgui  ICON  R.ico
 #include <windows.h>
 #include "../../include/Rversion.h"
 
-#ifndef Win64
+#ifndef WIN64
 CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "Rgui.exe.manifest"
 #else
 CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "Rgui64.manifest"
