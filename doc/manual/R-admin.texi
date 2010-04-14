@@ -3968,7 +3968,7 @@ On @cputype{x86} you will get marginally higher performance @emph{via}
 CFLAGS="-xO5 -xc99 -xlibmieee -xlibmil -nofstore -xtarget=native"
 FFLAGS="-O5 -libmil -nofstore -xtarget=native"
 CXXFLAGS="-xO5 -xlibmil -nofstore -xtarget=native"
-SAFE_FFLAGS="-O5 -libmil -fstore -xtarget=native"
+SAFE_FFLAGS="-libmil -fstore -xtarget=native"
 @end example
 
 The SunStudio compilers provide several implementations of the C++

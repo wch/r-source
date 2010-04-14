@@ -14,6 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+## Examples as from 2.11.0 will always be new-style and hence in UTF-8
 example <-
 function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	 echo = TRUE, verbose = getOption("verbose"), setRNG = FALSE,
@@ -32,9 +33,7 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     packagePath <- dirname(dirname(file))
     pkgname <- basename(packagePath)
     lib <- dirname(packagePath)
-    encoding <- NULL
     tf <- tempfile("Rex")
-    encoding <- "UTF-8"
     tools::Rd2ex(.getHelpFile(file), tf)
     on.exit(unlink(tf))
     if(pkgname != "base")
@@ -57,16 +56,6 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
 	} else eval(setRNG)
     }
     zz <- readLines(tf, n = 1L)
-    if(is.null(encoding)) {
-        encoding <-
-            if(length(enc <- localeToCharset()) > 1L)
-                c(enc[-length(enc)], "latin1")
-            else ""
-        ## peek at the file, but note we can't usefully translate to C.
-        if(length(grep("^### Encoding: ", zz))  &&
-           !identical(Sys.getlocale("LC_CTYPE"), "C"))
-            encoding <- substring(zz, 15L)
-    }
     skips <- 0L
     if (echo) {
 	## skip over header
@@ -95,6 +84,6 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     source(tf, local, echo = echo,
            prompt.echo = paste(prompt.prefix, getOption("prompt"), sep=""),
            continue.echo = paste(prompt.prefix, getOption("continue"), sep=""),
-           verbose = verbose, max.deparse.length = Inf, encoding = encoding,
+           verbose = verbose, max.deparse.length = Inf, encoding = "UTF-8",
     	   skip.echo = skips, keep.source=TRUE)
 }
