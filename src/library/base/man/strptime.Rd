@@ -239,7 +239,7 @@ strptime(x, format, tz = "")
   number representation nor era available in any locale.
 #endif
 }
-\examples{
+\examples{\donttest{
 ## locale-specific version of date()
 format(Sys.time(), "\%a \%b \%d \%X \%Y \%Z")
 
@@ -275,6 +275,6 @@ attr(x, "tzone")
 
 ## An RFC 822 header (Eastern Canada, during DST)
 strptime("Tue, 23 Mar 2010 14:36:38 -0400",  "\%a, \%d \%b \%Y \%H:\%M:\%S \%z")
-}
+}}
 \keyword{utilities}
 \keyword{chron}

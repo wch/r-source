@@ -100,7 +100,7 @@ as.POSIXlt(x, tz = "", \dots)
   representations. \code{\link{Sys.timezone}} for details of the
   (system-specific)naming of time zones.
 }
-\examples{
+\examples{\donttest{
 (z <- Sys.time())             # the current datetime, as class "POSIXct"
 unclass(z)                    # a large integer
 floor(unclass(z)/86400)       # the number of days since 1970-01-01 (UTC)
@@ -120,6 +120,7 @@ z <- c(10485849600, 10477641600, 10561104000, 10562745600)
 as.Date(as.POSIXct(z, origin="1582-10-14", tz="GMT"))
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in UTC
+}
 \dontrun{## These may not be correct names on your system
 as.POSIXlt(Sys.time(), "America/New_York")  # in New York
 as.POSIXlt(Sys.time(), "EST5EDT")           # alternative.

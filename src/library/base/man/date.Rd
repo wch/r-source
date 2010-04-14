@@ -29,11 +29,11 @@
   and
   \code{\link{DateTimeClasses}} for objects representing date and time.
 }
-\examples{
+\examples{\donttest{
 (d <- date())
 nchar(d) == 24
 
 ## something similar in the current locale
 format(Sys.time(), "\%a \%b \%d \%H:\%M:\%S \%Y")
-}
+}}
 \keyword{utilities}

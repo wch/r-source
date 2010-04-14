@@ -53,11 +53,11 @@ packageDescription(pkg, lib.loc = NULL, fields = NULL,
 \seealso{
   \code{\link{read.dcf}}
 }
-\examples{
+\examples{\donttest{
 packageDescription("stats")
 packageDescription("stats", fields = c("Package", "Version"))
 
 packageDescription("stats", fields = "Version")
 packageDescription("stats", fields = "Version", drop = FALSE)
-}
+}}
 \keyword{utilities}

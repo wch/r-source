@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51724)
+R version 2.12.0 Under development (unstable) (2010-04-14 r51728)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -410,21 +410,6 @@ attr(,"match.length")
 > 
 > ### ** Examples
 > 
-> dir <- file.path(R.home(), "library", "stats")
-> list_files_with_exts(file.path(dir, "demo"), "R")
-[1] "R_HOME/library/stats/demo/glm.vr.R"
-[2] "R_HOME/library/stats/demo/lm.glm.R"
-[3] "R_HOME/library/stats/demo/nlm.R"   
-[4] "R_HOME/library/stats/demo/smooth.R"
-> list_files_with_type(file.path(dir, "demo"), "demo") # the same
-[1] "R_HOME/library/stats/demo/glm.vr.R"
-[2] "R_HOME/library/stats/demo/lm.glm.R"
-[3] "R_HOME/library/stats/demo/nlm.R"   
-[4] "R_HOME/library/stats/demo/smooth.R"
-> file_path_sans_ext(list.files(file.path(R.home("modules"))))
-[1] "R_X11"    "internet" "lapack"   "vfonts"  
-> 
-> 
 > 
 > cleanEx()
 > nameEx("getDepList")
@@ -516,9 +501,8 @@ NULL
 > 
 > ### ** Examples
 > 
-> md5sum(dir(R.home(), pattern="^COPY", full.names=TRUE))
-   R_HOME/COPYING 
-"eb723b61539feef013de476e68b5c50a" 
+> as.vector(md5sum(dir(R.home(), pattern="^COPY", full.names=TRUE)))
+[1] "eb723b61539feef013de476e68b5c50a"
 > 
 > 
 > 

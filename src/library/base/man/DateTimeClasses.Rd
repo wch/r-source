@@ -210,7 +210,7 @@
   tried to work around this, but if you get unexpected results try
   setting \code{"TZ"}.  See \code{\link{Sys.timezone}} for valid settings.
 }
-\examples{
+\examples{\donttest{
 (z <- Sys.time())             # the current date, as class "POSIXct"
 
 Sys.time() - 3600             # an hour ago
@@ -218,6 +218,6 @@ Sys.time() - 3600             # an hour ago
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT
 format(.leap.seconds)         # all 24 leapseconds in your timezone
 print(.leap.seconds, tz="PST8PDT")  # and in Seattle's
-}
+}}
 \keyword{utilities}
 \keyword{chron}

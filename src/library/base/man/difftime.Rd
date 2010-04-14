@@ -108,7 +108,7 @@ as.difftime(tim, format = "\%X", units = "auto")
 \seealso{
   \code{\link{DateTimeClasses}}.
 }
-\examples{
+\examples{\donttest{
 (z <- Sys.time() - 3600)
 Sys.time() - z                # just over 3600 seconds.
 
@@ -121,6 +121,6 @@ as.difftime(c("3:20", "23:15", "2:"), format= "\%H:\%M")# 3rd gives NA
 as.numeric(z, units="secs")
 as.numeric(z, units="hours")
 format(z)
-}
+}}
 \keyword{utilities}
 \keyword{chron}

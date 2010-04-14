@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51724)
+R version 2.12.0 Under development (unstable) (2010-04-14 r51728)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -14731,6 +14731,12 @@ Standard deviations:
 1.5748783 0.9948694 0.5971291 0.4164494 
 
  4  variables and  50 observations.
+> 
+> ## NA-handling
+> USArrests[1, 2] <- NA
+> pc.cr <- princomp(~ Murder + Assault + UrbanPop,
++                   data = USArrests, na.action=na.exclude, cor = TRUE)
+> 
 > 
 > 
 > cleanEx()

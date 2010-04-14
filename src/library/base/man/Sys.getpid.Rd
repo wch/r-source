@@ -20,7 +20,7 @@ Sys.getpid()
   An integer, usually an integer between 1 and 32767 under
   Unix-alikes and a small positive integer under Windows.
 }
-\examples{
+\examples{\donttest{
 Sys.getpid()
-}
+}}
 \keyword{utilities}

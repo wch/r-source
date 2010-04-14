@@ -44,6 +44,6 @@
 
 \examples{
 round(.leap.seconds + 1000, "hour")
-trunc(Sys.time(), "day")
+\donttest{trunc(Sys.time(), "day")}
 }
 \keyword{chron}

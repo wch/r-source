@@ -249,7 +249,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
 
 \seealso{\code{\link{runif}}, \code{\link{rnorm}}, \ldots.}
 %       this is ./Uniform.Rd
-\examples{
+\examples{\donttest{
 require(stats)
 
 ## the default random seed is 626 integers, so only print a few
@@ -290,6 +290,6 @@ RNGkind(ok[1])
 sum(duplicated(runif(1e6))) # around 110 for default generator
 ## and we would expect about almost sure duplicates beyond about
 qbirthday(1-1e-6, classes=2e9) # 235,000
-}
+}}
 \keyword{distribution}
 \keyword{sysdata}

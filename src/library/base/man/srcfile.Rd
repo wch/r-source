@@ -118,14 +118,14 @@ srcref(srcfile, lloc)
 }
 \author{Duncan Murdoch}
 
-\examples{
+\examples{\donttest{ # has timestamp
 src <- srcfile(system.file("DESCRIPTION", package = "base"))
 summary(src)
 getSrcLines(src, 1, 4)
 ref <- srcref(src, c(1, 1, 2, 1000))
 ref
 print(ref, useSource = FALSE)
-}
+}}
 
 \keyword{ debugging }
 \keyword{ utilities }

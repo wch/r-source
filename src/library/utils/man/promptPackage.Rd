@@ -51,10 +51,10 @@ promptPackage(package, lib.loc = NULL, filename = NULL,
   \code{final = TRUE} is certainly less work).
 }
 \seealso{\code{\link{prompt}}}
-\examples{
+\examples{\donttest{
 filename <- tempfile()
 promptPackage("utils", filename = filename)
 file.show(filename)
 unlink(filename)
-}
+}}
 \keyword{documentation}

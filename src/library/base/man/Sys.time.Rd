@@ -44,7 +44,7 @@ Sys.Date()
 
   \code{\link{Sys.timezone}}.
 }
-\examples{
+\examples{\donttest{
 Sys.time()
 ## print with possibly greater accuracy:
 op <- options(digits.secs=6)
@@ -55,6 +55,6 @@ options(op)
 format(Sys.time(), "\%a \%b \%d \%X \%Y")
 
 Sys.Date()
-}
+}}
 \keyword{utilities}
 \keyword{chron}
