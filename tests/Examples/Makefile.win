@@ -14,7 +14,6 @@ all: test-Examples-Base
 
 test-Examples: test-Examples-Base
 
-## Used to collate examples in LC_ALL
 test-Examples-Base:
 	@$(ECHO) "tools::testInstalledPackages(scope='base', types='examples')" | $(R_EXE)
 

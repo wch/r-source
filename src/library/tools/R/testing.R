@@ -18,8 +18,11 @@
 
 massageExamples <- function(pkg, files, outFile = stdout(), addTiming = FALSE)
 {
-    if(file_test("-d", files[1L]))
+    if(file_test("-d", files[1L])) {
+        old <- Sys.setlocale("LC_COLLATE", "C")
         files <- sort(Sys.glob(file.path(files, "*.R")))
+        Sys.setlocale("LC_COLLATE", old)
+    }
 
     if(is.character(outFile)) {
         out <- file(outFile, "wt")
@@ -122,15 +125,19 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE)
         ## regularize fancy quotes.
         txt <- gsub("(\xe2\x80\x98|\xe2\x80\x99)", "'", txt,
                       perl = TRUE, useBytes = TRUE)
-        if(.Platform$OS.type == "windows") # not entirely safe ...
+        if(.Platform$OS.type == "windows") {
+            ## not entirely safe ...
             txt <- gsub("(\x93|\x94)", "'", txt, perl = TRUE, useBytes = TRUE)
+            txt <- txt[!grepl('options(pager = "console")', txt,
+                              fixed = TRUE, useBytes = TRUE)]
+        }
         pat <- '(^Time |^Loading required package|^Package [A-Za-z][A-Za-z0-9]+ loaded|^<(environment|promise|pointer): )'
         txt[!grepl(pat, txt, perl = TRUE, useBytes = TRUE)]
     }
     clean2 <- function(txt)
     {
         eoh <- grep("^> options\\(warn = 1\\)$", txt)
-        if(length(eoh)) txt[-(1:eoh[1])] else txt
+        if(length(eoh)) txt[-(1L:eoh[1L])] else txt
     }
 
     left <- clean(readLines(from))
