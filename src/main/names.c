@@ -895,7 +895,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"terms.formula",do_termsform,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"update.formula",do_updateform,0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"model.frame",	do_modelframe,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
-{"model.matrix",do_modelmatrix,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"model.matrix",do_modelmatrix,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"D",		do_D,		0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"deriv.default",do_deriv,	0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
