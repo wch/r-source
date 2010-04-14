@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2010-04-10 08:20+0100\n"
-"PO-Revision-Date: 2009-10-09 12:46+0100\n"
+"PO-Revision-Date: 2010-04-13 13:35+0100\n"
 "Last-Translator: Pablo Emilio Verde <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
 "MIME-Version: 1.0\n"
@@ -433,7 +433,7 @@ msgstr "Imposible redireccionar la entrada"
 
 #: src/gnuwin32/run.c:311
 msgid "Child process not responding.  R will terminate it."
-msgstr ""
+msgstr "El proceso hijo no responde. R lo dará por terminado."
 
 #: src/gnuwin32/run.c:354
 #, c-format
@@ -860,6 +860,8 @@ msgid ""
 "values must be length %d,\n"
 " but FUN(X[[%d]]) result is length %d"
 msgstr ""
+"Los valores deben ser de longitud %d, \n"
+"pero el resultado FUN(X [[% d]]) es la longitud %d "
 
 #: src/main/apply.c:156
 #, c-format
@@ -867,6 +869,8 @@ msgid ""
 "values must be type '%s',\n"
 " but FUN(X[[%d]]) result is type '%s'"
 msgstr ""
+"valores deben ser del tipo '%s',\n"
+"pero el resultado FUN(X[[%d]])  es del tipo  '%s'"
 
 #: src/main/apply.c:174
 #, fuzzy, c-format
@@ -1399,7 +1403,7 @@ msgstr "'...' usado en un contexto incorrecto"
 
 #: src/main/builtin.c:901
 msgid "'EXPR' is missing"
-msgstr ""
+msgstr "'EXPR' esta perdida"
 
 #: src/main/builtin.c:905
 #, fuzzy
@@ -1581,7 +1585,7 @@ msgstr "%s() aplicado a un objeto que no es (lista o vector) de tipo '%s"
 #: src/main/coerce.c:2187 src/main/dotcode.c:764 src/main/dotcode.c:807
 #: src/main/dotcode.c:1631
 msgid "'name' is missing"
-msgstr ""
+msgstr "nombre esta perdido"
 
 #: src/main/coerce.c:2194
 msgid "first argument must be a character string"
@@ -3191,7 +3195,7 @@ msgstr "codificación '%s' no soportada"
 #: src/main/envir.c:3491
 #, c-format
 msgid "embedded nul in string: '%s'"
-msgstr ""
+msgstr "nul incrustado en la cadena: '% s' \""
 
 #: src/main/errors.c:181 src/main/errors.c:218
 msgid "interrupts suspended; signal ignored"
@@ -3486,7 +3490,7 @@ msgstr "elemento %d está vacío"
 #: src/main/eval.c:1581
 #, c-format
 msgid "'%s' is missing"
-msgstr ""
+msgstr "%s' esta perdido"
 
 #: src/main/eval.c:1713
 msgid "invalid formal argument list for \"function\""
@@ -4687,7 +4691,7 @@ msgstr ""
 #: src/main/objects.c:1236
 #, c-format
 msgid "object returned as generic function \"%s\" doesn't appear to be one"
-msgstr ""
+msgstr "no parece ser un objecto retornado como funcion generica \"%s\""
 
 #: src/main/objects.c:1334
 msgid "invalid primitive operation given for dispatch"
@@ -6521,7 +6525,7 @@ msgstr ""
 
 #: src/main/source.c:204
 msgid "coercion of 'text' to character was unsuccessful"
-msgstr ""
+msgstr "coacción de \"texto \" a carácteres  no tuvo éxito"
 
 #: src/main/source.c:220
 #, fuzzy, c-format
@@ -6872,7 +6876,7 @@ msgstr "argumento 'logarithm' debe ser lógico"
 
 #: src/main/summary.c:907
 msgid "no input has determined the number of cases"
-msgstr ""
+msgstr "se ha determinado el número de casos sin entrada"
 
 #: src/main/summary.c:1010
 msgid "not all arguments have the same length"
@@ -7098,7 +7102,7 @@ msgstr[1] "%d argumentos dados a '%s', que requeiren 1 o 2"
 #: src/main/util.c:440
 #, c-format
 msgid "supplied argument name '%s' does not match '%s'"
-msgstr ""
+msgstr "nombre de argumento suministrado '%s' no coincide '%s'"
 
 #: src/main/util.c:450
 #, fuzzy, c-format
@@ -7387,7 +7391,7 @@ msgstr "conectado a '%s' en el puerto %d."
 #: src/modules/internet/nanohttp.c:1131
 #, c-format
 msgid "unable to connect to '%s' on port %d."
-msgstr "no fue posible conectarse a '%s' en el pueto %d."
+msgstr "no fue posible conectarse a '%s' en el puerto %d."
 
 #: src/modules/internet/nanohttp.c:1434
 #, c-format
@@ -7942,12 +7946,12 @@ msgstr "falla de apertura en %s"
 #: src/nmath/nmath.h:141
 #, c-format
 msgid "full precision may not have been achieved in '%s'\n"
-msgstr ""
+msgstr "no se han podido alcanzar precisión absoluta en '%s' \n"
 
 #: src/nmath/nmath.h:144
 #, c-format
 msgid "underflow occurred in '%s'\n"
-msgstr ""
+msgstr "se produjo un desbordamiento en '%s' \n"
 
 #: src/nmath/pnchisq.c:233
 #, c-format
@@ -8170,6 +8174,27 @@ msgstr "módulo X11 no puede ser cargado"
 msgid "X11 is not available"
 msgstr "X11 no está disponible"
 
+#, fuzzy
+#~ msgid "first argument must be a named list"
+#~ msgstr "el primer argumento debe ser una lista"
+
+#, fuzzy
+#~ msgid "names(x) must be valid character(length(x))."
+#~ msgstr "'names' debe ser un vector de caracteres"
+
+#, fuzzy
+#~ msgid "'%s' must be an environment"
+#~ msgstr "'enclos' debe ser un entorno"
+
+#, fuzzy
+#~ msgid "invalid '%s' argument: must be NULL or environment"
+#~ msgstr "el argumento 'env' debe ser un ambiente"
+
+#~ msgid "mixing Unicode and octal/hex escapes in a string is not allowed"
+#~ msgstr ""
+#~ "mesclar escapes Unicode y octal / hexadecimal en una cadena no está "
+#~ "permitido"
+
 #~ msgid "directory/folder path name too long"
 #~ msgstr "nombre del directorio/carpeta demasiado largo"
 
@@ -8389,9 +8414,6 @@ msgstr "X11 no está disponible"
 #, fuzzy
 #~ msgid "invalid input in wtransChar"
 #~ msgstr "entrada UTF-8 inválida en readChar()"
-
-#~ msgid "first argument must be a list"
-#~ msgstr "el primer argumento debe ser una lista"
 
 #~ msgid "second argument must be a list"
 #~ msgstr "el segundo argumento debe ser una lista"
