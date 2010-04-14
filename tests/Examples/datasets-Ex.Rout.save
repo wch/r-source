@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51721)
+R version 2.12.0 Under development (unstable) (2010-04-14 r51724)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -78,6 +78,9 @@ Type 'q()' to quit R.
 > 
 > ### ** Examples
 > 
+> ## Don't show: 
+> options(show.nls.convergence=FALSE)
+> ## End Don't show
 > require(stats)
 > # simplest form of fitting a first-order model to these data
 > fm1 <- nls(demand ~ A*(1-exp(-exp(lrc)*Time)), data = BOD,
@@ -92,9 +95,6 @@ Nonlinear regression model
       A     lrc 
 19.1426 -0.6328 
  residual sum-of-squares: 25.99
-
-Number of iterations to convergence: 4 
-Achieved convergence tolerance: 3.588e-07 
 > # using the plinear algorithm
 > fm2 <- nls(demand ~ (1-exp(-exp(lrc)*Time)), data = BOD,
 +    start = c(lrc = log(.35)), algorithm = "plinear", trace = TRUE)
@@ -117,9 +117,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 2.549 on 4 degrees of freedom
 
-Number of iterations to convergence: 0 
-Achieved convergence tolerance: 6.473e-07 
-
 > 
 > 
 > 
@@ -137,6 +134,9 @@ Achieved convergence tolerance: 6.473e-07
 > ### ** Examples
 > 
 > require(stats); require(graphics)
+> ## Don't show: 
+> options(show.nls.convergence=FALSE)
+> ## End Don't show
 > coplot(weight ~ Time | Chick, data = ChickWeight,
 +     type = "b", show.given = FALSE)
 > ## fit a representative chick
@@ -156,9 +156,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 2.919 on 9 degrees of freedom
 
-Number of iterations to convergence: 0 
-Achieved convergence tolerance: 7.038e-07 
-
 > 
 > 
 > 
@@ -176,6 +173,9 @@ Achieved convergence tolerance: 7.038e-07
 > ### ** Examples
 > 
 > require(stats); require(graphics)
+> ## Don't show: 
+> options(show.nls.convergence=FALSE)
+> ## End Don't show
 > coplot(density ~ conc | Run, data = DNase,
 +        show.given = FALSE, type = "b")
 > coplot(density ~ log(conc) | Run, data = DNase,
@@ -200,9 +200,6 @@ scal  1.062579   0.056996  18.643 3.16e-10 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.01981 on 12 degrees of freedom
-
-Number of iterations to convergence: 0 
-Achieved convergence tolerance: 2.517e-07 
 
 > anova(fm1, fm2)
 Analysis of Variance Table
@@ -775,6 +772,9 @@ Cumulative Var   0.147   0.285   0.384   0.471   0.503
 > ### ** Examples
 > 
 > require(stats)
+> ## Don't show: 
+> options(show.nls.convergence=FALSE)
+> ## End Don't show
 > fm1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2),
 +            data = Indometh, subset = Subject == 1)
 > summary(fm1)
@@ -791,9 +791,6 @@ lrc2  -1.7878     0.7871  -2.271  0.05737 .
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.04103 on 7 degrees of freedom
-
-Number of iterations to convergence: 0 
-Achieved convergence tolerance: 4.216e-06 
 
 > 
 > 
@@ -928,6 +925,9 @@ F-statistic: 5.756 on 4 and 45 DF,  p-value: 0.0007904
 > ### ** Examples
 > 
 > require(stats); require(graphics)
+> ## Don't show: 
+> options(show.nls.convergence=FALSE)
+> ## End Don't show
 > plot(height ~ age, data = Loblolly, subset = Seed == 329,
 +      xlab = "Tree age (yr)", las = 1,
 +      ylab = "Tree height (ft)",
@@ -947,9 +947,6 @@ lrc   -3.2176     0.1386 -23.218 0.000175 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.7493 on 3 degrees of freedom
-
-Number of iterations to convergence: 0 
-Achieved convergence tolerance: 3.877e-07 
 
 > age <- seq(0, 30, length.out = 101)
 > lines(age, predict(fm1, list(age = age)))
@@ -1160,6 +1157,9 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### ** Examples
 > 
 > require(stats); require(graphics)
+> ## Don't show: 
+> options(show.nls.convergence=FALSE)
+> ## End Don't show
 > plot(rate ~ conc, data = Puromycin, las = 1,
 +      xlab = "Substrate concentration (ppm)",
 +      ylab = "Reaction velocity (counts/min/min)",
@@ -1186,9 +1186,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 10.93 on 10 degrees of freedom
 
-Number of iterations to convergence: 5 
-Achieved convergence tolerance: 8.798e-06 
-
 > summary(fm2)
 
 Formula: rate ~ Vm * conc/(K + conc)
@@ -1201,9 +1198,6 @@ K  4.771e-02  7.782e-03   6.131 0.000173 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 9.773 on 9 degrees of freedom
-
-Number of iterations to convergence: 5 
-Achieved convergence tolerance: 4.473e-06 
 
 > ## add fitted lines to the plot
 > conc <- seq(0, 1.2, length.out = 101)
@@ -1232,9 +1226,6 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 Residual standard error: 10.93 on 10 degrees of freedom
 
-Number of iterations to convergence: 0 
-Achieved convergence tolerance: 1.937e-06 
-
 > 
 > 
 > 
@@ -1252,6 +1243,9 @@ Achieved convergence tolerance: 1.937e-06
 > ### ** Examples
 > 
 > require(stats); require(graphics)
+> ## Don't show: 
+> options(show.nls.convergence=FALSE)
+> ## End Don't show
 > coplot(conc ~ Time | Subject, data = Theoph, show.given = FALSE)
 > Theoph.4 <- subset(Theoph, Subject == 4)
 > fm1 <- nls(conc ~ SSfol(Dose, Time, lKe, lKa, lCl),
@@ -1269,9 +1263,6 @@ lCl  -3.2861     0.1448 -22.695 1.51e-08 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 0.8465 on 8 degrees of freedom
-
-Number of iterations to convergence: 7 
-Achieved convergence tolerance: 2.969e-06 
 
 > plot(conc ~ Time, data = Theoph.4,
 +      xlab = "Time since drug administration (hr)",
@@ -3580,6 +3571,9 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### ** Examples
 > 
 > require(stats); require(graphics)
+> ## Don't show: 
+> options(show.nls.convergence=FALSE)
+> ## End Don't show
 > coplot(uptake ~ conc | Plant, data = CO2, show.given = FALSE, type = "b")
 > ## fit the data for the first plant
 > fm1 <- nls(uptake ~ SSasymp(conc, Asym, lrc, c0),
@@ -3597,9 +3591,6 @@ c0    -4.3806     0.2042 -21.457 2.79e-05 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 1.663 on 4 degrees of freedom
-
-Number of iterations to convergence: 0 
-Achieved convergence tolerance: 1.667e-06 
 
 > ## fit each plant separately
 > fmlist <- list()
@@ -3623,7 +3614,7 @@ c0    -4.591566  -4.466157 -5.064579 -4.560851   -3.465158 -5.142256
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.575 0.127 5.704 0 0 
+Time elapsed:  6.751 0.186 7.118 0 0 
 > grDevices::dev.off()
 null device 
           1 

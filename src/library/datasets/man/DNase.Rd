@@ -40,6 +40,7 @@
 }
 \examples{
 require(stats); require(graphics)
+\testonly{options(show.nls.convergence=FALSE)}
 coplot(density ~ conc | Run, data = DNase,
        show.given = FALSE, type = "b")
 coplot(density ~ log(conc) | Run, data = DNase,

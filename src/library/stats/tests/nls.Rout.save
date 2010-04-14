@@ -1,6 +1,6 @@
 
-R version 2.10.0 Under development (unstable) (2009-08-06 r49081)
-Copyright (C) 2009 The R Foundation for Statistical Computing
+R version 2.12.0 Under development (unstable) (2010-04-14 r51724)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -37,6 +37,7 @@ Type 'q()' to quit R.
 > library(stats)
 > options(digits=5) # to avoid trivial printed differences
 > options(show.signif.stars=FALSE) # avoid fancy quotes in o/p
+> options(show.nls.convergence=FALSE) # avoid non-diffable output
 > postscript("nls-test.ps")
 > 
 > ## selfStart.default() w/ no parameters:
@@ -141,9 +142,6 @@ Correlation of Parameter Estimates:
   a    
 b -0.89
 
-Number of iterations to convergence: 1 
-Achieved convergence tolerance: 2.75e-06 
-
 > stopifnot(all.equal(residuals(fit), residuals(fit0), 1e5,
 +                     check.attributes = FALSE))
 > stopifnot(df.residual(fit) == df.residual(fit0))
@@ -195,9 +193,6 @@ scal   1.0385     0.0304    34.1  4.2e-14
 
 Residual standard error: 0.0355 on 13 degrees of freedom
 
-Number of iterations to convergence: 2 
-Achieved convergence tolerance: 2.43e-06 
-
 > 
 > ## directly
 > fm2 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
@@ -214,9 +209,6 @@ xmid   1.4731     0.0947    15.6  8.8e-10
 scal   1.0385     0.0304    34.1  4.2e-14
 
 Residual standard error: 0.0355 on 13 degrees of freedom
-
-Number of iterations to convergence: 6 
-Achieved convergence tolerance: 1.04e-07 
 
 > stopifnot(all.equal(coef(summary(fm2)), coef(summary(fm1)), tol = 1e-6))
 > stopifnot(all.equal(residuals(fm2), residuals(fm1), tol = 1e-5))
@@ -247,9 +239,6 @@ xmid   1.4731     0.0947    15.6  8.8e-10
 scal   1.0385     0.0304    34.1  4.2e-14
 
 Residual standard error: 0.0355 on 13 degrees of freedom
-
-Number of iterations to convergence: 6 
-Achieved convergence tolerance: 1.73e-07 
 
 > stopifnot(all.equal(coef(summary(fm3)), coef(summary(fm1)), tol = 1e-6))
 > ft <- with(DNase1, density - fitted(fm3)/sqrt(wts))
@@ -284,9 +273,6 @@ scal   1.0385     0.0304    34.1  4.2e-14
 .lin   2.3350     0.0966    24.2  3.5e-12
 
 Residual standard error: 0.0355 on 13 degrees of freedom
-
-Number of iterations to convergence: 5 
-Achieved convergence tolerance: 3.73e-08 
 
 > cf <- coef(summary(fm4))[c(3,1,2), ]
 > rownames(cf)[2] <- "Asym"
@@ -376,9 +362,6 @@ Nonlinear regression model
     b 
 0.695 
  residual sum-of-squares: 2.39
-
-Number of iterations to convergence: 4 
-Achieved convergence tolerance: 2.80e-07 
 Waiting for profiling to be done...
    2.5%   97.5% 
 0.68704 0.70281 
@@ -399,9 +382,6 @@ Nonlinear regression model
     a     b 
 0.502 0.724 
  residual sum-of-squares: 2.51
-
-Number of iterations to convergence: 4 
-Achieved convergence tolerance: 3.64e-06 
 Waiting for profiling to be done...
      2.5%   97.5%
 a 0.49494 0.50893
@@ -424,9 +404,6 @@ Nonlinear regression model
      a      b   logc 
  0.558  0.603 -0.176 
  residual sum-of-squares: 2.44
-
-Number of iterations to convergence: 5 
-Achieved convergence tolerance: 3.16e-06 
 Waiting for profiling to be done...
          2.5%   97.5%
 a     0.35006 0.66057
@@ -605,9 +582,6 @@ Nonlinear regression model
    a    b 
 1.98 2.00 
  residual sum-of-squares: 26.5
-
-Number of iterations to convergence: 6 
-Achieved convergence tolerance: 7.17e-07 
 > ## failed to find n in 2.2.x
 > ## found wrong n in 2.3.x
 > ## finally worked in 2.4.0
@@ -639,9 +613,6 @@ sp1 1.00e+00   4.47e-03   224.0   <2e-16
 sp2 9.99e-01   5.00e-03   199.8   <2e-16
 
 Residual standard error: 0.00205 on 96 degrees of freedom
-
-Number of iterations to convergence: 7 
-Achieved convergence tolerance: 2.08e-06 
 
 > 
 > ## didn't work with port in 2.4.1

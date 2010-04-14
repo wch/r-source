@@ -1,0 +1,881 @@
+
+R version 2.12.0 Under development (unstable) (2010-04-14 r51724)
+Copyright (C) 2010 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "tools"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('tools')
+> 
+> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("HTMLheader")
+> ### * HTMLheader
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: HTMLheader
+> ### Title: Generate a standard HTML header for R help.
+> ### Aliases: HTMLheader
+> ### Keywords: utilities documentation
+> 
+> ### ** Examples
+> 
+> cat(HTMLheader("This is a sample header"), sep="\n")
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: This is a sample header</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/doc/html/R.css">
+</head><body>
+<h1> This is a sample header
+<img class="toplogo" src="/doc/html/logo.jpg" alt="[R logo]"></h1>
+</h1>
+<hr>
+<div align="center">
+<a href="/doc/html/index.html"><img src="/doc/html/up.jpg" alt="[Top]" width="30" height="30" border="0"></a>
+</div>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("Rd2HTML")
+> ### * Rd2HTML
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Rd2HTML
+> ### Title: Rd Converters
+> ### Aliases: Rd2txt Rd2HTML Rd2ex Rd2latex
+> ### Keywords: documentation
+> 
+> ### ** Examples
+> cleanEx()
+> nameEx("Rdutils")
+> ### * Rdutils
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Rdutils
+> ### Title: Rd Utilities
+> ### Aliases: Rd_db
+> ### Keywords: utilities documentation
+> 
+> ### ** Examples
+> 
+> ## Build the Rd db for the (installed) base package.
+> db <- Rd_db("base")
+> 
+> ## Keyword metadata per Rd object.
+> keywords <- lapply(db, tools:::.Rd_get_metadata, "keyword")
+> ## Tabulate the keyword entries.
+> kw_table <- sort(table(unlist(keywords)))
+> ## The 5 most frequent ones:
+> rev(kw_table)[1 : 5]
+
+  utilities programming       array        file       manip 
+         75          71          41          40          33 
+> ## The "most informative" ones:
+> kw_table[kw_table == 1]
+
+complex  device package 
+      1       1       1 
+> 
+> ## Concept metadata per Rd file.
+> concepts <- lapply(db, tools:::.Rd_get_metadata, "concept")
+> ## How many files already have \concept metadata?
+> sum(sapply(concepts, length) > 0)
+[1] 28
+> ## How many concept entries altogether?
+> length(unlist(concepts))
+[1] 59
+> 
+> 
+> 
+> cleanEx()
+> nameEx("charsets")
+> ### * charsets
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: charsets
+> ### Title: Conversion Tables between Character Sets
+> ### Aliases: Adobe_glyphs charset_to_Unicode
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> ## find Adobe names for ISOLatin2 chars.
+> latin2 <- charset_to_Unicode[, "ISOLatin2"]
+> aUnicode <- as.numeric(paste("0x", Adobe_glyphs$unicode, sep=""))
+> keep <- aUnicode %in% latin2
+> aUnicode <- aUnicode[keep]
+> aAdobe <- Adobe_glyphs[keep, 1]
+> ## first match
+> aLatin2 <- aAdobe[match(latin2, aUnicode)]
+> ## all matches
+> bLatin2 <- lapply(1:256, function(x) aAdobe[aUnicode == latin2[x]])
+> format(bLatin2, justify="none")
+  [1] ""                          "controlSTX"               
+  [3] "controlSOT"                "controlETX"               
+  [5] "controlEOT"                "controlENQ"               
+  [7] "controlACK"                "controlBEL"               
+  [9] "controlBS"                 "controlHT"                
+ [11] "controlLF"                 "controlVT"                
+ [13] "controlFF"                 "controlCR"                
+ [15] "controlSO"                 "controlSI"                
+ [17] "controlDLE"                "controlDC1"               
+ [19] "controlDC2"                "controlDC3"               
+ [21] "controlDC4"                "controlNAK"               
+ [23] "controlSYN"                "controlETB"               
+ [25] "controlCAN"                "controlEM"                
+ [27] "controlSUB"                "controlESC"               
+ [29] "controlFS"                 "controlGS"                
+ [31] "controlRS"                 "controlUS"                
+ [33] "space, spacehackarabic"    "exclam"                   
+ [35] "quotedbl"                  "numbersign"               
+ [37] "dollar"                    "percent"                  
+ [39] "ampersand"                 "quotesingle"              
+ [41] "parenleft"                 "parenright"               
+ [43] "asterisk"                  "plus"                     
+ [45] "comma"                     "hyphen"                   
+ [47] "period"                    "slash"                    
+ [49] "zero"                      "one"                      
+ [51] "two"                       "three"                    
+ [53] "four"                      "five"                     
+ [55] "six"                       "seven"                    
+ [57] "eight"                     "nine"                     
+ [59] "colon"                     "semicolon"                
+ [61] "less"                      "equal"                    
+ [63] "greater"                   "question"                 
+ [65] "at"                        "A"                        
+ [67] "B"                         "C"                        
+ [69] "D"                         "E"                        
+ [71] "F"                         "G"                        
+ [73] "H"                         "I"                        
+ [75] "J"                         "K"                        
+ [77] "L"                         "M"                        
+ [79] "N"                         "O"                        
+ [81] "P"                         "Q"                        
+ [83] "R"                         "S"                        
+ [85] "T"                         "U"                        
+ [87] "V"                         "W"                        
+ [89] "X"                         "Y"                        
+ [91] "Z"                         "bracketleft"              
+ [93] "backslash"                 "bracketright"             
+ [95] "asciicircum"               "underscore"               
+ [97] "grave"                     "a"                        
+ [99] "b"                         "c"                        
+[101] "d"                         "e"                        
+[103] "f"                         "g"                        
+[105] "h"                         "i"                        
+[107] "j"                         "k"                        
+[109] "l"                         "m"                        
+[111] "n"                         "o"                        
+[113] "p"                         "q"                        
+[115] "r"                         "s"                        
+[117] "t"                         "u"                        
+[119] "v"                         "w"                        
+[121] "x"                         "y"                        
+[123] "z"                         "braceleft"                
+[125] "bar, verticalbar"          "braceright"               
+[127] "asciitilde"                "controlDEL"               
+[129] ""                          ""                         
+[131] ""                          ""                         
+[133] ""                          ""                         
+[135] ""                          ""                         
+[137] ""                          ""                         
+[139] ""                          ""                         
+[141] ""                          ""                         
+[143] ""                          ""                         
+[145] ""                          ""                         
+[147] ""                          ""                         
+[149] ""                          ""                         
+[151] ""                          ""                         
+[153] ""                          ""                         
+[155] ""                          ""                         
+[157] ""                          ""                         
+[159] ""                          ""                         
+[161] "nbspace, nonbreakingspace" "Aogonek"                  
+[163] "breve"                     "Lslash"                   
+[165] "currency"                  "Lcaron"                   
+[167] "Sacute"                    "section"                  
+[169] "dieresis"                  "Scaron"                   
+[171] "Scedilla"                  "Tcaron"                   
+[173] "Zacute"                    "sfthyphen, softhyphen"    
+[175] "Zcaron"                    "Zdot, Zdotaccent"         
+[177] "degree"                    "aogonek"                  
+[179] "ogonek"                    "lslash"                   
+[181] "acute"                     "lcaron"                   
+[183] "sacute"                    "caron"                    
+[185] "cedilla"                   "scaron"                   
+[187] "scedilla"                  "tcaron"                   
+[189] "zacute"                    "hungarumlaut"             
+[191] "zcaron"                    "zdot, zdotaccent"         
+[193] "Racute"                    "Aacute"                   
+[195] "Acircumflex"               "Abreve"                   
+[197] "Adieresis"                 "Lacute"                   
+[199] "Cacute"                    "Ccedilla"                 
+[201] "Ccaron"                    "Eacute"                   
+[203] "Eogonek"                   "Edieresis"                
+[205] "Ecaron"                    "Iacute"                   
+[207] "Icircumflex"               "Dcaron"                   
+[209] "Dcroat, Dslash"            "Nacute"                   
+[211] "Ncaron"                    "Oacute"                   
+[213] "Ocircumflex"               "Odblacute, Ohungarumlaut" 
+[215] "Odieresis"                 "multiply"                 
+[217] "Rcaron"                    "Uring"                    
+[219] "Uacute"                    "Udblacute, Uhungarumlaut" 
+[221] "Udieresis"                 "Yacute"                   
+[223] "Tcedilla, Tcommaaccent"    "germandbls"               
+[225] "racute"                    "aacute"                   
+[227] "acircumflex"               "abreve"                   
+[229] "adieresis"                 "lacute"                   
+[231] "cacute"                    "ccedilla"                 
+[233] "ccaron"                    "eacute"                   
+[235] "eogonek"                   "edieresis"                
+[237] "ecaron"                    "iacute"                   
+[239] "icircumflex"               "dcaron"                   
+[241] "dcroat, dmacron"           "nacute"                   
+[243] "ncaron"                    "oacute"                   
+[245] "ocircumflex"               "odblacute, ohungarumlaut" 
+[247] "odieresis"                 "divide"                   
+[249] "rcaron"                    "uring"                    
+[251] "uacute"                    "udblacute, uhungarumlaut" 
+[253] "udieresis"                 "yacute"                   
+[255] "tcedilla, tcommaaccent"    "dotaccent"                
+> 
+> 
+> 
+> cleanEx()
+> nameEx("checkFF")
+> ### * checkFF
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: checkFF
+> ### Title: Check Foreign Function Calls
+> ### Aliases: checkFF print.checkFF
+> ### Keywords: programming utilities
+> 
+> ### ** Examples
+> 
+> checkFF(package = "stats", verbose = TRUE)
+.C(R_uni_pacf, ...): Called with symbol
+.Call(R_ARMAtoMA, ...): Called with symbol
+.C("HoltWinters", ...): OK
+.Call("KalmanFore", ...): OK
+.Call("KalmanLike", ...): OK
+.Call("KalmanLike", ...): OK
+.Call("KalmanSmooth", ...): OK
+.C("R_pp_sum", ...): OK
+.Call(R_KalmanLike, ...): Called with symbol
+.C(R_acf, ...): Called with symbol
+.Fortran(R_eureka, ...): Called with symbol
+.C(R_pansari, ...): Called with symbol
+.C(R_qansari, ...): Called with symbol
+.C("R_approx", ...): OK
+.C("R_approxtest", ...): OK
+.C("R_approxfun", ...): OK
+.C(R_burg, ...): Called with symbol
+.C(R_multi_burg, ...): Called with symbol
+.Fortran(R_eureka, ...): Called with symbol
+.C(R_multi_yw, ...): Called with symbol
+.Call(R_TSconv, ...): Called with symbol
+.Call(R_getQ0, ...): Called with symbol
+.Call(R_ARIMA_Like, ...): Called with symbol
+.Call(R_ARIMA_transPars, ...): Called with symbol
+.Call(R_ARIMA_Like, ...): Called with symbol
+.Call(R_ARIMA_transPars, ...): Called with symbol
+.Call(R_ARIMA_CSS, ...): Called with symbol
+.Call(R_ARIMA_Invtrans, ...): Called with symbol
+.Call(R_ARIMA_transPars, ...): Called with symbol
+.Call(R_ARIMA_CSS, ...): Called with symbol
+.Call(R_ARIMA_Invtrans, ...): Called with symbol
+.Call(R_ARIMA_transPars, ...): Called with symbol
+.Call(R_ARIMA_Gradtrans, ...): Called with symbol
+.Call(R_ARIMA_undoPars, ...): Called with symbol
+.Call(R_ARIMA_transPars, ...): Called with symbol
+.Call(R_arma0fa, ...): Called with symbol
+.Call(R_setup_starma, ...): Called with symbol
+.Call(R_free_starma, ...): Called with symbol
+.Call(R_Invtrans, ...): Called with symbol
+.Call(R_Starma_method, ...): Called with symbol
+.Call(R_Gradtrans, ...): Called with symbol
+.Call(R_Dotrans, ...): Called with symbol
+.Call(R_set_trans, ...): Called with symbol
+.Call(R_get_s2, ...): Called with symbol
+.Call(R_get_resid, ...): Called with symbol
+.Call("binomial_dev_resids", ...): OK
+.C(R_band_phi4_bin, ...): Called with symbol
+.C(R_band_phi6_bin, ...): Called with symbol
+.C(R_band_den_bin, ...): Called with symbol
+.C(R_band_bcv_bin, ...): Called with symbol
+.C(R_band_den_bin, ...): Called with symbol
+.C(R_band_ucv_bin, ...): Called with symbol
+.C(R_band_den_bin, ...): Called with symbol
+.C(R_chisqsim, ...): Called with symbol
+.C(R_dblcen, ...): Called with symbol
+.C(R_dblcen, ...): Called with symbol
+.C("pkendall", ...): OK
+.C("prho", ...): OK
+.Call("R_cutree", ...): OK
+.C("massdist", ...): OK
+.C("R_intgrt_vec", ...): OK
+.C("R_distance", ...): OK
+.C("signrank_free", ...): OK
+.C("wilcox_free", ...): OK
+.C("filter1", ...): OK
+.C("filter2", ...): OK
+.C("find_interv_vec", ...): OK
+.C("fisher_sim", ...): OK
+.C("fexact", ...): OK
+.C("fexact", ...): OK
+.Fortran("dqrls", ...): OK
+.Fortran("hclust", ...): OK
+.Fortran("hcass2", ...): OK
+.External("call_dqags", ...): OK
+.External("call_dqagi", ...): OK
+.Call("R_isoreg", ...): OK
+.Fortran("kmns", ...): OK
+.C("kmeans_Lloyd", ...): OK
+.C("kmeans_MacQueen", ...): OK
+.C("psmirnov2x", ...): OK
+.C("pkolmogorov2x", ...): OK
+.C("pkstwo", ...): OK
+.C("BDRksmooth", ...): OK
+.C("tukeyline", ...): OK
+.Fortran("dqrls", ...): OK
+.Fortran("lminfl", ...): OK
+.Fortran("dqrls", ...): OK
+.C(R_loess_ifit, ...): Called with symbol
+.C("loglin", ...): OK
+.C("lowess", ...): OK
+.Fortran("dqrls", ...): OK
+.Call("logit_link", ...): OK
+.Call("logit_linkinv", ...): OK
+.Call("logit_mu_eta", ...): OK
+.Call(R_getQ0, ...): Called with symbol
+.C(R_d2x2xk, ...): Called with symbol
+.Call(R_port_ivset, ...): Called with symbol
+.Call(R_port_nlminb, ...): Called with symbol
+.Call(R_nls_iter, ...): Called with symbol
+.Call(R_port_ivset, ...): Called with symbol
+.Call(R_port_nlsb, ...): Called with symbol
+.Call(R_numeric_deriv, ...): Called with symbol
+.C(R_uni_pacf, ...): Called with symbol
+.Fortran(R_setppr, ...): Called with symbol
+.Fortran(R_smart, ...): Called with symbol
+.Fortran(R_pppred, ...): Called with symbol
+.C(R_loess_dfitse, ...): Called with symbol
+.C(R_loess_dfit, ...): Called with symbol
+.C(R_loess_ifit, ...): Called with symbol
+.C(R_loess_ise, ...): Called with symbol
+.C(R_artoma, ...): Called with symbol
+.Call(R_setup_starma, ...): Called with symbol
+.Call(R_free_starma, ...): Called with symbol
+.Call(R_Starma_method, ...): Called with symbol
+.Call(R_arma0fa, ...): Called with symbol
+.Call(R_arma0_kfore, ...): Called with symbol
+.Fortran(R_pppred, ...): Called with symbol
+.Fortran(R_bvalus, ...): Called with symbol
+.Call(R_nls_iter, ...): Called with symbol
+.C("signrank_free", ...): OK
+.C("wilcox_free", ...): OK
+.C("signrank_free", ...): OK
+.C("wilcox_free", ...): OK
+.Call("R_r2dtable", ...): OK
+.C(R_Trunmed, ...): Called with symbol
+.C(R_Srunmed, ...): Called with symbol
+.C(R_swilk, ...): Called with symbol
+.C(R_loess_raw, ...): Called with symbol
+.Fortran(R_lowesw, ...): Called with symbol
+.Fortran(R_lowesp, ...): Called with symbol
+.C(R_loess_raw, ...): Called with symbol
+.C(paste("Rsm", kind, sep = "_"), ...): Called with symbol
+.Fortran(R_qsbart, ...): Called with symbol
+.C("spline_coef", ...): OK
+.C("spline_eval", ...): OK
+.C("spline_coef", ...): OK
+.C("spline_eval", ...): OK
+.Fortran(R_stl, ...): Called with symbol
+.Fortran(R_setsmu, ...): Called with symbol
+.Fortran(R_supsmu, ...): Called with symbol
+> 
+> 
+> 
+> cleanEx()
+> nameEx("checkRdaFiles")
+> ### * checkRdaFiles
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: checkRdaFiles
+> ### Title: Report on Details of Saved Images or Re-saves them
+> ### Aliases: checkRdaFiles resaveRdaFiles
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> ## Not run: 
+> ##D ## from a package top-level source directory
+> ##D paths <- sort(Sys.glob(c("data/*.rda", "data/*.RData")))
+> ##D (res <- checkRdaFiles(paths))
+> ##D ## pick out some that may need attention
+> ##D bad <- is.na(res$ASCII) | res$ASCII | (res$size > 1e4 & res$compress == "none")
+> ##D res[bad, ]
+> ## End(Not run)
+> 
+> 
+> cleanEx()
+> nameEx("delimMatch")
+> ### * delimMatch
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: delimMatch
+> ### Title: Delimited Pattern Matching
+> ### Aliases: delimMatch
+> ### Keywords: character
+> 
+> ### ** Examples
+> 
+> x <- c("\\value{foo}", "function(bar)")
+> delimMatch(x)
+[1]  7 -1
+attr(,"match.length")
+[1]  5 -1
+> delimMatch(x, c("(", ")"))
+[1] -1  9
+attr(,"match.length")
+[1] -1  5
+> 
+> 
+> 
+> cleanEx()
+> nameEx("dependsOnPkgs")
+> ### * dependsOnPkgs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: dependsOnPkgs
+> ### Title: Find Reverse Dependencies
+> ### Aliases: dependsOnPkgs
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> ## there are few dependencies in a vanilla R installation
+> dependsOnPkgs("lattice")
+[1] "Matrix" "nlme"   "mgcv"  
+> 
+> 
+> 
+> cleanEx()
+> nameEx("encoded")
+> ### * encoded
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: encoded_text_to_latex
+> ### Title: Translate non-ASCII Text to LaTeX Escapes
+> ### Aliases: encoded_text_to_latex
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> x <- "fa\xE7ile"
+> encoded_text_to_latex(x, "latin1")
+[1] "fa{\\c c}ile"
+> ## Not run: 
+> ##D ## create a tex file to show the upper half of 8-bit charsets
+> ##D x <- rawToChar(as.raw(160:255), multiple=TRUE)
+> ##D (x <- matrix(x, ncol=16, byrow=TRUE))
+> ##D xx <- x
+> ##D xx[] <- encoded_text_to_latex(x, "latin1") # or latin2 or latin9
+> ##D xx <- apply(xx, 1, paste, collapse="&")
+> ##D con <- file("test-encoding.tex", "w")
+> ##D header <- c(
+> ##D "\\documentclass{article}",
+> ##D "\\usepackage[T1]{fontenc}",
+> ##D "\\usepackage{Rd}",
+> ##D "\\begin{document}",
+> ##D "\\HeaderA{test}{}{test}",
+> ##D "\\begin{Details}\relax",
+> ##D "\\Tabular{cccccccccccccccc}{")
+> ##D trailer <- c("}", "\\end{Details}", "\\end{document}")
+> ##D writeLines(header, con)
+> ##D writeLines(paste(xx, "\\", sep=""), con)
+> ##D writeLines(trailer, con)
+> ##D close(con)
+> ##D ## and some UTF_8 chars
+> ##D x <- intToUtf8(as.integer(
+> ##D     c(160:383,0x0192,0x02C6,0x02C7,0x02CA,0x02D8,
+> ##D       0x02D9, 0x02DD, 0x200C, 0x2018, 0x2019, 0x201C,
+> ##D       0x201D, 0x2020, 0x2022, 0x2026, 0x20AC)),
+> ##D                multiple=TRUE)
+> ##D x <- matrix(x, ncol=16, byrow=TRUE)
+> ##D xx <- x
+> ##D xx[] <- encoded_text_to_latex(x, "UTF-8")
+> ##D xx <- apply(xx, 1, paste, collapse="&")
+> ##D con <- file("test-utf8.tex", "w")
+> ##D writeLines(header, con)
+> ##D writeLines(paste(xx, "\\", sep=""), con)
+> ##D writeLines(trailer, con)
+> ##D close(con)
+> ## End(Not run)
+> 
+> 
+> cleanEx()
+> nameEx("fileutils")
+> ### * fileutils
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fileutils
+> ### Title: File Utilities
+> ### Aliases: file_ext file_path_as_absolute file_path_sans_ext
+> ###   list_files_with_exts list_files_with_type
+> ### Keywords: file
+> 
+> ### ** Examples
+> 
+> dir <- file.path(R.home(), "library", "stats")
+> list_files_with_exts(file.path(dir, "demo"), "R")
+[1] "R_HOME/library/stats/demo/glm.vr.R"
+[2] "R_HOME/library/stats/demo/lm.glm.R"
+[3] "R_HOME/library/stats/demo/nlm.R"   
+[4] "R_HOME/library/stats/demo/smooth.R"
+> list_files_with_type(file.path(dir, "demo"), "demo") # the same
+[1] "R_HOME/library/stats/demo/glm.vr.R"
+[2] "R_HOME/library/stats/demo/lm.glm.R"
+[3] "R_HOME/library/stats/demo/nlm.R"   
+[4] "R_HOME/library/stats/demo/smooth.R"
+> file_path_sans_ext(list.files(file.path(R.home("modules"))))
+[1] "R_X11"    "internet" "lapack"   "vfonts"  
+> 
+> 
+> 
+> cleanEx()
+> nameEx("getDepList")
+> ### * getDepList
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getDepList
+> ### Title: Functions to Retrieve Dependency Information
+> ### Aliases: getDepList pkgDepends
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> pkgDepends("tools", local = FALSE)
+$Depends
+character(0)
+
+$Installed
+character(0)
+
+$Found
+list()
+
+$NotFound
+character(0)
+
+$R
+character(0)
+
+attr(,"class")
+[1] "DependsList" "list"       
+> 
+> 
+> 
+> cleanEx()
+> nameEx("installFoundDepends")
+> ### * installFoundDepends
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: installFoundDepends
+> ### Title: A function to install unresolved dependencies
+> ### Aliases: installFoundDepends
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> ## Set up a temporary directory to install packages to
+> tmp <- tempfile()
+> dir.create(tmp)
+> 
+> pDL <- pkgDepends("tools",local=FALSE)
+> installFoundDepends(pDL$Found, destdir=tmp)
+NULL
+> 
+> 
+> 
+> cleanEx()
+> nameEx("makeLazyLoading")
+> ### * makeLazyLoading
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: makeLazyLoading
+> ### Title: Lazy Loading of Packages
+> ### Aliases: makeLazyLoading
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> ## set up package "splines" for lazy loading -- already done
+> ## Not run: 
+> ##D tools:::makeLazyLoading("splines")
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("md5sum")
+> ### * md5sum
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: md5sum
+> ### Title: Compute MD5 Checksums
+> ### Aliases: md5sum
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> md5sum(dir(R.home(), pattern="^COPY", full.names=TRUE))
+   R_HOME/COPYING 
+"eb723b61539feef013de476e68b5c50a" 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("readNEWS")
+> ### * readNEWS
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: readNEWS
+> ### Title: Read R's NEWS file or a similar one
+> ### Aliases: readNEWS checkNEWS
+> ### Keywords: file documentation
+> 
+> ### ** Examples
+> # Check the current NEWS file
+> 
+> stopifnot(checkNEWS())
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("showNonASCII")
+> ### * showNonASCII
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: showNonASCII
+> ### Title: Highlight non-ASCII characters
+> ### Aliases: showNonASCII
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> out <- c(
++ "fa\xE7ile test of showNonASCII():",
++ "\\details{",
++ "   This is a good line",
++ "   This has an \xfcmlaut in it.",
++ "   OK again.",
++ "}")
+> f <- tempfile()
+> cat(out, file = f, sep = "\n")
+> 
+> showNonASCII(readLines(f))
+1: fa<e7>ile test of showNonASCII():
+4:    This has an <fc>mlaut in it.
+> unlink(f)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("toHTML")
+> ### * toHTML
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: toHTML
+> ### Title: Display an object in HTML.
+> ### Aliases: toHTML toHTML.packageIQR toHTML.news_db
+> ### Keywords: utilities documentation
+> 
+> ### ** Examples
+> 
+> cat(toHTML(demo(package="base")), sep="\n")
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: R</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/doc/html/R.css">
+</head><body>
+<h1> R
+<img class="toplogo" src="/doc/html/logo.jpg" alt="[R logo]"></h1>
+</h1>
+<hr>
+<div align="center">
+<a href="/doc/html/index.html"><img src="/doc/html/up.jpg" alt="[Top]" width="30" height="30" border="0"></a>
+</div>
+<h2>Demos in package &lsquo;base&rsquo;</h2>
+<table cols="2" width="100%">
+<tr>
+ <td align="left" valign="top" width="10%">
+is.things
+ </td>
+ <td align="left" valign="top" width="90%">
+Explore some properties of R objects and is.FOO() functions. Not for newbies!
+ </td>
+</tr>
+
+<tr>
+ <td align="left" valign="top" width="10%">
+recursion
+ </td>
+ <td align="left" valign="top" width="90%">
+Using recursion for adaptive integration
+ </td>
+</tr>
+
+<tr>
+ <td align="left" valign="top" width="10%">
+scoping
+ </td>
+ <td align="left" valign="top" width="90%">
+An illustration of lexical scoping.
+ </td>
+</tr>
+
+</table>
+<p>
+</p>
+</body></html>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("undoc")
+> ### * undoc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: undoc
+> ### Title: Find Undocumented Objects
+> ### Aliases: undoc print.undoc
+> ### Keywords: documentation
+> 
+> ### ** Examples
+> 
+> undoc("tools")                  # Undocumented objects in 'tools'
+> 
+> 
+> 
+> cleanEx()
+> nameEx("vignetteDepends")
+> ### * vignetteDepends
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: vignetteDepends
+> ### Title: Retrieve Dependency Information for a Vignette
+> ### Aliases: vignetteDepends
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> gridEx <- system.file("doc", "grid.Snw", package = "grid")
+> vignetteDepends(gridEx)
+$Depends
+[1] "lattice"
+
+$Installed
+[1] "lattice"
+
+$Found
+list()
+
+$NotFound
+character(0)
+
+$R
+[1] "R (>= 2.11.0)"
+
+attr(,"class")
+[1] "DependsList" "list"       
+> 
+> 
+> 
+> cleanEx()
+> nameEx("writePACKAGES")
+> ### * writePACKAGES
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: write_PACKAGES
+> ### Title: Generate PACKAGES files
+> ### Aliases: write_PACKAGES
+> ### Keywords: file utilities
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D write_PACKAGES("c:/myFolder/myRepository")  # on Windows
+> ##D write_PACKAGES("/pub/RWin/bin/windows/contrib/2.9",
+> ##D                type="win.binary")  # on Linux
+> ## End(Not run)
+> 
+> 
+> cleanEx()
+> nameEx("xgettext")
+> ### * xgettext
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: xgettext
+> ### Title: Extract Translatable Messages from R Files in a Package
+> ### Aliases: xgettext xngettext xgettext2pot
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> ## Not run: 
+> ##D ## in a source-directory build of R:
+> ##D xgettext(file.path(R.home(), "src", "library", "splines"))
+> ## End(Not run)
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  8.881 0.139 9.038 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

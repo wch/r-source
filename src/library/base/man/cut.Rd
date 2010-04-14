@@ -78,8 +78,7 @@ cut(x, \dots)
   \code{\link{findInterval}()}.
 
   \code{\link{quantile}} for ways of choosing breaks of roughly equal
-  content (rather than length), \code{\link[Hmisc]{cut2}} in package
-  \pkg{Hmisc} for a canned way to form quantile groups.
+  content (rather than length).
 }
 \examples{
 Z <- stats::rnorm(10000)

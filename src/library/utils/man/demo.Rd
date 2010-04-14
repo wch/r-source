@@ -59,11 +59,13 @@ demo() # for attached packages
 ## All available demos:
 demo(package = .packages(all.available = TRUE))
 
+\donttest{
 ## Display a demo, pausing between pages
 demo(lm.glm, package="stats", ask=TRUE)
 
 ## Display it without pausing
 demo(lm.glm, package="stats", ask=FALSE)
+}
 
 \dontrun{
  ch <- "scoping"

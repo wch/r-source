@@ -38,6 +38,7 @@
 }
 \examples{
 require(stats); require(graphics)
+\testonly{options(show.nls.convergence=FALSE)}
 plot(height ~ age, data = Loblolly, subset = Seed == 329,
      xlab = "Tree age (yr)", las = 1,
      ylab = "Tree height (ft)",

@@ -16,7 +16,7 @@ R.home(component="home")
 \arguments{
   \item{component}{As well as \code{"home"} which gives the \R home
     directory, other known values are \code{"bin"}, \code{"doc"},
-    \code{"etc"} and \code{"share"} giving the paths to the
+    \code{"etc"}, \code{"modules"} and \code{"share"} giving the paths to the
     corresponding parts of an \R installation.}
 }
 \details{
@@ -35,5 +35,8 @@ R.home(component="home")
   particular component.  Normally the components are all subdirectories
   of the \R home directory, but this may not be the case in a Unix-like
   installation.
+
+  The return value for \code{"modules"} and on Windows \code{"bin"} is
+  to a sub-architecture-specific location.
 }
 \keyword{utilities}

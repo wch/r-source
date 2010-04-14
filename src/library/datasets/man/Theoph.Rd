@@ -61,6 +61,7 @@
 \seealso{\code{\link{SSfol}}}
 \examples{
 require(stats); require(graphics)
+\testonly{options(show.nls.convergence=FALSE)}
 coplot(conc ~ Time | Subject, data = Theoph, show.given = FALSE)
 Theoph.4 <- subset(Theoph, Subject == 4)
 fm1 <- nls(conc ~ SSfol(Dose, Time, lKe, lKa, lCl),

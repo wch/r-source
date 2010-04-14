@@ -414,6 +414,9 @@ getOption(x, default = NULL)
       values are printed in summary tables of coefficients.  See
       \code{\link{printCoefmat}}.}
 
+    \item{\code{show.nls.convergence}:}{logical, should \code{\link{nls}}
+      convergence messages be printed for successful fits?}
+
     \item{\code{show.signif.stars}:}{logical, should stars be printed on
       summary tables of coefficients?  See \code{\link{printCoefmat}}.}
 

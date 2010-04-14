@@ -53,6 +53,7 @@
 }
 \examples{
 require(stats); require(graphics)
+\testonly{options(show.nls.convergence=FALSE)}
 coplot(weight ~ Time | Chick, data = ChickWeight,
     type = "b", show.given = FALSE)
 ## fit a representative chick

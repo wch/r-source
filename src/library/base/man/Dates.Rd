@@ -51,7 +51,7 @@
   
   \code{\link{format.Date}} for conversion to and from character strings.
 
-  \code{\link{plot.Date}} and
+  \code{\link{axis.Date}} and
   \code{\link{hist.Date}} for plotting.
 
   \code{\link{weekdays}} for convenience extraction functions.
