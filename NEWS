@@ -107,6 +107,10 @@ INSTALLATION
 
     o	Tcl/Tk >= 8.4 is now required (increased from 8.3).
 
+    o	The output of the examples from several of the base packages
+	is now compared to reference output rather than the previous
+	output (if any).
+
 
 BUG FIXES
 
@@ -546,6 +550,8 @@ INSTALLATION
 
     o	configure is now generated with autoconf-2.65, which works
 	better on recent systems and on Mac OS X.
+
+  
 
 
 PACKAGE INSTALLATION

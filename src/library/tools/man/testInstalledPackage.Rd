@@ -1,6 +1,6 @@
 % File src/library/tools/man/testInstalledPackage.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2009 R Core Development Team
+% Copyright 2009-10 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{testInstalledPackage}
@@ -14,11 +14,13 @@
 }
 \usage{
 testInstalledPackage(pkg, lib.loc = NULL, outDir = ".",
-                     types = c("examples", "tests", "vignettes"))
+                     types = c("examples", "tests", "vignettes"),
+                     srcdir = NULL)
 
 testInstalledPackages(outDir = ".", errorsAreFatal = TRUE,
                       scope = c("both", "base", "recommended"),
-                      types = c("examples", "tests", "vignettes"))
+                      types = c("examples", "tests", "vignettes"),
+                      srcdir = NULL)
 
 testInstalledBasic(scope = c("basic", "devel", "both"))
 }
@@ -31,6 +33,7 @@ testInstalledBasic(scope = c("basic", "devel", "both"))
   \item{types}{type(s) of tests to be done.}
   \item{errorsAreFatal}{logical: should testing terminate at the first
     error?}
+  \item{srcdir}{Optional directory to look for \code{.save} files.}
   \item{scope}{Which set(s) should be tested?}
 }
 \details{

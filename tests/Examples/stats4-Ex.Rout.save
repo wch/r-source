@@ -1,0 +1,198 @@
+
+R version 2.12.0 Under development (unstable) (2010-04-14 r51721)
+Copyright (C) 2010 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "stats4"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('stats4')
+> 
+> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("BIC")
+> ### * BIC
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: BIC
+> ### Title: Bayesian Information Criterion
+> ### Aliases: BIC BIC,ANY-method BIC,logLik-method
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> lm1 <- lm(Fertility ~ . , data = swiss)
+> AIC(lm1)
+[1] 326.0716
+> BIC(lm1)
+[1] 339.0226
+> 
+> ## Don't show: 
+> ## 2 equivalent ways of calculating the BIC:
+> stopifnot(all.equal(AIC(lm1, k=log(nrow(swiss))), BIC(lm1)))
+> ## End Don't show
+> 
+> 
+> 
+> cleanEx()
+> nameEx("mle")
+> ### * mle
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: mle
+> ### Title: Maximum Likelihood Estimation
+> ### Aliases: mle
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> x <- 0:10
+> y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
+> ## This needs a constrained parameter space: most methods will accept NA
+> ll <- function(ymax=15, xhalf=6)
++     if(ymax > 0 && xhalf > 0) -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE)) else NA
+> (fit <- mle(ll))
+
+Call:
+mle(minuslogl = ll)
+
+Coefficients:
+     ymax     xhalf 
+24.993092  3.057062 
+> mle(ll, fixed=list(xhalf=6))
+
+Call:
+mle(minuslogl = ll, fixed = list(xhalf = 6))
+
+Coefficients:
+    ymax    xhalf 
+19.28809  6.00000 
+> ## alternative using bounds on optimization
+> ll2 <- function(ymax=15, xhalf=6)
++     -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE))
+> mle(ll2, method="L-BFGS-B", lower=rep(0, 2))
+
+Call:
+mle(minuslogl = ll2, method = "L-BFGS-B", lower = rep(0, 2))
+
+Coefficients:
+     ymax     xhalf 
+24.999420  3.055779 
+> 
+> summary(fit)
+Maximum likelihood estimation
+
+Call:
+mle(minuslogl = ll)
+
+Coefficients:
+       Estimate Std. Error
+ymax  24.993092   4.224441
+xhalf  3.057062   1.034796
+
+-2 log L: 57.20811 
+> logLik(fit)
+'log Lik.' -28.60406 (df=2)
+> vcov(fit)
+           ymax     xhalf
+ymax  17.845905 -3.720571
+xhalf -3.720571  1.070802
+> plot(profile(fit), absVal=FALSE)
+> confint(fit)
+Profiling...
+          2.5 %    97.5 %
+ymax  17.884514 34.619387
+xhalf  1.661551  6.479181
+> 
+> ## use bounded optimization
+> ## the lower bounds are really > 0, but we use >=0 to stress-test profiling
+> (fit1 <- mle(ll, method="L-BFGS-B", lower=c(0, 0)))
+
+Call:
+mle(minuslogl = ll, method = "L-BFGS-B", lower = c(0, 0))
+
+Coefficients:
+     ymax     xhalf 
+24.999420  3.055779 
+> plot(profile(fit1), absVal=FALSE)
+> 
+> ## a better parametrization:
+> ll2 <- function(lymax=log(15), lxhalf=log(6))
++     -sum(stats::dpois(y, lambda=exp(lymax)/(1+x/exp(lxhalf)), log=TRUE))
+> (fit2 <- mle(ll2))
+
+Call:
+mle(minuslogl = ll2)
+
+Coefficients:
+   lymax   lxhalf 
+3.218870 1.117006 
+> plot(profile(fit2), absVal=FALSE)
+> exp(confint(fit2))
+Profiling...
+           2.5 %    97.5 %
+lymax  17.881480 34.618597
+lxhalf  1.661522  6.479448
+> 
+> 
+> 
+> cleanEx()
+> nameEx("update-methods")
+> ### * update-methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: update-methods
+> ### Title: Methods for Function `update' in Package `stats4'
+> ### Aliases: update-methods update,ANY-method update,mle-method
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> x <- 0:10
+> y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
+> ll <- function(ymax=15, xhalf=6)
++     -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE))
+> fit <- mle(ll)
+Warning in dpois(x, lambda, log) : NaNs produced
+> ## note the recorded call contains ..1, a problem with S4 dispatch
+> update(fit, fixed=list(xhalf=3))
+
+Call:
+mle(minuslogl = ll, fixed = ..1)
+
+Coefficients:
+    ymax    xhalf 
+25.19609  3.00000 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  1.957 0.01 1.968 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

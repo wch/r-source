@@ -166,7 +166,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE)
 testInstalledPackages <-
     function(outDir = ".", errorsAreFatal = TRUE,
              scope = c("both", "base", "recommended"),
-             types = c("examples", "tests", "vignettes"))
+             types = c("examples", "tests", "vignettes"), srcdir = NULL)
 {
     ow <- options(warn = 1)
     on.exit(ow)
@@ -180,7 +180,7 @@ testInstalledPackages <-
         pkgs <- c(pkgs, known_packages$recommended)
     ## It *should* be an error if any of these are missing
     for (pkg in pkgs) {
-        res <- testInstalledPackage(pkg, .Library, outDir, types)
+        res <- testInstalledPackage(pkg, .Library, outDir, types, srcdir)
         if (res) {
             status <- 1L
             msg <- gettextf("testing '%s' failed", pkg)
@@ -193,7 +193,8 @@ testInstalledPackages <-
 
 testInstalledPackage <-
     function(pkg, lib.loc = NULL, outDir = ".",
-             types = c("examples", "tests", "vignettes"))
+             types = c("examples", "tests", "vignettes"),
+             srcdir = NULL)
 {
     types <- pmatch(types, c("examples", "tests", "vignettes"))
     pkgdir <- .find.package(pkg, lib.loc)
@@ -201,7 +202,7 @@ testInstalledPackage <-
     owd <- setwd(outDir)
     on.exit(setwd(owd))
 
-    if (1 %in% types) { # && file_test("-d", exdir)) {
+    if (1 %in% types) {
         message("\nCollecting examples for package ", sQuote(pkg))
         Rfile <- .createExdotR(pkg, pkgdir)
         if (length(Rfile)) {
@@ -220,7 +221,10 @@ testInstalledPackage <-
             res <- system(cmd)
             if (res) return(invisible(1L)) else file.rename(failfile, outfile)
 
-            savefile <- paste(outfile, "prev", sep = "." )
+            savefile <- paste(outfile, "save", sep = "." )
+            if (!is.null(srcdir)) savefile <- file.path(srcdir, savefile)
+            if (!file.exists(savefile))
+                savefile <- paste(outfile, "prev", sep = "." )
             if (file.exists(savefile)) {
                 message("  Comparing ", sQuote(outfile), " to ",
                         sQuote(basename(savefile)), " ...", appendLF = FALSE)

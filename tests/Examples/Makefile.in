@@ -22,10 +22,9 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 test-Examples: test-Examples-Base
 
-## Should this go and update the R-ex directories?  It used to ...
 ## Who does make check but not make? -- maybe better to check what was made.
 test-Examples-Base: Makefile
-	@$(ECHO) "tools::testInstalledPackages(scope='base', types='examples')" | $(R_EXE)
+	@$(ECHO) "tools::testInstalledPackages(scope='base', types='examples', srcdir=\"$(srcdir)\")" | $(R_EXE)
 
 
 ## <NOTE>

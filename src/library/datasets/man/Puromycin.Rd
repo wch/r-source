@@ -1,6 +1,6 @@
 % File src/library/datasets/man/Puromycin.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Puromycin}
@@ -58,25 +58,26 @@ plot(rate ~ conc, data = Puromycin, las = 1,
 ## simplest form of fitting the Michaelis-Menten model to these data
 fm1 <- nls(rate ~ Vm * conc/(K + conc), data = Puromycin,
            subset = state == "treated",
-           start = c(Vm = 200, K = 0.05), trace = TRUE)
+           start = c(Vm = 200, K = 0.05))
 fm2 <- nls(rate ~ Vm * conc/(K + conc), data = Puromycin,
            subset = state == "untreated",
-           start = c(Vm = 160, K = 0.05), trace = TRUE)
+           start = c(Vm = 160, K = 0.05))
 summary(fm1)
 summary(fm2)
-## using partial linearity
-fm3 <- nls(rate ~ conc/(K + conc), data = Puromycin,
-           subset = state == "treated", start = c(K = 0.05),
-           algorithm = "plinear", trace = TRUE)
-## using a self-starting model
-fm4 <- nls(rate ~ SSmicmen(conc, Vm, K), data = Puromycin,
-           subset = state == "treated")
-summary(fm4)
 ## add fitted lines to the plot
 conc <- seq(0, 1.2, length.out = 101)
 lines(conc, predict(fm1, list(conc = conc)), lty = 1, col = 1)
 lines(conc, predict(fm2, list(conc = conc)), lty = 2, col = 2)
 legend(0.8, 120, levels(Puromycin$state),
        col = 1:2, lty = 1:2, pch = 1:2)
+
+## using partial linearity
+fm3 <- nls(rate ~ conc/(K + conc), data = Puromycin,
+           subset = state == "treated", start = c(K = 0.05),
+           algorithm = "plinear")
+## using a self-starting model
+fm4 <- nls(rate ~ SSmicmen(conc, Vm, K), data = Puromycin,
+           subset = state == "treated")
+summary(fm4)
 }
 \keyword{datasets}
