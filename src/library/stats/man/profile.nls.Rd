@@ -51,6 +51,7 @@
   \code{\link{nls}}, \code{\link{profile}}, \code{\link{plot.profile.nls}}
 }
 \examples{
+\testonly{od <- options(digits = 5)}
 # obtain the fitted object
 fm1 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
 # get the profile for the fitted model: default level is too extreme
@@ -59,6 +60,7 @@ pr1 <- profile(fm1, alpha = 0.05)
 pr1$A
 pr1$lrc
 # see also example(plot.profile.nls)
+\testonly{options(od)}
 }
 \keyword{nonlinear}
 \keyword{regression}

@@ -4,10 +4,10 @@
 % Distributed under GPL 2 or later
 
 \name{png}
-\alias{bmp}
 \alias{png}
 \alias{jpeg}
 \alias{tiff}
+\alias{bmp}
 \title{BMP, JPEG, PNG and TIFF graphics devices}
 \description{
   Graphics devices for BMP, JPEG, PNG and TIFF format bitmap files.

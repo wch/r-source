@@ -41,7 +41,7 @@ getInitial(object, data, \dots)
 }
 \examples{
 PurTrt <- Puromycin[ Puromycin$state == "treated", ]
-getInitial( rate ~ SSmicmen( conc, Vm, K ), PurTrt )
+print(getInitial( rate ~ SSmicmen( conc, Vm, K ), PurTrt ), digits = 3)
 }
 \keyword{models}
 \keyword{nonlinear}

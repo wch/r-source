@@ -72,6 +72,7 @@
   if it was supplied.
 }
 \examples{
+\testonly{od <- options(digits=5)}
 require(graphics)
 
 fm <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
@@ -84,6 +85,7 @@ plot(demand ~ Time, data = BOD, col = 4,
 tt <- seq(0, 8, length = 101)
 lines(tt, predict(fm, list(Time = tt)))
 par(opar)
+\testonly{options(od)}
 }
 \keyword{nonlinear}
 \keyword{regression}

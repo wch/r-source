@@ -39,7 +39,8 @@ Chick.1 <- ChickWeight[ChickWeight$Chick == 1, ]
 SSlogis( Chick.1$Time, 368, 14, 6 )  # response only
 Asym <- 368; xmid <- 14; scal <- 6
 SSlogis( Chick.1$Time, Asym, xmid, scal ) # response and gradient
-getInitial(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
+print(getInitial(weight ~ SSlogis(Time, Asym, xmid, scal),
+                 data = Chick.1), digits = 5)
 ## Initial values are in fact the converged values
 fm1 <- nls(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
 summary(fm1)
