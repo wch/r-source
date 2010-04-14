@@ -145,10 +145,10 @@ biplot(pc.cr)
 
 ## Formula interface
 princomp(~ ., data = USArrests, cor = TRUE)
-# NA-handling
+\donttest{# NA-handling
 USArrests[1, 2] <- NA
 pc.cr <- princomp(~ Murder + Assault + UrbanPop,
                   data = USArrests, na.action=na.exclude, cor = TRUE)
 pc.cr$scores
-}
+}}
 \keyword{multivariate}

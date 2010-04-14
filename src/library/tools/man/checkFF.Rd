@@ -60,8 +60,8 @@ checkFF(package, dir, file, lib.loc = NULL,
   This function is still experimental.  Both name and interface might
   change in future versions.
 }
-\examples{
+\examples{\donttest{ # order is pretty much random
 checkFF(package = "stats", verbose = TRUE)
-}
+}}
 \keyword{programming}
 \keyword{utilities}
