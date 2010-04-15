@@ -43,7 +43,8 @@ Indo.1 <- Indometh[Indometh$Subject == 1, ]
 SSbiexp( Indo.1$time, 3, 1, 0.6, -1.3 )  # response only
 A1 <- 3; lrc1 <- 1; A2 <- 0.6; lrc2 <- -1.3
 SSbiexp( Indo.1$time, A1, lrc1, A2, lrc2 ) # response and gradient
-getInitial(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = Indo.1)
+print(getInitial(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = Indo.1),
+      digits = 5)
 ## Initial values are in fact the converged values
 fm1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = Indo.1)
 summary(fm1)

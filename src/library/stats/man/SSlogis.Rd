@@ -35,15 +35,16 @@ SSlogis(input, Asym, xmid, scal)
 \seealso{\code{\link{nls}}, \code{\link{selfStart}}
 }
 \examples{
+\testonly{od <- options(digits=5)}
 Chick.1 <- ChickWeight[ChickWeight$Chick == 1, ]
 SSlogis(Chick.1$Time, 368, 14, 6)  # response only
 Asym <- 368; xmid <- 14; scal <- 6
 SSlogis(Chick.1$Time, Asym, xmid, scal) # response and gradient
-print(getInitial(weight ~ SSlogis(Time, Asym, xmid, scal),
-                 data = Chick.1), digits = 5)
+getInitial(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
 ## Initial values are in fact the converged values
 fm1 <- nls(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
 summary(fm1)
+\testonly{options(od)}
 \dontshow{
 require(graphics)
 

@@ -71,6 +71,6 @@ for (pp in levels(CO2$Plant)) {
       data = CO2, subset = Plant == pp)
 }
 ## check the coefficients by plant
-sapply(fmlist, coef)
+print(sapply(fmlist, coef), digits=3)
 }
 \keyword{datasets}

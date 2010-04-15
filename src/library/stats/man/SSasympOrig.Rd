@@ -38,7 +38,7 @@ SSasympOrig(Lob.329$age, 100, -3.2)  # response only
 Asym <- 100; lrc <- -3.2
 SSasympOrig(Lob.329$age, Asym, lrc) # response and gradient
 print(getInitial(height ~ SSasympOrig(age, Asym, lrc), data = Lob.329),
-      digits = 5)
+      digits = 3)
 ## Initial values are in fact the converged values
 fm1 <- nls(height ~ SSasympOrig(age, Asym, lrc), data = Lob.329)
 summary(fm1)

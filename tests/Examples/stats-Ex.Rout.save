@@ -74,9 +74,8 @@ Type 'q()' to quit R.
 > ARMAacf(c(1.0, -0.25), 1.0, lag.max = 10, pacf = TRUE)
  [1]  0.8750000 -0.6000000  0.3750000 -0.2727273  0.2142857 -0.1764706
  [7]  0.1500000 -0.1304348  0.1153846 -0.1034483
-> ARMAacf(c(1.0, -0.25), lag.max = 10, pacf = TRUE)
- [1]  8.000000e-01 -2.500000e-01  1.644775e-16 -6.091759e-17  2.380298e-17
- [6] -1.435512e-17  2.055969e-17 -2.569961e-17  1.541976e-17 -2.569961e-18
+> zapsmall(ARMAacf(c(1.0, -0.25), lag.max = 10, pacf = TRUE))
+ [1]  0.80 -0.25  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
 > 
 > ## Cov-Matrix of length-7 sub-sample of AR(1) example:
 > toeplitz(ARMAacf(0.8, lag.max = 7))
@@ -585,9 +584,11 @@ c    3    2    1    0    2    1    0    1    0     0
 > ### ** Examples
 > 
 > Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]
-> NLSstAsymptotic(sortedXyData(expression(age), expression(height), Lob.329))
-        b0         b1        lrc 
- -8.250753 102.378957  -3.217578 
+> print(NLSstAsymptotic(sortedXyData(expression(age),
++                                    expression(height),
++                                    Lob.329)), digits=3)
+    b0     b1    lrc 
+ -8.25 102.38  -3.22 
 > 
 > 
 > 
@@ -1046,9 +1047,9 @@ attr(,"gradient")
 [5,] 0.5574687 36.07710
 [6,] 0.6390642 36.78135
 > print(getInitial(height ~ SSasympOrig(age, Asym, lrc), data = Lob.329),
-+       digits = 5)
-    Asym      lrc 
-315.0457  -4.8139 
++       digits = 3)
+  Asym    lrc 
+315.05  -4.81 
 > ## Initial values are in fact the converged values
 > fm1 <- nls(height ~ SSasympOrig(age, Asym, lrc), data = Lob.329)
 > summary(fm1)
@@ -1125,9 +1126,10 @@ attr(,"gradient")
  [9,] 1.251198e-06 -5.101663e-05 0.2559792 -0.20928744
 [10,] 8.256409e-08 -4.039784e-06 0.1949152 -0.19123411
 [11,] 3.595188e-10 -2.345456e-08 0.1130128 -0.14783797
-> getInitial(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = Indo.1)
-        A1       lrc1         A2       lrc2 
- 2.0292774  0.5793887  0.1915474 -1.7877849 
+> print(getInitial(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = Indo.1),
++       digits = 5)
+      A1     lrc1       A2     lrc2 
+ 2.02928  0.57939  0.19155 -1.78778 
 > ## Initial values are in fact the converged values
 > fm1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = Indo.1)
 > summary(fm1)
@@ -1270,9 +1272,10 @@ attr(,"gradient")
 [10,] 0.3392436 0.66075637 -13.262646  -8.841764
 [11,] 0.2689414 0.73105858 -11.632873 -11.632873
 [12,] 0.2374580 0.76254197 -10.713410 -12.498978
-> getInitial(weight ~ SSfpl(Time, A, B, xmid, scal), data = Chick.1)
-         A          B       xmid       scal 
- 27.453205 348.971204  19.390529   6.672621 
+> print(getInitial(weight ~ SSfpl(Time, A, B, xmid, scal), data = Chick.1),
++       digits = 5)
+       A        B     xmid     scal 
+ 27.4532 348.9712  19.3905   6.6726 
 > ## Initial values are in fact the converged values
 > fm1 <- nls(weight ~ SSfpl(Time, A, B, xmid, scal), data = Chick.1)
 > summary(fm1)
@@ -1401,30 +1404,32 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 > 
 > ### ** Examples
 > 
+> ## Don't show: 
+> od <- options(digits=5)
+> ## End Don't show
 > Chick.1 <- ChickWeight[ChickWeight$Chick == 1, ]
 > SSlogis(Chick.1$Time, 368, 14, 6)  # response only
- [1]  32.53108  43.86668  58.46383  76.76794  98.97044 124.84166 153.61416
- [8] 184.00000 214.38584 243.15834 269.02956 280.61545
+ [1]  32.531  43.867  58.464  76.768  98.970 124.842 153.614 184.000 214.386
+[10] 243.158 269.030 280.615
 > Asym <- 368; xmid <- 14; scal <- 6
 > SSlogis(Chick.1$Time, Asym, xmid, scal) # response and gradient
- [1]  32.53108  43.86668  58.46383  76.76794  98.97044 124.84166 153.61416
- [8] 184.00000 214.38584 243.15834 269.02956 280.61545
+ [1]  32.531  43.867  58.464  76.768  98.970 124.842 153.614 184.000 214.386
+[10] 243.158 269.030 280.615
 attr(,"gradient")
-            Asym       xmid       scal
- [1,] 0.08839968  -4.942557  11.532634
- [2,] 0.11920292  -6.439607  12.879213
- [3,] 0.15886910  -8.195956  13.659926
- [4,] 0.20860853 -10.125582  13.500776
- [5,] 0.26894142 -12.058865  12.058865
- [6,] 0.33924363 -13.748320   9.165547
- [7,] 0.41742979 -14.915173   4.971724
- [8,] 0.50000000 -15.333333   0.000000
- [9,] 0.58257021 -14.915173  -4.971724
-[10,] 0.66075637 -13.748320  -9.165547
-[11,] 0.73105858 -12.058865 -12.058865
-[12,] 0.76254197 -11.105732 -12.956687
-> print(getInitial(weight ~ SSlogis(Time, Asym, xmid, scal),
-+                  data = Chick.1), digits = 5)
+         Asym     xmid     scal
+ [1,] 0.08840  -4.9426  11.5326
+ [2,] 0.11920  -6.4396  12.8792
+ [3,] 0.15887  -8.1960  13.6599
+ [4,] 0.20861 -10.1256  13.5008
+ [5,] 0.26894 -12.0589  12.0589
+ [6,] 0.33924 -13.7483   9.1655
+ [7,] 0.41743 -14.9152   4.9717
+ [8,] 0.50000 -15.3333   0.0000
+ [9,] 0.58257 -14.9152  -4.9717
+[10,] 0.66076 -13.7483  -9.1655
+[11,] 0.73106 -12.0589 -12.0589
+[12,] 0.76254 -11.1057 -12.9567
+> getInitial(weight ~ SSlogis(Time, Asym, xmid, scal), data = Chick.1)
    Asym    xmid    scal 
 937.021  35.223  11.405 
 > ## Initial values are in fact the converged values
@@ -1435,14 +1440,17 @@ Formula: weight ~ SSlogis(Time, Asym, xmid, scal)
 
 Parameters:
      Estimate Std. Error t value Pr(>|t|)    
-Asym 937.0215   465.8579   2.011  0.07516 .  
-xmid  35.2228     8.3119   4.238  0.00218 ** 
-scal  11.4052     0.9052  12.599 5.08e-07 ***
+Asym  937.021    465.858    2.01   0.0752 .  
+xmid   35.223      8.312    4.24   0.0022 ** 
+scal   11.405      0.905   12.60  5.1e-07 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
 Residual standard error: 2.919 on 9 degrees of freedom
 
+> ## Don't show: 
+> options(od)
+> ## End Don't show
 > ## Don't show: 
 > require(graphics)
 > 
@@ -2013,6 +2021,9 @@ ar(3) 0.6000000 0.3000 -0.2
 > 
 > ### ** Examples
 > 
+> ## Don't show: 
+> od <- options(digits=5)
+> ## End Don't show
 > require(graphics); require(utils)
 > example(step)#-> swiss
 
@@ -2035,8 +2046,8 @@ Analysis of Variance Table
 
 Response: weight
           Df Sum Sq Mean Sq F value Pr(>F)
-group      1 0.6882 0.68820  1.4191  0.249
-Residuals 18 8.7292 0.48496               
+group      1   0.69   0.688    1.42   0.25
+Residuals 18   8.73   0.485               
 
 lm> summary(lm.D90 <- lm(weight ~ group - 1))# omitting intercept
 
@@ -2049,14 +2060,14 @@ Residuals:
 
 Coefficients:
          Estimate Std. Error t value Pr(>|t|)    
-groupCtl   5.0320     0.2202   22.85 9.55e-15 ***
-groupTrt   4.6610     0.2202   21.16 3.62e-14 ***
+groupCtl     5.03       0.22    22.9  9.5e-15 ***
+groupTrt     4.66       0.22    21.2  3.6e-14 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
-Residual standard error: 0.6964 on 18 degrees of freedom
-Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798 
-F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16 
+Residual standard error: 0.696 on 18 degrees of freedom
+Multiple R-squared: 0.982,	Adjusted R-squared: 0.98 
+F-statistic:  485 on 2 and 18 DF,  p-value: <2e-16 
 
 
 lm> ## No test: 
@@ -2080,9 +2091,9 @@ step> step(lm.D9)
 Start:  AIC=-12.58
 weight ~ group
 
-        Df Sum of Sq    RSS     AIC
-- group  1    0.6882 9.4175 -13.063
-<none>               8.7292 -12.581
+        Df Sum of Sq  RSS   AIC
+- group  1     0.688 9.42 -13.1
+<none>               8.73 -12.6
 
 Step:  AIC=-13.06
 weight ~ 1
@@ -2093,7 +2104,7 @@ lm(formula = weight ~ 1)
 
 Coefficients:
 (Intercept)  
-      4.847  
+       4.85  
 
 
 step> summary(lm1 <- lm(Fertility ~ ., data = swiss))
@@ -2102,23 +2113,23 @@ Call:
 lm(formula = Fertility ~ ., data = swiss)
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--15.2743  -5.2617   0.5032   4.1198  15.3213 
+    Min      1Q  Median      3Q     Max 
+-15.274  -5.262   0.503   4.120  15.321 
 
 Coefficients:
                  Estimate Std. Error t value Pr(>|t|)    
-(Intercept)      66.91518   10.70604   6.250 1.91e-07 ***
-Agriculture      -0.17211    0.07030  -2.448  0.01873 *  
-Examination      -0.25801    0.25388  -1.016  0.31546    
-Education        -0.87094    0.18303  -4.758 2.43e-05 ***
-Catholic          0.10412    0.03526   2.953  0.00519 ** 
-Infant.Mortality  1.07705    0.38172   2.822  0.00734 ** 
+(Intercept)       66.9152    10.7060    6.25  1.9e-07 ***
+Agriculture       -0.1721     0.0703   -2.45   0.0187 *  
+Examination       -0.2580     0.2539   -1.02   0.3155    
+Education         -0.8709     0.1830   -4.76  2.4e-05 ***
+Catholic           0.1041     0.0353    2.95   0.0052 ** 
+Infant.Mortality   1.0770     0.3817    2.82   0.0073 ** 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
-Residual standard error: 7.165 on 41 degrees of freedom
-Multiple R-squared: 0.7067,	Adjusted R-squared: 0.671 
-F-statistic: 19.76 on 5 and 41 DF,  p-value: 5.594e-10 
+Residual standard error: 7.17 on 41 degrees of freedom
+Multiple R-squared: 0.707,	Adjusted R-squared: 0.671 
+F-statistic: 19.8 on 5 and 41 DF,  p-value: 5.59e-10 
 
 
 step> slm1 <- step(lm1)
@@ -2126,23 +2137,23 @@ Start:  AIC=190.69
 Fertility ~ Agriculture + Examination + Education + Catholic + 
     Infant.Mortality
 
-                   Df Sum of Sq    RSS    AIC
-- Examination       1     53.03 2158.1 189.86
-<none>                          2105.0 190.69
-- Agriculture       1    307.72 2412.8 195.10
-- Infant.Mortality  1    408.75 2513.8 197.03
-- Catholic          1    447.71 2552.8 197.75
-- Education         1   1162.56 3267.6 209.36
+                   Df Sum of Sq  RSS AIC
+- Examination       1        53 2158 190
+<none>                          2105 191
+- Agriculture       1       308 2413 195
+- Infant.Mortality  1       409 2514 197
+- Catholic          1       448 2553 198
+- Education         1      1163 3268 209
 
 Step:  AIC=189.86
 Fertility ~ Agriculture + Education + Catholic + Infant.Mortality
 
-                   Df Sum of Sq    RSS    AIC
-<none>                          2158.1 189.86
-- Agriculture       1    264.18 2422.2 193.29
-- Infant.Mortality  1    409.81 2567.9 196.03
-- Catholic          1    956.57 3114.6 205.10
-- Education         1   2249.97 4408.0 221.43
+                   Df Sum of Sq  RSS AIC
+<none>                          2158 190
+- Agriculture       1       264 2422 193
+- Infant.Mortality  1       410 2568 196
+- Catholic          1       957 3115 205
+- Education         1      2250 4408 221
 
 step> summary(slm1)
 
@@ -2151,60 +2162,60 @@ lm(formula = Fertility ~ Agriculture + Education + Catholic +
     Infant.Mortality, data = swiss)
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--14.6765  -6.0522   0.7514   3.1664  16.1422 
+    Min      1Q  Median      3Q     Max 
+-14.676  -6.052   0.751   3.166  16.142 
 
 Coefficients:
                  Estimate Std. Error t value Pr(>|t|)    
-(Intercept)      62.10131    9.60489   6.466 8.49e-08 ***
-Agriculture      -0.15462    0.06819  -2.267  0.02857 *  
-Education        -0.98026    0.14814  -6.617 5.14e-08 ***
-Catholic          0.12467    0.02889   4.315 9.50e-05 ***
-Infant.Mortality  1.07844    0.38187   2.824  0.00722 ** 
+(Intercept)       62.1013     9.6049    6.47  8.5e-08 ***
+Agriculture       -0.1546     0.0682   -2.27   0.0286 *  
+Education         -0.9803     0.1481   -6.62  5.1e-08 ***
+Catholic           0.1247     0.0289    4.31  9.5e-05 ***
+Infant.Mortality   1.0784     0.3819    2.82   0.0072 ** 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
-Residual standard error: 7.168 on 42 degrees of freedom
-Multiple R-squared: 0.6993,	Adjusted R-squared: 0.6707 
-F-statistic: 24.42 on 4 and 42 DF,  p-value: 1.717e-10 
+Residual standard error: 7.17 on 42 degrees of freedom
+Multiple R-squared: 0.699,	Adjusted R-squared: 0.671 
+F-statistic: 24.4 on 4 and 42 DF,  p-value: 1.72e-10 
 
 
 step> slm1$anova
-           Step Df Deviance Resid. Df Resid. Dev      AIC
-1               NA       NA        41   2105.043 190.6913
-2 - Examination  1 53.02656        42   2158.069 189.8606
+           Step Df Deviance Resid. Df Resid. Dev    AIC
+1               NA       NA        41     2105.0 190.69
+2 - Examination  1   53.027        42     2158.1 189.86
 > add1(lm1, ~ I(Education^2) + .^2)
 Single term additions
 
 Model:
 Fertility ~ Agriculture + Examination + Education + Catholic + 
     Infant.Mortality
-                             Df Sum of Sq    RSS    AIC
-<none>                                    2105.0 190.69
-I(Education^2)                1    11.819 2093.2 192.43
-Agriculture:Examination       1    10.667 2094.4 192.45
-Agriculture:Education         1     1.827 2103.2 192.65
-Agriculture:Catholic          1    75.048 2030.0 190.99
-Agriculture:Infant.Mortality  1     4.438 2100.6 192.59
-Examination:Education         1    48.694 2056.3 191.59
-Examination:Catholic          1    40.758 2064.3 191.77
-Examination:Infant.Mortality  1    65.857 2039.2 191.20
-Education:Catholic            1   278.189 1826.8 186.03
-Education:Infant.Mortality    1    92.950 2012.1 190.57
-Catholic:Infant.Mortality     1     2.359 2102.7 192.64
+                             Df Sum of Sq  RSS AIC
+<none>                                    2105 191
+I(Education^2)                1      11.8 2093 192
+Agriculture:Examination       1      10.7 2094 192
+Agriculture:Education         1       1.8 2103 193
+Agriculture:Catholic          1      75.0 2030 191
+Agriculture:Infant.Mortality  1       4.4 2101 193
+Examination:Education         1      48.7 2056 192
+Examination:Catholic          1      40.8 2064 192
+Examination:Infant.Mortality  1      65.9 2039 191
+Education:Catholic            1     278.2 1827 186
+Education:Infant.Mortality    1      93.0 2012 191
+Catholic:Infant.Mortality     1       2.4 2103 193
 > drop1(lm1, test="F")  # So called 'type II' anova
 Single term deletions
 
 Model:
 Fertility ~ Agriculture + Examination + Education + Catholic + 
     Infant.Mortality
-                 Df Sum of Sq    RSS    AIC F value     Pr(F)    
-<none>                        2105.0 190.69                      
-Agriculture       1    307.72 2412.8 195.10  5.9934  0.018727 *  
-Examination       1     53.03 2158.1 189.86  1.0328  0.315462    
-Education         1   1162.56 3267.6 209.36 22.6432 2.431e-05 ***
-Catholic          1    447.71 2552.8 197.75  8.7200  0.005190 ** 
-Infant.Mortality  1    408.75 2513.8 197.03  7.9612  0.007336 ** 
+                 Df Sum of Sq  RSS AIC F value   Pr(F)    
+<none>                        2105 191                    
+Agriculture       1       308 2413 195    5.99  0.0187 *  
+Examination       1        53 2158 190    1.03  0.3155    
+Education         1      1163 3268 209   22.64 2.4e-05 ***
+Catholic          1       448 2553 198    8.72  0.0052 ** 
+Infant.Mortality  1       409 2514 197    7.96  0.0073 ** 
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > 
@@ -2242,9 +2253,9 @@ Terms added sequentially (first to last)
 
 
           Df Deviance Resid. Df Resid. Dev
-NULL                          8    10.5814
-outcome    2   5.4523         6     5.1291
-treatment  2   0.0000         4     5.1291
+NULL                          8      10.58
+outcome    2     5.45         6       5.13
+treatment  2     0.00         4       5.13
 
 glm> summary(glm.D93)
 
@@ -2252,18 +2263,18 @@ Call:
 glm(formula = counts ~ outcome + treatment, family = poisson())
 
 Deviance Residuals: 
-       1         2         3         4         5         6         7         8  
--0.67125   0.96272  -0.16965  -0.21999  -0.95552   1.04939   0.84715  -0.09167  
-       9  
--0.96656  
+      1        2        3        4        5        6        7        8  
+-0.6712   0.9627  -0.1696  -0.2200  -0.9555   1.0494   0.8472  -0.0917  
+      9  
+-0.9666  
 
 Coefficients:
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  3.045e+00  1.709e-01  17.815   <2e-16 ***
-outcome2    -4.543e-01  2.022e-01  -2.247   0.0246 *  
-outcome3    -2.930e-01  1.927e-01  -1.520   0.1285    
-treatment2   1.338e-15  2.000e-01   0.000   1.0000    
-treatment3   1.421e-15  2.000e-01   0.000   1.0000    
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  3.04e+00   1.71e-01   17.81   <2e-16 ***
+outcome2    -4.54e-01   2.02e-01   -2.25    0.025 *  
+outcome3    -2.93e-01   1.93e-01   -1.52    0.128    
+treatment2   8.72e-16   2.00e-01    0.00    1.000    
+treatment3   4.56e-16   2.00e-01    0.00    1.000    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
@@ -2271,7 +2282,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
     Null deviance: 10.5814  on 8  degrees of freedom
 Residual deviance:  5.1291  on 4  degrees of freedom
-AIC: 56.761
+AIC: 56.76
 
 Number of Fisher Scoring iterations: 4
 
@@ -2289,23 +2300,23 @@ glm(formula = Postwt ~ Prewt + Treat + offset(Prewt), family = gaussian,
     data = anorexia)
 
 Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--14.1083   -4.2773   -0.5484    5.4838   15.2922  
+    Min       1Q   Median       3Q      Max  
+-14.108   -4.277   -0.548    5.484   15.292  
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  49.7711    13.3910   3.717 0.000410 ***
-Prewt        -0.5655     0.1612  -3.509 0.000803 ***
-TreatCont    -4.0971     1.8935  -2.164 0.033999 *  
-TreatFT       4.5631     2.1333   2.139 0.036035 *  
+(Intercept)   49.771     13.391    3.72  0.00041 ***
+Prewt         -0.566      0.161   -3.51  0.00080 ***
+TreatCont     -4.097      1.893   -2.16  0.03400 *  
+TreatFT        4.563      2.133    2.14  0.03604 *  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
-(Dispersion parameter for gaussian family taken to be 48.69504)
+(Dispersion parameter for gaussian family taken to be 48.695)
 
     Null deviance: 4525.4  on 71  degrees of freedom
 Residual deviance: 3311.3  on 68  degrees of freedom
-AIC: 489.97
+AIC: 490
 
 Number of Fisher Scoring iterations: 2
 
@@ -2322,17 +2333,17 @@ Call:
 glm(formula = lot1 ~ log(u), family = Gamma, data = clotting)
 
 Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--0.04008  -0.03756  -0.02637   0.02905   0.08641  
+    Min       1Q   Median       3Q      Max  
+-0.0401  -0.0376  -0.0264   0.0290   0.0864  
 
 Coefficients:
-              Estimate Std. Error t value Pr(>|t|)    
-(Intercept) -0.0165544  0.0009275  -17.85 4.28e-07 ***
-log(u)       0.0153431  0.0004150   36.98 2.75e-09 ***
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.016554   0.000928   -17.9  4.3e-07 ***
+log(u)       0.015343   0.000415    37.0  2.8e-09 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
-(Dispersion parameter for Gamma family taken to be 0.002446059)
+(Dispersion parameter for Gamma family taken to be 0.0024461)
 
     Null deviance: 3.512826  on 8  degrees of freedom
 Residual deviance: 0.016730  on 7  degrees of freedom
@@ -2347,21 +2358,21 @@ Call:
 glm(formula = lot2 ~ log(u), family = Gamma, data = clotting)
 
 Deviance Residuals: 
-     Min        1Q    Median        3Q       Max  
--0.05574  -0.02925   0.01030   0.01714   0.06371  
+    Min       1Q   Median       3Q      Max  
+-0.0557  -0.0293   0.0103   0.0171   0.0637  
 
 Coefficients:
-              Estimate Std. Error t value Pr(>|t|)    
-(Intercept) -0.0239085  0.0013265  -18.02 4.00e-07 ***
-log(u)       0.0235992  0.0005768   40.91 1.36e-09 ***
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.023908   0.001326   -18.0  4.0e-07 ***
+log(u)       0.023599   0.000577    40.9  1.4e-09 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
-(Dispersion parameter for Gamma family taken to be 0.001813354)
+(Dispersion parameter for Gamma family taken to be 0.0018134)
 
     Null deviance: 3.118557  on 8  degrees of freedom
 Residual deviance: 0.012672  on 7  degrees of freedom
-AIC: 27.032
+AIC: 27.03
 
 Number of Fisher Scoring iterations: 3
 
@@ -2370,10 +2381,10 @@ Single term deletions
 
 Model:
 counts ~ outcome + treatment
-          Df Deviance    AIC    LRT Pr(Chi)  
-<none>         5.1291 56.761                 
-outcome    2  10.5814 58.214 5.4523 0.06547 .
-treatment  2   5.1291 52.761 0.0000 1.00000  
+          Df Deviance  AIC  LRT Pr(Chi)  
+<none>           5.13 56.8               
+outcome    2    10.58 58.2 5.45   0.065 .
+treatment  2     5.13 52.8 0.00   1.000  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 > drop1(glm.D93, test="F")
@@ -2383,10 +2394,13 @@ Single term deletions
 
 Model:
 counts ~ outcome + treatment
-          Df Deviance    AIC F value  Pr(F)
-<none>         5.1291 56.761               
-outcome    2  10.5814 58.214   2.126 0.2350
-treatment  2   5.1291 52.761   0.000 1.0000
+          Df Deviance  AIC F value Pr(F)
+<none>           5.13 56.8              
+outcome    2    10.58 58.2    2.13  0.23
+treatment  2     5.13 52.8    0.00  1.00
+> ## Don't show: 
+> options(od)
+> ## End Don't show
 > 
 > 
 > 
@@ -4921,11 +4935,11 @@ $barrier.value
 > all(crossprod(cT.) == diag(4)) # TRUE
 [1] TRUE
 > 
-> (cP <- contr.poly(3)) # Linear and Quadratic
-                .L         .Q
-[1,] -7.071068e-01  0.4082483
-[2,] -7.850462e-17 -0.8164966
-[3,]  7.071068e-01  0.4082483
+> zapsmall(cP <- contr.poly(3)) # Linear and Quadratic
+             .L         .Q
+[1,] -0.7071068  0.4082483
+[2,]  0.0000000 -0.8164966
+[3,]  0.7071068  0.4082483
 > zapsmall(crossprod(cP), digits=15) # orthonormal up to fuzz
    .L .Q
 .L  1  0
