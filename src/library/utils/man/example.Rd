@@ -1,6 +1,6 @@
 % File src/library/utils/man/example.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{example}
@@ -78,17 +78,6 @@ example(topic, package = NULL, lib.loc = NULL,
       and the \code{example()} function.  This was previously
       \code{testonly}, and that form is still accepted.}
   }
-
-  If the examples file contains non-ASCII characters the encoding used
-  will matter.  If in a UTF-8 locale \code{example} first tries UTF-8
-  and then Latin-1.  (This can be overridden by setting the encoding in
-  the \file{.Rd} file.)
-}
-\note{
-  The examples can be many small files.  On some file systems it is
-  desirable to save space, and the files in the \file{R-ex} directory
-  of an installed package can be zipped up as a zip archive
-  \file{Rex.zip}.
 }
 \author{Martin Maechler and others}
 \seealso{\code{\link{demo}}}
