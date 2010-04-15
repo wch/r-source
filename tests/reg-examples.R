@@ -29,8 +29,8 @@ example(packageDescription)
 example(sessionInfo)
 
 
-## Moved from tools:fileutils.Rd
 library(tools)
+example(Rdutils)
 example(fileutils)
 ## results are location- and OS-specific
 

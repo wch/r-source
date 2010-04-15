@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51728)
+R version 2.12.0 Under development (unstable) (2010-04-15 r51746)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -76,34 +76,6 @@ Type 'q()' to quit R.
 > ### Keywords: utilities documentation
 > 
 > ### ** Examples
-> 
-> ## Build the Rd db for the (installed) base package.
-> db <- Rd_db("base")
-> 
-> ## Keyword metadata per Rd object.
-> keywords <- lapply(db, tools:::.Rd_get_metadata, "keyword")
-> ## Tabulate the keyword entries.
-> kw_table <- sort(table(unlist(keywords)))
-> ## The 5 most frequent ones:
-> rev(kw_table)[1 : 5]
-
-  utilities programming       array        file       manip 
-         75          71          41          40          33 
-> ## The "most informative" ones:
-> kw_table[kw_table == 1]
-
-complex  device package 
-      1       1       1 
-> 
-> ## Concept metadata per Rd file.
-> concepts <- lapply(db, tools:::.Rd_get_metadata, "concept")
-> ## How many files already have \concept metadata?
-> sum(sapply(concepts, length) > 0)
-[1] 28
-> ## How many concept entries altogether?
-> length(unlist(concepts))
-[1] 59
-> 
 > 
 > 
 > cleanEx()
