@@ -34,9 +34,9 @@ SSgompertz(x, Asym, b2, b3)
 }
 \examples{
 DNase.1 <- subset(DNase, Run == 1)
-SSlogis(log(DNase.1$conc), 4.5, 2.3, 0.7)  # response only
+SSlogis(log(DNase.1$conc), 4.5, 2.3, 0.7)   # response only
 Asym <- 4.5; b2 <- 2.3; b3 <- 0.7
-SSgompertz(log(DNase.1$conc), Asym, b2, b3 ) # response and gradient
+SSgompertz(log(DNase.1$conc), Asym, b2, b3) # response and gradient
 print(getInitial(density ~ SSgompertz(log(conc), Asym, b2, b3),
                  data = DNase.1), digits = 5)
 ## Initial values are in fact the converged values

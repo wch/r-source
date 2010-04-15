@@ -47,6 +47,10 @@
     Galactosyltransferase in Golgi Membranes}, M.Sc. Thesis, U. of
   Toronto. 
 }
+
+\seealso{
+  \code{\link{SSmicmen}} for other models fitted to this dataset.
+}
 \examples{
 require(stats); require(graphics)
 \testonly{options(show.nls.convergence=FALSE)}
@@ -76,9 +80,5 @@ legend(0.8, 120, levels(Puromycin$state),
 fm3 <- nls(rate ~ conc/(K + conc), data = Puromycin,
            subset = state == "treated", start = c(K = 0.05),
            algorithm = "plinear")
-## using a self-starting model
-fm4 <- nls(rate ~ SSmicmen(conc, Vm, K), data = Puromycin,
-           subset = state == "treated")
-summary(fm4)
 }
 \keyword{datasets}

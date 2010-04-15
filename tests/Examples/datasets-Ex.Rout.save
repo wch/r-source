@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51730)
+R version 2.12.0 Under development (unstable) (2010-04-15 r51747)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -89,7 +89,7 @@ Type 'q()' to quit R.
 > coef(fm1)
        A      lrc 
 19.14258 -0.63282 
-> print(fm1)
+> fm1
 Nonlinear regression model
   model:  demand ~ A * (1 - exp(-exp(lrc) * Time)) 
    data:  BOD 
@@ -105,7 +105,7 @@ Nonlinear regression model
 25.990 : -0.63282 19.14256 
 > # using a self-starting model
 > fm3 <- nls(demand ~ SSasympOrig(Time, A, lrc), data = BOD)
-> summary( fm3 )
+> summary(fm3)
 
 Formula: demand ~ SSasympOrig(Time, A, lrc)
 
@@ -738,43 +738,6 @@ Cumulative Var   0.147   0.285   0.384   0.471   0.503
 > 
 > 
 > cleanEx()
-> nameEx("Indometh")
-> ### * Indometh
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: Indometh
-> ### Title: Pharmacokinetics of Indomethicin
-> ### Aliases: Indometh
-> ### Keywords: datasets
-> 
-> ### ** Examples
-> 
-> require(stats)
-> ## Don't show: 
-> options(show.nls.convergence=FALSE)
-> ## End Don't show
-> fm1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2),
-+            data = Indometh, subset = Subject == 1)
-> summary(fm1)
-
-Formula: conc ~ SSbiexp(time, A1, lrc1, A2, lrc2)
-
-Parameters:
-     Estimate Std. Error t value Pr(>|t|)    
-A1     2.0293     0.1099  18.464 3.39e-07 ***
-lrc1   0.5794     0.1247   4.648  0.00235 ** 
-A2     0.1915     0.1106   1.731  0.12698    
-lrc2  -1.7878     0.7871  -2.271  0.05737 .  
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 0.04103 on 7 degrees of freedom
-
-> 
-> 
-> 
-> cleanEx()
 > nameEx("InsectSprays")
 > ### * InsectSprays
 > 
@@ -904,29 +867,12 @@ F-statistic: 5.756 on 4 and 45 DF,  p-value: 0.0007904
 > ### ** Examples
 > 
 > require(stats); require(graphics)
-> ## Don't show: 
-> options(show.nls.convergence=FALSE)
-> ## End Don't show
 > plot(height ~ age, data = Loblolly, subset = Seed == 329,
 +      xlab = "Tree age (yr)", las = 1,
 +      ylab = "Tree height (ft)",
 +      main = "Loblolly data and fitted curve (Seed 329 only)")
 > fm1 <- nls(height ~ SSasymp(age, Asym, R0, lrc),
 +            data = Loblolly, subset = Seed == 329)
-> summary(fm1)
-
-Formula: height ~ SSasymp(age, Asym, R0, lrc)
-
-Parameters:
-     Estimate Std. Error t value Pr(>|t|)    
-Asym  94.1282     8.4030  11.202 0.001525 ** 
-R0    -8.2508     1.2261  -6.729 0.006700 ** 
-lrc   -3.2176     0.1386 -23.218 0.000175 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 0.7493 on 3 degrees of freedom
-
 > age <- seq(0, 30, length.out = 101)
 > lines(age, predict(fm1, list(age = age)))
 > 
@@ -1189,22 +1135,6 @@ Residual standard error: 9.773 on 9 degrees of freedom
 > fm3 <- nls(rate ~ conc/(K + conc), data = Puromycin,
 +            subset = state == "treated", start = c(K = 0.05),
 +            algorithm = "plinear")
-> ## using a self-starting model
-> fm4 <- nls(rate ~ SSmicmen(conc, Vm, K), data = Puromycin,
-+            subset = state == "treated")
-> summary(fm4)
-
-Formula: rate ~ SSmicmen(conc, Vm, K)
-
-Parameters:
-    Estimate Std. Error t value Pr(>|t|)    
-Vm 2.127e+02  6.947e+00  30.615 3.24e-11 ***
-K  6.412e-02  8.281e-03   7.743 1.57e-05 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 10.93 on 10 degrees of freedom
-
 > 
 > 
 > 

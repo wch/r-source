@@ -949,10 +949,10 @@ Residual standard error: 0.7493 on 3 degrees of freedom
 > ### ** Examples
 > 
 > CO2.Qn1 <- CO2[CO2$Plant == "Qn1", ]
-> SSasympOff( CO2.Qn1$conc, 32, -4, 43 )  # response only
+> SSasympOff(CO2.Qn1$conc, 32, -4, 43)  # response only
 [1] 19.65412 29.14785 31.27791 31.88435 31.99259 31.99970 32.00000
 > Asym <- 32; lrc <- -4; c0 <- 43
-> SSasympOff( CO2.Qn1$conc, Asym, lrc, c0 ) # response and gradient
+> SSasympOff(CO2.Qn1$conc, Asym, lrc, c0) # response and gradient
 [1] 19.65412 29.14785 31.27791 31.88435 31.99259 31.99970 32.00000
 attr(,"gradient")
           Asym          lrc            c0
@@ -963,7 +963,7 @@ attr(,"gradient")
 [5,] 0.9997683 6.204920e-02 -1.357751e-04
 [6,] 0.9999906 3.479529e-03 -5.505583e-06
 [7,] 1.0000000 1.369435e-05 -1.430967e-08
-> getInitial(uptake ~ SSasympOff( conc, Asym, lrc, c0), data = CO2.Qn1)
+> getInitial(uptake ~ SSasympOff(conc, Asym, lrc, c0), data = CO2.Qn1)
 $Asym
 [1] 38.13978
 
@@ -974,7 +974,7 @@ $c0
 [1] 51.22324
 
 > ## Initial values are in fact the converged values
-> fm1 <- nls(uptake ~ SSasympOff( conc, Asym, lrc, c0), data = CO2.Qn1)
+> fm1 <- nls(uptake ~ SSasympOff(conc, Asym, lrc, c0), data = CO2.Qn1)
 > summary(fm1)
 
 Formula: uptake ~ SSasympOff(conc, Asym, lrc, c0)
@@ -1032,10 +1032,10 @@ Residual standard error: 1.663 on 4 degrees of freedom
 > ### ** Examples
 > 
 > Lob.329 <- Loblolly[ Loblolly$Seed == "329", ]
-> SSasympOrig( Lob.329$age, 100, -3.2 )  # response only
+> SSasympOrig(Lob.329$age, 100, -3.2)  # response only
 [1] 11.51053 18.43835 33.47697 45.74272 55.74687 63.90642
 > Asym <- 100; lrc <- -3.2
-> SSasympOrig( Lob.329$age, Asym, lrc ) # response and gradient
+> SSasympOrig(Lob.329$age, Asym, lrc) # response and gradient
 [1] 11.51053 18.43835 33.47697 45.74272 55.74687 63.90642
 attr(,"gradient")
           Asym      lrc
@@ -1050,7 +1050,7 @@ attr(,"gradient")
     Asym      lrc 
 315.0457  -4.8139 
 > ## Initial values are in fact the converged values
-> fm1 <- nls(height ~ SSasympOrig( age, Asym, lrc), data = Lob.329)
+> fm1 <- nls(height ~ SSasympOrig(age, Asym, lrc), data = Lob.329)
 > summary(fm1)
 
 Formula: height ~ SSasympOrig(age, Asym, lrc)
@@ -1186,11 +1186,11 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 > ### ** Examples
 > 
 > Theoph.1 <- Theoph[ Theoph$Subject == 1, ]
-> SSfol( Theoph.1$Dose, Theoph.1$Time, -2.5, 0.5, -3 )  # response only
+> SSfol(Theoph.1$Dose, Theoph.1$Time, -2.5, 0.5, -3)  # response only
  [1] 0.000000 2.214486 3.930988 5.261945 5.659813 5.084852 4.587699 3.916808
  [9] 3.318395 2.579204 0.943593
 > lKe <- -2.5; lKa <- 0.5; lCl <- -3
-> SSfol( Theoph.1$Dose, Theoph.1$Time, lKe, lKa, lCl ) # response and gradient
+> SSfol(Theoph.1$Dose, Theoph.1$Time, lKe, lKa, lCl)  # response and gradient
  [1] 0.000000 2.214486 3.930988 5.261945 5.659813 5.084852 4.587699 3.916808
  [9] 3.318395 2.579204 0.943593
 attr(,"gradient")
@@ -1249,11 +1249,11 @@ Residual standard error: 0.732 on 8 degrees of freedom
 > ### ** Examples
 > 
 > Chick.1 <- ChickWeight[ChickWeight$Chick == 1, ]
-> SSfpl( Chick.1$Time, 13, 368, 14, 6 )  # response only
+> SSfpl(Chick.1$Time, 13, 368, 14, 6)  # response only
  [1]  44.38189  55.31704  69.39853  87.05603 108.47420 133.43149 161.18758
  [8] 190.50000 219.81242 247.56851 272.52580 283.70240
 > A <- 13; B <- 368; xmid <- 14; scal <- 6
-> SSfpl( Chick.1$Time, A, B, xmid, scal ) # response and gradient
+> SSfpl(Chick.1$Time, A, B, xmid, scal) # response and gradient
  [1]  44.38189  55.31704  69.39853  87.05603 108.47420 133.43149 161.18758
  [8] 190.50000 219.81242 247.56851 272.52580 283.70240
 attr(,"gradient")
@@ -1337,12 +1337,12 @@ Residual standard error: 2.351 on 8 degrees of freedom
 > ### ** Examples
 > 
 > DNase.1 <- subset(DNase, Run == 1)
-> SSlogis(log(DNase.1$conc), 4.5, 2.3, 0.7)  # response only
+> SSlogis(log(DNase.1$conc), 4.5, 2.3, 0.7)   # response only
  [1] 0.002252677 0.002252677 0.016271550 0.016271550 0.043533453 0.043533453
  [7] 0.115296351 0.115296351 0.297460928 0.297460928 0.720167577 0.720167577
 [13] 1.525513075 1.525513075 2.609666856 2.609666856
 > Asym <- 4.5; b2 <- 2.3; b3 <- 0.7
-> SSgompertz(log(DNase.1$conc), Asym, b2, b3 ) # response and gradient
+> SSgompertz(log(DNase.1$conc), Asym, b2, b3) # response and gradient
  [1] 0.00525729 0.00525729 0.07323255 0.07323255 0.18049064 0.18049064
  [7] 0.36508763 0.36508763 0.63288772 0.63288772 0.97257180 0.97257180
 [13] 1.36033340 1.36033340 1.76786902 1.76786902
@@ -1402,11 +1402,11 @@ Residual standard error: 0.02684 on 13 degrees of freedom
 > ### ** Examples
 > 
 > Chick.1 <- ChickWeight[ChickWeight$Chick == 1, ]
-> SSlogis( Chick.1$Time, 368, 14, 6 )  # response only
+> SSlogis(Chick.1$Time, 368, 14, 6)  # response only
  [1]  32.53108  43.86668  58.46383  76.76794  98.97044 124.84166 153.61416
  [8] 184.00000 214.38584 243.15834 269.02956 280.61545
 > Asym <- 368; xmid <- 14; scal <- 6
-> SSlogis( Chick.1$Time, Asym, xmid, scal ) # response and gradient
+> SSlogis(Chick.1$Time, Asym, xmid, scal) # response and gradient
  [1]  32.53108  43.86668  58.46383  76.76794  98.97044 124.84166 153.61416
  [8] 184.00000 214.38584 243.15834 269.02956 280.61545
 attr(,"gradient")
@@ -1486,11 +1486,11 @@ Residual standard error: 2.919 on 9 degrees of freedom
 > ### ** Examples
 > 
 > PurTrt <- Puromycin[ Puromycin$state == "treated", ]
-> SSmicmen( PurTrt$conc, 200, 0.05 )  # response only
+> SSmicmen(PurTrt$conc, 200, 0.05)  # response only
  [1]  57.14286  57.14286 109.09091 109.09091 137.50000 137.50000 162.96296
  [8] 162.96296 183.60656 183.60656 191.30435 191.30435
 > Vm <- 200; K <- 0.05
-> SSmicmen( PurTrt$conc, Vm, K ) # response and gradient
+> SSmicmen(PurTrt$conc, Vm, K)      # response and gradient
  [1]  57.14286  57.14286 109.09091 109.09091 137.50000 137.50000 162.96296
  [8] 162.96296 183.60656 183.60656 191.30435 191.30435
 attr(,"gradient")
@@ -1512,7 +1512,7 @@ attr(,"gradient")
 212.6837   0.0641 
 > ## Initial values are in fact the converged values
 > fm1 <- nls(rate ~ SSmicmen(conc, Vm, K), data = PurTrt)
-> summary( fm1 )
+> summary(fm1)
 
 Formula: rate ~ SSmicmen(conc, Vm, K)
 
@@ -1580,7 +1580,7 @@ Residual standard error: 10.93 on 10 degrees of freedom
 > ### ** Examples
 > 
 > Chick.6 <- subset(ChickWeight, (Chick == 6) & (Time > 0))
-> SSweibull(Chick.6$Time, 160, 115, -5.5, 2.5 )  # response only
+> SSweibull(Chick.6$Time, 160, 115, -5.5, 2.5)   # response only
  [1]  47.62811  59.09743  79.79756 105.12008 128.41818 145.02585 154.25783
  [8] 158.24919 159.58222 159.92314 159.97023
 > Asym <- 160; Drop <- 115; lrc <- -5.5; pwr <- 2.5

@@ -39,9 +39,9 @@ SSfpl(input, A, B, xmid, scal)
 }
 \examples{
 Chick.1 <- ChickWeight[ChickWeight$Chick == 1, ]
-SSfpl( Chick.1$Time, 13, 368, 14, 6 )  # response only
+SSfpl(Chick.1$Time, 13, 368, 14, 6)  # response only
 A <- 13; B <- 368; xmid <- 14; scal <- 6
-SSfpl( Chick.1$Time, A, B, xmid, scal ) # response and gradient
+SSfpl(Chick.1$Time, A, B, xmid, scal) # response and gradient
 getInitial(weight ~ SSfpl(Time, A, B, xmid, scal), data = Chick.1)
 ## Initial values are in fact the converged values
 fm1 <- nls(weight ~ SSfpl(Time, A, B, xmid, scal), data = Chick.1)
