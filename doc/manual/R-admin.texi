@@ -2531,10 +2531,7 @@ suitable versions), @code{zlib}, @code{libbz2} and PCRE will be used if
 specified by @option{--with-system-zlib}, @option{--with-system-bzlib}
 or @option{--with-system-pcre}: otherwise versions in the @R{} sources
 will be compiled in.  As the latter suffice and are tested with @R{} you
-should not need to change this.  In particular, the version of
-@code{zlib} 1.2.3 in the @R{} sources has enhancements to work with
-large file systems on 32-bit platforms, and @code{zlib} 1.2.4 is not
-currently compatible with @R{}.
+should not need to change this.
 
 @code{liblzma} from @code{xz-utils} version 4.999 or later will be used
 if installed: the version in the @R{} sources can be selected instead by
@@ -3965,9 +3962,9 @@ performance: Sun recommend
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
 @example
-CFLAGS="-xO5 -xc99 -xlibmieee -xlibmil -nofstore -xtarget=native"
+CFLAGS="-O5 -xc99 -xlibmieee -xlibmil -nofstore -xtarget=native"
 FFLAGS="-O5 -libmil -nofstore -xtarget=native"
-CXXFLAGS="-xO5 -xlibmil -nofstore -xtarget=native"
+CXXFLAGS="-O5 -xlibmil -nofstore -xtarget=native"
 SAFE_FFLAGS="-libmil -fstore -xtarget=native"
 @end example
 
