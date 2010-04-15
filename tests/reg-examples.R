@@ -34,3 +34,11 @@ library(tools)
 example(fileutils)
 ## results are location- and OS-specific
 
+
+## grDevices
+if(.Platform$OS.type == "windows") {
+    example(windowsFonts)
+} else {
+    example(X11Fonts)
+    example(quartzFonts)
+}
