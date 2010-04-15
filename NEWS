@@ -116,7 +116,8 @@ INSTALLATION
 	is now compared to reference output rather than the previous
 	output (if any).
 
-    o	zlib has been updated to 1.2.4.
+    o	zlib has been updated to 1.2.4: this is also the minimum
+	version required for --with-system-zlib.
 
 
 BUG FIXES
