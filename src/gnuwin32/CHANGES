@@ -78,6 +78,8 @@ BUG FIXES
     o	Using ESC to interrupt a system() call could cause R to become
 	unstable.
 
+    o	0^1i (which should be complex NAN) was incorrect.
+
 
 
 
