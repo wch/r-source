@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-15 r51747)
+R version 2.12.0 Under development (unstable) (2010-04-15 r51750)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -3508,15 +3508,15 @@ Residual standard error: 1.663 on 4 degrees of freedom
 +       data = CO2, subset = Plant == pp)
 + }
 > ## check the coefficients by plant
-> sapply(fmlist, coef)
-            Qn1        Qn2        Qn3       Qc1        Qc3        Qc2
-Asym  38.139782  42.871686  44.227996 36.428732  40.683704  39.819497
-lrc  -34.276585 -29.656171 -37.626788 -9.901194 -11.541640 -51.534564
-c0    -4.380647  -4.665728  -4.486118 -4.861741  -4.945218  -4.463838
-            Mn3        Mn2       Mn1       Mc2         Mc3       Mc1
-Asym  28.482853  32.128265 34.084807 13.555203   18.535062 21.787232
-lrc  -17.370807 -29.044263 -8.813218 -1.982271 -136.114730  2.448758
-c0    -4.591566  -4.466157 -5.064579 -4.560851   -3.465158 -5.142256
+> print(sapply(fmlist, coef), digits=3)
+        Qn1    Qn2    Qn3   Qc1    Qc3    Qc2    Mn3    Mn2   Mn1   Mc2     Mc3
+Asym  38.14  42.87  44.23 36.43  40.68  39.82  28.48  32.13 34.08 13.56   18.54
+lrc  -34.28 -29.66 -37.63 -9.90 -11.54 -51.53 -17.37 -29.04 -8.81 -1.98 -136.11
+c0    -4.38  -4.67  -4.49 -4.86  -4.95  -4.46  -4.59  -4.47 -5.06 -4.56   -3.47
+       Mc1
+Asym 21.79
+lrc   2.45
+c0   -5.14
 > 
 > 
 > 

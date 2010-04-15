@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51730)
+R version 2.12.0 Under development (unstable) (2010-04-15 r51750)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1446,7 +1446,7 @@ scal   11.405      0.905   12.60  5.1e-07 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
-Residual standard error: 2.919 on 9 degrees of freedom
+Residual standard error: 2.92 on 9 degrees of freedom
 
 > ## Don't show: 
 > options(od)
@@ -2056,7 +2056,7 @@ lm(formula = weight ~ group - 1)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--1.0710 -0.4938  0.0685  0.2462  1.3690 
+-1.0710 -0.4937  0.0685  0.2462  1.3690 
 
 Coefficients:
          Estimate Std. Error t value Pr(>|t|)    
@@ -2072,8 +2072,8 @@ F-statistic:  485 on 2 and 18 DF,  p-value: <2e-16
 
 lm> ## No test: 
 lm> summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical
-      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
--7.772e-16 -3.608e-16  0.000e+00 -1.110e-17  0.000e+00  3.220e-15 
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+-7.77e-16 -3.61e-16  0.00e+00 -1.11e-17  0.00e+00  3.22e-15 
 
 lm> ## End(No test)
 lm> 
@@ -2273,8 +2273,8 @@ Coefficients:
 (Intercept)  3.04e+00   1.71e-01   17.81   <2e-16 ***
 outcome2    -4.54e-01   2.02e-01   -2.25    0.025 *  
 outcome3    -2.93e-01   1.93e-01   -1.52    0.128    
-treatment2   8.72e-16   2.00e-01    0.00    1.000    
-treatment3   4.56e-16   2.00e-01    0.00    1.000    
+treatment2   1.34e-15   2.00e-01    0.00    1.000    
+treatment3   1.42e-15   2.00e-01    0.00    1.000    
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
 
