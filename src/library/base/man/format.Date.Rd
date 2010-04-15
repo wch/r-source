@@ -107,9 +107,9 @@ as.Date(x, \dots)
   supported, but with no alternative number representation nor era
   available in any locale.
 }
-\examples{
+\examples{\donttest{
 ## locale-specific version of the date
-format(Sys.Date(), "\%a \%b \%d")
+format(Sys.Date(), "\%a \%b \%d")}
 
 ## read in date info in format 'ddmmmyyyy'
 ## This will give NA(s) in some locales; setting the C locale

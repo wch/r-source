@@ -35,10 +35,10 @@
   but see the comments about fractional days in the help for
   \code{\link{Dates}}.
 }
-\examples{
+\examples{\donttest{
 (z <- Sys.Date())
 z + 10
 z < c("2009-06-01", "2010-01-01", "2015-01-01")
-}
+}}
 \keyword{utilities}
 \keyword{chron}

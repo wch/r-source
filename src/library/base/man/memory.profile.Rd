@@ -32,7 +32,7 @@ memory.profile()
   of specific code or objects, but need to be enabled at compile time.
 }
 
-\examples{
+\examples{\donttest{
 memory.profile()
-}
+}}
 \keyword{utilities}

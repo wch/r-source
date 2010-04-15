@@ -234,7 +234,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
 \examples{
 library()                   # list all available packages
 library(lib.loc = .Library) # list all packages in the default library
-library(help = splines)     # documentation on package 'splines'
+\donttest{library(help = splines)     # documentation on package 'splines'}
 library(splines)            # load package 'splines'
 require(splines)            # the same
 search()                    # "splines", too

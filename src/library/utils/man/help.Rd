@@ -167,7 +167,7 @@ help(lapply)
 
 help("for")             # or ?"for", but quotes/backticks are needed
 
-help(package="splines") # get help even when package is not loaded
+\donttest{help(package="splines") # get help even when package is not loaded}
 
 topi <- "women"
 help(topi)

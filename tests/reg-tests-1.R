@@ -6131,29 +6131,3 @@ stopifnot(identical(gg, tc))
 close(tc)
 stopifnot(length(newConn()) == 0)
 ## getConn..(*) seg.faulted in R <= 2.10.x
-
-
-## run 'random' base examples
-example(DateTimeClasses)
-example(Dates)
-example(Random)
-example(Sys.getpid)
-example(Sys.time)
-example(as.POSIXlt)
-example(difftime)
-paste("Today is", date()) # from paste.Rd
-trunc(Sys.time(), "day") # from round.POSIXt.Rd
-example(srcref)
-example(strptime)
-example(sys.parent)
-example(tempfile)
-example(weekdays)
-##
-
-
-## Moved from tools:fileutils.Rd
-library(tools)
-example(fileutils)
-## results are location- and OS-specific
-
-example(packageDescription)

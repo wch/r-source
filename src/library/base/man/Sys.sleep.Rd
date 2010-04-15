@@ -36,7 +36,7 @@ Sys.sleep(time)
 }
 \note{This function may not be implemented on all systems.}
 
-\examples{
+\examples{\donttest{
 testit <- function(x)
 {
     p1 <- proc.time()
@@ -44,5 +44,5 @@ testit <- function(x)
     proc.time() - p1 # The cpu usage should be negligible
 }
 testit(3.7)
-}
+}}
 \keyword{utilities}
