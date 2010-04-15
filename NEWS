@@ -75,8 +75,8 @@ NEW FEATURES
 	and for fast multi-assign() to existing environment.
 
     o	There are several small changes to output which 'zap' small
-	numbers, e.g. in printing quantiled of residuals in summaries
-	from lm annd glm fits, and in test statisions in anovas.
+	numbers, e.g. in printing quantiles of residuals in summaries
+	from lm annd glm fits, and in test statisics in print.anova.
 
 
 DEPRECATED & DEFUNCT

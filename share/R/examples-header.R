@@ -60,7 +60,7 @@ assign("ptime", proc.time(), pos = "CheckExEnv")
 ## Use postscript as incomplete files may be viewable, unlike PDF.
 ## Choose a size that is close to on-screen devices, fix paper
 grDevices::ps.options(width = 7, height = 7, paper = "a4", reset = TRUE)
-grDevices::postscript(paste(pkgname, "-Ex.ps", sep=""))
+grDevices::postscript(paste(pkgname, "-Ex.ps", sep=""), encoding = "ISOLatin1")
 
 assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
