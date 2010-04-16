@@ -85,16 +85,18 @@ boxplot(xg, col = "lavender", notch = TRUE, varwidth = TRUE)
 sapply(xg, length)
 sapply(xg, mean)
 
-### Calculate z-scores by group
-
+### Calculate 'z-scores' by group (standardize to mean zero, variance one)
 z <- unsplit(lapply(split(x, g), scale), g)
-tapply(z, g, mean)
 
 # or
 
-z <- x
-split(z, g) <- lapply(split(x, g), scale)
+zz <- x
+split(zz, g) <- lapply(split(x, g), scale)
+
+# and check that the within-group std dev is indeed one
 tapply(z, g, sd)
+tapply(zz, g, sd)
+
 
 ### data frame variation
 
