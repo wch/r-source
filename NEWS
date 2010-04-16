@@ -70,9 +70,9 @@ NEW FEATURES
 	changes in R 2.12.x' on developer.r-project.org for the
 	consequences for a handful of CRAN packages.
 
-    o	*Experimental*	list2env()  utility as inverse of
- 	as.list(<environment>)
+    o	Experimental  list2env()  utility as inverse of as.list(<environment>)
 	and for fast multi-assign() to existing environment.
+	as.environment() is now generic and uses list2env() as list method.
 
     o	There are several small changes to output which 'zap' small
 	numbers, e.g. in printing quantiles of residuals in summaries
@@ -447,7 +447,7 @@ NEW FEATURES
 
     o	pchisq(ncp =, log.p = TRUE) is more accurate for probabilities
 	near one.  E.g. pchisq(80, 4, ncp=1, log.p=TRUE).  (Maybe what
-	was meant in PR#14126.)
+	was meant in PR#14216.)
 
     o	maintainer() has been added, to give convenient access to the
 	name of the maintainer of a package (contributed by David
@@ -559,7 +559,7 @@ INSTALLATION
     o	configure is now generated with autoconf-2.65, which works
 	better on recent systems and on Mac OS X.
 
-  
+
 
 
 PACKAGE INSTALLATION
