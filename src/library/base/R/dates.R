@@ -24,10 +24,14 @@ Sys.Date <- function() as.Date(as.POSIXlt(Sys.time()))
 
 as.Date <- function(x, ...) UseMethod("as.Date")
 
-as.Date.POSIXct <- function(x, ...) {
-    z <- floor(unclass(x)/86400)
-    attr(z, "tzone") <- NULL
-    structure(z, class="Date")
+as.Date.POSIXct <- function(x, tz = "UTC", ...)
+{
+    if(tz == "UTC") {
+        z <- floor(unclass(x)/86400)
+        attr(z, "tzone") <- NULL
+        structure(z, class = "Date")
+    } else
+        as.Date(as.POSIXlt(x, tz = tz))
 }
 
 as.Date.POSIXlt <- function(x, ...) .Internal(POSIXlt2Date(x))
