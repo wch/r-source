@@ -19041,6 +19041,11 @@ lm> par(opar)
 lm> ## model frame :
 lm> stopifnot(identical(lm(weight ~ group, method = "model.frame"),
 lm+                     model.frame(lm.D9)))
+
+lm> ### less simple examples in "See Also" above
+lm> 
+lm> 
+lm> 
 > all.equal(weighted.residuals(lm.D9),
 +           residuals(lm.D9))
 [1] TRUE
