@@ -239,7 +239,7 @@ optim(par, fn, gr = NULL, \dots,
 }
 
 \examples{
-\testonly{od <- options("digits")}
+\testonly{od <- options(digits = 5)}
 require(graphics)
 
 fr <- function(x) {   ## Rosenbrock Banana function

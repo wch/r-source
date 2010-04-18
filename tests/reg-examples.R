@@ -31,6 +31,7 @@ example(packageDescription)
 example(sessionInfo)
 
 ## stats
+example(nlminb)
 example(optim)
 example(uniroot)
 

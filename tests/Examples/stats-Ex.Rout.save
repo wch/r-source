@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-18 r51761)
+R version 2.12.0 Under development (unstable) (2010-04-18 r51768)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -11419,254 +11419,6 @@ $iterations
 > 
 > ### ** Examples
 > 
-> x <- rnbinom(100, mu = 10, size = 10)
-> hdev <- function(par) {
-+     -sum(dnbinom(x, mu = par[1], size = par[2], log = TRUE))
-+ }
-> nlminb(c(9, 12), hdev)
-$par
-[1]  9.760001 13.802305
-
-$objective
-[1] 278.9434
-
-$convergence
-[1] 0
-
-$message
-[1] "relative convergence (4)"
-
-$iterations
-[1] 11
-
-$evaluations
-function gradient 
-      12       31 
-
-> nlminb(c(20, 20), hdev, lower = 0, upper = Inf)
-$par
-[1]  9.76000 13.80230
-
-$objective
-[1] 278.9434
-
-$convergence
-[1] 0
-
-$message
-[1] "relative convergence (4)"
-
-$iterations
-[1] 16
-
-$evaluations
-function gradient 
-      21       41 
-
-> nlminb(c(20, 20), hdev, lower = 0.001, upper = Inf)
-$par
-[1]  9.76000 13.80230
-
-$objective
-[1] 278.9434
-
-$convergence
-[1] 0
-
-$message
-[1] "relative convergence (4)"
-
-$iterations
-[1] 16
-
-$evaluations
-function gradient 
-      21       41 
-
-> 
-> ## slightly modified from the S-PLUS help page for nlminb
-> # this example minimizes a sum of squares with known solution y
-> sumsq <- function( x, y) {sum((x-y)^2)}
-> y <- rep(1,5)
-> x0 <- rnorm(length(y))
-> nlminb(start = x0, sumsq, y = y)
-$par
-[1] 1 1 1 1 1
-
-$objective
-[1] 2.786045e-17
-
-$convergence
-[1] 0
-
-$message
-[1] "X-convergence (3)"
-
-$iterations
-[1] 4
-
-$evaluations
-function gradient 
-       7       26 
-
-> # now use bounds with a y that has some components outside the bounds
-> y <- c( 0, 2, 0, -2, 0)
-> nlminb(start = x0, sumsq, lower = -1, upper = 1, y = y)
-$par
-[1]  2.650082e-07  1.000000e+00 -8.293154e-08 -1.000000e+00 -7.620796e-07
-
-$objective
-[1] 2
-
-$convergence
-[1] 0
-
-$message
-[1] "relative convergence (4)"
-
-$iterations
-[1] 4
-
-$evaluations
-function gradient 
-       6       20 
-
-> # try using the gradient
-> sumsq.g <- function(x,y) 2*(x-y)
-> nlminb(start = x0, sumsq, sumsq.g,
-+        lower = -1, upper = 1, y = y)
-$par
-[1]  2.775558e-17  1.000000e+00  1.734723e-18 -1.000000e+00  2.775558e-17
-
-$objective
-[1] 2
-
-$convergence
-[1] 0
-
-$message
-[1] "both X-convergence and relative convergence (5)"
-
-$iterations
-[1] 4
-
-$evaluations
-function gradient 
-       6        4 
-
-> # now use the hessian, too
-> sumsq.h <- function(x,y) diag(2, nrow = length(x))
-> nlminb(start = x0, sumsq, sumsq.g, sumsq.h,
-+        lower = -1, upper = 1, y = y)
-$par
-[1]  0.000000e+00  1.000000e+00 -3.469447e-18 -1.000000e+00  5.551115e-17
-
-$objective
-[1] 2
-
-$convergence
-[1] 0
-
-$message
-[1] "both X-convergence and relative convergence (5)"
-
-$iterations
-[1] 3
-
-$evaluations
-function gradient 
-       4        3 
-
-> 
-> ## Rest lifted from optim help page
-> 
-> fr <- function(x) {   ## Rosenbrock Banana function
-+     x1 <- x[1]
-+     x2 <- x[2]
-+     100 * (x2 - x1 * x1)^2 + (1 - x1)^2
-+ }
-> grr <- function(x) { ## Gradient of 'fr'
-+     x1 <- x[1]
-+     x2 <- x[2]
-+     c(-400 * x1 * (x2 - x1 * x1) - 2 * (1 - x1),
-+        200 *      (x2 - x1 * x1))
-+ }
-> nlminb(c(-1.2,1), fr)
-$par
-[1] 1 1
-
-$objective
-[1] 2.768493e-20
-
-$convergence
-[1] 0
-
-$message
-[1] "X-convergence (3)"
-
-$iterations
-[1] 35
-
-$evaluations
-function gradient 
-      44       74 
-
-> nlminb(c(-1.2,1), fr, grr)
-$par
-[1] 1 1
-
-$objective
-[1] 4.291816e-22
-
-$convergence
-[1] 0
-
-$message
-[1] "X-convergence (3)"
-
-$iterations
-[1] 35
-
-$evaluations
-function gradient 
-      43       36 
-
-> 
-> 
-> flb <- function(x)
-+     { p <- length(x); sum(c(1, rep(4, p-1)) * (x - c(1, x[-p])^2)^2) }
-> ## 25-dimensional box constrained
-> ## par[24] is *not* at boundary
-> nlminb(rep(3, 25), flb,
-+           lower=rep(2, 25),
-+           upper=rep(4, 25))
-$par
- [1] 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000
- [9] 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000
-[17] 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000 2.109093
-[25] 4.000000
-
-$objective
-[1] 368.1059
-
-$convergence
-[1] 0
-
-$message
-[1] "relative convergence (4)"
-
-$iterations
-[1] 6
-
-$evaluations
-function gradient 
-      10      177 
-
-> ## trying to use a too small tolerance:
-> r <- nlminb(rep(3, 25), flb, control = list(rel.tol=1e-16))
-> stopifnot(grepl("rel.tol", r$message))
-> 
-> 
 > 
 > cleanEx()
 > nameEx("nls")
@@ -12146,7 +11898,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > ### ** Examples
 > 
 > ## Don't show: 
-> od <- options("digits")
+> od <- options(digits = 5)
 > ## End Don't show
 > require(graphics)
 > 
@@ -12163,10 +11915,10 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 + }
 > optim(c(-1.2,1), fr)
 $par
-[1] 1.000260 1.000506
+[1] 1.0003 1.0005
 
 $value
-[1] 8.825241e-08
+[1] 8.8252e-08
 
 $counts
 function gradient 
@@ -12183,7 +11935,7 @@ $par
 [1] 1 1
 
 $value
-[1] 9.594956e-18
+[1] 9.595e-18
 
 $counts
 function gradient 
@@ -12197,10 +11949,10 @@ NULL
 
 > optim(c(-1.2,1), fr, NULL, method = "BFGS", hessian = TRUE)
 $par
-[1] 0.9998044 0.9996084
+[1] 0.9998 0.9996
 
 $value
-[1] 3.827383e-08
+[1] 3.8274e-08
 
 $counts
 function gradient 
@@ -12213,16 +11965,16 @@ $message
 NULL
 
 $hessian
-          [,1]      [,2]
-[1,]  801.6881 -399.9218
-[2,] -399.9218  200.0000
+        [,1]    [,2]
+[1,]  801.69 -399.92
+[2,] -399.92  200.00
 
 > optim(c(-1.2,1), fr, grr, method = "L-BFGS-B")
 $par
-[1] 0.9999997 0.9999995
+[1] 1 1
 
 $value
-[1] 2.267577e-13
+[1] 2.2676e-13
 
 $counts
 function gradient 
@@ -12241,13 +11993,12 @@ $message
 > optim(rep(3, 25), flb, NULL, method = "L-BFGS-B",
 +       lower=rep(2, 25), upper=rep(4, 25)) # par[24] is *not* at boundary
 $par
- [1] 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000
- [9] 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000
-[17] 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000 2.000000 2.109093
-[25] 4.000000
+ [1] 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000
+[11] 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000 2.0000
+[21] 2.0000 2.0000 2.0000 2.1091 4.0000
 
 $value
-[1] 368.1059
+[1] 368.11
 
 $counts
 function gradient 
@@ -12269,10 +12020,10 @@ $message
 +              control=list(maxit=20000, temp=20, parscale=20))
 > res
 $par
-[1] -15.81517
+[1] -15.815
 
 $value
-[1] 67.46774
+[1] 67.468
 
 $counts
 function gradient 
@@ -12287,10 +12038,10 @@ NULL
 > ## Now improve locally {typically only by a small bit}:
 > (r2 <- optim(res$par, fw, method="BFGS"))
 $par
-[1] -15.81515
+[1] -15.815
 
 $value
-[1] 67.46773
+[1] 67.468
 
 $counts
 function gradient 
