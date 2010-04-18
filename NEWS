@@ -145,6 +145,9 @@ BUG FIXES
 
     o	The default C code (R_binary) for binary ops now sets the S4
 	bit in the result if either argument is an S4 object. (PR#13209)
+	
+    o	source(echo=TRUE) failed to echo comments that followed the
+    	last statement in a file.
 
 
 

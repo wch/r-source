@@ -45,6 +45,8 @@ Type 'q()' to quit R.
 
 > pi
 [1] 3.141593
+
+> # last line
 > unlink("testIO.R")
 > 
 > ## ======== LF file, incomplete final line
@@ -87,6 +89,8 @@ In readLines("testIO.R") : incomplete final line found on 'testIO.R'
 
 > pi
 [1] 3.141593
+
+> # last line
 > readLines("testIO.R")
 [1] "# line 1"    "2+3"         "ls()"        "pi"          "# last line"
 > unlink("testIO.R")
@@ -135,6 +139,8 @@ In readLines("testIO.R") : incomplete final line found on 'testIO.R'
 
 > pi
 [1] 3.141593
+
+> # last line
 > unlink("testIO.R")
 > 
 > ## ======== CR file, incomplete final line
