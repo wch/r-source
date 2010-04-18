@@ -38,6 +38,8 @@ mle(minuslogl, start = formals(minuslogl), method = "BFGS",
   \code{\link{mle-class}}
 }
 \examples{
+## Avoid printing to unwarranted accuracy
+od <- options(digits=5)
 x <- 0:10
 y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
 ## This needs a constrained parameter space: most methods will accept NA
@@ -67,6 +69,8 @@ ll2 <- function(lymax=log(15), lxhalf=log(6))
 (fit2 <- mle(ll2))
 plot(profile(fit2), absVal=FALSE)
 exp(confint(fit2))
+
+options(od)
 }
 \keyword{models}
 

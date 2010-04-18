@@ -68,7 +68,7 @@ xy.coords(x, y = NULL, xlab = NULL, ylab = NULL, log = NULL,
   and \code{\link{lowess}} are examples of functions which use this mechanism.
 }
 \examples{
-xy.coords(stats::fft(c(1:10)), NULL)
+xy.coords(stats::fft(c(1:9)), NULL)
 
 with(cars, xy.coords(dist ~ speed, NULL)$xlab ) # = "speed"
 

@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51721)
+R version 2.12.0 Under development (unstable) (2010-04-18 r51761)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -62,6 +62,8 @@ Type 'q()' to quit R.
 > 
 > ### ** Examples
 > 
+> ## Avoid printing to unwarranted accuracy
+> od <- options(digits=5)
 > x <- 0:10
 > y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
 > ## This needs a constrained parameter space: most methods will accept NA
@@ -73,16 +75,16 @@ Call:
 mle(minuslogl = ll)
 
 Coefficients:
-     ymax     xhalf 
-24.993092  3.057062 
+   ymax   xhalf 
+24.9931  3.0571 
 > mle(ll, fixed=list(xhalf=6))
 
 Call:
 mle(minuslogl = ll, fixed = list(xhalf = 6))
 
 Coefficients:
-    ymax    xhalf 
-19.28809  6.00000 
+  ymax  xhalf 
+19.288  6.000 
 > ## alternative using bounds on optimization
 > ll2 <- function(ymax=15, xhalf=6)
 +     -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE))
@@ -92,8 +94,8 @@ Call:
 mle(minuslogl = ll2, method = "L-BFGS-B", lower = rep(0, 2))
 
 Coefficients:
-     ymax     xhalf 
-24.999420  3.055779 
+   ymax   xhalf 
+24.9994  3.0558 
 > 
 > summary(fit)
 Maximum likelihood estimation
@@ -102,23 +104,23 @@ Call:
 mle(minuslogl = ll)
 
 Coefficients:
-       Estimate Std. Error
-ymax  24.993092   4.224441
-xhalf  3.057062   1.034796
+      Estimate Std. Error
+ymax   24.9931     4.2244
+xhalf   3.0571     1.0348
 
--2 log L: 57.20811 
+-2 log L: 57.208 
 > logLik(fit)
-'log Lik.' -28.60406 (df=2)
+'log Lik.' -28.604 (df=2)
 > vcov(fit)
-           ymax     xhalf
-ymax  17.845905 -3.720571
-xhalf -3.720571  1.070802
+         ymax   xhalf
+ymax  17.8459 -3.7206
+xhalf -3.7206  1.0708
 > plot(profile(fit), absVal=FALSE)
 > confint(fit)
 Profiling...
-          2.5 %    97.5 %
-ymax  17.884514 34.619387
-xhalf  1.661551  6.479181
+        2.5 %  97.5 %
+ymax  17.8845 34.6194
+xhalf  1.6616  6.4792
 > 
 > ## use bounded optimization
 > ## the lower bounds are really > 0, but we use >=0 to stress-test profiling
@@ -128,8 +130,8 @@ Call:
 mle(minuslogl = ll, method = "L-BFGS-B", lower = c(0, 0))
 
 Coefficients:
-     ymax     xhalf 
-24.999420  3.055779 
+   ymax   xhalf 
+24.9994  3.0558 
 > plot(profile(fit1), absVal=FALSE)
 > 
 > ## a better parametrization:
@@ -141,14 +143,16 @@ Call:
 mle(minuslogl = ll2)
 
 Coefficients:
-   lymax   lxhalf 
-3.218870 1.117006 
+ lymax lxhalf 
+3.2189 1.1170 
 > plot(profile(fit2), absVal=FALSE)
 > exp(confint(fit2))
 Profiling...
-           2.5 %    97.5 %
-lymax  17.881480 34.618597
-lxhalf  1.661522  6.479448
+         2.5 %  97.5 %
+lymax  17.8815 34.6186
+lxhalf  1.6615  6.4794
+> 
+> options(od)
 > 
 > 
 > 

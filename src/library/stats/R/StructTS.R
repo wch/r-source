@@ -132,7 +132,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     dimnames(states) <- list(time(x), cn)
     states <- ts(states, start = xtsp[1L], frequency = nf)
 
-    coef <- coef*vx
+    coef <- pmax(coef*vx, 0) # computed values just below 0 are possible
     names(coef) <- switch(type,
                           "level" = c("level", "epsilon"),
                           "trend" = c("level", "slope", "epsilon"),
