@@ -60,7 +60,7 @@ prop.test(x, n, p = NULL,
 
   If there is only one group, then the null tested is that the
   underlying probability of success is \code{p}, or .5 if \code{p} is
-  not given.  The alternative is that the probability of success if less
+  not given.  The alternative is that the probability of success is less
   than, not equal to, or greater than \code{p} or 0.5, respectively, as
   specified by \code{alternative}.  A confidence interval for the
   underlying proportion with confidence level as specified by
