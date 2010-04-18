@@ -28,6 +28,9 @@ library(help="splines")
 example(packageDescription)
 example(sessionInfo)
 
+## stats
+example(optim)
+example(uniroot)
 
 library(tools)
 example(Rdutils)
