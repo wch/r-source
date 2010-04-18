@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-15 r51750)
+R version 2.12.0 Under development (unstable) (2010-04-18 r51761)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -789,6 +789,9 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### ** Examples
 > 
+> ## Don't show: 
+> od <- options(digits=5)
+> ## End Don't show
 > require(stats); require(graphics)
 > JJ <- log10(JohnsonJohnson)
 > plot(JJ)
@@ -798,8 +801,8 @@ Call:
 StructTS(x = JJ, type = "BSM")
 
 Variances:
-    level      slope       seas    epsilon  
-1.948e-04  6.548e-06  4.138e-04  2.647e-04  
+   level     slope      seas   epsilon  
+1.95e-04  6.55e-06  4.14e-04  2.65e-04  
 > tsdiag(fit)
 > sm <- tsSmooth(fit)
 > plot(cbind(JJ, sm[, 1], sm[, 3]-0.5), plot.type = "single",
@@ -807,6 +810,9 @@ Variances:
 > abline(h = -0.5, col = "grey60")
 > 
 > monthplot(fit)
+> ## Don't show: 
+> options(od)
+> ## End Don't show
 > 
 > 
 > 
@@ -3523,7 +3529,7 @@ c0   -5.14
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.751 0.186 7.118 0 0 
+Time elapsed:  5.416 0.141 5.609 0 0 
 > grDevices::dev.off()
 null device 
           1 

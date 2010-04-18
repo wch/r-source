@@ -20,6 +20,7 @@
   Second Edition.  Springer.  Example 1.1.
 }
 \examples{
+\testonly{od <- options(digits=5)}
 require(stats); require(graphics)
 JJ <- log10(JohnsonJohnson)
 plot(JJ)
@@ -31,5 +32,6 @@ plot(cbind(JJ, sm[, 1], sm[, 3]-0.5), plot.type = "single",
 abline(h = -0.5, col = "grey60")
 
 monthplot(fit)
+\testonly{options(od)}
 }
 \keyword{datasets}
