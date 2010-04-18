@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-15 r51750)
+R version 2.12.0 Under development (unstable) (2010-04-18 r51758)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -2087,6 +2087,11 @@ lm> ## model frame :
 lm> stopifnot(identical(lm(weight ~ group, method = "model.frame"),
 lm+                     model.frame(lm.D9)))
 
+lm> ### less simple examples in "See Also" above
+lm> 
+lm> 
+lm> 
+
 step> step(lm.D9)  
 Start:  AIC=-12.58
 weight ~ group
@@ -2376,6 +2381,13 @@ AIC: 27.03
 
 Number of Fisher Scoring iterations: 3
 
+
+glm> ## Not run: 
+glm> ##D ## for an example of the use of a terms object as a formula
+glm> ##D demo(glm.vr)
+glm> ## End(Not run)
+glm> 
+glm> 
 > drop1(glm.D93, test="Chisq")
 Single term deletions
 
@@ -7206,6 +7218,13 @@ AIC: 27.032
 
 Number of Fisher Scoring iterations: 3
 
+
+glm> ## Not run: 
+glm> ##D ## for an example of the use of a terms object as a formula
+glm> ##D demo(glm.vr)
+glm> ## End(Not run)
+glm> 
+glm> 
 > extractAIC(glm.D93)  #>>  5  15.129
 [1]  5.00000 56.76132
 > 
@@ -17081,6 +17100,11 @@ lm> par(opar)
 lm> ## model frame :
 lm> stopifnot(identical(lm(weight ~ group, method = "model.frame"),
 lm+                     model.frame(lm.D9)))
+
+lm> ### less simple examples in "See Also" above
+lm> 
+lm> 
+lm> 
 > step(lm.D9)  
 Start:  AIC=-12.58
 weight ~ group
