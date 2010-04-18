@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51721)
+R version 2.12.0 Under development (unstable) (2010-04-18 r51758)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -277,18 +277,7 @@ F-statistic:  9609 on 5 and 9 DF,  p-value: < 2.2e-16
 > xx <- seq( -pi, pi, length.out = 16 )[-1]
 > yy <- sin( xx )
 > frm <- data.frame( xx, yy )
-> ( pispl <- periodicSpline( xx, yy, period = 2 * pi ) )
-bSpline representation of spline for yy ~ xx
-     -3.97935      -3.56047      -3.14159      -2.72271      -2.30383 
-           NA            NA            NA            NA  2.747662e-16 
-     -1.88496      -1.46608      -1.04720      -0.62832      -0.20944 
--4.188059e-01 -7.651964e-01 -9.792775e-01 -1.024033e+00 -8.917232e-01 
-      0.20944       0.62832       1.04720       1.46608       1.88496 
--6.052268e-01 -2.140811e-01  2.140811e-01  6.052268e-01  8.917232e-01 
-      2.30383       2.72271       3.14159       3.56047       3.97935 
- 1.024033e+00  9.792775e-01  7.651964e-01  4.188059e-01  2.747662e-16 
-      4.39823       4.81711 
--4.188059e-01 -7.651964e-01 
+> pispl <- periodicSpline( xx, yy, period = 2 * pi)
 > pispl2 <- periodicSpline( yy ~ xx, frm, period = 2 * pi )
 > stopifnot(all.equal(pispl, pispl2))# pispl and pispl2 are the same
 > 

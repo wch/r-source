@@ -117,9 +117,8 @@ cols <- rgb(srgb[,1],srgb[,2],srgb[,3])
 image((-10:15)*10,(-15:10)*10,matrix(1:(26*26),ncol=26),col=cols,
   xlab="a",ylab="b",main="Lab: L=80")
 
-
 (cols <- t(col2rgb(palette())))
-(lab <- convertColor(cols,from="sRGB",to="Lab",scale.in=255))
+zapsmall(lab <- convertColor(cols,from="sRGB",to="Lab",scale.in=255))
 round(convertColor(lab,from="Lab",to="sRGB",scale.out=255))
 }
 \keyword{color}

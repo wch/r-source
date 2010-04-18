@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-15 r51738)
+R version 2.12.0 Under development (unstable) (2010-04-18 r51758)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1480,7 +1480,6 @@ List of 150
 > image((-10:15)*10,(-15:10)*10,matrix(1:(26*26),ncol=26),col=cols,
 +   xlab="a",ylab="b",main="Lab: L=80")
 > 
-> 
 > (cols <- t(col2rgb(palette())))
      red green blue
 [1,]   0     0    0
@@ -1491,7 +1490,7 @@ List of 150
 [6,] 255     0  255
 [7,] 255   255    0
 [8,] 190   190  190
-> (lab <- convertColor(cols,from="sRGB",to="Lab",scale.in=255))
+> zapsmall(lab <- convertColor(cols,from="sRGB",to="Lab",scale.in=255))
             L       a.x          b
 [1,]  0.00000   0.00000    0.00000
 [2,] 53.48418  80.01027   67.38407
