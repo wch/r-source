@@ -231,7 +231,6 @@ group <- gl(2,10,20, labels=c("Ctl","Trt"))
 weight <- c(ctl, trt)
 anova(lm.D9 <- lm(weight ~ group))
 summary(lm.D90 <- lm(weight ~ group - 1))# omitting intercept
-\donttest{summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical}
 
 opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 plot(lm.D9, las = 1)      # Residuals, Fitted, ...

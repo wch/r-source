@@ -42,7 +42,7 @@ C(object, contr, how.many, \dots)
 ## reset contrasts to defaults
 options(contrasts=c("contr.treatment", "contr.poly"))
 tens <- with(warpbreaks, C(tension, poly, 1))
-attributes(tens)
+\donttest{attributes(tens)}
 ## tension SHOULD be an ordered factor, but as it is not we can use
 aov(breaks ~ wool + tens + tension, data=warpbreaks)
 

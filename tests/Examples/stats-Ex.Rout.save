@@ -2067,13 +2067,6 @@ Multiple R-squared: 0.982,	Adjusted R-squared: 0.98
 F-statistic:  485 on 2 and 18 DF,  p-value: <2e-16 
 
 
-lm> ## No test: 
-lm> summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical
-     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
--7.77e-16 -3.61e-16  0.00e+00 -1.11e-17  0.00e+00  3.22e-15 
-
-lm> ## End(No test)
-lm> 
 lm> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 
 lm> plot(lm.D9, las = 1)      # Residuals, Fitted, ...
@@ -4725,6 +4718,9 @@ treatment3  -0.3919928  0.39199279
 > 
 > ### ** Examples
 > 
+> ## Don't show: 
+> od <- options(digits=5)
+> ## End Don't show
 > ## from optim
 > fr <- function(x) {   ## Rosenbrock Banana function
 +     x1 <- x[1]
@@ -4740,10 +4736,10 @@ treatment3  -0.3919928  0.39199279
 > 
 > optim(c(-1.2,1), fr, grr)
 $par
-[1] 1.000260 1.000506
+[1] 1.0003 1.0005
 
 $value
-[1] 8.825241e-08
+[1] 8.8252e-08
 
 $counts
 function gradient 
@@ -4758,10 +4754,10 @@ NULL
 > #Box-constraint, optimum on the boundary
 > constrOptim(c(-1.2,0.9), fr, grr, ui=rbind(c(-1,0),c(0,-1)), ci=c(-1,-1))
 $par
-[1] 0.9999761 0.9999522
+[1] 0.99998 0.99995
 
 $value
-[1] 5.708626e-10
+[1] 5.7086e-10
 
 $counts
 function gradient 
@@ -4777,15 +4773,15 @@ $outer.iterations
 [1] 14
 
 $barrier.value
-[1] -0.0001999198
+[1] -0.00019992
 
 > #  x<=0.9,  y-x>0.1
 > constrOptim(c(.5,0), fr, grr, ui=rbind(c(-1,0),c(1,-1)), ci=c(-0.9,0.1))
 $par
-[1] 0.8891335 0.7891335
+[1] 0.88913 0.78913
 
 $value
-[1] 0.01249441
+[1] 0.012494
 
 $counts
 function gradient 
@@ -4801,7 +4797,7 @@ $outer.iterations
 [1] 5
 
 $barrier.value
-[1] -7.399944e-05
+[1] -7.4e-05
 
 > 
 > 
@@ -4815,10 +4811,10 @@ $barrier.value
 > bvec       <- c(-8,2,0)
 > constrOptim(c(2,-1,-1), fQP, NULL, ui=t(Amat),ci=bvec)
 $par
-[1] 0.4761374 1.0477253 2.0954507
+[1] 0.47614 1.04773 2.09545
 
 $value
-[1] -2.380952
+[1] -2.3810
 
 $counts
 function gradient 
@@ -4834,16 +4830,16 @@ $outer.iterations
 [1] 5
 
 $barrier.value
-[1] -0.0006243786
+[1] -0.00062438
 
 > # derivative
 > gQP <- function(b) {-c(0,5,0)+b}
 > constrOptim(c(2,-1,-1), fQP, gQP, ui=t(Amat), ci=bvec)
 $par
-[1] 0.4761908 1.0476188 2.0952376
+[1] 0.47619 1.04762 2.09524
 
 $value
-[1] -2.380952
+[1] -2.3810
 
 $counts
 function gradient 
@@ -4859,7 +4855,7 @@ $outer.iterations
 [1] 5
 
 $barrier.value
-[1] -0.0006243894
+[1] -0.00062439
 
 > 
 > ## Now with maximisation instead of minimisation
@@ -4867,10 +4863,10 @@ $barrier.value
 > constrOptim(c(2,-1,-1), hQP, NULL, ui=t(Amat), ci=bvec,
 +             control=list(fnscale=-1))
 $par
-[1] 0.4763538 1.0477181 2.0954838
+[1] 0.47635 1.04772 2.09548
 
 $value
-[1] 2.380751
+[1] 2.3808
 
 $counts
 function gradient 
@@ -4886,8 +4882,11 @@ $outer.iterations
 [1] 1
 
 $barrier.value
-[1] -0.001142111
+[1] -0.0011421
 
+> ## Don't show: 
+> options(od)
+> ## End Don't show
 > 
 > 
 > 
@@ -10920,14 +10919,8 @@ b4                    3  0  0  0  0  3
 > ### ** Examples
 > 
 > ## From Venables and Ripley (2002) p.165.
-> N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
-> P <- c(1,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,1,0,1,1,0)
-> K <- c(1,0,0,1,0,1,1,0,0,1,0,1,0,1,1,0,0,0,1,1,1,0,1,0)
-> yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,
-+ 55.0, 62.0,48.8,45.5,44.2,52.0,51.5,49.8,48.8,57.2,59.0,53.2,56.0)
+> utils::data(npk, package="MASS")
 > 
-> npk <- data.frame(block=gl(6,4), N=factor(N), P=factor(P),
-+                   K=factor(K), yield=yield)
 > options(contrasts=c("contr.helmert", "contr.treatment"))
 > npk.aov <- aov(yield ~ block + N*P*K, npk)
 > model.tables(npk.aov, "means", se = TRUE)
@@ -13329,18 +13322,19 @@ rate ratio
 > 
 > ### ** Examples
 > 
+> od <- options(digits=3) # avoid too much visual clutter
 > (z <- poly(1:10, 3))
-                1           2          3
- [1,] -0.49543369  0.52223297 -0.4534252
- [2,] -0.38533732  0.17407766  0.1511417
- [3,] -0.27524094 -0.08703883  0.3778543
- [4,] -0.16514456 -0.26111648  0.3346710
- [5,] -0.05504819 -0.34815531  0.1295501
- [6,]  0.05504819 -0.34815531 -0.1295501
- [7,]  0.16514456 -0.26111648 -0.3346710
- [8,]  0.27524094 -0.08703883 -0.3778543
- [9,]  0.38533732  0.17407766 -0.1511417
-[10,]  0.49543369  0.52223297  0.4534252
+           1      2      3
+ [1,] -0.495  0.522 -0.453
+ [2,] -0.385  0.174  0.151
+ [3,] -0.275 -0.087  0.378
+ [4,] -0.165 -0.261  0.335
+ [5,] -0.055 -0.348  0.130
+ [6,]  0.055 -0.348 -0.130
+ [7,]  0.165 -0.261 -0.335
+ [8,]  0.275 -0.087 -0.378
+ [9,]  0.385  0.174 -0.151
+[10,]  0.495  0.522  0.453
 attr(,"degree")
 [1] 1 2 3
 attr(,"coefs")
@@ -13353,12 +13347,12 @@ attr(,"coefs")$norm2
 attr(,"class")
 [1] "poly"   "matrix"
 > predict(z, seq(2, 4, 0.5))
-              1           2         3
-[1,] -0.3853373  0.17407766 0.1511417
-[2,] -0.3302891  0.03263956 0.3049824
-[3,] -0.2752409 -0.08703883 0.3778543
-[4,] -0.2201928 -0.18495751 0.3832522
-[5,] -0.1651446 -0.26111648 0.3346710
+          1       2     3
+[1,] -0.385  0.1741 0.151
+[2,] -0.330  0.0326 0.305
+[3,] -0.275 -0.0870 0.378
+[4,] -0.220 -0.1850 0.383
+[5,] -0.165 -0.2611 0.335
 attr(,"degree")
 [1] 1 2 3
 attr(,"coefs")
@@ -13370,13 +13364,13 @@ attr(,"coefs")$norm2
 
 attr(,"class")
 [1] "poly"   "matrix"
-> poly(seq(4, 6, 0.5), 3, coefs = attr(z, "coefs"))
-               1          2             3
-[1,] -0.16514456 -0.2611165  3.346710e-01
-[2,] -0.11009638 -0.3155158  2.456053e-01
-[3,] -0.05504819 -0.3481553  1.295501e-01
-[4,]  0.00000000 -0.3590352 -2.636873e-16
-[5,]  0.05504819 -0.3481553 -1.295501e-01
+> zapsmall(poly(seq(4, 6, 0.5), 3, coefs = attr(z, "coefs")))
+          1      2      3
+[1,] -0.165 -0.261  0.335
+[2,] -0.110 -0.316  0.246
+[3,] -0.055 -0.348  0.130
+[4,]  0.000 -0.359  0.000
+[5,]  0.055 -0.348 -0.130
 attr(,"degree")
 [1] 1 2 3
 attr(,"coefs")
@@ -13389,32 +13383,23 @@ attr(,"coefs")$norm2
 attr(,"class")
 [1] "poly"   "matrix"
 > 
-> polym(1:4, c(1, 4:6), degree=3) # or just poly()
-            1.0  2.0        3.0           0.1          1.1           2.1
-[1,] -0.6708204  0.5 -0.2236068 -8.017837e-01 5.378529e-01 -4.008919e-01
-[2,] -0.2236068 -0.5  0.6708204 -1.483598e-16 3.317426e-17  7.417990e-17
-[3,]  0.2236068 -0.5 -0.6708204  2.672612e-01 5.976143e-02 -1.336306e-01
-[4,]  0.6708204  0.5  0.2236068  5.345225e-01 3.585686e-01  2.672612e-01
-            0.2         1.2         0.3
-[1,]  0.3230796 -0.21672838 -0.05255883
-[2,] -0.6883000  0.15390856  0.52558833
-[3,] -0.2387980 -0.05339685 -0.78838250
-[4,]  0.6040184  0.40518785  0.31535300
+> zapsmall(polym(1:4, c(1, 4:6), degree=3)) # or just poly()
+        1.0  2.0    3.0    0.1   1.1    2.1    0.2    1.2    0.3
+[1,] -0.671  0.5 -0.224 -0.802 0.538 -0.401  0.323 -0.217 -0.053
+[2,] -0.224 -0.5  0.671  0.000 0.000  0.000 -0.688  0.154  0.526
+[3,]  0.224 -0.5 -0.671  0.267 0.060 -0.134 -0.239 -0.053 -0.788
+[4,]  0.671  0.5  0.224  0.535 0.359  0.267  0.604  0.405  0.315
 attr(,"degree")
 [1] 1 2 3 1 2 3 2 3 3
-> poly(cbind(1:4, c(1, 4:6)), degree=3)
-            1.0  2.0        3.0           0.1          1.1           2.1
-[1,] -0.6708204  0.5 -0.2236068 -8.017837e-01 5.378529e-01 -4.008919e-01
-[2,] -0.2236068 -0.5  0.6708204 -1.483598e-16 3.317426e-17  7.417990e-17
-[3,]  0.2236068 -0.5 -0.6708204  2.672612e-01 5.976143e-02 -1.336306e-01
-[4,]  0.6708204  0.5  0.2236068  5.345225e-01 3.585686e-01  2.672612e-01
-            0.2         1.2         0.3
-[1,]  0.3230796 -0.21672838 -0.05255883
-[2,] -0.6883000  0.15390856  0.52558833
-[3,] -0.2387980 -0.05339685 -0.78838250
-[4,]  0.6040184  0.40518785  0.31535300
+> zapsmall(poly(cbind(1:4, c(1, 4:6)), degree=3))
+        1.0  2.0    3.0    0.1   1.1    2.1    0.2    1.2    0.3
+[1,] -0.671  0.5 -0.224 -0.802 0.538 -0.401  0.323 -0.217 -0.053
+[2,] -0.224 -0.5  0.671  0.000 0.000  0.000 -0.688  0.154  0.526
+[3,]  0.224 -0.5 -0.671  0.267 0.060 -0.134 -0.239 -0.053 -0.788
+[4,]  0.671  0.5  0.224  0.535 0.359  0.267  0.604  0.405  0.315
 attr(,"degree")
 [1] 1 2 3 1 2 3 2 3 3
+> options(od)
 > 
 > 
 > 
@@ -14014,22 +13999,23 @@ predict.smooth.spline.fit :
 > 
 > ### ** Examples
 > 
+> od <- options(digits=5) # avoid too much spurious accuracy
 > predict(arima(lh, order = c(3,0,0)), n.ahead = 12)
 $pred
 Time Series:
 Start = 49 
 End = 60 
 Frequency = 1 
- [1] 2.460181 2.270846 2.198618 2.260719 2.346956 2.414502 2.438940 2.431461
- [9] 2.410244 2.391665 2.382674 2.382717
+ [1] 2.4602 2.2708 2.1986 2.2607 2.3470 2.4145 2.4389 2.4315 2.4102 2.3917
+[11] 2.3827 2.3827
 
 $se
 Time Series:
 Start = 49 
 End = 60 
 Frequency = 1 
- [1] 0.4226823 0.5029319 0.5245248 0.5247153 0.5305493 0.5369155 0.5388042
- [8] 0.5388446 0.5391041 0.5395172 0.5396989 0.5397138
+ [1] 0.42268 0.50293 0.52452 0.52472 0.53055 0.53692 0.53880 0.53884 0.53910
+[10] 0.53952 0.53970 0.53971
 
 > 
 > (fit <- arima(USAccDeaths, order = c(0,1,1),
@@ -14039,20 +14025,21 @@ Call:
 arima(x = USAccDeaths, order = c(0, 1, 1), seasonal = list(order = c(0, 1, 1)))
 
 Coefficients:
-          ma1     sma1
-      -0.4303  -0.5528
-s.e.   0.1228   0.1784
+         ma1    sma1
+      -0.430  -0.553
+s.e.   0.123   0.178
 
 sigma^2 estimated as 99347:  log likelihood = -425.44,  aic = 856.88
 > predict(fit, n.ahead = 6)
 $pred
-          Jan      Feb      Mar      Apr      May      Jun
-1979 8336.061 7531.829 8314.644 8616.869 9488.913 9859.757
+        Jan    Feb    Mar    Apr    May    Jun
+1979 8336.1 7531.8 8314.6 8616.9 9488.9 9859.8
 
 $se
-          Jan      Feb      Mar      Apr      May      Jun
-1979 315.4481 363.0056 405.0168 443.0623 478.0897 510.7204
+        Jan    Feb    Mar    Apr    May    Jun
+1979 315.45 363.01 405.02 443.06 478.09 510.72
 
+> options(od)
 > 
 > 
 > 
@@ -17081,13 +17068,6 @@ Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798
 F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16 
 
 
-lm> ## No test: 
-lm> summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical
-      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
--7.772e-16 -3.608e-16  0.000e+00 -1.110e-17  0.000e+00  3.220e-15 
-
-lm> ## End(No test)
-lm> 
 lm> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 
 lm> plot(lm.D9, las = 1)      # Residuals, Fitted, ...
@@ -17366,47 +17346,7 @@ f.f1c  1.0 1.00    1 2.00  2.0 2.00    2 4.00  4.0  4.00     4  3.00   3.0
 > 
 > ### ** Examples
 > 
-> ## From Venables and Ripley (2002) p.165.
-> N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
-> P <- c(1,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,1,0,1,1,0)
-> K <- c(1,0,0,1,0,1,1,0,0,1,0,1,0,1,1,0,0,0,1,1,1,0,1,0)
-> yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,55.0,
-+            62.0,48.8,45.5,44.2,52.0,51.5,49.8,48.8,57.2,59.0,53.2,56.0)
-> npk <- data.frame(block=gl(6,4), N=factor(N), P=factor(P),
-+                   K=factor(K), yield=yield)
-> 
-> ( npk.aov <- aov(yield ~ block + N*P*K, npk) )
-Call:
-   aov(formula = yield ~ block + N * P * K, data = npk)
-
-Terms:
-                   block        N        P        K      N:P      N:K      P:K
-Sum of Squares  343.2950 189.2817   8.4017  95.2017  21.2817  33.1350   0.4817
-Deg. of Freedom        5        1        1        1        1        1        1
-                Residuals
-Sum of Squares   185.2867
-Deg. of Freedom        12
-
-Residual standard error: 3.929447 
-1 out of 13 effects not estimable
-Estimated effects may be unbalanced
-> summary(npk.aov)
-            Df Sum Sq Mean Sq F value   Pr(>F)   
-block        5 343.29  68.659  4.4467 0.015939 * 
-N            1 189.28 189.282 12.2587 0.004372 **
-P            1   8.40   8.402  0.5441 0.474904   
-K            1  95.20  95.202  6.1657 0.028795 * 
-N:P          1  21.28  21.282  1.3783 0.263165   
-N:K          1  33.13  33.135  2.1460 0.168648   
-P:K          1   0.48   0.482  0.0312 0.862752   
-Residuals   12 185.29  15.441                    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-> coefficients(npk.aov)
-(Intercept)      block2      block3      block4      block5      block6 
- 51.8250000   3.4250000   6.7500000  -3.9000000  -3.5000000   2.3250000 
-         N1          P1          K1       N1:P1       N1:K1       P1:K1 
-  9.8500000   0.4166667  -1.9166667  -3.7666667  -4.7000000   0.5666667 
+> ## For a simple example see example(aov)
 > 
 > # Cochran and Cox (1957, p.164)
 > # 3x3 factorial with ordered factors, each is average of 12. 
@@ -17479,49 +17419,7 @@ N:P          4  399.28   99.82
 > 
 > ### ** Examples
 > 
-> ## --- Continuing the Example from  '?glm':
-> ## Don't show: 
-> utils::example("glm", echo = FALSE)
-  treatment outcome counts
-1         1       1     18
-2         1       2     17
-3         1       3     15
-4         2       1     20
-5         2       2     10
-6         2       3     20
-7         3       1     25
-8         3       2     13
-9         3       3     12
-> ## End Don't show
-> summary(glm.D93)
-
-Call:
-glm(formula = counts ~ outcome + treatment, family = poisson())
-
-Deviance Residuals: 
-       1         2         3         4         5         6         7         8  
--0.67125   0.96272  -0.16965  -0.21999  -0.95552   1.04939   0.84715  -0.09167  
-       9  
--0.96656  
-
-Coefficients:
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  3.045e+00  1.709e-01  17.815   <2e-16 ***
-outcome2    -4.543e-01  2.022e-01  -2.247   0.0246 *  
-outcome3    -2.930e-01  1.927e-01  -1.520   0.1285    
-treatment2   1.338e-15  2.000e-01   0.000   1.0000    
-treatment3   1.421e-15  2.000e-01   0.000   1.0000    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-(Dispersion parameter for poisson family taken to be 1)
-
-    Null deviance: 10.5814  on 8  degrees of freedom
-Residual deviance:  5.1291  on 4  degrees of freedom
-AIC: 56.761
-
-Number of Fisher Scoring iterations: 4
-
+> ## For examples see example(glm)
 > 
 > 
 > 
@@ -19022,13 +18920,6 @@ Multiple R-squared: 0.9818,	Adjusted R-squared: 0.9798
 F-statistic: 485.1 on 2 and 18 DF,  p-value: < 2.2e-16 
 
 
-lm> ## No test: 
-lm> summary(resid(lm.D9) - resid(lm.D90)) #- residuals almost identical
-      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
--7.772e-16 -3.608e-16  0.000e+00 -1.110e-17  0.000e+00  3.220e-15 
-
-lm> ## End(No test)
-lm> 
 lm> opar <- par(mfrow = c(2,2), oma = c(0, 0, 1.1, 0))
 
 lm> plot(lm.D9, las = 1)      # Residuals, Fitted, ...
@@ -19619,19 +19510,6 @@ detaching ‘package:Matrix’, ‘package:lattice’
 > ## reset contrasts to defaults
 > options(contrasts=c("contr.treatment", "contr.poly"))
 > tens <- with(warpbreaks, C(tension, poly, 1))
-> attributes(tens)
-$levels
-[1] "L" "M" "H"
-
-$class
-[1] "factor"
-
-$contrasts
-             .L
-L -7.071068e-01
-M -7.850462e-17
-H  7.071068e-01
-
 > ## tension SHOULD be an ordered factor, but as it is not we can use
 > aov(breaks ~ wool + tens + tension, data=warpbreaks)
 Call:

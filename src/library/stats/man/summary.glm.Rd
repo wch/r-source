@@ -102,9 +102,7 @@
   \code{\link{glm}}, \code{\link{summary}}.
 }
 \examples{
-## --- Continuing the Example from  '?glm':
-\dontshow{utils::example("glm", echo = FALSE)}
-summary(glm.D93)
+## For examples see example(glm)
 }
 \keyword{models}
 \keyword{regression}
