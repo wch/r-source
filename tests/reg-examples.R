@@ -1,5 +1,7 @@
 ## For examples skipped in testing because they are 'random'
 
+if(.Platform$OS.type == "windows") options(pager = "console")
+
 ## base
 example(DateTimeClasses)
 example(Dates)
