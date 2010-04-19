@@ -272,7 +272,7 @@ SEXP attribute_hidden do_utf8ToInt(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument should be a character vector of length 1\nall but the first element will be ignored"));
     if (STRING_ELT(x, 0) == NA_STRING) return ScalarInteger(NA_INTEGER);
     nc = LENGTH(STRING_ELT(x, 0)); /* ints will be shorter */
-    ians = (int *) R_alloc(nc,  sizeof(int *));
+    ians = (int *) R_alloc(nc, sizeof(int));
     for (i = 0, j = 0; i < nc; i++) {
 	used = mbrtoint(&tmp, s);
 	if (used <= 0) break;
