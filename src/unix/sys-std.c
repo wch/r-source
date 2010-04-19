@@ -1012,6 +1012,10 @@ void R_CleanTempDir(void)
     char buf[1024];
 
     if((Sys_TempDir)) {
+#if defined(sun) || defined(__sun)
+	/* On Solaris the working directory must be outside this one */
+	chdir(R_HomeDir());
+#endif
 	snprintf(buf, 1024, "rm -rf %s", Sys_TempDir);
 	buf[1023] = '\0';
 	R_system(buf);
