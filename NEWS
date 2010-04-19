@@ -149,6 +149,9 @@ BUG FIXES
     o	source(echo=TRUE) failed to echo comments that followed the
     	last statement in a file.
 
+    o	more efficient utf8ToInt() on long multi-byte strings with
+	many multi-byte characters (PR#14262)
+
 
 
 
