@@ -1,6 +1,6 @@
 % File src/library/base/man/Sys.which.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2007 R Core Development Team
+% Copyright 2007-10 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Sys.which}
@@ -29,8 +29,9 @@ Sys.which(names)
 \value{
   A character vector of the same length as \code{names}, named by
   \code{names}.  The elements are either the full path to the
-  executable/script or \code{""} if no executable of that name was
-  found.
+  executable/script or some indication that no executable of that name was
+  found.  Typically the indication is \code{""}, but this does depend on
+  the OS (and is a message on Solaris).
 
 #ifdef windows
   The paths will be short paths (8+3 components, no spaces) with
