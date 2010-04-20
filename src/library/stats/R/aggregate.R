@@ -92,7 +92,7 @@ function(x, by, FUN, ..., simplify = TRUE)
         y[[len + i]] <- z[[i]]
     names(y) <- c(names(by), names(x))
     row.names(y) <- NULL
-    
+
     y
 }
 
@@ -160,7 +160,9 @@ function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
     ## length ofrequency/nfrequency, for each of the variables in x.
     ## We first get the new start and end right, and then break x into
     ## such blocks by reshaping it into an array and setting dim.
-    len <- ofrequency %/% nfrequency
+    ## avoid e.g. 1.0 %/% 0.2
+    ## https://stat.ethz.ch/pipermail/r-devel/2010-April/057225.html
+    len <- trunc((ofrequency / nfrequency) + ts.eps)
     mat <- is.matrix(x)
     if(mat) cn <- colnames(x)
     ##   nstart <- ceiling(tsp(x)[1L] * nfrequency) / nfrequency

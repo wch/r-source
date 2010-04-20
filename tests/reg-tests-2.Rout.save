@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51730)
+R version 2.12.0 Under development (unstable) (2010-04-19 r51778)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6522,4 +6522,23 @@ NULL
 > .Last.value
 [1] 4
 > ## visiblilty changed in 2.11.0
+> 
+> 
+> ## rounding error in aggregate.ts
+> ## https://stat.ethz.ch/pipermail/r-devel/2010-April/057225.html
+> x <- rep(6:10, 1:5)
+> aggregate(as.ts(x), FUN = mean, ndeltat = 5)
+Time Series:
+Start = 1 
+End = 11 
+Frequency = 0.2 
+[1]  7.2  8.8 10.0
+> x <- rep(6:10, 1:5)
+> aggregate(as.ts(x), FUN = mean, nfrequency = 0.2)
+Time Series:
+Start = 1 
+End = 11 
+Frequency = 0.2 
+[1]  7.2  8.8 10.0
+> ## platform-dependent in 2.10.1
 > 
