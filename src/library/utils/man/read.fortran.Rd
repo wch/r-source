@@ -1,6 +1,6 @@
 % File src/library/utils/man/read.fortran.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{read.fortran}
@@ -43,7 +43,7 @@ read.fortran(file, format, ..., as.is = TRUE, colClasses = NA)
   \code{read.fortran} does not use actual Fortran input routines, so
   the formats are at best rough approximations to the Fortran ones.
   In particular, specifying \code{d > 0} in the \code{F} or \code{D}
-  format will shift the decimal \code{d} places to the right, even if
+  format will shift the decimal \code{d} places to the left, even if
   it is explicitly specified in the input file.
 }
 \value{
