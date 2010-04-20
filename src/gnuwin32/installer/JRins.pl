@@ -194,6 +194,8 @@ END
 ## view of the Registry depends on the arch.
 ## But not for HLCU (and file associations are necessarily for both).
 
+## can use Check: isComponentSelected('x64') to select registry entries.
+
 if ($have32bit) { # necessarily 64-bit
 print insfile <<END;
 
