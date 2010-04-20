@@ -165,6 +165,9 @@ void attribute_hidden InitArithmetic()
 }
 
 /* Keep these two in step */
+/* FIXME: consider using
+    tmp = (LDOUBLE)x1 - floor(q) * (LDOUBLE)x2;
+ */
 static double myfmod(double x1, double x2)
 {
     double q = x1 / x2, tmp;
@@ -1519,14 +1522,6 @@ SEXP attribute_hidden do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	i3 = (++i3==n3) ? 0 : i3,				\
 	++i)
 
-static SEXP math3(SEXP sa, SEXP sb, SEXP sc,
-		  double (*f)(double, double, double), SEXP lcall)
-{
-    SEXP sy;
-    int i, ia, ib, ic, n, na, nb, nc;
-    double ai, bi, ci, *a, *b, *c, *y;
-    int naflag;
-
 #define SETUP_Math3						\
     if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc))	\
 	errorcall(lcall, R_MSG_NONNUM_MATH);			\
@@ -1549,31 +1544,6 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc,
     y = REAL(sy);						\
     naflag = 0
 
-    SETUP_Math3;
-
-#ifdef R_MEMORY_PROFILING
-    if (RTRACE(sa) || RTRACE(sb) || RTRACE(sc)){
-       if (RTRACE(sa))
-	  memtrace_report(sa,sy);
-       else if (RTRACE(sb))
-	  memtrace_report(sb, sy);
-       else if (RTRACE(sc))
-	  memtrace_report(sc,sy);
-       SET_RTRACE(sy, 1);
-    }
-#endif
-
-    mod_iterate3 (na, nb, nc, ia, ib, ic) {
-	ai = a[ia];
-	bi = b[ib];
-	ci = c[ic];
-	if_NA_Math3_set(y[i], ai,bi,ci)
-	else {
-	    y[i] = f(ai, bi, ci);
-	    if (ISNAN(y[i])) naflag = 1;
-	}
-    }
-
 #define FINISH_Math3				\
     if(naflag)					\
 	warningcall(lcall, R_MSG_NA);		\
@@ -1587,12 +1557,6 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc,
     else if (n == nc) {				\
 	DUPLICATE_ATTRIB(sy, sc);	\
     }						\
-    UNPROTECT(4)
-
-    FINISH_Math3;
-
-    return sy;
-} /* math3 */
 
 static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI,
 		    double (*f)(double, double, double, int), SEXP lcall)
