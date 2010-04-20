@@ -4650,28 +4650,21 @@ function(g, env)
         ##   its parent.  (If the package defines generics, these seem
         ##   to have E as their parent env.)
         ## However, in the latter case, there seems no way to infer E
-        ## from the package env.  Hence, we fall back to comparing the
-        ## methods in the package env with those in its parent env, and
-        ## exclude the ones already found there.
+        ## from the package env.  In the old days predating methods
+        ## tables, we compared methods in the package env with those in
+        ## its parent env, and excluded the ones already found there.
+        ## This no longer works, so we exclude "at least" all methods
+        ## with a namespace environment (as these cannot come from a
+        ## package with no namespace).
         namespace <- .get_namespace_from_package_env(env)
         if(!is.null(namespace)) {
             mlist <- Filter(function(m)
                             identical(environment(m), namespace),
                             mlist)
         } else {
-            penv <- parent.env(env)
-            if((g %in% get_S4_generics_with_methods(penv)) &&
-               length(pmlist <- methods::findMethods(g, penv))) {
-                ## Alas,
-                ##   match(mlist, pmlist)
-                ## does not work ...
-                ind <- sapply(mlist,
-                              function(m)
-                              any(sapply(pmlist, identical, m)))
-                ## When worried about efficiency, we could try to
-                ## compare just names and environments ...
-                mlist <- mlist[!ind]
-            }
+            mlist <- Filter(function(m)
+                            environmentName(environment(m)) == "",
+                            mlist)
         }
     }
 
