@@ -1396,7 +1396,7 @@ different build for version 10.4.4 or higher).
 The simplest way is to use @file{R-@value{VERSIONno}.pkg}: just
 double-click on the icon.  Note that Tcl/Tk and the Fortran compiler
 need to be installed separately if needed (unlike for @R{} 2.9.x and
-eariier).
+earlier).
 
 See the @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
@@ -3956,9 +3956,9 @@ performance: Sun recommend
 On @cputype{x86} you will get marginally higher performance @emph{via}
 
 @example
-CFLAGS="-xO5 -xc99 -xlibmieee -xlibmil -nofstore -xtarget=native"
+CFLAGS="-O5 -xc99 -xlibmieee -xlibmil -nofstore -xtarget=native"
 FFLAGS="-O5 -libmil -nofstore -xtarget=native"
-CXXFLAGS="-xO5 -xlibmil -nofstore -xtarget=native"
+CXXFLAGS="-O5 -xlibmil -nofstore -xtarget=native"
 SAFE_FFLAGS="-libmil -fstore -xtarget=native"
 @end example
 
@@ -4304,7 +4304,12 @@ locations and other updates to these instructions.  (Most Windows users
 will not need to build add-on packages from source; see @ref{Add-on
 packages} for details.)
 
-Only building with MinGW @command{gcc 4.2.1} is supported.
+Only building with MinGW @command{gcc 4.2.1} is supported.  It is
+possible to build with the recently released MinGW @command{gcc 4.5.0},
+but this came too late to be supported for this release of @R{}---beware
+that this by default uses DLLs for runtimes which need to be distributed
+with @R{} or packages built with that compiler.  There are also
+differences in the behaviour of @code{formatC} with later MinGW runtimes.
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
@@ -4514,15 +4519,9 @@ tarball_name}).  (You may need to copy @file{bin/gcc-sjlj.exe} to
 @file{bin/g++-sjlj.exe} copied to @file{bin/g++.exe}.)  This compiler
 should work on Windows Vista without any workarounds.
 
-Note that @code{mingw-runtime-3.13.tar.gz} or later and @code{gcc-4.2.1}
-or later are needed to get a correct build of @R{} itself.  There are
-known problems with using earlier compiler sets on Windows Vista and later
-(@uref{http://www.nabble.com/@/environment-@/hosed-@/during-@/upgrade-@/tf3305745@/.html#a9195667})
-and the workaround is to set @code{PATH} to include the path to
-@file{cc1}.
-
-The MinGW build of @code{gcc-4.4.0} current in September 2009 failed to
-build a properly functioning @R{}.
+Note that @code{mingw-runtime-3.13.tar.gz} or later (but not as late as
+@code{3.18}) and @code{gcc-4.2.1} or later are needed to get a correct
+build of @R{} itself.
 
 @node Useful additional programs,  , The MinGW compilers, The Windows toolset
 @section Useful additional programs
