@@ -4495,11 +4495,11 @@ from the URL above, as the download links from
 @uref{http://www.mingw.org/} have led to obsolete versions. See the
 notes on @uref{http://www.murdoch-sutherland.com/@/Rtools/} for updates.
 
-The MinGW build of @code{gcc-4.4.0} current in September 2009 failed to
-build a properly functioning @R{}. However, we have tested using the
-32-bit compilers from the @code{mingw-w64} project, which are currently
-pre-releases of @command{gcc 4.4.4}, and flags to use those are provided
-in file @file{MkRules.dist}.
+See above for comments about the MinGW build of @code{gcc-4.5.0} from
+April 2010.  We have tested using the 32-bit compilers from the
+@code{mingw-w64} project, which are currently pre-releases of
+@command{gcc 4.4.4}, and flags to use those are provided in file
+@file{MkRules.dist}.
 
 
 @node Useful additional programs,  , The MinGW compilers, The Windows toolset
