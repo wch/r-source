@@ -81,8 +81,10 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.11.0} or later).  It is mainly about the 32-bit build, with
-some mentions of 64-bit builds.
+(@samp{2.11.0} or later).  The details of the installer refer to the
+intended behaviour at release: snapshots builds for now are separate for
+32- and 64-bit build and work as described in the @samp{R 2.11.0}
+version of this FAQ.
 
 
 @newchap{}
@@ -128,7 +130,7 @@ some mentions of 64-bit builds.
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @file{bin/windows/base} directory and
 collect the file(s) you need.  The current release is distributed as an
-installer @samp{@RWVER@-win32.exe} of about 32Mb.  This contains all the
+installer @samp{@RWVER@-win.exe} of about 37Mb.  This contains all the
 components and allows as complete as installation as you choose.
 
 There are also links on that page to the @samp{r-patched} and
@@ -142,18 +144,17 @@ release.
 @section How do I install R for Windows?
 
 Current binary versions of R run on Windows 2000 or later.@footnote{R
-2.6.2 was the last version for Windows 95. 98, ME and NT4.}  The
-standard 32-bit version works well on x64 Windows: @xref{Can I use R
-on 64-bit Windows?}.
+2.6.2 was the last version for Windows 95. 98, ME and NT4.}, including
+on 64-bit versions.
 
 We only test on versions of Windows currently supported by Microsoft,
 mainly on 32-bit XP SP3 and 64-bit Windows 7 and Windows Server 2008.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical install
-takes 45Mb of disk space, a full installation about 70Mb and a
+takes 45Mb of disk space, a full installation about 75Mb and a
 minimal one about 30Mb.
-@c : 70Mb is for 64-bit
+@c : 75Mb is for 32/64-bit
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
@@ -166,7 +167,7 @@ user area.} should consider installing into a non-system area (such as
 @code{\\machine\...}) is not supported: such paths will need to mapped
 to a network drive.
 
-To install use @samp{@RWVER@-win32.exe}.  Just double-click on the icon
+To install use @samp{@RWVER@-win.exe}.  Just double-click on the icon
 and follow the instructions.  If you have an account with Administrator
 privileges you will be able to install R in the @file{Program Files}
 area and to set all the optional registry entries; otherwise you will
@@ -218,8 +219,8 @@ set the default Start-menu group name
 set the initial list of components: Components are named @samp{main},
 @samp{i386} or @samp{x64}, @samp{html}, @samp{manuals},
 @samp{manuals/basic}, @samp{manuals/technical}, @samp{manuals/refman},
-@samp{manuals/libdocs}, @samp{tcl/noarch}, @samp{tcl/tzdata},
-@samp{tcl/chm}, @samp{trans} and @code{tests}.
+@samp{manuals/libdocs}, @samp{tcl/noarch}, @samp{tcl/32}, @samp{tcl/64},
+@samp{tcl/tzdata}, @samp{tcl/chm}, @samp{trans} and @code{tests}.
 @end table
 
 @noindent
@@ -323,9 +324,9 @@ Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} within a
 running R session.
 
-The executables @file{Rgui.exe} and @file{Rterm.exe} support up to 3GB
-of user address space per process under suitably enabled versions of
-32-bit Windows (see
+The 32-bit executables @file{Rgui.exe} and @file{Rterm.exe} support up
+to 3GB of user address space per process under suitably enabled versions
+of 32-bit Windows (see
 @uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx},
 @uref{http://msdn.microsoft.com/en-us/library/bb613473%28VS.85%29.aspx};
 this is not enabled by default).  On such systems, the default for
@@ -333,7 +334,7 @@ this is not enabled by default).  On such systems, the default for
 all but the earliest 64-bit versions of Windows the user address space
 for a 32-bit process is 4GB, and there the default for
 @code{--max-mem-size} is the smaller of the amount of RAM and 3.5GB.
-For a 64-bit build, the defailt is the amount of RAM.
+For a 64-bit build, the default is the amount of RAM.
 
 @c limits are documented at http://msdn.microsoft.com/en-us/library/aa366778%28VS.85%29.aspx
 
@@ -527,7 +528,7 @@ only) (`Associate R with .RData files') then entries are created under
 After installation you can add the Registry entries in by running
 @code{RSetReg.exe} in the @code{bin} folder, and remove them by running
 this with argument @code{/U}.  Note that this requires administrative
-privileges un;ess run with argument @code{/Personal} and neither sets up
+privileges unless run with argument @code{/Personal} and neither sets up
 nor removes the file associations.
 
 
@@ -800,35 +801,18 @@ releasing the Alt key.
 @node Can I use R on 64-bit Windows?, Should I run 32-bit or 64-bit R?, There is no tilde on my keyboard, Installation and Usage
 @section Can I use R on 64-bit Windows?
 
-The standard build of R for Windows (including the binary installer on
-CRAN) is a 32-bit executable that will run on both 32-bit and
-64-bit@footnote{what Windows calls x64 for x86-64 CPUs, not the very
-rare ia64 Windows for Itanium CPUs.} versions of Windows.  64-bit
-versions of Windows run 32-bit executables under the WOW (Windows on
-Windows) subsystem: they run in almost exactly the same way as on a
-32-bit version of Windows, except that the address limit for the R
-process is 4GB (rather than 2GB or perhaps 3GB).
+The standard build of R for Windows is a 32-bit executable that will run
+on both 32-bit and 64-bit@footnote{what Windows calls x64 for x86-64
+CPUs, not the very rare ia64 Windows for Itanium CPUs.} versions of
+Windows.  64-bit versions of Windows run 32-bit executables under the
+WOW (Windows on Windows) subsystem: they run in almost exactly the same
+way as on a 32-bit version of Windows, except that the address limit for
+the R process is 4GB (rather than 2GB or perhaps 3GB).
 
-As from R 2.11.0 there is a native 64-bit version of R: see the `R
-Installation and Administration Manual'.  A binary installer is
-available from @url{http://cran.r-project.org/bin/windows64/base/}.
-Most binary packages are available from CRAN or CRANextras (including
-some from Omegahat and @code{Rgraphviz}), but fewer hard-to-install
-packages are available than for the standard 32-bit build.  A subset of
-Bioconductor packages are available.
-
-It is planned to merge the 32- and 64-bit builds into a common
-distribution (including binary packages) from R 2.12.0.  For R 2.11.x it
-is possible to have both builds installed on a machine: the installers
-will put the builds into different directories, and the 64-bit build
-will have name suffixed by 'x64' on the Start menus.  The default
-personal library directories are different.  If you set the library path
-in a personal (rather than site) startup file it will need to choose a
-build, e.g.@:
-
-@example
-.libPaths(if(.Machine$sizeof.pointer == 8) "~/Rlibs/x64" else "~/Rlibs")
-@end example
+When R is installed on 64-bit Windows there is the option of installing
+either or both of 32- and 64-bit builds: the default is to install both.
+The 64-bit build has 'x64' suffixed to its name on the Start menu and
+desktop shortcuts.
 
 @node Should I run 32-bit or 64-bit R?, Can both 32- and 64-bit R be installed on the same machine?, Can I use R on 64-bit Windows?, Installation and Usage
 @section Should I run 32-bit or 64-bit R?
@@ -846,48 +830,35 @@ those of 1GB or more).  The disadvantages are that all the pointers are
 to be moved around, and that far less external software is available for
 64-bit versions of the OS.
 
-The toolchain (compilers, linkers, @dots{}) used to build 64-bit R are far
+The toolchain (compilers, linkers, @dots{}) used to build 64-bit R are
 less mature than those for 32-bit R, but testing so far (and all the
 CRAN packages provide an extensive test suite) suggests that they are
 mature enough for production use.  The compilers are more recent
 versions of @acronym{GCC} with better optimization and are able to take
 advantage of extra features of all x86-64 chips (more registers, SSE2/3
-instructions, @dots{}) and so the code may run faster despite using larger
-pointers.
+instructions, @dots{}) and so the code may run faster despite using
+larger pointers.
 
 @node Can both 32- and 64-bit R be installed on the same machine?,  , Should I run 32-bit or 64-bit R?, Installation and Usage
 @section Can both 32- and 64-bit R be installed on the same machine?
 
 Obviously, only relevant if the machine is running a 64-bit version of
-Windows.
+Windows -- simply select both when using the installer.  You can also go
+back and add 64-bit components to a 32-bit install.
 
-Yes, with a little care.
-The details here are for R 2.12.0, and may change before release.
+The default personal library directories are different.  If you set the
+library path in a personal (rather than site) startup file it will need
+to choose one depending on the build, e.g.@:
 
-The 32- and 64-bit installers will suggest that the 64-bit build
-is installed into, say, @file{R-@RVER@-x64} and Administrator installs
-will default to different paths (e.g.@: @file{C:\Program Files (x86)\R}
-for 32-bit, @file{C:\Program Files\R} for 64-bit).  The Start Menu,
-desktop and quick launch icons will be named differently, and the
-versions can be uninstalled independently.
-
-It is also possible to install the two builds to the same directory.
-First install the 32-bit build, then the 64-bit one choosing the path
-chosen for the 32-bit build and selecting the type @emph{Add 64-bit
-components}.  This will give separate icons for the two builds.
+@example
+.libPaths(if(.Machine$sizeof.pointer == 8) "~/Rlibs/x64" else "~/Rlibs/i386")
+@end example
 
 For many Registry items, 32- and 64-bit programs have different views of
 the Registry, but clashes can occur.  The most obvious problem is the
 file association, which will use the last installation for which this
-option is selected.  The situation with (optionally) recording the
-version and install path is complex and may vary by the version of
-Windows.  But generally we find that with Administrator installs that
-the 32-bit view of the Registry shows the last recorded 32-bit install,
-and analogously for the 64-bit view, whereas for a user install the 32-
-and 64-bit views are shared and so show the latest recorded
-installation.  To circumvent the latter, version information is also
-recorded at @code{Software\R-code\R32} or @code{Software\R-code\R64} as
-from R 2.11.0.
+option is selected, and if that was for an installation of both, will
+use 32-bit R.
 
 @newchap{}
 @node Languages and Internationalization, Packages, Installation and Usage, Top

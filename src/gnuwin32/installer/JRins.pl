@@ -58,6 +58,7 @@ if($mode64bit) {
     $bindir = "bin/x64"; # used for shortcuts
     $have32bit = 1 if -d "$SRCDIR\\bin\\i386";
     $RK = "R64"; # arch-specific key
+    $suffix = "win" if $have32bit;
 } else {
     $suffix = "win32";
     $PF = "pf32";
@@ -82,8 +83,6 @@ if ($have32bit) {
 } elsif ($mode64bit) {
     print insfile "ArchitecturesInstallIn64BitMode=x64\nArchitecturesAllowed=x64\n";
 }
-
-## When installing in 64-bit mode, Is64BitInstallMode returns true
 
 print insfile <<END;
 AppName=R for Windows$QUAL $RVER
@@ -151,7 +150,7 @@ Name: "recordversion"; Description: {cm:recordversion}; GroupDescription: {cm:re
 Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 0,5.0; Check: IsAdmin
 END
 
-if ($have32bit) {
+if ($have32bit) { #================ 32/64 bit installer ===========
 print insfile <<END;
 [Icons]
 Name: "{group}\\Uninstall R $RVER"; Filename: "{uninstallexe}"
@@ -221,7 +220,7 @@ Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; Value
 Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\i386\\RGui.exe,0"; Tasks: associate; Check: IsAdmin and isComponentSelected('x64')
 Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\bin\\i386\\RGui.exe"" ""%1"""; Tasks: associate; Check: IsAdmin and isComponentSelected('i386')
 END
-} else {
+} else { # ================== just one arch =============
 print insfile <<END;
 [Icons]
 Name: "{group}\\R$QUAL $RVER"; Filename: "{app}\\${bindir}\\Rgui.exe"; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
@@ -229,7 +228,6 @@ Name: "{group}\\Uninstall R$QUAL $RVER"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\\R$QUAL $RVER"; Filename: "{app}\\${bindir}\\Rgui.exe"; MinVersion: 0,5.0; Tasks: desktopicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
 Name: "{userappdata}\\Microsoft\\Internet Explorer\\Quick Launch\\R$QUAL $RVER"; Filename: "{app}\\${bindir}\\Rgui.exe"; Tasks: quicklaunchicon; WorkingDir: "{userdocs}"; Parameters: {code:CmdParms}
 Name: "{group}\\R$QUAL $RVER Help"; Filename: "{app}\\doc\\html\\index.html"; Components: html
-
 
 [Registry] 
 Root: HKLM; Subkey: "Software\\$Producer"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin
@@ -264,12 +262,6 @@ Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: "";
 Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\${bindir}\\RGui.exe"" ""%1"""; Tasks: associate; Check: IsAdmin
 END
 }
-
-## It is OK to use the same keys in HKLM for 32- and 64-bit versions as the 
-## view of the Registry depends on the arch.
-## But not for HLCU (and file associations are necessarily for both).
-
-## can use Check: isComponentSelected('x64') to select registry entries.
 
 if ($have32bit) { # necessarily 64-bit
 print insfile <<END;
