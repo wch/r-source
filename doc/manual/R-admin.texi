@@ -1371,11 +1371,7 @@ you need the correct one first in your path if using both.
 A package-building service is available at
 @url{http://win-builder.r-project.org/}, and some notes on porting
 packages can be found at
-@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.  A port
-of Bioconductor package @pkg{Rgraphviz} is available on
-@acronym{CRANextras} (see the previous URL for sources for GraphViz),
-but other Bioconductor packages will at present need to be installed as
-source packages.
+@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
 
 The default memory limit will be the amount of installed RAM: it can
 be changed by using (preferably) @option{--max-mem-size=} at startup or

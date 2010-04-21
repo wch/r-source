@@ -811,11 +811,10 @@ process is 4GB (rather than 2GB or perhaps 3GB).
 As from R 2.11.0 there is a native 64-bit version of R: see the `R
 Installation and Administration Manual'.  A binary installer is
 available from @url{http://cran.r-project.org/bin/windows64/base/}.
-Most binary packages are available from CRAN or CRANextras, but fewer
-hard-to-install packages are available than for the standard 32-bit
-build.  At the time of writing Bioconductor packages apart from
-@code{Rgraphviz} are not available in binary form for 64-bit Windows R
-(but installing source packages can be tried).
+Most binary packages are available from CRAN or CRANextras (including
+some from Omegahat and @code{Rgraphviz}), but fewer hard-to-install
+packages are available than for the standard 32-bit build.  A subset of
+Bioconductor packages are available.
 
 It is planned to merge the 32- and 64-bit builds into a common
 distribution (including binary packages) from R 2.12.0.  For R 2.11.x it
