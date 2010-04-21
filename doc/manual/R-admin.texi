@@ -4306,7 +4306,11 @@ locations and other updates to these instructions.  (Most Windows users
 will not need to build add-on packages from source; see @ref{Add-on
 packages} for details.)
 
-Only building with MinGW @command{gcc 4.2.1} is supported.
+Only building with MinGW @command{gcc 4.2.1} is supported.  It is
+possible to build with the recently released MinGW @command{gcc 4.5.0},
+but this came too late to be supported for this release of @R{}---beware
+that this by default uses DLLs for runtimes which need to be distributed
+with @R{} or packages built with that compiler.
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
@@ -4490,38 +4494,6 @@ If you would like to install your own copy, we recommend downloading
 from the URL above, as the download links from
 @uref{http://www.mingw.org/} have led to obsolete versions. See the
 notes on @uref{http://www.murdoch-sutherland.com/@/Rtools/} for updates.
-
-@c There may be an installer in the `Current' section, which can be used
-@c if it gives the @samp{Candidate} compilers (@code{gcc-3.4.5}).  (If
-@c using this, select the @samp{Candidate} package and add the @code{g++}
-@c and @code{g77} compilers to the @samp{MinGW base tools}: components will
-@c be downloaded from Sourceforge and unpacked.)
-
-To download the components individually, currently you need
-
-@example
-mingw-runtime-3.13.tar.gz
-w32api-3.10.tar.gz
-binutils-2.17.50-20060824-1.tar.gz  
-gcc-core-4.2.1-sjlj-2.tar.gz
-gcc-g++-4.2.1-sjlj-2.tar.gz
-gcc-gfortran-4.2.1-sjlj-2.tar.gz
-@end example
-
-@noindent
-(and @code{gcc-objc-4.2.1-sjlj-2.tar.gz} if you want Objective C
-support).  Unpack these into the same directory (using @command{tar zxf
-tarball_name}).  (You may need to copy @file{bin/gcc-sjlj.exe} to
-@file{bin/gcc.exe} and a few badly-written packages need
-@file{bin/g++-sjlj.exe} copied to @file{bin/g++.exe}.)  This compiler
-should work on Windows Vista without any workarounds.
-
-Note that @code{mingw-runtime-3.13.tar.gz} or later and @code{gcc-4.2.1}
-or later are needed to get a correct build of @R{} itself.  There are
-known problems with using earlier compiler sets on Windows Vista and later
-(@uref{http://www.nabble.com/@/environment-@/hosed-@/during-@/upgrade-@/tf3305745@/.html#a9195667})
-and the workaround is to set @code{PATH} to include the path to
-@file{cc1}.
 
 The MinGW build of @code{gcc-4.4.0} current in September 2009 failed to
 build a properly functioning @R{}. However, we have tested using the

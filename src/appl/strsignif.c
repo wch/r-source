@@ -90,6 +90,12 @@
 #define _(String) (String)
 #endif
 
+#ifdef Win32
+/* avoid latest MinGW's redefinition in stdio.h */
+int trio_sprintf(char *buffer, const char *format, ...);
+#define sprintf trio_sprintf
+#endif
+
 /*
    The declaration for x is unusual for a .C() but is managed by
    casting in the code itself.  However, it does mean that we cannot
