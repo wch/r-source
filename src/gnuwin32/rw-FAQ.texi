@@ -322,9 +322,9 @@ Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} within a
 running R session.
 
-The executables @file{Rgui.exe} and @file{Rterm.exe} support up to 3GB
-of user address space per process under suitably enabled versions of
-32-bit Windows (see
+The 32-bit executables @file{Rgui.exe} and @file{Rterm.exe} support up
+to 3GB of user address space per process under suitably enabled versions
+of 32-bit Windows (see
 @uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx},
 @uref{http://msdn.microsoft.com/en-us/library/bb613473%28VS.85%29.aspx};
 this is not enabled by default).  On such systems, the default for
@@ -332,7 +332,7 @@ this is not enabled by default).  On such systems, the default for
 all but the earliest 64-bit versions of Windows the user address space
 for a 32-bit process is 4GB, and there the default for
 @code{--max-mem-size} is the smaller of the amount of RAM and 3.5GB.
-For a 64-bit build, the defailt is the amount of RAM.
+For a 64-bit build, the default is the amount of RAM.
 
 @c limits are documented at http://msdn.microsoft.com/en-us/library/aa366778%28VS.85%29.aspx
 
@@ -526,7 +526,7 @@ only) (`Associate R with .RData files') then entries are created under
 After installation you can add the Registry entries in by running
 @code{RSetReg.exe} in the @code{bin} folder, and remove them by running
 this with argument @code{/U}.  Note that this requires administrative
-privileges un;ess run with argument @code{/Personal} and neither sets up
+privileges unless run with argument @code{/Personal} and neither sets up
 nor removes the file associations.
 
 
@@ -845,7 +845,7 @@ those of 1GB or more).  The disadvantages are that all the pointers are
 to be moved around, and that far less external software is available for
 64-bit versions of the OS.
 
-The toolchain (compilers, linkers, @dots{}) used to build 64-bit R are far
+The toolchain (compilers, linkers, @dots{}) used to build 64-bit R are
 less mature than those for 32-bit R, but testing so far (and all the
 CRAN packages provide an extensive test suite) suggests that they are
 mature enough for production use.  The compilers are more recent
