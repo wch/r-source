@@ -12,10 +12,6 @@ LOCAL_SOFT =
 
 ## ============== configuration macros for building R ===================
 
-# Alternatives GCC4 or F2C (use suitable f2c rather than a Fortran compiler).
-
-BUILD=GCC4
-
 # an alternative is to use -gstabs here, if the debugger supports only stabs.
 G_FLAG=-gdwarf-2
 
