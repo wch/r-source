@@ -128,17 +128,10 @@ BUG FIXES
     o	Calls to selectMethod() by default no longer cache inherited
 	methods.  This could previously corrupt methods used by as().
 
-    o	The C function mkCharLenCE now no longer reads past 'len' bytes
-	(unlikely to be a problem except in user code). (PR# 14246)
-
     o	The densities of non-central chi-squared are now more accurate
 	in some cases in the extreme tails, e.g. dchisq(2000, 2,
 	1000), as a series expansion was truncated too early.
 	(PR#14105)
-
-    o	On systems without any default LD_LIBRARY_PATH (not even
-	/usr/local/lib), [DY]LIB_LIBRARY_PATH is now set without a
-	trailing colon.	 (PR#13637)
 
     o	pt() is more accurate in the left tail for ncp large, e.g.
 	pt(-1000, 3, 200).  (PR#14069)
@@ -149,12 +142,6 @@ BUG FIXES
     o	source(echo=TRUE) failed to echo comments that followed the
     	last statement in a file.
 
-    o	More efficient utf8ToInt() on long multi-byte strings with
-	many multi-byte characters.  (PR#14262)
-
-    o	aggregate.ts() gave platform-depedent results due to rounding
-	error for ndeltat != 1.
-
 
 
 
@@ -163,6 +150,30 @@ BUG FIXES
 	*	       2.11 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.11.1
+
+
+BUG FIXES
+
+    o	The C function mkCharLenCE now no longer reads past 'len' bytes
+	(unlikely to be a problem except in user code). (PR# 14246)
+
+    o	On systems without any default LD_LIBRARY_PATH (not even
+	/usr/local/lib), [DY]LIB_LIBRARY_PATH is now set without a
+	trailing colon.	 (PR#13637)
+
+    o	More efficient utf8ToInt() on long multi-byte strings with
+	many multi-byte characters.  (PR#14262)
+
+    o	aggregate.ts() gave platform-depedent results due to rounding
+	error for ndeltat != 1.
+
+    o 	package.skeleton() sometimes failed to fix filenames for .R or
+    	.Rd files to start with an alphanumeric.  (PR#14253)
+
+
 
 
 		CHANGES IN R VERSION 2.11.0
@@ -572,8 +583,6 @@ INSTALLATION
 	better on recent systems and on Mac OS X.
 
 
-
-
 PACKAGE INSTALLATION
 
     o	Characters in R source which are not translatable to the
@@ -730,9 +739,6 @@ BUG FIXES
     o	If xy[z].coords (used internally by many graphics functions) are
 	given a list as 'x', they now check that the list has suitable
 	names and give a more informative error message.  (PR#13936)
-
-    o 	package.skeleton() sometimes failed to fix filenames for .R or
-    	.Rd files to start with an alphanumeric.  (PR#14253)
 
 
 
