@@ -176,6 +176,9 @@ BUG FIXES
     o	splinefun(*, method = "monoH.FC")  was not quite monotone in rare
 	cases.	(PR#14215)
 
+    o	Rhttpd no longer crashes due to SIGPIPE when the client closes
+	the connection prematurely.  (PR#14266)
+
 
 
 		CHANGES IN R VERSION 2.11.0
