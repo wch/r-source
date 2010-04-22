@@ -744,4 +744,8 @@ stopifnot(qgamma(.99, .00001) == 0,
 stopifnot(all(qpois((0:8)/8, lambda=0) == 0))
 ## gave Inf as p==1 was checked *before* lambda==0
 
+## extreme tail of non-central chisquare
+stopifnot(all.equal(pchisq(200, 4, ncp=.001, log.p=TRUE), -3.851e-42))
+## jumped to zero too early up to R 2.10.1 (PR#14216)
+
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

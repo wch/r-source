@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-06 r51610)
+R version 2.12.0 Under development (unstable) (2010-04-14 r51722)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1279,6 +1279,10 @@ Warning messages:
 > stopifnot(all(qpois((0:8)/8, lambda=0) == 0))
 > ## gave Inf as p==1 was checked *before* lambda==0
 > 
+> ## extreme tail of non-central chisquare
+> stopifnot(all.equal(pchisq(200, 4, ncp=.001, log.p=TRUE), -3.851e-42))
+> ## jumped to zero too early up to R 2.10.1 (PR#14216)
+> 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.56 0.01 1.582 0 0 
+Time elapsed:  1.494 0.007 1.501 0 0 
 > 
