@@ -138,7 +138,7 @@ BUG FIXES
 
     o	The default C code (R_binary) for binary ops now sets the S4
 	bit in the result if either argument is an S4 object. (PR#13209)
-	
+
     o	source(echo=TRUE) failed to echo comments that followed the
     	last statement in a file.
 
@@ -152,7 +152,7 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.11.1
+		CHANGES IN R VERSION 2.11.0 patched
 
 
 BUG FIXES
@@ -173,6 +173,8 @@ BUG FIXES
     o 	package.skeleton() sometimes failed to fix filenames for .R or
     	.Rd files to start with an alphanumeric.  (PR#14253)
 
+    o	splinefun(*, method = "monoH.FC")  was not quite monotone in rare
+	cases.	(PR#14215)
 
 
 
