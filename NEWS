@@ -6,6 +6,35 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.11.0 patched
+
+
+BUG FIXES
+
+    o	The C function mkCharLenCE now no longer reads past 'len' bytes
+	(unlikely to be a problem except in user code). (PR# 14246)
+
+    o	On systems without any default LD_LIBRARY_PATH (not even
+	/usr/local/lib), [DY]LIB_LIBRARY_PATH is now set without a
+	trailing colon.	 (PR#13637)
+
+    o	More efficient utf8ToInt() on long multi-byte strings with
+	many multi-byte characters.  (PR#14262)
+
+    o	aggregate.ts() gave platform-depedent results due to rounding
+	error for ndeltat != 1.
+
+    o 	package.skeleton() sometimes failed to fix filenames for .R or
+    	.Rd files to start with an alphanumeric.  (PR#14253)
+
+    o	splinefun(*, method = "monoH.FC")  was not quite monotone in rare
+	cases.	(PR#14215)
+
+    o	Rhttpd no longer crashes due to SIGPIPE when the client closes
+	the connection prematurely.  (PR#14266)
+
+
+
 		CHANGES IN R VERSION 2.11.0
 
 

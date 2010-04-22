@@ -400,11 +400,19 @@ static RETSIGTYPE handleInterrupt(int dummy)
     signal(SIGINT, handleInterrupt);
 }
 
+/* this flag is set if R internal code is using send() and does not
+   want to trigger an error on SIGPIPE (e.g., the httpd code).
+   [It is safer and more portable than other methods of handling
+   broken pipes on send().]
+ */
+
 #ifndef Win32
+int R_ignore_SIGPIPE = 0;
+
 static RETSIGTYPE handlePipe(int dummy)
 {
     signal(SIGPIPE, handlePipe);
-    error("ignoring SIGPIPE signal");
+    if (!R_ignore_SIGPIPE) error("ignoring SIGPIPE signal");
 }
 #endif
 
