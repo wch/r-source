@@ -720,7 +720,8 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, sformat, ans, tz;
     int i, n = 0, m, N, nlen[9], UseTZ;
-    char buff[300];
+    int buf2size = 128;
+    char buff[300], *buf2 = alloca(buf2size);
     const char *p;
     struct tm tm;
 
@@ -771,7 +772,10 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else {
 		const char *q = CHAR(STRING_ELT(sformat, i%m));
 		int n = strlen(q) + 50;
-		char *buf2 = alloca(n);
+		if (n > buf2size) {
+		    buf2size *= 2;
+		    buf2 = alloca(buf2size);
+		}
 #ifdef Win32
 		/* We want to override Windows' TZ names */
 		p = strstr(q, "%Z");

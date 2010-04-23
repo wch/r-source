@@ -32,6 +32,9 @@ BUG FIXES
 
     o	Rhttpd no longer crashes due to SIGPIPE when the client closes
 	the connection prematurely.  (PR#14266)
+	
+    o	format.POSIXlt() could cause a stack overflow and crash when used on
+    	very long vectors.  (PR#14267)
 
 
 
