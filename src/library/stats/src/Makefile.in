@@ -17,7 +17,7 @@ SOURCES_C = init.c kmeans.c \
   ansari.c bandwidths.c chisqsim.c d2x2xk.c fexact.c kendall.c ks.c \
   line.c smooth.c \
   prho.c swilk.c \
-  ksmooth.c loessc.c isoreg.c Srunmed.c Trunmed.c \
+  ksmooth.c loessc.c monoSpl.c isoreg.c Srunmed.c Trunmed.c \
   dblcen.c distance.c hclust-utils.c \
   nls.c \
   HoltWinters.c PPsum.c arima.c burg.c filter.c \

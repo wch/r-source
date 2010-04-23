@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-7   The R Development Core Team.
+ *  Copyright (C) 2001-2010   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -155,6 +155,7 @@ static const R_CMethodDef CEntries[]  = {
 static const R_CallMethodDef CallEntries[] = {
     {"R_cutree", (DL_FUNC) &R_cutree, 2},
     {"R_isoreg", (DL_FUNC) &R_isoreg, 1},
+    {"R_monoFC_m", (DL_FUNC) &R_monoFC_m, 2},
     {"numeric_deriv", (DL_FUNC)&numeric_deriv, 4},
     {"nls_iter", (DL_FUNC)&nls_iter, 3},
     {"setup_starma", (DL_FUNC) &setup_starma, 8},
