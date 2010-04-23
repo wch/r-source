@@ -145,7 +145,8 @@ release.
 
 Current binary versions of R run on Windows 2000 or later.@footnote{R
 2.6.2 was the last version for Windows 95. 98, ME and NT4.}, including
-on 64-bit versions.
+on 64-bit versions: @xref{Can I use R on 64-bit Windows?}.
+
 
 We only test on versions of Windows currently supported by Microsoft,
 mainly on 32-bit XP SP3 and 64-bit Windows 7 and Windows Server 2008.
@@ -830,8 +831,8 @@ those of 1GB or more).  The disadvantages are that all the pointers are
 to be moved around, and that far less external software is available for
 64-bit versions of the OS.
 
-The toolchain (compilers, linkers, @dots{}) used to build 64-bit R are
-less mature than those for 32-bit R, but testing so far (and all the
+The toolchain (compilers, linkers, @dots{}) used to build 64-bit R is
+less mature than that for 32-bit R, but testing so far (and all the
 CRAN packages provide an extensive test suite) suggests that they are
 mature enough for production use.  The compilers are more recent
 versions of @acronym{GCC} with better optimization and are able to take
