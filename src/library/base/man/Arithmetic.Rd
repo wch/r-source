@@ -90,6 +90,13 @@ x \%/\% y
   For real arguments, \code{\%\%} can be subject to catastrophic loss of
   accuracy if \code{x} is much larger than \code{y}, and a warning is
   given if this is detected.
+
+  \code{\%\%} and \code{x \%/\% y} can be used for non-integer \code{y},
+  e.g. \code{1 \%/\% 0.2}, but the results are subject to rounding error
+  and so may be platform-dependent.  Because the IEC 60059
+  representation of \code{0.2} is a binary fraction slightly larger than
+  \code{0.2}, the answer to \code{1 \%/\% 0.2} should be \code{4} but
+  most platforms give \code{5}.
 }
 \section{S4 methods}{
   These operators are members of the S4 \code{\link{Arith}} group generic,

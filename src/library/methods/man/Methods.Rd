@@ -1,6 +1,6 @@
 % File src/library/methods/man/Methods.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Methods}
@@ -8,7 +8,7 @@
 \title{General Information on Methods}
 \description{
   This documentation section covers some general topics on how methods
-  work and how the \pkg{methods} package interacts with the rest of R.  The
+  work and how the \pkg{methods} package interacts with the rest of \R.  The
   information is usually not needed to get started with methods and
   classes, but may be helpful for moderately ambitious projects, or when
   something doesn't work as expected.
@@ -27,10 +27,10 @@
   formal arguments as the generic.  See the \dQuote{Generic
     Functions} section below for more on generic functions themselves.
 
-  Each R package will include  methods metadata objects
+  Each \R package will include  methods metadata objects
   corresponding to each generic function  for which methods have been
   defined in that package.
-  When the package is loaded into an R session, the methods for each
+  When the package is loaded into an \R session, the methods for each
   generic function are \emph{cached}, that is, stored in the
   environment of the generic function along with the methods from
   previously loaded packages.  This merged table of methods is used to
@@ -188,15 +188,15 @@ with this vector as its class attribute.
 
 A second nonstandard situation arises when an S3 method has been
 explicitly written for an S4 class.
-Versions of R through 2.9.0 did not recognize S4
+Versions of \R up to and including 2.9.0 did not recognize S4
 inheritance in dispatching S3 methods, so that subclasses of the S4 class
 would not then inherit the S3 method.  The version of \R{} accompanying this documentation
 fixes this problem, to the extent practical, as follows.
 S3 method selection will
 resemble S4 selection for the same class \emph{if} the call to
 \code{\link{setClass}} has included the argument \code{S3methods =
-  TRUE}. If not, the current behavior (R 2.9.1) is to select S3 methods
-defined for this class, but not for its subclasses  (largely for back compatibility; in future versions of R, S3 methods may be
+  TRUE}. If not, the current behavior (\R 2.9.1) is to select S3 methods
+defined for this class, but not for its subclasses  (largely for back compatibility; in future versions of \R, S3 methods may be
 ignored for S4 classes unless \code{S3methods} is set.)
 The implementation uses the same special slot as above for inheriting
 from an S3 class.  Subclasses of a class set this way will inherit the
@@ -254,7 +254,7 @@ have superclasses, defined by any of the same mechanisms, and
 similarly for further generations.  Putting all this information together produces
 the full list of superclasses for this class.
 The superclass list is included in the definition of the class that is
-cached during the R session.
+cached during the \R session.
 Each element of the list describes the nature of the relationship (see
 \code{\linkS4class{SClassExtension}} for details).
 Included in the element is a \code{distance} slot giving a numeric

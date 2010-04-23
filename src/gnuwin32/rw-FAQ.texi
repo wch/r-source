@@ -143,9 +143,9 @@ release.
 @section How do I install R for Windows?
 
 Current binary versions of R run on Windows 2000 or later.@footnote{R
-2.6.2 was the last version for Windows 95. 98, ME and NT4.}  The
-standard 32-bit version works well on x64 Windows: @xref{Can I use R
-on 64-bit Windows?}.
+2.6.2 was the last version for Windows 95. 98, ME and NT4.}, including
+on 64-bit versions: @xref{Can I use R on 64-bit Windows?}.
+
 
 We only test on versions of Windows currently supported by Microsoft,
 mainly on 32-bit XP SP3 and 64-bit Windows 7 and Windows Server 2008.
@@ -799,14 +799,13 @@ releasing the Alt key.
 @node Can I use R on 64-bit Windows?, Should I run 32-bit or 64-bit R?, There is no tilde on my keyboard, Installation and Usage
 @section Can I use R on 64-bit Windows?
 
-The standard build of R for Windows (including the binary installer on
-CRAN) is a 32-bit executable that will run on both 32-bit and
-64-bit@footnote{what Windows calls x64 for x86-64 CPUs, not the very
-rare ia64 Windows for Itanium CPUs.} versions of Windows.  64-bit
-versions of Windows run 32-bit executables under the WOW (Windows on
-Windows) subsystem: they run in almost exactly the same way as on a
-32-bit version of Windows, except that the address limit for the R
-process is 4GB (rather than 2GB or perhaps 3GB).
+The standard build of R for Windows is a 32-bit executable that will run
+on both 32-bit and 64-bit@footnote{what Windows calls x64 for x86-64
+CPUs, not the very rare ia64 Windows for Itanium CPUs.} versions of
+Windows.  64-bit versions of Windows run 32-bit executables under the
+WOW (Windows on Windows) subsystem: they run in almost exactly the same
+way as on a 32-bit version of Windows, except that the address limit for
+the R process is 4GB (rather than 2GB or perhaps 3GB).
 
 As from R 2.11.0 there is a native 64-bit version of R: see the `R
 Installation and Administration Manual'.  A binary installer is
@@ -816,18 +815,6 @@ some from Omegahat and @code{Rgraphviz}), but fewer hard-to-install
 packages are available than for the standard 32-bit build.  A subset of
 Bioconductor packages are available.
 
-It is planned to merge the 32- and 64-bit builds into a common
-distribution (including binary packages) from R 2.12.0.  For R 2.11.x it
-is possible to have both builds installed on a machine: the installers
-will put the builds into different directories, and the 64-bit build
-will have name suffixed by 'x64' on the Start menus.  The default
-personal library directories are different.  If you set the library path
-in a personal (rather than site) startup file it will need to choose a
-build, e.g.@:
-
-@example
-.libPaths(if(.Machine$sizeof.pointer == 8) "~/Rlibs/x64" else "~/Rlibs")
-@end example
 
 @node Should I run 32-bit or 64-bit R?, Can both 32- and 64-bit R be installed on the same machine?, Can I use R on 64-bit Windows?, Installation and Usage
 @section Should I run 32-bit or 64-bit R?
@@ -845,14 +832,14 @@ those of 1GB or more).  The disadvantages are that all the pointers are
 to be moved around, and that far less external software is available for
 64-bit versions of the OS.
 
-The toolchain (compilers, linkers, @dots{}) used to build 64-bit R are
-less mature than those for 32-bit R, but testing so far (and all the
+The toolchain (compilers, linkers, @dots{}) used to build 64-bit R is
+less mature than that for 32-bit R, but testing so far (and all the
 CRAN packages provide an extensive test suite) suggests that they are
 mature enough for production use.  The compilers are more recent
 versions of @acronym{GCC} with better optimization and are able to take
 advantage of extra features of all x86-64 chips (more registers, SSE2/3
-instructions, @dots{}) and so the code may run faster despite using larger
-pointers.
+instructions, @dots{}) and so the code may run faster despite using
+larger pointers.
 
 @node Can both 32- and 64-bit R be installed on the same machine?,  , Should I run 32-bit or 64-bit R?, Installation and Usage
 @section Can both 32- and 64-bit R be installed on the same machine?
@@ -867,6 +854,14 @@ will default to different paths (e.g.@: @file{C:\Program Files (x86)\R}
 for 32-bit, @file{C:\Program Files\R} for 64-bit).  The Start Menu,
 desktop and quick launch icons will be named differently, and the
 versions can be uninstalled independently.
+
+The default personal library directories are different.  If you set the
+library path in a personal (rather than site) startup file it will need
+to choose one depending on the build, e.g.@:
+
+@example
+.libPaths(if(.Machine$sizeof.pointer == 8) "~/Rlibs/x64" else "~/Rlibs/i386")
+@end example
 
 For many Registry items, 32- and 64-bit programs have different views of
 the Registry, but clashes can occur.  The most obvious problem is the

@@ -1918,10 +1918,10 @@ void GScale(double min, double max, int axis, pGEDevDesc dd)
 	    temp = fmin2(min_o, 1.01* DBL_MIN); /* allow smaller non 0 */
 	    min = log10(temp);
 	}
-	if((tmp2 = pow(10., max)) == R_PosInf) { /* or  > .95*DBL_MAX */
+	if(max >= 308.25) { /* overflows */
 	    tmp2 = fmax2(max_o, .99 * DBL_MAX);
 	    max = log10(tmp2);
-	}
+	} else tmp2 = pow(10., max);
     }
     if(is_xaxis) {
 	if (log) {

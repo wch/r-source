@@ -205,6 +205,15 @@ are legal but discouraged).
 So the detailed calculations should be done only on the first
 occurrence of a coerce from \code{class(object)} to \code{Class}.
 
+Note that  \code{coerce} is not a standard generic function.  It is
+not intended to be called directly.  To prevent accidentally caching
+an invalid inherited method, calls are routed to an equivalent call to
+\code{as}, and a warning is issued.  Also, calls to
+\code{\link{selectMethod}} for this function may not represent the
+method that \code{as} will choose.  You can only trust the result if
+the corresponding call to \code{as} has occurred previously in this
+session.
+
   With this explanation as background, the function \code{setAs} does a
   fairly obvious computation:  It constructs and sets a method for the function
   \code{coerce} with signature \code{c(from, to)}, using the \code{def}

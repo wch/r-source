@@ -149,11 +149,7 @@ package.skeleton <-
     if(length(internalObjInds))
 	list <- list[-internalObjInds]
 
-    if(use_code_files) {
-        list0 <- .fixPackageFileNames(list)
-    } else {
-        list0 <- list
-    }
+    list0 <- .fixPackageFileNames(list)
     names(list0) <- list
 
     ## Dump the items in 'data' or 'R'
@@ -282,10 +278,11 @@ package.skeleton <-
                       list0)
         if(length(wrong))
             list0[wrong] <- paste("zz", list0[wrong], sep="")
-        ok <- grep("^[[:alnum:]]", list0)
-        if(length(ok) < length(list0))
-            list0[-ok] <- paste("z", list0[-ok], sep="")
-        ## now on Windows lower/uppercase will collide too
+        ## using grep was wrong, as could give -integer(0)
+        ok <- grepl("^[[:alnum:]]", list0)
+        if(any(!ok))
+            list0[!ok] <- paste("z", list0[!ok], sep="")
+        ## now on Mac/Windows lower/uppercase will collide too
         list1 <- tolower(list0)
         list2 <- make.unique(list1, sep="_")
         changed <- (list2 != list1)

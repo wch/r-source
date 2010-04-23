@@ -1215,9 +1215,12 @@ static int gzfile_fgetc_internal(Rconnection con)
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
     int c;
 
-    /* Looks like eof is signalled one char early */
-    /* -- sometimes! gzgetc may still return EOF */
+    /* Looks like eof is signalled one char early
+     -- sometimes! gzgetc may still return EOF 
     if(gzeof(fp)) return R_EOF;
+    
+    Removed for zlib 1.2.4
+    */
     c = gzgetc(fp);
     return (c == EOF) ? R_EOF : c;
 }

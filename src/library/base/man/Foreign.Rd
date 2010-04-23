@@ -120,7 +120,11 @@
   \code{logical} are \code{int}, not \code{long} as in S.  This
   difference matters on most 64-bit platforms, where \code{int} is
   32-bit and \code{long} is 64-bit (but not on 64-bit Windows).
-
+  
+  \emph{Note:} The Fortran type corresponding to \code{logical} is
+  \code{integer}, not \code{logical}: the difference matters on some
+  older Fortran compilers.
+  
   The first character string of a character vector is passed as a C
   character array to Fortran: that string may be usable as
   \code{character*255} if its true length is passed separately.  Only up

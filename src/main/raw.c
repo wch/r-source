@@ -198,13 +198,13 @@ static int mbrtoint(int *w, const char *s)
 	*w = (int) byte;
 	return 1;
     } else if (byte < 0xE0) {
-	if (strlen(s) < 2) return -2;
+	if (!s[1]) return -2;
 	if ((s[1] & 0xC0) == 0x80) {
 	    *w = (int) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
 	    return 2;
 	} else return -1;
     } else if (byte < 0xF0) {
-	if (strlen(s) < 3) return -2;
+	if (!s[1] || !s[2]) return -2;
 	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
 	    *w = (int) (((byte & 0x0F) << 12)
 			| ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
@@ -214,7 +214,7 @@ static int mbrtoint(int *w, const char *s)
 	    return 3;
 	} else return -1;
     } else if (byte < 0xF8) {
-	if (strlen(s) < 4) return -2;
+	if (!s[1] || !s[2] || !s[3]) return -2;
 	if (((s[1] & 0xC0) == 0x80)
 	    && ((s[2] & 0xC0) == 0x80)
 	    && ((s[3] & 0xC0) == 0x80)) {
@@ -226,7 +226,7 @@ static int mbrtoint(int *w, const char *s)
 	    return 4;
 	} else return -1;
     } else if (byte < 0xFC) {
-	if (strlen(s) < 5) return -2;
+	if (!s[1] || !s[2] || !s[3] || !s[4]) return -2;
 	if (((s[1] & 0xC0) == 0x80)
 	    && ((s[2] & 0xC0) == 0x80)
 	    && ((s[3] & 0xC0) == 0x80)
@@ -240,7 +240,7 @@ static int mbrtoint(int *w, const char *s)
 	    return 5;
 	} else return -1;
     } else {
-	if (strlen(s) < 6) return -2;
+	if (!s[1] || !s[2] || !s[3] || !s[4] || !s[5]) return -2;
 	if (((s[1] & 0xC0) == 0x80)
 	    && ((s[2] & 0xC0) == 0x80)
 	    && ((s[3] & 0xC0) == 0x80)
@@ -272,7 +272,7 @@ SEXP attribute_hidden do_utf8ToInt(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("argument should be a character vector of length 1\nall but the first element will be ignored"));
     if (STRING_ELT(x, 0) == NA_STRING) return ScalarInteger(NA_INTEGER);
     nc = LENGTH(STRING_ELT(x, 0)); /* ints will be shorter */
-    ians = (int *) R_alloc(nc,  sizeof(int *));
+    ians = (int *) R_alloc(nc, sizeof(int));
     for (i = 0, j = 0; i < nc; i++) {
 	used = mbrtoint(&tmp, s);
 	if (used <= 0) break;
@@ -281,7 +281,7 @@ SEXP attribute_hidden do_utf8ToInt(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (used < 0) error("invalid UTF-8 string");
     ans = allocVector(INTSXP, j);
-    for (i = 0; i < j; i++) INTEGER(ans)[i] = ians[i];
+    memcpy(INTEGER(ans), ians, sizeof(int) * j);
     return ans;
 }
 
