@@ -1356,14 +1356,14 @@ imposes on re-distribution).
 @c @url{http://www.cadforte.com/downloads.html}.  Use at your own risk!
 
 To build package @pkg{tcltk} you need to unpack
-@url{http://www.stats.ox.ac.uk/pub/Rtools/R64_Tcl_8-5-8.zip} at the top
-of the source tree: otherwise edit @file{src/library/tcltk/Makefile.win}
-to make a stub package.
+@url{http://www.stats.ox.ac.uk/pub/Rtools/R64_Tcl_8-5-8.zip}
+(@strong{NB} this is not the same file as for @R{} 2.12.0) at the top of
+the source tree: otherwise edit @file{src/library/tcltk/Makefile.win} to
+make a stub package.
 
-The default is @code{options(pkgType="win64.binary")}, supported for
-@R{} 2.11.x on both @acronym{CRAN} and @acronym{CRANextras}.  Packages
-using Gtk+ (@pkg{Cairo}, @pkg{RGtk2}, @pkg{cairoDevice} and those that
-depend on them) need the @file{bin} directory of the distribution at
+The default is @code{options(pkgType="win64.binary")}.  Packages using
+Gtk+ (@pkg{Cairo}, @pkg{RGtk2}, @pkg{cairoDevice} and those that depend
+on them) need the @file{bin} directory of the distribution at
 @url{http://www.gtk.org/download-windows-64bit.html} in the path: note
 that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
 you need the correct one first in your path if using both.
@@ -4304,10 +4304,10 @@ will not need to build add-on packages from source; see @ref{Add-on
 packages} for details.)
 
 Only building with MinGW @command{gcc 4.2.1} is supported.  It is
-possible to build with the recently released MinGW @command{gcc 4.5.0},
-but this came too late to be supported for this release of @R{}---beware
-that this by default uses DLLs for runtimes which need to be distributed
-with @R{} or packages built with that compiler.
+possible to build with the recently released MinGW @command{gcc
+4.5.0}---beware that this by default uses DLLs for Fortran and C++
+runtimes which need to be distributed with @R{} or packages built with
+that compiler.
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
