@@ -74,6 +74,19 @@ PACKAGE INSTALLATION
 	**************************************************
 
 
+    		CHANGES IN R VERSION 2.11.0 patched
+
+
+NEW FEATURES
+
+    o	The Rgui console, pagers and editor on the 64-bit build now have
+	a title bar icon.
+
+    o	The outer frame/console for RGui/Rterm  mention '(64-bit)' to
+	make it easier to distinguish running copies of R.
+
+
+
     		CHANGES IN R VERSION 2.11.0
 
 

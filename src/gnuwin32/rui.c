@@ -25,9 +25,6 @@
 
 #include <Defn.h>
 
-#ifdef Win32
-#define USE_MDI 1
-#endif
 /* R user interface based on GraphApp */
 #include "Defn.h"
 #undef append /* defined by graphapp/internal.h */
@@ -37,9 +34,7 @@
 #define GA_EXTERN
 #include "graphapp/internal.h"
 #include "graphapp/ga.h"
-#ifdef USE_MDI
-# include "graphapp/stdimg.h"
-#endif
+#include "graphapp/stdimg.h"
 
 #include "console.h"
 #include "rui.h"
@@ -53,12 +48,10 @@
 extern Rboolean UserBreak;
 
 console RConsole = NULL;
-#ifdef USE_MDI
 int   RguiMDI = RW_MDI | RW_TOOLBAR | RW_STATUSBAR;
 int   MDIset = 0;
 window RFrame = NULL; /* some compilers want initialized for export */
 rect MDIsize;
-#endif
 extern int ConsoleAcceptCmd, R_is_running;
 extern Rboolean DebugMenuitem;
 Rboolean R_LoadRconsole = TRUE; /* used in commandLineArgs */
@@ -1019,12 +1012,9 @@ int RguiCommonHelp(menu m, HelpMenuItems hmenu)
 
 static int RguiWindowMenu()
 {
-#ifdef USE_MDI
     if (ismdi())
 	newmdimenu();
-    else 
-#endif
-    {
+    else {
 	MCHECK(newmenu(G_("Windows")));
 	MCHECK(newmenuitem(G_("Cascade"), 0, menucascade));
 	MCHECK(newmenuitem(G_("Tile &Horizontally"), 0, menutilehoriz));
@@ -1056,22 +1046,34 @@ int setupui(void)
     if(p && isdigit(p[1])) localeCP = atoi(p+1); else localeCP = 1252;
 
     readconsolecfg();
-#ifdef USE_MDI
+    int flags = StandardWindow | Document | Menubar;
+    if(mbcslocale) flags |= UseUnicode;
     if (RguiMDI & RW_MDI) {
 	TRACERUI("Rgui");
-	RFrame = newwindow("RGui", MDIsize,
-			   StandardWindow | Menubar | Workspace);
+	RFrame = newwindow(
+#ifdef WIN64
+	    "RGui (64-bit)",
+#else
+	    "RGui",
+#endif
+	    MDIsize,
+	    StandardWindow | Menubar | Workspace);
 	setclose(RFrame, closeconsole);
 	show(RFrame);
 	TRACERUI("Rgui done");
-    }
+	TRACERUI("Console");
+	if (!(RConsole = newconsole("R Console", flags ))) return 0;
+	TRACERUI("Console done");
+    } else {
+	TRACERUI("Console");
+#ifdef WIN64
+	if (!(RConsole = newconsole("R Console (64-bit)", flags ))) return 0;
+#else
+	if (!(RConsole = newconsole("R Console", flags ))) return 0;
 #endif
-    TRACERUI("Console");
-    int flags = StandardWindow | Document | Menubar;
-    if(mbcslocale) flags |= UseUnicode;
-    if (!(RConsole = newconsole("R Console", flags ))) return 0;
-    TRACERUI("Console done");
-#ifdef USE_MDI
+	TRACERUI("Console done");
+    }
+    
     if (ismdi()) {
 	  int btsize = 24;
 	  rect r = rect(2, 2, btsize, btsize);
@@ -1122,7 +1124,6 @@ int setupui(void)
 	PrintVersionString(s);
 	setstatus(s);
     }
-#endif
     addto(RConsole);
     setclose(RConsole, closeconsole);
     setdrop(RConsole, dropconsole);
@@ -1161,7 +1162,6 @@ int setupui(void)
     MCHECK(mde = newmenuitem(G_("Data editor..."), 0, menude));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mconfig = newmenuitem(G_("GUI preferences..."), 0, menuconfig));
-#ifdef USE_MDI
     if (ismdi()) {
 	MCHECK(newmenu(G_("View")));
 	MCHECK(mtools = newmenuitem(G_("Toolbar"), 0, menutools));
@@ -1169,7 +1169,6 @@ int setupui(void)
 	if(RguiMDI & RW_TOOLBAR) check(mtools);
 	if(RguiMDI & RW_STATUSBAR) check(mstatus);
     }
-#endif
     MCHECK(newmenu(G_("Misc")));
     MCHECK(newmenuitem(G_("Stop current computation           \tESC"), 0,
 		       menukill));
@@ -1208,7 +1207,6 @@ int setupui(void)
     return 1;
 }
 
-#ifdef USE_MDI
 static RECT RframeRect; /* for use by pagercreate */
 RECT *RgetMDIsize(void)
 {
@@ -1225,7 +1223,6 @@ int RgetMDIheight(void)
 {
     return RgetMDIsize()->bottom;
 }
-#endif
 
 #if 0
 extern int  CharacterMode;
