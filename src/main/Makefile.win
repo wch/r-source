@@ -50,6 +50,12 @@ gramRd.c: gramRd.y
 	$(RM) gramRd.tab.c	
 endif
 
+ifeq ($(strip $(WIN)),64)
+platform-CPPFLAGS=-I../gnuwin32 -I../extra -DPLATFORM_PKGTYPE='"win64.binary"'
+else
+platform-CPPFLAGS=-I../gnuwin32 -I../extra -DPLATFORM_PKGTYPE='"win.binary"'
+endif
+
 agrep-CPPFLAGS=-I../extra
 builtin-CPPFLAGS=-I../gnuwin32
 connections-CPPFLAGS=-I../extra/zlib -I../extra/bzip2
@@ -57,7 +63,6 @@ connections-CPPFLAGS+=-DLZMA_API_STATIC -I../extra/xz/api
 dcf-CPPFLAGS=-I../extra
 dounzip-CPPFLAGS=-I../extra/zlib
 grep-CPPFLAGS=-I../extra -I../extra/pcre -I../gnuwin32 -DPCRE_STATIC
-platform-CPPFLAGS=-I../gnuwin32 -I../extra
 printutils-CPPFLAGS=-I../gnuwin32
 saveload-CPPFLAGS=-I../extra/xdr
 sysutils-CPPFLAGS=-I../gnuwin32
