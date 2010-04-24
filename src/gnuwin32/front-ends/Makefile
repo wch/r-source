@@ -77,8 +77,8 @@ rcico.o: Rcmd.exe.manifest
 rgico.o: Rgui.exe.manifest
 rtico.o: Rterm.exe.manifest
 else
-Rgui.exe: rgui.o rgico64.o
-Rterm.exe: rterm.o rtico.o
+Rgui.exe: graphappmain.o  rgui.o rgico64.o
+Rterm.exe: graphappmain.o rterm.o rtico.o
 rtico.o: Rterm64.manifest
 rgico64.o: Rgui64.manifest
 endif

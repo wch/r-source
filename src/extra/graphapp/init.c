@@ -147,23 +147,6 @@ static void getappname(HANDLE Instance)
     setappname(title);
 }
 
-#if 0
-/*
- *  Special function for making printf work on Windows systems.
- *  This function is never called, it merely tricks the compiler into
- *  including printf and scanf support.
- */
-void app_init_printf(void)
-{
-#ifdef __BORLANDC__
-#if __BORLANDC__ <= 0x410
-    _InitEasyWin();
-#endif
-#else
-    printf(" ");
-#endif
-}
-#endif
 
 /*
  *  The main Windows entry point is the WinMain function.

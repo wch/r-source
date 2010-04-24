@@ -56,13 +56,7 @@ static void my_onintr(int nSig)
   PostThreadMessage(mainThreadId,0,0,0);
 }
 
-int
-#if defined(WIN64) && !defined(FOR_Rscript)
-main
-#else
-AppMain
-#endif
-(int argc, char **argv)
+int AppMain(int argc, char **argv)
 {
     CharacterMode = RTerm;
     if(strcmp(getDLLVersion(), getRVersion()) != 0) {
@@ -81,7 +75,11 @@ AppMain
 	gl_hist_init(R_HistorySize, 1);
 	if (R_RestoreHistory) gl_loadhistory(R_HistoryFile);
 	saveConsoleTitle();
+#ifdef WIN64
+	SetConsoleTitle("Rterm (64-bit)");
+#else
 	SetConsoleTitle("Rterm");
+#endif
     }
     Rf_mainloop();
     /* NOTREACHED */

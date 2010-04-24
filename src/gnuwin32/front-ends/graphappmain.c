@@ -11,7 +11,21 @@
 extern void 
 GA_startgraphapp(HINSTANCE Instance, HINSTANCE PrevInstance, int CmdShow);
 
+#ifdef WIN64
+int PASCAL
+WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
+	 int CmdShow)
+{
+    extern int __argc;
+    extern char **__argv;
+    extern void AppMain(int argc, char **argv);
 
+    GA_startgraphapp(Instance, PrevInstance, CmdShow);
+    AppMain(__argc, __argv);
+
+    return 0;
+}
+#else
 int PASCAL
 WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
 	 int CmdShow)
@@ -25,3 +39,4 @@ WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
 
     return 0;
 }
+#endif
