@@ -601,7 +601,8 @@ SEXP attribute_hidden do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(res == -1 && errno == E2BIG) {
 		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 		goto top_of_loop;
-	    } else if(res == -1 && errno == EILSEQ && sub) {
+	    } else if(res == -1 && sub && 
+		      (errno == EILSEQ || errno == EINVAL)) {
 		/* it seems this gets thrown for non-convertible input too */
 		if(strcmp(sub, "byte") == 0) {
 		    if(outb < 5) {
@@ -755,7 +756,7 @@ next_char:
     if(res == -1 && errno == E2BIG) {
 	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	goto top_of_loop;
-    } else if(res == -1 && errno == EILSEQ) {
+    } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
 	if(outb < 13) {
 	    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	    goto top_of_loop;
@@ -834,7 +835,7 @@ next_char:
     if(res == -1 && errno == E2BIG) {
 	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	goto top_of_loop;
-    } else if(res == -1 && errno == EILSEQ) {
+    } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
 	if(outb < 5) {
 	    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	    goto top_of_loop;
@@ -927,7 +928,7 @@ next_char:
     if(res == -1 && errno == E2BIG) {
 	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	goto top_of_loop;
-    } else if(res == -1 && errno == EILSEQ) {
+    } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
 	if(outb < 5) {
 	    R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	    goto top_of_loop;
@@ -1031,7 +1032,7 @@ next_char:
     if(res == -1 && errno == E2BIG) {
 	R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 	goto top_of_loop;
-    } else if(res == -1 && errno == EILSEQ) {
+    } else if(res == -1 && (errno == EILSEQ || errno == EINVAL)) {
 	switch(subst) {
 	case 1: /* substitute hex */
 	    if(outb < 5) {

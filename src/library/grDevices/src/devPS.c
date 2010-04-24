@@ -4217,7 +4217,8 @@ static void mbcsToSbcs(const char *in, char *out, const char *encoding,
     o_len = i_len; /* must be the same or fewer chars */
 next_char:
     status = Riconv(cd, &i_buf, &i_len, &o_buf, &o_len);
-    if(status == (size_t) -1 && errno == EILSEQ) {
+    /* libiconv 1.13 gives EINVAL on \xe0 in UTF-8 (as used in fBasics) */
+    if(status == (size_t) -1 && (errno == EILSEQ || errno == EINVAL)) {
 	warning(_("conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"),
 		in, (unsigned char) *i_buf),
 	*o_buf++ = '.'; i_buf++; o_len--; i_len--;
