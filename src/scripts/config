@@ -5,7 +5,7 @@
 ## Usage:
 ##   R CMD config [options] [VAR]
 
-## Copyright (C) 2002-6 The R Core Development Team
+## Copyright (C) 2002-10 The R Core Development Team
 ##
 ## This document is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -131,7 +131,6 @@ if test "${R_OSTYPE}" = "windows"; then
   R_DOC_DIR=${R_HOME}/doc
   R_INCLUDE_DIR=${R_HOME}/include
   R_SHARE_DIR=${R_HOME}/share
-  R_ARCH=
 fi
 
 makefiles="-f ${R_HOME}/etc${R_ARCH}/Makeconf -f ${R_SHARE_DIR}/make/config.mk"
