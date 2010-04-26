@@ -1669,9 +1669,9 @@ this will be selected automatically if the name given is a single
 
 @code{install.packages} can look in several repositories, specified as a
 character vector by the argument @code{repos}: these can include a
-@acronym{CRAN} mirror, Bioconductor, Omegahat, local archives, local
-files, @dots{}).  Function @code{setRepositories()} can select amongst
-those repositories that the @R{} installation is aware of.
+@acronym{CRAN} mirror, Bioconductor, Omegahat, R-forge, local archives,
+local files, @dots{}).  Function @code{setRepositories()} can select
+amongst those repositories that the @R{} installation is aware of.
 
 Naive users sometimes forget that as well as installing a package, they
 have to use @code{library} to make its functionality available.
@@ -1699,15 +1699,15 @@ interface to @code{install.packages}, @code{update.packages} and
 you have set up the tools needed (see @ref{The Windows toolset}).
 @command{R CMD INSTALL --help} will tell you the current options under
 Windows (which differ from those on a Unix-alike).
-Installation of binary packages must be done by @code{install.packages}.
 
 We have seen permission problems after unpacking source packages on some
 Vista/Windows 7/Server 2008 systems: these have been circumvented by
 setting the environment variable @env{R_INSTALL_TAR} to @samp{tar.exe}.
 
 If you have only a source package that is known to work with current
-@R{} and just want a binary Windows build of it, you could make use of
-the building service offered at @uref{http://win-builder.r-project.org/}.
+@R{} and just want a binary (32- or 64-bit) Windows build of it, you
+could make use of the building service offered at
+@uref{http://win-builder.r-project.org/}.
 
 @node Mac OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection Mac OS X
@@ -1814,7 +1814,11 @@ can be used, e.g.@: @file{.tar.bz2} or @file{.tar.xz} files.
 
 @item 
 @code{"win.binary"}: located at @file{bin/windows/contrib/@var{x.y}} for
-@R{} versions @var{x.y.z} and containing @file{.zip} files.
+@R{} versions @var{x.y.z} and containing @file{.zip} files for 32-bit Windows
+
+@item 
+@code{"win64.binary"}: located at @file{bin/windows64/contrib/@var{x.y}} for
+@R{} versions @var{x.y.z} and containing @file{.zip} files for 64-bit Windows.
 
 @item 
 @code{"mac.binary"}: located at
@@ -1823,8 +1827,7 @@ and containing @file{.tgz} files.  If the repository contains only
 packages for a specific architecture, the package distribution type
 can be set to @code{"mac.binary.xxx"} where @var{xxx} specifies the
 architecture, replacing @code{universal} by @var{xxx} in the path
-above.  For packages built for the off-CRAN `leopard' binary, replace
-@code{universal} by @code{leopard}.
+above.
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
@@ -4342,7 +4345,7 @@ Perl (in @file{Rtools.exe})
 @item
 The command line tools (in @file{Rtools.exe})
 @item
-The MinGW compilers (in @file{Rtools.exe})
+The MinGW compilers (for 32-bit, in @file{Rtools.exe})
 @end itemize
 For installing simple packages containing data or @R{} source
 but no compiled code, none of these are needed.
@@ -4448,7 +4451,7 @@ location where Inno Setup was installed.
 @node The command line tools, The MinGW compilers, The Inno Setup installer, The Windows toolset
 @section The command line tools
 
-This item and the next are installed by the @file{Rtools.exe} installer.
+This item is installed by the @file{Rtools.exe} installer.
 
 @c date is used when building base and tools
 @c find is used in building the installers
