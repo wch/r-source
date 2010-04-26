@@ -158,7 +158,7 @@ BUG FIXES
 BUG FIXES
 
     o	The C function mkCharLenCE now no longer reads past 'len' bytes
-	(unlikely to be a problem except in user code). (PR# 14246)
+	(unlikely to be a problem except in user code). (PR#14246)
 
     o	On systems without any default LD_LIBRARY_PATH (not even
 	/usr/local/lib), [DY]LIB_LIBRARY_PATH is now set without a
