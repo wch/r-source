@@ -1312,52 +1312,13 @@ those wanting to work with large R objects, or many medium-sized ones.
 
 To build a 64-bit version of R you need a 64-bit toolchain: the only one
 discussed here is based on the work of the MinGW-w64 project
-(@url{http://sourceforge.net/projects/mingw-w64/}, a port of
-@acronym{GNU} @code{binutils} and @code{gcc}), but commercial compilers
-such as those from Intel and PGI could be used (and have been by @R{}
-redistributors).
+(@url{http://sourceforge.net/projects/mingw-w64/}, but commercial
+compilers such as those from Intel and PGI could be used (and have been
+by @R{} redistributors).
 
 Support for MinGW-w64 was developed in the R sources over the period
-2008--10 and was first released as part of @R{} 2.11.0.  The binary
-version available from @acronym{CRAN} was built with the MinGW-w64
-toolchain described in this section, using static linking.
+2008--10 and was first released as part of @R{} 2.11.0.
 
-Several versions of the MinGW-w64 toolchain are available: use one of
-them to replace the @file{MinGW/bin} directory of @code{Rtools} in your
-path (but still have the Rtools @file{bin} directory and Perl in your
-path).  Then copy @file{src/gnuwin32/MkRules.dist} to
-@file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64} and
-@code{BINPREF64} appropriate to your toolchain, then make @R{} in the
-usual way.
-
-The toolchain we use is technically a cross-compiler: the tools run
-under 32-bit Windows but produce code to run under 64-bit
-Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
-be done under 64-bit Windows.  So does installation of source packages.}
-This comes from
-@url{http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Automated%20Builds/}
-and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100322.zip}.
-(Care is needed: that site also has compilers targeting 32-bit Windows
-and running on other host OSes.  You do want the `release' version with
-@code{-1.0-} in the name.  There was a native x64 toolchain under
-`Personal builds'.)  Some versions of that toolchain by default use
-dynamic linking to the compiler runtimes, which causes problems (see
-@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}), and can
-be converted to static linking by removing the files like
-@example
-.../x86_64-w64-mingw32/lib64/*.dll.a
-.../bin/*.dll
-@end example
-
-@noindent
-where @code{...} is the top-level directory of the toolchain. If do you
-use a dynamically-linking toolchain be sure to arrange to distribute the
-required run-time DLLs (and note the requirements that their GPL license
-imposes on re-distribution).
-
-@c Other toolchains are available: the time of writing native 64-bit
-@c compilers from @url{ftp://ftp.equation.com/gcc/} and from
-@c @url{http://www.cadforte.com/downloads.html}.  Use at your own risk!
 
 To build package @pkg{tcltk} you need to unpack
 @url{http://www.stats.ox.ac.uk/pub/Rtools/R64a_Tcl_8-5-8.zip}
@@ -1372,9 +1333,7 @@ on them) need the @file{bin} directory of the distribution at
 that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
 you need the correct one first in your path if using both.
 
-A package-building service is available at
-@url{http://win-builder.r-project.org/}, and some notes on porting
-packages can be found at
+Some notes on porting packages can be found at
 @url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
 
 The default memory limit will be the amount of installed RAM: it can
@@ -1673,9 +1632,9 @@ this will be selected automatically if the name given is a single
 
 @code{install.packages} can look in several repositories, specified as a
 character vector by the argument @code{repos}: these can include a
-@acronym{CRAN} mirror, Bioconductor, Omegahat, local archives, local
-files, @dots{}).  Function @code{setRepositories()} can select amongst
-those repositories that the @R{} installation is aware of.
+@acronym{CRAN} mirror, Bioconductor, Omegahat, R-forge, local archives,
+local files, @dots{}).  Function @code{setRepositories()} can select
+amongst those repositories that the @R{} installation is aware of.
 
 Naive users sometimes forget that as well as installing a package, they
 have to use @code{library} to make its functionality available.
@@ -1703,15 +1662,15 @@ interface to @code{install.packages}, @code{update.packages} and
 you have set up the tools needed (see @ref{The Windows toolset}).
 @command{R CMD INSTALL --help} will tell you the current options under
 Windows (which differ from those on a Unix-alike).
-Installation of binary packages must be done by @code{install.packages}.
 
 We have seen permission problems after unpacking source packages on some
 Vista/Windows 7/Server 2008 systems: these have been circumvented by
 setting the environment variable @env{R_INSTALL_TAR} to @samp{tar.exe}.
 
 If you have only a source package that is known to work with current
-@R{} and just want a binary Windows build of it, you could make use of
-the building service offered at @uref{http://win-builder.r-project.org/}.
+@R{} and just want a binary (32- or 64-bit) Windows build of it, you
+could make use of the building service offered at
+@uref{http://win-builder.r-project.org/}.
 
 @node Mac OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection Mac OS X
@@ -1818,7 +1777,11 @@ can be used, e.g.@: @file{.tar.bz2} or @file{.tar.xz} files.
 
 @item 
 @code{"win.binary"}: located at @file{bin/windows/contrib/@var{x.y}} for
-@R{} versions @var{x.y.z} and containing @file{.zip} files.
+@R{} versions @var{x.y.z} and containing @file{.zip} files for 32-bit Windows
+
+@item 
+@code{"win64.binary"}: located at @file{bin/windows64/contrib/@var{x.y}} for
+@R{} versions @var{x.y.z} and containing @file{.zip} files for 64-bit Windows.
 
 @item 
 @code{"mac.binary"}: located at
@@ -1827,8 +1790,7 @@ and containing @file{.tgz} files.  If the repository contains only
 packages for a specific architecture, the package distribution type
 can be set to @code{"mac.binary.xxx"} where @var{xxx} specifies the
 architecture, replacing @code{universal} by @var{xxx} in the path
-above.  For packages built for the off-CRAN `leopard' binary, replace
-@code{universal} by @code{leopard}.
+above.
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
@@ -4305,12 +4267,6 @@ locations and other updates to these instructions.  (Most Windows users
 will not need to build add-on packages from source; see @ref{Add-on
 packages} for details.)
 
-Only building with MinGW @command{gcc 4.2.1} is supported.  It is
-possible to build with the recently released MinGW @command{gcc
-4.5.0}---beware that this by default uses DLLs for Fortran and C++
-runtimes which need to be distributed with @R{} or packages built with
-that compiler.
-
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
 even to the choice of particular versions of the tools.@footnote{For
@@ -4343,7 +4299,7 @@ Perl (in @file{Rtools.exe})
 @item
 The command line tools (in @file{Rtools.exe})
 @item
-The MinGW compilers (in @file{Rtools.exe})
+The MinGW compilers (for 32-bit, in @file{Rtools.exe})
 @end itemize
 For installing simple packages containing data or @R{} source
 but no compiled code, none of these are needed.
@@ -4449,7 +4405,7 @@ location where Inno Setup was installed.
 @node The command line tools, The MinGW compilers, The Inno Setup installer, The Windows toolset
 @section The command line tools
 
-This item and the next are installed by the @file{Rtools.exe} installer.
+This item is installed by the @file{Rtools.exe} installer.
 
 @c date is used when building base and tools
 @c find is used in building the installers
@@ -4483,10 +4439,22 @@ at the prompt to find out.
 @node The MinGW compilers, Useful additional programs, The command line tools, The Windows toolset
 @section The MinGW compilers
 
-This version of @R{} is set up to use @command{gcc} @code{4.2.1} for
-which MinGW compilers were released in August 2007.  The
-@file{Rtools.exe} installer currently includes the @code{-sjlj} version
-of @code{4.2.1} of the MinGW port of @command{gcc} from
+This is the only step which differs between 32- and 64-bit builds.
+Technically you need more than just a compiler so the set of tools is
+referred to as a `toolchain'.
+
+@menu
+* 32-bit toolchain::            
+* 64-bit toolchain::            
+@end menu
+
+@node 32-bit toolchain, 64-bit toolchain, The MinGW compilers, The MinGW compilers
+@subsection 32-bit toolchain
+
+The 32-bit build for this version of @R{} is set up to use @command{gcc}
+@code{4.2.1}.  The @file{Rtools.exe} installer currently includes the
+@code{-sjlj} version of @code{4.2.1} of the MinGW port of @command{gcc}
+from
 @uref{http://sourceforge.net/@/project/@/showfiles.php?@/group_id=2435}.
 
 If you would like to install your own copy, we recommend downloading
@@ -4494,11 +4462,58 @@ from the URL above, as the download links from
 @uref{http://www.mingw.org/} have led to obsolete versions. See the
 notes on @uref{http://www.murdoch-sutherland.com/@/Rtools/} for updates.
 
-See above for comments about the MinGW build of @code{gcc-4.5.0} from
-April 2010.  We have tested using the 32-bit compilers from the
-@code{mingw-w64} project, which are currently pre-releases of
-@command{gcc 4.4.4}, and flags to use those are provided in file
-@file{MkRules.dist}.
+It is also possible to build with the recently released MinGW
+@command{gcc 4.5.0}---beware that this by default uses DLLs for Fortran
+and C++ runtimes which need to be distributed with @R{} or packages
+built with that compiler.@footnote{In our experiments, packages using
+C++ crash frequently unless linked statically @emph{via}
+@code{-static-libstdc++}.}  It is likely that a version of that
+toolchain will become the preferred option prior to release.
+
+We have also tested using the 32-bit toolchain from the @code{mingw-w64}
+project, which are currently pre-releases of @command{gcc 4.4.4}, and
+flags to use those are provided in file @file{MkRules.dist}.
+
+@node 64-bit toolchain,  , 32-bit toolchain, The MinGW compilers
+@subsection 64-bit toolchain
+
+Several versions of the MinGW-w64 toolchain are available: use one of
+them to replace the @file{MinGW/bin} directory of @code{Rtools} in your
+path (but still have the Rtools @file{bin} directory and Perl in your
+path).  Then copy @file{src/gnuwin32/MkRules.dist} to
+@file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64} and
+@code{BINPREF64} appropriate to your toolchain, then make @R{} in the
+usual way.
+
+The toolchain we use is technically a cross-compiler: the tools run
+under 32-bit Windows but produce code to run under 64-bit
+Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
+be done under 64-bit Windows.  So does installation of source packages.}
+This comes from
+@url{http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Automated%20Builds/}
+and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100405.zip}.
+(Care is needed: that site also has compilers targeting 32-bit Windows
+and running on other host OSes.  You do want the `release' version with
+@code{-1.0-} in the name.  There was a native x64 toolchain under
+`Personal builds'.)
+
+@emph{Some versions} of that toolchain by default use dynamic linking to
+the compiler runtimes, which causes problems (see
+@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}), and can
+be converted to static linking by removing the files like
+@example
+.../x86_64-w64-mingw32/lib64/*.dll.a
+@end example
+
+@noindent
+where @code{...} is the top-level directory of the toolchain. If do you
+use a dynamically-linking toolchain be sure to arrange to distribute the
+required run-time DLLs (and note the requirements that their GPL license
+imposes on re-distribution).
+
+@c Other toolchains are available: the time of writing native 64-bit
+@c compilers from @url{ftp://ftp.equation.com/gcc/} and from
+@c @url{http://www.cadforte.com/downloads.html}.  Use at your own risk!
 
 
 @node Useful additional programs,  , The MinGW compilers, The Windows toolset
