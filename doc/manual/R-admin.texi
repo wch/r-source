@@ -4307,7 +4307,8 @@ Only building with MinGW @command{gcc 4.2.1} is supported.  It is
 possible to build with the recently released MinGW @command{gcc
 4.5.0}---beware that this by default uses DLLs for Fortran and C++
 runtimes which need to be distributed with @R{} or packages built with
-that compiler.
+that compiler.@footnote{In our experiments, packages using C++ crash
+frequently unless linked statically @emph{via} @code{-static-libstdc++}.}
 
 We have found that the build process for @R{} is quite sensitive to
 the choice of tools: please follow our instructions @strong{exactly},
@@ -4481,10 +4482,14 @@ at the prompt to find out.
 @node The MinGW compilers, Useful additional programs, The command line tools, The Windows toolset
 @section The MinGW compilers
 
-This version of @R{} is set up to use @command{gcc} @code{4.2.1} for
-which MinGW compilers were released in August 2007.  The
-@file{Rtools.exe} installer currently includes the @code{-sjlj} version
-of @code{4.2.1} of the MinGW port of @command{gcc} from
+This is the only step which differs between 32- and 64-bit builds.
+Technically you need more than just a compiler so the set of tools is
+referred to as a `toolchain'.
+
+The 32-bit build for this version of @R{} is set up to use @command{gcc}
+@code{4.2.1} for which MinGW compilers were released in August 2007.
+The @file{Rtools.exe} installer currently includes the @code{-sjlj}
+version of @code{4.2.1} of the MinGW port of @command{gcc} from
 @uref{http://sourceforge.net/@/project/@/showfiles.php?@/group_id=2435}.
 
 If you would like to install your own copy, we recommend downloading
@@ -4492,9 +4497,9 @@ from the URL above, as the download links from
 @uref{http://www.mingw.org/} have led to obsolete versions. See the
 notes on @uref{http://www.murdoch-sutherland.com/@/Rtools/} for updates.
 
-See above for comments about the MinGW build of @code{gcc-4.5.0} from
-April 2010.
+See above for comments about the MinGW build of @code{gcc 4.5.0}.
 
+For the 64-bit toolchain, see @ref{Building R for 64-bit Windows}.
 
 @node Useful additional programs,  , The MinGW compilers, The Windows toolset
 @section Useful additional programs
