@@ -68,7 +68,7 @@ done
 if test -z "${JAVA_HOME}" ; then
     JAVA_PATH=${PATH}
 else
-    if test ! -e "${JAVA_HOME}"; then
+    if test ! -f "${JAVA_HOME}"; then
 	echo "*** JAVA_HOME is not a valid path, ignoring"
 	JAVA_HOME=
 	JAVA_PATH=${PATH}
@@ -146,9 +146,9 @@ if test -n "$JAVAC"; then
     (error "cannot create temporary directory" && exit 1)
 
     echo "public class A { }" > ${tempdir}/A.java
-    if test -e ${tempdir}/A.java; then
+    if test -f ${tempdir}/A.java; then
 	if "${JAVAC}" ${tempdir}/A.java >/dev/null; then
-           if test -e ${tempdir}/A.class; then
+           if test -f ${tempdir}/A.class; then
 		javac_works=yes
 	    fi
 	fi
@@ -224,7 +224,7 @@ case "$hostos" in
         jinc=''
 	JAVA_CPPFLAGS=''
         for pinc in include ../include jre/include; do
-          if test -e "${JAVA_HOME}/${pinc}/jni.h"; then jinc="${JAVA_HOME}/${pinc}"; break; fi
+          if test -f "${JAVA_HOME}/${pinc}/jni.h"; then jinc="${JAVA_HOME}/${pinc}"; break; fi
         done
         ## only if we get jni.h we can try to find jni_md.h
         if test -n "${jinc}"; then
@@ -246,7 +246,7 @@ case "$hostos" in
            ## prepend . and append less-likely ones
            jmdirs=". ${jmdirs} genunix ppc x86 iris hp-ux aix win32 cygwin openbsd"
            for pimd in ${jmdirs}; do
-             if test -e "${jinc}/${pimd}/jni_md.h"; then jmdinc="${jinc}/${pimd}"; break; fi
+             if test -f "${jinc}/${pimd}/jni_md.h"; then jmdinc="${jinc}/${pimd}"; break; fi
            done
            if test -z "${jmdinc}"; then
              # ultima-ratio: use find and pray that it works
