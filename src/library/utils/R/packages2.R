@@ -181,7 +181,9 @@ install.packages <-
 	if(NROW(available)) {
             ## avoid duplicate entries in menus, since the latest available
             ## will be picked up
-	    pkgs <- select.list(unique(rownames(available)), multiple = TRUE,
+            ## sort in the locale, as R <= 2.10.1 did so
+	    pkgs <- select.list(sort(unique(rownames(available))),
+                                multiple = TRUE,
                                 title = "Packages", graphics = TRUE)
 	}
 	if(!length(pkgs)) stop("no packages were specified")
