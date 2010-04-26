@@ -83,7 +83,7 @@ if test -n "${JAVAC}"; then
   rm -f A.java A.class
   echo "public class A { }" > A.java
   if "${JAVAC}" A.java 2>&AS_MESSAGE_LOG_FD; then
-    if test -e A.class; then
+    if test -f A.class; then
       r_cv_javac_works=yes
     fi
   fi
@@ -96,7 +96,7 @@ if test "${r_cv_javac_works}" = yes; then
   rm -f A.java A.class
   echo "public class A { }" > A.java
   if "${JAVAC}" -source 1.4 -target 1.4 A.java 2>&AS_MESSAGE_LOG_FD; then
-    if test -e A.class; then
+    if test -f A.class; then
       r_cv_javac14_works=yes
     fi
   fi
@@ -178,7 +178,7 @@ if test ${r_cv_java_works} = yes; then
 	## includes consist of two parts - jni.h and machine-dependent jni_md.h
 	jinc=''
 	for pinc in include ../include jre/include; do 
-	  if test -e "${JAVA_HOME}/${pinc}/jni.h"; then jinc="${JAVA_HOME}/${pinc}"; break; fi
+	  if test -f "${JAVA_HOME}/${pinc}/jni.h"; then jinc="${JAVA_HOME}/${pinc}"; break; fi
 	done
 	## only if we get jni.h we can try to find jni_md.h
 	if test -n "${jinc}"; then
@@ -196,7 +196,7 @@ if test ${r_cv_java_works} = yes; then
 	   ## prepend . and append less-likely ones
 	   jmdirs=". ${jmdirs} genunix ppc x86 iris hp-ux aix win32 cygwin openbsd"
 	   for pimd in ${jmdirs}; do
-	     if test -e "${jinc}/${pimd}/jni_md.h"; then jmdinc="${jinc}/${pimd}"; break; fi
+	     if test -f "${jinc}/${pimd}/jni_md.h"; then jmdinc="${jinc}/${pimd}"; break; fi
 	   done
 	   if test -z "${jmdinc}"; then
 	     # ultima-ratio: use find and pray that it works

@@ -113,7 +113,7 @@ reg-plot-latin1.Rout: reg-plot-latin1.R
 	@$(ECHO) "  expect failure or some differences if not in a Latin or UTF-8 locale"
 	@$(ECHO) $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R2) < $< > $@ 2>&1 || mv $@ $@.fail
-	@if test -e $@.fail; then \
+	@if test -f $@.fail; then \
 	  $(ECHO) "$(ECHO_T) FAILED"; \
 	else \
 	  $(ECHO) "$(ECHO_T) OK"; \
