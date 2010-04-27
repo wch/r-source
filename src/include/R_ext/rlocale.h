@@ -25,9 +25,11 @@
 #ifndef R_LOCALE_H
 #define R_LOCALE_H
 
+#ifndef NO_C_HEADERS
 #include <wchar.h>
 #include <ctype.h>
 #include <wctype.h>
+#endif
 
 #ifdef  __cplusplus
 extern "C" {
