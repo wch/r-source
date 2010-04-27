@@ -8809,6 +8809,7 @@ The most useful function for printing from a C routine compiled into
 @code{printf}, but is guaranteed to write to @R{}'s output (which might
 be a @acronym{GUI} console rather than a file).  It is wise to write
 complete lines (including the @code{"\n"}) before returning to @R{}.
+It is defined in @file{R_ext/Print.h}.
 
 The function @code{REprintf} is similar but writes on the error stream
 (@code{stderr}) which may or may not be different from the standard

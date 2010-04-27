@@ -27,7 +27,10 @@
 #define RINTERFACE_H_
 
 #ifdef __cplusplus
+#include <cstdio>
 extern "C" {
+#else
+#include <stdio.h>
 #endif
 
 #include <R_ext/Boolean.h>
@@ -69,7 +72,6 @@ void process_site_Renviron(void);
 void process_system_Renviron(void);
 void process_user_Renviron(void);
 
-#include <stdio.h>
 extern FILE * R_Consolefile;
 extern FILE * R_Outputfile;
 

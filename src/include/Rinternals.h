@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2009   The R Development Core Team.
+ *  Copyright (C) 1999-2010   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,7 +22,10 @@
 #define R_INTERNALS_H_
 
 #ifdef __cplusplus
+#include <cstdio>
 extern "C" {
+#else
+#include <stdio.h>
 #endif
 
 #include <R_ext/Arith.h>
@@ -32,17 +35,6 @@ extern "C" {
 #include <R_ext/Memory.h>
 #include <R_ext/PrtUtil.h>
 #include <R_ext/Utils.h>
-
-#include <stdio.h> /* for FILE */
-/*
-#include <errno.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <string.h>
-#include <limits.h>
-#include <float.h>
-#include <ctype.h>
-*/
 
 #include <R_ext/libextern.h>
 
