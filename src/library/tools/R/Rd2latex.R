@@ -90,82 +90,81 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
       "\\arguments"="ldescription",
       "\\examples"="ExampleCode")
 
-    inCodeBlock <- FALSE ## used to indicate to vtexify where we are
+    inCodeBlock <- FALSE ## used to indicate to texify where we are
     inCode <- FALSE
     inEqn <- FALSE
     inPre <- FALSE
     sectionLevel <- 0
 
+    startByte <- function(x) {
+    	srcref <- attr(x, "srcref")
+    	if (is.null(srcref)) NA
+    	else srcref[2L]
+    }
+    
     addParaBreaks <- function(x, tag) {
-        start <- attr(x, "srcref")[2L]
+        start <- startByte(x)
         if (isBlankLineRd(x)) "\n"
-	else if (start == 1) psub("^\\s+", "", x)
+	else if (identical(start, 1L)) psub("^\\s+", "", x)
         else x
     }
 
-    texify <- function(x) {
+    texify <- function(x, code = inCodeBlock) {
         if(inEqn) return(x)
-        # Need to be careful to handle backslash, so do it in three steps.
-        # First, mark all the ones in the original text, but don't add
-        # any other special chars
-        x <- fsub("\\", "\\bsl", x)
-        # Second, escape other things, introducing more backslashes
-        x <- psub("([&$%_#])", "\\\\\\1", x)
-        ## pretty has braces in text.
-        x <- fsub("{", "\\{", x)
-        x <- fsub("}", "\\}", x)
-        x <- fsub("^", "\\textasciicircum{}", x)
-        x <- fsub("~", "\\textasciitilde{}", x)
-        # Third, add the terminal braces to the backslash
-        x <- fsub("\\bsl", "\\bsl{}", x)
+        if (!code) {
+	    # Need to be careful to handle backslash, so do it in three steps.
+	    # First, mark all the ones in the original text, but don't add
+	    # any other special chars
+	    x <- fsub("\\", "\\bsl", x)
+	    # Second, escape other things, introducing more backslashes
+	    x <- psub("([&$%_#])", "\\\\\\1", x)
+	    ## pretty has braces in text.
+	    x <- fsub("{", "\\{", x)
+	    x <- fsub("}", "\\}", x)
+	    x <- fsub("^", "\\textasciicircum{}", x)
+	    x <- fsub("~", "\\textasciitilde{}", x)
+	    # Third, add the terminal braces to the backslash
+	    x <- fsub("\\bsl", "\\bsl{}", x)
+	} else {
+	    x <- psub("\\\\[l]{0,1}dots", "...", as.character(x))
+	    ## unescape (should not be escaped: but see kappa.Rd)
+	    x <- psub("\\\\([$^&~_#])", "\\1", x)
+	    ## inCodeBlock/inPre is in alltt, where only \ { } have their usual meaning
+	    if (inCodeBlock) {
+		## We do want to escape { }, but unmatched braces had
+		## to be escaped in earlier versions (e.g. Paren.Rd, body.tex).
+		## So fix up for now
+		x <- fsub1('"\\{"', '"{"', x)
+	    } else if (inPre) {
+		BSL = '@BSL@';
+		BSL2 = '@BSLBSL@';
+		#x <- fsub("\\dots", "...", x)
+		## escape any odd \, e.g. \n
+		x <- fsub("\\\\", BSL, x) # change even ones
+		x <- fsub("\\", BSL2, x)  # odd ones
+		x <- fsub(BSL, "\\\\", x) # change back
+		x <- psub("(?<!\\\\)\\{", "\\\\{", x)
+		x <- psub("(?<!\\\\)}", "\\\\}", x)
+		x <- fsub(BSL2, "\\bsl{}", x)
+		x <- psub("\\\\\\\\var\\\\\\{([^\\\\]*)\\\\}", "\\\\var{\\1}", x)
+	    } else {
+		## cat(sprintf("\ntexify in: '%s'\n", x))
+		BSL = '@BSL@';
+		x <- fsub("\\", BSL, x)
+		x <- psub("(?<!\\\\)\\{", "\\\\{", x)
+		x <- psub("(?<!\\\\)}", "\\\\}", x)
+		x <- psub("(?<!\\\\)([&$%_#])", "\\\\\\1", x)
+		x <- fsub("^", "\\textasciicircum{}", x)
+		x <- fsub("~", "\\textasciitilde{}", x)
+		x <- fsub(BSL, "\\bsl{}", x)
+		## avoid conversion to guillemets
+		x <- fsub("<<", "<{}<", x)
+		x <- fsub(">>", ">{}>", x)
+		x <- fsub(",,", ",{},", x) # ,, is a ligature in the ae font.
+		## cat(sprintf("\ntexify out: '%s'\n", x))
+	    }
+	}
         x
-    }
-
-    ## version for RCODE and VERB
-    ## inCodeBlock/inPre is in alltt, where only \ { } have their usual meaning
-    vtexify <- function(x, code = TRUE) {
-        if(inEqn) return(x)
-        ## cat(sprintf("vtexify: '%s'\n", x))
-        x <- psub("\\\\[l]{0,1}dots", "...", as.character(x))
-        ## unescape (should not be escaped: but see kappa.Rd)
-        x <- psub("\\\\([$^&~_#])", "\\1", x)
-        if (inCodeBlock) {
-            ## We do want to escape { }, but unmatched braces had
-            ## to be escaped in earlier versions (e.g. Paren.Rd, body.tex).
-            ## So fix up for now
-            x <- fsub1('"\\{"', '"{"', x)
-        } else if (inPre) {
-            BSL = '@BSL@';
-            BSL2 = '@BSLBSL@';
-            #x <- fsub("\\dots", "...", x)
-            ## escape any odd \, e.g. \n
-            x <- fsub("\\\\", BSL, x) # change even ones
-            x <- fsub("\\", BSL2, x)  # odd ones
-            x <- fsub(BSL, "\\\\", x) # change back
-            x <- psub("(?<!\\\\)\\{", "\\\\{", x)
-            x <- psub("(?<!\\\\)}", "\\\\}", x)
-            x <- fsub(BSL2, "\\bsl{}", x)
-            x <- psub("\\\\\\\\var\\\\\\{([^\\\\]*)\\\\}", "\\\\var{\\1}", x)
-        } else {
-            ## cat(sprintf("\nvtexify in: '%s'\n", x))
-            BSL = '@BSL@';
-            x <- fsub("\\", BSL, x)
-            x <- psub("(?<!\\\\)\\{", "\\\\{", x)
-            x <- psub("(?<!\\\\)}", "\\\\}", x)
-            x <- psub("(?<!\\\\)([&$%_#])", "\\\\\\1", x)
-            x <- fsub("^", "\\textasciicircum{}", x)
-            x <- fsub("~", "\\textasciitilde{}", x)
-            x <- fsub(BSL, "\\bsl{}", x)
-            ## avoid conversion to guillemets
-            x <- fsub("<<", "<{}<", x)
-            x <- fsub(">>", ">{}>", x)
-            x <- fsub(",,", ",{},", x) # ,, is a ligature in the ae font.
-            ## used to preserve \var: needed in code only, or not at all
-            if(FALSE) # was code
-                x <- psub("\\\\bsl{}var\\\\{([^}]+)\\\\}", "\\\\var{\\1}", x)
-            ## cat(sprintf("\nvtexify out: '%s'\n", x))
-        }
-	x
     }
 
     # The quotes were Rd.sty macros, but Latex limitations (e.g. nesting \preformatted within)
@@ -337,8 +336,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     writeBlock <- function(block, tag, blocktag) {
 	switch(tag,
                UNKNOWN =,
-               VERB = of1(vtexify(block, FALSE)),
-               RCODE = of1(vtexify(block, TRUE)),
+               VERB = of1(texify(block, TRUE)),
+               RCODE = of1(texify(block, TRUE)),
                TEXT = of1(addParaBreaks(texify(block), blocktag)),
                COMMENT = {},
                LIST = writeContent(block, tag),

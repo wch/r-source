@@ -36,6 +36,8 @@ BUG FIXES
     o	format.POSIXlt() could cause a stack overflow and crash when used on
     	very long vectors.  (PR#14267)
 
+    o	Rd2latex() incorrectly escaped special characters in \usage sections.
+
 
 
 		CHANGES IN R VERSION 2.11.0
