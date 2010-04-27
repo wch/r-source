@@ -21,7 +21,7 @@ as.environment(object)
     it is a character string, match the string to the names on the
     search list.
 
-    If it is a list, the equivalent of \code{\link{env2list}(object,
+    If it is a list, the equivalent of \code{\link{list2env}(object,
       parent=emptyenv())} is returned.
 
     If \code{\link{is.object}(object)} is true and it has a
@@ -36,7 +36,8 @@ as.environment(object)
 }
 \author{ John Chambers }
 \seealso{\code{\link{environment}} for creation and manipulation,
-  \code{\link{search}}.}
+  \code{\link{search}}; \code{\link{list2env}}.
+}
 \examples{
 as.environment(1) ## the global environment
 identical(globalenv(), as.environment(1)) ## is TRUE
