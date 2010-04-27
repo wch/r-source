@@ -51,14 +51,6 @@
 @RMATH_HAVE_WORKING_LOG1P@
 #endif
 
-/* not really appropriate
-#include <errno.h>
-#include <limits.h>
-#include <float.h>
-#include <math.h>
-#include <stdlib.h>
-*/
-
 #if defined(HAVE_LOG1P) && !defined(HAVE_WORKING_LOG1P)
 /* remap to avoid problems with getting the right entry point */
 double  Rlog1p(double);
