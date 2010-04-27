@@ -339,7 +339,7 @@ stopifnot(identical(authorNames(c("me", "you")), c("me", "you")),
 }
 
 ## An example of group generic methods, using the class
-## "track"; see the documentation of setClass for its definition
+## "track"; see the documentation of \link{setClass} for its definition
 
 ## define a method for the Arith group
 

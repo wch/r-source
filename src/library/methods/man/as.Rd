@@ -1,6 +1,6 @@
 % File src/library/methods/man/as.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{as}
@@ -273,7 +273,7 @@ As with the \code{coerce} method, the first two arguments are
  Springer (For the original S4 version.)
 }
 \examples{
-## using the definition of class "track" from \link{Classes}
+## using the definition of class "track" from \link{setClass}
 
 \dontshow{
 setClass("track",

@@ -1,6 +1,6 @@
 % File src/library/methods/man/new.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{new}
@@ -80,13 +80,13 @@ initialize(.Object, ...)
 
  Chambers, John M. (1998)
  \emph{Programming with Data}
- Springer (For the original S4 version.) 
+ Springer (For the original S4 version.)
 }
 \seealso{ \link{Classes} for an overview of defining class, and
   \code{\link{setOldClass}} for the relation to S3 classes. }
 
 \examples{
-## using the definition of class "track" from \link{Classes}
+## using the definition of class "track" from \link{setClass}
 
 \dontshow{
 setClass("track",
