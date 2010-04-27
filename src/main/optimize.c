@@ -23,10 +23,11 @@
 #endif
 
 #include <Defn.h>
+#include <float.h>		/* for DBL_MAX */
 #include <Print.h>		/* for printRealVector() */
 #include <Rmath.h>
 #include <R_ext/Applic.h>
-#include <R_ext/RS.h>			/* for Memcpy */
+#include <R_ext/RS.h>	       	/* for Memcpy */
 
 
 /* One Dimensional Minimization --- just wrapper for

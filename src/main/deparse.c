@@ -91,6 +91,7 @@
 #endif
 
 #include <Defn.h>
+#include <float.h> /* for DBL_DIG */
 #include <Print.h>
 #include <Fileio.h>
 

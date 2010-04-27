@@ -228,8 +228,6 @@ typedef long R_long_t;
 
 /* some commonly needed headers */
 #include <math.h>
-#include <float.h>
-#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -594,7 +592,6 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 #define extern0 extern
 #endif
 
-/* extern int	errno; already have errno.h ! */
 extern int	gc_inhibit_torture INI_as(1);
 
 LibExtern Rboolean R_interrupts_suspended INI_as(FALSE);

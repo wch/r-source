@@ -40,6 +40,7 @@
 #endif
 
 #include <Defn.h>
+#include <float.h> /* for DBL_EPSILON */
 #include <Rmath.h>
 #include <Print.h>
 

@@ -3227,8 +3227,8 @@ fi
 ## R_SIZE_MAX
 ## ----------
 ## Look for a definition of SIZE_MAX (the maximum of size_t).
-## C99 has it declared in <inttypes.h>, glibc in <stdint.h>
-## and Solaris 8 in <limits.h>!
+## C99 has it declared in <stdint.h>, pre-C99 POSIX in <inttypes.h>, 
+## glibc in <stdint.h> and Solaris 8 in <limits.h>!
 ## autoconf tests for inttypes.h and stdint.h by default
 AC_DEFUN([R_SIZE_MAX],
 [AC_CACHE_CHECK([whether SIZE_MAX is declared],

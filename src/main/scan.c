@@ -33,6 +33,7 @@
 #endif
 
 #include <Defn.h>
+#include <float.h>  /* for DBL_DIG */
 #include <Fileio.h>
 #include <Rconnections.h>
 #include <errno.h>
