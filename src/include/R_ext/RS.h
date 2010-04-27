@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2010 The R Development Core Team.
+ *  Copyright (C) 1999-2007 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -30,6 +30,24 @@
 extern "C" {
 #endif
 
+/* S Like Error Handling */
+
+#include <R_ext/Error.h>	/* for error and warning */
+
+#ifndef STRICT_R_HEADERS
+
+#define R_PROBLEM_BUFSIZE	4096
+/* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
+#define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];(sprintf)(R_problem_buf,
+#define MESSAGE                 {char R_problem_buf[R_PROBLEM_BUFSIZE];(sprintf)(R_problem_buf,
+#define ERROR			),error(R_problem_buf);}
+#define RECOVER(x)		),error(R_problem_buf);}
+#define WARNING(x)		),warning(R_problem_buf);}
+#define LOCAL_EVALUATOR		/**/
+#define NULL_ENTRY		/**/
+#define WARN			WARNING(NULL)
+
+#endif
 
 /* S Like Memory Management */
 

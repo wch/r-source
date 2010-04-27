@@ -115,9 +115,6 @@ C-LEVEL FACILITIES
 	versions of stdio.h and stdarg.h respectively if included from
 	a C++ source file.
 
-    o	The S-compatibility macros ERROR, WARNING ... are now defined
-	only by S.h and not by R.h nor R_ext/RS.h.
-
 
 INSTALLATION
 

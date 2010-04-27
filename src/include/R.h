@@ -41,7 +41,8 @@
 #include <R_ext/Print.h>      /* Rprintf etc */
 #include <R_ext/Random.h>     /* RNG interface */
 #include <R_ext/Utils.h>      /* sort routines et al */
-#include <R_ext/RS.h> /* for Calloc, Realloc, Free, Memcpy, F77_xxxx */
+#include <R_ext/RS.h>
+/* for PROBLEM ... Calloc, Realloc, Free, Memcpy, F77_xxxx */
 
 
 typedef double Sfloat;
