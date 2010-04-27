@@ -27,9 +27,11 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Fileio.h"
-#include "Startup.h"
+#include <Defn.h>
+#include <Fileio.h>
+#include <Startup.h>
+
+#include <ctype.h> /* for isalpha */
 
 extern Rboolean LoadInitFile;
 extern UImode  CharacterMode;
