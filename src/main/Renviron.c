@@ -31,6 +31,7 @@
 #include <Defn.h> /* for PATH_MAX */
 #include <Rinterface.h>
 #include <Fileio.h>
+#include <ctype.h>		/* for isspace */
 
 /* remove leading and trailing space */
 static char *rmspace(char *s)

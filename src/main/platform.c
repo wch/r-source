@@ -26,7 +26,7 @@
 #include <Rinterface.h>
 #include <Fileio.h>
 #include <R_ext/Applic.h>		/* machar */
-
+#include <ctype.h>			/* toupper */
 #include <time.h>
 
 #ifdef HAVE_ERRNO_H

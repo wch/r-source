@@ -31,6 +31,7 @@
 #include <Fileio.h>
 #include <R_ext/RS.h>
 #include <errno.h>
+#include <ctype.h>		/* for isspace */
 
 /* From time to time changes in R, such as the addition of a new SXP,
  * may require changes in the save file format.  Here are some

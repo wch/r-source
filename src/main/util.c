@@ -24,6 +24,8 @@
 #endif
 
 #include <Defn.h>
+#include <ctype.h>		/* for isspace */
+
 #undef COMPILING_R
 
 #define imax2(x, y) ((x < y) ? y : x)
