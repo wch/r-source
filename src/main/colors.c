@@ -29,7 +29,7 @@
 #include <Colors.h>
 #include <R_ext/GraphicsEngine.h>
 #include <Rmath.h>
-
+#include <ctype.h> /* for tolower, isdigit */
 
 static unsigned int rgb2col(const char *);
 static char *RGB2rgb(unsigned int, unsigned int, unsigned int);

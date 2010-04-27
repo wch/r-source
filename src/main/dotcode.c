@@ -29,7 +29,7 @@
 #endif
 
 #include <Defn.h>
-
+#include <ctype.h> /* for tolower */
 #include <string.h>
 #include <errno.h>
 

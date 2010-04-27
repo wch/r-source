@@ -159,9 +159,10 @@
 #endif
 
 #include <Defn.h>
-#include "Parse.h"
+#include <Parse.h>
 #define STRICT_R_HEADERS
 #include <R_ext/RS.h>           /* for R_chk_* allocation */
+#include <ctype.h>
 
 #define DEBUGVALS 0		/* 1 causes detailed internal state output to R console */	
 #define DEBUGMODE 0		/* 1 causes Bison output of parse state, to stdout or stderr */

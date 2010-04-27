@@ -55,6 +55,7 @@ strsplit grep [g]sub [g]regexpr
 
 #include <Defn.h>
 #include <R_ext/RS.h>  /* for Calloc/Free */
+#include <ctype.h>
 #include <wchar.h>
 #include <wctype.h>    /* for wctrans_t */
 
