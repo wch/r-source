@@ -21,10 +21,10 @@
 #define R_EXT_PRINT_H_
 
 #ifdef  __cplusplus
-extern "C" {
-# include <stdarg.h>
-#else
 # include <cstdarg>
+extern "C" {
+#else
+# include <stdarg.h>
 #endif
 
 void Rprintf(const char *, ...);
