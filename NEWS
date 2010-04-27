@@ -107,6 +107,14 @@ C-LEVEL FACILITIES
 	If you have your own definition, do wrap it inside
 	'#ifndef lang5 .... #endif' to keep it working with old and new R.
 
+    o	Header R.h now includes only the C headers it itself needs,
+	hence no longer includes float.h and errno.h.  (This helps
+	avoid problems when it is included from C++ source files.)
+
+    o	Headers Rinternals.h and R_ext/Print.h include the C++
+	versions of stdio.h and stdarg.h respectively if included from
+	a C++ source file.
+
 
 INSTALLATION
 

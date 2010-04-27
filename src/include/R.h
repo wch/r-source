@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2007 The R Development Core Team.
+ *  Copyright (C) 2000-2010 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,21 +21,15 @@
 #define R_R_H
 
 #ifndef USING_R
-#define USING_R
+# define USING_R
 #endif
 
 #ifndef NO_C_HEADERS
 #include <stdlib.h>
-#include <stdio.h>
-#include <limits.h>
-#include <float.h>
+#include <stdio.h>  /* Used by several packages, remove in due course */
+#include <limits.h> /* for INT_MAX */
 #include <math.h>
-#include <errno.h>
 #endif
-
-/*
-#include <stddef.h>
-*/
 
 #include <Rconfig.h>
 #include <R_ext/Arith.h>      /* R_FINITE, ISNAN, ... */

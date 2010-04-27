@@ -23,9 +23,11 @@
 
 #ifdef __cplusplus
 #include <cstdio>
+#include <climits>
 extern "C" {
 #else
 #include <stdio.h>
+#include <limits.h> /* for INT_MAX */
 #endif
 
 #include <R_ext/Arith.h>
