@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003 The R Development Core Team.
+ *  Copyright (C) 1997--2010 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -38,7 +38,7 @@ extern "C" {
 #include <stdio.h>
 #include <limits.h>
 #include <float.h>
-# include <math.h>
+#include <math.h>
 
 #include <Rconfig.h>
 #include <R_ext/Constants.h>
@@ -53,7 +53,7 @@ extern double norm_rand(void);
 /* Macros for S/R Compatibility */
 
 #include <R_ext/RS.h>
-/* for PROBLEM ... Calloc, Realloc, Free, Memcpy, F77_xxxx */
+/* for Calloc, Realloc, Free, Memcpy, F77_xxxx */
 
 /* S4 uses macros equivalent to */
 #define Salloc(n,t) (t*)S_alloc(n, sizeof(t))
@@ -69,10 +69,26 @@ typedef struct {
 # define complex S_complex
 #endif
 
+
+
 /* Not quite full compatibility: beware! */
 /* void	call_R(char*, long, void**, char**, long*, char**, long, char**);*/
 #define call_S call_R
 
+/* S Like Error Handling */
+
+#include <R_ext/Error.h>	/* for error and warning */
+
+#define R_PROBLEM_BUFSIZE	4096
+/* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
+#define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];(sprintf)(R_problem_buf,
+#define MESSAGE                 {char R_problem_buf[R_PROBLEM_BUFSIZE];(sprintf)(R_problem_buf,
+#define ERROR			),error(R_problem_buf);}
+#define RECOVER(x)		),error(R_problem_buf);}
+#define WARNING(x)		),warning(R_problem_buf);}
+#define LOCAL_EVALUATOR		/**/
+#define NULL_ENTRY		/**/
+#define WARN			WARNING(NULL)
 
 #ifdef __cplusplus
 }

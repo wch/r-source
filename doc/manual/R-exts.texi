@@ -8642,8 +8642,8 @@ simplest case can be called with a single character string argument
 giving the error message. (Don't do this if the string contains @samp{%}
 or might otherwise be interpreted as a format.)
 
-If @code{STRICT_R_HEADERS} is not defined there is also an
-@Sl{}-compatibility interface which uses calls of the form
+In @code{S.h} there is also an @Sl{}-compatibility interface which uses
+calls of the form
 
 @example
 @group

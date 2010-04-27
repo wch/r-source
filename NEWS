@@ -108,12 +108,15 @@ C-LEVEL FACILITIES
 	'#ifndef lang5 .... #endif' to keep it working with old and new R.
 
     o	Header R.h now includes only the C headers it itself needs,
-	hence no longer includes float.h and errno.h.  (This helps
-	avoid problems when it is included from C++ source files.)
+	hence no longer includes errno.h.  (This helps avoid problems
+	when it is included from C++ source files.)
 
     o	Headers Rinternals.h and R_ext/Print.h include the C++
 	versions of stdio.h and stdarg.h respectively if included from
 	a C++ source file.
+
+    o	The S-compatibility macros ERROR, WARNING ... are now defined
+	only by S.h and not by R.h nor R_ext/RS.h.
 
 
 INSTALLATION
