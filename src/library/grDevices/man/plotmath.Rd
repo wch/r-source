@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/plotmath.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{plotmath}
@@ -160,7 +160,9 @@
   case mu can be obtained either by the special symbol \code{mu} or by
   \code{symbol("m")}.  This provides access to symbols that have no
   special symbol name, for example, the universal, or forall, symbol is
-  \code{symbol("\\042")}.
+  \code{symbol("\\042")}.  To see what symbols are available in this way
+  use \code{TestChars(font=5)} as given in the examples for
+  \code{\link{points}}: some are only available on some devices.
 
   Note to TeX users: TeX's \samp{\\Upsilon} is \code{Upsilon1}, TeX's
   \samp{\\varepsilon} is close to \code{epsilon}, and there is no
