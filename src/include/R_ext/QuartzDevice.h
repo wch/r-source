@@ -87,6 +87,8 @@
 #ifndef R_EXT_QUARTZDEVICE_H_
 #define R_EXT_QUARTZDEVICE_H_
 
+/* FIXME: this is installed, but can it really work without config.h */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
