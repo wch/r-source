@@ -36,9 +36,9 @@ mcnemar.test(x, y = NULL, correct = TRUE)
 
   If \code{x} is a matrix, it is taken as a two-dimensional contingency
   table, and hence its entries should be nonnegative integers.
-  Otherwise, both \code{x} and \code{y} must be vectors of the same
-  length.  Incomplete cases are removed, the vectors are coerced into
-  factor objects, and the contingency table is computed from these.
+  Otherwise, both \code{x} and \code{y} must be vectors or factrs of the
+  same length.  Incomplete cases are removed, vectors are coerced into
+  factors, and the contingency table is computed from these.
 
   Continuity correction is only used in the 2-by-2 case if
   \code{correct} is \code{TRUE}.

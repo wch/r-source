@@ -38,6 +38,10 @@ BUG FIXES
 
     o	Rd2latex() incorrectly escaped special characters in \usage sections.
 
+    o	mcnemar.test() could alter the levels (including dropping unused
+	levels) if passed 'x' and 'y' as factors (reported by Greg
+	Snow).
+
 
 
 		CHANGES IN R VERSION 2.11.0
