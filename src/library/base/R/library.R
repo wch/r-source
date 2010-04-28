@@ -563,8 +563,9 @@ function(chname, package = NULL, lib.loc = NULL,
         file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
         if(file.exists(file)) break else file <- ""
         if(r_arch == "i386") { # 32-bit Windows, back-compatibility
-        file <- file.path(pkg, "libs", paste(chname, file.ext, sep = ""))
-        if(file.exists(file)) break else file <- ""
+            DLLpath <- if(nzchar(r_arch)) file.path(pkg, "libs")
+            file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
+            if(file.exists(file)) break else file <- ""
        }
     }
     if(file == "")
