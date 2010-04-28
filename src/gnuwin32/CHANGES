@@ -38,6 +38,13 @@ NEW FEATURES
     o	R CMD INSTALL can install zipfiles as binary packages.
 
 
+INSTALLATION
+
+    o	The preferred toolchain for 32-bit builds (including packages)
+	is now based on gcc 4.5.0: see the 'R Installation and
+	Administration Manual'.
+
+
 64-bit NEWS
 
     o   The plan is to merge the 32- and 64-bit distributions and have

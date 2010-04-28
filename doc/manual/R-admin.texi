@@ -2023,10 +2023,6 @@ prepare and install translation catalogues.
 @node Choosing between 32- and 64-bit builds, The standalone Rmath library, Internationalization, Top
 @chapter Choosing between 32- and 64-bit builds
 
-@menu
-* Windows::                     
-@end menu
-
 Many current @acronym{CPU}s have both 32- and 64-bit sets of
 instructions: this has long been true for UltraSparc and more recently
 for MIPS, PPC and @cputype{x86_64} (sometimes known as @cputype{amd64}
@@ -2099,16 +2095,6 @@ use of 32-bit integers (especially in FORTRAN code).  On all builds of
 block of memory allocated is limited to @math{2^{34}-1} bytes (8GB).  It
 is anticipated these will be raised eventually but routine use of 8GB
 objects is (when this was written in 2005) several years off.
-
-@node Windows,  , Choosing between 32- and 64-bit builds, Choosing between 32- and 64-bit builds
-@section Windows
-
-Currently the main Windows build of @R{} from @acronym{CRAN} is a 32-bit
-executable.  This runs happily on Windows x64, but is limited to an
-address space of 4GB (see the `R for Windows FAQ' for details).  As from
-@R{} 2.11.0 a 64-bit build is also available from @acronym{CRAN}, and a
-different build has been available from commercial @R{} redistributors
-since 2009.
 
 @node The standalone Rmath library, Essential and useful other programs under Unix, Choosing between 32- and 64-bit builds, Top
 @chapter The standalone Rmath library
@@ -4299,15 +4285,15 @@ Perl (in @file{Rtools.exe})
 @item
 The command line tools (in @file{Rtools.exe})
 @item
-The MinGW compilers (for 32-bit, in @file{Rtools.exe})
+The MinGW toolchain to compile C, Fortran and C++.
 @end itemize
 For installing simple packages containing data or @R{} source
 but no compiled code, none of these are needed.
 Perl is essential to build @R{}, and needed to develop packages.
 
 A complete build of @R{} including PDF manuals, and producing the
-standalone installer @file{@value{RWVERSION}-win32.exe} will also need
-the following:
+standalone installer @file{@value{RWVERSION}-win.exe} will also need the
+following:
 @itemize
 @item
 @LaTeX{}
@@ -4349,7 +4335,7 @@ path.
 * LaTeX::                       
 * The Inno Setup installer::    
 * The command line tools::      
-* The MinGW compilers::         
+* The MinGW toolchain::         
 * Useful additional programs::  
 @end menu
 
@@ -4390,7 +4376,7 @@ suitably; ensure you have the required fonts installed.
 @node The Inno Setup installer, The command line tools, LaTeX, The Windows toolset
 @section The Inno Setup installer
 
-To make the installer package (@file{@value{RWVERSION}-win32.exe}) we
+To make the installer package (@file{@value{RWVERSION}-win.exe}) we
 currently require Inno Setup 5.3.7 or later from
 @uref{http://jrsoftware.org/}.  We use the Unicode version and recommend
 that version be used.  This is @emph{not} included in @file{Rtools.exe}.
@@ -4402,7 +4388,7 @@ Copy file @file{src/gnuwin32/MkRules.dist} to
 @file{src/gnuwin32/MkRules.local} and edit it to set @code{ISDIR} to the
 location where Inno Setup was installed.
 
-@node The command line tools, The MinGW compilers, The Inno Setup installer, The Windows toolset
+@node The command line tools, The MinGW toolchain, The Inno Setup installer, The Windows toolset
 @section The command line tools
 
 This item is installed by the @file{Rtools.exe} installer.
@@ -4436,51 +4422,65 @@ sure it is at the front of your path (including before the Windows
 system directories).  If you are using a Windows shell, type @code{PATH}
 at the prompt to find out.
 
-@node The MinGW compilers, Useful additional programs, The command line tools, The Windows toolset
-@section The MinGW compilers
+@node The MinGW toolchain, Useful additional programs, The command line tools, The Windows toolset
+@section The MinGW toolchain
 
 This is the only step which differs between 32- and 64-bit builds.
 Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
+
+In each case you need to put the @file{bin} directory of the toolchain
+early in your @env{PATH}.
 
 @menu
 * 32-bit toolchain::            
 * 64-bit toolchain::            
 @end menu
 
-@node 32-bit toolchain, 64-bit toolchain, The MinGW compilers, The MinGW compilers
+@node 32-bit toolchain, 64-bit toolchain, The MinGW toolchain, The MinGW toolchain
 @subsection 32-bit toolchain
 
+Note that the recomended toolchain for @R{} 2.12.0 differs from that for
+earlier versions, and there are binary incompatibilities, especially
+where C++ code is involved.  So we recommend that all packages are built
+with the current toolchain.
+
 The 32-bit build for this version of @R{} is set up to use @command{gcc}
-@code{4.2.1}.  The @file{Rtools.exe} installer currently includes the
-@code{-sjlj} version of @code{4.2.1} of the MinGW port of @command{gcc}
-from
-@uref{http://sourceforge.net/@/project/@/showfiles.php?@/group_id=2435}.
+@code{4.5.0}.  The toolchain is currently hosted at
+@url{http://www.stats.ox.ac.uk/pub/Rtools/mingw32-toolchain.zip}: unpack
+this in an empty directory.  This is collected from the files at
+@url{http://sourceforge.net/projects/mingw/files/}, specifically
 
-If you would like to install your own copy, we recommend downloading
-from the URL above, as the download links from
-@uref{http://www.mingw.org/} have led to obsolete versions. See the
-notes on @uref{http://www.murdoch-sutherland.com/@/Rtools/} for updates.
+@example
+binutils-2.20.1-2-mingw32-bin.tar.gz
+gcc-c++-4.5.0-1-mingw32-bin.tar.lzma
+gcc-core-4.5.0-1-mingw32-bin.tar.lzma
+gcc-fortran-4.5.0-1-mingw32-bin.tar.lzma
+libgcc-4.5.0-1-mingw32-dll-1.tar.lzma
+libgmp-5.0.1-1-mingw32-dll-10.tar.lzma
+libgomp-4.5.0-1-mingw32-dll-1.tar.lzma
+libmpc-0.8.1-1-mingw32-dll-2.tar.lzma
+libmpfr-2.4.1-1-mingw32-dll-1.tar.lzma
+libssp-4.5.0-1-mingw32-dll-0.tar.lzma
+mingwrt-3.18-mingw32-dev.tar.gz
+mingwrt-3.18-mingw32-dll.tar.gz
+w32api-3.14-mingw32-dev.tar.gz
+@end example
 
-It is also possible to build with the recently released MinGW
-@command{gcc 4.5.0}---beware that this by default uses DLLs for Fortran
-and C++ runtimes which need to be distributed with @R{} or packages
-built with that compiler.@footnote{In our experiments, packages using
-C++ crash frequently unless linked statically @emph{via}
-@code{-static-libstdc++}.}  It is likely that a version of that
-toolchain will become the preferred option prior to release.
+with the import libraries in @file{lib/gcc/mingw32/4.5.0} moved to a
+subdirectory @file{dlls} so that @file{libgfortran} and @file{libstdc++}
+are linked statically.
 
 We have also tested using the 32-bit toolchain from the @code{mingw-w64}
-project, which are currently pre-releases of @command{gcc 4.4.4}, and
-flags to use those are provided in file @file{MkRules.dist}.
+project (which are currently pre-releases of @command{gcc 4.4.4}) and
+options to use that are documented in file @file{MkRules.dist}.
 
-@node 64-bit toolchain,  , 32-bit toolchain, The MinGW compilers
+@node 64-bit toolchain,  , 32-bit toolchain, The MinGW toolchain
 @subsection 64-bit toolchain
 
 Several versions of the MinGW-w64 toolchain are available: use one of
-them to replace the @file{MinGW/bin} directory of @code{Rtools} in your
-path (but still have the Rtools @file{bin} directory and Perl in your
-path).  Then copy @file{src/gnuwin32/MkRules.dist} to
+them to replace the 32-bit toolchain's @file{bin} directory in your
+path.  Then copy @file{src/gnuwin32/MkRules.dist} to
 @file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64} and
 @code{BINPREF64} appropriate to your toolchain, then make @R{} in the
 usual way.
@@ -4516,7 +4516,7 @@ imposes on re-distribution).
 @c @url{http://www.cadforte.com/downloads.html}.  Use at your own risk!
 
 
-@node Useful additional programs,  , The MinGW compilers, The Windows toolset
+@node Useful additional programs,  , The MinGW toolchain, The Windows toolset
 @section Useful additional programs
 
 Developers of packages will find some of the `goodies' at
