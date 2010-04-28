@@ -43,7 +43,7 @@ Options:
       --pdf		generate PDF output
       --title=NAME	use NAME as the title of the document
   -V, --verbose		report on what is done
-      --no-index	don't index PDF output
+      --no-index	don't index output
       --no-description	don't typeset the description of a package
       --internals	typeset 'internal' documentation (usually skipped)
 
@@ -239,9 +239,10 @@ if test "${out_ext}" = pdf; then
       exit 1
     fi
   fi
+  ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 &&
   ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 || status=1
   if test $status -gt 0; then
-    echo "Error in running pdflatex command ('${R_PDFATEXCMD}')"
+    echo "Error in running pdflatex command ('${R_PDFLATEXCMD}')"
     do_cleanup
     exit 1
   fi
@@ -252,8 +253,16 @@ else
     do_cleanup
     exit 1
   fi
-  ## OK for R_MAKEINDEXCMD to fail.
-  ${R_MAKEINDEXCMD} Rd2
+  if test "${index}" != "false"; then
+    ## OK for R_MAKEINDEXCMD to fail.
+    ${R_MAKEINDEXCMD} Rd2
+    ${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
+    if test $status -gt 0; then
+      echo "Error in running latex command ('${R_LATEXCMD}')"
+      do_cleanup
+      exit 1
+    fi
+  fi
   ${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
   if test $status -gt 0; then
     echo "Error in running latex command ('${R_LATEXCMD}')"
