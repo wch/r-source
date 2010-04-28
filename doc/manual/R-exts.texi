@@ -2403,6 +2403,9 @@ file by
 SystemRequirements: GNU make
 @end example
 
+Since the only viable make for Windows is GNU make, it is permissible to
+use GNU extensions in files @file{Makevars.win} or @file{Makefile.win}.
+
 @item
 Make use of the abilities of your compilers to check the
 standards-conformance of your code.  For example, @command{gcc} can be used
@@ -2427,10 +2430,16 @@ on most @R{} platforms (including those mostly used by the
 platforms.  It is rather unlikely that the use of @code{long} in C code
 has been thought through: if you need a longer type than @code{int} you
 should use a configure test for a C99 type such as @code{int_fast64_t}
-(and failing that, @code{long long}, but not that @code{long long} is
-not a standard C++ type, and C++ compilers set up for strict checking
-will reject it) and typedef your own type to be @code{long} or
+(and failing that, @code{long long} @footnote{but note that @code{long
+long} is not a standard C++ type, and C++ compilers set up for strict
+checking will reject it}) and typedef your own type to be @code{long} or
 @code{long long}, or use another suitable type (such as @code{size_t}).
+
+It is not safe to assume that @code{long} and pointer types are the same
+size, and they are not on 64-bit Windows.  If you need to convert
+pointers to and from integers use the C99 integer types @code{intptr_t}
+and @code{uintptr_t}.
+
 Note that @code{integer} in @acronym{FORTRAN} corresponds to @code{int}
 in C on all @R{} platforms.
 
