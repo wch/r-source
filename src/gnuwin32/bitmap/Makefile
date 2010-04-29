@@ -14,7 +14,7 @@ all:
 	@$(MKDIR) -p ../../../library/grDevices/libs
 	@$(MAKE) --no-print-directory DLL
 
-DLL: ../../../library/grDevices/libs/Rbitmap.dll
+DLL: ../../../library/grDevices/libs$(R_ARCH)/Rbitmap.dll
 
 buildzlib:
 	@$(MAKE) -C ../../extra/zlib -f Makefile.win
@@ -44,7 +44,7 @@ buildtiff: $(JPEGDIR)/jconfig.h Makefile.tiff
 rbitmap-CPPFLAGS=-DHAVE_PNG -DHAVE_JPEG -DHAVE_TIFF -I. -I../../extra/zlib -I./$(PNGDIR) -I$(JPEGDIR) -I./$(TIFFDIR) -I../../include
 CFLAGS=-O3 -Wall -pedantic 
 
-../../../library/grDevices/libs/Rbitmap.dll: rbitmap.o $(TIFFDIR)/libtiff.a $(PNGDIR)/libpng.a $(JPEGDIR)/libjpeg.a
+../../../library/grDevices/libs$(R_ARCH)/Rbitmap.dll: rbitmap.o $(TIFFDIR)/libtiff.a $(PNGDIR)/libpng.a $(JPEGDIR)/libjpeg.a
 	$(DLL) -shared -s -o $@ $^ -L../../../$(IMPDIR) -lR -lRzlib
 
 clean:
