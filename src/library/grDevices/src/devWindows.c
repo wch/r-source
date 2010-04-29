@@ -3325,7 +3325,6 @@ SEXP savePlot(SEXP args)
 
 
 /* Rbitmap  */
-#define BITMAP_DLL_NAME "\\library\\grDevices\\libs\\Rbitmap.dll"
 typedef int (*R_SaveAsBitmap)(/* variable set of args */);
 static R_SaveAsBitmap R_SaveAsPng, R_SaveAsJpeg, R_SaveAsBmp, R_SaveAsTIFF;
 
@@ -3337,7 +3336,9 @@ static int Load_Rbitmap_Dll()
     if (!RbitmapAlreadyLoaded) {
 	char szFullPath[PATH_MAX];
 	strcpy(szFullPath, R_HomeDir());
-	strcat(szFullPath, BITMAP_DLL_NAME);
+	strcat(szFullPath, "\\library\\grDevices\\libs\\");
+	strcat(szFullPath, R_ARCH);
+	strcat(szFullPath, "\\Rbitmap.dll");
 	if (((hRbitmapDll = LoadLibrary(szFullPath)) != NULL) &&
 	    ((R_SaveAsPng=
 	      (R_SaveAsBitmap)GetProcAddress(hRbitmapDll, "R_SaveAsPng"))
