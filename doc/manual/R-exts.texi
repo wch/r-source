@@ -10813,10 +10813,10 @@ to how to do so or what value to use.
 
 The @R{} for Windows installers have for a long time allowed the value
 of @code{R_HOME} to be recorded in the Windows Registry: this is
-optional but the default. Where is it is recorded has changed over the
-years to allow for multiple versions of @R{} to be installed at once,
-and as from @R{} 2.11.0, to allow 32- and 64-bit versions of @R{} to be
-installed on the same machine.
+optional but selected by default.  @emph{Where} is it is recorded has
+changed over the years to allow for multiple versions of @R{} to be
+installed at once, and as from @R{} 2.11.0, to allow 32- and 64-bit
+versions of @R{} to be installed on the same machine.
 
 The basic Registry location is @code{Software\R-core\R}.  For an
 administrative install this is under @code{HKEY_LOCAL_MACHINE} and on a
