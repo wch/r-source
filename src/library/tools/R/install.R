@@ -570,14 +570,33 @@
                                         paste("-f", shQuote(makefiles), collapse = " ")))
                     if (res == 0) shlib_install(instdir, rarch)
                     else has_error <- TRUE
-                } else {
-                    ## Future: NB, not R.home("bin")
-                    ## f <- dir(file.path(R.home(), "bin"))
-                    ## archs <- archs[f %in% c("i386", "x64")]
-                    message("  making DLL ...")
+                } else { ## no src/Makefile.win
                     srcs <- dir(pattern = "\\.([cfmCM]|cc|cpp|f90|f95|mm)$")
-                    has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
-                    message("  ... done")
+                    ## NB, not R.home("bin")
+                    f  <- dir(file.path(R.home(), "bin"))
+                    archs <- f[f %in% c("i386", "x64")]
+                    one_only <- !multiarch
+                    if(!one_only && file.exists("../configure.win"))
+                        one_only <- length(readLines("../configure.win")) > 0
+                    if(one_only)
+                        has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
+                    else {
+                        setwd(owd)
+                        for(arch in archs) {
+                            starsmsg(stars, "arch - ", arch)
+                            ss <- paste("src", arch, sep="-")
+                            dir.create(ss)
+                            file.copy(Sys.glob("src/*"), ss, recursive = TRUE)
+                            setwd(ss)
+                            ## unlink(Sys.glob(c("*.o", "*.dll")))
+                            ra <- paste0("/", arch)
+                            Sys.setenv(R_ARCH = ra)
+                            has_error <- run_shlib(pkg_name, srcs, instdir, ra)
+                            Sys.setenv(R_ARCH = rarch)
+                            setwd(owd)
+                            if (has_error) break
+                        }
+                    }
                 }
                 setwd(owd)
             } else { # not WINDOWS
@@ -628,8 +647,8 @@
                                     ## FIXME: do this lower down
                                     Sys.setenv(R_ARCH = ra)
                                     has_error <- run_shlib(pkg_name, srcs, instdir, ra)
-                                    if (has_error) break
                                     Sys.setenv(R_ARCH = rarch)
+                                    if (has_error) break
                                 }
                             }
                         }
@@ -1253,8 +1272,11 @@
         SHLIB_LIBADD <- ""
         MAKE <- "make"
         ## For winshlib.mk to pick up Makeconf
-        rarch <- .Platform$r_arch
-        if (nzchar(rarch)) Sys.setenv(R_ARCH = p0("/", rarch))
+        rarch <- Sys.getenv("R_ARCH", NA)
+        if(is.na(rarch)) {
+            rarch <- .Platform$r_arch
+            if (nzchar(rarch)) Sys.setenv(R_ARCH = p0("/", rarch))
+        }
     }
 
     OBJ_EXT <- ".o" # all currrent compilers, but not some on Windows
