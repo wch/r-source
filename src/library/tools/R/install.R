@@ -576,25 +576,35 @@
                     f  <- dir(file.path(R.home(), "bin"))
                     archs <- f[f %in% c("i386", "x64")]
                     one_only <- !multiarch
-                    if(!one_only && file.exists("../configure.win"))
-                        one_only <- length(readLines("../configure.win")) > 0
+                    if(!one_only && file.exists("../configure.win")) {
+                        ## for now, hardcode some exceptions
+                        if(!pkg_name %in% c("AnalyzeFMRI", "CORElearn",
+                                            "PearsonDS", "RODBC", "Runuran",
+                                            "fastICA", "glmnet", "gstat",
+                                            "randtoolbox", "rngWELL", "tcltk2"))
+                            one_only <- sum(nchar(readLines("../configure.win"), "bytes")) > 0
+                    }
                     if(one_only)
                         has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
                     else {
                         setwd(owd)
                         for(arch in archs) {
+                            message("\n", domain = NA) # two blank lines
                             starsmsg(stars, "arch - ", arch)
                             ss <- paste("src", arch, sep="-")
                             dir.create(ss)
                             file.copy(Sys.glob("src/*"), ss, recursive = TRUE)
                             setwd(ss)
-                            ## unlink(Sys.glob(c("*.o", "*.dll")))
                             ra <- paste0("/", arch)
                             Sys.setenv(R_ARCH = ra)
-                            has_error <- run_shlib(pkg_name, srcs, instdir, ra)
+                            has_error0 <- run_shlib(pkg_name, srcs, instdir, ra)
                             Sys.setenv(R_ARCH = rarch)
                             setwd(owd)
-                            if (has_error) break
+                            ## allow archs other than the current one to fail.
+                            if (has_error0 && ra == rarch) {
+                                has_error <- TRUE
+                                break
+                            }
                         }
                     }
                 }
