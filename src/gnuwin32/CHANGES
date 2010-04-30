@@ -31,9 +31,9 @@ NEW FEATURES
 	R_HOME/bin/R.exe, which accepts --arch and launches either
 	R_HOME/bin/i386/R.exe or R_HOME/bin/x64/R.exe.
 
-	For now, almost all 32-bit packages with compiled code built
-	under 2.{10,11}.x can be used, but this will be disabled
-	before release.
+	For now, almost all (32- or 64-bit) packages with compiled
+	code built under 2.{10,11}.x can be used, but this will be
+	disabled before release.
 
     o	R CMD INSTALL can install zipfiles as binary packages.
 
@@ -52,7 +52,7 @@ INSTALLATION
 	started, and some of the steps are recorded here (and some are
 	in progress).
 
-    o	There is a combined installer (called R-<version> -win.exe).
+    o	There is a combined installer (called R-<version>-win.exe).
 	When used under 32-bit Windows this works as before and
 	installs 32-bit R.  When used under 64-bit Windows there are
 	options to install either or both of 32- and 64-bit R: the
