@@ -590,7 +590,7 @@
                         setwd(owd)
                         for(arch in archs) {
                             message("\n", domain = NA) # two blank lines
-                            starsmsg(stars, "arch - ", arch)
+                            starsmsg("***", "arch - ", arch)
                             ss <- paste("src", arch, sep="-")
                             dir.create(ss)
                             file.copy(Sys.glob("src/*"), ss, recursive = TRUE)

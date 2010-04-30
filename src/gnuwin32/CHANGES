@@ -49,21 +49,23 @@ INSTALLATION
 
     o   The plan is to merge the 32- and 64-bit distributions and have
 	a common repository of packages.  This process has been
-	started, and some of the steps are recorded here.
+	started, and some of the steps are recorded here (and some are
+	in progress).
 
-    o	The 64-bit Tcl binary is now in file R64a_Tcl_8-5-8.zip: when
-	you unpack it ensure you have directory Tcl/bin64 and not
-	Tcl/bin.
-
-    o	The 64-bit installer (which runs only on a 64-bit system) can
-	be used to add 64-bit components to a 32-bit install by
-	selecting the existing 32-bit installation directory and
-	installation type 'Add 64-bit components'.
+    o	There is a combined installer (called R-<version> -win.exe).
+	When used under 32-bit Windows this works as before and
+	installs 32-bit R.  When used under 64-bit Windows there are
+	options to install either or both of 32- and 64-bit R: the
+	current default is to install both.
 
     o	The 32-bit CRANextras repository is a prototype of a merged
-	repository. All the packages are available from a 32-bit
+	repository.  All the packages are available from a 32-bit
 	build, and those appropriate to a 64-bit build (e.g. not
-	BRugs) with type="win.binary".
+	BRugs) are available with type="win.binary".
+
+    o	For those building R from the sources, the 64-bit Tcl binary
+	distribution is now in file R64a_Tcl_8-5-8.zip and contains
+	e.g. directory Tcl/bin64 and not Tcl/bin.
 
 
 PACKAGE INSTALLATION

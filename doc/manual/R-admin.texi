@@ -737,9 +737,9 @@ R --arch=@var{name} CMD make check[-devel|all]
 @noindent
 to select a sub-architecture to check.
 
-Sub-architectures are also used on Windows, but by selecting the
-appropriate @file{bin} directory, @file{@var{R_HOME}/bin/i386} or
-@file{@var{R_HOME}/bin/x64}.
+Sub-architectures are also used on Windows, but by selecting executables
+within the appropriate @file{bin} directory,
+@file{@var{R_HOME}/bin/i386} or @file{@var{R_HOME}/bin/x64}.
 
 @menu
 * Multilib::                    
@@ -857,19 +857,15 @@ from @acronym{CRAN} to run on Windows 2000 or later on ix86
 @acronym{CPU}s (including AMD64/Intel64@footnote{formerly EM64T.} chips
 and Windows x64).
 
-As from @R{} 2.11.0 there is also a 64-bit version for Windows x64 in
-the @file{bin/windows64} directory: this is primarily intended for users
-who require large amounts of memory and beginning users of @R{} should
-install the standard version even on a 64-bit Windows OS.
-
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
 Installation is @emph{via} the installer
-@file{@value{RWVERSION}-win32.exe} (or
-@file{@value{RWVERSION}-win64.exe}).  Just double-click on the icon and
-follow the instructions.  You can uninstall @R{} from the Control Panel
-or from the (optional) @R{} program group on the Start Menu.
+@file{@value{RWVERSION}-win.exe}.  Just double-click on the icon and
+follow the instructions.  When installing on a 64-bit version of Windows
+the options will include 32- or 64-bit versions of R (and the default is
+to install both).  You can uninstall @R{} from the Control Panel or from
+the (optional) @R{} program group on the Start Menu.
 
 Note that you will be asked to choose a language for installation, and
 that choice applies to both installation and un-installation but not to
@@ -881,11 +877,13 @@ Windows @acronym{FAQ}} for more details on the binary installer.
 @menu
 * Building from source::        
 * Testing a Windows Installation::  
-* Building R for 64-bit Windows::  
 @end menu
 
 @node Building from source, Testing a Windows Installation, Installing R under Windows, Installing R under Windows
 @section Building from source
+
+The instructions in this section are primarily to build a 32-bit build
+of @R{}.
 
 @menu
 * Getting the tools::           
@@ -897,6 +895,7 @@ Windows @acronym{FAQ}} for more details on the binary installer.
 * Building the Inno Setup installer::  
 * Building the MSI installer::  
 * Cross-building on Linux::     
+* 64-bit Windows builds::       
 @end menu
 
 @node Getting the tools, Getting the source files, Building from source, Building from source
@@ -1268,12 +1267,41 @@ installed, but those who need it will know what to do with it.
 Thanks to David del Campo (Dept of Statistics, University of Oxford)
 for suggesting WiX and building a prototype installer.
 
-@node Cross-building on Linux,  , Building the MSI installer, Building from source
+@node Cross-building on Linux, 64-bit Windows builds, Building the MSI installer, Building from source
 @subsection Cross-building on Linux
 
 Support for cross-building was withdrawn at @R{} 2.9.0.
 
-@node Testing a Windows Installation, Building R for 64-bit Windows, Building from source, Installing R under Windows
+@node 64-bit Windows builds,  , Cross-building on Linux, Building from source
+@subsection 64-bit Windows builds
+
+To build a 64-bit version of R you need a 64-bit toolchain: the only one
+discussed here is based on the work of the MinGW-w64 project
+(@url{http://sourceforge.net/projects/mingw-w64/}, but commercial
+compilers such as those from Intel and PGI could be used (and have been
+by @R{} redistributors).
+
+Support for MinGW-w64 was developed in the R sources over the period
+2008--10 and was first released as part of @R{} 2.11.0.  The assistance
+of Yu Gong at a crucial step in porting R to MinGW-w64 is gratefully
+acknowledged, as well as help from Kai Tietz, the lead developer of the
+MinGW-w64 project.
+
+To build package @pkg{tcltk} you need to unpack
+@url{http://www.stats.ox.ac.uk/pub/Rtools/R64a_Tcl_8-5-8.zip}
+(@strong{NB} this is not the same file as for @R{} 2.11.x) at the top of
+the source tree: otherwise edit @file{src/library/tcltk/Makefile.win} to
+make a stub package.
+
+Copy the file @file{MkRules.dist} to @file{MkRules.local} and set
+@code{WIN = 64} (and edit any other entries as appropriate).  The rest
+of the build process is the same as for the 32-bit build.
+
+Some notes on porting packages can be found at
+@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
+
+
+@node Testing a Windows Installation,  , Building from source, Installing R under Windows
 @section Testing an Installation
 
 The Windows installer contains a set of test files used when building
@@ -1302,50 +1330,6 @@ recommended packages.  These tests can be run from anywhere: they write
 their results in the @file{tests} folder of the @R{} home directory (as
 given by @code{R.home()}).
 
-@node Building R for 64-bit Windows,  , Testing a Windows Installation, Installing R under Windows
-@section Building R for 64-bit Windows
-
-Note that the standard 32-bit build of R runs perfectly well on 64-bit
-versions of Windows, with a limit on the total memory allocation (and
-address space) of 4GB.  Thus a native 64-bit build will be attractive to
-those wanting to work with large R objects, or many medium-sized ones.
-
-To build a 64-bit version of R you need a 64-bit toolchain: the only one
-discussed here is based on the work of the MinGW-w64 project
-(@url{http://sourceforge.net/projects/mingw-w64/}, but commercial
-compilers such as those from Intel and PGI could be used (and have been
-by @R{} redistributors).
-
-Support for MinGW-w64 was developed in the R sources over the period
-2008--10 and was first released as part of @R{} 2.11.0.
-
-
-To build package @pkg{tcltk} you need to unpack
-@url{http://www.stats.ox.ac.uk/pub/Rtools/R64a_Tcl_8-5-8.zip}
-(@strong{NB} this is not the same file as for @R{} 2.11.x) at the top of
-the source tree: otherwise edit @file{src/library/tcltk/Makefile.win} to
-make a stub package.
-
-The default is @code{options(pkgType="win64.binary")}.  Packages using
-Gtk+ (@pkg{Cairo}, @pkg{RGtk2}, @pkg{cairoDevice} and those that depend
-on them) need the @file{bin} directory of the distribution at
-@url{http://www.gtk.org/download-windows-64bit.html} in the path: note
-that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
-you need the correct one first in your path if using both.
-
-Some notes on porting packages can be found at
-@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
-
-The default memory limit will be the amount of installed RAM: it can
-be changed by using (preferably) @option{--max-mem-size=} at startup or
-@code{memory.limit} in a running R session.
-
-The personal library is (by default) folder
-@file{R\win64-library\@var{x.y}} of your home directory.
-
-The assistance of Yu Gong at a crucial step in porting R to MinGW-w64 is
-gratefully acknowledged, as well as help from Kai Tietz, the lead
-developer of the MinGW-w64 project.
 
 @node Installing R under Mac OS X, Running R, Installing R under Windows, Top
 @chapter Installing R under Mac OS X
@@ -1556,6 +1540,7 @@ library paths, separated by colons (semicolons on Windows).
 * Windows packages::            
 * Mac OS X packages::           
 * Customizing package compilation::  
+* Multiple sub-architectures::  
 @end menu
 
 
@@ -1667,16 +1652,31 @@ We have seen permission problems after unpacking source packages on some
 Vista/Windows 7/Server 2008 systems: these have been circumvented by
 setting the environment variable @env{R_INSTALL_TAR} to @samp{tar.exe}.
 
+Some of the binary packages need other software to be installed on your
+system.  For 32-bit builds see for example
+@url{http://cran.r-project.org/bin/windows/contrib/2.12/@@ReadMe}.  For
+64-bit builds, packages using Gtk+ (@pkg{Cairo}, @pkg{RGtk2},
+@pkg{cairoDevice} and those that depend on them) need the @file{bin}
+directory of the distribution at
+@url{http://www.gtk.org/download-windows-64bit.html} in the path: note
+that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
+you need the correct one first in your path if using both.
+
 If you have only a source package that is known to work with current
 @R{} and just want a binary (32- or 64-bit) Windows build of it, you
 could make use of the building service offered at
 @uref{http://win-builder.r-project.org/}.
 
+@R{} 2.11.x had separate repository areas for 32- and 64-bit binary
+packages: it is planned that most (maybe all) packages for @R 2.12.0
+will be distributed as a single binary containing either or both
+architectures---details to come.
+
 @node Mac OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection Mac OS X
 
 On Mac OS X @code{install.packages} works as it does on other Unix-like
-systems, but there is an additional type @code{mac.binary} (the default
+systems, but there are additional type @code{mac.binary*} (the default
 in the @acronym{CRAN} distribution) that can be passed to
 @code{install.packages} in order to download and install binary packages
 from a suitable repository, and is the default for @acronym{CRAN} builds
@@ -1684,7 +1684,15 @@ of R.  These Macintosh binary package files have the extension
 @samp{tgz}.  The @R{} GUI provides for installation of either binary or
 source packages, from @acronym{CRAN} or local files.
 
-@node Customizing package compilation,  , Mac OS X packages, Installing packages
+Originally there was just package type @code{mac.binary}, and this was
+used for `universal' binaries, that is those designed to run on multiple
+CPU types (PowerPC and i386 at the time).  Later it became necessary to
+use different binary distributions for different versions of Mac OS X,
+and we now have @code{mac.binary.universal} (for Mac OS 10.4 aka
+`Tiger', last built for @R{} 2.10.1) and @code{mac.binary.leopard} (for
+Mac OS 10.5 and 10.6).
+
+@node Customizing package compilation, Multiple sub-architectures, Mac OS X packages, Installing packages
 @subsection Customizing package compilation
 
 The R system and package-specific compilation flags can be overridden or
@@ -1713,6 +1721,45 @@ FFLAGS=-g -O
 ## @r{for Fortran 95 code}
 FCFLAGS=-g -O
 @end example
+
+
+@node Multiple sub-architectures,  , Customizing package compilation, Installing packages
+@subsection Multiple sub-architectures
+
+When installing packages from their sources, there are some extra
+considerations on installations which use sub-architectures.  These are
+commonly used on Mac OS and (from @R{} 2.12.0) on Windows, but can in
+principle be used on other platforms.
+
+When a source package is installed by a build of @R{} which supports
+multiple sub-architectures, the normal installation process installs the
+packages for all sub-architectures, but only tests it can be loaded
+under the current sub-architecture.  The exceptions are
+
+@table @emph
+@item Unix-alikes
+
+where there is an @file{configure} script, or a file @file{src/Makefile}.
+
+@item Windows
+
+where there is a non-empty @file{configure.win} script, or a file
+@file{src/Makefile.win} (plus some exceptions where the package is known
+to have an architecture-independent @file{configure.win}).
+
+@end table
+
+@noindent
+In those cases only the current architecture is installed.  Further
+sub-architectures can be installed by
+
+@example
+R CMD INSTALL --libs-only @var{pkg}
+@end example
+
+@noindent
+using the path to @command{R} or @command{R --arch} to select the
+additional sub-architecture.
 
 @node Updating packages, Removing packages, Installing packages, Add-on packages
 @section Updating packages
@@ -3778,12 +3825,12 @@ can be done (and is provided as an alternative in the binary
 distribution).
 
 @menu
-* 64-bit builds::               
+* 64-bit Leopard builds::       
 * Snow Leopard::                
 @end menu
 
-@node 64-bit builds, Snow Leopard, Mac OS X, Mac OS X
-@subsection 64-bit builds
+@node 64-bit Leopard builds, Snow Leopard, Mac OS X, Mac OS X
+@subsection 64-bit Leopard builds
 
 64-bit builds are supported on 10.5.x (Leopard) and later.  All that is
 needed is to select suitable compiler options, e.g.@: for recent Intel
@@ -3802,7 +3849,7 @@ in @file{config.site} or on the @command{configure} command line.  (Or
 on Leopard specify @option{gcc-4.2} etc: those versions are the default
 on Snow Leopard.)
 
-@node Snow Leopard,  , 64-bit builds, Mac OS X
+@node Snow Leopard,  , 64-bit Leopard builds, Mac OS X
 @subsection Snow Leopard
 
 On Snow Leopard you will most likely to need to specify @option{-arch
