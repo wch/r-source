@@ -304,7 +304,7 @@ getMethods <-
                     .makeMlistFromTable(fdef) # else NULL
             }
             else if(.noMlists())
-                  .makeMlistFromTable(fdef, where)
+		.makeMlistFromTable(fdef, where)
             else getMethodsMetaData(f, where = where)
              )
 

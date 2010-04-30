@@ -123,7 +123,7 @@
         else list(ANY=mlist)
         )
   ## once MethodsList is defunct, this should be rewritten (and renamed!)
-        
+
   ## the methods slot is a list named by class, with elements either
   ## method definitions or mlists
   classes <- names(m)
@@ -395,12 +395,19 @@
 }
 
 .newSignature <- function(classes, names) {
-  ## a simple version to deal with boostrapping stage
+  ## a simple version to deal with boostrapping stage, used in new() etc
   i <- seq_len(min(length(classes), length(names)))
-  value <- as.character(classes)[i]
-  class(value) <- getClass("signature")@className
-  value@names <- as.character(names)[i]
-  value
+
+  ## Simplified version ...
+  structure(as.character(classes)[i],
+            class = getClass("signature")@className,
+            names = as.character(names)[i])
+  ## ... of the following (which uses `@<-` in non-standard way):
+  ## value <- as.character(classes)[i]
+  ## class(value) <- getClass("signature")@className
+  ## attr(value,"names") <- as.character(names)[i]
+  ## value@names <- as.character(names)[i]
+  ## value
 }
 
 .findNextFromTable <- function(method, f, optional, envir, prev = character()) {
@@ -621,7 +628,7 @@
     argSyms <- lapply(generic@signature, as.name)
     assign(".SigArgs", argSyms, envir = env)
     if(initialize) {
-        mlist <- generic@default # from 2.11.0: method, primitive or NULL, not MethodsList 
+        mlist <- generic@default # from 2.11.0: method, primitive or NULL, not MethodsList
         mtable <- .mlistAddToTable(generic, mlist) # by default, adds to an empty table
         assign(".MTable", mtable, envir = env)
     }

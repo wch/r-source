@@ -45,7 +45,7 @@ NEW FEATURES
 
 	It gains an argument 'hessian' to be passed to optim(), which
 	allows all the ... arguments to be intended to f() and grad().
-	(PR14071)
+	(PR#14071)
 
     o	curve() now allows 'expr' to be an object of mode "expression"
 	as well as "call" and "function".
@@ -80,6 +80,9 @@ NEW FEATURES
     o	There are several small changes to output which 'zap' small
 	numbers, e.g. in printing quantiles of residuals in summaries
 	from lm annd glm fits, and in test statisics in print.anova.
+
+    o	Special names such as "dim", "names", etc, are now allowed as slot
+	names of S4 classes, with "class" the only remaining exception.
 
 
 DEPRECATED & DEFUNCT
@@ -186,7 +189,7 @@ BUG FIXES
 
     o	Rhttpd no longer crashes due to SIGPIPE when the client closes
 	the connection prematurely.  (PR#14266)
-	
+
     o	Rd2latex() incorrectly escaped special characters in \usage sections.
 
     o	mcnemar.test() could alter the levels (dropping unused levels)

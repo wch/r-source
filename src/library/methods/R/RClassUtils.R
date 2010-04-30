@@ -5,7 +5,7 @@
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2 of the License, or
 #  (at your option) any later version.
-#int
+#
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -167,7 +167,7 @@ makePrototypeFromClassDef <-
     slotDefs <- getSlots(ClassDef); slotNames <- names(slotDefs)
     pnames <- names(attributes(prototype))
     pnames <- pnames[!is.na(match(pnames, slotNames))]
-    check <- rep(FALSE, length(pnames))
+    check <- rep.int(FALSE, length(pnames))
     for(what in pnames) {
         pwhat <- slot(prototype, what)
         slotClass <- getClassDef(slotDefs[[what]], where)
@@ -289,7 +289,7 @@ completeClassDefinition <-
             }
         }
         ## ensure that each element of the slots is a valid class reference
-        undefClasses <- rep(FALSE, length(properties))
+        undefClasses <- rep.int(FALSE, length(properties))
         for(i in seq_along(properties)) {
             cli <- properties[[i]]
             if(is.null(packageSlot(cli))) {
@@ -842,7 +842,7 @@ showClass <-
         cat("\n",propertiesAreCalled, ":\n", sep="")
         text <- format(c(names(x), as.character(x)), justify="right")
         text <- matrix(text, nrow = 2L, ncol = n, byrow = TRUE)
-        dimnames(text) <- list(c("Name:", "Class:"), rep("", n))
+        dimnames(text) <- list(c("Name:", "Class:"), rep.int("", n))
         print(text, quote = FALSE)
     }
     else
@@ -1264,8 +1264,7 @@ getSlots <- function(x) {
 
 ## check for reserved slot names.  Currently only "class" is reserved
 validSlotNames <- function(names) {
-    i <- match("class", names)
-    if(is.na(i))
+    if(is.na(match("class", names)))
         names
     else
         stop("\"class\" is a reserved slot name and cannot be redefined")
@@ -2090,7 +2089,7 @@ classesToAM <- function(classes, includeSubclasses = FALSE,
     value
   }
   if(length(includeSubclasses) == 1)
-    includeSubclasses <- rep(includeSubclasses, length(classes))
+    includeSubclasses <- rep.int(includeSubclasses, length(classes))
   if(!is(includeSubclasses, "logical") || length(includeSubclasses) != length(classes))
     stop("argument includeSubclasses must be a logical, either one value or a vector of the same length as argument classes")
   value <- matrix(0,0,0)
