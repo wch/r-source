@@ -16,19 +16,19 @@
 
 ## Original code Copyright (C) 2010 Felix Andrews <felix@nfrac.org>
 
-pretty.Date <- function(x, n = 5, min.n = round(n / 2), ...)
+pretty.Date <- function(x, n = 5, min.n = max(2, round(n / 2)), ...)
 {
     prettyDate(x = x, n = n, min.n = min.n, ...)
 }
 
-pretty.POSIXt <- function(x, n = 5, min.n = round(n / 2), ...)
+pretty.POSIXt <- function(x, n = 5, min.n = max(2, round(n / 2)), ...)
 {
     prettyDate(x = x, n = n, min.n = min.n, ...)
 }
 
 
 prettyDate <-
-    function(x, n = 5, min.n = round(n / 2), ...)
+    function(x, n = 5, min.n = max(2, round(n / 2)), ...)
 {
     isDate <- inherits(x, "Date")
     zz <- range(as.POSIXct(x))
@@ -58,8 +58,8 @@ prettyDate <-
              "1 DSTday" = list(1*DAY, format = "%b %d"),
              "2 DSTdays" = list(2*DAY),
              "1 week" = list(7*DAY, start = "weeks"),
-             "2 weeks" = list(14*DAY),
-             "1 month" = list(1*MONTH, format = "%Y %b"),
+             "15 DSTdays" = list(15*DAY, start = "months"),
+             "1 month" = list(1*MONTH, format = "%b"),
              "3 months" = list(3*MONTH, start = "years"),
              "6 months" = list(6*MONTH, format = "%Y-%m"),
              "1 year" = list(1*YEAR, format = "%Y"),
