@@ -71,6 +71,7 @@
             Sys.setenv(R_ARCH = rarch)
             Sys.setenv(R_ARCH_BIN = rarch)
         }
+        if (rarch == "x64") Sys.setenv(TCLBIN = "64") else Sys.unsetenv('TCLBIN')
     }
 
     Usage <- function() {
@@ -579,8 +580,9 @@
                     if(!one_only && file.exists("../configure.win")) {
                         ## for now, hardcode some exceptions
                         if(!pkg_name %in% c("AnalyzeFMRI", "CORElearn",
-                                            "PearsonDS", "RODBC", "Runuran",
-                                            "fastICA", "glmnet", "gstat",
+                                            "PearsonDS", "RODBC", "RSiena",
+                                            "Rcpp", "Runuran", "fastICA",
+                                            "glmnet", "gstat", "mvabund",
                                             "randtoolbox", "rngWELL", "tcltk2"))
                             one_only <- sum(nchar(readLines("../configure.win"), "bytes")) > 0
                     }
@@ -591,14 +593,15 @@
                         for(arch in archs) {
                             message("\n", domain = NA) # two blank lines
                             starsmsg("***", "arch - ", arch)
-                            ss <- paste("src", arch, sep="-")
-                            dir.create(ss)
+                            ss <- paste("src", arch, sep = "-")
+                            dir.create(ss, showWarnings = FALSE)
                             file.copy(Sys.glob("src/*"), ss, recursive = TRUE)
                             setwd(ss)
                             ra <- paste0("/", arch)
                             Sys.setenv(R_ARCH = ra)
+                            Sys.setenv(R_ARCH_BIN = ra)
+                            if (arch == "x64") Sys.setenv(TCLBIN = "64")
                             has_error0 <- run_shlib(pkg_name, srcs, instdir, ra)
-                            Sys.setenv(R_ARCH = rarch)
                             setwd(owd)
                             ## allow archs other than the current one to fail.
                             if (has_error0 && ra == rarch) {
