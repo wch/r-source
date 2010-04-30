@@ -81,10 +81,9 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.11.0} or later).  The details of the installer refer to the
-intended behaviour at release: snapshots builds for now are separate for
-32- and 64-bit build and work as described in the @samp{R 2.11.0}
-version of this FAQ.
+(@samp{2.12.0} or later).  The details of the installer refer to the
+intended behaviour at release of R @samp{2.12.0} and not necessarily
+that of current snapshots builds.
 
 
 @newchap{}
@@ -177,7 +176,7 @@ Windows you may need to confirm that you want to proceed with installing
 a program from an `unidentified publisher'.
 
 After installation you should choose a working directory for R.  You
-will have a shortcut to @file{@RWVER@\bin\Rgui.exe} on your desktop
+will have a shortcut to @file{Rgui.exe} on your desktop
 and/or somewhere on the Start menu file tree, and perhaps also in the
 Quick Launch part of the taskbar.  Right-click each shortcut, select
 Properties... and change the `Start in' field to your working directory.
@@ -306,8 +305,8 @@ versions around if you wish.
 For those with a personal library (folder @file{R\win-library\@var{x.y}}
 of your home directory, @file{R\win64-library\@var{x.y}} on 64-bit
 builds), you will need to update that too when the minor version of R
-changes (e.g.@: from 2.10.1 to 2.11.0).  A simple way to do so is to
-copy (say) @file{R\win-library\2.10} to @file{R\win-library\2.11} before
+changes (e.g.@: from 2.11.1 to 2.12.0).  A simple way to do so is to
+copy (say) @file{R\win-library\2.11} to @file{R\win-library\2.12} before
 running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 
 
@@ -387,7 +386,7 @@ You can set also up a batch file using @command{Rterm.exe}.  A sample
 batch file might contain (as one line)
 
 @example
-path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out 2>&1
+path_to_R\bin\i386\Rterm.exe --no-restore --no-save < %1 > %1.out 2>&1
 @end example
 
 @noindent
@@ -421,9 +420,9 @@ variable @env{HOME} is set, its value is used.  After those two
 user-controllable settings, R tries to find system-defined home
 directories.  It first tries to use the Windows "personal" directory
 (typically @file{C:\Documents and Settings\username\My Documents} on
-Windows XP and @file{C:\Users\username\Documents} on Vista).  If that
-fails, if both environment variables @env{HOMEDRIVE} and @env{HOMEPATH}
-are set (and they normally are), the value is
+Windows XP and @file{C:\Users\username\Documents} on Vista/Windows 7).
+If that fails, if both environment variables @env{HOMEDRIVE} and
+@env{HOMEPATH} are set (and they normally are), the value is
 @file{$@{HOMEDRIVE@}$@{HOMEPATH@}}.  If all of these fail, the current
 working directory is used.
 
@@ -440,7 +439,7 @@ On the command line as name=value pairs.  For example in the shortcut to
 @command{Rgui} you could have
 
 @example
-"path_to_R\bin\Rgui.exe" HOME=p:/ R_LIBS=p:/myRlib
+"path_to_R\bin\i386\Rgui.exe" HOME=p:/ R_LIBS=p:/myRlib
 @end example
 
 @item
@@ -527,10 +526,10 @@ only) (`Associate R with .RData files') then entries are created under
 @code{HKEY_CLASSES_ROOT\.RData} and @code{HKEY_CLASSES_ROOT\RWorkspace}.
 
 After installation you can add the Registry entries in by running
-@code{RSetReg.exe} in the @code{bin} folder, and remove them by running
-this with argument @code{/U}.  Note that this requires administrative
-privileges unless run with argument @code{/Personal} and neither sets up
-nor removes the file associations.
+@code{RSetReg.exe} in a sub-folder of the @code{bin} folder, and remove
+them by running this with argument @code{/U}.  Note that this requires
+administrative privileges unless run with argument @code{/Personal} and
+neither sets up nor removes the file associations.
 
 
 @node Does R support automation?, The Internet download functions fail., Does R use the Registry?, Installation and Usage
@@ -561,9 +560,9 @@ versions of an example (a real one, but from a machine that is only
 available locally) of a command-line in a short cut:
 
 @example
-"path_to_R\bin\Rgui.exe" http_proxy=http://user:pass@@gannet:80/
+"path_to_R\bin\i386\Rgui.exe" http_proxy=http://user:pass@@gannet:80/
 
-"path_to_R\bin\Rgui.exe" http_proxy=http://gannet/ http_proxy_user=ask
+"path_to_R\bin\i386\Rgui.exe" http_proxy=http://gannet/ http_proxy_user=ask
 @end example
 
 @noindent
@@ -813,7 +812,8 @@ the R process is 4GB (rather than 2GB or perhaps 3GB).
 When R is installed on 64-bit Windows there is the option of installing
 either or both of 32- and 64-bit builds: the default is to install both.
 The 64-bit build has 'x64' suffixed to its name on the Start menu and
-desktop shortcuts.
+desktop shortcuts.  If you are using that build, replace @samp{i386} by
+@samp{x64} in the examples in this FAQ.
 
 @node Should I run 32-bit or 64-bit R?, Can both 32- and 64-bit R be installed on the same machine?, Can I use R on 64-bit Windows?, Installation and Usage
 @section Should I run 32-bit or 64-bit R?
@@ -832,13 +832,11 @@ to be moved around, and that far less external software is available for
 64-bit versions of the OS.
 
 The toolchain (compilers, linkers, @dots{}) used to build 64-bit R is
-less mature than that for 32-bit R, but testing so far (and all the
-CRAN packages provide an extensive test suite) suggests that they are
-mature enough for production use.  The compilers are more recent
-versions of @acronym{GCC} with better optimization and are able to take
-advantage of extra features of all x86-64 chips (more registers, SSE2/3
-instructions, @dots{}) and so the code may run faster despite using
-larger pointers.
+less mature than that for 32-bit R, but testing so far (and all the CRAN
+packages provide an extensive test suite) suggests that they are mature
+enough for production use.  The compilers are able to take advantage of
+extra features of all x86-64 chips (more registers, SSE2/3 instructions,
+@dots{}) and so the code may run faster despite using larger pointers.
 
 @node Can both 32- and 64-bit R be installed on the same machine?,  , Should I run 32-bit or 64-bit R?, Installation and Usage
 @section Can both 32- and 64-bit R be installed on the same machine?
@@ -1063,9 +1061,7 @@ You can install pre-compiled packages either from CRAN or from a local
 There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  The packages for
 each minor (2.x) version will be stored in a separate area, so for R
-2.11.? the files are in @file{bin/windows/contrib/2.11}.  You can try
-those compiled for earlier versions (but not before 2.10.0), at your own
-risk.
+2.12.? the files are in @file{bin/windows/contrib/2.12}.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
 @uref{http://cran.r-project.org/bin/windows/contrib/ReadMe}, which also
@@ -1155,8 +1151,9 @@ replaced.
 @node Loading a package fails., Package TclTk does not work., My functions are not found by the HTML help search system., Packages
 @section Loading a package fails.
 
-Is the package compiled for this version of R?   Many of the packages
-need to be compiled for a fairly recent version.
+Is the package compiled for this version of R?   Packages need to have
+prepared for R 2.10.0 or later, and packages containing compiled code
+for R 2.12.0 or later.
 
 You can tell the version the package was compiled for by looking at the
 @samp{Built:} line in its @file{DESCRIPTION} file or at the
@@ -1170,9 +1167,9 @@ software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found (except
 on Windows 2000).  See
 @uref{http://cran.r-project.org/bin/windows/contrib/2.11/ReadMe} for a
-listing of some of these packages (notably @code{RGtk2}, @code{rggobi},
-@code{rJava}, @code{rjags} and some of the packages connecting to
-databases).
+listing of some of these packages running under 32-bit R (notably
+@code{RGtk2}, @code{rggobi}, @code{rJava}, @code{rjags} and some of the
+packages connecting to databases).
 
 
 @node Package TclTk does not work., Hyperlinks in HTML do not work., Loading a package fails., Packages
@@ -1194,7 +1191,9 @@ Tcl/Tk 8.5.x installation with the path to its @file{bin} directory
 given by value of @env{MY_TCLTK}, and that this is set up correctly
 (with @env{TCL_LIBRARY} set if needed).  In that case you do not need
 the Tcl/Tk support files installed (but they can be).  Note that you do
-need 8.5.x and not 8.4.x nor (a pre-release of) 8.6.0.
+need 8.5.x and not 8.4.x nor (a pre-release of) 8.6.0, and you do need
+the architecture to match, that is a 32-bit or 64-bit build of Tcl/Tk to
+match the R build in use.
 
 Several package authors have suggested using ActiveTcl
 (@uref{http://www.activestate.com/Products/activetcl/}) as a way to get
@@ -1530,9 +1529,8 @@ compiler, and the MinGW-w64 port of @code{binutils} and @code{gcc} is
 finally mature enough to produce a working version of R, so support has
 been added as from R 2.11.0: see the manual.  You are welcome to try a
 commercial compiler@footnote{such as those from Intel and PGI: there is
-no Fortran compiler in the Microsoft set, but @code{f2c} could be
-used.}, and pre-compiled versions using such compilers are available
-from R redistributors.
+no Fortran compiler in the Microsoft set.}, and pre-compiled versions
+using such compilers are available from R redistributors.
 
 @node Can I use a fast BLAS?, How do I include compiled C code?, How can I compile R from source?, Building from Source
 @section  Can I use a fast BLAS?
@@ -1547,9 +1545,10 @@ Because ATLAS is tuned to a particular chip we can't use it generally:
 the optimal routines for a P4 or an Athlon XP are quite different and
 neither will run at all on a PII.
 
-BLAS support is supplied by the single DLL @file{R_HOME\bin\Rblas.dll},
-and you can add a fast BLAS just by replacing that.  Replacements for
-some of the older common chips are available on CRAN in directory
+BLAS support is supplied by the single DLL
+@file{R_HOME\bin\i386\Rblas.dll}, and you can add a fast BLAS
+just by replacing that.  Replacements for 32-bit R and some of the older
+common chips are available on CRAN in directory
 @file{bin/windows/contrib/ATLAS}.  See the R Installation and
 Administration' manual for how to build an ATLAS @file{Rblas.dll} tuned
 to your system using the R sources.  Unfortunately the process has been
@@ -1564,10 +1563,10 @@ install the parts of the R system for building R packages (installed by
 default), and get and install the tools and compilers mentioned in the
 `R Installation and Administration' manual.  Then you can use
 @example
-...\bin\R CMD SHLIB foo.c bar.f
+...\bin\i386\R CMD SHLIB foo.c bar.f
 @end example
 @noindent
-to make @file{foo.dll}.  Use @command{...\bin\R CMD SHLIB --help} for
+to make @file{foo.dll}.  Use @command{...\bin\i386\R CMD SHLIB --help} for
 further options, or see @code{?SHLIB}.
 
 If you want to use Visual C++, Borland C++ or other compilers, see the
@@ -1615,7 +1614,7 @@ Rcmd install mypkg
 Then you can debug by
 
 @example
-gdb /path/to/@RWVER@/bin/Rgui.exe
+gdb /path/to/@RWVER@/bin/i386/Rgui.exe
 @end example
 
 @noindent
@@ -1637,7 +1636,7 @@ been loaded.  So a way to examine the function @code{tukeyline} in
 package @code{stats} might be
 
 @example
-     gdb ../../../../bin/Rgui.exe
+     gdb ../../../../bin/i386/Rgui.exe
      (gdb) break WinMain
      (gdb) run
      [ stops with R.dll loaded ]
@@ -1695,7 +1694,7 @@ as in the example in @emph{`Writing R Extensions'}.  Then build the DLL by
 (@command{gcc})
 
 @example
-...\bin\R CMD SHLIB X.cc X_main.cc
+...\bin\i386\R CMD SHLIB X.cc X_main.cc
 @end example
 
 @noindent
@@ -1762,7 +1761,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2010-04-03
+@set LASTEDIT 2010-04-30
 @ifhtml
 @html
 <hr WIDTH="100%">
