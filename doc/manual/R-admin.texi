@@ -1713,13 +1713,21 @@ could make use of the building service offered at
 @subsection Mac OS X
 
 On Mac OS X @code{install.packages} works as it does on other Unix-like
-systems, but there is an additional type @code{mac.binary} (the default
+systems, but there are additional type @code{mac.binary*} (the default
 in the @acronym{CRAN} distribution) that can be passed to
 @code{install.packages} in order to download and install binary packages
 from a suitable repository, and is the default for @acronym{CRAN} builds
 of R.  These Macintosh binary package files have the extension
 @samp{tgz}.  The @R{} GUI provides for installation of either binary or
 source packages, from @acronym{CRAN} or local files.
+
+Originally there was just package type @code{mac.binary}, and this was
+used for `universal' binaries, that is those designed to run on multiple
+CPU types (PowerPC and i386 at the time).  Later it became necessary to
+use different binary distributions for different versions of Mac OS X,
+and we now have @code{mac.binary.universal} (for Mac OS 10.4 aka
+`Tiger', last built for @R{} 2.10.1) and @code{mac.binary.leopard} (for
+Mac OS 10.5 and 10.6).
 
 @node Customizing package compilation,  , Mac OS X packages, Installing packages
 @subsection Customizing package compilation
