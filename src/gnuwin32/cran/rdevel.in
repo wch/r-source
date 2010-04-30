@@ -33,10 +33,10 @@
 
 <body>
 
-<h1>R-@FULLVERSION@ build for Windows (@BITSIZE@ bit)</h1>
+<h1>R-@FULLVERSION@ build for Windows (32/64 bit)</h1>
 
 <div class="download">
-  <p><a href="@RWVER@-win@BITSIZE@.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(33 megabytes, @BITSIZE@ bit)</span></p>
+  <p><a href="@RWVER@-win.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(33 megabytes, 32/64 bit)</span></p>
   <ul>
     <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
     <li>New features in this version: <a href="../../windows/base/CHANGES.@RWVER@">Windows specific</a>, <a href="../../windows/base/NEWS.@RWVER@">all platforms</a>.</li>
@@ -44,7 +44,7 @@
 </div>
 
 
-<p>This is a Windows @BITSIZE@ bit binary build of the @DATE@
+<p>This is a combined Windows 32/64 bit binary build of the @DATE@
 r@SVNREVISION@ development snapshot of R (which will eventually become
 R-@RVER@). </p>
 

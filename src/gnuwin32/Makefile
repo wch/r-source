@@ -399,7 +399,7 @@ endif
 crandir:
 	$(CP) CHANGES cran/CHANGES.$(RPREFIX)
 	$(CP) ../../NEWS cran/NEWS.$(RPREFIX)
-	$(CP) installer/$(RPREFIX)-win$(BITSIZE).exe cran
+	$(CP) installer/$(RPREFIX)-win*.exe cran
 	(cd cran;\
 	 $(ECHO) 'cat(md5sum("$(RPREFIX)-win$(BITSIZE).exe"),"*$(RPREFIX)-win$(BITSIZE).exe")' \
          | $(REXE) R_DEFAULT_PACKAGES=tools >md5sum.txt)
