@@ -5,7 +5,7 @@
 en.regentries=Registry entries:
 en.associate=&Associate R with .RData files
 en.user=User installation
-en.compact=Minimal user installation
+en.compact=Minimal 32-bit user installation
 en.full=Full installation
 en.custom=Custom installation
 en.adminprivilegesrequired=You should be logged in as an administrator when installing R

@@ -36,7 +36,7 @@
 <h1>R-@FULLVERSION@ build for Windows (32/64 bit)</h1>
 
 <div class="download">
-  <p><a href="@RWVER@-win.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(33 megabytes, 32/64 bit)</span></p>
+  <p><a href="@RWVER@-win.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(37 megabytes, 32/64 bit)</span></p>
   <ul>
     <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
     <li>New features in this version: <a href="../../windows/base/CHANGES.@RWVER@">Windows specific</a>, <a href="../../windows/base/NEWS.@RWVER@">all platforms</a>.</li>
@@ -51,7 +51,7 @@ R-@RVER@). </p>
 <p>This is a development version of R. <strong>It likely contains
 bugs, so be careful if you use it</strong>.  Please don't report bugs
 in this version through the usual R bug reporting system, please report
-them on the r-devel mailing list---but only if they persist for a day or more.</p>
+them on the r-devel mailing list---but only if they persist for a few days.</p>
 
 <h2>Frequently asked questions</h2>
 

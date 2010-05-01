@@ -278,7 +278,7 @@ Name: "custom"; Description: {cm:custom}; Flags: iscustom
 [Components]
 Name: "main"; Description: "Main Files"; Types: user user32 user64 compact full custom;
 Name: "i386"; Description: "i386 Files"; Types: user user32 compact full custom;
-Name: "x64"; Description: "x64 Files"; Types: user user64 add64 compact full custom; Check: Is64BitInstallMode
+Name: "x64"; Description: "x64 Files"; Types: user user64 add64 full custom; Check: Is64BitInstallMode
 Name: "html"; Description: "HTML Manuals"; Types: user user32 user64 full custom; Flags:
 Name: "manuals"; Description: "On-line PDF Manuals"; Types: user user32 user64 full custom
 Name: "manuals/basic"; Description: "Basic Manuals"; Types: user user32 user64 full custom

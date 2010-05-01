@@ -44,7 +44,7 @@ int main (int argc, char **argv)
     for(int i = cmdarg; i < argc; i++) {
 	strcat(cmd, " ");
 	if(strchr(argv[i], ' ')) {
-	    /* We should really escape "here, I believe */
+	    /* We should really escape " here, I believe */
 	    strcat(cmd, "\"");
 	    strcat(cmd, argv[i]);
 	    strcat(cmd, "\"");

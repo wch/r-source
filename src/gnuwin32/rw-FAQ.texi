@@ -81,9 +81,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@samp{2.12.0} or later).  The details of the installer refer to the
-intended behaviour at release of R @samp{2.12.0} and not necessarily
-that of current snapshots builds.
+(@samp{2.12.0} or later).
 
 
 @newchap{}
@@ -142,19 +140,17 @@ release.
 @node How do I install R for Windows?, How do I check an installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-Current binary versions of R run on Windows 2000 or later.@footnote{R
-2.6.2 was the last version for Windows 95. 98, ME and NT4.}, including
+Current binary versions of R run on Windows 2000 or later, including
 on 64-bit versions: @xref{Can I use R on 64-bit Windows?}.
 
-
 We only test on versions of Windows currently supported by Microsoft,
-mainly on 32-bit XP SP3 and 64-bit Windows 7 and Windows Server 2008.
+mainly 64-bit Windows 7, Vista and Server 2008, and also on 32-bit XP
+SP3.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical install
-takes 45Mb of disk space, a full installation about 75Mb and a
+takes 45Mb of disk space, a full installation about 80Mb and a
 minimal one about 30Mb.
-@c : 75Mb is for 32/64-bit
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
@@ -171,9 +167,9 @@ To install use @samp{@RWVER@-win.exe}.  Just double-click on the icon
 and follow the instructions.  If you have an account with Administrator
 privileges you will be able to install R in the @file{Program Files}
 area and to set all the optional registry entries; otherwise you will
-only be able to install R in your own file area.  On recent versions of
-Windows you may need to confirm that you want to proceed with installing
-a program from an `unidentified publisher'.
+only be able to install R in your own file area.  You may need to
+confirm that you want to proceed with installing a program from an
+`unidentified publisher'.
 
 After installation you should choose a working directory for R.  You
 will have a shortcut to @file{Rgui.exe} on your desktop
@@ -314,11 +310,11 @@ running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 @section There seems to be a limit on the memory it uses!
 
 Indeed there is.  It is set by the command-line flag
-@option{--max-mem-size} (@pxref{How do I install R for Windows?}) and
+@option{--max-mem-size} (@pxref{How do I install R for Windows?}) and R
 defaults to the smaller of the amount of physical RAM in the machine and
 0.5GB less than the limit of user virtual memory for a process (most
-often 2GB on a 32-bit build).  It can be set to any amount between 32Mb
-and 4095Mb (on a 32-bit build).
+often 2GB on a 32-bit build).  It must be at least 32Mb, and on a 32-bit
+build at most and 4095Mb.
 
 Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} within a
@@ -810,9 +806,9 @@ way as on a 32-bit version of Windows, except that the address limit for
 the R process is 4GB (rather than 2GB or perhaps 3GB).
 
 When R is installed on 64-bit Windows there is the option of installing
-either or both of 32- and 64-bit builds: the default is to install both.
-The 64-bit build has 'x64' suffixed to its name on the Start menu and
-desktop shortcuts.  If you are using that build, replace @samp{i386} by
+32- and/or 64-bit builds: the default is to install both.  The 64-bit
+build has 'x64' suffixed to its name on the Start menu and desktop
+shortcuts.  If you are using the 64-bit build, replace @samp{i386} by
 @samp{x64} in the examples in this FAQ.
 
 @node Should I run 32-bit or 64-bit R?, Can both 32- and 64-bit R be installed on the same machine?, Can I use R on 64-bit Windows?, Installation and Usage
