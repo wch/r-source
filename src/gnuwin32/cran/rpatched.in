@@ -68,7 +68,7 @@ FAQ</a> for Windows-specific information.</p>
 <ul>
   <li><a href="index.html">The current official release.</a></li>
   <li>A build of the development version (which will eventually become
-the next major release of R) is available in the <a href="rdevel.html">r-devel snapshot build</a>.
+the next major release of R) is available in the <a href="../../windows/base/rdevel.html">r-devel snapshot build</a>.
   <li><a href="../../windows@OTHERBITSUFFIX@/base">@OTHERBITSIZE@ bit builds for Windows</a></li>
   <li><a href="../../windows/base/old/">Previous releases</a></li>
 </ul>
