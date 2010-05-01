@@ -20,18 +20,18 @@ memory.size(max = FALSE)
 memory.limit(size = NA)
 }
 \arguments{
-  \item{max}{logical.  If \code{TRUE} the maximum amount of memory obtained from
-    the OS is reported, if \code{FALSE} the amount currently in use, if \code{NA}
-    the memory limit.}
+  \item{max}{logical.  If \code{TRUE} the maximum amount of memory
+    obtained from the OS is reported, if \code{FALSE} the amount
+    currently in use, if \code{NA} the memory limit.}
   \item{size}{numeric.  If \code{NA} report the memory limit, otherwise
-    request a new limit, in Mb.  Values of up to 4095 are allowed, but
-    see Details.}
+    request a new limit, in Mb.  Only values of up to 4095 are allowed on
+    32-bit \R builds, but see \sQuote{Details}.}
 }
 \details{
   Command-line flag \option{--max-mem-size} sets the maximum value of
   obtainable memory (including a very small amount of housekeeping
-  overhead).  This cannot exceed 3Gb on 32-bit Windows, and most versions of
-  Windows are limited to 2Gb.  The minimum is currently 32Mb.
+  overhead).  This cannot exceed 3Gb on 32-bit Windows, and most
+  versions are limited to 2Gb.  The minimum is currently 32Mb.
 
   If 32-bit \R is run on most 64-bit versions of Windows the maximum
   value of obtainable memory is just under 4Gb.  For a 64-bit versions
