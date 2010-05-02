@@ -1212,7 +1212,7 @@ where @file{rootdir} is the path to the root of the customized
 installation (forward slashes and no spaces, please).  
 
 Both methods create an executable with a standard name such as
-@file{@value{RWVERSION}-win.exe}, so please rename it to indicate that
+@file{@value{RWVERSION}-win32.exe}, so please rename it to indicate that
 it is customized.  If you intend to @emph{distribute} a customized
 installer please do check that license requirements are met -- note that
 the installer will state that the contents are distributed under GPL-2
@@ -1231,6 +1231,24 @@ make myR IMAGEDIR=rootdir MDISDI=1
 will create an installer that defaults to installing @R{} to run in SDI
 mode.  See @file{src/@/gnuwin32/installer/Makefile} for the names and
 values that can be set.
+
+The distributed 32/64-bit installer is made by first building 32-bit R
+(just
+
+@example
+make all recommended bitmapdll
+@end example
+
+@noindent
+is needed), and then building 64-bit R with the macro @code{HOME32} set
+in file @file{MkRules.local} to the top-level directory of the 32-bit
+build.  Then the @command{make rinstaller} step copies the files that
+differ between architectures from the 32-bit buils as it builds the
+installer image.
+
+The scripts will name a combined 32/64-bit installer
+@file{@value{RWVERSION}-win.exe}, but use @file{-win32.exe} or
+@file{-win64.exe} for one containing a single architecture.
 
 @node Building the MSI installer, Cross-building on Linux, Building the Inno Setup installer, Building from source
 @subsection Building the MSI installer
@@ -4341,8 +4359,7 @@ but no compiled code, none of these are needed.
 Perl is essential to build @R{}, and needed to develop packages.
 
 A complete build of @R{} including PDF manuals, and producing the
-standalone installer @file{@value{RWVERSION}-win.exe} will also need the
-following:
+installer will also need the following:
 @itemize
 @item
 @LaTeX{}
