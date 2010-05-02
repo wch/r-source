@@ -11,7 +11,10 @@ subdir = tests/Examples
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in  Makefile.win
+DISTFILES = Makefile.in  Makefile.win \
+  datasets-Ex.Rout.save grDevices-Ex.Rout.save graphics-Ex.Rout.save \
+  grid-Ex.Rout.save methods-Ex.Rout.save splines-Ex.Rout.save \
+  stats-Ex.Rout.save stats4-Ex.Rout.save tools-Ex.Rout.save
 
 R_EXE = $(top_builddir)/bin/R --slave --vanilla
 
