@@ -105,7 +105,7 @@ my $regfile;
 if ($have32bit && $have64bit) {
     $regfile = "reg3264.iss";
 } else {
-    $refile = "reg.iss";
+    $regfile = "reg.iss";
 }
 
 open (IN,  "< $regfile") or die "can't open $regfile";
