@@ -1243,7 +1243,7 @@ make all recommended bitmapdll
 is needed), and then building 64-bit R with the macro @code{HOME32} set
 in file @file{MkRules.local} to the top-level directory of the 32-bit
 build.  Then the @command{make rinstaller} step copies the files that
-differ between architectures from the 32-bit buils as it builds the
+differ between architectures from the 32-bit build as it builds the
 installer image.
 
 The scripts will name a combined 32/64-bit installer
