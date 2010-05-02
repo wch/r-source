@@ -32,7 +32,7 @@ SUFF = win32
 endif
 
 FULLVERSION=`cat ../../../VERSION`
-RPREFIX = $(shell $(PERL) ../fixed/rwver.pl $(R_HOME)/VERSION)
+RPREFIX = $(shell $(R_HOME)/tools/GETRWVERSION $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
 
 INFO_FILES = COPYING NEWS README
@@ -183,7 +183,7 @@ clean:
 	  uuidgen.o uuidgen.exe uuids
 
 distclean: clean
-	rm -f $(RPREFIX)-win32.* $(RPREFIX)-win64.*
+	rm -f $(RPREFIX)-win32.* $(RPREFIX)-win64.* $(RPREFIX)-win.*
 
 myR:
 	echo "make.packages.html(.Library)" | $(IMAGEDIR)/$(BINDIR)/Rterm.exe --vanilla --slave LC_COLLATE=C

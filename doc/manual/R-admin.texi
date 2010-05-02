@@ -542,7 +542,7 @@ the option @option{--prefix}, as in
 @end example
 
 @noindent
-This causes @command{make install} to install the @R{} executable to
+This causes @command{make install} to install the @R{} script to
 @file{/where/you/want/R/to/go/bin}, and so on.  The prefix of the
 installation directories can be seen in the status message that is
 displayed at the end of @command{configure}.  You can install into
@@ -1080,9 +1080,10 @@ ample memory, and is not 100% reliable.
 The file @file{@var{R_HOME}/library/grDevices/libs/@{i386,x64@}Rbitmap.dll} is not built
 automatically.  
 
-Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap}
-or @code{make bitmapdll} in @file{@var{R_HOME}/@/src/gnuwin32}
-should build @file{Rbitmap.dll} and install it in @file{@var{R_HOME}/bin}.
+Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap} or
+@code{make bitmapdll} in @file{@var{R_HOME}/@/src/gnuwin32} should build
+@file{Rbitmap.dll} and install it under
+@file{@var{R_HOME}/library/grDevices/libs}.
 
 @node Checking the build, Building the manuals, Building the bitmap files, Building from source
 @subsection Checking the build
@@ -4354,7 +4355,7 @@ The MinGW toolchain to compile C, Fortran and C++.
 @end itemize
 For installing simple packages containing data or @R{} source
 but no compiled code, none of these are needed.
-Perl is essential to build @R{}, and needed to develop packages.
+Perl is not needed to build @R{}, but is needed to develop packages.
 
 A complete build of @R{} including PDF manuals, and producing the
 installer will also need the following:
@@ -4370,15 +4371,15 @@ It is important to set your @env{PATH} properly.  The @file{Rtools.exe}
 optionally sets the path to components that it installs.
 
 Your @env{PATH} may include @file{.} first, then the @file{bin}
-directories of the tools, Perl, MinGW and @LaTeX{}.  Do not use
-filepaths containing spaces: you can always use the short forms (found
-by @code{dir /x} at the Windows command line).  Network shares (with
-paths starting @code{\\}) are not supported.  For example, all on one
-line,
+directories of the tools, Perl, the compiler toolchain and @LaTeX{}.  Do
+not use filepaths containing spaces: you can always use the short forms
+(found by @code{dir /x} at the Windows command line).  Network shares
+(with paths starting @code{\\}) are not supported.  For example, all on
+one line,
 
 @smallexample
-PATH=c:\Rtools\bin;c:\Rtools\perl\bin;c:\Rtools\MinGW\bin;c:\texmf\miktex\bin;
-     c:\R\bin;c:\windows;c:\windows\system32
+PATH=c:\Rtools\bin;c:\Rtools\perl\bin;c:\Rtools\MinGW\bin;c:\MiKTeX\miktex\bin;
+     c:\R\bin\i386;c:\windows;c:\windows\system32
 @end smallexample
 
 It is essential that the directory containing the command line tools

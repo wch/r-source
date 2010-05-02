@@ -44,6 +44,8 @@ INSTALLATION
 	is now based on gcc 4.5.0: see the 'R Installation and
 	Administration Manual'.
 
+    o	It is now possible to build R and the installer without Perl.
+
 
 64-bit NEWS
 

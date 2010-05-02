@@ -39,7 +39,7 @@ RHOME = $(shell ./Rpwd.exe ../..)
 
 REXE = $(RHOME)/$(BINDIR)/rterm.exe --vanilla --slave
 
-RPREFIX = $(shell $(PERL) fixed/rwver.pl ../../VERSION)
+RPREFIX = $(shell ../../tools/GETRWVERSION ../../VERSION)
 
 FULLVERSION=`cat ../../VERSION`
 
