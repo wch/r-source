@@ -5,11 +5,15 @@
 en.regentries=Registry entries:
 en.associate=&Associate R with .RData files
 en.user=User installation
-en.compact=Minimal 32-bit user installation
+en.user32=32-bit user installation
+en.user64=64-bit User installation
+en.compact=Minimal user installation
+en.compact32=Minimal 32-bit installation
 en.full=Full installation
+en.add64=Add 64-bit components
 en.custom=Custom installation
 en.adminprivilegesrequired=You should be logged in as an administrator when installing R
-en.adminexplanation=Note:  A full R installation requires administrative privileges, and it appears that those are not available.  If you continue with this installation, you will not be able to install DCOM support nor associate R with .RData files.  Installation must be made to a directory where you have write permission.
+en.adminexplanation=Note:  A full R installation requires administrative privileges, and it appears that those are not available.  If you continue with this installation, you will not be able to associate R with .RData files.  Installation must be made to a directory where you have write permission.
 en.recordversion=Save version number in registry
 en.startupt=Startup options
 en.startupq=Do you want to customize the startup options?

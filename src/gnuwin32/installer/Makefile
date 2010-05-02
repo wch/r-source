@@ -21,12 +21,13 @@ Internet = 0
 ## Used to set Registry entries
 Producer = R-core
 
-## Limit installation to 64-bit systems
 ifeq ($(strip $(WIN)),64)
-bit64 = 1
-SUFF = win64
+ifneq ($(strip $(HOME32)),)
+SUFF = win
 else
-bit64 = 0
+SUFF = win64
+endif
+else
 SUFF = win32
 endif
 
@@ -132,7 +133,7 @@ endif
 
 R.iss: JRins.pl CustomMsg.txt imagedir fixups 32bit md5sums \
   ../../../VERSION ../../../SVN-REVISION
-	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer) $(bit64)
+	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
 
 $(RPREFIX)-$(SUFF).exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1

@@ -29,7 +29,13 @@ my $MDISDI=$ARGV[2];
 my $HelpStyle=$ARGV[3];
 my $Internet=$ARGV[4];
 my $Producer = $ARGV[5];
-my $mode64bit = $ARGV[6];
+
+my $have32bit = 0;
+my $have64bit = 0;
+
+$have32bit = 1 if -d "$SRCDIR\\bin\\i386";
+$have64bit = 1 if -d "$SRCDIR\\bin\\x64";
+
 
 $SRCDIR =~ s+/+\\+g; # need DOS-style paths
 
@@ -49,17 +55,27 @@ close ver;
 $SVN =~s/Revision: //;
 $RVER0 .= "." . $SVN;
 
-my $have32bit = 0;
-if($mode64bit) {
-    $suffix = "win64";
+open insfile, "> R.iss" || die "Cannot open R.iss\n";
+print insfile <<END;
+[Setup]
+END
+
+if ($have32bit && $have64bit) {
+    $suffix = "win";
     $PF = "pf"; # 32- or 64-bit Program Files
+    $QUAL = "";
+    $SUFF = "";
+    # bindir and RK are not used
+    print insfile "ArchitecturesInstallIn64BitMode=x64\n";
+} elsif ($have64bit) {
+    $suffix = "win64";
+    $PF = "pf";
     $QUAL = " x64"; # used for AppName
     $SUFF = "-x64"; # used for default install dir
     $bindir = "bin/x64"; # used for shortcuts
-    $have32bit = 1 if -d "$SRCDIR\\bin\\i386";
     $RK = "R64"; # arch-specific key
-    $suffix = "win" if $have32bit;
-} else {
+    print insfile "ArchitecturesInstallIn64BitMode=x64\nArchitecturesAllowed=x64\n";
+} else { # 32-bit only
     $suffix = "win32";
     $PF = "pf32";
     $QUAL = "";
@@ -68,23 +84,10 @@ if($mode64bit) {
     $RK = "R32";
 }
 
-open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
-[Setup]
 OutputBaseFilename=${RW}-${suffix}
 PrivilegesRequired=none
 MinVersion=0,5.0
-END
-
-if ($have32bit) {
-    $QUAL = "";
-    $SUFF = "";
-    print insfile "ArchitecturesInstallIn64BitMode=x64\n";
-} elsif ($mode64bit) {
-    print insfile "ArchitecturesInstallIn64BitMode=x64\nArchitecturesAllowed=x64\n";
-}
-
-print insfile <<END;
 AppName=R for Windows$QUAL $RVER
 AppVerName=R for Windows$QUAL $RVER
 AppPublisherURL=http://www.r-project.org
@@ -150,7 +153,7 @@ Name: "recordversion"; Description: {cm:recordversion}; GroupDescription: {cm:re
 Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 0,5.0; Check: IsAdmin
 END
 
-if ($have32bit) { #================ 32/64 bit installer ===========
+if ($have32bit && $have64bit) { #============ 32/64 bit installer ===========
 print insfile <<END;
 [Icons]
 Name: "{group}\\Uninstall R $RVER"; Filename: "{uninstallexe}"
@@ -263,16 +266,16 @@ Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; Value
 END
 }
 
-if ($have32bit) { # necessarily 64-bit
+if ($have32bit && $have64bit) {
 print insfile <<END;
 
 [Types]
 Name: "user"; Description: {cm:user}; Check: Is64BitInstallMode
-Name: "user32"; Description: 32-bit user installation
-Name: "user64"; Description: 64-bit user installation; Check: Is64BitInstallMode
-Name: "compact"; Description: {cm:compact}
+Name: "user32"; Description: {cm:user32}
+Name: "user64"; Description: {cm:user64}; Check: Is64BitInstallMode
+Name: "compact"; Description: {cm:compact32}
 Name: "full"; Description: {cm:full}
-Name: "add64"; Description: Add 64-bit components; Check: Is64BitInstallMode
+Name: "add64"; Description: {cm:add64}; Check: Is64BitInstallMode
 Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
@@ -294,14 +297,14 @@ Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
 Name: "trans"; Description: "Message Translations"; Types: user user32 user64 full custom
 Name: "tests"; Description: "Test files"; Types: full custom
 END
-} elsif ($mode64bit) {
+} elsif ($have64bit) { #========== 64-bit only
 print insfile <<END;
 
 [Types]
 Name: "user"; Description: {cm:user}
 Name: "compact"; Description: {cm:compact}
 Name: "full"; Description: {cm:full}
-Name: "add64"; Description: Add 64-bit components
+Name: "add64"; Description: {cm:add64}
 Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
@@ -321,7 +324,7 @@ Name: "tcl/chm"; Description: "Tcl/Tk Help (Compiled HTML)"; Types: full custom
 Name: "trans"; Description: "Message Translations"; Types: user full custom
 Name: "tests"; Description: "Test files"; Types: full custom
 END
-} else {
+} else { #========== 32-bit only
 print insfile <<END;
 
 [Types]
@@ -547,7 +550,7 @@ end;
 [Files]  
 END
 
-$path="${SRCDIR}";chdir($path);
+$path="${SRCDIR}"; chdir($path);
 find(\&listFiles, ".");
 
 close insfile;
