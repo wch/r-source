@@ -128,9 +128,9 @@
 	    	component <- "tests"
 	else if (grepl("^Tcl/(bin|lib)64", f))
 	    component <- "tcl/64"
-	else if (have32bit && grepl("^Tcl/bin", f))
-	    component <- "tcl/32"
-	else if (have32bit && grepl("^Tcl/lib/(dde1.3|reg1.2|Tktable)", f))
+	else if (have32bit && have64bit &&
+                 (grepl("^Tcl/bin", f) ||
+                  grepl("^Tcl/lib/(dde1.3|reg1.2|Tktable)", f)))
 	    component <- "tcl/32"
 	else if (grepl("^Tcl/doc/.*chm$", f))
 	    component <- "tcl/chm"
