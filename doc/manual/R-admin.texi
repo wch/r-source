@@ -2574,8 +2574,7 @@ run.
 @c The Perl scripts left are
 @c src/scripts: Rprof Sd2Rd build check
 @c tools: help2man.pl install-info.pl
-@c src/gnuwin32/fixed/rwver.pl
-@c src/gnuwin32/installer: JRins.pl WIXins.pl
+@c src/gnuwin32/installer: WIXins.pl
 
 The @code{bitmap} and @code{dev2bitmap} devices and also
 @code{embedFonts()} use ghostscript
@@ -4347,8 +4346,7 @@ See the subsections below for detailed descriptions.
 Perl (in @file{Rtools.exe})
 @c Current Perl scripts used on Windows are
 @c src/scripts: Rprof Sd2Rd build check
-@c src/gnuwin32/fixed/rwver.pl, used to make version.texi
-@c src/gnuwin32/installer: JRins.pl WIXins.pl
+@c src/gnuwin32/installer: WIXins.pl
 @item
 The command line tools (in @file{Rtools.exe})
 @item

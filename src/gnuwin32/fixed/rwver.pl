@@ -1,3 +1,8 @@
+##
+## used for RPREFIX in 
+## doc/manual, src/gnuwin32/Makefile and src/gnuwin32/installer/Makefile
+##
+
 while(<>) {
     s/([0-9]+)\.([0-9]+)\.([0-9]+)\s*//;
     my $major = $1;
