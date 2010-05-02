@@ -131,7 +131,8 @@ endif
 
 ## for Inno Setup installer
 
-R.iss: JRins.pl CustomMsg.txt imagedir fixups 32bit md5sums \
+R.iss: JRins.pl header1.iss types3264.iss types32.iss types64.iss code.iss \
+   CustomMsg.txt imagedir fixups 32bit md5sums \
   ../../../VERSION ../../../SVN-REVISION
 	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
 
