@@ -131,10 +131,16 @@ endif
 
 ## for Inno Setup installer
 
-R.iss: JRins.pl header1.iss types3264.iss types32.iss types64.iss code.iss \
+R0.iss: JRins.pl header1.iss types3264.iss types32.iss types64.iss code.iss \
    CustomMsg.txt imagedir fixups 32bit md5sums \
   ../../../VERSION ../../../SVN-REVISION
 	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
+
+R.iss: JRins.R header1.iss types3264.iss types32.iss types64.iss code.iss \
+   CustomMsg.txt imagedir fixups 32bit md5sums \
+  ../../../VERSION ../../../SVN-REVISION
+	../../../bin$(R_ARCH)/Rscript JRins.R \
+	  $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
 
 $(RPREFIX)-$(SUFF).exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1
