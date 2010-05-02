@@ -4344,18 +4344,14 @@ You will need the following items to build @R{} and packages.
 See the subsections below for detailed descriptions.
 @itemize
 @item
-Perl (in @file{Rtools.exe})
-@c Current Perl scripts used on Windows are
-@c src/scripts: Rprof Sd2Rd build check
-@c src/gnuwin32/installer: WIXins.pl
-@item
 The command line tools (in @file{Rtools.exe})
 @item
 The MinGW toolchain to compile C, Fortran and C++.
 @end itemize
-For installing simple packages containing data or @R{} source
-but no compiled code, none of these are needed.
-Perl is not needed to build @R{}, but is needed to develop packages.
+For installing simple source packages containing data or @R{} source but
+no compiled code, none of these are needed.  Perl (in @file{Rtools.exe})
+is not needed to build @R{} nor to install source packages, but is
+needed to develop packages.
 
 A complete build of @R{} including PDF manuals, and producing the
 installer will also need the following:
@@ -4407,8 +4403,8 @@ path.
 @node Perl, LaTeX, The Windows toolset, The Windows toolset
 @section Perl
 
-Perl is needed to build @R{} and to use @command{R CMD
-build|check|Rprof}: it is no longer needed to install packages.
+Perl is needed to use @command{R CMD build|check|Rprof}: it is no longer
+needed to install packages nor to build @R{}.
 
 You will need a Windows port of @code{perl5} (but only the basic
 functionality, not any of the third-party Win32 extensions).  The
@@ -4459,25 +4455,23 @@ location where Inno Setup was installed.
 This item is installed by the @file{Rtools.exe} installer.
 
 @c date is used when building base and tools
-@c find is used in building the installers
 @c comm, sort, uniq are used in producing .def files
 @c cmp is used in src/include/Makefile.win
 @c cut is used to make RVER
-@c gzip and tar used to be needed to unpack recommended packages
 @c rsync is only needed if building from svn
 @c tr is used by Rdiff
-@c awk, egrep, head, rmdir, tail, wc are no longer used
+@c awk, egrep, find, gzip, head, rmdir, tail, tar, wc are no longer used
 If you choose to install these yourself, you will need suitable versions
 of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
 @code{cp}, @code{cut}, @code{date}, @code{diff}, @code{echo},
-@code{find}, @code{grep}, @code{gzip}, @code{ls}, @code{make},
-@code{makeinfo}, @code{mkdir}, @code{mv}, @code{rm}, @code{rsync},
-@code{sed}, @code{sh}, @code{sort}, @code{tar}, @code{texindex},
-@code{touch}, @code{tr} and @code{uniq}; we use those from the Cygwin
-distribution (@uref{http://www.cygwin.com/}) or compiled from the
-sources.  You will also need @code{zip} and @code{unzip} from the
-Info-ZIP project (@uref{http://www.info-zip.org/}).  All of these tools
-are in @file{Rtools.exe}.
+@code{grep}, @code{gzip}, @code{ls}, @code{make}, @code{makeinfo},
+@code{mkdir}, @code{mv}, @code{rm}, @code{rsync}, @code{sed}, @code{sh},
+@code{sort}, @code{tar}, @code{texindex}, @code{touch}, @code{tr} and
+@code{uniq}; we use those from the Cygwin distribution
+(@uref{http://www.cygwin.com/}) or compiled from the sources.  You will
+also need @code{zip} and @code{unzip} from the Info-ZIP project
+(@uref{http://www.info-zip.org/}).  All of these tools are in
+@file{Rtools.exe}.
 
 @strong{Beware}: `Native' ports of make are @strong{not} suitable
 (including that called `MinGW make' at the MinGW SourceForge site).
@@ -4511,9 +4505,8 @@ where C++ code is involved.  So we recommend that all packages are built
 with the current toolchain.
 
 The 32-bit build for this version of @R{} is set up to use @command{gcc}
-@code{4.5.0}.  The toolchain is currently hosted at
-@url{http://www.stats.ox.ac.uk/pub/Rtools/mingw32-toolchain.zip}: unpack
-this in an empty directory.  This is collected from the files at
+@code{4.5.0}.  The toolchain is part of @file{Rtools2.12.exe}, and was
+collected from the files at
 @url{http://sourceforge.net/projects/mingw/files/}, specifically
 
 @example
@@ -4537,8 +4530,8 @@ subdirectory @file{dlls} so that @file{libgfortran} and @file{libstdc++}
 are linked statically.
 
 We have also tested using the 32-bit toolchain from the @code{mingw-w64}
-project (which are currently pre-releases of @command{gcc 4.4.4}) and
-options to use that are documented in file @file{MkRules.dist}.
+project (which are currently using pre-releases of @command{gcc 4.4.4})
+and options to use that are documented in file @file{MkRules.dist}.
 
 @node 64-bit toolchain,  , 32-bit toolchain, The MinGW toolchain
 @subsection 64-bit toolchain
@@ -4559,7 +4552,7 @@ This comes from
 and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100405.zip}.
 (Care is needed: that site also has compilers targeting 32-bit Windows
 and running on other host OSes.  You do want the `release' version with
-@code{-1.0-} in the name.  There was a native x64 toolchain under
+@code{-1.0-} in the name.  There may be a native x64 toolchain under
 `Personal builds'.)
 
 @emph{Some versions} of that toolchain by default use dynamic linking to
