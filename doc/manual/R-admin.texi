@@ -726,7 +726,10 @@ e.g.@: @file{/usr/bin} will be the last installed, but
 architecture-specific versions will be available in e.g.@:
 @file{/usr/lib64/R/bin/exec@var{R_ARCH}}.  Normally all installed
 architectures will run on the platform so the architecture of
-@command{Rscript} does not matter.
+@command{Rscript} itself does not matter.  The executable
+@command{Rscript} will run the @command{R} script, and at the time the
+setting of the @env{R_ARCH} environment variable determines the
+architecture which is run.
 
 When running post-install tests with sub-architectures, use
 
@@ -739,7 +742,15 @@ to select a sub-architecture to check.
 
 Sub-architectures are also used on Windows, but by selecting executables
 within the appropriate @file{bin} directory,
-@file{@var{R_HOME}/bin/i386} or @file{@var{R_HOME}/bin/x64}.
+@file{@var{R_HOME}/bin/i386} or @file{@var{R_HOME}/bin/x64}.  For
+backwards compatibility with @R{} < 2.12.0, there are executables
+@file{@var{R_HOME}/bin/R.exe} or @file{@var{R_HOME}/bin/Rscript.exe}:
+these will run an executable from one of the subdirectories, which being
+taken first from the @env{R_ARCH} environment variable, then from the
+@option{--arch} command-line option@footnote{with possible values
+@samp{i386}, @samp{x64}, @samp{32} and @samp{64}.} and finally from the
+installation default (which is 32-bit of a combined 32/64 bit @R{}
+installation).
 
 @menu
 * Multilib::                    
@@ -854,8 +865,8 @@ package-specific tests) by @code{testInstalledPackages} even if
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
 from @acronym{CRAN} to run on Windows 2000 or later on ix86
-@acronym{CPU}s (including AMD64/Intel64@footnote{formerly EM64T.} chips
-and Windows x64).
+@acronym{CPU}s (including AMD64/Intel64@footnote{formerly known as
+EM64T.} chips and Windows x64).
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).

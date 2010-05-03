@@ -29,7 +29,9 @@ NEW FEATURES
 
 	Because many people expect it, there is an executable
 	R_HOME/bin/R.exe, which accepts --arch and launches either
-	R_HOME/bin/i386/R.exe or R_HOME/bin/x64/R.exe.
+	R_HOME/bin/i386/R.exe or R_HOME/bin/x64/R.exe, and analogously
+	for Rscript.exe.  If not set on the command-line these check
+	the environment variable R_ARCH for the architecture to use.
 
 	For now, almost all (32- or 64-bit) packages with compiled
 	code built under 2.{10,11}.x can be used, but this will be
@@ -44,7 +46,8 @@ INSTALLATION
 	is now based on gcc 4.5.0: see the 'R Installation and
 	Administration Manual'.
 
-    o	It is now possible to build R and the installer without Perl.
+    o	It is now possible to build R and the Inno Setup installer
+	without Perl.
 
 
 64-bit NEWS
