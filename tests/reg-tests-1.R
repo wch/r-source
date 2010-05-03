@@ -6132,6 +6132,7 @@ close(tc)
 stopifnot(length(newConn()) == 0)
 ## getConn..(*) seg.faulted in R <= 2.10.x
 
+
 ## splinefun(., method = "monoH.FC")
 x <- 1:7 ; xx <- seq(0.9, 7.1, length=2^12)
 y <- c(-12, -10, 3.5, 4.45, 4.5, 140, 142)
@@ -6139,3 +6140,11 @@ Smon <- splinefun(x, y, method = "monoH.FC")
 stopifnot(0 <= min(Smon(xx, deriv=1)))
 ## slopes in [4.4, 4.66] were slightly negative, because m[] adjustments
 ## could be sightly off in cases of adjacency, for  R <= 2.11.0
+
+
+## prettyDate( <Date> )
+x <- as.Date("2008-04-22 09:45") + c(0,4)
+px <- pretty(x)
+stopifnot(px[1] == "2008-04-22", length(px) == 5)
+## did depend on the local timezone  at first
+
