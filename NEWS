@@ -102,6 +102,11 @@ PACKAGE INSTALLATION
 	There is a new default filter, "subarch", in
 	available.packages() to make use of this.
 
+	Code is compiled in a copy of the 'src' directory when a
+	package is installed for more than one sub-architecture: this
+	avoid problems with cleaning the sources between building
+	sub-architectures.
+
 
 C-LEVEL FACILITIES
 

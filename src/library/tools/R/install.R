@@ -641,26 +641,31 @@
                     if (length(allfiles)) {
                         ## if there is a configure script we install only the main
                         ## sub-architecture
-                        if (!multiarch ||
+                        if (!multiarch || length(archs) <= 1 ||
                             .file_test("-x", "../configure")) {
                             if (nzchar(rarch))
-                                starsmsg(stars, "arch - ", substr(rarch, 2, 1000))
+                                starsmsg("***", "arch - ",
+                                         substr(rarch, 2, 1000))
                             has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
                         } else {
+                            setwd(owd)
                             for(arch in archs) {
-                                system("rm -f *.o *.so *.sl *.dylib")
+#                                system("rm -f *.o *.so *.sl *.dylib")
                                 if (arch == "R") {
                                     ## top-level, so one arch without subdirs
                                     has_error <- run_shlib(pkg_name, srcs, instdir, "")
-                                } else if (arch == "Rgnome") {
-                                    ## ignore
                                 } else {
-                                    starsmsg(stars, "arch - ", arch)
+                                    starsmsg("***", "arch - ", arch)
+                                    ss <- paste("src", arch, sep = "-")
+                                    dir.create(ss, showWarnings = FALSE)
+                                    file.copy(Sys.glob("src/*"), ss, recursive = TRUE)
+                                    setwd(ss)
                                     ra <- paste0("/", arch)
                                     ## FIXME: do this lower down
                                     Sys.setenv(R_ARCH = ra)
                                     has_error <- run_shlib(pkg_name, srcs, instdir, ra)
                                     Sys.setenv(R_ARCH = rarch)
+                                    setwd(owd)
                                     if (has_error) break
                                 }
                             }
