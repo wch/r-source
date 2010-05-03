@@ -3,7 +3,8 @@
 include MkRules
 
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
-RPREFIX = $(shell ../../tools/GETRWVERSION ../../VERSION)
+#RPREFIX = $(shell ../../tools/GETRWVERSION ../../VERSION)
+RPREFIX = $(shell ../../bin$(R_ARCH)/Rscript fixed/rwver.R)
 SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 
 all: rw-FAQ ../../doc/html/rw-FAQ.html

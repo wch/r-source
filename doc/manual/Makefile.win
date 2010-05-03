@@ -253,7 +253,7 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 	  $(ECHO) "@set VERSIONno $${v}" > $@; \
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_srcdir)/SVN-REVISION`)"; \
 	  $(ECHO) "@set VERSION $${v}" >> $@; \
-	  rwv=$(shell $(top_srcdir)/tools/GETRWVERSION $(top_srcdir)/VERSION); \
+	  rwv=$(shell ../../bin$(R_ARCH)/Rscript ../../src/gnuwin32/fixed/rwver.R); \
 	  $(ECHO) "@set RWVERSION $${rwv}" >> $@ )
 	@if test "$(R_PAPERSIZE)" = "a4"; then \
 	  $(ECHO) "@afourpaper" >> $@ ; \

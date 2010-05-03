@@ -14,7 +14,8 @@ endif
 
 R_HOME = $(shell ../Rpwd.exe ../../..)
 
-RPREFIX = $(shell ../../../tools/GETRWVERSION ../../../VERSION)
+#RPREFIX = $(shell ../../../tools/GETRWVERSION ../../../VERSION)
+RPREFIX = $(shell ../../../bin$(R_ARCH)/Rscript ../fixed/rwver.R)
 FULLVERSION=`cat ../../../VERSION`
 SVNREVISION=`sed -e 1s/Revision:.// -e q < $(R_HOME)/SVN-REVISION`
 RVER = $(shell cut -d' ' -f1 ../../../VERSION | sed -n 1p)
