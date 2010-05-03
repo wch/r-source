@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-14 r51724)
+R version 2.12.0 Under development (unstable) (2010-05-03 r51895)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -678,7 +678,7 @@ e1="vector", e2="structure"
 > 
 > ### ** Examples
 > 
-> ## using the definition of class "track" from Classes
+> ## using the definition of class "track" from setClass
 > 
 > ## Don't show: 
 > setClass("track",
@@ -1465,7 +1465,7 @@ Skeleton of method written to connection
 > 
 > ### ** Examples
 > 
-> ## using the definition of class "track" from Classes
+> ## using the definition of class "track" from setClass
 > 
 > ## Don't show: 
 > setClass("track",

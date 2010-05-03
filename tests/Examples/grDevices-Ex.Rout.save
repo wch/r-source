@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-18 r51761)
+R version 2.12.0 Under development (unstable) (2010-05-03 r51899)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -2788,7 +2788,7 @@ $`span = 10 secs`
 [1] "00" "02" "04" "06" "08" "10"
 
 $`span = 1 min`
-[1] "00" "15" "30" "45" "00"
+[1] "00" "10" "20" "30" "40" "50" "00"
 
 $`span = 5 mins`
 [1] "02:02" "02:03" "02:04" "02:05" "02:06" "02:07"
@@ -2812,10 +2812,10 @@ $`span = 1 month`
 [1] "Feb 04" "Feb 11" "Feb 18" "Feb 25"
 
 $`span = 6 months`
-[1] "2002 Feb" "2002 Mar" "2002 Apr" "2002 May" "2002 Jun" "2002 Jul"
+[1] "Mar" "Apr" "May" "Jun" "Jul" "Aug"
 
 $`span = 1 year`
-[1] "2002 Apr" "2002 Jul" "2002 Oct" "2003 Jan"
+[1] "Apr" "Jul" "Oct" "Jan"
 
 $`span = 10 years`
 [1] "2004" "2006" "2008" "2010" "2012"
