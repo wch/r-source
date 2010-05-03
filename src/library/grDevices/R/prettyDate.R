@@ -27,11 +27,13 @@ pretty.POSIXt <- function(x, n = 5, min.n = max(2, round(n / 2)), ...)
 }
 
 
-prettyDate <-
-    function(x, n = 5, min.n = max(2, round(n / 2)), ...)
+prettyDate <- function(x, n = 5, min.n = max(2, round(n / 2)), ...)
 {
     isDate <- inherits(x, "Date")
-    zz <- range(as.POSIXct(x))
+    x <- as.POSIXct(x)
+    if (isDate) # the timezone *does* matter
+	attr(x, "tzone") <- "GMT"
+    zz <- range(x)
     ## specify the set of pretty timesteps
     MIN <- 60
     HOUR <- MIN * 60
@@ -104,7 +106,7 @@ prettyDate <-
     }
     makeOutput <- function(at, s) {
         flabels <- format(at, s$format)
-        ans <- 
+        ans <-
             if (isDate) as.Date(round(at, units = "days"))
             else as.POSIXct(at)
         attr(ans, "labels") <- flabels
@@ -127,15 +129,14 @@ prettyDate <-
     if (new.n < min.n)
         new.n <- -Inf
     if (abs(new.n - n) < abs(init.n - n))
-        return(makeOutput(new.at, steps[[new.i]]))
+	makeOutput(new.at, steps[[new.i]])
     else
-        return(makeOutput(init.at, steps[[init.i]]))
+	makeOutput(init.at, steps[[init.i]])
 }
 
 ## utility function, extending the base function trunc.POSIXt.
 ## Ideally this should replace the original, but that should be done
 ## with a little more thought (what about round.POSIXt etc.?)
-
 
 trunc_POSIXt <-
     function(x, units = c("secs", "mins", "hours", "days",
@@ -172,4 +173,3 @@ trunc_POSIXt <-
                })
     x
 }
-
