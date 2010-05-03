@@ -134,8 +134,8 @@ if ${rfiles}; then
 
 require(utils)
 
-rtags(path.expand('${SRCDIR}'), pattern = '[.]*\\\\.[RrSs]$', 
-      keep.re = '/R/[^/]*\\\\.[RrSs]', 
+rtags(path.expand('${SRCDIR}'), pattern = '[.]*\\\\\.[RrSs]$', 
+      keep.re = '/R/[^/]*\\\\\.[RrSs]', 
       verbose = ${VERBOSE}, 
       ofile = '${ofile}', 
       append = ${APPEND}, 
@@ -153,8 +153,16 @@ fi
 if ${cfiles}; then
     if ${verbose}; then 
 	find -L ${SRCDIR} -type f -name "*.[ch]" -print
+	find -L ${SRCDIR} -type f -name "*.cpp" -print
+	find -L ${SRCDIR} -type f -name "*.hpp" -print
+	find -L ${SRCDIR} -type f -name "*.cc" -print
+	find -L ${SRCDIR} -type f -name "*.hh" -print
     fi
     find -L ${SRCDIR} -type f -name "*.[ch]" -print0 | xargs -0 etags -o ${ofile} -a -l c
+    find -L ${SRCDIR} -type f -name "*.cpp" -print0 | xargs -0 etags -o ${ofile} -a -l c
+    find -L ${SRCDIR} -type f -name "*.hpp" -print0 | xargs -0 etags -o ${ofile} -a -l c
+    find -L ${SRCDIR} -type f -name "*.cc" -print0 | xargs -0 etags -o ${ofile} -a -l c
+    find -L ${SRCDIR} -type f -name "*.hh" -print0 | xargs -0 etags -o ${ofile} -a -l c
 fi
 
 echo "Done"
