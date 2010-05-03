@@ -129,10 +129,11 @@
   in particular the outermost level of (single or double) quotes is
   stripped, and backslashes are removed except inside quotes.
   
-  On systems with sub-architectures (mainly Mac OS X), the files
-  \file{Renviron.site} and \file{Rprofile.site} are looked for first in
-  architecture-specific directories,
-  e.g. \file{\var{\link{R_HOME}}/etc/i386/Renviron.site}.
+  On systems with sub-architectures (mainly Mac OS X and Winows), the
+  files \file{Renviron.site} and \file{Rprofile.site} are looked for
+  first in architecture-specific directories,
+  e.g. \file{\var{\link{R_HOME}}/etc/i386/Renviron.site}.  And e.g.
+  \file{.Renviron.i386} will be used in preference to \file{.Renviron}.
 }
 \note{
 #ifdef unix
@@ -153,7 +154,7 @@
 }
 \seealso{
   For the definition of the \sQuote{home} directory on Windows see the
-  \file{rw-FAQ} Q2.14 It can be found from a running \R by
+  \file{rw-FAQ} Q2.14.  It can be found from a running \R by
   \code{Sys.getenv("R_USER")}.
 
   \code{\link{.Last}} for final actions at the close of an \R session.

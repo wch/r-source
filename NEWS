@@ -84,6 +84,9 @@ NEW FEATURES
     o	Special names such as "dim", "names", etc, are now allowed as slot
 	names of S4 classes, with "class" the only remaining exception.
 
+    o	.Renviron.site can have architecture-specific versions such as
+	.Renviron.i386 on systems with sub-architectures.
+
 
 DEPRECATED & DEFUNCT
 

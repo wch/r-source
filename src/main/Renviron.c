@@ -276,6 +276,11 @@ void process_user_Renviron()
 	return;
     }
 
+#ifdef R_ARCH
+    char buff[100];
+    snprintf(buff, 100, ".Renviron.%s", R_ARCH);
+    if( process_Renviron(buff)) return;
+#endif
     if(process_Renviron(".Renviron")) return;
 #ifdef Unix
     s = R_ExpandFileName("~/.Renviron");
@@ -290,6 +295,10 @@ void process_user_Renviron()
 	snprintf(buf, 1024, "%s/.Renviron", s);
 	s = buf;
     }
+#endif
+#ifdef R_ARCH
+    snprintf(buff, 100, "%s.%s", s, R_ARCH);
+    if( process_Renviron(buff)) return;
 #endif
     process_Renviron(s);
 }
