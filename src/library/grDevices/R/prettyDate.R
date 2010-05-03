@@ -16,24 +16,27 @@
 
 ## Original code Copyright (C) 2010 Felix Andrews <felix@nfrac.org>
 
-pretty.Date <- function(x, n = 5, min.n = max(2, round(n / 2)), ...)
+pretty.Date <- function(x, n = 5, min.n = n %/% 2, ...)
 {
     prettyDate(x = x, n = n, min.n = min.n, ...)
 }
 
-pretty.POSIXt <- function(x, n = 5, min.n = max(2, round(n / 2)), ...)
+pretty.POSIXt <- function(x, n = 5, min.n = n %/% 2, ...)
 {
     prettyDate(x = x, n = n, min.n = min.n, ...)
 }
 
 
-prettyDate <- function(x, n = 5, min.n = max(2, round(n / 2)), ...)
+prettyDate <- function(x, n = 5, min.n = n %/% 2, ...)
 {
     isDate <- inherits(x, "Date")
     x <- as.POSIXct(x)
     if (isDate) # the timezone *does* matter
 	attr(x, "tzone") <- "GMT"
-    zz <- range(x)
+    zz <- range(x, na.rm = TRUE)
+    if (diff(as.numeric(zz)) == 0)# one value only
+	zz <- zz + c(0,60)
+
     ## specify the set of pretty timesteps
     MIN <- 60
     HOUR <- MIN * 60
@@ -96,13 +99,13 @@ prettyDate <- function(x, n = 5, min.n = max(2, round(n / 2)), ...)
         at
     }
     init.at <- calcSteps(steps[[init.i]])
-    init.n <- length(init.at)
+    init.n <- length(init.at) - 1L
     ## bump it up if below acceptable threshold
     while (init.n < min.n) {
-        init.i <- init.i - 1
+        init.i <- init.i - 1L
         if (init.i == 0) stop("range too small for min.n")
         init.at <- calcSteps(steps[[init.i]])
-        init.n <- length(init.at)
+        init.n <- length(init.at) - 1L
     }
     makeOutput <- function(at, s) {
         flabels <- format(at, s$format)
@@ -116,15 +119,15 @@ prettyDate <- function(x, n = 5, min.n = max(2, round(n / 2)), ...)
         return(makeOutput(init.at, steps[[init.i]]))
     if (init.n > n) {
         ## too many ticks
-        new.i <- init.i + 1
+        new.i <- init.i + 1L
         new.i <- min(new.i, length(steps))
     } else {
         ## too few ticks
-        new.i <- init.i - 1
-        new.i <- max(new.i, 1)
+        new.i <- init.i - 1L
+        new.i <- max(new.i, 1L)
     }
     new.at <- calcSteps(steps[[new.i]])
-    new.n <- length(new.at)
+    new.n <- length(new.at) - 1L
     ## work out whether new.at or init.at is better
     if (new.n < min.n)
         new.n <- -Inf
