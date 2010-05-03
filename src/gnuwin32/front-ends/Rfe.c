@@ -21,13 +21,20 @@
 #include <string.h>
 #include <stdio.h>
 
+/* FIXME
+
+ * add --help/Usage
+ * use R_ARCH to set the default architecture.
+ * add something similar for Rscript, via basename.
+ */
+
 extern char *getRHOME(int); /* in ../rhome.c */
 
 #define CMD_LEN 10000
 int main (int argc, char **argv)
 {
     int cmdarg = 1;
-    char arch[10] = R_ARCH, cmd[CMD_LEN];
+    char arch[10] = R_ARCH, cmd[CMD_LEN], *p;
 
     if (argc > 2 && strcmp(argv[1], "--arch") == 0) {
 	cmdarg = 3;
@@ -38,14 +45,21 @@ int main (int argc, char **argv)
 	    fprintf(stderr, "valid values for --arch are i386, x64, 32, 64\n");
 	    exit(1);
 	}
-    }
-    snprintf(cmd, CMD_LEN, "%s\\bin\\%s\\R.exe", getRHOME(2), arch);
+    } else if ((p = getenv("R_ARCH")))
+	strncpy(arch, p+1, 10); /* skip leading slash */
+    
+
+    if (stricmp(argv[0] + strlen(argv[0]) - 11, "Rscript.exe") == 0
+	|| stricmp(argv[0] + strlen(argv[0]) - 7, "Rscript") == 0)
+	snprintf(cmd, CMD_LEN, "%s\\bin\\%s\\Rscript.exe", getRHOME(2), arch);
+    else
+    	snprintf(cmd, CMD_LEN, "%s\\bin\\%s\\R.exe", getRHOME(2), arch);
 
     for(int i = cmdarg; i < argc; i++) {
 	strcat(cmd, " ");
 	if(strchr(argv[i], ' ')) {
-	    /* We should really escape " here, I believe */
 	    strcat(cmd, "\"");
+	    /* We should really escape " here, I believe */
 	    strcat(cmd, argv[i]);
 	    strcat(cmd, "\"");
 	} else strcat(cmd, argv[i]);

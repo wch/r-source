@@ -95,7 +95,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 {
     /* tasks:
        find R_HOME, set as env variable (with / as separator)
-       set R_ARCH
+       set R_ARCH if not already set
        set PATH to include R_HOME\bin
        set TMPDIR if unset
        set HOME if unset
@@ -104,8 +104,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
        launch %R_HOME%\bin\$*
      */
     int i, iused, status = 0;
-    char *RHome, BUFFER[10000],
-	RHOME[MAX_PATH], *p, cmd[CMD_LEN], Rversion[25], HOME[MAX_PATH + 10];
+    char *p, cmd[CMD_LEN];
     char RCMD[] = "R CMD";
     int len = strlen(argv[0]);
     char env_path[MAX_PATH];
@@ -304,7 +303,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	status = system(cmd);
 	return(status);
     } else {
-	RHome = getRHOME(3);
+	char RHOME[MAX_PATH], Path[MAX_PATH+10], Rarch[30], Bindir[30], 
+	    Tmpdir[MAX_PATH+10], HOME[MAX_PATH+10], Rversion[25];
+	char *RHome = getRHOME(3);
 	if (argc > cmdarg+1 && 
 	    strcmp(argv[cmdarg+1], "RHOME") == 0) {
 	    fprintf(stdout, "%s", RHome);
@@ -320,37 +321,39 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 
 	putenv("R_CMD=R CMD");
 
-	strcpy(BUFFER, "PATH=");
-	strcat(BUFFER, RHome);
-	strcat(BUFFER, "\\"); 
-	strcat(BUFFER, BINDIR);
-	strcat(BUFFER, ";"); 
-	strcat(BUFFER, getenv("PATH"));
-	putenv(BUFFER);
+	strcpy(Path, "PATH=");
+	strcat(Path, RHome);
+	strcat(Path, "\\"); 
+	strcat(Path, BINDIR);
+	strcat(Path, ";"); 
+	strcat(Path, getenv("PATH"));
+	putenv(Path);
 
-	strcpy(BUFFER, "R_ARCH=/");
-	strcat(BUFFER, R_ARCH);
-	putenv(BUFFER);
+	if (!getenv("R_ARCH")) {
+	    strcpy(Rarch, "R_ARCH=/");
+	    strcat(Rarch, R_ARCH);
+	    putenv(Rarch);
+	}
 
-	strcpy(BUFFER, "BINDIR=");
-	strcat(BUFFER, BINDIR);
-	putenv(BUFFER);
+	strcpy(Bindir, "BINDIR=");
+	strcat(Bindir, BINDIR);
+	putenv(Bindir);
 
 	if ( (p = getenv("TMPDIR")) && isDir(p)) {
 	    /* TMPDIR is already set */
 	} else {
 	    if ( (p = getenv("TEMP")) && isDir(p)) {
-		strcpy(BUFFER, "TMPDIR=");
-		strcat(BUFFER, p);
-		putenv(BUFFER);
+		strcpy(Tmpdir, "TMPDIR=");
+		strcat(Tmpdir, p);
+		putenv(Tmpdir);
 	    } else if ( (p = getenv("TMP")) && isDir(p)) {
-		strcpy(BUFFER, "TMPDIR=");
-		strcat(BUFFER, p);
-		putenv(BUFFER);
+		strcpy(Tmpdir, "TMPDIR=");
+		strcat(Tmpdir, p);
+		putenv(Tmpdir);
 	    } else {
-		strcpy(BUFFER, "TMPDIR=");
-		strcat(BUFFER, getRUser());
-		putenv(BUFFER);
+		strcpy(Tmpdir, "TMPDIR=");
+		strcat(Tmpdir, getRUser());
+		putenv(Tmpdir);
 	    }
 	}
 
