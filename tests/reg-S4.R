@@ -529,3 +529,30 @@ x[1, drop=FALSE]
 y[1, drop=FALSE]
 ## the last gave TRUE on C1-level in R 2.10.x;
 ## the value of drop was wrongly taken from the default.
+
+## All slot names -- but "class" -- should work now
+problNames <- c("names", "dimnames", "row.names",
+                "class", "comment", "dim", "tsp")
+myTry <- function(expr, ...) tryCatch(expr, error = function(e) e)
+tstSlotname <- function(nm) {
+    r <- myTry(setClass("foo", representation =
+                        structure(list("character"), .Names = nm)))
+    if(is(r, "error")) return(r$message)
+    ## else
+    ch <- LETTERS[1:5]
+    ## instead of  new("foo", <...> = ch):
+    x <- myTry(do.call(new, structure(list("foo", ch), .Names=c("", nm))))
+    if(is(x, "error")) return(x$message)
+    y <- myTry(new("foo"));		 if(is(y, "error")) return(y$message)
+    r <- myTry(capture.output(show(x))); if(is(r, "error")) return(r$message)
+    r <- myTry(capture.output(show(y))); if(is(r, "error")) return(r$message)
+    ## else
+    slot(y, nm) <- slot(x, nm)
+    stopifnot(validObject(x), identical(x,y), identical(slot(x, nm), ch))
+    return(TRUE)
+}
+R <- sapply(problNames, tstSlotname, simplify = FALSE)
+str(R) # just so ...
+stopifnot(is.character(R[["class"]]),
+          sapply(R[names(R) != "class"], isTRUE))
+## only "class" (and ".Data", ...) is reserved as slot name
