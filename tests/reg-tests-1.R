@@ -6143,8 +6143,8 @@ stopifnot(0 <= min(Smon(xx, deriv=1)))
 
 
 ## prettyDate( <Date> )
-x <- as.Date("2008-04-22 09:45") + c(0,4)
-px <- pretty(x)
-stopifnot(px[1] == "2008-04-22", length(px) == 5)
+x <- as.Date("2008-04-22 09:45") + 0:5
+px <- pretty(x, n = 5)
+stopifnot(px[1] == "2008-04-22", length(px) == 6)
 ## did depend on the local timezone  at first
 
