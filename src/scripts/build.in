@@ -302,6 +302,10 @@ foreach my $pkg (@ARGV) {
     }
 
     &fix_unneeded_dirs($pkgname);
+    ## remove subarch build directories
+    foreach my $d ("src-i386", "src-x64", "src-x86_64", "src-ppc") {
+	rmtree(&file_path($pkgname, $d)); 
+    }
 
     ## Finalize.
     if($opt_binary) {
