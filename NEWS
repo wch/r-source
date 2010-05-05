@@ -26,6 +26,8 @@ BUG FIXES
 
     o 	package.skeleton() sometimes failed to fix filenames for .R or
     	.Rd files to start with an alphanumeric.  (PR#14253)
+	It also failed when only an S4 class without any methods was
+	defined.  (PR#14280)
 
     o	splinefun(*, method = "monoH.FC")  was not quite monotone in rare
 	cases.	(PR#14215)

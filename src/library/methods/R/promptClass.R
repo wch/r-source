@@ -28,8 +28,8 @@ function (clName, filename = NULL, type = "class",
     ## obtain list of all generics with cl in
     ## one of its signatures
 	allgen <- getGenerics(where = where)
-	ok <- sapply(allgen, classInSig, cl = cl, where = where)
-        allgen[ok]
+	ok <- as.logical(unlist(lapply(allgen, classInSig, cl = cl, where = where)))
+	allgen[ok]
     }
 
     sigsList <- function (g, where)
