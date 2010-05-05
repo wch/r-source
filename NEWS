@@ -110,6 +110,10 @@ PACKAGE INSTALLATION
 	avoid problems with cleaning the sources between building
 	sub-architectures.
 
+    o	R CMD INSTALL --libs-only no longer overrides the setting of
+	locking, so a previous version of the package will be restored
+	unless --no-lock is specified.
+
 
 C-LEVEL FACILITIES
 

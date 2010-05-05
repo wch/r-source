@@ -674,6 +674,7 @@
                 }
                 setwd(owd)
             }
+
             if (has_error)
                 pkgerrmsg("compilation failed", pkg_name)
 
@@ -1170,7 +1171,6 @@
              sQuote(lib), call. = FALSE)
 
     if (libs_only) {
-        lock <- FALSE
         tar_up <- FALSE
 	install_R <- FALSE
 	install_data <- FALSE
