@@ -944,7 +944,7 @@ which is a minimal version of Bourne-style @command{sh}.)  When
 @env{R_HOME}@footnote{and also @env{RHOME} for backwards compatiblity,
 but this will be removed in future.} and @env{R_ARCH} will be set.
 Use @env{R_ARCH} to decide if this is a 64-bit build (its value there is
-@samp{/x64} and to install DLLs to the correct place
+@samp{/x64}) and to install DLLs to the correct place
 (@code{$@{R_HOME@}/libs$@{R_ARCH@}}).
 
 In some rare circumstances, the configuration and cleanup scripts need
@@ -1127,6 +1127,21 @@ directory for some purpose other than building a DLL, use a
 
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
 or @file{Makevars.win}: this will be used by @command{R CMD build}.
+
+
+If you want to run @R{} code in @file{Makevars}, e.g.@: to find
+configuration information, please do ensure that you use the correct
+copy of @code{R} or @code{Rscript}: there might not be one in the path
+at all, or it might be the wrong version or architecture.  The correct
+way to do this is @emph{via}
+
+@example
+$(R_HOME)/bin$(R_ARCH_BIN)/Rscript @var{filename}
+$(R_HOME)/bin$(R_ARCH_BIN)/Rscript -e '@var{R expression}'
+@end example
+
+@noindent
+where @code{$(R_ARCH_BIN)} is only needed currently on Windows.
 
 @menu
 * Back-compatibility for Makevars::  
