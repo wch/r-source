@@ -46,6 +46,7 @@ interaction <- function(..., drop = FALSE, sep = ".", lex.order = FALSE)
                 while((i <- anyDuplicated(flv <- match(lvs, ulvs)))) {
                     lvs <- lvs[-i]
                     ans[ans+1L == i] <- match(flv[i], flv[1:(i-1)]) - 1L
+                    ans[ans+1L > i] <- ans[ans+1L > i] - 1L
                 }
                 lvs <- ulvs
             }

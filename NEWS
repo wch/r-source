@@ -43,6 +43,9 @@ BUG FIXES
 
     o	Rd2pdf sometimes needed a further pdflatex pass to get
 	hyperlinked pages correct.
+	
+    o	interaction() produced malformed results when levels were
+    	duplicated, causing segfaults in split().
 
 
 
