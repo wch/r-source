@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-15 r51746)
+R version 2.12.0 Under development (unstable) (2010-05-06 r51917)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -619,6 +619,7 @@ An illustration of lexical scoping.
 > 
 > ### ** Examples
 > 
+> ## This may not be installed
 > gridEx <- system.file("doc", "grid.Snw", package = "grid")
 > vignetteDepends(gridEx)
 $Depends
