@@ -828,8 +828,8 @@ Alternatively, the installed @R{} can be run, preferably with
 @example
 library("tools")
 testInstalledBasic("both")
-testInstalledPackages("base")
-testInstalledPackages("recommended")
+testInstalledPackages(scope = "base")
+testInstalledPackages(scope = "recommended")
 @end example
 
 @noindent
@@ -838,6 +838,12 @@ recommended packages.  These tests can be run from anywhere: they write
 their results in the @file{tests} folder of the @R{} home directory.
 They run slightly fewer tests than the first approach: in particular
 they do not test Internet access.
+
+These tests work best if @command{diff} (in @file{Rtools.exe} for
+Windows users) is in the path, and on some systems need the collation
+locale set manually (the @R{} code tries to do so but it may not be
+possible to reset it): so if needed try setting the environment variable
+@env{LC_COLLATE} to @samp{C} before starting @R{}.
 
 It is possible to test the installed packages (but not the
 package-specific tests) by @code{testInstalledPackages} even if

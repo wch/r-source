@@ -45,6 +45,7 @@ vignetteDepends(vignette, recursive = TRUE, reduce = TRUE,
 \author{ Jeff Gentry }
 \seealso{\code{\link{pkgDepends}}}
 \examples{
+## This may not be installed
 gridEx <- system.file("doc", "grid.Snw", package = "grid")
 vignetteDepends(gridEx)
 }
