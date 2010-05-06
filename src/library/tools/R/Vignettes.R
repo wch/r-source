@@ -375,6 +375,7 @@ function(vignette, recursive = TRUE, reduce = TRUE,
 {
     if (length(vignette) != 1L)
         stop("argument 'vignette' must be of length 1")
+    if (!nzchar(vignette)) return(invisible()) # lets examples work.
     if (!file.exists(vignette))
         stop(gettextf("file '%s' not found", vignette),
              domain = NA)
