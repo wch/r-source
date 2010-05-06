@@ -187,6 +187,8 @@ testInstalledPackages <-
         pkgs <- c(pkgs, known_packages$recommended)
     ## It *should* be an error if any of these are missing
     for (pkg in pkgs) {
+        if(is.null(srcdir) && pkg %in% known_packages$base)
+            srcdir <- R.home("tests/Examples")
         res <- testInstalledPackage(pkg, .Library, outDir, types, srcdir)
         if (res) {
             status <- 1L
@@ -230,6 +232,11 @@ testInstalledPackage <-
 
             savefile <- paste(outfile, "save", sep = "." )
             if (!is.null(srcdir)) savefile <- file.path(srcdir, savefile)
+            else {
+                tfile <- file.path(pkgdir, "tests", "Examples" , savefile)
+                if(!file.exists(savefile) && file.exists(tfile))
+                    savefile <- tfile
+            }
             if (!file.exists(savefile))
                 savefile <- paste(outfile, "prev", sep = "." )
             if (file.exists(savefile)) {

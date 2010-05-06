@@ -843,16 +843,16 @@ Alternatively, the installed @R{} can be run, preferably with
 @example
 library("tools")
 testInstalledBasic("both")
-testInstalledPackages(scope = "base", srcdir = R.home("tests/Examples"))
+testInstalledPackages(scope = "base")
 testInstalledPackages(scope = "recommended")
 @end example
 
 @noindent
 runs the basic tests and then all the tests on the standard and
-recommended packages.  These tests can be run from anywhere: they write
-their results in the @file{tests} folder of the @R{} home directory.
-They run slightly fewer tests than the first approach: in particular
-they do not test Internet access.
+recommended packages.  These tests can be run from anywhere: the basic
+tests write their results in the @file{tests} folder of the @R{} home
+directory and run slightly fewer tests than the first approach: in
+particular they do not test Internet access.
 
 These tests work best if @command{diff} (in @file{Rtools.exe} for
 Windows users) is in the path, and on some systems need the collation
