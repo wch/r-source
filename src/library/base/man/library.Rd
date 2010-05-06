@@ -92,7 +92,7 @@ require(package, lib.loc = NULL, quietly = FALSE,
   loaded.  (Furthermore, if the package has a name space and a name
   space of that name is already loaded, they work from the existing
   name space rather than reloading from the file system.  If you want to
-  reload a package, call \code{\link{detach}} or
+  reload such a package, call \code{\link{detach}(unload = TRUE)} or
   \code{\link{unloadNamespace}} first.)
 
   To suppress messages during the loading of packages use
