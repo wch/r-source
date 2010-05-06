@@ -81,3 +81,4 @@ install-tests:
 	@for f in $(INSTFILES); do \
 	  cp $(srcdir)/$${f} "$(INST_TO)"; \
 	done
+	@$(MAKE) -C Examples -f Makefile.win install-tests INST_TO="$(INST_TO)"

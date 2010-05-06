@@ -58,8 +58,7 @@ testInstalledBasic(scope = c("basic", "devel", "both"))
 #endif
 #ifdef windows
   The package-specific tests for the base and recommended packages are
-  an optional part of the install: for testing package \pkg{tools} you
-  will also need the help page sources installed (also optional).
+  an optional part of the install.
   Currently testing requires a Unix-like \code{diff} for a full report
   if more than simple differences are found.
 #endif

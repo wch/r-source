@@ -843,7 +843,7 @@ Alternatively, the installed @R{} can be run, preferably with
 @example
 library("tools")
 testInstalledBasic("both")
-testInstalledPackages(scope = "base")
+testInstalledPackages(scope = "base", srcdir = R.home("tests/Examples"))
 testInstalledPackages(scope = "recommended")
 @end example
 

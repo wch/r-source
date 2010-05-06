@@ -101,6 +101,7 @@ install-tests:
 	done
 	@$(INSTALL_DATA) $(srcdir)/Makefile.install \
 	  "$(DESTDIR)/$(rhome)/tests/Makefile"
+	@(cd Examples; $(MAKE) install-tests)
 
 uninstall-tests:
 	@$(ECHO) "uninstalling specific tests and removing results"

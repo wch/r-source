@@ -11,10 +11,11 @@ subdir = tests/Examples
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in  Makefile.win \
+INSTFILES = \
   datasets-Ex.Rout.save grDevices-Ex.Rout.save graphics-Ex.Rout.save \
   grid-Ex.Rout.save methods-Ex.Rout.save splines-Ex.Rout.save \
   stats-Ex.Rout.save stats4-Ex.Rout.save tools-Ex.Rout.save
+DISTFILES = Makefile.in  Makefile.win $(INSTFILES)
 
 R_EXE = $(top_builddir)/bin/R --slave --vanilla
 
@@ -45,6 +46,13 @@ clean:
 distclean: clean
 	-@rm -f *.R*prev .RData sink-examp.txt Makefile
 maintainer-clean: distclean
+
+install-tests:
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rhome)/tests/Examples"
+	@for f in $(INSTFILES); do \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(DESTDIR)$(rhome)/tests/Examples"; \
+	done
+
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \

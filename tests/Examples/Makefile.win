@@ -6,6 +6,11 @@ RHOME=../..
 
 include $(RHOME)/src/gnuwin32/MkRules
 
+INSTFILES = \
+  datasets-Ex.Rout.save grDevices-Ex.Rout.save graphics-Ex.Rout.save \
+  grid-Ex.Rout.save methods-Ex.Rout.save splines-Ex.Rout.save \
+  stats-Ex.Rout.save stats4-Ex.Rout.save tools-Ex.Rout.save
+
 ECHO = echo
 
 R_EXE = $(RHOME)/$(BINDIR)/Rterm --slave --vanilla
@@ -27,3 +32,7 @@ clean:
 	-@rm -f *.R *.Rout *.Rd* *.ps *.tex *.dat* data foo* ex*.gz
 distclean: clean
 	-@rm -f *.R*bak *.R*bakk *.R*prev .RData sink-examp.txt
+
+install-tests:
+	@mkdir -p "../$(INST_TO)/Examples"
+	@cp $(INSTFILES) "../$(INST_TO)/Examples"
