@@ -5170,32 +5170,35 @@ if(.Platform$OS.type == "unix") {
     ## More building & installing packages
     ## NB: tests were added here for 2.11.0.
     ## NB^2: do not do this in the R sources!
+    ## and this testdir is not installed.
     pkgSrcPath <- file.path(Sys.getenv("SRCDIR"), "Pkgs")
-    ## could use file.copy(recursive = TRUE), but this is Unix-only
-    system(paste('cp -r',
-                 shQuote(file.path(Sys.getenv("SRCDIR"), "Pkgs")),
-                 shQuote(tempdir())
-                 ))
-    pkgPath <- file.path(tempdir(), "Pkgs")
-    op <- options(warn=2) # There should be *NO* warnings here!
-    ## pkgB tests an empty R directory
-    dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
-               showWarnings = FALSE)
-    p.lis <- c("pkgA", "pkgB", "exS4noNS", "exNSS4")
-    for(p. in p.lis) {
-	cat("building package", p., "...\n")
-	r <- build.pkg(file.path(pkgPath, p.))
-	cat("installing package", p., "using file", r, "...\n")
-	## we could install the tar file ... (see build.pkg()'s definition)
-	install.packages(r, lib = "myLib", repos=NULL, type = "source")
-	stopifnot(require(p.,lib = "myLib", character.only=TRUE))
-	detach(pos = match(p., sub("^package:","", search())))
+    if(file_test("-d", pkgSrcPath)) {
+        ## could use file.copy(recursive = TRUE), but this is Unix-only
+        system(paste('cp -r',
+                     shQuote(file.path(Sys.getenv("SRCDIR"), "Pkgs")),
+                     shQuote(tempdir())
+                     ))
+        pkgPath <- file.path(tempdir(), "Pkgs")
+        op <- options(warn=2)    # There should be *NO* warnings here!
+        ## pkgB tests an empty R directory
+        dir.create(file.path(pkgPath, "pkgB", "R"), recursive = TRUE,
+                   showWarnings = FALSE)
+        p.lis <- c("pkgA", "pkgB", "exS4noNS", "exNSS4")
+        for(p. in p.lis) {
+            cat("building package", p., "...\n")
+            r <- build.pkg(file.path(pkgPath, p.))
+            cat("installing package", p., "using file", r, "...\n")
+            ## we could install the tar file ... (see build.pkg()'s definition)
+            install.packages(r, lib = "myLib", repos=NULL, type = "source")
+            stopifnot(require(p.,lib = "myLib", character.only=TRUE))
+            detach(pos = match(p., sub("^package:","", search())))
+        }
+        ## TODO: not just print, but check the "list":
+        print(installed.packages(lib.loc = "myLib", priority = "NA"))
+        options(op)
+        unlink("myLib", recursive = TRUE)
+        unlink(file.path(pkgPath), recursive = TRUE)
     }
-    ## TODO: not just print, but check the "list":
-    print(installed.packages(lib.loc = "myLib", priority = "NA"))
-    options(op)
-    unlink("myLib", recursive = TRUE)
-    unlink(file.path(pkgPath), recursive = TRUE)
 }
 unlink("myTst", recursive=TRUE)
 
