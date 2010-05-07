@@ -9,6 +9,14 @@
 		CHANGES IN R VERSION 2.11.0 patched
 
 
+DEPRECATED & DEFUNCT
+
+    o	Use of .C for C++ code in packages is now deprecated: it has
+	caused problems for some 'make's on case-insensitive file
+	systems (although it currently works with the recommended
+	toolkits).
+
+
 BUG FIXES
 
     o	The C function mkCharLenCE now no longer reads past 'len' bytes

@@ -652,11 +652,12 @@ want to ship Ratfor source files, please do so in a subdirectory of
 @file{src} and not in the main subdirectory.}, Objective C and Objective
 C++@footnote{either or both of which may not be supported on particular
 platforms} with associated extensions @file{.c}, @file{.cc} or
-@file{.cpp} or @file{.C}, @file{.f}, @file{.f90} or @file{.f95},
-@file{.m}, and @file{.mm} or @file{.M}, respectively.  We recommend
-using @file{.h} for headers, also for C++@footnote{Using @file{.hpp},
-although somewhat popular, is not guaranteed to be portable.} or Fortran
-9x include files.
+@file{.cpp}, @file{.f}, @file{.f90} or @file{.f95}, @file{.m}, and
+@file{.mm} or @file{.M}, respectively.  We recommend using @file{.h} for
+headers, also for C++@footnote{Using @file{.hpp}, although somewhat
+popular, is not guaranteed to be portable.} or Fortran 9x include files.
+(Use of @file{.C} for C++ is now deprecated and will be removed in @R{}
+2.12.0.)
 
 It is not portable (and may not be possible at all) to mix all these
 languages in a single package, and we do not support using both C++ and
