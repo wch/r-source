@@ -598,8 +598,6 @@ cat << \EOF > ${r_cxx_rules_frag}
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $[@]
 .cpp.o:
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $[@]
-.C.o:
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $[@]
 EOF
 if test "${r_cv_prog_cxx_m}" = yes; then
   cat << \EOF >> ${r_cxx_rules_frag}
@@ -609,17 +607,12 @@ if test "${r_cv_prog_cxx_m}" = yes; then
 .cpp.d:
 	@echo "making $[@] from $<"
 	@$(CXX) -M $(ALL_CPPFLAGS) $< > $[@]
-.C.d:
-	@echo "making $[@] from $<"
-	@$(CXX) -M $(ALL_CPPFLAGS) $< > $[@]
 EOF
 else
   cat << \EOF >> ${r_cxx_rules_frag}
 .cc.d:
 	@echo > $[@]
 .cpp.d:
-	@echo > $[@]
-.C.d:
 	@echo > $[@]
 EOF
 fi

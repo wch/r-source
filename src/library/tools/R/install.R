@@ -572,7 +572,7 @@
                     if (res == 0) shlib_install(instdir, rarch)
                     else has_error <- TRUE
                 } else { ## no src/Makefile.win
-                    srcs <- dir(pattern = "\\.([cfmCM]|cc|cpp|f90|f95|mm)$")
+                    srcs <- dir(pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$")
                     ## NB, not R.home("bin")
                     f  <- dir(file.path(R.home(), "bin"))
                     archs <- f[f %in% c("i386", "x64")]
@@ -580,10 +580,11 @@
                     if(!one_only && file.exists("../configure.win")) {
                         ## for now, hardcode some exceptions
                         if(!pkg_name %in% c("AnalyzeFMRI", "CORElearn",
-                                            "PearsonDS", "RODBC", "RSiena",
-                                            "Rcpp", "Runuran", "fastICA",
-                                            "glmnet", "gstat", "mvabund",
-                                            "randtoolbox", "rngWELL", "tcltk2"))
+                                            "PearsonDS", "RBGL", "RODBC",
+                                            "RSiena", "Rcpp", "Runuran",
+                                            "fastICA", "glmnet", "gstat",
+                                            "mvabund", "randtoolbox",
+                                            "rngWELL", "tcltk2"))
                             one_only <- sum(nchar(readLines("../configure.win"), "bytes")) > 0
                     }
                     if(one_only)
@@ -632,7 +633,7 @@
                     setwd(owd)
                 } else { ## no src/Makefile
                     owd <- setwd("src")
-                    srcs <- dir(pattern = "\\.([cfmCM]|cc|cpp|f90|f95|mm)$")
+                    srcs <- dir(pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$")
                     ## This allows Makevars to set OBJECTS or its own targets.
                     allfiles <- if (file.exists("Makevars")) c("Makevars", srcs) else srcs
                     wd2 <- setwd(file.path(R.home("bin"), "exec"))
@@ -1350,7 +1351,7 @@
             ext <- sub(p0(base, "."),  "", a, fixed = TRUE)
             nobj <- ""
             if (nzchar(ext)) {
-                if (ext %in% c("cc", "cpp", "C")) {
+                if (ext %in% c("cc", "cpp")) {
                     with_cxx <- TRUE
                     nobj <- base
                 } else if (ext == "m") {

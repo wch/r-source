@@ -93,6 +93,8 @@ DEPRECATED & DEFUNCT
     o	Supplying the parser with a string containing both octal/hex and
 	Unicode escapes is now an error.
 
+    o	Extension .C for C++ code files in packages is now defunct.
+
 
 PACKAGE INSTALLATION
 

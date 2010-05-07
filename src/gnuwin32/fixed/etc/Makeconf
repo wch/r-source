@@ -148,7 +148,7 @@ ALL_FFLAGS = $(R_XTRA_FFLAGS) $(PKG_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAG
 ALL_LIBS = $(LOCAL_LIBS) $(PKG_LIBS) $(SHLIB_LIBADD) $(LIBR) $(LIBINTL)
 
 .SUFFIXES:
-.SUFFIXES: .c .cc .cpp .C .f .f90 .f95 .m .mm .M .o .a .def .dll .exe .rc
+.SUFFIXES: .c .cc .cpp .f .f90 .f95 .m .mm .M .o .a .def .dll .exe .rc
 
 .c.o:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
@@ -159,15 +159,10 @@ ALL_LIBS = $(LOCAL_LIBS) $(PKG_LIBS) $(SHLIB_LIBADD) $(LIBR) $(LIBINTL)
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $@
 .cpp.o:
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $@
-.C.o:
-	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $@
 .cc.d:
 	@echo "making $@ from $<"
 	@$(CXX) -M $(ALL_CPPFLAGS) $< > $@
 .cpp.d:
-	@echo "making $@ from $<"
-	@$(CXX) -M $(ALL_CPPFLAGS) $< > $@
-.C.d:
 	@echo "making $@ from $<"
 	@$(CXX) -M $(ALL_CPPFLAGS) $< > $@
 .m.o:

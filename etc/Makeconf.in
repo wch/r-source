@@ -100,7 +100,7 @@ ALL_FFLAGS = $(R_XTRA_FFLAGS) $(PKG_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAG
 ALL_LIBS = $(PKG_LIBS) $(SHLIB_LIBADD) $(LIBR)@DYLIB_UNDEFINED_ALLOWED_FALSE@ $(LIBINTL)
 
 .SUFFIXES:
-.SUFFIXES: .c .cc .cpp .C .d .f .f90 .f95 .m .mm .M .o
+.SUFFIXES: .c .cc .cpp .d .f .f90 .f95 .m .mm .M .o
 
 @r_cc_rules_frag@
 @r_cxx_rules_frag@
