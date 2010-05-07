@@ -45,7 +45,7 @@ str.POSIXt <- function(object, ...) {
     cl <- oldClass(object)
     ## be careful to be fast for large object:
     n <- length(object)
-    if(n >= 1000L) object <- object[seq_len(1000L)]
+    if(n > 1000L) object <- object[seq_len(1000L)]
 
     give.length <- TRUE ## default
     ## use 'give.length' when specified, else default = give.head
@@ -67,7 +67,7 @@ str.POSIXt <- function(object, ...) {
     }
 
     le.str <- if(give.length) paste("[1:",as.character(n),"]", sep="")
-    cat(" ", cl[min(2, length(cl))], le.str,", format: ", sep = "")
+    cat(" ", cl[1L], le.str,", format: ", sep = "")
     do.call(str, c(list(format(object), give.head = FALSE), larg))
 }
 
