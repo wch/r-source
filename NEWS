@@ -221,9 +221,12 @@ BUG FIXES
 
     o	Rd2pdf sometimes needed a further pdflatex pass to get
 	hyperlinked pages correct.
-	
+
     o	interaction() produced malformed results when levels were
     	duplicated, causing segfaults in split().
+
+    o	cut(d, breaks = <n>)  now also works for "Date" or "POSIXt"
+        argument d.  (PR#14288)
 
 
 

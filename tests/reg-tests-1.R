@@ -6158,3 +6158,12 @@ px <- pretty(x, n = 5)
 stopifnot(px[1] == "2008-04-22", length(px) == 6)
 ## did depend on the local timezone  at first
 
+
+## cut( d, breaks = n) - for d a  'Date' or 'POSIXt'
+x <- seq(as.POSIXct("2000-01-01"), by = "days", length = 20)
+stopifnot(nlevels(c1 <- cut(x,	  breaks = 3)) == 3,
+	  nlevels(c2 <- cut(as.POSIXlt(x), breaks = 3)) == 3,
+	  nlevels(c3 <- cut(as.Date   (x), breaks = 3)) == 3,
+	  identical(c1, c2))
+## failed in R <= 2.11.0
+
