@@ -292,6 +292,7 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     }
 }
 
+## *very* similar to cut.POSIXt [ ./datetime.R ] -- keep in sync!
 cut.Date <-
     function (x, breaks, labels = NULL, start.on.monday = TRUE,
               right = FALSE, ...)
@@ -304,61 +305,66 @@ cut.Date <-
     } else if(is.numeric(breaks) && length(breaks) == 1L) {
 	## specified number of breaks
     } else if(is.character(breaks) && length(breaks) == 1L) {
-        by2 <- strsplit(breaks, " ", fixed=TRUE)[[1L]]
-        if(length(by2) > 2L || length(by2) < 1L)
-            stop("invalid specification of 'breaks'")
+	by2 <- strsplit(breaks, " ", fixed=TRUE)[[1L]]
+	if(length(by2) > 2L || length(by2) < 1L)
+	    stop("invalid specification of 'breaks'")
 	valid <-
-	    pmatch(by2[length(by2)], c("days", "weeks", "months", "years", "quarters"))
+	    pmatch(by2[length(by2)],
+		   c("days", "weeks", "months", "years", "quarters"))
 	if(is.na(valid)) stop("invalid specification of 'breaks'")
 	start <- as.POSIXlt(min(x, na.rm=TRUE))
 	if(valid == 1L) incr <- 1L
-	if(valid == 2L) { # weeks
+	if(valid == 2L) {		# weeks
 	    start$mday <- start$mday - start$wday
 	    if(start.on.monday)
 		start$mday <- start$mday + ifelse(start$wday > 0L, 1L, -6L)
 	    incr <- 7L
 	}
-    if(valid == 3L) { # months
-        start$mday <- 1L
-        end <- as.POSIXlt(max(x, na.rm = TRUE))
-        step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
-        end <- as.POSIXlt(end + (31 * step * 86400))
-        end$mday <- 1L
-        breaks <- as.Date(seq(start, end, breaks))
-    } else if(valid == 4L) { # years
-        start$mon <- 0L
-        start$mday <- 1L
-        end <- as.POSIXlt(max(x, na.rm = TRUE))
-        step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
-        end <- as.POSIXlt(end + (366 * step * 86400))
-        end$mon <- 0L
-        end$mday <- 1L
-        breaks <- as.Date(seq(start, end, breaks))
-    } else if(valid == 5L) { # quarters
-        qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
-        start$mon <- qtr[start$mon + 1L]
-        start$mday <- 1L
-        maxx <- max(x, na.rm = TRUE)
-        end <- as.POSIXlt(maxx)
-        step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
-        end <- as.POSIXlt(end + (93 * step * 86400))
-        end$mon <- qtr[end$mon + 1L]
-        end$mday <- 1L
-        breaks <- as.Date(seq(start, end, paste(step * 3L, "months")))
-        ## 93 days ahead could give an empty level, so
-        lb <- length(breaks)
-        if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
-    } else {
-        start <- as.Date(start)
-        if (length(by2) == 2L) incr <- incr * as.integer(by2[1L])
-        maxx <- max(x, na.rm = TRUE)
-        breaks <- seq.int(start, maxx + incr, breaks)
-        breaks <- breaks[seq_len(1L+max(which(breaks <= maxx)))]
-      }
+	if(valid == 3L) {		# months
+	    start$mday <- 1L
+	    end <- as.POSIXlt(max(x, na.rm = TRUE))
+	    step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
+	    end <- as.POSIXlt(end + (31 * step * 86400))
+	    end$mday <- 1L
+	    breaks <- as.Date(seq(start, end, breaks))
+	} else if(valid == 4L) {	# years
+	    start$mon <- 0L
+	    start$mday <- 1L
+	    end <- as.POSIXlt(max(x, na.rm = TRUE))
+	    step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
+	    end <- as.POSIXlt(end + (366 * step * 86400))
+	    end$mon <- 0L
+	    end$mday <- 1L
+	    breaks <- as.Date(seq(start, end, breaks))
+	} else if(valid == 5L) {	# quarters
+	    qtr <- rep(c(0L, 3L, 6L, 9L), each = 3L)
+	    start$mon <- qtr[start$mon + 1L]
+	    start$mday <- 1L
+	    maxx <- max(x, na.rm = TRUE)
+	    end <- as.POSIXlt(maxx)
+	    step <- ifelse(length(by2) == 2L, as.integer(by2[1L]), 1L)
+	    end <- as.POSIXlt(end + (93 * step * 86400))
+	    end$mon <- qtr[end$mon + 1L]
+	    end$mday <- 1L
+	    breaks <- as.Date(seq(start, end, paste(step * 3L, "months")))
+	    ## 93 days ahead could give an empty level, so
+	    lb <- length(breaks)
+	    if(maxx < breaks[lb-1]) breaks <- breaks[-lb]
+	} else {
+	    start <- as.Date(start)
+	    if (length(by2) == 2L) incr <- incr * as.integer(by2[1L])
+	    maxx <- max(x, na.rm = TRUE)
+	    breaks <- seq.int(start, maxx + incr, breaks)
+	    breaks <- breaks[seq_len(1L+max(which(breaks <= maxx)))]
+	}
     } else stop("invalid specification of 'breaks'")
     res <- cut(unclass(x), unclass(breaks), labels = labels,
-               right = right, ...)
-    if(is.null(labels)) levels(res) <- as.character(breaks[-length(breaks)])
+	       right = right, ...)
+    if(is.null(labels)) {
+	levels(res) <-
+	    as.character(if (is.numeric(breaks)) x[!duplicated(res)]
+			 else breaks[-length(breaks)])
+    }
     res
 }
 

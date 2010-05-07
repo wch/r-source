@@ -705,6 +705,7 @@ seq.POSIXt <-
     }
 }
 
+## *very* similar to cut.Date [ ./dates.R ] -- keep in sync!
 cut.POSIXt <-
     function (x, breaks, labels = NULL, start.on.monday = TRUE,
               right = FALSE, ...)
@@ -775,8 +776,13 @@ cut.POSIXt <-
             breaks <- breaks[seq_len(1+max(which(breaks <= maxx)))]
         }
     } else stop("invalid specification of 'breaks'")
-    res <- cut(unclass(x), unclass(breaks), labels = labels, right = right, ...)
-    if(is.null(labels)) levels(res) <- as.character(breaks[-length(breaks)])
+    res <- cut(unclass(x), unclass(breaks), labels = labels,
+               right = right, ...)
+    if(is.null(labels)) {
+	levels(res) <-
+	    as.character(if (is.numeric(breaks)) x[!duplicated(res)]
+			 else breaks[-length(breaks)])
+    }
     res
 }
 
