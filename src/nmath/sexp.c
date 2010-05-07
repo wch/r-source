@@ -39,7 +39,7 @@
 double exp_rand(void)
 {
     /* q[k-1] = sum(log(2)^k / k!)  k=1,..,n, */
-    /* The highest n (here 8) is determined by q[n-1] = 1.0 */
+    /* The highest n (here 16) is determined by q[n-1] = 1.0 */
     /* within standard precision */
     const static double q[] =
     {
@@ -60,16 +60,13 @@ double exp_rand(void)
 	0.9999999999999999,
 	1.0000000000000000
     };
-    double a, u, ustar, umin;
-    int i;
 
-    a = 0.;
-    /* precaution if u = 0 is ever returned */
-    u = unif_rand();
-    while(u <= 0.0 || u >= 1.0) u = unif_rand();
+    double a = 0.;
+    double u = unif_rand();    /* precaution if u = 0 is ever returned */
+    while(u <= 0. || u >= 1.) u = unif_rand();
     for (;;) {
 	u += u;
-	if (u > 1.0)
+	if (u > 1.)
 	    break;
 	a += q[0];
     }
@@ -78,12 +75,11 @@ double exp_rand(void)
     if (u <= q[0])
 	return a + u;
 
-    i = 0;
-    ustar = unif_rand();
-    umin = ustar;
+    int i = 0;
+    double ustar = unif_rand(), umin = ustar;
     do {
 	ustar = unif_rand();
-	if (ustar < umin)
+	if (umin > ustar)
 	    umin = ustar;
 	i++;
     } while (u > q[i]);
