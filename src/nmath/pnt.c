@@ -44,7 +44,7 @@
 
 /*----------- DEBUGGING -------------
  *
- *	make CFLAGS='-DDEBUG_pnt -g -I/usr/local/include -I../include'
+ *	make CFLAGS='-DDEBUG_pnt -g'
 
  * -- Feb.3, 1999; M.Maechler:
 	- For 't > ncp > 20' (or so)	the result is completely WRONG!
@@ -52,8 +52,8 @@
 
 double pnt(double t, double df, double ncp, int lower_tail, int log_p)
 {
-    double albeta, b, del, errbd, lambda, rxb, tt, x;
-    LDOUBLE a, geven, godd, p, q, s, tnc, xeven, xodd;
+    double albeta, a, b, del, errbd, lambda, rxb, tt, x;
+    LDOUBLE geven, godd, p, q, s, tnc, xeven, xodd;
     int it, negdel;
 
     /* note - itrmax and errmax may be changed to suit one's needs. */
@@ -90,6 +90,7 @@ double pnt(double t, double df, double ncp, int lower_tail, int log_p)
     /* Guenther, J. (1978). Statist. Computn. Simuln. vol.6, 199. */
 
     x = t * t;
+    rxb = df/(x + df);/* := (1 - x) {x below} -- but more accurately */
     x = x / (x + df);/* in [0,1) */
 #ifdef DEBUG_pnt
     REprintf("pnt(t=%7g, df=%7g, ncp=%7g) ==> x= %10g:",t,df,ncp, x);
@@ -98,7 +99,7 @@ double pnt(double t, double df, double ncp, int lower_tail, int log_p)
 	lambda = del * del;
 	p = .5 * exp(-.5 * lambda);
 #ifdef DEBUG_pnt
-	REprintf("\t p=%10g\n",p);
+	REprintf("\t p=%10Lg\n",p);
 #endif
 	if(p == 0.) { /* underflow! */
 
@@ -108,16 +109,21 @@ double pnt(double t, double df, double ncp, int lower_tail, int log_p)
 	    return R_DT_0;
 	}
 #ifdef DEBUG_pnt
-	REprintf("it  1e5*(godd,  geven)       p	 q	    s	 "
-	       /* 1.3 1..4..7.9 1..4..7.9  1..4..7.9 1..4..7.9 1..4..7.9_ */
-		 "	  pnt(*)      errbd\n");
-	       /* 1..4..7..0..3..6 1..4..7.9*/
+        REprintf("it  1e5*(godd,   geven)|          p           q           s"
+               /* 1.3 1..4..7.9 1..4..7.9|1..4..7.901 1..4..7.901 1..4..7.901 */
+                 "        pnt(*)     errbd\n");
+               /* 1..4..7..0..34 1..4..7.9*/
 #endif
 	q = M_SQRT_2dPI * p * del;
 	s = .5 - p;
+        /* s = 0.5 - p = 0.5*(1 - exp(-.5 L)) =  -0.5*expm1(-.5 L)) */
+        if(s < 1e-7)
+            s = -0.5 * expm1(-0.5 * lambda);
 	a = .5;
 	b = .5 * df;
-	rxb = pow(1. - x, b); /* ~ 1 - b*x for tiny x */
+	/* rxb = (1 - x) ^ b   [ ~= 1 - b*x for tiny x --> see 'xeven' below]
+	 *       where '(1 - x)' =: rxb {accurately!} above */
+        rxb = pow(rxb, b);
 	albeta = M_LN_SQRT_PI + lgammafn(b) - lgammafn(.5 + b);
 	xodd = pbeta(x, a, b, /*lower*/TRUE, /*log_p*/FALSE);
 	godd = 2. * rxb * exp(a * log(x) - albeta);
@@ -141,17 +147,17 @@ double pnt(double t, double df, double ncp, int lower_tail, int log_p)
 	    if(s < -1.e-10) { /* happens e.g. for (t,df,ncp)=(40,10,38.5), after 799 it.*/
 		ML_ERROR(ME_PRECISION, "pnt");
 #ifdef DEBUG_pnt
-		REprintf("s = %#14.7g < 0 !!! ---> non-convergence!!\n", s);
+		REprintf("s = %#14.7Lg < 0 !!! ---> non-convergence!!\n", s);
 #endif
 		goto finis;
 	    }
-	    if(s <= 0) goto finis;
+	    if(s <= 0 && it > 1) goto finis;
 	    errbd = 2. * s * (xodd - godd);
 #ifdef DEBUG_pnt
-	    REprintf("%3d %#9.4g %#9.4g	 %#9.4g %#9.4g %#9.4g %#14.10g %#9.4g\n",
-		     it, 1e5*godd, 1e5*geven, p,q, s, tnc, errbd);
+	    REprintf("%3d %#9.4g %#9.4g|%#11.4Lg %#11.4Lg %#11.4Lg %#14.10Lg %#9.4g\n",
+		     it, 1e5*(double)godd, 1e5*(double)geven, p, q, s, tnc, errbd);
 #endif
-	    if(errbd < errmax) goto finis;/*convergence*/
+	    if(fabs(errbd) < errmax) goto finis;/*convergence*/
 	}
 	/* non-convergence:*/
 	ML_ERROR(ME_NOCONV, "pnt");
@@ -163,12 +169,8 @@ double pnt(double t, double df, double ncp, int lower_tail, int log_p)
     tnc += pnorm(- del, 0., 1., /*lower*/TRUE, /*log_p*/FALSE);
 
     lower_tail = lower_tail != negdel; /* xor */
-    /* return R_DT_val(tnc);
-       We want to warn about cancellation here */
-    if(lower_tail) return log_p	? log(tnc) : tnc;
-    else {
-	if(tnc > 1 - 1e-10) ML_ERROR(ME_PRECISION, "pnt");
-	tnc = fmin2(tnc, 1.0);  /* Precaution */
-	return log_p ? log1p(-tnc) : (0.5 - tnc + 0.5);
-    }
+    if(tnc > 1 - 1e-10 && lower_tail)
+	ML_ERROR(ME_PRECISION, "pnt{final}");
+
+    return R_DT_val(fmin2(tnc, 1.) /* Precaution */);
 }
