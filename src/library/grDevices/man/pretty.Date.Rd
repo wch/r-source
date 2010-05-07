@@ -8,8 +8,8 @@
 \alias{pretty.Date}
 \alias{pretty.POSIXt}
 \usage{
-\method{pretty}{Date}(x, n = 5, min.n = round(n / 2), \dots)
-\method{pretty}{POSIXt}(x, n = 5, min.n = round(n / 2), \dots)
+\method{pretty}{Date}(x, n = 5, min.n = n \%/\% 2, \dots)
+\method{pretty}{POSIXt}(x, n = 5, min.n = n \%/\% 2, \dots)
 }
 \arguments{
   \item{x}{an object of class \code{"Date"} or \code{"POSIXt"} (i.e.,
