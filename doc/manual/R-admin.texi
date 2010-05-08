@@ -1865,8 +1865,8 @@ Windows.
 @item 
 @code{"win64.binary"}: located at @file{bin/windows64/contrib/@var{x.y}}
 for @R{} versions @var{x.y.z} and containing @file{.zip} files for
-64-bit Windows.  (This may be merged with @code{"win.binary"} before the
-release of R 2.12.0.)
+64-bit Windows.  (This was used for @R{} 2.11.x, but is no longer the
+default for 64-bit Windows.)
 
 @item 
 @code{"mac.binary"}: located at

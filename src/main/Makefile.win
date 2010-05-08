@@ -50,11 +50,7 @@ gramRd.c: gramRd.y
 	$(RM) gramRd.tab.c	
 endif
 
-ifeq ($(strip $(WIN)),64)
-platform-CPPFLAGS=-I../gnuwin32 -I../extra -DPLATFORM_PKGTYPE='"win64.binary"'
-else
 platform-CPPFLAGS=-I../gnuwin32 -I../extra -DPLATFORM_PKGTYPE='"win.binary"'
-endif
 
 agrep-CPPFLAGS=-I../extra
 builtin-CPPFLAGS=-I../gnuwin32
