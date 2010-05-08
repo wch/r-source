@@ -71,6 +71,8 @@ BUG FIXES
 	input due to incorrect documentation of xz utils.  (Report
 	and patch from Olaf Mersmann.)
 
+    o	the initialize() methods for "matrix", "array", and "ts" have been
+        fixed to call validObject() (PR#14284)
 
 
 		CHANGES IN R VERSION 2.11.0

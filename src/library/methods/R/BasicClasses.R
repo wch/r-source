@@ -165,10 +165,12 @@
             nzchar(argnames) & is.na(match(argnames, .tsArgNames)) }
 	if(any(slotnames)) {
 	    value <- do.call(stats::ts, args[!slotnames])
-	    .mergeAttrs(value, .Object, args[slotnames])
+	    .Object <- .mergeAttrs(value, .Object, args[slotnames])
 	}
 	else
-	    .mergeAttrs(stats::ts(...), .Object)
+	    .Object <- .mergeAttrs(stats::ts(...), .Object)
+        validObject(.Object)
+        .Object
     }
     setMethod("initialize", "ts", .init_ts, where = envir)
     setMethod("initialize", "mts", .init_ts, where = envir) #else, it's ambiguous
@@ -374,56 +376,60 @@
 	      function(.Object, data = NA, nrow = 1, ncol = 1,
 		       byrow = FALSE, dimnames = NULL, ...) {
 		  if((na <- nargs()) < 2) # guaranteed to be called with .Object from new
-		      .Object
-		  else if(length(dots <- list(...)) && ".Data" %in% names(dots)) {
+		      return(.Object)
+		  if(length(dots <- list(...)) && ".Data" %in% names(dots)) {
 		      if(na == 2)
-			  .mergeAttrs(dots$.Data, .Object)
+			  .Object <-  .mergeAttrs(dots$.Data, .Object)
 		      else {
 			  dat <- dots$.Data
 			  dots <- dots[names(dots) != ".Data"]
 			  if(na == 2 + length(dots)) {
-			      .mergeAttrs(as.matrix(dat), .Object, dots)
+			      .Object <-  .mergeAttrs(as.matrix(dat), .Object, dots)
 			  }
 			  else
 			      stop("Cannot specify matrix() arguments when specifying .Data")
 		      }
 		  }
 		  else if(is.matrix(data) && na == 2 + length(dots))
-		      .mergeAttrs(data, .Object, dots)
+		      .Object <-  .mergeAttrs(data, .Object, dots)
 		  else {
 		      if (missing(nrow))
 			  nrow <- ceiling(length(data)/ncol)
 		      else if (missing(ncol))
 			  ncol <- ceiling(length(data)/nrow)
 		      value <- matrix(data, nrow, ncol, byrow, dimnames)
-		      .mergeAttrs(value, .Object, dots)
+		      .Object <-  .mergeAttrs(value, .Object, dots)
 		  }
+                  validObject(.Object)
+                  .Object
 	      })
 
     setMethod("initialize", "array", where = where,
 	      function(.Object, data = NA, dim = length(data),
 		       dimnames = NULL, ...) {
 		  if((na <- nargs()) < 2) # guaranteed to be called with .Object from new
-		      .Object
-		  else if(length(dots <- list(...)) && ".Data" %in% names(dots)) {
+		      return(.Object)
+		  if(length(dots <- list(...)) && ".Data" %in% names(dots)) {
 		      if(na == 2)
-			  .mergeAttrs(dots$.Data, .Object)
+			  .Object <- .mergeAttrs(dots$.Data, .Object)
 		      else {
 			  dat <- dots$.Data
 			  dots <- dots[names(dots) != ".Data"]
 			  if(na == 2 + length(dots)) {
-			      .mergeAttrs(as.array(dat), .Object, dots)
+			      .Object <- .mergeAttrs(as.array(dat), .Object, dots)
 			  }
 			  else
 			      stop("Cannot specify array() arguments when specifying .Data")
 		      }
 		  }
 		  else if(is.array(data) && na == 2 + length(dots))
-		      .mergeAttrs(data, .Object, dots)
+		      .Object <- .mergeAttrs(data, .Object, dots)
 		  else {
 		      value <- array(data, dim, dimnames)
-		      .mergeAttrs(value, .Object, dots)
+		      .Object <- .mergeAttrs(value, .Object, dots)
 		  }
+                  validObject(.Object)
+                  .Object
 	      })
     ## following should not be needed if data_class2 returns "array",...
 ##     setMethod("[", # a method to avoid invalid objects from an S4 class
