@@ -1,6 +1,6 @@
 % File src/library/utils/man/install.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{install.packages}
@@ -95,7 +95,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \code{"win64.binary"}: the binary types can be listed and downloaded
     but not installed on other platforms.
 
-    The default is the appropriate binary type on 32-bit Windows and on
+    The default is the appropriate binary type on Windows and on
     the CRAN binary Mac OS X distribution, otherwise \code{"source"}.
   }
   \item{configure.args}{
