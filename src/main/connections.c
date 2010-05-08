@@ -5485,25 +5485,45 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	unsigned int inlen = LENGTH(from), outlen = 3*inlen;
 	lzma_stream strm = LZMA_STREAM_INIT;
 	lzma_ret ret;
-	/* probably at most 80Mb is required, but 512Mb seems OK as a limit */
-	if (subtype == 1)
-	    ret = lzma_alone_decoder(&strm, 536870912);
-	else
-	    ret = lzma_stream_decoder(&strm, 536870912, LZMA_CONCATENATED);
-	if (ret != LZMA_OK)
-	    error(_("cannot initialize lzma decoder, error %d"), ret);
 	while(1) {
+	    /* Initialize lzma_stream in each iteration. */
+	    /* probably at most 80Mb is required, but 512Mb seems OK as a limit */
+	    if (subtype == 1)
+		ret = lzma_alone_decoder(&strm, 536870912);
+	    else
+		ret = lzma_stream_decoder(&strm, 536870912, LZMA_CONCATENATED);
+	    if (ret != LZMA_OK)
+		error(_("cannot initialize lzma decoder, error %d"), ret);
+	    
 	    buf = (unsigned char *) R_alloc(outlen, sizeof(unsigned char));
 	    strm.avail_in = inlen;
 	    strm.avail_out = outlen;
 	    strm.next_in = (unsigned char *) RAW(from);
 	    strm.next_out = buf;
+	    
 	    ret = lzma_code(&strm, LZMA_FINISH);
-	    if (ret == LZMA_BUF_ERROR) { outlen *= 2; continue; }
-	    if (ret != LZMA_OK && (strm.avail_in > 0))
-		error("internal error %d in memDecompress(%d) at %d",
-		ret, type, strm.avail_in);
-	    break;
+	    /* Did lzma_code() leave some input? */
+	    if (strm.avail_in > 0) {
+		/* Decompression failed, free lzma_stream. */
+		lzma_end(&strm);
+		/* Because it ran out of output buffer? 
+		 *
+		 * This used to only check if LZMA_BUF_ERROR was
+		 * returned, but apparently XZ will also signal an out
+		 * of buffer condition by returning LZMA_OK and
+		 * leaving avail_in > 0 (i.e. not all input was
+		 * consumed).
+		 */
+		if (ret == LZMA_BUF_ERROR || ret == LZMA_OK) {
+		    outlen *= 2;
+		    continue;
+		} else {
+		    error("internal error %d in memDecompress(%d) at %d",
+			  ret, type, strm.avail_in);
+		}
+	    } else {
+		break;
+	    }
 	}
 	outlen = strm.total_out;
 	lzma_end(&strm);

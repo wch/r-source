@@ -6167,3 +6167,11 @@ stopifnot(nlevels(c1 <- cut(x,	  breaks = 3)) == 3,
 	  identical(c1, c2))
 ## failed in R <= 2.11.0
 
+
+## memDecompress (https://stat.ethz.ch/pipermail/r-devel/2010-May/057419.html)
+n <- 200
+char <- paste(replicate(n, "1234567890"), collapse="")
+char.comp <- memCompress(char, type="xz")
+char.dec <- memDecompress(char.comp, type="xz", asChar=TRUE)
+stopifnot(nchar(char.dec) == nchar(char))
+## short in R < 2.11.1
