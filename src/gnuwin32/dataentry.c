@@ -1740,7 +1740,7 @@ static dataeditor newdataeditor(DEstruct DE, const char *title)
     DE->p = newconsoledata((consolefn) ? consolefn : FixedFont,
 			   pagerrow, pagercol, 0, 0,
 			   guiColors,
-			   DATAEDITOR, 0);
+			   DATAEDITOR, 0, 0);
     if (!DE->p) return NULL;
 
     w = DE->p->w ;

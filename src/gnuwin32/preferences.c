@@ -72,17 +72,18 @@ static const char *GuiElementNames[numGuiColors+1] = {"background", "normaltext"
 						"pagerbg", "pagertext", "highlight",
 						"dataeditbg", "dataedittext", "dataedituser",
 						"editorbg", "editortext", NULL};
+static const char *BlinkList[] = {"None", "Partial", "Full"};
 static window wconfig;
 static button bApply, bSave, bLoad, bOK, bCancel;
 static label l_mdi, l_mwin, l_font, l_point, l_style, l_lang, l_crows, l_ccols,
     l_cx, l_cy, l_prows, l_pcols, l_grx, l_gry,
-    l_cols, l_cbb, l_cbl;
+    l_cols, l_cbb, l_cbl, l_blink;
 static radiogroup g_mwin;
 static radiobutton rb_mdi, rb_sdi, rb_mwin, rb_swin;
 static listbox f_font, f_style, d_point, guielement, guicolor;
 static checkbox toolbar, statusbar, tt_font, c_resize, c_buff;
 static field f_crows, f_ccols, f_prows, f_pcols, f_cx, f_cy, f_cbb,f_cbl,
-    f_grx, f_gry, f_lang;
+    f_grx, f_gry, f_lang, f_blink;
 static textbox guisample;
 static font samplefont = NULL;
 static int samplePointsize = 10;
@@ -114,6 +115,7 @@ static void getChoices(Gui p)
     p->pcols = atoi(gettext(f_pcols));
     p->grx = atoi(gettext(f_grx));
     p->gry = atoi(gettext(f_gry));
+    p->cursor_blink = getlistitem(f_blink);
     dialogColors[cmatch(gettext(guielement),GuiElementNames)] = nametorgb(gettext(guicolor));
     for (int i=0; i<numGuiColors; i++)
 	p->guiColors[i] = dialogColors[i];    
@@ -127,6 +129,7 @@ void getDefaults(Gui gui)
     gui->cx = gui->cy = 0;
     gui->grx = Rwin_graphicsx;
     gui->gry = Rwin_graphicsy;
+    gui->cursor_blink = 1; /* partial */
     gui->guiColors[consolebg] = White;
     gui->guiColors[consolefg] = DarkBlue;
     gui->guiColors[consoleuser] = gaRed;
@@ -213,6 +216,9 @@ void getActive(Gui gui)
 	gui->grx = Rwin_graphicsx;
 	gui->gry = Rwin_graphicsy;
 
+        /* Cursor blink */
+        gui->cursor_blink = p->cursor_blink;
+        
 	/* Font colours */
 	for (int i=0; i<numGuiColors; i++)
 	    gui->guiColors[i] = guiColors[i];
@@ -249,7 +255,8 @@ static int has_changed(Gui a, Gui b)
 	a->prows != b->prows ||
 	a->pcols != b->pcols ||
 	a->grx != b->grx ||
-	a->gry != b->gry ;
+	a->gry != b->gry ||
+	a->cursor_blink != b->cursor_blink;
 }
 
 
@@ -267,6 +274,7 @@ static void cleanup(void)
     delobj(c_resize); delobj(c_buff);
     delobj(l_cx); delobj(f_cx); delobj(l_cy); delobj(f_cy);
     delobj(l_cbb); delobj(f_cbb); delobj(l_cbl); delobj(f_cbl);
+    delobj(l_blink); delobj(f_blink);
     delobj(l_prows); delobj(f_prows); delobj(l_pcols); delobj(f_pcols);
     delobj(l_grx); delobj(f_grx); delobj(l_gry); delobj(f_gry);
     delobj(l_cols);
@@ -376,6 +384,8 @@ void applyGUI(Gui newGUI)
 
     Rwin_graphicsx = newGUI->grx;
     Rwin_graphicsy = newGUI->gry;
+    
+    p->cursor_blink = newGUI->cursor_blink;
 }
 
 static void do_apply(void)
@@ -473,6 +483,9 @@ static void save(button b)
     fprintf(fp, "\n\n## Default setting for console buffering: 'yes' or 'no'\n");
     fprintf(fp, "buffered = %s\n",
 	    ischecked(c_buff) ? "yes" : "no");
+    fprintf(fp, "\n\n%s\ncursor_blink = %s\n",
+    	    "## Console cursor blink",
+    	    BlinkList[getlistitem(f_blink)]);
     fclose(fp);
 }
 
@@ -551,6 +564,16 @@ int loadRconsole(Gui gui, const char *optf)
 	    if (!strcmp(opt[0], "ygraphics")) {
 		gui->gry = atoi(opt[1]);
 		done = 1;
+	    }
+	    if (!strcmp(opt[0], "cursor_blink")) {
+	    	int i;
+	    	for (i = 0; i < 3; i++) {
+	    	    if (!strcmp(opt[1], BlinkList[i])) {    	
+	    		gui->cursor_blink = i;
+	    		done = 1;
+	    		break;
+	    	    }
+	    	}
 	    }
 	    if (!strcmp(opt[0], "pgrows")) {
 		gui->prows = atoi(opt[1]);
@@ -838,30 +861,36 @@ static void showDialog(Gui gui)
 			 rect(20, 190, 200, 20), NULL);
     if(gui->buffered) check(c_buff);
 
+/* Cursor blink */
+
+    l_blink = newlabel("Cursor blink", rect(270, 200,100, 30), AlignLeft);
+    f_blink = newdroplist(BlinkList, rect(350, 200, 80, 20), NULL);
+    setlistitem(f_blink, gui->cursor_blink);
+    
 /* Pager size */
-    l_prows = newlabel("Pager   rows", rect(10, 220, 100, 20), AlignLeft);
+    l_prows = newlabel("Pager   rows", rect(10, 230, 100, 20), AlignLeft);
     sprintf(buf, "%d", gui->prows);
-    f_prows = newfield(buf, rect(110, 220, 30, 20));
-    l_pcols = newlabel("columns", rect(150, 220, 60, 20), AlignLeft);
+    f_prows = newfield(buf, rect(110, 230, 30, 20));
+    l_pcols = newlabel("columns", rect(150, 230, 60, 20), AlignLeft);
     sprintf(buf, "%d", gui->pcols);
-    f_pcols = newfield(buf, rect(220, 220, 30, 20));
+    f_pcols = newfield(buf, rect(220, 230, 30, 20));
 
 /* Graphics window */
     l_grx = newlabel("Graphics windows: initial left",
-		     rect(10, 260, 190, 20), AlignLeft);
+		     rect(10, 270, 190, 20), AlignLeft);
     sprintf(buf, "%d", gui->grx);
-    f_grx = newfield(buf, rect(200, 260, 40, 20));
-    l_gry = newlabel("top", rect(270, 260, 30, 20), AlignLeft);
+    f_grx = newfield(buf, rect(200, 270, 40, 20));
+    l_gry = newlabel("top", rect(270, 270, 30, 20), AlignLeft);
     sprintf(buf, "%d", gui->gry);
-    f_gry = newfield(buf, rect(300, 260, 40, 20));
+    f_gry = newfield(buf, rect(300, 270, 40, 20));
 
 /* Font colours */
     l_cols = newlabel("Console and Pager Colours",
-		      rect(10, 300, 520, 20), AlignCenter);
+		      rect(10, 310, 520, 20), AlignCenter);
 			      
-    guielement = newlistbox(GuiElementNames, rect(50, 320, 100, 80), changeElement, NULL);
-    guicolor = newlistbox(ColorName, rect(205, 320, 100, 80), clickColor, NULL);
-    guisample = newrichtextarea("Sample text", rect(350, 320, 150, 55));
+    guielement = newlistbox(GuiElementNames, rect(50, 330, 100, 80), changeElement, NULL);
+    guicolor = newlistbox(ColorName, rect(205, 330, 100, 80), clickColor, NULL);
+    guisample = newrichtextarea("Sample text", rect(350, 330, 150, 55));
 	
     for (int i=0; i<numGuiColors; i++)
     	dialogColors[i] = gui->guiColors[i];

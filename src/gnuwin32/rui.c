@@ -835,7 +835,7 @@ void readconsolecfg()
 		      gui.cx, gui.cy,
 		      gui.guiColors,
 		      gui.prows, gui.pcols, gui.pagerMultiple, gui.setWidthOnResize,
-		      gui.cbb, gui.cbl, gui.buffered);
+		      gui.cbb, gui.cbl, gui.buffered, gui.cursor_blink);
 }
 
 static void dropconsole(control m, char *fn)

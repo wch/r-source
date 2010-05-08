@@ -231,6 +231,10 @@ struct objinfo
 #if USE_NATIVE_CONTROLS
     HBRUSH  bgbrush; /* background brush */
 #endif
+    int caretwidth;  /* Caret (blinking cursor) is set here. caretwidth=0 for none, 
+                        negative for not focussed */
+    int caretheight;
+    int caretshowing;
 };
 
 struct callinfo

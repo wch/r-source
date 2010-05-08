@@ -359,7 +359,7 @@ static pager pagercreate(void)
     p = newconsoledata((consolefn) ? consolefn : FixedFont,
 		       pagerrow, pagercol, 0, 0,
 		       guiColors,
-		       PAGER, 0);
+		       PAGER, 0, 0);
     if (!p) return NULL;
 
 /*    if (ismdi()) {

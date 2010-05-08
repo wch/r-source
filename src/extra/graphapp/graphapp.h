@@ -527,6 +527,7 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define setaction		GA_setaction
 #define setbackground		GA_setbackground
 #define setbitmapdata		GA_setbitmapdata
+#define setcaret		GA_setcaret
 #define setcliprect		GA_setcliprect
 #define setclose		GA_setclose
 #define setcursor		GA_setcursor
@@ -567,6 +568,7 @@ typedef void (*imfn)(control c, font *f, point *xy);
 #define setuserfilter		GA_setuserfilter
 #define setvalue		GA_setvalue
 #define show		GA_show
+#define showcaret	GA_showcaret
 #define show_window		GAI_show_window
 #define simple_window		GAI_simple_window
 #define sortpalette		GA_sortpalette
@@ -1206,6 +1208,12 @@ void	setdrawstate(drawstate saved_state);
 void	restoredrawstate(drawstate saved_state);
 void	resetdrawstate(void);
 
+/*
+ *  Caret-related functions.
+ */
+ 
+void 	setcaret(control c, int x, int y, int width, int height);
+void	showcaret(control c, int showing);
 
 /*
  *  Library supplied variables.

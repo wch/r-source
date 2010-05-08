@@ -31,7 +31,7 @@ setconsoleoptions(const char *fnname,int fnsty, int fnpoints,
 		  int rows, int cols, int consx, int consy,
 		  rgb *nguiColors,
 		  int pgr, int pgc, int multiplewindows, int widthonresize,
-		  int bufbytes, int buflines, int buffered);
+		  int bufbytes, int buflines, int buffered, int cursor_blink);
 pager newpager(const char *title, const char *filename, int enc,
 	       const char *header, int unlinkonexit);
 console newconsole(char *name, int flags);

@@ -37,6 +37,7 @@ struct structGUI
     char style[20];
     int crows, ccols, cx, cy, setWidthOnResize, prows, pcols,
 	cbb, cbl, grx, gry;
+    int cursor_blink; /* 0=none, 1=partial, 2=full */
     rgb guiColors[numGuiColors];
     rect MDIsize;
     char language[20];

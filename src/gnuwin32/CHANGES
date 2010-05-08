@@ -38,6 +38,9 @@ NEW FEATURES
 	disabled before release.
 
     o	R CMD INSTALL can install zipfiles as binary packages.
+    
+    o	The Rgui console now has an optional blinking caret (cursor)
+    	to assist screen readers for the visually impaired.
 
 
 INSTALLATION

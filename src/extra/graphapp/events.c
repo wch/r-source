@@ -326,10 +326,19 @@ static void handle_destroy(object obj)
 
 static void handle_focus(object obj, int gained_focus)
 {
-    if (gained_focus)
+    if (gained_focus) {
 	obj->state |= Focus;
-    else
+	if (obj->caretwidth < 0) {
+	    setcaret(obj, 0,0, -obj->caretwidth, obj->caretheight);
+	    showcaret(obj, 1);
+	}
+    } else {
 	obj->state &= ~Focus;
+	if (obj->caretwidth > 0) {
+	    setcaret(obj, 0,0, -obj->caretwidth, obj->caretheight);
+	    showcaret(obj, 0);
+	}
+    }
     if ((! USE_NATIVE_BUTTONS) && (obj->kind == ButtonObject))
 	InvalidateRect(obj->handle, NULL, 0);
     if (obj->call && obj->call->focus)
