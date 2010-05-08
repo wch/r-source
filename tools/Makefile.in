@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = README \
 	Makefile.in \
-	GETCONFIG GETDISTNAME GETMAKEVAL GETRWVERSION GETVERSION \
+	GETCONFIG GETDISTNAME GETMAKEVAL GETVERSION \
 	config.guess \
 	config.rpath \
 	config.sub \
