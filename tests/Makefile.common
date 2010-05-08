@@ -40,7 +40,8 @@ test-src-regexp = utf8-regex.R
 test-src-segfault = no-segfault.R
 
 ## added to on Windows
-test-src-reg-1 = reg-examples.R reg-tests-1.R reg-tests-2.R \
+test-src-reg-1 = reg-tests-1.R reg-tests-1b.R reg-tests-2.R \
+  reg-examples.R reg-packages.R \
   reg-IO.R reg-IO2.R reg-plot.R reg-S4.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
