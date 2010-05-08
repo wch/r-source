@@ -60,6 +60,10 @@ BUG FIXES
     o	cut(d, breaks = <n>)  now also works for "Date" or "POSIXt"
         argument d.  (PR#14288)
 
+    o	memDecompress() could decompress incompletely rare xz-compressed
+	input due to incorrect documentation of xz utils.  (Report
+	and patch from Olaf Mersmann.)
+
 
 
 		CHANGES IN R VERSION 2.11.0
