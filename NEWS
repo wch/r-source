@@ -73,18 +73,20 @@ NEW FEATURES
     o	The "POSIXct" method of as.Date() allows a timezone to be
 	specified (but still defaults to UTC).
 
-    o	Experimental  list2env()  utility as inverse of as.list(<environment>)
-	and for fast multi-assign() to existing environment.
-	as.environment() is now generic and uses list2env() as list method.
+    o	Experimental list2env() utility function as an inverse of
+	as.list(<environment>) and for fast multi-assign() to existing
+	environment.  as.environment() is now generic and uses
+	list2env() as list method.
 
     o	There are several small changes to output which 'zap' small
 	numbers, e.g. in printing quantiles of residuals in summaries
-	from lm annd glm fits, and in test statisics in print.anova.
+	from "lm" and "glm" fits, and in test statisics in
+	print.anova().
 
     o	Special names such as "dim", "names", etc, are now allowed as slot
 	names of S4 classes, with "class" the only remaining exception.
 
-    o	.Renviron.site can have architecture-specific versions such as
+    o	.Renviron can have architecture-specific versions such as
 	.Renviron.i386 on systems with sub-architectures.
 
 
