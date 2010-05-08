@@ -180,6 +180,13 @@ BUG FIXES
 		CHANGES IN R VERSION 2.11.0 patched
 
 
+NEW FEATURES
+
+    o	R CMD INSTALL checks if dependent packages are available early on
+	in the installation of source packages, thereby giving clearer
+	error messages.
+
+
 DEPRECATED & DEFUNCT
 
     o	Use of .C for C++ code in packages is now deprecated: it has
