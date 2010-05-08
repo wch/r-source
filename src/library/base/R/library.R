@@ -901,11 +901,11 @@ print.packageInfo <- function(x, ...)
 }
 
 .getRequiredPackages <-
-    function(file="DESCRIPTION", quietly = FALSE, useImports = FALSE)
+    function(file="DESCRIPTION", lib.loc = NULL, quietly = FALSE, useImports = FALSE)
 {
     ## OK to call tools as only used during installation.
     pkgInfo <- tools:::.split_description(tools:::.read_description(file))
-    .getRequiredPackages2(pkgInfo, quietly, , useImports)
+    .getRequiredPackages2(pkgInfo, quietly, lib.loc, useImports)
     invisible()
 }
 

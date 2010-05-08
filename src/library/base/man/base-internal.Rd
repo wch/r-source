@@ -44,8 +44,8 @@
 
 .path.package(package, quiet = FALSE)
 
-.getRequiredPackages(file = "DESCRIPTION", quietly = FALSE,
-                     useImports = FALSE)
+.getRequiredPackages(file = "DESCRIPTION", lib.loc = NULL,
+                     quietly = FALSE, useImports = FALSE)
 .getRequiredPackages2(pkgInfo, quietly = FALSE, lib.loc = NULL,
                       useImports = FALSE)
 
