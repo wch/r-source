@@ -125,6 +125,11 @@ ifneq ($(strip $(HOME32)),)
 	rm $(HOME32)/32bit.zip
 	mkdir -p $(RPREFIX)/Tcl
 	$(CP) -prf $(HOME32)/Tcl/bin $(HOME32)/Tcl/lib $(RPREFIX)/Tcl
+	for f in $(R_PKGS_RECOMMENDED); do \
+	   sed -e 's/Archs: x64/Archs: i386, x64/' \
+             ../../../library/$${f}/DESCRIPTION \
+             > $(RPREFIX)/library/$${f}/DESCRIPTION; \
+	done
 else
 	@echo "------------ not including 32-bit files"
 endif
