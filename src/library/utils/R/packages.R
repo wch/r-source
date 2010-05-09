@@ -507,7 +507,7 @@ installed.packages <-
 			      duplicates.ok = TRUE))
 	mat <- mat[keep, , drop=FALSE]
     }
-    if(length(mat) && !is.null(subarch)) {
+    if(length(mat) && !is.null(subarch) && nzchar(subarch)) {
         archs <- strsplit(mat[, "Archs"], ", ", fixed = TRUE)
         keep <- unlist(lapply(archs,
                               function(x) is.na(x[1L]) || subarch %in% x))
