@@ -23,9 +23,6 @@ NEW FEATURES
 
 	Architecture-specific files (such as Rgui.exe and Rscript.exe)
 	are now in R_HOME/bin/i386 or R_HOME/bin/x64. 
-	Package installation, including 'configure.win' scripts, can
-	use ${R_HOME}/bin${R_ARCH_BIN} as a portable way to find
-	these.
 
 	Because many people expect it, there is an executable
 	R_HOME/bin/R.exe, which accepts --arch and launches either
@@ -52,31 +49,29 @@ INSTALLATION
     o	It is now possible to build R and the Inno Setup-based
 	installer without Perl.
 
+    o	For those building R from the sources, the 64-bit Tcl binary
+	distribution for 2.12.x is in file R64a_Tcl_8-5-8.zip and
+	contains e.g. directory Tcl/bin64 and not Tcl/bin.
+
 
 64-bit NEWS
 
-    o   The plan is to merge the 32- and 64-bit distributions and have
-	a common repository of packages.  This process has been
-	started, and some of the steps are recorded here (and some are
-	in progress).
+    o   The 32- and 64-bit distributions have been merged:
 
-    o	There is a combined installer (called R-<version>-win.exe).
-	When used under 32-bit Windows this works as before and
-	installs 32-bit R.  When used under 64-bit Windows there are
-	options to install either or both of 32- and 64-bit R: the
-	current default is to install both.
+    	- There is a combined installer (called R-<version>-win.exe).
+	  When used under 32-bit Windows this works as before and
+	  installs 32-bit R.  When used under 64-bit Windows there are
+	  options to install either or both of 32- and 64-bit R: the
+	  current default is to install both.
 
-    o	The default package type is "win.binary" on both 32- and
-	64-bit builds: a single repository contains binary packages
-	for both architectures.  This is in place for CRAN and
-	CRANextras: type = "win64.binary" can still be used for
-	repositories which follow the R 2.11.x convention.  With the
-	default filters (see ?available.packages) packages will only
-	be offered if they are available for the current architecture.
-
-    o	For those building R from the sources, the 64-bit Tcl binary
-	distribution is now in file R64a_Tcl_8-5-8.zip and contains
-	e.g. directory Tcl/bin64 and not Tcl/bin.
+   	- The default package type is "win.binary" on both 32- and
+	  64-bit builds: a single repository contains binary packages
+	  for both architectures.  This is in place for CRAN and
+	  CRANextras: type = "win64.binary" can still be used for
+	  repositories which follow the R 2.11.x convention.  With the
+	  default filters (see ?available.packages) packages will only
+	  be offered if they are available for the current
+	  architecture.
 
 
 PACKAGE INSTALLATION
@@ -84,6 +79,10 @@ PACKAGE INSTALLATION
     o	The deprecated environment variable RHOME is no longer set when
 	a package is installed: use R_HOME instead (and depend on R
 	(>= 2.9) ).
+
+    o	Package installation, including 'configure.win' scripts, can
+	use ${R_HOME}/bin${R_ARCH_BIN} as a portable way to find
+	the binaries such as Rscript.exe.
 
 
 
@@ -103,12 +102,12 @@ NEW FEATURES
     o	The Rgui console, pagers and editor on the 64-bit build now have
 	a title bar icon.
 
-    o	The outer frame/console for RGui/Rterm  mention '(64-bit)' to
+    o	The outer frame/console for RGui/Rterm mentions '(64-bit)' to
 	make it easier to distinguish running copies of R.
 
-    o	The package entries in the 'Install package(s) ...' menu are
-	now explicitly sorted in the current locale (there were in
-	most previous releases, but not in 2.11.0).
+    o	The package entries in listbox shown by the 'Install package(s)
+	...' menu are now explicitly sorted in the current locale
+	(there were in most previous releases, but not in 2.11.0).
 
 
 

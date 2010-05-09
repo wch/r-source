@@ -9688,11 +9688,13 @@ static R_INLINE int ind_2(int l, int j)
 @end example
 
 Be aware that using inlining with functions in more than one compilation
-unit is almost impossible to do portably: see
-@uref{http://www.greenend.org.uk/rjk/2003/03/inline.html}.  All the @R{}
+unit is almost impossible to do portably, see
+@uref{http://www.greenend.org.uk/rjk/2003/03/inline.html}, so this usage
+is for @code{static} functions as in the example.  All the @R{}
 configure code has checked is that @code{R_INLINE} can be used in a
 single C file with the compiler used to build @R{}.  We recommend that
-packages making extensive use of inlining include their own configure code.
+packages making extensive use of inlining include their own configure
+code.
 
 @node Controlling visibility, Standalone Mathlib, Inlining C functions, The R API
 @section Controlling visibility
