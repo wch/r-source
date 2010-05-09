@@ -463,7 +463,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
 installed.packages <-
     function(lib.loc = NULL, priority = NULL, noCache = FALSE,
-             fields = NULL)
+             fields = NULL, subarch = .Platform$r_arch)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
@@ -495,10 +495,11 @@ installed.packages <-
 	}
     }
 
-    .fixupPkgMat(retval, fields, priority)
+    .fixupPkgMat(retval, fields, priority, subarch)
 }
 
-.fixupPkgMat <- function(mat, fields, priority) {
+.fixupPkgMat <- function(mat, fields, priority, subarch=NULL)
+{
     ## to be used in installed.packages() and similar
     colnames(mat) <- c("Package", "LibPath", fields)
     if(length(mat) && !is.null(priority)) {
@@ -506,9 +507,13 @@ installed.packages <-
 			      duplicates.ok = TRUE))
 	mat <- mat[keep, , drop=FALSE]
     }
-    if (length(mat)) {
-	rownames(mat) <- mat[, "Package"]
+    if(length(mat) && !is.null(subarch)) {
+        archs <- strsplit(mat[, "Archs"], ", ", fixed = TRUE)
+        keep <- unlist(lapply(archs,
+                              function(x) is.na(x[1L]) || subarch %in% x))
+	mat <- mat[keep, , drop=FALSE]
     }
+    if (length(mat)) rownames(mat) <- mat[, "Package"]
     mat
 }
 

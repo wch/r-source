@@ -1,6 +1,6 @@
 % File src/library/utils/man/installed.packages.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{installed.packages}
@@ -12,7 +12,8 @@
 }
 \usage{
 installed.packages(lib.loc = NULL, priority = NULL,
-                   noCache = FALSE, fields = NULL)
+                   noCache = FALSE, fields = NULL,
+                   subarch = .Platform$r_arch)
 }
 \arguments{
   \item{lib.loc}{
@@ -32,6 +33,10 @@ installed.packages(lib.loc = NULL, priority = NULL,
     each package's \code{DESCRIPTION} file in addition to the default
     ones, or \code{NULL} (default).  Unavailable fields result in
     \code{NA} values.}
+  \item{subarch}{
+    character string or \code{NULL}.  If non-null, used to
+    select packages which are installed for that sub-architecture.
+  }
 }
 \details{
   \code{installed.packages} scans the \file{DESCRIPTION} files of each
