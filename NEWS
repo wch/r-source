@@ -125,6 +125,12 @@ PACKAGE INSTALLATION
 	unless --no-lock is specified.
 
 
+UTILITIES
+
+    o	R CMD check has a new argument --extra-arch to confine tests
+	to those needed to check an additional sub-architecture.
+
+
 C-LEVEL FACILITIES
 
     o	lang5() and lang6() {in addition to pre-existing lang[1-4]()}
