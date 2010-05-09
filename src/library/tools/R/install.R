@@ -482,9 +482,11 @@
                 if (debug) starsmsg(stars, "backing up earlier installation")
                 if(WINDOWS) {
                     file.copy(instdir, lockdir, recursive = TRUE)
-                    unlink(instdir, recursive = TRUE)
-                } else
+                    if (more_than_libs) unlink(instdir, recursive = TRUE)
+                } else if (more_than_libs)
                     system(paste("mv", instdir, file.path(lockdir, pkg_name)))
+                else
+                    file.copy(instdir, lockdir, recursive = TRUE)
             } else if (more_than_libs) unlink(instdir, recursive = TRUE)
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
