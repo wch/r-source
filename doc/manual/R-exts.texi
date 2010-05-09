@@ -6962,7 +6962,7 @@ SEXP out(SEXP x, SEXP y)
   double tmp, *rx = REAL(x), *ry = REAL(y), *rans;
   SEXP ans;
 
-  nx = length(x); ny = 8;
+  nx = length(x); ny = length(y);
   PROTECT(ans = allocMatrix(REALSXP, nx, ny));
   rans = REAL(ans);
   for(i = 0; i < nx; i++) @{
@@ -6997,7 +6997,7 @@ SEXP out(SEXP x, SEXP y)
 @end group
 
 @group
-  nx = length(x); ny = 8;
+  nx = length(x); ny = length(y);
   PROTECT(ans = allocVector(REALSXP, nx*ny));
   rans = REAL(ans);
   for(i = 0; i < nx; i++) @{
