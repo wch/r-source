@@ -283,6 +283,8 @@
         }
 
         if (zip_up) {
+            starsmsg(stars, "MD5 sums")
+            .installMD5sums(instdir)
             ZIP <- "zip"                # Windows only
             version <- desc["Version"]
             filename <- paste0(pkg_name, "_", version, ".zip")
@@ -923,11 +925,6 @@
         }
 
         if (clean) run_clean()
-
-        if (WINDOWS) { ## Add MD5 sums: only for --build?
-            starsmsg(stars, "MD5 sums")
-            .installMD5sums(instdir)
-        }
 
         if (test_load) {
 	    starsmsg(stars, "testing if installed package can be loaded")
