@@ -89,8 +89,11 @@ NEW FEATURES
     o	.Renviron can have architecture-specific versions such as
 	.Renviron.i386 on systems with sub-architectures.
 
-    o	installed.packages() has a new argumnt 'subarch' to filter on
+    o	installed.packages() has a new argument 'subarch' to filter on
 	sub-architecture.
+
+    o	The summary() method for packageStatus() now has a separate
+	print() method.
 
 
 DEPRECATED & DEFUNCT

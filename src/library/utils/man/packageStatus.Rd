@@ -1,6 +1,6 @@
 % File src/library/utils/man/packageStatus.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{packageStatus}
@@ -70,6 +70,15 @@ packageStatus(lib.loc = NULL, repositories = NULL, method,
     \code{\link{available.packages}} plus \code{"Status"}, a factor with
     levels \code{c("installed", "not installed", "unavailable")}..
   }
+
+  For the \code{summary} method the result is also of class
+  \code{"summary.packageStatus"} with additional components
+
+  \item{Libs}{a list with one element for each library}
+  \item{Repos}{a list with one element for each repository}
+
+  with the elements being lists of character vectors of package name for
+  each status.
 }
 \seealso{
   \code{\link{installed.packages}}, \code{\link{available.packages}}

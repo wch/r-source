@@ -85,29 +85,38 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method,
 
 summary.packageStatus <- function(object, ...)
 {
+    Libs <- levels(object$inst$LibPath)
+    Repos <- levels(object$avail$Repository)
+
+    byLib <- split(object$inst, object$inst$LibPath)
+    Libs <- lapply(split(object$inst, object$inst$LibPath),
+                   function(x) tapply(x$Package, x$Status,
+                                      function(x) sort(as.character(x))))
+    Repos <- lapply(split(object$avail, object$avail$Repository),
+                    function(x) tapply(x$Package, x$Status,
+                                       function(x) sort(as.character(x))))
+    object$Libs <- Libs
+    object$Repos <- Repos
+    class(object) <- c("summary.packageStatus", "packageStatus")
+    object
+}
+
+print.summary.packageStatus <- function(x, ...)
+{
     cat("\nInstalled packages:\n")
     cat(  "-------------------\n")
-    for(k in levels(object$inst$LibPath)){
-        ok <- (object$inst$LibPath==k)
-        cat("\n*** Library ", k, "\n", sep="")
-        if(any(ok)){
-            i <- object$inst
-            print(tapply(i$Package[ok], i$Status[ok],
-                         function(x) sort(as.character(x))))
-        }
+    for(k in seq_along(x$Libs)) {
+        cat("\n*** Library ", names(x$Libs)[k], "\n", sep="")
+        print(x$Libs[[k]])
     }
     cat("\n\nAvailable packages:\n")
     cat(    "-------------------\n")
     cat("(each package appears only once)\n")
-    for(k in levels(object$avail$Repository)){
-        cat("\n*** Repository ", k, "\n", sep="")
-        ok <- object$avail$Repository==k
-        if(any(ok))
-            print(tapply(object$avail$Package[ok],
-                         object$avail$Status[ok],
-                         function(x) sort(as.character(x))))
+    for(k in seq_along(x$Repos)){
+        cat("\n*** Repository ", names(x$Repos)[k], "\n", sep="")
+        print(x$Repos[[k]])
     }
-    invisible(object)
+    invisible(x)
 }
 
 print.packageStatus <- function(x, ...)
