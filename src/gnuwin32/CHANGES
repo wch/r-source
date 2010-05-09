@@ -21,12 +21,12 @@ NEW FEATURES
     o	The Rgui console, pagers and editor on the 64-bit build now have
 	a title bar icon.
 
-    o	The outer frame/console for RGui/Rterm  mention '(64-bit)' to
+    o	The outer frame/console for RGui/Rterm mentions '(64-bit)' to
 	make it easier to distinguish running copies of R.
 
-    o	The package entries in the 'Install package(s) ...' menu are
-	now explicitly sorted in the current locale (there were in
-	most previous releases, but not in 2.11.0).
+    o	The package entries in listbox shown by the 'Install package(s)
+	...' menu are now explicitly sorted in the current locale
+	(there were in most previous releases, but not in 2.11.0).
 
 
 

@@ -1129,7 +1129,6 @@ directory for some purpose other than building a DLL, use a
 It is sometimes useful to have a target @samp{clean} in @file{Makevars}
 or @file{Makevars.win}: this will be used by @command{R CMD build}.
 
-
 If you want to run @R{} code in @file{Makevars}, e.g.@: to find
 configuration information, please do ensure that you use the correct
 copy of @code{R} or @code{Rscript}: there might not be one in the path
@@ -9904,11 +9903,13 @@ static R_INLINE int ind_2(int l, int j)
 @end example
 
 Be aware that using inlining with functions in more than one compilation
-unit is almost impossible to do portably: see
-@uref{http://www.greenend.org.uk/rjk/2003/03/inline.html}.  All the @R{}
+unit is almost impossible to do portably, see
+@uref{http://www.greenend.org.uk/rjk/2003/03/inline.html}, so this usage
+is for @code{static} functions as in the example.  All the @R{}
 configure code has checked is that @code{R_INLINE} can be used in a
 single C file with the compiler used to build @R{}.  We recommend that
-packages making extensive use of inlining include their own configure code.
+packages making extensive use of inlining include their own configure
+code.
 
 @node Controlling visibility, Standalone Mathlib, Inlining C functions, The R API
 @section Controlling visibility
@@ -11045,10 +11046,10 @@ to how to do so or what value to use.
 
 The @R{} for Windows installers have for a long time allowed the value
 of @code{R_HOME} to be recorded in the Windows Registry: this is
-optional but the default. Where is it is recorded has changed over the
-years to allow for multiple versions of @R{} to be installed at once,
-and as from @R{} 2.11.0, to allow 32- and 64-bit versions of @R{} to be
-installed on the same machine.
+optional but selected by default.  @emph{Where} is it is recorded has
+changed over the years to allow for multiple versions of @R{} to be
+installed at once, and as from @R{} 2.11.0, to allow 32- and 64-bit
+versions of @R{} to be installed on the same machine.
 
 The basic Registry location is @code{Software\R-core\R}.  For an
 administrative install this is under @code{HKEY_LOCAL_MACHINE} and on a
