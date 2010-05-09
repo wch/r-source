@@ -1489,6 +1489,7 @@ execution is allowed.
 * Updating packages::           
 * Removing packages::           
 * Setting up a package repository::  
+* Checking installed source packages::  
 @end menu
 
 It is helpful to use the correct terminology.  A @emph{package} is
@@ -1839,7 +1840,7 @@ Finally, in most installations one can just remove the package directory
 from the library.
 
 
-@node Setting up a package repository,  , Removing packages, Add-on packages
+@node Setting up a package repository, Checking installed source packages, Removing packages, Add-on packages
 @section Setting up a package repository
 @cindex Repositories
 
@@ -1902,6 +1903,51 @@ Path: @var{path/to/subdirectory}
 @noindent
 ---once again @code{write_PACKAGES} is the simplest way to set this up.
 
+@node Checking installed source packages,  , Setting up a package repository, Add-on packages
+@section Checking installed source packages
+
+It can be convenient to run @command{R CMD check} on an installed
+package, particularly on a platform which uses sub-architectures.  The
+outline of how to do this is, in an @file{sh}-style shell, with the
+source package in directory @file{@var{pkgname}} (or a tarball filename):
+
+@example
+R CMD INSTALL -l @var{libdir} @var{pkgname} > @var{pkgname}.log 2>&1
+R CMD check -l @var{libdir} --install=check:@var{pkgname}.log @var{pkgname}
+@end example
+
+@noindent
+Where sub-architectures are in use the @command{R CMD check} line can be
+repeated with additional architectures by
+
+@example
+R --arch @var{arch} CMD check -l @var{libdir} --extra-arch --install=check:@var{pkgname}.log @var{pkgname}
+@end example
+
+@noindent
+where @option{--extra-arch} selects only those checks which depend on
+the installed code and not those which analyse the sources.  On Mac OS X
+and other Unix-alikes the architecture to run is selected by
+@option{--arch}: this can also be used on Windows with
+@file{@var{R_HOME}/bin/R.exe}, but it is more usual to select the path
+to the @command{Rcmd.exe} of the desired architecture.
+
+So on Windows to install, check and package for distribution a source
+package from a tarball which has been tested on another platform one
+might use
+
+@example
+.../bin/i386/Rcmd INSTALL -l @var{libdir} @var{tarball} > @var{pkgname}.log 2>&1
+.../bin/x64/Rcmd INSTALL --build -l @var{libdir} --libs-only @var{tarball}
+.../bin/i386/Rcmd check -l @var{libdir} --extra-arch --install=check:@var{pkgname}.log @var{pkgname}
+.../bin/x64/Rcmd check -l @var{libdir} --extra-arch --install=check:@var{pkgname}.log @var{pkgname}
+@end example
+
+@noindent
+where the second line is not often needed, and when it is one might want
+to run the second and fourth lines in a different shell with different
+settings for environment variables and the path (to find external
+software such as Gtk+).
 
 @node Internationalization, Choosing between 32- and 64-bit builds, Add-on packages, Top
 @chapter Internationalization and Localization
