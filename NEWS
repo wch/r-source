@@ -73,7 +73,7 @@ NEW FEATURES
     o	The "POSIXct" method of as.Date() allows a timezone to be
 	specified (but still defaults to UTC).
 
-    o	Experimental list2env() utility function as an inverse of
+    o	New list2env() utility function as an inverse of
 	as.list(<environment>) and for fast multi-assign() to existing
 	environment.  as.environment() is now generic and uses
 	list2env() as list method.
@@ -238,7 +238,7 @@ BUG FIXES
 
     o	Rhttpd no longer crashes due to SIGPIPE when the client closes
 	the connection prematurely.  (PR#14266)
-	
+
     o	format.POSIXlt() could cause a stack overflow and crash when used on
     	very long vectors.  (PR#14267)
 
@@ -267,6 +267,9 @@ BUG FIXES
 	--no-multiarch on platforms with only one installed
 	architecture.  (It used to clean the src directory without
 	--no-multiarch.)
+
+    o	rbeta(n, a,b) no longer occasionally returns NaN for a >> 1 > b.
+	(PR#14291)
 
 
 

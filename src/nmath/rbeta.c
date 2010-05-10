@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000--2010 The R Development Core Team
+ *  Copyright (C) 2000, 2010 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,11 +59,12 @@ double rbeta(double aa, double bb)
     b = fmax2(aa, bb); /* a <= b */
     alpha = a + b;
 
-#define v_w_from__u1_bet(AA)			\
+#define v_w_from__u1_bet(AA) 			\
 	    v = beta * log(u1 / (1.0 - u1));	\
-	    if (v <= expmax)			\
+	    if (v <= expmax) {			\
 		w = AA * exp(v);		\
-	    else				\
+		if(!R_FINITE(w)) w = DBL_MAX;	\
+	    } else				\
 		w = DBL_MAX
 
 

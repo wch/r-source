@@ -1195,4 +1195,12 @@ char.dec <- memDecompress(char.comp, type="xz", asChar=TRUE)
 stopifnot(nchar(char.dec) == nchar(char))
 ## short in R <= 2.11.0
 
+
+## rbeta() with mass very close to 1 -- bug PR#14291
+set.seed(1)
+if(any(ii <- is.na(rbeta(5000, 100, 0.001))))
+    stop("rbeta() gave NAs at ", paste(which(ii), collapse=", "),
+         "\n")
+## did give several, but platform dependently, in R <= 2.11.0
+
 proc.time()
