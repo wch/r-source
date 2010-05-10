@@ -464,14 +464,16 @@
 
 
         ## at this point we check that we have the dependencies we need.
-        pkgInfo <- .split_description(.read_description("DESCRIPTION"))
-        pkgs <- unique(c(names(pkgInfo$Depends), names(pkgInfo$Imports)))
-        installed <-  utils::installed.packages()[ , "Package"]
-        miss <- pkgs[! pkgs %in% installed]
-        if (length(miss))
-            pkgerrmsg(sprintf("dependencies %s are not available",
-                              paste(sQuote(miss), collapse = ", ")),
-                      pkg_name)
+##         pkgInfo <- .split_description(.read_description("DESCRIPTION"))
+##         pkgs <- unique(c(names(pkgInfo$Depends), names(pkgInfo$Imports)))
+##         if (length(pkgs)) {
+##             installed <-  utils::installed.packages()[ , "Package"]
+##             miss <- pkgs[! pkgs %in% installed]
+##             if (length(miss))
+##                 pkgerrmsg(sprintf("dependencies %s are not available",
+##                                   paste(sQuote(miss), collapse = ", ")),
+##                           pkg_name)
+##         }
 
         starsmsg(stars, "installing *source* package ",
                  sQuote(pkg_name), " ...")
