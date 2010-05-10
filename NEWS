@@ -234,6 +234,9 @@ BUG FIXES
 
     o	Rhttpd no longer crashes due to SIGPIPE when the client closes
 	the connection prematurely.  (PR#14266)
+	
+    o	format.POSIXlt() could cause a stack overflow and crash when used on
+    	very long vectors.  (PR#14267)
 
     o	Rd2latex() incorrectly escaped special characters in \usage sections.
 
@@ -252,6 +255,14 @@ BUG FIXES
     o	memDecompress() could decompress incompletely rare xz-compressed
 	input due to incorrect documentation of xz utils.  (Report
 	and patch from Olaf Mersmann.)
+
+    o	The S4 initialize() methods for "matrix", "array", and "ts" have
+ 	been fixed to call validObject(). (PR#14284)
+
+    o	R CMD INSTALL now behaves the same way with or without
+	--no-multiarch on platforms with only one installed
+	architecture.  (It used to clean the src directory without
+	--no-multiarch.)
 
 
 
