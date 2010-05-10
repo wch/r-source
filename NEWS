@@ -181,6 +181,10 @@ BUG FIXES
     o	source(echo=TRUE) failed to echo comments that followed the
     	last statement in a file.
 
+    o	S4 classes that contained one of matrix, array, ts and also
+        another class now accept superclass objects in new(). Also
+        fixes failure to call validObject() for these classes.
+
 
 
 

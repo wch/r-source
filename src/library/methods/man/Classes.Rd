@@ -54,14 +54,18 @@
       definition, or some class that extends the one in the
       definition (a \emph{subclass}).
 
-      One slot name is special, \code{.Data}.  This stands for the
+      A special slot name, \code{.Data}, stands for the
       \sQuote{data part} of the object.  An object from a class with a
       data part is defined by specifying that the class contains one
       of the \R object types or one of the special pseudo-classes, 
       \code{matrix} or \code{array}, usually because the definition of
       the class, or of one of its superclasses, has included the type
-      or pseudo-class in its \code{contains} argument.  See the
-      section on inheriting from non-S4 classes for more details.
+      or pseudo-class in its \code{contains} argument.  A second
+      special slot name, \code{.xData}, is used to enable inheritance
+      from abnormal types such as \code{"environment"} 
+      See the section on inheriting from non-S4 classes
+      for details on the representation and
+      for the behavior of S3 methods with objects from these classes.
 
     }
     \item{Superclasses:}{
@@ -264,9 +268,11 @@ S3 classes, which must have been registered by a previous call to
       passed to a binary operator.
 
       The remainder of this section discusses the mechanisms for
-      accessing the inherited objects of the second and third items
-      above:  basic object types and the matrix and array
-      pseudo-classes.  For the corresponding details for inheritance
+      inheriting from  basic object types. See \code{\linkS4class{matrix}}
+      or \code{\linkS4class{array}}
+      for inhering from the matrix and array
+      pseudo-classes, or from time-series.  For the
+      corresponding details for inheritance
       from S3 classes, see \code{\link{setOldClass}}.
  
       An object from a class that directly and simply contains one
@@ -290,28 +296,21 @@ S3 classes, which must have been registered by a previous call to
       methods.  Any basic type can be used for \code{.Data}, but 
       a few types are treated differently because they do not behave like ordinary objects;
       for example, \code{"NULL"}, environments, and external pointers.
-      Classes extend these types by using a specially named slot,
-      itself inherited from an internally defined S4 class.
-      Inheritance from the nonstandard object type then requires an
+      Classes extend these types by having a slot, \code{.xData},
+      itself inherited from an internally defined S4 class.  This
+      slot actually contains an object of the inherited type, to
+      protect computations from the reference semantics of the type.
+      Coercing to the nonstandard object type then requires an
       actual computation, rather than the \code{"simple"} inclusion
       for other types and classes.  The intent is that programmers
       will not need to take account of the mechanism, but one
       implication is that you should \emph{not} explicitly use the
-      type of an S4 object that extends an arbitrary object type.  Use
+      type of an S4 object to detect inheritance from an arbitrary
+      object type.  Use
       \code{\link{is}} and similar functions instead.
-
-      There is  one additional use of the data part, which is also an
-      exception to the correspondence with the object's type.  The exception
-      arises from the special treatment of \code{\linkS4class{matrix}}
-      and \code{\linkS4class{array}} \dQuote{classes} in \R.
-      Matrix and array objects are managed internally and recognized
-      without regard to any class attribute; therefore, they can be
-      used as the data part of a new class.  In this case, the object
-      type for the new class depends on the type of the data in the
-      matrix or array, but the \code{.Data} slot in the definition
-      will be \code{"matrix"} or \code{"array"}.
-     
 }
+
+
 
 \references{
  Chambers, John M. (2008)

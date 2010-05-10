@@ -2272,3 +2272,17 @@ S3forS4Methods <- function(where, checkClasses = character()) {
 ##             className, "\" have apparent S3 methods.\n\nThese will be hidden by the S3 class that this class contains. (See ?Methods)\n\n", msg)
 ##   }
 ## }
+
+## a utility to detect mixin classes:  meant to be fast for use in
+## initialize methods (cf the "matrix" method in BasicClasses.R)
+isMixin <- function(classDef) {
+    val <- 0
+    cc <- classDef@contains
+    ## relies on the superclasses in contains slot being ordered by distance
+    for(cl in cc) {
+        if(cl@distance > 1 || val > 1)
+          break
+        val <- val + 1
+    }
+    val > 1
+}
