@@ -109,6 +109,8 @@
             "      --no-inst",
             "			suppress installation of the specified part of the",
             "			package for testing or other special purposes",
+            "      --no-multiarch	build only the main architecture",
+            "      --libs-only	only install the libs directory",
             "      --data-compress=	none, gzip (default), bzip2 or xz compression",
             "			to be used for lazy-loading of data",
             "      --resave-data	re-save data files as compactly as possible",
@@ -118,8 +120,6 @@
             "			set arguments for the configure scripts (if any)",
             "      --configure-vars=VARS",
             "			set variables for the configure scripts (if any)",
-            "      --libs-only	only install the libs directory",
-            "      --no-multiarch	build only the main architecture",
             "\nand on Windows only",
             "      --auto-zip	select whether to zip data automatically",
             "",
@@ -134,8 +134,8 @@
     {
         do_cleanup_tmpdir()
         if (!is_first_package) {
-            ## Only need to do this in case we successfully installed at least
-            ## *one* package
+            ## Only need to do this in case we successfully installed
+            ## at least one package
             file.copy(file.path(R.home("doc"), "html", "R.css"), lib)
             if (lib == .Library) {
                 if (build_help)
