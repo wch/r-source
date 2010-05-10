@@ -21,12 +21,14 @@ NEW FEATURES
     o	The Rgui console, pagers and editor on the 64-bit build now have
 	a title bar icon.
 
-    o	The outer frame/console for RGui/Rterm mentions '(64-bit)' to
+    o	The outer frame/console for Rgui/Rterm mentions '(64-bit)' to
 	make it easier to distinguish running copies of R.
 
     o	The package entries in listbox shown by the 'Install package(s)
 	...' menu are now explicitly sorted in the current locale
 	(there were in most previous releases, but not in 2.11.0).
+
+    o	R CMD INSTALL can install zipfiles as binary packages.
 
 
 
@@ -532,7 +534,7 @@ BUG FIXES
     o	winDialog() and winDialogString() check that they are being
 	used in an interactive session.
 
-    o	The Korean translation of the RGui menus has been corrected
+    o	The Korean translation of the Rgui menus has been corrected
     	and restored.  (Thanks to June Kim and Seung-ho Kang.)
     	
     o	The list of hives in the readRegistry() defaults contained
@@ -631,7 +633,7 @@ BUG FIXES
 	set, semi-transparent text and lines might have been omitted.
 
     o	Some (but not all) Korean users have been having problems with
-	Korean translations of the RGui menus.  These had not been
+	Korean translations of the Rgui menus.  These had not been
 	updated for a long time, and have now been removed.
 
 

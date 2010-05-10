@@ -71,8 +71,14 @@ BUG FIXES
 	input due to incorrect documentation of xz utils.  (Report
 	and patch from Olaf Mersmann.)
 
-    o	the initialize() methods for "matrix", "array", and "ts" have been
-        fixed to call validObject() (PR#14284)
+    o	The S4 initialize() methods for "matrix", "array", and "ts" have
+ 	been fixed to call validObject(). (PR#14284)
+
+    o	R CMD INSTALL now behaves the same way with or without
+	--no-multiarch on platforms with only one installed
+	architecture.  (It used to clean the src directory without
+	--no-multiarch.)
+
 
 
 		CHANGES IN R VERSION 2.11.0

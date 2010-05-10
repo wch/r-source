@@ -215,6 +215,14 @@
     ## 'pkg' is the absolute path to package sources.
     do_install <- function(pkg)
     {
+        if (WINDOWS && grepl("\\.zip$", pkg)) {
+            pkg_name <- basename(pkg)
+            pkg_name <- sub("\\.zip$", "", pkg_name)
+            pkg_name <- sub("_[0-9.-]+$", "", pkg_name)
+            utils:::unpackPkgZip(pkg, pkg_name, lib, libs_only)
+            return()
+        }
+
         setwd(pkg)
         desc <- read.dcf(file.path(pkg, "DESCRIPTION"))[1, ]
         ## Let's see if we have a bundle
@@ -273,6 +281,8 @@
         }
 
         if (zip_up) {
+            starsmsg(stars, "MD5 sums")
+            .installMD5sums(instdir)
             ZIP <- "zip"                # Windows only
             version <- desc["Version"]
             filename <- paste0(pkg_name, "_", version, ".zip")
@@ -603,17 +613,17 @@
                     srcs <- dir(pattern = "\\.([cfmCM]|cc|cpp|f90|f95|mm)$")
                     ## This allows Makevars to set OBJECTS or its own targets.
                     allfiles <- if (file.exists("Makevars")) c("Makevars", srcs) else srcs
-                    ## FIXME better R.home("bin") ?  Same for now.
-                    wd2 <- setwd(file.path(R.home(), "bin", "exec"))
+                    wd2 <- setwd(file.path(R.home("bin"), "exec"))
                     archs <- Sys.glob("*")
                     setwd(wd2)
                     if (length(allfiles)) {
                         ## if there is a configure script we install only the main
                         ## sub-architecture
-                        if (!multiarch ||
+                        if (!multiarch || length(archs) <= 1 ||
                             .file_test("-x", "../configure")) {
                             if (nzchar(rarch))
-                                starsmsg(stars, "arch - ", substr(rarch, 2, 1000))
+                                starsmsg("***", "arch - ",
+                                         substr(rarch, 2, 1000))
                             has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
                         } else {
                             for(arch in archs) {
@@ -621,10 +631,8 @@
                                 if (arch == "R") {
                                     ## top-level, so one arch without subdirs
                                     has_error <- run_shlib(pkg_name, srcs, instdir, "")
-                                } else if (arch == "Rgnome") {
-                                    ## ignore
                                 } else {
-                                    starsmsg(stars, "arch - ", arch)
+                                    starsmsg("***", "arch - ", arch)
                                     ra <- paste0("/", arch)
                                     ## FIXME: do this lower down
                                     Sys.setenv(R_ARCH = ra)
@@ -857,11 +865,6 @@
 
         if (clean) run_clean()
 
-        if (WINDOWS) { ## Add MD5 sums: only for --build?
-            starsmsg(stars, "MD5 sums")
-            .installMD5sums(instdir)
-        }
-
         if (test_load) {
 	    starsmsg(stars, "testing if installed package can be loaded")
             res <- try(suppressPackageStartupMessages(library(pkg_name, lib.loc = lib, character.only = TRUE, logical.return = TRUE)))
@@ -1027,6 +1030,14 @@
     for(pkg in pkgs) {
         if (debug) message("processing ", sQuote(pkg), domain = NA)
         if (.file_test("-f", pkg)) {
+            if (WINDOWS && grepl("\\.zip$", pkg)) {
+                if (debug) message("a zip file", domain = NA)
+                pkgname <- basename(pkg)
+                pkgname <- sub("\\.zip$", "", pkgname)
+                pkgname <- sub("_[0-9.-]+$", "", pkgname)
+                allpkgs <- c(allpkgs, pkg)
+                next
+            }
             if (debug) message("a file", domain = NA)
             of <- dir(tmpdir, full.names = TRUE)
             ## force the use of internal untar unless over-ridden
