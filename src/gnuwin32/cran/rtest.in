@@ -33,17 +33,17 @@
 
 <body>
 
-<h1>R-@FULLVERSION@ build for Windows (@BITSIZE@ bit)</h1>
+<h1>R-@FULLVERSION@ build for Windows (32/64 bit)</h1>
 
 <div class="download">
-  <p><a href="@RWVER@-win@BITSIZE@.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(33 megabytes, @BITSIZE@ bit)</span></p>
+  <p><a href="@RWVER@-win.exe">Download R-@FULLVERSION@ build for Windows</a> <span>(37 megabytes, 32/64 bit)</span></p>
   <ul>
     <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
     <li>New features in this version: <a href="../../windows/base/CHANGES.@RWVER@">Windows specific</a>, <a href="../../windows/base/NEWS.@RWVER@">all platforms</a>.</li>
   </ul>
 </div>
 
-<p>This is a pre-release Windows @BITSIZE@ bit build of R-@RVER@,
+<p>This is a pre-release Windows 32/64 bit build of R-@RVER@,
 including changes up to @DATE@ (r@SVNREVISION@).</p>
 
 <p>This is not an official release.  Please report bugs
@@ -70,7 +70,6 @@ FAQ</a> for Windows-specific information.</p>
   <li>Patches to the official release are incorporated in the <a href="rpatched.html">r-patched snapshot build</a>.</li>
   <li>A build of the development version (which will eventually become
 a later major release of R) is available in the <a href="rdevel.html">r-devel snapshot build</a>.
-  <li><a href="../../windows@OTHERBITSUFFIX@/base">@OTHERBITSIZE@ bit builds for Windows</a></li>
   <li><a href="../../windows/base/old/">Previous releases</a></li>
 </ul>
 

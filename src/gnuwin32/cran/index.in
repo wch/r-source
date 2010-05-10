@@ -34,10 +34,10 @@
 
 <body>
 
-<h1>R-@RVER@ for Windows (@BITSIZE@ bit build)</h1>
+<h1>R-@RVER@ for Windows (32/64 bit)</h1>
 
 <div class="download">
-  <p><a href="@RWVER@-win@BITSIZE@.exe">Download R @RVER@ for Windows</a> <span>(33 megabytes, @BITSIZE@ bits)</span></p>
+  <p><a href="@RWVER@-win.exe">Download R @RVER@ for Windows</a> <span>(37 megabytes, 32/64 bit)</span></p>
   <ul>
     <li><a href="../../windows/base/README.@RWVER@">Installation and other instructions</a></li>
     <li>New features in this version: <a href="../../windows/base/CHANGES.@RWVER@">Windows specific</a>, <a href="../../windows/base/NEWS.@RWVER@">all platforms</a>.</li>
@@ -65,13 +65,12 @@ FAQ</a> for Windows-specific information.</p>
   <li>Patches to this release are incorporated in the <a href="rpatched.html">r-patched snapshot build</a>.</li>
   <li>A build of the development version (which will eventually become
 the next major release of R) is available in the <a href="rdevel.html">r-devel snapshot build</a>.</li>
-  <li><a href="../../windows@OTHERBITSUFFIX@/base">@OTHERBITSIZE@ bit builds for Windows</a> are also available.</li>
   <li><a href="../../windows/base/old/">Previous releases</a></li>
 </ul>
 
 <p>Note to webmasters: A stable link which will redirect to the
-current Windows @BITSIZE@ bit binary release is<br>
-<a href="release.htm">&lt;CRAN MIRROR&gt/bin/windows@BITSUFFIX@/base/release.htm</a>.</p>
+current Windows binary release is<br>
+<a href="release.htm">&lt;CRAN MIRROR&gt/bin/windows/base/release.htm</a>.</p>
 
 <hr>
 

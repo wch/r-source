@@ -2,14 +2,8 @@ include ../MkRules
 
 ifeq ($(strip $(WIN)),64)
 BITSIZE=64
-BITSUFFIX=64
-OTHERBITSIZE=32
-OTHERBITSUFFIX=
 else
 BITSIZE=32
-BITSUFFIX=
-OTHERBITSIZE=64
-OTHERBITSUFFIX=64
 endif
 
 R_HOME = $(shell ../Rpwd.exe ../../..)
@@ -19,6 +13,7 @@ RPREFIX = $(shell ../../../bin$(R_ARCH)/Rscript ../fixed/rwver.R)
 FULLVERSION=`cat ../../../VERSION`
 SVNREVISION=`sed -e 1s/Revision:.// -e q < $(R_HOME)/SVN-REVISION`
 RVER = $(shell cut -d' ' -f1 ../../../VERSION | sed -n 1p)
+DATE = $(shell date +%F)
 
 REXE = $(R_HOME)/$(BINDIR)/rterm.exe --vanilla --slave
 
@@ -34,11 +29,7 @@ all:
 	    -e s/@RVER@/$(RVER)/g \
 	    -e "s/@DATE@/$(DATE)/g" \
 	    -e "s/@SVNREVISION@/$(SVNREVISION)/g" \
-	    -e "s/@FULLVERSION@/$(FULLVERSION)/g" \
-	    -e "s/@BITSIZE@/$(BITSIZE)/g" \
-	    -e "s/@BITSUFFIX@/$(BITSUFFIX)/g" \
-	    -e "s/@OTHERBITSIZE@/$(OTHERBITSIZE)/g" \
-	    -e "s/@OTHERBITSUFFIX@/$(OTHERBITSUFFIX)/g" $${page}.in >$${page}.html; \
+	    -e "s/@FULLVERSION@/$(FULLVERSION)/g" $${page}.in >$${page}.html; \
 	done
 	$(CP) release.html release.htm
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
