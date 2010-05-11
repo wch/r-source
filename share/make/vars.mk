@@ -3,5 +3,7 @@
 
 R_PKGS_BASE = base tools utils grDevices graphics stats datasets methods grid splines stats4 tcltk
 
-R_PKGS_RECOMMENDED =            boot cluster codetools foreign KernSmooth lattice mgcv nlme rpart survival MASS class nnet spatial Matrix
-# mgcv requires nlme and MASS, but that is handled in src/library/Recommended/Makefile*
+R_PKGS_RECOMMENDED =  boot cluster codetools foreign KernSmooth lattice mgcv nlme rpart survival MASS class nnet spatial Matrix
+R_PKGS_RECOMMENDED =  MASS lattice Matrix nlme survival boot cluster codetools foreign KernSmooth rpart class nnet spatial mgcv
+# there are dependencies in src/library/Recommended/Makefile*
+# which this order respects
