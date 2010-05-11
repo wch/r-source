@@ -503,6 +503,7 @@
          "packageIQR",
          "mtable",
          "table",
+         c("summaryDefault","table"),
          "summary.table",
          "recordedplot",
          "socket",

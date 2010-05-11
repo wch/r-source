@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-19 r51778)
+R version 2.12.0 Under development (unstable) (2010-05-11 r51975)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -336,12 +336,12 @@ c  203  215  227  239
 > for(nu in nus){xx <- x[x > .6*nu]; lines(xx,besselY(xx,nu=nu), col = nu+2)}
 > summary(bY <- besselY(2,nu = nu <- seq(0,100,len=501)))
        Min.     1st Qu.      Median        Mean     3rd Qu.        Max. 
--3.001e+155 -1.067e+107  -1.976e+62 -9.961e+152  -2.059e+23   5.104e-01 
+-3.001e+155 -1.067e+107  -1.976e+62 -9.961e+152  -2.059e+23   1.000e+00 
 > which(bY >= 0)
 [1] 1 2 3 4 5
 > summary(bY <- besselY(2,nu = nu <- seq(3,300,len=51)))
        Min.     1st Qu.      Median        Mean     3rd Qu.        Max. 
-       -Inf        -Inf -2.248e+263        -Inf -3.777e+116  -1.128e+00 
+       -Inf        -Inf -2.248e+263        -Inf -3.777e+116  -1.000e+00 
 There were 22 warnings (use warnings() to see them)
 > summary(bI <- besselI(x = x <- 10:700, 1))
       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 

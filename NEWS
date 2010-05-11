@@ -95,6 +95,10 @@ NEW FEATURES
     o	The summary() method for packageStatus() now has a separate
 	print() method.
 
+    o	The default summary() method returns an object inheriting from
+	class "summaryDefault" which has a separate print() method
+	that calls zapsmall() for numeric/complex values.
+
 
 DEPRECATED & DEFUNCT
 

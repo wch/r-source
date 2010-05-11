@@ -1,6 +1,6 @@
 % File src/library/base/man/summary.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{summary}
@@ -9,6 +9,7 @@
 \alias{summary.data.frame}
 \alias{summary.factor}
 \alias{summary.matrix}
+\alias{print.summaryDefault}
 \title{Object Summaries}
 \description{
   \code{summary} is a generic function used to produce result summaries
@@ -39,7 +40,8 @@ summary(object, \dots)
 \details{
     For \code{\link{factor}}s, the frequency of the first \code{maxsum - 1}
     most frequent levels is shown, where the less frequent levels are
-    summarized in \code{"(Others)"} (resulting in \code{maxsum} frequencies).
+    summarized in \code{"(Others)"} (resulting in at most \code{maxsum}
+    frequencies).
 
     The functions \code{summary.lm} and \code{summary.glm} are examples
     of particular methods which summarize the results produced by

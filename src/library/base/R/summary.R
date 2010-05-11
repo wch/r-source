@@ -43,7 +43,7 @@ summary.default <-
     } else if(is.recursive(object) && !is.language(object) &&
 	      (n <- length(object))) {
 	sumry <- array("", c(n, 3L), list(names(object),
-					 c("Length", "Class", "Mode")))
+                                          c("Length", "Class", "Mode")))
 	ll <- numeric(n)
 	for(i in 1L:n) {
 	    ii <- object[[i]]
@@ -56,8 +56,15 @@ summary.default <-
 	sumry
     }
     else c(Length= length(object), Class= class(object), Mode= mode(object))
-    class(value) <- "table"
+    class(value) <- c("summaryDefault", "table")
     value
+}
+
+print.summaryDefault <- function(x, ...)
+{
+    xx <- if(is.numeric(x) || is.complex(x)) zapsmall(x) else x
+    print.table(xx, ...)
+    invisible(x)
 }
 
 summary.factor <- function(object, maxsum = 100, ...)
