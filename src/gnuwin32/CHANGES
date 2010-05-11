@@ -85,6 +85,13 @@ PACKAGE INSTALLATION
     o	Package installation, including 'configure.win' scripts, can
 	use ${R_HOME}/bin${R_ARCH_BIN} as a portable way to find
 	the binaries such as Rscript.exe.
+	
+
+BUG FIXES
+
+    o	file.rename() now waits for the rename to complete before 
+    	returning, so that operations on the new filename will not fail.
+
 
 
 
