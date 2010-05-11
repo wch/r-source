@@ -1112,22 +1112,44 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++) {
+    	int warn=0;
+    	SEXP result;
 	el = STRING_ELT(paths, i);
 	if(getCharCE(el) == CE_UTF8) {
-	    if (!GetFullPathNameW(filenameToWchar(el, FALSE), MAX_PATH,
-			     wtmp, &wtmp2)
-	    	|| !GetLongPathNameW(wtmp, wlongpath, MAX_PATH))
-	    	errorcall(call, "path[%d]=\"%ls\": %s", i+1, filenameToWchar(el,FALSE), 
+	    if (GetFullPathNameW(filenameToWchar(el, FALSE), MAX_PATH, 
+	    		         wtmp, &wtmp2)) {
+		if (GetLongPathNameW(wtmp, wlongpath, MAX_PATH)) {
+	    	    wcstoutf8(longpath, wlongpath, wcslen(wlongpath)+1);
+	    	    result = mkCharCE(longpath, CE_UTF8);
+	    	} else {
+	    	    wcstoutf8(tmp, wtmp, wcslen(wtmp)+1);
+	    	    result = mkCharCE(tmp, CE_UTF8);
+	    	    warn = 1;
+	    	}
+	    } else {
+	    	result = el;
+	    	warn = 1;
+	    }
+	    if (warn)
+	    	warningcall(call, "path[%d]=\"%ls\": %s", i+1, filenameToWchar(el,FALSE), 
 	    	          formatError(GetLastError()));
-	    wcstoutf8(longpath, wlongpath, wcslen(wlongpath)+1);
-	    SET_STRING_ELT(ans, i, mkCharCE(longpath, CE_UTF8));
 	} else {
-	    if (!GetFullPathName(translateChar(el), MAX_PATH, tmp, &tmp2)
-	        || !GetLongPathName(tmp, longpath, MAX_PATH))
-	        errorcall(call, "path[%d]=\"%s\": %s", i+1, translateChar(el), 
-	                  formatError(GetLastError()));
-	    SET_STRING_ELT(ans, i, mkChar(longpath));
+	    if (GetFullPathName(translateChar(el), MAX_PATH, tmp, &tmp2)) {
+	    	if (GetLongPathName(tmp, longpath, MAX_PATH)) 
+	    	    result = mkChar(longpath);
+	    	else {
+	    	    result = mkChar(tmp);
+	    	    warn = 1;
+	    	}
+	    } else {
+	    	result = el;
+	    	warn = 1;
+	    }
+	    if (warn)
+		warningcall(call, "path[%d]=\"%s\": %s", i+1, translateChar(el), 
+			    formatError(GetLastError()));	
 	}
+	SET_STRING_ELT(ans, i, result);
     }
     UNPROTECT(1);
     return ans;

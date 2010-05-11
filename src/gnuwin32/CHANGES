@@ -36,6 +36,10 @@ NEW FEATURES
     
     o	The Rgui console now has an optional blinking caret (cursor)
     	to assist screen readers for the visually impaired.
+    	
+    o	normalizePath() now signals a warning instead of an error
+    	when the input path does not exist.  It attempts partial
+    	normalization, or if that fails, returns the original input.
 
 
 INSTALLATION
