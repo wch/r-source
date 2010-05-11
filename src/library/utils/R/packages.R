@@ -440,6 +440,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 .readPkgDesc <- function(lib, fields, pkgs = list.files(lib))
 {
     ## to be used in installed.packages() and similar
+    ## FIXME: this is vulnerable to installs going on in parallel
     ret <- matrix(NA_character_, length(pkgs), 2L+length(fields))
     for(i in seq_along(pkgs)) {
         pkgpath <- file.path(lib, pkgs[i])
@@ -449,7 +450,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         desc <- tryCatch(read.dcf(pkgpath, fields = fields), error = identity)
         if(inherits(desc, "error")) {
             warning(gettextf("read.dcf() error on file '%s'", pkgpath),
-                    domain=NA, call.=FALSE)
+                    domain = NA, call. = FALSE)
             next
         }
         desc <- desc[1,]
@@ -475,7 +476,7 @@ installed.packages <-
     }
 
     fields <- .instPkgFields(fields)
-    retval <- matrix("", 0L, 2L + length(fields))
+    retval <- matrix(character(0), 0L, 2L + length(fields))
     for(lib in lib.loc) {
 	dest <- file.path(tempdir(),
 			  paste("libloc_", URLencode(lib, TRUE),

@@ -39,7 +39,7 @@ summary(object, \dots)
 }
 \details{
     For \code{\link{factor}}s, the frequency of the first \code{maxsum - 1}
-    most frequent levels is shown, where the less frequent levels are
+    most frequent levels is shown, and the less frequent levels are
     summarized in \code{"(Others)"} (resulting in at most \code{maxsum}
     frequencies).
 
@@ -51,6 +51,15 @@ summary(object, \dots)
     The form of the value returned by \code{summary} depends on the
     class of its argument.  See the documentation of the particular
     methods for details of what is produced by that method.
+
+    The default method returns an object of class
+    \code{c("summaryDefault", "\link{table}")} which has a specialized
+    \code{print} method.  The \code{\link{factor}} method returns an
+    integer vector.
+
+    The matrix and data frame methods return a matrix of class
+    \code{"\link{table}"}, obtained by applying \code{summary} to each
+    column and collating the results.
 }
 \seealso{
   \code{\link{anova}},
