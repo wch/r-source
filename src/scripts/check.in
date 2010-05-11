@@ -1107,6 +1107,9 @@ sub check_pkg {
     ## ASCII and do not contain %, which is what is known to cause
     ## troubles.
    
+    ## checks below look for R code.  Package WWGbook has an empty R dir.
+    my $haveR = -d "R";
+
     if (!$opt_extra_arch) {
 	$log->checking("for portable file names");
 	my @bad_files = ();
@@ -1366,9 +1369,6 @@ sub check_pkg {
 	else {
 	    $log->result("OK");
 	}
-
-	## checks below look for R code.  Package WWGbook has an empty R dir.
-	my $haveR = -d "R";
 
 	## Check package subdirectories.
 
