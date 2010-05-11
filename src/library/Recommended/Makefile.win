@@ -43,6 +43,7 @@ clean:
 	@rm -f $(CLEANFILES)
 
 ## Hardcoded dependencies (see '../../../share/make/vars.mk')
+Matrix.ts: lattice.ts
 mgcv.ts: nlme.ts MASS.ts Matrix.ts
 nlme.ts: lattice.ts
 class.ts: MASS.ts
