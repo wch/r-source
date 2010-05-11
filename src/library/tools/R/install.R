@@ -132,8 +132,8 @@
     {
         do_cleanup_tmpdir()
         if (!is_first_package) {
-            ## Only need to do this in case we successfully installed at least
-            ## *one* package
+            ## Only need to do this in case we successfully installed
+            ## at least one package
             file.copy(file.path(R.home("doc"), "html", "R.css"), lib)
             if (lib == .Library) {
                 if (build_help)
@@ -461,15 +461,23 @@
         }
 
 
-        ## at this point we check that we have the dependencies we need.
+        ## At this point we check that we have the dependencies we need.
+        ## We cannot use installed.packages() as other installs might be
+        ## going on in parallel
+
         pkgInfo <- .split_description(.read_description("DESCRIPTION"))
-        pkgs <- unique(c(names(pkgInfo$Depends), names(pkgInfo$Imports)))
-        installed <-  utils::installed.packages()[ , "Package"]
-        miss <- pkgs[! pkgs %in% installed]
-        if (length(miss))
-            pkgerrmsg(sprintf("dependencies %s are not available",
-                              paste(sQuote(miss), collapse = ", ")),
-                      pkg_name)
+         pkgs <- unique(c(names(pkgInfo$Depends), names(pkgInfo$Imports)))
+        if (length(pkgs)) {
+            miss <- character()
+            for (pkg in pkgs) {
+                if(!length(.find.package(pkg, quiet = TRUE)))
+                    miss <- c(miss, pkg)
+            }
+            if (length(miss))
+                 pkgerrmsg(sprintf("dependencies %s are not available",
+                                   paste(sQuote(miss), collapse = ", ")),
+                           pkg_name)
+        }
 
         starsmsg(stars, "installing *source* package ",
                  sQuote(pkg_name), " ...")
