@@ -35,41 +35,22 @@
     con <- file("R.iss", "w")
     cat("[Setup]\n", file = con)
 
-    if (have32bit && have64bit) {
-        suffix <- "win"
-        QUAL <- ""
-        SUFF <- ""
+    if (have64bit) {
         regfile <- "reg3264.iss"
         types <- "types3264.iss"
-        ## bindir and RK are not used
-        RK <- bindir <- ""
         cat("ArchitecturesInstallIn64BitMode=x64\n", file = con)
-    } else if (have64bit) {
-        suffix <- "win64"
-        QUAL <- " x64" # used for AppName
-        SUFF <- "-x64" # used for default install dir
-        regfile <- "reg.iss"
-        types <- "types64.iss"
-        bindir <- "bin/x64" # used for shortcuts
-        RK <- "R64" # arch-specific key
-        cat("ArchitecturesInstallIn64BitMode=x64",
-            "ArchitecturesAllowed=x64", file = con, sep = "\n")
     } else { # 32-bit only
-        suffix <- "win32"
-        QUAL <- ""
-        SUFF <- ""
         regfile <- "reg.iss"
         types <- "types32.iss"
-        bindir <- "bin/i386"
-        RK <- "R32"
     }
+    suffix <- "win"
 
     cat(paste("OutputBaseFilename=", RW, "-", suffix, sep = ""),
-        paste("AppName=R for Windows", QUAL, " ", Rver, sep = ""),
-        paste("AppVerName=R for Windows", QUAL, " ", Rver, sep = ""),
+        paste("AppName=R for Windows ", Rver, sep = ""),
+        paste("AppVerName=R for Windows ", Rver, sep = ""),
         paste("AppVersion=", Rver, sep = ""),
         paste("VersionInfoVersion=", Rver0, sep = ""),
-        paste("DefaultDirName={code:UserPF}\\R\\", RW, SUFF, sep = ""),
+        paste("DefaultDirName={code:UserPF}\\R\\", RW, sep = ""),
         paste("InfoBeforeFile=", srcdir, "\\COPYING", sep = ""),
         if(Producer == "R-core") "AppPublisher=R Development Core Team"
         else Producer,
@@ -80,12 +61,15 @@
     lines <- readLines(regfile)
     lines <- gsub("@RVER@", Rver, lines)
     lines <- gsub("@Producer@", Producer, lines)
-    lines <- gsub("@bindir@", bindir, lines)
-    lines <- gsub("@RK@", RK, lines)
-    lines <- gsub("@QUAL@", QUAL, lines)
     writeLines(lines, con)
 
-    writeLines(readLines(types), con)
+    lines <- readLines(types)
+    if(have64bit && !have32bit) {
+        lines <- lines[-c(3,4,6)]
+        lines <- gsub("user(32)* ", "", lines)
+        lines <- gsub("compact ", "", lines)
+    }
+    writeLines(lines, con)
 
     lines <- readLines("code.iss")
     lines <- gsub("@MDISDI@", MDISDI, lines)
@@ -128,7 +112,7 @@
 	    	component <- "tests"
 	else if (grepl("^Tcl/(bin|lib)64", f))
 	    component <- "tcl/64"
-	else if (have32bit && have64bit &&
+	else if (have64bit &&
                  (grepl("^Tcl/bin", f) ||
                   grepl("^Tcl/lib/(dde1.3|reg1.2|Tktable)", f)))
 	    component <- "tcl/32"

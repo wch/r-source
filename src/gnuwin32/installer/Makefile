@@ -142,7 +142,7 @@ R0.iss: JRins.pl header1.iss types3264.iss types32.iss types64.iss code.iss \
   ../../../VERSION ../../../SVN-REVISION
 	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
 
-R.iss: JRins.R header1.iss types3264.iss types32.iss types64.iss code.iss \
+R.iss: JRins.R header1.iss types3264.iss types32.iss code.iss \
    CustomMsg.txt imagedir fixups 32bit md5sums \
   ../../../VERSION ../../../SVN-REVISION
 	../../../bin$(R_ARCH)/Rscript JRins.R \
