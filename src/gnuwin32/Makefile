@@ -356,7 +356,9 @@ rinstaller:
 	@$(MAKE) -C installer clean
 
 crandir:
+ifeq ($(strip $(WIN)),64)
 	$(MAKE) -C cran all
+endif
 
 distribution:
 	@$(MK) all

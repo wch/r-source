@@ -1197,7 +1197,7 @@ vignettes @r{(the vignettes in package @strong{grid}:}
 	  @r{ only needed if building from an svn checkout)}
 manuals @r{(the PDF manuals)}
 rinstaller @r{(the install program)}
-crandir @r{(the @acronym{CRAN} distribution directory)}
+crandir @r{(the @acronym{CRAN} distribution directory, only for 64-bit builds)}
 @end example
 
 The parts can be made individually if a full build is not needed, but
