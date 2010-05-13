@@ -1730,10 +1730,11 @@ Mac OS 10.5 and 10.6).
 The R system and package-specific compilation flags can be overridden or
 added to by setting the appropriate Make variables in the personal file
 @file{@var{HOME}/.R/Makevars-@var{R_PLATFORM}} (but
-@file{@var{HOME}/.R/Makevars.win} on Windows), or if that does not
-exist, @file{@var{HOME}/.R/Makevars}, where @samp{R_PLATFORM} is the
-platform for which R was built, as available in the @code{platform}
-component of the R variable @code{R.version}.
+@file{@var{HOME}/.R/Makevars.win} or @file{@var{HOME}/.R/Makevars.win64}
+on Windows), or if that does not exist, @file{@var{HOME}/.R/Makevars},
+where @samp{R_PLATFORM} is the platform for which R was built, as
+available in the @code{platform} component of the R variable
+@code{R.version}.
 
 Package developers are encouraged to use this mechanism to enable a
 reasonable amount of diagnostic messaging (``warnings'') when compiling,

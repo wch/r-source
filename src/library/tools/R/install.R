@@ -610,7 +610,7 @@
                                             "PearsonDS", "RBGL", "RODBC",
                                             "RSiena", "Rcpp", "Runuran",
                                             "fastICA", "glmnet", "gstat",
-                                            "mvabund", "randtoolbox", "rjags",
+                                            "mvabund", "randtoolbox",
                                             "rngWELL", "tcltk2"))
                             one_only <- sum(nchar(readLines("../configure.win"), "bytes")) > 0
                     }
@@ -710,6 +710,8 @@
             ## if we have subarchs, update DESCRIPTION
             fi <- file.info(Sys.glob(file.path(instdir, "libs", "*")))
             dirs <- row.names(fi[fi$isdir %in% TRUE])
+            ## avoid DLLs installed by rogue packages
+            if(WINDOWS) dirs <- dirs[dirs %in% c("i386", "x64")]
             if (length(dirs)) {
                 descfile <- file.path(instdir, "DESCRIPTION")
                 olddesc <- readLines(descfile)
@@ -1411,13 +1413,17 @@
     if (length(objs)) objs <- p0(objs, OBJ_EXT, collapse=" ")
 
     if (WINDOWS) {
-        if (file.exists(f <- path.expand("~/.R/Makevars.win")))
+        if (rarch == "/x64" &&
+            file.exists(f <- path.expand("~/.R/Makevars.win64")))
+            makefiles <- c(makefiles, f)
+        else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
             makefiles <- c(makefiles, f)
         else if (file.exists(f <- path.expand("~/.R/Makevars")))
             makefiles <- c(makefiles, f)
     } else {
         if (file.exists(f <- path.expand(paste("~/.R/Makevars",
-                                               Sys.getenv("R_PLATFORM"), sep="-"))))
+                                               Sys.getenv("R_PLATFORM"),
+                                               sep="-"))))
             makefiles <- c(makefiles, f)
         else if (file.exists(f <- path.expand("~/.R/Makevars")))
             makefiles <- c(makefiles, f)
