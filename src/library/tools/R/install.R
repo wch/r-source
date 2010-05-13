@@ -122,6 +122,7 @@
             "			set variables for the configure scripts (if any)",
             "\nand on Windows only",
             "      --auto-zip	select whether to zip data automatically",
+            "      --force-biarch	attempt to build both architectures",
             "",
             "Which of --html or --no-html is the default depends on the build of R:",
             paste("for this one it is ",
@@ -603,14 +604,17 @@
                     one_only <- !multiarch
                     if(!one_only && file.exists("../configure.win")) {
                         ## for now, hardcode some exceptions
+                        ## These are packages which have arch-independent
+                        ## code in configure.win
                         if(!pkg_name %in% c("AnalyzeFMRI", "CORElearn",
                                             "PearsonDS", "RBGL", "RODBC",
                                             "RSiena", "Rcpp", "Runuran",
                                             "fastICA", "glmnet", "gstat",
-                                            "mvabund", "randtoolbox",
+                                            "mvabund", "randtoolbox", "rjags",
                                             "rngWELL", "tcltk2"))
                             one_only <- sum(nchar(readLines("../configure.win"), "bytes")) > 0
                     }
+                    if(force_biarch) one_only <- FALSE
                     if(one_only)
                         has_error <- run_shlib(pkg_name, srcs, instdir, rarch)
                     else {
@@ -977,6 +981,7 @@
     tar_up <- zip_up <- FALSE
     shargs <- character(0)
     multiarch <- TRUE
+    force_biarch <- FALSE
     test_load <- TRUE
 
     get_user_libPaths <- FALSE
@@ -1052,6 +1057,8 @@
             libs_only <- TRUE
         } else if (a == "--no-multiarch") {
             multiarch <- FALSE
+        } else if (a == "--force-biarch") {
+            force_biarch <- TRUE
         } else if (a == "--maybe-get-user-libPaths") {
             get_user_libPaths <- TRUE
         } else if (a == "--build") {

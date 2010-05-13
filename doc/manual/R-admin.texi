@@ -1777,7 +1777,8 @@ where there is an @file{configure} script, or a file @file{src/Makefile}.
 
 where there is a non-empty @file{configure.win} script, or a file
 @file{src/Makefile.win} (plus some exceptions where the package is known
-to have an architecture-independent @file{configure.win}).
+to have an architecture-independent @file{configure.win}, or if
+@option{--force-biarch} is used to assert so).
 
 @end table
 
@@ -4282,7 +4283,9 @@ environment can be found in the ``R on AIX'' project on R-Forge
 
 The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
 This is unsupported, but experiments have been conducted and a few
-workarounds added for @R{} 2.6.0.
+workarounds added for @R{} 2.6.0.  Currently (mid 2010) the build
+produced with Cygwin's @command{gcc 4.3.4} fails to handles regular
+expressions correctly.
 
 Only building as a shared library works,@footnote{Windows DLLs need to
 have all links resolved at build time and so cannot resolve against
