@@ -648,7 +648,8 @@
                     owd <- setwd("src")
                     system_makefile <- file.path(R.home(), paste0("etc", rarch),
                                                  "Makeconf")
-                    site <- file.path(p0(R.home("etc"), rarch), "Makevars.site")
+                    site <- file.path(paste(R.home("etc"), rarch, sep=""),
+                                      "Makevars.site")
                     makefiles <- c(system_makefile,
                                    if(file.exists(site)) site,
                                    "Makefile")
