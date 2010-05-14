@@ -1008,7 +1008,7 @@ GCC.
 There are some macros which are built whilst configuring the building of
 @R{} itself and are stored in
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}.  That makefile is included
-as a @file{Makefile} @emph{before} @file{Makevars[.win]}, and so the
+as a @file{Makefile} @emph{after} @file{Makevars[.win]}, and the
 macros it defines can be used in the latter.  These include
 
 @table @code
@@ -1142,6 +1142,32 @@ $(R_HOME)/bin$(R_ARCH_BIN)/Rscript -e '@var{R expression}'
 
 @noindent
 where @code{$(R_ARCH_BIN)} is only needed currently on Windows.
+
+Since @file{Makeconf} is included after @file{Makevars[.win]}, the values
+of the macros it defines cannot be used in GNU-style conditionals.  However,
+environment variables can be and so for example a way on Windows to
+select different macros for 32- and 64-bit code is
+
+@example
+ifeq "$@{R_ARCH@}" "/x64"
+PKG_LIBS = @var{value for 64-bit Windows}
+else
+PKG_LIBS = @var{value for 32-bit Windows}
+endif
+@end example
+
+@noindent
+To make this simpler, as from @R{} 2.11.1 (but not in @R{} 2.11.0) you
+can use
+
+@example
+ifeq "$(WIN)" "64"
+PKG_LIBS = @var{value for 64-bit Windows}
+else
+PKG_LIBS = @var{value for 32-bit Windows}
+endif
+@end example
+
 
 @menu
 * Back-compatibility for Makevars::  

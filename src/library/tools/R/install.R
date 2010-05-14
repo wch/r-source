@@ -1341,7 +1341,10 @@
     if (length(objs)) objs <- p0(objs, OBJ_EXT, collapse=" ")
 
     if (WINDOWS) {
-        if (file.exists(f <- path.expand("~/.R/Makevars.win")))
+        if (rarch == "x64" &&
+            file.exists(f <- path.expand("~/.R/Makevars.win64")))
+            makefiles <- c(makefiles, f)
+        else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
             makefiles <- c(makefiles, f)
         else if (file.exists(f <- path.expand("~/.R/Makevars")))
             makefiles <- c(makefiles, f)
@@ -1387,6 +1390,7 @@
     ## removed in 2.10.0
     ## if (WINDOWS) makeargs <- c(makeargs, "all")
     if (WINDOWS && debug) makeargs <- c(makeargs, "DEBUG=T")
+    if (WINDOWS && rarch == "x64") makeargs <- c(makeargs, "WIN=64")
 
     cmd <- paste(MAKE, p1(paste("-f", makefiles)), p1(makeargs), p1(makeobjs))
     if (dry_run) {
