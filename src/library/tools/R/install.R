@@ -71,7 +71,6 @@
             Sys.setenv(R_ARCH = rarch)
             Sys.setenv(R_ARCH_BIN = rarch)
         }
-        if (rarch == "x64") Sys.setenv(TCLBIN = "64") else Sys.unsetenv('TCLBIN')
     }
 
     Usage <- function() {
@@ -629,7 +628,6 @@
                             ra <- paste0("/", arch)
                             Sys.setenv(R_ARCH = ra)
                             Sys.setenv(R_ARCH_BIN = ra)
-                            if (arch == "x64") Sys.setenv(TCLBIN = "64")
                             has_error0 <- run_shlib(pkg_name, srcs, instdir, ra)
                             setwd(owd)
                             ## allow archs other than the current one to fail.
@@ -1469,7 +1467,8 @@
                       p0("SHLIB_LIBADD='", p1(shlib_libadd), "'"))
 
     if (WINDOWS && debug) makeargs <- c(makeargs, "DEBUG=T")
-    if (WINDOWS && rarch == "/x64") makeargs <- c(makeargs, "WIN=64")
+    ## TCLBIN is needed for tkrplot and tcltk2
+    if (WINDOWS && rarch == "/x64") makeargs <- c(makeargs, "WIN=64 TCLBIN=64")
 
     cmd <- paste(MAKE, p1(paste("-f", makefiles)), p1(makeargs), p1(makeobjs))
     if (dry_run) {
