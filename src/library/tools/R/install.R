@@ -620,7 +620,7 @@
                     else {
                         setwd(owd)
                         for(arch in archs) {
-                            message("\n", domain = NA) # two blank lines
+                            message("", domain = NA) # a blank line
                             starsmsg("***", "arch - ", arch)
                             ss <- paste("src", arch, sep = "-")
                             dir.create(ss, showWarnings = FALSE)
@@ -1319,8 +1319,10 @@
         ## For winshlib.mk to pick up Makeconf
         rarch <- Sys.getenv("R_ARCH", NA)
         if(is.na(rarch)) {
-            rarch <- .Platform$r_arch
-            if (nzchar(rarch)) Sys.setenv(R_ARCH = p0("/", rarch))
+            if (nzchar(.Platform$r_arch)) {
+                rarch = p0("/", .Platform$r_arch)
+                Sys.setenv(R_ARCH = rarch)
+            }
         }
     }
 
@@ -1411,7 +1413,7 @@
     if (length(objs)) objs <- p0(objs, OBJ_EXT, collapse=" ")
 
     if (WINDOWS) {
-        if (rarch == "x64" &&
+        if (rarch == "/x64" &&
             file.exists(f <- path.expand("~/.R/Makevars.win64")))
             makefiles <- c(makefiles, f)
         else if (file.exists(f <- path.expand("~/.R/Makevars.win")))
@@ -1458,10 +1460,8 @@
         makeargs <- c(makeargs,
                       p0("SHLIB_LIBADD='", p1(shlib_libadd), "'"))
 
-    ## removed in 2.10.0
-    ## if (WINDOWS) makeargs <- c(makeargs, "all")
     if (WINDOWS && debug) makeargs <- c(makeargs, "DEBUG=T")
-    if (WINDOWS && rarch == "x64") makeargs <- c(makeargs, "WIN=64")
+    if (WINDOWS && rarch == "/x64") makeargs <- c(makeargs, "WIN=64")
 
     cmd <- paste(MAKE, p1(paste("-f", makefiles)), p1(makeargs), p1(makeobjs))
     if (dry_run) {

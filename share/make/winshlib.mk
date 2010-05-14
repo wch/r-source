@@ -1,6 +1,7 @@
 ## ${R_HOME}/share/make/winshlib.mk
 
 include $(R_HOME)/etc${R_ARCH}/Makeconf
+-include $(R_HOME)/etc${R_ARCH}/Makevars.site
 
 all: $(SHLIB)
 
