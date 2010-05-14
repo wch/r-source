@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-05-03 r51895)
+R version 2.12.0 Under development (unstable) (2010-05-14 r51995)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -2592,7 +2592,7 @@ Class "vector", by class "list", distance 2
 > ## for more examples, see ?S3Class.
 > 
 > utils::str(.OldClassesList)
-List of 27
+List of 28
  $ : chr [1:2] "anova" "data.frame"
  $ : chr [1:2] "mlm" "lm"
  $ : chr [1:2] "aov" "lm"
@@ -2612,6 +2612,7 @@ List of 27
  $ : chr "packageIQR"
  $ : chr "mtable"
  $ : chr "table"
+ $ : chr [1:2] "summaryDefault" "table"
  $ : chr "summary.table"
  $ : chr "recordedplot"
  $ : chr "socket"

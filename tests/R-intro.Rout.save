@@ -1,5 +1,5 @@
 
-R version 2.11.0 Under development (unstable) (2010-01-07 r50925)
+R version 2.12.0 Under development (unstable) (2010-05-14 r51995)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -693,8 +693,8 @@ Call:
 lm(formula = y ~ x, data = dummy)
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--3.5401 -1.1026 -0.0541  1.1525  3.2623 
+   Min     1Q Median     3Q    Max 
+-3.540 -1.103 -0.054  1.152  3.262 
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
@@ -714,8 +714,8 @@ Call:
 lm(formula = y ~ x, data = dummy, weights = 1/w^2)
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--1.32054 -0.44924 -0.00879  0.50876  1.26555 
+    Min      1Q  Median      3Q     Max 
+-1.3205 -0.4492 -0.0088  0.5088  1.2656 
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    

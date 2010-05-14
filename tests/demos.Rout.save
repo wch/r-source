@@ -1,5 +1,5 @@
 
-R version 2.11.0 Under development (unstable) (2010-03-21 r51349)
+R version 2.12.0 Under development (unstable) (2010-05-14 r51995)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -61,8 +61,8 @@ Type 'q()' to quit R.
 +     "\n\t starting with 'is.' :\t  ",
 +     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n", sep = "")
 
-Number of base objects:		1224
-Number of functions in base:	1195
+Number of base objects:		1229
+Number of functions in base:	1200
 	 starting with 'is.' :	  50
 
 > ## 0.14  : 31
@@ -1170,8 +1170,8 @@ glm(formula = Fr ~ M.user * Temp * Soft + Brand, family = poisson,
     data = detg)
 
 Deviance Residuals: 
-      Min         1Q     Median         3Q        Max  
--2.208764  -0.991898  -0.001264   0.935415   1.976008  
+     Min        1Q    Median        3Q       Max  
+-2.20876  -0.99190  -0.00126   0.93542   1.97601  
 
 Coefficients:
                             Estimate Std. Error z value Pr(>|z|)    
@@ -1211,8 +1211,8 @@ glm(formula = terms(Fr ~ M.user * Temp * Soft + Brand * M.user *
     Temp, keep.order = TRUE), family = poisson, data = detg)
 
 Deviance Residuals: 
-      Min         1Q     Median         3Q        Max  
--0.913649  -0.355846   0.002531   0.330274   0.921460  
+     Min        1Q    Median        3Q       Max  
+-0.91365  -0.35585   0.00253   0.33027   0.92146  
 
 Coefficients:
                             Estimate Std. Error z value Pr(>|z|)    
@@ -1251,8 +1251,8 @@ glm(formula = terms(Fr ~ M.user * Temp * Soft + Brand * M.user *
     Temp, keep.order = TRUE), family = poisson, data = detg)
 
 Deviance Residuals: 
-      Min         1Q     Median         3Q        Max  
--0.913649  -0.355846   0.002531   0.330274   0.921460  
+     Min        1Q    Median        3Q       Max  
+-0.91365  -0.35585   0.00253   0.33027   0.92146  
 
 Coefficients:
                             Estimate Std. Error z value Pr(>|z|)    
