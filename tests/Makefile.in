@@ -78,10 +78,12 @@ clean:
 	-@rm -f stamp-R Makedeps Rplot* Rprof.out data dumpdata.R \
 	  reg-plot-latin1.ps reg-plot.ps reg-tests-?.ps \
 	  R-exts.* R-intro.R R-intro.Rout \
-	  FALSE* .R .tex mirrors.html PACKAGES*
+	  FALSE* .R .tex mirrors.html PACKAGES* ./-package.Rd
 	-@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	-@rm -f ver20.txt ver20.html ver20.tex ver20-Ex.R
 	-@rm -rf anRpackage myTst* myLib
+	-@rm -f exNSS4_1.0.tar.gz exS4noNS_1.0.tar.gz pkgA_1.0.tar.gz pkgB_1.0.tar.gz
+
 distclean: clean
 	-@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
