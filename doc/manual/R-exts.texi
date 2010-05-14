@@ -1152,11 +1152,24 @@ select different macros for 32- and 64-bit code is
 
 @example
 ifeq "$@{R_ARCH@}" "/x64"
-PKG_LIBS = @var{value for x64 Windows}
+PKG_LIBS = @var{value for 64-bit Windows}
 else
-PKG_LIBS = @var{value for i386 Windows}
+PKG_LIBS = @var{value for 32-bit Windows}
 endif
 @end example
+
+@noindent
+To make this simpler, as from @R{} 2.11.1 (but not in @R{} 2.11.0) you
+can use
+
+@example
+ifeq "$(WIN)" "64"
+PKG_LIBS = @var{value for 64-bit Windows}
+else
+PKG_LIBS = @var{value for 32-bit Windows}
+endif
+@end example
+
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example
