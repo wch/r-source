@@ -1,7 +1,5 @@
 ## ${R_HOME}/share/make/shlib.mk
 
-include $(R_HOME)/etc${R_ARCH}/Makeconf
-
 all: $(SHLIB)
 
 $(SHLIB): $(OBJECTS)

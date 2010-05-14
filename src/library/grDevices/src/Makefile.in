@@ -42,6 +42,7 @@ shlib: $(SHLIB)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(SHLIB) \
 	  $(top_builddir)/library/$(pkg)/libs@R_ARCH@/$(SHLIB)
 
+include $(R_HOME)/etc${R_ARCH}/Makeconf
 include $(top_srcdir)/share/make/shlib.mk
 
 mostlyclean: clean

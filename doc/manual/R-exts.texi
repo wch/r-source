@@ -670,7 +670,8 @@ which can used in C or C++.  On all Windows builds (even 64-bit ones)
 @samp{WIN64}, and on Mac OS X @samp{__APPLE__} and @samp{__APPLE_CC__}
 are defined.
 
-The default rules can be tweaked by setting macros in a file
+The default rules can be tweaked by setting macros@footnote{the POSIX
+terminology, called `make variables' by GNU make.} in a file
 @file{src/Makevars} (@pxref{Using Makevars}).  Note that this mechanism
 should be general enough to eliminate the need for a package-specific
 @file{src/Makefile}.  If such a file is to be distributed, considerable
@@ -1010,8 +1011,9 @@ GCC.
 There are some macros which are built whilst configuring the building of
 @R{} itself and are stored in
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}.  That makefile is included
-as a @file{Makefile} @emph{after} @file{Makevars[.win]}, and the
-macros it defines can be used in the latter.  These include
+as a @file{Makefile} @emph{after} @file{Makevars[.win]}, and the macros
+it defines can be used in macro assignments and make command lines in the
+latter.  These include
 
 @table @code
 @item FLIBS
@@ -6212,7 +6214,7 @@ MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
 
 It is also possible to set such variables in personal @file{Makevars}
 files, which are read after the local @file{Makevars} and the system
-makefiles.
+makefiles or in a site-wide @file{Makevars.site} file.
 @ifset UseExternalXrefs
 @xref{Customizing package compilation,
 Customizing package compilation, R-admin,

@@ -648,7 +648,10 @@
                     owd <- setwd("src")
                     system_makefile <- file.path(R.home(), paste0("etc", rarch),
                                                  "Makeconf")
-                    makefiles <- c(system_makefile, "Makefile")
+                    site <- file.path(p0(R.home("etc"), rarch), "Makevars.site")
+                    makefiles <- c(system_makefile,
+                                   if(file.exists(site)) site,
+                                   "Makefile")
                     if (file.exists(f <- path.expand(paste("~/.R/Makevars",
                                                            Sys.getenv("R_PLATFORM"), sep="-"))))
                         makefiles <- c(makefiles, f)
@@ -1310,6 +1313,7 @@
         SHLIB_EXT <- sub(".*= ", "", grep("^SHLIB_EXT", mconf, value = TRUE))
         SHLIB_LIBADD <- sub(".*= ", "", grep("^SHLIB_LIBADD", mconf, value = TRUE))
         MAKE <- Sys.getenv("MAKE")
+        rarch <- Sys.getenv("R_ARCH")
     } else {
         rhome <- chartr("\\", "/", R.home())
         Sys.setenv(R_HOME = rhome)
@@ -1320,9 +1324,9 @@
         rarch <- Sys.getenv("R_ARCH", NA)
         if(is.na(rarch)) {
             if (nzchar(.Platform$r_arch)) {
-                rarch = p0("/", .Platform$r_arch)
+                rarch <- p0("/", .Platform$r_arch)
                 Sys.setenv(R_ARCH = rarch)
-            }
+            } else rarch <- ""
         }
     }
 
@@ -1330,9 +1334,12 @@
 
     objs <- character()
     shlib <- ""
+    site <- file.path(p0(R.home("etc"), rarch), "Makevars.site")
     makefiles <-
-        file.path(R.home("share"), "make",
-                  if (WINDOWS) "winshlib.mk" else "shlib.mk")
+        c(file.path(p0(R.home("etc"), rarch), "Makeconf"),
+          if(file.exists(site)) site,
+          file.path(R.home("share"), "make",
+                    if (WINDOWS) "winshlib.mk" else "shlib.mk"))
     shlib_libadd <- if (nzchar(SHLIB_LIBADD)) SHLIB_LIBADD else character()
     with_cxx <- FALSE
     with_f77 <- FALSE
