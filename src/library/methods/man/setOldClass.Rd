@@ -1,6 +1,6 @@
 % File src/library/methods/man/setOldClass.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{setOldClass}
@@ -37,6 +37,7 @@
 \alias{recordedplot-class}
 \alias{rle-class}
 \alias{socket-class}
+\alias{summaryDefault-class}
 \alias{summary.table-class}
 \alias{oldClass-class}
 \alias{.OldClassesList}
@@ -46,14 +47,14 @@
 \alias{initialize,ordered-method}
 \alias{initialize,table-method}
 \alias{initialize,summary.table-method}
-\title{Register Old-Style (S3) Classes and Inheritance }
+\title{Register Old-Style (S3) Classes and Inheritance}
 \description{
   Register an old-style (a.k.a. \sQuote{S3}) class as a formally defined
   class. The \code{Classes} argument is the character vector used as the
   \code{class} attribute; in particular, if there is more than one
-  string,  old-style class inheritance is mimicked.  Registering via
-  \code{setOldClass} allows S3 classes to appear  in method
-  signatures, as a slot in an S4 class, or as a superclass of an S4 class.
+  string, old-style class inheritance is mimicked.  Registering via
+  \code{setOldClass} allows S3 classes to appear in method signatures,
+  as a slot in an S4 class, or as a superclass of an S4 class.
 }
 \usage{
 setOldClass(Classes, prototype, where, test = FALSE, S4Class)
@@ -85,17 +86,16 @@ setOldClass(Classes, prototype, where, test = FALSE, S4Class)
     different set of class strings, with the same first string.
     This is a different mechanism in implementation and should be
     specified separately for each pair of classes that have an
-    optional inheritance.
-    See the details below.
+    optional inheritance.  See the \sQuote{Details}.
   }
   \item{S4Class}{ optionally, the class definition or the class name
-      of an S4 class.  The new class will have all the slots and other
-      properties of this class, plus its S3 inheritance as defined by
-      the \code{Classses} argument.  Arguments \code{prototype} and
-      \code{test} must not be supplied in this case.  See the section
-      on \dQuote{S3 classes with known attributes} below.
-    }
+    of an S4 class.  The new class will have all the slots and other
+    properties of this class, plus its S3 inheritance as defined by
+    the \code{Classses} argument.  Arguments \code{prototype} and
+    \code{test} must not be supplied in this case.  See the section
+    on \dQuote{S3 classes with known attributes} below.
   }
+}
 \details{
   Each of the names will be defined as an S4 class, extending the
   remaining classes in \code{Classes}, and the class \code{oldClass},
@@ -106,15 +106,14 @@ setOldClass(Classes, prototype, where, test = FALSE, S4Class)
   call to \code{\link{new}}; however, this usually not as relevant as
   generating objects from subclasses (see the section on extending S3
   classes below).   If  a prototype is not provided,
-   the class will be created as a virtual S4
-  class.
-The main disadvantage is that the prototype object in an S4 class that
-uses this class as a slot will have a \code{NULL} object in that slot,
-which can sometimes lead to confusion.
+   the class will be created as a virtual S4 class.
+  The main disadvantage is that the prototype object in an S4 class that
+  uses this class as a slot will have a \code{NULL} object in that slot,
+  which can sometimes lead to confusion.
 
- Beginning with version 2.8.0 of \R, support is provided for using a
- (registered) S3 class as a super class of a new S4 class.  See the
- section on extending S3 classes below, and the examples.
+  Beginning with version 2.8.0 of \R, support is provided for using a
+  (registered) S3 class as a superclass of a new S4 class.  See the
+  section on extending S3 classes below, and the examples.
 
   See \link{Methods} for the details of method dispatch and
   inheritance.
@@ -146,7 +145,6 @@ which can sometimes lead to confusion.
   The list \code{.OldClassesList} contains the old-style classes that
   are defined by the methods package.  Each element of the list is a
   character vector, with multiple strings if inheritance is included.
-  %%
   Each element of the list was passed to \code{setOldClass} when
   creating the \pkg{methods} package; therefore, these classes can be used
   in \code{\link{setMethod}} calls, with the inheritance as implied by
@@ -183,52 +181,51 @@ which can sometimes lead to confusion.
   all objects from such classes contain the S3 class in a special
   slot.
 
-There are three different ways to indicate an extension to an existing
-S3 class:  \code{setOldClass()},  \code{setClass()} and
-\code{setIs()}.  In most cases, calling \code{setOldClass} is the
-best approach,  but the alternatives may be preferred in the special
-circumstances described below.
+  There are three different ways to indicate an extension to an existing
+  S3 class:  \code{setOldClass()},  \code{setClass()} and
+  \code{setIs()}.  In most cases, calling \code{setOldClass} is the
+  best approach,  but the alternatives may be preferred in the special
+  circumstances described below.
 
-Suppose \code{"A"} is any class extending \code{"oldClass"}. then
+  Suppose \code{"A"} is any class extending \code{"oldClass"}. then
 
- \code{setOldClass(c("B", "A"))}
+  \code{setOldClass(c("B", "A"))}
 
-creates a new class \code{"B"} whose S3 class
-concatenates \code{"B"}  with \code{S3Class("A")}.  The new class is a
-virtual class.  If \code{"A"} was defined with known attribute/slots,
-then \code{"B"} has these slots also; therefore, you must believe that
-the corresponding S3 objects from class \code{"B"} do indeed have the
-claimed attributes.  Notice that you can supply an S4 definition for the
-new class to specify additional attributes (as described in the next
-section.)
-The first alternative call produces a non-virtual  class.
+  creates a new class \code{"B"} whose S3 class
+  concatenates \code{"B"}  with \code{S3Class("A")}.  The new class is a
+  virtual class.  If \code{"A"} was defined with known attribute/slots,
+  then \code{"B"} has these slots also; therefore, you must believe that
+  the corresponding S3 objects from class \code{"B"} do indeed have the
+  claimed attributes.  Notice that you can supply an S4 definition for the
+  new class to specify additional attributes (as described in the next
+  section.)
+  The first alternative call produces a non-virtual class.
 
-\code{setClass("B", contains = "A")}
+  \code{setClass("B", contains = "A")}
 
-This creates a non-virtual class with the same slots and superclasses
-as class \code{"A"}.  However, class \code{"B"} is not included in
-the S3 class slot of the new class, unless you provide it explicitly
-in the prototype.
+  This creates a non-virtual class with the same slots and superclasses
+  as class \code{"A"}.  However, class \code{"B"} is not included in
+  the S3 class slot of the new class, unless you provide it explicitly
+  in the prototype.
 
-\code{setClass("B"); setIs("B", "A", .....)}
+  \code{setClass("B"); setIs("B", "A", .....)}
 
-This creates a virtual class that extends \code{"A"}, but does not
-contain the slots of \code{"A"}.  The additional arguments to
-\code{\link{setIs}} should provide a coerce and replacement method.
-In order for the new class to inherit S3 methods, the coerce method must
-ensure that the class \code{"A"} object produced has a suitable S3
-class.  The only likely reason to prefer this third approach is that
-class \code{"B"} is not consistent with known attributes in class
-\code{"A"}.
+  This creates a virtual class that extends \code{"A"}, but does not
+  contain the slots of \code{"A"}.  The additional arguments to
+  \code{\link{setIs}} should provide a coerce and replacement method.
+  In order for the new class to inherit S3 methods, the coerce method must
+  ensure that the class \code{"A"} object produced has a suitable S3
+  class.  The only likely reason to prefer this third approach is that
+  class \code{"B"} is not consistent with known attributes in class
+  \code{"A"}.
 
-Beginning with version 2.9.0 of \R, objects from a class extending an
-S3 class will be converted to the corresponding S3 class when being
-passed to an S3 method defined for that class (that is, for one of the
-strings in the S3 class attribute).  This is intended to ensure, as
-far as possible, that such methods will work if they work for ordinary
-S3 objects.  See \code{\link{Classes}} for details.
-
- }
+  Beginning with version 2.9.0 of \R, objects from a class extending an
+  S3 class will be converted to the corresponding S3 class when being
+  passed to an S3 method defined for that class (that is, for one of the
+  strings in the S3 class attribute).  This is intended to ensure, as
+  far as possible, that such methods will work if they work for ordinary
+  S3 objects.  See \code{\link{Classes}} for details.
+}
 
 \section{S3 Classes with known attributes}{
   A further specification of an S3 class can be made \emph{if} the
@@ -245,22 +242,22 @@ S3 objects.  See \code{\link{Classes}} for details.
   argument \code{S4Class} to \code{setOldClass()}.
 
   See the definition of class \code{"ts"} in the examples below.  The
-  call to \code{\link{setClass}} to create the S4 class can use the same class name, as here,
-  so long as the class definition is not sealed.  In the example, we
-  define \code{"ts"} as a vector structure with a numeric slot for
-  \code{"tsp"}.  The validity of this definition relies on an
-  assertion that all the S3 code for this class is consistent with
+  call to \code{\link{setClass}} to create the S4 class can use the same
+  class name, as here, so long as the class definition is not sealed.
+  In the example, we define \code{"ts"} as a vector structure with a
+  numeric slot for \code{"tsp"}.  The validity of this definition relies
+  on an assertion that all the S3 code for this class is consistent with
   that definition; specifically, that all \code{"ts"} objects will
   behave as vector structures and will have a numeric \code{"tsp"}
-  attribute. We  believe this to be true of all the base code in \R,
-  but as always with S3 classes, no guarantee is possible.
+  attribute. We believe this to be true of all the base code in \R, but
+  as always with S3 classes, no guarantee is possible.
 
   The S4 class definition can  have virtual superclasses (as in
   the \code{"ts"} case) if the S3 class is asserted to behave
   consistently with these (in the example, time-series objects are
   asserted to be consistent with the \linkS4class{structure} class).
 
-For another example, look at the S4 class definition for \code{"data.frame"}.
+  For another example, look at the S4 class definition for \code{"data.frame"}.
 
   Be warned that failures of the S3 class to live up to its asserted
   behavior will usually go uncorrected, since S3 classes inherently
@@ -274,28 +271,28 @@ For another example, look at the S4 class definition for \code{"data.frame"}.
   by pretending that it is present with class \code{"NULL"}, because
   attributes unlike slots can not have value \code{NULL}.
 
-  One irregularity that is usually tolerated, however, is to
-  optionally add other attributes to those guaranteed to exist (for
-  example, \code{"terms"} in \code{"data.frame"} objects returned by
- \code{\link{model.frame}}).  As of version 2.8.0, validity checks by
- \code{\link{validObject}} ignore extra attributes; even if this
- check is tightened in the future, classes extending S3 classes
- would likely be exempted because extra attributes are so common.
-  }
+  One irregularity that is usually tolerated, however, is to optionally
+  add other attributes to those guaranteed to exist (for example,
+  \code{"terms"} in \code{"data.frame"} objects returned by
+  \code{\link{model.frame}}).  As of version 2.8.0, validity checks by
+  \code{\link{validObject}} ignore extra attributes; even if this check
+  is tightened in the future, classes extending S3 classes would likely
+  be exempted because extra attributes are so common.
+}
 
 \seealso{
   \code{\link{setClass}}, \code{\link{setMethod}}
 }
 
 \references{
- Chambers, John M. (2008)
- \emph{Software for Data Analysis: Programming with R}
+  Chambers, John M. (2008)
+  \emph{Software for Data Analysis: Programming with R}
   Springer.  (For the R version: see section 10.6 for method
   selection and section 13.4 for generic functions).
-
- Chambers, John M. (1998)
- \emph{Programming with Data}
- Springer (For the original S4 version.)
+  
+  Chambers, John M. (1998)
+  \emph{Programming with Data}
+  Springer (For the original S4 version.)
 }
 
 \examples{
