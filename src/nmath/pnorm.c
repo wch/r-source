@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998	    Ross Ihaka
- *  Copyright (C) 2000-2002 The R Development Core Team
+ *  Copyright (C) 2000-2010 The R Development Core Team
  *  Copyright (C) 2003	    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -224,7 +224,7 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
  *
  * Note that we do want symmetry(0), lower/upper -> hence use y
  */
-    else if(log_p
+    else if((log_p && y < 1e170) /* avoid underflow below */
 	/*  ^^^^^ MM FIXME: can speedup for log_p and much larger |x| !
 	 * Then, make use of  Abramowitz & Stegun, 26.2.13, something like
 
@@ -239,13 +239,15 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 
  	 swap_tail;
 
+	 [Yes, but xsq might be infinite.]
+
 	*/
 	    || (lower && -37.5193 < x  &&  x < 8.2924)
 	    || (upper && -8.2924  < x  &&  x < 37.5193)
 	) {
 
 	/* Evaluate pnorm for x in (-37.5, -5.657) union (5.657, 37.5) */
-	xsq = 1.0 / (x * x);
+	xsq = 1.0 / (x * x); /* (1./x)*(1./x) might be better */
 	xnum = p[5] * xsq;
 	xden = xsq;
 	for (i = 0; i < 4; ++i) {

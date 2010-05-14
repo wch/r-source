@@ -275,6 +275,9 @@ BUG FIXES
     o	rbeta(n, a,b) no longer occasionally returns NaN for a >> 1 > b.
 	(PR#14291)
 
+    o	pnorm(x, log.p = TRUE) could return NaN not -Inf for x near
+	(minus for lower.tail=TRUE) the largest representable number.
+
 
 
 		CHANGES IN R VERSION 2.11.0
