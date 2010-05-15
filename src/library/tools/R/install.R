@@ -609,7 +609,7 @@
                                             "PearsonDS", "RBGL", "RODBC",
                                             "RSiena", "Rcpp", "Runuran",
                                             "fastICA", "glmnet", "gstat",
-                                            "mvabund", "randtoolbox",
+                                            "mvabund", "png", "randtoolbox",
                                             "rngWELL", "tcltk2"))
                             one_only <- sum(nchar(readLines("../configure.win"), "bytes")) > 0
                     }

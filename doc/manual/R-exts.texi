@@ -908,7 +908,8 @@ CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
 @noindent
 (Using @samp{$@{R_HOME@}/bin/R} rather than just @samp{R} is necessary
 in order to use the correct version of @R{} when running the script as
-part of @code{R CMD INSTALL}.)
+part of @code{R CMD INSTALL}, and the quotes since @samp{$@{R_HOME@}}
+might contain spaces.)
 
 @findex R CMD config
 You can use @code{R CMD config} for getting the value of the basic
