@@ -99,6 +99,10 @@ NEW FEATURES
 	class "summaryDefault" which has a separate print() method
 	that calls zapsmall() for numeric/complex values.
 
+    o	The startup message now includes the platform and if used,
+	sub-architecture: this is useful where different
+	(sub-)architectures run on the same OS.
+
 
 DEPRECATED & DEFUNCT
 
