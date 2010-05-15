@@ -38,7 +38,7 @@ void attribute_hidden PrintGreeting(void)
     Rprintf("ISBN 3-900051-07-0\n");
     Rprintf("Platform: %s", R_PLATFORM);
     if(strlen(R_ARCH)) Rprintf("/%s", R_ARCH);
-    Rprintf("\n\n");
+    Rprintf(" (%d-bit)\n\n", 8*sizeof(void *));
     Rprintf(_("R is free software and comes with ABSOLUTELY NO WARRANTY.\n\
 You are welcome to redistribute it under certain conditions.\n\
 Type 'license()' or 'licence()' for distribution details.\n\n"));
