@@ -40,9 +40,18 @@ setRepositories(graphics = getOption("menu.graphics"), ind = NULL)
   (e.g. only source packages or not Mac OS X binary packages).
   Further, for binary packages some repositories (notably R-Forge) only
   offer packages for the current or recent versions of \R.
-
+  
+  Repository \samp{CRAN} is treated specially: the value is taken from
+  the current setting of \code{getOption("repos")} if this has an
+  element \code{"CRAN"}: this ensures mirror selection is sticky.
+  
   This function requires the \R session to be interactive unless
   \code{ind} is supplied.
+}
+\note{
+  This does \strong{not} set the list of repositories at startup: to do
+  so set \code{\link{options}(repos=)} in a start up file (see help topic
+  \link{Startup}).
 }
 \value{
   This function is invoked mainly for its side effect of updating
