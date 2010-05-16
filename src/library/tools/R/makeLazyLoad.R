@@ -82,8 +82,8 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
         } else {
             files <- list_files_with_type(dataDir, "data")
             ## omit compression extensions
-            files <- unique(basename(file_path_sans_ext(ans, TRUE)))
-            files <- vector("list", length(files))
+            files <- unique(basename(file_path_sans_ext(files, TRUE)))
+            ans <- vector("list", length(files))
             dataEnv <- new.env(hash=TRUE)
             names(ans) <- files
             for(f in files) {
