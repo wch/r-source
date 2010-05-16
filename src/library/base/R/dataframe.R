@@ -912,7 +912,7 @@ data.frame <-
         o <- order(jseq)
         jseq <- jseq[o]
         jvseq <- jvseq[o]
-     
+
         jj <- jseq[jjj]
         v <- value[[ jvseq[[jjj]] ]]
         ## This is consistent with the have.i case rather than with
@@ -920,7 +920,7 @@ data.frame <-
         if (nrows > 0L && !length(v)) length(v) <- nrows
 	x[[jj]] <- v
         if(!is.null(v) && is.atomic(x[[jj]])) names(x[[jj]]) <- NULL
-      }
+    }
     if(length(new.cols) > 0L) {
         new.cols <- names(x) # we might delete columns with NULL
         ## added in 1.8.0

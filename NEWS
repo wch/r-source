@@ -276,13 +276,16 @@ BUG FIXES
 	architecture.  (It used to clean the src directory without
 	--no-multiarch.)
 
+    o	[<-.data.frame was not quite careful enough in assigning (and
+        potentially deleting) columns right-to-left. (PR#14263)
+
     o	rbeta(n, a,b) no longer occasionally returns NaN for a >> 1 > b.
 	(PR#14291)
 
     o	pnorm(x, log.p = TRUE) could return NaN not -Inf for x near
 	(minus for lower.tail=TRUE) the largest representable number.
 
-    o	Compressed ata files *.(txt|tab|csv).(gz|bz2|xz) were not
+    o	Compressed data files *.(txt|tab|csv).(gz|bz2|xz) were not
 	recognized for the list of data topics and hence for packages
 	using LazyData.  (PR#14273)
 
@@ -852,9 +855,6 @@ BUG FIXES
     o	If xy[z].coords (used internally by many graphics functions) are
 	given a list as 'x', they now check that the list has suitable
 	names and give a more informative error message.  (PR#13936)
-
-    o	[<-.data.frame was not quite careful enough in assigning (and
-        potentially deleting) columns right-to-left. (PR#14263)
 
 
 
