@@ -1713,6 +1713,7 @@ int consolereads(control c, const char *prompt, char *buf, int len,
     max_pos = 0;
     cur_line = &aLine[prompt_len];
     cur_line[0] = L'\0';
+    showcaret(c, 1);
     REDRAW;
     for(;;) {
 	wchar_t cur_char;
@@ -1829,6 +1830,7 @@ int consolereads(control c, const char *prompt, char *buf, int len,
 		    if (max_pos && addtohistory) wgl_histadd(cur_line);
 		    xbuffixl(p->lbuf);
 		    consolewrites(c, "\n");
+		    showcaret(c, 0);
 		    REDRAW;
 		    return cur_char == EOFKEY;
 		}
