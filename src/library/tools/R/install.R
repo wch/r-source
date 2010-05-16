@@ -615,7 +615,7 @@
                                             "rngWELL", "tcltk2"))
                             one_only <- sum(nchar(readLines("../configure.win"), "bytes")) > 0
                         if(one_only && !force_biarch)
-                            warning("this package has a non-empty 'configure.win' file, so building only the main architecture")
+                            warning("this package has a non-empty 'configure.win' file,\nso building only the main architecture\n", call. = FALSE, domain=NA)
                     }
                     if(force_biarch) one_only <- FALSE
                     if(one_only)
