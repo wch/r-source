@@ -81,8 +81,9 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
             names(ans) <- nms
         } else {
             files <- list_files_with_type(dataDir, "data")
-            files <- unique(basename(file_path_sans_ext(files)))
-            ans <- vector("list", length(files))
+            ## omit compression extensions
+            files <- unique(basename(file_path_sans_ext(ans, TRUE)))
+            files <- vector("list", length(files))
             dataEnv <- new.env(hash=TRUE)
             names(ans) <- files
             for(f in files) {
@@ -120,7 +121,8 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
             dataEnv <- new.env(hash=TRUE)
             tmpEnv <- new.env()
             f0 <- files <- list_files_with_type(dataDir, "data")
-            files <- unique(basename(file_path_sans_ext(files)))
+            ## omit compression extensions
+            files <- unique(basename(file_path_sans_ext(files, TRUE)))
             dlist <- vector("list", length(files))
             names(dlist) <- files
             loaded <- character(0L)

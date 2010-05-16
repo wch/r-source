@@ -85,6 +85,11 @@ BUG FIXES
     o	pnorm(x, log.p = TRUE) could return NaN not -Inf for x near
 	(minus for lower.tail=TRUE) the largest representable number.
 
+    o	Compressed ata files *.(txt|tab|csv).(gz|bz2|xz) were not
+	recognized for the list of data topics and hence for packages
+	using LazyData.  (PR#14273)
+
+
 
 
 		CHANGES IN R VERSION 2.11.0

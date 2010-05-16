@@ -16,7 +16,7 @@
 \usage{
 file_ext(x)
 file_path_as_absolute(x)
-file_path_sans_ext(x)
+file_path_sans_ext(x, compression = FALSE)
 
 list_files_with_exts(dir, exts, all.files = FALSE,
                      full.names = TRUE)
@@ -25,6 +25,8 @@ list_files_with_type(dir, type, all.files = FALSE,
 }
 \arguments{
   \item{x}{character vector giving file paths.}
+  \item{compression}{logical: should compresssion extension \file{.gz},
+    \file{.bz2} or \file{.xz} be removed first?}
   \item{dir}{a character string with the path name to a directory.}
   \item{exts}{a character vector of possible file extensions.}
   \item{all.files}{a logical.  If \code{FALSE} (default), only visible
