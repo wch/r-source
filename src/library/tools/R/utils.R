@@ -57,10 +57,12 @@ function(x)
 ### ** file_path_sans_ext
 
 file_path_sans_ext <-
-function(x)
+function(x, compression = FALSE)
 {
     ## Return the file paths without extensions.
     ## (Only purely alphanumeric extensions are recognized.)
+    if(compression)
+        x <- sub("[.](gz|bz2|xz)$", "", x)
     sub("([^.]+)\\.[[:alnum:]]+$", "\\1", x)
 }
 

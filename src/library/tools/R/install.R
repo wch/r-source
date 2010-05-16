@@ -122,6 +122,7 @@
             "\nand on Windows only",
             "      --auto-zip	select whether to zip data automatically",
             "      --force-biarch	attempt to build both architectures",
+            "			even if there is a non-empty configure.win",
             "",
             "Which of --html or --no-html is the default depends on the build of R:",
             paste("for this one it is ",
@@ -609,9 +610,12 @@
                                             "PearsonDS", "RBGL", "RODBC",
                                             "RSiena", "Rcpp", "Runuran",
                                             "fastICA", "glmnet", "gstat",
-                                            "mvabund", "png", "randtoolbox",
+                                            "mvabund", "png", "proj4",
+                                            "randtoolbox",
                                             "rngWELL", "tcltk2"))
                             one_only <- sum(nchar(readLines("../configure.win"), "bytes")) > 0
+                        if(one_only && !force_biarch)
+                            warning("this package has a non-empty 'configure.win' file, so building only the main architecture")
                     }
                     if(force_biarch) one_only <- FALSE
                     if(one_only)
