@@ -906,8 +906,14 @@ data.frame <-
                 }
             }
 	}
-    else if(p > 0L) for(jjj in p:1L) { # we might delete columns with NULL
-	jj <- jseq[jjj]
+    else if(p > 0L)
+      for(jjj in p:1L) { # we might delete columns with NULL
+        ## ... and for that reason, we'd better ensure that jseq is increasing!
+        o <- order(jseq)
+        jseq <- jseq[o]
+        jvseq <- jvseq[o]
+
+        jj <- jseq[jjj]
         v <- value[[ jvseq[[jjj]] ]]
         ## This is consistent with the have.i case rather than with
         ## [[<- and $<- (which throw an error).  But both are plausible.
