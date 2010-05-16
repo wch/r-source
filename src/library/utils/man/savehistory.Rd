@@ -68,7 +68,7 @@ timestamp(stamp = date(),
   within a session by the use of \code{\link{Sys.setenv}}.
 
 #ifdef unix
-  Note that \code{readline} history library save files with permission
+  Note that \code{readline} history library saves files with permission
   \code{0600}, that is with read/write permission for the user and not
   even read permission for any other account.
 #endif
