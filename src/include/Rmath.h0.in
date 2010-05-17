@@ -633,6 +633,8 @@ R_EXTERN double R_PosInf;
 R_EXTERN double R_NegInf;
 R_EXTERN int N01_kind;
 #  undef R_EXTERN
+#else
+extern int N01_kind;
 # endif
 
 #endif /* MATHLIB_STANDALONE */
