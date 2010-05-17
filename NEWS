@@ -92,6 +92,11 @@ BUG FIXES
 	recognized for the list of data topics and hence for packages
 	using LazyData.  (PR#14273)
 
+    o	textConnection() did an unnecessary translation on strings in
+	a foreign encoding (e.g. UTF-8 strings on Windows) and so was
+	slower than it could have been on very long input strings.
+	(PR#14286)
+
 
 
 
