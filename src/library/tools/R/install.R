@@ -271,12 +271,24 @@
                                Sys.getenv("R_PLATFORM"), ".tar")
             filepath <- shQuote(file.path(startdir, filename))
             owd <- setwd(lib)
-            system(paste(TAR, "-chf", filepath,
+            TAR2 <- shQuote(Sys.getenv("TAR"))
+            system(paste(TAR2, "-chf", filepath,
                          paste(curPkg, collapse = " ")))
             system(paste(GZIP, "-9f", filepath))
-            message("packaged installation of ",
-                    sQuote(pkg_name), " as ", filename, ".gz",
-                    domain = NA)
+            if (grepl("darwin", R.version$os)) {
+                filename <- paste0(filename, ".gz")
+                nfilename <- paste0(pkg_name, "_", version,".tgz")
+                file.rename(file.path(startdir, filename),
+                            file.path(startdir, nfilename))
+                message("packaged installation of ",
+                        sQuote(pkg_name), " as ", sQuote(nfilename),
+                        domain = NA)
+            } else {
+                message("packaged installation of ",
+                        sQuote(pkg_name), " as ",
+                        sQuote(paste0(filename, ".gz")),
+                        domain = NA)
+            }
             setwd(owd)
         }
 
