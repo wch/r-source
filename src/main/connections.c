@@ -2405,7 +2405,9 @@ static void text_init(Rconnection con, SEXP text, int type)
     Rtextconn this = con->private;
 
     for(i = 0; i < nlines; i++)
-	nchars += strlen(translateChar(STRING_ELT(text, i))) + 1;
+	nchars += strlen(type == 1 ? translateChar(STRING_ELT(text, i))
+			 : ((type == 3) ?translateCharUTF8(STRING_ELT(text, i))
+			    : CHAR(STRING_ELT(text, i))) ) + 1;    
     this->data = (char *) malloc(nchars+1);
     if(!this->data) {
 	free(this); free(con->description); free(con->class); free(con);
