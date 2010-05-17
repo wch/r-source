@@ -1,7 +1,7 @@
 #! @PERL@
 #-*- perl -*-
 
-# Copyright (C) 2000-2009 R Development Core Team
+# Copyright (C) 2000-2010 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1696,7 +1696,7 @@ sub check_pkg {
 	}
     }
 
-    if(!$is_base_pkg && $haveR) {
+    if(!$is_base_pkg && $haveR && !$opt_extra_arch) {
 	if($opt_install) {
 	    $log->checking("for unstated dependencies in R code");
 	    my $Rcmd = "options(warn=1);tools:::.check_packages_used(package=\"${pkgname}\")\n";
@@ -1735,7 +1735,7 @@ sub check_pkg {
     ## Check whether methods have all arguments of the corresponding
     ## generic.
 
-    if($haveR) {
+    if($haveR && !$opt_extra_arch) {
 	$log->checking("S3 generic/method consistency");
 
 	my @msg_S3_methods =
@@ -1770,7 +1770,7 @@ sub check_pkg {
     ## Check whether replacement functions have their final argument
     ## named 'value'.
 
-    if($haveR) {
+    if($haveR && !$opt_extra_arch) {
 	$log->checking("replacement functions");
 
 	my @msg_replace_funs =
@@ -1809,7 +1809,7 @@ sub check_pkg {
 
     ## Check foreign function calls.
 
-    if($opt_ff_calls && $haveR) {
+    if($opt_ff_calls && $haveR && !$opt_extra_arch) {
 	$log->checking("foreign function calls");
 
 	my @msg_ff_calls =
@@ -1843,7 +1843,7 @@ sub check_pkg {
     ## Check R code for possible problems, including tests based on LT's
     ## codetools package.
 
-    if($haveR) {
+    if($haveR && !$opt_extra_arch) {
 	$log->checking("R code for possible problems");
 
 	my $any;
@@ -2018,7 +2018,7 @@ sub check_pkg {
 
     ## Check for missing documentation entries.
 
-    if($haveR || (-d "data")) {
+    if(!$opt_extra_arch && ($haveR || (-d "data"))) {
 	$log->checking("for missing documentation entries");
 
 	my $Rcmd= "options(warn=1)\n";
@@ -2218,7 +2218,7 @@ sub check_pkg {
 	$log->result("OK") unless($any);
     }
 	
-    if(!$is_base_pkg && (-d "data")) {
+    if(!$is_base_pkg && (-d "data") && !$opt_extra_arch) {
 	$log->checking("data for non-ASCII characters");
 	my @out = R_runR("tools:::.check_package_datasets('.')",
 			 "${R_opts} --slave");
