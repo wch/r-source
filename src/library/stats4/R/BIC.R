@@ -24,4 +24,16 @@ setMethod("BIC", signature(object="logLik"),
           -2 * c(object) + attr(object, "df") * log(attr(object, "nobs")) )
 
 setMethod("BIC", signature(object="ANY"),
-          function(object, ...) BIC(object=logLik(object, ...)) )
+	  ## work like AIC with *multiple* objects
+	  function(object, ...) {
+	      if(length(list(...))) {# several objects: produce data.frame
+		  val <- lapply(list(object, ...), logLik)
+		  val <- as.data.frame(t(sapply(val,
+						function(el)
+						c(attr(el, "df"), BIC(el)),
+						USE.NAMES=FALSE)))
+		  names(val) <- c("df", "AIC")
+		  row.names(val) <- as.character(match.call()[-1L])
+		  val
+	      } else BIC(logLik(object))
+	  })

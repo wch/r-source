@@ -215,6 +215,9 @@ NEW FEATURES
     o	R CMD INSTALL --build now names the file in the format used
 	for Mac OS X binary files on that platform.
 
+    o	BIC() in package stats4 now also works with multiple fitted models,
+	analogously to AIC().
+
 
 DEPRECATED & DEFUNCT
 
