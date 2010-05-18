@@ -535,7 +535,8 @@ R_PROG_INSTALL
 
 ## we would like a POSIX sed, and need one on Solaris
 AC_PATH_PROGS(SED, sed, /bin/sed, [/usr/xpg4/bin:$PATH])
-AC_PATH_PROGS(TR, tr, /bin/tr, [/usr/xpg4/tr:$PATH])
+## we need an tr that interprets \r for Rdiff
+AC_PATH_PROGS(TR, tr, /bin/tr, [/usr/xpg4/bin:$PATH])
 ## Make
 : ${MAKE=make}
 AC_SUBST(MAKE)

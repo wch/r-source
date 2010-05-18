@@ -4657,7 +4657,7 @@ else
   ;;
   *)
   as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-as_dummy="/usr/xpg4/tr:$PATH"
+as_dummy="/usr/xpg4/bin:$PATH"
 for as_dir in $as_dummy
 do
   IFS=$as_save_IFS
