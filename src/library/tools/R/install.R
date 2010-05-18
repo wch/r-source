@@ -274,8 +274,7 @@
                                Sys.getenv("R_PLATFORM"), ".tar")
             filepath <- shQuote(file.path(startdir, filename))
             owd <- setwd(lib)
-            TAR2 <- shQuote(Sys.getenv("TAR"))
-            system(paste(TAR2, "-chf", filepath,
+            system(paste(TAR, "-chf", filepath,
                          paste(curPkg, collapse = " ")))
             system(paste(GZIP, "-9f", filepath))
             if (grepl("darwin", R.version$os)) {
@@ -1137,8 +1136,8 @@
             of <- dir(tmpdir, full.names = TRUE)
             ## force the use of internal untar unless over-ridden
             ## so e.g. .tar.xz works everywhere
-            TAR <- Sys.getenv("R_INSTALL_TAR", "internal")
-            if (untar(pkg, exdir = tmpdir, tar = TAR))
+            if (untar(pkg, exdir = tmpdir,
+                      tar =  Sys.getenv("R_INSTALL_TAR", "internal")))
                 errmsg("error unpacking tarball")
             ## Now see what we got
             nf <- dir(tmpdir, full.names = TRUE)
