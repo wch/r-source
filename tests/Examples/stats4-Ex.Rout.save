@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-18 r51761)
+R version 2.12.0 Under development (unstable) (2010-05-18 r52028)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -41,6 +41,17 @@ Type 'q()' to quit R.
 [1] 326.0716
 > BIC(lm1)
 [1] 339.0226
+> 
+> ## with two models:
+> lm1. <- update(lm1, . ~ . -Examination)
+> AIC(lm1, lm1.)
+     df      AIC
+lm1   7 326.0716
+lm1.  6 325.2408
+> BIC(lm1, lm1.)
+     df      AIC
+lm1   7 339.0226
+lm1.  6 336.3417
 > 
 > ## Don't show: 
 > ## 2 equivalent ways of calculating the BIC:
