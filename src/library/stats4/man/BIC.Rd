@@ -17,7 +17,7 @@
     \log(n_{obs})}{-2*log-likelihood + npar*log(nobs)}, where
   \eqn{n_{par}}{npar}  represents the
   number of parameters and \eqn{n_{obs}}{nobs} the number of
-  observations in the fitted model. 
+  observations in the fitted model.
 }
 \usage{
 BIC(object, \dots)
@@ -27,11 +27,14 @@ BIC(object, \dots)
     calculated - usually a \code{"logLik"} object or an object for which
     a \code{\link[=logLik-methods]{logLik}} method exists.
   }
-  \item{\dots}{Some methods for this generic function may take
-    additional, optional arguments.  At present none do.}
+  \item{\dots}{optionally more fitted model objects.}
 }
 \value{
-  Returns a numeric value with the corresponding BIC.
+  If just one object is provided, returns a numeric value
+  with the corresponding BIC; if multiple objects are provided, returns
+  a \code{\link{data.frame}} with rows corresponding to the objects and
+  columns representing the number of parameters in the model (\code{df})
+  and the BIC.
 }
 \references{
   Schwarz, G. (1978) "Estimating the Dimension of a Model",
@@ -42,6 +45,11 @@ BIC(object, \dots)
 lm1 <- lm(Fertility ~ . , data = swiss)
 AIC(lm1)
 BIC(lm1)
+
+## with two models:
+lm1. <- update(lm1, . ~ . -Examination)
+AIC(lm1, lm1.)
+BIC(lm1, lm1.)
 
 \testonly{
 ## 2 equivalent ways of calculating the BIC:
