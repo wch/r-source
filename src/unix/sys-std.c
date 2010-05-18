@@ -1096,9 +1096,8 @@ void attribute_hidden Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
  *  7) PLATFORM DEPENDENT FUNCTIONS
  */
 
-#ifdef HAVE_ERRNO_H
 # include <errno.h>
-#endif
+
 int attribute_hidden
 Rstd_ShowFiles(int nfile,		/* number of files */
 	       const char **file,		/* array of filenames */

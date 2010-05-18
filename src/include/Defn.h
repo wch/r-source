@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2008  The R Development Core Team.
+ *  Copyright (C) 1998--2010  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -167,15 +167,12 @@ extern void R_ProcessEvents(void);
 
 /*  Heap and Pointer Protection Stack Sizes.  */
 
-/* These are for future protection: will need to be different on Win64 */
-typedef unsigned long R_ulong_t;
-typedef long R_long_t;
-
+/* These are all required by C99 */
 #ifdef HAVE_INTTYPES_H
 # include <inttypes.h>
 #endif
-/* According to POSIX inttypes.h should include stdint.h, but let's be
-   sure. */
+/* According to POSIX inttypes.h should include stdint.h,
+   but let's be sure. */
 #ifdef HAVE_STDINT_H
 # include <stdint.h>
 #endif
@@ -183,27 +180,11 @@ typedef long R_long_t;
 # include <limits.h>
 #endif
 
-/* NB: will need a 64-bit type, ULONG64 or size_t, for Win64 */
 #if defined HAVE_DECL_SIZE_MAX && HAVE_DECL_SIZE_MAX
   typedef size_t R_size_t;
-/* final precaution in case we don't have the right headers */
-# ifdef SIZE_MAX
-#  define R_SIZE_T_MAX SIZE_MAX
-# else
-#  define R_SIZE_T_MAX ULONG_MAX
-# endif
+# define R_SIZE_T_MAX SIZE_MAX
 #else
-  typedef unsigned long R_size_t;
-# define R_SIZE_T_MAX ULONG_MAX
-#endif
-#define R_SIZE_T_DEFINED 1
-
-/* These are optional C99 types */
-#if !defined(HAVE_INTPTR_T) && !defined(intptr_t)
- typedef long intptr_t;
-#endif
-#if !defined(HAVE_UINTPTR_T) && !defined(uintptr_t)
- typedef unsigned long uintptr_t;
+# error SIZE_MAX is required for C99
 #endif
 
 

@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2009 R Core Team
+### Copyright (C) 1998-2010 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -535,7 +535,8 @@ R_PROG_INSTALL
 
 ## we would like a POSIX sed, and need one on Solaris
 AC_PATH_PROGS(SED, sed, /bin/sed, [/usr/xpg4/bin:$PATH])
-AC_PATH_PROGS(TR, tr, /bin/tr, [/usr/xpg4/tr:$PATH])
+## we need an tr that interprets \r for Rdiff
+AC_PATH_PROGS(TR, tr, /bin/tr, [/usr/xpg4/bin:$PATH])
 ## Make
 : ${MAKE=make}
 AC_SUBST(MAKE)
@@ -720,20 +721,16 @@ AC_HEADER_SYS_WAIT
 ## Some of these are also checked for when Autoconf computes the default
 ## includes.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h glob.h grp.h limits.h locale.h \
-  netdb.h netinet/in.h pwd.h stdbool.h strings.h \
+  fpu_control.h glob.h grp.h locale.h \
+  netdb.h netinet/in.h pwd.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/resource.h \
   sys/time.h sys/times.h sys/utsname.h time.h unistd.h)
 ## </NOTE>
 ## <NOTE>
 ## These are C99 headers but some C code (written to work also
 ## without assuming C99) may need the corresponding conditionals.
-AC_CHECK_HEADERS(errno.h inttypes.h stdarg.h stdint.h string.h)
-## </NOTE>
-## <NOTE>
-## src/main/regex.c uses HAVE_LIBINTL_H.
-## But then we want full gettext support and AM_GNU_GETTEXT.
-## AC_CHECK_HEADERS(libintl.h)
+AC_CHECK_HEADERS(errno.h inttypes.h limits.h stdarg.h stdbool.h \
+                 stdint.h string.h)
 ## </NOTE>
 
 R_HEADER_SETJMP

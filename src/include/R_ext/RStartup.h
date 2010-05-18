@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2006  The R Development Core Team
+ *  Copyright (C) 1999-2010  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,10 +50,6 @@ typedef enum {
     SA_SUICIDE
 } SA_TYPE;
 
-#ifndef R_SIZE_T_DEFINED
-# define R_size_t unsigned long
-#endif
-
 typedef struct
 {
     Rboolean R_Quiet;
@@ -65,11 +61,11 @@ typedef struct
     Rboolean DebugInitFile;
     SA_TYPE RestoreAction;
     SA_TYPE SaveAction;
-    R_size_t vsize;
-    R_size_t nsize;
-    R_size_t max_vsize;
-    R_size_t max_nsize;
-    R_size_t ppsize;
+    size_t vsize;
+    size_t nsize;
+    size_t max_vsize;
+    size_t max_nsize;
+    size_t ppsize;
     int NoRenviron;
 
 #ifdef Win32

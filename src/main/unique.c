@@ -1209,18 +1209,13 @@ SEXP attribute_hidden do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-#if defined(HAVE_STRING_H)
-#  include <string.h>
-#  ifdef _AIX  /*some people just have to be different */
+#include <string.h>
+#ifdef _AIX  /*some people just have to be different */
 #    include <memory.h>
-#  endif
-/* int and double zeros are all bits off */
-#  define ZEROINT(X,N,I) do{memset(INTEGER(X),0,N*sizeof(int));}while(0)
-#  define ZERODBL(X,N,I) do{memset(REAL(X),0,N*sizeof(double));}while(0)
-#else
-#  define ZEROINT(X,N,I) for(I=0;I<N;I++) INTEGER(X)[I]=0
-#  define ZERODBL(X,N,I) for(I=0;I<N;I++) REAL(X)[I]=0
 #endif
+/* int and double zeros are all bits off */
+#define ZEROINT(X,N,I) do{memset(INTEGER(X),0,N*sizeof(int));}while(0)
+#define ZERODBL(X,N,I) do{memset(REAL(X),0,N*sizeof(double));}while(0)
 
 SEXP attribute_hidden
 Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg, SEXP snarm)

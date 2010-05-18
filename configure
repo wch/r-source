@@ -21195,8 +21195,8 @@ fi
 ## Some of these are also checked for when Autoconf computes the default
 ## includes.
 for ac_header in arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h glob.h grp.h limits.h locale.h \
-  netdb.h netinet/in.h pwd.h stdbool.h strings.h \
+  fpu_control.h glob.h grp.h locale.h \
+  netdb.h netinet/in.h pwd.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/resource.h \
   sys/time.h sys/times.h sys/utsname.h time.h unistd.h
 do :
@@ -21216,7 +21216,8 @@ done
 ## <NOTE>
 ## These are C99 headers but some C code (written to work also
 ## without assuming C99) may need the corresponding conditionals.
-for ac_header in errno.h inttypes.h stdarg.h stdint.h string.h
+for ac_header in errno.h inttypes.h limits.h stdarg.h stdbool.h \
+                 stdint.h string.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
@@ -21230,11 +21231,6 @@ fi
 
 done
 
-## </NOTE>
-## <NOTE>
-## src/main/regex.c uses HAVE_LIBINTL_H.
-## But then we want full gettext support and AM_GNU_GETTEXT.
-## AC_CHECK_HEADERS(libintl.h)
 ## </NOTE>
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether setjmp.h is POSIX.1 compatible" >&5
@@ -22763,7 +22759,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:22766: \"$ac_link\") >&5
+(eval echo $as_me:22762: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -22838,7 +22834,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:22841: \"$ac_link\") >&5
+(eval echo $as_me:22837: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -35144,11 +35140,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35147: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35143: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:35151: \$? = $ac_status" >&5
+   echo "$as_me:35147: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -35243,11 +35239,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35246: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35242: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35250: \$? = $ac_status" >&5
+   echo "$as_me:35246: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -35295,11 +35291,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:35298: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:35294: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:35302: \$? = $ac_status" >&5
+   echo "$as_me:35298: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
