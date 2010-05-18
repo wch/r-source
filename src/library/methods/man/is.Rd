@@ -46,6 +46,13 @@
       the details and other sections below, this form is often less
       recommended than the corresponding call to \code{\link{setAs}}, to
       which it is an alternative.
+
+      Argument \code{test} allows conditional inheritance, in which
+      the \code{is()} result is tested for each object rather than
+      being determined by the class definition.  This form is
+      discouraged when it can be avoided; in particular, note that
+      conditional inheritance is \emph{not} used to select methods for
+      dispatch.
     }
   }
 }
@@ -72,11 +79,15 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
     objects of class \code{classExtension} to be returned, rather than
     just the names of the classes.}
 
-  \item{test, coerce, replace}{
-    In a call to \code{setIs}, functions optionally supplied to test
-    whether the relation is defined, to coerce the object to
+  \item{coerce, replace}{
+    In a call to \code{setIs}, functions optionally supplied to coerce the object to
     \code{class2}, and to alter the object so that \code{is(object, class2)}
-    is identical to \code{value}.  See the details section below.
+    is identical to \code{value}.  See the details section below.}
+
+  \item{test}{
+    In a call to \code{setIs}, a \emph{conditional} relationship is
+    defined by supplying this function.  Conditional relations are
+    discouraged and are not included in selecting methods.  See the details section below.
 
   The remaining arguments are for internal use and/or usually omitted.}
 
@@ -167,7 +178,7 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
   define how to coerce a \code{class1} object to \code{class2}, and
   how to replace the part of the subclass object that corresponds to
   \code{class2}.  The first of these is a function of one argument
-  (conventionally \code{from}) and the second of two arguments
+  which should be \code{from}, and the second of two arguments
   (\code{from}, \code{value}).  For details, see the section on coerce
   functions below .
 
@@ -213,12 +224,13 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
   that returns \code{TRUE} or \code{FALSE} according to whether the
   object supplied satisfies the relation \code{is(object, class2)}.
   Conditional relations between
-  classes are slightly deprecated because they cannot be implemented
-  as efficiently as ordinary relations and because they sometimes can
-  lead to confusion (in thinking about what methods are dispatched for
-  a particular function, for example).  But they can correspond to
-  distinctions such as two classes that have the same representation,
-  but with only one of them obeying certain additional constraints.
+  classes are discouraged in general because they require a per-object
+  calculation to determine their validity. They cannot be applied
+  as efficiently as ordinary relations and tend to make the code that
+  uses them harder to interpret.  \emph{NOTE:  conditional inheritance
+    is not used to dispatch methods.}  Methods for conditional
+  superclasses will not be inherited.  Instead, a method for the
+  subclass should be defined that tests the conditional relationship.
 }
 \section{Inherited methods}{
   A method written for a particular signature (classes matched to one

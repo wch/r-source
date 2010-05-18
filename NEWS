@@ -193,6 +193,9 @@ BUG FIXES
         another class now accept superclass objects in new(). Also
         fixes failure to call validObject() for these classes.
 
+    o	Conditional inheritance defined by argument test= in setIs()
+        will no longer be used in method selection (caching these
+        methods could give incorrect results).  See ?setIs.
 
 
 

@@ -274,10 +274,8 @@
     ## Next, miscellaneous S3 classes.
     for(cl in .OldClassesList)
         setOldClass(cl, where = envir)
-    ## some S3 classes have inheritance on an instance basis, that breaks the S4 contains
-    ## model.  To emulate their (unfortunate) behavior requires a setIs with a test.
-    for(cl in .OldIsList)
-        .setOldIs(cl, envir)
+    ## special mess for "maov"; see comment in .OldClassesList
+    setIs("maov", "aov")
     setClassUnion("data.frameRowLabels", c("character", "integer"), where = envir)
     setClass("data.frame",
              representation(names = "character", row.names = "data.frameRowLabels"),
@@ -488,9 +486,13 @@
     list(
          c("anova", "data.frame"),
          c("mlm", "lm"),
-         c("aov", "lm"), # see also .OldIsList
+         c("aov", "lm"),
+         ## note:  definition of "maov" below differs from the
+         ## current S3 attribute, which has an inconsistent combination
+         ## of "aov" and "mlm" (version 2.12 devel, rev. 51984)
          c("maov", "mlm", "lm"),
-         "POSIXt", "POSIXct", "POSIXlt", # see .OldIsList
+         c("POSIXct", "POSIXt"),
+         c("POSIXlt", "POSIXt"),
          "Date",
          "dump.frames",
          c("ordered", "factor"),
@@ -513,14 +515,6 @@
          "logLik",
          "rle"
 )
-
-# These relations sometimes hold, sometimes not:  have to look in the S3
-# class attribute to test.
-.OldIsList <- list(
-                   c("POSIXct", "POSIXt"),
-                   c("POSIXlt", "POSIXt"),
-                   c("aov","mlm")
-                   )
 
 .InitSpecialTypesAndClasses <- function(where) {
     if(!exists(".S3MethodsClasses", envir = where, inherits = FALSE)) {

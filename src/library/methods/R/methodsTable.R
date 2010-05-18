@@ -226,143 +226,142 @@
     ## to avoid infinite recursion, and somewhat for speed, turn off S4 methods for primitives
     primMethods <- .allowPrimitiveMethods(FALSE)
     on.exit(.allowPrimitiveMethods(primMethods))
-  ## classes is a list of the class(x) for each arg in generic
-  ## signature, with "missing" for missing args
-  if(!is.environment(table)) {
-    if(is(fdef, "standardGeneric"))
-      stop("Invalid or unset methods table in generic function \"",
-           fdef@generic,"\"")
-    else
-      stop("Trying to find a methods table in a non-generic function")
-  }
-  hasGroup <- length(fdef@group) > 0L
-  if(hasGroup)
+    ## classes is a list of the class(x) for each arg in generic
+    ## signature, with "missing" for missing args
+    if(!is.environment(table)) {
+        if(is(fdef, "standardGeneric"))
+          stop("Invalid or unset methods table in generic function \"",
+               fdef@generic,"\"")
+        else
+          stop("Trying to find a methods table in a non-generic function")
+    }
+    hasGroup <- length(fdef@group) > 0L
+    if(hasGroup)
       groupGenerics <- .getAllGroups(list(fdef))
-  doExcluded <- length(excluded) > 0L
-  if(verbose)
+    doExcluded <- length(excluded) > 0L
+    if(verbose)
       cat(" .findInheritedMethods(): (hasGroup, doCache, doExcluded)= (",
 	  paste(c("f","T")[1+c(hasGroup, doCache, doExcluded)],collapse=", "),
 	  ")\n", sep='')
-  nargs <- length(classes)
-  if(!missing(useInherited) && length(useInherited) < nargs)
-    useInherited <- rep(useInherited, length.out = nargs)
-  if(hasGroup && !doExcluded) {
-    ## first try for an exact match in a group generic
-    ## If this matches &  is cached, it then will be treated as a non-inherited method
-    ## so no further calls here should occur.
-    ##
-    ## doExcluded is the findNextMethod case; we don't regard group methods as
-    ## inherited in the nextMethod sense, since they have the same signature
-    label <- .sigLabel(classes)
-    direct <- .getGroupMethods(label, groupGenerics, FALSE)
-    if(length(direct) && doCache) {
-        assign(label, direct[[1L]], envir = mtable)
-        return(direct)
+    nargs <- length(classes)
+    if(!missing(useInherited) && length(useInherited) < nargs)
+      useInherited <- rep(useInherited, length.out = nargs)
+    if(hasGroup && !doExcluded) {
+        ## first try for an exact match in a group generic
+        ## If this matches &  is cached, it then will be treated as a non-inherited method
+        ## so no further calls here should occur.
+        ##
+        ## doExcluded is the findNextMethod case; we don't regard group methods as
+        ## inherited in the nextMethod sense, since they have the same signature
+        label <- .sigLabel(classes)
+        direct <- .getGroupMethods(label, groupGenerics, FALSE)
+        if(length(direct) && doCache) {
+            assign(label, direct[[1L]], envir = mtable)
+            return(direct)
+        }
+        ## else, continue because we may want all defined methods
     }
-    ## else, continue because we may want all defined methods
-  }
-  cl1 <- classes[[1L]]
-  def <- getClass(cl1, .Force = TRUE)
-  labels <-
+    cl1 <- classes[[1L]]
+    def <- getClass(cl1, .Force = TRUE)
+    labels <-
       if(missing(useInherited) || useInherited[[1L]])
-          c(cl1, .eligibleSuperClasses(def@contains, simpleOnly),
-            ## comes last:
-            "ANY")
+          c(cl1, .eligibleSuperClasses(def@contains, simpleOnly), "ANY")
       else cl1
-  supersList <- list(labels)
-  if(nargs > 1) { ## further arguments
-      classDefs <- vector("list", nargs)
-      classDefs[[1L]] <- def
-      for(i in 2:nargs) {
-          cc <- classDefs[[i]] <- getClass(classes[[i]], .Force = TRUE)
-          allLabels <- if(missing(useInherited) || useInherited[[i]])
-              c(cc@className, .eligibleSuperClasses(cc@contains, simpleOnly),
-                "ANY") else cc@className
-          labels <- outerLabels(labels, allLabels)
-          supersList <- c(supersList, list(allLabels))
-      }
-  }
-  if(!returnAll)
-    labels <- labels[-1L] # drop exact match
-  labels <- unique(labels)# only needed while contains slot can have duplicates(!)
-  if(verbose) cat(" .fI> length(unique(method labels)) = ", length(labels))
-  allMethods <- objects(table, all.names=TRUE)
-  found <- match(labels, allMethods, 0L) > 0L
-  nFound <- length(lab.found <- labels[found])
-  methods <- list() # =?= vector("list", nFound) ; but fails??
-  for(label in lab.found)
-      methods[[label]] <- get(label, envir = table)
-  if(verbose) cat(" >> found: ", nFound, "\n")
-  if(hasGroup) {
-      ##  add the  group methods recursively found but each time
-      ## only those not already included in found.
-      groupmethods <- .getGroupMethods(labels, groupGenerics, found)
-      fromGroup <- c(rep(FALSE, length(methods)),
-                     rep(TRUE,  length(groupmethods)))
-      if(verbose) cat(" .fI> #{additional group methods}:",
-                      length(groupmethods),"\n")
-      methods <- c(methods, groupmethods)
-  }
-  else
-      fromGroup <- rep(FALSE, length(methods))
-  ## remove default (ANY,..,ANY) if its not the only method:
-  if(length(methods) > 1L && !returnAll) {
-      defaultLabel <- paste(rep.int("ANY", nargs), collapse = "#")
-      i <- match(defaultLabel, names(methods), 0L)
-      if(i > 0L) {
-          methods <- methods[-i]
-          fromGroup <- fromGroup[-i]
-      }
-  }
-  if(doExcluded)
-    methods <- methods[is.na(match(names(methods), as.character(excluded)))]
-  if(length(methods) > 1L && !returnAll) {
-      if(verbose) cat(" .fI> length(methods) = ", length(methods),
-                      " --> ambiguity\n")
-      ## have ambiguity to resolve
-      select <- .getBestMethods(methods, supersList, fromGroup, verbose=verbose)
-      ##         --------------
-      if(length(select) > 1L) {
-        if(verbose) cat(" .fI> found", length(select)," best methods\n")
-
-        target <- .sigLabel(classes)
-        condAction <- getOption("ambiguousMethodSelection")
-        if(is.null(condAction))
-          condAction <- .ambiguousMethodMessage
-        else if(!is(condAction, "function"))
-          stop(gettextf("The \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class \"%s\"",
-                         class(condAction)), domain = NA)
-
-	select <- withCallingHandlers(
-			.disambiguateMethods(classes, select, fdef@generic,
-					     methods, supersList, fromGroup,
-					     classDefs, verbose),
-				      ambiguousMethodSelection=condAction)
-      }
-      methods <- methods[select]
-  }
-  if(simpleOnly && length(methods) == 0L) {
-      methods <- Recall(classes, fdef, mtable, table, excluded, useInherited,
-                        verbose, returnAll, FALSE)
-      if(length(methods) > 0L)
-        message(gettextf("No simply inherited methods found for function \"%s\"; using non-simple method",
-                      fdef@generic), domain = NA)
-  }
-  if(doCache && length(methods)) { ## Cache the newly found one
-      if(verbose) cat(" .fI> caching newly found methods ..\n")
-    tlabel <- .sigLabel(classes)
-    m <- methods[[1L]]
-    if(is(m, "MethodDefinition"))  { # else, a primitive
-      m@target <- .newSignature(classes, fdef@signature)
-      ## if any of the inheritance is not simple, must insert coerce's in method body
-      coerce <- .inheritedArgsExpression(m@target, m@defined, body(m))
-      if(!is.null(coerce))
-        body(m) <- coerce
-      methods[[1L]] <- m
+    supersList <- list(labels)
+    if(nargs > 1) { ## further arguments
+        classDefs <- vector("list", nargs)
+        classDefs[[1L]] <- def
+        for(i in 2:nargs) {
+            cc <- classDefs[[i]] <- getClass(classes[[i]], .Force = TRUE)
+            allLabels <- if(missing(useInherited) || useInherited[[i]])
+                c(cc@className, .eligibleSuperClasses(cc@contains, simpleOnly),
+                  "ANY")
+            else cc@className
+            labels <- outerLabels(labels, allLabels)
+            supersList <- c(supersList, list(allLabels))
+        }
     }
-    assign(tlabel, m, envir = mtable)
-  }
-  methods
+    if(!returnAll)
+      labels <- labels[-1L] # drop exact match
+    labels <- unique(labels)# only needed while contains slot can have duplicates(!)
+    if(verbose) cat(" .fI> length(unique(method labels)) = ", length(labels))
+    allMethods <- objects(table, all.names=TRUE)
+    found <- match(labels, allMethods, 0L) > 0L
+    nFound <- length(lab.found <- labels[found])
+    methods <- list() # =?= vector("list", nFound) ; but fails??
+    for(label in lab.found)
+      methods[[label]] <- get(label, envir = table)
+    if(verbose) cat(" >> found: ", nFound, "\n")
+    if(hasGroup) {
+        ##  add the  group methods recursively found but each time
+        ## only those not already included in found.
+        groupmethods <- .getGroupMethods(labels, groupGenerics, found)
+        fromGroup <- c(rep(FALSE, length(methods)),
+                       rep(TRUE,  length(groupmethods)))
+        if(verbose) cat(" .fI> #{additional group methods}:",
+                        length(groupmethods),"\n")
+        methods <- c(methods, groupmethods)
+    }
+    else
+      fromGroup <- rep(FALSE, length(methods))
+    ## remove default (ANY,..,ANY) if its not the only method:
+    if(length(methods) > 1L && !returnAll) {
+        defaultLabel <- paste(rep.int("ANY", nargs), collapse = "#")
+        i <- match(defaultLabel, names(methods), 0L)
+        if(i > 0L) {
+            methods <- methods[-i]
+            fromGroup <- fromGroup[-i]
+        }
+    }
+    if(doExcluded)
+      methods <- methods[is.na(match(names(methods), as.character(excluded)))]
+    if(length(methods) > 1L && !returnAll) {
+        if(verbose) cat(" .fI> length(methods) = ", length(methods),
+                        " --> ambiguity\n")
+        ## have ambiguity to resolve
+        select <- .getBestMethods(methods, supersList, fromGroup, verbose=verbose)
+        ##         --------------
+        if(length(select) > 1L) {
+            if(verbose) cat(" .fI> found", length(select)," best methods\n")
+
+            target <- .sigLabel(classes)
+            condAction <- getOption("ambiguousMethodSelection")
+            if(is.null(condAction))
+              condAction <- .ambiguousMethodMessage
+            else if(!is(condAction, "function"))
+              stop(gettextf("The \"ambiguousMethodSelection\" option should be a function to be called as the condition action; got an object of class \"%s\"",
+                            class(condAction)), domain = NA)
+
+            select <- withCallingHandlers(
+                                          .disambiguateMethods(classes, select, fdef@generic,
+                                                               methods, supersList, fromGroup,
+                                                               classDefs, verbose),
+                                          ambiguousMethodSelection=condAction)
+        }
+        methods <- methods[select]
+    }
+    if(simpleOnly && length(methods) == 0L) {
+        methods <- Recall(classes, fdef, mtable, table, excluded, useInherited,
+                          verbose, returnAll, FALSE)
+        if(length(methods) > 0L)
+          message(gettextf("No simply inherited methods found for function \"%s\"; using non-simple method",
+                           fdef@generic), domain = NA)
+    }
+    if(doCache && length(methods)) { ## Cache the newly found one
+        if(verbose) cat(" .fI> caching newly found methods ..\n")
+        tlabel <- .sigLabel(classes)
+        m <- methods[[1L]]
+        if(is(m, "MethodDefinition"))  { # else, a primitive
+            m@target <- .newSignature(classes, fdef@signature)
+            ## if any of the inheritance is not simple, must insert coerce's in method body
+            coerce <- .inheritedArgsExpression(m@target, m@defined, body(m))
+            if(!is.null(coerce))
+              body(m) <- coerce
+            methods[[1L]] <- m
+        }
+        assign(tlabel, m, envir = mtable)
+    }
+    methods
 }
 
 .ambiguousMethodMessage <- function(cond) {
@@ -386,12 +385,15 @@
 
 .eligibleSuperClasses <- function(contains, simpleOnly) {
     what <- names(contains)
-    if(simpleOnly && length(what)) {
-        eligible <- sapply(contains, function(x) (is.logical(x) && x) || x@simple)
+    if(!length(what))
+      what
+    else {
+        if(simpleOnly)
+            eligible <- sapply(contains, function(x) (is.logical(x) && x) || x@simple)
+        else # eliminate conditional inheritance
+            eligible <- sapply(contains, function(x) (is.logical(x) && x) || x@simple || identical(x@test, .simpleExtTest))
         what[eligible]
     }
-    else
-        what
 }
 
 .newSignature <- function(classes, names) {
