@@ -102,6 +102,9 @@ BUG FIXES
 	a foreign encoding (e.g. UTF-8 strings on Windows) and so was
 	slower than it could have been on very long input strings.
 	(PR#14286)
+	
+    o	tools::Rd2txt() did not render poorly written Rd files consistently
+	with other renderers.
 
 
 
