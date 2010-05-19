@@ -688,7 +688,7 @@ final line, including a newline.
 A few packages use the @file{src} directory for purposes other than
 making a shared object (e.g.@: to create executables).  Such packages
 should have files @file{src/Makefile} and @file{src/Makefile.win}
-(unless intended for only Unix or only Windows).
+(unless intended for only Unix-alikes or only Windows).
 
 The @file{data} subdirectory is for data files: @xref{Data in packages}.
 
@@ -811,7 +811,7 @@ including choosing the best type for that particular image.
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
 
-Note that most of this section is Unix-specific: see the comments
+Note that most of this section is Unix-alike-specific: see the comments
 later on about the Windows port of @R{}.
 
 If your package needs some system-dependent configuration before
@@ -889,8 +889,8 @@ functionality, respectively.
 
 You will very likely need to ensure that the same C compiler and
 compiler flags are used in the @file{configure} tests as when compiling
-@R{} or your package.  Under Unix, you can achieve this by including the
-following fragment early in @file{configure.ac}
+@R{} or your package.  Under a Unix-alike, you can achieve this by
+including the following fragment early in @file{configure.ac}
 
 @example
 @group
@@ -938,14 +938,14 @@ of @R{} can detect external BLAS and LAPACK libraries.)
 
 You should bear in mind that the configure script will not be used on
 Windows systems.  If your package is to be made publicly available,
-please give enough information for a user on a non-Unix platform to
-configure it manually, or provide a @file{configure.win} script to be
+please give enough information for a user on a non-Unix-alike platform
+to configure it manually, or provide a @file{configure.win} script to be
 used on that platform.  (Optionally, there can be a @file{cleanup.win}
 script.  Both should be shell scripts to be executed by @command{ash},
 which is a minimal version of Bourne-style @command{sh}.)  When
 @file{configure.win} is run the environment variables
-@env{R_HOME}@footnote{formerly also @env{RHOME}, but this was removed
-in @R{} 2.12.0.} (which uses @code{/} as the file separator) and
+@env{R_HOME}@footnote{formerly also @env{RHOME}, but this was removed in
+@R{} 2.12.0.} (which uses @code{/} as the file separator) and
 @env{R_ARCH} will be set.  Use @env{R_ARCH} to decide if this is a
 64-bit build (its value there is @samp{/x64}) and to install DLLs to the
 correct place (@code{$@{R_HOME@}/libs$@{R_ARCH@}}).  Use
@@ -1373,8 +1373,8 @@ The file names are checked to be valid across file systems and supported
 operating system platforms.
 
 @item
-The files and directories are checked for sufficient permissions (Unix
-only).
+The files and directories are checked for sufficient permissions
+(Unix-alikes only).
 
 @item
 The files are checked for binary executables, using a suitable version
@@ -4443,11 +4443,11 @@ and run @R{} with this as the source file, for example by @kbd{R
 the standard layout.  Warning:  comments in your functions will be lost.
 
 The standard format provides a good starting point for further tidying.
-Many package authors use a version of Emacs (on Unix or Windows) to edit
-@R{} code, using the ESS[S] mode of the @acronym{ESS} Emacs package.
-See @ref{R coding standards, , R coding standards, R-ints, R Internals}
-for style options within the ESS[S] mode recommended for the source code
-of @R{} itself.
+Many package authors use a version of Emacs (on a Unix-alike or Windows)
+to edit @R{} code, using the ESS[S] mode of the @acronym{ESS} Emacs
+package.  See @ref{R coding standards, , R coding standards, R-ints, R
+Internals} for style options within the ESS[S] mode recommended for the
+source code of @R{} itself.
 
 
 @node Profiling R code for speed, Profiling R code for memory use, Tidying R code, Tidying and profiling R code
@@ -4457,7 +4457,7 @@ of @R{} itself.
 
 It is possible to profile @R{} code on Windows and most@footnote{@R{}
 has to be built to enable this, but the option
-@option{--enable-R-profiling} is the default.} Unix-like versions of
+@option{--enable-R-profiling} is the default.} Unix-alike versions of
 @R{}.
 
 The command @command{Rprof} is used to control profiling, and its help
@@ -5671,7 +5671,7 @@ vector.
 The function @code{system.time}
 @findex system.time
 is available for timing (although the information available may be
-limited on non-Unix-like platforms: these days only on the obsolete
+limited on non-Unix-alike platforms: these days only on the obsolete
 Windows 9x/ME).
 
 @node Interface functions .C and .Fortran, dyn.load and dyn.unload, Operating system access, System and foreign language interfaces
@@ -5853,9 +5853,9 @@ FORTRAN compilers on each platform.
 @findex dyn.load
 @findex dyn.unload
 
-Compiled code to be used with @R{} is loaded as a shared object (Unix
-and Mac OS X, @pxref{Creating shared objects} for more information) or
-DLL (Windows).
+Compiled code to be used with @R{} is loaded as a shared object
+(Unix-alikes including Mac OS X, @pxref{Creating shared objects} for
+more information) or DLL (Windows).
 
 The shared object/DLL is loaded by @code{dyn.load} and unloaded by
 @code{dyn.unload}.  Unloading is not normally necessary, but it is
@@ -8551,7 +8551,7 @@ platforms but are not declared in the installed header files.
 Do not use these in distributed code.
 
 @item hidden
-Entry points that are where possible (Windows and some modern Unix
+Entry points that are where possible (Windows and some modern Unix-alike
 compilers/loaders when using @R{} as a shared library) not exported.
 @end table
 
@@ -9788,7 +9788,7 @@ EXPORTS
 
 It is possible to build @code{Mathlib}, the @R{} set of mathematical
 functions documented in @file{Rmath.h}, as a standalone library
-@file{libRmath} under both Unix and Windows.  (This includes the
+@file{libRmath} under both Unix-alikes and Windows.  (This includes the
 functions documented in @ref{Numerical analysis subroutines} as from
 that header file.)
 
@@ -10506,8 +10506,8 @@ Interrupts, where permitted.
 @end itemize
 
 @noindent
-Specifically, the Unix command-line version of @R{} runs separate event
-loops for
+Specifically, the Unix-alike command-line version of @R{} runs separate
+event loops for
 
 @itemize
 @item
@@ -10649,7 +10649,7 @@ The @code{R} DLL is mainly written in C and has @code{_cdecl} entry
 points.  Calling it directly will be tricky except from C code (or C++
 with a little care).
 
-There is a version of the Unix interface calling
+There is a version of the Unix-alike interface calling
 
 @example
 int Rf_initEmbeddedR(int ac, char **av);

@@ -73,8 +73,8 @@ The current version of this document is @value{VERSION}.
 * Internationalization::        
 * Choosing between 32- and 64-bit builds::  
 * The standalone Rmath library::  
-* Essential and useful other programs under Unix::  
-* Configuration on Unix::       
+* Essential and useful other programs under a Unix-alike::  
+* Configuration on a Unix-alike::  
 * Platform notes::              
 * The Windows toolset::         
 * Function and variable index::  
@@ -252,14 +252,15 @@ of this chapter we consider only building from the sources.
 * Installation::                
 * Uninstallation::              
 * Sub-architectures::           
-* Testing a Unix Installation::  
+* Testing a Unix-alike Installation::  
 @end menu
 
 @node Simple compilation, Help options, Installing R under Unix-alikes, Installing R under Unix-alikes
 @section Simple compilation
 
 First review the essential and useful tools and libraries in
-@ref{Essential and useful other programs under Unix}, and install those you
+@ref{Essential and useful other programs under a Unix-alike}, and install
+those you
 @enindex TMPDIR
 want or need.  Ensure that the environment variable @env{TMPDIR} is
 either unset (and @file{/tmp} exists and can be written in and scripts
@@ -484,7 +485,7 @@ completely incorrect glyphs so you need to examine the logs carefully.
 The default can be overridden by setting the environment variables
 @enindex R_RD4DVI
 @enindex R_RD4PDF
-@env{R_RD4PDF} and @env{R_RD4DVI}.  (On Unix, these will be picked up
+@env{R_RD4PDF} and @env{R_RD4DVI}.  (On Unix-alikes, these will be picked up
 at install time.)  The default value for @env{R_RD4PDF} is
 @samp{times,hyper}: omit @samp{hyper} if you do not want hyperlinks,
 e.g.@: for printing.  The default for @env{R_RD4DVI} is @samp{ae}.
@@ -674,7 +675,7 @@ well as removing the directory @file{tests} containing the test results.
 
 
 
-@node Sub-architectures, Testing a Unix Installation, Uninstallation, Installing R under Unix-alikes
+@node Sub-architectures, Testing a Unix-alike Installation, Uninstallation, Installing R under Unix-alikes
 @section Sub-architectures
 
 Some platforms can support closely related builds of @R{} which can
@@ -801,7 +802,7 @@ e.g.@: @file{/usr/lib64/R/bin}.  Normally all installed architectures
 will run on the platform so the architecture of @command{Rscript} does
 not matter.
 
-@node Testing a Unix Installation,  , Sub-architectures, Installing R under Unix-alikes
+@node Testing a Unix-alike Installation,  , Sub-architectures, Installing R under Unix-alikes
 @section Testing an Installation
 
 Full testing is possible only if the test files have been installed with
@@ -1164,7 +1165,7 @@ make -f Makefile.win dvi
 (all assuming you have @command{pdftex}/@command{pdflatex} or
 @command{tex}/@command{latex} installed and in your path).
 
-See the @ref{Making the manuals} section in the Unix section for setting
+See the @ref{Making the manuals} section in the Unix-alike section for setting
 options such as the paper size.
 
 @node Building the Inno Setup installer, Building the MSI installer, Building the manuals, Building from source
@@ -1597,7 +1598,7 @@ available.@footnote{If a proxy needs to be set, see
 @command{?download.file}.}  On most systems @samp{install.packages()}
 will allow packages to be selected from a list box.
 
-To install packages from source in Unix use
+To install packages from source in a Unix-alike use
 
 @example
 R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
@@ -1707,7 +1708,7 @@ architectures---details to come.
 @node Mac OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection Mac OS X
 
-On Mac OS X @code{install.packages} works as it does on other Unix-like
+On Mac OS X @code{install.packages} works as it does on other Unix-alike
 systems, but there are additional types @code{mac.binary*} (the default
 in the @acronym{CRAN} distribution) that can be passed to
 @code{install.packages} in order to download and install binary packages
@@ -2232,7 +2233,7 @@ block of memory allocated is limited to @math{2^{34}-1} bytes (8GB).  It
 is anticipated these will be raised eventually but routine use of 8GB
 objects is (when this was written in 2005) several years off.
 
-@node The standalone Rmath library, Essential and useful other programs under Unix, Choosing between 32- and 64-bit builds, Top
+@node The standalone Rmath library, Essential and useful other programs under a Unix-alike, Choosing between 32- and 64-bit builds, Top
 @chapter The standalone Rmath library
 
 The routines supporting the distribution and
@@ -2244,8 +2245,8 @@ built, and the standalone version differs in several ways.)
 
 The makefiles and other sources needed are in directory
 @file{src/nmath/standalone}, so the following instructions assume that
-is the current working directory (in the build directory tree on Unix if
-that is separate from the sources).
+is the current working directory (in the build directory tree on a
+Unix-alike if that is separate from the sources).
 
 @file{Rmath.h} contains @samp{R_VERSION_STRING}, which is a character
 string containing the current @R{} version, for example @code{"2.11.0"}.
@@ -2303,12 +2304,12 @@ typedef enum @{
 
 
 @menu
-* Unix standalone::             
+* Unix-alike standalone::       
 * Windows standalone::          
 @end menu
 
-@node Unix standalone, Windows standalone, The standalone Rmath library, The standalone Rmath library
-@section Unix
+@node Unix-alike standalone, Windows standalone, The standalone Rmath library, The standalone Rmath library
+@section Unix-alikes
 
 If @R{} has not already be made in the directory tree,
 @command{configure} must be run as described in the main build
@@ -2372,7 +2373,7 @@ library.
 
 
 
-@node Windows standalone,  , Unix standalone, The standalone Rmath library
+@node Windows standalone,  , Unix-alike standalone, The standalone Rmath library
 @section Windows
 
 You need to set up almost all the tools to make @R{} and then run (in a
@@ -2447,8 +2448,8 @@ sure. This is likely to also work with VC++, Borland and similar
 compilers.)
 
 
-@node Essential and useful other programs under Unix, Configuration on Unix, The standalone Rmath library, Top
-@appendix Essential and useful other programs under Unix
+@node Essential and useful other programs under a Unix-alike, Configuration on a Unix-alike, The standalone Rmath library, Top
+@appendix Essential and useful other programs under a Unix-alike
 
 This appendix gives details of programs you will need to build @R{} on
 Unix-like platforms, or which will be used by @R{} if found by
@@ -2466,7 +2467,7 @@ installed.
 * Linear algebra::              
 @end menu
 
-@node Essential programs and libraries, Useful libraries and programs, Essential and useful other programs under Unix, Essential and useful other programs under Unix
+@node Essential programs and libraries, Useful libraries and programs, Essential and useful other programs under a Unix-alike, Essential and useful other programs under a Unix-alike
 @section Essential programs and libraries
 
 You need a means of compiling C and FORTRAN 77 (see @ref{Using
@@ -2564,7 +2565,7 @@ If you want to build from the R Subversion repository you need both
 The essential programs should be in your @env{PATH} at the time
 @command{configure} is run: this will capture the full paths.
 
-@node Useful libraries and programs, Linear algebra, Essential programs and libraries, Essential and useful other programs under Unix
+@node Useful libraries and programs, Linear algebra, Essential programs and libraries, Essential and useful other programs under a Unix-alike
 @section Useful libraries and programs
 
 The ability to use translated messages makes use of @code{gettext} and
@@ -2735,7 +2736,7 @@ where @samp{JAVA_LIBS} contains flags necessary to link JNI programs.
 Some of the above variables can be queried using @code{R CMD config}.
 
 
-@node Linear algebra,  , Useful libraries and programs, Essential and useful other programs under Unix
+@node Linear algebra,  , Useful libraries and programs, Essential and useful other programs under a Unix-alike
 @section Linear algebra
 @cindex BLAS library
 
@@ -3101,8 +3102,8 @@ On some systems it is necessary that an external BLAS/LAPACK was built
 with the same FORTRAN compiler used to build @R{}: known problems are
 with @R{} built with @command{gfortran}, @pxref{Using gfortran}.
 
-@node Configuration on Unix, Platform notes, Essential and useful other programs under Unix, Top
-@appendix Configuration on Unix
+@node Configuration on a Unix-alike, Platform notes, Essential and useful other programs under a Unix-alike, Top
+@appendix Configuration on a Unix-alike
 
 @menu
 * Configuration options::       
@@ -3114,7 +3115,7 @@ with @R{} built with @command{gfortran}, @pxref{Using gfortran}.
 * Compile and load flags::      
 @end menu
 
-@node Configuration options, Internationalization support, Configuration on Unix, Configuration on Unix
+@node Configuration options, Internationalization support, Configuration on a Unix-alike, Configuration on a Unix-alike
 @section Configuration options
 
 @command{configure} has many options: running
@@ -3172,7 +3173,7 @@ If you need to re-configure @R{} with different options you may need to run
 @code{make clean} or even @code{make distclean} before doing so.
 
 
-@node Internationalization support, Configuration variables, Configuration options, Configuration on Unix
+@node Internationalization support, Configuration variables, Configuration options, Configuration on a Unix-alike
 @section Internationalization support
 
 Translation of messages is supported via @acronym{GNU} @code{gettext}
@@ -3190,7 +3191,7 @@ in an English locale (but not the @code{C} locale) will include
 in the greeting on starting R.
 
 
-@node Configuration variables, Setting the shell, Internationalization support, Configuration on Unix
+@node Configuration variables, Setting the shell, Internationalization support, Configuration on a Unix-alike
 @section Configuration variables
 
 @findex configure
@@ -3311,7 +3312,7 @@ older architectures such as @cputype{ix86}.
 The default settings for making the manuals are controlled by
 @env{R_RD4PDF}, @env{R_RD4DVI} and @env{R_PAPERSIZE}.
 
-@node Setting the shell, Using make, Configuration variables, Configuration on Unix
+@node Setting the shell, Using make, Configuration variables, Configuration on a Unix-alike
 @section Setting the shell
 
 By default the shell scripts such as @file{R} will be @samp{#!/bin/sh}
@@ -3321,7 +3322,7 @@ Bourne shell or clone, and the shell to be used can be changed by
 setting the configure variable @env{R_SHELL} to a suitable value (a full
 path to a shell, e.g. @file{/usr/local/bin/bash}).
 
-@node Using make, Using FORTRAN, Setting the shell, Configuration on Unix
+@node Using make, Using FORTRAN, Setting the shell, Configuration on a Unix-alike
 @section Using make
 @findex make
 
@@ -3348,7 +3349,7 @@ variable @code{MAKE} at configure time, for example
 Note the comment in @ref{Installation} about using a parallel
 @command{make}.
 
-@node Using FORTRAN, Compile and load flags, Using make, Configuration on Unix
+@node Using FORTRAN, Compile and load flags, Using make, Configuration on a Unix-alike
 @section Using FORTRAN
 @cindex FORTRAN
 
@@ -3449,7 +3450,7 @@ shared with other platforms on that @acronym{CPU} type).  A maximum
 optimization of @samp{-O} is recommended there.
 
 
-@node Compile and load flags,  , Using FORTRAN, Configuration on Unix
+@node Compile and load flags,  , Using FORTRAN, Configuration on a Unix-alike
 @section Compile and load flags
 
 A wide range of flags can be set in the file @file{config.site} or as
@@ -3531,10 +3532,10 @@ which are always required, for example to force @acronym{IEC}@tie{}60559
 compliance.
 
 
-@node Platform notes, The Windows toolset, Configuration on Unix, Top
+@node Platform notes, The Windows toolset, Configuration on a Unix-alike, Top
 @appendix Platform notes
 
-This section provides some notes on building @R{} on different Unix-like
+This section provides some notes on building @R{} on different Unix-alike
 platforms.  These notes are based on tests run on one or two systems in
 each case with particular sets of compilers and support libraries.
 Success in building @R{} depends on the proper installation and functioning
@@ -4217,7 +4218,7 @@ libraries downloaded from these repositories (e.g., GCC, Make,
 @file{/opt/freeware}, hence corresponding executables are found in
 @enindex PATH
 @file{/opt/freeware/bin} which thus needs to be in @env{PATH} for using
-these tools.  Like on other Unix systems one needs @acronym{GNU}
+these tools.  As on other Unix systems one needs @acronym{GNU}
 @code{libiconv} as the AIX version of iconv is not sufficiently
 powerful.  Additionally, for proper Unicode compatibility one should
 install the corresponding package from the ICU project
