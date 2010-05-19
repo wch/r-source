@@ -61,9 +61,12 @@ density(x, \dots)
     the \sQuote{canonical bandwidth} of the chosen \code{kernel} is returned
     instead.}
 
-  \item{n}{the number of equally spaced points at which the density
-    is to be estimated.  When \code{n > 512}, it is rounded up to the next
-    power of 2 for efficiency reasons (\code{\link{fft}}).}
+  \item{n}{the number of equally spaced points at which the density is
+    to be estimated.  When \code{n > 512}, it is rounded up to a power
+    of 2 during the calculations (as \code{\link{fft}} is used) and the
+    final result is interpolated by \code{\link{approx}}.  So it almost
+    always makes sense to specify \code{n} as a power of two.
+  }
 
   \item{from,to}{the left and right-most points of the grid at which the
     density is to be estimated; the defaults are \code{cut * bw} outside
