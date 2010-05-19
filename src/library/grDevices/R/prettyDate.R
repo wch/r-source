@@ -63,7 +63,7 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, ...)
              "1 DSTday" = list(1*DAY, format = "%b %d"),
              "2 DSTdays" = list(2*DAY),
              "1 week" = list(7*DAY, start = "weeks"),
-             "15 DSTdays" = list(15*DAY, start = "months"),
+             "halfmonth" = list(MONTH/2, start = "months"),
              "1 month" = list(1*MONTH, format = "%b"),
              "3 months" = list(3*MONTH, start = "years"),
              "6 months" = list(6*MONTH, format = "%Y-%m"),
@@ -94,7 +94,15 @@ prettyDate <- function(x, n = 5, min.n = n %/% 2, ...)
     ## calculate actual number of ticks in the given interval
     calcSteps <- function(s) {
         startTime <- trunc_POSIXt(min(zz), units = s$start) ## FIXME: should be trunc() eventually
-        at <- seq(startTime, max(zz), by = s$spec)
+        if (identical(s$spec, "halfmonth")) {
+            at <- seq(startTime, max(zz), by = "months")
+            at2 <- as.POSIXlt(at)
+            at2$mday <- 15L
+            at <- structure(sort(c(as.POSIXct(at), as.POSIXct(at2))), 
+                            tzone = attr(at, "tzone"))
+        } else {
+            at <- seq(startTime, max(zz), by = s$spec)
+        }
         at <- at[(min(zz) <= at) & (at <= max(zz))]
         at
     }
