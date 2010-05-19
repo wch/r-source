@@ -123,6 +123,7 @@
             "      --auto-zip	select whether to zip data automatically",
             "      --force-biarch	attempt to build both architectures",
             "			even if there is a non-empty configure.win",
+            "      --merge-multiarch	bi-arch by merging",
             "",
             "Which of --html or --no-html is the default depends on the build of R:",
             paste("for this one it is ",
@@ -973,6 +974,7 @@
         args <- paste(args, collapse=" ")
         args <- strsplit(args,'nextArg', fixed = TRUE)[[1L]][-1L]
     }
+    args0 <- args
 
     startdir <- getwd()
 
@@ -1001,6 +1003,7 @@
     multiarch <- TRUE
     force_biarch <- FALSE
     test_load <- TRUE
+    merge <- FALSE
 
     get_user_libPaths <- FALSE
     data_compress <- TRUE # FALSE (none), TRUE (gzip), 2 (bzip2), 3 (xz)
@@ -1109,6 +1112,9 @@
             install_help <- FALSE
         } else if (a == "--no-test-load") {
             test_load <- FALSE
+        } else if (a == "--merge-multiarch") {
+            if (WINDOWS) merge <- TRUE
+            else warning("--merge-multiarch is Windows-only", call.=FALSE)
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
@@ -1118,6 +1124,38 @@
     tmpdir <- tempfile("R.INSTALL")
     if (!dir.create(tmpdir))
         stop("cannot create temporary directory")
+
+    if (merge && length(pkgs) != 1)
+        stop("ERROR: --merge-multiarch applies only to a single tarball",
+             call.=FALSE)
+
+    if (merge) {
+        if (length(pkgs) != 1 || !.file_test("-f", pkgs))
+            stop("ERROR: --merge-multiarch applies only to a single tarball",
+                 call.=FALSE)
+        f  <- dir(file.path(R.home(), "bin"))
+        archs <- f[f %in% c("i386", "x64")]
+        if (length(archs) < 2)
+            stop("ERROR: --merge-multiarch can only be used on i386/x64 installations",
+                 call.=FALSE)
+        args <- args0[! args0 %in% c("--merge-multiarch", "--build")]
+        cmd <- paste(file.path(R.home(), "bin", "i386", "Rcmd.exe"),
+                     "INSTALL", "--no-multiarch")
+        allargs <-  paste(args, collapse=" ")
+        cmd1 <- paste(cmd, allargs)
+        if (debug) message("about to run ", cmd1, domain = NA)
+        message("\n", "install for i386", "\n", domain=NA)
+        res <- system(cmd1)
+        if(res == 0) {
+            cmd <- paste(file.path(R.home(), "bin", "x64", "Rcmd.exe"),
+                         "INSTALL", "--no-multiarch")
+            cmd1 <- paste(cmd, "--libs-only", if (zip_up) "--build", allargs)
+            if (debug) message("about to run ", cmd1, domain = NA)
+            message("\n", "add DLL for x64", "\n", domain=NA)
+            system(cmd1)
+        }
+        return(invisible())
+    }
 
     ## now unpack tarballs and do some basic checks
     allpkgs <- character()
@@ -1181,6 +1219,7 @@
 
     if (!length(allpkgs))
         stop("ERROR: no packages specified", call.=FALSE)
+
 
     if (!nzchar(lib)) {
         lib <- if (get_user_libPaths) { ## need .libPaths()[1L] *after* the site- and user-initialization
