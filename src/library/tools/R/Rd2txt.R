@@ -307,8 +307,8 @@ Rd2txt <-
                VERB =,
                RCODE = writeCode(tabExpand(block)),
                TEXT = if(blocktag == "\\command") putw(block) else putw(unescape(tabExpand(block))),
-               LIST =,
                COMMENT = {},
+               LIST = writeContent(block, tag),
                "\\describe" = {
                	   blankLine(0L)
                    writeContent(block, tag)
@@ -402,7 +402,7 @@ Rd2txt <-
                    writeContent(block, tag)
                    eqn <- endCapture(save)
                    eqn <- format(eqn, justify="centre", width=WIDTH-indent)
-                   putf(eqn)
+                   putf(paste(eqn, collapse="\n"))
     		   blankLine()
                },
                "\\tabular" = writeTabular(block),
