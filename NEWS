@@ -103,6 +103,9 @@ NEW FEATURES
 	sub-architecture: this is useful where different
 	(sub-)architectures run on the same OS.
 
+    o	tools::texi2dvi() gains an 'index' argument, mainly for use by
+	R CMD Rd2pdf.
+
 
 DEPRECATED & DEFUNCT
 
@@ -137,6 +140,9 @@ UTILITIES
 
     o	R CMD check has a new argument --extra-arch to confine tests
 	to those needed to check an additional sub-architecture.
+
+    o	R CMD Rd2dvi makes use of tools::texi2dvi to process the
+	package manual.
 
 
 C-LEVEL FACILITIES

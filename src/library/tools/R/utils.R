@@ -203,7 +203,8 @@ function(x, delim = c("{", "}"), syntax = "Rd")
 
 texi2dvi <-
 function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
-         texi2dvi = getOption("texi2dvi"), texinputs = NULL)
+         texi2dvi = getOption("texi2dvi"),
+         texinputs = NULL, index = TRU)
 {
     ## Run texi2dvi on a latex file, or emulate it.
 
@@ -237,7 +238,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     } else on.exit(Sys.setenv(BSTINPUTS = bstinputs), add = TRUE)
     Sys.setenv(BSTINPUTS = paste(bstinputs, texinputs, sep = envSep))
 
-    if(nzchar(texi2dvi) && .Platform$OS.type != "windows") {
+    if(index && nzchar(texi2dvi) && .Platform$OS.type != "windows") {
         opt_pdf <- if(pdf) "--pdf" else ""
         opt_quiet <- if(quiet) "--quiet" else ""
         opt_extra <- ""
@@ -315,7 +316,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             message(paste(paste(out$stderr, collapse = "\n"),
                           paste(out$stdout, collapse = "\n"),
                           sep = "\n"))
-    } else if(nzchar(texi2dvi)) {       # Windows
+    } else if(index && nzchar(texi2dvi)) {       # Windows
         extra <- ""
         ext <- if(pdf) "pdf" else "dvi"
         pdf <- if(pdf) "--pdf" else ""
@@ -367,7 +368,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
         if(nzchar(msg)) stop(msg, domain = NA)
     } else {
-        ## Do not have texi2dvi
+        ## Do not have texi2dvi or don't want to index
         ## Needed at least on Windows except for MiKTeX
         ## Note that this does not do anything about running quietly,
         ## nor cleaning, but is probably not used much anymore.
@@ -384,19 +385,21 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         }
         bibtex <- Sys.getenv("BIBTEX")
         if(!nzchar(bibtex)) bibtex <- "bibtex"
-        makeindex <- Sys.getenv("MAKEINDEX")
+        makeindex <- Sys.getenv("R_MAKEINDEXCMD")
         if(!nzchar(makeindex)) makeindex <- "makeindex"
         if(system(paste(shQuote(latex), "-interaction=nonstopmode", texfile)))
-            stop(gettextf("unable to run %s on '%s'", latex, file), domain = NA)
+            stop(gettextf("unable to run '%s' on '%s'", latex, file),
+                 domain = NA)
         nmiss <- length(grep("^LaTeX Warning:.*Citation.*undefined",
                              readLines(paste(base, ".log", sep = ""))))
         for(iter in 1L:10L) { ## safety check
             ## This might fail as the citations have been included in the Rnw
             if(nmiss) system(paste(shQuote(bibtex), shQuote(base)))
             nmiss_prev <- nmiss
-            if(file.exists(idxfile)) {
+            if(index && file.exists(idxfile)) {
                 if(system(paste(shQuote(makeindex), shQuote(idxfile))))
-                    stop(gettextf("unable to run %s on '%s'", makeindex, idxfile),
+                    stop(gettextf("unable to run '%s' on '%s'",
+                                  makeindex, idxfile),
                          domain = NA)
             }
             if(system(paste(shQuote(latex), "-interaction=nonstopmode", texfile)))

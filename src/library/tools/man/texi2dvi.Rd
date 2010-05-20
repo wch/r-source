@@ -1,6 +1,6 @@
 % File src/library/tools/man/texi2dvi.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{texi2dvi}
@@ -12,7 +12,8 @@
 }
 \usage{
 texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
-         texi2dvi = getOption("texi2dvi"), texinputs = NULL)
+         texi2dvi = getOption("texi2dvi"),
+         texinputs = NULL, index = TRUE)
 }
 \arguments{
   \item{file}{character.  Name of LaTeX source file.}
@@ -30,6 +31,7 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     \code{system} calls.}
   \item{texinputs}{\code{NULL} or a character vector of paths to add to
     the LaTeX and bibtex input search paths.}
+  \item{index}{logical: should indices be prepared?}
 }
 \details{
   Despite the name, this is used in \R to compile LaTeX files,
@@ -46,6 +48,11 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
   MiKTeX has a \code{texi2dvi} executable but no other Windows TeX
   installation that we know of does, so emulation is used on e.g. TeXLive
   installations.
+  
+  Occasionally indices contain special characters which cause indexing
+  to fail (particularly when using the \samp{hyperref} LaTeX package)
+  even on valid input.  The argument \code{index = FALSE} is provided to
+  allow package manuals to be made when this happens: it uses emulation.
 }
 \author{Achim Zeileis and R-core}
 \keyword{utilities}

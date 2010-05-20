@@ -205,84 +205,10 @@ echo "tools:::.Rd2dvi(\"${1}\",  \"${build_dir}/Rd2.tex\", \
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
 
-status=0
+echo "tools::texi2dvi('Rd2.tex', pdf=(\"${out_ext}\" == \"pdf\"), \
+    quiet=FALSE, index=(\"${index}\" != \"false\"))" | \
+   LC_ALL=C ${R_HOME}/bin/R --slave --vanilla || do_cleanup && exit 1
 
-if test "${index}" != "false"; then
-  if test "${out_ext}" = pdf; then
-    PDF=TRUE
-  else
-    PDF=FALSE
-  fi
-  echo "tools::texi2dvi('Rd2.tex', pdf=$PDF, quiet=FALSE)" | \
-    LC_ALL=C ${R_HOME}/bin/R --slave --vanilla || status=1
-  if test $status -gt 0; then
-    do_cleanup
-    exit 1
-  fi
-else
-R_TEXOPTS=
-if test "${R_OSTYPE}" = "windows"; then
-  miktex=`latex --version | grep ^MiKTeX | wc -l`
-  if test "${miktex}" = "1"; then
-    R_TEXOPTS=--include-directory=${R_HOME}/share/texmf
-  fi
-fi
-
-if test "${out_ext}" = pdf; then
-  ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 || status=1
-  if test $status -gt 0; then
-    echo "Error in running pdflatex command ('${R_PDFLATEXCMD}')"
-    do_cleanup
-    exit 1
-  fi
-  if test "${index}" != "false"; then
-    ## OK for R_MAKEINDEXCMD to fail.
-    ${R_MAKEINDEXCMD} Rd2
-    ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 || status=1
-    if test $status -gt 0; then
-      echo "Error in running pdflatex command ('${R_PDFLATEXCMD}')"
-      do_cleanup
-      exit 1
-    fi
-  fi
-  ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 &&
-  ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 || status=1
-  if test $status -gt 0; then
-    echo "Error in running pdflatex command ('${R_PDFLATEXCMD}')"
-    do_cleanup
-    exit 1
-  fi
-else
-  ${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
-  if test $status -gt 0; then
-    echo "Error in running latex command ('${R_LATEXCMD}')"
-    do_cleanup
-    exit 1
-  fi
-  if test "${index}" != "false"; then
-    ## OK for R_MAKEINDEXCMD to fail.
-    ${R_MAKEINDEXCMD} Rd2
-    ${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
-    if test $status -gt 0; then
-      echo "Error in running latex command ('${R_LATEXCMD}')"
-      do_cleanup
-      exit 1
-    fi
-  fi
-  ${R_LATEXCMD} ${R_TEXOPTS} Rd2 || status=1
-  if test $status -gt 0; then
-    echo "Error in running latex command ('${R_LATEXCMD}')"
-    do_cleanup
-    exit 1
-  fi
-fi
-fi
-
-if test ! -f Rd2.${out_ext}; then
-  echo "Error: no output file was created"
-  do_cleanup
-  exit 1
-fi
 cd ${start_dir}
 echo "Saving output to '${output}' ..."
 cp ${build_dir}/Rd2.${out_ext} ${output}
@@ -290,7 +216,7 @@ echo "Done"
 
 do_cleanup
 ${preview} ${output}
-exit ${status}
+exit 0
 
 ### Local Variables: ***
 ### mode: sh ***
