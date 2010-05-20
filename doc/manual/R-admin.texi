@@ -2451,7 +2451,8 @@ A @command{tar} program is needed to unpack the sources and packages
 @command{tar} from the Heirloom Toolchest
 (@uref{http://heirloom.sourceforge.net/tools.html}.} that can
 automagically detect compressed archives is preferred for use with
-@code{untar()}: the configure script looks for @command{gtar} before
+@code{untar()}: the configure script looks for @command{gtar} and
+@command{gnutar} before
 @enindex TAR
 @command{tar}: use environment variable @env{TAR} to override this.
 

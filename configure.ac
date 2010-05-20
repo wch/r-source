@@ -545,7 +545,7 @@ R_PROG_PAGER
 ## Perl
 R_PROG_PERL
 ## Tar -- we prefer a GNU version
-AC_PATH_PROGS(TAR, [${TAR} gtar tar], "")
+AC_PATH_PROGS(TAR, [${TAR} gtar gnutar tar], "")
 ## TeXMF stuff
 R_PROG_TEXMF
 ## Unzip && zip && gzip && bip2

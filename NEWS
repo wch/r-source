@@ -24,10 +24,18 @@ NEW FEATURES
 
 DEPRECATED & DEFUNCT
 
-    o	Use of .C for C++ code in packages is now deprecated: it has
-	caused problems for some 'make's on case-insensitive file
-	systems (although it currently works with the recommended
-	toolkits).
+    o	Use of file extension .C for C++ code in packages is now
+	deprecated: it has caused problems for some 'make's on
+	case-insensitive file systems (although it currently works
+	with the recommended toolkits).
+
+
+INSTALLATION
+
+    o	Command 'gnutar' is preferred to 'tar' when configure sets
+	TAR.  This is needed on Mac OS 10.6, where the default tar,
+	bsdtar 2.6.2, has been reported to produce archives with
+	illegal extensions (according to the POSIX standard).
 
 
 BUG FIXES

@@ -4816,7 +4816,7 @@ $as_echo "$as_me: WARNING: Using 'R CMD build|check|Rprof' requires Perl >= 5.8.
 fi
 
 ## Tar -- we prefer a GNU version
-for ac_prog in ${TAR} gtar tar
+for ac_prog in ${TAR} gtar gnutar tar
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
