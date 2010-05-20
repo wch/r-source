@@ -109,7 +109,7 @@ DEPRECATED & DEFUNCT
     o	Supplying the parser with a string containing both octal/hex and
 	Unicode escapes is now an error.
 
-    o	Extension .C for C++ code files in packages is now defunct.
+    o	File extension .C for C++ code files in packages is now defunct.
 
 
 PACKAGE INSTALLATION
@@ -189,13 +189,15 @@ BUG FIXES
     o	source(echo=TRUE) failed to echo comments that followed the
     	last statement in a file.
 
-    o	S4 classes that contained one of matrix, array, ts and also
-        another class now accept superclass objects in new(). Also
-        fixes failure to call validObject() for these classes.
+    o	S4 classes that contained one of "matrix", "array" or "ts" and
+	also another class now accept superclass objects in new().
+	Also fixes failure to call validObject() for these classes.
 
-    o	Conditional inheritance defined by argument test= in setIs()
-        will no longer be used in method selection (caching these
-        methods could give incorrect results).  See ?setIs.
+    o	Conditional inheritance defined by argument test= in
+    	methods::setIs() will no longer be used in S4 method selection
+    	(caching these methods could give incorrect results).  See
+    	?setIs.
+
 
 
 
