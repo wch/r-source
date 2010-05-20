@@ -1931,7 +1931,7 @@ R --arch @var{arch} CMD check -l @var{libdir} --extra-arch --install=check:@var{
 where @option{--extra-arch} selects only those checks which depend on
 the installed code and not those which analyse the sources.  (If
 multiple sub-architectures fail only because they need different
-settings, e.g.@: environment variables, @option{--no-multilib} may need
+settings, e.g.@: environment variables, @option{--no-multiarch} may need
 to be added to the @code{INSTALL} lines.)  On Mac OS X and other
 Unix-alikes the architecture to run is selected by @option{--arch}: this
 can also be used on Windows with @file{@var{R_HOME}/bin/R.exe}, but it
@@ -1954,6 +1954,16 @@ where the second line is not often needed, and when it is one might want
 to run the second and fourth lines in a different shell with different
 settings for environment variables and the path (to find external
 software, notably for Gtk+).
+
+@command{R CMD INSTALL} can do a @code{i386} install and then add the
+@code{x64} DLL by
+
+@example
+R CMD INSTALL --merge-multiarch -l @var{libdir} @var{tarball}
+@end example
+
+@noindent
+and @option{--build} can be added to zip up the installation.
 
 @node Internationalization, Choosing between 32- and 64-bit builds, Add-on packages, Top
 @chapter Internationalization and Localization
