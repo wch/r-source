@@ -1,6 +1,6 @@
 % File src/library/base/man/EnvVar.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 2007-2009 R Core Development Team
+% Copyright 2007-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{EnvVar}
@@ -72,18 +72,15 @@
       which are to be loaded in every session.  See \code{\link{options}}.}
     \item{\env{R_DOC_DIR}:}{The location of the \R \file{doc}
       directory.  Set by \R.}
+#ifdef unix
     \item{\env{R_DVIPSCMD}:}{The path to \command{dvips}.  Defaults to
       the value of \env{DVIPS}, and if that is unset to a value
       determined when \R was built.
-#ifdef unix
-      Used by \command{R CMD Rd2dvi}, and at startup to set the default for
-      \code{\link{options}("latexcmd")}, used by
+      Used at startup to set the default for
+      \code{\link{options}("dvipscmd")}, used by
       \code{\link{help}(help_type="ps")}.
-#endif
-#ifdef windows
-      Used by \command{R CMD Rd2dvi}.
-#endif
     }
+#endif
     \item{\env{R_ENVIRON}:}{Optional.  The path to the site environment
       file: see \link{Startup}.  Consulted at startup.}
     \item{\env{R_GSCMD}:}{Optional.  The path to GhostScript, used by
@@ -133,7 +130,7 @@
       is unset to a value determined when \R was built.
       Used by \command{R CMD Rd2dvi}.}
     \item{\env{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
-      by \command{R CMD Rd2dvi}.}
+      by \command{R CMD Rd2dvi --pdf}.}
     \item{\env{R_PLATFORM}:}{The platform -- a string of the form
       \code{\var{cpu}-\var{vendor}-\var{os}}, see \code{\link{R.Version}}.}
     \item{\env{R_PROFILE}:}{Optional.  The path to the site profile
