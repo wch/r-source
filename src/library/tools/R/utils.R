@@ -204,7 +204,7 @@ function(x, delim = c("{", "}"), syntax = "Rd")
 texi2dvi <-
 function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
          texi2dvi = getOption("texi2dvi"),
-         texinputs = NULL, index = TRU)
+         texinputs = NULL, index = TRUE)
 {
     ## Run texi2dvi on a latex file, or emulate it.
 
