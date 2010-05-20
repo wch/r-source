@@ -205,9 +205,15 @@ echo "tools:::.Rd2dvi(\"${1}\",  \"${build_dir}/Rd2.tex\", \
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
 
+status=0
 echo "tools::texi2dvi('Rd2.tex', pdf=(\"${out_ext}\" == \"pdf\"), \
     quiet=FALSE, index=(\"${index}\" != \"false\"))" | \
-   LC_ALL=C ${R_HOME}/bin/R --slave --vanilla || do_cleanup && exit 1
+   LC_ALL=C ${R_HOME}/bin/R --slave --vanilla || status=1
+if test $status -gt 0; then
+  echo "Error in running tools::texi2dvi"
+  do_cleanup
+  exit 1
+fi
 
 cd ${start_dir}
 echo "Saving output to '${output}' ..."
