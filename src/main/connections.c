@@ -201,10 +201,10 @@ void set_iconv(Rconnection con)
 	/* UTF8out is set in readLines() and scan()
 	   Was Windows-only until 2.12.0, but we now require iconv.
 	 */
-	tmp = Riconv_open((!utf8locale && con->UTF8out) ? "UTF-8" : "",
-			  con->encname);
+	Rboolean useUTF8 = !utf8locale && con->UTF8out;
+	tmp = Riconv_open(useUTF8 ? "UTF-8" : "", con->encname);
 	if(tmp != (void *)-1) con->inconv = tmp;
-	else set_iconv_error(con, con->encname, con->UTF8out ? "UTF-8" : "");
+	else set_iconv_error(con, con->encname, useUTF8 ? "UTF-8" : "");
 	con->EOF_signalled = FALSE;
 	/* initialize state, and prepare any initial bytes */
 	Riconv(tmp, NULL, NULL, &ob, &onb);
