@@ -1,6 +1,6 @@
 % File src/library/stats/man/prop.test.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{prop.test}
@@ -31,7 +31,7 @@ prop.test(x, n, p = NULL,
     when testing the null that a single proportion equals a given
     value, or that two proportions are equal; ignored otherwise.}
   \item{correct}{a logical indicating whether Yates' continuity
-    correction should be applied.}
+    correction should be applied where possible.}
 }
 \description{
   \code{prop.test} can be used for testing the null that the

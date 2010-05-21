@@ -175,14 +175,14 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   
   \item{fileEncoding}{character string: if non-empty declares the
     encoding used on a file (not a connection) so the character data can
-    be re-encoded.  See \code{\link{file}}.
+    be re-encoded.  See \code{\link{file}} and \sQuote{Note}.
   }
   
   \item{encoding}{encoding to be assumed for input strings.  It is
     used to mark character strings as known to be in
-    Latin-1 or UTF-8: it is not used to re-encode the input, but allows
-    \R to handle encoded strings in their native encoding (if one of
-    those two).  See \sQuote{Value}.
+    Latin-1 or UTF-8 (see \code{\link{Encoding}}): it is not used to
+    re-encode the input, but allows \R to handle encoded strings in
+    their native encoding (if one of those two).  See \sQuote{Value}.
   }
 
   \item{\dots}{Further arguments to be passed to \code{read.table}.}
@@ -267,6 +267,15 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   especially those with many columns: it is designed to read
   \emph{data frames} which may have columns of very different classes.
   Use \code{\link{scan}} instead.
+
+  Because this function uses \code{\link{pushBack}} it can only handle
+  character strings which can be represented in the current locale.  So
+  although \code{fileEncoding} can be used to specify the encoding of
+  the input file (or a connection can be specified which re-encodes),
+  the implied re-encoding must be possible.  This is not a problem in
+  UTF-8 locales, but it can be on Windows---other tools such as
+  \code{\link{readLines}} and \code{\link{scan}} be used to avoid this
+  limitation.
 }
 
 \seealso{

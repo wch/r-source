@@ -1,6 +1,6 @@
 % File src/library/base/man/pushBack.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{pushBack}
@@ -35,6 +35,11 @@ pushBackLength(connection)
   connection is still wired directly, so for example parsing
   commands from the console and \code{\link{scan}("")} ignore pushbacks on
   \code{\link{stdin}}.
+
+  When character strings with a marked encoding (see
+  \code{\link{Encoding}}) are pushed back they are converted to the
+  current encoding.  This may involve representing characters as
+  \samp{<U+xxxx>} if they cannot be converted.
 }
 \value{
   \code{pushBack} returns nothing.
