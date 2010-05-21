@@ -198,12 +198,11 @@ void set_iconv(Rconnection con)
     if(con->canread) {
 	size_t onb = 50;
 	char *ob = con->oconvbuff;
-	/* UTF8out is set in readLines() and scan() */
-#ifndef Win32
-	con->UTF8out = FALSE;  /* No point in converting to UTF-8
-				  unless in a UTF-8 locale */
-#endif
-	tmp = Riconv_open(con->UTF8out ? "UTF-8" : "", con->encname);
+	/* UTF8out is set in readLines() and scan()
+	   Was Windows-only until 2.12.0, but we now require iconv.
+	 */
+	tmp = Riconv_open((!utf8locale && con->UTF8out) ? "UTF-8" : "",
+			  con->encname);
 	if(tmp != (void *)-1) con->inconv = tmp;
 	else set_iconv_error(con, con->encname, con->UTF8out ? "UTF-8" : "");
 	con->EOF_signalled = FALSE;

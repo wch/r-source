@@ -1,6 +1,6 @@
 % File src/library/base/man/sink.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sink}
@@ -61,6 +61,12 @@ sink.number(type = c("output", "message"))
   Sink-ing the messages stream should be done only with great care.
   For that stream \code{file} must be an already open connection, and
   there is no stack of connections.
+  
+  If \code{file} is a character string, the file will be opened using
+  the current encoding.  If you want a different encoding (e.g. to
+  represent strings which have been stored in UTF-8), use a
+  \code{\link{file}} connection --- but some ways to produce \R output
+  will already have converted such strings to the current encoding.
 }
 \value{
   \code{sink} returns \code{NULL}.

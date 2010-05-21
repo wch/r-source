@@ -106,6 +106,10 @@ NEW FEATURES
     o	tools::texi2dvi() gains an 'index' argument, mainly for use by
 	R CMD Rd2pdf.
 
+    o	The ability of readLines() and scan() to re-encode inputs to
+	marked UTF-8 strings on Windows since R 2.7.0 is extended to
+	non-UTF-8 locales on other OSes.
+
 
 DEPRECATED & DEFUNCT
 
