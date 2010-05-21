@@ -219,9 +219,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   is a list, otherwise every 10000 items.
 #ifdef windows
 
-  If \code{con} is a not-already-open \link{connection} with a non-default
+  If \code{file} is a not-already-open \link{connection} with a non-default
   \code{encoding} argument, the text is converted to UTF-8 and declared
-  as such (and the encoding argument to \code{scan} is ignored).
+  as such (and the \code{encoding} argument to \code{scan} is ignored).
   See the examples of \code{\link{readLines}}.
 #endif
 }
