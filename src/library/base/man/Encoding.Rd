@@ -32,7 +32,7 @@ enc2utf8(x)
   \code{"UTF-8"} or \code{"unknown"}, or set, when \code{value} is
   recycled as needed and other values are silently treated as
   \code{"unknown"}.  ASCII strings will never be marked with a declared
-  encoding, since their representation is the same in all encodings.
+  encoding, since their representation is the same in all supported encodings.
 
   \code{enc2native} and \code{enc2utf8} convert elements of character
   vectors to the native encoding or UTF-8 respectively, taking any

@@ -1,6 +1,6 @@
 % File src/library/base/man/scan.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{scan}
@@ -16,7 +16,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
      flush = FALSE, fill = FALSE, strip.white = FALSE,
      quiet = FALSE, blank.lines.skip = TRUE, multi.line = TRUE,
      comment.char = "", allowEscapes = FALSE,
-     encoding = "unknown")
+     fileEncoding = "", encoding = "unknown")
 }
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
@@ -142,16 +142,16 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     hexadecimal representations like \samp{\\040} and \samp{\\0x2A}.  Any
     other escaped character is treated as itself, including backslash.
   }
+  
+  \item{fileEncoding}{character string: if non-empty declares the
+    encoding used on a file (not a connection nor the keyboard) so the
+    character data can be re-encoded.  See \code{\link{file}}.
+  }
+  
   \item{encoding}{encoding to be assumed for input strings.  If the
     value is \code{"latin1"} or \code{"UTF-8"} it is used to mark
     character strings as known to be in Latin-1 or UTF-8: it is not used
-    to re-encode the input.  To do the latter, specify the encoding as
-    part of the connection \code{con} or \emph{via}
-    \code{\link{options}(encoding=)}: see the example under
-    \code{\link{file}}.
-#ifdef windows
-    See also \sQuote{Details}.
-#endif
+    to re-encode the input (see \code{fileEncoding}.  See also \sQuote{Details}.
   }
 }
 \details{
@@ -206,10 +206,10 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \code{\link{readLines}}.
 
   If \code{comment.char} occurs (except inside a quoted character
-  field), it signals that the rest of the line
-  should be regarded as a comment and be discarded.  Lines beginning
-  with a comment character (possibly after white space with the default
-  separator) are treated as blank lines.
+  field), it signals that the rest of the line should be regarded as a
+  comment and be discarded.  Lines beginning with a comment character
+  (possibly after white space with the default separator) are treated as
+  blank lines.
 
   There is a line-length limit of 4095 bytes when reading from the
   console (which may impose a lower limit: see \sQuote{An Introduction
@@ -218,10 +218,11 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   There is a check for a user interrupt every 1000 lines if \code{what}
   is a list, otherwise every 10000 items.
 
-  If \code{con} is a not-already-open \link{connection} with a non-default
-  \code{encoding} argument, the text is converted to UTF-8 and declared
-  as such (and the \code{encoding} argument to \code{scan} is ignored).
-  See the examples of \code{\link{readLines}}.
+  If \code{file} is a character string and \code{fileEncoding} is
+  non-default, or it it is a not-already-open \link{connection} with a
+  non-default \code{encoding} argument, the text is converted to UTF-8
+  and declared as such (and the \code{encoding} argument to \code{scan}
+  is ignored).  See the examples of \code{\link{readLines}}.
 }
 \value{
   if \code{what} is a list, a list of the same length and same names (as
