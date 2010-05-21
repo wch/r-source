@@ -198,6 +198,7 @@ void set_iconv(Rconnection con)
     if(con->canread) {
 	size_t onb = 50;
 	char *ob = con->oconvbuff;
+	/* UTF8out is set in readLines() and scan() */
 #ifndef Win32
 	con->UTF8out = FALSE;  /* No point in converting to UTF-8
 				  unless in a UTF-8 locale */
