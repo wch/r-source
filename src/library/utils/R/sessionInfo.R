@@ -60,8 +60,8 @@ print.sessionInfo <- function(x, locale=TRUE, ...)
         paste(pkg, vers, sep="_")
     }
 
-    cat(x$R.version$version.string, "\n")
-    cat(x$platform, "\n\n")
+    cat(x$R.version$version.string, "\n", sep="")
+    cat("Platform: ", x$platform, "\n\n", sep="")
     if(locale){
         cat("locale:\n")
         print(strsplit(x$locale, ";", fixed=TRUE)[[1]], quote=FALSE)
