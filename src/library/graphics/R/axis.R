@@ -44,6 +44,25 @@ Axis <- function(x=NULL, at=NULL, ..., side, labels=NULL)
 Axis.default <- function(x=NULL, at=NULL, ..., side, labels=NULL)
     axis(side=side, at=at, labels=labels, ...)
 
+Axis.table <- function(x, at, ..., labels)
+{
+     if (length(dim(x)) == 1) {
+         nx <- dimnames(x)[[1]]
+         ow <- options(warn = -1)
+         is.num <- !any(is.na(xx <- as.numeric(nx)))
+         options(ow)
+         x0 <- if (is.num) xx else seq.int(x)
+         if(missing(at)) at <- x0
+         if(missing(labels)) labels <- nx
+         xaxt <- if (length(as <- list(...))) {
+             if (!is.null(as$axes) && !as$axes) "n" else as$xaxt
+         }## else NULL
+         axis(1, at = at, labels = labels, xaxt = xaxt)
+     }
+     else stop("only for 1-D table")
+}
+
+
 
 ## Note that axTicks() can be used without any graphics device
 ## when (axp, usr, log) are specified.  However, axTicks() should

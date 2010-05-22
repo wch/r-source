@@ -110,16 +110,14 @@ plot.table <-
 {
     xnam <- deparse(substitute(x))
     rnk <- length(dim(x))
-    if(rnk == 0L)
-	stop("invalid table 'x'")
+    if(rnk == 0L) stop("invalid table 'x'")
     if(rnk == 1L) {
 	dn <- dimnames(x)
 	nx <- dn[[1L]]
 	if(is.null(xlab)) xlab <- names(dn)
 	if(is.null(xlab)) xlab <- ""
 	if(is.null(ylab)) ylab <- xnam
-	ow <- options(warn = -1)
-	is.num <- !any(is.na(xx <- as.numeric(nx))); options(ow)
+        is.num <- suppressWarnings(!any(is.na(xx <- as.numeric(nx))))
 	x0 <- if(is.num) xx else seq.int(x)
 	plot(x0, unclass(x), type = type,
 	     ylim = ylim, xlab = xlab, ylab = ylab, frame.plot = frame.plot,
@@ -141,8 +139,6 @@ plot.formula <-
 function(formula, data = parent.frame(), ..., subset,
          ylab = varnames[response], ask = dev.interactive())
 {
-    enquote <- function(x) as.call(list(as.name("quote"), x))
-
     m <- match.call(expand.dots = FALSE)
     if (is.matrix(eval(m$data, parent.frame())))
 	m$data <- as.data.frame(data)

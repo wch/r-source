@@ -112,6 +112,9 @@ NEW FEATURES
 
     o	scan() gains a 'fileEncoding' argument to match read.table().
 
+    o	points() and lines() gain "table" methods to match plot().
+	(Wish of PR#10472.)
+
 
 DEPRECATED & DEFUNCT
 

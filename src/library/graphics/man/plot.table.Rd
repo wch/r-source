@@ -1,10 +1,12 @@
 % File src/library/graphics/man/plot.table.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{plot.table}
 \alias{plot.table}
+\alias{lines.table}
+\alias{points.table}
 \title{Plot Methods for `table' Objects}
 \description{
   This is a method of the generic \code{plot} function for
@@ -13,9 +15,10 @@
   one-dimensional ones are plotted as bars.
 }
 \usage{
-%% Improvement ideas: see code definition, currently in ../R/plot.R
 \method{plot}{table}(x, type = "h", ylim = c(0, max(x)), lwd = 2,
      xlab = NULL, ylab = NULL, frame.plot = is.num, \dots)
+\method{plot}{table}(x, type = "h", lwd = 2, \dots)
+\method{lines}{table}(x, type = "h", lwd = 2, \dots)
 }
 \arguments{
   \item{x}{a \code{\link{table}} (like) object.}
