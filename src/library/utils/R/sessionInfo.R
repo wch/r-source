@@ -18,6 +18,11 @@ sessionInfo <- function(package=NULL)
 {
     z <- list()
     z$R.version <- R.Version()
+    z$platform <- z$R.version$platform
+    if(nzchar(.Platform$r_arch))
+        z$platform <- paste(z$platform, .Platform$r_arch, sep="/")
+    z$platform <- paste(z$platform, " (", 8*.Machine$sizeof.pointer, "-bit)",
+                        sep = "")
     z$locale <- Sys.getlocale()
 
     if(is.null(package)){
@@ -56,7 +61,7 @@ print.sessionInfo <- function(x, locale=TRUE, ...)
     }
 
     cat(x$R.version$version.string, "\n")
-    cat(x$R.version$platform, "\n\n")
+    cat(x$platform, "\n\n")
     if(locale){
         cat("locale:\n")
         print(strsplit(x$locale, ";", fixed=TRUE)[[1]], quote=FALSE)
@@ -82,14 +87,14 @@ toLatex.sessionInfo <- function(object, locale=TRUE, ...)
     z <- c("\\begin{itemize}\\raggedright",
            paste("  \\item ", object$R.version$version.string,
                  ", \\verb|", object$R.version$platform, "|", sep=""))
-    
+
     if(locale){
-        z <- c(z, 
+        z <- c(z,
                paste("  \\item Locale: \\verb|",
                      gsub(";","|, \\\\verb|", object$locale)
                      , "|", sep=""))
     }
-    
+
     z <- c(z, strwrap(paste("\\item Base packages: ",
                          paste(sort(object$basePkgs), collapse=", ")),
                    indent=2, exdent=4))
