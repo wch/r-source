@@ -36,6 +36,11 @@ function(topic, package = NULL, lib.loc = NULL, local = FALSE,
     tf <- tempfile("Rex")
     encoding <- "UTF-8"
     tools::Rd2ex(.getHelpFile(file), tf)
+    if (!file.exists(tf)) {
+        warning(gettextf("'%s' has a help file but no examples", topic),
+                domain = NA)
+        return(invisible())
+    }
     on.exit(unlink(tf))
     if(pkgname != "base")
         library(pkgname, lib.loc = lib, character.only = TRUE)
