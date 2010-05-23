@@ -525,6 +525,7 @@ pGEDevDesc GEcreateDevDesc(pDevDesc dev)
     gdd->dirty = FALSE;
     gdd->recordGraphics = TRUE;
     gdd->ask = Rf_GetOptionDeviceAsk();
+    gdd->dev->eventEnv = R_NilValue;  /* gc needs this */
     return gdd;
 }
 

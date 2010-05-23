@@ -196,7 +196,7 @@ static void GA_Clip(double x0, double x1, double y0, double y1,
 		     pDevDesc dd);
 static void GA_Close(pDevDesc dd);
 static void GA_Deactivate(pDevDesc dd);
-static SEXP GA_getEvent(SEXP eventRho, const char* prompt);
+static void GA_initEvent(pDevDesc dd, Rboolean start);
 static Rboolean GA_Locator(double *x, double *y, pDevDesc dd);
 static void GA_Line(double x1, double y1, double x2, double y2,
 		    const pGEcontext gc,
@@ -813,8 +813,7 @@ static void HelpMouseClick(window w, int button, point pt)
 	} else
 	    xd->clicked = 2;
 	if (dd->gettingEvent) {
-	    xd->eventResult = doMouseEvent(xd->eventRho, dd, meMouseDown,
-				button, pt.x, pt.y);
+	    doMouseEvent(dd, meMouseDown, button, pt.x, pt.y);
 	    if (xd->buffered) SHOW;
 	}
     }
@@ -828,8 +827,7 @@ static void HelpMouseMove(window w, int button, point pt)
 	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
 	if (dd->gettingEvent) {
-	    xd->eventResult = doMouseEvent(xd->eventRho, dd, meMouseMove,
-				button, pt.x, pt.y);
+	    doMouseEvent(dd, meMouseMove, button, pt.x, pt.y);
 	    if (xd->buffered) SHOW;
 	}
     }
@@ -843,8 +841,7 @@ static void HelpMouseUp(window w, int button, point pt)
 	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
 	if (dd->gettingEvent) {
-	    xd->eventResult = doMouseEvent(xd->eventRho, dd, meMouseUp,
-				button, pt.x, pt.y);
+	    doMouseEvent(dd, meMouseUp,button, pt.x, pt.y);
 	    if (xd->buffered) SHOW;
 	}
     }
@@ -1292,7 +1289,7 @@ static void CHelpKeyIn(control w, int key)
     if (dd->gettingEvent) {
 	keyname = getKeyName(key);
 	if (keyname > knUNKNOWN) {
-	    xd->eventResult = doKeybd(xd->eventRho, dd, keyname, NULL);
+	    doKeybd(dd, keyname, NULL);
 	    if (xd->buffered) SHOW;
 	}
     } else {
@@ -1331,7 +1328,7 @@ static void NHelpKeyIn(control w, int key)
 	    keyname[0] = (char) key;
 	    keyname[1] = '\0';
 	}
-	xd->eventResult = doKeybd(xd->eventRho, dd, knUNKNOWN, keyname);
+	doKeybd(dd, knUNKNOWN, keyname);
 	if (xd->buffered) SHOW;
     } else {
 	if (xd->replaying) return;
@@ -1682,16 +1679,13 @@ setupScreenDevice(pDevDesc dd, gadesc *xd, double w, double h,
     xd->replaying = FALSE;
     xd->resizing = resize;
 
-    dd->getEvent = GA_getEvent;
+    dd->initEvent = GA_initEvent;
 
     dd->canGenMouseDown = TRUE;
     dd->canGenMouseMove = TRUE;
     dd->canGenMouseUp = TRUE;
     dd->canGenKeybd = TRUE;
     dd->gettingEvent = FALSE;
-
-    xd->eventRho = NULL;
-    xd->eventResult = NULL;
 
     return TRUE;
 }
@@ -3633,7 +3627,6 @@ static void GA_onExit(pDevDesc dd)
     dd->onExit = NULL;
     xd->confirmation = FALSE;
     dd->gettingEvent = FALSE;
-    xd->eventRho = NULL;
 
     if (xd->cntxt) endcontext(xd->cntxt);
     if (xd->locator) donelocator((void *)xd);
@@ -3679,35 +3672,25 @@ static Rboolean GA_NewFrameConfirm(pDevDesc dev)
     return TRUE;
 }
 
-static SEXP GA_getEvent(SEXP eventRho, const char* prompt)
+static void GA_initEvent(pDevDesc dd, Rboolean start)
 {
-    gadesc *xd;
-    pGEDevDesc dd = GEcurrentDevice();
+    gadesc *xd = dd->deviceSpecific;
 
-    xd = dd->dev->deviceSpecific;
+    if (start) {
+    	show(xd->gawin);
+    	addto(xd->gawin);
+    	gchangemenubar(xd->mbar);
+    	gchangepopup(xd->gawin, NULL);
+    	if (isEnvironment(dd->eventEnv)) {
+    	    SEXP prompt = findVar(install("prompt"), dd->eventEnv);
+    	    if (length(prompt) == 1) {
+    		setstatus(CHAR(asChar(prompt)));
+    		settext(xd->gawin, CHAR(asChar(prompt)));
+    	    }
+    	}
+    	dd->onExit = GA_onExit;  /* install callback for cleanup */
+    } else
+    	dd->onExit(dd);
 
-    if (xd->eventRho)
-	error(_("recursive use of getGraphicsEvent not supported"));
-    xd->eventRho = eventRho;
-
-    dd->dev->gettingEvent = TRUE;
-    show(xd->gawin);
-    addto(xd->gawin);
-    gchangemenubar(xd->mbar);
-    gchangepopup(xd->gawin, NULL);
-    setstatus(prompt);
-    Rprintf("%s", prompt);
-    Rprintf("\n", 1);
-    R_FlushConsole();
-    settext(xd->gawin, prompt);
-    xd->eventResult = NULL;
-    dd->dev->onExit = GA_onExit;  /* install callback for cleanup */
-    while (!xd->eventResult || xd->eventResult == R_NilValue) {
-	SH;
-	if (!peekevent()) WaitMessage();
-	R_ProcessEvents(); /* May not return if user interrupts */
-    }
-    dd->dev->onExit(dd->dev);
-
-    return xd->eventResult;
+    return;
 }

@@ -91,8 +91,6 @@ typedef struct {
     R_GE_linejoin ljoin;
     float lmitre;
     Rboolean enterkey; /* Set true when enter key is hit */
-    SEXP eventRho;     /* Environment during event handling */
-    SEXP eventResult;  /* Result of event handler */
     double lwdscale;   /* scale factor for lwd */
     RCNTXT *cntxt;     /* context for unwinding on error */
     Rboolean have_alpha; /* support for AlphaBlend */

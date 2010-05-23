@@ -14,6 +14,27 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-getGraphicsEvent <- function(prompt = "Waiting for input", 
-                 onMouseDown = NULL, onMouseMove = NULL, onMouseUp = NULL, onKeybd = NULL)
-    .Internal(getGraphicsEvent(prompt, onMouseDown, onMouseMove, onMouseUp, onKeybd))
+setGraphicsEventHandlers <- function(which=dev.cur(), 
+				     ...) 
+    setGraphicsEventEnv(which, as.environment(list(...)))
+    
+setGraphicsEventEnv <- function(which=dev.cur(), env) {
+    result <- getGraphicsEventEnv(which)
+    env$which <- which
+    .Internal(setGraphicsEventEnv(which, env))
+    invisible(result)
+}
+
+getGraphicsEventEnv <- function(which=dev.cur()) 
+    .Internal(getGraphicsEventEnv(which))
+                                     
+getGraphicsEvent <- function(prompt = "Waiting for input",
+                 onMouseDown = NULL, onMouseMove = NULL, onMouseUp = NULL, 
+                 onKeybd = NULL, consolePrompt = prompt) {
+    if (!missing(prompt) || !missing(onMouseDown) || !missing(onMouseMove) 
+     || !missing(onMouseUp) || !missing(onKeybd)) {
+        setGraphicsEventHandlers(prompt=prompt, onMouseDown=onMouseDown, 
+          onMouseMove=onMouseMove, onMouseUp=onMouseUp, onKeybd=onKeybd)
+    }
+    .Internal(getGraphicsEvent(consolePrompt))
+}

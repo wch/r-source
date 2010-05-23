@@ -1,7 +1,8 @@
 
-R version 2.12.0 Under development (unstable) (2010-05-03 r51899)
+R version 2.12.0 Under development (unstable) (2010-05-23 r52077)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: i386-pc-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -20,6 +21,7 @@ Type 'q()' to quit R.
 > pkgname <- "grDevices"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> options(pager = "console")
 > library('grDevices')
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
@@ -1665,42 +1667,16 @@ Copyright M. P. Wand 1997-2009
 > 
 > ### Name: getGraphicsEvent
 > ### Title: Wait for a mouse or keyboard event from a graphics window
-> ### Aliases: getGraphicsEvent
+> ### Aliases: getGraphicsEvent setGraphicsEventHandlers getGraphicsEventEnv
+> ###   setGraphicsEventEnv
 > ### Keywords: iplot
 > 
 > ### ** Examples
 > 
-> ## Not run: 
-> ##D     mousedown <- function(buttons, x, y) {
-> ##D         plx <- grconvertX(x, "ndc", "user")
-> ##D         ply <- grconvertY(y, "ndc", "user")    
-> ##D         cat("Buttons ", paste(buttons, collapse=" "), " at ndc",
-> ##D             x, y, "user", plx, ply, "\n")
-> ##D         points(plx, ply, col="red", pch=19, cex=2)
-> ##D         if (x > 0.85 && y > 0.85) "Done"
-> ##D         else NULL
-> ##D     }
-> ##D     
-> ##D     mousemove <- function(buttons, x, y) {
-> ##D         plx <- grconvertX(x, "ndc", "user")
-> ##D         ply <- grconvertY(y, "ndc", "user")    
-> ##D         points(plx, ply)
-> ##D         NULL
-> ##D     }
-> ##D     
-> ##D     keybd <- function(key) {
-> ##D         cat("Key <", key, ">\n", sep = "")
-> ##D     }
-> ##D     
-> ##D     plot(0:1, 0:1, type='n')
-> ##D     getGraphicsEvent("Click on upper right to quit",
-> ##D                      onMouseDown = mousedown,
-> ##D                      onMouseMove = mousemove,
-> ##D                      onKeybd = keybd)
-> ## End(Not run)
 > 
 > 
 > 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("gray")
 > ### * gray
@@ -2868,15 +2844,15 @@ List of 18
 > 
 > ### ---- error checking of arguments: ----
 > ps.options(width=0:12, onefile=0, bg=pi)
-Warning: ‘mode(onefile)’ and ‘mode(bg)’ differ between new and previous
-	 ==> NOT changing ‘onefile’ & ‘bg’
-Warning: ‘length(width)’ differs between new and previous
-	 ==> NOT changing ‘width’
+Warning: 'mode(onefile)' and 'mode(bg)' differ between new and previous
+	 ==> NOT changing 'onefile' & 'bg'
+Warning: 'length(width)' differs between new and previous
+	 ==> NOT changing 'width'
 > # override the check for 'width', but not 'bg':
 > ps.options(width=0:12, bg=pi, override.check = c(TRUE,FALSE))
-Warning: ‘mode(bg)’ differs between new and previous
-	 ==> NOT changing ‘bg’
-Warning: ‘length(width)’ differs between new and previous
+Warning: 'mode(bg)' differs between new and previous
+	 ==> NOT changing 'bg'
+Warning: 'length(width)' differs between new and previous
 > utils::str(ps.options())
 List of 18
  $ onefile    : logi TRUE
@@ -3307,7 +3283,7 @@ $zlab
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.49 0.114 3.767 0 0 
+Time elapsed:  8.22 1.94 10.2 NA NA 
 > grDevices::dev.off()
 null device 
           1 

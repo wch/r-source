@@ -2703,7 +2703,8 @@ of a would-be writer of a graphics device.
 * Device capabilities::         
 * Handling text::               
 * Conventions::                 
-* 'Mode'::                      
+* 'Mode'::  
+* Graphics events::
 * Specific devices::            
 @end menu
 
@@ -2827,8 +2828,9 @@ function to change gamma.  So @samp{FALSE} is the only useful value.
 adjustment, 1 = @{0, 0.5, 1@} (left, centre, right justification) or 2 =
 continuously variable (in [0,1]) between left and right justification.
 @item canGenMouseDown -- 
-@code{Rboolean}: should mouse down events be sent to the @code{getEvent}
-callback?
+@code{Rboolean}: can the device handle mouse down events?  This
+flag and the next three are not currently used by R, but are maintained
+for back compatibility.
 @item canGenMouseMove -- 
 @code{Rboolean}: ditto for mouse move events.
 @item canGenMouseUp -- 
@@ -3063,7 +3065,7 @@ in the header @file{GraphicsEngine.h} and in the help for @code{par}: note that 
 least for widths above the default).
 
 
-@node 'Mode', Specific devices, Conventions, Graphics devices
+@node 'Mode', Graphics events, Conventions, Graphics devices
 @subsection `Mode'
 
 One of the device callbacks is a function @code{mode}, documented in
@@ -3092,7 +3094,32 @@ ensure that drawing is flushed to the screen when called with @code{mode
 that `drawing' is interpreted at quite a low level and a typical single
 figure will stop and start drawing many times.
 
-@node Specific devices,  , 'Mode', Graphics devices
+@node Graphics events, Specific devices, 'Mode', Graphics devices
+@subsection Graphics events
+
+Graphics devices may be designed to handle user interaction.  
+The current model is similar to the one introduced in R 2.1.0 for
+the Windows screen device, but the design was changed in R 2.12.0 to 
+be more open ended.
+
+Users may use @code{grDevices::setGraphicsEventEnv} to set the
+@code{eventEnv} environment in the device driver to hold event
+handlers. When the user calls @code{grDevices::getGraphicsEvent}, R
+will take three steps.  First, it sets the device driver member
+@code{gettingEvent} to @code{true} for each device with a
+non-@code{NULL} @code{eventEnv} entry, and calls @code{initEvent(dd,
+true)} if the callback is defined. It then enters an event loop.  Each
+time through the loop R will process events once, then check whether
+any device has set the @code{result} member of @code{eventEnv} to a
+non-@code{NULL} value, and will save the first such value found to be
+returned.  C functions @code{doMouseEvent} and @code{doKeybd} are
+provided to call the R event handlers @code{onMouseDown},
+@code{onMouseMove}, @code{onMouseUp}, and @code{onKeybd} and set
+@code{eventEnv$result} during this step.  Finally, @code{initEvent} is
+called again with @code{init=false} to inform the the devices that the
+loop is done, and the result is returned to the user.
+
+@node Specific devices,  , Graphics events, Graphics devices
 @subsection Specific devices
 
 Specific devices are mostly documented by comments in their sources,

@@ -50,9 +50,11 @@ extern "C" {
  *             NewDevDesc to GEDevDesc.
  *             Add 'ask' to GEDevDesc.
  * Version 6:  Add dev_Raster() and dev_Cap()
+ * Version 7:  Change graphics event handling, adding eventEnv and initEvents() 
+ *	       to DevDesc.
  */
 
-#define R_GE_version 6
+#define R_GE_version 7
 
 int R_GE_getVersion(void);
 

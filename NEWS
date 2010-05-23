@@ -102,6 +102,11 @@ NEW FEATURES
     o	The startup message now includes the platform and if used,
 	sub-architecture: this is useful where different
 	(sub-)architectures run on the same OS.
+	
+    o	The getGraphicsEvent() mechanism now allows multiple windows
+	to return graphics events, through the new functions
+	setGraphicsEventHandlers(), setGraphicsEventEnv(), and
+	getGraphicsEventEnv().
 
     o	tools::texi2dvi() gains an 'index' argument, mainly for use by
 	R CMD Rd2pdf.
