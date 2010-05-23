@@ -41,6 +41,8 @@ struct structGUI
     rect MDIsize;
     char language[20];
     int buffered;
+    char warning[256];  /* When loading the Rconsole, the warning system isn't set
+                           up, so save one warning here. */
 };
 typedef struct structGUI *Gui;
 

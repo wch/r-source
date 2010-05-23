@@ -150,6 +150,7 @@ void getDefaults(Gui gui)
     gui->pointsize = 10;
     strcpy(gui->language, "");
     gui->buffered = 1;
+    gui->warning[0] = 0;
 
 #ifdef USE_MDI
     gui->toolbar = ((RguiMDI & RW_TOOLBAR) != 0);
@@ -218,6 +219,7 @@ void getActive(Gui gui)
 	    gui->guiColors[i] = guiColors[i];
 
 	/* MDIsize is not currently a choice in the dialog, only in the Rconsole file, so is not set here */
+	gui->warning[0] = 0;
     } else
 	getDefaults(gui);
 }
@@ -489,6 +491,7 @@ static void load(button b) /* button callback */
 
     getChoices(&newGUI);
     if (loadRconsole(&newGUI, optf)) {
+        if (strlen(newGUI.warning)) askok(newGUI.warning);
 	cleanup();
 	showDialog(&newGUI);
     }
@@ -656,14 +659,10 @@ int loadRconsole(Gui gui, const char *optf)
 		done = 1;
 	    }
 	}
-	if (!done) {
-	    char  buf[128];
-
-	    snprintf(buf, 128, G_("Error at line %d of file %s"),
-		     optline(), optfile());
-	    askok(buf);
-	    cfgerr = 1;
-	}
+	if (!done) 
+	    snprintf(gui->warning, sizeof(gui->warning), 
+	             G_("Ignored '%s' at line %d of file %s"), 
+	                opt[0], optline(), optfile());
     }
     return !cfgerr;
 }
