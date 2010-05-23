@@ -103,7 +103,7 @@ BUG FIXES
 	**************************************************
 
 
-    		CHANGES IN R VERSION 2.11.0 patched
+    		CHANGES IN R VERSION 2.11.1
 
 
 NEW FEATURES
@@ -119,6 +119,9 @@ NEW FEATURES
 	(there were in most previous releases, but not in 2.11.0).
 
     o	R CMD INSTALL can install zipfiles as binary packages.
+    
+    o	Errors in the Rconsole file are ignored:  silently on startup, 
+    	with a warning when Rconsole is loaded interactively.
 
 
 
