@@ -17,9 +17,9 @@
   Descriptions of the various uses of quoting in \R.
 }
 \details{
-  Three types of quote are part of the syntax of \R: single and double
+  Three types of quotes are part of the syntax of \R: single and double
   quotation marks and the backtick (or back quote, \samp{`}).  In
-  addition, backslash is used for quoting the following characters
+  addition, backslash is used for escaping the following character
   inside character constants.
 }
 \section{Character constants}{
@@ -29,11 +29,10 @@
   normally only used to delimit character constants containing double
   quotes.
 
-  Backslash is used to start an escape sequence inside character constants.
-  Unless specified in the following table, an escaped character is
-  interpreted as the character itself.  (Note that the parser will warn
-  about most such uses, as they are most often erroneous, e.g.
-  using \samp{\\.} where \samp{\\\\.} was intended.)
+  Backslash is used to start an escape sequence inside character
+  constants.  Escaping a character not in the following table is an
+  error (since \R 2.11.0; earlier versions accepted them with a
+  warning).
   
   Single quotes need to be escaped by backslash in single-quoted
   strings, and double quotes in double-quoted strings.
@@ -47,6 +46,8 @@
     \samp{\\f}\tab form feed\cr
     \samp{\\v}\tab vertical tab\cr
     \samp{\\\\}\tab backslash \samp{\\}\cr
+    \samp{\\'}\tab ASCII apostrophe \samp{'}\cr
+    \samp{\\"}\tab ASCII quotation mark \samp{"}\cr
     \samp{\\nnn}\tab character with given octal code (1, 2 or 3 digits)\cr
     \samp{\\xnn}\tab character with given hex code (1 or 2 hex digits)\cr
     \samp{\\unnnn}\tab Unicode character with given code (1--4 hex digits)\cr
