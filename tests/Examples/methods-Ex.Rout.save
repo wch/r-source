@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-05-14 r51995)
+R version 2.12.0 Under development (unstable) (2010-05-23 r52081)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -2548,10 +2548,10 @@ Warning in removeMethods("Compare") :
 > ###   hsearch-class integrate-class libraryIQR-class lm-class logLik-class
 > ###   mlm-class mtable-class mts-class ordered-class packageIQR-class
 > ###   packageInfo-class recordedplot-class rle-class socket-class
-> ###   summary.table-class oldClass-class .OldClassesList table-class
-> ###   initialize,data.frame-method initialize,factor-method
-> ###   initialize,ordered-method initialize,table-method
-> ###   initialize,summary.table-method
+> ###   summaryDefault-class summary.table-class oldClass-class
+> ###   .OldClassesList table-class initialize,data.frame-method
+> ###   initialize,factor-method initialize,ordered-method
+> ###   initialize,table-method initialize,summary.table-method
 > ### Keywords: programming methods
 > 
 > ### ** Examples
@@ -2592,14 +2592,13 @@ Class "vector", by class "list", distance 2
 > ## for more examples, see ?S3Class.
 > 
 > utils::str(.OldClassesList)
-List of 28
+List of 27
  $ : chr [1:2] "anova" "data.frame"
  $ : chr [1:2] "mlm" "lm"
  $ : chr [1:2] "aov" "lm"
  $ : chr [1:3] "maov" "mlm" "lm"
- $ : chr "POSIXt"
- $ : chr "POSIXct"
- $ : chr "POSIXlt"
+ $ : chr [1:2] "POSIXct" "POSIXt"
+ $ : chr [1:2] "POSIXlt" "POSIXt"
  $ : chr "Date"
  $ : chr "dump.frames"
  $ : chr [1:2] "ordered" "factor"

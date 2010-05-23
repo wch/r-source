@@ -1896,7 +1896,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > 
 > ### Name: plot.table
 > ### Title: Plot Methods for `table' Objects
-> ### Aliases: plot.table
+> ### Aliases: plot.table lines.table points.table
 > ### Keywords: hplot category
 > 
 > ### ** Examples
