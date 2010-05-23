@@ -36,7 +36,7 @@ mcnemar.test(x, y = NULL, correct = TRUE)
 
   If \code{x} is a matrix, it is taken as a two-dimensional contingency
   table, and hence its entries should be nonnegative integers.
-  Otherwise, both \code{x} and \code{y} must be vectors or factrs of the
+  Otherwise, both \code{x} and \code{y} must be vectors or factors of the
   same length.  Incomplete cases are removed, vectors are coerced into
   factors, and the contingency table is computed from these.
 

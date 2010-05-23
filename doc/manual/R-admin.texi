@@ -4580,7 +4580,7 @@ early in your @env{PATH}.
 @node 32-bit toolchain, 64-bit toolchain, The MinGW toolchain, The MinGW toolchain
 @subsection 32-bit toolchain
 
-Note that the recomended toolchain for @R{} 2.12.0 differs from that for
+Note that the recommended toolchain for @R{} 2.12.0 differs from that for
 earlier versions, and there are binary incompatibilities, especially
 where C++ code is involved.  So we recommend that all packages are built
 with the current toolchain.
