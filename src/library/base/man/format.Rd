@@ -93,10 +93,12 @@ format(x, \dots)
   character vectors by their methods) is done on display width (see
   \code{\link{nchar}}), taking double-width characters and the rendering
   of special characters (as escape sequences, including escaping
-  backslash: see \code{\link{print.default}}) into account.  Character
-  strings are padded with blanks to the display width of the widest.
-  (If \code{na.encode = FALSE} missing character strings are not
-  included in the width computations and are not encoded.)
+  backslash but not double quote: see \code{\link{print.default}}) into
+  account.  Thus the width is as displayed by \code{print(quote =
+  FALSE)} and not as displayed by \code{\link{cat}}.  Character strings
+  are padded with blanks to the display width of the widest.  (If
+  \code{na.encode = FALSE} missing character strings are not included in
+  the width computations and are not encoded.)
 
   Numeric vectors are encoded with the minimum number of decimal places
   needed to display all the elements to at least the \code{digit}

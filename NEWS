@@ -336,6 +336,10 @@ BUG FIXES
     o	tools::Rd2txt() did not render poorly written Rd files
 	consistently with other renderers.
 
+	It computed widths of strings that would be print()ed with
+	escapes incorrectly, for example in the computation of column
+	width for \tabular.
+
     o	na.action() did not extract the 'na.action' component as
 	documented.
 

@@ -95,6 +95,23 @@ Rd2txt <-
         }
     }
 
+    ## Use display widths as used by cat not print.
+    frmt <- function(x, justify="left", width = 0L) {
+        justify <- match.arg(justify, c("left", "right", "centre", "none"))
+        w <- nchar(x, "width")
+        if(w < width && justify != "none") {
+            excess <- width - w
+            left <- right <- 0L
+            if(justify == "left") right <- excess
+            else if(justify == "right")  left <- excess
+            else if(justify == "centre") {
+                left <- excess %/% 2
+                right <- excess-left
+            }
+            paste(c(rep(" ", left), x, rep(" ", right)), collapse = "")
+        } else x
+    }
+
     wrap <- function(doWrap = TRUE)
 	if (doWrap != wrapping) { flushBuffer(); wrapping <<- doWrap }
 
@@ -401,7 +418,7 @@ Rd2txt <-
                    inEqn <<- TRUE
                    writeContent(block, tag)
                    eqn <- endCapture(save)
-                   eqn <- format(eqn, justify="centre", width=WIDTH-indent)
+                   eqn <- frmt(eqn, justify="centre", width=WIDTH-indent)
                    putf(paste(eqn, collapse="\n"))
     		   blankLine()
                },
@@ -475,7 +492,7 @@ Rd2txt <-
             	entries[[i]] <- e
             }
             if (any(nzchar(e$text)))
-            	widths[e$col] <- max(widths[e$col], max(nchar(e$text)))
+            	widths[e$col] <- max(widths[e$col], max(nchar(e$text, "w")))
             lines[e$row] <- max(lines[e$row], length(e$text))
         }
         result <- matrix("", sum(lines), cols)
@@ -484,7 +501,9 @@ Rd2txt <-
         firstline <- c(1L, 1L+cumsum(lines))
         for (i in seq_along(entries)) {
             e <- entries[[i]]
-            text <- format(e$text, justify=formats[e$col], width=widths[e$col])
+            ## FIXME: this is not right: it justifies strings as if
+            ## they are escaped, so in particular \ takes two columns.
+            text <- frmt(e$text, justify=formats[e$col], width=widths[e$col])
             for (j in seq_along(text))
             	result[firstline[e$row] + j - 1L, e$col] <- text[j]
         }
@@ -690,8 +709,8 @@ Rd2txt <-
                                   indent <<- max(10L, indent + 4L)
                                   keepFirstIndent <<- TRUE
                                   putw(paste(rep(" ", indent0), collapse=""),
-                                       format(paste(DLlab,  sep=""),
-                                              justify="left", width=indent),
+                                       frmt(paste(DLlab,  sep=""),
+                                            justify="left", width=indent),
                                        " ")
                                   writeContent(block[[2L]], tag)
 			  	  blankLine(0L)
@@ -707,7 +726,7 @@ Rd2txt <-
                                   indent0 <- indent
                                   indent <<- max(10L, indent + 4L)
                                   keepFirstIndent <<- TRUE
-                                  putw(format(paste(DLlab, ": ", sep=""),
+                                  putw(frmt(paste(DLlab, ": ", sep=""),
                                               justify="right", width=indent))
                                   writeContent(block[[2L]], tag)
 			  	  blankLine(0L)
@@ -723,8 +742,8 @@ Rd2txt <-
                               	      enumItem <<- enumItem + 1L
                               	      label <- paste(enumItem, ". ", sep="")
                               	  }
-                              	  putw(format(label, justify="right",
-                                              width=indent))
+                              	  putw(frmt(label, justify="right",
+                                            width=indent))
                               })
                        itemskip <- TRUE
                    },
