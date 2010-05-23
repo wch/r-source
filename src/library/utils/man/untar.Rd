@@ -84,7 +84,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
 
   You may see warnings from the internal implementation such as
 \preformatted{
-unsupported entry type ‘x’  
+unsupported entry type 'x' 
 }
   This often indicates an invalid archive: entry types \code{"A-Z"} are
   allowed as extensions, but other types are reserved (this example is
