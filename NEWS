@@ -35,7 +35,7 @@ INSTALLATION
     o	Command 'gnutar' is preferred to 'tar' when configure sets
 	TAR.  This is needed on Mac OS 10.6, where the default tar,
 	bsdtar 2.6.2, has been reported to produce archives with
-	illegal extensions (according to the POSIX standard).
+	illegal extensions to tar (according to the POSIX standard).
 
 
 BUG FIXES
@@ -111,8 +111,11 @@ BUG FIXES
 	slower than it could have been on very long input strings.
 	(PR#14286)
 	
-    o	tools::Rd2txt() did not render poorly written Rd files consistently
-	with other renderers.
+    o	tools::Rd2txt() did not render poorly written Rd files
+	consistently with other renderers.
+
+    o	na.action() did not extract the 'na.action' component as
+	documented.
 
 
 
