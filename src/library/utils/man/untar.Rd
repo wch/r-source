@@ -88,7 +88,7 @@ unsupported entry type 'x'
 }
   This often indicates an invalid archive: entry types \code{"A-Z"} are
   allowed as extensions, but other types are reserved (this example is
-  from Mac OS 10.6.3).  The only think you can do with such an archive
+  from Mac OS 10.6.3).  The only thing you can do with such an archive
   is to find a \code{tar} program that handles it, and look carefully at
   the resulting files.
   
