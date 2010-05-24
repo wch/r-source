@@ -1,7 +1,8 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-28 r51857)
+R version 2.12.0 Under development (unstable) (2010-05-24 r52087)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -15,9 +16,9 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> ##--- S4 Methods (and Classes)
+> ####--- S4 Methods (and Classes)  --- see also ../src/library/methods/tests/
 > options(useFancyQuotes=FALSE)
-> library(methods)
+> require(methods)
 > ##too fragile: showMethods(where = "package:methods")
 > 
 > ##-- S4 classes with S3 slots [moved from ./reg-tests-1.R]
@@ -563,7 +564,7 @@ Creating a new generic function for "as.vector" in ".GlobalEnv"
 > ## whereas this fails in R versions earlier than 2.6.0:
 > setMethod("as.vector", "foo", function(x) unclass(x))
 [1] "as.vector"
-> xx <- removeClass("foo")
+> stopifnot(removeClass("foo"))
 > 
 > ## stats4::AIC in R < 2.7.0 used to clobber stats::AIC
 > pfit <- function(data) {
@@ -856,4 +857,18 @@ List of 7
 > stopifnot(is.character(R[["class"]]),
 +           sapply(R[names(R) != "class"], isTRUE))
 > ## only "class" (and ".Data", ...) is reserved as slot name
+> 
+> ## implicit generics ..
+> setMethod("sample", "C2",
++           function(x, size, replace=FALSE, prob=NULL) {"sample.C2"})
+Creating a new generic function for "sample" in ".GlobalEnv"
+[1] "sample"
+> stopifnot(is(sample,"standardGeneric"),
++ 	  ## the signature must come from the implicit generic:
++ 	  identical(sample@signature, c("x", "size")),
++ 	  identical(packageSlot(sample), "base"),
++ 	  ## default method must still work:
++ 	  identical({set.seed(3); sample(3)}, 1:3))
+> ## failed in R 2.11.0
+> 
 > 

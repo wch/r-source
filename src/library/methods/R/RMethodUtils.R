@@ -711,7 +711,7 @@ getMethodsMetaData <- function(f, where = topenv(parent.frame()))
 
 assignMethodsMetaData <-
   ## assign value to be the methods metadata for generic f on database where.
-  ## as of R 2.7.0 the mlist metadata is deprecated.  
+  ## as of R 2.7.0 the mlist metadata is deprecated.
   ## If value is not a MethodsList,  only turns on primitives & groups
   function(f, value, fdef, where, deflt)
 {
@@ -1533,6 +1533,7 @@ getGroupMembers <- function(group, recursive = FALSE, character = TRUE)
                           pattern = "^[.]__[CT]_")))
 
 ## turn ordinary generic into one that dispatches on "..."
+## currently only called in one place from setGeneric()
 .dotsGeneric <- function(f)
 {
     if(!is(f, "genericFunction"))

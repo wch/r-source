@@ -1,6 +1,6 @@
-##--- S4 Methods (and Classes)
+####--- S4 Methods (and Classes)  --- see also ../src/library/methods/tests/
 options(useFancyQuotes=FALSE)
-library(methods)
+require(methods)
 ##too fragile: showMethods(where = "package:methods")
 
 ##-- S4 classes with S3 slots [moved from ./reg-tests-1.R]
@@ -330,7 +330,7 @@ setMethod("as.vector", signature(x = "foo", mode = "missing"),
           function(x) unclass(x))
 ## whereas this fails in R versions earlier than 2.6.0:
 setMethod("as.vector", "foo", function(x) unclass(x))
-xx <- removeClass("foo")
+stopifnot(removeClass("foo"))
 
 ## stats4::AIC in R < 2.7.0 used to clobber stats::AIC
 pfit <- function(data) {
@@ -556,3 +556,15 @@ str(R) # just so ...
 stopifnot(is.character(R[["class"]]),
           sapply(R[names(R) != "class"], isTRUE))
 ## only "class" (and ".Data", ...) is reserved as slot name
+
+## implicit generics ..
+setMethod("sample", "C2",
+          function(x, size, replace=FALSE, prob=NULL) {"sample.C2"})
+stopifnot(is(sample,"standardGeneric"),
+	  ## the signature must come from the implicit generic:
+	  identical(sample@signature, c("x", "size")),
+	  identical(packageSlot(sample), "base"),
+	  ## default method must still work:
+	  identical({set.seed(3); sample(3)}, 1:3))
+## failed in R 2.11.0
+

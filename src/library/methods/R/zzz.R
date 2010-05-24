@@ -40,7 +40,7 @@
         ## optionally turn off old-style mlists
         mopt <- Sys.getenv("R_MLIST")
         .noMlistsFlag <<- (is.character(mopt) && all(mopt != "YES"))
-        if(!.noMlistsFlag) 
+        if(!.noMlistsFlag)
             cat("Initializing with support for old-style methods list objects\n")
         cat("initializing class and method definitions ...")
         on.exit(assign(".saveImage", NA, envir = where))
@@ -148,5 +148,3 @@
 
 ## want ASCII quotes, not fancy nor translated ones
 .dQ <- function (x) paste('"', x, '"', sep = '')
-
-

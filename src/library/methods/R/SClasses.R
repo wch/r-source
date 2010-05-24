@@ -367,6 +367,7 @@ isClass <-
         !is.null(getClassDef(Class, where))
 }
 
+### TODO   s/Class/._class/  -- in order to allow 'Class' as regular slot name
 new <-
   ## Generate an object from the specified class.
   ##
@@ -378,15 +379,17 @@ new <-
   ### Unnamed arguments are objects from this class or a superclass.
   ##
   function(Class, ...)
+    ## NB: the *name* of the first argument is automatically invalid as slot name
+    ## --  in  new(., <slot> = <val>)
 {
     ## get the class definition, completing it if this is the first reference
     ## to this class in this session.
-    ## FIXME:  really wants to be is(Class, "classRepresentation") but
-    ## generates inf. loop in booting methods package (also for getClassDef)
-    if(.identC(class(Class), "classRepresentation"))
-        ClassDef <- Class
-    else
-        ClassDef <- getClass(Class, where = topenv(parent.frame()))
+    ClassDef <-
+	if(.identC(class(Class), "classRepresentation"))
+	    ## FIXME:  really wants to be is(Class, "classRepresentation") but
+	    ## generates inf. loop in booting methods package (also for getClassDef)
+	    Class
+	else getClass(Class, where = topenv(parent.frame()))
     value <- .Call("R_do_new_object", ClassDef, PACKAGE = "base")
     initialize(value, ...)
 }

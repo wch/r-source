@@ -52,19 +52,22 @@ setGeneric <-
             stop(msg, domain = NA)
         }
     }
-    simpleCall <- nargs() < 2 || all(missing(def), missing(group), missing(valueClass),
-               missing(package), missing(signature), missing(useAsDefault), missing(genericFunction), missing(simpleInheritanceOnly))
+    simpleCall <- { nargs() < 2 ||
+		    all(missing(def), missing(group), missing(valueClass),
+			missing(package), missing(signature), missing(useAsDefault),
+			missing(genericFunction), missing(simpleInheritanceOnly)) }
     stdGenericBody <- substitute(standardGeneric(NAME), list(NAME = name))
     ## get the current function which may already be a generic
-    if(is.null(package))
-      fdef <- getFunction(name, mustFind = FALSE, where = where)
-    else {
-        ev <- .NamespaceOrPackage(package)
-        if(simpleCall)
-          fdef <- implicitGeneric(name, ev) # generic or NULL
-        else
-          fdef <- getFunction(name, mustFind = FALSE, where = ev)
-    }
+    fdef <-
+	if(is.null(package))
+	    getFunction(name, mustFind = FALSE, where = where)
+	else {
+	    ev <- .NamespaceOrPackage(package)
+	    if(simpleCall)
+		implicitGeneric(name, ev) # generic or NULL
+	    else
+		getFunction(name, mustFind = FALSE, where = ev)
+	}
     if(simpleCall) {
         if(is(fdef, "genericFunction"))
           return(.GenericAssign(name, fdef, where))
@@ -91,15 +94,18 @@ setGeneric <-
     }
     else
         prevDefault <- NULL
+
     if(is.primitive(fdef)) ## get the pre-defined version
         fdef <- getGeneric(name, where = where)
     else if(is.function(fdef))
         body(fdef, envir = as.environment(where)) <- stdGenericBody
     if(!is.null(def)) {
         if(is.primitive(def) || !is.function(def))
-            stop(gettextf("if the `def' argument is supplied, it must be a function that calls standardGeneric(\"%s\") to dispatch methods", name), domain = NA)
+            stop(gettextf("if the 'def' argument is supplied, it must be a function that calls standardGeneric(\"%s\") to dispatch methods",
+                          name), domain = NA)
         fdef <- def
-        if(is.null(genericFunction) && .NonstandardGenericTest(body(fdef), name, stdGenericBody))
+        if(is.null(genericFunction) &&
+           .NonstandardGenericTest(body(fdef), name, stdGenericBody))
             genericFunction <- new("nonstandardGenericFunction") # force this class for fdef
     }
     thisPackage <- getPackageName(where)
@@ -108,33 +114,41 @@ setGeneric <-
         package <- thisPackage
     if(is.null(fdef))
         stop("must supply a function skeleton, explicitly or via an existing function")
-    if(!(is.object(fdef) && is(fdef, "genericFunction"))) {
-        if(is.function(useAsDefault))
-            fdeflt <- useAsDefault
-        else if(identical(useAsDefault, FALSE))
-            fdeflt <- NULL
-        else {
-            if(is.function(prevDefault) && !identical(formalArgs(prevDefault), formalArgs(fdef)) && !is.primitive(prevDefault))
-                fdeflt <- NULL
-            else
-              fdeflt <- prevDefault
-        }
-        if(is.function(fdeflt))
-            fdeflt <- .derivedDefaultMethod(fdeflt)
-        fdef <- makeGeneric(name, fdef, fdeflt, group=group, valueClass=valueClass,
-                            package = package, signature = signature,
+    ensureGeneric.fdef <- function(sig = signature) {
+        if(!(is.object(fdef) && is(fdef, "genericFunction"))) {
+            fdeflt <-
+                if(is.function(useAsDefault)) useAsDefault
+                else if(identical(useAsDefault, FALSE)) NULL
+                else if(is.function(prevDefault) &&
+                        !identical(formalArgs(prevDefault), formalArgs(fdef)) &&
+                        !is.primitive(prevDefault))
+                    NULL
+                else prevDefault
+            if(is.function(fdeflt))
+                fdeflt <- .derivedDefaultMethod(fdeflt)
+            fdef <<-
+                makeGeneric(name, fdef, fdeflt, group=group, valueClass=valueClass,
+                            package = package, signature = sig,
                             genericFunction = genericFunction,
                             simpleInheritanceOnly = simpleInheritanceOnly)
+        }
     }
-    if(!identical(package, thisPackage)) {
+    if(identical(package, thisPackage)) {
+        ensureGeneric.fdef()
+    } else {
         ## setting a generic for a function in another package.
         ## In this case, the generic definition must agree with the implicit
         ## generic for the given function and package
         implicit <- implicitGeneric(name, .NamespaceOrPackage(package))
-        if(is.null(implicit))
-          {} # New function, go ahead
+        if(is.null(implicit)) { # New function, go ahead
+            ensureGeneric.fdef()
+        }
         else {
-            cmp <- .identicalGeneric(fdef, implicit)
+            ## possibly take the signature from the *implicit* generic:
+            ensureGeneric.fdef(if(is.null(signature)) implicit@signature else signature)
+	    cmp <- .identicalGeneric(fdef, implicit,
+				     allow.extra.dots =
+				     !nzchar(Sys.getenv("R_SETGENERIC_PICKY_DOTS")))
             if(identical(cmp, TRUE)) {
                 fdef <- implicit
             }  # go ahead silently
@@ -167,9 +181,9 @@ setGeneric <-
         }
     }
     if(identical(fdef@signature, "..."))
-      fdef <- .dotsGeneric(fdef)
+	fdef <- .dotsGeneric(fdef)
     if(doUncache)
-      .uncacheGeneric(name, oldDef)
+	.uncacheGeneric(name, oldDef)
     groups <- fdef@group
     for(group in groups) { # add as member of group generic(s) if not there
         gdef <- getGeneric(group)
@@ -1249,7 +1263,7 @@ implicitGeneric <- function(...) NULL
             generic <- .getImplicitGeneric(name, env, package)
             if(is.null(generic))  { # make a new one
                 generic <- makeGeneric(name, fdefault = fdefault, package = package,
-                                     group = group)
+                                       group = group)
                 .cacheImplicitGeneric(name, generic)
             }
           }
@@ -1321,7 +1335,7 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 }
 
 ## only called from setGeneric, f1 = supplied, f2 = implicit
-.identicalGeneric <- function(f1, f2)
+.identicalGeneric <- function(f1, f2, allow.extra.dots = FALSE)
 {
     gpString <- function(gp) {
 	if(length(gp))
@@ -1333,22 +1347,29 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
 	return(gettext("Original function is prohibited as a generic function"))
     if(!(is.function(f2) && is.function(f1)))
 	return(gettext("not both functions!"))
-    if(isS4(f2))
-	f2d <- f2@.Data
-    if(isS4(f1))
-	f1d <- f1@.Data
     ## environments will be different
     if(!identical(class(f1), class(f2)))
 	return(gettextf("Classes: %s, %s",
                         .dQ(class(f1)), .dQ(class(f2))))
+    if(!isS4(f1)) return(gettextf("argument %s is not S4",
+                                  deparse(substitute(f1))))
+    if(!isS4(f2)) return(gettextf("argument %s is not S4",
+                                  deparse(substitute(f2))))
+    f1d <- f1@.Data
+    f2d <- f2@.Data
+    ## xtra... <- FALSE
     if(!identical(formals(f1d), formals(f2d))) {
 	a1 <- names(formals(f1d)); a2 <- names(formals(f2d))
 	if(identical(a1, a2))
 	    return(gettext("Formal arguments differ (in default values?)"))
+	else if(identical(c(a1, "..."), a2) && allow.extra.dots)
+            ## silently accept an extra "..."
+            { } ## xtra... <- TRUE
+	    ## and continue
 	else
 	    return(gettextf("Formal arguments differ: (%s), (%s)",
-                            paste(a1, collapse = ", "),
-                            paste(a2, collapse = ", ")))
+			    paste(a1, collapse = ", "),
+			    paste(a2, collapse = ", ")))
     }
     if(!identical(f1@valueClass, f2@valueClass))
 	return(gettextf("Value classes differ: %s, %s",

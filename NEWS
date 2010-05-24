@@ -55,7 +55,7 @@ NEW FEATURES
 
 	There are no longer separate plot() methods for "POSIX[cl]t"
 	and "Date": the default method has been able to handle those
-	classes for a long time.  This iter alia allows a single
+	classes for a long time.  This inter alia allows a single
 	date-time object to be supplied, the wish of PR#14016.
 
 	The methods had a different default ("") for xlab.
@@ -218,6 +218,9 @@ BUG FIXES
     	(caching these methods could give incorrect results).  See
     	?setIs.
 
+    o	The signature of an implicit generic is now used by
+	setGeneric() when that does not explicitly set a signature.
+
 
 
 
@@ -332,7 +335,7 @@ BUG FIXES
 	a foreign encoding (e.g. UTF-8 strings on Windows) and so was
 	slower than it could have been on very long input strings.
 	(PR#14286)
-	
+
     o	tools::Rd2txt() did not render poorly written Rd files
 	consistently with other renderers.
 
