@@ -88,11 +88,15 @@ chisq.test(x, y = NULL, correct = TRUE,
   \item{residuals}{the Pearson residuals,
     \code{(observed - expected) / sqrt(expected)}.}
 }
+\seealso{
+  For goodness-of-fit testing, notably of continuous distributions,
+  \code{\link{ks.test}}.
+}
 \references{
   Hope, A. C. A. (1968)
   A simplified Monte Carlo significance test procedure.
   \emph{J. Roy, Statist. Soc. B} \bold{30}, 582--598.
-  
+
   Patefield, W. M. (1981)
   Algorithm AS159.  An efficient method of generating r x c tables
   with given row and column totals.
@@ -129,7 +133,7 @@ p <- c(0.40,0.20,0.20,0.19,0.01)
                                 # Expected count in category 5
                                 # is 1.86 < 5 ==> chi square approx.
 chisq.test(x, p = p)            #               maybe doubtful, but is ok!
-chisq.test(x, p = p,simulate.p.value = TRUE)
+chisq.test(x, p = p, simulate.p.value = TRUE)
 
 ## Case B. Raw data
 x <- trunc(5 * runif(100))
