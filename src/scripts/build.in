@@ -454,9 +454,6 @@ sub cleanup_pkg {
 	chdir("src");
 	$log->message("cleaning src");
 	if($WINDOWS) {
-	    ## A Windows Makefile.win might use
-	    ## $(RHOME)/src/gnuwin32/MkRules.
-	    $ENV{RHOME} = $ENV{R_HOME};
 	    if(-r "Makefile.win") {
 		## FIXME: why not use 'Makefile' if Makefile.win does not exist?
 		R_system("${R::Vars::MAKE} -f Makefile.win clean");
