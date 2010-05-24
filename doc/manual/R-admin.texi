@@ -3960,6 +3960,31 @@ Another quirk is that people have found that the X11 libraries are not
 in the default linking path, so something like
 @samp{LIBS=-L/usr/X11/lib} may be required.
 
+So for a 64-bit build of @R{} you need a file @file{config.site} in the
+top-level build directory containing
+
+@example
+CC='gcc -arch x86_64'
+CXX='g++ -arch x86_64'
+F77='gfortran -arch x86_64'
+FC='gfortran -arch x86_64'
+OBJC='gcc -arch x86_64'
+LIBS=-L/usr/X11/lib
+@end example
+
+@noindent
+whereas for a 32-bit build it should have
+
+@example
+CC='gcc -arch i386'
+CXX='g++ -arch i386'
+F77='gfortran -arch i386'
+FC='gfortran -arch i386'
+OBJC='gcc -arch i386'
+LIBS=-L/usr/X11/lib
+@end example
+
+
 @node Solaris, AIX, Mac OS X, Platform notes
 @section Solaris
 @cindex Solaris
