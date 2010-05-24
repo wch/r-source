@@ -726,7 +726,7 @@
 
             ## if we have subarchs, update DESCRIPTION
             fi <- file.info(Sys.glob(file.path(instdir, "libs", "*")))
-            dirs <- row.names(fi[fi$isdir %in% TRUE])
+            dirs <- basename(row.names(fi[fi$isdir %in% TRUE]))
             ## avoid DLLs installed by rogue packages
             if(WINDOWS) dirs <- dirs[dirs %in% c("i386", "x64")]
             if (length(dirs)) {
@@ -735,8 +735,7 @@
                 olddesc <- grep("^Archs:", olddesc,
                                 invert = TRUE, value = TRUE, useBytes = TRUE)
                 newdesc <- c(olddesc,
-                             paste("Archs:",
-                                   paste(basename(dirs), collapse=", "))
+                             paste("Archs:", paste(dirs, collapse=", "))
                              )
                 writeLines(newdesc, descfile, useBytes = TRUE)
             }
