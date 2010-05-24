@@ -16,7 +16,7 @@
 
 #### R based engine for  R CMD build
 
-## emulation of Perl Logfile.pm
+### emulation of Perl Logfile.pm
 
 newLog <- function(class, filename = "")
 {
@@ -79,11 +79,25 @@ summaryLog <- function(Log, text)
             file = Log$con)
 }
 
-
+### based on Perl build script
 
 .build_package <- function(args = NULL)
 {
     WINDOWS <- .Platform$OS.type == "windows"
+
+    writeLinesNL <- function(text, file)
+    {
+        ## a version that uses NL line endings everywhere
+        con <- file(file, "wb")
+        on.exit(close(con))
+        writeLines(text, con)
+    }
+
+    Ssystem <- function(command, ...)
+        system(paste(if(WINDOWS) "sh",
+                     command,
+                     ">/dev/null 2>&1"),
+               ...)
 
     .file_test <- function(op, x)
         switch(op,
@@ -92,6 +106,9 @@ summaryLog <- function(Log, text)
                stop(sprintf("test '%s' is not available", op), domain = NA))
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
+    do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
+
+    env_path <- function(...) paste(..., sep = .Platform$path.sep)
 
     Usage <- function() {
         cat("Usage: R CMD build [options] pkgdirs",
@@ -121,19 +138,75 @@ summaryLog <- function(Log, text)
         ## Do not keep previous build stamps.
         lines <- lines[!grepl("^Packaged:", lines)]
         lines <- c(lines,
-                   paste("Packaged:",
+                   paste("Packaged: ",
                          format(Sys.time(), '', tz='UTC', usetz=TRUE),
-                         ":", Sys.info()["login"]))
-        writeLines(lines, ldpath)
+                         ";", " ", Sys.info()["login"], sep = ""))
+        writeLinesNL(lines, ldpath)
     }
 
     prepare_pkg <- function(pkgdir, desc, Log)
     {
         pkgname <- basename(pkgdir)
-        ## check package description
+        checkingLog(Log, "DESCRIPTION meta-information")
+        res <- try(.check_package_description("DESCRIPTION"))
+        if(inherits(res, "try-error")) {
+            resultLog(Log, "ERROR")
+            messageLog(Log, "running .check_package_description failed")
+        } else {
+            if (any(sapply(res, length))) {
+                resultLog(Log, "ERROR")
+                print(res) # FIXME to Log?
+                do_exit(1L)
+            } else resultLog(Log, "OK")
+        }
         cleanup_pkg(pkgdir, Log)
         if(file.exists("INDEX")) update_Rd_index("INDEX", "man", Log)
-        ## do vignettes
+        if(vignettes && dir.exists(file.path("inst", "doc")) &&
+           length(list_files_with_type(file.path("inst", "doc"),
+                                       "vignette"))) {
+            messageLog(Log, "installing the package to re-build vignettes")
+            libdir <- tempfile("Rinst")
+            dir.create(libdir, mode = "0755")
+            cmd <- if(WINDOWS)
+                paste(file.path(R.home("bin"), "Rcmd.exe"),
+                      "INSTALL -l", shQuote(libdir), shQuote(pkgdir))
+            else
+                 paste(file.path(R.home("bin"), "R"),
+                       "CMD INSTALL -l", shQuote(libdir), shQuote(pkgdir))
+            res <- Ssystem(cmd)
+            if(res) {
+                errorLog(Log, "Installation failed\n")
+                printLog(Log, "Removing installation dir\n")
+                unlink(libdir, recursive = TRUE)
+                do_exit(1)
+            }
+            creatingLog(Log, "vignettes")
+            R_LIBS <- Sys.getenv("R_LIBS", NA_character_)
+            if(!is.na(R_LIBS)) {
+                on.exit(Sys.setenv(R_LIBS = R_LIBS))
+                Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
+            }
+            Tfile <- tempfile()
+            msgcon <- file(Tfile, "w")
+            sink(msgcon, type = "message")
+            sink(msgcon)
+            res <- try(buildVignettes(dir = "."))
+            sink()
+            sink(stderr(), type = "message")
+            close(msgcon)
+            if(inherits(res, "try-error")) {
+                errorLog(Log , "")
+                Lines <- readLines(Tfile)
+                Lines <- grep("^>", Lines, invert=TRUE, value=TRUE)
+                printLog(Log, paste(c(Lines, ""),  collapse="\n"))
+                do_exit(1L)
+            } else resultLog(Log, "OK")
+            unlink(libdir, recursive = TRUE)
+            if(inherits(res, 'try-error')) do_exit(1L)
+
+	    ## And finally, clean up again.
+            cleanup_pkg(pkgdir, Log)
+        }
     }
 
     cleanup_pkg <- function(pkgdir, Log)
@@ -144,14 +217,14 @@ summaryLog <- function(Log, text)
             messageLog(Log, "cleaning src")
             if(WINDOWS) {
                 if(file.exists("Makefile.win")) {
-                    system(paste(Sys.getenv("MAKE", "make"), "-f Makefile.win clean"))
+                    Ssystem(paste(Sys.getenv("MAKE", "make"), "-f Makefile.win clean"))
                 } else {
                     if(file.exists("Makevars.win")) {
                         makefiles <- paste()
                         makefiles <- paste("-f",
                                            shQuote(file.path(R.home("share"), "make", "clean.mk")),
                                            "-f Makevars.win")
-                        system(paste(Sys.getenv("MAKE", "make"), makefiles, "clean"))
+                        Ssystem(paste(Sys.getenv("MAKE", "make"), makefiles, "clean"))
                     }
                     if(dir.exists("_libs")) unlink("_libs", recursive = TRUE)
                 }
@@ -162,14 +235,14 @@ summaryLog <- function(Log, text)
                                                      "Makeconf")))
                 if(file.exists("Makefile")) {
                     makefiles <- paste(makefiles, "-f", "Makefile")
-                    system(paste(Sys.getenv("MAKE", "make"), makefiles, "clean"))
+                    Ssystem(paste(Sys.getenv("MAKE", "make"), makefiles, "clean"))
                 } else {
                     if(file.exists("Makevars")) {
                         ## ensure we do have a 'clean' target.
                         makefiles <- paste(makefiles, "-f",
                                        shQuote(file.path(R.home("share"), "make", "clean.mk")),
                                            "-f Makevars")
-                        system(paste(Sys.getenv("MAKE", "make"), makefiles, "clean"))
+                        Ssystem(paste(Sys.getenv("MAKE", "make"), makefiles, "clean"))
                     }
                     ## Also cleanup possible Windows leftovers ...
                     unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
@@ -182,7 +255,7 @@ summaryLog <- function(Log, text)
         setwd(pkgdir)
         if(!WINDOWS && .file_test("-x", "./cleanup")) {
             messageLog(Log, "running cleanup")
-            system("./cleanup")
+            Ssystem("./cleanup")
         }
     }
 
@@ -193,7 +266,7 @@ summaryLog <- function(Log, text)
         if(inherits(res, "try-error")) {
             messageLog(Log, "computing Rd index")
             errorLog(Log, "something") # FIXME
-            q("no", status = 1, runLast = FALSE)
+            do_exit(1L)
         }
         checkingLog(Log, "whether ", sQuote(oldindex), " is up-to-date")
         if(file.exists(oldindex)) {
@@ -222,13 +295,28 @@ summaryLog <- function(Log, text)
         }
     }
 
+    ## These also fix up missing final NL
     fix_nonLF_in_source_files <- function(pkgname, Log)
     {
+        if(dir.exists(file.path(pkgname, "src"))) return()
+        src_files <- dir(file.path(pkgname, "src"),
+                         pattern = "\\.([cfh]|cc|cpp)$",
+                         full.names=TRUE, recursive = TRUE)
+        for (ff in src_files) {
+            lines <- readLines(ff, warn = FALSE)
+            writeLinesNL(lines, ff)
+        }
     }
 
     fix_nonLF_in_make_files <- function(pkgname, Log)
     {
-    }
+         if(dir.exists(file.path(pkgname, "src"))) return()
+         for (f in c("Makefile", "Makefile.in", "Makevars", "Makevars.in")) {
+             if (!file.exists(ff <- file.path(pkgname, "src", f))) next
+             lines <- readLines(ff, warn = FALSE)
+             writeLinesNL(lines, ff)
+         }
+     }
 
     force <- FALSE
     vignettes <- TRUE
@@ -248,7 +336,7 @@ summaryLog <- function(Log, text)
         a <- args[1L]
         if (a %in% c("-h", "--help")) {
             Usage()
-            q("no", runLast = FALSE)
+            do_exit(0L)
         }
         else if (a %in% c("-v", "--version")) {
             cat("R add-on package builder: ",
@@ -259,7 +347,7 @@ summaryLog <- function(Log, text)
                 "This is free software; see the GNU General Public License version 2",
                 "or later for copying conditions.  There is NO warranty.",
                 sep="\n")
-            q("no", runLast = FALSE)
+            do_exit(0L)
         } else if (a == "--force") {
             force <- TRUE
         } else if (a == "--no-vignettes") {
@@ -297,9 +385,9 @@ summaryLog <- function(Log, text)
     for(pkg in pkgs) {
         ## remove any trailing /, for Windows' sake
         pkg <- sub("/$", "", pkg)
-        ## Older versions used $pkg as absolute or relative to $startdir.
+        ## 'Older versions used $pkg as absolute or relative to $startdir.
         ## This does not easily work if $pkg is a symbolic link.
-        ## Hence, we now convert to absolute paths.
+        ## Hence, we now convert to absolute paths.'
         setwd(startdir)
         res <- try(setwd(pkg),
         if(inherits(res, "try-error"))
@@ -315,7 +403,7 @@ summaryLog <- function(Log, text)
             resultLog(Log, "OK")
         } else {
             resultLog(Log, "NO")
-            q("no", status = 1, runLast = FALSE)
+            do_exit(1L)
         }
         intname <- desc["Package"]
         messageLog(Log, "preparing ", sQuote(intname), ":")
@@ -331,18 +419,17 @@ summaryLog <- function(Log, text)
         filepath <- file.path(startdir, filename)
         cmd <- paste(TAR, "-chf", shQuote(filepath), pkgname)
         res <- system(cmd)
-        if(res) stop("...")
+        if(res) stop("...") # FIXME
         Tdir <- tempfile("Rbuild")
         dir.create(Tdir, mode="0755")
         setwd(Tdir)
-        system(paste(TAR, "-xf",  shQuote(filepath)))
+        system(paste(TAR, "-xf",  shQuote(filepath))) # FIXME check worked
 
         ## remove exclude files
         ## FIXME: what about case-insensitivity on Windows?
         allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
                         full.names = TRUE)
-        ## drop './...'
-        allfiles <- substring(allfiles, 3L)
+        allfiles <- substring(allfiles, 3L)  # drop './'
         bases <- basename(allfiles)
         exclude <- rep(FALSE, length(allfiles))
         ## handle .Rbuildignore
@@ -368,7 +455,7 @@ summaryLog <- function(Log, text)
         if (pkgname != intname) {
             if(!file.rename(pkgname, intname)) {
                 message("Error: cannot rename directory to ", sQuote(intname))
-                q("no", status = 1, runLast = FALSE)
+                do_exit(1L)
             }
             pkgname <- intname
         }
@@ -378,12 +465,18 @@ summaryLog <- function(Log, text)
         setwd(Tdir)
         ## Fix permissions
         if(!WINDOWS) {
-	    ## Directories should really be mode 00755 if possible.
-	    # chmod(00755, $_);
-	    ## Files should be readable by everyone, and writable
+            allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
+                            full.names = TRUE)
+            isdir <- file_test("-d", allfiles)
+	    ## 'Directories should really be mode 00755 if possible.'
+            Sys.chmod(allfiles[isdir], "0755")
+	    ## 'Files should be readable by everyone, and writable
 	    ## only for user.  This leaves a bit of uncertainty
-	    ## about the execute bits.
-	    # chmod(((stat $_)[2] | 00644) & 00755, $_);
+	    ## about the execute bits.'
+            files <- allfiles[!isdir]
+            mode <- file.info(files)$mode
+            ## FIXME equivalent of mode = (mode | 0644) & 0755
+            # Sys.chmod(files, mode)
         }
         ## Add build stamp to the DESCRIPTION file.
         add_build_stamp_to_description_file(file.path(pkgname, "DESCRIPTION"))
@@ -409,6 +502,26 @@ summaryLog <- function(Log, text)
 
         ## Finalize
         if (binary) {
+            messageLog(Log, "building binary distribution")
+            setwd(startdir)
+            libdir <- tempfile("Rinst")
+            dir.create(libdir, mode = "0755")
+            srcdir <- file.path(Tdir, pkgname)
+            cmd <- if(WINDOWS)
+                paste(file.path(R.home("bin"), "Rcmd.exe"),
+                      "INSTALL -l", shQuote(libdir),
+                      "--build", paste(INSTALL_opts, collapse = " "),
+                      shQuote(pkgdir))
+            else
+                 paste(file.path(R.home("bin"), "R"),
+                       "CMD INSTALL -l", shQuote(libdir),
+                      "--build", paste(INSTALL_opts, collapse = " "),
+                       shQuote(pkgdir))
+            res <- system(cmd)
+            if(res) {
+                errorLog(Log, "Installation failed\n")
+                do_exit(1)
+            }
         } else {
             ## precaution for Mac OS X to omit resource forks
             Sys.setenv(COPYFILE_DISABLE = 1) # Leopard
@@ -416,13 +529,14 @@ summaryLog <- function(Log, text)
             messageLog(Log, "building ", sQuote(paste(filename, ".gz", sep="")))
             cmd <- paste(TAR, "-chf", shQuote(filepath), pkgname)
             res <- system(cmd)
-            if(res) stop("...")
+            if(res) stop("...") # FIXME
             res <- system(paste(shQuote(GZIP), "-9f", shQuote(filepath)))
-            if(res) stop("...")
+            if(res) stop("...") # FIXME
             setwd(startdir)
             unlink(Tdir, recursive = TRUE)
             closeLog(Log)
             message("") # blank line
         }
     }
+    do_exit(0L)
 }
