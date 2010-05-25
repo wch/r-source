@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{files2}
@@ -22,7 +22,8 @@ Sys.umask(mode = "0000")
   \item{recursive}{logical. Should elements of the path other than the
     last be created?  If true, like Unix's \command{mkdir -p}.}
   \item{mode}{the file mode to be used on Unix-alikes: it will be
-    coerced by \code{\link{as.octmode}}.}
+    coerced by \code{\link{as.octmode}}.  For \code{Sys.chmod} it is
+    recycled along \code{paths}.}
 }
 \description{
   These functions provide a low-level interface to the computer's

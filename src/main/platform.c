@@ -2089,33 +2089,39 @@ SEXP attribute_hidden do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 #ifdef HAVE_CHMOD
-    SEXP paths, ans;
-    int i, n, mode, res;
+    SEXP paths, smode, ans;
+    int i, m, n, *modes, mode, res;
 
     checkArity(op, args);
     paths = CAR(args);
     if (!isString(paths))
 	error(_("invalid '%s' argument"), "paths");
     n = LENGTH(paths);
-    mode = asInteger(CADR(args));
-    if (mode == NA_LOGICAL) mode = 0777;
-#ifdef Win32
-    /* Windows' _chmod seems only to support read access or read-write access
-     */
-    mode = (mode & 0200) ? (_S_IWRITE | _S_IREAD): _S_IREAD;
-#endif
+    PROTECT(smode = coerceVector(CADR(args), INTSXP));
+    modes = INTEGER(smode);
+    m = LENGTH(smode);
+    if(!m) error(_("'mode' must be of length at least one"));
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
+	mode = modes[i % m];
+	if (mode == NA_INTEGER) mode = 0777;
+#ifdef Win32
+	/* Windows' _chmod seems only to support read access
+	   or read-write access */
+	mode = (mode & 0200) ? (_S_IWRITE | _S_IREAD): _S_IREAD;
+#endif
 	if (STRING_ELT(paths, i) != NA_STRING) {
 #ifdef Win32
-	res = _wchmod(filenameToWchar(STRING_ELT(paths, i), TRUE), mode);
+	    res = _wchmod(filenameToWchar(STRING_ELT(paths, i), TRUE), mode);
 #else
-	res = chmod(R_ExpandFileName(translateChar(STRING_ELT(paths, i))),
-		    mode);
+	    res = chmod(R_ExpandFileName(translateChar(STRING_ELT(paths, i))),
+			mode);
 #endif
 	} else res = 1;
-	LOGICAL(ans)[i] = res == 0;
-   }
+	LOGICAL(ans)[i] = (res == 0);
+    }
+    UNPROTECT(2);
+    return ans;
 #else
     SEXP paths, ans;
     int i, n;
@@ -2128,9 +2134,9 @@ SEXP attribute_hidden do_syschmod(SEXP call, SEXP op, SEXP args, SEXP env)
     warning("insufficient OS support on this platform");
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) LOGICAL(ans)[i] = 0;
-#endif
     UNPROTECT(1);
     return ans;
+#endif
 }
 
 SEXP attribute_hidden do_sysumask(SEXP call, SEXP op, SEXP args, SEXP env)

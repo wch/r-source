@@ -120,6 +120,8 @@ NEW FEATURES
     o	points() and lines() gain "table" methods to match plot().
 	(Wish of PR#10472.)
 
+    o	Sys.chmod() allows 'mode' to be a vector, recycled along 'paths'.
+
 
 DEPRECATED & DEFUNCT
 
