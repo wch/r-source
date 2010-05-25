@@ -26,7 +26,7 @@ newLog <- function(class, filename = "")
 
 closeLog <- function(Log) if(Log$con > 2) close(Log$con)
 
-printLog <- function(Log, text) cat(text, file = Log$con)
+printLog <- function(Log, ...) cat(..., file = Log$con)
 
 ## unused
 setStars <- function(Log, stars) {Log$stars <- stars; Log}
@@ -47,10 +47,10 @@ messageLog <- function(Log, ...)
 }
 resultLog <- function(Log, text) cat(" ", text, "\n", file = Log$con)
 
-errorLog <- function(Log, text)
+errorLog <- function(Log, ...)
 {
     resultLog(Log, "ERROR")
-    if(nzchar(text)) messageLog(Log, text)
+    if(nzchar(text)) messageLog(Log, ...)
 }
 
 warningLog <- function(Log, text)
@@ -95,21 +95,18 @@ summaryLog <- function(Log, text)
         writeLines(text, con)
     }
 
+    ## Run silently
     Ssystem <- function(command, ...)
-        system(paste(if(WINDOWS) "sh",
-                     command,
-                     ">/dev/null 2>&1"),
-               ...)
+        system(paste(if(WINDOWS) "sh", command, ">/dev/null 2>&1"), ...)
 
     .file_test <- function(op, x)
         switch(op,
                "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,
                "-x" = (file.access(x, 1L) == 0L),
                stop(sprintf("test '%s' is not available", op), domain = NA))
+
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
-    ## FIXME: should this close the log?
-    ## or should that be an on.exit action?
     do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
 
     env_path <- function(...) file.path(..., fsep = .Platform$path.sep)
@@ -179,7 +176,7 @@ summaryLog <- function(Log, text)
                        "CMD INSTALL -l", shQuote(libdir), shQuote(pkgdir))
             res <- Ssystem(cmd)
             if(res) {
-                errorLog(Log, "Installation failed\n")
+                errorLog(Log, "Installation failed")
                 printLog(Log, "Removing installation dir\n")
                 unlink(libdir, recursive = TRUE)
                 do_exit(1)
@@ -386,19 +383,20 @@ summaryLog <- function(Log, text)
     libdir <- tempfile("Rinst");
 
     for(pkg in pkgs) {
+        Log <- newLog() # if not stdin; on.exit(closeLog(Log))
         ## remove any trailing /, for Windows' sake
         pkg <- sub("/$", "", pkg)
         ## 'Older versions used $pkg as absolute or relative to $startdir.
         ## This does not easily work if $pkg is a symbolic link.
         ## Hence, we now convert to absolute paths.'
         setwd(startdir)
-        res <- try(setwd(pkg),
-        if(inherits(res, "try-error"))
-                   stop("cannot change to directory ", sQuote(pkg),
-                        call.=FALSE, domain = NA))
+        res <- try(setwd(pkg))
+        if(inherits(res, "try-error")) {
+            errorLog(Log, "cannot change to directory ", sQuote(pkg))
+            do_exit(1L)
+        }
         pkgdir <- getwd()
         pkgname <- basename(pkgdir)
-        Log <- newLog()
         f <- file.path(pkg, "DESCRIPTION")
         checkingLog(Log, "for file ", sQuote(f))
         if(file.exists(f)) {
@@ -437,11 +435,13 @@ summaryLog <- function(Log, text)
         ## FIXME: what about case-insensitivity on Windows?
         allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
                         full.names = TRUE)
+        allfiles <- c(allfiles, unique(dirname(allfiles)))
+        ## FIXME check for '.'
         allfiles <- substring(allfiles, 3L)  # drop './'
         bases <- basename(allfiles)
         exclude <- rep(FALSE, length(allfiles))
         ## handle .Rbuildignore
-        ignore_file <- file.path(pkgdir, "..Rbuildignore")
+        ignore_file <- file.path(pkgdir, ".Rbuildignore")
         if(file.exists(ignore_file)) {
             ## 'These patterns should be Perl regexps, one per line,
             ## to be matched against the file names relative to
@@ -453,6 +453,7 @@ summaryLog <- function(Log, text)
         isdir <- file_test("-d", allfiles)
         exclude <- exclude & (isdir & (bases %in% c("check", "chm", "CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg", ".Rcheck")))
         exclude <- exclude | (isdir && grepl("[Oo]ld$", bases))
+        ## FIXME how about *~ files?
         exclude <- exclude | bases %in% c(".DS_Store", "Read-and-delete-me", "GNUMakefile")
         ## Mac resource forks
         exclude <- exclude | grepl("^\\._", bases)
@@ -476,8 +477,10 @@ summaryLog <- function(Log, text)
         setwd(Tdir)
         if(!WINDOWS) {
             ## Fix permissions
+            ## FIXME does not include directories.
             allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
                             full.names = TRUE)
+            allfiles <- c(allfiles, unique(dirname(allfiles)))
             isdir <- file_test("-d", allfiles)
 	    ## 'Directories should really be mode 00755 if possible.'
             Sys.chmod(allfiles[isdir], "0755")
@@ -497,6 +500,14 @@ summaryLog <- function(Log, text)
         fix_nonLF_in_source_files(pkgname, Log)
         fix_nonLF_in_make_files(pkgname, Log)
         messageLog(Log, "checking for empty or unneeded directories");
+        ## FIXME does not include directories.
+        allfiles <- dir(pkgname, all.files = TRUE, recursive = TRUE,
+                        full.names = TRUE)
+        allfiles <- c(allfiles, unique(dirname(allfiles)))
+        isdir <- file_test("-d", allfiles)
+        for (d in allfiles[isdir])
+            if(length(dir(d, all.files = TRUE)) < 2L) # always has ..
+               printLog(Log, "WARNING: directory ", sQuote(d), " is empty\n")
         for(dir in c("Meta", "R-ex", "chtml", "help", "html", "latex")) {
             d <- file.path(pkgname, dir)
             if(dir.exists(d)) {
@@ -531,7 +542,7 @@ summaryLog <- function(Log, text)
                        shQuote(pkgdir))
             res <- system(cmd)
             if(res) {
-                errorLog(Log, "Installation failed\n")
+                errorLog(Log, "Installation failed")
                 do_exit(1)
             }
         } else {
