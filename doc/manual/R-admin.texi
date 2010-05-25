@@ -3887,7 +3887,8 @@ Developer Tools (`Xcode') and @command{gfortran}.  You will also need to
 install an X sub-system or configure with @option{--without-x}.  The X
 window manager is part of the standard Mac OS X distribution since Mac
 OS X version 10.3 (Panther), but it is typically not pre-installed prior
-to 10.5 (Leopard).
+to 10.5 (Leopard).  You will also need @command{gfortran} and
+@code{libreadline} (or configure with @option{--without-readline}).
 
 For more information on how to find these tools please read the
 @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac
@@ -3954,11 +3955,12 @@ on Snow Leopard.)
 On Snow Leopard you will most likely to need to specify @option{-arch
 i386} for a 32-bit build and @option{-arch x86_64} for a 64-bit build:
 the Apple compilers default to 64-bit but the @command{gfortran}
-supplied on @acronym{CRAN} defaults to 32-bit.
+supplied on @url{http://r.research.att.com} defaults to 32-bit.
 
-Another quirk is that people have found that the X11 libraries are not
-in the default linking path, so something like
-@samp{LIBS=-L/usr/X11/lib} may be required.
+Another quirk is that the X11 libraries are not in the default linking
+path, so something like @samp{LIBS=-L/usr/X11/lib} may be required (or
+you can use the @command{configure} options
+@option{--x-includes=/usr/X11/include --x-libraries=/usr/X11/lib.}).
 
 So for a 64-bit build of @R{} you need a file @file{config.site} in the
 top-level build directory containing
