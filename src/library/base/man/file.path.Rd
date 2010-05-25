@@ -1,6 +1,6 @@
 % File src/library/base/man/file.path.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{file.path}
@@ -16,6 +16,13 @@ file.path(\dots, fsep = .Platform$file.sep)
 \arguments{
   \item{\dots}{character vectors.}
   \item{fsep}{the path separator to use.}
+}
+\details{
+  The implementation is designed to be fast, faster than
+  \code{\link{paste}} as this function is used extensively in \R itself.
+
+  It can also be used for enviroment paths such as \env{PATH} and
+  \env{R_LIBS} with \code{fsep = .Platform$path.sep}.
 }
 \value{
   A character vector of the arguments concatenated term-by-term and
