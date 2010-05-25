@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-#### R based engine for  R CMD build
+#### R based engine for R CMD build
 
 ### emulation of Perl Logfile.pm
 
@@ -85,6 +85,8 @@ summaryLog <- function(Log, text)
 {
     WINDOWS <- .Platform$OS.type == "windows"
 
+    Sys.umask("022") # Perl version did not have this.
+
     writeLinesNL <- function(text, file)
     {
         ## a version that uses NL line endings everywhere
@@ -106,9 +108,11 @@ summaryLog <- function(Log, text)
                stop(sprintf("test '%s' is not available", op), domain = NA))
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
+    ## FIXME: should this close the log?
+    ## or should that be an on.exit action?
     do_exit <- function(status = 1L) q("no", status = status, runLast = FALSE)
 
-    env_path <- function(...) paste(..., sep = .Platform$path.sep)
+    env_path <- function(...) file.path(..., fsep = .Platform$path.sep)
 
     Usage <- function() {
         cat("Usage: R CMD build [options] pkgdirs",
@@ -155,7 +159,7 @@ summaryLog <- function(Log, text)
         } else {
             if (any(sapply(res, length))) {
                 resultLog(Log, "ERROR")
-                print(res) # FIXME to Log?
+                print(res) # FIXME print to Log?
                 do_exit(1L)
             } else resultLog(Log, "OK")
         }
@@ -264,8 +268,7 @@ summaryLog <- function(Log, text)
         newindex <- tempfile()
         res <- try(Rdindex(Rd_files, newindex))
         if(inherits(res, "try-error")) {
-            messageLog(Log, "computing Rd index")
-            errorLog(Log, "something") # FIXME
+            errorLog(Log, "computing Rd index failed")
             do_exit(1L)
         }
         checkingLog(Log, "whether ", sQuote(oldindex), " is up-to-date")
@@ -419,11 +422,16 @@ summaryLog <- function(Log, text)
         filepath <- file.path(startdir, filename)
         cmd <- paste(TAR, "-chf", shQuote(filepath), pkgname)
         res <- system(cmd)
-        if(res) stop("...") # FIXME
-        Tdir <- tempfile("Rbuild")
-        dir.create(Tdir, mode="0755")
-        setwd(Tdir)
-        system(paste(TAR, "-xf",  shQuote(filepath))) # FIXME check worked
+        if(!res) {
+            Tdir <- tempfile("Rbuild")
+            dir.create(Tdir, mode = "0755")
+            setwd(Tdir)
+            res <- system(paste(TAR, "-xf",  shQuote(filepath)))
+        }
+        if(res) {
+            errorLog(Log, "copying to build directory failed")
+            do_exit(1L)
+        }
 
         ## remove exclude files
         ## FIXME: what about case-insensitivity on Windows?
@@ -460,11 +468,14 @@ summaryLog <- function(Log, text)
             pkgname <- intname
         }
         ## Fix up man, R, demo inst/doc directories
-        .check_package_subdirs(pkgname, TRUE)
-        ## FIXME do something with the result
+        res <- .check_package_subdirs(pkgname, TRUE)
+        if (any(sapply(res, length))) {
+            messageLog(Log, "excluding invalid files")
+            print(res) # FIXME print to Log?
+        }
         setwd(Tdir)
-        ## Fix permissions
         if(!WINDOWS) {
+            ## Fix permissions
             allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
                             full.names = TRUE)
             isdir <- file_test("-d", allfiles)
@@ -475,8 +486,9 @@ summaryLog <- function(Log, text)
 	    ## about the execute bits.'
             files <- allfiles[!isdir]
             mode <- file.info(files)$mode
-            ## FIXME equivalent of mode = (mode | 0644) & 0755
-            # Sys.chmod(files, mode)
+            ## equivalent of mode = (mode | 0644) & 0755
+            mode <- (mode | "0644") & "0755"
+            Sys.chmod(files, mode)
         }
         ## Add build stamp to the DESCRIPTION file.
         add_build_stamp_to_description_file(file.path(pkgname, "DESCRIPTION"))
@@ -523,15 +535,20 @@ summaryLog <- function(Log, text)
                 do_exit(1)
             }
         } else {
-            ## precaution for Mac OS X to omit resource forks
-            Sys.setenv(COPYFILE_DISABLE = 1) # Leopard
-            Sys.setenv(COPY_EXTENDED_ATTRIBUTES_DISABLE = 1) # Tiger
+            if(grepl("darwin", R.version$os)) {
+                ## precaution for Mac OS X to omit resource forks
+                Sys.setenv(COPYFILE_DISABLE = 1) # Leopard
+                Sys.setenv(COPY_EXTENDED_ATTRIBUTES_DISABLE = 1) # Tiger
+            }
             messageLog(Log, "building ", sQuote(paste(filename, ".gz", sep="")))
             cmd <- paste(TAR, "-chf", shQuote(filepath), pkgname)
             res <- system(cmd)
-            if(res) stop("...") # FIXME
-            res <- system(paste(shQuote(GZIP), "-9f", shQuote(filepath)))
-            if(res) stop("...") # FIXME
+            if(!res)
+                res <- system(paste(shQuote(GZIP), "-9f", shQuote(filepath)))
+            if(res) {
+                errorLog(Log, "packaging into .tar.gz failed")
+                do_exit(1L)
+            }
             setwd(startdir)
             unlink(Tdir, recursive = TRUE)
             closeLog(Log)
