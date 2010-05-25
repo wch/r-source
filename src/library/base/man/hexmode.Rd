@@ -50,7 +50,7 @@ as.hexmode(x)
   \code{"hexmode"}.
 
   There are \code{\link{|}}, \code{\link{&}} and \code{\link{xor}}
-  methods: these recycle their arguments to the length of the longest
+  methods: these recycle their arguments to the length of the longer
   and then apply the operators bitwise to each element.
 }
 \seealso{
