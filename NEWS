@@ -122,6 +122,9 @@ NEW FEATURES
 
     o	Sys.chmod() allows 'mode' to be a vector, recycled along 'paths'.
 
+    o	There are |, & and xor() methods for classes "octmode" and
+	"hexmode", which work bitwise.
+
 
 DEPRECATED & DEFUNCT
 

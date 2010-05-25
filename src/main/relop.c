@@ -604,3 +604,31 @@ static SEXP raw_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
     UNPROTECT(2);
     return ans;
 }
+
+
+SEXP bitwiseAnd(SEXP a, SEXP b)
+{
+    int  m = LENGTH(a), n = LENGTH(b), mn = fmax2(m, n);
+    SEXP ans = allocVector(INTSXP, mn);
+    for(int i = 0; i < mn; i++)
+	INTEGER(ans)[i] = INTEGER(a)[i%m] & INTEGER(b)[i%n];
+    return ans;
+}
+
+SEXP bitwiseOr(SEXP a, SEXP b)
+{
+    int  m = LENGTH(a), n = LENGTH(b), mn = fmax2(m, n);
+    SEXP ans = allocVector(INTSXP, mn);
+    for(int i = 0; i < mn; i++)
+	INTEGER(ans)[i] = INTEGER(a)[i%m] | INTEGER(b)[i%n];
+    return ans;
+}
+
+SEXP bitwiseXor(SEXP a, SEXP b)
+{
+    int  m = LENGTH(a), n = LENGTH(b), mn = fmax2(m, n);
+    SEXP ans = allocVector(INTSXP, mn);
+    for(int i = 0; i < mn; i++)
+	INTEGER(ans)[i] = INTEGER(a)[i%m] ^ INTEGER(b)[i%n];
+    return ans;
+}

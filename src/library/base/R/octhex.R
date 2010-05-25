@@ -110,3 +110,18 @@ as.hexmode <- function(x)
     }
     stop("'x' cannot be coerced to hexmode")
 }
+
+
+`&.octmode` <- function(a, b)
+    as.octmode(.Call("bitwiseAnd", as.octmode(a), as.octmode(b), PACKAGE = "base"))
+`|.octmode` <- function(a, b)
+    as.octmode(.Call("bitwiseOr", as.octmode(a), as.octmode(b), PACKAGE = "base"))
+xor.octmode <- function(a, b)
+    as.octmode(.Call("bitwiseXor", as.octmode(a), as.octmode(b), PACKAGE = "base"))
+
+`&.hexmode` <- function(a, b)
+    as.hexmode(.Call("bitwiseAnd", as.hexmode(a), as.hexmode(b), PACKAGE = "base"))
+`|.hexmode` <- function(a, b)
+    as.hexmode(.Call("bitwiseOr", as.hexmode(a), as.hexmode(b), PACKAGE = "base"))
+xor.hexmode <- function(a, b)
+    as.hexmode(.Call("bitwiseXor", as.hexmode(a), as.hexmode(b), PACKAGE = "base"))
