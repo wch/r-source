@@ -314,7 +314,6 @@ foreach my $pkg (@ARGV) {
 	my $srcdir = &file_path($tmpdir, $pkgname);
 	my $cmd;
 	if($WINDOWS) {
-	    $log->print("WARNING: some HTML links may not be found\n");
 	    $cmd = join(" ",
 			("Rcmd.exe INSTALL -l",
 			 &shell_quote_file_path($libdir),
