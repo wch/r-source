@@ -834,10 +834,10 @@ testInstalledPackages(scope = "recommended")
 
 @noindent
 runs the basic tests and then all the tests on the standard and
-recommended packages.  These tests can be run from anywhere: they write
-their results in the @file{tests} folder of the @R{} home directory.
-They run slightly fewer tests than the first approach: in particular
-they do not test Internet access.
+recommended packages.  These tests can be run from anywhere: the basic
+tests write their results in the @file{tests} folder of the @R{} home
+directory and run slightly fewer tests than the first approach: in
+particular they do not test Internet access.
 
 These tests work best if @command{diff} (in @file{Rtools.exe} for
 Windows users) is in the path, and on some systems need the collation
@@ -1001,7 +1001,7 @@ You need @code{libpng} and @code{jpeg} sources (available, e.g., from
 @uref{http://www.libpng.org/}, @uref{http://www.ijg.org},
 @uref{http://www.libtiff.org/}.@footnote{but the current versions are at
 @uref{ftp://ftp.remotesensing.org/pub/libtiff/}: we used
-@file{tiff-3.9.1.tar.gz}.}  You will need files
+@file{tiff-3.9.2.tar.gz}.}  You will need files
 @file{libpng-1.2.18.tar.gz}, @file{jpegsrc.v6b.tar.gz},
 @file{tiff-3.8.0.tar.gz} or later.
 
@@ -1083,9 +1083,10 @@ ample memory, and is not 100% reliable.
 The file @file{@var{R_HOME}/library/grDevices/libs/Rbitmap.dll} is not built
 automatically.  
 
-Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap}
-or @code{make bitmapdll} in @file{@var{R_HOME}/@/src/gnuwin32}
-should build @file{Rbitmap.dll} and install it in @file{@var{R_HOME}/bin}.
+Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap} or
+@code{make bitmapdll} in @file{@var{R_HOME}/@/src/gnuwin32} should build
+@file{Rbitmap.dll} and install it under
+@file{@var{R_HOME}/library/grDevices/libs}.
 
 @node Checking the build, Building the manuals, Building the bitmap files, Building from source
 @subsection Checking the build
@@ -1396,8 +1397,7 @@ developer of the MinGW-w64 project.
 
 The @file{bin/macosx} directory of a @acronym{CRAN} site contains
 binaries for Mac OS X for a base distribution and a large number of
-add-on packages from @acronym{CRAN} to run on Mac OS X 10.5/6 (with a
-different build for version 10.4.4 or higher).
+add-on packages from @acronym{CRAN} to run on Mac OS X 10.5/6.
 
 The simplest way is to use @file{R-@value{VERSIONno}.pkg}: just
 double-click on the icon.  Note that Tcl/Tk and the Fortran compiler
@@ -1603,12 +1603,12 @@ library paths, separated by colons (semicolons on Windows).
 
 
 Packages may be distributed in source form or compiled binary form.
-Installing source packages requires that compilers and tools be
-installed.  Binary packages are platform-specific and generally need no
-special tools to install, but see the documentation for your platform
-for details.
+Installing source packages which contain C/C++/Fortran code requires
+that compilers and related tools be installed.  Binary packages are
+platform-specific and generally need no special tools to install, but
+see the documentation for your platform for details.
 
-Note that you need to specify implicitly or explicitly the library to
+Note that you may need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
 more than one library, of course.
 
@@ -1719,7 +1719,7 @@ could make use of the building service offered at
 @subsection Mac OS X
 
 On Mac OS X @code{install.packages} works as it does on other Unix-like
-systems, but there are additional type @code{mac.binary*} (the default
+systems, but there are additional types @code{mac.binary*} (the default
 in the @acronym{CRAN} distribution) that can be passed to
 @code{install.packages} in order to download and install binary packages
 from a suitable repository, and is the default for @acronym{CRAN} builds
@@ -3750,8 +3750,7 @@ suggests that @option{-pc64} may be desirable.
 @node Sun Studio compilers,  , PGI compilers, Linux
 @subsection Sun Studio compilers
 
-Brian Ripley tested the Sun Studio 12 (aka Sun Ceres, formerly Sun
-Forte) compilers
+Brian Ripley tested the Sun Studio 12 compilers
 (@uref{http://developers.sun.com/@/sunstudio/@/index.jsp}) on
 @cputype{x86_64} Linux with
 
@@ -3809,7 +3808,8 @@ Developer Tools (`Xcode') and @command{gfortran}.  You will also need to
 install an X sub-system or configure with @option{--without-x}.  The X
 window manager is part of the standard Mac OS X distribution since Mac
 OS X version 10.3 (Panther), but it is typically not pre-installed prior
-to 10.5 (Leopard).
+to 10.5 (Leopard).  You will also need @command{gfortran} and
+@code{libreadline} (or configure with @option{--without-readline}).
 
 For more information on how to find these tools please read the
 @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac
@@ -3846,12 +3846,12 @@ can be done (and is provided as an alternative in the binary
 distribution).
 
 @menu
-* 64-bit builds::               
+* 64-bit Leopard builds::       
 * Snow Leopard::                
 @end menu
 
-@node 64-bit builds, Snow Leopard, Mac OS X, Mac OS X
-@subsection 64-bit builds
+@node 64-bit Leopard builds, Snow Leopard, Mac OS X, Mac OS X
+@subsection 64-bit Leopard builds
 
 64-bit builds are supported on 10.5.x (Leopard) and later.  All that is
 needed is to select suitable compiler options, e.g.@: for recent Intel
@@ -3870,30 +3870,56 @@ in @file{config.site} or on the @command{configure} command line.  (Or
 on Leopard specify @option{gcc-4.2} etc: those versions are the default
 on Snow Leopard.)
 
-@node Snow Leopard,  , 64-bit builds, Mac OS X
+@node Snow Leopard,  , 64-bit Leopard builds, Mac OS X
 @subsection Snow Leopard
 
 On Snow Leopard you will most likely to need to specify @option{-arch
 i386} for a 32-bit build and @option{-arch x86_64} for a 64-bit build:
 the Apple compilers default to 64-bit but the @command{gfortran}
-supplied on @acronym{CRAN} defaults to 32-bit.
+supplied on @url{http://r.research.att.com} defaults to 32-bit.
 
-Another quirk is that people have found that the X11 libraries are not
-in the default linking path, so something like
-@samp{LIBS=-L/usr/X11/lib} may be required.
+Another quirk is that the X11 libraries are not in the default linking
+path, so something like @samp{LIBS=-L/usr/X11/lib} may be required (or
+you can use the @command{configure} options
+@option{--x-includes=/usr/X11/include --x-libraries=/usr/X11/lib.}).
+
+So for a 64-bit build of @R{} you need a file @file{config.site} in the
+top-level build directory containing
+
+@example
+CC='gcc -arch x86_64'
+CXX='g++ -arch x86_64'
+F77='gfortran -arch x86_64'
+FC='gfortran -arch x86_64'
+OBJC='gcc -arch x86_64'
+LIBS=-L/usr/X11/lib
+@end example
+
+@noindent
+whereas for a 32-bit build it should have
+
+@example
+CC='gcc -arch i386'
+CXX='g++ -arch i386'
+F77='gfortran -arch i386'
+FC='gfortran -arch i386'
+OBJC='gcc -arch i386'
+LIBS=-L/usr/X11/lib
+@end example
+
 
 @node Solaris, AIX, Mac OS X, Platform notes
 @section Solaris
 @cindex Solaris
 
 @R{} has been built successfully on Solaris 10 (both Sparc and
-@cputype{x86}) using the (zero cost) Sun Studio (aka Ceres) 12
-compilers: there has been some success with
-@command{gcc}@tie{}4/@command{gfortran}, mainly on Sparc.  Sun packages
-for @R{} used to be available from @uref{http://www.sunfreeware.com/}
-for both architectures, but have not been updated recently.  (Recent Sun
-machines are Opterons (@cputype{amd64}) rather than @cputype{x86}, but
-32-bit @cputype{x86} executables are the default.)
+@cputype{x86}) using the (zero cost) Sun Studio 12 compilers: there has
+been some success with @command{gcc}@tie{}4/@command{gfortran}, mainly
+on Sparc.  Sun packages for @R{} used to be available from
+@uref{http://www.sunfreeware.com/} for both architectures, but have not
+been updated recently.  (Recent Sun machines are Opterons
+(@cputype{amd64}) rather than @cputype{x86}, but 32-bit @cputype{x86}
+executables are the default.)
 
 There are also reports of success on OpenSolaris (also known as Solaris
 Express Community Edition, and sometimes as Solaris 11) on
@@ -3979,7 +4005,7 @@ CXXFLAGS="-O5 -xlibmil -nofstore -xtarget=native"
 SAFE_FFLAGS="-libmil -fstore -xtarget=native"
 @end example
 
-The SunStudio compilers provide several implementations of the C++
+The Sun Studio compilers provide several implementations of the C++
 standard which select both the set of headers and a C++ runtime library.
 These are selected by the @option{-library} flag, which as it is needed
 for both compiling and linking is best specified as part of the
@@ -4151,7 +4177,7 @@ libraries downloaded from these repositories (e.g., GCC, Make,
 @file{/opt/freeware}, hence corresponding executables are found in
 @enindex PATH
 @file{/opt/freeware/bin} which thus needs to be in @env{PATH} for using
-these tools.  Like on other Unix systems one needs @acronym{GNU}
+these tools.  As on other Unix systems one needs @acronym{GNU}
 @code{libiconv} as the AIX version of iconv is not sufficiently
 powerful.  Additionally, for proper Unicode compatibility one should
 install the corresponding package from the ICU project
@@ -4221,7 +4247,9 @@ environment can be found in the ``R on AIX'' project on R-Forge
 
 The Cygwin emulation layer on Windows can be treated as a Unix-alike OS.
 This is unsupported, but experiments have been conducted and a few
-workarounds added for @R{} 2.6.0.
+workarounds added for @R{} 2.6.0.  Currently (mid 2010) the build
+produced with Cygwin's @command{gcc 4.3.4} fails to handles regular
+expressions correctly.
 
 Only building as a shared library works,@footnote{Windows DLLs need to
 have all links resolved at build time and so cannot resolve against
