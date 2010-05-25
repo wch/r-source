@@ -26,7 +26,7 @@ newLog <- function(class, filename = "")
 
 closeLog <- function(Log) if(Log$con > 2) close(Log$con)
 
-printLog <- function(Log, ...) cat(..., file = Log$con)
+printLog <- function(Log, ...) cat(..., file = Log$con, sep = "")
 
 ## unused
 setStars <- function(Log, stars) {Log$stars <- stars; Log}
@@ -78,6 +78,33 @@ summaryLog <- function(Log, text)
                     sQuote(Log$filename)),
             file = Log$con)
 }
+
+### formerly Perl R::Utils::get_exclude_patterns
+
+## Return list of file patterns excluded by R CMD build and check.
+## Kept here so that we ensure that the lists are in sync, but not
+## exported.
+## <NOTE>
+## Has Unix-style '/' path separators hard-coded.
+get_exclude_patterns <- function()
+    c("^\\.Rbuildignore$",
+      "(^|/)\\.DS_Store$",
+      "~$", "\\.bak$", "\\.swp$",
+      "(^|/)\\.#[^/]*$", "(^|/)#[^/]*#$",
+      ## Outdated ...
+      "^TITLE$", "^data/00Index$",
+      "^inst/doc/00Index\\.dcf$",
+      ## Autoconf
+      "^config\\.(cache|log|status)$",
+      "^autom4te\\.cache$",
+      ## Windows dependency files
+      "^src/.*\\.d$", "^src/Makedeps$",
+      ## IRIX, of some vintage
+      "^src/so_locations$"
+      )
+## </NOTE>
+
+
 
 ### based on Perl build script
 
@@ -318,6 +345,18 @@ summaryLog <- function(Log, text)
          }
      }
 
+    find_empty_dirs <- function(d)
+    {
+        ## dir(recursive = TRUE) does not include directories, so
+        ## we do need to do this recursively
+        files <- dir(d, all.files = TRUE, full.names = TRUE)
+        if(length(files) <= 2L) # always has ., ..
+            printLog(Log, "WARNING: directory ", sQuote(d), " is empty\n")
+        isdir <- file.info(files)$isdir
+        isdir[1:2] <- FALSE
+        for (d in files[isdir]) find_empty_dirs(d)
+    }
+
     force <- FALSE
     vignettes <- TRUE
     binary <- FALSE
@@ -440,21 +479,24 @@ summaryLog <- function(Log, text)
         allfiles <- substring(allfiles, 3L)  # drop './'
         bases <- basename(allfiles)
         exclude <- rep(FALSE, length(allfiles))
+        ## basic exclusions: could be streamlined
+        for(e in get_exclude_patterns())
+            exclude <- exclude | grepl(e, allfiles, perl = TRUE)
         ## handle .Rbuildignore
         ignore_file <- file.path(pkgdir, ".Rbuildignore")
         if(file.exists(ignore_file)) {
             ## 'These patterns should be Perl regexps, one per line,
-            ## to be matched against the file names relative to
-            ## the top-level source directory.'
+            ##  to be matched against the file names relative to
+            ##  the top-level source directory.'
             ignore <- readLines(ignore_file)
-            for(line in ignore)
-                exclude <- exclude | grepl(line, allfiles, perl = TRUE)
+            for(e in ignore)
+                exclude <- exclude | grepl(e, allfiles, perl = TRUE)
         }
         isdir <- file_test("-d", allfiles)
-        exclude <- exclude & (isdir & (bases %in% c("check", "chm", "CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg", ".Rcheck")))
-        exclude <- exclude | (isdir && grepl("[Oo]ld$", bases))
-        ## FIXME how about *~ files?
-        exclude <- exclude | bases %in% c(".DS_Store", "Read-and-delete-me", "GNUMakefile")
+        vcdirs <- c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg")
+        exclude <- exclude | (isdir & (bases %in% c("check", "chm", vcdirs)))
+        exclude <- exclude | (isdir & grepl("([Oo]ld|\\.Rcheck)$", bases))
+        exclude <- exclude | bases %in% c("Read-and-delete-me", "GNUMakefile")
         ## Mac resource forks
         exclude <- exclude | grepl("^\\._", bases)
 	## Windows DLL resource file
@@ -500,14 +542,7 @@ summaryLog <- function(Log, text)
         fix_nonLF_in_source_files(pkgname, Log)
         fix_nonLF_in_make_files(pkgname, Log)
         messageLog(Log, "checking for empty or unneeded directories");
-        ## FIXME does not include directories.
-        allfiles <- dir(pkgname, all.files = TRUE, recursive = TRUE,
-                        full.names = TRUE)
-        allfiles <- c(allfiles, unique(dirname(allfiles)))
-        isdir <- file_test("-d", allfiles)
-        for (d in allfiles[isdir])
-            if(length(dir(d, all.files = TRUE)) < 2L) # always has ..
-               printLog(Log, "WARNING: directory ", sQuote(d), " is empty\n")
+        find_empty_dirs(pkgname)
         for(dir in c("Meta", "R-ex", "chtml", "help", "html", "latex")) {
             d <- file.path(pkgname, dir)
             if(dir.exists(d)) {
