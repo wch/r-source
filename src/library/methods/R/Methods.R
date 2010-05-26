@@ -144,8 +144,9 @@ setGeneric <-
             ensureGeneric.fdef()
         }
         else {
-            ## possibly take the signature from the *implicit* generic:
-            ensureGeneric.fdef(if(is.null(signature)) implicit@signature else signature)
+	    ## possibly take the signature from the *implicit* generic:
+	    ensureGeneric.fdef(if(is.null(signature) && is.null(def))
+			       implicit@signature else signature)
 	    cmp <- .identicalGeneric(fdef, implicit,
 				     allow.extra.dots =
 				     !nzchar(Sys.getenv("R_SETGENERIC_PICKY_DOTS")))

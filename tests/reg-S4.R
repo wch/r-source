@@ -568,3 +568,11 @@ stopifnot(is(sample,"standardGeneric"),
 	  identical({set.seed(3); sample(3)}, 1:3))
 ## failed in R 2.11.0
 
+## Still, signature is taken from "def"inition, if one is provided:
+## (For test, qqplot must be a "simple" function:)
+stopifnot(is.function(qqplot) && identical(class(qqplot), "function"))
+setGeneric("qqplot", function(x, y, ...) standardGeneric("qqplot"))
+stopifnot(is(qqplot, "standardGeneric"),
+	  identical(qqplot@signature, c("x","y")))
+## failed for a day ~ 2005-05-26, for R-devel only
+

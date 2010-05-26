@@ -1,46 +1,34 @@
 setClass("A", representation(a="numeric"))
 
 a1 <- new("A", a=1.5)
-
 m1 <- as.matrix(1)
 
 setClass("M", contains = "matrix", representation(fuzz = "numeric"))
 
 set.seed(113)
+f1 <- runif(3)
 
-f1 = runif(3)
-
-stopifnot(identical(as(new("M", 1:12, nrow = 3, fuzz = f1), "matrix"), matrix(1:12, nrow=3)))
-
-stopifnot(identical(as(new("M", 1:12, 3, fuzz = f1), "matrix"), matrix(1:12, 3)))
-
-
-stopifnot(identical(as(new("M", 1:12, ncol = 3, fuzz = f1), "matrix"), matrix(1:12, ncol=3)))
-
-
+stopifnot(identical(as(new("M", 1:12, nrow = 3, fuzz = f1), "matrix"),
+		    matrix(1:12, nrow=3)),
+	  identical(as(new("M", 1:12, 3, fuzz = f1), "matrix"),
+		    matrix(1:12, 3)),
+	  identical(as(new("M", 1:12, ncol = 3, fuzz = f1), "matrix"),
+		    matrix(1:12, ncol=3)))
 
 setClass("B", contains = c("matrix", "A"))
 
-
-## a new "B" element mixing two superclass objects
-
-stopifnot(identical(new("B", m1, a1)@a, a1@a))
-
-## or not
-
-stopifnot(identical(as(new("B", m1),"matrix"), m1))
-
-## or supplying a slot to override
-
-stopifnot(identical(new("B", matrix(m1, nrow = 2), a1, a=pi)@a, pi))
+stopifnot(## a new "B" element mixing two superclass objects
+	  identical(new("B", m1, a1)@a, a1@a),
+	  ## or not
+	  identical(as(new("B", m1),"matrix"), m1),
+	  ## or supplying a slot to override
+	  identical(new("B", matrix(m1, nrow = 2), a1, a=pi)@a, pi))
 
 ## an extra level of inheritance
 setClass("C", contains = "B", representation(c = "character"))
-
 new("C", m1, c = "Testing")
 
 ## verify that validity tests work (PR#14284)
-
 setValidity("B", function(object) {
     if(all(is.na(object@a) | (object@a > 0)))
       TRUE

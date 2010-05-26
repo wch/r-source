@@ -2,36 +2,34 @@ setClass("maybe")
 
 setClass("A", representation(x = "numeric"))
 
-setIs("A", "maybe", test = function(object)length(object@x) >= 1 && object@x[[1]]>0,
+setIs("A", "maybe",
+      test = function(object)length(object@x) >= 1 && object@x[[1]] > 0,
       coerce = function(from)from,
-      replace = function(from, value) stop("meaningless to replace the \"maybe\" part of an object"))
+      replace = function(from, value)
+      stop("meaningless to replace the \"maybe\" part of an object"))
 
-aa = new("A", x=1)
+aa <- new("A", x=1)
 
 ff <- function(x)"default ff"
-
 setGeneric("ff")
 
 ffMaybe <- function(x) "ff maybe method"
-
 setMethod("ff", "maybe", ffMaybe)
 
-stopifnot(identical(ff(aa), "default ff"))
-
 aa2 <- new("A", x = -1) # condition not TRUE
-
-stopifnot(identical(ff(aa2), "default ff"))
+stopifnot(identical(ff(aa),  "default ff"),
+	  identical(ff(aa2), "default ff"))# failed in R 2.11.0
 
 ## a method to test the condition
 setMethod("ff", "A",
-          function(x) {
-              if(is(x, "maybe"))
-                  ffMaybe(x)
-              else
-                callNextMethod()
-          })
-stopifnot(identical(ff(aa), "ff maybe method"))
-stopifnot(identical(ff(aa2), "default ff"))
+	  function(x) {
+	      if(is(x, "maybe"))
+		  ffMaybe(x)
+	      else
+		  callNextMethod()
+	  })
+stopifnot(identical(ff(aa), "ff maybe method"),
+          identical(ff(aa2), "default ff"))
 
 removeClass("A")
 removeClass("maybe")

@@ -18,10 +18,10 @@ new(Class, ...)
 initialize(.Object, ...)
 }
 \arguments{
-  \item{Class}{ Either the name of a class (the usual case) or the
-    object describing the class (e.g., the value returned by
-    \code{getClass}).}
-  \item{\dots}{ Data to include in the new object.  Named arguments
+  \item{Class}{either the name of a class, a \code{\link{character}}
+    string, (the usual case) or the object describing the class (e.g.,
+    the value returned by \code{getClass}).}
+  \item{\dots}{data to include in the new object.  Named arguments
     correspond to slots in the class definition. Unnamed arguments must
     be objects from classes that this class extends.}
   \item{.Object}{ An object:  see the Details section.}
@@ -35,6 +35,10 @@ initialize(.Object, ...)
   one of the basic types, where the prototype has that basic type.  User
   functions that depend on \code{\link{typeof}(object)} should be
   careful to handle \code{"S4"} as a possible type.
+
+  Note that the \emph{name} of the first argument, \code{"Class"}
+  entails that \code{"Class"} is an undesirable slot name in any formal
+  class: \code{new("myClass", Class = <value>)} will not work.
 
   The interpretation of the \code{\dots} arguments can be specialized to
   particular classes, if an appropriate method has been defined for the

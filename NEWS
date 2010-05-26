@@ -102,7 +102,7 @@ NEW FEATURES
     o	The startup message now includes the platform and if used,
 	sub-architecture: this is useful where different
 	(sub-)architectures run on the same OS.
-	
+
     o	The getGraphicsEvent() mechanism now allows multiple windows
 	to return graphics events, through the new functions
 	setGraphicsEventHandlers(), setGraphicsEventEnv(), and
@@ -224,7 +224,8 @@ BUG FIXES
     	?setIs.
 
     o	The signature of an implicit generic is now used by
-	setGeneric() when that does not explicitly set a signature.
+	setGeneric() when that does not use a definition nor
+	explicitly set a signature.
 
 
 
