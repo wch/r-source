@@ -1978,14 +1978,14 @@ function(package, dir, lib.loc = NULL)
         if(g == "plot") gArgs <- gArgs[-2L]
         ogArgs <- gArgs
         gm <- if(m %in% S3_reg) {
-            ## See registerS3method() in namespace.R.
+            ## See registerS3method() in ../../base/R/namespace.R.
             defenv <-
                 if (g %in% S3_group_generics || g %in% S3_primitive_generics)
                     .BaseNamespaceEnv
                 else {
                     if(.isMethodsDispatchOn()
-                       && methods::is(genfun, "genericFunction"))
-                        genfun <- methods::slot(genfun, "default")
+                       && methods:::is(genfun, "genericFunction"))
+                        genfun <- methods:::finalDefaultMethod(genfun@default)
                     if (typeof(genfun) == "closure") environment(genfun)
                     else .BaseNamespaceEnv
                 }
