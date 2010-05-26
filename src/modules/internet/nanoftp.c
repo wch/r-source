@@ -39,13 +39,13 @@
 #define _(String) (String)
 #endif
 
+extern void R_ProcessEvents(void);
 #if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
 
 #ifdef Win32
 #include <io.h>
 #include <winsock2.h>
 #define _WINSOCKAPI_
-extern void R_ProcessEvents(void);
 #define R_SelectEx(n,rfd,wrd,efd,tv,ih) select(n,rfd,wrd,efd,tv)
 #endif
 

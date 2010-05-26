@@ -26,8 +26,8 @@
 #include <config.h>
 #endif
 
-#ifdef Win32
 extern void R_ProcessEvents(void);
+#ifdef Win32
 #define R_SelectEx(n,rfd,wrd,efd,tv,ih) select(n,rfd,wrd,efd,tv)
 #endif
 
