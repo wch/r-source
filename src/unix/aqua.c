@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2008 The R Development Core Team
+ *  Copyright (C) 1999-2010 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -47,7 +47,8 @@ DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
     ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser,
     ptr_do_selectlist;
 
-DL_FUNC ptr_R_ProcessEvents, ptr_CocoaSystem;
+DL_FUNC ptr_R_ProcessEvents, ptr_CocoaSystem; /* ptr_CocoaSystem is used in
+						 sysutils.c */
 
 int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
 
@@ -68,7 +69,6 @@ QuartzFunctions_t *getQuartzFunctions(void) {
     }
 }
 
-void R_ProcessEvents(void);
 
 SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
 {

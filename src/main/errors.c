@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2008  The R Development Core Team.
+ *  Copyright (C) 1997--2010  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,12 +21,6 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-
-/* Now in Defn.h
-#ifdef HAVE_AQUA
-extern void R_ProcessEvents(void);
-#endif
-*/
 
 #include <Defn.h>
 /* -> Errormsg.h */
@@ -120,7 +114,7 @@ void R_CheckUserInterrupt(void)
        to run at this point then we end up with concurrent R
        evaluations and that can cause problems until we have proper
        concurrency support. LT */
-#if  ( defined(HAVE_AQUA) || defined(Win32) )
+#if defined(HAVE_AQUA) || defined(Win32)
     R_ProcessEvents();
 #else
     R_PolledEvents();

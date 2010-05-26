@@ -51,7 +51,7 @@
 #endif
 
 #ifdef HAVE_AQUA
-extern int (*ptr_CocoaSystem)(char*);
+extern int (*ptr_CocoaSystem)(char*); /* defined in aqua.c */
 extern	Rboolean useaqua;
 #endif
 
