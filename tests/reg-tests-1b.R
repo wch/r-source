@@ -1203,4 +1203,14 @@ if(any(ii <- is.na(rbeta(5000, 100, 0.001))))
          "\n")
 ## did give several, but platform dependently, in R <= 2.11.0
 
+
+## print.ls_str() should not eval() some objects
+E <- environment((function(miss)function(){})())
+E$i <- 2:4
+E$o <- as.name("foobar")
+E$cl <- expression(sin(x))[[1]]
+ls.str(E)
+## 'o' failed in R <= 2.11.0 (others in earlier versions of R)
+
+
 proc.time()

@@ -554,7 +554,7 @@ print.ls_str <- function(x, max.level = 1, give.attr = FALSE,
 	}
 	else
 	    do.call(str, c(list(o), strargs),
-		    quote = is.call(o)) # protect calls from evaluation
+		    quote = is.call(o) || is.symbol(o)) # protect calls from evaluation
     }
     invisible(x)
 }
