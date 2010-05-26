@@ -4568,7 +4568,7 @@ Warning in chisq.test(x, p = p) :
 data:  x 
 X-squared = 5.7947, df = 4, p-value = 0.215
 
-> chisq.test(x, p = p,simulate.p.value = TRUE)
+> chisq.test(x, p = p, simulate.p.value = TRUE)
 
 	Chi-squared test for given probabilities with simulated p-value (based
 	on 2000 replicates)
