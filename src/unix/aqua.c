@@ -47,8 +47,6 @@ DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
     ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser,
     ptr_do_selectlist;
 
-DL_FUNC ptr_R_ProcessEvents, ptr_CocoaSystem; /* ptr_CocoaSystem is used in
-						 sysutils.c */
 
 int (*ptr_Raqua_CustomPrint)(const char *, SEXP);
 
@@ -152,34 +150,5 @@ SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
 
     return rv;
-}
-
-void R_ProcessEvents(void)
-{
-    if (ptr_R_ProcessEvents)
-	ptr_R_ProcessEvents();
-    if (cpuLimit > 0.0 || elapsedLimit > 0.0) {
-	double cpu, data[5];
-	R_getProcTime(data);
-	cpu = data[0] + data[1] + data[3] + data[4];
-	if (elapsedLimit > 0.0 && data[2] > elapsedLimit) {
-	    cpuLimit = elapsedLimit = -1;
-	    if (elapsedLimit2 > 0.0 && data[2] > elapsedLimit2) {
-		elapsedLimit2 = -1.0;
-		error(_("reached session elapsed time limit"));
-	    } else
-		error(_("reached elapsed time limit"));
-	}
-	if (cpuLimit > 0.0 && cpu > cpuLimit) {
-	    cpuLimit = elapsedLimit = -1;
-	    if (cpuLimit2 > 0.0 && cpu > cpuLimit2) {
-		cpuLimit2 = -1.0;
-		error(_("reached session CPU time limit"));
-	    } else
-		error(_("reached CPU time limit"));
-	}
-    }
-    if (R_interrupts_pending)
-	onintr();
 }
 #endif

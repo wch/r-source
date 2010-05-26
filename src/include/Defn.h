@@ -136,9 +136,7 @@ SEXP (SET_CXTAIL)(SEXP x, SEXP y);
 
 #include "Errormsg.h"
 
-#if defined(Win32) || defined(HAVE_AQUA)
 extern void R_ProcessEvents(void);
-#endif
 
 #ifdef Win32
 # include <psignal.h>
