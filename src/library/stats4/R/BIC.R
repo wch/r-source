@@ -32,7 +32,7 @@ setMethod("BIC", signature(object="ANY"),
 						function(el)
 						c(attr(el, "df"), BIC(el)),
 						USE.NAMES=FALSE)))
-		  names(val) <- c("df", "AIC")
+		  names(val) <- c("df", "BIC")
 		  row.names(val) <- as.character(match.call()[-1L])
 		  val
 	      } else BIC(logLik(object))
