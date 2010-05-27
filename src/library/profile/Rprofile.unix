@@ -20,7 +20,6 @@ if(!nchar(papersize)) {
 }
 options(papersize = as.vector(papersize),
         printcmd = as.vector(Sys.getenv("R_PRINTCMD")),
-        latexcmd = as.vector(Sys.getenv("R_LATEXCMD")),
         dvipscmd = as.vector(Sys.getenv("R_DVIPSCMD")),
         texi2dvi = as.vector(Sys.getenv("R_TEXI2DVICMD")),
         browser = as.vector(Sys.getenv("R_BROWSER")),

@@ -529,8 +529,8 @@ getOption(x, default = NULL)
 \section{Options used on Unix only}{
   These will be \code{""} if no suitable path is known.
   \describe{
-    \item{\code{latexcmd}, \code{dvipscmd}:}{character strings giving
-      commands to be used in off-line printing of help pages.}
+    \item{\code{dvipscmd}:}{character string giving command to be used in
+    off-line printing of help pages.}
   }
 }
 #endif
