@@ -321,8 +321,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         aa <- "\\aliasA{"
         ## some versions of hyperref (from 6.79d) have trouble indexing these
         ## |, || in base, |.bit, %||% in ggplot2 ...
-        ## And texindy used by texi2dvi > 1.135 chokes on {
-        if(grepl("[|{]", alias)) aa <- "\\aliasB{"
+        ## And texindy used by texi2dvi > 1.135 chokes on {/(
+        if(grepl("[|{(]", alias)) aa <- "\\aliasB{"
         if(is.na(currentAlias)) currentAlias <<- name
         if (pmatch(paste(currentAlias, ".", sep=""), alias, 0L)) {
             aa <- "\\methaliasA{"
