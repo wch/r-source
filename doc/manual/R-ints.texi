@@ -74,6 +74,7 @@ The current version of this document is @value{VERSION}.
 * Tools::                       
 * R coding standards::          
 * Testing R code::              
+* Use of TeX dialects::         
 * Function and variable index::  
 * Concept index::               
 @end menu
@@ -2703,8 +2704,8 @@ of a would-be writer of a graphics device.
 * Device capabilities::         
 * Handling text::               
 * Conventions::                 
-* 'Mode'::  
-* Graphics events::
+* 'Mode'::                      
+* Graphics events::             
 * Specific devices::            
 @end menu
 
@@ -3653,7 +3654,7 @@ their startup files, and using customization to set the
 which has been determined not to display the structure clearly enough
 when using narrow fonts.)
 
-@node Testing R code, Function and variable index, R coding standards, Top
+@node Testing R code, Use of TeX dialects, R coding standards, Top
 @chapter Testing R code
 
 When you (as @R{} developer) add new functions to the R base (all the
@@ -3667,7 +3668,51 @@ list'' in @file{tests/no-segfault.Rin}.
 [To be revised: use @command{make check-devel}, check the write barrier
 if you change internal structures.]
 
-@node Function and variable index, Concept index, Testing R code, Top
+@node Use of TeX dialects, Function and variable index, Testing R code, Top
+@chapter Use of TeX dialects
+
+Various dialects of TeX and used for different purposes in @R{}.  The
+policy is that manuals be written in @samp{texinfo}, and for convenience
+the main and Windows FAQs are also.  This has the advantage that is is
+easy to produce HTML and plain text versions as well as typeset manuals.
+
+LaTeX is not used directly, but rather as an intermediate format for
+typeset help documents and for vignettes.
+
+Care needs to be taken about the assumptions made about the @R{} user's
+system: it may not have either @samp{texinfo} or a TeX system
+installed.  We have attempted to abstract out the cross-platform
+differences, and almost all the setting of typeset documents is done by
+@code{tools::texi2dvi}.  This is used for offline printing of help
+documents, preparing vignettes and for package manuals via @command{R
+CMD Rd2dvi}.  It is not currently used for the @R{} manuals created in
+directory @file{doc/manual}, and @command{R CMD check} currently does a
+check of the availability of @command{pdflatex} or @command{latex} which
+is unrelated to the commands actually used.
+
+@code{tools::texi2dvi} makes use of a system command @command{texi2dvi}
+where available.  On a Unix-alike this is usually part of
+@samp{texinfo}, whereas on Windows if it exists at all it would be an
+executable, part of MiKTeX.  If none is available, the @R{} code runs
+a sequence of @command{(pdf)latex}, @command{bibtex} and
+@command{makeindex} commands.
+
+This process has been rather vulnerable to the versions of the external
+software used: particular issues have been @command{texi2dvi} and
+@file{texinfo.tex} updates, mismatches between the two@footnote{Linux
+distributions tend to unbundle @file{texinfo.tex} from @samp{texinfo}.},
+versions of the LaTeX package @samp{hyperref} and quirks in index
+production.  The licenses used for LaTeX and latterly @samp{texinfo}
+prohibit us from including `known good' versions in the @R{} distribution.
+
+On a Unix-alike @command{configure} looks for the exeutables for TeX and
+friends and if found records the absolute paths in the system
+@file{Renviron} file.  This used to record @samp{false} if no command
+was found, but it nowadays records the name for looking up on the path
+at run time.  The latter can be important for binary distributions: one
+does not want to be tied to, for example, TeXLive 2007.
+
+@node Function and variable index, Concept index, Use of TeX dialects, Top
 @unnumbered Function and variable index
 
 @printindex vr

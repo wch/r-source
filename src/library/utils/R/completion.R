@@ -1045,7 +1045,7 @@ fileCompletions <- function(token)
 	"digits", "dvipscmd", "echo", "editor", "encoding",
 	"example.ask", "expressions", "help.try.all.packages",
 	"htmlhelp", "HTTPUserAgent", "internet.info", "keep.source",
-	"keep.source.pkgs", "latexcmd", "locatorBell", "mailer",
+	"keep.source.pkgs", "locatorBell", "mailer",
 	"max.print", "menu.graphics", "na.action", "OutDec", "pager",
 	"papersize", "par.ask.default", "pdfviewer", "pkgType",
 	"printcmd", "prompt", "repos", "scipen", "show.coef.Pvalues",

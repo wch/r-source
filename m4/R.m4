@@ -160,17 +160,17 @@ fi])
 ## ------------
 AC_DEFUN([R_PROG_TEXMF],
 [AC_REQUIRE([R_PROG_PERL])
-## dvips is not used to make manuals, only in Rd2dvi and help-print.sh
-## the latter via options("dvipscmd"). Also sets R_DVIPSCMD.
+## dvips is not used to make manuals, only in Rd2dvi and
+## utils:::offline_help_helper via options("dvipscmd").
+## Also sets R_DVIPSCMD.
 AC_PATH_PROGS(DVIPS, [${DVIPS} dvips], dvips)
 DVIPSCMD=${ac_cv_path_DVIPS}
 if test -z "${DVIPSCMD}"; then
   DVIPSCMD=dvips
 fi
 AC_SUBST(DVIPSCMD)
-## TEX PDFTEX LATEX PDFLATEX MAKEINDEX TEXI2DVI are used to make manuals
-## LATEXCMD is used for options("latexcmd") (used in help-print.sh).
-## LATEXCMD PDFLATEXCMD MAKEINDEXCMD TEXI2DVICMD set default for R_<foo> in etc/Renviron
+## TEX PDFTEX LATEX PDFLATEX MAKEINDEXCMD TEXI2DVI are used to make manuals
+## LATEXCMD PDFLATEXCMD TEXI2DVICMD set default for R_<foo> in etc/Renviron
 AC_PATH_PROGS(TEX, [${TEX} tex], )
 if test -z "${ac_cv_path_TEX}" ; then
   warn_dvi1="you cannot build DVI versions of the R manuals"

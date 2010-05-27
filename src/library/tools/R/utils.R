@@ -385,7 +385,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         }
         bibtex <- Sys.getenv("BIBTEX")
         if(!nzchar(bibtex)) bibtex <- "bibtex"
-        makeindex <- Sys.getenv("R_MAKEINDEXCMD")
+        makeindex <- Sys.getenv("MAKEINDEX")
         if(!nzchar(makeindex)) makeindex <- "makeindex"
         if(system(paste(shQuote(latex), "-interaction=nonstopmode", texfile)))
             stop(gettextf("unable to run '%s' on '%s'", latex, file),

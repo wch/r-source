@@ -17,7 +17,7 @@
 \alias{R_HISTSIZE}
 \alias{R_INCLUDE_DIR}
 \alias{R_LATEXCMD}
-\alias{R_MAKEINDEXCMD}
+\alias{MAKEINDEX}
 \alias{R_PAPERSIZE}
 \alias{R_PDFLATEXCMD}
 \alias{R_PDFVIEWER}
@@ -63,6 +63,9 @@
       message translations.  This is consulted when needed.}
     \item{\env{LC_ALL}:}{(etc) Optional.  Use to set various aspects of
       the locale -- see \code{\link{Sys.getlocale}}.  Consulted at startup.}
+    \item{\env{MAKEINDEX}:}{The path to \command{makeindex}.
+      If unset to a value determined when \R was built.
+      Used by the emulation mode of \code{\link{texi2dvi}}.}
     \item{\env{R_BATCH}:}{Optional -- set in a batch session.}
     \item{\env{R_BROWSER}:}{The path to the default browser.  Used to
       set the default value of \code{\link{options}("browser")}.}
@@ -75,9 +78,8 @@
 #ifdef unix
     \item{\env{R_DVIPSCMD}:}{The path to \command{dvips}.  Defaults to
       the value of \env{DVIPS}, and if that is unset to a value
-      determined when \R was built.
-      Used at startup to set the default for
-      \code{\link{options}("dvipscmd")}, used by
+      determined when \R was built.  Used at startup to set the default
+      for \code{\link{options}("dvipscmd")} which used by
       \code{\link{help}(help_type="ps")}.
     }
 #endif
@@ -117,10 +119,6 @@
       \code{\link{.libPaths}}.}
     \item{\env{R_LIBS_USER}:}{Optional.  Used for initial setting of
       \code{\link{.libPaths}}.}
-    \item{\env{R_MAKEINDEXCMD}:}{The path to \command{makeindex}.
-      Defaults at startup to the value of \env{MAKEINDEX}, and if that
-      is unset to a value determined when \R was built.
-      Used by the emulation mode of \code{\link{texi2dvi}}.}
     \item{\env{R_PAPERSIZE}:}{Optional.  Used to set the default for
       \code{\link{options}("papersize")}, e.g. used by
       \code{\link{pdf}} and \code{\link{postscript}}.}

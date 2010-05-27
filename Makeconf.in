@@ -62,7 +62,6 @@ MAIN_FFLAGS = @MAIN_FFLAGS@
 MAIN_LD = @MAIN_LD@
 MAIN_LDFLAGS = @MAIN_LDFLAGS@ @WANT_R_SHLIB_FALSE@ @USE_EXPORTFILES_TRUE@ -Wl,-bE:$(top_builddir)/etc/R.exp
 MAIN_LINK = $(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS)
-MAKEINDEX = @MAKEINDEX@
 ## need this for bootstrapping
 MKINSTALLDIRS = @R_SHELL@ $(top_srcdir)/src/scripts/mkinstalldirs.in
 PERL = @PERL@
