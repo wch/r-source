@@ -110,8 +110,7 @@ while test -n "${1}"; do
 	    preview=false
 	fi
       fi
-      R_RD4DVI=${R_RD4PDF-"times,hyper"}
-      R_LATEXCMD="${R_PDFLATEXCMD}"
+      export R_RD4DVI=${R_RD4PDF-"times,hyper"}
       ;;
     --title=*)
       title=`echo "${1}" | ${SED} -e 's/[^=]*=//'` ;;
