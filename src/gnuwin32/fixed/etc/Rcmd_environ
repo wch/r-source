@@ -10,7 +10,7 @@ PERL5LIB=${R_SHARE_DIR}/perl;${PERL5LIB}
 TEXINPUTS=.;${TEXINPUTS};${R_SHARE_DIR}/texmf;
 
 ## from etc/Renviron
-R_PLAFORM='i386-pc-mingw32'
+#R_PLATFORM='i386-pc-mingw32'
 R_PAPERSIZE_USER=${R_PAPERSIZE}
 R_PAPERSIZE=${R_PAPERSIZE-'a4'}
 ## Default TeXMF stuff
