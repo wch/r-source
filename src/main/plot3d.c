@@ -2182,7 +2182,7 @@ static void PerspAxis(double *x, double *y, double *z,
 		      int axis, int axisType, int nTicks, int tickType,
 		      const char *label, cetype_t enc, pGEDevDesc dd)
 {
-    Vector3d u1, u2, u3, v1, v2, v3;
+    Vector3d u1={0.,0.,0.,0.}, u2={0.,0.,0.,0.}, u3={0.,0.,0.,0.}, v1, v2, v3;
     double tickLength = .03; /* proportion of axis length */
     double min, max, d_frac;
     double *range = NULL; /* -Wall */
