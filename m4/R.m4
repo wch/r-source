@@ -169,8 +169,8 @@ if test -z "${DVIPSCMD}"; then
   DVIPSCMD=dvips
 fi
 AC_SUBST(DVIPSCMD)
-## TEX PDFTEX LATEX PDFLATEX MAKEINDEXCMD TEXI2DVI are used to make manuals
-## LATEXCMD PDFLATEXCMD TEXI2DVICMD set default for R_<foo> in etc/Renviron
+## TEX PDFTEX LATEX PDFLATEX TEXI2DVI are used to make manuals
+## LATEXCMD MAKEINDEXCMD PDFLATEXCMD TEXI2DVICMD set default for R_<foo> in etc/Renviron
 AC_PATH_PROGS(TEX, [${TEX} tex], )
 if test -z "${ac_cv_path_TEX}" ; then
   warn_dvi1="you cannot build DVI versions of the R manuals"

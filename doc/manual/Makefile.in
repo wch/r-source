@@ -31,7 +31,7 @@ OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
 OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
-MAKEINDEX = @MAKEINDEXCMD@
+MAKEINDEX = @MAKEINDEX@
 MAKEINFO = @MAKEINFO@
 MAKEINFO_HTML_OPTS = --html --no-split --css-include=$(srcdir)/Rman.css
 MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
