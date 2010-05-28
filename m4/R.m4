@@ -160,49 +160,28 @@ fi])
 ## ------------
 AC_DEFUN([R_PROG_TEXMF],
 [AC_REQUIRE([R_PROG_PERL])
-## dvips is not used to make manuals, only in Rd2dvi and
-## utils:::offline_help_helper via options("dvipscmd").
-## Also sets R_DVIPSCMD.
-AC_PATH_PROGS(DVIPS, [${DVIPS} dvips], dvips)
-DVIPSCMD=${ac_cv_path_DVIPS}
-if test -z "${DVIPSCMD}"; then
-  DVIPSCMD=dvips
-fi
-AC_SUBST(DVIPSCMD)
-## TEX PDFTEX LATEX PDFLATEX TEXI2DVI are used to make manuals
-## LATEXCMD MAKEINDEXCMD PDFLATEXCMD TEXI2DVICMD set default for R_<foo> in etc/Renviron
+## TEX  PDFTEX LATEX PDFLATEX MAKEINDEX TEXI2DVI are used to make manuals
 AC_PATH_PROGS(TEX, [${TEX} tex], )
 if test -z "${ac_cv_path_TEX}" ; then
   warn_dvi1="you cannot build DVI versions of the R manuals"
   AC_MSG_WARN([${warn_dvi1}])
 fi
 AC_PATH_PROGS(LATEX, [${LATEX} latex], )
-LATEXCMD=${ac_cv_path_LATEX}
 if test -z "${ac_cv_path_LATEX}"; then
   warn_dvi2="you cannot build DVI versions of all the help pages"
   AC_MSG_WARN([${warn_dvi2}])
-  LATEXCMD=latex
 fi
-AC_SUBST(LATEXCMD)
-AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], )
-MAKEINDEXCMD=${ac_cv_path_MAKEINDEX}
-if test -z "${MAKEINDEXCMD}"; then
-  MAKEINDEXCMD=makeindex
-fi
-AC_SUBST(MAKEINDEXCMD)
 AC_PATH_PROGS(PDFTEX, [${PDFTEX} pdftex], )
 if test -z "${ac_cv_path_PDFTEX}" ; then
   warn_pdf1="you cannot build PDF versions of the R manuals"
   AC_MSG_WARN([${warn_pdf1}])
 fi
 AC_PATH_PROGS(PDFLATEX, [${PDFLATEX} pdflatex], )
-PDFLATEXCMD=${ac_cv_path_PDFLATEX}
 if test -z "${ac_cv_path_PDFLATEX}" ; then
   warn_pdf2="you cannot build PDF versions of all the help pages"
   AC_MSG_WARN([${warn_pdf2}])
-  PDFLATEXCMD=pdflatex
 fi
-AC_SUBST(PDFLATEXCMD)
+AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], )
 R_PROG_MAKEINFO
 AC_PATH_PROGS(TEXI2DVI, [${TEXI2DVI} texi2dvi], )
 TEXI2DVICMD=${ac_cv_path_TEXI2DVI}

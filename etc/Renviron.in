@@ -10,16 +10,11 @@ R_PAPERSIZE_USER=${R_PAPERSIZE}
 R_PAPERSIZE=${R_PAPERSIZE-'@R_PAPERSIZE@'}
 ## Default print command
 R_PRINTCMD=${R_PRINTCMD-'@R_PRINTCMD@'}
-## Default TeXMF stuff
-# R_LATEXCMD=${R_LATEXCMD-${LATEX-'@LATEXCMD@'}}
-# R_PDFLATEXCMD=${R_PDFLATEXCMD-${PDFLATEX-'@PDFLATEXCMD@'}}
-# MAKEINDEX=${MAKEINDEX-'@MAKEINDEXCMD@'}
+# for Rd2dvi, reference manual
 R_RD4DVI=${R_RD4DVI-'@R_RD4DVI@'}
 R_RD4PDF=${R_RD4PDF-'@R_RD4PDF@'}
 ## used for options("texi2dvi")
 R_TEXI2DVICMD=${R_TEXI2DVICMD-${TEXI2DVI-'@TEXI2DVICMD@'}}
-## used by help(help_type = "ps")
-R_DVIPSCMD=${R_DVIPSCMD-${DVIPS-'@DVIPSCMD@'}}
 ## used by INSTALL, check, build
 R_GZIPCMD=${R_GZIPCMD-'@R_GZIPCMD@'}
 ## Default zip/unzip commands

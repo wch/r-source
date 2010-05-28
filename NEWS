@@ -125,10 +125,11 @@ NEW FEATURES
     o	There are |, & and xor() methods for classes "octmode" and
 	"hexmode", which work bitwise.
 
-    o	Environment variables R_LATEXCMD, R_MAKEINDEXCMD,
-	R_PDFLATEXCMD are no longer used, nor set in an R session.
-	(With the move to tools::texinfo(), the conventional LATEX,
-	MAKEINDEX and PDFLATEX will be used.)
+    o	Environment variables R_DVIPSCMD,, R_LATEXCMD, R_MAKEINDEXCMD,
+	R_PDFLATEXCMD are no longer used nor set in an R session.
+	(With the move to tools::texi2dvi(), the conventional LATEX,
+	MAKEINDEX and PDFLATEX will be used.  options("dvipscmd")
+	defaults to the value of DVIPS, then to "dvips".)
 
 
 DEPRECATED & DEFUNCT

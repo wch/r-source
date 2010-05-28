@@ -56,6 +56,12 @@
   some of the more important ones.  Those that set the defaults for
   options are consulted only at startup (as are some of the others).
   \describe{
+#ifdef unix
+    \item{\env{DVIPS}:}{The path to \command{dvips}.  Used at startup to
+      set the default for \code{\link{options}("dvipscmd")} which used
+      by \code{\link{help}(help_type="ps")}.
+    }
+#endif
     \item{\env{HOME}:}{The user's \sQuote{home} directory.}
     \item{\env{LANGUAGE}:}{Optional.  The language(s) to be used for
       message translations.  This is consulted when needed.}
@@ -73,14 +79,6 @@
       which are to be loaded in every session.  See \code{\link{options}}.}
     \item{\env{R_DOC_DIR}:}{The location of the \R \file{doc}
       directory.  Set by \R.}
-#ifdef unix
-    \item{\env{R_DVIPSCMD}:}{The path to \command{dvips}.  Defaults to
-      the value of \env{DVIPS}, and if that is unset to a value
-      determined when \R was built.  Used at startup to set the default
-      for \code{\link{options}("dvipscmd")} which used by
-      \code{\link{help}(help_type="ps")}.
-    }
-#endif
     \item{\env{R_ENVIRON}:}{Optional.  The path to the site environment
       file: see \link{Startup}.  Consulted at startup.}
     \item{\env{R_GSCMD}:}{Optional.  The path to GhostScript, used by

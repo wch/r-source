@@ -13,16 +13,11 @@ TEXINPUTS=.;${TEXINPUTS};${R_SHARE_DIR}/texmf;
 # R_PLATFORM='i386-pc-mingw32'
 R_PAPERSIZE_USER=${R_PAPERSIZE}
 R_PAPERSIZE=${R_PAPERSIZE-'a4'}
-## Default TeXMF stuff
-# R_LATEXCMD=${R_LATEXCMD-${LATEX-'latex'}}
-# R_PDFLATEXCMD=${R_PDFLATEXCMD-${PDFLATEX-'pdflatex'}}
-# MAKEINDEX=${MAKEINDEX-'makeindex'}
+# for Rd2dvi, reference manual
 R_RD4DVI=${R_RD4DVI-'ae'}
 R_RD4PDF=${R_RD4PDF-'times,hyper'}
 ## used for options("texi2dvi")
 # R_TEXI2DVICMD=${R_TEXI2DVICMD-${TEXI2DVI-'texi2dvi'}}
-## used by help(help_type = "ps")
-R_DVIPSCMD=${R_DVIPSCMD-${DVIPS-'dvips'}}
 ## used by INSTALL, check, build
 R_GZIPCMD=${R_GZIPCMD-'gzip'}
 ## Default zip/unzip commands

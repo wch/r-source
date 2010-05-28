@@ -530,10 +530,9 @@ getOption(x, default = NULL)
 
 #ifdef unix
 \section{Options used on Unix only}{
-  These will be \code{""} if no suitable path is known.
   \describe{
     \item{\code{dvipscmd}:}{character string giving command to be used in
-    off-line printing of help pages.}
+    off-line printing of help pages.  Defaults to \command{"dvips"}.}
   }
 }
 #endif

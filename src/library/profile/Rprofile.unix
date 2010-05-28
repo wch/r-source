@@ -20,7 +20,7 @@ if(!nchar(papersize)) {
 }
 options(papersize = as.vector(papersize),
         printcmd = as.vector(Sys.getenv("R_PRINTCMD")),
-        dvipscmd = as.vector(Sys.getenv("R_DVIPSCMD")),
+        dvipscmd = as.vector(Sys.getenv("DVIPS", "dvips")),
         texi2dvi = as.vector(Sys.getenv("R_TEXI2DVICMD")),
         browser = as.vector(Sys.getenv("R_BROWSER")),
         pager = file.path(R.home(), "bin", "pager"),
