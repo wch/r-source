@@ -1696,9 +1696,14 @@
             }
             latexdir <- tempfile("ltx")
             dir.create(latexdir)
-            message("Converting Rd files to LaTeX ...")
+            if (!silent) message("Converting Rd files to LaTeX ",
+                                 appendLF = FALSE, domain = NA)
+            cnt <- 0L
             for(f in files) {
-                cat("  ", basename(f), "\n", sep="")
+#                cat("  ", basename(f), "\n", sep="")
+                cnt <- cnt + 1L
+                if (!silent && cnt %% 10L == 0L)
+                    message(".", appendLF=FALSE, domain=NA)
                 out <-  sub("\\.[Rr]d$", ".tex", basename(f))
                 latexEncodings <-
                     c(latexEncodings,
@@ -1707,6 +1712,7 @@
                                     outputEncoding = outputEncoding),
                            "latexEncoding"))
             }
+            if (!silent) message(domain = NA)
         }
     }
     ## they might be zipped up
@@ -2291,9 +2297,6 @@ function(pkgdir, outfile, title, batch = FALSE,
          enc = "unknown", outputEncoding = "UTF-8", files_or_dir, OSdir,
          internals = "no", index = "true")
 {
-
-    ## %in% and others cause problems for some page layouts.
-    if (basename(pkgdir) == "base") index <- "false"
     ## Write directly to the final location.  Encodings may mean we need
     ## to make edits, but for most files one pass should be enough.
     out <- file(outfile, "wt")
