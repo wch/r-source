@@ -1270,6 +1270,10 @@ static int isDir(char *path)
 extern char * mkdtemp (char *template);
 #endif
 
+#ifdef Win32
+# include <ctype.h>
+#endif
+
 void attribute_hidden InitTempDir()
 {
     char *tmp, *tm, tmp1[PATH_MAX+11], *p;
