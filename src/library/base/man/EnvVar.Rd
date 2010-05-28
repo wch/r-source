@@ -16,10 +16,8 @@
 \alias{R_HISTFILE}
 \alias{R_HISTSIZE}
 \alias{R_INCLUDE_DIR}
-\alias{R_LATEXCMD}
 \alias{MAKEINDEX}
 \alias{R_PAPERSIZE}
-\alias{R_PDFLATEXCMD}
 \alias{R_PDFVIEWER}
 \alias{R_PLATFORM}
 \alias{R_RD4DVI}
@@ -109,10 +107,6 @@
       installation: see \code{\link{R.home}}.  Set by \R.}
     \item{\env{R_INCLUDE_DIR}:}{The location of the \R \file{include}
       directory.  Set by \R.}
-    \item{\env{R_LATEXCMD}:}{The path to \code{latex}. Defaults to
-      the value of \env{LATEX}, and if that is unset to a value
-      determined when \R was built.
-      Used by the emulation mode of \code{\link{texi2dvi}}.}
     \item{\env{R_LIBS}:}{Optional.  Used for initial setting of
       \code{\link{.libPaths}}.}
     \item{\env{R_LIBS_SITE}:}{Optional.  Used for initial setting of
@@ -122,10 +116,6 @@
     \item{\env{R_PAPERSIZE}:}{Optional.  Used to set the default for
       \code{\link{options}("papersize")}, e.g. used by
       \code{\link{pdf}} and \code{\link{postscript}}.}
-    \item{\env{R_PDFLATEXCMD}:}{The path to \command{pdflatex}.
-      Defaults at startup to the value of \code{PDFLATEX}, and if that
-      is unset to a value determined when \R was built.
-      Used by the emulation mode of \code{\link{texi2dvi}}.}
     \item{\env{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
       by \command{R CMD Rd2dvi --pdf}.}
     \item{\env{R_PLATFORM}:}{The platform -- a string of the form

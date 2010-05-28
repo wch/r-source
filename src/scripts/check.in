@@ -57,8 +57,6 @@ my $opt_rcfile = "";		# Only set this if $ENV{"HOME"} is set.
 $opt_rcfile = &file_path($ENV{"HOME"}, ".R", "check.conf")
     if defined($ENV{"HOME"});
 my $opt_subdirs;
-my $HAVE_LATEX = 0;
-my $HAVE_PDFLATEX = 0;
 
 my $INSTALL_OPTS ="";
 
@@ -257,45 +255,6 @@ my $tar = R_getenv("TAR", "tar");
 
 my $R_opts = "--vanilla";
 
-if($opt_latex) {
-    my $log = new R::Logfile();
-    $log->checking("for working pdflatex");
-    open(TEXFILE,
-	 "> " . &file_path(${R::Vars::TMPDIR}, "Rtextest$$.tex"))
-      or die "Error: cannot open file 'Rtextest$$.tex' for writing\n";
-    print TEXFILE "\\nonstopmode\\documentclass\n\{article\}\n\\begin\{document\}\n" .
-	"test\n\\end\{document\}\n";
-    close(TEXFILE);
-    chdir($R::Vars::TMPDIR);
-    ## print "\ntesting ${R::Vars::PDFLATEX}\n";
-    if(R_system("${R::Vars::PDFLATEX} Rtextest$$ > Rtextest$$.out")) {
-	$log->result("NO");
-    } else {
-	$log->result("OK");
-	$HAVE_PDFLATEX = 1;
-	$HAVE_LATEX = 1;
-    }
-    unlink(<Rtextest$$.*>);
-    if(!$HAVE_PDFLATEX) {
-	$log->checking("for working latex");
-	open(TEXFILE,
-	     "> " . &file_path(${R::Vars::TMPDIR}, "Rtextest$$.tex"))
-	  or die "Error: cannot open file 'Rtextest$$.tex' for writing\n";
-	print TEXFILE "\\nonstopmode\\documentclass\n\{article\}\n\\begin\{document\}\n" .
-	    "test\n\\end\{document\}\n";
-	close(TEXFILE);
-	chdir($R::Vars::TMPDIR);
-	if(R_system("${R::Vars::LATEX} Rtextest$$ > Rtextest$$.out")) {
-	    $log->result("NO");
-	} else {
-	    $log->result("OK");
-	    $HAVE_LATEX = 1;
-	}
-	unlink(<Rtextest$$.*>);
-    }
-    chdir($startdir);
-    $log->close();
-}
 
 my @msg_DESCRIPTION = ("See the information on DESCRIPTION files",
 		     "in the chapter 'Creating R packages'",
@@ -2628,19 +2587,12 @@ sub check_pkg_manual {
     ## and for a source package, there is a 'man' dir
     if ( (-d &file_path($pkgdir, "help")) ||
 	 (-d &file_path($pkgdir, "man")) ) {
-	if($opt_latex && $HAVE_LATEX) {
+	if($opt_latex) {
 	    $topdir = $pkgdir;
-	    my $Rd2dvi_opts = "--batch --no-preview";
-	    my $fmt;
-	    if($HAVE_PDFLATEX) {
-		$Rd2dvi_opts = $Rd2dvi_opts . " --pdf";
-		$fmt = "pdf";
-	    } else {
-		$fmt = "dvi";
-	    }
-	    $log->checking("\U$fmt\E version of manual");
+	    my $Rd2pdf_opts = "--batch --no-preview";
+	    $log->checking("PDF version of manual");
 	    my $cmd0, $cmd;
-	    my $build_dir = R_tempfile("Rd2dvi");
+	    my $build_dir = R_tempfile("Rd2pdf");
 	    if($WINDOWS) {
 		$cmd0 = "Rcmd.exe";
 	    } else {
@@ -2648,7 +2600,7 @@ sub check_pkg_manual {
 		$cmd0 = "$cmd0 CMD";
 	    }
 	    $cmd = join(" ",
-			($cmd0, "Rd2dvi $Rd2dvi_opts",
+			($cmd0, "Rd2pdf $Rd2pdf_opts",
 			 "--build-dir=${build_dir} --no-clean",
 			 "-o ${pkgname}-manual.${fmt} > Rdlatex.log 2>&1",
 			 "$topdir"));
@@ -2668,11 +2620,11 @@ sub check_pkg_manual {
 		my $latex_file = &file_path($build_dir, "Rd2.tex");
 		if(-f $latex_file) {copy($latex_file, "${pkgname}-manual.tex");}
 		$log->warning();
-		$log->print("LaTeX errors when creating \U$fmt\E version.\n");
+		$log->print("LaTeX errors when creating PDF version.\n");
 		$log->print("This typically indicates Rd problems.\n");
 		## If possible, indicate the problems found.
 		my $latex_log = &file_path($build_dir, "Rd2.log");
-		## Note that Rd2dvi works on 'Rd2.tex'.
+		## Note that Rd2pdf works on 'Rd2.tex'.
 		if(-f $latex_log) {
 		    my $Rcmd = "writeLines(tools:::.get_LaTeX_errors_from_log_file(\"${latex_log}\"))";
 		    my @out = R_runR($Rcmd, "${R_opts} --quiet",
@@ -2684,9 +2636,9 @@ sub check_pkg_manual {
 		    }
 		}
 		rmtree($build_dir);
-		$log->checking("\U$fmt\E version of manual without index");
+		$log->checking("PDF version of manual without index");
 		$cmd = join(" ",
-			    ($cmd0, "Rd2dvi $Rd2dvi_opts",
+			    ($cmd0, "Rd2pdf $Rd2pdf_opts",
 			     "--build-dir=${build_dir} --no-clean --no-index",
 			     "-o ${pkgname}-manual.${fmt} >/dev/null 2>&1",
 			     "$topdir"));
@@ -2706,7 +2658,7 @@ sub check_pkg_manual {
 			$log->print(wrap("  ", "    ", ($cmd)) . "\n");
 			$log->print("Re-running with no redirection of stdout/stderr.\n");
 			$cmd = join(" ",
-				    ($cmd0, "Rd2dvi $Rd2dvi_opts",
+				    ($cmd0, "Rd2pdf $Rd2pdf_opts",
 				     "--build-dir=${build_dir} --no-clean --no-index",
 				     "-o ${pkgname}-manual.${fmt} $topdir"));
 			R_system($cmd);
