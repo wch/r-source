@@ -1,6 +1,6 @@
 % File src/library/utils/man/help.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{help}
@@ -67,12 +67,6 @@ help(topic, package = NULL, lib.loc = NULL,
   the \sQuote{factory-fresh} default is HTML help.
 #endif
 
-  With packages installed under \R{} 2.10.0 or later help pages are
-  generated when needed from parsed Rd files.  Packages installed under
-  earlier versions of \R do not have parsed Rd files, but do (by
-  default) have prebuilt text, html and latex help pages, and these are
-  used if parsed Rd files are not available.
-  
   The rendering of text help will use directional quotes in suitable
   locales (UTF-8 and single-byte Windows locales): sometimes the fonts
   used do not support these quotes so this can be turned off by setting
@@ -103,9 +97,11 @@ help(topic, package = NULL, lib.loc = NULL,
 \section{Offline help}{
   Typeset documentation is produced by running the LaTeX version of the
   help page through \command{latex} and \command{dvips} or, if
-  \code{help_type = "PDF"}, \command{pdflatex}.  This will either
-  produce a PostScript or PDF file or (depending on the configuration of
-  \command{dvips}) send a PostScript file to a printer.
+  \code{help_type = "PDF"}, \command{pdflatex}.  This will produce
+  either a PostScript or PDF file and possibly (depending on the
+  configuration of \command{dvips}) send a PostScript file to a printer.
+  You can set \code{\link{options}("dvipscmd")} to customize how
+  \command{dvips}) is called.
 
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path: this will be
