@@ -847,15 +847,15 @@ resaveRdaFiles <- function(paths,
         load(p, envir = env)
         if(compress == "auto") {
             f1 <- tempfile()
-            save(file = f1, list = ls(env, all=TRUE), envir = env)
+            save(file = f1, list = ls(env, all.names = TRUE), envir = env)
             f2 <- tempfile()
-            save(file = f2, list = ls(env, all=TRUE), envir = env,
+            save(file = f2, list = ls(env, all.names = TRUE), envir = env,
                  compress = "bzip2")
             ss <- file.info(c(f1, f2))$size * c(0.9, 1.0)
             names(ss) <- c(f1, f2)
             if(ss[1L] > 10240) {
                 f3 <- tempfile()
-                save(file = f3, list = ls(env, all=TRUE), envir = env,
+                save(file = f3, list = ls(env, all.names = TRUE), envir = env,
                      compress = "xz")
                 ss <- c(ss, file.info(f3)$size)
 		names(ss) <- c(f1, f2, f3)
@@ -865,7 +865,7 @@ resaveRdaFiles <- function(paths,
             file.copy(nm[ind], p, overwrite = TRUE)
             unlink(nm)
         } else
-            save(file = p, list = ls(env, all=TRUE), envir = env,
+            save(file = p, list = ls(env, all.names = TRUE), envir = env,
                  compress = compress, compression_level = compression_level)
     }
 }
