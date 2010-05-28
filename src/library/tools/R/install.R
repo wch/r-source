@@ -2327,7 +2327,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     ## this needs to be canonical, e.g. 'utf8'
     setEncoding <- paste("\\usepackage[", latex_canonical_encoding(outputEncoding), "]{inputenc} % @SET ENCODING@", sep="")
     writeLines(c(setEncoding,
-                 "\\makeindex{}",
+                 if (index) "\\makeindex{}",
                  "\\begin{document}"), out)
     if (!nzchar(title)) {
         if (is.character(desc))

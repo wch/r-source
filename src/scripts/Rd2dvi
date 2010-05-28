@@ -167,9 +167,12 @@ if test -d "${1}"; then
     echo "Hmm ... looks like a package from the R distribution"
     dir=${1}
     test -z "${output}" && output="`basename ${1}`.${out_ext}"
-    if ${index} && test `basename ${1}`="base"; then
-       index=false
-       echo "not indexing base package"
+    if ${index}; then
+      this=`basename ${1}`
+      if test ${this} = "base"; then
+        index=false
+        echo "_not_ indexing 'base' package"
+      fi
     fi
   else
     if test -d ${1}/man; then
