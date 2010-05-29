@@ -17,8 +17,6 @@ SUBDIRS = profile $(R_PKGS_BASE) Recommended
 
 R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
-PDFLATEX = @PDFLATEX@
-
 .SUFFIXES: .inn .Rdts .Rdh
 
 all: Makefile R
@@ -88,19 +86,14 @@ Rdfiles:
 
 ## only 'grid' has any vignettes
 vignettes:
-	@if test "$(PDFLATEX)" = false; then \
-          $(ECHO) "WARNING: cannot build/update package vignettes."; \
-	  $(ECHO) "'pdflatex' needed but missing on your system."; \
-	else \
-	  for pkg in $(R_PKGS_BASE); do \
-	    if test -d "$(srcdir)/$${pkg}/inst/doc"; then \
-	      $(ECHO) "building/updating vignettes for package '$${pkg}' ..."; \
-	      ($(ECHO) "tools:::.install_package_vignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
-	          R_DEFAULT_PACKAGES="utils,tools" LC_ALL=C \
-	            $(R_EXE) > /dev/null; \
-	    fi; \
-	  done; \
-	fi
+	@for pkg in $(R_PKGS_BASE); do \
+	  if test -d "$(srcdir)/$${pkg}/inst/doc"; then \
+	    $(ECHO) "building/updating vignettes for package '$${pkg}' ..."; \
+	    ($(ECHO) "tools:::.install_package_vignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
+	        R_DEFAULT_PACKAGES="utils,tools" LC_ALL=C \
+	          $(R_EXE) > /dev/null; \
+	   fi; \
+	done
 
 metadata:
 	@$(ECHO) "building/updating package metadata ..."
