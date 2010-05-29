@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -372,21 +372,21 @@ getOption(x, default = NULL)
       respectively.
     }
 
+    \item{\code{device.ask.default}:}{logical.  The default for
+      \code{\link{devAskNewPage}("ask")} when a device is opened.}
+
     \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
       and \code{identify} be confirmed by a bell?  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
 
-    \item{\code{device.ask.default}:}{logical.  The default for
-      \code{\link{devAskNewPage}("ask")} when a device is opened.}
-
 #ifdef unix
-    \item{\code{bitmapType}:}{character.  The default type for the
+    \item{\code{bitmapType}:}{(Unix-only) character.  The default type for the
       bitmap devices such as \code{\link{png}}.  Defaults to
       \code{"cairo"} on systems where that is available, or to
       \code{"quartz"} on Mac OS X where that is available.}
 #endif
 #ifdef windows
-    \item{\code{windowsTimeout}:}{integer vector of length 2
+    \item{\code{windowsTimeout}:}{(Windows-only) integer vector of length 2
       representing two times in milliseconds.  These control the
       double-buffering of \code{\link{windows}} devices when that is
       enabled: the first is the delay after plotting finishes
@@ -528,15 +528,13 @@ getOption(x, default = NULL)
   }
 }
 
-#ifdef unix
 \section{Options used on Unix only}{
   \describe{
-    \item{\code{dvipscmd}:}{character string giving command to be used in
-    off-line printing of help pages.  Defaults to \command{"dvips"}.}
+    \item{\code{dvipscmd}:}{character string giving a command to be used in
+    off-line printing of help pages \emph{via} PostScript.  Defaults to
+    \command{"dvips"}.}
   }
 }
-#endif
-#ifdef windows
 \section{Options used on Windows only}{
   \describe{
     \item{\code{warn.FPU}:}{logical, by default undefined.  If true,
@@ -544,7 +542,6 @@ getOption(x, default = NULL)
       control word damaged by a buggy DLL.}
   }
 }
-#endif
 
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

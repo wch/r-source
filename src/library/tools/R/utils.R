@@ -239,7 +239,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     Sys.setenv(BSTINPUTS = paste(bstinputs, texinputs, sep = envSep))
 
     if(index && nzchar(texi2dvi) && .Platform$OS.type != "windows") {
-        ## switch off the use of texindy in texi2dvi >= 1.137
+        ## switch off the use of texindy in texi2dvi >= 1.157
         Sys.setenv(TEXINDY = "false")
         on.exit(Sys.unsetenv("TEXINDY"), add = TRUE)
         opt_pdf <- if(pdf) "--pdf" else ""
@@ -379,17 +379,10 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         texfile <- shQuote(file)
         base <- file_path_sans_ext(file)
         idxfile <- paste(base, ".idx", sep="")
-        if(pdf) {
-            latex <- Sys.getenv("PDFLATEX")
-            if(!nzchar(latex)) latex <- "pdflatex"
-        } else {
-            latex <- Sys.getenv("LATEX")
-            if(!nzchar(latex)) latex <- "latex"
-        }
-        bibtex <- Sys.getenv("BIBTEX")
-        if(!nzchar(bibtex)) bibtex <- "bibtex"
-        makeindex <- Sys.getenv("MAKEINDEX")
-        if(!nzchar(makeindex)) makeindex <- "makeindex"
+        latex <- if(pdf) Sys.getenv("PDFLATEX", "pdflatex")
+        else  Sys.getenv("LATEX", "latex")
+        bibtex <- Sys.getenv("BIBTEX", "bibtex")
+        makeindex <- Sys.getenv("MAKEINDEX", "makeindex")
         if(system(paste(shQuote(latex), "-interaction=nonstopmode", texfile)))
             stop(gettextf("unable to run '%s' on '%s'", latex, file),
                  domain = NA)
