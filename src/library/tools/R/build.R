@@ -445,9 +445,9 @@ get_exclude_patterns <- function()
         checkingLog(Log, "for file ", sQuote(file.path(pkg, "DESCRIPTION")))
         f <- file.path(pkgdir, "DESCRIPTION")
         if(file.exists(f)) {
-            desc <- read.dcf(f)
-            if(!length(desc)) {
-                resultLog(Log, "NO")
+            desc <- try(read.dcf(f))
+            if(inherits(desc, "try-error") || !length(desc)) {
+                resultLog(Log, "EXISTS but not correct format")
                 do_exit(1L)
             }
             desc <- desc[1L, ]
@@ -459,15 +459,15 @@ get_exclude_patterns <- function()
         intname <- desc["Package"]
         messageLog(Log, "preparing ", sQuote(intname), ":")
         prepare_pkg(pkgdir, desc, Log);
+        ## FIXME: do this with other exclusions.
         messageLog(Log, "removing junk files")
         setwd(pkgdir)
-        if(file.exists("DESCRIPTION.in") && file.exists("DESCRIPTION"))
-            unlink("DESCRIPTION")
         ff <- dir(".", all.files = TRUE, recursive = TRUE, full.names = TRUE)
         unlink(grep("^\\.(RData|Rhistory)$", ff, value = TRUE))
         setwd(dirname(pkgdir))
         filename <- paste(intname, "_", desc["Version"], ".tar", sep="")
         filepath <- file.path(startdir, filename)
+        ## -h means dereference symbolic links: some prefer -L
         res <- system(paste(TAR, "-chf", shQuote(filepath), pkgname))
         if(!res) {
             Tdir <- tempfile("Rbuild")
@@ -480,31 +480,31 @@ get_exclude_patterns <- function()
             do_exit(1L)
         }
 
+        ## FIXME: fix the dirname here.
         owd <- setwd(pkgname)
         ## remove exclude files
-        ## FIXME: what about case-insensitivity on Windows?
         allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
                         full.names = TRUE)
+        ## this does not include dirs, so add them back
         allfiles <- c(allfiles, unique(dirname(allfiles)))
-        ## FIXME check for '.'
         allfiles <- substring(allfiles, 3L)  # drop './'
         bases <- basename(allfiles)
         exclude <- rep(FALSE, length(allfiles))
-        ## basic exclusions: could be streamlined
-        for(e in get_exclude_patterns())
-            exclude <- exclude | grepl(e, allfiles, perl = TRUE)
-        ## handle .Rbuildignore
+        ignore <- get_exclude_patterns()
+        ## handle .Rbuildignore:
+        ## 'These patterns should be Perl regexps, one per line,
+        ##  to be matched against the file names relative to
+        ##  the top-level source directory.'
         ignore_file <- file.path(pkgdir, ".Rbuildignore")
-        if(file.exists(ignore_file)) {
-            ## 'These patterns should be Perl regexps, one per line,
-            ##  to be matched against the file names relative to
-            ##  the top-level source directory.'
-            ignore <- readLines(ignore_file)
-            for(e in ignore)
-                exclude <- exclude | grepl(e, allfiles, perl = TRUE)
-        }
+        if(file.exists(ignore_file)) ignore <- c(ignore, readLines(ignore_file))
+        for(e in ignore)
+            exclude <- exclude | grepl(e, allfiles, perl = TRUE,
+                                       ignore.case = WINDOWS)
+
         isdir <- file_test("-d", allfiles)
+        ## Version-control directories
         vcdirs <- c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg")
+        ## old (pre-2.10.0) dirnames
         exclude <- exclude | (isdir & (bases %in% c("check", "chm", vcdirs)))
         exclude <- exclude | (isdir & grepl("([Oo]ld|\\.Rcheck)$", bases))
         exclude <- exclude | bases %in% c("Read-and-delete-me", "GNUMakefile")
@@ -599,6 +599,7 @@ get_exclude_patterns <- function()
                 Sys.setenv(COPY_EXTENDED_ATTRIBUTES_DISABLE = 1) # Tiger
             }
             messageLog(Log, "building ", sQuote(paste(filename, ".gz", sep="")))
+            ## should not be any symlinks, so remove -h?
             cmd <- paste(TAR, "-chf", shQuote(filepath), pkgname)
             res <- system(cmd)
             if(!res)
