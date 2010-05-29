@@ -173,6 +173,9 @@ UTILITIES
     o	R CMD Rd2dvi makes use of tools::texi2dvi to process the
 	package manual.
 
+    o	There is an R-based version of R CMD build, R CMD nbuild, that
+	is intended to replace it before release.
+
 
 C-LEVEL FACILITIES
 
