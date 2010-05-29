@@ -239,6 +239,9 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     Sys.setenv(BSTINPUTS = paste(bstinputs, texinputs, sep = envSep))
 
     if(index && nzchar(texi2dvi) && .Platform$OS.type != "windows") {
+        ## switch off the use of texindy in texi2dvi >= 1.137
+        Sys.setenv(TEXINDY = "false")
+        on.exit(Sys.unsetenv("TEXINDY"), add = TRUE)
         opt_pdf <- if(pdf) "--pdf" else ""
         opt_quiet <- if(quiet) "--quiet" else ""
         opt_extra <- ""

@@ -111,6 +111,10 @@ NEW FEATURES
     o	tools::texi2dvi() gains an 'index' argument, mainly for use by
 	R CMD Rd2pdf.
 
+	It avoids the use of 'texindy' by texinfo's texi2dvi >= 1.137,
+	since that does not emulate 'makeindex' well enough to avoid
+	problems with special characters (such as (,{,!) in indices.
+
     o	The ability of readLines() and scan() to re-encode inputs to
 	marked UTF-8 strings on Windows since R 2.7.0 is extended to
 	non-UTF-8 locales on other OSes.
