@@ -445,7 +445,12 @@ get_exclude_patterns <- function()
         checkingLog(Log, "for file ", sQuote(file.path(pkg, "DESCRIPTION")))
         f <- file.path(pkgdir, "DESCRIPTION")
         if(file.exists(f)) {
-            desc <- read.dcf(f)[1L, ]
+            desc <- read.dcf(f)
+            if(!length(desc)) {
+                resultLog(Log, "NO")
+                do_exit(1L)
+            }
+            desc <- desc[1L, ]
             resultLog(Log, "OK")
         } else {
             resultLog(Log, "NO")
@@ -475,6 +480,7 @@ get_exclude_patterns <- function()
             do_exit(1L)
         }
 
+        owd <- setwd(pkgname)
         ## remove exclude files
         ## FIXME: what about case-insensitivity on Windows?
         allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
@@ -505,8 +511,9 @@ get_exclude_patterns <- function()
         ## Mac resource forks
         exclude <- exclude | grepl("^\\._", bases)
 	## Windows DLL resource file
-        exclude <- exclude | bases == paste("src/", pkgname, "_res.rc", sep="")
+        exclude <- exclude | (bases == paste("src/", pkgname, "_res.rc", sep=""))
         unlink(allfiles[exclude], recursive = TRUE)
+        setwd(owd)
         ## Now correct the package name (PR#9266)
         if (pkgname != intname) {
             if(!file.rename(pkgname, intname)) {
@@ -524,8 +531,7 @@ get_exclude_patterns <- function()
         setwd(Tdir)
         if(!WINDOWS) {
             ## Fix permissions
-            ## FIXME does not include directories.
-            allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
+            allfiles <- dir(pkgname, all.files = TRUE, recursive = TRUE,
                             full.names = TRUE)
             allfiles <- c(allfiles, unique(dirname(allfiles)))
             isdir <- file_test("-d", allfiles)
@@ -551,12 +557,13 @@ get_exclude_patterns <- function()
         for(dir in c("Meta", "R-ex", "chtml", "help", "html", "latex")) {
             d <- file.path(pkgname, dir)
             if(dir.exists(d)) {
-                print(Log, strwrap(paste("WARNING: Removing directory",
-                                         sQuote(d),
-                                         "which should only occur",
-                                         "in an installed package\n"),
-                                   indent = 0L, exdent = 2L))
-                unlink(f, recursive=TRUE)
+                msg <- paste("WARNING: Removing directory",
+                             sQuote(d),
+                             "which should only occur",
+                             "in an installed package")
+                printLog(Log, paste(strwrap(msg, indent = 0L, exdent = 2L),
+                                    collapse = "\n"), "\n")
+                unlink(d, recursive=TRUE)
             }
         }
         ## remove subarch build directories
@@ -580,14 +587,14 @@ get_exclude_patterns <- function()
                        "CMD INSTALL -l", shQuote(libdir),
                       "--build", paste(INSTALL_opts, collapse = " "),
                        shQuote(pkgdir))
-            res <- system(cmd)
-            if(res) {
+            if(system(cmd)) {
                 errorLog(Log, "Installation failed")
                 do_exit(1)
             }
         } else {
             if(grepl("darwin", R.version$os)) {
                 ## precaution for Mac OS X to omit resource forks
+                ## we can't tell the running OS version from R.version$os
                 Sys.setenv(COPYFILE_DISABLE = 1) # Leopard
                 Sys.setenv(COPY_EXTENDED_ATTRIBUTES_DISABLE = 1) # Tiger
             }
