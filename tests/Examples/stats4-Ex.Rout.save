@@ -49,7 +49,7 @@ Type 'q()' to quit R.
 lm1   7 326.0716
 lm1.  6 325.2408
 > BIC(lm1, lm1.)
-     df      AIC
+     df      BIC
 lm1   7 339.0226
 lm1.  6 336.3417
 > 
