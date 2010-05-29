@@ -50,7 +50,7 @@ resultLog <- function(Log, text) cat(" ", text, "\n", file = Log$con)
 errorLog <- function(Log, ...)
 {
     resultLog(Log, "ERROR")
-    if(nzchar(paste(..., sep=""))) messageLog(Log, ...)
+    if(nzchar(paste(..., sep=""))) printLog(Log, ..., "\n")
 }
 
 warningLog <- function(Log, text)
@@ -419,8 +419,10 @@ get_exclude_patterns <- function()
     gzip <- Sys.getenv("R_GZIPCMD", "gzip")
     ## The tar.exe in Rtools has --force-local by default, but this
     ## enables people to use Cygwin or MSYS tar.
-    TAR <- shQuote(Sys.getenv("TAR",
-                              if(WINDOWS) "tar --force-local" else "tar"))
+
+    TAR <- Sys.getenv("TAR", NA)
+    TAR <- if(is.na(TAR)) {if(WINDOWS) "tar --force-local" else "tar"}
+    else shQuote(TAR)
     GZIP <- Sys.getenv("R_GZIPCMD")
     if (!nzchar(GZIP)) GZIP <- "gzip"
     libdir <- tempfile("Rinst");
@@ -461,8 +463,7 @@ get_exclude_patterns <- function()
         setwd(dirname(pkgdir))
         filename <- paste(intname, "_", desc["Version"], ".tar", sep="")
         filepath <- file.path(startdir, filename)
-        cmd <- paste(TAR, "-chf", shQuote(filepath), pkgname)
-        res <- system(cmd)
+        res <- system(paste(TAR, "-chf", shQuote(filepath), pkgname))
         if(!res) {
             Tdir <- tempfile("Rbuild")
             dir.create(Tdir, mode = "0755")
