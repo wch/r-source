@@ -17,7 +17,7 @@ Windows distributions.
 
 	---------------------------------------------------
 
-The some of the public header files are distributed under the more
+Some of the public header files are distributed under the more
 permissive terms of the file COPYING.LIB.  This applies only to the
 files
 
@@ -93,6 +93,8 @@ src/library/grDevices/inst/afm/cm*.afm
 	of the fonts which have been altered in any way'.
 
 doc/manual/R-intro.texi
+
+in part
 
 	Copyright (C) 1990 W. N. Venables
 	Copyright (C) 1992 W. N. Venables & D. M. Smith
@@ -394,7 +396,7 @@ http://lists.gnu.org/archive/html/bug-gnulib/2003-02/msg00019.html
    Distributed under the GNU Library General Public License
    version 2 or later.
 
-src/main/Rstrptime.c
+src/main/Rstrptime.h
 
    Copyright (C) 1996, 1997, 1998, 1999, 2000 Free Software Foundation, Inc.
    Distributed under the GNU Library General Public License
