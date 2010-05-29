@@ -50,7 +50,7 @@ resultLog <- function(Log, text) cat(" ", text, "\n", file = Log$con)
 errorLog <- function(Log, ...)
 {
     resultLog(Log, "ERROR")
-    if(nzchar(text)) messageLog(Log, ...)
+    if(nzchar(paste(..., sep=""))) messageLog(Log, ...)
 }
 
 warningLog <- function(Log, text)
@@ -108,7 +108,9 @@ get_exclude_patterns <- function()
 
 ### based on Perl build script
 
-.build_package <- function(args = NULL)
+## FIXME: could use .shell_with_capture
+
+.build_packages <- function(args = NULL)
 {
     WINDOWS <- .Platform$OS.type == "windows"
 
@@ -142,7 +144,7 @@ get_exclude_patterns <- function()
         cat("Usage: R CMD build [options] pkgdirs",
             "",
             "Build R packages from package sources in the directories specified by",
-            "pkgdirs.",
+            sQuote("pkgdirs"),
             "",
             "Options:",
             "  -h, --help		print short help message and exit",
@@ -150,6 +152,7 @@ get_exclude_patterns <- function()
             "",
             "  --force               force overwriting of INDEX file",
             "  --no-vignettes        do not rebuild package vignettes",
+            "",
             "  --binary              build pre-compiled binary packages, with options:",
             if(WINDOWS) "  --auto-zip            select zipping of data based on size",
             "  --use-zip-data        collect data files in zip archive",
@@ -303,7 +306,7 @@ get_exclude_patterns <- function()
                 resultLog(Log, "NO")
                 if (force) {
                     messageLog(Log, "overwriting ", sQuote(oldindex),
-			      "as '--force' was given")
+			      " as '--force' was given")
                     unlink(oldindex)
                     file.rename(newindex, oldindex)
                 } else {
@@ -325,7 +328,7 @@ get_exclude_patterns <- function()
     ## These also fix up missing final NL
     fix_nonLF_in_source_files <- function(pkgname, Log)
     {
-        if(dir.exists(file.path(pkgname, "src"))) return()
+        if(!dir.exists(file.path(pkgname, "src"))) return()
         src_files <- dir(file.path(pkgname, "src"),
                          pattern = "\\.([cfh]|cc|cpp)$",
                          full.names=TRUE, recursive = TRUE)
@@ -337,8 +340,9 @@ get_exclude_patterns <- function()
 
     fix_nonLF_in_make_files <- function(pkgname, Log)
     {
-         if(dir.exists(file.path(pkgname, "src"))) return()
-         for (f in c("Makefile", "Makefile.in", "Makevars", "Makevars.in")) {
+        if(!dir.exists(file.path(pkgname, "src"))) return()
+         for (f in c("Makefile", "Makefile.in", "Makefile.win",
+                     "Makevars", "Makevars.in", "Makevars.win")) {
              if (!file.exists(ff <- file.path(pkgname, "src", f))) next
              lines <- readLines(ff, warn = FALSE)
              writeLinesNL(lines, ff)
@@ -436,8 +440,8 @@ get_exclude_patterns <- function()
         }
         pkgdir <- getwd()
         pkgname <- basename(pkgdir)
-        f <- file.path(pkg, "DESCRIPTION")
-        checkingLog(Log, "for file ", sQuote(f))
+        checkingLog(Log, "for file ", sQuote(file.path(pkg, "DESCRIPTION")))
+        f <- file.path(pkgdir, "DESCRIPTION")
         if(file.exists(f)) {
             desc <- read.dcf(f)[1L, ]
             resultLog(Log, "OK")
@@ -453,7 +457,7 @@ get_exclude_patterns <- function()
         if(file.exists("DESCRIPTION.in") && file.exists("DESCRIPTION"))
             unlink("DESCRIPTION")
         ff <- dir(".", all.files = TRUE, recursive = TRUE, full.names = TRUE)
-        unlink(grep("\\.(RData|Rhistory)$", ff, value = TRUE))
+        unlink(grep("^\\.(RData|Rhistory)$", ff, value = TRUE))
         setwd(dirname(pkgdir))
         filename <- paste(intname, "_", desc["Version"], ".tar", sep="")
         filepath <- file.path(startdir, filename)
