@@ -4,11 +4,11 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2010
-@set FAQ_DATE @value{FAQ_YEAR}-05-06
+@set FAQ_DATE @value{FAQ_YEAR}-05-30
 @set REL_YEAR 2010
 @set REL_MAJOR 2
 @set REL_MINOR 11
-@set REL_PATCHLEVEL 0
+@set REL_PATCHLEVEL 1
 @set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
 @set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
 
@@ -233,7 +233,7 @@ know.
 * What is the current version of R?::  
 * How can R be obtained?::      
 * How can R be installed?::     
-* Are there Unix binaries for R?::  
+* Are there Unix-like binaries for R?::  
 * What documentation exists for R?::  
 * Citing R::                    
 * What mailing lists exist for R?::  
@@ -295,14 +295,16 @@ official part of the @url{http://www.gnu.org/, @acronym{GNU}} project
 @node What machines does R run on?, What is the current version of R?, What is R?, R Basics
 @section What machines does R run on?
 
-R is being developed for the Unix, Windows and Mac families of operating
-systems.  Support for Mac OS Classic ended with R 1.7.1.
+R is being developed for the Unix-like, Windows and Mac families of
+operating systems.  Support for Mac OS Classic ended with R 1.7.1.
 
 The current version of R will configure and build under a number of
-common Unix platforms including @var{cpu}-linux-gnu for the i386, alpha,
-arm, hppa, ia64, m68k, mips/mipsel, powerpc, s390, sparc (e.g.,
-@url{http://buildd.debian.org/build.php?&pkg=r-base}), and x86_64
-@acronym{CPU}s, powerpc-apple-darwin, mips-sgi-irix,
+common Unix-like (e.g., @uref{http://en.wikipedia.org/wiki/Unix-like})
+platforms including @var{cpu}-linux-gnu for the i386, amd64, alpha,
+arm/armel, hppa, ia64, m68k, mips/mipsel, powerpc, s390 and sparc 
+@acronym{CPU}s (e.g., @url{http://buildd.debian.org/build.php?&pkg=r-base}),
+i386-hurd-gnu, @var{cpu}-kfreebsd-gnu for i386 and amd64, 
+powerpc-apple-darwin, mips-sgi-irix,
 @c <FIXME>
 @c Not sure anymore ...
 @c alpha-dec-osf4,
@@ -375,27 +377,27 @@ versions of R can be found at
 @c The sources of the development version are also available via anonymous
 @c CVS.  See @url{http://anoncvs.R-project.org} for more information.
 
-@node How can R be installed?, Are there Unix binaries for R?, How can R be obtained?, R Basics
+@node How can R be installed?, Are there Unix-like binaries for R?, How can R be obtained?, R Basics
 @section How can R be installed?
 
 @menu
-* How can R be installed (Unix)::  
+* How can R be installed (Unix-like)::  
 * How can R be installed (Windows)::  
 * How can R be installed (Macintosh)::  
 @end menu
 
-@node How can R be installed (Unix), How can R be installed (Windows), How can R be installed?, How can R be installed?
-@subsection How can R be installed (Unix)
+@node How can R be installed (Unix-like), How can R be installed (Windows), How can R be installed?, How can R be installed?
+@subsection How can R be installed (Unix-like)
 
 If R is already installed, it can be started by typing @kbd{R} at the
 shell prompt (of course, provided that the executable is in your path).
 
-If binaries are available for your platform (see @ref{Are there Unix
-binaries for R?}), you can use these, following the instructions that
-come with them.
+If binaries are available for your platform (see @ref{Are there
+Unix-like binaries for R?}), you can use these, following the
+instructions that come with them.
 
 Otherwise, you can compile and install R yourself, which can be done
-very easily under a number of common Unix platforms (see @ref{What
+very easily under a number of common Unix-like platforms (see @ref{What
 machines does R run on?}).  The file @file{INSTALL} that comes with the
 R distribution contains a brief introduction, and the ``R Installation
 and Administration'' guide (@pxref{What documentation exists for R?})
@@ -467,7 +469,7 @@ To install DVI, info and PDF versions of the manuals, use @kbd{make
 install-dvi}, @kbd{make install-info} and @kbd{make install-pdf},
 respectively.
 
-@node How can R be installed (Windows), How can R be installed (Macintosh), How can R be installed (Unix), How can R be installed?
+@node How can R be installed (Windows), How can R be installed (Macintosh), How can R be installed (Unix-like), How can R be installed?
 @subsection How can R be installed (Windows)
 
 The @file{bin/windows} directory of a @CRAN{} site contains binaries for
@@ -511,8 +513,8 @@ The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
 and a large number of add-on packages of R 1.7.1 to run under Mac OS 8.6
 to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 
-@node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
-@section Are there Unix binaries for R?
+@node Are there Unix-like binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
+@section Are there Unix-like binaries for R?
 
 @c Linux binaries as of 2009-04-15:
 @c
@@ -625,7 +627,7 @@ No other binary distributions are currently publically available via
 @c @url{http://dirk.eddelbuettel.com/quantian/} contains more details as
 @c well download information.
 
-@node What documentation exists for R?, Citing R, Are there Unix binaries for R?, R Basics
+@node What documentation exists for R?, Citing R, Are there Unix-like binaries for R?, R Basics
 @section What documentation exists for R?
 
 Online documentation for most of the functions and variables in R
@@ -1904,8 +1906,8 @@ obtained from the mailing list archive.
 @node How can add-on packages be installed?, How can add-on packages be used?, Which add-on packages exist for R?, R Add-On Packages
 @section How can add-on packages be installed?
 
-(Unix only.)  The add-on packages on @CRAN{} come as gzipped tar files
-named @code{@var{pkg}_@var{version}.tar.gz}, which may in fact be
+(Unix-like only.)  The add-on packages on @CRAN{} come as gzipped tar
+files named @code{@var{pkg}_@var{version}.tar.gz}, which may in fact be
 ``bundles'' containing more than one package.  Let @var{path} be the
 path to such a package file.  Provided that @command{tar} and
 @command{gzip} are available on your system, type
@@ -2803,7 +2805,7 @@ squares resulting from dropping single terms.
 @node How do I produce PNG graphics in batch mode?, How can I get command line editing to work?, Why does the output from anova() depend on the order of factors in the model?, R Miscellanea
 @section How do I produce PNG graphics in batch mode?
 
-Under a Unix-alike, if your installation supports the
+Under a Unix-like, if your installation supports the
 @code{type="cairo"} option to the @code{png()} device there should be no
 problems, and the default settings should just work.  This option is not
 available for versions of R prior to 2.7.0, or without support for
@@ -2824,7 +2826,7 @@ bitmaps without X11.
 @node How can I get command line editing to work?, How can I turn a string into a variable?, How do I produce PNG graphics in batch mode?, R Miscellanea
 @section How can I get command line editing to work?
 
-The Unix command-line interface to R can only provide the inbuilt
+The Unix-like command-line interface to R can only provide the inbuilt
 command line editor which allows recall, editing and re-submission of
 prior commands provided that the @acronym{GNU} readline library is
 available at the time R is configured for compilation.  Note that the
@@ -3190,7 +3192,7 @@ Disable this option.
 There are settings for Text Alpha and Graphics Alpha.
 Change Graphics Alpha from 4 bits to 1 bit to disable graphic
 anti-aliasing.
-@item gv (Linux/Unix X)
+@item gv (Unix-like X)
 There is an option to enable/disable anti-aliasing.
 Disable this option.
 @item Evince (Linux/GNOME)
@@ -3524,7 +3526,7 @@ should be sent first to the package maintainer, and only submitted to
 the R-bugs repository by package maintainers, mentioning the package in
 the subject line.
 
-On Unix systems a bug report can be generated using the function
+On Unix-like systems a bug report can be generated using the function
 @code{bug.report()}.  This automatically includes the version
 information and sends the bug to the correct address.  Alternatively the
 bug report can be emailed to @email{R-bugs@@R-project.org} or submitted
