@@ -214,11 +214,9 @@ get_exclude_patterns <- function()
                 do_exit(1)
             }
             creatingLog(Log, "vignettes")
-            R_LIBS <- Sys.getenv("R_LIBS", NA_character_)
-            if(!is.na(R_LIBS)) {
-                on.exit(Sys.setenv(R_LIBS = R_LIBS))
-                Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
-            }
+            lP <- .libPaths()
+            .libPaths(c(libdir, lP))
+            on.exit(.libPaths(lP))
             Tfile <- tempfile()
             msgcon <- file(Tfile, "w")
             sink(msgcon, type = "message")
@@ -368,7 +366,7 @@ get_exclude_patterns <- function()
     binary <- FALSE
     INSTALL_opts <- character()
     pkgs <- character()
-    options(showErrorCalls=FALSE)
+    options(showErrorCalls=FALSE, warn = 1)
 
     if (is.null(args)) {
         args <- commandArgs(TRUE)
