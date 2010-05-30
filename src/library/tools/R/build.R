@@ -108,8 +108,6 @@ get_exclude_patterns <- function()
 
 ### based on Perl build script
 
-## FIXME: could use .shell_with_capture
-
 .build_packages <- function(args = NULL)
 {
     WINDOWS <- .Platform$OS.type == "windows"
@@ -123,6 +121,17 @@ get_exclude_patterns <- function()
         on.exit(close(con))
         writeLines(text, con)
     }
+
+    ## This version merges stdout and stderr
+    shell_with_capture <- function (command) {
+        outfile <- tempfile("xshell")
+        on.exit(unlink(outfile))
+        status <- if (.Platform$OS.type == "windows")
+            shell(sprintf("%s > %s 2>&1", command, outfile), shell = "cmd.exe")
+        else system(sprintf("%s > %s 2>&1", command, outfile))
+        list(status = status, stdout = readLines(outfile, warn = FALSE))
+    }
+
 
     ## Run silently
     Ssystem <- function(command, ...)
@@ -200,40 +209,41 @@ get_exclude_patterns <- function()
             messageLog(Log, "installing the package to re-build vignettes")
             libdir <- tempfile("Rinst")
             dir.create(libdir, mode = "0755")
-            cmd <- if(WINDOWS)
-                paste(file.path(R.home("bin"), "Rcmd.exe"),
-                      "INSTALL -l", shQuote(libdir), shQuote(pkgdir))
-            else
-                 paste(file.path(R.home("bin"), "R"),
-                       "CMD INSTALL -l", shQuote(libdir), shQuote(pkgdir))
-            res <- Ssystem(cmd)
-            if(res) {
+            cmd <- if(WINDOWS) file.path(R.home("bin"), "Rcmd.exe")
+            else paste(file.path(R.home("bin"), "R"), "CMD")
+            cmd <- paste(cmd, "INSTALL -l", shQuote(libdir), shQuote(pkgdir))
+            res <- shell_with_capture(cmd)
+            if(res$status) {
+                printLog(Log, "      -----------------------------------\n")
+                printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
+                printLog(Log, "      -----------------------------------\n")
                 errorLog(Log, "Installation failed")
                 printLog(Log, "Removing installation dir\n")
                 unlink(libdir, recursive = TRUE)
                 do_exit(1)
             }
+
+            ## Better to do this in a separate process: it might die
             creatingLog(Log, "vignettes")
-            lP <- .libPaths()
-            .libPaths(c(libdir, lP))
-            on.exit(.libPaths(lP))
-            Tfile <- tempfile()
-            msgcon <- file(Tfile, "w")
-            sink(msgcon, type = "message")
-            sink(msgcon)
-            res <- try(buildVignettes(dir = "."))
-            sink()
-            sink(stderr(), type = "message")
-            close(msgcon)
-            if(inherits(res, "try-error")) {
-                errorLog(Log , "")
-                Lines <- readLines(Tfile)
-                Lines <- grep("^>", Lines, invert=TRUE, value=TRUE)
-                printLog(Log, paste(c(Lines, ""),  collapse="\n"))
+            R_LIBS <- Sys.getenv("R_LIBS", NA_character_)
+            if(!is.na(R_LIBS)) {
+                on.exit(Sys.setenv(R_LIBS = R_LIBS))
+                Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
+            } else {
+                on.exit(Sys.unsetenv("R_LIBS"))
+                Sys.setenv(R_LIBS = libdir)
+            }
+            cmd <- paste(file.path(R.home("bin"), "Rscript"),
+                         "--vanilla",
+                         "--default-packages=", # some vignettes assume methods
+                         "-e", shQuote("tools::buildVignettes(dir = '.')"))
+            res <- shell_with_capture(cmd)
+            if(res$status) {
+                resultLog(Log, "ERROR")
+                printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
                 do_exit(1L)
             } else resultLog(Log, "OK")
             unlink(libdir, recursive = TRUE)
-            if(inherits(res, 'try-error')) do_exit(1L)
 
 	    ## And finally, clean up again.
             cleanup_pkg(pkgdir, Log)
