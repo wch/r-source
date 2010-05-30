@@ -89,6 +89,7 @@ summaryLog <- function(Log, text)
 get_exclude_patterns <- function()
     c("^\\.Rbuildignore$",
       "(^|/)\\.DS_Store$",
+      "^\\.(RData|Rhistory)$",
       "~$", "\\.bak$", "\\.swp$",
       "(^|/)\\.#[^/]*$", "(^|/)#[^/]*#$",
       ## Outdated ...
@@ -469,13 +470,9 @@ get_exclude_patterns <- function()
             do_exit(1L)
         }
         intname <- desc["Package"]
+        ## FIXME: why not copy and then prepare the copy?
         messageLog(Log, "preparing ", sQuote(intname), ":")
         prepare_pkg(pkgdir, desc, Log);
-        ## FIXME: do this with other exclusions.
-        messageLog(Log, "removing junk files")
-        setwd(pkgdir)
-        ff <- dir(".", all.files = TRUE, recursive = TRUE, full.names = TRUE)
-        unlink(grep("^\\.(RData|Rhistory)$", ff, value = TRUE))
         setwd(dirname(pkgdir))
         filename <- paste(intname, "_", desc["Version"], ".tar", sep="")
         filepath <- file.path(startdir, filename)
@@ -497,7 +494,7 @@ get_exclude_patterns <- function()
         ## remove exclude files
         allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
                         full.names = TRUE)
-        ## this does not include dirs, so add them back
+        ## this does not include dirs, so add non-empty ones back
         allfiles <- c(allfiles, unique(dirname(allfiles)))
         allfiles <- substring(allfiles, 3L)  # drop './'
         bases <- basename(allfiles)
@@ -519,6 +516,7 @@ get_exclude_patterns <- function()
         ## old (pre-2.10.0) dirnames
         exclude <- exclude | (isdir & (bases %in% c("check", "chm", vcdirs)))
         exclude <- exclude | (isdir & grepl("([Oo]ld|\\.Rcheck)$", bases))
+        ## FIXME: GNU make uses GNUmakefile (note capitalization)
         exclude <- exclude | bases %in% c("Read-and-delete-me", "GNUMakefile")
         ## Mac resource forks
         exclude <- exclude | grepl("^\\._", bases)
