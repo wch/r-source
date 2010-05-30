@@ -641,7 +641,11 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     GetComputerNameW(name, &namelen);
     wcstoutf8(buf, name, 1000);
     SET_STRING_ELT(ans, 3, mkCharCE(buf, CE_UTF8));
+#ifdef WIN64
+    SET_STRING_ELT(ans, 4, mkChar("x86-64"));
+#else
     SET_STRING_ELT(ans, 4, mkChar("x86"));
+#endif
     GetUserNameW(user, &userlen);
     wcstoutf8(buf, user, 1000);
     SET_STRING_ELT(ans, 5, mkCharCE(buf, CE_UTF8));
