@@ -77,8 +77,10 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 		    (int) osvi.dwMajorVersion, (int) osvi.dwMinorVersion,
 		    LOWORD(osvi.dwBuildNumber));
 	} else if(osvi.dwMajorVersion == 6) {
-	    if(osvi.wProductType == VER_NT_WORKSTATION) desc = "Vista";
-	    else desc = "Server 2008";
+	    if(osvi.wProductType == VER_NT_WORKSTATION) {
+		if(osvi.dwMinorVersion == 0) desc = "Vista";
+		else desc = "7";
+	    } else desc = "Server 2008";
 	} else if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0)
 	    desc = "2000";
 	else if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1)
@@ -600,9 +602,11 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PGNSI pGNSI;
 	SYSTEM_INFO si;
 	if(osvi.dwMajorVersion == 6) {
-	    if(osvi.wProductType == VER_NT_WORKSTATION)
-		strcpy(ver, "Vista");
-	    else
+	    if(osvi.wProductType == VER_NT_WORKSTATION) {
+		if(osvi.dwMinorVersion == 0)
+		    strcpy(ver, "Vista");
+		else strcpy(ver, "7");
+	    } else
 		strcpy(ver, "Server 2008");
 	}
 	if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0)
