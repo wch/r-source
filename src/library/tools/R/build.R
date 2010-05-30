@@ -357,8 +357,10 @@ get_exclude_patterns <- function()
         if(length(files) <= 2L) # always has ., ..
             printLog(Log, "WARNING: directory ", sQuote(d), " is empty\n")
         isdir <- file.info(files)$isdir
-        isdir[1:2] <- FALSE
-        for (d in files[isdir]) find_empty_dirs(d)
+        for (d in files[isdir]) {
+            if(grepl("/\\.+$", d)) next
+            find_empty_dirs(d)
+        }
     }
 
     force <- FALSE
