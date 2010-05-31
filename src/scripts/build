@@ -1,4 +1,4 @@
-# ${R_HOME}/bin/build -*- sh -*- for installing add-on packages
+# ${R_HOME}/bin/build -*- sh -*- for building add-on packages
 
 args=
 while test -n "${1}"; do
