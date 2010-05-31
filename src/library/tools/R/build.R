@@ -210,8 +210,8 @@ get_exclude_patterns <- function()
             messageLog(Log, "installing the package to re-build vignettes")
             libdir <- tempfile("Rinst")
             dir.create(libdir, mode = "0755")
-            cmd <- if(WINDOWS) file.path(R.home("bin"), "Rcmd.exe")
-            else paste(file.path(R.home("bin"), "R"), "CMD")
+            cmd <- if(WINDOWS) shQuote(file.path(R.home("bin"), "Rcmd.exe"))
+            else paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
             cmd <- paste(cmd, "INSTALL -l", shQuote(libdir), shQuote(pkgdir))
             res <- shell_with_capture(cmd)
             if(res$status) {
@@ -234,7 +234,7 @@ get_exclude_patterns <- function()
                 on.exit(Sys.unsetenv("R_LIBS"))
                 Sys.setenv(R_LIBS = libdir)
             }
-            cmd <- paste(file.path(R.home("bin"), "Rscript"),
+            cmd <- paste(shQuote(file.path(R.home("bin"), "Rscript")),
                          "--vanilla",
                          "--default-packages=", # some vignettes assume methods
                          "-e", shQuote("tools::buildVignettes(dir = '.')"))

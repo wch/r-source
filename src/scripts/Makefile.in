@@ -12,11 +12,11 @@ include $(top_builddir)/Makeconf
 
 ## don't add '#! R_SHELL' for scripts intend to be run by 'R CMD script'
 SCRIPTS_S = BATCH COMPILE INSTALL LINK REMOVE Rd2dvi Rdconv \
-  SHLIB Stangle Sweave config javareconf rtags nbuild
+  SHLIB Stangle Sweave build config javareconf rtags
 ## <NOTE>
 ## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
 SCRIPTS_B_IN = Rcmd.in Rdiff.in Rprof.in Sd2Rd.in \
-  build.in check.in f77_f2c.in mkinstalldirs.in pager.in
+  obuild.in check.in f77_f2c.in mkinstalldirs.in pager.in
 SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 ## </NOTE>
 
@@ -47,7 +47,7 @@ Rprof: $(srcdir)/Rprof.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 Sd2Rd: $(srcdir)/Sd2Rd.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-build: $(srcdir)/build.in $(top_builddir)/config.status
+obuild: $(srcdir)/obuild.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 check: $(srcdir)/check.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@

@@ -7,7 +7,7 @@ R_HOME = ../..
 SCRIPTDIR = bin
 
 all: \
-  $(R_HOME)/$(SCRIPTDIR)/build.pl $(R_HOME)/$(SCRIPTDIR)/check.pl \
+  $(R_HOME)/$(SCRIPTDIR)/obuild.pl $(R_HOME)/$(SCRIPTDIR)/check.pl \
   $(R_HOME)/$(SCRIPTDIR)/config.sh $(R_HOME)/$(SCRIPTDIR)/Rdconv.sh \
   $(R_HOME)/$(SCRIPTDIR)/Rd2dvi.sh $(R_HOME)/$(SCRIPTDIR)/Sd2Rd.pl \
   $(R_HOME)/$(SCRIPTDIR)/Rprof.pl $(R_HOME)/$(SCRIPTDIR)/SHLIB.sh \
@@ -16,7 +16,7 @@ all: \
 $(R_HOME)/$(SCRIPTDIR)/check.pl: check.in
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/$(SCRIPTDIR)/build.pl: build.in
+$(R_HOME)/$(SCRIPTDIR)/obuild.pl: obuild.in
 	@$(SED) -e 1d $< > $@
 
 $(R_HOME)/$(SCRIPTDIR)/Sd2Rd.pl: Sd2Rd.in

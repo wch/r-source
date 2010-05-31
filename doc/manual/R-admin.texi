@@ -2646,14 +2646,14 @@ available (including on Mac OS X >= 10.4): should a broken version of
 ICU be found this can be suppressed by @option{--without-ICU}.
 
 Code developers will need Perl version 5.8.0 or later, available via
-@uref{http://www.perl.com/CPAN/}.  This is used to package and check
-packages, for @command{R CMD Rprof}@footnote{for which the @R{} function
+@uref{http://www.perl.com/CPAN/}.  This is used to check packages, for
+@command{R CMD Rprof}@footnote{for which the @R{} function
 @code{summmaryProf} is an alternative.} and the rarely used @command{R
 CMD Sd2Rd}: it should be in your @env{PATH} when @command{configure} is
 run.
 
 @c The Perl scripts left are
-@c src/scripts: Rprof Sd2Rd build check
+@c src/scripts: Rprof Sd2Rd check
 @c tools: help2man.pl install-info.pl
 @c src/gnuwin32/installer: WIXins.pl
 
@@ -4511,8 +4511,8 @@ path.
 @node Perl, LaTeX, The Windows toolset, The Windows toolset
 @section Perl
 
-Perl is needed to use @command{R CMD build|check|Rprof}: it is no longer
-needed to install packages nor to build @R{}.
+Perl is needed to use @command{R CMD check} and @command{R CMD Rprof}:
+it is no longer needed to install packages nor to build @R{}.
 
 You will need a Windows port of @code{perl5} (but only the basic
 functionality, not any of the third-party Win32 extensions).  The
