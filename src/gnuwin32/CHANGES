@@ -13,6 +13,20 @@
 	**************************************************
 
 
+    		CHANGES IN R VERSION 2.11.1 patched
+	
+
+BUG FIXES
+
+    o	file.rename() now waits for the rename to complete before 
+    	returning, so that operations on the new filename will not fail.
+
+    o	Sys.info() and win.version() now report Windows 7 as such (and
+	not as Vista), and Sys.info() now reports the machine type as
+	'x86-64' on 64-bit platforms.
+
+
+
     		CHANGES IN R VERSION 2.11.1
 
 

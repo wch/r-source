@@ -641,7 +641,11 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     GetComputerNameW(name, &namelen);
     wcstoutf8(buf, name, 1000);
     SET_STRING_ELT(ans, 3, mkCharCE(buf, CE_UTF8));
+#ifdef WIN64
+    SET_STRING_ELT(ans, 4, mkChar("x86-64"));
+#else
     SET_STRING_ELT(ans, 4, mkChar("x86"));
+#endif
     GetUserNameW(user, &userlen);
     wcstoutf8(buf, user, 1000);
     SET_STRING_ELT(ans, 5, mkCharCE(buf, CE_UTF8));
@@ -912,12 +916,12 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 int Rwin_rename(const char *from, const char *to)
 {
-    return (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED) == 0);
+    return (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH) == 0);
 }
 
 int Rwin_wrename(const wchar_t *from, const wchar_t *to)
 {
-    return (MoveFileExW(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED) == 0);
+    return (MoveFileExW(from, to, MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH) == 0);
 }
 
 SEXP do_getClipboardFormats(SEXP call, SEXP op, SEXP args, SEXP rho)
