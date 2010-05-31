@@ -538,10 +538,9 @@ as currently defined by RFC 4646
 The optional file @file{INDEX} contains a line for each sufficiently
 interesting object in the package, giving its name and a description
 (functions such as print methods not usually called explicitly might not
-be included).  Normally this file is missing, and the corresponding
+be included).  Normally this file is missing and the corresponding
 information is automatically generated from the documentation sources
-(using @code{Rdindex()} from package @pkg{tools}) when installing from
-source.
+(using @code{tools::Rdindex()}) when installing from source.
 
 Rather than editing this file, it is preferable to put customized
 information about the package into an overview man page

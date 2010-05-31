@@ -176,6 +176,10 @@ UTILITIES
     o	There is an R-based version of R CMD build.  The Perl-based
 	version is, for now, still available as R CMD obuild.
 
+	R CMD build no longer creates an INDEX file (R CMD INSTALL
+	does so), and --force removes (rather than overwrites) an
+	existing INDEX file.
+
 
 C-LEVEL FACILITIES
 

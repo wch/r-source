@@ -18,24 +18,27 @@
 
 ### emulation of Perl Logfile.pm
 
-newLog <- function(class, filename = "")
+newLog <- function(filename = "")
 {
-    con <- if(nzchar(filename)) file(filename, "wt") else stdout()
+    con <- if(nzchar(filename)) file(filename, "wt") else 0L
     list(filename = filename, con = con, stars = "*", warnings = 0L)
 }
 
 closeLog <- function(Log) if(Log$con > 2) close(Log$con)
 
-printLog <- function(Log, ...) cat(..., file = Log$con, sep = "")
+printLog <- function(Log, ...) {
+    cat(..., sep = "")
+    if(Log$con > 0L) cat(..., file = Log$con, sep = "")
+}
 
 ## unused
 setStars <- function(Log, stars) {Log$stars <- stars; Log}
 
 checkingLog <- function(Log, ...)
-    cat(Log$stars, " checking ", ..., " ...", file = Log$con, sep = "")
+    printLog(Log, Log$stars, " checking ", ..., " ...")
 
 creatingLog <- function(Log, text)
-    cat(Log$stars, " creating ", text, " ...", file = Log$con, sep = "")
+    printLog(Log, Log$stars," creating ", text, " ...")
 
 messageLog <- function(Log, ...)
 {
@@ -43,9 +46,9 @@ messageLog <- function(Log, ...)
 ##     cat(Log$stars, " ",
 ##         gsub("\n", paste("\n", Log$stars, " ", sep = ""), text, fixed = TRUE),
 ##         sep = "\n", file = Log$con)
-    cat(Log$stars, " ", ..., "\n", file = Log$con, sep = "")
+    printLog(Log, Log$stars, " ", ..., "\n")
 }
-resultLog <- function(Log, text) cat(" ", text, "\n", file = Log$con)
+resultLog <- function(Log, text) printLog(Log, " ", text, "\n")
 
 errorLog <- function(Log, ...)
 {
@@ -160,7 +163,7 @@ get_exclude_patterns <- function()
             "  -h, --help		print short help message and exit",
             "  -v, --version		print version info and exit",
             "",
-            "  --force               force overwriting of INDEX file",
+            "  --force               force removal of INDEX file",
             "  --no-vignettes        do not rebuild package vignettes",
             "",
             "  --binary              build pre-compiled binary packages, with options:",
@@ -316,12 +319,11 @@ get_exclude_patterns <- function()
             if (!identical(ol, nl)) {
                 resultLog(Log, "NO")
                 if (force) {
-                    messageLog(Log, "overwriting ", sQuote(oldindex),
+                    messageLog(Log, "removing ", sQuote(oldindex),
 			      " as '--force' was given")
                     unlink(oldindex)
-                    file.rename(newindex, oldindex)
                 } else {
-                    messageLog(Log, "use '--force' to overwrite ",
+                    messageLog(Log, "use '--force' to remove ",
 			      "the existing ", sQuote(oldindex))
                     unlink(newindex)
                 }

@@ -58,7 +58,6 @@ $opt_rcfile = &file_path($ENV{"HOME"}, ".R", "check.conf")
     if defined($ENV{"HOME"});
 my $opt_subdirs;
 
-my $INSTALL_OPTS ="";
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
