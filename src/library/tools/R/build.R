@@ -20,15 +20,15 @@
 
 newLog <- function(filename = "")
 {
-    con <- if(nzchar(filename)) file(filename, "wt") else 0L
+    con <- if (nzchar(filename)) file(filename, "wt") else 0L
     list(filename = filename, con = con, stars = "*", warnings = 0L)
 }
 
-closeLog <- function(Log) if(Log$con > 2) close(Log$con)
+closeLog <- function(Log) if (Log$con > 2) close(Log$con)
 
 printLog <- function(Log, ...) {
     cat(..., sep = "")
-    if(Log$con > 0L) cat(..., file = Log$con, sep = "")
+    if (Log$con > 0L) cat(..., file = Log$con, sep = "")
 }
 
 ## unused
@@ -53,13 +53,13 @@ resultLog <- function(Log, text) printLog(Log, " ", text, "\n")
 errorLog <- function(Log, ...)
 {
     resultLog(Log, "ERROR")
-    if(nzchar(paste(..., sep=""))) printLog(Log, ..., "\n")
+    if (nzchar(paste(..., sep=""))) printLog(Log, ..., "\n")
 }
 
 warningLog <- function(Log, text)
 {
     resultLog(Log, "WARNING")
-    if(nzchar(text)) messageLog(Log, text)
+    if (nzchar(text)) messageLog(Log, text)
     Log$warnings <- Log$warnings+1L
     invisible(Log)
 }
@@ -67,12 +67,12 @@ warningLog <- function(Log, text)
 noteLog <- function(Log, text)
 {
     resultLog(Log, "NOTE")
-    if(nzchar(text)) messageLog(text)
+    if (nzchar(text)) messageLog(text)
 }
 
 summaryLog <- function(Log, text)
 {
-    if(Log$warnings > 1)
+    if (Log$warnings > 1)
         cat(sprintf("WARNING: There were %d warnings, see\n%%s\nfor details\n",
                     Log$warnings, sQuote(Log$filename)),
             file = Log$con)
@@ -139,7 +139,7 @@ get_exclude_patterns <- function()
 
     ## Run silently
     Ssystem <- function(command, ...)
-        system(paste(if(WINDOWS) "sh", command, ">/dev/null 2>&1"), ...)
+        system(paste(if (WINDOWS) "sh", command, ">/dev/null 2>&1"), ...)
 
     .file_test <- function(op, x)
         switch(op,
@@ -167,7 +167,7 @@ get_exclude_patterns <- function()
             "  --no-vignettes        do not rebuild package vignettes",
             "",
             "  --binary              build pre-compiled binary packages, with options:",
-            if(WINDOWS) "  --auto-zip            select zipping of data based on size",
+            if (WINDOWS) "  --auto-zip            select zipping of data based on size",
             "  --use-zip-data        collect data files in zip archive",
             "  --no-docs             do not build and install documentation",
             "",
@@ -182,7 +182,7 @@ get_exclude_patterns <- function()
         ## Do not keep previous build stamps.
         lines <- lines[!grepl("^Packaged:", lines)]
         user <- Sys.info()["user"]
-        if(user == "unknown") user <- Sys.getenv("LOGNAME")
+        if (user == "unknown") user <- Sys.getenv("LOGNAME")
         lines <- c(lines,
                    paste("Packaged: ",
                          format(Sys.time(), '', tz='UTC', usetz=TRUE),
@@ -195,7 +195,7 @@ get_exclude_patterns <- function()
         pkgname <- basename(pkgdir)
         checkingLog(Log, "DESCRIPTION meta-information")
         res <- try(.check_package_description("DESCRIPTION"))
-        if(inherits(res, "try-error")) {
+        if (inherits(res, "try-error")) {
             resultLog(Log, "ERROR")
             messageLog(Log, "running .check_package_description failed")
         } else {
@@ -206,18 +206,18 @@ get_exclude_patterns <- function()
             } else resultLog(Log, "OK")
         }
         cleanup_pkg(pkgdir, Log)
-        if(file.exists("INDEX")) update_Rd_index("INDEX", "man", Log)
-        if(vignettes && dir.exists(file.path("inst", "doc")) &&
+        if (file.exists("INDEX")) update_Rd_index("INDEX", "man", Log)
+        if (vignettes && dir.exists(file.path("inst", "doc")) &&
            length(list_files_with_type(file.path("inst", "doc"),
                                        "vignette"))) {
             messageLog(Log, "installing the package to re-build vignettes")
             libdir <- tempfile("Rinst")
             dir.create(libdir, mode = "0755")
-            cmd <- if(WINDOWS) shQuote(file.path(R.home("bin"), "Rcmd.exe"))
+            cmd <- if (WINDOWS) shQuote(file.path(R.home("bin"), "Rcmd.exe"))
             else paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
             cmd <- paste(cmd, "INSTALL -l", shQuote(libdir), shQuote(pkgdir))
             res <- shell_with_capture(cmd)
-            if(res$status) {
+            if (res$status) {
                 printLog(Log, "      -----------------------------------\n")
                 printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
                 printLog(Log, "      -----------------------------------\n")
@@ -230,7 +230,7 @@ get_exclude_patterns <- function()
             ## Better to do this in a separate process: it might die
             creatingLog(Log, "vignettes")
             R_LIBS <- Sys.getenv("R_LIBS", NA_character_)
-            if(!is.na(R_LIBS)) {
+            if (!is.na(R_LIBS)) {
                 on.exit(Sys.setenv(R_LIBS = R_LIBS))
                 Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
             } else {
@@ -242,7 +242,7 @@ get_exclude_patterns <- function()
                          "--default-packages=", # some vignettes assume methods
                          "-e", shQuote("tools::buildVignettes(dir = '.')"))
             res <- shell_with_capture(cmd)
-            if(res$status) {
+            if (res$status) {
                 resultLog(Log, "ERROR")
                 printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
                 do_exit(1L)
@@ -257,32 +257,32 @@ get_exclude_patterns <- function()
     cleanup_pkg <- function(pkgdir, Log)
     {
         pkgname <- basename(pkgdir)
-        if(dir.exists("src")) {
+        if (dir.exists("src")) {
             setwd("src")
             messageLog(Log, "cleaning src")
-            if(WINDOWS) {
-                if(file.exists("Makefile.win")) {
+            if (WINDOWS) {
+                if (file.exists("Makefile.win")) {
                     Ssystem(paste(Sys.getenv("MAKE", "make"), "-f Makefile.win clean"))
                 } else {
-                    if(file.exists("Makevars.win")) {
+                    if (file.exists("Makevars.win")) {
                         makefiles <- paste()
                         makefiles <- paste("-f",
                                            shQuote(file.path(R.home("share"), "make", "clean.mk")),
                                            "-f Makevars.win")
                         Ssystem(paste(Sys.getenv("MAKE", "make"), makefiles, "clean"))
                     }
-                    if(dir.exists("_libs")) unlink("_libs", recursive = TRUE)
+                    if (dir.exists("_libs")) unlink("_libs", recursive = TRUE)
                 }
             } else {
                 makefiles <- paste("-f",
                                    shQuote(file.path(R.home("etc"),
                                                      Sys.getenv("R_ARCH"),
                                                      "Makeconf")))
-                if(file.exists("Makefile")) {
+                if (file.exists("Makefile")) {
                     makefiles <- paste(makefiles, "-f", "Makefile")
                     Ssystem(paste(Sys.getenv("MAKE", "make"), makefiles, "clean"))
                 } else {
-                    if(file.exists("Makevars")) {
+                    if (file.exists("Makevars")) {
                         ## ensure we do have a 'clean' target.
                         makefiles <- paste(makefiles, "-f",
                                        shQuote(file.path(R.home("share"), "make", "clean.mk")),
@@ -292,13 +292,13 @@ get_exclude_patterns <- function()
                     ## Also cleanup possible Windows leftovers ...
                     unlink(c(Sys.glob(c("*.o", "*.sl", "*.so", "*.dylib")),
                              paste(pkgname, c(".a", ".dll", ".def"), sep="")))
-                    if(dir.exists(".libs")) unlink(".libs", recursive = TRUE)
-                    if(dir.exists("_libs")) unlink("_libs", recursive = TRUE)
+                    if (dir.exists(".libs")) unlink(".libs", recursive = TRUE)
+                    if (dir.exists("_libs")) unlink("_libs", recursive = TRUE)
                 }
             }
         }
         setwd(pkgdir)
-        if(!WINDOWS && .file_test("-x", "./cleanup")) {
+        if (!WINDOWS && .file_test("-x", "./cleanup")) {
             messageLog(Log, "running cleanup")
             Ssystem("./cleanup")
         }
@@ -308,12 +308,12 @@ get_exclude_patterns <- function()
     {
         newindex <- tempfile()
         res <- try(Rdindex(Rd_files, newindex))
-        if(inherits(res, "try-error")) {
+        if (inherits(res, "try-error")) {
             errorLog(Log, "computing Rd index failed")
             do_exit(1L)
         }
         checkingLog(Log, "whether ", sQuote(oldindex), " is up-to-date")
-        if(file.exists(oldindex)) {
+        if (file.exists(oldindex)) {
             ol <- readLines(oldindex)
             nl <- readLines(newindex)
             if (!identical(ol, nl)) {
@@ -341,7 +341,7 @@ get_exclude_patterns <- function()
     ## These also fix up missing final NL
     fix_nonLF_in_source_files <- function(pkgname, Log)
     {
-        if(!dir.exists(file.path(pkgname, "src"))) return()
+        if (!dir.exists(file.path(pkgname, "src"))) return()
         src_files <- dir(file.path(pkgname, "src"),
                          pattern = "\\.([cfh]|cc|cpp)$",
                          full.names=TRUE, recursive = TRUE)
@@ -353,7 +353,7 @@ get_exclude_patterns <- function()
 
     fix_nonLF_in_make_files <- function(pkgname, Log)
     {
-        if(!dir.exists(file.path(pkgname, "src"))) return()
+        if (!dir.exists(file.path(pkgname, "src"))) return()
          for (f in c("Makefile", "Makefile.in", "Makefile.win",
                      "Makevars", "Makevars.in", "Makevars.win")) {
              if (!file.exists(ff <- file.path(pkgname, "src", f))) next
@@ -367,11 +367,11 @@ get_exclude_patterns <- function()
         ## dir(recursive = TRUE) does not include directories, so
         ## we do need to do this recursively
         files <- dir(d, all.files = TRUE, full.names = TRUE)
-        if(length(files) <= 2L) # always has ., ..
+        if (length(files) <= 2L) # always has ., ..
             printLog(Log, "WARNING: directory ", sQuote(d), " is empty\n")
         isdir <- file.info(files)$isdir
         for (d in files[isdir]) {
-            if(grepl("/\\.+$", d)) next
+            if (grepl("/\\.+$", d)) next
             find_empty_dirs(d)
         }
     }
@@ -423,7 +423,7 @@ get_exclude_patterns <- function()
         } else pkgs <- c(pkgs, a)
         args <- args[-1L]
     }
-    if(!binary && length(INSTALL_opts))
+    if (!binary && length(INSTALL_opts))
         message("** Options ",
                 sQuote(paste(INSTALL_opts, collapse=" ")),
                 " are only for '--binary'  and will be ignored")
@@ -436,7 +436,7 @@ get_exclude_patterns <- function()
     ## enables people to use Cygwin or MSYS tar.
 
     TAR <- Sys.getenv("TAR", NA)
-    TAR <- if(is.na(TAR)) {if(WINDOWS) "tar --force-local" else "tar"}
+    TAR <- if (is.na(TAR)) {if (WINDOWS) "tar --force-local" else "tar"}
     else shQuote(TAR)
     GZIP <- Sys.getenv("R_GZIPCMD")
     if (!nzchar(GZIP)) GZIP <- "gzip"
@@ -451,7 +451,7 @@ get_exclude_patterns <- function()
         ## Hence, we now convert to absolute paths.'
         setwd(startdir)
         res <- try(setwd(pkg))
-        if(inherits(res, "try-error")) {
+        if (inherits(res, "try-error")) {
             errorLog(Log, "cannot change to directory ", sQuote(pkg))
             do_exit(1L)
         }
@@ -459,9 +459,9 @@ get_exclude_patterns <- function()
         pkgname <- basename(pkgdir)
         checkingLog(Log, "for file ", sQuote(file.path(pkg, "DESCRIPTION")))
         f <- file.path(pkgdir, "DESCRIPTION")
-        if(file.exists(f)) {
+        if (file.exists(f)) {
             desc <- try(read.dcf(f))
-            if(inherits(desc, "try-error") || !length(desc)) {
+            if (inherits(desc, "try-error") || !length(desc)) {
                 resultLog(Log, "EXISTS but not correct format")
                 do_exit(1L)
             }
@@ -480,13 +480,13 @@ get_exclude_patterns <- function()
         filepath <- file.path(startdir, filename)
         ## -h means dereference symbolic links: some prefer -L
         res <- system(paste(TAR, "-chf", shQuote(filepath), pkgname))
-        if(!res) {
+        if (!res) {
             Tdir <- tempfile("Rbuild")
             dir.create(Tdir, mode = "0755")
             setwd(Tdir)
             res <- system(paste(TAR, "-xf",  shQuote(filepath)))
         }
-        if(res) {
+        if (res) {
             errorLog(Log, "copying to build directory failed")
             do_exit(1L)
         }
@@ -507,7 +507,7 @@ get_exclude_patterns <- function()
         ##  to be matched against the file names relative to
         ##  the top-level source directory.'
         ignore_file <- file.path(pkgdir, ".Rbuildignore")
-        if(file.exists(ignore_file)) ignore <- c(ignore, readLines(ignore_file))
+        if (file.exists(ignore_file)) ignore <- c(ignore, readLines(ignore_file))
         for(e in ignore)
             exclude <- exclude | grepl(e, allfiles, perl = TRUE,
                                        ignore.case = WINDOWS)
@@ -528,7 +528,7 @@ get_exclude_patterns <- function()
         setwd(owd)
         ## Now correct the package name (PR#9266)
         if (pkgname != intname) {
-            if(!file.rename(pkgname, intname)) {
+            if (!file.rename(pkgname, intname)) {
                 message("Error: cannot rename directory to ", sQuote(intname))
                 do_exit(1L)
             }
@@ -541,7 +541,7 @@ get_exclude_patterns <- function()
             print(res) # FIXME print to Log?
         }
         setwd(Tdir)
-        if(!WINDOWS) {
+        if (!WINDOWS) {
             ## Fix permissions
             allfiles <- dir(pkgname, all.files = TRUE, recursive = TRUE,
                             full.names = TRUE)
@@ -568,7 +568,7 @@ get_exclude_patterns <- function()
         find_empty_dirs(pkgname)
         for(dir in c("Meta", "R-ex", "chtml", "help", "html", "latex")) {
             d <- file.path(pkgname, dir)
-            if(dir.exists(d)) {
+            if (dir.exists(d)) {
                 msg <- paste("WARNING: Removing directory",
                              sQuote(d),
                              "which should only occur",
@@ -589,22 +589,22 @@ get_exclude_patterns <- function()
             libdir <- tempfile("Rinst")
             dir.create(libdir, mode = "0755")
             srcdir <- file.path(Tdir, pkgname)
-            cmd <- if(WINDOWS)
-                paste(file.path(R.home("bin"), "Rcmd.exe"),
+            cmd <- if (WINDOWS)
+                paste(shQuote(file.path(R.home("bin"), "Rcmd.exe")),
                       "INSTALL -l", shQuote(libdir),
                       "--build", paste(INSTALL_opts, collapse = " "),
                       shQuote(pkgdir))
             else
-                 paste(file.path(R.home("bin"), "R"),
+                 paste(shQuote(file.path(R.home("bin"), "R")),
                        "CMD INSTALL -l", shQuote(libdir),
                       "--build", paste(INSTALL_opts, collapse = " "),
                        shQuote(pkgdir))
-            if(system(cmd)) {
+            if (system(cmd)) {
                 errorLog(Log, "Installation failed")
                 do_exit(1)
             }
         } else {
-            if(grepl("darwin", R.version$os)) {
+            if (grepl("darwin", R.version$os)) {
                 ## precaution for Mac OS X to omit resource forks
                 ## we can't tell the running OS version from R.version$os
                 Sys.setenv(COPYFILE_DISABLE = 1) # Leopard
@@ -614,9 +614,9 @@ get_exclude_patterns <- function()
             ## should not be any symlinks, so remove -h?
             cmd <- paste(TAR, "-chf", shQuote(filepath), pkgname)
             res <- system(cmd)
-            if(!res)
+            if (!res)
                 res <- system(paste(shQuote(GZIP), "-9f", shQuote(filepath)))
-            if(res) {
+            if (res) {
                 errorLog(Log, "packaging into .tar.gz failed")
                 do_exit(1L)
             }
