@@ -2151,7 +2151,7 @@ sub check_pkg {
 	$log->result("OK") unless($any);
     }
 
-    if($R_check_Rd_contents) {
+    if(-d "man" && $R_check_Rd_contents && !$opt_extra_arch) {
 	$log->checking("Rd contents");
 
 	my $any;
@@ -2176,6 +2176,7 @@ sub check_pkg {
 	$log->result("OK") unless($any);
     }
 	
+    ## Check for non-ASCII characters in data
     if(!$is_base_pkg && (-d "data") && !$opt_extra_arch) {
 	$log->checking("data for non-ASCII characters");
 	my @out = R_runR("tools:::.check_package_datasets('.')",
@@ -2288,7 +2289,7 @@ sub check_pkg {
 	}
     }
 
-    ## check src/Makevar*, src/Makefile* for correct use of BLAS_LIBS
+    ## check src/Makevars*, src/Makefile* for correct use of BLAS_LIBS
     ## FLIBS is not needed on Windows, at least currently (as it is
     ## statically linked).
     if(-d "src" && !$opt_extra_arch) {

@@ -64,7 +64,7 @@ warningLog <- function(Log, text="")
     invisible(Log)
 }
 
-noteLog <- function(Log, text)
+noteLog <- function(Log, text="")
 {
     resultLog(Log, "NOTE")
     if (nzchar(text)) messageLog(text)
