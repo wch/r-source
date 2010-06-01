@@ -4044,7 +4044,7 @@ CPPFLAGS=-I/opt/csw/include
 CFLAGS="-O -xlibmieee"
 F77=f95
 FFLAGS=-O4
-CXX="CC -library=stlport"
+CXX="CC -library=stlport4"
 CXXFLAGS=-O
 FC=f95
 FCFLAGS=$FFLAGS
