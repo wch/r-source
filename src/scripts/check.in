@@ -1266,7 +1266,7 @@ sub check_pkg {
 	    $log->warning();
 	    $log->print(join(" ", @topfiles) . "\n");
 	    $log->print(wrap("", "",
-			     ("These files are deprecated.",
+			     ("These files are defunct.",
 			      "See manual 'Writing R Extensions'.\n")));
 	} else {
 	    $log->result("OK");
