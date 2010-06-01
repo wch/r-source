@@ -33,7 +33,8 @@ R_runR <- function(cmd, Ropts="", env = "")
     writeLines(cmd, Rin)
     R_system(paste(shQuote(file.path(R.home("bin"),
                                      ifelse(WINDOWS, "Rterm.exe", "R"))),
-                   Ropts, "<", Rin, ">", Rout, "2>&1"), env)
+                   paste(Ropts, collapse = " "),
+                   "<", Rin, ">", Rout, "2>&1"), env)
     readLines(Rout, warn = FALSE)
 }
 
@@ -45,7 +46,8 @@ R_run_R <- function(cmd, Ropts, env)
     writeLines(cmd, Rin)
     status <- R_system(paste(shQuote(file.path(R.home("bin"),
                                                ifelse(WINDOWS, "Rterm.exe", "R"))),
-                             Ropts, "<", Rin, ">", Rout, "2>&1"), env)
+                             paste(Ropts, collapse = " "),
+                             "<", Rin, ">", Rout, "2>&1"), env)
     list(status = status, out = readLines(Rout, warn = FALSE))
 }
 
@@ -75,19 +77,166 @@ R_run_R <- function(cmd, Ropts, env)
         haveR <- dir.exists("R") && !extra_arch
 
         ## Build list of exclude patterns.
+        ## FIXME
 
         if (!extra_arch) {
             ## Check for portable file names.
             checkingLog(Log, "for portable file names")
-            resultLog(Log, "Not implemented")
+
+            ## Ensure that the names of the files in the package are
+            ## valid for at least the supported OS types.
+            ## Under Unix, we definitely cannot have '/'.
+            ## Under Windows, the control characters as well as " * :
+            ## < > ? \ | (i.e., ASCII characters 1 to 31 and 34, 36,
+            ## 58, 60, 62, 63, 92, and 124) are or can be invalid.
+            ## (In addition, one cannot have one-character file names
+            ## consisting of just ' ', '.', or '~'.)  Based on
+            ## information by Uwe Ligges, Duncan Murdoch, and Brian
+            ## Ripley.
+
+            ## In addition, Windows does not allow the following DOS
+            ## type device names (by themselves or with possible
+            ## extensions), see e.g.
+            ## http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/naming_a_file.asp
+            ## and http://en.wikipedia.org/wiki/Filename (which as of
+            ## 2007-04-22 is wrong about claiming that COM0 and LPT0
+            ## are disallowed):
+            ##
+            ## CON: Keyboard and display
+            ## PRN: System list device, usually a parallel port
+            ## AUX: Auxiliary device, usually a serial port
+            ## NUL: Bit-bucket device
+            ## CLOCK$: System real-time clock
+            ## COM1, COM2, COM3, COM4, COM5, COM6, COM7, COM8, COM9:
+            ##   Serial communications ports 1-9
+            ## LPT1, LPT2, LPT3, LPT4, LPT5, LPT6, LPT7, LPT8, LPT9:
+            ##   parallel printer ports 1-9
+
+            ## In addition, the names of help files get converted to
+            ## HTML file names and so should be valid in URLs.  We
+            ## check that they are ASCII and do not contain %, which
+            ## is what is known to cause troubles.
+
+            allfiles <- dir(".", all.files = TRUE,
+                            full.names = TRUE, recursive = TRUE)
+            allfiles <- c(allfiles, unique(dirname(allfiles)))
+            allfiles <- sub("^./", "", allfiles)
+            ## FIXME: exclude files here?
+            ## collation is ASCII: see 'check' script.
+            ## NB: the omission of ' ' is deliberate.
+            bad_files <- allfiles[grepl("[[:cntrl:]\"*/:<>?\\|]",
+                                       basename(allfiles))]
+            is_man <- grepl("man$", dirname(allfiles))
+            bad <- sapply(strsplit(basename(allfiles[is_man]), ""),
+                          function(x) any(grepl("[^ -~]|%", x)))
+            bad_files <- c(bad_files, (allfiles[is_man])[bad])
+            bad <- tolower(basename(allfiles[!is_man]))
+            bad <- grepl("^(con|prn|aux|clock$|nul|lpt[1-9]|com[1-9])$", bad)
+            bad_files <- c(bad_files, (allfiles[!is_man])[bad])
+            if (length(bad_files)) {
+                errorLog(Log)
+                printLog(Log,
+                         strwrap("Found the following file(s) with non-portable file names:\n"))
+                printLog(Log, paste(c("", bad_files, ""), collapse = "\n"))
+                printLog(Log,
+                         strwrap(paste("These are not valid file names",
+                                       "on all R platforms.\n",
+                                       "Please rename the files and try again.\n",
+                                       "See section 'Package structure'",
+                                       "in manual 'Writing R Extensions'.\n")))
+                do_exit(1L)
+            }
 
             ## Next check for name clashes on case-insensitive file systems
             ## (that is on Windows and (by default) on Mac OS X).
 
+            dups <- unique(allfiles[duplicated(tolower(allfiles))])
+            if (length(dups)) {
+                errorLog(Log)
+                printLog(Log,
+                         strwrap("Found the following file(s) with duplicate lower-cased file names:\n"))
+                printLog(Log, paste(c("", dups, ""), collapse = "\n"))
+                printLog(Log,
+                         strwrap(paste("File names must not differ just by case",
+                                       "to be usable on all R platforms.\n",
+                                       "Please rename the files and try again.\n",
+                                       "See section 'Package structure'",
+                                       "in manual 'Writing R Extensions'.\n")))
+                do_exit(1L)
+            }
+
+            non_ASCII_files <-
+                allfiles[grepl("[^-A-Za-z0-9._!#$%&+,;=@^(){}\'[\\]]",
+                               basename(allfiles))]
+            if (length(non_ASCII_files)) {
+                warningLog(Log)
+                printLog(Log,
+                         strwrap("The following file(s) h ave non-portable file names:\n"))
+                    printLog(Log, paste(c("", non_ASCII_files, ""), collapse = "\n"))
+                printLog(Log,
+                         strwrap(paste("These are not fully portable file names\n",
+                                       "See section 'Package structure'",
+                                       "in manual 'Writing R Extensions'.\n")))
+            } else resultLog(Log, "OK")
+
             ## Check for sufficient file permissions (Unix only).
             if (.Platform$OS.type == "unix") {
-                checkingLog(Log, "for sufficient/correct file permissions");
-                resultLog(Log, "Not implemented")
+                checkingLog(Log, "for sufficient/correct file permissions")
+
+                ## This used to be much more 'aggressive', requiring
+                ## that dirs and files have mode >= 00755 and 00644,
+                ## respectively (with an error if not), and that files
+                ## know to be 'text' have mode 00644 (with a warning
+                ## if not).  We now only require that dirs and files
+                ## have mode >= 00700 and 00400, respectively, and try
+                ## to fix insufficient permission in the INSTALL code
+                ## (Unix only).
+                ##
+                ## In addition, we check whether files 'configure' and
+                ## 'cleanup' exists in the top-level directory but are
+                ## not executable, which is most likely not what was
+                ## intended.
+
+                ## Phase A.  Directories at least 700, files at least 400.
+                bad_files <- character()
+                allfiles <- dir(".", all.files = TRUE,
+                                full.names = TRUE, recursive = TRUE)
+                allfiles <- sub("^./", "", allfiles)
+                ## Perl version used exclude patterns -- why?
+                mode <- file.info(allfiles)$mode
+                bad_files <- allfiles[(mode & "400") < as.octmode("400")]
+                alldirs <- unique(dirname(allfiles))
+                mode <- file.info(alldirs)$mode
+                bad_files <- c(bad_files,
+                               alldirs[(mode & "700") < as.octmode("700")])
+                if (length(bad_files)) {
+                    errorLog(Log)
+                    printLog(Log,
+                             strwrap("Found the following files with insufficient permissions:\n"))
+                    printLog(Log, paste(c("", bad_files, ""), collapse = "\n"))
+                    printLog(Log,
+                             strwrap("Permissions should be at least 700 for directories and 400 for files.\nPlease fix permissions and try again.\n"))
+                    do_exit(1L)
+                }
+
+                ## Phase B.  Top-level scripts 'configure' and
+                ## 'cleanup' should really be mode at least 500, or
+                ## they will not be necessarily be used (or should we
+                ## rather change *that*?)
+                bad_files <- character()
+                for (f in c("configure", "cleanup")) {
+                    if (!file.exists(f)) next
+                    mode <- file.info(f)$mode
+                    if ((mode & "500") < as.octmode("500"))
+                        bad_files <- c(bad_files, f)
+                }
+                if (length(bad_files)) {
+                    warningLog(Log)
+                    printLog(Log,
+                             strwrap("The following files should most likely be executable (for the owner):\n"))
+                    printLog(Log, paste(c("", bad_files, ""), collapse = "\n"))
+                    printLog(Log, "Please fix their permissions\n")
+                } else resultLog(Log, "OK")
             }
 
             ## Check DESCRIPTION meta-information.
@@ -96,10 +245,18 @@ R_run_R <- function(cmd, Ropts, env)
             ## validated most of the package DESCRIPTION metadata.  Otherwise,
             ## let us be defensive about this ...
 
-            ## FIXME
+            checkingLog(Log, "DESCRIPTION meta-information");
+            resultLog(Log, "Not implemented")
 
             checkingLog(Log, "top-level files");
-            resultLog(Log, "Not implemented")
+            topfiles <- Sys.glob(c("install.R", "R_PROFILE.R"))
+            if (length(topfiles)) {
+                warningLog(Log)
+                printLog(Log, paste(c("", topfiles, ""), collapse = "\n"))
+                printLog(Log,
+                         strwrap(paste("These files are defunct.",
+                                       "See manual 'Writing R Extensions'.\n")))
+            } else resultLog(Log, "OK")
 
             ## Check index information.
 
@@ -109,6 +266,7 @@ R_run_R <- function(cmd, Ropts, env)
             ## Check package subdirectories.
 
             checkingLog(Log, "package subdirectories");
+            ## this does a lot, should be a function
             resultLog(Log, "Not implemented")
 
             ## Check R code for syntax errors and for non-ASCII chars which
@@ -126,28 +284,82 @@ R_run_R <- function(cmd, Ropts, env)
         ## Check we can actually load the package: base is always loaded
         if (do_install && pkgname != "base") {
             checkingLog(Log, "whether the package can be loaded");
-            resultLog(Log, "Not implemented")
+            Rcmd <- sprintf("library(%s)", pkgname)
+            out <- R_runR(Rcmd, c(R_opts, "--quiet"))
+            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            if (any(grepl("^Error", out))) {
+                errorLog(Log)
+                printLog(Log, paste(c("", out, ""), collapse = "\n"))
+                printLog(Log,
+                         strwrap(paste("\nIt looks like this package",
+                                       "has a loading problem: see the messages",
+                                       "for details.\n")))
+                do_exit()
+            } else resultLog(Log, "OK")
 
             checkingLog(Log, "whether the package can be loaded with stated dependencies")
-            resultLog(Log, "Not implemented")
+            out <- R_runR(Rcmd, c(R_opts, "--quiet"), "R_DEFAULT_PACKAGES=NULL")
+            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            if (any(grepl("^Error", out))) {
+                warningLog(Log)
+                printLog(Log, paste(c("", out, ""), collapse = "\n"))
+                printLog(Log,
+                         strwrap(paste("\nIt looks like this package",
+                                       "(or one of its dependent packages)",
+                                       "has an unstated dependence on a standard",
+                                       "package.  All dependencies must be",
+                                       "declared in DESCRIPTION.\n")))
+                printLog(Log, strwrap(msg_DESCRIPTION))
+            } else resultLog(Log, "OK")
 
             checkingLog(Log, "whether the package can be unloaded cleanly")
-            resultLog(Log, "Not implemented")
+            Rcmd <- sprintf("suppressMessages(library(%s)); cat('\n---- unloading\n'); detach(\"package:%s\")", pkgname, pkgname)
+            out <- R_runR(Rcmd, c(R_opts, "--quiet"), "R_DEFAULT_PACKAGES=NULL")
+            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            if (any(grepl("^(Error|\\.Last\\.lib failed)", out))) {
+                warningLog(Log)
+                printLog(Log, paste(c("", out, ""), collapse = "\n"))
+            } else resultLog(Log, "OK")
 
             ## and if it has a namespace, that we can load/unload just the namespace
             if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
                 checkingLog(Log, "whether the name space can be loaded with stated dependencies")
-                resultLog(Log, "Not implemented")
+                Rcmd <- sprintf("loadNamespace(\"%s\")", pkgname)
+                out <- R_runR(Rcmd, c(R_opts, "--quiet"),
+                              "R_DEFAULT_PACKAGES=NULL")
+                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                if (any(grepl("^Error", out))) {
+                    warningLog(Log)
+                    printLog(Log, paste(c("", out, ""), collapse = "\n"))
+                    printLog(Log,
+                             strwrap(paste("\nA namespace must be able to be loaded",
+			      "with just the base namespace loaded:",
+			      "otherwise if the namespace gets loaded by a",
+			      "saved object, the session will be unable",
+			      "to start.\n\n",
+			      "Probably some imports need to be declared",
+			      "in the NAMESPACE file.\n")))
+                } else resultLog(Log, "OK")
 
-                checkingLog(Log, "whether the name space can be unloaded cleanly")
-                resultLog(Log, "Not implemented")
+                checkingLog(Log,
+                            "whether the name space can be unloaded cleanly")
+                Rcmd <- sprintf("invisible(suppressMessages(loadNamespace(\"%s\"))); cat('\n---- unloading\n'); unloadNamespace(\"%s\")",
+                                pkgname, pkgname)
+                out <- if (is_base_pkg && pkgname != "stats4")
+                    R_runR(Rcmd, c(R_opts, "--quiet"),
+                           "R_DEFAULT_PACKAGES=NULL")
+                else R_runR(Rcmd, c(R_opts, "--quiet"))
+                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                if (any(grepl("^(Error|\\.onUnload failed)", out))) {
+                    warningLog(Log)
+                    printLog(Log, paste(c("", out, ""), collapse = "\n"))
+                } else resultLog(Log, "OK")
             }
         }
 
         if (!is_base_pkg && haveR) {
             checkingLog(Log, "for unstated dependencies in R code")
             resultLog(Log, "Not implemented")
-
         }
 
         ## Check whether methods have all arguments of the corresponding
@@ -257,7 +469,7 @@ R_run_R <- function(cmd, Ropts, env)
 
         ## Run the examples.
         ## This setting applies to vignettes below too.
-        if (use_valgrind) R_opts <- paste(R_opts, "-d valgrind", sep = "")
+        if (use_valgrind) R_opts <- c(R_opts, "-d valgrind")
 
         ## this will be skipped if installation was
         if (dir.exists(file.path(libdir, pkgname, "help"))) {
@@ -426,7 +638,7 @@ R_run_R <- function(cmd, Ropts, env)
                               if (R_check_weave_vignettes) ", tangle = FALSE",
                               if (R_check_latex_vignettes) ", latex = TRUE",
                               ")\n", sep = "")
-                out <- R_runR(Rcmd, paste(R_opts, "--quiet"))
+                out <- R_runR(Rcmd, c(R_opts, "--quiet"))
                 ## Vignette could redefine the prompt, e.g. to 'R>' ...
                 out <- grep("^[[:alnum:]]*[>]", out,
                             invert = TRUE, value = TRUE)
