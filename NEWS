@@ -135,6 +135,9 @@ NEW FEATURES
 	MAKEINDEX and PDFLATEX will be used.  options("dvipscmd")
 	defaults to the value of DVIPS, then to "dvips".)
 
+    o	New function isatty() to see if terminal connections are
+	redirected.
+
 
 DEPRECATED & DEFUNCT
 
@@ -179,6 +182,9 @@ UTILITIES
 	R CMD build no longer creates an INDEX file (R CMD INSTALL
 	does so), and --force removes (rather than overwrites) an
 	existing INDEX file.
+
+    o	There is an R-based version of R CMD check, R CMD ncheck.
+	[In progess, currently Unix-only.]
 
 
 C-LEVEL FACILITIES

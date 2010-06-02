@@ -1574,22 +1574,22 @@ you need @env{R_LIBS} set (to find packages in a non-standard library)
 you will need to set it in the environment.
 @end quotation
 
-@quotation Note to Windows users
-@code{R CMD check} and @code{R CMD build} need you to have installed the
-files for building source packages (which is the default), as well as
-the Windows toolset and Perl (see the ``R Installation and
-Administration'' manual).  You may need to set @env{TMPDIR} to point to
-a suitable writable directory with a path not containing spaces -- use
-forward slashes for the separators.  Also, the directory needs to be on
-a case-honouring file system (some network-mounted file systems are
-not).
-@end quotation
+@c @quotation Note to Windows users
+@c @code{R CMD check} and @code{R CMD build} need you to have installed the
+@c files for building source packages (which is the default), as well as
+@c the Windows toolset and Perl (see the ``R Installation and
+@c Administration'' manual).  You may need to set @env{TMPDIR} to point to
+@c a suitable writable directory with a path not containing spaces -- use
+@c forward slashes for the separators.  Also, the directory needs to be on
+@c a case-honouring file system (some network-mounted file systems are
+@c not).
+@c @end quotation
 
 @node Customizing checking and building,  , Building packages, Checking and building packages
 @subsection Customizing checking and building
 
 In addition to the available command line options, @code{R CMD check}
-also allows customization by setting (Perl) configuration variables in a
+also allows customization by setting configuration variables in a
 configuration file, the location of which can be specified @emph{via} the
 @option{--rcfile} option and defaults to @file{$HOME/.R/check.conf}
 provided that the environment variable @env{HOME} is set.

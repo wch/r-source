@@ -2645,12 +2645,11 @@ Linux distributions, Solaris 9/10, AIX and Windows, usually as
 available (including on Mac OS X >= 10.4): should a broken version of
 ICU be found this can be suppressed by @option{--without-ICU}.
 
-Code developers will need Perl version 5.8.0 or later, available via
-@uref{http://www.perl.com/CPAN/}.  This is used to check packages, for
-@command{R CMD Rprof}@footnote{for which the @R{} function
-@code{summmaryProf} is an alternative.} and the rarely used @command{R
-CMD Sd2Rd}: it should be in your @env{PATH} when @command{configure} is
-run.
+Code developers may want Perl version 5.8.0 or later, available via
+@uref{http://www.perl.com/CPAN/}.  This is used for @command{R CMD
+Rprof}@footnote{for which the @R{} function @code{summmaryProf} is an
+alternative.} and the rarely used @command{R CMD Sd2Rd}: it should be in
+your @env{PATH} when @command{configure} is run.
 
 @c The Perl scripts left are
 @c src/scripts: Rprof Sd2Rd check
@@ -4458,8 +4457,8 @@ The MinGW toolchain to compile C, Fortran and C++.
 @end itemize
 For installing simple source packages containing data or @R{} source but
 no compiled code, none of these are needed.  Perl (in @file{Rtools.exe})
-is not needed to build @R{} nor to install source packages, but is
-needed to develop packages.
+is not needed to build @R{} nor to install source packages, but it may
+be useful to develop packages.
 
 A complete build of @R{} including PDF manuals, and producing the
 installer will also need the following:
@@ -4475,11 +4474,11 @@ It is important to set your @env{PATH} properly.  The @file{Rtools.exe}
 optionally sets the path to components that it installs.
 
 Your @env{PATH} may include @file{.} first, then the @file{bin}
-directories of the tools, Perl, the compiler toolchain and @LaTeX{}.  Do
-not use filepaths containing spaces: you can always use the short forms
-(found by @code{dir /x} at the Windows command line).  Network shares
-(with paths starting @code{\\}) are not supported.  For example, all on
-one line,
+directories of the tools, Perl (if available), the compiler toolchain
+and @LaTeX{}.  Do not use filepaths containing spaces: you can always
+use the short forms (found by @code{dir /x} at the Windows command
+line).  Network shares (with paths starting @code{\\}) are not
+supported.  For example, all on one line,
 
 @smallexample
 PATH=c:\Rtools\bin;c:\Rtools\perl\bin;c:\Rtools\MinGW\bin;c:\MiKTeX\miktex\bin;
@@ -4511,8 +4510,8 @@ path.
 @node Perl, LaTeX, The Windows toolset, The Windows toolset
 @section Perl
 
-Perl is needed to use @command{R CMD check} and @command{R CMD Rprof}:
-it is no longer needed to install packages nor to build @R{}.
+Perl is needed to use @command{R CMD Rprof}: it is no longer needed to
+install packages nor to build @R{}.
 
 You will need a Windows port of @code{perl5} (but only the basic
 functionality, not any of the third-party Win32 extensions).  The

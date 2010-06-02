@@ -1073,8 +1073,8 @@ several tools: you can download them via the portal at
 @uref{http://www.murdoch-sutherland.com/Rtools/}.  Once you have done
 so, just run @command{R CMD INSTALL pkgname}.  To check the package
 (including running all the examples on its help pages and in its test
-suite, if any) use @command{R CMD check pkgname} (which needs Perl
-installed): see the @emph{`Writing R Extensions'} manual.
+suite, if any) use @command{R CMD check pkgname}: see the @emph{`Writing
+R Extensions'} manual.
 
 Note that setting up Windows to install a source package that needs
 compilation is rather tricky; please do ensure that you have followed
