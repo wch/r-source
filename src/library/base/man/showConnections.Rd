@@ -1,6 +1,6 @@
 % File src/library/base/man/showConnections.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{showConnections}
@@ -11,6 +11,7 @@
 \alias{stdin}
 \alias{stdout}
 \alias{stderr}
+\alias{isatty}
 \title{Display Connections}
 \description{
   Display aspects of connections.
@@ -23,6 +24,8 @@ closeAllConnections()
 stdin()
 stdout()
 stderr()
+
+isatty(con)
 }
 \arguments{
   \item{all}{logical: if true all connections, including closed ones
@@ -31,6 +34,8 @@ stderr()
 
   \item{what}{integer: a row number of the table given by
     \code{showConnections}.}
+
+  \item{con}{a connection.}
 }
 \details{
   \code{stdin()}, \code{stdout()} and \code{stderr()} are standard
@@ -54,7 +59,13 @@ stderr()
   collection.
 
   \code{closeAllConnections} closes (and destroys) all user
-  connections, restoring all \code{\link{sink}} diversions as it does so.
+  connections, restoring all \code{\link{sink}} diversions as it does
+  so.
+
+  \code{isatty} returns true if the connection is one of the class
+  \code{"terminal"} connections and it is apparently connected to a
+  terminal, otherwise false.  This may not be reliable in embedded
+  applications, including GUI consoles.
 }
 \note{
   \code{stdin()} refers to the \sQuote{console} and not to the C-level

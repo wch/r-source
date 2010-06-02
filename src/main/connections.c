@@ -2156,6 +2156,17 @@ SEXP attribute_hidden do_stderr(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* isatty is in unistd.h, or io.h on Windows */
+#ifdef Win32
+# include <io.h>
+#endif
+SEXP attribute_hidden do_isatty(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    /* FIXME: is this correct for consoles? */
+    checkArity(op, args);
+    return ScalarLogical(isatty(asInteger(CAR(args))));
+}
+
 /* ------------------- raw connections --------------------- */
 
 /* Possible future redesign: store nbytes as TRUELENGTH */

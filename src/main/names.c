@@ -931,6 +931,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"stdin",	do_stdin,	0,      11,     0,      {PP_FUNCALL, PREC_FN,	0}},
 {"stdout",	do_stdout,	0,      11,     0,      {PP_FUNCALL, PREC_FN,	0}},
 {"stderr",	do_stderr,	0,      11,     0,      {PP_FUNCALL, PREC_FN,	0}},
+{"isatty",	do_isatty,	0,      11,     1,      {PP_FUNCALL, PREC_FN,	0}},
 {"readLines",	do_readLines,	0,      11,     5,      {PP_FUNCALL, PREC_FN,	0}},
 {"writeLines",	do_writelines,	0,      11,     4,      {PP_FUNCALL, PREC_FN,	0}},
 {"readBin",	do_readbin,	0,      11,     6,      {PP_FUNCALL, PREC_FN,	0}},

@@ -18,6 +18,11 @@ stdin <- function() .Internal(stdin())
 stdout <- function() .Internal(stdout())
 stderr <- function() .Internal(stderr())
 
+isatty <- function(con) {
+    if (!inherits(con, "terminal")) FALSE
+    else .Internal(isatty(con))
+}
+
 readLines <- function(con = stdin(), n = -1L, ok = TRUE, warn = TRUE,
                       encoding = "unknown")
 {
