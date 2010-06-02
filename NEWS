@@ -184,7 +184,7 @@ UTILITIES
 	existing INDEX file.
 
     o	There is an R-based version of R CMD check, R CMD ncheck.
-	[In progess, currently Unix-only.]
+	[In progress.]
 
 
 C-LEVEL FACILITIES

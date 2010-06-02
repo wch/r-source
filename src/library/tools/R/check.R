@@ -16,38 +16,39 @@
 
 #### R based engine for R CMD check
 
-## Perl version uses R_system and R_runR extensively.
-
 R_system <- function(cmd, env = "")
 {
     WINDOWS <- .Platform$OS.type == "windows"
-    if (WINDOWS) shell(paste(env, cmd), shell = "sh.exe")
-    else system(paste(env, cmd))
+    if (WINDOWS) {
+        Tfile <- tempfile()
+        cat(env, " ", cmd, "\n", file = Tfile)
+        on.exit(unlink(Tfile))
+        system(paste("sh", shQuote(Tfile)))
+    } else system(paste(env, cmd))
 }
 
 R_runR <- function(cmd, Ropts="", env = "")
 {
     WINDOWS <- .Platform$OS.type == "windows"
+    R_EXE <- file.path(R.home("bin"), if (WINDOWS) "Rterm.exe" else "R")
     Rin <- tempfile("Rin")
     Rout <- tempfile("Rout")
     writeLines(cmd, Rin)
-    R_system(paste(shQuote(file.path(R.home("bin"),
-                                     ifelse(WINDOWS, "Rterm.exe", "R"))),
-                   paste(Ropts, collapse = " "),
-                   "<", Rin, ">", Rout, "2>&1"), env)
+    R_system(paste(shQuote(R_EXE), paste(Ropts, collapse = " "),
+                   "<", shQuote(Rin), ">", shQuote(Rout), "2>&1"), env)
     readLines(Rout, warn = FALSE)
 }
 
 R_run_R <- function(cmd, Ropts, env)
 {
     WINDOWS <- .Platform$OS.type == "windows"
+    R_EXE <- file.path(R.home("bin"), if (WINDOWS) "Rterm.exe" else "R")
     Rin <- tempfile("Rin")
     Rout <- tempfile("Rout")
     writeLines(cmd, Rin)
-    status <- R_system(paste(shQuote(file.path(R.home("bin"),
-                                               ifelse(WINDOWS, "Rterm.exe", "R"))),
-                             paste(Ropts, collapse = " "),
-                             "<", Rin, ">", Rout, "2>&1"), env)
+    status <-
+        R_system(paste(shQuote(R_EXE), paste(Ropts, collapse = " "),
+                       "<", shQuote(Rin), ">", shQuote(Rout), "2>&1"), env)
     list(status = status, out = readLines(Rout, warn = FALSE))
 }
 
@@ -1385,11 +1386,7 @@ R_run_R <- function(cmd, Ropts, env)
             Rd2pdf_opts <- "--batch --no-preview"
             checkingLog(Log, "PDF version of manual")
             build_dir <- tempfile("Rd2pdf")
-            ## TODO: this is what the Perl version had, but it should
-            ## probably be shQuote(file.path((R.home("bin"), "Rcmd.exe")))
-            cmd0 <- if (.Platform$OS.type == "windows") "Rcmd.exe"
-            else paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
-            cmd <- paste(cmd0, " Rd2pdf ", Rd2pdf_opts,
+           cmd <- paste(R_CMD, " Rd2pdf ", Rd2pdf_opts,
                          " --build-dir=", build_dir,
                          " --no-clean",
                          " -o ", pkgname, "-manual.pdf ",
@@ -1464,7 +1461,10 @@ R_run_R <- function(cmd, Ropts, env)
 
     WINDOWS <- .Platform$OS.type == "windows"
 
-    if (!WINDOWS) R_EXE <- file.path(R.home("bin"), "R")
+    R_EXE <- file.path(R.home("bin"), if (WINDOWS) "Rterm.exe" else "R")
+    R_CMD <- if (WINDOWS)
+        shQuote(file.path(R.home("bin"), "Rcmd.exe"))
+    else paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
 
     ## This version merges stdout and stderr
     shell_with_capture <- function (command) {
@@ -2099,7 +2099,7 @@ R_run_R <- function(cmd, Ropts, env)
                     Tfile <- tempfile("file")
                     ## version 4.21 writes to stdout, 4.23 to stderr
                     ## and sets an error status code
-                    R_system(paste("file --version > ", Tfile, " 2>&1"))
+                    R_system(paste("file --version > ", shQuote(Tfile), " 2>&1"))
                     lines <- readLines(Tfile)
                     ## a reasonable check -- it does not identify itself well
                     have_free_file <-
@@ -2176,18 +2176,10 @@ R_run_R <- function(cmd, Ropts, env)
                     if (install == "fake")
                         INSTALL_opts <- c(INSTALL_opts,  "--fake")
                     INSTALL_opts <- paste(INSTALL_opts, collapse = " ")
-                    cmd <- if (WINDOWS) {
-                        paste("Rcmd.exe INSTALL -l",
-                              shQuote(libdir),
-                              INSTALL_opts,
-                              shQuote(shortPathName(pkgdir)))
-                    } else {
-                        paste(shQuote(R_EXE),
-                              "CMD INSTALL -l",
-                              shQuote(libdir),
-                              INSTALL_opts,
-                              shQuote(pkgdir))
-                    }
+                    cmd <-
+                        paste(R_CMD,
+                              "INSTALL -l", shQuote(libdir), INSTALL_opts,
+                              shQuote(if (WINDOWS) shortPathName(pkgdir) else pkgdir))
                     if (!use_install_log) {
                         ## Case A: No redirection of stdout/stderr from
                         ## installation.
