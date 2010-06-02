@@ -2305,18 +2305,18 @@ R_run_R <- function(cmd, Ropts, env)
                         ## Warnings spotted by gfortran >= 4.0 with
                         ## -Wall.  Justified in principle, it seems.  Let's
                         ## filter them for the time being, and maybe revert
-                        ## this lateron ... but make it possible to suppress
+                        ## this later on ... but make it possible to suppress
                         ## filtering out by setting the internal environment
                         ## variable _R_CHECK_WALL_FORTRAN_ to something
                         ## "true".
                         check_src_flag <- Sys.getenv("_R_CHECK_WALL_FORTRAN_", "FALSE")
                         if (config_val_to_logical(check_src_flag)) {
                             warn_re <-
-                                c("Label .* at \\(1\\) defined but not used",
-				  "Line truncated at \\(1\\)",
-				  "ASSIGN statement at \\(1\\)",
-				  "Assigned GOTO statement at \\(1\\)",
-				  "arithmetic IF statement at \\(1\\)",
+                                c("Label .* at \\\\(1\\\\) defined but not used",
+				  "Line truncated at \\\\(1\\\\)",
+				  "ASSIGN statement at \\\\(1\\\\)",
+				  "Assigned GOTO statement at \\\\(1\\\\)",
+				  "arithmetic IF statement at \\\\(1\\\\)",
 				  "Nonconforming tab character (in|at)")
                             warn_re <- paste("(",
                                              paste(warn_re, collapse = "|"),
