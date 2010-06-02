@@ -102,5 +102,7 @@ showConnections()
 \dontshow{r <- as.numeric(row.names(showConnections()))
 close(getConnection(r))}
 showConnections()
+
+c(isatty(stdin()), isatty(stdout()), isatty(stderr()))
 }
 \keyword{connection}
