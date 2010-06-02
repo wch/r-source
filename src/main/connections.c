@@ -2162,9 +2162,11 @@ SEXP attribute_hidden do_stderr(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 SEXP attribute_hidden do_isatty(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    int con;
     /* FIXME: is this correct for consoles? */
     checkArity(op, args);
-    return ScalarLogical(isatty(asInteger(CAR(args))));
+    con = asInteger(CAR(args));
+    return ScalarLogical(con == NA_LOGICAL ? FALSE : isatty(con) );
 }
 
 /* ------------------- raw connections --------------------- */
