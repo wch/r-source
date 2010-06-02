@@ -53,7 +53,8 @@ resultLog <- function(Log, text) printLog(Log, " ", text, "\n")
 errorLog <- function(Log, ...)
 {
     resultLog(Log, "ERROR")
-    if (nzchar(paste(..., sep=""))) printLog(Log, ..., "\n")
+    text <- paste(..., sep="")
+    if (length(text) && nzchar(text)) printLog(Log, ..., "\n")
 }
 
 warningLog <- function(Log, text="")
@@ -74,7 +75,7 @@ summaryLog <- function(Log)
 {
     if (Log$warnings > 1)
         printLog(Log,
-                 sprintf("WARNING: There were %d warnings, see\n%%s\nfor details\n",
+                 sprintf("WARNING: There were %d warnings, see\n%s\nfor details\n",
                          Log$warnings, sQuote(Log$filename)))
     else if (Log$warnings == 1)
         printLog(Log,
