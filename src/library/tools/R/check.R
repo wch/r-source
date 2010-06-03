@@ -2329,7 +2329,7 @@ R_run_R <- function(cmd, Ropts, env)
                             warn_re <- paste("(",
                                              paste(warn_re, collapse = "|"),
                                              ")", sep = "")
-                            lines <- grep(warn_re, lines, value = TRUE)
+                            lines <- grep(warn_re, lines, invert = TRUE, value = TRUE)
                         }
 
                         ## 'Warning' from deldir 0.0-10
