@@ -1,6 +1,6 @@
 % File src/library/utils/man/summaryRprof.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{summaryRprof}
@@ -63,18 +63,20 @@ the end of the interval.
 
 }
 \value{
-If \code{memory="none"}, a list with components
+  If \code{memory = "none"}, a list with components
   \item{by.self}{Timings sorted by \sQuote{self} time}
   \item{by.total}{Timings sorted by \sQuote{total} time}
+  \item{sample.interval}{The sampling interval}
   \item{sampling.time}{Total length of profiling run}
 
-If \code{memory="both"} the same list but with memory consumption in Mb
-in addition to the timings.  
+  If \code{memory = "both"} the same list but with memory consumption in Mb
+  in addition to the timings.  
 
-If \code{memory="tseries"} a data frame giving memory statistics over
-time
+  If \code{memory = "tseries"} a data frame giving memory statistics over
+  time
 
-If \code{memory="stats"} a \code{by} object giving memory statistics by function.
+  If \code{memory = "stats"} a \code{\link{by}} object giving memory statistics
+  by function.
 }
 
 

@@ -111,14 +111,18 @@ summaryRprof <-
     rownames(rval) <- fnames
     if (memory == "both") rval$mem.total <- memtotal
 
-    list(by.self = rval[index1, ],
-         by.total = rval[index2, c(3L, 4L,  if(memory == "both") 5L, 1L, 2L)],
+    by.self <- rval[index1, ]
+    by.self <- by.self[by.self[,1L] > 0, ]
+    by.total <- rval[index2, c(3L, 4L,  if(memory == "both") 5L, 1L, 2L)]
+    list(by.self = by.self, by.total = by.total,
+         sample.interval = sample.interval,
          sampling.time = sum(fcounts)*sample.interval)
 }
 
 Rprof_memory_summary <- function(filename, chunksize = 5000,
                                  label = c(1, -1), aggregate = 0, diff = FALSE,
-                                 exclude = NULL, sample.interval){
+                                 exclude = NULL, sample.interval)
+{
 
     fnames <- NULL
     memcounts <- NULL

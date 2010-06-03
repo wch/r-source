@@ -4464,11 +4464,12 @@ has to be built to enable this, but the option
 The command @command{Rprof} is used to control profiling, and its help
 page can be consulted for full details.  Profiling works by recording at
 fixed intervals@footnote{For Unix-alikes these are intervals of CPU
-time, and for Windows of elapsed time.} (by default every 20 msecs) which
-@R{} function is being used, and recording the results in a file
+time, and for Windows of elapsed time.} (by default every 20 msecs)
+which @R{} function is being used, and recording the results in a file
 (default @file{Rprof.out} in the working directory).  Then the function
-@code{summaryRprof} or the command-line utility @code{R CMD Rprof
-@var{Rprof.out}} can be used to summarize the activity.
+@code{summaryRprof} or the command-line utilities @code{R CMD Rprof
+@var{Rprof.out}} and @code{R CMD Rprof2 @var{Rprof.out}} can be used to
+summarize the activity.
 
 As an example, consider the following code (from Venables & Ripley,
 2002).
@@ -4554,10 +4555,12 @@ replaced by compiled code.
 @code{R CMD Rprof} uses a Perl script that may be a little faster than
 @code{summaryRprof} for large files.  On the other hand
 @code{summaryRprof} does not require Perl and provides the results as an
-@R{} object.
+@R{} object.  @code{R CMD Rprof2} emulates @code{R CMD Rprof} using
+@code{summaryRprof} and so does not require Perl.
 
 Two warnings: profiling does impose a small performance penalty, and the
-output files can be very large if long runs are profiled.
+output files can be very large if long runs are profiled at the default
+sampling interval.
 
 Profiling short runs can sometimes give misleading results.  @R{} from
 time to time performs @emph{garbage collection} to reclaim unused

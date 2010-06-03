@@ -138,6 +138,10 @@ NEW FEATURES
     o	New function isatty() to see if terminal connections are
 	redirected.
 
+    o	summaryRprof() returns the sampling interval in component
+	'sample.interval' and only returns in 'by.self' data for
+	functions with non-zero self times.
+
 
 DEPRECATED & DEFUNCT
 
@@ -192,6 +196,10 @@ UTILITIES
 	R source files, and the default file is ~/.R/check.Rconf
 
 	[Work in progress.]
+
+    o	There is a new utility R CMD Rprof2 which emulates R CMD Rprof
+	but calls utils::summaryRprof() and does not use Perl.  It is
+	intended to be a replacement in due course.
 
 
 C-LEVEL FACILITIES
