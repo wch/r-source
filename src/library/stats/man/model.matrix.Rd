@@ -63,7 +63,7 @@ model.matrix(object, \dots)
   for each column in the matrix giving the term in the formula which
   gave rise to the column.  Value \code{0} corresponds to the intercept
   (if any), and positive values to terms in the order given by the
-  \code{terms.labels} attribute of the \code{terms} structure
+  \code{term.labels} attribute of the \code{terms} structure
   corresponding to \code{object}.
   
   If there are any factors in terms in the model, there is an attribute

@@ -4288,12 +4288,8 @@ Either the fractional or the decimal part can be empty, but not both at
 once.
 
 @example
-@r{Valid numeric constants:} 1 10 0.1 .2 1e-7 1.2e+7 2e 3e+
+@r{Valid numeric constants:} 1 10 0.1 .2 1e-7 1.2e+7
 @end example
-
-@noindent
-The two latter examples are hardly useful in practice, but they are
-accepted and treated as @samp{2} and @samp{3}, respectively.
 
 Numeric constants can also be hexadecimal, starting with @samp{0x} or
 @samp{0x} followed by zero or more digits, @samp{a-f} or @samp{A-F}.
@@ -4320,6 +4316,9 @@ decimal point, e.g. @code{1.L}.
 
 Note also that a preceding sign (@code{+} or @code{-}) is treated as a
 unary operator, not as part of the constant.
+
+Up-to-date information on the currently accepted formats can be found by
+@code{?NumericConstants}.
 
 Complex constants have the form of a decimal numeric constant followed
 by @samp{i}.  Notice that only purely imaginary numbers are actual
