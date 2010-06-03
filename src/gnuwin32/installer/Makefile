@@ -137,11 +137,6 @@ endif
 
 ## for Inno Setup installer
 
-R0.iss: JRins.pl header1.iss types3264.iss types32.iss types64.iss code.iss \
-   CustomMsg.txt imagedir fixups 32bit md5sums \
-  ../../../VERSION ../../../SVN-REVISION
-	$(PERL) JRins.pl $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
-
 R.iss: JRins.R header1.iss types3264.iss types32.iss code.iss \
    CustomMsg.txt imagedir fixups 32bit md5sums \
   ../../../VERSION ../../../SVN-REVISION
@@ -192,10 +187,11 @@ distclean: clean
 	rm -f $(RPREFIX)-win32.* $(RPREFIX)-win64.* $(RPREFIX)-win.*
 
 myR:
-	echo "make.packages.html(.Library)" | $(IMAGEDIR)/$(BINDIR)/Rterm.exe --vanilla --slave LC_COLLATE=C
+	echo "make.packages.html(.Library, verbose=FALSE)" | $(IMAGEDIR)/$(BINDIR)/Rterm.exe --vanilla --slave LC_COLLATE=C
 	@echo "adding MD5 checksums"
 	@(cd $(IMAGEDIR); echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
-	  $(BINDIR)/Rterm.exe --vanilla --slave)
-	$(PERL) JRins.pl $(RPREFIX) $(IMAGEDIR) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
+	  ../../../../$(BINDIR)/Rterm.exe --vanilla --slave)
+	../../../bin$(R_ARCH)/Rscript JRins.R \
+	  $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
 	"$(ISDIR)/iscc" R.iss > myR.log
