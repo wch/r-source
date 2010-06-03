@@ -4472,7 +4472,7 @@ which @R{} function is being used, and recording the results in a file
 summarize the activity.
 
 As an example, consider the following code (from Venables & Ripley,
-2002).
+2002, pp. 225--6).
 
 @smallexample
 @group
@@ -4488,7 +4488,7 @@ storm.bf <- function(rs, i) @{
 @}
 rs <- scale(resid(storm.fm), scale = FALSE) # remove the mean
 Rprof("boot.out")
-storm.boot <- boot(rs, storm.bf, R = 4999) # pretty slow
+storm.boot <- boot(rs, storm.bf, R = 4999) # slow enough to profile
 Rprof(NULL)
 @end group
 @end smallexample
@@ -4501,7 +4501,7 @@ Having run this we can summarize the results by
 R CMD Rprof boot.out
 
 Each sample represents 0.02 seconds.
-Total run time: 80.74 seconds.
+Total run time: 22.48 seconds.
 
 Total seconds: time spent in function and callees.
 Self seconds: time spent in function alone.
@@ -4510,47 +4510,49 @@ Self seconds: time spent in function alone.
 @group
    %       total       %       self
  total    seconds     self    seconds    name
-100.00     80.74      0.22      0.18     "boot"
- 99.65     80.46      1.19      0.96     "statistic"
- 96.33     77.78      2.68      2.16     "nls"
- 50.21     40.54      1.54      1.24     "<Anonymous>"
- 47.11     38.04      1.83      1.48     ".Call"
- 23.06     18.62      2.43      1.96     "eval"
- 19.87     16.04      0.67      0.54     "as.list"
- 18.97     15.32      0.64      0.52     "switch"
- 17.88     14.44      0.47      0.38     "model.frame"
- 17.41     14.06      1.73      1.40     "model.frame.default"
- 17.41     14.06      2.80      2.26     "nlsModel"
- 15.43     12.46      1.88      1.52     "qr.qty"
- 13.40     10.82      3.07      2.48     "assign"
- 12.73     10.28      2.33      1.88     "storage.mode<-"
- 12.34      9.96      1.81      1.46     "qr.coef"
- 10.13      8.18      5.42      4.38     "paste"
+100.00     22.48      0.00      0.00     "boot"
+100.00     22.48      0.50      0.12     "statistic"
+ 96.20     21.62      3.70      0.84     "nls"
+ 35.30      7.94      1.20      0.26     "eval"
+ 32.20      7.24      2.20      0.50     "<Anonymous>"
+ 31.70      7.12      0.20      0.04     "eval.parent"
+ 31.40      7.06      0.70      0.16     "model.frame"
+ 30.70      6.90      3.60      0.80     "model.frame.default"
+ 30.70      6.90      2.20      0.50     ".Call"
+ 19.40      4.36      1.00      0.22     "sapply"
+ 14.60      3.28      2.70      0.60     "lapply"
+ 13.10      2.94      2.60      0.58     "nlsModel"
+ 12.00      2.70      2.50      0.56     "assign"
+ 10.90      2.46      0.30      0.06     "na.omit"
+ 10.70      2.40      0.40      0.10     "na.omit.data.frame"
   ...
 @end group
 
 @group
    %       self        %       total
  self     seconds    total    seconds    name
-  5.42      4.38     10.13      8.18     "paste"
-  3.37      2.72      6.71      5.42     "as.integer"
-  3.29      2.66      5.00      4.04     "as.double"
-  3.20      2.58      4.29      3.46     "seq.default"
-  3.07      2.48     13.40     10.82     "assign"
-  2.92      2.36      5.95      4.80     "names"
-  2.80      2.26     17.41     14.06     "nlsModel"
-  2.68      2.16     96.33     77.78     "nls"
-  2.53      2.04      2.53      2.04     ".Fortran"
-  2.43      1.96     23.06     18.62     "eval"
-  2.33      1.88     12.73     10.28     "storage.mode<-"
+  6.60      1.48      8.10      1.82     "inherits"
+  3.70      0.84     96.20     21.62     "nls"
+  3.60      0.82      3.60      0.82     "$"
+  3.60      0.80     30.70      6.90     "model.frame.default"
+  2.70      0.60     14.60      3.28     "lapply"
+  2.60      0.58     13.10      2.94     "nlsModel"
+  2.50      0.56     12.00      2.70     "assign"
+  2.20      0.50     32.20      7.24     "<Anonymous>"
+  2.20      0.50     30.70      6.90     ".Call"
+  2.10      0.48      8.70      1.96     "qr.coef"
+  2.10      0.48      7.20      1.62     "[.data.frame"
+  2.00      0.46      5.60      1.26     "qr.default"
+  2.00      0.44      6.90      1.54     "match"
+  2.00      0.44      5.20      1.18     "qr.qty"
   ...
 @end group
 @end smallexample
 
 @noindent
-This often produces surprising results and can be used to identify
-bottlenecks or pieces of @R{} code that could benefit from being
-replaced by compiled code.
+(Function names are not quoted on Windows.)  This often produces
+surprising results and can be used to identify bottlenecks or pieces of
+@R{} code that could benefit from being replaced by compiled code.
 
 @code{R CMD Rprof} uses a Perl script that may be a little faster than
 @code{summaryRprof} for large files.  On the other hand
