@@ -2,7 +2,8 @@
 include ../gnuwin32/MkRules
 R_HOME = ../..
 
-## BATCH, INSTALL and REMOVE are handled internally in Rcmd.exe
+## BATCH, INSTALL, REMOVE, Rprof, build, [n]check 
+## are handled internally in Rcmd.exe
 
 SCRIPTDIR = bin
 
@@ -10,7 +11,7 @@ all: \
   $(R_HOME)/$(SCRIPTDIR)/obuild.pl $(R_HOME)/$(SCRIPTDIR)/check.pl \
   $(R_HOME)/$(SCRIPTDIR)/config.sh $(R_HOME)/$(SCRIPTDIR)/Rdconv.sh \
   $(R_HOME)/$(SCRIPTDIR)/Rd2dvi.sh $(R_HOME)/$(SCRIPTDIR)/Sd2Rd.pl \
-  $(R_HOME)/$(SCRIPTDIR)/Rprof.pl $(R_HOME)/$(SCRIPTDIR)/SHLIB.sh \
+  $(R_HOME)/$(SCRIPTDIR)/SHLIB.sh \
   $(R_HOME)/$(SCRIPTDIR)/Stangle.sh $(R_HOME)/$(SCRIPTDIR)/Sweave.sh
 
 $(R_HOME)/$(SCRIPTDIR)/check.pl: check.in
@@ -20,9 +21,6 @@ $(R_HOME)/$(SCRIPTDIR)/obuild.pl: obuild.in
 	@$(SED) -e 1d $< > $@
 
 $(R_HOME)/$(SCRIPTDIR)/Sd2Rd.pl: Sd2Rd.in
-	@$(SED) -e 1d $< > $@
-
-$(R_HOME)/$(SCRIPTDIR)/Rprof.pl: Rprof.in
 	@$(SED) -e 1d $< > $@
 
 $(R_HOME)/$(SCRIPTDIR)/Rdconv.sh: Rdconv

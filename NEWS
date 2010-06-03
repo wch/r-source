@@ -193,13 +193,14 @@ UTILITIES
 	empty directories.
 
 	'check' configuration files have changed format: they are now
-	R source files, and the default file is ~/.R/check.Rconf
+	R source files, and the default file is ~/.R/check.Rconf.
 
 	[Work in progress.]
 
     o	There is a new utility R CMD Rprof2 which emulates R CMD Rprof
-	but calls utils::summaryRprof() and does not use Perl.  It is
-	intended to be a replacement in due course.
+	via utils::summaryRprof() and does not use Perl.  It is
+	intended to be a replacement in due course (it already is on
+	Windows).
 
 
 C-LEVEL FACILITIES

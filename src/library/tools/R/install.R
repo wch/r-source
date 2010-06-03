@@ -2469,14 +2469,19 @@ function(pkgdir, outfile, title, batch = FALSE,
     cat("\nTotal seconds: time spent in function and callees.\n")
     cat("Self seconds: time spent in function alone.\n\n\n")
 
-    m <- data.frame(res$by.self[c(2,1,4,3)], row.names(res$by.self))
-    names(m) <- c("self %", "self s", "total %", "total s", "name")
-    print(m, row.names = FALSE, right = FALSE)
+    m <- data.frame(res$by.total[c(2,1,4,3)], row.names(res$by.total))
+    writeLines(c("   %       total       %       self",
+                 " total    seconds     self    seconds    name",
+                 sprintf("%6.2f%10.2f%10.2f%10.2f     %s",
+                       m[,1], m[,2], m[,3], m[,4], m[,5])))
 
     cat("\n\n")
-    m <- data.frame(res$by.total[c(2,1,4,3)], row.names(res$by.total))
-    names(m) <- c("self %", "self s", "total %", "total s", "name")
-    print(m, row.names = FALSE, right = FALSE)
+    m <- data.frame(res$by.self[c(2,1,4,3)], row.names(res$by.self))
+    writeLines(c("   %       self        %       total",
+                 " self     seconds    total    seconds    name",
+                 sprintf("%6.2f%10.2f%10.2f%10.2f     %s",
+                       m[,1], m[,2], m[,3], m[,4], m[,5])))
+    do_exit(0L)
 }
 
 
