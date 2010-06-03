@@ -1572,8 +1572,9 @@ R_run_R <- function(cmd, Ropts, env)
     do_timings <- FALSE
     install_args <- NULL
     check_subdirs <- ""           # defaults to R_check_subdirs_strict
+    ## FIXME: we could assume HOME except on Windows, and use R_USER there.
     home <- Sys.getenv("HOME", NA)
-    rcfile <- if (!is.na(home)) file.path(home, ".R", "check.conf") else character()
+    rcfile <- if (!is.na(home)) file.path(home, ".R", "check.Rconf") else character()
     extra_arch <- FALSE
     spec_install <- FALSE
     do_ff_calls <- TRUE
@@ -1706,9 +1707,7 @@ R_run_R <- function(cmd, Ropts, env)
 
     for(f in rcfile) {
         if (!file.exists(rcfile)) next
-        lines <- readLines(rcfile, warn = FALSE)
-        warning("rcfiles are not yet implemented")
-        ## TODO do something here: source it?
+        source(rcfile, local = TRUE, echo = FALSE)
     }
 
     R_check_use_install_log <-
@@ -1847,11 +1846,10 @@ R_run_R <- function(cmd, Ropts, env)
         Log <- newLog(file.path(pkgoutdir, "00check.log"))
         messageLog(Log, "using log directory ", sQuote(pkgoutdir))
         messageLog(Log, "using ", R.version.string)
-        .find_charset <- function () {
-            l10n <- l10n_info()
-            if (l10n[["UTF-8"]]) "UTF-8" else utils::localeToCharset()
-        }
-        charset <- .find_charset()
+        messageLog(Log, "using platform: ", R.version$platform,
+                   " (", 8*.Machine$sizeof.pointer, "-bit)")
+        charset <-
+            if (l10n_info()[["UTF-8"]]) "UTF-8" else utils::localeToCharset()
         messageLog(Log, "using session charset: ", charset)
         is_ascii <- charset == "ASCII"
 
@@ -1961,7 +1959,7 @@ R_run_R <- function(cmd, Ropts, env)
             ## Check CRAN incoming feasibility.
             if (config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_", "FALSE"))) {
                 checkingLog(Log, "CRAN incoming feasibility")
-                out <- .check_package_CRAN_incoming(pkgdir )
+                out <- .check_package_CRAN_incoming(pkgdir)
                 ## TODO: work with object directly
                 res <- utils::capture.output(print(out))
                 if(length(res)) {

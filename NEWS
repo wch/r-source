@@ -188,9 +188,8 @@ UTILITIES
 	thorough: it looks for files, and warns if there are only
 	empty directories.
 
-	The format of 'check' configuration files (default
-	~/.R/check.conf) will need to change, and they are currently
-	disabled in 'ncheck'.
+	'check' configuration files have changed format: they are now
+	R source files, and the default file is ~/.R/check.Rconf
 
 	[Work in progress.]
 
