@@ -1302,6 +1302,21 @@ R_run_R <- function(cmd, Ropts, env)
                     errorLog(Log)
                     ## Don't just fail: try to log where the problem occurred.
                     ## First, find the test which failed.
+                    ## (Maybe there was an error without a failing test.)
+                    bad_files <- dir(".", pattern="\\.Rout\\.fail")
+                    if (length(bad_files)) {
+                        ## Read in output from the (first) failed test
+                        ## and retain at most the last 13 lines
+                        ## (13? why not?).
+                        file <- bad_files[1L]
+                        lines <- readLines(file, warn = FALSE)
+                        file <- file.path("tests", sub("out\\.fail", "", file))
+                        ll <- length(lines)
+                        lines <- lines[max(1, ll-12):ll]
+                        printLog(Log, sprintf("Running the tests in %s failed.\n", sQuote(file)))
+                        printLog(Log, "Last 13 lines of output:\n")
+                        printLog(Log, paste("  ", lines, sep="", collapse="\n"), "\n")
+                    }
                     do_exit(1L)
                 }
                 setwd(pkgoutdir)
@@ -1772,6 +1787,8 @@ R_run_R <- function(cmd, Ropts, env)
     }
 
     TAR <- Sys.getenv("TAR", "tar")
+    ## all the analysis code is run with --quiet or --slave
+    ## examples and tests are not.
     R_opts <- "--vanilla"
 
     msg_DESCRIPTION <- c("See the information on DESCRIPTION files",
