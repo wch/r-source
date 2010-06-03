@@ -2682,7 +2682,7 @@ PostScriptSetLineTexture(FILE *fp, const char *dashlist, int nlty,
     int i;							\
     fprintf(fp,"[");						\
     for (i = 0; i < nlty; i++) {				\
-	dash = (lwd >= 1 ? lwd: 1) *				\
+	dash = lwd *				\
 	    ((i % 2) ? (dashlist[i] + a)			\
 	     : ((nlty == 1 && dashlist[i] == 1.) ? 1. : dashlist[i] - a) ); \
 	if (dash < 0) dash = 0;					\

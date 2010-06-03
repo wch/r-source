@@ -250,6 +250,8 @@ BUG FIXES
 	setGeneric() when that does not use a definition nor
 	explicitly set a signature.
 
+    o   The pdf() device will now allow lwd values less than 1
+        (it used to brute force such values to be 1)
 
 
 
