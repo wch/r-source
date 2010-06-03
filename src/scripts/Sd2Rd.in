@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/Sd2Rd for converting S documentation to Rd format
 
-# Copyright (C) 1997-2001 The R Core Development Team
+# Copyright (C) 1997-2007 The R Core Development Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,20 @@
 # http://www.r-project.org/Licenses/
 
 use Getopt::Long;
-use R::Utils;
+
+sub R_version {
+    my ($name, $version) = @_;
+    my $RV = $ENV{"R_VERSION"};
+
+    print <<END;
+$name: $RV (r$version)
+
+Copyright (C) 1997-2007 R Core Development Team.
+This is free software; see the GNU General Public Licence version 2
+or later for copying conditions.  There is NO warranty.
+END
+    exit 0;
+}
 
 my $revision = ' $Rev$ ';
 my $version;
