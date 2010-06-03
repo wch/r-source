@@ -7158,9 +7158,8 @@ In Windows with @code{R CMD} you may also specify your own @file{.bat},
 @file{.exe}, @file{.sh} or @file{.pl} file.  It will be run under the
 appropriate interpreter (Perl for @file{.pl}) with several environment
 variables set appropriately, including @env{R_HOME}, @env{R_VERSION},
-@env{R_CMD}, @env{R_OSTYPE}, @env{PATH}, @env{PERL5LIB}, and
-@env{TEXINPUTS}.  For example, if you already have @file{latex.exe} on
-your path, then
+@env{R_CMD}, @env{R_OSTYPE}, @env{PATH} and @env{TEXINPUTS}.  For
+example, if you already have @file{latex.exe} on your path, then
 
 @example
 R CMD latex.exe mydoc
