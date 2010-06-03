@@ -17,7 +17,7 @@
 \usage{
 \method{plot}{table}(x, type = "h", ylim = c(0, max(x)), lwd = 2,
      xlab = NULL, ylab = NULL, frame.plot = is.num, \dots)
-\method{plot}{table}(x, type = "h", lwd = 2, \dots)
+\method{points}{table}(x, type = "h", lwd = 2, \dots)
 \method{lines}{table}(x, type = "h", lwd = 2, \dots)
 }
 \arguments{
