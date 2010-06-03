@@ -1217,7 +1217,8 @@ R_run_R <- function(cmd, Ropts, env)
                         errorLog(Log, "Running examples in ", sQuote(exfile),
                                  " failed")
                         ## Try to spot the offending example right away.
-                        txt <- paste(readLines(exout), collapse = "\n")
+                        txt <- paste(readLines(exout, warn = FALSE),
+                                     collapse = "\n")
                         ## Look for the header section anchored by a
                         ## subsequent call to flush(): needs to be
                         ## kept in sync with the code in
@@ -1239,7 +1240,7 @@ R_run_R <- function(cmd, Ropts, env)
                     ## will make them defunct and hence using them an
                     ## error.
                     any <- FALSE
-                    lines <- readLines(exout)
+                    lines <- readLines(exout, warn = FALSE)
                     bad_lines <- grep("^Warning: .*is deprecated.$", lines,
                                       useBytes = TRUE)
                     if(length(bad_lines)) {
@@ -2145,7 +2146,9 @@ R_run_R <- function(cmd, Ropts, env)
                     }
                     if (length(execs)) {
                         warnLog("Found the following executable file(s):")
-                        printLog(Log, paste(c(execs, ""), collapse = "\n"))
+                        printLog(Log,
+                                 paste("  ", execs, sep="", collapse = "\n"),
+                                 "\n")
                         wrapLog("Source packages should not contain undeclared executable files.\n",
                                 "See section 'Package structure'",
                                 "in manual 'Writing R Extensions'.\n")
@@ -2225,7 +2228,7 @@ R_run_R <- function(cmd, Ropts, env)
 
                                 ## Still needed?
                             }
-                            lines <- readLines(outfile)
+                            lines <- readLines(outfile, warn = FALSE)
                         }
                         if (install_error) {
                             errorLog(Log, "Installation failed.")
@@ -2242,7 +2245,8 @@ R_run_R <- function(cmd, Ropts, env)
                         ## change in R 2.6.0.  (In theory, we should only do
                         ## this when using GCC ...)
 
-                        if (install != "check") lines <- readLines(outfile)
+                        if (install != "check")
+                            lines <- readLines(outfile, warn = FALSE)
                         warn_re <- c("^WARNING:",
                                      "^Warning:",
                                      ## <FIXME>
@@ -2267,7 +2271,6 @@ R_run_R <- function(cmd, Ropts, env)
                         ## files with incomplete final lines.  Most of these
                         ## come from .install_package_indices(), and should be
                         ## safe to ignore ...
-
                         lines <- grep("Warning: incomplete final line found by readLines",
                                       lines, invert = TRUE, value = TRUE)
 
@@ -2320,11 +2323,11 @@ R_run_R <- function(cmd, Ropts, env)
                         check_src_flag <- Sys.getenv("_R_CHECK_WALL_FORTRAN_", "FALSE")
                         if (!config_val_to_logical(check_src_flag)) {
                             warn_re <-
-                                c("Label .* at \\\\(1\\\\) defined but not used",
-				  "Line truncated at \\\\(1\\\\)",
-				  "ASSIGN statement at \\\\(1\\\\)",
-				  "Assigned GOTO statement at \\\\(1\\\\)",
-				  "arithmetic IF statement at \\\\(1\\\\)",
+                                c("Label .* at \\(1\\) defined but not used",
+				  "Line truncated at \\(1\\)",
+				  "ASSIGN statement at \\(1\\)",
+				  "Assigned GOTO statement at \\(1\\)",
+				  "arithmetic IF statement at \\(1\\)",
 				  "Nonconforming tab character (in|at)")
                             warn_re <- paste("(",
                                              paste(warn_re, collapse = "|"),
