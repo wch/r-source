@@ -148,14 +148,15 @@ R_run_R <- function(cmd, Ropts, env)
             is_man <- grepl("man$", dirname(allfiles))
             bad <- sapply(strsplit(basename(allfiles[is_man]), ""),
                           function(x) any(grepl("[^ -~]|%", x)))
-            bad_files <- c(bad_files, (allfiles[is_man])[bad])
+            if (length(bad))
+                bad_files <- c(bad_files, (allfiles[is_man])[bad])
             bad <- tolower(basename(allfiles[!is_man]))
             bad <- grepl("^(con|prn|aux|clock$|nul|lpt[1-9]|com[1-9])$", bad)
             bad_files <- c(bad_files, (allfiles[!is_man])[bad])
             if (length(bad_files)) {
                 errorLog(Log)
                 wrapLog("Found the following file(s) with non-portable file names:\n")
-                printLog(Log, paste(c(bad_files, ""), collapse = "\n"))
+                printLog(Log, paste("  ", bad_files, sep = "", collapse = "\n"), "\n")
                 wrapLog("These are not valid file names",
                         "on all R platforms.\n",
                         "Please rename the files and try again.\n",
@@ -186,9 +187,9 @@ R_run_R <- function(cmd, Ropts, env)
                                basename(allfiles), perl = TRUE)]
             if (length(non_ASCII_files)) {
                 warnLog()
-                wrapLog("The following file(s) have non-portable file names:\n")
-                printLog(Log, paste(c(non_ASCII_files, ""), collapse = "\n"))
-                wrapLog("These are not fully portable file names\n",
+                wrapLog("Found the following file(s) with non-portable file names:\n")
+                printLog(Log, paste("  ", non_ASCII_files, sep ="", collapse = "\n"), "\n")
+                wrapLog("These are not fully portable file names.\n",
                         "See section 'Package structure'",
                         "in manual 'Writing R Extensions'.\n")
             } else resultLog(Log, "OK")
@@ -320,13 +321,15 @@ R_run_R <- function(cmd, Ropts, env)
 
             checkingLog(Log, "index information")
             any <- FALSE
-            if (file.exists("INDEX") && !length(readLines("INDEX"))) {
+            if (file.exists("INDEX") &&
+                !length(readLines("INDEX", warn = FALSE))) {
                 any <- TRUE
                 warnLog("Empty file 'INDEX'.")
             }
             if (dir.exists("demo")) {
                 index <- file.path("demo", "00Index")
-                if (!file.exists(index) || !length(readLines(index))) {
+                if (!file.exists(index) ||
+                    !length(readLines(index, warn = FALSE))) {
                     if(!any) warnLog()
                     any <- TRUE
                     printLog(Log,
@@ -515,7 +518,7 @@ R_run_R <- function(cmd, Ropts, env)
                 if(length(out)) {
                     if(!any) warnLog("Invalid citation information in 'inst/CITATION':")
                     any <- TRUE
-                    printLog(Log, paste(c(out, ""), collapse="\n"))
+                    printLog(Log, paste("  ", out, sep = "", collapse="\n"), "\n")
                 }
             }
 
@@ -1079,7 +1082,7 @@ R_run_R <- function(cmd, Ropts, env)
             if (length(out)) {
                 bad <- grep("^Warning:", out)
                 if (length(bad)) warnLog() else noteLog(Log)
-                printLog(Log, paste(c(out, ""), collapse = "\n"))
+                printLog(Log, paste("  ", out, sep = "", collapse = "\n"), "\n")
             } else resultLog(Log, "OK")
         }
 
@@ -1105,7 +1108,7 @@ R_run_R <- function(cmd, Ropts, env)
             }
             if (length(bad_files)) {
                 warnLog("Found the following sources/headers with CR or CRLF line endings:")
-                printLog(Log, paste("  ", bad_files, collapse = "\n"), "\n")
+                printLog(Log, paste("  ", bad_files, sep = "", collapse = "\n"), "\n")
                 printLog(Log, "Some Unix compilers require LF line endings.\n")
             } else resultLog(Log, "OK")
         }
@@ -1124,7 +1127,7 @@ R_run_R <- function(cmd, Ropts, env)
             }
             if (length(bad_files)) {
                 warnLog("Found the following Makefiles with CR or CRLF line endings:")
-                printLog(Log, paste("  ", bad_files, collapse = "\n"), "\n")
+                printLog(Log, paste("  ", bad_files, sep = "", collapse = "\n"), "\n")
                 printLog(Log, "Some Unix compilers require LF line endings.\n")
             } else resultLog(Log, "OK")
         }
@@ -1153,7 +1156,7 @@ R_run_R <- function(cmd, Ropts, env)
                                               "Makefile", "Makefile.win")))
             any <- FALSE
             for (f in makefiles) {
-                lines <- readLines(f)
+                lines <- readLines(f, warn = FALSE)
                 c1 <- grepl("PKG_LIBS", lines)
                 c2 <- grepl("$[{(]{0,1}BLAS_LIBS", lines)
                 c3 <- grepl("FLIBS", lines)
@@ -1237,7 +1240,8 @@ R_run_R <- function(cmd, Ropts, env)
                     ## error.
                     any <- FALSE
                     lines <- readLines(exout)
-                    bad_lines <- grep("^Warning: .*is deprecated.$", lines)
+                    bad_lines <- grep("^Warning: .*is deprecated.$", lines,
+                                      useBytes = TRUE)
                     if(length(bad_lines)) {
                         any <- TRUE
                         warnLog("Found the following significant warnings:\n")
@@ -1261,7 +1265,7 @@ R_run_R <- function(cmd, Ropts, env)
                                      sep = "")
                         out <- R_runR(cmd, "--slave --vanilla")
                         if(length(out))
-                            printLog(Log, paste(c(out, ""), collapse = "\n"))
+                            printLog(Log, "\n", paste(c(out, ""), collapse = "\n"))
                         resultLog(Log, "OK")
                     }
                 } else resultLog(Log, "NONE")
@@ -1273,7 +1277,8 @@ R_run_R <- function(cmd, Ropts, env)
 
         ## Run the package-specific tests.
         tests_dir <- file.path(pkgdir, "tests")
-        if (dir.exists(tests_dir) && length(dir(tests_dir))) {
+        if (dir.exists(tests_dir) &&
+            length(dir(tests_dir, pattern = "\\.R$"))) {
             checkingLog(Log, "tests")
             if (do_install && do_tests) {
                 testsrcdir <- file.path(pkgdir, "tests")
@@ -2074,7 +2079,7 @@ R_run_R <- function(cmd, Ropts, env)
                             if (length(srcfiles)) {
                                 if (!any) warnLog()
                                 any <- TRUE
-                                text <- c(paste("Subdirectory ", sQuote("src"), "contains:"),
+                                text <- c(paste("Subdirectory", sQuote("src"), "contains:"),
                                           strwrap(paste(srcfiles, collapse = " "),
                                                   indent = 2, exdent = 2),
                                           strwrap("These are unlikely file names for src files."), "")
@@ -2247,12 +2252,15 @@ R_run_R <- function(cmd, Ropts, env)
                                      ## </FIXME>
                                      ": warning: .*ISO C",
                                      ": warning: implicit declaration of function",
+                                     ": warning: incompatible implicit declaration of built-in function",
+
                                      ": warning: .* discards qualifiers from pointer target type",
                                      ": warning: .* is used uninitialized",
                                      "missing link\\(s\\):")
                         warn_re <- paste("(",
                                          paste(warn_re, collapse = "|"),
                                          ")", sep = "")
+
                         lines <- grep(warn_re, lines, value = TRUE)
 
                         ## Ignore install time readLines() warnings about
@@ -2310,7 +2318,7 @@ R_run_R <- function(cmd, Ropts, env)
                         ## variable _R_CHECK_WALL_FORTRAN_ to something
                         ## "true".
                         check_src_flag <- Sys.getenv("_R_CHECK_WALL_FORTRAN_", "FALSE")
-                        if (config_val_to_logical(check_src_flag)) {
+                        if (!config_val_to_logical(check_src_flag)) {
                             warn_re <-
                                 c("Label .* at \\\\(1\\\\) defined but not used",
 				  "Line truncated at \\\\(1\\\\)",

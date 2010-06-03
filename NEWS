@@ -184,7 +184,9 @@ UTILITIES
 	existing INDEX file.
 
     o	There is an R-based version of R CMD check, R CMD ncheck.
-	[In progress.]
+	Its check for 'Subdirectory 'inst' contains no files' is more
+	thorough: it looks for files, and warns if there are only
+	empty directories. [Work in progress.]
 
 
 C-LEVEL FACILITIES
@@ -250,8 +252,9 @@ BUG FIXES
 	setGeneric() when that does not use a definition nor
 	explicitly set a signature.
 
-    o   The pdf() device will now allow lwd values less than 1
-        (it used to brute force such values to be 1)
+    o	The pdf() device will now allow 'lwd' values less than 1
+	(it used to brute force such values to be 1).
+
 
 
 

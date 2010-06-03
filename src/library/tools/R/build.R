@@ -75,11 +75,11 @@ summaryLog <- function(Log)
 {
     if (Log$warnings > 1)
         printLog(Log,
-                 sprintf("WARNING: There were %d warnings, see\n%s\nfor details\n",
+                 sprintf("WARNING: There were %d warnings, see\n  %s\nfor details\n",
                          Log$warnings, sQuote(Log$filename)))
     else if (Log$warnings == 1)
         printLog(Log,
-                 sprintf("WARNING: There was 1 warning, see\n%s\nfor details\n",
+                 sprintf("WARNING: There was 1 warning, see\n  %s\nfor details\n",
                          sQuote(Log$filename)))
 }
 
