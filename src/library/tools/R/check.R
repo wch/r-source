@@ -56,6 +56,9 @@ R_run_R <- function(cmd, Ropts, env)
 {
     wrapLog <- function(...) {
         text <- paste(..., collapse=" ")
+        ## strwrap expects paras separated by blank lines.
+        ## Perl's wrap split on \n
+        text <- strsplit(text, "\n")[[1L]]
         printLog(Log, paste(strwrap(text), collapse="\n"), "\n")
     }
 
@@ -1486,16 +1489,6 @@ R_run_R <- function(cmd, Ropts, env)
     R_CMD <- if (WINDOWS)
         shQuote(file.path(R.home("bin"), "Rcmd.exe"))
     else paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
-
-    ## This version merges stdout and stderr
-    shell_with_capture <- function (command) {
-        outfile <- tempfile("xshell")
-        on.exit(unlink(outfile))
-        status <- if (.Platform$OS.type == "windows")
-            shell(sprintf("%s > %s 2>&1", command, outfile), shell = "cmd.exe")
-        else system(sprintf("%s > %s 2>&1", command, shQuote(outfile)))
-        list(status = status, stdout = readLines(outfile, warn = FALSE))
-    }
 
     .file_test <- function(op, x)
         switch(op,
