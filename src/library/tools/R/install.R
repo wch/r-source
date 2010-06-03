@@ -2464,10 +2464,10 @@ function(pkgdir, outfile, title, batch = FALSE,
 
     res <- utils::summaryRprof(file)
 
-    cat("\nEach sample represents", format(res$sample.interval), "seconds\n")
-    cat("Total run time:", format(res$sampling.time), "seconds\n")
+    cat("\nEach sample represents", format(res$sample.interval), "seconds.\n")
+    cat("Total run time:", format(res$sampling.time), "seconds.\n")
     cat("\nTotal seconds: time spent in function and callees.\n")
-    cat("Self seconds: time spent in function alone.\n\n\n")
+    cat("Self seconds: time spent in function alone.\n\n")
 
     m <- data.frame(res$by.total[c(2,1,4,3)], row.names(res$by.total))
     writeLines(c("   %       total       %       self",

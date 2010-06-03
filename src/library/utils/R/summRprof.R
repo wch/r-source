@@ -94,17 +94,22 @@ summaryRprof <-
     if (sum(fcounts) == 0)
         stop("no events were recorded")
 
-    digits <- ifelse(sample.interval < 0.01,  3L, 2L)
-    firstnum <- round(fcounts*sample.interval, digits)
-    uniquenum <- round(ucounts*sample.interval, digits)
 
-    firstpct <- round(100*firstnum/sum(firstnum), 1)
-    uniquepct <- round(100*uniquenum/sum(firstnum), 1)
+    firstnum <- fcounts*sample.interval
+    uniquenum <- ucounts*sample.interval
 
-    if (memory == "both") memtotal <-  round(umem/1048576, 1)     ## 0.1MB
-
+    ## sort and form % on unrounded numbers
     index1 <- order(-firstnum, -uniquenum)
     index2 <- order(-uniquenum, -firstnum)
+
+    firstpct <- round(100*firstnum/sum(firstnum), 2)
+    uniquepct <- round(100*uniquenum/sum(firstnum), 2)
+
+    digits <- ifelse(sample.interval < 0.01,  3L, 2L)
+    firstnum <- round(firstnum, digits)
+    uniquenum <- round(uniquenum, digits)
+
+    if (memory == "both") memtotal <-  round(umem/1048576, 1)     ## 0.1MB
 
     rval <- data.frame(firstnum, firstpct, uniquenum, uniquepct)
     names(rval) <- c("self.time", "self.pct", "total.time", "total.pct")
