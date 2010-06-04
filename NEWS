@@ -269,6 +269,8 @@ BUG FIXES
     o	The pdf() device will now allow 'lwd' values less than 1
 	(it used to brute force such values to be 1).
 
+    o	A bug in callNextMethod() for some examples with "..." in the
+        arguments has been fixed.  See tests/nextWithDots.R in the source.
 
 
 

@@ -650,7 +650,7 @@ SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
 
 SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 {
-    SEXP e, val, args, this_sym, op;
+    SEXP e, val, args, argsp, this_sym, op;
     int nprotect = 0, i, nargs = length(matched_call)-1, error_flag;
     Rboolean prim_case, dotsDone;
     /* for primitive .nextMethod's, suppress further dispatch to avoid
@@ -660,8 +660,8 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
     if(op == R_UnboundValue)
 	error(_("internal error in 'callNextMethod': '.nextMethod' was not assigned in the frame of the method call"));
     /* If "..." is an argument, need to pass it down to next method;
-     * match.call() doesn't seem (always?) to include this, so we
-     * check below and add it if needed. */
+     * (this was motivated by issues with match.call; are these still
+     * valid in rev. 2.12 ? )*/
     dotsDone = (findVarInFrame3(ev, R_DotsSymbol, TRUE) == R_UnboundValue);
     {PROTECT(e = duplicate(matched_call)); nprotect++;}
     if(!dotsDone) {
@@ -669,7 +669,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
 	PROTECT(dots = allocVector(LANGSXP, 1)); nprotect++;
 	SETCAR(dots, R_DotsSymbol);
 	for(ee = e; CDR(ee) != R_NilValue; ee = CDR(ee));
-	SETCDR(ee, dots);
+	SETCDR(ee, dots); /* append ... symbol, with NULL CDR() */
     }
     prim_case = isPrimitive(op);
     if(prim_case) {
@@ -680,20 +680,21 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev)
     }
     else
 	SETCAR(e, R_dot_nextMethod); /* call .nextMethod instead */
-    args = CDR(e);
+    args = CDR(e); argsp = e;
     /* e is a copy of a match.call, with expand.dots=FALSE.  Turn each
-    <TAG>=value into <TAG> = <TAG>, except  ... = goes into ... (if it
-    appears) and there may be a "..." included */
+    <TAG>=value into <TAG> = <TAG>, except  ...= is skipped (if it
+    appears) in which case ... was appended. */
     for(i=0; i<nargs; i++) {
 	this_sym = TAG(args);
 	if(this_sym == R_DotsSymbol) {
-	    /* don't copy this; will have been appended */
+	    /* skip this; will have been appended */
 	    if(dotsDone)
 		error(_("in processing 'callNextMethod', found a '...' in the matched call, but no corresponding '...' argument"));
+	    SETCDR(argsp, CDR(args));
 	}
 	else if(CAR(args) != R_MissingArg) /* "missing" only possible in primitive */
 	    SETCAR(args, this_sym);
-	args = CDR(args);
+	argsp = args; args = CDR(args);
     }
     if(prim_case) {
 	val = R_tryEval(e, ev, &error_flag);
