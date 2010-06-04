@@ -142,6 +142,8 @@ NEW FEATURES
 	'sample.interval' and only returns in 'by.self' data for
 	functions with non-zero self times.
 
+    o	print(x) and str(x) now indicate if an empty list x is named.
+
 
 DEPRECATED & DEFUNCT
 

@@ -184,7 +184,8 @@ str.default <-
 	##?if(is.d.f) std.attr <- c(std.attr, "class", if(is.d.f) "row.names")
 	if(le == 0) {
 	    if(is.d.f) std.attr <- c(std.attr, "class", "row.names")
-	    else cat(" ", if(i.pl)"pair", "list()\n",sep="")
+	    else cat(" ", if(!is.null(names(object))) "Named ",
+		     if(i.pl)"pair", "list()\n",sep="")
 	} else { # list, length >= 1 :
 	    if(irregCl <- has.class && identical(object[[1L]], object)) {
 		le <- length(object <- unclass(object))

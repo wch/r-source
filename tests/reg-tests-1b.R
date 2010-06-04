@@ -1213,4 +1213,10 @@ ls.str(E)
 ## 'o' failed in R <= 2.11.0 (others in earlier versions of R)
 
 
+## print() {& str()} should distinguish named empty lists
+stopifnot(identical("named list()",
+		    capture.output(list(.=2)[0])))
+## was just "list()" up to R <= 2.11.x
+
+
 proc.time()
