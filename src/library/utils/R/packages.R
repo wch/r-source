@@ -534,8 +534,8 @@ remove.packages <- function(pkgs, lib)
 
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1L]
-        warning(gettextf("argument 'lib' is missing: using %s", lib),
-                immediate. = TRUE, domain = NA)
+	message(gettextf("Removing package(s) from '%s' (as 'lib' is unspecified)",
+			 lib), domain = NA)
     }
 
     paths <- .find.package(pkgs, lib)

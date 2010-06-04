@@ -192,9 +192,9 @@ install.packages <-
 
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1L]
-        if(length(.libPaths()) > 1L)
-            warning(gettextf("argument 'lib' is missing: using '%s'", lib),
-                    immediate. = TRUE, domain = NA)
+	if(length(.libPaths()) > 1L)
+	    message(gettextf("Installing package(s) into '%s' (as 'lib' is unspecified)",
+			     lib), domain = NA)
     }
 
     ## check for writability by user

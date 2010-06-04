@@ -144,6 +144,10 @@ NEW FEATURES
 
     o	print(x) and str(x) now indicate if an empty list x is named.
 
+    o	install.packages() and remove.packages() no longer warn but simply
+	inform the user of the library location used, when 'lib' has not
+	been specified.
+
 
 DEPRECATED & DEFUNCT
 
