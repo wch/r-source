@@ -62,7 +62,7 @@ R_run_R <- function(cmd, Ropts, env)
         printLog(Log, paste(strwrap(text), collapse="\n"), "\n")
     }
 
-    warnLog <- function(text="")
+    warnLog <- function(text = "")
     {
         resultLog(Log, "WARNING")
         if (nzchar(text)) printLog(Log, text, "\n")
@@ -1363,15 +1363,17 @@ R_run_R <- function(cmd, Ropts, env)
                 latex_file <- file.path(build_dir, "Rd2.tex")
                 if (file.exists(latex_file))
                     file.copy(latex_file, paste(pkgname, "-manual.tex", sep=""))
-                warnLog(Log)
-                printLog(Log, "LaTeX errors when creating PDF version.\n",
-                         "This typically indicates Rd problems.\n")
+                warnLog()
+                printLog(Log,
+                         paste("LaTeX errors when creating PDF version.\n",
+                               "This typically indicates Rd problems.\n",
+                               sep = ""))
                 ## If possible, indicate the problems found.
                 ## Note that Rd2pdf works on 'Rd2.tex'.
                 if (file.exists(latex_log)) {
                     lines <- .get_LaTeX_errors_from_log_file(latex_log)
                     printLog(Log, "LaTeX errors found:\n")
-                    printLog(log, paste(c(lines, ""), sep="\n"))
+                    printLog(log, paste(c(lines, ""), collapse="\n"))
                 }
                 unlink(build_dir, recursive = TRUE)
                 checkingLog(Log, "PDF version of manual without index")
