@@ -2139,16 +2139,18 @@ R_run_R <- function(cmd, Ropts, env)
 				   " can be installed")
                         outfile <- file.path(pkgoutdir, "00install.out")
                         if (grepl("^check", install)) {
-                            outfile <- substr(install, 6, 1000)
+                            outfile <- substr(install, 7L, 1000L)
                             install <- "check"
+                            owd <- setwd(startdir)
                             lines <- readLines(outfile, warn = FALSE)
+                            setwd(owd)
                             ## <NOTE>
                             ## We used to have
                             ## $install_error = ($lines[$#lines] !~ /^\* DONE/);
                             ## but what if there is output from do_cleanup
                             ## in (Unix) R CMD INSTALL?
                             ## </NOTE>
-                            install_error <- any(grepl("^\\* DONE", lines))
+                            install_error <- !any(grepl("^\\* DONE", lines))
                         } else {
                             ## record in the log what options were used
                             cat("* install options ", sQuote(INSTALL_opts),
