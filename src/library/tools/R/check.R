@@ -185,7 +185,7 @@ R_run_R <- function(cmd, Ropts, env)
             if (length(dups)) {
                 errorLog(Log)
                 wrapLog("Found the following file(s) with duplicate lower-cased file names:\n")
-                printLog(Log, paste(c("", dups, ""), collapse = "\n"))
+                printLog(Log, paste("  ", dups, sep="", collapse = "\n"), "\n")
                 wrapLog("File names must not differ just by case",
                         "to be usable on all R platforms.\n",
                         "Please rename the files and try again.\n",
@@ -239,7 +239,9 @@ R_run_R <- function(cmd, Ropts, env)
                 if (length(bad_files)) {
                     errorLog(Log)
                     wrapLog("Found the following files with insufficient permissions:\n")
-                    printLog(Log, paste(c("", bad_files, ""), collapse = "\n"))
+                    printLog(Log,
+                             paste("  ", bad_files, sep = "", collapse = "\n"),
+                             "\n")
                     wrapLog("Permissions should be at least 700 for directories and 400 for files.\nPlease fix permissions and try again.\n")
                     do_exit(1L)
                 }
@@ -258,7 +260,9 @@ R_run_R <- function(cmd, Ropts, env)
                 if (length(bad_files)) {
                     warnLog()
                     wrapLog("The following files should most likely be executable (for the owner):\n")
-                    printLog(Log, paste(c("", bad_files, ""), collapse = "\n"))
+                    printLog(Log,
+                             paste("  ", bad_files, sep = "", collapse = "\n"),
+                             "\n")
                     printLog(Log, "Please fix their permissions\n")
                 } else resultLog(Log, "OK")
             }
@@ -275,7 +279,7 @@ R_run_R <- function(cmd, Ropts, env)
             out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 errorLog(Log)
-                printLog(Log, paste(out, collapse="\n", "\n"))
+                printLog(Log, paste(out, collapse="\n"), "\n")
                 do_exit(1L)
             }
             any <- FALSE
@@ -322,7 +326,7 @@ R_run_R <- function(cmd, Ropts, env)
             topfiles <- Sys.glob(c("install.R", "R_PROFILE.R"))
             if (length(topfiles)) {
                 warnLog()
-                printLog(Log, paste(c("", topfiles, ""), collapse = "\n"))
+                printLog(Log, paste("  ", topfiles, collapse = "\n"), "\n")
                 wrapLog("These files are defunct.",
                         "See manual 'Writing R Extensions'.\n")
             } else resultLog(Log, "OK")
@@ -1169,11 +1173,13 @@ R_run_R <- function(cmd, Ropts, env)
                     any <- FALSE
                     lines <- readLines(exout, warn = FALSE)
                     bad_lines <- grep("^Warning: .*is deprecated.$", lines,
-                                      useBytes = TRUE)
+                                      useBytes = TRUE, value = TRUE)
                     if(length(bad_lines)) {
                         any <- TRUE
                         warnLog("Found the following significant warnings:\n")
-                        printLog(Log, paste(c("", bad_lines, ""), sep="\n"))
+                        printLog(Log,
+                                 paste("  ", bad_lines, sep = "", collapse = "\n"),
+                                 "\n")
                         wrapLog("Deprecated functions may be defunct as",
                                 "soon as of the next release of R.\n",
                                 "See ?Deprecated.\n")
