@@ -63,11 +63,6 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   for more details).
 }
 \note{
-#ifdef windows
-  Using \command{R CMD Rprof} needs Windows Perl to be installed: this can
-  be installed from \code{Rtools.exe}.  \code{\link{summaryRprof}} is an
-  alternative that does not use Perl.
-#endif
 #ifdef unix
   Profiling is not available on all platforms.  By default, it is
   attempted to compile support for profiling.  Configure \R with

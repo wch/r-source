@@ -4467,9 +4467,8 @@ fixed intervals@footnote{For Unix-alikes these are intervals of CPU
 time, and for Windows of elapsed time.} (by default every 20 msecs)
 which @R{} function is being used, and recording the results in a file
 (default @file{Rprof.out} in the working directory).  Then the function
-@code{summaryRprof} or the command-line utilities @code{R CMD Rprof
-@var{Rprof.out}} and @code{R CMD Rprof2 @var{Rprof.out}} can be used to
-summarize the activity.
+@code{summaryRprof} or the command-line utility @code{R CMD Rprof
+@var{Rprof.out}} can be used to summarize the activity.
 
 As an example, consider the following code (from Venables & Ripley,
 2002, pp. 225--6).
@@ -4501,50 +4500,46 @@ Having run this we can summarize the results by
 R CMD Rprof boot.out
 
 Each sample represents 0.02 seconds.
-Total run time: 22.48 seconds.
+Total run time: 22.52 seconds.
 
 Total seconds: time spent in function and callees.
 Self seconds: time spent in function alone.
 @end group
 
 @group
-   %       total       %       self
+   %       total       %        self
  total    seconds     self    seconds    name
-100.00     22.48      0.00      0.00     "boot"
-100.00     22.48      0.50      0.12     "statistic"
- 96.20     21.62      3.70      0.84     "nls"
- 35.30      7.94      1.20      0.26     "eval"
- 32.20      7.24      2.20      0.50     "<Anonymous>"
- 31.70      7.12      0.20      0.04     "eval.parent"
- 31.40      7.06      0.70      0.16     "model.frame"
- 30.70      6.90      3.60      0.80     "model.frame.default"
- 30.70      6.90      2.20      0.50     ".Call"
- 19.40      4.36      1.00      0.22     "sapply"
- 14.60      3.28      2.70      0.60     "lapply"
- 13.10      2.94      2.60      0.58     "nlsModel"
- 12.00      2.70      2.50      0.56     "assign"
- 10.90      2.46      0.30      0.06     "na.omit"
- 10.70      2.40      0.40      0.10     "na.omit.data.frame"
-  ...
+ 100.0     25.22       0.2      0.04     "boot"
+  99.8     25.18       0.6      0.16     "statistic"
+  96.3     24.30       4.0      1.02     "nls"
+  33.9      8.56       2.2      0.56     "<Anonymous>"
+  32.4      8.18       1.4      0.36     "eval"
+  31.8      8.02       1.4      0.34     ".Call"
+  28.6      7.22       0.0      0.00     "eval.parent"
+  28.5      7.18       0.3      0.08     "model.frame"
+  28.1      7.10       3.5      0.88     "model.frame.default"
+  17.4      4.38       0.7      0.18     "sapply"
+  15.0      3.78       3.2      0.80     "nlsModel"
+  12.5      3.16       1.8      0.46     "lapply"
+  12.3      3.10       2.7      0.68     "assign"
+ ...
 @end group
 
 @group
-   %       self        %       total
- self     seconds    total    seconds    name
-  6.60      1.48      8.10      1.82     "inherits"
-  3.70      0.84     96.20     21.62     "nls"
-  3.60      0.82      3.60      0.82     "$"
-  3.60      0.80     30.70      6.90     "model.frame.default"
-  2.70      0.60     14.60      3.28     "lapply"
-  2.60      0.58     13.10      2.94     "nlsModel"
-  2.50      0.56     12.00      2.70     "assign"
-  2.20      0.50     32.20      7.24     "<Anonymous>"
-  2.20      0.50     30.70      6.90     ".Call"
-  2.10      0.48      8.70      1.96     "qr.coef"
-  2.10      0.48      7.20      1.62     "[.data.frame"
-  2.00      0.46      5.60      1.26     "qr.default"
-  2.00      0.44      6.90      1.54     "match"
-  2.00      0.44      5.20      1.18     "qr.qty"
+   %        self        %      total
+  self    seconds     total   seconds    name
+   5.7      1.44       7.5      1.88     "inherits"
+   4.0      1.02      96.3     24.30     "nls"
+   3.6      0.92       3.6      0.92     "$"
+   3.5      0.88      28.1      7.10     "model.frame.default"
+   3.2      0.80      15.0      3.78     "nlsModel"
+   2.8      0.70       9.8      2.46     "qr.coef"
+   2.7      0.68      12.3      3.10     "assign"
+   2.5      0.64       2.5      0.64     ".Fortran"
+   2.5      0.62       7.1      1.80     "qr.default"
+   2.2      0.56      33.9      8.56     "<Anonymous>"
+   2.1      0.54       5.9      1.48     "unlist"
+   2.1      0.52       7.9      2.00     "FUN"
   ...
 @end group
 @end smallexample
@@ -4553,12 +4548,6 @@ Self seconds: time spent in function alone.
 (Function names are not quoted on Windows.)  This often produces
 surprising results and can be used to identify bottlenecks or pieces of
 @R{} code that could benefit from being replaced by compiled code.
-
-@code{R CMD Rprof} uses a Perl script that may be a little faster than
-@code{summaryRprof} for large files.  On the other hand
-@code{summaryRprof} does not require Perl and provides the results as an
-@R{} object.  @code{R CMD Rprof2} emulates @code{R CMD Rprof} using
-@code{summaryRprof} and so does not require Perl.
 
 Two warnings: profiling does impose a small performance penalty, and the
 output files can be very large if long runs are profiled at the default

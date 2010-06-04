@@ -2427,6 +2427,10 @@ function(pkgdir, outfile, title, batch = FALSE,
             "Options:",
             "  -h, --help		print short help message and exit",
             "  -v, --version		print version info and exit",
+            "  --total	       	print only by total",
+            "  --self	       	print only by self",
+            "  --min%total     	minimum % to print for 'by total'",
+            "  --min%self      	minimum % to print for 'by self'",
             "",
             "If 'file' is omitted 'Rprof.out' is used",
             "",
@@ -2441,6 +2445,8 @@ function(pkgdir, outfile, title, batch = FALSE,
     }
 
     files <- character()
+    bytotal <- byself <- TRUE
+    mintotal <- minself <- -1L
     while(length(args)) {
         a <- args[1L]
         if (a %in% c("-h", "--help")) {
@@ -2457,6 +2463,15 @@ function(pkgdir, outfile, title, batch = FALSE,
                 "or later for copying conditions.  There is NO warranty.",
                 sep="\n")
             do_exit(0L)
+        } else if (a == "--total") {
+            byself <- FALSE
+        } else if (a == "--self") {
+            byself <- TRUE
+            bytotal <- FALSE
+        } else if (substr(a, 1, 12)  == "--min%total=") {
+            mintotal <- as.integer(substr(a, 13, 1000))
+        } else if (substr(a, 1, 11)  == "--min%self=") {
+            minself <- as.integer(substr(a, 12, 1000))
         } else files <- c(files, a)
         args <- args[-1L]
     }
@@ -2469,18 +2484,23 @@ function(pkgdir, outfile, title, batch = FALSE,
     cat("\nTotal seconds: time spent in function and callees.\n")
     cat("Self seconds: time spent in function alone.\n\n")
 
-    m <- data.frame(res$by.total[c(2,1,4,3)], row.names(res$by.total))
-    writeLines(c("   %       total       %       self",
-                 " total    seconds     self    seconds    name",
-                 sprintf("%6.2f%10.2f%10.2f%10.2f     %s",
-                       m[,1], m[,2], m[,3], m[,4], m[,5])))
-
-    cat("\n\n")
-    m <- data.frame(res$by.self[c(2,1,4,3)], row.names(res$by.self))
-    writeLines(c("   %       self        %       total",
-                 " self     seconds    total    seconds    name",
-                 sprintf("%6.2f%10.2f%10.2f%10.2f     %s",
-                       m[,1], m[,2], m[,3], m[,4], m[,5])))
+    if (bytotal) {
+        m <- data.frame(res$by.total[c(2,1,4,3)], row.names(res$by.total))
+        if(mintotal > 0) m <- m[m[,1L] >= mintotal,]
+        writeLines(c("   %       total       %        self",
+                     " total    seconds     self    seconds    name",
+                     sprintf("%6.1f%10.2f%10.1f%10.2f     %s",
+                             m[,1], m[,2], m[,3], m[,4], m[,5])))
+    }
+    if(bytotal && byself) cat("\n\n")
+    if(byself) {
+        m <- data.frame(res$by.self[c(2,1,4,3)], row.names(res$by.self))
+        if(minself > 0) m <- m[m[,1L] >= minself,]
+        writeLines(c("   %        self        %      total",
+                     "  self    seconds     total   seconds    name",
+                     sprintf("%6.1f%10.2f%10.1f%10.2f     %s",
+                             m[,1], m[,2], m[,3], m[,4], m[,5])))
+    }
     do_exit(0L)
 }
 
