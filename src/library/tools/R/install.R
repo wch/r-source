@@ -2496,8 +2496,8 @@ function(pkgdir, outfile, title, batch = FALSE,
     if(byself) {
         m <- data.frame(res$by.self[c(2,1,4,3)], row.names(res$by.self))
         if(minself > 0) m <- m[m[,1L] >= minself,]
-        writeLines(c("   %        self        %      total",
-                     "  self    seconds     total   seconds    name",
+        writeLines(c("   %        self       %      total",
+                     "  self    seconds    total   seconds    name",
                      sprintf("%6.1f%10.2f%10.1f%10.2f     %s",
                              m[,1], m[,2], m[,3], m[,4], m[,5])))
     }

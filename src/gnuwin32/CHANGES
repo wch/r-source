@@ -41,6 +41,9 @@ NEW FEATURES
     	when the input path does not exist.  It attempts partial
     	normalization, or if that fails, returns the original input.
 
+    o	Rcmd Rprof|build|check are now handled internally rather by
+	shell scripts.
+
 
 INSTALLATION
 
