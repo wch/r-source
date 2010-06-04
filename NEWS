@@ -197,10 +197,9 @@ UTILITIES
 
 	[Work in progress.]
 
-    o	There is a new utility R CMD Rprof2 which emulates R CMD Rprof
-	via utils::summaryRprof() and does not use Perl.  It is
-	intended to be a replacement in due course (it already is on
-	Windows).
+    o	R CMD Rprof2 now uses utils::summaryRprof() rather than Perl.
+	It has new arguments to select one of the tables and to limit
+	the entries printed.
 
 
 C-LEVEL FACILITIES
