@@ -132,7 +132,6 @@ if test -n "${PERL}"; then
   _R_PROG_PERL_VERSION
 fi
 if test "${r_cv_prog_perl_v5}" != yes; then
-  AC_MSG_WARN([Using 'R CMD build|check|Rprof' requires Perl >= 5.8.0])
   ## in case available at runtime: 'false' is an alternative
   PERL="/usr/bin/env perl"
 fi
@@ -202,13 +201,13 @@ AC_DEFUN([R_PROG_MAKEINFO],
 [AC_PATH_PROGS(MAKEINFO, [${MAKEINFO} makeinfo])
 if test -n "${MAKEINFO}"; then
   _R_PROG_MAKEINFO_VERSION
-  ## This test admittedly looks a bit strange ... see R_PROG_PERL.
-  if test "${PERL}" = "${FALSE}"; then
-    AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
-  else
-    INSTALL_INFO="\$(PERL) \$(top_srcdir)/tools/install-info.pl"
-    AC_SUBST(INSTALL_INFO)
+  AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
+  if test "ac_cv_path_INSTALL_INFO" = "false"; then
+    if test "${r_cv_prog_perl_v5}" = yes; then
+      INSTALL_INFO="\$(PERL) \$(top_srcdir)/tools/install-info.pl"
+    fi
   fi
+  AC_SUBST(INSTALL_INFO)
 fi
 if test "${r_cv_prog_makeinfo_v4}" != yes; then
   warn_info="you cannot build info or HTML versions of the R manuals"
