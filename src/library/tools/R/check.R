@@ -2027,7 +2027,7 @@ R_run_R <- function(cmd, Ropts, env)
 
                 ## we need to do this before installation
                 if (R_check_executables) {
-                    setwd(pkgdir)
+                    owd <- setwd(pkgdir)
                     allfiles <- dir(".", all.files = TRUE, full.names = TRUE,
                                     recursive = TRUE)
                     allfiles <- sub("^./","", allfiles)
@@ -2086,6 +2086,7 @@ R_run_R <- function(cmd, Ropts, env)
                                 "See section 'Package structure'",
                                 "in manual 'Writing R Extensions'.\n")
                     } else resultLog(Log, "OK")
+                    setwd(owd)
                 }
 
                 ## Option '--no-install' turns off installation and the tests
@@ -2139,11 +2140,12 @@ R_run_R <- function(cmd, Ropts, env)
 				   " can be installed")
                         outfile <- file.path(pkgoutdir, "00install.out")
                         if (grepl("^check", install)) {
-                            outfile <- substr(install, 7L, 1000L)
+                            thislog <- substr(install, 7L, 1000L)
+                            #owd <- setwd(startdir)
+                            file.copy(thislog, outfile)
+                            #setwd(owd)
                             install <- "check"
-                            owd <- setwd(startdir)
                             lines <- readLines(outfile, warn = FALSE)
-                            setwd(owd)
                             ## <NOTE>
                             ## We used to have
                             ## $install_error = ($lines[$#lines] !~ /^\* DONE/);
