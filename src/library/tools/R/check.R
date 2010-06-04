@@ -2049,7 +2049,7 @@ R_run_R <- function(cmd, Ropts, env)
                         for (f in allfiles) {
                             ## watch out for spaces in file names here
                             ## FIXME: use intern = TRUE
-                            R_system(sprintf("file '%s' > %s", f, Tfile))
+                            R_system(sprintf("file '%s' > %s", f, shQuote(Tfile)))
                             line <- readLines(Tfile, n = 1L)
                             if (grepl("executable", line) &&
                                 !grepl("script text", line))
