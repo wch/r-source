@@ -69,6 +69,16 @@ R_run_R <- function(cmd, Ropts, env)
         Log$warnings <<- Log$warnings+1L
     }
 
+    R_runR2 <- function(cmd)
+    {
+        out <- R_runR(cmd, R_opts2,
+                      "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
+        if (R_check_suppress_RandR_message)
+            out <- grep('^Xlib: *extension "RANDR" missing on display',
+                        out, invert = TRUE, value = TRUE)
+        out
+    }
+
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
     check_pkg <- function(pkg, pkgoutdir, startdir, libdir, desc,
@@ -262,8 +272,7 @@ R_run_R <- function(cmd, Ropts, env)
             checkingLog(Log, "DESCRIPTION meta-information")
             dfile <- if (is_base_pkg) "DESCRIPTION.in" else "DESCRIPTION"
             Rcmd <- sprintf("tools:::.check_package_description(\"%s\")", dfile)
-            out <- R_runR(Rcmd, "--vanilla --quiet", "R_DEFAULT_PACKAGES=NULL")
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 errorLog(Log)
                 printLog(Log, paste(out, collapse="\n", "\n"))
@@ -272,8 +281,7 @@ R_run_R <- function(cmd, Ropts, env)
             any <- FALSE
             ## Check the encoding.
             Rcmd <- sprintf("tools:::.check_package_description_encoding(\"%s\")", dfile)
-            out <- R_runR(Rcmd, "--vanilla --quiet", "R_DEFAULT_PACKAGES=NULL")
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 warnLog()
                 any <- TRUE
@@ -294,8 +302,7 @@ R_run_R <- function(cmd, Ropts, env)
             if (!identical(check_license, FALSE)) {
                 Rcmd <- sprintf("tools:::.check_package_license(\"%s\", \"%s\")",
                                 dfile, pkgdir)
-                out <- R_runR(Rcmd, "--vanilla --quiet", "R_DEFAULT_PACKAGES=NULL")
-                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if (length(out)) {
                     if (check_license == "maybe") {
                         if (!any) warnLog()
@@ -340,9 +347,7 @@ R_run_R <- function(cmd, Ropts, env)
                                      sQuote(index)))
                 } else {
                     Rcmd <- "options(warn=1)\ntools:::.check_demo_index(\"demo\")\n"
-                    out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                                  "R_DEFAULT_PACKAGES=NULL")
-                    out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                    out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                     if(length(out)) {
                         if(!any) warnLog()
                         any <- TRUE
@@ -352,9 +357,7 @@ R_run_R <- function(cmd, Ropts, env)
             }
             if (dir.exists(file.path("inst", "doc"))) {
                     Rcmd <- "options(warn=1)\ntools:::.check_vignette_index(\"inst/doc\")\n"
-                    out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                                  "R_DEFAULT_PACKAGES=NULL")
-                    out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                    out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                     if(length(out)) {
                         if(!any) warnLog()
                         any <- TRUE
@@ -428,9 +431,7 @@ R_run_R <- function(cmd, Ropts, env)
                 ## We don't run this in the C locale, as we only require
                 ## certain filenames to start with ASCII letters/digits, and not
                 ## to be entirely ASCII.
-                out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                              "R_DEFAULT_PACKAGES=NULL")
-                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if(length(out)) {
                     if(!any) warnLog()
                     any <- TRUE
@@ -515,9 +516,7 @@ R_run_R <- function(cmd, Ropts, env)
             ## Valid CITATION metadata?
             if (file.exists(file.path("inst", "CITATION"))) {
                 Rcmd <- "tools:::.check_citation(\"inst/CITATION\")\n"
-                out <- R_runR(Rcmd, c(R_opts, "--slave"),
-                              "R_DEFAULT_PACKAGES=utils")
-#                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=utils")
                 if(length(out)) {
                     if(!any) warnLog("Invalid citation information in 'inst/CITATION':")
                     any <- TRUE
@@ -534,8 +533,7 @@ R_run_R <- function(cmd, Ropts, env)
             if (!is_base_pkg && haveR) {
                 checkingLog(Log, "R files for non-ASCII characters")
                 out <- R_runR("tools:::.check_package_ASCII_code('.')",
-                              c(R_opts, "--slave"),
-                              "R_DEFAULT_PACKAGES=NULL")
+                              R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if (length(out)) {
                     if (!is.na(desc["Encoding"])) noteLog(Log)
                     else warnLog()
@@ -549,9 +547,7 @@ R_run_R <- function(cmd, Ropts, env)
 
                 checkingLog(Log, "R files for syntax errors")
                 Rcmd  <- "options(warn=1);tools:::.check_package_code_syntax(\"R\")"
-                out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                              "R_DEFAULT_PACKAGES=NULL")
-                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if (any(grepl("^Error", out))) {
                     errorLog(Log)
                     printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -567,8 +563,7 @@ R_run_R <- function(cmd, Ropts, env)
         if (do_install && pkgname != "base") {
             checkingLog(Log, "whether the package can be loaded")
             Rcmd <- sprintf("library(%s)", pkgname)
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"))
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            out <- R_runR(Rcmd, R_opts2)
             if (any(grepl("^Error", out))) {
                 errorLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -579,8 +574,7 @@ R_run_R <- function(cmd, Ropts, env)
             } else resultLog(Log, "OK")
 
             checkingLog(Log, "whether the package can be loaded with stated dependencies")
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"), "R_DEFAULT_PACKAGES=NULL")
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (any(grepl("^Error", out))) {
                 warnLog()
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -594,8 +588,7 @@ R_run_R <- function(cmd, Ropts, env)
 
             checkingLog(Log, "whether the package can be unloaded cleanly")
             Rcmd <- sprintf("suppressMessages(library(%s)); cat('\n---- unloading\n'); detach(\"package:%s\")", pkgname, pkgname)
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"), "R_DEFAULT_PACKAGES=NULL")
-            out <- grep("^[>+]", out, invert = TRUE, value = TRUE)
+            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (any(grepl("^(Error|\\.Last\\.lib failed)", out))) {
                 warnLog()
                 ll <- grep("---- unloading", out)
@@ -611,9 +604,7 @@ R_run_R <- function(cmd, Ropts, env)
             if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
                 checkingLog(Log, "whether the name space can be loaded with stated dependencies")
                 Rcmd <- sprintf("loadNamespace(\"%s\")", pkgname)
-                out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                              "R_DEFAULT_PACKAGES=NULL")
-                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if (any(grepl("^Error", out))) {
                     warnLog()
                     printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -631,10 +622,8 @@ R_run_R <- function(cmd, Ropts, env)
                 Rcmd <- sprintf("invisible(suppressMessages(loadNamespace(\"%s\"))); cat('\n---- unloading\n'); unloadNamespace(\"%s\")",
                                 pkgname, pkgname)
                 out <- if (is_base_pkg && pkgname != "stats4")
-                    R_runR(Rcmd, c(R_opts, "--quiet"),
-                           "R_DEFAULT_PACKAGES=NULL")
-                else R_runR(Rcmd, c(R_opts, "--quiet"))
-                out <- grep("^[>+]", out, invert = TRUE, value = TRUE)
+                    R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+                else R_runR(Rcmd, R_opts2)
                 if (any(grepl("^(Error|\\.onUnload failed)", out))) {
                     warnLog()
                     ll <- grep("---- unloading", out)
@@ -653,9 +642,7 @@ R_run_R <- function(cmd, Ropts, env)
                 Rcmd <- paste("options(warn=1)\n",
                               sprintf("tools:::.check_packages_used(package = \"%s\")\n", pkgname))
 
-                out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                              "R_DEFAULT_PACKAGES=NULL")
-                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if (R_check_suppress_RandR_message)
                     out <- grep('^Xlib: *extension "RANDR" missing on display',
                                 out, invert = TRUE, value = TRUE)
@@ -670,9 +657,7 @@ R_run_R <- function(cmd, Ropts, env)
                  Rcmd <- paste("options(warn=1)\n",
                               sprintf("tools:::.check_packages_used(dir = \"%s\")\n", pkgdir))
 
-                out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                              "R_DEFAULT_PACKAGES=NULL")
-                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if (length(out)) {
                     warnLog()
                     printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -691,12 +676,7 @@ R_run_R <- function(cmd, Ropts, env)
                           sprintf("tools::checkS3methods(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools::checkS3methods(dir = \"%s\")\n", pkgdir))
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                          "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
-            if (R_check_suppress_RandR_message)
-                out <- grep('^Xlib: *extension "RANDR" missing on display',
-                            out, invert = TRUE, value = TRUE)
+            out <- R_runR2(Rcmd)
             if (length(out)) {
                 warnLog()
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -714,12 +694,7 @@ R_run_R <- function(cmd, Ropts, env)
                           sprintf("tools::checkReplaceFuns(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools::checkReplaceFuns(dir = \"%s\")\n", pkgdir))
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                          "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
-            if (R_check_suppress_RandR_message)
-                out <- grep('^Xlib: *extension "RANDR" missing on display',
-                            out, invert = TRUE, value = TRUE)
+            out <- R_runR2(Rcmd)
             if (length(out)) {
                 ## <NOTE>
                 ## We really want to stop if we find offending replacement
@@ -742,12 +717,7 @@ R_run_R <- function(cmd, Ropts, env)
                           sprintf("tools::checkFF(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools::checkFF(dir = \"%s\")\n", pkgdir))
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                          "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
-            if (R_check_suppress_RandR_message)
-                out <- grep('^Xlib: *extension "RANDR" missing on display',
-                            out, invert = TRUE, value = TRUE)
+            out <- R_runR2(Rcmd)
             if (length(out)) {
                 warnLog()
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -763,9 +733,7 @@ R_run_R <- function(cmd, Ropts, env)
             any <- FALSE
             if (!is_base_pkg) {
                 Rcmd <- "options(warn=1);tools:::.check_package_code_shlib(\"R\")"
-                out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                              "R_DEFAULT_PACKAGES=NULL")
-                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if (length(out)) {
                     errorLog(Log)
                     wrapLog("Incorrect (un)loading of package",
@@ -782,9 +750,7 @@ R_run_R <- function(cmd, Ropts, env)
                  Rcmd <-
                      paste("options(warn=1)\n",
                            sprintf("tools:::.check_code_usage_in_package(package = \"%s\")\n", pkgname))
-                out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                              "R_DEFAULT_PACKAGES=")
-                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
                 if (R_check_suppress_RandR_message)
                     out <- grep('^Xlib: *extension "RANDR" missing on display',
                                 out, invert = TRUE, value = TRUE)
@@ -801,9 +767,7 @@ R_run_R <- function(cmd, Ropts, env)
                               sprintf("tools:::.check_T_and_F(package = \"%s\")\n", pkgname)
                               else
                               sprintf("tools:::.check_T_and_F(dir = \"%s\")\n", pkgdir))
-                out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                              "R_DEFAULT_PACKAGES=")
-                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
                 if (R_check_suppress_RandR_message)
                     out <- grep('^Xlib: *extension "RANDR" missing on display',
                                 out, invert = TRUE, value = TRUE)
@@ -820,9 +784,7 @@ R_run_R <- function(cmd, Ropts, env)
                               sprintf("tools:::.check_dotInternal(package = \"%s\")\n", pkgname)
                               else
                               sprintf("tools:::.check_dotInternal(dir = \"%s\")\n", pkgdir))
-                out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                              "R_DEFAULT_PACKAGES=")
-                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
                 if (R_check_suppress_RandR_message)
                     out <- grep('^Xlib: *extension "RANDR" missing on display',
                                 out, invert = TRUE, value = TRUE)
@@ -847,9 +809,7 @@ R_run_R <- function(cmd, Ropts, env)
             minlevel <- Sys.getenv("_R_CHECK_RD_CHECKRD_MINLEVEL_", "-1")
             Rcmd <- paste("options(warn=1)\n",
                           sprintf("tools:::.check_package_parseRd('.', minlevel=%s)\n", minlevel))
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                          "R_DEFAULT_PACKAGES=NULL")
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 if(length(grep("^prepare.*Dropping empty section", out,
                                invert = TRUE)))
@@ -864,9 +824,7 @@ R_run_R <- function(cmd, Ropts, env)
                           sprintf("tools:::.check_Rd_metadata(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools:::.check_Rd_metadata(dir = \"%s\")\n", pkgdir))
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                          "R_DEFAULT_PACKAGES=NULL")
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 warnLog()
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -895,9 +853,7 @@ R_run_R <- function(cmd, Ropts, env)
                           sprintf("tools:::.check_Rd_xrefs(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools:::.check_Rd_xrefs(dir = \"%s\")\n", pkgdir))
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                          "R_DEFAULT_PACKAGES=NULL")
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 if (!all(grepl("Package\\(s\\) unavailable", out)))
                     warnLog()
@@ -914,13 +870,8 @@ R_run_R <- function(cmd, Ropts, env)
                           sprintf("tools::undoc(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools::undoc(dir = \"%s\")\n", pkgdir))
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                          "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
+            out <- R_runR2(Rcmd)
             err <- grep("^Error", out)
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
-            if (R_check_suppress_RandR_message)
-                out <- grep('^Xlib: *extension "RANDR" missing on display',
-                            out, invert = TRUE, value = TRUE)
             if (length(err)) {
                 errorLog(Log)
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -950,12 +901,7 @@ R_run_R <- function(cmd, Ropts, env)
                                   sprintf("tools::codoc(package = \"%s\")\n", pkgname)
                                   else
                                   sprintf("tools::codoc(dir = \"%s\")\n", pkgdir))
-                    out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                                  "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
-                    out <- grep("^[>]", out, invert = TRUE, value = TRUE)
-                    if (R_check_suppress_RandR_message)
-                        out <- grep('^Xlib: *extension "RANDR" missing on display',
-                                    out, invert = TRUE, value = TRUE)
+                    out <- R_runR2(Rcmd)
                     if (length(out)) {
                         any <- TRUE
                         warnLog()
@@ -967,12 +913,7 @@ R_run_R <- function(cmd, Ropts, env)
                 if (do_install) {
                     Rcmd <- paste("options(warn=1)\n",
                                   sprintf("tools::codocData(package = \"%s\")\n", pkgname))
-                    out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                                  "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
-                    out <- grep("^[>]", out, invert = TRUE, value = TRUE)
-                    if (R_check_suppress_RandR_message)
-                        out <- grep('^Xlib: *extension "RANDR" missing on display',
-                                    out, invert = TRUE, value = TRUE)
+                    out <- R_runR2(Rcmd)
                     if (length(out)) {
                         if (!any) warnLog()
                         any <- TRUE
@@ -984,12 +925,7 @@ R_run_R <- function(cmd, Ropts, env)
                 if (do_install && haveR) {
                     Rcmd <- paste("options(warn=1)\n",
                                   sprintf("tools::codocClasses(package = \"%s\")\n", pkgname))
-                    out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                                  "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
-                    out <- grep("^[>]", out, invert = TRUE, value = TRUE)
-                    if (R_check_suppress_RandR_message)
-                        out <- grep('^Xlib: *extension "RANDR" missing on display',
-                                    out, invert = TRUE, value = TRUE)
+                    out <- R_runR2(Rcmd)
                     if (length(out)) {
                         if (!any) warnLog()
                         any <- TRUE
@@ -1019,9 +955,7 @@ R_run_R <- function(cmd, Ropts, env)
                           sprintf("tools::checkDocFiles(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools::checkDocFiles(dir = \"%s\")\n", pkgdir))
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                          "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            out <- R_runR2(Rcmd)
             if (length(out)) {
                 any <- TRUE
                 warnLog()
@@ -1040,12 +974,7 @@ R_run_R <- function(cmd, Ropts, env)
                               sprintf("tools::checkDocStyle(package = \"%s\")\n", pkgname)
                               else
                               sprintf("tools::checkDocStyle(dir = \"%s\")\n", pkgdir))
-                out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                              "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
-                out <- grep("^[>]", out, invert = TRUE, value = TRUE)
-                if (R_check_suppress_RandR_message)
-                    out <- grep('^Xlib: *extension "RANDR" missing on display',
-                                out, invert = TRUE, value = TRUE)
+                out <- R_runR2(Rcmd)
                 if (length(out)) {
                     if (!any) noteLog(Log)
                     any <- TRUE
@@ -1066,9 +995,7 @@ R_run_R <- function(cmd, Ropts, env)
                           sprintf("tools:::.check_Rd_contents(package = \"%s\")\n", pkgname)
                           else
                           sprintf("tools:::.check_Rd_contents(dir = \"%s\")\n", pkgdir))
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                          "R_DEFAULT_PACKAGES=NULL")
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 warnLog()
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1078,8 +1005,7 @@ R_run_R <- function(cmd, Ropts, env)
         ## Check for non-ASCII characters in data
         if (!is_base_pkg && dir.exists("data") && !extra_arch) {
             checkingLog(Log, "data for non-ASCII characters")
-            out <- R_runR("tools:::.check_package_datasets('.')",
-                          c(R_opts, "--slave"))
+            out <- R_runR("tools:::.check_package_datasets('.')", R_opts2)
             out <- grep("Loading required package", out,
                         invert = TRUE, value = TRUE)
             if (length(out)) {
@@ -1140,9 +1066,7 @@ R_run_R <- function(cmd, Ropts, env)
            any(file.exists(file.path("src", c("Makevars", "Makevars.in")))) ) {
             checkingLog(Log, "for portable compilation flags in Makevars")
             Rcmd <- "tools:::.check_make_vars(\"src\")\n"
-            out <- R_runR(Rcmd, c(R_opts, "--quiet"),
-                          "R_DEFAULT_PACKAGES=NULL")
-            out <- grep("^[>]", out, invert = TRUE, value = TRUE)
+            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 warnLog()
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1190,7 +1114,7 @@ R_run_R <- function(cmd, Ropts, env)
                              '", silent = TRUE, addTiming = ', do_timings, ')',
                              sep = "")
                 exfile <- paste(pkgname, "-Ex.R", sep = "")
-                out <- R_run_R(cmd, "--vanilla --slave", "LC_ALL=C")
+                out <- R_run_R(cmd, R_opts2, "LC_ALL=C")
                 if (out$status) {
                     errorLog(Log,
                              paste("Running massageExamples to create",
@@ -1267,7 +1191,7 @@ R_run_R <- function(cmd, Ropts, env)
                         cmd <- paste("invisible(tools::Rdiff('",
                                      exout, "', '", exsave, "',TRUE,TRUE))",
                                      sep = "")
-                        out <- R_runR(cmd, "--slave --vanilla")
+                        out <- R_runR(cmd, R_opts2)
                         if(length(out))
                             printLog(Log, "\n", paste(c(out, ""), collapse = "\n"))
                         resultLog(Log, "OK")
@@ -1370,7 +1294,7 @@ R_run_R <- function(cmd, Ropts, env)
                               if (R_check_weave_vignettes) ", tangle = FALSE",
                               if (R_check_latex_vignettes) ", latex = TRUE",
                               ")\n", sep = "")
-                out <- R_runR(Rcmd, c(R_opts, "--quiet"))
+                out <- R_runR(Rcmd, R_opts2)
                 ## Vignette could redefine the prompt, e.g. to 'R>' ...
                 out <- grep("^[[:alnum:]]*[>]", out,
                             invert = TRUE, value = TRUE)
@@ -1780,9 +1704,10 @@ R_run_R <- function(cmd, Ropts, env)
     }
 
     TAR <- Sys.getenv("TAR", "tar")
-    ## all the analysis code is run with --quiet or --slave
+    ## all the analysis code is run with --slave
     ## examples and tests are not.
     R_opts <- "--vanilla"
+    R_opts2 <- "--vanilla --slave"
 
     msg_DESCRIPTION <- c("See the information on DESCRIPTION files",
                          " in the chapter 'Creating R packages'",
