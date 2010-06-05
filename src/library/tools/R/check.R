@@ -1340,7 +1340,7 @@ R_run_R <- function(cmd, Ropts, env)
             Rd2pdf_opts <- "--batch --no-preview"
             checkingLog(Log, "PDF version of manual")
             build_dir <- tempfile("Rd2pdf")
-           cmd <- paste(R_CMD, " Rd2pdf ", Rd2pdf_opts,
+            cmd <- paste(R_CMD, " Rd2pdf ", Rd2pdf_opts,
                          " --build-dir=", build_dir,
                          " --no-clean",
                          " -o ", pkgname, "-manual.pdf ",
@@ -1376,14 +1376,17 @@ R_run_R <- function(cmd, Ropts, env)
                     printLog(log, paste(c(lines, ""), collapse="\n"))
                 }
                 unlink(build_dir, recursive = TRUE)
+                ## for Windows' sake: errors can make it unwritable
+                build_dir <- tempfile("Rd2pdf")
                 checkingLog(Log, "PDF version of manual without index")
-                cmd <- paste(cmd0, " Rd2pdf ", Rd2pdf_opts,
+                cmd <- paste(R_CMD, " Rd2pdf ", Rd2pdf_opts,
                              " --build-dir=", build_dir,
                              " --no-clean --no-index",
                              " -o ", pkgname, "-manual.pdf  > Rdlatex.log 2>&1 ",
                              topdir, sep="")
                 if (R_system(cmd)) {
                     errorLog(Log)
+                    latex_log <- file.path(build_dir, "Rd2.log")
                     if (file.exists(latex_log))
                         file.copy(latex_log, paste(pkgname, "-manual.log", sep=""))
                     else {
@@ -1394,7 +1397,9 @@ R_run_R <- function(cmd, Ropts, env)
                         printLog(Log, "LaTeX error when running command:\n")
                         printLog(Log, strwrap(cmd, indent = 2, exdent = 4), "\n")
                         printLog(Log, "Re-running with no redirection of stdout/stderr.\n")
-                        cmd <- paste(cmd0, " Rd2pdf ", Rd2pdf_opts,
+                        unlink(build_dir, recursive = TRUE)
+                        build_dir <- tempfile("Rd2pdf")
+                        cmd <- paste(R_CMD, " Rd2pdf ", Rd2pdf_opts,
                                      " --build-dir=", build_dir,
                                      " --no-clean --no-index",
                                      " -o ", pkgname, "-manual.pdf ",
