@@ -1339,9 +1339,9 @@ R_run_R <- function(cmd, Ropts, env)
             topdir <- pkgdir
             Rd2pdf_opts <- "--batch --no-preview"
             checkingLog(Log, "PDF version of manual")
-            build_dir <- tempfile("Rd2pdf")
+            build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
             cmd <- paste(R_CMD, " Rd2pdf ", Rd2pdf_opts,
-                         " --build-dir=", build_dir,
+                         " --build-dir=", shQuote(build_dir),
                          " --no-clean",
                          " -o ", pkgname, "-manual.pdf ",
                          topdir,
@@ -1369,18 +1369,17 @@ R_run_R <- function(cmd, Ropts, env)
                                "This typically indicates Rd problems.\n",
                                sep = ""))
                 ## If possible, indicate the problems found.
-                ## Note that Rd2pdf works on 'Rd2.tex'.
                 if (file.exists(latex_log)) {
                     lines <- .get_LaTeX_errors_from_log_file(latex_log)
                     printLog(Log, "LaTeX errors found:\n")
-                    printLog(log, paste(c(lines, ""), collapse="\n"))
+                    printLog(Log, paste(c(lines, ""), collapse="\n"))
                 }
                 unlink(build_dir, recursive = TRUE)
                 ## for Windows' sake: errors can make it unwritable
-                build_dir <- tempfile("Rd2pdf")
+                build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
                 checkingLog(Log, "PDF version of manual without index")
                 cmd <- paste(R_CMD, " Rd2pdf ", Rd2pdf_opts,
-                             " --build-dir=", build_dir,
+                             " --build-dir=", shQuote(build_dir),
                              " --no-clean --no-index",
                              " -o ", pkgname, "-manual.pdf  > Rdlatex.log 2>&1 ",
                              topdir, sep="")
@@ -1398,9 +1397,9 @@ R_run_R <- function(cmd, Ropts, env)
                         printLog(Log, strwrap(cmd, indent = 2, exdent = 4), "\n")
                         printLog(Log, "Re-running with no redirection of stdout/stderr.\n")
                         unlink(build_dir, recursive = TRUE)
-                        build_dir <- tempfile("Rd2pdf")
+                        build_dir <- gsub("\\", "/", tempfile("Rd2pdf"), fixed = TRUE)
                         cmd <- paste(R_CMD, " Rd2pdf ", Rd2pdf_opts,
-                                     " --build-dir=", build_dir,
+                                     " --build-dir=", shQuote(build_dir),
                                      " --no-clean --no-index",
                                      " -o ", pkgname, "-manual.pdf ",
                                      topdir, sep="")

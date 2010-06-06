@@ -369,7 +369,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         }
         file.remove(".timestamp")
 
-        if(nzchar(msg)) stop(msg, domain = NA)
+        if(nzchar(msg)) stop(msg, call. = FALSE, domain = NA)
     } else {
         ## Do not have texi2dvi or don't want to index
         ## Needed at least on Windows except for MiKTeX
