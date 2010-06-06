@@ -559,7 +559,14 @@ function(con, n = 4L)
 
     ## Try matching both the regular error indicator ('!') as well as
     ## the file line error indicator ('file:line:').
-    pos <- grep("^(!|.*:[0123456789]+:)", lines)
+    pos <- grep("(^! |^!pdfTeX error:|:[0123456789]+:.*[Ee]rror)", lines)
+    ## unforunately that was too general and caught false positives
+    ## Errors are typically of the form
+    ## ! LaTeX Error:
+    ## !pdfTeX error:
+    ## ! Emergency stop
+    ## !  ==> Fatal error occurred, no output PDF file produced!
+    ## .../pegas.Rcheck/inst/doc/ReadingFiles.tex:395: Package inputenc Error:
     if(!length(pos)) return(character())
     ## Error chunk extends to at most the next error line.
     mapply(function(from, to) paste(lines[from : to], collapse = "\n"),
