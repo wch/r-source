@@ -38,7 +38,7 @@ while(length(args)) {
     a <- args[1]
     if(a %in% c("-h", "--help")) {
         Usage()
-        return(invisible())
+        q("no")
     }
     else if(a %in% c("-v", "--version")) {
         cat("R add-on package remover: ",
