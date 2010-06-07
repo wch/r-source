@@ -301,7 +301,7 @@ R_run_R <- function(cmd, Ropts, env)
                 if (check_license == "maybe")
                     Sys.setenv('_R_CHECK_LICENSE_' = "maybe")
                 else check_license <- config_val_to_logical(check_license)
-            }
+            } else check_license <- FALSE
             ## The check code conditionalizes *output* on _R_CHECK_LICENSE_.
             if (!identical(check_license, FALSE)) {
                 Rcmd <- sprintf("tools:::.check_package_license(\"%s\", \"%s\")",
@@ -1888,7 +1888,7 @@ R_run_R <- function(cmd, Ropts, env)
             package_name <- desc["Package"]
             messageLog(Log,
                        sprintf("this is package %s version %s",
-                               sQuote(package_name), sQuote(desc["Version"]))
+                               sQuote(package_name), sQuote(desc["Version"])))
 
             if (!is.na(encoding))
                 messageLog(Log, "package encoding: ", encoding)
@@ -2081,7 +2081,7 @@ R_run_R <- function(cmd, Ropts, env)
                     } else {
                         ## no 'file', so just check extensions
                         checkingLog(Log, "for .dll and .exe files")
-                        execs <- grepl("\\.(exe|dll)$", allfiles, value = TRUE)
+                        execs <- grep("\\.(exe|dll)$", allfiles, value = TRUE)
                     }
                     if (R_check_executables_exclusions &&
                         file.exists("BinaryFiles")) {
@@ -2091,7 +2091,7 @@ R_run_R <- function(cmd, Ropts, env)
                     if (grepl("^check", install) &&
                         file.exists(".install_timestamp")) {
                         execs <-
-                            execs[file.test("-nt", execs, ".install_timestamp")]
+                            execs[file_test("-nt", execs, ".install_timestamp")]
                     }
                     if (length(execs)) {
                         warnLog("Found the following executable file(s):")
