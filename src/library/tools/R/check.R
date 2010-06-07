@@ -1887,8 +1887,8 @@ R_run_R <- function(cmd, Ropts, env)
 
             package_name <- desc["Package"]
             messageLog(Log,
-                       sprint("this is package %s version %s",
-                              sQuote(package_name), sQuote(desc["Version"]))
+                       sprintf("this is package %s version %s",
+                               sQuote(package_name), sQuote(desc["Version"]))
 
             if (!is.na(encoding))
                 messageLog(Log, "package encoding: ", encoding)
