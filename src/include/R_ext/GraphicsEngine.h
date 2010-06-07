@@ -50,7 +50,7 @@ extern "C" {
  *             NewDevDesc to GEDevDesc.
  *             Add 'ask' to GEDevDesc.
  * Version 6:  Add dev_Raster() and dev_Cap()
- * Version 7:  Change graphics event handling, adding eventEnv and initEvents() 
+ * Version 7:  Change graphics event handling, adding eventEnv and eventHelper() 
  *	       to DevDesc.
  */
 

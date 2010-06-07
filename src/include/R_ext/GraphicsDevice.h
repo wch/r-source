@@ -588,21 +588,21 @@ struct _DevDesc {
 
     /* Added in 2.12.0:  Changed graphics event handling. */
     
-    SEXP eventEnv;		/* This is an environment holding the event handlers. */
+    SEXP eventEnv;		/* This is an environment holding  event handlers. */
     /*
-     * initEvent(dd, true) is called by do_getGraphicsEvent before looking for a 
-     * graphics event.  It will then call R_ProcessEvents() 
+     * eventHelper(dd, 1) is called by do_getGraphicsEvent before looking for a 
+     * graphics event.  It will then call R_ProcessEvents() and eventHelper(dd, 2)
      * until this or another device returns sets a non-null result value in eventEnv,
-     * at which time initEvent(dd, false) will be called.
+     * at which time eventHelper(dd, 0) will be called.
      * 
      * An example is ...
      *
-     * static SEXP GA_initEvent(pDevDesc dd, Rboolean start);
+     * static SEXP GA_eventHelper(pDevDesc dd, int code);
      */
 #if R_USE_PROTOTYPES
-    void (*initEvent)(pDevDesc dd, Rboolean start);
+    void (*eventHelper)(pDevDesc dd, int code);
 #else
-    void (*initEvent)();
+    void (*eventHelper)();
 #endif
 
     /* Area for future expansion.

@@ -106,7 +106,8 @@ NEW FEATURES
     o	The getGraphicsEvent() mechanism now allows multiple windows
 	to return graphics events, through the new functions
 	setGraphicsEventHandlers(), setGraphicsEventEnv(), and
-	getGraphicsEventEnv().
+	getGraphicsEventEnv().  (Currently implemented in the
+	windows() and X11() devices.)
 
     o	tools::texi2dvi() gains an 'index' argument, mainly for use by
 	R CMD Rd2pdf.

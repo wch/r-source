@@ -99,7 +99,7 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (dd->gettingEvent)
 	    	error(_("recursive use of getGraphicsEvent not supported"));
 	    if (dd->eventEnv != R_NilValue) {
-	        if (dd->initEvent) dd->initEvent(dd, TRUE);
+	        if (dd->eventHelper) dd->eventHelper(dd, 1);
 	        dd->gettingEvent = TRUE;
 	        defineVar(install("result"), R_NilValue, dd->eventEnv);
 	        count++;
@@ -115,12 +115,14 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Poll them */
 	while (result == R_NilValue) {
 	    R_ProcessEvents();
+	    R_CheckUserInterrupt();
 	    i = 1;
 	    devNum = curDevice();
 	    while (i++ < NumDevices()) {
 		gd = GEgetDevice(devNum);
 		dd = gd->dev;
 		if (dd->eventEnv != R_NilValue) {
+		    if (dd->eventHelper) dd->eventHelper(dd, 2);
 		    result = findVar(install("result"), dd->eventEnv);
 		    if (result != R_NilValue && result != R_UnboundValue) {
 		        break;
@@ -136,7 +138,7 @@ do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
 	    gd = GEgetDevice(devNum);
 	    dd = gd->dev;
 	    if (dd->eventEnv != R_NilValue) {
-	        if (dd->initEvent) dd->initEvent(dd, FALSE);
+	        if (dd->eventHelper) dd->eventHelper(dd, 0);
 	        dd->gettingEvent = FALSE;
 	    }
 	    devNum = nextDevice(devNum);

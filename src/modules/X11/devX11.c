@@ -171,6 +171,7 @@ static double X11_StrWidth(const char *str, const pGEcontext gc, pDevDesc dd);
 static void X11_Text(double x, double y, const char *str,
 		     double rot, double hadj,
 		     const pGEcontext gc, pDevDesc dd);
+static void X11_eventHelper(pDevDesc dd, int code);
 
 	/*************************************************/
 	/* End of list of required device driver actions */
@@ -1299,9 +1300,13 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
     attributes.background_pixel = whitepixel;
     attributes.border_pixel = blackpixel;
     attributes.backing_store = Always;
-    attributes.event_mask = ButtonPressMask
+    attributes.event_mask = ButtonPressMask 
+      | ButtonMotionMask 
+      | ButtonReleaseMask
       | ExposureMask
-      | StructureNotifyMask;
+      | StructureNotifyMask
+      | KeyPressMask;
+
 
     if (type == WINDOW) {
 	int alreadyCreated = (xd->window != (Window)NULL);
@@ -1469,7 +1474,8 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	/* Map the window */
 	if(alreadyCreated == 0) {
 	    XSelectInput(display, xd->window,
-			 ExposureMask | ButtonPressMask | StructureNotifyMask);
+			 ExposureMask | ButtonPressMask | StructureNotifyMask 
+			 | ButtonReleaseMask | ButtonMotionMask | KeyPressMask);
 	    XMapWindow(display, xd->window);
 	    XSync(display, 0);
 
@@ -2272,6 +2278,87 @@ static Rboolean X11_Locator(double *x, double *y, pDevDesc dd)
     return (done == 1);
 }
 
+static int translate_key(KeySym keysym)
+{
+    if ((keysym >= XK_F1) && (keysym <= XK_F12))
+    	return knF1 + keysym - XK_F1;
+    else {
+    	switch(keysym) {
+	case XK_Left: return knLEFT;
+	case XK_Up:   return knUP;
+	case XK_Right:return knRIGHT;
+	case XK_Down: return knDOWN;
+	case XK_Page_Up: 	return knPGUP;
+	case XK_Page_Down: 	return knPGDN;
+	case XK_End:  return knEND;
+	case XK_Begin:return knHOME;
+	case XK_Insert:  	return knINS;
+	}
+    }
+    return knUNKNOWN;
+}
+
+static void X11_eventHelper(pDevDesc dd, int code)
+{
+    XEvent event;
+    pDevDesc ddEvent;
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    caddr_t temp;
+    int done = 0;
+
+    if (xd->type > WINDOW) return;
+    if (code == 1) {
+    	R_ProcessX11Events((void*)NULL);	/* discard pending events */
+    	if (isEnvironment(dd->eventEnv)) {
+    	    SEXP prompt = findVar(install("prompt"), dd->eventEnv);
+    	    if (length(prompt) == 1) {
+    		 XStoreName(display, xd->window, CHAR(asChar(prompt)));
+    	    }
+    	}
+    	XSync(display, 1);
+    } else if (code == 2) {
+	XNextEvent(display, &event);
+	if (event.type == ButtonRelease || event.type == ButtonPress || event.type == MotionNotify) {
+	    XFindContext(display, event.xbutton.window,
+			 devPtrContext, &temp);
+	    ddEvent = (pDevDesc) temp;
+	    if (ddEvent == dd && dd->gettingEvent) {
+        	doMouseEvent(dd, event.type == ButtonRelease ? meMouseUp :
+        	                 event.type == ButtonPress ? meMouseDown : meMouseMove, 
+        	                 event.xbutton.button, event.xbutton.x, event.xbutton.y);
+                XSync(display, 0);
+                done = 1;
+    	    }
+	} else if (event.type == KeyPress) {
+	    char keybuffer[13] = "";
+	    char *keystart=keybuffer;
+	    XComposeStatus compose;
+  	    KeySym keysym;
+	    int count, keycode;
+	    if (event.xkey.state & ControlMask) {
+	    	keystart += 5; 
+	    	sprintf(keybuffer, "ctrl-"); /* report control keys using labels like "ctrl-A" */
+	    	event.xkey.state &= !ControlMask;
+	    	event.xkey.state |= ShiftMask;
+	    }
+      	    count = XLookupString(&event.xkey, keystart, sizeof(keybuffer)-(keystart-keybuffer), &keysym, &compose);
+      	    /* Rprintf("keysym=%x\n", keysym); */
+      	    if ((keycode = translate_key(keysym)) > knUNKNOWN)
+      	    	doKeybd(dd, keycode, NULL);
+      	    else if (*keystart)
+	    	doKeybd(dd, knUNKNOWN, keybuffer);
+	    done = 1;
+	}
+	if (!done) 
+	    handleEvent(event);
+    } else if (code == 0) {
+	XStoreName(display, xd->window, xd->title);
+	XSync(display, 0);
+    }
+
+    return;
+}
+
 	/********************************************************/
 	/* device_Mode is called whenever the graphics engine	*/
 	/* starts drawing (mode=1) or stops drawing (mode=0)	*/
@@ -2428,6 +2515,11 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->polygon = X11_Polygon;
 	dd->metricInfo = X11_MetricInfo;
 	dd->hasTextUTF8 = FALSE;
+    	dd->eventHelper = X11_eventHelper;
+    	dd->canGenMouseDown = TRUE;
+	dd->canGenMouseUp = TRUE;
+	dd->canGenMouseMove = TRUE;
+	dd->canGenKeybd = TRUE;
     }
 
     dd->activate = X11_Activate;
