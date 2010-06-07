@@ -1113,10 +1113,11 @@ R_run_R <- function(cmd, Ropts, env)
             if (!do_examples) resultLog(Log, "SKIPPED")
             else {
                 pkgtopdir <- file.path(libdir, pkgname)
-                cmd <- paste('tools:::.createExdotR("', pkgname,
-                             '", "', pkgtopdir,
-                             '", silent = TRUE, addTiming = ', do_timings, ')',
-                             sep = "")
+                cmd <- sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, addTiming = %s)', pkgname, pkgtopdir, do_timings)
+                ## cmd <- paste('tools:::.createExdotR("', pkgname,
+                ##              '", "', pkgtopdir,
+                ##              '", silent = TRUE, addTiming = ', do_timings, ')',
+                ##              sep = "")
                 exfile <- paste(pkgname, "-Ex.R", sep = "")
                 out <- R_run_R(cmd, R_opts2, "LC_ALL=C")
                 if (out$status) {
@@ -1768,7 +1769,7 @@ R_run_R <- function(cmd, Ropts, env)
             dir <- file.path(pkgoutdir, "00_pkg_src")
             dir.create(dir, mode = "0755")
             if (!dir.exists(dir)) {
-                errorLog(Log, sprintf("cannot create check %s", sQuote(dir)))
+                errorLog(Log, sprintf("cannot create %s", sQuote(dir)))
                 do_exit(1L)
             }
             untar(pkg, exdir = dir)
@@ -1885,10 +1886,12 @@ R_run_R <- function(cmd, Ropts, env)
             }
 
             package_name <- desc["Package"]
-            messageLog(Log, "this is package ", sQuote(package_name),
-                       " version ", sQuote(desc["Version"]))
+            messageLog(Log,
+                       sprint("this is package %s version %s",
+                              sQuote(package_name), sQuote(desc["Version"]))
 
-            if (!is.na(encoding)) messageLog(Log, "package encoding: ", encoding)
+            if (!is.na(encoding))
+                messageLog(Log, "package encoding: ", encoding)
 
             ## Check if we have any hope of installing
 
