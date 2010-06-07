@@ -84,19 +84,19 @@ keys will have been processed, so \code{shift-a} will be passed as
 The event handlers are standard R functions, and will be executed as though called
 from the event environment.  
 
-Events will be processed until
+In an interactive session, events will be processed until
 \itemize{
      \item one of the event handlers returns
 a non-\code{NULL} value which will be returned as the value of
 \code{getGraphicsEvent}, or 
       \item the user interrupts the function from the
 console.
-
-
 }
 }
 \value{
+When run interactively, 
 \code{getGraphicsEvent} returns a non-\code{NULL} value returned from one of the event handlers.
+In a non-interactive session, \code{getGraphicsEvent} will return \code{NULL} immediately.
 
 \code{getGraphicsEventEnv} returns the current event environment for the graphics device,
 or \code{NULL} if none has been set.

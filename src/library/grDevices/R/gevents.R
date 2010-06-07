@@ -31,6 +31,7 @@ getGraphicsEventEnv <- function(which=dev.cur())
 getGraphicsEvent <- function(prompt = "Waiting for input",
                  onMouseDown = NULL, onMouseMove = NULL, onMouseUp = NULL, 
                  onKeybd = NULL, consolePrompt = prompt) {
+    if (!interactive()) return(NULL)
     if (!missing(prompt) || !missing(onMouseDown) || !missing(onMouseMove) 
      || !missing(onMouseUp) || !missing(onKeybd)) {
         setGraphicsEventHandlers(prompt=prompt, onMouseDown=onMouseDown, 
