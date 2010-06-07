@@ -488,11 +488,14 @@
                 if(!length(.find.package(pkg, quiet = TRUE)))
                     miss <- c(miss, pkg)
             }
-            if (length(miss))
+            if (length(miss) > 1)
                  pkgerrmsg(sprintf("dependencies %s are not available",
                                    paste(sQuote(miss), collapse = ", ")),
                            pkg_name)
-        }
+            else if (length(miss))
+                pkgerrmsg(sprintf("dependency %s is not available",
+                                  sQuote(miss)), pkg_name)
+         }
 
         starsmsg(stars, "installing *source* package ",
                  sQuote(pkg_name), " ...")

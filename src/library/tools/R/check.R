@@ -54,6 +54,9 @@ R_run_R <- function(cmd, Ropts, env)
 
 .check_packages <- function(args = NULL)
 {
+    ## this requires on Windows
+    ## sh file(optional)
+
     wrapLog <- function(...) {
         text <- paste(..., collapse=" ")
         ## strwrap expects paras separated by blank lines.
@@ -1717,7 +1720,6 @@ R_run_R <- function(cmd, Ropts, env)
         setwd(startdir)
     }
 
-    TAR <- Sys.getenv("TAR", "tar")
     ## all the analysis code is run with --slave
     ## examples and tests are not.
     R_opts <- "--vanilla"

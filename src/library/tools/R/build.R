@@ -115,6 +115,9 @@ get_exclude_patterns <- function()
 
 .build_packages <- function(args = NULL)
 {
+    ## this requires on Windows
+    ## sh make tar gzip
+
     WINDOWS <- .Platform$OS.type == "windows"
 
     Sys.umask("022") # Perl version did not have this.
@@ -222,7 +225,7 @@ get_exclude_patterns <- function()
                 printLog(Log, "      -----------------------------------\n")
                 printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
                 printLog(Log, "      -----------------------------------\n")
-                errorLog(Log, "Installation failed")
+                printLog(Log, "ERROR: Installation failed\n")
                 printLog(Log, "Removing installation dir\n")
                 unlink(libdir, recursive = TRUE)
                 do_exit(1)
@@ -299,7 +302,22 @@ get_exclude_patterns <- function()
             }
         }
         setwd(pkgdir)
-        if (!WINDOWS && .file_test("-x", "./cleanup")) {
+        ## It is not clear that we want to do this: INSTALL should do so.
+        ## Also, certain environment variables should be set according
+        ## to 'Writing R Extensions', but were not in Perl version (nor
+        ## was cleanup.win used).
+        if (WINDOWS) {
+            if (file.exists("cleanup.win")) {
+                Sys.setenv(R_PACKAGE_NAME = pkgname)
+                Sys.setenv(R_PACKAGE_DIR = pkgdir)
+                Sys.setenv(R_LIBRARY_DIR = dirname(pkgdir))
+                messageLog(Log, "running cleanup.win")
+                Ssystem("sh ./cleanup.win")
+            }
+        } else if (.file_test("-x", "cleanup")) {
+            Sys.setenv(R_PACKAGE_NAME = pkgname)
+            Sys.setenv(R_PACKAGE_DIR = pkgdir)
+            Sys.setenv(R_LIBRARY_DIR = dirname(pkgdir))
             messageLog(Log, "running cleanup")
             Ssystem("./cleanup")
         }
