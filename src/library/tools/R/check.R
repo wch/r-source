@@ -92,7 +92,7 @@ R_run_R <- function(cmd, Ropts, env)
         setwd(startdir)
         pkg <- sub("/$", "", pkg)
         if (dir.exists(pkg)) {
-            setwd(pkg) ## check
+            setwd(pkg) ## wrap in try()?
             pkgdir <- getwd()
             pkgname <- desc["Package"]
             resultLog(Log, "OK")
@@ -1703,13 +1703,14 @@ R_run_R <- function(cmd, Ropts, env)
 
     startdir <- getwd()
     if (!nzchar(outdir)) outdir <- startdir
-    try(setwd(outdir)) # check it
+    setwd(outdir)
     outdir <- getwd()
     setwd(startdir)
 
     R_LIBS <- Sys.getenv("R_LIBS")
+    arg_libdir <- libdir
     if (nzchar(libdir)) {
-        try(setwd(libdir)) # test it
+        setwd(libdir)
         libdir <- getwd()
         Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
         setwd(startdir)
@@ -2112,8 +2113,6 @@ R_run_R <- function(cmd, Ropts, env)
                 ## <NOTE>
                 ## In this case, one also needs to specify *where* the package
                 ## was installed to using command line option '--library'.
-                ## Perhaps we should check for that, although '--install=check'
-                ## is really only meant for repository maintainers.
                 ## </NOTE>
                 if (install == "skip")
                     messageLog(Log, "skipping installation test")
@@ -2152,8 +2151,15 @@ R_run_R <- function(cmd, Ropts, env)
 				   " can be installed")
                         outfile <- file.path(pkgoutdir, "00install.out")
                         if (grepl("^check", install)) {
+                            if (!nzchar(arg_libdir))
+                                printLog(Log, "\nWarning: --install=check... specified without --library\n")
                             thislog <- substr(install, 7L, 1000L)
                             #owd <- setwd(startdir)
+                            if (!file.exists(thislog)) {
+                                errorLog(Log,
+                                         sprintf("install log %s does not exist", sQuote(thislog)))
+                                do_exit(2L)
+                            }
                             file.copy(thislog, outfile)
                             #setwd(owd)
                             install <- "check"
@@ -2175,7 +2181,7 @@ R_run_R <- function(cmd, Ropts, env)
                                 ## MS Html Help Compiler gives lines terminated
                                 ## by CRCRLF, so we clean up the log file.
 
-                                ## Still needed?
+                                ## Still needed?  Seems not
                             }
                             lines <- readLines(outfile, warn = FALSE)
                         }
