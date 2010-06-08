@@ -3822,7 +3822,7 @@ LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
 @noindent
 Note particularly the last, which is needed to ensure that a shared
 version of @code{libc} is found.  The flag @option{-Kieee} ensures strict
-compliance to IEC60659.  Also,
+compliance to IEC60559.  Also,
 @uref{http://@/www.amd.com/@/us-en/@/assets/@/content_type/@/DownloadableAssets/@/dwamd_PGI_nov603.pdf}
 suggests that @option{-pc64} may be desirable.
 
