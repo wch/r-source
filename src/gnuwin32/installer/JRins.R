@@ -53,7 +53,7 @@
         paste("DefaultDirName={code:UserPF}\\R\\", RW, sep = ""),
         paste("InfoBeforeFile=", srcdir, "\\COPYING", sep = ""),
         if(Producer == "R-core") "AppPublisher=R Development Core Team"
-        else Producer,
+        else paste("AppPublisher=", Producer, sep = ""),
         file = con, sep = "\n")
 
     writeLines(readLines("header1.iss"), con)
