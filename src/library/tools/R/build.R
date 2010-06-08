@@ -527,7 +527,7 @@ get_exclude_patterns <- function()
         ##  the top-level source directory.'
         ignore_file <- file.path(pkgdir, ".Rbuildignore")
         if (file.exists(ignore_file)) ignore <- c(ignore, readLines(ignore_file))
-        for(e in ignore)
+        for(e in ignore[nzchar(ignore)])
             exclude <- exclude | grepl(e, allfiles, perl = TRUE,
                                        ignore.case = WINDOWS)
 
