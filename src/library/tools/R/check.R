@@ -1117,10 +1117,6 @@ R_run_R <- function(cmd, Ropts, env)
             else {
                 pkgtopdir <- file.path(libdir, pkgname)
                 cmd <- sprintf('tools:::.createExdotR("%s", "%s", silent = TRUE, addTiming = %s)', pkgname, pkgtopdir, do_timings)
-                ## cmd <- paste('tools:::.createExdotR("', pkgname,
-                ##              '", "', pkgtopdir,
-                ##              '", silent = TRUE, addTiming = ', do_timings, ')',
-                ##              sep = "")
                 exfile <- paste(pkgname, "-Ex.R", sep = "")
                 out <- R_run_R(cmd, R_opts2, "LC_ALL=C")
                 if (out$status) {
@@ -1821,7 +1817,7 @@ R_run_R <- function(cmd, Ropts, env)
             Sys.setenv(R_LIBS = env_path(libdir, R_LIBS))
         }
         if (WINDOWS && grepl(" ", libdir)) # need to avoid spaces in libdir
-            libdir <- shortPathName(libdir)
+            libdir <- gsub("\\", "/", shortPathName(libdir), fixed = TRUE)
 
         is_base_pkg <- FALSE
 

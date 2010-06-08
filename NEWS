@@ -291,6 +291,16 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.11.1 patched
+
+
+BUG FIXES
+
+    o	R CMD Rd2dvi failed if run from a path with name containing
+	spaces.  This affected R CMD check, which called Rd2dvi.
+
+
+
 		CHANGES IN R VERSION 2.11.1
 
 
