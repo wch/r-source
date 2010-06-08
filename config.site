@@ -41,11 +41,8 @@
 ## The command which runs the C compiler.
 ## If unspecified, a search is made for gcc and cc (in that order).
 ## To override this choice, specify the name of the command which runs
-## the compiler here, for example 'c89'.
+## the compiler here, for example 'c99'.
 ## It is also convenient to set the architecture here, e.g. 'gcc -m32'.
-## NB, as from R 2.5.0 configure will append flags for C99 compliance,
-## e.g. CC=gcc -std=gnu99
-## To avoid this, set contradictory flags (such as -ansi) as part of CFLAGS.
 ## CC=
 
 ## Debugging and optimization options for the C compiler.
@@ -120,13 +117,12 @@
 ## Any special flags which must be used when compiling C code to be
 ## turned into a shared library.  This is typically something like
 ## '-fpic' or '-fPIC'.  If this variable is left unspecified an attempt
-## is made to automatically detect the correct value by configure.
+## is made to automatically detect the correct value.
 ## CPICFLAGS=
 
 ## The following variable can be used to provide any PIC flags for the
-## FORTRAN 77 compiler.  If this variable is left
-## unspecified an attempt is made to automatically detect the correct
-## value by configure.
+## FORTRAN 77 compiler.  If this variable is left unspecified an
+## attempt is made to automatically detect the correct value.
 ## FPICFLAGS=
 
 ## The command to be used to create shared objects which contain object
@@ -171,8 +167,7 @@
 
 ## Any special flags which must be used when compiling C++ code to be
 ## turned into a shared library.  If this variable is left unspecified
-## an attempt is made to automatically detect the correct value by
-## configure.
+## an attempt is made to automatically detect the correct value.
 ## CXXPICFLAGS=
 
 ## The command to be used to load shared libraries which contain object
@@ -208,7 +203,7 @@
 ## Browser default
 ## Default setting for the R_BROWSER env variable
 ## If unset configure searches in turn for (currently)
-## firefox mozilla galeon kfmclient opera gnome-moz-remote open
+## firefox mozilla galeon opera xdg-open kfmclient gnome-moz-remote open
 ## and uses the full path.
 ## R_BROWSER=
 
@@ -230,7 +225,9 @@
 
 ## Tar name
 ## Set this to prefer a tar which has the capability to automagically
-## read compressed archives.  The default is to choose 'gtar' (normally
-## GNU tar) then 'tar', but other possibilities include 'bsdtar' from
-## the libarchive project.
+## read compressed archives.  The default is to choose 'gtar' or
+## 'gnutar'(normally GNU tar) then 'tar'.
+## Note that 'bsdtar' (from the libarchive project) is known to create
+## archives in a non-POSIX format that untar() cannot read,
+## so should be avoided.
 ## TAR=
