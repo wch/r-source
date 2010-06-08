@@ -9,7 +9,7 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi: ${R_VERSION} (r${version})
 
-Copyright (C) 2000-2009 The R Core Development Team.
+Copyright (C) 2000-2010 The R Core Development Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -155,8 +155,8 @@ if ${debug}; then set -x; fi
 
 do_cleanup () {
   if ${clean}; then
-    cd ${start_dir}
-    rm -rf ${build_dir}
+    cd "${start_dir}"
+    rm -rf "${build_dir}"
   else
     echo "You may want to clean up by 'rm -rf ${build_dir}'"
   fi
@@ -196,10 +196,10 @@ if test -f ${output}; then
   echo "file '${output}' exists; please remove first"
   exit 1
 fi
-if test -d ${build_dir}; then
-  rm -rf ${build_dir} || echo "cannot write to build dir" && exit 2
+if test -d "${build_dir}"; then
+  rm -rf "${build_dir}" || echo "cannot write to build dir" && exit 2
 fi
-mkdir ${build_dir}
+mkdir "${build_dir}"
 
 echo "tools:::.Rd2dvi(\"${1}\",  \"${build_dir}/Rd2.tex\", \
 \"$title\", \"$batch\", \"$description\", \"$only_meta\",\
@@ -221,7 +221,7 @@ if test "${R_OSTYPE}" = "windows"; then
 fi
 
 echo "Creating ${out_ext} output from LaTeX ..."
-cd ${build_dir}
+cd "${build_dir}"
 if test "${out_ext}" = pdf; then
   ${R_PDFLATEXCMD} ${R_TEXOPTS} Rd2 || status=1
   if test $status -gt 0; then
@@ -275,9 +275,10 @@ if test ! -f Rd2.${out_ext}; then
   do_cleanup
   exit 1
 fi
-cd ${start_dir}
+
+cd "${start_dir}"
 echo "Saving output to '${output}' ..."
-cp ${build_dir}/Rd2.${out_ext} ${output}
+cp "${build_dir}/Rd2.${out_ext}" ${output}
 echo "Done"
 
 do_cleanup
