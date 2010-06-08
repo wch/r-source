@@ -200,13 +200,13 @@ install.packages <-
     ok <- file.info(lib)$isdir & (file.access(lib, 2) == 0)
     if(length(lib) > 1 && any(!ok))
         stop(sprintf(ngettext(sum(!ok),
-                              "'lib' element '%s'  is not a writable directory",
+                              "'lib' element '%s' is not a writable directory",
                               "'lib' elements '%s' are not writable directories"),
                      paste(lib[!ok], collapse=", ")), domain = NA)
-    if(length(lib) == 1 && .Platform$OS.type == "windows") {
-        ## file.access is unreliable on Windows, especially Vista.
+    if(length(lib) == 1L && .Platform$OS.type == "windows") {
+        ## file.access is unreliable on Windows, especially >= Vista.
         ## the only known reliable way is to try it
-        ok <- file.info(lib)$isdir
+        ok <- file.info(lib)$isdir %in% TRUE # dir might not exist, PR#14311
         if(ok) {
             fn <- file.path(lib, paste("_test_dir", Sys.getpid(), sep="_"))
             unlink(fn, recursive = TRUE) # precaution
