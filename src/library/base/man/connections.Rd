@@ -258,9 +258,9 @@ isIncomplete(con)
     \item{\code{"a+"}, \code{"a+b"}}{Open for reading and appending.}
   }
   Not all modes are applicable to all connections: for example URLs can
-  only be opened for reading, and \code{gzfile} does not support
-  appending.  Only file and socket connections can be opened for both
-  reading and writing.
+  only be opened for reading.  Only file and socket connections can be
+  opened for both reading and writing.  An unsupported mode is usually
+  silently substituted.
   
 #ifdef unix
   If a file or fifo is created on a Unix-alike, its permissions will be
@@ -290,6 +290,13 @@ isIncomplete(con)
   mode is interpreted as \code{"rb"}.)  Most operations that need write
   access or text-only or binary-only mode will override the default mode
   of a non-yet-open connection.
+
+  Append modes need to be considered carefully for compressed-file
+  connections.  They do \strong{not} produce a single compressed stream
+  on the file, but rather append a new compressed stream to the file.
+  Readers (including \R) may or may not read beyond end of the first
+  stream: currently \R does so for \code{gzfile} and \code{xzfile}
+  connections, but not for \code{bzfile} connections.
 }
 
 \section{Compression}{

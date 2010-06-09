@@ -149,6 +149,10 @@ NEW FEATURES
 	inform the user of the library location used, when 'lib' has not
 	been specified.
 
+    o	There is limited support for multiple compressed streams on a
+	file: all of [bgx]zfile() allow streams to be appended to an
+	existing file, but bzfile() reads only the first stream.
+
 
 DEPRECATED & DEFUNCT
 

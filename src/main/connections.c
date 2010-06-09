@@ -1169,7 +1169,7 @@ SEXP attribute_hidden do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 }
 
-/* ------------------- [bg]zipped file connections --------------------- */
+/* ------------------- [bgx]zipped file connections --------------------- */
 
 typedef struct gzfileconn {
     void *fp;
@@ -1183,12 +1183,9 @@ static Rboolean gzfile_open(Rconnection con)
     Rgzfileconn gzcon = con->private;
 
     strcpy(mode, con->mode);
-    /* Must open as binary, only "r" and "w" are supported */
-    if(con->mode[0] == 'a') {
-	warning(_("appending is not supported for gzfile connections"));
-	return FALSE;
-    }
+    /* Must open as binary */
     if(strchr(con->mode, 'w')) sprintf(mode, "wb%1d", gzcon->compress);
+    else if (con->mode[0] == 'a') sprintf(mode, "ab%1d", gzcon->compress);
     else strcpy(mode, "rb");
     fp = gzopen(R_ExpandFileName(con->description), mode);
     if(!fp) {
@@ -1198,7 +1195,7 @@ static Rboolean gzfile_open(Rconnection con)
     }
     ((Rgzfileconn)(con->private))->fp = fp;
     con->isopen = TRUE;
-    con->canwrite = (con->mode[0] == 'w');
+    con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
     con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
     set_iconv(con);
@@ -1330,6 +1327,8 @@ static Rboolean bzfile_open(Rconnection con)
     int bzerror;
     char mode[] = "rb";
 
+    if (con->mode[0] == 'a')
+	warning(_("append mode may not do what you expect"));
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
     /* regardless of the R view of the file, the file must be opened in
