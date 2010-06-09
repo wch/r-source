@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-9   The R Development Core Team.
+ *  Copyright (C) 2000-10   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1184,6 +1184,10 @@ static Rboolean gzfile_open(Rconnection con)
 
     strcpy(mode, con->mode);
     /* Must open as binary, only "r" and "w" are supported */
+    if(con->mode[0] == 'a') {
+	warning(_("appending is not supported for gzfile connections"));
+	return FALSE;
+    }
     if(strchr(con->mode, 'w')) sprintf(mode, "wb%1d", gzcon->compress);
     else strcpy(mode, "rb");
     fp = gzopen(R_ExpandFileName(con->description), mode);
@@ -1194,7 +1198,7 @@ static Rboolean gzfile_open(Rconnection con)
     }
     ((Rgzfileconn)(con->private))->fp = fp;
     con->isopen = TRUE;
-    con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
+    con->canwrite = (con->mode[0] == 'w');
     con->canread = !con->canwrite;
     con->text = strchr(con->mode, 'b') ? FALSE : TRUE;
     set_iconv(con);
