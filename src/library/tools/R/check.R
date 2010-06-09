@@ -1912,11 +1912,11 @@ R_run_R <- function(cmd, Ropts, env)
                 ## TODO: work with object directly
                 res <- utils::capture.output(print(out))
                 if(length(res)) {
-                    if (grepl("Conflicting", res)) {
+                    if (any(grepl("Conflicting", res))) {
                         errorLog(Log)
                         printLog(Log, paste(c(res, ""), collapse = "\n"))
                         do_exit(1L)
-                    } else if (grepl("Insufficient", res))
+                    } else if (any(grepl("Insufficient", res)))
                         warnLog()
                     else noteLog(Log)
                     printLog(Log, paste(c(res, ""), collapse = "\n"))
