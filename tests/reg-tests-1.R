@@ -3521,7 +3521,7 @@ as.data.frame(FUN(x1[1:3,,], x2 = c("a", "b"),
 
 
 ## PR#7797 citation() chops "Roeland "
-stopifnot(as.personList("Roeland Lastname")[[1]]$name[1] == "Roeland")
+stopifnot(as.personList("Roeland Lastname")[[1]]$given[1] == "Roeland")
 ## was empty in 2.1.0.
 
 

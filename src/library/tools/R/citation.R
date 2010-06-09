@@ -24,7 +24,7 @@ BibTeX_entry_field_db <-
 get_CITATION_entry_fields <-
 function(file, encoding = "ASCII")
 {
-    ## Assume that citEntry() only occurs at top level.
+    ## Assume that bibentry() or citEntry() only occur at top level.
 
     if(encoding %in% c("latin1", "UTF-8") && !l10n_info()$MBCS) {
         exprs <- tryCatch(parse(file = file, encoding = encoding),
@@ -36,23 +36,28 @@ function(file, encoding = "ASCII")
     }
     if(inherits(exprs, "error")) return()
 
-    ## Argh.  citEntry() has formals
-    ##   (entry, textVersion, header = NULL, footer = NULL, ...)
-    ## so we cannot simply compute of the names of the citEntry() calls.
-    FOO <- function(entry, textVersion, header = NULL, footer = NULL, ...)
-        match.call()
-
+    ## Try to detect entry type and field names from the calls.
+    FOO1 <- FOO2 <- function() match.call(expand.dots = FALSE)
+    formals(FOO1) <- formals(utils::citEntry)
+    formals(FOO2) <- formals(utils::bibentry)
+    ## Could also hard-wire this, of course.
     out <- lapply(exprs,
            function(e) {
-               if(as.character(e[[1L]]) != "citEntry") return()
-               e[[1L]] <- as.name("FOO")
-               e <- as.list(eval(e))
-               entry <- e$entry
+               nm <- as.character(e[[1L]])
+               if(nm == "citEntry") {
+                   e[[1L]] <- as.name("FOO1")
+                   e <- as.list(eval(e))
+                   entry <- e$entry
+                   fields <- names(e$...)
+               }
+               else if(nm == "bibentry") {
+                   e[[1L]] <- as.name("FOO2")
+                   e <- as.list(eval(e))
+                   entry <- e$bibtype
+                   fields <- c(names(e$...), names(e$other)[-1L])
+               }
+               else return()
                entry <- if(!is.character(entry)) NA_character_ else entry[1L]
-               fields <- names(e)
-               ## Retain fields textVersion/header/footer, so these must
-               ## be removed in subsequent BibTeX validation computations.
-               fields <- fields[is.na(match(fields, c("", "entry")))]
                list(entry = entry, fields = fields)
            })
 
@@ -79,9 +84,6 @@ function(entry, fields)
     }
     rfields <- BibTeX_entry_field_db[[pos]]
     if(!length(rfields)) return(character())
-    ## Drop non-BibTeX citEntry() fields.
-    fields <- tolower(fields[!fields %in%
-                             c("textVersion", "header", "footer")])
     ## Go for legibility/generality rather than efficiency.
     ok <- sapply(strsplit(rfields, "|", fixed = TRUE),
                  function(f) any(f %in% fields))

@@ -6,16 +6,20 @@
 \name{citation}
 \title{Citing R and R Packages in Publications}
 \alias{citation}
-\alias{toBibtex.citation}
-\alias{toBibtex.citationList}
+% <FIXME>
+%   \alias{toBibtex.citation}
+%   \alias{toBibtex.citationList}
+% </FIXME>
 \description{
   How to cite \R and \R packages in publications.
 }
 \usage{
-citation(package = "base", lib.loc = NULL)
-\S3method{toBibtex}{citation}(object, \dots)
-\S3method{toBibtex}{citationList}(object, \dots)
+citation(package = "base", lib.loc = NULL, auto = NULL)
 }
+% <FIXME>
+%   \S3method{toBibtex}{citation}(object, \dots)
+%   \S3method{toBibtex}{citationList}(object, \dots)
+% </FIXME>
 \arguments{
   \item{package}{a character string with the name of a single package.
     An error occurs if more than one package name is given.}
@@ -23,8 +27,14 @@ citation(package = "base", lib.loc = NULL)
     \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  If the default is used, the loaded
     packages are searched before the libraries.}
-  \item{object}{return object of \code{citation}.}
-  \item{\dots}{currently not used.}
+  \item{auto}{a logical indicating whether the default citation
+    auto-generated from the package \file{DESCRIPTION} metadata should
+    be used or not, or \code{NULL} (default), indicating that a
+    \file{CITATION} file is used if it exists.}
+% <FIXME>  
+%   \item{object}{return object of \code{citation}.}
+%   \item{\dots}{currently not used.}
+% </FIXME>
 }
 \details{
   The \R core development team and the very active community of package
@@ -35,10 +45,17 @@ citation(package = "base", lib.loc = NULL)
   Execute function \code{citation()} for information on how to cite the
   base R system in publications. If the name of a non-base package is
   given, the function either returns the information contained in the
-  \code{\link{CITATION}} file of the package or auto-generates citation
+  \file{\link{CITATION}} file of the package or auto-generates citation
   information. In the latter case the package \file{DESCRIPTION} file is
   parsed, the resulting citation object may be arbitrarily bad, but is
   quite useful (at least as a starting point) in most cases.
+
+  In \R 2.12.0, one can use a \code{Author@R} field in
+  \file{DESCRIPTION} to provide a (\R code giving a)
+  \code{\link{person}} object with a refined, machine-readable
+  description of the package \dQuote{authors} (in particular specifying
+  their precise roles).  Only those with an actual author role will be
+  included in the auto-generated citation.
 
   If only one reference is given, the print method shows both a text
   version and a BibTeX entry for it, if a package has more than one
@@ -46,9 +63,11 @@ citation(package = "base", lib.loc = NULL)
   can be obtained using function \code{toBibtex} (see the examples below).
 }
 \value{
-  An object of class \code{"citationList"}: see \code{\link{readCitationFile}}.
+  An object inheriting from class \code{"\link{bibentry}"}.
 }
-\seealso{\code{\link{citEntry}}}
+\seealso{
+  \code{\link{citEntry}}
+}
 \keyword{misc}
 \examples{
 ## the basic R reference
