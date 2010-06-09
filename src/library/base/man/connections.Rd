@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -258,8 +258,9 @@ isIncomplete(con)
     \item{\code{"a+"}, \code{"a+b"}}{Open for reading and appending.}
   }
   Not all modes are applicable to all connections: for example URLs can
-  only be opened for reading.  Only file and socket connections can be
-  opened for both reading and writing.
+  only be opened for reading, and \code{gzfile} does not support
+  appending.  Only file and socket connections can be opened for both
+  reading and writing.
   
 #ifdef unix
   If a file or fifo is created on a Unix-alike, its permissions will be
