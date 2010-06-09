@@ -102,7 +102,7 @@ install.packages <-
              configure.args = getOption("configure.args"),
              configure.vars = getOption("configure.vars"),
              clean = FALSE, Ncpus = getOption("Ncpus"),
-             libs_only = FALSE, ...)
+             libs_only = FALSE, INSTALL_opts, ...)
 {
     if (is.logical(clean) && clean)
         clean <- "--clean"
@@ -312,17 +312,21 @@ install.packages <-
         } else
             cmd0 <- paste(paste("R_LIBS", shQuote(libpath), sep="="), cmd0)
 
+    if (is.character(clean))
+        cmd0 <- paste(cmd0, clean)
+    if (libs_only)
+        cmd0 <- paste(cmd0, "--libs-only")
+    if (!missing(INSTALL_opts))
+        cmd0 <- paste(cmd0, paste(INSTALL_opts, collapse = " "))
+
     if(is.null(repos) & missing(contriburl)) {
-        ## install from local source tarballs
+        ## install from local source tarball(s)
         update <- cbind(path.expand(pkgs), lib) # for side-effect of recycling to same length
-        if (is.character(clean))
-            cmd0 <- paste(cmd0, clean)
 
         for(i in seq_len(nrow(update))) {
             cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
                          getConfigureArgs(update[i, 1L]),
                          getConfigureVars(update[i, 1L]),
-                         if(libs_only) "--libs-only",
                          shQuote(update[i, 1L]))
             if(system(cmd) > 0L)
                 warning(gettextf(
@@ -365,11 +369,11 @@ install.packages <-
             ## can't use update[p0, ] due to possible multiple matches
             update <- update[sort.list(match(pkgs, p0)), ]
         }
-        if (is.character(clean))
-            cmd0 <- paste(cmd0, clean)
 
         if (is.null(Ncpus)) Ncpus <- 1L
         if (Ncpus > 1L && nrow(update) > 1L) {
+            ## --no-lock/--unsafe was specified in INSTALL_opts
+            ## that will override this.
             cmd0 <- paste(cmd0, "--pkglock")
             tmpd <- file.path(tempdir(), "make_packages")
             if (!file.exists(tmpd) && !dir.create(tmpd))
@@ -385,7 +389,6 @@ install.packages <-
                 cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
                              getConfigureArgs(update[i, 3L]),
                              getConfigureVars(update[i, 3L]),
-                             if(libs_only) "--libs-only",
                              update[i, 3L],
                              ">", paste(pkg, ".out", sep=""), "2>&1")
                 deps <- DL[[pkg]]
@@ -423,7 +426,6 @@ install.packages <-
                 cmd <- paste(cmd0, "-l", shQuote(update[i, 2L]),
                              getConfigureArgs(update[i, 3L]),
                              getConfigureVars(update[i, 3L]),
-                             if(libs_only) "--libs-only",
                              update[i, 3L])
                 status <- system(cmd)
                 if(status > 0L)
