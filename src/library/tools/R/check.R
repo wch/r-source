@@ -1909,9 +1909,9 @@ R_run_R <- function(cmd, Ropts, env)
             if (config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_", "FALSE"))) {
                 checkingLog(Log, "CRAN incoming feasibility")
                 out <- .check_package_CRAN_incoming(pkgdir)
-                ## TODO: work with object directly
-                res <- utils::capture.output(print(out))
-                if(length(res)) {
+                if(length(out)) {
+                    ## TODO: work with object directly
+                    res <- utils::capture.output(print(out))
                     if (any(grepl("Conflicting", res))) {
                         errorLog(Log)
                         printLog(Log, paste(c(res, ""), collapse = "\n"))
@@ -1983,8 +1983,9 @@ R_run_R <- function(cmd, Ropts, env)
                 res <- .check_package_depends(pkgdir)
                 if (any(sapply(res, length) > 0)) {
                     errorLog(Log)
-                    res <- utils::capture.output(print(res))
-                    printLog(Log, paste(res, collapse="\n"), "\n")
+                    ## TODO: use object directly
+                    printLog(Log, paste(utils::capture.output(print(res)),
+                                        collapse="\n"), "\n")
                     wrapLog(msg_DESCRIPTION)
                     do_exit(1L)
                 } else resultLog(Log, "OK")
