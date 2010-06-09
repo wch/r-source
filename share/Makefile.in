@@ -72,6 +72,8 @@ install-sources: installdirs
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/sh"; \
 	done
 	@for f in $(srcdir)/texmf/*.sty \
+		  $(srcdir)/texmf/*.cls \
+		  $(srcdir)/texmf/*.bst \
 		  $(srcdir)/texmf/*.fd; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/texmf"; \
 	done
