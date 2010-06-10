@@ -204,10 +204,18 @@ UTILITIES
 	R CMD Sd2Rd, install-info.pl (used only if install-info is
 	not found) and some maintainer-mode-only scripts.
 
-	[Work in progress: 'check' is currently called 'ncheck'.]
-
     o	R CMD check has a new argument --extra-arch to confine tests
 	to those needed to check an additional sub-architecture.
+
+	R CMD check's check for "Subdirectory 'inst' contains no files"
+	is more thorough: it looks for files, and warns if there are
+	only empty directories.
+
+	'check' configuration files have changed format: they are now
+	R source files, and the default file is ~/.R/check.Rconf.
+
+	[The Perl-based version is, for now, still available as
+	R CMD ocheck.]
 
     o	R CMD Rd2dvi makes use of tools::texi2dvi() to process the
 	package manual.
@@ -216,15 +224,8 @@ UTILITIES
 	does so), and --force removes (rather than overwrites) an
 	existing INDEX file.
 
-	[The Perl-based version is, for now, still available as R CMD
-	obuild.]
-
-    o	R CMD check's check for 'Subdirectory 'inst' contains no files'
-	is more thorough: it looks for files, and warns if there are
-	only empty directories.
-
-	'check' configuration files have changed format: they are now
-	R source files, and the default file is ~/.R/check.Rconf.
+	[The Perl-based version is, for now, still available as
+	R CMD obuild.]
 
     o	R CMD Rprof now uses utils::summaryRprof() rather than Perl.
 	It has new arguments to select one of the tables and to limit

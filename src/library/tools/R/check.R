@@ -2254,7 +2254,7 @@ R_run_R <- function(cmd, Ropts, env)
                         check_src_flag <- Sys.getenv("_R_CHECK_SRC_MINUS_W_IMPLICIT_", "FALSE")
                         ## (Not quite perfect, as the name should really
                         ## include 'IMPLICIT_FUNCTION_DECLARATION'.)
-                        if (config_val_to_logical(check_src_flag)) {
+                        if (!config_val_to_logical(check_src_flag)) {
                             lines <- grep("warning: implicit declaration of function",
                                           lines, invert = TRUE, value = TRUE)
                         }
@@ -2263,7 +2263,7 @@ R_run_R <- function(cmd, Ropts, env)
                         ## implied by '-Wall'.  Currently only accessible
                         ## via an internal environment variable.
                         check_src_flag <- Sys.getenv("_R_CHECK_SRC_MINUS_W_UNUSED_", "FALSE")
-                        if (config_val_to_logical(check_src_flag)) {
+                        if (!config_val_to_logical(check_src_flag)) {
                             lines <- grep("warning: unused", lines,
                                           ignore.case = TRUE, invert = TRUE, value = TRUE)
                         }

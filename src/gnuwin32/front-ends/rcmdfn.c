@@ -319,7 +319,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	status = system(cmd);
 	return(status);
     } else if (cmdarg > 0 && argc > cmdarg && 
-	      strcmp(argv[cmdarg], "ncheck") == 0) {
+	      strcmp(argv[cmdarg], "check") == 0) {
 	/* handle Rcmd check internally */
 	snprintf(cmd, CMD_LEN, 
 		 "%s/%s/Rterm.exe -e tools:::.check_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --slave --args ",
@@ -440,8 +440,8 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2dvi.sh --pdf");
 	    } else if (strcmp(p, "obuild") == 0) {
 		snprintf(cmd, CMD_LEN, "perl %s/bin/obuild.pl", RHome);
-	    } else if (strcmp(p, "check") == 0) {
-		snprintf(cmd, CMD_LEN, "perl %s/bin/check.pl", RHome);
+	    } else if (strcmp(p, "ocheck") == 0) {
+		snprintf(cmd, CMD_LEN, "perl %s/bin/ocheck.pl", RHome);
 	    } else if (strcmp(p, "Rprof") == 0) {
 		snprintf(cmd, CMD_LEN, "perl %s/bin/Rprof.pl", RHome);
 	    } else if (strcmp(p, "Sd2Rd") == 0) {
