@@ -438,12 +438,6 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		snprintf(cmd, CMD_LEN, "sh %s/bin/Rd2dvi.sh --pdf", RHome);
 		strcpy(cmd, "sh ");
 		strcat(cmd, RHome); strcat(cmd, "/bin/Rd2dvi.sh --pdf");
-	    } else if (strcmp(p, "obuild") == 0) {
-		snprintf(cmd, CMD_LEN, "perl %s/bin/obuild.pl", RHome);
-	    } else if (strcmp(p, "ocheck") == 0) {
-		snprintf(cmd, CMD_LEN, "perl %s/bin/ocheck.pl", RHome);
-	    } else if (strcmp(p, "Rprof") == 0) {
-		snprintf(cmd, CMD_LEN, "perl %s/bin/Rprof.pl", RHome);
 	    } else if (strcmp(p, "Sd2Rd") == 0) {
 		snprintf(cmd, CMD_LEN, "perl %s/bin/Sd2Rd.pl", RHome);
 	    } else if (strcmp(p, "open") == 0) {

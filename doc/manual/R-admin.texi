@@ -2646,14 +2646,12 @@ available (including on Mac OS X >= 10.4): should a broken version of
 ICU be found this can be suppressed by @option{--without-ICU}.
 
 Some code developers may want Perl version 5.8.0 or later, available via
-@uref{http://www.perl.com/CPAN/}.  This is used for @command{R CMD
-Rprof}@footnote{for which @command{R CMD Rprof2} and the @R{} function
-@code{summmaryProf} is an alternative.} and the rarely used @command{R
-CMD Sd2Rd}: if required it should be in your @env{PATH} when
+@uref{http://www.perl.com/CPAN/}.  This is used for the rarely used
+@command{R CMD Sd2Rd}: if required it should be in your @env{PATH} when
 @command{configure} is run.
 
 @c The Perl scripts left are
-@c src/scripts: Rprof Sd2Rd
+@c src/scripts: Sd2Rd
 @c tools: help2man.pl install-info.pl
 @c src/gnuwin32/installer: WIXins.pl
 
@@ -4457,9 +4455,8 @@ The command line tools (in @file{Rtools.exe})
 The MinGW toolchain to compile C, Fortran and C++.
 @end itemize
 For installing simple source packages containing data or @R{} source but
-no compiled code, none of these are needed.  Perl (in @file{Rtools.exe})
-is no longer needed to build @R{} nor to install nor develop source
-packages.
+no compiled code, none of these are needed.  Perl is no longer needed to
+build @R{} nor to install nor develop source packages.
 
 A complete build of @R{} including PDF manuals, and producing the
 installer will also need the following:

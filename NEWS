@@ -163,9 +163,10 @@ NEW FEATURES
     	specify person roles using a controlled vocabulary (the MARC
     	relator terms).
 
-    o	Package utils adds a new bibentry class for representing and
-        manipulating bibliographic information in enhanced BibTeX style,
-        unifying and enhancing the previously existing mechanisms.
+    o	Package 'utils' adds a new "bibentry" class for representing and
+        manipulating bibliographic information in enhanced BibTeX
+        style, unifying and enhancing the previously existing
+        mechanisms.
 
 
 DEPRECATED & DEFUNCT
@@ -214,7 +215,7 @@ UTILITIES
 	'check' configuration files have changed format: they are now
 	R source files, and the default file is ~/.R/check.Rconf.
 
-	[The Perl-based version is, for now, still available as
+	[The Perl-based version is, for Unix, still available as
 	R CMD ocheck.]
 
     o	R CMD Rd2dvi makes use of tools::texi2dvi() to process the
@@ -224,7 +225,7 @@ UTILITIES
 	does so), and --force removes (rather than overwrites) an
 	existing INDEX file.
 
-	[The Perl-based version is, for now, still available as
+	[The Perl-based version is, for Unix, still available as
 	R CMD obuild.]
 
     o	R CMD Rprof now uses utils::summaryRprof() rather than Perl.

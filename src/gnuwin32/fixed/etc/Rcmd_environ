@@ -6,7 +6,6 @@ R_ARCH=
 
 ## from Rcmd
 R_OSTYPE=windows
-PERL5LIB=${R_SHARE_DIR}/perl;${PERL5LIB}
 TEXINPUTS=.;${TEXINPUTS};${R_SHARE_DIR}/texmf;
 
 ## from etc/Renviron
