@@ -62,7 +62,7 @@ matplot <- function(x, y, type = "p",
     type <- str2vec(type)
     if(is.null(pch)) {
 	pch <- c(1L:9L, 0L, letters, LETTERS)
-	if(k > length(pch))
+	if(k > length(pch) && any(type %in% c("p","o","b")))
 	    warning("default 'pch' is smaller than number of columns and hence recycled")
     } else if(is.character(pch))
 	pch <- str2vec(pch)
