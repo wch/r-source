@@ -7,13 +7,13 @@ and x86_64 chips.  It is designed to be as close as possible to the
 implementation on Unix, but see the list of differences below.  The
 port was by Guido Masarotto, Brian Ripley and Duncan Murdoch.
 
-See the file `CHANGES' for the new features of this version.
+See the file 'CHANGES' for the new features of this version.
 
 
 Installation
 ============
 
-The distribution is distributed as a 30Mb installer @RWVER@-win32.exe.
+The distribution is distributed as a 37Mb installer @RWVER@-win.exe.
 
 Just run this for a Windows-XP style installer.  It contains all the R
 components, and you can select what want installed.
@@ -27,7 +27,8 @@ and file doc\html\rw-FAQ.html.
 Usage
 =====
 
-There are two versions of the R executable in @RWVER@\bin:
+There are two versions of the R executable in @RWVER@\bin\i386 (32-bit) or 
+@RWVER@\bin\x64 (64-bit).
 
 GUI:
 
@@ -35,7 +36,7 @@ Rgui.exe runs as a standard Windows GUI executable and provides an R
 console in its own window.  It takes the standard R command-line
 arguments; these are most easily set by making a shortcut to
 ...\@RWVER@\bin\Rgui.exe and adding the arguments in the Target field.
-Set the `Start in' field of the shortcut to the directory you want to
+Set the 'Start in' field of the shortcut to the directory you want to
 use as the working directory (where workspaces and files are saved to
 and loaded from).  The installer creates a shortcut on the desktop for
 you (by default).
@@ -54,23 +55,21 @@ The 'load' menu items (Source R code, Display file, Load Workspace)
 keep track of the directory that was last used, and start their dialog
 boxes from that directory the next time they are used.  That directory
 can be made the working directory by the File | Change dir menu item.
-All the `save' menu items start dialog boxes at the current working
-directory: this includes `Save Workspace' and the various ways to save
+All the 'save' menu items start dialog boxes at the current working
+directory: this includes 'Save Workspace' and the various ways to save
 graphics, as well as saving the workspace at the end of the session.
 
-Note that the text help files use the latin1 encoding.  To see all the
-characters you must use an appropriate font (European-language True
-Type fonts should be OK).  To check if your preferred font has latin1
-capability, try "help(text)" and look at the examples.   [Note: only a
-few help files make use of latin1 characters not contained in the
-standard ASCII set so if you like a font without latin1 capability,
-use it.]
+Note that a few of the text help files use accented Western European.
+To see all the characters you must use an appropriate font
+(European-language True Type fonts should be OK).  To check if your
+preferred font has these characters, try "help(text)" and look at the
+examples.
 
 
 TERMINAL/BATCH:
 
-Rterm.exe will run from a command line such as an MS-DOS or Commands
-Window running the standard shell, cmd.exe, as well as the ports of
+Rterm.exe will run from a command line such as a 'Command Prompt'
+window running the standard shell, cmd.exe, as well as the ports of
 bash and tcsh that we use.  Its primary purpose is to allow batch
 operation, but it does provide all the facilities needed for
 interactive use, including command-line editing (see the file
@@ -129,12 +128,13 @@ colours) can be customized by editing the file etc\Rconsole, and a
 copy with a user's settings can be put in her HOME directory or in the
 working directory.  (The exact sequence is to search the directory
 pointed to by the first found of the environment variables R_USER then
-HOME, then the Windows "personal" directory (typically `C:\Documents
-and Settings\username\My Documents' in Windows XP)
- then {HOMEDRIVE}{HOMEPATH} then the working directory, finally
-R_HOME\etc.  This also applies to .Renviron and other uses of `HOME'
-in our documentation.)  The file contains a description of the
-settings that can be altered.  See also ?Rconsole.
+HOME, then the Windows "personal" directory (typically 'C:\Documents
+and Settings\username\My Documents' in Windows XP and
+'C:\Users\username\My Documents' on Vista/7) then
+{HOMEDRIVE}{HOMEPATH} then the working directory, finally R_HOME\etc.
+This also applies to .Renviron and other uses of 'HOME' in our
+documentation.)  The file contains a description of the settings that
+can be altered.  See also ?Rconsole.
 
 An alternative way to edit the Rconsole file is to use the GUI
 preferences item on the Edit menu in Rgui.exe.  This can change some
@@ -166,14 +166,6 @@ CRAN/bin/windows/contrib.  These are zip files which should be
 unpacked in @RWVER@\library.  The simplest option is use the items on
 the Packages menu to install from a zip file or to download from CRAN.
 
-The list of packages and functions given by HTML help and used by the
-search engine can be updated from a running R process by the command
-
-	link.html.help()
-
-provided the owner of the process has write permission on
-@RWVER@\doc\html.
-
 Private libraries of packages can be used and can be specified by the
 environment variable R_LIBS.  (Separate directories by ";" in this
 version.)  They will not be linked to HTML help.  In more detail, to
@@ -190,7 +182,7 @@ to your .Rprofile or at the end of R_HOME\etc\Rprofile.
 
 To install a package from source code you need the source-package
 distribution installed from @RWVER@-win32.exe (but not the R sources).
-The `R Installation and Administration' manual contains detailed
+The 'R Installation and Administration' manual contains detailed
 instructions.
 
 
@@ -203,7 +195,7 @@ Differences from Unix versions of R
 
 - Command-line editing is always available, but is simpler than
   under readline-based input on Unix.  For Rgui.exe, see the menu item
-  `Help | Console', for Rterm.exe the file README.Rterm.
+  'Help | Console', for Rterm.exe the file README.Rterm.
 
 - Paths to files can be specified with "/" or "\\".
 
@@ -226,7 +218,7 @@ rw-FAQ.
 Building From Source
 ====================
 
-See the `R Installation and Adminstration' Manual
+See the 'R Installation and Adminstration' Manual
 (doc\manual\R-admin.html) and the rw-FAQ.
 
 
