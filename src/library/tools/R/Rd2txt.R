@@ -28,15 +28,33 @@ tabExpand <- function(x) {
     .Call(doTabExpand, x, start)
 }
 
+Rd2txt_options <- local({
+    opts <- list(width = 80L,
+                 minIndent = 10L,
+    	         extraIndent = 4L,
+    	         sectionIndent = 5L,
+    	         sectionExtra = 2L,
+    	         itemBullet = "* ",
+    	         enumFormat = function(n) sprintf("%d. ", n))
+    function(...) {
+        args <- list(...)
+        if (!length(args))
+            return(opts)
+        else {
+            if (is.list(args[[1]])) args <- args[[1]]
+            result <- opts[names(args)]
+            opts[names(args)] <<- args
+            invisible(result)
+        }
+    }
+})
+              
 Rd2txt <-
     function(Rd, out="", package = "", defines=.Platform$OS.type,
              stages = "render", outputEncoding = "",
-             width = getOption("help_text_width", 80L), ...)
+             options, ...)
 {
-    ## these attempt to mimic pre-2.10.0 layout
-    WIDTH <- 0.9 * width
-    HDR_WIDTH <- WIDTH - 2L
-
+    
     ## we need to keep track of where we are.
     buffer <- character()	# Buffer not yet written to con
     				# Newlines have been processed, each line in buffer is
@@ -50,6 +68,15 @@ Rd2txt <-
     enumItem <- 0L		# Last enumeration item number
     inEqn <- FALSE		# Should we do edits needed in an eqn?
     sectionLevel <- 0		# How deeply nested within sections/subsections
+    
+    saveOpts <- Rd2txt_options() 
+    on.exit(Rd2txt_options(saveOpts))# Rd files may change these, so restore them
+    				     # whether or not the caller set them.
+    if (!missing(options)) Rd2txt_options(options)
+    
+## these attempt to mimic pre-2.10.0 layout
+    WIDTH <- 0.9 * Rd2txt_options()$width
+    HDR_WIDTH <- WIDTH - 2L
 
     startCapture <- function() {
     	save <- list(buffer=buffer, linestart=linestart, indent=indent,
@@ -337,7 +364,9 @@ Rd2txt <-
                    enumItem0 <- enumItem
                    enumItem <<- 0L
                    indent0 <- indent
-                   indent <<- max(10L, indent+4L)
+                   opts <- Rd2txt_options()
+                   indent <<- max(opts$minIndent,
+                              indent + opts$extraIndent)
                    dropBlank <<- TRUE
                    writeContent(block, tag)
                    blankLine()
@@ -706,7 +735,9 @@ Rd2txt <-
                                   writeContent(block[[1L]], tag)
                                   DLlab <- endCapture(save)
                                   indent0 <- indent
-                                  indent <<- max(10L, indent + 4L)
+                                  opts <- Rd2txt_options()
+                                  indent <<- max(opts$minIndent, 
+                                                 indent + opts$extraIndent)
                                   keepFirstIndent <<- TRUE
                                   putw(paste(rep(" ", indent0), collapse=""),
                                        frmt(paste(DLlab,  sep=""),
@@ -724,7 +755,8 @@ Rd2txt <-
                                   writeContent(block[[1L]], tag)
                                   DLlab <- endCapture(save)
                                   indent0 <- indent
-                                  indent <<- max(10L, indent + 4L)
+                                  opts <- Rd2txt_options()
+                                  indent <<- max(opts$minIndent, indent + opts$extraIndent)
                                   keepFirstIndent <<- TRUE
                                   putw(frmt(paste(DLlab, ": ", sep=""),
                                               justify="right", width=indent))
@@ -736,11 +768,12 @@ Rd2txt <-
                               "\\enumerate" = {
                               	  blankLine()
                               	  keepFirstIndent <<- TRUE
+                              	  opts <- Rd2txt_options()
                               	  if (blocktag == "\\itemize")
-                              	      label <- "* "
+                              	      label <- opts$itemBullet
                               	  else {
                               	      enumItem <<- enumItem + 1L
-                              	      label <- paste(enumItem, ". ", sep="")
+                              	      label <- opts$enumFormat(enumItem)
                               	  }
                               	  putw(frmt(label, justify="right",
                                             width=indent))
@@ -786,7 +819,8 @@ Rd2txt <-
     	save <- c(indent, sectionLevel, keepFirstIndent, dropBlank, wrapping)
     	blankLine(min(sectionLevel, 1L))
     	titlePrefix <- paste(rep("  ", sectionLevel), collapse="")
-        indent <<- 5L + 2L*sectionLevel
+    	opts <- Rd2txt_options()
+        indent <<- opts$sectionIndent + opts$sectionExtra*sectionLevel
         sectionLevel <<- sectionLevel + 1
         keepFirstIndent <<- TRUE
         if (tag == "\\section" || tag == "\\subsection") {
@@ -826,7 +860,7 @@ Rd2txt <-
             con <- stdout()
         } else {
 	    con <- file(out, "wt")
-	    on.exit(close(con))
+	    on.exit(close(con), add=TRUE)
 	}
     } else {
     	con <- out

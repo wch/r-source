@@ -1,7 +1,8 @@
 
-R version 2.12.0 Under development (unstable) (2010-05-06 r51917)
+R version 2.12.0 Under development (unstable) (2010-06-11 r52253)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: i386-pc-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -20,6 +21,7 @@ Type 'q()' to quit R.
 > pkgname <- "tools"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> options(pager = "console")
 > library('tools')
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
@@ -64,6 +66,97 @@ Type 'q()' to quit R.
 > ### Keywords: documentation
 > 
 > ### ** Examples
+> cleanEx()
+> nameEx("Rd2txt_options")
+> ### * Rd2txt_options
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Rd2txt_options
+> ### Title: Set formatting options for text help.
+> ### Aliases: Rd2txt_options
+> ### Keywords: documentation
+> 
+> ### ** Examples
+> 
+> saveOpts <- Rd2txt_options()
+> saveOpts
+$width
+[1] 80
+
+$minIndent
+[1] 10
+
+$extraIndent
+[1] 4
+
+$sectionIndent
+[1] 5
+
+$sectionExtra
+[1] 2
+
+$itemBullet
+[1] "* "
+
+$enumFormat
+function (n) 
+sprintf("%d. ", n)
+<environment: 018d9764>
+
+> Rd2txt_options(minIndent=4)
+> Rd2txt_options()
+$width
+[1] 80
+
+$minIndent
+[1] 4
+
+$extraIndent
+[1] 4
+
+$sectionIndent
+[1] 5
+
+$sectionExtra
+[1] 2
+
+$itemBullet
+[1] "* "
+
+$enumFormat
+function (n) 
+sprintf("%d. ", n)
+<environment: 018d9764>
+
+> Rd2txt_options(saveOpts)
+> Rd2txt_options()
+$width
+[1] 80
+
+$minIndent
+[1] 10
+
+$extraIndent
+[1] 4
+
+$sectionIndent
+[1] 5
+
+$sectionExtra
+[1] 2
+
+$itemBullet
+[1] "* "
+
+$enumFormat
+function (n) 
+sprintf("%d. ", n)
+<environment: 018d9764>
+
+> 
+> 
+> 
 > cleanEx()
 > nameEx("Rdutils")
 > ### * Rdutils
@@ -683,7 +776,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.145 0.122 3.328 0 0 
+Time elapsed:  1.24 0.14 1.71 NA NA 
 > grDevices::dev.off()
 null device 
           1 

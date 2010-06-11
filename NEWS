@@ -167,6 +167,10 @@ NEW FEATURES
         manipulating bibliographic information in enhanced BibTeX
         style, unifying and enhancing the previously existing
         mechanisms.
+        
+    o	Several aspects of the display of text help are now
+	customizable using the new Rd2txt_options() function.
+	options("help_text_width") is no longer used.
 
 
 DEPRECATED & DEFUNCT
