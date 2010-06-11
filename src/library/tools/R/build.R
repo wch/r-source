@@ -131,14 +131,22 @@ get_exclude_patterns <- function()
     }
 
     ## This version merges stdout and stderr
-    shell_with_capture <- function (command) {
-        outfile <- tempfile("xshell")
-        on.exit(unlink(outfile))
-        status <- if (.Platform$OS.type == "windows")
-            shell(sprintf("%s > %s 2>&1", command, outfile), shell = "cmd.exe")
-        else system(sprintf("%s > %s 2>&1", command, outfile))
-        list(status = status, stdout = readLines(outfile, warn = FALSE))
+    if (WINDOWS) {
+        shell_with_capture <- function (command) {
+            Rin <- tempfile("Rin")
+            Rout <- tempfile("Rout")
+            writeLines(paste(command, ">", shQuote(Rout), "2>&1"), Rin)
+            status <- system(paste("sh", shQuote(Rin)))
+            list(status = status, stdout = readLines(Rout, warn = FALSE))
+        }
+    } else {
+        shell_with_capture <- function (command) {
+            outfile <- tempfile("xshell")
+            on.exit(unlink(outfile))
+            status <- system(sprintf("%s > %s 2>&1", command, shQuote(outfile)))
+            list(status = status, stdout = readLines(outfile, warn = FALSE))
     }
+}
 
 
     ## Run silently
