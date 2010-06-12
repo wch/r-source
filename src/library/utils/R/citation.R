@@ -246,7 +246,7 @@ function(x)
         return(z)
     }
 
-    do.call("c", lapply(x, as_person1))
+    as.list(do.call("c", lapply(x, as_person1)))
 }
 
 personList <-
