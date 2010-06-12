@@ -36,8 +36,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     Tilde-expansion will be done on the file paths.
 #endif
     
-    If this is a zero-length character vector, a listbox of available
-    packages is presented where possible.
+    If this is missing or a zero-length character vector, a listbox of
+    available packages is presented where possible.
   }
   \item{lib}{
     character vector giving the library directories where to

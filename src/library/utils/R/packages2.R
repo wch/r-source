@@ -372,7 +372,7 @@ install.packages <-
 
         if (is.null(Ncpus)) Ncpus <- 1L
         if (Ncpus > 1L && nrow(update) > 1L) {
-            ## --no-lock/--unsafe was specified in INSTALL_opts
+            ## if --no-lock/--unsafe was specified in INSTALL_opts
             ## that will override this.
             cmd0 <- paste(cmd0, "--pkglock")
             tmpd <- file.path(tempdir(), "make_packages")
