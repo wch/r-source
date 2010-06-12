@@ -17,7 +17,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
                  dependencies = NA, type = getOption("pkgType"),
                  configure.args = getOption("configure.args"),
                  configure.vars = getOption("configure.vars"),
-                 clean = FALSE, Ncpus = getOption("Ncpus"), \dots)
+                 clean = FALSE, Ncpus = getOption("Ncpus"),
+                 INSTALL_opts, \dots)
 }
 \arguments{
   \item{pkgs}{character vector of the short names of packages whose
@@ -35,8 +36,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     Tilde-expansion will be done on the file paths.
 #endif
     
-    If this is a zero-length character vector, a listbox of available
-    packages is presented where possible.
+    If this is missing or a zero-length character vector, a listbox of
+    available packages is presented where possible.
   }
   \item{lib}{
     character vector giving the library directories where to
@@ -131,6 +132,11 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     only if GNU \command{make} is in use (more precisely, if
     \command{make -j \var{Ncpus}} works).  Defaults to \code{1} if the
     option is unset.
+  }
+  \item{INSTALL_opts}{
+    an optional character vector of additional option(s) to be passed to
+    \command{R CMD INSTALL} for a source package install.  E.g.
+    \code{c("--html", "--no-multiarch")}.
   }
   \item{\dots}{
     Arguments to be passed to \code{\link{download.file}}.

@@ -9,10 +9,17 @@
 		CHANGES IN R VERSION 2.11.1 patched
 
 
+NEW FEATURES
+
+    o	install.packages() has a new optional argument 'INSTALL_opts'
+    	which can be used to pass options to R CMD INSTALL for
+    	source-package installs.
+
+
 BUG FIXES
 
-    o	R CMD Rd2dvi failed if run from a path with name containing
-	spaces.  This affected R CMD check, which called Rd2dvi.
+    o	R CMD Rd2dvi failed if run from a path containing space(s).
+	This also affected R CMD check, which calls Rd2dvi.
 
 
 
