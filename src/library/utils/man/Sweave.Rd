@@ -1,6 +1,6 @@
 % File src/library/utils/man/Sweave.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Sweave}
@@ -85,7 +85,9 @@ Stangle(file, driver = Rtangle(),
   Friedrich Leisch: Sweave User Manual, 2008\cr
   \url{http://www.stat.uni-muenchen.de/~leisch/Sweave}
 }
-\seealso{\code{\link{RweaveLatex}}, \code{\link{Rtangle}}}
+\seealso{
+  \code{\link{RweaveLatex}}, \code{\link{Rtangle}}
+}
 \examples{
 testfile <- system.file("Sweave", "Sweave-test-1.Rnw", package = "utils")
 

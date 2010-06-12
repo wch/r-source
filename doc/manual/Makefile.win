@@ -5,10 +5,9 @@
 ECHO = echo
 
 include ../../src/gnuwin32/MkRules
-## this was in MkRules, but throws errors unless latex is in the path.
 ifeq ($(strip $(shell latex --version | grep ^MiKTeX | wc -l)),1)
 # MiKTeX
-R_TEXOPTS=--include-directory=$(RHOME)/share/texmf
+R_TEXOPTS=--include-directory=$(RHOME)/share/texmf/tex/latex
 TEXI2DVI=texi2dvi
 else
 R_TEXOPTS=
@@ -61,7 +60,7 @@ texinputs_BASE = $(R_PKGS_BASE:=-pkg.tex)
 texinputs_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-pkg.tex)
 R_PKGS_refman = base datasets grDevices graphics grid methods stats tools utils
 refman_TEXINPUTS = $(R_PKGS_refman:=-pkg.tex)
-refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/Rd.sty
+refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/tex/latex/Rd.sty
 fullrefman_TEXINPUTS = $(texinputs_BASE) $(texinputs_RECOMMENDED)
 
 
@@ -136,10 +135,10 @@ refman.dvi: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 	@$(RM) -f *.aux refman.toc refman.ind
-	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
 	  $(BATCHLATEX) refman.tex 
 	@-$(MAKEINDEX) refman
-	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
 	  $(BATCHLATEX) refman.tex 
 
 fullrefman.dvi: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
@@ -165,10 +164,10 @@ fullrefman.dvi: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@$(RM) -f *.aux fullrefman.toc fullrefman.ind
-	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
 	  $(BATCHLATEX) fullrefman.tex 
 	@-$(MAKEINDEX) fullrefman
-	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
 	  $(BATCHLATEX) fullrefman.tex 
 
 html: $(OBJECTS_HTML)
@@ -194,12 +193,12 @@ refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 	@$(RM) -f *.aux refman.toc refman.ind
-	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) refman.tex 
 	@$(MAKEINDEX) refman
-	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) refman.tex 
-	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) refman.tex 
 
 fullrefman.pdf: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
@@ -224,12 +223,12 @@ fullrefman.pdf: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
 	@$(RM) -f *.aux fullrefman.toc fullrefman.ind
-	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) fullrefman.tex 
 	@$(MAKEINDEX) fullrefman
-	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) fullrefman.tex 
-	@TEXINPUTS="$(top_srcdir)/share/texmf;$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex;$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) fullrefman.tex 
 
 version.tex: $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION

@@ -45,6 +45,8 @@ installdirs:
 	done
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/sh"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/texmf"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/texmf/bibtex/bst"
+	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/texmf/tex/latex"
 install-message:
 	@$(ECHO) "installing share ..."
 install-sources: installdirs
@@ -71,11 +73,11 @@ install-sources: installdirs
 	@for f in $(srcdir)/sh/*.sh; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/sh"; \
 	done
-	@for f in $(srcdir)/texmf/*.sty \
-		  $(srcdir)/texmf/*.cls \
-		  $(srcdir)/texmf/*.bst \
-		  $(srcdir)/texmf/*.fd; do \
-	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/texmf"; \
+	@for f in $(srcdir)/texmf/bibtex/bst/*; do \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/texmf/bibtex/bst"; \
+	done
+	@for f in $(srcdir)/texmf/tex/latex/*; do \
+	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/texmf/tex/latex"; \
 	done
 install-strip: install
 

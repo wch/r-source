@@ -212,12 +212,15 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         texi2dvi <- Sys.which("texi2dvi")
 
     envSep <- .Platform$path.sep
-    Rtexmf <- file.path(R.home("share"), "texmf")
+    texinputs0 <- texinputs
+    Rtexmf <- file.path(R.home("share"), "texmf", "tex", "latex")
     ## "" forces use of default paths.
     texinputs <- paste(c(texinputs, Rtexmf, ""), collapse = envSep)
     ## not clear if this is needed, but works
     if(.Platform$OS.type == "windows")
-        texinputs <- gsub("\\\\", "/", texinputs)
+        texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
+    Rtexmf <- file.path(R.home("share"), "texmf", "bibtex", "bst")
+    bstinputs <- paste(c(texinputs, Rtexmf, ""), collapse = envSep)
 
     otexinputs <- Sys.getenv("TEXINPUTS", unset = NA)
     if(is.na(otexinputs)) {
@@ -231,12 +234,12 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         bibinputs <- "."
     } else on.exit(Sys.setenv(BIBINPUTS = bibinputs, add = TRUE))
     Sys.setenv(BIBINPUTS = paste(bibinputs, texinputs, sep = envSep))
-    bstinputs <- Sys.getenv("BSTINPUTS", unset = NA)
-    if(is.na(bstinputs)) {
+    obstinputs <- Sys.getenv("BSTINPUTS", unset = NA)
+    if(is.na(obstinputs)) {
         on.exit(Sys.unsetenv("BSTINPUTS"), add = TRUE)
-        bstinputs <- "."
-    } else on.exit(Sys.setenv(BSTINPUTS = bstinputs), add = TRUE)
-    Sys.setenv(BSTINPUTS = paste(bstinputs, texinputs, sep = envSep))
+        obstinputs <- "."
+    } else on.exit(Sys.setenv(BSTINPUTS = obstinputs), add = TRUE)
+    Sys.setenv(BSTINPUTS = paste(obstinputs, bstinputs, sep = envSep))
 
     if(index && nzchar(texi2dvi) && .Platform$OS.type != "windows") {
         ## switch off the use of texindy in texi2dvi >= 1.157
@@ -319,7 +322,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             message(paste(paste(out$stderr, collapse = "\n"),
                           paste(out$stdout, collapse = "\n"),
                           sep = "\n"))
-    } else if(index && nzchar(texi2dvi)) {       # Windows
+    } else if(index && nzchar(texi2dvi)) { # MiKTeX on Windows
         extra <- ""
         ext <- if(pdf) "pdf" else "dvi"
         pdf <- if(pdf) "--pdf" else ""
@@ -329,8 +332,12 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## look for MiKTeX (which this almost certainly is)
         ## and set the path to R's style files.
         ## -I works in MiKTeX >= 2.4, at least
+        ## http://docs.miktex.org/manual/texify.html
         ver <- system(paste(shQuote(texi2dvi), "--version"), intern = TRUE)
         if(length(grep("MiKTeX", ver[1L]))) {
+            ## AFAICS need separate -I for each element of texinputs.
+            texinputs <- c(texinputs0, Rtexmf,
+                           file.path(R.home("share"), "texmf", "bibtex", "bst"))
             paths <- paste ("-I", shQuote(texinputs))
             extra <- paste(extra, paste(paths, collapse = " "))
         }
@@ -372,9 +379,11 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         if(nzchar(msg)) stop(msg, call. = FALSE, domain = NA)
     } else {
         ## Do not have texi2dvi or don't want to index
-        ## Needed at least on Windows except for MiKTeX
+        ## Needed on Windows except for MiKTeX
         ## Note that this does not do anything about running quietly,
         ## nor cleaning, but is probably not used much anymore.
+
+        ## If it is called with MiKTeX then TEXINPUTS etc will be ignored.
 
         texfile <- shQuote(file)
         base <- file_path_sans_ext(file)

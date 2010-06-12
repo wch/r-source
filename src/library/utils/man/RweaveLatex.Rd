@@ -1,6 +1,6 @@
 % File src/library/utils/man/RweaveLatex.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{RweaveLatex}
@@ -44,11 +44,15 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
   process the hard-coded path if it contains spaces (as it often will
   under Windows) or TeX special characters.
 
-  The default in \R prior to 2.7.0 was \code{stylepath = TRUE}.  It is
-  now taken from the environment variable
-  \env{SWEAVE_STYLEPATH_DEFAULT}, or is \code{FALSE} it that is unset or
-  empty.  If set, it should be exactly \code{TRUE} or \code{FALSE}: any
-  other values are taken as \code{FALSE}.
+  The default for \code{stylepath} is now taken from the environment
+  variable \env{SWEAVE_STYLEPATH_DEFAULT}, or is \code{FALSE} it that is
+  unset or empty.  If set, it should be exactly \code{TRUE} or
+  \code{FALSE}: any other values are taken as \code{FALSE}.
+
+  As from \R 2.12.0, the simplest way for frequent Sweave users to ensure
+  that \file{Sweave.sty} is in the TeX input path is to add
+  \file{\var{R_HOME}/share/texmf} as a \sQuote{texmf tree} (\sQuote{root
+  directory} in the parlance of the \sQuote{MiKTeX settings} utility).
 
   By default, \file{Sweave.sty} sets the width of all included graphics to:\cr
   \samp{\\setkeys{Gin}{width=0.8\\textwidth}}.

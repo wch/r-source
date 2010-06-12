@@ -58,7 +58,7 @@ texinputs_BASE = $(R_PKGS_BASE:=-pkg.tex)
 texinputs_RECOMMENDED = $(R_PKGS_RECOMMENDED:=-pkg.tex)
 R_PKGS_refman = base datasets grDevices graphics grid methods stats tools utils
 refman_TEXINPUTS = $(R_PKGS_refman:=-pkg.tex)
-refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/Rd.sty
+refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/tex/latex/Rd.sty
 fullrefman_TEXINPUTS = $(texinputs_BASE) @USE_RECOMMENDED_PACKAGES_TRUE@ $(texinputs_RECOMMENDED)
 
 texiincludes = version.texi $(srcdir)/R-defs.texi
@@ -161,10 +161,10 @@ refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
-	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHLATEX) refman.tex
 	@-$(MAKEINDEX) refman
-	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHLATEX) refman.tex
 	@touch stamp-refman-dvi
 
@@ -224,10 +224,10 @@ fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
 	  done; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
-	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHLATEX) fullrefman.tex 
 	@-$(MAKEINDEX) fullrefman
-	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHLATEX) fullrefman.tex
 	@touch stamp-fullrefman-dvi
 stamp-fullrefman-dvi: $(fullrefman_TEXINPUTS)
@@ -297,12 +297,12 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
-	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) refman.tex
 	@-$(MAKEINDEX) refman
-	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) refman.tex
-	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) refman.tex
 	@touch stamp-refman-pdf
 stamp-refman-pdf: $(refman_TEXINPUTS)
@@ -332,12 +332,12 @@ fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	  done; \
 	  for f in $${texinputs}; do $(ECHO) "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > fullrefman.tex
-	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) fullrefman.tex
 	@-$(MAKEINDEX) fullrefman
-	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) fullrefman.tex
-	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	@TEXINPUTS="$(top_srcdir)/share/texmf/tex/latex:$$TEXINPUTS" \
 	  $(BATCHPDFLATEX) fullrefman.tex
 	@touch stamp-fullrefman-pdf
 stamp-fullrefman-pdf: $(fullrefman_TEXINPUTS)

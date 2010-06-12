@@ -114,7 +114,7 @@ NEW FEATURES
 
 	It avoids the use of 'texindy' by texinfo's texi2dvi >= 1.157,
 	since that does not emulate 'makeindex' well enough to avoid
-	problems with special characters (such as (,{,!) in indices.
+	problems with special characters (such as '(', '{', '!') in indices.
 
     o	The ability of readLines() and scan() to re-encode inputs to
 	marked UTF-8 strings on Windows since R 2.7.0 is extended to
@@ -172,6 +172,9 @@ NEW FEATURES
 	customizable using the new Rd2txt_options() function.
 	options("help_text_width") is no longer used.
 
+    o	R_HOME/share/texmf now follows the TDS conventions, so can be
+	set as a texmf tree ('root directory' in MiKTeX parlance).
+
 
 DEPRECATED & DEFUNCT
 
@@ -222,9 +225,6 @@ UTILITIES
 	[The Perl-based version is, for Unix, still available as
 	R CMD ocheck.]
 
-    o	R CMD Rd2dvi makes use of tools::texi2dvi() to process the
-	package manual.
-
     o	R CMD build no longer creates an INDEX file (R CMD INSTALL
 	does so), and --force removes (rather than overwrites) an
 	existing INDEX file.
@@ -232,9 +232,12 @@ UTILITIES
 	[The Perl-based version is, for Unix, still available as
 	R CMD obuild.]
 
+    o	R CMD Rd2dvi makes use of tools::texi2dvi() to process the
+	package manual.
+
     o	R CMD Rprof now uses utils::summaryRprof() rather than Perl.
 	It has new arguments to select one of the tables and to limit
-	the entries printed.
+	the number of entries printed.
 
 
 C-LEVEL FACILITIES
