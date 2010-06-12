@@ -45,6 +45,8 @@ rbinom(n, size, prob)
   \deqn{p(x) = {n \choose x} {p}^{x} {(1-p)}^{n-x}}{
     p(x) = choose(n,x) p^x (1-p)^(n-x)}
   for \eqn{x = 0, \ldots, n}.
+  Note that binomial \emph{coefficients} can be computed by
+  \code{\link{choose}} in \R.
 
   If an element of \code{x} is not integer, the result of \code{dbinom}
   is zero, with a warning.
