@@ -115,7 +115,7 @@ the new method was
 
  \code{f3.myClass <- function(x, ...) { ..... }}
 
- \code{setMethod("f3", "myClass", f.myClass)}
+ \code{setMethod("f3", "myClass", f3.myClass)}
 
 The reasons for defining both S3 and S4 methods are as follows:
 \enumerate{
