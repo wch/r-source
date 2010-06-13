@@ -171,6 +171,10 @@ NEW FEATURES
     o	R_HOME/share/texmf now follows the TDS conventions, so can be
 	set as a texmf tree ('root directory' in MiKTeX parlance).
 
+    o	S3 generic functions now use correct S4 inheritance when
+        dispatching on an S4 object.  See ?Methods, section on
+        "Methods for S3 Generic Functions" for recommendations and details.
+
 
 DEPRECATED & DEFUNCT
 

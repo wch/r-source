@@ -510,7 +510,8 @@ data.frame <-
     mdrop <- missing(drop)
     Narg <- nargs() - !mdrop  # number of arg from x,i,j that were specified
     has.j <- !missing(j)
-    if(!all(names(sys.call()) %in% c("", "drop")))
+    if(!all(names(sys.call()) %in% c("", "drop"))
+       && !isS4(x)) # at least don't warn for callNextMethod!
         warning("named arguments other than 'drop' are discouraged")
 
     if(Narg < 3L) {  # list-like indexing or matrix indexing

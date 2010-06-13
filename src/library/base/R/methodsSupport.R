@@ -77,6 +77,15 @@ asS4 <- function(object, flag = TRUE, complete = TRUE) {
     .Call("R_setS4Object", object, flag, complete, PACKAGE = "base")
   }
 
+asS3 <- function(object, flag = TRUE, complete = TRUE) {
+    flag <- methods::as(flag, "logical")
+    if(length(flag) != 1L || is.na(flag))
+      stop("Expected a single logical value for the S3 state flag")
+    .Call("R_setS4Object", object, !flag, complete, PACKAGE = "base")
+  }
+
+
+
 .doTrace <- function(expr, msg) {
     on <- tracingState(FALSE) # turn it off QUICKLY (via a .Call)
     if(on) {

@@ -250,7 +250,7 @@ int isBasicClass(const char *ss) {
 int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	      SEXP rho, SEXP callrho, SEXP defrho, SEXP *ans)
 {
-    SEXP klass, method, sxp, t, s, matchedarg;
+    SEXP klass, method, sxp, t, s, matchedarg, sort_list;
     SEXP op, formals, newrho, newcall, match_obj = 0;
     char buf[512];
     int i, j, nclass, matched, S4toS3, nprotect;
@@ -302,7 +302,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     PROTECT(newcall = duplicate(cptr->call));
 
     PROTECT(klass = R_data_class2(obj));
-    S4toS3 = IS_S4_OBJECT(obj);
+    sort_list = install("sort.list");
 
     nclass = length(klass);
     for (i = 0; i < nclass; i++) {
@@ -313,6 +313,8 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	method = install(buf);
 	sxp = R_LookupMethod(method, rho, callrho, defrho);
 	if (isFunction(sxp)) {
+	    if(method == sort_list && CLOENV(sxp) == R_BaseNamespace)
+		continue; /* kludge because sort.list is not a method */
             if( RDEBUG(op) || RSTEP(op) )
                 SET_RSTEP(sxp, 1);
 	    defineVar(install(".Generic"), mkString(generic), newrho);
@@ -331,25 +333,6 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	    UNPROTECT(1);
 	    defineVar(install(".GenericCallEnv"), callrho, newrho);
 	    defineVar(install(".GenericDefEnv"), defrho, newrho);
-	    if(S4toS3 && i > 0 && isBasicClass(ss)) {
-	      SEXP S3Part; 
-	      S3Part = R_getS4DataSlot(obj, S4SXP);
-	      if(S3Part == R_NilValue && TYPEOF(obj) == S4SXP) /* could be type, e.g. "environment" */
-		S3Part = R_getS4DataSlot(obj, ANYSXP);
-	      PROTECT(S3Part); nprotect++;
-	      /* At this point S3Part is the S3 class object or
-	       an object of an abnormal type, or NULL */
-	      if(S3Part != R_NilValue) {  /* use S3Part as inherited object */
-		  obj = S3Part;
-		  if(!match_obj) /* use the first arg, for "[",e.g. */
-		    match_obj = CAR(matchedarg);
-		  if(NAMED(obj)) SET_NAMED(obj, 2);
-		  if(TYPEOF(match_obj) == PROMSXP)
-		    SET_PRVALUE(match_obj, obj); /* must have been eval'd */
-		  else /* not possible ?*/
-		    defineVar(TAG(FORMALS(sxp)), obj, newrho);
-	      } /* else, use the S4 object */
-	    }
 	    t = newcall;
 	    SETCAR(t, method);
 	    R_GlobalContext->callflag = CTXT_GENERIC;
@@ -845,23 +828,6 @@ SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 static SEXP s_S4inherits;
-static SEXP do_S4inherits(SEXP obj, SEXP what, SEXP which) {
-    SEXP e, val;
-    if(!s_S4inherits)
-      s_S4inherits = install(".S4inherits");
-    PROTECT(e = allocVector(LANGSXP, 4));
-    SETCAR(e, s_S4inherits);
-    val = CDR(e);
-    SETCAR(val, obj);
-    val = CDR(val);
-    SETCAR(val, what);
-    val = CDR(val);
-    SETCAR(val, which);
-    val = eval(e, R_MethodsNamespace);
-    UNPROTECT(1);
-    return val;
-}
-
 
 SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -872,9 +838,9 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 
     x = CAR(args);
     if(IS_S4_OBJECT(x))
-      return do_S4inherits(x, CADR(args), CADDR(args));
+	PROTECT(klass = R_data_class2(x));
     else
-      PROTECT(klass = R_data_class(x, FALSE));
+	PROTECT(klass = R_data_class(x, FALSE));
     nclass = length(klass);
 
     what = CADR(args);

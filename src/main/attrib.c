@@ -615,8 +615,22 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
 
 static SEXP s_dot_S3Class = 0;
 
-#ifdef UNUSED
 static SEXP R_S4_extends_table = 0;
+
+ 
+static SEXP cache_class(const char *class, SEXP klass) {
+    if(!R_S4_extends_table) {
+	R_S4_extends_table = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
+	R_PreserveObject(R_S4_extends_table);
+    }
+    if(isNull(klass)) { /* retrieve cached value */
+	SEXP val;
+	val = findVarInFrame(R_S4_extends_table, install(class));
+	return (val == R_UnboundValue) ? klass : val;
+    }
+    defineVar(install(class), klass, R_S4_extends_table);
+    return klass;
+}
 
 static SEXP S4_extends(SEXP klass) {
     static SEXP s_extends = 0;
@@ -638,57 +652,21 @@ static SEXP S4_extends(SEXP klass) {
     val = CDR(e);
     SETCAR(val, klass);
     val = eval(e, R_GlobalEnv);
-    defineVar(install(class), val, R_S4_extends_table);
+    cache_class(class, val);
     UNPROTECT(1);
     return(val);
 }
-#endif
 
 /* Version for S3-dispatch */
 SEXP attribute_hidden R_data_class2 (SEXP obj)
 {
     SEXP klass = getAttrib(obj, R_ClassSymbol);
       if(length(klass) > 0) {
-	if(IS_S4_OBJECT(obj)) {
-	    /* return an S3Class slot, if it exists,
-	       or else the S4 class inheritance */
-	    /* The S4 class is included for compatibility with
-	       the deprecated practice of defining S3 methods
-	       for S4 classes.  Someday this should be disallowed.
-	       JMC iii.9.09 */
-  	    SEXP s3class = S3Class(obj);
-	    if(s3class != R_NilValue) {
-	      SEXP value; int i, j = 0, n = length(s3class);
-		PROTECT(value =  allocVector(STRSXP, n+1));
-		if(STRING_ELT(value, 0) != STRING_ELT(klass, 0)) {
-		  /* always include the S4 class itself.  It would be
-		     cleaner NOT to do this & require the class to
-		     specify that it wants S3 methods for its own
-		     class. (see S3method= argument to setClass())
-		  */
-		  SET_STRING_ELT(value, 0, STRING_ELT(klass, 0));
-		  j++;
-		}
-		for(i=0; i<n; i++, j++)
-		  SET_STRING_ELT(value, j, STRING_ELT(s3class, i));
-		UNPROTECT(1);
-		return value;
-	    }
-	    else if(TYPEOF(obj) == S4SXP &&
-		    (s3class = R_getS4DataSlot(obj, ANYSXP)) != R_NilValue) {
-	        SEXP value; /* an object extending an abnormal type*/
-	        PROTECT(value = allocVector(STRSXP, 2));
-		SET_STRING_ELT(value, 0, STRING_ELT(klass, 0));
-		SET_STRING_ELT(value, 1, type2str(TYPEOF(s3class)));
-		UNPROTECT(1);
-		return value; /* return c(class(obj), typeof(obj)) */
-	    }
-	    else
-	        return klass;
-	    }
+	if(IS_S4_OBJECT(obj))
+	    return S4_extends(klass);
 	else
 	    return klass;
-    }
+      }
       else { /* length(klass) == 0 */
 	SEXPTYPE t;
 	SEXP value, class0 = R_NilValue, dim = getAttrib(obj, R_DimSymbol);
@@ -747,6 +725,15 @@ SEXP attribute_hidden R_data_class2 (SEXP obj)
 SEXP attribute_hidden R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
   checkArity(op, args);
+  if(PRIMVAL(op) == 1) {
+      const char *class; SEXP klass;
+      check1arg(args, call, "class");
+      klass = CAR(args);
+      if(TYPEOF(klass) != STRSXP || LENGTH(klass) < 1)
+	  error("invalid class argument to internal .class_cache");
+      class = translateChar(STRING_ELT(klass, 0));
+      return cache_class(class, CADR(args));
+  }
   check1arg(args, call, "x");
   return R_data_class(CAR(args), FALSE);
 }

@@ -91,6 +91,7 @@ setClass <-
     if(S3methods)
       classDef <- .setS3MethodsOn(classDef)
     assignClassDef(Class, classDef, where)
+    base:::.cache_class(Class, extends(classDef)) # ensure S3 dispatch is correct
      Class
 }
 

@@ -7,6 +7,7 @@
 \alias{isS4}
 \alias{asS4}
 \alias{S4}
+\alias{asS3}
 
 \title{ Test for an S4 object }
 \description{
@@ -16,42 +17,38 @@
 isS4(object)
 
 asS4(object, flag = TRUE, complete = TRUE)
+asS3(object, flag = TRUE, complete = TRUE)
 }
 \arguments{
   \item{object}{ Any R object. }
 
-  \item{flag}{A single logical value; not \code{NA}, whether to turn
-      the S4 object flag on or off.}
-  \item{complete}{How to complete the transformation to/from S4.  Only
-    currently used when \code{flag} is \code{FALSE}.  If \code{1}, the object
-    must convert to a valid S3 object, or an error results.  If \code{2}, a
-    non-valid S3 object is left alone, silently.  If \code{0}, no conversion
-    is made other than setting the internal bit (used internally but not recommended, since it can result
-    in an invalid object).
-  }
+  \item{flag, complete}{Optional arguments to indicate direction of
+      conversion and whether conversion to S3 is completed.  Not
+      usually needed, but see the details section.}
 }
 \value{
   \code{isS4} always returns \code{TRUE} or \code{FALSE} according to
   whether the internal flag marking an S4 object has been turned on for
   this object.
 
-  \code{asS4} will turn this flag on or off, according to argument
-  \code{flag}, and in the latter case complete the conversion as
-  described under argument \code{complete}. Note that with \code{flag
-    FALSE}, an S4 object will \emph{not} but turned into an S3 object
+  \code{asS4} and \code{asS3} will turn this flag on or off, 
+  and \code{asS3} will set the class from the objects \code{.S3Class}
+  slot if one exists. Note that \code{asS3} will \emph{not}  turn
+  the object into an S3 object
   unless there is a valid conversion; that is, an object of type other
   than \code{"S4"} for which the S4 object is an extension, unless
-  argument \code{complete} is \code{0}.
+  argument \code{complete} is \code{FALSE}.
 }
 \details{
   Note that \code{isS4} does not rely on the \pkg{methods}
   package, so in particular it can be used to detect the need to
-  \code{\link{require}} that package.  (But \code{asS4} does depend on
+  \code{\link{require}} that package.  (The other functions do depend on
   \pkg{methods}.)
   
-  When \code{asS4} is called with \code{flag == FALSE}, the value of
-  \code{complete} controls whether an attempt is made to transform
-  \code{object} into a valid object of the implied S3 class.  If so,
+  \code{asS3} uses the value of
+  \code{complete} to control whether an attempt is made to transform
+  \code{object} into a valid object of the implied S3 class.  If
+  \code{complete} is \code{TRUE},
   then an object from an S4 class extending an S3 class will be
   transformed into an S3 object with the corresponding S3 class (see
   \code{\link{S3Part}}).  This includes classes extending the

@@ -29,6 +29,7 @@
 \alias{.POSIXct}
 \alias{.POSIXlt}
 \alias{.difftime}
+\alias{.cache_class}
 
 \title{Internal Functions in the Base Package}
 \description{
@@ -74,6 +75,8 @@ lazyLoadDBfetch(key, file, compressed, hook)
 .POSIXct(xx, tz = NULL)
 .POSIXlt(xx, tz = NULL)
 .difftime(xx, units)
+
+.cache_class(class, extends)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -198,6 +201,10 @@ lazyLoadDBfetch(key, file, compressed, hook)
 
   \code{.POSIXct}, \code{.POSIXlt} and \code{.difftime} are class
   generators added in \R 2.11.0.
+
+  \code{.cache_class} caches the inheritance of an S4 class for use in
+  S3 method dispatch.  With \code{NULL} second argument, returns the
+  cached inheritance, for diagnostic use.
 }
 \value{
   \code{.find.package} and \code{.path.packages} return a character

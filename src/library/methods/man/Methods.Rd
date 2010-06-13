@@ -14,7 +14,7 @@
   something doesn't work as expected.
 
   The section \dQuote{How Methods Work} describes the underlying
-  mechanism; \dQuote{S3 Methods} gives the rules applied when S4
+  mechanism; \dQuote{S3 Methods and Generic Functions} gives the rules applied when S4
   classes and methods interact with older S3 methods; \dQuote{Method Selection and Dispatch} provides more
   details on how class definitions determine which methods are used;
   \dQuote{Generic Functions} discusses generic functions as objects.
@@ -82,41 +82,124 @@
 
 }
 
-\section{S3 Methods}{
+\section{Methods for S3 Generic Functions}{
 
-The functions for which S4 methods will be written often include some
-for which S3 methods exist, corresponding to S3 classes for the first
-formal argument of an S3 generic function or of a primitive function, or for either of the
-arguments in a call to one of the primitive binary operators.
-In the case of true functions, S3 methods will be dispatched
-by the original version of the function.  The usual
-way this happens is by the function becoming the default
-method for the S4 generic, implicitly by a call to
-\code{\link{setMethod}} or explicitly by the call
+S4 methods may be wanted for functions that also have S3 methods, corresponding to classes for the first
+formal argument of an S3 generic function--either a regular R function in which there is a
+call to the S3 dispatch function, \code{\link{UseMethod}},
+or one of a fixed set of primitive
+functions, which are not true functions but go directly to C code.
+In either case S3 method dispatch looks at the class of the first
+argument or the class of either
+argument in a call to one of the primitive binary operators.
+S3 methods are ordinary functions with the same arguments as the
+generic function (for primitives the formal arguments are not actually
+part of the object, but are simulated when the object is printed or
+viewed by \code{\link{args}()}).
+The \dQuote{signature} of an S3 method is identified  by the name to
+which the method is assigned, composed of the name of the
+generic function, followed by \code{"."}, followed by the name of the class.
+For details, see \link{S3Methods}.
 
-  \code{setGeneric("f")}
+To implement a method for one of these functions corresponding to S4
+classes, there are two possibilities: either an S4 method or an S3 method with the
+S4 class name.
+The S3 method is only possible if the intended signature has the
+first argument and nothing else.
+In this case,
+the recommended approach is to define the S3 method and also supply the
+identical function as the definition of the S4 method.
+If the S3 generic function was \code{f3(x, ...)} and the S4 class for
+the new method was 
+\code{"myClass"}:
 
-where the original \code{f()} contained the call
-\code{UseMethod("f")}.
-The S4 method selection code matches the classes of the arguments as
-described in the previous section.
-Matching will be applied for the class of S3 objects as well as S4
-objects, but only the first string in an S3 class attribute is used.
-If no non-default S4 method
-matches the call,  the default S4 method can then operate as an S3
-generic to select S3 methods for \code{f()}.
+ \code{f3.myClass <- function(x, ...) { ..... }}
 
-Primitive functions and operators dispatch both S4 and S3 methods from
+ \code{setMethod("f3", "myClass", f.myClass)}
+
+The reasons for defining both S3 and S4 methods are as follows:
+\enumerate{
+  \item An S4 method alone will not be seen if the S3 generic function
+    is called directly.  However, primitive functions and operators
+    are exceptions:  The internal C code will look for S4 methods
+    if and only if the object is an S4 object.  In the examples, the method
+    for \code{`[`} for class \code{"myFrame"} will always be called
+    for objects of this class.
+
+    For the same reason, an S4 method defined for an S3 class will not be called from
+    internal code for a non-S4 object. (See the example for function
+    \code{Math} and
+    class \code{"data.frame"} in the examples.)
+  \item An S3 method alone will not be called if there is \emph{any}
+    eligible non-default S4 method. (See the example for function
+    \code{f3} and class \code{"classA"} in the examples.)
+}
+Details of the selection computations are given below.
+
+When an S4 method is defined for an existing function that is not an
+S4 generic function (whether or not the existing function is an S3 generic),
+an S4 generic function will be created corresponding to the existing
+function and the package in which it is found (more precisely,
+according to the implicit generic function either specified or
+inferred from the ordinary function; see \code{\link{implicitGeneric}}).
+A message is printed after the initial call to
+\code{\link{setMethod}}; this is not an error, just a reminder that
+you have created the generic.
+Creating the generic explicitly by the call
+
+  \code{setGeneric("f3")}
+
+avoids the message, but has the same effect.
+The existing function becomes the default method for
+the S4 generic function.
+Primitive functions work the same way, but
+the S4 generic function is not explicitly created (as discussed below).
+
+
+S4 and S3 method selection are designed to follow compatible rules of
+inheritance, as far as possible.
+S3 classes can be used for any S4 method selection, provided that the
+S3 classes have been registered by a call to
+\code{\link{setOldClass}}, with that call specifying the correct S3
+inheritance pattern.
+S4 classes can be used for any S3 method selection; when an S4 object
+is detected, S3 method selection uses the contents of
+\code{\link{extends}(class(x))} as the equivalent of the S3
+inheritance (the inheritance is cached after the first call).
+
+An existing S3 method may not behave as desired for an S4 subclass, in
+which case utilities such as \code{\link{asS3}} and
+\code{\link{S3Part}} may be useful.  If the S3 method fails on the S4
+object, \code{asS3(x)} may be passed instead; if the object returned
+by the S3 method needs to be incorporated in the S4 object, the
+replacement function for \code{S3Part} may be useful, as in the method
+for class \code{"myFrame"} in the examples.
+
+Here are details explaining the reasons for defining both S3 and S4 methods.
+Calls still accessing the S3 generic function
+directly will not see S4 methods, except in the case of primitive
+functions.
+This means that calls to the generic function from namespaces that
+import the S3 generic but not the S4 version will only see S3
+methods.
+On the other hand, S3 methods will only be selected from the
+S4 generic function as part of its default (\code{"ANY"}) method.
+If there are inherited S4 non-default methods, these will be chosen in
+preference to \emph{any} S3 method.
+
+S3 generic functions implemented as primitive functions (including
+binary operators) are an exception to recognizing only
+S3 methods.
+These functions dispatch both S4 and S3 methods from
 the internal C code.
-The method selection mechanism works essentially the same way, with
-two exceptions.
-There is no explicit generic function, either S3 or S4, meaning that
-the selection of an S3 method if no S4 method is found is built in and
-not a result of an explicit default method.
-Also, the internal code does not look for S4 methods unless the first
-argument or one of the arguments to an operator is an S4 object.
-S4 methods can be defined for an S3 generic function and an S3 class.
-But if the function is a primitive, such methods will not be selected
+There is no explicit generic function, either S3 or S4.
+The internal code looks for S4 methods if the first
+argument, or either of the arguments in the case of a binary operator,
+is an S4 object.
+If no S4 method is found, a search is made for an S3 method.
+
+S4 methods can be defined for an S3 generic function and an S3 class,
+but if the function is a primitive, such methods will not be selected
 if the object in question is not an S4 object.
 In the examples below, for instance,  an S4 method for signature
 \code{"data.frame"} for function \code{f3()} would be called for the
@@ -124,97 +207,8 @@ S3 object \code{df1}.
 A similar S4 method for primitive function
 \code{`[`} would be ignored for that object, but would be called for
 the S4 object \code{mydf1} that inherits from \code{"data.frame"}.
-It's an unfortunate inconsistency, but enforced by the passion for
-efficiency in dispatching methods for primitives.
+Defining both an S3 and S4 method removes this inconsistency.
 
-
-The common case is that objects from S4 classes will use S4 methods,
-except when the function's default definition is wanted.  For example,
-if an S4 class extends one of the basic object types the base code for
-that type may do what we want.
-Objects not from an S4 class will continue to follow S3 method selection.
-
-The rest of this section describes S3 method selection in two special cases.
-In one case, the S4 class contains an S3 class (and has ensured that
-objects have all the structure needed for the S3 class).
-In the second case, S3 methods have been written for an S4 class;
-that is, a function \emph{f.class}, where \emph{f} is an S3 generic
-function and \emph{class} is the name of an S4 class, other than a
-registered S3 class.
-The first case is now supported and recommended, the second case is
-discouraged, but occasionally needed (see section 4 of the paper in
-the references).
-
-The following rules define selection of an S3 method for an S4
-object.  S4 objects are defined internally by a bit in the C
-structure.  In practice, any object generated from an S4 class will be
-an S4 object, as well as the result of most computations
-on such objects.  Older computations defined for non-S4 classes or
-object types may or may not return S4 objects when the arguments are
-such objects.
-
-An S3 method will be selected applying the following criteria in order:
-\enumerate{
-
-\item 
-the \emph{class} for the method matches the name of the S4 class
-exactly;
-
-
-\item 
-the object has a slot \code{".S3Class"} and \emph{class} is selected
-by S3 inheritance, treating that slot as the S3 class of the object;
-
-}
-The second criterion will apply if either the S4 class contains an S3
-class or the argument \code{S3methods=TRUE} was given to
-\code{\link{setClass}} for the class of the object or for one of its
-superclasses.
-
-
-If an S4 class extends an S3 class, and if no S4 methods take precedence, we expect that the
-correct S3 method for the inherited S3 class will be chosen.
-This will happen, so long as the S3 class has been registered by a
-call to \code{\link{setOldClass}}.
-If so, the object from the S4 class will inherit a special slot
-that will be used as the class for S3 dispatch.  Effectively, this
-slot is a proxy for the class attribute expected by S3 dispatch.  It
-can even vary in its inheritance between objects, as happens with some
-S3 classes, such as \code{\link{POSIXt}}, if the replacement version
-of \code{\link{S3Class}} is used to set it.
-If the class so selected is one of the basic S3 classes,
-the object is converted to an S3 object
-with this vector as its class attribute.
-
-A second nonstandard situation arises when an S3 method has been
-explicitly written for an S4 class.
-Versions of \R up to and including 2.9.0 did not recognize S4
-inheritance in dispatching S3 methods, so that subclasses of the S4 class
-would not then inherit the S3 method.  The version of \R{} accompanying this documentation
-fixes this problem, to the extent practical, as follows.
-S3 method selection will
-resemble S4 selection for the same class \emph{if} the call to
-\code{\link{setClass}} has included the argument \code{S3methods =
-  TRUE}. If not, the current behavior (\R 2.9.1) is to select S3 methods
-defined for this class, but not for its subclasses  (largely for back compatibility; in future versions of \R, S3 methods may be
-ignored for S4 classes unless \code{S3methods} is set.)
-The implementation uses the same special slot as above for inheriting
-from an S3 class.  Subclasses of a class set this way will inherit the
-same special slot and the same S3 method selection.
-It's even possible to set the slot in individual objects, as above,
-but the possibilities for confusion are serious.
-
-
-Looking in the other direction, it remains true that S4 selection has no
-knowledge of S3 methods.
-This can cause problems when a class that expects to inherit
-the S3 method, \code{"classA"} in the example below, also inherits from another S4
-class.  If that class inherits an S4 method for a function, no matter how
-indirectly, that S4 method will be selected for an object from
-\code{"classA"}, even though there is a directly defined S3 method.
-The S3 method can only be accessed through the default S4 method.
-These problems are relatively unlikely to occur, but anyone defining a
-class that extends both S3 and S4 classes needs to be careful.
 
 }
 \section{Method Selection and Dispatch: Details}{
@@ -234,16 +228,18 @@ Each class definition may include a list of  one or more
 The simplest and most common specification is by the \code{contains=} argument in
 the  call to \code{\link{setClass}}.
 Each class named in this argument is a superclass of the new class.
-The S language has two additional mechanisms for defining
-superclasses.
+Two additional mechanisms for defining
+superclasses exist.
+A call to \code{\link{setClassUnion}} creates a union class that
+is a
+superclass of each of the members of the union.
  A call to 
 \code{\link{setIs}} can create an inheritance relationship that is not the simple one of
 containing the superclass representation in the new class.
-In this case, explicit methods are defined to relate the subclass and
-the superclass.
-Also, a call to \code{\link{setClassUnion}} creates a union class that
-is a
-superclass of each of the members of the union.
+Arguments \code{coerce} and \code{replace} supply methods to convert
+to the superclass and to replace the part corresponding to the superclass.
+(In addition, a \code{test=} argument allows conditional inheritance;  conditional inheritance is not
+recommended and is not used in method selection.)
 All three mechanisms are treated equivalently for purposes of
 method selection:  they define the \emph{direct} superclasses of a
 particular class.
@@ -251,15 +247,14 @@ For more details on the mechanisms, see \code{\link{Classes}}.
 
 The direct superclasses themselves may
 have superclasses, defined by any of the same mechanisms, and
-similarly for further generations.  Putting all this information together produces
+similarly through further generations.  Putting all this information together produces
 the full list of superclasses for this class.
 The superclass list is included in the definition of the class that is
 cached during the \R session.
 Each element of the list describes the nature of the relationship (see
 \code{\linkS4class{SClassExtension}} for details).
-Included in the element is a \code{distance} slot giving a numeric
-distance between the two classes.
-The distance is the path length for the relationship:
+Included in the element is a \code{distance} slot containing
+the path length for the relationship:
 \code{1} for direct superclasses (regardless of which mechanism
 defined them), then \code{2} for the direct superclasses of those
 classes, and so on.
@@ -310,7 +305,7 @@ among the best matches for \emph{all} arguments.
 
 If there is no best match, the selection is ambiguous and a message is
 printed noting which method was selected (the first method
-lexicographicaly in the ordering) and what other methods could have
+lexicographically in the ordering) and what other methods could have
 been selected.
 Since the ambiguity is usually nothing the end user could control,
 this is not a warning.
@@ -489,32 +484,38 @@ The  \code{"target"} slot starts off equal to the \code{"defined"}
 }
 
 \examples{
-## The rules for inheriting S3 methods.
 
-f3 <- function(x)UseMethod("f3") # an S3 generic to illustrate inheritance
 
 ## A class that extends a registered S3 class inherits that class' S3
-## methods.  The S3 methods will be passed an object with the S3 class
+## methods.
 
 setClass("myFrame", contains = "data.frame",
-    representation(date = "POSIXt", type = "character"))
+    representation(timestamps = "POSIXt"))
 
 df1 <- data.frame(x = 1:10, y = rnorm(10), z = sample(letters,10))
 
-mydf1 <- new("myFrame", df1, date = Sys.time())
+mydf1 <- new("myFrame", df1, timestamps = Sys.time())
 
 ## "myFrame" objects inherit "data.frame" S3 methods; e.g., for `[`
 
-mydf1[1:2, ] # a data frame object (with extra attributes "date" and "type")
+mydf1[1:2, ] # a data frame object (with extra attributes)
 
-\dontshow{
+## a method explicitly for "myFrame" class
 
-m1 <- mydf1[1:2,]
-attr(m1, "date") <- attr(m1, "type") <- NULL
-stopifnot(identical(m1, df1[1:2,]))
-}
 
-## Extending an S3 class with inconsistent (instance-based) inheritance
+setMethod("[",
+    signature(x = "myFrame"),
+    function (x, i, j, ..., drop = TRUE) 
+    {
+        S3Part(x) <- callNextMethod()
+        x@timestamps <- c(Sys.time(), as.POSIXct(x@timestamps))
+        x
+    }
+)
+
+mydf1[1:2, ]
+
+
 setClass("myDateTime", contains = "POSIXt")
 
 now <- Sys.time() # class(now) is c("POSIXct", "POSIXt")
@@ -523,25 +524,29 @@ nowLt <- as.POSIXlt(now)# class(nowLt) is c("POSIXlt", "POSIXt")
 mCt <- new("myDateTime", now)
 mLt <- new("myDateTime", nowLt)
 
-## S3 methods will be selected using instance-based information
+## S3 methods for an S4 object will be selected using S4 inheritance
+## Objects mCt and mLt have different S3Class() values, but this is
+## not used.
+f3 <- function(x)UseMethod("f3") # an S3 generic to illustrate inheritance
 
 f3.POSIXct <- function(x) "The POSIXct result"
 f3.POSIXlt <- function(x) "The POSIXlt result"
+f3.POSIXt <- function(x) "The POSIXt result"
 
-stopifnot(identical(f3(mCt), f3.POSIXct(mCt)))
-stopifnot(identical(f3(mLt), f3.POSIXlt(mLt)))
+stopifnot(identical(f3(mCt), f3.POSIXt(mCt)))
+stopifnot(identical(f3(mLt), f3.POSIXt(mLt)))
 
 
 
-## An S4 class that does not contain a registered S3 class or object type
-## selects S3 methods according to its S4 "inheritance"
-## but only if the class definition requests this via S3methods=TRUE
-## ( from version 2.9.1 on)
+## An S4 object selects S3 methods according to its S4 "inheritance"
+
 
 setClass("classA", contains = "numeric",
-   representation(realData = "numeric"), S3methods = TRUE)
+   representation(realData = "numeric"))
 
 Math.classA <- function(x) {(getFunction(.Generic))(x@realData)}
+setMethod("Math", "classA", Math.classA)
+
 
 x <- new("classA", log(1:10), realData = 1:10)
 
@@ -553,29 +558,57 @@ y <- new("classB", x)
 
 stopifnot(identical(abs(y), 1:10)) # (version 2.9.0 or earlier fails here)
 
-## Note: with a class that tries to combine both S3 and S4 superclasses.
-## The S3 inheritance is used and the S3 method for
-## the S4 superclass will not be selected.
+## an S3 generic: just for demonstration purposes
+f3 <- function(x, ...) UseMethod("f3")
 
-setClass("classC", representation(x = "numeric"))
+f3.default <- function(x, ...) "Default f3"
 
-# an S3 method for "[" (not a good idea, but it would work)
-`[.classc` <- function(x, ..., drop = TRUE) {x@x[...]}
+## S3 method (only) for classA
+f3.classA <- function(x, ...) "Class classA for f3"
+
+## S3 and S4 method for numeric
+f3.numeric <- function(x, ...) "Class numeric for f3"
+setMethod("f3", "numeric", f3.numeric)
+
+## The S3 method for classA and the closest inherited S3 method for classB
+## are not found.
+
+f3(x); f3(y) # both choose "numeric" method
+
+## to obtain the natural inheritance, set identical S3 and S4 methods
+setMethod("f3", "classA", f3.classA)
+
+f3(x); f3(y) # now both choose "classA" method
+
+## Need to define an S3 as well as S4 method to use on an S3 object
+## or if called from a package without the S4 generic
+
+MathFun <- function(x) { # a smarter "data.frame" method for Math group
+  for (i in seq(length = ncol(x))[sapply(x, is.numeric)])
+    x[, i] <- (getFunction(.Generic))(x[, i])
+  x
+}
+setMethod("Math", "data.frame", MathFun)
+
+## S4 method works for an S4 class containing data.frame,
+## but not for data.frame objects (not S4 objects)
+
+try(logIris <- log(iris)) #gets an error from the old method
+
+## Define an S3 method with the same computation
+
+Math.data.frame <- MathFun
+
+logIris <- log(iris)
 
 
-setClass("classD", contains = c("classC", "data.frame"))
 
-## by the rule mentioned in the S3 method section, the
-## S3 methods are selected from the S3 class defined; that is, "data.frame"
-## If the user expected to inherit `[.classC`, no luck.
-xd <- new("classD", df1, x = 1:50)
-
-## Note the error from `[.data.frame`
-try(xd[1:25])
 
 \dontshow{
 removeClass("classA"); removeClass("classB"); rm(x,y)
+removeGeneric("f3")
 removeClass("myDateTime")
+removeMethod("Math", "data.frame"); rm(Math.data.frame, MathFun, logIris)
 }
 
 }

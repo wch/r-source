@@ -97,8 +97,10 @@
         ## package-- the namespace of the methods package, if it has
         ## one, or the global environment
 
-        assign(".methodsNamespace",
-               environment(get("setGeneric", where)), where)
+        mns <- environment(get("setGeneric", where))
+        assign(".methodsNamespace", mns, where)
+        ## assign to baseenv also, signalling methods loaded
+        assign(".methodsNamespace", mns, baseenv())
     }
 }
 
