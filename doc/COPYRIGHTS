@@ -402,13 +402,6 @@ src/main/Rstrptime.h
    Distributed under the GNU Library General Public License
    version 2 or later.
 
-share/perl/File/Copy/Recursive.pm
-
-   Copyright 2004 by Daniel Muey
-
-   This library is free software; you can redistribute it and/or modify
-   it under the same terms as Perl itself.
-
 po/*.po
 src/library/*/po/*.po
 

@@ -2455,8 +2455,6 @@ AC_CONFIG_FILES(
   src/scripts/Rcmd
   src/scripts/Rdiff
   src/scripts/Sd2Rd
-  src/scripts/obuild
-  src/scripts/ocheck
   src/scripts/f77_f2c
   src/scripts/mkinstalldirs
   src/scripts/pager

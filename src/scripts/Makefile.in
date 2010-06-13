@@ -15,8 +15,7 @@ SCRIPTS_S = BATCH COMPILE INSTALL LINK REMOVE Rd2dvi Rdconv Rprof \
   SHLIB Stangle Sweave build check config javareconf rtags
 ## <NOTE>
 ## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
-SCRIPTS_B_IN = Rcmd.in Rdiff.in Sd2Rd.in \
-  obuild.in ocheck.in f77_f2c.in mkinstalldirs.in pager.in
+SCRIPTS_B_IN = Rcmd.in Rdiff.in Sd2Rd.in f77_f2c.in mkinstalldirs.in pager.in
 SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
 ## </NOTE>
 
@@ -44,10 +43,6 @@ Rcmd: $(srcdir)/Rcmd.in $(top_builddir)/config.status
 Rdiff: $(srcdir)/Rdiff.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 Sd2Rd: $(srcdir)/Sd2Rd.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-obuild: $(srcdir)/obuild.in $(top_builddir)/config.status
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-ocheck: $(srcdir)/ocheck.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 f77_f2c: $(srcdir)/f77_f2c.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@

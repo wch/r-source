@@ -218,15 +218,9 @@ UTILITIES
 	'check' configuration files have changed format: they are now
 	R source files, and the default file is ~/.R/check.Rconf.
 
-	[The Perl-based version is, for Unix, still available as
-	R CMD ocheck.]
-
     o	R CMD build no longer creates an INDEX file (R CMD INSTALL
 	does so), and --force removes (rather than overwrites) an
 	existing INDEX file.
-
-	[The Perl-based version is, for Unix, still available as
-	R CMD obuild.]
 
     o	R CMD Rd2dvi makes use of tools::texi2dvi() to process the
 	package manual.
