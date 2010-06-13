@@ -1123,7 +1123,7 @@ R_run_R <- function(cmd, Ropts, env)
                     errorLog(Log,
                              paste("Running massageExamples to create",
                                    sQuote(exfile), "failed"))
-                    printLog(Log, paste(c(out$out, "", collapse = "\n")))
+                    printLog(Log, paste(out$out, collapse = "\n"), "\n")
                     do_exit(1L)
                 }
                 ## It ran, but did it create any examples?
