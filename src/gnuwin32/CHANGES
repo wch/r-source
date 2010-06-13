@@ -27,8 +27,8 @@ NEW FEATURES
 	Because many people expect it, there is an executable
 	R_HOME/bin/R.exe, which accepts --arch and launches either
 	R_HOME/bin/i386/R.exe or R_HOME/bin/x64/R.exe, and analogously
-	for Rscript.exe.  If not set on the command-line these check
-	the environment variable R_ARCH for the architecture to use.
+	for Rscript.exe.  If not set by --arch these check the
+	environment variable R_ARCH for the architecture to use.
 
 	For now, almost all (32- or 64-bit) packages with compiled
 	code built under 2.{10,11}.x can be used, but this will be
@@ -43,6 +43,9 @@ NEW FEATURES
 
     o	Rcmd Rprof|build|check are now handled internally rather by
 	shell scripts.
+
+    o	Rcmd has a new command 'texify' to run MiKTeX's texify.exe
+	with arguments to find files such as Sweave.sty.
 
 
 INSTALLATION
