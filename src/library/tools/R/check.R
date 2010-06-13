@@ -55,7 +55,7 @@ R_run_R <- function(cmd, Ropts, env)
 .check_packages <- function(args = NULL)
 {
     ## this requires on Windows
-    ## sh file(optional)
+    ## sh file (optional)
 
     wrapLog <- function(...) {
         text <- paste(..., collapse=" ")
@@ -172,7 +172,9 @@ R_run_R <- function(cmd, Ropts, env)
             if (length(bad_files)) {
                 errorLog(Log)
                 wrapLog("Found the following file(s) with non-portable file names:\n")
-                printLog(Log, paste("  ", bad_files, sep = "", collapse = "\n"), "\n")
+                printLog(Log,
+                         paste("  ", bad_files, sep = "", collapse = "\n"),
+                         "\n")
                 wrapLog("These are not valid file names",
                         "on all R platforms.\n",
                         "Please rename the files and try again.\n",
@@ -204,7 +206,9 @@ R_run_R <- function(cmd, Ropts, env)
             if (length(non_ASCII_files)) {
                 warnLog()
                 wrapLog("Found the following file(s) with non-portable file names:\n")
-                printLog(Log, paste("  ", non_ASCII_files, sep ="", collapse = "\n"), "\n")
+                printLog(Log,
+                         paste("  ", non_ASCII_files, sep ="", collapse = "\n"),
+                         "\n")
                 wrapLog("These are not fully portable file names.\n",
                         "See section 'Package structure'",
                         "in manual 'Writing R Extensions'.\n")
@@ -329,7 +333,9 @@ R_run_R <- function(cmd, Ropts, env)
             topfiles <- Sys.glob(c("install.R", "R_PROFILE.R"))
             if (length(topfiles)) {
                 warnLog()
-                printLog(Log, paste("  ", topfiles, collapse = "\n"), "\n")
+                printLog(Log,
+                         paste("  ", topfiles, sep = "",  collapse = "\n"),
+                         "\n")
                 wrapLog("These files are defunct.",
                         "See manual 'Writing R Extensions'.\n")
             } else resultLog(Log, "OK")
@@ -358,7 +364,7 @@ R_run_R <- function(cmd, Ropts, env)
                     if(length(out)) {
                         if(!any) warnLog()
                         any <- TRUE
-                        printLog(Log, paste(c(out, ""), sep="\n"))
+                        printLog(Log, paste(c(out, ""), collapse="\n"))
                     }
                 }
             }
@@ -368,7 +374,7 @@ R_run_R <- function(cmd, Ropts, env)
                     if(length(out)) {
                         if(!any) warnLog()
                         any <- TRUE
-                        printLog(Log, paste(c(out, ""), sep="\n"))
+                        printLog(Log, paste(c(out, ""), collapse="\n"))
                     }
             }
             if (any)
@@ -442,7 +448,7 @@ R_run_R <- function(cmd, Ropts, env)
                 if(length(out)) {
                     if(!any) warnLog()
                     any <- TRUE
-                    printLog(Log, paste(c(out, ""), sep="\n"))
+                    printLog(Log, paste(c(out, ""), collapse="\n"))
                     wrapLog("Please remove or rename the files.\n",
                             "See section 'Package subdirectories'",
                             "in manual 'Writing R Extensions'.\n")
@@ -512,7 +518,7 @@ R_run_R <- function(cmd, Ropts, env)
                         wrapLog("Found the following non-empty",
                                 "subdirectories of 'inst' also",
                                 "used by R:\n")
-                        printLog(Log, paste(c("", suspect, ""), sep="\n"))
+                        printLog(Log, paste(c("", suspect, ""), collapse="\n"))
                         wrapLog("It is recommended not to interfere",
                                 "with package subdirectories",
                                 "used by R.\n")
@@ -527,7 +533,9 @@ R_run_R <- function(cmd, Ropts, env)
                 if(length(out)) {
                     if(!any) warnLog("Invalid citation information in 'inst/CITATION':")
                     any <- TRUE
-                    printLog(Log, paste("  ", out, sep = "", collapse="\n"), "\n")
+                    printLog(Log,
+                             paste("  ", out, sep = "", collapse="\n"),
+                             "\n")
                 }
             }
 
@@ -1044,7 +1052,9 @@ R_run_R <- function(cmd, Ropts, env)
             }
             if (length(bad_files)) {
                 warnLog("Found the following sources/headers with CR or CRLF line endings:")
-                printLog(Log, paste("  ", bad_files, sep = "", collapse = "\n"), "\n")
+                printLog(Log,
+                         paste("  ", bad_files, sep = "", collapse = "\n"),
+                         "\n")
                 printLog(Log, "Some Unix compilers require LF line endings.\n")
             } else resultLog(Log, "OK")
         }
@@ -1063,7 +1073,9 @@ R_run_R <- function(cmd, Ropts, env)
             }
             if (length(bad_files)) {
                 warnLog("Found the following Makefiles with CR or CRLF line endings:")
-                printLog(Log, paste("  ", bad_files, sep = "", collapse = "\n"), "\n")
+                printLog(Log,
+                         paste("  ", bad_files, sep = "", collapse = "\n"),
+                         "\n")
                 printLog(Log, "Some Unix compilers require LF line endings.\n")
             } else resultLog(Log, "OK")
         }
@@ -1161,6 +1173,11 @@ R_run_R <- function(cmd, Ropts, env)
                             printLog(Log,
                                      "The error most likely occurred in:\n\n")
                             printLog(Log, chunks[ll], "\n")
+                        } else {
+                            ## most likely error before the first example
+                            ## so show all the output.
+                            printLog(Log, "The error occurred in:\n\n")
+                            printLog(Log, txt, "\n")
                         }
                         do_exit(1L)
                     }
@@ -1199,7 +1216,7 @@ R_run_R <- function(cmd, Ropts, env)
                                      sep = "")
                         out <- R_runR(cmd, R_opts2)
                         if(length(out))
-                            printLog(Log, "\n", paste(c(out, ""), collapse = "\n"))
+                            printLog(Log, paste(c("", out, ""), collapse = "\n"))
                         resultLog(Log, "OK")
                     }
                 } else resultLog(Log, "NONE")
@@ -1248,7 +1265,9 @@ R_run_R <- function(cmd, Ropts, env)
                         lines <- lines[max(1, ll-12):ll]
                         printLog(Log, sprintf("Running the tests in %s failed.\n", sQuote(file)))
                         printLog(Log, "Last 13 lines of output:\n")
-                        printLog(Log, paste("  ", lines, sep="", collapse="\n"), "\n")
+                        printLog(Log,
+                                 paste("  ", lines, sep="", collapse="\n"),
+                                 "\n")
                     }
                     do_exit(1L)
                 }
@@ -1275,7 +1294,8 @@ R_run_R <- function(cmd, Ropts, env)
                 if(length(bad_vignettes)) {
                     any <- TRUE
                     warnLog("Package vignettes without corresponding PDF:\n")
-                    printLog(Log, paste(c("", bad_vignettes, ""), collapse = "\n"))
+                    printLog(Log,
+                             paste(c("", bad_vignettes, ""), collapse = "\n"))
                 }
             }
             ## Can we run the code in the vignettes?
