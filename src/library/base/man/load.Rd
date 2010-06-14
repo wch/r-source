@@ -1,6 +1,6 @@
 % File src/library/base/man/load.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{load}
@@ -33,7 +33,9 @@ load(file, envir = parent.frame())
   
   Loading from an earlier version will give a warning about the
   \sQuote{magic number}: magic numbers \code{1971:1977} are from \R <
-  0.99.0, and \code{R[ADX]1} from \R 0.99.0 to \R 1.3.1.
+  0.99.0, and \code{RD[ABX]1} from \R 0.99.0 to \R 1.3.1.  These are all
+  obsolete, and you are strongly recommended to re-save such files in a
+  current format.
 }
 \value{
   A character vector of the names of objects created, invisibly.
@@ -50,18 +52,18 @@ load(file, envir = parent.frame())
 \examples{
 ## save all data
 xx <- pi # to ensure there is some data
-save(list = ls(all=TRUE), file= "all.Rdata")
+save(list = ls(all=TRUE), file= "all.RData")
 rm(xx)
 
 ## restore the saved values to the current environment
 local({
-   load("all.Rdata")
+   load("all.RData")
    ls()
 })
 ## restore the saved values to the user's workspace
-load("all.Rdata", .GlobalEnv)
+load("all.RData", .GlobalEnv)
 
-unlink("all.Rdata")
+unlink("all.RData")
 
 \dontrun{
 con <- url("http://some.where.net/R/data/example.rda")
