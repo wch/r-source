@@ -1219,4 +1219,9 @@ stopifnot(identical("named list()",
 ## was just "list()" up to R <= 2.11.x
 
 
+## stripchart with empty first level (PR#14317)
+stripchart(decrease ~ treatment, data = OrchardSprays,
+           subset = treatment != "A")
+## failed in 2.11.1
+
 proc.time()

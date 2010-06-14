@@ -330,6 +330,8 @@ BUG FIXES
     o	R CMD Rd2dvi failed if run from a path containing space(s).
 	This also affected R CMD check, which calls Rd2dvi.
 
+    o	stripchart() could fail with an empty factor level. (PR#14317) 
+
 
 
 		CHANGES IN R VERSION 2.11.1

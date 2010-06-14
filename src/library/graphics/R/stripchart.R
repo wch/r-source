@@ -30,24 +30,21 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	stop("invalid plotting method")
     groups <-
 	if(is.list(x)) x else if(is.numeric(x)) list(x)
-    if(0L == (n <- length(groups)))
-	stop("invalid first argument")
+    n <- length(groups)
+    if(!n) stop("invalid first argument")
     if(!missing(group.names))
 	attr(groups, "names") <- group.names
     else if(is.null(attr(groups, "names")))
-	attr(groups, "names") <- 1L:n
-    if(is.null(at))
-	at <- 1L:n
+	attr(groups, "names") <- seq_len(n)
+    if(is.null(at)) at <- seq_len(n)
     else if(length(at) != n)
 	stop(gettextf("'at' must have length equal to the number %d of groups",
                       n), domain = NA)
     if (is.null(dlab)) dlab <- deparse(substitute(x))
 
     if(!add) {
-	dlim <- c(NA, NA)
-	for(i in groups)
-	    dlim <- range(dlim, i[is.finite(i)], na.rm = TRUE)
-	glim <- c(1L, n)# in any case, not range(at)
+        dlim <- range(unlist(groups, use.names = FALSE), na.rm = TRUE)
+	glim <- c(1L, n) # in any case, not range(at)
 	if(method == 2L) { # jitter
 	    glim <- glim + jitter * if(n == 1) c(-5, 5) else c(-2, 2)
 	} else if(method == 3) { # stack
