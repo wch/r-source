@@ -62,7 +62,7 @@ format.default <-
 }
 
 format.pval <- function(pv, digits = max(1, getOption("digits")-2),
-			eps = .Machine$double.eps, na.form = "NA")
+			eps = .Machine$double.eps, na.form = "NA", ...)
 {
     ## Format  P values; auxiliary for print.summary.[g]lm(.)
 
@@ -74,8 +74,8 @@ format.pval <- function(pv, digits = max(1, getOption("digits")-2),
 	## be smart -- differ for fixp. and expon. display:
 	expo <- floor(log10(ifelse(pv > 0, pv, 1e-50)))
 	fixp <- expo >= -3 | (expo == -4 & digits>1)
-	if(any( fixp)) rr[ fixp] <- format(pv[ fixp], digits=digits)
-	if(any(!fixp)) rr[!fixp] <- format(pv[!fixp], digits=digits)
+	if(any( fixp)) rr[ fixp] <- format(pv[ fixp], digits=digits, ...)
+	if(any(!fixp)) rr[!fixp] <- format(pv[!fixp], digits=digits, ...)
 	r[!is0]<- rr
     }
     if(any(is0)) {
@@ -86,7 +86,7 @@ format.pval <- function(pv, digits = max(1, getOption("digits")-2),
 		digits <- max(1, nc - 7)
 	    sep <- if(digits==1 && nc <= 6) "" else " "
 	} else sep <- if(digits==1) "" else " "
-	r[is0] <- paste("<", format(eps, digits=digits), sep = sep)
+	r[is0] <- paste("<", format(eps, digits=digits, ...), sep = sep)
     }
     if(has.na) { ## rarely
 	rok <- r

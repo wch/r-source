@@ -1,6 +1,6 @@
 % File src/library/base/man/format.pval.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{format.pval}
@@ -11,13 +11,15 @@
 \alias{format.pval}
 \usage{
 format.pval(pv, digits = max(1, getOption("digits") - 2),
-            eps = .Machine$double.eps, na.form = "NA")
+            eps = .Machine$double.eps, na.form = "NA", ...)
 }
 \arguments{
   \item{pv}{a numeric vector.}
   \item{digits}{how many significant digits are to be used.}
   \item{eps}{a numerical tolerance: see \sQuote{Details}.}
   \item{na.form}{character representation of \code{NA}s.}
+  \item{\dots}{further arguments to be passed to \code{\link{format}}
+    such as \code{nsmall}.}
 }
 \value{
   A character vector.

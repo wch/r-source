@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-05-11 r51975)
+R version 2.12.0 Under development (unstable) (2010-06-14 r52268)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -6541,4 +6541,13 @@ End = 11
 Frequency = 0.2 
 [1]  7.2  8.8 10.0
 > ## platform-dependent in 2.10.1
+> 
+> 
+> ## wish of PR#9574
+> a <- c(0.1, 0.3, 0.4, 0.5, 0.3, 0.0001)
+> format.pval(a, eps=0.01)
+[1] "0.1"   "0.3"   "0.4"   "0.5"   "0.3"   "<0.01"
+> format.pval(a, eps=0.01, nsmall =2)
+[1] "0.10"  "0.30"  "0.40"  "0.50"  "0.30"  "<0.01"
+> ## granted in 2.12.0
 > 
