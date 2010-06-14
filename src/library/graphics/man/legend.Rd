@@ -1,6 +1,6 @@
 % File src/library/graphics/man/legend.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{legend}
@@ -16,7 +16,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
        adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
        merge = do.lines && has.pch, trace = FALSE,
        plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
-       inset = 0, xpd, title.col = text.col)
+       inset = 0, xpd, title.col = text.col, title.adj = 0.5)
 }
 \description{
   This function can be used to add legends to plots.  Note that a call
@@ -91,6 +91,8 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   \item{xpd}{if supplied, a value of the graphical parameter \code{xpd}
     to be used while the legend is being drawn.}
   \item{title.col}{color for \code{title}.}
+  \item{title.adj}{horizontal adjustment for \code{title}: see the help
+    for \code{\link{par}("adj")}.}
 }
 \details{
   Arguments \code{x}, \code{y}, \code{legend} are interpreted in a

@@ -181,6 +181,8 @@ NEW FEATURES
     o	format.pval() gains a ... argument to pass arguments such as
 	'nsmall' to format().  (Wish of PR#9574)
 
+    o	legend() supports 'title.adj' (Wish of PR#13415)
+
 
 DEPRECATED & DEFUNCT
 
