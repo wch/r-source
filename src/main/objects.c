@@ -253,7 +253,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
     SEXP klass, method, sxp, t, s, matchedarg, sort_list;
     SEXP op, formals, newrho, newcall, match_obj = 0;
     char buf[512];
-    int i, j, nclass, matched, S4toS3, nprotect;
+    int i, j, nclass, matched, /* S4toS3, */ nprotect;
     RCNTXT *cptr;
 
     /* Get the context which UseMethod was called from. */
@@ -827,7 +827,7 @@ SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
     return CAR(args);
 }
 
-static SEXP s_S4inherits;
+/* static SEXP s_S4inherits; */
 
 SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 {
