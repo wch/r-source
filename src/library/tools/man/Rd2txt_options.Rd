@@ -25,6 +25,7 @@ which is used in displaying text format help.  Currently defined options:
 \item{sectionExtra}{(default 2):  The extra indentation for each nested section level.}
 \item{itemBullet}{(default \code{"* "}):  The symbol to use as a bullet in itemized lists.}
 \item{enumFormat}{:  A function to format item numbers in enumerated lists.}
+\item{showURLs}{(default FALSE):  Whether to show URLs when expanding \verb{\href} tags.}
 }
 }
 \value{ 

@@ -3387,8 +3387,8 @@ listing components, just individual @code{\item@{@}@{@}} entries.
 
 @item \references@{@dots{}@}
 @findex \references
-A section with references to the literature.  Use @code{\url@{@}} for
-web pointers.
+A section with references to the literature.  Use @code{\url@{@}} or 
+@code{\href@{@}@{@}} for web pointers.
 
 @item \note@{...@}
 @findex \note
@@ -3411,7 +3411,7 @@ For example, @file{pie.Rd} contains
 @findex \author
 Information about the author(s) of the @file{Rd} file.  Use @code{\email@{@}}
 without extra delimiters (@samp{( )} or @samp{< >}) to specify email
-addresses, or @code{\url@{@}} for web pointers.
+addresses, or @code{\url@{@}} or @code{\href@{@}@{@}} for web pointers.
 
 @item \seealso@{@dots{}@}
 @findex \seealso
@@ -3786,6 +3786,12 @@ Indicate a uniform resource locator (@acronym{URL}) for the World Wide
 Web.  The argument is handled verbatim, and rendered as a hyperlink in
 HTML and PDF conversion.  Displayed using @code{typewriter} font if
 possible.
+
+@item \href@{@var{uniform_resource_locator}@}@{@var{text}@}
+@findex \href
+Indicate a hyperlink to the World Wide Web. The first argument is handled 
+verbatim, and is used as the @acronym{URL} in the hyperlink, with the
+second argument of @LaTeX{}-like text displayed to the user.
 
 @item \var@{@var{metasyntactic_variable}@}
 @findex \var

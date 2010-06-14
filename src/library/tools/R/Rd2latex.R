@@ -185,9 +185,18 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 
     writeURL <- function(block, tag) {
         ## really verbatim
+        if (tag == "\\url")
+            url <- as.character(block)
+        else
+            url <- as.character(block[[1]])
     	of0(tag, "{",
-            gsub("\n", "", paste(as.character(block), collapse="")),
+            gsub("\n", "", paste(as.character(url), collapse="")),
             "}")
+        if (tag == "\\href") {
+            of1("{")
+            writeContent(block[[2]], tag)
+            of1("}")
+        }   
     }
 
     ## Currently ignores [option] except for [=dest] form
@@ -366,7 +375,8 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\option" =,
                "\\samp" = writeWrapped(block, tag),
                ## really verbatim
-                "\\url"= writeURL(block, tag),
+                "\\url"=,
+               "\\href"= writeURL(block, tag),
                ## R-like
                "\\code"= {
                    inCode <<- TRUE

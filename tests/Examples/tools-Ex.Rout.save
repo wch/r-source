@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-06-11 r52253)
+R version 2.12.0 Under development (unstable) (2010-06-14 r52274)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i386-pc-mingw32/i386 (32-bit)
@@ -21,6 +21,7 @@ Type 'q()' to quit R.
 > pkgname <- "tools"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> options(pager = "console")
 > library('tools')
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
@@ -101,7 +102,10 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 018d9764>
+<environment: 01d8157c>
+
+$showURLs
+[1] FALSE
 
 > Rd2txt_options(minIndent=4)
 > Rd2txt_options()
@@ -126,7 +130,10 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 018d9764>
+<environment: 01d8157c>
+
+$showURLs
+[1] FALSE
 
 > Rd2txt_options(saveOpts)
 > Rd2txt_options()
@@ -151,7 +158,10 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 018d9764>
+<environment: 01d8157c>
+
+$showURLs
+[1] FALSE
 
 > 
 > 
@@ -775,7 +785,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.24 0.14 1.71 NA NA 
+Time elapsed:  1.48 0.1 1.69 NA NA 
 > grDevices::dev.off()
 null device 
           1 

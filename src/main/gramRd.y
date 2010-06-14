@@ -152,7 +152,7 @@ static int 	mkComment(int);
 %token		SECTIONHEADER2
 %token		RCODEMACRO SEXPR RDOPTS LATEXMACRO VERBMACRO OPTMACRO ESCAPE
 %token		LISTSECTION ITEMIZE DESCRIPTION NOITEM
-%token		LATEXMACRO2 VERBMACRO2
+%token		LATEXMACRO2 VERBMACRO2 VERBLATEX
 %token		LATEXMACRO3
 %token		IFDEF ENDIF
 %token		TEXT RCODE VERB COMMENT UNKNOWN
@@ -167,7 +167,7 @@ static int 	mkComment(int);
 %destructor { UNPROTECT_PTR($$); } SECTIONHEADER RSECTIONHEADER
 VSECTIONHEADER SECTIONHEADER2 RCODEMACRO SEXPR LATEXMACRO VERBMACRO
 OPTMACRO ESCAPE LISTSECTION ITEMIZE DESCRIPTION NOITEM LATEXMACRO2
-VERBMACRO2 LATEXMACRO3 IFDEF ENDIF TEXT RCODE VERB COMMENT UNKNOWN
+VERBMACRO2 VERBLATEX LATEXMACRO3 IFDEF ENDIF TEXT RCODE VERB COMMENT UNKNOWN
 STARTFILE STARTFRAGMENT goLatexLike goRLike goRLike2 goOption
 goVerbatim goVerbatim1 goVerbatim2 goItem0 goItem2 LatexArg RLikeArg2
 VerbatimArg1 VerbatimArg2 IfDefTarget ArgItems Option
@@ -227,7 +227,8 @@ Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
 	|	VERBMACRO2  VerbatimArg1	{ $$ = xxmarkup2($1, $2, R_NilValue, 1, STATIC, &@$); }
 	|       VERBMACRO2  VerbatimArg1 VerbatimArg2 { $$ = xxmarkup2($1, $2, $3, 2, STATIC, &@$); }
 	|	ESCAPE				{ $$ = xxmarkup($1, R_NilValue, STATIC, &@$); }
-	|	IFDEF IfDefTarget ArgItems ENDIF { $$ = xxmarkup2($1, $2, $3, 2, HAS_IFDEF, &@$); UNPROTECT_PTR($4); } 
+	|	IFDEF IfDefTarget ArgItems ENDIF { $$ = xxmarkup2($1, $2, $3, 2, HAS_IFDEF, &@$); UNPROTECT_PTR($4); }
+	|	VERBLATEX   VerbatimArg1 LatexArg2 { $$ = xxmarkup2($1, $2, $3, 2, STATIC, &@$); }
 	
 LatexArg:	goLatexLike Arg		 	{ xxpopMode($1); $$ = $2; }
 
@@ -842,6 +843,10 @@ static keywords[] = {
     { "\\S4method",LATEXMACRO2 },
     { "\\tabular", LATEXMACRO2 },
     { "\\subsection", LATEXMACRO2 },
+    
+    /* This macro takes one verbatim and one LaTeX-like argument. */
+    
+    { "\\href",    VERBLATEX },
     
     /* This macro takes three LaTeX-like arguments. */
     

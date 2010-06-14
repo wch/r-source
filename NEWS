@@ -167,6 +167,9 @@ NEW FEATURES
     o	Several aspects of the display of text help are now
 	customizable using the new Rd2txt_options() function.
 	options("help_text_width") is no longer used.
+	
+    o	Added \href tag to the Rd format, to allow hyperlinks to URLs
+    	without displaying the full URL.
 
     o	R_HOME/share/texmf now follows the TDS conventions, so can be
 	set as a texmf tree ('root directory' in MiKTeX parlance).

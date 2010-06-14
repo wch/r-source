@@ -401,6 +401,16 @@ Rd2HTML <-
                    url <- gsub("\n", "", url)
                    of0('<a href="', url, '">', url, '</a>')
                },
+               "\\href" = {
+               	   if(length(block[[1]])) {
+               	   	url <- paste(as.character(block[[1]]), collapse="")
+               	   	url <- gsub("\n", "", url)
+               	   	of0('<a href="', url, '">')
+               	   	closing <- "</a>"
+               	   } else closing <- ""
+               	   writeContent(block[[2]], tag)
+               	   of0(closing)
+               },
                "\\Sexpr"= of0(as.character.Rd(block, deparse=TRUE)),
                "\\cr" =,
                "\\dots" =,

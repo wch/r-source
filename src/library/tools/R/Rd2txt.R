@@ -35,7 +35,8 @@ Rd2txt_options <- local({
     	         sectionIndent = 5L,
     	         sectionExtra = 2L,
     	         itemBullet = "* ",
-    	         enumFormat = function(n) sprintf("%d. ", n))
+    	         enumFormat = function(n) sprintf("%d. ", n),
+    	         showURLs = FALSE)
     function(...) {
         args <- list(...)
         if (!length(args))
@@ -384,9 +385,17 @@ Rd2txt <-
                "\\email"=  put("<email: ",
                                gsub("\n", "", paste(as.character(block), collapse="")),
                                ">"),
-                "\\url"= put("<URL: ",
+               "\\url"= put("<URL: ",
                               gsub("\n", "", paste(as.character(block), collapse="")),
                               ">") ,
+               "\\href"= {
+                   opts <- Rd2txt_options()
+                   writeContent(block[[2]], tag)
+                   if (opts$showURLs)
+  			put(" (URL: ",
+  			    gsub("\n", "", paste(as.character(block[[1]]), collapse="")),
+  			    ")") 
+               },
                "\\Sexpr"= put(as.character.Rd(block, deparse=TRUE)),
                "\\acronym" =,
                "\\cite"=,
