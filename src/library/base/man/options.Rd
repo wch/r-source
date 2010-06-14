@@ -465,7 +465,8 @@ getOption(x, default = NULL)
     \item{\code{help.try.all.packages}:}{default for an argument of
       \code{\link{help}}.}
     
-    \item{\code{help_type}:}{default for an argument of \code{\link{help}}.}
+    \item{\code{help_type}:}{default for an argument of
+    \code{\link{help}}, used also as the help type by \code{\link{?}}.}
 
     \item{\code{HTTPUserAgent}:}{string used as the user agent in HTTP
       requests.  If \code{NULL}, HTTP requests will be made without a
