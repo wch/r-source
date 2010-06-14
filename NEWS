@@ -236,6 +236,9 @@ UTILITIES
 	It has new arguments to select one of the tables and to limit
 	the number of entries printed.
 
+    o	R CMD Sweave now runs R with --vanilla so the environment
+	setting of R_LIBS will always be used.
+
 
 C-LEVEL FACILITIES
 
