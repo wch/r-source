@@ -322,11 +322,10 @@ static void Cairo_Raster(unsigned int *raster, int w, int h,
 
     cairo_set_source_surface(xd->cc, image, 0, 0);
 
-    /* Use nearest-neighbour filter so that a scaled up image
-     * is "blocky";  alternative is some sort of linear
-     * interpolation, which gives nasty edge-effects
-     */
-    if (!interpolate) {
+    if (interpolate) {
+        cairo_pattern_set_filter(cairo_get_source(xd->cc), 
+                                 CAIRO_FILTER_BILINEAR);
+    } else {
         cairo_pattern_set_filter(cairo_get_source(xd->cc), 
                                  CAIRO_FILTER_NEAREST);
     }

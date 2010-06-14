@@ -959,8 +959,6 @@ grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
 validDetails.rastergrob <- function(x) {
     if (!is.raster(x$raster))
         x$raster <- as.raster(x$raster)
-    if (is.null(x$width) && is.null(x$height))
-        stop("at least one of 'width' and 'height' must be specified")
     if (!is.unit(x$x) ||
         !is.unit(x$y) ||
         (!is.null(x$width) && !is.unit(x$width)) ||
@@ -978,15 +976,32 @@ drawDetails.rastergrob <- function(x, recording=TRUE) {
     # At this point resolve NULL width/height based on
     # image dimensions
     if (is.null(x$width)) {
-        h <- convertHeight(x$height, "inches", valueOnly=TRUE)
-        x$width <- unit(h*dim(x$raster)[2]/dim(x$raster)[1],
-                        "inches")
+        if (is.null(x$height)) {
+            rasterRatio <- dim(x$raster)[1]/dim(x$raster)[2]
+            vpWidth <- convertWidth(unit(1, "npc"), "inches", valueOnly=TRUE)
+            vpHeight <- convertHeight(unit(1, "npc"), "inches", valueOnly=TRUE)
+            vpRatio <- vpHeight/vpWidth
+            if (rasterRatio > vpRatio) {
+                x$height <- unit(vpHeight, "inches")
+                x$width <- unit(vpHeight*dim(x$raster)[2]/dim(x$raster)[1],
+                                "inches")
+            } else {
+                x$width <- unit(vpWidth, "inches")
+                x$height <- unit(vpWidth*dim(x$raster)[1]/dim(x$raster)[2],
+                                 "inches")
+            }
+        } else {
+            h <- convertHeight(x$height, "inches", valueOnly=TRUE)
+            x$width <- unit(h*dim(x$raster)[2]/dim(x$raster)[1],
+                            "inches")
+        }
+    } else {
+        if (is.null(x$height)) {
+            w <- convertWidth(x$width, "inches", valueOnly=TRUE)
+            x$height <- unit(w*dim(x$raster)[1]/dim(x$raster)[2],
+                             "inches")
+        }
     }
-    if (is.null(x$height)) {
-        w <- convertWidth(x$width, "inches", valueOnly=TRUE)
-        x$height <- unit(w*dim(x$raster)[1]/dim(x$raster)[2],
-                        "inches")
-    }    
     grid.Call.graphics("L_raster", x$raster,
                        x$x, x$y, x$width, x$height,
                        resolveHJust(x$just, x$hjust),
@@ -998,7 +1013,7 @@ drawDetails.rastergrob <- function(x, recording=TRUE) {
 
 rasterGrob <- function(image,
                        x=unit(0.5, "npc"), y=unit(0.5, "npc"),
-                       width=unit(1, "npc"), height=NULL,
+                       width=NULL, height=NULL,
                        just="centre", hjust=NULL, vjust=NULL,
                        interpolate=TRUE,
                        default.units="npc",
@@ -1019,7 +1034,7 @@ rasterGrob <- function(image,
 
 grid.raster <- function(image,
                         x=unit(0.5, "npc"), y=unit(0.5, "npc"),
-                        width=unit(1, "npc"), height=NULL,
+                        width=NULL, height=NULL,
                         just="centre", hjust=NULL, vjust=NULL,
                         interpolate=TRUE,
                         default.units="npc",

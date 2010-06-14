@@ -16,14 +16,14 @@
 \usage{
 grid.raster(image,
             x = unit(0.5, "npc"), y = unit(0.5, "npc"),
-            width = unit(1, "npc"), height = NULL,
+            width = NULL, height = NULL,
             just = "centre", hjust = NULL, vjust = NULL,
             interpolate = TRUE, default.units = "npc",
             name = NULL, gp = gpar(), vp = NULL)
 
 rasterGrob(image,
            x = unit(0.5, "npc"), y = unit(0.5, "npc"),
-           width = unit(1, "npc"), height = NULL,
+           width = NULL, height = NULL,
            just = "centre", hjust = NULL, vjust = NULL,
            interpolate = TRUE, default.units = "npc",
            name = NULL, gp = gpar(), vp = NULL)
@@ -63,7 +63,7 @@ rasterGrob(image,
   }
 }
 \details{
-  Only one of \code{width} or \code{height} needs to be specified,
+  Neither \code{width} nor \code{height} needs to be specified,
   in which case, the aspect ratio of the image is preserved.  If
   both \code{width} and \code{height} are specified, it is likely
   that the image will be distorted.
