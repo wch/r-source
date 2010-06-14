@@ -4106,17 +4106,17 @@ function(cfile)
     else
         NULL
 
-    out <- tryCatch(suppressMessages(utils::readCitationFile(cfile, meta)),
-                    error = identity)
-    if(inherits(out, "error")) {
-        writeLines(conditionMessage(out))
+    db <- tryCatch(suppressMessages(get_CITATION_entry_fields(cfile,
+                                                              meta$Encoding)),
+                   error = identity)
+
+    if(inherits(db, "error")) {
+        writeLines(conditionMessage(db))
         return(invisible())
     }
 
-    if(is.null(encoding <- meta$Encoding))
-        encoding <- "ASCII"
-    db <- get_CITATION_entry_fields(cfile, encoding)
     if(!NROW(db)) return(invisible())
+
     bad <- Map(find_missing_required_BibTeX_fields, db$Entry, db$Fields,
                USE.NAMES = FALSE)
     ind <- sapply(bad, identical, NA_character_)
@@ -4126,14 +4126,14 @@ function(cfile)
             ifelse(nchar(entries) < 20L,
                    entries,
                    paste(substring(entries, 1L, 20L), "[TRUNCATED]"))
-        writeLines(sprintf("citEntry %d: invalid type %s",
+        writeLines(sprintf("entry %d: invalid type %s",
                            pos, sQuote(entries)))
     }
     pos <- which(!ind & (sapply(bad, length) > 0L))
     if(length(pos)) {
-        writeLines(strwrap(sprintf("citEntry %d (%s): missing required field(s) %s",
+        writeLines(strwrap(sprintf("entry %d (%s): missing required field(s) %s",
                                    pos,
-                                   tolower(db$Entry[pos]),
+                                   db$Entry[pos],
                                    sapply(bad[pos],
                                           function(s)
                                           paste(sQuote(s),

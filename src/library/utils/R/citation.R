@@ -633,28 +633,10 @@ function(...)
     rval
 }
 
-## Keep tools:::get_CITATION_entry_fields is step with this
 readCitationFile <-
 function(file, meta = NULL)
 {
-    if(is.null(encoding <- meta$Encoding))
-        encoding <- "ASCII"
-
-    ## The parser can only read valid strings, but single-byte locales
-    ## can mark their encoding.  The following allows latin1 and UTF-8
-    ## citation files to be read in UTF-8 and any single-byte locale
-    ## (including C).
-    ##
-    ##
-    ## FIXME: if parse() could be told to read strings bytewise,
-    ## we could simply convert to UTF-8.
-    if(encoding %in% c("latin1", "UTF-8") && !l10n_info()$MBCS) {
-        pcf <- parse(file = file, encoding = encoding)
-    } else {
-        con <- file(file, encoding = encoding)
-        on.exit(close(con))
-        pcf <- parse(con)
-    }
+    exprs <- tools:::.parse_CITATION_file(file, meta$Encoding)
 
     rval <- list()
     mheader <- NULL
@@ -664,7 +646,7 @@ function(file, meta = NULL)
     ## Make the package metadata available to the citation entries.
     assign("meta", meta, envir = envir)
 
-    for(expr in pcf) {
+    for(expr in exprs) {
         x <- eval(expr, envir = envir)
         if(class(x) == "bibentry")
             rval <- c(rval, list(x))

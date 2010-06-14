@@ -1,5 +1,26 @@
 ## Tools for computing on CITATION info.
-## Currently only for validation, and hence not in utils.
+
+.parse_CITATION_file <-
+function(cfile, encoding = NULL)
+{
+    if(is.null(encoding))
+        encoding <- "ASCII"
+    
+    ## The parser can only read valid strings, but single-byte locales
+    ## can mark their encoding.  The following allows latin1 and UTF-8
+    ## citation files to be read in UTF-8 and any single-byte locale
+    ## (including C).
+    ##
+    ## FIXME: if parse() could be told to read strings bytewise,
+    ## we could simply convert to UTF-8.
+    if(encoding %in% c("latin1", "UTF-8") && !l10n_info()$MBCS) {
+        parse(file = cfile, encoding = encoding)
+    } else {
+        con <- file(cfile, encoding = encoding)
+        on.exit(close(con))
+        parse(con)
+    }
+}
 
 BibTeX_entry_field_db <-
     list(Article = c("author", "title", "journal", "year"),
@@ -20,21 +41,12 @@ BibTeX_entry_field_db <-
          )
 ## See e.g. lisp/textmodes/bibtex.el in the GNU Emacs sources.
 
-## Keep in step with utils::readCitationFile
 get_CITATION_entry_fields <-
 function(file, encoding = "ASCII")
 {
-    ## Assume that bibentry() or citEntry() only occur at top level.
+    exprs <- .parse_CITATION_file(file, encoding)
 
-    if(encoding %in% c("latin1", "UTF-8") && !l10n_info()$MBCS) {
-        exprs <- tryCatch(parse(file = file, encoding = encoding),
-                          error = identity)
-    } else {
-        con <- file(file, encoding = encoding)
-        on.exit(close(con))
-        exprs <- tryCatch(parse(con), error = identity)
-    }
-    if(inherits(exprs, "error")) return()
+    ## Assume that bibentry() or citEntry() only occur at top level.
 
     ## Try to detect entry type and field names from the calls.
     FOO1 <- FOO2 <- function() match.call(expand.dots = FALSE)
@@ -58,7 +70,7 @@ function(file, encoding = "ASCII")
                }
                else return()
                entry <- if(!is.character(entry)) NA_character_ else entry[1L]
-               list(entry = entry, fields = fields)
+               list(entry = entry, fields = as.character(fields))
            })
 
     out <- Filter(Negate(is.null), out)
@@ -75,7 +87,6 @@ function(file, encoding = "ASCII")
 find_missing_required_BibTeX_fields <-
 function(entry, fields)
 {
-    if(!length(fields)) return(character())
     pos <- match(tolower(entry),
                  tolower(names(BibTeX_entry_field_db)))
     if(is.na(pos)) {
