@@ -42,7 +42,7 @@ latex_canonical_encoding  <- function(encoding)
 
 ## 'encoding' is passed to parse_Rd, as the input encoding
 Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
-		     outputEncoding = "ASCII", ...,
+		     outputEncoding = "ASCII", fragment = FALSE, ...,
                      writeEncoding = TRUE)
 {
     encode_warn <- FALSE
@@ -646,7 +646,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         sectionLevel <<- save
     }
 
-    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
+    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, fragment=fragment, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
 
@@ -669,37 +669,45 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         if(writeEncoding) of0("\\inputencoding{", latexEncoding, "}\n")
     } else latexEncoding <- NA
 
-    ## we know this has been ordered by prepare2_Rd, but
-    ## need to sort the aliases (if any)
-    nm <- character(length(Rd))
-    isAlias <- sections == "\\alias"
-    sortorder <- if (any(isAlias)) {
-        nm[isAlias] <- sapply(Rd[isAlias], as.character)
-        order(sectionOrder[sections], toupper(nm), nm)
-    } else  order(sectionOrder[sections])
-    Rd <- Rd[sortorder]
-    sections <- sections[sortorder]
+    if (fragment) {
+    	if (sections[1] %in% names(sectionOrder))
+    	    for (i in seq_along(sections))
+    	    	writeSection(Rd[[i]], sections[i])
+    	else
+    	    for (i in seq_along(sections))
+    	    	writeBlock(Rd[[i]], sections[i], "")
+    } else {
+	## we know this has been ordered by prepare2_Rd, but
+	## need to sort the aliases (if any)
+	nm <- character(length(Rd))
+	isAlias <- sections == "\\alias"
+	sortorder <- if (any(isAlias)) {
+	    nm[isAlias] <- sapply(Rd[isAlias], as.character)
+	    order(sectionOrder[sections], toupper(nm), nm)
+	} else  order(sectionOrder[sections])
+	Rd <- Rd[sortorder]
+	sections <- sections[sortorder]
 
-    title <- as.character(Rd[[1L]])
-    ## remove empty lines, leading whitespace
-    title <- trim(paste(psub1("^\\s+", "", title[nzchar(title)]),
-                        collapse=" "))
-    ## substitutions?
+	title <- as.character(Rd[[1L]])
+	## remove empty lines, leading whitespace
+	title <- trim(paste(psub1("^\\s+", "", title[nzchar(title)]),
+			    collapse=" "))
+	## substitutions?
 
-    name <- Rd[[2L]]
+	name <- Rd[[2L]]
 
-    name <- trim(as.character(Rd[[2L]][[1L]]))
-    ltxname <- latex_escape_name(name)
+	name <- trim(as.character(Rd[[2L]][[1L]]))
+	ltxname <- latex_escape_name(name)
 
-    of0('\\HeaderA{', ltxname, '}{',
-        ltxstriptitle(title), '}{',
-        latex_link_trans0(name), '}\n')
+	of0('\\HeaderA{', ltxname, '}{',
+	    ltxstriptitle(title), '}{',
+	    latex_link_trans0(name), '}\n')
 
-    for (i in seq_along(sections)[-(1:2)])
-        writeSection(Rd[[i]], sections[i])
-
+	for (i in seq_along(sections)[-(1:2)])
+	    writeSection(Rd[[i]], sections[i])
+    }
     if (encode_warn)
-        warnRd(Rd, Rdfile, "Some input could not be re-encoded to ",
-               outputEncoding)
+	warnRd(Rd, Rdfile, "Some input could not be re-encoded to ",
+	       outputEncoding)
     invisible(structure(out, latexEncoding = latexEncoding))
 }

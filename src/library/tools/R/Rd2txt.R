@@ -53,7 +53,7 @@ Rd2txt_options <- local({
 Rd2txt <-
     function(Rd, out="", package = "", defines=.Platform$OS.type,
              stages = "render", outputEncoding = "",
-             options, ...)
+             fragment = FALSE, options, ...)
 {
     
     ## we need to keep track of where we are.
@@ -821,7 +821,6 @@ Rd2txt <-
         }
         paste(out, collapse = "")
     }
-
     writeSection <- function(section, tag) {
         if (tag %in% c("\\alias", "\\concept", "\\encoding", "\\keyword"))
             return()
@@ -876,36 +875,43 @@ Rd2txt <-
     	out <- summary(con)$description
     }
 
-    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, ...)
+    Rd <- prepare_Rd(Rd, defines=defines, stages=stages, fragment=fragment, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
+    if (fragment) {
+    	if (sections[1] %in% names(sectionOrder))
+    	    for (i in seq_along(sections))
+    	    	writeSection(Rd[[i]], sections[i])
+    	else
+    	    for (i in seq_along(sections))
+    	    	writeBlock(Rd[[i]], sections[i], "")
+    } else {
+	title <- as.character(Rd[[1L]])
+	## remove empty lines, leading and trailing whitespace, \n
+	title <- trim(paste(psub1("^\\s+", "", title[nzchar(title)]), collapse=" "))
+	title <- fsub("\n", "", title)
 
-    title <- as.character(Rd[[1L]])
-    ## remove empty lines, leading and trailing whitespace, \n
-    title <- trim(paste(psub1("^\\s+", "", title[nzchar(title)]), collapse=" "))
-    title <- fsub("\n", "", title)
+	name <- trim(Rd[[2L]][[1L]])
 
-    name <- trim(Rd[[2L]][[1L]])
+	if(nzchar(package)) {
+	    left <- name
+	    mid <- if(nzchar(package)) paste("package:", package, sep = "") else ""
+	    right <- "R Documentation"
+	    if(encoding != "unknown")
+		right <- paste(right, "(", encoding, ")", sep="")
+	    pad <- max(HDR_WIDTH - nchar(left, "w") - nchar(mid, "w") - nchar(right, "w"), 0)
+	    pad0 <- pad %/% 2L
+	    pad1 <- paste(rep.int(" ", pad0), collapse = "")
+	    pad2 <- paste(rep.int(" ", pad - pad0), collapse = "")
+	    putf(paste(left, pad1, mid, pad2, right, "\n\n", sep=""))
+	}
 
-    if(nzchar(package)) {
-        left <- name
-        mid <- if(nzchar(package)) paste("package:", package, sep = "") else ""
-        right <- "R Documentation"
-        if(encoding != "unknown")
-            right <- paste(right, "(", encoding, ")", sep="")
-        pad <- max(HDR_WIDTH - nchar(left, "w") - nchar(mid, "w") - nchar(right, "w"), 0)
-        pad0 <- pad %/% 2L
-        pad1 <- paste(rep.int(" ", pad0), collapse = "")
-        pad2 <- paste(rep.int(" ", pad - pad0), collapse = "")
-        putf(paste(left, pad1, mid, pad2, right, "\n\n", sep=""))
+	putf(txt_header(txt_striptitle(title)))
+	blankLine()
+
+	for (i in seq_along(sections)[-(1:2)])
+	    writeSection(Rd[[i]], sections[i])
     }
-
-    putf(txt_header(txt_striptitle(title)))
-    blankLine()
-
-    for (i in seq_along(sections)[-(1:2)])
-        writeSection(Rd[[i]], sections[i])
-
     blankLine(0L)
     invisible(out)
 }

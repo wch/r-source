@@ -18,14 +18,14 @@
 Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         Links = NULL, Links2 = NULL,
         stages = "render", outputEncoding = "UTF-8", 
-        dynamic = FALSE, no_links = FALSE, ...)
+        dynamic = FALSE, no_links = FALSE, fragment = FALSE, ...)
 
 Rd2txt(Rd, out = "", package = "", defines = .Platform$OS.type,
        stages = "render", outputEncoding = "",
-       options, ...)
+       fragment = FALSE, options, ...)
 
 Rd2latex(Rd, out = "", defines = .Platform$OS.type,
-         stages = "render", outputEncoding = "ASCII", ...,
+         stages = "render", outputEncoding = "ASCII", fragment = FALSE, ...,
          writeEncoding = TRUE)
 
 Rd2ex(Rd, out = "", defines = .Platform$OS.type,
@@ -44,6 +44,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       dynamic help system.}
   \item{no_links}{logical: suppress hyperlinks to other help topics.
       Used by \command{R CMD \link{Rdconv}}.}
+  \item{fragment}{logical:  should fragments of Rd files be accepted?  See the
+      notes below.}
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
   \item{options}{An optional named list of options to pass to \code{\link{Rd2txt_options}}.}
@@ -92,6 +94,13 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   \code{options} argument, documented with the \code{\link{Rd2txt_options}}
   function. Changes made using \code{options} are temporary, those
   made with \code{\link{Rd2txt_options}} are persistent.
+  
+  When \code{fragment = TRUE}, the \code{Rd} file will be rendered
+  with no processing of \verb{\Sexpr} elements or conditional defines
+  using \verb{#ifdef} or \verb{#ifndef}.  Normally a fragment represents
+  text within a section, but if the first element of the fragment
+  is a section macro, the whole fragment will be rendered as 
+  a series of sections, without the usual sorting.
 }
 \section{Encodings}{
   Rd files are normally intended to be rendered on a wide variety of

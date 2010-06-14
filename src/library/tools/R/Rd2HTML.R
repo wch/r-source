@@ -140,7 +140,7 @@ Rd2HTML <-
     function(Rd, out = "", package = "", defines = .Platform$OS.type,
              Links = NULL, Links2 = NULL,
              stages = "render", outputEncoding = "UTF-8",
-             dynamic = FALSE, no_links = FALSE, ...)
+             dynamic = FALSE, no_links = FALSE, fragment=FALSE, ...)
 {
     if (missing(no_links) && is.null(Links) && !dynamic) no_links <- TRUE
     version <- ""
@@ -664,51 +664,60 @@ Rd2HTML <-
     	out <- summary(con)$description
     }
 
-    Rd <- prepare_Rd(Rd, defines = defines, stages = stages, ...)
+    Rd <- prepare_Rd(Rd, defines = defines, stages = stages, 
+                     fragment = fragment, ...)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
+    if (fragment) {
+    	if (sections[1] %in% names(sectionOrder))
+    	    for (i in seq_along(sections))
+    	    	writeSection(Rd[[i]], sections[i])
+    	else
+    	    for (i in seq_along(sections))
+    	    	writeBlock(Rd[[i]], sections[i], "")
+    } else {
+	title <- Rd[[1L]]
+	name <- htmlify(Rd[[2L]][[1L]])
 
-    title <- Rd[[1L]]
-    name <- htmlify(Rd[[2L]][[1L]])
+	of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
+	    '<html><head><title>R: ')
+	## special for now, as we need to remove leading and trailing spaces
+	title <- trim(as.character(title))
+	title <- htmlify(paste(psub1("^\\s+", "", title[nzchar(title)]),
+			       collapse = " "))
+	of1(title)
+	of0('</title>\n',
+	    '<meta http-equiv="Content-Type" content="text/html; charset=',
+	    mime_canonical_encoding(outputEncoding),
+	    '">\n')
 
-    of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
-        '<html><head><title>R: ')
-    ## special for now, as we need to remove leading and trailing spaces
-    title <- trim(as.character(title))
-    title <- htmlify(paste(psub1("^\\s+", "", title[nzchar(title)]),
-                           collapse = " "))
-    of1(title)
-    of0('</title>\n',
-        '<meta http-equiv="Content-Type" content="text/html; charset=',
-        mime_canonical_encoding(outputEncoding),
-        '">\n')
+	of0('<link rel="stylesheet" type="text/css" ',
+	    if (no_links) 'href="R.css">' else 'href="../../R.css">',
+	    '\n</head><body>\n\n',
+	    '<table width="100%" summary="page for ', name)
+	if (nchar(package))
+	    of0(' {', package, '}"><tr><td>',name,' {', package,'}')
+	else
+	    of0('"><tr><td>',name)
+	of0('</td><td align="right">R Documentation</td></tr></table>\n\n')
 
-    of0('<link rel="stylesheet" type="text/css" ',
-        if (no_links) 'href="R.css">' else 'href="../../R.css">',
-        '\n</head><body>\n\n',
-        '<table width="100%" summary="page for ', name)
-    if (nchar(package))
-    	of0(' {', package, '}"><tr><td>',name,' {', package,'}')
-    else
-        of0('"><tr><td>',name)
-    of0('</td><td align="right">R Documentation</td></tr></table>\n\n')
+	of0("<h2>", title,'</h2>\n')
 
-    of0("<h2>", title,'</h2>\n')
+	for (i in seq_along(sections)[-(1:2)])
+	    writeSection(Rd[[i]], sections[i])
 
-    for (i in seq_along(sections)[-(1:2)])
-    	writeSection(Rd[[i]], sections[i])
-
-    if(version != "")
-        version <- paste('Package <em>', package,
-                         '</em> version ', version,
-                         ' ', sep='')
-    of0('\n')
-    if (version != "")
-    	of0('<hr><div align="center">[', version,
-            if (!no_links) '<a href="00Index.html">Index</a>',
-            ']</div>')
-    of0('\n', 
-        '</body></html>\n')
+	if(version != "")
+	    version <- paste('Package <em>', package,
+			     '</em> version ', version,
+			     ' ', sep='')
+	of0('\n')
+	if (version != "")
+	    of0('<hr><div align="center">[', version,
+		if (!no_links) '<a href="00Index.html">Index</a>',
+		']</div>')
+	of0('\n', 
+	    '</body></html>\n')
+    }
     invisible(out)
 }
 

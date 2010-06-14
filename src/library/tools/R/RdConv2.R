@@ -321,38 +321,40 @@ processRdSexprs <-
 
 prepare_Rd <-
     function(Rd, encoding = "unknown", defines = NULL, stages = NULL,
-             options = RweaveRdDefaults,
+             fragment = FALSE, options = RweaveRdDefaults,
              stage2 = TRUE, stage3 = TRUE, ..., msglevel = 0)
 {
     if (is.character(Rd)) {
         Rdfile <- Rd
         ## do it this way to get info in internal warnings
-        Rd <- eval(substitute(parse_Rd(f, encoding = enc, ...),
-                              list(f = Rd, enc = encoding)))
+        Rd <- eval(substitute(parse_Rd(f, encoding = enc, fragment = frag, ...),
+                              list(f = Rd, enc = encoding, frag = fragment)))
     } else if(inherits(Rd, "connection")) {
         Rdfile <- summary(Rd)
-        Rd <- parse_Rd(Rd, encoding = encoding, ...)
+        Rd <- parse_Rd(Rd, encoding = encoding, fragment=fragment, ...)
     } else Rdfile <- attr(Rd, "Rdfile")
     if (is.null(Rdfile) && !is.null(srcref <- attr(Rd, "srcref")))
     	Rdfile <- attr(srcref, "srcfile")$filename
-    pratt <- attr(Rd, "prepared")
-    if (is.null(pratt)) pratt <- 0L
-    if ("build" %in% stages)
-    	Rd <- processRdSexprs(Rd, "build", options)
-    if (!is.null(defines))
-    	Rd <- processRdIfdefs(Rd, defines)
-    for (stage in c("install", "render"))
-    	if (stage %in% stages)
-    	    Rd <- processRdSexprs(Rd, stage, options)
-    if (pratt < 2L && stage2)
-        Rd <- prepare2_Rd(Rd, Rdfile)
-    meta <- attr(Rd, "meta")
-    if (pratt < 3L && stage3)
-        Rd <- prepare3_Rd(Rd, Rdfile, msglevel = msglevel)
+    if (fragment) meta <- NULL
+    else {
+	pratt <- attr(Rd, "prepared")
+	if (is.null(pratt)) pratt <- 0L
+	if ("build" %in% stages)
+	    Rd <- processRdSexprs(Rd, "build", options)
+	if (!is.null(defines))
+	    Rd <- processRdIfdefs(Rd, defines)
+	for (stage in c("install", "render"))
+	    if (stage %in% stages)
+		Rd <- processRdSexprs(Rd, stage, options)
+	if (pratt < 2L && stage2)
+	    Rd <- prepare2_Rd(Rd, Rdfile)
+	meta <- attr(Rd, "meta")
+	if (pratt < 3L && stage3)
+	    Rd <- prepare3_Rd(Rd, Rdfile, msglevel = msglevel)
 
-    # Restore flags from any sections that are left
-    Rd <- setDynamicFlags(Rd, apply(sapply(Rd, getDynamicFlags), 1, any))
-
+	# Restore flags from any sections that are left
+	Rd <- setDynamicFlags(Rd, apply(sapply(Rd, getDynamicFlags), 1, any))
+    }
     structure(Rd, Rdfile = Rdfile, class = "Rd", meta = meta)
 }
 
@@ -882,4 +884,5 @@ testRdConditional <- function(format, conditional, Rdfile) {
     any(c("TRUE", format) %in% allow)
 }
 
-
+toRd <- function(obj, ...)
+    UseMethod("toRd")

@@ -171,6 +171,10 @@ NEW FEATURES
     o	Added \href tag to the Rd format, to allow hyperlinks to URLs
     	without displaying the full URL.
 
+    o	Added toRd() generic to convert objects to fragments of Rd
+	code, and added "fragment" argument to Rd2txt(), Rd2HTML(),
+	and Rd2latex() to support it.
+	
     o	R_HOME/share/texmf now follows the TDS conventions, so can be
 	set as a texmf tree ('root directory' in MiKTeX parlance).
 

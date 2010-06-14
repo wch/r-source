@@ -17,7 +17,7 @@ export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rd2txt_options",
        "testInstalledBasic", "testInstalledPackage",
        "testInstalledPackages", "RdTextFilter", "SweaveTeXFilter",
        "startDynamicHelp", "checkRdaFiles", "resaveRdaFiles",
-       "HTMLheader", "toHTML")
+       "HTMLheader", "toHTML", "toRd")
 
 export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 
