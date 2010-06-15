@@ -351,7 +351,7 @@ RweaveLatexSetup <-
         stylepath <- if(length(p) >= 1L && nzchar(p[1L])) identical(p, "TRUE") else FALSE
     }
     if(stylepath){
-        styfile <- file.path(R.home("share"), "texmf", "Sweave")
+        styfile <- file.path(R.home("share"), "texmf", "tex", "latex", "Sweave")
         if(.Platform$OS.type == "windows")
             styfile <- gsub("\\\\", "/", styfile)
         if(length(grep(" ", styfile)))
