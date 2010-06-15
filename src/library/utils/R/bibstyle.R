@@ -1,0 +1,312 @@
+# Functions for making Rd and human readable versions of bibentry records.
+
+makeJSS <- function() 
+    local({
+
+	# First, some utilities
+
+	collapse <- function(strings) 
+	    paste(strings, collapse="\n")
+
+	# Add a period if there's no sentence punctuation already    	
+	addPeriod <- function(string) 
+	    sub("([^.?!])$", "\\1.", string)
+
+	# Separate args by sep, add a period at the end.
+	sentence <- function(..., sep=", ") {
+	    strings <- c(...)
+	    if (length(strings)) {
+		addPeriod(paste(strings, collapse=sep))
+	    }
+	}
+
+	# Now some simple markup
+
+	plain <- function(pages) 
+	    if (length(pages)) collapse(pages)
+
+	emph <- function(s) 
+	    if (length(s)) paste("\\emph{", collapse(s), "}", sep="")
+
+	# This creates a function to label a field by adding a prefix or suffix (or both)
+
+	label <- function(prefix=NULL, suffix=NULL, style=plain) {
+	    force(prefix); force(suffix); force(style)
+	    function(s) 
+		if (length(s)) style(paste(prefix, collapse(s), suffix, sep=""))
+	}
+
+	# Now the formatters for each particular field.  These take
+	# a character vector; if length zero, they return NULL, otherwise 
+	# a single element character vector putting everything together
+
+	fmtAddress <- plain
+	fmtBook <- emph
+	fmtBtitle <- emph
+	fmtChapter <- label(prefix="chapter ")
+	fmtDOI <- label(prefix="\\url{http://dx.doi.org/", suffix="}")
+	fmtEdition <- label(suffix=" edition")
+	fmtEprint <- plain
+	fmtHowpublished <- plain
+	fmtISBN <- label(prefix = "ISBN ")
+	fmtISSN <- label(prefix="ISSN ")
+	fmtInstitution <- plain
+	fmtNote <- plain
+	fmtPages <- label(prefix="pp. ")
+	fmtSchool <- plain
+	fmtTechreportnumber <- label(prefix="Technical Report ")
+	fmtUrl <- label(prefix="\\url{", suffix="}")
+	fmtTitle <- function(title) 
+	    if (length(title)) paste("\\dQuote{", 
+				     addPeriod(collapse(title)), "}", sep="")
+
+	fmtYear <- function(year) {
+	    if (!length(year)) year <- "????"
+	    paste("(", collapse(year), ")", sep="")
+	}
+
+	# Now some more complicated ones that look at multiple fields
+	volNum <- function(paper) {
+	    if (length(paper$volume)) {
+		result <- paste("\\bold{", collapse(paper$volume), "}", sep="")
+		if (length(paper$number)) 
+		    result <- paste(result, "(", collapse(paper$number), ")", sep="")
+		result
+	    }
+	}
+
+	# Format one person object in short "Murdoch DJ" format
+	shortName <- function(person) {
+	    if (length(person$family)) {
+		result <- person$family
+		if (length(person$given))
+			 result <- paste(result, paste(substr(person$given, 1,1), collapse=""))
+	    } else
+		     result <- paste(person$given, collapse=" ")
+	    result
+	}
+
+	# Format all authors for one paper
+	authorList <- function(paper) {
+	    names <- sapply(paper$author, shortName)
+	    if (length(names) > 1)
+		result <- paste( paste(names[-length(names)], collapse=", "),
+			    "and", names[length(names)])
+	    else
+		result <- names
+	    result
+	}
+
+	# Format all editors for one paper
+	editorList <- function(paper) {
+	    names <- sapply(paper$editor, shortName)
+	    if (length(names) > 1)
+		result <- paste( paste(names[-length(names)], collapse=", "),
+			    "and", names[length(names)], "(eds.)") 
+	    else if (length(names))
+		result <- paste(names, "(ed.)")
+	    else
+		result <- NULL
+	    result
+	}
+
+	extraInfo <- function(paper) {
+	    result <- paste(c(fmtDOI(paper$doi), fmtNote(paper$note), 
+		  fmtEprint(paper$eprint), fmtUrl(paper$url)), collapse=", ")
+	    if (result != "") result
+	}
+
+	bookVolume <- function(book) {
+	    result <- ""
+	    if (length(book$volume))
+		result <- paste("volume", collapse(book$volume))
+	    if (length(book$number))
+		result <- paste(result, "number", collapse(book$number))
+	    if (length(book$series))
+		result <- paste(result, "series", collapse(book$series))
+	    if (result != "") result
+	}
+
+	bookPublisher <- function(book) {
+	    if (length(book$publisher)) {
+		result <- collapse(book$publisher)
+		if (length(book$address)) 
+		    result <- paste(result, collapse(book$address), sep=", ")
+		result
+	    }
+	}
+
+	procOrganization <- function(paper) {
+	    if (length(paper$organization)) {
+		result <- collapse(paper$organization)
+		if (length(paper$address)) 
+		    result <- paste(result, collapse(paper$address), sep=", ")
+		result
+	    }
+	}
+
+	formatArticle <- function(paper) {
+	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+		     fmtTitle(paper$title),
+		     sentence(fmtBook(paper$journal), volNum(paper), fmtPages(paper$pages)),
+		     sentence(fmtISSN(paper$issn), extraInfo(paper))))
+	}
+
+	formatBook <- function(book) {
+	    authors <- authorList(book)
+	    if (is.null(authors))
+		authors <- editorList(book)
+
+	    collapse(c(sentence(authors, fmtYear(book$year), sep=" "),
+		       sentence(fmtBtitle(book$title), bookVolume(book), fmtEdition(book$edition)),
+		       sentence(bookPublisher(book)),
+		       sentence(fmtISBN(book$isbn), extraInfo(book))))
+	}
+
+	formatInbook <- function(paper) {
+	    authors <- authorList(paper)
+	    editors <- editorList(paper)
+	    if (is.null(authors)) {
+		authors <- editors
+		editors <- NULL
+	    }
+	    collapse(c(sentence(authors, fmtYear(paper$year), sep=" "),
+		       fmtTitle(paper$title),
+		       paste("In", sentence(editors, fmtBtitle(paper$fmtBtitle), bookVolume(paper), 
+					    fmtChapter(paper$chapter),
+					    fmtEdition(paper$edition), fmtPages(paper$pages))),
+		       sentence(bookPublisher(paper)),
+		       sentence(fmtISBN(paper$isbn), extraInfo(paper))))
+	}
+
+	formatIncollection <- function(paper) {
+	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+		       fmtTitle(paper$title),
+		       paste("In", sentence(editorList(paper), fmtBtitle(paper$fmtBtitle), bookVolume(paper), 
+					    fmtEdition(paper$edition), fmtPages(paper$pages))),
+		       sentence(bookPublisher(paper)),
+		       sentence(fmtISBN(paper$isbn), extraInfo(paper))))
+	}
+
+	formatInProceedings <- function(paper) 
+	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+		       fmtTitle(paper$title),
+		       paste("In", sentence(editorList(paper), fmtBtitle(paper$booktitle), bookVolume(paper), 
+					    fmtEdition(paper$edition), fmtPages(paper$pages))),
+		       sentence(procOrganization(paper)),
+		       sentence(fmtISBN(paper$isbn), extraInfo(paper))))
+
+	formatManual <- function(paper) {
+	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+		       sentence(fmtBtitle(paper$title), bookVolume(paper), fmtEdition(paper$edition)),
+		       sentence(procOrganization(paper)),
+		       sentence(fmtISBN(paper$isbn), extraInfo(paper))))
+	}
+
+	formatMastersthesis <- function(paper) {
+	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+		       sentence(fmtBtitle(paper$title)), 
+		       sentence("Master's thesis", fmtSchool(paper$school), fmtAddress(paper$address)),
+		       sentence(extraInfo(paper))))
+	}
+
+	formatPhdthesis <- function(paper) {
+	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+		       sentence(fmtBtitle(paper$title)), 
+		       sentence("PhD thesis", fmtSchool(paper$school), fmtAddress(paper$address)),
+		       sentence(extraInfo(paper))))
+	}
+
+	formatMisc <- function(paper) {
+	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+		       fmtTitle(paper$title), 
+		       sentence(fmtHowpublished(paper$howpublished)),
+		       sentence(extraInfo(paper))))
+	}
+
+	formatProceedings <- function(book) {
+	    if (is.null(book$editor)) editor <- "Anonymous (ed.)"
+	    else editor <- editorList(book)
+	    collapse(c(sentence(editor, fmtYear(book$year), sep=" "),
+		       sentence(fmtBtitle(book$title), bookVolume(book)),
+		       sentence(procOrganization(book)),
+		       sentence(fmtISBN(book$isbn), fmtISSN(book$issn), 
+				extraInfo(book))))
+	}
+
+	formatTechreport <- function(paper) {
+	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+		       fmtTitle(paper$title), 
+		       sentence(fmtTechreportnumber(paper$number),
+				fmtInstitution(paper$institution),
+				fmtAddress(paper$address)),
+		       sentence(extraInfo(paper))))
+	}
+
+	formatUnpublished <- function(paper) {
+	    collapse(c(sentence(authorList(paper), fmtYear(paper$year), sep=" "),
+		       fmtTitle(paper$title), 
+		       sentence(extraInfo(paper))))
+	}
+
+	sortKeys <- function(bib) {
+	    result <- character(length(bib))
+	    for (i in seq_along(bib)) {
+		authors <- authorList(bib[[i]])
+		if (!length(authors))
+		    authors <- editorList(bib[[i]])
+		if (!length(authors))
+		    authors <- ""
+		result[i] <- authors
+	    }
+	    result
+	}
+
+	environment()
+    })
+    
+bibstyle <- local({
+    styles <- list(JSS = makeJSS())
+    function(style, envir, ..., .init = FALSE) {
+        if (!missing(envir)) {
+            stopifnot(!.init)
+            styles[[style]] <<- envir
+        }
+        if (.init) styles[[style]] <<- makeJSS()
+        newfns <- list(...)
+        if (length(newfns) && style == "JSS")
+            stop("The default JSS style may not be modified.")
+        for (n in names(newfns))
+            assign(n, newfns[[n]], envir=styles[[style]])
+        styles[[style]]
+    }
+})
+    
+toRd.bibentry <- function(obj, style="JSS", ...) {
+    env <- new.env(parent=bibstyle(style))
+    env$obj <- obj
+    o <- with(env, order(sortKeys(obj)))
+    rm("obj", envir=env)
+    bib <- unclass(obj[o])    
+    result <- character(length(bib))
+    for (i in seq_along(bib)) {
+    	env$paper <- bib[[i]]
+    	result[i] <- with(env,
+    	    switch(attr(paper, "bibtype"),
+    	    Article = formatArticle(paper),
+    	    Book = formatBook(paper),
+    	    InBook = formatInbook(paper),
+    	    InCollection = formatIncollection(paper),
+    	    InProceedings = formatInProceedings(paper),
+    	    Manual = formatManual(paper),
+    	    MastersThesis = formatMastersthesis(paper),
+    	    Misc = formatMisc(paper),
+    	    PhdThesis = formatPhdthesis(paper),
+    	    Proceedings = formatProceedings(paper),
+    	    TechReport = formatTechreport(paper),
+    	    Unpublished = formatUnpublished(paper),
+    	    paste("bibtype", attr(paper, "bibtype"),"not implemented") ))
+    } 
+    result
+}
+

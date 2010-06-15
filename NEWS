@@ -162,7 +162,11 @@ NEW FEATURES
     o	Package 'utils' adds a new "bibentry" class for representing and
         manipulating bibliographic information in enhanced BibTeX
         style, unifying and enhancing the previously existing
-        mechanisms.
+        mechanisms.  
+        
+    o	The bibstyle() function has been added with default JSS style
+	for rendering "bibentry" objects, and a mechanism for
+	registering other rendering styles.
         
     o	Several aspects of the display of text help are now
 	customizable using the new Rd2txt_options() function.

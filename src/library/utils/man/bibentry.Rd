@@ -7,9 +7,10 @@
   information in enhanced BibTeX style.
 }
 \usage{
-bibentry(bibtype, textVersion, header = NULL, footer = NULL, key = NULL,
+bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
          ..., other = list(), mheader = NULL, mfooter = NULL)
-\method{print}{bibentry}(x, style = c("text", "Bibtex", "citation"), ...)
+\method{print}{bibentry}(x, style = c("text", "textVersion", "Bibtex", 
+                         "citation", "html", "latex"), .bibstyle = "JSS", ...)
 }
 \arguments{
   \item{bibtype}{a character string with a BibTeX entry type.
@@ -20,10 +21,11 @@ bibentry(bibtype, textVersion, header = NULL, footer = NULL, key = NULL,
   \item{header}{a character string with optional header text.}
   \item{footer}{a character string with optional footer text.}
   \item{key}{a character string giving the citation key for the entry.}
-  \item{...}{arguments of the form \code{\var{tag}=\var{value}} giving
+  \item{...}{for \code{bibentry}: arguments of the form \code{\var{tag}=\var{value}} giving
     the fields of the entry, with \var{tag} and \var{value} the name and
     value of the field, respectively.
-    See \bold{Entry Fields} for details.}
+    See \bold{Entry Fields} for details. For the \code{print} method,
+    extra parameters to pass to the renderer.}
   \item{other}{a list of arguments as in \code{...} (useful in
     particular for fields named the same as formals of
     \code{bibentry}).}
@@ -34,8 +36,8 @@ bibentry(bibtype, textVersion, header = NULL, footer = NULL, key = NULL,
   \item{x}{an object inheriting from class \code{"bibentry"}.}
   \item{style}{a character string with a unique abbreviation of
     \code{"text"}, \code{"Bibtex"} or \code{"citation"} specifying the
-    print style.
-  }
+    print style.}
+  \item{.bibstyle}{a character string naming a bibliography style.}
 }
 \details{
   The bibentry objects created by \code{bibentry} can represent an
@@ -47,14 +49,18 @@ bibentry(bibtype, textVersion, header = NULL, footer = NULL, key = NULL,
   instead of character strings.
 
   The \code{\link{print}} method for bibentry objects provides a choice
-  between three different styles: plain text based on the
-  \code{textVersion} elements (style \code{"text"}), BibTeX
-  (\code{"Bibtex"}) and a mixture of plain text and BibTeX as
-  traditionally used for citations (\code{"citation"}).  There is also a
+  between six different styles: plain text (style \code{"text"}), a simple copy
+  of the \code{textVersion} elements (style \code{"textVersion"}), BibTeX
+  (\code{"Bibtex"}), a mixture of plain text and BibTeX as
+  traditionally used for citations (\code{"citation"}), HTML (style \code{"html"},
+  and LaTeX (style \code{"latex"}).  
+  The \code{"text"}, \code{"html"} and \code{"latex"} styles make use
+  of the \code{.bibstyle} argument using the \code{\link{bibstyle}} function.
+  There is also a
   \code{\link{toBibtex}} method for direct conversion to BibTeX.
 }
 \value{
-  An object of class \code{"bibentry"}.
+  \code{bibentry} produces an object of class \code{"bibentry"}.
 }
 \section{Entry Types}{
   \code{bibentry} creates \code{"bibentry"} objects, which are modeled
@@ -122,3 +128,15 @@ bibentry(bibtype, textVersion, header = NULL, footer = NULL, key = NULL,
 \note{
   The bibentry functionality is still experimental.
 }
+\examples{
+bibentry(bibtype = "manual",
+    title = "R: A Language and Environment for Statistical Computing",
+    author = person("R Development Core Team"),
+    organization = "R Foundation for Statistical Computing",
+    address = "Vienna, Austria",
+    year = 2010,
+    isbn = "3-900051-07-0",
+    url = "http://www.R-project.org")
+}
+\keyword{ utilities }
+\keyword{ documentation }

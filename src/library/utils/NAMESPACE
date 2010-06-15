@@ -2,7 +2,7 @@ export("?", .DollarNames, CRAN.packages, Rprof, Rprofmem, RShowDoc,
        RSiteSearch, URLdecode, URLencode, View, alarm, apropos,
        argsAnywhere, assignInNamespace, as.roman, as.person,
        as.personList, as.relistable, aspell, available.packages,
-       browseEnv, browseURL, browseVignettes, bug.report,
+       bibstyle, browseEnv, browseURL, browseVignettes, bug.report,
        capture.output, checkCRAN, chooseBioCmirror, chooseCRANmirror,
        citation, citEntry, citHeader, citFooter, close.socket, combn,
        compareVersion, contrib.url, count.fields, data, data.entry,
@@ -118,6 +118,8 @@ S3method("print", "bibentry")
 S3method(print, citation)
 S3method("print", "person")
 S3method("toBibtex", "bibentry")
+importFrom("tools", "toRd")
+S3method("toRd", "bibentry")
 ## </FIXME>
 
 ## <FIXME>

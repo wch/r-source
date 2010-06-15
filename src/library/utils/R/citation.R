@@ -335,7 +335,7 @@ function(object, ...)
 ######################################################################
 
 bibentry <-
-function(bibtype, textVersion, header = NULL, footer = NULL, key = NULL,
+function(bibtype, textVersion=NULL, header = NULL, footer = NULL, key = NULL,
          ...,
          other = list(), mheader = NULL, mfooter = NULL)
 {
@@ -400,7 +400,7 @@ function(bibtype, textVersion, header = NULL, footer = NULL, key = NULL,
         ## set attributes
         attr(rval, "bibtype") <- bibtype
         attr(rval, "key") <- if(is.null(key)) NULL else as.character(key)
-        attr(rval, "textVersion") <- as.character(textVersion)
+        if(!is.null(textVersion)) attr(rval, "textVersion") <- as.character(textVersion)
         if(!.is_not_nonempty_text(header))
             attr(rval, "header") <- paste(header, collapse = "\n")
         if(!.is_not_nonempty_text(footer))
@@ -435,17 +435,28 @@ function(x, i)
 }
 
 print.bibentry <- 
-function(x, style = c("text", "Bibtex", "citation"), ...)
+function(x, style = c("text", "textVersion", "Bibtex", "citation", "html", "latex"), 
+            .bibstyle = "JSS", ...)
 {
     style <- match.arg(style)
 
     ## styles
-    ## text: simply print the textVersions
+    ## text: render using toRd and Rd2txt
+    ## textVersion: simply print the textVersions
     ## Bibtex: print list of Bibtex objects
     ## citation: mimic old behavior
+    ## html: render using toRd and Rd2HTML
+    ## latex: render using toRd and Rd2Latex
+    
     switch(style,
 
-    "text" = { 
+    "text" = {
+    	rd <- paste(tools::toRd(x, style=.bibstyle), "\n\n")
+    	cat(tools::Rd2txt(con <- textConnection(rd), fragment=TRUE, ...))
+    	close(con)
+    },
+    
+    "textVersion" = { 
     	print(sapply(unclass(x), attr, "textVersion"))
     },
 
@@ -489,7 +500,19 @@ function(x, style = c("text", "Bibtex", "citation"), ...)
     	    writeLines(strwrap(attr(x, "mfooter")))
     	}
     	cat("\n")
-    })
+    },
+    
+    "html" = {
+       	rd <- paste(tools::toRd(x, style=.bibstyle), "\n\n")
+       	cat(tools::Rd2HTML(con <- textConnection(rd), fragment=TRUE, ...))
+       	close(con)
+    },
+        
+    "latex" = {
+    	rd <- paste(tools::toRd(x, style=.bibstyle), "\n\n")
+    	cat(tools::Rd2latex(con <- textConnection(rd), fragment=TRUE, ...))
+    	close(con)
+    } )
 
     invisible(x)
 }
