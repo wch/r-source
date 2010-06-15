@@ -67,7 +67,7 @@ br.Internet0=Padrão
 br.Internet1=Internet2
 
 dk.regentries=Indgange i registreringsdatabasen:
-dk.associate=&Associere R med .Rdata filer
+dk.associate=&Associere R med .RData filer
 dk.user=Brugerinstallation
 dk.compact=Minimal brugerinstallation
 dk.full=Luld installation
@@ -391,7 +391,7 @@ ja.Internet1=Internet2
 ; Korean is in code page 949, which extends EUC-KR
 
 ko.regentries=·¹Áö½ºÆ®¸® Ç×¸ñ:
-ko.associate=R¸¦ È®ÀåÀÚ .Rdata¿¡ °ü·Ã Áı´Ï´Ù
+ko.associate=R¸¦ È®ÀåÀÚ .RData¿¡ °ü·Ã Áı´Ï´Ù
 ko.user=ÀÌ¿ëÀÚ¸¦ À§ÇÑ ÀÎ½ºÅç
 ko.compact=ÀÌ¿ëÀÚ¸¦ À§ÇÑ ÃÖ¼Ò ÀÎ½ºÅç
 ko.full=ÀüºÎ ÀÎ½ºÅç

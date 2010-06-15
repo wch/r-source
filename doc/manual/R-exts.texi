@@ -3103,13 +3103,13 @@ load(file, envir = parent.frame())
 @}
 \examples@{
 ## save all data
-save(list = ls(), file= "all.Rdata")
+save(list = ls(), file= "all.RData")
 
 ## restore the saved values to the current environment
-load("all.Rdata")
+load("all.RData")
 
 ## restore the saved values to the workspace
-load("all.Rdata", .GlobalEnv)
+load("all.RData", .GlobalEnv)
 @}
 \keyword@{file@}
 @end smallexample

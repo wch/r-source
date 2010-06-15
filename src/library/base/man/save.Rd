@@ -145,9 +145,9 @@ save.image(file = ".RData", version = NULL, ascii = FALSE,
 \examples{
 x <- stats::runif(20)
 y <- list(a = 1, b = TRUE, c = "oops")
-save(x, y, file = "xy.Rdata")
+save(x, y, file = "xy.RData")
 save.image()
-unlink("xy.Rdata")
+unlink("xy.RData")
 unlink(".RData")
 
 # set save defaults using option:
