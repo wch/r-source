@@ -3884,7 +3884,7 @@ BUG FIXES
 	Matthew Dowle.
 
     o	data.frame(x=1:2, y=3:4, row.names=c("a","NA"))[c(2,NA),] has
-	correct row names c("NA,"NA.1") again.
+	correct row names c("NA","NA.1") again.
 
     o	The GUI data editor for dataframes did not handle escape
 	characters in entries properly. (PR#11897)
@@ -11619,7 +11619,7 @@ DEPRECATED & DEFUNCT
     o	The aqua module for MacOS X has been removed: --with-aqua now
 	refers to the unbundled Cocoa GUI.
 
-    o	Capabilities "bzip2", "GNOME, "libz" and "PCRE" are defunct.
+    o	Capabilities "bzip2", "GNOME", "libz" and "PCRE" are defunct.
 
     o	The undocumented use of UseMethod() with no argument was
 	deprecated in 2.0.1 and is now regarded as an error.
@@ -12088,7 +12088,7 @@ DEPRECATED & DEFUNCT
 
     o	The aqua module in MacOS X is deprecated.
 
-    o	Capabilities "bzip2", "GNOME, "libz" and "PCRE" are deprecated.
+    o	Capabilities "bzip2", "GNOME", "libz" and "PCRE" are deprecated.
 
     o	The GNOME GUI on Unix-alikes is deprecated as part of R;
 	it will be available in another form as from R 2.1.0.
