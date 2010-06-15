@@ -45,9 +45,9 @@ citFooter(...)
   source file and may contain arbitrary R commands including
   conditionals and computations.  Function \code{readCitationFile} (used
   in turn by \code{\link{citation}}) extracts the information in
-  \file{CITATION} files).  The file is \code{source()}ed by the R
+  \file{CITATION} files.  The file is \code{source()}ed by the R
   parser in a temporary environment and all resulting bibliographic
-  objects (spefically, of class \code{"\link{bibentry}"}) are collected.
+  objects (specifically, of class \code{"\link{bibentry}"}) are collected.
 
   Traditionally, the \file{CITATION} file contained zero or more calls
   to \code{citHeader}, then one or more calls to \code{citEntry}, and

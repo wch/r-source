@@ -21,7 +21,7 @@ file.path(\dots, fsep = .Platform$file.sep)
   The implementation is designed to be fast, faster than
   \code{\link{paste}} as this function is used extensively in \R itself.
 
-  It can also be used for enviroment paths such as \env{PATH} and
+  It can also be used for environment paths such as \env{PATH} and
   \env{R_LIBS} with \code{fsep = .Platform$path.sep}.
 }
 \value{
