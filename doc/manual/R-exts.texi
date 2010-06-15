@@ -1541,10 +1541,8 @@ executed, and the vignettes made from the sources as a check of
 completeness.
 
 @item
-If a working @command{pdflatex} or @command{latex} program is available,
-the @file{.pdf} or @file{.dvi} version, respectively, of the package's
-manual is created (to check that the @file{Rd} files can be converted
-successfully).
+The PDF version of the package's manual is created (to check that the
+@file{Rd} files can be converted successfully).
 @end enumerate
 
 Use @kbd{R CMD check --help} to obtain more information about the usage
@@ -1749,15 +1747,16 @@ would see this as incompatible with an Open Source licence.}
 
 By default @code{R CMD build} will run @code{Sweave} on all files in
 Sweave format.  If no @file{Makefile} is found in directory
-@file{inst/doc}, then @code{texi2dvi --pdf} is run on all vignettes.
-Whenever a @file{Makefile} is found, then @code{R CMD build} will try to
-run @command{make} after the @code{Sweave} step, so PDF manuals can be
-created from arbitrary source formats (plain @LaTeX{} files, @dots{}).
-The first target in the @file{Makefile} should take care of both
-creation of PDF files and cleaning up afterwards, i.e., delete all files
-that shall not appear in the final package archive.  Note that the
-@code{make} step is executed independently from the presence of any
-files in Sweave format.
+@file{inst/doc}, then @code{tool::texi2dvi(pdf = TRUE)} is run on all
+vignettes.  Whenever a @file{Makefile} is found, then @code{R CMD build}
+will try to run @command{make} after the @code{Sweave} step, so PDF
+manuals can be created from arbitrary source formats (plain @LaTeX{}
+files, @dots{}).  The first target in the @file{Makefile} should take
+care of both creation of PDF files and cleaning up afterwards, i.e.,
+delete all files that shall not appear in the final package archive.
+Note that the @code{make} step is executed independently from the
+presence of any files in Sweave format, and that if it runs @R{} it
+needs to be careful to respect the environment value of @env{R_LIBS}.
 
 It is no longer necessary to provide a @file{00Index.dcf} file in the
 @file{inst/doc} directory---the corresponding information is generated
@@ -1831,7 +1830,7 @@ should
 @item
 Read through the PDF manual that was produced by @code{R CMD check} at
 @file{@var{mypkg}.Rcheck/@var{mypkg}-manual.pdf}, or produce another copy by
-@code{R CMD Rd2dvi --pdf @var{mypkg}}.
+@code{R CMD Rd2pdf @var{mypkg}}.
 
 @item
 Look at the rendering of your help pages in text from within @R{}.
@@ -1896,6 +1895,10 @@ extras, as was done for package @pkg{BRugs}.
 Be aware that in all cases license requirements will need to be met so
 you may need to supply the sources for the additional components (and
 will if your package has a GPL-like license).
+
+Also be aware that as from @R{} 2.11.0 there are both 32- and 64-bit
+binary builds of @R{} for Windows and the CRAN team will be reluctant to
+support a package that works under just one of the architectures.
 
 
 @node Package name spaces, Writing portable packages, Submitting a package to CRAN, Creating R packages
@@ -4338,10 +4341,11 @@ The @code{\enc} command (@pxref{Insertions}) can be used to provide
 transliterations which will be used in conversions that do not support
 the declared encoding.
 
-The @LaTeX{} conversion converts an explicit encoding of the file to a
+The @LaTeX{} conversion converts the file to UTF-8 from the declared
+encoding, and includes a
 
 @example
-\inputencoding@{@var{some_encoding}@}
+\inputencoding@{utf8@}
 @end example
 
 @noindent
@@ -4351,7 +4355,7 @@ CMD Rd2dvi} looks at the converted code and includes the encodings used:
 it might for example use
 
 @example
-\usepackage[latin1,latin9,utf8]@{inputenc@}
+\usepackage[utf8]@{inputenc@}
 @end example
 
 @noindent
@@ -4361,9 +4365,8 @@ also need @samp{\usepackage[T2A]@{fontenc@}}, and @command{R CMD Rd2dvi}
 includes this conditionally on the file @file{t2aenc.def} being present
 and environment variable @env{_R_CYRILLIC_TEX_} being set.)
 
-Note that this mechanism works best with Latin letters and for example
-the copyright symbol may be rendered as a superscript and the plus--minus
-symbol cannot be used in text.
+Note that this mechanism works best with Latin letters: the coverage of
+UTF-8 in @LaTeX{} is quite low.
 
 
 
@@ -4381,21 +4384,23 @@ The currently supported conversions are to plain text, @HTML{} and
 @LaTeX{} as well as extraction of the examples.
 
 @findex R CMD Rd2dvi
+@findex R CMD Rd2pdf
 @code{R CMD Rd2dvi} generates DVI (or, if option @option{--pdf} is
-given, PDF) output from documentation in @file{Rd} files, which can be
-specified either explicitly or by the path to a directory with the
-sources of a package.  In the latter case, a reference
-manual for all documented objects in the package is created, including
-the information in the @file{DESCRIPTION} files.
+given, or it is invoked as @code{R CMD Rd2pdf}, PDF) output from
+documentation in @file{Rd} files, which can be specified either
+explicitly or by the path to a directory with the sources of a package.
+In the latter case, a reference manual for all documented objects in the
+package is created, including the information in the @file{DESCRIPTION}
+files.
 
 @findex R CMD Sd2Rd
 @code{R CMD Sd2Rd} converts @Sl{} version 3 documentation files (which
 use an extended Nroff format) and @Sl{} version 4 documentation (which
-uses SGML markup) to @file{Rd} format.  This is useful when porting a package
-originally written for the @Sl{} system to @R{}.  @Sl{} version 3 files
-usually have extension @file{.d}, whereas version 4 ones have extension
-@file{.sgml} or @file{.sgm}.  (This command is deprecated, and requires
-Perl to be installed.)
+uses SGML markup) to @file{Rd} format.  This is useful when porting a
+package originally written for the @Sl{} system to @R{}.  @Sl{} version
+3 files usually have extension @file{.d}, whereas version 4 ones have
+extension @file{.sgml} or @file{.sgm}.  (This command is unsupported, and
+requires Perl to be installed.)
 
 @findex R CMD Sweave
 @findex R CMD Stangle
@@ -4408,11 +4413,9 @@ these commands can be obtained by running @code{R CMD @var{command}
 --help}, e.g., @kbd{R CMD Rdconv --help}.  All available commands can be
 listed using @kbd{R --help} (or @kbd{Rcmd --help} under Windows).
 
-All of these work under Windows. You will need to have installed the
-files in the @R{} binary Windows distribution for installing source
-packages (this is true for a default installation), and for @code{R CMD
-Rd2dvi} also the tools to build packages from source as described in the
-``R Installation and Administration'' manual.
+All of these work under Windows.  You will need to have installed the
+the tools to build packages from source as described in the ``R
+Installation and Administration'' manual.
 
 @node Back-compatibility issues,  , Processing Rd format, Writing R documentation files
 @section Back-compatibility issues
