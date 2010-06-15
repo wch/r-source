@@ -52,6 +52,7 @@
 #ifdef HAVE_X11_Xmu
 # include <X11/Xmu/Atoms.h>
 #endif
+#include <X11/keysymdef.h>
 
 
 #define R_USE_PROTOTYPES 1
