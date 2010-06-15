@@ -318,6 +318,9 @@ BUG FIXES
     o	A bug in callNextMethod() for some examples with "..." in the
         arguments has been fixed.  See tests/nextWithDots.R in the source.
 
+    o   GERaster() now checks for width or height of zero and does
+        nothing in those cases;  previously the behaviour was
+        undefined, probably device-specific, and possibly dangerous.
 
 
 	**************************************************
