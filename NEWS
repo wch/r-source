@@ -8706,7 +8706,7 @@ NEW FEATURES
     o	[qr]beta(), [qr]f() and [qr]t() now have a non-centrality parameter.
 
     o	[rc]bind and some more cases of subassignment are implemented
-	for raw matrices.  (PR8529 and 8530)
+	for raw matrices.  (PR#8529 and PR#8530)
 
     o	The number of lines of deparsed calls printed by browser() and
 	traceback() can be limited by the option "deparse.max.lines".
