@@ -3687,9 +3687,7 @@ differences, and almost all the setting of typeset documents is done by
 @code{tools::texi2dvi}.  This is used for offline printing of help
 documents, preparing vignettes and for package manuals via @command{R
 CMD Rd2dvi}.  It is not currently used for the @R{} manuals created in
-directory @file{doc/manual}, and @command{R CMD check} currently does a
-check of the availability of @command{pdflatex} or @command{latex} which
-is unrelated to the commands actually used.
+directory @file{doc/manual}.
 
 @code{tools::texi2dvi} makes use of a system command @command{texi2dvi}
 where available.  On a Unix-alike this is usually part of
@@ -3706,7 +3704,7 @@ versions of the LaTeX package @samp{hyperref} and quirks in index
 production.  The licenses used for LaTeX and latterly @samp{texinfo}
 prohibit us from including `known good' versions in the @R{} distribution.
 
-On a Unix-alike @command{configure} looks for the exeutables for TeX and
+On a Unix-alike @command{configure} looks for the executables for TeX and
 friends and if found records the absolute paths in the system
 @file{Renviron} file.  This used to record @samp{false} if no command
 was found, but it nowadays records the name for looking up on the path
