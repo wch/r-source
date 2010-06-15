@@ -1,7 +1,8 @@
 
-R version 2.12.0 Under development (unstable) (2010-05-23 r52081)
+R version 2.12.0 Under development (unstable) (2010-06-14 r52268)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -137,36 +138,50 @@ function (x, y, ...)
 > 
 > ### ** Examples
 > 
-> ## The rules for inheriting S3 methods.
 > 
-> f3 <- function(x)UseMethod("f3") # an S3 generic to illustrate inheritance
 > 
 > ## A class that extends a registered S3 class inherits that class' S3
-> ## methods.  The S3 methods will be passed an object with the S3 class
+> ## methods.
 > 
 > setClass("myFrame", contains = "data.frame",
-+     representation(date = "POSIXt", type = "character"))
++     representation(timestamps = "POSIXt"))
 [1] "myFrame"
 > 
 > df1 <- data.frame(x = 1:10, y = rnorm(10), z = sample(letters,10))
 > 
-> mydf1 <- new("myFrame", df1, date = Sys.time())
+> mydf1 <- new("myFrame", df1, timestamps = Sys.time())
 > 
 > ## "myFrame" objects inherit "data.frame" S3 methods; e.g., for `[`
 > 
-> mydf1[1:2, ] # a data frame object (with extra attributes "date" and "type")
+> mydf1[1:2, ] # a data frame object (with extra attributes)
   x          y z
 1 1 -0.6264538 y
 2 2  0.1836433 f
 > 
-> ## Don't show: 
+> ## a method explicitly for "myFrame" class
 > 
-> m1 <- mydf1[1:2,]
-> attr(m1, "date") <- attr(m1, "type") <- NULL
-> stopifnot(identical(m1, df1[1:2,]))
-> ## End Don't show
 > 
-> ## Extending an S3 class with inconsistent (instance-based) inheritance
+> setMethod("[",
++     signature(x = "myFrame"),
++     function (x, i, j, ..., drop = TRUE) 
++     {
++         S3Part(x) <- callNextMethod()
++         x@timestamps <- c(Sys.time(), as.POSIXct(x@timestamps))
++         x
++     }
++ )
+[1] "["
+> 
+> mydf1[1:2, ]
+Object of class "myFrame"
+  x          y z
+1 1 -0.6264538 y
+2 2  0.1836433 f
+Slot "timestamps":
+[1] "2010-06-14 06:20:31 BST" "2010-06-14 06:20:31 BST"
+
+> 
+> 
 > setClass("myDateTime", contains = "POSIXt")
 [1] "myDateTime"
 > 
@@ -176,26 +191,31 @@ function (x, y, ...)
 > mCt <- new("myDateTime", now)
 > mLt <- new("myDateTime", nowLt)
 > 
-> ## S3 methods will be selected using instance-based information
+> ## S3 methods for an S4 object will be selected using S4 inheritance
+> ## Objects mCt and mLt have different S3Class() values, but this is
+> ## not used.
+> f3 <- function(x)UseMethod("f3") # an S3 generic to illustrate inheritance
 > 
 > f3.POSIXct <- function(x) "The POSIXct result"
 > f3.POSIXlt <- function(x) "The POSIXlt result"
+> f3.POSIXt <- function(x) "The POSIXt result"
 > 
-> stopifnot(identical(f3(mCt), f3.POSIXct(mCt)))
-> stopifnot(identical(f3(mLt), f3.POSIXlt(mLt)))
+> stopifnot(identical(f3(mCt), f3.POSIXt(mCt)))
+> stopifnot(identical(f3(mLt), f3.POSIXt(mLt)))
 > 
 > 
 > 
-> ## An S4 class that does not contain a registered S3 class or object type
-> ## selects S3 methods according to its S4 "inheritance"
-> ## but only if the class definition requests this via S3methods=TRUE
-> ## ( from version 2.9.1 on)
+> ## An S4 object selects S3 methods according to its S4 "inheritance"
+> 
 > 
 > setClass("classA", contains = "numeric",
-+    representation(realData = "numeric"), S3methods = TRUE)
++    representation(realData = "numeric"))
 [1] "classA"
 > 
 > Math.classA <- function(x) {(getFunction(.Generic))(x@realData)}
+> setMethod("Math", "classA", Math.classA)
+[1] "Math"
+> 
 > 
 > x <- new("classA", log(1:10), realData = 1:10)
 > 
@@ -208,34 +228,71 @@ function (x, y, ...)
 > 
 > stopifnot(identical(abs(y), 1:10)) # (version 2.9.0 or earlier fails here)
 > 
-> ## Note: with a class that tries to combine both S3 and S4 superclasses.
-> ## The S3 inheritance is used and the S3 method for
-> ## the S4 superclass will not be selected.
+> ## an S3 generic: just for demonstration purposes
+> f3 <- function(x, ...) UseMethod("f3")
 > 
-> setClass("classC", representation(x = "numeric"))
-[1] "classC"
+> f3.default <- function(x, ...) "Default f3"
 > 
-> # an S3 method for "[" (not a good idea, but it would work)
-> `[.classc` <- function(x, ..., drop = TRUE) {x@x[...]}
+> ## S3 method (only) for classA
+> f3.classA <- function(x, ...) "Class classA for f3"
+> 
+> ## S3 and S4 method for numeric
+> f3.numeric <- function(x, ...) "Class numeric for f3"
+> setMethod("f3", "numeric", f3.numeric)
+Creating a generic function from function "f3"
+[1] "f3"
+> 
+> ## The S3 method for classA and the closest inherited S3 method for classB
+> ## are not found.
+> 
+> f3(x); f3(y) # both choose "numeric" method
+[1] "Class numeric for f3"
+[1] "Class numeric for f3"
+> 
+> ## to obtain the natural inheritance, set identical S3 and S4 methods
+> setMethod("f3", "classA", f3.classA)
+[1] "f3"
+> 
+> f3(x); f3(y) # now both choose "classA" method
+[1] "Class classA for f3"
+[1] "Class classA for f3"
+> 
+> ## Need to define an S3 as well as S4 method to use on an S3 object
+> ## or if called from a package without the S4 generic
+> 
+> MathFun <- function(x) { # a smarter "data.frame" method for Math group
++   for (i in seq(length = ncol(x))[sapply(x, is.numeric)])
++     x[, i] <- (getFunction(.Generic))(x[, i])
++   x
++ }
+> setMethod("Math", "data.frame", MathFun)
+[1] "Math"
+> 
+> ## S4 method works for an S4 class containing data.frame,
+> ## but not for data.frame objects (not S4 objects)
+> 
+> try(logIris <- log(iris)) #gets an error from the old method
+Error in Math.data.frame(structure(list(Sepal.Length = c(5.1, 4.9, 4.7,  : 
+  non-numeric variable in data frame: Species
+> 
+> ## Define an S3 method with the same computation
+> 
+> Math.data.frame <- MathFun
+> 
+> logIris <- log(iris)
 > 
 > 
-> setClass("classD", contains = c("classC", "data.frame"))
-[1] "classD"
 > 
-> ## by the rule mentioned in the S3 method section, the
-> ## S3 methods are selected from the S3 class defined; that is, "data.frame"
-> ## If the user expected to inherit `[.classC`, no luck.
-> xd <- new("classD", df1, x = 1:50)
-> 
-> ## Note the error from `[.data.frame`
-> try(xd[1:25])
-Error in `[.data.frame`(xd, 1:25) : undefined columns selected
 > 
 > ## Don't show: 
 > removeClass("classA"); removeClass("classB"); rm(x,y)
 [1] TRUE
 [1] TRUE
+> removeGeneric("f3")
+[1] TRUE
 > removeClass("myDateTime")
+[1] TRUE
+> removeMethod("Math", "data.frame"); rm(Math.data.frame, MathFun, logIris)
 [1] TRUE
 > ## End Don't show
 > 
@@ -1230,7 +1287,7 @@ standardGeneric for "with" defined from package "base"
 
 function (data, expr, ...) 
 standardGeneric("with")
-<environment: 0x111be38>
+<environment: 0x17a4888>
 Methods may be defined for arguments: data
 Use  showMethods("with")  for currently available ones.
 > 
@@ -3031,7 +3088,7 @@ Error in validObject(tT, complete = TRUE) :
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  8.031 0.08 8.142 0 0 
+Time elapsed:  4.278 0.045 4.324 0 0 
 > grDevices::dev.off()
 null device 
           1 
