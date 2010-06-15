@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-06-14 r52274)
+R version 2.12.0 Under development (unstable) (2010-06-15 r52287)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i386-pc-mingw32/i386 (32-bit)
@@ -21,6 +21,7 @@ Type 'q()' to quit R.
 > pkgname <- "tools"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> options(pager = "console")
 > library('tools')
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
@@ -101,7 +102,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 01d8157c>
+<environment: 01d74cfc>
 
 $showURLs
 [1] FALSE
@@ -129,7 +130,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 01d8157c>
+<environment: 01d74cfc>
 
 $showURLs
 [1] FALSE
@@ -157,7 +158,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 01d8157c>
+<environment: 01d74cfc>
 
 $showURLs
 [1] FALSE
@@ -177,6 +178,48 @@ $showURLs
 > ### Keywords: utilities documentation
 > 
 > ### ** Examples
+> 
+> 
+> cleanEx()
+> nameEx("bibstyle")
+> ### * bibstyle
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bibstyle
+> ### Title: Select or define a bibliography style.
+> ### Aliases: bibstyle
+> ### Keywords: utilties documentation
+> 
+> ### ** Examples
+> 
+> refs <- 
++ c(bibentry(bibtype = "manual",
++     title = "R: A Language and Environment for Statistical Computing",
++     author = person("R Development Core Team"),
++     organization = "R Foundation for Statistical Computing",
++     address = "Vienna, Austria",
++     year = 2010,
++     isbn = "3-900051-07-0",
++     url = "http://www.R-project.org"),  
++   bibentry(bibtype = "article",
++     author = c(person(c("George", "E", "P"), "Box"),
++                person(c("David",  "R"),      "Cox")),
++     year = 1964,
++     title="An Analysis of Transformations",
++     journal="Journal of the Royal Statistical Society, Series B",
++     volume=26,
++     pages="211-252"))
+> bibstyle("unsorted", sortKeys = function(refs) seq_along(refs), .init=TRUE)
+<environment: 017b7eb8>
+> print(refs, .bibstyle="unsorted")    
+R Development Core Team (2010). _R: A Language and Environment for
+Statistical Computing_. R Foundation for Statistical Computing, Vienna,
+Austria. ISBN 3-900051-07-0, <URL: http://www.R-project.org>.
+
+Box GEP and Cox DR (1964). "An Analysis of Transformations." _Journal
+of the Royal Statistical Society, Series B_, *26*, pp. 211-252.
+> 
 > 
 > 
 > cleanEx()
@@ -784,7 +827,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.48 0.1 1.69 NA NA 
+Time elapsed:  1.46 0.18 1.76 NA NA 
 > grDevices::dev.off()
 null device 
           1 

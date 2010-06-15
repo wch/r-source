@@ -1,10 +1,10 @@
 useDynLib(tools, .registration = TRUE)
 
 export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rd2txt_options",
-       "Rdindex", "checkDocFiles", "checkDocStyle", "checkFF",
-       "checkMD5sums", "checkReplaceFuns", "checkS3methods",
-       "checkTnF", "checkVignettes", "codoc", "codocClasses",
-       "codocData", "md5sum", "undoc", "file_ext",
+       "Rdindex", "bibstyle", "checkDocFiles", "checkDocStyle",
+       "checkFF", "checkMD5sums", "checkReplaceFuns",
+       "checkS3methods", "checkTnF", "checkVignettes", "codoc",
+       "codocClasses", "codocData", "md5sum", "undoc", "file_ext",
        "file_path_as_absolute", "file_path_sans_ext",
        "list_files_with_exts", "findHTMLlinks",
        "list_files_with_type", "showNonASCII", "delimMatch",
@@ -58,5 +58,7 @@ S3method("print", "check_vignette_index")
 
 S3method("toHTML", "packageIQR")
 S3method("toHTML", "news_db")
+
+S3method("toRd", "bibentry")
 
 S3method("as.character", "Rd")

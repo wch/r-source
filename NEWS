@@ -164,9 +164,9 @@ NEW FEATURES
         style, unifying and enhancing the previously existing
         mechanisms.  
         
-    o	The bibstyle() function has been added with default JSS style
-	for rendering "bibentry" objects, and a mechanism for
-	registering other rendering styles.
+    o	The bibstyle() function has been added to the 'tools' package
+	with default JSS style for rendering "bibentry" objects, and a
+	mechanism for registering other rendering styles.
         
     o	Several aspects of the display of text help are now
 	customizable using the new Rd2txt_options() function.
@@ -175,9 +175,9 @@ NEW FEATURES
     o	Added \href tag to the Rd format, to allow hyperlinks to URLs
     	without displaying the full URL.
 
-    o	Added toRd() generic to convert objects to fragments of Rd
-	code, and added "fragment" argument to Rd2txt(), Rd2HTML(),
-	and Rd2latex() to support it.
+    o	Added toRd() generic in the 'tools' package to convert objects to
+	fragments of Rd code, and added "fragment" argument to
+	Rd2txt(), Rd2HTML(), and Rd2latex() to support it.
 	
     o	R_HOME/share/texmf now follows the TDS conventions, so can be
 	set as a texmf tree ('root directory' in MiKTeX parlance).
