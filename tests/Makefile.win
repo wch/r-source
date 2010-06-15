@@ -32,7 +32,9 @@ ECHO_T =
 MK = $(MAKE) -f Makefile.win
 TAR = tar
 
-test-src-reg-1 = reg-examples.R reg-tests-1.R reg-tests-2.R \
+## Note: not reg-packages.R
+test-src-reg-1 = reg-tests-1.R  reg-tests-1b.R reg-tests-2.R \
+  reg-examples.R reg-packages.R \
   reg-IO.R reg-IO2.R reg-plot.R reg-S4.R reg-win.R
 
 all-basic-tests = Examples Specific Reg Internet
