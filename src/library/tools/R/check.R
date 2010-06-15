@@ -1351,7 +1351,7 @@ R_run_R <- function(cmd, Ropts, env)
 
 
     check_pkg_manual <- function(pkgdir, pkgname) {
-        ## Run LaTeX on the manual, if there are man pages
+        ## Run Rd2pdf on the manual, if there are man pages
         ## If it is installed there is a 'help' dir
         ## and for a source package, there is a 'man' dir
         if (dir.exists(file.path(pkgdir, "help")) ||
@@ -1480,9 +1480,9 @@ R_run_R <- function(cmd, Ropts, env)
             "A variety of diagnostic checks on directory structure, index and",
             "control files are performed.  The package is installed into the log",
             "directory (which includes the translation of all Rd files into several",
-            "formats), and the Rd files are tested by LaTeX (if available).  All",
-            "examples and tests provided by the package are tested to see if they",
-            "run successfully.",
+            "formats), and the Rd files are tested by LaTeX.",
+            "All examples and tests provided by the package are tested to see if",
+            "they run successfully.",
             "",
             "Options:",
             "  -h, --help		print short help message and exit",
@@ -1492,13 +1492,13 @@ R_run_R <- function(cmd, Ropts, env)
             "  -o, --outdir=DIR      directory used for logfiles, R output, etc.",
             "			(default is 'pkg.Rcheck' in current directory,",
             "			where 'pkg' is the name of the package checked)",
-            "      --no-clean        do not clean outdir before using it",
+            "      --no-clean        do not clean 'outdir' before using it",
             "      --no-codoc        do not check for code/documentation mismatches",
             "      --no-examples     do not run the examples in the Rd files",
             "      --no-install      skip installation and associated tests",
-            "      --no-tests        do not run code in tests subdirectory",
+            "      --no-tests        do not run code in 'tests' subdirectory",
+            "      --no-latex        do not run LaTeX on help files to produce the PDF manual",
             "      --no-vignettes    do not check vignettes in Sweave format",
-            "      --no-latex        do not run LaTeX on help files",
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
             "      --timings         record timings for examples",
@@ -1507,6 +1507,7 @@ R_run_R <- function(cmd, Ropts, env)
             "			run checks on the package subdirectories",
             "			(default is yes for a tarball, no otherwise)",
             "      --rcfile=FILE     read configuration values from FILE",
+            "",
             "      --extra-arch      do only runtime tests needed for an additional",
             "                        sub-architecture.",
             "",
