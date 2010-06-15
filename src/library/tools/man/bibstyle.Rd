@@ -8,7 +8,7 @@ This function defines and registers styles for rendering \code{\link{bibentry}} 
 into Rd format, for later conversion to text, HTML, etc.
 }
 \usage{
-bibstyle(style, envir, ..., .init = FALSE)
+bibstyle(style, envir, ..., .init = FALSE, .default = FALSE)
 }
 \arguments{
   \item{style}{
@@ -22,6 +22,9 @@ Named arguments to add to the environment.
 }
   \item{.init}{
 Whether to initialize the environment from the default style \code{"JSS"}.
+}
+  \item{.default}{
+Whether to set the specified style as the default style.
 }
 }
 \details{
@@ -39,7 +42,9 @@ can be used to specify a completely new style environment.
 To simply retrieve an existing style, specify \code{style}
 and no other arguments.  To modify an existing style, specify \code{style}
 and some named entries via \code{...}.  (Modifying the default
-\code{"JSS"} style is discouraged.)
+\code{"JSS"} style is discouraged.)  Setting \code{style} to \code{NULL}
+or leaving it missing will retrieve the default style, but modifications
+will not be allowed.
 
 At a minimum, the environment should contain routines to render each
 of the 12 types of bibliographic entry supported by

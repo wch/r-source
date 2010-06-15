@@ -886,3 +886,11 @@ testRdConditional <- function(format, conditional, Rdfile) {
 
 toRd <- function(obj, ...)
     UseMethod("toRd")
+
+toRd.default <- function(obj, ...) {
+    obj <- as.character(obj)
+    obj <- gsub("\\", "\\\\", obj, fixed = TRUE)
+    obj <- gsub("{", "\\{", obj, fixed = TRUE)
+    obj <- gsub("}", "\\}", obj, fixed = TRUE)
+    gsub("%", "\\%", obj, fixed = TRUE)
+}

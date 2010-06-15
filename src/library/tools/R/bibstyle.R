@@ -267,22 +267,31 @@ makeJSS <- function()
     
 bibstyle <- local({
     styles <- list(JSS = makeJSS())
-    function(style, envir, ..., .init = FALSE) {
-        if (!missing(envir)) {
-            stopifnot(!.init)
-            styles[[style]] <<- envir
-        }
-        if (.init) styles[[style]] <<- makeJSS()
+    default <- "JSS"
+    function(style, envir, ..., .init = FALSE, .default=FALSE) {
         newfns <- list(...)
-        if (length(newfns) && style == "JSS")
-            stop("The default JSS style may not be modified.")
-        for (n in names(newfns))
-            assign(n, newfns[[n]], envir=styles[[style]])
+        if (missing(style) || is.null(style)) {
+            if (!missing(envir) || length(newfns) || .init || .default)
+            	stop("Changes require specified 'style'")
+            style <- default
+        } else {
+	    if (!missing(envir)) {
+		stopifnot(!.init)
+		styles[[style]] <<- envir
+	    }
+	    if (.init) styles[[style]] <<- makeJSS()
+	    if (length(newfns) && style == "JSS")
+		stop("The default JSS style may not be modified.")
+	    for (n in names(newfns))
+		assign(n, newfns[[n]], envir=styles[[style]])
+            if (.default)
+            	default <<- style
+        }
         styles[[style]]
     }
 })
     
-toRd.bibentry <- function(obj, style="JSS", ...) {
+toRd.bibentry <- function(obj, style=NULL, ...) {
     env <- new.env(parent=bibstyle(style))
     env$obj <- obj
     o <- with(env, order(sortKeys(obj)))
