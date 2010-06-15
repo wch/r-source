@@ -972,9 +972,41 @@ validDetails.rastergrob <- function(x) {
     x
 }
 
+resolveRasterSize <- function(x) {
+    if (is.null(x$width)) {
+        if (is.null(x$height)) {
+            rasterRatio <- dim(x$raster)[1]/dim(x$raster)[2]
+            vpWidth <- convertWidth(unit(1, "npc"), "inches", valueOnly=TRUE)
+            vpHeight <- convertHeight(unit(1, "npc"), "inches", valueOnly=TRUE)
+            vpRatio <- vpHeight/vpWidth
+            if (rasterRatio > vpRatio) {
+                x$height <- unit(vpHeight, "inches")
+                x$width <- unit(vpHeight*dim(x$raster)[2]/dim(x$raster)[1],
+                                "inches")
+            } else {
+                x$width <- unit(vpWidth, "inches")
+                x$height <- unit(vpWidth*dim(x$raster)[1]/dim(x$raster)[2],
+                                 "inches")
+            }
+        } else {
+            h <- convertHeight(x$height, "inches", valueOnly=TRUE)
+            x$width <- unit(h*dim(x$raster)[2]/dim(x$raster)[1],
+                            "inches")
+        }
+    } else {
+        if (is.null(x$height)) {
+            w <- convertWidth(x$width, "inches", valueOnly=TRUE)
+            x$height <- unit(w*dim(x$raster)[1]/dim(x$raster)[2],
+                             "inches")
+        }
+    }
+    x
+}
+
 drawDetails.rastergrob <- function(x, recording=TRUE) {
     # At this point resolve NULL width/height based on
     # image dimensions
+    x <- resolveRasterSize(x)
     if (is.null(x$width)) {
         if (is.null(x$height)) {
             rasterRatio <- dim(x$raster)[1]/dim(x$raster)[2]
@@ -1009,7 +1041,53 @@ drawDetails.rastergrob <- function(x, recording=TRUE) {
                        x$interpolate)
 }
 
-# FIXME: width|height|x|yDetails() methods required
+xDetails.rastergrob <- function(x, theta) {
+    x <- resolveRasterSize(x)
+    bounds <- grid.Call("L_rectBounds", x$x, x$y, x$width, x$height,
+                        resolveHJust(x$just, x$hjust),
+                        resolveVJust(x$just, x$vjust),
+                        theta)
+    if (is.null(bounds))
+        unit(0.5, "npc")
+    else
+        unit(bounds[1L], "inches")
+}
+
+yDetails.rastergrob <- function(x, theta) {
+    x <- resolveRasterSize(x)
+    bounds <- grid.Call("L_rectBounds", x$x, x$y, x$width, x$height,
+                        resolveHJust(x$just, x$hjust),
+                        resolveVJust(x$just, x$vjust),
+                        theta)
+    if (is.null(bounds))
+        unit(0.5, "npc")
+    else
+        unit(bounds[2L], "inches")
+}
+
+widthDetails.rastergrob <- function(x) {
+    x <- resolveRasterSize(x)
+    bounds <- grid.Call("L_rectBounds", x$x, x$y, x$width, x$height,
+                        resolveHJust(x$just, x$hjust),
+                        resolveVJust(x$just, x$vjust),
+                        0)
+    if (is.null(bounds))
+        unit(0, "inches")
+    else
+        unit(bounds[3L], "inches")
+}
+
+heightDetails.rastergrob <- function(x) {
+    x <- resolveRasterSize(x)
+    bounds <- grid.Call("L_rectBounds", x$x, x$y, x$width, x$height,
+                        resolveHJust(x$just, x$hjust),
+                        resolveVJust(x$just, x$vjust),
+                        0)
+    if (is.null(bounds))
+        unit(0, "inches")
+    else
+        unit(bounds[4L], "inches")
+}
 
 rasterGrob <- function(image,
                        x=unit(0.5, "npc"), y=unit(0.5, "npc"),
