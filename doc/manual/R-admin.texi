@@ -4540,13 +4540,20 @@ location where Inno Setup was installed.
 
 This item is installed by the @file{Rtools.exe} installer.
 
+@c INSTALL uses sh make zip
+@c build used sh make tar gzip
+@c check uses sh make
+@c Rdiff.sh uses diff echo grep sed tr
+@c Rd2dvi uses echo mkdir sed
+@c Sweave Stangle use echo
+
 @c date is used when building base and tools
 @c comm, sort, uniq are used in producing .def files
 @c cmp is used in src/include/Makefile.win
 @c cut is used to make RVER
+@c find is used in installer/Makefile
 @c rsync is only needed if building from svn
-@c tr is used by Rdiff
-@c awk, egrep, find, gzip, head, rmdir, tail, tar, wc are no longer used
+@c [g]awk, egrep, expr, head, rmdir, tail, wc are no longer used
 If you choose to install these yourself, you will need suitable versions
 of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
 @code{cp}, @code{cut}, @code{date}, @code{diff}, @code{echo},
