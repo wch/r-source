@@ -1313,6 +1313,7 @@ R_run_R <- function(cmd, Ropts, env)
                 Rcmd <- "options(warn=1)\nlibrary(tools)\n"
                 ## Should checking the vignettes assume the system default
                 ## packages, or just base?
+                ## unset SWEAVE_STYLEPATH_DEFAULT to avoid problems
                 Rcmd <- paste(Rcmd,
                               "checkVignettes(dir = '", pkgoutdir,
                               "', workdir='src'",
@@ -1320,7 +1321,7 @@ R_run_R <- function(cmd, Ropts, env)
                               if (R_check_weave_vignettes) ", tangle = FALSE",
                               if (R_check_latex_vignettes) ", latex = TRUE",
                               ")\n", sep = "")
-                out <- R_runR(Rcmd, R_opts2)
+                out <- R_runR(Rcmd, R_opts2, "SWEAVE_STYLEPATH_DEFAULT=FALSE")
                 ## Vignette could redefine the prompt, e.g. to 'R>' ...
                 out <- grep("^[[:alnum:]]*[>]", out,
                             invert = TRUE, value = TRUE)

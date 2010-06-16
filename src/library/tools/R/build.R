@@ -249,6 +249,8 @@ get_exclude_patterns <- function()
                 on.exit(Sys.unsetenv("R_LIBS"))
                 Sys.setenv(R_LIBS = libdir)
             }
+            ## unset SWEAVE_STYLEPATH_DEFAULT here to avoid problems
+            Sys.unsetenv("SWEAVE_STYLEPATH_DEFAULT")
             cmd <- paste(shQuote(file.path(R.home("bin"), "Rscript")),
                          "--vanilla",
                          "--default-packages=", # some vignettes assume methods
