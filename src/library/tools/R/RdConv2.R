@@ -230,10 +230,14 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 	    }
 	}
 	if (options$results == "rd") {
-	    res <- err   # The last value of the chunk
+	    res <- as.character(err)   # The last value of the chunk
 	    tmpcon <- file()
 	    writeLines(res, tmpcon, useBytes = TRUE)
 	    res <- parse_Rd(tmpcon, fragment=TRUE)
+	    # Now remove that extra newline added by the writeLines
+	    last <- res[[length(res)]]
+	    if (attr(last, "Rd_tag") == "TEXT" && (len <- length(last))) 
+	        res[[length(res)]][len] <- gsub("\\n$", "", last[len])
 	    flag <- getDynamicFlags(res)
 	    res <- tagged(res, "LIST")
 	    res <- setDynamicFlags(res, flag)

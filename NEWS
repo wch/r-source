@@ -325,6 +325,9 @@ BUG FIXES
     o   GERaster() now checks for width or height of zero and does
         nothing in those cases;  previously the behaviour was
         undefined, probably device-specific, and possibly dangerous.
+        
+    o	\Sexpr[result=rd] in an Rd file added a spurious newline,
+	which was displayed as extra whitespace when rendered.
 
 
 	**************************************************
