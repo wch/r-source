@@ -72,14 +72,14 @@ R_run_R <- function(cmd, Ropts, env)
         Log$warnings <<- Log$warnings+1L
     }
 
-    R_runR2 <- function(cmd)
+    R_runR2 <-
+        function(cmd, env = "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
     {
-        out <- R_runR(cmd, R_opts2,
-                      "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'")
+        out <- R_runR(cmd, R_opts2, env)
         if (R_check_suppress_RandR_message)
-            out <- grep('^Xlib: *extension "RANDR" missing on display',
-                        out, invert = TRUE, value = TRUE)
-        out
+            grep('^Xlib: *extension "RANDR" missing on display', out,
+                 invert = TRUE, value = TRUE)
+        else out
     }
 
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
@@ -657,10 +657,7 @@ R_run_R <- function(cmd, Ropts, env)
                 Rcmd <- paste("options(warn=1)\n",
                               sprintf("tools:::.check_packages_used(package = \"%s\")\n", pkgname))
 
-                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
-                if (R_check_suppress_RandR_message)
-                    out <- grep('^Xlib: *extension "RANDR" missing on display',
-                                out, invert = TRUE, value = TRUE)
+                out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
                 if (length(out)) {
                     warnLog()
                     printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -765,10 +762,7 @@ R_run_R <- function(cmd, Ropts, env)
                  Rcmd <-
                      paste("options(warn=1)\n",
                            sprintf("tools:::.check_code_usage_in_package(package = \"%s\")\n", pkgname))
-                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
-                if (R_check_suppress_RandR_message)
-                    out <- grep('^Xlib: *extension "RANDR" missing on display',
-                                out, invert = TRUE, value = TRUE)
+                out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
                 if (length(out)) {
                     if (!any) noteLog(Log)
                     any <- TRUE
@@ -782,10 +776,7 @@ R_run_R <- function(cmd, Ropts, env)
                               sprintf("tools:::.check_T_and_F(package = \"%s\")\n", pkgname)
                               else
                               sprintf("tools:::.check_T_and_F(dir = \"%s\")\n", pkgdir))
-                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
-                if (R_check_suppress_RandR_message)
-                    out <- grep('^Xlib: *extension "RANDR" missing on display',
-                                out, invert = TRUE, value = TRUE)
+                out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
                 if (length(out)) {
                     if (!any) noteLog(Log)
                     any <- TRUE
@@ -799,10 +790,7 @@ R_run_R <- function(cmd, Ropts, env)
                               sprintf("tools:::.check_dotInternal(package = \"%s\")\n", pkgname)
                               else
                               sprintf("tools:::.check_dotInternal(dir = \"%s\")\n", pkgdir))
-                out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=")
-                if (R_check_suppress_RandR_message)
-                    out <- grep('^Xlib: *extension "RANDR" missing on display',
-                                out, invert = TRUE, value = TRUE)
+                out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=")
                 if (length(out)) {
                     if (!any) noteLog(Log)
                     any <- TRUE
@@ -1263,6 +1251,9 @@ R_run_R <- function(cmd, Ropts, env)
                         file <- file.path("tests", sub("out\\.fail", "", file))
                         ll <- length(lines)
                         lines <- lines[max(1, ll-12):ll]
+                        if (R_check_suppress_RandR_message)
+                            lines <- grep('^Xlib: *extension "RANDR" missing on display',
+                                          lines, invert = TRUE, value = TRUE)
                         printLog(Log, sprintf("Running the tests in %s failed.\n", sQuote(file)))
                         printLog(Log, "Last 13 lines of output:\n")
                         printLog(Log,
@@ -1321,7 +1312,7 @@ R_run_R <- function(cmd, Ropts, env)
                               if (R_check_weave_vignettes) ", tangle = FALSE",
                               if (R_check_latex_vignettes) ", latex = TRUE",
                               ")\n", sep = "")
-                out <- R_runR(Rcmd, R_opts2, "SWEAVE_STYLEPATH_DEFAULT=FALSE")
+                out <- R_runR2(Rcmd, "SWEAVE_STYLEPATH_DEFAULT=FALSE")
                 ## Vignette could redefine the prompt, e.g. to 'R>' ...
                 out <- grep("^[[:alnum:]]*[>]", out,
                             invert = TRUE, value = TRUE)
@@ -1329,9 +1320,6 @@ R_run_R <- function(cmd, Ropts, env)
                 ## likely not indicate a problem ...
                 out <- grep("^[[:space:]]*$", out,
                             invert = TRUE, value = TRUE)
-                if (R_check_suppress_RandR_message)
-                    out <- grep('^Xlib: *extension "RANDR" missing on display',
-                                out, invert = TRUE, value = TRUE)
                 if (length(out)) {
                     if (any(grepl("^\\*\\*\\* (Tangle|Weave|Source) Errors \\*\\*\\*$", out))) {
                         if (!any) warnLog()
