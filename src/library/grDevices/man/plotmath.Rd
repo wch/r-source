@@ -181,7 +181,8 @@
 
   Note that \code{bold}, \code{italic} and \code{bolditalic} do not
   apply to symbols, and hence not to the Greek \emph{symbols} such as
-  \code{mu} which are displayed in the symbol font.
+  \code{mu} which are displayed in the symbol font.  They also do not
+  apply to numeric constants.
 }
 \section{Other symbols}{
   On many OSes and some graphics devices many other symbols are
