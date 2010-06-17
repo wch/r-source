@@ -4544,16 +4544,25 @@ This item is installed by the @file{Rtools.exe} installer.
 @c build used sh make tar gzip
 @c check uses sh make
 @c Rdiff.sh uses diff echo grep sed tr
-@c Rd2dvi uses echo mkdir sed
+@c Rd2dvi uses basename echo mkdir sed
 @c Sweave Stangle use echo
+
+@c src/library/Recommended/Makefile.win uses basename and tar.exe
 
 @c date is used when building base and tools
 @c comm, sort, uniq are used in producing .def files
 @c cmp is used in src/include/Makefile.win
+@c cp is used as $CP) in numerous Makefiles
 @c cut is used to make RVER
 @c find is used in installer/Makefile
+@c gzip is used in src/library/Makefile.win, R CMD build
+@c ls is used in src/library/*/Makefile.win
+@c mkdir is used in numerous Makefiles, Rd2dvi
 @c rsync is only needed if building from svn
-@c [g]awk, egrep, expr, head, rmdir, tail, wc are no longer used
+@c touch is used in Makefiles
+@c unzip is used in making R, e.g. for zoneinfo.zip
+@c wc is used in doc/manual/Makefile.win
+@c AFAICS [g]awk, egrep, expr, head, rmdir, tail are no longer used
 If you choose to install these yourself, you will need suitable versions
 of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
 @code{cp}, @code{cut}, @code{date}, @code{diff}, @code{echo},
