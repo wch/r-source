@@ -49,13 +49,13 @@ Rd2txt_options <- local({
         }
     }
 })
-              
+
 Rd2txt <-
     function(Rd, out="", package = "", defines=.Platform$OS.type,
              stages = "render", outputEncoding = "",
              fragment = FALSE, options, ...)
 {
-    
+
     ## we need to keep track of where we are.
     buffer <- character()	# Buffer not yet written to con
     				# Newlines have been processed, each line in buffer is
@@ -69,12 +69,12 @@ Rd2txt <-
     enumItem <- 0L		# Last enumeration item number
     inEqn <- FALSE		# Should we do edits needed in an eqn?
     sectionLevel <- 0		# How deeply nested within sections/subsections
-    
-    saveOpts <- Rd2txt_options() 
+
+    saveOpts <- Rd2txt_options()
     on.exit(Rd2txt_options(saveOpts))# Rd files may change these, so restore them
     				     # whether or not the caller set them.
     if (!missing(options)) Rd2txt_options(options)
-    
+
 ## these attempt to mimic pre-2.10.0 layout
     WIDTH <- 0.9 * Rd2txt_options()$width
     HDR_WIDTH <- WIDTH - 2L
@@ -126,7 +126,7 @@ Rd2txt <-
     ## Use display widths as used by cat not print.
     frmt <- function(x, justify="left", width = 0L) {
         justify <- match.arg(justify, c("left", "right", "centre", "none"))
-        w <- nchar(x, "width")
+        w <- sum(nchar(x, "width")) # copes with 0-length x
         if(w < width && justify != "none") {
             excess <- width - w
             left <- right <- 0L
@@ -394,7 +394,7 @@ Rd2txt <-
                    if (opts$showURLs)
   			put(" (URL: ",
   			    gsub("\n", "", paste(as.character(block[[1]]), collapse="")),
-  			    ")") 
+  			    ")")
                },
                "\\Sexpr"= put(as.character.Rd(block, deparse=TRUE)),
                "\\acronym" =,
@@ -539,6 +539,7 @@ Rd2txt <-
         firstline <- c(1L, 1L+cumsum(lines))
         for (i in seq_along(entries)) {
             e <- entries[[i]]
+            if(!length(e$text)) next
             ## FIXME: this is not right: it justifies strings as if
             ## they are escaped, so in particular \ takes two columns.
             text <- frmt(e$text, justify=formats[e$col], width=widths[e$col])
@@ -549,8 +550,10 @@ Rd2txt <-
         indent0 <- indent
         indent <<- indent + 1L
         for (i in seq_len(nrow(result))) {
-            for (j in seq_len(cols))
-            	putf(" ", result[i,j], " ")
+            putf(paste(" ", result[i,], " ", sep = "", collapse=""))
+# This version stripped leading blanks on the first line
+#            for (j in seq_len(cols))
+#            	putf(" ", result[i,j], " ")
             putf("\n")
         }
         blankLine()
@@ -745,7 +748,7 @@ Rd2txt <-
                                   DLlab <- endCapture(save)
                                   indent0 <- indent
                                   opts <- Rd2txt_options()
-                                  indent <<- max(opts$minIndent, 
+                                  indent <<- max(opts$minIndent,
                                                  indent + opts$extraIndent)
                                   keepFirstIndent <<- TRUE
                                   putw(paste(rep(" ", indent0), collapse=""),
