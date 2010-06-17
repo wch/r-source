@@ -42,7 +42,8 @@ constrOptim <-
         grad(theta, ...) - mu*dbar
     }
 
-    if (any(ui%*%theta-ci <= 0)) stop("initial value not feasible")
+    if (any(ui%*%theta-ci <= 0))
+        stop("initial value is not in the interior of the feasible region")
     obj <- f(theta, ...)
     r <- R(theta, theta, ...)
     fun <- function(theta, ...) R(theta, theta.old, ...)
@@ -50,7 +51,7 @@ constrOptim <-
         if(missing(grad)) NULL else grad
     } else function(theta, ...) dR(theta, theta.old, ...)
 
-        for(i in seq_len(outer.iterations)) {
+    for(i in seq_len(outer.iterations)) {
         obj.old <- obj
         r.old <- r
         theta.old <- theta
@@ -66,15 +67,15 @@ constrOptim <-
     }
     if (i == outer.iterations) {
         a$convergence <- 7
-        a$message <- "Barrier algorithm ran out of iterations and did not converge"
+        a$message <- gettext("Barrier algorithm ran out of iterations and did not converge")
     }
     if (mu > 0 && obj > obj.old) {
         a$convergence <- 11
-        a$message <- paste("Objective function increased at outer iteration", i)
+        a$message <- gettextf("Objective function increased at outer iteration %d", i)
     }
     if (mu < 0 && obj < obj.old) {
         a$convergence <- 11
-        a$message <- paste("Objective function decreased at outer iteration", i)
+        a$message <- gettextf("Objective function decreased at outer iteration %d", i)
     }
     a$outer.iterations <- i
     a$barrier.value <- a$value
