@@ -492,8 +492,10 @@ Rd2txt <-
         indent0 <- indent
         indent <<- indent + 1L
         for (i in seq_len(nrow(result))) {
-            for (j in seq_len(cols))
-            	putf(" ", result[i,j], " ")
+            putf(paste(" ", result[i,], " ", sep = "", collapse=""))
+# This version stripped leading blanks on the first line
+#            for (j in seq_len(cols))
+#            	putf(" ", result[i,j], " ")
             putf("\n")
         }
         blankLine()
