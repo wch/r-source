@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-26 08:42\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2010-04-03 10:33+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -534,6 +534,49 @@ msgstr ""
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "エラー：この R はバージョン %s です。 R %s %s を必要とします "
 
+msgid "Changes require specified 'style'"
+msgstr ""
+
+msgid "The default JSS style may not be modified."
+msgstr ""
+
+msgid "Warning: unknown option"
+msgstr " 警告: 未知のオプションです "
+
+msgid "** Options"
+msgstr ""
+
+msgid "are only for '--binary'  and will be ignored"
+msgstr ""
+
+#, fuzzy
+msgid "Error: cannot rename directory to"
+msgstr " ディレクトリ '%s' を生成することが出来ません "
+
+#, fuzzy
+msgid "cannot coerce"
+msgstr "オープンできません "
+
+msgid "to logical"
+msgstr ""
+
+msgid "-o option without value"
+msgstr " 値のない -o オプションです "
+
+msgid "-l option without value"
+msgstr " 値のない -l オプション"
+
+#, fuzzy
+msgid "Error: no packages were specified"
+msgstr "パッケージが特定できません "
+
+msgid "package dir"
+msgstr ""
+
+#, fuzzy
+msgid "does not exist"
+msgstr " ファイル '%s' が存在しません "
+
 msgid "No files in this directory"
 msgstr " このディレクトリにはファイルが存在しません "
 
@@ -635,12 +678,6 @@ msgstr ""
 msgid "running src/Makefile.win ..."
 msgstr " src/Makefile.win を実行中"
 
-msgid "making DLL ..."
-msgstr "DLLの作成中... "
-
-msgid "... done"
-msgstr " ... 完了 "
-
 msgid "no source files found"
 msgstr "ソースファイルが見つかりません "
 
@@ -650,14 +687,19 @@ msgstr " 'data' ディレクトリが空です "
 msgid "'--auto-zip' is for Windows only"
 msgstr " --auto-zip'  は Windows 専用です "
 
-msgid "-l option without value"
-msgstr " 値のない -l オプション"
-
-msgid "Warning: unknown option"
-msgstr " 警告: 未知のオプションです "
+#, fuzzy
+msgid "--merge-multiarch is Windows-only"
+msgstr " --auto-zip'  は Windows 専用です "
 
 msgid "cannot create temporary directory"
 msgstr " 一時ディレクトリを生成することが出来ません "
+
+#, fuzzy
+msgid "ERROR: --merge-multiarch applies only to a single tarball"
+msgstr " --pkglock は単一のパッケージだけに適用されます "
+
+msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
+msgstr ""
 
 msgid "invalid package"
 msgstr " 不正なパッケージです "
@@ -695,9 +737,6 @@ msgstr " --no-help が優先されます "
 
 msgid "--"
 msgstr " -- "
-
-msgid "-o option without value"
-msgstr " 値のない -o オプションです "
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "RdファイルをLaTeXに変換しています "
@@ -905,6 +944,10 @@ msgstr " 'texi2dvi' を '%s' に対して実行できませんでした "
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr " 'texi2dvi' を '%s' に対して実行できませんでした "
 
+#, fuzzy
+msgid "unable to run '%s' on '%s'"
+msgstr " %s を '%s' に対して実行出来ません "
+
 msgid "unable to run %s on '%s'"
 msgstr " %s を '%s' に対して実行出来ません "
 
@@ -950,6 +993,12 @@ msgstr[0] " 以下の関数中に .internal 呼び出しが見つかりました
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] " オブジェクト %s は1つ以上のデータ呼び出しにより生成されました "
+
+#~ msgid "making DLL ..."
+#~ msgstr "DLLの作成中... "
+
+#~ msgid "... done"
+#~ msgstr " ... 完了 "
 
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr ""

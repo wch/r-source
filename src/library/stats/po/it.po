@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08+0100\n"
+"POT-Creation-Date: 2010-06-17 14:08+0100\n"
 "PO-Revision-Date: 2005-04-14 18:06+0200\n"
 "Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -99,6 +99,24 @@ msgstr "metodo non valido"
 #: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "l'alrgoritmo di Burg non è riuscito a trovare correlazione parziale"
+
+#: monoSpl.c:39
+#, fuzzy
+msgid "n must be at least two"
+msgstr "m deve essere di tipo list"
+
+#: monoSpl.c:72
+msgid "Argument m must be numeric"
+msgstr ""
+
+#: monoSpl.c:75
+#, fuzzy
+msgid "length(m) must be at least two"
+msgstr "m deve essere di tipo list"
+
+#: monoSpl.c:77
+msgid "Argument Sx must be numeric vector one shorter than m[]"
+msgstr ""
 
 #: nls.c:97
 msgid "'control' must be a list"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-26 08:42\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2010-04-03 09:46+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -346,9 +346,6 @@ msgstr " 'x', 'y', 'r' は全て単位(units)でなければなりません "
 msgid "'x', 'y', 'width', and 'height' must be units"
 msgstr " 'x', 'y', 'width', 'height' は全て単位(units)でなければなりません "
 
-msgid "at least one of 'width' and 'height' must be specified"
-msgstr " 少なくとも'width'と'height'のどちらかは指定する必要があります "
-
 msgid "Invalid 'rot' value"
 msgstr " 不正な 'rot' 値です "
 
@@ -514,6 +511,9 @@ msgstr " 'y' か 'yscale' のうち少なくとも一つを指定しなければ
 
 msgid "shutting down all devices when unloading 'grid' name space"
 msgstr " 'grid'名前空間が読み込まれないうちにすべてのデバイスを閉じています "
+
+#~ msgid "at least one of 'width' and 'height' must be specified"
+#~ msgstr " 少なくとも'width'と'height'のどちらかは指定する必要があります "
 
 #~ msgid "Viewport '%s' was not found"
 #~ msgstr " Viewport '%s' が見つかりません "

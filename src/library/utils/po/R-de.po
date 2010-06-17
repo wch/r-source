@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:39\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2010-03-24 12:26+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -122,8 +122,59 @@ msgstr "'file' muss NULL, eine Zeichenkette oder eine Verbindung sein"
 msgid "bad argument"
 msgstr "unbrauchbares Argument"
 
+msgid ""
+"Not all arguments are of the same length, the following need to be recycled: "
+"%s"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "Use either 'given' or 'first'/'middle' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'first'."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'middle'."
+msgstr ""
+
+msgid "Use either 'family' or 'last' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'family' instead of 'last'."
+msgstr ""
+
+#, fuzzy
+msgid "Invalid role specification(s): %s."
+msgstr "unzulässige Spezifikation für 'quote'"
+
+msgid "It is recommended to use given/family instead of first/middle/last."
+msgstr ""
+
+msgid "method is just applicable to 'person' objects"
+msgstr ""
+
 msgid "all arguments must be of class \"person\""
 msgstr "Alle Argumente müssen zur Klasse \"person\" gehören"
+
+msgid "at least one field has to be specified"
+msgstr ""
+
+msgid "all fields have to be named"
+msgstr ""
+
+msgid "'bibtype' has to be one of"
+msgstr ""
+
+msgid "A bibentry of bibtype '"
+msgstr ""
+
+msgid "' has to specify the field(s):"
+msgstr ""
+
+msgid "method is just applicable to 'bibentry' objects"
+msgstr ""
 
 msgid "package '%s' not found"
 msgstr "Paket '%s' nicht gefunden"
@@ -137,6 +188,9 @@ msgstr "kein Feld date in der Datei DESCRIPTION des Paketes '%s'"
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr ""
 "konnte das Jahr für '%s' aus der DESCRIPTION des Paketes nicht bestimmen"
+
+msgid "Enhanced author specification provides no authors."
+msgstr ""
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -260,6 +314,9 @@ msgstr "kann NULL Zeilennamen nicht editieren"
 
 msgid "no help found for '%s'"
 msgstr "kein Hilfe für '%s' gefunden"
+
+msgid "'%s' has a help file but no examples"
+msgstr "'%s' hat eine Hilfe, aber keine Beispiele"
 
 msgid "test '%s' is not available"
 msgstr "test '%s' ist nicht verfügbar"
@@ -493,9 +550,6 @@ msgstr "Ungültige Dateiname(n) für R Kode in"
 msgid ":"
 msgstr ":"
 
-msgid ","
-msgstr ","
-
 msgid "are now renamed to 'z<name>.R'"
 msgstr "sind nun unbenannt nach 'z<name>.R'"
 
@@ -529,8 +583,8 @@ msgstr "Fehler in read.dcf() bei Datei '%s'"
 msgid "'priority' must be character or NULL"
 msgstr "'priority' muss ein Zeichen oder NULL sein"
 
-msgid "argument 'lib' is missing: using %s"
-msgstr "Argument 'lib' fehlt: nutze %s"
+msgid "Removing package(s) from '%s' (as 'lib' is unspecified)"
+msgstr ""
 
 msgid "'destdir' is not a directory"
 msgstr "'destdir' ist kein Verzeichnis"
@@ -581,8 +635,8 @@ msgstr ""
 msgid "no packages were specified"
 msgstr "keine Pakete angegeben"
 
-msgid "argument 'lib' is missing: using '%s'"
-msgstr "Argument 'lib' fehlt: nutze '%s'"
+msgid "Installing package(s) into '%s' (as 'lib' is unspecified)"
+msgstr ""
 
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib = \"%s\" ist nicht schreibbar"
@@ -1045,7 +1099,8 @@ msgid_plural "also installing the dependencies %s"
 msgstr[0] "installiere auch Abhängigkeit %s"
 msgstr[1] "installiere auch Abhängigkeiten %s"
 
-msgid "'lib' element '%s'  is not a writable directory"
+#, fuzzy
+msgid "'lib' element '%s' is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
 msgstr[0] "'lib' Element '%s' ist keine schreibbares Verzeichnis"
 msgstr[1] "'lib' Elemente '%s' sind keine schreibbaren Verzeichnisse"
@@ -1054,6 +1109,12 @@ msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "Paket '%s' wird gerade benutzt und deshab nicht installiert"
 msgstr[1] "Pakete '%s' werden gerade bennutzt und deshalb nicht installiert"
+
+#~ msgid "argument 'lib' is missing: using %s"
+#~ msgstr "Argument 'lib' fehlt: nutze %s"
+
+#~ msgid "argument 'lib' is missing: using '%s'"
+#~ msgstr "Argument 'lib' fehlt: nutze '%s'"
 
 #~ msgid "untar: using cmd ="
 #~ msgstr "untar: benutze cmd ="
@@ -1079,9 +1140,6 @@ msgstr[1] "Pakete '%s' werden gerade bennutzt und deshalb nicht installiert"
 
 #~ msgid "options(\"browser\") not set"
 #~ msgstr "options(\"browser\") nicht gesetzt"
-
-#~ msgid "'%s' has a help file but no examples"
-#~ msgstr "'%s' hat eine Hilfe, aber keine Beispiele"
 
 #~ msgid ""
 #~ "No text help for '%s' is available:\n"

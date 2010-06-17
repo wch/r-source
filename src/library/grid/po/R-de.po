@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:19\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2010-03-24 12:22+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -348,9 +348,6 @@ msgstr "'x', 'y' und 'r' müssen Einheiten sein"
 msgid "'x', 'y', 'width', and 'height' must be units"
 msgstr "'x', 'y', 'width' und 'height' müssen Einheiten sein"
 
-msgid "at least one of 'width' and 'height' must be specified"
-msgstr "mindestens 'width' oder 'height' müssen angegeben sein"
-
 msgid "Invalid 'rot' value"
 msgstr "Unzulässiger Wert für 'rot'"
 
@@ -507,6 +504,9 @@ msgstr "Mindestens 'y' oder 'yscale' muss angegeben werden"
 
 msgid "shutting down all devices when unloading 'grid' name space"
 msgstr "schließe alle Geräte, wenn der 'grid' Namensraum entfernt wird "
+
+#~ msgid "at least one of 'width' and 'height' must be specified"
+#~ msgstr "mindestens 'width' oder 'height' müssen angegeben sein"
 
 #~ msgid "Viewport '%s' was not found"
 #~ msgstr "Viewport '%s' nicht gefunden"

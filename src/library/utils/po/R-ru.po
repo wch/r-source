@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:39\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2010-04-09 20:01-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -128,8 +128,59 @@ msgstr "'file' должен быть NULL, текстовой строкой или соединением"
 msgid "bad argument"
 msgstr "неправильный аргумент"
 
+msgid ""
+"Not all arguments are of the same length, the following need to be recycled: "
+"%s"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "Use either 'given' or 'first'/'middle' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'first'."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'middle'."
+msgstr ""
+
+msgid "Use either 'family' or 'last' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'family' instead of 'last'."
+msgstr ""
+
+#, fuzzy
+msgid "Invalid role specification(s): %s."
+msgstr "неправильное указание 'quote'"
+
+msgid "It is recommended to use given/family instead of first/middle/last."
+msgstr ""
+
+msgid "method is just applicable to 'person' objects"
+msgstr ""
+
 msgid "all arguments must be of class \"person\""
 msgstr "все аргументы должны быть класса \"person\""
+
+msgid "at least one field has to be specified"
+msgstr ""
+
+msgid "all fields have to be named"
+msgstr ""
+
+msgid "'bibtype' has to be one of"
+msgstr ""
+
+msgid "A bibentry of bibtype '"
+msgstr ""
+
+msgid "' has to specify the field(s):"
+msgstr ""
+
+msgid "method is just applicable to 'bibentry' objects"
+msgstr ""
 
 msgid "package '%s' not found"
 msgstr "пакет '%s' не найден"
@@ -142,6 +193,9 @@ msgstr "в файле DESCRIPTION пакета '%s' нет поля date"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "не могу определить год для '%s' из файла DESCRIPTION пакета"
+
+msgid "Enhanced author specification provides no authors."
+msgstr ""
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -265,6 +319,9 @@ msgstr "не могу редактировать NULL-имена строк"
 
 msgid "no help found for '%s'"
 msgstr "в '%s' не найдено помощи"
+
+msgid "'%s' has a help file but no examples"
+msgstr "у '%s' есть файл помощи, но нет примеров"
 
 msgid "test '%s' is not available"
 msgstr "тест '%s' недоступен"
@@ -494,9 +551,6 @@ msgstr "Неправильное имя файла(ов) для кода R в"
 msgid ":"
 msgstr ":"
 
-msgid ","
-msgstr ","
-
 msgid "are now renamed to 'z<name>.R'"
 msgstr "теперь переименован в 'z<name>.R'"
 
@@ -530,8 +584,8 @@ msgstr "Ошибка read.dcf() на файле '%s'"
 msgid "'priority' must be character or NULL"
 msgstr "'priority' должен быть текстом или NULL"
 
-msgid "argument 'lib' is missing: using %s"
-msgstr "аргумент 'lib' пропущен: использую %s"
+msgid "Removing package(s) from '%s' (as 'lib' is unspecified)"
+msgstr ""
 
 msgid "'destdir' is not a directory"
 msgstr "'destdir' не является папкой"
@@ -583,8 +637,8 @@ msgstr ""
 msgid "no packages were specified"
 msgstr "не указаны пакеты"
 
-msgid "argument 'lib' is missing: using '%s'"
-msgstr "аргумент 'lib' пропущен: использую %s"
+msgid "Installing package(s) into '%s' (as 'lib' is unspecified)"
+msgstr ""
 
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib = \"%s\"' не для записи"
@@ -1056,7 +1110,8 @@ msgstr[0] "устанавливаю также зависимость"
 msgstr[1] "устанавливаю также зависимости"
 msgstr[2] "устанавливаю также зависимости"
 
-msgid "'lib' element '%s'  is not a writable directory"
+#, fuzzy
+msgid "'lib' element '%s' is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
 msgstr[0] "элемент '%s' из 'lib' -- папка не для записи"
 msgstr[1] "элемент '%s' из 'lib' -- папки не для записи"
@@ -1068,6 +1123,12 @@ msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 
+#~ msgid "argument 'lib' is missing: using %s"
+#~ msgstr "аргумент 'lib' пропущен: использую %s"
+
+#~ msgid "argument 'lib' is missing: using '%s'"
+#~ msgstr "аргумент 'lib' пропущен: использую %s"
+
 #~ msgid "untar: using cmd ="
 #~ msgstr "untar: использую cmd ="
 
@@ -1076,9 +1137,6 @@ msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
 
 #~ msgid "more than one help file found: using package '%s'"
 #~ msgstr "найдено более одного файла помощи: использую пакет '%s'"
-
-#~ msgid "'%s' has a help file but no examples"
-#~ msgstr "у '%s' есть файл помощи, но нет примеров"
 
 #~ msgid "offline = TRUE is deprecated: use help_type =\"postscript\""
 #~ msgstr ""

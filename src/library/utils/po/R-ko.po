@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:39\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -119,8 +119,59 @@ msgstr "'package'는 문자열이나 NULL이어야만 합니다"
 msgid "bad argument"
 msgstr "불적절한 인수"
 
+msgid ""
+"Not all arguments are of the same length, the following need to be recycled: "
+"%s"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "Use either 'given' or 'first'/'middle' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'first'."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'middle'."
+msgstr ""
+
+msgid "Use either 'family' or 'last' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'family' instead of 'last'."
+msgstr ""
+
+#, fuzzy
+msgid "Invalid role specification(s): %s."
+msgstr "'agrep' 명세는 적적하지 않습니다"
+
+msgid "It is recommended to use given/family instead of first/middle/last."
+msgstr ""
+
+msgid "method is just applicable to 'person' objects"
+msgstr ""
+
 msgid "all arguments must be of class \"person\""
 msgstr "모든 인수는 클래스 \"person\"이어야만 합니다"
+
+msgid "at least one field has to be specified"
+msgstr ""
+
+msgid "all fields have to be named"
+msgstr ""
+
+msgid "'bibtype' has to be one of"
+msgstr ""
+
+msgid "A bibentry of bibtype '"
+msgstr ""
+
+msgid "' has to specify the field(s):"
+msgstr ""
+
+msgid "method is just applicable to 'bibentry' objects"
+msgstr ""
 
 msgid "package '%s' not found"
 msgstr "'%s' 패키지가 검색되지 않습니다"
@@ -133,6 +184,9 @@ msgstr "패키지 '%s'의  DESCRIPTION 파일에서 date 필드가 있습니다"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "패키지 DESCRIPTION 파일로부터'%s'때문에 year를 결정할수 없었습니다"
+
+msgid "Enhanced author specification provides no authors."
+msgstr ""
 
 msgid "m < 0"
 msgstr ""
@@ -266,6 +320,10 @@ msgstr ""
 #, fuzzy
 msgid "no help found for '%s'"
 msgstr "help file는 '%s'에 검색되어져 있지 않았습니다"
+
+#, fuzzy
+msgid "'%s' has a help file but no examples"
+msgstr "'%s'는 help file를 지원하지만, examples 파일을 지원하지 않습니다"
 
 #, fuzzy
 msgid "test '%s' is not available"
@@ -512,9 +570,6 @@ msgstr ""
 msgid ":"
 msgstr ""
 
-msgid ","
-msgstr ""
-
 msgid "are now renamed to 'z<name>.R'"
 msgstr ""
 
@@ -550,8 +605,8 @@ msgstr ""
 msgid "'priority' must be character or NULL"
 msgstr "'prority'는 문자 또는 NULL이어야만 합니다"
 
-msgid "argument 'lib' is missing: using %s"
-msgstr "인수'lib'는 잘못되었습니다: %s를 사용합니다"
+msgid "Removing package(s) from '%s' (as 'lib' is unspecified)"
+msgstr ""
 
 msgid "'destdir' is not a directory"
 msgstr "'destdir'는 디렉토리가 아닙니다"
@@ -606,9 +661,8 @@ msgstr ""
 msgid "no packages were specified"
 msgstr "패키지는 지정되지 않았습니다"
 
-#, fuzzy
-msgid "argument 'lib' is missing: using '%s'"
-msgstr "인수'lib'는 잘못되었습니다: %s를 사용합니다"
+msgid "Installing package(s) into '%s' (as 'lib' is unspecified)"
+msgstr ""
 
 #, fuzzy
 msgid "'lib = \"%s\"' is not writable"
@@ -1107,7 +1161,7 @@ msgstr[0] ""
 "한층 더 depengencies를 인스톨 합니다"
 
 #, fuzzy
-msgid "'lib' element '%s'  is not a writable directory"
+msgid "'lib' element '%s' is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
 msgstr[0] "'destdir'는 디렉토리가 아닙니다"
 
@@ -1116,6 +1170,13 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] ""
 "package '%s'는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages '%s'는 사용되고 있어 인스톨 되지 않을 것입니다"
+
+#~ msgid "argument 'lib' is missing: using %s"
+#~ msgstr "인수'lib'는 잘못되었습니다: %s를 사용합니다"
+
+#, fuzzy
+#~ msgid "argument 'lib' is missing: using '%s'"
+#~ msgstr "인수'lib'는 잘못되었습니다: %s를 사용합니다"
 
 #~ msgid "Enter zero or more numbers separated by space"
 #~ msgstr "space에 의해서 분리된 0 이상의 수를 입력합니다"
@@ -1126,10 +1187,6 @@ msgstr[0] ""
 
 #~ msgid "options(\"browser\") not set"
 #~ msgstr "세트 되지않는 옵션(\"browser\")입니다"
-
-#, fuzzy
-#~ msgid "'%s' has a help file but no examples"
-#~ msgstr "'%s'는 help file를 지원하지만, examples 파일을 지원하지 않습니다"
 
 #~ msgid ""
 #~ "No text help for '%s' is available:\n"

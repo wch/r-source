@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:38\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2010-04-09 16:51-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -260,6 +260,9 @@ msgstr "'r' должен быть \"range\", то есть длины 2"
 msgid "invalid first argument"
 msgstr "неправильный первый аргумент"
 
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr ""
+
 msgid "'x' and 'y' lengths differ"
 msgstr "длины 'x' и 'y' различаются"
 
@@ -268,6 +271,9 @@ msgstr "неправильный первый аргумент [неправильный объект языка]"
 
 msgid "at least 2 columns needed"
 msgstr "нужны по крайней мере 2 колонки"
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr ""
 
 msgid "'x', 'y' and 'z' lengths differ"
 msgstr "длины 'x', 'y' и 'z' различаются"

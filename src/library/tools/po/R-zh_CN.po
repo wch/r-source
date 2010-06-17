@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:20\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -297,8 +297,7 @@ msgstr "必需载入程序包。"
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
-msgstr ""
-"%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs进行检查"
+msgstr "%s程序包存在但没有在R >= 2.10.0下安装，因此无法对xrefs进行检查"
 
 msgid "Obsolete package(s) %s in Rd xrefs"
 msgstr "Rd xrefs里程序包%s过时了"
@@ -504,6 +503,49 @@ msgstr "错误：R的版本是%s，程序包'%s'要求版本为%s %s的R"
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "错误：R的版本是%s，需要的是版本为%s %s的R"
 
+msgid "Changes require specified 'style'"
+msgstr ""
+
+msgid "The default JSS style may not be modified."
+msgstr ""
+
+msgid "Warning: unknown option"
+msgstr "警告：没有这种选项"
+
+msgid "** Options"
+msgstr ""
+
+msgid "are only for '--binary'  and will be ignored"
+msgstr ""
+
+#, fuzzy
+msgid "Error: cannot rename directory to"
+msgstr "无法建立目录'%s'"
+
+#, fuzzy
+msgid "cannot coerce"
+msgstr "打不开"
+
+msgid "to logical"
+msgstr ""
+
+msgid "-o option without value"
+msgstr "-o选项必需带值"
+
+msgid "-l option without value"
+msgstr "-l选项一定得有值"
+
+#, fuzzy
+msgid "Error: no packages were specified"
+msgstr "错误：没有设定程序包"
+
+msgid "package dir"
+msgstr ""
+
+#, fuzzy
+msgid "does not exist"
+msgstr "不存在'%s'这一文件"
+
 msgid "No files in this directory"
 msgstr "目录里没有任何文件"
 
@@ -601,12 +643,6 @@ msgstr "R包含目录是空的--也许你需要安装R-devel.rpm或类似的程�
 msgid "running src/Makefile.win ..."
 msgstr "调用src/Makefile.win ..."
 
-msgid "making DLL ..."
-msgstr "制造DLL…"
-
-msgid "... done"
-msgstr "…好了"
-
 msgid "no source files found"
 msgstr "找不到源程序文件"
 
@@ -616,14 +652,19 @@ msgstr "空的'data'目录"
 msgid "'--auto-zip' is for Windows only"
 msgstr "'--auto-zip'只在Windows上有用"
 
-msgid "-l option without value"
-msgstr "-l选项一定得有值"
-
-msgid "Warning: unknown option"
-msgstr "警告：没有这种选项"
+#, fuzzy
+msgid "--merge-multiarch is Windows-only"
+msgstr "'--auto-zip'只在Windows上有用"
 
 msgid "cannot create temporary directory"
 msgstr "无法建立临时性目录"
+
+#, fuzzy
+msgid "ERROR: --merge-multiarch applies only to a single tarball"
+msgstr "--pkglock只适用于单独程序包"
+
+msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
+msgstr ""
 
 msgid "invalid package"
 msgstr "程辑包无效."
@@ -661,9 +702,6 @@ msgstr "--no-help覆盖"
 
 msgid "--"
 msgstr "--"
-
-msgid "-o option without value"
-msgstr "-o选项必需带值"
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "把Rd文件转化成LaTeX…"
@@ -867,6 +905,10 @@ msgstr "给'%s'调用'texi2dvi'失败了"
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "给'%s'调用'texi2dvi'失败了"
 
+#, fuzzy
+msgid "unable to run '%s' on '%s'"
+msgstr "无法在'%2$s'上调用%1$s"
+
 msgid "unable to run %s on '%s'"
 msgstr "无法在'%2$s'上调用%1$s"
 
@@ -911,6 +953,12 @@ msgstr[0] "下面的函数调用了.Internal:"
 msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "不能用多个数据调用来产生对象%s"
+
+#~ msgid "making DLL ..."
+#~ msgstr "制造DLL…"
+
+#~ msgid "... done"
+#~ msgstr "…好了"
 
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr "在程序包%s找不到%s这个帮助文件"
@@ -1051,4 +1099,3 @@ msgstr[0] "不能用多个数据调用来产生对象%s"
 
 #~ msgid "no or more than one match"
 #~ msgstr "没有成对的，或多于一双"
-

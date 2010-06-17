@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-26 08:42\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -988,6 +988,10 @@ msgid ""
 msgstr "追蹤函数需要方法程辑包，但在载入方法名字空间的时候出了错"
 
 msgid "Expected a single logical value for the S4 state flag"
+msgstr "S4状况标记应该是一个单独逻辑值"
+
+#, fuzzy
+msgid "Expected a single logical value for the S3 state flag"
 msgstr "S4状况标记应该是一个单独逻辑值"
 
 msgid "invalid to change the storage mode of a factor"

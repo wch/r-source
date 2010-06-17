@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-19 11:18\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -477,8 +477,19 @@ msgstr "'k' deve estar em {1, 2, ... n - 1}"
 msgid "some of the first %d eigenvalues are < 0"
 msgstr "alguns dos primeiros %d autovalores são < 0"
 
-msgid "initial value not feasible"
+#, fuzzy
+msgid "initial value is not in the interior of the feasible region"
 msgstr "valor inicial não plausível"
+
+#, fuzzy
+msgid "Barrier algorithm ran out of iterations and did not converge"
+msgstr "algoritmo não convergiu"
+
+msgid "Objective function increased at outer iteration %d"
+msgstr ""
+
+msgid "Objective function decreased at outer iteration %d"
+msgstr ""
 
 msgid "contrasts not defined for %d degrees of freedom"
 msgstr "contrastes não definidos para %d graus de liberdade"
@@ -1970,6 +1981,10 @@ msgstr "argumentos devem ter o mesmo comprimento"
 
 msgid "'relevel' only for factors"
 msgstr "'relevel' somente possível para fatores"
+
+#, fuzzy
+msgid "'ref' must be of length one"
+msgstr "'acf' deve ter comprimento dois ou mais"
 
 msgid "'ref' must be an existing level"
 msgstr "'ref' deve ser um nível existente"

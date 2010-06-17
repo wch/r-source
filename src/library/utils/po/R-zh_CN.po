@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:39\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -120,8 +120,59 @@ msgstr "'file'的值必需是NULL，字符串或联结"
 msgid "bad argument"
 msgstr "参数不对"
 
+msgid ""
+"Not all arguments are of the same length, the following need to be recycled: "
+"%s"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "Use either 'given' or 'first'/'middle' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'first'."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'middle'."
+msgstr ""
+
+msgid "Use either 'family' or 'last' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'family' instead of 'last'."
+msgstr ""
+
+#, fuzzy
+msgid "Invalid role specification(s): %s."
+msgstr "'quote'设定得不对"
+
+msgid "It is recommended to use given/family instead of first/middle/last."
+msgstr ""
+
+msgid "method is just applicable to 'person' objects"
+msgstr ""
+
 msgid "all arguments must be of class \"person\""
 msgstr "所有的参数都必需是\"person\"类别"
+
+msgid "at least one field has to be specified"
+msgstr ""
+
+msgid "all fields have to be named"
+msgstr ""
+
+msgid "'bibtype' has to be one of"
+msgstr ""
+
+msgid "A bibentry of bibtype '"
+msgstr ""
+
+msgid "' has to specify the field(s):"
+msgstr ""
+
+msgid "method is just applicable to 'bibentry' objects"
+msgstr ""
 
 msgid "package '%s' not found"
 msgstr "没有'%s'这一个程序包"
@@ -134,6 +185,9 @@ msgstr "程序包'%s'里的DESCRIPTION文件中没有日期这一域"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "没有从程序包的DESCRIPTION文件中为'%s'确定年份"
+
+msgid "Enhanced author specification provides no authors."
+msgstr ""
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -255,6 +309,9 @@ msgstr "无法修改NULL行名"
 
 msgid "no help found for '%s'"
 msgstr "找不到与'%s'有关的帮助文件"
+
+msgid "'%s' has a help file but no examples"
+msgstr "'%s'含帮助文件但没有示范文件"
 
 msgid "test '%s' is not available"
 msgstr "没有'%s'这种测试"
@@ -477,9 +534,6 @@ msgstr "文件名无效，R代码在"
 msgid ":"
 msgstr ":"
 
-msgid ","
-msgstr ","
-
 msgid "are now renamed to 'z<name>.R'"
 msgstr "现在被改名为'z<name>.R'"
 
@@ -513,8 +567,8 @@ msgstr "read.dcf()在'%s'文件上出了错"
 msgid "'priority' must be character or NULL"
 msgstr "'priority'的值要么是字符要么为NULL"
 
-msgid "argument 'lib' is missing: using %s"
-msgstr "没有'lib'这个参数：改用%s"
+msgid "Removing package(s) from '%s' (as 'lib' is unspecified)"
+msgstr ""
 
 msgid "'destdir' is not a directory"
 msgstr "'destdir'不是目录"
@@ -565,8 +619,8 @@ msgstr ""
 msgid "no packages were specified"
 msgstr "没有设定程序包"
 
-msgid "argument 'lib' is missing: using '%s'"
-msgstr "没有'lib'这个参数：改用%s"
+msgid "Installing package(s) into '%s' (as 'lib' is unspecified)"
+msgstr ""
 
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib=\"%s\"'不可写"
@@ -1016,13 +1070,20 @@ msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] "还安装相依关系%s"
 
-msgid "'lib' element '%s'  is not a writable directory"
+#, fuzzy
+msgid "'lib' element '%s' is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
 msgstr[0] "'lib'元素'%s'不是可写的目录"
 
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
+
+#~ msgid "argument 'lib' is missing: using %s"
+#~ msgstr "没有'lib'这个参数：改用%s"
+
+#~ msgid "argument 'lib' is missing: using '%s'"
+#~ msgstr "没有'lib'这个参数：改用%s"
 
 #~ msgid "untar: using cmd ="
 #~ msgstr "untar：用cmd="
@@ -1047,9 +1108,6 @@ msgstr[0] "正在使用'%s'这个程序包，因此不会被安装"
 
 #~ msgid "options(\"browser\") not set"
 #~ msgstr "options(\"browser\")没有设好"
-
-#~ msgid "'%s' has a help file but no examples"
-#~ msgstr "'%s'含帮助文件但没有示范文件"
 
 #~ msgid ""
 #~ "No text help for '%s' is available:\n"

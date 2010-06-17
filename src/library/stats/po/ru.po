@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:06+0100\n"
+"POT-Creation-Date: 2010-06-17 14:08+0100\n"
 "PO-Revision-Date: 2009-03-29 01:16+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -103,6 +103,26 @@ msgstr "Неправильный vmethod"
 #: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Алгоритм Бурга не смог найти частную корреляцию"
+
+#: monoSpl.c:39
+#, fuzzy
+msgid "n must be at least two"
+msgstr "m должен быть списком"
+
+#: monoSpl.c:72
+#, fuzzy
+msgid "Argument m must be numeric"
+msgstr "Аргумент %s должен быть непустым числовым вектором"
+
+#: monoSpl.c:75
+#, fuzzy
+msgid "length(m) must be at least two"
+msgstr "m должен быть списком"
+
+#: monoSpl.c:77
+#, fuzzy
+msgid "Argument Sx must be numeric vector one shorter than m[]"
+msgstr "аргумент %s должен быть числовым вектором длины 1 или %d"
 
 #: nls.c:97
 msgid "'control' must be a list"

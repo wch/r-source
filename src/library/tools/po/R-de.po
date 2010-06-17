@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:20\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2010-03-24 12:16+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -307,7 +307,9 @@ msgstr "Paket muss geladen werden"
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
-msgstr "Paket %s existiert, wurde aber nicht mit R >= 2.10.0 installiert, weshalb Querverweise nicht überprüft werden können"
+msgstr ""
+"Paket %s existiert, wurde aber nicht mit R >= 2.10.0 installiert, weshalb "
+"Querverweise nicht überprüft werden können"
 
 msgid "Obsolete package(s) %s in Rd xrefs"
 msgstr "Veraltete(s) Paket(e) %s in Rd Kreusreferenzen"
@@ -350,7 +352,8 @@ msgid "Argument items with no description in Rd object '%s':"
 msgstr "Argumente ohne Beschreibung im Rd Objekt '%s':"
 
 msgid "Auto-generated content requiring editing in Rd object '%s':"
-msgstr "Automatisch generierter Inhalt benötigt noch Nacharbeit in Rd Objekt '%s':"
+msgstr ""
+"Automatisch generierter Inhalt benötigt noch Nacharbeit in Rd Objekt '%s':"
 
 msgid "Generics g in env ="
 msgstr "Generische g in env ="
@@ -518,6 +521,49 @@ msgstr "Fehler: dies ist R Version %s, Paket '%s' benötigt R %s %s"
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "Fehler: Dies ist R Version %s, benötigt wird R %s %s"
 
+msgid "Changes require specified 'style'"
+msgstr ""
+
+msgid "The default JSS style may not be modified."
+msgstr ""
+
+msgid "Warning: unknown option"
+msgstr "Warnung: unbekannte Option"
+
+msgid "** Options"
+msgstr ""
+
+msgid "are only for '--binary'  and will be ignored"
+msgstr ""
+
+#, fuzzy
+msgid "Error: cannot rename directory to"
+msgstr "kann  Verzeichnis '%s' nicht erzeugen"
+
+#, fuzzy
+msgid "cannot coerce"
+msgstr "kann nicht geöffnet werden"
+
+msgid "to logical"
+msgstr ""
+
+msgid "-o option without value"
+msgstr "-o Option ohne Wert"
+
+msgid "-l option without value"
+msgstr "-l Option ohne Wert"
+
+#, fuzzy
+msgid "Error: no packages were specified"
+msgstr "Fehler: keine Pakete angegeben"
+
+msgid "package dir"
+msgstr ""
+
+#, fuzzy
+msgid "does not exist"
+msgstr "Datei '%s' existiert nicht"
+
 msgid "No files in this directory"
 msgstr "Keine Dateien in diesem Verzeichnis"
 
@@ -546,7 +592,9 @@ msgid "No docs found for package %s"
 msgstr "Keine Dokumente zu Paket %s gefunden"
 
 msgid "Only help files, %s, %s and files under %s in a package can be viewed"
-msgstr "Nur Hilfeseiten, %s, %s und Dateien unter %s in einem Paket können angeschaut werden"
+msgstr ""
+"Nur Hilfeseiten, %s, %s und Dateien unter %s in einem Paket können "
+"angeschaut werden"
 
 msgid "NEWS"
 msgstr "Neuigkeiten"
@@ -619,12 +667,6 @@ msgstr ""
 msgid "running src/Makefile.win ..."
 msgstr "Ausführen von src/Makefile.win ..."
 
-msgid "making DLL ..."
-msgstr "erzuege DLL"
-
-msgid "... done"
-msgstr "... fertig"
-
 msgid "no source files found"
 msgstr "kein Quellkode gefunden"
 
@@ -634,14 +676,19 @@ msgstr "leeres 'data' Verzeichnis"
 msgid "'--auto-zip' is for Windows only"
 msgstr "'--auto-zip'ist nur für Windows"
 
-msgid "-l option without value"
-msgstr "-l Option ohne Wert"
-
-msgid "Warning: unknown option"
-msgstr "Warnung: unbekannte Option"
+#, fuzzy
+msgid "--merge-multiarch is Windows-only"
+msgstr "'--auto-zip'ist nur für Windows"
 
 msgid "cannot create temporary directory"
 msgstr "kann  temporäres Verzeichnis nicht erzeugen"
+
+#, fuzzy
+msgid "ERROR: --merge-multiarch applies only to a single tarball"
+msgstr "--pkglock bezieht sich nur auf eine einzelnes Paket"
+
+msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
+msgstr ""
 
 msgid "invalid package"
 msgstr "ungültiges Paket"
@@ -679,9 +726,6 @@ msgstr "--no-help übersteuert"
 
 msgid "--"
 msgstr "--"
-
-msgid "-o option without value"
-msgstr "-o Option ohne Wert"
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Konvertiere RD Dateien nach LaTeX"
@@ -888,6 +932,10 @@ msgstr "Ausführen von 'texi2dvi' für '%s' fehlgeschlagen."
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "Ausführen von 'texi2dvi' für '%s' fehlgeschlagen"
 
+#, fuzzy
+msgid "unable to run '%s' on '%s'"
+msgstr "kann %s nicht für '%s' ausführen"
+
 msgid "unable to run %s on '%s'"
 msgstr "kann %s nicht für '%s' ausführen"
 
@@ -938,6 +986,12 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "Objekt %s wird durch mehr als einen Datenaufruf erzeugt"
 msgstr[1] "Objekt(e) %s werden durch mehr als einen Datenaufruf erzeugt"
+
+#~ msgid "making DLL ..."
+#~ msgstr "erzuege DLL"
+
+#~ msgid "... done"
+#~ msgstr "... fertig"
 
 #~ msgid "Unable to locate help document %s in package %s"
 #~ msgstr "Kann das Hilfedokument %s in Paket %s nicht finden"

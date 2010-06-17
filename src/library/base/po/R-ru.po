@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-26 08:42\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2010-04-09 16:49-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -1004,6 +1004,10 @@ msgstr ""
 "пространство имен"
 
 msgid "Expected a single logical value for the S4 state flag"
+msgstr "Ожидается простое логическое значение для флага состояния S4"
+
+#, fuzzy
+msgid "Expected a single logical value for the S3 state flag"
 msgstr "Ожидается простое логическое значение для флага состояния S4"
 
 msgid "invalid to change the storage mode of a factor"

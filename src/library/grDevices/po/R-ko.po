@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:38\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -271,6 +271,9 @@ msgstr ""
 msgid "invalid first argument"
 msgstr ""
 
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr ""
+
 msgid "'x' and 'y' lengths differ"
 msgstr "'x' 그리고 'y'의 길이가 다릅니다"
 
@@ -279,6 +282,9 @@ msgstr ""
 
 msgid "at least 2 columns needed"
 msgstr "적어도 두개의 열이 필요합니다"
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr ""
 
 msgid "'x', 'y' and 'z' lengths differ"
 msgstr "'x', 'y' 그리고 'z'의 길이가 다릅니다"

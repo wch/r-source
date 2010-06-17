@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-19 11:18\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2010-03-23 13:36+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -467,8 +467,19 @@ msgstr "'k' muss in {1, 2, .. n-1} liegen"
 msgid "some of the first %d eigenvalues are < 0"
 msgstr "einige der ersten %d Eigenwerte sind < 0"
 
-msgid "initial value not feasible"
+#, fuzzy
+msgid "initial value is not in the interior of the feasible region"
 msgstr "Startwert nicht nutzbar"
+
+#, fuzzy
+msgid "Barrier algorithm ran out of iterations and did not converge"
+msgstr "Algorithmus konvergierte nicht"
+
+msgid "Objective function increased at outer iteration %d"
+msgstr ""
+
+msgid "Objective function decreased at outer iteration %d"
+msgstr ""
 
 msgid "contrasts not defined for %d degrees of freedom"
 msgstr "Kontraste für %d Freiheitsgrade nicht definiert"
@@ -1060,7 +1071,9 @@ msgid "glm.fit: algorithm stopped at boundary value"
 msgstr "glm.fit: Algortihmus stoppte am Rand"
 
 msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
-msgstr "glm.fit: Angepasste Wahrscheinlichkeiten mit numerischem Wert 0 oder 1 aufgetreten"
+msgstr ""
+"glm.fit: Angepasste Wahrscheinlichkeiten mit numerischem Wert 0 oder 1 "
+"aufgetreten"
 
 msgid "glm.fit: fitted rates numerically 0 occurred"
 msgstr "glm.fit: angepasste Raten, die numerisch 0 sind, aufgetreten"
@@ -1907,6 +1920,10 @@ msgstr "Argumente 'r' und 'c' müssen die selben Summen besitzen"
 
 msgid "'relevel' only for factors"
 msgstr "'relevel' nur für Faktoren"
+
+#, fuzzy
+msgid "'ref' must be of length one"
+msgstr "'acf' muss Länge zwei oder mehr haben"
 
 msgid "'ref' must be an existing level"
 msgstr "'ref' muss eine exisiterende Faktorstufe sein"

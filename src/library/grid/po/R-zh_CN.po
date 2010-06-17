@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:19\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -339,9 +339,6 @@ msgstr "'x', 'y'和'r'必需为单元值"
 msgid "'x', 'y', 'width', and 'height' must be units"
 msgstr "'x', 'y', 'width'和'height'必需为单元值"
 
-msgid "at least one of 'width' and 'height' must be specified"
-msgstr "至少需要设定'width'或'height'中的一个"
-
 msgid "Invalid 'rot' value"
 msgstr "'rot'的值不对"
 
@@ -494,6 +491,9 @@ msgstr "至少要设定'y'或'yscale'两个中的一个"
 msgid "shutting down all devices when unloading 'grid' name space"
 msgstr "卸载'grid'名字空间时关闭所有的设备"
 
+#~ msgid "at least one of 'width' and 'height' must be specified"
+#~ msgstr "至少需要设定'width'或'height'中的一个"
+
 #~ msgid "Viewport '%s' was not found"
 #~ msgstr "找不到视口'%s'"
 
@@ -511,4 +511,3 @@ msgstr "卸载'grid'名字空间时关闭所有的设备"
 
 #~ msgid "'x' must be numeric"
 #~ msgstr "'x'必需是数字"
-

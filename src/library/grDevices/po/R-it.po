@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:38\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -269,6 +269,9 @@ msgstr ""
 msgid "invalid first argument"
 msgstr ""
 
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr ""
+
 msgid "'x' and 'y' lengths differ"
 msgstr "le lunghezze di 'x' e 'y' differiscono"
 
@@ -277,6 +280,9 @@ msgstr "primo argomento non valido [oggetto sbagliato]"
 
 msgid "at least 2 columns needed"
 msgstr "necessarie almeno 2 colonne"
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr ""
 
 msgid "'x', 'y' and 'z' lengths differ"
 msgstr "le lunghezze di 'x', 'y' e 'z' differiscono"

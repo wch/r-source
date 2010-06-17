@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-26 08:42\n"
-"PO-Revision-Date: 2010-03-26 08:42\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
+"PO-Revision-Date: 2010-06-17 14:09\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -532,6 +532,45 @@ msgstr "ERROR: this R is version %s, package ‘%s’ requires R %s %s"
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ERROR: this R is version %s, required is R %s %s"
 
+msgid "Changes require specified 'style'"
+msgstr "Changes require specified ‘style’"
+
+msgid "The default JSS style may not be modified."
+msgstr "The default JSS style may not be modified."
+
+msgid "Warning: unknown option"
+msgstr "Warning: unknown option"
+
+msgid "** Options"
+msgstr "** Options"
+
+msgid "are only for '--binary'  and will be ignored"
+msgstr "are only for ‘--binary’  and will be ignored"
+
+msgid "Error: cannot rename directory to"
+msgstr "Error: cannot rename directory to"
+
+msgid "cannot coerce"
+msgstr "cannot coerce"
+
+msgid "to logical"
+msgstr "to logical"
+
+msgid "-o option without value"
+msgstr "-o option without value"
+
+msgid "-l option without value"
+msgstr "-l option without value"
+
+msgid "Error: no packages were specified"
+msgstr "Error: no packages were specified"
+
+msgid "package dir"
+msgstr "package dir"
+
+msgid "does not exist"
+msgstr "does not exist"
+
 msgid "No files in this directory"
 msgstr "No files in this directory"
 
@@ -633,12 +672,6 @@ msgstr ""
 msgid "running src/Makefile.win ..."
 msgstr "running src/Makefile.win ..."
 
-msgid "making DLL ..."
-msgstr "making DLL ..."
-
-msgid "... done"
-msgstr "... done"
-
 msgid "no source files found"
 msgstr "no source files found"
 
@@ -648,14 +681,17 @@ msgstr "empty ‘data’ directory"
 msgid "'--auto-zip' is for Windows only"
 msgstr "‘--auto-zip’ is for Windows only"
 
-msgid "-l option without value"
-msgstr "-l option without value"
-
-msgid "Warning: unknown option"
-msgstr "Warning: unknown option"
+msgid "--merge-multiarch is Windows-only"
+msgstr "--merge-multiarch is Windows-only"
 
 msgid "cannot create temporary directory"
 msgstr "cannot create temporary directory"
+
+msgid "ERROR: --merge-multiarch applies only to a single tarball"
+msgstr "ERROR: --merge-multiarch applies only to a single tarball"
+
+msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
+msgstr "ERROR: --merge-multiarch can only be used on i386/x64 installations"
 
 msgid "invalid package"
 msgstr "invalid package"
@@ -693,9 +729,6 @@ msgstr "--no-help overrides"
 
 msgid "--"
 msgstr "--"
-
-msgid "-o option without value"
-msgstr "-o option without value"
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Converting Rd files to LaTeX ..."
@@ -898,6 +931,9 @@ msgstr "Running ‘texi2dvi’ on ‘%s’ failed."
 
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "running ‘texi2dvi’ on ‘%s’ failed"
+
+msgid "unable to run '%s' on '%s'"
+msgstr "unable to run ‘%s’ on ‘%s’"
 
 msgid "unable to run %s on '%s'"
 msgstr "unable to run %s on ‘%s’"

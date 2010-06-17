@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: methods 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-12-17 11:57+0000\n"
+"POT-Creation-Date: 2010-06-17 14:08+0100\n"
 "PO-Revision-Date: 2007-04-13 12:22+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -80,7 +80,7 @@ msgstr ""
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr "pas de méthode directe ou héritée pour la fonction '%s' dans cet appel"
 
-#: methods_list_dispatch.c:514 methods_list_dispatch.c:978
+#: methods_list_dispatch.c:514 methods_list_dispatch.c:979
 msgid "invalid object (non-function) used as method"
 msgstr ""
 "objet incorrect (autre chose qu'une fonction) utilisé dans cette méthode"
@@ -143,7 +143,7 @@ msgstr ""
 "de classe \"%s\" est renvoyé"
 
 #: methods_list_dispatch.c:604 methods_list_dispatch.c:615
-#: methods_list_dispatch.c:936
+#: methods_list_dispatch.c:937
 #, c-format
 msgid ""
 "error in evaluating the argument '%s' in selecting a method for function '%s'"
@@ -182,37 +182,37 @@ msgstr ""
 "lors du calcul de 'callNextMethod', un '...' est trouvé dans l'appel "
 "correspondant, mais aucun '...' n'est trouvé dans l'argument en question"
 
-#: methods_list_dispatch.c:704
+#: methods_list_dispatch.c:705
 msgid "error in evaluating a 'primitive' next method"
 msgstr "erreur lors de l'évaluation d'une 'primitive' comme méthode suivante"
 
-#: methods_list_dispatch.c:763
+#: methods_list_dispatch.c:764
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr ""
 "'%s' doit être une chaîne de caractères unique (un vecteur de caractères de "
 "longueur %d est renvoyé)"
 
-#: methods_list_dispatch.c:767
+#: methods_list_dispatch.c:768
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr ""
 "'%s' doit être une chaîne de caractères non vide ; Une chaîne de caractères "
 "vide est renvoyée"
 
-#: methods_list_dispatch.c:771
+#: methods_list_dispatch.c:772
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr ""
 "'%s' doit être une chaîne de caractères unique (un objet de classe \"%s\" "
 "est renvoyé)"
 
-#: methods_list_dispatch.c:895
+#: methods_list_dispatch.c:896
 #, c-format
 msgid "Failed to get the generic for the primitive \"%s\""
 msgstr "Impossible de trouver la fonction générique pour la primitive \"%s\""
 
-#: methods_list_dispatch.c:902
+#: methods_list_dispatch.c:903
 #, c-format
 msgid ""
 "Expected a generic function or a primitive for dispatch, got an object of "
@@ -221,7 +221,7 @@ msgstr ""
 "Une fonction générique ou une primitive était attendue pour le dispatching, "
 "un objet de classe \"%s\" est renvoyé à la place"
 
-#: methods_list_dispatch.c:914
+#: methods_list_dispatch.c:915
 #, c-format
 msgid ""
 "Generic \"%s\" seems not to have been initialized for table dispatch---need "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:39\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,7 +101,55 @@ msgstr ""
 msgid "bad argument"
 msgstr ""
 
+msgid "Not all arguments are of the same length, the following need to be recycled: %s"
+msgstr ""
+
+msgid ","
+msgstr ""
+
+msgid "Use either 'given' or 'first'/'middle' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'first'."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'middle'."
+msgstr ""
+
+msgid "Use either 'family' or 'last' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'family' instead of 'last'."
+msgstr ""
+
+msgid "Invalid role specification(s): %s."
+msgstr ""
+
+msgid "It is recommended to use given/family instead of first/middle/last."
+msgstr ""
+
+msgid "method is just applicable to 'person' objects"
+msgstr ""
+
 msgid "all arguments must be of class \"person\""
+msgstr ""
+
+msgid "at least one field has to be specified"
+msgstr ""
+
+msgid "all fields have to be named"
+msgstr ""
+
+msgid "'bibtype' has to be one of"
+msgstr ""
+
+msgid "A bibentry of bibtype '"
+msgstr ""
+
+msgid "' has to specify the field(s):"
+msgstr ""
+
+msgid "method is just applicable to 'bibentry' objects"
 msgstr ""
 
 msgid "package '%s' not found"
@@ -114,6 +162,9 @@ msgid "no date field in DESCRIPTION file of package '%s'"
 msgstr ""
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
+msgstr ""
+
+msgid "Enhanced author specification provides no authors."
 msgstr ""
 
 msgid "m < 0"
@@ -231,6 +282,9 @@ msgid "cannot edit NULL row names"
 msgstr ""
 
 msgid "no help found for '%s'"
+msgstr ""
+
+msgid "'%s' has a help file but no examples"
 msgstr ""
 
 msgid "test '%s' is not available"
@@ -449,9 +503,6 @@ msgstr ""
 msgid ":"
 msgstr ""
 
-msgid ","
-msgstr ""
-
 msgid "are now renamed to 'z<name>.R'"
 msgstr ""
 
@@ -485,7 +536,7 @@ msgstr ""
 msgid "'priority' must be character or NULL"
 msgstr ""
 
-msgid "argument 'lib' is missing: using %s"
+msgid "Removing package(s) from '%s' (as 'lib' is unspecified)"
 msgstr ""
 
 msgid "'destdir' is not a directory"
@@ -533,7 +584,7 @@ msgstr ""
 msgid "no packages were specified"
 msgstr ""
 
-msgid "argument 'lib' is missing: using '%s'"
+msgid "Installing package(s) into '%s' (as 'lib' is unspecified)"
 msgstr ""
 
 msgid "'lib = \"%s\"' is not writable"
@@ -954,7 +1005,7 @@ msgid_plural "also installing the dependencies %s"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "'lib' element '%s'  is not a writable directory"
+msgid        "'lib' element '%s' is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
 msgstr[0]    ""
 msgstr[1]    ""

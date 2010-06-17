@@ -1,5 +1,3 @@
-
-
 # Translation of R-tools.pot to French
 # Copyright (C) 2005 The R Foundation
 # This file is distributed under the same license as the tools R package.
@@ -9,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:20\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2010-03-26 13:32-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -320,7 +318,9 @@ msgstr "le package doit être chargé"
 msgid ""
 "package %s exists but was not installed under R >= 2.10.0 so xrefs cannot be "
 "checked"
-msgstr "le package %s existe, mais il n'a pas été installé sous R >= 2.10.0 et donc vérification de xrefs impossible"
+msgstr ""
+"le package %s existe, mais il n'a pas été installé sous R >= 2.10.0 et donc "
+"vérification de xrefs impossible"
 
 msgid "Obsolete package(s) %s in Rd xrefs"
 msgstr "Package(s) obsolètes %s dans les xrefs Rd"
@@ -537,6 +537,49 @@ msgstr "ERREUR : cette version de R est %s, le package '%s' nécessite R %s %s "
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr "ERREUR : cette version de R est %s, requis R %s %s "
 
+msgid "Changes require specified 'style'"
+msgstr ""
+
+msgid "The default JSS style may not be modified."
+msgstr ""
+
+msgid "Warning: unknown option"
+msgstr "Avis : option inconnue"
+
+msgid "** Options"
+msgstr ""
+
+msgid "are only for '--binary'  and will be ignored"
+msgstr ""
+
+#, fuzzy
+msgid "Error: cannot rename directory to"
+msgstr "impossible de créer le répertoire '%s'"
+
+#, fuzzy
+msgid "cannot coerce"
+msgstr "ne peut être ouvert"
+
+msgid "to logical"
+msgstr ""
+
+msgid "-o option without value"
+msgstr "option -o sans valeur"
+
+msgid "-l option without value"
+msgstr "option -l sans valeur"
+
+#, fuzzy
+msgid "Error: no packages were specified"
+msgstr "ERREUR : aucun package spécifié"
+
+msgid "package dir"
+msgstr ""
+
+#, fuzzy
+msgid "does not exist"
+msgstr "le fichier '%s' n'existe pas"
+
 msgid "No files in this directory"
 msgstr "Pas de fichiers dans ce répertoire"
 
@@ -565,7 +608,9 @@ msgid "No docs found for package %s"
 msgstr "Pas de docs trouvés pour le package %s"
 
 msgid "Only help files, %s, %s and files under %s in a package can be viewed"
-msgstr "Visualisation possible seulement pour les fichiers d'aide, %s, %s et les fichiers dans %s"
+msgstr ""
+"Visualisation possible seulement pour les fichiers d'aide, %s, %s et les "
+"fichiers dans %s"
 
 msgid "NEWS"
 msgstr "NEWS"
@@ -638,12 +683,6 @@ msgstr ""
 msgid "running src/Makefile.win ..."
 msgstr "exécution de src/Makefile.win ..."
 
-msgid "making DLL ..."
-msgstr "création de la DLL ..."
-
-msgid "... done"
-msgstr "... fini"
-
 msgid "no source files found"
 msgstr "aucun fichier source n'est trouvé"
 
@@ -653,14 +692,19 @@ msgstr "répertoire 'data' vide"
 msgid "'--auto-zip' is for Windows only"
 msgstr "'--auto-zip'  est pour Windows seulement"
 
-msgid "-l option without value"
-msgstr "option -l sans valeur"
-
-msgid "Warning: unknown option"
-msgstr "Avis : option inconnue"
+#, fuzzy
+msgid "--merge-multiarch is Windows-only"
+msgstr "'--auto-zip'  est pour Windows seulement"
 
 msgid "cannot create temporary directory"
 msgstr "impossible de créer un répertoire temporaire"
+
+#, fuzzy
+msgid "ERROR: --merge-multiarch applies only to a single tarball"
+msgstr "--pkglock est valide pour un seul package"
+
+msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
+msgstr ""
 
 msgid "invalid package"
 msgstr "package incorrect"
@@ -698,9 +742,6 @@ msgstr "--no-help a priorité sur"
 
 msgid "--"
 msgstr "--"
-
-msgid "-o option without value"
-msgstr "option -o sans valeur"
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Conversion des fichiers Rd en LaTeX ..."
@@ -909,6 +950,10 @@ msgstr "l'exécution de 'texi2dvi' sur '%s' a échoué."
 msgid "running 'texi2dvi' on '%s' failed"
 msgstr "l'exécution de 'texi2dvi' sur '%s' a échoué"
 
+#, fuzzy
+msgid "unable to run '%s' on '%s'"
+msgstr "impossible d'exécuter %s sur '%s'"
+
 msgid "unable to run %s on '%s'"
 msgstr "impossible d'exécuter %s sur '%s'"
 
@@ -966,3 +1011,9 @@ msgid "object %s is created by more than one data call"
 msgid_plural "objects %s are created by more than one data call"
 msgstr[0] "l'objet %s est créé par plus d'un appel aux données"
 msgstr[1] "les objets %s sont créés par plus d'un appel aux données"
+
+#~ msgid "making DLL ..."
+#~ msgstr "création de la DLL ..."
+
+#~ msgid "... done"
+#~ msgstr "... fini"

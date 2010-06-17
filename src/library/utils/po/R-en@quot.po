@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:39\n"
-"PO-Revision-Date: 2010-04-04 14:39\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
+"PO-Revision-Date: 2010-06-17 14:09\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -139,8 +139,60 @@ msgstr "‘file’ must be NULL, a character string or a connection"
 msgid "bad argument"
 msgstr "bad argument"
 
+msgid ""
+"Not all arguments are of the same length, the following need to be recycled: "
+"%s"
+msgstr ""
+"Not all arguments are of the same length, the following need to be recycled: "
+"%s"
+
+msgid ","
+msgstr ","
+
+msgid "Use either 'given' or 'first'/'middle' but not both."
+msgstr "Use either ‘given’ or 'first'/'middle' but not both."
+
+msgid "It is recommended to use 'given' instead of 'first'."
+msgstr "It is recommended to use ‘given’ instead of 'first'."
+
+msgid "It is recommended to use 'given' instead of 'middle'."
+msgstr "It is recommended to use ‘given’ instead of 'middle'."
+
+msgid "Use either 'family' or 'last' but not both."
+msgstr "Use either ‘family’ or ‘last’ but not both."
+
+msgid "It is recommended to use 'family' instead of 'last'."
+msgstr "It is recommended to use ‘family’ instead of 'last'."
+
+msgid "Invalid role specification(s): %s."
+msgstr "Invalid role specification(s): %s."
+
+msgid "It is recommended to use given/family instead of first/middle/last."
+msgstr "It is recommended to use given/family instead of first/middle/last."
+
+msgid "method is just applicable to 'person' objects"
+msgstr "method is just applicable to ‘person’ objects"
+
 msgid "all arguments must be of class \"person\""
 msgstr "all arguments must be of class “person”"
+
+msgid "at least one field has to be specified"
+msgstr "at least one field has to be specified"
+
+msgid "all fields have to be named"
+msgstr "all fields have to be named"
+
+msgid "'bibtype' has to be one of"
+msgstr "‘bibtype’ has to be one of"
+
+msgid "A bibentry of bibtype '"
+msgstr "A bibentry of bibtype '"
+
+msgid "' has to specify the field(s):"
+msgstr "' has to specify the field(s):"
+
+msgid "method is just applicable to 'bibentry' objects"
+msgstr "method is just applicable to ‘bibentry’ objects"
 
 msgid "package '%s' not found"
 msgstr "package ‘%s’ not found"
@@ -153,6 +205,9 @@ msgstr "no date field in DESCRIPTION file of package ‘%s’"
 
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr "could not determine year for ‘%s’ from package DESCRIPTION file"
+
+msgid "Enhanced author specification provides no authors."
+msgstr "Enhanced author specification provides no authors."
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -275,6 +330,9 @@ msgstr "cannot edit NULL row names"
 
 msgid "no help found for '%s'"
 msgstr "no help found for ‘%s’"
+
+msgid "'%s' has a help file but no examples"
+msgstr "‘%s’ has a help file but no examples"
 
 msgid "test '%s' is not available"
 msgstr "test ‘%s’ is not available"
@@ -502,9 +560,6 @@ msgstr "Invalid file name(s) for R code in"
 msgid ":"
 msgstr ":"
 
-msgid ","
-msgstr ","
-
 msgid "are now renamed to 'z<name>.R'"
 msgstr "are now renamed to ‘z<name>.R’"
 
@@ -538,8 +593,8 @@ msgstr "read.dcf() error on file ‘%s’"
 msgid "'priority' must be character or NULL"
 msgstr "‘priority’ must be character or NULL"
 
-msgid "argument 'lib' is missing: using %s"
-msgstr "argument ‘lib’ is missing: using %s"
+msgid "Removing package(s) from '%s' (as 'lib' is unspecified)"
+msgstr "Removing package(s) from ‘%s’ (as ‘lib’ is unspecified)"
 
 msgid "'destdir' is not a directory"
 msgstr "‘destdir’ is not a directory"
@@ -590,8 +645,8 @@ msgstr ""
 msgid "no packages were specified"
 msgstr "no packages were specified"
 
-msgid "argument 'lib' is missing: using '%s'"
-msgstr "argument ‘lib’ is missing: using ‘%s’"
+msgid "Installing package(s) into '%s' (as 'lib' is unspecified)"
+msgstr "Installing package(s) into ‘%s’ (as ‘lib’ is unspecified)"
 
 msgid "'lib = \"%s\"' is not writable"
 msgstr "‘lib = “%s”’ is not writable"
@@ -1053,9 +1108,9 @@ msgid_plural "also installing the dependencies %s"
 msgstr[0] "also installing the dependency %s"
 msgstr[1] "also installing the dependencies %s"
 
-msgid "'lib' element '%s'  is not a writable directory"
+msgid "'lib' element '%s' is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
-msgstr[0] "‘lib’ element ‘%s’  is not a writable directory"
+msgstr[0] "‘lib’ element ‘%s’ is not a writable directory"
 msgstr[1] "‘lib’ elements ‘%s’ are not writable directories"
 
 msgid "package '%s' is in use and will not be installed"

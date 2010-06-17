@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-26 08:42\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2010-04-03 18:36+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1013,6 +1013,10 @@ msgstr ""
 "できません "
 
 msgid "Expected a single logical value for the S4 state flag"
+msgstr " S4 状態フラグに対しては単一の論理値が期待されています "
+
+#, fuzzy
+msgid "Expected a single logical value for the S3 state flag"
 msgstr " S4 状態フラグに対しては単一の論理値が期待されています "
 
 msgid "invalid to change the storage mode of a factor"

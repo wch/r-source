@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-19 11:18\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2010-03-26 13:14-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -34,7 +34,9 @@ msgid "'alpha', 'beta' and 'gamma' must be within the unit interval."
 msgstr "'alpha', 'beta' et 'gamma' doivent être dans l'intervalle [0,1]"
 
 msgid "data must be non-zero for multiplicative Holt-Winters."
-msgstr "les données ne peuvent être négatives dans un modèle de Holt-Winters multiplicatif."
+msgstr ""
+"les données ne peuvent être négatives dans un modèle de Holt-Winters "
+"multiplicatif."
 
 msgid "need at least 2 periods to compute seasonal start values."
 msgstr ""
@@ -476,8 +478,19 @@ msgstr "'k' doit être dans {1, 2, ..  n - 1}"
 msgid "some of the first %d eigenvalues are < 0"
 msgstr "certaines des %d premières valeurs propres sont négatives"
 
-msgid "initial value not feasible"
+#, fuzzy
+msgid "initial value is not in the interior of the feasible region"
 msgstr "mauvaise valeur initiale"
+
+#, fuzzy
+msgid "Barrier algorithm ran out of iterations and did not converge"
+msgstr "l'algorithme n'a pas convergé"
+
+msgid "Objective function increased at outer iteration %d"
+msgstr ""
+
+msgid "Objective function decreased at outer iteration %d"
+msgstr ""
 
 msgid "contrasts not defined for %d degrees of freedom"
 msgstr "contrastes indéfinis pour %d degrés de liberté"
@@ -1968,6 +1981,10 @@ msgstr "les arguments 'r' et 'c' doivent avoir la même somme"
 
 msgid "'relevel' only for factors"
 msgstr "'relevel' n'est utilisable que pour des facteurs"
+
+#, fuzzy
+msgid "'ref' must be of length one"
+msgstr "'acf' doit être de longueur deux ou plus"
 
 msgid "'ref' must be an existing level"
 msgstr "'ref' doit être un niveau existant"

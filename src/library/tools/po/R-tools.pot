@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-03-26 08:42\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -461,6 +461,45 @@ msgstr ""
 msgid "ERROR: this R is version %s, required is R %s %s"
 msgstr ""
 
+msgid "Changes require specified 'style'"
+msgstr ""
+
+msgid "The default JSS style may not be modified."
+msgstr ""
+
+msgid "Warning: unknown option"
+msgstr ""
+
+msgid "** Options"
+msgstr ""
+
+msgid "are only for '--binary'  and will be ignored"
+msgstr ""
+
+msgid "Error: cannot rename directory to"
+msgstr ""
+
+msgid "cannot coerce"
+msgstr ""
+
+msgid "to logical"
+msgstr ""
+
+msgid "-o option without value"
+msgstr ""
+
+msgid "-l option without value"
+msgstr ""
+
+msgid "Error: no packages were specified"
+msgstr ""
+
+msgid "package dir"
+msgstr ""
+
+msgid "does not exist"
+msgstr ""
+
 msgid "No files in this directory"
 msgstr ""
 
@@ -554,12 +593,6 @@ msgstr ""
 msgid "running src/Makefile.win ..."
 msgstr ""
 
-msgid "making DLL ..."
-msgstr ""
-
-msgid "... done"
-msgstr ""
-
 msgid "no source files found"
 msgstr ""
 
@@ -569,13 +602,16 @@ msgstr ""
 msgid "'--auto-zip' is for Windows only"
 msgstr ""
 
-msgid "-l option without value"
-msgstr ""
-
-msgid "Warning: unknown option"
+msgid "--merge-multiarch is Windows-only"
 msgstr ""
 
 msgid "cannot create temporary directory"
+msgstr ""
+
+msgid "ERROR: --merge-multiarch applies only to a single tarball"
+msgstr ""
+
+msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
 msgstr ""
 
 msgid "invalid package"
@@ -609,9 +645,6 @@ msgid "--no-help overrides"
 msgstr ""
 
 msgid "--"
-msgstr ""
-
-msgid "-o option without value"
 msgstr ""
 
 msgid "Converting Rd files to LaTeX ..."
@@ -810,6 +843,9 @@ msgid "Running 'texi2dvi' on '%s' failed."
 msgstr ""
 
 msgid "running 'texi2dvi' on '%s' failed"
+msgstr ""
+
+msgid "unable to run '%s' on '%s'"
 msgstr ""
 
 msgid "unable to run %s on '%s'"

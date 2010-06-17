@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:38\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -253,6 +253,9 @@ msgstr "'r'的值应该为\"range\"，因此它的长度必需为二"
 msgid "invalid first argument"
 msgstr "第一个参数不对"
 
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr ""
+
 msgid "'x' and 'y' lengths differ"
 msgstr "'x'和'y'的长度不一样"
 
@@ -261,6 +264,9 @@ msgstr "第一个参数不对[语言对象出了错]"
 
 msgid "at least 2 columns needed"
 msgstr "至少需要两列"
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr ""
 
 msgid "'x', 'y' and 'z' lengths differ"
 msgstr "'x', 'y'和'z'的长度不一样"

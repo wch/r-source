@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:38\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,6 +33,9 @@ msgid "at least one entry of 'x' must be positive"
 msgstr ""
 
 msgid "incorrect 'col': must be length 2"
+msgstr ""
+
+msgid "only for 1-D table"
 msgstr ""
 
 msgid "'side' must be in {1:4}"
@@ -125,7 +128,7 @@ msgstr ""
 msgid "Missing rows"
 msgstr ""
 
-msgid "'expr' must be a function or an expression containing 'x'"
+msgid "'expr' must be a function, call or an expression containing 'x'"
 msgstr ""
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""

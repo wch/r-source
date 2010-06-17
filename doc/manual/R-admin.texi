@@ -4364,7 +4364,7 @@ There are a number of sources of problems when installing @R {} on a new
 hardware/OS platform.  These include
 
 @strong{Floating Point Arithmetic}: @R{} requires arithmetic compliant
-with @acronym{IEC}@tie{}60559, also know as @acronym{IEEE}@tie{}754.
+with @acronym{IEC}@tie{}60559, also known as @acronym{IEEE}@tie{}754.
 This mandates the use of plus and minus infinity and @code{NaN} (not a
 number) as well as specific details of rounding.  Although almost all
 current FPUs can support this, selecting such support can be a pain.
@@ -4380,7 +4380,7 @@ directory.
 Beware of using high levels of optimization, at least initially.  On
 many compilers these reduce the degree of compliance to the
 @acronym{IEEE} model.  For example, using @option{-fast} on the Solaris
-SunPro compilers causes @R{}'s @code{NaN} to be set incorrectly.
+Sun Studio compilers causes @R{}'s @code{NaN} to be set incorrectly.
 
 @strong{Shared Libraries}: There seems to be very little agreement
 across platforms on what needs to be done to build shared libraries.

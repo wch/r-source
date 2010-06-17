@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:39\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2010-04-03 09:55+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -116,8 +116,59 @@ msgstr " 'file' はconnectionか文字列か NULL でなければなりません
 msgid "bad argument"
 msgstr " 誤った引数 "
 
+msgid ""
+"Not all arguments are of the same length, the following need to be recycled: "
+"%s"
+msgstr ""
+
+msgid ","
+msgstr " , "
+
+msgid "Use either 'given' or 'first'/'middle' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'first'."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'middle'."
+msgstr ""
+
+msgid "Use either 'family' or 'last' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'family' instead of 'last'."
+msgstr ""
+
+#, fuzzy
+msgid "Invalid role specification(s): %s."
+msgstr " 不正な 'quote' 指定です "
+
+msgid "It is recommended to use given/family instead of first/middle/last."
+msgstr ""
+
+msgid "method is just applicable to 'person' objects"
+msgstr ""
+
 msgid "all arguments must be of class \"person\""
 msgstr " 全ての引数がクラス \"person\" でなければなりません "
+
+msgid "at least one field has to be specified"
+msgstr ""
+
+msgid "all fields have to be named"
+msgstr ""
+
+msgid "'bibtype' has to be one of"
+msgstr ""
+
+msgid "A bibentry of bibtype '"
+msgstr ""
+
+msgid "' has to specify the field(s):"
+msgstr ""
+
+msgid "method is just applicable to 'bibentry' objects"
+msgstr ""
 
 msgid "package '%s' not found"
 msgstr " パッケージ '%s' が見付かりません "
@@ -133,6 +184,9 @@ msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr ""
 " パッケージの DESCRIPTION ファイルから '%s' に対する年度を決定できませんでし"
 "た "
+
+msgid "Enhanced author specification provides no authors."
+msgstr ""
 
 msgid "m < 0"
 msgstr " m < 0 "
@@ -258,6 +312,9 @@ msgstr " NULLの行の名前は編集できません "
 
 msgid "no help found for '%s'"
 msgstr " '%s' に対するヘルプファイルが見つかりません "
+
+msgid "'%s' has a help file but no examples"
+msgstr " '%s' にはヘルプファイルはありますが、実行例はありません "
 
 msgid "test '%s' is not available"
 msgstr " テスト '%s' が利用できません "
@@ -492,9 +549,6 @@ msgstr " Rコードに不正なファイル名 "
 msgid ":"
 msgstr " : "
 
-msgid ","
-msgstr " , "
-
 msgid "are now renamed to 'z<name>.R'"
 msgstr " の名前は 'z<name>.R' に変更されました "
 
@@ -530,8 +584,8 @@ msgstr "ファイル '%s' に対する read.dcf() エラー"
 msgid "'priority' must be character or NULL"
 msgstr " 'priority' は文字か NULL で無ければなりません "
 
-msgid "argument 'lib' is missing: using %s"
-msgstr " 引数 'lib' が欠けています：%s を使います "
+msgid "Removing package(s) from '%s' (as 'lib' is unspecified)"
+msgstr ""
 
 msgid "'destdir' is not a directory"
 msgstr " 'destdir' はディレクトリではありません "
@@ -583,8 +637,8 @@ msgstr ""
 msgid "no packages were specified"
 msgstr " 如何なるパッケージも指定されませんでした "
 
-msgid "argument 'lib' is missing: using '%s'"
-msgstr " 引数 'lib' が欠けています：%s を使います "
+msgid "Installing package(s) into '%s' (as 'lib' is unspecified)"
+msgstr ""
 
 msgid "'lib = \"%s\"' is not writable"
 msgstr " 'lib = \"%s\"' は書き込み可能ではありません "
@@ -1059,13 +1113,20 @@ msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
 msgstr[0] " 依存対象(dependency)　%s もインストールします "
 
-msgid "'lib' element '%s'  is not a writable directory"
+#, fuzzy
+msgid "'lib' element '%s' is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
 msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリではありません "
 
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "argument 'lib' is missing: using %s"
+#~ msgstr " 引数 'lib' が欠けています：%s を使います "
+
+#~ msgid "argument 'lib' is missing: using '%s'"
+#~ msgstr " 引数 'lib' が欠けています：%s を使います "
 
 #~ msgid "untar: using cmd ="
 #~ msgstr " untar: 以下を使用 cmd = "
@@ -1093,9 +1154,6 @@ msgstr[0] " パッケージ '%s' は使用中ですから、インストール�
 
 #~ msgid "options(\"browser\") not set"
 #~ msgstr " options(\"browser\") が設定されていません "
-
-#~ msgid "'%s' has a help file but no examples"
-#~ msgstr " '%s' にはヘルプファイルはありますが、実行例はありません "
 
 #~ msgid ""
 #~ "No text help for '%s' is available:\n"

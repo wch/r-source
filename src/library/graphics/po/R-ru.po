@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:38\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2010-04-09 16:49-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -46,6 +46,9 @@ msgstr "как минимум одна запись в 'x' должна быть положительной"
 
 msgid "incorrect 'col': must be length 2"
 msgstr "неправильный параметр 'col': должен быть длиной 2"
+
+msgid "only for 1-D table"
+msgstr ""
 
 msgid "'side' must be in {1:4}"
 msgstr "'side' должен быть в пределах {1:4}"
@@ -142,7 +145,8 @@ msgstr "слишком маленькое произведение строки * колонки"
 msgid "Missing rows"
 msgstr "Пропущенные строки"
 
-msgid "'expr' must be a function or an expression containing 'x'"
+#, fuzzy
+msgid "'expr' must be a function, call or an expression containing 'x'"
 msgstr "'expr' должен быть функцией или выражением содержащим 'x'"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""

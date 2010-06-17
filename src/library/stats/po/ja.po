@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08+0100\n"
+"POT-Creation-Date: 2010-06-17 14:08+0100\n"
 "PO-Revision-Date: 2008-09-30 10:57+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -98,6 +98,26 @@ msgstr " 不正な vmethod です "
 #: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr " Burg のアルゴリズムが偏相関を見つけ損ないました "
+
+#: monoSpl.c:39
+#, fuzzy
+msgid "n must be at least two"
+msgstr " m はリストでなければなりません "
+
+#: monoSpl.c:72
+#, fuzzy
+msgid "Argument m must be numeric"
+msgstr " 引数 %s は空でない数値ベクトルでなければなりません  "
+
+#: monoSpl.c:75
+#, fuzzy
+msgid "length(m) must be at least two"
+msgstr " m はリストでなければなりません "
+
+#: monoSpl.c:77
+#, fuzzy
+msgid "Argument Sx must be numeric vector one shorter than m[]"
+msgstr " 引数 %s は長さが 1 か %d の数値ベクトルでなければなりません "
 
 #: nls.c:97
 msgid "'control' must be a list"

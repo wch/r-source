@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08+0100\n"
-"PO-Revision-Date: 2009-10-05 14:08+0100\n"
+"POT-Creation-Date: 2010-06-17 14:08+0100\n"
+"PO-Revision-Date: 2010-06-17 14:08+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -120,6 +120,22 @@ msgstr "Invalid vmethod"
 #: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg's algorithm failed to find partial correlation"
+
+#: monoSpl.c:39
+msgid "n must be at least two"
+msgstr "n must be at least two"
+
+#: monoSpl.c:72
+msgid "Argument m must be numeric"
+msgstr "Argument m must be numeric"
+
+#: monoSpl.c:75
+msgid "length(m) must be at least two"
+msgstr "length(m) must be at least two"
+
+#: monoSpl.c:77
+msgid "Argument Sx must be numeric vector one shorter than m[]"
+msgstr "Argument Sx must be numeric vector one shorter than m[]"
 
 #: nls.c:97
 msgid "'control' must be a list"

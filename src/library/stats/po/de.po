@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2009-10-05 14:08+0100\n"
+"POT-Creation-Date: 2010-06-17 14:08+0100\n"
 "PO-Revision-Date: 2009-10-07 14:29+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -97,6 +97,26 @@ msgstr "unzulässige vmethod"
 #: mAR.c:833
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg's Algorithmus konnte keine partielle Korrelation finden"
+
+#: monoSpl.c:39
+#, fuzzy
+msgid "n must be at least two"
+msgstr "m nuss eine Liste sein"
+
+#: monoSpl.c:72
+#, fuzzy
+msgid "Argument m must be numeric"
+msgstr "Argument %s muss ein nichtleerer numerischer Vektor sein"
+
+#: monoSpl.c:75
+#, fuzzy
+msgid "length(m) must be at least two"
+msgstr "m nuss eine Liste sein"
+
+#: monoSpl.c:77
+#, fuzzy
+msgid "Argument Sx must be numeric vector one shorter than m[]"
+msgstr "Argument %s muss ein numerischer Vektor der Länge 1 oder %d sein"
 
 #: nls.c:97
 msgid "'control' must be a list"

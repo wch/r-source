@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:38\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2010-04-03 20:07+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -253,6 +253,9 @@ msgstr " 'r' は範囲でなければなりません. 従って長さは2です 
 msgid "invalid first argument"
 msgstr " 最初の引数が無効です "
 
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr ""
+
 msgid "'x' and 'y' lengths differ"
 msgstr " 'x' と 'y' の長さが異なります "
 
@@ -261,6 +264,9 @@ msgstr " 最初の引数が無効です [誤った言語オブジェクトです
 
 msgid "at least 2 columns needed"
 msgstr " 少なくとも二つの列が必要です "
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr ""
 
 msgid "'x', 'y' and 'z' lengths differ"
 msgstr " 'x','y' そして 'z' の長さが異なります "

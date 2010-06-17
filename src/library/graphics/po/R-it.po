@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:38\n"
+"POT-Creation-Date: 2010-06-17 14:08\n"
 "PO-Revision-Date: 2005-02-26 22:56+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -39,6 +39,9 @@ msgstr "almeno un termine di 'x' deve essere positivo"
 
 msgid "incorrect 'col': must be length 2"
 msgstr "'col' non valido: deve essere di lunghezza 2"
+
+msgid "only for 1-D table"
+msgstr ""
 
 #, fuzzy
 msgid "'side' must be in {1:4}"
@@ -133,7 +136,8 @@ msgstr "righe * colonne troppo piccolo"
 msgid "Missing rows"
 msgstr "Righe mancanti"
 
-msgid "'expr' must be a function or an expression containing 'x'"
+#, fuzzy
+msgid "'expr' must be a function, call or an expression containing 'x'"
 msgstr "'expr' deve essere una funzione o un'espressione contenent 'x'"
 
 msgid "'from' and 'to' must be > 0 with log=\"x\""

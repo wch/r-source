@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-04-04 14:39\n"
+"POT-Creation-Date: 2010-06-17 14:09\n"
 "PO-Revision-Date: 2010-03-26 13:32-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -125,8 +125,59 @@ msgstr "'file' doit être NULL, une chaîne de caractères ou une connexion"
 msgid "bad argument"
 msgstr "argument incorrect"
 
+msgid ""
+"Not all arguments are of the same length, the following need to be recycled: "
+"%s"
+msgstr ""
+
+msgid ","
+msgstr ","
+
+msgid "Use either 'given' or 'first'/'middle' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'first'."
+msgstr ""
+
+msgid "It is recommended to use 'given' instead of 'middle'."
+msgstr ""
+
+msgid "Use either 'family' or 'last' but not both."
+msgstr ""
+
+msgid "It is recommended to use 'family' instead of 'last'."
+msgstr ""
+
+#, fuzzy
+msgid "Invalid role specification(s): %s."
+msgstr "spécification de 'quote' incorrecte"
+
+msgid "It is recommended to use given/family instead of first/middle/last."
+msgstr ""
+
+msgid "method is just applicable to 'person' objects"
+msgstr ""
+
 msgid "all arguments must be of class \"person\""
 msgstr "tous les arguments doivent être de la classe \"person\""
+
+msgid "at least one field has to be specified"
+msgstr ""
+
+msgid "all fields have to be named"
+msgstr ""
+
+msgid "'bibtype' has to be one of"
+msgstr ""
+
+msgid "A bibentry of bibtype '"
+msgstr ""
+
+msgid "' has to specify the field(s):"
+msgstr ""
+
+msgid "method is just applicable to 'bibentry' objects"
+msgstr ""
 
 msgid "package '%s' not found"
 msgstr "package '%s' introuvable"
@@ -140,6 +191,9 @@ msgstr "pas de champ date dans le fichier DESCRIPTION du package '%s'"
 msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr ""
 "impossible de déterminer l'année de '%s' du fichier DESCRIPTION du package "
+
+msgid "Enhanced author specification provides no authors."
+msgstr ""
 
 msgid "m < 0"
 msgstr "m < 0"
@@ -268,6 +322,9 @@ msgstr "impossible d'éditer des noms de lignes NULL"
 
 msgid "no help found for '%s'"
 msgstr "fichier d'aide introuvable pour '%s'"
+
+msgid "'%s' has a help file but no examples"
+msgstr ""
 
 msgid "test '%s' is not available"
 msgstr "le test '%s' n'est pas disponible"
@@ -507,9 +564,6 @@ msgstr "Nom(s) de fichier(s) invalide(s) pour du code R"
 msgid ":"
 msgstr ":"
 
-msgid ","
-msgstr ","
-
 msgid "are now renamed to 'z<name>.R'"
 msgstr "sont maintenant renommés vers 'z<nom>.R'"
 
@@ -543,8 +597,8 @@ msgstr "erreur de read.dcf() dans le fichier %s"
 msgid "'priority' must be character or NULL"
 msgstr "'priority' doit être de type caractère ou NULL"
 
-msgid "argument 'lib' is missing: using %s"
-msgstr "l'argument 'lib' manque : %s est utilisé"
+msgid "Removing package(s) from '%s' (as 'lib' is unspecified)"
+msgstr ""
 
 msgid "'destdir' is not a directory"
 msgstr "'destdir' n'est pas un répertoire"
@@ -595,8 +649,8 @@ msgstr ""
 msgid "no packages were specified"
 msgstr "aucun package spécifié"
 
-msgid "argument 'lib' is missing: using '%s'"
-msgstr "l'argument 'lib' manque : '%s' est utilisé"
+msgid "Installing package(s) into '%s' (as 'lib' is unspecified)"
+msgstr ""
 
 msgid "'lib = \"%s\"' is not writable"
 msgstr "'lib = \"%s\"' ne peut être ouvert en écriture"
@@ -1074,7 +1128,8 @@ msgid_plural "also installing the dependencies %s"
 msgstr[0] "installation de la dépendance %s"
 msgstr[1] "installation des dépendances %s"
 
-msgid "'lib' element '%s'  is not a writable directory"
+#, fuzzy
+msgid "'lib' element '%s' is not a writable directory"
 msgid_plural "'lib' elements '%s' are not writable directories"
 msgstr[0] ""
 "l'élément '%s' de 'lib' n'est pas un répertoire ouvrable en écriture"
@@ -1086,3 +1141,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "argument 'lib' is missing: using %s"
+#~ msgstr "l'argument 'lib' manque : %s est utilisé"
+
+#~ msgid "argument 'lib' is missing: using '%s'"
+#~ msgstr "l'argument 'lib' manque : '%s' est utilisé"
