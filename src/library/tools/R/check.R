@@ -2222,12 +2222,22 @@ R_run_R <- function(cmd, Ropts, env)
                                      "^Rd (warning|error): ",
                                      ## </FIXME>
                                      ": warning: .*ISO C",
-                                     ": warning: implicit declaration of function",
-                                     ": warning: incompatible implicit declaration of built-in function",
-
                                      ": warning: .* discards qualifiers from pointer target type",
                                      ": warning: .* is used uninitialized",
                                      "missing link\\(s\\):")
+                        ## Warnings spotted by gcc with
+                        ## '-Wimplicit-function-declaration', which is
+                        ## implied by '-Wall'.  Currently only accessible
+                        ## via an internal environment variable.
+                        check_src_flag <- Sys.getenv("_R_CHECK_SRC_MINUS_W_IMPLICIT_", "FALSE")
+                        ## (Not quite perfect, as the name should really
+                        ## include 'IMPLICIT_FUNCTION_DECLARATION'.)
+                        if (config_val_to_logical(check_src_flag)) {
+                            warn_re <- c(warn_re,
+                                         ": warning: implicit declaration of function",
+                                         ": warning: incompatible implicit declaration of built-in function")
+                        }
+
                         warn_re <- paste("(",
                                          paste(warn_re, collapse = "|"),
                                          ")", sep = "")
@@ -2257,18 +2267,7 @@ R_run_R <- function(cmd, Ropts, env)
                                           lines, invert = TRUE, value = TRUE)
                         }
 
-                        ## Warnings spotted by gcc with
-                        ## '-Wimplicit-function-declaration', which is
-                        ## implied by '-Wall'.  Currently only accessible
-                        ## via an internal environment variable.
-                        check_src_flag <- Sys.getenv("_R_CHECK_SRC_MINUS_W_IMPLICIT_", "FALSE")
-                        ## (Not quite perfect, as the name should really
-                        ## include 'IMPLICIT_FUNCTION_DECLARATION'.)
-                        if (!config_val_to_logical(check_src_flag)) {
-                            lines <- grep("warning: implicit declaration of function",
-                                          lines, invert = TRUE, value = TRUE)
-                        }
-
+                        ## FIXME: these lines never got into 'lines'
                         ## Warnings spotted by gcc with '-Wunused', which is
                         ## implied by '-Wall'.  Currently only accessible
                         ## via an internal environment variable.
@@ -2306,6 +2305,10 @@ R_run_R <- function(cmd, Ropts, env)
                          lines <- grep("Warning: The process for determining duplicated points",
                                        lines, invert = TRUE, value = TRUE)
 
+                        ## Warning on Windows with some packages that
+                        ## cannot transparently be installed biarch.
+                        lines <- grep("Warning: this package has a non-empty 'configure.win' file",
+                                       lines, invert = TRUE, value = TRUE)
                         if (length(lines)) {
                             warnLog("Found the following significant warnings:")
                             printLog(Log, "  ",
