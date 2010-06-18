@@ -7,10 +7,12 @@
   information in enhanced BibTeX style.
 }
 \usage{
-bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
-         ..., other = list(), mheader = NULL, mfooter = NULL)
-\method{print}{bibentry}(x, style = c("text", "textVersion", "Bibtex", 
-                         "citation", "html", "latex"), .bibstyle = "JSS", ...)
+bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
+         key = NULL, ..., other = list(),
+         mheader = NULL, mfooter = NULL)
+\method{print}{bibentry}(x, style = c("text", "textVersion", "Bibtex",
+                   "citation", "html", "latex"),
+      .bibstyle = "JSS", ...)
 }
 \arguments{
   \item{bibtype}{a character string with a BibTeX entry type.
@@ -21,11 +23,14 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL, key = NULL,
   \item{header}{a character string with optional header text.}
   \item{footer}{a character string with optional footer text.}
   \item{key}{a character string giving the citation key for the entry.}
-  \item{...}{for \code{bibentry}: arguments of the form \code{\var{tag}=\var{value}} giving
-    the fields of the entry, with \var{tag} and \var{value} the name and
-    value of the field, respectively.
-    See \bold{Entry Fields} for details. For the \code{print} method,
-    extra parameters to pass to the renderer.}
+  \item{...}{for \code{bibentry}: arguments of the form
+    \code{\var{tag}=\var{value}} giving the fields of the entry, with
+    \var{tag} and \var{value} the name and value of the field,
+    respectively.  Arguments with empty values are dropped.
+    See \bold{Entry Fields} for details.
+
+    For the \code{print} method, extra parameters to pass to the
+    renderer.}
   \item{other}{a list of arguments as in \code{...} (useful in
     particular for fields named the same as formals of
     \code{bibentry}).}

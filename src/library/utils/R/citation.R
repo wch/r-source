@@ -29,7 +29,6 @@ function(given = NULL, family = NULL, middle = NULL,
              email = NULL, role = NULL, comment = NULL,
              first = NULL, last = NULL)
     {
-
         if(!.is_not_nonempty_text(first)) {
             if(!.is_not_nonempty_text(given))
                 stop("Use either 'given' or 'first'/'middle' but not both.")
@@ -377,6 +376,7 @@ function(bibtype, textVersion=NULL, header = NULL, footer = NULL, key = NULL,
 
         ## process fields
         rval <- c(list(...), other)
+        rval <- rval[!sapply(rval, .is_not_nonempty_text)]
 	fields <- tolower(names(rval))
         names(rval) <- fields
 
@@ -386,7 +386,7 @@ function(bibtype, textVersion=NULL, header = NULL, footer = NULL, key = NULL,
         if(length(rfields) > 0L) {
             ok <- sapply(rfields, function(f) any(f %in% fields))
 	    if(any(!ok)) stop("A bibentry of bibtype '", bibtype,
-		"' has to specify the field(s): ",
+		"' has to correctly specify the field(s): ",
 		paste(rfields[!ok], collapse = ", "), sep = "")
         }
         pos <- fields %in% c("author", "editor")

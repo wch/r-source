@@ -53,6 +53,15 @@ function(file, encoding = "ASCII")
     formals(FOO1) <- formals(utils::citEntry)
     formals(FOO2) <- formals(utils::bibentry)
     ## Could also hard-wire this, of course.
+    get_names_of_nonempty_fields <- function(x) {
+        names(x)[sapply(x,
+                        function(e) {
+                            length(e) &&
+                            !(is.character(e) &&
+                              all(grepl("^[[:space:]]*$", e)))
+                        })]
+    }
+    
     out <- lapply(exprs,
            function(e) {
                nm <- as.character(e[[1L]])
@@ -60,13 +69,14 @@ function(file, encoding = "ASCII")
                    e[[1L]] <- as.name("FOO1")
                    e <- as.list(eval(e))
                    entry <- e$entry
-                   fields <- names(e$...)
+                   fields <- get_names_of_nonempty_fields(e$...)
                }
                else if(nm == "bibentry") {
                    e[[1L]] <- as.name("FOO2")
                    e <- as.list(eval(e))
                    entry <- e$bibtype
-                   fields <- c(names(e$...), names(e$other)[-1L])
+                   fields <- get_names_of_nonempty_fields(c(e$...,
+                                                            as.list(e$other)[-1L]))
                }
                else return()
                entry <- if(!is.character(entry)) NA_character_ else entry[1L]
