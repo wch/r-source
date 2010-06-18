@@ -305,33 +305,35 @@ BUG FIXES
 	bit in the result if either argument is an S4 object. (PR#13209)
 
     o	source(echo=TRUE) failed to echo comments that followed the
-    	last statement in a file.
+	last statement in a file.
 
     o	S4 classes that contained one of "matrix", "array" or "ts" and
 	also another class now accept superclass objects in new().
 	Also fixes failure to call validObject() for these classes.
 
     o	Conditional inheritance defined by argument test= in
-    	methods::setIs() will no longer be used in S4 method selection
-    	(caching these methods could give incorrect results).  See
-    	?setIs.
+	methods::setIs() will no longer be used in S4 method selection
+	(caching these methods could give incorrect results).  See
+	?setIs.
 
     o	The signature of an implicit generic is now used by
 	setGeneric() when that does not use a definition nor
 	explicitly set a signature.
 
     o	The pdf() device will now allow 'lwd' values less than 1
-	(it used to brute force such values to be 1).
+	(it used to force such values to be 1).
 
     o	A bug in callNextMethod() for some examples with "..." in the
-        arguments has been fixed.  See tests/nextWithDots.R in the source.
+	arguments has been fixed.  See tests/nextWithDots.R in the source.
 
-    o   GERaster() now checks for width or height of zero and does
-        nothing in those cases;  previously the behaviour was
-        undefined, probably device-specific, and possibly dangerous.
+    o	GERaster() now checks for width or height of zero and does
+	nothing in those cases; previously the behaviour was
+	undefined, probably device-specific, and possibly dangerous.
         
     o	\Sexpr[result=rd] in an Rd file added a spurious newline,
 	which was displayed as extra whitespace when rendered.
+
+
 
 
 	**************************************************
