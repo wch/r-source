@@ -18,7 +18,7 @@ static const double INVEPS = 1/DOUBLE_EPS;
  */
 static R_INLINE double x_d_omx(double x) {
     if (x < 0 || x > 1)
-	error(_("Value %d out of range (0, 1)"), x);
+	error(_("Value %g out of range (0, 1)"), x);
     return x/(1 - x);
 }
 
