@@ -27,7 +27,13 @@ readNEWS <- function(file = file.path(R.home(), "NEWS"),
 
     rmIniTABs	   <- function(ch) sub("^\t+", "", ch)
     rmTABs	   <- function(ch) gsub("\t+", "", ch)
-    collapseWSpace <- function(ch) gsub("[\t ]+", " ", ch)
+    collapseWSpace <- function(ch) {
+        ## This used to be
+        ##   gsub("[\t ]+", " ", ch)
+        ## which removes sentence-end double spaces.
+        ch <- gsub("[\t ]{2,}", "  ", ch)
+        gsub("\t", " ", ch)
+    }
     "%nIN%" <- function(x,table) is.na(match(x, table))
 
     chop1st <- function(cvec) {
