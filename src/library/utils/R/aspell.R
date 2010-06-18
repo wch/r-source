@@ -10,16 +10,24 @@ function(files, filter, control = list(), encoding = "unknown")
         filter <- NULL
     else if(is.character(filter)) {
         ## Look up filter in aspell filter db.
-        filter <- aspell_filter_db[[filter[1L]]]
-        ## Could warn if the filter was not found in the db.
+        filter_name <- filter[1L]
+        filter <- aspell_filter_db[[filter_name]]
+        ## Warn if the filter was not found in the db.
+        if(is.null(filter))
+            warning(sprintf("Filter '%s' is not available.",
+                            filter_name))
     }
     else if(is.list(filter)) {
         ## Support
         ##   list("Rd", drop = "\\references"
         ## at least for now.
+        filter_name <- filter[[1L]][1L]
         filter_args <- filter[-1L]
-        filter <- aspell_filter_db[[filter[[1L]][1L]]]
-        ## Could warn if the filter was not found in the db.
+        filter <- aspell_filter_db[[filter_name]]
+        ## Warn if the filter was not found in the db.
+        if(is.null(filter))
+            warning(sprintf("Filter '%s' is not available.",
+                            filter_name))
     }
     else if(!is.function(filter))
         stop("Invalid 'filter' argument.")
@@ -28,6 +36,8 @@ function(files, filter, control = list(), encoding = "unknown")
     control <- paste(as.character(control), collapse = " ")
 
     encoding <- rep(encoding, length.out = length(files))
+
+    verbose <- getOption("verbose")
     
     db <- data.frame(Original = character(), File = character(),
                      Line = integer(), Column = integer(),
@@ -41,6 +51,9 @@ function(files, filter, control = list(), encoding = "unknown")
 
         file <- files[i]
         enc <- encoding[i]
+
+        if(verbose)
+            message(sprintf("Processing file %s", file))
 
         lines <- if(is.null(filter))
             readLines(file, encoding = enc)
