@@ -34,7 +34,7 @@ as.raster(x, \dots)
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
-  It is not expected that the user will call these functions
+  It is not expected that the user will need to call these functions
   directly;  functions to render bitmap images
   in graphics packages will make use
   of the \code{as.raster()} function to automatically
@@ -42,6 +42,16 @@ as.raster(x, \dots)
   
   The \code{as.raster()} function is generic so methods can be
   written to convert other R objects to a raster object.
+
+  Raster objects can be subsetted like a matrix and it is
+  possible to assign to a subset of a raster object.
+
+  There is a method for converting a raster object to a matrix
+  (of colour strings).
+
+  Raster objects can be compared
+  for equality or inequality (with each other or with a
+  colour string).
 }
 \value{
   For \code{as.raster()}, a raster object.
@@ -74,6 +84,17 @@ as.raster(array(c(0:1, rep(0.5, 4)), c(2, 1, 3)))
 
 # ... or 4-plane numeric (R, G, B, A planes)
 as.raster(array(c(0:1, rep(0.5, 6)), c(2, 1, 4)))
+
+# subsetting
+r <- as.raster(matrix(colors()[1:100], ncol=10))
+r[, 2]
+r[2:4, 2:5]
+
+# assigning to subset
+r[2:4, 2:5] <- "white"
+
+# comparison
+r == "white"
 
 }
 \keyword{ dplot }

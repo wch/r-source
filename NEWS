@@ -191,6 +191,10 @@ NEW FEATURES
 
     o	legend() supports 'title.adj' (Wish of PR#13415)
 
+    o   Added support for subsetting "raster" objects, plus assigning
+        to a subset, conversion to a matrix (of colour strings), and
+        comparisons (== and !=).
+
 
 DEPRECATED & DEFUNCT
 
