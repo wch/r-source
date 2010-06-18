@@ -369,7 +369,7 @@ option to continue to build @HTML{} pages when packages are installed
 @HTML{} pages is determined by looking at the @R{} installation and is
 reported by @command{R CMD INSTALL --help}: it can be overridden by
 specifying one of the @command{INSTALL} options @option{--html} or
-@option{-no-html}.
+@option{--no-html}.
 
 The server is disabled by setting the environment variable
 @enindex R_DISABLE_HTTPD
@@ -716,7 +716,7 @@ wise to use explicit names for each, and you may also need to set
 When sub-architectures are used the version of @command{Rscript} in
 e.g.@: @file{/usr/bin} will be the last installed, but
 architecture-specific versions will be available in e.g.@:
-@file{/usr/lib64/R/bin/exec@var{R_ARCH}}.  Normally all installed
+@file{/usr/lib64/R/bin/exec$@{@var{R_ARCH}@}}.  Normally all installed
 architectures will run on the platform so the architecture of
 @command{Rscript} itself does not matter.  The executable
 @command{Rscript} will run the @command{R} script, and at the time the
@@ -741,7 +741,7 @@ these will run an executable from one of the subdirectories, which being
 taken first from the @env{R_ARCH} environment variable, then from the
 @option{--arch} command-line option@footnote{with possible values
 @samp{i386}, @samp{x64}, @samp{32} and @samp{64}.} and finally from the
-installation default (which is 32-bit of a combined 32/64 bit @R{}
+installation default (which is 32-bit for a combined 32/64 bit @R{}
 installation).
 
 @menu
@@ -1301,7 +1301,7 @@ Support for cross-building was withdrawn at @R{} 2.9.0.
 
 To build a 64-bit version of R you need a 64-bit toolchain: the only one
 discussed here is based on the work of the MinGW-w64 project
-(@url{http://sourceforge.net/projects/mingw-w64/}, but commercial
+(@url{http://sourceforge.net/@/projects/@/mingw-w64/}, but commercial
 compilers such as those from Intel and PGI could be used (and have been
 by @R{} redistributors).
 
@@ -1312,7 +1312,7 @@ acknowledged, as well as help from Kai Tietz, the lead developer of the
 MinGW-w64 project.
 
 To build package @pkg{tcltk} you need to unpack
-@url{http://www.stats.ox.ac.uk/pub/Rtools/R64a_Tcl_8-5-8.zip}
+@url{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/R64a_Tcl_8-5-8.zip}
 (@strong{NB} this is not the same file as for @R{} 2.11.x) at the top of
 the source tree: otherwise edit @file{src/library/tcltk/Makefile.win} to
 make a stub package.
@@ -1322,7 +1322,7 @@ Copy the file @file{MkRules.dist} to @file{MkRules.local} and set
 of the build process is the same as for the 32-bit build.
 
 Some notes on porting packages can be found at
-@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
+@url{http://www.stats.ox.ac.uk/@/~ripley/@/Win64/@/W64porting.html}.
 
 
 @node Testing a Windows Installation,  , Building from source, Installing R under Windows
@@ -1368,7 +1368,7 @@ double-click on the icon.  Note that Tcl/Tk and the Fortran compiler
 need to be installed separately if needed (unlike for @R{} 2.9.x and
 earlier).
 
-See the @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
+See the @uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for more details.
 
 @menu
@@ -1599,8 +1599,7 @@ R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 The part @samp{-l /path/to/library} can be omitted, in which case the
 @enindex R_LIBS
 first library in @env{R_LIBS} is used if set, otherwise the main library
-@file{@var{R_HOME}/library} is used.  (@env{R_LIBS} is looked for in the
-environment: note that @file{.Renviron} is not read by @command{R CMD}.)
+@file{@var{R_HOME}/library} is used.
 @enindex TMPDIR
 Ensure that the environment variable @env{TMPDIR} is either unset (and
 @file{/tmp} exists and can be written in and executed from) or points to
@@ -1678,11 +1677,11 @@ setting the environment variable @env{R_INSTALL_TAR} to @samp{tar.exe}.
 
 Some of the binary packages need other software to be installed on your
 system.  For 32-bit builds see for example
-@url{http://cran.r-project.org/bin/windows/contrib/2.12/@@ReadMe}.  For
+@url{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.12/@/@@ReadMe}.  For
 64-bit builds, packages using Gtk+ (@pkg{Cairo}, @pkg{RGtk2},
 @pkg{cairoDevice} and those that depend on them) need the @file{bin}
 directory of the distribution at
-@url{http://www.gtk.org/download-windows-64bit.html} in the path: note
+@url{http://www.gtk.org/@/download-windows-64bit.html} in the path: note
 that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
 you need the correct one first in your path if using both.
 
@@ -1692,7 +1691,7 @@ could make use of the building service offered at
 @uref{http://win-builder.r-project.org/}.
 
 @R{} 2.11.x had separate repository areas for 32- and 64-bit binary
-packages: it is planned that most (maybe all) packages for @R 2.12.0
+packages: it is planned that most (maybe all) packages for @R{} 2.12.0
 will be distributed as a single binary containing either or both
 architectures---details to come.
 
@@ -1789,7 +1788,8 @@ R CMD INSTALL --libs-only @var{pkg}
 
 @noindent
 using the path to @command{R} or @command{R --arch} to select the
-additional sub-architecture.
+additional sub-architecture.  On Windows there is also @command{R CMD
+INSTALL --merge-multiarch} to builds and merge the two architectures.
 
 @node Updating packages, Removing packages, Installing packages, Add-on packages
 @section Updating packages
@@ -1854,8 +1854,7 @@ can be used, e.g.@: @file{.tar.bz2} or @file{.tar.xz} files.
 
 @item 
 @code{"win.binary"}: located at @file{bin/windows/contrib/@var{x.y}} for
-@R{} versions @var{x.y.z} and containing @file{.zip} files for 32-bit
-Windows.
+@R{} versions @var{x.y.z} and containing @file{.zip} files for Windows.
 
 @item 
 @code{"win64.binary"}: located at @file{bin/windows64/contrib/@var{x.y}}
@@ -1902,8 +1901,8 @@ Path: @var{path/to/subdirectory}
 
 It can be convenient to run @command{R CMD check} on an installed
 package, particularly on a platform which uses sub-architectures.  The
-outline of how to do this is, in an @file{sh}-style shell, with the
-source package in directory @file{@var{pkgname}} (or a tarball filename):
+outline of how to do this is, with the source package in directory
+@file{@var{pkgname}} (or a tarball filename):
 
 @example
 R CMD INSTALL -l @var{libdir} @var{pkgname} > @var{pkgname}.log 2>&1
@@ -1934,17 +1933,15 @@ package from a tarball which has been tested on another platform one
 might use
 
 @example
-.../bin/i386/Rcmd INSTALL -l @var{libdir} @var{tarball} > @var{pkgname}.log 2>&1
-.../bin/x64/Rcmd INSTALL --build -l @var{libdir} --libs-only @var{tarball}
+.../bin/i386/Rcmd INSTALL -l @var{libdir} @var{tarball} --build > @var{pkgname}.log 2>&1
 .../bin/i386/Rcmd check -l @var{libdir} --extra-arch --install=check:@var{pkgname}.log @var{pkgname}
 .../bin/x64/Rcmd check -l @var{libdir} --extra-arch --install=check:@var{pkgname}.log @var{pkgname}
 @end example
 
 @noindent
-where the second line is not often needed, and when it is one might want
-to run the second and fourth lines in a different shell with different
-settings for environment variables and the path (to find external
-software, notably for Gtk+).
+where one might want to run the second and third lines in a different
+shell with different settings for environment variables and the path (to
+find external software, notably for Gtk+).
 
 @command{R CMD INSTALL} can do a @code{i386} install and then add the
 @code{x64} DLL by
@@ -2006,12 +2003,12 @@ locale needs to specify
 @item
 A human language.  These are generally specified by a lower-case
 two-character abbreviation following ISO 639 (see e.g.@:
-@url{http://en.wikipedia.org/wiki/ISO_639-1}).
+@url{http://en.wikipedia.org/@/wiki/@/ISO_639-1}).
 
 @item
 A `territory', used mainly to specify the currency. These are generally
 specified by an upper-case two-character abbreviation following ISO 3166
-(see e.g.@: @url{http://@/en.wikipedia.org/wiki/ISO_3166}).  Sometimes
+(see e.g.@: @url{http://@/en.wikipedia.org/@/wiki/@/ISO_3166}).  Sometimes
 the combination of language and territory is used to specify the
 encoding, for example to distinguish between traditional and simplified
 Chinese.
@@ -2071,7 +2068,7 @@ if it defaults to @samp{C}.
 
 Internally Mac OS X uses a form similar to Linux but without specifying
 the encoding (which is @code{UTF-8}).  It is based on ICU locales
-(@uref{http://userguide.icu-project.org/locale}) and not POSIX ones.
+(@uref{http://userguide.icu-project.org/@/locale}) and not POSIX ones.
 
 
 @node Localization of messages,  , Locales, Internationalization
@@ -2425,7 +2422,7 @@ able to force static or dynamic linking  @emph{via}
 @noindent
 or by linking to explicit files (as in the @samp{test} target in
 @file{Makefile.win}: this makes two executables, @file{test.exe} which
-is dynamically linked, and @code{test-static}, which is statically
+is dynamically linked, and @file{test-static.exe}, which is statically
 linked).
 
 It is possible to link to @file{Rmath.dll} using other compilers, either
@@ -2520,9 +2517,9 @@ types: this is checked at configuration.
 A @command{tar} program is needed to unpack the sources and packages
 (including the recommended packages).  A version@footnote{Such as
 @acronym{GNU} @command{tar} 1.15 or later, @command{bsdtar} (from
-@uref{http://code.google.com/p/libarchive/}, as used by Mac OS 10.6) or
+@uref{http://code.google.com/@/p/libarchive/}, as used by Mac OS 10.6) or
 @command{tar} from the Heirloom Toolchest
-(@uref{http://heirloom.sourceforge.net/tools.html}.} that can
+(@uref{http://heirloom.sourceforge.net/@/tools.html}).} that can
 automagically detect compressed archives is preferred for use with
 @code{untar()}: the configure script looks for @command{gtar} and
 @command{gnutar} before
@@ -2536,7 +2533,7 @@ versions (including looking in @file{/usr/xpg4/bin} which is used on
 some commercial Unixes).
 
 You will not be able to build most of the manuals unless you have
-@command{makeinfo} version 4.7 or later installed , and if not some of
+@command{makeinfo} version 4.7 or later installed, and if not some of
 the @HTML{} manuals will be linked to @acronym{CRAN}.  (Version 4.6 is
 known to create incorrect @HTML{} files.)  To make DVI or PDF versions
 of the manuals you will also need file @file{texinfo.tex} installed
@@ -2847,7 +2844,7 @@ file also describes how to build ATLAS as a shared library.
 
 ATLAS can also be used on Windows: see @pxref{Getting the source files}
 when building from source, and
-@uref{http://CRAN.R-project.org/bin/windows/rw-FAQ.html, R Windows
+@uref{http://CRAN.R-project.org/@/bin/@/windows/@/rw-FAQ.html, R Windows
 @acronym{FAQ}} for adding pre-compiled support to binary versions.
 
 @node ACML, Goto BLAS, ATLAS, BLAS
@@ -3880,7 +3877,7 @@ to 10.5 (Leopard).  You will also need @command{gfortran} and
 @code{libreadline} (or configure with @option{--without-readline}).
 
 For more information on how to find these tools please read the
-@uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac
+@uref{http://CRAN.R-project.org/@/bin/@/macosx/@/RMacOSX-FAQ.html, R for Mac
 OS X @acronym{FAQ}}.
 
 @c If you use the X window manager and prefer @code{Terminal.app} to
@@ -4080,7 +4077,7 @@ for both compiling and linking is best specified as part of the
 compiler.  The examples above use @samp{stlport4}, currently the most
 modern of the options: the default (but still needed to be specified as
 it is needed for linking) is @samp{Cstd} which dates from 1998: see
-@uref{http://developers.sun.com/solaris/articles/cmp_stlport_libCstd.html}.
+@uref{http://developers.sun.com/@/solaris/@/articles/@/cmp_stlport_libCstd.html}.
 Note though that most external Solaris C++ libraries will have been
 built with @samp{Cstd} and so an @R{} package using such a package also
 needs to be.  Occasionally the library flag @option{-lCrun} is needed.
@@ -4237,7 +4234,7 @@ directly from the AIX Installation DVDs, e.g., Java 6, X11, and Perl.
 Additional open source software (OSS) is packaged for AIX in @file{.rpm}
 files and available from both IBM's ``AIX Toolbox for Linux
 Applications''
-(@uref{http://www-03.ibm.com/systems/power/software/aix/linux/}) and
+(@uref{http://www-03.ibm.com/@/systems/@/power/@/software/@/aix/@/linux/}) and
 @uref{http://www.@/oss4aix.org/download/}.  The latter website typically
 offers more recent versions of the available OSS.  All tools needed and
 libraries downloaded from these repositories (e.g., GCC, Make,
@@ -4253,7 +4250,7 @@ install the corresponding package from the ICU project
 binaries for various platforms which in case of AIX can be installed via
 unpacking the tarball to the root file system.  For full @LaTeX{}
 support one can install the @TeX{} Live DVD distribution
-(@uref{http://www.tug.org/texlive/}): it is recommended to update the
+(@uref{http://www.tug.org/@/texlive/}): it is recommended to update the
 distribution using the @code{tlmgr} update manager.  For 64-bit R builds
 supporting Tcl/Tk this needs to installed from the sources as available
 pre-compiled binaries supply only 32-bit shared objects.
@@ -4262,7 +4259,7 @@ The recent WU testing was done using compilers from both the
 @acronym{GNU} Compiler Collection (version 4.2.4) which is available
 from one of the above OSS repositories, and the IBM C/C++ (XL C/C++
 10.01) as well as FORTRAN (XL Fortran 12.01) compilers
-(@url{http://www14.software.ibm.com/webapp/download/byproduct.jsp#X}).
+(@url{http://www14.software.ibm.com/@/webapp/@/download/@/byproduct.jsp#X}).
 
 To compile for a 64-bit @cputype{powerpc} (Power6 @acronym{CPU}) target
 one can use
@@ -4308,7 +4305,7 @@ environment, and to use @acronym{GNU} Make (e.g., via
 
 Further installation instructions to set up a proper R development
 environment can be found in the ``R on AIX'' project on R-Forge
-(@uref{http://R-Forge.R-project.org/projects/aix/}).
+(@uref{http://R-Forge.R-project.org/@/projects/@/aix/}).
 
 @node Cygwin, New platforms, AIX, Platform notes
 @section Cygwin
@@ -4600,7 +4597,7 @@ with the current toolchain.
 The 32-bit build for this version of @R{} is set up to use @command{gcc}
 @code{4.5.0}.  The toolchain is part of @file{Rtools2.12.exe}, and was
 collected from the files at
-@url{http://sourceforge.net/projects/mingw/files/}, specifically
+@url{http://sourceforge.net/@/projects/@/mingw/@/files/}, specifically
 
 @example
 binutils-2.20.1-2-mingw32-bin.tar.gz
@@ -4641,7 +4638,7 @@ under 32-bit Windows but produce code to run under 64-bit
 Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
 be done under 64-bit Windows.  So does installation of source packages.}
 This comes from
-@url{http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Automated%20Builds/}
+@url{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/}
 and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100405.zip}.
 (Care is needed: that site also has compilers targeting 32-bit Windows
 and running on other host OSes.  You do want the `release' version with
@@ -4650,7 +4647,7 @@ and running on other host OSes.  You do want the `release' version with
 
 @emph{Some versions} of that toolchain by default use dynamic linking to
 the compiler runtimes, which causes problems (see
-@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}), and can
+@url{http://www.stats.ox.ac.uk/@/~ripley/@/Win64/@/W64porting.html}), and can
 be converted to static linking by removing the files like
 @example
 .../x86_64-w64-mingw32/lib64/*.dll.a
@@ -4671,7 +4668,7 @@ imposes on re-distribution).
 @section Useful additional programs
 
 Developers of packages will find some of the `goodies' at
-@uref{http://www.stats.ox.ac.uk/pub/Rtools/goodies} useful.  
+@uref{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/goodies} useful.  
 
 There is a version of the @command{file} command that identifies the
 type of files, and is used by @command{Rcmd check} if available.
