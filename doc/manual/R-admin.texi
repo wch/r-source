@@ -172,19 +172,8 @@ and RC versions of an upcoming @var{x.y.0} release are available from
 the four-week period prior to the release.
 
 Note that @samp{https:} is required, and that the SSL certificate for
-the Subversion server of the R project is
-
-@example
-Certificate information:
- - Hostname: svn.r-project.org
- - Valid: from Jul 16 08:10:01 2004 GMT until Jul 14 08:10:01 2014 GMT
- - Issuer: Department of Mathematics, ETH Zurich, Zurich, Switzerland, CH
- - Fingerprint: c9:5d:eb:f9:f2:56:d1:04:ba:44:61:f8:64:6b:d9:33:3f:93:6e:ad
-@end example
-
-@noindent
-(currently, there is no ``trusted certificate'').  You can accept this
-certificate permanently and will not be asked about it anymore.
+the Subversion server of the R project should be recognized as from a
+trusted source.
 
 Note that retrieving the sources by e.g.@: @command{wget -r} or
 @command{svn export} from that URL will not work: the Subversion
@@ -373,7 +362,7 @@ As from @R{} 2.10.0, by default @HTML{} help pages are created when
 needed rather than being built at install time.
 
 If you need to disable the server and want HTML help, there is the
-option to continue to build @HTML{} pages at when packages are installed
+option to continue to build @HTML{} pages when packages are installed
 (including those installed with @R{}).  This is enabled by the
 @command{configure} option @option{--enable-prebuilt-html}.  Whether
 @command{R CMD INSTALL} (and hence @code{install.packages}) pre-builds
@@ -485,10 +474,12 @@ completely incorrect glyphs so you need to examine the logs carefully.
 The default can be overridden by setting the environment variables
 @enindex R_RD4DVI
 @enindex R_RD4PDF
-@env{R_RD4PDF} and @env{R_RD4DVI}.  (On Unix-alikes, these will be picked up
-at install time.)  The default value for @env{R_RD4PDF} is
-@samp{times,hyper}: omit @samp{hyper} if you do not want hyperlinks,
-e.g.@: for printing.  The default for @env{R_RD4DVI} is @samp{ae}.
+@env{R_RD4PDF} and @env{R_RD4DVI}.  (On Unix-alikes, these will be
+picked up at install time and stored in @file{etc/Renviron}, but can
+still be overridden when the manuals are built.)  The default value for
+@env{R_RD4PDF} is @samp{times,hyper}: omit @samp{hyper} if you do not
+want hyperlinks, e.g.@: for printing.  The default for @env{R_RD4DVI} is
+@samp{ae}.
 
 
 @node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
@@ -2612,7 +2603,7 @@ Roman and Courier New, and contain fonts rather similar to the first two
 
 The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
-@code{jpeg} (version 6b or 7 or 8) or @code{libpng} (version 1.2.3 or
+@code{jpeg} (version 6b or later) or @code{libpng} (version 1.2.3 or
 later, including 1.4.0) and @code{zlib} (version 1.1.3 or later) or
 @code{libtiff} (any recent version of 3.x.y -- 3.8.2 and 3.9.1 have been
 tested) respectively.
@@ -2646,7 +2637,7 @@ available (including on Mac OS X >= 10.4): should a broken version of
 ICU be found this can be suppressed by @option{--without-ICU}.
 
 Some code developers may want Perl version 5.8.0 or later, available via
-@uref{http://www.perl.com/CPAN/}.  This is used for the rarely used
+@uref{http://www.perl.com/CPAN/}.  This is needed for the rarely used
 @command{R CMD Sd2Rd}: if required it should be in your @env{PATH} when
 @command{configure} is run.
 
@@ -2688,7 +2679,7 @@ or use the configure variables @code{TCLTK_LIBS} and
 @code{TCLTK_CPPFLAGS} to specify the flags needed for linking against
 the Tcl and Tk libraries and for finding the @file{tcl.h} and
 @file{tk.h} headers, respectively.  If you have both 32- and 64-bit
-versions of Tcl/Tk installed, setting the paths to the correct config
+versions of Tcl/Tk installed, specifying the paths to the correct config
 files may be necessary to avoid confusion between them.
 
 Versions of Tcl/Tk up to 8.5.8 have been tested (including most versions
@@ -3019,7 +3010,7 @@ cases using a shared BLAS was as fast, provided high levels (e.g.,
 @option{-O3}) of compiler optimization are used.
 
 @item
-It is easy to change the BLAS without making to re-install @R{} and all
+It is easy to change the BLAS without needing to re-install @R{} and all
 the add-on packages, since all references to the BLAS go through
 @code{libRblas}, and that can be replaced.  Note though that any dynamic
 libraries the replacement links to will need to be found by the linker:
@@ -3049,11 +3040,11 @@ appropriate @file{lib} directory is in the run-time library path or
 Provision is made for using an external LAPACK library, principally to
 cope with BLAS libraries which contain a copy of LAPACK (such as
 @code{libsunperf} on Solaris, @code{vecLib} on Mac OS X and ACML on
-@cputype{ix86}/@cputype{x86_64} Linux and Solaris).  However, the likely
-performance gains are thought to be small (and may be negative), and the
-default is not to search for a suitable LAPACK library, and this is
-definitely @strong{not} recommended.  You can specify a specific LAPACK
-library or a search for a generic library by the configuration option
+@cputype{ix86}/@cputype{x86_64} Linux).  However, the likely performance
+gains are thought to be small (and may be negative), and the default is
+not to search for a suitable LAPACK library, and this is definitely
+@strong{not} recommended.  You can specify a specific LAPACK library or
+a search for a generic library by the configuration option
 @option{--with-lapack}.  The default for @option{--with-lapack} is to
 check the BLAS library and then look for an external library
 @samp{-llapack}.  Sites searching for the fastest possible linear
@@ -3342,7 +3333,7 @@ Irix 6.5 and Alpha/OSF1 (aka Tru64).
 
 To build in a separate directory you need a @command{make} that uses the
 @code{VPATH} variable, for example @acronym{GNU} @command{make}, or Sun
-@command{make} on Solaris 2.7 or later.
+@command{make} on Solaris 7 or later.
 
 @command{dmake} has also been used. e.g,@: on Solaris 10.
 
@@ -3680,7 +3671,7 @@ what is needed.
 
 It seems that @cputype{ix86} Linux accepts non-PIC code in shared
 libraries, but this is not necessarily so on other platforms, in
-particular for 64-bit @acronym{CPU}s such as @cputype{x86_64}.  So care
+particular on 64-bit @acronym{CPU}s such as @cputype{x86_64}.  So care
 can be needed with BLAS libraries and when building @R{} as a shared
 library to ensure that position-independent code is used in any static
 libraries (such as the Tcl/Tk libraries, @code{libpng}, @code{libjpeg}
