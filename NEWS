@@ -130,7 +130,7 @@ NEW FEATURES
     o	There are |, & and xor() methods for classes "octmode" and
 	"hexmode", which work bitwise.
 
-    o	Environment variables R_DVIPSCMD,, R_LATEXCMD, R_MAKEINDEXCMD,
+    o	Environment variables R_DVIPSCMD, R_LATEXCMD, R_MAKEINDEXCMD,
 	R_PDFLATEXCMD are no longer used nor set in an R session.
 	(With the move to tools::texi2dvi(), the conventional LATEX,
 	MAKEINDEX and PDFLATEX will be used.  options("dvipscmd")
@@ -145,9 +145,10 @@ NEW FEATURES
 
     o	print(x) and str(x) now indicate if an empty list x is named.
 
-    o	install.packages() and remove.packages() no longer warn but simply
-	inform the user of the library location used, when 'lib' has not
-	been specified.
+    o	install.packages() and remove.packages() with 'lib'
+	unspecified and multiple libraries in .libPaths()
+	inform the user of the library location used with a message
+	rather than a warning.
 
     o	There is limited support for multiple compressed streams on a
 	file: all of [bgx]zfile() allow streams to be appended to an
@@ -162,9 +163,9 @@ NEW FEATURES
     o	Package 'utils' adds a new "bibentry" class for representing and
         manipulating bibliographic information in enhanced BibTeX
         style, unifying and enhancing the previously existing
-        mechanisms.  
+        mechanisms.
         
-    o	The bibstyle() function has been added to the 'tools' package
+    o	A bibstyle() function has been added to the 'tools' package
 	with default JSS style for rendering "bibentry" objects, and a
 	mechanism for registering other rendering styles.
         
@@ -175,7 +176,7 @@ NEW FEATURES
     o	Added \href tag to the Rd format, to allow hyperlinks to URLs
     	without displaying the full URL.
 
-    o	Added toRd() generic in the 'tools' package to convert objects to
+    o	New toRd() generic in the 'tools' package to convert objects to
 	fragments of Rd code, and added "fragment" argument to
 	Rd2txt(), Rd2HTML(), and Rd2latex() to support it.
 	
@@ -184,7 +185,8 @@ NEW FEATURES
 
     o	S3 generic functions now use correct S4 inheritance when
         dispatching on an S4 object.  See ?Methods, section on
-        "Methods for S3 Generic Functions" for recommendations and details.
+        "Methods for S3 Generic Functions" for recommendations and
+        details.
 
     o	format.pval() gains a ... argument to pass arguments such as
 	'nsmall' to format().  (Wish of PR#9574)
@@ -284,9 +286,10 @@ INSTALLATION
 
     o	Tcl/Tk >= 8.4 is now required (increased from 8.3).
 
-    o	The output of the examples from several of the base packages
-	is now compared to reference output rather than the previous
-	output (if any).
+    o	'make check' compares the output of the examples from several of
+	the base packages to reference output rather than the previous
+	output (if any).  Expect some differences due to differences
+	in floating-point computations.
 
     o	zlib has been updated to 1.2.4: this is also the minimum
 	version required for --with-system-zlib.
@@ -328,7 +331,8 @@ BUG FIXES
 	(it used to force such values to be 1).
 
     o	A bug in callNextMethod() for some examples with "..." in the
-	arguments has been fixed.  See tests/nextWithDots.R in the source.
+	arguments has been fixed.  
+	See src/library/methods/tests/nextWithDots.R in the sources.
 
     o	GERaster() now checks for width or height of zero and does
 	nothing in those cases; previously the behaviour was
