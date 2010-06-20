@@ -1,6 +1,6 @@
 # Functions for making Rd and human readable versions of bibentry records.
 
-makeJSS <- function() 
+makeJSS <- function()
     local({
 
 	# First, some utilities
@@ -19,15 +19,30 @@ makeJSS <- function()
 		addPeriod(paste(strings, collapse=sep))
 	    }
 	}
+	
+	# Clean up LaTeX accents and braces
+	cleanup <- function(x) {
+	    if (!length(x)) return(x) 
+	    latex <- try(parseLatex(x), silent=TRUE)
+	    if (inherits(latex, "try-error")) {
+	    	x
+	    } else {
+	    	deparseLatex(latexToUtf8(latex), dropBraces=TRUE)
+	    }
+	}
 
 	# Now some simple markup
 
 	plain <- function(pages) 
 	    if (length(pages)) collapse(pages)
+	    
+	plainclean <- function(s) plain(cleanup(s))
 
 	emph <- function(s) 
 	    if (length(s)) paste("\\emph{", collapse(s), "}", sep="")
 
+        emphclean <- function(s) emph(cleanup(s))
+        
 	# This creates a function to label a field by adding a prefix or suffix (or both)
 
 	label <- function(prefix=NULL, suffix=NULL, style=plain) {
@@ -35,30 +50,35 @@ makeJSS <- function()
 	    function(s) 
 		if (length(s)) style(paste(prefix, collapse(s), suffix, sep=""))
 	}
+	
+	labelclean <- function(prefix=NULL, suffix=NULL, style=plain) {
+	    f <- label(prefix, suffix, style)
+	    function(s) f(cleanup(s))
+	}    	
 
 	# Now the formatters for each particular field.  These take
 	# a character vector; if length zero, they return NULL, otherwise 
 	# a single element character vector putting everything together
 
-	fmtAddress <- plain
-	fmtBook <- emph
-	fmtBtitle <- emph
-	fmtChapter <- label(prefix="chapter ")
+	fmtAddress <- plainclean
+	fmtBook <- emphclean
+	fmtBtitle <- emphclean
+	fmtChapter <- labelclean(prefix="chapter ")
 	fmtDOI <- label(prefix="\\url{http://dx.doi.org/", suffix="}")
-	fmtEdition <- label(suffix=" edition")
+	fmtEdition <- labelclean(suffix=" edition")
 	fmtEprint <- plain
-	fmtHowpublished <- plain
+	fmtHowpublished <- plainclean
 	fmtISBN <- label(prefix = "ISBN ")
 	fmtISSN <- label(prefix="ISSN ")
-	fmtInstitution <- plain
-	fmtNote <- plain
+	fmtInstitution <- plainclean
+	fmtNote <- plainclean
 	fmtPages <- label(prefix="pp. ")
-	fmtSchool <- plain
-	fmtTechreportnumber <- label(prefix="Technical Report ")
+	fmtSchool <- plainclean
+	fmtTechreportnumber <- labelclean(prefix="Technical Report ")
 	fmtUrl <- label(prefix="\\url{", suffix="}")
 	fmtTitle <- function(title) 
 	    if (length(title)) paste("\\dQuote{", 
-				     addPeriod(collapse(title)), "}", sep="")
+				     addPeriod(collapse(cleanup(title))), "}", sep="")
 
 	fmtYear <- function(year) {
 	    if (!length(year)) year <- "????"
@@ -78,11 +98,11 @@ makeJSS <- function()
 	# Format one person object in short "Murdoch DJ" format
 	shortName <- function(person) {
 	    if (length(person$family)) {
-		result <- person$family
+		result <- cleanup(person$family)
 		if (length(person$given))
-			 result <- paste(result, paste(substr(person$given, 1,1), collapse=""))
+			 result <- paste(result, paste(substr(sapply(person$given, cleanup), 1,1), collapse=""))
 	    } else
-		     result <- paste(person$given, collapse=" ")
+		     result <- paste(cleanup(person$given), collapse=" ")
 	    result
 	}
 
@@ -138,9 +158,9 @@ makeJSS <- function()
 
 	procOrganization <- function(paper) {
 	    if (length(paper$organization)) {
-		result <- collapse(paper$organization)
+		result <- collapse(cleanup(paper$organization))
 		if (length(paper$address)) 
-		    result <- paste(result, collapse(paper$address), sep=", ")
+		    result <- paste(result, collapse(cleanup(paper$address)), sep=", ")
 		result
 	    }
 	}
