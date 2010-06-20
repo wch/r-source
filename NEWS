@@ -370,6 +370,9 @@ BUG FIXES
 
     o	Text help rendering of \tabular{} has been improved: under
  	some circumstances leading blank columns were not rendered.
+ 	
+    o	strsplit(x, fixed=TRUE) marked UTF-8 strings with the local
+	encoding when no splits were found.    	
 
 
 

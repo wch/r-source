@@ -329,8 +329,12 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    bufp = laststart;
 		}
-		if (*bufp)
-		    SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
+		if (*bufp) {
+		    if (use_UTF8)
+		        SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_UTF8));
+		    else
+		    	SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
+		}
 		vmaxset(vmax2);
 	    }
 	} else if (perl_opt) {
@@ -429,8 +433,12 @@ SEXP attribute_hidden do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    else
 			SET_STRING_ELT(t, j, markKnown(pt, STRING_ELT(x, i)));
 		}
-		if (*bufp)
-		    SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
+		if (*bufp) {
+		    if (use_UTF8)
+		        SET_STRING_ELT(t, ntok, mkCharCE(bufp, CE_UTF8));
+		    else
+		    	SET_STRING_ELT(t, ntok, markKnown(bufp, STRING_ELT(x, i)));
+		}
 		vmaxset(vmax2);
 	    }
 	    pcre_free(re_pe);
