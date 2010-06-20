@@ -86,7 +86,11 @@ oldClass(x) <- value
   An additional mechanism of \emph{formal} classes is available in
   packages \pkg{methods} which is attached by default.  For objects
   which have a formal class, its name is returned by \code{class}
-  as a character vector of length one.
+  as a character vector of length one.  However, S3 method selection
+  attempts to treat objects from an S4 class as if they had the
+  appropriate S3 class attribute, as does \code{inherits}.  Therefore,
+  S3 methods can be defined for S4 classes.  See
+  \link{Methods} for details.
 
   The replacement version of the function sets the class to the value
   provided.  For classes that have a formal definition, directly
@@ -94,7 +98,12 @@ oldClass(x) <- value
   \code{\link{as}(object, value)} is the way to coerce an object to a
   particular class.
 
-  The analogue of \code{inherits} for formal classes is \code{\link{is}}.
+  The analogue of \code{inherits} for formal classes is
+  \code{\link{is}}. The two functions behave consistently
+  objects with one exception:  S4 classes can have conditional
+  inheritance, with an explicit test.  In this case, \code{is} will
+  test the condition, but \code{inherits} ignores all conditional
+  superclasses.
 }
 
 \seealso{

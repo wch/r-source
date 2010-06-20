@@ -633,10 +633,11 @@ static SEXP cache_class(const char *class, SEXP klass) {
 }
 
 static SEXP S4_extends(SEXP klass) {
-    static SEXP s_extends = 0;
+  static SEXP s_extends = 0, s_extendsForS3;
     SEXP e, val; const char *class;
     if(!s_extends) {
 	s_extends = install("extends");
+	s_extendsForS3 = install(".extendsForS3");
 	R_S4_extends_table = R_NewHashedEnv(R_NilValue, ScalarInteger(0));
 	R_PreserveObject(R_S4_extends_table);
     }
@@ -648,10 +649,10 @@ static SEXP S4_extends(SEXP klass) {
     if(val != R_UnboundValue)
        return val;
     PROTECT(e = allocVector(LANGSXP, 2));
-    SETCAR(e, s_extends);
+    SETCAR(e, s_extendsForS3);
     val = CDR(e);
     SETCAR(val, klass);
-    val = eval(e, R_GlobalEnv);
+    val = eval(e, R_MethodsNamespace);
     cache_class(class, val);
     UNPROTECT(1);
     return(val);

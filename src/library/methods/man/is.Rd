@@ -295,6 +295,15 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
 
 }
 \seealso{
+  \code{\link{inherits}} is nearly always equivalent to
+  \code{is}, both for S4 and non-S4 objects, and is somewhat faster.
+  The non-equivalence applies to classes that have conditional
+  superclasses, with a non-trivial \code{test=} in the relation (not
+  common and discouraged):  for these, \code{is} tests for the
+  relation but \code{inherits} by definition ignores conditional
+  inheritance for S4 objects.
+
+
   \code{\link{selectSuperClasses}(cl)} has similar semantics as
   \code{extends(cl)}, typically returning subsets of the latter.
 }

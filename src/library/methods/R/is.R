@@ -72,7 +72,7 @@ extends <-
         if(is.null(classDef1))
             return(class1)
         ext <- classDef1@contains
-        if(!identical(maybe, TRUE))
+        if(!identical(maybe, TRUE) && length(ext) > 0)
         {
             noTest <- sapply(ext, function(obj)identical(obj@test, .simpleExtTest))
             ext <- ext[noTest]

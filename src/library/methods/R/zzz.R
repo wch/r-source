@@ -61,6 +61,7 @@
         assign("newClassRepresentation", .newClassRepresentation, envir = where)
         assign(".mergeClassDefSlots", ..mergeClassDefSlots, envir = where)
         assign(".addToMetaTable", ..addToMetaTable, envir = where)
+        assign(".extendsForS3", ..extendsForS3, envir = where)
         .makeBasicFuns(where)
         rm(.makeGeneric, .newClassRepresentation, .possibleExtends,
            ..mergeClassDefSlots, envir = where)

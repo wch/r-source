@@ -292,3 +292,10 @@ S3Class <- function(object) {
     def
 }
 
+## extends() w/o conditional inheritance:  used for S3 inheritance, method
+## selection on S4 objects
+..extendsForS3 <- function(Class)
+    extends(Class, maybe = FALSE)
+## dummy version while generating methods package
+.extendsForS3 <- function(Class)
+    extends(Class)

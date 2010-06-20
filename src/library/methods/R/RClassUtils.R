@@ -1852,7 +1852,8 @@ substituteFunctionArgs <-
             pkg <- prev@package # start a per-package list
             if(identical(pkg, newpkg)) { # redefinition
                 ## cache for S3, to override possible previous cache
-                base:::.cache_class(name, extends(def)) 
+                base:::.cache_class(name, .extendsForS3(def))
+##                base:::.cache_class(name, extends(def))
                 return(assign(name, def, envir = .classTable))
             }
             prev <- list(prev)
