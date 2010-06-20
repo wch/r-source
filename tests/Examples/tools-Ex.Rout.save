@@ -1,14 +1,12 @@
 
-R version 2.12.0 Under development (unstable) (2010-06-15 r52288)
+R version 2.12.0 Under development (unstable) (2010-06-18 r52328)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: i386-pc-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -21,6 +19,7 @@ Type 'q()' to quit R.
 > pkgname <- "tools"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
+> options(pager = "console")
 > library('tools')
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
@@ -101,7 +100,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 01d74cfc>
+<environment: 01d39c00>
 
 $showURLs
 [1] FALSE
@@ -129,7 +128,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 01d74cfc>
+<environment: 01d39c00>
 
 $showURLs
 [1] FALSE
@@ -157,7 +156,7 @@ $itemBullet
 $enumFormat
 function (n) 
 sprintf("%d. ", n)
-<environment: 01d74cfc>
+<environment: 01d39c00>
 
 $showURLs
 [1] FALSE
@@ -213,7 +212,7 @@ $showURLs
 +     volume=26,
 +     pages="211-252"))
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs), .init=TRUE)
-<environment: 017b7eb8>
+<environment: 0171378c>
 > print(refs, .bibstyle="unsorted")    
 R Development Core Team (2010). _R: A Language and Environment for
 Statistical Computing_. R Foundation for Statistical Computing, Vienna,
@@ -625,6 +624,25 @@ NULL
 > 
 > 
 > cleanEx()
+> nameEx("parseLatex")
+> ### * parseLatex
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: parseLatex
+> ### Title: These experimental functions work with a subset of LaTeX code.
+> ### Aliases: parseLatex deparseLatex latexToUtf8
+> ### Keywords: utilities documentation
+> 
+> ### ** Examples
+> 
+> latex <- parseLatex("fa\\c{c}ile")
+> deparseLatex(latexToUtf8(latex))
+[1] "façile"
+> 
+> 
+> 
+> cleanEx()
 > nameEx("readNEWS")
 > ### * readNEWS
 > 
@@ -829,7 +847,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.601 0.016 0.617 0 0 
+Time elapsed:  2.16 0 2.3 NA NA 
 > grDevices::dev.off()
 null device 
           1 

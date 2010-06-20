@@ -19,3 +19,6 @@
 .onUnload <-
 function(libpath)
     library.dynam.unload("tools", libpath)
+
+latexArgCount <- integer(0)              # The next line modifies this
+latexTable <- makeLatexTable(utf8table)  # FIXME: Should latexTable be hardcoded instead?

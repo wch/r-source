@@ -21,7 +21,7 @@ CSOURCES=\
 	dotcode.c dounzip.c dstruct.c duplicate.c \
 	engine.c envir.c errors.c eval.c \
 	format.c fourier.c \
-	gevents.c gram.c gram-ex.c gramRd.c graphics.c grep.c \
+	gevents.c gram.c gram-ex.c gramLatex.c gramRd.c graphics.c grep.c \
 	identical.c inlined.c inspect.c internet.c iosupport.c \
 	lapack.c list.c localecharset.c logic.c \
 	main.c mapply.c match.c memory.c mkdtemp.c model.c \
@@ -48,6 +48,11 @@ gramRd.c: gramRd.y
 	bison gramRd.y
 	$(SED) -e "s/gramRd.tab.c/gramRd.c/" gramRd.tab.c > gramRd.c
 	$(RM) gramRd.tab.c	
+	
+gramLatex.c: gramLatex.y
+	bison gramLatex.y
+	$(SED) -e "s/gramLatex.tab.c/gramLatex.c/" gramLatex.tab.c > gramLatex.c
+	$(RM) gramLatex.tab.c		
 endif
 
 platform-CPPFLAGS=-I../gnuwin32 -I../extra -DPLATFORM_PKGTYPE='"win.binary"'

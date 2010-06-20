@@ -67,7 +67,8 @@ DISTFILES = Makefile.in Makefile.win \
 	$(EXTRA_SOURCES_C) \
 	$(SOURCES_F) \
 	gram.y \
-	gramRd.y
+	gramRd.y \
+	gramLatex.y
 
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 BZLIB_CPPFLAGS = @BUILD_BZLIB_TRUE@ -I$(top_srcdir)/src/extra/bzip2
@@ -194,6 +195,10 @@ $(srcdir)/gramRd.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gramRd.y
 	@$(ECHO) "re-making gramRd.c"
 	$(YACC) $(YFLAGS) $(srcdir)/gramRd.y
 	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gramRd.c	
+$(srcdir)/gramLatex.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gramLatex.y
+	@$(ECHO) "re-making gramLatex.c"
+	$(YACC) $(YFLAGS) $(srcdir)/gramLatex.y
+	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gramLatex.c	
 
 install: installdirs
 	@$(MAKE) install-bin

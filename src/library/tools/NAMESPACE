@@ -17,7 +17,8 @@ export("Rd2HTML", "Rd2ex", "Rd2latex", "Rd2txt", "Rd2txt_options",
        "testInstalledBasic", "testInstalledPackage",
        "testInstalledPackages", "RdTextFilter", "SweaveTeXFilter",
        "startDynamicHelp", "checkRdaFiles", "resaveRdaFiles",
-       "HTMLheader", "toHTML", "toRd")
+       "HTMLheader", "toHTML", "toRd", "parseLatex", "deparseLatex",
+       "latexToUtf8")
 
 export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 
@@ -31,6 +32,7 @@ S3method("print", "checkVignettes")
 S3method("print", "codoc")
 S3method("print", "codocClasses")
 S3method("print", "codocData")
+S3method("print", "LaTeX")
 S3method("print", "Rd")
 S3method("print", "subdir_tests")
 S3method("print", "undoc")

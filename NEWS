@@ -194,6 +194,10 @@ NEW FEATURES
     o   Added support for subsetting "raster" objects, plus assigning
         to a subset, conversion to a matrix (of colour strings), and
         comparisons (== and !=).
+        
+    o	Added a new parseLatex() function (and related functions
+	deparseLatex() and latexToUtf8()) to support conversion of
+	bibliographic entries for display in R.
 
 
 DEPRECATED & DEFUNCT
