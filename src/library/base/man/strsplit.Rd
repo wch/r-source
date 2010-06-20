@@ -77,7 +77,7 @@ strsplit(x, split, fixed = FALSE, perl = FALSE, useBytes = FALSE)
   contains the vector of splits of \code{x[i]}.
 
   If any element of \code{x} or \code{split} is declared to be in UTF-8
-  (see \code{\link{Encoding}}, all non-ASCII character strings in the
+  (see \code{\link{Encoding}}), all non-ASCII character strings in the
   result will be in UTF-8 and have their encoding declared as UTF-8.  As
   from \R 2.10.0, for \code{perl = TRUE, useBytes = FALSE} all non-ASCII
   strings in a multibyte locale are translated to UTF-8.
