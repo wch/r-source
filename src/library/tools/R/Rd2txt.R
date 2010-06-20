@@ -150,8 +150,12 @@ Rd2txt <-
     put <- function(...) {
         txt <- paste(..., collapse="", sep="")
         trail <- grepl("\n$", txt)
+        
         # Convert newlines
+        enc <- Encoding(txt)
         txt <- strsplit(txt, "\n", fixed = TRUE)[[1L]]
+        Encoding(txt) <- enc  # work around loss of encoding
+        
         if (dropBlank) {
             while(length(txt) && grepl("^[[:space:]]*$", txt[1L]))
             	txt <- txt[-1L]
