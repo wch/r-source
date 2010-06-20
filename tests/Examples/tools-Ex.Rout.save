@@ -1,12 +1,14 @@
 
-R version 2.12.0 Under development (unstable) (2010-06-18 r52328)
+R version 2.12.0 Under development (unstable) (2010-06-20 r52333)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-pc-mingw32/i386 (32-bit)
+Platform: i386-apple-darwin9.8.0/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -19,7 +21,6 @@ Type 'q()' to quit R.
 > pkgname <- "tools"
 > source(file.path(R.home("share"), "R", "examples-header.R"))
 > options(warn = 1)
-> options(pager = "console")
 > library('tools')
 > 
 > assign(".oldSearch", search(), pos = 'CheckExEnv')
@@ -635,11 +636,6 @@ NULL
 > ### Keywords: utilities documentation
 > 
 > ### ** Examples
-> 
-> latex <- parseLatex("fa\\c{c}ile")
-> deparseLatex(latexToUtf8(latex))
-[1] "façile"
-> 
 > 
 > 
 > cleanEx()

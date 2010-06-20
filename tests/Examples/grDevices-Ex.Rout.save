@@ -1,8 +1,8 @@
 
-R version 2.12.0 Under development (unstable) (2010-05-23 r52077)
+R version 2.12.0 Under development (unstable) (2010-06-20 r52333)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: i386-pc-mingw32/i386 (32-bit)
+Platform: i386-apple-darwin9.8.0/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -241,6 +241,43 @@ $allowed
      [,1]       
 [1,] "#00808080"
 [2,] "#FF808080"
+> 
+> # subsetting
+> r <- as.raster(matrix(colors()[1:100], ncol=10))
+> r[, 2]
+      [,1]         
+ [1,] "aquamarine3"
+ [2,] "aquamarine4"
+ [3,] "azure"      
+ [4,] "azure1"     
+ [5,] "azure2"     
+ [6,] "azure3"     
+ [7,] "azure4"     
+ [8,] "beige"      
+ [9,] "bisque"     
+[10,] "bisque1"    
+> r[2:4, 2:5]
+     [,1]          [,2]      [,3]     [,4]        
+[1,] "aquamarine4" "bisque3" "brown"  "cadetblue" 
+[2,] "azure"       "bisque4" "brown1" "cadetblue1"
+[3,] "azure1"      "black"   "brown2" "cadetblue2"
+> 
+> # assigning to subset
+> r[2:4, 2:5] <- "white"
+> 
+> # comparison
+> r == "white"
+       [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
+ [1,]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [2,] FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+ [3,] FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+ [4,] FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+ [5,] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [6,] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [7,] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [8,] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [9,] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[10,] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 > 
 > 
 > 

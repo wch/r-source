@@ -55,9 +55,9 @@ The \code{latexToUtf8()} function returns a modified version of the
 \author{
 Duncan Murdoch
 }
-\examples{
+\examples{\donttest{
 latex <- parseLatex("fa\\\\c{c}ile")
 deparseLatex(latexToUtf8(latex))
-}
+}}
 \keyword{ utilities }
 \keyword{ documentation }

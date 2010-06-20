@@ -39,7 +39,7 @@ library(tools)
 example(Rdutils)
 example(fileutils)
 ## results are location- and OS-specific
-
+example(parseLatex) # charset-specific
 
 ## grDevices
 if(.Platform$OS.type == "windows") {
