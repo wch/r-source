@@ -4636,8 +4636,8 @@ usual way.
 The toolchain we use is technically a cross-compiler: the tools run
 under 32-bit Windows but produce code to run under 64-bit
 Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
-be done under 64-bit Windows.  So does installation of source packages.}
-This comes from
+be done under 64-bit Windows.  So does installation of source packages
+unless @option{--no-test-load} is used.}  This comes from
 @url{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/}
 and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100405.zip}.
 (Care is needed: that site also has compilers targeting 32-bit Windows
