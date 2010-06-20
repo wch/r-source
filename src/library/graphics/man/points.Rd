@@ -1,6 +1,6 @@
 % File src/library/graphics/man/points.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{points}
@@ -214,7 +214,7 @@ TestChars <- function(sign=1, font=1, ...)
    for(i in r) try(points(i\%\%16, i\%/\%16, pch=sign*i, font=font,...))
 }
 TestChars()
-try(TestChars(sign=-1)) # needs MBCS support
+try(TestChars(sign=-1))
 TestChars(font=5) # Euro might be at 160.  Mac OS has apple at 240.
 }}
 \keyword{aplot}
