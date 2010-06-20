@@ -1156,6 +1156,8 @@
             message("\n", "add DLL for x64", "\n", domain=NA)
             system(cmd1)
         }
+        do_cleanup()
+        on.exit()
         return(invisible())
     }
 
