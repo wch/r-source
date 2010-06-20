@@ -139,19 +139,24 @@ get_exclude_patterns <- function()
             status <- system(paste("sh", shQuote(Rin)))
             list(status = status, stdout = readLines(Rout, warn = FALSE))
         }
+        ## Run silently
+        Ssystem <- function(command, ...) {
+            Rin <- tempfile("Rin")
+            writeLines(paste(command, ">/dev/null 2>&1"), Rin)
+            system(paste("sh", shQuote(Rin)), ...)
+        }
     } else {
         shell_with_capture <- function (command) {
             outfile <- tempfile("xshell")
             on.exit(unlink(outfile))
             status <- system(sprintf("%s > %s 2>&1", command, shQuote(outfile)))
             list(status = status, stdout = readLines(outfile, warn = FALSE))
+        }
+        ## Run silently
+        Ssystem <- function(command, ...)
+            system(paste(command, ">/dev/null 2>&1"), ...)
     }
-}
 
-
-    ## Run silently
-    Ssystem <- function(command, ...)
-        system(paste(if (WINDOWS) "sh", command, ">/dev/null 2>&1"), ...)
 
     .file_test <- function(op, x)
         switch(op,
@@ -322,7 +327,7 @@ get_exclude_patterns <- function()
                 Sys.setenv(R_PACKAGE_DIR = pkgdir)
                 Sys.setenv(R_LIBRARY_DIR = dirname(pkgdir))
                 messageLog(Log, "running cleanup.win")
-                Ssystem("sh ./cleanup.win")
+                Ssystem("./cleanup.win")
             }
         } else if (.file_test("-x", "cleanup")) {
             Sys.setenv(R_PACKAGE_NAME = pkgname)
@@ -608,7 +613,8 @@ get_exclude_patterns <- function()
             }
         }
         ## remove subarch build directories
-        unlink(c("src-i386", "src-x64", "src-x86_64", "src-ppc"),
+        unlink(file.path(pkgname,
+                         c("src-i386", "src-x64", "src-x86_64", "src-ppc")),
                recursive = TRUE)
 
         ## Finalize

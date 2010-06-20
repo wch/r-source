@@ -625,6 +625,7 @@
                                             "PearsonDS", "RBGL",
                                             "RNetCDF","RODBC",
                                             "RSiena", "Rcpp", "Runuran",
+                                            "cairoDevice",
                                             "fastICA", "glmnet", "gstat",
                                             "mvabund", "png", "proj4",
                                             "randtoolbox", "rngWELL",
