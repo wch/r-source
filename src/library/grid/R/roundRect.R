@@ -3,7 +3,7 @@
 roundrectGrob <- function(x=0.5, y=0.5, width=1, height=1,
                           default.units="npc",
                           r=unit(0.1, "snpc"),
-                          just="centre",
+                          just="centre", 
                           name=NULL, gp=NULL, vp=NULL) {
     if (!is.unit(x))
         x <- unit(x, default.units)
@@ -13,7 +13,7 @@ roundrectGrob <- function(x=0.5, y=0.5, width=1, height=1,
         width <- unit(width, default.units)
     if (!is.unit(height))
         height <- unit(height, default.units)
-    grob(x=x, y=y, width=width, height=height, r=r,
+    grob(x=x, y=y, width=width, height=height, r=r, just=just,
          name=name, gp=gp, vp=vp, cl="roundrect")
 }
 
