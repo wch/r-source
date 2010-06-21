@@ -1,5 +1,4 @@
 Name,Country,City,URL,Host,Maintainer,OK,CountryCode
-"Argentina (Buenos Aires)",Argentina,"Buenos Aires",http://cran.patan.com.ar/,"Patan.com.ar, Buenos Aires","jknoll # patan.com.ar",0,ar
 Australia,Australia,Melbourne,http://cran.ms.unimelb.edu.au/,"University of Melbourne","cran # ms.unimelb.edu.au",1,au
 Austria,Austria,Wien,http://cran.at.r-project.org/,"Wirtschaftsuniversitaet Wien","CRAN # R-project.org",1,at
 Belgium,Belgium,Antwerp,http://www.freestatistics.org/cran/,"K.U.Leuven Association","patrick # wessa.net",1,be
@@ -48,7 +47,8 @@ Portugal,Portugal,Porto,http://neacm.fe.up.pt/CRAN/,"Universidade do Porto","nea
 Russia,Russia,Moscow,http://cran.gis-lab.info/,GIS-Lab.info,"sim # gis-lab.info",1,ru
 "Singapore 1",Singapore,Singapore,http://cran.bic.nus.edu.sg/,"National University of Singapore","sysadmin # bic.nus.edu.sg",0,sg
 "Singapore 2",Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University of Singapore","Zhang Rong <ccezr # nus.edu.sg>",1,sg
-Slovakia,Slovakia,Bratislava,http://cran.fyxm.net/,"FYXM.net, Bratislava","docko # docko.sk",1,sk
+"Slovakia 1",Slovakia,Bratislava,http://cran.fyxm.net/,"FYXM.net, Bratislava","docko # docko.sk",1,sk
+"Slovakia 2",Slovakia,Bratislava,http://cran.phphosts.org/,"phphosts.org,Bratislava","admin # Phphosts.org",1,sk
 "South Africa","South Africa",Grahamstown,http://cran.ru.ac.za/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>",1,za
 "Spain (Madrid)",Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias # rediris.es>",1,es
 Sweden,Sweden,Uppsala,http://ftp.sunet.se/pub/lang/CRAN/,"Swedish University Computer Network, Uppsala","Goran Brostrom <gb # stat.umu.se>",1,se
