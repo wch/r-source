@@ -15,14 +15,15 @@
 #  http://www.r-project.org/Licenses/
 
 parseLatex <- function(text, filename = deparse(substitute(text)),
-                     verbose = FALSE)
+                     verbose = FALSE, verbatim = c("verbatim", "verbatim*",
+                     "Sinput", "Soutput") )
 {
     ## the internal function must get some sort of srcfile
     srcfile <- srcfile(filename)
     srcfile$Enc <- "UTF-8"
     text <- paste(text, collapse="\n")
 
-    .Internal(parseLatex(text, srcfile, verbose))
+    .Internal(parseLatex(text, srcfile, verbose, as.character(verbatim)))
 }
 
 
@@ -35,6 +36,7 @@ deparseLatex <- function(x, dropBraces=FALSE) {
         tag <- attr(a, "latex_tag")
         if (is.null(tag)) tag <- "NULL"
         switch(tag,
+        VERB = ,
         TEXT = ,
         MACRO = ,
         COMMENT = result <- c(result, a),
@@ -44,7 +46,6 @@ deparseLatex <- function(x, dropBraces=FALSE) {
         	deparseLatex(a[[2L]]),
         	"\\end{", a[[1L]], "}"),
         MATH = result <- c(result, "$", deparseLatex(a), "$"),
-        VERB = result <- c(result, "\\verb", a[[1L]]),
         NULL = stop("Internal error, no tag")
         )
         lastTag <- tag

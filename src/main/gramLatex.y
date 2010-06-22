@@ -97,6 +97,10 @@ static int	xxDebugTokens;  /* non-zero causes debug output to R console */
 static SEXP	Value;
 static int	xxinitvalue;
 static char const yyunknown[] = "unknown macro"; /* our message, not bison's */
+static SEXP	xxInVerbEnv;    /* Are we currently in a verbatim environment? If
+				   so, this is the string to end it. If not, 
+				   this is NULL */
+static SEXP	xxVerbatimList;/* A STRSXP containing all the verbatim environment names */
 
 static SEXP     SrcFile;  /* parseLatex will *always* supply a srcfile */
 
@@ -109,12 +113,13 @@ static SEXP	xxtag(SEXP, int, YYLTYPE *);
 static SEXP 	xxenv(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP	xxmath(SEXP, YYLTYPE *);
 static SEXP	xxblock(SEXP, YYLTYPE *);
-
+static void	xxSetInVerbEnv(SEXP);
 
 static int	mkMarkup(int);
 static int	mkText(int);
 static int 	mkComment(int);
 static int      mkVerb(int);
+static int      mkVerbEnv();
 
 #define YYSTYPE		SEXP
 
@@ -157,8 +162,9 @@ Item:		TEXT				{ $$ = xxtag($1, TEXT, &@$); }
 	|	environment			{ $$ = $1; }
 	|	block				{ $$ = $1; }
 	
-environment:	BEGIN '{' TEXT '}' Items END '{' TEXT '}' { $$ = xxenv($3, $5, $8, &@$); 
-                                                  UNPROTECT_PTR($1); UNPROTECT_PTR($6); } 
+environment:	BEGIN '{' TEXT '}' { xxSetInVerbEnv($3); } 
+                Items END '{' TEXT '}' 	{ $$ = xxenv($3, $6, $9, &@$);
+                                                  UNPROTECT_PTR($1); UNPROTECT_PTR($7); } 
 
 math:		'$' nonMath '$'			{ $$ = xxmath($2, &@$); }
 
@@ -261,6 +267,24 @@ static SEXP xxblock(SEXP body, YYLTYPE *lloc)
     return ans;
 }
 
+static int VerbatimLookup(const char *s)
+{
+    int i;
+    for (i = 0; i < length(xxVerbatimList); i++) {
+    	if (strcmp(s, CHAR(STRING_ELT(xxVerbatimList, i))) == 0)
+    	    return TRUE;
+    }
+    return FALSE;
+}
+
+static void xxSetInVerbEnv(SEXP envname)
+{
+    char buffer[256];
+    if (VerbatimLookup(CHAR(STRING_ELT(envname, 0)))) {
+    	snprintf(buffer, sizeof(buffer), "\\end{%s}", CHAR(STRING_ELT(envname, 0)));
+    	PROTECT(xxInVerbEnv = ScalarString(mkChar(buffer)));
+    } else xxInVerbEnv = NULL;
+}
 
 static void xxsavevalue(SEXP items, YYLTYPE *lloc)
 {
@@ -355,7 +379,7 @@ static int xxungetc(int c)
     /* Mac OS X requires us to keep this non-negative */
     R_ParseContextLast = (R_ParseContextLast + PARSE_CONTEXT_SIZE - 1) 
 	% PARSE_CONTEXT_SIZE;
-    if(npush >= PUSHBACK_BUFSIZE - 2) return EOF;
+    if(npush >= PUSHBACK_BUFSIZE - 2) return R_EOF;
     pushback[npush++] = c;
     return c;
 }
@@ -433,6 +457,7 @@ static SEXP ParseLatex(ParseStatus *status, SEXP srcfile)
 {
     R_ParseContextLast = 0;
     R_ParseContext[0] = '\0';
+    xxInVerbEnv = NULL;
     
     xxlineno = 1;
     xxcolno = 1; 
@@ -463,7 +488,7 @@ static int char_getc(void)
     
     c = *nextchar_parse++;
     if (!c) {
-    	c = EOF;
+    	c = R_EOF;
     	nextchar_parse--;
     }
     return (c);
@@ -649,8 +674,12 @@ static int token(void)
     }
     
     setfirstloc();    
+    
+    if (xxInVerbEnv)
+    	return mkVerbEnv();    
+    	
     c = xxgetc();
-
+    
     switch (c) {
     	case '%': return mkComment(c);
 	case '\\':return mkMarkup(c);
@@ -742,7 +771,8 @@ static int mkVerb(int c)
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
     int delim = c;   
- 
+    
+    TEXT_PUSH('\\'); TEXT_PUSH('v'); TEXT_PUSH('e'); TEXT_PUSH('r'); TEXT_PUSH('b');
     TEXT_PUSH(c);
     while ((c = xxgetc()) != delim) TEXT_PUSH(c);
     TEXT_PUSH(c);
@@ -750,6 +780,33 @@ static int mkVerb(int c)
     PROTECT(yylval = mkString2(stext, bp - stext));
     if(stext != st0) free(stext);
     return VERB;  
+}
+
+static int mkVerbEnv()
+{
+    char st0[INITBUFSIZE];
+    unsigned int nstext = INITBUFSIZE;
+    char *stext = st0, *bp = st0;
+    int matched = 0, i;
+    int c;
+    
+    while ((c = xxgetc()) != R_EOF && CHAR(STRING_ELT(xxInVerbEnv, 0))[matched]) {
+    	TEXT_PUSH(c);
+    	if (c == CHAR(STRING_ELT(xxInVerbEnv, 0))[matched])
+    	    matched++;
+    	else
+    	    matched = 0;
+    }
+    if ( !CHAR(STRING_ELT(xxInVerbEnv, 0))[matched] ) {
+    	for (i = matched-1; i >= 0; i--) 
+    	    xxungetc(*(--bp));    	    
+    	UNPROTECT_PTR(xxInVerbEnv);
+    	xxInVerbEnv = NULL;
+    }
+    	    
+    PROTECT(yylval = mkString2(stext, bp - stext));
+    if (stext != st0) free(stext);
+    return VERB;
 }
 
 static int yylex(void)
@@ -791,6 +848,7 @@ SEXP attribute_hidden do_parseLatex(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isLogical(CAR(args)) || LENGTH(CAR(args)) != 1)
     	error(_("invalid '%s' value"), "verbose");
     xxDebugTokens = asInteger(CAR(args));		args = CDR(args);
+    xxVerbatimList = CAR(args); 			args = CDR(args);
 
     s = R_ParseLatex(text, &status, source);
     if (status != PARSE_OK) parseError(call, R_ParseError);
