@@ -20,7 +20,7 @@
 args <- commandArgs(TRUE)
 
 exitstatus <- as.integer(args[3])
-if(is.na(existatatus)) exitstatus <- 0L
+if(is.na(exitstatus)) exitstatus <- 0L
 
 left <- args[1]
 if(left == "-") left <- "stdin"
