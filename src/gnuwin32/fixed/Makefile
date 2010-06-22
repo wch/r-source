@@ -2,7 +2,7 @@ include ../MkRules
 
 R_HOME = ../../..
 
-all: profiles fixhtml fixbin fixetc fixdoc svnonly
+all: profiles fixhtml fixetc fixdoc svnonly
 
 profiles: $(R_HOME)/library/base/R/Rprofile
 
@@ -11,18 +11,6 @@ $(R_HOME)/library/base/R/Rprofile:  ../../library/profile/Common.R \
 	@$(ECHO) -------- Building $@ from $^--------
 	mkdir -p $(R_HOME)/library/base/R
 	@$(CAT)  $^ > $@
-
-fixbin:  cp2bin # iconv
-	@$(ECHO) done > fixbin
-
-## unused
-iconv:
-	@$(CP) ../unicode/iconv.dll ../../../$(BINDIR)
-
-cp2bin: $(wildcard ./bin/*)
-	@zip -q bins $^
-	@unzip -oaqj bins -d  $(R_HOME)/bin
-	@$(RM) bins.zip
 
 fixhtml:  html/rwin.html
 	$(CP) -p html/rwin.html $(R_HOME)/doc/html/index.html

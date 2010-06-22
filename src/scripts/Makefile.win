@@ -16,16 +16,16 @@ $(R_HOME)/$(SCRIPTDIR)/Sd2Rd.pl: Sd2Rd.in
 	@$(SED) -e 1d $< > $@
 
 $(R_HOME)/$(SCRIPTDIR)/Rdconv.sh: Rdconv
-	@$(SED) -e 's|/bin/R|/bin/$${R_ARCH_BIN}/R|' $< > $@
+	@$(SED) -e 's|/bin/R|/bin$${R_ARCH_BIN}/R|' $< > $@
 
 $(R_HOME)/$(SCRIPTDIR)/Rd2dvi.sh: Rd2dvi
-	@$(SED) -e 's|/bin/R|/bin/$${R_ARCH_BIN}/R|' $< > $@
+	@$(SED) -e 's|/bin/R|/bin$${R_ARCH_BIN}/R|' $< > $@
 
 $(R_HOME)/$(SCRIPTDIR)/config.sh: config
 	@cp $< $@
 
 $(R_HOME)/$(SCRIPTDIR)/Stangle.sh: Stangle
-	@$(SED) -e 's|/bin/R|/bin/$${R_ARCH_BIN}/R|' $< > $@
+	@$(SED) -e 's|/bin/R|/bin$${R_ARCH_BIN}/R|' $< > $@
 
 $(R_HOME)/$(SCRIPTDIR)/Sweave.sh: Sweave
-	@$(SED) -e 's|/bin/R|/bin/$${R_ARCH_BIN}/R|' $< > $@
+	@$(SED) -e 's|/bin/R|/bin$${R_ARCH_BIN}/R|' $< > $@

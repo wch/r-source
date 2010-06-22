@@ -63,26 +63,27 @@ static int isDir(char *path)
 
 void rcmdusage (char *RCMD)
 {
-    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
+    fprintf(stderr, "%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
 	    "where 'command' is one of:\n",
-	    "  INSTALL  Install add-on packages.\n",
-	    "  REMOVE   Remove add-on packages.\n",
-	    "  SHLIB    Make a DLL for use with dyn.load.\n",
-	    "  BATCH    Run R in batch mode.\n",
-	    "  build    Build add-on packages.\n",
-	    "  check    Check add-on packages.\n",
-	    "  Rprof    Post process R profiling files.\n",
-	    "  Rdconv   Convert Rd format to various other formats.\n",
-	    "  Rdiff    difference R output files.\n",
-	    "  Rd2dvi   Convert Rd format to DVI.\n",
-	    "  Rd2pdf   Convert Rd format to PDF.\n",
-	    "  Rd2txt   Convert Rd format to pretty text.\n",
-	    "  Sd2Rd    Convert S documentation to Rd format.\n",
-	    "  Stangle  Extract S/R code from Sweave documentation.\n",
-	    "  Sweave   Process Sweave documentation.\n",
-	    "  config   Obtain configuration information about R.\n"
-	    "  open     Open a file via Windows file associations.\n"
-	    "  texify   Process a latex file.\n"
+	    "  INSTALL  Install add-on packages\n",
+	    "  REMOVE   Remove add-on packages\n",
+	    "  SHLIB    Make a DLL for use with dynload\n",
+	    "  BATCH    Run R in batch mode\n",
+	    "  build    Build add-on packages\n",
+	    "  check    Check add-on packages\n",
+	    "  Rprof    Post process R profiling files\n",
+	    "  Rdconv   Convert Rd format to various other formats\n",
+	    "  Rdiff    difference R output files\n",
+	    "  Rd2dvi   Convert Rd format to DVI\n",
+	    "  Rd2pdf   Convert Rd format to PDF\n",
+	    "  Rd2txt   Convert Rd format to pretty text\n",
+	    "  Sd2Rd    Convert S documentation to Rd format\n",
+	    "  Stangle  Extract S/R code from Sweave documentation\n",
+	    "  Sweave   Process Sweave documentation\n",
+	    "  config   Obtain configuration information about R\n"
+	    "  rtags    Create Emacs-style tag files from C, R, and Rd files\n",
+	    "  open     Open a file via Windows file associations\n"
+	    "  texify   Process a latex file\n"
 	    );
 
     fprintf(stderr, "\n%s%s%s%s",
@@ -384,6 +385,23 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	}
 	status = system(cmd);
 	return(status);
+    } else if (cmdarg > 0 && argc > cmdarg && 
+	      strcmp(argv[cmdarg], "Rdiff") == 0) {
+	
+	/* handle Rcmd Rdiff internally */
+	snprintf(cmd, CMD_LEN, 
+		 "%s/%s/Rterm.exe -e tools:::.Rdiff() R_DEFAULT_PACKAGES=NULL --vanilla --slave --args ",
+		 getRHOME(3), BINDIR);
+	for (i = cmdarg + 1; i < argc; i++) {
+	    strcat(cmd, "nextArg");
+	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
+		fprintf(stderr, "command line too long\n");
+		return(27);
+	    }
+	    strcat(cmd, argv[i]);
+	}
+	status = system(cmd);
+	return(status);
     } else {
 	char RHOME[MAX_PATH], Path[MAX_PATH+10], Rarch[30], Bindir[30], 
 	    Tmpdir[MAX_PATH+10], HOME[MAX_PATH+10], Rversion[25];
@@ -452,8 +470,6 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	    p = argv[cmdarg];
 	    if (strcmp(p, "Rd2dvi") == 0) {
 		snprintf(cmd, CMD_LEN, "sh %s/bin/Rd2dvi.sh", RHome);
-	    } else if (strcmp(p, "Rdiff") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/bin/Rdiff.sh", RHome);
 	    } else if (strcmp(p, "Sweave") == 0) {
 		snprintf(cmd, CMD_LEN, "sh %s/bin/Sweave.sh", RHome);
 	    } else if (strcmp(p, "Stangle") == 0) {

@@ -7070,11 +7070,11 @@ Process Sweave documentation
 @item Rdiff
 Diff @R{} output ignoring headers etc
 @item config
-Obtain configuration information.
+Obtain configuration information
 @item javareconf
 (Unix only) Update the Java configuration variables
 @item rtags
-(Unix only) Create Emacs-style tag files from C, R, and Rd files
+Create Emacs-style tag files from C, R, and Rd files
 @item open
 (Windows only) Open a file via Windows' file associations
 @item texify

@@ -535,8 +535,7 @@ detachPackages <- function(pkgs, verbose = TRUE)
     }
 }
 
-## Usage something like Rscript --vanilla --default-packages=NULL args
-## What about spaces in args?
+## Usage: Rscript --vanilla --default-packages=NULL args
 .Rdiff <- function()
 {
     options(showErrorCalls=FALSE)
@@ -564,6 +563,8 @@ detachPackages <- function(pkgs, verbose = TRUE)
         Usage()
         do_exit(1L)
     }
+    args <- paste(args, collapse=" ")
+    args <- strsplit(args,'nextArg', fixed = TRUE)[[1L]][-1L]
     if (length(args) == 1L) {
         if(args[1L] %in% c("-h", "--help")) { Usage(); do_exit() }
         if(args[1L] %in% c("-v", "--version")) {
