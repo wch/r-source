@@ -1064,6 +1064,14 @@ SHLIB} setting them: in particular if @file{Makevars} sets
 @samp{OBJECTS} it will not be set on the @command{make} command line.
 This can be useful in conjunction with implicit rules to allow other
 types of source code to be compiled and included in the shared object.
+It can also be used to control the set of files which are compiled,
+either by excluding some files in @file{src} or including some files in
+subdirectories.  For example
+
+@example
+OBJECTS = 4dfp/endianio.o 4dfp/Getifh.o R4dfp-object.o
+@end example
+
 
 Note that @file{Makevars} should not normally contain targets, as it is
 included before the default makefile and @command{make} is called with
@@ -2482,8 +2490,8 @@ LF-terminated (including the final line of the file) and not make use of
 GNU extensions.  Commonly misused GNU extensions are conditional
 inclusions (@code{ifeq} and the like), @code{$@{shell ...@}} and
 @code{$@{wildcard ...@}}, and the use of @code{+=} and @code{:=}.
-Unfortunately makefiles which use GNU features often run on other
-platforms but have unintended results.
+Unfortunately makefiles which use GNU extensions often run on other
+platforms but do not have the intended results.
 
 If you really must assume GNU make, declare it in the @file{DESCRIPTON}
 file by
@@ -2506,7 +2514,7 @@ important for C++, where @code{g++ -Wall -pedantic} will alert you to
 the use of GNU extensions which fail to compile on most other C++
 compilers.
 
-If you use FORTRAN, @code{ftnchek}
+If you use FORTRAN 77, @code{ftnchek}
 (@uref{http://www.dsm.fordham.edu/~ftnchek/}) provides thorough testing
 of conformance to the standard.
 
@@ -2520,7 +2528,7 @@ has been thought through: if you need a longer type than @code{int} you
 should use a configure test for a C99 type such as @code{int_fast64_t}
 (and failing that, @code{long long} @footnote{but note that @code{long
 long} is not a standard C++ type, and C++ compilers set up for strict
-checking will reject it}) and typedef your own type to be @code{long} or
+checking will reject it.}) and typedef your own type to be @code{long} or
 @code{long long}, or use another suitable type (such as @code{size_t}).
 
 It is not safe to assume that @code{long} and pointer types are the same
