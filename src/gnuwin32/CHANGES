@@ -19,7 +19,9 @@
 NEW FEATURES
 
     o	A sub-architecture is used for 32-bit (i386) as well as
-	64-bit (x64) builds.
+	64-bit (x64) builds.  32-bit packages containing compiled code
+	need to re-installed for this release (64-bit packages built
+	for 2.11.x will most likely still work).
 
 	Architecture-specific files (such as Rgui.exe and Rscript.exe)
 	are now in R_HOME/bin/i386 or R_HOME/bin/x64. 
@@ -27,12 +29,9 @@ NEW FEATURES
 	Because many people expect it, there is an executable
 	R_HOME/bin/R.exe, which accepts --arch and launches either
 	R_HOME/bin/i386/R.exe or R_HOME/bin/x64/R.exe, and analogously
-	for Rscript.exe.  If not set by --arch these check the
-	environment variable R_ARCH for the architecture to use.
-
-	For now, almost all (32- or 64-bit) packages with compiled
-	code built under 2.{10,11}.x can be used, but this will be
-	disabled before release.
+	for Rscript.exe.  If not specified by their argument --arch,
+	these check the environment variable R_ARCH for the
+	architecture to use.
     
     o	The Rgui console now has an optional blinking caret (cursor)
     	to assist screen readers for the visually impaired.
