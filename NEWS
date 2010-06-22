@@ -44,7 +44,7 @@ NEW FEATURES
     o	constrOptim() can now be used with method "SANN".  (PR#14245)
 
 	It gains an argument 'hessian' to be passed to optim(), which
-	allows all the ... arguments to be intended to f() and grad().
+	allows all the ... arguments to be intended for f() and grad().
 	(PR#14071)
 
     o	curve() now allows 'expr' to be an object of mode "expression"
@@ -154,11 +154,11 @@ NEW FEATURES
 	file: all of [bgx]zfile() allow streams to be appended to an
 	existing file, but bzfile() reads only the first stream.
 
-    o	Function person() in utils now uses a given/family scheme in
-    	preference to first/middle/last, is vectorized to handle an
-    	arbitrary number of persons, and gains a 'role' argument to
-    	specify person roles using a controlled vocabulary (the MARC
-    	relator terms).
+    o	Function person() in package 'utils' now uses a given/family
+    	scheme in preference to first/middle/last, is vectorized to
+    	handle an arbitrary number of persons, and gains a 'role'
+    	argument to specify person roles using a controlled vocabulary
+    	(the MARC relator terms).
 
     o	Package 'utils' adds a new "bibentry" class for representing and
         manipulating bibliographic information in enhanced BibTeX

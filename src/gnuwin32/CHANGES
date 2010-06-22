@@ -53,12 +53,8 @@ INSTALLATION
 	is now based on gcc 4.5.0: see the 'R Installation and
 	Administration Manual'.
 
-    o	It is now possible to build R and the Inno Setup-based
-	installer without Perl.
-
-    o	For those building R from the sources, the 64-bit Tcl binary
-	distribution for 2.12.x is in file R64a_Tcl_8-5-8.zip and
-	contains e.g. directory Tcl/bin64 and not Tcl/bin.
+    o	It is now possible to build R and the standard installer
+	 without Perl: only maintainer-mode tasks now need Perl.
 
 
 64-bit NEWS
@@ -79,6 +75,10 @@ INSTALLATION
 	  default filters (see ?available.packages) packages will only
 	  be offered if they are available for the current
 	  architecture.
+
+    o	For those building R from the sources, the 64-bit Tcl binary
+	distribution for 2.12.x is in file R64a_Tcl_8-5-8.zip and
+	contains e.g. directory Tcl/bin64 and not Tcl/bin.
 
 
 PACKAGE INSTALLATION
