@@ -4537,11 +4537,12 @@ This item is installed by the @file{Rtools.exe} installer.
 
 @c src/library/Recommended/Makefile.win uses basename and tar.exe
 
-@c date is used when building base and tools
 @c comm, sort, uniq are used in producing .def files
 @c cmp is used in src/include/Makefile.win
 @c cp is used as $CP) in numerous Makefiles
 @c cut is used to make RVER
+@c date is used when building base and tools
+@c diff is used by tools::Rdiff, tests/Makefile.common and Rdiff.sh
 @c find is used in installer/Makefile
 @c gzip is used in src/library/Makefile.win, R CMD build
 @c ls is used in src/library/*/Makefile.win

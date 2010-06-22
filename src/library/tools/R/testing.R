@@ -534,3 +534,59 @@ detachPackages <- function(pkgs, verbose = TRUE)
         deps <- deps[-i]
     }
 }
+
+## Usage something like Rscript --vanilla --default-packages=NULL args
+## What about spaces in args?
+.Rdiff <- function()
+{
+    options(showErrorCalls=FALSE)
+
+    Usage <- function() {
+        cat("Usage: R CMD Rdiff FROM-FILE TO-FILE EXITSTATUS",
+            "",
+            "Diff R output files FROM-FILE and TO-FILE discarding the R startup message,",
+            "where FROM-FILE equal to '-' means stdin.",
+            "",
+            "Options:",
+            "  -h, --help     print this help message and exit",
+            "  -v, --version  print version info and exit",
+            "",
+            "Report bugs to <r-bugs@r-project.org>.",
+            sep = "\n")
+    }
+
+    do_exit <- function(status = 0L)
+        q("no", status = status, runLast = FALSE)
+
+    args <- commandArgs(TRUE)
+
+    if (!length(args)) {
+        Usage()
+        do_exit(1L)
+    }
+    if (length(args) == 1L) {
+        if(args[1L] %in% c("-h", "--help")) { Usage(); do_exit() }
+        if(args[1L] %in% c("-v", "--version")) {
+            cat("R output diff: ",
+                R.version[["major"]], ".",  R.version[["minor"]],
+                " (r", R.version[["svn rev"]], ")\n", sep = "")
+            cat("",
+                "Copyright (C) 2000-2010 The R Core Development Team.",
+                "This is free software; see the GNU General Public License version 2",
+                "or later for copying conditions.  There is NO warranty.",
+                sep="\n")
+            do_exit()
+        }
+        Usage()
+        do_exit(1L)
+    }
+
+    exitstatus <- as.integer(args[3])
+    if(is.na(exitstatus)) exitstatus <- 0L
+
+    left <- args[1]
+    if(left == "-") left <- "stdin"
+    status <- tools::Rdiff(left, args[2], TRUE)
+    if(status) status <- exitstatus
+    do.exit(status)
+}
