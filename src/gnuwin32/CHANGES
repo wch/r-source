@@ -40,8 +40,8 @@ NEW FEATURES
     	when the input path does not exist.  It attempts partial
     	normalization, or if that fails, returns the original input.
 
-    o	Rcmd Rprof|build|check are now handled internally rather by
-	shell scripts.
+    o	Rcmd Rprof|SHLIB|build|check are now handled internally rather
+	by shell scripts.
 
     o	Rcmd has a new command 'texify' to run MiKTeX's texify.exe
 	with arguments to find files such as Sweave.sty.

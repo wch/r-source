@@ -10,7 +10,6 @@ SCRIPTDIR = bin
 all: \
   $(R_HOME)/$(SCRIPTDIR)/config.sh $(R_HOME)/$(SCRIPTDIR)/Rdconv.sh \
   $(R_HOME)/$(SCRIPTDIR)/Rd2dvi.sh $(R_HOME)/$(SCRIPTDIR)/Sd2Rd.pl \
-  $(R_HOME)/$(SCRIPTDIR)/SHLIB.sh \
   $(R_HOME)/$(SCRIPTDIR)/Stangle.sh $(R_HOME)/$(SCRIPTDIR)/Sweave.sh
 
 $(R_HOME)/$(SCRIPTDIR)/Sd2Rd.pl: Sd2Rd.in
@@ -24,9 +23,6 @@ $(R_HOME)/$(SCRIPTDIR)/Rd2dvi.sh: Rd2dvi
 
 $(R_HOME)/$(SCRIPTDIR)/config.sh: config
 	@cp $< $@
-
-$(R_HOME)/$(SCRIPTDIR)/SHLIB.sh: SHLIB
-	@$(SED) -e 's|/bin/R|/bin/$${R_ARCH_BIN}/R|' $< > $@
 
 $(R_HOME)/$(SCRIPTDIR)/Stangle.sh: Stangle
 	@$(SED) -e 's|/bin/R|/bin/$${R_ARCH_BIN}/R|' $< > $@
