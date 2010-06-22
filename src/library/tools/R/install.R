@@ -1269,7 +1269,8 @@
 	install_help <- FALSE
     }
     more_than_libs <- !libs_only
-    if(!more_than_libs) test_load <- FALSE
+    ## probably desirable everywhere, but we know it works on Windows
+    if(!WINDOWS && !more_than_libs) test_load <- FALSE
 
 
     if (lock) {
