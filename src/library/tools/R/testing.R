@@ -588,5 +588,5 @@ detachPackages <- function(pkgs, verbose = TRUE)
     if(left == "-") left <- "stdin"
     status <- tools::Rdiff(left, args[2], TRUE)
     if(status) status <- exitstatus
-    do.exit(status)
+    do_exit(status)
 }
