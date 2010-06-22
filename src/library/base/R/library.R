@@ -89,7 +89,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         ## if using r_arch subdirs, check for presence
         if(nzchar(r_arch)
            ## back-compatibility fix: remove before 2.12.0
-           && (.Platform$OS.type != "windows" || r_arch != "i386")
+           ## && (.Platform$OS.type != "windows" || r_arch != "i386")
            && file.exists(file.path(pkgpath, "libs"))
            && !file.exists(file.path(pkgpath, "libs", r_arch)))
             stop(gettextf("package '%s' is not installed for 'arch=%s'",
@@ -562,11 +562,11 @@ function(chname, package = NULL, lib.loc = NULL,
 	else    file.path(pkg, "libs")
         file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
         if(file.exists(file)) break else file <- ""
-        if(r_arch == "i386") { # 32-bit Windows, back-compatibility
-            DLLpath <- if(nzchar(r_arch)) file.path(pkg, "libs")
-            file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
-            if(file.exists(file)) break else file <- ""
-       }
+##         if(r_arch == "i386") { # 32-bit Windows, back-compatibility
+##             DLLpath <- if(nzchar(r_arch)) file.path(pkg, "libs")
+##             file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
+##             if(file.exists(file)) break else file <- ""
+##        }
     }
     if(file == "")
         stop(gettextf("shared library '%s' not found", chname), domain = NA)
