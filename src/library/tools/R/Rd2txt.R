@@ -36,7 +36,9 @@ Rd2txt_options <- local({
     	         sectionExtra = 2L,
     	         itemBullet = "* ",
     	         enumFormat = function(n) sprintf("%d. ", n),
-    	         showURLs = FALSE)
+    	         showURLs = FALSE,
+                 code_quote = TRUE,
+                 underline_titles = TRUE)
     function(...) {
         args <- list(...)
         if (!length(args))
@@ -73,6 +75,11 @@ Rd2txt <-
     saveOpts <- Rd2txt_options()
     on.exit(Rd2txt_options(saveOpts))# Rd files may change these, so restore them
     				     # whether or not the caller set them.
+    li <- l10n_info()
+    if (li[["UTF-8"]]) Rd2txt_options(itemBullet = "\u2022 ")
+    if (!is.null(li$codepage) &&
+        (li$codepage >= 1250L && li$codepage <= 1258L || li$codepage == 874L))
+        Rd2txt_options(itemBullet = "\x95 ")
     if (!missing(options)) Rd2txt_options(options)
 
 ## these attempt to mimic pre-2.10.0 layout
@@ -269,11 +276,14 @@ Rd2txt <-
 
     ## underline via backspacing
     txt_header <- function(header) {
+        opts <- Rd2txt_options()
         header <- paste(strwrap(header, WIDTH), collapse="\n")
-        letters <- strsplit(header, "", fixed = TRUE)[[1L]]
-        isaln <- grep("[[:alnum:]]", letters)
-        letters[isaln] <- paste("_\b", letters[isaln], sep="")
-        paste(letters, collapse = "")
+        if (opts$underline_titles) {
+            letters <- strsplit(header, "", fixed = TRUE)[[1L]]
+            isaln <- grep("[[:alnum:]]", letters)
+            letters[isaln] <- paste("_\b", letters[isaln], sep="")
+            paste(letters, collapse = "")
+        } else header
     }
 
     unescape <- function(x) {
@@ -381,7 +391,12 @@ Rd2txt <-
                "\\kbd"=,
                "\\option"=,
                "\\pkg"=,
-               "\\samp" = writeQ(block, tag, quote="\\sQuote"),
+               "\\samp" = {
+                   opts <- Rd2txt_options()
+                   if(opts$code_quote)
+                       writeQ(block, tag, quote="\\sQuote")
+                   else writeContent(block,tag)
+               },
                "\\email"=  put("<email: ",
                                gsub("\n", "", paste(as.character(block), collapse="")),
                                ">"),

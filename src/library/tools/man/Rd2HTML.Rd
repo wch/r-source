@@ -48,7 +48,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
       notes below.}
   \item{Links, Links2}{\code{NULL} or a named (by topics) character vector of
     links, as returned by \code{\link{findHTMLlinks}}.}
-  \item{options}{An optional named list of options to pass to \code{\link{Rd2txt_options}}.}
+  \item{options}{An optional named list of options to pass to
+    \code{\link{Rd2txt_options}}.}
   \item{...}{ additional parameters to pass to \code{\link{parse_Rd}} when
     \code{Rd} is a filename. }
   \item{writeEncoding}{should \verb{\inputencoding} lines be written in
@@ -158,7 +159,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 \references{ \url{http://developer.r-project.org/parseRd.pdf} }
 \seealso{
   \code{\link{parse_Rd}}, \code{\link{checkRd}},
-  \code{\link{findHTMLlinks}}.
+  \code{\link{findHTMLlinks}}, \code{\link{Rd2txt_options}}.
 }
 \examples{\donttest{
 

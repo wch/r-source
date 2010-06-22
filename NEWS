@@ -201,6 +201,9 @@ NEW FEATURES
 	deparseLatex() and latexToUtf8()) to support conversion of
 	bibliographic entries for display in R.
 
+    o	Text rendering of \itemize in help used a Unicode bullet in
+	UTF-8 and single-byte Windows locales.
+
 
 DEPRECATED & DEFUNCT
 
