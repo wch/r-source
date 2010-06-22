@@ -7073,6 +7073,12 @@ Diff @R{} output ignoring headers etc
 Obtain configuration information.
 @item javareconf
 (Unix only) Update the Java configuration variables
+@item rtags
+(Unix only) Create Emacs-style tag files from C, R, and Rd files
+@item open
+(Windows only) Open a file via Windows' file associations
+@item texify
+(Windows only) Process (La)TeX files with R's style files
 @end table
 
 Use
