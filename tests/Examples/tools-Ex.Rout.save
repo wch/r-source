@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-06-20 r52333)
+R version 2.12.0 Under development (unstable) (2010-06-22 r52353)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i386-apple-darwin9.8.0/i386 (32-bit)
@@ -106,6 +106,12 @@ sprintf("%d. ", n)
 $showURLs
 [1] FALSE
 
+$code_quote
+[1] TRUE
+
+$underline_titles
+[1] TRUE
+
 > Rd2txt_options(minIndent=4)
 > Rd2txt_options()
 $width
@@ -134,6 +140,12 @@ sprintf("%d. ", n)
 $showURLs
 [1] FALSE
 
+$code_quote
+[1] TRUE
+
+$underline_titles
+[1] TRUE
+
 > Rd2txt_options(saveOpts)
 > Rd2txt_options()
 $width
@@ -161,6 +173,12 @@ sprintf("%d. ", n)
 
 $showURLs
 [1] FALSE
+
+$code_quote
+[1] TRUE
+
+$underline_titles
+[1] TRUE
 
 > 
 > 
@@ -843,7 +861,7 @@ attr(,"class")
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.16 0 2.3 NA NA 
+Time elapsed:  0.92 0.06 1.15 NA NA 
 > grDevices::dev.off()
 null device 
           1 
