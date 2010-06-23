@@ -237,9 +237,7 @@ version.tex: $(top_srcdir)/VERSION $(top_srcdir)/SVN-REVISION
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_srcdir)/SVN-REVISION`)"; \
 	  $(ECHO) "$${v}") > $@
 
-## Packages almost always have zipped latex dirs, 
-## so don't try to be clever with dates
-## And collecting is fast compared to latexing.
+## Unlike Unix, we don't check dates
 %-pkg.tex: FORCE
 	@$(ECHO) "collecting LaTeX docs for package \`$*' ..."
 	@$(ECHO) "tools:::.pkg2tex(\"$(top_srcdir)/library/$*\")" \
