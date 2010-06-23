@@ -90,6 +90,17 @@ void rcmdusage (char *RCMD)
 	    "for usage information for each command.\n\n");
 }
 
+#define PROCESS_CMD(ARG) 	for (i = cmdarg + 1; i < argc; i++) {\
+	    strcat(cmd, ARG);\
+	    if (strlen(cmd) + strlen(argv[i]) > 9900) {\
+		fprintf(stderr, "command line too long\n");\
+		return(27);\
+	    }\
+	    strcat(cmd, argv[i]);\
+	}\
+	return(system(cmd))
+
+
 extern int process_Renviron(const char *filename);
 #define CMD_LEN 10000
 int rcmdfn (int cmdarg, int argc, char **argv)
@@ -129,7 +140,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	/* need to cover Rcmd --help, R CMD --help and R --help,
 	   as well as -h versions.
 	 */
-	if(cmdarg == 2 || (cmdarg == 1 && strcmp(RCMD, "Rcmd")) == 0) {
+	if(cmdarg == 2 || (cmdarg == 1 && !strcmp(RCMD, "Rcmd"))) {
 	    fprintf(stderr, "%s%s%s", "Usage: ", RCMD, " command args\n\n");
 	    rcmdusage(RCMD);
 	    return(0);
@@ -142,8 +153,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	return(0);
     }
 
-    if (cmdarg > 0 && argc > cmdarg && 
-	strcmp(argv[cmdarg], "BATCH") == 0) {
+    if (cmdarg > 0 && argc > cmdarg && !strcmp(argv[cmdarg], "BATCH")) {
 	/* handle Rcmd BATCH internally */
 	char infile[MAX_PATH], outfile[MAX_PATH], *p, cmd_extra[CMD_LEN];
 	DWORD ret;
@@ -266,25 +276,12 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	}
 	CloseHandle(pi.hThread);
 	return(pwait(pi.hProcess));
-    } else if (cmdarg > 0 && argc > cmdarg && 
-	      strcmp(argv[cmdarg], "INSTALL") == 0) {
-	/* handle Rcmd INSTALL internally */
+    } else if (cmdarg > 0 && argc > cmdarg && !strcmp(argv[cmdarg], "INSTALL")) {
 	snprintf(cmd, CMD_LEN, 
 		 "%s/%s/Rterm.exe -e tools:::.install_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --slave --args ",
 		 getRHOME(3), BINDIR);
-	for (i = cmdarg + 1; i < argc; i++) {
-	    strcat(cmd, "nextArg");
-	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
-		fprintf(stderr, "command line too long\n");
-		return(27);
-	    }
-	    strcat(cmd, argv[i]);
-	}
-	status = system(cmd);
-	return(status);
-    } else if (cmdarg > 0 && argc > cmdarg && 
-	      strcmp(argv[cmdarg], "REMOVE") == 0) {
-	/* handle Rcmd REMOVE internally */
+	PROCESS_CMD("nextArg");
+    } else if (cmdarg > 0 && argc > cmdarg && !strcmp(argv[cmdarg], "REMOVE")) {
 	snprintf(cmd, CMD_LEN, 
 		 "%s/%s/Rterm.exe -f \"%s/share/R/REMOVE.R\" R_DEFAULT_PACKAGES=NULL --slave --args",
 		 getRHOME(3), BINDIR, getRHOME(3));
@@ -301,106 +298,58 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		strcat(cmd, "\"");
 	    } else strcat(cmd, argv[i]);
 	}
-	status = system(cmd);
-	return(status);
+	return(system(cmd));
     } else if (cmdarg > 0 && argc > cmdarg && 
-	      strcmp(argv[cmdarg], "build") == 0) {
-	/* handle Rcmd build internally */
+	       !strcmp(argv[cmdarg], "build")) {
 	snprintf(cmd, CMD_LEN, 
 		 "%s/%s/Rterm.exe -e tools:::.build_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --slave --args ",
 		 getRHOME(3), BINDIR);
-	for (i = cmdarg + 1; i < argc; i++) {
-	    strcat(cmd, "nextArg");
-	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
-		fprintf(stderr, "command line too long\n");
-		return(27);
-	    }
-	    strcat(cmd, argv[i]);
-	}
-	status = system(cmd);
-	return(status);
+	PROCESS_CMD("nextArg");
     } else if (cmdarg > 0 && argc > cmdarg && 
-	      strcmp(argv[cmdarg], "check") == 0) {
-	/* handle Rcmd check internally */
+	       !strcmp(argv[cmdarg], "check")) {
 	snprintf(cmd, CMD_LEN, 
 		 "%s/%s/Rterm.exe -e tools:::.check_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --slave --args ",
 		 getRHOME(3), BINDIR);
-	for (i = cmdarg + 1; i < argc; i++) {
-	    strcat(cmd, "nextArg");
-	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
-		fprintf(stderr, "command line too long\n");
-		return(27);
-	    }
-	    strcat(cmd, argv[i]);
-	}
-	status = system(cmd);
-	return(status);
+	PROCESS_CMD("nextArg");
     } else if (cmdarg > 0 && argc > cmdarg && 
-	      strcmp(argv[cmdarg], "Rprof") == 0) {
-	/* handle Rcmd Rprof internally */
+	       !strcmp(argv[cmdarg], "Rprof")) {
 	snprintf(cmd, CMD_LEN, 
 		 "%s/%s/Rterm.exe -e tools:::.Rprof() R_DEFAULT_PACKAGES=utils LC_COLLATE=C --vanilla --slave --args ",
 		 getRHOME(3), BINDIR);
-	for (i = cmdarg + 1; i < argc; i++) {
-	    strcat(cmd, "nextArg");
-	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
-		fprintf(stderr, "command line too long\n");
-		return(27);
-	    }
-	    strcat(cmd, argv[i]);
-	}
-	status = system(cmd);
-	return(status);
-    } else if (cmdarg > 0 && argc > cmdarg && 
-	      strcmp(argv[cmdarg], "texify") == 0) {
+	PROCESS_CMD("nextArg");
+   } else if (cmdarg > 0 && argc > cmdarg && 
+	      !strcmp(argv[cmdarg], "texify")) {
 	if (argc < cmdarg+2) {
 	    fprintf(stderr, "\nUsage: %s texify [options] filename\n", RCMD);
 	    return(1);
 	}
-	
-	/* handle Rcmd texify internally */
 	snprintf(cmd, CMD_LEN,
 		 "texify.exe -I %s/share/texmf/tex/latex -I %s/share/texmf/bibtex/bst", getRHOME(3), getRHOME(3));
-	for(int i = cmdarg+1; i < argc; i++) {
-	    strcat(cmd, " "); 
-	    strcat(cmd, argv[i]);
-	}
-	status = system(cmd);
-	return(status);
+	PROCESS_CMD(" ");
     } else if (cmdarg > 0 && argc > cmdarg && 
-	      strcmp(argv[cmdarg], "SHLIB") == 0) {
-	
-	/* handle Rcmd SHLIB internally */
+	       !strcmp(argv[cmdarg], "SHLIB")) {
 	snprintf(cmd, CMD_LEN, 
 		 "%s/%s/Rterm.exe -e tools:::.SHLIB() R_DEFAULT_PACKAGES=NULL --no-restore --slave --no-site-file --no-init-file --args",
 		 getRHOME(3), BINDIR);
-	for(int i = cmdarg+1; i < argc; i++) {
-	    strcat(cmd, " "); 
-	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
-		fprintf(stderr, "command line too long\n");
-		return(27);
-	    }
-	    strcat(cmd, argv[i]);
-	}
-	status = system(cmd);
-	return(status);
+	PROCESS_CMD(" ");
     } else if (cmdarg > 0 && argc > cmdarg && 
-	      strcmp(argv[cmdarg], "Rdiff") == 0) {
-	
-	/* handle Rcmd Rdiff internally */
+	       !strcmp(argv[cmdarg], "Rdiff")) {
 	snprintf(cmd, CMD_LEN, 
 		 "%s/%s/Rterm.exe -e tools:::.Rdiff() R_DEFAULT_PACKAGES=NULL --vanilla --slave --args ",
 		 getRHOME(3), BINDIR);
-	for (i = cmdarg + 1; i < argc; i++) {
-	    strcat(cmd, "nextArg");
-	    if (strlen(cmd) + strlen(argv[i]) > 9900) {
-		fprintf(stderr, "command line too long\n");
-		return(27);
-	    }
-	    strcat(cmd, argv[i]);
-	}
-	status = system(cmd);
-	return(status);
+	PROCESS_CMD("nextArg");
+    } else if (cmdarg > 0 && argc > cmdarg && 
+	       !strcmp(argv[cmdarg], "Rdconv")) {
+	snprintf(cmd, CMD_LEN, 
+		 "%s/%s/Rterm.exe -e tools:::.Rdconv() R_DEFAULT_PACKAGES= LC_COLLATE=C --vanilla --slave --args ",
+		 getRHOME(3), BINDIR);
+	PROCESS_CMD("nextArg");
+    } else if (cmdarg > 0 && argc > cmdarg && 
+	       !strcmp(argv[cmdarg], "Rd2txt")) {
+	snprintf(cmd, CMD_LEN, 
+		 "%s/%s/Rterm.exe -e tools:::.Rdconv() R_DEFAULT_PACKAGES= LC_COLLATE=C --vanilla --slave --args nextArg-tnextArgtxt",
+		 getRHOME(3), BINDIR);
+	PROCESS_CMD("nextArg");
     } else {
 	char RHOME[MAX_PATH], Path[MAX_PATH+10], Rarch[30], Bindir[30], 
 	    Tmpdir[MAX_PATH+10], HOME[MAX_PATH+10], Rversion[25];
@@ -477,10 +426,6 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		snprintf(cmd, CMD_LEN, "sh %s/bin/Stangle.sh", RHome);
 	    } else if (strcmp(p, "config") == 0) {
 		snprintf(cmd, CMD_LEN, "sh %s/bin/config.sh", RHome);
-	    } else if (strcmp(p, "Rdconv") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/bin/Rdconv.sh", RHome);
-	    } else if (strcmp(p, "Rd2txt") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/bin/Rdconv.sh -t txt", RHome);
 	    } else if (strcmp(p, "Sd2Rd") == 0) {
 		snprintf(cmd, CMD_LEN, "perl %s/bin/Sd2Rd.pl", RHome);
 	    } else if (strcmp(p, "open") == 0) {

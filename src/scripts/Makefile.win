@@ -2,27 +2,24 @@
 include ../gnuwin32/MkRules
 R_HOME = ../..
 
-## BATCH, INSTALL, REMOVE, Rdiff, Rprof, SHLIB, build, check 
+## BATCH, INSTALL, REMOVE, Rdconv Rdiff, Rprof, SHLIB, build, check 
 ## are handled internally in Rcmd.exe
 ## COMPILE LINK javareonf rtags are Unix-only
 
 
 all: \
-  $(R_HOME)/bin/config.sh $(R_HOME)/bin/Rdconv.sh \
-  $(R_HOME)/bin/Rd2dvi.sh $(R_HOME)/bin/Sd2Rd.pl \
-  $(R_HOME)/bin/Stangle.sh $(R_HOME)/bin/Sweave.sh
+  $(R_HOME)/bin/config.sh $(R_HOME)/bin/Rd2dvi.sh \
+  $(R_HOME)/bin/Stangle.sh $(R_HOME)/bin/Sweave.sh \
+  $(R_HOME)/bin/Sd2Rd.pl
 
 $(R_HOME)/bin/Sd2Rd.pl: Sd2Rd.in
 	@$(SED) -e 1d $< > $@
 
-$(R_HOME)/bin/Rdconv.sh: Rdconv
-	@$(SED) -e 's|/bin/R|/bin$${R_ARCH_BIN}/R|' $< > $@
+$(R_HOME)/bin/config.sh: config
+	@cp $< $@
 
 $(R_HOME)/bin/Rd2dvi.sh: Rd2dvi
 	@$(SED) -e 's|/bin/R|/bin$${R_ARCH_BIN}/R|' $< > $@
-
-$(R_HOME)/bin/config.sh: config
-	@cp $< $@
 
 $(R_HOME)/bin/Stangle.sh: Stangle
 	@$(SED) -e 's|/bin/R|/bin$${R_ARCH_BIN}/R|' $< > $@
