@@ -500,6 +500,259 @@ function(pkgdir, outfile, title, batch = FALSE,
     invisible(NULL)
 }
 
+### * .Rdnewer
+
+## replacement for tools/Rdnewer.pl,
+## called from doc/manual/Makefile
+.Rdnewer <- function(dir, file)
+    q("no", status = ..Rdnewer(dir, file), runLast = FALSE)
+
+..Rdnewer <- function(dir, file, OS = .Platform$OS.type)
+{
+    ## Test whether any Rd file in the 'man' and 'man/$OS'
+    ## subdirectories of directory DIR is newer than a given FILE.
+    ## Return 0 if such a file is found (i.e., in the case of
+    ## 'success'), and 1 otherwise, so that the return value can be used
+    ## for shell 'if' tests.
+
+    ## <NOTE>
+    ## For now only used for the R sources (/doc/manual/Makefile.in)
+    ## hence no need to also look for Rd files with '.rd' extension.
+    ## </NOTE>
+
+    if (!file.exists(file)) return(0L)
+    age <- file.info(file)$mtime
+
+    if (any(file.info(c(Sys.glob(file.path(dir, "man", "*.Rd")),
+                        Sys.glob(file.path(dir, "man", "*.rd")))
+                      )$mtime > age))
+        return(0L)
+
+    if (isTRUE(file.info(file.path(dir, OS))$isdir)) {
+        if (any(file.info(c(Sys.glob(file.path(dir, "man", OS, "*.Rd")),
+                            Sys.glob(file.path(dir, "man", OS, "*.rd")))
+                          )$mtime > age))
+            return(0L)
+    }
+
+    1L
+}
+
+### * ..Rd2dvi
+
+..Rd2dvi <- function(args = NULL)
+{
+    dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
+
+    do_cleanup <- function() {
+        if(clean) {
+            setwd(startdir)
+            unlink(build_dir, recursive = TRUE)
+        } else {
+            cat("You may want to clean up by 'rm -rf ", build_dir, "'\n", sep="")
+        }
+    }
+
+    Usage <- function() {
+        cat("Usage: R CMD Rd2dvi [options] files",
+            "",
+            "Generate DVI (or PDF) output from the Rd sources specified by files, by",
+            "either giving the paths to the files, or the path to a directory with",
+            "the sources of a package, or an installed package.",
+            "",
+            "Unless specified via option '--output', the basename of the output file",
+            "equals the basename of argument 'files' if this specifies a package",
+            "or a single file, and 'Rd2' otherwise.",
+            "",
+            "The Rd sources are assumed to be ASCII unless they contain \\encoding",
+            "declarations (which take priority) or --encoding is supplied or if using",
+            "package sources, if the package DESCRIPTION file has an Encoding field.",
+            "The output encoding defaults to the package encoding then to 'UTF-8'.",
+            "",
+            "Options:",
+            "  -h, --help		print short help message and exit",
+            "  -v, --version		print version info and exit",
+            "      --batch		no interaction",
+            "      --no-clean	do not remove created temporary files",
+            "      --no-preview	do not preview generated DVI/PDF file",
+            "      --encoding=enc    use 'enc' as the default input encoding",
+            "      --outputEncoding=outenc use 'outenc' as the default output encoding",
+            "      --os=NAME		use OS subdir 'NAME' (unix or windows)",
+            "      --OS=NAME		the same as '--os'",
+            "  -o, --output=FILE	write output to FILE",
+            "      --pdf		generate PDF output",
+            "      --title=NAME	use NAME as the title of the document",
+            "      --no-index	don't index output",
+            "      --no-description	don't typeset the description of a package",
+            "      --internals	typeset 'internal' documentation (usually skipped)",
+            "",
+            "The output papersize is set by the environment variable R_PAPERSIZE.",
+            "The DVI previewer is set by the environment variable xdvi.",
+            "The PDF previewer is set by the environment variable R_PDFVIEWER.",
+            "",
+            "Report bugs to <r-bugs@r-project.org>.",
+            sep = "\n")
+    }
+
+    options(showErrorCalls = FALSE, warn = 1)
+
+    if (is.null(args)) {
+        args <- commandArgs(TRUE)
+        args <- paste(args, collapse=" ")
+        args <- strsplit(args,'nextArg', fixed = TRUE)[[1L]][-1L]
+    }
+
+    startdir <- getwd()
+    build_dir <- tempdir(".Rd2dvi") # FIXME
+    title <- ""
+    batch <- FALSE
+    clean <- TRUE
+    only_meta <- FALSE
+    out_ext <- "dvi"
+    output <- ""
+    enc <- "unknown"
+    outenc <- "latin1"
+    index <- TRUE
+    description <- TRUE
+    internals <- TRUE
+    files <- character()
+    dir <- ""
+
+    WINDOWS <- .Platform$OS.type == "windows"
+
+    if (WINDOWS) {
+        OSdir <- "windows"
+        preview <- Sys.getenv("xdvi", "xdvi")
+    } else {
+        OSdir <- "unix"
+        preview <- Sys.getenv("xdvi", "open")
+    }
+
+    while(length(args)) {
+        a <- args[1L]
+        if (a %in% c("-h", "--help")) {
+            Usage()
+            q("no", runLast = FALSE)
+        } else if (a %in% c("-v", "--version")) {
+            cat("Rd2dvi: ",
+                R.version[["major"]], ".",  R.version[["minor"]],
+                " (r", R.version[["svn rev"]], ")\n", sep = "")
+            cat("",
+                "Copyright (C) 2000-2010 The R Core Development Team.",
+                "This is free software; see the GNU General Public License version 2",
+                "or later for copying conditions.  There is NO warranty.",
+                sep="\n")
+            q("no", runLast = FALSE)
+        } else if (a == "--batch") {
+            batch <- TRUE
+        } else if (a == "--no-clean") {
+            clean <- FALSE
+        } else if (a == "--no-preview") {
+            preview <- "false"
+        } else if (a == "--pdf") {
+            out_ext <-  "pdf";
+            ## allow for --no-preview --pdf
+            if (preview != "false")
+                preview <- Sys.getenv("R_PDFVIEWER", if(WINDOWS) "open" else "false")
+            Sys.setenv(R_RD4DVI = Sys.getenv("R_RD4PDF", "times,hyper"))
+        } else if (substr(a, 1, 8) == "--title=") {
+            title <- substr(a, 9, 1000)
+        } else if (a == "-o") {
+            if (length(args) >= 2L) {output <- args[2L]; args <- args[-1L]}
+            else stop("-o option without value", call. = FALSE)
+        } else if (substr(a, 1, 9) == "--output=") {
+            output <- substr(a, 10, 1000)
+        } else if (a == "--only_meta") {
+            only_meta <- TRUE
+        } else if (substr(a, 1, 5) == "--OS=" || substr(a, 1, 5) == "--OS=") {
+            OS_type <- substr(a, 6, 1000)
+        } else if (substr(a, 1, 11) == "--encoding=") {
+            enc <- substr(a, 12, 1000)
+        } else if (substr(a, 1, 17) == "--outputEncoding=") {
+            outenc <- substr(a, 18, 1000)
+        } else if (substr(a, 1, 12) == "--build-dir=") {
+            build_dir<- substr(a, 13, 1000)
+        } else if (a == "--no-index") {
+            index <- FALSE
+        } else if (a == "--no-description") {
+            description <- FALSE
+        } else if (a == "--internals") {
+            internals <- FALSE
+        } else if (substr(a, 1, 1) == "-") {
+            message("Warning: unknown option ", sQuote(a))
+        } else files <- c(files, a)
+        args <- args[-1L]
+    }
+
+    if(!length(files)) {
+        message("no inputs")
+        q("no", status = 1L, runLast = FALSE)
+    }
+
+    if(dir.exists(files[1L])) {
+        if(file.exists(file.path(files[1L], "DESCRIPTION"))) {
+            cat("Hmm ... looks like a package\n")
+            dir <- files[1L]
+            if(!nzchar(output)) output <- paste(basename(dir), out_ext, sep = ".")
+        } else if (file.exists(f <- file.path(files[1L], "DESCRIPTION,in"))
+                   && grepl("^Priority: *base", f)) {
+            cat("Hmm ... looks like a package from the R distribution\n")
+            dir <- files[1L]
+            if(!nzchar(output)) output <- paste(basename(dir), out_ext, sep = ".")
+            if(index && basename(dir) == "base") {
+                index <- FALSE
+                cat("_not_ indexing 'base' package\n")
+            }
+        } else {
+            dir <- if(dir.exists(d <- file.path(files[1L], "man"))) d else files[1L]
+        }
+    } else {
+        if(length(files) == 1L && !nzchar(output))
+            output <- paste(sub("[.][Rr]d$", "", basename(files)), out_ext, sep = ".")
+    }
+
+    if(!nzchar(dir)) dir <- "$@" # FIXME
+
+    ## Prepare for building the documentation.
+    if(!nzchar(output)) output <- paste("Rd2", out_ext, sep = ".")
+    if(file.exists(output)) {
+        cat("file", sQuote(output), "exists; please remove it first\n")
+        q("no", status = 1L, runLast = FALSE)
+    }
+    if(dir.exists(build_dir) && unlink(build_dir, recursive = TRUE)) {
+        cat("cannot write to build dir\n")
+        q("no", status = 2L, runLast = FALSE)
+    }
+    dir.create(build_dir, FALSE)
+
+    tryCatch(.Rd2dvi(files[1L], file.path(build_dir, "Rd2.tex"),
+                     title, batch, description, only_meta,
+                     enc, outenc, dir, OSdir, internals, index),
+             error = {
+                 q("no", status = 11L, runLast = FALSE)
+             })
+
+    cat("Creating", out_ext, "output from LaTeX ...\n")
+    setwd(build_dir)
+
+    tryCatch(tools::texi2dvi('Rd2.tex', pdf = (out_ext == "pdf"),
+                             quiet = FALSE, index = index),
+             error = {
+                 message("Error in running tools::texi2dvi")
+                 do_cleanup()
+                 q("no", status = 1L, runLast = FALSE)
+             })
+
+    setwd(startdir)
+    cat("Saving output to", sQuote(output), "...\n")
+    file.copy(file.path(build_dir, paste("Rd2", out_ext, sep = ".")), output)
+    cat("Done\n")
+
+    do_cleanup()
+    if(preview != "false") system(paste(preview, output))
+    q("no", runLast = FALSE)
+}
+
 
 ### Local variables: ***
 ### mode: outline-minor ***
