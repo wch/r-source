@@ -276,12 +276,14 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	}
 	CloseHandle(pi.hThread);
 	return(pwait(pi.hProcess));
-    } else if (cmdarg > 0 && argc > cmdarg && !strcmp(argv[cmdarg], "INSTALL")) {
+    } else if (cmdarg > 0 && argc > cmdarg && 
+	       !strcmp(argv[cmdarg], "INSTALL")) {
 	snprintf(cmd, CMD_LEN, 
 		 "%s/%s/Rterm.exe -e tools:::.install_packages() R_DEFAULT_PACKAGES= LC_COLLATE=C --no-restore --slave --args ",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
-    } else if (cmdarg > 0 && argc > cmdarg && !strcmp(argv[cmdarg], "REMOVE")) {
+    } else if (cmdarg > 0 && argc > cmdarg && 
+	       !strcmp(argv[cmdarg], "REMOVE")) {
 	snprintf(cmd, CMD_LEN, 
 		 "%s/%s/Rterm.exe -f \"%s/share/R/REMOVE.R\" R_DEFAULT_PACKAGES=NULL --slave --args",
 		 getRHOME(3), BINDIR, getRHOME(3));
@@ -350,6 +352,18 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		 "%s/%s/Rterm.exe -e tools:::.Rdconv() R_DEFAULT_PACKAGES= LC_COLLATE=C --vanilla --slave --args nextArg-tnextArgtxt",
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
+    } else if (cmdarg > 0 && argc > cmdarg && 
+	       !strcmp(argv[cmdarg], "Sweave")) {
+	snprintf(cmd, CMD_LEN, 
+		 "%s/%s/Rterm.exe --vanilla --slave -e \"utils:::.Sweave('%s')\"",
+		 getRHOME(3), BINDIR, argv[cmdarg + 1]);
+	return(system(cmd));
+    } else if (cmdarg > 0 && argc > cmdarg && 
+	       !strcmp(argv[cmdarg], "Stangle")) {
+	snprintf(cmd, CMD_LEN, 
+		 "%s/%s/Rterm.exe --vanilla --slave -e \"utils:::.Stangle('%s')\"",
+		 getRHOME(3), BINDIR, argv[cmdarg + 1]);
+	return(system(cmd));
     } else {
 	char RHOME[MAX_PATH], Path[MAX_PATH+10], Rarch[30], Bindir[30], 
 	    Tmpdir[MAX_PATH+10], HOME[MAX_PATH+10], Rversion[25];
@@ -420,10 +434,6 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		snprintf(cmd, CMD_LEN, "sh %s/bin/Rd2dvi.sh", RHome);
 	    } else if (strcmp(p, "Rd2pdf") == 0) {
 		snprintf(cmd, CMD_LEN, "sh %s/bin/Rd2dvi.sh --pdf", RHome);
-	    } else if (strcmp(p, "Sweave") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/bin/Sweave.sh", RHome);
-	    } else if (strcmp(p, "Stangle") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/bin/Stangle.sh", RHome);
 	    } else if (strcmp(p, "config") == 0) {
 		snprintf(cmd, CMD_LEN, "sh %s/bin/config.sh", RHome);
 	    } else if (strcmp(p, "Sd2Rd") == 0) {
