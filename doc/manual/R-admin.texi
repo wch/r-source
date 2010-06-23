@@ -4531,11 +4531,11 @@ This item is installed by the @file{Rtools.exe} installer.
 @c INSTALL uses sh make zip
 @c build used sh make tar gzip
 @c check uses sh make
-@c Rdiff.sh uses diff echo grep sed tr
-@c Rd2dvi uses basename echo mkdir sed
-@c Sweave Stangle use echo
+@c Rdiff.sh USED to use diff echo grep sed tr
+@c Rd2dvi uses basename echo mkdir rm sed
+@c Rdconv Sweave Stangle use echo
 
-@c src/library/Recommended/Makefile.win uses basename and tar.exe
+@c src/library/Recommended/Makefile.win uses basename and tar
 
 @c comm, sort, uniq are used in producing .def files
 @c cmp is used in src/include/Makefile.win
@@ -4563,6 +4563,9 @@ of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
 also need @code{zip} and @code{unzip} from the Info-ZIP project
 (@uref{http://www.info-zip.org/}).  All of these tools are in
 @file{Rtools.exe}.
+
+@c So needed to for end users:
+@c basename comm cp echo gzip make mkdir rm sh sort tar uniq zip
 
 @strong{Beware}: `Native' ports of make are @strong{not} suitable
 (including that called `MinGW make' at the MinGW SourceForge site).
