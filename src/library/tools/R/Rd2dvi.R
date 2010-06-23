@@ -603,7 +603,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     }
 
     startdir <- getwd()
-    build_dir <- tempdir(".Rd2dvi") # FIXME
+    build_dir <- tempfile(".Rd2dvi") # FIXME
     title <- ""
     batch <- FALSE
     clean <- TRUE
@@ -614,7 +614,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     outenc <- "latin1"
     index <- TRUE
     description <- TRUE
-    internals <- TRUE
+    internals <- FALSE
     files <- character()
     dir <- ""
 
@@ -662,7 +662,7 @@ function(pkgdir, outfile, title, batch = FALSE,
             else stop("-o option without value", call. = FALSE)
         } else if (substr(a, 1, 9) == "--output=") {
             output <- substr(a, 10, 1000)
-        } else if (a == "--only_meta") {
+        } else if (a == "--only-meta") {
             only_meta <- TRUE
         } else if (substr(a, 1, 5) == "--OS=" || substr(a, 1, 5) == "--OS=") {
             OS_type <- substr(a, 6, 1000)
@@ -677,7 +677,7 @@ function(pkgdir, outfile, title, batch = FALSE,
         } else if (a == "--no-description") {
             description <- FALSE
         } else if (a == "--internals") {
-            internals <- FALSE
+            internals <- TRUE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else files <- c(files, a)
@@ -694,8 +694,8 @@ function(pkgdir, outfile, title, batch = FALSE,
             cat("Hmm ... looks like a package\n")
             dir <- files[1L]
             if(!nzchar(output)) output <- paste(basename(dir), out_ext, sep = ".")
-        } else if (file.exists(f <- file.path(files[1L], "DESCRIPTION,in"))
-                   && grepl("^Priority: *base", f)) {
+        } else if (file.exists(f <- file.path(files[1L], "DESCRIPTION.in"))
+                   && any(grepl("^Priority: *base", readLines(f)))) {
             cat("Hmm ... looks like a package from the R distribution\n")
             dir <- files[1L]
             if(!nzchar(output)) output <- paste(basename(dir), out_ext, sep = ".")
@@ -725,23 +725,28 @@ function(pkgdir, outfile, title, batch = FALSE,
     }
     dir.create(build_dir, FALSE)
 
-    tryCatch(.Rd2dvi(files[1L], file.path(build_dir, "Rd2.tex"),
-                     title, batch, description, only_meta,
-                     enc, outenc, dir, OSdir, internals, index),
-             error = {
-                 q("no", status = 11L, runLast = FALSE)
-             })
+    res <-
+        try(.Rd2dvi(files[1L], file.path(build_dir, "Rd2.tex"),
+                    title,
+                    ifelse(batch, "true", "false"),
+                    ifelse(description, "true", "false"),
+                    ifelse(only_meta, "true", "false"),
+                    enc, outenc, dir, OSdir,
+                    ifelse(internals, "yes", "no"),
+                    ifelse(index, "true", "false")))
+    if (inherits(res, "try-error"))
+        q("no", status = 11L, runLast = FALSE)
 
     cat("Creating", out_ext, "output from LaTeX ...\n")
     setwd(build_dir)
 
-    tryCatch(tools::texi2dvi('Rd2.tex', pdf = (out_ext == "pdf"),
-                             quiet = FALSE, index = index),
-             error = {
-                 message("Error in running tools::texi2dvi")
-                 do_cleanup()
-                 q("no", status = 1L, runLast = FALSE)
-             })
+    res <- try(texi2dvi('Rd2.tex', pdf = (out_ext == "pdf"),
+                        quiet = FALSE, index = index))
+    if (inherits(res, "try-error")) {
+        message("Error in running tools::texi2dvi")
+        do_cleanup()
+        q("no", status = 1L, runLast = FALSE)
+    }
 
     setwd(startdir)
     cat("Saving output to", sQuote(output), "...\n")
