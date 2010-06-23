@@ -926,3 +926,71 @@ RtangleFinish <- function(object, error=FALSE)
     }
 }
 
+## For R CMD xxxx
+.Sweave <- function(arg)
+{
+    Usage <- function() {
+        cat("Usage: R CMD Sweave file",
+            "",
+            "A simple front-end for Sweave",
+            "",
+            "Options:",
+            "  -h, --help     print this help message and exit",
+            "  -v, --version  print version info and exit",
+            "",
+            "Report bugs to <r-bugs@r-project.org>.",
+            sep = "\n")
+    }
+    do_exit <- function(status = 0L)
+        q("no", status = status, runLast = FALSE)
+
+    if (length(arg) != 1) { Usage(); do_exit(1L) }
+    if(arg %in% c("-h", "--help")) { Usage(); do_exit() }
+    if(arg %in% c("-v", "--version")) {
+        cat("Sweave front-end: ",
+            R.version[["major"]], ".",  R.version[["minor"]],
+            " (r", R.version[["svn rev"]], ")\n", sep = "")
+        cat("",
+            "Copyright (C) 2006-2010 The R Core Development Team.",
+            "This is free software; see the GNU General Public License version 2",
+            "or later for copying conditions.  There is NO warranty.",
+            sep="\n")
+        do_exit()
+    }
+    Sweave(arg)
+    do_exit()
+}
+
+.Stangle <- function(arg)
+{
+    Usage <- function() {
+        cat("Usage: R CMD Stangle file",
+            "",
+            "A simple front-end for Stangle",
+            "",
+            "Options:",
+            "  -h, --help     print this help message and exit",
+            "  -v, --version  print version info and exit",
+            "",
+            "Report bugs to <r-bugs@r-project.org>.",
+            sep = "\n")
+    }
+    do_exit <- function(status = 0L)
+        q("no", status = status, runLast = FALSE)
+
+    if (length(arg) != 1) { Usage(); do_exit(1L) }
+    if(arg %in% c("-h", "--help")) { Usage(); do_exit() }
+    if(arg %in% c("-v", "--version")) {
+        cat("Stangle front-end: ",
+            R.version[["major"]], ".",  R.version[["minor"]],
+            " (r", R.version[["svn rev"]], ")\n", sep = "")
+        cat("",
+            "Copyright (C) 2006-2010 The R Core Development Team.",
+            "This is free software; see the GNU General Public License version 2",
+            "or later for copying conditions.  There is NO warranty.",
+            sep="\n")
+        do_exit()
+    }
+    Stangle(arg)
+    do_exit()
+}
