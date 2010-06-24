@@ -164,22 +164,22 @@ NEW FEATURES
         manipulating bibliographic information in enhanced BibTeX
         style, unifying and enhancing the previously existing
         mechanisms.
-        
+
     o	A bibstyle() function has been added to the 'tools' package
 	with default JSS style for rendering "bibentry" objects, and a
 	mechanism for registering other rendering styles.
-        
+
     o	Several aspects of the display of text help are now
 	customizable using the new Rd2txt_options() function.
 	options("help_text_width") is no longer used.
-	
+
     o	Added \href tag to the Rd format, to allow hyperlinks to URLs
     	without displaying the full URL.
 
     o	New toRd() generic in the 'tools' package to convert objects to
 	fragments of Rd code, and added "fragment" argument to
 	Rd2txt(), Rd2HTML(), and Rd2latex() to support it.
-	
+
     o	R_HOME/share/texmf now follows the TDS conventions, so can be
 	set as a texmf tree ('root directory' in MiKTeX parlance).
 
@@ -196,7 +196,7 @@ NEW FEATURES
     o   Added support for subsetting "raster" objects, plus assigning
         to a subset, conversion to a matrix (of colour strings), and
         comparisons (== and !=).
-        
+
     o	Added a new parseLatex() function (and related functions
 	deparseLatex() and latexToUtf8()) to support conversion of
 	bibliographic entries for display in R.
@@ -334,13 +334,13 @@ BUG FIXES
 	(it used to force such values to be 1).
 
     o	A bug in callNextMethod() for some examples with "..." in the
-	arguments has been fixed.  
+	arguments has been fixed.
 	See src/library/methods/tests/nextWithDots.R in the sources.
 
     o	GERaster() now checks for width or height of zero and does
 	nothing in those cases; previously the behaviour was
 	undefined, probably device-specific, and possibly dangerous.
-        
+
     o	\Sexpr[result=rd] in an Rd file added a spurious newline,
 	which was displayed as extra whitespace when rendered.
 
@@ -373,9 +373,12 @@ BUG FIXES
 
     o	Text help rendering of \tabular{} has been improved: under
  	some circumstances leading blank columns were not rendered.
- 	
+
     o	strsplit(x, fixed=TRUE) marked UTF-8 strings with the local
-	encoding when no splits were found.    	
+	encoding when no splits were found.
+
+    o	weighted.mean(NA, na.rm=TRUE) and similar now returns NaN again,
+	as it did previously to R 2.10.0.
 
 
 

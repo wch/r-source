@@ -24,8 +24,7 @@ weighted.mean.default <- function(x, w, ..., na.rm = FALSE)
         stop("'x' and 'w' must have the same length")
     w <- as.double(w) # avoid overflow in sum for integer weights.
     if (na.rm) { i <- !is.na(x); w <- w[i]; x <- x[i] }
-    w <- w/sum(w)
-    sum((x*w)[w != 0])
+    sum((x*w)[w != 0])/sum(w) # --> NaN in empty case
 }
 
 ## see note for ?mean.Date
