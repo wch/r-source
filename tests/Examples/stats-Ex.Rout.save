@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-18 r51768)
+R version 2.12.0 Under development (unstable) (2010-06-25 r52381)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -13586,10 +13586,10 @@ Rape    -0.5393836 -0.8179779 -0.1999436
 > plot(prcomp(USArrests))
 > summary(prcomp(USArrests, scale = TRUE))
 Importance of components:
-                        PC1   PC2    PC3    PC4
-Standard deviation     1.57 0.995 0.5971 0.4164
-Proportion of Variance 0.62 0.247 0.0891 0.0434
-Cumulative Proportion  0.62 0.868 0.9566 1.0000
+                         PC1    PC2     PC3     PC4
+Standard deviation     1.575 0.9949 0.59713 0.41645
+Proportion of Variance 0.620 0.2474 0.08914 0.04336
+Cumulative Proportion  0.620 0.8675 0.95664 1.00000
 > biplot(prcomp(USArrests, scale = TRUE))
 > 
 > 
