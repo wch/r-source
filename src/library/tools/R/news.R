@@ -428,6 +428,9 @@ function(file = NULL)
                                                     do_chunk(e[[2L]]))))
                              })))
     ## Squeeze in an empty date column.
-    .make_news_db(cbind(db[, 1L], NA_character_, db[, -1L]),
+    .make_news_db(cbind(sub("^CHANGES IN R VERSION ", "", db[, 1L]),
+                        NA_character_,
+                        db[, 2L],
+                        sub("\n*$", "", db[, 3L])),
                   logical(nrow(db)))
 }

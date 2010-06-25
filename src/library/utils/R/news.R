@@ -4,7 +4,7 @@ function(query, package = "R", lib.loc = NULL,
 {
     if(is.null(db)) {
         db <- if(package == "R")
-            tools:::.build_news_db_from_R_NEWS()
+            tools:::.build_news_db_from_R_NEWS_Rd()
         else
             tools:::.build_news_db(package, lib.loc, format, reader)
     }
