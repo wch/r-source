@@ -375,9 +375,6 @@ function(x)
 .build_news_db_from_R_NEWS_Rd <-
 function(file = NULL)
 {
-    if(is.null(file))
-        file <- file.path(R.home("doc"), "NEWS.Rd")
-
     ## Need to proceed as follows:
     ## Get \section and respective name
     ## Get \subsection and respective name
@@ -407,7 +404,10 @@ function(file = NULL)
         unlist(strsplit(s, "\n\036", fixed = TRUE))
     }
 
-    x <- parse_Rd(file)
+    x <- if(is.null(file))
+        .readRDS(file.path(R.home("doc"), "NEWS.rds"))
+    else
+        parse_Rd(file)
     ## Expand \Sexpr et al now because this does not happen when using
     ## fragments.
     x <- prepare_Rd(x, stages = "install")

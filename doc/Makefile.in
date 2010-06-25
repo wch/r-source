@@ -12,12 +12,14 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS CRAN_mirrors.csv \
-	KEYWORDS KEYWORDS.db THANKS NEWS.Rd
-DISTFILES = Makefile.in $(INSTFILES) R.aux Rscript.1
+	KEYWORDS KEYWORDS.db THANKS
+DISTFILES = Makefile.in $(INSTFILES) R.aux Rscript.1 NEWS.Rd
 NON_SVN_INSTFILES = FAQ RESOURCES
 SUBDIRS = html manual
 
 HELP2MAN = $(PERL) $(top_srcdir)/tools/help2man.pl
+
+R_EXE = $(top_builddir)/bin/R --vanilla --slave
 
 all: Makefile R docs
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -31,7 +33,7 @@ R: Makefile svnonly
 	  $(MAKE) rdocdir=$(top_builddir)/doc install-sources; \
 	fi
 
-docs: R.1 @MAINTAINER_MODE_TRUE@ updateNEWS
+docs: R.1 NEWS.rds @MAINTAINER_MODE_TRUE@ updateNEWS
 	@(cd manual && $(MAKE) $@)
 
 R.1:
@@ -39,15 +41,18 @@ R.1:
 	  --name="a language for data analysis and graphics" \
 	  $(top_builddir)/bin/R
 
+NEWS.rds: NEWS.Rd
+	@$(ECHO) ".saveRDS(tools::parse_Rd(\"$<\"), \"$@\")" | $(R_EXE)
+
 updateNEWS: $(top_srcdir)/NEWS $(srcdir)/html/NEWS.html
 
 $(top_srcdir)/NEWS: $(srcdir)/NEWS.Rd
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
-	  $(top_builddir)/bin/R --slave --vanilla
+	  $(R_EXE)
 
 $(srcdir)/html/NEWS.html: $(srcdir)/NEWS.Rd
 	@$(ECHO) "options(warn=1);tools:::Rd2HTML_NEWS_in_Rd(\"$<\", \"$@\")" | \
-	  $(top_builddir)/bin/R --slave --vanilla
+	  $(R_EXE)
 
 install: install-message installdirs install-sources install-sources2 install-man
 	@for d in $(SUBDIRS); do \
@@ -102,6 +107,7 @@ clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(INSTFILES) R.1; \
 	fi
+	-@rm -f NEWS.rds
 distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
