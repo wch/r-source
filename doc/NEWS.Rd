@@ -1,0 +1,2091 @@
+\name{NEWS}
+\title{R News}
+\encoding{UTF-8}
+\section{CHANGES IN R VERSION 2.12.0}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item Reading a packages's CITATION file now defaults to ASCII
+       rather than Latin-1: a package with a non-ASCII CITATION file
+       should declare an encoding in their DESCRIPTION file and use
+       that encoding for the CITATION file.
+      
+      \item \code{difftime()} now defaults to the \code{"tzone"} attribute of
+       \code{"POSIXlt"} objects rather than to the current timezone as set
+       by the default for the 'tz' argument.  (Wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(14182)}.)
+      
+      \item \code{pretty()} is now generic, with new methods for \code{"Date"} and
+       \code{"POSIXt"} classes (based on code contributed by Felix Andrews).
+      
+      \item \code{unique()} and \code{match()} are now faster on character vectors where
+       all elements are in the global CHARSXP cache and have unmarked
+       encoding (ASCII).  Thanks to Matthew Dowle for suggesting
+       improvements to the way the hash code is generated in
+       unique.c.
+      
+      \item The \code{enquote()} utility, in use internally, is exported now.
+      
+      \item .C and .Fortran now map non-zero return values (other than
+       NA_LOGICAL) for logical vectors to TRUE: it has been an
+       implicit assumption that they are treated as true.
+      
+      \item The \code{print()} methods for \code{"glm"} and \code{"lm"} objects now insert
+       linebreaks in long calls in the same way that the \code{print()}
+       methods for "summary.[g]lm" objects have long done.  This does
+       change the layout of the examples for a number of packages,
+       e.g. MASS.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14250)})
+      
+      \item \code{constrOptim()} can now be used with method \code{"SANN"}.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14245)})
+      
+       It gains an argument 'hessian' to be passed to \code{optim()}, which
+       allows all the ... arguments to be intended for \code{f()} and \code{grad()}.
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14071)})
+      
+      \item \code{curve()} now allows 'expr' to be an object of mode \code{"expression"}
+       as well as \code{"call"} and \code{"function"}.
+      
+      \item The "POSIX[cl]t" methods for \code{Axis()} have been replaced by a
+       single method for \code{"POSIXt"}.
+      
+       There are no longer separate \code{plot()} methods for "POSIX[cl]t"
+       and \code{"Date"}: the default method has been able to handle those
+       classes for a long time.  This inter alia allows a single
+       date-time object to be supplied, the wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(14016)}.
+      
+       The methods had a different default (\code{""}) for xlab.
+      
+      \item Classes \code{"POSIXct"}, \code{"POSIXlt"} and \code{"difftime"} have generators
+       \code{.POSIXct()}, \code{.POSIXlt()} and \code{.difftime()}.  Package authors are
+       advised to make use of them (they are available from R 2.11.0)
+       to proof against planned future changes to the classes.
+      
+       The ordering of the classes has been changed, so \code{"POSIXt"} is
+       now the second class.  See the document 'Updating packages for
+       changes in R 2.12.x' on developer.r-project.org for the
+       consequences for a handful of CRAN packages.
+      
+      \item The \code{"POSIXct"} method of \code{as.Date()} allows a timezone to be
+       specified (but still defaults to UTC).
+      
+      \item New \code{list2env()} utility function as an inverse of
+       as.list(<environment>) and for fast multi-\code{assign()} to existing
+       environment.  \code{as.environment()} is now generic and uses
+       \code{list2env()} as list method.
+      
+      \item There are several small changes to output which 'zap' small
+       numbers, e.g. in printing quantiles of residuals in summaries
+       from \code{"lm"} and \code{"glm"} fits, and in test statisics in
+       \code{print.anova()}.
+      
+      \item Special names such as \code{"dim"}, \code{"names"}, etc, are now allowed as slot
+       names of S4 classes, with \code{"class"} the only remaining exception.
+      
+      \item .Renviron can have architecture-specific versions such as
+       .Renviron.i386 on systems with sub-architectures.
+      
+      \item \code{installed.packages()} has a new argument 'subarch' to filter on
+       sub-architecture.
+      
+      \item The \code{summary()} method for \code{packageStatus()} now has a separate
+       \code{print()} method.
+      
+      \item The default \code{summary()} method returns an object inheriting from
+       class \code{"summaryDefault"} which has a separate \code{print()} method
+       that calls \code{zapsmall()} for numeric/complex values.
+      
+      \item The startup message now includes the platform and if used,
+       sub-architecture: this is useful where different
+       (sub-)architectures run on the same OS.
+      
+      \item The \code{getGraphicsEvent()} mechanism now allows multiple windows
+       to return graphics events, through the new functions
+       \code{setGraphicsEventHandlers()}, \code{setGraphicsEventEnv()}, and
+       \code{getGraphicsEventEnv()}.  (Currently implemented in the
+       \code{windows()} and \code{X11()} devices.)
+      
+      \item \code{tools::texi2dvi()} gains an 'index' argument, mainly for use by
+       R CMD Rd2pdf.
+      
+       It avoids the use of 'texindy' by texinfo's texi2dvi >= 1.157,
+       since that does not emulate 'makeindex' well enough to avoid
+       problems with special characters (such as '(', '\{', '!') in indices.
+      
+      \item The ability of \code{readLines()} and \code{scan()} to re-encode inputs to
+       marked UTF-8 strings on Windows since R 2.7.0 is extended to
+       non-UTF-8 locales on other OSes.
+      
+      \item \code{scan()} gains a 'fileEncoding' argument to match \code{read.table()}.
+      
+      \item \code{points()} and \code{lines()} gain \code{"table"} methods to match \code{plot()}.
+       (Wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(10472)}.)
+      
+      \item \code{Sys.chmod()} allows 'mode' to be a vector, recycled along 'paths'.
+      
+      \item There are |, & and \code{xor()} methods for classes \code{"octmode"} and
+       \code{"hexmode"}, which work bitwise.
+      
+      \item Environment variables R_DVIPSCMD, R_LATEXCMD, R_MAKEINDEXCMD,
+       R_PDFLATEXCMD are no longer used nor set in an R session.
+       (With the move to \code{tools::texi2dvi()}, the conventional LATEX,
+       MAKEINDEX and PDFLATEX will be used.  options(\code{"dvipscmd"})
+       defaults to the value of DVIPS, then to \code{"dvips"}.)
+      
+      \item New function \code{isatty()} to see if terminal connections are
+       redirected.
+      
+      \item \code{summaryRprof()} returns the sampling interval in component
+       'sample.interval' and only returns in 'by.self' data for
+       functions with non-zero self times.
+      
+      \item print(x) and str(x) now indicate if an empty list x is named.
+      
+      \item \code{install.packages()} and \code{remove.packages()} with 'lib'
+       unspecified and multiple libraries in \code{.libPaths()}
+       inform the user of the library location used with a message
+       rather than a warning.
+      
+      \item There is limited support for multiple compressed streams on a
+       file: all of [bgx]\code{zfile()} allow streams to be appended to an
+       existing file, but \code{bzfile()} reads only the first stream.
+      
+      \item Function \code{person()} in package 'utils' now uses a given/family
+        scheme in preference to first/middle/last, is vectorized to
+        handle an arbitrary number of persons, and gains a 'role'
+        argument to specify person roles using a controlled vocabulary
+        (the MARC relator terms).
+      
+      \item Package 'utils' adds a new \code{"bibentry"} class for representing and
+        manipulating bibliographic information in enhanced BibTeX
+        style, unifying and enhancing the previously existing
+        mechanisms.
+      
+      \item A \code{bibstyle()} function has been added to the 'tools' package
+       with default JSS style for rendering \code{"bibentry"} objects, and a
+       mechanism for registering other rendering styles.
+      
+      \item Several aspects of the display of text help are now
+       customizable using the new \code{Rd2txt_options()} function.
+       options(\code{"help_text_width"}) is no longer used.
+      
+      \item Added \\href tag to the Rd format, to allow hyperlinks to URLs
+        without displaying the full URL.
+      
+      \item New \code{toRd()} generic in the 'tools' package to convert objects to
+       fragments of Rd code, and added \code{"fragment"} argument to
+       \code{Rd2txt()}, \code{Rd2HTML()}, and \code{Rd2latex()} to support it.
+      
+      \item R_HOME/share/texmf now follows the TDS conventions, so can be
+       set as a texmf tree ('root directory' in MiKTeX parlance).
+      
+      \item S3 generic functions now use correct S4 inheritance when
+        dispatching on an S4 object.  See ?Methods, section on
+        "Methods for S3 Generic Functions" for recommendations and
+        details.
+      
+      \item \code{format.pval()} gains a ... argument to pass arguments such as
+       'nsmall' to \code{format()}.  (Wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(9574)})
+      
+      \item \code{legend()} supports 'title.adj' (Wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(13415)})
+      
+      \item Added support for subsetting \code{"raster"} objects, plus assigning
+        to a subset, conversion to a matrix (of colour strings), and
+        comparisons (== and !=).
+      
+      \item Added a new \code{parseLatex()} function (and related functions
+       \code{deparseLatex()} and \code{latexToUtf8()}) to support conversion of
+       bibliographic entries for display in R.
+      
+      \item Text rendering of \\itemize in help uses a Unicode bullet in
+       UTF-8 and most single-byte Windows locales.
+      
+      
+    }
+  }
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+      \item Supplying the parser with a string containing both octal/hex and
+       Unicode escapes is now an error.
+      
+      \item File extension .C for C++ code files in packages is now defunct.
+      
+      
+    }
+  }
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item \code{install.packages()} has a new argument 'libs_only' to optionally
+       pass --libs-only to INSTALL and works analogously for Windows
+       binary installs (to add support for 64- or 32-bit Windows).
+      
+      \item When sub-architectures are in use, the installed architectures
+       are recorded in the 'Archs' field of the DESCRIPTION file.
+       There is a new default filter, \code{"subarch"}, in
+       \code{available.packages()} to make use of this.
+      
+       Code is compiled in a copy of the 'src' directory when a
+       package is installed for more than one sub-architecture: this
+       avoid problems with cleaning the sources between building
+       sub-architectures.
+      
+      \item R CMD INSTALL --libs-only no longer overrides the setting of
+       locking, so a previous version of the package will be restored
+       unless --no-lock is specified.
+      
+      
+    }
+  }
+  \subsection{UTILITIES}{
+    \itemize{
+      \item R CMD Rprof|build|check are now based on R rather than Perl
+       scripts.  The only remaining Perl scripts are the rarely used
+       R CMD Sd2Rd, install-info.pl (used only if install-info is
+       not found) and some maintainer-mode-only scripts.
+      
+      \item R CMD check has a new argument --extra-arch to confine tests
+       to those needed to check an additional sub-architecture.
+      
+       R CMD check's check for "Subdirectory 'inst' contains no files"
+       is more thorough: it looks for files, and warns if there are
+       only empty directories.
+      
+       'check' configuration files have changed format: they are now
+       R source files, and the default file is ~/.R/check.Rconf.
+      
+      \item R CMD build no longer creates an INDEX file (R CMD INSTALL
+       does so), and --force removes (rather than overwrites) an
+       existing INDEX file.
+      
+      \item R CMD Rd2dvi makes use of \code{tools::texi2dvi()} to process the
+       package manual.
+      
+      \item R CMD Rprof now uses \code{utils::summaryRprof()} rather than Perl.
+       It has new arguments to select one of the tables and to limit
+       the number of entries printed.
+      
+      \item R CMD Sweave now runs R with --vanilla so the environment
+       setting of R_LIBS will always be used.
+      
+      
+    }
+  }
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item \code{lang5()} and \code{lang6()} \{in addition to pre-existing lang[1-4]()\}
+       convenience functions for easier construction of \code{eval()} calls.
+       If you have your own definition, do wrap it inside
+       '#ifndef lang5 .... #endif' to keep it working with old and new R.
+      
+      \item Header R.h now includes only the C headers it itself needs,
+       hence no longer includes errno.h.  (This helps avoid problems
+       when it is included from C++ source files.)
+      
+      \item Headers Rinternals.h and R_ext/Print.h include the C++
+       versions of stdio.h and stdarg.h respectively if included from
+       a C++ source file.
+      
+      
+    }
+  }
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item A C99 compiler is now required, and more C99 language features
+       will be used in the R sources.
+      
+      \item Tcl/Tk >= 8.4 is now required (increased from 8.3).
+      
+      \item 'make check' compares the output of the examples from several of
+       the base packages to reference output rather than the previous
+       output (if any).  Expect some differences due to differences
+       in floating-point computations.
+      
+      \item zlib has been updated to 1.2.4: this is also the minimum
+       version required for --with-system-zlib.
+      
+      
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Calls to \code{selectMethod()} by default no longer cache inherited
+       methods.  This could previously corrupt methods used by \code{as()}.
+      
+      \item The densities of non-central chi-squared are now more accurate
+       in some cases in the extreme tails, e.g. dchisq(2000, 2,
+       1000), as a series expansion was truncated too early.
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14105)})
+      
+      \item \code{pt()} is more accurate in the left tail for ncp large, e.g.
+       pt(-1000, 3, 200).  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14069)})
+      
+      \item The default C code (R_binary) for binary ops now sets the S4
+       bit in the result if either argument is an S4 object. (\Sexpr[results=rd]{tools:::Rd_expr_PR(13209)})
+      
+      \item source(echo=TRUE) failed to echo comments that followed the
+       last statement in a file.
+      
+      \item S4 classes that contained one of \code{"matrix"}, \code{"array"} or \code{"ts"} and
+       also another class now accept superclass objects in \code{new()}.
+       Also fixes failure to call \code{validObject()} for these classes.
+      
+      \item Conditional inheritance defined by argument test= in
+       \code{methods::setIs()} will no longer be used in S4 method selection
+       (caching these methods could give incorrect results).  See
+       ?setIs.
+      
+      \item The signature of an implicit generic is now used by
+       \code{setGeneric()} when that does not use a definition nor
+       explicitly set a signature.
+      
+      \item The \code{pdf()} device will now allow 'lwd' values less than 1
+       (it used to force such values to be 1).
+      
+      \item A bug in \code{callNextMethod()} for some examples with \code{"..."} in the
+       arguments has been fixed.
+       See src/library/methods/tests/nextWithDots.R in the sources.
+      
+      \item \code{GERaster()} now checks for width or height of zero and does
+       nothing in those cases; previously the behaviour was
+       undefined, probably device-specific, and possibly dangerous.
+      
+      \item \\Sexpr[result=rd] in an Rd file added a spurious newline,
+       which was displayed as extra whitespace when rendered.
+      
+      
+      
+      
+    }
+  }
+}
+\section{CHANGES IN R VERSION 2.11.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{install.packages()} has a new optional argument 'INSTALL_opts'
+        which can be used to pass options to R CMD INSTALL for
+        source-package installs.
+      
+      
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item R CMD Rd2dvi failed if run from a path containing space(s).
+       This also affected R CMD check, which calls Rd2dvi.
+      
+      \item \code{stripchart()} could fail with an empty factor level. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14317)})
+      
+      \item Text help rendering of \\tabular\{\} has been improved: under
+        some circumstances leading blank columns were not rendered.
+      
+      \item strsplit(x, fixed=TRUE) marked UTF-8 strings with the local
+       encoding when no splits were found.
+      
+      \item weighted.mean(NA, na.rm=TRUE) and similar now returns NaN again,
+       as it did previously to R 2.10.0.
+      
+      
+      
+    }
+  }
+}
+\section{CHANGES IN R VERSION 2.11.1}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item R CMD INSTALL checks if dependent packages are available early on
+       in the installation of source packages, thereby giving clearer
+       error messages.
+      
+      \item R CMD INSTALL --build now names the file in the format used
+       for Mac OS X binary files on that platform.
+      
+      \item \code{BIC()} in package stats4 now also works with multiple fitted models,
+       analogously to \code{AIC()}.
+      
+      
+    }
+  }
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+      \item Use of file extension .C for C++ code in packages is now
+       deprecated: it has caused problems for some 'make's on
+       case-insensitive file systems (although it currently works
+       with the recommended toolkits).
+      
+      
+    }
+  }
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item Command 'gnutar' is preferred to 'tar' when configure sets
+       TAR.  This is needed on Mac OS 10.6, where the default tar,
+       bsdtar 2.6.2, has been reported to produce archives with
+       illegal extensions to tar (according to the POSIX standard).
+      
+      
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item The C function mkCharLenCE now no longer reads past 'len' bytes
+       (unlikely to be a problem except in user code). (\Sexpr[results=rd]{tools:::Rd_expr_PR(14246)})
+      
+      \item On systems without any default LD_LIBRARY_PATH (not even
+       /usr/local/lib), [DY]LIB_LIBRARY_PATH is now set without a
+       trailing colon.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(13637)})
+      
+      \item More efficient \code{utf8ToInt()} on long multi-byte strings with
+       many multi-byte characters.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14262)})
+      
+      \item \code{aggregate.ts()} gave platform-depedent results due to rounding
+       error for ndeltat != 1.
+      
+      \item \code{package.skeleton()} sometimes failed to fix filenames for .R or
+        .Rd files to start with an alphanumeric.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14253)})
+       It also failed when only an S4 class without any methods was
+       defined.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14280)})
+      
+      \item splinefun(*, method = \code{"monoH.FC"})  was not quite monotone in rare
+       cases. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14215)})
+      
+      \item Rhttpd no longer crashes due to SIGPIPE when the client closes
+       the connection prematurely.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14266)})
+      
+      \item \code{format.POSIXlt()} could cause a stack overflow and crash when used on
+        very long vectors.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14267)})
+      
+      \item \code{Rd2latex()} incorrectly escaped special characters in \\usage sections.
+      
+      \item \code{mcnemar.test()} could alter the levels (dropping unused levels)
+       if passed 'x' and 'y' as factors (reported by Greg Snow).
+      
+      \item Rd2pdf sometimes needed a further pdflatex pass to get
+       hyperlinked pages correct.
+      
+      \item \code{interaction()} produced malformed results when levels were
+        duplicated, causing segfaults in \code{split()}.
+      
+      \item cut(d, breaks = <n>)  now also works for \code{"Date"} or \code{"POSIXt"}
+        argument d.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14288)})
+      
+      \item \code{memDecompress()} could decompress incompletely rare xz-compressed
+       input due to incorrect documentation of xz utils.  (Report
+       and patch from Olaf Mersmann.)
+      
+      \item The S4 \code{initialize()} methods for \code{"matrix"}, \code{"array"}, and \code{"ts"} have
+        been fixed to call \code{validObject()}. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14284)})
+      
+      \item R CMD INSTALL now behaves the same way with or without
+       --no-multiarch on platforms with only one installed
+       architecture.  (It used to clean the src directory without
+       --no-multiarch.)
+      
+      \item [<-.data.frame was not quite careful enough in assigning (and
+        potentially deleting) columns right-to-left. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14263)})
+      
+      \item rbeta(n, a,b) no longer occasionally returns NaN for a >> 1 > b.
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14291)})
+      
+      \item pnorm(x, log.p = TRUE) could return NaN not -Inf for x near
+       (minus for lower.tail=TRUE) the largest representable number.
+      
+      \item Compressed data files *.(txt|tab|csv).(gz|bz2|xz) were not
+       recognized for the list of data topics and hence for packages
+       using LazyData.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14273)})
+      
+      \item \code{textConnection()} did an unnecessary translation on strings in
+       a foreign encoding (e.g. UTF-8 strings on Windows) and so was
+       slower than it could have been on very long input strings.
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14286)})
+      
+      \item \code{tools::Rd2txt()} did not render poorly written Rd files
+       consistently with other renderers.
+      
+       It computed widths of strings that would be print()ed with
+       escapes incorrectly, for example in the computation of column
+       width for \\tabular.
+      
+      \item \code{na.action()} did not extract the 'na.action' component as
+       documented.
+      
+      
+      
+      
+    }
+  }
+}
+\section{CHANGES IN R VERSION 2.11.0}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item Packages must have been installed under R >= 2.10.0, as the
+       current help system is the only one now supported.
+      
+      \item A port to 64-bit Windows is now available as well as binary
+       package repositiories: see the 'R Administration and
+       Installation Manual'.
+      
+      \item Argument matching for primitive functions is now done in the
+       same way as for interpreted functions except for the deliberate
+       exceptions
+      
+        call switch .C .Fortran .Call .External
+      
+       all of which use positional matching for their first argument,
+       and also some internal-use-only primitives.
+      
+      \item The default device for command-line R at the console on Mac OS X
+       is now \code{quartz()} and not \code{X11()}.
+      
+      
+    }
+  }
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The 'open' modes for connections are now interpreted more
+       consistently.  open = \code{"r"} is now equivalent to open = \code{"rt"} for
+       all connections.  The default open = \code{""} now means \code{"rt"} for all
+       connections except the compressed file connections \code{gzfile()},
+       \code{bzfile()} and \code{xzfile()} for which it means \code{"rb"}.
+      
+      \item R CMD INSTALL now uses the internal \code{untar()} in package utils:
+       this ensures that all platforms can install bzip2- and
+       xz-compressed tarballs.  In case this causes problems (as it
+       has on some Windows file systems when run from Cygwin tools)
+       it can be overridden by the environment variable
+       R_INSTALL_TAR: setting this to a modern external tar program
+       will speed up unpacking of large (tens of Mb or more)
+       tarballs.
+      
+      \item help(try.all.packages = TRUE) is much faster (although the
+       time taken by the OS to find all the packages the first time
+       it is used can dominate the time).
+      
+      \item R CMD check has a new option '--timings' to record
+       per-example timings in file <pkg>.Rcheck/<pkg>-Ex.timings.
+      
+      \item The TRE library has been updated to version 0.8.0 (minor bugfixes).
+      
+      \item grep[l], [g]sub and [g]regexpr now work in bytes in an 8-bit
+       locales if there is no marked UTF-8 input string: this will be
+       somewhat faster, and for [g]\code{sub()} give the result in the
+       native encoding rather than in UTF-8 (which returns to the
+       behaviour prior to R 2.10.0).
+      
+      \item A new argument 'skipCalls' has been added to \code{browser()} so that
+       it can report the original context when called by other
+       debugging functions.
+      
+      \item More validity checking of UTF-8 and MBCS strings is done by
+       \code{agrep()} and the regular-expression matching functions.
+      
+      \item The undocumented restriction on \code{gregexpr()} to length(text) > 0
+       has been removed.
+      
+      \item Package tcltk now sends strings to Tcl in UTF-8: this means
+       that strings with a marked UTF-8 encoding are supported in
+       non-UTF-8 locales.
+      
+      \item The graphics engine now supports rendering of raster (bitmap)
+       images, though not all graphics devices can provide (full)
+       support.  Packages providing graphics devices (e.g., Cairo,
+       RSvgDevice, cairoDevice) will need to be reinstalled.
+      
+       There is also support in the graphics engine for capturing
+       raster images from graphics devices (again not supported
+       on all graphics devices).
+      
+      \item R CMD check now also checks if the package and namespace can
+       be unloaded: this provides a check of the \code{.Last.lib()} and
+       \code{.onUnload()} hook functions (unless --install=fake).
+      
+      \item prop.table(x) now accepts a one-dimensional table for x.
+      
+      \item A new function \code{vapply()} has been added, based on a suggestion
+       from Bill Dunlap.  It requires that a template for the
+       function value be specified, and uses it to determine the
+       output type and to check for consistency in the function
+       values.
+      
+      \item The main HTML help page now links to a reformatted copy of
+       this NEWS file. (Suggested by Henrik Bengtsson.)  Package
+       index files link to the package DESCRIPTION and NEWS files and
+       a list of demos when using dynamic help.
+      
+      \item The [ method for class \code{"AsIs"} allows the next method to change
+       the underlying class.  (Wish of Jens Oehlschlägel.)
+      
+      \item write.csv[2] no longer allow 'append' to be changed: as ever,
+       direct calls to \code{write.table()} give more flexibility as well as
+       more room for error.
+      
+      \item The index page for HTML help for a package now collapses
+       multiple signatures for S4 methods into a single entry.
+      
+      \item The use of '.required' by \code{require()} and \code{detach()} has been
+       replaced by '.Depends' which is set from the 'Depends' field
+       of a package (even in packages with name spaces).  By default
+       \code{detach()} prevents such dependencies from being detached: this
+       can be overridden by the argument 'force'.
+      
+      \item \code{bquote()} has been extended to work on function definitions
+       (wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(14031)}).
+      
+      \item \code{detach()} when applied to an object other than a package
+       returns the environment that has been detached, to parallel
+       \code{attach()}.
+      
+      \item \code{readline()} in non-interactive use returns \code{""} and does not
+       attempt to read from the 'terminal'.
+      
+      \item New function \code{file_ext()} in package 'tools'.
+      
+      \item \code{xtfrm()} is now primitive and internally generic, as this allows
+       S4 methods to be set on it without name-space scoping issues.
+      
+       There are now \code{"AsIs"} and \code{"difftime"} methods, and the default
+       method uses unclass(x) if is.numeric(x) is true (which will be
+       faster but relies on \code{is.numeric()} having been set correctly
+       for the class).
+      
+      \item is.numeric(x) is now false for a \code{"difftime"} object
+       (multiplication and division make no sense for such objects).
+      
+      \item The default method of weighted.mean(x, w) coerces 'w' to be
+       numeric (aka double); previously only integer weights were
+       coerced.  Zero weights are handled specially so an infinite
+       value with zero weight does not force an NaN result.
+      
+       There is now a \code{"difftime"} method.
+      
+      \item \code{bug.report()} now has 'package' and 'lib.loc' arguments to
+       generate bug reports about packages.  When this is used, it
+       looks for a BugReports field in the package DESCRIPTION file,
+       which will be assumed to be a URL at which to submit the
+       report, and otherwise generates an email to the package
+       maintainer.  (Suggested by Barry Rowlingson.)
+      
+      \item \code{quantile()} now has a method for the date-time class \code{"POSIXt"},
+       and types 1 and 3 (which never interpolate) work for Dates and
+       ordered factors.
+      
+      \item length(<POSIXlt>)  now returns the length of the corresponding
+       abstract timedate-vector rather than always 9 (the length of the
+       underlying list structure).  (Wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(14073)} and \Sexpr[results=rd]{tools:::Rd_expr_PR(10507)}.)
+      
+      \item The readline completion backend no longer sorts possible
+       completions alphabetically (e.g., function argument names) if
+       R was built with readline >= 6.
+      
+      \item \code{select.list()} gains a 'graphics' argument to allow Windows/Mac
+       users to choose the text interface.  This changes the
+       behaviour of new.packages(ask=TRUE) to be like
+       update.packages(ask=TRUE) on those platforms in using a text
+       menu: use ask=\code{"graphics"} for a graphical menu.
+      
+      \item New function \code{chooseBioCmirror()} to set the \code{"BioC_mirror"} option.
+      
+      \item The R grammar prevents using the argument 'name' in signatures
+       of S4 methods for '$' and '$<-', since they will always be
+       called with a character string value for 'name'.  The implicit
+       S4 generic functions have been changed to reflect this:
+       packages which included 'name' in the signature of their
+       methods need to be updated and re-installed.
+      
+      \item The handling of the 'method' argument of \code{glm()} has been
+       refined following suggestions by Ioannis Kosmidis and Heather
+       Turner.
+      
+      \item \code{str()} gains a new argument 'list.len' with default 99, limiting the
+       number of \code{list()} items (per level), thanks to suggestions from
+       David Winsenius.
+      
+      \item Having formal arguments of an S4 method in a different order
+       from the generic is now an error (the warning having been
+       ignored by some package maintainers for a long time).
+      
+      \item New functions \code{enc2native()} and \code{enc2utf8()} convert character
+       vectors with possibly marked encodings to the current locale and
+       UTF-8 respectively.
+      
+      \item Unrecognized escapes and embedded nuls in character strings are
+       now an error, not just a warning.  Thus option \code{"warnEscapes"}
+       is no longer needed.  \code{rawToChar()} now removes trailing nuls
+       silently, but other embedded nuls become errors.
+      
+      \item Informational messages about masked objects displayed when a
+       package is attached are now more compact, using \code{strwrap()}
+       instead of one object per line.
+      
+      \item \code{print.rle()} gains argument 'prefix'.
+      
+      \item \code{download.file()} gains a \code{"curl"} method, mainly for use on
+       platforms which have 'curl' but not 'wget', but also for some
+       hard-to-access URLs.
+      
+      \item In Rd, \\eqn and \\deqn will render in HTML (and convert to text)
+       upper- and lower-case Greek letters (entered as \\alpha ...),
+       \\ldots, \\dots, \\ge and \\le.
+      
+      \item \code{utf8ToInt()} and \code{intToUtf8()} now map NA inputs to NA outputs.
+      
+      \item \code{file()} has a new argument 'raw' which may help if it is used
+       with something other than a regular file, e.g. a character device.
+      
+      \item New function \code{strtoi()}, a wrapper for the C function strtol.
+      
+      \item \code{as.octmode()} and \code{as.hexmode()} now allow inputs of length other
+       than one.
+      
+       The \code{format()} and \code{print()} methods for \code{"octmode"} now preserve
+       names and dimensions (as those for \code{"hexmode"} did).
+      
+       The \code{format()} methods for classes \code{"octmode"} and \code{"hexmode"} gain
+       a 'width' argument.
+      
+      \item \code{seq.int()} returns an integer result in some further cases
+       where \code{seq()} does, e.g. seq.int(1L, 9L, by = 2L).
+      
+      \item Added \\subsection\{\}\{\} macro to Rd syntax, for subsections
+       within sections.
+      
+      \item n-dimensional arrays with dimension names can now be indexed
+       by an n-column character matrix. The indices are matched
+       against the dimension names.  NA indices are propagated to the
+       result.  Unmatched values and \code{""} are not allowed and result in
+       an error.
+      
+      \item interaction(drop=TRUE) uses less memory (related to \Sexpr[results=rd]{tools:::Rd_expr_PR(14121)}).
+      
+      \item \code{summary()} methods have been added to the \code{"srcref"} and
+       \code{"srcfile"} classes, and various encoding issues have been
+       cleaned up.
+      
+      \item If option \code{"checkPackageLicense"} is set to TRUE (not currently
+       the default), users will be asked to agree to
+       non-known-to-be-FOSS package licences at first use.
+      
+      \item Checking setAs(a,b) methods only gives a message instead of a
+       warning, when one of a or b is unknown.
+      
+      \item New function \code{norm()} to compute a matrix norm.
+       \code{norm()} and also \code{backsolve()} and \code{sample()} have implicit S4 generics.
+      
+      \item Renviron.site and Rprofile.site can have architecture-specific
+       versions on systems with sub-architectures.
+      
+      \item R CMD check now (by default) also checks Rd files for
+       auto-generated content in need of editing, and missing argument
+       descriptions.
+      
+      \item \code{aggregate()} gains a formula method thanks to a contribution by
+       Arni Magnusson.  The data frame method now allows summary
+       functions to return arbitrarily many values.
+      
+      \item \code{path.expand()} now propagates NA values rather than converting them
+       to \code{"NA"}.
+      
+      \item \code{file.show()} now disallows NA values for file names, headers, and
+       pager.
+      
+      \item The 'fuzz' used by \code{seq()} and \code{seq.int()} has been reduced from
+       1e-7 to 1e-10, which should be ample for the double-precision
+       calculations used in R.  It ensures that the fuzz never comes
+       into play with sequences of integers (wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(14169)}).
+      
+      \item The default value of RSiteSearch(restrict=) has been changed
+       to include vignettes but to exclude R-help.  The R-help
+       archives available have been split, with a new option of
+       \code{"Rhelp10"} for those from 2010.
+      
+      \item New function \code{rasterImage()} in the 'graphics' package for drawing
+       raster images.
+      
+      \item \code{stats:::extractAIC.coxph()} now omits aliased terms when computing
+       the degrees of freedom (suggestion of Terry Therneau).
+      
+      \item \code{cor()} and \code{cov()} now test for misuse with non-numeric
+       arguments, such as the non-bug report \Sexpr[results=rd]{tools:::Rd_expr_PR(14207)}.
+      
+      \item pchisq(ncp =, log.p = TRUE) is more accurate for probabilities
+       near one.  E.g. pchisq(80, 4, ncp=1, log.p=TRUE).  (Maybe what
+       was meant in \Sexpr[results=rd]{tools:::Rd_expr_PR(14216)}.)
+      
+      \item \code{maintainer()} has been added, to give convenient access to the
+       name of the maintainer of a package (contributed by David
+       Scott).
+      
+      \item \code{sample()} and \code{sample.int()} allow zero items to be sampled from
+       a zero-length input.  \code{sample.int()} gains a default value
+       'size=n' to be more similar to \code{sample()}.
+      
+      \item \code{switch()} returned NULL on error (not previously documented on
+       the help page): it now does so invisibly, analogously to
+       if-without-else.
+      
+       It is now primitive: this means that EXPR is always matched to
+       the first argument and there is no danger of partial matching
+       to later named arguments.
+      
+      \item Primitive functions \code{UseMethod()}, \code{attr()}, attr<-(), \code{on.exit()},
+       \code{retracemem()} and \code{substitute()} now use standard argument
+       matching (rather than positional matching).  This means that
+       all multi-argument primitives which are not internal now use
+       standard argument matching except where positional matching is
+       desirable (as for \code{switch()}, \code{call()}, \code{.C()} ...).
+      
+      \item All the one-argument primitives now check that any name
+       supplied for their first argument is a partial match to the
+       argument name as documented on the help page: this also
+       applies to replacement functions of two arguments.
+      
+      \item \code{base::which()} uses a new .Internal function when arr.ind is
+       FALSE resulting in a 10x speedup.  Thanks to Patrick Aboyoun
+       for implementation suggestions.
+      
+      \item Help conversion to text now uses the first part of \\enc\{\}\{\}
+       markup if it is representable in the current output encoding.
+       On the other hand, conversion to LaTeX with the default
+       outputEncoding = \code{"ASCII"} uses the second part.
+      
+      \item A new class \code{"listOfMethods"} has been introduced to represent
+       the methods in a methods table, to replace the deprecated
+       class \code{"MethodsList"}.
+      
+      \item \code{any()} and \code{all()} return early if possible.  This may speed up
+       operations on long vectors.
+      
+      \item \code{strptime()} now accepts "\%z" (for the offset from UTC in the
+       RFC822 format of +/-hhmm).
+      
+      \item The PCRE library has been updated to version 8.02, a bug-fix
+       release which also updates tables to Unicode 5.02.
+      
+      \item Functions which may use a graphical \code{select.list()} (including
+       \code{menu()} and \code{install.packages()}) now check on a Unix-alike that
+       Tk can be started (and not just
+       capabilities(\code{"tcltk"}) && capabilities(\code{"X11"})).
+      
+      \item The parser no longer marks strings containing octal or hex
+       escapes as being in UTF-8 when entered in a UTF-8 locale.
+      
+      \item On platforms with cairo but not Pango (notably Mac OS X) the
+       initial default \code{X11()} type is set to \code{"Xlib"}: this avoids
+       several problems with font selection when done by cairo rather
+       than Pango (at least on Mac OS X).
+      
+      \item New \code{arrayInd()} such that which(x, arr.ind = TRUE) for an array
+       'x' is now equivalent to arrayInd(which(x), dim(x), dimnames(x)).
+      
+      
+    }
+  }
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+      \item Bundles of packages are defunct.
+      
+      \item \code{stats::clearNames()} is defunct: use \code{unname()}.
+      
+      \item Basic regular expressions are defunct, and \code{strsplit()}, \code{grep()},
+       \code{grepl()}, \code{sub()}, \code{gsub()}, \code{regexpr()} and \code{gregexpr()} no longer
+       have an 'extended' argument.
+      
+      \item \code{methods::trySilent()} is defunct.
+      
+      \item \code{index.search()} (which was deprecated in 2.10.0) is no longer
+       exported and has a different argument list.
+      
+      \item Use of multiple arguments to \code{return()} is now defunct.
+      
+      \item The use of \code{UseMethod()} with more than two arguments is now defunct.
+      
+      \item In the 'methods' package, the MethodsList metadata objects which
+       had been superseded by hash tables (environments) since R
+       2.8.0 are being phased out.  Objects of this class are no
+       longer assigned or used as metadata by the package.
+      
+       \code{getMethods()} is now deprecated, with its internal use replaced
+       by \code{findMethods()} and other changes.  Creating objects from the
+       MethodsList class is also deprecated.
+      
+      \item Parsing strings containing both octal/hex and Unicode escapes
+       now gives a warning and will become an error in R 2.12.0.
+      
+      
+    }
+  }
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item UTF-8 is now used for the reference manual and package
+       manuals.  This requires LaTeX '2005/12/01' or later.
+      
+      \item configure looks for a POSIX compliant tr, Solaris's
+       /usr/ucb/tr having been found to cause Rdiff to malfunction.
+      
+      \item configure is now generated with autoconf-2.65, which works
+       better on recent systems and on Mac OS X.
+      
+      
+    }
+  }
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item Characters in R source which are not translatable to the
+       current locale are now handled more tolerantly:  these will be
+       converted to hex codes with a warning. Such characters are
+       only really portable if they appear in comments.
+      
+      \item R CMD INSTALL now tests that the installed package can be loaded
+       (and backs out the installation if it cannot): this can be
+       suppressed by --no-test-load.  This avoids installing/updating
+       a package that cannot be used: common causes of failures to
+       load are missing/incompatible external software and
+       missing/broken dependent packages.
+      
+      \item Package installation on Windows for a package with a src
+       directory now checks if a DLL is created unless there is a
+       src/Makefile.win file: this helps catch broken installations
+       where the toolchain has not reported problems in building the DLL.
+       (Note: this can be any DLL, not just one named <pkg-name>.dll.)
+      
+      
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Using \code{with()}, \code{eval()} etc with a list with some unnamed
+       elements now works. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14035)})
+      
+      \item The \code{"quick"} dispatch of S4 methods for primitive functions was
+       not happening, forcing a search each time.  (Dispatch for
+       closures was not affected.)  A side effect is that default
+       values for arguments in a method that do not have defaults in
+       the generic will now be ignored.
+      
+      \item Trying to dispatch S4 methods for primitives during the search
+       for inherited methods slows that search down and potentially
+       could cause an infinite recursion.  An internal switch was
+       added to turn off all such methods from
+       \code{findInheritedMethods()}.
+      
+      \item R framework installation (on Mac OS X) would not work properly
+       if a rogue Resources directory was present at the top level.
+       Such a non-symlink will now be renamed to Resources.old (and
+       anything previously named Resources.old removed) as part of
+       the framework installation process.
+      
+      \item The checks for conforming S4 method arguments could fail when
+       the signature of the generic function omitted some of the
+       formal arguments (in addition to ...). Arguments omitted from
+       the method definition but conforming (per the documentation)
+       should now be ignored (treated as \code{"ANY"}) in dispatching.
+      
+      \item The computations for S4 method evaluation when '...' was in the
+       signature could fail, treating '...' as an ordinary symbol.
+       This has been fixed, for the known cases.
+      
+      \item Various \code{ar()} fitting methods have more protection for singular
+       fits.
+      
+      \item callNextMethod now works again with the drop= argument in `[`
+      
+      \item \code{parse()} and \code{parse_Rd()} miscounted columns when multibyte UTF-8
+       characters were present.
+      
+      \item Formatting of help pages has had minor improvements: extra
+       blank lines have been removed from the text format, and empty
+       package labels removed from HTML.
+      
+      \item cor(A, B) where A has n x 1 and B a 1-dimensional array
+       segfaulted or gave an internal error.
+       (The case cor(B, A) was \Sexpr[results=rd]{tools:::Rd_expr_PR(7116)}.)
+      
+      \item \code{cut.POSIXt()} applied to a start value after the DST transition
+       on a DST-change day could give the wrong time for 'breaks' in units
+       of days or longer.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14208)})
+      
+      \item \code{do_par()} UNPROTECTed too early (\Sexpr[results=rd]{tools:::Rd_expr_PR(14214)})
+      
+      \item subassignment x[[....]] <- y didn't check for a zero-length
+       right hand side, and inserted rubbish value. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14217)})
+      
+      \item \code{fisher.test()} no longer gives a P-value *very* slightly > 1,
+       in some borderline cases.
+      
+      \item Internal function matchArgs no longer modifies the general
+       purpose bits of the SEXPs that make up the formals list of R
+       functions.  This fixes an invalid error message that would
+       occur when a garbage collection triggered a second call to
+       matchArgs for the same function via a finalizer.
+      
+      \item \code{gsub()} in 2.10.x could fail from stack overflow for extremely
+       long strings due to temporary data being allocated on the
+       stack. Also, \code{gsub()} with fixed=TRUE is in some circumstances
+       considerably faster.
+      
+      \item Several primitives, including \code{attributes()}, attr<-()
+       \code{interactive()}, \code{nargs()} and \code{proc.time()}, did not check that
+       they were called with the correct number of arguments.
+      
+      \item A potential race condition in \code{list.files()} when other processes
+       are operating on the directory has been fixed; the code now
+       dynamically allocates memory for file listings in a single
+       pass instead of making an initial count pass.
+      
+      \item mean(x, trim=, na.rm = FALSE) failed to return NA if 'x'
+       contained missing values.  (Reported by Bill Dunlap.)
+      
+      \item Extreme tail behavior of, \code{pbeta()} \{and hence \code{pf()}\}, e.g.,
+       pbeta(x, 3, 2200, lower.tail=FALSE, log.p=TRUE) now returns
+       finite values instead of jumping to -Inf too early (\Sexpr[results=rd]{tools:::Rd_expr_PR(14230)}).
+      
+      \item parse(text=x) misbehaved for objects 'x' that were not coerced
+       internally to character, notably symbols.  (Reported to
+       R-devel by Bill Dunlap.)
+      
+      \item The internal C function 'coerceSymbol' now handles coercion to
+       character, and warns if coercion fails (rather than silently
+       returning NULL).  This allows a name to be given where a
+       character vector is required in functions which coerce
+       internally.
+      
+      \item The interpretation by \code{strptime()} of \%c was non-standard (not
+       that it is ever advisable to use locale- and system-specific
+       input formats).
+      
+      \item capabilities(\code{"X11"}) now works the same way on Mac OS X as on
+       other platforms (and as documented: it was always true for R
+       built with --with-aqua, as the CRAN builds are).
+      
+      \item The \code{X11()} device with cairo but not Pango (notably Mac OS X)
+       now checks validity of text strings in UTF-8 locales (since
+       Pango does but cairo it seems does not).
+      
+      \item \code{read.fwf()} misread multi-line records when n was specified.
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14241)})
+      
+      \item all.equal(*, tolerance = e) passes the numeric tolerance also to
+       the comparison of the attributes.
+      
+      \item pgamma(0,0), a boundary case, now returns 0, its limit from the
+       left, rather than the limit from the right.
+      
+      \item Issuing POST requests to the internal web server could stall
+       the request under certain circumstances.
+      
+      \item gzcon( <textConnection> ), an error, no longer damages the
+       connection (in a way to have it seg.fault). (\Sexpr[results=rd]{tools:::Rd_expr_PR(14237)})
+      
+      \item All the results from \code{hist()} now use the nominal 'breaks' not
+       those adjusted by the numeric 'fuzz': in recent versions the
+       nominal 'breaks' were reported but the 'density' referred to
+       the intervals used in the calculation -- which mattered very
+       slightly for one of the extreme bins.  (Based on a report by
+       Martin Becker.)
+      
+      \item If xy[z].coords (used internally by many graphics functions) are
+       given a list as 'x', they now check that the list has suitable
+       names and give a more informative error message.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(13936)})
+      
+      
+      
+      
+    }
+  }
+}
+\section{CHANGES IN R VERSION 2.10.1 patched}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The handling of line textures in the \code{postscript()} and \code{pdf()}
+       devices was set up for round end caps (the only type which
+       existed at the time): it has now been adjusted for butt endcaps.
+      
+      \item lchoose(a,k) is now defined as log(abs(choose(a,k))), analogously
+       to \code{lfactorial()}.
+      
+      \item Although \\eqn\{\} in Rd files is defined as a 'verbatim' macro,
+       many packages expected \\dots and \\ldots to be interpreted
+       there (as was the case in R < 2.10.0), so this is now done
+       (using an ellipsis in HTML rendering).
+      
+      \item Escaping of braces in quoted strings in R-code sections of Rd
+       files is allowed again.  This had been changed for the new Rd
+       format in R 2.10.0 but was only documented on the developer
+       site and was handled inconsistently by the converters: text
+       and example conversion removed the escapes but HTML conversion
+       did not.
+      
+      \item The PCRE library has been updated to version 8.01, a bug-fix
+       release.
+      
+      \item \code{tools::readNEWS()} now accepts a digit as the first character
+       of a news section.
+      
+      
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Using read.table(header=TRUE) on a header with an embedded new
+       line would copy part of the header into the data.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14103)})
+      
+      \item qpois(p = 1, lambda = 0) now gives 0 as for all other p.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14135)})
+      
+      \item Functions related to string comparison (e.g. \code{unique()}, \code{match()})
+       could cause crashes when used with strings not in the native
+       encoding, e.g. UTF-8 strings on Windows.
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14114)} and \Sexpr[results=rd]{tools:::Rd_expr_PR(14125)})
+      
+      \item x[ , drop=TRUE] dropped an NA level even if it was in use.
+      
+      \item The dynamic HTML help system reported the wrong MIME type for the
+       style sheet.
+      
+      \item \code{tools::codoc()} (used by R CMD check) was missing cases where the
+       function had no arguments but was documented to have some.
+      
+      \item Help links containing special characters (e.g. "?") were not
+       generated correctly when rendered in HTML. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14155)})
+      
+      \item lchoose(a,k) no longer wrongly gives NaN for negative a.
+      
+      \item \code{ks.test()} could give a p-value that was off by one observation
+       due to rounding error. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14145)})
+      
+      \item \code{readBin()}/readChar() when reading millions of character strings
+       in a single call used excessive amounts of memory (which also
+       slowed them down).
+      
+      \item R CMD SHLIB could fail if used with paths that were not
+       alphanumeric, e.g. contained '+'.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14168)})
+      
+      \item \code{sprintf()} was not re-entrant, which potentially caused problems
+       if an \code{as.character()} method called it.
+      
+      \item The \code{quartz()} device did not restore the clipping region when
+       filling the background for a new page. This could be observed
+       in multi-page bitmap output as stale outer regions of the
+       plot.
+      
+      \item p.adjust(*, method, n) now works correctly for the rare case
+       n > length(p), also when method differs from \code{"bonferroni"} or
+       \code{"none"}, thanks to a patch from Gordon Smyth.
+      
+      \item \code{tools::showNonASCII()} failed to detect non-ASCII characters
+       if \code{iconv()} (incorrectly) converted them to different ASCII
+       characters.  (Seen on Windows only.)
+      
+      \item \code{tcrossprod()} wrongly failed in some cases when one of the
+       arguments was a vector and the other a matrix.
+      
+      \item [cr]bind(..., deparse.level=2) was not always giving names
+       when documented to do so.  (Discovered whilst investigating
+       \Sexpr[results=rd]{tools:::Rd_expr_PR(14189)}.)
+      
+      \item match(incomparables=<non-NULL>) could in rare cases infinite-
+       loop.
+      
+      \item \code{poisson.test()} needed to pass 'conf.level' to \code{binom.test()}
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14195)})
+      
+      \item The \code{"nls"} method for \code{df.residual()} gave incorrect results for
+       models fitted with na.action = na.exclude.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14194)})
+      
+      \item A change to options(scipen=) was only implemented when printing
+       next occurred, even though it should have affected intervening
+       calls to \code{axis()}, \code{contour()} and \code{filledcontour()}.
+      
+      \item prettyNum(drop0trailing=TRUE) did not handle signs of imaginary
+       parts of complex numbers correctly (and this was used by \code{str()}:
+       \Sexpr[results=rd]{tools:::Rd_expr_PR(14201)}).
+      
+      \item \code{system.time()} had sys.child component wrong (copied user.child
+       instead) on systems with HAVE_GETRUSAGE (\Sexpr[results=rd]{tools:::Rd_expr_PR(14210)})
+      
+      \item Changing both line texture and line cap (end) resulted in the
+       latter to be ommitted form the PDF code.  In addition, line cap
+       (end) and join are now set explicitly in PDF output to ensure
+       correct defaults.
+      
+      \item The suppression of auto-rotation in \code{bitmap()} and \code{dev2bitmap()}
+       with the 'pdfwrite' device was not working correctly.
+      
+      \item plot(\code{ecdf()}, log=\code{"x"}) no longer gives an incorrect warning.
+      
+      \item \code{read.fwf()} works again when 'file' is a connection.
+      
+      \item Startup files will now be found if their paths exceed 255 bytes.
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14228)})
+      
+      \item contrasts<- (in the 'stats' package) no longer has an
+       undeclared dependence on 'methods' (introduced in 2.10.0).
+      
+      
+      
+    }
+  }
+}
+\section{CHANGES IN R VERSION 2.10.1}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The PCRE library has been updated to version 8.00.
+      
+      \item R CMD INSTALL has new options --no-R, --no-libs, --no-data,
+       --no-help, --no-demo, --no-exec, and --no-inst to suppress
+       installation of the specified part of the package.  These are
+       intended for special purposes (e.g. building a database
+       of help pages without fully installing all packages).
+      
+      \item The documented line-length limit of 4095 bytes when reading
+       from the console now also applies also to parse(file=\code{""})
+       (which previously had a limit of around 1024 bytes).
+      
+      \item A Bioconductor mirror can be set for use by \code{setRepositories()}
+       via the option \code{"BioC_mirror"}, e.g. the European mirror can be
+       selected by
+       options(BioC_mirror="http://bioconductor.statistik.tu-dortmund.de")
+      
+      \item Double-clicking in a \code{tk_select.list()} list box now selects the
+       item and closes the list box (as happens on the Windows
+       \code{select.list()} widget).
+      
+      
+    }
+  }
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item configure will be able to find a usable libtiff in some rare
+       circumstances where it did not previously (where libtiff
+       needed to be linked explicitly against -ljpeg).
+      
+      \item Making refman.pdf works around a problem with the indexing
+       with hyperref 6.79d and later.
+      
+      
+    }
+  }
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+      \item The 'extended' argument is deprecated in \code{strsplit()}, \code{grep()},
+       \code{grepl()}, \code{sub()}, \code{gsub()}, \code{regexpr()} and \code{gregexpr()} (not just the
+       value extended = FALSE) and will be removed in R 2.11.0.
+      
+      
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item trigamma(x) and other psigamma(x, n) calls are now accurate for
+       very large abs(x). (\Sexpr[results=rd]{tools:::Rd_expr_PR(14020)})
+      
+      \item [g]sub(perl=FALSE, fixed=FALSE) could use excessive stack space
+       when used with a very long vector containing some non-ASCII
+       strings.
+      
+      \item The default method of weighted.mean(na.rm = TRUE) did not omit
+       weights for NA observations in 2.10.0. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14032)})
+      
+      \item [g]regexpr(pattern, fixed = TRUE) returned match positions in
+       bytes (not characters) in an MBCS locale if 'pattern' was a
+       single byte.
+      
+       [g]sub(fixed = TRUE) with a single-byte pattern could
+       conceivably have matched part of a multibyte character in a
+       non-UTF-8 MBCS.
+      
+      \item \code{findLineNum()} and \code{setBreakpoint()} would sometimes fail if the
+       specified file was not in the current directory.
+      
+      \item Package tcltk's demo(tkdensity) was broken in 2.9.0 when \code{demo()}
+       was changed to set par(ask = TRUE).
+      
+      \item \code{gsub()} with backrefs could fail on extremely long strings
+       (hundreds of thousands of characters) due to integer overflow
+       in a length calculation.
+      
+      \item abline(*, untf=TRUE) now uses a better x-grid in log-scale, e.g.,
+       for plot(c(1,300), c(1,300), log=\code{"xy"}) ; abline(4,1, untf=TRUE).
+      
+      \item detach/\code{unloadNamespace()} arrange to flush the package's
+       lazyload cache of R objects once the package/namespace is no
+       longer needed.
+      
+      \item There have been small fixes to the rendering of help,
+       e.g. \\command is now rendered verbatim (so e.g. -- is not
+       interpreted, \Sexpr[results=rd]{tools:::Rd_expr_PR(14045)}).
+      
+       Also, there are many small changes to help files where the new
+       converters were not rendering them in the same way as before.
+      
+      \item \code{available.packages()} would fail when run on a repository
+       with no packages meeting the filtering conditions. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14042)})
+      
+      \item rep(x, times, each = 2) gave invalid results when the 'times'
+       argument is a vector longer than 'x'.  Reported by Bill Dunlap.
+      
+      \item An error when \code{unloadNamespace()} attempted to run the \code{.onUnload()}
+       function gave an error in the reporting function and so was
+       not reported properly.
+      
+      \item Text help rendering did not handle very long input lines
+       properly.
+      
+      \item \code{promptMethods()} generated signature documentation improperly.
+      
+      \item pgamma(x, a, lower.tail=FALSE) and qgamma(..) are now
+       considerably more accurate in some regions for very small 'a'.
+       \code{qgamma()} now correctly returns 0 instead of NaN in similar
+       extreme cases, and \code{qgamma()} no longer warns in the case of
+       small 'a', see (\Sexpr[results=rd]{tools:::Rd_expr_PR(12324)}).
+      
+      \item \code{unname()} now also removes names from a zero length vector.
+      
+      \item Printing results from \code{ls.str()} no longer evaluates unevaluated
+       calls.
+      
+      \item \code{complete.cases()} failed on a 0-column data frame argument.
+       (Underlies \Sexpr[results=rd]{tools:::Rd_expr_PR(14066)}.)
+      
+       It could return nonsensical results if no input determined the
+       number of cases (seen in the no-segfault tests).
+      
+      \item An error in \code{nls()} with a long formula could cause a segfault.
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14059)})
+      
+      \item qchisq(p, df, ncp, lower.tail = FALSE) with ncp >= 80 was
+       inaccurate for small p (as the help page said): it is now
+       less inaccurate. (In part, \Sexpr[results=rd]{tools:::Rd_expr_PR(13999)}.)
+      
+       For ncp less than but close to 80, \code{pchisq()} and \code{qchisq()} are
+       more accurate for probablilities very close to 1 (a series
+       expansion was truncated slightly too early).
+      
+       pchisq(x, df, ncp) can no longer return values just larger
+       than one for large values of ncp.
+      
+      \item \code{intToUtf8()} could fail when asked to produce 10Mb or more
+       strings, something it was never intended to do: unfortunately
+       Windows crashed R (other OSes reported a lack of resources).
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14068)})
+      
+      \item \code{chisq.test()} could fail when given argument 'x' or 'y' which
+       deparsed to more than one line.  (Reported by Laurent Gauthier.)
+      
+      \item S4 methods are uncached whenever the name space containing
+       them is unloaded (by \code{unloadNamespace()} as well as by
+       detach(unload = TRUE)).
+      
+      \item The internal record-keeping by dyn.load/dyn.unload was
+       incomplete, which could crash R if a DLL that registered
+       .External routines had earlier been unloaded.
+      
+      \item bessel[JY](x, nu) with nu a negative integer (a singular case)
+       is now correct, analogously to \code{besselI()}, see \Sexpr[results=rd]{tools:::Rd_expr_PR(13556)}, below.
+      
+      \item \code{tools::file_path_as_absolute()} doubled the file separator when
+       applied to a file such as "/vmunix" or (on Windows) "d:/afile"
+       in a directory for which \code{getwd()} would return a path with a
+       trailing separator (largely cosmetic, as reasonable file
+       systems handle such a path correctly). (Perhaps what was
+       meant by \Sexpr[results=rd]{tools:::Rd_expr_PR(14078)}.)
+      
+      \item unsplit(drop = TRUE) applied to a data frame failed to pass
+       'drop' to the computation of row names. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14084)})
+      
+      \item The \code{"difftime"} method of \code{mean()} ignored its 'na.rm' argument.
+      
+      \item \code{tcltk::tk_select.list()} is now more likely to remove the
+       widget immediately after selection is complete.
+      
+      \item Adding/subtracting a \code{"difftime"} object to/from a \code{"POSIXt"} or
+       \code{"Date"} object works again (it was broken by the addition of
+       Ops.difftime).
+      
+      \item Conversion to latex of an Rd file with no aliases failed.
+      
+      \item wilcox.test(*, conf.int=TRUE) has achieved.level corrected and, for
+       exact=FALSE, now gives an 'estimate' which does not depend on the
+       alternative used.
+      
+      \item \code{help.search()} failed when the package argument was specified.
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14113)})
+      
+      \item switch(EXPR = \code{"A"})  now returns NULL, as switch(1) \{which used to
+       signal an error\}.
+      
+      
+      
+    }
+  }
+}
+\section{CHANGES IN R VERSION 2.10.0}{
+  \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
+    \itemize{
+      \item Package help is now converted from Rd by the R-based converters
+       that were first introduced in 2.9.0.  This means
+      
+       - Packages that were installed by R-devel after 2009-08-09
+        should not be used with earlier versions of R, and most
+        aspects of package help (including the runnable examples)
+        will be missing if they are so used.
+      
+       - Text, HTML and latex help and examples for packages
+        installed under the new system are converted on-demand from
+        stored parsed Rd files.  (Conversions stored in packages
+        installed under R < 2.10.0 are used if no parsed Rd files
+        are found.  It is recommended that such packages be
+        re-installed.)
+      
+      
+      \item HTML help is now generated dynamically using an HTTP server
+       running in the R process and listening on the loopback
+       interface.
+      
+       - Those worried about security implications of such a server
+        can disable it by setting the environment variable
+        R_DISABLE_HTTPD to a non-empty value.  This disables
+        \code{help.start()} and HTML help (so text help is shown instead).
+      
+       - The Java/Javascript search engine has been replaced by an
+        HTML interface to \code{help.search()}.  \code{help.start()} no longer has
+        an argument 'searchEngine' as it is no longer needed.
+      
+       - The HTML help can now locate cross-references of the form
+        \\link[pkg]\{foo\} and \\link[pkg:foo]\{bar\} where 'foo' is an
+        alias in the package, rather than the documented (basename
+        of a) filename (since the documentation has been much
+        ignored).
+      
+      
+    }
+  }
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{polygon()}, \code{pdf()} and \code{postscript()} now have a parameter
+       'fillOddEven' (default FALSE), which controls the mode used for
+       polygon fills of self-intersecting shapes.
+      
+      \item New \code{debugonce()} function; further,
+       getOption(\code{"deparse.max.lines"}) is now observed when debugging,
+       from a code suggestion by John Brzustowski.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(13647)}/8)
+      
+      \item \code{plot()} methods for \code{"stepfun"} and hence \code{"ecdf"} no longer plot
+       points by default for n >= 1000.
+      
+      \item [g]sub(*, perl=TRUE) now also supports '\\E' in order to *end*
+       \\U and \\L case changes, thanks to a patch from Bill Dunlap.
+      
+      \item \code{factor()}, `levels<-`(), etc, now ensure that the resulting factor
+       levels are unique (as was always the implied intention).  Factors
+       with duplicated levels are still constructible by low-level means,
+       but are now declared illegal.
+      
+      \item New \code{print()} (S3) method for class \code{"function"}, also used for
+       auto-printing. Further, .Primitive functions now print and
+       auto-print identically.  The new method is based on code
+       suggestions by Romain François.
+      
+      \item The \code{print()} and \code{toLatex()} methods for class \code{"sessionInfo"} now
+       show the locale in a nicer format and have arguments to
+       suppress locale information.
+      
+      \item In addition to previously only \code{round()}, there are other 'Math'
+       group (S3) methods for 'difftime', such as \code{floor()}, \code{signif()},
+       \code{abs()}, etc.
+      
+      \item For completeness, \code{old.packages()} and \code{available.packages()} allow
+       'type' to be specified (you could always specify 'available'
+       or 'contriburl').
+      
+      \item \code{available.packages()} by default only returns information on
+       the latest versions of packages whose version requirements are
+       satisified by the currently running R.
+      
+      \item \code{tools::write_PACKAGES()} has a new argument 'latestOnly', which
+       defaults to TRUE when only the latest versions in the
+       repository will be listed in the index.
+      
+      \item \code{getOption()} has a new argument 'default' that is returned if
+       the specified option is not set. This simplifies querying a
+       value and checking whether it is NULL or not.
+      
+      \item \code{parse()} now warns if the requested encoding is not supported.
+      
+      \item The \code{"table"} method of \code{as.data.frame()} gains a 'stringsAsFactors'
+       argument to allow the classifying factors to be returned as
+       character vectors rather than the default factor type.
+      
+      \item If \code{model.frame.default()} encounters a character variable where
+       'xlev' indicates a factor, it now converts the variable to a
+       factor (with a warning).
+      
+      \item \code{curve()} now returns a list containing the points that were drawn.
+      
+      \item \code{spineplot()} now accepts axes = FALSE, for consistency with
+       other functions called by \code{plot.factor()}.
+      
+      \item The Kendall and Spearman methods of \code{cor.test()} can optionally
+       use continuity correction when not computing exact p-values.
+       (The Kendall case is the wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(13691)}.)
+      
+      \item R now keeps track of line numbers during execution for
+       code sourced with options(keep.source = TRUE). The source
+       reference is displayed by debugging functions such as \code{traceback()},
+       \code{browser()}, \code{recover()}, and \code{dump.frames()}, and is stored as an
+       attribute on each element returned by \code{sys.calls()}. [Experimental]
+      
+      \item More functions now have an implicit (S4) generic definition.
+      
+      \item \code{quantile.default()} now disallows factors (wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(13631)})
+       and its help documents what numeric-like properties its input
+       need to have to work correctly.
+      
+      \item \code{weighted.mean()} is now generic and has \code{"Date"}, \code{"POSIXct"} and
+       \code{"POSIXlt"} methods.
+      
+      \item Naming subscripts (e.g. x[i=1, j=2]) in data.frame methods for
+       [ and [[ now gives a warning.  (Names are ignored in the
+       default method, but could have odd semantics for other
+       methods, and do for the data.frame ones.)
+      
+      \item \code{as.data.frame()} has an \code{"aovproj"} method.  (Wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(13505)})
+      
+      \item as.character(x) for numeric x no longer produces strings such as
+       \code{"0.30"}, i.e., with trailing zeros.  This change also renders
+       levels construction in \code{factor()} more consistent.
+      
+      \item \code{codocClasses()}, which checks consistency of the documentation of
+       S4 class slots, now does so in considerably more cases.  The
+       documentation of inherited slots (from superclasses) is now
+       optional.  This affects 'R CMD check <pkg>' when the package
+       defines S4 classes.
+      
+      \item \code{codoc()} now also checks S4 methods for code/documentation
+       mismatches.
+      
+      \item \code{for()}, \code{while()}, and \code{repeat()} loops  now always return NULL as
+       their (invisible) value.  This change was needed to address a
+       reference counting bug without creating performance penalties
+       for some common use cases.
+      
+      \item The \code{print()} method for \code{ls.str()} results now obeys an optional
+       'digits' argument.
+      
+      \item The 'method' argument of \code{glm()} now allows user-contributed methods.
+      
+      \item More general \code{reorder.default()} replaces functionality of
+       \code{reorder.factor()} and \code{reorder.character()}.
+      
+      \item The function \code{aspell()} has been added to provide an interface to
+       the Aspell spell-checker.
+      
+      \item Filters \code{RdTextFilter()} and \code{SweaveTeXFilter()} have been added
+       to the tools package to provide support for \code{aspell()} or other
+       spell checkers.
+      
+      \item \code{xtabs()} with the new option 'sparse = TRUE' now returns a sparse
+       Matrix, using package 'Matrix'.
+      
+      \item \code{contr.sum()} etc gain an argument 'sparse' which allows sparse
+       matrices to be returned.
+      
+       \code{contrasts()} also gains a 'sparse' argument which it passes to the
+       actual contrast function if that has a formal argument 'sparse'.
+      
+       'contrasts(f, .) <- val' now also works when 'val' is a sparse
+       Matrix.  It is planned that \code{model.matrix()} will work with such
+       factors 'f' in the future.
+      
+      \item \code{readNEWS()} will recognize a UTF-8 byte-order mark (BOM) in the
+       NEWS file. However, it is safer to use only ASCII code there
+       because not all editors recognize BOMs.
+      
+      \item New utility function \code{inheritedSlotNames()} for S4 class programming.
+      
+      \item \code{tabulate()} now allows NAs to pass through (and be ignored).
+      
+      \item If \code{debug()} is called on an S3 generic function then all methods
+       are debugged as well.
+      
+      \item Outlier symbols drawn by \code{boxplot()} now obey the 'outlwd'
+       argument.  Reported by Jurgen Kluge.
+      
+      \item svd(x) and eigen(x) now behave analogously to qr(x) in
+       accepting logical matrices x.
+      
+      \item File NEWS is now in UTF-8, and has a BOM (often invisible) on
+       the first line, and Emacs local variables set for UTF-8 at the
+       end.  RShowDoc(\code{"NEWS"}) should display this correctly, given
+       suitable fonts.
+      
+      \item terms.formula(simplify = TRUE) now does not deparse the LHS and
+       so preserves non-standard responses such as `a: b` (requested
+       by Sundar Dorai-Raj).
+      
+      \item New function \code{news()} for building and querying R or package news
+       information.
+      
+      \item z^n for integer n and complex z is more accurate now if
+       |n| <= 65536.
+      
+      \item factor(NULL) now returns the same as factor(character(0))
+       instead of an error, and table(NULL) consequently does
+       analogously.
+      
+      \item \code{as.data.frame.vector()} (and its copies) is slightly faster
+       by avoiding a copy if there are no names (following a
+       suggestion of Tim Hesterberg).
+      
+      \item \code{writeLines()}, \code{writeBin()} and \code{writeChar()} have a new argument
+       'useBytes'.  If false, character strings with marked encodings
+       are translated to the current locale (as before) but if true
+       they are written byte-by-byte.
+      
+      \item \code{iconv()} has a new argument 'mark' which can be used (by
+       experts) to suppress the declaration of encodings.
+      
+      \item DESCRIPTION 'LinkingTo' specs are now recognized as installation
+       dependencies, and included in package management computations.
+      
+      \item Standardized DESCRIPTION 'License' specs are now available for
+       package management computations.
+      
+      \item "\\uxxxx" and "\\Uxxxxxxxx" escapes can now be parsed to a UTF-8
+       encoded string even in non-UTF-8 locales (this has been
+       implemented on Windows since R 2.7.0). The semantics have
+       been changed slightly: a string containing such escapes is
+       always stored in UTF-8 (and hence is suitable for portably
+       including Unicode text in packages).
+      
+      \item New \code{as.raw()} method for \code{"tclObj"} objects (wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(13758)}).
+      
+      \item Rd.sty now makes a better job of setting email addresses,
+       including using a monospaced font.
+      
+      \item \code{textConnection()} gains an 'encoding' argument to determine how
+       input strings with marked encodings will be handled.
+      
+      \item R CMD Rd2pdf is available as a shortcut for R CMD Rd2dvi --pdf.
+      
+      \item R CMD check now checks links where a package is specified
+       (\\link[pkg]\{file\} or \\link[pkg:file]\{topic\}), if the package
+       is available.  It notes if the package is not available, as in
+       many cases this is an error in the link.
+      
+      \item \code{identical()} gains three logical arguments, which allow for even
+       more differentiation, notably '-0' and '0'.
+      
+      \item \code{legend()} now can specify the 'border' color of filled boxes,
+       thanks to a patch from Frederic Schutz.
+      
+      \item Indexing with a vector index to [[]] has now been extended to
+       all recursive types.
+      
+      \item Pairlists may now be assigned as elements of lists.  (Lists
+       could always be created with pairlist elements, but [[<-
+       didn't support assigning them.)
+      
+      \item The parser now supports C-preprocessor-like #line directives,
+       so error messages and source references may refer to the original
+       file rather than an intermediate one.
+      
+      \item New functions \code{findLineNum()} and \code{setBreakpoint()} work with the
+       source references to find the location of source lines and set
+       breakpoints (using \code{trace()}) at those lines.
+      
+      \item Namespace importing is more careful about warning on masked
+       generics, thanks to a patch by Yohan Chalabi.
+      
+      \item \code{detach()} now has an argument 'character.only' with the same
+       meaning as for \code{library()} or \code{require()}.
+      
+      \item \code{available.packages()} gains a 'filters' argument for specifying
+       the filtering operations performed on the packages found in the
+       repositories.  A new built-in 'license/FOSS' filter only
+       retains packages for which installation can proceed solely based
+       on packages which can be verified as Free or Open Source
+       Software (FOSS) employing the available license specifications.
+      
+      \item In registering an S3 class by a call to \code{setOldClass()}, the data
+       part (e.g., the object type) required for the class can be
+       included as one of the superclasses in the Classes argument.
+      
+      \item The argument 'f' to \code{showMethods()} can be an expression evaluating
+       to a generic function, allowing methods to be shown for
+       non-exported generics and other nonstandard cases.
+      
+      \item \code{sprintf()} now supports '\%o' for octal conversions.
+      
+      \item New function \code{Sys.readlink()} for information about symbolic
+       links, including if a file is a symbolic link.
+      
+      \item Package 'tools' has new functions \code{checkRdaFiles()} and
+       \code{resaveRdaFiles()} to report on the format of .rda/.RData data
+       files, and to re-save them in a different compressed format,
+       including choosing the most compact format available.
+      
+       A new INSTALL option, --resave-data, makes use of this.
+      
+      \item File ~/.R/config is used in preference to ~/.Rconfig, and
+       these are now documented in 'R Installation and Administration'.
+      
+      \item Logic operations with complex numbers now work, as they were always
+       documented to, and as in S.
+      
+      \item \code{arrows()} and \code{segments()} allow one of x1 or y1 to be omitted to
+       simplify the specification of vertical or horizontal lines
+       (suggestion of Tim Hesterberg).
+      
+      \item \code{approxfun()} is faster by avoiding repeated NA checks (diagnosis
+       and patch by Karline Soetaert & Thomas Petzoldt).
+      
+      \item There are the beginnings of a Nynorsk translation by Karl Ove
+       Hufthammer.
+      
+      \item \code{stripchart()} allows par 'bg' to be passed in for the
+       background colour for pch = 21 (wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(13984)}).
+      
+      \item New generic function \code{.DollarNames()} to enable class authors
+       to customize completion after the $ extractor.
+      
+      \item \code{load()}, \code{save()}, \code{dput()} and \code{dump()} now open a not-yet-open
+       connection in the appropriate mode (as other functions using
+       connections directly already did).
+      
+      
+    }
+  }
+  \subsection{REGULAR EXPRESSIONS}{
+    \itemize{
+      \item A different regular expression engine is used for basic and
+       extended regexps and is also for approximate matching. This is
+       based on the TRE library of Ville Laurikari, a modifed copy of
+       which is included in the R sources.
+      
+       This is often faster, especially in a MBCS locale.
+      
+       Some known differences are that it is less tolerant of invalid
+       inputs in MBCS locales, and in its interpretation of undefined
+       (extended) regexps such as "^*".  Also, the interpretation of
+       ranges such as [W-z] in caseless matching is no longer to map
+       the range to lower case.
+      
+       This engine may in future be used in 'literal' mode for fixed
+       = TRUE, and there is a compile-time option in src/main/grep.c
+       to do so.
+      
+      \item The use of repeated boundary regexps in \code{gsub()} and \code{gregexpr()} as
+       warned about in the help page does not work in this engine (it
+       did in the previous one since 2005).
+      
+      \item Extended (and basic) regexps now support same set of options as
+       for fixed = TRUE and perl = TRUE, including 'useBytes' and
+       support for UTF-8-encoded strings in non-UTF-8 locales.
+      
+      \item \code{agrep()} now has full support for MBCS locales with a modest
+       speed penalty. This enables \code{help.search()} to use approximate
+       matching character-wise rather than byte-wise.
+      
+      \item [g]sub use a single-pass algorithm instead of matching twice
+       and so is usually faster.
+      
+      \item The perl = TRUE versions now work correctly in a non-UTF-8 MBCS
+       locale, by translating the inputs to UTF-8.
+      
+      \item useBytes = TRUE now inhibits the translation of inputs with
+       marked encodings.
+      
+      \item \code{strsplit()} gains a 'useBytes' argument.
+      
+      \item The algorithm used by \code{strsplit()} has been reordered to batch by
+       elements of 'split': this can be much faster for fixed = FALSE
+       (as multiple compilation of regexps is avoided).
+      
+      \item The help pages, including ?regexp, have been updated and
+       should be consulted for details of the new implementations.
+      
+      
+    }
+  }
+  \subsection{HELP & Rd FILE CHANGES}{
+    \itemize{
+      \item A new dynamic HTML help system is used by default, and may be
+       controlled using \code{tools::startDynamicHelp()}.  With this enabled,
+       HTML help pages will be generated on request, resolving links
+       by searching through the current \code{.libPaths()}.  The user
+       may set options(\code{"help.ports"}) to control which IP port is used
+       by the server.
+      
+      \item \code{help.start()} no longer sets options(htmlhelp = TRUE) (it used
+       to on Unix but not on Windows).  Nor does it on Unix reset the
+       \code{"browser"} option if given an argument of that name.
+      
+       Arguments 'update' and 'remote' are now available on all
+       platforms: the default is update = FALSE since the http server
+       will update the package index at first use.
+      
+      \item \code{help()} has a new argument 'help_type' (with default set by the
+       option of that name) to supersede 'offline', 'htmlhelp' and
+       'chmhelp' (although for now they still work if 'help_type' is
+       unset).  There is a new type, \code{"PDF"} to allow offline PDF
+       (rather than PostScript).
+      
+       A function \code{offline_help_helper()} will be used if this exists
+       in the workspace or further down the search path, otherwise
+       the function of that name in the 'utils' name space is used.
+      
+      \item Plain text help is now used as the fallback for HTML help (as
+       it always was for Compiled HTML help on Windows).
+      
+      \item It is possible to ask for static HTML pages to be prebuilt via
+       the configure option --enable-prebuilt-html.  This may be
+       useful for those who wish to make HTML help available outside
+       R, e.g. on a local web site.
+      
+      \item An experimental tag \\Sexpr has been added to Rd files, to
+       evaluate expressions at build, install, or render time.
+       Currently install time and render time evaluation are
+       supported.
+      
+      \item Tags \\if, \\ifelse and \\out have been added to allow
+       format-specific (or more general, using \\Sexpr) conditional
+       text in man pages.
+      
+      \item The \code{parse_Rd()} parser has been made more tolerant of coding
+       errors in Rd files:  now all syntax errors are reported as
+       warnings, and an attempt is made to continue parsing.
+      
+      \item \code{parse_Rd()} now has an argument 'fragment' (default FALSE) to
+       accept small fragments of Rd files (so that \\Sexpr can output
+       Rd code which is then parsed).
+      
+      \item \code{parse_Rd()} now always converts its input to UTF-8.  The Rd2*
+       rendering functions have a new parameter, 'outputEncoding',
+       which controls how their output is encoded.
+      
+      \item \code{parse_Rd()} no longer includes the newline as part of a
+       "\%"-style comment.
+      
+      \item There have been various bug fixes and code reorganization in
+       the Rd renderers Rd2HTML, Rd2latex, Rd2txt, and Rd2ex.
+      
+       All example files are now created with either ASCII or UTF-8
+       encoding, and the encoding is only marked in the file if there
+       is any non-UTF-8 code (previously it was marked if the help
+       file had non-ASCII contents, possibly in other sections).
+      
+      \item \code{print.Rd()} now adds necessary escape characters so that
+       printing and re-parsing an Rd object should produce an
+       equivalent object.
+      
+      \item \code{parse_Rd()} was incorrectly handling multiple backslashes in
+       R code strings, converting 4n+3 backslashes to 2n+1 instead
+       of 2n+2.
+      
+      \item \code{parse_Rd()} now recognizes the \\var tag within a quoted string
+       in R-like text.
+      
+      \item \code{parse_Rd()} now treats the argument of \\command as LaTeX-like,
+       rather than verbatim.
+      
+      
+    }
+  }
+  \subsection{COMPRESSION}{
+    \itemize{
+      \item New function \code{untar()} to list or unpack tar archives, possibly
+       compressed.  This uses either an external 'tar' command or an
+       internal implementation.
+      
+      \item New function \code{tar()} to create (possibly compressed) tar archives.
+      
+      \item New functions \code{memCompress()} and \code{memDecompress()} for in-memory
+       compression and decompression.
+      
+      \item \code{bzfile()} has a 'compress' argument to select the amount of
+       effort put into compression when writing.
+      
+      \item New function \code{xzfile()} for use with xz-compressed files.  (This
+       can also read files compressed by some versions of 'lzma'.)
+      
+      \item \code{gzfile()} looks at the file header and so can now also read
+       bzip2-ed files and xz-compressed files.
+      
+      \item There are the new options of save(compress = \code{"bzip2"}) and \code{"xz"}
+       to use bzip2 or xz compression (which will be slower, but can
+       give substantially smaller files).  Argument compression_level
+       gives finer control over the space/time tradeoffs.
+      
+       \code{load()} can read such saves (but only as from this version of R).
+      
+      \item R CMD INSTALL/check and tools::writePACKAGES accept a wider
+       range of compressed tar archives.  Precisely how wide depends
+       on the capabilities of the host system's 'tar' command: they
+       almost always include .tar.bz2 archives, and with modern
+       versions of 'tar' other forms of compression such as lzma and
+       xz, and arbitrary extensions.
+      
+      \item R CMD INSTALL has a new option --data-compress to control the
+       compression used when lazy-loading data.  New possibilities are
+       --data-compress=bzip2 which will give ca 15\% better
+       compression at the expense of slower installation times, and
+       --data-compress=xz, often giving even better compression on
+       large datasets at the expense of much longer installation
+       times. (The latter is used for the recommended packages: it is
+       particularly effective for 'survival'.)
+      
+      \item \code{file()} for open = \code{""}, \code{"r"} or \code{"rt"} will automagically detect
+       compressed files (from gzip, bzip2 or xz).  This means that
+       compressed files can be specified by file name (rather than
+       via a \code{gzfile()} connection) to \code{read.table()}, \code{readlines()},
+       \code{scan()} and so on.
+      
+      \item \code{data()} can handle compressed text files with extensions
+       .\{txt,tab,csv\}.\{gz,bz2,xz\} .
+      
+      
+    }
+  }
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+      \item png(type=\code{"cairo1"}) is defunct: the value is no longer recognized.
+      
+      \item \code{tools::Rd_parse()} is defunct (as this version of R uses only
+       Rd version 2).
+      
+      \item Use of ~/.Rconf (which was deprecated in favour of ~/.Rconfig
+       in 2004) has finally been removed.
+      
+      \item Bundles of packages are deprecated.  See 'Writing R
+       Extensions' for the steps needed to unbundle a bundle.
+      
+      \item \code{help()} arguments 'offline', 'htmlhelp' and 'chmhelp' are
+       deprecated in favour of 'help_type'.
+      
+      \item \code{clearNames()} ('stats') is deprecated for \code{unname()}.
+      
+      \item Basic regular expressions (extended = FALSE) are deprecated in
+       strsplit, grep and friends.  There is a precise POSIX standard
+       for them, but it is not what recent RE engines implement, and
+       it seems that in almost all cases package authors intended
+       fixed = TRUE when using extended = FALSE.
+      
+      \item \code{methods::trySilent()} is deprecated for try(*, silent=TRUE) or
+       - more efficiently and flexibly - something like
+       tryCatch(*, error = function(e) e).
+      
+      \item \code{index.search()} is deprecated: there are no longer directories of
+       types other than 'help'.
+      
+      
+    }
+  }
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item cairo >= 1.2 is now required (1.2.0 was released in July 2006)
+       for cairo-based graphics devices (which remain optional).
+      
+      \item A suitable \code{iconv()} is now required: support for configure option
+       --without-iconv has been withdrawn (it was deprecated in R 2.5.0).
+      
+      \item Perl is no longer 'essential'. R can be built without it, but
+       scripts R CMD build, check, Rprof and Sd2d require it.
+      
+      \item A system 'glob' function is now essential (a working
+       \code{Sys.glob()} has been assumed since R 2.9.0 at least).
+      
+      \item C99 support for MBCS is now required, and configure option
+       --disable-mbcs has been withdrawn.
+      
+      \item Having a version of 'tar' capable of automagically detecting
+       compressed archives is useful for \code{utils::untar()}, and so 'gtar'
+       (a common name for GNU tar) is preferred to 'tar': set
+       environment variable TAR to specify a particular 'tar' command.
+      
+      
+    }
+  }
+  \subsection{INTERNATIONALIZATION}{
+    \itemize{
+      \item There is some makefile support for adding/updating translations
+       in packages: see po/README and 'Writing R Extensions'.
+      
+       There is support for the use of 'dngettext' for C-level
+       translations in packages: see 'Writing R Extensions'.
+      
+      
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item Assigning an extra 0-length column to a data frame by
+       DF[, \code{"foo"}] <- value now works in most cases (by filling with
+       NAs) or fails. (It used to give a corrupt data frame.)
+      
+      \item \code{validObject()} avoids an error during evaluation in the case
+       of various incorrect slot definitions.
+      
+      \item n:m now returns a result of type \code{"integer"} in a few more
+       boundary cases.
+      
+      \item The 'zap.ind' argument to \code{printCoefmat()} did not usually work as
+       other code attempted to ensure that non-zero values had a
+       non-zero representation.
+      
+      \item \code{printCoefmat()} formatted groups of columns together, not just
+       the cs.ind group but also the zap.ind group and a residual
+       group. It now formats all columns except the cs.ind group
+       separately (and zaps the zap.ind group column-by-column).  The
+       main effect will be see in the output from print.anova, as
+       this grouped SS-like columns in the zap.ind group.
+      
+      \item \code{R_ReplDLLinit()} initializes the top-level jump so that some
+       embedded applications on Windows no longer crash on error.
+      
+      \item \code{identical()} failed to take the encoding of character strings
+       into account, so identical byte patterns are not necessarily
+       identical strings, and similarly Latin-1 and UTF-8 versions of
+       the same string differ in byte pattern.
+      
+      \item methods(f) used to warn unnecessarily for an S4 generic 'f' which
+       had been created based on an existing S3 generic.
+      
+      \item The check for consistent ordering of superclasses was not
+       ignoring all conditional relations (the symptom was usually
+       spurious warnings for classes extending \code{"array"}).
+      
+      \item Trying to assign into a raw vector with an index vector
+       containing NAs could cause a segfault. Reported by Hervé Pagès.
+      
+      \item Rscript could segfault if (by user error) its filename argument
+       was missing.  Reported by Martin Morgan.
+      
+      \item \code{getAnywhere()} (and functions that use it, including argument
+       completion in the console) did not handle special built-in
+       functions.  Reported by Romain Francois.
+      
+      \item \code{order()} was missing a \code{PROTECT()} call and so could segfault when
+       called on character data under certain (rare) circumstances
+       involving marked non-native encodings.
+      
+      \item prettyNum(z, drop0trailing=TRUE) did not work correctly when z
+       was a complex vector.  Consequently, str(z, ...)  also did
+       not.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(13985)})
+      
+      \item 'make distclean' removed too many files in etc/ if
+       builddir = srcdir.
+      
+      \item R CMD replaced TEXINPUTS rather than appending to it (as
+       documented and intended).
+      
+      \item \code{help.start()} no longer fails on unix when \code{"browser"} is a
+       function.
+      
+      \item pbeta(x, *, log.p = TRUE) is sometimes more accurate, e.g., for
+       very small x.
+      
+      \item Unserializing a pre-2.8 workspace containing pure ASCII character
+       objects with a LATIN1 or UTF-8 encoding would corrupt the CHARSXP
+       cache.
+      
+      
+      
+    }
+  }
+}

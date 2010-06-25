@@ -23,9 +23,10 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
   An data frame inheriting from class \code{"news_db"}.
 }
 \details{
-  If \code{package} is \code{"R"} (default), \code{\link{readNEWS}} in
-  package \pkg{tools} is used to build a news db from the R \file{NEWS}
-  file.  Otherwise, if the given add-on package can be found in the
+  If \code{package} is \code{"R"} (default), a news db is built with the
+  news since the 2.10.0 release of R (corresponding to R's top-level
+  \file{NEWS} file).
+  Otherwise, if the given add-on package can be found in the
   given libraries and has a \file{NEWS} file, it is attempted to read
   the package news in structured form.  The \file{NEWS} files in add-on
   packages use a variety of different formats; the default news reader
@@ -70,9 +71,9 @@ news(query, package = "R", lib.loc = NULL, format = NULL,
 \examples{
 ## Build a db of all R news entries.
 db <- news()
-## Bug fixes with PR number in 2.9.0.
-news(Version == "2.9.0" & grepl("^BUG", Category) & grepl("PR#", Text),
+## Bug fixes with PR number in 2.11.0.
+news(Version == "2.11.0" & grepl("^BUG", Category) & grepl("PR#", Text),
      db = db)
-## Entries with version >= 2.8.1 (including "2.8.1 patched"):
-table(news(Version >= "2.8.1", db = db)$Version)
+## Entries with version >= 2.10.1 (including "2.10.1 patched"):
+table(news(Version >= "2.10.1", db = db)$Version)
 }

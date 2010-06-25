@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS CRAN_mirrors.csv \
-	KEYWORDS KEYWORDS.db THANKS
+	KEYWORDS KEYWORDS.db THANKS NEWS.Rd
 DISTFILES = Makefile.in $(INSTFILES) R.aux Rscript.1
 NON_SVN_INSTFILES = FAQ RESOURCES
 SUBDIRS = html manual
@@ -31,13 +31,17 @@ R: Makefile svnonly
 	  $(MAKE) rdocdir=$(top_builddir)/doc install-sources; \
 	fi
 
-docs: R.1
+docs: R.1 $(top_srcdir)/NEWS
 	@(cd manual && $(MAKE) $@)
 
 R.1:
 	@$(HELP2MAN) --include=$(srcdir)/R.aux --no-info --output=R.1 \
 	  --name="a language for data analysis and graphics" \
 	  $(top_builddir)/bin/R
+
+$(top_srcdir)/NEWS: @MAINTAINER_MODE_TRUE@ NEWS.Rd
+	@$(ECHO) "tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
+	  $(top_builddir)/bin/R --slave --vanilla
 
 install: install-message installdirs install-sources install-sources2 install-man
 	@for d in $(SUBDIRS); do \

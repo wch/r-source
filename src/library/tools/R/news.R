@@ -290,3 +290,144 @@ function(x, bad = NULL)
     class(out) <- c("news_db", "data.frame")
     out
 }
+
+## Transform NEWS.Rd
+
+Rd2txt_NEWS_in_Rd_options <-
+    list(sectionIndent = 0L, sectionExtra = 2L,
+         minIndent = 4L, code_quote = FALSE,
+         underline_title = FALSE)
+
+Rd2txt_NEWS_in_Rd <-
+function(f, out = "")
+     tools::Rd2txt(f, out,
+                   stages = c("install", "render"),
+                   options = Rd2txt_NEWS_in_Rd_options)
+
+Rd2HTML_NEWS_in_Rd <-
+function(f, out)
+    tools::Rd2HTML(f, out,
+                   stages = c("install", "render"))
+
+## Transform old-style plain text NEWS file to Rd.
+
+news2Rd <-
+function(con = stdout(), codify = FALSE)
+{
+    out <- function(x) writeLines(x, con = con)
+
+    if(is.character(con)) {
+        con <- file(con, "wt")
+        on.exit(close(con))
+    }
+    if(!isOpen(con, "wt")) {
+        open(con, "wt")
+        on.exit(close(con))
+    }
+    
+    out(c("\\name{NEWS}",
+          "\\title{R News}",
+          "\\encoding{UTF-8}"))
+    
+    for(y in tools::readNEWS(chop = "keepAll")) {
+        for(i in seq_along(y)) {
+            out(sprintf("\\section{CHANGES IN R VERSION %s}{",
+                        names(y)[i]))
+            z <- y[[i]]
+            for(j in seq_along(z)) {
+                out(c(sprintf("  \\subsection{%s}{", names(z)[j]),
+                      "    \\itemize{"))
+                for(chunk in z[[j]]) {
+                    chunk <- paste(chunk, collapse = "\n      ")
+                    ## <FIXME>
+                    ## Change to something like
+                    ##   chunk <- toRd(chunk)
+                    ## eventually ...
+                    chunk <- gsub("\\", "\\\\", chunk, fixed = TRUE)
+                    chunk <- gsub("{", "\\{", chunk, fixed = TRUE)
+                    chunk <- gsub("}", "\\}", chunk, fixed = TRUE)
+                    chunk <- gsub("%", "\\%", chunk, fixed = TRUE)
+                    ## </FIXME>
+                    if(codify) {
+                        chunk <- gsub("(\\W|^)(\"[[:alnum:]_.]*\"|[[:alnum:]_.:]+\\(\\))(\\W|$)",
+                                      "\\1\\\\code{\\2}\\3", chunk)
+                    }
+                    chunk <- gsub("PR#([[:digit:]]+)",
+                                  "\\\\Sexpr[results=rd]{tools:::Rd_expr_PR(\\1)}",
+                                  chunk)
+                    out(paste("      \\item", chunk))
+                }
+                out(c("    }", "  }"))
+            }
+            out("}")
+        }
+    }
+
+}
+
+Rd_expr_PR <-
+function(x)
+{
+    baseurl <- "https://bugs.R-project.org/bugzilla3/show_bug.cgi?id"
+    sprintf("\\href{%s=%s}{PR#%s}", baseurl, x, x)
+}
+
+.build_news_db_from_R_NEWS_Rd <-
+function(file = NULL)
+{
+    if(is.null(file))
+        file <- file.path(R.home("doc"), "NEWS.Rd")
+    
+    ## Need to proceed as follows:
+    ## Get \section and respective name
+    ## Get \subsection and respective name
+    ## Get respective items ...
+
+    .get_Rd_section_names <- function(x)
+        sapply(x, function(e) .Rd_deparse(e[[1L]]))
+
+    do_chunk <- function(x) {
+        ## <FIXME>
+        ## This assumes that the chunk in essence is one \itemize list.
+        ## Should be safe to assume this for base R NEWS in Rd: for add
+        ## on packages we need to check ...
+        ## </FIXME>
+        out <- NULL
+        zz <- textConnection("out", "w", local = TRUE)
+        on.exit(close(zz))
+        Rd2txt(x, out = zz, fragment = TRUE,
+               options =
+               c(Rd2txt_NEWS_in_Rd_options,
+                 list(itemBullet = "\036  ")))
+        s <- gsub("^    ", "", out)
+        s <- gsub("^  \036 ", "\036", s)
+        s <- paste(s, collapse = "\n")
+        s <- sub("^[[:space:]]*\036", "", s)
+        s <- sub("[[:space:]]*$", "", s)
+        unlist(strsplit(s, "\n\036", fixed = TRUE))
+    }
+
+    x <- parse_Rd(file)
+    ## Expand \Sexpr et al now because this does not happen when using
+    ## fragments.
+    x <- prepare_Rd(x, stages = "install")
+    
+    y <- x[RdTags(x) == "\\section"]
+    db <- do.call(rbind,
+                  Map(cbind,
+                      .get_Rd_section_names(y),
+                      lapply(y,
+                             function(e) {
+                                 z <- e[[2L]]
+                                 z <- z[RdTags(z) == "\\subsection"]
+                                 do.call(rbind,
+                                         Map(cbind,
+                                             .get_Rd_section_names(z),
+                                             lapply(z,
+                                                    function(e)
+                                                    do_chunk(e[[2L]]))))
+                             })))
+    ## Squeeze in an empty date column.
+    .make_news_db(cbind(db[, 1L], NA_character_, db[, -1L]),
+                  logical(nrow(db)))
+}
