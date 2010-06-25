@@ -58,9 +58,9 @@ CHANGES IN R VERSION 2.12.0:
       proof against planned future changes to the classes.
 
       The ordering of the classes has been changed, so "POSIXt" is now
-      the second class.  See the document 'Updating packages for
-      changes in R 2.12.x' on developer.r-project.org for the
-      consequences for a handful of CRAN packages.
+      the second class.  See the document ‘Updating packages for
+      changes in R 2.12.x’ on <URL: http://developer.r-project.org> for
+      the consequences for a handful of CRAN packages.
 
     • The "POSIXct" method of as.Date() allows a timezone to be
       specified (but still defaults to UTC).
@@ -70,7 +70,7 @@ CHANGES IN R VERSION 2.12.0:
       environment.  as.environment() is now generic and uses list2env()
       as list method.
 
-    • There are several small changes to output which 'zap' small
+    • There are several small changes to output which ‘zap’ small
       numbers, e.g. in printing quantiles of residuals in summaries
       from "lm" and "glm" fits, and in test statisics in print.anova().
 
@@ -125,9 +125,10 @@ CHANGES IN R VERSION 2.12.0:
 
     • Environment variables R_DVIPSCMD, R_LATEXCMD, R_MAKEINDEXCMD,
       R_PDFLATEXCMD are no longer used nor set in an R session.  (With
-      the move to tools::texi2dvi(), the conventional LATEX, MAKEINDEX
-      and PDFLATEX will be used.  options("dvipscmd") defaults to the
-      value of DVIPS, then to "dvips".)
+      the move to tools::texi2dvi(), the conventional environment
+      variables LATEX, MAKEINDEX and PDFLATEX will be used.
+      options("dvipscmd") defaults to the value of DVIPS, then to
+      "dvips".)
 
     • New function isatty() to see if terminal connections are
       redirected.
@@ -172,11 +173,11 @@ CHANGES IN R VERSION 2.12.0:
       Rd2HTML(), and Rd2latex() to support it.
 
     • R_HOME/share/texmf now follows the TDS conventions, so can be set
-      as a texmf tree ('root directory' in MiKTeX parlance).
+      as a texmf tree (‘root directory’ in MiKTeX parlance).
 
     • S3 generic functions now use correct S4 inheritance when
-      dispatching on an S4 object.  See ?Methods, section on "Methods
-      for S3 Generic Functions" for recommendations and details.
+      dispatching on an S4 object.  See ?Methods, section on “Methods
+      for S3 Generic Functions” for recommendations and details.
 
     • format.pval() gains a ... argument to pass arguments such as
       'nsmall' to format().  (Wish of PR#9574)
@@ -232,7 +233,7 @@ CHANGES IN R VERSION 2.12.0:
     • R CMD check has a new argument --extra-arch to confine tests to
       those needed to check an additional sub-architecture.
 
-      R CMD check's check for "Subdirectory 'inst' contains no files"
+      R CMD check's check for “Subdirectory 'inst' contains no files”
       is more thorough: it looks for files, and warns if there are only
       empty directories.
 
@@ -255,7 +256,7 @@ CHANGES IN R VERSION 2.12.0:
 
   C-LEVEL FACILITIES:
 
-    • lang5() and lang6() {in addition to pre-existing lang[1-4]()}
+    • lang5() and lang6() (in addition to pre-existing lang[1-4]())
       convenience functions for easier construction of eval() calls.
       If you have your own definition, do wrap it inside '#ifndef lang5
       .... #endif' to keep it working with old and new R.
@@ -305,7 +306,7 @@ CHANGES IN R VERSION 2.12.0:
       also another class now accept superclass objects in new().  Also
       fixes failure to call validObject() for these classes.
 
-    • Conditional inheritance defined by argument test= in
+    • Conditional inheritance defined by argument test in
       methods::setIs() will no longer be used in S4 method selection
       (caching these methods could give incorrect results).  See
       ?setIs.
@@ -369,7 +370,7 @@ CHANGES IN R VERSION 2.11.1:
   DEPRECATED & DEFUNCT:
 
     • Use of file extension .C for C++ code in packages is now
-      deprecated: it has caused problems for some 'make's on
+      deprecated: it has caused problems for some makes on
       case-insensitive file systems (although it currently works with
       the recommended toolkits).
 
@@ -383,7 +384,7 @@ CHANGES IN R VERSION 2.11.1:
   BUG FIXES:
 
     • The C function mkCharLenCE now no longer reads past 'len' bytes
-      (unlikely to be a problem except in user code). (PR#14246)
+      (unlikely to be a problem except in user code).  (PR#14246)
 
     • On systems without any default LD_LIBRARY_PATH (not even
       /usr/local/lib), [DY]LIB_LIBRARY_PATH is now set without a
@@ -430,14 +431,14 @@ CHANGES IN R VERSION 2.11.1:
       patch from Olaf Mersmann.)
 
     • The S4 initialize() methods for "matrix", "array", and "ts" have
-      been fixed to call validObject(). (PR#14284)
+      been fixed to call validObject().  (PR#14284)
 
     • R CMD INSTALL now behaves the same way with or without
       --no-multiarch on platforms with only one installed architecture.
       (It used to clean the src directory without --no-multiarch.)
 
     • [<-.data.frame was not quite careful enough in assigning (and
-      potentially deleting) columns right-to-left. (PR#14263)
+      potentially deleting) columns right-to-left.  (PR#14263)
 
     • rbeta(n, a, b) no longer occasionally returns NaN for a >> 1 > b.
       (PR#14291)
@@ -472,8 +473,8 @@ CHANGES IN R VERSION 2.11.0:
       current help system is the only one now supported.
 
     • A port to 64-bit Windows is now available as well as binary
-      package repositiories: see the 'R Administration and Installation
-      Manual'.
+      package repositiories: see the ‘R Administration and Installation
+      Manual’.
 
     • Argument matching for primitive functions is now done in the same
       way as for interpreted functions except for the deliberate
@@ -557,7 +558,7 @@ CHANGES IN R VERSION 2.11.0:
       to check for consistency in the function values.
 
     • The main HTML help page now links to a reformatted copy of this
-      NEWS file. (Suggested by Henrik Bengtsson.)  Package index files
+      NEWS file.  (Suggested by Henrik Bengtsson.)  Package index files
       link to the package DESCRIPTION and NEWS files and a list of
       demos when using dynamic help.
 
@@ -577,14 +578,14 @@ CHANGES IN R VERSION 2.11.0:
       prevents such dependencies from being detached: this can be
       overridden by the argument 'force'.
 
-    • bquote() has been extended to work on function definitions (wish
-      of PR#14031).
+    • bquote() has been extended to work on function definitions.
+      (Wish of PR#14031).
 
     • detach() when applied to an object other than a package returns
       the environment that has been detached, to parallel attach().
 
     • readline() in non-interactive use returns "" and does not attempt
-      to read from the 'terminal'.
+      to read from the ‘terminal’.
 
     • New function file_ext() in package 'tools'.
 
@@ -634,11 +635,11 @@ CHANGES IN R VERSION 2.11.0:
     • New function chooseBioCmirror() to set the "BioC_mirror" option.
 
     • The R grammar now prevents using the argument 'name' in
-      signatures of S4 methods for '$' and '$<-', since they will
-      always be called with a character string value for 'name'.  The
-      implicit S4 generic functions have been changed to reflect this:
-      packages which included 'name' in the signature of their methods
-      need to be updated and re-installed.
+      signatures of S4 methods for $ and $<-, since they will always be
+      called with a character string value for 'name'.  The implicit S4
+      generic functions have been changed to reflect this: packages
+      which included 'name' in the signature of their methods need to
+      be updated and re-installed.
 
     • The handling of the 'method' argument of glm() has been refined
       following suggestions by Ioannis Kosmidis and Heather Turner.
@@ -697,8 +698,8 @@ CHANGES IN R VERSION 2.11.0:
       sections.
 
     • n-dimensional arrays with dimension names can now be indexed by
-      an n-column character matrix. The indices are matched against the
-      dimension names.  NA indices are propagated to the result.
+      an n-column character matrix.  The indices are matched against
+      the dimension names.  NA indices are propagated to the result.
       Unmatched values and "" are not allowed and result in an error.
 
     • interaction(drop=TRUE) uses less memory (related to PR#14121).
@@ -733,7 +734,7 @@ CHANGES IN R VERSION 2.11.0:
     • file.show() now disallows NA values for file names, headers, and
       pager.
 
-    • The 'fuzz' used by seq() and seq.int() has been reduced from 1e-7
+    • The ‘fuzz’ used by seq() and seq.int() has been reduced from 1e-7
       to 1e-10, which should be ample for the double-precision
       calculations used in R.  It ensures that the fuzz never comes
       into play with sequences of integers (wish of PR#14169).
@@ -857,7 +858,7 @@ CHANGES IN R VERSION 2.11.0:
   INSTALLATION:
 
     • UTF-8 is now used for the reference manual and package manuals.
-      This requires LaTeX '2005/12/01' or later.
+      This requires LaTeX ‘2005/12/01’ or later.
 
     • configure looks for a POSIX compliant tr, Solaris's /usr/ucb/tr
       having been found to cause Rdiff to malfunction.
@@ -869,7 +870,7 @@ CHANGES IN R VERSION 2.11.0:
 
     • Characters in R source which are not translatable to the current
       locale are now handled more tolerantly: these will be converted
-      to hex codes with a warning. Such characters are only really
+      to hex codes with a warning.  Such characters are only really
       portable if they appear in comments.
 
     • R CMD INSTALL now tests that the installed package can be loaded
@@ -940,7 +941,7 @@ CHANGES IN R VERSION 2.11.0:
     • do_par() UNPROTECTed too early (PR#14214)
 
     • Subassignment x[[....]] <- y didn't check for a zero-length right
-      hand side, and inserted a rubbish value. (PR#14217)
+      hand side, and inserted a rubbish value.  (PR#14217)
 
     • fisher.test() no longer gives a P-value *very* slightly > 1, in
       some borderline cases.
@@ -1007,10 +1008,10 @@ CHANGES IN R VERSION 2.11.0:
       request under certain circumstances.
 
     • gzcon( <textConnection> ), an error, no longer damages the
-      connection (in a way to have it segfault). (PR#14237)
+      connection (in a way to have it segfault).  (PR#14237)
 
     • All the results from hist() now use the nominal 'breaks' not
-      those adjusted by the numeric 'fuzz': in recent versions the
+      those adjusted by the numeric ‘fuzz’: in recent versions the
       nominal 'breaks' were reported but the 'density' referred to the
       intervals used in the calculation - which mattered very slightly
       for one of the extreme bins.  (Based on a report by Martin
@@ -1031,7 +1032,7 @@ CHANGES IN R VERSION 2.10.1 patched:
     • lchoose(a, k) is now defined as log(abs(choose(a,k))),
       analogously to lfactorial().
 
-    • Although \eqn{} in Rd files is defined as a 'verbatim' macro,
+    • Although \eqn{} in Rd files is defined as a ‘verbatim’ macro,
       many packages expected ... and \ldots to be interpreted there (as
       was the case in R < 2.10.0), so this is now done (using an
       ellipsis in HTML rendering).
@@ -1070,12 +1071,12 @@ CHANGES IN R VERSION 2.10.1 patched:
       function had no arguments but was documented to have some.
 
     • Help links containing special characters (e.g. "?") were not
-      generated correctly when rendered in HTML. (PR#14155)
+      generated correctly when rendered in HTML.  (PR#14155)
 
     • lchoose(a, k) no longer wrongly gives NaN for negative a.
 
     • ks.test() could give a p-value that was off by one observation
-      due to rounding error. (PR#14145)
+      due to rounding error.  (PR#14145)
 
     • readBin()/readChar() when reading millions of character strings
       in a single call used excessive amounts of memory (which also
@@ -1088,7 +1089,7 @@ CHANGES IN R VERSION 2.10.1 patched:
       if an as.character() method called it.
 
     • The quartz() device did not restore the clipping region when
-      filling the background for a new page. This could be observed in
+      filling the background for a new page.  This could be observed in
       multi-page bitmap output as stale outer regions of the plot.
 
     • p.adjust(*, method, n) now works correctly for the rare case n >
@@ -1105,8 +1106,8 @@ CHANGES IN R VERSION 2.10.1 patched:
     • [cr]bind(..., deparse.level=2) was not always giving names when
       documented to do so.  (Discovered whilst investigating PR#14189.)
 
-    • match(incomparables=<non-NULL>) could in rare cases infinite-
-      loop.
+    • match(incomparables=<non-NULL>) could in rare cases
+      infinite-loop.
 
     • poisson.test() needed to pass 'conf.level' to binom.test()
       (PR#14195)
@@ -1162,7 +1163,7 @@ CHANGES IN R VERSION 2.10.1:
     • A Bioconductor mirror can be set for use by setRepositories() via
       the option "BioC_mirror", e.g. the European mirror can be
       selected by
-      options(BioC_mirror="http://bioconductor.statistik.tu-dortmund.de")
+      options(BioC_mirror="http://bioconductor.statistik.tu-dortmund.de").
 
     • Double-clicking in a tk_select.list() list box now selects the
       item and closes the list box (as happens on the Windows
@@ -1186,14 +1187,14 @@ CHANGES IN R VERSION 2.10.1:
   BUG FIXES:
 
     • trigamma(x) and other psigamma(x, n) calls are now accurate for
-      very large abs(x). (PR#14020)
+      very large abs(x).  (PR#14020)
 
     • [g]sub(perl=FALSE, fixed=FALSE) could use excessive stack space
       when used with a very long vector containing some non-ASCII
       strings.
 
     • The default method of weighted.mean(na.rm = TRUE) did not omit
-      weights for NA observations in 2.10.0. (PR#14032)
+      weights for NA observations in 2.10.0.  (PR#14032)
 
     • [g]regexpr(pattern, fixed = TRUE) returned match positions in
       bytes (not characters) in an MBCS locale if 'pattern' was a
@@ -1213,24 +1214,24 @@ CHANGES IN R VERSION 2.10.1:
       a length calculation.
 
     • abline(*, untf=TRUE) now uses a better x-grid in log-scale, e.g.,
-      for plot(c(1,300), c(1,300), log="xy") ; abline(4,1, untf=TRUE).
+      for plot(c(1,300), c(1,300), log="xy"); abline(4,1, untf=TRUE).
 
-    • detach/unloadNamespace() arrange to flush the package's lazyload
-      cache of R objects once the package/namespace is no longer
-      needed.
+    • detach()/unloadNamespace() arrange to flush the package's
+      lazyload cache of R objects once the package/namespace is no
+      longer needed.
 
     • There have been small fixes to the rendering of help, e.g.
-      \command is now rendered verbatim (so e.g. - is not interpreted,
+      \command is now rendered verbatim (so e.g. -- is not interpreted,
       PR#14045).
 
       Also, there are many small changes to help files where the new
       converters were not rendering them in the same way as before.
 
     • available.packages() would fail when run on a repository with no
-      packages meeting the filtering conditions. (PR#14042)
+      packages meeting the filtering conditions.  (PR#14042)
 
     • rep(x, times, each = 2) gave invalid results when the 'times'
-      argument is a vector longer than 'x'.  Reported by Bill Dunlap.
+      argument was a vector longer than 'x'.  Reported by Bill Dunlap.
 
     • An error when unloadNamespace() attempted to run the .onUnload()
       function gave an error in the reporting function and so was not
@@ -1241,7 +1242,7 @@ CHANGES IN R VERSION 2.10.1:
 
     • promptMethods() generated signature documentation improperly.
 
-    • pgamma(x, a, lower.tail=FALSE) and qgamma(..) are now
+    • pgamma(x, a, lower.tail=FALSE) and qgamma(...) are now
       considerably more accurate in some regions for very small 'a'.
       qgamma() now correctly returns 0 instead of NaN in similar
       extreme cases, and qgamma() no longer warns in the case of small
@@ -1263,7 +1264,7 @@ CHANGES IN R VERSION 2.10.1:
 
     • qchisq(p, df, ncp, lower.tail = FALSE) with ncp >= 80 was
       inaccurate for small p (as the help page said): it is now less
-      inaccurate. (In part, PR#13999.)
+      inaccurate.  (In part, PR#13999.)
 
       For ncp less than but close to 80, pchisq() and qchisq() are more
       accurate for probablilities very close to 1 (a series expansion
@@ -1289,16 +1290,16 @@ CHANGES IN R VERSION 2.10.1:
       .External routines had earlier been unloaded.
 
     • bessel[JY](x, nu) with nu a negative integer (a singular case) is
-      now correct, analogously to besselI(), see PR#13556, below.
+      now correct, analogously to besselI(), see PR#13556.
 
     • tools::file_path_as_absolute() doubled the file separator when
       applied to a file such as "/vmunix" or (on Windows) "d:/afile" in
       a directory for which getwd() would return a path with a trailing
       separator (largely cosmetic, as reasonable file systems handle
-      such a path correctly). (Perhaps what was meant by PR#14078.)
+      such a path correctly).  (Perhaps what was meant by PR#14078.)
 
     • unsplit(drop = TRUE) applied to a data frame failed to pass
-      'drop' to the computation of row names. (PR#14084)
+      'drop' to the computation of row names.  (PR#14084)
 
     • The "difftime" method of mean() ignored its 'na.rm' argument.
 
@@ -1318,8 +1319,8 @@ CHANGES IN R VERSION 2.10.1:
     • help.search() failed when the package argument was specified.
       (PR#14113)
 
-    • switch(EXPR = "A") now returns NULL, as switch(1) {which used to
-      signal an error}.
+    • switch(EXPR = "A") now returns NULL, as does switch(1) (which
+      used to signal an error).
 
 CHANGES IN R VERSION 2.10.0:
 
@@ -1328,33 +1329,33 @@ CHANGES IN R VERSION 2.10.0:
     • Package help is now converted from Rd by the R-based converters
       that were first introduced in 2.9.0.  This means
 
-      - Packages that were installed by R-devel after 2009-08-09 should
-      not be used with earlier versions of R, and most aspects of
-      package help (including the runnable examples) will be missing if
-      they are so used.
+        • Packages that were installed by R-devel after 2009-08-09
+          should not be used with earlier versions of R, and most
+          aspects of package help (including the runnable examples)
+          will be missing if they are so used.
 
-      - Text, HTML and latex help and examples for packages installed
-      under the new system are converted on-demand from stored parsed
-      Rd files.  (Conversions stored in packages installed under R <
-      2.10.0 are used if no parsed Rd files are found.  It is
-      recommended that such packages be re-installed.)
+        • Text, HTML and latex help and examples for packages installed
+          under the new system are converted on-demand from stored
+          parsed Rd files.  (Conversions stored in packages installed
+          under R < 2.10.0 are used if no parsed Rd files are found.
+          It is recommended that such packages be re-installed.)
 
     • HTML help is now generated dynamically using an HTTP server
       running in the R process and listening on the loopback interface.
 
-      - Those worried about security implications of such a server can
-      disable it by setting the environment variable R_DISABLE_HTTPD to
-      a non-empty value.  This disables help.start() and HTML help (so
-      text help is shown instead).
+        • Those worried about security implications of such a server
+          can disable it by setting the environment variable
+          R_DISABLE_HTTPD to a non-empty value.  This disables
+          help.start() and HTML help (so text help is shown instead).
 
-      - The Java/Javascript search engine has been replaced by an HTML
-      interface to help.search().  help.start() no longer has an
-      argument 'searchEngine' as it is no longer needed.
+        • The Java/Javascript search engine has been replaced by an
+          HTML interface to help.search().  help.start() no longer has
+          an argument 'searchEngine' as it is no longer needed.
 
-      - The HTML help can now locate cross-references of the form
-      \link[pkg]{foo} and \link[pkg:foo]{bar} where 'foo' is an alias
-      in the package, rather than the documented (basename of a)
-      filename (since the documentation has been much ignored).
+        • The HTML help can now locate cross-references of the form
+          \link[pkg]{foo} and \link[pkg:foo]{bar} where 'foo' is an
+          alias in the package, rather than the documented (basename of
+          a) filename (since the documentation has been much ignored).
 
   NEW FEATURES:
 
@@ -1378,7 +1379,7 @@ CHANGES IN R VERSION 2.10.0:
       means, but are now declared illegal.
 
     • New print() (S3) method for class "function", also used for
-      auto-printing. Further, .Primitive functions now print and
+      auto-printing.  Further, .Primitive functions now print and
       auto-print identically.  The new method is based on code
       suggestions by Romain François.
 
@@ -1403,8 +1404,8 @@ CHANGES IN R VERSION 2.10.0:
       will be listed in the index.
 
     • getOption() has a new argument 'default' that is returned if the
-      specified option is not set. This simplifies querying a value and
-      checking whether it is NULL or not.
+      specified option is not set.  This simplifies querying a value
+      and checking whether it is NULL or not.
 
     • parse() now warns if the requested encoding is not supported.
 
@@ -1426,10 +1427,10 @@ CHANGES IN R VERSION 2.10.0:
       Kendall case is the wish of PR#13691.)
 
     • R now keeps track of line numbers during execution for code
-      sourced with options(keep.source = TRUE). The source reference is
-      displayed by debugging functions such as traceback(), browser(),
-      recover(), and dump.frames(), and is stored as an attribute on
-      each element returned by sys.calls(). [Experimental]
+      sourced with options(keep.source = TRUE).  The source reference
+      is displayed by debugging functions such as traceback(),
+      browser(), recover(), and dump.frames(), and is stored as an
+      attribute on each element returned by sys.calls().
 
     • More functions now have an implicit (S4) generic definition.
 
@@ -1495,7 +1496,7 @@ CHANGES IN R VERSION 2.10.0:
       factors 'f' in the future.
 
     • readNEWS() will recognize a UTF-8 byte-order mark (BOM) in the
-      NEWS file. However, it is safer to use only ASCII code there
+      NEWS file.  However, it is safer to use only ASCII code there
       because not all editors recognize BOMs.
 
     • New utility function inheritedSlotNames() for S4 class
@@ -1550,7 +1551,7 @@ CHANGES IN R VERSION 2.10.0:
 
     • "\uxxxx" and "\Uxxxxxxxx" escapes can now be parsed to a UTF-8
       encoded string even in non-UTF-8 locales (this has been
-      implemented on Windows since R 2.7.0). The semantics have been
+      implemented on Windows since R 2.7.0).  The semantics have been
       changed slightly: a string containing such escapes is always
       stored in UTF-8 (and hence is suitable for portably including
       Unicode text in packages).
@@ -1576,8 +1577,8 @@ CHANGES IN R VERSION 2.10.0:
     • legend() now can specify the 'border' color of filled boxes,
       thanks to a patch from Frederic Schutz.
 
-    • Indexing with a vector index to [[]] has now been extended to all
-      recursive types.
+    • Indexing with a vector index to [[ ]] has now been extended to
+      all recursive types.
 
     • Pairlists may now be assigned as elements of lists.  (Lists could
       always be created with pairlist elements, but [[<- didn't support
@@ -1625,7 +1626,7 @@ CHANGES IN R VERSION 2.10.0:
       A new INSTALL option, --resave-data, makes use of this.
 
     • File ~/.R/config is used in preference to ~/.Rconfig, and these
-      are now documented in 'R Installation and Administration'.
+      are now documented in ‘R Installation and Administration'’.
 
     • Logic operations with complex numbers now work, as they were
       always documented to, and as in S.
@@ -1653,7 +1654,7 @@ CHANGES IN R VERSION 2.10.0:
   REGULAR EXPRESSIONS:
 
     • A different regular expression engine is used for basic and
-      extended regexps and is also for approximate matching. This is
+      extended regexps and is also for approximate matching.  This is
       based on the TRE library of Ville Laurikari, a modifed copy of
       which is included in the R sources.
 
@@ -1665,7 +1666,7 @@ CHANGES IN R VERSION 2.10.0:
       ranges such as [W-z] in caseless matching is no longer to map the
       range to lower case.
 
-      This engine may in future be used in 'literal' mode for fixed =
+      This engine may in future be used in ‘literal’ mode for fixed =
       TRUE, and there is a compile-time option in src/main/grep.c to do
       so.
 
@@ -1678,7 +1679,7 @@ CHANGES IN R VERSION 2.10.0:
       support for UTF-8-encoded strings in non-UTF-8 locales.
 
     • agrep() now has full support for MBCS locales with a modest speed
-      penalty. This enables help.search() to use approximate matching
+      penalty.  This enables help.search() to use approximate matching
       character-wise rather than byte-wise.
 
     • [g]sub use a single-pass algorithm instead of matching twice and
@@ -1768,7 +1769,7 @@ CHANGES IN R VERSION 2.10.0:
     • print.Rd() now adds necessary escape characters so that printing
       and re-parsing an Rd object should produce an equivalent object.
 
-    • parse_Rd() was incorrectly handling multiple backslashes in R\
+    • parse_Rd() was incorrectly handling multiple backslashes in R
       code strings, converting 4n+3 backslashes to 2n+1 instead of
       2n+2.
 
@@ -1817,7 +1818,7 @@ CHANGES IN R VERSION 2.10.0:
       --data-compress=bzip2 which will give ca 15% better compression
       at the expense of slower installation times, and
       --data-compress=xz, often giving even better compression on large
-      datasets at the expense of much longer installation times. (The
+      datasets at the expense of much longer installation times.  (The
       latter is used for the recommended packages: it is particularly
       effective for 'survival'.)
 
@@ -1840,13 +1841,13 @@ CHANGES IN R VERSION 2.10.0:
     • Use of ~/.Rconf (which was deprecated in favour of ~/.Rconfig in
       2004) has finally been removed.
 
-    • Bundles of packages are deprecated.  See 'Writing R Extensions'
+    • Bundles of packages are deprecated.  See ‘Writing R Extensions’
       for the steps needed to unbundle a bundle.
 
     • help() arguments 'offline', 'htmlhelp' and 'chmhelp' are
       deprecated in favour of 'help_type'.
 
-    • clearNames() ('stats') is deprecated for unname().
+    • clearNames() (in package 'stats') is deprecated for unname().
 
     • Basic regular expressions (extended = FALSE) are deprecated in
       strsplit, grep and friends.  There is a precise POSIX standard
@@ -1854,9 +1855,9 @@ CHANGES IN R VERSION 2.10.0:
       seems that in almost all cases package authors intended fixed =
       TRUE when using extended = FALSE.
 
-    • methods::trySilent() is deprecated for try(*, silent=TRUE) or -
-      more efficiently and flexibly - something like tryCatch(*, error
-      = function(e) e).
+    • methods::trySilent() is deprecated in favour of try(*,
+      silent=TRUE) or - more efficiently and flexibly - something like
+      tryCatch(*, error = function(e) e).
 
     • index.search() is deprecated: there are no longer directories of
       types other than 'help'.
@@ -1870,11 +1871,11 @@ CHANGES IN R VERSION 2.10.0:
       --without-iconv has been withdrawn (it was deprecated in R
       2.5.0).
 
-    • Perl is no longer 'essential'. R can be built without it, but
+    • Perl is no longer ‘essential’.  R can be built without it, but
       scripts R CMD build, check, Rprof and Sd2d currently require it.
 
-    • A system 'glob' function is now essential (a working Sys.glob()
-      has been assumed since R 2.9.0 at least).
+    • A system glob function is now essential (a working Sys.glob() has
+      been assumed since R 2.9.0 at least).
 
     • C99 support for MBCS is now required, and configure option
       --disable-mbcs has been withdrawn.
@@ -1887,10 +1888,10 @@ CHANGES IN R VERSION 2.10.0:
   INTERNATIONALIZATION:
 
     • There is some makefile support for adding/updating translations
-      in packages: see po/README and 'Writing R Extensions'.
+      in packages: see po/README and ‘Writing R Extensions’.
 
       There is support for the use of 'dngettext' for C-level
-      translations in packages: see 'Writing R Extensions'.
+      translations in packages: see ‘Writing R Extensions’.
 
   BUG FIXES:
 
@@ -1909,10 +1910,10 @@ CHANGES IN R VERSION 2.10.0:
       non-zero representation.
 
     • printCoefmat() formatted groups of columns together, not just the
-      cs.ind group but also the zap.ind group and a residual group. It
+      cs.ind group but also the zap.ind group and a residual group.  It
       now formats all columns except the cs.ind group separately (and
       zaps the zap.ind group column-by-column).  The main effect will
-      be see in the output from print.anova, as this grouped SS-like
+      be see in the output from print.anova(), as this grouped SS-like
       columns in the zap.ind group.
 
     • R_ReplDLLinit() initializes the top-level jump so that some
