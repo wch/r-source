@@ -1,8 +1,8 @@
-_R _N_e_w_s
+R News
 
-_C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_2._0:
+CHANGES IN R VERSION 2.12.0:
 
-  _N_E_W _F_E_A_T_U_R_E_S:
+  NEW FEATURES:
 
     • Reading a packages's CITATION file now defaults to ASCII rather
       than Latin-1: a package with a non-ASCII CITATION file should
@@ -23,7 +23,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_2._0:
 
     • The enquote() utility, in use internally, is exported now.
 
-    • .C and .Fortran now map non-zero return values (other than
+    • .C() and .Fortran() now map non-zero return values (other than
       NA_LOGICAL) for logical vectors to TRUE: it has been an implicit
       assumption that they are treated as true.
 
@@ -47,7 +47,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_2._0:
 
       There are no longer separate plot() methods for "POSIX[cl]t" and
       "Date": the default method has been able to handle those classes
-      for a long time.  This inter alia allows a single date-time
+      for a long time.  This _inter alia_ allows a single date-time
       object to be supplied, the wish of PR#14016.
 
       The methods had a different default ("") for xlab.
@@ -194,18 +194,19 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_2._0:
     • Text rendering of \itemize in help uses a Unicode bullet in UTF-8
       and most single-byte Windows locales.
 
-  _D_E_P_R_E_C_A_T_E_D & _D_E_F_U_N_C_T:
+  DEPRECATED & DEFUNCT:
 
     • Supplying the parser with a string containing both octal/hex and
       Unicode escapes is now an error.
 
     • File extension .C for C++ code files in packages is now defunct.
 
-  _P_A_C_K_A_G_E _I_N_S_T_A_L_L_A_T_I_O_N:
+  PACKAGE INSTALLATION:
 
     • install.packages() has a new argument 'libs_only' to optionally
-      pass -libs-only to INSTALL and works analogously for Windows
-      binary installs (to add support for 64- or 32-bit Windows).
+      pass --libs-only to R CMD INSTALL and works analogously for
+      Windows binary installs (to add support for 64- or 32-bit
+      Windows).
 
     • When sub-architectures are in use, the installed architectures
       are recorded in the 'Archs' field of the DESCRIPTION file.  There
@@ -219,9 +220,9 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_2._0:
 
     • R CMD INSTALL --libs-only no longer overrides the setting of
       locking, so a previous version of the package will be restored
-      unless -no-lock is specified.
+      unless --no-lock is specified.
 
-  _U_T_I_L_I_T_I_E_S:
+  UTILITIES:
 
     • R CMD Rprof|build|check are now based on R rather than Perl
       scripts.  The only remaining Perl scripts are the rarely used R
@@ -239,7 +240,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_2._0:
       source files, and the default file is ~/.R/check.Rconf.
 
     • R CMD build no longer creates an INDEX file (R CMD INSTALL does
-      so), and -force removes (rather than overwrites) an existing
+      so), and --force removes (rather than overwrites) an existing
       INDEX file.
 
     • R CMD Rd2dvi makes use of tools::texi2dvi() to process the
@@ -252,7 +253,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_2._0:
     • R CMD Sweave now runs R with --vanilla so the environment setting
       of R_LIBS will always be used.
 
-  _C-_L_E_V_E_L _F_A_C_I_L_I_T_I_E_S:
+  C-LEVEL FACILITIES:
 
     • lang5() and lang6() {in addition to pre-existing lang[1-4]()}
       convenience functions for easier construction of eval() calls.
@@ -267,7 +268,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_2._0:
       of stdio.h and stdarg.h respectively if included from a C++
       source file.
 
-  _I_N_S_T_A_L_L_A_T_I_O_N:
+  INSTALLATION:
 
     • A C99 compiler is now required, and more C99 language features
       will be used in the R sources.
@@ -280,9 +281,9 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_2._0:
       floating-point computations.
 
     • zlib has been updated to 1.2.4: this is also the minimum version
-      required for -with-system-zlib.
+      required for --with-system-zlib.
 
-  _B_U_G _F_I_X_E_S:
+  BUG FIXES:
 
     • Calls to selectMethod() by default no longer cache inherited
       methods.  This could previously corrupt methods used by as().
@@ -327,15 +328,15 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_2._0:
     • \Sexpr[result=rd] in an Rd file added a spurious newline, which
       was displayed as extra whitespace when rendered.
 
-_C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._1 _p_a_t_c_h_e_d:
+CHANGES IN R VERSION 2.11.1 patched:
 
-  _N_E_W _F_E_A_T_U_R_E_S:
+  NEW FEATURES:
 
     • install.packages() has a new optional argument 'INSTALL_opts'
       which can be used to pass options to R CMD INSTALL for
       source-package installs.
 
-  _B_U_G _F_I_X_E_S:
+  BUG FIXES:
 
     • R CMD Rd2dvi failed if run from a path containing space(s).  This
       also affected R CMD check, which calls Rd2dvi.
@@ -349,11 +350,11 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._1 _p_a_t_
       encoding when no splits were found.
 
     • weighted.mean(NA, na.rm=TRUE) and similar now returns NaN again,
-      as it did previously to R 2.10.0.
+      as it did prior to R 2.10.0.
 
-_C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._1:
+CHANGES IN R VERSION 2.11.1:
 
-  _N_E_W _F_E_A_T_U_R_E_S:
+  NEW FEATURES:
 
     • R CMD INSTALL checks if dependent packages are available early on
       in the installation of source packages, thereby giving clearer
@@ -365,21 +366,21 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._1:
     • BIC() in package stats4 now also works with multiple fitted
       models, analogously to AIC().
 
-  _D_E_P_R_E_C_A_T_E_D & _D_E_F_U_N_C_T:
+  DEPRECATED & DEFUNCT:
 
     • Use of file extension .C for C++ code in packages is now
       deprecated: it has caused problems for some 'make's on
       case-insensitive file systems (although it currently works with
       the recommended toolkits).
 
-  _I_N_S_T_A_L_L_A_T_I_O_N:
+  INSTALLATION:
 
     • Command 'gnutar' is preferred to 'tar' when configure sets TAR.
       This is needed on Mac OS 10.6, where the default tar, bsdtar
       2.6.2, has been reported to produce archives with illegal
       extensions to tar (according to the POSIX standard).
 
-  _B_U_G _F_I_X_E_S:
+  BUG FIXES:
 
     • The C function mkCharLenCE now no longer reads past 'len' bytes
       (unlikely to be a problem except in user code). (PR#14246)
@@ -431,8 +432,8 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._1:
       been fixed to call validObject(). (PR#14284)
 
     • R CMD INSTALL now behaves the same way with or without
-      -no-multiarch on platforms with only one installed architecture.
-      (It used to clean the src directory without -no-multiarch.)
+      --no-multiarch on platforms with only one installed architecture.
+      (It used to clean the src directory without --no-multiarch.)
 
     • [<-.data.frame was not quite careful enough in assigning (and
       potentially deleting) columns right-to-left. (PR#14263)
@@ -462,9 +463,9 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._1:
     • na.action() did not extract the 'na.action' component as
       documented.
 
-_C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._0:
+CHANGES IN R VERSION 2.11.0:
 
-  _S_I_G_N_I_F_I_C_A_N_T _U_S_E_R-_V_I_S_I_B_L_E _C_H_A_N_G_E_S:
+  SIGNIFICANT USER-VISIBLE CHANGES:
 
     • Packages must have been installed under R >= 2.10.0, as the
       current help system is the only one now supported.
@@ -485,7 +486,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._0:
     • The default device for command-line R at the console on Mac OS X
       is now quartz() and not X11().
 
-  _N_E_W _F_E_A_T_U_R_E_S:
+  NEW FEATURES:
 
     • The 'open' modes for connections are now interpreted more
       consistently.  open = "r" is now equivalent to open = "rt" for
@@ -542,7 +543,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._0:
 
     • R CMD check now also checks if the package and namespace can be
       unloaded: this provides a check of the .Last.lib() and
-      .onUnload() hook functions (unless -install=fake).
+      .onUnload() hook functions (unless --install=fake).
 
     • prop.table(x) now accepts a one-dimensional table for x.
 
@@ -816,7 +817,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._0:
     • New arrayInd() such that which(x, arr.ind = TRUE) for an array
       'x' is now equivalent to arrayInd(which(x), dim(x), dimnames(x)).
 
-  _D_E_P_R_E_C_A_T_E_D & _D_E_F_U_N_C_T:
+  DEPRECATED & DEFUNCT:
 
     • Bundles of packages are defunct.
 
@@ -848,7 +849,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._0:
     • Parsing strings containing both octal/hex and Unicode escapes now
       gives a warning and will become an error in R 2.12.0.
 
-  _I_N_S_T_A_L_L_A_T_I_O_N:
+  INSTALLATION:
 
     • UTF-8 is now used for the reference manual and package manuals.
       This requires LaTeX '2005/12/01' or later.
@@ -859,7 +860,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._0:
     • configure is now generated with autoconf-2.65, which works better
       on recent systems and on Mac OS X.
 
-  _P_A_C_K_A_G_E _I_N_S_T_A_L_L_A_T_I_O_N:
+  PACKAGE INSTALLATION:
 
     • Characters in R source which are not translatable to the current
       locale are now handled more tolerantly: these will be converted
@@ -868,7 +869,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._0:
 
     • R CMD INSTALL now tests that the installed package can be loaded
       (and backs out the installation if it cannot): this can be
-      suppressed by -no-test-load.  This avoids installing/updating a
+      suppressed by --no-test-load.  This avoids installing/updating a
       package that cannot be used: common causes of failures to load
       are missing/incompatible external software and missing/broken
       dependent packages.
@@ -880,7 +881,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._0:
       DLL.  (Note: this can be any DLL, not just one named
       <pkg-name>.dll.)
 
-  _B_U_G _F_I_X_E_S:
+  BUG FIXES:
 
     • Using with(), eval() etc with a list with some unnamed elements
       now works. (PR#14035)
@@ -983,7 +984,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._0:
 
     • capabilities("X11") now works the same way on Mac OS X as on
       other platforms (and as documented: it was always true for R
-      built with -with-aqua, as the CRAN builds are).
+      built with --with-aqua, as the CRAN builds are).
 
     • The X11() device with cairo but not Pango (notably Mac OS X) now
       checks validity of text strings in UTF-8 locales (since Pango
@@ -1015,9 +1016,9 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_1._0:
       given a list as 'x', they now check that the list has suitable
       names and give a more informative error message.  (PR#13936)
 
-_C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._1 _p_a_t_c_h_e_d:
+CHANGES IN R VERSION 2.10.1 patched:
 
-  _N_E_W _F_E_A_T_U_R_E_S:
+  NEW FEATURES:
 
     • The handling of line textures in the postscript() and pdf()
       devices was set up for round end caps (the only type which
@@ -1044,7 +1045,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._1 _p_a_t_
     • tools::readNEWS() now accepts a digit as the first character of a
       news section.
 
-  _B_U_G _F_I_X_E_S:
+  BUG FIXES:
 
     • Using read.table(header=TRUE) on a header with an embedded new
       line would copy part of the header into the data.  (PR#14103)
@@ -1138,14 +1139,14 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._1 _p_a_t_
     • contrasts<- (in the 'stats' package) no longer has an undeclared
       dependence on 'methods' (introduced in 2.10.0).
 
-_C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._1:
+CHANGES IN R VERSION 2.10.1:
 
-  _N_E_W _F_E_A_T_U_R_E_S:
+  NEW FEATURES:
 
     • The PCRE library has been updated to version 8.00.
 
     • R CMD INSTALL has new options --no-R, --no-libs, --no-data,
-      -no-help, -no-demo, -no-exec, and -no-inst to suppress
+      --no-help, --no-demo, --no-exec, and --no-inst to suppress
       installation of the specified part of the package.  These are
       intended for special purposes (e.g. building a database of help
       pages without fully installing all packages).
@@ -1163,7 +1164,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._1:
       item and closes the list box (as happens on the Windows
       select.list() widget).
 
-  _I_N_S_T_A_L_L_A_T_I_O_N:
+  INSTALLATION:
 
     • configure will be able to find a usable libtiff in some rare
       circumstances where it did not previously (where libtiff needed
@@ -1172,13 +1173,13 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._1:
     • Making refman.pdf works around a problem with the indexing with
       hyperref 6.79d and later.
 
-  _D_E_P_R_E_C_A_T_E_D & _D_E_F_U_N_C_T:
+  DEPRECATED & DEFUNCT:
 
     • The 'extended' argument is deprecated in strsplit(), grep(),
       grepl(), sub(), gsub(), regexpr() and gregexpr() (not just the
       value extended = FALSE) and will be removed in R 2.11.0.
 
-  _B_U_G _F_I_X_E_S:
+  BUG FIXES:
 
     • trigamma(x) and other psigamma(x, n) calls are now accurate for
       very large abs(x). (PR#14020)
@@ -1316,9 +1317,9 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._1:
     • switch(EXPR = "A") now returns NULL, as switch(1) {which used to
       signal an error}.
 
-_C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._0:
+CHANGES IN R VERSION 2.10.0:
 
-  _S_I_G_N_I_F_I_C_A_N_T _U_S_E_R-_V_I_S_I_B_L_E _C_H_A_N_G_E_S:
+  SIGNIFICANT USER-VISIBLE CHANGES:
 
     • Package help is now converted from Rd by the R-based converters
       that were first introduced in 2.9.0.  This means
@@ -1351,7 +1352,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._0:
       in the package, rather than the documented (basename of a)
       filename (since the documentation has been much ignored).
 
-  _N_E_W _F_E_A_T_U_R_E_S:
+  NEW FEATURES:
 
     • polygon(), pdf() and postscript() now have a parameter
       'fillOddEven' (default FALSE), which controls the mode used for
@@ -1617,7 +1618,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._0:
       files, and to re-save them in a different compressed format,
       including choosing the most compact format available.
 
-      A new INSTALL option, -resave-data, makes use of this.
+      A new INSTALL option, --resave-data, makes use of this.
 
     • File ~/.R/config is used in preference to ~/.Rconfig, and these
       are now documented in 'R Installation and Administration'.
@@ -1645,7 +1646,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._0:
       connection in the appropriate mode (as other functions using
       connections directly already did).
 
-  _R_E_G_U_L_A_R _E_X_P_R_E_S_S_I_O_N_S:
+  REGULAR EXPRESSIONS:
 
     • A different regular expression engine is used for basic and
       extended regexps and is also for approximate matching. This is
@@ -1694,7 +1695,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._0:
     • The help pages, including ?regexp, have been updated and should
       be consulted for details of the new implementations.
 
-  _H_E_L_P & _R_d _F_I_L_E _C_H_A_N_G_E_S:
+  HELP & Rd FILE CHANGES:
 
     • A new dynamic HTML help system is used by default, and may be
       controlled using tools::startDynamicHelp().  With this enabled,
@@ -1725,7 +1726,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._0:
       always was for Compiled HTML help on Windows).
 
     • It is possible to ask for static HTML pages to be prebuilt via
-      the configure option -enable-prebuilt-html.  This may be useful
+      the configure option --enable-prebuilt-html.  This may be useful
       for those who wish to make HTML help available outside R, e.g. on
       a local web site.
 
@@ -1773,7 +1774,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._0:
     • parse_Rd() now treats the argument of \command as LaTeX-like,
       rather than verbatim.
 
-  _C_O_M_P_R_E_S_S_I_O_N:
+  COMPRESSION:
 
     • New function untar() to list or unpack tar archives, possibly
       compressed.  This uses either an external 'tar' command or an
@@ -1809,12 +1810,12 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._0:
 
     • R CMD INSTALL has a new option --data-compress to control the
       compression used when lazy-loading data.  New possibilities are
-      -data-compress=bzip2 which will give ca 15% better compression at
-      the expense of slower installation times, and -data-compress=xz,
-      often giving even better compression on large datasets at the
-      expense of much longer installation times. (The latter is used
-      for the recommended packages: it is particularly effective for
-      'survival'.)
+      --data-compress=bzip2 which will give ca 15% better compression
+      at the expense of slower installation times, and
+      --data-compress=xz, often giving even better compression on large
+      datasets at the expense of much longer installation times. (The
+      latter is used for the recommended packages: it is particularly
+      effective for 'survival'.)
 
     • file() for open = "", "r" or "rt" will automagically detect
       compressed files (from gzip, bzip2 or xz).  This means that
@@ -1825,7 +1826,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._0:
     • data() can handle compressed text files with extensions
       .{txt,tab,csv}.{gz,bz2,xz} .
 
-  _D_E_P_R_E_C_A_T_E_D & _D_E_F_U_N_C_T:
+  DEPRECATED & DEFUNCT:
 
     • png(type="cairo1") is defunct: the value is no longer recognized.
 
@@ -1856,13 +1857,14 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._0:
     • index.search() is deprecated: there are no longer directories of
       types other than 'help'.
 
-  _I_N_S_T_A_L_L_A_T_I_O_N:
+  INSTALLATION:
 
     • cairo >= 1.2 is now required (1.2.0 was released in July 2006)
       for cairo-based graphics devices (which remain optional).
 
     • A suitable iconv() is now required: support for configure option
-      -without-iconv has been withdrawn (it was deprecated in R 2.5.0).
+      --without-iconv has been withdrawn (it was deprecated in R
+      2.5.0).
 
     • Perl is no longer 'essential'. R can be built without it, but
       scripts R CMD build, check, Rprof and Sd2d require it.
@@ -1871,14 +1873,14 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._0:
       has been assumed since R 2.9.0 at least).
 
     • C99 support for MBCS is now required, and configure option
-      -disable-mbcs has been withdrawn.
+      --disable-mbcs has been withdrawn.
 
     • Having a version of 'tar' capable of automagically detecting
       compressed archives is useful for utils::untar(), and so 'gtar'
       (a common name for GNU tar) is preferred to 'tar': set
       environment variable TAR to specify a particular 'tar' command.
 
-  _I_N_T_E_R_N_A_T_I_O_N_A_L_I_Z_A_T_I_O_N:
+  INTERNATIONALIZATION:
 
     • There is some makefile support for adding/updating translations
       in packages: see po/README and 'Writing R Extensions'.
@@ -1886,7 +1888,7 @@ _C_H_A_N_G_E_S _I_N _R _V_E_R_S_I_O_N _2._1_0._0:
       There is support for the use of 'dngettext' for C-level
       translations in packages: see 'Writing R Extensions'.
 
-  _B_U_G _F_I_X_E_S:
+  BUG FIXES:
 
     • Assigning an extra 0-length column to a data frame by DF[, "foo"]
       <- value now works in most cases (by filling with NAs) or fails.

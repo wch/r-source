@@ -66,10 +66,10 @@ function(file)
     verbose <- getOption("verbose")
 
     .collapse <- function(s) paste(s, collapse = "\n")
-    
+
     lines <- readLines(file, warn = FALSE)
 
-    ## Re-encode if necessary.    
+    ## Re-encode if necessary.
     if(any(ind <- is.na(nchar(lines, allowNA = TRUE)))) {
         dir <- dirname(file)
         if(basename(dir) == "inst")
@@ -170,7 +170,7 @@ function(file)
             else
                 NA_character_
         }
-            
+
         lines <- chunk[-1L]
         s <- .collapse(lines)
         if(grepl("^[[:space:]]*([o*+-])", s)) {
@@ -296,7 +296,7 @@ function(x, bad = NULL)
 Rd2txt_NEWS_in_Rd_options <-
     list(sectionIndent = 0L, sectionExtra = 2L,
          minIndent = 4L, code_quote = FALSE,
-         underline_title = FALSE)
+         underline_titles = FALSE)
 
 Rd2txt_NEWS_in_Rd <-
 function(f, out = "")
@@ -324,11 +324,11 @@ function(con = stdout(), codify = FALSE)
         open(con, "wt")
         on.exit(close(con))
     }
-    
+
     out(c("\\name{NEWS}",
           "\\title{R News}",
           "\\encoding{UTF-8}"))
-    
+
     for(y in tools::readNEWS(chop = "keepAll")) {
         for(i in seq_along(y)) {
             out(sprintf("\\section{CHANGES IN R VERSION %s}{",
@@ -377,7 +377,7 @@ function(file = NULL)
 {
     if(is.null(file))
         file <- file.path(R.home("doc"), "NEWS.Rd")
-    
+
     ## Need to proceed as follows:
     ## Get \section and respective name
     ## Get \subsection and respective name
@@ -411,7 +411,7 @@ function(file = NULL)
     ## Expand \Sexpr et al now because this does not happen when using
     ## fragments.
     x <- prepare_Rd(x, stages = "install")
-    
+
     y <- x[RdTags(x) == "\\section"]
     db <- do.call(rbind,
                   Map(cbind,

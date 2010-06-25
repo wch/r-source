@@ -9,49 +9,58 @@
        should declare an encoding in their DESCRIPTION file and use
        that encoding for the CITATION file.
       
-      \item \code{difftime()} now defaults to the \code{"tzone"} attribute of
-       \code{"POSIXlt"} objects rather than to the current timezone as set
-       by the default for the 'tz' argument.  (Wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(14182)}.)
+      \item \code{difftime()} now defaults to the \code{"tzone"}
+       attribute of \code{"POSIXlt"} objects rather than to the current
+       timezone as set by the default for the \code{'tz'} argument.  (Wish
+       of \Sexpr[results=rd]{tools:::Rd_expr_PR(14182)}.)
       
-      \item \code{pretty()} is now generic, with new methods for \code{"Date"} and
-       \code{"POSIXt"} classes (based on code contributed by Felix Andrews).
+      \item \code{pretty()} is now generic, with new methods for
+       \code{"Date"} and \code{"POSIXt"} classes (based on code
+       contributed by Felix Andrews).
       
-      \item \code{unique()} and \code{match()} are now faster on character vectors where
-       all elements are in the global CHARSXP cache and have unmarked
-       encoding (ASCII).  Thanks to Matthew Dowle for suggesting
-       improvements to the way the hash code is generated in
-       unique.c.
+      \item \code{unique()} and \code{match()} are now faster on
+       character vectors where all elements are in the global CHARSXP
+       cache and have unmarked encoding (ASCII).  Thanks to Matthew
+       Dowle for suggesting improvements to the way the hash code is
+       generated in unique.c.
       
       \item The \code{enquote()} utility, in use internally, is exported now.
       
-      \item .C and .Fortran now map non-zero return values (other than
-       NA_LOGICAL) for logical vectors to TRUE: it has been an
-       implicit assumption that they are treated as true.
+      \item \code{.C()} and \code{.Fortran()} now map non-zero return
+       values (other than \code{NA_LOGICAL}) for logical vectors to
+       \code{TRUE}: it has been an implicit assumption that they are
+       treated as true.
       
-      \item The \code{print()} methods for \code{"glm"} and \code{"lm"} objects now insert
-       linebreaks in long calls in the same way that the \code{print()}
-       methods for "summary.[g]lm" objects have long done.  This does
-       change the layout of the examples for a number of packages,
-       e.g. MASS.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14250)})
+      \item The \code{print()} methods for \code{"glm"} and \code{"lm"}
+       objects now insert linebreaks in long calls in the same way that
+       the \code{print()} methods for \code{"summary.[g]lm"} objects
+       have long done.  This does change the layout of the examples for
+       a number of packages, e.g. \code{MASS}.
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14250)})
       
-      \item \code{constrOptim()} can now be used with method \code{"SANN"}.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14245)})
+      \item \code{constrOptim()} can now be used with method
+      \code{"SANN"}.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14245)})
       
-       It gains an argument 'hessian' to be passed to \code{optim()}, which
-       allows all the ... arguments to be intended for \code{f()} and \code{grad()}.
+       It gains an argument \code{'hessian'} to be passed to
+       \code{optim()}, which allows all the \code{...} arguments to be
+       intended for \code{f()} and \code{grad()}.
        (\Sexpr[results=rd]{tools:::Rd_expr_PR(14071)})
       
-      \item \code{curve()} now allows 'expr' to be an object of mode \code{"expression"}
-       as well as \code{"call"} and \code{"function"}.
+      \item \code{curve()} now allows \code{'expr'} to be an object of
+       mode \code{"expression"} as well as \code{"call"} and
+       \code{"function"}.
       
-      \item The "POSIX[cl]t" methods for \code{Axis()} have been replaced by a
-       single method for \code{"POSIXt"}.
+      \item The \code{"POSIX[cl]t"} methods for \code{Axis()} have been
+       replaced by a single method for \code{"POSIXt"}.
       
-       There are no longer separate \code{plot()} methods for "POSIX[cl]t"
-       and \code{"Date"}: the default method has been able to handle those
-       classes for a long time.  This inter alia allows a single
-       date-time object to be supplied, the wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(14016)}.
+       There are no longer separate \code{plot()} methods for
+       \code{"POSIX[cl]t"} and \code{"Date"}: the default method has
+       been able to handle those classes for a long time.  This
+       \emph{inter alia} allows a single date-time object to be
+       supplied, the wish of
+       \Sexpr[results=rd]{tools:::Rd_expr_PR(14016)}.
       
-       The methods had a different default (\code{""}) for xlab.
+       The methods had a different default (\code{""}) for \code{xlab}.
       
       \item Classes \code{"POSIXct"}, \code{"POSIXlt"} and \code{"difftime"} have generators
        \code{.POSIXct()}, \code{.POSIXlt()} and \code{.difftime()}.  Package authors are
@@ -67,9 +76,9 @@
        specified (but still defaults to UTC).
       
       \item New \code{list2env()} utility function as an inverse of
-       as.list(<environment>) and for fast multi-\code{assign()} to existing
-       environment.  \code{as.environment()} is now generic and uses
-       \code{list2env()} as list method.
+       \code{as.list(<environment>)} and for fast multi-\code{assign()}
+       to existing environment.  \code{as.environment()} is now generic
+       and uses \code{list2env()} as list method.
       
       \item There are several small changes to output which 'zap' small
        numbers, e.g. in printing quantiles of residuals in summaries
@@ -79,18 +88,19 @@
       \item Special names such as \code{"dim"}, \code{"names"}, etc, are now allowed as slot
        names of S4 classes, with \code{"class"} the only remaining exception.
       
-      \item .Renviron can have architecture-specific versions such as
-       .Renviron.i386 on systems with sub-architectures.
+      \item \file{.Renviron} can have architecture-specific versions
+       such as \file{.Renviron.i386} on systems with sub-architectures.
       
-      \item \code{installed.packages()} has a new argument 'subarch' to filter on
-       sub-architecture.
+      \item \code{installed.packages()} has a new argument
+       \code{'subarch'} to filter on sub-architecture.
       
-      \item The \code{summary()} method for \code{packageStatus()} now has a separate
-       \code{print()} method.
+      \item The \code{summary()} method for \code{packageStatus()} now
+       has a separate \code{print()} method.
       
-      \item The default \code{summary()} method returns an object inheriting from
-       class \code{"summaryDefault"} which has a separate \code{print()} method
-       that calls \code{zapsmall()} for numeric/complex values.
+      \item The default \code{summary()} method returns an object
+       inheriting from class \code{"summaryDefault"} which has a
+       separate \code{print()} method that calls \code{zapsmall()} for
+       numeric/complex values.
       
       \item The startup message now includes the platform and if used,
        sub-architecture: this is useful where different
@@ -102,32 +112,38 @@
        \code{getGraphicsEventEnv()}.  (Currently implemented in the
        \code{windows()} and \code{X11()} devices.)
       
-      \item \code{tools::texi2dvi()} gains an 'index' argument, mainly for use by
-       R CMD Rd2pdf.
+      \item \code{tools::texi2dvi()} gains an \code{'index'} argument,
+       mainly for use by \command{R CMD Rd2pdf}.
       
-       It avoids the use of 'texindy' by texinfo's texi2dvi >= 1.157,
-       since that does not emulate 'makeindex' well enough to avoid
-       problems with special characters (such as '(', '\{', '!') in indices.
+       It avoids the use of \command{'texindy'} by \command{texinfo}'s
+       \command{texi2dvi >= 1.157}, since that does not emulate
+       'makeindex' well enough to avoid problems with special characters
+       (such as '(', '\{', '!') in indices.
       
-      \item The ability of \code{readLines()} and \code{scan()} to re-encode inputs to
-       marked UTF-8 strings on Windows since R 2.7.0 is extended to
-       non-UTF-8 locales on other OSes.
+      \item The ability of \code{readLines()} and \code{scan()} to
+       re-encode inputs to marked UTF-8 strings on Windows since R 2.7.0
+       is extended to non-UTF-8 locales on other OSes.
       
-      \item \code{scan()} gains a 'fileEncoding' argument to match \code{read.table()}.
+      \item \code{scan()} gains a \code{'fileEncoding'} argument to
+      match \code{read.table()}.
       
-      \item \code{points()} and \code{lines()} gain \code{"table"} methods to match \code{plot()}.
-       (Wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(10472)}.)
+      \item \code{points()} and \code{lines()} gain \code{"table"}
+       methods to match \code{plot()}.  (Wish of
+       \Sexpr[results=rd]{tools:::Rd_expr_PR(10472)}.)
       
-      \item \code{Sys.chmod()} allows 'mode' to be a vector, recycled along 'paths'.
+      \item \code{Sys.chmod()} allows \code{'mode'} to be a vector,
+      recycled along \code{'paths'}.
       
-      \item There are |, & and \code{xor()} methods for classes \code{"octmode"} and
-       \code{"hexmode"}, which work bitwise.
+      \item There are \code{|}, \code{&} and \code{xor()} methods for
+       classes \code{"octmode"} and \code{"hexmode"}, which work
+       bitwise.
       
-      \item Environment variables R_DVIPSCMD, R_LATEXCMD, R_MAKEINDEXCMD,
-       R_PDFLATEXCMD are no longer used nor set in an R session.
-       (With the move to \code{tools::texi2dvi()}, the conventional LATEX,
-       MAKEINDEX and PDFLATEX will be used.  options(\code{"dvipscmd"})
-       defaults to the value of DVIPS, then to \code{"dvips"}.)
+      \item Environment variables \code{R_DVIPSCMD}, \code{R_LATEXCMD},
+       \code{R_MAKEINDEXCMD}, \code{R_PDFLATEXCMD} are no longer used nor
+       set in an R session.  (With the move to \code{tools::texi2dvi()},
+       the conventional \code{LATEX}, \code{MAKEINDEX} and \code{PDFLATEX}
+       will be used.  options(\code{"dvipscmd"}) defaults to the value
+       of \code{DVIPS}, then to \code{"dvips"}.)
       
       \item New function \code{isatty()} to see if terminal connections are
        redirected.
@@ -136,27 +152,28 @@
        'sample.interval' and only returns in 'by.self' data for
        functions with non-zero self times.
       
-      \item print(x) and str(x) now indicate if an empty list x is named.
+      \item \code{print(x)} and \code{str(x)} now indicate if an empty
+      list x is named.
       
-      \item \code{install.packages()} and \code{remove.packages()} with 'lib'
-       unspecified and multiple libraries in \code{.libPaths()}
-       inform the user of the library location used with a message
-       rather than a warning.
+      \item \code{install.packages()} and \code{remove.packages()} with
+       \code{'lib'} unspecified and multiple libraries in
+       \code{.libPaths()} inform the user of the library location used
+       with a message rather than a warning.
       
       \item There is limited support for multiple compressed streams on a
-       file: all of [bgx]\code{zfile()} allow streams to be appended to an
+       file: all of \code{[bgx]zfile()} allow streams to be appended to an
        existing file, but \code{bzfile()} reads only the first stream.
       
-      \item Function \code{person()} in package 'utils' now uses a given/family
-        scheme in preference to first/middle/last, is vectorized to
-        handle an arbitrary number of persons, and gains a 'role'
-        argument to specify person roles using a controlled vocabulary
-        (the MARC relator terms).
+      \item Function \code{person()} in package \code{'utils'} now uses
+        a given/family scheme in preference to first/middle/last, is
+        vectorized to handle an arbitrary number of persons, and gains a
+        'role' argument to specify person roles using a controlled
+        vocabulary (the MARC relator terms).
       
-      \item Package 'utils' adds a new \code{"bibentry"} class for representing and
-        manipulating bibliographic information in enhanced BibTeX
-        style, unifying and enhancing the previously existing
-        mechanisms.
+      \item Package \code{'utils'} adds a new \code{"bibentry"} class
+        for representing and manipulating bibliographic information in
+        enhanced BibTeX style, unifying and enhancing the previously
+        existing mechanisms.
       
       \item A \code{bibstyle()} function has been added to the 'tools' package
        with default JSS style for rendering \code{"bibentry"} objects, and a
@@ -166,38 +183,39 @@
        customizable using the new \code{Rd2txt_options()} function.
        options(\code{"help_text_width"}) is no longer used.
       
-      \item Added \\href tag to the Rd format, to allow hyperlinks to URLs
-        without displaying the full URL.
+      \item Added \code{\\href} tag to the Rd format, to allow
+        hyperlinks to URLs without displaying the full URL.
       
       \item New \code{toRd()} generic in the 'tools' package to convert objects to
        fragments of Rd code, and added \code{"fragment"} argument to
        \code{Rd2txt()}, \code{Rd2HTML()}, and \code{Rd2latex()} to support it.
       
-      \item R_HOME/share/texmf now follows the TDS conventions, so can be
-       set as a texmf tree ('root directory' in MiKTeX parlance).
+      \item \code{R_HOME/share/texmf} now follows the TDS conventions,
+       so can be set as a \code{texmf} tree ('root directory' in MiKTeX
+       parlance).
       
       \item S3 generic functions now use correct S4 inheritance when
-        dispatching on an S4 object.  See ?Methods, section on
+        dispatching on an S4 object.  See \code{?Methods}, section on
         "Methods for S3 Generic Functions" for recommendations and
         details.
       
-      \item \code{format.pval()} gains a ... argument to pass arguments such as
-       'nsmall' to \code{format()}.  (Wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(9574)})
+      \item \code{format.pval()} gains a \code{...} argument to pass
+       arguments such as \code{'nsmall'} to \code{format()}.  (Wish of
+       \Sexpr[results=rd]{tools:::Rd_expr_PR(9574)})
       
-      \item \code{legend()} supports 'title.adj' (Wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(13415)})
+      \item \code{legend()} supports \code{'title.adj'} (Wish of
+      \Sexpr[results=rd]{tools:::Rd_expr_PR(13415)})
       
-      \item Added support for subsetting \code{"raster"} objects, plus assigning
-        to a subset, conversion to a matrix (of colour strings), and
-        comparisons (== and !=).
+      \item Added support for subsetting \code{"raster"} objects, plus
+        assigning to a subset, conversion to a matrix (of colour
+        strings), and comparisons (\code{==} and \code{!=}).
       
       \item Added a new \code{parseLatex()} function (and related functions
        \code{deparseLatex()} and \code{latexToUtf8()}) to support conversion of
        bibliographic entries for display in R.
       
-      \item Text rendering of \\itemize in help uses a Unicode bullet in
-       UTF-8 and most single-byte Windows locales.
-      
-      
+      \item Text rendering of \code{\\itemize} in help uses a Unicode
+       bullet in UTF-8 and most single-byte Windows locales.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
@@ -205,84 +223,82 @@
       \item Supplying the parser with a string containing both octal/hex and
        Unicode escapes is now an error.
       
-      \item File extension .C for C++ code files in packages is now defunct.
-      
-      
+      \item File extension \code{.C} for C++ code files in packages is
+      now defunct.
     }
   }
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
-      \item \code{install.packages()} has a new argument 'libs_only' to optionally
-       pass --libs-only to INSTALL and works analogously for Windows
-       binary installs (to add support for 64- or 32-bit Windows).
+      \item \code{install.packages()} has a new argument
+       \code{'libs_only'} to optionally pass \option{--libs-only} to
+       \command{R CMD INSTALL} and works analogously for Windows binary
+       installs (to add support for 64- or 32-bit Windows).
       
-      \item When sub-architectures are in use, the installed architectures
-       are recorded in the 'Archs' field of the DESCRIPTION file.
-       There is a new default filter, \code{"subarch"}, in
-       \code{available.packages()} to make use of this.
+      \item When sub-architectures are in use, the installed
+       architectures are recorded in the \code{'Archs'} field of the
+       \code{DESCRIPTION} file.  There is a new default filter,
+       \code{"subarch"}, in \code{available.packages()} to make use of
+       this.
       
-       Code is compiled in a copy of the 'src' directory when a
+       Code is compiled in a copy of the \code{'src'} directory when a
        package is installed for more than one sub-architecture: this
        avoid problems with cleaning the sources between building
        sub-architectures.
       
-      \item R CMD INSTALL --libs-only no longer overrides the setting of
-       locking, so a previous version of the package will be restored
-       unless --no-lock is specified.
-      
-      
+      \item \command{R CMD INSTALL --libs-only} no longer overrides the
+       setting of locking, so a previous version of the package will be
+       restored unless \option{--no-lock} is specified.
     }
   }
   \subsection{UTILITIES}{
     \itemize{
-      \item R CMD Rprof|build|check are now based on R rather than Perl
-       scripts.  The only remaining Perl scripts are the rarely used
-       R CMD Sd2Rd, install-info.pl (used only if install-info is
-       not found) and some maintainer-mode-only scripts.
+      \item \command{R CMD Rprof|build|check} are now based on R rather
+       than Perl scripts.  The only remaining Perl scripts are the
+       rarely used \command{R CMD Sd2Rd}, \code{install-info.pl} (used only if
+       \code{install-info} is not found) and some maintainer-mode-only scripts.
       
-      \item R CMD check has a new argument --extra-arch to confine tests
-       to those needed to check an additional sub-architecture.
+      \item \command{R CMD check} has a new argument \option{--extra-arch}
+       to confine tests to those needed to check an additional
+       sub-architecture.
       
-       R CMD check's check for "Subdirectory 'inst' contains no files"
-       is more thorough: it looks for files, and warns if there are
-       only empty directories.
+       \command{R CMD check}'s check for "Subdirectory 'inst' contains
+       no files" is more thorough: it looks for files, and warns if
+       there are only empty directories.
       
-       'check' configuration files have changed format: they are now
-       R source files, and the default file is ~/.R/check.Rconf.
+       \code{'check'} configuration files have changed format: they are now
+       R source files, and the default file is \code{~/.R/check.Rconf}.
       
-      \item R CMD build no longer creates an INDEX file (R CMD INSTALL
-       does so), and --force removes (rather than overwrites) an
-       existing INDEX file.
+      \item \command{R CMD build} no longer creates an \code{INDEX} file
+       (\command{R CMD INSTALL} does so), and \code{--force} removes
+       (rather than overwrites) an existing \code{INDEX} file.
       
-      \item R CMD Rd2dvi makes use of \code{tools::texi2dvi()} to process the
-       package manual.
+      \item \command{R CMD Rd2dvi} makes use of \code{tools::texi2dvi()}
+       to process the package manual.
       
-      \item R CMD Rprof now uses \code{utils::summaryRprof()} rather than Perl.
-       It has new arguments to select one of the tables and to limit
-       the number of entries printed.
+      \item \command{R CMD Rprof} now uses \code{utils::summaryRprof()}
+       rather than Perl.  It has new arguments to select one of the
+       tables and to limit the number of entries printed.
       
-      \item R CMD Sweave now runs R with --vanilla so the environment
-       setting of R_LIBS will always be used.
-      
-      
+      \item \command{R CMD Sweave} now runs R with \code{--vanilla} so
+       the environment setting of \code{R_LIBS} will always be used.
     }
   }
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      \item \code{lang5()} and \code{lang6()} \{in addition to pre-existing lang[1-4]()\}
-       convenience functions for easier construction of \code{eval()} calls.
-       If you have your own definition, do wrap it inside
-       '#ifndef lang5 .... #endif' to keep it working with old and new R.
       
-      \item Header R.h now includes only the C headers it itself needs,
-       hence no longer includes errno.h.  (This helps avoid problems
+      \item \code{lang5()} and \code{lang6()} \{in addition to
+       pre-existing lang[1-4]()\} convenience functions for easier
+       construction of \code{eval()} calls.  If you have your own
+       definition, do wrap it inside \code{'#ifndef lang5 .... #endif'}
+       to keep it working with old and new R.
+      
+      \item Header \code{R.h} now includes only the C headers it itself needs,
+       hence no longer includes \code{errno.h}.  (This helps avoid problems
        when it is included from C++ source files.)
       
-      \item Headers Rinternals.h and R_ext/Print.h include the C++
-       versions of stdio.h and stdarg.h respectively if included from
-       a C++ source file.
-      
-      
+      \item Headers \code{Rinternals.h} and \code{R_ext/Print.h} include
+       the C++ versions of \code{stdio.h} and \code{stdarg.h}
+       respectively if included from a C++ source file.
     }
   }
   \subsection{INSTALLATION}{
@@ -292,15 +308,13 @@
       
       \item Tcl/Tk >= 8.4 is now required (increased from 8.3).
       
-      \item 'make check' compares the output of the examples from several of
-       the base packages to reference output rather than the previous
-       output (if any).  Expect some differences due to differences
-       in floating-point computations.
+      \item \command{'make check'} compares the output of the examples
+       from several of the base packages to reference output rather than
+       the previous output (if any).  Expect some differences due to
+       differences in floating-point computations.
       
-      \item zlib has been updated to 1.2.4: this is also the minimum
-       version required for --with-system-zlib.
-      
-      
+      \item \code{zlib} has been updated to 1.2.4: this is also the minimum
+       version required for \option{--with-system-zlib}.
     }
   }
   \subsection{BUG FIXES}{
@@ -309,97 +323,97 @@
        methods.  This could previously corrupt methods used by \code{as()}.
       
       \item The densities of non-central chi-squared are now more accurate
-       in some cases in the extreme tails, e.g. dchisq(2000, 2,
-       1000), as a series expansion was truncated too early.
+       in some cases in the extreme tails, e.g. \code{dchisq(2000, 2,
+       1000)}, as a series expansion was truncated too early.
        (\Sexpr[results=rd]{tools:::Rd_expr_PR(14105)})
       
-      \item \code{pt()} is more accurate in the left tail for ncp large, e.g.
-       pt(-1000, 3, 200).  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14069)})
+      \item \code{pt()} is more accurate in the left tail for \code{ncp}
+       large, e.g.  \code{pt(-1000, 3, 200)}.
+       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14069)})
       
       \item The default C code (R_binary) for binary ops now sets the S4
-       bit in the result if either argument is an S4 object. (\Sexpr[results=rd]{tools:::Rd_expr_PR(13209)})
+       bit in the result if either argument is an S4
+       object. (\Sexpr[results=rd]{tools:::Rd_expr_PR(13209)})
       
-      \item source(echo=TRUE) failed to echo comments that followed the
-       last statement in a file.
+      \item \code{source(echo=TRUE)} failed to echo comments that
+       followed the last statement in a file.
       
-      \item S4 classes that contained one of \code{"matrix"}, \code{"array"} or \code{"ts"} and
-       also another class now accept superclass objects in \code{new()}.
-       Also fixes failure to call \code{validObject()} for these classes.
+      \item S4 classes that contained one of \code{"matrix"},
+       \code{"array"} or \code{"ts"} and also another class now accept
+       superclass objects in \code{new()}.  Also fixes failure to call
+       \code{validObject()} for these classes.
       
       \item Conditional inheritance defined by argument test= in
-       \code{methods::setIs()} will no longer be used in S4 method selection
-       (caching these methods could give incorrect results).  See
-       ?setIs.
+       \code{methods::setIs()} will no longer be used in S4 method
+       selection (caching these methods could give incorrect results).
+       See \code{?setIs}.
       
       \item The signature of an implicit generic is now used by
        \code{setGeneric()} when that does not use a definition nor
        explicitly set a signature.
       
-      \item The \code{pdf()} device will now allow 'lwd' values less than 1
-       (it used to force such values to be 1).
+      \item The \code{pdf()} device will now allow \code{'lwd'} values
+       less than 1 (it used to force such values to be 1).
       
-      \item A bug in \code{callNextMethod()} for some examples with \code{"..."} in the
-       arguments has been fixed.
-       See src/library/methods/tests/nextWithDots.R in the sources.
+      \item A bug in \code{callNextMethod()} for some examples with
+       \code{"..."} in the arguments has been fixed.  See
+       \code{src/library/methods/tests/nextWithDots.R} in the sources.
       
       \item \code{GERaster()} now checks for width or height of zero and does
        nothing in those cases; previously the behaviour was
        undefined, probably device-specific, and possibly dangerous.
       
-      \item \\Sexpr[result=rd] in an Rd file added a spurious newline,
-       which was displayed as extra whitespace when rendered.
-      
-      
-      
-      
+      \item \code{\\Sexpr[result=rd]} in an \code{Rd} file added a
+       spurious newline, which was displayed as extra whitespace when
+       rendered.
     }
   }
 }
+
+
 \section{CHANGES IN R VERSION 2.11.1 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{install.packages()} has a new optional argument 'INSTALL_opts'
-        which can be used to pass options to R CMD INSTALL for
-        source-package installs.
-      
-      
+      \item \code{install.packages()} has a new optional argument
+      \code{'INSTALL_opts'}
+      which can be used to pass options to \command{R CMD INSTALL} for
+      source-package installs.
     }
   }
   \subsection{BUG FIXES}{
     \itemize{
-      \item R CMD Rd2dvi failed if run from a path containing space(s).
-       This also affected R CMD check, which calls Rd2dvi.
+      \item \command{R CMD Rd2dvi} failed if run from a path containing
+       space(s).  This also affected \command{R CMD check}, which calls
+       \command{Rd2dvi}.
       
-      \item \code{stripchart()} could fail with an empty factor level. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14317)})
+      \item \code{stripchart()} could fail with an empty factor
+      level. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14317)})
       
-      \item Text help rendering of \\tabular\{\} has been improved: under
-        some circumstances leading blank columns were not rendered.
+      \item Text help rendering of \code{\\tabular\{\}} has been
+        improved: under some circumstances leading blank columns were
+        not rendered.
       
-      \item strsplit(x, fixed=TRUE) marked UTF-8 strings with the local
-       encoding when no splits were found.
+      \item \code{strsplit(x, fixed=TRUE)} marked UTF-8 strings with the
+       local encoding when no splits were found.
       
-      \item weighted.mean(NA, na.rm=TRUE) and similar now returns NaN again,
-       as it did previously to R 2.10.0.
-      
-      
-      
+      \item \code{weighted.mean(NA, na.rm=TRUE)} and similar now returns
+       \code{NaN} again, as it did prior to R 2.10.0.
     }
   }
 }
+
 \section{CHANGES IN R VERSION 2.11.1}{
   \subsection{NEW FEATURES}{
     \itemize{
-      \item R CMD INSTALL checks if dependent packages are available early on
-       in the installation of source packages, thereby giving clearer
-       error messages.
+      \item \command{R CMD INSTALL} checks if dependent packages are
+       available early on in the installation of source packages,
+       thereby giving clearer error messages.
       
-      \item R CMD INSTALL --build now names the file in the format used
-       for Mac OS X binary files on that platform.
+      \item \command{R CMD INSTALL --build} now names the file in the
+       format used for Mac OS X binary files on that platform.
       
-      \item \code{BIC()} in package stats4 now also works with multiple fitted models,
-       analogously to \code{AIC()}.
-      
-      
+      \item \code{BIC()} in package stats4 now also works with multiple
+       fitted models, analogously to \code{AIC()}.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
@@ -408,8 +422,6 @@
        deprecated: it has caused problems for some 'make's on
        case-insensitive file systems (although it currently works
        with the recommended toolkits).
-      
-      
     }
   }
   \subsection{INSTALLATION}{
@@ -469,13 +481,14 @@
        input due to incorrect documentation of xz utils.  (Report
        and patch from Olaf Mersmann.)
       
-      \item The S4 \code{initialize()} methods for \code{"matrix"}, \code{"array"}, and \code{"ts"} have
-        been fixed to call \code{validObject()}. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14284)})
+      \item The S4 \code{initialize()} methods for \code{"matrix"},
+        \code{"array"}, and \code{"ts"} have been fixed to call
+        \code{validObject()}. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14284)})
       
-      \item R CMD INSTALL now behaves the same way with or without
-       --no-multiarch on platforms with only one installed
-       architecture.  (It used to clean the src directory without
-       --no-multiarch.)
+      \item \command{R CMD INSTALL} now behaves the same way with or
+       without \option{--no-multiarch} on platforms with only one
+       installed architecture.  (It used to clean the src directory
+       without \option{--no-multiarch}.)
       
       \item [<-.data.frame was not quite careful enough in assigning (and
         potentially deleting) columns right-to-left. (\Sexpr[results=rd]{tools:::Rd_expr_PR(14263)})
@@ -557,8 +570,9 @@
        time taken by the OS to find all the packages the first time
        it is used can dominate the time).
       
-      \item R CMD check has a new option '--timings' to record
-       per-example timings in file <pkg>.Rcheck/<pkg>-Ex.timings.
+      \item \command{R CMD check} has a new option \option{'--timings'}
+       to record per-example timings in file
+       \code{<pkg>.Rcheck/<pkg>-Ex.timings}.
       
       \item The TRE library has been updated to version 0.8.0 (minor bugfixes).
       
@@ -593,7 +607,7 @@
       
       \item R CMD check now also checks if the package and namespace can
        be unloaded: this provides a check of the \code{.Last.lib()} and
-       \code{.onUnload()} hook functions (unless --install=fake).
+       \code{.onUnload()} hook functions (unless \option{--install=fake}).
       
       \item prop.table(x) now accepts a one-dimensional table for x.
       
@@ -931,20 +945,18 @@
        converted to hex codes with a warning. Such characters are
        only really portable if they appear in comments.
       
-      \item R CMD INSTALL now tests that the installed package can be loaded
-       (and backs out the installation if it cannot): this can be
-       suppressed by --no-test-load.  This avoids installing/updating
-       a package that cannot be used: common causes of failures to
-       load are missing/incompatible external software and
-       missing/broken dependent packages.
+      \item \command{R CMD INSTALL} now tests that the installed package
+       can be loaded (and backs out the installation if it cannot): this
+       can be suppressed by \option{--no-test-load}.  This avoids
+       installing/updating a package that cannot be used: common causes
+       of failures to load are missing/incompatible external software
+       and missing/broken dependent packages.
       
       \item Package installation on Windows for a package with a src
        directory now checks if a DLL is created unless there is a
        src/Makefile.win file: this helps catch broken installations
        where the toolchain has not reported problems in building the DLL.
        (Note: this can be any DLL, not just one named <pkg-name>.dll.)
-      
-      
     }
   }
   \subsection{BUG FIXES}{
@@ -1051,7 +1063,7 @@
       
       \item capabilities(\code{"X11"}) now works the same way on Mac OS X as on
        other platforms (and as documented: it was always true for R
-       built with --with-aqua, as the CRAN builds are).
+       built with \option{--with-aqua}, as the CRAN builds are).
       
       \item The \code{X11()} device with cairo but not Pango (notably Mac OS X)
        now checks validity of text strings in UTF-8 locales (since
@@ -1215,9 +1227,6 @@
       
       \item contrasts<- (in the 'stats' package) no longer has an
        undeclared dependence on 'methods' (introduced in 2.10.0).
-      
-      
-      
     }
   }
 }
@@ -1226,10 +1235,11 @@
     \itemize{
       \item The PCRE library has been updated to version 8.00.
       
-      \item R CMD INSTALL has new options --no-R, --no-libs, --no-data,
-       --no-help, --no-demo, --no-exec, and --no-inst to suppress
-       installation of the specified part of the package.  These are
-       intended for special purposes (e.g. building a database
+      \item \command{R CMD INSTALL} has new options \option{--no-R},
+       \option{--no-libs}, \option{--no-data}, \option{--no-help},
+       \option{--no-demo}, \option{--no-exec}, and \option{--no-inst} to
+       suppress installation of the specified part of the package.
+       These are intended for special purposes (e.g. building a database
        of help pages without fully installing all packages).
       
       \item The documented line-length limit of 4095 bytes when reading
@@ -1241,12 +1251,10 @@
        selected by
        options(BioC_mirror="http://bioconductor.statistik.tu-dortmund.de")
       
-      \item Double-clicking in a \code{tk_select.list()} list box now selects the
-       item and closes the list box (as happens on the Windows
-       \code{select.list()} widget).
-      
-      
-    }
+      \item Double-clicking in a \code{tk_select.list()} list box now
+       selects the item and closes the list box (as happens on the
+       Windows \code{select.list()} widget).
+     }
   }
   \subsection{INSTALLATION}{
     \itemize{
@@ -1658,10 +1666,12 @@
       \item Rd.sty now makes a better job of setting email addresses,
        including using a monospaced font.
       
-      \item \code{textConnection()} gains an 'encoding' argument to determine how
-       input strings with marked encodings will be handled.
+      \item \code{textConnection()} gains an \code{'encoding'} argument
+       to determine how input strings with marked encodings will be
+       handled.
       
-      \item R CMD Rd2pdf is available as a shortcut for R CMD Rd2dvi --pdf.
+      \item \command{R CMD Rd2pdf} is available as a shortcut for
+      \command{R CMD Rd2dvi --pdf}.
       
       \item R CMD check now checks links where a package is specified
        (\\link[pkg]\{file\} or \\link[pkg:file]\{topic\}), if the package
@@ -1720,7 +1730,8 @@
        files, and to re-save them in a different compressed format,
        including choosing the most compact format available.
       
-       A new INSTALL option, --resave-data, makes use of this.
+       A new \command{INSTALL} option, \option{--resave-data}, makes use
+       of this.
       
       \item File ~/.R/config is used in preference to ~/.Rconfig, and
        these are now documented in 'R Installation and Administration'.
@@ -1833,10 +1844,10 @@
       \item Plain text help is now used as the fallback for HTML help (as
        it always was for Compiled HTML help on Windows).
       
-      \item It is possible to ask for static HTML pages to be prebuilt via
-       the configure option --enable-prebuilt-html.  This may be
-       useful for those who wish to make HTML help available outside
-       R, e.g. on a local web site.
+      \item It is possible to ask for static HTML pages to be prebuilt
+       via the configure option \option{--enable-prebuilt-html}.  This
+       may be useful for those who wish to make HTML help available
+       outside R, e.g. on a local web site.
       
       \item An experimental tag \\Sexpr has been added to Rd files, to
        evaluate expressions at build, install, or render time.
@@ -1921,19 +1932,21 @@
        versions of 'tar' other forms of compression such as lzma and
        xz, and arbitrary extensions.
       
-      \item R CMD INSTALL has a new option --data-compress to control the
-       compression used when lazy-loading data.  New possibilities are
-       --data-compress=bzip2 which will give ca 15\% better
+      \item \command{R CMD INSTALL} has a new option
+       \option{--data-compress} to control the compression used when
+       lazy-loading data.  New possibilities are
+       \option{--data-compress=bzip2} which will give ca 15\% better
        compression at the expense of slower installation times, and
-       --data-compress=xz, often giving even better compression on
-       large datasets at the expense of much longer installation
+       \option{--data-compress=xz}, often giving even better compression
+       on large datasets at the expense of much longer installation
        times. (The latter is used for the recommended packages: it is
-       particularly effective for 'survival'.)
+       particularly effective for \code{'survival'}.)
       
-      \item \code{file()} for open = \code{""}, \code{"r"} or \code{"rt"} will automagically detect
-       compressed files (from gzip, bzip2 or xz).  This means that
-       compressed files can be specified by file name (rather than
-       via a \code{gzfile()} connection) to \code{read.table()}, \code{readlines()},
+      \item \code{file()} for open = \code{""}, \code{"r"} or
+       \code{"rt"} will automagically detect compressed files (from
+       gzip, bzip2 or xz).  This means that compressed files can be
+       specified by file name (rather than via a \code{gzfile()}
+       connection) to \code{read.table()}, \code{readlines()},
        \code{scan()} and so on.
       
       \item \code{data()} can handle compressed text files with extensions
@@ -1981,8 +1994,9 @@
       \item cairo >= 1.2 is now required (1.2.0 was released in July 2006)
        for cairo-based graphics devices (which remain optional).
       
-      \item A suitable \code{iconv()} is now required: support for configure option
-       --without-iconv has been withdrawn (it was deprecated in R 2.5.0).
+      \item A suitable \code{iconv()} is now required: support for
+       configure option \option{--without-iconv} has been withdrawn (it
+       was deprecated in R 2.5.0).
       
       \item Perl is no longer 'essential'. R can be built without it, but
        scripts R CMD build, check, Rprof and Sd2d require it.
@@ -1991,7 +2005,7 @@
        \code{Sys.glob()} has been assumed since R 2.9.0 at least).
       
       \item C99 support for MBCS is now required, and configure option
-       --disable-mbcs has been withdrawn.
+       \option{--disable-mbcs} has been withdrawn.
       
       \item Having a version of 'tar' capable of automagically detecting
        compressed archives is useful for \code{utils::untar()}, and so 'gtar'

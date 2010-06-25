@@ -31,7 +31,7 @@ R: Makefile svnonly
 	  $(MAKE) rdocdir=$(top_builddir)/doc install-sources; \
 	fi
 
-docs: R.1 $(top_srcdir)/NEWS
+docs: R.1 @MAINTAINER_MODE_TRUE@ updateNEWS
 	@(cd manual && $(MAKE) $@)
 
 R.1:
@@ -39,8 +39,14 @@ R.1:
 	  --name="a language for data analysis and graphics" \
 	  $(top_builddir)/bin/R
 
-$(top_srcdir)/NEWS: @MAINTAINER_MODE_TRUE@ NEWS.Rd
+updateNEWS: $(top_srcdir)/NEWS $(srcdir)/html/NEWS.html
+
+$(top_srcdir)/NEWS: $(srcdir)/NEWS.Rd
 	@$(ECHO) "tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
+	  $(top_builddir)/bin/R --slave --vanilla
+
+$(srcdir)/html/NEWS.html: $(srcdir)/NEWS.Rd
+	@$(ECHO) "tools:::Rd2HTML_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(top_builddir)/bin/R --slave --vanilla
 
 install: install-message installdirs install-sources install-sources2 install-man
