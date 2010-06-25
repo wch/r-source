@@ -133,7 +133,7 @@ as.POSIXct.default <- function(x, tz = "", ...)
                   deparse(substitute(x))))
 }
 
-as.double.POSIXlt <- function(x, ...) as.POSIXct(x)
+as.double.POSIXlt <- function(x, ...) as.double(as.POSIXct(x))
 
 ## POSIXlt is not primarily a list, but primarily an abstract vector of
 ## time stamps:
