@@ -100,10 +100,11 @@ The methods had a different default (<code>""</code>) for <code>xlab</code>.
 </p>
 <p>
 </li>
-<li>Classes <code>"POSIXct"</code>, <code>"POSIXlt"</code> and <code>"difftime"</code> have generators
-<code>.POSIXct()</code>, <code>.POSIXlt()</code> and <code>.difftime()</code>.  Package authors are
-advised to make use of them (they are available from R 2.11.0)
-to proof against planned future changes to the classes.
+<li>Classes <code>"POSIXct"</code>, <code>"POSIXlt"</code> and
+<code>"difftime"</code> have generators <code>.POSIXct()</code>,
+<code>.POSIXlt()</code> and <code>.difftime()</code>.  Package authors are
+advised to make use of them (they are available from <font face="Courier New,Courier" color="#666666"><b>R</b></font> 2.11.0) to
+proof against planned future changes to the classes.
 </p>
 <p>
 The ordering of the classes has been changed, so <code>"POSIXt"</code> is
@@ -185,7 +186,7 @@ It avoids the use of <CODE>'texindy'</CODE> by <CODE>texinfo</CODE>'s
 <p>
 </li>
 <li>The ability of <code>readLines()</code> and <code>scan()</code> to
-re-encode inputs to marked UTF-8 strings on Windows since R 2.7.0
+re-encode inputs to marked UTF-8 strings on Windows since <font face="Courier New,Courier" color="#666666"><b>R</b></font> 2.7.0
 is extended to non-UTF-8 locales on other OSes.
 </p>
 <p>
@@ -214,7 +215,7 @@ bitwise.
 </li>
 <li>Environment variables <code>R_DVIPSCMD</code>, <code>R_LATEXCMD</code>,
 <code>R_MAKEINDEXCMD</code>, <code>R_PDFLATEXCMD</code> are no longer used nor
-set in an R session.  (With the move to <code>tools::texi2dvi()</code>,
+set in an <font face="Courier New,Courier" color="#666666"><b>R</b></font> session.  (With the move to <code>tools::texi2dvi()</code>,
 the conventional <code>LATEX</code>, <code>MAKEINDEX</code> and <code>PDFLATEX</code>
 will be used.  options(<code>"dvipscmd"</code>) defaults to the value
 of <code>DVIPS</code>, then to <code>"dvips"</code>.)
@@ -233,7 +234,7 @@ functions with non-zero self times.
 <p>
 </li>
 <li><code>print(x)</code> and <code>str(x)</code> now indicate if an empty
-list x is named.
+list <code>x</code> is named.
 </p>
 <p>
 </li>
@@ -390,7 +391,7 @@ restored unless <span class="option">--no-lock</span> is specified.
 <p>
 
 <ul>
-<li> <CODE>R CMD Rprof|build|check</CODE> are now based on R rather
+<li> <CODE>R CMD Rprof|build|check</CODE> are now based on <font face="Courier New,Courier" color="#666666"><b>R</b></font> rather
 than Perl scripts.  The only remaining Perl scripts are the
 rarely used <CODE>R CMD Sd2Rd</CODE>, <code>install-info.pl</code> (used only if
 <code>install-info</code> is not found) and some maintainer-mode-only scripts.
@@ -408,7 +409,7 @@ there are only empty directories.
 </p>
 <p>
 <code>'check'</code> configuration files have changed format: they are now
-R source files, and the default file is <code>~/.R/check.Rconf</code>.
+<font face="Courier New,Courier" color="#666666"><b>R</b></font> source files, and the default file is <code>~/.R/check.Rconf</code>.
 </p>
 <p>
 </li>
@@ -429,7 +430,7 @@ tables and to limit the number of entries printed.
 </p>
 <p>
 </li>
-<li><CODE>R CMD Sweave</CODE> now runs R with <code>--vanilla</code> so
+<li><CODE>R CMD Sweave</CODE> now runs <font face="Courier New,Courier" color="#666666"><b>R</b></font> with <code>--vanilla</code> so
 the environment setting of <code>R_LIBS</code> will always be used.
 </ul>
 
@@ -473,7 +474,7 @@ respectively if included from a C++ source file.
 
 <ul>
 <li> A C99 compiler is now required, and more C99 language features
-will be used in the R sources.
+will be used in the <font face="Courier New,Courier" color="#666666"><b>R</b></font> sources.
 </p>
 <p>
 </li>
@@ -514,14 +515,14 @@ in some cases in the extreme tails, e.g. <code>dchisq(2000, 2,
 <p>
 </li>
 <li><code>pt()</code> is more accurate in the left tail for <code>ncp</code>
-large, e.g.  <code>pt(-1000, 3, 200)</code>.
+large, e.g. <code>pt(-1000, 3, 200)</code>.
 (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14069">PR#14069</a>)
 </p>
 <p>
 </li>
 <li>The default C code (R_binary) for binary ops now sets the S4
 bit in the result if either argument is an S4
-object. (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=13209">PR#13209</a>)
+object.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=13209">PR#13209</a>)
 </p>
 <p>
 </li>
@@ -609,7 +610,7 @@ space(s).  This also affected <CODE>R CMD check</CODE>, which calls
 <p>
 </li>
 <li><code>stripchart()</code> could fail with an empty factor
-level. (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14317">PR#14317</a>)
+level.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14317">PR#14317</a>)
 </p>
 <p>
 </li>
@@ -625,7 +626,7 @@ local encoding when no splits were found.
 <p>
 </li>
 <li><code>weighted.mean(NA, na.rm=TRUE)</code> and similar now returns
-<code>NaN</code> again, as it did prior to R 2.10.0.
+<code>NaN</code> again, as it did prior to <font face="Courier New,Courier" color="#666666"><b>R</b></font> 2.10.0.
 </ul>
 
 </p>
@@ -667,7 +668,7 @@ fitted models, analogously to <code>AIC()</code>.
 <p>
 
 <ul>
-<li> Use of file extension .C for C++ code in packages is now
+<li> Use of file extension <code>.C</code> for C++ code in packages is now
 deprecated: it has caused problems for some 'make's on
 case-insensitive file systems (although it currently works
 with the recommended toolkits).
@@ -682,14 +683,11 @@ with the recommended toolkits).
 <p>
 
 <ul>
-<li> Command 'gnutar' is preferred to 'tar' when configure sets
-TAR.  This is needed on Mac OS 10.6, where the default tar,
-bsdtar 2.6.2, has been reported to produce archives with
-illegal extensions to tar (according to the POSIX standard).
-</p>
-<p>
-</p>
-<p>
+<li> Command <CODE>'gnutar'</CODE> is preferred to <CODE>'tar'</CODE>
+when configure sets <code>TAR</code>.  This is needed on Mac OS 10.6,
+where the default <code>tar</code>, <code>bsdtar 2.6.2</code>, has been
+reported to produce archives with illegal extensions to tar
+(according to the POSIX standard).
 </ul>
 
 </p>
@@ -701,60 +699,71 @@ illegal extensions to tar (according to the POSIX standard).
 <p>
 
 <ul>
-<li> The C function mkCharLenCE now no longer reads past 'len' bytes
-(unlikely to be a problem except in user code). (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14246">PR#14246</a>)
+<li> The C function <code>mkCharLenCE</code> now no longer reads past
+<code>'len'</code> bytes (unlikely to be a problem except in user
+code). (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14246">PR#14246</a>)
 </p>
 <p>
 </li>
-<li>On systems without any default LD_LIBRARY_PATH (not even
-/usr/local/lib), [DY]LIB_LIBRARY_PATH is now set without a
-trailing colon.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=13637">PR#13637</a>)
+<li>On systems without any default <code>LD_LIBRARY_PATH</code> (not
+even <code>/usr/local/lib</code>), <code>[DY]LIB_LIBRARY_PATH</code> is now
+set without a trailing colon.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=13637">PR#13637</a>)
 </p>
 <p>
 </li>
-<li>More efficient <code>utf8ToInt()</code> on long multi-byte strings with
-many multi-byte characters.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14262">PR#14262</a>)
+<li>More efficient <code>utf8ToInt()</code> on long multi-byte strings
+with many multi-byte characters.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14262">PR#14262</a>)
 </p>
 <p>
 </li>
-<li><code>aggregate.ts()</code> gave platform-depedent results due to rounding
-error for ndeltat != 1.
+<li><code>aggregate.ts()</code> gave platform-dependent results due to
+rounding error for <code>ndeltat != 1</code>.
 </p>
 <p>
 </li>
-<li><code>package.skeleton()</code> sometimes failed to fix filenames for .R or
-.Rd files to start with an alphanumeric.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14253">PR#14253</a>)
+<li><code>package.skeleton()</code> sometimes failed to fix filenames
+for <code>.R</code> or <code>.Rd</code> files to start with an alphanumeric.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14253">PR#14253</a>)
+</p>
+<p>
 It also failed when only an S4 class without any methods was
 defined.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14280">PR#14280</a>)
 </p>
 <p>
 </li>
-<li>splinefun(*, method = <code>"monoH.FC"</code>)  was not quite monotone in rare
-cases. (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14215">PR#14215</a>)
+<li><code>splinefun(*, method = <code>"monoH.FC"</code>)</code> was not
+quite monotone in rare cases.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14215">PR#14215</a>)
 </p>
 <p>
 </li>
-<li>Rhttpd no longer crashes due to SIGPIPE when the client closes
-the connection prematurely.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14266">PR#14266</a>)
+<li><code>Rhttpd</code> no longer crashes due to <code>SIGPIPE</code> when
+the client closes the connection prematurely.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14266">PR#14266</a>)
 </p>
 <p>
 </li>
-<li><code>format.POSIXlt()</code> could cause a stack overflow and crash when used on
-very long vectors.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14267">PR#14267</a>)
+<li><code>format.POSIXlt()</code> could cause a stack overflow and
+crash when used on very long vectors.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14267">PR#14267</a>)
 </p>
 <p>
 </li>
-<li><code>Rd2latex()</code> incorrectly escaped special characters in \usage sections.
+<li><code>Rd2latex()</code> incorrectly escaped special characters in
+<code>\usage</code> sections.
 </p>
 <p>
 </li>
-<li><code>mcnemar.test()</code> could alter the levels (dropping unused levels)
-if passed 'x' and 'y' as factors (reported by Greg Snow).
+<li><code>mcnemar.test()</code> could alter the levels (dropping
+unused levels) if passed <code>'x'</code> and <code>'y'</code> as factors
+(reported by Greg Snow).
 </p>
 <p>
 </li>
-<li>Rd2pdf sometimes needed a further pdflatex pass to get
-hyperlinked pages correct.
+<li><CODE>Rd2pdf</CODE> sometimes needed a further
+<CODE>pdflatex</CODE> pass to get hyperlinked pages correct.
 </p>
 <p>
 </li>
@@ -763,14 +772,15 @@ duplicated, causing segfaults in <code>split()</code>.
 </p>
 <p>
 </li>
-<li>cut(d, breaks = <n>)  now also works for <code>"Date"</code> or <code>"POSIXt"</code>
-argument d.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14288">PR#14288</a>)
+<li><code>cut(d, breaks = &lt;n&gt;)</code> now also works for <code>"Date"</code>
+or <code>"POSIXt"</code> argument <code>d</code>.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14288">PR#14288</a>)
 </p>
 <p>
 </li>
-<li><code>memDecompress()</code> could decompress incompletely rare xz-compressed
-input due to incorrect documentation of xz utils.  (Report
-and patch from Olaf Mersmann.)
+<li><code>memDecompress()</code> could decompress incompletely rare
+<code>xz</code>-compressed input due to incorrect documentation of
+<CODE>xz utils</CODE>.  (Report and patch from Olaf Mersmann.)
 </p>
 <p>
 </li>
@@ -787,54 +797,50 @@ without <span class="option">--no-multiarch</span>.)
 </p>
 <p>
 </li>
-<li>[<-.data.frame was not quite careful enough in assigning (and
-potentially deleting) columns right-to-left. (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14263">PR#14263</a>)
+<li><code>[&lt;-.data.frame</code> was not quite careful enough in
+assigning (and potentially deleting) columns
+right-to-left. (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14263">PR#14263</a>)
 </p>
 <p>
 </li>
-<li>rbeta(n, a,b) no longer occasionally returns NaN for a >> 1 > b.
+<li><code>rbeta(n, a, b)</code> no longer occasionally returns
+<code>NaN</code> for <code>a &gt;&gt; 1 &gt; b</code>.
 (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14291">PR#14291</a>)
 </p>
 <p>
 </li>
-<li>pnorm(x, log.p = TRUE) could return NaN not -Inf for x near
-(minus for lower.tail=TRUE) the largest representable number.
+<li><code>pnorm(x, log.p = TRUE)</code> could return <code>NaN</code> not
+<code>-Inf</code> for <code>x</code> near (minus for <code>lower.tail=TRUE</code>)
+the largest representable number.
 </p>
 <p>
 </li>
-<li>Compressed data files *.(txt|tab|csv).(gz|bz2|xz) were not
-recognized for the list of data topics and hence for packages
-using LazyData.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14273">PR#14273</a>)
+<li>Compressed data files <code>*.(txt|tab|csv).(gz|bz2|xz)</code>
+were not recognized for the list of data topics and hence for
+packages using <code>LazyData</code>.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14273">PR#14273</a>)
 </p>
 <p>
 </li>
-<li><code>textConnection()</code> did an unnecessary translation on strings in
-a foreign encoding (e.g. UTF-8 strings on Windows) and so was
-slower than it could have been on very long input strings.
+<li><code>textConnection()</code> did an unnecessary translation on
+strings in a foreign encoding (e.g. UTF-8 strings on Windows) and
+so was slower than it could have been on very long input strings.
 (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14286">PR#14286</a>)
 </p>
 <p>
 </li>
-<li><code>tools::Rd2txt()</code> did not render poorly written Rd files
-consistently with other renderers.
+<li><code>tools::Rd2txt()</code> did not render poorly written Rd
+files consistently with other renderers.
 </p>
 <p>
-It computed widths of strings that would be print()ed with
+It computed widths of strings that would be <code>print()</code>ed with
 escapes incorrectly, for example in the computation of column
-width for \tabular.
+width for <code>\tabular</code>.
 </p>
 <p>
 </li>
-<li><code>na.action()</code> did not extract the 'na.action' component as
-documented.
-</p>
-<p>
-</p>
-<p>
-</p>
-<p>
-</p>
-<p>
+<li><code>na.action()</code> did not extract the <code>'na.action'</code>
+component as documented.
 </ul>
 
 </p>
@@ -852,7 +858,7 @@ documented.
 <p>
 
 <ul>
-<li> Packages must have been installed under R &gt;= 2.10.0, as the
+<li> Packages must have been installed under <font face="Courier New,Courier" color="#666666"><b>R</b></font> &gt;= 2.10.0, as the
 current help system is the only one now supported.
 </p>
 <p>
@@ -866,22 +872,16 @@ Installation Manual'.
 <li>Argument matching for primitive functions is now done in the
 same way as for interpreted functions except for the deliberate
 exceptions
-</p>
-<p>
-call switch .C .Fortran .Call .External
-</p>
-<p>
+<pre>
+	 call switch .C .Fortran .Call .External
+       </pre>
 all of which use positional matching for their first argument,
 and also some internal-use-only primitives.
 </p>
 <p>
 </li>
-<li>The default device for command-line R at the console on Mac OS X
+<li>The default device for command-line <font face="Courier New,Courier" color="#666666"><b>R</b></font> at the console on Mac OS X
 is now <code>quartz()</code> and not <code>X11()</code>.
-</p>
-<p>
-</p>
-<p>
 </ul>
 
 </p>
@@ -893,28 +893,29 @@ is now <code>quartz()</code> and not <code>X11()</code>.
 <p>
 
 <ul>
-<li> The 'open' modes for connections are now interpreted more
-consistently.  open = <code>"r"</code> is now equivalent to open = <code>"rt"</code> for
-all connections.  The default open = <code>""</code> now means <code>"rt"</code> for all
-connections except the compressed file connections <code>gzfile()</code>,
-<code>bzfile()</code> and <code>xzfile()</code> for which it means <code>"rb"</code>.
+<li> The <code>'open'</code> modes for connections are now interpreted more
+consistently.  <code>open = "r"</code> is now equivalent to <code>open =
+       "rt"</code> for all connections.  The default open = <code>""</code>
+now means <code>"rt"</code> for all connections except the compressed
+file connections <code>gzfile()</code>, <code>bzfile()</code> and
+<code>xzfile()</code> for which it means <code>"rb"</code>.
 </p>
 <p>
 </li>
-<li>R CMD INSTALL now uses the internal <code>untar()</code> in package utils:
-this ensures that all platforms can install bzip2- and
-xz-compressed tarballs.  In case this causes problems (as it
-has on some Windows file systems when run from Cygwin tools)
-it can be overridden by the environment variable
-R_INSTALL_TAR: setting this to a modern external tar program
-will speed up unpacking of large (tens of Mb or more)
+<li><CODE>R CMD INSTALL</CODE> now uses the internal <code>untar()</code>
+in package utils: this ensures that all platforms can install
+<CODE>bzip2</CODE>- and <CODE>xz</CODE>-compressed tarballs.  In case
+this causes problems (as it has on some Windows file systems when
+run from Cygwin tools) it can be overridden by the environment
+variable <code>R_INSTALL_TAR</code>: setting this to a modern external
+tar program will speed up unpacking of large (tens of Mb or more)
 tarballs.
 </p>
 <p>
 </li>
-<li>help(try.all.packages = TRUE) is much faster (although the
-time taken by the OS to find all the packages the first time
-it is used can dominate the time).
+<li><code>help(try.all.packages = TRUE)</code> is much faster
+(although the time taken by the OS to find all the packages the
+first time it is used can dominate the time).
 </p>
 <p>
 </li>
@@ -928,17 +929,17 @@ to record per-example timings in file
 </p>
 <p>
 </li>
-<li>grep[l], [g]sub and [g]regexpr now work in bytes in an 8-bit
-locales if there is no marked UTF-8 input string: this will be
-somewhat faster, and for [g]<code>sub()</code> give the result in the
-native encoding rather than in UTF-8 (which returns to the
-behaviour prior to R 2.10.0).
+<li><code>grep[l]</code>, <code>[g]sub</code> and <code>[g]regexpr</code> now work
+in bytes in an 8-bit locales if there is no marked UTF-8 input
+string: this will be somewhat faster, and for <code>[g]sub()</code>
+give the result in the native encoding rather than in UTF-8
+(which returns to the behaviour prior to <font face="Courier New,Courier" color="#666666"><b>R</b></font> 2.10.0).
 </p>
 <p>
 </li>
-<li>A new argument 'skipCalls' has been added to <code>browser()</code> so that
-it can report the original context when called by other
-debugging functions.
+<li>A new argument <code>'skipCalls'</code> has been added to
+<code>browser()</code> so that it can report the original context when
+called by other debugging functions.
 </p>
 <p>
 </li>
@@ -947,21 +948,21 @@ debugging functions.
 </p>
 <p>
 </li>
-<li>The undocumented restriction on <code>gregexpr()</code> to length(text) &gt; 0
-has been removed.
+<li>The undocumented restriction on <code>gregexpr()</code> to
+length(text) &gt; 0 has been removed.
 </p>
 <p>
 </li>
-<li>Package tcltk now sends strings to Tcl in UTF-8: this means
-that strings with a marked UTF-8 encoding are supported in
+<li>Package <code>tcltk</code> now sends strings to Tcl in UTF-8: this
+means that strings with a marked UTF-8 encoding are supported in
 non-UTF-8 locales.
 </p>
 <p>
 </li>
 <li>The graphics engine now supports rendering of raster (bitmap)
 images, though not all graphics devices can provide (full)
-support.  Packages providing graphics devices (e.g., Cairo,
-RSvgDevice, cairoDevice) will need to be reinstalled.
+support.  Packages providing graphics devices (e.g., <code>Cairo</code>,
+<code>RSvgDevice</code>, <code>cairoDevice</code>) will need to be reinstalled.
 </p>
 <p>
 There is also support in the graphics engine for capturing
@@ -970,39 +971,41 @@ on all graphics devices).
 </p>
 <p>
 </li>
-<li>R CMD check now also checks if the package and namespace can
-be unloaded: this provides a check of the <code>.Last.lib()</code> and
-<code>.onUnload()</code> hook functions (unless <span class="option">--install=fake</span>).
+<li><CODE>R CMD check</CODE> now also checks if the package and
+namespace can be unloaded: this provides a check of the
+<code>.Last.lib()</code> and <code>.onUnload()</code> hook functions (unless
+<span class="option">--install=fake</span>).
 </p>
 <p>
 </li>
-<li>prop.table(x) now accepts a one-dimensional table for x.
+<li><code>prop.table(x)</code> now accepts a one-dimensional table for
+<code>x</code>.
 </p>
 <p>
 </li>
-<li>A new function <code>vapply()</code> has been added, based on a suggestion
-from Bill Dunlap.  It requires that a template for the
-function value be specified, and uses it to determine the
-output type and to check for consistency in the function
-values.
+<li>A new function <code>vapply()</code> has been added, based on a
+suggestion from Bill Dunlap.  It requires that a template for the
+function value be specified, and uses it to determine the output
+type and to check for consistency in the function values.
 </p>
 <p>
 </li>
 <li>The main HTML help page now links to a reformatted copy of
-this NEWS file. (Suggested by Henrik Bengtsson.)  Package
-index files link to the package DESCRIPTION and NEWS files and
-a list of demos when using dynamic help.
+this <code>NEWS</code> file. (Suggested by Henrik Bengtsson.)  Package
+index files link to the package <code>DESCRIPTION</code> and
+<code>NEWS</code> files and a list of demos when using dynamic help.
 </p>
 <p>
 </li>
-<li>The [ method for class <code>"AsIs"</code> allows the next method to change
-the underlying class.  (Wish of Jens Oehlschlägel.)
+<li>The <code>[</code> method for class <code>"AsIs"</code> allows the next
+method to change the underlying class.  (Wish of Jens
+Oehlschlägel.)
 </p>
 <p>
 </li>
-<li>write.csv[2] no longer allow 'append' to be changed: as ever,
-direct calls to <code>write.table()</code> give more flexibility as well as
-more room for error.
+<li><code>write.csv[2]</code> no longer allow <code>'append'</code> to be
+changed: as ever, direct calls to <code>write.table()</code> give more
+flexibility as well as more room for error.
 </p>
 <p>
 </li>
@@ -1011,11 +1014,12 @@ multiple signatures for S4 methods into a single entry.
 </p>
 <p>
 </li>
-<li>The use of '.required' by <code>require()</code> and <code>detach()</code> has been
-replaced by '.Depends' which is set from the 'Depends' field
-of a package (even in packages with name spaces).  By default
-<code>detach()</code> prevents such dependencies from being detached: this
-can be overridden by the argument 'force'.
+<li>The use of <code>'.required'</code> by <code>require()</code> and
+<code>detach()</code> has been replaced by <code>'.Depends'</code> which is
+set from the <code>'Depends'</code> field of a package (even in
+packages with name spaces).  By default <code>detach()</code> prevents
+such dependencies from being detached: this can be overridden by
+the argument <code>'force'</code>.
 </p>
 <p>
 </li>
@@ -1030,98 +1034,105 @@ returns the environment that has been detached, to parallel
 </p>
 <p>
 </li>
-<li><code>readline()</code> in non-interactive use returns <code>""</code> and does not
-attempt to read from the 'terminal'.
+<li><code>readline()</code> in non-interactive use returns <code>""</code>
+and does not attempt to read from the 'terminal'.
 </p>
 <p>
 </li>
-<li>New function <code>file_ext()</code> in package 'tools'.
+<li>New function <code>file_ext()</code> in package <code>'tools'</code>.
 </p>
 <p>
 </li>
-<li><code>xtfrm()</code> is now primitive and internally generic, as this allows
-S4 methods to be set on it without name-space scoping issues.
+<li><code>xtfrm()</code> is now primitive and internally generic, as
+this allows S4 methods to be set on it without name-space scoping
+issues.
 </p>
 <p>
-There are now <code>"AsIs"</code> and <code>"difftime"</code> methods, and the default
-method uses unclass(x) if is.numeric(x) is true (which will be
-faster but relies on <code>is.numeric()</code> having been set correctly
-for the class).
-</p>
-<p>
-</li>
-<li>is.numeric(x) is now false for a <code>"difftime"</code> object
-(multiplication and division make no sense for such objects).
+There are now <code>"AsIs"</code> and <code>"difftime"</code> methods, and
+the default method uses <code>unclass(x)</code> if <code>is.numeric(x)</code>
+is true (which will be faster but relies on <code>is.numeric()</code>
+having been set correctly for the class).
 </p>
 <p>
 </li>
-<li>The default method of weighted.mean(x, w) coerces 'w' to be
-numeric (aka double); previously only integer weights were
-coerced.  Zero weights are handled specially so an infinite
-value with zero weight does not force an NaN result.
+<li><code>is.numeric(x)</code> is now false for a <code>"difftime"</code>
+object (multiplication and division make no sense for such
+objects).
+</p>
+<p>
+</li>
+<li>The default method of <code>weighted.mean(x, w)</code> coerces
+<code>'w'</code> to be numeric (aka double); previously only integer
+weights were coerced.  Zero weights are handled specially so an
+infinite value with zero weight does not force an <code>NaN</code>
+result.
 </p>
 <p>
 There is now a <code>"difftime"</code> method.
 </p>
 <p>
 </li>
-<li><code>bug.report()</code> now has 'package' and 'lib.loc' arguments to
-generate bug reports about packages.  When this is used, it
-looks for a BugReports field in the package DESCRIPTION file,
-which will be assumed to be a URL at which to submit the
-report, and otherwise generates an email to the package
-maintainer.  (Suggested by Barry Rowlingson.)
+<li><code>bug.report()</code> now has <code>'package'</code> and
+<code>'lib.loc'</code> arguments to generate bug reports about
+packages.  When this is used, it looks for a <code>BugReports</code>
+field in the package <code>DESCRIPTION</code> file, which will be
+assumed to be a URL at which to submit the report, and otherwise
+generates an email to the package maintainer.  (Suggested by
+Barry Rowlingson.)
 </p>
 <p>
 </li>
-<li><code>quantile()</code> now has a method for the date-time class <code>"POSIXt"</code>,
-and types 1 and 3 (which never interpolate) work for Dates and
-ordered factors.
+<li><code>quantile()</code> now has a method for the date-time class
+<code>"POSIXt"</code>, and types 1 and 3 (which never interpolate) work
+for Dates and ordered factors.
 </p>
 <p>
 </li>
-<li>length(<POSIXlt>)  now returns the length of the corresponding
-abstract timedate-vector rather than always 9 (the length of the
-underlying list structure).  (Wish of <a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14073">PR#14073</a> and <a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=10507">PR#10507</a>.)
+<li><code>length(&lt;POSIXlt&gt;)</code> now returns the length of the
+corresponding abstract timedate-vector rather than always 9 (the
+length of the underlying list structure).  (Wish of
+<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14073">PR#14073</a> and
+<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=10507">PR#10507</a>.)
 </p>
 <p>
 </li>
-<li>The readline completion backend no longer sorts possible
-completions alphabetically (e.g., function argument names) if
-R was built with readline &gt;= 6.
+<li>The <code>readline</code> completion backend no longer sorts
+possible completions alphabetically (e.g., function argument
+names) if <font face="Courier New,Courier" color="#666666"><b>R</b></font> was built with <code>readline &gt;= 6</code>.
 </p>
 <p>
 </li>
-<li><code>select.list()</code> gains a 'graphics' argument to allow Windows/Mac
-users to choose the text interface.  This changes the
-behaviour of new.packages(ask=TRUE) to be like
-update.packages(ask=TRUE) on those platforms in using a text
-menu: use ask=<code>"graphics"</code> for a graphical menu.
+<li><code>select.list()</code> gains a <code>'graphics'</code> argument to
+allow Windows/Mac users to choose the text interface.  This
+changes the behaviour of <code>new.packages(ask=TRUE)</code> to be like
+<code>update.packages(ask=TRUE)</code> on those platforms in using a
+text menu: use ask=<code>"graphics"</code> for a graphical menu.
 </p>
 <p>
 </li>
-<li>New function <code>chooseBioCmirror()</code> to set the <code>"BioC_mirror"</code> option.
+<li>New function <code>chooseBioCmirror()</code> to set the
+<code>"BioC_mirror"</code> option.
 </p>
 <p>
 </li>
-<li>The R grammar prevents using the argument 'name' in signatures
-of S4 methods for '$' and '$&lt;-', since they will always be
-called with a character string value for 'name'.  The implicit
-S4 generic functions have been changed to reflect this:
-packages which included 'name' in the signature of their
-methods need to be updated and re-installed.
+<li>The <font face="Courier New,Courier" color="#666666"><b>R</b></font> grammar now prevents using the argument <code>'name'</code>
+in signatures of S4 methods for <code>'$'</code> and <code>'$&lt;-'</code>,
+since they will always be called with a character string value
+for <code>'name'</code>.  The implicit S4 generic functions have been changed
+to reflect this: packages which included 'name' in the signature
+of their methods need to be updated and re-installed.
 </p>
 <p>
 </li>
-<li>The handling of the 'method' argument of <code>glm()</code> has been
-refined following suggestions by Ioannis Kosmidis and Heather
-Turner.
+<li>The handling of the <code>'method'</code> argument of <code>glm()</code>
+has been refined following suggestions by Ioannis Kosmidis and
+Heather Turner.
 </p>
 <p>
 </li>
-<li><code>str()</code> gains a new argument 'list.len' with default 99, limiting the
-number of <code>list()</code> items (per level), thanks to suggestions from
-David Winsenius.
+<li><code>str()</code> gains a new argument 'list.len' with default
+99, limiting the number of <code>list()</code> items (per level),
+thanks to suggestions from David Winsenius.
 </p>
 <p>
 </li>
@@ -1131,9 +1142,9 @@ ignored by some package maintainers for a long time).
 </p>
 <p>
 </li>
-<li>New functions <code>enc2native()</code> and <code>enc2utf8()</code> convert character
-vectors with possibly marked encodings to the current locale and
-UTF-8 respectively.
+<li>New functions <code>enc2native()</code> and <code>enc2utf8()</code>
+convert character vectors with possibly marked encodings to the
+current locale and UTF-8 respectively.
 </p>
 <p>
 </li>
@@ -1150,183 +1161,196 @@ instead of one object per line.
 </p>
 <p>
 </li>
-<li><code>print.rle()</code> gains argument 'prefix'.
+<li><code>print.rle()</code> gains argument <code>'prefix'</code>.
 </p>
 <p>
 </li>
-<li><code>download.file()</code> gains a <code>"curl"</code> method, mainly for use on
-platforms which have 'curl' but not 'wget', but also for some
-hard-to-access URLs.
+<li><code>download.file()</code> gains a <code>"curl"</code> method, mainly
+for use on platforms which have <CODE>'curl'</CODE> but not
+<CODE>'wget'</CODE>, but also for some hard-to-access URLs.
 </p>
 <p>
 </li>
-<li>In Rd, \eqn and \deqn will render in HTML (and convert to text)
-upper- and lower-case Greek letters (entered as \alpha ...),
-\ldots, \dots, \ge and \le.
+<li>In <code>Rd</code>, <code>\eqn</code> and <code>\deqn</code> will render in
+HTML (and convert to text) upper- and lower-case Greek letters
+(entered as <code>\alpha</code> ...), <code>\ldots</code>, <code>\dots</code>,
+<code>\ge</code> and <code>\le</code>.
 </p>
 <p>
 </li>
-<li><code>utf8ToInt()</code> and <code>intToUtf8()</code> now map NA inputs to NA outputs.
+<li><code>utf8ToInt()</code> and <code>intToUtf8()</code> now map <code>NA</code> inputs
+to <code>NA</code> outputs.
 </p>
 <p>
 </li>
-<li><code>file()</code> has a new argument 'raw' which may help if it is used
-with something other than a regular file, e.g. a character device.
+<li><code>file()</code> has a new argument <code>'raw'</code> which may help
+if it is used with something other than a regular file, e.g. a
+character device.
 </p>
 <p>
 </li>
-<li>New function <code>strtoi()</code>, a wrapper for the C function strtol.
+<li>New function <code>strtoi()</code>, a wrapper for the C function
+<code>strtol</code>.
 </p>
 <p>
 </li>
-<li><code>as.octmode()</code> and <code>as.hexmode()</code> now allow inputs of length other
-than one.
+<li><code>as.octmode()</code> and <code>as.hexmode()</code> now allow inputs
+of length other than one.
 </p>
 <p>
-The <code>format()</code> and <code>print()</code> methods for <code>"octmode"</code> now preserve
-names and dimensions (as those for <code>"hexmode"</code> did).
+The <code>format()</code> and <code>print()</code> methods for
+<code>"octmode"</code> now preserve names and dimensions (as those for
+<code>"hexmode"</code> did).
 </p>
 <p>
-The <code>format()</code> methods for classes <code>"octmode"</code> and <code>"hexmode"</code> gain
-a 'width' argument.
+The <code>format()</code> methods for classes <code>"octmode"</code> and
+<code>"hexmode"</code> gain a <code>'width'</code> argument.
 </p>
 <p>
 </li>
 <li><code>seq.int()</code> returns an integer result in some further cases
-where <code>seq()</code> does, e.g. seq.int(1L, 9L, by = 2L).
+where <code>seq()</code> does, e.g. <code>seq.int(1L, 9L, by = 2L)</code>.
 </p>
 <p>
 </li>
-<li>Added \subsection{}{} macro to Rd syntax, for subsections
-within sections.
+<li>Added <code>\subsection{}{}</code> macro to Rd syntax, for
+subsections within sections.
 </p>
 <p>
 </li>
 <li>n-dimensional arrays with dimension names can now be indexed
-by an n-column character matrix. The indices are matched
-against the dimension names.  NA indices are propagated to the
-result.  Unmatched values and <code>""</code> are not allowed and result in
-an error.
+by an n-column character matrix. The indices are matched against
+the dimension names.  <code>NA</code> indices are propagated to the
+result.  Unmatched values and <code>""</code> are not allowed and
+result in an error.
 </p>
 <p>
 </li>
-<li>interaction(drop=TRUE) uses less memory (related to <a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14121">PR#14121</a>).
+<li><code>interaction(drop=TRUE)</code> uses less memory (related to
+<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14121">PR#14121</a>).
 </p>
 <p>
 </li>
-<li><code>summary()</code> methods have been added to the <code>"srcref"</code> and
-<code>"srcfile"</code> classes, and various encoding issues have been
-cleaned up.
+<li><code>summary()</code> methods have been added to the
+<code>"srcref"</code> and <code>"srcfile"</code> classes, and various
+encoding issues have been cleaned up.
 </p>
 <p>
 </li>
-<li>If option <code>"checkPackageLicense"</code> is set to TRUE (not currently
-the default), users will be asked to agree to
+<li>If option <code>"checkPackageLicense"</code> is set to <code>TRUE</code> (not
+currently the default), users will be asked to agree to
 non-known-to-be-FOSS package licences at first use.
 </p>
 <p>
 </li>
-<li>Checking setAs(a,b) methods only gives a message instead of a
-warning, when one of a or b is unknown.
+<li>Checking <code>setAs(a, b)</code> methods only gives a message
+instead of a warning, when one of <code>a</code> or <code>b</code> is
+unknown.
 </p>
 <p>
 </li>
 <li>New function <code>norm()</code> to compute a matrix norm.
-<code>norm()</code> and also <code>backsolve()</code> and <code>sample()</code> have implicit S4 generics.
+<code>norm()</code> and also <code>backsolve()</code> and <code>sample()</code>
+have implicit S4 generics.
 </p>
 <p>
 </li>
-<li>Renviron.site and Rprofile.site can have architecture-specific
-versions on systems with sub-architectures.
+<li><code>Renviron.site</code> and <code>Rprofile.site</code> can have
+architecture-specific versions on systems with sub-architectures.
 </p>
 <p>
 </li>
-<li>R CMD check now (by default) also checks Rd files for
-auto-generated content in need of editing, and missing argument
-descriptions.
+<li><CODE>R CMD check</CODE> now (by default) also checks <code>Rd</code>
+files for auto-generated content in need of editing, and missing
+argument descriptions.
 </p>
 <p>
 </li>
-<li><code>aggregate()</code> gains a formula method thanks to a contribution by
-Arni Magnusson.  The data frame method now allows summary
-functions to return arbitrarily many values.
+<li><code>aggregate()</code> gains a formula method thanks to a
+contribution by Arni Magnusson.  The data frame method now allows
+summary functions to return arbitrarily many values.
 </p>
 <p>
 </li>
-<li><code>path.expand()</code> now propagates NA values rather than converting them
-to <code>"NA"</code>.
+<li><code>path.expand()</code> now propagates <code>NA</code> values rather
+than converting them to <code>"NA"</code>.
 </p>
 <p>
 </li>
-<li><code>file.show()</code> now disallows NA values for file names, headers, and
-pager.
+<li><code>file.show()</code> now disallows <code>NA</code> values for file names,
+headers, and pager.
 </p>
 <p>
 </li>
-<li>The 'fuzz' used by <code>seq()</code> and <code>seq.int()</code> has been reduced from
-1e-7 to 1e-10, which should be ample for the double-precision
-calculations used in R.  It ensures that the fuzz never comes
-into play with sequences of integers (wish of <a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14169">PR#14169</a>).
+<li>The 'fuzz' used by <code>seq()</code> and <code>seq.int()</code> has
+been reduced from <code>1e-7</code> to <code>1e-10</code>, which should be
+ample for the double-precision calculations used in <font face="Courier New,Courier" color="#666666"><b>R</b></font>.  It
+ensures that the fuzz never comes into play with sequences of
+integers (wish of <a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14169">PR#14169</a>).
 </p>
 <p>
 </li>
-<li>The default value of RSiteSearch(restrict=) has been changed
-to include vignettes but to exclude R-help.  The R-help
+<li>The default value of <code>RSiteSearch(restrict=)</code> has been
+changed to include vignettes but to exclude R-help.  The R-help
 archives available have been split, with a new option of
 <code>"Rhelp10"</code> for those from 2010.
 </p>
 <p>
 </li>
-<li>New function <code>rasterImage()</code> in the 'graphics' package for drawing
-raster images.
+<li>New function <code>rasterImage()</code> in the <code>'graphics'</code>
+package for drawing raster images.
 </p>
 <p>
 </li>
-<li><code>stats:::extractAIC.coxph()</code> now omits aliased terms when computing
-the degrees of freedom (suggestion of Terry Therneau).
+<li><code>stats:::extractAIC.coxph()</code> now omits aliased terms
+when computing the degrees of freedom (suggestion of Terry
+Therneau).
 </p>
 <p>
 </li>
-<li><code>cor()</code> and <code>cov()</code> now test for misuse with non-numeric
-arguments, such as the non-bug report <a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14207">PR#14207</a>.
+<li><code>cor()</code> and <code>cov()</code> now test for misuse with
+non-numeric arguments, such as the non-bug report
+<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14207">PR#14207</a>.
 </p>
 <p>
 </li>
-<li>pchisq(ncp =, log.p = TRUE) is more accurate for probabilities
-near one.  E.g. pchisq(80, 4, ncp=1, log.p=TRUE).  (Maybe what
-was meant in <a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14216">PR#14216</a>.)
+<li><code>pchisq(ncp =, log.p = TRUE)</code> is more accurate for
+probabilities near one.  E.g. <code>pchisq(80, 4, ncp=1,
+       log.p=TRUE)</code>.  (Maybe what was meant in
+<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14216">PR#14216</a>.)
 </p>
 <p>
 </li>
-<li><code>maintainer()</code> has been added, to give convenient access to the
-name of the maintainer of a package (contributed by David
-Scott).
+<li><code>maintainer()</code> has been added, to give convenient
+access to the name of the maintainer of a package (contributed by
+David Scott).
 </p>
 <p>
 </li>
-<li><code>sample()</code> and <code>sample.int()</code> allow zero items to be sampled from
-a zero-length input.  <code>sample.int()</code> gains a default value
-'size=n' to be more similar to <code>sample()</code>.
+<li><code>sample()</code> and <code>sample.int()</code> allow zero items to
+be sampled from a zero-length input.  <code>sample.int()</code> gains a
+default value <code>'size=n'</code> to be more similar to <code>sample()</code>.
 </p>
 <p>
 </li>
-<li><code>switch()</code> returned NULL on error (not previously documented on
-the help page): it now does so invisibly, analogously to
-if-without-else.
+<li><code>switch()</code> returned <code>NULL</code> on error (not
+previously documented on the help page): it now does so
+invisibly, analogously to if-without-else.
 </p>
 <p>
-It is now primitive: this means that EXPR is always matched to
-the first argument and there is no danger of partial matching
-to later named arguments.
+It is now primitive: this means that argument <code>EXPR</code> is
+always matched to the first argument and there is no danger of
+partial matching to later named arguments.
 </p>
 <p>
 </li>
-<li>Primitive functions <code>UseMethod()</code>, <code>attr()</code>, attr&lt;-(), <code>on.exit()</code>,
-<code>retracemem()</code> and <code>substitute()</code> now use standard argument
-matching (rather than positional matching).  This means that
-all multi-argument primitives which are not internal now use
-standard argument matching except where positional matching is
-desirable (as for <code>switch()</code>, <code>call()</code>, <code>.C()</code> ...).
+<li>Primitive functions <code>UseMethod()</code>, <code>attr()</code>,
+<code>attr&lt;-()</code>, <code>on.exit()</code>, <code>retracemem()</code> and
+<code>substitute()</code> now use standard argument matching (rather
+than positional matching).  This means that all multi-argument
+primitives which are not internal now use standard argument
+matching except where positional matching is desirable (as for
+<code>switch()</code>, <code>call()</code>, <code>.C()</code> ...).
 </p>
 <p>
 </li>
@@ -1337,16 +1361,16 @@ applies to replacement functions of two arguments.
 </p>
 <p>
 </li>
-<li><code>base::which()</code> uses a new .Internal function when arr.ind is
-FALSE resulting in a 10x speedup.  Thanks to Patrick Aboyoun
-for implementation suggestions.
+<li><code>base::which()</code> uses a new <code>.Internal</code> function
+when <code>arr.ind</code> is <code>FALSE</code> resulting in a 10x speedup.
+Thanks to Patrick Aboyoun for implementation suggestions.
 </p>
 <p>
 </li>
-<li>Help conversion to text now uses the first part of \enc{}{}
-markup if it is representable in the current output encoding.
-On the other hand, conversion to LaTeX with the default
-outputEncoding = <code>"ASCII"</code> uses the second part.
+<li>Help conversion to text now uses the first part of
+<code>\enc{}{}</code> markup if it is representable in the current
+output encoding.  On the other hand, conversion to LaTeX with the
+default <code>outputEncoding = "ASCII"</code> uses the second part.
 </p>
 <p>
 </li>
@@ -1356,13 +1380,13 @@ class <code>"MethodsList"</code>.
 </p>
 <p>
 </li>
-<li><code>any()</code> and <code>all()</code> return early if possible.  This may speed up
-operations on long vectors.
+<li><code>any()</code> and <code>all()</code> return early if possible.
+This may speed up operations on long vectors.
 </p>
 <p>
 </li>
-<li><code>strptime()</code> now accepts "%z" (for the offset from UTC in the
-RFC822 format of +/-hhmm).
+<li><code>strptime()</code> now accepts <code>"%z"</code> (for the offset
+from UTC in the RFC822 format of <code>+/-hhmm</code>).
 </p>
 <p>
 </li>
@@ -1371,10 +1395,10 @@ release which also updates tables to Unicode 5.02.
 </p>
 <p>
 </li>
-<li>Functions which may use a graphical <code>select.list()</code> (including
-<code>menu()</code> and <code>install.packages()</code>) now check on a Unix-alike that
-Tk can be started (and not just
-capabilities(<code>"tcltk"</code>) &amp;&amp; capabilities(<code>"X11"</code>)).
+<li>Functions which may use a graphical <code>select.list()</code>
+(including <code>menu()</code> and <code>install.packages()</code>) now check
+on a Unix-alike that Tk can be started (and not just
+<code>capabilities("tcltk") &amp;&amp; capabilities("X11")</code>).
 </p>
 <p>
 </li>
@@ -1390,12 +1414,9 @@ than Pango (at least on Mac OS X).
 </p>
 <p>
 </li>
-<li>New <code>arrayInd()</code> such that which(x, arr.ind = TRUE) for an array
-'x' is now equivalent to arrayInd(which(x), dim(x), dimnames(x)).
-</p>
-<p>
-</p>
-<p>
+<li>New function <code>arrayInd()</code> such that <code>which(x,
+       arr.ind = TRUE)</code> for an array 'x' is now equivalent to
+<code>arrayInd(which(x), dim(x), dimnames(x))</code>.
 </ul>
 
 </p>
@@ -1415,9 +1436,10 @@ than Pango (at least on Mac OS X).
 </p>
 <p>
 </li>
-<li>Basic regular expressions are defunct, and <code>strsplit()</code>, <code>grep()</code>,
-<code>grepl()</code>, <code>sub()</code>, <code>gsub()</code>, <code>regexpr()</code> and <code>gregexpr()</code> no longer
-have an 'extended' argument.
+<li>Basic regular expressions are defunct, and
+<code>strsplit()</code>, <code>grep()</code>, <code>grepl()</code>, <code>sub()</code>,
+<code>gsub()</code>, <code>regexpr()</code> and <code>gregexpr()</code> no longer
+have an <code>'extended'</code> argument.
 </p>
 <p>
 </li>
@@ -1425,8 +1447,8 @@ have an 'extended' argument.
 </p>
 <p>
 </li>
-<li><code>index.search()</code> (which was deprecated in 2.10.0) is no longer
-exported and has a different argument list.
+<li><code>index.search()</code> (which was deprecated in 2.10.0) is no
+longer exported and has a different argument list.
 </p>
 <p>
 </li>
@@ -1434,28 +1456,26 @@ exported and has a different argument list.
 </p>
 <p>
 </li>
-<li>The use of <code>UseMethod()</code> with more than two arguments is now defunct.
+<li>The use of <code>UseMethod()</code> with more than two arguments
+is now defunct.
 </p>
 <p>
 </li>
-<li>In the 'methods' package, the MethodsList metadata objects which
-had been superseded by hash tables (environments) since R
-2.8.0 are being phased out.  Objects of this class are no
-longer assigned or used as metadata by the package.
+<li>In the <code>'methods'</code> package, the <code>"MethodsList"</code>
+metadata objects which had been superseded by hash tables
+(environments) since <font face="Courier New,Courier" color="#666666"><b>R</b></font> 2.8.0 are being phased out.  Objects of
+this class are no longer assigned or used as metadata by the
+package.
 </p>
 <p>
 <code>getMethods()</code> is now deprecated, with its internal use replaced
 by <code>findMethods()</code> and other changes.  Creating objects from the
-MethodsList class is also deprecated.
+<code>"MethodsList"</code> class is also deprecated.
 </p>
 <p>
 </li>
 <li>Parsing strings containing both octal/hex and Unicode escapes
-now gives a warning and will become an error in R 2.12.0.
-</p>
-<p>
-</p>
-<p>
+now gives a warning and will become an error in <font face="Courier New,Courier" color="#666666"><b>R</b></font> 2.12.0.
 </ul>
 
 </p>
@@ -1472,17 +1492,14 @@ manuals.  This requires LaTeX '2005/12/01' or later.
 </p>
 <p>
 </li>
-<li>configure looks for a POSIX compliant tr, Solaris's
-/usr/ucb/tr having been found to cause Rdiff to malfunction.
+<li><CODE>configure</CODE> looks for a POSIX compliant
+<CODE>tr</CODE>, Solaris's <CODE>/usr/ucb/tr</CODE> having been found
+to cause <CODE>Rdiff</CODE> to malfunction.
 </p>
 <p>
 </li>
-<li>configure is now generated with autoconf-2.65, which works
-better on recent systems and on Mac OS X.
-</p>
-<p>
-</p>
-<p>
+<li><CODE>configure</CODE> is now generated with <CODE>autoconf
+       2.65</CODE>, which works better on recent systems and on Mac OS X.
 </ul>
 
 </p>
@@ -1494,7 +1511,7 @@ better on recent systems and on Mac OS X.
 <p>
 
 <ul>
-<li> Characters in R source which are not translatable to the
+<li> Characters in <font face="Courier New,Courier" color="#666666"><b>R</b></font> source which are not translatable to the
 current locale are now handled more tolerantly:  these will be
 converted to hex codes with a warning. Such characters are
 only really portable if they appear in comments.
@@ -1514,7 +1531,7 @@ and missing/broken dependent packages.
 directory now checks if a DLL is created unless there is a
 src/Makefile.win file: this helps catch broken installations
 where the toolchain has not reported problems in building the DLL.
-(Note: this can be any DLL, not just one named &lt;pkg-name&gt;.dll.)
+(Note: this can be any DLL, not just one named <code>&lt;pkg-name&gt;.dll</code>.)
 </ul>
 
 </p>
@@ -1525,17 +1542,20 @@ where the toolchain has not reported problems in building the DLL.
 
 <p>
 
+</p>
+<p>
 <ul>
-<li> Using <code>with()</code>, <code>eval()</code> etc with a list with some unnamed
-elements now works. (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14035">PR#14035</a>)
+<li> Using <code>with()</code>, <code>eval()</code> etc with a list with some
+unnamed elements now works.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14035">PR#14035</a>)
 </p>
 <p>
 </li>
-<li>The <code>"quick"</code> dispatch of S4 methods for primitive functions was
-not happening, forcing a search each time.  (Dispatch for
-closures was not affected.)  A side effect is that default
-values for arguments in a method that do not have defaults in
-the generic will now be ignored.
+<li>The <code>"quick"</code> dispatch of S4 methods for primitive
+functions was not happening, forcing a search each time.
+(Dispatch for closures was not affected.)  A side effect is that
+default values for arguments in a method that do not have
+defaults in the generic will now be ignored.
 </p>
 <p>
 </li>
@@ -1547,39 +1567,41 @@ added to turn off all such methods from
 </p>
 <p>
 </li>
-<li>R framework installation (on Mac OS X) would not work properly
-if a rogue Resources directory was present at the top level.
-Such a non-symlink will now be renamed to Resources.old (and
-anything previously named Resources.old removed) as part of
-the framework installation process.
+<li><font face="Courier New,Courier" color="#666666"><b>R</b></font> framework installation (on Mac OS X) would not work
+properly if a rogue <code>Resources</code> directory was present at the
+top level.  Such a non-symlink will now be renamed to
+<code>Resources.old</code> (and anything previously named
+<code>Resources.old</code> removed) as part of the framework
+installation process.
 </p>
 <p>
 </li>
-<li>The checks for conforming S4 method arguments could fail when
-the signature of the generic function omitted some of the
-formal arguments (in addition to ...). Arguments omitted from
-the method definition but conforming (per the documentation)
+<li>The checks for conforming S4 method arguments could fail
+when the signature of the generic function omitted some of the
+formal arguments (in addition to <code>...</code>).  Arguments omitted
+from the method definition but conforming (per the documentation)
 should now be ignored (treated as <code>"ANY"</code>) in dispatching.
 </p>
 <p>
 </li>
-<li>The computations for S4 method evaluation when '...' was in the
-signature could fail, treating '...' as an ordinary symbol.
-This has been fixed, for the known cases.
+<li>The computations for S4 method evaluation when <code>'...'</code>
+was in the signature could fail, treating <code>'...'</code> as an
+ordinary symbol.  This has been fixed, for the known cases.
 </p>
 <p>
 </li>
-<li>Various <code>ar()</code> fitting methods have more protection for singular
-fits.
+<li>Various <code>ar()</code> fitting methods have more protection for
+singular fits.
 </p>
 <p>
 </li>
-<li>callNextMethod now works again with the drop= argument in `[`
+<li><code>callNextMethod</code> now works again with the <code>drop=</code>
+argument in <code>`[`</code>
 </p>
 <p>
 </li>
-<li><code>parse()</code> and <code>parse_Rd()</code> miscounted columns when multibyte UTF-8
-characters were present.
+<li><code>parse()</code> and <code>parse_Rd()</code> miscounted columns when
+multibyte UTF-8 characters were present.
 </p>
 <p>
 </li>
@@ -1589,24 +1611,28 @@ package labels removed from HTML.
 </p>
 <p>
 </li>
-<li>cor(A, B) where A has n x 1 and B a 1-dimensional array
-segfaulted or gave an internal error.
-(The case cor(B, A) was <a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=7116">PR#7116</a>.)
+<li><code>cor(A, B)</code> where <code>A</code> is <i>n x 1</i> and <code>B</code>
+a 1-dimensional array segfaulted or gave an internal error.  (The
+case <code>cor(B, A)</code> was
+<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=7116">PR#7116</a>.)
 </p>
 <p>
 </li>
-<li><code>cut.POSIXt()</code> applied to a start value after the DST transition
-on a DST-change day could give the wrong time for 'breaks' in units
-of days or longer.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14208">PR#14208</a>)
+<li><code>cut.POSIXt()</code> applied to a start value after the DST
+transition on a DST-change day could give the wrong time for
+<code>'breaks'</code> in units of days or longer.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14208">PR#14208</a>)
 </p>
 <p>
 </li>
-<li><code>do_par()</code> UNPROTECTed too early (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14214">PR#14214</a>)
+<li><code>do_par()</code> <code>UNPROTECT</code>ed too early
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14214">PR#14214</a>)
 </p>
 <p>
 </li>
-<li>subassignment x[[....]] <- y didn't check for a zero-length
-right hand side, and inserted rubbish value. (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14217">PR#14217</a>)
+<li>Subassignment <code>x[[....]] &lt;- y</code> didn't check for a
+zero-length right hand side, and inserted a rubbish
+value. (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14217">PR#14217</a>)
 </p>
 <p>
 </li>
@@ -1615,62 +1641,65 @@ in some borderline cases.
 </p>
 <p>
 </li>
-<li>Internal function matchArgs no longer modifies the general
-purpose bits of the SEXPs that make up the formals list of R
-functions.  This fixes an invalid error message that would
-occur when a garbage collection triggered a second call to
+<li>Internal function <code>matchArgs()</code> no longer modifies the
+general purpose bits of the <code>SEXP</code>s that make up the formals
+list of <font face="Courier New,Courier" color="#666666"><b>R</b></font> functions.  This fixes an invalid error message that
+would occur when a garbage collection triggered a second call to
 matchArgs for the same function via a finalizer.
 </p>
 <p>
 </li>
-<li><code>gsub()</code> in 2.10.x could fail from stack overflow for extremely
-long strings due to temporary data being allocated on the
-stack. Also, <code>gsub()</code> with fixed=TRUE is in some circumstances
-considerably faster.
+<li><code>gsub()</code> in 2.10.x could fail from stack overflow for
+extremely long strings due to temporary data being allocated on
+the stack.  Also, <code>gsub()</code> with <code>fixed=TRUE</code> is in some
+circumstances considerably faster.
 </p>
 <p>
 </li>
-<li>Several primitives, including <code>attributes()</code>, attr&lt;-()
-<code>interactive()</code>, <code>nargs()</code> and <code>proc.time()</code>, did not check that
-they were called with the correct number of arguments.
+<li>Several primitives, including <code>attributes()</code>,
+<code>attr&lt;-()</code> <code>interactive()</code>, <code>nargs()</code> and
+<code>proc.time()</code>, did not check that they were called with the
+correct number of arguments.
 </p>
 <p>
 </li>
-<li>A potential race condition in <code>list.files()</code> when other processes
-are operating on the directory has been fixed; the code now
-dynamically allocates memory for file listings in a single
+<li>A potential race condition in <code>list.files()</code> when other
+processes are operating on the directory has been fixed; the code
+now dynamically allocates memory for file listings in a single
 pass instead of making an initial count pass.
 </p>
 <p>
 </li>
-<li>mean(x, trim=, na.rm = FALSE) failed to return NA if 'x'
-contained missing values.  (Reported by Bill Dunlap.)
+<li><code>mean(x, trim=, na.rm = FALSE)</code> failed to return <code>NA</code> if
+<code>x</code> contained missing values.  (Reported by Bill Dunlap.)
 </p>
 <p>
 </li>
-<li>Extreme tail behavior of, <code>pbeta()</code> {and hence <code>pf()</code>}, e.g.,
-pbeta(x, 3, 2200, lower.tail=FALSE, log.p=TRUE) now returns
-finite values instead of jumping to -Inf too early (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14230">PR#14230</a>).
+<li>Extreme tail behavior of, <code>pbeta()</code> {and hence
+<code>pf()</code>}, e.g., <code>pbeta(x, 3, 2200, lower.tail=FALSE,
+       log.p=TRUE)</code> now returns finite values instead of jumping to
+<code>-Inf</code> too early
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14230">PR#14230</a>).
 </p>
 <p>
 </li>
-<li>parse(text=x) misbehaved for objects 'x' that were not coerced
-internally to character, notably symbols.  (Reported to
-R-devel by Bill Dunlap.)
+<li><code>parse(text=x)</code> misbehaved for objects <code>'x'</code> that
+were not coerced internally to character, notably symbols.
+(Reported to R-devel by Bill Dunlap.)
 </p>
 <p>
 </li>
-<li>The internal C function 'coerceSymbol' now handles coercion to
-character, and warns if coercion fails (rather than silently
-returning NULL).  This allows a name to be given where a
-character vector is required in functions which coerce
+<li>The internal C function <code>'coerceSymbol'</code> now handles
+coercion to character, and warns if coercion fails (rather than
+silently returning <code>NULL</code>).  This allows a name to be given
+where a character vector is required in functions which coerce
 internally.
 </p>
 <p>
 </li>
-<li>The interpretation by <code>strptime()</code> of %c was non-standard (not
-that it is ever advisable to use locale- and system-specific
-input formats).
+<li>The interpretation by <code>strptime()</code> of <code>"%c"</code> was
+non-standard (not that it is ever advisable to use locale- and
+system-specific input formats).
 </p>
 <p>
 </li>
@@ -1691,46 +1720,40 @@ Pango does but cairo it seems does not).
 </p>
 <p>
 </li>
-<li>all.equal(*, tolerance = e) passes the numeric tolerance also to
-the comparison of the attributes.
+<li><code>all.equal(*, tolerance = e)</code> passes the numeric
+tolerance also to the comparison of the attributes.
 </p>
 <p>
 </li>
-<li>pgamma(0,0), a boundary case, now returns 0, its limit from the
-left, rather than the limit from the right.
+<li><code>pgamma(0, 0)</code>, a boundary case, now returns 0, its
+limit from the left, rather than the limit from the right.
 </p>
 <p>
 </li>
-<li>Issuing POST requests to the internal web server could stall
+<li>Issuing <code>POST</code> requests to the internal web server could stall
 the request under certain circumstances.
 </p>
 <p>
 </li>
-<li>gzcon( <textConnection> ), an error, no longer damages the
-connection (in a way to have it seg.fault). (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14237">PR#14237</a>)
+<li><code>gzcon( &lt;textConnection&gt; )</code>, an error, no longer
+damages the connection (in a way to have it
+segfault). (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14237">PR#14237</a>)
 </p>
 <p>
 </li>
-<li>All the results from <code>hist()</code> now use the nominal 'breaks' not
-those adjusted by the numeric 'fuzz': in recent versions the
-nominal 'breaks' were reported but the 'density' referred to
-the intervals used in the calculation &ndash; which mattered very
-slightly for one of the extreme bins.  (Based on a report by
-Martin Becker.)
+<li>All the results from <code>hist()</code> now use the nominal
+<code>'breaks'</code> not those adjusted by the numeric 'fuzz': in
+recent versions the nominal 'breaks' were reported but the
+'density' referred to the intervals used in the calculation &ndash;
+which mattered very slightly for one of the extreme bins.  (Based
+on a report by Martin Becker.)
 </p>
 <p>
 </li>
-<li>If xy[z].coords (used internally by many graphics functions) are
-given a list as 'x', they now check that the list has suitable
-names and give a more informative error message.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=13936">PR#13936</a>)
-</p>
-<p>
-</p>
-<p>
-</p>
-<p>
-</p>
-<p>
+<li>If <code>xy[z].coords</code> (used internally by many graphics
+functions) are given a list as <code>'x'</code>, they now check that
+the list has suitable names and give a more informative error
+message.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=13936">PR#13936</a>)
 </ul>
 
 </p>
@@ -1748,30 +1771,32 @@ names and give a more informative error message.  (<a href="https://bugs.R-proje
 <p>
 
 <ul>
-<li> The handling of line textures in the <code>postscript()</code> and <code>pdf()</code>
-devices was set up for round end caps (the only type which
-existed at the time): it has now been adjusted for butt endcaps.
+<li> The handling of line textures in the <code>postscript()</code> and
+<code>pdf()</code> devices was set up for round end caps (the only type
+which existed at the time): it has now been adjusted for butt
+endcaps.
 </p>
 <p>
 </li>
-<li>lchoose(a,k) is now defined as log(abs(choose(a,k))), analogously
-to <code>lfactorial()</code>.
+<li><code>lchoose(a, k)</code> is now defined as
+<code>log(abs(choose(a,k)))</code>, analogously to <code>lfactorial()</code>.
 </p>
 <p>
 </li>
-<li>Although \eqn{} in Rd files is defined as a 'verbatim' macro,
-many packages expected \dots and \ldots to be interpreted
-there (as was the case in R &lt; 2.10.0), so this is now done
-(using an ellipsis in HTML rendering).
+<li>Although <code>\eqn{}</code> in Rd files is defined as a
+'verbatim' macro, many packages expected <code>\dots</code> and
+<code>\ldots</code> to be interpreted there (as was the case in <font face="Courier New,Courier" color="#666666"><b>R</b></font> &lt;
+2.10.0), so this is now done (using an ellipsis in HTML
+rendering).
 </p>
 <p>
 </li>
-<li>Escaping of braces in quoted strings in R-code sections of Rd
-files is allowed again.  This had been changed for the new Rd
-format in R 2.10.0 but was only documented on the developer
-site and was handled inconsistently by the converters: text
-and example conversion removed the escapes but HTML conversion
-did not.
+<li>Escaping of braces in quoted strings in <font face="Courier New,Courier" color="#666666"><b>R</b></font>-code sections of
+Rd files is allowed again.  This had been changed for the new Rd
+format in <font face="Courier New,Courier" color="#666666"><b>R</b></font> 2.10.0 but was only documented on the developer site
+and was handled inconsistently by the converters: text and
+example conversion removed the escapes but HTML conversion did
+not.
 </p>
 <p>
 </li>
@@ -1780,12 +1805,8 @@ release.
 </p>
 <p>
 </li>
-<li><code>tools::readNEWS()</code> now accepts a digit as the first character
-of a news section.
-</p>
-<p>
-</p>
-<p>
+<li><code>tools::readNEWS()</code> now accepts a digit as the first
+character of a news section.
 </ul>
 
 </p>
@@ -1797,23 +1818,27 @@ of a news section.
 <p>
 
 <ul>
-<li> Using read.table(header=TRUE) on a header with an embedded new
-line would copy part of the header into the data.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14103">PR#14103</a>)
+<li> Using <code>read.table(header=TRUE)</code> on a header with an embedded
+new line would copy part of the header into the data.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14103">PR#14103</a>)
 </p>
 <p>
 </li>
-<li>qpois(p = 1, lambda = 0) now gives 0 as for all other p.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14135">PR#14135</a>)
+<li><code>qpois(p = 1, lambda = 0)</code> now gives 0 as for all other
+<code>p</code>.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14135">PR#14135</a>)
 </p>
 <p>
 </li>
-<li>Functions related to string comparison (e.g. <code>unique()</code>, <code>match()</code>)
-could cause crashes when used with strings not in the native
-encoding, e.g. UTF-8 strings on Windows.
-(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14114">PR#14114</a> and <a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14125">PR#14125</a>)
+<li>Functions related to string comparison
+(e.g. <code>unique()</code>, <code>match()</code>) could cause crashes when
+used with strings not in the native encoding, e.g. UTF-8 strings
+on Windows.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14114">PR#14114</a> and
+<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14125">PR#14125</a>)
 </p>
 <p>
 </li>
-<li>x[ , drop=TRUE] dropped an NA level even if it was in use.
+<li><code>x[ , drop=TRUE]</code> dropped an <code>NA</code> level even if it
+was in use.
 </p>
 <p>
 </li>
@@ -1822,51 +1847,57 @@ style sheet.
 </p>
 <p>
 </li>
-<li><code>tools::codoc()</code> (used by R CMD check) was missing cases where the
-function had no arguments but was documented to have some.
+<li><code>tools::codoc()</code> (used by <CODE>R CMD check</CODE>) was
+missing cases where the function had no arguments but was
+documented to have some.
 </p>
 <p>
 </li>
-<li>Help links containing special characters (e.g. "?") were not
-generated correctly when rendered in HTML. (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14155">PR#14155</a>)
+<li>Help links containing special characters (e.g. <code>"?"</code>)
+were not generated correctly when rendered in
+HTML. (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14155">PR#14155</a>)
 </p>
 <p>
 </li>
-<li>lchoose(a,k) no longer wrongly gives NaN for negative a.
+<li><code>lchoose(a, k)</code> no longer wrongly gives <code>NaN</code> for
+negative <code>a</code>.
 </p>
 <p>
 </li>
-<li><code>ks.test()</code> could give a p-value that was off by one observation
-due to rounding error. (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14145">PR#14145</a>)
+<li><code>ks.test()</code> could give a p-value that was off by one
+observation due to rounding
+error. (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14145">PR#14145</a>)
 </p>
 <p>
 </li>
-<li><code>readBin()</code>/readChar() when reading millions of character strings
-in a single call used excessive amounts of memory (which also
-slowed them down).
+<li><code>readBin()</code>/<code>readChar()</code> when reading millions of
+character strings in a single call used excessive amounts of
+memory (which also slowed them down).
 </p>
 <p>
 </li>
-<li>R CMD SHLIB could fail if used with paths that were not
-alphanumeric, e.g. contained '+'.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14168">PR#14168</a>)
+<li><CODE>R CMD SHLIB</CODE> could fail if used with paths that
+were not alphanumeric, e.g. contained <code>'+'</code>.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14168">PR#14168</a>)
 </p>
 <p>
 </li>
-<li><code>sprintf()</code> was not re-entrant, which potentially caused problems
-if an <code>as.character()</code> method called it.
+<li><code>sprintf()</code> was not re-entrant, which potentially
+caused problems if an <code>as.character()</code> method called it.
 </p>
 <p>
 </li>
-<li>The <code>quartz()</code> device did not restore the clipping region when
-filling the background for a new page. This could be observed
-in multi-page bitmap output as stale outer regions of the
-plot.
+<li>The <code>quartz()</code> device did not restore the clipping
+region when filling the background for a new page. This could be
+observed in multi-page bitmap output as stale outer regions of
+the plot.
 </p>
 <p>
 </li>
-<li>p.adjust(*, method, n) now works correctly for the rare case
-n &gt; length(p), also when method differs from <code>"bonferroni"</code> or
-<code>"none"</code>, thanks to a patch from Gordon Smyth.
+<li><code>p.adjust(*, method, n)</code> now works correctly for the
+rare case <code>n &gt; length(p)</code>, also when method differs from
+<code>"bonferroni"</code> or <code>"none"</code>, thanks to a patch from
+Gordon Smyth.
 </p>
 <p>
 </li>
@@ -1881,41 +1912,46 @@ arguments was a vector and the other a matrix.
 </p>
 <p>
 </li>
-<li>[cr]bind(..., deparse.level=2) was not always giving names
-when documented to do so.  (Discovered whilst investigating
+<li><code>[cr]bind(..., deparse.level=2)</code> was not always giving
+names when documented to do so.  (Discovered whilst investigating
 <a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14189">PR#14189</a>.)
 </p>
 <p>
 </li>
-<li>match(incomparables=<non-NULL>) could in rare cases infinite-
-loop.
+<li><code>match(incomparables=&lt;non-NULL&gt;)</code> could in rare cases
+infinite- loop.
 </p>
 <p>
 </li>
-<li><code>poisson.test()</code> needed to pass 'conf.level' to <code>binom.test()</code>
+<li><code>poisson.test()</code> needed to pass <code>'conf.level'</code> to
+<code>binom.test()</code>
 (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14195">PR#14195</a>)
 </p>
 <p>
 </li>
-<li>The <code>"nls"</code> method for <code>df.residual()</code> gave incorrect results for
-models fitted with na.action = na.exclude.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14194">PR#14194</a>)
+<li>The <code>"nls"</code> method for <code>df.residual()</code> gave
+incorrect results for models fitted with <code>na.action =
+       na.exclude</code>.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14194">PR#14194</a>)
 </p>
 <p>
 </li>
-<li>A change to options(scipen=) was only implemented when printing
-next occurred, even though it should have affected intervening
-calls to <code>axis()</code>, <code>contour()</code> and <code>filledcontour()</code>.
+<li>A change to <code>options(scipen=)</code> was only implemented
+when printing next occurred, even though it should have affected
+intervening calls to <code>axis()</code>, <code>contour()</code> and
+<code>filledcontour()</code>.
 </p>
 <p>
 </li>
-<li>prettyNum(drop0trailing=TRUE) did not handle signs of imaginary
-parts of complex numbers correctly (and this was used by <code>str()</code>:
-<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14201">PR#14201</a>).
+<li><code>prettyNum(drop0trailing=TRUE)</code> did not handle signs of
+imaginary parts of complex numbers correctly (and this was used
+by <code>str()</code>: <a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14201">PR#14201</a>).
 </p>
 <p>
 </li>
-<li><code>system.time()</code> had sys.child component wrong (copied user.child
-instead) on systems with HAVE_GETRUSAGE (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14210">PR#14210</a>)
+<li><code>system.time()</code> had the <code>sys.child</code> component
+wrong (copied <code>user.child</code> instead) on systems with
+<code>HAVE_GETRUSAGE</code>.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14210">PR#14210</a>)
 </p>
 <p>
 </li>
@@ -1926,26 +1962,28 @@ correct defaults.
 </p>
 <p>
 </li>
-<li>The suppression of auto-rotation in <code>bitmap()</code> and <code>dev2bitmap()</code>
-with the 'pdfwrite' device was not working correctly.
+<li>The suppression of auto-rotation in <code>bitmap()</code> and
+<code>dev2bitmap()</code> with the <code>'pdfwrite'</code> device was not
+working correctly.
 </p>
 <p>
 </li>
-<li>plot(<code>ecdf()</code>, log=<code>"x"</code>) no longer gives an incorrect warning.
+<li>plot(<code>ecdf()</code>, log=<code>"x"</code>) no longer gives an
+incorrect warning.
 </p>
 <p>
 </li>
-<li><code>read.fwf()</code> works again when 'file' is a connection.
+<li><code>read.fwf()</code> works again when <code>'file'</code> is a connection.
 </p>
 <p>
 </li>
-<li>Startup files will now be found if their paths exceed 255 bytes.
-(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14228">PR#14228</a>)
+<li>Startup files will now be found if their paths exceed 255
+bytes.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14228">PR#14228</a>)
 </p>
 <p>
 </li>
-<li>contrasts<- (in the 'stats' package) no longer has an
-undeclared dependence on 'methods' (introduced in 2.10.0).
+<li><code>contrasts&lt;-</code> (in the <code>'stats'</code> package) no longer has an
+undeclared dependence on <code>'methods'</code> (introduced in 2.10.0).
 </ul>
 
 </p>
@@ -2026,13 +2064,10 @@ with hyperref 6.79d and later.
 <p>
 
 <ul>
-<li> The 'extended' argument is deprecated in <code>strsplit()</code>, <code>grep()</code>,
-<code>grepl()</code>, <code>sub()</code>, <code>gsub()</code>, <code>regexpr()</code> and <code>gregexpr()</code> (not just the
-value extended = FALSE) and will be removed in R 2.11.0.
-</p>
-<p>
-</p>
-<p>
+<li> The <code>'extended'</code> argument is deprecated in <code>strsplit()</code>,
+<code>grep()</code>, <code>grepl()</code>, <code>sub()</code>, <code>gsub()</code>,
+<code>regexpr()</code> and <code>gregexpr()</code> (not just the value
+<code>extended = FALSE</code>) and will be removed in <font face="Courier New,Courier" color="#666666"><b>R</b></font> 2.11.0.
 </ul>
 
 </p>
@@ -2044,8 +2079,9 @@ value extended = FALSE) and will be removed in R 2.11.0.
 <p>
 
 <ul>
-<li> trigamma(x) and other psigamma(x, n) calls are now accurate for
-very large abs(x). (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14020">PR#14020</a>)
+<li> trigamma(x) and other psigamma(x, n) calls are now
+accurate for very large
+abs(x). (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14020">PR#14020</a>)
 </p>
 <p>
 </li>
@@ -2093,7 +2129,7 @@ for plot(c(1,300), c(1,300), log=<code>"xy"</code>) ; abline(4,1, untf=TRUE).
 <p>
 </li>
 <li>detach/<code>unloadNamespace()</code> arrange to flush the package's
-lazyload cache of R objects once the package/namespace is no
+lazyload cache of <font face="Courier New,Courier" color="#666666"><b>R</b></font> objects once the package/namespace is no
 longer needed.
 </p>
 <p>
@@ -2181,7 +2217,7 @@ than one for large values of ncp.
 </li>
 <li><code>intToUtf8()</code> could fail when asked to produce 10Mb or more
 strings, something it was never intended to do: unfortunately
-Windows crashed R (other OSes reported a lack of resources).
+Windows crashed <font face="Courier New,Courier" color="#666666"><b>R</b></font> (other OSes reported a lack of resources).
 (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=14068">PR#14068</a>)
 </p>
 <p>
@@ -2198,7 +2234,7 @@ detach(unload = TRUE)).
 <p>
 </li>
 <li>The internal record-keeping by dyn.load/dyn.unload was
-incomplete, which could crash R if a DLL that registered
+incomplete, which could crash <font face="Courier New,Courier" color="#666666"><b>R</b></font> if a DLL that registered
 .External routines had earlier been unloaded.
 </p>
 <p>
@@ -2290,7 +2326,7 @@ will be missing if they are so used.
 - Text, HTML and latex help and examples for packages
 installed under the new system are converted on-demand from
 stored parsed Rd files.  (Conversions stored in packages
-installed under R &lt; 2.10.0 are used if no parsed Rd files
+installed under <font face="Courier New,Courier" color="#666666"><b>R</b></font> &lt; 2.10.0 are used if no parsed Rd files
 are found.  It is recommended that such packages be
 re-installed.)
 </p>
@@ -2299,7 +2335,7 @@ re-installed.)
 <p>
 </li>
 <li>HTML help is now generated dynamically using an HTTP server
-running in the R process and listening on the loopback
+running in the <font face="Courier New,Courier" color="#666666"><b>R</b></font> process and listening on the loopback
 interface.
 </p>
 <p>
@@ -2437,7 +2473,7 @@ use continuity correction when not computing exact p-values.
 </p>
 <p>
 </li>
-<li>R now keeps track of line numbers during execution for
+<li><font face="Courier New,Courier" color="#666666"><b>R</b></font> now keeps track of line numbers during execution for
 code sourced with options(keep.source = TRUE). The source
 reference is displayed by debugging functions such as <code>traceback()</code>,
 <code>browser()</code>, <code>recover()</code>, and <code>dump.frames()</code>, and is stored as an
@@ -2471,17 +2507,18 @@ methods, and do for the data.frame ones.)
 </p>
 <p>
 </li>
-<li>as.character(x) for numeric x no longer produces strings such as
-<code>"0.30"</code>, i.e., with trailing zeros.  This change also renders
-levels construction in <code>factor()</code> more consistent.
+<li><code>as.character(x)</code> for numeric <code>x</code> no longer
+produces strings such as <code>"0.30"</code>, i.e., with trailing
+zeros.  This change also renders levels construction in
+<code>factor()</code> more consistent.
 </p>
 <p>
 </li>
-<li><code>codocClasses()</code>, which checks consistency of the documentation of
-S4 class slots, now does so in considerably more cases.  The
-documentation of inherited slots (from superclasses) is now
-optional.  This affects 'R CMD check &lt;pkg&gt;' when the package
-defines S4 classes.
+<li><code>codocClasses()</code>, which checks consistency of the
+documentation of S4 class slots, now does so in considerably more
+cases.  The documentation of inherited slots (from superclasses)
+is now optional.  This affects <CODE>R CMD check &lt;pkg&gt;</CODE> when
+the package defines S4 classes.
 </p>
 <p>
 </li>
@@ -2490,10 +2527,10 @@ mismatches.
 </p>
 <p>
 </li>
-<li><code>for()</code>, <code>while()</code>, and <code>repeat()</code> loops  now always return NULL as
-their (invisible) value.  This change was needed to address a
-reference counting bug without creating performance penalties
-for some common use cases.
+<li><code>for()</code>, <code>while()</code>, and <code>repeat()</code> loops now
+always return NULL as their (invisible) value.  This change was
+needed to address a reference counting bug without creating
+performance penalties for some common use cases.
 </p>
 <p>
 </li>
@@ -2583,8 +2620,8 @@ by Sundar Dorai-Raj).
 </p>
 <p>
 </li>
-<li>New function <code>news()</code> for building and querying R or package news
-information.
+<li>New function <code>news()</code> for building and querying <font face="Courier New,Courier" color="#666666"><b>R</b></font> or
+package news information.
 </p>
 <p>
 </li>
@@ -2629,7 +2666,7 @@ package management computations.
 </li>
 <li>"\uxxxx" and "\Uxxxxxxxx" escapes can now be parsed to a UTF-8
 encoded string even in non-UTF-8 locales (this has been
-implemented on Windows since R 2.7.0). The semantics have
+implemented on Windows since <font face="Courier New,Courier" color="#666666"><b>R</b></font> 2.7.0). The semantics have
 been changed slightly: a string containing such escapes is
 always stored in UTF-8 (and hence is suitable for portably
 including Unicode text in packages).
@@ -2804,7 +2841,7 @@ connections directly already did).
 <li> A different regular expression engine is used for basic and
 extended regexps and is also for approximate matching. This is
 based on the TRE library of Ville Laurikari, a modifed copy of
-which is included in the R sources.
+which is included in the <font face="Courier New,Courier" color="#666666"><b>R</b></font> sources.
 </p>
 <p>
 This is often faster, especially in a MBCS locale.
@@ -2982,7 +3019,7 @@ equivalent object.
 <p>
 </li>
 <li><code>parse_Rd()</code> was incorrectly handling multiple backslashes in
-R code strings, converting 4n+3 backslashes to 2n+1 instead
+R\ code strings, converting 4n+3 backslashes to 2n+1 instead
 of 2n+2.
 </p>
 <p>
@@ -3029,32 +3066,35 @@ effort put into compression when writing.
 </p>
 <p>
 </li>
-<li>New function <code>xzfile()</code> for use with xz-compressed files.  (This
-can also read files compressed by some versions of 'lzma'.)
+<li>New function <code>xzfile()</code> for use with
+<CODE>xz</CODE>-compressed files.  (This can also read files
+compressed by some versions of <CODE>'lzma'</CODE>.)
 </p>
 <p>
 </li>
-<li><code>gzfile()</code> looks at the file header and so can now also read
-bzip2-ed files and xz-compressed files.
+<li><code>gzfile()</code> looks at the file header and so can now also
+read <CODE>bzip2</CODE>-ed files and <CODE>xz</CODE>-compressed files.
 </p>
 <p>
 </li>
-<li>There are the new options of save(compress = <code>"bzip2"</code>) and <code>"xz"</code>
-to use bzip2 or xz compression (which will be slower, but can
-give substantially smaller files).  Argument compression_level
-gives finer control over the space/time tradeoffs.
+<li>There are the new options of save(compress = <code>"bzip2"</code>)
+and <code>"xz"</code> to use <CODE>bzip2</CODE> or <CODE>xz</CODE>
+compression (which will be slower, but can give substantially
+smaller files).  Argument <code>compression_level</code> gives finer control
+over the space/time tradeoffs.
 </p>
 <p>
-<code>load()</code> can read such saves (but only as from this version of R).
+<code>load()</code> can read such saves (but only as from this version of <font face="Courier New,Courier" color="#666666"><b>R</b></font>).
 </p>
 <p>
 </li>
-<li>R CMD INSTALL/check and tools::writePACKAGES accept a wider
-range of compressed tar archives.  Precisely how wide depends
-on the capabilities of the host system's 'tar' command: they
-almost always include .tar.bz2 archives, and with modern
-versions of 'tar' other forms of compression such as lzma and
-xz, and arbitrary extensions.
+<li><CODE>R CMD INSTALL/check</CODE> and
+<code>tools::writePACKAGES</code> accept a wider range of compressed
+tar archives.  Precisely how wide depends on the capabilities of
+the host system's <CODE>'tar'</CODE> command: they almost always
+include <CODE>.tar.bz2</CODE> archives, and with modern versions of
+<CODE>'tar'</CODE> other forms of compression such as <CODE>lzma</CODE>
+and <CODE>xz</CODE>, and arbitrary extensions.
 </p>
 <p>
 </li>
@@ -3072,19 +3112,15 @@ particularly effective for <code>'survival'</code>.)
 </li>
 <li><code>file()</code> for open = <code>""</code>, <code>"r"</code> or
 <code>"rt"</code> will automagically detect compressed files (from
-gzip, bzip2 or xz).  This means that compressed files can be
-specified by file name (rather than via a <code>gzfile()</code>
-connection) to <code>read.table()</code>, <code>readlines()</code>,
-<code>scan()</code> and so on.
+<CODE>gzip</CODE>, <CODE>bzip2</CODE> or <CODE>xz</CODE>).  This means
+that compressed files can be specified by file name (rather than
+via a <code>gzfile()</code> connection) to <code>read.table()</code>,
+<code>readlines()</code>, <code>scan()</code> and so on.
 </p>
 <p>
 </li>
 <li><code>data()</code> can handle compressed text files with extensions
-.{txt,tab,csv}.{gz,bz2,xz} .
-</p>
-<p>
-</p>
-<p>
+<code>.{txt,tab,csv}.{gz,bz2,xz}</code> .
 </ul>
 
 </p>
@@ -3100,7 +3136,7 @@ connection) to <code>read.table()</code>, <code>readlines()</code>,
 </p>
 <p>
 </li>
-<li><code>tools::Rd_parse()</code> is defunct (as this version of R uses only
+<li><code>tools::Rd_parse()</code> is defunct (as this version of <font face="Courier New,Courier" color="#666666"><b>R</b></font> uses only
 Rd version 2).
 </p>
 <p>
@@ -3162,17 +3198,17 @@ for cairo-based graphics devices (which remain optional).
 </li>
 <li>A suitable <code>iconv()</code> is now required: support for
 configure option <span class="option">--without-iconv</span> has been withdrawn (it
-was deprecated in R 2.5.0).
+was deprecated in <font face="Courier New,Courier" color="#666666"><b>R</b></font> 2.5.0).
 </p>
 <p>
 </li>
-<li>Perl is no longer 'essential'. R can be built without it, but
-scripts R CMD build, check, Rprof and Sd2d require it.
+<li>Perl is no longer 'essential'. <font face="Courier New,Courier" color="#666666"><b>R</b></font> can be built without it, but
+scripts R CMD build, check, Rprof and Sd2d currently require it.
 </p>
 <p>
 </li>
 <li>A system 'glob' function is now essential (a working
-<code>Sys.glob()</code> has been assumed since R 2.9.0 at least).
+<code>Sys.glob()</code> has been assumed since <font face="Courier New,Courier" color="#666666"><b>R</b></font> 2.9.0 at least).
 </p>
 <p>
 </li>
@@ -3222,8 +3258,9 @@ translations in packages: see 'Writing R Extensions'.
 
 <ul>
 <li> Assigning an extra 0-length column to a data frame by
-DF[, <code>"foo"</code>] &lt;- value now works in most cases (by filling with
-NAs) or fails. (It used to give a corrupt data frame.)
+<code>DF[, "foo"] &lt;- value</code> now works in most cases (by filling
+with <code>NA</code>s) or fails.  (It used to give a corrupt data
+frame.)
 </p>
 <p>
 </li>
@@ -3232,14 +3269,14 @@ of various incorrect slot definitions.
 </p>
 <p>
 </li>
-<li>n:m now returns a result of type <code>"integer"</code> in a few more
-boundary cases.
+<li><code>n:m</code> now returns a result of type <code>"integer"</code> in
+a few more boundary cases.
 </p>
 <p>
 </li>
-<li>The 'zap.ind' argument to <code>printCoefmat()</code> did not usually work as
-other code attempted to ensure that non-zero values had a
-non-zero representation.
+<li>The <code>'zap.ind'</code> argument to <code>printCoefmat()</code> did
+not usually work as other code attempted to ensure that non-zero
+values had a non-zero representation.
 </p>
 <p>
 </li>
@@ -3264,8 +3301,9 @@ the same string differ in byte pattern.
 </p>
 <p>
 </li>
-<li>methods(f) used to warn unnecessarily for an S4 generic 'f' which
-had been created based on an existing S3 generic.
+<li><code>methods(f)</code> used to warn unnecessarily for an S4
+generic <code>'f'</code> which had been created based on an existing S3
+generic.
 </p>
 <p>
 </li>
@@ -3276,12 +3314,12 @@ spurious warnings for classes extending <code>"array"</code>).
 <p>
 </li>
 <li>Trying to assign into a raw vector with an index vector
-containing NAs could cause a segfault. Reported by Hervé Pagès.
+containing NAs could cause a segfault.  Reported by Hervé Pagès.
 </p>
 <p>
 </li>
-<li>Rscript could segfault if (by user error) its filename argument
-was missing.  Reported by Martin Morgan.
+<li><CODE>Rscript</CODE> could segfault if (by user error) its
+filename argument was missing.  Reported by Martin Morgan.
 </p>
 <p>
 </li>
@@ -3291,15 +3329,16 @@ functions.  Reported by Romain Francois.
 </p>
 <p>
 </li>
-<li><code>order()</code> was missing a <code>PROTECT()</code> call and so could segfault when
-called on character data under certain (rare) circumstances
-involving marked non-native encodings.
+<li><code>order()</code> was missing a <code>PROTECT()</code> call and so
+could segfault when called on character data under certain (rare)
+circumstances involving marked non-native encodings.
 </p>
 <p>
 </li>
-<li>prettyNum(z, drop0trailing=TRUE) did not work correctly when z
-was a complex vector.  Consequently, str(z, ...)  also did
-not.  (<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=13985">PR#13985</a>)
+<li><code>prettyNum(z, drop0trailing=TRUE)</code> did not work
+correctly when <code>z</code> was a complex vector.  Consequently,
+<code>str(z, ...)</code> also did not.
+(<a href="https://bugs.R-project.org/bugzilla3/show_bug.cgi?id=13985">PR#13985</a>)
 </p>
 <p>
 </li>
@@ -3308,30 +3347,24 @@ builddir = srcdir.
 </p>
 <p>
 </li>
-<li>R CMD replaced TEXINPUTS rather than appending to it (as
-documented and intended).
+<li><CODE>R CMD</CODE> replaced <code>TEXINPUTS</code> rather than
+appending to it (as documented and intended).
 </p>
 <p>
 </li>
-<li><code>help.start()</code> no longer fails on unix when <code>"browser"</code> is a
-function.
+<li><code>help.start()</code> no longer fails on unix when
+<code>"browser"</code> is a function.
 </p>
 <p>
 </li>
-<li>pbeta(x, *, log.p = TRUE) is sometimes more accurate, e.g., for
-very small x.
+<li><code>pbeta(x, *, log.p = TRUE)</code> is sometimes more accurate,
+e.g., for very small <code>x</code>.
 </p>
 <p>
 </li>
-<li>Unserializing a pre-2.8 workspace containing pure ASCII character
-objects with a LATIN1 or UTF-8 encoding would corrupt the CHARSXP
-cache.
-</p>
-<p>
-</p>
-<p>
-</p>
-<p>
+<li>Unserializing a pre-2.8 workspace containing pure ASCII
+character objects with a Latin-1 or UTF-8 encoding would corrupt
+the <code>CHARSXP</code> cache.
 </ul>
 
 </p>

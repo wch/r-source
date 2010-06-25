@@ -296,7 +296,7 @@ CHANGES IN R VERSION 2.12.0:
       pt(-1000, 3, 200).  (PR#14069)
 
     • The default C code (R_binary) for binary ops now sets the S4 bit
-      in the result if either argument is an S4 object. (PR#13209)
+      in the result if either argument is an S4 object.  (PR#13209)
 
     • source(echo=TRUE) failed to echo comments that followed the last
       statement in a file.
@@ -341,7 +341,7 @@ CHANGES IN R VERSION 2.11.1 patched:
     • R CMD Rd2dvi failed if run from a path containing space(s).  This
       also affected R CMD check, which calls Rd2dvi.
 
-    • stripchart() could fail with an empty factor level. (PR#14317)
+    • stripchart() could fail with an empty factor level.  (PR#14317)
 
     • Text help rendering of \tabular{} has been improved: under some
       circumstances leading blank columns were not rendered.
@@ -392,16 +392,17 @@ CHANGES IN R VERSION 2.11.1:
     • More efficient utf8ToInt() on long multi-byte strings with many
       multi-byte characters.  (PR#14262)
 
-    • aggregate.ts() gave platform-depedent results due to rounding
+    • aggregate.ts() gave platform-dependent results due to rounding
       error for ndeltat != 1.
 
     • package.skeleton() sometimes failed to fix filenames for .R or
-      .Rd files to start with an alphanumeric.  (PR#14253) It also
-      failed when only an S4 class without any methods was defined.
-      (PR#14280)
+      .Rd files to start with an alphanumeric.  (PR#14253)
+
+      It also failed when only an S4 class without any methods was
+      defined.  (PR#14280)
 
     • splinefun(*, method = "monoH.FC") was not quite monotone in rare
-      cases. (PR#14215)
+      cases.  (PR#14215)
 
     • Rhttpd no longer crashes due to SIGPIPE when the client closes
       the connection prematurely.  (PR#14266)
@@ -438,7 +439,7 @@ CHANGES IN R VERSION 2.11.1:
     • [<-.data.frame was not quite careful enough in assigning (and
       potentially deleting) columns right-to-left. (PR#14263)
 
-    • rbeta(n, a,b) no longer occasionally returns NaN for a >> 1 > b.
+    • rbeta(n, a, b) no longer occasionally returns NaN for a >> 1 > b.
       (PR#14291)
 
     • pnorm(x, log.p = TRUE) could return NaN not -Inf for x near
@@ -478,7 +479,10 @@ CHANGES IN R VERSION 2.11.0:
       way as for interpreted functions except for the deliberate
       exceptions
 
-      call switch .C .Fortran .Call .External
+      
+      
+               call switch .C .Fortran .Call .External
+             
 
       all of which use positional matching for their first argument,
       and also some internal-use-only primitives.
@@ -629,12 +633,12 @@ CHANGES IN R VERSION 2.11.0:
 
     • New function chooseBioCmirror() to set the "BioC_mirror" option.
 
-    • The R grammar prevents using the argument 'name' in signatures of
-      S4 methods for '$' and '$<-', since they will always be called
-      with a character string value for 'name'.  The implicit S4
-      generic functions have been changed to reflect this: packages
-      which included 'name' in the signature of their methods need to
-      be updated and re-installed.
+    • The R grammar now prevents using the argument 'name' in
+      signatures of S4 methods for '$' and '$<-', since they will
+      always be called with a character string value for 'name'.  The
+      implicit S4 generic functions have been changed to reflect this:
+      packages which included 'name' in the signature of their methods
+      need to be updated and re-installed.
 
     • The handling of the 'method' argument of glm() has been refined
       following suggestions by Ioannis Kosmidis and Heather Turner.
@@ -668,7 +672,7 @@ CHANGES IN R VERSION 2.11.0:
 
     • In Rd, \eqn and \deqn will render in HTML (and convert to text)
       upper- and lower-case Greek letters (entered as \alpha ...),
-      \ldots, \dots, \ge and \le.
+      \ldots, ..., \ge and \le.
 
     • utf8ToInt() and intToUtf8() now map NA inputs to NA outputs.
 
@@ -706,7 +710,7 @@ CHANGES IN R VERSION 2.11.0:
       default), users will be asked to agree to non-known-to-be-FOSS
       package licences at first use.
 
-    • Checking setAs(a,b) methods only gives a message instead of a
+    • Checking setAs(a, b) methods only gives a message instead of a
       warning, when one of a or b is unknown.
 
     • New function norm() to compute a matrix norm.  norm() and also
@@ -763,9 +767,9 @@ CHANGES IN R VERSION 2.11.0:
       help page): it now does so invisibly, analogously to
       if-without-else.
 
-      It is now primitive: this means that EXPR is always matched to
-      the first argument and there is no danger of partial matching to
-      later named arguments.
+      It is now primitive: this means that argument EXPR is always
+      matched to the first argument and there is no danger of partial
+      matching to later named arguments.
 
     • Primitive functions UseMethod(), attr(), attr<-(), on.exit(),
       retracemem() and substitute() now use standard argument matching
@@ -814,8 +818,9 @@ CHANGES IN R VERSION 2.11.0:
       problems with font selection when done by cairo rather than Pango
       (at least on Mac OS X).
 
-    • New arrayInd() such that which(x, arr.ind = TRUE) for an array
-      'x' is now equivalent to arrayInd(which(x), dim(x), dimnames(x)).
+    • New function arrayInd() such that which(x, arr.ind = TRUE) for an
+      array 'x' is now equivalent to arrayInd(which(x), dim(x),
+      dimnames(x)).
 
   DEPRECATED & DEFUNCT:
 
@@ -837,14 +842,14 @@ CHANGES IN R VERSION 2.11.0:
     • The use of UseMethod() with more than two arguments is now
       defunct.
 
-    • In the 'methods' package, the MethodsList metadata objects which
-      had been superseded by hash tables (environments) since R 2.8.0
-      are being phased out.  Objects of this class are no longer
+    • In the 'methods' package, the "MethodsList" metadata objects
+      which had been superseded by hash tables (environments) since R
+      2.8.0 are being phased out.  Objects of this class are no longer
       assigned or used as metadata by the package.
 
       getMethods() is now deprecated, with its internal use replaced by
       findMethods() and other changes.  Creating objects from the
-      MethodsList class is also deprecated.
+      "MethodsList" class is also deprecated.
 
     • Parsing strings containing both octal/hex and Unicode escapes now
       gives a warning and will become an error in R 2.12.0.
@@ -857,7 +862,7 @@ CHANGES IN R VERSION 2.11.0:
     • configure looks for a POSIX compliant tr, Solaris's /usr/ucb/tr
       having been found to cause Rdiff to malfunction.
 
-    • configure is now generated with autoconf-2.65, which works better
+    • configure is now generated with autoconf 2.65, which works better
       on recent systems and on Mac OS X.
 
   PACKAGE INSTALLATION:
@@ -884,7 +889,7 @@ CHANGES IN R VERSION 2.11.0:
   BUG FIXES:
 
     • Using with(), eval() etc with a list with some unnamed elements
-      now works. (PR#14035)
+      now works.  (PR#14035)
 
     • The "quick" dispatch of S4 methods for primitive functions was
       not happening, forcing a search each time.  (Dispatch for
@@ -905,11 +910,11 @@ CHANGES IN R VERSION 2.11.0:
 
     • The checks for conforming S4 method arguments could fail when the
       signature of the generic function omitted some of the formal
-      arguments (in addition to ...). Arguments omitted from the method
-      definition but conforming (per the documentation) should now be
-      ignored (treated as "ANY") in dispatching.
+      arguments (in addition to ...).  Arguments omitted from the
+      method definition but conforming (per the documentation) should
+      now be ignored (treated as "ANY") in dispatching.
 
-    • The computations for S4 method evaluation when '...' was in the
+    • The computations for S4 method evaluation when '...'  was in the
       signature could fail, treating '...' as an ordinary symbol.  This
       has been fixed, for the known cases.
 
@@ -925,9 +930,8 @@ CHANGES IN R VERSION 2.11.0:
       lines have been removed from the text format, and empty package
       labels removed from HTML.
 
-    • cor(A, B) where A has n x 1 and B a 1-dimensional array
-      segfaulted or gave an internal error.  (The case cor(B, A) was
-      PR#7116.)
+    • cor(A, B) where A is n x 1 and B a 1-dimensional array segfaulted
+      or gave an internal error.  (The case cor(B, A) was PR#7116.)
 
     • cut.POSIXt() applied to a start value after the DST transition on
       a DST-change day could give the wrong time for 'breaks' in units
@@ -935,13 +939,13 @@ CHANGES IN R VERSION 2.11.0:
 
     • do_par() UNPROTECTed too early (PR#14214)
 
-    • subassignment x[[....]] <- y didn't check for a zero-length right
-      hand side, and inserted rubbish value. (PR#14217)
+    • Subassignment x[[....]] <- y didn't check for a zero-length right
+      hand side, and inserted a rubbish value. (PR#14217)
 
     • fisher.test() no longer gives a P-value *very* slightly > 1, in
       some borderline cases.
 
-    • Internal function matchArgs no longer modifies the general
+    • Internal function matchArgs() no longer modifies the general
       purpose bits of the SEXPs that make up the formals list of R
       functions.  This fixes an invalid error message that would occur
       when a garbage collection triggered a second call to matchArgs
@@ -961,8 +965,8 @@ CHANGES IN R VERSION 2.11.0:
       dynamically allocates memory for file listings in a single pass
       instead of making an initial count pass.
 
-    • mean(x, trim=, na.rm = FALSE) failed to return NA if 'x'
-      contained missing values.  (Reported by Bill Dunlap.)
+    • mean(x, trim=, na.rm = FALSE) failed to return NA if x contained
+      missing values.  (Reported by Bill Dunlap.)
 
     • Extreme tail behavior of, pbeta() {and hence pf()}, e.g.,
       pbeta(x, 3, 2200, lower.tail=FALSE, log.p=TRUE) now returns
@@ -978,9 +982,9 @@ CHANGES IN R VERSION 2.11.0:
       character vector is required in functions which coerce
       internally.
 
-    • The interpretation by strptime() of %c was non-standard (not that
-      it is ever advisable to use locale- and system-specific input
-      formats).
+    • The interpretation by strptime() of "%c" was non-standard (not
+      that it is ever advisable to use locale- and system-specific
+      input formats).
 
     • capabilities("X11") now works the same way on Mac OS X as on
       other platforms (and as documented: it was always true for R
@@ -996,14 +1000,14 @@ CHANGES IN R VERSION 2.11.0:
     • all.equal(*, tolerance = e) passes the numeric tolerance also to
       the comparison of the attributes.
 
-    • pgamma(0,0), a boundary case, now returns 0, its limit from the
+    • pgamma(0, 0), a boundary case, now returns 0, its limit from the
       left, rather than the limit from the right.
 
     • Issuing POST requests to the internal web server could stall the
       request under certain circumstances.
 
     • gzcon( <textConnection> ), an error, no longer damages the
-      connection (in a way to have it seg.fault). (PR#14237)
+      connection (in a way to have it segfault). (PR#14237)
 
     • All the results from hist() now use the nominal 'breaks' not
       those adjusted by the numeric 'fuzz': in recent versions the
@@ -1024,12 +1028,12 @@ CHANGES IN R VERSION 2.10.1 patched:
       devices was set up for round end caps (the only type which
       existed at the time): it has now been adjusted for butt endcaps.
 
-    • lchoose(a,k) is now defined as log(abs(choose(a,k))), analogously
-      to lfactorial().
+    • lchoose(a, k) is now defined as log(abs(choose(a,k))),
+      analogously to lfactorial().
 
     • Although \eqn{} in Rd files is defined as a 'verbatim' macro,
-      many packages expected \dots and \ldots to be interpreted there
-      (as was the case in R < 2.10.0), so this is now done (using an
+      many packages expected ... and \ldots to be interpreted there (as
+      was the case in R < 2.10.0), so this is now done (using an
       ellipsis in HTML rendering).
 
     • Escaping of braces in quoted strings in R-code sections of Rd
@@ -1068,7 +1072,7 @@ CHANGES IN R VERSION 2.10.1 patched:
     • Help links containing special characters (e.g. "?") were not
       generated correctly when rendered in HTML. (PR#14155)
 
-    • lchoose(a,k) no longer wrongly gives NaN for negative a.
+    • lchoose(a, k) no longer wrongly gives NaN for negative a.
 
     • ks.test() could give a p-value that was off by one observation
       due to rounding error. (PR#14145)
@@ -1118,8 +1122,8 @@ CHANGES IN R VERSION 2.10.1 patched:
       parts of complex numbers correctly (and this was used by str():
       PR#14201).
 
-    • system.time() had sys.child component wrong (copied user.child
-      instead) on systems with HAVE_GETRUSAGE (PR#14210)
+    • system.time() had the sys.child component wrong (copied
+      user.child instead) on systems with HAVE_GETRUSAGE.  (PR#14210)
 
     • Changing both line texture and line cap (end) resulted in the
       latter to be ommitted form the PDF code.  In addition, line cap
@@ -1450,7 +1454,7 @@ CHANGES IN R VERSION 2.10.0:
     • codocClasses(), which checks consistency of the documentation of
       S4 class slots, now does so in considerably more cases.  The
       documentation of inherited slots (from superclasses) is now
-      optional.  This affects 'R CMD check <pkg>' when the package
+      optional.  This affects R CMD check <pkg> when the package
       defines S4 classes.
 
     • codoc() now also checks S4 methods for code/documentation
@@ -1764,7 +1768,7 @@ CHANGES IN R VERSION 2.10.0:
     • print.Rd() now adds necessary escape characters so that printing
       and re-parsing an Rd object should produce an equivalent object.
 
-    • parse_Rd() was incorrectly handling multiple backslashes in R
+    • parse_Rd() was incorrectly handling multiple backslashes in R\
       code strings, converting 4n+3 backslashes to 2n+1 instead of
       2n+2.
 
@@ -1867,7 +1871,7 @@ CHANGES IN R VERSION 2.10.0:
       2.5.0).
 
     • Perl is no longer 'essential'. R can be built without it, but
-      scripts R CMD build, check, Rprof and Sd2d require it.
+      scripts R CMD build, check, Rprof and Sd2d currently require it.
 
     • A system 'glob' function is now essential (a working Sys.glob()
       has been assumed since R 2.9.0 at least).
@@ -1927,7 +1931,7 @@ CHANGES IN R VERSION 2.10.0:
       spurious warnings for classes extending "array").
 
     • Trying to assign into a raw vector with an index vector
-      containing NAs could cause a segfault. Reported by Hervé Pagès.
+      containing NAs could cause a segfault.  Reported by Hervé Pagès.
 
     • Rscript could segfault if (by user error) its filename argument
       was missing.  Reported by Martin Morgan.
@@ -1941,7 +1945,7 @@ CHANGES IN R VERSION 2.10.0:
       involving marked non-native encodings.
 
     • prettyNum(z, drop0trailing=TRUE) did not work correctly when z
-      was a complex vector.  Consequently, str(z, ...)  also did not.
+      was a complex vector.  Consequently, str(z, ...) also did not.
       (PR#13985)
 
     • 'make distclean' removed too many files in etc/ if builddir =
@@ -1957,6 +1961,6 @@ CHANGES IN R VERSION 2.10.0:
       very small x.
 
     • Unserializing a pre-2.8 workspace containing pure ASCII character
-      objects with a LATIN1 or UTF-8 encoding would corrupt the CHARSXP
-      cache.
+      objects with a Latin-1 or UTF-8 encoding would corrupt the
+      CHARSXP cache.
 

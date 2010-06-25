@@ -42,11 +42,11 @@ R.1:
 updateNEWS: $(top_srcdir)/NEWS $(srcdir)/html/NEWS.html
 
 $(top_srcdir)/NEWS: $(srcdir)/NEWS.Rd
-	@$(ECHO) "tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
+	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(top_builddir)/bin/R --slave --vanilla
 
 $(srcdir)/html/NEWS.html: $(srcdir)/NEWS.Rd
-	@$(ECHO) "tools:::Rd2HTML_NEWS_in_Rd(\"$<\", \"$@\")" | \
+	@$(ECHO) "options(warn=1);tools:::Rd2HTML_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(top_builddir)/bin/R --slave --vanilla
 
 install: install-message installdirs install-sources install-sources2 install-man
