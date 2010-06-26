@@ -12,7 +12,7 @@ all: NEWS.rds html/NEWS.html # not yet ../NEWS
 updateNEWS: NEWS.rds html/NEWS.html ../NEWS
 
 NEWS.rds: NEWS.Rd
-	@$(ECHO) ".saveRDS(tools::parse_Rd(\"$<\"), \"$@\")" | $(R_EXE)
+	@$(ECHO) ".saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\"), stages = \"install\"), \"$@\")" | $(R_EXE)
 
 ../NEWS: NEWS.rds
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
