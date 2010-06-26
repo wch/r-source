@@ -1,0 +1,23 @@
+#-*-Makefile-*-
+#
+# ${R_HOME}/doc/Makefile.win
+
+ECHO = echo
+
+include ../src/gnuwin32/MkRules
+
+R_EXE=../$(BINDIR)/Rterm --vanilla --slave
+
+all: NEWS.rds html/NEWS.html # not yet ../NEWS
+updateNEWS: NEWS.rds html/NEWS.html ../NEWS
+
+NEWS.rds: NEWS.Rd
+	@$(ECHO) ".saveRDS(tools::parse_Rd(\"$<\"), \"$@\")" | $(R_EXE)
+
+../NEWS: NEWS.rds
+	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
+	  $(R_EXE)
+
+html/NEWS.html: NEWS.rds
+	@$(ECHO) "options(warn=1);tools:::Rd2HTML_NEWS_in_Rd(\"$<\", \"$@\")" | \
+	  $(R_EXE)
