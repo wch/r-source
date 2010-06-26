@@ -284,7 +284,8 @@ distclean: clean
 	$(RM) MkRules Rpwd.exe # do this last of all
 
 veryclean: distclean
-	$(RM) ../../doc/FAQ ../../doc/RESOURCES ../../doc/html/resources.html \
+	$(RM) ../../doc/FAQ ../../doc/RESOURCES ../../doc/NEWS.rds \
+	  ../../doc/html/resources.html ../../doc/html/NEWS.html \
 	  ../../SVN-REVISION # not in SVN sources
 
 cleanwin:
