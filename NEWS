@@ -232,11 +232,11 @@ CHANGES IN R VERSION 2.12.0:
     • R CMD check has a new argument --extra-arch to confine tests to
       those needed to check an additional sub-architecture.
 
-      R CMD check's check for “Subdirectory 'inst' contains no files”
-      is more thorough: it looks for files, and warns if there are only
-      empty directories.
+      Its check for “Subdirectory 'inst' contains no files” is more
+      thorough: it looks for files, and warns if there are only empty
+      directories.
 
-      'check' configuration files have changed format: they are now R
+      Its configuration files have changed format: they are now R
       source files, and the default file is ~/.R/check.Rconf.
 
     • R CMD build no longer creates an INDEX file (R CMD INSTALL does
@@ -244,7 +244,8 @@ CHANGES IN R VERSION 2.12.0:
       INDEX file.
 
     • R CMD Rd2dvi makes use of tools::texi2dvi() to process the
-      package manual.
+      package manual.  It is now implemented entirely in R (rather than
+      partially as a shell script).
 
     • R CMD Rprof now uses utils::summaryRprof() rather than Perl.  It
       has new arguments to select one of the tables and to limit the

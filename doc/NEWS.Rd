@@ -122,7 +122,7 @@
        It avoids the use of \command{texindy} by \command{texinfo}'s
        \command{texi2dvi >= 1.157}, since that does not emulate
        'makeindex' well enough to avoid problems with special characters
-       (such as '(', '\{', '!') in indices.
+       (such as \code{(}, \code{\{}, \code{!}) in indices.
       
       \item The ability of \code{readLines()} and \code{scan()} to
        re-encode inputs to marked UTF-8 strings on Windows since \R 2.7.0
@@ -135,8 +135,8 @@
        methods to match \code{plot()}.  (Wish of
        \Sexpr[results=rd]{tools:::Rd_expr_PR(10472)}.)
       
-      \item \code{Sys.chmod()} allows \code{'mode'} to be a vector,
-      recycled along \code{'paths'}.
+      \item \code{Sys.chmod()} allows argument \code{'mode'} to be a
+      vector, recycled along \code{'paths'}.
       
       \item There are \code{|}, \code{&} and \code{xor()} methods for
        classes \code{"octmode"} and \code{"hexmode"}, which work
@@ -261,26 +261,28 @@
     \itemize{
       \item \command{R CMD Rprof|build|check} are now based on \R rather
        than Perl scripts.  The only remaining Perl scripts are the
-       rarely used \command{R CMD Sd2Rd}, \code{install-info.pl} (used only if
-       \code{install-info} is not found) and some maintainer-mode-only scripts.
+       rarely used \command{R CMD Sd2Rd}, \code{install-info.pl} (used
+       only if \code{install-info} is not found) and some
+       maintainer-mode-only scripts.
       
       \item \command{R CMD check} has a new argument \option{--extra-arch}
        to confine tests to those needed to check an additional
        sub-architecture.
       
-       \command{R CMD check}'s check for \dQuote{Subdirectory 'inst'
-       contains no files} is more thorough: it looks for files, and
-       warns if there are only empty directories.
+       Its check for \dQuote{Subdirectory 'inst' contains no files} is
+       more thorough: it looks for files, and warns if there are only
+       empty directories.
       
-       \code{'check'} configuration files have changed format: they are now
-       \R source files, and the default file is \file{~/.R/check.Rconf}.
+       Its configuration files have changed format: they are now \R
+       source files, and the default file is \file{~/.R/check.Rconf}.
       
       \item \command{R CMD build} no longer creates an \file{INDEX} file
        (\command{R CMD INSTALL} does so), and \code{--force} removes
        (rather than overwrites) an existing \file{INDEX} file.
       
       \item \command{R CMD Rd2dvi} makes use of \code{tools::texi2dvi()}
-       to process the package manual.
+       to process the package manual.  It is now implemented entirely in
+       \R (rather than partially as a shell script).
       
       \item \command{R CMD Rprof} now uses \code{utils::summaryRprof()}
        rather than Perl.  It has new arguments to select one of the
@@ -296,7 +298,7 @@
       \item \code{lang5()} and \code{lang6()} (in addition to
        pre-existing \code{lang[1-4]()}) convenience functions for easier
        construction of \code{eval()} calls.  If you have your own
-       definition, do wrap it inside \code{'#ifndef lang5 .... #endif'}
+       definition, do wrap it inside \code{#ifndef lang5 .... #endif}
        to keep it working with old and new \R.
       
       \item Header \code{R.h} now includes only the C headers it itself needs,
@@ -586,7 +588,7 @@
        (although the time taken by the OS to find all the packages the
        first time it is used can dominate the time).
       
-      \item \command{R CMD check} has a new option \option{'--timings'}
+      \item \command{R CMD check} has a new option \option{--timings}
        to record per-example timings in file
        \file{<pkg>.Rcheck/<pkg>-Ex.timings}.
       
@@ -643,9 +645,9 @@
        method to change the underlying class.  (Wish of Jens
        Oehlschlägel.)
       
-      \item \code{write.csv[2]} no longer allow \code{'append'} to be
-       changed: as ever, direct calls to \code{write.table()} give more
-       flexibility as well as more room for error.
+      \item \code{write.csv[2]} no longer allow argument \code{'append'}
+       to be changed: as ever, direct calls to \code{write.table()} give
+       more flexibility as well as more room for error.
       
       \item The index page for HTML help for a package now collapses
        multiple signatures for S4 methods into a single entry.
@@ -691,13 +693,13 @@
       
        There is now a \code{"difftime"} method.
       
-      \item \code{bug.report()} now has \code{'package'} and
-       \code{'lib.loc'} arguments to generate bug reports about
-       packages.  When this is used, it looks for a \code{BugReports}
-       field in the package \file{DESCRIPTION} file, which will be
-       assumed to be a URL at which to submit the report, and otherwise
-       generates an email to the package maintainer.  (Suggested by
-       Barry Rowlingson.)
+      \item \code{bug.report()} now has arguments \code{'package'} and
+       \code{'lib.loc'} to generate bug reports about packages.  When
+       this is used, it looks for a \code{BugReports} field in the
+       package \file{DESCRIPTION} file, which will be assumed to be a
+       URL at which to submit the report, and otherwise generates an
+       email to the package maintainer.  (Suggested by Barry
+       Rowlingson.)
       
       \item \code{quantile()} now has a method for the date-time class
        \code{"POSIXt"}, and types 1 and 3 (which never interpolate) work
@@ -867,7 +869,8 @@
       
       \item \code{sample()} and \code{sample.int()} allow zero items to
        be sampled from a zero-length input.  \code{sample.int()} gains a
-       default value \code{'size=n'} to be more similar to \code{sample()}.
+       default value \code{size=n} to be more similar to
+       \code{sample()}.
       
       \item \code{switch()} returned \code{NULL} on error (not
        previously documented on the help page): it now does so
@@ -1056,7 +1059,7 @@
       
       \item \code{cut.POSIXt()} applied to a start value after the DST
        transition on a DST-change day could give the wrong time for
-       \code{'breaks'} in units of days or longer.
+       argument \code{'breaks'} in units of days or longer.
        (\Sexpr[results=rd]{tools:::Rd_expr_PR(14208)})
       
       \item \code{do_par()} \code{UNPROTECT}ed too early
@@ -1103,7 +1106,7 @@
        were not coerced internally to character, notably symbols.
        (Reported to R-devel by Bill Dunlap.)
       
-      \item The internal C function \code{'coerceSymbol'} now handles
+      \item The internal C function \code{coerceSymbol} now handles
        coercion to character, and warns if coercion fails (rather than
        silently returning \code{NULL}).  This allows a name to be given
        where a character vector is required in functions which coerce
@@ -1253,8 +1256,8 @@
       \item \code{match(incomparables=<non-NULL>)} could in rare cases
        infinite-loop.
       
-      \item \code{poisson.test()} needed to pass \code{'conf.level'} to
-       \code{binom.test()}
+      \item \code{poisson.test()} needed to pass argument
+       \code{'conf.level'} to \code{binom.test()}
        (\Sexpr[results=rd]{tools:::Rd_expr_PR(14195)})
       
       \item The \code{"nls"} method for \code{df.residual()} gave
@@ -1281,13 +1284,14 @@
        correct defaults.
       
       \item The suppression of auto-rotation in \code{bitmap()} and
-       \code{dev2bitmap()} with the \code{'pdfwrite'} device was not
+       \code{dev2bitmap()} with the \code{"pdfwrite"} device was not
        working correctly.
       
       \item \code{plot(ecdf(), log="x")} no longer gives an incorrect
       warning.
       
-      \item \code{read.fwf()} works again when \code{'file'} is a connection.
+      \item \code{read.fwf()} works again when argument \code{'file'} is
+      a connection.
       
       \item Startup files will now be found if their paths exceed 255
        bytes.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14228)})
@@ -1491,8 +1495,9 @@
        \item Conversion to latex of an Rd file with no aliases failed.
       
        \item \code{wilcox.test(conf.int=TRUE)} has achieved.level
-       corrected and, for \code{exact=FALSE}, now gives an
-       \code{'estimate'} which does not depend on the alternative used.
+       corrected and, for \code{exact=FALSE}, now returns a
+       \code{'estimate'} component which does not depend on the
+       alternative used.
      
        \item \code{help.search()} failed when the package argument was
        specified.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14113)})
@@ -1549,9 +1554,8 @@
   }
   \subsection{NEW FEATURES}{
     \itemize{
-      
       \item \code{polygon()}, \code{pdf()} and \code{postscript()} now
-       have a parameter \code{'fillOddEven'} (default \code{FALSE}),
+       have an argument \code{'fillOddEven'} (default \code{FALSE}),
        which controls the mode used for polygon fills of
        self-intersecting shapes.
       
@@ -1563,8 +1567,8 @@
       \item \code{plot()} methods for \code{"stepfun"} and hence
        \code{"ecdf"} no longer plot points by default for \code{n >= 1000}.
       
-      \item \code{[g]sub(perl=TRUE)} now also supports \code{'\\E'}
-      in order to \strong{end} \code{\\U} and \code{\\L} case changes,
+      \item \code{[g]sub(perl=TRUE)} now also supports \code{"\\E"}
+      in order to \strong{end} \code{"\\U"} and \code{"\\L"} case changes,
       thanks to a patch from Bill Dunlap.
       
       \item \code{factor()}, \code{`levels<-`()}, etc, now ensure that
@@ -1586,9 +1590,9 @@
        such as \code{floor()}, \code{signif()}, \code{abs()}, etc.
       
       \item For completeness, \code{old.packages()} and
-       \code{available.packages()} allow \code{'type'} to be specified
-       (you could always specify \code{'available'} or
-       \code{'contriburl'}).
+       \code{available.packages()} allow arguments \code{'type'} to be
+       specified (you could always specify arguments \code{'available'}
+       or \code{'contriburl'}).
       
       \item \code{available.packages()} by default only returns
        information on the latest versions of packages whose version
@@ -1685,7 +1689,7 @@
        have been added to the tools package to provide support for
        \code{aspell()} or other spell checkers.
       
-      \item \code{xtabs()} with the new option \code{'sparse = TRUE'}
+      \item \code{xtabs()} with the new argument \code{'sparse = TRUE'}
        now returns a sparse Matrix, using package \pkg{Matrix}.
       
       \item \code{contr.sum()} etc gain an argument \code{'sparse'}
@@ -1695,7 +1699,7 @@
        passes to the actual contrast function if that has a formal
        argument \code{'sparse'}.
       
-       \code{'contrasts(f, .) <- val'} now also works when \code{'val'}
+       \code{contrasts(f, .) <- val} now also works when \code{'val'}
        is a sparse Matrix.  It is planned that \code{model.matrix()}
        will work with such factors \code{'f'} in the future.
       
@@ -1815,7 +1819,7 @@
       \item \code{available.packages()} gains a \code{'filters'}
        argument for specifying the filtering operations performed on the
        packages found in the repositories.  A new built-in
-       \code{'license/FOSS'} filter only retains packages for which
+       \code{"license/FOSS"} filter only retains packages for which
        installation can proceed solely based on packages which can be
        verified as Free or Open Source Software (FOSS) employing the
        available license specifications.
@@ -1846,7 +1850,7 @@
       
       \item File \file{~/.R/config} is used in preference to
        \file{~/.Rconfig}, and these are now documented in \sQuote{R
-       Installation and Administration'}.
+       Installation and Administration}.
       
       \item Logic operations with complex numbers now work, as they were always
        documented to, and as in S.
@@ -1945,7 +1949,7 @@
        http server will update the package index at first use.
       
       \item \code{help()} has a new argument \code{'help_type'} (with
-       default set by the option of that name) to supersede
+       default set by the option of that name) to supersede arguments
        \code{'offline'}, \code{'htmlhelp'} and \code{'chmhelp'}
        (although for now they still work if \code{'help_type'} is
        unset).  There is a new type, \code{"PDF"} to allow offline PDF
@@ -1980,7 +1984,7 @@
        that \code{\\Sexpr} can output Rd code which is then parsed).
       
       \item \code{parse_Rd()} now always converts its input to UTF-8.
-       The \code{Rd2*} rendering functions have a new parameter,
+       The \code{Rd2*} rendering functions have a new argument,
        \code{'outputEncoding'}, which controls how their output is
        encoded.
       
@@ -2058,7 +2062,7 @@
        \option{--data-compress=xz}, often giving even better compression
        on large datasets at the expense of much longer installation
        times.  (The latter is used for the recommended packages: it is
-       particularly effective for \code{'survival'}.)
+       particularly effective for \pkg{survival}.)
       
       \item \code{file()} for open = \code{""}, \code{"r"} or
        \code{"rt"} will automagically detect compressed files (from
