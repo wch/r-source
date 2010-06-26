@@ -90,7 +90,7 @@
         }
         latexEncodings <- character()
         for(f in files) {
-            cat("  ", basename(f), "\n", sep="")
+            if (!silent) cat("  ", basename(f), "\n", sep="")
             if (!internals) {
                 lines <- readLines(f)
                 if (any(grepl("\\\\keyword\\{\\s*internal\\s*\\}",
@@ -388,10 +388,6 @@ function(pkgdir, outfile, title, batch = FALSE,
     ## to make edits, but for most files one pass should be enough.
     out <- file(outfile, "wt")
     if (!nzchar(enc)) enc <- "unknown"
-    description <- description == "true"
-    only_meta <- only_meta == "true"
-    internals <- internals != "no"
-    index <- index != "false"
 
     desc <- NULL
     if (file.exists(f <- file.path(pkgdir, "DESCRIPTION"))) {
@@ -406,7 +402,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     }
 
     ## Rd2.tex part 1: header
-    if (batch == "true") writeLines("\\nonstopmode{}", out)
+    if (batch) writeLines("\\nonstopmode{}", out)
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
         "\\usepackage[", Sys.getenv("R_RD4DVI", "ae"), "]{Rd}\n",
         sep = "", file = out)
@@ -466,7 +462,7 @@ function(pkgdir, outfile, title, batch = FALSE,
         latexEncodings <-
             .Rdfiles2tex(files_or_dir, out, encoding = enc, append = TRUE,
                          extraDirs = OSdir, internals = internals,
-                         silent = (batch == "true"))
+                         silent = batch)
     }
 
     ## Rd2.tex part 3: footer
@@ -731,17 +727,12 @@ function(pkgdir, outfile, title, batch = FALSE,
 
     res <-
         try(.Rd2dvi(files[1L], file.path(build_dir, "Rd2.tex"),
-                    title,
-                    ifelse(batch, "true", "false"),
-                    ifelse(description, "true", "false"),
-                    ifelse(only_meta, "true", "false"),
-                    enc, outenc, dir, OSdir,
-                    ifelse(internals, "yes", "no"),
-                    ifelse(index, "true", "false")))
+                    title, batch, description, only_meta,
+                    enc, outenc, dir, OSdir, internals, index))
     if (inherits(res, "try-error"))
         q("no", status = 11L, runLast = FALSE)
 
-    cat("Creating", out_ext, "output from LaTeX ...\n")
+    if (!batch)  cat("Creating", out_ext, "output from LaTeX ...\n")
     setwd(build_dir)
 
     res <- try(texi2dvi('Rd2.tex', pdf = (out_ext == "pdf"),
