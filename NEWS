@@ -104,7 +104,7 @@ CHANGES IN R VERSION 2.12.0:
     • tools::texi2dvi() gains an 'index' argument, mainly for use by R
       CMD Rd2pdf.
 
-      It avoids the use of 'texindy' by texinfo's texi2dvi >= 1.157,
+      It avoids the use of texindy by texinfo's texi2dvi >= 1.157,
       since that does not emulate 'makeindex' well enough to avoid
       problems with special characters (such as '(', '{', '!') in
       indices.
@@ -147,17 +147,17 @@ CHANGES IN R VERSION 2.12.0:
       file: all of [bgx]zfile() allow streams to be appended to an
       existing file, but bzfile() reads only the first stream.
 
-    • Function person() in package 'utils' now uses a given/family
-      scheme in preference to first/middle/last, is vectorized to
-      handle an arbitrary number of persons, and gains a 'role'
-      argument to specify person roles using a controlled vocabulary
-      (the MARC relator terms).
+    • Function person() in package utils now uses a given/family scheme
+      in preference to first/middle/last, is vectorized to handle an
+      arbitrary number of persons, and gains a 'role' argument to
+      specify person roles using a controlled vocabulary (the MARC
+      relator terms).
 
-    • Package 'utils' adds a new "bibentry" class for representing and
+    • Package utils adds a new "bibentry" class for representing and
       manipulating bibliographic information in enhanced BibTeX style,
       unifying and enhancing the previously existing mechanisms.
 
-    • A bibstyle() function has been added to the 'tools' package with
+    • A bibstyle() function has been added to the tools package with
       default JSS style for rendering "bibentry" objects, and a
       mechanism for registering other rendering styles.
 
@@ -168,12 +168,12 @@ CHANGES IN R VERSION 2.12.0:
     • Added \href tag to the Rd format, to allow hyperlinks to URLs
       without displaying the full URL.
 
-    • New toRd() generic in the 'tools' package to convert objects to
+    • New toRd() generic in the tools package to convert objects to
       fragments of Rd code, and added "fragment" argument to Rd2txt(),
       Rd2HTML(), and Rd2latex() to support it.
 
-    • R_HOME/share/texmf now follows the TDS conventions, so can be set
-      as a texmf tree (‘root directory’ in MiKTeX parlance).
+    • Directory R_HOME/share/texmf now follows the TDS conventions, so
+      can be set as a texmf tree (‘root directory’ in MiKTeX parlance).
 
     • S3 generic functions now use correct S4 inheritance when
       dispatching on an S4 object.  See ?Methods, section on “Methods
@@ -214,10 +214,9 @@ CHANGES IN R VERSION 2.12.0:
       is a new default filter, "subarch", in available.packages() to
       make use of this.
 
-      Code is compiled in a copy of the 'src' directory when a package
-      is installed for more than one sub-architecture: this avoid
-      problems with cleaning the sources between building
-      sub-architectures.
+      Code is compiled in a copy of the src directory when a package is
+      installed for more than one sub-architecture: this avoid problems
+      with cleaning the sources between building sub-architectures.
 
     • R CMD INSTALL --libs-only no longer overrides the setting of
       locking, so a previous version of the package will be restored
@@ -276,7 +275,7 @@ CHANGES IN R VERSION 2.12.0:
 
     • Tcl/Tk >= 8.4 is now required (increased from 8.3).
 
-    • 'make check' compares the output of the examples from several of
+    • make check compares the output of the examples from several of
       the base packages to reference output rather than the previous
       output (if any).  Expect some differences due to differences in
       floating-point computations.
@@ -296,8 +295,8 @@ CHANGES IN R VERSION 2.12.0:
     • pt() is more accurate in the left tail for ncp large, e.g.
       pt(-1000, 3, 200).  (PR#14069)
 
-    • The default C code (R_binary) for binary ops now sets the S4 bit
-      in the result if either argument is an S4 object.  (PR#13209)
+    • The default C function (R_binary) for binary ops now sets the S4
+      bit in the result if either argument is an S4 object.  (PR#13209)
 
     • source(echo=TRUE) failed to echo comments that followed the last
       statement in a file.
@@ -319,7 +318,7 @@ CHANGES IN R VERSION 2.12.0:
       to force such values to be 1).
 
     • A bug in callNextMethod() for some examples with "..." in the
-      arguments has been fixed.  See
+      arguments has been fixed.  See file
       src/library/methods/tests/nextWithDots.R in the sources.
 
     • GERaster() now checks for width or height of zero and does
@@ -376,10 +375,10 @@ CHANGES IN R VERSION 2.11.1:
 
   INSTALLATION:
 
-    • Command 'gnutar' is preferred to 'tar' when configure sets TAR.
-      This is needed on Mac OS 10.6, where the default tar, bsdtar
-      2.6.2, has been reported to produce archives with illegal
-      extensions to tar (according to the POSIX standard).
+    • Command gnutar is preferred to tar when configure sets TAR.  This
+      is needed on Mac OS 10.6, where the default tar, bsdtar 2.6.2,
+      has been reported to produce archives with illegal extensions to
+      tar (according to the POSIX standard).
 
   BUG FIXES:
 
@@ -390,8 +389,8 @@ CHANGES IN R VERSION 2.11.1:
       /usr/local/lib), [DY]LIB_LIBRARY_PATH is now set without a
       trailing colon.  (PR#13637)
 
-    • More efficient utf8ToInt() on long multi-byte strings with many
-      multi-byte characters.  (PR#14262)
+    • More efficient implementation of utf8ToInt() on long multi-byte
+      strings with many multi-byte characters.  (PR#14262)
 
     • aggregate.ts() gave platform-dependent results due to rounding
       error for ndeltat != 1.
@@ -402,7 +401,7 @@ CHANGES IN R VERSION 2.11.1:
       It also failed when only an S4 class without any methods was
       defined.  (PR#14280)
 
-    • splinefun(*, method = "monoH.FC") was not quite monotone in rare
+    • splinefun(method = "monoH.FC") was not quite monotone in rare
       cases.  (PR#14215)
 
     • Rhttpd no longer crashes due to SIGPIPE when the client closes
@@ -496,11 +495,11 @@ CHANGES IN R VERSION 2.11.0:
     • The 'open' modes for connections are now interpreted more
       consistently.  open = "r" is now equivalent to open = "rt" for
       all connections.  The default open = "" now means "rt" for all
-      connections except the compressed file connections gzfile(),
+      connections except the compressed-file connections gzfile(),
       bzfile() and xzfile() for which it means "rb".
 
-    • R CMD INSTALL now uses the internal untar() in package utils:
-      this ensures that all platforms can install bzip2- and
+    • R CMD INSTALL now uses the internal untar() function in package
+      utils: this ensures that all platforms can install bzip2- and
       xz-compressed tarballs.  In case this causes problems (as it has
       on some Windows file systems when run from Cygwin tools) it can
       be overridden by the environment variable R_INSTALL_TAR: setting
@@ -572,9 +571,9 @@ CHANGES IN R VERSION 2.11.0:
     • The index page for HTML help for a package now collapses multiple
       signatures for S4 methods into a single entry.
 
-    • The use of '.required' by require() and detach() has been
-      replaced by '.Depends' which is set from the 'Depends' field of a
-      package (even in packages with name spaces).  By default detach()
+    • The use of .required by require() and detach() has been replaced
+      by .Depends which is set from the Depends field of a package
+      (even in packages with name spaces).  By default detach()
       prevents such dependencies from being detached: this can be
       overridden by the argument 'force'.
 
@@ -587,7 +586,7 @@ CHANGES IN R VERSION 2.11.0:
     • readline() in non-interactive use returns "" and does not attempt
       to read from the ‘terminal’.
 
-    • New function file_ext() in package 'tools'.
+    • New function file_ext() in package tools.
 
     • xtfrm() is now primitive and internally generic, as this allows
       S4 methods to be set on it without name-space scoping issues.
@@ -668,7 +667,7 @@ CHANGES IN R VERSION 2.11.0:
     • print.rle() gains argument 'prefix'.
 
     • download.file() gains a "curl" method, mainly for use on
-      platforms which have 'curl' but not 'wget', but also for some
+      platforms which have curl but not wget, but also for some
       hard-to-access URLs.
 
     • In Rd, \eqn and \deqn will render in HTML (and convert to text)
@@ -717,8 +716,8 @@ CHANGES IN R VERSION 2.11.0:
     • New function norm() to compute a matrix norm.  norm() and also
       backsolve() and sample() have implicit S4 generics.
 
-    • Renviron.site and Rprofile.site can have architecture-specific
-      versions on systems with sub-architectures.
+    • Files Renviron.site and Rprofile.site can have
+      architecture-specific versions on systems with sub-architectures.
 
     • R CMD check now (by default) also checks Rd files for
       auto-generated content in need of editing, and missing argument
@@ -843,9 +842,9 @@ CHANGES IN R VERSION 2.11.0:
     • The use of UseMethod() with more than two arguments is now
       defunct.
 
-    • In the 'methods' package, the "MethodsList" metadata objects
-      which had been superseded by hash tables (environments) since R
-      2.8.0 are being phased out.  Objects of this class are no longer
+    • In the methods package, the "MethodsList" metadata objects which
+      had been superseded by hash tables (environments) since R 2.8.0
+      are being phased out.  Objects of this class are no longer
       assigned or used as metadata by the package.
 
       getMethods() is now deprecated, with its internal use replaced by
@@ -998,8 +997,8 @@ CHANGES IN R VERSION 2.11.0:
     • read.fwf() misread multi-line records when n was specified.
       (PR#14241)
 
-    • all.equal(*, tolerance = e) passes the numeric tolerance also to
-      the comparison of the attributes.
+    • all.equal(tolerance = e) passes the numeric tolerance also to the
+      comparison of the attributes.
 
     • pgamma(0, 0), a boundary case, now returns 0, its limit from the
       left, rather than the limit from the right.
@@ -1092,7 +1091,7 @@ CHANGES IN R VERSION 2.10.1 patched:
       filling the background for a new page.  This could be observed in
       multi-page bitmap output as stale outer regions of the plot.
 
-    • p.adjust(*, method, n) now works correctly for the rare case n >
+    • p.adjust(method, n) now works correctly for the rare case n >
       length(p), also when method differs from "bonferroni" or "none",
       thanks to a patch from Gordon Smyth.
 
@@ -1141,8 +1140,8 @@ CHANGES IN R VERSION 2.10.1 patched:
     • Startup files will now be found if their paths exceed 255 bytes.
       (PR#14228)
 
-    • contrasts<- (in the 'stats' package) no longer has an undeclared
-      dependence on 'methods' (introduced in 2.10.0).
+    • contrasts<- (in the stats package) no longer has an undeclared
+      dependence on methods (introduced in 2.10.0).
 
 CHANGES IN R VERSION 2.10.1:
 
@@ -1213,7 +1212,7 @@ CHANGES IN R VERSION 2.10.1:
       (hundreds of thousands of characters) due to integer overflow in
       a length calculation.
 
-    • abline(*, untf=TRUE) now uses a better x-grid in log-scale, e.g.,
+    • abline(untf=TRUE) now uses a better x-grid in log-scale, e.g.,
       for plot(c(1,300), c(1,300), log="xy"); abline(4,1, untf=TRUE).
 
     • detach()/unloadNamespace() arrange to flush the package's
@@ -1312,9 +1311,9 @@ CHANGES IN R VERSION 2.10.1:
 
     • Conversion to latex of an Rd file with no aliases failed.
 
-    • wilcox.test(*, conf.int=TRUE) has achieved.level corrected and,
-      for exact=FALSE, now gives an 'estimate' which does not depend on
-      the alternative used.
+    • wilcox.test(conf.int=TRUE) has achieved.level corrected and, for
+      exact=FALSE, now gives an 'estimate' which does not depend on the
+      alternative used.
 
     • help.search() failed when the package argument was specified.
       (PR#14113)
@@ -1370,8 +1369,8 @@ CHANGES IN R VERSION 2.10.0:
     • plot() methods for "stepfun" and hence "ecdf" no longer plot
       points by default for n >= 1000.
 
-    • [g]sub(*, perl=TRUE) now also supports '\E' in order to *end* \U
-      and \L case changes, thanks to a patch from Bill Dunlap.
+    • [g]sub(perl=TRUE) now also supports '\E' in order to *end* \U and
+      \L case changes, thanks to a patch from Bill Dunlap.
 
     • factor(), `levels<-`(), etc, now ensure that the resulting factor
       levels are unique (as was always the implied intention).  Factors
@@ -1483,7 +1482,7 @@ CHANGES IN R VERSION 2.10.0:
       checkers.
 
     • xtabs() with the new option 'sparse = TRUE' now returns a sparse
-      Matrix, using package 'Matrix'.
+      Matrix, using package Matrix.
 
     • contr.sum() etc gain an argument 'sparse' which allows sparse
       matrices to be returned.
@@ -1618,7 +1617,7 @@ CHANGES IN R VERSION 2.10.0:
     • New function Sys.readlink() for information about symbolic links,
       including if a file is a symbolic link.
 
-    • Package 'tools' has new functions checkRdaFiles() and
+    • Package tools has new functions checkRdaFiles() and
       resaveRdaFiles() to report on the format of .rda/.RData data
       files, and to re-save them in a different compressed format,
       including choosing the most compact format available.
@@ -1794,7 +1793,7 @@ CHANGES IN R VERSION 2.10.0:
       put into compression when writing.
 
     • New function xzfile() for use with xz-compressed files.  (This
-      can also read files compressed by some versions of 'lzma'.)
+      can also read files compressed by some versions of lzma.)
 
     • gzfile() looks at the file header and so can now also read
       bzip2-ed files and xz-compressed files.
@@ -1808,10 +1807,10 @@ CHANGES IN R VERSION 2.10.0:
 
     • R CMD INSTALL/check and tools::writePACKAGES accept a wider range
       of compressed tar archives.  Precisely how wide depends on the
-      capabilities of the host system's 'tar' command: they almost
-      always include .tar.bz2 archives, and with modern versions of
-      'tar' other forms of compression such as lzma and xz, and
-      arbitrary extensions.
+      capabilities of the host system's tar command: they almost always
+      include .tar.bz2 archives, and with modern versions of tar other
+      forms of compression such as lzma and xz, and arbitrary
+      extensions.
 
     • R CMD INSTALL has a new option --data-compress to control the
       compression used when lazy-loading data.  New possibilities are
@@ -1847,7 +1846,7 @@ CHANGES IN R VERSION 2.10.0:
     • help() arguments 'offline', 'htmlhelp' and 'chmhelp' are
       deprecated in favour of 'help_type'.
 
-    • clearNames() (in package 'stats') is deprecated for unname().
+    • clearNames() (in package stats) is deprecated for unname().
 
     • Basic regular expressions (extended = FALSE) are deprecated in
       strsplit, grep and friends.  There is a precise POSIX standard
@@ -1855,9 +1854,9 @@ CHANGES IN R VERSION 2.10.0:
       seems that in almost all cases package authors intended fixed =
       TRUE when using extended = FALSE.
 
-    • methods::trySilent() is deprecated in favour of try(*,
-      silent=TRUE) or - more efficiently and flexibly - something like
-      tryCatch(*, error = function(e) e).
+    • methods::trySilent() is deprecated in favour of try(silent=TRUE)
+      or - more efficiently and flexibly - something like
+      tryCatch(error = function(e) e).
 
     • index.search() is deprecated: there are no longer directories of
       types other than 'help'.
@@ -1949,7 +1948,7 @@ CHANGES IN R VERSION 2.10.0:
       was a complex vector.  Consequently, str(z, ...) also did not.
       (PR#13985)
 
-    • 'make distclean' removed too many files in etc/ if builddir =
+    • make distclean removed too many files in etc/ if builddir =
       srcdir.
 
     • R CMD replaced TEXINPUTS rather than appending to it (as
@@ -1958,7 +1957,7 @@ CHANGES IN R VERSION 2.10.0:
     • help.start() no longer fails on unix when "browser" is a
       function.
 
-    • pbeta(x, *, log.p = TRUE) is sometimes more accurate, e.g., for
+    • pbeta(x, ..., log.p = TRUE) is sometimes more accurate, e.g., for
       very small x.
 
     • Unserializing a pre-2.8 workspace containing pure ASCII character
