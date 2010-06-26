@@ -203,7 +203,7 @@ mkdir "${build_dir}"
 
 echo "tools:::.Rd2dvi(\"${1}\",  \"${build_dir}/Rd2.tex\", \
 \"$title\", \"$batch\", \"$description\", \"$only_meta\",\
-\"$enc\", \"$outenc\", \"${dir-$@}\", \"OSdir\", \"$internals\", \"$index\")" \
+\"$enc\", \"$outenc\", \"${dir-$@}\", \"$OSdir\", \"$internals\", \"$index\")" \
   | LC_ALL=C ${R_HOME}/bin/R --slave --vanilla || exit 11
 
 ## <FIXME>
