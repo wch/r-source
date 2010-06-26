@@ -1,6 +1,6 @@
 % File src/library/utils/man/unix/COMPILE.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{COMPILE}
@@ -18,7 +18,7 @@
   \item{srcfiles}{A list of the names of source files to be compiled.
     Currently, C, C++, Objective C, Objective C++ and FORTRAN are
     supported; the corresponding files should have the extensions
-    \file{.c}, \file{.cc} (or \file{.cpp} or \file{.C}), \file{.m},
+    \file{.c}, \file{.cc} (or \file{.cpp}), \file{.m},
     \file{.mm} (or \file{.M}) and \file{.f}, respectively.}
   \item{options}{A list of compile-relevant settings, such as special
     values for \code{CFLAGS} or \code{FFLAGS}, or for obtaining
