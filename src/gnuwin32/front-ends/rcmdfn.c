@@ -353,6 +353,18 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		 getRHOME(3), BINDIR);
 	PROCESS_CMD("nextArg");
     } else if (cmdarg > 0 && argc > cmdarg && 
+	       !strcmp(argv[cmdarg], "Rd2dvi")) {
+	snprintf(cmd, CMD_LEN, 
+		 "%s/%s/Rterm.exe -e tools:::..Rd2dvi() R_DEFAULT_PACKAGES= LC_ALL=C --vanilla --slave --args ",
+		 getRHOME(3), BINDIR);
+	PROCESS_CMD("nextArg");
+    } else if (cmdarg > 0 && argc > cmdarg && 
+	       !strcmp(argv[cmdarg], "Rd2pdf")) {
+	snprintf(cmd, CMD_LEN, 
+		 "%s/%s/Rterm.exe -e tools:::..Rd2dvi() R_DEFAULT_PACKAGES= LC_ALL=C --vanilla --slave --args nextArg--pdf",
+		 getRHOME(3), BINDIR);
+	PROCESS_CMD("nextArg");
+    } else if (cmdarg > 0 && argc > cmdarg && 
 	       !strcmp(argv[cmdarg], "Sweave")) {
 	snprintf(cmd, CMD_LEN, 
 		 "%s/%s/Rterm.exe --vanilla --slave -e \"utils:::.Sweave('%s')\"",
@@ -430,11 +442,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 
 	if (cmdarg > 0 && argc > cmdarg) {
 	    p = argv[cmdarg];
-	    if (strcmp(p, "Rd2dvi") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/bin/Rd2dvi.sh", RHome);
-	    } else if (strcmp(p, "Rd2pdf") == 0) {
-		snprintf(cmd, CMD_LEN, "sh %s/bin/Rd2dvi.sh --pdf", RHome);
-	    } else if (strcmp(p, "config") == 0) {
+	    if (strcmp(p, "config") == 0) {
 		snprintf(cmd, CMD_LEN, "sh %s/bin/config.sh", RHome);
 	    } else if (strcmp(p, "Sd2Rd") == 0) {
 		snprintf(cmd, CMD_LEN, "perl %s/bin/Sd2Rd.pl", RHome);
