@@ -42,7 +42,7 @@ R.1:
 	  $(top_builddir)/bin/R
 
 NEWS.rds: $(srcdir)/NEWS.Rd
-	@$(ECHO) ".saveRDS(tools::parse_Rd(\"$<\"), \"$@\")" | $(R_EXE)
+	@$(ECHO) ".saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\"), stages = \"install\"), \"$@\")" | $(R_EXE)
 
 updateNEWS: NEWS.rds ../NEWS html/NEWS.html
 

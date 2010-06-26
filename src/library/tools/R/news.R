@@ -410,11 +410,11 @@ function(file = NULL)
 
     x <- if(is.null(file))
         .readRDS(file.path(R.home("doc"), "NEWS.rds"))
-    else
-        parse_Rd(file)
-    ## Expand \Sexpr et al now because this does not happen when using
-    ## fragments.
-    x <- prepare_Rd(x, stages = "install")
+    else {
+        ## Expand \Sexpr et al now because this does not happen when using
+        ## fragments.
+        prepare_Rd(parse_Rd(file), stages = "install")
+    }
 
     y <- x[RdTags(x) == "\\section"]
     db <- do.call(rbind,
