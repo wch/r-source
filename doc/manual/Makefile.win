@@ -274,4 +274,5 @@ maintainer-clean: distclean
 ../html/resources.html: resources.texi
 	@$(TEXI2HTML) --no-headers -o $@ $<
 
+## Run from src/gnuwin32/fixed/Makefile
 svnonly: ../FAQ ../RESOURCES ../html/resources.html

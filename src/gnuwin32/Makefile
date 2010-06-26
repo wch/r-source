@@ -18,7 +18,7 @@ all:
 	@$(MK) rbuild
 	@$(MK) -C ../library -f Makefile.win all WIN=$(WIN)
 	@$(MK) -C ../library -f Makefile.win docs
-	@$(MK) htmldocs docfiles
+	@$(MK) newsdocs htmldocs docfiles
 	@$(MK)  -C ../../po -f Makefile.win
 
 rpackages:
@@ -199,6 +199,8 @@ front-ends:
 ../extra/xz/liblzma.a:
 	$(MK) -C ../extra/xz -f Makefile.win
 
+NEWSdocs:
+	@$(MK) -C ../../doc -f Makefile.win
 
 htmldocs:
 	@$(ECHO)
