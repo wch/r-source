@@ -123,9 +123,10 @@ httpd <- function(path, query, ...)
     else if(path == "/favicon.ico")
         return(list(file = file.path(R.home("doc"), "html", "favicon.ico")))
     else if(path == "/NEWS") {
-     	db <- news()
-    	return( list(payload = paste(toHTML(db, title="R News"), collapse="\n")) )
-    } else if(path %in% c("/ONEWS", "/OONEWS")) 
+         return(list(file = file.path(R.home("doc"), "html", "NEWS.html")))
+#    	db <- news()
+#    	return( list(payload = paste(toHTML(db, title="R News"), collapse="\n")) )
+    } else if(path %in% c("/ONEWS", "/OONEWS")) # not installed
     	return(list(file = file.path(R.home(), sub("/", "", path)),
     	            "content-type" = "text/plain"))
     else if(!grepl("^/(doc|library)/", path))
@@ -139,7 +140,7 @@ httpd <- function(path, query, ...)
     docRegexp <- "^/library/([^/]*)/doc(.*)"
     demoRegexp <- "^/library/([^/]*)/demo$"
     newsRegexp <- "^/library/([^/]*)/NEWS$"
-    
+
     file <- NULL
     if (grepl(topicRegexp, path)) {
         ## ----------------------- package help by topic ---------------------
@@ -297,7 +298,7 @@ httpd <- function(path, query, ...)
     	                                    up="html/00Index.html"), collapse="\n")) )
     } else if (grepl(newsRegexp, path)) {
     	pkg <- sub(newsRegexp, "\\1", path)
-    	formatted <- toHTML(news(package = pkg), 
+    	formatted <- toHTML(news(package = pkg),
     		            title=paste("NEWS in package", sQuote(pkg)),
     			    up="html/00Index.html")
         if (length(formatted))
@@ -312,7 +313,7 @@ httpd <- function(path, query, ...)
             file <- system.file("DESCRIPTION", package = pkg)
             return(list(file = file, "content-type" = "text/plain"))
         } else
-            return(error_page(gettextf("Only help files, %s, %s and files under %s in a package can be viewed", mono("NEWS"), 
+            return(error_page(gettextf("Only help files, %s, %s and files under %s in a package can be viewed", mono("NEWS"),
                               mono("DESCRIPTION"), mono("doc/"))))
     }
 
