@@ -581,6 +581,7 @@ function(pkgdir, outfile, title, batch = FALSE,
             "      --OS=NAME		the same as '--os'",
             "  -o, --output=FILE	write output to FILE",
             "      --pdf		generate PDF output",
+            "      --force		overwrite output file if it exists",
             "      --title=NAME	use NAME as the title of the document",
             "      --no-index	don't index output",
             "      --no-description	don't typeset the description of a package",
@@ -603,7 +604,7 @@ function(pkgdir, outfile, title, batch = FALSE,
     }
 
     startdir <- getwd()
-    build_dir <- tempfile(".Rd2dvi") # FIXME
+    build_dir <- paste(".Rd2dvi", Sys.getpid(), sep = "")
     title <- ""
     batch <- FALSE
     clean <- TRUE
@@ -617,15 +618,16 @@ function(pkgdir, outfile, title, batch = FALSE,
     internals <- FALSE
     files <- character()
     dir <- ""
+    force <- FALSE
 
     WINDOWS <- .Platform$OS.type == "windows"
 
     if (WINDOWS) {
         OSdir <- "windows"
-        preview <- Sys.getenv("xdvi", "xdvi")
+        preview <- Sys.getenv("xdvi", "open")
     } else {
         OSdir <- "unix"
-        preview <- Sys.getenv("xdvi", "open")
+        preview <- Sys.getenv("xdvi", "xdvi")
     }
 
     while(length(args)) {
@@ -662,6 +664,8 @@ function(pkgdir, outfile, title, batch = FALSE,
             else stop("-o option without value", call. = FALSE)
         } else if (substr(a, 1, 9) == "--output=") {
             output <- substr(a, 10, 1000)
+        } else if (a == "--force") {
+            force <- TRUE
         } else if (a == "--only-meta") {
             only_meta <- TRUE
         } else if (substr(a, 1, 5) == "--OS=" || substr(a, 1, 5) == "--OS=") {
@@ -711,19 +715,19 @@ function(pkgdir, outfile, title, batch = FALSE,
             output <- paste(sub("[.][Rr]d$", "", basename(files)), out_ext, sep = ".")
     }
 
-    if(!nzchar(dir)) dir <- "$@" # FIXME
+    if(!nzchar(dir)) dir <- paste(files, collapse = " ")
 
     ## Prepare for building the documentation.
-    if(!nzchar(output)) output <- paste("Rd2", out_ext, sep = ".")
-    if(file.exists(output)) {
-        cat("file", sQuote(output), "exists; please remove it first\n")
-        q("no", status = 1L, runLast = FALSE)
-    }
     if(dir.exists(build_dir) && unlink(build_dir, recursive = TRUE)) {
         cat("cannot write to build dir\n")
         q("no", status = 2L, runLast = FALSE)
     }
     dir.create(build_dir, FALSE)
+    if(!nzchar(output)) output <- paste("Rd2", out_ext, sep = ".")
+    if(file.exists(output) && !force) {
+        cat("file", sQuote(output), "exists; please remove it first\n")
+        q("no", status = 1L, runLast = FALSE)
+    }
 
     res <-
         try(.Rd2dvi(files[1L], file.path(build_dir, "Rd2.tex"),
