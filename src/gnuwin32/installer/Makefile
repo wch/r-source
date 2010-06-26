@@ -85,6 +85,7 @@ imagedir:
 	zip -q dosfiles.zip $(RPREFIX)/* $(RPREFIX)/doc/*
 	unzip -qao dosfiles.zip
 	$(RM) dosfiles.zip
+	$(CP) -p $(R_HOME)/doc/NEWS.rds $(RPREFIX)/doc
 #
 # files to make source packages
 	$(MKDIR) -p $(RPREFIX)/share \
