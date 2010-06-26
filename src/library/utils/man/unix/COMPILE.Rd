@@ -19,7 +19,8 @@
     Currently, C, C++, Objective C, Objective C++ and FORTRAN are
     supported; the corresponding files should have the extensions
     \file{.c}, \file{.cc} (or \file{.cpp}), \file{.m},
-    \file{.mm} (or \file{.M}) and \file{.f}, respectively.}
+    \file{.mm} (or \file{.M}), \file{.f} and \file{.f90} or \file{.f95},
+    respectively.}
   \item{options}{A list of compile-relevant settings, such as special
     values for \code{CFLAGS} or \code{FFLAGS}, or for obtaining
     information about usage and version of the utility.}
