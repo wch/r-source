@@ -50,11 +50,11 @@ $(top_srcdir)/NEWS: $(srcdir)/NEWS.Rd
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(R_EXE)
 
-../NEWS: NEWS.Rds
+../NEWS: NEWS.rds
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(R_EXE)
 
-html/NEWS.html: NEWS.Rds
+html/NEWS.html: NEWS.rds
 	@$(ECHO) "options(warn=1);tools:::Rd2HTML_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(R_EXE)
 

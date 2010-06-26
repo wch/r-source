@@ -300,7 +300,7 @@ Rd2txt_NEWS_in_Rd_options <-
 
 Rd2txt_NEWS_in_Rd <-
 function(f, out = "") {
-    if (grepl("[.]Rds$", f)) f <- .readRDS(f)
+    if (grepl("[.]rds$", f)) f <- .readRDS(f)
     tools::Rd2txt(f, out,
                   stages = c("install", "render"),
                   options = Rd2txt_NEWS_in_Rd_options)
@@ -308,7 +308,7 @@ function(f, out = "") {
 
 Rd2HTML_NEWS_in_Rd <-
 function(f, out) {
-    if (grepl("[.]Rds$", f)) f <- .readRDS(f)
+    if (grepl("[.]rds$", f)) f <- .readRDS(f)
     tools::Rd2HTML(f, out,
                    stages = c("install", "render"))
 }
