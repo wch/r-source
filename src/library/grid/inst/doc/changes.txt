@@ -1,4 +1,4 @@
-Changes from grid_2.10.0 to grid_2.12.0:
+Changes from grid_2.11.0 to grid_2.12.0:
 --------------------------------------
 
 1.  Neither width nor height need to be specified in 
@@ -10,6 +10,8 @@ Changes from grid_2.10.0 to grid_2.12.0:
 
 3.  "roundrect" grobs now obey their 'just' setting
     (bug reported by Beau Benjamin Bruce)
+
+4.  Added grid.path() for rendering paths with holes.
 
 
 Changes from grid_2.10.0 to grid_2.11.0:

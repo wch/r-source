@@ -1350,6 +1350,36 @@ void GERect(double x0, double y0, double x1, double y1,
 }
 
 /****************************************************************
+ * GEPath
+ ****************************************************************
+ */
+
+void GEPath(double *x, double *y, 
+            int npoly, int *nper,
+            Rboolean winding,
+            const pGEcontext gc, pGEDevDesc dd)
+{
+    /* FIXME: what about clipping? (if the device can't) 
+    */
+    if (gc->lty == LTY_BLANK)
+	gc->col = R_TRANWHITE;
+    if (npoly > 0) {
+        int i;
+        int draw = 1;
+        for (i=0; i < npoly; i++) {
+            if (nper[i] < 2) {
+                draw = 0;
+            }
+        }
+        if (draw) {
+            dd->dev->path(x, y, npoly, nper, winding, gc, dd->dev);
+        } else {
+	    error(_("Invalid graphics path"));
+        }
+    }
+}
+
+/****************************************************************
  * GERaster
  ****************************************************************
  */

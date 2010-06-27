@@ -851,6 +851,7 @@ attribute_hidden FUNTAB R_FunTab[] =
 {"abline",	do_abline,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"box",		do_box,		0,	111,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"rect",	do_rect,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
+{"path",	do_path,	0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"raster",	do_raster,	0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},
 {"polygon",	do_polygon,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"xspline",	do_xspline,	0,	111,	-1,	{PP_FUNCALL, PREC_FN,	0}},

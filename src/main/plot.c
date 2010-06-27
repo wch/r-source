@@ -1904,6 +1904,83 @@ SEXP attribute_hidden do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+SEXP attribute_hidden do_path(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    /* path(x, y, col, border, lty, ...) */
+    SEXP sx, sy, nper, rule, col, border, lty;
+    int nx, npoly;
+    int ncol, nborder, nlty, i;
+    double *xx, *yy;
+    const void *vmax = NULL /* -Wall */;
+
+    SEXP originalArgs = args;
+    pGEDevDesc dd = GEcurrentDevice();
+
+    GCheckState(dd);
+
+    if (length(args) < 2) error(_("too few arguments"));
+    /* (x,y) is checked in R via xy.coords() ; no need here : */
+    sx = SETCAR(args, coerceVector(CAR(args), REALSXP));  args = CDR(args);
+    sy = SETCAR(args, coerceVector(CAR(args), REALSXP));  args = CDR(args);
+    nx = LENGTH(sx);
+
+    PROTECT(nper = CAR(args)); args = CDR(args);
+    npoly = LENGTH(nper);
+
+    PROTECT(rule = CAR(args)); args = CDR(args);
+
+    PROTECT(col = FixupCol(CAR(args), R_TRANWHITE));	args = CDR(args);
+    ncol = LENGTH(col);
+
+    PROTECT(border = FixupCol(CAR(args), gpptr(dd)->fg)); args = CDR(args);
+    nborder = LENGTH(border);
+
+    PROTECT(lty = FixupLty(CAR(args), gpptr(dd)->lty)); args = CDR(args);
+    nlty = length(lty);
+
+    GSavePars(dd);
+    ProcessInlinePars(args, dd, call);
+
+    GMode(1, dd);
+
+    vmax = vmaxget();
+
+    /*
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
+     */
+    xx = (double*) R_alloc(nx, sizeof(double));
+    yy = (double*) R_alloc(nx, sizeof(double));
+    if (!xx || !yy)
+	error(_("unable to allocate memory (in GPath)"));
+    for (i=0; i<nx; i++) {
+        xx[i] = REAL(sx)[i];
+        yy[i] = REAL(sy)[i];
+        GConvert(&(xx[i]), &(yy[i]), USER, DEVICE, dd);
+        if (!(R_FINITE(xx[i]) && R_FINITE(yy[i])))
+            error(_("invalid x or y (in GPath)"));
+    }
+
+    if (INTEGER(lty)[0] == NA_INTEGER)
+	gpptr(dd)->lty = dpptr(dd)->lty;
+    else
+	gpptr(dd)->lty = INTEGER(lty)[0];
+
+    GPath(xx, yy, npoly, INTEGER(nper), INTEGER(rule)[0] == 1,
+          INTEGER(col)[0], INTEGER(border)[0], dd);
+
+    GMode(0, dd);
+
+    GRestorePars(dd);
+    UNPROTECT(5);
+    /* NOTE: only record operation if no "error"  */
+    if (GRecording(call, dd))
+	GErecordGraphicOperation(op, originalArgs, dd);
+
+    vmaxset(vmax);
+    return R_NilValue;
+}
+
 SEXP attribute_hidden do_raster(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* raster(image, xl, yb, xr, yt, angle, interpolate, ...) */

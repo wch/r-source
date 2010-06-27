@@ -75,12 +75,12 @@ export(
        # Creating and drawing predefined grobs and gTrees
        "grid.arrows", "grid.circle", "grid.clip", "grid.curve",
        "grid.line.to", "grid.lines", "grid.move.to", "grid.null", 
-       "grid.points", "grid.polygon", "grid.polyline", 
+       "grid.points", "grid.path", "grid.polygon", "grid.polyline", 
        "grid.raster", "grid.rect", "grid.roundrect",
        "grid.segments", "grid.text", "grid.xspline",
        "arrowsGrob", "circleGrob", "clipGrob", "curveGrob",
        "linesGrob", "lineToGrob", "moveToGrob", "nullGrob",
-       "pointsGrob", "polygonGrob", "polylineGrob",
+       "pointsGrob", "pathGrob", "polygonGrob", "polylineGrob",
        "rasterGrob", "rectGrob", "roundrectGrob",
        "segmentsGrob", "textGrob", "xsplineGrob",
        "xsplinePoints",
@@ -150,6 +150,7 @@ S3method("drawDetails", "line.to")
 S3method("drawDetails", "lines")
 S3method("drawDetails", "move.to")
 S3method("drawDetails", "points")
+S3method("drawDetails", "pathgrob")
 S3method("drawDetails", "polygon")
 S3method("drawDetails", "polyline")
 S3method("drawDetails", "xspline")

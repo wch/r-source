@@ -282,3 +282,34 @@ xspline <-
     if(open) s[1L] <- s[length(x)] <- 0
     .Internal(xspline(xy$x, xy$y, s, open, repEnds, draw, col, border, ...))
 }
+
+polypath <-
+  function(x, y = NULL, 
+           border = NULL, col = NA, lty = par("lty"),
+           rule = "winding", ...)
+{
+    xy <- xy.coords(x, y)
+    if (is.logical(border)) {
+        if (!is.na(border) && border) border <- par("fg")
+        else border <- NA
+    }
+    rule <- match(rule, c("winding", "evenodd"))
+    if (is.na(rule))
+        stop("Invalid fill rule for graphics path")
+    # Determine path components
+    breaks <- which(is.na(xy$x) | is.na(xy$y))
+    if (length(breaks) == 0) { # Only one path
+        .Internal(path(xy$x, xy$y,
+                       as.integer(length(xy$x)), as.integer(rule),
+                       col, border, lty, ...))
+    } else {
+        nb <- length(breaks)
+        lengths <- c(breaks[1] - 1,
+                     diff(breaks) - 1,
+                     length(xy$x) - breaks[nb])
+        .Internal(path(xy$x[-breaks], xy$y[-breaks],
+                       as.integer(lengths), as.integer(rule),
+                       col, border, lty, ...))
+    }
+}
+

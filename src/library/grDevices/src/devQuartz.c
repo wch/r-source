@@ -357,6 +357,7 @@ static void     RQuartz_Circle(double, double, double, const pGEcontext, pDevDes
 static void     RQuartz_Line(double, double, double, double, const pGEcontext, pDevDesc);
 static void     RQuartz_Polyline(int, double*, double*, const pGEcontext, pDevDesc);
 static void     RQuartz_Polygon(int, double*, double*, const pGEcontext, pDevDesc);
+static void     RQuartz_Path(double*, double*, int, int*, Rboolean, const pGEcontext, pDevDesc);
 static Rboolean RQuartz_Locator(double*, double*, pDevDesc);
 static void     RQuartz_Mode(int mode, pDevDesc);
 static void     RQuartz_MetricInfo(int, const pGEcontext , double*, double*, double*, pDevDesc);
@@ -390,6 +391,7 @@ void* QuartzDevice_Create(void *_dev, QuartzBackend_t *def)
     dev->line         = RQuartz_Line;
     dev->polyline     = RQuartz_Polyline;
     dev->polygon      = RQuartz_Polygon;
+    dev->path         = RQuartz_Path;
     dev->locator      = RQuartz_Locator;
     dev->mode         = RQuartz_Mode;
     dev->metricInfo   = RQuartz_MetricInfo;
@@ -1108,6 +1110,33 @@ static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC)
 	CGContextAddLineToPoint(ctx, x[i], y[i]);
     CGContextClosePath(ctx);
     CGContextDrawPath(ctx, kCGPathFillStroke);
+}
+
+static void RQuartz_Path(double *x, double *y, 
+                         int npoly, int* nper,
+                         Rboolean winding,
+                         CTXDESC)
+{
+    int i, j, index;
+    DRAWSPEC;
+    if (!ctx) NOCTX;
+    SET(RQUARTZ_FILL | RQUARTZ_STROKE | RQUARTZ_LINE);
+    index = 0;
+    CGContextBeginPath(ctx);
+    for (i=0; i < npoly; i++) {
+        CGContextMoveToPoint(ctx, x[index], y[index]);
+        index++;
+        for(j=1; j < nper[i]; j++) {
+            CGContextAddLineToPoint(ctx, x[index], y[index]);
+            index++;
+        }
+        CGContextClosePath(ctx);
+    }
+    if (winding) {
+        CGContextDrawPath(ctx, kCGPathFillStroke);
+    } else {
+        CGContextDrawPath(ctx, kCGPathEOFillStroke);
+    }
 }
 
 static void RQuartz_Mode(int mode, DEVDESC)

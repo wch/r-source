@@ -177,6 +177,11 @@ static void PicTeX_MetricInfo(int c,
 			      double* width, pDevDesc dd);
 static void PicTeX_Mode(int mode, pDevDesc dd);
 static void PicTeX_NewPage(const pGEcontext gc, pDevDesc dd);
+static void PicTeX_Path(double *x, double *y, 
+                        int npoly, int *nper,
+                        Rboolean winding,
+                        const pGEcontext gc,
+                        pDevDesc dd);
 static void PicTeX_Polygon(int n, double *x, double *y, 
 			   const pGEcontext gc,
 			   pDevDesc dd);
@@ -525,6 +530,14 @@ static void PicTeX_Rect(double x0, double y0, double x1, double y1,
     PicTeX_Polygon(4, x, y, gc, dd);
 }
 
+static void PicTeX_Path(double *x, double *y, 
+                        int npoly, int *nper,
+                        Rboolean winding,
+                        const pGEcontext gc, pDevDesc dd)
+{
+    warning(_("%s not available for this device"), "Path rendering");
+}
+
 static void PicTeX_Raster(unsigned int *raster, int w, int h,
                       double x, double y, 
                       double width, double height,
@@ -696,6 +709,7 @@ Rboolean PicTeXDeviceDriver(pDevDesc dd, const char *filename,
     dd->raster     = PicTeX_Raster;
     dd->cap        = PicTeX_Cap;
     dd->circle = PicTeX_Circle;
+    dd->path = PicTeX_Path;
     dd->polygon = PicTeX_Polygon;
     dd->polyline = PicTeX_Polyline;
     dd->locator = PicTeX_Locator;

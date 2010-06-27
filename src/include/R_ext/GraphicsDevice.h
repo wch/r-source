@@ -425,6 +425,29 @@ struct _DevDesc {
     void (*rect)();
 #endif
     /* 
+     * device_Path should draw one or more sets of points 
+     * as a single path
+     * 
+     * 'x' and 'y' give the points
+     *
+     * 'npoly' gives the number of polygons in the path
+     * MUST be at least 1
+     *
+     * 'nper' gives the number of points in each polygon
+     * each value MUST be at least 2
+     *
+     * 'winding' says whether to fill using the nonzero 
+     * winding rule or the even-odd rule
+     */
+#if R_USE_PROTOTYPES
+    void (*path)(double *x, double *y, 
+                 int npoly, int *nper,
+                 Rboolean winding,
+                 const pGEcontext gc, pDevDesc dd);
+#else
+    void (*path)();
+#endif
+    /* 
      * device_Raster should draw a raster image justified 
      * at the given location,
      * size, and rotation (not all devices may be able to rotate?)

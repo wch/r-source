@@ -524,6 +524,17 @@ void gfillpolygon(drawing d, rgb fill, point *p, int n)
     DeleteObject(br);
 }
 
+void gfillpolypolygon(drawing d, rgb fill, point *p, int npoly, int *nper)
+{
+    HDC dc = GETHDC(d);
+    HBRUSH br = CreateSolidBrush(getwinrgb(d,fill));
+    fix_brush(dc, d, br);
+    SelectObject(dc, br);
+    PolyPolygon(dc, (POINT FAR *) p, nper, npoly);
+    SelectObject(dc, GetStockObject(NULL_BRUSH));
+    DeleteObject(br);
+}
+
 /* Assumes all pixels in image are opaque 
  */
 void gdrawimage(drawing d, image img, rect dr, rect sr)

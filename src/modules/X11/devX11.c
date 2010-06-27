@@ -1968,6 +1968,14 @@ static void X11_Rect(double x0, double y0, double x1, double y1,
     }
 }
 
+static void X11_Path(double *x, double *y,
+                     int npoly, int *nper,
+                     Rboolean winding,
+                     const pGEcontext gc, pDevDesc dd)
+{
+    warning(_("%s not available for this device"), "Path drawing");
+}
+
 static void X11_Raster(unsigned int *raster, int w, int h,
                       double x, double y, 
                       double width, double height,
@@ -2489,6 +2497,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->line = Cairo_Line;
 	dd->polyline = Cairo_Polyline;
 	dd->polygon = Cairo_Polygon;
+        dd->path = Cairo_Path;
         dd->raster = Cairo_Raster;
         dd->cap = Cairo_Cap;
 	dd->hasTextUTF8 = TRUE;
@@ -2510,6 +2519,7 @@ Rf_setX11DeviceData(pDevDesc dd, double gamma_fac, pX11Desc xd)
 	dd->strWidth = X11_StrWidth;
 	dd->text = X11_Text;
 	dd->rect = X11_Rect;
+        dd->path = X11_Path;
         dd->raster     = X11_Raster;
         dd->cap        = X11_Cap;
 	dd->circle = X11_Circle;
@@ -3211,6 +3221,7 @@ BMDeviceDriver(pDevDesc dd, int kind, const char * filename,
     dd->line = Cairo_Line;
     dd->polyline = Cairo_Polyline;
     dd->polygon = Cairo_Polygon;
+    dd->path = Cairo_Path;
     dd->raster = Cairo_Raster;
     dd->locator = null_Locator;
     dd->mode = null_Mode;

@@ -222,7 +222,16 @@
        bibliographic entries for display in R.
       
       \item Text rendering of \code{\\itemize} in help uses a Unicode
-       bullet in UTF-8 and most single-byte Windows locales.
+      bullet in UTF-8 and most single-byte Windows locales.
+
+      \item Added support for polygons with holes to the graphics
+      engine.  This is implemented for the \code{pdf()},
+      \code{postscript()}, \code{x11(type="cairo")}, \code{windows()},
+      and \code{quartz()} devices (and associated raster formats),
+      but not for \code{x11(type="Xlib")} or \code{xfig()} or
+      \code{pictex()}.  The user-level interface is the
+      \code{polypath()} function in \pkg{graphics} and
+      \code{grid.path()} in \pkg{grid}.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{

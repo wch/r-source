@@ -652,6 +652,47 @@ grid.polygon <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
 }
 
 ######################################
+# PATH primitive
+######################################
+
+drawDetails.pathgrob <- function(x, recording=TRUE) {
+  if (is.null(x$id) && is.null(x$id.lengths))
+    grid.Call.graphics("L_polygon", x$x, x$y,
+                       list(as.integer(seq_along(x$x))))
+  else {
+    if (is.null(x$id)) {
+      n <- length(x$id.lengths)
+      id <- rep(1L:n, x$id.lengths)
+    } else {
+      n <- length(unique(x$id))
+      id <- x$id
+    }
+    index <- split(as.integer(seq_along(x$x)), id)
+    grid.Call.graphics("L_path", x$x, x$y, index,
+                       switch(x$rule, winding=1L, evenodd=0L))
+  }
+}
+
+pathGrob <- function(x, y,
+                     id=NULL, id.lengths=NULL,
+                     rule="winding",
+                     default.units="npc",
+                     name=NULL, gp=gpar(), vp=NULL) {
+  if (!is.unit(x))
+    x <- unit(x, default.units)
+  if (!is.unit(y))
+    y <- unit(y, default.units)
+  grob(x=x, y=y, id=id,
+       id.lengths=id.lengths,
+       rule=rule,
+       name=name, gp=gp, vp=vp, cl="pathgrob")
+}
+
+grid.path <- function(...) {
+  grid.draw(pathGrob(...))
+}
+
+######################################
 # XSPLINE primitive
 ######################################
 

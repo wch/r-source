@@ -2907,6 +2907,25 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
     GERect(x0, y0, x1, y1, &gc, dd);
 }
 
+void GPath(double *x, double *y, 
+           int npoly, int *nper,
+           Rboolean winding,
+           int bg, int fg, pGEDevDesc dd)
+{
+    R_GE_gcontext gc; gcontextFromGP(&gc, dd);
+
+    if (gpptr(dd)->lty == LTY_BLANK)
+	fg = R_TRANWHITE; /* transparent for the border */
+
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    gc.col = fg;
+    gc.fill = bg;
+    GEPath(x, y, npoly, nper, winding, &gc, dd);
+}
+
 void GRaster(unsigned int* image, int w, int h, 
              double x0, double y0, double x1, double y1, 
              double angle, Rboolean interpolate, 

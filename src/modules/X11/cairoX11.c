@@ -275,6 +275,43 @@ static void Cairo_Polygon(int n, double *x, double *y,
     }
 }
 
+static void Cairo_Path(double *x, double *y,
+                       int npoly, int *nper,
+                       Rboolean winding,
+                       const pGEcontext gc, pDevDesc dd)
+{
+    int i, j, n;
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+
+    cairo_new_path(xd->cc);
+    n = 0;
+    for (i=0; i < npoly; i++) {
+        cairo_move_to(xd->cc, x[n], y[n]);
+        n++;
+        for(j=1; j < nper[i]; j++) {
+            cairo_line_to(xd->cc, x[n], y[n]);
+            n++;
+        }
+        cairo_close_path(xd->cc);
+    }
+
+    if (R_ALPHA(gc->fill) > 0) {
+	cairo_set_antialias(xd->cc, CAIRO_ANTIALIAS_NONE);
+        if (winding) 
+            cairo_set_fill_rule(xd->cc, CAIRO_FILL_RULE_WINDING);
+        else 
+            cairo_set_fill_rule(xd->cc, CAIRO_FILL_RULE_EVEN_ODD);
+	CairoColor(gc->fill, xd);
+	cairo_fill_preserve(xd->cc);
+	cairo_set_antialias(xd->cc, xd->antialias);
+    }
+    if (R_ALPHA(gc->col) > 0 && gc->lty != -1) {
+	CairoColor(gc->col, xd);
+	CairoLineType(gc, xd);
+	cairo_stroke(xd->cc);
+    }
+}
+
 static void Cairo_Raster(unsigned int *raster, int w, int h,
                          double x, double y, 
                          double width, double height,

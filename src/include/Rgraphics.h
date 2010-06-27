@@ -80,6 +80,7 @@ typedef enum {
 #define GMode			Rf_GMode
 #define GMtext			Rf_GMtext
 #define GNewPlot		Rf_GNewPlot
+#define GPath   		Rf_GPath
 #define GPolygon		Rf_GPolygon
 #define GPolyline		Rf_GPolyline
 #define GPretty			Rf_GPretty
@@ -180,6 +181,8 @@ void GMetricInfo(int, double*, double*, double*, GUnit, pGEDevDesc);
 /* Set device "mode" (drawing or not drawing) here for windows and mac drivers.
  */
 void GMode(int, pGEDevDesc);
+/* Draw a path using the specified lists of x and y values: */
+void GPath(double*, double*, int, int*, Rboolean, int, int, pGEDevDesc);
 /* Draw a polygon using the specified lists of x and y values: */
 void GPolygon(int, double*, double*, int, int, int, pGEDevDesc);
 /* Draw series of straight lines using the specified lists of x and y values: */
