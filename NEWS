@@ -106,8 +106,7 @@ CHANGES IN R VERSION 2.12.0:
 
       It avoids the use of texindy by texinfo's texi2dvi >= 1.157,
       since that does not emulate 'makeindex' well enough to avoid
-      problems with special characters (such as '(', '{', '!') in
-      indices.
+      problems with special characters (such as (, {, !) in indices.
 
     • The ability of readLines() and scan() to re-encode inputs to
       marked UTF-8 strings on Windows since R 2.7.0 is extended to
@@ -118,7 +117,8 @@ CHANGES IN R VERSION 2.12.0:
     • points() and lines() gain "table" methods to match plot().  (Wish
       of PR#10472.)
 
-    • Sys.chmod() allows 'mode' to be a vector, recycled along 'paths'.
+    • Sys.chmod() allows argument 'mode' to be a vector, recycled along
+      'paths'.
 
     • There are |, & and xor() methods for classes "octmode" and
       "hexmode", which work bitwise.
@@ -195,6 +195,13 @@ CHANGES IN R VERSION 2.12.0:
     • Text rendering of \itemize in help uses a Unicode bullet in UTF-8
       and most single-byte Windows locales.
 
+    • Added support for polygons with holes to the graphics engine.
+      This is implemented for the pdf(), postscript(),
+      x11(type="cairo"), windows(), and quartz() devices (and
+      associated raster formats), but not for x11(type="Xlib") or
+      xfig() or pictex().  The user-level interface is the polypath()
+      function in graphics and grid.path() in grid.
+
   DEPRECATED & DEFUNCT:
 
     • Supplying the parser with a string containing both octal/hex and
@@ -258,8 +265,8 @@ CHANGES IN R VERSION 2.12.0:
 
     • lang5() and lang6() (in addition to pre-existing lang[1-4]())
       convenience functions for easier construction of eval() calls.
-      If you have your own definition, do wrap it inside '#ifndef lang5
-      .... #endif' to keep it working with old and new R.
+      If you have your own definition, do wrap it inside #ifndef lang5
+      .... #endif to keep it working with old and new R.
 
     • Header R.h now includes only the C headers it itself needs, hence
       no longer includes errno.h.  (This helps avoid problems when it
@@ -511,7 +518,7 @@ CHANGES IN R VERSION 2.11.0:
       taken by the OS to find all the packages the first time it is
       used can dominate the time).
 
-    • R CMD check has a new option '--timings' to record per-example
+    • R CMD check has a new option --timings to record per-example
       timings in file <pkg>.Rcheck/<pkg>-Ex.timings.
 
     • The TRE library has been updated to version 0.8.0 (minor
@@ -565,9 +572,9 @@ CHANGES IN R VERSION 2.11.0:
     • The [ method for class "AsIs" allows the next method to change
       the underlying class.  (Wish of Jens Oehlschlägel.)
 
-    • write.csv[2] no longer allow 'append' to be changed: as ever,
-      direct calls to write.table() give more flexibility as well as
-      more room for error.
+    • write.csv[2] no longer allow argument 'append' to be changed: as
+      ever, direct calls to write.table() give more flexibility as well
+      as more room for error.
 
     • The index page for HTML help for a package now collapses multiple
       signatures for S4 methods into a single entry.
@@ -607,7 +614,7 @@ CHANGES IN R VERSION 2.11.0:
 
       There is now a "difftime" method.
 
-    • bug.report() now has 'package' and 'lib.loc' arguments to
+    • bug.report() now has arguments 'package' and 'lib.loc' to
       generate bug reports about packages.  When this is used, it looks
       for a BugReports field in the package DESCRIPTION file, which
       will be assumed to be a URL at which to submit the report, and
@@ -761,8 +768,8 @@ CHANGES IN R VERSION 2.11.0:
       name of the maintainer of a package (contributed by David Scott).
 
     • sample() and sample.int() allow zero items to be sampled from a
-      zero-length input.  sample.int() gains a default value 'size=n'
-      to be more similar to sample().
+      zero-length input.  sample.int() gains a default value size=n to
+      be more similar to sample().
 
     • switch() returned NULL on error (not previously documented on the
       help page): it now does so invisibly, analogously to
@@ -935,8 +942,8 @@ CHANGES IN R VERSION 2.11.0:
       or gave an internal error.  (The case cor(B, A) was PR#7116.)
 
     • cut.POSIXt() applied to a start value after the DST transition on
-      a DST-change day could give the wrong time for 'breaks' in units
-      of days or longer.  (PR#14208)
+      a DST-change day could give the wrong time for argument 'breaks'
+      in units of days or longer.  (PR#14208)
 
     • do_par() UNPROTECTed too early (PR#14214)
 
@@ -977,7 +984,7 @@ CHANGES IN R VERSION 2.11.0:
       internally to character, notably symbols.  (Reported to R-devel
       by Bill Dunlap.)
 
-    • The internal C function 'coerceSymbol' now handles coercion to
+    • The internal C function coerceSymbol now handles coercion to
       character, and warns if coercion fails (rather than silently
       returning NULL).  This allows a name to be given where a
       character vector is required in functions which coerce
@@ -1109,8 +1116,8 @@ CHANGES IN R VERSION 2.10.1 patched:
     • match(incomparables=<non-NULL>) could in rare cases
       infinite-loop.
 
-    • poisson.test() needed to pass 'conf.level' to binom.test()
-      (PR#14195)
+    • poisson.test() needed to pass argument 'conf.level' to
+      binom.test() (PR#14195)
 
     • The "nls" method for df.residual() gave incorrect results for
       models fitted with na.action = na.exclude.  (PR#14194)
@@ -1132,11 +1139,11 @@ CHANGES IN R VERSION 2.10.1 patched:
       correct defaults.
 
     • The suppression of auto-rotation in bitmap() and dev2bitmap()
-      with the 'pdfwrite' device was not working correctly.
+      with the "pdfwrite" device was not working correctly.
 
     • plot(ecdf(), log="x") no longer gives an incorrect warning.
 
-    • read.fwf() works again when 'file' is a connection.
+    • read.fwf() works again when argument 'file' is a connection.
 
     • Startup files will now be found if their paths exceed 255 bytes.
       (PR#14228)
@@ -1313,8 +1320,8 @@ CHANGES IN R VERSION 2.10.1:
     • Conversion to latex of an Rd file with no aliases failed.
 
     • wilcox.test(conf.int=TRUE) has achieved.level corrected and, for
-      exact=FALSE, now gives an 'estimate' which does not depend on the
-      alternative used.
+      exact=FALSE, now returns a 'estimate' component which does not
+      depend on the alternative used.
 
     • help.search() failed when the package argument was specified.
       (PR#14113)
@@ -1359,7 +1366,7 @@ CHANGES IN R VERSION 2.10.0:
 
   NEW FEATURES:
 
-    • polygon(), pdf() and postscript() now have a parameter
+    • polygon(), pdf() and postscript() now have an argument
       'fillOddEven' (default FALSE), which controls the mode used for
       polygon fills of self-intersecting shapes.
 
@@ -1370,8 +1377,8 @@ CHANGES IN R VERSION 2.10.0:
     • plot() methods for "stepfun" and hence "ecdf" no longer plot
       points by default for n >= 1000.
 
-    • [g]sub(perl=TRUE) now also supports '\E' in order to *end* \U and
-      \L case changes, thanks to a patch from Bill Dunlap.
+    • [g]sub(perl=TRUE) now also supports "\E" in order to *end* "\U"
+      and "\L" case changes, thanks to a patch from Bill Dunlap.
 
     • factor(), `levels<-`(), etc, now ensure that the resulting factor
       levels are unique (as was always the implied intention).  Factors
@@ -1392,8 +1399,8 @@ CHANGES IN R VERSION 2.10.0:
       abs(), etc.
 
     • For completeness, old.packages() and available.packages() allow
-      'type' to be specified (you could always specify 'available' or
-      'contriburl').
+      arguments 'type' to be specified (you could always specify
+      arguments 'available' or 'contriburl').
 
     • available.packages() by default only returns information on the
       latest versions of packages whose version requirements are
@@ -1482,8 +1489,8 @@ CHANGES IN R VERSION 2.10.0:
       the tools package to provide support for aspell() or other spell
       checkers.
 
-    • xtabs() with the new option 'sparse = TRUE' now returns a sparse
-      Matrix, using package Matrix.
+    • xtabs() with the new argument 'sparse = TRUE' now returns a
+      sparse Matrix, using package Matrix.
 
     • contr.sum() etc gain an argument 'sparse' which allows sparse
       matrices to be returned.
@@ -1491,7 +1498,7 @@ CHANGES IN R VERSION 2.10.0:
       contrasts() also gains a 'sparse' argument which it passes to the
       actual contrast function if that has a formal argument 'sparse'.
 
-      'contrasts(f, .) <- val' now also works when 'val' is a sparse
+      contrasts(f, .) <- val now also works when 'val' is a sparse
       Matrix.  It is planned that model.matrix() will work with such
       factors 'f' in the future.
 
@@ -1600,7 +1607,7 @@ CHANGES IN R VERSION 2.10.0:
 
     • available.packages() gains a 'filters' argument for specifying
       the filtering operations performed on the packages found in the
-      repositories.  A new built-in 'license/FOSS' filter only retains
+      repositories.  A new built-in "license/FOSS" filter only retains
       packages for which installation can proceed solely based on
       packages which can be verified as Free or Open Source Software
       (FOSS) employing the available license specifications.
@@ -1626,7 +1633,7 @@ CHANGES IN R VERSION 2.10.0:
       A new INSTALL option, --resave-data, makes use of this.
 
     • File ~/.R/config is used in preference to ~/.Rconfig, and these
-      are now documented in ‘R Installation and Administration'’.
+      are now documented in ‘R Installation and Administration’.
 
     • Logic operations with complex numbers now work, as they were
       always documented to, and as in S.
@@ -1718,8 +1725,8 @@ CHANGES IN R VERSION 2.10.0:
       will update the package index at first use.
 
     • help() has a new argument 'help_type' (with default set by the
-      option of that name) to supersede 'offline', 'htmlhelp' and
-      'chmhelp' (although for now they still work if 'help_type' is
+      option of that name) to supersede arguments 'offline', 'htmlhelp'
+      and 'chmhelp' (although for now they still work if 'help_type' is
       unset).  There is a new type, "PDF" to allow offline PDF (rather
       than PostScript).
 
@@ -1752,7 +1759,7 @@ CHANGES IN R VERSION 2.10.0:
       code which is then parsed).
 
     • parse_Rd() now always converts its input to UTF-8.  The Rd2*
-      rendering functions have a new parameter, 'outputEncoding', which
+      rendering functions have a new argument, 'outputEncoding', which
       controls how their output is encoded.
 
     • parse_Rd() no longer includes the newline as part of a "%"-style
@@ -1820,7 +1827,7 @@ CHANGES IN R VERSION 2.10.0:
       --data-compress=xz, often giving even better compression on large
       datasets at the expense of much longer installation times.  (The
       latter is used for the recommended packages: it is particularly
-      effective for 'survival'.)
+      effective for survival.)
 
     • file() for open = "", "r" or "rt" will automagically detect
       compressed files (from gzip, bzip2 or xz).  This means that

@@ -382,7 +382,7 @@
 function(pkgdir, outfile, title, batch = FALSE,
          description = TRUE, only_meta = FALSE,
          enc = "unknown", outputEncoding = "UTF-8", files_or_dir, OSdir,
-         internals = "no", index = "true")
+         internals = FALSE, index = TRUE)
 {
     ## Write directly to the final location.  Encodings may mean we need
     ## to make edits, but for most files one pass should be enough.
