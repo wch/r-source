@@ -81,7 +81,8 @@ install-sources2: installdirs
 	@for f in $(NON_SVN_INSTFILES); do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rdocdir)"; \
 	done
-	$(INSTALL_DATA) $(top_srcdir)/NEWS "$(DESTDIR)$(rdocdir)"
+	@$(INSTALL_DATA) $(top_srcdir)/NEWS "$(DESTDIR)$(rdocdir)"
+	@$(INSTALL_DATA) NEWS.rds "$(DESTDIR)$(rdocdir)"
 install-strip: install
 
 uninstall:
