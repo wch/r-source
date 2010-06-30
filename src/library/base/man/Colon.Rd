@@ -45,7 +45,7 @@ from:to
   (for numeric arguments: S does not have \code{:} for factors.)
 }
 \seealso{
-  \code{\link{seq}}.
+  \code{\link{seq}} (a \emph{generalization} of \code{from:to}).
 
   As an alternative to using \code{:} for factors, \code{\link{interaction}}.
 

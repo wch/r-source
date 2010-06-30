@@ -265,6 +265,7 @@ slot <-
       if(check)
           value <- checkSlotAssignment(object, name, value)
       .Call("R_set_slot", object, name, value, PACKAGE="methods")
+      ## currently --> R_do_slot_assign() in ../../../main/attrib.c
   }
 
 checkSlotAssignment <- function(obj, name, value)
@@ -273,7 +274,7 @@ checkSlotAssignment <- function(obj, name, value)
     ClassDef <- getClass(cl) # fails if cl not a defined class (!)
     slotClass <- elNamed(ClassDef@slots, name)
     if(is.null(slotClass))
-        stop(gettextf("\"%s\" is not a slot in class \"%s\"", name, class(obj)),
+        stop(gettextf("\"%s\" is not a slot in class \"%s\"", name, cl),
              domain = NA)
     valueClass <- class(value)
     if(.identC(slotClass, valueClass))
@@ -284,7 +285,7 @@ checkSlotAssignment <- function(obj, name, value)
                           ClassDef2 = getClassDef(slotClass, where = .classEnv(ClassDef)))
     if(identical(ok, FALSE))
        stop(gettextf("assignment of an object of class \"%s\" is not valid for slot \"%s\" in an object of class \"%s\"; is(value, \"%s\") is not TRUE",
-                     class(value),  name, class(obj), slotClass),
+		     valueClass, name, cl, slotClass),
             domain = NA)
     else if(identical(ok, TRUE))
         value

@@ -97,8 +97,8 @@ seq(length.out= )
   \code{seq.int} and the default method of \code{seq} return a vector of
   type \code{"integer"} or \code{"double"}: programmers should not rely
   on which.
-  
-  \code{seq_along} and \code{seq_length} always return an integer vector.
+
+  \code{seq_along} and \code{seq_len} always return an integer vector.
 }
 
 \references{

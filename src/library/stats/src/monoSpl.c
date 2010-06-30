@@ -30,6 +30,7 @@
  *
  * @param m  numeric vector of length n, the preliminary desired slopes s'(x_i), i = 1:n
  * @param S the divided differences (y_{i+1} - y_i) / (x_{i+1} - x_i);        i = 1:(n-1)
+ * @param n  == length(m) == 1 + length(S)
  * @return m*: the modified m[]'s: Note that m[] is modified in place
  * @author Martin Maechler, Date: 19 Apr 2010
  */
