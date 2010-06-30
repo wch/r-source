@@ -926,6 +926,11 @@ unlink(tf)
 x <- c(101, 102, NA)
 stopifnot(all.equal(mean(x, na.rm = TRUE), weighted.mean(x, na.rm = TRUE)))
 ## divided by 3 in 2.10.0 (only)
+## but *should* give NaN for empty:
+stopifnot(identical(NaN, weighted.mean(0[0])),
+	  identical(NaN, weighted.mean(NA,		na.rm=TRUE)),
+	  identical(NaN, weighted.mean(rep(NA_real_,2), na.rm=TRUE)))
+## all three gave 0  in 2.10.x and 2.11.x (but not previously)
 
 
 ## regexpr(fixed = TRUE) with a single-byte pattern matching to a MBCS string
