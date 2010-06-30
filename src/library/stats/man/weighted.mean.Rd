@@ -29,14 +29,14 @@ weighted.mean(x, w, \dots)
   argument \code{x}: apart from the default methods there are methods
   for the date-time classes \code{"POSIXct"}, \code{"POSIXlt"},
   \code{"difftime"} and \code{"Date"}.  The default method will work for
-  any numeric-like object for which \code{[}, multiplication and
-  \code{\link{sum}} have suitable methods, including complex vectors.
-  
+  any numeric-like object for which \code{[}, multiplication, division
+  and \code{\link{sum}} have suitable methods, including complex vectors.
+
   If \code{w} is missing then all elements of \code{x} are given the
   same weight, otherwise the weights coerced to numeric by
   \code{\link{as.numeric}} and normalized to sum to one (if possible: if
   their sum is zero or infinite the value is likely to be \code{NaN}).
-  
+
   Missing values in \code{w} are not handled specially and so give a
   missing value as the result.  However, as from \R 2.11.0 zero weights
   \emph{are} handled specially and the corresponding \code{x} values are
