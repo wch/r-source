@@ -1999,133 +1999,135 @@ R_run_R <- function(cmd, Ropts, env)
                     wrapLog(msg_DESCRIPTION)
                     do_exit(1L)
                 } else resultLog(Log, "OK")
+            }
 
-                ## <NOTE>
-                ## This check should be adequate, but would not catch a manually
-                ## installed package, nor one installed prior to 1.4.0.
-                ## </NOTE>
-                checkingLog(Log, "if this is a source package")
-                if (!is.na(desc["Built"])) {
-                    errorLog(Log)
-                    printLog(Log, "Only *source* packages can be checked.\n")
-                    do_exit(1L)
-                } else if (!grepl("^check", install)) {
-                    ## Check for package 'src' subdirectories with object
-                    ## files (but not if installation was already performed).
-                    pat <- "(a|o|[ls][ao]|sl|obj)"; # Object file extensions.
-                    any <- FALSE
-                    srcd <- file.path(pkgdir, "src")
-                    if (dir.exists(srcd) &&
-                       length(list_files_with_exts(srcd, pat))) {
-                        if (!any) warnLog()
-                        any <- TRUE
-                        printLog(Log, "Subdirectory ",
-                                 sQuote(file.path(pkgname, "src")),
-                                 " contains object files.\n")
-                    }
-                    if (thispkg_src_subdirs != "no" && dir.exists(srcd)) {
-                        setwd(srcd)
-                        if (!file.exists("Makefile") &&
-                           !file.exists("Makefile.win") &&
-                           !(file.exists("Makefile.in") && spec_install)) {
-                            ## Recognized extensions for sources or headers.
-                            srcfiles <- dir(".", all.files = TRUE)
-                            fi <- file.info(srcfiles)
-                            srcfiles <- srcfiles[!fi$isdir]
-                            srcfiles <- grep("(\\.([cfmCM]|cc|cpp|f90|f95|mm|h)$|^Makevars|-win\\.def$)",
-                                             srcfiles,
-                                             invert = TRUE, value = TRUE)
-                            if (length(srcfiles)) {
-                                if (!any) warnLog()
-                                any <- TRUE
-                                text <- c(paste("Subdirectory", sQuote("src"), "contains:"),
-                                          strwrap(paste(srcfiles, collapse = " "),
-                                                  indent = 2, exdent = 2),
-                                          strwrap("These are unlikely file names for src files."), "")
-                                printLog(Log, paste(text, collapse = "\n"))
-                            }
-                        }
-                        setwd(startdir)
-                    }
-                    if (!any) resultLog(Log, "OK")
-                } else resultLog(Log, "OK")
-
-                ## we need to do this before installation
-                if (R_check_executables) {
-                    owd <- setwd(pkgdir)
-                    allfiles <- dir(".", all.files = TRUE, full.names = TRUE,
-                                    recursive = TRUE)
-                    allfiles <- sub("^./","", allfiles)
-                    ## this is tailored to the FreeBSD/Linux 'file',
-                    ## see http://www.darwinsys.com/file/
-                    ## (Solaris has a different 'file' without --version)
-                    ## Most systems are now on 5.03, but Mac OS 10.5 is 4.17
-                    Tfile <- tempfile("file")
-                    ## version 4.21 writes to stdout, 4.23 to stderr
-                    ## and sets an error status code
-                    R_system(paste("file --version > ", shQuote(Tfile), " 2>&1"))
-                    lines <- readLines(Tfile)
-                    ## a reasonable check -- it does not identify itself well
-                    have_free_file <-
-                        any(grepl("^(file-[45]|magic file from)", lines))
-                    if (have_free_file) {
-                        checkingLog(Log, "for executable files")
-                        execs <- character()
-                        for (f in allfiles) {
-                            ## watch out for spaces in file names here
-                            ## FIXME: use intern = TRUE
-                            R_system(sprintf("file '%s' > %s", f, shQuote(Tfile)))
-                            line <- readLines(Tfile, n = 1L)
-                            if (grepl("executable", line) &&
-                                !grepl("script text", line))
-                                execs <- c(execs, f)
-                        }
-                        known <- rep(FALSE, length(execs))
-                        pexecs <- file.path(pkgname, execs)
-                        for(fp in  c("foreign/tests/datefactor.dta",
-                                     "msProcess/inst/data[12]/.*.txt",
-                                     "WMBrukerParser/inst/Examples/C3ValidationExtractSmall/RobotRun1/2-100kDa/0_B1/1/1SLin/fid") )
-                            known <- known | grepl(fp, pexecs)
-                        execs <- execs[!known]
-                    } else {
-                        ## no 'file', so just check extensions
-                        checkingLog(Log, "for .dll and .exe files")
-                        execs <- grep("\\.(exe|dll)$", allfiles, value = TRUE)
-                    }
-                    if (R_check_executables_exclusions &&
-                        file.exists("BinaryFiles")) {
-                        excludes <- readLines("BinaryFiles")
-                        execs <- execs[!execs %in% excludes]
-                    }
-                    if (grepl("^check", install) &&
-                        file.exists(".install_timestamp")) {
-                        execs <-
-                            execs[file_test("-nt", execs, ".install_timestamp")]
-                    }
-                    if (length(execs)) {
-                        warnLog("Found the following executable file(s):")
-                        printLog(Log,
-                                 paste("  ", execs, sep="", collapse = "\n"),
-                                 "\n")
-                        wrapLog("Source packages should not contain undeclared executable files.\n",
-                                "See section 'Package structure'",
-                                "in manual 'Writing R Extensions'.\n")
-                    } else resultLog(Log, "OK")
-                    setwd(owd)
+            ## <NOTE>
+            ## This check should be adequate, but would not catch a manually
+            ## installed package, nor one installed prior to 1.4.0.
+            ## </NOTE>
+            checkingLog(Log, "if this is a source package")
+            if (!is.na(desc["Built"])) {
+                errorLog(Log)
+                printLog(Log, "Only *source* packages can be checked.\n")
+                do_exit(1L)
+            } else if (!grepl("^check", install)) {
+                ## Check for package 'src' subdirectories with object
+                ## files (but not if installation was already performed).
+                pat <- "(a|o|[ls][ao]|sl|obj)"; # Object file extensions.
+                any <- FALSE
+                srcd <- file.path(pkgdir, "src")
+                if (dir.exists(srcd) &&
+                    length(list_files_with_exts(srcd, pat))) {
+                    if (!any) warnLog()
+                    any <- TRUE
+                    printLog(Log, "Subdirectory ",
+                             sQuote(file.path(pkgname, "src")),
+                             " contains object files.\n")
                 }
+                if (thispkg_src_subdirs != "no" && dir.exists(srcd)) {
+                    setwd(srcd)
+                    if (!file.exists("Makefile") &&
+                        !file.exists("Makefile.win") &&
+                        !(file.exists("Makefile.in") && spec_install)) {
+                        ## Recognized extensions for sources or headers.
+                        srcfiles <- dir(".", all.files = TRUE)
+                        fi <- file.info(srcfiles)
+                        srcfiles <- srcfiles[!fi$isdir]
+                        srcfiles <- grep("(\\.([cfmCM]|cc|cpp|f90|f95|mm|h)$|^Makevars|-win\\.def$)",
+                                         srcfiles,
+                                         invert = TRUE, value = TRUE)
+                        if (length(srcfiles)) {
+                            if (!any) warnLog()
+                            any <- TRUE
+                            text <- c(paste("Subdirectory", sQuote("src"), "contains:"),
+                                      strwrap(paste(srcfiles, collapse = " "),
+                                              indent = 2, exdent = 2),
+                                      strwrap("These are unlikely file names for src files."), "")
+                            printLog(Log, paste(text, collapse = "\n"))
+                        }
+                    }
+                    setwd(startdir)
+                }
+                if (!any) resultLog(Log, "OK")
+            } else resultLog(Log, "OK")
 
-                ## Option '--no-install' turns off installation and the tests
-                ## which require the package to be installed.  When testing
-                ## recommended packages bundled with R we can skip installation,
-                ## and do so if '--install=skip' was given.  If command line
-                ## option '--install' is of the form 'check:FILE', it is assumed
-                ## that installation was already performed with stdout/stderr to
-                ## FILE, the contents of which need to be checked (without
-                ## repeating the installation).
-                ## <NOTE>
-                ## In this case, one also needs to specify *where* the package
-                ## was installed to using command line option '--library'.
-                ## </NOTE>
+            ## we need to do this before installation
+            if (R_check_executables) {
+                owd <- setwd(pkgdir)
+                allfiles <- dir(".", all.files = TRUE, full.names = TRUE,
+                                recursive = TRUE)
+                allfiles <- sub("^./","", allfiles)
+                ## this is tailored to the FreeBSD/Linux 'file',
+                ## see http://www.darwinsys.com/file/
+                ## (Solaris has a different 'file' without --version)
+                ## Most systems are now on 5.03, but Mac OS 10.5 is 4.17
+                Tfile <- tempfile("file")
+                ## version 4.21 writes to stdout, 4.23 to stderr
+                ## and sets an error status code
+                R_system(paste("file --version > ", shQuote(Tfile), " 2>&1"))
+                lines <- readLines(Tfile)
+                ## a reasonable check -- it does not identify itself well
+                have_free_file <-
+                    any(grepl("^(file-[45]|magic file from)", lines))
+                if (have_free_file) {
+                    checkingLog(Log, "for executable files")
+                    execs <- character()
+                    for (f in allfiles) {
+                        ## watch out for spaces in file names here
+                        ## FIXME: use intern = TRUE
+                        R_system(sprintf("file '%s' > %s", f, shQuote(Tfile)))
+                        line <- readLines(Tfile, n = 1L)
+                        if (grepl("executable", line) &&
+                            !grepl("script text", line))
+                            execs <- c(execs, f)
+                    }
+                    known <- rep(FALSE, length(execs))
+                    pexecs <- file.path(pkgname, execs)
+                    for(fp in  c("foreign/tests/datefactor.dta",
+                                 "msProcess/inst/data[12]/.*.txt",
+                                 "WMBrukerParser/inst/Examples/C3ValidationExtractSmall/RobotRun1/2-100kDa/0_B1/1/1SLin/fid") )
+                        known <- known | grepl(fp, pexecs)
+                    execs <- execs[!known]
+                } else {
+                    ## no 'file', so just check extensions
+                    checkingLog(Log, "for .dll and .exe files")
+                    execs <- grep("\\.(exe|dll)$", allfiles, value = TRUE)
+                }
+                if (R_check_executables_exclusions &&
+                    file.exists("BinaryFiles")) {
+                    excludes <- readLines("BinaryFiles")
+                    execs <- execs[!execs %in% excludes]
+                }
+                if (grepl("^check", install) &&
+                    file.exists(".install_timestamp")) {
+                    execs <-
+                        execs[file_test("-nt", execs, ".install_timestamp")]
+                }
+                if (length(execs)) {
+                    warnLog("Found the following executable file(s):")
+                    printLog(Log,
+                             paste("  ", execs, sep="", collapse = "\n"),
+                             "\n")
+                    wrapLog("Source packages should not contain undeclared executable files.\n",
+                            "See section 'Package structure'",
+                            "in manual 'Writing R Extensions'.\n")
+                } else resultLog(Log, "OK")
+                setwd(owd)
+            }
+
+            ## Option '--no-install' turns off installation and the tests
+            ## which require the package to be installed.  When testing
+            ## recommended packages bundled with R we can skip installation,
+            ## and do so if '--install=skip' was given.  If command line
+            ## option '--install' is of the form 'check:FILE', it is assumed
+            ## that installation was already performed with stdout/stderr to
+            ## FILE, the contents of which need to be checked (without
+            ## repeating the installation).
+            ## <NOTE>
+            ## In this case, one also needs to specify *where* the package
+            ## was installed to using command line option '--library'.
+            ## </NOTE>
+            if(do_install) {
                 if (install == "skip")
                     messageLog(Log, "skipping installation test")
                 else {
