@@ -288,7 +288,7 @@ CHANGES IN R VERSION 2.12.0:
       output (if any).  Expect some differences due to differences in
       floating-point computations.
 
-    • zlib has been updated to 1.2.4: this is also the minimum version
+    • zlib has been updated to 1.2.5: this is also the minimum version
       required for --with-system-zlib.
 
   BUG FIXES:

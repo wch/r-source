@@ -331,7 +331,7 @@
        the previous output (if any).  Expect some differences due to
        differences in floating-point computations.
       
-      \item \code{zlib} has been updated to 1.2.4: this is also the minimum
+      \item \code{zlib} has been updated to 1.2.5: this is also the minimum
        version required for \option{--with-system-zlib}.
     }
   }
