@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2010
-@set FAQ_DATE @value{FAQ_YEAR}-05-30
+@set FAQ_DATE @value{FAQ_YEAR}-07-01
 @set REL_YEAR 2010
 @set REL_MAJOR 2
 @set REL_MINOR 11
@@ -142,16 +142,13 @@ WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 @acronym{GNU} General Public License for more details.
 
-A copy of the @acronym{GNU} General Public License is available via WWW
-at
+Copies of the @acronym{GNU} General Public License versions are
+available at
 
 @display
-@url{http://www.gnu.org/copyleft/gpl.html}.
+@url{http://www.R-project.org/Licenses/}
 @end display
 
-@noindent
-You can also obtain it by writing to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, U.S.A.
 
 @node Obtaining this document, Citing this document, Legalese, Introduction
 @section Obtaining this document
