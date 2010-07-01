@@ -21,7 +21,7 @@ licence <- license <- function() {
     cat("this software and which can be displayed by RShowDoc(\"COPYING\").\n")
     cat("\n")
     cat("If you have not received a copy of this file, you can obtain one\n")
-    cat("at http://www.R-project.org/licenses/.\n")
+    cat("at http://www.R-project.org/Licenses/.\n")
     cat("\n")
     cat("A small number of files (the API header files listed in\n")
     cat("R_DOC_DIR/COPYRIGHTS) are distributed under the\n")
