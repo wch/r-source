@@ -6865,7 +6865,7 @@ Print version information to standard output and exit successfully.
 @item --encoding=@var{enc}
 Specify the encoding to be assumed for input from the console or
 @code{stdin}.  This needs to be an encoding known to @code{iconv}: see
-its help page.
+its help page.  (@code{--encoding @var{enc}} is also accepted.)
 
 @item RHOME
 Print the path to the @R{} ``home directory'' to standard output and

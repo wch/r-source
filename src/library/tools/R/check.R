@@ -1132,7 +1132,7 @@ R_run_R <- function(cmd, Ropts, env)
                         if (is_ascii)
                             warnLog(paste("checking a package with encoding ",
                                           sQuote(e), " in an ASCII locale\n"))
-                        paste("--encoding", e)
+                        paste("--encoding", e, sep="=")
                     } else ""
                     exout <- paste(pkgname, "-Ex.Rout", sep = "")
                     ## might be diff-ing results against tests/Examples later
