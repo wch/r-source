@@ -144,8 +144,8 @@ Current binary versions of R run on Windows 2000 or later, including
 on 64-bit versions: @xref{Can I use R on 64-bit Windows?}.
 
 We only test on versions of Windows currently supported by Microsoft,
-mainly 64-bit Windows 7, Vista and Server 2008, and also on 32-bit XP
-SP3.
+mainly 64-bit Windows 7 and Server 2008, but to a limited extent on
+32-bit XP SP3.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical install
@@ -1161,7 +1161,7 @@ For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found (except
 on Windows 2000).  See
-@uref{http://cran.r-project.org/bin/windows/contrib/2.11/ReadMe} for a
+@uref{http://cran.r-project.org/bin/windows/contrib/2.12/ReadMe} for a
 listing of some of these packages running under 32-bit R (notably
 @code{RGtk2}, @code{rggobi}, @code{rJava}, @code{rjags} and some of the
 packages connecting to databases).
@@ -1756,7 +1756,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2010-04-30
+@set LASTEDIT 2010-07-01
 @ifhtml
 @html
 <hr WIDTH="100%">
