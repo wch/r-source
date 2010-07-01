@@ -312,13 +312,12 @@ running @code{update.packages(checkBuilt=TRUE, ask=FALSE)}.
 Indeed there is.  It is set by the command-line flag
 @option{--max-mem-size} (@pxref{How do I install R for Windows?}) and R
 defaults to the smaller of the amount of physical RAM in the machine and
-0.5GB less than the limit of user virtual memory for a process (most
-often 2GB on a 32-bit build).  It must be at least 32Mb, and on a 32-bit
-build at most and 4095Mb.
+0.5GB less than the limit on user virtual memory for a process (most
+often 2GB on a 32-bit build).
 
 Use @code{?Memory} and @code{?memory.size} for information about memory
-usage.  The limit can be raised by calling @code{memory.limit} within a
-running R session.
+usage.  The limit can be raised (if possible) by calling
+@code{memory.limit} within a running R session.
 
 The 32-bit executables @file{Rgui.exe} and @file{Rterm.exe} support up
 to 3GB of user address space per process under suitably enabled versions
