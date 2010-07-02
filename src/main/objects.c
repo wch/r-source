@@ -244,8 +244,8 @@ int isBasicClass(const char *ss) {
       return FALSE; /* too screwed up to do conversions */
     return findVarInFrame3(s_S3table, install(ss), FALSE) != R_UnboundValue;
 }
-    
-    
+
+
 
 int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 	      SEXP rho, SEXP callrho, SEXP defrho, SEXP *ans)
@@ -372,7 +372,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 
 /* Note: "do_usemethod" is not the only entry point to
    "usemethod". Things like [ and [[ call usemethod directly,
-   hence do_usemethod should just be an interface to usemethod. 
+   hence do_usemethod should just be an interface to usemethod.
 */
 
 /* This is a primitive SPECIALSXP */
@@ -388,8 +388,8 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_TAG(CDR(ap), install("object"));
     PROTECT(argList =  matchArgs(ap, args, call));
     if (CAR(argList) == R_MissingArg)
-	errorcall(call, _("there must be a 'generic' argument"));	
-    else 
+	errorcall(call, _("there must be a 'generic' argument"));
+    else
 	PROTECT(generic = eval(CAR(argList), env));
     if(!isString(generic) || length(generic) != 1)
 	errorcall(call, _("'generic' argument must be a character string"));
@@ -450,7 +450,7 @@ SEXP attribute_hidden do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	char cl[1000];
 	PROTECT(klass = R_data_class2(obj));
 	nclass = length(klass);
-	if (nclass == 1) 
+	if (nclass == 1)
 	    strcpy(cl, translateChar(STRING_ELT(klass, 0)));
 	else {
 	    int i;
@@ -827,31 +827,35 @@ SEXP attribute_hidden do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
     return CAR(args);
 }
 
-/* static SEXP s_S4inherits; */
 
-SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
+
+/* NOTE: Fast  inherits(x, what)    in ../include/Rinlinedfuns.h
+ * ----        ----------------- */
+/** C API for  R  inherits(x, what, which)
+ *
+ * @param x any R object
+ * @param what character vector
+ * @param which logical: "want vector result" ?
+ *
+ * @return if which is false, logical TRUE or FALSE
+ *	   if which is true, integer vector of length(what) ..
+ */
+SEXP inherits3(SEXP x, SEXP what, SEXP which)
 {
-    SEXP x, klass, what, which, rval = R_NilValue /* -Wall */;
-    int i, j, nwhat, isvec, nclass;
-
-    checkArity(op, args);
-
-    x = CAR(args);
+    SEXP klass, rval = R_NilValue /* -Wall */;
     if(IS_S4_OBJECT(x))
 	PROTECT(klass = R_data_class2(x));
     else
 	PROTECT(klass = R_data_class(x, FALSE));
-    nclass = length(klass);
+    int nclass = length(klass);
 
-    what = CADR(args);
     if(!isString(what))
 	error(_("'what' must be a character vector"));
-    nwhat = length(what);
+    int j, nwhat = length(what);
 
-    which = CADDR(args);
     if( !isLogical(which) || (length(which) != 1) )
 	error(_("'which' must be a length 1 logical vector"));
-    isvec = asLogical(which);
+    int isvec = asLogical(which);
 
 #ifdef _be_too_picky_
     if(IS_S4_OBJECT(x) && nwhat == 1 && !isvec &&
@@ -863,13 +867,13 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(rval = allocVector(INTSXP, nwhat));
 
     for(j = 0; j < nwhat; j++) {
-	const char *ss = translateChar(STRING_ELT(what, j));
+	const char *ss = translateChar(STRING_ELT(what, j)); int i;
+	if(isvec)
+	    INTEGER(rval)[j] = 0;
 	for(i = 0; i < nclass; i++) {
-	    if(isvec)
-		INTEGER(rval)[j] = 0;
 	    if(!strcmp(translateChar(STRING_ELT(klass, i)), ss)) {
 		if(isvec)
-		   INTEGER(rval)[j] = i+1;
+		    INTEGER(rval)[j] = i+1;
 		else {
 		    UNPROTECT(1);
 		    return mkTrue();
@@ -884,6 +888,15 @@ SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     UNPROTECT(2);
     return rval;
+}
+
+SEXP attribute_hidden do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+
+    return inherits3(/* x = */ CAR(args),
+		     /* what = */ CADR(args),
+		     /* which = */ CADDR(args));
 }
 
 

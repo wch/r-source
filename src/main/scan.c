@@ -1355,7 +1355,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	    sortVector(levs, FALSE);
 
-	    PROTECT(a = match(levs, cvec, NA_INTEGER));
+	    PROTECT(a = matchE(levs, cvec, NA_INTEGER, env));
 	    for (i = 0; i < len; i++)
 		INTEGER(rval)[i] = INTEGER(a)[i];
 
@@ -1367,10 +1367,7 @@ SEXP attribute_hidden do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     setAttrib(rval, R_DimSymbol, dims);
-    if (isArray(cvec))
-	setAttrib(rval, R_DimNamesSymbol, names);
-    else
-	setAttrib(rval, R_NamesSymbol, names);
+    setAttrib(rval, isArray(cvec) ? R_DimNamesSymbol : R_NamesSymbol, names);
     UNPROTECT(3);
     return rval;
 }

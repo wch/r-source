@@ -282,6 +282,9 @@ INLINE_FUN Rboolean conformable(SEXP x, SEXP y)
     return TRUE;
 }
 
+/* NOTE: R's inherits() is based on inherits3() in ../main/objects.c
+ * Here, use char / CHAR() instead of the slower more general translateChar()
+ */
 INLINE_FUN Rboolean inherits(SEXP s, const char *name)
 {
     SEXP klass;

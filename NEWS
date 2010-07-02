@@ -339,6 +339,9 @@ CHANGES IN R VERSION 2.12.0:
     • \Sexpr[result=rd] in an Rd file added a spurious newline, which
       was displayed as extra whitespace when rendered.
 
+    • match(x, table) (and hence %in%) now treat "POSIXlt" consistently
+      as, e.g., "POSIXct".
+
 CHANGES IN R VERSION 2.11.1 patched:
 
   NEW FEATURES:

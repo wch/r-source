@@ -15,10 +15,7 @@
 #  http://www.r-project.org/Licenses/
 
 match <- function(x, table, nomatch = NA_integer_, incomparables = NULL)
-    .Internal(match(if(is.factor(x)) as.character(x) else x,
-                    if(is.factor(table)) as.character(table) else table,
-                    nomatch, incomparables))
-
+    .Internal(match(x, table, nomatch, incomparables))
 
 match.call <-
     function(definition=NULL, call=sys.call(sys.parent()), expand.dots=TRUE)
@@ -28,7 +25,8 @@ pmatch <- function(x, table, nomatch = NA_integer_, duplicates.ok = FALSE)
     .Internal(pmatch(as.character(x), as.character(table), nomatch,
                      duplicates.ok))
 
-"%in%" <- function(x, table) match(x, table, nomatch = 0L) > 0L
+"%in%"  <- function(x, table) match(x, table, nomatch = 0L) > 0L
+## "%nin%" <- function(x, table) is.na(match(x, table))
 
 match.arg <- function (arg, choices, several.ok = FALSE)
 {
