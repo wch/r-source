@@ -4542,7 +4542,7 @@ This item is installed by the @file{Rtools.exe} installer.
 @c cp is used as $CP) in numerous Makefiles
 @c cut is used to make RVER
 @c date is used when building base and tools
-@c diff is used by tools::Rdiff, tests/Makefile.common and Rdiff.sh
+@c diff is used by tools::Rdiff and tests/Makefile.common
 @c find is used in installer/Makefile
 @c gzip is used in src/library/Makefile.win, R CMD build
 @c ls is used in src/library/*/Makefile.win
@@ -4551,7 +4551,7 @@ This item is installed by the @file{Rtools.exe} installer.
 @c touch is used in Makefiles
 @c unzip is used in making R, e.g. for zoneinfo.zip
 @c wc is used in doc/manual/Makefile.win
-@c AFAICS [g]awk, egrep, expr, head, rmdir, tail are no longer used
+@c AFAICS [g]awk, egrep, expr, grep, head, rmdir, tail, tr are no longer used
 If you choose to install these yourself, you will need suitable versions
 of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
 @code{cp}, @code{cut}, @code{date}, @code{diff}, @code{echo},
