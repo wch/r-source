@@ -243,6 +243,9 @@ CHANGES IN R VERSION 2.12.0:
       thorough: it looks for files, and warns if there are only empty
       directories.
 
+      The package-specific tests are now run with LANGUAGE=en to
+      facilitate comparison to .Rout.save files.
+
       Its configuration files have changed format: they are now R
       source files, and the default file is ~/.R/check.Rconf.
 

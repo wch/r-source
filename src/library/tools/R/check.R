@@ -1233,9 +1233,12 @@ R_run_R <- function(cmd, Ropts, env)
                 extra <- character()
                 if (use_gct) extra <- c(extra, "use_gct = TRUE")
                 if (use_valgrind) extra <- c(extra, "use_valgrind = TRUE")
+                ## might be diff-ing results against tests/*.R.out.save
+                ## so force LANGUAGE=en
                 cmd <- paste("(echo 'tools:::.runPackageTestsR(",
                              paste(extra, collapse=", "),
-                             ")' |", shQuote(R_EXE), "--vanilla --slave)")
+                             ")' | LANGUAGE=en", shQuote(R_EXE),
+                             "--vanilla --slave)")
                 if (R_system(cmd)) {
                     errorLog(Log)
                     ## Don't just fail: try to log where the problem occurred.

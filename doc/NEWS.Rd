@@ -281,6 +281,9 @@
        Its check for \dQuote{Subdirectory 'inst' contains no files} is
        more thorough: it looks for files, and warns if there are only
        empty directories.
+
+       The package-specific tests are now run with \env{LANGUAGE=en} to
+       facilitate comparison to \file{.Rout.save} files.
       
        Its configuration files have changed format: they are now \R
        source files, and the default file is \file{~/.R/check.Rconf}.
