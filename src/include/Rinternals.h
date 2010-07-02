@@ -940,6 +940,7 @@ int R_system(const char *);
 #define list5			Rf_list5
 #define listAppend		Rf_listAppend
 #define match			Rf_match
+#define matchE			Rf_matchE
 #define mkChar			Rf_mkChar
 #define mkCharCE		Rf_mkCharCE
 #define mkCharLen		Rf_mkCharLen
