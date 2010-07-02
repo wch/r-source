@@ -548,8 +548,8 @@ We have had several reports of this, although they do work for us on
 (a) Use the alternative @file{internet2.dll} by starting R with the flag
 @option{--internet2} (@pxref{How do I install R for Windows?}) or
 calling @code{setInternet2(TRUE)}.  These cause R to use the Internet
-Explorer internals, which may already to configured for use with
-proxies.  Note that this does not work with proxies that need
+Explorer internals, which may already be configured for use with
+proxies.  Note that this does @emph{not} work with proxies that need
 authentication.
 
 (b) A proxy needs to be set up: see @code{?download.file}.  Here are two
@@ -621,15 +621,16 @@ error.
 
 This is a misreading of Windows' confusing Task Manager.  R's
 computation is single-threaded, and so it cannot use more than one CPU.
-What the task manager shows is not the usage in CPUs (as better written
-utilities do) but the usage as a percentage of the apparent total number
-of CPUs.  We say `apparent' as it treats so-called `hyperthreaded' CPUs
-as two CPUs even though there is only one physical CPU: dual-core CPUs
-will also show as two CPUs (which they genuinely are) or more (since
-each core can be hyperhreaded).
+What the task manager shows is not the usage in CPUs but the usage as a
+percentage of the apparent total number of CPUs.  We say `apparent' as
+it treats so-called `hyper-threaded' CPUs such as many Pentium 4s as two
+CPUs even though there is only one physical CPU.
 
-Many benchmarks show hyperthreading reduces the overall workload, so you
-may want to experiment with disabling it.
+Hyper-threading has been re-introduced for Intel i3/i5/i7 CPUs and some
+Xeons: these will usually be reported as 4 or 8 CPUs and so R be shown
+as using 25% or 12.5%.  You can see how many `CPU's are assumed by
+looking at the number of graphs of `CPU Usage History' on the
+`Performance' tab of the Windows Task manager.
 
 
 @node Does R run under Windows Vista?, Quotes don't come out right on the console/terminal/pager, Why does R never use more than 50% of my CPU?, Installation and Usage
