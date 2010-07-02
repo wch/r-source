@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-06-25 r52381)
+R version 2.12.0 Under development (unstable) (2010-07-02 r52431)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -327,7 +327,7 @@ Type 'q()' to quit R.
 > # that cannot be represented accurately (and most of those as zero)
 > pgamma(.Machine$double.xmin, 0.001)
 [1] 0.4927171
-> pgamma(5e-324, 0.001)  # on most machines this is the smallest
+> pgamma(5e-324, 0.001)  # on most machines 5e-324 is the smallest
 [1] 0.4752741
 >                        # representable non-zero number
 > table(rgamma(1e4, 0.001) == 0)/1e4
