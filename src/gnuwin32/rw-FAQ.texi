@@ -1095,7 +1095,7 @@ Suppose your packages are installed in @file{p:\myRlib}.  Then you can
 EITHER
 
 @example
-set the environment variable R_LIBS to p:\myRlib before starting R
+set the environment variable R_LIBS to p:/myRlib before starting R
 @end example
 
 OR use a package by, e.g.@:
