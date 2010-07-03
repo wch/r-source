@@ -6,7 +6,7 @@
     \itemize{
       \item Reading a packages's \file{CITATION} file now defaults to
        ASCII rather than Latin-1: a package with a non-ASCII
-       \file{CITATION} file should declare an encoding in their
+       \file{CITATION} file should declare an encoding in its
        \file{DESCRIPTION} file and use that encoding for the
        \file{CITATION} file.
 
