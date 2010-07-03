@@ -88,7 +88,7 @@ uninstall:
 	  for d in $(SUBDIRS); do \
 	    (cd $${d} && $(MAKE) $@) || exit 1; \
 	  done; \
-	  for f in $(INSTFILES) $(NON_SVN_INSTFILES) NEWS; do \
+	  for f in $(INSTFILES) $(NON_SVN_INSTFILES) NEWS.rds; do \
 	    rm -f "$(DESTDIR)$(rdocdir)"/$${f}; \
 	  done; \
 	  rmdir "$(DESTDIR)$(rdocdir)" 2>/dev/null \
