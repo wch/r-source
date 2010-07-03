@@ -33,7 +33,7 @@ R: Makefile svnonly
 	  $(MAKE) rdocdir=$(top_builddir)/doc install-sources; \
 	fi
 
-docs: R.1 updateNEWS @MAINTAINER_MODE_TRUE@ $(top_srcdir)/NEWS
+docs: R.1 updateNEWS
 	@(cd manual && $(MAKE) $@)
 
 R.1:
@@ -45,10 +45,6 @@ NEWS.rds: $(srcdir)/NEWS.Rd
 	@$(ECHO) ".saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\"), stages = \"install\"), \"$@\")" | $(R_EXE)
 
 updateNEWS: NEWS.rds ../NEWS html/NEWS.html
-
-$(top_srcdir)/NEWS: $(srcdir)/NEWS.Rd
-	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
-	  $(R_EXE)
 
 ../NEWS: NEWS.rds
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \

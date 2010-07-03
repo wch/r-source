@@ -77,6 +77,14 @@ RShowDoc <- function(what, type=c("pdf", "html", "txt"), package)
     }
     if(what == "FAQ") what <- "R-FAQ"
     if(what == "NEWS") {
+        if(type == "pdf") type <- "html"
+        if(type == "html") {
+            path <- file.path(R.home("doc"), "html", paste.(what, "html"))
+            if(file.exists(path)) {
+                html_viewer(path)
+                return(invisible(path))
+            }
+        }
         ## This is in UTF-8 and has a BOM on the first line
         path <- file.path(R.home(), what)
         tf <- tempfile()

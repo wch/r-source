@@ -332,10 +332,14 @@
       \item \command{make check} compares the output of the examples
        from several of the base packages to reference output rather than
        the previous output (if any).  Expect some differences due to
-       differences in floating-point computations.
+       differences in floating-point computations between platforms.
 
       \item \code{zlib} has been updated to 1.2.5: this is also the minimum
-       version required for \option{--with-system-zlib}.
+      version required for \option{--with-system-zlib}.
+
+      \item \file{NEWS} is no longer in the sources, but generated as
+      part of the installation.  The primary source for changes is now
+      \file{doc/NEWS.Rd}.
     }
   }
   \subsection{BUG FIXES}{
