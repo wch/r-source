@@ -20,3 +20,6 @@ NEWS.rds: NEWS.Rd
 html/NEWS.html: NEWS.rds
 	@$(ECHO) "options(warn=1);tools:::Rd2HTML_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(R_EXE)
+
+clean:
+	@rm -f NEWS.rds html/NEWS.html ../NEWS

@@ -263,7 +263,8 @@ distclean: clean
 	$(RM) R.exp COPYRIGHTS
 	$(RM) ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
-	../../doc/html/rw-FAQ.html
+	../../doc/html/rw-FAQ.html ../../doc/html/NEWS.html \
+	../../doc/NEWS.rds ../../NEWS
 	$(RM) ../../etc/Makeconf ../../etc/Rconsole ../../etc/Rdevga \
 	../../etc/Rprofile.site ../../etc/rgb.txt ../../etc/Rcmd_environ \
 	../../tests/*.Rout ../../tests/*.Rout.fail
