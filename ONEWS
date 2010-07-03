@@ -1,6 +1,11 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 
 
+	This file covers NEWS from the release of 2.0.0 up to the
+	release of R-2.10.0.  See 'NEWS' (or doc/html/NEWS.html or
+	doc/NEWS.Rd) for subsequent changes.
+
+
 	**************************************************
 	*						 *
 	*	       2.9 SERIES NEWS			 *
