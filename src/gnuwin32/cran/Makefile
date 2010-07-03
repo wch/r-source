@@ -8,7 +8,6 @@ endif
 
 R_HOME = $(shell ../Rpwd.exe ../../..)
 
-#RPREFIX = $(shell ../../../tools/GETRWVERSION ../../../VERSION)
 RPREFIX = $(shell ../../../bin$(R_ARCH)/Rscript ../fixed/rwver.R)
 FULLVERSION=`cat ../../../VERSION`
 SVNREVISION=`sed -e 1s/Revision:.// -e q < $(R_HOME)/SVN-REVISION`
@@ -44,4 +43,4 @@ all:
 
 
 clean:
-	$(RM) -r *.html *.htm ReadMe README* *.exe md5sum.txt *.$(RPREFIX) 
+	$(RM) -r *.html *.htm ReadMe README* *.exe md5sum.txt NEWS.* CHANGES.* 
