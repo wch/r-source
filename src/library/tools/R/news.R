@@ -303,6 +303,7 @@ function(f, out = "") {
     if (grepl("[.]rds$", f)) f <- .readRDS(f)
     tools::Rd2txt(f, out,
                   stages = c("install", "render"),
+                  outputEncoding = if(l10n_info()[["UTF-8"]]) "" else "ASCII//TRANSLIT",
                   options = Rd2txt_NEWS_in_Rd_options)
  }
 

@@ -29,9 +29,12 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
     indentString <- paste(rep.int(" ", indent), collapse = "")
     exdentString <- paste(rep.int(" ", exdent), collapse = "")
     y <- list()                         # return value
+    UB <- TRUE
     ## input need not be valid in this locale, e.g. from write.dcf
-    z <- lapply(strsplit(x, "\n[ \t\n]*\n", useBytes = TRUE),
-                strsplit, "[ \t\n]", useBytes = TRUE)
+    ## but if x has UTF-8 encoding we want to preserve it, so
+    if(all(Encoding(x) == "UTF-8")) UB <- FALSE
+    z <- lapply(strsplit(x, "\n[ \t\n]*\n", useBytes = UB),
+                strsplit, "[ \t\n]", useBytes = UB)
     ## Now z[[i]][[j]] is a character vector of all "words" in
     ## paragraph j of x[i].
 
