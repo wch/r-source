@@ -15,7 +15,7 @@ NEWS.rds: NEWS.Rd
 
 ../NEWS: NEWS.rds
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
-	  $(R_EXE)
+	  $(R_EXE) LC_ALL=C
 
 html/NEWS.html: NEWS.rds
 	@$(ECHO) "options(warn=1);tools:::Rd2HTML_NEWS_in_Rd(\"$<\", \"$@\")" | \
