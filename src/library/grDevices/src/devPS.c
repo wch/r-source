@@ -7391,7 +7391,7 @@ static int PDFfontNumber(const char *family, int face, PDFDesc *pd)
 	     * Use very high font number for CID fonts to avoid
 	     * Type 1 fonts
 	     */
-	    num = 1000 + (cidfontIndex - 1)*5 + 1 + face;
+	    num = 1000 + (cidfontIndex - 1)*5 + face;
 	else {
 	    /*
 	     * Check whether the font is loaded and, if not,
@@ -7427,7 +7427,7 @@ static int PDFfontNumber(const char *family, int face, PDFDesc *pd)
 		} else /* (isCIDFont(family, PDFFonts)) */ {
 		    if (addPDFDeviceCIDfont(cidfontfamily, pd,
 					    &cidfontIndex)) {
-			num = 1000 + (cidfontIndex - 1)*5 + 1 + face;
+			num = 1000 + (cidfontIndex - 1)*5 + face;
 		    } else {
 			cidfontfamily = NULL;
 		    }

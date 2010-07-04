@@ -395,6 +395,9 @@
 
       \item \code{match(x, table)} (and hence \code{\%in\%}) now treat
       \code{"POSIXlt"} consistently as, e.g., \code{"POSIXct"}.
+
+      \item Fixed font face for CID fonts in PDF graphics output
+      (\Sexpr[results=rd]{tools:::Rd_expr_PR(14326)})
     }
   }
 }
