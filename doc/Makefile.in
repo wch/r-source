@@ -43,15 +43,13 @@ R.1:
 	  $(top_builddir)/bin/R
 
 NEWS.rds: $(srcdir)/NEWS.Rd
-	@$(ECHO) ".saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\"), stages = \"install\"), \"$@\")" | $(R_EXE)
+	@$(ECHO) ".saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$(srcdir)/NEWS.Rd\"), stages = 'install'), 'NEWS.rds')" | $(R_EXE)
 
 ../NEWS: NEWS.rds
-	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
-	  $(R_EXE)
+	@$(ECHO) 'options(warn=1);tools:::Rd2txt_NEWS_in_Rd("NEWS.rds", "../NEWS")' |  $(R_EXE)
 
 html/NEWS.html: NEWS.rds
-	@$(ECHO) "options(warn=1);tools:::Rd2HTML_NEWS_in_Rd(\"$<\", \"$@\")" | \
-	  $(R_EXE)
+	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.rds", "html/NEWS.html")' |  $(R_EXE)
 
 install: install-message installdirs install-sources install-sources2 install-man
 	@for d in $(SUBDIRS); do \
