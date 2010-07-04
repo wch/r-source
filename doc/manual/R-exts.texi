@@ -726,17 +726,21 @@ for use by the @code{citation} function.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
-Test code can either be provided directly in a @file{.R} file, or @emph{via} a
-@file{.Rin} file containing code which in turn creates the corresponding
-@file{.R} file (e.g., by collecting all function objects in the package
-and then calling them with the strangest arguments).  The results of
-running a @file{.R} file are written to a @file{.Rout} file.  If there
-is a corresponding @file{.Rout.save} file, these two are compared, with
-differences being reported but not causing an error.  The directory
-@file{tests} is copied to the check area, and the tests are run with the
-copy as the working directory and with @code{R_LIBS} set to ensure that
-the copy of the package installed during testing will be found by
-@code{library(@var{pkg_name})}.
+Test code can either be provided directly in a @file{.R} file, or
+@emph{via} a @file{.Rin} file containing code which in turn creates the
+corresponding @file{.R} file (e.g., by collecting all function objects
+in the package and then calling them with the strangest arguments).  The
+results of running a @file{.R} file are written to a @file{.Rout} file.
+If there is a corresponding@footnote{The best way to generate such a
+file is to copy the @file{.Rout} from a successful run of @command{R CMD
+check}.  If you want to generate it separately, do run @R{} with options
+@option{--vanilla --slave} and with environment variable
+@env{LANGUAGE=en} set to get messages in English.} @file{.Rout.save}
+file, these two are compared, with differences being reported but not
+causing an error.  The directory @file{tests} is copied to the check
+area, and the tests are run with the copy as the working directory and
+with @code{R_LIBS} set to ensure that the copy of the package installed
+during testing will be found by @code{library(@var{pkg_name})}.
 
 If @file{tests} has a subdirectory @file{Examples} containing a file
 @code{@var{pkg}-Ex.Rout.save},  this is compared to the output file for
