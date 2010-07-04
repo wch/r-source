@@ -286,9 +286,6 @@
        more thorough: it looks for files, and warns if there are only
        empty directories.
 
-       The package-specific tests are now run with \env{LANGUAGE=en} to
-       facilitate comparison to \file{.Rout.save} files.
-
        Its configuration files have changed format: they are now \R
        source files, and the default file is \file{~/.R/check.Rconf}.
 
@@ -413,6 +410,11 @@
       \item \code{install.packages()} has a new optional argument
       \code{'INSTALL_opts'} which can be used to pass options to
       \command{R CMD INSTALL} for source-package installs.
+
+      \item \command{R CMD check} now runs the package-specific tests
+       with \env{LANGUAGE=en} to facilitate comparison to
+       \file{.Rout.save} files.
+
     }
   }
   \subsection{BUG FIXES}{
