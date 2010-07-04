@@ -1,5 +1,5 @@
 /* inftrees.c -- generate Huffman trees for efficient decoding
- * Copyright (C) 1995-2010 Mark Adler
+ * Copyright (C) 1995-2005 Mark Adler
  * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
@@ -9,7 +9,7 @@
 #define MAXBITS 15
 
 const char inflate_copyright[] =
-   " inflate 1.2.5 Copyright 1995-2010 Mark Adler ";
+   " inflate 1.2.3 Copyright 1995-2005 Mark Adler ";
 /*
   If you use the zlib library in a product, an acknowledgment is welcome
   in the documentation of your product. If for some reason you cannot
@@ -29,13 +29,17 @@ const char inflate_copyright[] =
    table index bits.  It will differ if the request is greater than the
    longest code or if it is less than the shortest code.
  */
-int ZLIB_INTERNAL inflate_table(type, lens, codes, table, bits, work)
+int inflate_table(codetype type, unsigned short FAR *lens, unsigned codes, 
+		  code FAR * FAR * table, unsigned FAR *bits, 
+		  unsigned short FAR *work)
+/*
 codetype type;
 unsigned short FAR *lens;
 unsigned codes;
 code FAR * FAR *table;
 unsigned FAR *bits;
 unsigned short FAR *work;
+*/
 {
     unsigned len;               /* a code's length in bits */
     unsigned sym;               /* index of code symbols */
@@ -50,7 +54,7 @@ unsigned short FAR *work;
     unsigned fill;              /* index for replicating entries */
     unsigned low;               /* low bits for current root entry */
     unsigned mask;              /* mask for low root bits */
-    code here;                  /* table entry for duplication */
+    code This;                  /* table entry for duplication */
     code FAR *next;             /* next available space in table */
     const unsigned short FAR *base;     /* base value table to use */
     const unsigned short FAR *extra;    /* extra bits table to use */
@@ -62,7 +66,7 @@ unsigned short FAR *work;
         35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0};
     static const unsigned short lext[31] = { /* Length codes 257..285 extra */
         16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18,
-        19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21, 16, 73, 195};
+        19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21, 16, 201, 196};
     static const unsigned short dbase[32] = { /* Distance codes 0..29 base */
         1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193,
         257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145,
@@ -115,15 +119,15 @@ unsigned short FAR *work;
         if (count[max] != 0) break;
     if (root > max) root = max;
     if (max == 0) {                     /* no symbols to code at all */
-        here.op = (unsigned char)64;    /* invalid code marker */
-        here.bits = (unsigned char)1;
-        here.val = (unsigned short)0;
-        *(*table)++ = here;             /* make a table to force an error */
-        *(*table)++ = here;
+        This.op = (unsigned char)64;    /* invalid code marker */
+        This.bits = (unsigned char)1;
+        This.val = (unsigned short)0;
+        *(*table)++ = This;             /* make a table to force an error */
+        *(*table)++ = This;
         *bits = 1;
         return 0;     /* no symbols, but wait for decoding to report error */
     }
-    for (min = 1; min < max; min++)
+    for (min = 1; min <= MAXBITS; min++)
         if (count[min] != 0) break;
     if (root < min) root = min;
 
@@ -166,10 +170,11 @@ unsigned short FAR *work;
        entered in the tables.
 
        used keeps track of how many table entries have been allocated from the
-       provided *table space.  It is checked for LENS and DIST tables against
-       the constants ENOUGH_LENS and ENOUGH_DISTS to guard against changes in
-       the initial root table size constants.  See the comments in inftrees.h
-       for more information.
+       provided *table space.  It is checked when a LENS table is being made
+       against the space in *table, ENOUGH, minus the maximum space needed by
+       the worst case distance code, MAXD.  This should never happen, but the
+       sufficiency of ENOUGH has not been proven exhaustively, hence the check.
+       This assumes that when type == LENS, bits == 9.
 
        sym increments through all symbols, and the loop terminates when
        all codes of length max, i.e. all codes, have been processed.  This
@@ -208,25 +213,24 @@ unsigned short FAR *work;
     mask = used - 1;            /* mask for comparing low */
 
     /* check available table space */
-    if ((type == LENS && used >= ENOUGH_LENS) ||
-        (type == DISTS && used >= ENOUGH_DISTS))
+    if (type == LENS && used >= ENOUGH - MAXD)
         return 1;
 
     /* process all codes and make table entries */
     for (;;) {
         /* create table entry */
-        here.bits = (unsigned char)(len - drop);
+        This.bits = (unsigned char)(len - drop);
         if ((int)(work[sym]) < end) {
-            here.op = (unsigned char)0;
-            here.val = work[sym];
+            This.op = (unsigned char)0;
+            This.val = work[sym];
         }
         else if ((int)(work[sym]) > end) {
-            here.op = (unsigned char)(extra[work[sym]]);
-            here.val = base[work[sym]];
+            This.op = (unsigned char)(extra[work[sym]]);
+            This.val = base[work[sym]];
         }
         else {
-            here.op = (unsigned char)(32 + 64);         /* end of block */
-            here.val = 0;
+            This.op = (unsigned char)(32 + 64);         /* end of block */
+            This.val = 0;
         }
 
         /* replicate for those indices with low len bits equal to huff */
@@ -235,7 +239,7 @@ unsigned short FAR *work;
         min = fill;                 /* save offset to next table */
         do {
             fill -= incr;
-            next[(huff >> drop) + fill] = here;
+            next[(huff >> drop) + fill] = This;
         } while (fill != 0);
 
         /* backwards increment the len-bit code huff */
@@ -277,8 +281,7 @@ unsigned short FAR *work;
 
             /* check for enough space */
             used += 1U << curr;
-            if ((type == LENS && used >= ENOUGH_LENS) ||
-                (type == DISTS && used >= ENOUGH_DISTS))
+            if (type == LENS && used >= ENOUGH - MAXD)
                 return 1;
 
             /* point entry in root table to sub-table */
@@ -296,20 +299,20 @@ unsigned short FAR *work;
        through high index bits.  When the current sub-table is filled, the loop
        drops back to the root table to fill in any remaining entries there.
      */
-    here.op = (unsigned char)64;                /* invalid code marker */
-    here.bits = (unsigned char)(len - drop);
-    here.val = (unsigned short)0;
+    This.op = (unsigned char)64;                /* invalid code marker */
+    This.bits = (unsigned char)(len - drop);
+    This.val = (unsigned short)0;
     while (huff != 0) {
         /* when done with sub-table, drop back to root table */
         if (drop != 0 && (huff & mask) != low) {
             drop = 0;
             len = root;
             next = *table;
-            here.bits = (unsigned char)len;
+            This.bits = (unsigned char)len;
         }
 
         /* put invalid code marker in table */
-        next[huff >> drop] = here;
+        next[huff >> drop] = This;
 
         /* backwards increment the len-bit code huff */
         incr = 1U << (len - 1);

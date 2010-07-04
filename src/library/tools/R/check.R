@@ -1490,6 +1490,7 @@ R_run_R <- function(cmd, Ropts, env)
             "      --no-install      skip installation and associated tests",
             "      --no-tests        do not run code in 'tests' subdirectory",
             "      --no-latex        do not run LaTeX on help files to produce the PDF manual",
+            "      --no-manual       ditto",
             "      --no-vignettes    do not check vignettes in Sweave format",
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
@@ -1523,7 +1524,7 @@ R_run_R <- function(cmd, Ropts, env)
     do_install <- TRUE; install <- ""
     do_tests <- TRUE
     do_vignettes <- TRUE
-    do_latex <- TRUE
+    do_manual <- TRUE
     use_gct <- FALSE
     use_valgrind <- FALSE
     do_timings <- FALSE
@@ -1579,8 +1580,8 @@ R_run_R <- function(cmd, Ropts, env)
             do_tests  <- FALSE
         } else if (a == "--no-vignettes") {
             do_vignettes  <- FALSE
-        } else if (a == "--no-latex") {
-            do_latex  <- FALSE
+        } else if (a == "--no-latex" || a == "--no-manual") {
+            do_manual  <- FALSE
         } else if (a == "--use-gct") {
             use_gct  <- TRUE
         } else if (a == "--use-valgrind") {
@@ -1710,7 +1711,7 @@ R_run_R <- function(cmd, Ropts, env)
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
     if (extra_arch)
-        do_latex <- R_check_Rd_contents <- R_check_all_non_ISO_C <-
+        do_manual <- R_check_Rd_contents <- R_check_all_non_ISO_C <-
             R_check_Rd_xrefs <- R_check_use_codetools <- R_check_Rd_style <-
                 R_check_executables <- R_check_dot_internal <- FALSE
 
@@ -2332,7 +2333,7 @@ R_run_R <- function(cmd, Ropts, env)
         check_pkg(pkgdir, pkgoutdir, startdir, libdir, desc,
                   is_base_pkg, thispkg_subdirs, extra_arch)
         instdir <- file.path(libdir, pkgname)
-        if (do_latex) {
+        if (do_manual) {
             setwd(pkgoutdir)
             if (dir.exists(file.path(instdir, "help")))
                 check_pkg_manual(instdir, desc["Package"])
