@@ -1229,4 +1229,14 @@ stripchart(decrease ~ treatment, data = OrchardSprays,
            subset = treatment != "A")
 ## failed in 2.11.1
 
+
+## versions of pre-2.12.0 using zlib 1.2.[45] failed
+zz <- gzfile("ex.gz", "w")  # compressed file
+cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep ="\n")
+close(zz)
+blah <- file("ex.gz", "r")
+stopifnot(seek(blah) == 0)
+## gave random large multiple of 2^32 on Linux systems attempting to
+## use LFS support.
+
 proc.time()
