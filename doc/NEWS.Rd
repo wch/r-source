@@ -232,6 +232,10 @@
       \code{pictex()}.  The user-level interface is the
       \code{polypath()} function in \pkg{graphics} and
       \code{grid.path()} in \pkg{grid}.
+
+      \item File \file{NEWS} is now generated at installation with a
+      slightly different format: it will be in UTF-8 on platforms using
+      UTF-8, and otherwise in ASCII.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
@@ -396,7 +400,7 @@
       \item \code{match(x, table)} (and hence \code{\%in\%}) now treat
       \code{"POSIXlt"} consistently as, e.g., \code{"POSIXct"}.
 
-      \item Fixed font face for CID fonts in PDF graphics output
+      \item Fixed font face for CID fonts in \code{pdf()} graphics output
       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14326)})
     }
   }
