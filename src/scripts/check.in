@@ -2494,6 +2494,7 @@ sub check_pkg {
 	    }
 	    $cmd = join(" ",
 			("(echo 'tools:::.runPackageTestsR($extra)' |",
+			 "LANGUAGE=en",
 			 &shell_quote_file_path(${R::Vars::R_EXE}),
 			 "--vanilla --slave)") );
 	    if(R_system($cmd)) {
