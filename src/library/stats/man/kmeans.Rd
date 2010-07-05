@@ -21,7 +21,7 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   \item{x}{A numeric matrix of data, or an object that can be coerced to
     such a matrix (such as a numeric vector or a data frame with all
     numeric columns).}
-  
+
   \item{centers}{Either the number of clusters or a set of initial
     (distinct) cluster centres.  If a number, a random set of (distinct)
     rows in \code{x} is chosen as the initial centres.}
@@ -39,7 +39,7 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   sum of squares from points to the assigned cluster centres is minimized.
   At the minimum, all cluster centres are at the mean of their Voronoi
   sets (the set of data points which are nearest to the cluster centre).
- 
+
   The algorithm of Hartigan and Wong (1979) is used by default.  Note
   that some authors use \eqn{k}-means to refer to a specific algorithm
   rather than the general method: most commonly the algorithm given by
@@ -47,6 +47,8 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   (1965). The Hartigan--Wong algorithm generally does a better job than
   either of those, but trying several random starts is often
   recommended.
+  For ease of programmatic exploration, \eqn{k=1} is allowed, notably
+  returning the center and \code{withinss}.
 
   Except for the Lloyd--Forgy method, \eqn{k} clusters will always be
   returned if a number is specified.
@@ -96,6 +98,8 @@ colnames(x) <- c("x", "y")
 (cl <- kmeans(x, 2))
 plot(x, col = cl$cluster)
 points(cl$centers, col = 1:2, pch = 8, cex=2)
+
+kmeans(x,1)$withinss # if you are interested in that
 
 ## random starts do help here with too many clusters
 (cl <- kmeans(x, 5, nstart = 25))

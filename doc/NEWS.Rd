@@ -236,6 +236,8 @@
       \item File \file{NEWS} is now generated at installation with a
       slightly different format: it will be in UTF-8 on platforms using
       UTF-8, and otherwise in ASCII.
+
+      \item \code{kmeans(x, 1)} now works.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{

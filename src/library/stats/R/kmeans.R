@@ -74,12 +74,12 @@ function(x, centers, iter.max = 10, nstart = 1,
     m <- nrow(x)
     if(missing(centers))
 	stop("'centers' must be a number or a matrix")
-    algorithm <- match.arg(algorithm)
-    nmeth <- switch(algorithm,
+    nmeth <- switch(match.arg(algorithm),
                     "Hartigan-Wong" = 1,
                     "Lloyd" = 2, "Forgy" = 2,
                     "MacQueen" = 3)
     if(length(centers) == 1L) {
+	if (centers == 1) nmeth <- 3
 	k <- centers
         ## we need to avoid duplicates here
         if(nstart == 1)
