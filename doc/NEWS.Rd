@@ -335,7 +335,7 @@
        the previous output (if any).  Expect some differences due to
        differences in floating-point computations between platforms.
 
-      \item \file{NEWS} is no longer in the sources, but generated as
+      \item File \file{NEWS} is no longer in the sources, but generated as
       part of the installation.  The primary source for changes is now
       \file{doc/NEWS.Rd}.
     }

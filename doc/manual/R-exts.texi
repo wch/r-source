@@ -1707,9 +1707,9 @@ hierarchy of the source package, or using calls to @code{system.file()}.
 vignettes for distribution with the package sources.  By including the
 PDF version in the package sources it is not necessary that the
 vignettes can be compiled at install time, i.e., the package author can
-use private @LaTeX{} extensions which are only available on his machine.
-@footnote{provided the conditions of the package's licence are met: many
-would see this as incompatible with an Open Source licence.}
+use private @LaTeX{} extensions which are only available on his
+machine.@footnote{provided the conditions of the package's licence are
+met: many would see this as incompatible with an Open Source licence.}
 
 By default @code{R CMD build} will run @code{Sweave} on all files in
 Sweave format.  If no @file{Makefile} is found in directory
