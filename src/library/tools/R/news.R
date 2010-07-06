@@ -314,6 +314,32 @@ function(f, out) {
                    stages = c("install", "render"))
 }
 
+Rd2pdf_NEWS_in_Rd <-
+function(f, pdf_file) {
+    if (grepl("[.]rds$", f)) f <- .readRDS(f)
+    f2 <- tempfile()
+    f3 <- file.path(tempdir(), "NEWS.tex")
+    f4 <- file.path(tempdir(), "NEWS.pdf")
+    out <- file(f3, "w")
+    tools::Rd2latex(f, f2,
+                    stages = c("install", "render"),
+                    outputEncoding = "UTF-8", writeEncoding = FALSE)
+    cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
+        "\\usepackage[", Sys.getenv("R_RD4PDF", "times"), "]{Rd}\n",
+        "\\usepackage[utf8]{inputenc}\n",
+        "\\begin{document}\n",
+        "\\chapter*{}\n",
+        sep = "", file = out)
+    writeLines(readLines(f2), out)
+    writeLines("\\end{document}", out)
+    close(out)
+    od <- setwd(tempdir())
+    on.exit(setwd(od))
+    texi2dvi(f3, pdf=TRUE, quiet = TRUE)
+    setwd(od)
+    invisible(file.copy(f4, pdf_file))
+}
+
 ## Transform old-style plain text NEWS file to Rd.
 
 news2Rd <-

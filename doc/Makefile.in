@@ -51,6 +51,10 @@ NEWS.rds: $(srcdir)/NEWS.Rd
 html/NEWS.html: NEWS.rds
 	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.rds", "html/NEWS.html")' |  $(R_EXE)
 
+NEWS.pdf: NEWS.rds
+	@$(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "NEWS.pdf")' |  $(R_EXE)
+
+
 install: install-message installdirs install-sources install-sources2 install-man
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
