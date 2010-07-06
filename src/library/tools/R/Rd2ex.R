@@ -112,6 +112,8 @@ Rd2ex <-
         } else if (tag == "\\out") {
             for (i in seq_along(x))
             	of1(x[[i]])
+        } else if (tag %in% c("USERMACRO", "\\newcommand", "\\renewcommand")) {
+            # do nothing
         } else {
             txt <- unlist(x)
             of0(prefix, remap(txt))

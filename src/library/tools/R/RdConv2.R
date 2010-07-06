@@ -414,7 +414,8 @@ prepare2_Rd <- function(Rd, Rdfile)
     }
 
     ## Drop all the parts that are not rendered
-    extras <- c("COMMENT", "TEXT", "\\docType", "\\Rdversion", "\\RdOpts")
+    extras <- c("COMMENT", "TEXT", "\\docType", "\\Rdversion", "\\RdOpts",
+                "USERMACRO", "\\newcommand", "\\renewcommand")
     drop <- drop | (sections %in% extras)
     bad <- ! sections %in% c(names(sectionOrder), extras)
     if (any(bad)) {
@@ -454,7 +455,10 @@ prepare3_Rd <- function(Rd, Rdfile, msglevel = 0)
         else {
             tag <- attr(x, "Rd_tag")
             switch(tag,
-                   COMMENT = {},
+		   USERMACRO =,
+		   "\\newcommand" =,
+		   "\\renewcommand" =,
+		   COMMENT = {},
                    VERB =,
                    RCODE =,
                    TEXT = if(any(grepl("[^[:space:]]", s, perl = TRUE, useBytes=TRUE))) return(TRUE),
@@ -561,6 +565,9 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                    ## check if this renders as non-whitespace
                    if(!grepl("^[[:space:]]*$", block)) has_text <<- TRUE
                },
+               USERMACRO =,
+               "\\newcommand" =,
+               "\\renewcommand" =,
                COMMENT = {},
                LIST = if (length(block)) {
                    deparse <- sQuote(paste(as.character.Rd(block), collapse=""))
@@ -673,6 +680,9 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                        ## check if this renders as non-whitespace
                        if(!grepl("^[[:space:]]*$", block)) has_text <<- TRUE
                    },
+		   USERMACRO =,
+		   "\\newcommand" =,
+		   "\\renewcommand" =,
                    COMMENT = {},
                    "\\var" = checkCodeBlock(block, blocktag), # not preformatted, but the parser checks that
                    "\\special" = checkCodeBlock(block, blocktag),

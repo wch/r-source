@@ -1,3 +1,4 @@
+\newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}
 \name{NEWS}
 \title{R News}
 \encoding{UTF-8}
@@ -13,7 +14,7 @@
       \item \code{difftime()} now defaults to the \code{"tzone"}
        attribute of \code{"POSIXlt"} objects rather than to the current
        timezone as set by the default for the \code{'tz'} argument.  (Wish
-       of \Sexpr[results=rd]{tools:::Rd_expr_PR(14182)}.)
+       of \PR{14182}.)
 
       \item \code{pretty()} is now generic, with new methods for
        \code{"Date"} and \code{"POSIXt"} classes (based on code
@@ -37,15 +38,15 @@
        the \code{print()} methods for \code{"summary.[g]lm"} objects
        have long done.  This does change the layout of the examples for
        a number of packages, e.g. \pkg{MASS}.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14250)})
+       (\PR{14250})
 
       \item \code{constrOptim()} can now be used with method
-      \code{"SANN"}.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14245)})
+      \code{"SANN"}.  (\PR{14245})
 
        It gains an argument \code{'hessian'} to be passed to
        \code{optim()}, which allows all the \code{...} arguments to be
        intended for \code{f()} and \code{grad()}.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14071)})
+       (\PR{14071})
 
       \item \code{curve()} now allows \code{'expr'} to be an object of
        mode \code{"expression"} as well as \code{"call"} and
@@ -59,7 +60,7 @@
        been able to handle those classes for a long time.  This
        \emph{inter alia} allows a single date-time object to be
        supplied, the wish of
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(14016)}.
+       \PR{14016}.
 
        The methods had a different default (\code{""}) for \code{xlab}.
 
@@ -133,7 +134,7 @@
 
       \item \code{points()} and \code{lines()} gain \code{"table"}
        methods to match \code{plot()}.  (Wish of
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(10472)}.)
+       \PR{10472}.)
 
       \item \code{Sys.chmod()} allows argument \code{'mode'} to be a
       vector, recycled along \code{'paths'}.
@@ -190,7 +191,10 @@
        options(\code{"help_text_width"}) is no longer used.
 
       \item Added \code{\\href} tag to the Rd format, to allow
-        hyperlinks to URLs without displaying the full URL.
+       hyperlinks to URLs without displaying the full URL. 
+        
+      \item Added \code{\\newcommand} and \code{\\renewcommand} tags
+       to the Rd format, to allow user-defined macros.
 
       \item New \code{toRd()} generic in the \pkg{tools} package to
        convert objects to fragments of Rd code, and added
@@ -208,10 +212,10 @@
 
       \item \code{format.pval()} gains a \code{...} argument to pass
        arguments such as \code{'nsmall'} to \code{format()}.  (Wish of
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(9574)})
+       \PR{9574})
 
       \item \code{legend()} supports \code{'title.adj'} (Wish of
-      \Sexpr[results=rd]{tools:::Rd_expr_PR(13415)})
+      \PR{13415})
 
       \item Added support for subsetting \code{"raster"} objects, plus
         assigning to a subset, conversion to a matrix (of colour
@@ -355,15 +359,15 @@
       \item The densities of non-central chi-squared are now more accurate
        in some cases in the extreme tails, e.g. \code{dchisq(2000, 2,
        1000)}, as a series expansion was truncated too early.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14105)})
+       (\PR{14105})
 
       \item \code{pt()} is more accurate in the left tail for \code{ncp}
        large, e.g. \code{pt(-1000, 3, 200)}.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14069)})
+       (\PR{14069})
 
       \item The default C function (\code{R_binary}) for binary ops now
        sets the S4 bit in the result if either argument is an S4 object.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(13209)})
+       (\PR{13209})
 
       \item \code{source(echo=TRUE)} failed to echo comments that
        followed the last statement in a file.
@@ -401,7 +405,7 @@
       \code{"POSIXlt"} consistently as, e.g., \code{"POSIXct"}.
 
       \item Fixed font face for CID fonts in \code{pdf()} graphics output
-      (\Sexpr[results=rd]{tools:::Rd_expr_PR(14326)})
+      (\PR{14326})
     }
   }
 }
@@ -427,7 +431,7 @@
        \command{Rd2dvi}.
 
       \item \code{stripchart()} could fail with an empty factor
-      level.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14317)})
+      level.  (\PR{14317})
 
       \item Text help rendering of \code{\\tabular\{\}} has been
         improved: under some circumstances leading blank columns were
@@ -477,38 +481,38 @@
     \itemize{
       \item The C function \code{mkCharLenCE} now no longer reads past
        \code{'len'} bytes (unlikely to be a problem except in user
-       code).  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14246)})
+       code).  (\PR{14246})
 
       \item On systems without any default \env{LD_LIBRARY_PATH} (not
        even \file{/usr/local/lib}), \env{[DY]LIB_LIBRARY_PATH} is now
        set without a trailing colon.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(13637)})
+       (\PR{13637})
 
       \item More efficient implementation of \code{utf8ToInt()} on long
        multi-byte strings with many multi-byte characters.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14262)})
+       (\PR{14262})
 
       \item \code{aggregate.ts()} gave platform-dependent results due to
        rounding error for \code{ndeltat != 1}.
 
       \item \code{package.skeleton()} sometimes failed to fix filenames
         for \file{.R} or \file{.Rd} files to start with an alphanumeric.
-        (\Sexpr[results=rd]{tools:::Rd_expr_PR(14253)})
+        (\PR{14253})
 
 	It also failed when only an S4 class without any methods was
-        defined.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14280)})
+        defined.  (\PR{14280})
 
       \item \code{splinefun(method = \code{"monoH.FC"})} was not
       quite monotone in rare cases.
-      (\Sexpr[results=rd]{tools:::Rd_expr_PR(14215)})
+      (\PR{14215})
 
       \item \code{Rhttpd} no longer crashes due to \code{SIGPIPE} when
        the client closes the connection prematurely.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14266)})
+       (\PR{14266})
 
       \item \code{format.POSIXlt()} could cause a stack overflow and
         crash when used on very long vectors.
-        (\Sexpr[results=rd]{tools:::Rd_expr_PR(14267)})
+        (\PR{14267})
 
       \item \code{Rd2latex()} incorrectly escaped special characters in
       \code{\\usage} sections.
@@ -525,7 +529,7 @@
 
       \item \code{cut(d, breaks = <n>)} now also works for \code{"Date"}
         or \code{"POSIXt"} argument \code{d}.
-        (\Sexpr[results=rd]{tools:::Rd_expr_PR(14288)})
+        (\PR{14288})
 
       \item \code{memDecompress()} could decompress incompletely rare
        \code{xz}-compressed input due to incorrect documentation of
@@ -533,7 +537,7 @@
 
       \item The S4 \code{initialize()} methods for \code{"matrix"},
         \code{"array"}, and \code{"ts"} have been fixed to call
-        \code{validObject()}.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14284)})
+        \code{validObject()}.  (\PR{14284})
 
       \item \command{R CMD INSTALL} now behaves the same way with or
        without \option{--no-multiarch} on platforms with only one
@@ -542,11 +546,11 @@
 
       \item \code{[<-.data.frame} was not quite careful enough in
         assigning (and potentially deleting) columns
-        right-to-left.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14263)})
+        right-to-left.  (\PR{14263})
 
       \item \code{rbeta(n, a, b)} no longer occasionally returns
        \code{NaN} for \code{a >> 1 > b}.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14291)})
+       (\PR{14291})
 
       \item \code{pnorm(x, log.p = TRUE)} could return \code{NaN} not
        \code{-Inf} for \code{x} near (minus for \code{lower.tail=TRUE})
@@ -555,12 +559,12 @@
       \item Compressed data files \file{*.(txt|tab|csv).(gz|bz2|xz)}
        were not recognized for the list of data topics and hence for
        packages using \code{LazyData}.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14273)})
+       (\PR{14273})
 
       \item \code{textConnection()} did an unnecessary translation on
        strings in a foreign encoding (e.g. UTF-8 strings on Windows) and
        so was slower than it could have been on very long input strings.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14286)})
+       (\PR{14286})
 
       \item \code{tools::Rd2txt()} did not render poorly written Rd
        files consistently with other renderers.
@@ -692,7 +696,7 @@
 
       \item \code{bquote()} has been extended to work on function
        definitions.  (Wish of
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(14031)}).
+       \PR{14031}).
 
       \item \code{detach()} when applied to an object other than a
        package returns the environment that has been detached, to
@@ -739,8 +743,8 @@
       \item \code{length(<POSIXlt>)} now returns the length of the
        corresponding abstract timedate-vector rather than always 9 (the
        length of the underlying list structure).  (Wish of
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(14073)} and
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(10507)}.)
+       \PR{14073} and
+       \PR{10507}.)
 
       \item The \code{readline} completion backend no longer sorts
        possible completions alphabetically (e.g., function argument
@@ -832,7 +836,7 @@
        result in an error.
 
       \item \code{interaction(drop=TRUE)} uses less memory (related to
-      \Sexpr[results=rd]{tools:::Rd_expr_PR(14121)}).
+      \PR{14121}).
 
       \item \code{summary()} methods have been added to the
        \code{"srcref"} and \code{"srcfile"} classes, and various
@@ -871,7 +875,7 @@
        been reduced from \code{1e-7} to \code{1e-10}, which should be
        ample for the double-precision calculations used in \R.  It
        ensures that the fuzz never comes into play with sequences of
-       integers (wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(14169)}).
+       integers (wish of \PR{14169}).
 
       \item The default value of \code{RSiteSearch(restrict=)} has been
        changed to include vignettes but to exclude R-help.  The R-help
@@ -887,12 +891,12 @@
 
       \item \code{cor()} and \code{cov()} now test for misuse with
        non-numeric arguments, such as the non-bug report
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(14207)}.
+       \PR{14207}.
 
       \item \code{pchisq(ncp =, log.p = TRUE)} is more accurate for
        probabilities near one.  E.g. \code{pchisq(80, 4, ncp=1,
        log.p=TRUE)}.  (Maybe what was meant in
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(14216)}.)
+       \PR{14216}.)
 
       \item \code{maintainer()} has been added, to give convenient
        access to the name of the maintainer of a package (contributed by
@@ -1039,7 +1043,7 @@
 
       \item Using \code{with()}, \code{eval()} etc with a list with some
       unnamed elements now works.
-      (\Sexpr[results=rd]{tools:::Rd_expr_PR(14035)})
+      (\PR{14035})
 
       \item The \code{"quick"} dispatch of S4 methods for primitive
        functions was not happening, forcing a search each time.
@@ -1086,19 +1090,19 @@
       \item \code{cor(A, B)} where \code{A} is \eqn{n \times 1}{n x 1}
        and \code{B} a 1-dimensional array segfaulted or gave an internal
        error.  (The case \code{cor(B, A)} was
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(7116)}.)
+       \PR{7116}.)
 
       \item \code{cut.POSIXt()} applied to a start value after the DST
        transition on a DST-change day could give the wrong time for
        argument \code{'breaks'} in units of days or longer.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14208)})
+       (\PR{14208})
 
       \item \code{do_par()} \code{UNPROTECT}ed too early
-      (\Sexpr[results=rd]{tools:::Rd_expr_PR(14214)})
+      (\PR{14214})
 
       \item Subassignment \code{x[[....]] <- y} didn't check for a
        zero-length right hand side, and inserted a rubbish
-       value.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14217)})
+       value.  (\PR{14217})
 
       \item \code{fisher.test()} no longer gives a P-value \strong{very}
        slightly > 1, in some borderline cases.
@@ -1131,7 +1135,7 @@
        \code{pf()}\}, e.g., \code{pbeta(x, 3, 2200, lower.tail=FALSE,
        log.p=TRUE)} now returns finite values instead of jumping to
        \code{-Inf} too early
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14230)}).
+       (\PR{14230}).
 
       \item \code{parse(text=x)} misbehaved for objects \code{'x'} that
        were not coerced internally to character, notably symbols.
@@ -1156,7 +1160,7 @@
        Pango does but cairo it seems does not).
 
       \item \code{read.fwf()} misread multi-line records when n was specified.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14241)})
+       (\PR{14241})
 
       \item \code{all.equal(tolerance = e)} passes the numeric
        tolerance also to the comparison of the attributes.
@@ -1169,7 +1173,7 @@
 
       \item \code{gzcon( <textConnection> )}, an error, no longer
        damages the connection (in a way to have it
-       segfault).  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14237)})
+       segfault).  (\PR{14237})
 
       \item All the results from \code{hist()} now use the nominal
        \code{'breaks'} not those adjusted by the numeric \sQuote{fuzz}:
@@ -1181,7 +1185,7 @@
       \item If \code{xy[z].coords} (used internally by many graphics
        functions) are given a list as \code{'x'}, they now check that
        the list has suitable names and give a more informative error
-       message.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(13936)})
+       message.  (\PR{13936})
     }
   }
 }
@@ -1220,16 +1224,16 @@
     \itemize{
       \item Using \code{read.table(header=TRUE)} on a header with an embedded
        new line would copy part of the header into the data.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14103)})
+       (\PR{14103})
 
       \item \code{qpois(p = 1, lambda = 0)} now gives 0 as for all other
-      \code{p}.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14135)})
+      \code{p}.  (\PR{14135})
 
       \item Functions related to string comparison
        (e.g. \code{unique()}, \code{match()}) could cause crashes when
        used with strings not in the native encoding, e.g. UTF-8 strings
-       on Windows.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14114)} and
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(14125)})
+       on Windows.  (\PR{14114} and
+       \PR{14125})
 
       \item \code{x[ , drop=TRUE]} dropped an \code{NA} level even if it
       was in use.
@@ -1243,14 +1247,14 @@
 
       \item Help links containing special characters (e.g. \code{"?"})
        were not generated correctly when rendered in
-       HTML.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14155)})
+       HTML.  (\PR{14155})
 
       \item \code{lchoose(a, k)} no longer wrongly gives \code{NaN} for
       negative \code{a}.
 
       \item \code{ks.test()} could give a p-value that was off by one
        observation due to rounding
-       error.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14145)})
+       error.  (\PR{14145})
 
       \item \code{readBin()}/\code{readChar()} when reading millions of
        character strings in a single call used excessive amounts of
@@ -1258,7 +1262,7 @@
 
       \item \command{R CMD SHLIB} could fail if used with paths that
        were not alphanumeric, e.g. contained \code{'+'}.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14168)})
+       (\PR{14168})
 
       \item \code{sprintf()} was not re-entrant, which potentially
        caused problems if an \code{as.character()} method called it.
@@ -1282,18 +1286,18 @@
 
       \item \code{[cr]bind(..., deparse.level=2)} was not always giving
        names when documented to do so.  (Discovered whilst investigating
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(14189)}.)
+       \PR{14189}.)
 
       \item \code{match(incomparables=<non-NULL>)} could in rare cases
        infinite-loop.
 
       \item \code{poisson.test()} needed to pass argument
        \code{'conf.level'} to \code{binom.test()}
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14195)})
+       (\PR{14195})
 
       \item The \code{"nls"} method for \code{df.residual()} gave
        incorrect results for models fitted with \code{na.action =
-       na.exclude}.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14194)})
+       na.exclude}.  (\PR{14194})
 
       \item A change to \code{options(scipen=)} was only implemented
        when printing next occurred, even though it should have affected
@@ -1302,12 +1306,12 @@
 
       \item \code{prettyNum(drop0trailing=TRUE)} did not handle signs of
        imaginary parts of complex numbers correctly (and this was used
-       by \code{str()}: \Sexpr[results=rd]{tools:::Rd_expr_PR(14201)}).
+       by \code{str()}: \PR{14201}).
 
       \item \code{system.time()} had the \code{sys.child} component
        wrong (copied \code{user.child} instead) on systems with
        \code{HAVE_GETRUSAGE}.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14210)})
+       (\PR{14210})
 
       \item Changing both line texture and line cap (end) resulted in the
        latter to be ommitted form the PDF code.  In addition, line cap
@@ -1325,7 +1329,7 @@
       a connection.
 
       \item Startup files will now be found if their paths exceed 255
-       bytes.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14228)})
+       bytes.  (\PR{14228})
 
       \item \code{contrasts<-} (in the \pkg{stats} package) no longer has an
        undeclared dependence on \pkg{methods} (introduced in 2.10.0).
@@ -1382,7 +1386,7 @@
      \itemize{
        \item \code{trigamma(x)} and other \code{psigamma(x, n)} calls are
        now accurate for very large \code{abs(x)}.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14020)})
+       (\PR{14020})
 
        \item \code{[g]sub(perl=FALSE, fixed=FALSE)} could use excessive
        stack space when used with a very long vector containing some
@@ -1390,7 +1394,7 @@
 
        \item The default method of \code{weighted.mean(na.rm = TRUE)} did
        not omit weights for \code{NA} observations in 2.10.0.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14032)})
+       (\PR{14032})
 
        \item \code{[g]regexpr(pattern, fixed = TRUE)} returned match
        positions in bytes (not characters) in an MBCS locale if
@@ -1422,14 +1426,14 @@
        \item There have been small fixes to the rendering of help,
        e.g. \code{\\command} is now rendered verbatim (so e.g. \code{--}
        is not interpreted,
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(14045)}).
+       \PR{14045}).
 
        Also, there are many small changes to help files where the new
        converters were not rendering them in the same way as before.
 
        \item \code{available.packages()} would fail when run on a
        repository with no packages meeting the filtering conditions.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14042)})
+       (\PR{14042})
 
        \item \code{rep(x, times, each = 2)} gave invalid results when the
        \code{'times'} argument was a vector longer than \code{'x'}.
@@ -1450,7 +1454,7 @@
        regions for very small \code{'a'}.  \code{qgamma()} now correctly
        returns \code{0} instead of \code{NaN} in similar extreme cases,
        and \code{qgamma()} no longer warns in the case of small
-       \code{'a'}, see (\Sexpr[results=rd]{tools:::Rd_expr_PR(12324)}).
+       \code{'a'}, see (\PR{12324}).
 
        \item \code{unname()} now also removes names from a zero length vector.
 
@@ -1459,18 +1463,18 @@
 
        \item \code{complete.cases()} failed on a 0-column data frame
        argument.  (Underlies
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(14066)}.)
+       \PR{14066}.)
 
        It could return nonsensical results if no input determined the
        number of cases (seen in the no-segfault tests).
 
        \item An error in \code{nls()} with a long formula could cause a
-       segfault.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14059)})
+       segfault.  (\PR{14059})
 
        \item \code{qchisq(p, df, ncp, lower.tail = FALSE)} with
        \code{ncp >= 80} was inaccurate for small \code{p} (as the help page
        said): it is now less inaccurate.  (In part,
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(13999)}.)
+       \PR{13999}.)
 
        For \code{ncp} less than but close to 80, \code{pchisq()} and
        \code{qchisq()} are more accurate for probablilities very close
@@ -1482,7 +1486,7 @@
        \item \code{intToUtf8()} could fail when asked to produce 10Mb or more
        strings, something it was never intended to do: unfortunately
        Windows crashed \R (other OSes reported a lack of resources).
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14068)})
+       (\PR{14068})
 
        \item \code{chisq.test()} could fail when given argument
        \code{'x'} or \code{'y'} which deparsed to more than one line.
@@ -1499,7 +1503,7 @@
 
        \item \code{bessel[JY](x, nu)} with \code{nu} a negative integer (a
        singular case) is now correct, analogously to \code{besselI()},
-       see \Sexpr[results=rd]{tools:::Rd_expr_PR(13556)}.
+       see \PR{13556}.
 
        \item \code{tools::file_path_as_absolute()} doubled the file
        separator when applied to a file such as \file{"/vmunix"} or (on
@@ -1507,11 +1511,11 @@
        \code{getwd()} would return a path with a trailing separator
        (largely cosmetic, as reasonable file systems handle such a path
        correctly).  (Perhaps what was meant by
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(14078)}.)
+       \PR{14078}.)
 
        \item \code{unsplit(drop = TRUE)} applied to a data frame failed
        to pass \code{'drop'} to the computation of row names.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(14084)})
+       (\PR{14084})
 
        \item The \code{"difftime"} method of \code{mean()} ignored its
        \code{'na.rm'} argument.
@@ -1531,7 +1535,7 @@
        alternative used.
 
        \item \code{help.search()} failed when the package argument was
-       specified.  (\Sexpr[results=rd]{tools:::Rd_expr_PR(14113)})
+       specified.  (\PR{14113})
 
        \item \code{switch(EXPR = "A")} now returns \code{NULL}, as does
        \code{switch(1)} (which used to signal an error).
@@ -1593,7 +1597,7 @@
       \item New \code{debugonce()} function; further,
        \code{getOption("deparse.max.lines")} is now observed when
        debugging, from a code suggestion by John Brzustowski.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(13647)}/8)
+       (\PR{13647}/8)
 
       \item \code{plot()} methods for \code{"stepfun"} and hence
        \code{"ecdf"} no longer plot points by default for \code{n >= 1000}.
@@ -1657,7 +1661,7 @@
       \item The Kendall and Spearman methods of \code{cor.test()} can
        optionally use continuity correction when not computing exact
        p-values.  (The Kendall case is the wish of
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(13691)}.)
+       \PR{13691}.)
 
       \item \R now keeps track of line numbers during execution for code
        sourced with \code{options(keep.source = TRUE)}.  The source
@@ -1669,7 +1673,7 @@
       \item More functions now have an implicit (S4) generic definition.
 
       \item \code{quantile.default()} now disallows factors (wish of
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(13631)}) and its help
+       \PR{13631}) and its help
        documents what numeric-like properties its input need to have to
        work correctly.
 
@@ -1683,7 +1687,7 @@
        ones.)
 
       \item \code{as.data.frame()} has an \code{"aovproj"} method.
-      (Wish of \Sexpr[results=rd]{tools:::Rd_expr_PR(13505)})
+      (Wish of \PR{13505})
 
       \item \code{as.character(x)} for numeric \code{x} no longer
        produces strings such as \code{"0.30"}, i.e., with trailing
@@ -1799,7 +1803,7 @@
        including Unicode text in packages).
 
       \item New \code{as.raw()} method for \code{"tclObj"} objects (wish
-      of \Sexpr[results=rd]{tools:::Rd_expr_PR(13758)}).
+      of \PR{13758}).
 
       \item \code{Rd.sty} now makes a better job of setting email addresses,
        including using a monospaced font.
@@ -1899,7 +1903,7 @@
 
       \item \code{stripchart()} allows \code{par} \code{'bg'} to be
        passed in for the background colour for \code{pch = 21} (wish of
-       \Sexpr[results=rd]{tools:::Rd_expr_PR(13984)}).
+       \PR{13984}).
 
       \item New generic function \code{.DollarNames()} to enable class authors
        to customize completion after the \code{$} extractor.
@@ -2237,7 +2241,7 @@
       \item \code{prettyNum(z, drop0trailing=TRUE)} did not work
        correctly when \code{z} was a complex vector.  Consequently,
        \code{str(z, \dots)} also did not.
-       (\Sexpr[results=rd]{tools:::Rd_expr_PR(13985)})
+       (\PR{13985})
 
       \item \command{make distclean} removed too many files in
        \code{etc/} if builddir = srcdir.

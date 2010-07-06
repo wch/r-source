@@ -364,6 +364,9 @@ Rd2txt <-
                VERB =,
                RCODE = writeCode(tabExpand(block)),
                TEXT = if(blocktag == "\\command") putw(block) else putw(unescape(tabExpand(block))),
+               USERMACRO =,
+               "\\newcommand" =,
+               "\\renewcommand" =,
                COMMENT = {},
                LIST = writeContent(block, tag),
                "\\describe" = {
@@ -693,6 +696,9 @@ Rd2txt <-
                    "\\dots" =, # \ldots is not really allowed
                    "\\ldots" = put("..."),
                    "\\dontrun"= writeDR(block, tag),
+		   USERMACRO =,
+		   "\\newcommand" =,
+		   "\\renewcommand" =,                   
                    COMMENT =,
                    "\\dontshow" =,
                    "\\testonly" = {}, # do nothing
@@ -906,7 +912,7 @@ Rd2txt <-
     	    for (i in seq_along(sections))
     	    	writeBlock(Rd[[i]], sections[i], "")
     } else {
-	title <- as.character(Rd[[1L]])
+	title <- capture.output(Rd2txt(Rd[[1L]], fragment=TRUE))
 	## remove empty lines, leading and trailing whitespace, \n
 	title <- trim(paste(psub1("^\\s+", "", title[nzchar(title)]), collapse=" "))
 	title <- fsub("\n", "", title)

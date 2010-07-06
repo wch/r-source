@@ -83,6 +83,7 @@ as.character.Rd <- function(x, deparse = FALSE, ...)
     ZEROARG <- c("\\cr", "\\dots", "\\ldots", "\\R", "\\tab") # Only these cause trouble when {} is added
     TWOARG <- c("\\section", "\\item", "\\enc", "\\method", "\\S3method",
                 "\\S4method", "\\tabular")
+    USERMACROS <- c("USERMACRO", "\\newcommand", "\\renewcommand")
     EQN <- c("\\deqn", "\\eqn")
     modes <- c(RLIKE=1L, LATEXLIKE=2L, VERBATIM=3L, INOPTION=4L, COMMENTMODE=5L, UNKNOWNMODE=6L)
     tags  <- c(RCODE=1L, TEXT=2L,      VERB=3L,                  COMMENT=5L,     UNKNOWN=6L)
@@ -139,6 +140,8 @@ as.character.Rd <- function(x, deparse = FALSE, ...)
     	    if (state[1L])  # If braces didn't match within the list, try again, quoting them
     	    	result <- pr(x, TRUE)
     	    state <<- savestate
+    	} else if (tag %in% USERMACROS) {
+    	    	result <- c()
     	} else {
     	    if (deparse) {
     		dep <- deparseRdElement(as.character(x), c(state, tags[tag], inEqn, as.integer(quoteBraces)))

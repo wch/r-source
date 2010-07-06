@@ -3068,7 +3068,8 @@ for exchanging information between developers and/or interested useRs.
 * Indices::                     
 * Platform-specific sections::  
 * Conditional text::            
-* Dynamic pages::               
+* Dynamic pages::
+* User-defined macros::
 * Encoding::                    
 * Processing Rd format::        
 @end menu
@@ -4172,7 +4173,7 @@ the following to output the markup necessary to display the Greek letter in
 \if@{latex@}@{\out@{\alpha@}@}\ifelse@{html@}@{\out@{&alpha;@}@}@{alpha@}
 @end example
 
-@node Dynamic pages, Encoding, Conditional text, Writing R documentation files
+@node Dynamic pages, User-defined macros, Conditional text, Writing R documentation files
 @section Dynamic pages
 @cindex dynamic pages
 @findex \Sexpr
@@ -4273,7 +4274,51 @@ For more details, see the online document
 @uref{http://developer.r-project.org/parseRd.pdf, ``Parsing Rd
 files''}.
 
-@node Encoding, Processing Rd format, Dynamic pages, Writing R documentation files
+@node User-defined macros, Encoding, Dynamic pages, Writing R documentation files
+@section User-defined macros
+@cindex user-defined macros
+@findex \newcommand
+@findex \renewcommand
+
+Two new macros supporting user-defined macros were introduced in 
+R 2.12.0.  The @code{\newcommand} and @code{\renewcommand} macros allow
+new macros to be defined within an Rd file.  These are similar but 
+not identical to the same-named LaTeX macros.
+
+They each take two arguments which are parsed verbatim.  The first is 
+the name of the new macro including the initial backslash, and the second
+is the macro definition.  As in @LaTeX{}, @code{\newcommand} requires that the
+new macro not have been previously defined, whereas @code{\renewcommand}
+allows existing macros (including all built-in ones) to be replaced.  
+
+Also as in @LaTeX{}, the new macro may be defined to take arguments,
+and numeric placeholders such as @code{#1} are used in the macro
+definition. However, unlike @LaTeX{}, the number of arguments is
+determined automatically from the highest placeholder number seen in
+the macro definition.  For example, a macro definition containing
+@code{#1} and @code{#3} (but no other placeholders) will define a
+three argument macro (whose second argument will be ignored). As in
+@LaTeX{}, at most 9 arguments may be defined. If the @code{#}
+character is followed by a non-digit it will have no special
+significance.  All arguments to user-defined macros will be parsed as
+verbatim text, and simple text-substitution will be used to replace
+the place-holders, after which the replacement text will be parsed.
+
+For example, the @file{NEWS.Rd} file currently uses the definition
+@example
+\newcommand@{\PR@}@{\Sexpr[results=rd]@{tools:::Rd_expr_PR(#1)@}@}
+@end example
+which defines @code{\PR} to be a single argument macro; then code like
+@example
+\PR@{1234@}
+@end example
+will expand to 
+@example
+\Sexpr[results=rd]@{tools:::Rd_expr_PR(1234)@}
+@end example
+when parsed.  
+
+@node Encoding, Processing Rd format, User-defined macros, Writing R documentation files
 @section Encoding
 @cindex encoding
 
