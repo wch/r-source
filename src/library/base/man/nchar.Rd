@@ -25,7 +25,7 @@ nzchar(x)
     vector.}
   \item{type}{character string: partial matching to one of
     \code{c("bytes", "chars", "width")}.  See \sQuote{Details}.}
-  \item{allowNA}{logical: show \code{NA} be returned for invalid
+  \item{allowNA}{logical: should \code{NA} be returned for invalid
     multibyte strings (rather than throwing an error)?}
 }
 \details{
@@ -42,7 +42,7 @@ nzchar(x)
   These will often be the same, and almost always will be in single-byte
   locales.  There will be differences between the first two with
   multibyte character sequences, e.g. in UTF-8 locales.
-  
+
   The internal equivalent of the default method of
   \code{\link{as.character}} is performed on \code{x} (so there is no
   method dispatch).  If you want to operate on non-vector objects
