@@ -1091,9 +1091,9 @@ R_run_R <- function(cmd, Ropts, env)
             any <- FALSE
             for (f in makefiles) {
                 lines <- readLines(f, warn = FALSE)
-                c1 <- grepl("PKG_LIBS", lines)
-                c2 <- grepl("$[{(]{0,1}BLAS_LIBS", lines)
-                c3 <- grepl("FLIBS", lines)
+                c1 <- grepl("PKG_LIBS", lines, useBytes = TRUE)
+                c2 <- grepl("$[{(]{0,1}BLAS_LIBS", lines, useBytes = TRUE)
+                c3 <- grepl("FLIBS", lines, useBytes = TRUE)
                 if (any(c1 && c2 && !c3)) {
                    if (!any) warnLog()
                    any <- TRUE
