@@ -238,6 +238,10 @@
       UTF-8, and otherwise in ASCII.
 
       \item \code{kmeans(x, 1)} now works.
+
+      \item \code{arrayInd()} and \code{which()} gain an argument
+      \code{useNames}. For \code{arrayInd}, the default is now false,
+      for speed reasons.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{

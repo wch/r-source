@@ -1,6 +1,6 @@
 % File src/library/base/man/which.min.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{which.min}
@@ -25,7 +25,7 @@ which.max(x)
 }
 \value{
   Missing and \code{NaN} values are discarded.
-  
+
   an \code{\link{integer}} of length 1 or 0 (iff \code{x} has no
   non-\code{NA}s), giving the index of the \emph{first} minimum or
   maximum respectively of \code{x}.
@@ -37,6 +37,9 @@ which.max(x)
 \author{Martin Maechler}
 \seealso{
   \code{\link{which}}, \code{\link{max.col}}, \code{\link{max}}, etc.
+
+  Use \code{\link{arrayInd}()}, if you need array/matrix indices instead
+  of 1D vector ones.
 
   \code{\link[nnet]{which.is.max}} in package \pkg{nnet} differs in
   breaking ties at random (and having a \sQuote{fuzz} in the definition

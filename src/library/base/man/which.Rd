@@ -12,8 +12,8 @@
   indices.
 }
 \usage{
-which(x, arr.ind = FALSE)
-arrayInd(ind, .dim, .dimnames = NULL)
+which(x, arr.ind = FALSE, useNames = TRUE)
+arrayInd(ind, .dim, .dimnames = NULL, useNames = FALSE)
 }
 \arguments{
  \item{x}{a \code{\link{logical}} vector or array.  \code{\link{NA}}s
@@ -26,6 +26,8 @@ arrayInd(ind, .dim, .dimnames = NULL)
  \item{.dim}{\code{\link{dim}(.)} integer vector}
  \item{.dimnames}{optional list of character \code{\link{dimnames}(.)},
    of which only \code{.dimnames[[1]]} is used.}
+ \item{useNames}{logical indicating if the value of \code{arrayInd()}
+   should have (non-null) dimnames at all.}
 }
 \value{
   If \code{arr.ind == FALSE} (the default), an integer vector with
@@ -39,8 +41,8 @@ arrayInd(ind, .dim, .dimnames = NULL)
   whose rows each are the indices of one element of \code{x}; see
   Examples below.
 }
-\author{Werner Stahel and Peter Holzer \email{holzer@stat.math.ethz.ch},
-  for the array case.}
+\author{Werner Stahel and Peter Holzer (ETH Zurich) proposed the
+  \code{arr.ind} option.}
 \seealso{\code{\link{Logic}}, \code{\link{which.min}} for the index of
   the minimum or maximum, and \code{\link{match}} for the first index of
   an element in a vector, i.e., for a scalar \code{a}, \code{match(a,x)}

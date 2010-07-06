@@ -14,21 +14,21 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-which <- function(x, arr.ind = FALSE)
+which <- function(x, arr.ind = FALSE, useNames = TRUE)
 {
     wh <- .Internal(which(x))
-    if (!is.null(d <- dim(x)) && arr.ind)
-	arrayInd(wh, d, dimnames(x)) else wh
+    if (arr.ind && !is.null(d <- dim(x)))
+	arrayInd(wh, d, dimnames(x), useNames=useNames) else wh
 }
 
-arrayInd <- function(ind, .dim, .dimnames = NULL) {
+arrayInd <- function(ind, .dim, .dimnames = NULL, useNames = FALSE) {
     ##-- return a matrix  length(ind) x rank == length(ind) x length(.dim)
     m <- length(ind)
     rank <- length(.dim)
     wh1 <- ind - 1L
     ind <- 1L + wh1 %% .dim[1L]
     ind <- matrix(ind, nrow = m, ncol = rank,
-		  dimnames =
+		  dimnames = if(useNames)
 		  list(.dimnames[[1L]][ind],
 		       if(rank == 2L) c("row", "col") # for matrices
 		       else paste("dim", seq_len(rank), sep="")))
