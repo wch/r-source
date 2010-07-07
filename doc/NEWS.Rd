@@ -13,7 +13,7 @@
 
       \item \code{difftime()} now defaults to the \code{"tzone"}
        attribute of \code{"POSIXlt"} objects rather than to the current
-       timezone as set by the default for the \code{'tz'} argument.  (Wish
+       timezone as set by the default for the \code{tz} argument.  (Wish
        of \PR{14182}.)
 
       \item \code{pretty()} is now generic, with new methods for
@@ -42,11 +42,11 @@
       \item \code{constrOptim()} can now be used with method
       \code{"SANN"}.  (\PR{14245})
 
-       It gains an argument \code{'hessian'} to be passed to
+       It gains an argument \code{hessian} to be passed to
        \code{optim()}, which allows all the \code{...} arguments to be
        intended for \code{f()} and \code{grad()}.  (\PR{14071})
 
-      \item \code{curve()} now allows \code{'expr'} to be an object of
+      \item \code{curve()} now allows \code{expr} to be an object of
        mode \code{"expression"} as well as \code{"call"} and
        \code{"function"}.
 
@@ -90,11 +90,11 @@
        now allowed as slot names of S4 classes, with \code{"class"} the
        only remaining exception.
 
-      \item \file{.Renviron} can have architecture-specific versions
+      \item File \file{.Renviron} can have architecture-specific versions
        such as \file{.Renviron.i386} on systems with sub-architectures.
 
       \item \code{installed.packages()} has a new argument
-       \code{'subarch'} to filter on sub-architecture.
+       \code{subarch} to filter on sub-architecture.
 
       \item The \code{summary()} method for \code{packageStatus()} now
        has a separate \code{print()} method.
@@ -114,7 +114,7 @@
        \code{getGraphicsEventEnv()}.  (Currently implemented in the
        \code{windows()} and \code{X11()} devices.)
 
-      \item \code{tools::texi2dvi()} gains an \code{'index'} argument,
+      \item \code{tools::texi2dvi()} gains an \code{index} argument,
        mainly for use by \command{R CMD Rd2pdf}.
 
        It avoids the use of \command{texindy} by \command{texinfo}'s
@@ -126,14 +126,14 @@
        re-encode inputs to marked UTF-8 strings on Windows since \R 2.7.0
        is extended to non-UTF-8 locales on other OSes.
 
-      \item \code{scan()} gains a \code{'fileEncoding'} argument to
+      \item \code{scan()} gains a \code{fileEncoding} argument to
       match \code{read.table()}.
 
       \item \code{points()} and \code{lines()} gain \code{"table"}
        methods to match \code{plot()}.  (Wish of \PR{10472}.)
 
-      \item \code{Sys.chmod()} allows argument \code{'mode'} to be a
-      vector, recycled along \code{'paths'}.
+      \item \code{Sys.chmod()} allows argument \code{mode} to be a
+      vector, recycled along \code{paths}.
 
       \item There are \code{|}, \code{&} and \code{xor()} methods for
        classes \code{"octmode"} and \code{"hexmode"}, which work
@@ -151,14 +151,14 @@
        redirected.
 
       \item \code{summaryRprof()} returns the sampling interval in
-       component \code{'sample.interval'} and only returns in
-       \code{'by.self'} data for functions with non-zero self times.
+       component \code{sample.interval} and only returns in
+       \code{by.self} data for functions with non-zero self times.
 
       \item \code{print(x)} and \code{str(x)} now indicate if an empty
       list \code{x} is named.
 
       \item \code{install.packages()} and \code{remove.packages()} with
-       \code{'lib'} unspecified and multiple libraries in
+       \code{lib} unspecified and multiple libraries in
        \code{.libPaths()} inform the user of the library location used
        with a message rather than a warning.
 
@@ -169,7 +169,7 @@
       \item Function \code{person()} in package \pkg{utils} now uses
         a given/family scheme in preference to first/middle/last, is
         vectorized to handle an arbitrary number of persons, and gains a
-        \code{'role'} argument to specify person roles using a controlled
+        \code{role} argument to specify person roles using a controlled
         vocabulary (the MARC relator terms).
 
       \item Package \pkg{utils} adds a new \code{"bibentry"} class
@@ -207,10 +207,10 @@
         and details.
 
       \item \code{format.pval()} gains a \code{...} argument to pass
-       arguments such as \code{'nsmall'} to \code{format()}.  (Wish of
+       arguments such as \code{nsmall} to \code{format()}.  (Wish of
        \PR{9574})
 
-      \item \code{legend()} supports \code{'title.adj'}.  (Wish of
+      \item \code{legend()} supports \code{title.adj}.  (Wish of
       \PR{13415})
 
       \item Added support for subsetting \code{"raster"} objects, plus
@@ -258,12 +258,12 @@
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item \code{install.packages()} has a new argument
-       \code{'libs_only'} to optionally pass \option{--libs-only} to
+       \code{libs_only} to optionally pass \option{--libs-only} to
        \command{R CMD INSTALL} and works analogously for Windows binary
        installs (to add support for 64- or 32-bit Windows).
 
       \item When sub-architectures are in use, the installed
-       architectures are recorded in the \code{'Archs'} field of the
+       architectures are recorded in the \code{Archs} field of the
        \file{DESCRIPTION} file.  There is a new default filter,
        \code{"subarch"}, in \code{available.packages()} to make use of
        this.
@@ -322,7 +322,7 @@
        definition, do wrap it inside \code{#ifndef lang5 .... #endif}
        to keep it working with old and new \R.
 
-      \item Header \code{R.h} now includes only the C headers it itself needs,
+      \item Header \file{R.h} now includes only the C headers it itself needs,
        hence no longer includes \code{errno.h}.  (This helps avoid problems
        when it is included from C++ source files.)
 
@@ -383,7 +383,7 @@
        \code{setGeneric()} when that does not use a definition nor
        explicitly set a signature.
 
-      \item The \code{pdf()} device will now allow \code{'lwd'} values
+      \item The \code{pdf()} device will now allow \code{lwd} values
        less than 1 (it used to force such values to be 1).
 
       \item A bug in \code{callNextMethod()} for some examples with
@@ -415,7 +415,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{install.packages()} has a new optional argument
-      \code{'INSTALL_opts'} which can be used to pass options to
+      \code{INSTALL_opts} which can be used to pass options to
       \command{R CMD INSTALL} for source-package installs.
 
       \item \command{R CMD check} now runs the package-specific tests
@@ -480,7 +480,7 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item The C function \code{mkCharLenCE} now no longer reads past
-       \code{'len'} bytes (unlikely to be a problem except in user
+       \code{len} bytes (unlikely to be a problem except in user
        code).  (\PR{14246})
 
       \item On systems without any default \env{LD_LIBRARY_PATH} (not
@@ -513,7 +513,7 @@
       \code{\\usage} sections.
 
       \item \code{mcnemar.test()} could alter the levels (dropping
-       unused levels) if passed \code{'x'} and \code{'y'} as factors
+       unused levels) if passed \code{x} and \code{y} as factors
        (reported by Greg Snow).
 
       \item \command{Rd2pdf} sometimes needed a further
@@ -566,7 +566,7 @@
        escapes incorrectly, for example in the computation of column
        width for \code{\\tabular}.
 
-      \item \code{na.action()} did not extract the \code{'na.action'}
+      \item \code{na.action()} did not extract the \code{na.action}
        component as documented.
     }
   }
@@ -596,7 +596,7 @@
   }
   \subsection{NEW FEATURES}{
     \itemize{
-      \item The \code{'open'} modes for connections are now interpreted
+      \item The \code{open} modes for connections are now interpreted
        more consistently.  \code{open = "r"} is now equivalent to
        \code{open = "rt"} for all connections.  The default \code{open =
        ""} now means \code{"rt"} for all connections except the
@@ -628,7 +628,7 @@
        give the result in the native encoding rather than in UTF-8
        (which returns to the behaviour prior to \R 2.10.0).
 
-      \item A new argument \code{'skipCalls'} has been added to
+      \item A new argument \code{skipCalls} has been added to
        \code{browser()} so that it can report the original context when
        called by other debugging functions.
 
@@ -673,7 +673,7 @@
        method to change the underlying class.  (Wish of Jens
        Oehlschlägel.)
 
-      \item \code{write.csv[2]} no longer allow argument \code{'append'}
+      \item \code{write.csv[2]} no longer allow argument \code{append}
        to be changed: as ever, direct calls to \code{write.table()} give
        more flexibility as well as more room for error.
 
@@ -685,7 +685,7 @@
        from the \code{Depends} field of a package (even in packages with
        name spaces).  By default \code{detach()} prevents such
        dependencies from being detached: this can be overridden by the
-       argument \code{'force'}.
+       argument \code{force}.
 
       \item \code{bquote()} has been extended to work on function
        definitions.  (Wish of
@@ -714,15 +714,15 @@
        objects).
 
       \item The default method of \code{weighted.mean(x, w)} coerces
-       \code{'w'} to be numeric (aka double); previously only integer
+       \code{w} to be numeric (aka double); previously only integer
        weights were coerced.  Zero weights are handled specially so an
        infinite value with zero weight does not force an \code{NaN}
        result.
 
        There is now a \code{"difftime"} method.
 
-      \item \code{bug.report()} now has arguments \code{'package'} and
-       \code{'lib.loc'} to generate bug reports about packages.  When
+      \item \code{bug.report()} now has arguments \code{package} and
+       \code{lib.loc} to generate bug reports about packages.  When
        this is used, it looks for a \code{BugReports} field in the
        package \file{DESCRIPTION} file, which will be assumed to be a
        URL at which to submit the report, and otherwise generates an
@@ -742,7 +742,7 @@
        possible completions alphabetically (e.g., function argument
        names) if \R was built with \code{readline >= 6}.
 
-      \item \code{select.list()} gains a \code{'graphics'} argument to
+      \item \code{select.list()} gains a \code{graphics} argument to
        allow Windows/Mac users to choose the text interface.  This
        changes the behaviour of \code{new.packages(ask=TRUE)} to be like
        \code{update.packages(ask=TRUE)} on those platforms in using a
@@ -751,19 +751,19 @@
       \item New function \code{chooseBioCmirror()} to set the
       \code{"BioC_mirror"} option.
 
-      \item The \R grammar now prevents using the argument \code{'name'}
+      \item The \R grammar now prevents using the argument \code{name}
        in signatures of S4 methods for \code{$} and \code{$<-}, since
        they will always be called with a character string value for
-       \code{'name'}.  The implicit S4 generic functions have been
-       changed to reflect this: packages which included \code{'name'} in
+       \code{name}.  The implicit S4 generic functions have been
+       changed to reflect this: packages which included \code{name} in
        the signature of their methods need to be updated and
        re-installed.
 
-      \item The handling of the \code{'method'} argument of \code{glm()}
+      \item The handling of the \code{method} argument of \code{glm()}
        has been refined following suggestions by Ioannis Kosmidis and
        Heather Turner.
 
-      \item \code{str()} gains a new argument \code{'list.len'} with
+      \item \code{str()} gains a new argument \code{list.len} with
        default 99, limiting the number of \code{list()} items (per
        level), thanks to suggestions from David Winsenius.
 
@@ -784,7 +784,7 @@
        package is attached are now more compact, using \code{strwrap()}
        instead of one object per line.
 
-      \item \code{print.rle()} gains argument \code{'prefix'}.
+      \item \code{print.rle()} gains argument \code{prefix}.
 
       \item \code{download.file()} gains a \code{"curl"} method, mainly
        for use on platforms which have \command{curl} but not
@@ -798,7 +798,7 @@
       \item \code{utf8ToInt()} and \code{intToUtf8()} now map \code{NA} inputs
       to \code{NA} outputs.
 
-      \item \code{file()} has a new argument \code{'raw'} which may help
+      \item \code{file()} has a new argument \code{raw} which may help
        if it is used with something other than a regular file, e.g. a
        character device.
 
@@ -813,7 +813,7 @@
        \code{"hexmode"} did).
 
        The \code{format()} methods for classes \code{"octmode"} and
-       \code{"hexmode"} gain a \code{'width'} argument.
+       \code{"hexmode"} gain a \code{width} argument.
 
       \item \code{seq.int()} returns an integer result in some further cases
        where \code{seq()} does, e.g. \code{seq.int(1L, 9L, by = 2L)}.
@@ -874,7 +874,7 @@
        archives available have been split, with a new option of
        \code{"Rhelp10"} for those from 2010.
 
-      \item New function \code{rasterImage()} in the \code{'graphics'}
+      \item New function \code{rasterImage()} in the \code{graphics}
        package for drawing raster images.
 
       \item \code{stats:::extractAIC.coxph()} now omits aliased terms
@@ -967,7 +967,7 @@
       \item Basic regular expressions are defunct, and
        \code{strsplit()}, \code{grep()}, \code{grepl()}, \code{sub()},
        \code{gsub()}, \code{regexpr()} and \code{gregexpr()} no longer
-       have an \code{'extended'} argument.
+       have an \code{extended} argument.
 
       \item \code{methods::trySilent()} is defunct.
 
@@ -1060,8 +1060,8 @@
        from the method definition but conforming (per the documentation)
        should now be ignored (treated as \code{"ANY"}) in dispatching.
 
-      \item The computations for S4 method evaluation when \code{'...'}
-       was in the signature could fail, treating \code{'...'} as an
+      \item The computations for S4 method evaluation when \code{...}
+       was in the signature could fail, treating \code{...} as an
        ordinary symbol.  This has been fixed, for the known cases.
 
       \item Various \code{ar()} fitting methods have more protection for
@@ -1084,7 +1084,7 @@
 
       \item \code{cut.POSIXt()} applied to a start value after the DST
        transition on a DST-change day could give the wrong time for
-       argument \code{'breaks'} in units of days or longer.  (\PR{14208})
+       argument \code{breaks} in units of days or longer.  (\PR{14208})
 
       \item \code{do_par()} \code{UNPROTECT}ed too early  (\PR{14214})
 
@@ -1124,7 +1124,7 @@
        log.p=TRUE)} now returns finite values instead of jumping to
        \code{-Inf} too early.  (\PR{14230}).
 
-      \item \code{parse(text=x)} misbehaved for objects \code{'x'} that
+      \item \code{parse(text=x)} misbehaved for objects \code{x} that
        were not coerced internally to character, notably symbols.
        (Reported to R-devel by Bill Dunlap.)
 
@@ -1163,14 +1163,14 @@
        segfault).  (\PR{14237})
 
       \item All the results from \code{hist()} now use the nominal
-       \code{'breaks'} not those adjusted by the numeric \sQuote{fuzz}:
-       in recent versions the nominal \code{'breaks'} were reported but
+       \code{breaks} not those adjusted by the numeric \sQuote{fuzz}:
+       in recent versions the nominal \code{breaks} were reported but
        the 'density' referred to the intervals used in the calculation
        -- which mattered very slightly for one of the extreme bins.
        (Based on a report by Martin Becker.)
 
       \item If \code{xy[z].coords} (used internally by many graphics
-       functions) are given a list as \code{'x'}, they now check that
+       functions) are given a list as \code{x}, they now check that
        the list has suitable names and give a more informative error
        message.  (\PR{13936})
     }
@@ -1246,7 +1246,7 @@
        memory (which also slowed them down).
 
       \item \command{R CMD SHLIB} could fail if used with paths that
-       were not alphanumeric, e.g. contained \code{'+'}.  (\PR{14168})
+       were not alphanumeric, e.g. contained \code{+}.  (\PR{14168})
 
       \item \code{sprintf()} was not re-entrant, which potentially
        caused problems if an \code{as.character()} method called it.
@@ -1276,7 +1276,7 @@
        infinite-loop.
 
       \item \code{poisson.test()} needed to pass argument
-       \code{'conf.level'} to \code{binom.test()}.  (\PR{14195})
+       \code{conf.level} to \code{binom.test()}.  (\PR{14195})
 
       \item The \code{"nls"} method for \code{df.residual()} gave
        incorrect results for models fitted with \code{na.action =
@@ -1308,7 +1308,7 @@
       \item \code{plot(ecdf(), log="x")} no longer gives an incorrect
       warning.
 
-      \item \code{read.fwf()} works again when argument \code{'file'} is
+      \item \code{read.fwf()} works again when argument \code{file} is
       a connection.
 
       \item Startup files will now be found if their paths exceed 255
@@ -1358,7 +1358,7 @@
    }
    \subsection{DEPRECATED & DEFUNCT}{
      \itemize{
-       \item The \code{'extended'} argument is deprecated in
+       \item The \code{extended} argument is deprecated in
        \code{strsplit()}, \code{grep()}, \code{grepl()}, \code{sub()},
        \code{gsub()}, \code{regexpr()} and \code{gregexpr()} (not just
        the value \code{extended = FALSE}) and will be removed in \R
@@ -1380,7 +1380,7 @@
 
        \item \code{[g]regexpr(pattern, fixed = TRUE)} returned match
        positions in bytes (not characters) in an MBCS locale if
-       \code{'pattern'} was a single byte.
+       \code{pattern} was a single byte.
 
        \code{[g]sub(fixed = TRUE)} with a single-byte pattern could
        conceivably have matched part of a multibyte character in a
@@ -1417,7 +1417,7 @@
        (\PR{14042})
 
        \item \code{rep(x, times, each = 2)} gave invalid results when the
-       \code{'times'} argument was a vector longer than \code{'x'}.
+       \code{times} argument was a vector longer than \code{x}.
        Reported by Bill Dunlap.
 
        \item An error when \code{unloadNamespace()} attempted to run the
@@ -1432,10 +1432,10 @@
 
        \item \code{pgamma(x, a, lower.tail=FALSE)} and
        \code{qgamma(\dots)} are now considerably more accurate in some
-       regions for very small \code{'a'}.  \code{qgamma()} now correctly
+       regions for very small \code{a}.  \code{qgamma()} now correctly
        returns \code{0} instead of \code{NaN} in similar extreme cases,
        and \code{qgamma()} no longer warns in the case of small
-       \code{'a'}, see (\PR{12324}).
+       \code{a}, see (\PR{12324}).
 
        \item \code{unname()} now also removes names from a zero length vector.
 
@@ -1469,7 +1469,7 @@
        (\PR{14068})
 
        \item \code{chisq.test()} could fail when given argument
-       \code{'x'} or \code{'y'} which deparsed to more than one line.
+       \code{x} or \code{y} which deparsed to more than one line.
        (Reported by Laurent Gauthier.)
 
        \item S4 methods are uncached whenever the name space containing
@@ -1493,11 +1493,10 @@
        correctly).  (Perhaps what was meant by \PR{14078}.)
 
        \item \code{unsplit(drop = TRUE)} applied to a data frame failed
-       to pass \code{'drop'} to the computation of row names.
-       (\PR{14084})
+       to pass \code{drop} to the computation of row names.  (\PR{14084})
 
        \item The \code{"difftime"} method of \code{mean()} ignored its
-       \code{'na.rm'} argument.
+       \code{na.rm} argument.
 
        \item \code{tcltk::tk_select.list()} is now more likely to remove the
        widget immediately after selection is complete.
@@ -1510,7 +1509,7 @@
 
        \item \code{wilcox.test(conf.int=TRUE)} has achieved.level
        corrected and, for \code{exact=FALSE}, now returns a
-       \code{'estimate'} component which does not depend on the
+       \code{estimate} component which does not depend on the
        alternative used.
 
        \item \code{help.search()} failed when the package argument was
@@ -1555,12 +1554,12 @@
 
 	 \item The Java/Javascript search engine has been replaced by an
          HTML interface to \code{help.search()}.  \code{help.start()} no
-         longer has an argument \code{'searchEngine'} as it is no longer
+         longer has an argument \code{searchEngine} as it is no longer
          needed.
 
 	 \item The HTML help can now locate cross-references of the form
          \code{\\link[pkg]\{foo\}} and \code{\\link[pkg:foo]\{bar\}}
-         where \code{'foo'} is an alias in the package, rather than the
+         where \code{foo} is an alias in the package, rather than the
          documented (basename of a) filename (since the documentation
          has been much ignored).
        }
@@ -1569,7 +1568,7 @@
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{polygon()}, \code{pdf()} and \code{postscript()} now
-       have an argument \code{'fillOddEven'} (default \code{FALSE}),
+       have an argument \code{fillOddEven} (default \code{FALSE}),
        which controls the mode used for polygon fills of
        self-intersecting shapes.
 
@@ -1600,35 +1599,35 @@
        have arguments to suppress locale information.
 
       \item In addition to previously only \code{round()}, there are
-       other \code{'Math'} group (S3) methods for \code{'difftime'},
+       other \code{Math} group (S3) methods for \code{"difftime"},
        such as \code{floor()}, \code{signif()}, \code{abs()}, etc.
 
       \item For completeness, \code{old.packages()} and
-       \code{available.packages()} allow arguments \code{'type'} to be
-       specified (you could always specify arguments \code{'available'}
-       or \code{'contriburl'}).
+       \code{available.packages()} allow arguments \code{type} to be
+       specified (you could always specify arguments \code{available}
+       or \code{contriburl}).
 
       \item \code{available.packages()} by default only returns
        information on the latest versions of packages whose version
        requirements are satisified by the currently running \R.
 
       \item \code{tools::write_PACKAGES()} has a new argument
-       \code{'latestOnly'}, which defaults to \code{TRUE} when only the
+       \code{latestOnly}, which defaults to \code{TRUE} when only the
        latest versions in the repository will be listed in the index.
 
-      \item \code{getOption()} has a new argument \code{'default'} that
+      \item \code{getOption()} has a new argument \code{default} that
        is returned if the specified option is not set.  This simplifies
        querying a value and checking whether it is \code{NULL} or not.
 
       \item \code{parse()} now warns if the requested encoding is not supported.
 
       \item The \code{"table"} method of \code{as.data.frame()} gains a
-       \code{'stringsAsFactors'} argument to allow the classifying
+       \code{stringsAsFactors} argument to allow the classifying
        factors to be returned as character vectors rather than the
        default factor type.
 
       \item If \code{model.frame.default()} encounters a character
-       variable where \code{'xlev'} indicates a factor, it now converts
+       variable where \code{xlev} indicates a factor, it now converts
        the variable to a factor (with a warning).
 
       \item \code{curve()} now returns a list containing the points that
@@ -1687,9 +1686,9 @@
        performance penalties for some common use cases.
 
       \item The \code{print()} method for \code{ls.str()} results now
-       obeys an optional \code{'digits'} argument.
+       obeys an optional \code{digits} argument.
 
-      \item The \code{'method'} argument of \code{glm()} now allows
+      \item The \code{method} argument of \code{glm()} now allows
       user-contributed methods.
 
       \item More general \code{reorder.default()} replaces functionality of
@@ -1702,19 +1701,19 @@
        have been added to the tools package to provide support for
        \code{aspell()} or other spell checkers.
 
-      \item \code{xtabs()} with the new argument \code{'sparse = TRUE'}
+      \item \code{xtabs()} with the new argument \code{sparse = TRUE}
        now returns a sparse Matrix, using package \pkg{Matrix}.
 
-      \item \code{contr.sum()} etc gain an argument \code{'sparse'}
+      \item \code{contr.sum()} etc gain an argument \code{sparse}
        which allows sparse matrices to be returned.
 
-       \code{contrasts()} also gains a \code{'sparse'} argument which it
+       \code{contrasts()} also gains a \code{sparse} argument which it
        passes to the actual contrast function if that has a formal
-       argument \code{'sparse'}.
+       argument \code{sparse}.
 
-       \code{contrasts(f, .) <- val} now also works when \code{'val'}
+       \code{contrasts(f, .) <- val} now also works when \code{val}
        is a sparse Matrix.  It is planned that \code{model.matrix()}
-       will work with such factors \code{'f'} in the future.
+       will work with such factors \code{f} in the future.
 
       \item \code{readNEWS()} will recognize a UTF-8 byte-order mark
        (BOM) in the \file{NEWS} file.  However, it is safer to use only
@@ -1729,7 +1728,7 @@
        all methods are debugged as well.
 
       \item Outlier symbols drawn by \code{boxplot()} now obey the
-       \code{'outlwd'} argument.  Reported by Jurgen Kluge.
+       \code{outlwd} argument.  Reported by Jurgen Kluge.
 
       \item \code{svd(x)} and \code{eigen(x)} now behave analogously to
        \code{qr(x)} in accepting logical matrices \code{x}.
@@ -1758,20 +1757,20 @@
        suggestion of Tim Hesterberg).
 
       \item \code{writeLines()}, \code{writeBin()} and
-       \code{writeChar()} have a new argument \code{'useBytes'}.  If
+       \code{writeChar()} have a new argument \code{useBytes}.  If
        false, character strings with marked encodings are translated to
        the current locale (as before) but if true they are written
        byte-by-byte.
 
-      \item \code{iconv()} has a new argument \code{'mark'} which can be
+      \item \code{iconv()} has a new argument \code{mark} which can be
        used (by experts) to suppress the declaration of encodings.
 
-      \item \file{DESCRIPTION} \code{'LinkingTo'} specs are now
+      \item \file{DESCRIPTION} file's \code{LinkingTo} specs are now
        recognized as installation dependencies, and included in package
        management computations.
 
-      \item Standardized \file{DESCRIPTION} \code{'License'} specs are
-       now available for package management computations.
+      \item Standardized \file{DESCRIPTION} file \code{License} specs
+       are now available for package management computations.
 
       \item \code{"\\uxxxx"} and \code{"\\Uxxxxxxxx"} escapes can now be
        parsed to a UTF-8 encoded string even in non-UTF-8 locales (this
@@ -1786,7 +1785,7 @@
       \item \code{Rd.sty} now makes a better job of setting email addresses,
        including using a monospaced font.
 
-      \item \code{textConnection()} gains an \code{'encoding'} argument
+      \item \code{textConnection()} gains an \code{encoding} argument
        to determine how input strings with marked encodings will be
        handled.
 
@@ -1800,10 +1799,10 @@
        is an error in the link.
 
       \item \code{identical()} gains three logical arguments, which
-       allow for even more differentiation, notably \code{'-0'} and
-       \code{'0'}.
+       allow for even more differentiation, notably \code{-0} and
+       \code{0}.
 
-      \item \code{legend()} now can specify the \code{'border'} color of
+      \item \code{legend()} now can specify the \code{border} color of
        filled boxes, thanks to a patch from Frederic Schutz.
 
       \item Indexing with a vector index to \code{[[ ]]} has now been
@@ -1825,11 +1824,11 @@
       \item Namespace importing is more careful about warning on masked
        generics, thanks to a patch by Yohan Chalabi.
 
-      \item \code{detach()} now has an argument \code{'character.only'}
+      \item \code{detach()} now has an argument \code{character.only}
        with the same meaning as for \code{library()} or
        \code{require()}.
 
-      \item \code{available.packages()} gains a \code{'filters'}
+      \item \code{available.packages()} gains a \code{filters}
        argument for specifying the filtering operations performed on the
        packages found in the repositories.  A new built-in
        \code{"license/FOSS"} filter only retains packages for which
@@ -1842,11 +1841,11 @@
        required for the class can be included as one of the superclasses
        in the Classes argument.
 
-      \item The argument \code{'f'} to \code{showMethods()} can be an
+      \item The argument \code{f} to \code{showMethods()} can be an
        expression evaluating to a generic function, allowing methods to
        be shown for non-exported generics and other nonstandard cases.
 
-      \item \code{sprintf()} now supports \code{'\%o'} for octal
+      \item \code{sprintf()} now supports \code{\%o} for octal
       conversions.
 
       \item New function \code{Sys.readlink()} for information about symbolic
@@ -1879,7 +1878,7 @@
       \item There are the beginnings of a Nynorsk translation by Karl Ove
        Hufthammer.
 
-      \item \code{stripchart()} allows \code{par} \code{'bg'} to be
+      \item \code{stripchart()} allows \code{par} \code{bg} to be
        passed in for the background colour for \code{pch = 21} (wish of
        \PR{13984}).
 
@@ -1917,7 +1916,7 @@
 
       \item Extended (and basic) regexps now support same set of options
        as for \code{fixed = TRUE} and \code{perl = TRUE}, including
-       \code{'useBytes'} and support for UTF-8-encoded strings in
+       \code{useBytes} and support for UTF-8-encoded strings in
        non-UTF-8 locales.
 
       \item \code{agrep()} now has full support for MBCS locales with a modest
@@ -1933,10 +1932,10 @@
       \item \code{useBytes = TRUE} now inhibits the translation of inputs with
        marked encodings.
 
-      \item \code{strsplit()} gains a \code{'useBytes'} argument.
+      \item \code{strsplit()} gains a \code{useBytes} argument.
 
       \item The algorithm used by \code{strsplit()} has been reordered
-       to batch by elements of \code{'split'}: this can be much faster for
+       to batch by elements of \code{split}: this can be much faster for
        \code{fixed = FALSE} (as multiple compilation of regexps is avoided).
 
       \item The help pages, including \code{?regexp}, have been updated
@@ -1957,20 +1956,20 @@
        Unix reset the \code{"browser"} option if given an argument of
        that name.
 
-       Arguments \code{'update'} and \code{'remote'} are now available
+       Arguments \code{update} and \code{remote} are now available
        on all platforms: the default is \code{update = FALSE} since the
        http server will update the package index at first use.
 
-      \item \code{help()} has a new argument \code{'help_type'} (with
+      \item \code{help()} has a new argument \code{help_type} (with
        default set by the option of that name) to supersede arguments
-       \code{'offline'}, \code{'htmlhelp'} and \code{'chmhelp'}
-       (although for now they still work if \code{'help_type'} is
+       \code{offline}, \code{htmlhelp} and \code{chmhelp}
+       (although for now they still work if \code{help_type} is
        unset).  There is a new type, \code{"PDF"} to allow offline PDF
        (rather than PostScript).
 
        A function \code{offline_help_helper()} will be used if this exists
        in the workspace or further down the search path, otherwise
-       the function of that name in the \code{'utils'} name space is used.
+       the function of that name in the \pkg{utils} name space is used.
 
       \item Plain text help is now used as the fallback for HTML help (as
        it always was for Compiled HTML help on Windows).
@@ -1992,13 +1991,13 @@
        errors in Rd files:  now all syntax errors are reported as
        warnings, and an attempt is made to continue parsing.
 
-      \item \code{parse_Rd()} now has an argument \code{'fragment'}
+      \item \code{parse_Rd()} now has an argument \code{fragment}
        (default \code{FALSE}) to accept small fragments of Rd files (so
        that \code{\\Sexpr} can output Rd code which is then parsed).
 
       \item \code{parse_Rd()} now always converts its input to UTF-8.
        The \code{Rd2*} rendering functions have a new argument,
-       \code{'outputEncoding'}, which controls how their output is
+       \code{outputEncoding}, which controls how their output is
        encoded.
 
       \item \code{parse_Rd()} no longer includes the newline as part of
@@ -2031,7 +2030,7 @@
   \subsection{COMPRESSION}{
     \itemize{
       \item New function \code{untar()} to list or unpack tar archives,
-       possibly compressed.  This uses either an external \code{'tar'}
+       possibly compressed.  This uses either an external \command{tar}
        command or an internal implementation.
 
       \item New function \code{tar()} to create (possibly compressed)
@@ -2041,7 +2040,7 @@
        \code{memDecompress()} for in-memory compression and
        decompression.
 
-      \item \code{bzfile()} has a \code{'compress'} argument to select
+      \item \code{bzfile()} has a \code{compress} argument to select
        the amount of effort put into compression when writing.
 
       \item New function \code{xzfile()} for use with
@@ -2096,15 +2095,14 @@
       \item \code{tools::Rd_parse()} is defunct (as this version of \R
        uses only Rd version 2).
 
-      \item Use of \file{~/.Rconf} (which was deprecated in favour of
-       \file{~/.Rconfig} in 2004) has finally been removed.
+      \item Use of file \file{~/.Rconf} (which was deprecated in favour
+       of \file{~/.Rconfig} in 2004) has finally been removed.
 
       \item Bundles of packages are deprecated.  See \sQuote{Writing R
        Extensions} for the steps needed to unbundle a bundle.
 
-      \item \code{help()} arguments \code{'offline'}, \code{'htmlhelp'}
-       and \code{'chmhelp'} are deprecated in favour of
-       \code{'help_type'}.
+      \item \code{help()} arguments \code{offline}, \code{htmlhelp} and
+       \code{chmhelp} are deprecated in favour of \code{help_type}.
 
       \item \code{clearNames()} (in package \pkg{stats}) is deprecated
       for \code{unname()}.
@@ -2121,7 +2119,7 @@
       something like \code{tryCatch(error = function(e) e)}.
 
       \item \code{index.search()} is deprecated: there are no longer
-       directories of types other than \code{'help'}.
+       directories of types other than \code{help}.
     }
   }
   \subsection{INSTALLATION}{
@@ -2143,11 +2141,11 @@
       \item C99 support for MBCS is now required, and configure option
        \option{--disable-mbcs} has been withdrawn.
 
-      \item Having a version of \code{'tar'} capable of automagically
+      \item Having a version of \command{tar} capable of automagically
        detecting compressed archives is useful for
-       \code{utils::untar()}, and so \code{'gtar'} (a common name for
-       GNU \code{tar}) is preferred to \code{'tar'}: set environment
-       variable \env{TAR} to specify a particular \code{'tar'} command.
+       \code{utils::untar()}, and so \command{gtar} (a common name for
+       GNU \command{tar}) is preferred to \command{tar}: set environment
+       variable \env{TAR} to specify a particular \command{tar} command.
     }
   }
   \subsection{INTERNATIONALIZATION}{
@@ -2155,7 +2153,7 @@
       \item There is some makefile support for adding/updating translations
        in packages: see \code{po/README} and \sQuote{Writing R Extensions}.
 
-       There is support for the use of \code{'dngettext'} for C-level
+       There is support for the use of \code{dngettext} for C-level
        translations in packages: see \sQuote{Writing R Extensions}.
     }
   }
@@ -2172,7 +2170,7 @@
       \item \code{n:m} now returns a result of type \code{"integer"} in
        a few more boundary cases.
 
-      \item The \code{'zap.ind'} argument to \code{printCoefmat()} did
+      \item The \code{zap.ind} argument to \code{printCoefmat()} did
        not usually work as other code attempted to ensure that non-zero
        values had a non-zero representation.
 
@@ -2194,7 +2192,7 @@
        versions of the same string differ in byte pattern.
 
       \item \code{methods(f)} used to warn unnecessarily for an S4
-       generic \code{'f'} which had been created based on an existing S3
+       generic \code{f} which had been created based on an existing S3
        generic.
 
       \item The check for consistent ordering of superclasses was not
