@@ -73,6 +73,10 @@ static void NULL_Raster(unsigned int *raster, int w, int h,
                         Rboolean interpolate,
                         const pGEcontext gc, pDevDesc dd) {
 }
+static SEXP NULL_Cap(pDevDesc dd)
+{
+    return R_NilValue;
+}
 static void NULL_Polyline(int n, double *x, double *y,
                           const pGEcontext gc,
                           pDevDesc dev) {
@@ -158,6 +162,7 @@ static Rboolean nullDeviceDriver(pDevDesc dev) {
     dev->polygon = NULL_Polygon;
     dev->path = NULL_Path;
     dev->raster = NULL_Raster;
+    dev->cap = NULL_Cap;
     dev->locator = NULL_Locator;
     dev->mode = NULL_Mode;
     dev->metricInfo = NULL_MetricInfo;
