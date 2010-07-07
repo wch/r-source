@@ -1887,7 +1887,9 @@ SEXP attribute_hidden do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    break;
 	cptr = cptr->nextcontext;
     }
-    args = cptr->promargs;
+    if (cptr != NULL) {
+	args = cptr->promargs;
+    }
     /* get the env recall was called from */
     s = R_GlobalContext->sysparent;
     while (cptr != NULL) {
@@ -1908,6 +1910,8 @@ SEXP attribute_hidden do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(s = findFun(CAR(cptr->call), cptr->sysparent));
     else
 	PROTECT(s = eval(CAR(cptr->call), cptr->sysparent));
+    if (TYPEOF(s) != CLOSXP) 
+    	error(_("'Recall' called from outside a closure"));
     ans = applyClosure(cptr->call, s, args, cptr->sysparent, R_BaseEnv);
     UNPROTECT(1);
     return ans;

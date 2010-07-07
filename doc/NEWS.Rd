@@ -406,6 +406,9 @@
 
       \item Fixed font face for CID fonts in \code{pdf()} graphics output
       (\PR{14326})
+      
+      \item Improperly calling \code{Recall()} from outside a function
+      could cause a segfault.  (Reported by Robert McGehee.)
     }
   }
 }
