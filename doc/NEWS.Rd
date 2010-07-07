@@ -37,16 +37,14 @@
        objects now insert linebreaks in long calls in the same way that
        the \code{print()} methods for \code{"summary.[g]lm"} objects
        have long done.  This does change the layout of the examples for
-       a number of packages, e.g. \pkg{MASS}.
-       (\PR{14250})
+       a number of packages, e.g. \pkg{MASS}.  (\PR{14250})
 
       \item \code{constrOptim()} can now be used with method
       \code{"SANN"}.  (\PR{14245})
 
        It gains an argument \code{'hessian'} to be passed to
        \code{optim()}, which allows all the \code{...} arguments to be
-       intended for \code{f()} and \code{grad()}.
-       (\PR{14071})
+       intended for \code{f()} and \code{grad()}.  (\PR{14071})
 
       \item \code{curve()} now allows \code{'expr'} to be an object of
        mode \code{"expression"} as well as \code{"call"} and
@@ -59,8 +57,7 @@
        \code{"POSIX[cl]t"} and \code{"Date"}: the default method has
        been able to handle those classes for a long time.  This
        \emph{inter alia} allows a single date-time object to be
-       supplied, the wish of
-       \PR{14016}.
+       supplied, the wish of \PR{14016}.
 
        The methods had a different default (\code{""}) for \code{xlab}.
 
@@ -133,8 +130,7 @@
       match \code{read.table()}.
 
       \item \code{points()} and \code{lines()} gain \code{"table"}
-       methods to match \code{plot()}.  (Wish of
-       \PR{10472}.)
+       methods to match \code{plot()}.  (Wish of \PR{10472}.)
 
       \item \code{Sys.chmod()} allows argument \code{'mode'} to be a
       vector, recycled along \code{'paths'}.
@@ -214,7 +210,7 @@
        arguments such as \code{'nsmall'} to \code{format()}.  (Wish of
        \PR{9574})
 
-      \item \code{legend()} supports \code{'title.adj'} (Wish of
+      \item \code{legend()} supports \code{'title.adj'}.  (Wish of
       \PR{13415})
 
       \item Added support for subsetting \code{"raster"} objects, plus
@@ -362,8 +358,7 @@
        (\PR{14105})
 
       \item \code{pt()} is more accurate in the left tail for \code{ncp}
-       large, e.g. \code{pt(-1000, 3, 200)}.
-       (\PR{14069})
+       large, e.g. \code{pt(-1000, 3, 200)}.  (\PR{14069})
 
       \item The default C function (\code{R_binary}) for binary ops now
        sets the S4 bit in the result if either argument is an S4 object.
@@ -488,12 +483,10 @@
 
       \item On systems without any default \env{LD_LIBRARY_PATH} (not
        even \file{/usr/local/lib}), \env{[DY]LIB_LIBRARY_PATH} is now
-       set without a trailing colon.
-       (\PR{13637})
+       set without a trailing colon.  (\PR{13637})
 
       \item More efficient implementation of \code{utf8ToInt()} on long
-       multi-byte strings with many multi-byte characters.
-       (\PR{14262})
+       multi-byte strings with many multi-byte characters.  (\PR{14262})
 
       \item \code{aggregate.ts()} gave platform-dependent results due to
        rounding error for \code{ndeltat != 1}.
@@ -506,16 +499,13 @@
         defined.  (\PR{14280})
 
       \item \code{splinefun(method = \code{"monoH.FC"})} was not
-      quite monotone in rare cases.
-      (\PR{14215})
+      quite monotone in rare cases.  (\PR{14215})
 
       \item \code{Rhttpd} no longer crashes due to \code{SIGPIPE} when
-       the client closes the connection prematurely.
-       (\PR{14266})
+       the client closes the connection prematurely.  (\PR{14266})
 
       \item \code{format.POSIXlt()} could cause a stack overflow and
-        crash when used on very long vectors.
-        (\PR{14267})
+        crash when used on very long vectors.  (\PR{14267})
 
       \item \code{Rd2latex()} incorrectly escaped special characters in
       \code{\\usage} sections.
@@ -552,8 +542,7 @@
         right-to-left.  (\PR{14263})
 
       \item \code{rbeta(n, a, b)} no longer occasionally returns
-       \code{NaN} for \code{a >> 1 > b}.
-       (\PR{14291})
+       \code{NaN} for \code{a >> 1 > b}.  (\PR{14291})
 
       \item \code{pnorm(x, log.p = TRUE)} could return \code{NaN} not
        \code{-Inf} for \code{x} near (minus for \code{lower.tail=TRUE})
@@ -561,8 +550,7 @@
 
       \item Compressed data files \file{*.(txt|tab|csv).(gz|bz2|xz)}
        were not recognized for the list of data topics and hence for
-       packages using \code{LazyData}.
-       (\PR{14273})
+       packages using \code{LazyData}.  (\PR{14273})
 
       \item \code{textConnection()} did an unnecessary translation on
        strings in a foreign encoding (e.g. UTF-8 strings on Windows) and
@@ -745,9 +733,8 @@
 
       \item \code{length(<POSIXlt>)} now returns the length of the
        corresponding abstract timedate-vector rather than always 9 (the
-       length of the underlying list structure).  (Wish of
-       \PR{14073} and
-       \PR{10507}.)
+       length of the underlying list structure).  (Wish of \PR{14073}
+       and \PR{10507}.)
 
       \item The \code{readline} completion backend no longer sorts
        possible completions alphabetically (e.g., function argument
@@ -893,13 +880,11 @@
        Therneau).
 
       \item \code{cor()} and \code{cov()} now test for misuse with
-       non-numeric arguments, such as the non-bug report
-       \PR{14207}.
+       non-numeric arguments, such as the non-bug report \PR{14207}.
 
       \item \code{pchisq(ncp =, log.p = TRUE)} is more accurate for
        probabilities near one.  E.g. \code{pchisq(80, 4, ncp=1,
-       log.p=TRUE)}.  (Maybe what was meant in
-       \PR{14216}.)
+       log.p=TRUE)}.  (Maybe what was meant in \PR{14216}.)
 
       \item \code{maintainer()} has been added, to give convenient
        access to the name of the maintainer of a package (contributed by
@@ -940,9 +925,9 @@
        output encoding.  On the other hand, conversion to LaTeX with the
        default \code{outputEncoding = "ASCII"} uses the second part.
 
-      \item A new class \code{"listOfMethods"} has been introduced to represent
-       the methods in a methods table, to replace the deprecated
-       class \code{"MethodsList"}.
+      \item A new class \code{"listOfMethods"} has been introduced to
+       represent the methods in a methods table, to replace the
+       deprecated class \code{"MethodsList"}.
 
       \item \code{any()} and \code{all()} return early if possible.
        This may speed up operations on long vectors.
@@ -1097,11 +1082,9 @@
 
       \item \code{cut.POSIXt()} applied to a start value after the DST
        transition on a DST-change day could give the wrong time for
-       argument \code{'breaks'} in units of days or longer.
-       (\PR{14208})
+       argument \code{'breaks'} in units of days or longer.  (\PR{14208})
 
-      \item \code{do_par()} \code{UNPROTECT}ed too early
-      (\PR{14214})
+      \item \code{do_par()} \code{UNPROTECT}ed too early  (\PR{14214})
 
       \item Subassignment \code{x[[....]] <- y} didn't check for a
        zero-length right hand side, and inserted a rubbish
@@ -1137,8 +1120,7 @@
       \item Extreme tail behavior of, \code{pbeta()} \{and hence
        \code{pf()}\}, e.g., \code{pbeta(x, 3, 2200, lower.tail=FALSE,
        log.p=TRUE)} now returns finite values instead of jumping to
-       \code{-Inf} too early
-       (\PR{14230}).
+       \code{-Inf} too early.  (\PR{14230}).
 
       \item \code{parse(text=x)} misbehaved for objects \code{'x'} that
        were not coerced internally to character, notably symbols.
@@ -1225,8 +1207,8 @@
   }
   \subsection{BUG FIXES}{
     \itemize{
-      \item Using \code{read.table(header=TRUE)} on a header with an embedded
-       new line would copy part of the header into the data.
+      \item Using \code{read.table(header=TRUE)} on a header with an
+       embedded new line would copy part of the header into the data.
        (\PR{14103})
 
       \item \code{qpois(p = 1, lambda = 0)} now gives 0 as for all other
@@ -1235,14 +1217,13 @@
       \item Functions related to string comparison
        (e.g. \code{unique()}, \code{match()}) could cause crashes when
        used with strings not in the native encoding, e.g. UTF-8 strings
-       on Windows.  (\PR{14114} and
-       \PR{14125})
+       on Windows.  (\PR{14114} and \PR{14125})
 
       \item \code{x[ , drop=TRUE]} dropped an \code{NA} level even if it
       was in use.
 
-      \item The dynamic HTML help system reported the wrong MIME type for the
-       style sheet.
+      \item The dynamic HTML help system reported the wrong MIME type
+       for the style sheet.
 
       \item \code{tools::codoc()} (used by \command{R CMD check}) was
        missing cases where the function had no arguments but was
@@ -1256,16 +1237,14 @@
       negative \code{a}.
 
       \item \code{ks.test()} could give a p-value that was off by one
-       observation due to rounding
-       error.  (\PR{14145})
+       observation due to rounding error.  (\PR{14145})
 
       \item \code{readBin()}/\code{readChar()} when reading millions of
        character strings in a single call used excessive amounts of
        memory (which also slowed them down).
 
       \item \command{R CMD SHLIB} could fail if used with paths that
-       were not alphanumeric, e.g. contained \code{'+'}.
-       (\PR{14168})
+       were not alphanumeric, e.g. contained \code{'+'}.  (\PR{14168})
 
       \item \code{sprintf()} was not re-entrant, which potentially
        caused problems if an \code{as.character()} method called it.
@@ -1295,8 +1274,7 @@
        infinite-loop.
 
       \item \code{poisson.test()} needed to pass argument
-       \code{'conf.level'} to \code{binom.test()}
-       (\PR{14195})
+       \code{'conf.level'} to \code{binom.test()}.  (\PR{14195})
 
       \item The \code{"nls"} method for \code{df.residual()} gave
        incorrect results for models fitted with \code{na.action =
@@ -1387,16 +1365,15 @@
    }
    \subsection{BUG FIXES}{
      \itemize{
-       \item \code{trigamma(x)} and other \code{psigamma(x, n)} calls are
-       now accurate for very large \code{abs(x)}.
-       (\PR{14020})
+       \item \code{trigamma(x)} and other \code{psigamma(x, n)} calls
+       are now accurate for very large \code{abs(x)}.  (\PR{14020})
 
        \item \code{[g]sub(perl=FALSE, fixed=FALSE)} could use excessive
        stack space when used with a very long vector containing some
        non-ASCII strings.
 
-       \item The default method of \code{weighted.mean(na.rm = TRUE)} did
-       not omit weights for \code{NA} observations in 2.10.0.
+       \item The default method of \code{weighted.mean(na.rm = TRUE)}
+       did not omit weights for \code{NA} observations in 2.10.0.
        (\PR{14032})
 
        \item \code{[g]regexpr(pattern, fixed = TRUE)} returned match
@@ -1428,8 +1405,7 @@
 
        \item There have been small fixes to the rendering of help,
        e.g. \code{\\command} is now rendered verbatim (so e.g. \code{--}
-       is not interpreted,
-       \PR{14045}).
+       is not interpreted, \PR{14045}).
 
        Also, there are many small changes to help files where the new
        converters were not rendering them in the same way as before.
@@ -1465,8 +1441,7 @@
        unevaluated calls.
 
        \item \code{complete.cases()} failed on a 0-column data frame
-       argument.  (Underlies
-       \PR{14066}.)
+       argument.  (Underlies \PR{14066}.)
 
        It could return nonsensical results if no input determined the
        number of cases (seen in the no-segfault tests).
@@ -1513,8 +1488,7 @@
        Windows) \file{"d:/afile"} in a directory for which
        \code{getwd()} would return a path with a trailing separator
        (largely cosmetic, as reasonable file systems handle such a path
-       correctly).  (Perhaps what was meant by
-       \PR{14078}.)
+       correctly).  (Perhaps what was meant by \PR{14078}.)
 
        \item \code{unsplit(drop = TRUE)} applied to a data frame failed
        to pass \code{'drop'} to the computation of row names.
@@ -1656,15 +1630,14 @@
        the variable to a factor (with a warning).
 
       \item \code{curve()} now returns a list containing the points that
-      were drawn.
+      w§ere drawn.
 
       \item \code{spineplot()} now accepts \code{axes = FALSE}, for
        consistency with other functions called by \code{plot.factor()}.
 
       \item The Kendall and Spearman methods of \code{cor.test()} can
        optionally use continuity correction when not computing exact
-       p-values.  (The Kendall case is the wish of
-       \PR{13691}.)
+       p-values.  (The Kendall case is the wish of \PR{13691}.)
 
       \item \R now keeps track of line numbers during execution for code
        sourced with \code{options(keep.source = TRUE)}.  The source
@@ -2118,8 +2091,8 @@
       \item \code{png(type="cairo1")} is defunct: the value is no longer
       recognized.
 
-      \item \code{tools::Rd_parse()} is defunct (as this version of \R uses only
-       Rd version 2).
+      \item \code{tools::Rd_parse()} is defunct (as this version of \R
+       uses only Rd version 2).
 
       \item Use of \file{~/.Rconf} (which was deprecated in favour of
        \file{~/.Rconfig} in 2004) has finally been removed.
@@ -2243,8 +2216,7 @@
 
       \item \code{prettyNum(z, drop0trailing=TRUE)} did not work
        correctly when \code{z} was a complex vector.  Consequently,
-       \code{str(z, \dots)} also did not.
-       (\PR{13985})
+       \code{str(z, \dots)} also did not.  (\PR{13985})
 
       \item \command{make distclean} removed too many files in
        \code{etc/} if builddir = srcdir.
