@@ -80,7 +80,7 @@ function(x, ...)
             vchunks[order(as.numeric_version(sub(" *patched", ".1",
                                                  names(vchunks))),
                                  decreasing = TRUE)]
-        vheaders <-
+	if(length(vchunks)) vheaders <-
             sprintf("%sChanges in version %s:\n\n",
                     c("", rep.int("\n", length(vchunks) - 1L)),
                     names(vchunks))
