@@ -301,17 +301,17 @@ Rd2txt_NEWS_in_Rd_options <-
 Rd2txt_NEWS_in_Rd <-
 function(f, out = "") {
     if (grepl("[.]rds$", f)) f <- .readRDS(f)
-    tools::Rd2txt(f, out,
-                  stages = c("install", "render"),
-                  outputEncoding = if(l10n_info()[["UTF-8"]]) "" else "ASCII//TRANSLIT",
-                  options = Rd2txt_NEWS_in_Rd_options)
+    Rd2txt(f, out,
+           stages = c("install", "render"),
+           outputEncoding = if(l10n_info()[["UTF-8"]]) "" else "ASCII//TRANSLIT",
+           options = Rd2txt_NEWS_in_Rd_options)
  }
 
 Rd2HTML_NEWS_in_Rd <-
 function(f, out) {
     if (grepl("[.]rds$", f)) f <- .readRDS(f)
-    tools::Rd2HTML(f, out,
-                   stages = c("install", "render"))
+    Rd2HTML(f, out,
+            stages = c("install", "render"))
 }
 
 Rd2pdf_NEWS_in_Rd <-
@@ -321,9 +321,9 @@ function(f, pdf_file) {
     f3 <- file.path(tempdir(), "NEWS.tex")
     f4 <- file.path(tempdir(), "NEWS.pdf")
     out <- file(f3, "w")
-    tools::Rd2latex(f, f2,
-                    stages = c("install", "render"),
-                    outputEncoding = "UTF-8", writeEncoding = FALSE)
+    Rd2latex(f, f2,
+             stages = c("install", "render"),
+             outputEncoding = "UTF-8", writeEncoding = FALSE)
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
 #        "\\usepackage[", Sys.getenv("R_RD4PDF", "times,hyper"), "]{Rd}\n",
         "\\usepackage[ae,hyper]{Rd}\n",
@@ -357,11 +357,12 @@ function(con = stdout(), codify = FALSE)
         on.exit(close(con))
     }
 
-    out(c("\\name{NEWS}",
+    out(c("\\newcommand{\\PR}{\\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}",
+          "\\name{NEWS}",
           "\\title{R News}",
           "\\encoding{UTF-8}"))
 
-    for(y in tools::readNEWS(chop = "keepAll")) {
+    for(y in readNEWS(chop = "keepAll")) {
         for(i in seq_along(y)) {
             out(sprintf("\\section{CHANGES IN R VERSION %s}{",
                         names(y)[i]))
@@ -384,8 +385,7 @@ function(con = stdout(), codify = FALSE)
                         chunk <- gsub("(\\W|^)(\"[[:alnum:]_.]*\"|[[:alnum:]_.:]+\\(\\))(\\W|$)",
                                       "\\1\\\\code{\\2}\\3", chunk)
                     }
-                    chunk <- gsub("PR#([[:digit:]]+)",
-                                  "\\\\Sexpr[results=rd]{tools:::Rd_expr_PR(\\1)}",
+                    chunk <- gsub("PR#([[:digit:]]+)", "\\\\PR{\\1}",
                                   chunk)
                     out(paste("      \\item", chunk))
                 }
