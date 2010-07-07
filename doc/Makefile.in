@@ -34,7 +34,7 @@ R: Makefile svnonly
 	  $(MAKE) rdocdir=$(top_builddir)/doc install-sources; \
 	fi
 
-docs: R.1 NEWS.rds ../NEWS html/NEWS.html
+docs: R.1 NEWS.rds ../NEWS html/NEWS.html ../NEWS.pdf
 	@(cd manual && $(MAKE) $@)
 
 R.1:
@@ -51,8 +51,8 @@ NEWS.rds: $(srcdir)/NEWS.Rd
 html/NEWS.html: NEWS.rds
 	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.rds", "html/NEWS.html")' |  $(R_EXE)
 
-NEWS.pdf: NEWS.rds
-	@$(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "NEWS.pdf")' |  $(R_EXE)
+../NEWS.pdf: NEWS.rds
+	@$(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "../NEWS.pdf")' |  $(R_EXE)
 
 
 install: install-message installdirs install-sources install-sources2 install-man

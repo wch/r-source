@@ -235,12 +235,14 @@
 
       \item File \file{NEWS} is now generated at installation with a
       slightly different format: it will be in UTF-8 on platforms using
-      UTF-8, and otherwise in ASCII.
+      UTF-8, and otherwise in ASCII.  There is also a PDF version,
+      \file{NEWS.pdf}, installed at the top-level of the R distribution.
+      [The format of these files is preliminary.]
 
       \item \code{kmeans(x, 1)} now works.
 
       \item \code{arrayInd()} and \code{which()} gain an argument
-      \code{useNames}. For \code{arrayInd}, the default is now false,
+      \code{useNames}.  For \code{arrayInd}, the default is now false,
       for speed reasons.
     }
   }

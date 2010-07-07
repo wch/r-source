@@ -325,10 +325,11 @@ function(f, pdf_file) {
                     stages = c("install", "render"),
                     outputEncoding = "UTF-8", writeEncoding = FALSE)
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
-        "\\usepackage[", Sys.getenv("R_RD4PDF", "times"), "]{Rd}\n",
+#        "\\usepackage[", Sys.getenv("R_RD4PDF", "times,hyper"), "]{Rd}\n",
+        "\\usepackage[ae,hyper]{Rd}\n",
         "\\usepackage[utf8]{inputenc}\n",
         "\\begin{document}\n",
-        "\\chapter*{}\n",
+        "\\chapter*{}\\sloppy\n",
         sep = "", file = out)
     writeLines(readLines(f2), out)
     writeLines("\\end{document}", out)
