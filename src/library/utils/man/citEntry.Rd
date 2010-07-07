@@ -65,21 +65,6 @@ citFooter(...)
   \code{readCitationFile} makes use of the \code{Encoding} element (if
   any) of \code{meta} to determine the encoding of the file.
 }
-% <FIXME>
-% \value{
-%   \code{citEntry} returns an object of class \code{"citation"}, for
-%   which there are \code{print} and \code{\link{toBibtex}} methods.  This
-%   is a named list of entries with attributes \code{"entry"},
-%   \code{"textversion"} and optionally \code{"header"} and
-%   \code{"footer"}.
-  
-%   \code{readCitationFile} returns an object of class
-%   \code{"citationList"}, also with \code{print} and
-%   \code{\link{toBibtex}} methods.  This is a list of one or more
-%   elements of class \code{"citation"} with optional attributes
-%   \code{"header"} and \code{"footer"}.
-% }
-% </FIXME>
 \keyword{misc}
 \examples{
 basecit <- system.file("CITATION", package="base")

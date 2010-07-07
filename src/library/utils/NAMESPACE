@@ -100,8 +100,6 @@ S3method(upgrade, packageStatus)
 ## can't register update.packageStatus as update is in stats
 ## and would create a cycle.
 
-## <FIXME>
-## New
 export("bibentry")
 S3method("$", "bibentry")
 S3method("$", "person")
@@ -118,16 +116,6 @@ S3method("print", "bibentry")
 S3method(print, citation)
 S3method("print", "person")
 S3method("toBibtex", "bibentry")
-## </FIXME>
-
-## <FIXME>
-## Old
-## S3method(as.character, personList)
-## S3method(print, citationList)
-## S3method(toBibtex, citation)
-## S3method(toBibtex, citationList)
-## S3method(toBibtex, personList)
-## </FIXME>
 
 S3method(.DollarNames, default)
 S3method(.DollarNames, list)

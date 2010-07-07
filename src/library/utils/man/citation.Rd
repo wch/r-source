@@ -6,20 +6,12 @@
 \name{citation}
 \title{Citing R and R Packages in Publications}
 \alias{citation}
-% <FIXME>
-%   \alias{toBibtex.citation}
-%   \alias{toBibtex.citationList}
-% </FIXME>
 \description{
   How to cite \R and \R packages in publications.
 }
 \usage{
 citation(package = "base", lib.loc = NULL, auto = NULL)
 }
-% <FIXME>
-%   \S3method{toBibtex}{citation}(object, \dots)
-%   \S3method{toBibtex}{citationList}(object, \dots)
-% </FIXME>
 \arguments{
   \item{package}{a character string with the name of a single package.
     An error occurs if more than one package name is given.}
@@ -31,10 +23,6 @@ citation(package = "base", lib.loc = NULL, auto = NULL)
     auto-generated from the package \file{DESCRIPTION} metadata should
     be used or not, or \code{NULL} (default), indicating that a
     \file{CITATION} file is used if it exists.}
-% <FIXME>  
-%   \item{object}{return object of \code{citation}.}
-%   \item{\dots}{currently not used.}
-% </FIXME>
 }
 \details{
   The \R core development team and the very active community of package

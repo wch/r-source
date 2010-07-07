@@ -14,10 +14,6 @@
 \alias{as.personList}
 \alias{as.personList.person}
 \alias{as.personList.default}
-% <FIXME>
-%   \alias{as.character.personList}
-%   \alias{toBibtex.personList}
-% </FIXME>
 \description{
   A class and utility methods for holding information about persons
   like name and email address.
@@ -31,12 +27,6 @@ as.person(x)
 personList(...)
 as.personList(x)
 }
-% <FIXME>
-%   \S3method{as.character}{person}(x, ...)
-%   \S3method{as.character}{personList}(x, ...)
-%   \S3method{toBibtex}{person}(object, ...)
-%   \S3method{toBibtex}{personList}(object, ...)
-% </FIXME>
 \arguments{
   \item{given}{a character string with the \emph{given} names.}
   \item{family}{a character string with the \emph{family} name.}
@@ -52,10 +42,6 @@ as.personList(x)
     objects}
   \item{x}{a character string or an object of class \code{person} or
     \code{personList}}
-% <FIXME>  
-%  \item{object}{an object of class \code{person} or
-%    \code{personList}}
-% </FIXME>
 }
 \details{
   Personal names are rather tricky, e.g.,
