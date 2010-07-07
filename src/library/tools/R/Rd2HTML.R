@@ -405,13 +405,13 @@ Rd2HTML <-
                    of0('<a href="', url, '">', url, '</a>')
                },
                "\\href" = {
-               	   if(length(block[[1]])) {
-               	   	url <- paste(as.character(block[[1]]), collapse="")
+               	   if(length(block[[1L]])) {
+               	   	url <- paste(as.character(block[[1L]]), collapse="")
                	   	url <- gsub("\n", "", url)
                	   	of0('<a href="', url, '">')
                	   	closing <- "</a>"
                	   } else closing <- ""
-               	   writeContent(block[[2]], tag)
+               	   writeContent(block[[2L]], tag)
                	   of0(closing)
                },
                "\\Sexpr"= of0(as.character.Rd(block, deparse=TRUE)),
@@ -672,7 +672,7 @@ Rd2HTML <-
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
     if (fragment) {
-    	if (sections[1] %in% names(sectionOrder))
+    	if (sections[1L] %in% names(sectionOrder))
     	    for (i in seq_along(sections))
     	    	writeSection(Rd[[i]], sections[i])
     	else

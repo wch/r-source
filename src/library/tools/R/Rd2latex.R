@@ -188,13 +188,13 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         if (tag == "\\url")
             url <- as.character(block)
         else
-            url <- as.character(block[[1]])
+            url <- as.character(block[[1L]])
     	of0(tag, "{",
             gsub("\n", "", paste(as.character(url), collapse="")),
             "}")
         if (tag == "\\href") {
             of1("{")
-            writeContent(block[[2]], tag)
+            writeContent(block[[2L]], tag)
             of1("}")
         }   
     }
@@ -673,7 +673,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
     } else latexEncoding <- NA
 
     if (fragment) {
-    	if (sections[1] %in% names(sectionOrder))
+    	if (sections[1L] %in% names(sectionOrder))
     	    for (i in seq_along(sections))
     	    	writeSection(Rd[[i]], sections[i])
     	else

@@ -1232,7 +1232,7 @@
                          "-e 'cat(.libPaths()[1L])'"),
                    intern = TRUE)
         }
-        else .libPaths()[1]
+        else .libPaths()[1L]
         starsmsg(stars, "installing to library ", sQuote(lib))
     } else {
         lib0 <- lib <- path.expand(lib)

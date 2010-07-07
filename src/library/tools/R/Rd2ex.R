@@ -38,7 +38,7 @@ Rd2ex <-
         of1(paste(..., sep=""))
     of1 <- function(text) {
         if (dropNewline && length(text)) {
-            text[1] <- psub("^\n", "", text[1L])
+            text[1L] <- psub("^\n", "", text[1L])
             dropNewline <<- FALSE
         }
         WriteLines(text, con, outputEncoding, sep = "")

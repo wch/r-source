@@ -89,7 +89,7 @@
         writeLines(c("   %       total       %        self",
                      " total    seconds     self    seconds    name",
                      sprintf("%6.1f%10.2f%10.1f%10.2f     %s",
-                             m[,1], m[,2], m[,3], m[,4], m[,5])))
+                             m[,1L], m[,2L], m[,3L], m[,4L], m[,5L])))
     }
     if(bytotal && byself) cat("\n\n")
     if(byself) {
@@ -98,7 +98,7 @@
         writeLines(c("   %        self       %      total",
                      "  self    seconds    total   seconds    name",
                      sprintf("%6.1f%10.2f%10.1f%10.2f     %s",
-                             m[,1], m[,2], m[,3], m[,4], m[,5])))
+                             m[,1L], m[,2L], m[,3L], m[,4L], m[,5L])))
     }
     do_exit(0L)
 }

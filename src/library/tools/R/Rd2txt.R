@@ -44,7 +44,7 @@ Rd2txt_options <- local({
         if (!length(args))
             return(opts)
         else {
-            if (is.list(args[[1]])) args <- args[[1]]
+            if (is.list(args[[1L]])) args <- args[[1L]]
             result <- opts[names(args)]
             opts[names(args)] <<- args
             invisible(result)
@@ -410,10 +410,10 @@ Rd2txt <-
                               ">") ,
                "\\href"= {
                    opts <- Rd2txt_options()
-                   writeContent(block[[2]], tag)
+                   writeContent(block[[2L]], tag)
                    if (opts$showURLs)
   			put(" (URL: ",
-  			    gsub("\n", "", paste(as.character(block[[1]]), collapse="")),
+  			    gsub("\n", "", paste(as.character(block[[1L]]), collapse="")),
   			    ")")
                },
                "\\Sexpr"= put(as.character.Rd(block, deparse=TRUE)),
@@ -882,11 +882,11 @@ Rd2txt <-
         }
         blankLine()
 
-        indent <<- save[1]
-        sectionLevel <<- save[2]
-        keepFirstIndent <<- save[3]
-        dropBlank <<- save[4]
-        wrapping <<- save[5]
+        indent <<- save[1L]
+        sectionLevel <<- save[2L]
+        keepFirstIndent <<- save[3L]
+        dropBlank <<- save[4L]
+        wrapping <<- save[5L]
     }
 
     if (is.character(out)) {
@@ -905,7 +905,7 @@ Rd2txt <-
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
     if (fragment) {
-    	if (sections[1] %in% names(sectionOrder))
+    	if (sections[1L] %in% names(sectionOrder))
     	    for (i in seq_along(sections))
     	    	writeSection(Rd[[i]], sections[i])
     	else
