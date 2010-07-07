@@ -1,6 +1,6 @@
 %%% Rd.sty ... Style for printing the R manual
 %%% Part of the R package, http://www.R-project.org
-%%% Copyright (C) 2003-2008 The R Foundation
+%%% Copyright (C) 2003-20010 The R Foundation
 %%% Distributed under GPL 2 or later
 %%%
 %%% Modified 1998/01/05 by Friedrich Leisch
@@ -184,7 +184,7 @@
 \newcommand{\deqn}[2]{\[#1\]}
 \newcommand{\eqn}[2]{$#1$}
 \newcommand{\bold}[1]{\ifmmode\bm{#1}\else\textbf{#1}\fi}
-\newcommand{\file}[1]{`\textsf{#1}'}
+\newcommand{\file}[1]{`\texttt{#1}'}
 
 \ifthenelse{\boolean{Rd@use@hyper}}
 {\newcommand{\link}[1]{\hyperlink{Rfn.#1}{#1}\index{#1@\texttt{#1}}}}
@@ -377,6 +377,10 @@
 \providecommand{\mathonesuperior}{\ensuremath{^1}}
 \providecommand{\mathtwosuperior}{\ensuremath{^2}}
 \providecommand{\maththreesuperior}{\ensuremath{^3}}
+
+\ifthenelse{\boolean{Rd@use@hyper}}
+{}
+{\newcommand{\href}[2]{#2}}
 
 \InputIfFileExists{Rd.cfg}{%
   \typeout{Reading personal defaults ...}}{}
