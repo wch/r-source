@@ -90,7 +90,7 @@ void attribute_hidden getParseFilename(char* buffer, int buflen)
     if (R_ParseErrorFile && !isNull(R_ParseErrorFile)) {
 	SEXP filename;
 	PROTECT(filename = findVar(install("filename"), R_ParseErrorFile));
-	if (!isNull(filename))
+	if (isString(filename) && length(filename))
 	    strncpy(buffer, CHAR(STRING_ELT(filename, 0)), buflen - 1);
 	UNPROTECT(1);
     }

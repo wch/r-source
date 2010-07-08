@@ -1257,7 +1257,7 @@ static void yyerror(const char *s)
     	sprintf(ParseErrorMsg, "%s", s);
     }
     filename = findVar(install("filename"), SrcFile);
-    if (filename == R_UnboundValue)
+    if (isString(filename) && length(filename))
     	strncpy(ParseErrorFilename, CHAR(STRING_ELT(filename, 0)), PARSE_ERROR_SIZE - 1);
     else
         ParseErrorFilename[0] = '\0';

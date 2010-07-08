@@ -531,7 +531,7 @@ void SrcrefPrompt(const char * prefix, SEXP srcref)
 	SEXP srcfile = getAttrib(srcref, R_SrcfileSymbol);
 	if (TYPEOF(srcfile) == ENVSXP) {
 	    SEXP filename = findVar(install("filename"), srcfile);
-	    if (TYPEOF(filename) == STRSXP && length(filename) == 1) {
+	    if (isString(filename) && length(filename)) {
 	    	Rprintf(_("%s at %s#%d: "), prefix, CHAR(STRING_ELT(filename, 0)), 
 	                                    asInteger(srcref));
 	        return;
