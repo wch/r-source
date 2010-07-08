@@ -196,7 +196,10 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		R_ShowMessage(msg);
 	    }
 	    /* mop up --max/min/-n/vsize */
-	    else if(strncmp(*av+7, "size", 4) == 0) {
+	    else if( !strncmp(*av, "--min-nsize", 11) ||
+		     !strncmp(*av, "--max-nsize", 11) ||
+		     !strncmp(*av, "--min-vsize", 11) ||
+		     !strncmp(*av, "--max-vsize", 11) ) {
 		if(strlen(*av) < 13) {
 		    ac--; av++; p = *av;
 		}
