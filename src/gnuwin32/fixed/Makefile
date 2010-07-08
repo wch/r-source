@@ -37,7 +37,7 @@ else
 endif
 	@$(ECHO) done > fixetc
 
-fixdoc: $(wildcard ../CHANGES*)
+fixdoc: $(wildcard ../CHANGES?)
 	$(CP) -p $^ $(R_HOME)/doc
 	@$(ECHO) done > fixdoc
 

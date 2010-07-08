@@ -17,8 +17,8 @@ DATE = $(shell date +%F)
 REXE = $(R_HOME)/$(BINDIR)/rterm.exe --vanilla --slave
 
 all:
-	$(CP) ../CHANGES CHANGES.$(RPREFIX)
-	$(CP) ../../../NEWS NEWS.$(RPREFIX)
+	$(CP) ../../../doc/html/CHANGES.html CHANGES.$(RPREFIX).html
+	$(CP) ../../../doc/html/NEWS.html NEWS.$(RPREFIX).html
 	$(CP) ../installer/$(RPREFIX)-win*.exe .
 	($(ECHO) 'cat(md5sum("$(RPREFIX)-win$(BITSIZE).exe"),"*$(RPREFIX)-win$(BITSIZE).exe")' \
          | $(REXE) R_DEFAULT_PACKAGES=tools > md5sum.txt)

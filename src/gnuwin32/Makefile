@@ -264,7 +264,8 @@ distclean: clean
 	$(RM) ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/NEWS.html \
-	../../doc/NEWS.rds ../../NEWS
+	../../doc/NEWS.rds ../../NEWS \
+	../../doc/CHANGES.rds ../../doc/html/CHANGES.html
 	$(RM) ../../etc/Makeconf ../../etc/Rconsole ../../etc/Rdevga \
 	../../etc/Rprofile.site ../../etc/rgb.txt ../../etc/Rcmd_environ \
 	../../tests/*.Rout ../../tests/*.Rout.fail
@@ -281,7 +282,6 @@ distclean: clean
 	$(MAKE) -C cran clean
 	$(RM) -r .vignettes # it gets left behind if there is an error
 	$(RM) -r ../../share/locale
-	$(RM) ../../doc/CHANGES*
 	$(RM) MkRules Rpwd.exe # do this last of all
 
 veryclean: distclean
