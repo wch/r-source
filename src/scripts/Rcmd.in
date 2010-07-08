@@ -24,13 +24,13 @@ else
 fi
 
 ## Append 'share/texmf/...' to TeX's input search path.
-if test -z "$TEXINPUTS}"; then
+if test -z "${TEXINPUTS}"; then
   TEXINPUTS=".:${R_SHARE_DIR}/texmf/tex/latex:"
 else
   TEXINPUTS=".:${TEXINPUTS}:${R_SHARE_DIR}/texmf/tex/latex:"
 fi
 export BSTINPUTS
-if test -z "$BSTINPUTS}"; then
+if test -z "${BSTINPUTS}"; then
   BSTINPUTS=".:${R_SHARE_DIR}/texmf/bibtex/bst:"
 else
   BSTINPUTS=".:${BSTINPUTS}:${R_SHARE_DIR}/texmf/bibtex/bst:"
