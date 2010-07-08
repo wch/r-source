@@ -29,7 +29,7 @@ if test -z "${TEXINPUTS}"; then
 else
   TEXINPUTS=".:${TEXINPUTS}:${R_SHARE_DIR}/texmf/tex/latex:"
 fi
-export BSTINPUTS
+export TEXINPUTS
 if test -z "${BSTINPUTS}"; then
   BSTINPUTS=".:${R_SHARE_DIR}/texmf/bibtex/bst:"
 else
