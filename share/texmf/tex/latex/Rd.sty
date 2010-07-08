@@ -378,9 +378,5 @@
 \providecommand{\mathtwosuperior}{\ensuremath{^2}}
 \providecommand{\maththreesuperior}{\ensuremath{^3}}
 
-\ifthenelse{\boolean{Rd@use@hyper}}
-{}
-{\newcommand{\href}[2]{#2}}
-
 \InputIfFileExists{Rd.cfg}{%
   \typeout{Reading personal defaults ...}}{}
