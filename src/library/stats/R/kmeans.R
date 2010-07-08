@@ -22,14 +22,14 @@ function(x, centers, iter.max = 10, nstart = 1,
         Z <-
             switch(nmeth,
                    { # 1
-                       Z <- .Fortran("kmns", as.double(x), as.integer(m),
+                       Z <- .Fortran(R_kmns, as.double(x), as.integer(m),
                                 as.integer(ncol(x)),
                                 centers = as.double(centers),
                                 as.integer(k), c1 = integer(m), integer(m),
                                 nc = integer(k), double(k), double(k), integer(k),
                                 double(m), integer(k), integer(k),
                                 as.integer(iter.max), wss = double(k),
-                                ifault = as.integer(0L), PACKAGE="stats")
+                                ifault = as.integer(0L))
                        switch(Z$ifault,
                               stop("empty cluster: try a better set of initial centers",
                                    call.=FALSE),
@@ -41,12 +41,11 @@ function(x, centers, iter.max = 10, nstart = 1,
                        Z
                    },
                    { # 2
-                       Z <- .C("kmeans_Lloyd", as.double(x), as.integer(m),
+                       Z <- .C(R_kmeans_Lloyd, as.double(x), as.integer(m),
                                as.integer(ncol(x)),
                                centers = as.double(centers), as.integer(k),
                                c1 = integer(m), iter = as.integer(iter.max),
-                               nc = integer(k), wss = double(k),
-                               PACKAGE="stats")
+                               nc = integer(k), wss = double(k))
                        if(Z$iter > iter.max)
                            warning("did not converge in ",
                                   iter.max, " iterations", call.=FALSE)
@@ -55,12 +54,11 @@ function(x, centers, iter.max = 10, nstart = 1,
                        Z
                    },
                    { # 3
-                       Z <- .C("kmeans_MacQueen", as.double(x), as.integer(m),
+                       Z <- .C(R_kmeans_MacQueen, as.double(x), as.integer(m),
                                as.integer(ncol(x)),
                                centers = as.double(centers), as.integer(k),
                                c1 = integer(m), iter = as.integer(iter.max),
-                               nc = integer(k), wss = double(k),
-                               PACKAGE="stats")
+                               nc = integer(k), wss = double(k))
                        if(Z$iter > iter.max)
                            warning("did not converge in ",
                                    iter.max, " iterations", call.=FALSE)
@@ -104,26 +102,26 @@ function(x, centers, iter.max = 10, nstart = 1,
     if(ncol(x) != ncol(centers))
 	stop("must have same number of columns in 'x' and 'centers'")
     Z <- do_one(nmeth)
-    if(nstart >= 2 && !is.null(cn)) {
-        best <- sum(Z$wss)
-        for(i in 2:nstart) {
-            centers <- cn[sample.int(mm, k), , drop=FALSE]
-            ZZ <- do_one(nmeth)
-            if((z <- sum(ZZ$wss)) < best) {
-                Z <- ZZ
-                best <- z
-            }
-        }
-    }
+    best <- sum(Z$wss)
+    if(nstart >= 2 && !is.null(cn))
+	for(i in 2:nstart) {
+	    centers <- cn[sample.int(mm, k), , drop=FALSE]
+	    ZZ <- do_one(nmeth)
+	    if((z <- sum(ZZ$wss)) < best) {
+		Z <- ZZ
+		best <- z
+	    }
+	}
     centers <- matrix(Z$centers, k)
     dimnames(centers) <- list(1L:k, dimnames(x)[[2L]])
     cluster <- Z$c1
     if(!is.null(rn <- rownames(x)))
         names(cluster) <- rn
-    out <- list(cluster = cluster, centers = centers, withinss = Z$wss,
-                size = Z$nc)
-    class(out) <- "kmeans"
-    out
+    totss <- sum(scale(x, scale = FALSE)^2)
+    structure(list(cluster = cluster, centers = centers, totss = totss,
+                   withinss = Z$wss, tot.withinss = best,
+                   betweenss = totss - best, size = Z$nc),
+	      class = "kmeans")
 }
 
 ## modelled on print methods in the cluster package
@@ -137,7 +135,9 @@ print.kmeans <- function(x, ...)
     print(x$cluster, ...)
     cat("\nWithin cluster sum of squares by cluster:\n")
     print(x$withinss, ...)
-    cat("\nAvailable components:\n")
+    cat(sprintf(" (between_SS / total_SS = %5.1f %%)\n",
+		100 * x$betweenss/x$totss),
+	"Available components:\n", sep="\n")
     print(names(x))
     invisible(x)
 }

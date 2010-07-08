@@ -18,19 +18,15 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
                      "MacQueen"))
 }
 \arguments{
-  \item{x}{A numeric matrix of data, or an object that can be coerced to
+  \item{x}{numeric matrix of data, or an object that can be coerced to
     such a matrix (such as a numeric vector or a data frame with all
     numeric columns).}
-
-  \item{centers}{Either the number of clusters or a set of initial
-    (distinct) cluster centres.  If a number, a random set of (distinct)
-    rows in \code{x} is chosen as the initial centres.}
-
-  \item{iter.max}{The maximum number of iterations allowed.}
-
-  \item{nstart}{If \code{centers} is a number, how many random sets
+  \item{centers}{either the number of clusters, say \eqn{k}, or a set of
+    initial (distinct) cluster centres.  If a number, a random set of
+    (distinct) rows in \code{x} is chosen as the initial centres.}
+  \item{iter.max}{the maximum number of iterations allowed.}
+  \item{nstart}{if \code{centers} is a number, how many random sets
     should be chosen?}
-
   \item{algorithm}{character: may be abbreviated.}
 }
 \details{
@@ -45,8 +41,8 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   rather than the general method: most commonly the algorithm given by
   MacQueen (1967) but sometimes that given by Lloyd (1957) and Forgy
   (1965). The Hartigan--Wong algorithm generally does a better job than
-  either of those, but trying several random starts is often
-  recommended.
+  either of those, but trying several random starts (\code{nstart}\eqn{>
+  1}) is often recommended.
   For ease of programmatic exploration, \eqn{k=1} is allowed, notably
   returning the center and \code{withinss}.
 
@@ -57,17 +53,18 @@ kmeans(x, centers, iter.max = 10, nstart = 1,
   an error for the Hartigan--Wong method.
 }
 \value{
-  An object of class \code{"kmeans"} which is a list with components:
-
+  An object of class \code{"kmeans"} which has a \code{print} method and
+  is a list with components:
   \item{cluster}{
-    A vector of integers indicating the cluster to which each point is
-    allocated.
+    A vector of integers (from \code{1:k}) indicating the cluster to
+    which each point is allocated.
   }
   \item{centers}{A matrix of cluster centres.}
   \item{withinss}{The within-cluster sum of squares for each cluster.}
+  \item{totss}{The total within-cluster sum of squares.}
+  \item{tot.withinss}{Total within-cluster sum of squares, i.e., \code{sum(withinss)}.}
+  \item{betweenss}{The between-cluster sum of squares.}
   \item{size}{The number of points in each cluster.}
-
-  There is a \code{print} method for this class.
 }
 \references{
   Forgy, E. W. (1965) Cluster analysis of multivariate data:

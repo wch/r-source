@@ -187,8 +187,8 @@
        options(\code{"help_text_width"}) is no longer used.
 
       \item Added \code{\\href} tag to the Rd format, to allow
-       hyperlinks to URLs without displaying the full URL. 
-        
+       hyperlinks to URLs without displaying the full URL.
+
       \item Added \code{\\newcommand} and \code{\\renewcommand} tags
        to the Rd format, to allow user-defined macros.
 
@@ -239,7 +239,8 @@
       \file{NEWS.pdf}, installed at the top-level of the R distribution.
       [The format of these files is preliminary.]
 
-      \item \code{kmeans(x, 1)} now works.
+      \item \code{kmeans(x, 1)} now works.  Further, \code{kmeans} now
+      returns between and total sum of squares.
 
       \item \code{arrayInd()} and \code{which()} gain an argument
       \code{useNames}.  For \code{arrayInd}, the default is now false,
@@ -403,7 +404,7 @@
 
       \item Fixed font face for CID fonts in \code{pdf()} graphics output
       (\PR{14326})
-      
+
       \item Improperly calling \code{Recall()} from outside a function
       could cause a segfault.  (Reported by Robert McGehee.)
     }
