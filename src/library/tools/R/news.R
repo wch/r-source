@@ -328,12 +328,17 @@ function(f, pdf_file) {
 #        "\\usepackage[", Sys.getenv("R_RD4PDF", "times,hyper"), "]{Rd}\n",
         "\\usepackage[ae,hyper]{Rd}\n",
         "\\usepackage[utf8]{inputenc}\n",
+        "\\hypersetup{pdfpagemode=None,pdfstartview=FitH}\n",
         "\\begin{document}\n",
         "\\chapter*{}\\sloppy\n",
+        "\\begin{center}\n\\huge\n",
+        "NEWS for ", R.version$version.string, "\n",
+        "\\end{center}\n",
         sep = "", file = out)
     writeLines(readLines(f2), out)
     writeLines("\\end{document}", out)
     close(out)
+#    file.copy(f3, "/tmp/NEWS.tex")
     od <- setwd(tempdir())
     on.exit(setwd(od))
     texi2dvi(f3, pdf=TRUE, quiet = TRUE)
