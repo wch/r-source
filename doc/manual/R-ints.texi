@@ -3402,42 +3402,42 @@ the corresponding public configuration variables
 building, R-exts, Writing R Extensions}):
 
 @quotation
-@multitable {@code{_R_CHECK_LATEX_VIGNETTES_}} {@code{$R_check_latex_vignettes}}
+@multitable {@code{_R_CHECK_LATEX_VIGNETTES_}} {@code{R_check_latex_vignettes}}
 @item Environment variable
 @tab Configuration variable
 @item @code{_R_CHECK_ALL_NON_ISO_C_}
 @vindex _R_CHECK_ALL_NON_ISO_C_
-@tab @code{$R_check_all_non_ISO_C} 
+@tab @code{R_check_all_non_ISO_C} 
 @item @code{_R_CHECK_FORCE_SUGGESTS_}
 @vindex_R_CHECK_FORCE_SUGGESTS_
-@tab @code{$R_check_force_suggests}
+@tab @code{R_check_force_suggests}
 @item @code{_R_CHECK_LATEX_VIGNETTES_}
 @vindex_R_CHECK_LATEX_VIGNETTES_
-@tab @code{$R_check_latex_vignettes}
+@tab @code{R_check_latex_vignettes}
 @item @code{_R_CHECK_RD_STYLE_}
 @vindex_R_CHECK_RD_CONTENTS_
-@tab @code{$R_check_Rd_contents}
+@tab @code{R_check_Rd_contents}
 @item @code{_R_CHECK_RD_CONTENTS_}
 @vindex_R_CHECK_RD_STYLE_
-@tab @code{$R_check_Rd_style}
+@tab @code{R_check_Rd_style}
 @item @code{_R_CHECK_RD_XREFS_}
 @vindex_R_CHECK_RD_XREFS_
-@tab @code{$R_check_Rd_xrefs}
+@tab @code{R_check_Rd_xrefs}
 @item @code{_R_CHECK_SUBDIRS_NOCASE_}
 @vindex_R_CHECK_SUBDIRS_NOCASE_
-@tab @code{$R_check_subdirs_nocase}
+@tab @code{R_check_subdirs_nocase}
 @item @code{_R_CHECK_SUBDIRS_STRICT_}
 @vindex_R_CHECK_SUBDIRS_STRICT_
-@tab @code{$R_check_subdirs_strict}
+@tab @code{R_check_subdirs_strict}
 @item @code{_R_CHECK_USE_INSTALL_LOG_}
 @vindex_R_CHECK_USE_INSTALL_LOG_
-@tab @code{$R_check_use_install_log}
+@tab @code{R_check_use_install_log}
 @item @code{_R_CHECK_WEAVE_VIGNETTES_}
 @vindex_R_CHECK_WEAVE_VIGNETTES_
-@tab @code{$R_check_weave_vignettes}
+@tab @code{R_check_weave_vignettes}
 @item @code{_R_CHECK_USE_CODETOOLS_}
 @vindex_R_CHECK_USE_CODETOOLS_
-@tab @code{$R_check_use_codetools}
+@tab @code{R_check_use_codetools}
 @end multitable
 @end quotation
 
@@ -3461,6 +3461,9 @@ listed in the package's @file{BinaryFiles} file.
 Default: true.
 However, most likely this package-level override mechanism will be
 removed eventually.
+@item _R_CHECK_PERMISSIONS_
+Control whether permissions of files should be checked.
+Default: true iff @code{.Platform$OS.type == "unix"}.
 @item _R_CHECK_FF_CALLS_
 Allows turning off @code{checkFF()} testing.  Legacy mostly.
 Default: true.

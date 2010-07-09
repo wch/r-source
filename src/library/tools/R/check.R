@@ -215,7 +215,7 @@ R_run_R <- function(cmd, Ropts, env)
             } else resultLog(Log, "OK")
 
             ## Check for sufficient file permissions (Unix only).
-            if (.Platform$OS.type == "unix") {
+            if (R_check_permissions) {
                 checkingLog(Log, "for sufficient/correct file permissions")
 
                 ## This used to be much more 'aggressive', requiring
@@ -1339,7 +1339,7 @@ R_run_R <- function(cmd, Ropts, env)
             if (!any) resultLog(Log, "OK")
       }
 
-    }
+    }## end{ check_pkg }
 
 
     check_pkg_manual <- function(pkgdir, pkgname) {
@@ -1654,6 +1654,8 @@ R_run_R <- function(cmd, Ropts, env)
         Sys.getenv("_R_CHECK_EXECUTABLES_", "TRUE")
     R_check_executables_exclusions <-
         Sys.getenv("_R_CHECK_EXECUTABLES_EXCLUSIONS_", "TRUE")
+    R_check_permissions <-
+        Sys.getenv("_R_CHECK_PERMISSIONS_", as.character(.Platform$OS.type == "unix"))
     ## This check needs codetools
     R_check_dot_internal <-
         Sys.getenv("_R_CHECK_DOT_INTERNAL_", "FALSE")
@@ -1663,9 +1665,10 @@ R_run_R <- function(cmd, Ropts, env)
     R_check_suppress_RandR_message <-
         do_install && config_val_to_logical(Sys.getenv("_R_CHECK_SUPPRESS_RANDR_MESSAGE_", "TRUE"))
 
+    ## rcfile can overrule all environment variable settings above:
     for(f in rcfile) {
-        if (!file.exists(rcfile)) next
-        source(rcfile, local = TRUE, echo = FALSE)
+	if (!file.exists(f)) next
+	source(f, local = TRUE, echo = FALSE)
     }
 
     R_check_use_install_log <-
@@ -1688,6 +1691,8 @@ R_run_R <- function(cmd, Ropts, env)
         config_val_to_logical(R_check_executables)
     R_check_executables_exclusions <-
         config_val_to_logical(R_check_executables_exclusions)
+    R_check_permissions <-
+        config_val_to_logical(R_check_permissions)
     R_check_dot_internal <-
         config_val_to_logical(R_check_dot_internal)
     ## <NOTE>
@@ -1713,7 +1718,8 @@ R_run_R <- function(cmd, Ropts, env)
     if (extra_arch)
         do_manual <- R_check_Rd_contents <- R_check_all_non_ISO_C <-
             R_check_Rd_xrefs <- R_check_use_codetools <- R_check_Rd_style <-
-                R_check_executables <- R_check_dot_internal <- FALSE
+		R_check_executables <- R_check_permissions <-
+		    R_check_dot_internal <- FALSE
 
     startdir <- getwd()
     if (!nzchar(outdir)) outdir <- startdir
@@ -2344,5 +2350,7 @@ R_run_R <- function(cmd, Ropts, env)
         if (Log$warnings > 0) { message(""); summaryLog(Log) }
         closeLog(Log)
         message("")
-    }
-}
+
+    }## end for (pkg in pkgs)
+
+}## end{ .check_packages }
