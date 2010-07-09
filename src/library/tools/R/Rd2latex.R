@@ -187,12 +187,14 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         ## really verbatim
         if (tag == "\\url")
             url <- as.character(block)
-        else
+        else {
             url <- as.character(block[[1L]])
+            tag <- "\\Rhref"
+        }
     	of0(tag, "{",
             gsub("\n", "", paste(as.character(url), collapse="")),
             "}")
-        if (tag == "\\href") {
+        if (tag == "\\Rhref") {
             of1("{")
             writeContent(block[[2L]], tag)
             of1("}")
