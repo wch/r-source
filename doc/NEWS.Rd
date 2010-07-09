@@ -420,9 +420,8 @@
       \command{R CMD INSTALL} for source-package installs.
 
       \item \command{R CMD check} now runs the package-specific tests
-       with \env{LANGUAGE=en} to facilitate comparison to
-       \file{.Rout.save} files.
-
+      with \env{LANGUAGE=en} to facilitate comparison to
+      \file{.Rout.save} files.
     }
   }
   \subsection{BUG FIXES}{
@@ -435,14 +434,22 @@
       level.  (\PR{14317})
 
       \item Text help rendering of \code{\\tabular\{\}} has been
-        improved: under some circumstances leading blank columns were
-        not rendered.
+      improved: under some circumstances leading blank columns were
+      not rendered.
 
       \item \code{strsplit(x, fixed=TRUE)} marked UTF-8 strings with the
-       local encoding when no splits were found.
+      local encoding when no splits were found.
 
       \item \code{weighted.mean(NA, na.rm=TRUE)} and similar now returns
-       \code{NaN} again, as it did prior to \R 2.10.0.
+      \code{NaN} again, as it did prior to \R 2.10.0.
+
+      \item \command{R CMD} had a typo in its detection of whether the
+      environment variable \env{TEXINPUTS} was set (reported by Martin
+      Morgan).
+
+      \item The command-line parser could mistake
+      \option{--file=size...} for one of the options for setting limits
+      for Ncells or Vcells.
     }
   }
 }
