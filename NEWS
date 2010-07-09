@@ -35,6 +35,12 @@ BUG FIXES
     o	weighted.mean(NA, na.rm=TRUE) and similar now returns NaN again,
 	as it did previously to R 2.10.0.
 
+    o	R CMD had a typo in its detection of whether the environment
+      	variable TEXINPUTS was set (reported by Martin Morgan).
+
+    o	The command-line parser could mistake --file=size... for one of
+	the options for setting limits for Ncells or Vcells.
+
 
 
 		CHANGES IN R VERSION 2.11.1
