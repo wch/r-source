@@ -237,12 +237,15 @@ R_run_R <- function(cmd, Ropts, env)
 ##                 allfiles <- dir(".", all.files = TRUE,
 ##                                 full.names = TRUE, recursive = TRUE)
 ##                 allfiles <- sub("^./", "", allfiles)
-                mode <- file.info(allfiles)$mode
-                bad_files <- allfiles[(mode & "400") < as.octmode("400")]
-                alldirs <- unique(dirname(allfiles))
-                mode <- file.info(alldirs)$mode
-                bad_files <- c(bad_files,
-                               alldirs[(mode & "700") < as.octmode("700")])
+		if(length(allfiles)) {
+		    mode <- file.info(allfiles)$mode
+		    bad_files <- allfiles[(mode & "400") < as.octmode("400")]
+		}
+		if(length(alldirs <- unique(dirname(allfiles)))) {
+		    mode <- file.info(alldirs)$mode
+		    bad_files <- c(bad_files,
+				   alldirs[(mode & "700") < as.octmode("700")])
+		}
                 if (length(bad_files)) {
                     errorLog(Log)
                     wrapLog("Found the following files with insufficient permissions:\n")
