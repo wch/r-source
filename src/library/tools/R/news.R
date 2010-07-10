@@ -319,13 +319,11 @@ function(f, pdf_file) {
     if (grepl("[.]rds$", f)) f <- .readRDS(f)
     f2 <- tempfile()
     f3 <- file.path(tempdir(), "NEWS.tex")
-    f4 <- file.path(tempdir(), "NEWS.pdf")
     out <- file(f3, "w")
     Rd2latex(f, f2,
              stages = c("install", "render"),
              outputEncoding = "UTF-8", writeEncoding = FALSE)
     cat("\\documentclass[", Sys.getenv("R_PAPERSIZE"), "paper]{book}\n",
-#        "\\usepackage[", Sys.getenv("R_RD4PDF", "times,hyper"), "]{Rd}\n",
         "\\usepackage[ae,hyper]{Rd}\n",
         "\\usepackage[utf8]{inputenc}\n",
         "\\hypersetup{pdfpagemode=None,pdfstartview=FitH}\n",
@@ -338,12 +336,11 @@ function(f, pdf_file) {
     writeLines(readLines(f2), out)
     writeLines("\\end{document}", out)
     close(out)
-#    file.copy(f3, "/tmp/NEWS.tex")
     od <- setwd(tempdir())
     on.exit(setwd(od))
-    texi2dvi(f3, pdf=TRUE, quiet = TRUE)
-    setwd(od)
-    invisible(file.copy(f4, pdf_file))
+    texi2dvi("NEWS.tex", pdf=TRUE, quiet = TRUE)
+    setwd(od); on.exit()
+    invisible(file.copy(file.path(tempdir(), "NEWS.pdf"), pdf_file))
 }
 
 ## Transform old-style plain text NEWS file to Rd.
