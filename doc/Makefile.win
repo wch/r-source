@@ -8,7 +8,8 @@ include ../src/gnuwin32/MkRules
 
 R_EXE=../$(BINDIR)/Rterm --vanilla --slave
 
-all: NEWS.rds html/NEWS.html ../NEWS CHANGES CHANGES.rds html/CHANGES.html
+all: NEWS.rds html/NEWS.html ../NEWS ../NEWS.pdf \
+  CHANGES.rds CHANGES html/CHANGES.html
 
 NEWS.rds: NEWS.Rd
 	@$(ECHO) ".saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\"), stages = \"install\"), \"$@\")" | $(R_EXE)
@@ -16,9 +17,16 @@ NEWS.rds: NEWS.Rd
 CHANGES.rds: ../src/gnuwin32/CHANGES.Rd
 	@$(ECHO) ".saveRDS(tools:::prepare_Rd(tools::parse_Rd(\"$<\"), stages = \"install\"), \"$@\")" | $(R_EXE)
 
+## Force ASCII output, for portability on Windows
 ../NEWS: NEWS.rds
+	@$(ECHO) "creating NEWS"
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(R_EXE) LC_ALL=C
+
+../NEWS.pdf: NEWS.rds
+	@$(ECHO) "creating NEWS.pdf"
+	@$(ECHO) "options(warn=1);tools:::Rd2pdf_NEWS_in_Rd(\"$<\", \"$@\")" | \
+	  $(R_EXE)
 
 CHANGES: CHANGES.rds
 	@$(ECHO) "options(warn=1);tools:::Rd2txt_NEWS_in_Rd(\"$<\", \"$@\")" | \
@@ -31,6 +39,7 @@ html/NEWS.html: NEWS.rds
 html/CHANGES.html: CHANGES.rds
 	@$(ECHO) "options(warn=1);tools:::Rd2HTML_NEWS_in_Rd(\"$<\", \"$@\")" | \
 	  $(R_EXE)
-	  
+
 clean:
-	@rm -f NEWS.rds html/NEWS.html ../NEWS CHANGES.rds html/CHANGES.html
+	@rm -f NEWS.rds html/NEWS.html ../NEWS ../NEWS.pdf \
+	  CHANGES.rds html/CHANGES.html
