@@ -410,6 +410,10 @@
 
       \item Improperly calling \code{Recall()} from outside a function
       could cause a segfault.  (Reported by Robert McGehee.)
+
+      \item Built-in code dealing with environments (get, assign,
+        parent.env, is.environment and others) now behave consistently
+        to recognize S4 subclasses; is.name() also recognizes subclasses.
     }
   }
 }

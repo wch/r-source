@@ -1684,6 +1684,7 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     PROTECT(ans = allocVector(LGLSXP, 1));
+
     switch (PRIMVAL(op)) {
     case NILSXP:	/* is.null */
 	LOGICAL(ans)[0] = isNull(CAR(args));
@@ -1705,10 +1706,20 @@ SEXP attribute_hidden do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == STRSXP);
 	break;
     case SYMSXP:	/* is.symbol === is.name */
-	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == SYMSXP);
+	if(IS_S4_OBJECT(CAR(args)) && (TYPEOF(CAR(args)) == S4SXP)) {
+	    SEXP dot_xData = R_getS4DataSlot(CAR(args), SYMSXP);
+	    LOGICAL(ans)[0] = (TYPEOF(dot_xData) == SYMSXP);
+	}
+	else
+	    LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == SYMSXP);
 	break;
     case ENVSXP:	/* is.environment */
-	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == ENVSXP);
+	if(IS_S4_OBJECT(CAR(args)) && (TYPEOF(CAR(args)) == S4SXP)) {
+	    SEXP dot_xData = R_getS4DataSlot(CAR(args), ENVSXP);
+	    LOGICAL(ans)[0] = (TYPEOF(dot_xData) == ENVSXP);
+	}
+	else
+	    LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == ENVSXP);
 	break;
     case VECSXP:	/* is.list */
 	LOGICAL(ans)[0] = (TYPEOF(CAR(args)) == VECSXP ||

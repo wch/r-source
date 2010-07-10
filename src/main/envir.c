@@ -1492,7 +1492,10 @@ void gsetVar(SEXP symbol, SEXP value, SEXP rho)
     SET_SYMBOL_BINDING_VALUE(symbol, value);
 }
 
+/* get environment from a subclass if possible; else return NULL */
+#define simple_as_environment(arg) (IS_S4_OBJECT(arg) && (TYPEOF(arg) == S4SXP) ? R_getS4DataSlot(arg, ENVSXP) : R_NilValue)
 
+	    
 
 /*----------------------------------------------------------------------
 
@@ -1516,7 +1519,8 @@ SEXP attribute_hidden do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
     aenv = CADDR(args);
     if (TYPEOF(aenv) == NILSXP)
 	error(_("use of NULL environment is defunct"));
-    if (TYPEOF(aenv) != ENVSXP)
+    if (TYPEOF(aenv) != ENVSXP &&
+	TYPEOF((aenv = simple_as_environment(aenv))) != ENVSXP)
 	error(_("invalid '%s' argument"), "envir");
     ginherits = asLogical(CADDDR(args));
     if (ginherits == NA_LOGICAL)
@@ -1733,7 +1737,7 @@ SEXP attribute_hidden do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else if (TYPEOF(CADR(args)) == ENVSXP)
 	genv = CADR(args);
-    else {
+    else if(TYPEOF((genv = simple_as_environment(CADR(args)))) != ENVSXP) {
 	error(_("invalid '%s' argument"), "envir");
 	genv = R_NilValue;  /* -Wall */
     }

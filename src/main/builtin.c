@@ -323,15 +323,21 @@ SEXP attribute_hidden do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+/* get environment from a subclass if possible; else return NULL */
+#define simple_as_environment(arg) (IS_S4_OBJECT(arg) && (TYPEOF(arg) == S4SXP) ? R_getS4DataSlot(arg, ENVSXP) : R_NilValue)
+
+
 SEXP attribute_hidden do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
+    SEXP arg = CAR(args);
 
-    if( !isEnvironment(CAR(args)) )
+    if( !isEnvironment(arg)  &&
+	!isEnvironment((arg = simple_as_environment(arg))))
 	error( _("argument is not an environment"));
-    if( CAR(args) == R_EmptyEnv )
+    if( arg == R_EmptyEnv )
 	error(_("the empty environment has no parent"));
-    return( ENCLOS(CAR(args)) );
+    return( ENCLOS(arg) );
 }
 
 SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -344,7 +350,8 @@ SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("use of NULL environment is defunct"));
 	env = R_BaseEnv;
     } else
-    if( !isEnvironment(env) )
+    if( !isEnvironment(env) &&
+	!isEnvironment((env = simple_as_environment(env))))
 	error(_("argument is not an environment"));
     if( env == R_EmptyEnv )
 	error(_("can not set parent of the empty environment"));
@@ -353,12 +360,13 @@ SEXP attribute_hidden do_parentenvgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("use of NULL environment is defunct"));
 	parent = R_BaseEnv;
     } else
-    if( !isEnvironment(parent) )
+    if( !isEnvironment(parent) &&
+	!isEnvironment((parent = simple_as_environment(parent))))
 	error(_("'parent' is not an environment"));
 
     SET_ENCLOS(env, parent);
 
-    return( env );
+    return( CAR(args) );
 }
 
 SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -366,7 +374,8 @@ SEXP attribute_hidden do_envirName(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP env = CAR(args), ans=mkString(""), res;
 
     checkArity(op, args);
-    if (TYPEOF(env) == ENVSXP) {
+    if (TYPEOF(env) == ENVSXP ||
+	TYPEOF((env = simple_as_environment(env))) == ENVSXP) {
 	if (env == R_GlobalEnv) ans = mkString("R_GlobalEnv");
 	else if (env == R_BaseEnv) ans = mkString("base");
 	else if (env == R_EmptyEnv) ans = mkString("R_EmptyEnv");
