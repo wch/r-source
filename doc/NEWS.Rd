@@ -1,7 +1,10 @@
 \newcommand{\PR}{\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}
+
 \name{NEWS}
 \title{R News}
 \encoding{UTF-8}
+
+
 \section{CHANGES IN R VERSION 2.12.0}{
   \subsection{NEW FEATURES}{
     \itemize{
@@ -424,6 +427,7 @@
       \file{.Rout.save} files.
     }
   }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \command{R CMD Rd2dvi} failed if run from a path containing
@@ -453,6 +457,7 @@
     }
   }
 }
+
 
 \section{CHANGES IN R VERSION 2.11.1}{
   \subsection{NEW FEATURES}{
@@ -579,6 +584,8 @@
     }
   }
 }
+
+
 \section{CHANGES IN R VERSION 2.11.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
@@ -1184,6 +1191,8 @@
     }
   }
 }
+
+
 \section{CHANGES IN R VERSION 2.10.1 patched}{
   \subsection{NEW FEATURES}{
     \itemize{
@@ -1327,208 +1336,211 @@
     }
   }
 }
+
+
 \section{CHANGES IN R VERSION 2.10.1}{
   \subsection{NEW FEATURES}{
     \itemize{
       \item The PCRE library has been updated to version 8.00.
 
       \item \command{R CMD INSTALL} has new options \option{--no-R},
-       \option{--no-libs}, \option{--no-data}, \option{--no-help},
-       \option{--no-demo}, \option{--no-exec}, and \option{--no-inst} to
-       suppress installation of the specified part of the package.
-       These are intended for special purposes (e.g. building a database
-       of help pages without fully installing all packages).
+      \option{--no-libs}, \option{--no-data}, \option{--no-help},
+      \option{--no-demo}, \option{--no-exec}, and \option{--no-inst} to
+      suppress installation of the specified part of the package.
+      These are intended for special purposes (e.g. building a database
+      of help pages without fully installing all packages).
 
       \item The documented line-length limit of 4095 bytes when reading
-       from the console now also applies also to \code{parse(file="")}
-       (which previously had a limit of around 1024 bytes).
+      from the console now also applies also to \code{parse(file="")}
+      (which previously had a limit of around 1024 bytes).
 
       \item A Bioconductor mirror can be set for use by
-       \code{setRepositories()} via the option \code{"BioC_mirror"},
-       e.g. the European mirror can be selected by
-       \code{options(BioC_mirror="http://bioconductor.statistik.tu-dortmund.de")}.
+      \code{setRepositories()} via the option \code{"BioC_mirror"},
+      e.g. the European mirror can be selected by
+      \code{options(BioC_mirror="http://bioconductor.statistik.tu-dortmund.de")}.
 
       \item Double-clicking in a \code{tk_select.list()} list box now
-       selects the item and closes the list box (as happens on the
-       Windows \code{select.list()} widget).
-     }
-   }
-   \subsection{INSTALLATION}{
-     \itemize{
-       \item \command{configure} will be able to find a usable
-       \code{libtiff} in some rare circumstances where it did not
-       previously (where \code{libtiff} needed to be linked explicitly against
-       \code{-ljpeg}).
+      selects the item and closes the list box (as happens on the
+      Windows \code{select.list()} widget).
+    }
+  }
+  \subsection{INSTALLATION}{
+    \itemize{
+      \item \command{configure} will be able to find a usable
+      \code{libtiff} in some rare circumstances where it did not
+      previously (where \code{libtiff} needed to be linked explicitly against
+      \code{-ljpeg}).
 
-       \item Making \code{refman.pdf} works around a problem with the indexing
-       with \code{hyperref 6.79d} and later.
-     }
-   }
-   \subsection{DEPRECATED & DEFUNCT}{
-     \itemize{
-       \item The \code{extended} argument is deprecated in
-       \code{strsplit()}, \code{grep()}, \code{grepl()}, \code{sub()},
-       \code{gsub()}, \code{regexpr()} and \code{gregexpr()} (not just
-       the value \code{extended = FALSE}) and will be removed in \R
-       2.11.0.
-     }
-   }
-   \subsection{BUG FIXES}{
-     \itemize{
-       \item \code{trigamma(x)} and other \code{psigamma(x, n)} calls
-       are now accurate for very large \code{abs(x)}.  (\PR{14020})
+      \item Making \code{refman.pdf} works around a problem with the indexing
+      with \code{hyperref 6.79d} and later.
+    }
+  }
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+      \item The \code{extended} argument is deprecated in
+      \code{strsplit()}, \code{grep()}, \code{grepl()}, \code{sub()},
+      \code{gsub()}, \code{regexpr()} and \code{gregexpr()} (not just
+      the value \code{extended = FALSE}) and will be removed in \R
+      2.11.0.
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{trigamma(x)} and other \code{psigamma(x, n)} calls
+      are now accurate for very large \code{abs(x)}.  (\PR{14020})
+      
+      \item \code{[g]sub(perl=FALSE, fixed=FALSE)} could use excessive
+      stack space when used with a very long vector containing some
+      non-ASCII strings.
 
-       \item \code{[g]sub(perl=FALSE, fixed=FALSE)} could use excessive
-       stack space when used with a very long vector containing some
-       non-ASCII strings.
+      \item The default method of \code{weighted.mean(na.rm = TRUE)}
+      did not omit weights for \code{NA} observations in 2.10.0.
+      (\PR{14032})
 
-       \item The default method of \code{weighted.mean(na.rm = TRUE)}
-       did not omit weights for \code{NA} observations in 2.10.0.
-       (\PR{14032})
+      \item \code{[g]regexpr(pattern, fixed = TRUE)} returned match
+      positions in bytes (not characters) in an MBCS locale if
+      \code{pattern} was a single byte.
 
-       \item \code{[g]regexpr(pattern, fixed = TRUE)} returned match
-       positions in bytes (not characters) in an MBCS locale if
-       \code{pattern} was a single byte.
+      \code{[g]sub(fixed = TRUE)} with a single-byte pattern could
+      conceivably have matched part of a multibyte character in a
+      non-UTF-8 MBCS.
 
-       \code{[g]sub(fixed = TRUE)} with a single-byte pattern could
-       conceivably have matched part of a multibyte character in a
-       non-UTF-8 MBCS.
+      \item \code{findLineNum()} and \code{setBreakpoint()} would
+      sometimes fail if the specified file was not in the current
+      directory.
 
-       \item \code{findLineNum()} and \code{setBreakpoint()} would
-       sometimes fail if the specified file was not in the current
-       directory.
+      \item Package \pkg{tcltk}'s \code{demo(tkdensity)} was broken in
+      2.9.0 when \code{demo()} was changed to set \code{par(ask = TRUE)}.
 
-       \item Package \pkg{tcltk}'s \code{demo(tkdensity)} was broken in
-       2.9.0 when \code{demo()} was changed to set \code{par(ask = TRUE)}.
+      \item \code{gsub()} with backrefs could fail on extremely long strings
+      (hundreds of thousands of characters) due to integer overflow
+      in a length calculation.
 
-       \item \code{gsub()} with backrefs could fail on extremely long strings
-       (hundreds of thousands of characters) due to integer overflow
-       in a length calculation.
+      \item \code{abline(untf=TRUE)} now uses a better x-grid in
+      log-scale, e.g., for \code{plot(c(1,300), c(1,300), log="xy");
+	abline(4,1, untf=TRUE)}.
 
-       \item \code{abline(untf=TRUE)} now uses a better x-grid in
-       log-scale, e.g., for \code{plot(c(1,300), c(1,300), log="xy");
-	 abline(4,1, untf=TRUE)}.
+      \item \code{detach()}/\code{unloadNamespace()} arrange to flush
+      the package's lazyload cache of \R objects once the
+      package/namespace is no longer needed.
 
-       \item \code{detach()}/\code{unloadNamespace()} arrange to flush
-       the package's lazyload cache of \R objects once the
-       package/namespace is no longer needed.
+      \item There have been small fixes to the rendering of help,
+      e.g. \code{\\command} is now rendered verbatim (so e.g. \code{--}
+      is not interpreted, \PR{14045}).
 
-       \item There have been small fixes to the rendering of help,
-       e.g. \code{\\command} is now rendered verbatim (so e.g. \code{--}
-       is not interpreted, \PR{14045}).
+      Also, there are many small changes to help files where the new
+      converters were not rendering them in the same way as before.
 
-       Also, there are many small changes to help files where the new
-       converters were not rendering them in the same way as before.
+      \item \code{available.packages()} would fail when run on a
+      repository with no packages meeting the filtering conditions.
+      (\PR{14042})
 
-       \item \code{available.packages()} would fail when run on a
-       repository with no packages meeting the filtering conditions.
-       (\PR{14042})
+      \item \code{rep(x, times, each = 2)} gave invalid results when the
+      \code{times} argument was a vector longer than \code{x}.
+      Reported by Bill Dunlap.
 
-       \item \code{rep(x, times, each = 2)} gave invalid results when the
-       \code{times} argument was a vector longer than \code{x}.
-       Reported by Bill Dunlap.
+      \item An error when \code{unloadNamespace()} attempted to run the
+      \code{.onUnload()} function gave an error in the reporting
+      function and so was not reported properly.
 
-       \item An error when \code{unloadNamespace()} attempted to run the
-       \code{.onUnload()} function gave an error in the reporting
-       function and so was not reported properly.
+      \item Text help rendering did not handle very long input lines
+      properly.
 
-       \item Text help rendering did not handle very long input lines
-       properly.
+      \item \code{promptMethods()} generated signature documentation
+      improperly.
 
-       \item \code{promptMethods()} generated signature documentation
-       improperly.
+      \item \code{pgamma(x, a, lower.tail=FALSE)} and
+      \code{qgamma(\dots)} are now considerably more accurate in some
+      regions for very small \code{a}.  \code{qgamma()} now correctly
+      returns \code{0} instead of \code{NaN} in similar extreme cases,
+      and \code{qgamma()} no longer warns in the case of small
+      \code{a}, see (\PR{12324}).
 
-       \item \code{pgamma(x, a, lower.tail=FALSE)} and
-       \code{qgamma(\dots)} are now considerably more accurate in some
-       regions for very small \code{a}.  \code{qgamma()} now correctly
-       returns \code{0} instead of \code{NaN} in similar extreme cases,
-       and \code{qgamma()} no longer warns in the case of small
-       \code{a}, see (\PR{12324}).
+      \item \code{unname()} now also removes names from a zero length vector.
 
-       \item \code{unname()} now also removes names from a zero length vector.
+      \item Printing results from \code{ls.str()} no longer evaluates
+      unevaluated calls.
 
-       \item Printing results from \code{ls.str()} no longer evaluates
-       unevaluated calls.
+      \item \code{complete.cases()} failed on a 0-column data frame
+      argument.  (Underlies \PR{14066}.)
 
-       \item \code{complete.cases()} failed on a 0-column data frame
-       argument.  (Underlies \PR{14066}.)
+      It could return nonsensical results if no input determined the
+      number of cases (seen in the no-segfault tests).
+      
+      \item An error in \code{nls()} with a long formula could cause a
+      segfault.  (\PR{14059})
 
-       It could return nonsensical results if no input determined the
-       number of cases (seen in the no-segfault tests).
+      \item \code{qchisq(p, df, ncp, lower.tail = FALSE)} with
+      \code{ncp >= 80} was inaccurate for small \code{p} (as the help page
+      said): it is now less inaccurate.  (In part,
+      \PR{13999}.)
 
-       \item An error in \code{nls()} with a long formula could cause a
-       segfault.  (\PR{14059})
+      For \code{ncp} less than but close to 80, \code{pchisq()} and
+      \code{qchisq()} are more accurate for probablilities very close
+      to 1 (a series expansion was truncated slightly too early).
 
-       \item \code{qchisq(p, df, ncp, lower.tail = FALSE)} with
-       \code{ncp >= 80} was inaccurate for small \code{p} (as the help page
-       said): it is now less inaccurate.  (In part,
-       \PR{13999}.)
+      \code{pchisq(x, df, ncp)} can no longer return values just larger
+      than one for large values of \code{ncp}.
 
-       For \code{ncp} less than but close to 80, \code{pchisq()} and
-       \code{qchisq()} are more accurate for probablilities very close
-       to 1 (a series expansion was truncated slightly too early).
+      \item \code{intToUtf8()} could fail when asked to produce 10Mb or more
+      strings, something it was never intended to do: unfortunately
+      Windows crashed \R (other OSes reported a lack of resources).
+      (\PR{14068})
 
-       \code{pchisq(x, df, ncp)} can no longer return values just larger
-       than one for large values of \code{ncp}.
+      \item \code{chisq.test()} could fail when given argument
+      \code{x} or \code{y} which deparsed to more than one line.
+      (Reported by Laurent Gauthier.)
 
-       \item \code{intToUtf8()} could fail when asked to produce 10Mb or more
-       strings, something it was never intended to do: unfortunately
-       Windows crashed \R (other OSes reported a lack of resources).
-       (\PR{14068})
+      \item S4 methods are uncached whenever the name space containing
+      them is unloaded (by \code{unloadNamespace()} as well as by
+      \code{detach(unload = TRUE))}.
 
-       \item \code{chisq.test()} could fail when given argument
-       \code{x} or \code{y} which deparsed to more than one line.
-       (Reported by Laurent Gauthier.)
+      \item The internal record-keeping by
+      \code{dyn.load}/\code{dyn.unload} was incomplete, which could
+      crash \R if a DLL that registered \code{.External} routines had
+      earlier been unloaded.
 
-       \item S4 methods are uncached whenever the name space containing
-       them is unloaded (by \code{unloadNamespace()} as well as by
-       \code{detach(unload = TRUE))}.
+      \item \code{bessel[JY](x, nu)} with \code{nu} a negative integer (a
+      singular case) is now correct, analogously to \code{besselI()},
+      see \PR{13556}.
 
-       \item The internal record-keeping by
-       \code{dyn.load}/\code{dyn.unload} was incomplete, which could
-       crash \R if a DLL that registered \code{.External} routines had
-       earlier been unloaded.
+      \item \code{tools::file_path_as_absolute()} doubled the file
+      separator when applied to a file such as \file{"/vmunix"} or (on
+      Windows) \file{"d:/afile"} in a directory for which
+      \code{getwd()} would return a path with a trailing separator
+      (largely cosmetic, as reasonable file systems handle such a path
+      correctly).  (Perhaps what was meant by \PR{14078}.)
 
-       \item \code{bessel[JY](x, nu)} with \code{nu} a negative integer (a
-       singular case) is now correct, analogously to \code{besselI()},
-       see \PR{13556}.
+      \item \code{unsplit(drop = TRUE)} applied to a data frame failed
+      to pass \code{drop} to the computation of row names.  (\PR{14084})
 
-       \item \code{tools::file_path_as_absolute()} doubled the file
-       separator when applied to a file such as \file{"/vmunix"} or (on
-       Windows) \file{"d:/afile"} in a directory for which
-       \code{getwd()} would return a path with a trailing separator
-       (largely cosmetic, as reasonable file systems handle such a path
-       correctly).  (Perhaps what was meant by \PR{14078}.)
+      \item The \code{"difftime"} method of \code{mean()} ignored its
+      \code{na.rm} argument.
 
-       \item \code{unsplit(drop = TRUE)} applied to a data frame failed
-       to pass \code{drop} to the computation of row names.  (\PR{14084})
+      \item \code{tcltk::tk_select.list()} is now more likely to remove the
+      widget immediately after selection is complete.
 
-       \item The \code{"difftime"} method of \code{mean()} ignored its
-       \code{na.rm} argument.
+      \item Adding/subtracting a \code{"difftime"} object to/from a
+      \code{"POSIXt"} or \code{"Date"} object works again (it was
+      broken by the addition of \code{Ops.difftime}).
 
-       \item \code{tcltk::tk_select.list()} is now more likely to remove the
-       widget immediately after selection is complete.
+      \item Conversion to latex of an Rd file with no aliases failed.
 
-       \item Adding/subtracting a \code{"difftime"} object to/from a
-       \code{"POSIXt"} or \code{"Date"} object works again (it was
-       broken by the addition of \code{Ops.difftime}).
+      \item \code{wilcox.test(conf.int=TRUE)} has achieved.level
+      corrected and, for \code{exact=FALSE}, now returns a
+      \code{estimate} component which does not depend on the
+      alternative used.
 
-       \item Conversion to latex of an Rd file with no aliases failed.
-
-       \item \code{wilcox.test(conf.int=TRUE)} has achieved.level
-       corrected and, for \code{exact=FALSE}, now returns a
-       \code{estimate} component which does not depend on the
-       alternative used.
-
-       \item \code{help.search()} failed when the package argument was
-       specified.  (\PR{14113})
-
-       \item \code{switch(EXPR = "A")} now returns \code{NULL}, as does
-       \code{switch(1)} (which used to signal an error).
-     }
-   }
- }
-
+      \item \code{help.search()} failed when the package argument was
+      specified.  (\PR{14113})
+      
+      \item \code{switch(EXPR = "A")} now returns \code{NULL}, as does
+      \code{switch(1)} (which used to signal an error).
+    }
+  }
+}
+ 
+ 
 \section{CHANGES IN R VERSION 2.10.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{
