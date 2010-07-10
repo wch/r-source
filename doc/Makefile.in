@@ -52,9 +52,11 @@ NEWS.rds: $(srcdir)/NEWS.Rd
 html/NEWS.html: NEWS.rds
 	@$(ECHO) 'options(warn=1);tools:::Rd2HTML_NEWS_in_Rd("NEWS.rds", "html/NEWS.html")' |  $(R_EXE)
 
+## Need LC_COLLATE to work around the misuse of [A-z] in texi2dvi 1.135
+## (as reported by MM)
 ../NEWS.pdf: NEWS.rds
 	@$(ECHO) "creating NEWS.pdf"
-	@$(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "../NEWS.pdf")' |  $(R_EXE)
+	@$(ECHO) 'options(warn=1);tools:::Rd2pdf_NEWS_in_Rd("NEWS.rds", "../NEWS.pdf")' |  LC_COLLATE=C $(R_EXE)
 
 
 install: install-message installdirs install-sources install-sources2 install-man
