@@ -1239,4 +1239,9 @@ stopifnot(seek(blah) == 0)
 ## gave random large multiple of 2^32 on Linux systems attempting to
 ## use LFS support.
 
+## pre-2.12.0 wrongly accessed 0-length entries
+o0 <- as.octmode(integer(0))
+stopifnot(identical(o0, o0 & "400"))
+## gave a seg.fault at some point
+
 proc.time()
