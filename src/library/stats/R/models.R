@@ -68,8 +68,11 @@ formula.character <- function(x, env = parent.frame(), ...)
 }
 
 print.formula <- function(x, ...) {
+    e <- environment(x)
     attr(x, ".Environment") <- NULL
     print.default(unclass(x), ...)
+    if (!identical(e, .GlobalEnv))
+    	print(e)
     invisible(x)
 }
 

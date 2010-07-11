@@ -248,6 +248,10 @@
       \item \code{arrayInd()} and \code{which()} gain an argument
       \code{useNames}.  For \code{arrayInd}, the default is now false,
       for speed reasons.
+      
+      \item As is done for closures, the default print method for the
+      formula class now displays the associated environment if it is
+      not the global environment.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
