@@ -22,6 +22,7 @@
 #include <R_ext/Constants.h>
 #include <R_ext/BLAS.h>
 				/* names of 1-based indices into iv and v */
+#define AFCTOL  31
 #define ALGSAV  51
 #define COVPRT  14
 #define COVREQ  15
@@ -163,6 +164,7 @@ void Rf_divset(int alg, int iv[], int liv, int lv, double v[])
 	iv[NGCOV] = 0;
 	iv[NVDFLT] = 25;
 	iv[PARSAV] = (alg > 2) ? 61 : 47;
+	v[AFCTOL] = 0.0;		/* Skip |f(x)| test */
 	return;
     }
 				/*  REGRESSION  VALUES */

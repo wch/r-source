@@ -418,6 +418,10 @@
       \code{assign}, \code{parent.env}, \code{is.environment} and
       others) now behave consistently to recognize S4 subclasses;
       \code{is.name()} also recognizes subclasses.
+      
+      \item The \code{abs.tol} control parameter to \code{nlminb()}
+      now defaults to \code{0.0} to avoid false declarations of
+      convergence in objective functions that may go negative.      
     }
   }
 }
