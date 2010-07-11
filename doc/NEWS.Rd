@@ -319,7 +319,6 @@
   }
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-
       \item \code{lang5()} and \code{lang6()} (in addition to
        pre-existing \code{lang[1-4]()}) convenience functions for easier
        construction of \code{eval()} calls.  If you have your own
@@ -411,9 +410,10 @@
       \item Improperly calling \code{Recall()} from outside a function
       could cause a segfault.  (Reported by Robert McGehee.)
 
-      \item Built-in code dealing with environments (get, assign,
-        parent.env, is.environment and others) now behave consistently
-        to recognize S4 subclasses; is.name() also recognizes subclasses.
+      \item Built-in code dealing with environments (\code{get},
+      \code{assign}, \code{parent.env}, \code{is.environment} and
+      others) now behave consistently to recognize S4 subclasses;
+      \code{is.name()} also recognizes subclasses.
     }
   }
 }
