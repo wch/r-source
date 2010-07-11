@@ -340,7 +340,8 @@ function(f, pdf_file) {
     on.exit(setwd(od))
     texi2dvi("NEWS.tex", pdf=TRUE, quiet = TRUE)
     setwd(od); on.exit()
-    invisible(file.copy(file.path(tempdir(), "NEWS.pdf"), pdf_file))
+    invisible(file.copy(file.path(tempdir(), "NEWS.pdf"),
+                        pdf_file, overwrite = TRUE))
 }
 
 ## Transform old-style plain text NEWS file to Rd.
