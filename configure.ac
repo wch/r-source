@@ -430,27 +430,27 @@ AC_ARG_VAR([R_BATCHSAVE],
 AC_ARG_VAR([MAIN_CFLAGS],
            [additional CFLAGS used when compiling the main binary])
 AC_ARG_VAR([SHLIB_CFLAGS],
-           [additional CFLAGS used when building shared libraries])
+           [additional CFLAGS used when building shared objects])
 AC_ARG_VAR([MAIN_FFLAGS],
            [additional FFLAGS used when compiling the main binary])
 AC_ARG_VAR([SHLIB_FFLAGS],
-           [additional FFLAGS used when building shared libraries])
+           [additional FFLAGS used when building shared objects])
 AC_ARG_VAR([MAIN_LD],
            [command used to link the main binary])
 AC_ARG_VAR([MAIN_LDFLAGS],
            [flags which are necessary for loading a main program which
-            will load shared library modules (DLLs) at runtime])
+            will load shared objects (DLLs) at runtime])
 AC_ARG_VAR([CPICFLAGS],
            [special flags for compiling C code to be turned into a
-            shared library.])
+            shared object.])
 AC_ARG_VAR([FPICFLAGS],
            [special flags for compiling Fortran code to be turned into a
-            shared library.])
+            shared object.])
 AC_ARG_VAR([FCPICFLAGS],
            [special flags for compiling Fortran 95 code to be turned into a
-            shared library.])
+            shared object.])
 AC_ARG_VAR([SHLIB_LD],
-           [command for linking shared libraries which contain object
+           [command for linking shared objects which contain object
             files from a C or Fortran compiler only])
 AC_ARG_VAR([SHLIB_LDFLAGS],
            [special flags used by SHLIB_LD])
@@ -461,14 +461,14 @@ AC_ARG_VAR([DYLIB_LDFLAGS],
            [special flags used for make a dynamic library])
 AC_ARG_VAR([CXXPICFLAGS],
            [special flags for compiling C++ code to be turned into a
-            shared library])
+            shared object])
 AC_ARG_VAR([SHLIB_CXXLD],
-           [command for linking shared libraries which contain object
-            files from a C++ compiler])
+           [command for linking shared objects which contain object
+            files from the C++ compiler])
 AC_ARG_VAR([SHLIB_CXXLDFLAGS],
            [special flags used by SHLIB_CXXLD])
 AC_ARG_VAR([SHLIB_FCD],
-           [command for linking shared libraries which contain object
+           [command for linking shared objects which contain object
             files from the Fortran 95 compiler])
 AC_ARG_VAR([SHLIB_FCLDFLAGS],
            [special flags used by SHLIB_FCLD])
@@ -1079,7 +1079,7 @@ AC_SUBST(OBJCXXFLAGS)
 ##
 ## MAIN_LD, MAINLD_FLAGS
 ##   command and flags for loading the main binary so that it will load
-##   shared libraries (DLLs) at runtime, also for profiling.
+##   shared objects (DLLs) at runtime, also for profiling.
 ## CPICFLAGS, CXXPICFLAGS, FPICFLAGS, FCPICFLAGS
 ##   flags for compiling C, C++, and Fortran library code.
 ## SHLIB_LD, SHLIB_LDFLAGS
@@ -1641,8 +1641,7 @@ AC_SUBST(SHLIB_LDFLAGS)
 AC_SUBST(SHLIB_LIBADD)
 AC_SUBST(SHLIB_EXT)
 AC_DEFINE_UNQUOTED(SHLIB_EXT, "${SHLIB_EXT}",
-[Define this to be the extension used for shared libraries on your
-system.])
+[Define this to be the extension used for shared objects on your system.])
 AM_CONDITIONAL(USE_EXPORTFILES, [test "x${use_exportfiles}" = xyes])
 AC_SUBST(DYLIB_EXT)
 AC_SUBST(LIBR_LDFLAGS)

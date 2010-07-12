@@ -2814,7 +2814,7 @@ to be re-installed.
 ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned'' BLAS
 that runs on a wide range of Unix-alike platforms.  Unfortunately it is
 usually built as a static library that on some platforms cannot be used
-with shared libraries such as are used in @R{} packages.  Be careful
+with shared objects such as are used in @R{} packages.  Be careful
 when using pre-built versions of ATLAS (they seem to work on
 @cputype{ix86} platforms, but not on @cputype{x86_64} ones).
 
@@ -3472,7 +3472,7 @@ debugging and optimization flags, C
 @item MAIN_CFLAGS
 ditto, for compiling the main program
 @item SHLIB_CFLAGS
-for shared libraries
+for shared objects
 @item FFLAGS
 debugging and optimization flags, FORTRAN
 @item SAFE_FFLAGS
@@ -3480,21 +3480,21 @@ ditto for source files which need exact floating point behaviour
 @item MAIN_FFLAGS
 ditto, for compiling the main program
 @item SHLIB_FFLAGS
-for shared libraries
+for shared objects
 @item MAIN_LDFLAGS
 additional flags for the main link
 @item SHLIB_LDFLAGS
-additional flags for linking the shared libraries
+additional flags for linking the shared objects
 @item LIBnn
 the primary library directory, @file{lib} or @file{lib64}
 @item CPICFLAGS
-special flags for compiling C code to be turned into a shared library
+special flags for compiling C code to be turned into a shared object
 @item FPICFLAGS
-special flags for compiling Fortran code to be turned into a shared library
+special flags for compiling Fortran code to be turned into a shared object
 @item CXXPICFLAGS
-special flags for compiling C++ code to be turned into a shared library
+special flags for compiling C++ code to be turned into a shared object
 @item FCPICFLAGS
-special flags for compiling Fortran 95 code to be turned into a shared library
+special flags for compiling Fortran 95 code to be turned into a shared object
 @item DEFS
 defines to be used when compiling C code in R itself
 @end table
@@ -3509,7 +3509,7 @@ system's equivalent), so there should be no need for @option{-R} or
 Variables such as @env{CPICFLAGS} are determined where possible by
 @command{configure}.  Some systems allows two types of PIC flags, for
 example @samp{-fpic} and @samp{-fPIC}, and if they differ the first
-allows only a limited number of symbols in a shared library.  Since @R{}
+allows only a limited number of symbols in a shared object.  Since @R{}
 as a shared library has about 6200 symbols, if in doubt use the larger
 version.
 
@@ -4371,8 +4371,8 @@ many compilers these reduce the degree of compliance to the
 @acronym{IEEE} model.  For example, using @option{-fast} on the Solaris
 Sun Studio compilers causes @R{}'s @code{NaN} to be set incorrectly.
 
-@strong{Shared Libraries}: There seems to be very little agreement
-across platforms on what needs to be done to build shared libraries.
+@strong{Shared Objects}: There seems to be very little agreement
+across platforms on what needs to be done to build shared objects.
 there are many different combinations of flags for the compilers and
 loaders.  @acronym{GNU} libtool cannot be used (yet), as it currently
 does not fully support FORTRAN: one would need a shell wrapper for

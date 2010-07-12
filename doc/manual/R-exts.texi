@@ -4889,7 +4889,7 @@ callgraph (if collection was enabled and the platform supports this).
 @subsection Solaris
 
 On 64-bit (only) Solaris, the standard profiling tool @command{gprof}
-collects information from shared libraries compiled with @option{-pg}.
+collects information from shared objects compiled with @option{-pg}.
 
 @node Mac OS X,  , Solaris, Profiling compiled code
 @subsection Mac OS X
@@ -6488,7 +6488,8 @@ is written to a file (@file{fort.6} in the working directory).
 It is not in general possible to link a DLL in package @pkg{packA} to a
 DLL provided by package @pkg{packB} (for the security reasons mentioned
 in @ref{dyn.load and dyn.unload}, and also because some platforms
-distinguish between shared and dynamic libraries), but it is on Windows.
+distinguish between shared objects and dynamic libraries), but it is on
+Windows.
 
 Note that there can be tricky versioning issues here, as package
 @pkg{packB} could be re-installed after package @pkg{packA} --- it is

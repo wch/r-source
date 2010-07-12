@@ -1868,21 +1868,21 @@ Some influential environment variables:
   R_BATCHSAVE set default behavior of R when ending a session
   MAIN_CFLAGS additional CFLAGS used when compiling the main binary
   SHLIB_CFLAGS
-              additional CFLAGS used when building shared libraries
+              additional CFLAGS used when building shared objects
   MAIN_FFLAGS additional FFLAGS used when compiling the main binary
   SHLIB_FFLAGS
-              additional FFLAGS used when building shared libraries
+              additional FFLAGS used when building shared objects
   MAIN_LD     command used to link the main binary
   MAIN_LDFLAGS
               flags which are necessary for loading a main program which will
-              load shared library modules (DLLs) at runtime
+              load shared objects (DLLs) at runtime
   CPICFLAGS   special flags for compiling C code to be turned into a shared
-              library.
+              object.
   FPICFLAGS   special flags for compiling Fortran code to be turned into a
-              shared library.
+              shared object.
   FCPICFLAGS  special flags for compiling Fortran 95 code to be turned into a
-              shared library.
-  SHLIB_LD    command for linking shared libraries which contain object files
+              shared object.
+  SHLIB_LD    command for linking shared objects which contain object files
               from a C or Fortran compiler only
   SHLIB_LDFLAGS
               special flags used by SHLIB_LD
@@ -1891,12 +1891,12 @@ Some influential environment variables:
   DYLIB_LDFLAGS
               special flags used for make a dynamic library
   CXXPICFLAGS special flags for compiling C++ code to be turned into a shared
-              library
-  SHLIB_CXXLD command for linking shared libraries which contain object files
-              from a C++ compiler
+              object
+  SHLIB_CXXLD command for linking shared objects which contain object files
+              from the C++ compiler
   SHLIB_CXXLDFLAGS
               special flags used by SHLIB_CXXLD
-  SHLIB_FCD   command for linking shared libraries which contain object files
+  SHLIB_FCD   command for linking shared objects which contain object files
               from the Fortran 95 compiler
   SHLIB_FCLDFLAGS
               special flags used by SHLIB_FCLD
@@ -25424,7 +25424,7 @@ fi
 ##
 ## MAIN_LD, MAINLD_FLAGS
 ##   command and flags for loading the main binary so that it will load
-##   shared libraries (DLLs) at runtime, also for profiling.
+##   shared objects (DLLs) at runtime, also for profiling.
 ## CPICFLAGS, CXXPICFLAGS, FPICFLAGS, FCPICFLAGS
 ##   flags for compiling C, C++, and Fortran library code.
 ## SHLIB_LD, SHLIB_LDFLAGS
