@@ -58,7 +58,7 @@
 ## DEFS=
 
 ## The following additional CFLAGS to be used only in the main
-## compilation and only in building shared libraries respectively.
+## compilation and only in building shared objects respectively.
 ## For example, on some systems one needs 'MAIN_CFLAGS=-pg' when
 ## profiling.
 ## MAIN_CFLAGS=
@@ -95,7 +95,7 @@
 ## SAFE_FFLAGS=
 
 ## The following additional FFLAGS to be used only in the main
-## compilation and only in building shared libraries respectively.
+## compilation and only in building shared objects respectively.
 ## For example, on some systems one needs 'MAIN_FFLAGS=-pg' when
 ## profiling.
 ## MAIN_FFLAGS=
@@ -115,7 +115,7 @@
 ## MAIN_LDFLAGS=
 
 ## Any special flags which must be used when compiling C code to be
-## turned into a shared library.  This is typically something like
+## turned into a shared object.  This is typically something like
 ## '-fpic' or '-fPIC'.  If this variable is left unspecified an attempt
 ## is made to automatically detect the correct value.
 ## CPICFLAGS=
@@ -166,17 +166,17 @@
 ## CXXFLAGS=
 
 ## Any special flags which must be used when compiling C++ code to be
-## turned into a shared library.  If this variable is left unspecified
+## turned into a shared object.  If this variable is left unspecified
 ## an attempt is made to automatically detect the correct value.
 ## CXXPICFLAGS=
 
-## The command to be used to load shared libraries which contain object
-## files from a C++ compiler.  This is usually the C++ compiler/linker,
+## The command to be used to load shared objects which contain object
+## files from the C++ compiler.  This is usually the C++ compiler/linker,
 ## but the automatic choice can be overridden by means of this
 ## variable.
 ## SHLIB_CXXLD=
 
-## Any special flags which are required when creating shared libraries
+## Any special flags which are required when creating shared objects
 ## containing object files from a C++ compiler.  This is usually
 ## automatically detected by configure, and anything set here will be in
 ## addition unless SHLIB_CXXLD is given.
