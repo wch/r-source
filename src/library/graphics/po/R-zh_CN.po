@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -328,6 +328,9 @@ msgstr "至少要有一个数值变量!"
 
 msgid "cannot hatch with logarithmic scale active"
 msgstr "对数尺度设定时不能进行策劃"
+
+msgid "Invalid fill rule for graphics path"
+msgstr ""
 
 msgid "invalid rectangle specification"
 msgstr "长方形定义不对"

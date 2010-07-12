@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -82,8 +82,17 @@ msgid "%d occurrences in %s"
 msgstr "%s에서 %d가 발생됩니다"
 
 #, fuzzy
+msgid "Filter '%s' is not available."
+msgstr ""
+"dependency '%s'는 이용 가능하지는 않습니다\n"
+"dependencies '%s'는 이용 가능하지는 않습니다"
+
+#, fuzzy
 msgid "Invalid 'filter' argument."
 msgstr "무효의 'data' 인수입니다"
+
+msgid "Processing file %s"
+msgstr ""
 
 msgid "Could not find aspell or ispell executable."
 msgstr ""
@@ -165,6 +174,9 @@ msgid "'bibtype' has to be one of"
 msgstr ""
 
 msgid "A bibentry of bibtype '"
+msgstr ""
+
+msgid "' has to correctly specify the field(s):"
 msgstr ""
 
 msgid "' has to specify the field(s):"

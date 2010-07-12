@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:19+0000\n"
+"POT-Creation-Date: 2010-07-12 18:52+0100\n"
 "PO-Revision-Date: 2009-10-07 14:22+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team:  <R-core@r-project.org>\n"
@@ -52,11 +52,15 @@ msgstr "Mindestens zwei Punkte nötig, um einen Pfeil zu zeichnen"
 msgid "Non-finite control point in Xspline"
 msgstr "Nicht-endlicher Kontrollpunkt in Xspline"
 
-#: grid.c:3203
+#: grid.c:2786
+msgid "non-finite x or y in graphics path"
+msgstr ""
+
+#: grid.c:3270
 msgid "invalid plotting symbol"
 msgstr "unzulässiges Plotsymbol"
 
-#: grid.c:3289
+#: grid.c:3356
 msgid "Unable to clip to rotated rectangle"
 msgstr "Kann nicht auf das rotierte Rechteck zurechtschneiden"
 

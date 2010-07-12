@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
-"PO-Revision-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
+"PO-Revision-Date: 2010-07-12 18:52\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -428,6 +428,33 @@ msgstr "missing/empty \\name field in Rd file(s)"
 msgid "No help on %s found in RdDB %s"
 msgstr "No help on %s found in RdDB %s"
 
+msgid "Converting Rd files to LaTeX ..."
+msgstr "Converting Rd files to LaTeX ..."
+
+msgid "-t option without value"
+msgstr "-t option without value"
+
+msgid "-o option without value"
+msgstr "-o option without value"
+
+msgid "Warning: unknown option"
+msgstr "Warning: unknown option"
+
+msgid "exactly one Rd file must be specified"
+msgstr "exactly one Rd file must be specified"
+
+msgid "no 'type' specified"
+msgstr "no ‘type’ specified"
+
+msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
+msgstr "‘type’ must be one of 'txt', 'html', ‘latex’ or ‘example’"
+
+msgid "no inputs"
+msgstr "no inputs"
+
+msgid "Error in running tools::texi2dvi"
+msgstr "Error in running tools::texi2dvi"
+
 msgid "more than one \\examples section, using the first"
 msgstr "more than one \\examples section, using the first"
 
@@ -538,9 +565,6 @@ msgstr "Changes require specified ‘style’"
 msgid "The default JSS style may not be modified."
 msgstr "The default JSS style may not be modified."
 
-msgid "Warning: unknown option"
-msgstr "Warning: unknown option"
-
 msgid "** Options"
 msgstr "** Options"
 
@@ -555,9 +579,6 @@ msgstr "cannot coerce"
 
 msgid "to logical"
 msgstr "to logical"
-
-msgid "-o option without value"
-msgstr "-o option without value"
 
 msgid "-l option without value"
 msgstr "-l option without value"
@@ -730,26 +751,11 @@ msgstr "--no-help overrides"
 msgid "--"
 msgstr "--"
 
-msgid "Converting Rd files to LaTeX ..."
-msgstr "Converting Rd files to LaTeX ..."
-
 msgid "finding HTML links ..."
 msgstr "finding HTML links ..."
 
 msgid "finding level-2 HTML links ..."
 msgstr "finding level-2 HTML links ..."
-
-msgid "-t option without value"
-msgstr "-t option without value"
-
-msgid "exactly one Rd file must be specified"
-msgstr "exactly one Rd file must be specified"
-
-msgid "no 'type' specified"
-msgstr "no ‘type’ specified"
-
-msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
-msgstr "‘type’ must be one of 'txt', 'html', ‘latex’ or ‘example’"
 
 msgid "there is no package called '%s'"
 msgstr "there is no package called ‘%s’"
@@ -793,6 +799,33 @@ msgstr "‘DESCRIPTION’ has ‘Encoding’ field and re-encoding is not possib
 
 msgid "cannot create HTML package index"
 msgstr "cannot create HTML package index"
+
+msgid "Internal error, no tag"
+msgstr "Internal error, no tag"
+
+msgid "Argument for"
+msgstr "Argument for"
+
+msgid "not found."
+msgstr "not found."
+
+msgid "Internal error:  NULL tag"
+msgstr "Internal error:  NULL tag"
+
+msgid "internal error"
+msgstr "internal error"
+
+msgid "Inconsistent arg count for"
+msgstr "Inconsistent arg count for"
+
+msgid "Entry for"
+msgstr "Entry for"
+
+msgid "="
+msgstr "="
+
+msgid "already defined to be"
+msgstr "already defined to be"
 
 msgid "found encoding"
 msgstr "found encoding"

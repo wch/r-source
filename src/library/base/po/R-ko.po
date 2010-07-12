@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -844,19 +844,39 @@ msgstr "어떠한 패키지도 검색되지 않았습니다"
 msgid "R packages available"
 msgstr "이용 가능한 R 패키지"
 
-msgid "shared library '%s' not found"
-msgstr "공용 라이브러리 '%s'가 검색되지 않습니다"
+#, fuzzy
+msgid "DLL '%s' not found"
+msgstr "파일 '%s'가 검색되지 않습니다"
 
-msgid "shared library '%s' already loaded"
+#, fuzzy
+msgid "shared object '%s' not found"
+msgstr "%s를 검색해낼수가 없습니다"
+
+#, fuzzy
+msgid "DLL '%s' already loaded"
+msgstr "공용 라이브러리 '%s'는 적재되지 않았습니다"
+
+#, fuzzy
+msgid "shared object '%s' already loaded"
 msgstr "공용 라이브러리 '%s'는 적재되지 않았습니다"
 
 msgid "now dyn.load(\"%s\") ..."
 msgstr "dyn.load(\"%s\") 중입니다..."
 
-msgid "no shared library was specified"
+#, fuzzy
+msgid "no DLL was specified"
 msgstr "공용 라이브러리가 아무것도 지정되지 않았습니다"
 
-msgid "shared library '%s' was not loaded"
+#, fuzzy
+msgid "no shared object was specified"
+msgstr "공용 라이브러리가 아무것도 지정되지 않았습니다"
+
+#, fuzzy
+msgid "DLL '%s' was not loaded"
+msgstr "공용 라이브러리'%s'는 로드 되지 않았습니다"
+
+#, fuzzy
+msgid "shared object '%s' was not loaded"
 msgstr "공용 라이브러리'%s'는 로드 되지 않았습니다"
 
 msgid "now dyn.unload(\"%s\") ..."
@@ -1654,6 +1674,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] ""
 "경고 메세지:\n"
 "경고 메세지(복수)\n"
+
+#~ msgid "shared library '%s' not found"
+#~ msgstr "공용 라이브러리 '%s'가 검색되지 않습니다"
 
 #, fuzzy
 #~ msgid ""

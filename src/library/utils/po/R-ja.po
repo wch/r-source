@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2010-04-03 09:55+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -80,8 +80,16 @@ msgstr " 'what' の要素の最初のもの以降は無視されます "
 msgid "%d occurrences in %s"
 msgstr " %d 回 %s 中に起きました "
 
+#, fuzzy
+msgid "Filter '%s' is not available."
+msgstr " テスト '%s' が利用できません "
+
 msgid "Invalid 'filter' argument."
 msgstr " 不正な 'filter' 引数 "
+
+#, fuzzy
+msgid "Processing file %s"
+msgstr "ファイルを処理中"
 
 msgid "Could not find aspell or ispell executable."
 msgstr " 実行可能なaspellまたはispellが見つかりません "
@@ -162,6 +170,9 @@ msgid "'bibtype' has to be one of"
 msgstr ""
 
 msgid "A bibentry of bibtype '"
+msgstr ""
+
+msgid "' has to correctly specify the field(s):"
 msgstr ""
 
 msgid "' has to specify the field(s):"

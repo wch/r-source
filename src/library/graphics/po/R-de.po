@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2010-03-24 10:52+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -339,6 +339,9 @@ msgstr "es muss zumindest eine nummerische Varable vorhanden sein!"
 
 msgid "cannot hatch with logarithmic scale active"
 msgstr "bei logarithmischer Skala hatch nicht möglich"
+
+msgid "Invalid fill rule for graphics path"
+msgstr ""
 
 msgid "invalid rectangle specification"
 msgstr "unzulässige Spezifikation des Rechecks"

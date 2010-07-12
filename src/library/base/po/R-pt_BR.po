@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -851,19 +851,39 @@ msgstr "nenhum pacote encontrado"
 msgid "R packages available"
 msgstr "pacotes R disponíveis"
 
-msgid "shared library '%s' not found"
-msgstr "biblioteca compartilhada '%s' não encontrada"
+#, fuzzy
+msgid "DLL '%s' not found"
+msgstr "arquivo '%s' não encontrado"
 
-msgid "shared library '%s' already loaded"
+#, fuzzy
+msgid "shared object '%s' not found"
+msgstr "%s não encontrado"
+
+#, fuzzy
+msgid "DLL '%s' already loaded"
+msgstr "biblioteca compartilhada '%s' já carregada"
+
+#, fuzzy
+msgid "shared object '%s' already loaded"
 msgstr "biblioteca compartilhada '%s' já carregada"
 
 msgid "now dyn.load(\"%s\") ..."
 msgstr "agora dyn.load(\"%s\") ..."
 
-msgid "no shared library was specified"
+#, fuzzy
+msgid "no DLL was specified"
 msgstr "nenhuma biblioteca compartilhada foi especificada"
 
-msgid "shared library '%s' was not loaded"
+#, fuzzy
+msgid "no shared object was specified"
+msgstr "nenhuma biblioteca compartilhada foi especificada"
+
+#, fuzzy
+msgid "DLL '%s' was not loaded"
+msgstr "biblioteca compartilhada '%s' não foi carregada"
+
+#, fuzzy
+msgid "shared object '%s' was not loaded"
 msgstr "biblioteca compartilhada '%s' não foi carregada"
 
 msgid "now dyn.unload(\"%s\") ..."
@@ -1648,6 +1668,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Mensagem de aviso:\n"
 msgstr[1] "Mensagens de aviso:\n"
+
+#~ msgid "shared library '%s' not found"
+#~ msgstr "biblioteca compartilhada '%s' não encontrada"
 
 #, fuzzy
 #~ msgid ""

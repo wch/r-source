@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2010-03-28 14:27+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -230,6 +230,9 @@ msgstr "Une matrice de pixels doit avoir exactement 3 dimensions"
 
 msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "Une matrice de pixels doit avoir exactement 3 ou 4 plans"
+
+msgid "Operator not meaningful for raster objects"
+msgstr ""
 
 msgid "no current device to record from"
 msgstr "aucun périphérique à partir duquel enregistrer"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2010-04-03 10:33+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -429,6 +429,34 @@ msgstr ""
 msgid "No help on %s found in RdDB %s"
 msgstr " %s に関するいかなるヘルプも RdDB %s 中にはありません "
 
+msgid "Converting Rd files to LaTeX ..."
+msgstr "RdファイルをLaTeXに変換しています "
+
+msgid "-t option without value"
+msgstr " 値のない -t オプション"
+
+msgid "-o option without value"
+msgstr " 値のない -o オプションです "
+
+msgid "Warning: unknown option"
+msgstr " 警告: 未知のオプションです "
+
+msgid "exactly one Rd file must be specified"
+msgstr " 正確に1つのRdファイルは指定されなければなりません "
+
+msgid "no 'type' specified"
+msgstr "指定された 'type' ではありません "
+
+msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
+msgstr ""
+" 'type'は'txt', 'html', 'latex', 'example'のいずれかである必要があります "
+
+msgid "no inputs"
+msgstr ""
+
+msgid "Error in running tools::texi2dvi"
+msgstr ""
+
 msgid "more than one \\examples section, using the first"
 msgstr " 2つ以上の\\examples節があります、1番目を用います "
 
@@ -540,9 +568,6 @@ msgstr ""
 msgid "The default JSS style may not be modified."
 msgstr ""
 
-msgid "Warning: unknown option"
-msgstr " 警告: 未知のオプションです "
-
 msgid "** Options"
 msgstr ""
 
@@ -559,9 +584,6 @@ msgstr "オープンできません "
 
 msgid "to logical"
 msgstr ""
-
-msgid "-o option without value"
-msgstr " 値のない -o オプションです "
 
 msgid "-l option without value"
 msgstr " 値のない -l オプション"
@@ -738,27 +760,11 @@ msgstr " --no-help が優先されます "
 msgid "--"
 msgstr " -- "
 
-msgid "Converting Rd files to LaTeX ..."
-msgstr "RdファイルをLaTeXに変換しています "
-
 msgid "finding HTML links ..."
 msgstr "HTML リンクを検索... "
 
 msgid "finding level-2 HTML links ..."
 msgstr " level-2 HTML リンクを検索... "
-
-msgid "-t option without value"
-msgstr " 値のない -t オプション"
-
-msgid "exactly one Rd file must be specified"
-msgstr " 正確に1つのRdファイルは指定されなければなりません "
-
-msgid "no 'type' specified"
-msgstr "指定された 'type' ではありません "
-
-msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
-msgstr ""
-" 'type'は'txt', 'html', 'latex', 'example'のいずれかである必要があります "
 
 msgid "there is no package called '%s'"
 msgstr " '%s' という名前のパッケージが見当たりません "
@@ -803,6 +809,34 @@ msgstr " 'DESCRIPTION' は 'Encoding' 欄を持ち、再エンコーディング
 
 msgid "cannot create HTML package index"
 msgstr " HTMLパッケージのインデックスを生成することが出来ません "
+
+msgid "Internal error, no tag"
+msgstr ""
+
+msgid "Argument for"
+msgstr ""
+
+#, fuzzy
+msgid "not found."
+msgstr " ファイル '%s' が見つかりません "
+
+msgid "Internal error:  NULL tag"
+msgstr ""
+
+msgid "internal error"
+msgstr ""
+
+msgid "Inconsistent arg count for"
+msgstr ""
+
+msgid "Entry for"
+msgstr ""
+
+msgid "="
+msgstr ""
+
+msgid "already defined to be"
+msgstr ""
 
 msgid "found encoding"
 msgstr " 見つけられたエンコーディング"

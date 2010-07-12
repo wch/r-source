@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:19+0000\n"
+"POT-Creation-Date: 2010-07-12 18:52+0100\n"
 "PO-Revision-Date: 2005-04-17 17:30+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -50,12 +50,16 @@ msgstr ""
 msgid "Non-finite control point in Xspline"
 msgstr ""
 
-#: grid.c:3203
+#: grid.c:2786
+msgid "non-finite x or y in graphics path"
+msgstr ""
+
+#: grid.c:3270
 #, fuzzy
 msgid "invalid plotting symbol"
 msgstr "layout.pos.col non valido"
 
-#: grid.c:3289
+#: grid.c:3356
 msgid "Unable to clip to rotated rectangle"
 msgstr "Impossibile tagliare su una viewport ruotata"
 

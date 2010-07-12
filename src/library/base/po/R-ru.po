@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2010-04-09 16:49-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -819,19 +819,39 @@ msgstr "пакеты не найдены"
 msgid "R packages available"
 msgstr "доступные R-пакеты"
 
-msgid "shared library '%s' not found"
-msgstr "разделяемая библиотека '%s' не найдена"
+#, fuzzy
+msgid "DLL '%s' not found"
+msgstr "файл '%s' не найден"
 
-msgid "shared library '%s' already loaded"
+#, fuzzy
+msgid "shared object '%s' not found"
+msgstr "%s не найден"
+
+#, fuzzy
+msgid "DLL '%s' already loaded"
+msgstr "разделяемая библиотека '%s' уже загружена"
+
+#, fuzzy
+msgid "shared object '%s' already loaded"
 msgstr "разделяемая библиотека '%s' уже загружена"
 
 msgid "now dyn.load(\"%s\") ..."
 msgstr "сейчас dyn.load(\"%s\") ..."
 
-msgid "no shared library was specified"
+#, fuzzy
+msgid "no DLL was specified"
 msgstr "разделяемая библиотека не указана"
 
-msgid "shared library '%s' was not loaded"
+#, fuzzy
+msgid "no shared object was specified"
+msgstr "разделяемая библиотека не указана"
+
+#, fuzzy
+msgid "DLL '%s' was not loaded"
+msgstr "разделяемая библиотека '%s' не загружена"
+
+#, fuzzy
+msgid "shared object '%s' was not loaded"
 msgstr "разделяемая библиотека '%s' не загружена"
 
 msgid "now dyn.unload(\"%s\") ..."
@@ -1598,6 +1618,9 @@ msgid_plural "Warning messages:\n"
 msgstr[0] "Предупреждение:\n"
 msgstr[1] "Предупреждения:\n"
 msgstr[2] "Предупреждения:\n"
+
+#~ msgid "shared library '%s' not found"
+#~ msgstr "разделяемая библиотека '%s' не найдена"
 
 #~ msgid ""
 #~ "package '%s' claims to be built under R version %s but is missing some "

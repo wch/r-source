@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
-"PO-Revision-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
+"PO-Revision-Date: 2010-07-12 18:52\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -101,8 +101,14 @@ msgstr "elements of ‘what’ after the first will be ignored"
 msgid "%d occurrences in %s"
 msgstr "%d occurrences in %s"
 
+msgid "Filter '%s' is not available."
+msgstr "Filter ‘%s’ is not available."
+
 msgid "Invalid 'filter' argument."
 msgstr "Invalid ‘filter’ argument."
+
+msgid "Processing file %s"
+msgstr "Processing file %s"
 
 msgid "Could not find aspell or ispell executable."
 msgstr "Could not find aspell or ispell executable."
@@ -187,6 +193,9 @@ msgstr "‘bibtype’ has to be one of"
 
 msgid "A bibentry of bibtype '"
 msgstr "A bibentry of bibtype '"
+
+msgid "' has to correctly specify the field(s):"
+msgstr "' has to correctly specify the field(s):"
 
 msgid "' has to specify the field(s):"
 msgstr "' has to specify the field(s):"

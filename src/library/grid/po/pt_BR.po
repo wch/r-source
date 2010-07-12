@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-03-16 09:19+0000\n"
+"POT-Creation-Date: 2010-07-12 18:52+0100\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -50,12 +50,16 @@ msgstr "Pelo menos dois pontos são necessários para desenhar uma seta"
 msgid "Non-finite control point in Xspline"
 msgstr "Ponto de controle não-finito em Xspline"
 
-#: grid.c:3203
+#: grid.c:2786
+msgid "non-finite x or y in graphics path"
+msgstr ""
+
+#: grid.c:3270
 #, fuzzy
 msgid "invalid plotting symbol"
 msgstr "layout.pos.col inválido"
 
-#: grid.c:3289
+#: grid.c:3356
 msgid "Unable to clip to rotated rectangle"
 msgstr "Não é possível cortar sobre um retângulo rotacionado"
 

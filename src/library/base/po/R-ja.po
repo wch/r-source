@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2010-04-03 18:36+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -825,19 +825,39 @@ msgstr " いかなるパッケージも見付かりませんでした "
 msgid "R packages available"
 msgstr " 利用可能な R パッケージ "
 
-msgid "shared library '%s' not found"
-msgstr " 共用ライブラリ '%s' が見付かりません "
+#, fuzzy
+msgid "DLL '%s' not found"
+msgstr " ファイル '%s' が見付かりません "
 
-msgid "shared library '%s' already loaded"
+#, fuzzy
+msgid "shared object '%s' not found"
+msgstr " %s を見付けることができません "
+
+#, fuzzy
+msgid "DLL '%s' already loaded"
+msgstr " 共用ライブラリ '%s' は既にロードされています "
+
+#, fuzzy
+msgid "shared object '%s' already loaded"
 msgstr " 共用ライブラリ '%s' は既にロードされています "
 
 msgid "now dyn.load(\"%s\") ..."
 msgstr " 今 dyn.load(\"%s\") 中です ... "
 
-msgid "no shared library was specified"
+#, fuzzy
+msgid "no DLL was specified"
 msgstr " 共用ライブラリが何も指定されませんでした "
 
-msgid "shared library '%s' was not loaded"
+#, fuzzy
+msgid "no shared object was specified"
+msgstr " 共用ライブラリが何も指定されませんでした "
+
+#, fuzzy
+msgid "DLL '%s' was not loaded"
+msgstr " 共用ライブラリ '%s' はロードされませんでした "
+
+#, fuzzy
+msgid "shared object '%s' was not loaded"
 msgstr " 共用ライブラリ '%s' はロードされませんでした "
 
 msgid "now dyn.unload(\"%s\") ..."
@@ -1604,6 +1624,9 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] " 警告メッセージ： \n"
+
+#~ msgid "shared library '%s' not found"
+#~ msgstr " 共用ライブラリ '%s' が見付かりません "
 
 #~ msgid ""
 #~ "package '%s' claims to be built under R version %s but is missing some "

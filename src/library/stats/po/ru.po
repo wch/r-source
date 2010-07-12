@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.9.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08+0100\n"
+"POT-Creation-Date: 2010-07-12 18:52+0100\n"
 "PO-Revision-Date: 2009-03-29 01:16+0300\n"
 "Last-Translator: Anton Korobeynikov <asl at math dot spbu dot ru>\n"
 "Language-Team: Russian\n"
@@ -66,8 +66,8 @@ msgid "distance(): invalid distance"
 msgstr "distance(): неправильное расстояние"
 
 #: family.c:21
-#, c-format
-msgid "Value %d out of range (0, 1)"
+#, fuzzy, c-format
+msgid "Value %g out of range (0, 1)"
 msgstr "Значение %d вне промежутка (0, 1)"
 
 #: family.c:42 family.c:56 family.c:74
@@ -104,22 +104,22 @@ msgstr "Неправильный vmethod"
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Алгоритм Бурга не смог найти частную корреляцию"
 
-#: monoSpl.c:39
+#: monoSpl.c:40
 #, fuzzy
 msgid "n must be at least two"
 msgstr "m должен быть списком"
 
-#: monoSpl.c:72
+#: monoSpl.c:73
 #, fuzzy
 msgid "Argument m must be numeric"
 msgstr "Аргумент %s должен быть непустым числовым вектором"
 
-#: monoSpl.c:75
+#: monoSpl.c:76
 #, fuzzy
 msgid "length(m) must be at least two"
 msgstr "m должен быть списком"
 
-#: monoSpl.c:77
+#: monoSpl.c:78
 #, fuzzy
 msgid "Argument Sx must be numeric vector one shorter than m[]"
 msgstr "аргумент %s должен быть числовым вектором длины 1 или %d"
@@ -160,7 +160,7 @@ msgstr "сошлось"
 msgid "'theta' should be of type character"
 msgstr "'theta' должна быть текстового типа"
 
-#: nls.c:290 port.c:380
+#: nls.c:290 port.c:382
 msgid "use of NULL environment is defunct"
 msgstr "использование окружения NULL больше не работает"
 
@@ -205,74 +205,74 @@ msgstr "ошибка 'forkal' с кодом %d"
 msgid "invalid value of lag.max"
 msgstr "неправильное значение 'lag.max'"
 
-#: port.c:129
+#: port.c:130
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr "Rf_divset: alg = %d должен быть 1, 2, 3 или 4"
 
-#: port.c:324
+#: port.c:326
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr "градиентная функция должна возвращать числовой вектор длины %d"
 
-#: port.c:334
+#: port.c:336
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "функция гессиана должна возвращать квадратную числовую матрицу порядка %d"
 
-#: port.c:384
+#: port.c:386
 msgid "'rho' must be an environment"
 msgstr "'rho' должно быть окружением"
 
-#: port.c:386 port.c:537
+#: port.c:388 port.c:539
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' должен быть непустым числовым вектором"
 
-#: port.c:388
+#: port.c:390
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 "Когда определяется функция, вычисляющая гессиан, должен быть определен и "
 "градиент"
 
-#: port.c:391
+#: port.c:393
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr "окружение 'rho' должно содержать числовой вектор '.par' длины %d"
 
-#: port.c:405
+#: port.c:407
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' и 'upper' должны быть числовыми векторами"
 
-#: port.c:451
+#: port.c:453
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' применяется лишь к именованным спискам"
 
-#: port.c:472
+#: port.c:474
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() не найден"
 
-#: port.c:485
+#: port.c:487
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 "'gradient' должен быть числовой матрицей матрицей с измерениями (%d,%d)"
 
-#: port.c:506
+#: port.c:508
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn выдала тип %d, длину %d - нужен тип %d, длина %d"
 
-#: port.c:519
+#: port.c:521
 msgid "invalid type for eval_check_store"
 msgstr "неправильный тип 'eval_check_store'"
 
-#: port.c:538
+#: port.c:540
 msgid "m must be a list"
 msgstr "m должен быть списком"
 
-#: port.c:558
+#: port.c:560
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' и 'upperb' должны быть числовыми векторами"
 

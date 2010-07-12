@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08+0100\n"
+"POT-Creation-Date: 2010-07-12 18:52+0100\n"
 "PO-Revision-Date: 2009-10-07 14:29+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -60,8 +60,8 @@ msgid "distance(): invalid distance"
 msgstr "distance(): unzulässige distance"
 
 #: family.c:21
-#, c-format
-msgid "Value %d out of range (0, 1)"
+#, fuzzy, c-format
+msgid "Value %g out of range (0, 1)"
 msgstr "Wert %d liegt außerhalb des Bereichs (0, 1)"
 
 #: family.c:42 family.c:56 family.c:74
@@ -98,22 +98,22 @@ msgstr "unzulässige vmethod"
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "Burg's Algorithmus konnte keine partielle Korrelation finden"
 
-#: monoSpl.c:39
+#: monoSpl.c:40
 #, fuzzy
 msgid "n must be at least two"
 msgstr "m nuss eine Liste sein"
 
-#: monoSpl.c:72
+#: monoSpl.c:73
 #, fuzzy
 msgid "Argument m must be numeric"
 msgstr "Argument %s muss ein nichtleerer numerischer Vektor sein"
 
-#: monoSpl.c:75
+#: monoSpl.c:76
 #, fuzzy
 msgid "length(m) must be at least two"
 msgstr "m nuss eine Liste sein"
 
-#: monoSpl.c:77
+#: monoSpl.c:78
 #, fuzzy
 msgid "Argument Sx must be numeric vector one shorter than m[]"
 msgstr "Argument %s muss ein numerischer Vektor der Länge 1 oder %d sein"
@@ -154,7 +154,7 @@ msgstr "konvergiert"
 msgid "'theta' should be of type character"
 msgstr "'theta' sollte vom Typ character sein"
 
-#: nls.c:290 port.c:380
+#: nls.c:290 port.c:382
 msgid "use of NULL environment is defunct"
 msgstr "NULL Umgebung kann nicht genutzt werden"
 
@@ -198,76 +198,76 @@ msgstr "forkal Fehlerkode %d"
 msgid "invalid value of lag.max"
 msgstr "unzulässiger Wert von lag.max"
 
-#: port.c:129
+#: port.c:130
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr "RF_divset: alg = %d muss 1, 2, 3 oder 4 sein"
 
-#: port.c:324
+#: port.c:326
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr ""
 "Gradientenfunktion muss einen numerischen Vektor der Länge %d zurückgeben"
 
-#: port.c:334
+#: port.c:336
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 "Hessematrixfunktion muss eine quadratische numerische Matrix mit Rang %d "
 "zurückgeben"
 
-#: port.c:384
+#: port.c:386
 msgid "'rho' must be an environment"
 msgstr "'rho' muss eine Umgebung sein"
 
-#: port.c:386 port.c:537
+#: port.c:388 port.c:539
 msgid "'d' must be a nonempty numeric vector"
 msgstr "'d' muss ein nichtleerer numerischer Vektor sein"
 
-#: port.c:388
+#: port.c:390
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 "Wird eine Hesse-Funktion angegeben, so muss auch ein Gradient angegeben "
 "werden"
 
-#: port.c:391
+#: port.c:393
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 "Umgebung 'rho' muss einen numerischen Vektor '.par' der Länge %d enthalten"
 
-#: port.c:405
+#: port.c:407
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr "'lower' und 'upper' müssen numerische Vektoren sein"
 
-#: port.c:451
+#: port.c:453
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' nur für benannte Listen anwendbar"
 
-#: port.c:472
+#: port.c:474
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() nicht gefunden"
 
-#: port.c:485
+#: port.c:487
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' muss eine numerische Matrix der Dimension (%d,%d) sein"
 
-#: port.c:506
+#: port.c:508
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "fcn erzeugte Modus %d, Länge %d - gewünscht Modus %d, Länge %d"
 
-#: port.c:519
+#: port.c:521
 msgid "invalid type for eval_check_store"
 msgstr "unzulässiger Typ für eval_check_source"
 
-#: port.c:538
+#: port.c:540
 msgid "m must be a list"
 msgstr "m nuss eine Liste sein"
 
-#: port.c:558
+#: port.c:560
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' und 'upperb' muss ein numerischer Vektor sein"
 

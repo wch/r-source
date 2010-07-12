@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2010-04-09 20:01-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -90,8 +90,16 @@ msgstr "элементы 'what' после первого будут пропущены"
 msgid "%d occurrences in %s"
 msgstr "%d вхождений в %s"
 
+#, fuzzy
+msgid "Filter '%s' is not available."
+msgstr "тест '%s' недоступен"
+
 msgid "Invalid 'filter' argument."
 msgstr "Неправильный аргумент 'filter'"
+
+#, fuzzy
+msgid "Processing file %s"
+msgstr "Обрабатываю файл"
 
 msgid "Could not find aspell or ispell executable."
 msgstr "Не могу найти исполняемого файла aspell или ispell."
@@ -174,6 +182,9 @@ msgid "'bibtype' has to be one of"
 msgstr ""
 
 msgid "A bibentry of bibtype '"
+msgstr ""
+
+msgid "' has to correctly specify the field(s):"
 msgstr ""
 
 msgid "' has to specify the field(s):"

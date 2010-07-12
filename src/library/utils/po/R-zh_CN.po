@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2008-10-08 18:27+0100\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -82,8 +82,16 @@ msgstr "只用'what'值里的第一个元素"
 msgid "%d occurrences in %s"
 msgstr "%2$s里出现了%1$d个具體值"
 
+#, fuzzy
+msgid "Filter '%s' is not available."
+msgstr "没有'%s'这种测试"
+
 msgid "Invalid 'filter' argument."
 msgstr "'filter'参数不对"
+
+#, fuzzy
+msgid "Processing file %s"
+msgstr "处理文件"
 
 msgid "Could not find aspell or ispell executable."
 msgstr "找不到aspell或ispell执行文件"
@@ -166,6 +174,9 @@ msgid "'bibtype' has to be one of"
 msgstr ""
 
 msgid "A bibentry of bibtype '"
+msgstr ""
+
+msgid "' has to correctly specify the field(s):"
 msgstr ""
 
 msgid "' has to specify the field(s):"

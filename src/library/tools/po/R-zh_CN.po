@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -400,6 +400,33 @@ msgstr "Rd文件里缺少或有空白的\\name域"
 msgid "No help on %s found in RdDB %s"
 msgstr "RdDB %2$s里找不到关于%1$s的帮助"
 
+msgid "Converting Rd files to LaTeX ..."
+msgstr "把Rd文件转化成LaTeX…"
+
+msgid "-t option without value"
+msgstr "-t选项必需带值"
+
+msgid "-o option without value"
+msgstr "-o选项必需带值"
+
+msgid "Warning: unknown option"
+msgstr "警告：没有这种选项"
+
+msgid "exactly one Rd file must be specified"
+msgstr "只能设定一个Rd文件"
+
+msgid "no 'type' specified"
+msgstr "没有设定'type'"
+
+msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
+msgstr "'type'值必需在'txt', 'html', 'latex'或'example'取一个"
+
+msgid "no inputs"
+msgstr ""
+
+msgid "Error in running tools::texi2dvi"
+msgstr ""
+
 msgid "more than one \\examples section, using the first"
 msgstr "多个\\example段，取用第一段"
 
@@ -509,9 +536,6 @@ msgstr ""
 msgid "The default JSS style may not be modified."
 msgstr ""
 
-msgid "Warning: unknown option"
-msgstr "警告：没有这种选项"
-
 msgid "** Options"
 msgstr ""
 
@@ -528,9 +552,6 @@ msgstr "打不开"
 
 msgid "to logical"
 msgstr ""
-
-msgid "-o option without value"
-msgstr "-o选项必需带值"
 
 msgid "-l option without value"
 msgstr "-l选项一定得有值"
@@ -703,26 +724,11 @@ msgstr "--no-help覆盖"
 msgid "--"
 msgstr "--"
 
-msgid "Converting Rd files to LaTeX ..."
-msgstr "把Rd文件转化成LaTeX…"
-
 msgid "finding HTML links ..."
 msgstr "搜寻HTML链结…"
 
 msgid "finding level-2 HTML links ..."
 msgstr "搜寻二级HTML链结…"
-
-msgid "-t option without value"
-msgstr "-t选项必需带值"
-
-msgid "exactly one Rd file must be specified"
-msgstr "只能设定一个Rd文件"
-
-msgid "no 'type' specified"
-msgstr "没有设定'type'"
-
-msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
-msgstr "'type'值必需在'txt', 'html', 'latex'或'example'取一个"
 
 msgid "there is no package called '%s'"
 msgstr "没有叫'%s'的程辑包"
@@ -766,6 +772,34 @@ msgstr "'DESCRIPTION'有'encoding'这个域，却无法重新编码"
 
 msgid "cannot create HTML package index"
 msgstr "无法建立HTML程辑包索引"
+
+msgid "Internal error, no tag"
+msgstr ""
+
+msgid "Argument for"
+msgstr ""
+
+#, fuzzy
+msgid "not found."
+msgstr "找不到'%s'这个文件"
+
+msgid "Internal error:  NULL tag"
+msgstr ""
+
+msgid "internal error"
+msgstr ""
+
+msgid "Inconsistent arg count for"
+msgstr ""
+
+msgid "Entry for"
+msgstr ""
+
+msgid "="
+msgstr ""
+
+msgid "already defined to be"
+msgstr ""
 
 msgid "found encoding"
 msgstr "找到编码"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08+0100\n"
+"POT-Creation-Date: 2010-07-12 18:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,7 +62,7 @@ msgstr ""
 
 #: family.c:21
 #, c-format
-msgid "Value %d out of range (0, 1)"
+msgid "Value %g out of range (0, 1)"
 msgstr ""
 
 #: family.c:42 family.c:56 family.c:74
@@ -99,19 +99,19 @@ msgstr ""
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr ""
 
-#: monoSpl.c:39
+#: monoSpl.c:40
 msgid "n must be at least two"
 msgstr ""
 
-#: monoSpl.c:72
+#: monoSpl.c:73
 msgid "Argument m must be numeric"
 msgstr ""
 
-#: monoSpl.c:75
+#: monoSpl.c:76
 msgid "length(m) must be at least two"
 msgstr ""
 
-#: monoSpl.c:77
+#: monoSpl.c:78
 msgid "Argument Sx must be numeric vector one shorter than m[]"
 msgstr ""
 
@@ -151,7 +151,7 @@ msgstr ""
 msgid "'theta' should be of type character"
 msgstr ""
 
-#: nls.c:290 port.c:380
+#: nls.c:290 port.c:382
 msgid "use of NULL environment is defunct"
 msgstr ""
 
@@ -195,70 +195,70 @@ msgstr ""
 msgid "invalid value of lag.max"
 msgstr ""
 
-#: port.c:129
+#: port.c:130
 #, c-format
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr ""
 
-#: port.c:324
+#: port.c:326
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr ""
 
-#: port.c:334
+#: port.c:336
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 
-#: port.c:384
+#: port.c:386
 msgid "'rho' must be an environment"
 msgstr ""
 
-#: port.c:386 port.c:537
+#: port.c:388 port.c:539
 msgid "'d' must be a nonempty numeric vector"
 msgstr ""
 
-#: port.c:388
+#: port.c:390
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 
-#: port.c:391
+#: port.c:393
 #, c-format
 msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
 msgstr ""
 
-#: port.c:405
+#: port.c:407
 msgid "'lower' and 'upper' must be numeric vectors"
 msgstr ""
 
-#: port.c:451
+#: port.c:453
 msgid "'getElement' applies only to named lists"
 msgstr ""
 
-#: port.c:472
+#: port.c:474
 #, c-format
 msgid "%s$%s() not found"
 msgstr ""
 
-#: port.c:485
+#: port.c:487
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr ""
 
-#: port.c:506
+#: port.c:508
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr ""
 
-#: port.c:519
+#: port.c:521
 msgid "invalid type for eval_check_store"
 msgstr ""
 
-#: port.c:538
+#: port.c:540
 msgid "m must be a list"
 msgstr ""
 
-#: port.c:558
+#: port.c:560
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr ""
 

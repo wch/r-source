@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -770,19 +770,31 @@ msgstr ""
 msgid "R packages available"
 msgstr ""
 
-msgid "shared library '%s' not found"
+msgid "DLL '%s' not found"
 msgstr ""
 
-msgid "shared library '%s' already loaded"
+msgid "shared object '%s' not found"
+msgstr ""
+
+msgid "DLL '%s' already loaded"
+msgstr ""
+
+msgid "shared object '%s' already loaded"
 msgstr ""
 
 msgid "now dyn.load(\"%s\") ..."
 msgstr ""
 
-msgid "no shared library was specified"
+msgid "no DLL was specified"
 msgstr ""
 
-msgid "shared library '%s' was not loaded"
+msgid "no shared object was specified"
+msgstr ""
+
+msgid "DLL '%s' was not loaded"
+msgstr ""
+
+msgid "shared object '%s' was not loaded"
 msgstr ""
 
 msgid "now dyn.unload(\"%s\") ..."

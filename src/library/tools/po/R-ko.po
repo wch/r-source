@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2005-05-26 17:33+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -411,6 +411,33 @@ msgstr "Rd 파일에서 실패한 필드 또는 비어 있는 필드가 있습�
 msgid "No help on %s found in RdDB %s"
 msgstr "이것은 패키지 'base'를 위해서 사용할수가 없습니다"
 
+msgid "Converting Rd files to LaTeX ..."
+msgstr ""
+
+msgid "-t option without value"
+msgstr ""
+
+msgid "-o option without value"
+msgstr ""
+
+msgid "Warning: unknown option"
+msgstr ""
+
+msgid "exactly one Rd file must be specified"
+msgstr ""
+
+msgid "no 'type' specified"
+msgstr ""
+
+msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
+msgstr ""
+
+msgid "no inputs"
+msgstr ""
+
+msgid "Error in running tools::texi2dvi"
+msgstr ""
+
 msgid "more than one \\examples section, using the first"
 msgstr ""
 
@@ -520,9 +547,6 @@ msgstr ""
 msgid "The default JSS style may not be modified."
 msgstr ""
 
-msgid "Warning: unknown option"
-msgstr ""
-
 msgid "** Options"
 msgstr ""
 
@@ -537,9 +561,6 @@ msgid "cannot coerce"
 msgstr ""
 
 msgid "to logical"
-msgstr ""
-
-msgid "-o option without value"
 msgstr ""
 
 msgid "-l option without value"
@@ -720,25 +741,10 @@ msgstr ""
 msgid "--"
 msgstr ""
 
-msgid "Converting Rd files to LaTeX ..."
-msgstr ""
-
 msgid "finding HTML links ..."
 msgstr ""
 
 msgid "finding level-2 HTML links ..."
-msgstr ""
-
-msgid "-t option without value"
-msgstr ""
-
-msgid "exactly one Rd file must be specified"
-msgstr ""
-
-msgid "no 'type' specified"
-msgstr ""
-
-msgid "'type' must be one of 'txt', 'html', 'latex' or 'example'"
 msgstr ""
 
 msgid "there is no package called '%s'"
@@ -784,6 +790,34 @@ msgstr ""
 #, fuzzy
 msgid "cannot create HTML package index"
 msgstr "source은 code로 패키지 할수가 없습니다"
+
+msgid "Internal error, no tag"
+msgstr ""
+
+msgid "Argument for"
+msgstr ""
+
+#, fuzzy
+msgid "not found."
+msgstr "파일 '%s'가 검색되지 않습니다"
+
+msgid "Internal error:  NULL tag"
+msgstr ""
+
+msgid "internal error"
+msgstr ""
+
+msgid "Inconsistent arg count for"
+msgstr ""
+
+msgid "Entry for"
+msgstr ""
+
+msgid "="
+msgstr ""
+
+msgid "already defined to be"
+msgstr ""
 
 msgid "found encoding"
 msgstr ""

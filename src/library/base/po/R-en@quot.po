@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
-"PO-Revision-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
+"PO-Revision-Date: 2010-07-12 18:52\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -826,20 +826,32 @@ msgstr "no packages found"
 msgid "R packages available"
 msgstr "R packages available"
 
-msgid "shared library '%s' not found"
-msgstr "shared library ‘%s’ not found"
+msgid "DLL '%s' not found"
+msgstr "DLL ‘%s’ not found"
 
-msgid "shared library '%s' already loaded"
-msgstr "shared library ‘%s’ already loaded"
+msgid "shared object '%s' not found"
+msgstr "shared object ‘%s’ not found"
+
+msgid "DLL '%s' already loaded"
+msgstr "DLL ‘%s’ already loaded"
+
+msgid "shared object '%s' already loaded"
+msgstr "shared object ‘%s’ already loaded"
 
 msgid "now dyn.load(\"%s\") ..."
 msgstr "now dyn.load(“%s”) ..."
 
-msgid "no shared library was specified"
-msgstr "no shared library was specified"
+msgid "no DLL was specified"
+msgstr "no DLL was specified"
 
-msgid "shared library '%s' was not loaded"
-msgstr "shared library ‘%s’ was not loaded"
+msgid "no shared object was specified"
+msgstr "no shared object was specified"
+
+msgid "DLL '%s' was not loaded"
+msgstr "DLL ‘%s’ was not loaded"
+
+msgid "shared object '%s' was not loaded"
+msgstr "shared object ‘%s’ was not loaded"
 
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "now dyn.unload(“%s”) ..."

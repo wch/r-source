@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-07-12 18:52\n"
 "PO-Revision-Date: 2010-04-03 20:07+0900 \n"
 "Last-Translator: Shigeru Mase <maseshigeru@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -225,6 +225,9 @@ msgstr "ラスター配列は丁度3つの次元を持つ必要があります "
 
 msgid "A raster array must have exactly 3 or 4 planes"
 msgstr "ラスター配列は丁度3か4の平面(plane)を持つ必要があります "
+
+msgid "Operator not meaningful for raster objects"
+msgstr ""
 
 msgid "no current device to record from"
 msgstr " 現在，以下のものから記録することが出来るデバイスはありません:  "
