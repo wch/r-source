@@ -421,7 +421,15 @@
       
       \item The \code{abs.tol} control parameter to \code{nlminb()}
       now defaults to \code{0.0} to avoid false declarations of
-      convergence in objective functions that may go negative.      
+      convergence in objective functions that may go negative.
+
+      \item The standard Unix-alike termination dialog to ask if to save
+      the workspace takes a EOF response as \code{n} to avoid problems
+      with a damaged terminal connection.  (\PR{14332})
+
+      \item wilcox.test(x, y, conf.int = TRUE) failed with an unhelpful
+      message if \code{x} and \code{y} were constant vectors, and
+      similarly in the one-sample case.  (\PR{14329})
     }
   }
 }

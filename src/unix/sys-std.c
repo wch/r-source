@@ -1035,24 +1035,26 @@ void attribute_hidden Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 
 	    R_ClearerrConsole();
 	    R_FlushConsole();
-	    R_ReadConsole("Save workspace image? [y/n/c]: ",
-			  buf, 128, 0);
-	    switch (buf[0]) {
-	    case 'y':
-	    case 'Y':
-		saveact = SA_SAVE;
-		break;
-	    case 'n':
-	    case 'N':
-		saveact = SA_NOSAVE;
-		break;
-	    case 'c':
-	    case 'C':
-		jump_to_toplevel();
-		break;
-	    default:
-		goto qask;
-	    }
+	    int res = R_ReadConsole("Save workspace image? [y/n/c]: ",
+				    buf, 128, 0);
+	    if(res) {
+		switch (buf[0]) {
+		case 'y':
+		case 'Y':
+		    saveact = SA_SAVE;
+		    break;
+		case 'n':
+		case 'N':
+		    saveact = SA_NOSAVE;
+		    break;
+		case 'c':
+		case 'C':
+		    jump_to_toplevel();
+		    break;
+		default:
+		    goto qask;
+		}
+	    } else saveact = SA_NOSAVE; /* probably EOF */
 	} else
 	    saveact = SaveAction;
     }
