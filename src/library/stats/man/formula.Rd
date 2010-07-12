@@ -8,6 +8,8 @@
 \usage{
 formula(x, \dots)
 as.formula(object, env = parent.frame())
+
+\method{print}{function}(x, showEnv = !identical(e, .GlobalEnv), \dots)
 }
 \alias{formula}
 \alias{formula.default}
@@ -30,6 +32,8 @@ as.formula(object, env = parent.frame())
   \item{x, object}{\R object.}
   \item{\dots}{further arguments passed to or from other methods.}
   \item{env}{the environment to associate with the result.}
+  \item{showEnv}{logical indicating if the environment should be printed
+    as well.}
 }
 \details{
   The models fit by, e.g., the \code{\link{lm}} and \code{\link{glm}} functions
@@ -129,7 +133,7 @@ as.formula(object, env = parent.frame())
 }
 \seealso{
   \code{\link{I}}, \code{\link{offset}}.
-  
+
   For formula manipulation: \code{\link{terms}}, and \code{\link{all.vars}};
   for typical use: \code{\link{lm}}, \code{\link{glm}}, and
   \code{\link{coplot}}.
