@@ -550,7 +550,7 @@ function(chname, package = NULL, lib.loc = NULL,
         return(dll_list)
 
     ## Be defensive about possible system-specific extension for shared
-    ## libraries, although the docs clearly say they should not be
+    ## objects, although the docs clearly say they should not be
     ## added.
     nc_file_ext <- nchar(file.ext, "c")
     if(substr(chname, nc_chname - nc_file_ext + 1L, nc_chname) == file.ext)
@@ -569,12 +569,19 @@ function(chname, package = NULL, lib.loc = NULL,
 ##        }
     }
     if(file == "")
-        stop(gettextf("shared library '%s' not found", chname), domain = NA)
+        if(.Platform$OS.type == "windows")
+            stop(gettextf("DLL '%s' not found", chname), domain = NA)
+        else
+            stop(gettextf("shared object '%s' not found", chname), domain = NA)
     ind <- sapply(dll_list, function(x) x[["path"]] == file)
     if(length(ind) && any(ind)) {
         if(verbose)
-            message(gettextf("shared library '%s' already loaded", chname),
-                    domain = NA)
+            if(.Platform$OS.type == "windows")
+                message(gettextf("DLL '%s' already loaded", chname),
+                        domain = NA)
+            else
+                message(gettextf("shared object '%s' already loaded", chname),
+                        domain = NA)
         return(invisible(dll_list[[ seq_along(dll_list)[ind] ]]))
     }
     if(.Platform$OS.type == "windows") {
@@ -606,10 +613,13 @@ function(chname, libpath, verbose = getOption("verbose"),
     dll_list <- .dynLibs()
 
     if(missing(chname) || (nc_chname <- nchar(chname, "c")) == 0)
-        stop("no shared library was specified")
+        if(.Platform$OS.type == "windows")
+            stop("no DLL was specified")
+        else
+            stop("no shared object was specified")
 
     ## Be defensive about possible system-specific extension for shared
-    ## libraries, although the docs clearly say they should not be
+    ## objects, although the docs clearly say they should not be
     ## added.
     nc_file_ext <- nchar(file.ext, "c")
     if(substr(chname, nc_chname - nc_file_ext + 1L, nc_chname)
@@ -624,11 +634,17 @@ function(chname, libpath, verbose = getOption("verbose"),
 
     pos <- which(sapply(dll_list, function(x) x[["path"]] == file))
     if(!length(pos))
-        stop(gettextf("shared library '%s' was not loaded", chname),
-             domain = NA)
+        if(.Platform$OS.type == "windows")
+            stop(gettextf("DLL '%s' was not loaded", chname), domain = NA)
+        else
+            stop(gettextf("shared object '%s' was not loaded", chname),
+                 domain = NA)
 
     if(!file.exists(file))
-        stop(gettextf("shared library '%s' not found", chname), domain = NA)
+        if(.Platform$OS.type == "windows")
+            stop(gettextf("DLL '%s' not found", chname), domain = NA)
+        else
+            stop(gettextf("shared object '%s' not found", chname), domain = NA)
     if(verbose)
         message(gettextf("now dyn.unload(\"%s\") ...", file), domain = NA)
     dyn.unload(file)

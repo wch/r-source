@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2009 The R Development Core Team
+ *  Copyright (C) 1997-2010 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,31 +36,31 @@
 
 /*  Dynamic Loading Support
  *
- *  This module provides support for run-time loading of shared libraries
- *  access to symbols within such libraries via .C and .Fortran.  This is
+ *  This module provides support for run-time loading of shared objects
+ *  access to symbols within such objects via .C and .Fortran.  This is
  *  done under Unix with dlopen, dlclose and dlsym (the exception is
- *  hpux, where we use compatibility code provided by Luke Tierney.
+ *  hpux, where we use compatibility code provided by Luke Tierney).
  *  There are two cases:
  *
  *
  *  1. The dlopen interface is available.
  *
- *  In this case all symbol location in packages is done using the dlopen routines.
- *  We maintain a list of currently loaded shared libraries in an array
- *  called "LoadedDLL" with the number of currenly loaded libraries
- *  being "CountDLL".  To locate a symbol, we probe the loaded libraries
- *  in order until the symbol is located.  If we do not find a symbol
- *  in the loaded libraries, we search the executable itself.  This
- *  search is not very efficient, but this probably pales into
- *  insignificance when compared with the inefficiencies in the R
- *  interpreter.
+ *  In this case all symbol location in packages is done using the
+ *  dlopen routines.  We maintain a list of currently loaded shared
+ *  objects in an array called "LoadedDLL" with the number of currently
+ *  loaded objects being "CountDLL".  To locate a symbol, we probe
+ *  the loaded objects in order until the symbol is located.  If we
+ *  do not find a symbol in the loaded objects, we search the
+ *  executable itself.  This search is not very efficient, but this
+ *  probably pales into insignificance when compared with the
+ *  inefficiencies in the R interpreter.
  *
- *  Loading and unloading of shared libraries is done via the routines
- *  AddDLL and DeleteDLL.  These routines maintain the list of currently
- *  loaded libraries.  When a library is added, any existing reference
- *  to that library are deleted and then the library is inserted at the
- *  start of the search list.  This way, symbols in more recently loaded
- *  libraries are found first.
+ *  Loading and unloading of shared objects is done via the routines
+ *  AddDLL and DeleteDLL.  These routines maintain the list of
+ *  currently loaded objects.  When an object is added, any existing
+ *  reference to that object is deleted and then the object is
+ *  inserted at the start of the search list.  This way, symbols in
+ *  more recently loaded objects are found first.
  *
  *
  *  Accessing native routines in base (the R executable).
@@ -211,13 +211,13 @@ R_addExternalRoutine(DllInfo *info,
 
 
 /*
- Returns a reference to the DllInfo object associated with the dynamic library
+ Returns a reference to the DllInfo object associated with the shared object
  with the path name `path'. This ensures uniqueness rather than having the
- undesirable situation of two libraries with the same name but in different
+ undesirable situation of two object with the same name but in different
  directories.
  This is available so that it can be called from arbitrary C routines
  that need to call R_registerRoutines(). The initialization routine
- R_init_<library name> is passed the DllInfo reference as an argument.
+ R_init_<object name> is passed the DllInfo reference as an argument.
  Other routines must explicitly request it using this routine.
  */
 DllInfo *
@@ -232,10 +232,11 @@ R_getDllInfo(const char *path)
 }
 
 /*
-  Explicitly register the native routines for use in .Call(), .C() and .Fortran()
-  functions. These registered values are used to resolve symbols in a library
-  that makes a call to this routine, rather than the usual dynamic resolution
-  done by dlsym() or the equivalent on the different platforms.
+  Explicitly register the native routines for use in .Call(), .C() and
+  .Fortran() functions. These registered values are used to resolve
+  symbols in an object that makes a call to this routine, rather than
+  the usual dynamic resolution done by dlsym() or the equivalent on
+  the different platforms.
  */
 int
 R_registerRoutines(DllInfo *info, const R_CMethodDef * const croutines,
@@ -516,8 +517,8 @@ static char DLLerror[DLLerrBUFSIZE] = "";
 /* the error message; length taken from ERRBUFSIZE in ./hpdlfcn.c  */
 
 	/* Inserts the specified DLL at the head of the DLL list */
-	/* Returns 1 if the library was successfully added */
-	/* and returns 0 if the library table is full or */
+	/* Returns 1 if the DLL was successfully added */
+	/* and returns 0 if the DLL table is full or */
 	/* or if dlopen fails for some reason. */
 
 
@@ -542,7 +543,7 @@ static DllInfo* AddDLL(const char *path, int asLocal, int now,
 
     info = R_RegisterDLL(handle, path);
 
-    /* Now look for an initializing routine named R_init_<library name>.
+    /* Now look for an initializing routine named R_init_<object name>.
        If it is present, we invoke it. It should take a reference to the
        DllInfo object currently being initialized.
     */
@@ -577,7 +578,7 @@ static DllInfo *R_RegisterDLL(HINSTANCE handle, const char *path)
     DllInfo *info;
 
     info = &LoadedDLL[CountDLL];
-    /* default is to use old-style dynamic lookup. Library's
+    /* default is to use old-style dynamic lookup.  The object's
        initialization routine can limit access by setting this to FALSE.
     */
     info->useDynamicLookup = TRUE;
@@ -806,7 +807,7 @@ R_dlsym(DllInfo *info, char const *name,
     return f;
 }
 
-	/* R_FindSymbol checks whether one of the libraries */
+	/* R_FindSymbol checks whether one of the objects */
 	/* that have been loaded contains the symbol name and */
 	/* returns a pointer to that symbol upon success. */
 
@@ -815,7 +816,7 @@ R_dlsym(DllInfo *info, char const *name,
   which will specify the nature of the symbol expected by the
   caller, specifically whether it is for a .C(), .Call(),
   .Fortran(), .External(), generic, etc. invocation. This will
-  reduce the pool of possible symbols in the case of a library
+  reduce the pool of possible symbols in the case of an object
   that registers its routines.
   This is currently done via the value in symbol.
  */
@@ -869,11 +870,11 @@ static void GetFullDLLPath(SEXP call, char *buf, const char *const path)
 }
 
 	/* do_dynload implements the R-Interface for the */
-	/* loading of shared libraries */
+	/* loading of shared objects */
 
 /*
   Extended to support 2 additional arguments (3 in total).
-  First argument is the name of the library.
+  First argument is the name of the DLL.
   Second argument is a logical indicating whether we
   want the symbols to be kept in their own local symbol table
   or added to the global symbol table of the application.
@@ -883,7 +884,7 @@ static void GetFullDLLPath(SEXP call, char *buf, const char *const path)
   the symbols as they are invoked. This is useful for
   developers so that they can ensure that all the symbols
   are available before they release, and allows users to
-  call routines from "incomplete" libraries.
+  call routines from "incomplete" DLLs.
  */
 
 SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -899,7 +900,7 @@ SEXP attribute_hidden do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     info = AddDLL(buf, LOGICAL(CADR(args))[0], LOGICAL(CADDR(args))[0],
 		  translateChar(STRING_ELT(CADDDR(args), 0)));
     if(!info)
-	error(_("unable to load shared library '%s':\n  %s"), buf, DLLerror);
+	error(_("unable to load shared object '%s':\n  %s"), buf, DLLerror);
     return(Rf_MakeDLLInfo(info));
 }
 
@@ -912,7 +913,7 @@ SEXP attribute_hidden do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("character argument expected"));
     GetFullDLLPath(call, buf, translateChar(STRING_ELT(CAR(args), 0)));
     if(!DeleteDLL(buf))
-	error(_("dynamic/shared library '%s\' was not loaded"), buf);
+	error(_("shared object '%s\' was not loaded"), buf);
     return R_NilValue;
 }
 
@@ -932,7 +933,7 @@ int R_moduleCdynload(const char *module, int local, int now)
 #endif
     res = AddDLL(dllpath, local, now, "");
     if(!res)
-	warning(_("unable to load shared library '%s':\n  %s"),
+	warning(_("unable to load shared object '%s':\n  %s"),
 		dllpath, DLLerror);
     return res != NULL ? 1 : 0;
 }
@@ -941,7 +942,7 @@ int R_moduleCdynload(const char *module, int local, int now)
   Creates an R object representing the value of the
   function pointer given by `f'. This object has class
   NativeSymbol and can be used to relay symbols from
-  one library to another.
+  one DLL to another.
  */
 static SEXP
 Rf_MakeNativeSymbolRef(DL_FUNC f)
@@ -1058,13 +1059,13 @@ Rf_MakeDLLInfo(DllInfo *info)
     return(ref);
 }
 
-/**
+/*
   This is the routine associated with the getNativeSymbolInfo()
-  function and it takes the name of a symbol and optionally a
-  library identifier (package usually) in which to restrict the search
+  function and it takes the name of a symbol and optionally an
+  object identifier (package usually) in which to restrict the search
   for this symbol. It resolves the symbol and returns it to the caller
   giving the symbol address, the package information (i.e. name and
-  fully qualified shared library name). If the symbol was explicitly
+  fully qualified shared object name). If the symbol was explicitly
   registered (rather than dynamically resolved by R), then we pass
   back that information also, giving the number of arguments it
   expects and the interface by which it should be called.

@@ -1,6 +1,6 @@
 % File src/library/utils/man/SHLIB.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{SHLIB}
@@ -8,7 +8,7 @@
 \title{Build Shared Object/DLL for Dynamic Loading}
 \description{
   Compile the given source files and then link all specified object
-  files into a shared library aka DLL which can be loaded into \R using
+  files into a shared object aka DLL which can be loaded into \R using
   \code{dyn.load} or \code{library.dynam}.
 }
 \usage{

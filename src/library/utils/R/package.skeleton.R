@@ -136,7 +136,7 @@ package.skeleton <-
           if(namespace)
           "* If you have compiled code, add a useDynLib() directive to 'NAMESPACE'."
           else
-          "* If you have compiled code, add a .First.lib() function in 'R' to load the shared library.",
+          "* If you have compiled code, add a .First.lib() function in 'R' to load the shared object.",
           "* Run R CMD build to build the package tarball.",
           "* Run R CMD check to check the package tarball.",
           "",

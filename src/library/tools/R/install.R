@@ -1342,10 +1342,10 @@
     Usage <- function()
         cat("Usage: R CMD SHLIB [options] files | linker options",
             "",
-            "Build a shared library for dynamic loading from the specified source or",
+            "Build a shared object for dynamic loading from the specified source or",
             "object files (which are automagically made from their sources) or",
             "linker options.  If not given via '--output', the name for the shared",
-            "library is determined from the first source or object file.",
+            "object is determined from the first source or object file.",
             "",
             "Options:",
             "  -h, --help		print short help message and exit",
@@ -1418,7 +1418,7 @@
             return(0L)
         }
         else if (a %in% c("-v", "--version")) {
-            cat("R shared library builder: ",
+            cat("R shared object builder: ",
                 R.version[["major"]], ".",  R.version[["minor"]],
                 " (r", R.version[["svn rev"]], ")\n", sep = "")
             cat("",

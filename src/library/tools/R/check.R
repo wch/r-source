@@ -752,10 +752,10 @@ R_run_R <- function(cmd, Ropts, env)
                 if (length(out)) {
                     errorLog(Log)
                     wrapLog("Incorrect (un)loading of package",
-                            "shared libraries.\n")
+                            "shared object.\n")
                     printLog(Log, paste(c(out, ""), collapse = "\n"))
                     wrapLog("The system-specific extension for",
-                            "shared libraries must not be added.\n",
+                            "shared objects must not be added.\n",
                             "See ?library.dynam.\n")
                     do_exit(1L)
                 }
