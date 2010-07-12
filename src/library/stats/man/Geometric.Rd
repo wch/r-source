@@ -36,7 +36,7 @@ rgeom(n, prob)
   \deqn{p(x) = p {(1-p)}^{x}}{p(x) = p (1-p)^x}
   for \eqn{x = 0, 1, 2, \ldots}, \eqn{0 < p \le 1}.
 
-  If an element of \code{x} is not integer, the result of \code{pgeom}
+  If an element of \code{x} is not integer, the result of \code{dgeom}
   is zero, with a warning.
 
   The quantile is defined as the smallest value \eqn{x} such that
