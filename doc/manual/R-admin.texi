@@ -1333,30 +1333,13 @@ The toolchain we use is technically a cross-compiler: the tools run
 under 32-bit Windows but produce code to run under 64-bit
 Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
 be done under 64-bit Windows.  So does installation of source packages.}
-This comes from
+This came from
 @url{http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Automated%20Builds/}
-and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100322.zip}.
-(Care is needed: that site also has compilers targeting 32-bit Windows
-and running on other host OSes.  You do want the `release' version with
-@code{-1.0-} in the name.  There was a native x64 toolchain under
-`Personal builds'.)  Some versions of that toolchain by default use
-dynamic linking to the compiler runtimes, which causes problems (see
-@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}), and can
-be converted to static linking by removing the files like
-@example
-.../x86_64-w64-mingw32/lib64/*.dll.a
-.../bin/*.dll
-@end example
-
-@noindent
-where @code{...} is the top-level directory of the toolchain. If do you
-use a dynamically-linking toolchain be sure to arrange to distribute the
-required run-time DLLs (and note the requirements that their GPL license
-imposes on re-distribution).
-
-@c Other toolchains are available: the time of writing native 64-bit
-@c compilers from @url{ftp://ftp.equation.com/gcc/} and from
-@c @url{http://www.cadforte.com/downloads.html}.  Use at your own risk!
+and had a name like @file{mingw-w64-1.0-bin_i686-mingw_20100322.zip}.
+@strong{However}, toolchains from June 2010 on at that site use a
+no-underscore convention and so do not work with the @R{} 2.11.x sources,
+so please use the version linked from
+@url{http://www.murdoch-sutherland.com/Rtools/}.
 
 To build package @pkg{tcltk} you need to unpack
 @url{http://www.stats.ox.ac.uk/pub/Rtools/R64_Tcl_8-5-8.zip}
