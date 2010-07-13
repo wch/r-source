@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-07-07 r52477)
+R version 2.12.0 Under development (unstable) (2010-07-12 r52515)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -9339,9 +9339,12 @@ Clustering vector:
 
 Within cluster sum of squares by cluster:
 [1] 8.392416 6.525480
+ (between_SS / total_SS =  75.5 %)
 
 Available components:
-[1] "cluster"  "centers"  "withinss" "size"    
+
+[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
+[6] "betweenss"    "size"        
 > plot(x, col = cl$cluster)
 > points(cl$centers, col = 1:2, pch = 8, cex=2)
 > 
@@ -9367,9 +9370,12 @@ Clustering vector:
 
 Within cluster sum of squares by cluster:
 [1] 1.2816507 0.7104553 1.5056575 2.5330710 1.0314888
+ (between_SS / total_SS =  88.4 %)
 
 Available components:
-[1] "cluster"  "centers"  "withinss" "size"    
+
+[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
+[6] "betweenss"    "size"        
 > plot(x, col = cl$cluster)
 > points(cl$centers, col = 1:5, pch = 8)
 > 
