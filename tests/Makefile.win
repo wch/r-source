@@ -68,12 +68,12 @@ clean:
 	  reg-plot-latin1.ps reg-tests-*.ps \
 	  $(test-src-auto) R-exts.* R-exts_res.rc R-intro.R Makedeps
 	@rm -rf *.Rcheck myTst* myLib Rprofmem.out
-	@rm -f FALSE* PACKAGES* .R .tex mirrors.html Rplots*.pdf ./-package.Rd
+	@rm -f FALSE* PACKAGES* .R .tex mirrors.html Rplots*.pdf ./-package.Rd ex.gz
 	@rm -f testit.txt testit.html testit.tex testit-Ex.R
 	@rm -f ver10.txt ver10.html ver10.tex ver10-Ex.R
 	@rm -f ver11.txt ver11.html ver11.tex ver11-Ex.R
 	@rm -rf Packages
-	-@rm -f exNSS4_1.0.tar.gz exS4noNS_1.0.tar.gz pkgA_1.0.tar.gz pkgB_1.0.tar.gz
+	-@rm -f *.tar.gz
 	@$(MK) -C Embedding clean
 
 distclean: clean
