@@ -139,7 +139,7 @@ dllversion.o: ../include/Rversion.h
 
 R.dll: $(OBJS) $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 	@$(ECHO) EXPORTS > R.def
-	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' | $(SORT) | uniq > R0.def
+	@$(NM) $^ | $(SED) -n  $(SYMPAT)  | $(SORT) | uniq > R0.def
 	@comm -23 R0.def Rdll.hide >> R.def
 	$(DLL) -shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ R.def $^ $($*-DLLLIBS) $(DLLLIBS)
 	@$(RM) R.def R0.def
@@ -147,7 +147,7 @@ R.dll: $(OBJS) $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 R.exp: $(OBJS) $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 	@$(ECHO) LIBRARY R.dll > R.exp
 	@$(ECHO) EXPORTS >> R.exp
-	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' | $(SORT) | uniq > R0.def
+	@$(NM) $^ | $(SED) -n "$(SYM_PAT)" | $(SORT) | uniq > R0.def
 	@comm -23 R0.def Rdll.hide >> R.exp
 	@$(RM) R0.def
 

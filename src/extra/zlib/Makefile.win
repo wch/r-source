@@ -28,7 +28,7 @@ libRzlib.dll.a: Rzlib.def
 
 Rzlib.def: $(OBJECTS)
 	@$(ECHO) EXPORTS > $@
-	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' | $(SORT) | uniq >> $@
+	@$(NM) $^ | $(SED) -n "$(SYMPAT)" | $(SORT) | uniq >> $@
 
 headers:
 	@$(CP) -p zlib.h zconf.h ../../../include

@@ -92,7 +92,7 @@ DEPENDS = $(SOURCES_NMATH:.c=.d)
 libRmath.a: sunif.o $(SOURCES_NMATH:.c=.o)
 Rmath.def: sunif.o $(SOURCES_NMATH:.c=.o)
 	$(ECHO) EXPORTS > $@
-	$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' >> $@
+	$(NM) $^ | $(SED) -n $(SYMPAT) >> $@
 Rmath.dll: libRmath.a Rmath.def
 	$(DLL) $(DLLFLAGS) --shared -o $@ Rmath.def $^
 libRmath.dll.a: Rmath.def

@@ -37,7 +37,7 @@ libRlapack.dll.a: Rlapack.def
 
 Rlapack.def: $(LIBOBJECTS)
 	@$(ECHO) EXPORTS > $@
-	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' | $(SORT) | uniq >> $@
+	@$(NM) $^ | $(SED) -n $(SYMPAT) | $(SORT) | uniq >> $@
 
 
 $(MODULE).dll: $(OBJS)

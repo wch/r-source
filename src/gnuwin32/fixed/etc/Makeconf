@@ -186,7 +186,7 @@ ALL_LIBS = $(LOCAL_LIBS) $(PKG_LIBS) $(SHLIB_LIBADD) $(LIBR) $(LIBINTL)
 
 %.dll:
 	@echo EXPORTS > $*.def
-	@$(NM) $^ | $(SED) -n 's/^.* [BCDRT] _/ /p' >> $*.def
+	@$(NM) $^ | $(SED) -n @SYMPAT@ >> $*.def
 	$(SHLIB_LD) -shared $(DLLFLAGS) -o $@ $*.def $^ $(ALL_LIBS)
 	@$(RM) $*.def
 

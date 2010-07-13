@@ -49,6 +49,10 @@ WIN = 32
 # define to -DW64 if using MinGW-w64 (32- or 64-bit)
 DEFS_W64 =
 
+# pattern for symbols: 
+# remove underline for versions of MinGW-w64 from about 2010-06
+SYMPAT = 's/^.* [BCDRT] _/ /p'
+
 # set to use ICU (experimental)
 # USE_ICU=YES
 # path to parent of ICU headers

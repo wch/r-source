@@ -27,12 +27,14 @@ ifeq ($(strip $(WIN)),64)
 	  -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
 	  -e "s|LOCAL_SOFT =|LOCAL_SOFT = $(LOCAL_SOFT)|" \
 	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
+	  -e "s|@SYMPAT@|$(SYMPAT)|" \
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
 else
 	$(SED) -e "s|IMPDIR = bin|IMPDIR = $(IMPDIR)|" \
 	  -e "s/BINPREF =/BINPREF = $(BINPREF)/" \
 	  -e "s|LOCAL_SOFT =|LOCAL_SOFT = $(LOCAL_SOFT)|" \
 	  -e "s|R_ARCH =|R_ARCH = $(R_ARCH)|" \
+	  -e "s|@SYMPAT@|$(SYMPAT)|" \
 	  etc/Makeconf > $(R_HOME)/etc$(R_ARCH)/Makeconf
 endif
 	@$(ECHO) done > fixetc
