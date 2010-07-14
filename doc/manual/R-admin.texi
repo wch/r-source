@@ -1036,6 +1036,10 @@ Example:
 @node Building the core files, Building the bitmap files, Getting the source files, Building from source
 @subsection Building the core files
 
+Set the environment variable @env{TMPDIR} to point to a writable
+directory, with a path specified with forward slashes and no spaces.
+(The default is @file{/tmp}, which may not be useful on Windows.)
+
 You may need to compile under a case-honouring file system: we found
 that a @command{samba}-mounted file system (which maps all file names to
 lower case) did not work.

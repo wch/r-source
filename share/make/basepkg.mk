@@ -20,6 +20,7 @@ instdirs:
 	   done; \
 	 fi; done
 
+## FIXME: should we try to quote f to allow spaces, backslashes etc?
 mkR:
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
