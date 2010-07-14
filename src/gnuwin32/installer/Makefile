@@ -189,11 +189,11 @@ distclean: clean
 	rm -f R*-win32.*exe R*-win32.msi R*-win64.exe R*-win.exe
 
 myR:
-	echo "make.packages.html(.Library, verbose=FALSE)" | $(IMAGEDIR)/$(BINDIR)/Rterm.exe --vanilla --slave LC_COLLATE=C
+	echo "make.packages.html(.Library, verbose=FALSE)" | "$(IMAGEDIR)/$(BINDIR)/Rterm.exe" --vanilla --slave LC_COLLATE=C
 	@echo "adding MD5 checksums"
-	@(cd $(IMAGEDIR); echo "tools:::.installMD5sums(\".\")" | \
+	@(cd "$(IMAGEDIR)"; echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
-	  ../../../../$(BINDIR)/Rterm.exe --vanilla --slave)
+	  "$(IMAGEDIR)/$(BINDIR)/Rterm.exe" --vanilla --slave)
 	../../../bin$(R_ARCH)/Rscript JRins.R \
-	  $(RPREFIX) $(RPREFIX) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
+	  $(RPREFIX) "$(IMAGEDIR)" $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
 	"$(ISDIR)/iscc" R.iss > myR.log
