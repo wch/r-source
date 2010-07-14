@@ -1209,7 +1209,15 @@ make myR IMAGEDIR=rootdir
 
 @noindent
 where @file{rootdir} is the path to the root of the customized
-installation (forward slashes and no spaces, please).  
+installation (in double quotes if it contains spaces or backslashes).
+(This assumes that @R{} has been built in the source tree: at the least
+it is necessary to run
+
+@example
+cd src/gnuwin32
+make MkRules
+@end example
+and edit @file{MkRules} to e.g.@: set @code{ISDIR}.)
 
 Both methods create an executable with the standard name,
 @file{@value{RWVERSION}-win32.exe}, so please rename it to indicate that

@@ -168,10 +168,10 @@ distclean: clean
 	rm -f $(RPREFIX)-win32.* $(RPREFIX)-win64.*
 
 myR:
-	echo "make.packages.html(.Library)" | $(IMAGEDIR)/$(BINDIR)/rterm --vanilla --slave LC_COLLATE=C
+	echo "make.packages.html(.Library)" | "$(IMAGEDIR)/$(BINDIR)/rterm" --vanilla --slave LC_COLLATE=C
 	@echo "adding MD5 checksums"
-	@(cd $(IMAGEDIR); echo "tools:::.installMD5sums(\".\")" | \
+	@(cd "$(IMAGEDIR)"; echo "tools:::.installMD5sums(\".\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows \
 	  bin/Rterm.exe --vanilla --slave)
-	$(PERL) JRins.pl $(RPREFIX) $(IMAGEDIR) $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
+	$(PERL) JRins.pl $(RPREFIX) "$(IMAGEDIR)" $(MDISDI) $(HelpStyle) $(Internet) $(Producer)
 	"$(ISDIR)/iscc" R.iss > myR.log
