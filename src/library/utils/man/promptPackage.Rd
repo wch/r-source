@@ -1,6 +1,6 @@
 % File src/library/utils/man/promptPackage.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{promptPackage}
@@ -14,8 +14,8 @@ promptPackage(package, lib.loc = NULL, filename = NULL,
               name = NULL, final = FALSE)
 }
 \arguments{
-  \item{package}{the name of an \emph{installed} or \emph{source} package
-    to be documented.}
+  \item{package}{a \code{\link{character}} string with the name of an
+    \emph{installed} or \emph{source} package to be documented.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
     of \code{NULL} corresponds to all libraries currently known.  For a
@@ -38,13 +38,13 @@ promptPackage(package, lib.loc = NULL, filename = NULL,
 \details{
   Unless \code{filename} is \code{NA}, a documentation shell for
   \code{package} is written to the file specified by \code{filename}, and
-  a message about this is given.  
+  a message about this is given.
 
   If \code{filename} is \code{NA}, a list-style representation of the
   documentation shell is created and returned.  Writing the shell to a
   file amounts to \code{cat(unlist(x), file = filename, sep = "\\n")},
   where \code{x} is the list-style representation.
-  
+
   If \code{final} is \code{TRUE}, the generated documentation will not
   include the place-holder slots for manual editing, it will be usable
   as-is.  In most cases a manually edited file is preferable (but
