@@ -1692,9 +1692,8 @@ could make use of the building service offered at
 @uref{http://win-builder.r-project.org/}.
 
 @R{} 2.11.x had separate repository areas for 32- and 64-bit binary
-packages: it is planned that most (maybe all) packages for @R{} 2.12.0
-will be distributed as a single binary containing either or both
-architectures---details to come.
+packages: it is planned that packages for @R{} 2.12.0 will be
+distributed as a single binary containing either or both architectures.
 
 @node Mac OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection Mac OS X
@@ -2603,7 +2602,7 @@ The bitmapped graphics devices @code{jpeg()}, @code{png()} and
 @code{tiff()} need the appropriate headers and libraries installed:
 @code{jpeg} (version 6b or later) or @code{libpng} (version 1.2.3 or
 later, including 1.4.x) and @code{zlib} (version 1.1.3 or later) or
-@code{libtiff} (any recent version of 3.x.y -- 3.8.2 and 3.9.1 have been
+@code{libtiff} (any recent version of 3.x.y -- 3.8.2 and 3.9.[124] have been
 tested) respectively.
 
 If you have them installed (including the appropriate headers and of
@@ -4646,28 +4645,12 @@ be done under 64-bit Windows.  So does installation of source packages
 unless @option{--no-test-load} is used.}  This comes from
 @url{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/}
 and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100405.zip}.
-(Care is needed: that site also has compilers targeting 32-bit Windows
-and running on other host OSes.  You do want the `release' version with
-@code{-1.0-} in the name.  There may be a native x64 toolchain under
-`Personal builds'.)
-
-@emph{Some versions} of that toolchain by default use dynamic linking to
-the compiler runtimes, which causes problems (see
-@url{http://www.stats.ox.ac.uk/@/~ripley/@/Win64/@/W64porting.html}), and can
-be converted to static linking by removing the files like
-@example
-.../x86_64-w64-mingw32/lib64/*.dll.a
-@end example
-
-@noindent
-where @code{...} is the top-level directory of the toolchain. If do you
-use a dynamically-linking toolchain be sure to arrange to distribute the
-required run-time DLLs (and note the requirements that their GPL license
-imposes on re-distribution).
-
-@c Other toolchains are available: the time of writing native 64-bit
-@c compilers from @url{ftp://ftp.equation.com/gcc/} and from
-@c @url{http://www.cadforte.com/downloads.html}.  Use at your own risk!
+@strong{However}, toolchains from June 2010 on at that site use a
+no-underscore convention and so do not work with the @R{} 2.11.x
+sources, so please use the version linked from
+@url{http://www.murdoch-sutherland.com/Rtools/} which is what is
+currently been used for R-devel snapshots (although this may change
+before release).
 
 
 @node Useful additional programs,  , The MinGW toolchain, The Windows toolset
