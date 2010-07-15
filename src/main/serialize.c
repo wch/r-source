@@ -1915,15 +1915,14 @@ static void resize_buffer(membuf_t mb, R_size_t needed)
 {
     /* This used to allocate double 'needed', but that was problematic for
        large buffers */
-    R_size_t newsize = needed;
     /* we need to store the result in a RAWSXP */
     if(needed > INT_MAX)
 	error(_("serialization is too large to store in a raw vector"));
     if(needed < INT_MAX - MAXELTSIZE) needed += MAXELTSIZE;
-    mb->buf = realloc(mb->buf, newsize);
+    mb->buf = realloc(mb->buf, needed);
     if (mb->buf == NULL)
 	error(_("cannot allocate buffer"));
-    mb->size = newsize;
+    mb->size = needed;
 }
 
 static void OutCharMem(R_outpstream_t stream, int c)
