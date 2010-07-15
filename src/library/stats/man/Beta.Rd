@@ -1,6 +1,6 @@
 % File src/library/stats/man/Beta.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Beta}
@@ -65,6 +65,12 @@ rbeta(n, shape1, shape2, ncp = 0)
 
   Invalid arguments will result in return value \code{NaN}, with a warning.
 }
+\note{
+  Supplying \code{ncp = 0} uses the algorithm for the non-central
+  distribution, which is not the same algorithm used if \code{ncp} is
+  omitted.  This is to give consistent behaviour in extreme cases with
+  values of \code{ncp} very near zero.
+}
 \source{
   The central \code{dbeta} is based on a binomial probability, using code
   contributed by Catherine Loader (see \code{\link{dbinom}}) if either
@@ -98,14 +104,14 @@ rbeta(n, shape1, shape2, ncp = 0)
   cancellation and a warning will be given when this is likely to be
   significant.
 
-  \code{qbeta} is based on a C translation of
+  The central case of \code{qbeta} is based on a C translation of
 
   Cran, G. W., K. J. Martin and G. E. Thomas (1977).
   Remark AS R19 and Algorithm AS 109,
   \emph{Applied Statistics},  \bold{26}, 111--114,
   and subsequent remarks (AS83 and correction).
 
-  \code{rbeta} is based on a C translation of
+  The central case of \code{rbeta} is based on a C translation of
 
   R. C. H. Cheng (1978).
   Generating beta variates with nonintegral shape parameters.

@@ -67,16 +67,16 @@ rf(n, df1, df2, ncp)
   non-central distributions.
 }
 \source{
-  For \code{df}, and \code{ncp == 0}, computed via a binomial
-  probability, code contributed by Catherine Loader (see \code{\link{dbinom}});
-  for \code{ncp != 0}, computed via a \code{\link{dbeta}},
-  code contributed by Peter Ruckdeschel.
+  For the central case of \code{df}, computed \emph{via} a binomial
+  probability, code contributed by Catherine Loader (see
+  \code{\link{dbinom}}); for the non-central case computed \emph{via}
+  \code{\link{dbeta}}, code contributed by Peter Ruckdeschel.
 
-  For \code{pf}, via \code{\link{pbeta}} (or for large \code{df2}, via
-  \code{\link{pchisq}}).
+  For \code{pf}, \emph{via} \code{\link{pbeta}} (or for large
+  \code{df2}, \emph{via} \code{\link{pchisq}}).
 
-  For \code{qf}, via \code{\link{qchisq}} for large \code{df2}, else via
-  \code{\link{qbeta}}.
+  For \code{qf}, \emph{via} \code{\link{qchisq}} for large \code{df2},
+  else \emph{via} \code{\link{qbeta}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -88,6 +88,11 @@ rf(n, df1, df2, ncp)
   Wiley, New York.
 }
 \note{
+  Supplying \code{ncp = 0} uses the algorithm for the non-central
+  distribution, which is not the same algorithm used if \code{ncp} is
+  omitted.  This is to give consistent behaviour in extreme cases with
+  values of \code{ncp} very near zero.
+  
   The code for non-zero \code{ncp} is principally intended to be used
   for moderate values of \code{ncp}: it will not be highly accurate,
   especially in the tails, for large values.
