@@ -12,9 +12,12 @@ else
 endif
 
 DLLFLAGS+= -static-libgcc
+LINKFLAGS+= -static-libgcc
 
 WIN = 32
 BINPREF =
+## includes _ for 32-bit and older 64-bit, no _ for 64-bit >= May 2010
+SYMPAT = @SYMPAT@
 
 IMPDIR = bin
 
@@ -186,7 +189,7 @@ ALL_LIBS = $(LOCAL_LIBS) $(PKG_LIBS) $(SHLIB_LIBADD) $(LIBR) $(LIBINTL)
 
 %.dll:
 	@echo EXPORTS > $*.def
-	@$(NM) $^ | $(SED) -n @SYMPAT@ >> $*.def
+	@$(NM) $^ | $(SED) -n $(SYMPAT) >> $*.def
 	$(SHLIB_LD) -shared $(DLLFLAGS) -o $@ $*.def $^ $(ALL_LIBS)
 	@$(RM) $*.def
 
