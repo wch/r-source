@@ -1911,14 +1911,21 @@ typedef struct membuf_st {
     unsigned char *buf;
 } *membuf_t;
 
+
+#define INCR MAXELTSIZE
 static void resize_buffer(membuf_t mb, R_size_t needed)
 {
     /* This used to allocate double 'needed', but that was problematic for
        large buffers */
-    /* we need to store the result in a RAWSXP */
+    /* we need to store the result in a RAWSXP so limited to INT_MAX */
     if(needed > INT_MAX)
 	error(_("serialization is too large to store in a raw vector"));
-    if(needed < INT_MAX - MAXELTSIZE) needed += MAXELTSIZE;
+    if(needed < 10000000) /* ca 10MB */
+	needed = (1+2*needed/INCR) * INCR;
+    if(needed < 1000000000) /* ca 1GB */
+	needed = (1+1.2*needed/INCR) * INCR;
+    else if(needed < INT_MAX - INCR) 
+	needed = (1+needed/INCR) * INCR;
     mb->buf = realloc(mb->buf, needed);
     if (mb->buf == NULL)
 	error(_("cannot allocate buffer"));

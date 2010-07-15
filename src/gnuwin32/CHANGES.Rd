@@ -90,12 +90,16 @@
   \subsection{BUG FIXES}{
     \itemize{
       \item \code{file.rename()} now waits for the rename to complete
-        before returning, so that operations on the new filename will
-        not fail.
+      before returning, so that operations on the new filename will
+      not fail.
       
       \item \code{Sys.info()} and \code{win.version()} now report
-       Windows 7 as such (and not as Vista), and \code{Sys.info()} now
-       reports the machine type as \code{"x86-64"} on 64-bit platforms.
+      Windows 7 as such (and not as Vista), and \code{Sys.info()} now
+      reports the machine type as \code{"x86-64"} on 64-bit platforms.
+
+      \item \code{serialize()} to a raw vector works around the dismal
+      performance of Windows' memory manager by allocating much larger
+      chunks of memory less frequently.
     }
   }
 }
