@@ -1331,7 +1331,7 @@ redistributors).
 Support for MinGW-w64 was developed in the R sources over the period
 2008--10 and was first released as part of @R{} 2.11.0.  The binary
 version available from @acronym{CRAN} was built with the MinGW-w64
-toolchain described in this section, using static linking.
+toolchain described in this section.
 
 Several versions of the MinGW-w64 toolchain are available: use one of
 them to replace the @file{MinGW/bin} directory of @code{Rtools} in your
@@ -1348,9 +1348,9 @@ be done under 64-bit Windows.  So does installation of source packages.}
 This came from
 @url{http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Automated%20Builds/}
 and had a name like @file{mingw-w64-1.0-bin_i686-mingw_20100322.zip}.
-@strong{However}, toolchains from June 2010 on at that site use a
-no-underscore convention and so do not work with the @R{} 2.11.x sources,
-so please use the version linked from
+@strong{However}, toolchains from late April 2010 at that site do not
+use the leading underscore convention and so do not work with the @R{}
+2.11.x sources, so please use the version linked from
 @url{http://www.murdoch-sutherland.com/Rtools/}.
 
 To build package @pkg{tcltk} you need to unpack
@@ -1369,7 +1369,10 @@ you need the correct one first in your path if using both.
 A package-building service is available at
 @url{http://win-builder.r-project.org/}, and some notes on porting
 packages can be found at
-@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
+@url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.  Note
+carefully whether any external software you use has been compiled with
+leading underscores or not: this matters for static and import libraries
+but not for linking directly to DLLs.
 
 The default memory limit will be the amount of installed RAM: it can
 be changed by using (preferably) @option{--max-mem-size=} at startup or
