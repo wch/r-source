@@ -1812,7 +1812,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     SEXP t;
     PROTECT_INDEX pvalidx, pxidx;
     Rboolean maybe_duplicate=FALSE;
-    Rboolean S4;
+    Rboolean S4; SEXP xS4 = R_NilValue;
 
     PROTECT_WITH_INDEX(x, &pxidx);
     PROTECT_WITH_INDEX(val, &pvalidx);
@@ -1832,6 +1832,7 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	REPROTECT(val = duplicate(val), pvalidx);
     /* code to allow classes to extend ENVSXP */
     if(TYPEOF(x) == S4SXP) {
+	xS4 = x;
         x = R_getS4DataSlot(x, ANYSXP);
 	if(x == R_NilValue)
 	  errorcall(call, _("no method for assigning subsets of this S4 class"));
@@ -1970,6 +1971,8 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 	}
     }
     UNPROTECT(2);
+    if(xS4 != R_NilValue)
+	x = xS4; /* x was an env't, the data slot of xS4 */
     SET_NAMED(x, 0);
     if(S4) SET_S4_OBJECT(x);
     return x;

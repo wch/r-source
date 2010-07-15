@@ -1742,7 +1742,7 @@ static SEXP VectorToPairListNamed(SEXP x)
     return xnew;
 }
 
-
+#define simple_as_environment(arg) (IS_S4_OBJECT(arg) && (TYPEOF(arg) == S4SXP) ? R_getS4DataSlot(arg, ENVSXP) : R_NilValue)
 
 /* "eval" and "eval.with.vis" : Evaluate the first argument */
 /* in the environment specified by the second argument. */
@@ -1763,8 +1763,11 @@ SEXP attribute_hidden do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* This is supposed to be defunct, but has been kept here
 	   (and documented as such) */
 	encl = R_BaseEnv;
-    } else if ( !isEnvironment(encl) )
+    } else if ( !isEnvironment(encl) &&
+		!isEnvironment((encl = simple_as_environment(encl))) )
 	error(_("invalid '%s' argument"), "enclos");
+    if(IS_S4_OBJECT(env) && (TYPEOF(env) == S4SXP))
+	env = R_getS4DataSlot(env, ANYSXP); /* usually an ENVSXP */
     switch(TYPEOF(env)) {
     case NILSXP:
 	env = encl;     /* so eval(expr, NULL, encl) works */

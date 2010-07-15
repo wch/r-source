@@ -2488,7 +2488,8 @@ SEXP R_lsInternal(SEXP env, Rboolean all)
     k = 0;
     if (env == R_BaseEnv || env == R_BaseNamespace)
 	k += BuiltinSize(all, 0);
-    else if (isEnvironment(env)) {
+    else if (isEnvironment(env) ||
+	isEnvironment(env = simple_as_environment(env))) {
 	if (HASHTAB(env) != R_NilValue)
 	    k += HashTableSize(HASHTAB(env), all);
 	else
@@ -2860,6 +2861,8 @@ do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 void R_LockEnvironment(SEXP env, Rboolean bindings)
 {
+    if(IS_S4_OBJECT(env) && (TYPEOF(env) == S4SXP))
+	env = R_getS4DataSlot(env, ANYSXP); /* better be an ENVSXP */
     if (env == R_BaseEnv || env == R_BaseNamespace) {
 	if (bindings) {
 	    SEXP s;
@@ -2903,7 +2906,8 @@ Rboolean R_EnvironmentIsLocked(SEXP env)
 {
     if (TYPEOF(env) == NILSXP)
 	error(_("use of NULL environment is defunct"));
-    if (TYPEOF(env) != ENVSXP)
+    if (TYPEOF(env) != ENVSXP &&
+	TYPEOF((env = simple_as_environment(env))) != ENVSXP)
 	error(_("not an environment"));
     return FRAME_IS_LOCKED(env) != 0;
 }
@@ -2931,7 +2935,8 @@ void R_LockBinding(SEXP sym, SEXP env)
 	error(_("not a symbol"));
     if (TYPEOF(env) == NILSXP)
 	error(_("use of NULL environment is defunct"));
-    if (TYPEOF(env) != ENVSXP)
+    if (TYPEOF(env) != ENVSXP &&
+	TYPEOF((env = simple_as_environment(env))) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv || env == R_BaseNamespace)
 	/* It is a symbol, so must have a binding even if it is
@@ -2951,7 +2956,8 @@ void R_unLockBinding(SEXP sym, SEXP env)
 	error(_("not a symbol"));
     if (TYPEOF(env) == NILSXP)
 	error(_("use of NULL environment is defunct"));
-    if (TYPEOF(env) != ENVSXP)
+    if (TYPEOF(env) != ENVSXP &&
+	TYPEOF((env = simple_as_environment(env))) != ENVSXP)
 	error(_("not an environment"));
     if (env == R_BaseEnv || env == R_BaseNamespace)
 	/* It is a symbol, so must have a binding even if it is
