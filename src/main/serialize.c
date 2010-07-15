@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2009  The R Development Core Team
+ *  Copyright (C) 1997--2010  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1909,19 +1909,25 @@ typedef struct membuf_st {
     unsigned char *buf;
 } *membuf_t;
 
+
+#define INCR MAXELTSIZE
 static void resize_buffer(membuf_t mb, R_size_t needed)
 {
     /* This used to allocate double 'needed', but that was problematic for
        large buffers */
-    R_size_t newsize = needed;
-    /* we need to store the result in a RAWSXP */
+    /* we need to store the result in a RAWSXP so limited to INT_MAX */
     if(needed > INT_MAX)
 	error(_("serialization is too large to store in a raw vector"));
-    if(needed < INT_MAX - MAXELTSIZE) needed += MAXELTSIZE;
-    mb->buf = realloc(mb->buf, newsize);
+    if(needed < 10000000) /* ca 10MB */
+	needed = (1+2*needed/INCR) * INCR;
+    if(needed < 1000000000) /* ca 1GB */
+	needed = (1+1.2*needed/INCR) * INCR;
+    else if(needed < INT_MAX - INCR) 
+	needed = (1+needed/INCR) * INCR;
+    mb->buf = realloc(mb->buf, needed);
     if (mb->buf == NULL)
 	error(_("cannot allocate buffer"));
-    mb->size = newsize;
+    mb->size = needed;
 }
 
 static void OutCharMem(R_outpstream_t stream, int c)

@@ -25,6 +25,10 @@ BUG FIXES
 	not as Vista), and Sys.info() now reports the machine type as
 	'x86-64' on 64-bit platforms.
 
+    o	serialize() to a raw vector works around the dismal performance
+      	of Windows' memory manager by allocating much larger chunks of
+      	memory less frequently.
+
 
 
     		CHANGES IN R VERSION 2.11.1
