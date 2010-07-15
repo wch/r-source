@@ -25,6 +25,7 @@ Denmark,Denmark,Aalborg,http://mirrors.dotsrc.org/cran/,"dotsrc.org, Aalborg","m
 "Germany (Hannover)",Germany,Hannover,http://cran.mirroring.de,"Opensource Mirror Project","admin # mirroring.de",1,de
 "Germany (Hamburg)",Germany,Hamburg,http://artfiles.org/cran/,"Artfiles New Media, Hamburg","mirror # artfiles.org",1,de
 "Germany (Muenchen)",Germany,Muenchen,http://cran.rakanu.com/,"Rakanu.com, Muenchen","Carsten Zedler <info # rakanu.com>",1,de
+"Germany (Nuernberg)",Germany,Nuernberg,http://cran.myamplifiers.com/,"Hetzner Online AG, Nuernberg","nikrans # Gmail.com",1,de
 "Germany (Wiesbaden)",Germany,Wiesbaden,http://ftp.yalwa.org/cran/,"Yalwa GmbH, Wiesbaden","webmaster # yalwa.com",1,de
 Iran,Iran,Mashhad,http://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad # um.ac.ir>",1,ir
 Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet, Dublin","Brian McArdle <brian.mcardle # heanet.ie>",1,ie
@@ -40,7 +41,6 @@ Mexico,Mexico,Cuernavaca,http://www2.uaem.mx/r-mirror/,"Universidad Autonoma del
 "Netherlands (Amsterdam)",Netherlands,Amsterdam,http://cran.xl-mirror.nl/,"XL-Data, Amsterdam","werner # xl-mirror.nl",1,nl
 "Netherlands (Utrecht)",Netherlands,Utrecht,http://cran-mirror.cs.uu.nl/,"Utrecht University","webmaster # cs.uu.nl",1,nl
 "New Zealand","New Zealand",Auckland,http://cran.stat.auckland.ac.nz/,"University of Auckland","w.schmidt # auckland.ac.nz",1,nz
-Norway,Norway,Bergen,http://cran.ii.uib.no/,"University of Bergen","webmaster # ii.uib.no",1,no
 "Poland (Oswiecim)",Poland,Oswiecim,http://piotrkosoft.net/pub/mirrors/CRAN/,"Piotrkosoft - Data Storage Center","Piotr Maluty <piotr.maluty # gmail.com>",1,pl
 "Poland (Wroclaw)",Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Paweł Netzel <netzel # meteo.uni.wroc.pl>",1,pl
 Portugal,Portugal,Porto,http://neacm.fe.up.pt/CRAN/,"Universidade do Porto","neacm # fe.up.pt",1,pt
