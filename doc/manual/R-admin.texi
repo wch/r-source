@@ -1305,7 +1305,8 @@ Support for cross-building was withdrawn at @R{} 2.9.0.
 @subsection 64-bit Windows builds
 
 To build a 64-bit version of R you need a 64-bit toolchain: the only one
-discussed here is based on the work of the MinGW-w64 project
+discussed here (@pxref{64-bit toolchain}) is based on the work of
+the MinGW-w64 project
 (@url{http://sourceforge.net/@/projects/@/mingw-w64/}, but commercial
 compilers such as those from Intel and PGI could be used (and have been
 by @R{} redistributors).
@@ -4637,10 +4638,10 @@ and options to use that are documented in file @file{MkRules.dist}.
 
 Several versions of the MinGW-w64 toolchain are available: use one of
 them to replace the 32-bit toolchain's @file{bin} directory in your
-path.  Then copy @file{src/gnuwin32/MkRules.dist} to
-@file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64} and
-@code{BINPREF64} appropriate to your toolchain, then make @R{} in the
-usual way.
+path.  Then copy file @file{src/gnuwin32/MkRules.dist} to
+@file{src/gnuwin32/MkRules.local} and edit it to set @code{WIN=64},
+@code{BINPREF64} and @code{SYMPAT} appropriate to your toolchain, then
+make @R{} in the usual way.
 
 The toolchain we use is technically a cross-compiler: the tools run
 under 32-bit Windows but produce code to run under 64-bit
@@ -4649,12 +4650,16 @@ be done under 64-bit Windows.  So does installation of source packages
 unless @option{--no-test-load} is used.}  This comes from
 @url{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/}
 and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100405.zip}.
-@strong{However}, toolchains from June 2010 on at that site use a
-no-underscore convention and so do not work with the @R{} 2.11.x
-sources, so please use the version linked from
-@url{http://www.murdoch-sutherland.com/Rtools/} which is what is
-currently been used for R-devel snapshots (although this may change
-before release).
+
+@strong{However}, toolchains from late April 2010 on at that site
+generate objects with symbols without a leading underscore.  Current
+R-devel snapshots are made with the earlier toolchain as used for @R{}
+2.11.x which does use leading underscores, so that is the default for
+@file{src/gnuwin32/MkRules.dist}.  If you are using a binary
+distribution of @R{}, check that the settings of @code{BINPREF} and
+@code{SYMPAT} in file @file{etc/x64/Makeconf} are appropriate to your
+toolchain.  The use or not of leading underscores affects linking to
+external static and import libraries but not linking directly to DLLs.
 
 
 @node Useful additional programs,  , The MinGW toolchain, The Windows toolset
