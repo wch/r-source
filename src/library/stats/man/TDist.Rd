@@ -45,9 +45,10 @@ rt(n, df, ncp)
   Invalid arguments will result in return value \code{NaN}, with a warning.
 }
 \note{
-  Setting \code{ncp = 0} is \emph{not} equivalent to omitting
-  \code{ncp}.  \R uses the non-centrality functionality whenever \code{ncp}
-  is specified which provides continuous behavior at \eqn{ncp = 0}.
+  Supplying \code{ncp = 0} uses the algorithm for the non-central
+  distribution, which is not the same algorithm used if \code{ncp} is
+  omitted.  This is to give consistent behaviour in extreme cases with
+  values of \code{ncp} very near zero.
 
   The code for non-zero \code{ncp} is principally intended to be used
   for moderate values of \code{ncp}: it will not be highly accurate,
