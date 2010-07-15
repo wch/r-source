@@ -1380,7 +1380,7 @@
         SHLIB_EXT <- ".dll"
         SHLIB_LIBADD <- ""
         MAKE <- "make"
-        ## For winshlib.mk to pick up Makeconf
+        ## Formerly for winshlib.mk to pick up Makeconf
         rarch <- Sys.getenv("R_ARCH", NA)
         if(is.na(rarch)) {
             if (nzchar(.Platform$r_arch)) {
