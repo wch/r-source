@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-16 09:29\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@.ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -2359,6 +2359,10 @@ msgstr "não há observações o suficiente de 'x' (finitas)"
 
 msgid "Requested conf.level not achievable"
 msgstr "Nível de confiança pedido não é possível de se obter"
+
+#, fuzzy
+msgid "cannot compute confidence interval when all observations are tied"
+msgstr "não é possível calcular intervalo de confiança exato com zeros"
 
 msgid "cannot compute exact confidence interval with ties"
 msgstr "não é possível calcular intervalo de confiança exato com empates"

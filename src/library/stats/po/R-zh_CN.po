@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-16 09:29\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -2220,6 +2220,10 @@ msgstr "(有限)'x'观察量数目不够"
 
 msgid "Requested conf.level not achievable"
 msgstr "无法达到所要求的conf.level"
+
+#, fuzzy
+msgid "cannot compute confidence interval when all observations are tied"
+msgstr "有零时无法計算精確的置信区间"
 
 msgid "cannot compute exact confidence interval with ties"
 msgstr "有连结时无法計算精確的置信区间"

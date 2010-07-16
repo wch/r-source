@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-16 09:29\n"
 "PO-Revision-Date: 2010-03-23 13:36+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -2290,6 +2290,10 @@ msgstr "nicht genug (endliche) 'x' Beobachtungen"
 
 msgid "Requested conf.level not achievable"
 msgstr "gefordertes conf.level nicht erreichbar"
+
+#, fuzzy
+msgid "cannot compute confidence interval when all observations are tied"
+msgstr "kann das exakte Konfidenzinterval bei Nullen nicht berechnen"
 
 msgid "cannot compute exact confidence interval with ties"
 msgstr "kann bei Bindungen das exakte Konfidenzinterval nicht berechnen"

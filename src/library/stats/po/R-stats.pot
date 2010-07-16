@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-16 09:29\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2166,6 +2166,9 @@ msgid "not enough (finite) 'x' observations"
 msgstr ""
 
 msgid "Requested conf.level not achievable"
+msgstr ""
+
+msgid "cannot compute confidence interval when all observations are tied"
 msgstr ""
 
 msgid "cannot compute exact confidence interval with ties"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:09\n"
+"POT-Creation-Date: 2010-07-16 09:29\n"
 "PO-Revision-Date: 2010-04-09 19:52-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -2293,6 +2293,10 @@ msgstr "недостаточно (конечных) данных 'x'"
 
 msgid "Requested conf.level not achievable"
 msgstr "Заданный доверительный интервал не достигнут"
+
+#, fuzzy
+msgid "cannot compute confidence interval when all observations are tied"
+msgstr "не могу высчитать точный доверительный интервал при наличии нулей"
 
 msgid "cannot compute exact confidence interval with ties"
 msgstr "совпадающие значения: не могу высчитать точный доверительный интервал"
