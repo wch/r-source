@@ -249,14 +249,14 @@
       \code{useNames}.  For \code{arrayInd}, the default is now false,
       for speed reasons.
       
-      \item As is done for closures, the default print method for the
-      formula class now displays the associated environment if it is
+      \item As is done for closures, the default \code{print} method for
+      the formula class now displays the associated environment if it is
       not the global environment.
 
       \item A new facility has been added for inserting code into a
-        package without re-installing it, to facilitate testing
-        changes which can be selectively added and backed out. See
-        ?insertSource.
+      package without re-installing it, to facilitate testing
+      changes which can be selectively added and backed out. See
+      \code{?insertSource}.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
