@@ -193,8 +193,8 @@ install.packages <-
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1L]
 	if(length(.libPaths()) > 1L)
-	    message(gettextf("Installing package(s) into '%s' (as 'lib' is unspecified)",
-			     lib), domain = NA)
+	    message(gettextf("Installing package(s) into %s\n(as 'lib' is unspecified)",
+			     sQuote(lib)), domain = NA)
     }
 
     ## check for writability by user
