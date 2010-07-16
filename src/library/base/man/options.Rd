@@ -346,7 +346,7 @@ getOption(x, default = NULL)
     \code{timeout} \tab \code{60}\cr
     \code{verbose} \tab \code{FALSE}\cr
     \code{warn} \tab \code{0}\cr
-    \code{warnings.length} \tab \code{1000}\cr
+    \code{warning.length} \tab \code{1000}\cr
     \code{width}  \tab \code{80}\cr
   }
   Others are set from environment variables or are platform-dependent.
