@@ -1051,7 +1051,7 @@ fileCompletions <- function(token)
 	"printcmd", "prompt", "repos", "scipen", "show.coef.Pvalues",
 	"show.error.messages", "show.signif.stars", "str",
 	"stringsAsFactors", "timeout", "ts.eps", "ts.S.compat",
-	"unzip", "verbose", "warn", "warnings.length", "width")
+	"unzip", "verbose", "warn", "warning.length", "width")
 
     .addFunctionInfo(par = par, options = options)
 
