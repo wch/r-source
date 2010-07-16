@@ -198,6 +198,8 @@
 	     },
 	     where = envir)
     setOldClass("factor", S4Class = "factor", where = envir)
+    if(!isGeneric("show", envir))
+        setGeneric("show", where = envir, simpleInheritanceOnly = TRUE)
     setMethod("show", "oldClass", function(object) {
         if(!isS4(object))  {
             print(object)
@@ -549,6 +551,8 @@
     ## a few other special classes
     setClass("namedList", representation(names = "character"),
              contains = "list", where = where)
+    if(!isGeneric("show", where))
+        setGeneric("show", where = where, simpleInheritanceOnly = TRUE)
     setMethod("show", "namedList", function(object) {
         cat("An object of class ", dQuote(class(object)), "\n")
         print(structure(object@.Data, names=object@names))

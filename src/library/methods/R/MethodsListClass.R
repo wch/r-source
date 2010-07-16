@@ -157,7 +157,6 @@
     if(!isGeneric("initialize", envir)) {
         setGeneric("initialize",  .initGeneric, where = envir, useAsDefault = TRUE, simpleInheritanceOnly = TRUE)
     }
-    .InitTraceFunctions(envir)
     setMethod("initialize", "signature",
               function(.Object, functionDef, ...) {
                   if(nargs() < 2)
@@ -183,7 +182,7 @@
         .MlistDeprecated()
         callNextMethod()
     }, where = envir)
-              
+
     ## make sure body(m) <- .... leaves a method as a method
     setGeneric("body<-", where = envir)
     setMethod("body<-", "MethodDefinition", function (fun, envir, value) {
@@ -193,6 +192,8 @@
         fun
     }, where = envir)
     ## a show method for lists of generic functions, etc; see metaNameUndo
+    if(!isGeneric("show", envir))
+        setGeneric("show", where = envir, simpleInheritanceOnly = TRUE)
     setMethod("show", "ObjectsWithPackage",
               function(object) {
                   pkg <- object@package

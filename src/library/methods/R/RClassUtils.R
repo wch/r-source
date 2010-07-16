@@ -505,7 +505,8 @@ assignClassDef <-
       }
       else
           assign(mname, def, where)
-      .cacheClass(clName, def, is(def, "ClassUnionRepresentation"), where)
+      if(cacheOnAssign(where)) # will be FALSE for sourceEnvironment's
+          .cacheClass(clName, def, is(def, "ClassUnionRepresentation"), where)
   }
 
 
@@ -1197,6 +1198,11 @@ classMetaName <-
   ## a name for the object storing this class's definition
   function(name)
   methodsPackageMetaName("C", name)
+
+# regexp for matching class metanames; semi-general but assumes the
+# meta pattern starts with "." and has no other special characters
+.ClassMetaPattern <- function()
+    paste("^[.]",substring(methodsPackageMetaName("C",""),2), sep = "")
 
 ##FIXME:  C code should take multiple strings in name so paste() calls could  be avoided.
 methodsPackageMetaName <-

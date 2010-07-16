@@ -767,13 +767,13 @@ sealClass <- function(Class, where = topenv(parent.frame())) {
     stop(gettextf("Class definition cannot extend more than one of these data types: %s", paste('"',type, '"', sep="", collapse = ", ")),
          domain = NA)
   class <- .indirectAbnormalClasses[type]
-  if(is.na(class) || is.null(getClassDef(class, .methodsNamespace)))
+  if(is.na(class))
     stop(gettextf("Sorry, abnormal type \"%s\" is not supported as a superclass of a class definition", type),
          domain = NA)
-  ## this message is not strictly needed, but reminds programmers that
+  ## this message USED TO BE PRINTED: reminds programmers that
   ## they will see an unexpected superclass
-  message(gettextf('Defining type "%s" as a superclass via class "%s"',
-                  type, class), domain = NA)
+  ## message(gettextf('Defining type "%s" as a superclass via class "%s"',
+  ##                 type, class), domain = NA)
   c(class, classes[!types])
 }
 

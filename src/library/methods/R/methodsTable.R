@@ -928,7 +928,12 @@ outerLabels <- function(labels, new) {
   methodsPackageMetaName("T", paste(name, package, sep=":"))
 
 .TableMetaPrefix <- function()
-  methodsPackageMetaName("T","")
+    methodsPackageMetaName("T","")
+
+# regexp for matching table names; semi-general but assumes the
+# meta pattern starts with "." and has no other special characters
+.TableMetaPattern <- function()
+    paste("^[.]",substring(methodsPackageMetaName("T",""),2), sep = "")
 
 .addToMetaTable <- function(fdef, signature, definition, where, nSig) {
   return()

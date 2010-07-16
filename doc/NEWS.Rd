@@ -252,6 +252,11 @@
       \item As is done for closures, the default print method for the
       formula class now displays the associated environment if it is
       not the global environment.
+
+      \item A new facility has been added for inserting code into a
+        package without re-installing it, to facilitate testing
+        changes which can be selectively added and backed out. See
+        ?insertSource.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
