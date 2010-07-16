@@ -43,15 +43,15 @@ BINPREF =
 # prefix for 64-bit compiler
 BINPREF64 = x86_64-w64-mingw32-
 
-# 32- or 64-bit Windows?  For MinGW-w64.
+# 32- or 64-bit Windows?
 WIN = 32
 
-# define to -DW64 if using MinGW-w64 (32- or 64-bit)
+# define to -DW64 if using 32-bit MinGW-w64
 DEFS_W64 =
 
-# pattern for symbols: 
-# remove underline for versions of MinGW-w64 from about 2010-06
-SYMPAT = 's/^.* [BCDRT] _/ /p'
+# pattern for symbols on 64-bit
+# remove underline for versions of MinGW-w64 from about 2010-05
+SYMPAT64 = 's/^.* [BCDRT] _/ /p'
 
 # set to use ICU (experimental)
 # USE_ICU=YES
