@@ -16,7 +16,8 @@ LINKFLAGS+= -static-libgcc
 
 WIN = 32
 BINPREF =
-## includes _ for 32-bit and older 64-bit, no _ for 64-bit >= May 2010
+## SYMPAT = 's/^.* [BCDRT] _/ /p' or 32-bit and older 64-bit toolchains
+## SYMPAT = 's/^.* [BCDRT] / /p' for 64-bit >= May 2010
 SYMPAT = @SYMPAT@
 
 IMPDIR = bin
