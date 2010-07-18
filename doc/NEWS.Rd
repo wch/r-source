@@ -435,6 +435,11 @@
       \item wilcox.test(x, y, conf.int = TRUE) failed with an unhelpful
       message if \code{x} and \code{y} were constant vectors, and
       similarly in the one-sample case.  (\PR{14329})
+
+      \item \code{dir.create(recusive = TRUE)} could fail if one of the
+      components existed but was a directory on a read-only file system.
+      (Seen on Solaris, where this error code is not even listed as
+      possible on the man page.) 
     }
   }
 }
