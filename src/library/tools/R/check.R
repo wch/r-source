@@ -2320,10 +2320,16 @@ R_run_R <- function(cmd, Ropts, env)
                          lines <- grep("Warning: The process for determining duplicated points",
                                        lines, invert = TRUE, value = TRUE)
 
-                        ## Warning on Windows with some packages that
-                        ## cannot transparently be installed biarch.
-                        lines <- grep("Warning: this package has a non-empty 'configure.win' file",
-                                       lines, invert = TRUE, value = TRUE)
+                        if (WINDOWS) {
+                            ## Warning on Windows with some packages that
+                            ## cannot transparently be installed bi-arch.
+                            lines <- grep("Warning: this package has a non-empty 'configure.win' file",
+                                          lines, invert = TRUE, value = TRUE)
+                            ## Warning on x64 Windows gcc 4.5.1 that
+                            ## seems to be spurious
+                            lines <- grep("Warning: .drectve .* unrecognized",
+                                          lines, invert = TRUE, value = TRUE)
+                        }
                         if (length(lines)) {
                             warnLog("Found the following significant warnings:")
                             printLog(Log, "  ",
