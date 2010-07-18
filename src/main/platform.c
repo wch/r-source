@@ -1833,8 +1833,10 @@ SEXP attribute_hidden do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 	while ((p = Rf_strchr(p+1, '/'))) {
 	    *p = '\0';
 	    res = mkdir(dir, mode);
-	    /* Solaris 10 returns ENOSYS on automount, PR#13834 */
-	    if (res && errno != EEXIST && errno != ENOSYS) goto end;
+	    /* Solaris 10 returns ENOSYS on automount, PR#13834
+	       EROFS is allowed by POSIX, so we skip that too */
+	    if (res && errno != EEXIST && errno != ENOSYS && errno != EROFS) 
+		goto end;
 	    *p = '/';
 	}
     }
