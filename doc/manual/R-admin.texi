@@ -1681,9 +1681,10 @@ you have set up the tools needed (see @ref{The Windows toolset}).
 @command{R CMD INSTALL --help} will tell you the current options under
 Windows (which differ from those on a Unix-alike).
 
-We have seen permission problems after unpacking source packages on some
-Vista/Windows 7/Server 2008 systems: these have been circumvented by
-setting the environment variable @env{R_INSTALL_TAR} to @samp{tar.exe}.
+We have seen occasional permission problems after unpacking source
+packages on some Vista/Windows 7/Server 2008 systems: these have been
+circumvented by setting the environment variable @env{R_INSTALL_TAR} to
+@samp{tar.exe}.
 
 If you have only a source package that is known to work with current
 @R{} and just want a binary Windows build of it, you could make use of
@@ -1691,7 +1692,7 @@ the building service offered at
 @uref{http://win-builder.r-project.org/}.
 
 For almost all packages @command{R CMD INSTALL} will install both 32-
-and 64-bit builds of a package is run from a 32/64-bit install of @R{}
+and 64-bit builds of a package if run from a 32/64-bit install of @R{}
 on a 64-bit OS.  The exceptions are packages with a non-empty
 @file{configure.win} script or which make use of
 @file{src/Makefile.win}.  If @file{configure.win} does something
