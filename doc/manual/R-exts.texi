@@ -1158,10 +1158,8 @@ $(R_HOME)/bin$(R_ARCH_BIN)/Rscript -e '@var{R expression}'
 @noindent
 where @code{$(R_ARCH_BIN)} is only needed currently on Windows.
 
-Since @file{Makeconf} is included after @file{Makevars[.win]}, the values
-of the macros it defines cannot be used in GNU-style conditionals.  However,
-environment variables can be and so for example a way on Windows to
-select different macros for 32- and 64-bit code is
+Environment variables can be used to select different macros for 32- and
+64-bit code, foe example
 
 @example
 ifeq "$@{R_ARCH@}" "/x64"
@@ -1183,6 +1181,53 @@ PKG_LIBS = @var{value for 32-bit Windows}
 endif
 @end example
 
+On Windows there is normally a choice between linking to an import
+library or directly to a DLL.  Where possible, the latter is much more
+reliable: import libraries are tied to a specific toolchain, and in
+particular on 64-bit Windows two different conventions are common. So
+for example instead of
+
+@example
+PKG_LIBS = -L$(XML_DIR)/lib -lxml2
+@end example
+
+@noindent
+one can use
+
+@example
+PKG_LIBS = -L$(XML_DIR)/bin -lxml2
+@end example
+
+@noindent
+since on Windows @code{-lxxx} will look in turn for
+
+@example
+libxxx.dll.a
+xxx.dll.a
+libxxx.a
+xxx.lib
+libxxx.dll
+xxx.dll
+@end example
+
+@noindent
+where the first and second are conventionally import libraries, the
+third and fourth often static libraries (with @code{.lib} intended for
+Visual C++), but might be import libraries.  See for example
+@uref{http://sourceware.org/@/binutils/@/docs-2.20/@/ld/@/WIN32.html#WIN32}.
+
+The fly in the ointment is that the DLL might not be named
+@file{libxxx.dll}, and in fact on 32-bit Windows there is
+@file{libxml2.dll} whereas on 64-bit Windows the DLL is called
+@file{libxml2-2.dll}.  Using import libraries can cover over these
+differences but can cause equal difficulties.
+
+If static libraries are available they can save a lot of problems with
+run-time finding of DLLs, especially when binary packages are to be
+distributed and even more when these support both architectures.  Where
+using DLLs is unavoidable we normally arrange (@emph{via}
+@file{configure.win}) to ship them in the same directory as the package
+DLL.
 
 @node Configure example, Using F95 code, Using Makevars, Configure and cleanup
 @subsection Configure example

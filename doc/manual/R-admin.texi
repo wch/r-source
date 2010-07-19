@@ -846,7 +846,7 @@ tests write their results in the @file{tests} folder of the @R{} home
 directory and run slightly fewer tests than the first approach: in
 particular they do not test Internet access.
 
-These tests work best if @command{diff} (in @file{Rtools.exe} for
+These tests work best if @command{diff} (in @file{Rtools*.exe} for
 Windows users) is in the path, and on some systems need the collation
 locale set manually (the @R{} code tries to do so but it may not be
 possible to reset it): so if needed try setting the environment variable
@@ -915,7 +915,7 @@ collect, install and test an extensive set of tools.  See @ref{The
 Windows toolset} (and perhaps updates in
 @uref{http://www.murdoch-sutherland.com/@/Rtools/}) for details.
 
-The @file{Rtools.exe} executable installer described in @ref{The Windows
+The @file{Rtools*.exe} executable installer described in @ref{The Windows
 toolset} also includes some source files in addition to the @R{} source
 as noted below. You should run it first, to obtain a working @code{tar}
 and other necessities.  Choose a ``Full installation'', and install the
@@ -987,7 +987,7 @@ the compilers used to compile @R{}.
 @end itemize
 
 The following additional items are normally installed by
-@file{Rtools.exe}.  If instead you choose to do a completely manual
+@file{Rtools*.exe}.  If instead you choose to do a completely manual
 build you will also need
 
 @itemize
@@ -4446,8 +4446,8 @@ here as a result of bitter experience.  Please do not report problems to
 the @R{} mailing lists unless you have followed all the prescriptions.}
 
 We have collected most of the necessary tools (unfortunately not all,
-due to license or size limitations) into an executable installer named
-@file{Rtools2.12.exe}, available from
+due to license or size limitations) into an executable installer
+named@footnote{for @R{} 2.12.x.}  @file{Rtools212.exe}, available from
 @uref{http://www.murdoch-sutherland.com/@/Rtools/}. You should download
 and run it, choosing the default ``Package authoring installation'' to
 build add-on packages, or the ``full installation'' if you intend to
@@ -4457,7 +4457,7 @@ You will need the following items to build @R{} and packages.
 See the subsections below for detailed descriptions.
 @itemize
 @item
-The command line tools (in @file{Rtools2.12.exe})
+The command line tools (in @file{Rtools*.exe})
 @item
 The MinGW toolchain to compile C, Fortran and C++.
 @end itemize
@@ -4475,8 +4475,9 @@ The Inno Setup installer
 @end itemize
 
 @enindex PATH
-It is important to set your @env{PATH} properly.  The @file{Rtools2.12.exe}
-optionally sets the path to components that it installs.
+It is important to set your @env{PATH} properly.  The installer
+@file{Rtools*.exe} optionally sets the path to components that it
+installs.
 
 Your @env{PATH} may include @file{.} first, then the @file{bin}
 directories of the tools, the compiler toolchain and @LaTeX{}.  Do not
@@ -4518,7 +4519,7 @@ The @samp{MiKTeX} (@uref{http://www.miktex.org/}) distribution of
 @LaTeX{} includes a suitable port of @code{pdftex}.  The `basic' version
 of @samp{MiKTeX} almost suffices (the @pkg{grid} vignettes need
 @file{fancyvrb.sty}), but it will install the 15Mb @samp{lm} package if
-allowed to (although that is not actually used).  The @file{Rtools2.12.exe}
+allowed to (although that is not actually used).  The @file{Rtools*.exe}
 installer does @emph{not} include any version of @LaTeX{}.
 
 @enindex R_RD4DVI
@@ -4533,7 +4534,7 @@ suitably; ensure you have the required fonts installed.
 To make the installer package (@file{@value{RWVERSION}-win.exe}) we
 currently require Inno Setup 5.3.7 or later from
 @uref{http://jrsoftware.org/}.  We use the Unicode version and recommend
-that version be used.  This is @emph{not} included in @file{Rtools.exe}.
+that version be used.  This is @emph{not} included in @file{Rtools*.exe}.
 
 Copy file @file{src/gnuwin32/MkRules.dist} to
 @file{src/gnuwin32/MkRules.local} and edit it to set @code{ISDIR} to the
@@ -4542,7 +4543,7 @@ location where Inno Setup was installed.
 @node The command line tools, The MinGW toolchain, The Inno Setup installer, The Windows toolset
 @section The command line tools
 
-This item is installed by the @file{Rtools.exe} installer.
+This item is installed by the @file{Rtools*.exe} installer.
 
 @c INSTALL uses sh make zip
 @c build used sh make tar gzip
@@ -4578,7 +4579,7 @@ of at least @code{basename}, @code{cat}, @code{cmp}, @code{comm},
 (@uref{http://www.cygwin.com/}) or compiled from the sources.  You will
 also need @code{zip} and @code{unzip} from the Info-ZIP project
 (@uref{http://www.info-zip.org/}).  All of these tools are in
-@file{Rtools.exe}.
+@file{Rtools*.exe}.
 
 @c So needed to for end users:
 @c basename comm cp echo gzip make mkdir rm sh sort tar uniq zip
@@ -4617,7 +4618,7 @@ where C++ code is involved.  So we recommend that all packages are built
 with the current toolchain.
 
 The 32-bit build for this version of @R{} is set up to use @command{gcc}
-@code{4.5.0}.  The toolchain is part of @file{Rtools2.12.exe}, and was
+@code{4.5.0}.  The toolchain is part of @file{Rtools212.exe}, and was
 collected from the files at
 @url{http://sourceforge.net/@/projects/@/mingw/@/files/}, specifically
 
