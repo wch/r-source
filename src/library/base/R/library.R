@@ -562,15 +562,10 @@ function(chname, package = NULL, lib.loc = NULL,
 	else    file.path(pkg, "libs")
         file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
         if(file.exists(file)) break else file <- ""
-##         if(r_arch == "i386") { # 32-bit Windows, back-compatibility
-##             DLLpath <- if(nzchar(r_arch)) file.path(pkg, "libs")
-##             file <- file.path(DLLpath, paste(chname, file.ext, sep = ""))
-##             if(file.exists(file)) break else file <- ""
-##        }
     }
     if(file == "")
         if(.Platform$OS.type == "windows")
-            stop(gettextf("DLL '%s' not found", chname), domain = NA)
+            stop(gettextf("DLL '%s' not found: maybe not installed for this architecture?", chname), domain = NA)
         else
             stop(gettextf("shared object '%s' not found", chname), domain = NA)
     ind <- sapply(dll_list, function(x) x[["path"]] == file)
