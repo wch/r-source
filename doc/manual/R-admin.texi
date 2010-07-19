@@ -1672,6 +1672,10 @@ from a local @file{zip} file by setting argument @code{repos} to
 interface to @code{install.packages}, @code{update.packages} and
 @code{library}.
 
+Windows binary packages for @R{} 2.12.x are distributed as a single
+binary containing either or both architectures (@R{} 2.11.x had separate
+repository areas for 32- and 64-bit binary packages).
+
 @command{R CMD INSTALL} works in Windows to install source packages if
 you have set up the tools needed (see @ref{The Windows toolset}).
 @command{R CMD INSTALL --help} will tell you the current options under
@@ -1681,24 +1685,32 @@ We have seen permission problems after unpacking source packages on some
 Vista/Windows 7/Server 2008 systems: these have been circumvented by
 setting the environment variable @env{R_INSTALL_TAR} to @samp{tar.exe}.
 
-Some of the binary packages need other software to be installed on your
-system.  For 32-bit builds see for example
-@url{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.12/@/@@ReadMe}.  For
-64-bit builds, packages using Gtk+ (@pkg{Cairo}, @pkg{RGtk2},
-@pkg{cairoDevice} and those that depend on them) need the @file{bin}
-directory of the distribution at
-@url{http://www.gtk.org/@/download-windows-64bit.html} in the path: note
-that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
-you need the correct one first in your path if using both.
-
 If you have only a source package that is known to work with current
-@R{} and just want a binary (32- or 64-bit) Windows build of it, you
-could make use of the building service offered at
+@R{} and just want a binary Windows build of it, you could make use of
+the building service offered at
 @uref{http://win-builder.r-project.org/}.
 
-@R{} 2.11.x had separate repository areas for 32- and 64-bit binary
-packages: it is planned that packages for @R{} 2.12.0 will be
-distributed as a single binary containing either or both architectures.
+For almost all packages @command{R CMD INSTALL} will install both 32-
+and 64-bit builds of a package is run from a 32/64-bit install of @R{}
+on a 64-bit OS.  The exceptions are packages with a non-empty
+@file{configure.win} script or which make use of
+@file{src/Makefile.win}.  If @file{configure.win} does something
+appropriate to both architectures use option @option{--force-biarch}:
+otherwise @command{R CMD INSTALL --merge-multiarch} can be applied to a
+source tarball to merge separate 32- and 64-bit installs.
+
+A few of the binary packages need other software to be installed on your
+system.  For 32-bit builds see for example
+@url{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.12/@/@@ReadMe}.
+For 64-bit builds, packages using Gtk+ (@pkg{Cairo}, @pkg{RGtk2},
+@pkg{cairoDevice} and those that depend on them) need the @file{bin}
+directory of a bundled distribution from
+@url{http://www.gtk.org/@/download-windows-64bit.html} in the path: note
+that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
+you need the correct one first in your path if using both.  One way to
+achieve this is the set the @env{PATH} environment variable in files
+@file{R_HOME/etc/i386/Renviron.site} and
+@file{R_HOME/etc/x64/Renviron.site}.
 
 @node Mac OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection Mac OS X
@@ -4434,7 +4446,7 @@ the @R{} mailing lists unless you have followed all the prescriptions.}
 
 We have collected most of the necessary tools (unfortunately not all,
 due to license or size limitations) into an executable installer named
-@file{Rtools.exe}, available from
+@file{Rtools2.12.exe}, available from
 @uref{http://www.murdoch-sutherland.com/@/Rtools/}. You should download
 and run it, choosing the default ``Package authoring installation'' to
 build add-on packages, or the ``full installation'' if you intend to
@@ -4444,7 +4456,7 @@ You will need the following items to build @R{} and packages.
 See the subsections below for detailed descriptions.
 @itemize
 @item
-The command line tools (in @file{Rtools.exe})
+The command line tools (in @file{Rtools2.12.exe})
 @item
 The MinGW toolchain to compile C, Fortran and C++.
 @end itemize
@@ -4462,7 +4474,7 @@ The Inno Setup installer
 @end itemize
 
 @enindex PATH
-It is important to set your @env{PATH} properly.  The @file{Rtools.exe}
+It is important to set your @env{PATH} properly.  The @file{Rtools2.12.exe}
 optionally sets the path to components that it installs.
 
 Your @env{PATH} may include @file{.} first, then the @file{bin}
@@ -4505,7 +4517,7 @@ The @samp{MiKTeX} (@uref{http://www.miktex.org/}) distribution of
 @LaTeX{} includes a suitable port of @code{pdftex}.  The `basic' version
 of @samp{MiKTeX} almost suffices (the @pkg{grid} vignettes need
 @file{fancyvrb.sty}), but it will install the 15Mb @samp{lm} package if
-allowed to (although that is not actually used).  The @file{Rtools.exe}
+allowed to (although that is not actually used).  The @file{Rtools2.12.exe}
 installer does @emph{not} include any version of @LaTeX{}.
 
 @enindex R_RD4DVI
@@ -4521,9 +4533,6 @@ To make the installer package (@file{@value{RWVERSION}-win.exe}) we
 currently require Inno Setup 5.3.7 or later from
 @uref{http://jrsoftware.org/}.  We use the Unicode version and recommend
 that version be used.  This is @emph{not} included in @file{Rtools.exe}.
-(Earlier versions can be used, but the set of languages will need to be
-edited in @file{src/gnuwin32/installer/JRins.pl}, at least to change the
-location of @file{Japanese.isl} or remove the reference to it.)
 
 Copy file @file{src/gnuwin32/MkRules.dist} to
 @file{src/gnuwin32/MkRules.local} and edit it to set @code{ISDIR} to the
@@ -4589,7 +4598,9 @@ Technically you need more than just a compiler so the set of tools is
 referred to as a `toolchain'.
 
 In each case you need to put the @file{bin} directory of the toolchain
-early in your @env{PATH}.
+early in your @env{PATH}: if you use the recommended toolchains you can
+have both in the path, and need to if you want to install 32/64-bit
+packages.
 
 @menu
 * 32-bit toolchain::            
@@ -4630,7 +4641,7 @@ subdirectory @file{dlls} so that @file{libgfortran} and @file{libstdc++}
 are linked statically.
 
 We have also tested using the 32-bit toolchain from the @code{mingw-w64}
-project (which are currently using pre-releases of @command{gcc 4.4.4})
+project (which are currently using pre-releases of @command{gcc 4.5.1})
 and options to use that are documented in file @file{MkRules.dist}.
 
 @node 64-bit toolchain,  , 32-bit toolchain, The MinGW toolchain
@@ -4649,17 +4660,22 @@ Windows.@footnote{As the @R{} build process itself runs @R{}, it has to
 be done under 64-bit Windows.  So does installation of source packages
 unless @option{--no-test-load} is used.}  This comes from
 @url{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Automated%20Builds/}
-and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100405.zip}.
+and has a name like @file{mingw-w64-1.0-bin_i686-mingw_20100702.zip}.
+However, this has been patched to use static Fortran and C++ runtime
+libraries and to correct some header files: a suitable toolchain can be
+found at
+@url{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/Win64No_toolchain.zip}.
 
 @strong{However}, toolchains from late April 2010 on at that site
 generate objects with symbols without a leading underscore.  Current
-R-devel snapshots are made with the earlier toolchain as used for @R{}
-2.11.x which does use leading underscores, so that is the default for
-@file{src/gnuwin32/MkRules.dist}.  If you are using a binary
-distribution of @R{}, check that the settings of @code{BINPREF} and
-@code{SYMPAT} in file @file{etc/x64/Makeconf} are appropriate to your
-toolchain.  The use or not of leading underscores affects linking to
-external static and import libraries but not linking directly to DLLs.
+R-devel snapshots are made with the earlier toolchain (as used for @R{}
+2.11.x) which does use leading underscores, so that is the default for
+@code{SYMPAT64} in @file{src/gnuwin32/MkRules.dist}.  If you are using a
+binary distribution of @R{}, check that the settings of @code{BINPREF}
+and @code{SYMPAT} in file @file{etc/x64/Makeconf} are appropriate to
+your toolchain.  The use or not of leading underscores affects linking
+to external static and import libraries but not linking directly to
+DLLs.
 
 
 @node Useful additional programs,  , The MinGW toolchain, The Windows toolset
