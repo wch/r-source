@@ -40,6 +40,9 @@ BUG FIXES
 
     o	The command-line parser could mistake --file=size... for one of
 	the options for setting limits for Ncells or Vcells.
+	
+    o 	The internal strptime() could corrupt its copy of the timezone
+    	which would then lead to spurious warnings. (PR#14338)
 
 
 
