@@ -602,7 +602,7 @@ bp
 85.97 54.72 808.77 547.76 cl
 0.7451 setgray
 0.75 setlinewidth
-[ 0.00 4.00] 0 setdash
+[ 0.00 3.00] 0 setdash
 1 setlinecap
 1 setlinejoin
 10.00 setmiterlimit
@@ -806,7 +806,7 @@ bp
 184.05 128.16 778.53 488.72 cl
 0.7451 setgray
 0.75 setlinewidth
-[ 0.00 4.00] 0 setdash
+[ 0.00 3.00] 0 setdash
 1 setlinecap
 1 setlinejoin
 10.00 setmiterlimit
@@ -2906,7 +2906,7 @@ o
 18.00 18.00 823.89 577.28 cl
 0 0 1 rgb
 0.75 setlinewidth
-[ 2.00 2.00] 0 setdash
+[ 1.50 1.50] 0 setdash
 1 setlinecap
 1 setlinejoin
 10.00 setmiterlimit
@@ -3602,7 +3602,7 @@ o
 716.07 502.43 2.70 c p3
 0.7020 setgray
 0.75 setlinewidth
-[ 3.00 5.00] 0 setdash
+[ 2.25 3.75] 0 setdash
 np
 77.04 107.25 m
 716.61 0 l
@@ -3941,7 +3941,7 @@ bp
 59.33 69.41 802.72 535.95 cl
 0.7451 setgray
 0.75 setlinewidth
-[ 0.00 4.00] 0 setdash
+[ 0.00 3.00] 0 setdash
 1 setlinecap
 1 setlinejoin
 10.00 setmiterlimit

@@ -148,7 +148,8 @@ on 64-bit versions: @xref{Can I use R on 64-bit Windows?}.
 
 
 We only test on versions of Windows currently supported by Microsoft,
-mainly on 32-bit XP SP3 and 64-bit Windows 7 and Windows Server 2008.
+mainly 64-bit Windows 7 and Server 2008, but to a limited extent on
+32-bit XP SP3.
 
 Your file system must allow case-honouring long file names (as is likely
 except perhaps for some network-mounted systems).  A typical install
@@ -170,9 +171,9 @@ To install use @samp{@RWVER@-win32.exe}.  Just double-click on the icon
 and follow the instructions.  If you have an account with Administrator
 privileges you will be able to install R in the @file{Program Files}
 area and to set all the optional registry entries; otherwise you will
-only be able to install R in your own file area.  On recent versions of
-Windows you may need to confirm that you want to proceed with installing
-a program from an `unidentified publisher'.
+only be able to install R in your own file area.  You may need to
+confirm that you want to proceed with installing a program from an
+`unidentified publisher'.
 
 After installation you should choose a working directory for R.  You
 will have a shortcut to @file{Rgui.exe} on your desktop
@@ -1119,7 +1120,7 @@ Suppose your packages are installed in @file{p:\myRlib}.  Then you can
 EITHER
 
 @example
-set the environment variable R_LIBS to p:\myRlib before starting R
+set the environment variable R_LIBS to p:/myRlib before starting R
 @end example
 
 OR use a package by, e.g.@:
@@ -1185,9 +1186,9 @@ software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found (except
 on Windows 2000).  See
 @uref{http://cran.r-project.org/bin/windows/contrib/2.11/ReadMe} for a
-listing of some of these packages (notably @code{RGtk2}, @code{rggobi},
-@code{rJava}, @code{rjags} and some of the packages connecting to
-databases).
+listing of some of these packages (notably @code{RGtk2},
+@code{cairoDevice}, @code{rggobi}, @code{rJava}, @code{rjags} and some
+of the packages connecting to databases).
 
 
 @node Package TclTk does not work., Hyperlinks in HTML do not work., Loading a package fails., Packages

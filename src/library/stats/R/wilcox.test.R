@@ -163,6 +163,8 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 		    NTIES.CI <- table(dr)
 		    SIGMA.CI <- sqrt(nx * (nx + 1) * (2 * nx + 1) / 24
 				     - sum(NTIES.CI^3 - NTIES.CI) / 48)
+                    if (SIGMA.CI == 0)
+                        stop("cannot compute confidence interval when all observations are tied", call.=FALSE)
 		    CORRECTION.CI <-
 			if(correct) {
                             switch(alternative,
@@ -349,6 +351,8 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                      ((n.x + n.y + 1)
                                       - sum(NTIES.CI^3 - NTIES.CI)
                                       / ((n.x + n.y) * (n.x + n.y - 1))))
+                    if (SIGMA.CI == 0)
+                        stop("cannot compute confidence interval when all observations are tied", call.=FALSE)
                     (dz - CORRECTION.CI) / SIGMA.CI - zq
                 }
                 root <- function(zq) {

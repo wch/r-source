@@ -58,6 +58,10 @@ BUG FIXES
 	nothing in those cases; previously the behaviour was
 	undefined, probably device-specific, and possibly dangerous.
 
+    o	wilcox.test(x, y, conf.int = TRUE) failed with an unhelpful
+	message if 'x' and 'y' were constant vectors, and similarly in
+	the one-sample case.  (PR#14329)
+
     o	Improperly calling Recall() from outside a function could cause a
 	segfault.  (Reported by Robert McGehee.)
 

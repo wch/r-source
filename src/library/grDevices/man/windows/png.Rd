@@ -4,10 +4,10 @@
 % Distributed under GPL 2 or later
 
 \name{png}
-\alias{bmp}
 \alias{png}
 \alias{jpeg}
 \alias{tiff}
+\alias{bmp}
 \title{BMP, JPEG, PNG and TIFF graphics devices}
 \description{
   Graphics devices for BMP, JPEG, PNG and TIFF format bitmap files.
@@ -70,7 +70,8 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
   Windows imposes limits on the size of bitmaps: these are not
   documented in the SDK and may depend on the version of Windows.
   It seems that \code{width} and \code{height} are each limited to
-  \eqn{2^{15}-1}{2^15-1}.
+  \eqn{2^{15}-1}{2^15-1}.  In addition, there are limits on the total
+  number of pixels which depend on the graphics hardware.
 
   By default no resolution is recorded in the file.  Viewers will often
   assume a nominal resolution of 72dpi when none is recorded.  As
@@ -99,8 +100,8 @@ tiff(filename = "Rplot\%03d.tif", width = 480, height = 480,
 }
 
 \section{Warnings}{
-  Note that by default the \code{width} and \code{height} are in pixels
-  not inches.  A warning will be issued if both are less than 20.
+  Note that by default the \code{width} and \code{height} values are in
+  pixels not inches.  A warning will be issued if both are less than 20.
   
   If you plot more than one page on one of these devices and do not
   include something like \code{\%d} for the sequence number in

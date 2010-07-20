@@ -25,6 +25,8 @@ relevel.ordered <- function(x, ref, ...)
 relevel.factor <- function(x, ref, ...)
 {
     lev <- levels(x)
+    if(length(ref) != 1L)
+        stop("'ref' must be of length one")
     if(is.character(ref))
         ref <- match(ref, lev)
     if(is.na(ref))
