@@ -522,14 +522,14 @@ H.2.8, I.5.1}.
 
 Finally, an optional @samp{Language} field can be used to indicate if
 the package documentation is not in English: this should be a
-comma-separated list of 2-letter ISO 639-1
+comma-separated list of standard (not private use or grandfathered) IETF
+language tags as currently defined by RFC 5645
+(@uref{http://tools.ietf.org/html/rfc5645}, see also
+@uref{http://en.wikipedia.org/wiki/IETF_language_tag}), i.e., use
+language subtags which in essence are 2-letter ISO 639-1
 (@uref{http://en.@/wikipedia.@/org/wiki/ISO_639-1}) or 3-letter ISO
 639-3 (@uref{http://en.@/wikipedia.@/org/wiki/ISO_639-3}) language
-codes, or standard (not private use or grandfathered) IETF language tags
-as currently defined by RFC 4646
-(@uref{http://tools.ietf.org/html/rfc4646}, see also
-@uref{http://en.wikipedia.org/wiki/IETF_language_tag}).
-
+codes.
 
 @node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
 @subsection The @file{INDEX} file
@@ -538,10 +538,9 @@ as currently defined by RFC 4646
 The optional file @file{INDEX} contains a line for each sufficiently
 interesting object in the package, giving its name and a description
 (functions such as print methods not usually called explicitly might not
-be included).  Normally this file is missing, and the corresponding
+be included).  Normally this file is missing and the corresponding
 information is automatically generated from the documentation sources
-(using @code{Rdindex()} from package @pkg{tools}) when installing from
-source.
+(using @code{tools::Rdindex()}) when installing from source.
 
 Rather than editing this file, it is preferable to put customized
 information about the package into an overview man page
@@ -669,7 +668,8 @@ which can used in C or C++.  On all Windows builds (even 64-bit ones)
 @samp{WIN64}, and on Mac OS X @samp{__APPLE__} and @samp{__APPLE_CC__}
 are defined.
 
-The default rules can be tweaked by setting macros in a file
+The default rules can be tweaked by setting macros@footnote{the POSIX
+terminology, called `make variables' by GNU make.} in a file
 @file{src/Makevars} (@pxref{Using Makevars}).  Note that this mechanism
 should be general enough to eliminate the need for a package-specific
 @file{src/Makefile}.  If such a file is to be distributed, considerable
@@ -722,7 +722,7 @@ in @file{inst} will be that seen in the installed package.
 @findex CITATION
 @cindex citation
 One thing you might like to add to @file{inst} is a @file{CITATION} file
-for use by the @code{citation} function. 
+for use by the @code{citation} function.
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
@@ -910,7 +910,8 @@ CPPFLAGS=`"$@{R_HOME@}/bin/R" CMD config CPPFLAGS`
 @noindent
 (Using @samp{$@{R_HOME@}/bin/R} rather than just @samp{R} is necessary
 in order to use the correct version of @R{} when running the script as
-part of @code{R CMD INSTALL}.)
+part of @code{R CMD INSTALL}, and the quotes since @samp{$@{R_HOME@}}
+might contain spaces.)
 
 @findex R CMD config
 You can use @code{R CMD config} for getting the value of the basic
@@ -1011,8 +1012,9 @@ GCC.
 There are some macros which are built whilst configuring the building of
 @R{} itself and are stored in
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}.  That makefile is included
-as a @file{Makefile} @emph{after} @file{Makevars[.win]}, and the
-macros it defines can be used in the latter.  These include
+as a @file{Makefile} @emph{after} @file{Makevars[.win]}, and the macros
+it defines can be used in macro assignments and make command lines in the
+latter.  These include
 
 @table @code
 @item FLIBS
@@ -1179,6 +1181,53 @@ PKG_LIBS = @var{value for 32-bit Windows}
 endif
 @end example
 
+On Windows there is normally a choice between linking to an import
+library or directly to a DLL.  Where possible, the latter is much more
+reliable: import libraries are tied to a specific toolchain, and in
+particular on 64-bit Windows two different conventions are common. So
+for example instead of
+
+@example
+PKG_LIBS = -L$(XML_DIR)/lib -lxml2
+@end example
+
+@noindent
+one can use
+
+@example
+PKG_LIBS = -L$(XML_DIR)/bin -lxml2
+@end example
+
+@noindent
+since on Windows @code{-lxxx} will look in turn for
+
+@example
+libxxx.dll.a
+xxx.dll.a
+libxxx.a
+xxx.lib
+libxxx.dll
+xxx.dll
+@end example
+
+@noindent
+where the first and second are conventionally import libraries, the
+third and fourth often static libraries (with @code{.lib} intended for
+Visual C++), but might be import libraries.  See for example
+@uref{http://sourceware.org/@/binutils/@/docs-2.20/@/ld/@/WIN32.html#WIN32}.
+
+The fly in the ointment is that the DLL might not be named
+@file{libxxx.dll}, and in fact on 32-bit Windows there is
+@file{libxml2.dll} whereas on 64-bit Windows the DLL is called
+@file{libxml2-2.dll}.  Using import libraries can cover over these
+differences but can cause equal difficulties.
+
+If static libraries are available they can save a lot of problems with
+run-time finding of DLLs, especially when binary packages are to be
+distributed and even more when these support both architectures.  Where
+using DLLs is unavoidable we normally arrange (@emph{via}
+@file{configure.win}) to ship them in the same directory as the package
+DLL.
 
 @menu
 * Back-compatibility for Makevars::  
@@ -1629,8 +1678,7 @@ you will need to set it in the environment.
 @end quotation
 
 @quotation Note to Windows users
-@code{R CMD check} and @code{R CMD build} need you to have installed the
-files for building source packages (which is the default), as well as
+@code{R CMD check} and @code{R CMD build} require you to have installed
 the Windows toolset and Perl (see the ``R Installation and
 Administration'' manual).  You may need to set @env{TMPDIR} to point to
 a suitable writable directory with a path not containing spaces -- use
@@ -1753,9 +1801,9 @@ hierarchy of the source package, or using calls to @code{system.file()}.
 vignettes for distribution with the package sources.  By including the
 PDF version in the package sources it is not necessary that the
 vignettes can be compiled at install time, i.e., the package author can
-use private @LaTeX{} extensions which are only available on his machine.
-@footnote{provided the conditions of the package's licence are met: many
-would see this as incompatible with an Open Source licence.}
+use private @LaTeX{} extensions which are only available on his
+machine.@footnote{provided the conditions of the package's licence are
+met: many would see this as incompatible with an Open Source licence.}
 
 By default @code{R CMD build} will run @code{Sweave} on all files in
 Sweave format.  If no @file{Makefile} is found in directory
@@ -2467,6 +2515,7 @@ being imported from more than one namespace.
 
 @menu
 * Encoding issues::             
+* Binary distribution::         
 @end menu
 
 Portable packages should have simple file names: use only alphanumeric
@@ -2493,7 +2542,8 @@ that you use only portable make features.  Such files should be
 LF-terminated (including the final line of the file) and not make use of
 GNU extensions.  Commonly misused GNU extensions are conditional
 inclusions (@code{ifeq} and the like), @code{$@{shell ...@}} and
-@code{$@{wildcard ...@}}, and the use of @code{+=} and @code{:=}.
+@code{$@{wildcard ...@}}, and the use of @code{+=} and @code{:=}.  Also,
+the use of @code{$<} other than in implicit rules is a GNU extension.
 Unfortunately makefiles which use GNU extensions often run on other
 platforms but do not have the intended results.
 
@@ -2574,7 +2624,7 @@ Some notes on issues specific to porting to x64 Windows are available at
 @url{http://www.stats.ox.ac.uk/~ripley/Win64/W64porting.html}.
 
 
-@node Encoding issues,  , Writing portable packages, Writing portable packages
+@node Encoding issues, Binary distribution, Writing portable packages, Writing portable packages
 @subsection Encoding issues
 
 Care is needed if your package contains non-@acronym{ASCII} text, and in
@@ -2646,6 +2696,31 @@ is equivalent to the value
 the current locale is UTF-8 when the package code is translated to UTF-8
 for syntax checking.
 
+@node Binary distribution,  , Encoding issues, Writing portable packages
+@subsection Binary distribution
+
+If you want to distribute a binary version of a package on Windows or
+Mac OS X, there are further checks you need to do to check it is
+portable: it is all to easy to depend on external software on your own
+machine that other users will not have.
+
+For Windows, check what other DLLs your package's DLL depends on
+(`imports' from in the DLL tools' parlance).  A convenient GUI-based
+tool to do so is `Dependency Walker'
+(@uref{http://www.dependencywalker.com/}) for both 32-bit and 64-bit
+DLLs -- note that this will report as missing links to @R{}'s own DLLs
+such as @file{R.dll} and @file{Rblas.dll}.  For 32-bit DLLs only, the
+command-line tool @command{pedump.exe -i} (in @file{Rtools*.exe}) can be
+used, and for the brave, the @command{objdump} tool in the appropriate
+toolchain will also reveal what DLLs are imported from.  If you use a
+toolchain other than one provided by the @R{} developers or use your own
+makefiles, watch out in particular for dependencies on the toolchain's
+runtime DLLs such as @file{libgfortran}, @file{libstdc++} and
+@file{libgcc_s}.
+
+For Mac OS X, using @code{R CMD otool -L} on the package's shared
+objects under @file{libs} will show what they depend on: watch for any
+dependencies in @file{/usr/local/lib}, notably @file{libgfortran.2.dylib}.
 
 @node Diagnostic messages, Internationalization, Writing portable packages, Creating R packages
 @section Diagnostic messages
@@ -2963,9 +3038,8 @@ An installed file named @file{CITATION} will be used by the
 @file{inst} subdirectory of the package sources.)
 
 The @file{CITATION} file is parsed as @R{} code (in the package's
-declared encoding@footnote{as from @R{} 2.8.0: @R{} 2.7.x read it in
-Latin-1, and earlier versions in the current encoding of the @R{}
-session}, defaulting to Latin-1).  If no such file is present,
+declared encoding@footnote{as from @R{} 2.8.0: this used to default to
+Latin-1 but no longer does so}).  If no such file is present,
 @code{citation} generates a standard contents, and an example of what
 that would look like as a @file{CITATION} file can be seen in
 recommended package @pkg{nlme} (see below): recommended packages
@@ -3165,13 +3239,13 @@ load(file, envir = parent.frame())
 @}
 \examples@{
 ## save all data
-save(list = ls(), file= "all.Rdata")
+save(list = ls(), file= "all.RData")
 
 ## restore the saved values to the current environment
-load("all.Rdata")
+load("all.RData")
 
 ## restore the saved values to the workspace
-load("all.Rdata", .GlobalEnv)
+load("all.RData", .GlobalEnv)
 @}
 \keyword@{file@}
 @end smallexample
@@ -4690,14 +4764,14 @@ has to be built to enable this, but the option
 The command @command{Rprof} is used to control profiling, and its help
 page can be consulted for full details.  Profiling works by recording at
 fixed intervals@footnote{For Unix-alikes these are intervals of CPU
-time, and for Windows of elapsed time.} (by default every 20 msecs) which
-@R{} function is being used, and recording the results in a file
+time, and for Windows of elapsed time.} (by default every 20 msecs)
+which @R{} function is being used, and recording the results in a file
 (default @file{Rprof.out} in the working directory).  Then the function
 @code{summaryRprof} or the command-line utility @code{R CMD Rprof
 @var{Rprof.out}} can be used to summarize the activity.
 
 As an example, consider the following code (from Venables & Ripley,
-2002).
+2002, pp. 225--6).
 
 @smallexample
 @group
@@ -4713,7 +4787,7 @@ storm.bf <- function(rs, i) @{
 @}
 rs <- scale(resid(storm.fm), scale = FALSE) # remove the mean
 Rprof("boot.out")
-storm.boot <- boot(rs, storm.bf, R = 4999) # pretty slow
+storm.boot <- boot(rs, storm.bf, R = 4999) # slow enough to profile
 Rprof(NULL)
 @end group
 @end smallexample
@@ -4726,7 +4800,7 @@ Having run this we can summarize the results by
 R CMD Rprof boot.out
 
 Each sample represents 0.02 seconds.
-Total run time: 80.74 seconds.
+Total run time: 22.52 seconds.
 
 Total seconds: time spent in function and callees.
 Self seconds: time spent in function alone.
@@ -4783,7 +4857,8 @@ replaced by compiled code.
 @R{} object.
 
 Two warnings: profiling does impose a small performance penalty, and the
-output files can be very large if long runs are profiled.
+output files can be very large if long runs are profiled at the default
+sampling interval.
 
 Profiling short runs can sometimes give misleading results.  @R{} from
 time to time performs @emph{garbage collection} to reclaim unused
@@ -5898,7 +5973,7 @@ vector.
 The function @code{system.time}
 @findex system.time
 is available for timing (although the information available may be
-limited on non-Unix-like platforms: these days only on the obsolete
+limited on non-Unix-alike platforms: these days only on the obsolete
 Windows 9x/ME).
 
 @node Interface functions .C and .Fortran, dyn.load and dyn.unload, Operating system access, System and foreign language interfaces
@@ -6442,7 +6517,7 @@ MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
 
 It is also possible to set such variables in personal @file{Makevars}
 files, which are read after the local @file{Makevars} and the system
-makefiles.
+makefiles or in a site-wide @file{Makevars.site} file.
 @ifset UseExternalXrefs
 @xref{Customizing package compilation,
 Customizing package compilation, R-admin,
