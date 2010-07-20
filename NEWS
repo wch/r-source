@@ -64,7 +64,9 @@ BUG FIXES
 
     o	Improperly calling Recall() from outside a function could cause a
 	segfault.  (Reported by Robert McGehee.)
-
+        
+    o	\Sexpr[result=rd] in an Rd file added a spurious newline,
+	which was displayed as extra whitespace when rendered.
 
 
 		CHANGES IN R VERSION 2.11.1
