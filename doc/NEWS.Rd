@@ -406,9 +406,6 @@
       \item \code{match(x, table)} (and hence \code{\%in\%}) now treat
       \code{"POSIXlt"} consistently with, e.g., \code{"POSIXct"}.
 
-      \item Improperly calling \code{Recall()} from outside a function
-      could cause a segfault.  (Reported by Robert McGehee.)
-
       \item Built-in code dealing with environments (\code{get()},
       \code{assign()}, \code{parent.env()}, \code{is.environment()} and
       others) now behave consistently to recognize S4 subclasses;
@@ -488,6 +485,9 @@
       \item \code{GERaster()} now checks for width or height of zero and
       does nothing in those cases; previously the behaviour was
       undefined, probably device-specific, and possibly dangerous.
+
+      \item Improperly calling \code{Recall()} from outside a function
+      could cause a segfault.  (Reported by Robert McGehee.)
     }
   }
 }
