@@ -129,7 +129,7 @@ COPYRIGHTS: ../../doc/COPYRIGHTS COPYRIGHTS.win
 
 
 fixfiles: 
-	@$(MKDIR) -p ../../$(BINDIR) ../../bin
+	@$(MKDIR) -p ../../$(BINDIR)
 	@$(MK) -C ./fixed
 
 fixed/fixdesc:
@@ -249,7 +249,7 @@ distclean: clean
 	  $(MAKE) -C ../extra/$${d} -f Makefile.win distclean; \
 	done
 	@$(MAKE) -C ../../tests -f Makefile.win distclean RHOME=$(RHOME)
-	$(RM) -r ../../$(BINDIR) ../../include ../../lib ../../library ../../modules
+	$(RM) -r ../../bin ../../include ../../lib ../../library ../../modules
 	$(RM) ../include/config.h ../include/iconv.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h \
 	../include/libintl.h
