@@ -399,10 +399,6 @@
        \code{"..."} in the arguments has been fixed.  See file
        \file{src/library/methods/tests/nextWithDots.R} in the sources.
 
-      \item \code{\\Sexpr[result=rd]} in an Rd file added a
-       spurious newline, which was displayed as extra whitespace when
-       rendered.
-
       \item \code{match(x, table)} (and hence \code{\%in\%}) now treat
       \code{"POSIXlt"} consistently with, e.g., \code{"POSIXct"}.
 
@@ -488,6 +484,10 @@
 
       \item Improperly calling \code{Recall()} from outside a function
       could cause a segfault.  (Reported by Robert McGehee.)
+
+      \item \code{\\Sexpr[result=rd]} in an Rd file added a
+      spurious newline, which was displayed as extra whitespace when
+      rendered.
     }
   }
 }
