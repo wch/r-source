@@ -2684,7 +2684,7 @@ PostScriptSetLineTexture(FILE *fp, const char *dashlist, int nlty,
     int i;							\
     fprintf(fp,"[");						\
     for (i = 0; i < nlty; i++) {				\
-	dash = (lwd >= 1 ? lwd: 1) *				\
+	dash = lwd *				\
 	    ((i % 2) ? (dashlist[i] + a)			\
 	     : ((nlty == 1 && dashlist[i] == 1.) ? 1. : dashlist[i] - a) ); \
 	if (dash < 0) dash = 0;					\
@@ -7267,7 +7267,7 @@ static int PDFfontNumber(const char *family, int face, PDFDesc *pd)
 	     * Use very high font number for CID fonts to avoid
 	     * Type 1 fonts
 	     */
-	    num = 1000 + (cidfontIndex - 1)*5 + 1 + face;
+	    num = 1000 + (cidfontIndex - 1)*5 + face;
 	else {
 	    /*
 	     * Check whether the font is loaded and, if not,
@@ -7303,7 +7303,7 @@ static int PDFfontNumber(const char *family, int face, PDFDesc *pd)
 		} else /* (isCIDFont(family, PDFFonts)) */ {
 		    if (addPDFDeviceCIDfont(cidfontfamily, pd,
 					    &cidfontIndex)) {
-			num = 1000 + (cidfontIndex - 1)*5 + 1 + face;
+			num = 1000 + (cidfontIndex - 1)*5 + face;
 		    } else {
 			cidfontfamily = NULL;
 		    }

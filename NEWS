@@ -49,6 +49,15 @@ BUG FIXES
 	on Solaris, where the error code returned is not even listed
 	as possible on the man page.)
 
+    o	The postscript() and pdf() devices will now allow lwd values
+	less than 1 (they used to force such values to be 1).
+
+    o	Fixed font face for CID fonts in pdf() graphics output. (PR#14326)
+
+    o	GERaster() now checks for width or height of zero and does
+	nothing in those cases; previously the behaviour was
+	undefined, probably device-specific, and possibly dangerous.
+
 
 
 		CHANGES IN R VERSION 2.11.1
