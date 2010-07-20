@@ -395,26 +395,16 @@
        \code{setGeneric()} when that does not use a definition nor
        explicitly set a signature.
 
-      \item The \code{pdf()} device will now allow \code{lwd} values
-       less than 1 (it used to force such values to be 1).
-
       \item A bug in \code{callNextMethod()} for some examples with
        \code{"..."} in the arguments has been fixed.  See file
        \file{src/library/methods/tests/nextWithDots.R} in the sources.
-
-      \item \code{GERaster()} now checks for width or height of zero and does
-       nothing in those cases; previously the behaviour was
-       undefined, probably device-specific, and possibly dangerous.
 
       \item \code{\\Sexpr[result=rd]} in an Rd file added a
        spurious newline, which was displayed as extra whitespace when
        rendered.
 
       \item \code{match(x, table)} (and hence \code{\%in\%}) now treat
-      \code{"POSIXlt"} consistently as, e.g., \code{"POSIXct"}.
-
-      \item Fixed font face for CID fonts in \code{pdf()} graphics output.
-      (\PR{14326})
+      \code{"POSIXlt"} consistently with, e.g., \code{"POSIXct"}.
 
       \item Improperly calling \code{Recall()} from outside a function
       could cause a segfault.  (Reported by Robert McGehee.)
@@ -479,14 +469,25 @@
       \item The command-line parser could mistake
       \option{--file=size...} for one of the options for setting limits
       for Ncells or Vcells.
+      
+      \item The internal strptime() could corrupt its copy of the
+      timezone which would then lead to spurious warnings. (\PR{14338})
 
       \item \code{dir.create(recursive = TRUE)} could fail if one of the
       components existed but was a directory on a read-only file system.
       (Seen on Solaris, where the error code returned is not even listed
       as possible on the man page.)
-      
-      \item The internal strptime() could corrupt its copy of the
-      timezone which would then lead to spurious warnings. (\PR{14338})
+
+      \item The \code{postscript()} and \code{pdf()} devices will now
+      allow \code{lwd} values less than 1 (they used to force such
+      values to be 1).
+
+      \item Fixed font face for CID fonts in \code{pdf()} graphics output.
+      (\PR{14326})
+
+      \item \code{GERaster()} now checks for width or height of zero and
+      does nothing in those cases; previously the behaviour was
+      undefined, probably device-specific, and possibly dangerous.
     }
   }
 }
