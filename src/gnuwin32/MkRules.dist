@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 
 ## This is only used when building R itself but it does customize
-## etc/Makeconf using LOCAL_SOFT, BINPREF[64], IMPLIB and R_ARCH
+## etc/*/Makeconf using LOCAL_SOFT, BINPREF[64], SYMPAT64, IMPLIB and R_ARCH
 
 ## =========== configuration macros for building packages ================
 # Absolute path to '/usr/local' software collection.  The versions used
@@ -37,10 +37,10 @@ TCL_VERSION = 85
 # Needed if using other compilers, including some versions of MinGW-w64
 # USE_IMPLIBS = YES
 
-# Some of the compilers are in fact cross-compilers and have prefixes
-# prefix for 32-bit compiler, i686-w64-mingw32- for MinGW-w64's
+# Some of the toolchains are in fact cross-compilers and have prefixes
+# prefix for 32-bit, i686-w64-mingw32- for MinGW-w64's
 BINPREF =
-# prefix for 64-bit compiler
+# prefix for 64-bit: usually this, but not for native x64 builds.
 BINPREF64 = x86_64-w64-mingw32-
 
 # 32- or 64-bit Windows?
