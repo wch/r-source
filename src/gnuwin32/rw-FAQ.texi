@@ -1163,9 +1163,9 @@ software and have its DLLs in your @code{PATH}.  Windows will normally
 give an informative message about a certain DLL not being found (except
 on Windows 2000).  See
 @uref{http://cran.r-project.org/bin/windows/contrib/2.12/ReadMe} for a
-listing of some of these packages running under 32-bit R (notably
-@code{RGtk2}, @code{rggobi}, @code{rJava}, @code{rjags} and some of the
-packages connecting to databases).
+listing of some of these packages (notably @code{RGtk2},
+@code{cairoDevice}, @code{rggobi}, @code{rJava}, @code{rjags} and some
+of the packages connecting to databases).
 
 
 @node Package TclTk does not work., Hyperlinks in HTML do not work., Loading a package fails., Packages

@@ -20,22 +20,21 @@ instdirs:
 	   done; \
 	 fi; done
 
-## FIXME: should we try to quote f to allow spaces, backslashes etc?
 mkR:
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  if test "$(R_KEEP_PKG_SOURCE)" = "yes"; then \
-	    $(ECHO) > $${f}; \
+	    $(ECHO) > "$${f}"; \
 	    for rsrc in $(RSRC); do \
-	      $(ECHO) "#line 1 \"$${rsrc}\"" >> $${f}; \
-	      cat $${rsrc} >> $${f}; \
+	      $(ECHO) "#line 1 \"$${rsrc}\"" >> "$${f}"; \
+	      cat $${rsrc} >> "$${f}"; \
 	    done; \
 	  else \
-	    cat $(RSRC) > $${f}; \
+	    cat $(RSRC) > "$${f}"; \
 	  fi; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
+	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f}" all.R)
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
-	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
+	  $(top_builddir)/library/$(pkg)/R/$(pkg) "$${f}"
 	@if test -f $(srcdir)/NAMESPACE;  then \
 	  $(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg); \
 	fi
@@ -45,16 +44,16 @@ mkR:
 mkR2:
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-          $(ECHO) ".packageName <- \"$(pkg)\"" >  $${f}; \
+          $(ECHO) ".packageName <- \"$(pkg)\"" >  "$${f}"; \
 	  if test "$(R_KEEP_PKG_SOURCE)" = "yes"; then \
 		for rsrc in `LC_COLLATE=C ls $(srcdir)/R/*.R`; do \
-		  $(ECHO) "#line 1 \"$${rsrc}\"" >> $${f}; \
-		    cat $${rsrc} >> $${f}; \
+		  $(ECHO) "#line 1 \"$${rsrc}\"" >> "$${f}"; \
+		    cat $${rsrc} >> "$${f}"; \
 		done; \
 	  else \
-		cat `LC_COLLATE=C ls $(srcdir)/R/*.R` >> $${f}; \
+		cat `LC_COLLATE=C ls $(srcdir)/R/*.R` >> "$${f}"; \
 	  fi; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
+	  $(SHELL) $(top_srcdir)/tools/move-if-change "$${f}" all.R)
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 	@if test -f $(srcdir)/NAMESPACE;  then \
 	  $(INSTALL_DATA) $(srcdir)/NAMESPACE $(top_builddir)/library/$(pkg); \
@@ -82,14 +81,14 @@ mkdemos:
 mkdemos2:
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo
 	@for f in `ls -d $(srcdir)/demo/* | sed -e '/00Index/d'`; do \
-	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
+	  $(INSTALL_DATA) "$${f}" $(top_builddir)/library/$(pkg)/demo; \
 	done
 
 mkexec:
 	@if test -d $(srcdir)/exec; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/exec; \
 	  for f in  $(srcdir)/exec/*; do \
-	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/exec; \
+	    $(INSTALL_DATA) "$${f}" $(top_builddir)/library/$(pkg)/exec; \
 	  done; \
 	fi
 
