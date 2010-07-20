@@ -418,10 +418,6 @@
       \item The standard Unix-alike termination dialog to ask if to save
       the workspace takes a EOF response as \code{n} to avoid problems
       with a damaged terminal connection.  (\PR{14332})
-
-      \item wilcox.test(x, y, conf.int = TRUE) failed with an unhelpful
-      message if \code{x} and \code{y} were constant vectors, and
-      similarly in the one-sample case.  (\PR{14329})
     }
   }
 }
@@ -485,6 +481,10 @@
       \item \code{GERaster()} now checks for width or height of zero and
       does nothing in those cases; previously the behaviour was
       undefined, probably device-specific, and possibly dangerous.
+
+      \item wilcox.test(x, y, conf.int = TRUE) failed with an unhelpful
+      message if \code{x} and \code{y} were constant vectors, and
+      similarly in the one-sample case.  (\PR{14329})
 
       \item Improperly calling \code{Recall()} from outside a function
       could cause a segfault.  (Reported by Robert McGehee.)
