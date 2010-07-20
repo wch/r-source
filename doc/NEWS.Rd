@@ -484,6 +484,9 @@
       components existed but was a directory on a read-only file system.
       (Seen on Solaris, where the error code returned is not even listed
       as possible on the man page.)
+      
+      \item The internal strptime() could corrupt its copy of the
+      timezone which would then lead to spurious warnings. (\PR{14338})
     }
   }
 }

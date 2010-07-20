@@ -591,8 +591,12 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* do a direct look up here as this does not otherwise
 	   work on Windows */
 	char *p = getenv("TZ");
-	if(p) tz = p;
+	if(p) {
+	    stz = mkString(p); /* make a copy */
+	    tz = CHAR(STRING_ELT(stz, 0));
+	}
     }
+    PROTECT(stz); /* it might be new */
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 
@@ -631,7 +635,7 @@ SEXP attribute_hidden do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_STRING_ELT(tzone, 2, mkChar(tzname[1]));
     }
     setAttrib(ans, install("tzone"), tzone);
-    UNPROTECT(5);
+    UNPROTECT(6);
 
     if(settz) reset_tz(oldtz);
     return ans;
@@ -658,8 +662,12 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* do a direct look up here as this does not otherwise
 	   work on Windows */
 	char *p = getenv("TZ");
-	if(p) tz = p;
+	if(p) {
+	    stz = mkString(p);
+	    tz = CHAR(STRING_ELT(stz, 0));
+	}
     }
+    PROTECT(stz); /* it might be new */
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 
@@ -709,7 +717,7 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(settz) reset_tz(oldtz);
 
-    UNPROTECT(2);
+    UNPROTECT(3);
     return ans;
 }
 
@@ -886,8 +894,12 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* do a direct look up here as this does not otherwise
 	   work on Windows */
 	char *p = getenv("TZ");
-	if(p) tz = p;
+	if(p) {
+	    stz = mkString(p);
+	    tz = CHAR(STRING_ELT(stz, 0));
+	}
     }
+    PROTECT(stz); /* it might be new */
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 
@@ -965,7 +977,7 @@ SEXP attribute_hidden do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(settz) reset_tz(oldtz);
 
-    UNPROTECT(3);
+    UNPROTECT(4);
     return ans;
 }
 
