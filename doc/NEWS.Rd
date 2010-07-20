@@ -413,14 +413,14 @@
       \item \code{match(x, table)} (and hence \code{\%in\%}) now treat
       \code{"POSIXlt"} consistently as, e.g., \code{"POSIXct"}.
 
-      \item Fixed font face for CID fonts in \code{pdf()} graphics output
+      \item Fixed font face for CID fonts in \code{pdf()} graphics output.
       (\PR{14326})
 
       \item Improperly calling \code{Recall()} from outside a function
       could cause a segfault.  (Reported by Robert McGehee.)
 
-      \item Built-in code dealing with environments (\code{get},
-      \code{assign}, \code{parent.env}, \code{is.environment} and
+      \item Built-in code dealing with environments (\code{get()},
+      \code{assign()}, \code{parent.env()}, \code{is.environment()} and
       others) now behave consistently to recognize S4 subclasses;
       \code{is.name()} also recognizes subclasses.
       
@@ -435,11 +435,6 @@
       \item wilcox.test(x, y, conf.int = TRUE) failed with an unhelpful
       message if \code{x} and \code{y} were constant vectors, and
       similarly in the one-sample case.  (\PR{14329})
-
-      \item \code{dir.create(recursive = TRUE)} could fail if one of the
-      components existed but was a directory on a read-only file system.
-      (Seen on Solaris, where this error code is not even listed as
-      possible on the man page.) 
     }
   }
 }
@@ -484,6 +479,11 @@
       \item The command-line parser could mistake
       \option{--file=size...} for one of the options for setting limits
       for Ncells or Vcells.
+
+      \item \code{dir.create(recursive = TRUE)} could fail if one of the
+      components existed but was a directory on a read-only file system.
+      (Seen on Solaris, where the error code returned is not even listed
+      as possible on the man page.)
     }
   }
 }
