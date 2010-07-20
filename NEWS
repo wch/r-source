@@ -58,6 +58,9 @@ BUG FIXES
 	nothing in those cases; previously the behaviour was
 	undefined, probably device-specific, and possibly dangerous.
 
+    o	Improperly calling Recall() from outside a function could cause a
+	segfault.  (Reported by Robert McGehee.)
+
 
 
 		CHANGES IN R VERSION 2.11.1
