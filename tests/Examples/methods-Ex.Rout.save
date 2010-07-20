@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-06-14 r52268)
+R version 2.12.0 Under development (unstable) (2010-07-20 r52568)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -178,7 +178,7 @@ Object of class "myFrame"
 1 1 -0.6264538 y
 2 2  0.1836433 f
 Slot "timestamps":
-[1] "2010-06-14 06:20:31 BST" "2010-06-14 06:20:31 BST"
+[1] "2010-07-20 10:57:55 BST" "2010-07-20 10:57:55 BST"
 
 > 
 > 
@@ -1960,7 +1960,6 @@ Slot "id":
 > ## inherit from reference object of type "environment"
 > setClass("stampedEnv", contains = "environment",
 +       representation(update = "POSIXct"))
-Defining type "environment" as a superclass via class ".environment"
 [1] "stampedEnv"
 > 
 > e1 <- new("stampedEnv", new.env(), update = Sys.time())
