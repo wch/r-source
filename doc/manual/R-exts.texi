@@ -1159,7 +1159,7 @@ $(R_HOME)/bin$(R_ARCH_BIN)/Rscript -e '@var{R expression}'
 where @code{$(R_ARCH_BIN)} is only needed currently on Windows.
 
 Environment variables can be used to select different macros for 32- and
-64-bit code, foe example
+64-bit code, for example
 
 @example
 ifeq "$@{R_ARCH@}" "/x64"
@@ -1632,7 +1632,11 @@ you will need to set it in the environment.
 @quotation Note to Windows users
 @code{R CMD check} and @code{R CMD build} require you to have installed
 the Windows toolset (see the ``R Installation and Administration''
-manual) and have it in your path.
+manual) and have it in your path.  You may need to set @env{TMPDIR} to
+point to a suitable writable directory with a path not containing spaces
+-- use forward slashes for the separators.  Also, the directory needs to
+be on a case-honouring file system (some network-mounted file systems
+are not).
 @end quotation
 
 @node Customizing checking and building,  , Building packages, Checking and building packages
