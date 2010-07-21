@@ -1626,7 +1626,12 @@ is considerably more flexible).
 @code{R CMD check} and @code{R CMD build} run @R{} with
 @option{--vanilla}, so none of the user's startup files are read.  If
 you need @env{R_LIBS} set (to find packages in a non-standard library)
-you will need to set it in the environment.
+you can set it in the environment: also as from @R{} 2.12.0 you can use
+files@footnote{On systems which use sub-architectures,
+architecture-specific versions such as @file{~/.R/check.Renviron.i386}
+take precedence.}  @file{~/.R/check.Renviron} and
+@file{~/.R/build.Renviron} to set environment variables when using these
+utilities.
 @end quotation
 
 @quotation Note to Windows users
@@ -1645,8 +1650,7 @@ are not).
 In addition to the available command line options, @code{R CMD check}
 also allows customization by setting configuration variables in a
 configuration file, the location of which can be specified @emph{via} the
-@option{--rcfile} option and defaults to @file{$HOME/.R/check.Rconf}
-provided that the environment variable @env{HOME} is set.
+@option{--rcfile} option and defaults to @file{~/.R/check.Rconf}.
 (Note that this changed in @R{} 2.12.0: earlier versions of @R{} used
 Perl configuration files, default @file{$HOME/.R/check.Rconf}.)
 

@@ -1709,7 +1709,7 @@ directory of a bundled distribution from
 @url{http://www.gtk.org/@/download-windows-64bit.html} in the path: note
 that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
 you need the correct one first in your path if using both.  One way to
-achieve this is the set the @env{PATH} environment variable in files
+achieve this is to set the @env{PATH} environment variable in files
 @file{R_HOME/etc/i386/Renviron.site} and
 @file{R_HOME/etc/x64/Renviron.site}.
 

@@ -313,9 +313,20 @@
        Its configuration files have changed format: they are now \R
        source files, and the default file is \file{~/.R/check.Rconf}.
 
+       Environment variables such as \env{R_LIBS} can be set for the
+       duration of checking via a file \file{~/.R/check.Renviron} (in the
+       format used by \file{.Renviron}, and with sub-architecture
+       specific versions such as \file{~/.R/check.Renviron.i386} taking
+       precedence).  This can also be used for the environment variables
+       described in the \sQuote{Tools} chapter of the \sQuote{R
+       Internals} manual.
+
       \item \command{R CMD build} no longer creates an \file{INDEX} file
        (\command{R CMD INSTALL} does so), and \code{--force} removes
        (rather than overwrites) an existing \file{INDEX} file.
+
+       It supports file \file{~/.R/build.Renviron} analogously to
+       \command{check}.
 
       \item \command{R CMD Rd2dvi} makes use of \code{tools::texi2dvi()}
        to process the package manual.  It is now implemented entirely in

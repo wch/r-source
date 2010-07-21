@@ -3399,7 +3399,8 @@ which require the package to be installed.
 The following internal environment variables are used for initializing
 the corresponding public configuration variables
 (@pxref{Customizing checking and building, , Customizing checking and
-building, R-exts, Writing R Extensions}):
+building, R-exts, Writing R Extensions}).  A convenient place to set
+these is the file @file{~/.R/check.Renviron}.
 
 @quotation
 @multitable {@code{_R_CHECK_LATEX_VIGNETTES_}} {@code{R_check_latex_vignettes}}

@@ -151,6 +151,11 @@
   environment variables set by \R in the configure process, and is not
   used on \R for Windows.
 #endif
+  
+  \command{R CMD check} and \command{R CMD build} do not read the
+  standard startup files, but they do read specific \samp{Renviron}
+  files such as \file{~/.R/check.Renviron}, \file{~/.R/build.Renviron}
+  or sub-architecture-specific versions.
 }
 \seealso{
   For the definition of the \sQuote{home} directory on Windows see the

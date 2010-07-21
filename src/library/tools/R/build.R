@@ -417,6 +417,13 @@ get_exclude_patterns <- function()
     pkgs <- character()
     options(showErrorCalls=FALSE, warn = 1)
 
+    ## read in ~/.R/build.Renviron[.rarch]
+    rarch <- .Platform$r_arch
+    if (nzchar(rarch) &&
+        file.exists(Renv <- paste("~/.R/build.Renviron", rarch, sep = ".")))
+        readRenviron(Renv)
+    else if (file.exists(Renv <- "~/.R/build.Renviron")) readRenviron(Renv)
+
     if (is.null(args)) {
         args <- commandArgs(TRUE)
         ## it seems that splits on spaces, so try harder.

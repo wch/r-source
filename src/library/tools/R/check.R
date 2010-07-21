@@ -1514,6 +1514,13 @@ R_run_R <- function(cmd, Ropts, env)
 
     options(showErrorCalls=FALSE, warn = 1)
 
+    ## read in ~/.R/check.Renviron[.rarch]
+    rarch <- .Platform$r_arch
+    if (nzchar(rarch) &&
+        file.exists(Renv <- paste("~/.R/check.Renviron", rarch, sep = ".")))
+        readRenviron(Renv)
+    else if (file.exists(Renv <- "~/.R/check.Renviron")) readRenviron(Renv)
+
     if (is.null(args)) {
         args <- commandArgs(TRUE)
         ## it seems that splits on spaces, so try harder.
@@ -1533,9 +1540,7 @@ R_run_R <- function(cmd, Ropts, env)
     do_timings <- FALSE
     install_args <- NULL
     check_subdirs <- ""           # defaults to R_check_subdirs_strict
-    ## FIXME: we could assume HOME except on Windows, and use R_USER there.
-    home <- Sys.getenv("HOME", NA)
-    rcfile <- if (!is.na(home)) file.path(home, ".R", "check.Rconf") else character()
+    rcfile <- file.path("~", ".R", "check.Rconf")
     extra_arch <- FALSE
     spec_install <- FALSE
     do_ff_calls <- TRUE
