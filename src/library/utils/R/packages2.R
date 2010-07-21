@@ -194,7 +194,7 @@ install.packages <-
         lib <- .libPaths()[1L]
 	if(length(.libPaths()) > 1L)
 	    message(gettextf("Installing package(s) into %s\n(as %s is unspecified)",
-			     sQuote(lib)), domain = NA)
+			     sQuote(lib), sQuote("lib")), domain = NA)
     }
 
     ## check for writability by user
