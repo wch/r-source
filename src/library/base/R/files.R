@@ -198,3 +198,6 @@ Sys.umask <- function(mode = "0000")
 
 Sys.readlink <- function(paths)
     .Internal(Sys.readlink(paths))
+
+readRenviron <- function(path)
+    .Internal(readRenviron(path))

@@ -173,6 +173,8 @@
   affecting memory management are covered in the help file for
   \link{Memory}.
 
+  \code{\link{readRenviron}} to read \file{.Renviron} files.
+  
   For profiling code, see \code{\link{Rprof}}.
 }
 \examples{

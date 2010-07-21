@@ -389,6 +389,7 @@ SEXP do_rawShift(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rawToBits(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rawToChar(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readDCF(SEXP, SEXP, SEXP, SEXP);
+SEXP do_readEnviron(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readlink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readLines(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readln(SEXP, SEXP, SEXP, SEXP);

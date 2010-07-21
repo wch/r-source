@@ -205,9 +205,9 @@
        directory} in MiKTeX parlance).
 
       \item S3 generic functions now use correct S4 inheritance when
-        dispatching on an S4 object.  See \code{?Methods}, section on
-        \dQuote{Methods for S3 Generic Functions} for recommendations
-        and details.
+      dispatching on an S4 object.  See \code{?Methods}, section on
+      \dQuote{Methods for S3 Generic Functions} for recommendations
+      and details.
 
       \item \code{format.pval()} gains a \code{...} argument to pass
        arguments such as \code{nsmall} to \code{format()}.  (Wish of
@@ -217,12 +217,12 @@
       \PR{13415})
 
       \item Added support for subsetting \code{"raster"} objects, plus
-        assigning to a subset, conversion to a matrix (of colour
-        strings), and comparisons (\code{==} and \code{!=}).
+      assigning to a subset, conversion to a matrix (of colour
+      strings), and comparisons (\code{==} and \code{!=}).
 
-      \item Added a new \code{parseLatex()} function (and related functions
-       \code{deparseLatex()} and \code{latexToUtf8()}) to support conversion of
-       bibliographic entries for display in R.
+      \item Added a new \code{parseLatex()} function (and related
+      functions \code{deparseLatex()} and \code{latexToUtf8()}) to
+      support conversion of bibliographic entries for display in R.
 
       \item Text rendering of \code{\\itemize} in help uses a Unicode
       bullet in UTF-8 and most single-byte Windows locales.
@@ -257,6 +257,9 @@
       package without re-installing it, to facilitate testing
       changes which can be selectively added and backed out. See
       \code{?insertSource}.
+
+      \item New function \code{readRenviron} to (re-)read files in the
+      format of \file{~/.Renviron} and \file{Renviron.site}.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
