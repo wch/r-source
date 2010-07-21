@@ -57,16 +57,25 @@
         \file{R-<version>-win.exe}).  When used under 32-bit Windows
         this works as before and installs 32-bit \R.  When used under
         64-bit Windows there are options to install either or both of
-        32- and 64-bit \R: the current default is to install both.
+        32- and 64-bit \R: the default is to install both.
       
         The default package type is \code{"win.binary"} on both 32- and
         64-bit builds: a single repository contains binary packages for
-        both architectures.  This is in place for CRAN and CRANextras:
-        \code{type = "win64.binary"} can still be used for repositories
-        which follow the \R 2.11.x convention.  With the default filters
-        (see \code{?available.packages}) packages will only be offered
-        if they are available for the current architecture.
-      
+        both architectures.  This is in place for CRAN, CRANextras and
+        BioC: \code{type = "win64.binary"} can still be used for any
+        repositories which follow the \R 2.11.x convention.  With the
+        default filters (see \code{?available.packages}) packages will
+        only be offered if they are available for the current
+        architecture.
+	
+      \item The recommended toolchain has been changed to one that does
+      not add leading underscores. See
+      \url{http://www.murdoch-sutherland.com/Rtools/} or
+      \url{http://www.stats.ox.ac.uk/pub/Rtools/}.  Any static or import
+      libraries for external software used in installing packages will
+      need to be re-compiled for this toolchain, but the use of DLLs is
+      unaffected.
+
       \item For those building \R from the sources, the 64-bit
        \code{Tcl} binary distribution for 2.12.x is in file
        \file{R64a_Tcl_8-5-8.zip} and contains e.g. directory

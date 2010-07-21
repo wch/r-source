@@ -51,9 +51,9 @@ DEFS_W64 =
 
 # pattern for symbols on 64-bit builds only
 # for older toolchains which use a leading underscore
-SYMPAT64 = 's/^.* [BCDRT] _/ /p'
+# SYMPAT64 = 's/^.* [BCDRT] _/ /p'
 # for versions of MinGW-w64 from about 2010-05
-# SYMPAT64 = 's/^.* [BCDRT] / /p'
+SYMPAT64 = 's/^.* [BCDRT] / /p'
 
 # set to use ICU (experimental)
 # USE_ICU=YES
