@@ -146,7 +146,6 @@ Current binary versions of R run on Windows 2000 or later.@footnote{R
 2.6.2 was the last version for Windows 95. 98, ME and NT4.}, including
 on 64-bit versions: @xref{Can I use R on 64-bit Windows?}.
 
-
 We only test on versions of Windows currently supported by Microsoft,
 mainly 64-bit Windows 7 and Server 2008, but to a limited extent on
 32-bit XP SP3.
@@ -173,7 +172,7 @@ privileges you will be able to install R in the @file{Program Files}
 area and to set all the optional registry entries; otherwise you will
 only be able to install R in your own file area.  You may need to
 confirm that you want to proceed with installing a program from an
-`unidentified publisher'.
+`unknown' or `unidentified' publisher.
 
 After installation you should choose a working directory for R.  You
 will have a shortcut to @file{Rgui.exe} on your desktop
@@ -458,10 +457,10 @@ See @code{?Startup} for more details of environment files.
 
 @item
 For all applications via Windows.  How you set an environment variable
-is system specific: under Windows 2000/XP/2003 you can use `System' in
-the control panel or the properties of `My Computer' (under the
-`Advanced' tab).  Under Vista, go to `User Accounts' in the Control
-Panel, and select your account and then `Change my environment
+is system specific: under Windows 2000/XP/Server 2003 you can use
+`System' in the control panel or the properties of `My Computer' (under
+the `Advanced' tab).  Under Vista/7, go to `User Accounts' in the
+Control Panel, and select your account and then `Change my environment
 variables'.
 @end enumerate
 
@@ -475,11 +474,11 @@ which these options are listed, that is the command line then
 
 How did you specify it?  Backslashes have to be doubled in R character
 strings, so for example one needs
-@samp{"d:\\@RWVER@\\library\\xgobi\\scripts\\xgobi.bat"}.  You can
-make life easier for yourself by using forward slashes as path
-separators: they do work under Windows.  You should include the file
-extension (e.g.@: @samp{"xgobi.bat"} rather than just @samp{"xgobi"});
-sometimes this isn't shown in Windows, but it is necessary in R.
+@samp{"d:\\@RWVER@\\library\\xgobi\\scripts\\xgobi.bat"}.  You can make
+life easier for yourself by using forward slashes as path separators:
+they do work under Windows.  You should include the file extension
+(e.g.@: @samp{"xgobi.bat"} rather than just @samp{"xgobi"}); sometimes
+this isn't shown in Windows Explorer, but it is necessary in R.
 
 A simple way to avoid these problems is to use the function
 @code{file.choose()} to invoke the standard Windows file selection
@@ -500,9 +499,9 @@ and using the function @code{shortPathName} from R code.
 
 Not when R itself is running.
 
-When you run the R installer, there are options (under `Select
-Additional Tasks') to `Save version number in registry' and (for
-Administrator installs) `Associate R with .RData files'.
+When you run the R installer, there are options (under @samp{Select
+Additional Tasks}) to @samp{Save version number in registry} and (for
+Administrator installs) @samp{Associate R with .RData files}.
 
 If you tick the first option, the following string entries are added to the
 Windows registry:
@@ -520,8 +519,9 @@ As from R 2.11.0 the same entries are also created under
 64-bit R respectively.
 
 If you tick the second option (shown with administrative privileges
-only) (`Associate R with .RData files') then entries are created under
-@code{HKEY_CLASSES_ROOT\.RData} and @code{HKEY_CLASSES_ROOT\RWorkspace}.
+only) (@samp{Associate R with .RData files}) then entries are created
+under @code{HKEY_CLASSES_ROOT\.RData} and
+@code{HKEY_CLASSES_ROOT\RWorkspace}.
 
 After installation you can add the Registry entries in by running
 @code{RSetReg.exe} in the @code{bin} folder, and remove them by running
@@ -628,8 +628,8 @@ it treats so-called `hyper-threaded' CPUs such as many Pentium 4s as two
 CPUs even though there is only one physical CPU.
 
 Hyper-threading has been re-introduced for Intel i3/i5/i7 CPUs and some
-Xeons: these will usually be reported as 4 or 8 CPUs and so R be shown
-as using 25% or 12.5%.  You can see how many `CPU's are assumed by
+Xeons: these will usually be reported as 4 or 8 or 12 CPUs and so R be
+shown as using 25% or less.  You can see how many `CPU's are assumed by
 looking at the number of graphs of `CPU Usage History' on the
 `Performance' tab of the Windows Task manager.
 
@@ -650,26 +650,28 @@ privileges into a system area.  Sysadmins could set policies for user
 accounts, and you might for example have needed to be a `Power User' to
 install software at all.
 
-Vista normally disables the Administrator account and expects software
-installation to done by an account which is in the local Administrator
-group with `admin approval mode' turned on.  (The Administrator
-account by default has it turned off.)  Unlike (say) Windows XP, such
-accounts do not run programs with full administrator privileges, and
-this is where the issues arise.  (For background information consult e.g.@:
+Vista and later normally disable the Administrator account and expects
+software installation to done by an account which is in the local
+Administrator group with `admin approval mode' turned on.  (The
+Administrator account by default has it turned off.)  Unlike (say)
+Windows XP, such accounts do not run programs with full administrator
+privileges, and this is where the issues arise.  (For background
+information consult e.g.@:
 @url{http://windowsvistablog.com/blogs/windowsvista/archive/2007/01/23/security-features-vs-convenience.aspx}.)
-Vista has the concept of `over-the-shoulder' credentials: if you are
-running without full administrator privileges and do something which
+These OSes have the concept of `over-the-shoulder' credentials: if you
+are running without full administrator privileges and do something which
 needs them you may be prompted with one or more security-check dialog
 boxes, and may be required to provide administrator credentials or
 confirm that you really want to take that action.
 
 Vista will report that the R installer has an `unidentified publisher'
-and ask if it should be run.  System administrators can disable
-installing applications from non-trusted sources, in which case you
-will have to persuade them that R is trustworthy, or digitally sign the
-R installer yourself, or (unless this is also disabled) run the
-installer from a standard account and install into your own file area.
-(The same issues apply to the @file{.msi} version of the installer.)
+(Windows 7 uses `unknown publisher') and ask if it should be run.
+System administrators can disable installing applications from
+non-trusted sources, in which case you will have to persuade them that R
+is trustworthy, or digitally sign the R installer yourself, or (unless
+this is also disabled) run the installer from a standard account and
+install into your own file area.  (The same issues apply to the
+@file{.msi} version of the installer.)
 
 If you install R as a standard user into your own file space and use it
 under the same account, there are no known permission issues.
@@ -679,14 +681,13 @@ mode' being turned on) and install/update packages (in the system area
 or elsewhere), no issues are known.
 
 If you use an account in the local Administrators group in `admin
-approval mode' (which is the intended norm under Vista), installation
-will make use of `over-the-shoulder' credentials.  You will run into
-problems if you try installing (including updating) packages in the
-main R library.  (It would be nice if at that point R could use
-over-the-shoulder credentials, but they apply to processes as a
-whole.  Vista disallows creating @code{.chm} and @code{.dll} files in
-the system area without credentials.)  There are several ways around
-this.
+approval mode' (which is the intended norm under these OSes),
+installation will make use of `over-the-shoulder' credentials.  You will
+run into problems if you try installing (including updating) packages in
+the main R library.  (It would be nice if at that point R could use
+over-the-shoulder credentials, but they apply to processes as a whole.
+Vista and later disallow creating @code{.dll} files in the system area
+without credentials.)  There are several ways around this.
 
 @itemize
 @item
@@ -727,10 +728,10 @@ Another issue with Vista was that the standard POSIX ways that R uses
 (e.g.@: in @code{file.info} and @code{file.access}) to look at file
 permissions no longer work reliably.  @code{file.access} was re-written
 to work with Windows NT-based security and the new version seems much
-more reliable with Vista (but still not 100% correct).
+more reliable with these OSes (but still not 100% correct).
 
-On suitably recent hardware Vista can prevent the execution of code
-from data areas via `Data Execution Prevention' (from a tab in
+On suitably recent hardware Vista and later can prevent the execution of
+code from data areas via `Data Execution Prevention' (from a tab in
 System Properties -> Advanced -> Performance), and sysadmins can turn
 this on for all programs.  R runs correctly with DEP enabled.
 
@@ -764,9 +765,9 @@ default font in the @code{Rgui} console and internal pager is
 @code{Courier New}, which has directional quotes on all the systems we
 tried.  @code{Lucida Console} has elegant glyphs for directional quotes,
 but seems rather light on Windows XP (it looks better than @code{Courier
-New} on Vista): @code{Consolas} is another font which we often select.
-Non-TrueType fonts such as @code{Courier} and @code{FixedSys} lack
-directional double quotes on all the systems we tried.
+New} on Vista and later): @code{Consolas} is another font which we often
+select.  Non-TrueType fonts such as @code{Courier} and @code{FixedSys}
+lack directional double quotes on all the systems we tried.
 
 There is a related problem with using @code{Sweave} output in
 @code{Rgui}, for LaTeX needs to be told about the encoding of
@@ -830,7 +831,7 @@ process to take advantage of more than 4GB of RAM (if available) and for
 R's memory manager to more easily handle large objects (in particular
 those of 1GB or more).  The disadvantages are that all the pointers are
 8 rather than 4 bytes and so small objects are larger and more data has
-to be moved around, and that far less external software is available for
+to be moved around, and that less external software is available for
 64-bit versions of the OS.
 
 The toolchain (compilers, linkers, @dots{}) used to build 64-bit R is
@@ -928,9 +929,11 @@ and Spanish (Spain).
 The default behaviour of R is to try to run in the language you run
 Windows in.
 
-Apparently some users want Windows in their native language, but not R.
-To do so, set @code{LANGUAGE=en} as discussed in Q2.2 and Q2.15, or in
-the @file{Rconsole} file.
+Apparently some users want@footnote{or they may have no choice:
+apparently some Windows editions are tied to a specific language.}
+Windows in their native language, but not R.  To do so, set
+@code{LANGUAGE=en} as discussed in Q2.2 and Q2.15, or in the
+@file{Rconsole} file.
 
 @node I want to run R in Chinese/Japanese/Korean, I selected English for installation but R runs in Chinese, I want R in English!, Languages and Internationalization
 @section I want to run R in Chinese/Japanese/Korean.
@@ -1014,9 +1017,8 @@ see its help page (which also applies to @code{pdf}).
 @section I don't see characters with accents at the R console, for example in ?text.
 
 You need to specify a font in @file{Rconsole} (see Q5.2) that supports
-the encoding in use, in Western European languages Latin-1.  This used
-to be a problem in earlier versions of Windows, but now it is hard to
-find a font which does not.
+the encoding in use.  This used to be a problem in earlier versions of
+Windows, but now it is hard to find a font which does not.
 
 Support for these characters within @command{Rterm} depends on the
 environment (the terminal window and shell, including locale and
@@ -1027,15 +1029,15 @@ to altered.
 @node The dialog buttons are not translated,  , I don't see characters with accents at the R console, Languages and Internationalization
 @section The dialog buttons are not translated.
 
-In most cases they actually are, but by Windows.  Setting the locale
-or the @code{LANGUAGE} environment variable does not change the
-Windows setting of its `UI language'.  Under (international) Windows
-XP there are three tabs on the @emph{Regional and Language Options}
-applet in the Control Panel.  The first tab controls the locale, the
-second the UI and the third the fonts used for `non-Unicode' programs
-(but apparently also for Unicode ones in many cases): see Q3.3.  Vista
-talks about the 'UI language' and the 'system locale' for setting
-the language used for `non-Unicode' programs.
+In most cases they actually are, but by Windows.  Setting the locale or
+the @code{LANGUAGE} environment variable does not change the Windows
+setting of its `UI language'.  Under (international) Windows XP there
+are three tabs on the @emph{Regional and Language Options} applet in the
+Control Panel.  The first tab controls the locale, the second the UI and
+the third the fonts used for `non-Unicode' programs (but apparently also
+for Unicode ones in many cases): see Q3.3.  Vista and later talk about
+the 'UI language' and the 'system locale' for setting the language used
+for `non-Unicode' programs (on the 'Administrative' tab in Windows 7).
 
 If you have Windows running completely in say French or Chinese these
 settings are likely to be consistent.  However, if you try to run
@@ -1288,7 +1290,8 @@ R CMD INSTALL --html @var{pkg1} @var{pkg2} \ldots
 @end example
 
 To install R itself with static HTML pages change the following line in
-file @file{MkRules}
+file @file{MkRules.local} (after copying @file{MkRules.dist} to
+@file{MkRules.local} if that has not already been done).
 
 @example
 # set this to YES to build static HTML help
@@ -1539,17 +1542,8 @@ horizontally. (The @key{left/right arrow} keys work in the pager too.)
 @node How can I compile R from source?, Can I use a fast BLAS?, Building from Source, Building from Source
 @section How can I compile R from source?
 
-To build R on 32-bit Windows you will need the tools from 
-@uref{http://www.murdoch-sutherland.com/Rtools/} as well as some
-others.  See the `R Installation and Administration' manual.
-
-To build a 64-bit version on 64-bit Windows you will need a suitable
-compiler, and the MinGW-w64 port of @code{binutils} and @code{gcc} is
-finally mature enough to produce a working version of R, so support has
-been added as from R 2.11.0: see the manual.  You are welcome to try a
-commercial compiler@footnote{such as those from Intel and PGI: there is
-no Fortran compiler in the Microsoft set.}, and pre-compiled versions
-using such compilers are available from R redistributors.
+See the `R Installation and Administration' manual (for the version of R
+you want to install).
 
 @node Can I use a fast BLAS?, How do I include compiled C code?, How can I compile R from source?, Building from Source
 @section  Can I use a fast BLAS?
@@ -1779,7 +1773,7 @@ call @code{R_ProcessEvents()} periodically from your compiled code.
 If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
-@set LASTEDIT 2010-07-01
+@set LASTEDIT 2010-07-21
 @ifhtml
 @html
 <hr WIDTH="100%">
