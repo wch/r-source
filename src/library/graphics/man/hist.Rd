@@ -16,7 +16,7 @@ hist(x, \dots)
      xlim = range(breaks), ylim = NULL,
      xlab = xname, ylab,
      axes = TRUE, plot = TRUE, labels = FALSE,
-     nclass = NULL, \dots)
+     nclass = NULL, warn.unused = FALSE, \dots)
 }
 \alias{hist}
 \alias{hist.default}
@@ -71,7 +71,10 @@ hist(x, \dots)
     of bars, if not \code{FALSE}; see \code{\link{plot.histogram}}.}
   \item{nclass}{numeric (integer).  For S(-PLUS) compatibility only,
     \code{nclass} is equivalent to \code{breaks} for a scalar or
-    character argument.}
+    character argument.}  
+  \item{warn.unused}{logical.  If \code{plot=FALSE} and 
+    \code{warn.unused=TRUE}, a warning will be issued when graphical
+    parameters are passed to \code{hist.default()}.}
   \item{\dots}{further arguments and graphical parameters passed to
     \code{\link{plot.histogram}} and thence to \code{\link{title}} and
     \code{\link{axis}} (if \code{plot=TRUE}).}

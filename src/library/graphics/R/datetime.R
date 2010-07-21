@@ -153,7 +153,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
         }
         else stop("invalid specification of 'breaks'")
     }
-    res <- hist.default(unclass(x), unclass(breaks), plot = FALSE, ...)
+    res <- hist.default(unclass(x), unclass(breaks), plot = FALSE, warn.unused=FALSE, ...)
     res$equidist <- TRUE # years are of uneven lengths
     res$intensities <- res$intensities*incr
     res$xname <- xlab
@@ -292,7 +292,7 @@ hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
             }
         } else stop("invalid specification of 'breaks'")
     }
-    res <- hist.default(unclass(x), unclass(breaks), plot = FALSE, ...)
+    res <- hist.default(unclass(x), unclass(breaks), plot = FALSE, warn.unused = FALSE, ...)
     res$equidist <- TRUE # years are of uneven lengths
     res$intensities <- res$intensities*incr
     res$xname <- xlab

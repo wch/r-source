@@ -417,6 +417,10 @@
       \item The standard Unix-alike termination dialog to ask if to save
       the workspace takes a EOF response as \code{n} to avoid problems
       with a damaged terminal connection.  (\PR{14332})
+      
+      \item Added \code{warn.unused} argument to \code{hist.default()}
+      to allow suppression of warnings about graphical parameters used
+      with \code{plot=FALSE}.  (\PR{14341})
     }
   }
 }
