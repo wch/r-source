@@ -725,7 +725,10 @@ R_run_R <- function(cmd, Ropts, env)
         }
 
         ## Check foreign function calls.
-        if (do_ff_calls && haveR) {
+        ## The neverending story ...
+        ## For the time being, allow to turn this off by setting the environment
+        ## variable _R_CHECK_FF_CALLS_ to an empty value.
+        if (haveR && nzchar(Sys.getenv("_R_CHECK_FF_CALLS_", "true")) {
             checkingLog(Log, "foreign function calls")
             Rcmd <- paste("options(warn=1)\n",
                           if (do_install)
@@ -1543,7 +1546,6 @@ R_run_R <- function(cmd, Ropts, env)
     rcfile <- file.path("~", ".R", "check.Rconf")
     extra_arch <- FALSE
     spec_install <- FALSE
-    do_ff_calls <- TRUE
 
     libdir <- ""
     outdir <- ""
@@ -1624,11 +1626,6 @@ R_run_R <- function(cmd, Ropts, env)
         do_examples = do_tests = do_vignettes = 0
         spec_install = TRUE
     }
-
-    ## The neverending story ...
-    ## For the time being, allow to turn this off by setting the environment
-    ## variable _R_CHECK_FF_CALLS_ to a Perl 'null' value.
-    do_ff_calls <- nzchar(Sys.getenv("_R_CHECK_FF_CALLS_", "true"))
 
     ## Use system default unless explicitly specified otherwise.
     Sys.setenv(R_DEFAULT_PACKAGES="")

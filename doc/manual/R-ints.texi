@@ -3392,12 +3392,12 @@ Fake installation, and turn off the run-time tests.
 Skip installation, e.g., when testing recommended packages bundled with
 R.
 @item no
-The same as @option{--no-install}: turns off installation and the tests
+The same as @option{--no-install} : turns off installation and the tests
 which require the package to be installed.
 @end table
 
-The following internal environment variables are used for initializing
-the corresponding public configuration variables
+The following environment variables are used for initializing
+the corresponding configuration variables
 (@pxref{Customizing checking and building, , Customizing checking and
 building, R-exts, Writing R Extensions}).  A convenient place to set
 these is the file @file{~/.R/check.Renviron}.
@@ -3415,10 +3415,10 @@ these is the file @file{~/.R/check.Renviron}.
 @item @code{_R_CHECK_LATEX_VIGNETTES_}
 @vindex_R_CHECK_LATEX_VIGNETTES_
 @tab @code{R_check_latex_vignettes}
-@item @code{_R_CHECK_RD_STYLE_}
+@item @code{_R_CHECK_RD_CONTENTS_}
 @vindex_R_CHECK_RD_CONTENTS_
 @tab @code{R_check_Rd_contents}
-@item @code{_R_CHECK_RD_CONTENTS_}
+@item @code{_R_CHECK_RD_STYLE_}
 @vindex_R_CHECK_RD_STYLE_
 @tab @code{R_check_Rd_style}
 @item @code{_R_CHECK_RD_XREFS_}
@@ -3442,7 +3442,7 @@ these is the file @file{~/.R/check.Renviron}.
 @end multitable
 @end quotation
 
-The following internal environment variables have no corresponding
+The following environment variables have no corresponding
 configuration variable.
 @vtable @code
 @item _R_CHECK_CODOC_S4_METHODS_
@@ -3453,6 +3453,7 @@ Default: true.
 @item _R_CHECK_DOT_INTERNAL_
 Control whether the package code is scanned for @code{.Internal} calls.
 Default: false.
+@c actually this is R_check_dot_internal
 @item _R_CHECK_EXECUTABLES_
 Control checking for executable (binary) files.
 Default: true.
@@ -3480,16 +3481,6 @@ Off by default because this can result in false positives.
 New in @R{} 2.10.0.  Controls the minimum level for reporting warnings
 from @code{checkRd}.
 Default: -1.
-@item _R_CHECK_RD_USAGE_METHOD_BINOPS_
-Control whether binops generics are considered as allowing useful S3
-method markup. 
-Default: true (as this Rd feature was added some time ago).
-OBSOLETE.
-@item _R_CHECK_RD_USAGE_METHOD_SUBSET_
-Control whether subset generics are considered as allowing useful S3
-method markup.
-Default: true (as this Rd feature was added some time ago).
-OBSOLETE.
 @item _R_CHECK_XREFS_REPOSITORIES_
 New in @R{} 2.10.0.  If set to a non-empty value, a space-separated list
 of repositories to use to determine known packages.
@@ -3501,22 +3492,15 @@ about implicit function declarations (as spotted by GCC with command
 line option @option{-Wimplicit-function-declaration}, which is implied
 by @option{-Wall}).
 Default: false.
-This should really be a configuration variable, but we need a better
-name.
 @item _R_CHECK_SRC_MINUS_W_UNUSED_
 Control whether installation output is checked for compilation warnings
 about unused code constituents (as spotted by GCC with command line
 option @option{-Wunused}, which is implied by @option{-Wall}).
+Default: true.
 @item _R_CHECK_WALL_FORTRAN_
 Control whether gfortran 4.0 or better @option{-Wall} warnings are used in
 the analysis of installation output.
 Default: false, even though the warnings are justifiable.
-This should really be a configuration variable, but we need a better name.
-@item _R_CHECK_WARN_BAD_USAGE_LINES_
-Control whether @code{checkDocFiles()} warns about bad Rd @code{\usage}
-lines.
-Default: true (as @code{\special} was rolled out a long time ago).
-OBSOLETE.
 @end vtable
 
 @node R coding standards, Testing R code, Tools, Top
@@ -3542,9 +3526,9 @@ The following tools can ``safely be assumed'' for @R{} extensions.
 An ISO C99 C compiler.  Note that extensions such as @acronym{POSIX}
 1003.1 must be tested for, typically using Autoconf unless you are sure
 they are supported on all mainstream @R{} platforms (including Windows
-and Mac OS X).  Packages will be more portable if written assuming only
-C89, but this should not be done where using C99 features will make for
-cleaner or more robust code.
+and Mac OS X).  Packages will be more portable to @R{} < 2.12.0 if
+written assuming only C89, but this should not be done where using C99
+features will make for cleaner or more robust code.
 
 @item
 A FORTRAN 77 compiler (but not Fortran 9x).
@@ -3604,7 +3588,7 @@ for building @R{} from source, building and checking add-on packages,
 and for installing add-on packages from source.  On the other hand, Perl
 cannot be assumed at all for installing @emph{binary} (pre-built)
 versions of add-on packages, or at run time.  (As from @R{} 2.12.0 Perl
-is no longer needed for mos of these purposes.)
+is needed for almost none of these purposes.)
 
 @item
 Makeinfo version 4.7 or later is needed to build the Info files for the
