@@ -18,6 +18,9 @@ NEW FEATURES
     o	R CMD check runs the package-specific tests with LANGUAGE=en
 	set, to facilitate comparison to .Rout.save files.
 
+    o	sessionInfo() gives more detailed platform information,
+	including 32/64-bit and the sub-architecture if one is used.
+
 
 BUG FIXES
 
