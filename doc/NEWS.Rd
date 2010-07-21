@@ -432,6 +432,10 @@
       \item \command{R CMD check} now runs the package-specific tests
       with \env{LANGUAGE=en} to facilitate comparison to
       \file{.Rout.save} files.
+
+      \item \code{sessionInfo()} gives more detailed platform
+      information, including 32/64-bit and the sub-architecture if one
+      is used.
     }
   }
   

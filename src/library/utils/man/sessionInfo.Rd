@@ -1,6 +1,6 @@
 % File src/library/utils/man/sessionInfo.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sessionInfo}
@@ -12,17 +12,33 @@
   Print version information about \R and attached or loaded packages.
 }
 \usage{
-sessionInfo(package=NULL)
-\S3method{print}{sessionInfo}(x, locale=TRUE, ...)
-\S3method{toLatex}{sessionInfo}(object, locale=TRUE, ...)
+sessionInfo(package = NULL)
+\S3method{print}{sessionInfo}(x, locale = TRUE, ...)
+\S3method{toLatex}{sessionInfo}(object, locale = TRUE, ...)
 }
 \arguments{
- \item{package}{a character vector naming installed packages.  By
-   default all attached packages are used.}
+ \item{package}{a character vector naming installed packages, or \code{NULL}
+   (the default) meaning all attached packages.}
   \item{x}{an object of class \code{"sessionInfo"}.}
   \item{object}{an object of class \code{"sessionInfo"}.}
   \item{locale}{show locale information?}
   \item{\dots}{currently not used.}
+}
+\value{
+  An object of class \code{"sessionInfo"}, which has a \code{print}
+  method. This is a list with components
+  \item{R.version}{a list, the result of calling \code{\link{R.Version}()}.}
+  \item{platform}{a character string describing the platform. In recent
+    versions where sub-architectures are in use this is of the form
+    \samp{platform/sub-arch (nn-bit)}.}
+  \item{locale}{a character string, the result of calling
+    \code{\link{Sys.locale}()}.}
+  \item{basePkgs}{a character vector of base packages which are attached.}
+  \item{otherPkgs}{(not always present): a character vector os other
+    attached packages.}
+  \item{loadedOnly}{(not always present): a named list of the results of
+    calling \code{\link{packageDescription}} on packages whose
+    namespaces are loaded but are not attached.}
 }
 \seealso{\code{\link{R.version}}
 }
