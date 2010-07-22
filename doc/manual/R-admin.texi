@@ -880,7 +880,7 @@ Note that you will be asked to choose a language for installation, and
 that choice applies to both installation and un-installation but not to
 running @R{} itself.
 
-See the @uref{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R
+See the @uref{http://CRAN.R-project.org/@/bin/@/windows/@/base/@/rw-FAQ.html, R
 Windows @acronym{FAQ}} for more details on the binary installer.
 
 @menu
@@ -1007,7 +1007,7 @@ and two 64-bit versions (for R 2.11.x and 2.12.x).
 @item
 You need @code{libpng} and @code{jpeg} sources (available, e.g., from
 @uref{http://www.libpng.org/}, @uref{http://www.ijg.org} and
-@uref{ftp://ftp.remotesensing.org/pub/libtiff/}).  You will need files
+@uref{ftp://ftp.remotesensing.org/@/pub/@/libtiff/}).  You will need files
 @file{libpng-1.2.18.tar.gz}, @file{jpegsrc.v6b.tar.gz},
 @file{tiff-3.8.0.tar.gz} or later.
 
@@ -4265,7 +4265,7 @@ these tools.  As on other Unix systems one needs @acronym{GNU}
 @code{libiconv} as the AIX version of iconv is not sufficiently
 powerful.  Additionally, for proper Unicode compatibility one should
 install the corresponding package from the ICU project
-(@uref{http://www.icu-project.org/download/}), which offers pre-compiled
+(@uref{http://www.icu-project.org/@/download/}), which offers pre-compiled
 binaries for various platforms which in case of AIX can be installed via
 unpacking the tarball to the root file system.  For full @LaTeX{}
 support one can install the @TeX{} Live DVD distribution
@@ -4680,7 +4680,7 @@ leading underscores affects linking to external static and import
 libraries but not linking directly to DLLs.
 
 Other toolchains are available: for example under
-@uref{http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/}
+@uref{http://sourceforge.net/@/projects/@/mingw-w64/@/files/@/Toolchains%20targetting%20Win64/@/Personal%20Builds/}
 is a native x64 Windows toolchain that may be useful when building
 external software.
 
