@@ -891,8 +891,11 @@ Windows @acronym{FAQ}} for more details on the binary installer.
 @node Building from source, Testing a Windows Installation, Installing R under Windows, Installing R under Windows
 @section Building from source
 
-The instructions in this section are primarily to build a 32-bit build
-of @R{}.
+@R{} can be built as either a 32-bit or 64-bit application on Windows.
+The standard installer combines 32-bit and 64-bit builds into a single
+executable which can then be installed into the same location and share
+all the files except the @file{.exe} and @file{.dll} files and some
+configuration files in the @file{etc} directory.
 
 @menu
 * Getting the tools::           
@@ -921,10 +924,14 @@ as noted below. You should run it first, to obtain a working @code{tar}
 and other necessities.  Choose a ``Full installation'', and install the
 extra files into your intended @R{} source directory, e.g.@:
 @file{C:/R}. The directory name @emph{should not contain spaces}. We
-will call this directory @var{R_HOME} below.
+will call this directory @file{@var{R_HOME}} below.
 
-@c To avoid warnings you may need to set the environment variable
-@c @env{CYGWIN} to @samp{nodosfilewarning}.
+For a 64-bit build you will need a 64-bit toolchain (not currently
+contained in @file{Rtools212.exe}) and the appropriate 64-bit version of
+Tcl/Tk packaged as
+@url{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/R64a_Tcl_8-5-8.zip}:
+unpack this in @file{@var{R_HOME}}.
+
 
 @node Getting the source files, Building the core files, Getting the tools, Building from source
 @subsection Getting the source files
@@ -933,9 +940,9 @@ You need to collect the following sets of files:
 @itemize
 
 @item
-Get the @R{} source code @file{R-@value{VERSIONno}.tar.gz} from
-@acronym{CRAN}.  Open a command window (or another shell) at 
-directory @var{R_HOME}, and run
+Get the @R{} source code tarball @file{R-@value{VERSIONno}.tar.gz} from
+@acronym{CRAN}.  Open a command window (or another shell) at directory
+@var{R_HOME}, and run
 
 @example
 tar xf R-@value{VERSIONno}.tar.gz
@@ -954,41 +961,18 @@ It is also possible to obtain the source code using Subversion; see
 If you are not using a tarball you need to obtain copies of the
 recommended packages from @acronym{CRAN}.  Put the @file{.tar.gz} files
 in @file{@var{R_HOME}/src/library/Recommended} and run @code{make
-link-recommended}.  If you have an Internet
-connection, you can do this automatically using
+link-recommended}.  If you have an Internet connection, you can do this
+automatically by running in @file{@var{R_HOME}/src/gnuwin32}
 
 @example
 make rsync-recommended
 @end example
 
-@item
-Optionally, you can install a version of ATLAS
-(@uref{http://math-atlas.sourceforge.net/}) tuned to your system for
-fast linear algebra routines. Pre-built @file{Rblas.dll} for various
-@acronym{CPU}s are available in the @file{windows/contrib/ATLAS} area on
-@acronym{CRAN}.  If you are building R from source, there are macros
-@code{USE_ATLAS} and @code{ATLAS_PATH} in the file @file{MkRules.dist}.
-Copy file @file{MkRules.dist} to @file{MkRules.local} and edit it to set
-@code{USE_ATLAS = YES} and @code{ATLAS_PATH} to where the ATLAS
-libraries are located.  You will need to make the libraries
-yourself@footnote{We do this using the Cygwin compilers, often with some
-difficulty.}: none of the binaries we have seen are compiled for the
-correct compiler.  Since @R{} has its own @samp{xerbla} it is necessary
-to delete that in ATLAS by
-
-@example
-ar d /path/to/libf77blas.a xerbla.o
-@end example
-
-There used to be support for AMD's AMD Core Math Library (ACML) and
-Kazushige Goto's BLAS, but neither is currently available for use with
-the compilers used to compile @R{}.
-
 @end itemize
 
-The following additional items are normally installed by
-@file{Rtools*.exe}.  If instead you choose to do a completely manual
-build you will also need
+The following additional items are normally installed (for 32-bit
+builds) by @file{Rtools*.exe}.  If instead you choose to do a completely
+manual build you will also need
 
 @itemize
 
@@ -1005,30 +989,30 @@ Please make sure you get the right version: there is a 32-bit version
 and two 64-bit versions (for R 2.11.x and 2.12.x).
 
 @item
-You need @code{libpng} and @code{jpeg} sources (available, e.g., from
-@uref{http://www.libpng.org/}, @uref{http://www.ijg.org} and
-@uref{ftp://ftp.remotesensing.org/@/pub/@/libtiff/}).  You will need files
-@file{libpng-1.2.18.tar.gz}, @file{jpegsrc.v6b.tar.gz},
+You need @code{libpng}, @code{jpeg} and @code{libtiff} sources
+(available, e.g., from @uref{http://www.libpng.org/},
+@uref{http://www.ijg.org} and
+@uref{ftp://ftp.remotesensing.org/@/pub/@/libtiff/}).  You will need
+files @file{libpng-1.2.18.tar.gz}, @file{jpegsrc.v6b.tar.gz},
 @file{tiff-3.8.0.tar.gz} or later.
 
 Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
 install the @code{libpng} and @code{jpeg} sources in sub-directories.
-The @code{jpeg} sub-directory for version 8a is named @file{jpeg-8a}; if
-you use a different version (e.g.@: @file{jpeg-6b} or @file{jpeg-7}),
-copy file @file{src/gnuwin32/MkRules.dist} to
-@file{src/gnuwin32/MkRules.local} and edit the definition of
-@code{JPEGDIR}: the names of the @file{libpng} and @file{libtiff}
-directories can also be set there.
+The @code{jpeg} sub-directory for version 8a is named @file{jpeg-8b}; if
+you use a different version (e.g.@: @file{jpeg-6b}), copy file
+@file{src/gnuwin32/MkRules.dist} to @file{src/gnuwin32/MkRules.local}
+and edit the definition of @code{JPEGDIR}: the names of the
+@file{libpng} and @file{libtiff} directories can also be set there.
 
 Example:
 
 @example
-> tar zxf libpng-1.2.40.tar.gz
-> mv libpng-1.2.40 libpng
+> tar zxf libpng-1.4.1.tar.gz
+> mv libpng-1.4.1 libpng
 > tar zxf jpegsrc.v8a.tar.gz
-> tar zxf tiff-3.9.1.tar.gz
-> mv tiff-3.9.1/libtiff .
-> rm -rf tiff-3.9.1
+> tar zxf tiff-3.9.4.tar.gz
+> mv tiff-3.9.4/libtiff .
+> rm -rf tiff-3.9.4
 @end example
 
 @end itemize
@@ -1046,7 +1030,8 @@ lower case) did not work.
 
 Open a command window at @file{@var{R_HOME}/src/gnuwin32}.  Look at
 @file{MkRules.dist} and if settings need to be altered, copy it to
-@file{MkRules.local} and edit the settings there.  Then run
+@file{MkRules.local} and edit the settings there.  In particular, this
+is where a 64-bit build is selected.  Then run
 
 @example
 make all recommended
@@ -1090,8 +1075,9 @@ ample memory, and is not 100% reliable.
 @subsection Building the bitmap files
 @cindex Rbitmap.dll
 
-The file @file{@var{R_HOME}/library/grDevices/libs/@{i386,x64@}Rbitmap.dll} is not built
-automatically.  
+The file
+@file{@var{R_HOME}/library/grDevices/libs/@{i386,x64@}Rbitmap.dll} is
+not built automatically.
 
 Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap} or
 @code{make bitmapdll} in @file{@var{R_HOME}/@/src/gnuwin32} should build
@@ -1101,13 +1087,14 @@ Running @code{make} in @file{@var{R_HOME}/src/gnuwin32/bitmap} or
 @node Checking the build, Building the manuals, Building the bitmap files, Building from source
 @subsection Checking the build
 
-You can test a build by running @code{make check}.  You may need to set
-@enindex TMPDIR
-@env{TMPDIR} to the absolute path to a suitable temporary directory: the
-default is @file{c:/TEMP}.  (Use forward slashes and do not use a path
-including spaces.  It will be ignored if not set to a directory.)
+You can test a build by running
 
-The recommended packages can be  checked by
+@example
+make check
+@end example
+
+@noindent
+The recommended packages can be checked by
 
 @example
 make check-recommended
@@ -1141,7 +1128,8 @@ make manuals
 @end example
 
 @noindent
-If you want to make the info versions (not the Reference Manual), use
+If you want to make the info versions (not including the Reference
+Manual), use
 
 @example
 cd ../../doc/manual
@@ -1200,7 +1188,8 @@ The parts can be made individually if a full build is not needed, but
 earlier parts must be built before later ones.  (The @file{Makefile}
 doesn't enforce this dependency---some build targets force a lot of
 computation even if all files are up to date.)  The first four targets
-are the default build if just @samp{make} is run.
+are the default build if just @command{make} (or @command{make all}) is
+run.
 
 If you want to customize the installation by adding extra packages,
 replace @code{make rinstaller} by something like
@@ -1247,8 +1236,8 @@ will create an installer that defaults to installing @R{} to run in SDI
 mode.  See @file{src/@/gnuwin32/installer/Makefile} for the names and
 values that can be set.
 
-The distributed 32/64-bit installer is made by first building 32-bit R
-(just
+The standard CRAN distribution of a 32/64-bit installer is made by first
+building 32-bit R (just
 
 @example
 make all recommended bitmapdll
@@ -1316,20 +1305,6 @@ Support for MinGW-w64 was developed in the R sources over the period
 of Yu Gong at a crucial step in porting R to MinGW-w64 is gratefully
 acknowledged, as well as help from Kai Tietz, the lead developer of the
 MinGW-w64 project.
-
-To build package @pkg{tcltk} you need to unpack
-@url{http://www.stats.ox.ac.uk/@/pub/@/Rtools/@/R64a_Tcl_8-5-8.zip}
-(@strong{NB} this is not the same file as for @R{} 2.11.x) at the top of
-the source tree: otherwise edit @file{src/library/tcltk/Makefile.win} to
-make a stub package.
-
-Copy the file @file{MkRules.dist} to @file{MkRules.local} and set
-@code{WIN = 64} (and edit any other entries as appropriate).  The rest
-of the build process is the same as for the 32-bit build.
-
-Some notes on porting packages can be found at
-@url{http://www.stats.ox.ac.uk/@/~ripley/@/Win64/@/W64porting.html}.
-
 
 @node Testing a Windows Installation,  , Building from source, Installing R under Windows
 @section Testing an Installation
@@ -1584,9 +1559,9 @@ Note that you may need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
 more than one library, of course.
 
-If installing packages to be used by other users, ensure that the system
-@code{umask} is set to give sufficient permissions (see also
-@code{Sys.umask} in @R{}).
+If installing packages on a Unix-alike to be used by other users, ensure
+that the system @code{umask} is set to give sufficient permissions (see
+also @code{Sys.umask} in @R{}).
 
 For most users it suffices to call
 @samp{install.packages(@var{pkgname})} or its GUI equivalent if the
@@ -1603,10 +1578,9 @@ R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 
 @noindent
 The part @samp{-l /path/to/library} can be omitted, in which case the
-@enindex R_LIBS
-first library in @env{R_LIBS} is used if set, otherwise the main library
-@file{@var{R_HOME}/library} is used.
-@enindex TMPDIR
+first library of a normal @R{} session is used (that shown by
+@code{.libPaths()[1]}).
+
 Ensure that the environment variable @env{TMPDIR} is either unset (and
 @file{/tmp} exists and can be written in and executed from) or points to
 a valid temporary directory.
@@ -1676,6 +1650,20 @@ Windows binary packages for @R{} 2.12.x are distributed as a single
 binary containing either or both architectures (@R{} 2.11.x had separate
 repository areas for 32- and 64-bit binary packages).
 
+
+A few of the binary packages need other software to be installed on your
+system.  For 32-bit builds see for example
+@url{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.12/@/@@ReadMe}.
+For 64-bit builds, packages using Gtk+ (@pkg{Cairo}, @pkg{RGtk2},
+@pkg{cairoDevice} and those that depend on them) need the @file{bin}
+directory of a bundled distribution from
+@url{http://www.gtk.org/@/download-windows-64bit.html} in the path: note
+that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
+you need the correct one first in your path if using both.  One way to
+achieve this is to set the @env{PATH} environment variable in files
+@file{R_HOME/etc/i386/Renviron.site} and
+@file{R_HOME/etc/x64/Renviron.site}.
+
 @command{R CMD INSTALL} works in Windows to install source packages if
 you have set up the tools needed (see @ref{The Windows toolset}).
 @command{R CMD INSTALL --help} will tell you the current options under
@@ -1693,25 +1681,16 @@ the building service offered at
 
 For almost all packages @command{R CMD INSTALL} will install both 32-
 and 64-bit builds of a package if run from a 32/64-bit install of @R{}
-on a 64-bit OS.  The exceptions are packages with a non-empty
-@file{configure.win} script or which make use of
+on a 64-bit version of Windows.  The exceptions are packages with a
+non-empty @file{configure.win} script or which make use of
 @file{src/Makefile.win}.  If @file{configure.win} does something
 appropriate to both architectures use option @option{--force-biarch}:
 otherwise @command{R CMD INSTALL --merge-multiarch} can be applied to a
 source tarball to merge separate 32- and 64-bit installs.
 
-A few of the binary packages need other software to be installed on your
-system.  For 32-bit builds see for example
-@url{http://cran.r-project.org/@/bin/@/windows/@/contrib/@/2.12/@/@@ReadMe}.
-For 64-bit builds, packages using Gtk+ (@pkg{Cairo}, @pkg{RGtk2},
-@pkg{cairoDevice} and those that depend on them) need the @file{bin}
-directory of a bundled distribution from
-@url{http://www.gtk.org/@/download-windows-64bit.html} in the path: note
-that this conflicts with the directory of DLLs needed for 32-bit Gtk+ so
-you need the correct one first in your path if using both.  One way to
-achieve this is to set the @env{PATH} environment variable in files
-@file{R_HOME/etc/i386/Renviron.site} and
-@file{R_HOME/etc/x64/Renviron.site}.
+
+Some notes on porting packages to 64-bit Windows can be found at
+@url{http://www.stats.ox.ac.uk/@/~ripley/@/Win64/@/W64porting.html}.
 
 @node Mac OS X packages, Customizing package compilation, Windows packages, Installing packages
 @subsection Mac OS X
@@ -1807,7 +1786,7 @@ R CMD INSTALL --libs-only @var{pkg}
 @noindent
 using the path to @command{R} or @command{R --arch} to select the
 additional sub-architecture.  On Windows there is also @command{R CMD
-INSTALL --merge-multiarch} to builds and merge the two architectures.
+INSTALL --merge-multiarch} to build and merge the two architectures.
 
 @node Updating packages, Removing packages, Installing packages, Add-on packages
 @section Updating packages
