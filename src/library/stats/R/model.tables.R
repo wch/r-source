@@ -157,7 +157,8 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
 	tables <- lapply(tables, "+", gmtable)
 	tables <- c("Grand mean" = gmtable, tables)
     }
-    n <- replications(attr(x, "call"), data = mf)
+#    n <- replications(attr(x, "call"), data = mf)
+    n <- replications(terms(x), data = mf)
     if(se)
 	if(type == "effects"  && is.list(n)) {
 	    message("Standard error information not returned as design is unbalanced. \nStandard errors can be obtained through 'se.contrast'.")
