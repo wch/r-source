@@ -22,6 +22,14 @@ NEW FEATURES
 	including 32/64-bit and the sub-architecture if one is used.
 
 
+DEPRECATED & DEFUNCT
+
+    o	The use of Perl configuration variables (as previously
+	documented in 'Writing R Extensions') is deprecated and will be
+	removed in R 2.12.0.  Use the environment variables documented
+	in 'R Internals' instead.
+
+
 BUG FIXES
 
     o	R CMD Rd2dvi failed if run from a path containing space(s).
