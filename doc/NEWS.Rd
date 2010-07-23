@@ -453,6 +453,15 @@
     }
   }
   
+  \subsection{DEPRECATED & DEFUNCT}{
+    \itemize{
+      \item The use of Perl configuration variables (as previously
+	documented in \sQuote{Writing R Extensions}) is deprecated and will be
+	removed in \R 2.12.0.  Use the environment variables documented
+	in \sQuote{R Internals} instead.
+    }
+  }
+  
   \subsection{BUG FIXES}{
     \itemize{
       \item \command{R CMD Rd2dvi} failed if run from a path containing

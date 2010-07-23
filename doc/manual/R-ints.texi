@@ -3371,8 +3371,7 @@ package @pkg{grDevices}.
 @chapter Tools
 
 The behavior of @command{R CMD check} can be controlled through a
-variety of command line arguments, configuration variables, and
-internal environment variables.
+variety of command line arguments and environment variables.
 
 There is an internal @option{--install=@var{value}} command line
 argument not shown by @command{R CMD check --help}, with possible values
@@ -3464,7 +3463,6 @@ Default: true.
 @item _R_CHECK_DOT_INTERNAL_
 Control whether the package code is scanned for @code{.Internal} calls.
 Default: false.
-@c actually this is R_check_dot_internal
 @item _R_CHECK_EXECUTABLES_
 Control checking for executable (binary) files.
 Default: true.
