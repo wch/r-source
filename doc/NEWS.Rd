@@ -269,6 +269,10 @@
 
       \item File extension \file{.C} for C++ code files in packages is
       now defunct.
+      
+      \item \command{R CMD check} not longer supports configuration
+      files containing Perl configuration variables: use the environment
+      variables documented in \sQuote{R Internals} instead.
     }
   }
   \subsection{PACKAGE INSTALLATION}{
@@ -309,10 +313,6 @@
        Its check for \dQuote{Subdirectory 'inst' contains no files} is
        more thorough: it looks for files, and warns if there are only
        empty directories.
-
-       There are no longer configuration files: customization is done
-       only by environment variables as described in the \sQuote{Tools}
-       chapter of the \sQuote{R Internals} manual.
 
        Environment variables such as \env{R_LIBS} and those used for
        customization can be set for the duration of checking \emph{via} a file
@@ -455,10 +455,11 @@
   
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
-      \item The use of Perl configuration variables (as previously
-	documented in \sQuote{Writing R Extensions}) is deprecated and will be
-	removed in \R 2.12.0.  Use the environment variables documented
-	in \sQuote{R Internals} instead.
+      \item The use of Perl configuration variables for \command{R CMD
+	check} (as previously documented in \sQuote{Writing R
+	Extensions}) is deprecated and will be removed in \R 2.12.0.  Use
+      the environment variables documented in \sQuote{R Internals}
+      instead.
     }
   }
   
