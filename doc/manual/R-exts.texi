@@ -1647,83 +1647,15 @@ are not).
 @node Customizing checking and building,  , Building packages, Checking and building packages
 @subsection Customizing checking and building
 
-In addition to the available command line options, @code{R CMD check}
-also allows customization by setting configuration variables in a
-configuration file, the location of which can be specified @emph{via} the
-@option{--rcfile} option and defaults to @file{~/.R/check.Rconf}.
-(Note that this changed in @R{} 2.12.0: earlier versions of @R{} used
-Perl configuration files, default @file{$HOME/.R/check.Rconf}.)
-
-The following configuration variables are currently available.
-
-@table @code
-@item R_check_use_install_log
-If true, record the output from installing a package as part of its
-check to a log file (@file{00install.out} by default), even when running
-interactively.
-Default: true.
-@item R_check_all_non_ISO_C
-If true, do not ignore compiler (typically GCC) warnings about non ISO C
-code in @emph{system} headers.  Note that this may also show additional
-ISO C++ warnings.
-Default: false.
-@item R_check_weave_vignettes
-If true, weave package vignettes in the process of checking them.
-Default: true.
-@item R_check_latex_vignettes
-If true (and @code{R_check_weave_vignettes} is also true),
-@command{latex} package vignettes in the process of checking them: this
-will show up @code{Sweave} source errors, including missing source
-files.  Default: true.
-@item R_check_subdirs_nocase
-If true, check the case of directories such as @file{R} and @file{man}.
-Default: false.
-@item R_check_subdirs_strict
-Initial setting for @option{--check-subdirs}.
-Default: @samp{default} (which checks only tarballs, and checks in the
-@file{src} only if there is no @file{configure} file).
-@item R_check_force_suggests
-If true, give an error if suggested packages are not available.
-Default: true.
-@item R_check_use_codetools
-If true, make use of the @pkg{codetools} package, which provides a
-detailed analysis of visibility of objects (but may give false
-positives).
-Default: true.
-@item R_check_Rd_contents
-If true, check @file{Rd} files for auto-generated content which needs editing,
-and missing argument documentation.
-Default: true.
-@item R_check_Rd_style
-If true, check whether @file{Rd} usage entries for S3 methods use the full
-function name rather than the appropriate @code{\method} markup.
-Default: true.
-@item R_check_Rd_xrefs
-If true, check the cross-references in @file{.Rd} files.
-Default: true.
-@end table
-
-Values @samp{1} or a string with lower-cased version @samp{"yes"} or
-@samp{"true"} can be used for setting the variables to true; similarly,
-@samp{0} or strings with lower-cased version @samp{"no"} or
-@samp{"false"} give false.
-
-For example, a configuration file containing
-
-@example
-R_check_use_install_log <- "TRUE"
-R_check_weave_vignettes <- 0
-@end example
-
-@noindent
-results in using install logs and turning off weaving.
-
-Future versions of @R{} may enhance this customization mechanism, and
-provide a similar scheme for @code{R CMD build}.
-
-There are other internal settings that can be changed @emph{via} environment
-variables @w{@env{_R_CHECK_*_}:}  @xref{Tools, , Tools, R-ints, R
-Internals}, (and the source code for @code{check}).
+In addition to the command line options, @code{R CMD check} also allows
+customization by setting environment variables @w{@env{_R_CHECK_*_}:},
+as described in
+@ifset UseExternalXrefs
+@ref{Tools, , Tools, R-ints, R Internals},
+@end ifset
+@ifclear UseExternalXrefs
+`R Internals',
+@end ifclear
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes

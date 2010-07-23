@@ -2381,7 +2381,7 @@ function(x, ...)
 ## changed in 2.3.0 to refer to a source dir.
 
 .check_package_depends <-
-function(dir)
+function(dir, force_suggests = TRUE)
 {
     if(length(dir) != 1L)
         stop("argument 'package' must be of length 1")
@@ -2410,10 +2410,9 @@ function(dir)
     bad_depends <- list()
 
     ## Are all packages listed in Depends/Suggests/Imports installed?
-    ## Need to treat specially the former stub packages.
     lreqs <- c(ldepends,
                limports,
-               if(!identical(as.logical(Sys.getenv("_R_CHECK_FORCE_SUGGESTS_")), FALSE)) lsuggests)
+               if(force_suggests) lsuggests)
     if(length(lreqs)) {
         reqs <- unique(sapply(lreqs, `[[`, 1L))
         ## this was changed for speed.

@@ -310,16 +310,15 @@
        more thorough: it looks for files, and warns if there are only
        empty directories.
 
-       Its configuration files have changed format: they are now \R
-       source files, and the default file is \file{~/.R/check.Rconf}.
+       There are no longer configuration files: customization is done
+       only by environment variables as described in the \sQuote{Tools}
+       chapter of the \sQuote{R Internals} manual.
 
-       Environment variables such as \env{R_LIBS} can be set for the
-       duration of checking via a file \file{~/.R/check.Renviron} (in the
-       format used by \file{.Renviron}, and with sub-architecture
-       specific versions such as \file{~/.R/check.Renviron.i386} taking
-       precedence).  This can also be used for the environment variables
-       described in the \sQuote{Tools} chapter of the \sQuote{R
-       Internals} manual.
+       Environment variables such as \env{R_LIBS} and those used for
+       customization can be set for the duration of checking \emph{via} a file
+       \file{~/.R/check.Renviron} (in the format used by
+       \file{.Renviron}, and with sub-architecture specific versions
+       such as \file{~/.R/check.Renviron.i386} taking precedence).
 
       \item \command{R CMD build} no longer creates an \file{INDEX} file
        (\command{R CMD INSTALL} does so), and \code{--force} removes
@@ -1170,7 +1169,7 @@
        general purpose bits of the \code{SEXP}s that make up the formals
        list of \R functions.  This fixes an invalid error message that
        would occur when a garbage collection triggered a second call to
-       matchArgs for the same function via a finalizer.
+       matchArgs for the same function \emph{via} a finalizer.
 
       \item \code{gsub()} in 2.10.x could fail from stack overflow for
        extremely long strings due to temporary data being allocated on
@@ -1411,7 +1410,7 @@
       (which previously had a limit of around 1024 bytes).
 
       \item A Bioconductor mirror can be set for use by
-      \code{setRepositories()} via the option \code{"BioC_mirror"},
+      \code{setRepositories()} \emph{via} the option \code{"BioC_mirror"},
       e.g. the European mirror can be selected by
       \code{options(BioC_mirror="http://bioconductor.statistik.tu-dortmund.de")}.
 
@@ -2051,7 +2050,7 @@
        it always was for Compiled HTML help on Windows).
 
       \item It is possible to ask for static HTML pages to be prebuilt
-       via the configure option \option{--enable-prebuilt-html}.  This
+       \emph{via} the configure option \option{--enable-prebuilt-html}.  This
        may be useful for those who wish to make HTML help available
        outside R, e.g. on a local web site.
 
@@ -2156,7 +2155,7 @@
        \code{"rt"} will automagically detect compressed files (from
        \command{gzip}, \command{bzip2} or \command{xz}).  This means
        that compressed files can be specified by file name (rather than
-       via a \code{gzfile()} connection) to \code{read.table()},
+       \emph{via} a \code{gzfile()} connection) to \code{read.table()},
        \code{readlines()}, \code{scan()} and so on.
 
       \item \code{data()} can handle compressed text files with extensions

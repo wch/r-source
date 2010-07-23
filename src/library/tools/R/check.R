@@ -1505,7 +1505,6 @@ R_run_R <- function(cmd, Ropts, env)
             "      --check-subdirs=default|yes|no",
             "			run checks on the package subdirectories",
             "			(default is yes for a tarball, no otherwise)",
-            "      --rcfile=FILE     read configuration values from FILE",
             "",
             "      --extra-arch      do only runtime tests needed for an additional",
             "                        sub-architecture.",
@@ -1543,7 +1542,7 @@ R_run_R <- function(cmd, Ropts, env)
     do_timings <- FALSE
     install_args <- NULL
     check_subdirs <- ""           # defaults to R_check_subdirs_strict
-    rcfile <- file.path("~", ".R", "check.Rconf")
+##    rcfile <- file.path("~", ".R", "check.Rconf")
     extra_arch <- FALSE
     spec_install <- FALSE
 
@@ -1602,10 +1601,10 @@ R_run_R <- function(cmd, Ropts, env)
             install_args <- substr(a, 16, 1000)
         } else if (substr(a, 1, 16) == "--check-subdirs=") {
             check_subdirs <- substr(a, 17, 1000)
-        } else if (substr(a, 1, 9) == "--rcfile=") {
-            rcfile <- c(rcfile, substr(a, 10, 1000))
         } else if (a == "--extra-arch") {
             extra_arch  <- TRUE
+        } else if (substr(a, 1, 9) == "--rcfile=") {
+            warning("configuration files are not supported as from R 2.12.0")
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
@@ -1632,91 +1631,39 @@ R_run_R <- function(cmd, Ropts, env)
 
     ## Configurable variables
     R_check_use_install_log <-
-        Sys.getenv("_R_CHECK_USE_INSTALL_LOG_", "TRUE")
+        config_val_to_logical(Sys.getenv("_R_CHECK_USE_INSTALL_LOG_", "TRUE"))
     R_check_subdirs_nocase <-
-        Sys.getenv("_R_CHECK_SUBDIRS_NOCASE_", "FALSE")
+        config_val_to_logical(Sys.getenv("_R_CHECK_SUBDIRS_NOCASE_", "FALSE"))
     R_check_all_non_ISO_C <-
-        Sys.getenv("_R_CHECK_ALL_NON_ISO_C_", "FALSE")
+        config_val_to_logical(Sys.getenv("_R_CHECK_ALL_NON_ISO_C_", "FALSE"))
     R_check_weave_vignettes <-
-        Sys.getenv("_R_CHECK_WEAVE_VIGNETTES_", "TRUE")
-
-    ## This needs texi2dvi.  MiKTeX has a binary texi2dvi, but other
-    ## Windows' LaTeX distributions do not.  We check later.
+        config_val_to_logical(Sys.getenv("_R_CHECK_WEAVE_VIGNETTES_", "TRUE"))
     R_check_latex_vignettes <-
-        Sys.getenv("_R_CHECK_LATEX_VIGNETTES_", "TRUE")
-
+        config_val_to_logical(Sys.getenv("_R_CHECK_LATEX_VIGNETTES_", "TRUE"))
     R_check_subdirs_strict <-
         Sys.getenv("_R_CHECK_SUBDIRS_STRICT_", "default")
     R_check_Rd_xrefs <-
-        Sys.getenv("_R_CHECK_RD_XREFS_", "TRUE")
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_XREFS_", "TRUE"))
     R_check_use_codetools <-
-        Sys.getenv("_R_CHECK_USE_CODETOOLS_", "TRUE")
-    R_check_force_suggests <-
-        Sys.getenv("_R_CHECK_FORCE_SUGGESTS_", "TRUE")
+        config_val_to_logical(Sys.getenv("_R_CHECK_USE_CODETOOLS_", "TRUE"))
     R_check_Rd_style <-
-        Sys.getenv("_R_CHECK_RD_STYLE_", "TRUE")
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_STYLE_", "TRUE"))
     R_check_executables <-
-        Sys.getenv("_R_CHECK_EXECUTABLES_", "TRUE")
+        config_val_to_logical(Sys.getenv("_R_CHECK_EXECUTABLES_", "TRUE"))
     R_check_executables_exclusions <-
-        Sys.getenv("_R_CHECK_EXECUTABLES_EXCLUSIONS_", "TRUE")
+        config_val_to_logical(Sys.getenv("_R_CHECK_EXECUTABLES_EXCLUSIONS_", "TRUE"))
     R_check_permissions <-
-        Sys.getenv("_R_CHECK_PERMISSIONS_", as.character(.Platform$OS.type == "unix"))
-    ## This check needs codetools
+        config_val_to_logical(Sys.getenv("_R_CHECK_PERMISSIONS_",
+                                         as.character(.Platform$OS.type == "unix")))
     R_check_dot_internal <-
-        Sys.getenv("_R_CHECK_DOT_INTERNAL_", "FALSE")
+        config_val_to_logical(Sys.getenv("_R_CHECK_DOT_INTERNAL_", "FALSE"))
     R_check_Rd_contents <-
-        Sys.getenv("_R_CHECK_RD_CONTENTS_", "TRUE")
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_CONTENTS_", "TRUE"))
     ## Only relevant when the package is loaded, thus installed.
     R_check_suppress_RandR_message <-
         do_install && config_val_to_logical(Sys.getenv("_R_CHECK_SUPPRESS_RANDR_MESSAGE_", "TRUE"))
-
-    ## rcfile can overrule all environment variable settings above:
-    for(f in rcfile) {
-	if (!file.exists(f)) next
-	source(f, local = TRUE, echo = FALSE)
-    }
-
-    R_check_use_install_log <-
-        config_val_to_logical(R_check_use_install_log)
-    R_check_subdirs_nocase <-
-        config_val_to_logical(R_check_subdirs_nocase)
-    R_check_all_non_ISO_C <-
-        config_val_to_logical(R_check_all_non_ISO_C)
-    R_check_weave_vignettes <-
-        config_val_to_logical(R_check_weave_vignettes)
-    R_check_latex_vignettes <-
-        config_val_to_logical(R_check_latex_vignettes)
-    R_check_Rd_xrefs <-
-        config_val_to_logical(R_check_Rd_xrefs)
-    R_check_use_codetools <-
-        config_val_to_logical(R_check_use_codetools)
-    R_check_Rd_style <-
-        config_val_to_logical(R_check_Rd_style)
-    R_check_executables <-
-        config_val_to_logical(R_check_executables)
-    R_check_executables_exclusions <-
-        config_val_to_logical(R_check_executables_exclusions)
-    R_check_permissions <-
-        config_val_to_logical(R_check_permissions)
-    R_check_dot_internal <-
-        config_val_to_logical(R_check_dot_internal)
-    ## <NOTE>
-    ## This looks a bit strange, but tools:::.check_package_depends()
-    ## currently gets the information about forcing suggests via an
-    ## environment variable rather than an explicit argument.
     R_check_force_suggests <-
-        config_val_to_logical(R_check_force_suggests)
-    ## And in fact, it gets even stranger ...
-    ## <FIXME>
-    ## Compatibility code for old-style interface: sanitize eventually.
-    R_check_force_suggests <- ifelse(R_check_force_suggests, "true", "false")
-    Sys.setenv("_R_CHECK_FORCE_SUGGESTS_" = R_check_force_suggests)
-    ## </FIXME>
-    ## </NOTE>
-    R_check_Rd_contents <-
-        config_val_to_logical(R_check_Rd_contents)
-    R_check_suppress_RandR_message <-
-        config_val_to_logical(R_check_suppress_RandR_message)
+        config_val_to_logical(Sys.getenv("_R_CHECK_FORCE_SUGGESTS_", "TRUE"))
 
     if (!nzchar(check_subdirs)) check_subdirs <- R_check_subdirs_strict
 
@@ -2005,7 +1952,7 @@ R_run_R <- function(cmd, Ropts, env)
                 ## package vignette must require its own package, which OTOH is
                 ## not required in the package DESCRIPTION file.
                 ## Namespace imports must really be in Depends.
-                res <- .check_package_depends(pkgdir)
+                res <- .check_package_depends(pkgdir, R_check_force_suggests)
                 if (any(sapply(res, length) > 0)) {
                     errorLog(Log)
                     ## TODO: use object directly
