@@ -46,6 +46,7 @@
 ## .runPackageTestsR (testing.R)
 ## .get_LaTeX_errors_from_log_file
 ## .check_package_CRAN_incoming
+## .check_Rd_contents
 
 ## R CMD build uses .check_package_subdirs
 
