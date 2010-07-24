@@ -68,7 +68,7 @@ warningLog <- function(Log, text="")
 noteLog <- function(Log, text="")
 {
     resultLog(Log, "NOTE")
-    if (nzchar(text)) messageLog(text)
+    if (nzchar(text)) messageLog(Log, text)
 }
 
 summaryLog <- function(Log)
@@ -367,7 +367,7 @@ get_exclude_patterns <- function()
             }
         } else {
             resultLog(Log, "NO")
-            messageLog("creating new ", sQuote(oldindex))
+            messageLog(Log, "creating new ", sQuote(oldindex))
             file.rename(newindex, oldindex)
         }
     }
