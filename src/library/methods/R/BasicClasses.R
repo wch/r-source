@@ -42,6 +42,7 @@
     .setBaseClass("expression", prototype = expression(), where = envir)
     clList <- c(clList, vClasses)
     nullF <- function()NULL; environment(nullF) <- .GlobalEnv
+    attr(nullF, "source") <- NULL
     .setBaseClass("function", prototype = nullF, where = envir); clList <- c(clList, "function")
 
     setClass("language", where = envir); clList <- c(clList, "language")
