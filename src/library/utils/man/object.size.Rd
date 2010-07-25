@@ -43,7 +43,7 @@ object.size(x)
   length and pointer size.
 }
 \value{
-  An object of class \code{"object.size"} with a length-one double value,
+  An object of class \code{"object_size"} with a length-one double value,
   an estimate of the memory allocation attributable to the object in bytes.
 }
 \seealso{
