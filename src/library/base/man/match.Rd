@@ -1,6 +1,6 @@
 % File src/library/base/man/match.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{match}
@@ -42,7 +42,8 @@ x \%in\% table
   is \code{nomatch}.
 
   \code{\%in\%}: A logical vector, indicating if a match was located for
-  each element of \code{x}.
+  each element of \code{x}: thus the values are \code{TRUE} or
+  \code{FALSE} and never \code{NA}.
 }
 \details{
   \code{\%in\%} is currently defined as \cr
@@ -50,7 +51,7 @@ x \%in\% table
 
   Factors, raw vectors and lists are converted to character vectors, and
   then \code{x} and \code{table} are coerced to a common type (the later
-  of the two types in R's ordering, logical < integer < numeric <
+  of the two types in \R's ordering, logical < integer < numeric <
   complex < character) before matching.  If \code{incomparables} has
   positive length it is coerced to the common type.
 
@@ -61,6 +62,9 @@ x \%in\% table
   For all types, \code{NA} matches \code{NA} and no other value.
   For real and complex values, \code{NaN} values are regarded
   as matching any other \code{NaN} value, but not matching \code{NA}.
+  
+  That \code{\%in\%} never returns \code{NA} makes it particularly
+  useful in \code{if} conditions.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -83,10 +87,10 @@ intersect # the R function in base, slightly more careful
 intersect(1:10,7:20)
 
 1:10 \%in\% c(1,3,5,9)
-sstr <- c("c","ab","B","bba","c","@","bla","a","Ba","\%")
-sstr[sstr \%in\% c(letters,LETTERS)]
+sstr <- c("c","ab","B","bba","c",NA,"@","bla","a","Ba","\%")
+sstr[sstr \%in\% c(letters, LETTERS)]
 
-"\%w/o\%" <- function(x,y) x[!x \%in\% y] #--  x without y
+"\%w/o\%" <- function(x, y) x[!x \%in\% y] #--  x without y
 (1:10) \%w/o\% c(3,7,12)
 }
 \keyword{manip}
