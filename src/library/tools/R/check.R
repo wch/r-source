@@ -39,6 +39,7 @@ R_runR <- function(cmd, Ropts="", env = "")
     readLines(Rout, warn = FALSE)
 }
 
+## used for .createDotR
 R_run_R <- function(cmd, Ropts, env)
 {
     WINDOWS <- .Platform$OS.type == "windows"
@@ -109,8 +110,7 @@ R_run_R <- function(cmd, Ropts, env)
         if (!extra_arch) {
             allfiles <- check_file_names()
             if (R_check_permissions) check_permissions(allfiles)
-            ## Check DESCRIPTION meta-information.
-            check_meta()
+            check_meta()  # Check DESCRIPTION meta-information.
             check_top_level()
             check_indices()
             check_subdirectories(haveR, subdirs)
@@ -329,6 +329,7 @@ R_run_R <- function(cmd, Ropts, env)
 
         checkingLog(Log, "DESCRIPTION meta-information")
         dfile <- if (is_base_pkg) "DESCRIPTION.in" else "DESCRIPTION"
+        ## FIXME: this does not need to be run in another process
         Rcmd <- sprintf("tools:::.check_package_description(\"%s\")", dfile)
         out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
         if (length(out)) {
@@ -345,6 +346,7 @@ R_run_R <- function(cmd, Ropts, env)
             any <- TRUE
             printLog(Log, paste(out, collapse="\n"), "\n")
         }
+
         ## Check the license.
         ## For base packages, the DESCRIPTION.in files have non-canonical
         ##   License: Part of R @VERSION@
@@ -360,12 +362,13 @@ R_run_R <- function(cmd, Ropts, env)
         if (!identical(check_license, FALSE)) {
             Rcmd <- sprintf("tools:::.check_package_license(\"%s\", \"%s\")",
                             dfile, pkgdir)
+            ## FIXME: this does not need to be run in another process
             out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if (length(out)) {
                 if (check_license == "maybe") {
                     if (!any) warnLog()
                 } else if (any(grepl("^(Standardizable: FALSE|Invalid license file pointers:)",
-                                     lines))) {
+                                     out))) {
                     if (!any) warnLog()
                 } else {
                     if (!any) noteLog(Log)
@@ -412,6 +415,7 @@ R_run_R <- function(cmd, Ropts, env)
                                  sQuote(index)))
             } else {
                 Rcmd <- "options(warn=1)\ntools:::.check_demo_index(\"demo\")\n"
+                ## FIXME: this does not need to be run in another process
                 out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
                 if(length(out)) {
                     if(!any) warnLog()
@@ -422,6 +426,7 @@ R_run_R <- function(cmd, Ropts, env)
         }
         if (dir.exists(file.path("inst", "doc"))) {
             Rcmd <- "options(warn=1)\ntools:::.check_vignette_index(\"inst/doc\")\n"
+            ## FIXME: this does not need to be run in another process
             out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
             if(length(out)) {
                 if(!any) warnLog()
@@ -1719,10 +1724,6 @@ R_run_R <- function(cmd, Ropts, env)
                                      ")", sep = "")
                     lines <- grep(warn_re, lines, invert = TRUE, value = TRUE)
                 }
-
-                ## 'Warning' from deldir 0.0-10
-                lines <- grep("Warning: The process for determining duplicated points",
-                              lines, invert = TRUE, value = TRUE)
 
                 if (WINDOWS) {
                     ## Warning on Windows with some packages that
