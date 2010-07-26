@@ -27,14 +27,21 @@ R_system <- function(cmd, env = "")
     } else system(paste(env, cmd))
 }
 
-R_runR <- function(cmd, Ropts="", env = "")
+R_runR <- function(cmd, Ropts="", env = "", arch = "")
 {
     WINDOWS <- .Platform$OS.type == "windows"
-    R_EXE <- file.path(R.home("bin"), if (WINDOWS) "Rterm.exe" else "R")
+    R_EXE <- if (nzchar(arch)) {
+        if (WINDOWS)
+            shQuote(file.path(R.home(), "bin", arch, "Rterm.exe"))
+        else
+            paste(shQuote(file.path(R.home("bin"), "R")),
+                  " --arch=", arch, sep = "")
+    } else
+        shQuote(file.path(R.home("bin"), if (WINDOWS) "Rterm.exe" else "R"))
     Rin <- tempfile("Rin")
     Rout <- tempfile("Rout")
     writeLines(cmd, Rin)
-    R_system(paste(shQuote(R_EXE), paste(Ropts, collapse = " "),
+    R_system(paste(R_EXE, paste(Ropts, collapse = " "),
                    "<", shQuote(Rin), ">", shQuote(Rout), "2>&1"), env)
     readLines(Rout, warn = FALSE)
 }
@@ -120,7 +127,18 @@ R_run_R <- function(cmd, Ropts, env)
         } # end of !extra_arch
 
         ## Check we can actually load the package: base is always loaded
-        if (do_install && pkgname != "base") check_loading()
+        if (do_install && pkgname != "base") {
+            if (this_multiarch) {
+                Log$stars <<-  "**"
+                for (arch in inst_archs) {
+                    printLog(Log, "* loading checks for arch=", arch, "\n")
+                    check_loading(arch)
+                }
+                Log$stars <<-  "*"
+            } else {
+                check_loading()
+            }
+        }
 
         if (haveR) {
             check_R_code() # S3 methods, replacement, foreign
@@ -1079,11 +1097,11 @@ R_run_R <- function(cmd, Ropts, env)
         if (!any) resultLog(Log, "OK")
     }
 
-    check_loading <- function()
+    check_loading <- function(arch = "")
     {
         checkingLog(Log, "whether the package can be loaded")
         Rcmd <- sprintf("library(%s)", pkgname)
-        out <- R_runR(Rcmd, R_opts2)
+        out <- R_runR(Rcmd, R_opts2, arch = arch)
         if (any(grepl("^Error", out))) {
             errorLog(Log)
             printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1094,7 +1112,7 @@ R_run_R <- function(cmd, Ropts, env)
         } else resultLog(Log, "OK")
 
         checkingLog(Log, "whether the package can be loaded with stated dependencies")
-        out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+        out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL", arch = arch)
         if (any(grepl("^Error", out))) {
             warnLog()
             printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1108,7 +1126,7 @@ R_run_R <- function(cmd, Ropts, env)
 
         checkingLog(Log, "whether the package can be unloaded cleanly")
         Rcmd <- sprintf("suppressMessages(library(%s)); cat('\n---- unloading\n'); detach(\"package:%s\")", pkgname, pkgname)
-        out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+        out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL", arch = arch)
         if (any(grepl("^(Error|\\.Last\\.lib failed)", out))) {
             warnLog()
             ll <- grep("---- unloading", out)
@@ -1124,7 +1142,7 @@ R_run_R <- function(cmd, Ropts, env)
         if (file.exists(file.path(pkgdir, "NAMESPACE"))) {
             checkingLog(Log, "whether the name space can be loaded with stated dependencies")
             Rcmd <- sprintf("loadNamespace(\"%s\")", pkgname)
-            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+            out <- R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL", arch = arch)
             if (any(grepl("^Error", out))) {
                 warnLog()
                 printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1142,7 +1160,7 @@ R_run_R <- function(cmd, Ropts, env)
             Rcmd <- sprintf("invisible(suppressMessages(loadNamespace(\"%s\"))); cat('\n---- unloading\n'); unloadNamespace(\"%s\")",
                             pkgname, pkgname)
             out <- if (is_base_pkg && pkgname != "stats4")
-                R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL")
+                R_runR(Rcmd, R_opts2, "R_DEFAULT_PACKAGES=NULL", arch = arch)
             else R_runR(Rcmd, R_opts2)
             if (any(grepl("^(Error|\\.onUnload failed)", out))) {
                 warnLog()
@@ -1158,6 +1176,88 @@ R_run_R <- function(cmd, Ropts, env)
 
     run_examples <- function()
     {
+        run_one_arch <- function(exout, arch = "")
+        {
+            R_EXE1 <- if (nzchar(arch)) {
+                if (WINDOWS)
+                    shQuote(file.path(R.home(), "bin", arch, "Rterm.exe"))
+                else
+                    paste(shQuote(file.path(R.home("bin"), "R")),
+                          " --arch=", arch, sep = "")
+            } else shQuote(R_EXE)
+            ## might be diff-ing results against tests/Examples later
+            ## so force LANGUAGE=en
+            cmd <- if(use_gct)
+                paste("(echo 'gctorture(TRUE)'; cat", exfile,
+                      ") | LANGUAGE=en", R_EXE1, R_opts, enc,
+                      ">", exout, "2>&1")
+            else
+                paste("LANGUAGE=en", R_EXE1, R_opts, enc,
+                      "<", exfile, ">", exout, "2>&1")
+            if (R_system(cmd)) {
+                errorLog(Log, "Running examples in ", sQuote(exfile),
+                         " failed")
+                ## Try to spot the offending example right away.
+                txt <- paste(readLines(exout, warn = FALSE),
+                             collapse = "\n")
+                ## Look for the header section anchored by a
+                ## subsequent call to flush(): needs to be kept in
+                ## sync with the code in massageExamples (in
+                ## testing.R).  Should perhaps also be more
+                ## defensive about the prompt ...
+                chunks <- strsplit(txt,
+                                   "> ### \\* [^\n]+\n> \n> flush[^\n]+\n> \n")[[1L]] #
+                                       if((ll <- length(chunks)) >= 2) {
+                                           printLog(Log,
+                                                    "The error most likely occurred in:\n\n")
+                                           printLog(Log, chunks[ll], "\n")
+                                       } else {
+                                           ## most likely error before the first example
+                                           ## so show all the output.
+                                           printLog(Log, "The error occurred in:\n\n")
+                                           printLog(Log, txt, "\n")
+                                       }
+                do_exit(1L)
+            }
+
+            ## Look at the output from running the examples.  For
+            ## the time being, report warnings about use of
+            ## deprecated functions, as the next release will make
+            ## them defunct and hence using them an error.
+            any <- FALSE
+            lines <- readLines(exout, warn = FALSE)
+            bad_lines <- grep("^Warning: .*is deprecated.$", lines,
+                              useBytes = TRUE, value = TRUE)
+            if(length(bad_lines)) {
+                any <- TRUE
+                warnLog("Found the following significant warnings:\n")
+                printLog(Log,
+                         paste("  ", bad_lines, sep = "", collapse = "\n"),
+                         "\n")
+                wrapLog("Deprecated functions may be defunct as",
+                        "soon as of the next release of R.\n",
+                        "See ?Deprecated.\n")
+            }
+            if (!any) resultLog(Log, "OK")
+
+            ## Try to compare results from running the examples to
+            ## a saved previous version.
+            exsave <- file.path(pkgdir, "tests", "Examples",
+                                paste(pkgname, "-Ex.Rout.save", sep=""))
+            if (file.exists(exsave)) {
+                checkingLog(Log, "differences from ",
+                            sQuote(basename(exout)),
+                            " to ", sQuote(basename(exsave)))
+                cmd <- paste("invisible(tools::Rdiff('",
+                             exout, "', '", exsave, "',TRUE,TRUE))",
+                             sep = "")
+                out <- R_runR(cmd, R_opts2)
+                if(length(out))
+                    printLog(Log, paste(c("", out, ""), collapse = "\n"))
+                resultLog(Log, "OK")
+            }
+        }
+
         if (use_valgrind) R_opts <- c(R_opts, "-d valgrind")
 
         checkingLog(Log, "examples")
@@ -1182,77 +1282,18 @@ R_run_R <- function(cmd, Ropts, env)
                                       sQuote(e), " in an ASCII locale\n"))
                     paste("--encoding", e, sep="=")
                 } else ""
-                exout <- paste(pkgname, "-Ex.Rout", sep = "")
-                ## might be diff-ing results against tests/Examples later
-                ## so force LANGUAGE=en
-                cmd <- if(use_gct)
-                    paste("(echo 'gctorture(TRUE)'; cat", exfile,
-                          ") | LANGUAGE=en", shQuote(R_EXE), R_opts, enc,
-                          ">", exout, "2>&1")
-                else
-                    paste("LANGUAGE=en", shQuote(R_EXE), R_opts, enc,
-                          "<", exfile, ">", exout, "2>&1")
-                if (R_system(cmd)) {
-                    errorLog(Log, "Running examples in ", sQuote(exfile),
-                             " failed")
-                    ## Try to spot the offending example right away.
-                    txt <- paste(readLines(exout, warn = FALSE),
-                                 collapse = "\n")
-                    ## Look for the header section anchored by a
-                    ## subsequent call to flush(): needs to be kept in
-                    ## sync with the code in massageExamples (in
-                    ## testing.R).  Should perhaps also be more
-                    ## defensive about the prompt ...
-                    chunks <- strsplit(txt,
-                                       "> ### \\* [^\n]+\n> \n> flush[^\n]+\n> \n")[[1L]] #
-                                           if((ll <- length(chunks)) >= 2) {
-                                               printLog(Log,
-                                                        "The error most likely occurred in:\n\n")
-                                               printLog(Log, chunks[ll], "\n")
-                                           } else {
-                                               ## most likely error before the first example
-                                               ## so show all the output.
-                                               printLog(Log, "The error occurred in:\n\n")
-                                               printLog(Log, txt, "\n")
-                                           }
-                    do_exit(1L)
-                }
-
-                ## Look at the output from running the examples.  For
-                ## the time being, report warnings about use of
-                ## deprecated functions, as the next release will make
-                ## them defunct and hence using them an error.
-                any <- FALSE
-                lines <- readLines(exout, warn = FALSE)
-                bad_lines <- grep("^Warning: .*is deprecated.$", lines,
-                                  useBytes = TRUE, value = TRUE)
-                if(length(bad_lines)) {
-                    any <- TRUE
-                    warnLog("Found the following significant warnings:\n")
-                    printLog(Log,
-                             paste("  ", bad_lines, sep = "", collapse = "\n"),
-                             "\n")
-                    wrapLog("Deprecated functions may be defunct as",
-                            "soon as of the next release of R.\n",
-                            "See ?Deprecated.\n")
-                }
-                if (!any) resultLog(Log, "OK")
-
-                ## Try to compare results from running the examples to
-                ## a saved previous version.
-                exsave <- file.path(pkgdir, "tests", "Examples",
-                                    paste(pkgname, "-Ex.Rout.save", sep=""))
-                if (file.exists(exsave)) {
-                    checkingLog(Log, "differences from ",
-                                sQuote(basename(exout)),
-                                " to ", sQuote(basename(exsave)))
-                    cmd <- paste("invisible(tools::Rdiff('",
-                                 exout, "', '", exsave, "',TRUE,TRUE))",
-                                 sep = "")
-                    out <- R_runR(cmd, R_opts2)
-                    if(length(out))
-                        printLog(Log, paste(c("", out, ""), collapse = "\n"))
-                    resultLog(Log, "OK")
+                if (!this_multiarch) {
+                    exout <- paste(pkgname, "-Ex.Rout", sep = "")
+                    run_one_arch(exout)
+                } else {
+                    printLog(Log, "\n")
+                    Log$stars <<-  "**"
+                    for (arch in inst_archs) {
+                        printLog(Log, "** running examples for arch=", arch, " ...")
+                        exout <- paste(pkgname, "-Ex_", arch, ".Rout", sep = "")
+                        run_one_arch(exout, arch)
+                    }
+                    Log$stars <<-  "*"
                 }
             } else resultLog(Log, "NONE")
         }
@@ -1261,16 +1302,28 @@ R_run_R <- function(cmd, Ropts, env)
     run_tests <- function()
     {
         checkingLog(Log, "tests")
-        if (do_install && do_tests) {
+        run_one_arch <- function(arch = "")
+        {
+            R_EXE1 <- if (nzchar(arch)) {
+                if (WINDOWS)
+                    shQuote(file.path(R.home(), "bin", arch, "Rterm.exe"))
+                else
+                    paste(shQuote(file.path(R.home("bin"), "R")),
+                          " --arch=", arch, sep = "")
+            } else shQuote(R_EXE)
             testsrcdir <- file.path(pkgdir, "tests")
             testdir <- file.path(pkgoutdir, "tests")
+            if(nzchar(arch)) testdir <- paste(testdir, arch, sep = "_")
             if(!dir.exists(testdir)) dir.create(testdir, mode = "0755")
             if(!dir.exists(testdir)) {
                 errorLog(Log,
                          sprintf("unable to create %s", sQuote(testdir)))
                 do_exit(1L)
             }
-            file.copy(testsrcdir, ".", recursive = TRUE)
+##            print(testdir)
+##            file.copy(testsrcdir, ".", recursive = TRUE)
+            file.copy(Sys.glob(paste(testsrcdir, "/*", sep = "")),
+                      testdir, recursive = TRUE)
             setwd(testdir)
             extra <- character()
             if (use_gct) extra <- c(extra, "use_gct = TRUE")
@@ -1279,7 +1332,7 @@ R_run_R <- function(cmd, Ropts, env)
             ## so force LANGUAGE=en
             cmd <- paste("(echo 'tools:::.runPackageTestsR(",
                          paste(extra, collapse=", "),
-                         ")' | LANGUAGE=en", shQuote(R_EXE),
+                         ")' | LANGUAGE=en", R_EXE1,
                          "--vanilla --slave)")
             if (R_system(cmd)) {
                 errorLog(Log)
@@ -1308,6 +1361,17 @@ R_run_R <- function(cmd, Ropts, env)
                 do_exit(1L)
             }
             setwd(pkgoutdir)
+        }
+        if (do_install && do_tests) {
+            if (!this_multiarch) {
+                run_one_arch()
+            } else {
+                printLog(Log, "\n")
+                for (arch in inst_archs) {
+                    printLog(Log, "** running tests for arch=", arch)
+                    run_one_arch(arch)
+                }
+            }
             resultLog(Log, "OK")
         } else resultLog(Log, "SKIPPED")
     }
@@ -1352,7 +1416,7 @@ R_run_R <- function(cmd, Ropts, env)
             Rcmd <- "options(warn=1)\nlibrary(tools)\n"
             ## Should checking the vignettes assume the system default
             ## packages, or just base?
-            ## unset SWEAVE_STYLEPATH_DEFAULT to avoid problems
+            ## FIXME: should we do this for multiple sub-archs?
             Rcmd <- paste(Rcmd,
                           "checkVignettes(dir = '", pkgoutdir,
                           "', workdir='src'",
@@ -1360,6 +1424,7 @@ R_run_R <- function(cmd, Ropts, env)
                           if (R_check_weave_vignettes) ", tangle = FALSE",
                           if (R_check_latex_vignettes) ", latex = TRUE",
                           ")\n", sep = "")
+            ## unset SWEAVE_STYLEPATH_DEFAULT to avoid problems if set
             out <- R_runR2(Rcmd, "SWEAVE_STYLEPATH_DEFAULT=FALSE")
             ## Vignette could redefine the prompt, e.g. to 'R>' ...
             out <- grep("^[[:alnum:]]*[>]", out,
@@ -1559,7 +1624,7 @@ R_run_R <- function(cmd, Ropts, env)
             INSTALL_opts <- install_args
             ## don't use HTML, checkRd goes over the same ground.
             INSTALL_opts <- c(INSTALL_opts,  "--no-html")
-            if (WINDOWS)
+            if (WINDOWS && !multiarch)
                 INSTALL_opts <- c(INSTALL_opts,  "--no-multiarch")
             if (install == "fake")
                 INSTALL_opts <- c(INSTALL_opts,  "--fake")
@@ -1994,6 +2059,7 @@ R_run_R <- function(cmd, Ropts, env)
             "      --extra-arch      do only runtime tests needed for an additional",
             "                        sub-architecture.",
             "      --multiarch       do runtime tests on all installed sub-archs",
+            "      --no-multiarch    do runtime tests on the main sub-architecture",
             "",
             "By default, all test sections are turned on.",
             "",
@@ -2030,7 +2096,7 @@ R_run_R <- function(cmd, Ropts, env)
     check_subdirs <- ""           # defaults to R_check_subdirs_strict
     extra_arch <- FALSE
     spec_install <- FALSE
-    multiarch <- TRUE
+    multiarch <- FALSE
 
     libdir <- ""
     outdir <- ""
@@ -2091,6 +2157,8 @@ R_run_R <- function(cmd, Ropts, env)
             extra_arch  <- TRUE
         } else if (a == "--multiarch") {
             multiarch  <- TRUE
+        } else if (a == "--no-multiarch") {
+            multiarch  <- FALSE
         } else if (substr(a, 1, 9) == "--rcfile=") {
             warning("configuration files are not supported as from R 2.12.0")
         } else if (substr(a, 1, 1) == "-") {
@@ -2110,9 +2178,28 @@ R_run_R <- function(cmd, Ropts, env)
 
     if (install == "fake") {
         ## If we fake installation, then we cannot *run* any code.
-        do_examples = do_tests = do_vignettes = 0
-        spec_install = TRUE
+        do_examples <- do_tests <- do_vignettes <- 0
+        spec_install <- TRUE
+        multiarch <- FALSE
     }
+
+    if (multiarch) {
+        ## see if there are multiple installed architectures.
+        if (WINDOWS) {
+            f <- dir(file.path(R.home(), "bin"))
+            archs <- f[f %in% c("i386", "x64")]
+        } else {
+            wd2 <- setwd(file.path(R.home("bin"), "exec"))
+            archs <- Sys.glob("*")
+            setwd(wd2)
+        }
+        if (length(archs) <= 1) {
+            warning("'--multiarch' specified with only one installed sub-architecture",
+                    call.=FALSE, immediate. = TRUE)
+            multiarch <- FALSE
+        }
+    }
+
 
     ## Use system default unless explicitly specified otherwise.
     Sys.setenv(R_DEFAULT_PACKAGES="")
@@ -2335,8 +2422,24 @@ R_run_R <- function(cmd, Ropts, env)
             ## we need to do this before installation
             if (R_check_executables)  check_executables()
 
-            if(do_install) check_install()
-        }                               # end of if (!is_base_pkg)
+            if (do_install) check_install()
+            this_multiarch <- multiarch
+            if (multiarch) {
+                ## check which architectures this package is installed for
+                if (dir.exists(dd <- file.path(libdir, pkgname, "libs"))) {
+                    inst_archs <- dir(dd)
+                    if (!identical(inst_archs, archs)) {
+                        if (length(inst_archs) > 1)
+                            printLog(Log, "NB: this package is only installed for sub-architectures ", paste(sQuote(inst_archs), collapse=", "), "\n")
+                        else {
+                            printLog(Log, "NB: this package is only installed for sub-architecture ", sQuote(inst_archs), "\n")
+                            if(inst_archs == .Platform$r_arch)
+                                this_multiarch <- FALSE
+                        }
+                    }
+                } else this_multiarch <- FALSE
+            }
+        }   ## end of if (!is_base_pkg)
 
         setwd(startdir)
         check_pkg(pkgdir, pkgoutdir, startdir, libdir, desc,
