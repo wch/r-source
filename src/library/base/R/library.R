@@ -658,8 +658,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
                          keep.source = keep.source)
     } else value <- TRUE
 
-    if(identical(save, FALSE)) {}
-    else {
+    if(value && !identical(save, FALSE)) {
         ## update the ".Depends" variable
         ## We no longer use '.required' since some packages set that.
         if(identical(save, TRUE)) {

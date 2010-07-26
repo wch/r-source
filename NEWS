@@ -79,6 +79,9 @@ BUG FIXES
     o	\Sexpr[result=rd] in an Rd file added a spurious newline,
 	which was displayed as extra whitespace when rendered.
 
+    o	require(save = TRUE) recorded in .Depends the names of
+	packages it failed to load.
+
 
 
 		CHANGES IN R VERSION 2.11.1

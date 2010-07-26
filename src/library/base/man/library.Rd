@@ -73,9 +73,9 @@ require(package, lib.loc = NULL, quietly = FALSE,
     package loading is printed.}
   \item{save}{logical or environment.  If \code{TRUE}, a call to
     \code{require} from the source for a package will save the name of
-    the required package in the variable \code{".required"}, allowing
+    the required package in the variable \code{".Depends"}, allowing
     function \code{\link{detach}} to warn if a required package is
-    detached. See section \sQuote{Packages that require other packages} below.}
+    detached.  See section \sQuote{Packages that require other packages} below.}
   \item{libname}{a character string giving the library directory where
     the package was found.}
   \item{pkgname}{a character string giving the name of the package.}
