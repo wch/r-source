@@ -296,6 +296,10 @@
       \item \command{R CMD INSTALL --libs-only} no longer overrides the
        setting of locking, so a previous version of the package will be
        restored unless \option{--no-lock} is specified.
+
+       \item The default is now \code{require(save = FALSE)}: this
+       avoids checking often for the very rare circumstances in which
+       the save was done.
     }
   }
   \subsection{UTILITIES}{
@@ -519,6 +523,9 @@
       \item \code{\\Sexpr[result=rd]} in an Rd file added a
       spurious newline, which was displayed as extra whitespace when
       rendered.
+
+      \item \code{require(save = TRUE)} recorded in \code{.Depends}
+      the names of packages it failed to load.
     }
   }
 }

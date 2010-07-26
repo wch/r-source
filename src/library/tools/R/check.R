@@ -1993,6 +1993,7 @@ R_run_R <- function(cmd, Ropts, env)
             "",
             "      --extra-arch      do only runtime tests needed for an additional",
             "                        sub-architecture.",
+            "      --multiarch       do runtime tests on all installed sub-archs",
             "",
             "By default, all test sections are turned on.",
             "",
@@ -2029,6 +2030,7 @@ R_run_R <- function(cmd, Ropts, env)
     check_subdirs <- ""           # defaults to R_check_subdirs_strict
     extra_arch <- FALSE
     spec_install <- FALSE
+    multiarch <- TRUE
 
     libdir <- ""
     outdir <- ""
@@ -2087,6 +2089,8 @@ R_run_R <- function(cmd, Ropts, env)
             check_subdirs <- substr(a, 17, 1000)
         } else if (a == "--extra-arch") {
             extra_arch  <- TRUE
+        } else if (a == "--multiarch") {
+            multiarch  <- TRUE
         } else if (substr(a, 1, 9) == "--rcfile=") {
             warning("configuration files are not supported as from R 2.12.0")
         } else if (substr(a, 1, 1) == "-") {
