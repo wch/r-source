@@ -131,7 +131,7 @@ R_run_R <- function(cmd, Ropts, env)
             if (this_multiarch) {
                 Log$stars <<-  "**"
                 for (arch in inst_archs) {
-                    printLog(Log, "* loading checks for arch=", arch, "\n")
+                    printLog(Log, "* loading checks for arch ", sQuote(arch), "\n")
                     check_loading(arch)
                 }
                 Log$stars <<-  "*"
@@ -1289,7 +1289,8 @@ R_run_R <- function(cmd, Ropts, env)
                     printLog(Log, "\n")
                     Log$stars <<-  "**"
                     for (arch in inst_archs) {
-                        printLog(Log, "** running examples for arch=", arch, " ...")
+                        printLog(Log, "** running examples for arch ",
+                                 sQuote(arch), " ...")
                         exout <- paste(pkgname, "-Ex_", arch, ".Rout", sep = "")
                         run_one_arch(exout, arch)
                     }
@@ -1368,7 +1369,7 @@ R_run_R <- function(cmd, Ropts, env)
             } else {
                 printLog(Log, "\n")
                 for (arch in inst_archs) {
-                    printLog(Log, "** running tests for arch=", arch)
+                    printLog(Log, "** running tests for arch ", sQuote(arch))
                     run_one_arch(arch)
                 }
             }
