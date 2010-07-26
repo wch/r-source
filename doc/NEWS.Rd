@@ -296,10 +296,6 @@
       \item \command{R CMD INSTALL --libs-only} no longer overrides the
        setting of locking, so a previous version of the package will be
        restored unless \option{--no-lock} is specified.
-
-       \item The default is now \code{require(save = FALSE)}: this
-       avoids checking often for the very rare circumstances in which
-       the save was done.
     }
   }
   \subsection{UTILITIES}{

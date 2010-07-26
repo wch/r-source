@@ -650,7 +650,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 require <-
 function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
          keep.source = getOption("keep.source.pkgs"),
-         character.only = FALSE, save = FALSE)
+         character.only = FALSE, save = TRUE)
 {
     if( !character.only )
         package <- as.character(substitute(package)) # allowing "require(eda)"
@@ -660,12 +660,11 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 	if (!quietly)
             packageStartupMessage(gettextf("Loading required package: %s",
                                            package), domain = NA)
-	value <- try(library(package, lib.loc = lib.loc, character.only = TRUE,
-                             logical.return = TRUE,
-                             warn.conflicts = warn.conflicts,
-                             keep.source = keep.source))
-        if (inherits(value, "try-error") || !value) return(invisible(FALSE))
-    }
+	value <- library(package, lib.loc = lib.loc, character.only = TRUE,
+                         logical.return = TRUE,
+                         warn.conflicts = warn.conflicts,
+                         keep.source = keep.source)
+    } else value <- TRUE
 
     if(identical(save, FALSE)) {}
     else {
@@ -710,7 +709,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
             assign(".Depends", packages, save)
         }
     }
-    invisible(TRUE)
+    invisible(value)
 }
 
 .packages <- function(all.available = FALSE, lib.loc = NULL)
@@ -950,10 +949,10 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                 if (!quietly)
                     packageStartupMessage(gettextf("Loading required package: %s",
                                      pkg), domain = NA)
-                require(pkg, character.only = TRUE, lib.loc = lib.loc,
-                        save = FALSE) ||
-                    stop(gettextf("package '%s' could not be loaded", pkg),
-                         call. = FALSE, domain = NA)
+                library(pkg, character.only = TRUE, logical.return = TRUE,
+                        lib.loc = lib.loc) ||
+                stop(gettextf("package '%s' could not be loaded", pkg),
+                     call. = FALSE, domain = NA)
             } else {
                 ## check the required version number, if any
                 if (have_vers) {
