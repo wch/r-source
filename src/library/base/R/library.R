@@ -650,7 +650,7 @@ function(chname, libpath, verbose = getOption("verbose"),
 require <-
 function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
          keep.source = getOption("keep.source.pkgs"),
-         character.only = FALSE, save = TRUE)
+         character.only = FALSE, save = FALSE)
 {
     if( !character.only )
         package <- as.character(substitute(package)) # allowing "require(eda)"
@@ -668,6 +668,7 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 
     if(identical(save, FALSE)) {}
     else {
+        warning("use of 'save' is deprecated")
         ## update the ".Depends" variable
         ## We no longer use '.required' since some packages set that.
         if(identical(save, TRUE)) {
