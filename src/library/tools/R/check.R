@@ -1101,7 +1101,7 @@ R_run_R <- function(cmd, Ropts, env)
     {
         checkingLog(Log, "whether the package can be loaded")
         Rcmd <- sprintf("library(%s)", pkgname)
-        out <- R_runR(Rcmd, R_opts2, arch = arch)
+        out <- R_runR(Rcmd, if(nzchar(arch)) R_opts4 else R_opts2, arch = arch)
         if (any(grepl("^Error", out))) {
             errorLog(Log)
             printLog(Log, paste(c(out, ""), collapse = "\n"))
@@ -1189,11 +1189,14 @@ R_run_R <- function(cmd, Ropts, env)
             ## so force LANGUAGE=en
             cmd <- if(use_gct)
                 paste("(echo 'gctorture(TRUE)'; cat", exfile,
-                      ") | LANGUAGE=en", R_EXE1, R_opts, enc,
-                      ">", exout, "2>&1")
+                      ") | LANGUAGE=en", R_EXE1,
+                      if(nzchar(arch)) R_opts3 else R_opts,
+                      R_opts,
+                      enc, ">", exout, "2>&1")
             else
-                paste("LANGUAGE=en", R_EXE1, R_opts, enc,
-                      "<", exfile, ">", exout, "2>&1")
+                paste("LANGUAGE=en", R_EXE1,
+                      if(nzchar(arch)) R_opts3 else R_opts,
+                      enc, "<", exfile, ">", exout, "2>&1")
             if (R_system(cmd)) {
                 errorLog(Log, "Running examples in ", sQuote(exfile),
                          " failed")
@@ -1334,7 +1337,8 @@ R_run_R <- function(cmd, Ropts, env)
             cmd <- paste("(echo 'tools:::.runPackageTestsR(",
                          paste(extra, collapse=", "),
                          ")' | LANGUAGE=en", R_EXE1,
-                         "--vanilla --slave)")
+                         if(nzchar(arch)) R_opts4 else R_opts2,
+                         ")")
             if (R_system(cmd)) {
                 errorLog(Log)
                 ## Don't just fail: try to log where the problem occurred.
@@ -2268,6 +2272,9 @@ R_run_R <- function(cmd, Ropts, env)
     ## examples and tests are not.
     R_opts <- "--vanilla"
     R_opts2 <- "--vanilla --slave"
+    ## do run Renviron[.site]
+    R_opts3 <- "--no-site-file --no-init-file --no-restore"
+    R_opts4 <- "--no-site-file --no-init-file --no-restore --slave"
 
     msg_DESCRIPTION <- c("See the information on DESCRIPTION files",
                          " in the chapter 'Creating R packages'",
