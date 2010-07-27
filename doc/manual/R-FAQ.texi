@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2010
-@set FAQ_DATE @value{FAQ_YEAR}-07-01
+@set FAQ_DATE @value{FAQ_YEAR}-07-27
 @set REL_YEAR 2010
 @set REL_MAJOR 2
 @set REL_MINOR 11
@@ -569,15 +569,15 @@ packages.
 @end multitable
 @end quotation
 
-Debian packages, maintained by Dirk Eddelbuettel Bates, have
-long been part of the Debian distribution, and can be accessed through
-APT, the Debian package maintenance tool.  Use e.g.@: @code{apt-get
-install r-base r-recommended} to install the R environment and
-recommended packages.  If you also want to build R packages from source,
-also run @code{apt-get install r-base-dev} to obtain the additional
-tools required for this.  So-called ``backports'' of the current R
-packages for at least the @dfn{stable} distribution of Debian are
-provided by Johannes Ranke, and available from @CRAN{}.  See
+Debian packages, maintained by Dirk Eddelbuettel, have long been part of
+the Debian distribution, and can be accessed through APT, the Debian
+package maintenance tool.  Use e.g.@: @code{apt-get install r-base
+r-recommended} to install the R environment and recommended packages.
+If you also want to build R packages from source, also run @code{apt-get
+install r-base-dev} to obtain the additional tools required for this.
+So-called ``backports'' of the current R packages for at least the
+@dfn{stable} distribution of Debian are provided by Johannes Ranke, and
+available from @CRAN{}.  See
 @url{http://CRAN.R-project.org/bin/linux/debian/README} for details on R
 Debian packages and installing the backports, which should also be
 suitable for other Debian derivatives.  Native backports for Ubuntu are
@@ -1715,12 +1715,21 @@ interface for doing microarray analysis using several of the
 Bioconductor packages'' and is designed to be installed at local sites
 as a shared computing resource.
 
-Finally, @url{http://sysbio.mrc-bsu.cam.ac.uk/Rwui, Rwui} is a web
-application to create user-friendly web interfaces for R scripts.  All
-code for the web interface is created automatically.  There is no need
-for the user to do any extra scripting or learn any new scripting
-techniques.  Rwui can also be found at
-@uref{http://rwui.cryst.bbk.ac.uk}.
+@url{http://sysbio.mrc-bsu.cam.ac.uk/Rwui, Rwui} is a web application to
+create user-friendly web interfaces for R scripts.  All code for the web
+interface is created automatically.  There is no need for the user to do
+any extra scripting or learn any new scripting techniques.  Rwui can
+also be found at @uref{http://rwui.cryst.bbk.ac.uk}.
+
+Finally, the @cpkg{R.rsp} package by Henrik Bengtsson introduces ``R
+Server Pages''.  Analogous to Java Server Pages, an R server page is
+typically @HTML{} with embedded R code that gets evaluated when the page
+is requested.  The package includes an internal cross-platform HTTP
+server implemented in Tcl, so provides a good framework for including
+web-based user interfaces in packages.  The approach is similar to the
+use of the @cpkg{brew} package with @url{http://rapache.net/, Rapache}
+with the advantage of cross-platform support and easy installation.
+
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
