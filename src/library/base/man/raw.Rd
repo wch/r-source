@@ -43,7 +43,7 @@ is.raw(x)
   (with escape sequences for non-printing characters) use
   \code{\link{rawToChar}}.
 
-  Coercion to raw treats the input values as representing a small
+  Coercion to raw treats the input values as representing small
   (decimal) integers, so the input is first coerced to integer, and then
   values which are outside the range \code{[0 \dots 255]} or are
   \code{NA} are set to \code{0} (the \code{nul} byte).
