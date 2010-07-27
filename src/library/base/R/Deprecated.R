@@ -17,18 +17,18 @@
 ###----- NOTE:	../man/base-deprecated.Rd   must be synchronized with this file!
 ###		-------------------------
 .Deprecated <- function(new, package = NULL, msg) {
-    if( missing(msg) ) {
-       msg <- gettextf("'%s' is deprecated.\n",
-                       as.character(sys.call(sys.parent()))[1L] )
-      if(!missing(new))
-	msg <- c(msg, gettextf("Use '%s' instead.\n", new))
-      msg <- c(msg,
-	     if(!is.null(package))
-	     gettextf("See help(\"Deprecated\") and help(\"%s-deprecated\").",
-		      package)
-	     else gettext("See help(\"Deprecated\")"))
+    msg <- if( missing(msg) ) {
+	msg <- gettextf("'%s' is deprecated.\n",
+			as.character(sys.call(sys.parent()))[1L] )
+	if(!missing(new))
+	    msg <- c(msg, gettextf("Use '%s' instead.\n", new))
+	c(msg,
+	  if(!is.null(package))
+	  gettextf("See help(\"Deprecated\") and help(\"%s-deprecated\").",
+		   package)
+	  else gettext("See help(\"Deprecated\")"))
     }
-    else msg = as.character(msg)
+    else as.character(msg)
     warning(paste(msg, collapse=""), call. = FALSE, domain = NA)
 }
 
