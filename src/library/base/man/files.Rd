@@ -1,6 +1,6 @@
 % File src/library/base/man/files.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{files}
@@ -67,10 +67,9 @@ file.symlink(from, to)
   permissions allow this will first remove an existing file \code{to}.
   This is subject to the limitations of the OS's corresponding system
   call: in particular in the interpretation of \sQuote{file}: also most
-  platforms will not rename files across file systems.
-#ifdef Windows
-  (As from \R 2.11.0, \code{file.rename} works across Windows' volumes.)
-#endif
+  platforms will not rename files across file systems.  (On Windows,
+  \code{file.rename} works for files (but not directories) across
+  volumes as from \R 2.11.0.)
 
   \code{file.append} attempts to append the files named by its
   second argument to those named by its first.  The \R subscript
@@ -86,7 +85,7 @@ file.symlink(from, to)
   which support them.  The \code{to} argument can specify a single
   existing directory.
 #ifdef windows
-  (Windows Vista/Server 2008/7 have a version of symbolic links on NTFS
+  (Windows Vista/7/Server 2008 have a version of symbolic links on NTFS
   filesystems, but this seems too limited to be worth implementing.)
 #endif
 }
