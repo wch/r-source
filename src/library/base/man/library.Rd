@@ -70,7 +70,8 @@ require(package, lib.loc = NULL, quietly = FALSE,
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
-    package loading is printed.}
+    package loading is printed, and most often, no errors/warnings are
+    printed if package loading fails.}
   \item{save}{logical or environment: see section \sQuote{Packages that
     require other packages}.  Use of any value other than the default is
     deprecated.}
@@ -147,7 +148,8 @@ require(package, lib.loc = NULL, quietly = FALSE,
   class \code{"packageInfo"}.
 
   \code{require} returns (invisibly) a logical indicating whether the required
-  package is available.
+  package is available.  (Before \R 2.12.0 it could also fail with an
+  error.)
 }
 \section{Licenses}{
   Some packages have restrictive licenses, and as from \R 2.11.0 there

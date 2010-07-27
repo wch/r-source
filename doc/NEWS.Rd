@@ -260,6 +260,9 @@
 
       \item New function \code{readRenviron} to (re-)read files in the
       format of \file{~/.Renviron} and \file{Renviron.site}.
+
+      \item \code{require()} will now return \code{FALSE} (and not fail)
+      if loading the package or one of its dependencies fails.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{

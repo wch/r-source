@@ -660,10 +660,22 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts = TRUE,
 	if (!quietly)
             packageStartupMessage(gettextf("Loading required package: %s",
                                            package), domain = NA)
-	value <- library(package, lib.loc = lib.loc, character.only = TRUE,
-                         logical.return = TRUE,
-                         warn.conflicts = warn.conflicts,
-                         keep.source = keep.source)
+	value <- tryCatch(library(package, lib.loc = lib.loc,
+                                  character.only = TRUE,
+                                  logical.return = TRUE,
+                                  warn.conflicts = warn.conflicts,
+                                  keep.source = keep.source),
+                          error = function(e) e)
+        if (inherits(value, "error")) {
+            if (!quietly) {
+                msg <- conditionMessage(value)
+                cat("Failed with error:  ",
+                    sQuote(msg), "\n", file = stderr(), sep = "")
+                .Internal(printDeferredWarnings())
+            }
+            return(invisible(FALSE))
+        }
+        if (!value) return(invisible(FALSE))
     } else value <- TRUE
 
     if(identical(save, FALSE)) {}
