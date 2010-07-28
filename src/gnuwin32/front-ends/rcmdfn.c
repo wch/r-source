@@ -377,9 +377,9 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 		 getRHOME(3), BINDIR, argv[cmdarg + 1]);
 	return(system(cmd));
     } else {
-	char RHOME[MAX_PATH], Path[MAX_PATH+10], Rarch[30], Bindir[30], 
+	char RHOME[MAX_PATH], Rarch[30], Bindir[30], 
 	    Tmpdir[MAX_PATH+10], HOME[MAX_PATH+10], Rversion[25];
-	char *RHome = getRHOME(3);
+	char *RHome = getRHOME(3), *Path;
 	if (argc > cmdarg+1 && 
 	    strcmp(argv[cmdarg+1], "RHOME") == 0) {
 	    fprintf(stdout, "%s", RHome);
@@ -395,6 +395,12 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 
 	putenv("R_CMD=R CMD");
 
+        Path = malloc( strlen(getenv("PATH")) + MAX_PATH + 10 );
+        if (!Path) {
+            fprintf(stderr, "PATH too long\n");
+            return(4);
+        }
+        
 	strcpy(Path, "PATH=");
 	strcat(Path, RHome);
 	strcat(Path, "\\"); 
@@ -402,6 +408,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	strcat(Path, ";"); 
 	strcat(Path, getenv("PATH"));
 	putenv(Path);
+	free(Path);
 
 	if (!getenv("R_ARCH")) {
 	    strcpy(Rarch, "R_ARCH=/");
