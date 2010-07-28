@@ -1402,8 +1402,30 @@ directly.
 @menu
 * Checking packages::           
 * Building packages::           
-* Customizing checking and building::  
 @end menu
+
+@quotation Note
+@code{R CMD check} and @code{R CMD build} run @R{} with
+@option{--vanilla}, so none of the user's startup files are read.  If
+you need @env{R_LIBS} set (to find packages in a non-standard library)
+you can set it in the environment: also as from @R{} 2.12.0 you can use
+files@footnote{On systems which use sub-architectures,
+architecture-specific versions such as @file{~/.R/check.Renviron.i386}
+take precedence.}  @file{~/.R/check.Renviron} and
+@file{~/.R/build.Renviron} to set environment variables when using these
+utilities.
+@end quotation
+
+@quotation Note to Windows users
+@code{R CMD check} and @code{R CMD build} require you to have installed
+the Windows toolset (see the ``R Installation and Administration''
+manual) and have it in your path.  You may need to set @env{TMPDIR} to
+point to a suitable writable directory with a path not containing spaces
+-- use forward slashes for the separators.  Also, the directory needs to
+be on a case-honouring file system (some network-mounted file systems
+are not).
+@end quotation
+
 
 @node Checking packages, Building packages, Checking and building packages, Checking and building packages
 @subsection Checking packages
@@ -1560,7 +1582,14 @@ The PDF version of the package's manual is created (to check that the
 
 Use @kbd{R CMD check --help} to obtain more information about the usage
 of the @R{} package checker.  A subset of the checking steps can be
-selected by adding flags.
+selected by adding command-line options. It also allows customization by
+setting environment variables @w{@env{_R_CHECK_*_}:}, as described in
+@ifset UseExternalXrefs
+@ref{Tools, , Tools, R-ints, R Internals},
+@end ifset
+@ifclear UseExternalXrefs
+`R Internals',
+@end ifclear
 
 You do need to ensure that the package is checked in a suitable locale
 if it contains non-@acronym{ASCII} characters.  Such packages are likely
@@ -1570,7 +1599,31 @@ any package in a UTF-8 locale (if one is available).  Beware that
 although a @code{C} locale is rarely used at a console, it may be the
 default if logging in remotely or for batch jobs.
 
-@node Building packages, Customizing checking and building, Checking packages, Checking and building packages
+@quotation Multiple sub-architectures
+On systems which support multiple sub-architectures (principally Windows
+and Mac OS X), @command{R CMD check} will install (at least on Windows)
+and check the package only for the default sub-architecture run by
+@command{R}.
+
+There are two possible ways to check a package under other installed
+sub-architectures.  One is to use something like @command{R
+--arch=x86_64 CMD check --extra-arch} or (Windows)
+@command{/path/to/R/bin/x64/Rcmd check --extra-arch} to run just the
+checks@footnote{loading, examples, tests, vignettes} which differ by
+sub-architecture.
+
+The second approach is to run @command{R CMD check --multiarch} which
+will run the loading tests, examples and @file{tests} directory under
+each installed sub-architecture in turn, and give an error if any fail.
+Where environment variables (including @env{PATH}@footnote{this is
+needed on Windows to select the appropriate GTK+ and @samp{graphviz}
+DLLs.}) need to be set differently for each sub-architecture, these can
+be set in architecture-specific files such as
+@file{@var{R_HOME}/etc/i386/Renviron.site}.
+@end quotation
+
+
+@node Building packages,  , Checking packages, Checking and building packages
 @subsection Building packages
 @cindex Building packages
 
@@ -1621,41 +1674,6 @@ built tarball as a final check on the contents.
 @code{R CMD build} can also build pre-compiled version of packages for
 binary distributions, but @code{R CMD INSTALL --build} is preferred (and
 is considerably more flexible).
-
-@quotation Note
-@code{R CMD check} and @code{R CMD build} run @R{} with
-@option{--vanilla}, so none of the user's startup files are read.  If
-you need @env{R_LIBS} set (to find packages in a non-standard library)
-you can set it in the environment: also as from @R{} 2.12.0 you can use
-files@footnote{On systems which use sub-architectures,
-architecture-specific versions such as @file{~/.R/check.Renviron.i386}
-take precedence.}  @file{~/.R/check.Renviron} and
-@file{~/.R/build.Renviron} to set environment variables when using these
-utilities.
-@end quotation
-
-@quotation Note to Windows users
-@code{R CMD check} and @code{R CMD build} require you to have installed
-the Windows toolset (see the ``R Installation and Administration''
-manual) and have it in your path.  You may need to set @env{TMPDIR} to
-point to a suitable writable directory with a path not containing spaces
--- use forward slashes for the separators.  Also, the directory needs to
-be on a case-honouring file system (some network-mounted file systems
-are not).
-@end quotation
-
-@node Customizing checking and building,  , Building packages, Checking and building packages
-@subsection Customizing checking and building
-
-In addition to the command line options, @code{R CMD check} also allows
-customization by setting environment variables @w{@env{_R_CHECK_*_}:},
-as described in
-@ifset UseExternalXrefs
-@ref{Tools, , Tools, R-ints, R Internals},
-@end ifset
-@ifclear UseExternalXrefs
-`R Internals',
-@end ifclear
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes
