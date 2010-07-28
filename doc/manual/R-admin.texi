@@ -2482,7 +2482,9 @@ those to set the architecture, should be specified as part of @code{CC}
 rather than of @code{CFLAGS}.)
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
-installed, including its headers and client libraries. For recent Fedora
+installed, including its headers and client libraries.  (You also need
+@samp{X11} installed to use the @code{jpeg()}, @code{png()},
+@code{tiff()} and @code{bmp()} devices.)  For recent Fedora
 distributions it means (at least) @samp{libX11}, @samp{libX11-devel},
 @samp{libXt} and @samp{libXt-devel}.  On Debian we recommend the
 meta-package @samp{xorg-dev}.  If you really do not want these you will
