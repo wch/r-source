@@ -22,7 +22,7 @@ Denmark,Denmark,Aalborg,http://mirrors.dotsrc.org/cran/,"dotsrc.org, Aalborg","m
 "France (Lyon 2)",France,Lyon,http://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr
 "Germany (Berlin)",Germany,Berlin,http://mirrors.softliste.de/cran/,"Softliste.de, Berlin","docko # docko.sk",1,de
 "Germany (Goettingen)",Germany,Goettingen,http://ftp5.gwdg.de/pub/misc/cran/,"GWDG Goettingen","Eberhard Moenkeberg <emoenke # gwdg.de>",1,de
-"Germany (Hannover)",Germany,Hannover,http://cran.mirroring.de,"Opensource Mirror Project","admin # mirroring.de",1,de
+"Germany (Hannover)",Germany,Hannover,http://cran.mirroring.de,"Opensource Mirror Project","admin # mirroring.de",0,de
 "Germany (Hamburg)",Germany,Hamburg,http://artfiles.org/cran/,"Artfiles New Media, Hamburg","mirror # artfiles.org",1,de
 "Germany (Muenchen)",Germany,Muenchen,http://cran.rakanu.com/,"Rakanu.com, Muenchen","Carsten Zedler <info # rakanu.com>",1,de
 "Germany (Nuernberg)",Germany,Nuernberg,http://cran.myamplifiers.com/,"Hetzner Online AG, Nuernberg","nikrans # Gmail.com",1,de
@@ -32,9 +32,7 @@ Ireland,Ireland,Dublin,http://ftp.heanet.ie/mirrors/cran.r-project.org/,"HEAnet,
 "Italy (Milano)",Italy,Milano,http://rm.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it
 "Italy (Padua)",Italy,Padua,http://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it
 "Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo # dssm.unipa.it, alf # dssm.unipa.it",1,it
-"Japan (Aizu)",Japan,Aizu,ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN,"University of Aizu",,1,jp
 "Japan (Hyogo)",Japan,Hyogo,http://essrc.hyogo-u.ac.jp/cran/,"Hyogo University of Teacher Education","essrc-cran # hyogo-u.ac.jp",1,jp
-"Japan (Tokyo)",Japan,Tokyo,ftp://ftp.ecc.u-tokyo.ac.jp/CRAN/,"University of Tokyo","Teru KAMOGASHIRA <teru # sodan.ecc.u-tokyo.ac.jp>",0,jp
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",,1,jp
 Korea,Korea,Seoul,http://bibs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skonmeme # gmail.com>",1,kr
 Mexico,Mexico,Cuernavaca,http://www2.uaem.mx/r-mirror/,"Universidad Autonoma del Estado de Morelos","Sandra Espinoza Lopez <sandrae # buzon.uaem.mx>",0,mx
@@ -46,8 +44,7 @@ Norway,Norway,Bergen,http://cran.uib.no/,"University of Bergen","sundrift # It.u
 "Poland (Wroclaw)",Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Paweł Netzel <netzel # meteo.uni.wroc.pl>",1,pl
 Portugal,Portugal,Porto,http://neacm.fe.up.pt/CRAN/,"Universidade do Porto","neacm # fe.up.pt",1,pt
 Russia,Russia,Moscow,http://cran.gis-lab.info/,GIS-Lab.info,"sim # gis-lab.info",1,ru
-"Singapore 1",Singapore,Singapore,http://cran.bic.nus.edu.sg/,"National University of Singapore","sysadmin # bic.nus.edu.sg",0,sg
-"Singapore 2",Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University of Singapore","Zhang Rong <ccezr # nus.edu.sg>",1,sg
+Singapore,Singapore,Singapore,http://cran.stat.nus.edu.sg/,"National University of Singapore","Zhang Rong <ccezr # nus.edu.sg>",1,sg
 "Slovakia 1",Slovakia,Bratislava,http://cran.fyxm.net/,"FYXM.net, Bratislava","docko # docko.sk",1,sk
 "Slovakia 2",Slovakia,Bratislava,http://cran.phphosts.org/,"phphosts.org,Bratislava","admin # Phphosts.org",1,sk
 "South Africa","South Africa",Grahamstown,http://cran.ru.ac.za/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>",1,za
