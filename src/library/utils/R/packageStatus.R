@@ -36,7 +36,7 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method,
         y <- list()
         for(k in 1L:ncol(x)) y[[k]] <- x[,k]
         attr(y, "names") <- colnames(x)
-        attr(y, "row.names") <- y[[1L]]
+        attr(y, "row.names") <- make.unique(y[[1L]])
         class(y) <- "data.frame"
         y
     }

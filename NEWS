@@ -79,8 +79,11 @@ BUG FIXES
     o	\Sexpr[result=rd] in an Rd file added a spurious newline,
 	which was displayed as extra whitespace when rendered.
 
-    o	require(save = TRUE) recorded in .Depends the names of
-	packages it failed to load.
+    o	require(save = TRUE) recorded the names of packages it failed
+	to load.
+
+    o	packageStatus() could return a data frame with duplicate row
+	names which could then not be printed.
 
 
 
