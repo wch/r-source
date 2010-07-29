@@ -1807,6 +1807,22 @@ repositories.  The @code{print} and @code{summary} methods give an
 overview of installed and available packages, the @code{upgrade} method
 offers to fetch and install the latest versions of outdated packages.
 
+One sometimes-useful additional piece of information that
+@code{packageStatus()} returns is the status of a package, as
+@code{"ok"}, @code{"upgrade"} or @code{"unavailable"} (in the currently
+selected repositories).  For example
+
+@example
+> inst <- packageStatus()$inst
+> with(inst, inst[Status != "ok", c(1:3, 14)])
+> with(inst, inst[Status != "ok", c(1, 3, 14)])
+                  Package Version      Status
+Biobase           Biobase   2.8.0 unavailable
+RCurl               RCurl   1.4-2     upgrade
+Rgraphviz       Rgraphviz  1.26.0 unavailable
+rgdal               rgdal  0.6-27     upgrade
+@end example
+
 
 @node Removing packages, Setting up a package repository, Updating packages, Add-on packages
 @section Removing packages
