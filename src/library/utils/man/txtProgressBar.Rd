@@ -23,7 +23,8 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
 \arguments{
   \item{min, max}{(finite) numeric values for the extremes of the
     progress bar. Must have \code{min < max}.}
-  \item{initial, value}{initial or new value for the progress bar.}
+  \item{initial, value}{initial or new value for the progress bar.  See
+    \sQuote{Details} for what happens with invalid values.}
   \item{char}{the character (or character string) to form the progress bar.}
   \item{width}{the width of the progress bar, as a multiple of the width
     of \code{char}.  If \code{NA}, the default, the number of characters
@@ -39,7 +40,8 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
   
   \code{setTxtProgessBar} will update the value.  Missing
   (\code{\link{NA}}) and out-of-range values of \code{value} will be
-  (silently) ignored.
+  (silently) ignored.  (Such values of \code{initial} cause the progress
+  bar not to be displayed until a valid value is set.)
   
   The progress bar should be \code{close}d when finished with: this
   outputs the final newline character.

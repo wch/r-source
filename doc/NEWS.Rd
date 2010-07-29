@@ -540,6 +540,11 @@
 
       \item \code{packageStatus()} could return a data frame with
       duplicate row names which could then not be printed.
+
+      \item \code{txtProgressBar(style = 2)} did not work correctly.
+      
+      \code{txtProgressBar(style = 3)} did not display until a
+      non-minimum value was set.
     }
   }
 }
