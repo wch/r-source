@@ -90,6 +90,9 @@ BUG FIXES
 	txtProgressBar(style = 3) did not display until a
       	non-minimum value was set.
 
+    o	pdf() device suffered from buffer overflow when adding more than
+	a few raster images.
+
 
 
 		CHANGES IN R VERSION 2.11.1

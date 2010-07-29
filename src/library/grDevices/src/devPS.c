@@ -5730,7 +5730,10 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     pd->versionMajor = versionMajor;
     pd->versionMinor = versionMinor;
 
-    pd->pos = (int *) calloc(1150, sizeof(int));
+    /* FIXME: pos is allocated of a static size that is never checked
+       as objects are added. This can lead to buffer overflows (and
+       has in the past when it was independent of maxRasters). */
+    pd->pos = (int *) calloc(1150 + maxRasters * 2, sizeof(int));
     if(!pd->pos) {
 	PDFcleanup(1, pd);
 	free(dd);
