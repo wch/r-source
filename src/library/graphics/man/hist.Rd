@@ -16,7 +16,7 @@ hist(x, \dots)
      xlim = range(breaks), ylim = NULL,
      xlab = xname, ylab,
      axes = TRUE, plot = TRUE, labels = FALSE,
-     nclass = NULL, warn.unused = FALSE, \dots)
+     nclass = NULL, warn.unused = TRUE, \dots)
 }
 \alias{hist}
 \alias{hist.default}

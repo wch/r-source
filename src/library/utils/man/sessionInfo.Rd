@@ -32,7 +32,7 @@ sessionInfo(package = NULL)
     versions where sub-architectures are in use this is of the form
     \samp{platform/sub-arch (nn-bit)}.}
   \item{locale}{a character string, the result of calling
-    \code{\link{Sys.locale}()}.}
+    \code{\link{Sys.getlocale}()}.}
   \item{basePkgs}{a character vector of base packages which are attached.}
   \item{otherPkgs}{(not always present): a character vector os other
     attached packages.}

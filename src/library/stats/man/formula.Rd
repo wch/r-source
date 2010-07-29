@@ -9,7 +9,7 @@
 formula(x, \dots)
 as.formula(object, env = parent.frame())
 
-\method{print}{function}(x, showEnv = !identical(e, .GlobalEnv), \dots)
+\method{print}{formula}(x, showEnv = !identical(e, .GlobalEnv), \dots)
 }
 \alias{formula}
 \alias{formula.default}
