@@ -437,8 +437,8 @@
       with a damaged terminal connection.  (\PR{14332})
       
       \item Added \code{warn.unused} argument to \code{hist.default()}
-      to allow suppression of warnings about graphical parameters used
-      with \code{plot=FALSE}.  (\PR{14341})
+      to allow suppression of spurious warnings about graphical
+      parameters used with \code{plot=FALSE}.  (\PR{14341})
     }
   }
 }
@@ -528,8 +528,11 @@
       spurious newline, which was displayed as extra whitespace when
       rendered.
 
-      \item \code{require(save = TRUE)} recorded in \code{.Depends}
-      the names of packages it failed to load.
+      \item \code{require(save = TRUE)} recorded the names of packages
+      it failed to load.
+
+      \item \code{packageStatus()} could return a data frame with
+      duplicate row names which could then not be printed.
     }
   }
 }
