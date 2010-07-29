@@ -248,7 +248,7 @@
       \item \code{arrayInd()} and \code{which()} gain an argument
       \code{useNames}.  For \code{arrayInd}, the default is now false,
       for speed reasons.
-      
+
       \item As is done for closures, the default \code{print} method for
       the formula class now displays the associated environment if it is
       not the global environment.
@@ -272,11 +272,11 @@
 
       \item File extension \file{.C} for C++ code files in packages is
       now defunct.
-      
+
       \item \command{R CMD check} not longer supports configuration
       files containing Perl configuration variables: use the environment
       variables documented in \sQuote{R Internals} instead.
-      
+
       \item The \code{save} argument of \code{detach()} now defaults to
       \code{FALSE} and \code{save = TRUE} is now deprecated.  (This
       facility is very rarely actually used, and was superseded by the
@@ -427,15 +427,20 @@
       \code{assign()}, \code{parent.env()}, \code{is.environment()} and
       others) now behave consistently to recognize S4 subclasses;
       \code{is.name()} also recognizes subclasses.
-      
+
       \item The \code{abs.tol} control parameter to \code{nlminb()}
       now defaults to \code{0.0} to avoid false declarations of
       convergence in objective functions that may go negative.
 
+      \item \code{constrOptim()} now has an improved convergence
+      criterion, notably for cases where the minimum was (very close to)
+      zero; further, other tweaks inspired from code proposals by Ravi
+      Varadhan.
+
       \item The standard Unix-alike termination dialog to ask if to save
       the workspace takes a EOF response as \code{n} to avoid problems
       with a damaged terminal connection.  (\PR{14332})
-      
+
       \item Added \code{warn.unused} argument to \code{hist.default()}
       to allow suppression of spurious warnings about graphical
       parameters used with \code{plot=FALSE}.  (\PR{14341})
@@ -469,7 +474,7 @@
       is used.
     }
   }
-  
+
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
       \item The use of Perl configuration variables for \command{R CMD
@@ -479,7 +484,7 @@
       instead.
     }
   }
-  
+
   \subsection{BUG FIXES}{
     \itemize{
       \item \command{R CMD Rd2dvi} failed if run from a path containing
@@ -506,7 +511,7 @@
       \item The command-line parser could mistake
       \option{--file=size...} for one of the options for setting limits
       for Ncells or Vcells.
-      
+
       \item The internal strptime() could corrupt its copy of the
       timezone which would then lead to spurious warnings. (\PR{14338})
 
@@ -544,7 +549,7 @@
       duplicate row names which could then not be printed.
 
       \item \code{txtProgressBar(style = 2)} did not work correctly.
-      
+
       \code{txtProgressBar(style = 3)} did not display until a
       non-minimum value was set.
     }
@@ -1481,7 +1486,7 @@
     \itemize{
       \item \code{trigamma(x)} and other \code{psigamma(x, n)} calls
       are now accurate for very large \code{abs(x)}.  (\PR{14020})
-      
+
       \item \code{[g]sub(perl=FALSE, fixed=FALSE)} could use excessive
       stack space when used with a very long vector containing some
       non-ASCII strings.
@@ -1559,7 +1564,7 @@
 
       It could return nonsensical results if no input determined the
       number of cases (seen in the no-segfault tests).
-      
+
       \item An error in \code{nls()} with a long formula could cause a
       segfault.  (\PR{14059})
 
@@ -1626,14 +1631,14 @@
 
       \item \code{help.search()} failed when the package argument was
       specified.  (\PR{14113})
-      
+
       \item \code{switch(EXPR = "A")} now returns \code{NULL}, as does
       \code{switch(1)} (which used to signal an error).
     }
   }
 }
- 
- 
+
+
 \section{CHANGES IN R VERSION 2.10.0}{
   \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
     \itemize{

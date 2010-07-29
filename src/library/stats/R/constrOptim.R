@@ -22,7 +22,7 @@ constrOptim <-
 {
 
     if (!is.null(control$fnscale) && control$fnscale < 0)
-        mu <-  -mu ##maximizing
+        mu <- -mu ##maximizing
 
     R <- function(theta, theta.old, ...) {
         ui.theta <- ui%*%theta
@@ -31,7 +31,7 @@ constrOptim <-
         gi.old <- ui%*%theta.old-ci
         bar <- sum(gi.old*log(gi)-ui.theta)
         if (!is.finite(bar)) bar <-  -Inf
-        f(theta, ...)-mu*bar
+        f(theta, ...) -mu*bar
     }
 
     dR <- function(theta, theta.old, ...) {
@@ -50,6 +50,8 @@ constrOptim <-
     gradient <- if(method == "SANN") {
         if(missing(grad)) NULL else grad
     } else function(theta, ...) dR(theta, theta.old, ...)
+    totCounts <- 0
+    s.mu <- sign(mu)
 
     for(i in seq_len(outer.iterations)) {
         obj.old <- obj
@@ -60,10 +62,11 @@ constrOptim <-
                    method = method, hessian = hessian, ...)
         r <- a$value
         if (is.finite(r) && is.finite(r.old) &&
-            abs(r-r.old)/(outer.eps+abs(r-r.old)) < outer.eps) break
+ 	    abs(r - r.old) < (1e-3 + abs(r)) * outer.eps) break
         theta <- a$par
+ 	totCounts <- totCounts + a$counts
         obj <- f(theta, ...)
-        if (obj > obj.old) break
+        if (s.mu * obj > s.mu * obj.old) break
     }
     if (i == outer.iterations) {
         a$convergence <- 7
@@ -78,6 +81,7 @@ constrOptim <-
         a$message <- gettextf("Objective function decreased at outer iteration %d", i)
     }
     a$outer.iterations <- i
+    a$counts <- totCounts
     a$barrier.value <- a$value
     a$value <- f(a$par, ...)
     a$barrier.value <- a$barrier.value - a$value
