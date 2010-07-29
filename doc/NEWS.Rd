@@ -446,6 +446,8 @@
       models). (Thanks to Bill Dunlap for spotting the
       \code{predict()} case.)
 
+      \item \code{aperm()} treated \code{resize = NA} as \code{resize =
+      TRUE}.
     }
   }
 }

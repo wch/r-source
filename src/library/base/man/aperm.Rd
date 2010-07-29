@@ -1,6 +1,6 @@
 % File src/library/base/man/aperm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{aperm}
@@ -11,13 +11,14 @@
   it.
 }
 \usage{
-aperm(a, perm, resize = TRUE)
+aperm(a, perm = NULL, resize = TRUE)
 }
 \arguments{
   \item{a}{the array to be transposed.}
   \item{perm}{the subscript permutation vector, which must be a
     permutation of the integers \code{1:n}, where \code{n} is the
-    number of dimensions of \code{a}.  The default is to reverse the
+    number of dimensions of \code{a}.  The default (used whenever
+    \code{perm} has zero length) is to reverse the
     order of the dimensions.}
   \item{resize}{a flag indicating whether the vector should be
     resized as well as having its elements reordered (default \code{TRUE}).}

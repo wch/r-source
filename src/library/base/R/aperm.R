@@ -14,9 +14,5 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-aperm <- function(a, perm, resize=TRUE)
-{
-    if (missing(perm))
-	perm <- integer(0L) # will reverse the order
+aperm <- function(a, perm = NULL, resize=TRUE)
     .Internal(aperm(a, perm, resize))
-}
