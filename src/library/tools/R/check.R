@@ -2398,6 +2398,7 @@ R_run_R <- function(cmd, Ropts, env)
             }
         }
 
+        this_multiarch <- multiarch
         if (!is_base_pkg) {
             desc <- check_description()
 
@@ -2431,7 +2432,6 @@ R_run_R <- function(cmd, Ropts, env)
             if (R_check_executables)  check_executables()
 
             if (do_install) check_install()
-            this_multiarch <- multiarch
             if (multiarch) {
                 ## check which architectures this package is installed for
                 if (dir.exists(dd <- file.path(libdir, pkgname, "libs"))) {
