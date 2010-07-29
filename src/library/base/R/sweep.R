@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-sweep <- function(x, MARGIN, STATS, FUN = "-", check.margin=TRUE, ...)
+sweep <- function(x, MARGIN, STATS, FUN = "-", check.margin = TRUE, ...)
 {
     FUN <- match.fun(FUN)
     dims <- dim(x)
@@ -25,7 +25,7 @@ sweep <- function(x, MARGIN, STATS, FUN = "-", check.margin=TRUE, ...)
         if (lstats > prod(dimmargin)) {
             warning("STATS is longer than the extent of 'dim(x)[MARGIN]'")
         } else if (is.null(dimstats)) { # STATS is a vector
-            cumDim <- c(1, cumprod(dimmargin))
+            cumDim <- c(1L, cumprod(dimmargin))
             upper <- min(cumDim[cumDim >= lstats])
             lower <- max(cumDim[cumDim <= lstats])
             if (lstats && (upper %% lstats != 0L || lstats %% lower != 0L))

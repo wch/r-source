@@ -1,6 +1,6 @@
 % File src/library/base/man/sweep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{sweep}
@@ -15,13 +15,10 @@ sweep(x, MARGIN, STATS, FUN="-", check.margin=TRUE, \dots)
 }
 \arguments{
   \item{x}{an array.}
-  \item{MARGIN}{a vector of indices giving the extents of \code{x}
+  \item{MARGIN}{a vector of indices giving the extent(s) of \code{x}
     which correspond to \code{STATS}.}
   \item{STATS}{the summary statistic which is to be swept out.}
-  \item{FUN}{the function to be used to carry out the sweep.  In the
-    case of binary operators such as \code{"/"} etc., the function name
-    must backquoted or quoted. (\code{FUN} is found by a call to
-    \code{\link{match.fun}}.)}
+  \item{FUN}{the function to be used to carry out the sweep.}
   \item{check.margin}{logical.  If \code{TRUE} (the default), warn if the
     length or dimensions of \code{STATS} do not match the specified
     dimensions of \code{x}.  Set to \code{FALSE} for a small speed gain
@@ -29,10 +26,17 @@ sweep(x, MARGIN, STATS, FUN="-", check.margin=TRUE, \dots)
   \item{\dots}{optional arguments to \code{FUN}.}
 }
 \details{
+  \code{FUN} is found by a call to \code{\link{match.fun}}.  As in the
+  default, binary operators can be supplied if quoted or backquoted.
+  
+  \code{FUN} should be a function of two arguments: it will be called
+  with arguments \code{x} and an array of the same dimensions generated
+  from \code{STATS} by \code{\link{aperm}}.
+  
   The consistency check among \code{STATS}, \code{MARGIN} and \code{x}
   is stricter if \code{STATS} is an array than if it is a vector.
   In the vector case, some kinds of recycling are allowed without a
-  warning. Use \code{sweep(x,MARGIN,as.array(STATS))} if \code{STATS}
+  warning.  Use \code{sweep(x, MARGIN, as.array(STATS))} if \code{STATS}
   is a vector and you want to be warned if any recycling occurs.
 }
 \value{
