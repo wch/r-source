@@ -51,9 +51,10 @@ lm <- function (formula, data, subset, weights, na.action,
     if (is.empty.model(mt)) {
 	x <- NULL
 	z <- list(coefficients = if (is.matrix(y))
-                    matrix(,0,3) else numeric(0L), residuals = y,
+                  matrix(,0,3) else numeric(0L), residuals = y,
 		  fitted.values = 0 * y, weights = w, rank = 0L,
-		  df.residual = if (is.matrix(y)) nrow(y) else length(y))
+		  df.residual = if(!is.null(w)) sum(w != 0) else
+                  if (is.matrix(y)) nrow(y) else length(y))
         if(!is.null(offset)) {
             z$fitted.values <- offset
             z$residuals <- y - offset
@@ -271,6 +272,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
 {
     z <- object
     p <- z$rank
+    rdf <- z$df.residual
     if (p == 0) {
         r <- z$residuals
         n <- length(r)
@@ -281,7 +283,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
             rss <- sum(w * r^2)
             r <- sqrt(w) * r
         }
-        resvar <- rss/(n - p)
+        resvar <- rss/rdf
         ans <- z[c("call", "terms")]
         class(ans) <- "summary.lm"
         ans$aliased <- is.na(coef(object))  # used in print method
@@ -298,8 +300,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     if (is.null(z$terms) || is.null(Qr))
 	stop("invalid \'lm\' object:  no 'terms' nor 'qr' component")
     n <- NROW(Qr$qr)
-    rdf <- n - p
-    if(is.na(z$df.residual) || rdf != z$df.residual)
+    if(is.na(z$df.residual) || n - p != z$df.residual)
         warning("residual degrees of freedom in object suggest this is not an \"lm\" fit")
     p1 <- 1L:p
     ## do not want missing values substituted here
@@ -705,7 +706,7 @@ predict.lm <-
 		r <- object$residuals
 		w <- object$weights
 		rss <- sum(if(is.null(w)) r^2 else r^2 * w)
-		df <- n - p
+		df <- object$df.residual
 		rss/df
 	    } else scale^2
 	if(type != "terms") {

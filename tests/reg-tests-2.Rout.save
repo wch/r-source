@@ -1,7 +1,8 @@
 
-R version 2.12.0 Under development (unstable) (2010-06-14 r52268)
+R version 2.12.0 Under development (unstable) (2010-07-29 r52637)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin10.4.0 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3004,7 +3005,7 @@ j
 
 $sigma
         b         d         e         f         g         h         i         j 
-0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 
+0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 
 
 $wt.res
          b          d          e          f          g          h          i 
@@ -3031,9 +3032,9 @@ j
 
 $sigma
         b         d         c         e         f         g         h         i 
-0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 0.8830622 
+0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 0.9366289 
         j 
-0.8830622 
+0.9366289 
 
 $wt.res
          b          d          c          e          f          g          h 

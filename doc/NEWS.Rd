@@ -439,6 +439,13 @@
       \item Added \code{warn.unused} argument to \code{hist.default()}
       to allow suppression of spurious warnings about graphical
       parameters used with \code{plot=FALSE}.  (\PR{14341})
+
+      \item \code{predict.lm()}, \code{summary.lm()}, and indeed
+      \code{lm()} itself had issues with residual DF in zero-weighted
+      cases (the latter two only in connection with empty
+      models). (Thanks to Bill Dunlap for spotting the
+      \code{predict()} case.)
+
     }
   }
 }
