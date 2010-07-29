@@ -85,6 +85,11 @@ BUG FIXES
     o	packageStatus() could return a data frame with duplicate row
 	names which could then not be printed.
 
+    o	txtProgressBar(style = 2) did not work correctly.
+      	
+	txtProgressBar(style = 3) did not display until a
+      	non-minimum value was set.
+
 
 
 		CHANGES IN R VERSION 2.11.1

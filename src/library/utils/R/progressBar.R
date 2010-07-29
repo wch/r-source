@@ -6,7 +6,7 @@ txtProgressBar <-
     .val <- initial
     .killed <- FALSE
     .nb <- 0L
-    .pc <- 0L
+    .pc <- -1L # This ensures the initial value is displayed for style = 3
     nw <- nchar(char, "w")
     if(is.na(width)) {
         width <- getOption("width")
@@ -23,8 +23,8 @@ txtProgressBar <-
             cat(paste(rep.int(char, nb-.nb), collapse=""))
             flush.console()
         } else if (.nb > nb) {
-            cat(paste(c("\r", rep.int(" ", .nb*nw)), collapse=""))
-            cat(paste(c("\r", rep.int(char, nb)), collapse=""))
+            cat("\r", paste(rep.int(" ", .nb*nw), collapse=""),
+                "\r", paste(rep.int(char, nb), collapse=""), sep = "")
             flush.console()
         }
         .nb <<- nb
@@ -35,11 +35,11 @@ txtProgressBar <-
         .val <<- value
         nb <- round(width*(value - min)/(max - min))
         if(.nb <= nb) {
-            cat(paste("\r", rep.int(char, nb), collapse=""))
+            cat("\r", paste(rep.int(char, nb), collapse=""), sep = "")
             flush.console()
         } else {
-            cat(paste(c("\r", rep.int(" ", .nb*nw)), collapse=""))
-            cat(paste(c("\r", rep.int(char, nb)), collapse=""))
+            cat("\r", paste(rep.int(" ", .nb*nw), collapse=""),
+                "\r", paste(rep.int(char, nb), collapse=""), sep = "")
             flush.console()
         }
         .nb <<- nb
@@ -70,7 +70,7 @@ txtProgressBar <-
             .killed <<- TRUE
         }
     up <- switch(style, up1, up2, up3)
-    if(initial > min) up(initial)
+    up(initial) # will check if in range
     structure(list(getVal=getVal, up=up, kill=kill),
               class = "txtProgressBar")
 }
