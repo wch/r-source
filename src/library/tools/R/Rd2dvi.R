@@ -745,7 +745,8 @@ function(pkgdir, outfile, title, batch = FALSE,
 
     setwd(startdir)
     cat("Saving output to", sQuote(output), "...\n")
-    file.copy(file.path(build_dir, paste("Rd2", out_ext, sep = ".")), output)
+    file.copy(file.path(build_dir, paste("Rd2", out_ext, sep = ".")), output,
+              overwrite = force)
     cat("Done\n")
 
     do_cleanup()
