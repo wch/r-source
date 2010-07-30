@@ -187,6 +187,7 @@ get_exclude_patterns <- function()
             if (WINDOWS) "  --auto-zip            select zipping of data based on size",
             "  --use-zip-data        collect data files in zip archive",
             "  --no-docs             do not build and install documentation",
+            "  --no-manual           do not build the manual even if \\Sexprs are present",
             "",
             "Report bugs to <r-bugs@r-project.org>.", sep="\n")
     }
@@ -207,6 +208,24 @@ get_exclude_patterns <- function()
         writeLinesNL(lines, ldpath)
     }
 
+    temp_install_pkg <- function(pkgdir, libdir) {
+	dir.create(libdir, mode = "0755")
+	cmd <- if (WINDOWS) shQuote(file.path(R.home("bin"), "Rcmd.exe"))
+	else paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
+	cmd <- paste(cmd, "INSTALL -l", shQuote(libdir), shQuote(pkgdir))
+	res <- shell_with_capture(cmd)
+	if (res$status) {
+	    printLog(Log, "      -----------------------------------\n")
+	    printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
+	    printLog(Log, "      -----------------------------------\n")
+	    printLog(Log, "ERROR: Installation failed\n")
+	    printLog(Log, "Removing installation dir\n")
+	    unlink(libdir, recursive = TRUE)
+	    do_exit(1)
+	}   
+	TRUE
+    }
+    
     prepare_pkg <- function(pkgdir, desc, Log)
     {
         pkgname <- basename(pkgdir)
@@ -223,26 +242,19 @@ get_exclude_patterns <- function()
             } else resultLog(Log, "OK")
         }
         cleanup_pkg(pkgdir, Log)
+        
+        libdir <- tempfile("Rinst")        
+        
+        pkgInstalled <- build_Rd_db(pkgdir, libdir)
+        
         if (file.exists("INDEX")) update_Rd_index("INDEX", "man", Log)
         if (vignettes && dir.exists(file.path("inst", "doc")) &&
            length(list_files_with_type(file.path("inst", "doc"),
                                        "vignette"))) {
-            messageLog(Log, "installing the package to re-build vignettes")
-            libdir <- tempfile("Rinst")
-            dir.create(libdir, mode = "0755")
-            cmd <- if (WINDOWS) shQuote(file.path(R.home("bin"), "Rcmd.exe"))
-            else paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
-            cmd <- paste(cmd, "INSTALL -l", shQuote(libdir), shQuote(pkgdir))
-            res <- shell_with_capture(cmd)
-            if (res$status) {
-                printLog(Log, "      -----------------------------------\n")
-                printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
-                printLog(Log, "      -----------------------------------\n")
-                printLog(Log, "ERROR: Installation failed\n")
-                printLog(Log, "Removing installation dir\n")
-                unlink(libdir, recursive = TRUE)
-                do_exit(1)
-            }
+            if (!pkgInstalled) {
+		messageLog(Log, "installing the package to re-build vignettes")
+		pkgInstalled <- temp_install_pkg(pkgdir, libdir)
+	    }	
 
             ## Better to do this in a separate process: it might die
             creatingLog(Log, "vignettes")
@@ -266,8 +278,10 @@ get_exclude_patterns <- function()
                 printLog(Log, paste(c(res$stdout, ""),  collapse="\n"))
                 do_exit(1L)
             } else resultLog(Log, "OK")
+        }
+        if (pkgInstalled) {
             unlink(libdir, recursive = TRUE)
-
+	
 	    ## And finally, clean up again.
             cleanup_pkg(pkgdir, Log)
         }
@@ -371,7 +385,41 @@ get_exclude_patterns <- function()
             file.rename(newindex, oldindex)
         }
     }
-
+    
+    build_Rd_db <- function(pkgdir, libdir) {
+    	db <- .build_Rd_db(pkgdir, stages=NULL, os=c("unix", "windows"), step=1)
+    	if (!length(db)) return(FALSE)
+    	
+    	# Strip the pkgdir off the names
+    	names(db) <- substring(names(db), nchar(file.path(pkgdir, "man", ""))+1)
+    	
+	containsSexprs <- which(sapply(db, function(Rd) getDynamicFlags(Rd)["\\Sexpr"]))
+	if (!length(containsSexprs)) return(FALSE)
+	
+	messageLog(Log, "installing the package to process help pages")
+	temp_install_pkg(pkgdir, libdir)
+	
+	containsBuildSexprs <- which(sapply(db, function(Rd) getDynamicFlags(Rd)["build"]))
+	    
+	if (length(containsBuildSexprs)) {
+	    for (i in containsBuildSexprs) 
+		db[[i]] <- prepare_Rd(db[[i]], stages="build", stage2=FALSE, stage3=FALSE)
+	    messageLog(Log, "saving partial Rd database")
+	    partial <- db[containsBuildSexprs]
+	    dir.create("build", showWarnings=FALSE)
+	    .saveRDS(partial, file.path("build", "partial.rdb"))
+	}
+	needRefman <- manual && any(sapply(db, function(Rd) any(getDynamicFlags(Rd)[c("install","render")])))
+	if (needRefman) {
+	    messageLog(Log, "building the package manual")
+	    refman <- file.path(pkgdir, "build", paste(basename(pkgdir), ".pdf", sep = ""))
+	    ..Rd2dvi(c("--pdf", "--force", "--no-preview", 
+	               paste("--output=", refman, sep=""),
+	               pkgdir), quit = FALSE)
+        }	
+	return(TRUE)
+    }
+    
     ## These also fix up missing final NL
     fix_nonLF_in_source_files <- function(pkgname, Log)
     {
@@ -413,6 +461,7 @@ get_exclude_patterns <- function()
     force <- FALSE
     vignettes <- TRUE
     binary <- FALSE
+    manual <- TRUE  # Install the manual if Rds contain \Sexprs
     INSTALL_opts <- character()
     pkgs <- character()
     options(showErrorCalls=FALSE, warn = 1)
@@ -459,6 +508,8 @@ get_exclude_patterns <- function()
             INSTALL_opts <- c(INSTALL_opts, "--use-zip-data")
         } else if (a == "--no-docs") {
             INSTALL_opts <- c(INSTALL_opts, "--no-docs")
+        } else if (a == "--no-manual") {
+            manual <- FALSE
         } else if (substr(a, 1, 1) == "-") {
             message("Warning: unknown option ", sQuote(a))
         } else pkgs <- c(pkgs, a)
