@@ -215,7 +215,7 @@ Section:	VSECTIONHEADER VerbatimArg	{ $$ = xxmarkup($1, $2, STATIC, &@$); }
 	|	SECTIONHEADER2 LatexArg LatexArg2 { $$ = xxmarkup2($1, $2, $3, 2, STATIC, &@$); }
 	|	IFDEF IfDefTarget SectionList ENDIF { $$ = xxmarkup2($1, $2, $3, 2, HAS_IFDEF, &@$); UNPROTECT_PTR($4); } 
 	|	SEXPR       goOption RLikeArg2   { $$ = xxmarkup($1, $3, HAS_SEXPR, &@$); xxpopMode($2); }
-	|	SEXPR       goOption Option RLikeArg2 { $$ = xxOptionmarkup($1, $3, $4, HAS_SEXPR, &@$); xxpopMode($2); }
+	|	SEXPR       goOption Option RLikeArg2 { $$ = xxOptionmarkup($1, $3, $4, STATIC, &@$); xxpopMode($2); }
 	|	COMMENT				{ $$ = xxtag($1, COMMENT, &@$); }
 	|	TEXT				{ $$ = xxtag($1, TEXT, &@$); } /* must be whitespace */
 	|	UserMacro			{ $$ = $1; }
@@ -1830,3 +1830,6 @@ SEXP attribute_hidden do_deparseRd(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return result;
 }
+
+
+
