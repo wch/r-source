@@ -106,6 +106,7 @@ function(entry, fields)
     rfields <- BibTeX_entry_field_db[[pos]]
     if(!length(rfields)) return(character())
     ## Go for legibility/generality rather than efficiency.
+    fields <- tolower(fields)
     ok <- sapply(strsplit(rfields, "|", fixed = TRUE),
                  function(f) any(f %in% fields))
     rfields[!ok]
