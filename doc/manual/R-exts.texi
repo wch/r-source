@@ -1601,9 +1601,8 @@ default if logging in remotely or for batch jobs.
 
 @quotation Multiple sub-architectures
 On systems which support multiple sub-architectures (principally Windows
-and Mac OS X), @command{R CMD check} will install (at least on Windows)
-and check the package only for the default sub-architecture run by
-@command{R}.
+and Mac OS X), @command{R CMD check} will install and check the package
+only for the default sub-architecture run by @command{R}.
 
 There are two possible ways to check a package under other installed
 sub-architectures.  One is to use something like @command{R

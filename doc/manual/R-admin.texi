@@ -1814,7 +1814,6 @@ selected repositories).  For example
 
 @example
 > inst <- packageStatus()$inst
-> with(inst, inst[Status != "ok", c(1:3, 14)])
 > with(inst, inst[Status != "ok", c(1, 3, 14)])
                   Package Version      Status
 Biobase           Biobase   2.8.0 unavailable

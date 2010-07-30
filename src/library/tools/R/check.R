@@ -1629,7 +1629,7 @@ R_run_R <- function(cmd, Ropts, env)
             INSTALL_opts <- install_args
             ## don't use HTML, checkRd goes over the same ground.
             INSTALL_opts <- c(INSTALL_opts,  "--no-html")
-            if (WINDOWS && !multiarch)
+            if (!multiarch)
                 INSTALL_opts <- c(INSTALL_opts,  "--no-multiarch")
             if (install == "fake")
                 INSTALL_opts <- c(INSTALL_opts,  "--fake")
@@ -1683,12 +1683,6 @@ R_run_R <- function(cmd, Ropts, env)
                         "\n\n", sep = "", file = outfile)
                     cmd <- paste(cmd, ">>", shQuote(outfile), "2>&1")
                     install_error <- R_system(cmd)
-                    if (WINDOWS) {
-                        ## MS Html Help Compiler gives lines terminated
-                        ## by CRCRLF, so we clean up the log file.
-
-                        ## Still needed?  Seems not
-                    }
                     lines <- readLines(outfile, warn = FALSE)
                 }
                 if (install_error) {
@@ -1995,8 +1989,7 @@ R_run_R <- function(cmd, Ropts, env)
     WINDOWS <- .Platform$OS.type == "windows"
 
     R_EXE <- file.path(R.home("bin"), if (WINDOWS) "Rterm.exe" else "R")
-    R_CMD <- if (WINDOWS)
-        shQuote(file.path(R.home("bin"), "Rcmd.exe"))
+    R_CMD <- if (WINDOWS) shQuote(file.path(R.home("bin"), "Rcmd.exe"))
     else paste(shQuote(file.path(R.home("bin"), "R")), "CMD")
 
     .file_test <- function(op, x)

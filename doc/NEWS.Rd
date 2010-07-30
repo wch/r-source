@@ -273,8 +273,8 @@
   }
   \subsection{DEPRECATED & DEFUNCT}{
     \itemize{
-      \item Supplying the parser with a string containing both octal/hex and
-       Unicode escapes is now an error.
+      \item Supplying the parser with a character string containing both
+       octal/hex and Unicode escapes is now an error.
 
       \item File extension \file{.C} for C++ code files in packages is
       now defunct.
@@ -333,6 +333,12 @@
        \file{~/.R/check.Renviron} (in the format used by
        \file{.Renviron}, and with sub-architecture specific versions
        such as \file{~/.R/check.Renviron.i386} taking precedence).
+
+       There is a new option \option{--multiarch} to check the package
+       under all of the installed sub-architectures.  Unless this is
+       used, the install done by \code{check} for testing purposes is
+       only of the current sub-architecture (\emph{via} \command{R CMD
+       INSTALL --no-multiarch}.
 
       \item \command{R CMD build} no longer creates an \file{INDEX} file
        (\command{R CMD INSTALL} does so), and \code{--force} removes
@@ -438,9 +444,9 @@
       now defaults to \code{0.0} to avoid false declarations of
       convergence in objective functions that may go negative.
 
-      \item The standard Unix-alike termination dialog to ask if to save
-      the workspace takes a EOF response as \code{n} to avoid problems
-      with a damaged terminal connection.  (\PR{14332})
+      \item The standard Unix-alike termination dialog to ask whether to
+      save the workspace takes a EOF response as \code{n} to avoid
+      problems with a damaged terminal connection.  (\PR{14332})
 
       \item Added \code{warn.unused} argument to \code{hist.default()}
       to allow suppression of spurious warnings about graphical
