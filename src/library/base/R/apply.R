@@ -19,20 +19,25 @@ apply <- function(X, MARGIN, FUN, ...)
     FUN <- match.fun(FUN)
 
     ## Ensure that X is an array object
-    d <- dim(X)
-    dl <- length(d)
-    if(dl == 0L)
-	stop("dim(X) must have a positive length")
-    ds <- 1L:dl
-    if(length(oldClass(X)))
-	X <- if(dl == 2) as.matrix(X) else as.array(X)
-    ## now recompute things as coercion can change dims
+    dl <- length(dim(X))
+    if(!dl) stop("dim(X) must have a positive length")
+    if(is.object(X))
+	X <- if(dl == 2L) as.matrix(X) else as.array(X)
+    ## now record dim as coercion can change it
     ## (e.g. when a data frame contains a matrix).
     d <- dim(X)
     dn <- dimnames(X)
+    ds <- seq_len(dl)
 
     ## Extract the margins and associated dimnames
 
+    if (is.character(MARGIN)) {
+        if(is.null(dnn <- names(dn))) # names(NULL) is NULL
+           stop("'X' must have named dimnames")
+        MARGIN <- match(MARGIN, dnn)
+        if (any(is.na(MARGIN)))
+            stop("not all elements of 'MARGIN' are names of dimensions")
+    }
     s.call <- ds[-MARGIN]
     s.ans  <- ds[MARGIN]
     d.call <- d[-MARGIN]

@@ -1033,6 +1033,20 @@ SEXP attribute_hidden do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(perm) == 0) {
 	for (i = 0; i < n; i++) pp[i] = n-1-i;
     } else if (isString(perm)) {
+	SEXP dna = getAttrib(a, R_DimNamesSymbol);
+	if (isNull(dna))
+	    error(_("'a' does not have named dimnames"));
+	SEXP dnna = getAttrib(dna, R_NamesSymbol);
+	if (isNull(dnna))
+	    error(_("'a' does not have named dimnames"));
+	for (i = 0; i < n; i++) {
+	    const char *this = translateChar(STRING_ELT(perm, i));
+	    for (j = 0; j < n; j++)
+		if (streql(translateChar(STRING_ELT(dnna, j)),
+			   this)) {pp[i] = j; break;}
+	    if (j >= n)
+		error(_("perm[%d] does not match a dimension name"), i+1);
+	}
     } else {
 	PROTECT(perm = coerceVector(perm, INTSXP));
 	if (length(perm) == n) {

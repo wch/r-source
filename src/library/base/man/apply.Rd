@@ -16,18 +16,20 @@ apply(X, MARGIN, FUN, \dots)
 \arguments{
   \item{X}{an array, including a matrix.}
   \item{MARGIN}{a vector giving the subscripts which the function will
-    be applied over.
-    \code{1} indicates rows, \code{2} indicates columns,
-    \code{c(1,2)} indicates rows and columns.}
+    be applied over. E.g., for a matrix \code{1} indicates rows,
+    \code{2} indicates columns, \code{c(1, 2)} indicates rows and
+    columns. Where \code{X} has named dimnames, it can be a character
+    vector selecting dimension names.}
   \item{FUN}{the function to be applied: see \sQuote{Details}.
     In the case of functions like \code{+}, \code{\%*\%}, etc., the
     function name must be backquoted or quoted.}
   \item{\dots}{optional arguments to \code{FUN}.}
 }
 \details{
-  If \code{X} is not an array but has a non-null \code{\link{dim}} value,
-  \code{apply} attempts to coerce it to an array via \code{as.matrix}
-  if it is two-dimensional (e.g., data frames) or via \code{as.array}.
+  If \code{X} is not an array but an object of a class with a non-null
+  \code{\link{dim}} value (such as a data frame), \code{apply} attempts
+  to coerce it to an array via \code{as.matrix} if it is two-dimensional
+  (e.g., a data frame) or via \code{as.array}.
 
   \code{FUN} is found by a call to \code{\link{match.fun}} and typically
   is either a function or a symbol (e.g. a backquoted name) or a

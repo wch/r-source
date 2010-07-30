@@ -263,6 +263,12 @@
 
       \item \code{require()} will now return \code{FALSE} (and not fail)
       if loading the package or one of its dependencies fails.
+
+      \item \code{aperm()} now allows argument \code{perm} to be a
+      character vector when the array has named dimnames (as the results
+      of \code{table()} calls do).  Similarly, \code{array()} allows
+      \code{MARGIN} to be a character vector.  (Based on suggestions of
+      Michael Lachmann.)
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
@@ -432,11 +438,6 @@
       now defaults to \code{0.0} to avoid false declarations of
       convergence in objective functions that may go negative.
 
-      \item \code{constrOptim()} now has an improved convergence
-      criterion, notably for cases where the minimum was (very close to)
-      zero; further, other tweaks inspired from code proposals by Ravi
-      Varadhan.
-
       \item The standard Unix-alike termination dialog to ask if to save
       the workspace takes a EOF response as \code{n} to avoid problems
       with a damaged terminal connection.  (\PR{14332})
@@ -453,6 +454,11 @@
 
       \item \code{aperm()} treated \code{resize = NA} as \code{resize =
       TRUE}.
+
+      \item \code{constrOptim()} now has an improved convergence
+      criterion, notably for cases where the minimum was (very close to)
+      zero; further, other tweaks inspired from code proposals by Ravi
+      Varadhan.
     }
   }
 }

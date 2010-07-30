@@ -15,11 +15,12 @@ aperm(a, perm = NULL, resize = TRUE)
 }
 \arguments{
   \item{a}{the array to be transposed.}
-  \item{perm}{the subscript permutation vector, which must be a
-    permutation of the integers \code{1:n}, where \code{n} is the
-    number of dimensions of \code{a}.  The default (used whenever
-    \code{perm} has zero length) is to reverse the
-    order of the dimensions.}
+  \item{perm}{the subscript permutation vector, usually a permutation of
+    the integers \code{1:n}, where \code{n} is the number of dimensions
+    of \code{a}.  When \code{a} has named dimnames, it can be a
+    character vector of length \code{n} giving a permutation of those
+    names. The default (used whenever \code{perm} has zero length) is to
+    reverse the order of the dimensions.}
   \item{resize}{a flag indicating whether the vector should be
     resized as well as having its elements reordered (default \code{TRUE}).}
 }
