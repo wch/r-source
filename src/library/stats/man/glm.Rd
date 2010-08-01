@@ -1,6 +1,6 @@
 % File src/library/stats/man/glm.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{glm}
@@ -84,10 +84,14 @@ glm.fit(x, y, weights = rep(1, nobs),
 
   \item{method}{the method to be used in fitting the model.  The default
     method \code{"glm.fit"} uses iteratively reweighted least squares
-    (IWLS), whereas \code{"model.frame"} which returns the model frame and
-    does no fitting.  User-supplied fitting functions can be supplied
-    either as a function or a character string naming a function, with a
-    function which takes the same arguments as \code{glm.fit}.}
+    (IWLS): the alternative \code{"model.frame"} returns the model frame
+    and does no fitting.
+
+    User-supplied fitting functions can be supplied either as a function
+    or a character string naming a function, with a function which takes
+    the same arguments as \code{glm.fit}.  If specified as a character
+    string it is looked up from within the \pkg{stats} namespace.
+  }
 
   \item{x, y}{For \code{glm}:
     logical values indicating whether the response vector and model
