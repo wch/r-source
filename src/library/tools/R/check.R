@@ -616,7 +616,27 @@ R_run_R <- function(cmd, Ropts, env)
             }
         }
 
-        if (!any) resultLog(Log, "OK")
+        ## CITATION files in non-standard places?
+        ## Common problems: rather than inst/CITATION, have
+        ##   CITATION
+        ##   CITATION.txt
+        ##   inst/doc/CITATION
+        ## Of course, everything in inst is justifiable, so only give a
+        ## note for now.
+        files <- dir(".", pattern = "^CITATION.*", recursive = TRUE)
+        files <- files[tools::file_path_sans_ext(files) == "CITATION" &
+                       files != file.path("inst", "CITATION")]
+        if(length(files)) {
+            if(!any) noteLog(Log)
+            any <- TRUE
+            wrapLog("Found the following CITATION file(s) in a non-standard place:\n")
+            printLog(Log,
+                     paste("  ", files, sep ="", collapse = "\n"),
+                     "\n")
+            wrapLog("Most likely inst/CITATION should be used instead.\n")
+        }
+
+        if(!any) resultLog(Log, "OK")
     }
 
     check_non_ASCII <- function()
