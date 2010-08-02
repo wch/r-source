@@ -1649,10 +1649,10 @@ R_run_R <- function(cmd, Ropts, env)
             INSTALL_opts <- install_args
             ## don't use HTML, checkRd goes over the same ground.
             INSTALL_opts <- c(INSTALL_opts,  "--no-html")
-            if (!multiarch)
-                INSTALL_opts <- c(INSTALL_opts,  "--no-multiarch")
             if (install == "fake")
                 INSTALL_opts <- c(INSTALL_opts,  "--fake")
+            else if (!multiarch)
+                INSTALL_opts <- c(INSTALL_opts,  "--no-multiarch")
             INSTALL_opts <- paste(INSTALL_opts, collapse = " ")
             cmd <-
                 paste(R_CMD,
@@ -2077,7 +2077,7 @@ R_run_R <- function(cmd, Ropts, env)
             "      --extra-arch      do only runtime tests needed for an additional",
             "                        sub-architecture.",
             "      --multiarch       do runtime tests on all installed sub-archs",
-            "      --no-multiarch    do runtime tests on the main sub-architecture",
+            "      --no-multiarch    do runtime tests only on the main sub-architecture",
             "",
             "By default, all test sections are turned on.",
             "",
@@ -2114,7 +2114,7 @@ R_run_R <- function(cmd, Ropts, env)
     check_subdirs <- ""           # defaults to R_check_subdirs_strict
     extra_arch <- FALSE
     spec_install <- FALSE
-    multiarch <- FALSE
+    multiarch <- NA
 
     libdir <- ""
     outdir <- ""
@@ -2201,21 +2201,32 @@ R_run_R <- function(cmd, Ropts, env)
         multiarch <- FALSE
     }
 
-    if (multiarch) {
-        ## see if there are multiple installed architectures.
+    if (!identical(multiarch, FALSE)) {
+        ## see if there are multiple installed architectures, and if they work
         if (WINDOWS) {
+            ## always has multiple sub-archs as from R 2.12.0.
             f <- dir(file.path(R.home(), "bin"))
             archs <- f[f %in% c("i386", "x64")]
+            ## if we have x64, can only run it on a 64-bit OS
+            if (length(archs) > 1L && !grepl("x64", win.version()))
+                arch <- "i386"
         } else {
             wd2 <- setwd(file.path(R.home("bin"), "exec"))
             archs <- Sys.glob("*")
             setwd(wd2)
+            if (length(archs) > 1L)
+                for (arch in archs) {
+                    if (arch == rarch) next
+                    cmd <- paste(file.path(R.home(), "bin", "R"),
+                                 " --arch=", arch,
+                                 " --version > /dev/null", sep = "")
+                    if (system(cmd)) archs <- archs[archs != arch]
+                }
         }
-        if (length(archs) <= 1) {
-            warning("'--multiarch' specified with only one installed sub-architecture",
+        if (length(archs) <= 1L && isTRUE(multiarch))
+            warning("'--multiarch' specified with only one usable sub-architecture",
                     call.=FALSE, immediate. = TRUE)
-            multiarch <- FALSE
-        }
+        multiarch <- length(archs) > 1L
     }
 
 

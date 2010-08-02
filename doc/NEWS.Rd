@@ -334,11 +334,18 @@
        \file{.Renviron}, and with sub-architecture specific versions
        such as \file{~/.R/check.Renviron.i386} taking precedence).
 
-       There is a new option \option{--multiarch} to check the package
-       under all of the installed sub-architectures.  Unless this is
-       used, the install done by \code{check} for testing purposes is
-       only of the current sub-architecture (\emph{via} \command{R CMD
-       INSTALL --no-multiarch}.
+       There are new options \option{--multiarch} to check the package
+       under all of the installed sub-architectures and
+       \option{--no-multiarch} to confine checking to the
+       sub-architecture under which \command{check} is invoked.  If
+       neither option is supplied, a test is done of installed
+       sub-architectures and those which can be run on the current OS
+       are used.
+
+       Unless multiple sub-architectures are selected, the install done
+       by \code{check} for testing purposes is only of the current
+       sub-architecture (\emph{via} \command{R CMD INSTALL
+       --no-multiarch}.
 
       \item \command{R CMD build} no longer creates an \file{INDEX} file
        (\command{R CMD INSTALL} does so), and \code{--force} removes

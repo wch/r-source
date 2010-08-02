@@ -1602,23 +1602,21 @@ default if logging in remotely or for batch jobs.
 @quotation Multiple sub-architectures
 On systems which support multiple sub-architectures (principally Windows
 and Mac OS X), @command{R CMD check} will install and check the package
-only for the default sub-architecture run by @command{R}.
-
-There are two possible ways to check a package under other installed
-sub-architectures.  One is to use something like @command{R
---arch=x86_64 CMD check --extra-arch} or (Windows)
-@command{/path/to/R/bin/x64/Rcmd check --extra-arch} to run just the
-checks@footnote{loading, examples, tests, vignettes} which differ by
-sub-architecture.
-
-The second approach is to run @command{R CMD check --multiarch} which
-will run the loading tests, examples and @file{tests} directory under
-each installed sub-architecture in turn, and give an error if any fail.
-Where environment variables (including @env{PATH}@footnote{this is
-needed on Windows to select the appropriate GTK+ and @samp{graphviz}
-DLLs.}) need to be set differently for each sub-architecture, these can
-be set in architecture-specific files such as
+only for all the available sub-architectures.  This will run the loading
+tests, examples and @file{tests} directory under each installed
+sub-architecture in turn, and give an error if any fail.  Where
+environment variables (including @env{PATH}@footnote{this is needed on
+Windows to select the appropriate GTK+ and @samp{graphviz} DLLs.}) need
+to be set differently for each sub-architecture, these can be set in
+architecture-specific files such as
 @file{@var{R_HOME}/etc/i386/Renviron.site}.
+
+An alternative approach is to use @command{R CMD check --no-multiarch}
+to check the primary subarchitecture, and then to use something like
+@command{R --arch=x86_64 CMD check --extra-arch} or (Windows)
+@command{/path/to/R/bin/x64/Rcmd check --extra-arch} to run for each
+additional sub-architecture just the checks@footnote{loading, examples,
+tests, vignettes} which differ by sub-architecture.
 @end quotation
 
 
