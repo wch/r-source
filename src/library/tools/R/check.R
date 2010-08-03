@@ -624,7 +624,7 @@ R_run_R <- function(cmd, Ropts, env)
         ## Of course, everything in inst is justifiable, so only give a
         ## note for now.
         files <- dir(".", pattern = "^CITATION.*", recursive = TRUE)
-        files <- files[tools::file_path_sans_ext(files) == "CITATION" &
+        files <- files[file_path_sans_ext(basename(files)) == "CITATION" &
                        files != file.path("inst", "CITATION")]
         if(length(files)) {
             if(!any) noteLog(Log)
