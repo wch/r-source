@@ -337,7 +337,8 @@ prepare_Rd <-
         Rdfile <- summary(Rd)
         Rd <- parse_Rd(Rd, encoding = encoding, fragment=fragment, ...)
     } else Rdfile <- attr(Rd, "Rdfile")
-    if (is.null(Rdfile) && !is.null(srcref <- attr(Rd, "srcref")))
+    srcref <- attr(Rd, "srcref")
+    if (is.null(Rdfile) && !is.null(srcref))
     	Rdfile <- attr(srcref, "srcfile")$filename
     if (fragment) meta <- NULL
     else {
@@ -359,7 +360,8 @@ prepare_Rd <-
 	# Restore flags from any sections that are left
 	Rd <- setDynamicFlags(Rd, apply(sapply(Rd, getDynamicFlags), 1, any))
     }
-    structure(Rd, Rdfile = Rdfile, class = "Rd", meta = meta)
+    structure(Rd, Rdfile = Rdfile, class = "Rd", meta = meta,
+              srcref = srcref)
 }
 
 prepare2_Rd <- function(Rd, Rdfile)
