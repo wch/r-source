@@ -109,6 +109,9 @@
       \item \code{serialize()} to a raw vector works around the dismal
       performance of Windows' memory manager by allocating much larger
       chunks of memory less frequently.
+      
+      \item \code{readClipboard()} could cause a segfault with certain
+      clipboard data.
     }
   }
 }
