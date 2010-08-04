@@ -1613,7 +1613,7 @@ R_run_R <- function(cmd, Ropts, env)
         if (grepl("^check", install) &&
             file.exists(".install_timestamp")) {
             execs <-
-                execs[file_test("-nt", execs, ".install_timestamp")]
+                execs[file_test("-ot", execs, ".install_timestamp")]
         }
         if (length(execs)) {
             warnLog("Found the following executable file(s):")
