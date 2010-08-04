@@ -2,9 +2,16 @@ RdTextFilter <-
 function(ifile, encoding = "unknown", keepSpacing = TRUE,
          drop = character(), keep = character())
 {
-    if (inherits(ifile, "Rd")) p <- ifile
-    else p <- parse_Rd(ifile, encoding = encoding)
+    if (inherits(ifile, "Rd")) {
+	# Undo sorting done in prepare2_Rd
+	srcrefs <- sapply(ifile, function(s) attr(s, "srcref"))
+	p <- ifile[ order(srcrefs[1,], srcrefs[2,]) ]
+	class(p) <- class(ifile)
+    } else 
+    	p <- parse_Rd(ifile, encoding = encoding)
+    
     tags <- RdTags(p)
+    
     if ("\\encoding" %in% tags) {
 	encoding <- p[[which(tags == "\\encoding")[1L]]][[1L]]
 	if (encoding %in% c("UTF-8", "utf-8", "utf8")) encoding <- "UTF-8"
