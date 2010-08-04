@@ -39,6 +39,7 @@ function(x, strict = TRUE, regexp, classes = NULL)
 {
     ## Internal creator for numeric version objects.
 
+    nms <- names(x)
     x <- as.character(x)
     y <- rep.int(list(integer()), length(x))
     valid_numeric_version_regexp <- sprintf("^%s$", regexp)
@@ -48,6 +49,7 @@ function(x, strict = TRUE, regexp, classes = NULL)
             stop("invalid version specification ", x, call. = FALSE)
         y[ok] <- lapply(strsplit(x[ok], "[.-]"), as.integer)
     }
+    names(y) <- nms
     class(y) <- unique(c(classes, "numeric_version"))
     y
 }
@@ -125,6 +127,7 @@ function(x, base = NULL)
     if(!is.numeric_version(x)) stop("wrong class")
     if(is.null(base)) base <- max(unlist(x), 0, na.rm = TRUE) + 1
     classes <- class(x)
+    nms <- names(x)
     x <- unclass(x)
     lens <- as.numeric(sapply(x, length))
     ## We store the lengths so that we know when to stop when decoding.
@@ -137,7 +140,7 @@ function(x, base = NULL)
                            sum(t / base^seq.int(0, length.out =
                                                 length(t)))))
     structure(ifelse(lens > 0L, x, NA_real_),
-              base = base, lens = lens, .classes = classes)
+              base = base, lens = lens, .classes = classes, names = nms)
 }
 
 ## <NOTE>
@@ -261,19 +264,19 @@ function(..., na.rm)
 
 as.character.numeric_version <-
 function(x, ...)
-{
-    x <- unclass(x)
-    y <- rep.int(NA_character_, length(x))
-    ind <- as.integer(sapply(x, length)) > 0L
-    y[ind] <- unlist(lapply(x[ind], paste, collapse = "."))
-    y
-}
+    as.character(format(x))
 
 as.data.frame.numeric_version <- as.data.frame.vector
 
 as.list.numeric_version <-
 function(x, ...)
-    lapply(seq_along(x), function(i) x[i])
+{
+    nms <- names(x)
+    names(x) <- NULL
+    y <- lapply(seq_along(x), function(i) x[i])
+    names(y) <- nms
+    y
+}    
 
 c.numeric_version <-
 function(..., recursive = FALSE)
@@ -297,7 +300,15 @@ function(x, incomparables = FALSE, ...)
 }
 
 format.numeric_version <-
-    as.character.numeric_version
+function(x, ...)
+{
+    x <- unclass(x)
+    y <- rep.int(NA_character_, length(x))
+    names(y) <- names(x)
+    ind <- as.integer(sapply(x, length)) > 0L
+    y[ind] <- unlist(lapply(x[ind], paste, collapse = "."))
+    y
+}
 
 is.na.numeric_version <-
 function(x)
@@ -317,12 +328,6 @@ function(x, ...)
 rep.numeric_version <-
 function(x, ...)
     structure(NextMethod("rep"), class = oldClass(x))
-
-## not needed: duplicates xtfrm method
-## sort.numeric_version <-
-## function(x, decreasing = FALSE, na.last = NA, ...)
-##     x[order(.encode_numeric_version(x),
-##             na.last = na.last, decreasing = decreasing)]
 
 unique.numeric_version <-
 function(x, incomparables = FALSE, ...)
