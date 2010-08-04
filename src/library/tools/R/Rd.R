@@ -249,7 +249,7 @@ function(RdFiles, outFile = "", type = NULL,
     if(!inherits(outFile, "connection"))
         stop("argument 'outFile' must be a character string or connection")
 
-    db <- .build_Rd_db(files = RdFiles)
+    db <- .build_Rd_db(files = RdFiles, stages="build")
     index <- .build_Rd_index(Rd_contents(db), type = type)
     writeLines(formatDL(index, width = width, indent = indent), outFile)
 }
@@ -347,51 +347,79 @@ function(x, ...)
 }
 
 .build_Rd_db <-
-function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL)
+function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL, 
+         stages = c("build", "install"), os = .OStype(), step = 3L, built_file = NULL)
 {
     if(!is.null(dir)) {
         man_dir <- file.path(dir, "man")
         if(!file_test("-d", man_dir))
             return(structure(list(), names = character()))
         if(is.null(files))
-            files <- list_files_with_type(man_dir, "docs")
+            files <- list_files_with_type(man_dir, "docs", OS_subdirs=os)
         encoding <- .get_package_metadata(dir, FALSE)["Encoding"]
         if(is.na(encoding)) encoding <- "unknown"
     } else if(is.null(files))
         stop("you must specify 'dir' or 'files'")
 
     .fetch_Rd_object <- function(f) {
-        ## This calls parse_Rd
+        ## This calls parse_Rd if f is a filename
         Rd <- prepare_Rd(f, encoding = encoding,
-                         defines = .Platform$OS.type,
-                         stages = "install", warningCalls = FALSE)
-        structure(Rd, prepared = 3L)
+                         defines = os,
+                         stages = stages, warningCalls = FALSE,
+                         stage2 = step > 1L, stage3 = step > 2L)
+        structure(Rd, prepared = step)
     }
 
-    if(!is.null(db_file) && file_test("-f", db_file)) {
+    if(!is.null(db_file) && file_test("-f", db_file)) { 
         ## message("updating database of parsed Rd files")
         db <- fetchRdDB(sub("\\.rdx$", "", db_file))
         db_names <- names(db) <-
             .readRDS(file.path(dirname(db_file), "paths.rds"))
         ## Files in the db in need of updating:
-        ind <- (files %in% db_names) & file_test("-nt", files, db_file)
-        if(any(ind))
-            db[files[ind]] <- lapply(files[ind], .fetch_Rd_object)
-        ## Files not in the db:
-        ind <- !(files %in% db_names)
-        if(any(ind)) {
-            db1 <- lapply(files[ind], .fetch_Rd_object)
-            names(db1) <- files[ind]
-            db <- c(db, db1)
-        }
+        indf <- (files %in% db_names) & file_test("-nt", files, db_file)
+        ## Also files not in the db:
+        indf <- indf | !(files %in% db_names)
+
         ## Db elements missing from files:
-        ind <- !(db_names %in% files)
-        if(any(ind))
+        ind <- !(db_names %in% files) | (db_names %in% files[indf])
+	if(any(ind))
             db <- db[!ind]
-    } else {
+	files <- files[indf]    
+    } else 
+    	db <- list()
+    	
+    # The built_file is a file of partially processed Rd objects, where build time
+    # \Sexprs have been evaluated.  We'll put the object in place of its
+    # filename to continue processing.
+
+    names(files) <- files    
+    if(!is.null(built_file) && file_test("-f", built_file)) {	
+        basenames <- basename(files)
+ 	built <- .readRDS(built_file)
+ 	names_built <- names(built)
+ 	if ("install" %in% stages) {
+ 	    this_os <- grepl(paste("^", os, "/", sep=""), names_built)
+ 	    name_only <- basename(names_built[this_os])
+ 	    built[name_only] <- built[this_os]
+ 	    some_os <- grepl("/", names(built))
+ 	    built <- built[!some_os]
+ 	    names_built <- names(built)
+ 	}
+ 	built[!(names_built %in% basenames)] <- NULL
+ 	if (length(built)) {
+ 	    which <- match(names(built), basenames)
+ 	    if (all(file_test("-nt", built_file, files[which]))) {
+ 	    	files <- as.list(files) 	
+	    	files[which] <- built
+	    }
+	}
+    }
+    	
+    if(length(files)) {
         ## message("building database of parsed Rd files")
-        db <- lapply(files, .fetch_Rd_object)
-        names(db) <- files
+        db1 <- lapply(files, .fetch_Rd_object)
+        names(db1) <- names(files)
+        db <- c(db, db1)
     }
 
     db

@@ -698,6 +698,7 @@ function(dir, outDir, encoding = "unknown")
     dir.create(manOutDir, FALSE)
     db_file <- file.path(manOutDir,
                          paste(basename(outDir), ".rdx", sep = ""))
+    built_file <- file.path(dir, "build", "partial.rdb")
     ## Avoid (costly) rebuilding if not needed.
     ## Actually, it seems no more costly than these tests, which it also does
     pathsFile <- file.path(manOutDir, "paths.rds")
@@ -705,8 +706,8 @@ function(dir, outDir, encoding = "unknown")
        !identical(sort(manfiles), sort(.readRDS(pathsFile))) ||
        !all(file_test("-nt", db_file, manfiles))) {
         db <- .build_Rd_db(dir, manfiles, db_file = db_file,
-                           encoding = encoding)
-        nm <- names(db)
+                           encoding = encoding, built_file = built_file)
+        nm <- as.character(names(db)) # Might be NULL
         .saveRDS(nm, pathsFile)
         names(db) <- sub("\\.[Rr]d$", "", basename(nm))
         makeLazyLoadDB(db, file.path(manOutDir, basename(outDir)))

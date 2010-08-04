@@ -192,6 +192,7 @@
                 latexEncodings <-
                     c(latexEncodings,
                       attr(Rd2latex(f, file.path(latexdir, out),
+                                    stages = c("build", "install", "render"), 
                                     encoding = encoding,
                                     outputEncoding = outputEncoding),
                            "latexEncoding"))
@@ -536,7 +537,7 @@ function(pkgdir, outfile, title, batch = FALSE,
 
 ### * ..Rd2dvi
 
-..Rd2dvi <- function(args = NULL)
+..Rd2dvi <- function(args = NULL, quit = TRUE)
 {
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
@@ -751,7 +752,8 @@ function(pkgdir, outfile, title, batch = FALSE,
 
     do_cleanup()
     if(preview != "false") system(paste(preview, output))
-    q("no", runLast = FALSE)
+    if (quit)
+    	q("no", runLast = FALSE)
 }
 
 

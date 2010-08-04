@@ -1661,6 +1661,16 @@ vignettes}) in the package.  To do so it installs the current package
 into a temporary library tree, but any dependent packages need to be
 installed in an available library tree (see the Note: below).
 
+Similarly, if the @file{.Rd} documentation files contain any
+@code{\Sexpr} macros (@pxref{Dynamic pages}), the package will be
+temporarily installed to execute them.  Post-execution binary copies
+of those pages containing build-time macros will be saved in
+@file{build/partial.rdb}.  If there are any install-time or 
+render-time macros, a @file{.pdf} version of the package manual will be built
+and installed in the @file{build/} subdirectory.  (This allows CRAN or
+other repositories to display the manual even if they are unable to
+install the package.)
+
 One of the checks that @code{R CMD build} runs is for empty source
 directories.  These are in most cases unintentional, in which case they
 should be removed and the build re-run.
@@ -4265,8 +4275,7 @@ output if @code{strip.white=TRUE}.  With
 Control when this macro is run.  Possible values are
 @itemize @minus
 @item @code{stage=build}
-The macro is run when building a source tarball.  Currently
-this stage is not processed.
+The macro is run when building a source tarball.
 
 @item @code{stage=install}
 The macro is run when installing from source.
@@ -4279,11 +4288,10 @@ Conditionals such as @code{#ifdef}
 (@pxref{Platform-specific sections}) are applied after the
 @code{build} macros but before the @code{install} macros.  In some
 situations (e.g. installing directly from a source directory without a
-tarball, or building a binary package) the above descriptions may not
-be accurate, but authors should be able to rely on the sequence being
+tarball, or building a binary package) the above description is not
+literally accurate, but authors can rely on the sequence being
 @code{build}, @code{#ifdef}, @code{install}, @code{render}, with all
-stages executed@footnote{As noted above, the @code{build} stage is not
-currently implemented.}.
+stages executed.
 
 Code is only run once in each stage, so a @code{\Sexpr[results=rd]}
 macro can output an @code{\Sexpr} macro designed for a later stage,

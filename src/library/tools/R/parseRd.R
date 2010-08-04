@@ -68,8 +68,9 @@ parse_Rd <- function(file, srcfile = NULL, encoding = "unknown",
     writeLines(lines, tcon, useBytes = TRUE)
     on.exit(close(tcon))
 
-    .Internal(parse_Rd(tcon, srcfile, "UTF-8",
+    result <- .Internal(parse_Rd(tcon, srcfile, "UTF-8",
                        verbose, basename, fragment, warningCalls))
+    expandDynamicFlags(result)
 }
 
 print.Rd <- function(x, deparse = FALSE, ...)

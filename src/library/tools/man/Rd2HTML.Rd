@@ -122,13 +122,10 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 \note{
   The \verb{\Sexpr} macro is a new addition to Rd files.  It includes
   \R code that will be executed at one of three times: \emph{build} time
-  (when a package's source code is built into a tarball, not yet
-  implemented), \emph{install} time (when the package is installed or
+  (when a package's source code is built into a tarball), 
+  \emph{install} time (when the package is installed or
   built into a binary package), and \emph{render} time (when the man
   page is converted to a readable format).
-
-  Currently only text format man pages render when displayed; all other
-  formats render when installed.
 
   For example, this man page was:
   \enumerate{
@@ -139,11 +136,6 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
     \item rendered on
     \Sexpr[stage=render]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")}.
   }
-  Because build-time execution is not yet supported, the first of these
-  will display as a macro; the other two may or may not, depending on the
-  build of \R.  (Note that escapes, e.g. for \samp{\%}, may not be
-  identical in this display, but the displayed Rd code should parse to the
-  same object.)
 }
 
 \value{

@@ -138,15 +138,45 @@ evalWithOpt <- function(expr, options, env)
     return(res)
 }
 
+# The parser doesn't distinguish between types of Sexprs, we do
+expandDynamicFlags <- function(block, options = RweaveRdDefaults) {
+    recurse <- function(block) {
+	flags <- getDynamicFlags(block)
+	if (flags["\\Sexpr"]) {
+	    if (identical(tag <- attr(block, "Rd_tag"), "\\Sexpr")) {
+		if (is.null(opts <- attr(block, "Rd_option"))) opts <- ""
+		# modify locally
+                options <- utils:::SweaveParseOptions(opts, options, RweaveRdOptions)
+                flags[options$stage] <- TRUE
+	    } else if (identical(tag, "\\RdOpts")) {
+	        # modify globally
+	    	options <<- utils:::SweaveParseOptions(block, options, RweaveRdOptions)
+	    } else { # Has \Sexpr flag, so must be a list
+		for (i in seq_along(block)) {
+		    block[[i]] <- recurse(block[[i]])
+		    flags <- flags | getDynamicFlags(block[[i]])
+		}
+	    }
+	    block <- setDynamicFlags(block, flags)
+	}
+	block
+    }
+    recurse(block)
+}
+
 getDynamicFlags <- function(block) {
     flag <- attr(block, "dynamicFlag")
-    if (is.null(flag)) c("#ifdef"=FALSE, "\\Sexpr"=FALSE)
-    else c("#ifdef" = flag %% 2 > 0, "\\Sexpr" = flag %/% 2 > 0)
+    if (is.null(flag)) c("#ifdef"=FALSE, "\\Sexpr"=FALSE, build=FALSE, install=FALSE, render=FALSE)
+    else c("#ifdef" = flag %% 2L > 0L,               # 1
+           "\\Sexpr" = (flag %/% 2L) %% 2L > 0L,     # 2
+           build = (flag %/% 4L) %% 2L > 0L,         # 4
+           install = (flag %/% 8L) %% 2L > 0L,       # 8
+           render = (flag %/% 16L) %% 2L > 0L)       # 16
 }
 
 setDynamicFlags <- function(block, flags) {  # flags in format coming from getDynamicFlags
-    flag <- sum(flags * c(1,2))
-    if (flag == 0) flag <- NULL
+    flag <- sum(flags * c(1L,2L,4L,8L,16L))
+    if (flag == 0L) flag <- NULL
     attr(block, "dynamicFlag") <- flag
     block
 }
@@ -305,22 +335,26 @@ processRdSexprs <-
              env = new.env(parent=globalenv()))
 {
     recurse <- function(block) {
-    	if (!getDynamicFlags(block)["\\Sexpr"]) return(block)
+    	if (!any(getDynamicFlags(block)[stage])) return(block)
 
         if (is.list(block)) {
             if (!is.null(tag <- attr(block, "Rd_tag"))) {
-        	if (tag == "\\Sexpr")
+        	if (tag == "\\Sexpr") 
             	    block <- processRdChunk(block, stage, options, env)
             	else if (tag == "\\RdOpts")
     	    	    options <<-
                         utils:::SweaveParseOptions(block, options, RweaveRdOptions)
     	    }
-	    for (i in seq_along(block))
-		block[[i]] <- recurse(block[[i]])
+    	    if (is.list(block)) {
+		for (i in seq_along(block)) 
+		    block[[i]] <- recurse(block[[i]])
+	    }
 	}
 	block
     }
-    recurse(block)
+    
+    if (!any(getDynamicFlags(block)[stage])) return(block)
+    expandDynamicFlags(recurse(block), options)
 }
 
 prepare_Rd <-

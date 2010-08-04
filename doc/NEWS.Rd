@@ -353,6 +353,9 @@
 
        It supports file \file{~/.R/build.Renviron} analogously to
        \command{check}.
+       
+      \item \command{R CMD build} now runs build-time \code{\\Sexpr}
+       expressions.
 
       \item \command{R CMD Rd2dvi} makes use of \code{tools::texi2dvi()}
        to process the package manual.  It is now implemented entirely in
