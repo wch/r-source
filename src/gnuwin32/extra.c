@@ -972,11 +972,12 @@ static SEXP splitClipboardText(const char *s, int ienc)
 	default:
 	    last = FALSE;
 	}
+    if (!last) line_len = max(line_len, nc);  /* the unterminated last might be the longest */
     n = max(cnt_n, cnt_r) + (last ? 0 : 1);
     if (cnt_n == 0 && cnt_r > 0) eol = '\r';
     if (cnt_r == cnt_n) CRLF = TRUE;
     /* over-allocate a line buffer */
-    line = R_chk_calloc(1+(line_len ? line_len :nc), 1);
+    line = R_chk_calloc(1+line_len, 1);
     PROTECT(ans = allocVector(STRSXP, n));
     for(p = s, q = line, nl = 0; *p; p++) {
 	if (*p == eol) {
