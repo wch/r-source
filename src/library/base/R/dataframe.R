@@ -544,17 +544,17 @@ data.frame <-
 
     if(missing(i)) { # df[, j] or df[ , ]
         ## not quite the same as the 1/2-arg case, as 'drop' is used.
-        if(missing(j) && drop && length(x) == 1L) return(.subset2(x, 1L))
+        if(drop && !has.j && length(x) == 1L) return(.subset2(x, 1L))
         nm <- names(x); if(is.null(nm)) nm <- character(0L)
-        if(!missing(j) && !is.character(j) && any(is.na(nm))) {
+        if(has.j && !is.character(j) && any(is.na(nm))) {
             ## less efficient version
             names(nm) <- names(x) <- seq_along(x)
-            y <- if(missing(j)) x else .subset(x, j)
+            y <- .subset(x, j)
             cols <- names(y)
             if(any(is.na(cols))) stop("undefined columns selected")
             cols <- names(y) <- nm[cols]
         } else {
-            y <- if(missing(j)) x else .subset(x, j)
+            y <- if(has.j) .subset(x, j) else x
             cols <- names(y)
             if(any(is.na(cols))) stop("undefined columns selected")
         }
@@ -578,7 +578,7 @@ data.frame <-
     x <- .Call("R_copyDFattr", xx, x, PACKAGE="base")
     oldClass(x) <- attr(x, "row.names") <- NULL
 
-    if(!missing(j)) { # df[i, j]
+    if(has.j) { # df[i, j]
         nm <- names(x); if(is.null(nm)) nm <- character(0L)
         if(!is.character(j) && any(is.na(nm)))
             names(nm) <- names(x) <- seq_along(x)
