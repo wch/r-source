@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.data.frame.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Extract.data.frame}
@@ -57,7 +57,10 @@
 
   When \code{[} and \code{[[} are used with two indices (\code{x[i, j]}
   and \code{x[[i, j]]}) they act like indexing a matrix:  \code{[[} can
-  only be used to select one element.
+  only be used to select one element.  Note that for each selected
+  column, \code{xj} say, typically (if it is not matrix-like), the
+  resulting column will be \code{xj[i]}, and hence rely on the
+  corresponding \code{[} method, see the examples section.
 
   If \code{[} returns a data frame it will have unique (and non-missing)
   row names, if necessary transforming the row names using
@@ -194,5 +197,25 @@ A <- data.frame(x=1:3, y=I(matrix(4:6)), z=I(matrix(letters[1:9],3,3)))
 A[1:3, "y"] # a matrix
 A[1:3, "z"] # a matrix
 A[, "y"]    # a matrix
+
+## keeping special attributes: use a class with a
+## "as.data.frame" and "[" method:
+% "avector" := vector that keeps attributes and we could provide a constructor
+%  avector <- function(x) { class(x) <- c("avector", class(x)); x }
+as.data.frame.avector <- as.data.frame.vector
+
+`[.avector` <- function(x,i,...) {
+  r <- NextMethod("[")
+  mostattributes(r) <- attributes(x)
+  r
+}
+
+d <- data.frame(i= 0:7, f= gl(2,4),
+                u= structure(11:18, unit = "kg", class="avector"))
+str(d[2:4, -1]) # 'u' keeps its "unit"
+\dontshow{
+stopifnot(identical(d[2:4,-1][,"u"],
+       structure(12:14, unit = "kg", class = "avector")))
+}
 }
 \keyword{array}

@@ -42,7 +42,7 @@ default.stringsAsFactors()
 \value{
   A data frame, a matrix-like structure whose columns may be of
   differing types (numeric, logical, factor and character and so on).
-  
+
   How the names of the data frame are created is complex, and the rest
   of this paragraph is only the basic story.  If the arguments are all
   named and simple objects (not lists, matrices of data frames) then the
@@ -62,7 +62,7 @@ default.stringsAsFactors()
   A data frame is a list of variables of the same number of rows with
   unique row names, given class \code{"data.frame"}.  If no variables
   are included, the row names determine the number of rows.
-  
+
   The column names should be non-empty, and attempts to use empty names
   will have unsupported results.  Duplicate column names are allowed,
   but you need to use \code{check.names = FALSE} for \code{data.frame}
@@ -123,7 +123,7 @@ default.stringsAsFactors()
   \code{\link{plot.data.frame}},
   \code{\link{print.data.frame}},
   \code{\link{row.names}}, \code{\link{names}} (for the column names),
-  \code{\link{[.data.frame}} for subsetting methods,
+  \code{\link{[.data.frame}} for subsetting methods,% ./Extract.data.frame.Rd
   \code{\link{Math.data.frame}} etc, about
   \emph{Group} methods for \code{data.frame}s;
   \code{\link{read.table}},
