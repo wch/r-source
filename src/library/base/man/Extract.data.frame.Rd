@@ -85,9 +85,10 @@
   contain \code{NULL} elements which will cause the corresponding
   columns to be deleted.  (See the Examples.)
 
-  Matrix indexing using \code{[} is not recommended, and barely
+  Matrix indexing (\code{x[i]} with a logical or a 2-column integer
+  matrix \code{i}) using \code{[} is not recommended, and barely
   supported.  For extraction, \code{x} is first coerced to a matrix.
-  For replacement a logical matrix (only) can be used to select the
+  For replacement, a logical matrix (only) can be used to select the
   elements to be replaced in the same way as for a matrix.
 
   Both \code{[} and \code{[[} extraction methods partially match row
@@ -123,7 +124,7 @@
 
   Arguments other than \code{drop} and \code{exact} should not be named:
   there is a warning if they are and the behaviour differs from the
-  description here. 
+  description here.
 }
 \value{
   For \code{[} a data frame, list or a single column (the latter two
@@ -161,7 +162,7 @@ sw[1,, drop=TRUE]  # a list
 
 sw["C", ] # partially matches
 sw[match("C", row.names(sw)), ] # no exact match
-
+try(sw[, "Ferti"]) # column names must match exactly
 
 \dontshow{
 stopifnot(identical(sw[,1], sw[[1]]),
@@ -185,7 +186,7 @@ sapply(sw, class)
 sw$new4 <- NULL              # delete the column
 sw
 sw[6:8] <- list(letters[10:14], NULL, aa=1:5)
-# delete col7, update 6, append
+# update col. 6, delete 7, append
 sw
 
 ## matrices in a data frame
