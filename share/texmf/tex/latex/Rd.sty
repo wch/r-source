@@ -207,7 +207,7 @@
 \def\codedash{-\discretionary{}{}{}}
 \def\Rd@code#1{\normalfont\texttt{#1}\egroup}
 
-\def\AsIs{\bgroup\let\do\@makeother\Rd@AsIs@dospecials\Rd@AsIsX}
+\def\AsIs{\bgroup\let\do\@makeother\Rd@AsIs@dospecials\@noligs\Rd@AsIsX}
 \def\Rd@AsIs@dospecials{\do\$\do\&\do\#\do\^\do\_\do\%\do\~}
 \def\Rd@AsIsX#1{\normalfont #1\egroup}
 \let\command=\code
