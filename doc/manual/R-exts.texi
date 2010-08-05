@@ -523,8 +523,8 @@ H.2.8, I.5.1}.
 Finally, an optional @samp{Language} field can be used to indicate if
 the package documentation is not in English: this should be a
 comma-separated list of standard (not private use or grandfathered) IETF
-language tags as currently defined by RFC 5645
-(@uref{http://tools.ietf.org/html/rfc5645}, see also
+language tags as currently defined by RFC 5646
+(@uref{http://tools.ietf.org/html/rfc5646}, see also
 @uref{http://en.wikipedia.org/wiki/IETF_language_tag}), i.e., use
 language subtags which in essence are 2-letter ISO 639-1
 (@uref{http://en.@/wikipedia.@/org/wiki/ISO_639-1}) or 3-letter ISO
