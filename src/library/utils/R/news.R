@@ -80,10 +80,15 @@ function(x, ...)
             vchunks[order(as.numeric_version(sub(" *patched", ".1",
                                                  names(vchunks))),
                                  decreasing = TRUE)]
-	if(length(vchunks)) vheaders <-
-            sprintf("%sChanges in version %s:\n\n",
-                    c("", rep.int("\n", length(vchunks) - 1L)),
-                    names(vchunks))
+	if(length(vchunks)) {
+            dates <- sapply(vchunks, function(v) v$Date[1L])
+            vheaders <-
+                sprintf("%sChanges in version %s%s:\n\n",
+                        c("", rep.int("\n", length(vchunks) - 1L)),
+                        names(vchunks),
+                        ifelse(is.na(dates), "",
+                               sprintf(" (%s)", dates)))
+        }
         for(i in seq_along(vchunks)) {
             cat(vheaders[i])
             vchunk <- vchunks[[i]]
