@@ -46,14 +46,26 @@ function(files, filter, control = list(), encoding = "unknown")
     
     tfile <- tempfile("aspell")
     on.exit(unlink(tfile))
+
+    files <- as.list(files)
     
     for (i in seq_along(files)) {
 
-        file <- files[i]
+        file <- files[[i]]
+        if(is.character(file))
+            fname <- file
+        else {
+            ## The filter might be be able to figure out src files
+            ## without srcrefs so let's be nice for now ...
+            fname <- attr(attr(file, "srcref"), "srcfile")$filename
+            if(is.null(fname))
+                fname <- "<unknown>"
+        }
+
         enc <- encoding[i]
 
         if(verbose)
-            message(sprintf("Processing file %s", file))
+            message(sprintf("Processing file %s", fname))
 
         lines <- if(is.null(filter))
             readLines(file, encoding = enc)
@@ -134,6 +146,7 @@ function(files, filter, control = list(), encoding = "unknown")
 	##   None: # original offset
 
 	## Look at words not in dictionary with suggestions.
+
 	ind <- grepl("^&", lines)
 	if(any(ind)) {
 	    info <- strsplit(lines[ind], ": ", fixed = TRUE)
@@ -141,7 +154,7 @@ function(files, filter, control = list(), encoding = "unknown")
 	    two <- strsplit(sapply(info, `[`, 2L), ", ", fixed = TRUE)
 	    db1 <- data.frame(Original =
 			      as.character(sapply(one, `[`, 2L)),
-			      File = file,
+			      File = fname,
 			      Line = pos[ind],
 			      Column =
 			      as.integer(sapply(one, `[`, 4L)),
@@ -155,7 +168,7 @@ function(files, filter, control = list(), encoding = "unknown")
 	    one <- strsplit(lines[ind], " ", fixed = TRUE)
 	    db1 <- data.frame(Original =
 			      as.character(sapply(one, `[`, 2L)),
-			      File = file,
+			      File = fname,
 			      Line = pos[ind],
 			      Column =
 			      as.integer(sapply(one, `[`, 3L)),
