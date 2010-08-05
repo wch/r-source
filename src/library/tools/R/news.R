@@ -1,28 +1,28 @@
-.build_news_db_from_R_NEWS <-
-function()
-{
-    db <- readNEWS(chop = "keepAll")
-    ## This currently is a list of x.y lists of x.y.z lists of
-    ## categories list of entries.
-    flatten <- function(e)
-        cbind(rep.int(names(e), sapply(e, length)),
-              unlist(lapply(e,
-                            function(s) {
-                                ## Also remove leading white space and
-                                ## trailing blank lines.
-                                lapply(s,
-                                       function(e)
-                                           sub("[[:space:]]*$", "",
-                                               paste(sub("^ ", "", e),
-                                                     collapse = "\n")))
-                            }),
-                            use.names = FALSE))
-    db <- lapply(Reduce(c, db), flatten)
-    db <- do.call(rbind, Map(cbind, names(db), db))
-    ## Squeeze in an empty date column.
-    .make_news_db(cbind(db[, 1L], NA_character_, db[, -1L]),
-                  logical(nrow(db)))
-}
+## .build_news_db_from_R_NEWS <-
+## function()
+## {
+##     db <- readNEWS(chop = "keepAll")
+##     ## This currently is a list of x.y lists of x.y.z lists of
+##     ## categories list of entries.
+##     flatten <- function(e)
+##         cbind(rep.int(names(e), sapply(e, length)),
+##               unlist(lapply(e,
+##                             function(s) {
+##                                 ## Also remove leading white space and
+##                                 ## trailing blank lines.
+##                                 lapply(s,
+##                                        function(e)
+##                                            sub("[[:space:]]*$", "",
+##                                                paste(sub("^ ", "", e),
+##                                                      collapse = "\n")))
+##                             }),
+##                             use.names = FALSE))
+##     db <- lapply(Reduce(c, db), flatten)
+##     db <- do.call(rbind, Map(cbind, names(db), db))
+##     ## Squeeze in an empty date column.
+##     .make_news_db(cbind(db[, 1L], NA_character_, db[, -1L]),
+##                   logical(nrow(db)))
+## }
 
 .build_news_db <-
 function(package, lib.loc = NULL, format = NULL, reader = NULL)
@@ -30,17 +30,26 @@ function(package, lib.loc = NULL, format = NULL, reader = NULL)
     dir <- system.file(package = package, lib.loc = lib.loc)
     ## Or maybe use .find.package()?
 
-    ## Eventually add support for DESCRIPTION
+    ## <FIXME>
+    ## We had planned to eventually add support for DESCRIPTION
     ##   News/File
     ##   News/Format
     ##   News/Reader
     ##   News/Reader@R
-    ## entries.
-    ## For now, only look for files
+    ## entries.  But now that we're moving to NEWS.Rd, there seems
+    ## little point in providing format/reader support ...
+    ## </FIXME>
+    
+    ## Look for new-style inst/NEWS.Rd.
+    ## If not found, look for old-style
     ##   NEWS inst/NEWS
     ## and ignore
     ##   ChangeLog inst/ChangeLog
     ## in the package directory.
+    nfile <- file.path(dir, "inst", "NEWS.Rd")
+    if(file_test("-f", nfile))
+        return(.build_news_db_from_package_NEWS_Rd(nfile))
+    
     files <- file.path(dir,
                        c("NEWS",
                          file.path("inst", "NEWS")))
@@ -347,57 +356,137 @@ function(f, pdf_file) {
 ## Transform old-style plain text NEWS file to Rd.
 
 news2Rd <-
-function(con = stdout(), codify = FALSE)
+function(file, out = stdout(), codify = FALSE)
 {
-    out <- function(x) writeLines(x, con = con)
+    ## For add-on packages, the given NEWS file should be in the root
+    ## package source directory or its 'inst' subdirectory, so that we
+    ## can use the DESCRIPTION metadata to obtain the package name and
+    ## encoding.
 
-    if(is.character(con)) {
-        con <- file(con, "wt")
-        on.exit(close(con))
+    file <- file_path_as_absolute(file)
+    dir <- dirname(file)
+    format <- "default"
+    if(file_test("-f", dfile <- file.path(dir, "DESCRIPTION")))
+        meta <- .read_description(dfile)
+    else if(basename(dir) == "inst" &&
+            file_test("-f", dfile <- file.path(dirname(dir),
+                                               "DESCRIPTION")))
+        meta <- .read_description(dfile)
+    else
+        format <- "R"
+
+    wto <- function(x) writeLines(x, con = out, useBytes = TRUE)
+    cre <- "(\\W|^)(\"[[:alnum:]_.]*\"|[[:alnum:]_.:]+\\(\\))(\\W|$)"
+
+    if(is.character(out)) {
+        out <- file(out, "wt")
+        on.exit(close(out))
     }
-    if(!isOpen(con, "wt")) {
-        open(con, "wt")
-        on.exit(close(con))
+    if(!isOpen(out, "wt")) {
+        open(out, "wt")
+        on.exit(close(out))
     }
 
-    out(c("\\newcommand{\\PR}{\\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}",
-          "\\name{NEWS}",
-          "\\title{R News}",
-          "\\encoding{UTF-8}"))
-
-    for(y in readNEWS(chop = "keepAll")) {
-        for(i in seq_along(y)) {
-            out(sprintf("\\section{CHANGES IN R VERSION %s}{",
-                        names(y)[i]))
-            z <- y[[i]]
-            for(j in seq_along(z)) {
-                out(c(sprintf("  \\subsection{%s}{", names(z)[j]),
-                      "    \\itemize{"))
-                for(chunk in z[[j]]) {
-                    chunk <- paste(chunk, collapse = "\n      ")
-                    ## <FIXME>
-                    ## Change to something like
-                    ##   chunk <- toRd(chunk)
-                    ## eventually ...
-                    chunk <- gsub("\\", "\\\\", chunk, fixed = TRUE)
-                    chunk <- gsub("{", "\\{", chunk, fixed = TRUE)
-                    chunk <- gsub("}", "\\}", chunk, fixed = TRUE)
-                    chunk <- gsub("%", "\\%", chunk, fixed = TRUE)
-                    ## </FIXME>
-                    if(codify) {
-                        chunk <- gsub("(\\W|^)(\"[[:alnum:]_.]*\"|[[:alnum:]_.:]+\\(\\))(\\W|$)",
-                                      "\\1\\\\code{\\2}\\3", chunk)
+    if(format == "R") {
+        news <- readNEWS(chop = "keepAll")
+        if(!length(news))
+            stop("No news found in given file using old-style R-like format.")
+        wto(c("\\newcommand{\\PR}{\\Sexpr[results=rd]{tools:::Rd_expr_PR(#1)}}",
+              "\\name{NEWS}",
+              "\\title{R News}",
+              "\\encoding{UTF-8}"))
+        for(y in news) {
+            for(i in seq_along(y)) {
+                wto(sprintf("\\section{CHANGES IN R VERSION %s}{",
+                            names(y)[i]))
+                z <- y[[i]]
+                for(j in seq_along(z)) {
+                    wto(c(sprintf("  \\subsection{%s}{", names(z)[j]),
+                          "    \\itemize{"))
+                    for(chunk in z[[j]]) {
+                        chunk <- toRd(paste(chunk, collapse = "\n      "))
+                        if(codify) {
+                            chunk <- gsub(cre, "\\1\\\\code{\\2}\\3",
+                                          chunk)
+                        }
+                        chunk <- gsub("PR#([[:digit:]]+)", "\\\\PR{\\1}",
+                                      chunk)
+                        wto(paste("      \\item", enc2utf8(chunk)))
                     }
-                    chunk <- gsub("PR#([[:digit:]]+)", "\\\\PR{\\1}",
-                                  chunk)
-                    out(paste("      \\item", chunk))
+                    wto(c("    }", "  }"))
                 }
-                out(c("    }", "  }"))
+                wto("}")
             }
-            out("}")
+        }
+    } else {
+        news <- .news_reader_default(file)
+        bad <- attr(news, "bad")
+        if(!length(bad))
+            stop("No news found in given file using package default format.")
+        if(any(bad)) {
+            bad <- news$Text[bad]
+            stop("Could not extract news from the following text chunks:\n",
+                 paste(sprintf("\nChunk %s:\n%s",
+                               format(seq_along(bad)), bad),
+                       collapse = "\n"))
+        }
+
+        encoding <- meta["Encoding"]
+        package <- meta["Package"]
+        
+        texts <- toRd(news$Text)
+        if(codify)
+            texts <- gsub(cre, "\\1\\\\code{\\2}\\3", texts)
+        ## Note that .news_reader_default re-encodes ...
+        if(!is.na(encoding))
+            texts <- iconv(texts, to = encoding, sub = "byte", mark = FALSE)
+        news$Text <- texts
+
+        wto(c("\\name{NEWS}",
+              sprintf("\\title{News for Package '%s'}", package)))
+        if(!is.na(encoding))
+            wto(sprintf("\\encoding{%s}", encoding))
+
+        ## Similar to print.news_db():
+        vchunks <- split(news, news$Version)
+        ## Re-order according to decreasing version.
+        vchunks <- vchunks[order(as.numeric_version(names(vchunks)),
+                                 decreasing = TRUE)]
+        dates <- sapply(vchunks, function(v) v$Date[1L])
+        if(any(ind <- !is.na(dates)))
+            names(vchunks)[ind] <-
+                sprintf("%s (%s)", names(vchunks)[ind], dates[ind])
+        vheaders <- sprintf("\\section{Changes in %s version %s}{",
+                            package, names(vchunks))
+        for(i in seq_along(vchunks)) {
+            wto(vheaders[i])
+            vchunk <- vchunks[[i]]
+            if(all(!is.na(category <- vchunk$Category)
+                   & nzchar(category))) {
+                ## need to preserve order of headings.
+                cchunks <-
+                    split(vchunk,
+                          factor(category, levels = unique(category)))
+                cheaders <- sprintf("  \\subsection{%s}{",
+                                    names(cchunks))
+                for(j in seq_along(cchunks)) {
+                    wto(c(cheaders[j],
+                          "    \\itemize{",
+                          paste("      \\item",
+                                gsub("\n", "\n        ", 
+                                     cchunks[[j]]$Text)),
+                          "    }",
+                          "  }"))
+                }
+            } else {
+                wto(c("  \\itemize{",
+                      paste("    \\item",
+                            gsub("\n", "\n      ", vchunk$Text)),
+                      "  }"))
+            }
+            wto("}")
         }
     }
-
 }
 
 Rd_expr_PR <-
@@ -410,11 +499,56 @@ function(x)
 .build_news_db_from_R_NEWS_Rd <-
 function(file = NULL)
 {
-    ## Need to proceed as follows:
-    ## Get \section and respective name
-    ## Get \subsection and respective name
-    ## Get respective items ...
+    x <- if(is.null(file))
+        .readRDS(file.path(R.home("doc"), "NEWS.rds"))
+    else {
+        ## Expand \Sexpr et al now because this does not happen when using
+        ## fragments.
+        prepare_Rd(parse_Rd(file), stages = "install")
+    }
 
+    db <- .extract_news_from_Rd(x)
+
+    ## Squeeze in an empty date column.
+    .make_news_db(cbind(sub("^CHANGES IN R VERSION ", "", db[, 1L]),
+                        NA_character_,
+                        db[, 2L],
+                        sub("\n*$", "", db[, 3L])),
+                  logical(nrow(db)))
+}
+
+.build_news_db_from_package_NEWS_Rd <-
+function(file)
+{
+    x <- prepare_Rd(parse_Rd(file), stages = "install")
+
+    db <- .extract_news_from_Rd(x)
+
+    ## Post-process section names to extract versions and dates.
+    re_v <- sprintf(".*[Vv]ersion[[:space:]]+(%s).*$",
+                    .standard_regexps()$valid_package_version)
+    re_d <- sprintf("^.*(%s)[[:punct:][:space:]]*$",
+                    "[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}")
+
+    nms <- db[, 1L]
+    ind <- grepl(re_v, nms, ignore.case = TRUE)
+    if(!all(ind))
+        warning("Cannot extract version info from the following section titles:\n",
+                sprintf("  %s", unique(nms[ind])))
+    .make_news_db(cbind(ifelse(ind,
+                               sub(re_v, "\\1", nms),
+                               NA_character_),
+                        ifelse(grepl(re_d, nms),
+                               sub(re_d, "\\1", nms),
+                               NA_character_),
+                        db[, 2L],
+                        sub("\n*$", "", db[, 3L])),
+                  logical(nrow(db)))
+}
+
+.extract_news_from_Rd <-
+function(x)
+{
     .get_Rd_section_names <- function(x)
         sapply(x, function(e) .Rd_deparse(e[[1L]]))
 
@@ -438,34 +572,30 @@ function(file = NULL)
         s <- sub("[[:space:]]*$", "", s)
         unlist(strsplit(s, "\n\036", fixed = TRUE))
     }
-
-    x <- if(is.null(file))
-        .readRDS(file.path(R.home("doc"), "NEWS.rds"))
-    else {
-        ## Expand \Sexpr et al now because this does not happen when using
-        ## fragments.
-        prepare_Rd(parse_Rd(file), stages = "install")
-    }
-
+    
     y <- x[RdTags(x) == "\\section"]
-    db <- do.call(rbind,
-                  Map(cbind,
-                      .get_Rd_section_names(y),
-                      lapply(y,
-                             function(e) {
-                                 z <- e[[2L]]
-                                 z <- z[RdTags(z) == "\\subsection"]
-                                 do.call(rbind,
-                                         Map(cbind,
-                                             .get_Rd_section_names(z),
-                                             lapply(z,
-                                                    function(e)
-                                                    do_chunk(e[[2L]]))))
-                             })))
-    ## Squeeze in an empty date column.
-    .make_news_db(cbind(sub("^CHANGES IN R VERSION ", "", db[, 1L]),
-                        NA_character_,
-                        db[, 2L],
-                        sub("\n*$", "", db[, 3L])),
-                  logical(nrow(db)))
+    do.call(rbind,
+            Map(cbind,
+                .get_Rd_section_names(y),
+                lapply(y,
+                       function(e) {
+                           z <- e[[2L]]
+                           ind <- RdTags(z) == "\\subsection"
+                           if(any(ind)) {
+                               z <- z[ind]
+                               do.call(rbind,
+                                       Map(cbind,
+                                           .get_Rd_section_names(z),
+                                           lapply(z,
+                                                  function(e)
+                                                  do_chunk(e[[2L]]))))
+                           } else {
+                               pos <- which(RdTags(z) == "\\itemize")[1L]
+                               if(is.na(pos))
+                                   stop("Malformed NEWS.Rd file.")
+                               cbind(NA_character_,
+                                     do_chunk(z[pos]))
+                           }
+                       })))
+    
 }
