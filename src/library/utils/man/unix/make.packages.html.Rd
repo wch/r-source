@@ -16,7 +16,7 @@ make.packages.html(lib.loc = .libPaths(), temp = TRUE, verbose = TRUE)
   \item{lib.loc}{character vector. List of libraries to be included.}
   \item{temp}{logical: should the package indices be created in a
     temporary location for use by the HTTP server?}
-  \item{verbose}{ogical: should messages and a heartbeat be shown?}
+  \item{verbose}{logical: should messages and a heartbeat be shown?}
 }
 \details{
   This creates the \file{packages.html} file, either a temporary copy

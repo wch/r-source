@@ -28,7 +28,7 @@
   \item{\dots}{Currently unused.}
 }
 \details{
-  The profiling algoritm tries to find an approximately evenly spaced
+  The profiling algorithm tries to find an approximately evenly spaced
   set of at least five parameter values (in each direction from the
   optimum) to cover  
   the root-likelihood function. Some care is taken to try and get sensible
