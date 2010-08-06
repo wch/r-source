@@ -93,6 +93,8 @@ BUG FIXES
     o	pdf() device suffered from buffer overflow when adding more than
 	a few raster images.
 
+    o   contour() did not display dashed line types properly when
+	contour lines were labelled. (Reported by David B. Thompson.)
 
 
 		CHANGES IN R VERSION 2.11.1
