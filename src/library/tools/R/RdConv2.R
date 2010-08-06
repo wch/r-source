@@ -285,7 +285,8 @@ processRdIfdefs <- function(blocks, defines)
 	    	    all <- seq_along(block)
 	    	    before <- all[all < i]
 	    	    after <- all[all > i]
-	    	    block <- tagged(c(block[before], newval, block[after]), tag)
+	    	    block <- structure(tagged(c(block[before], newval, block[after]), 
+	    	    			      tag), srcref = attr(block, "srcref"))
 	    	} else {
 	    	    flags <- flags | getDynamicFlags(newval)
 		    block[[i]] <- newval
