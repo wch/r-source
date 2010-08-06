@@ -1196,13 +1196,11 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 			      .5, .5, 0, dd);
 		    }
 		    else {
-			for (iii = 0; iii < indx; iii++)
-			    GLine(xxx[iii], yyy[iii],
-				  xxx[iii+1], yyy[iii+1], USER, dd);
-			for (iii = indx+range; iii < ns - 1; iii++)
-			    GLine(xxx[iii], yyy[iii],
-				  xxx[iii+1], yyy[iii+1], USER, dd);
-
+			if (indx > 0)
+		            GPolyline(indx+1, xxx, yyy, USER, dd);
+			if (ns-1-indx-range > 0)
+			    GPolyline(ns-indx-range, xxx+indx+range, yyy+indx+range,
+			          USER, dd);
 			if (gotLabel) {
 			    /* find which plot edge we are closest to */
 			    int closest; /* 0 = indx,  1 = indx+range */

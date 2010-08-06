@@ -583,6 +583,10 @@
 
       \code{txtProgressBar(style = 3)} did not display until a
       non-minimum value was set.
+      
+      \item \code{contour()} did not display dashed line types
+      properly when contour lines were labelled. (Reported by
+      David B. Thompson.)
     }
   }
 }
