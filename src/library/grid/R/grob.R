@@ -964,8 +964,10 @@ setGTree <- function(gTree, pathsofar, gPath, newGrob, strict, grep) {
         if (fullPathMatch(pathsofar, gPath, strict, grep)) {
           if (nameMatch(gPath$name, childName, grep[depth(gPath)])) {
             if (match(childName, newGrob$name, nomatch=0L)) {
-              gTree$children[[newGrob$name]] <- newGrob
-              found <- TRUE
+                gTree$children[[newGrob$name]] <- newGrob
+                found <- TRUE
+            } else {
+                stop("The new 'grob' must have the same name as the old 'grob'")
             }
           }
         # Otherwise recurse down child

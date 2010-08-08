@@ -33,6 +33,12 @@ get.gpar(names = NULL)
   viewport is popped off the viewport stack, or until some other
   viewport or graphical object is pushed or begins drawing.
 
+  The default parameter settings are defined by the ROOT viewport,
+  which takes its settings from the graphics device.
+  These
+  defaults may differ between devices (e.g., the default \code{fill}
+  setting is different for a PNG device compared to a PDF device).
+  
   Valid parameter names are:
   \tabular{ll}{
     col \tab Colour for lines and borders. \cr
@@ -52,7 +58,7 @@ get.gpar(names = NULL)
     font \tab Font face (alias for fontface;  for
     backward compatibility) \cr
   }
-
+  
   Colours can be specified in one of the forms returned by
   \code{\link{rgb}}, as a name (see \code{\link{colors}}) or as a
   positive integer index into the current \link{palette} (with zero or
