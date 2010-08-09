@@ -362,7 +362,7 @@
 
        It supports file \file{~/.R/build.Renviron} analogously to
        \command{check}.
-       
+
       \item \command{R CMD build} now runs build-time \code{\\Sexpr}
        expressions.
 
@@ -583,10 +583,13 @@
 
       \code{txtProgressBar(style = 3)} did not display until a
       non-minimum value was set.
-      
+
       \item \code{contour()} did not display dashed line types
       properly when contour lines were labelled. (Reported by
       David B. Thompson.)
+
+      \item \code{tools::undoc()} again detects undocumented data
+      objects.  Of course, this also affects \command{R CMD check}.
     }
   }
 }
