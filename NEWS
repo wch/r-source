@@ -96,6 +96,10 @@ BUG FIXES
     o   contour() did not display dashed line types properly when
 	contour lines were labelled. (Reported by David B. Thompson.)
 
+    o	tools::undoc() again detects undocumented data
+	objects.  Of course, this also affects R CMD check.
+
+
 
 		CHANGES IN R VERSION 2.11.1
 

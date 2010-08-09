@@ -131,8 +131,8 @@ function(package, dir, lib.loc = NULL)
     ## Find the data sets to work on.
     data_dir <- file.path(dir, "data")
     data_objs <- if(file_test("-d", data_dir))
-        names(unlist(.try_quietly(list_data_in_pkg(dataDir = data_dir)),
-                     use.names = FALSE))
+	unlist(.try_quietly(list_data_in_pkg(dataDir = data_dir)),
+	       use.names = FALSE)
     else
         character()
 
