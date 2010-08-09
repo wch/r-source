@@ -268,6 +268,10 @@ slot <-
       ## currently --> R_do_slot_assign() in ../../../main/attrib.c
   }
 
+## ". - hidden" since one should typically rather use is(), extends() etc:
+.hasSlot <- function(object, name)
+    .Call("R_hasSlot", object, name, PACKAGE = "methods")
+
 checkSlotAssignment <- function(obj, name, value)
 {
     cl <- class(obj)

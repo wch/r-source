@@ -33,6 +33,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(R_externalptr_prototype_object, 0),
     CALLDEF(R_getGeneric, 4),
     CALLDEF(R_get_slot, 2),
+    CALLDEF(R_hasSlot, 2),
     CALLDEF(R_identC, 2),
     CALLDEF(R_initMethodDispatch, 1),
     CALLDEF(R_methodsPackageMetaName, 3),
