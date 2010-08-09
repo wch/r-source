@@ -213,14 +213,17 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 
     envSep <- .Platform$path.sep
     texinputs0 <- texinputs
-    Rtexmf <- file.path(R.home("share"), "texmf", "tex", "latex")
+    Rtexmf <- file.path(R.home("share"), "texmf")
+    Rtexinputs <- file.path(Rtexmf, "tex", "latex")
     ## "" forces use of default paths.
-    texinputs <- paste(c(texinputs, Rtexmf, ""), collapse = envSep)
+    texinputs <- paste(c(texinputs0, Rtexinputs, ""), 
+                      collapse = envSep)
     ## not clear if this is needed, but works
-    if(.Platform$OS.type == "windows")
+    if(.Platform$OS.type == "windows") 
         texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
-    Rtexmf <- file.path(R.home("share"), "texmf", "bibtex", "bst")
-    bstinputs <- paste(c(texinputs, Rtexmf, ""), collapse = envSep)
+    Rbstinputs <- file.path(Rtexmf, "bibtex", "bst")
+    bstinputs <- paste(c(texinputs0, Rbstinputs, ""), 
+                      collapse = envSep)
 
     otexinputs <- Sys.getenv("TEXINPUTS", unset = NA)
     if(is.na(otexinputs)) {
@@ -336,9 +339,11 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ver <- system(paste(shQuote(texi2dvi), "--version"), intern = TRUE)
         if(length(grep("MiKTeX", ver[1L]))) {
             ## AFAICS need separate -I for each element of texinputs.
-            texinputs <- c(texinputs0, Rtexmf,
-                           file.path(R.home("share"), "texmf", "bibtex", "bst"))
-            paths <- paste ("-I", shQuote(texinputs))
+            texinputs <- c(texinputs0, 
+                           Rtexinputs,
+                           Rbstinputs)
+	    texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
+	    paths <- paste ("-I", shQuote(texinputs))
             extra <- paste(extra, paste(paths, collapse = " "))
         }
         ## this only gives a failure in some cases, e.g. not for bibtex errors.
