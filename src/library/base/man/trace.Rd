@@ -123,12 +123,15 @@ tracingState(on = NULL)
   you don't want to try to count the steps in the printed version of a
   function; instead, look at \code{as.list(body(f))} to get the numbers
   associated with the steps in function \code{f}.)
-  
+
   The \code{at} argument can also be a list of integer vectors.  In
   this case, each vector refers to a step nested within another step of
   the function.  For example, \code{at = list(c(3,4))}
   will call the tracer just before the fourth step of the third step
   of the function.  See the example below.
+
+  Using \code{\link[utils]{setBreakpoint}()} (package \pkg{utils}) may
+  be an alternative, calling \code{trace(...., at, ...)}.
 
   An intrinsic limitation in the \code{exit} argument is that it won't
   work if the function itself uses \code{on.exit}, since the existing
@@ -234,7 +237,7 @@ trace("f", quote(browser(skipCalls=4)), exit = quote(browser(skipCalls=4)))
 trace("f", quote(if(any(y < 0)) yOrig <- y),
       exit = quote(if(exists("yOrig")) browser(skipCalls=4)),
       print = FALSE)
-      
+
 ## Enter the browser just before stop() is called.  First, find
 ## the step numbers
 

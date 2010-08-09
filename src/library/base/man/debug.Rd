@@ -56,6 +56,10 @@ isdebugged(fun)
   To debug a function is defined inside a function, single-step though
   to the end of its definition, and then call \code{debug} on its name.
 
+  If you want to debug a function not starting at the very beginning,
+  use \code{\link{trace}(..., at = *)} or
+  \code{\link[utils]{setBreakpoint}}.
+
   Using \code{debug} is persistent, and unless debugging is turned off
   the debugger will be entered on every invocation (note that if the
   function is removed and replaced the debug state is not preserved).
@@ -66,10 +70,10 @@ isdebugged(fun)
   need to use \code{\link{trace}}, typically calling \code{\link{browser}},
   e.g., as \cr
   \code{trace("plot", browser, exit=browser, signature = c("track", "missing"))}
-  
+
   The number of lines printed for the deparsed call when a function is
   entered for debugging can be limited by setting
-  \code{\link{options}(deparse.max.lines)}.  
+  \code{\link{options}(deparse.max.lines)}.
 }
 \seealso{
   \code{\link{browser}}, \code{\link{trace}};
