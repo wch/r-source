@@ -122,12 +122,17 @@ print.packageDescription <- function(x, ...)
     invisible(x)
 }
 
-# Simple convenience function 
+# Simple convenience functions
 
 maintainer <- function(pkg){
   pkg # force evaluation
   return(packageDescription(pkg)$Maintainer)
 }
+
+packageVersion <- function(pkg, lib.loc=NULL)
+    package_version(packageDescription(pkg, lib.loc=lib.loc,
+				       fields = "Version", drop=TRUE))
+
 
 ## used with firstOnly = TRUE for example()
 ## used with firstOnly = FALSE in help()

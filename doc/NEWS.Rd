@@ -278,6 +278,8 @@
       \item Package news can now be given in Rd format, and
       \code{news()} prefers these \file{inst/NEWS.Rd} files to old-style
       plain text \file{NEWS} or \file{inst/NEWS} files.
+
+      \item New simple function \code{packageVersion}.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
