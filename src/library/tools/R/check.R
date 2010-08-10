@@ -2078,6 +2078,8 @@ R_run_R <- function(cmd, Ropts, env)
             "                        sub-architecture.",
             "      --multiarch       do runtime tests on all installed sub-archs",
             "      --no-multiarch    do runtime tests only on the main sub-architecture",
+            "      --force-multiarch run tests on all sub-archs even for packages",
+            "                        with no compiled code",
             "",
             "By default, all test sections are turned on.",
             "",
@@ -2115,6 +2117,7 @@ R_run_R <- function(cmd, Ropts, env)
     extra_arch <- FALSE
     spec_install <- FALSE
     multiarch <- NA
+    force_multiarch <- FALSE
 
     libdir <- ""
     outdir <- ""
@@ -2177,6 +2180,8 @@ R_run_R <- function(cmd, Ropts, env)
             multiarch  <- TRUE
         } else if (a == "--no-multiarch") {
             multiarch  <- FALSE
+        } else if (a == "--force-multiarch") {
+            force_multiarch  <- TRUE
         } else if (substr(a, 1, 9) == "--rcfile=") {
             warning("configuration files are not supported as from R 2.12.0")
         } else if (substr(a, 1, 1) == "-") {
@@ -2204,7 +2209,9 @@ R_run_R <- function(cmd, Ropts, env)
     if (!identical(multiarch, FALSE)) {
         ## see if there are multiple installed architectures, and if they work
         if (WINDOWS) {
-            ## always has multiple sub-archs as from R 2.12.0.
+            ## always has sub-archs as from R 2.12.0.
+            ## usually if two are installed, it was done on a 64-bit OS,
+            ## but the filesystem might be shared betweeen OSes.
             f <- dir(file.path(R.home(), "bin"))
             archs <- f[f %in% c("i386", "x64")]
             ## if we have x64, can only run it on a 64-bit OS
@@ -2453,23 +2460,26 @@ R_run_R <- function(cmd, Ropts, env)
             check_sources()
 
             ## we need to do this before installation
-            if (R_check_executables)  check_executables()
+            if (R_check_executables) check_executables()
 
             if (do_install) check_install()
             if (multiarch) {
-                ## check which architectures this package is installed for
-                if (dir.exists(dd <- file.path(libdir, pkgname, "libs"))) {
-                    inst_archs <- dir(dd)
-                    if (!identical(inst_archs, archs)) {
-                        if (length(inst_archs) > 1)
-                            printLog(Log, "NB: this package is only installed for sub-architectures ", paste(sQuote(inst_archs), collapse=", "), "\n")
-                        else {
-                            printLog(Log, "NB: this package is only installed for sub-architecture ", sQuote(inst_archs), "\n")
-                            if(inst_archs == .Platform$r_arch)
-                                this_multiarch <- FALSE
+                if (force_multiarch) inst_archs <- archs
+                else {
+                    ## check which architectures this package is installed for
+                    if (dir.exists(dd <- file.path(libdir, pkgname, "libs"))) {
+                        inst_archs <- dir(dd)
+                        if (!identical(inst_archs, archs)) {
+                            if (length(inst_archs) > 1)
+                                printLog(Log, "NB: this package is only installed for sub-architectures ", paste(sQuote(inst_archs), collapse=", "), "\n")
+                            else {
+                                printLog(Log, "NB: this package is only installed for sub-architecture ", sQuote(inst_archs), "\n")
+                                if(inst_archs == .Platform$r_arch)
+                                    this_multiarch <- FALSE
+                            }
                         }
-                    }
-                } else this_multiarch <- FALSE
+                    } else this_multiarch <- FALSE  # no compiled code
+                }
             }
         }   ## end of if (!is_base_pkg)
 

@@ -1601,18 +1601,20 @@ default if logging in remotely or for batch jobs.
 
 @quotation Multiple sub-architectures
 On systems which support multiple sub-architectures (principally Windows
-and Mac OS X), @command{R CMD check} will install and check the package
-only for all the available sub-architectures.  This will run the loading
-tests, examples and @file{tests} directory under each installed
-sub-architecture in turn, and give an error if any fail.  Where
-environment variables (including @env{PATH}@footnote{this is needed on
-Windows to select the appropriate GTK+ and @samp{graphviz} DLLs.}) need
-to be set differently for each sub-architecture, these can be set in
-architecture-specific files such as
-@file{@var{R_HOME}/etc/i386/Renviron.site}.
+and Mac OS X), @command{R CMD check} will install and check a package
+which contains compiled code under all available sub-architectures. (Use
+option @option{--force-multiarch} to force this for packages without
+compiled code, which are otherwise only checked under the main
+sub-architecture.)  This will run the loading tests, examples and
+@file{tests} directory under each installed sub-architecture in turn,
+and give an error if any fail.  Where environment variables (including
+@env{PATH}@footnote{this is needed on Windows to select the appropriate
+GTK+ and @samp{graphviz} DLLs.}) need to be set differently for each
+sub-architecture, these can be set in architecture-specific files such
+as @file{@var{R_HOME}/etc/i386/Renviron.site}.
 
 An alternative approach is to use @command{R CMD check --no-multiarch}
-to check the primary subarchitecture, and then to use something like
+to check the primary sub-architecture, and then to use something like
 @command{R --arch=x86_64 CMD check --extra-arch} or (Windows)
 @command{/path/to/R/bin/x64/Rcmd check --extra-arch} to run for each
 additional sub-architecture just the checks@footnote{loading, examples,
