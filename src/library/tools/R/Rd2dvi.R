@@ -427,7 +427,7 @@ function(pkgdir, outfile, title, batch = FALSE,
                 subj1 <- if (length(files) > 1L) " etc." else ""
                 subj <- paste("\\file{", pkgdir, "}", subj1, sep = "")
             }
-            subj <- gsub("[_$]", "\\\\1", subj)
+            subj <- gsub("([_$])", "\\\\\\1", subj)
             title <- paste("\\R{} documentation}} \\par\\bigskip{{\\Large of", subj)
         }
     }
