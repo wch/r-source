@@ -311,9 +311,10 @@
             message("packaged installation of ",
                     sQuote(pkg_name), " as ", filename)
         }
-
-        message("")  # ensure next starts on a new line
-        starsmsg(stars, "DONE (", pkg_name, ")")
+        if (!identical("_R_INSTALL_NO_DONE_", "yes")) {
+            message("")  # ensure next starts on a new line, for R CMD check
+            starsmsg(stars, "DONE (", pkg_name, ")")
+        }
 
         curPkg <<- character()
     }
@@ -1148,6 +1149,10 @@
         cmd1 <- paste(cmd, allargs)
         if (debug) message("about to run ", cmd1, domain = NA)
         message("\n", "install for i386", "\n", domain=NA)
+        ## this will report '* DONE (foo)' if it works, which
+        ## R CMD check treats as an indication of success.
+        ## so use a backdoor to suppress it.
+        Sys.setenv("_R_INSTALL_NO_DONE_"="yes")
         res <- system(cmd1)
         if(res == 0) {
             cmd <- paste(file.path(R.home(), "bin", "x64", "Rcmd.exe"),
@@ -1155,6 +1160,7 @@
             cmd1 <- paste(cmd, "--libs-only", if (zip_up) "--build", allargs)
             if (debug) message("about to run ", cmd1, domain = NA)
             message("\n", "add DLL for x64", "\n", domain=NA)
+            Sys.unsetenv("_R_INSTALL_NO_DONE_")
             system(cmd1)
         }
         do_cleanup()

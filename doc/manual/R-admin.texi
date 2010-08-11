@@ -1679,14 +1679,19 @@ If you have only a source package that is known to work with current
 the building service offered at
 @uref{http://win-builder.r-project.org/}.
 
-For almost all packages @command{R CMD INSTALL} will install both 32-
-and 64-bit builds of a package if run from a 32/64-bit install of @R{}
-on a 64-bit version of Windows.  The exceptions are packages with a
-non-empty @file{configure.win} script or which make use of
-@file{src/Makefile.win}.  If @file{configure.win} does something
-appropriate to both architectures use option @option{--force-biarch}:
-otherwise @command{R CMD INSTALL --merge-multiarch} can be applied to a
-source tarball to merge separate 32- and 64-bit installs.
+For almost all packages @command{R CMD INSTALL} will attempt to install
+both 32- and 64-bit builds of a package if run from a 32/64-bit install
+of @R{} on a 64-bit version of Windows.  It will report success if the
+installation of the architecture of @command{R} succeeded, whether or
+not the other architecture was successfully installed.
+
+The exceptions are packages with a non-empty @file{configure.win} script
+or which make use of @file{src/Makefile.win}.  If @file{configure.win}
+does something appropriate to both architectures use option
+@option{--force-biarch}: otherwise @command{R CMD INSTALL
+--merge-multiarch} can be applied to a source tarball to merge separate
+32- and 64-bit installs.  (This can only be applied to a tarball, and
+will only succeed if both installs succeed.)
 
 
 Some notes on porting packages to 64-bit Windows can be found at
