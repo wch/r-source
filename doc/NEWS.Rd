@@ -282,6 +282,10 @@
       \item New simple function \code{packageVersion()}.
       
       \item The PCRE library has been updated to version 8.10.
+
+      \item The standard Unix-alike terminal interface declares its name
+      to readline as 'R', so that can be used for conditional sections
+      in  \file{~/.inputrc} files.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
