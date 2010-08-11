@@ -55,16 +55,18 @@
         ## \AsIs is per-para.
         text <- strsplit(text, "\n\n", fixed = TRUE, useBytes = TRUE)[[1L]]
         Encoding(text) <- "unknown"
-        wrap <- paste("\\AsIs{", text, "}", sep = "")
         if(f %in% c("Author", "Maintainer"))
-            wrap <- gsub("<([^@]+)@([^>]+)>", "\\\\email{\\1@\\2}",
-                         wrap, useBytes = TRUE)
+            text <- gsub("<([^@]+)@([^>]+)>",
+                         "}\\\\email{\\1@\\2}\\\\AsIs{",
+                         text, useBytes = TRUE)
         if(f == "URL")
-            wrap <- gsub("(http://|ftp://)([^[:space:]]+)",
-                         "\\\\url{\\1\\2}", wrap, useBytes = TRUE)
+            text <- gsub("(http://|ftp://)([^[:space:]]+)",
+                         "}\\\\url{\\1\\2}\\\\AsIs{", text,
+                         useBytes = TRUE)
+        text <- paste("\\AsIs{", text, "}", sep = "")
         ## Not entirely safe: in theory, tags could contain \ ~ ^.
         cat("\\item[", gsub("([#$%&_{}])", "\\\\\\1", f),
-            "]", paste(wrap, collapse = "\n\n"),  "\n", sep = "", file=out)
+            "]", paste(text, collapse = "\n\n"),  "\n", sep = "", file=out)
     }
     cat("\\end{description}\n", file = out)
 }
