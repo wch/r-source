@@ -279,7 +279,9 @@
       \code{news()} prefers these \file{inst/NEWS.Rd} files to old-style
       plain text \file{NEWS} or \file{inst/NEWS} files.
 
-      \item New simple function \code{packageVersion}.
+      \item New simple function \code{packageVersion()}.
+      
+      \item The PCRE library has been updated to version 8.10.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
