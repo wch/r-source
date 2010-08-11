@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-07-20 r52568)
+R version 2.12.0 Under development (unstable) (2010-08-11 r52699)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-unknown-linux-gnu (64-bit)
@@ -178,7 +178,7 @@ Object of class "myFrame"
 1 1 -0.6264538 y
 2 2  0.1836433 f
 Slot "timestamps":
-[1] "2010-07-20 10:57:55 BST" "2010-07-20 10:57:55 BST"
+[1] "2010-08-11 09:41:05 BST" "2010-08-11 09:41:05 BST"
 
 > 
 > 
@@ -2944,7 +2944,7 @@ object="mle"
 > 
 > ### Name: slot
 > ### Title: The Slots in an Object from a Formal Class
-> ### Aliases: slot slot<- @<- slotNames .slotNames getSlots
+> ### Aliases: slot .hasSlot slot<- @<- slotNames .slotNames getSlots
 > ### Keywords: programming classes
 > 
 > ### ** Examples

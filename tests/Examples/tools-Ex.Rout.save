@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-06-22 r52353)
+R version 2.12.0 Under development (unstable) (2010-08-11 r52699)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: i386-apple-darwin9.8.0/i386 (32-bit)
@@ -31,7 +31,7 @@ Type 'q()' to quit R.
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: HTMLheader
-> ### Title: Generate a standard HTML header for R help.
+> ### Title: Generate a standard HTML header for R help
 > ### Aliases: HTMLheader
 > ### Keywords: utilities documentation
 > 
@@ -72,7 +72,7 @@ Type 'q()' to quit R.
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: Rd2txt_options
-> ### Title: Set formatting options for text help.
+> ### Title: Set formatting options for text help
 > ### Aliases: Rd2txt_options
 > ### Keywords: documentation
 > 
