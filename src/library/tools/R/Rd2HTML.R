@@ -450,24 +450,9 @@ Rd2HTML <-
                "\\dontshow" =,
                "\\testonly" = {}, # do nothing
                "\\method" =,
-               "\\S3method" = {
-                   class <- as.character(block[[2L]])
-                   if (class == "default")
-                       of1('## Default S3 method:\n')
-                   else {
-                       of1("## S3 method for class '")
-                       writeContent(block[[2L]], tag)
-                       of1("':\n")
-                   }
-                   if (!checkInfixMethod(block[[1L]]))
-                       writeContent(block[[1L]], tag)
-               },
+               "\\S3method",
                "\\S4method" = {
-                   of1("## S4 method for signature '")
-                   writeContent(block[[2L]], tag)
-                   of1("':\n")
-                   if (!checkInfixMethod(block[[1L]]))
-                       writeContent(block[[1L]], tag)
+                   # Should not get here
                },
                "\\tabular" = writeTabular(block),
                "\\subsection" = writeSection(block, tag),
@@ -537,8 +522,10 @@ Rd2HTML <-
         itemskip <- FALSE
 
 	tags <- RdTags(blocks)
-
-	for (i in seq_along(tags)) {
+	
+	i <- 0
+	while (i < length(tags)) {
+	    i <- i + 1
             tag <- tags[i]
             block <- blocks[[i]]
             if (length(pendingOpen)) { # Handle $, [ or [[ methods
@@ -562,6 +549,13 @@ Rd2HTML <-
             	pendingClose <<- character()
             }
             switch(tag,
+            "\\method" =,
+            "\\S3method" =,
+            "\\S4method" = {
+               	blocks <- transformMethod(i, blocks)
+               	tags <- RdTags(blocks)
+               	i <- i - 1
+            },
             "\\item" = {
     	    	if (!inlist) {
     	    	    switch(blocktag,

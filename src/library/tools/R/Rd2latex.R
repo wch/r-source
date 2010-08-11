@@ -448,14 +448,9 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                "\\dontshow" =,
                "\\testonly" = {}, # do nothing
                "\\method" =,
-               "\\S3method" = {
-                   ## should not get here
-               },
+               "\\S3method",
                "\\S4method" = {
-                   of1("## S4 method for signature '")
-                   writeContent(block[[2L]], tag)
-                   of1("':\n")
-                   writeContent(block[[1L]], tag)
+                   ## should not get here
                },
                "\\tabular" = writeTabular(block),
                "\\subsection" = writeSection(block, tag),
@@ -493,69 +488,21 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
         itemskip <- FALSE
 
 	tags <- RdTags(blocks)
-
-	for (i in seq_along(tags)) {
+	
+	i <- 0
+	while (i < length(tags)) {
+	    i <- i + 1
             block <- blocks[[i]]
             tag <- attr(block, "Rd_tag")
             ## this should not be null, but it might be in a erroneous Rd file
             if(!is.null(tag))
             switch(tag,
                    "\\method" =,
-                   "\\S3method" = {
-                       class <- as.character(block[[2L]])
-                       generic <- as.character(block[[1L]])
-                       ## R.huge has
-                       ## \method{[}{FileMatrix}(this, i, j, drop=FALSE)
-                       if (length(blocks) > 2L &&
-                           generic %in% c("[", "[[", "$")) {
-                           ## need to assemble the call
-                           j <- i + 1L
-                           txt <- ""
-                           repeat {
-                               this <- switch(tg <- attr(blocks[[j]], "Rd_tag"),
-                                              "\\ldots" =, # not really right
-                                              "\\dots" = "...",
-                                              RCODE = as.character(blocks[[j]]),
-                                              stopRd(block, Rdfile, sprintf("invalid markup '%s' in %s", tg, tag)))
-                               txt <- paste(txt, this, sep = "")
-                               blocks[[j]] <- structure("", Rd_tag = "COMMENT")
-                               if(grepl("\n$", txt)) {
-                                   res <- try(parse(text = paste("a", txt)))
-                                   if(!inherits(res, "try-error")) break
-                               }
-                               j <- j + 1L
-                           }
-                           #print(txt)
-                           txt <- psub1("\\(([^,]*),\\s*", "\\1@generic@", txt)
-                           txt <- fsub1("@generic@", generic, txt)
-                           if (generic == "[")
-                               txt <- psub1("\\)([^)]*)$", "]\\1", txt)
-                           else if (generic == "[[")
-                               txt <- psub1("\\)([^)]*)$", "]]\\1", txt)
-                           else if (generic == "$")
-                               txt <- psub1("\\)([^)]*)$", "\\1", txt)
-                           #print(txt)
-                           if (grepl("<-\\s*value", txt))
-                               of1("## S3 replacement method for class '")
-                           else
-                               of1("## S3 method for class '")
-                           writeContent(block[[2L]], tag)
-                           of1("':\n")
-                           blocks[[i+1L]] <- structure(txt, Rd_tag = "RCODE")
-                       } else {
-                           if (class == "default")
-                               of1('## Default S3 method:\n')
-                           else if (grepl("<-\\s*value", blocks[[i+1L]][[1L]])) {
-                               of1("## S3 replacement method for class '")
-                               writeContent(block[[2L]], tag)
-                               of1("':\n")
-                           } else {
-                               of1("## S3 method for class '")
-                               writeContent(block[[2L]], tag)
-                               of1("':\n")
-                           }
-                           writeContent(block[[1L]], tag)
-                       }
+                   "\\S3method" =,
+                   "\\S4method" = {
+                   	blocks <- transformMethod(i, blocks)
+                   	tags <- RdTags(blocks)
+                   	i <- i - 1
                    },
                    "\\item" = {
                        if (blocktag == "\\value" && !inList) {

@@ -488,6 +488,9 @@
       criterion, notably for cases where the minimum was (very close to)
       zero; further, other tweaks inspired from code proposals by Ravi
       Varadhan.
+      
+      \item Rendering of S3 and S4 methods in man pages has been
+      corrected and made consistent across output formats.
     }
   }
 }
