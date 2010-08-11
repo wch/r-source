@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -566,6 +566,12 @@ msgstr ""
 msgid "-l option without value"
 msgstr ""
 
+msgid "configuration files are not supported as from R 2.12.0"
+msgstr ""
+
+msgid "'--multiarch' specified with only one usable sub-architecture"
+msgstr ""
+
 msgid "Error: no packages were specified"
 msgstr ""
 
@@ -774,6 +780,29 @@ msgstr "il pacchetto sembra usare già il lazy loading"
 msgid ""
 "Cannot process chunk/lines:\n"
 "%s"
+msgstr ""
+
+msgid "No news found in given file using old-style R-like format."
+msgstr ""
+
+msgid "No news found in given file using package default format."
+msgstr ""
+
+msgid "Could not extract news from the following text chunks:"
+msgstr ""
+
+msgid ""
+"Chunk %s:\n"
+"%s"
+msgstr ""
+
+msgid "Cannot extract version info from the following section titles:"
+msgstr ""
+
+msgid "%s"
+msgstr ""
+
+msgid "Malformed NEWS.Rd file."
 msgstr ""
 
 msgid "Processing packages:"

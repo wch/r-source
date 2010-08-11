@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2010-04-09 19:57-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -580,6 +580,12 @@ msgstr ""
 msgid "-l option without value"
 msgstr "-l опция без значения"
 
+msgid "configuration files are not supported as from R 2.12.0"
+msgstr ""
+
+msgid "'--multiarch' specified with only one usable sub-architecture"
+msgstr ""
+
 #, fuzzy
 msgid "Error: no packages were specified"
 msgstr "ОШИБКА: пакет не определен"
@@ -788,6 +794,30 @@ msgid ""
 msgstr ""
 "Не могу обработать группу/строки:\n"
 "%s"
+
+msgid "No news found in given file using old-style R-like format."
+msgstr ""
+
+msgid "No news found in given file using package default format."
+msgstr ""
+
+msgid "Could not extract news from the following text chunks:"
+msgstr ""
+
+msgid ""
+"Chunk %s:\n"
+"%s"
+msgstr ""
+
+msgid "Cannot extract version info from the following section titles:"
+msgstr ""
+
+msgid "%s"
+msgstr ""
+
+#, fuzzy
+msgid "Malformed NEWS.Rd file."
+msgstr "Плохо сформированное поле разработчика."
 
 msgid "Processing packages:"
 msgstr "Обрабатываю пакеты:"

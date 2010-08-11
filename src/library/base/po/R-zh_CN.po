@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -87,6 +87,13 @@ msgstr "版本字串格式有错"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X)的值必需是正数"
+
+#, fuzzy
+msgid "'X' must have named dimnames"
+msgstr "'x'的长度一定得为一"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr ""
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim'的值太大"
@@ -807,9 +814,8 @@ msgstr "找不到程辑包"
 msgid "R packages available"
 msgstr "有R程辑包"
 
-#, fuzzy
-msgid "DLL '%s' not found"
-msgstr "没有'%s'文件"
+msgid "DLL '%s' not found: maybe not installed for this architecture?"
+msgstr ""
 
 #, fuzzy
 msgid "shared object '%s' not found"
@@ -842,11 +848,19 @@ msgstr "共享图书馆'%s'没有载入"
 msgid "shared object '%s' was not loaded"
 msgstr "共享图书馆'%s'没有载入"
 
+#, fuzzy
+msgid "DLL '%s' not found"
+msgstr "没有'%s'文件"
+
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "现在dyn.unload(\"%s\") ..."
 
 msgid "Loading required package: %s"
 msgstr "载入需要的程辑包：%s"
+
+#, fuzzy
+msgid "use of 'save' is deprecated"
+msgstr "%s不再有用。"
 
 msgid "none of the packages are loaded"
 msgstr "没有载入任何程辑包"
@@ -1582,9 +1596,6 @@ msgstr[0] "警告信息：\n"
 #~ "package '%s' claims to be built under R version %s but is missing some "
 #~ "help files and needs to be re-installed"
 #~ msgstr "程辑包'%s'是用R版本%s建的，但它缺少一些帮助文件，请重新组装"
-
-#~ msgid "'x' must have length 1"
-#~ msgstr "'x'的长度一定得为一"
 
 #~ msgid "invalid digits"
 #~ msgstr "数字无效"

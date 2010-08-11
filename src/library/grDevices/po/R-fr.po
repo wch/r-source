@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2010-03-28 14:27+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -286,6 +286,9 @@ msgstr "'file' est manquant sans valeur par défaut"
 
 msgid "sorry, 'gs' cannot be found"
 msgstr "désolé, 'gs' est introuvable"
+
+msgid "unrecognized format of gs -help"
+msgstr ""
 
 msgid "device '%s' is not available"
 msgstr "le périphérique '%s' n'est pas disponible"

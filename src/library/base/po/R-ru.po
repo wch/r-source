@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2010-04-09 16:49-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -91,6 +91,13 @@ msgstr "неправильно сформирована строка версии"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) должен иметь положительную длину"
+
+#, fuzzy
+msgid "'X' must have named dimnames"
+msgstr "'x' должен иметь длину 1"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr ""
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' определяет слишком большую многомерную матрицу"
@@ -819,9 +826,8 @@ msgstr "пакеты не найдены"
 msgid "R packages available"
 msgstr "доступные R-пакеты"
 
-#, fuzzy
-msgid "DLL '%s' not found"
-msgstr "файл '%s' не найден"
+msgid "DLL '%s' not found: maybe not installed for this architecture?"
+msgstr ""
 
 #, fuzzy
 msgid "shared object '%s' not found"
@@ -854,11 +860,19 @@ msgstr "разделяемая библиотека '%s' не загружена"
 msgid "shared object '%s' was not loaded"
 msgstr "разделяемая библиотека '%s' не загружена"
 
+#, fuzzy
+msgid "DLL '%s' not found"
+msgstr "файл '%s' не найден"
+
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "сейчас dyn.unload(\"%s\") ..."
 
 msgid "Loading required package: %s"
 msgstr "Загрузка требуемого пакета: %s"
+
+#, fuzzy
+msgid "use of 'save' is deprecated"
+msgstr "'%s' устарел"
 
 msgid "none of the packages are loaded"
 msgstr "ни один из пакетов не загружен"
@@ -1628,9 +1642,6 @@ msgstr[2] "Предупреждения:\n"
 #~ msgstr ""
 #~ "пакет '%s' сообщает, что он был собран для версии R %s, но у него нет "
 #~ "некоторых файлов помощи и поэтому его надо переустановить"
-
-#~ msgid "'x' must have length 1"
-#~ msgstr "'x' должен иметь длину 1"
 
 #~ msgid "invalid digits"
 #~ msgstr "неправильное количество знаков после запятой"

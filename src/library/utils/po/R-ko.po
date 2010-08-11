@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-16 09:29\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -617,7 +617,9 @@ msgstr ""
 msgid "'priority' must be character or NULL"
 msgstr "'prority'는 문자 또는 NULL이어야만 합니다"
 
-msgid "Removing package(s) from '%s' (as 'lib' is unspecified)"
+msgid ""
+"Removing package(s) from %s\n"
+"(as %s is unspecified)"
 msgstr ""
 
 msgid "'destdir' is not a directory"
@@ -675,7 +677,7 @@ msgstr "패키지는 지정되지 않았습니다"
 
 msgid ""
 "Installing package(s) into %s\n"
-"(as 'lib' is unspecified)"
+"(as %s is unspecified)"
 msgstr ""
 
 #, fuzzy

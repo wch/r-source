@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,6 +81,12 @@ msgid "malformed version string"
 msgstr ""
 
 msgid "dim(X) must have a positive length"
+msgstr ""
+
+msgid "'X' must have named dimnames"
+msgstr ""
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr ""
 
 msgid "'dim' specifies too large an array"
@@ -770,7 +776,7 @@ msgstr ""
 msgid "R packages available"
 msgstr ""
 
-msgid "DLL '%s' not found"
+msgid "DLL '%s' not found: maybe not installed for this architecture?"
 msgstr ""
 
 msgid "shared object '%s' not found"
@@ -797,10 +803,16 @@ msgstr ""
 msgid "shared object '%s' was not loaded"
 msgstr ""
 
+msgid "DLL '%s' not found"
+msgstr ""
+
 msgid "now dyn.unload(\"%s\") ..."
 msgstr ""
 
 msgid "Loading required package: %s"
+msgstr ""
+
+msgid "use of 'save' is deprecated"
 msgstr ""
 
 msgid "none of the packages are loaded"

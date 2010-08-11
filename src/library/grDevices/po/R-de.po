@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2010-03-24 11:02+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -281,6 +281,9 @@ msgstr "'file' fehlt ohne Standardwert"
 
 msgid "sorry, 'gs' cannot be found"
 msgstr "'gs' kann leider nicht gefunden werden"
+
+msgid "unrecognized format of gs -help"
+msgstr ""
 
 msgid "device '%s' is not available"
 msgstr "Device '%s' steht nicht zur Verfügung"

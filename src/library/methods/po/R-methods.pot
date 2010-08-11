@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -740,9 +740,6 @@ msgstr ""
 msgid "Sorry, abnormal type \"%s\" is not supported as a superclass of a class definition"
 msgstr ""
 
-msgid "Defining type \"%s\" as a superclass via class \"%s\""
-msgstr ""
-
 msgid "'traceOn' is deprecated: use the function 'trace' in the 'methods' package instead"
 msgstr ""
 
@@ -1071,6 +1068,60 @@ msgid "Environment of class \""
 msgstr ""
 
 msgid "\" is locked; using global environment for new class"
+msgstr ""
+
+msgid "None of the objects in the source code could be found:  need to attach or specify the package"
+msgstr ""
+
+msgid "Objects found in multiple packages: using \"%s\" and ignoring %s"
+msgstr ""
+
+msgid "Package \"%s\" is not attached and no namespace found for it"
+msgstr ""
+
+msgid "Invalid source argument: expected file names(s) or connection, got an object of class \"%s\""
+msgstr ""
+
+msgid "Can't find an environment corresponding to package name '%s\""
+msgstr ""
+
+msgid "Supplied package, \"%s\", differs from package inferred from source, \"%s\""
+msgstr ""
+
+msgid "Can't insert these (not found in source): %s"
+msgstr ""
+
+msgid "Can't insert methods for these functions (methods table not found in source): %s"
+msgstr ""
+
+msgid "Non-function objects aren't currently inserted (not traceable): %s"
+msgstr ""
+
+msgid "New functions aren't currently inserted (not untraceable): %s"
+msgstr ""
+
+msgid "Functions inserted through trace(): %s"
+msgstr ""
+
+msgid "%s() is not a generic function in the target environment--methods will not be inserted"
+msgstr ""
+
+msgid "Methods inserted for function %s(): %s"
+msgstr ""
+
+msgid "Pretend we inserted class"
+msgstr ""
+
+msgid "No definition for object \"%s\" found in tracing environment"
+msgstr ""
+
+msgid "multiple generics match pattern, using table %s"
+msgstr ""
+
+msgid "Does not seem to be a method table for generic  \"%s\" in tracing environment"
+msgstr ""
+
+msgid "No method in methods table for \"%s\" for signature \"%s\""
 msgstr ""
 
 msgid "not a package name: \"%s\""

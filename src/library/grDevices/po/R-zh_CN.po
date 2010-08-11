@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2008-04-05 10:53+0100\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -279,6 +279,9 @@ msgstr "'file'不存在，也没有默认值"
 
 msgid "sorry, 'gs' cannot be found"
 msgstr "对不起，'gs'不存在"
+
+msgid "unrecognized format of gs -help"
+msgstr ""
 
 msgid "device '%s' is not available"
 msgstr "没有'%s'这样的装置"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2010-04-03 18:36+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -83,6 +83,13 @@ msgstr " 正しい書式のバージョン文字列ではありません "
 
 msgid "dim(X) must have a positive length"
 msgstr " dim(X) は正の長さを持たねばなりません "
+
+#, fuzzy
+msgid "'X' must have named dimnames"
+msgstr " 'x' は長さ 1 でなければなりません "
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr ""
 
 msgid "'dim' specifies too large an array"
 msgstr " 'dim' は余りに大きな配列を指定しています "
@@ -825,9 +832,8 @@ msgstr " いかなるパッケージも見付かりませんでした "
 msgid "R packages available"
 msgstr " 利用可能な R パッケージ "
 
-#, fuzzy
-msgid "DLL '%s' not found"
-msgstr " ファイル '%s' が見付かりません "
+msgid "DLL '%s' not found: maybe not installed for this architecture?"
+msgstr ""
 
 #, fuzzy
 msgid "shared object '%s' not found"
@@ -860,11 +866,19 @@ msgstr " 共用ライブラリ '%s' はロードされませんでした "
 msgid "shared object '%s' was not loaded"
 msgstr " 共用ライブラリ '%s' はロードされませんでした "
 
+#, fuzzy
+msgid "DLL '%s' not found"
+msgstr " ファイル '%s' が見付かりません "
+
 msgid "now dyn.unload(\"%s\") ..."
 msgstr " 今 dyn.unload(\"%s\") 中です ... "
 
 msgid "Loading required package: %s"
 msgstr " 要求されたパッケージ %s をロード中です "
+
+#, fuzzy
+msgid "use of 'save' is deprecated"
+msgstr " '%s' は廃止予定です "
 
 msgid "none of the packages are loaded"
 msgstr " どのパッケージもロードされません "
@@ -1634,9 +1648,6 @@ msgstr[0] " 警告メッセージ： \n"
 #~ msgstr ""
 #~ "パッケージ '%s' はバージョン %s の R の下で造らている必要があります。欠け"
 #~ "ているヘルプファイルがあります。新しくインストールしてください "
-
-#~ msgid "'x' must have length 1"
-#~ msgstr " 'x' は長さ 1 でなければなりません "
 
 #~ msgid "invalid digits"
 #~ msgstr " 無効な桁数です "

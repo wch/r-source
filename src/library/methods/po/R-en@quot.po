@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
-"PO-Revision-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
+"PO-Revision-Date: 2010-08-11 09:24\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1173,9 +1173,6 @@ msgstr ""
 "Sorry, abnormal type “%s” is not supported as a superclass of a class "
 "definition"
 
-msgid "Defining type \"%s\" as a superclass via class \"%s\""
-msgstr "Defining type “%s” as a superclass via class “%s”"
-
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1655,6 +1652,80 @@ msgstr "Environment of class \""
 
 msgid "\" is locked; using global environment for new class"
 msgstr "\" is locked; using global environment for new class"
+
+msgid ""
+"None of the objects in the source code could be found:  need to attach or "
+"specify the package"
+msgstr ""
+"None of the objects in the source code could be found:  need to attach or "
+"specify the package"
+
+msgid "Objects found in multiple packages: using \"%s\" and ignoring %s"
+msgstr "Objects found in multiple packages: using “%s” and ignoring %s"
+
+msgid "Package \"%s\" is not attached and no namespace found for it"
+msgstr "Package “%s” is not attached and no namespace found for it"
+
+msgid ""
+"Invalid source argument: expected file names(s) or connection, got an object "
+"of class \"%s\""
+msgstr ""
+"Invalid source argument: expected file names(s) or connection, got an object "
+"of class “%s”"
+
+msgid "Can't find an environment corresponding to package name '%s\""
+msgstr "Can't find an environment corresponding to package name '%s\""
+
+msgid ""
+"Supplied package, \"%s\", differs from package inferred from source, \"%s\""
+msgstr ""
+"Supplied package, “%s”, differs from package inferred from source, “%s”"
+
+msgid "Can't insert these (not found in source): %s"
+msgstr "Can't insert these (not found in source): %s"
+
+msgid ""
+"Can't insert methods for these functions (methods table not found in "
+"source): %s"
+msgstr ""
+"Can't insert methods for these functions (methods table not found in "
+"source): %s"
+
+msgid "Non-function objects aren't currently inserted (not traceable): %s"
+msgstr "Non-function objects aren't currently inserted (not traceable): %s"
+
+msgid "New functions aren't currently inserted (not untraceable): %s"
+msgstr "New functions aren't currently inserted (not untraceable): %s"
+
+msgid "Functions inserted through trace(): %s"
+msgstr "Functions inserted through trace(): %s"
+
+msgid ""
+"%s() is not a generic function in the target environment--methods will not "
+"be inserted"
+msgstr ""
+"%s() is not a generic function in the target environment--methods will not "
+"be inserted"
+
+msgid "Methods inserted for function %s(): %s"
+msgstr "Methods inserted for function %s(): %s"
+
+msgid "Pretend we inserted class"
+msgstr "Pretend we inserted class"
+
+msgid "No definition for object \"%s\" found in tracing environment"
+msgstr "No definition for object “%s” found in tracing environment"
+
+msgid "multiple generics match pattern, using table %s"
+msgstr "multiple generics match pattern, using table %s"
+
+msgid ""
+"Does not seem to be a method table for generic  \"%s\" in tracing environment"
+msgstr ""
+"Does not seem to be a method table for generic  “%s” in tracing environment"
+
+msgid "No method in methods table for \"%s\" for signature \"%s\""
+msgstr "No method in methods table for “%s” for signature “%s”"
 
 msgid "not a package name: \"%s\""
 msgstr "not a package name: “%s”"

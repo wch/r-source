@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1027,9 +1027,6 @@ msgid ""
 "definition"
 msgstr "对不起，不支持作为一个类别定义的超类\"%s\""
 
-msgid "Defining type \"%s\" as a superclass via class \"%s\""
-msgstr "将种类\"%s\"通过类别\"%s\"定义为超类"
-
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1461,6 +1458,77 @@ msgstr "环境有类别"
 msgid "\" is locked; using global environment for new class"
 msgstr "\"被锁住了；在新的类别上用全局环境"
 
+msgid ""
+"None of the objects in the source code could be found:  need to attach or "
+"specify the package"
+msgstr ""
+
+msgid "Objects found in multiple packages: using \"%s\" and ignoring %s"
+msgstr ""
+
+msgid "Package \"%s\" is not attached and no namespace found for it"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Invalid source argument: expected file names(s) or connection, got an object "
+"of class \"%s\""
+msgstr "方法定义不对：提供的应该是函数，现在却是个类别为\"%s\"的对象"
+
+#, fuzzy
+msgid "Can't find an environment corresponding to package name '%s\""
+msgstr "找不到包含类别\"%s\"的环境"
+
+msgid ""
+"Supplied package, \"%s\", differs from package inferred from source, \"%s\""
+msgstr ""
+
+msgid "Can't insert these (not found in source): %s"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Can't insert methods for these functions (methods table not found in "
+"source): %s"
+msgstr "无法\"%s\"将删除追踪，这一标记没有与之相对应的唯一方法：%s"
+
+msgid "Non-function objects aren't currently inserted (not traceable): %s"
+msgstr ""
+
+msgid "New functions aren't currently inserted (not untraceable): %s"
+msgstr ""
+
+msgid "Functions inserted through trace(): %s"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"%s() is not a generic function in the target environment--methods will not "
+"be inserted"
+msgstr "'%s'不是在'%s'里的泛型函数；因此方法没有被删除掉"
+
+#, fuzzy
+msgid "Methods inserted for function %s(): %s"
+msgstr "找不到对函数'%s'和标记%s适用的方法"
+
+msgid "Pretend we inserted class"
+msgstr ""
+
+#, fuzzy
+msgid "No definition for object \"%s\" found in tracing environment"
+msgstr "找不到\"%s\"类别定义(无效果)"
+
+msgid "multiple generics match pattern, using table %s"
+msgstr ""
+
+msgid ""
+"Does not seem to be a method table for generic  \"%s\" in tracing environment"
+msgstr ""
+
+#, fuzzy
+msgid "No method in methods table for \"%s\" for signature \"%s\""
+msgstr "函数\"%s\"和标记%s没有设定方法"
+
 msgid "not a package name: \"%s\""
 msgstr "不程輯包名: '%s'"
 
@@ -1473,6 +1541,9 @@ msgstr "移动文件或删除类别/方法"
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "类别%s的定义不存在"
+
+#~ msgid "Defining type \"%s\" as a superclass via class \"%s\""
+#~ msgstr "将种类\"%s\"通过类别\"%s\"定义为超类"
 
 #, fuzzy
 #~ msgid ""

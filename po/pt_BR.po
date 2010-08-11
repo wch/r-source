@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-07-16 09:29+0100\n"
+"POT-Creation-Date: 2010-08-11 09:23+0100\n"
 "PO-Revision-Date: 2006-04-16 19:17-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -113,11 +113,11 @@ msgstr ""
 #: src/gnuwin32/extra.c:326 src/gnuwin32/extra.c:350 src/gnuwin32/extra.c:358
 #: src/gnuwin32/extra.c:513 src/gnuwin32/extra.c:533 src/gnuwin32/extra.c:573
 #: src/gnuwin32/extra.c:758 src/gnuwin32/extra.c:842 src/gnuwin32/extra.c:845
-#: src/gnuwin32/extra.c:850 src/gnuwin32/extra.c:1595
-#: src/gnuwin32/extra.c:1620 src/main/agrep.c:67 src/main/agrep.c:70
+#: src/gnuwin32/extra.c:850 src/gnuwin32/extra.c:1596
+#: src/gnuwin32/extra.c:1621 src/main/agrep.c:67 src/main/agrep.c:70
 #: src/main/apply.c:257 src/main/apply.c:259 src/main/apply.c:262
-#: src/main/array.c:73 src/main/array.c:1052 src/main/array.c:1185
-#: src/main/array.c:1187 src/main/array.c:1188 src/main/attrib.c:192
+#: src/main/array.c:73 src/main/array.c:1064 src/main/array.c:1193
+#: src/main/array.c:1195 src/main/array.c:1196 src/main/attrib.c:192
 #: src/main/builtin.c:77 src/main/builtin.c:86 src/main/builtin.c:105
 #: src/main/builtin.c:107 src/main/builtin.c:136 src/main/builtin.c:500
 #: src/main/builtin.c:516 src/main/builtin.c:700 src/main/character.c:120
@@ -157,9 +157,9 @@ msgstr ""
 #: src/main/connections.c:4590 src/main/connections.c:4594
 #: src/main/connections.c:4598 src/main/connections.c:4602
 #: src/main/context.c:597 src/main/context.c:606 src/main/context.c:610
-#: src/main/datetime.c:652 src/main/datetime.c:727 src/main/datetime.c:729
-#: src/main/datetime.c:733 src/main/datetime.c:879 src/main/datetime.c:881
-#: src/main/datetime.c:1041 src/main/debug.c:223 src/main/deparse.c:349
+#: src/main/datetime.c:656 src/main/datetime.c:735 src/main/datetime.c:737
+#: src/main/datetime.c:741 src/main/datetime.c:887 src/main/datetime.c:889
+#: src/main/datetime.c:1053 src/main/debug.c:223 src/main/deparse.c:349
 #: src/main/devices.c:581 src/main/dotcode.c:736 src/main/dotcode.c:740
 #: src/main/dotcode.c:745 src/main/dounzip.c:250 src/main/dounzip.c:257
 #: src/main/dounzip.c:267 src/main/dounzip.c:272 src/main/dounzip.c:276
@@ -185,13 +185,13 @@ msgstr ""
 #: src/main/platform.c:1223 src/main/platform.c:1226 src/main/platform.c:1262
 #: src/main/platform.c:1265 src/main/platform.c:1338 src/main/platform.c:1356
 #: src/main/platform.c:1397 src/main/platform.c:1399 src/main/platform.c:1459
-#: src/main/platform.c:1550 src/main/platform.c:1810 src/main/platform.c:1851
-#: src/main/platform.c:1972 src/main/platform.c:1975 src/main/platform.c:1978
-#: src/main/platform.c:1981 src/main/platform.c:2098 src/main/platform.c:2132
-#: src/main/platform.c:2180 src/main/plot.c:3113 src/main/plot.c:4252
-#: src/main/plot.c:4256 src/main/plot.c:4259 src/main/plot3d.c:2451
-#: src/main/plot3d.c:2455 src/main/plot3d.c:2460 src/main/plot3d.c:2464
-#: src/main/plot3d.c:2468 src/main/plot3d.c:2472 src/main/print.c:230
+#: src/main/platform.c:1550 src/main/platform.c:1810 src/main/platform.c:1853
+#: src/main/platform.c:1974 src/main/platform.c:1977 src/main/platform.c:1980
+#: src/main/platform.c:1983 src/main/platform.c:2100 src/main/platform.c:2134
+#: src/main/platform.c:2182 src/main/plot.c:3113 src/main/plot.c:4252
+#: src/main/plot.c:4256 src/main/plot.c:4259 src/main/plot3d.c:2449
+#: src/main/plot3d.c:2453 src/main/plot3d.c:2458 src/main/plot3d.c:2462
+#: src/main/plot3d.c:2466 src/main/plot3d.c:2470 src/main/print.c:230
 #: src/main/print.c:236 src/main/print.c:258 src/main/print.c:264
 #: src/main/print.c:270 src/main/random.c:468 src/main/random.c:472
 #: src/main/random.c:476 src/main/saveload.c:1937 src/main/saveload.c:1940
@@ -273,20 +273,20 @@ msgstr "'loadhistory' só pode ser utilizado no Rgui e Rterm"
 msgid "invalid timestamp"
 msgstr "etiqueta de tempo inválida"
 
-#: src/gnuwin32/extra.c:675 src/gnuwin32/extra.c:1810
-#: src/gnuwin32/extra.c:1992 src/gnuwin32/extra.c:1995
-#: src/gnuwin32/extra.c:1998 src/main/character.c:561 src/main/colors.c:365
+#: src/gnuwin32/extra.c:675 src/gnuwin32/extra.c:1811
+#: src/gnuwin32/extra.c:1993 src/gnuwin32/extra.c:1996
+#: src/gnuwin32/extra.c:1999 src/main/character.c:561 src/main/colors.c:365
 #: src/main/connections.c:3230 src/main/context.c:643 src/main/context.c:662
-#: src/main/datetime.c:588 src/main/datetime.c:654 src/main/datetime.c:883
+#: src/main/datetime.c:588 src/main/datetime.c:658 src/main/datetime.c:891
 #: src/main/dotcode.c:197 src/main/errors.c:833 src/main/errors.c:864
 #: src/main/errors.c:965 src/main/errors.c:990 src/main/errors.c:995
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
 #: src/main/optimize.c:180 src/main/optimize.c:186 src/main/optimize.c:195
-#: src/main/platform.c:2152 src/main/plot.c:276 src/main/plot.c:470
+#: src/main/platform.c:2154 src/main/plot.c:276 src/main/plot.c:470
 #: src/main/plot.c:475 src/main/plot.c:2287 src/main/plot.c:2294
 #: src/main/plot.c:3326 src/main/plot.c:3328 src/main/plot.c:3330
-#: src/main/plot.c:3488 src/main/plot3d.c:1400 src/main/plot3d.c:2529
-#: src/main/plot3d.c:2533 src/main/plot3d.c:2535 src/main/seq.c:167
+#: src/main/plot.c:3488 src/main/plot3d.c:1398 src/main/plot3d.c:2527
+#: src/main/plot3d.c:2531 src/main/plot3d.c:2533 src/main/seq.c:167
 #: src/main/seq.c:265 src/main/seq.c:268 src/main/sort.c:869
 #: src/main/sort.c:968 src/main/source.c:209 src/main/summary.c:1026
 #: src/main/sysutils.c:229 src/main/util.c:885 src/main/util.c:890
@@ -322,94 +322,94 @@ msgstr "Seleção: "
 msgid "Select one"
 msgstr "Seleção: "
 
-#: src/gnuwin32/extra.c:1057
+#: src/gnuwin32/extra.c:1058
 msgid "argument must be a character vector or a raw vector"
 msgstr "argumento deve ser um vetor de caracteres ou um vetor simples"
 
-#: src/gnuwin32/extra.c:1094 src/main/connections.c:1863
+#: src/gnuwin32/extra.c:1095 src/main/connections.c:1863
 msgid "Unable to open the clipboard"
 msgstr "impossível abrir a área de transferência "
 
-#: src/gnuwin32/extra.c:1099 src/main/connections.c:1867
+#: src/gnuwin32/extra.c:1100 src/main/connections.c:1867
 msgid "Unable to write to the clipboard"
 msgstr "impossível escrever na área de transferência"
 
-#: src/gnuwin32/extra.c:1120 src/gnuwin32/extra.c:1177
+#: src/gnuwin32/extra.c:1121 src/gnuwin32/extra.c:1178
 msgid "'path' must be a character vector"
 msgstr "'path' deve ser um vetor de caracteres"
 
-#: src/gnuwin32/extra.c:1237 src/gnuwin32/extra.c:1310
+#: src/gnuwin32/extra.c:1238 src/gnuwin32/extra.c:1311
 msgid "'default' must be a character string"
 msgstr "'default' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1239 src/gnuwin32/extra.c:1312
+#: src/gnuwin32/extra.c:1240 src/gnuwin32/extra.c:1313
 msgid "'default' is overlong"
 msgstr "'default' muito longo"
 
-#: src/gnuwin32/extra.c:1243 src/gnuwin32/extra.c:1316
+#: src/gnuwin32/extra.c:1244 src/gnuwin32/extra.c:1317
 msgid "'caption' must be a character string"
 msgstr "'caption' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1245
+#: src/gnuwin32/extra.c:1246
 msgid "'multi' must be a logical value"
 msgstr "'multi' deve ser um valor lógico"
 
-#: src/gnuwin32/extra.c:1247
+#: src/gnuwin32/extra.c:1248
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' deve ser um valor inteiro"
 
-#: src/gnuwin32/extra.c:1398
+#: src/gnuwin32/extra.c:1399
 msgid "'title' must be a character string"
 msgstr "'title' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1415
+#: src/gnuwin32/extra.c:1416
 #, fuzzy
 msgid "'text' must be a character string"
 msgstr "'title' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1445
+#: src/gnuwin32/extra.c:1446
 #, fuzzy, c-format
 msgid "'%s' must be length 1"
 msgstr "'which' deve ter comprimento 1"
 
-#: src/gnuwin32/extra.c:1561
+#: src/gnuwin32/extra.c:1562
 #, fuzzy, c-format
 msgid "'%s' must be a list"
 msgstr "'dimnames' deve ser uma lista"
 
-#: src/gnuwin32/extra.c:1565
+#: src/gnuwin32/extra.c:1566
 #, fuzzy, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr "'%s' não é uma chamada válida"
 
-#: src/gnuwin32/extra.c:1597 src/gnuwin32/extra.c:1599
-#: src/gnuwin32/extra.c:1622 src/gnuwin32/extra.c:1624
-#: src/gnuwin32/extra.c:1670 src/main/gevents.c:47 src/main/gevents.c:73
+#: src/gnuwin32/extra.c:1598 src/gnuwin32/extra.c:1600
+#: src/gnuwin32/extra.c:1623 src/gnuwin32/extra.c:1625
+#: src/gnuwin32/extra.c:1671 src/main/gevents.c:47 src/main/gevents.c:73
 msgid "invalid device"
 msgstr "dispositivo inválido"
 
-#: src/gnuwin32/extra.c:1600
+#: src/gnuwin32/extra.c:1601
 msgid "requires SDI mode"
 msgstr "modo SDI requerido"
 
-#: src/gnuwin32/extra.c:1664 src/main/gevents.c:44 src/main/gevents.c:70
+#: src/gnuwin32/extra.c:1665 src/main/gevents.c:44 src/main/gevents.c:70
 msgid "invalid graphical device number"
 msgstr "número de dispositivo gráfico inválido"
 
-#: src/gnuwin32/extra.c:1674
+#: src/gnuwin32/extra.c:1675
 msgid "bad device"
 msgstr "dispositivo defeituoso "
 
-#: src/gnuwin32/extra.c:2010
+#: src/gnuwin32/extra.c:2011
 #, fuzzy, c-format
 msgid "Registry key '%ls' not found"
 msgstr "objeto '%s' não encontrado"
 
-#: src/gnuwin32/extra.c:2074 src/gnuwin32/extra.c:2082
+#: src/gnuwin32/extra.c:2075 src/gnuwin32/extra.c:2083
 msgid "invalid input in Rmbstowcs"
 msgstr "entrada inválida em Rmbstowcs"
 
-#: src/gnuwin32/extra.c:2104 src/main/platform.c:1035
+#: src/gnuwin32/extra.c:2105 src/main/platform.c:1035
 msgid "file choice cancelled"
 msgstr "escolha de arquivo cancelada"
 
@@ -1042,19 +1042,33 @@ msgstr "argumentos não compatíveis"
 msgid "argument is not a matrix"
 msgstr "argumento não é uma matriz"
 
-#: src/main/array.c:1025
+#: src/main/array.c:1023
 msgid "invalid first argument, must be an array"
 msgstr "primeiro argumento inválido: deve ser um array"
 
-#: src/main/array.c:1041
+#: src/main/array.c:1038 src/main/array.c:1041
+msgid "'a' does not have named dimnames"
+msgstr ""
+
+#: src/main/array.c:1048
+#, c-format
+msgid "perm[%d] does not match a dimension name"
+msgstr ""
+
+#: src/main/array.c:1055
 msgid "'perm' is of wrong length"
 msgstr "'perm' tem comprimento errado"
 
-#: src/main/array.c:1049
+#: src/main/array.c:1062
 msgid "value out of range in 'perm'"
 msgstr "valor fora de limites em 'perm'"
 
-#: src/main/array.c:1197
+#: src/main/array.c:1144
+#, fuzzy
+msgid "'resize' must be TRUE or FALSE"
+msgstr "'decreasing' deve ser TRUE ou FALSE"
+
+#: src/main/array.c:1205
 msgid "'x' must be numeric"
 msgstr "'x' deve ser numérico"
 
@@ -1374,7 +1388,7 @@ msgid "cannot write to this connection"
 msgstr "não é possível escrever nessa conexão"
 
 #: src/main/builtin.c:492 src/main/builtin.c:522 src/main/platform.c:342
-#: src/main/platform.c:345 src/main/plot3d.c:2543 src/main/plot3d.c:2547
+#: src/main/platform.c:345 src/main/plot3d.c:2541 src/main/plot3d.c:2545
 #, c-format
 msgid "invalid '%s' specification"
 msgstr "especificação '%s' inválida"
@@ -2489,8 +2503,8 @@ msgstr "não é possível especificar fuso horários nesse sistema"
 msgid "problem with unsetting timezone"
 msgstr "problema na execução do editor %s"
 
-#: src/main/datetime.c:672 src/main/datetime.c:674 src/main/datetime.c:1049
-#: src/main/datetime.c:1051
+#: src/main/datetime.c:680 src/main/datetime.c:682 src/main/datetime.c:1061
+#: src/main/datetime.c:1063
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "componente de comprimento zero em estrutura POSIXlt não vazia"
 
@@ -2545,7 +2559,7 @@ msgstr ""
 #: src/main/plot.c:2247 src/main/plot.c:2528 src/main/plot.c:2706
 #: src/main/plot.c:2925 src/main/plot.c:3469 src/main/plot.c:3597
 #: src/main/plot.c:3676 src/main/plot.c:3847 src/main/plot.c:4124
-#: src/main/plot3d.c:1362 src/main/sprintf.c:211 src/main/sprintf.c:243
+#: src/main/plot3d.c:1360 src/main/sprintf.c:211 src/main/sprintf.c:243
 msgid "too few arguments"
 msgstr "muitos poucos argumentos"
 
@@ -4538,32 +4552,32 @@ msgstr ""
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "valores negativos não são permitidos na subscrição de matriz"
 
-#: src/main/names.c:1023
+#: src/main/names.c:1024
 msgid "string argument required"
 msgstr "argumento string requerido"
 
-#: src/main/names.c:1031
+#: src/main/names.c:1032
 msgid "no such primitive function"
 msgstr "não existe tal função primitiva"
 
-#: src/main/names.c:1149
+#: src/main/names.c:1150
 msgid "attempt to use zero-length variable name"
 msgstr "tentativa de usar um nome de variável com comprimento zero"
 
-#: src/main/names.c:1151
+#: src/main/names.c:1152
 #, c-format
 msgid "variable names are limited to %d bytes"
 msgstr ""
 
-#: src/main/names.c:1180
+#: src/main/names.c:1181
 msgid "invalid .Internal() argument"
 msgstr "argumento .Internal() inválido"
 
-#: src/main/names.c:1183
+#: src/main/names.c:1184
 msgid "invalid internal function"
 msgstr "função interna inválida"
 
-#: src/main/names.c:1185
+#: src/main/names.c:1186
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "nenhuma função interna \"%s\""
@@ -5320,27 +5334,27 @@ msgstr "formato desconhecido retornado por gethostbyname"
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() não é suportado nessa plataforma"
 
-#: src/main/platform.c:1834
+#: src/main/platform.c:1836
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' já existe"
 
-#: src/main/platform.c:1837
+#: src/main/platform.c:1839
 #, fuzzy, c-format
 msgid "cannot create dir '%s', reason '%s'"
 msgstr "não foi possível criar fifo '%s', motivo '%s'"
 
-#: src/main/platform.c:1880
+#: src/main/platform.c:1882
 #, fuzzy, c-format
 msgid "'%ls' already exists"
 msgstr "'%s' já existe"
 
-#: src/main/platform.c:2103
+#: src/main/platform.c:2105
 #, fuzzy
 msgid "'mode' must be of length at least one"
 msgstr "'hadj' deve ter comprimento 1"
 
-#: src/main/platform.c:2159
+#: src/main/platform.c:2161
 #, fuzzy
 msgid "insufficient OS support on this platform"
 msgstr "nsl() não é suportado nessa plataforma"
@@ -5662,87 +5676,87 @@ msgstr "não foi possível alocar memória (em GPolygon)"
 msgid "contour(): circular/long seglist -- bug.report()!"
 msgstr "contour(): seglist do tipo circular/longa -- bug.report()!"
 
-#: src/main/plot3d.c:803 src/main/plot3d.c:1462
+#: src/main/plot3d.c:803 src/main/plot3d.c:1460
 msgid "all z values are equal"
 msgstr "todos os valores de z são iguais"
 
-#: src/main/plot3d.c:805 src/main/plot3d.c:1464
+#: src/main/plot3d.c:805 src/main/plot3d.c:1462
 msgid "all z values are NA"
 msgstr "todos os valore de z são NA"
 
-#: src/main/plot3d.c:1426 src/main/plot3d.c:1683
+#: src/main/plot3d.c:1424 src/main/plot3d.c:1681
 msgid "insufficient 'x' or 'y' values"
 msgstr "valores insuficientes de 'x' ou 'y'"
 
-#: src/main/plot3d.c:1429 src/main/plot3d.c:1686
+#: src/main/plot3d.c:1427 src/main/plot3d.c:1684
 msgid "dimension mismatch"
 msgstr "dimensão incompatível"
 
-#: src/main/plot3d.c:1432 src/main/plot3d.c:1689
+#: src/main/plot3d.c:1430 src/main/plot3d.c:1687
 msgid "no contour values"
 msgstr "nenhum valor de contorno"
 
-#: src/main/plot3d.c:1436
+#: src/main/plot3d.c:1434
 msgid "missing 'x' values"
 msgstr "valores de 'x' ausentes"
 
-#: src/main/plot3d.c:1438
+#: src/main/plot3d.c:1436
 msgid "increasing 'x' values expected"
 msgstr "valores de 'x' esperados crescentes"
 
-#: src/main/plot3d.c:1443
+#: src/main/plot3d.c:1441
 msgid "missing 'y' values"
 msgstr "valores de 'y' ausentes"
 
-#: src/main/plot3d.c:1445
+#: src/main/plot3d.c:1443
 msgid "increasing 'y' values expected"
 msgstr "valores de 'y' esperados crescentes"
 
-#: src/main/plot3d.c:1450
+#: src/main/plot3d.c:1448
 msgid "invalid NA contour values"
 msgstr "valores de contorno NA"
 
-#: src/main/plot3d.c:1753
+#: src/main/plot3d.c:1751
 msgid "invalid x / y values or limits"
 msgstr "valores ou limites de x / y inválidos"
 
-#: src/main/plot3d.c:1755
+#: src/main/plot3d.c:1753
 msgid "invalid contour levels: must be strictly increasing"
 msgstr "valores de contorno inválidos: devem ser estritamente crescentes"
 
-#: src/main/plot3d.c:2415 src/main/plot3d.c:2428
+#: src/main/plot3d.c:2413 src/main/plot3d.c:2426
 msgid "Axis orientation not calculated"
 msgstr "Orientação dos eixos não calculada"
 
-#: src/main/plot3d.c:2446
+#: src/main/plot3d.c:2444
 msgid "too few parameters"
 msgstr "muito poucos parâmetros"
 
-#: src/main/plot3d.c:2478
+#: src/main/plot3d.c:2476
 msgid "invalid 'x' limits"
 msgstr "limites de 'x' inválidos"
 
-#: src/main/plot3d.c:2480
+#: src/main/plot3d.c:2478
 msgid "invalid 'y' limits"
 msgstr "limites de 'y' inválidos"
 
-#: src/main/plot3d.c:2482
+#: src/main/plot3d.c:2480
 msgid "invalid 'z' limits"
 msgstr "limites de 'z' inválidos"
 
-#: src/main/plot3d.c:2503
+#: src/main/plot3d.c:2501
 msgid "'xlab' must be a character vector of length 1"
 msgstr "'xlab' deve ser um vetor de caracteres de comprimento 1"
 
-#: src/main/plot3d.c:2505
+#: src/main/plot3d.c:2503
 msgid "'ylab' must be a character vector of length 1"
 msgstr "'ylab' deve ser um vetor de caracteres de comprimento 1"
 
-#: src/main/plot3d.c:2507
+#: src/main/plot3d.c:2505
 msgid "'zlab' must be a character vector of length 1"
 msgstr "'zlab' deve ser um vetor de caracteres de comprimento 1"
 
-#: src/main/plot3d.c:2527
+#: src/main/plot3d.c:2525
 msgid "invalid viewing parameters"
 msgstr "parâmetros de visualização inválidos"
 

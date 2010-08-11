@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2010-04-03 10:33+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -588,6 +588,12 @@ msgstr ""
 msgid "-l option without value"
 msgstr " 値のない -l オプション"
 
+msgid "configuration files are not supported as from R 2.12.0"
+msgstr ""
+
+msgid "'--multiarch' specified with only one usable sub-architecture"
+msgstr ""
+
 #, fuzzy
 msgid "Error: no packages were specified"
 msgstr "パッケージが特定できません "
@@ -797,6 +803,30 @@ msgid ""
 msgstr ""
 "チャンク/行を処理できません: \n"
 " %s "
+
+msgid "No news found in given file using old-style R-like format."
+msgstr ""
+
+msgid "No news found in given file using package default format."
+msgstr ""
+
+msgid "Could not extract news from the following text chunks:"
+msgstr ""
+
+msgid ""
+"Chunk %s:\n"
+"%s"
+msgstr ""
+
+msgid "Cannot extract version info from the following section titles:"
+msgstr ""
+
+msgid "%s"
+msgstr ""
+
+#, fuzzy
+msgid "Malformed NEWS.Rd file."
+msgstr " 不正な　maintainer field　です． "
 
 msgid "Processing packages:"
 msgstr " パッケージを処理中： "

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
-"PO-Revision-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
+"PO-Revision-Date: 2010-08-11 09:24\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -104,6 +104,12 @@ msgstr "malformed version string"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) must have a positive length"
+
+msgid "'X' must have named dimnames"
+msgstr "‘X’ must have named dimnames"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr "not all elements of ‘MARGIN’ are names of dimensions"
 
 msgid "'dim' specifies too large an array"
 msgstr "‘dim’ specifies too large an array"
@@ -826,8 +832,8 @@ msgstr "no packages found"
 msgid "R packages available"
 msgstr "R packages available"
 
-msgid "DLL '%s' not found"
-msgstr "DLL ‘%s’ not found"
+msgid "DLL '%s' not found: maybe not installed for this architecture?"
+msgstr "DLL ‘%s’ not found: maybe not installed for this architecture?"
 
 msgid "shared object '%s' not found"
 msgstr "shared object ‘%s’ not found"
@@ -853,11 +859,17 @@ msgstr "DLL ‘%s’ was not loaded"
 msgid "shared object '%s' was not loaded"
 msgstr "shared object ‘%s’ was not loaded"
 
+msgid "DLL '%s' not found"
+msgstr "DLL ‘%s’ not found"
+
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "now dyn.unload(“%s”) ..."
 
 msgid "Loading required package: %s"
 msgstr "Loading required package: %s"
+
+msgid "use of 'save' is deprecated"
+msgstr "use of ‘save’ is deprecated"
 
 msgid "none of the packages are loaded"
 msgstr "none of the packages are loaded"

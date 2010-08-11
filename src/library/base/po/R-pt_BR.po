@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2005-12-17 10:55-0200\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -91,6 +91,13 @@ msgstr "string de versão mal formada"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(X) deve ter um comprimento positivo"
+
+#, fuzzy
+msgid "'X' must have named dimnames"
+msgstr "'input' deve ter comprimento 1"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr ""
 
 msgid "'dim' specifies too large an array"
 msgstr "'dim' especifica um array muito grande"
@@ -851,9 +858,8 @@ msgstr "nenhum pacote encontrado"
 msgid "R packages available"
 msgstr "pacotes R disponíveis"
 
-#, fuzzy
-msgid "DLL '%s' not found"
-msgstr "arquivo '%s' não encontrado"
+msgid "DLL '%s' not found: maybe not installed for this architecture?"
+msgstr ""
 
 #, fuzzy
 msgid "shared object '%s' not found"
@@ -886,11 +892,19 @@ msgstr "biblioteca compartilhada '%s' não foi carregada"
 msgid "shared object '%s' was not loaded"
 msgstr "biblioteca compartilhada '%s' não foi carregada"
 
+#, fuzzy
+msgid "DLL '%s' not found"
+msgstr "arquivo '%s' não encontrado"
+
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "agora dyn.unload(\"%s\") ..."
 
 msgid "Loading required package: %s"
 msgstr "Carregando pacotes exigidos: %s"
+
+#, fuzzy
+msgid "use of 'save' is deprecated"
+msgstr "'%s' é obsoleto."
 
 msgid "none of the packages are loaded"
 msgstr "nenhum dos pacotes foi carregado"
@@ -1678,10 +1692,6 @@ msgstr[1] "Mensagens de aviso:\n"
 #~ "help files and needs to be re-installed"
 #~ msgstr ""
 #~ "pacote '%s' foi compilado antes do R 2.0.0: por favor instale-o novamente"
-
-#, fuzzy
-#~ msgid "'x' must have length 1"
-#~ msgstr "'input' deve ter comprimento 1"
 
 #, fuzzy
 #~ msgid "invalid digits"

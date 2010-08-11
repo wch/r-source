@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2005-05-30 21:04+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1212,9 +1212,6 @@ msgid ""
 "definition"
 msgstr ""
 
-msgid "Defining type \"%s\" as a superclass via class \"%s\""
-msgstr ""
-
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1711,6 +1708,77 @@ msgstr ""
 
 msgid "\" is locked; using global environment for new class"
 msgstr ""
+
+msgid ""
+"None of the objects in the source code could be found:  need to attach or "
+"specify the package"
+msgstr ""
+
+msgid "Objects found in multiple packages: using \"%s\" and ignoring %s"
+msgstr ""
+
+msgid "Package \"%s\" is not attached and no namespace found for it"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Invalid source argument: expected file names(s) or connection, got an object "
+"of class \"%s\""
+msgstr "무효인 메소드 정의: 함수를 예측해서 클래스 '%s'의 대상을 얻었습니다"
+
+#, fuzzy
+msgid "Can't find an environment corresponding to package name '%s\""
+msgstr "환경이 클래스 \"%s\"를 포함하고 있는것을 검색할수가 없습니다"
+
+msgid ""
+"Supplied package, \"%s\", differs from package inferred from source, \"%s\""
+msgstr ""
+
+msgid "Can't insert these (not found in source): %s"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Can't insert methods for these functions (methods table not found in "
+"source): %s"
+msgstr "이 기호와 일치하고 있는 특별한 메소드가 아닙니다"
+
+msgid "Non-function objects aren't currently inserted (not traceable): %s"
+msgstr ""
+
+msgid "New functions aren't currently inserted (not untraceable): %s"
+msgstr ""
+
+msgid "Functions inserted through trace(): %s"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"%s() is not a generic function in the target environment--methods will not "
+"be inserted"
+msgstr "'%s'는 '%s'의 일반적인 함수가 아닙니다; 제거되지 않는 메소드입니다"
+
+#, fuzzy
+msgid "Methods inserted for function %s(): %s"
+msgstr "함수'%s' 그리고 기호 %s 때문에 검색되는 메소드가 아닙니다"
+
+msgid "Pretend we inserted class"
+msgstr ""
+
+#, fuzzy
+msgid "No definition for object \"%s\" found in tracing environment"
+msgstr "\"%s\"는 클래스(되는 행동이 아닙니다)가 아닙니다"
+
+msgid "multiple generics match pattern, using table %s"
+msgstr ""
+
+msgid ""
+"Does not seem to be a method table for generic  \"%s\" in tracing environment"
+msgstr ""
+
+#, fuzzy
+msgid "No method in methods table for \"%s\" for signature \"%s\""
+msgstr "함수 '%s'와 기호 %s를 위해서 정해지는 메소드가 아닙니다"
 
 #, fuzzy
 msgid "not a package name: \"%s\""

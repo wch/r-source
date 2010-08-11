@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2010-04-05 15:45+0900 \n"
 "Last-Translator: Ryota Suzuki <suzuki@ef-prime.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -1187,9 +1187,6 @@ msgstr ""
 "すいませんが, 異常なタイプ \"%s\" はクラス定義のスーパークラスとして支持され"
 "ません. "
 
-msgid "Defining type \"%s\" as a superclass via class \"%s\""
-msgstr "タイプ \"%s\" をクラス \"%s\" を経たスーパークラスと定義すること"
-
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1687,6 +1684,84 @@ msgid "\" is locked; using global environment for new class"
 msgstr ""
 " \" はロックされています；グローバル環境を新しいクラスのために使います "
 
+msgid ""
+"None of the objects in the source code could be found:  need to attach or "
+"specify the package"
+msgstr ""
+
+msgid "Objects found in multiple packages: using \"%s\" and ignoring %s"
+msgstr ""
+
+msgid "Package \"%s\" is not attached and no namespace found for it"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Invalid source argument: expected file names(s) or connection, got an object "
+"of class \"%s\""
+msgstr ""
+" 不正なメソッド定義です：関数が期待されますが、クラス \"%s\" のオブジェクトが"
+"得られました "
+
+#, fuzzy
+msgid "Can't find an environment corresponding to package name '%s\""
+msgstr " クラス \"%s\" を含む環境を見付けることが出来ません "
+
+msgid ""
+"Supplied package, \"%s\", differs from package inferred from source, \"%s\""
+msgstr ""
+
+msgid "Can't insert these (not found in source): %s"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Can't insert methods for these functions (methods table not found in "
+"source): %s"
+msgstr ""
+" メソッド \"%s\" に対するメソッドをトレースできません；　以下のシグネチャに対"
+"するメソッドはありません： %s "
+
+msgid "Non-function objects aren't currently inserted (not traceable): %s"
+msgstr ""
+
+msgid "New functions aren't currently inserted (not untraceable): %s"
+msgstr ""
+
+msgid "Functions inserted through trace(): %s"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"%s() is not a generic function in the target environment--methods will not "
+"be inserted"
+msgstr ""
+" 総称的関数でない \"%s\" が \"%s\" 中にあります；メソッドは取り除かれません "
+
+#, fuzzy
+msgid "Methods inserted for function %s(): %s"
+msgstr " 関数 \"%s\" とシグネチャ(signature) %s に対するメソッドがありません "
+
+msgid "Pretend we inserted class"
+msgstr ""
+
+#, fuzzy
+msgid "No definition for object \"%s\" found in tracing environment"
+msgstr " \"%s\" に対するクラス定義が見付かりません(何も行いません) "
+
+msgid "multiple generics match pattern, using table %s"
+msgstr ""
+
+msgid ""
+"Does not seem to be a method table for generic  \"%s\" in tracing environment"
+msgstr ""
+
+#, fuzzy
+msgid "No method in methods table for \"%s\" for signature \"%s\""
+msgstr ""
+" 関数 \"%s\" とシグネチャ(signature) %s に対して定義されたメソッドはメソッド"
+"リスト中にありません "
+
 msgid "not a package name: \"%s\""
 msgstr " パッケージ名ではありません: '%s' "
 
@@ -1700,6 +1775,9 @@ msgstr "ファイルを移動するか、クラスまたはメソッドを削除
 msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] " クラス %s に対する定義はありません "
+
+#~ msgid "Defining type \"%s\" as a superclass via class \"%s\""
+#~ msgstr "タイプ \"%s\" をクラス \"%s\" を経たスーパークラスと定義すること"
 
 #, fuzzy
 #~ msgid ""

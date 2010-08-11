@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
-"PO-Revision-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
+"PO-Revision-Date: 2010-08-11 09:24\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -583,6 +583,12 @@ msgstr "to logical"
 msgid "-l option without value"
 msgstr "-l option without value"
 
+msgid "configuration files are not supported as from R 2.12.0"
+msgstr "configuration files are not supported as from R 2.12.0"
+
+msgid "'--multiarch' specified with only one usable sub-architecture"
+msgstr "‘--multiarch’ specified with only one usable sub-architecture"
+
 msgid "Error: no packages were specified"
 msgstr "Error: no packages were specified"
 
@@ -787,6 +793,31 @@ msgid ""
 msgstr ""
 "Cannot process chunk/lines:\n"
 "%s"
+
+msgid "No news found in given file using old-style R-like format."
+msgstr "No news found in given file using old-style R-like format."
+
+msgid "No news found in given file using package default format."
+msgstr "No news found in given file using package default format."
+
+msgid "Could not extract news from the following text chunks:"
+msgstr "Could not extract news from the following text chunks:"
+
+msgid ""
+"Chunk %s:\n"
+"%s"
+msgstr ""
+"Chunk %s:\n"
+"%s"
+
+msgid "Cannot extract version info from the following section titles:"
+msgstr "Cannot extract version info from the following section titles:"
+
+msgid "%s"
+msgstr "%s"
+
+msgid "Malformed NEWS.Rd file."
+msgstr "Malformed NEWS.Rd file."
 
 msgid "Processing packages:"
 msgstr "Processing packages:"

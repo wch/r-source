@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -85,6 +85,13 @@ msgstr "'%s'는 유효한 선택이 아닙니다"
 
 msgid "dim(X) must have a positive length"
 msgstr "dim(x)은 positive 길이를 가지지 않으면 되지 않습니다"
+
+#, fuzzy
+msgid "'X' must have named dimnames"
+msgstr "'input'는 길이 1 이 나오지 않으면 되지 않습니다"
+
+msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr ""
 
 msgid "'dim' specifies too large an array"
 msgstr "너무 큰 배열을 지정해 있습니다"
@@ -844,9 +851,8 @@ msgstr "어떠한 패키지도 검색되지 않았습니다"
 msgid "R packages available"
 msgstr "이용 가능한 R 패키지"
 
-#, fuzzy
-msgid "DLL '%s' not found"
-msgstr "파일 '%s'가 검색되지 않습니다"
+msgid "DLL '%s' not found: maybe not installed for this architecture?"
+msgstr ""
 
 #, fuzzy
 msgid "shared object '%s' not found"
@@ -879,11 +885,19 @@ msgstr "공용 라이브러리'%s'는 로드 되지 않았습니다"
 msgid "shared object '%s' was not loaded"
 msgstr "공용 라이브러리'%s'는 로드 되지 않았습니다"
 
+#, fuzzy
+msgid "DLL '%s' not found"
+msgstr "파일 '%s'가 검색되지 않습니다"
+
 msgid "now dyn.unload(\"%s\") ..."
 msgstr "dyn.unload(\"%s\")중입니다..."
 
 msgid "Loading required package: %s"
 msgstr "요구된 패키지 %s를 로드중입니다"
+
+#, fuzzy
+msgid "use of 'save' is deprecated"
+msgstr "'%s'는 없어져 버릴 예정입니다"
 
 msgid "none of the packages are loaded"
 msgstr "어느 패키지도 로드 되지 않습니다"
@@ -1683,10 +1697,6 @@ msgstr[0] ""
 #~ "package '%s' claims to be built under R version %s but is missing some "
 #~ "help files and needs to be re-installed"
 #~ msgstr "패키지 '%s' R 2.0.0 이전 것입니다. 그것을 다시 인스톨을 해주십시오"
-
-#, fuzzy
-#~ msgid "'x' must have length 1"
-#~ msgstr "'input'는 길이 1 이 나오지 않으면 되지 않습니다"
 
 #, fuzzy
 #~ msgid "invalid digits"

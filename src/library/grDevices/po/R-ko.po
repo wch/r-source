@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -297,6 +297,9 @@ msgstr "'file'는 default가 없음으로 결손이 되고 있습니다"
 
 msgid "sorry, 'gs' cannot be found"
 msgstr "죄송합니다.'gs'가 검색되지 않습니다"
+
+msgid "unrecognized format of gs -help"
+msgstr ""
 
 msgid "device '%s' is not available"
 msgstr "디바이스 '%s'는 유효하지는 않습니다"

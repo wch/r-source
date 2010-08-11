@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2010-04-09 16:51-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -286,6 +286,9 @@ msgstr "пропущен 'file', умолчания нет"
 
 msgid "sorry, 'gs' cannot be found"
 msgstr "извините, не могу найти 'gs'"
+
+msgid "unrecognized format of gs -help"
+msgstr ""
 
 msgid "device '%s' is not available"
 msgstr "устройство '%s' недоступно"

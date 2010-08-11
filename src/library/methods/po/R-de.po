@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-06-17 14:08\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2010-03-23 16:16+0100\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -1238,9 +1238,6 @@ msgstr ""
 "Sorry, der unnormaler Typ \"%s\" wird als  Superklasse der Klassendefinition "
 "nicht unterstützt"
 
-msgid "Defining type \"%s\" as a superclass via class \"%s\""
-msgstr "Definiere den Typ \"%s\" als eine Superklasse über Klasse \"%s\""
-
 msgid ""
 "'traceOn' is deprecated: use the function 'trace' in the 'methods' package "
 "instead"
@@ -1743,6 +1740,82 @@ msgstr "Umgebung der Klasse \""
 msgid "\" is locked; using global environment for new class"
 msgstr "\" ist gesichert; nutze die globale Umgebung für die neue Klasse"
 
+msgid ""
+"None of the objects in the source code could be found:  need to attach or "
+"specify the package"
+msgstr ""
+
+msgid "Objects found in multiple packages: using \"%s\" and ignoring %s"
+msgstr ""
+
+msgid "Package \"%s\" is not attached and no namespace found for it"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Invalid source argument: expected file names(s) or connection, got an object "
+"of class \"%s\""
+msgstr ""
+"ungültie Methodendefinition; Funktion erwartet, Objekt der Klasse \"%s\" "
+"bekommen"
+
+#, fuzzy
+msgid "Can't find an environment corresponding to package name '%s\""
+msgstr "kann keine Umgebung mit einer Klasse \"%s\" finden"
+
+msgid ""
+"Supplied package, \"%s\", differs from package inferred from source, \"%s\""
+msgstr ""
+
+msgid "Can't insert these (not found in source): %s"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"Can't insert methods for these functions (methods table not found in "
+"source): %s"
+msgstr ""
+"Kann die Verfolgung von \"%s\" nicht aufheben; keine Methodendefinition für "
+"diese Signatur"
+
+msgid "Non-function objects aren't currently inserted (not traceable): %s"
+msgstr ""
+
+msgid "New functions aren't currently inserted (not untraceable): %s"
+msgstr ""
+
+msgid "Functions inserted through trace(): %s"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"%s() is not a generic function in the target environment--methods will not "
+"be inserted"
+msgstr ""
+"\"%s\" ist keine generische Funktion in \"%s\"; Methoden nicht entfernt"
+
+#, fuzzy
+msgid "Methods inserted for function %s(): %s"
+msgstr "keine Methode für Funktion \"%s\" und Signatur %s gefunden"
+
+msgid "Pretend we inserted class"
+msgstr ""
+
+#, fuzzy
+msgid "No definition for object \"%s\" found in tracing environment"
+msgstr "Klassendefinition für \"%s\" nicht gefunden (keine Aktion ausgeführt)"
+
+msgid "multiple generics match pattern, using table %s"
+msgstr ""
+
+msgid ""
+"Does not seem to be a method table for generic  \"%s\" in tracing environment"
+msgstr ""
+
+#, fuzzy
+msgid "No method in methods table for \"%s\" for signature \"%s\""
+msgstr "keine Methode für Funktion \"%s\" und Signatur %s definiert"
+
 msgid "not a package name: \"%s\""
 msgstr "kein Paketname: \"%s\""
 
@@ -1759,6 +1832,9 @@ msgid "no definition for class %s"
 msgid_plural "no definition for classes %s"
 msgstr[0] "keine Definition der Klasse \"%s\" gefunden"
 msgstr[1] "keine Definition der Klasse \"%s\" gefunden"
+
+#~ msgid "Defining type \"%s\" as a superclass via class \"%s\""
+#~ msgstr "Definiere den Typ \"%s\" als eine Superklasse über Klasse \"%s\""
 
 #, fuzzy
 #~ msgid ""

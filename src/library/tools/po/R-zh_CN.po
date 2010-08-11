@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-07-12 18:52\n"
+"POT-Creation-Date: 2010-08-11 09:24\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -556,6 +556,12 @@ msgstr ""
 msgid "-l option without value"
 msgstr "-l选项一定得有值"
 
+msgid "configuration files are not supported as from R 2.12.0"
+msgstr ""
+
+msgid "'--multiarch' specified with only one usable sub-architecture"
+msgstr ""
+
 #, fuzzy
 msgid "Error: no packages were specified"
 msgstr "错误：没有设定程序包"
@@ -760,6 +766,30 @@ msgid ""
 msgstr ""
 "无法处理段/列：\n"
 "%s"
+
+msgid "No news found in given file using old-style R-like format."
+msgstr ""
+
+msgid "No news found in given file using package default format."
+msgstr ""
+
+msgid "Could not extract news from the following text chunks:"
+msgstr ""
+
+msgid ""
+"Chunk %s:\n"
+"%s"
+msgstr ""
+
+msgid "Cannot extract version info from the following section titles:"
+msgstr ""
+
+msgid "%s"
+msgstr ""
+
+#, fuzzy
+msgid "Malformed NEWS.Rd file."
+msgstr "畸形维修人员域."
 
 msgid "Processing packages:"
 msgstr "正在处理程辑包:"
