@@ -311,7 +311,7 @@
             message("packaged installation of ",
                     sQuote(pkg_name), " as ", filename)
         }
-        if (!identical("_R_INSTALL_NO_DONE_", "yes")) {
+        if (Sys.getenv("_R_INSTALL_NO_DONE_") != "yes") {
             message("")  # ensure next starts on a new line, for R CMD check
             starsmsg(stars, "DONE (", pkg_name, ")")
         }
@@ -1161,8 +1161,9 @@
             if (debug) message("about to run ", cmd1, domain = NA)
             message("\n", "add DLL for x64", "\n", domain=NA)
             Sys.unsetenv("_R_INSTALL_NO_DONE_")
-            system(cmd1)
+            res <- system(cmd1)
         }
+        if (res) do_exit_on_error()
         do_cleanup()
         on.exit()
         return(invisible())
