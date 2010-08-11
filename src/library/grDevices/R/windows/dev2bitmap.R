@@ -35,7 +35,7 @@ dev2bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
     st <- grep("^Available", gshelp)
     en <- grep("^Search", gshelp)
     if(!length(st) || !length(en))
-        warning("unrecognized format of gs --help")
+        warning("unrecognized format of gs -help")
     else {
         gsdevs <- gshelp[(st+1):(en-1)]
         devs <- c(strsplit(gsdevs, " "), recursive=TRUE)
@@ -95,7 +95,7 @@ bitmap <- function(file, type="png16m", height = 7, width = 7, res = 72,
     st <- grep("^Available", gshelp)
     en <- grep("^Search", gshelp)
     if(!length(st) || !length(en))
-        warning("unrecognized format of gs --help")
+        warning("unrecognized format of gs -help")
     else {
         gsdevs <- gshelp[(st+1):(en-1)]
         devs <- c(strsplit(gsdevs, " "), recursive=TRUE)
