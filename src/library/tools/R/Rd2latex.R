@@ -500,7 +500,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
                    "\\method" =,
                    "\\S3method" =,
                    "\\S4method" = {
-                   	blocks <- transformMethod(i, blocks)
+                   	blocks <- transformMethod(i, blocks, Rdfile)
                    	tags <- RdTags(blocks)
                    	i <- i - 1
                    },

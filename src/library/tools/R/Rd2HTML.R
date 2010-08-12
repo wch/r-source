@@ -552,7 +552,7 @@ Rd2HTML <-
             "\\method" =,
             "\\S3method" =,
             "\\S4method" = {
-               	blocks <- transformMethod(i, blocks)
+               	blocks <- transformMethod(i, blocks, Rdfile)
                	tags <- RdTags(blocks)
                	i <- i - 1
             },

@@ -52,7 +52,7 @@ Rd2txt_options <- local({
     }
 })
 
-transformMethod <- function(i, blocks) {
+transformMethod <- function(i, blocks, Rdfile) {
     editblock <- function(block, newtext) 
     	list(structure(newtext, Rd_tag = attr(block, "Rd_tag"),
     	                   srcref = attr(block, "srcref")))
@@ -779,7 +779,7 @@ Rd2txt <-
                    "\\method" =,
                    "\\S3method" =,
                    "\\S4method" = {
-                   	blocks <- transformMethod(i, blocks)
+                   	blocks <- transformMethod(i, blocks, Rdfile)
                    	tags <- RdTags(blocks)
                    	i <- i - 1
                    },
