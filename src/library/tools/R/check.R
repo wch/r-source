@@ -582,7 +582,7 @@ R_run_R <- function(cmd, Ropts, env)
                   "man", "help", "html", "latex", "R-ex")
             allfiles <- dir("inst", full.names = TRUE)
             alldirs <- allfiles[file.info(allfiles)$isdir]
-            suspect <- dirname(alldirs) %in% R_system_subdirs
+            suspect <- basename(alldirs) %in% R_system_subdirs
             if (any(suspect)) {
                 ## check they are non-empty
                 suspect <- alldirs[suspect]
