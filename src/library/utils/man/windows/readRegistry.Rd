@@ -18,7 +18,7 @@ readRegistry(key, hive = c("HLM", "HCR", "HCU", "HU", "HCC", "HPD"),
   \item{hive}{The \sQuote{hive} containing the key.  The abbreviations
     are for \code{HKEY_LOCAL_MACHINE},
     \code{HKEY_CLASSES_ROOT}. \code{HKEY_CURRENT_USER},
-    \code{HKEY_USERS}. \code{HKEY_CURRENT_CONFIG} and
+    \code{HKEY_USERS}, \code{HKEY_CURRENT_CONFIG} and
     \code{HKEY_PERFORMANCE_DATA}}
   \item{maxdepth}{How far to recurse into the subkeys of the key.  By
     default only the values of the key and the names of subkeys are
