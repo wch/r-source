@@ -307,7 +307,7 @@ VerbatimArg1:	goVerbatim1 Arg			{ xxpopMode($1); $$ = $2; }
 VerbatimArg2:   '{' goVerbatim2 ArgItems '}'    { xxpopMode($2); $$ = $3; }
 	|	'{' goVerbatim2 '}'		{ xxpopMode($2); $$ = xxnewlist(NULL); }
 
-IfDefTarget:	goLatexLike TEXT	{ xxpopMode($1); $$ = xxnewlist($2); }
+IfDefTarget:	goLatexLike TEXT	{ xxpopMode($1); $$ = xxnewlist(xxtag($2, TEXT, &@$)); }
 
 
 goLatexLike:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, UNKNOWN, FALSE); }
