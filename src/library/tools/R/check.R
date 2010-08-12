@@ -2469,6 +2469,8 @@ R_run_R <- function(cmd, Ropts, env)
                     ## check which architectures this package is installed for
                     if (dir.exists(dd <- file.path(libdir, pkgname, "libs"))) {
                         inst_archs <- dir(dd)
+                        ## xlsReadWrite has spurious subdir 'template'
+                        inst_archs <- inst_archs[inst_archs %in% archs]
                         if (!identical(inst_archs, archs)) {
                             if (length(inst_archs) > 1)
                                 printLog(Log, "NB: this package is only installed for sub-architectures ", paste(sQuote(inst_archs), collapse=", "), "\n")
