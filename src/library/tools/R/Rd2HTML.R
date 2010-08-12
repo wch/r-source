@@ -678,11 +678,7 @@ Rd2HTML <-
 
 	of0('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">\n',
 	    '<html><head><title>R: ')
-	## special for now, as we need to remove leading and trailing spaces
-	title <- trim(as.character(title))
-	title <- htmlify(paste(psub1("^\\s+", "", title[nzchar(title)]),
-			       collapse = " "))
-	of1(title)
+	of1(htmlify(.Rd_format_title(.Rd_get_title(Rd, encoding="UTF-8"))))
 	of0('</title>\n',
 	    '<meta http-equiv="Content-Type" content="text/html; charset=',
 	    mime_canonical_encoding(outputEncoding),
@@ -698,7 +694,9 @@ Rd2HTML <-
 	    of0('"><tr><td>',name)
 	of0('</td><td align="right">R Documentation</td></tr></table>\n\n')
 
-	of0("<h2>", title,'</h2>\n')
+	of1("<h2>")
+	writeContent(title,sections[1])
+	of1("</h2>")
 
 	for (i in seq_along(sections)[-(1:2)])
 	    writeSection(Rd[[i]], sections[i])

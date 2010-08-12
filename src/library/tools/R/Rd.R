@@ -506,13 +506,9 @@ function(x, which, predefined = TRUE)
     else {
         ## User-defined sections are parsed into lists of length 2, with
         ## the elements the title and the body, respectively.
-        ## <FIXME>
-        ## Section titles should really contain no Rd markup, but might
-        ## they contain Rd comments?
-        ## </FIXME>
         x <- x[RdTags(x) == "\\section"]
         if(length(x)) {
-            ind <- sapply(x, function(e) .Rd_deparse(e[[1L]])) == which
+            ind <- sapply(x, function(e) .Rd_get_text(e[[1L]])) == which
             x <- lapply(x[ind], `[[`, 2L)
         }
     }
@@ -669,21 +665,38 @@ function(x)
 ### * .Rd_get_title
 
 .Rd_get_title <-
-function(x)
+function(x, encoding="")
 {
-    x <- .Rd_get_section(x, "title")
+    title <- .Rd_get_section(x, "title")
 
-    if(length(x)) {
-        ## <FIXME>
-        ## Remove eventually.
-        x <- .Rd_drop_comments(x)
-        ## </FIXME>
-        .strip_whitespace(.Rd_deparse(x, tag = FALSE))
+    result <- character()
+    if(length(title)) {
+        result <- .Rd_get_text(title, encoding=encoding)
+        result <- result[result != ""]
     }
-    else
-        character()
+    if (length(result)) 
+    	result <- result[1]
+    result
 }
 
+### * .Rd_get_text
+
+.Rd_get_text <-
+function(x, encoding="") {
+    # We'd like to use capture.output here, but don't want to depend
+    # on utils, so we duplicate some of it
+    rval <- NULL
+    file <- textConnection("rval", "w", local = TRUE)
+    
+    save <- options(useFancyQuotes = FALSE)
+    sink(file)
+    tryCatch(Rd2txt(x, fragment=TRUE, encoding=encoding),
+             finally = {sink(); options(save); close(file)})    
+    
+    if (is.null(rval)) character()
+    else rval
+}
+     
 ### * .Rd_get_xrefs
 
 .Rd_get_xrefs <-

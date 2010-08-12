@@ -463,20 +463,6 @@ Rd2txt <-
         text
     }
 
-    txt_striptitle <- function(text) {
-        text <- striptitle(text)
-        if(use_fancy_quotes) {
-            text <- fsub("``", LDQM, text)
-            text <- fsub("''", RDQM, text)
-            text <- psub("`([^']+)'", paste(LSQM, "\\1", RSQM, sep=""), text)
-            text <- fsub("`", "'", text)
-        } else {
-            text <- psub("(``|'')", '"', text)
-            text <- fsub("`", "'", text)
-        }
-        text
-    }
-
     ## underline via backspacing
     txt_header <- function(header) {
         opts <- Rd2txt_options()
@@ -895,25 +881,6 @@ Rd2txt <-
 	}
     }
 
-    toChar <- function(x)
-    {
-        out <- character()
-        for(i in seq_along(x)) {
-            this <- x[[i]]
-            out <- c(out,
-                     switch(attr(this, "Rd_tag"),
-                            "\\ldots" =,
-                            "\\dots" = "...",
-                            "\\R" = "R",
-                            "\\bold" =,
-                            "\\strong" =,
-                            "\\emph" = toChar(this),
-                            "\\code" = sQuote(toChar(this)),
-                            as.character(this))
-                     )
-        }
-        paste(out, collapse = "")
-    }
     writeSection <- function(section, tag) {
         if (tag %in% c("\\alias", "\\concept", "\\encoding", "\\keyword"))
             return()
@@ -926,7 +893,8 @@ Rd2txt <-
         keepFirstIndent <<- TRUE
         if (tag == "\\section" || tag == "\\subsection") {
             ## section header could have markup
-            putf(titlePrefix, txt_header(toChar(section[[1L]])), ":")
+            title <- .Rd_format_title(.Rd_get_text(section[[1L]]))
+            putf(titlePrefix, txt_header(title), ":")
             blankLine()
             dropBlank <<- TRUE
             wrapping <<- TRUE
@@ -979,10 +947,7 @@ Rd2txt <-
     	    for (i in seq_along(sections))
     	    	writeBlock(Rd[[i]], sections[i], "")
     } else {
-	title <- capture.output(Rd2txt(Rd[[1L]], fragment=TRUE))
-	## remove empty lines, leading and trailing whitespace, \n
-	title <- trim(paste(psub1("^\\s+", "", title[nzchar(title)]), collapse=" "))
-	title <- fsub("\n", "", title)
+	title <- .Rd_format_title(.Rd_get_title(Rd))
 
 	name <- trim(Rd[[2L]][[1L]])
 
@@ -999,7 +964,7 @@ Rd2txt <-
 	    putf(paste(left, pad1, mid, pad2, right, "\n\n", sep=""))
 	}
 
-	putf(txt_header(txt_striptitle(title)))
+	putf(txt_header(title))
 	blankLine()
 
 	for (i in seq_along(sections)[-(1:2)])

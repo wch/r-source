@@ -640,11 +640,7 @@ Rd2latex <- function(Rd, out="", defines=.Platform$OS.type, stages="render",
 	Rd <- Rd[sortorder]
 	sections <- sections[sortorder]
 
-	title <- as.character(Rd[[1L]])
-	## remove empty lines, leading whitespace
-	title <- trim(paste(psub1("^\\s+", "", title[nzchar(title)]),
-			    collapse=" "))
-	## substitutions?
+	title <- .Rd_format_title(.Rd_get_title(Rd))
 
 	name <- Rd[[2L]]
 

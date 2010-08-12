@@ -3287,11 +3287,15 @@ example).
 
 @item \title@{@var{Title}@}
 @findex \title
-Title information for the @file{Rd} file.  This should be capitalized, not end
-in a period, and not use any markup (which would cause problems for
-hypertext search).  Use of characters other than English text and
-punctuation (e.g., @samp{<}) may limit portability.  There must be one
-(and only one) @code{\title} section in a help file.
+Title information for the @file{Rd} file.  This should be capitalized
+and not end in a period; try to limit its length to at most 65
+characters for widest compatibility.
+
+Since @R{} version 2.12.0 markup has been supported
+in the text, but use of characters other than English text and
+punctuation (e.g., @samp{<}) may limit portability.  
+
+There must be one (and only one) @code{\title} section in a help file.
 
 @item \description@{@dots{}@}
 @findex \description

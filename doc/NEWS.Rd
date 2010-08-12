@@ -495,6 +495,8 @@
       
       \item Rendering of S3 and S4 methods in man pages has been
       corrected and made consistent across output formats.
+      
+      \item Simple markup is now allowed in Rd titles.
     }
   }
 }
