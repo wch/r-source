@@ -595,10 +595,9 @@ R_run_R <- function(cmd, Ropts, env)
                     wrapLog("Found the following non-empty",
                             "subdirectories of 'inst' also",
                             "used by R:\n")
-                    printLog(Log, paste(c("", suspect, ""), collapse="\n"))
+                    printLog(Log, paste(c(suspect, ""), collapse="\n"))
                     wrapLog("It is recommended not to interfere",
-                            "with package subdirectories",
-                            "used by R.\n")
+                            "with package subdirectories used by R.\n")
                 }
             }
         }
