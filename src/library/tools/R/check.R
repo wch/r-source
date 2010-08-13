@@ -2215,7 +2215,7 @@ R_run_R <- function(cmd, Ropts, env)
             f <- dir(file.path(R.home(), "bin"))
             archs <- f[f %in% c("i386", "x64")]
             ## if we have x64, can only run it on a 64-bit OS
-            if (length(archs) > 1L && !grepl("x64", win.version()))
+            if (length(archs) > 1L && !grepl("x64", utils:::win.version()))
                 archs <- "i386"
         } else {
             wd2 <- setwd(file.path(R.home("bin"), "exec"))
