@@ -60,7 +60,7 @@
     variables such as \code{PATH} and \code{TEXINPUTS}.
   }
   \item{r_arch}{
-    character string, possibly \code{""}.  The name of the
+    character string, possibly \code{""}.  The name of an
     architecture-specific directory used in this build of \R.
   }
 }
@@ -69,7 +69,7 @@
   \code{.Platform$GUI} is set to \code{"AQUA"} under the Mac OS X GUI,
   \code{R.app}. This has a number of consequences:
   \itemize{
-    \item the \env{DISPLAY} environment variable is set.
+    \item the \env{DISPLAY} environment variable is set to \code{":0"} if unset.
     \item appends \file{/usr/local/bin} to the \env{PATH} environment variable.
     \item the default graphics device is set to \code{quartz}.
     \item selects native (rather than Tk) widgets for the \code{graphics
