@@ -304,6 +304,9 @@
       \code{FALSE} and \code{save = TRUE} is now deprecated.  (This
       facility is very rarely actually used, and was superseded by the
       \samp{Depends} field of the \file{DESCRIPTION} file long ago.)
+
+      \item \command{R CMD check --no-latex} is deprecated in favour of
+      \option{--no-manual}.
     }
   }
   \subsection{PACKAGE INSTALLATION}{

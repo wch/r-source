@@ -2063,8 +2063,8 @@ R_run_R <- function(cmd, Ropts, env)
             "      --no-examples     do not run the examples in the Rd files",
             "      --no-install      skip installation and associated tests",
             "      --no-tests        do not run code in 'tests' subdirectory",
-            "      --no-latex        do not run LaTeX on help files to produce the PDF manual",
-            "      --no-manual       ditto",
+            "      --no-manual       do not produce the PDF manual",
+            "      --no-latex        (deprecated) ditto",
             "      --no-vignettes    do not check vignettes in Sweave format",
             "      --use-gct         use 'gctorture(TRUE)' when running examples/tests",
             "      --use-valgrind    use 'valgrind' when running examples/tests/vignettes",
@@ -2162,7 +2162,11 @@ R_run_R <- function(cmd, Ropts, env)
             do_tests  <- FALSE
         } else if (a == "--no-vignettes") {
             do_vignettes  <- FALSE
-        } else if (a == "--no-latex" || a == "--no-manual") {
+        } else if (a == "--no-manual") {
+            do_manual  <- FALSE
+        } else if (a == "--no-latex") {
+            warning("'--no-latex' is deprecated: use '--no-manual' instead",
+                    call. = FALSE, domain = NA)
             do_manual  <- FALSE
         } else if (a == "--use-gct") {
             use_gct  <- TRUE
