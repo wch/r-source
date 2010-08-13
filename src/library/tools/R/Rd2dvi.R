@@ -56,7 +56,7 @@
         text <- strsplit(text, "\n\n", fixed = TRUE, useBytes = TRUE)[[1L]]
         Encoding(text) <- "unknown"
         if(f %in% c("Author", "Maintainer"))
-            text <- gsub("<([^@]+)@([^>]+)>",
+            text <- gsub("<([^@ ]+)@([^> ]+)>",
                          "}\\\\email{\\1@\\2}\\\\AsIs{",
                          text, useBytes = TRUE)
         if(f == "URL")
