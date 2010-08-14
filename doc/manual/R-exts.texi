@@ -3179,6 +3179,13 @@ function's arguments and return value, as in the above example).
 Finally, there is an optional footer with keyword information.  The
 header is mandatory.
 
+Information is given within a series of @emph{sections} with standard
+names (and user-defined sections are also allowed).  Unless otherwise
+specified@footnote{e.g.@: @code{\alias}, @code{\keyword} and
+@code{\note} sections.} these should occur only once in an @file{Rd}
+file (in any order), and the processing software will retain only the
+first occurrence of a standard section in the file, with a warning.
+
 See @uref{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
 files''} for guidelines for writing documentation in @file{Rd} format
 which should be useful for package writers.
@@ -3252,7 +3259,7 @@ may not be collated correctly in the index.)  There can only be one
 
 @item \alias@{@var{topic}@}
 @findex \alias
-The @code{\alias} entries specify all ``topics'' the file documents.
+The @code{\alias} sections specify all ``topics'' the file documents.
 This information is collected into index data bases for lookup by the
 on-line (plain text and @HTML{}) help systems.  The @var{topic} can
 contain spaces, but (for historical reasons) leading and trailing spaces
@@ -3451,7 +3458,8 @@ A section with references to the literature.  Use @code{\url@{@}} or
 
 @item \note@{...@}
 @findex \note
-Use this for a special note you want to have pointed out.
+Use this for a special note you want to have pointed out.  Multiple
+@code{\note} sections are allowed, but might be confusing to the end users.
 
 For example, @file{pie.Rd} contains
 
@@ -3468,9 +3476,10 @@ For example, @file{pie.Rd} contains
 
 @item \author@{@dots{}@}
 @findex \author
-Information about the author(s) of the @file{Rd} file.  Use @code{\email@{@}}
-without extra delimiters (@samp{( )} or @samp{< >}) to specify email
-addresses, or @code{\url@{@}} or @code{\href@{@}@{@}} for web pointers.
+Information about the author(s) of the @file{Rd} file.  Use
+@code{\email@{@}} without extra delimiters (such as @samp{( )} or
+@samp{< >}) to specify email addresses, or @code{\url@{@}} or
+@code{\href@{@}@{@}} for web pointers.
 
 @item \seealso@{@dots{}@}
 @findex \seealso
@@ -3532,12 +3541,10 @@ for, for example in some locales.  (Use e.g. @code{capabilities()} to
 test for features needed in the examples wherever possible, and you can
 also use @code{try()} or @code{trycatch()}.)
 
-There should be only one @code{\examples} section per file, and only the
-first will be used.
-
 @findex \keyword
 @item \keyword@{@var{key}@}
-Each @code{\keyword} entry should specify a single keyword, preferably
+There can be zero or more @code{\keyword} sections per file.
+Each @code{\keyword} section should specify a single keyword, preferably
 one of the standard keywords as listed in file @file{KEYWORDS} in the
 @R{} documentation directory (default @file{@var{R_HOME}/doc}).  Use
 e.g.@: @code{RShowDoc("KEYWORDS")} to inspect the standard keywords from
@@ -3597,7 +3604,9 @@ This uses the following additional markup commands.
 @item \docType@{@dots{}@}
 Indicates the ``type'' of the documentation object.  Always @samp{data}
 for data sets, and @samp{package} for @file{@var{pkg}-package.Rd}
-overview files.
+overview files.  Documentation for S4 methods and classes uses
+@samp{methods} (from @code{promptMethods()}) and @samp{class} (from
+@code{promptClass()}).
 
 @item \format@{@dots{}@}
 @findex \format
@@ -4364,16 +4373,14 @@ when parsed.
 
 Rd files are text files and so it is impossible to deduce the encoding
 they are written in unless @acronym{ASCII}: files with 8-bit characters
-could be UTF-8, Latin-1, Latin-9, KOI8-R, EUC-JP, @emph{etc}.  So the
-@code{\encoding@{@}} directive must be used to specify the encoding if
-it is not @acronym{ASCII}.  (The @code{\encoding@{@}} directive must be
-on a line by itself, and in particular one containing no
-non-@acronym{ASCII} characters.  There should be only one
-@code{\encoding@{@}} directive per file, but only the first will be
-used.  The encoding declared in the @file{DESCRIPTION} file will be used
-if none is declared in the file.)  The @file{Rd} files are converted to
-UTF-8 before parsing and so the preferred encoding for the files
-themselves is now UTF-8.
+could be UTF-8, Latin-1, Latin-9, KOI8-R, EUC-JP, @emph{etc}.  So an
+@code{\encoding@{@}} section must be used to specify the encoding if it
+is not @acronym{ASCII}.  (The @code{\encoding@{@}} section must be on a
+line by itself, and in particular one containing no non-@acronym{ASCII}
+characters.  The encoding declared in the @file{DESCRIPTION} file will
+be used if none is declared in the file.)  The @file{Rd} files are
+converted to UTF-8 before parsing and so the preferred encoding for the
+files themselves is now UTF-8.
 
 Wherever possible, avoid non-@acronym{ASCII} chars in @file{Rd} files, and
 even symbols such as @samp{<}, @samp{>}, @samp{$}, @samp{^}, @samp{&},

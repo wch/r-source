@@ -285,7 +285,15 @@
 
       \item The standard Unix-alike terminal interface declares its name
       to readline as 'R', so that can be used for conditional sections
-      in  \file{~/.inputrc} files.
+      in \file{~/.inputrc} files.
+
+      \item \sQuote{Writing R Extensions} now stresses that the standard
+      sections in \file{.Rd} files (other than \samp{\alias},
+      \samp{\keyword} and \samp{\note}) are intended to be unique, and
+      the conversion tools now drop duplicates with a warning.
+
+      The \file{.Rd} conversion tools also warn about an unrecognized type
+      in a \samp{\docType} section.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{

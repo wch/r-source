@@ -48,8 +48,7 @@ checkRd(Rd, defines = .Platform$OS.type, stages = "render",
   level 0.  These include
   \tabular{l}{
     All text must be in a section\cr
-    Only one \verb{\examples} section is allowed: the first will be used\cr
-    Only one \verb{\encoding} section is allowed: the first will be used\cr
+    Only one \var{tag name} section is allowed: the first will be used\cr
     Section \var{name} is unrecognized and will be dropped\cr
     Dropping empty section \var{name}\cr
   }

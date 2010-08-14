@@ -266,7 +266,7 @@ processRdChunk <- function(code, stage, options, env, Rdfile)
 	    res <- parse_Rd(tmpcon, fragment=TRUE)
 	    # Now remove that extra newline added by the writeLines
 	    last <- res[[length(res)]]
-	    if (attr(last, "Rd_tag") == "TEXT" && (len <- length(last))) 
+	    if (attr(last, "Rd_tag") == "TEXT" && (len <- length(last)))
 	        res[[length(res)]][len] <- gsub("\\n$", "", last[len])
 	    flag <- getDynamicFlags(res)
 	    res <- tagged(res, "LIST")
@@ -315,7 +315,7 @@ processRdIfdefs <- function(blocks, defines)
 	    	    all <- seq_along(block)
 	    	    before <- all[all < i]
 	    	    after <- all[all > i]
-	    	    block <- structure(tagged(c(block[before], newval, block[after]), 
+	    	    block <- structure(tagged(c(block[before], newval, block[after]),
 	    	    			      tag), srcref = attr(block, "srcref"))
 	    	} else {
 	    	    flags <- flags | getDynamicFlags(newval)
@@ -340,20 +340,20 @@ processRdSexprs <-
 
         if (is.list(block)) {
             if (!is.null(tag <- attr(block, "Rd_tag"))) {
-        	if (tag == "\\Sexpr") 
+        	if (tag == "\\Sexpr")
             	    block <- processRdChunk(block, stage, options, env)
             	else if (tag == "\\RdOpts")
     	    	    options <<-
                         utils:::SweaveParseOptions(block, options, RweaveRdOptions)
     	    }
     	    if (is.list(block)) {
-		for (i in seq_along(block)) 
+		for (i in seq_along(block))
 		    block[[i]] <- recurse(block[[i]])
 	    }
 	}
 	block
     }
-    
+
     if (!any(getDynamicFlags(block)[stage])) return(block)
     expandDynamicFlags(recurse(block), options)
 }
@@ -419,21 +419,24 @@ prepare2_Rd <- function(Rd, Rdfile)
 
     drop <- rep.int(FALSE, length(sections))
 
-    where <- which(sections == "\\examples")
-    if(length(where) > 1L) {
-        warnRd(Rd[where[[2L]]], Rdfile,
-               "Only one \\examples section is allowed: the first will be used")
-        drop[where[-1L]] <- TRUE
+    ## Check other sections are unique
+    unique_tags <-
+        paste("\\",
+              c("usage", "arguments", "synopsis",
+                "format", "details", "value", "references", "source",
+                "seealso", "examples", "author", "encoding"),
+              sep = "")
+    for (tag in unique_tags) {
+        where <- which(sections == tag)
+        if(length(where) > 1L) {
+            warnRd(Rd[where[[2L]]], Rdfile,
+                   sprintf("Only one %s section is allowed: the first will be used", tag))
+            drop[where[-1L]] <- TRUE
+        }
     }
 
     enc <- which(sections == "\\encoding")
     if (length(enc)) {
-    	if (length(enc) > 1L) {
-    	    warnRd(Rd[[enc[2L]]], Rdfile,
-                   "Only one \\encoding declaration is allowed: the first will be used")
-            drop[enc[-1L]] <- TRUE
-            enc <- enc[[1L]]
-        }
     	encoding <- Rd[[enc]]
     	if (!identical(RdTags(encoding), "TEXT"))
     	    stopRd(encoding, Rdfile, "'encoding' must be plain text")
@@ -442,11 +445,17 @@ prepare2_Rd <- function(Rd, Rdfile)
     dt <- which(sections == "\\docType")
     docTypes <- character(length(dt))
     if(length(dt)) {
+        if(length(dt) > 1L)
+            warnRd(dt[[1L]], Rdfile,
+                   "Multiple \\docType sections are not supported")
         for(i in seq_along(dt)) {
             docType <- Rd[[dt[i]]]
             if(!identical(RdTags(docType), "TEXT"))
         	stopRd(docType, Rdfile, "'docType' must be plain text")
             docTypes[i] <- docType[[1L]]
+            if (! docTypes[i] %in% c("data", "package", "methods", "class"))
+                warnRd(dt[i], Rdfile, "docType ", sQuote(docTypes[i]),
+                       " is unrecognized")
          }
     }
 
@@ -477,6 +486,7 @@ prepare2_Rd <- function(Rd, Rdfile)
     name_text <- as.character(Rd[[2L]])
     if(grepl("[!|@]", name_text))
         warnRd(RdTags(Rd[[2L]]), Rdfile,"\\name should not contain !, | or @")
+    ## is this really what we want?  docTypes is a vector.
     structure(Rd, meta = list(docType = docTypes))
 }
 
@@ -851,7 +861,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
                              "Empty section ", tagtitle)
     }
 
-    checkUnique <- function(tag) {
+    checkUnique <- function(tag) { # currently only used for \description
     	which <- which(sections == tag)
     	if (length(which) < 1L)
     	    warnRd(Rd, Rdfile, level = 5, "Must have a ", tag)
@@ -909,6 +919,21 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     inEnc2 <- FALSE
     if(!identical("package", docTypes))
         checkUnique("\\description")
+
+    ## Check other standard sections are unique
+    ## \alias and \keyword are allowed to be repeated
+    ## Normally prepare_Rd will have dropped duplicates already
+    unique_tags <-
+        paste("\\",
+              c("name", "title", "description", # must exist and be unique
+                "usage", "arguments",  "synopsis",
+                "format", "details", "value", "references", "source",
+                "seealso", "examples", "author", "encoding"),
+              sep = "")
+    for(tag in intersect(sections[duplicated(sections)], unique_tags))
+        warnRd(Rd, Rdfile, level = 5,
+               sprintf("multiple sections named '%s' are not allowed", tag))
+
     for (i in seq_along(sections))
         checkSection(Rd[[i]], sections[i])
 
