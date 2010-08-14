@@ -1,6 +1,7 @@
 % File src/library/datasets/man/sleep.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
+% Copyright 1999-2010 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{sleep}
@@ -14,10 +15,11 @@
 }
 \usage{sleep}
 \format{
-  A data frame with 20 observations on 2 variables.
+  A data frame with 20 observations on 3 variables.
   \tabular{rlll}{
     [, 1] \tab extra \tab numeric \tab increase in hours of sleep\cr
-    [, 2] \tab group \tab factor  \tab drug given
+    [, 2] \tab group \tab factor  \tab drug given\cr
+    [, 3] \tab ID    \tab factor  \tab patient ID
   }
 }
 \source{
@@ -29,6 +31,11 @@
   The probable error of the mean.
   \emph{Biometrika}, \bold{6}, 20.
 }
+\details{
+  The \code{group} variable name may be misleading about the data:
+  They represent measurements on 10 persons, not in groups.
+  %% But we keep it (as [,2]) for back compatibility.
+}
 \references{
   \enc{Scheffé}{Scheffe}, Henry (1959)
   \emph{The Analysis of Variance}.
@@ -37,6 +44,8 @@
 \examples{
 require(stats)
 ## Student's paired t-test
-t.test(extra ~ group, data = sleep, paired = TRUE)
+with(sleep,
+     t.test(extra[group == 1],
+            extra[group == 2], paired = TRUE))
 }
 \keyword{datasets}
