@@ -27,7 +27,7 @@ subset.data.frame <- function (x, subset, select, drop = FALSE, ...)
     if(missing(select))
 	vars <- TRUE
     else {
-	nl <- as.list(1L:ncol(x))
+	nl <- as.list(seq_along(x))
 	names(nl) <- names(x)
 	vars <- eval(substitute(select), nl, parent.frame())
     }

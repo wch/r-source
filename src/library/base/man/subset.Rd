@@ -1,6 +1,6 @@
 % File src/library/base/man/subset.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{subset}
@@ -58,6 +58,12 @@ subset(x, \dots)
   An object similar to \code{x} contain just the selected elements (for
   a vector), rows and columns (for a matrix or data frame), and so on.
 }
+\section{Warning}{
+  This is a convenience function intended for use interactively.  For
+  programming it is better to use the standard subsetting functions like
+  \code{\link{[}}, and in particular the non-standard evaluation of
+  argument \code{subset} can have unanticipated consequences.
+}
 \author{Peter Dalgaard and Brian Ripley}
 \seealso{
   \code{\link{[}}, % = ./Extract.Rd
@@ -74,5 +80,7 @@ with(airquality, subset(Ozone, Temp > 80))
 nm <- rownames(state.x77)
 start_with_M <- nm \%in\% grep("^M", nm, value=TRUE)
 subset(state.x77, start_with_M, Illiteracy:Murder)
+# but in recent versions of R this can simply be
+subset(state.x77, grepl("^M", nm), Illiteracy:Murder)
 }
 \keyword{manip}
