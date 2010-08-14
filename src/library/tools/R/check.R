@@ -1588,8 +1588,8 @@ R_run_R <- function(cmd, Ropts, env)
                 ## FIXME: use intern = TRUE
                 R_system(sprintf("file '%s' > %s", f, shQuote(Tfile)))
                 line <- readLines(Tfile, n = 1L)
-                if (grepl("executable", line) &&
-                    !grepl("script text", line))
+                if (grepl("executable", line, useBytes=TRUE) &&
+                    !grepl("script text", line, useBytes=TRUE))
                     execs <- c(execs, f)
             }
             known <- rep(FALSE, length(execs))
