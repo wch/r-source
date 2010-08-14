@@ -5,7 +5,7 @@
 
 \name{xyVector}
 \alias{xyVector}
-\title{Construct an xyVector Object}
+\title{Construct an \code{xyVector} Object}
 \description{
   Create an object to represent a set of x-y pairs.  The resulting
   object can be treated as a matrix or as a data frame or as a vector.

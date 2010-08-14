@@ -882,8 +882,7 @@
 /* Define this to be the name of the vendor of your system. */
 #undef R_VENDOR
 
-/* Define this to be the extension used for shared libraries on your system.
-   */
+/* Define this to be the extension used for shared objects on your system. */
 #undef SHLIB_EXT
 
 /* The size of `double', as computed by sizeof. */

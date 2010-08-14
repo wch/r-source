@@ -39,14 +39,16 @@ Sections of the Rd file to keep.
   (If \code{keepSpacing} is \code{FALSE}, blank filling will not occur,
   and text will not be output in its original location.)
 
-  By default, the tags \code{c("\\docType", "\\encoding", "\\keyword",
-    "\\email", "\\file", "\\linkS4class", "\\pkg", "\\var", "\\method",
-    "\\S3method", "\\S4method", "\\link")} are skipped.  Additional tags
-  can be skipped by listing them in the \code{drop} argument; listing
-  tags in the \code{keep} argument will stop them from being skipped.
-  It is also possible to \code{keep} any of the \code{c("RCODE", "COMMENT",
-    "VERB")} tags, which correspond to R-like code, comments, and verbatim
-  text respectively, or to drop \code{"TEXT"}.
+  By default, the tags \verb{\S3method}, \verb{\S4method},
+  \verb{\command}, \verb{\docType}, \verb{\email}, \verb{\encoding},
+  \verb{\file}, \verb{\keyword}, \verb{\link}, \verb{\linkS4class},
+  \verb{\method}, \verb{\pkg}, and \verb{\var} are skipped.  Additional
+  tags can be skipped by listing them in the \code{drop} argument;
+  listing tags in the \code{keep} argument will stop them from being
+  skipped.  It is also possible to \code{keep} any of the
+  \code{c("RCODE", "COMMENT", "VERB")} tags, which correspond to R-like
+  code, comments, and verbatim text respectively, or to drop
+  \code{"TEXT"}.
 }
 \value{
   A character vector which if written to a file, one element per line, would 

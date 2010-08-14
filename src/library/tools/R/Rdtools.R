@@ -2,6 +2,8 @@ RdTextFilter <-
 function(ifile, encoding = "unknown", keepSpacing = TRUE,
          drop = character(), keep = character())
 {
+    if(inherits(ifile, "srcfile"))
+        ifile <- ifile$filename
     if (inherits(ifile, "Rd")) {
 	# Undo sorting done in prepare2_Rd
 	srcrefs <- sapply(ifile, function(s) attr(s, "srcref"))
@@ -90,18 +92,19 @@ function(ifile, encoding = "unknown", keepSpacing = TRUE,
 	    prevcol <<- lastcol
 	    prevline <<- lastline
 	},
-	"\\docType"=,
-	"\\encoding"=,
-	"\\keyword"=,
-	"\\email"=,
-	"\\file"=,
-	"\\linkS4class"=,
-	"\\pkg"=,
-	"\\var"=,
-	"\\method"=,
 	"\\S3method"=,
 	"\\S4method"=,
+        "\\command"=,
+	"\\docType"=,
+	"\\email"=,
+	"\\encoding"=,
+	"\\file"=,
+	"\\keyword"=,
 	"\\link"=,
+        "\\linkS4class"=,
+	"\\method"=,
+	"\\pkg"=,
+	"\\var"=,
 	DROP = {},  # do nothing
 
 	"\\tabular"=,

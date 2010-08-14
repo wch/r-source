@@ -1,13 +1,31 @@
 aspell <-
-function(files, filter, control = list(), encoding = "unknown")
+function(files, filter, control = list(), encoding = "unknown",
+         program = NULL)
 {
-    ## Take the given files and feed them through aspell in pipe mode.
+    ## Take the given files and feed them through spell checker in
+    ## Ispell pipe mode.
 
     ## Think about options and more command line options eventually.
 
+    program <- aspell_find_program(program)
+    if(is.na(program))
+        stop("No suitable spell check program found.")
+
+    files_are_names <- is.character(files)
+
     filter_args <- list()
-    if(missing(filter) || is.null(filter))
-        filter <- NULL
+    if(missing(filter) || is.null(filter)) {
+        filter <- if(!files_are_names) {
+            function(ifile, encoding) {
+                ## What should this do with encodings?
+                if(inherits(ifile, "srcfile"))
+                    readLines(ifile$filename, warn = FALSE)
+                else 
+                    as.character(ifile)
+            }
+        }
+        else NULL
+    }
     else if(is.character(filter)) {
         ## Look up filter in aspell filter db.
         filter_name <- filter[1L]
@@ -47,17 +65,24 @@ function(files, filter, control = list(), encoding = "unknown")
     tfile <- tempfile("aspell")
     on.exit(unlink(tfile))
 
+    fnames <- names(files)
     files <- as.list(files)
     
     for (i in seq_along(files)) {
 
         file <- files[[i]]
-        if(is.character(file))
+        if(files_are_names)
             fname <- file
         else {
-            ## The filter might be be able to figure out src files
-            ## without srcrefs so let's be nice for now ...
-            fname <- attr(attr(file, "srcref"), "srcfile")$filename
+            ## Try srcfiles and srcrefs ...
+            fname <- if(inherits(file, "srcfile"))
+                file$filename
+            else
+                attr(attr(file, "srcref"), "srcfile")$filename
+            ## As a last resort, try the names of the files argument.
+            if(is.null(fname))
+                fname <- fnames[i]
+            ## If unknown ...
             if(is.null(fname))
                 fname <- "<unknown>"
         }
@@ -105,14 +130,7 @@ function(files, filter, control = list(), encoding = "unknown")
         ##                else sprintf("%s --encoding=%s", control, enc),
         ##                tfile)
 
-        exe <- Sys.which("aspell")
-        if(exe == "") {
-            exe <- Sys.which("ispell")
-            if(exe == "")
-                stop("Could not find aspell or ispell executable.")
-        }
-        
-        cmd <- sprintf("%s -a %s < %s", shQuote(exe), control, tfile)
+        cmd <- sprintf("%s -a %s < %s", shQuote(program), control, tfile)
 
 	out <- tools:::.shell_with_capture(cmd)
 
@@ -177,7 +195,9 @@ function(files, filter, control = list(), encoding = "unknown")
 	    db <- rbind(db, db1)
 	}
     }
-    structure(db, class = c("aspell", "data.frame"))
+    
+    class(db) <- c("aspell", "data.frame")
+    db
 }
 
 print.aspell <-
@@ -225,35 +245,103 @@ aspell_filter_db <- new.env()
 aspell_filter_db$Rd <- tools::RdTextFilter
 aspell_filter_db$Sweave <- tools::SweaveTeXFilter
 
+aspell_find_program <-
+function(program = NULL)
+{
+    check <- !is.null(program) || !is.null(names(program))
+    if(is.null(program))
+        program <- getOption("aspell_program")
+    if(is.null(program))
+        program <- c("aspell", "hunspell", "ispell")
+    program <- Filter(nzchar, Sys.which(program))[1L]
+    if(!is.na(program) && check) {
+        out <- c(system(sprintf("%s -v", program),
+                        intern = TRUE), "")[1L]
+        if(grepl("really Aspell", out))
+            names(program) <- "aspell"
+        else if(grepl("really Hunspell", out))
+            names(program) <- "hunspell"
+        else if(grepl("International Ispell", out))
+            names(program) <- "ispell"
+        else
+            names(program) <- NA_character_
+    }
+    program
+}
+
 ### Utilities.
+
+aspell_inspect_context <-
+function(x)
+{
+    x <- split(x, x$File)
+    y <- Map(function(f, x) {
+        lines <- readLines(f, warn = FALSE)[x$Line]
+        cbind(f,
+              x$Line,
+              substring(lines, 1L, x$Column - 1L),
+              x$Original,
+              substring(lines, x$Column + nchar(x$Original)))
+    },
+             names(x), x)
+    y <- data.frame(do.call(rbind, y), stringsAsFactors = FALSE)
+    names(y) <- c("File", "Line", "Left", "Original", "Right")
+    class(y) <- c("aspell_inspect_context", "data.frame")
+    y
+}
+
+print.aspell_inspect_context <-
+function(x, ...)
+{
+    s <- split(x, x$File)
+    nms <- names(s)
+    for(i in seq_along(s)) {
+        e <- s[[i]]
+        writeLines(c(sprintf("File '%s':", nms[i]),
+                     sprintf("  Line %s: \"%s\", \"%s\", \"%s\"",
+                             format(e$Line),
+                             gsub("\"", "\\\"", e$Left),
+                             e$Original,
+                             gsub("\"", "\\\"", e$Right)),
+                     ""))
+    }
+    invisible(x)
+}                      
+
 
 ## For spell-checking the R manuals:
 
+## This can really only be done with Aspell as the other checkers have
+## no texinfo mode.
+
 aspell_control_R_manuals <-
-    c("--master=en_US",
-      "--add-extra-dicts=en_GB",
-      "--mode=texinfo",
-      "--add-texinfo-ignore=acronym",
-      "--add-texinfo-ignore=deftypefun",
-      "--add-texinfo-ignore=deftypefunx",
-      "--add-texinfo-ignore=findex",
-      "--add-texinfo-ignore=enindex",
-      "--add-texinfo-ignore=include",
-      "--add-texinfo-ignore=ifclear",
-      "--add-texinfo-ignore=ifset",
-      "--add-texinfo-ignore=math",
-      "--add-texinfo-ignore=macro",
-      "--add-texinfo-ignore=multitable",
-      "--add-texinfo-ignore=node",
-      "--add-texinfo-ignore=pkg",
-      "--add-texinfo-ignore=printindex",
-      "--add-texinfo-ignore=set",
-      "--add-texinfo-ignore=vindex",
-      "--add-texinfo-ignore-env=menu"
-      )
+    list(aspell =    
+         c("--master=en_US",
+           "--add-extra-dicts=en_GB",
+           "--mode=texinfo",
+           "--add-texinfo-ignore=acronym",
+           "--add-texinfo-ignore=deftypefun",
+           "--add-texinfo-ignore=deftypefunx",
+           "--add-texinfo-ignore=findex",
+           "--add-texinfo-ignore=enindex",
+           "--add-texinfo-ignore=include",
+           "--add-texinfo-ignore=ifclear",
+           "--add-texinfo-ignore=ifset",
+           "--add-texinfo-ignore=math",
+           "--add-texinfo-ignore=macro",
+           "--add-texinfo-ignore=multitable",
+           "--add-texinfo-ignore=node",
+           "--add-texinfo-ignore=pkg",
+           "--add-texinfo-ignore=printindex",
+           "--add-texinfo-ignore=set",
+           "--add-texinfo-ignore=vindex",
+           "--add-texinfo-ignore-env=menu"
+           ),
+         hunspell =
+         c("-d en_US,en_GB"))
     
 aspell_R_manuals <-
-function(which = NULL, dir = NULL)
+function(which = NULL, dir = NULL, program = NULL)
 {
     if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
     ## Allow specifying 'R-exts' and alikes, or full paths.
@@ -267,19 +355,26 @@ function(which = NULL, dir = NULL)
                       sprintf("%s.texi", which[ind]))
         which
     }
+
+    program <- aspell_find_program(program)
     
     aspell(files,
-           control = aspell_control_R_manuals)
+           control = aspell_control_R_manuals[[names(program)]],
+           program = program)
 }
 
 ## For spell-checking the R Rd files:
 
 aspell_control_R_Rd_files <-
-    c("--master=en_US",
-      "--add-extra-dicts=en_GB")
+    list(aspell =
+         c("--master=en_US",
+           "--add-extra-dicts=en_GB"),
+         hunspell = 
+         c("-d en_US,en_GB"))
 
 aspell_R_Rd_files <-
-function(which = NULL, dir = NULL, drop = "\\references")
+function(which = NULL, dir = NULL, drop = "\\references",
+         program = NULL)
 {
     if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
     if(is.null(which))
@@ -291,15 +386,18 @@ function(which = NULL, dir = NULL, drop = "\\references")
                       "docs", OS_subdirs = c("unix", "windows")),
                use.names = FALSE)
 
+    program <- aspell_find_program(program)
+
     aspell(files,
            filter = list("Rd", drop = drop),
-           control = aspell_control_R_Rd_files)
+           control = aspell_control_R_Rd_files[[names(program)]],
+           program = program)
 }
 
 ## For spell-checking Rd files in a package:
 
 aspell_package_Rd_files <-
-function(dir, drop = "\\references", control = list())
+function(dir, drop = "\\references", control = list(), program = NULL)
 {
     dir <- tools::file_path_as_absolute(dir)
     
@@ -326,60 +424,67 @@ function(dir, drop = "\\references", control = list())
             control <- d
         if(!is.null(d <- defaults$personal))
             control <- c(control,
-                         sprintf("--personal=%s",
-                                 file.path(dir, ".aspell", d)))
+                         sprintf("-p %s",
+                                 shQuote(file.path(dir, ".aspell", d))))
+        if(!is.null(d <- defaults$program))
+            program <- d
     }
     
     aspell(files,
            filter = list("Rd", drop = drop),
            control = control,
-           encoding = encoding)
+           encoding = encoding,
+           program = program)
 }
-
-## For spell-checking vignettes:
-
-aspell_control_vignettes <-
-    c("--mode=tex",
-      "--add-tex-command='citep oop'",
-      "--add-tex-command='Sexpr p'",
-      "--add-tex-command='code p'",
-      "--add-tex-command='pkg p'",
-      "--add-tex-command='proglang p'",
-      "--add-tex-command='samp p'"
-      )
-
-aspell_vignettes <-
-function(files, control = list())
-    aspell(files,
-           filter = "Sweave",
-           control = c(aspell_control_vignettes, control))
 
 ## For spell-checking the R vignettes:
 
+## This should really be done with Aspell as the other checkers have far
+## less powerful TeX modes.
+
 aspell_control_R_vignettes <-
-    c("--mode=tex",
-      "--master=en_US",
-      "--add-extra-dicts=en_GB",
-      "--add-tex-command='code p'",
-      "--add-tex-command='pkg p'")
+    list(aspell = 
+         c("--mode=tex",
+           "--master=en_US",
+           "--add-extra-dicts=en_GB",
+           "--add-tex-command='code p'",
+           "--add-tex-command='pkg p'"),
+         hunspell =
+         c("-t", "-d en_US,en_GB"))
 
 aspell_R_vignettes <-
-function()
+function(program = NULL)
 {
-    ## No arguments for now.
     ## Currently, all vignettes are in grid.
     files <- Sys.glob(file.path(tools:::.R_top_srcdir_from_Rd(),
                                 "src", "library", "grid", "inst", "doc",
                                 "*.Snw"))
+
+    program <- aspell_find_program(program)
+    
     aspell(files,
            filter = "Sweave",
-           control = aspell_control_R_vignettes)
+           control = aspell_control_R_vignettes[[names(program)]],
+           program = program)
 }
 
 ## For spell-checking vignettes in a package:
 
+## This should really be done with Aspell as the other checkers have far
+## less powerful TeX modes.
+
+aspell_control_package_vignettes <-
+    list(aspell =
+         c("--add-tex-command='citep oop'",
+           "--add-tex-command='Sexpr p'",
+           "--add-tex-command='code p'",
+           "--add-tex-command='pkg p'",
+           "--add-tex-command='proglang p'",
+           "--add-tex-command='samp p'"
+           ))
+
 aspell_package_vignettes <-
-function(dir, control = list())
+function(dir, control = list(), program = NULL)
 {
     dir <- file.path(dir, "inst", "doc")
     files <- if(file_test("-d", dir))
@@ -396,35 +501,60 @@ function(dir, control = list())
             control <- d
         if(!is.null(d <- defaults$personal))
             control <- c(control,
-                         sprintf("--personal=%s",
-                                 file.path(dir, ".aspell", d)))
+                         sprintf("-p %s",
+                                 shQuote(file.path(dir, ".aspell", d))))
+        if(!is.null(d <- defaults$program))
+            program <- d
     }
+
+    program <- aspell_find_program(program)
     
-    aspell_vignettes(files, control)
+    aspell(files,
+           filter = "Sweave",
+           control =
+           c("-t",
+             aspell_control_package_vignettes[[names(program)]],
+             control),
+           program = program)
 }
 
 ## For writing personal dictionaries:
 
 aspell_write_personal_dictionary_file <-
-function(x, out, language = "en")
+function(x, out, language = "en", program = NULL)
 {
     if(inherits(x, "aspell"))
         x <- sort(unique(x$Original))
 
-    header <- sprintf("personal_ws-1.1 %s %d", language, length(x))
-    ## In case UTF_8 is around ...
-    ## This would be nice:
-    ##   encodings <- unique(Encoding(x))
-    ##   if(identical(encodings[encodings != "unknown"], "UTF-8"))
-    ##       header <- paste(header, "UTF-8")
-    ## but does not work as we currently do not canonicalized to UTF-8
-    ## and do not mark encodings when reading Aspell results which are
-    ## documented to be in the current encoding ...
-    if(localeToCharset()[1L] == "UTF-8") {
-        x <- iconv(x, "", "UTF-8")
-        if(any(Encoding(x) == "UTF-8"))
-            header <- paste(header, "UTF-8")
+    program <- aspell_find_program(program)
+    if(is.na(program))
+        stop("No suitable spell check program found.")
+
+    ## <NOTE>
+    ## Ispell and Hunspell take simple word lists as personal dictionary
+    ## files, but Aspell requires a special format, see e.g.
+    ## http://aspell.net/man-html/Format-of-the-Personal-and-Replacement-Dictionaries.html
+    ## and one has to create these by hand, as
+    ##   aspell --lang=en create personal ./foo "a b c"
+    ## gives: Sorry "create/merge personal" is currently unimplemented.
+
+    header <- if(names(program) == "aspell") {
+        sprintf("personal_ws-1.1 %s %d", language, length(x))
+        ## In case UTF_8 is around ...
+        ## This would be nice:
+        ##   encodings <- unique(Encoding(x))
+        ##   if(identical(encodings[encodings != "unknown"], "UTF-8"))
+        ##       header <- paste(header, "UTF-8")
+        ## but does not work as we currently do not canonicalized to
+        ## UTF-8 and do not mark encodings when reading Aspell results
+        ## which are documented to be in the current encoding ...
+        if(localeToCharset()[1L] == "UTF-8") {
+            x <- iconv(x, "", "UTF-8")
+            if(any(Encoding(x) == "UTF-8"))
+                header <- paste(header, "UTF-8")
+        }
     }
+    else NULL
 
     writeLines(c(header, x), out)
 }

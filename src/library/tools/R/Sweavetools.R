@@ -1,5 +1,8 @@
 SweaveTeXFilter <- function(ifile, encoding = "unknown")
 {
+    if(inherits(ifile, "srcfile"))
+        ifile <- ifile$filename
+
     lines <- readLines(ifile, encoding = encoding, warn = FALSE)
 
     TEXT <- 1L

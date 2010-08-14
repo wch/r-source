@@ -338,7 +338,7 @@ legend because the legend is a \code{"frame"} grob.
 \item The dimensions of the ``plot'' default to \code{unit(1, "null")}
 because \code{"collection"} grobs have no width or height methods, which
 means that the plot fills up whatever space remains once the
-legend has been accomodated.
+legend has been accommodated.
 \end{itemize}
 
 <<plot, echo=FALSE, include=FALSE, fig=TRUE, results=hide>>=

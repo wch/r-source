@@ -426,7 +426,7 @@ lists the \grid{} functions that produce these primitives.
 all graphical regions and coordinate systems.
 
 There used to be (prior to R 2.3.0) a separate \code{grid.arrows()}
-function, but this has been superceded by an \code{arrow} argument
+function, but this has been superseded by an \code{arrow} argument
 to the line-drawing primitives (lines, segments, line-to).
 
 \begin{table}[h!]
