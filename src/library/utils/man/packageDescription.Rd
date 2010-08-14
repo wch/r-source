@@ -55,6 +55,9 @@ packageVersion(pkg, lib.loc = NULL)
   If parsing the \file{DESCRIPTION} file was not successful, it returns
   a named list of \code{NA}s with the field tags as names if \code{fields}
   is not null, and \code{NA} otherwise.
+
+  \code{packageVersion()} returns a (length-one) object of class
+  \code{"\link{package_version}"}.
 }
 \seealso{
   \code{\link{read.dcf}}
