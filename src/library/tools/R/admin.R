@@ -691,6 +691,7 @@ function(dir, packages)
 .install_package_Rd_objects <-
 function(dir, outDir, encoding = "unknown")
 {
+    dir <- file_path_as_absolute(dir)
     mandir <- file.path(dir, "man")
     manfiles <- if(!file_test("-d", mandir)) character()
     else list_files_with_type(mandir, "docs")
