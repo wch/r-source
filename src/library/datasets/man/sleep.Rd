@@ -29,6 +29,11 @@
   The probable error of the mean.
   \emph{Biometrika}, \bold{6}, 20.
 }
+\details{
+  The \code{group} variable name may be misleading about the data:
+  They represent measurements on 10 persons, not in groups.
+  %% But we keep it (as [,2]) for back compatibility.
+}
 \references{
   \enc{Scheffé}{Scheffe}, Henry (1959)
   \emph{The Analysis of Variance}.
@@ -37,6 +42,8 @@
 \examples{
 require(stats)
 ## Student's paired t-test
-t.test(extra ~ group, data = sleep, paired = TRUE)
+with(sleep,
+     t.test(extra[group == 1],
+            extra[group == 2], paired = TRUE))
 }
 \keyword{datasets}
