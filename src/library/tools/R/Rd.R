@@ -351,6 +351,7 @@ function(dir = NULL, files = NULL, encoding = "unknown", db_file = NULL,
          stages = c("build", "install"), os = .OStype(), step = 3L, built_file = NULL)
 {
     if(!is.null(dir)) {
+        dir <- file_path_as_absolute(dir)
         man_dir <- file.path(dir, "man")
         if(!file_test("-d", man_dir))
             return(structure(list(), names = character()))
