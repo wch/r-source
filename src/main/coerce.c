@@ -1278,6 +1278,7 @@ static SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
     return u;/* -Wall */
 }
 
+/* used in attrib.c, eval.c and unique.c */
 SEXP asCharacterFactor(SEXP x)
 {
     SEXP ans;

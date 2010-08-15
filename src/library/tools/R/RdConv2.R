@@ -452,8 +452,13 @@ prepare2_Rd <- function(Rd, Rdfile)
             docType <- Rd[[dt[i]]]
             if(!identical(RdTags(docType), "TEXT"))
         	stopRd(docType, Rdfile, "'docType' must be plain text")
-            docTypes[i] <- docType[[1L]]
-            if (! docTypes[i] %in% c("data", "package", "methods", "class"))
+            ## Some people have \docType{ package } and similar.
+            docTypes[i] <- sub("^ *", "", sub(" *$", "", docType[[1L]]))
+            ## I've no idea where 'genericFunction' came from, but
+            ## it seems common.  The usual conceit that S4 generics
+            ## are the only ones ....
+            if (! docTypes[i] %in%
+                c("data", "package", "methods", "class", "genericFunction"))
                 warnRd(dt[i], Rdfile, "docType ", sQuote(docTypes[i]),
                        " is unrecognized")
          }
@@ -890,7 +895,8 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
             if(!identical(RdTags(docType), "TEXT"))
         	warnRd(docType, Rdfile, level = 7,
                        "'docType' must be plain text")
-            docTypes[i] <- docType[[1L]]
+            ## Some people have \docType{ package } and similar.
+            docTypes[i] <- sub("^ *", "", sub(" *$", "", docType[[1L]]))
          }
     }
 
@@ -921,7 +927,7 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
         checkUnique("\\description")
 
     ## Check other standard sections are unique
-    ## \alias and \keyword are allowed to be repeated
+    ## \alias, \keyword and \note are allowed to be repeated
     ## Normally prepare_Rd will have dropped duplicates already
     unique_tags <-
         paste("\\",

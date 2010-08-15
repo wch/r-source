@@ -508,6 +508,9 @@
       corrected and made consistent across output formats.
       
       \item Simple markup is now allowed in Rd titles.
+
+      \item The behaviour of \code{as.logical()} on factors (to use the
+      levels) was lost in \R 2.6.0 and has been restored.
     }
   }
 }

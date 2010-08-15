@@ -6,6 +6,7 @@
 \name{logical}
 \alias{logical}
 \alias{as.logical}
+\alias{as.logical.factor}
 \alias{is.logical}
 \alias{TRUE}
 \alias{FALSE}

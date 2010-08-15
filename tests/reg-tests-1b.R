@@ -1244,4 +1244,14 @@ o0 <- as.octmode(integer(0))
 stopifnot(identical(o0, o0 & "400"))
 ## gave a seg.fault at some point
 
+
+## as.logical on factors
+x <- factor(c("FALSE", "TRUE"))
+stopifnot(identical(as.logical(x), c(FALSE, TRUE)))
+# Lost documented behaviour when taken primitive in R 2.6.0
+stopifnot(identical(as.vector(x, "logical"), c(FALSE, TRUE)))
+# continued to work
+## Reverted in 2.12.0.
+
+
 proc.time()

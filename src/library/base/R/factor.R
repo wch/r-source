@@ -98,6 +98,8 @@ as.vector.factor <- function(x, mode="any")
 
 as.character.factor <- function(x,...) levels(x)[x]
 
+as.logical.factor <- function(x,...) as.logical(levels(x))[x]
+
 as.list.factor <- function(x,...)
 {
     res <- vector("list", length(x))
