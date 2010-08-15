@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-04-18 r51761)
+R version 2.12.0 Under development (unstable) (2010-08-14 r52732)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -2985,11 +2985,13 @@ Warning: Not plotting observations with leverage one:
 > 
 > require(stats)
 > ## Student's paired t-test
-> t.test(extra ~ group, data = sleep, paired = TRUE)
+> with(sleep,
++      t.test(extra[group == 1],
++             extra[group == 2], paired = TRUE))
 
 	Paired t-test
 
-data:  extra by group 
+data:  extra[group == 1] and extra[group == 2] 
 t = -4.0621, df = 9, p-value = 0.002833
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
