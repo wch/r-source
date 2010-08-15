@@ -141,7 +141,7 @@ R_run_R <- function(cmd, Ropts, env)
         }
 
         if (haveR) {
-            check_R_code() # S3 methods, replacement, foreign
+            check_R_code() # unstated dependencies, S3 methods, replacement, foreign
             check_R_files() # codetools etc
         }
         check_Rd_files(haveR)
@@ -159,7 +159,8 @@ R_run_R <- function(cmd, Ropts, env)
 
         ## Run the package-specific tests.
         tests_dir <- file.path(pkgdir, "tests")
-        if (dir.exists(tests_dir) && length(dir(tests_dir, pattern = "\\.R$")))
+        if (dir.exists(tests_dir) && # trackObjs has only *.Rin
+            length(dir(tests_dir, pattern = "\\.(R|Rin)$")))
             run_tests()
 
         ## Check package vignettes.
@@ -1022,6 +1023,19 @@ R_run_R <- function(cmd, Ropts, env)
             } else resultLog(Log, "OK")
         }
 
+        if (do_install && !extra_arch) {
+            checkingLog(Log, "for unstated dependencies in examples")
+            Rcmd <- paste("options(warn=1)\n",
+                          sprintf("tools:::.check_packages_used_in_examples(package = \"%s\")\n", pkgname))
+
+            out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
+            if (length(out)) {
+                noteLog(Log)
+                printLog(Log, paste(c(out, ""), collapse = "\n"))
+                # wrapLog(msg_DESCRIPTION)
+            } else resultLog(Log, "OK")
+        } ## FIXME, what if no install?
+
         ## Check for non-ASCII characters in data
         if (!is_base_pkg && dir.exists("data") && !extra_arch) {
             checkingLog(Log, "data for non-ASCII characters")
@@ -1324,6 +1338,19 @@ R_run_R <- function(cmd, Ropts, env)
 
     run_tests <- function()
     {
+        if (!extra_arch) {
+            checkingLog(Log, "for unstated dependencies in tests")
+            Rcmd <- paste("options(warn=1)\n",
+                          sprintf("tools:::.check_packages_used_in_tests(\"%s\")\n", pkgdir))
+
+            out <- R_runR2(Rcmd, "R_DEFAULT_PACKAGES=NULL")
+            if (length(out)) {
+                noteLog(Log)
+                printLog(Log, paste(c(out, ""), collapse = "\n"))
+                # wrapLog(msg_DESCRIPTION)
+            } else resultLog(Log, "OK")
+        }
+
         checkingLog(Log, "tests")
         run_one_arch <- function(arch = "")
         {

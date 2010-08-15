@@ -3839,15 +3839,219 @@ function(x, ...)
 {
     if(length(x$imports)) {
         writeLines(gettext("'::' or ':::' imports not declared from:"))
-        .pretty_print(x$imports)
+        .pretty_print(sort(x$imports))
     }
     if(length(x$others)) {
         writeLines(gettext("'library' or 'require' calls not declared from:"))
-        .pretty_print(x$others)
+        .pretty_print(sort(x$others))
     }
     if(nzchar(x$methods_message))
         writeLines(x$methods_message)
     invisible(x)
+}
+
+
+### * .check_packages_used_in_examples
+
+.check_packages_used_in_examples <-
+function(package, dir, lib.loc = NULL)
+{
+    ## Argument handling.
+    if(!missing(package)) {
+        if(length(package) != 1L)
+            stop("argument 'package' must be of length 1")
+        dir <- .find.package(package, lib.loc)
+        dfile <- file.path(dir, "DESCRIPTION")
+        db <- .read_description(dfile)
+    }
+    else if(!missing(dir)) {
+        ## Using sources from directory @code{dir} ...
+        ## FIXME: not yet supported by .createExdotR.
+        if(!file_test("-d", dir))
+            stop(gettextf("directory '%s' does not exist", dir),
+                 domain = NA)
+        else
+            dir <- file_path_as_absolute(dir)
+        dfile <- file.path(dir, "DESCRIPTION")
+        db <- .read_description(dfile)
+    }
+    pkg_name <- db["Package"]
+    depends <- .get_requires_from_package_db(db, "Depends")
+    imports <- .get_requires_from_package_db(db, "Imports")
+    suggests <- .get_requires_from_package_db(db, "Suggests")
+    enhances <- .get_requires_from_package_db(db, "Enhances")
+
+    ## it is OK to refer to yourself and standard packages
+    standard_package_names <- .get_standard_package_names()$base
+    depends_suggests <- c(depends, suggests, enhances,  pkg_name,
+                          standard_package_names)
+    imports <- c(imports, depends, suggests, enhances, pkg_name,
+                 standard_package_names)
+    ## the first argument could be named, or could be a variable name.
+    ## we just have a stop list here.
+    common_names <- c("pkg", "pkgName", "package", "pos")
+
+    bad_exprs <- character()
+    bad_imports <- character()
+    find_bad_exprs <- function(e) {
+        if(is.call(e) || is.expression(e)) {
+            Call <- deparse(e[[1L]])[1L]
+            if(length(e) >= 2L) pkg <- deparse(e[[2L]])
+            if(Call %in% c("library", "require")) {
+                if(length(e) >= 2L) {
+                    pkg <- sub('^"(.*)"$', '\\1', pkg)
+                    ## <NOTE>
+                    ## Using code analysis, we really don't know which
+                    ## package was called if character.only = TRUE and
+                    ## the package argument is not a string constant.
+                    ## (Btw, what if character.only is given a value
+                    ## which is an expression evaluating to TRUE?)
+                    dunno <- FALSE
+                    pos <- which(!is.na(pmatch(names(e),
+                                               "character.only")))
+                    if(length(pos)
+                       && identical(e[[pos]], TRUE)
+                       && !identical(class(e[[2L]]), "character"))
+                        dunno <- TRUE
+                    ## </NOTE>
+                    ## <FIXME> could be inside substitute or a variable
+                    ## and is in e.g. R.oo
+                    if(! dunno
+                       && ! pkg %in% c(depends_suggests, common_names))
+                        bad_exprs <<- c(bad_exprs, pkg)
+                }
+            } else if(Call %in%  "::") {
+                if(! pkg %in% imports)
+                    bad_imports <<- c(bad_imports, pkg)
+            } else if(Call %in%  ":::") {
+                ## <FIXME> fathom out if this package has a namespace
+                if(! pkg %in% imports)
+                    bad_imports <<- c(bad_imports, pkg)
+            }
+            for(i in seq_along(e)) Recall(e[[i]])
+        }
+    }
+
+    file <- .createExdotR(pkg_name, dir, silent = TRUE)
+    if (is.null(file)) return(invisible(NULL)) # e.g, no examples
+    on.exit(unlink(file))
+    enc <- db["Encoding"]
+    if(!is.na(enc) &&
+       !(Sys.getlocale("LC_CTYPE") %in% c("C", "POSIX"))) {
+        con <- file(file, encoding=enc)
+        on.exit(close(con))
+    } else con <- file
+    exprs <-
+        tryCatch(parse(file = con, n = -1L),
+                 error = function(e)
+                 stop(gettextf("parse error in file '%s':\n%s",
+                               file,
+                               .massage_file_parse_error_message(conditionMessage(e))),
+                      domain = NA, call. = FALSE))
+
+    for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
+
+    res <- list(others = unique(bad_exprs),
+                imports = unique(bad_imports),
+                methods_message = "")
+    class(res) <- "check_packages_used"
+    res
+}
+
+
+### * .check_packages_used_in_tests
+
+.check_packages_used_in_tests <-
+function(dir, lib.loc = NULL)
+{
+    ## Argument handling.
+    ## Using sources from directory @code{dir} ...
+    if(!file_test("-d", dir))
+        stop(gettextf("directory '%s' does not exist", dir),
+             domain = NA)
+    else
+        dir <- file_path_as_absolute(dir)
+    dfile <- file.path(dir, "DESCRIPTION")
+    db <- .read_description(dfile)
+    testsrcdir <- file.path(dir, "tests")
+
+    pkg_name <- db["Package"]
+    depends <- .get_requires_from_package_db(db, "Depends")
+    imports <- .get_requires_from_package_db(db, "Imports")
+    suggests <- .get_requires_from_package_db(db, "Suggests")
+    enhances <- .get_requires_from_package_db(db, "Enhances")
+
+    ## it is OK to refer to yourself and standard packages
+    standard_package_names <- .get_standard_package_names()$base
+    depends_suggests <- c(depends, suggests, enhances,  pkg_name,
+                          standard_package_names)
+    imports <- c(imports, depends, suggests, enhances, pkg_name,
+                 standard_package_names)
+    ## the first argument could be named, or could be a variable name.
+    ## we just have a stop list here.
+    common_names <- c("pkg", "pkgName", "package", "pos")
+
+    bad_exprs <- character()
+    bad_imports <- character()
+    find_bad_exprs <- function(e) {
+        if(is.call(e) || is.expression(e)) {
+            Call <- deparse(e[[1L]])[1L]
+            if(length(e) >= 2L) pkg <- deparse(e[[2L]])
+            if(Call %in% c("library", "require")) {
+                if(length(e) >= 2L) {
+                    pkg <- sub('^"(.*)"$', '\\1', pkg)
+                    ## <NOTE>
+                    ## Using code analysis, we really don't know which
+                    ## package was called if character.only = TRUE and
+                    ## the package argument is not a string constant.
+                    ## (Btw, what if character.only is given a value
+                    ## which is an expression evaluating to TRUE?)
+                    dunno <- FALSE
+                    pos <- which(!is.na(pmatch(names(e),
+                                               "character.only")))
+                    if(length(pos)
+                       && identical(e[[pos]], TRUE)
+                       && !identical(class(e[[2L]]), "character"))
+                        dunno <- TRUE
+                    ## </NOTE>
+                    ## <FIXME> could be inside substitute or a variable
+                    ## and is in e.g. R.oo
+                    if(! dunno
+                       && ! pkg %in% c(depends_suggests, common_names))
+                        bad_exprs <<- c(bad_exprs, pkg)
+                }
+            } else if(Call %in%  "::") {
+                if(! pkg %in% imports)
+                    bad_imports <<- c(bad_imports, pkg)
+            } else if(Call %in%  ":::") {
+                ## <FIXME> fathom out if this package has a namespace
+                if(! pkg %in% imports)
+                    bad_imports <<- c(bad_imports, pkg)
+            }
+            for(i in seq_along(e)) Recall(e[[i]])
+        }
+    }
+
+    od <- setwd(testsrcdir)
+    on.exit(setwd(od))
+    Rinfiles <- dir(".", pattern="\\.Rin$") # only trackOjs has *.Rin
+    Rfiles <- dir(".", pattern="\\.R$")
+
+    for(f in c(Rinfiles, Rfiles)) {
+        exprs <- tryCatch(parse(file = f, n = -1L),
+                          error = function(e)
+                          stop(gettextf("parse error in file '%s':\n%s",
+                                        file,
+                                        .massage_file_parse_error_message(conditionMessage(e))),
+                               domain = NA, call. = FALSE))
+        for(i in seq_along(exprs)) find_bad_exprs(exprs[[i]])
+    }
+
+    res <- list(others = unique(bad_exprs),
+                imports = unique(bad_imports),
+                methods_message = "")
+    class(res) <- "check_packages_used"
+    res
 }
 
 
