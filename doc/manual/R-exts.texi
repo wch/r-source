@@ -404,12 +404,13 @@ loaded.
 
 The optional @samp{Suggests} field uses the same syntax as
 @samp{Depends} and lists packages that are not necessarily needed.  This
-includes packages used only in examples or vignettes (@pxref{Writing
-package vignettes}), and packages loaded in the body of functions.
-E.g., suppose an example from package @pkg{foo} uses a dataset from
-package @pkg{bar}. Then it is not necessary to have @pkg{bar} for
-routine use of @pkg{foo}, unless one wants to execute all the examples:
-it is nice to have @pkg{bar}, but not necessary.
+includes packages used only in examples, tests or vignettes
+(@pxref{Writing package vignettes}), and packages loaded in the body of
+functions.  E.g., suppose an example from package @pkg{foo} uses a
+dataset from package @pkg{bar}. Then it is not necessary to have
+@pkg{bar} for routine use of @pkg{foo}, unless one wants to execute all
+the examples/tests/vignettes: it is useful to have @pkg{bar}, but not
+necessary.
 
 Finally, the optional @samp{Enhances} field lists packages ``enhanced''
 by the package at hand, e.g., by providing methods for classes from
@@ -429,7 +430,10 @@ field, only.
 @item
 All packages that are needed to successfully run @code{R CMD check} on
 the package must be listed in one of @samp{Depends} or @samp{Suggests}
-or @samp{Imports}.
+or @samp{Imports}.  Packages used to run examples or tests conditionally
+(e.g.@: @emph{via} @code{if(require(@var{pkgname}))}) should be listed in
+@samp{Suggests} or @samp{Enhances}.  (This ensures that checkers can
+ensure that all the packages needed for a complete check are installed.)
 @end itemize
 
 @noindent
