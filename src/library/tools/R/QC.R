@@ -2521,12 +2521,12 @@ function(x, ...)
         writeLines("")
     }
     if(length(bad <- x$suggests_but_not_installed)) {
-        writeLines(gettext("Packages suggested but not available:"))
+        writeLines(gettext("Packages suggested but not available for checking:"))
         .pretty_print(bad)
         writeLines("")
     }
     if(length(bad <- x$enhances_but_not_installed)) {
-        writeLines(gettext("Packages which this enhances but not available:"))
+        writeLines(gettext("Packages which this enhances but not available for checking:"))
         .pretty_print(bad)
         writeLines("")
     }
