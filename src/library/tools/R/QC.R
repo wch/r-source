@@ -3885,7 +3885,7 @@ function(x, ...)
             writeLines(gettext("'::' or ':::' imports not declared from:"))
             .pretty_print(sort(xx))
         } else
-            writeLines(gettextf("'::' or ':::' import not declared from: %s"), xx)
+            writeLines(gettextf("'::' or ':::' import not declared from: %s", xx))
     }
     if(length(xx <- x$others)) {
         if (length(xx) > 1L) {
