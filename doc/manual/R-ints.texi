@@ -3837,6 +3837,8 @@ introduce `long' versions.
 
 @end itemize
 
+See also @uref{http://www.cs.uiowa.edu/~luke/talks/useR10.pdf}.
+
 @node Function and variable index, Concept index, Future directions, Top
 @unnumbered Function and variable index
 
