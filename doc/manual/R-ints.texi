@@ -3760,7 +3760,7 @@ the XDR format has a type @samp{hyper} for 64-bit integers, but it is
 not currently implemented in the code in @file{src/extra/xdr}.)
 
 @item
-Another immediate consequence is that there would need to be a type to
+Another immediate consequence is that there would need to be a C type to
 hold vector lengths and element numbers, say @code{Rlongint}.  It would
 be cleanest if this were a type defined by @R{}, and it may need to be.
 C99 guarantees @emph{via} @file{stdint.h} a number of types which are
@@ -3786,7 +3786,7 @@ vector for indexing or @code{length<-} would work.
 @item
 A more radical alternative is to change the existing @code{integer} type
 to be 64-bit on 64-bit platforms (which was the approach taken by S-PLUS
-for DEC/Compaq Alpha systems).
+for DEC/Compaq Alpha systems).  Or even on all platforms.
 
 @item
 Allow either @code{integer} or @code{double} values for lengths and
