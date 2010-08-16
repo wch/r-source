@@ -75,6 +75,7 @@ The current version of this document is @value{VERSION}.
 * R coding standards::          
 * Testing R code::              
 * Use of TeX dialects::         
+* Future directions::           
 * Function and variable index::  
 * Concept index::               
 @end menu
@@ -3666,7 +3667,7 @@ list'' in @file{tests/no-segfault.Rin}.
 [To be revised: use @command{make check-devel}, check the write barrier
 if you change internal structures.]
 
-@node Use of TeX dialects, Function and variable index, Testing R code, Top
+@node Use of TeX dialects, Future directions, Testing R code, Top
 @chapter Use of TeX dialects
 
 Various dialects of TeX and used for different purposes in @R{}.  The
@@ -3708,7 +3709,135 @@ was found, but it nowadays records the name for looking up on the path
 at run time.  The latter can be important for binary distributions: one
 does not want to be tied to, for example, TeXLive 2007.
 
-@node Function and variable index, Concept index, Use of TeX dialects, Top
+
+@node Future directions, Function and variable index, Use of TeX dialects, Top
+@chapter Future directions
+
+This chapter is for notes about possible future changes to @R{}: there
+is no commitment to make such changes, let alone to a timescale.
+
+@menu
+* 64-bit types::                
+@end menu
+
+@node 64-bit types,  , Future directions, Future directions
+@section 64-bit types
+
+Vectors in @R{} are limited to a length of 2^31 - 1 elements (about 2
+billion), as the length is stored in the @code{SEXPREC} as a C
+@code{int}, and that type is used extensively to record lengths and
+element numbers, including in packages.  (It is the latter that
+precludes a simple change to @code{unsigned int}).
+
+There is also some desire to be able to store larger integers in @R{},
+although the possibility of storing these as @code{double} is often
+overlooked (and e.g.@: file pointers as returned by @code{seek} are
+already stored as @code{double}).
+
+A single object with 2^31 or more elements will take up at least 8GB of
+memory if integer or logical and 16GB if numeric or character, so
+routine use of such objects is in 2010 still some way off, but it is
+time to start to note some of the considerations in allowing longer
+vectors.  Note that longer vectors are impossible under 32-bit
+platforms, so one possibility is to make changes only on 64-bit platforms.
+
+@itemize
+
+@item
+The most obvious next step is 64-bit lengths, but note that 64-bit OSes
+do not even theoretically offer 64-bit address spaces and it is likely
+that a 48-bit length would suffice for another 25 years or more.  Thus an
+alternative is to use C @code{double} to store lengths and element
+numbers, since this can hold integers up to 2^53 exactly.
+
+@item
+Simply changing the internal format of a @code{VECTOR_SEXPREC} has a
+number of consequences.  Most immediately, the serialization format
+would have to be changed to accommodate longer lengths -- and it might
+well be prudent to store lengths up to 2^31-1 in the same way as before
+to avoid unnecessary padding and for backwards compatibility.  (Note that
+the XDR format has a type @samp{hyper} for 64-bit integers, but it is
+not currently implemented in the code in @file{src/extra/xdr}.)
+
+@item
+Another immediate consequence is that there would need to be a type to
+hold vector lengths and element numbers, say @code{Rlongint}.  It would
+be cleanest if this were a type defined by @R{}, and it may need to be.
+C99 guarantees @emph{via} @file{stdint.h} a number of types which are
+64-bit or at least 64-bit and which would be suitable, but regretably
+people try to use @R{} internals in C++, whereas C99 is not a subset
+of C++ and C++ compilers are not required to support these types.  It
+would need to be tested if @file{stdint.h} was widely enough usable.
+
+@item
+There would need to be a way to refer to the length of longer vectors
+and to create indices to subset them: @R{}'s @code{integer} type is no
+longer necessarily suitable.  Much code has been written assuming that
+it is!  Different routes have been proposed:
+
+@itemize
+
+@item
+Add a new type to @R{} and use that for lengths and indices---most likely
+this would be a 64-bit signed type, say @code{longint}.  @R{}'s usual
+implicit coercion rules would ensure that supplying an @code{integer}
+vector for indexing or @code{length<-} would work.
+
+@item
+A more radical alternative is to change the existing @code{integer} type
+to be 64-bit on 64-bit platforms (which was the approach taken by S-PLUS
+for DEC/Compaq Alpha systems).
+
+@item
+Allow either @code{integer} or @code{double} values for lengths and
+indices, and return @code{double} only when necessary.
+
+@end itemize
+
+@noindent
+The third has the advantages of mininal distruption to existing code and
+not increasing memory requirements, but the disadvantage that the code
+branches for long vectors would be tested rarely.  In the first and
+third scenarios both @R{}'s own code and user code woud have to be
+adapted for lengths that were not of type @code{integer}.
+
+@item
+Matrices are stored as vectors and so also limited to 2^31-1 elements.
+If longer vectors are allowed, this raises the question if larger
+matrices should be either allowed or supported.  The main problem is
+matrix algebra which is almost entirely done by FORTRAN code, not
+uncommonly calling external BLAS or LAPACK routines.  For FORTRAN code
+compiled as part of @R{} it may be possible simply to set the default
+integer size to be 64-bit (it is not clear if this can be done
+portably), and some external software (e.g.@: AMD's ACML) is available
+in versions compiled with 64-bit integers.
+
+However, it does seem that for the foreseeable future anything but the
+most trivial matrix algebra on gigabyte matrices will be too slow to be
+contemplated, not least under the single-thread implementation supplied by
+@R{}.
+
+@item
+The @code{.C}, @code{.Fortran}, @code{.Call} and @code{.External}
+interfaces need consideration (as well as the @code{.Internal} and
+@code{.Primitive} interfaces used by @R{} itself).
+
+Most users of the @code{.C} and @code{.Fortran} interfaces use
+@code{as.integer} for lengths and element numbers, but a few omit these
+in the knowledge that these were of type @code{integer}.  It might be
+reasonable to suppose that these interfaces were not intended to be used
+with long vectors and make passing a long vector to them an error.
+
+The remaining interfaces will need to cope with the changed
+@code{VECTOR_SEXPREC} types.  It seems likely that in most cases lengths
+are accessed by the @code{length} and @code{LENGTH}
+functions@footnote{but @code{LENGTH} is a macro under some internal
+uses.}  So one approach is to keep these returning 32-bit lengths and
+introduce `long' versions.
+
+@end itemize
+
+@node Function and variable index, Concept index, Future directions, Top
 @unnumbered Function and variable index
 
 @printindex vr

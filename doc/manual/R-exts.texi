@@ -431,9 +431,9 @@ field, only.
 All packages that are needed to successfully run @code{R CMD check} on
 the package must be listed in one of @samp{Depends} or @samp{Suggests}
 or @samp{Imports}.  Packages used to run examples or tests conditionally
-(e.g.@: @emph{via} @code{if(require(@var{pkgname}))}) should be listed in
-@samp{Suggests} or @samp{Enhances}.  (This ensures that checkers can
-ensure that all the packages needed for a complete check are installed.)
+(e.g.@: @emph{via} @code{if(require(@var{pkgname}))}) should be listed
+in @samp{Suggests} or @samp{Enhances}.  (This allows checkers to ensure
+that all the packages needed for a complete check are installed.)
 @end itemize
 
 @noindent
