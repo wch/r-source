@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{BIC}
-\docType{genericFunction}
+%\docType{genericFunction}
 \alias{BIC}
 \alias{BIC,ANY-method}
 \alias{BIC,logLik-method}
