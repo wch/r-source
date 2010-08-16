@@ -2507,43 +2507,62 @@ function(dir, force_suggests = TRUE)
 print.check_package_depends <-
 function(x, ...)
 {
-    if(length(bad <- x$required_but_not_installed)) {
+    if(length(bad <- x$required_but_not_installed) > 1L) {
         writeLines(gettext("Packages required but not available:"))
         .pretty_print(bad)
         writeLines("")
-    }
-    if(length(bad <- x$required_but_obsolete)) {
-        writeLines(gettext("Packages required and available but unsuitable version:"))
+    } else if (length(bad))
+        writeLines(c(gettextf("Package required but not available: %s", bad),
+                     ""))
+    if(length(bad <- x$required_but_obsolete) > 1L) {
+        writeLines(gettext("Packages required and available but unsuitable versions:"))
         .pretty_print(bad)
         writeLines("")
-    }
-    if(length(bad <- x$required_but_stub)) {
+    } else if (length(bad))
+        writeLines(c(gettextf("Package required and available but unsuitable version: %s", bad),
+                     ""))
+    if(length(bad <- x$required_but_stub) > 1L) {
         writeLines(gettext("Former standard packages required but now defunct:"))
         .pretty_print(bad)
         writeLines("")
-    }
-    if(length(bad <- x$suggests_but_not_installed)) {
+    } else if (length(bad))
+        writeLines(c(gettextf("Package required but not available: %s", bad),
+                     ""))
+
+    if(length(bad <- x$suggests_but_not_installed) > 1L) {
         writeLines(gettext("Packages suggested but not available for checking:"))
         .pretty_print(bad)
         writeLines("")
-    }
-    if(length(bad <- x$enhances_but_not_installed)) {
+    } else if (length(bad))
+        writeLines(c(gettextf("Package suggested but not available for checking: %s", bad),
+                     ""))
+
+    if(length(bad <- x$enhances_but_not_installed) > 1L) {
         writeLines(gettext("Packages which this enhances but not available for checking:"))
         .pretty_print(bad)
         writeLines("")
-    }
+    } else if (length(bad))
+        writeLines(c(gettextf("Package which this enhances but not available for checking: %s", bad),
+                     ""))
+
     if(length(bad <- x$missing_vignette_depends)) {
-        writeLines(gettext("Vignette dependencies not required:"))
-        .pretty_print(bad)
+        if(length(bad) > 1L) {
+            writeLines(gettext("Vignette dependencies not required:"))
+            .pretty_print(bad)
+        } else
+           writeLines(gettextf("Vignette dependencies not required: %s", bad))
         msg <- gettext("Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.")
         writeLines(strwrap(msg))
         writeLines("")
     }
-    if(length(bad <- x$missing_namespace_depends)) {
+    if(length(bad <- x$missing_namespace_depends) > 1L) {
         writeLines(gettext("Namespace dependencies not required:"))
         .pretty_print(bad)
         writeLines("")
-    }
+    } else if (length(bad))
+        writeLines(c(gettextf("Namespace dependency not required: %s", bad),
+                     ""))
+
     invisible(x)
 }
 
@@ -3861,13 +3880,19 @@ function(package, dir, lib.loc = NULL)
 print.check_packages_used <-
 function(x, ...)
 {
-    if(length(x$imports)) {
-        writeLines(gettext("'::' or ':::' imports not declared from:"))
-        .pretty_print(sort(x$imports))
+    if(length(xx <- x$imports)) {
+        if (length(xx) > 1L) {
+            writeLines(gettext("'::' or ':::' imports not declared from:"))
+            .pretty_print(sort(xx))
+        } else
+            writeLines(gettextf("'::' or ':::' import not declared from: %s"), xx)
     }
-    if(length(x$others)) {
-        writeLines(gettext("'library' or 'require' calls not declared from:"))
-        .pretty_print(sort(x$others))
+    if(length(xx <- x$others)) {
+        if (length(xx) > 1L) {
+            writeLines(gettext("'library' or 'require' calls not declared from:"))
+            .pretty_print(sort(x$others))
+        } else
+            writeLines(gettextf("'library' or 'require' call not declared from: %s", xx))
     }
     if(nzchar(x$methods_message))
         writeLines(x$methods_message)
