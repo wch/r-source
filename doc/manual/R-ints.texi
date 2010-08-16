@@ -3744,11 +3744,11 @@ platforms, so one possibility is to make changes only on 64-bit platforms.
 @itemize
 
 @item
-The most obvious next step is 64-bit lengths, but note that 64-bit OSes
-do not even theoretically offer 64-bit address spaces and it is likely
-that a 48-bit length would suffice for another 25 years or more.  Thus an
-alternative is to use C @code{double} to store lengths and element
-numbers, since this can hold integers up to 2^53 exactly.
+The most obvious next step is 64-bit lengths, but note that current
+64-bit OSes do not even theoretically offer 64-bit address spaces and it
+is likely that a 48-bit length would suffice for another 25 years or
+more.  Thus an alternative is to use C @code{double} to store lengths
+and element numbers, since this can hold integers up to 2^53 exactly.
 
 @item
 Simply changing the internal format of a @code{VECTOR_SEXPREC} has a
@@ -3811,6 +3811,11 @@ compiled as part of @R{} it may be possible simply to set the default
 integer size to be 64-bit (it is not clear if this can be done
 portably), and some external software (e.g.@: AMD's ACML) is available
 in versions compiled with 64-bit integers.
+
+Some FORTRAN compilers (e.g.@: @command{gfortran}) have flags to compile
+code with @code{INTEGER} as 64-bit (but not all), and even amongst those
+which do care is needed that any external functions which are called
+have versions for 64-bit integers and the correct versions are called.
 
 However, it does seem that for the foreseeable future anything but the
 most trivial matrix algebra on gigabyte matrices will be too slow to be

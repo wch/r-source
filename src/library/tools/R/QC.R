@@ -2405,6 +2405,10 @@ function(dir, force_suggests = TRUE)
     ## NB: no one checks version for 'Enhances'.
     lenhances <- .get_requires_with_version_from_package_db(db, "Enhances")
 
+    depends <- sapply(ldepends, `[[`, 1L)
+    imports <- sapply(limports, `[[`, 1L)
+    suggests <- sapply(lsuggests, `[[`, 1L)
+
     standard_package_names <- .get_standard_package_names()
 
     bad_depends <- list()
@@ -2474,9 +2478,6 @@ function(dir, force_suggests = TRUE)
         ## For the time being, ignore base packages missing from the
         ## DESCRIPTION dependencies even if explicitly given as vignette
         ## dependencies.
-        depends <- sapply(ldepends, `[[`, 1L)
-        imports <- sapply(limports, `[[`, 1L)
-        suggests <- sapply(lsuggests, `[[`, 1L)
         reqs <- reqs %w/o% c(depends, imports, suggests, package_name,
                              standard_package_names$base)
         if(length(reqs))
