@@ -280,7 +280,7 @@
       plain text \file{NEWS} or \file{inst/NEWS} files.
 
       \item New simple function \code{packageVersion()}.
-      
+
       \item The PCRE library has been updated to version 8.10.
 
       \item The standard Unix-alike terminal interface declares its name
@@ -294,6 +294,8 @@
 
       The \file{.Rd} conversion tools also warn about an unrecognized type
       in a \samp{\docType} section.
+
+      \code{ecdf()} objects now have a \code{quantile()} method.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
@@ -503,10 +505,10 @@
       criterion, notably for cases where the minimum was (very close to)
       zero; further, other tweaks inspired from code proposals by Ravi
       Varadhan.
-      
+
       \item Rendering of S3 and S4 methods in man pages has been
       corrected and made consistent across output formats.
-      
+
       \item Simple markup is now allowed in Rd titles.
 
       \item The behaviour of \code{as.logical()} on factors (to use the

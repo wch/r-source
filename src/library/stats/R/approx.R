@@ -113,7 +113,7 @@ approxfun <- function(x, y = NULL, method = "linear",
 	yright <- if (rule[2L] == 1) NA else y[length(y)]
     force(f)
     stopifnot(length(yleft) == 1L, length(yright) == 1L, length(f) == 1L)
-    rm(o, rule, ties)
+    rm(o, rule, ties, lenR)
 
 ## Changed here:
 ## suggestion:

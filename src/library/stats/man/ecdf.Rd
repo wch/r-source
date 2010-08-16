@@ -1,6 +1,7 @@
 % File src/library/stats/man/ecdf.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
+% Copyright 2002-2010 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{ecdf}
@@ -8,6 +9,7 @@
 \alias{plot.ecdf}
 \alias{print.ecdf}
 \alias{summary.ecdf}
+\alias{quantile.ecdf}
 \title{Empirical Cumulative Distribution Function}
 \usage{
 ecdf(x)
@@ -18,6 +20,7 @@ ecdf(x)
 \method{print}{ecdf}(x, digits= getOption("digits") - 2, \dots)
 
 \method{summary}{ecdf}(object, \dots)
+\method{quantile}{ecdf}(x, \dots)
 }
 \arguments{
   \item{x, object}{numeric vector of the observations for \code{ecdf};  for

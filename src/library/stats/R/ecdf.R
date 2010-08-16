@@ -28,6 +28,7 @@ ecdf <- function (x)
 		      method = "constant", yleft = 0, yright = 1, f = 0,
                       ties = "ordered")
     class(rval) <- c("ecdf", "stepfun", class(rval))
+    assign("nobs", n, envir=environment(rval))# e.g. to reconstruct rank(x)
     attr(rval, "call") <- sys.call()
     rval
 }
@@ -37,7 +38,7 @@ print.ecdf <- function (x, digits= getOption("digits") - 2, ...)
     numform <- function(x) paste(formatC(x, digits=digits), collapse=", ")
     cat("Empirical CDF \nCall: ")
     print(attr(x, "call"), ...)
-    n <- length(xx <- eval(expression(x), envir = environment(x)))
+    n <- length(xx <- environment(x)$"x")
     i1 <- 1L:min(3L,n)
     i2 <- if(n >= 4L) max(4L,n-1L):n else integer(0L)
     cat(" x[1:",n,"] = ", numform(xx[i1]),
@@ -47,8 +48,7 @@ print.ecdf <- function (x, digits= getOption("digits") - 2, ...)
 
 summary.ecdf <- function(object, ...)
 {
-    header <- paste("Empirical CDF:	 ",
-                    eval(expression(n), envir = environment(object)),
+    header <- paste("Empirical CDF:	 ", environment(object)$"n",
                     "unique values with summary\n")
     structure(summary(knots(object), ...),
               header = header, class = "summary.ecdf")
@@ -73,3 +73,8 @@ plot.ecdf <- function(x, ..., ylab="Fn(x)", verticals = FALSE,
     plot.stepfun(x, ..., ylab = ylab, verticals = verticals, pch = pch)
     abline(h = c(0,1), col = col.01line, lty = 2)
 }
+
+quantile.ecdf <- function (x, ...)
+    ## == quantile( sort( <original sample> ) ) :
+    quantile(eval(rep.int(x, diff(c(0,round(nobs*y)))), environment(x)), ...)
+
