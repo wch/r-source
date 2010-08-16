@@ -454,11 +454,8 @@ prepare2_Rd <- function(Rd, Rdfile)
         	stopRd(docType, Rdfile, "'docType' must be plain text")
             ## Some people have \docType{ package } and similar.
             docTypes[i] <- sub("^ *", "", sub(" *$", "", docType[[1L]]))
-            ## I've no idea where 'genericFunction' came from, but
-            ## it seems common.  The usual conceit that S4 generics
-            ## are the only ones ....
             if (! docTypes[i] %in%
-                c("data", "package", "methods", "class", "genericFunction"))
+                c("data", "package", "methods", "class"))
                 warnRd(dt[i], Rdfile, "docType ", sQuote(docTypes[i]),
                        " is unrecognized")
          }
