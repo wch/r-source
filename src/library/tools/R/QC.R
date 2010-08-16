@@ -2402,9 +2402,7 @@ function(dir, force_suggests = TRUE)
     ldepends <- .get_requires_with_version_from_package_db(db, "Depends")
     limports <- .get_requires_with_version_from_package_db(db, "Imports")
     lsuggests <- .get_requires_with_version_from_package_db(db, "Suggests")
-    depends <- sapply(ldepends, `[[`, 1L)
-    imports <- sapply(limports, `[[`, 1L)
-    suggests <- sapply(lsuggests, `[[`, 1L)
+    lenhances <- .get_requires_with_version_from_package_db(db, "Enhances")
 
     standard_package_names <- .get_standard_package_names()
 
@@ -2414,47 +2412,58 @@ function(dir, force_suggests = TRUE)
     lreqs <- c(ldepends,
                limports,
                if(force_suggests) lsuggests)
-    if(length(lreqs)) {
-        reqs <- unique(sapply(lreqs, `[[`, 1L))
-        ## this was changed for speed.
-        ## installed <-  utils::installed.packages()[ , "Package"]
-        installed <- character(0L)
-        installed_in <- character(0L)
+    lreqs2 <- c(if(!force_suggests) lsuggests, lenhances)
+    if(length(c(lreqs, lreqs2))) {
+        ## Do this directly for speed.
+        installed <- character()
+        installed_in <- character()
         for(lib in .libPaths()) {
             pkgs <- list.files(lib)
             pkgs <- pkgs[file.access(file.path(lib, pkgs, "DESCRIPTION"), 4) == 0]
             installed <- c(installed, pkgs)
             installed_in <- c(installed_in, rep.int(lib, length(pkgs)))
         }
-        installed <- sub("_.*", "", installed) # obsolete versioned installs.
-        reqs <- reqs %w/o% installed
-        m <- reqs %in% standard_package_names$stubs
-        if(length(reqs[!m]))
-            bad_depends$required_but_not_installed <- reqs[!m]
-        if(length(reqs[m]))
-            bad_depends$required_but_stub <- reqs[m]
-        ## now check versions
-        have_ver <- unlist(lapply(lreqs, function(x) length(x) == 3L))
-        lreqs3 <- lreqs[have_ver]
-        if(length(lreqs3)) {
-            bad <- character(0)
-            for (r in lreqs3) {
-                pkg <- r[[1L]]
-                op <- r[[2L]]
-                where <- which(installed == pkg)
-                if(!length(where)) next
-                ## want the first one
-                desc <- .readRDS(file.path(installed_in[where[1L]], pkg,
-                                           "Meta", "package.rds"))
-                current <- desc$DESCRIPTION["Version"]
-                target <- as.package_version(r[[3L]])
-                if(eval(parse(text = paste("!(current", op, "target)"))))
-                    bad <- c(bad, pkg)
+        if (length(lreqs)) {
+            reqs <- unique(sapply(lreqs, `[[`, 1L))
+            reqs <- reqs %w/o% installed
+            m <- reqs %in% standard_package_names$stubs
+            if(length(reqs[!m]))
+                bad_depends$required_but_not_installed <- reqs[!m]
+            if(length(reqs[m]))
+                bad_depends$required_but_stub <- reqs[m]
+            ## now check versions
+            have_ver <- unlist(lapply(lreqs, function(x) length(x) == 3L))
+            lreqs3 <- lreqs[have_ver]
+            if(length(lreqs3)) {
+                bad <- character(0)
+                for (r in lreqs3) {
+                    pkg <- r[[1L]]
+                    op <- r[[2L]]
+                    where <- which(installed == pkg)
+                    if(!length(where)) next
+                    ## want the first one
+                    desc <- .readRDS(file.path(installed_in[where[1L]], pkg,
+                                               "Meta", "package.rds"))
+                    current <- desc$DESCRIPTION["Version"]
+                    target <- as.package_version(r[[3L]])
+                    if(eval(parse(text = paste("!(current", op, "target)"))))
+                        bad <- c(bad, pkg)
+                }
+                if(length(bad))
+                    bad_depends$required_but_obsolete <- bad
             }
-            if(length(bad))
-                bad_depends$required_but_obsolete <- bad
         }
-    }
+        if (length(lenhances)) {
+            m <- sapply(lenhances, `[[`, 1L)  %w/o% installed
+            if(length(m))
+                bad_depends$enhances_but_not_installed <- m
+        }
+        if (!force_suggests && length(lsuggests)) {
+            m <- sapply(lsuggests, `[[`, 1L)  %w/o% installed
+            if(length(m))
+                bad_depends$suggests_but_not_installed <- m
+        }
+   }
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
     vignette_dir <- file.path(dir, "inst", "doc")
@@ -2464,6 +2473,9 @@ function(dir, force_suggests = TRUE)
         ## For the time being, ignore base packages missing from the
         ## DESCRIPTION dependencies even if explicitly given as vignette
         ## dependencies.
+        depends <- sapply(ldepends, `[[`, 1L)
+        imports <- sapply(limports, `[[`, 1L)
+        suggests <- sapply(lsuggests, `[[`, 1L)
         reqs <- reqs %w/o% c(depends, imports, suggests, package_name,
                              standard_package_names$base)
         if(length(reqs))
@@ -2505,6 +2517,16 @@ function(x, ...)
     }
     if(length(bad <- x$required_but_stub)) {
         writeLines(gettext("Former standard packages required but now defunct:"))
+        .pretty_print(bad)
+        writeLines("")
+    }
+    if(length(bad <- x$suggests_but_not_installed)) {
+        writeLines(gettext("Packages suggested but not available:"))
+        .pretty_print(bad)
+        writeLines("")
+    }
+    if(length(bad <- x$enhances_but_not_installed)) {
+        writeLines(gettext("Packages which this enhances but not available:"))
         .pretty_print(bad)
         writeLines("")
     }

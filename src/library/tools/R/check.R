@@ -1970,12 +1970,18 @@ R_run_R <- function(cmd, Ropts, env)
         ## Namespace imports must really be in Depends.
         res <- .check_package_depends(pkgdir, R_check_force_suggests)
         if (any(sapply(res, length) > 0)) {
-            errorLog(Log)
-            ## TODO: use object directly
-            printLog(Log, paste(utils::capture.output(print(res)),
-                                collapse="\n"), "\n")
-            wrapLog(msg_DESCRIPTION)
-            do_exit(1L)
+            if (!all(names(res) %in% c("suggests_but_not_installed",
+                                       "enhances_but_not_installed"))) {
+                errorLog(Log)
+                printLog(Log, paste(utils::capture.output(print(res)),
+                                    collapse="\n"), "\n")
+                wrapLog(msg_DESCRIPTION)
+                do_exit(1L)
+            } else {
+                noteLog(Log)
+                printLog(Log, paste(utils::capture.output(print(res)),
+                                    collapse="\n"))
+            }
         } else resultLog(Log, "OK")
     }
 
