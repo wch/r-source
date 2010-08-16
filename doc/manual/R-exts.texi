@@ -399,8 +399,8 @@ important to include S4-using packages (as their class definitions can
 change and the @file{DESCRIPTION} file is used to decide which packages
 to re-install when this happens).  Packages declared in the
 @samp{Depends} field should not also be in the @samp{Imports} field.
-Versions can be specified, but will not be checked when the namespace is
-loaded.
+Version requirements can be specified, but will not be checked when the
+namespace is loaded (whereas they are checked by @command{R CMD check}).
 
 The optional @samp{Suggests} field uses the same syntax as
 @samp{Depends} and lists packages that are not necessarily needed.  This
@@ -408,13 +408,15 @@ includes packages used only in examples, tests or vignettes
 (@pxref{Writing package vignettes}), and packages loaded in the body of
 functions.  E.g., suppose an example from package @pkg{foo} uses a
 dataset from package @pkg{bar}. Then it is not necessary to have
-@pkg{bar} for routine use of @pkg{foo}, unless one wants to execute all
-the examples/tests/vignettes: it is useful to have @pkg{bar}, but not
-necessary.
+@pkg{bar} use of @pkg{foo} unless one wants to execute all the
+examples/tests/vignettes: it is useful to have @pkg{bar}, but not
+necessary.   Version requirements can be specified, and will be used by
+@command{R CMD check}.
 
 Finally, the optional @samp{Enhances} field lists packages ``enhanced''
 by the package at hand, e.g., by providing methods for classes from
-these packages.
+these packages.  Version requirements can be specified, but are
+currently not used.
 
 The general rules are
 

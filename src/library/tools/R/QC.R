@@ -2402,6 +2402,7 @@ function(dir, force_suggests = TRUE)
     ldepends <- .get_requires_with_version_from_package_db(db, "Depends")
     limports <- .get_requires_with_version_from_package_db(db, "Imports")
     lsuggests <- .get_requires_with_version_from_package_db(db, "Suggests")
+    ## NB: no one checks version for 'Enhances'.
     lenhances <- .get_requires_with_version_from_package_db(db, "Enhances")
 
     standard_package_names <- .get_standard_package_names()
