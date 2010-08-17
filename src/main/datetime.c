@@ -724,9 +724,10 @@ SEXP attribute_hidden do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, sformat, ans, tz;
-    int i, n = 0, m, N, nlen[9], UseTZ;
+    int i, n = 0, m, N, nlen[9], UseTZ, settz = 0;
     char buff[300];
-    const char *p;
+    char oldtz[20] = "";
+    const char *p, *tz1;
     struct tm tm;
 
     checkArity(op, args);
@@ -740,6 +741,17 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(UseTZ == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "usetz");
     tz = getAttrib(x, install("tzone"));
+
+    if (!isNull(tz) && strlen(tz1 = CHAR(STRING_ELT(tz, 0)))) {
+	/* If the format includes %Z or %z 
+	   we need to try to set TZ accordingly */
+	int needTZ = 0;
+	for(i = 0; i < m; i++) {
+	    const char *p = CHAR(STRING_ELT(sformat, i));
+	    if (strstr(p, "%Z") || strstr(p, "%z")) {needTZ = 1; break;}
+	}
+	if(needTZ) settz = set_tz(tz1, oldtz);
+    }
 
     /* workaround for glibc/FreeBSD/MacOS X bugs in strftime: they have
        non-POSIX/C99 time zone components
@@ -830,6 +842,7 @@ SEXP attribute_hidden do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     UNPROTECT(2);
+    if(settz) reset_tz(oldtz);
     return ans;
 }
 

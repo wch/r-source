@@ -122,7 +122,11 @@ strptime(x, format, tz = "")
   }
   Where leading zeros are shown they will be used on output but are
   optional on input.
-
+  
+  Note that when \code{\%z} or \code{\%Z} is used for output with an
+  object with an assigned timezone an attempt is made to use the values
+  for that timezone --- but it is not guaranteed to succeed.
+  
   Also defined in the current standards but less widely implemented
   (e.g. not for output on Windows) are
   \describe{
