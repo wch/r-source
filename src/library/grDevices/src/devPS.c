@@ -8032,7 +8032,7 @@ SEXP PostScript(SEXP args)
 			   pagecentre, printit, cmd, title, fonts,
 			   colormodel, useKern, fillOddEven)) {
 	    /* free(dev); No, dev freed inside PSDeviceDrive */
-	    error(_("unable to start device PostScript"));
+	    error(_("unable to start %s() device"), "postscript");
 	}
 	gdd = GEcreateDevDesc(dev);
 	GEaddDevice2(gdd, "postscript");
@@ -8099,7 +8099,7 @@ SEXP XFig(SEXP args)
 			     (double) horizontal, ps, onefile, pagecentre, defaultfont, textspecial,
 			     encoding)) {
 	    /* free(dev); No, freed inside XFigDeviceDriver */
-	    error(_("unable to start device xfig"));
+	    error(_("unable to start %s() device"), "xfig");
 	}
 	gdd = GEcreateDevDesc(dev);
 	GEaddDevice2(gdd, "xfig");
@@ -8194,7 +8194,7 @@ SEXP PDF(SEXP args)
 			    title, fonts, major, minor, colormodel,
 			    dingbats, useKern, fillOddEven, maxRasters)) {
 	    /* free(dev); PDFDeviceDriver now frees */
-	    error(_("unable to start device pdf"));
+	    error(_("unable to start %s() device"), "pdf");
 	}
 	gdd = GEcreateDevDesc(dev);
 	GEaddDevice2(gdd, "pdf");

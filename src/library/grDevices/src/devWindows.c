@@ -3699,8 +3699,14 @@ SEXP devga(SEXP args)
 			    (Rboolean)recording, resize, bg, canvas, gamma,
 			    xpos, ypos, (Rboolean)buffered, psenv,
 			    restoreConsole, title, clickToConfirm, fillOddEven)) {
+	    char type[100], *p;
 	    free(dev);
-	    error(_("unable to start device"));
+	    if (display[0]) {
+		strncpy(type, display);
+		p = strchr(type, ':');
+		if(p) *p = '\p';
+	    } else strcpy(type, "windows");
+	    error(_("unable to start %s() device"), type);
 	}
 	gdd = GEcreateDevDesc(dev);
 	GEaddDevice2(gdd, display[0] ? display : "windows");
