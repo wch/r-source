@@ -143,8 +143,8 @@ Other types of extensions are supported (but rare): @xref{Package types}.
 @section Package structure
 @cindex Package structure
 
-A package consists of a subdirectory containing a file
-@file{DESCRIPTION} and the subdirectories @file{R}, @file{data},
+The sources of a @R{} package consists of a subdirectory containing a
+file @file{DESCRIPTION} and the subdirectories @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{inst}, @file{man}, @file{po},
 @file{src}, and @file{tests} (some of which can be missing).  The
 package subdirectory may also contain files @file{INDEX},
@@ -155,8 +155,8 @@ package subdirectory may also contain files @file{INDEX},
 useful to end-users.
 
 The @file{DESCRIPTION} and @file{INDEX} files are described in the
-sections below.  The @file{NAMESPACE} file is described in @ref{Package
-name spaces}.
+subsections below.  The @file{NAMESPACE} file is described in the
+section on @ref{Package name spaces}.
 
 @cindex configure file
 @cindex cleanup file
@@ -174,11 +174,11 @@ shell) script files which are executed before and (provided that option
 The optional file @file{LICENSE}/@file{LICENCE} or @file{COPYING} (where
 the former names are preferred) contains a copy of the license to the
 package, e.g.@: a copy of the @acronym{GNU} public license.  Whereas you
-should feel free to include a license file in your source distribution,
-please do not arrange to @emph{install} yet another copy of the
-@acronym{GNU} @file{COPYING} or @file{COPYING.LIB} files but refer to
-the copies on @url{http://www.r-project.org/Licenses/} and included in
-the @R{} distribution (in directory @file{share/licenses}).
+should feel free to include a license file in your @emph{source}
+distribution, please do not arrange to @emph{install} yet another copy
+of the @acronym{GNU} @file{COPYING} or @file{COPYING.LIB} files but
+refer to the copies on @url{http://www.r-project.org/Licenses/} and
+included in the @R{} distribution (in directory @file{share/licenses}).
 
 For the conventions for files @file{NEWS} and @file{ChangeLog} in the
 @acronym{GNU} project see
@@ -193,21 +193,22 @@ also create a package named @file{Foo}.
 
 To ensure that file names are valid across file systems and supported
 operating system platforms, the @acronym{ASCII} control characters as
-well as the characters @samp{"}, @samp{*}, @samp{:}, @samp{/},
-@samp{<}, @samp{>}, @samp{?}, @samp{\}, and @samp{|} are not allowed
-in file names.  In addition, files with names @samp{con}, @samp{prn},
+well as the characters @samp{"}, @samp{*}, @samp{:}, @samp{/}, @samp{<},
+@samp{>}, @samp{?}, @samp{\}, and @samp{|} are not allowed in file
+names.  In addition, files with names @samp{con}, @samp{prn},
 @samp{aux}, @samp{clock$}, @samp{nul}, @samp{com1} to @samp{com9}, and
-@samp{lpt1} to @samp{lpt9} after conversion to lower case and
-stripping possible ``extensions'' (e.g., @samp{lpt5.foo.bar}), are
-disallowed.  Also, file names in the same directory must not differ
-only by case (see the previous paragraph).  In addition, the names of
-@samp{.Rd} files will be used in URLs and so must be @acronym{ASCII}
-and not contain @code{%}.  For maximal portability filenames should
-only contain only @acronym{ASCII} characters not excluded already
-(that is @code{A-Za-z0-9._!#$%&+,;=@@^()@{@}'[]} we exclude space as
-many utilities do not accept spaces in file paths): non-English alphabetic
-characters cannot be guaranteed to be supported in all locales.  It would
-be good practice to avoid the shell metacharacters @code{()@{@}'[]$}.
+@samp{lpt1} to @samp{lpt9} after conversion to lower case and stripping
+possible ``extensions'' (e.g., @samp{lpt5.foo.bar}), are disallowed.
+Also, file names in the same directory must not differ only by case (see
+the previous paragraph).  In addition, the names of @samp{.Rd} files
+will be used in URLs and so must be @acronym{ASCII} and not contain
+@code{%}.  For maximal portability filenames should only contain only
+@acronym{ASCII} characters not excluded already (that is
+@code{A-Za-z0-9._!#$%&+,;=@@^()@{@}'[]} --- we exclude space as many
+utilities do not accept spaces in file paths): non-English alphabetic
+characters cannot be guaranteed to be supported in all locales.  It
+would be good practice to avoid the shell metacharacters
+@code{()@{@}'[]$}.
 
 A source package if possible should not contain binary executable files:
 they are not portable, and a security risk if they are of the
@@ -259,27 +260,30 @@ BugReports: http://pkgname.bugtracker.url
 
 @noindent
 The format is that of a `Debian Control File' (see the help for
-@samp{read.dcf}).  Continuation lines (for example, for descriptions
-longer than one line) start with a space or tab.  The @samp{Package},
-@samp{Version}, @samp{License}, @samp{Description}, @samp{Title},
-@samp{Author}, and @samp{Maintainer} fields are mandatory, the
-remaining fields (@samp{Date}, @samp{Depends}, @samp{URL},
-@samp{BugReports}, @dots{}) are optional.
+@samp{read.dcf} and
+@uref{http://www.debian.org/@/doc/@/debian-policy/@/ch-controlfields.html}:
+@R{} does not require encoding in UTF-8).  Continuation lines (for
+example, for descriptions longer than one line) start with a space or
+tab.  The @samp{Package}, @samp{Version}, @samp{License},
+@samp{Description}, @samp{Title}, @samp{Author}, and @samp{Maintainer}
+fields are mandatory, all other fields are optional.
 
-The @file{DESCRIPTION} file should be written entirely in
-@acronym{ASCII} for maximal portability.
+For maximal portability, the @file{DESCRIPTION} file should be written
+entirely in @acronym{ASCII} --- if this is not possible it must contain
+an @samp{Encoding} field (see below).
 
-The @samp{Package} and @samp{Version} fields give the name and the
-version of the package, respectively.  The name should consist of
-letters, numbers, and the dot character and start with a letter.  The
-version is a sequence of at least @emph{two} (and usually three)
-non-negative integers separated by single @samp{.} or @samp{-}
-characters.  The canonical form is as shown in the example, and a
-version such as @samp{0.01} or @samp{0.01.0} will be handled as if it
-were @samp{0.1-0}.  (Translation packages are allowed names of the form
+The mandatory @samp{Package} field gives the name of the package.  This should
+contain only letters, numbers and dot, and start with a letter.
+(Translation packages are allowed names of the form
 @samp{Translation-@var{ll}}.)
 
-The @samp{License} field should specify the license of the package in
+The mandatory @samp{Version} field gives version of the package.  This is a
+sequence of at least @emph{two} (and usually three) non-negative
+integers separated by single @samp{.} or @samp{-} characters.  The
+canonical form is as shown in the example, and a version such as
+@samp{0.01} or @samp{0.01.0} will be handled as if it were @samp{0.1-0}.
+
+The mandatory @samp{License} field should specify the license of the package in
 the following standardized form.  Alternatives are indicated @emph{via}
 vertical bars.  Individual specifications must be one of
 @itemize @bullet
@@ -342,67 +346,69 @@ Please ensure that the license you choose also covers any dependencies
 important that any restrictions on the use of such dependencies are
 evident to people reading your @file{DESCRIPTION} file.
 
-The @samp{Description} field should give a comprehensive description of
+The mandatory @samp{Description} field should give a comprehensive description of
 what the package does.  One can use several (complete) sentences, but
 only one paragraph.
 
-The @samp{Title} field should give a short description of the
+The mandatory @samp{Title} field should give a short description of the
 package. Some package listings may truncate the title to 65 characters
 in order to keep the overall size of the listing limited.
 It should be capitalized, not use any markup, not have any continuation
 lines, and not end in a period.
 
-The @samp{Author} field describes who wrote the package.  It is a plain
-text field intended for human readers, but not for automatic processing
-(such as extracting the email addresses of all listed contributors).
+The mandatory @samp{Author} field describes who wrote the package.  It
+is a plain text field intended for human readers, but not for automatic
+processing (such as extracting the email addresses of all listed
+contributors).
 
-The @samp{Maintainer} field should give a @emph{single} name with a
-@emph{valid} (RFC 2822) email address in angle brackets (for sending bug
-reports etc.).  It should not end in a period or comma.
+The mandatory @samp{Maintainer} field should give a @emph{single} name
+with a @emph{valid} (RFC 2822) email address in angle brackets (for
+sending bug reports etc.).  It should not end in a period or comma.
 
-The optional @samp{Date} field gives the release date of the current
+The @samp{Date} field gives the release date of the current
 version of the package.  It is strongly recommended to use the yyyy-mm-dd
 format conforming to the ISO 8601 standard.
 
-The optional @samp{Depends} field gives a comma-separated list of
+The @samp{Depends} field gives a comma-separated list of
 package names which this package depends on.  The package name may be
 optionally followed by a comment in parentheses.  The comment should
 contain a comparison operator@footnote{only @samp{>=} and @samp{<=} were
 supported prior to @R{} 2.7.0, and only @samp{>=} is supported for
 package versions by @code{install.packages}.}, whitespace and a valid
 version number).  You can also use the special package name @samp{R} if
-your package depends on a certain version of @R{}.  E.g., if the package
-works only with @R{} version 2.11.0 or later, include @samp{R (>= 2.11.0)}
-in the @samp{Depends} field.  Both @code{library} and the @R{} package
-checking facilities use this field, hence it is an error to use improper
-syntax or misuse the @samp{Depends} field for comments on other software
-that might be needed.  Other dependencies (external to the @R{} system)
-should be listed in the @samp{SystemRequirements} field, possibly
-amplified in a separate @file{README} file.  The @R{} @command{INSTALL}
-facilities check if the version of @R{} used is recent enough for the
-package being installed, and the list of packages which is specified
-will be attached (after checking version requirements) before the
-current package, both when @code{library} is called and when preparing
-for lazy-loading.
+your package depends on a certain version of @R{} --- e.g., if the
+package works only with @R{} version 2.11.0 or later, include @samp{R
+(>= 2.11.0)} in the @samp{Depends} field.  Both @code{library} and the
+@R{} package checking facilities use this field, hence it is an error to
+use improper syntax or misuse the @samp{Depends} field for comments on
+other software that might be needed.  Other dependencies (external to
+the @R{} system) should be listed in the @samp{SystemRequirements}
+field, possibly amplified in a separate @file{README} file.  The @R{}
+@command{INSTALL} facilities check if the version of @R{} used is recent
+enough for the package being installed, and the list of packages which
+is specified will be attached (after checking version requirements)
+before the current package, both when @code{library} is called and when
+preparing for lazy-loading.
 
 As from @R{} 2.7.0 a package (or @samp{R}) can appear more than once in
 the @samp{Depends}, but only the first occurrence will be used in
 earlier versions of @R{}.  (Unfortunately all occurrences will be checked,
 so only @samp{>=} and @samp{<=} can be used.)
 
-The optional @samp{Imports} field lists packages whose name spaces are
-imported from but which do not need to be attached.  Name spaces
-accessed by the @samp{::} and @samp{:::} operators must be listed here,
-or in @samp{Suggests} or @samp{Enhances} (see below).  Ideally this
-field will include all the standard packages that are used, and it is
-important to include S4-using packages (as their class definitions can
-change and the @file{DESCRIPTION} file is used to decide which packages
-to re-install when this happens).  Packages declared in the
-@samp{Depends} field should not also be in the @samp{Imports} field.
-Version requirements can be specified, but will not be checked when the
-namespace is loaded (whereas they are checked by @command{R CMD check}).
+The @samp{Imports} field lists packages whose name spaces are
+imported from (as specified in the @file{NAMESPACE} file) but which do
+not need to be attached.  Name spaces accessed by the @samp{::} and
+@samp{:::} operators must be listed here, or in @samp{Suggests} or
+@samp{Enhances} (see below).  Ideally this field will include all the
+standard packages that are used, and it is important to include S4-using
+packages (as their class definitions can change and the
+@file{DESCRIPTION} file is used to decide which packages to re-install
+when this happens).  Packages declared in the @samp{Depends} field
+should not also be in the @samp{Imports} field.  Version requirements
+can be specified, but will @strong{not} be checked when the namespace is
+loaded (whereas they are checked by @command{R CMD check}).
 
-The optional @samp{Suggests} field uses the same syntax as
+The @samp{Suggests} field uses the same syntax as
 @samp{Depends} and lists packages that are not necessarily needed.  This
 includes packages used only in examples, tests or vignettes
 (@pxref{Writing package vignettes}), and packages loaded in the body of
@@ -413,7 +419,7 @@ examples/tests/vignettes: it is useful to have @pkg{bar}, but not
 necessary.   Version requirements can be specified, and will be used by
 @command{R CMD check}.
 
-Finally, the optional @samp{Enhances} field lists packages ``enhanced''
+Finally, the @samp{Enhances} field lists packages ``enhanced''
 by the package at hand, e.g., by providing methods for classes from
 these packages.  Version requirements can be specified, but are
 currently not used.
@@ -443,19 +449,18 @@ In particular, large packages providing ``only'' data for examples or
 vignettes should be listed in @samp{Suggests} rather than @samp{Depends}
 in order to make lean installations possible.
 
-Prior to @R{} 2.9.0, adding version dependencies for packages only made
-sense for the @samp{Depends} field, as only @code{library} checks
-version requirements, and only for the packages it loads @emph{via} the
-@samp{Depends} field.  As from @R{} 2.9.0 other dependencies are used by
-@code{install.packages}.
+Version dependencies in the @samp{Depends} field are used by
+@code{library} when it loads the package, and @code{install.packages}
+checks versions for the @samp{Imports} and (for @code{dependencies =
+TRUE}) @samp{Suggests} fields.
 
-The optional @samp{URL} field may give a list of @acronym{URL}s
+The @samp{URL} field may give a list of @acronym{URL}s
 separated by commas or whitespace, for example the homepage of the
 author or a page where additional material describing the software can
 be found.  These @acronym{URL}s are converted to active hyperlinks in
 @acronym{CRAN} package listings.
 
-The optional @samp{BugReports} field may contain a single
+The @samp{BugReports} field may contain a single
 @acronym{URL} to which bug reports about the package should be
 submitted.  This @acronym{URL} will be used by @code{bug.reports}
 instead of sending an email to the maintainer.
@@ -466,7 +471,7 @@ be included in every binary distribution of @R{}) have a @samp{Priority}
 field with value @samp{base} or @samp{recommended}, respectively.  These
 priorities must not be used by other packages.
 
-An optional @samp{Collate} field can be used for controlling the
+An @samp{Collate} field can be used for controlling the
 collation order for the @R{} code files in a package when these are
 processed for package installation.  The default is to collate according
 to the @samp{C} locale.  If present, the collate specification must list
@@ -479,14 +484,14 @@ Paths containing white space or quotes need to be quoted.  An
 OS-specific collation field (@samp{Collate.unix} or
 @samp{Collate.windows}) will be used instead of @samp{Collate}.
 
-The optional @samp{LazyLoad} and @samp{LazyData} fields control whether
+The @samp{LazyLoad} and @samp{LazyData} fields control whether
 the @R{} objects and the datasets (respectively) use lazy-loading: set
 the field's value to @samp{yes} or @samp{true} for lazy-loading and
 @samp{no} or @samp{false} for no lazy-loading.  (Capitalized values are
 also accepted.)  If the package you are writing uses the @pkg{methods}
 package, specify @samp{LazyLoad: yes}.
 
-The optional @samp{ZipData} field controls whether the automatic
+The @samp{ZipData} field controls whether the automatic
 Windows build will zip up the data directory or no: set this to
 @samp{no} if your package will not work with a zipped data directory.
 
@@ -501,12 +506,12 @@ and @code{UTF-8} are known to be portable.  (Do not specify an encoding
 unless one is actually needed: doing so makes the package @emph{less}
 portable.)
 
-The optional @samp{OS_type} field specifies the OS(es) for which the
+The @samp{OS_type} field specifies the OS(es) for which the
 package is intended.  If present, it should be one of @code{unix} or
 @code{windows}, and indicates that the package can only be installed
 on a platform with @samp{.Platform$OS.type} having that value.
 
-The optional @samp{Type} field specifies the type of the package:
+The @samp{Type} field specifies the type of the package:
 @pxref{Package types}.
 
 @quotation Note
@@ -515,7 +520,7 @@ added by the package management tools.
 @end quotation
 
 One can add subject classifications for the content of the package using
-the optional fields @samp{Classification/ACM} (using the Computing
+the fields @samp{Classification/ACM} (using the Computing
 Classification System of the Association for Computing Machinery,
 @uref{http://www.acm.org/class/}), @samp{Classification/JEL} (the
 Journal of Economic Literature Classification System,
@@ -526,7 +531,7 @@ subject classifications should be comma-separated lists of the
 respective classification codes, e.g., @samp{Classification/ACM: G.4,
 H.2.8, I.5.1}.
 
-Finally, an optional @samp{Language} field can be used to indicate if
+Finally, an @samp{Language} field can be used to indicate if
 the package documentation is not in English: this should be a
 comma-separated list of standard (not private use or grandfathered) IETF
 language tags as currently defined by RFC 5646
@@ -793,10 +798,12 @@ you can speed up installation by providing a file @file{datalist} in the
 provides @samp{foo}, or @samp{foo: bar bah} if @code{data(foo)} provides
 @samp{bar} and @samp{bah}.
 
-As from @R{} 2.10.0 tables (@file{.tab}, @file{.txt}, or @file{.csv}
-files) can be compressed by @command{gzip}, @command{bzip2} or
-@command{xz}, optionally with additional extension @file{.gz},
-@file{.bz2} or @file{.xz}.
+Tables (@file{.tab}, @file{.txt}, or @file{.csv} files) can be
+compressed by @command{gzip}, @command{bzip2} or @command{xz},
+optionally with additional extension @file{.gz}, @file{.bz2} or
+@file{.xz}.  However, such files can only be used with @R{} 2.10.0 or
+later, and so the package should have an appropriate @samp{Depends}
+entry in its DESCRIPTION file.
 
 If your package is to be distributed, do consider the resource
 implications for your users of large datasets: they can make packages
@@ -804,7 +811,6 @@ very slow to download and use up unwelcome amounts of storage space, as
 well as taking many seconds to load.  It is normally best to distribute
 large datasets as @file{.rda} images prepared by @code{save(, compress =
 TRUE)} (the default): there is no excuse for distributing ASCII saves.
-
 Using @command{bzip2} or @command{xz} compression will usually reduce
 the size of both the package tarball and the installed package, in some
 cases by a factor of two or more.  However, such compression can only be
@@ -813,7 +819,7 @@ appropriate @samp{Depends} entry in its DESCRIPTION file.
 
 Package @pkg{tools} has a couple of functions to help with data images:
 @code{checkRdaFiles} reports on the way the image was saved, and
-@code{resaveRdaFiles} will re-save in a different type of compression,
+@code{resaveRdaFiles} will re-save with a different type of compression,
 including choosing the best type for that particular image.
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
@@ -1017,12 +1023,13 @@ distribute, take care to ensure that it is not specific to your
 compiler: flags such as @option{-O2 -Wall -pedantic} are all specific to
 GCC.
 
-There are some macros which are built whilst configuring the building of
-@R{} itself and are stored in
+There are some macros@footnote{in POSIX parlance: GNU @command{make}
+calls these `make variables'.}  which are set whilst configuring the
+building of @R{} itself and are stored in
 @file{@var{R_HOME}/etc@var{R_ARCH}/Makeconf}.  That makefile is included
 as a @file{Makefile} @emph{after} @file{Makevars[.win]}, and the macros
-it defines can be used in macro assignments and make command lines in the
-latter.  These include
+it defines can be used in macro assignments and make command lines in
+the latter.  These include
 
 @table @code
 @item FLIBS
@@ -1164,8 +1171,8 @@ $(R_HOME)/bin$(R_ARCH_BIN)/Rscript -e '@var{R expression}'
 @noindent
 where @code{$(R_ARCH_BIN)} is only needed currently on Windows.
 
-Environment variables can be used to select different macros for 32- and
-64-bit code, for example
+Environment or make variables can be used to select different macros for
+32- and 64-bit code, for example
 
 @example
 ifeq "$@{R_ARCH@}" "/x64"
@@ -1190,8 +1197,8 @@ endif
 On Windows there is normally a choice between linking to an import
 library or directly to a DLL.  Where possible, the latter is much more
 reliable: import libraries are tied to a specific toolchain, and in
-particular on 64-bit Windows two different conventions are common. So
-for example instead of
+particular on 64-bit Windows two different conventions are common, and
+@R{} 2.11.x and 2.12.x use different ones. So for example instead of
 
 @example
 PKG_LIBS = -L$(XML_DIR)/lib -lxml2
@@ -1880,9 +1887,10 @@ Be aware that in all cases license requirements will need to be met so
 you may need to supply the sources for the additional components (and
 will if your package has a GPL-like license).
 
-Also be aware that as from @R{} 2.11.0 there are both 32- and 64-bit
-binary builds of @R{} for Windows and the CRAN team will be reluctant to
-support a package that works under just one of the architectures.
+Also be aware that there are both 32- and 64-bit builds of @R{} for
+Windows with a combined distribution of binary packages, so the CRAN
+team will be reluctant to support a package that works under just one of
+the architectures.
 
 
 @node Package name spaces, Writing portable packages, Submitting a package to CRAN, Creating R packages
@@ -2626,7 +2634,7 @@ for syntax checking.
 
 If you want to distribute a binary version of a package on Windows or
 Mac OS X, there are further checks you need to do to check it is
-portable: it is all to easy to depend on external software on your own
+portable: it is all too easy to depend on external software on your own
 machine that other users will not have.
 
 For Windows, check what other DLLs your package's DLL depends on
@@ -2964,10 +2972,10 @@ An installed file named @file{CITATION} will be used by the
 
 The @file{CITATION} file is parsed as @R{} code (in the package's
 declared encoding@footnote{as from @R{} 2.8.0: this used to default to
-Latin-1 but no longer does so}).  If no such file is present,
-@code{citation} generates a standard contents, and an example of what
-that would look like as a @file{CITATION} file can be seen in
-recommended package @pkg{nlme} (see below): recommended packages
+Latin-1 but no longer does so}, or in ASCII if note is declared).  If no
+such file is present, @code{citation} generates a standard contents, and
+an example of what that would look like as a @file{CITATION} file can be
+seen in recommended package @pkg{nlme} (see below): recommended packages
 @pkg{boot}, @pkg{cluster} and @pkg{mgcv} have further examples.
 
 A @file{CITATION} file will contain calls to the functions
@@ -3082,8 +3090,8 @@ writing @R{} packages, particularly those intended for public
 distribution.
 
 @uref{http://win-builder.r-project.org, win-builder.r-project.org}
-offers the automated preparation of (32- and 64-bit) Windows binaries
-from well-tested source packages.
+offers the automated preparation of (32/64-bit) Windows binaries from
+well-tested source packages.
 
 R-Forge (@uref{http://R-Forge.r-project.org, R-Forge.r-project.org}) and
 RForge (@uref{http://www.rforge.net, www.rforge.net}) are similar
