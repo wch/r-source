@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-17 16:04\n"
 "PO-Revision-Date: 2010-04-03 10:33+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -180,13 +180,42 @@ msgstr ""
 msgid "Packages required but not available:"
 msgstr " パッケージが必要ですが，利用可能ではありません "
 
-msgid "Packages required and available but unsuitable version:"
+#, fuzzy
+msgid "Package required but not available: %s"
+msgstr " パッケージが必要ですが，利用可能ではありません "
+
+#, fuzzy
+msgid "Packages required and available but unsuitable versions:"
+msgstr " パッケージが必要で，利用可能ですが，適切なバージョンではありません "
+
+#, fuzzy
+msgid "Package required and available but unsuitable version: %s"
 msgstr " パッケージが必要で，利用可能ですが，適切なバージョンではありません "
 
 msgid "Former standard packages required but now defunct:"
 msgstr " 以前の標準パッケージが必要ですが，このパッケージは現存しません： "
 
+#, fuzzy
+msgid "Packages suggested but not available for checking:"
+msgstr " パッケージが必要ですが，利用可能ではありません "
+
+#, fuzzy
+msgid "Package suggested but not available for checking: %s"
+msgstr " パッケージが必要ですが，利用可能ではありません "
+
+#, fuzzy
+msgid "Packages which this enhances but not available for checking:"
+msgstr " パッケージが必要ですが，利用可能ではありません "
+
+#, fuzzy
+msgid "Package which this enhances but not available for checking: %s"
+msgstr " パッケージが必要ですが，利用可能ではありません "
+
 msgid "Vignette dependencies not required:"
+msgstr " ビニエットの依存性は不要です: "
+
+#, fuzzy
+msgid "Vignette dependencies not required: %s"
 msgstr " ビニエットの依存性は不要です: "
 
 msgid ""
@@ -197,6 +226,10 @@ msgstr ""
 "Suggests/Imports 項目に含まれなければなりません "
 
 msgid "Namespace dependencies not required:"
+msgstr " Namespaceの依存性は必要ありません： "
+
+#, fuzzy
+msgid "Namespace dependency not required: %s"
 msgstr " Namespaceの依存性は必要ありません： "
 
 msgid "Malformed package name"
@@ -345,7 +378,16 @@ msgstr " パッケージ \"methods\" が使われていますが、宣言され�
 msgid "'::' or ':::' imports not declared from:"
 msgstr " '::' もしくは ':::'　によるインポートが以下から宣言されていません: "
 
+#, fuzzy
+msgid "'::' or ':::' import not declared from: %s"
+msgstr " '::' もしくは ':::'　によるインポートが以下から宣言されていません: "
+
 msgid "'library' or 'require' calls not declared from:"
+msgstr ""
+" 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
+
+#, fuzzy
+msgid "'library' or 'require' call not declared from: %s"
 msgstr ""
 " 'library' もしくは 'requires'　による呼出しが以下から宣言されていません: "
 

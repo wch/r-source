@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-17 16:04\n"
 "PO-Revision-Date: 2010-04-09 20:01-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -90,6 +90,9 @@ msgstr "элементы 'what' после первого будут пропущены"
 msgid "%d occurrences in %s"
 msgstr "%d вхождений в %s"
 
+msgid "No suitable spell check program found."
+msgstr ""
+
 #, fuzzy
 msgid "Filter '%s' is not available."
 msgstr "тест '%s' недоступен"
@@ -100,9 +103,6 @@ msgstr "Неправильный аргумент 'filter'"
 #, fuzzy
 msgid "Processing file %s"
 msgstr "Обрабатываю файл"
-
-msgid "Could not find aspell or ispell executable."
-msgstr "Не могу найти исполняемого файла aspell или ispell."
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
@@ -476,6 +476,14 @@ msgstr "у файла 'DESCRIPTION' есть поле 'Encoding', а перекодировка невозможна"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "файл DESCRIPTION пакета '%s' пропущен или поврежден"
+
+#, fuzzy
+msgid "package"
+msgstr "Пакет"
+
+#, fuzzy
+msgid "not found"
+msgstr "документ не найден"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() нельзя использовать неинтерактивно"
@@ -1137,6 +1145,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "пакет '%s' сейчас используется и не будет установлен"
 msgstr[1] "пакеты '%s' сейчас используются и не будут установлены"
 msgstr[2] "пакеты '%s' сейчас используются и не будут установлены"
+
+#~ msgid "Could not find aspell or ispell executable."
+#~ msgstr "Не могу найти исполняемого файла aspell или ispell."
 
 #~ msgid "argument 'lib' is missing: using %s"
 #~ msgstr "аргумент 'lib' пропущен: использую %s"

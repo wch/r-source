@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-17 16:04\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -81,6 +81,9 @@ msgstr "'what' 요소의 첫번째가 무시될 것입니다"
 msgid "%d occurrences in %s"
 msgstr "%s에서 %d가 발생됩니다"
 
+msgid "No suitable spell check program found."
+msgstr ""
+
 #, fuzzy
 msgid "Filter '%s' is not available."
 msgstr ""
@@ -92,9 +95,6 @@ msgid "Invalid 'filter' argument."
 msgstr "무효의 'data' 인수입니다"
 
 msgid "Processing file %s"
-msgstr ""
-
-msgid "Could not find aspell or ispell executable."
 msgstr ""
 
 msgid ""
@@ -489,6 +489,16 @@ msgstr ""
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "패키지 '%s'의 DESCRIPTION 파일은 잘못되어지거나 파손되었습니다"
+
+#, fuzzy
+msgid "package"
+msgstr "패키지"
+
+#, fuzzy
+msgid "not found"
+msgstr ""
+"검색되지 않는 object '%s' 입니다\n"
+"검색되지 않는 objects '%s' 입니다"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu()는 non-intertactively에 사용할 수가 없습니다"

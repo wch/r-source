@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0 \n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:23+0100\n"
+"POT-Creation-Date: 2010-08-17 16:03+0100\n"
 "PO-Revision-Date: 2010-04-03 09:42+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: R-core <R-core@R-project.org> \n"
@@ -158,9 +158,9 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/connections.c:4590 src/main/connections.c:4594
 #: src/main/connections.c:4598 src/main/connections.c:4602
 #: src/main/context.c:597 src/main/context.c:606 src/main/context.c:610
-#: src/main/datetime.c:656 src/main/datetime.c:735 src/main/datetime.c:737
-#: src/main/datetime.c:741 src/main/datetime.c:887 src/main/datetime.c:889
-#: src/main/datetime.c:1053 src/main/debug.c:223 src/main/deparse.c:349
+#: src/main/datetime.c:656 src/main/datetime.c:736 src/main/datetime.c:738
+#: src/main/datetime.c:742 src/main/datetime.c:900 src/main/datetime.c:902
+#: src/main/datetime.c:1066 src/main/debug.c:223 src/main/deparse.c:351
 #: src/main/devices.c:581 src/main/dotcode.c:736 src/main/dotcode.c:740
 #: src/main/dotcode.c:745 src/main/dounzip.c:250 src/main/dounzip.c:257
 #: src/main/dounzip.c:267 src/main/dounzip.c:272 src/main/dounzip.c:276
@@ -210,7 +210,7 @@ msgstr " '%ls'の表示に問題があります "
 #: src/main/seq.c:385 src/main/seq.c:403 src/main/seq.c:407 src/main/seq.c:413
 #: src/main/seq.c:421 src/main/sort.c:161 src/main/sysutils.c:555
 #: src/main/sysutils.c:557 src/main/sysutils.c:559 src/main/sysutils.c:564
-#: src/main/sysutils.c:1512 src/main/sysutils.c:1516 src/main/unique.c:820
+#: src/main/sysutils.c:1513 src/main/sysutils.c:1517 src/main/unique.c:820
 #: src/main/unique.c:1099 src/main/unique.c:1159 src/main/unique.c:1166
 #: src/main/util.c:572 src/main/util.c:575 src/main/util.c:1685
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
@@ -224,7 +224,7 @@ msgstr " '%ls'の表示に問題があります "
 #: src/modules/X11/devX11.c:3304 src/modules/X11/devX11.c:3308
 #: src/modules/X11/devX11.c:3312 src/modules/X11/devX11.c:3316
 #: src/modules/X11/devX11.c:3327 src/modules/X11/devX11.c:3331
-#: src/unix/sys-std.c:1207 src/unix/sys-std.c:1230
+#: src/unix/sys-std.c:1201 src/unix/sys-std.c:1224
 #, c-format
 msgid "invalid '%s' argument"
 msgstr " '%s' 引数が不正です "
@@ -270,7 +270,7 @@ msgstr " 'savehistory' は Rgui または Rterm でのみ使えます "
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr " 'loadhistory' は Rgui と Rterm の中でだけ使えます "
 
-#: src/gnuwin32/extra.c:552 src/unix/sys-std.c:1261
+#: src/gnuwin32/extra.c:552 src/unix/sys-std.c:1255
 msgid "invalid timestamp"
 msgstr " タイムスタンプが不正です "
 
@@ -278,7 +278,7 @@ msgstr " タイムスタンプが不正です "
 #: src/gnuwin32/extra.c:1993 src/gnuwin32/extra.c:1996
 #: src/gnuwin32/extra.c:1999 src/main/character.c:561 src/main/colors.c:365
 #: src/main/connections.c:3230 src/main/context.c:643 src/main/context.c:662
-#: src/main/datetime.c:588 src/main/datetime.c:658 src/main/datetime.c:891
+#: src/main/datetime.c:588 src/main/datetime.c:658 src/main/datetime.c:904
 #: src/main/dotcode.c:197 src/main/errors.c:833 src/main/errors.c:864
 #: src/main/errors.c:965 src/main/errors.c:990 src/main/errors.c:995
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
@@ -295,7 +295,7 @@ msgstr " タイムスタンプが不正です "
 #: src/modules/X11/devX11.c:2830 src/modules/X11/devX11.c:2835
 #: src/modules/X11/devX11.c:2840 src/modules/X11/devX11.c:2850
 #: src/modules/X11/devX11.c:2855 src/modules/X11/devX11.c:2859
-#: src/modules/X11/devX11.c:3320 src/unix/sys-std.c:1308
+#: src/modules/X11/devX11.c:3320 src/unix/sys-std.c:1302
 #, c-format
 msgid "invalid '%s' value"
 msgstr " '%s' の値が不正です "
@@ -499,12 +499,12 @@ msgstr " CPU時間が経過して上限に達しました "
 msgid "Fatal error: %s\n"
 msgstr " 致命的なエラーです： %s \n"
 
-#: src/gnuwin32/system.c:329 src/unix/sys-std.c:859
+#: src/gnuwin32/system.c:329 src/unix/sys-std.c:851
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr " '%s' というエンコーディングは認識できません "
 
-#: src/gnuwin32/system.c:335 src/unix/sys-std.c:865
+#: src/gnuwin32/system.c:335 src/unix/sys-std.c:857
 #, c-format
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr ""
@@ -1320,7 +1320,7 @@ msgstr " 指定されたベクトルのサイズが長すぎます "
 
 #: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:276
 #: src/main/builtin.c:308 src/main/builtin.c:350 src/main/builtin.c:360
-#: src/main/coerce.c:1435 src/main/connections.c:2752 src/main/engine.c:2839
+#: src/main/coerce.c:1436 src/main/connections.c:2752 src/main/engine.c:2839
 #: src/main/envir.c:921 src/main/envir.c:974 src/main/envir.c:1064
 #: src/main/envir.c:1521 src/main/envir.c:1668 src/main/envir.c:1735
 #: src/main/envir.c:1856 src/main/envir.c:2529 src/main/envir.c:2589
@@ -1361,8 +1361,8 @@ msgstr " 'parent' は環境ではありません "
 #: src/main/connections.c:3716 src/main/connections.c:4087
 #: src/main/connections.c:4149 src/main/connections.c:4356
 #: src/main/connections.c:4360 src/main/connections.c:4720
-#: src/main/deparse.c:310 src/main/deparse.c:313 src/main/deparse.c:394
-#: src/main/deparse.c:397 src/main/scan.c:1704 src/main/serialize.c:1657
+#: src/main/deparse.c:312 src/main/deparse.c:315 src/main/deparse.c:396
+#: src/main/deparse.c:399 src/main/scan.c:1704 src/main/serialize.c:1657
 msgid "cannot write to this connection"
 msgstr " このコネクションには書き出せません "
 
@@ -1399,7 +1399,7 @@ msgid "invalid argument"
 msgstr " 引数が不正です "
 
 #: src/main/builtin.c:850 src/main/builtin.c:854 src/main/character.c:335
-#: src/main/coerce.c:2590
+#: src/main/coerce.c:2591
 msgid "invalid value"
 msgstr "値が不正です "
 
@@ -1543,7 +1543,7 @@ msgstr "  (list)オブジェクトは '%s' に変換できません "
 msgid "(symbol) object cannot be coerced to type '%s'"
 msgstr "  (symbol)オブジェクトは '%s' に変換できません "
 
-#: src/main/coerce.c:1084 src/main/coerce.c:1383
+#: src/main/coerce.c:1084 src/main/coerce.c:1384
 msgid "no method for coercing this S4 class to a vector"
 msgstr "このS4クラスをベクトルに強制変換する方法はありません "
 
@@ -1551,83 +1551,83 @@ msgstr "このS4クラスをベクトルに強制変換する方法はありま�
 msgid "environments cannot be coerced to other types"
 msgstr " 環境は他の型に変換することはできません "
 
-#: src/main/coerce.c:1286
+#: src/main/coerce.c:1287
 msgid "attempting to coerce non-factor"
 msgstr " 非因子へ強制変換しようとしています "
 
-#: src/main/coerce.c:1431
+#: src/main/coerce.c:1432
 msgid "list argument expected"
 msgstr " リスト引数が期待されています "
 
-#: src/main/coerce.c:1439 src/main/eval.c:3733 src/main/eval.c:3740
+#: src/main/coerce.c:1440 src/main/eval.c:3733 src/main/eval.c:3740
 msgid "invalid environment"
 msgstr " 不正な環境です "
 
-#: src/main/coerce.c:1443
+#: src/main/coerce.c:1444
 msgid "argument must have length at least 1"
 msgstr " 引数は長さが1以上でなければいけません "
 
-#: src/main/coerce.c:1468
+#: src/main/coerce.c:1469
 msgid "invalid body for function"
 msgstr " 関数の内容が不正です "
 
-#: src/main/coerce.c:1491
+#: src/main/coerce.c:1492
 msgid "invalid length 0 argument"
 msgstr " 長さが0の引数は不正です "
 
-#: src/main/coerce.c:1506
+#: src/main/coerce.c:1507
 msgid "invalid argument list"
 msgstr " 引数リストが不正です "
 
-#: src/main/coerce.c:1816
+#: src/main/coerce.c:1817
 msgid "type \"single\" unimplemented in R"
 msgstr " \"single\" 型は R には実装されていません "
 
-#: src/main/coerce.c:1818
+#: src/main/coerce.c:1819
 msgid "unimplemented predicate"
 msgstr " 未実装の「述語」です "
 
-#: src/main/coerce.c:1959 src/main/coerce.c:2059
+#: src/main/coerce.c:1960 src/main/coerce.c:2060
 #, c-format
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr " %s() は型 '%s' のベクトル、リスト以外に適用されます "
 
-#: src/main/coerce.c:2199 src/main/dotcode.c:770 src/main/dotcode.c:813
+#: src/main/coerce.c:2200 src/main/dotcode.c:770 src/main/dotcode.c:813
 #: src/main/dotcode.c:1637
 msgid "'name' is missing"
 msgstr " 'name'が見つかりません "
 
-#: src/main/coerce.c:2206
+#: src/main/coerce.c:2207
 msgid "first argument must be a character string"
 msgstr " 最初の引数は文字列でなくてはなりません "
 
-#: src/main/coerce.c:2233
+#: src/main/coerce.c:2234
 msgid "'what' must be a character string or a function"
 msgstr " 'what'は、文字列または関数でなければならない "
 
-#: src/main/coerce.c:2236
+#: src/main/coerce.c:2237
 msgid "'args' must be a list"
 msgstr " 'args' はリストでなくてはなりません "
 
-#: src/main/coerce.c:2239
+#: src/main/coerce.c:2240
 msgid "'envir' must be an environment"
 msgstr " 'envir' は環境でなくてはなりません "
 
-#: src/main/coerce.c:2314 src/main/coerce.c:2355
+#: src/main/coerce.c:2315 src/main/coerce.c:2356
 msgid "... used in an incorrect context"
 msgstr " ... が不適切な文脈で使われました "
 
-#: src/main/coerce.c:2403
+#: src/main/coerce.c:2404
 msgid "invalid environment specified"
 msgstr " 不正な環境指定です "
 
-#: src/main/coerce.c:2464
+#: src/main/coerce.c:2465
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr ""
 " class(x) を NULL に設定しようとしています；結果はもはや S4 オブジェクトでは"
 "なくなります "
 
-#: src/main/coerce.c:2467
+#: src/main/coerce.c:2468
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
@@ -1636,7 +1636,7 @@ msgstr ""
 " class(x) を多重文字列 (\"%s\", \"%s\", ...) に設定しようとしています；結果は"
 "もはや S4 オブジェクトではなくなります "
 
-#: src/main/coerce.c:2469
+#: src/main/coerce.c:2470
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
@@ -1645,11 +1645,11 @@ msgstr ""
 " class(x) を \"%s\" に設定すると属性は NULL に設定されます；結果はもはや S4 "
 "オブジェクトではなくなります "
 
-#: src/main/coerce.c:2499
+#: src/main/coerce.c:2500
 msgid "invalid replacement object to be a class string"
 msgstr " クラス文字列とするには不正な置き換えオブジェクトです "
 
-#: src/main/coerce.c:2519
+#: src/main/coerce.c:2520
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1657,7 +1657,7 @@ msgstr ""
 " \"%s\" はオブジェクトがこの型を持つ時だけクラスとして設定できます。\"%s\" が"
 "見つかりました "
 
-#: src/main/coerce.c:2537
+#: src/main/coerce.c:2538
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1666,16 +1666,16 @@ msgstr ""
 " 次元属性が長さ 2 でないかぎり(%d でした)、行列にクラスを設定するのは不正で"
 "す "
 
-#: src/main/coerce.c:2545
+#: src/main/coerce.c:2546
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr " 次元属性が長さ > 0 でないかぎり、配列にクラスを設定できません  "
 
-#: src/main/coerce.c:2581
+#: src/main/coerce.c:2582
 msgid "'value' must be non-null character string"
 msgstr " 'value' は NULL でない文字列でなければなりません "
 
-#: src/main/coerce.c:2594
+#: src/main/coerce.c:2595
 msgid "invalid to change the storage mode of a factor"
 msgstr "因子保管モードを変更するのは不正です "
 
@@ -1802,9 +1802,9 @@ msgstr " コネクションが不正です "
 msgid "closing unused connection %d (%s)\n"
 msgstr " 使われていないコネクション%d (%s) を閉じます \n"
 
-#: src/main/connections.c:182 src/main/sysutils.c:582 src/main/sysutils.c:722
-#: src/main/sysutils.c:737 src/main/sysutils.c:821 src/main/sysutils.c:890
-#: src/main/sysutils.c:900 src/main/sysutils.c:913 src/main/sysutils.c:1202
+#: src/main/connections.c:182 src/main/sysutils.c:582 src/main/sysutils.c:723
+#: src/main/sysutils.c:738 src/main/sysutils.c:822 src/main/sysutils.c:891
+#: src/main/sysutils.c:901 src/main/sysutils.c:914 src/main/sysutils.c:1203
 #, c-format
 msgid "unsupported conversion from '%s' to '%s'"
 msgstr " '%s'から'%s'へのサポートされていない変換です "
@@ -1911,7 +1911,7 @@ msgstr ""
 #: src/main/connections.c:3498 src/main/connections.c:3712
 #: src/main/connections.c:4036 src/main/connections.c:4145
 #: src/main/connections.c:4352 src/main/connections.c:4695 src/main/dcf.c:52
-#: src/main/deparse.c:306 src/main/deparse.c:390 src/main/saveload.c:2244
+#: src/main/deparse.c:308 src/main/deparse.c:392 src/main/saveload.c:2244
 #: src/main/saveload.c:2328 src/main/scan.c:901 src/main/scan.c:1012
 #: src/main/scan.c:1514 src/main/scan.c:1708 src/main/source.c:254
 msgid "cannot open the connection"
@@ -2451,8 +2451,8 @@ msgstr " このシステムではタイムゾーンは設定できません "
 msgid "problem with unsetting timezone"
 msgstr " タイムゾーンが未設定による問題です "
 
-#: src/main/datetime.c:680 src/main/datetime.c:682 src/main/datetime.c:1061
-#: src/main/datetime.c:1063
+#: src/main/datetime.c:680 src/main/datetime.c:682 src/main/datetime.c:1074
+#: src/main/datetime.c:1076
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr " 空ではない POSIXlt 構造の中に長さゼロの成分があります "
 
@@ -2513,44 +2513,44 @@ msgstr " 引数が少なすぎます "
 msgid "invalid 'cutoff' for deparse, using default"
 msgstr " deparse の 'cutoff' が不正です（デフォルトが使用されました） "
 
-#: src/main/deparse.c:235
+#: src/main/deparse.c:236
 msgid "deparse of an S4 object will not be source()able"
 msgstr "S4オブジェクトの文字列化(deparse)はsource()できないでしょう "
 
-#: src/main/deparse.c:237
+#: src/main/deparse.c:238
 msgid "deparse may be incomplete"
 msgstr " 式の文字列化(deparse)が不完全かも知れません "
 
-#: src/main/deparse.c:239
+#: src/main/deparse.c:240
 msgid "deparse may be not be source()able in R < 2.7.0"
 msgstr ""
 "R 2.7.0より以前のバージョンで文字列化(deparse)された式はsource()できないかも"
 "しれません "
 
-#: src/main/deparse.c:322 src/main/deparse.c:412 src/main/deparse.c:418
+#: src/main/deparse.c:324 src/main/deparse.c:414 src/main/deparse.c:420
 msgid "wrote too few characters"
 msgstr " 書かれた文字が短すぎます "
 
-#: src/main/deparse.c:343
+#: src/main/deparse.c:345
 msgid "character arguments expected"
 msgstr " 文字引数(複数)が期待されています "
 
-#: src/main/deparse.c:346
+#: src/main/deparse.c:348
 msgid "zero length argument"
 msgstr " 長さゼロの引数です "
 
-#: src/main/deparse.c:353
+#: src/main/deparse.c:355
 msgid "'opts' should be small non-negative integer"
 msgstr " 'opts' は，小さな非負の整数でなくてはなりません "
 
-#: src/main/deparse.c:363 src/main/envir.c:1692 src/main/envir.c:1774
+#: src/main/deparse.c:365 src/main/envir.c:1692 src/main/envir.c:1774
 #: src/main/eval.c:423 src/main/eval.c:909 src/main/eval.c:2795
 #: src/main/saveload.c:1965 src/main/saveload.c:2282 src/main/serialize.c:2282
 #, c-format
 msgid "object '%s' not found"
 msgstr " オブジェクト '%s' がありません "
 
-#: src/main/deparse.c:1421
+#: src/main/deparse.c:1423
 msgid "badly formed function expression"
 msgstr " 関数の構文が不適切です "
 
@@ -5221,12 +5221,12 @@ msgstr " ファイル名が長すぎます "
 msgid "file.access() is not implemented on this system"
 msgstr " このシステムには file.access 関数は実装されていません "
 
-#: src/main/platform.c:1233 src/main/platform.c:1277 src/main/sysutils.c:1531
-#: src/main/sysutils.c:1545
+#: src/main/platform.c:1233 src/main/platform.c:1277 src/main/sysutils.c:1532
+#: src/main/sysutils.c:1546
 msgid "internal out-of-memory condition"
 msgstr " 内部でアウトオブメモリーが発生しています "
 
-#: src/main/platform.c:1273 src/main/sysutils.c:1541
+#: src/main/platform.c:1273 src/main/sysutils.c:1542
 #, c-format
 msgid "read error on '%s'"
 msgstr " \"%s\" の読み込みエラーです "
@@ -6907,49 +6907,49 @@ msgstr " 'Sys.unsetenv' はこのシステムでは使えません "
 msgid "'x' must be a character vector"
 msgstr " 'x' は文字列ベクトルでなくてはなりません "
 
-#: src/main/sysutils.c:647 src/main/sysutils.c:707 src/main/sysutils.c:810
-#: src/main/sysutils.c:884
+#: src/main/sysutils.c:647 src/main/sysutils.c:708 src/main/sysutils.c:811
+#: src/main/sysutils.c:885
 #, c-format
 msgid "'%s' must be called on a CHARSXP"
 msgstr " '%s'はCHARSXP上で呼び出されなければなりません "
 
-#: src/main/sysutils.c:1315
+#: src/main/sysutils.c:1316
 msgid "cannot mkdir R_TempDir"
 msgstr " ディレクトリ R_TempDir を作成できません "
 
-#: src/main/sysutils.c:1319 src/main/sysutils.c:1326 src/main/sysutils.c:1329
+#: src/main/sysutils.c:1320 src/main/sysutils.c:1327 src/main/sysutils.c:1330
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr " R_SESSION_TMPDIR を設定することが出来ません "
 
-#: src/main/sysutils.c:1338
+#: src/main/sysutils.c:1339
 msgid "cannot allocate R_TempDir"
 msgstr " R_TempDir を割り当てることができません "
 
-#: src/main/sysutils.c:1357
+#: src/main/sysutils.c:1358
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr " R_tmpnam において 'tempdir' が不正です "
 
-#: src/main/sysutils.c:1372
+#: src/main/sysutils.c:1373
 msgid "cannot find unused tempfile name"
 msgstr " 未使用の一時ファイル名を探すことができません "
 
-#: src/main/sysutils.c:1375
+#: src/main/sysutils.c:1376
 msgid "allocation failed in R_tmpnam"
 msgstr " R_tmpnam においてメモリ割り当てが失敗しました "
 
-#: src/main/sysutils.c:1401
+#: src/main/sysutils.c:1402
 msgid "proc.time() is not implemented on this system"
 msgstr " このシステムでは proc.time 関数は未実装です "
 
-#: src/main/sysutils.c:1453
+#: src/main/sysutils.c:1454
 msgid "setTimelimit() is not implemented on this system"
 msgstr " このシステムでは setTimelimit()関数は実装されていません "
 
-#: src/main/sysutils.c:1481
+#: src/main/sysutils.c:1482
 msgid "setSessionTimelimit() is not implemented on this system"
 msgstr " このシステムでは setSessionTimelimit() 関数は実装されていません "
 
-#: src/main/sysutils.c:1519
+#: src/main/sysutils.c:1520
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr " 'dirmark  = TRUE' はこのプラットフォームではサポートされていません "
 
@@ -7990,11 +7990,11 @@ msgstr ""
 " x <- edit() \n"
 " のようなコマンドで修復して下さい "
 
-#: src/unix/sys-std.c:129
+#: src/unix/sys-std.c:128
 msgid "interrupt handler must not return"
 msgstr " 割り込みハンドラーはリターンすべきではありません "
 
-#: src/unix/sys-std.c:519
+#: src/unix/sys-std.c:514
 msgid ""
 "An unusual circumstance has arisen in the nesting of readline input. Please "
 "report using bug.report()"
@@ -8002,12 +8002,12 @@ msgstr ""
 " readline 入力のネスティング中に普通でない状況が起こりました。bug.report 関数"
 "を使って報告して下さい "
 
-#: src/unix/sys-std.c:1072 src/unix/sys-std.c:1239
+#: src/unix/sys-std.c:1066 src/unix/sys-std.c:1233
 #, c-format
 msgid "problem in saving the history file '%s'"
 msgstr " 履歴ファイル '%s' の保存に問題があります "
 
-#: src/unix/sys-std.c:1146
+#: src/unix/sys-std.c:1140
 #, c-format
 msgid ""
 "Cannot open file '%s': %s\n"
@@ -8016,23 +8016,23 @@ msgstr ""
 " ファイル '%s' を開くことができません : %s \n"
 " \n"
 
-#: src/unix/sys-std.c:1210 src/unix/sys-std.c:1233
+#: src/unix/sys-std.c:1204 src/unix/sys-std.c:1227
 msgid "'file' argument is too long"
 msgstr " 'file' 引数が長過ぎます "
 
-#: src/unix/sys-std.c:1216 src/unix/sys-std.c:1218
+#: src/unix/sys-std.c:1210 src/unix/sys-std.c:1212
 msgid "no history mechanism available"
 msgstr " 利用できる履歴機構がありません "
 
-#: src/unix/sys-std.c:1245
+#: src/unix/sys-std.c:1239
 msgid "problem in truncating the history file"
 msgstr " 履歴ファイルの切り詰め中に問題がおきました "
 
-#: src/unix/sys-std.c:1247 src/unix/sys-std.c:1249
+#: src/unix/sys-std.c:1241 src/unix/sys-std.c:1243
 msgid "no history available to save"
 msgstr " 保存すべき履歴がありません "
 
-#: src/unix/sys-std.c:1355
+#: src/unix/sys-std.c:1349
 msgid "Sys.sleep is not implemented on this system"
 msgstr " Sys.sleep はこのシステムでは実装されていません "
 

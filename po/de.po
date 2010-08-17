@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.10.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:23+0100\n"
+"POT-Creation-Date: 2010-08-17 16:03+0100\n"
 "PO-Revision-Date: 2009-10-07 14:23+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -155,9 +155,9 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/connections.c:4590 src/main/connections.c:4594
 #: src/main/connections.c:4598 src/main/connections.c:4602
 #: src/main/context.c:597 src/main/context.c:606 src/main/context.c:610
-#: src/main/datetime.c:656 src/main/datetime.c:735 src/main/datetime.c:737
-#: src/main/datetime.c:741 src/main/datetime.c:887 src/main/datetime.c:889
-#: src/main/datetime.c:1053 src/main/debug.c:223 src/main/deparse.c:349
+#: src/main/datetime.c:656 src/main/datetime.c:736 src/main/datetime.c:738
+#: src/main/datetime.c:742 src/main/datetime.c:900 src/main/datetime.c:902
+#: src/main/datetime.c:1066 src/main/debug.c:223 src/main/deparse.c:351
 #: src/main/devices.c:581 src/main/dotcode.c:736 src/main/dotcode.c:740
 #: src/main/dotcode.c:745 src/main/dounzip.c:250 src/main/dounzip.c:257
 #: src/main/dounzip.c:267 src/main/dounzip.c:272 src/main/dounzip.c:276
@@ -207,7 +207,7 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/main/seq.c:385 src/main/seq.c:403 src/main/seq.c:407 src/main/seq.c:413
 #: src/main/seq.c:421 src/main/sort.c:161 src/main/sysutils.c:555
 #: src/main/sysutils.c:557 src/main/sysutils.c:559 src/main/sysutils.c:564
-#: src/main/sysutils.c:1512 src/main/sysutils.c:1516 src/main/unique.c:820
+#: src/main/sysutils.c:1513 src/main/sysutils.c:1517 src/main/unique.c:820
 #: src/main/unique.c:1099 src/main/unique.c:1159 src/main/unique.c:1166
 #: src/main/util.c:572 src/main/util.c:575 src/main/util.c:1685
 #: src/modules/internet/internet.c:283 src/modules/internet/internet.c:289
@@ -221,7 +221,7 @@ msgstr "Problem bei der Anzeige von '%ls'"
 #: src/modules/X11/devX11.c:3304 src/modules/X11/devX11.c:3308
 #: src/modules/X11/devX11.c:3312 src/modules/X11/devX11.c:3316
 #: src/modules/X11/devX11.c:3327 src/modules/X11/devX11.c:3331
-#: src/unix/sys-std.c:1207 src/unix/sys-std.c:1230
+#: src/unix/sys-std.c:1201 src/unix/sys-std.c:1224
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "ungültiges '%s' Argument"
@@ -267,7 +267,7 @@ msgstr "'savehistory' kann nur im Rgui und im Rterm benutzt werden"
 msgid "'loadhistory' can only be used in Rgui and Rterm"
 msgstr "'loadhistory' kann nur im Rgui und im Rterm benutzt werden"
 
-#: src/gnuwin32/extra.c:552 src/unix/sys-std.c:1261
+#: src/gnuwin32/extra.c:552 src/unix/sys-std.c:1255
 msgid "invalid timestamp"
 msgstr "ungültiger Zeitstempel"
 
@@ -275,7 +275,7 @@ msgstr "ungültiger Zeitstempel"
 #: src/gnuwin32/extra.c:1993 src/gnuwin32/extra.c:1996
 #: src/gnuwin32/extra.c:1999 src/main/character.c:561 src/main/colors.c:365
 #: src/main/connections.c:3230 src/main/context.c:643 src/main/context.c:662
-#: src/main/datetime.c:588 src/main/datetime.c:658 src/main/datetime.c:891
+#: src/main/datetime.c:588 src/main/datetime.c:658 src/main/datetime.c:904
 #: src/main/dotcode.c:197 src/main/errors.c:833 src/main/errors.c:864
 #: src/main/errors.c:965 src/main/errors.c:990 src/main/errors.c:995
 #: src/main/optimize.c:95 src/main/optimize.c:102 src/main/optimize.c:111
@@ -292,7 +292,7 @@ msgstr "ungültiger Zeitstempel"
 #: src/modules/X11/devX11.c:2830 src/modules/X11/devX11.c:2835
 #: src/modules/X11/devX11.c:2840 src/modules/X11/devX11.c:2850
 #: src/modules/X11/devX11.c:2855 src/modules/X11/devX11.c:2859
-#: src/modules/X11/devX11.c:3320 src/unix/sys-std.c:1308
+#: src/modules/X11/devX11.c:3320 src/unix/sys-std.c:1302
 #, c-format
 msgid "invalid '%s' value"
 msgstr "ungültiger '%s' Wert"
@@ -496,12 +496,12 @@ msgstr "CPU Zeitlimit erreicht"
 msgid "Fatal error: %s\n"
 msgstr "Fataler Fehler: %s\n"
 
-#: src/gnuwin32/system.c:329 src/unix/sys-std.c:859
+#: src/gnuwin32/system.c:329 src/unix/sys-std.c:851
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr "Kodierung '%s' wird nicht erkannt"
 
-#: src/gnuwin32/system.c:335 src/unix/sys-std.c:865
+#: src/gnuwin32/system.c:335 src/unix/sys-std.c:857
 #, c-format
 msgid "<ERROR: re-encoding failure from encoding '%s'>\n"
 msgstr "<Fehler: Rekodierungsfehler aus Kodierung '%s'>\n"
@@ -1312,7 +1312,7 @@ msgstr "angegebene Vektorgröße ist zu groß"
 
 #: src/main/builtin.c:73 src/main/builtin.c:82 src/main/builtin.c:276
 #: src/main/builtin.c:308 src/main/builtin.c:350 src/main/builtin.c:360
-#: src/main/coerce.c:1435 src/main/connections.c:2752 src/main/engine.c:2839
+#: src/main/coerce.c:1436 src/main/connections.c:2752 src/main/engine.c:2839
 #: src/main/envir.c:921 src/main/envir.c:974 src/main/envir.c:1064
 #: src/main/envir.c:1521 src/main/envir.c:1668 src/main/envir.c:1735
 #: src/main/envir.c:1856 src/main/envir.c:2529 src/main/envir.c:2589
@@ -1353,8 +1353,8 @@ msgstr "'parent' ist keine Umgebung"
 #: src/main/connections.c:3716 src/main/connections.c:4087
 #: src/main/connections.c:4149 src/main/connections.c:4356
 #: src/main/connections.c:4360 src/main/connections.c:4720
-#: src/main/deparse.c:310 src/main/deparse.c:313 src/main/deparse.c:394
-#: src/main/deparse.c:397 src/main/scan.c:1704 src/main/serialize.c:1657
+#: src/main/deparse.c:312 src/main/deparse.c:315 src/main/deparse.c:396
+#: src/main/deparse.c:399 src/main/scan.c:1704 src/main/serialize.c:1657
 msgid "cannot write to this connection"
 msgstr "kann auf diese Verbindung nicht schreiben"
 
@@ -1391,7 +1391,7 @@ msgid "invalid argument"
 msgstr "ungültiges Argument"
 
 #: src/main/builtin.c:850 src/main/builtin.c:854 src/main/character.c:335
-#: src/main/coerce.c:2590
+#: src/main/coerce.c:2591
 msgid "invalid value"
 msgstr "ungültiger Wert"
 
@@ -1535,7 +1535,7 @@ msgstr "(list) Objekt kann nicht nach '%s' umgewandelt werden"
 msgid "(symbol) object cannot be coerced to type '%s'"
 msgstr "(symbol) Objekt kann nicht in Typ '%s' umgewandelt werden"
 
-#: src/main/coerce.c:1084 src/main/coerce.c:1383
+#: src/main/coerce.c:1084 src/main/coerce.c:1384
 msgid "no method for coercing this S4 class to a vector"
 msgstr "Keine Methode um diese S4 Klasse in einen Vektor zu verwandeln"
 
@@ -1543,81 +1543,81 @@ msgstr "Keine Methode um diese S4 Klasse in einen Vektor zu verwandeln"
 msgid "environments cannot be coerced to other types"
 msgstr "Umgebungen können nicht in andere Typen umgewandelt werden"
 
-#: src/main/coerce.c:1286
+#: src/main/coerce.c:1287
 msgid "attempting to coerce non-factor"
 msgstr "Versuch einen nicht-Faktor umzuwandeln"
 
-#: src/main/coerce.c:1431
+#: src/main/coerce.c:1432
 msgid "list argument expected"
 msgstr "Listenargument erwartet"
 
-#: src/main/coerce.c:1439 src/main/eval.c:3733 src/main/eval.c:3740
+#: src/main/coerce.c:1440 src/main/eval.c:3733 src/main/eval.c:3740
 msgid "invalid environment"
 msgstr "ungültige Umgebung"
 
-#: src/main/coerce.c:1443
+#: src/main/coerce.c:1444
 msgid "argument must have length at least 1"
 msgstr "Argument muss mindestens Länge 1 haben"
 
-#: src/main/coerce.c:1468
+#: src/main/coerce.c:1469
 msgid "invalid body for function"
 msgstr "ungültiger Funktionstext"
 
-#: src/main/coerce.c:1491
+#: src/main/coerce.c:1492
 msgid "invalid length 0 argument"
 msgstr "ungültiges Argument der Länge 0"
 
-#: src/main/coerce.c:1506
+#: src/main/coerce.c:1507
 msgid "invalid argument list"
 msgstr "ungültige Argumentenliste"
 
-#: src/main/coerce.c:1816
+#: src/main/coerce.c:1817
 msgid "type \"single\" unimplemented in R"
 msgstr "Typ \"single\" nicht in R implementiert"
 
-#: src/main/coerce.c:1818
+#: src/main/coerce.c:1819
 msgid "unimplemented predicate"
 msgstr "nicht implementiertes Prädikat"
 
-#: src/main/coerce.c:1959 src/main/coerce.c:2059
+#: src/main/coerce.c:1960 src/main/coerce.c:2060
 #, c-format
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr "%s() auf nicht-(Liste oder Vektor) des Typs '%s' angewendet"
 
-#: src/main/coerce.c:2199 src/main/dotcode.c:770 src/main/dotcode.c:813
+#: src/main/coerce.c:2200 src/main/dotcode.c:770 src/main/dotcode.c:813
 #: src/main/dotcode.c:1637
 msgid "'name' is missing"
 msgstr "'name' fehlt"
 
-#: src/main/coerce.c:2206
+#: src/main/coerce.c:2207
 msgid "first argument must be a character string"
 msgstr "erstes Argument muss eine Zeichenkette sein"
 
-#: src/main/coerce.c:2233
+#: src/main/coerce.c:2234
 msgid "'what' must be a character string or a function"
 msgstr "'what' muss eine Zeichenkette oder eine Funktion sein"
 
-#: src/main/coerce.c:2236
+#: src/main/coerce.c:2237
 msgid "'args' must be a list"
 msgstr "'args' muss eine Liste sein"
 
-#: src/main/coerce.c:2239
+#: src/main/coerce.c:2240
 msgid "'envir' must be an environment"
 msgstr "'envir' muss eine Umgebung sein"
 
-#: src/main/coerce.c:2314 src/main/coerce.c:2355
+#: src/main/coerce.c:2315 src/main/coerce.c:2356
 msgid "... used in an incorrect context"
 msgstr "... in falschem Kontext benutzt"
 
-#: src/main/coerce.c:2403
+#: src/main/coerce.c:2404
 msgid "invalid environment specified"
 msgstr "ungültige Umgebung spezifiziert"
 
-#: src/main/coerce.c:2464
+#: src/main/coerce.c:2465
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr "Setze class(x) auf NULL;  das Ergebnis ist keine S4 Objekt mehr"
 
-#: src/main/coerce.c:2467
+#: src/main/coerce.c:2468
 #, c-format
 msgid ""
 "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no "
@@ -1626,7 +1626,7 @@ msgstr ""
 "Setze class(x) auf mehrere Zeichenketten(\"%s\", \"%s\", ...); das Ergebnis "
 "ist kein S4 Objekt mehr"
 
-#: src/main/coerce.c:2469
+#: src/main/coerce.c:2470
 #, c-format
 msgid ""
 "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be "
@@ -1635,11 +1635,11 @@ msgstr ""
 "class(x) auf \"%s\" zu setzen, setzt Attribut auf NULL; das Ergebnis ist "
 "kein S4 Objekt mehr"
 
-#: src/main/coerce.c:2499
+#: src/main/coerce.c:2500
 msgid "invalid replacement object to be a class string"
 msgstr "Ungültiges Ersetzungsobjekt als Klassenzeichenkette"
 
-#: src/main/coerce.c:2519
+#: src/main/coerce.c:2520
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
@@ -1647,7 +1647,7 @@ msgstr ""
 "\"%s\" kann nur als Klasse gesetzt werden, wenn das Objekt diesen Typ hat; "
 "gefunden wurde \"%s\""
 
-#: src/main/coerce.c:2537
+#: src/main/coerce.c:2538
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
@@ -1656,18 +1656,18 @@ msgstr ""
 "ungültig die Klasse auf Matrix zu setzen, außer das Dimensionsattribut hat "
 "Länge 2 (war %d)"
 
-#: src/main/coerce.c:2545
+#: src/main/coerce.c:2546
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""
 "Kann Klasse nicht auf \"array\" setzen, außer das Dimensionsattribut hat "
 "eine Länge > 0"
 
-#: src/main/coerce.c:2581
+#: src/main/coerce.c:2582
 msgid "'value' must be non-null character string"
 msgstr "'value' muss eine nicht-Null Zeichenkette sein"
 
-#: src/main/coerce.c:2594
+#: src/main/coerce.c:2595
 msgid "invalid to change the storage mode of a factor"
 msgstr "unzulässig den Speichermodus eines Faktors zu ändern"
 
@@ -1794,9 +1794,9 @@ msgstr "ungültige Verbindung"
 msgid "closing unused connection %d (%s)\n"
 msgstr "ungenutzte Verbindung %d (%s) geschlossen\n"
 
-#: src/main/connections.c:182 src/main/sysutils.c:582 src/main/sysutils.c:722
-#: src/main/sysutils.c:737 src/main/sysutils.c:821 src/main/sysutils.c:890
-#: src/main/sysutils.c:900 src/main/sysutils.c:913 src/main/sysutils.c:1202
+#: src/main/connections.c:182 src/main/sysutils.c:582 src/main/sysutils.c:723
+#: src/main/sysutils.c:738 src/main/sysutils.c:822 src/main/sysutils.c:891
+#: src/main/sysutils.c:901 src/main/sysutils.c:914 src/main/sysutils.c:1203
 #, c-format
 msgid "unsupported conversion from '%s' to '%s'"
 msgstr "nicht unterstützte Umwandlung von '%s' nach '%s'"
@@ -1904,7 +1904,7 @@ msgstr ""
 #: src/main/connections.c:3498 src/main/connections.c:3712
 #: src/main/connections.c:4036 src/main/connections.c:4145
 #: src/main/connections.c:4352 src/main/connections.c:4695 src/main/dcf.c:52
-#: src/main/deparse.c:306 src/main/deparse.c:390 src/main/saveload.c:2244
+#: src/main/deparse.c:308 src/main/deparse.c:392 src/main/saveload.c:2244
 #: src/main/saveload.c:2328 src/main/scan.c:901 src/main/scan.c:1012
 #: src/main/scan.c:1514 src/main/scan.c:1708 src/main/source.c:254
 msgid "cannot open the connection"
@@ -2445,8 +2445,8 @@ msgstr "kann Zeitzonen auf diesem System nicht setzen"
 msgid "problem with unsetting timezone"
 msgstr "Problem beim Zurücksetzen der Zeitzone"
 
-#: src/main/datetime.c:680 src/main/datetime.c:682 src/main/datetime.c:1061
-#: src/main/datetime.c:1063
+#: src/main/datetime.c:680 src/main/datetime.c:682 src/main/datetime.c:1074
+#: src/main/datetime.c:1076
 msgid "zero length component in non-empty POSIXlt structure"
 msgstr "Komponente der Länge 0 in nicht-leerer POSIXlt Struktur"
 
@@ -2508,42 +2508,42 @@ msgstr "zu wenig Argumente"
 msgid "invalid 'cutoff' for deparse, using default"
 msgstr "ungülter 'cutoff' in deparse, nutze Standard"
 
-#: src/main/deparse.c:235
+#: src/main/deparse.c:236
 msgid "deparse of an S4 object will not be source()able"
 msgstr "Deparsed S4 Objekt kann nicht ge-sourced() werden"
 
-#: src/main/deparse.c:237
+#: src/main/deparse.c:238
 msgid "deparse may be incomplete"
 msgstr "deparse ist evtl. unvollständig"
 
-#: src/main/deparse.c:239
+#: src/main/deparse.c:240
 msgid "deparse may be not be source()able in R < 2.7.0"
 msgstr "deparse evtl. nicht source()bar in R < 2.7.0"
 
-#: src/main/deparse.c:322 src/main/deparse.c:412 src/main/deparse.c:418
+#: src/main/deparse.c:324 src/main/deparse.c:414 src/main/deparse.c:420
 msgid "wrote too few characters"
 msgstr "zu wenig Zeichen geschrieben"
 
-#: src/main/deparse.c:343
+#: src/main/deparse.c:345
 msgid "character arguments expected"
 msgstr "Charakter Argumente erwartet"
 
-#: src/main/deparse.c:346
+#: src/main/deparse.c:348
 msgid "zero length argument"
 msgstr "Argument der Länge 0"
 
-#: src/main/deparse.c:353
+#: src/main/deparse.c:355
 msgid "'opts' should be small non-negative integer"
 msgstr "'opts' sollte eine kleine nicht-negative ganze Zahl sein"
 
-#: src/main/deparse.c:363 src/main/envir.c:1692 src/main/envir.c:1774
+#: src/main/deparse.c:365 src/main/envir.c:1692 src/main/envir.c:1774
 #: src/main/eval.c:423 src/main/eval.c:909 src/main/eval.c:2795
 #: src/main/saveload.c:1965 src/main/saveload.c:2282 src/main/serialize.c:2282
 #, c-format
 msgid "object '%s' not found"
 msgstr "Objekt '%s' nicht gefunden"
 
-#: src/main/deparse.c:1421
+#: src/main/deparse.c:1423
 msgid "badly formed function expression"
 msgstr "unbrauchbar gebildeter Funktionenausdruck"
 
@@ -5222,12 +5222,12 @@ msgstr "Dateiname zu lang"
 msgid "file.access() is not implemented on this system"
 msgstr "file.access() auf diesem System nicht implementiert"
 
-#: src/main/platform.c:1233 src/main/platform.c:1277 src/main/sysutils.c:1531
-#: src/main/sysutils.c:1545
+#: src/main/platform.c:1233 src/main/platform.c:1277 src/main/sysutils.c:1532
+#: src/main/sysutils.c:1546
 msgid "internal out-of-memory condition"
 msgstr "interner out-of-memory Vorfall"
 
-#: src/main/platform.c:1273 src/main/sysutils.c:1541
+#: src/main/platform.c:1273 src/main/sysutils.c:1542
 #, c-format
 msgid "read error on '%s'"
 msgstr "Lesefehler auf '%s'"
@@ -6910,49 +6910,49 @@ msgstr "'Sys.unsetenv' auf diesem System nicht verfügbar"
 msgid "'x' must be a character vector"
 msgstr "'x' muss ein Charaktervektor sein"
 
-#: src/main/sysutils.c:647 src/main/sysutils.c:707 src/main/sysutils.c:810
-#: src/main/sysutils.c:884
+#: src/main/sysutils.c:647 src/main/sysutils.c:708 src/main/sysutils.c:811
+#: src/main/sysutils.c:885
 #, c-format
 msgid "'%s' must be called on a CHARSXP"
 msgstr "'%s' muss für CHARSXP aufgerufen werden"
 
-#: src/main/sysutils.c:1315
+#: src/main/sysutils.c:1316
 msgid "cannot mkdir R_TempDir"
 msgstr "mkdir R_TempDir geht nicht"
 
-#: src/main/sysutils.c:1319 src/main/sysutils.c:1326 src/main/sysutils.c:1329
+#: src/main/sysutils.c:1320 src/main/sysutils.c:1327 src/main/sysutils.c:1330
 msgid "unable to set R_SESSION_TMPDIR"
 msgstr "kann R_SESSION_TMPDIR nicht setzen"
 
-#: src/main/sysutils.c:1338
+#: src/main/sysutils.c:1339
 msgid "cannot allocate R_TempDir"
 msgstr "kann R_TempDir nicht allozieren"
 
-#: src/main/sysutils.c:1357
+#: src/main/sysutils.c:1358
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "ungültiges 'tempdir' in R_tmpnam"
 
-#: src/main/sysutils.c:1372
+#: src/main/sysutils.c:1373
 msgid "cannot find unused tempfile name"
 msgstr "kann keinen ungenutzten temporären Dateinamen finden"
 
-#: src/main/sysutils.c:1375
+#: src/main/sysutils.c:1376
 msgid "allocation failed in R_tmpnam"
 msgstr "Allokationsfehler in R_tmpnam"
 
-#: src/main/sysutils.c:1401
+#: src/main/sysutils.c:1402
 msgid "proc.time() is not implemented on this system"
 msgstr "proc.time() ist auf diesem System nicht implementiert"
 
-#: src/main/sysutils.c:1453
+#: src/main/sysutils.c:1454
 msgid "setTimelimit() is not implemented on this system"
 msgstr "setTimelimit() ist auf diesem System nicht implementiert"
 
-#: src/main/sysutils.c:1481
+#: src/main/sysutils.c:1482
 msgid "setSessionTimelimit() is not implemented on this system"
 msgstr "setSessionTimelimit() ist auf diesem System nicht implementiert"
 
-#: src/main/sysutils.c:1519
+#: src/main/sysutils.c:1520
 msgid "'dirmark = TRUE' is not supported on this platform"
 msgstr "'dirmark = TRUE' wird auf dieser Platform nicht unterstützt"
 
@@ -7996,11 +7996,11 @@ msgstr ""
 " x <- edit()\n"
 " zur Wiederherstellung"
 
-#: src/unix/sys-std.c:129
+#: src/unix/sys-std.c:128
 msgid "interrupt handler must not return"
 msgstr "Interrupt-Handler darf nicht zurückkehren"
 
-#: src/unix/sys-std.c:519
+#: src/unix/sys-std.c:514
 msgid ""
 "An unusual circumstance has arisen in the nesting of readline input. Please "
 "report using bug.report()"
@@ -8008,12 +8008,12 @@ msgstr ""
 "Ungewöhnliches Ereignis aufgetreten in verschachtelter readline Eingabe. Ein "
 "bug.report() bitte!"
 
-#: src/unix/sys-std.c:1072 src/unix/sys-std.c:1239
+#: src/unix/sys-std.c:1066 src/unix/sys-std.c:1233
 #, c-format
 msgid "problem in saving the history file '%s'"
 msgstr "Problem beim Speichern der Befehlshistory '%s'"
 
-#: src/unix/sys-std.c:1146
+#: src/unix/sys-std.c:1140
 #, c-format
 msgid ""
 "Cannot open file '%s': %s\n"
@@ -8022,23 +8022,23 @@ msgstr ""
 "kann Datei '%s': %s nicht öffnen\n"
 "\n"
 
-#: src/unix/sys-std.c:1210 src/unix/sys-std.c:1233
+#: src/unix/sys-std.c:1204 src/unix/sys-std.c:1227
 msgid "'file' argument is too long"
 msgstr "Argument für 'file' zu lang"
 
-#: src/unix/sys-std.c:1216 src/unix/sys-std.c:1218
+#: src/unix/sys-std.c:1210 src/unix/sys-std.c:1212
 msgid "no history mechanism available"
 msgstr "kein History Mechanismus verfügbar"
 
-#: src/unix/sys-std.c:1245
+#: src/unix/sys-std.c:1239
 msgid "problem in truncating the history file"
 msgstr "Problem beim Kürzen der Befehlshistory"
 
-#: src/unix/sys-std.c:1247 src/unix/sys-std.c:1249
+#: src/unix/sys-std.c:1241 src/unix/sys-std.c:1243
 msgid "no history available to save"
 msgstr "keine History zum Sichern verfügbar"
 
-#: src/unix/sys-std.c:1355
+#: src/unix/sys-std.c:1349
 msgid "Sys.sleep is not implemented on this system"
 msgstr "Sys.sleep ist auf diesem System nicht implementiert"
 

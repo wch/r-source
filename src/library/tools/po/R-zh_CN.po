@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-17 16:04\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <feic@avaya.com>\n"
 "Language-Team: Chinese\n"
@@ -171,13 +171,42 @@ msgstr "程辑包的名字'%s'好象有问题；用文件目录名'%s'替代"
 msgid "Packages required but not available:"
 msgstr "需要有程辑包但它却不存在:"
 
-msgid "Packages required and available but unsuitable version:"
+#, fuzzy
+msgid "Package required but not available: %s"
+msgstr "需要有程辑包但它却不存在:"
+
+#, fuzzy
+msgid "Packages required and available but unsuitable versions:"
+msgstr "虽然有需要的程辑包，但其版本不对:"
+
+#, fuzzy
+msgid "Package required and available but unsuitable version: %s"
 msgstr "虽然有需要的程辑包，但其版本不对:"
 
 msgid "Former standard packages required but now defunct:"
 msgstr "原来需要的标准程辑包现在不要了:"
 
+#, fuzzy
+msgid "Packages suggested but not available for checking:"
+msgstr "需要有程辑包但它却不存在:"
+
+#, fuzzy
+msgid "Package suggested but not available for checking: %s"
+msgstr "需要有程辑包但它却不存在:"
+
+#, fuzzy
+msgid "Packages which this enhances but not available for checking:"
+msgstr "需要有程辑包但它却不存在:"
+
+#, fuzzy
+msgid "Package which this enhances but not available for checking: %s"
+msgstr "需要有程辑包但它却不存在:"
+
 msgid "Vignette dependencies not required:"
+msgstr "不需要标头从属:"
+
+#, fuzzy
+msgid "Vignette dependencies not required: %s"
 msgstr "不需要标头从属:"
 
 msgid ""
@@ -188,6 +217,10 @@ msgstr ""
 "Suggests/Imports条目中."
 
 msgid "Namespace dependencies not required:"
+msgstr "不需要名字空间从属:"
+
+#, fuzzy
+msgid "Namespace dependency not required: %s"
 msgstr "不需要名字空间从属:"
 
 msgid "Malformed package name"
@@ -325,7 +358,15 @@ msgstr "用了'methods'这个程辑包却没有被声明"
 msgid "'::' or ':::' imports not declared from:"
 msgstr "'::'或':::'引进没有被声明:"
 
+#, fuzzy
+msgid "'::' or ':::' import not declared from: %s"
+msgstr "'::'或':::'引进没有被声明:"
+
 msgid "'library' or 'require' calls not declared from:"
+msgstr "'library'或'require'调用没有被声明:"
+
+#, fuzzy
+msgid "'library' or 'require' call not declared from: %s"
 msgstr "'library'或'require'调用没有被声明:"
 
 msgid "Rd files with duplicated name '%s':"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-17 16:04\n"
 "PO-Revision-Date: 2010-03-26 13:32-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -185,13 +185,42 @@ msgstr ""
 msgid "Packages required but not available:"
 msgstr "Packages requis mais non disponibles :"
 
-msgid "Packages required and available but unsuitable version:"
+#, fuzzy
+msgid "Package required but not available: %s"
+msgstr "Packages requis mais non disponibles :"
+
+#, fuzzy
+msgid "Packages required and available but unsuitable versions:"
+msgstr "Packages requis et disponibles mais de version incompatible :"
+
+#, fuzzy
+msgid "Package required and available but unsuitable version: %s"
 msgstr "Packages requis et disponibles mais de version incompatible :"
 
 msgid "Former standard packages required but now defunct:"
 msgstr "Packages standard requis, mais maintenant obsolètes :"
 
+#, fuzzy
+msgid "Packages suggested but not available for checking:"
+msgstr "Packages requis mais non disponibles :"
+
+#, fuzzy
+msgid "Package suggested but not available for checking: %s"
+msgstr "Packages requis mais non disponibles :"
+
+#, fuzzy
+msgid "Packages which this enhances but not available for checking:"
+msgstr "Packages requis mais non disponibles :"
+
+#, fuzzy
+msgid "Package which this enhances but not available for checking: %s"
+msgstr "Packages requis mais non disponibles :"
+
 msgid "Vignette dependencies not required:"
+msgstr "Dependences de vignette non requises :"
+
+#, fuzzy
+msgid "Vignette dependencies not required: %s"
 msgstr "Dependences de vignette non requises :"
 
 msgid ""
@@ -202,6 +231,10 @@ msgstr ""
 "contenues dans les entrées Depends/Suggests/Imports de DESCRIPTION."
 
 msgid "Namespace dependencies not required:"
+msgstr "Dépendances d'espaces de noms non requises :"
+
+#, fuzzy
+msgid "Namespace dependency not required: %s"
 msgstr "Dépendances d'espaces de noms non requises :"
 
 msgid "Malformed package name"
@@ -350,7 +383,15 @@ msgstr "le package 'methods' est utilisé mais pas déclaré"
 msgid "'::' or ':::' imports not declared from:"
 msgstr "importations '::' ou ':::' non déclarées depuis :"
 
+#, fuzzy
+msgid "'::' or ':::' import not declared from: %s"
+msgstr "importations '::' ou ':::' non déclarées depuis :"
+
 msgid "'library' or 'require' calls not declared from:"
+msgstr "appels 'library' ou 'require' non déclarés depuis :"
+
+#, fuzzy
+msgid "'library' or 'require' call not declared from: %s"
 msgstr "appels 'library' ou 'require' non déclarés depuis :"
 
 msgid "Rd files with duplicated name '%s':"

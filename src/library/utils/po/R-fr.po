@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-17 16:04\n"
 "PO-Revision-Date: 2010-03-26 13:32-0400\n"
 "Last-Translator: Vincent Goulet <vincent.goulet@act.ulaval.ca>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -86,6 +86,9 @@ msgstr "les éléments suivants de 'what' seront ignorés"
 msgid "%d occurrences in %s"
 msgstr "%d occurences dans %s"
 
+msgid "No suitable spell check program found."
+msgstr ""
+
 #, fuzzy
 msgid "Filter '%s' is not available."
 msgstr "le test '%s' n'est pas disponible"
@@ -96,9 +99,6 @@ msgstr "argument 'filter' incorrect"
 #, fuzzy
 msgid "Processing file %s"
 msgstr "Traitement du fichier"
-
-msgid "Could not find aspell or ispell executable."
-msgstr "Executable aspell ou ispell introuvable."
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
@@ -487,6 +487,14 @@ msgstr ""
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "le fichier DESCRIPTION du package '%s' est manquant ou incorrect"
+
+#, fuzzy
+msgid "package"
+msgstr "Package"
+
+#, fuzzy
+msgid "not found"
+msgstr "document introuvable"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() ne peut être utilisé en mode non interactif"
@@ -1156,6 +1164,9 @@ msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] "le package '%s' est en cours d'utilisation et ne sera pas installé"
 msgstr[1] ""
 "les packages '%s' sont en cours d'utilisation et ne seront pas installés"
+
+#~ msgid "Could not find aspell or ispell executable."
+#~ msgstr "Executable aspell ou ispell introuvable."
 
 #~ msgid "argument 'lib' is missing: using %s"
 #~ msgstr "l'argument 'lib' manque : %s est utilisé"

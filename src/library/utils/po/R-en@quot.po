@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.12.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
-"PO-Revision-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-17 16:04\n"
+"PO-Revision-Date: 2010-08-17 16:04\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -101,6 +101,9 @@ msgstr "elements of ‘what’ after the first will be ignored"
 msgid "%d occurrences in %s"
 msgstr "%d occurrences in %s"
 
+msgid "No suitable spell check program found."
+msgstr "No suitable spell check program found."
+
 msgid "Filter '%s' is not available."
 msgstr "Filter ‘%s’ is not available."
 
@@ -109,9 +112,6 @@ msgstr "Invalid ‘filter’ argument."
 
 msgid "Processing file %s"
 msgstr "Processing file %s"
-
-msgid "Could not find aspell or ispell executable."
-msgstr "Could not find aspell or ispell executable."
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
@@ -484,6 +484,12 @@ msgstr ""
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr "DESCRIPTION file of package ‘%s’ is missing or broken"
+
+msgid "package"
+msgstr "package"
+
+msgid "not found"
+msgstr "not found"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() cannot be used non-interactively"

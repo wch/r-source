@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0 \n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-17 16:04\n"
 "PO-Revision-Date: 2010-04-03 09:55+0900 \n"
 "Last-Translator: takahashi <takahashi.kohske@gmail.com> \n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp> \n"
@@ -80,6 +80,9 @@ msgstr " 'what' の要素の最初のもの以降は無視されます "
 msgid "%d occurrences in %s"
 msgstr " %d 回 %s 中に起きました "
 
+msgid "No suitable spell check program found."
+msgstr ""
+
 #, fuzzy
 msgid "Filter '%s' is not available."
 msgstr " テスト '%s' が利用できません "
@@ -90,9 +93,6 @@ msgstr " 不正な 'filter' 引数 "
 #, fuzzy
 msgid "Processing file %s"
 msgstr "ファイルを処理中"
-
-msgid "Could not find aspell or ispell executable."
-msgstr " 実行可能なaspellまたはispellが見つかりません "
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
@@ -474,6 +474,14 @@ msgstr ""
 msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr ""
 " パッケージ '%s' に対する DESCRIPTION ファイルは存在しないか壊れています "
+
+#, fuzzy
+msgid "package"
+msgstr " パッケージ "
+
+#, fuzzy
+msgid "not found"
+msgstr " ドキュメントが見付かりません "
 
 msgid "menu() cannot be used non-interactively"
 msgstr " menu() は対話的にしか使用できません "
@@ -1136,6 +1144,9 @@ msgstr[0] " 'lib' の要素 '%s'' は書き込み可能なディレクトリで�
 msgid "package '%s' is in use and will not be installed"
 msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0] " パッケージ '%s' は使用中ですから、インストールされません "
+
+#~ msgid "Could not find aspell or ispell executable."
+#~ msgstr " 実行可能なaspellまたはispellが見つかりません "
 
 #~ msgid "argument 'lib' is missing: using %s"
 #~ msgstr " 引数 'lib' が欠けています：%s を使います "

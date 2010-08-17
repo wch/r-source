@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2010-08-11 09:24\n"
+"POT-Creation-Date: 2010-08-17 16:04\n"
 "PO-Revision-Date: 2010-04-09 19:57-0500\n"
 "Last-Translator: Alexey Shipunov <dactylorhiza@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -178,14 +178,43 @@ msgstr ""
 msgid "Packages required but not available:"
 msgstr "Пакет требуется, но недоступен:"
 
-msgid "Packages required and available but unsuitable version:"
+#, fuzzy
+msgid "Package required but not available: %s"
+msgstr "Пакет требуется, но недоступен:"
+
+#, fuzzy
+msgid "Packages required and available but unsuitable versions:"
+msgstr "Пакет требуется и доступен, но неподходящей версии:"
+
+#, fuzzy
+msgid "Package required and available but unsuitable version: %s"
 msgstr "Пакет требуется и доступен, но неподходящей версии:"
 
 msgid "Former standard packages required but now defunct:"
 msgstr ""
 "Бывший стандартный пакет требуется, который сейчас вышел из употребления:"
 
+#, fuzzy
+msgid "Packages suggested but not available for checking:"
+msgstr "Пакет требуется, но недоступен:"
+
+#, fuzzy
+msgid "Package suggested but not available for checking: %s"
+msgstr "Пакет требуется, но недоступен:"
+
+#, fuzzy
+msgid "Packages which this enhances but not available for checking:"
+msgstr "Пакет требуется, но недоступен:"
+
+#, fuzzy
+msgid "Package which this enhances but not available for checking: %s"
+msgstr "Пакет требуется, но недоступен:"
+
 msgid "Vignette dependencies not required:"
+msgstr "Зависимости очерка не требуются:"
+
+#, fuzzy
+msgid "Vignette dependencies not required: %s"
 msgstr "Зависимости очерка не требуются:"
 
 msgid ""
@@ -196,6 +225,10 @@ msgstr ""
 "пунктах 'Depends/Suggests/Imports' файла DESCRIPTION."
 
 msgid "Namespace dependencies not required:"
+msgstr "Определения пространства имен не требуются:"
+
+#, fuzzy
+msgid "Namespace dependency not required: %s"
 msgstr "Определения пространства имен не требуются:"
 
 msgid "Malformed package name"
@@ -344,7 +377,15 @@ msgstr "пакет 'methods' используется, но не объявлен"
 msgid "'::' or ':::' imports not declared from:"
 msgstr "не объявлен импорт '::' или ':::' из:"
 
+#, fuzzy
+msgid "'::' or ':::' import not declared from: %s"
+msgstr "не объявлен импорт '::' или ':::' из:"
+
 msgid "'library' or 'require' calls not declared from:"
+msgstr "не объявлены вызовы 'library' или 'require' из:"
+
+#, fuzzy
+msgid "'library' or 'require' call not declared from: %s"
 msgstr "не объявлены вызовы 'library' или 'require' из:"
 
 msgid "Rd files with duplicated name '%s':"
