@@ -513,6 +513,9 @@
 
       \item The behaviour of \code{as.logical()} on factors (to use the
       levels) was lost in \R 2.6.0 and has been restored.
+
+      \item \code{parse()} did not backquote some default arguments in
+      the \samp{\usage} section.  (Reported by Claudia Beleites.)
     }
   }
 }

@@ -1254,4 +1254,10 @@ stopifnot(identical(as.vector(x, "logical"), c(FALSE, TRUE)))
 ## Reverted in 2.12.0.
 
 
+## missing backquoting of default arguments in in prompt()
+f <- function (FUN = `*`) {}
+pr <- prompt(f, NA)$usage
+stopifnot(identical(pr[2], "f(FUN = `*`)"))
+## see https://stat.ethz.ch/pipermail/r-devel/2010-August/058126.html
+
 proc.time()
