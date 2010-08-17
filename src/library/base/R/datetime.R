@@ -727,10 +727,10 @@ cut.POSIXt <-
 	if(is.na(valid)) stop("invalid specification of 'breaks'")
 	start <- as.POSIXlt(min(x, na.rm=TRUE))
 	incr <- 1
-	if(valid > 1L) { start$sec <- 0L; incr <- 59.99 }
-	if(valid > 2L) { start$min <- 0L; incr <- 3600 - 1 }
+	if(valid > 1L) { start$sec <- 0L; incr <- 60 }
+	if(valid > 2L) { start$min <- 0L; incr <- 3600 }
         ## start of day need not be on the same DST, PR#14208
-	if(valid > 3L) { start$hour <- 0L; start$isdst <- -1L; incr <- 86400 - 1 }
+	if(valid > 3L) { start$hour <- 0L; start$isdst <- -1L; incr <- 86400 }
 	if(valid == 5L) {               # weeks
 	    start$mday <- start$mday - start$wday
 	    if(start.on.monday)

@@ -1260,4 +1260,11 @@ pr <- prompt(f, NA)$usage
 stopifnot(identical(pr[2], "f(FUN = `*`)"))
 ## see https://stat.ethz.ch/pipermail/r-devel/2010-August/058126.html
 
+
+## cut.POSIXt very near boundaries (PR#14351)
+x <- as.POSIXlt("2010-08-10 00:00:01")
+stopifnot(!is.na(cut(x, "5 hours")))
+## was NA in 2.11.x
+
+
 proc.time()
