@@ -31,6 +31,10 @@ BUG FIXES
       	
     o	readClipboard() could cause a segfault with certain clipboard data.
 
+    o	A fix intended for Mac OS X was incorrectly applied to Windows,
+	so iconv(x, from, "") in a C locale was interpreted as
+	requesting translation to UTF-8.
+
 
 
     		CHANGES IN R VERSION 2.11.1
