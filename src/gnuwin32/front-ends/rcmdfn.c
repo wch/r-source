@@ -243,7 +243,7 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	strcat(cmd, cmd_extra);
 	if(timing) 
 	    putenv("R_BATCH=1234"); 
-	/* to get ,Last.sys run: see profile/Common.R */
+	/* to get .Last.sys run: see profile/Common.R */
 
 	/* fprintf(stderr, "%s->%s\n", infile, outfile);
 	   fprintf(stderr, "%s\n", cmd); */

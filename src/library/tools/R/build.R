@@ -130,7 +130,8 @@ get_exclude_patterns <- function()
         writeLines(text, con)
     }
 
-    ## This version merges stdout and stderr
+    ## This version of shell_with_capture merges stdout and stderr
+    ## Used to install package and build vignettes.
     if (WINDOWS) {
         shell_with_capture <- function (command) {
             Rin <- tempfile("Rin")
