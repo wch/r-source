@@ -3079,12 +3079,15 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     if(strlen(file) > PATH_MAX - 1) {
 	free(dd);
-	error(_("filename too long in postscript"));
+	error(_("filename too long in %s()"), "postscript");
     }
 
     /* allocate new postscript device description */
-    if (!(pd = (PostScriptDesc *) malloc(sizeof(PostScriptDesc))))
+    if (!(pd = (PostScriptDesc *) malloc(sizeof(PostScriptDesc)))) {
+	free(dd);
+	error(_("memory allocation problem in %s()"), "postscript");
 	return FALSE;
+    }
 
     /* from here on, if need to bail out with "error", must also */
     /* free(pd) */
@@ -3100,7 +3103,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     if(strlen(encoding) > PATH_MAX - 1) {
 	free(dd);
 	free(pd);
-	error(_("encoding path is too long"));
+	error(_("encoding path is too long in %s()"), "postscript");
     }
     /*
      * Load the default encoding AS THE FIRST ENCODING FOR THIS DEVICE.
@@ -3115,7 +3118,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     } else {
 	free(dd);
 	free(pd);
-	error(_("failed to load encoding"));
+	error(_("failed to load encoding file in %s()"), "postscript");
     }
 
     /*****************************
@@ -3195,7 +3198,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	int i, dontcare, gotFonts = 0, nfonts = LENGTH(fonts);
 	type1fontlist fontlist;
 	cidfontlist cidfontlist;
-	for (i=0; i<nfonts; i++) {
+	for (i = 0; i < nfonts; i++) {
 	    int index, cidindex;
 	    const char *name = CHAR(STRING_ELT(fonts, i));
 	    /*
@@ -3428,6 +3431,7 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	pd->cidfonts = NULL;
 	free(dd);
 	free(pd);
+	error(_("problem in opening the %s() device"), "postscript");
 	return FALSE;
     }
 
@@ -4708,7 +4712,7 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     if(strlen(file) > PATH_MAX - 1) {
 	free(dd);
-	error(_("filename too long in xfig"));
+	error(_("filename too long in %s()"), "xfig");
     }
 
     /* allocate new xfig device description */
@@ -4751,7 +4755,7 @@ XFigDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     } else {
 	free(dd);
 	free(pd);
-	error(_("failed to load encoding"));
+	error(_("failed to load encoding file in %s()"), "xfig");
     }
 
     /* Load default font */
@@ -5791,14 +5795,16 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     if(strlen(file) > PATH_MAX - 1) {
 	/* not yet created PDFcleanup(0, pd); */
 	free(dd);
-	error(_("filename too long in pdf"));
+	error(_("filename too long in %s()"), "pdf");
     }
 
     /* allocate new PDF device description */
-    if (!(pd = (PDFDesc *) malloc(sizeof(PDFDesc))))
-	return 0;
-    /* from here on, if need to bail out with "error", must also */
-    /* free(pd) */
+    if (!(pd = (PDFDesc *) malloc(sizeof(PDFDesc)))) {
+	free(dd);
+	error(_("memory allocation problem in %s()"), "pdf");
+    }
+    /* from here on, if need to bail out with "error", must also
+       free(pd) */
 
     pd->versionMajor = versionMajor;
     pd->versionMinor = versionMinor;
@@ -5837,7 +5843,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     if(strlen(encoding) > PATH_MAX - 1) {
 	PDFcleanup(3, pd);
 	free(dd);
-	error(_("encoding path is too long"));
+	error(_("encoding path is too long in %s()"), "pdf");
     }
     /*
      * Load the default encoding AS THE FIRST ENCODING FOR THIS DEVICE.
@@ -5919,7 +5925,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     if (!gotFont) {
 	PDFcleanup(3, pd);
 	free(dd);
-	error(_("Failed to initialise default PostScript font"));
+	error(_("Failed to initialise default PDF font"));
     }
 
     /*
@@ -5974,7 +5980,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 	if (gotFonts < nfonts) {
 	    PDFcleanup(4, pd);
 	    free(dd);
-	    error(_("Failed to initialise additional PostScript fonts"));
+	    error(_("Failed to initialise additional PDF fonts"));
 	}
     }
     /*****************************
@@ -6135,7 +6141,8 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     if(!PDF_Open(dd, pd)) {
 	PDFcleanup(6, pd);
 	free(dd);
-	return 0;
+	error(_("problem in opening the %s() device"), "pdf");
+	return FALSE;
     }
 
     dd->close      = PDF_Close;
@@ -6164,7 +6171,7 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = FALSE;
-    return 1;
+    return TRUE;
 }
 
 static void PDF_Invalidate(pDevDesc dd)
@@ -8193,7 +8200,7 @@ SEXP PDF(SEXP args)
 			    width, height, ps, onefile, pagecentre,
 			    title, fonts, major, minor, colormodel,
 			    dingbats, useKern, fillOddEven, maxRasters)) {
-	    /* free(dev); PDFDeviceDriver now frees */
+	    /* we no longer get here: error is thrown in PDFDeviceDriver */
 	    error(_("unable to start %s() device"), "pdf");
 	}
 	gdd = GEcreateDevDesc(dev);
