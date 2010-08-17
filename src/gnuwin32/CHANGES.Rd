@@ -112,6 +112,10 @@
       
       \item \code{readClipboard()} could cause a segfault with certain
       clipboard data.
+
+      \item A fix intended for Mac OS X was incorrectly applied to
+      Windows, so iconv(x, from, "") in a C locale was interpreted as
+      requesting translation to UTF-8.
     }
   }
 }
