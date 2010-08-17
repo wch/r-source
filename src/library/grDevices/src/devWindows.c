@@ -3702,9 +3702,9 @@ SEXP devga(SEXP args)
 	    char type[100], *p;
 	    free(dev);
 	    if (display[0]) {
-		strncpy(type, display);
+		strncpy(type, display, 100);
 		p = strchr(type, ':');
-		if(p) *p = '\p';
+		if(p) *p = '\0';
 	    } else strcpy(type, "windows");
 	    error(_("unable to start %s() device"), type);
 	}
