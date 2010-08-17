@@ -845,11 +845,6 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     checkSection <- function(section, tag) {
     	if (tag == "\\section" || tag == "\\subsection") {
     	    title <- section[[1L]]
-            ## should be simple text
-            if(length(title) < 1L || attr(title[[1L]], "Rd_tag") != "TEXT") {
-                warnRd(section, Rdfile, level = 5,
-                       "Title of \\section must be non-empty plain text")
-            }
     	    checkContent(title, tag)
     	    section <- section[[2L]]
             ## replace 'tag' in message below
@@ -909,11 +904,6 @@ checkRd <- function(Rd, defines=.Platform$OS.type, stages="render",
     }, warning = .whandler)
     Rdfile <- attr(Rd, "Rdfile")
     sections <- RdTags(Rd)
-
-    if (sections[1L] == "\\title")  # if not, we've already been warned...
-    	if (!all(RdTags(Rd[[1L]]) == "TEXT"))
-    	    warnRd(Rd[[1L]], Rdfile, level = 5,
-    	    	   "\\title content must be plain text")
 
     enc <- which(sections == "\\encoding")
     ## sanity was checked in prepare2_Rd
