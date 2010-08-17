@@ -3345,10 +3345,13 @@ function(pkgDir)
             switch(Encoding(txt),
                    "latin1" = {latin1 <<- c(latin1, txt)},
                    "UTF-8" = {utf8 <<- c(utf8, txt)},
-                   {non_ASCII <<- c(non_ASCII, txt)})
+                   {
+                       non_ASCII <<- c(non_ASCII, txt)
+                       where <<- c(where, ds)
+                   })
         invisible()
     }
-    check_one <- function(x)
+    check_one <- function(x, ds)
     {
         if(!length(x)) return()
         ## avoid as.list methods
@@ -3373,15 +3376,16 @@ function(pkgDir)
         .try_quietly(utils::data(list = f, package = character(0L), envir = dataEnv))
     setwd(old)
 
-    non_ASCII <- latin1 <- utf8 <- character(0L)
+    non_ASCII <- latin1 <- utf8 <- where <- character(0L)
     ## avoid messages about loading packages that started with r48409
     suppressPackageStartupMessages({
         for(ds in ls(envir = dataEnv, all.names = TRUE))
-            check_one(get(ds, envir = dataEnv))
+            check_one(get(ds, envir = dataEnv), ds)
     })
     sink()
+    unknown <- unique(cbind(non_ASCII, where))
     structure(list(latin1 = unique(latin1), utf8 = unique(utf8),
-                   unknown = unique(non_ASCII)),
+                   unknown = unknown),
               class = "check_package_datasets")
 }
 
@@ -3395,9 +3399,10 @@ function(x, ...)
         cat(sprintf("Note: found %d marked Latin-1 string(s)\n", n))
     if(n <- length(x$utf8))
         cat(sprintf("Note: found %d marked UTF-8 string(s)\n", n))
-    if(n <- length(x$unknown)) {
+    if(ncol(x$unknown)) {
         cat("Warning: found non-ASCII string(s)\n")
-        cat(iconv0(x$unknown, "", "ASCII", sub="byte"), sep="  ", fill=70)
+        writeLines(paste(iconv0(x$unknown[,1L], "", "ASCII", sub="byte"),
+                         " in object '", x$unknown[,2L], "'", sep = ""))
     }
     invisible(x)
 }
