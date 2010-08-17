@@ -3399,7 +3399,7 @@ function(x, ...)
         cat(sprintf("Note: found %d marked Latin-1 string(s)\n", n))
     if(n <- length(x$utf8))
         cat(sprintf("Note: found %d marked UTF-8 string(s)\n", n))
-    if(ncol(x$unknown)) {
+    if(nrow(x$unknown)) {
         cat("Warning: found non-ASCII string(s)\n")
         writeLines(paste(iconv0(x$unknown[,1L], "", "ASCII", sub="byte"),
                          " in object '", x$unknown[,2L], "'", sep = ""))
