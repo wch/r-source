@@ -50,10 +50,8 @@ iconvlist()
   Most versions of \code{iconv} will allow transliteration by appending
   \samp{//TRANSLIT} to the \code{to} encoding: see the examples.
 
-  
-  Encoding \code{"ASCII"} is also accepted, but prior to \R 2.10.0
-  conversion to \code{"ASCII"} on Windows might have involved dropping
-  accents.
+  Encoding \code{"ASCII"} is also accepted, and on most systems
+  \code{"C"} and \code{"POSIX"} are synonyms for ASCII.
   
   Any encoding bits (see \code{\link{Encoding}}) on elements of \code{x}
   are ignored: they will always be translated as if from \code{from}
@@ -122,7 +120,7 @@ iconv(x, "latin1", "ASCII", "?")     # "fa?ile"
 iconv(x, "latin1", "ASCII", "")      # "faile"
 iconv(x, "latin1", "ASCII", "byte")  # "fa<e7>ile"
 
-# Extracts from R help files
+# Extracts from old R help files (they are nowadays in UTF-8)
 x <- c("Ekstr\xf8m", "J\xf6reskog", "bi\xdfchen Z\xfcrcher")
 Encoding(x) <- "latin1"
 x
