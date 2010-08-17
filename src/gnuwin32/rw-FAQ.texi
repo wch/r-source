@@ -330,6 +330,7 @@ this is not enabled by default).  On such systems, the default for
 all but the earliest 64-bit versions of Windows the user address space
 for a 32-bit process is 4GB, and there the default for
 @code{--max-mem-size} is the smaller of the amount of RAM and 3.5GB.
+
 For a 64-bit build, the default is the amount of RAM.
 
 @c limits are documented at http://msdn.microsoft.com/en-us/library/aa366778%28VS.85%29.aspx
@@ -1168,11 +1169,12 @@ prepared for R 2.10.0 or later, and packages containing compiled code
 for R 2.12.0 or later.
 
 You can tell the version the package was compiled for by looking at the
-@samp{Built:} line in its @file{DESCRIPTION} file or at the
-@samp{Version} tab of its DLL in the @file{libs} directory.
-(Right-click on the DLL in Windows Explorer and select @samp{Version}
-tab of the @samp{Properties}, or use the @code{DLL.version} function
-inside R.)
+@samp{Built:} line in its @file{DESCRIPTION} file 
+@c Next does not work in Vista/7, and in any case there may be multiple DLLs
+@c or at the @samp{Version} tab of its DLL in the @file{libs} directory.
+@c (Right-click on the DLL in Windows Explorer and select @samp{Version}
+@c tab of the @samp{Properties}, or use the @code{DLL.version} function
+@c inside R.)
 
 For a small number of binary packages you need to install additional
 software and have its DLLs in your @code{PATH}.  Windows will normally
