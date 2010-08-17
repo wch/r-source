@@ -229,7 +229,8 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     }
     if(nlines > 0 && localData.linenumber < nlines)
 	svec = lengthgets(svec, localData.linenumber);
-    UNPROTECT(1); /* new version does not need to be protected */
+    UNPROTECT(1);
+    PROTECT(svec); /* protect from warning() allocating, PR#14356 */
     R_print.digits = savedigits;
     if ((opts & WARNINCOMPLETE) && localData.isS4)
 	warning(_("deparse of an S4 object will not be source()able"));
@@ -239,6 +240,7 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
 	warning(_("deparse may be not be source()able in R < 2.7.0"));
     /* somewhere lower down might have allocated ... */
     R_FreeStringBuffer(&(localData.buffer));
+    UNPROTECT(1);
     return svec;
 }
 
