@@ -634,7 +634,7 @@ evalSource <- function(source, package = "", lock = TRUE, cache = FALSE) {
 
 insertSource <- function(source, package = "",
                          functions = allPlainObjects(),
-                         methods = (if(missing(functions)) allMethodsTables() else NULL)
+                         methods = (if(missing(functions)) allMethodTables() else NULL)
 ##                         ,classes = (if(missing(functions)) allClassDefs() else NULL)
                      ){
     MPattern <- .TableMetaPattern()
