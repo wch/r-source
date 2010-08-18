@@ -27,7 +27,7 @@
        character vectors where all elements are in the global \code{CHARSXP}
        cache and have unmarked encoding (ASCII).  Thanks to Matthew
        Dowle for suggesting improvements to the way the hash code is
-       generated in unique.c.
+       generated in \file{unique.c}.
 
       \item The \code{enquote()} utility, in use internally, is exported now.
 
@@ -295,9 +295,9 @@
       The \file{.Rd} conversion tools also warn about an unrecognized type
       in a \samp{\docType} section.
 
-      \code{ecdf()} objects now have a \code{quantile()} method.
+      \item \code{ecdf()} objects now have a \code{quantile()} method.
 
-      \code{format()} methods for date-time objects now attempt to make
+      \item \code{format()} methods for date-time objects now attempt to make
       use of a \code{"tzone"} attribute with \code{"\%Z"} and
       \code{"\%z"} formats, but it is not always possible.  (Wish of
       \PR{14358}.)
@@ -311,7 +311,7 @@
       \item File extension \file{.C} for C++ code files in packages is
       now defunct.
 
-      \item \command{R CMD check} not longer supports configuration
+      \item \command{R CMD check} no longer supports configuration
       files containing Perl configuration variables: use the environment
       variables documented in \sQuote{R Internals} instead.
 
