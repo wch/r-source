@@ -17,11 +17,15 @@ function(files, filter, control = list(), encoding = "unknown",
     if(missing(filter) || is.null(filter)) {
         filter <- if(!files_are_names) {
             function(ifile, encoding) {
-                ## What should this do with encodings?
                 if(inherits(ifile, "srcfile"))
-                    readLines(ifile$filename, warn = FALSE)
-                else 
+                    readLines(ifile$filename, encoding = encoding,
+                              warn = FALSE)
+                else if(inherits(ifile, "connection"))
+                    readLines(ifile, encoding = encoding)
+                else {
+                    ## What should this do with encodings?
                     as.character(ifile)
+                }
             }
         }
         else NULL
@@ -538,8 +542,8 @@ function(x, out, language = "en", program = NULL)
     ##   aspell --lang=en create personal ./foo "a b c"
     ## gives: Sorry "create/merge personal" is currently unimplemented.
 
-    header <- if(names(program) == "aspell") {
-        sprintf("personal_ws-1.1 %s %d", language, length(x))
+    if(names(program) == "aspell") {
+        header <- sprintf("personal_ws-1.1 %s %d", language, length(x))
         ## In case UTF_8 is around ...
         ## This would be nice:
         ##   encodings <- unique(Encoding(x))
@@ -554,7 +558,9 @@ function(x, out, language = "en", program = NULL)
                 header <- paste(header, "UTF-8")
         }
     }
-    else NULL
+    else {
+        header <- NULL
+    }
 
     writeLines(c(header, x), out)
 }
