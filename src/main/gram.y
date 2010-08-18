@@ -2422,6 +2422,8 @@ static int processLineDirective()
     c = SkipSpace();
     if (c == '"') 
 	tok = StringValue(c, FALSE);
+    else
+    	xxungetc(c);
     if (tok == STR_CONST) 
 	setParseFilename(yylval);
     while ((c = xxgetc()) != '\n' && c != R_EOF) /* skip */ ;
