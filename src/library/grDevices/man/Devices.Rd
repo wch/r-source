@@ -22,7 +22,7 @@
     \item \code{\link{pdf}} Write PDF graphics commands to a file
     \item \code{\link{xfig}} Device for XFIG graphics file format
     \item \code{\link{bitmap}} bitmap pseudo-device via
-    \code{GhostScript} (if available).
+    \code{Ghostscript} (if available).
     \item \code{\link{pictex}} Writes TeX/PicTeX graphics commands to a
     file (of historical interest only)
   }

@@ -5,7 +5,7 @@
 
 \name{sortedXyData}
 \encoding{UTF-8}
-\title{Create a sortedXyData object}
+\title{Create a \code{sortedXyData} Object}
 \alias{sortedXyData}
 \alias{sortedXyData.default}
 \usage{

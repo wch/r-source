@@ -6,7 +6,7 @@
 \name{dev2bitmap}
 \alias{dev2bitmap}
 \alias{bitmap}
-\title{Graphics Device for Bitmap Files via GhostScript}
+\title{Graphics Device for Bitmap Files via Ghostscript}
 \usage{
 bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
        units = "in", pointsize, taa = NA, gaa = NA, \dots)
@@ -81,7 +81,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   the listed TIFF types support transparency.
   
   For formats which contain a single image, a file specification like
-  \code{Rplots\%03d.png} can be used: this is interpreted by GhostScript.
+  \code{Rplots\%03d.png} can be used: this is interpreted by Ghostscript.
 
   For \code{dev2bitmap} if just one of \code{width} and \code{height} is
   specified, the other is chosen to preserve aspect ratio of the
@@ -122,7 +122,7 @@ dev2bitmap(file, type = "png16m", height = 7, width = 7, res = 72,
   \itemize{
     \item The default device size is 7 inches square.
     \item Font sizes are in big points.
-    \item The default font family is (for the standard GhostScript
+    \item The default font family is (for the standard Ghostscript
     setup) URW Nimbus Sans.
     \item Line widths are as a multiple of 1/96 inch, with no minimum. 
     \item Circle of any radius are allowed.

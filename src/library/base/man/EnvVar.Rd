@@ -81,7 +81,7 @@
       directory.  Set by \R.}
     \item{\env{R_ENVIRON}:}{Optional.  The path to the site environment
       file: see \link{Startup}.  Consulted at startup.}
-    \item{\env{R_GSCMD}:}{Optional.  The path to GhostScript, used by
+    \item{\env{R_GSCMD}:}{Optional.  The path to Ghostscript, used by
       \code{\link{dev2bitmap}}, \code{\link{bitmap}} and
       \code{\link{embedFonts}}.  Consulted when those functions are invoked.}
     \item{\env{R_HISTFILE}:}{Optional.  The path of the history file:
@@ -177,7 +177,7 @@
 \section{Windows-specific}{
   Some Windows-specific variables are
   \describe{
-    \item{\env{GSC}:}{Optional: the path to GhostScript, used if
+    \item{\env{GSC}:}{Optional: the path to Ghostscript, used if
       \env{R_GSCMD} is not set.}
     \item{\env{R_USER}:}{The user's \sQuote{home} directory.  Set by
       \R.  (\env{HOME} will be set to the same value if not already set.)}

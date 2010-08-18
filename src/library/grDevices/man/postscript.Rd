@@ -320,7 +320,7 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
   file to a printer can be found in \file{RedMon} suite available from
   \url{http://www.cs.wisc.edu/~ghost/index.html}.  The command will be
   run in a minimized window.   GSView 4.x provides \file{gsprint.exe}
-  which may be more convenient (it requires GhostScript version 6.0
+  which may be more convenient (it requires Ghostscript version 6.0
   or later).
 #endif
 }
