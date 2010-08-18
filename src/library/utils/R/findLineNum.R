@@ -22,9 +22,7 @@
     	oldwd <- setwd(wd)
     	on.exit(setwd(oldwd))
     }
-    res <- tryCatch(normalizePath(path), error = identity)
-    if (inherits(res, "error")) path
-    else res
+    suppressWarnings(normalizePath(path))
 }
 
 fnLineNum <- function(f, srcfile, line, nameonly=TRUE) {
