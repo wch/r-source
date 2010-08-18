@@ -79,6 +79,9 @@ rlogis(n, location = 0, scale = 1)
   \emph{Continuous Univariate Distributions}, volume 2, chapter 23.
   Wiley, New York.
 }
+\seealso{
+  \link{Distributions} for other standard distributions.  
+}
 \examples{
 var(rlogis(4000, 0, scale = 5))# approximately (+/- 3)
 pi^2/3 * 5^2

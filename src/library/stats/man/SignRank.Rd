@@ -56,7 +56,8 @@ rsignrank(nn, n)
   \code{\link{wilcox.test}} to calculate the statistic from data, find p
   values and so on.
 
-  \code{\link{dwilcox}} etc, for the distribution of \emph{two-sample}
+  \link{Distributions} for standard distributions, including
+  \code{\link{dwilcox}} for the distribution of \emph{two-sample}
   Wilcoxon rank sum statistic.
 }
 \examples{

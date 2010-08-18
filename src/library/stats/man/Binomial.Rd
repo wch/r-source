@@ -56,6 +56,7 @@ rbinom(n, size, prob)
   \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
 }
 \seealso{
+  \link{Distributions} for other standard distributions, including
   \code{\link{dnbinom}} for the negative binomial, and
   \code{\link{dpois}} for the Poisson distribution.
 }

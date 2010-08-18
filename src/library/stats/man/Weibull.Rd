@@ -64,7 +64,8 @@ rweibull(n, shape, scale = 1)
   Wiley, New York.
 }
 \seealso{
-  The \link{Exponential} is a special case of the Weibull distribution.
+  \link{Distributions} for other standard distributions, including
+  the \link{Exponential} which is a special case of the Weibull distribution.
 }
 \examples{
 x <- c(0,rlnorm(50))

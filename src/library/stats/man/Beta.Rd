@@ -131,8 +131,9 @@ rbeta(n, shape1, shape2, ncp = 0)
   chapter 25. Wiley, New York.
 }
 \seealso{
-  \code{\link{beta}} for the Beta function, and \code{\link{dgamma}} for
-  the Gamma distribution.
+  \link{Distributions} for other standard distributions.
+  
+  \code{\link{beta}} for the Beta function.
 }
 \examples{
 x <- seq(0, 1, length=21)

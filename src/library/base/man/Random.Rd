@@ -1,9 +1,10 @@
 % File src/library/base/man/Random.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Random}
+\alias{Random}
 \alias{RNG}
 \alias{RNGkind}
 \alias{RNGversion}

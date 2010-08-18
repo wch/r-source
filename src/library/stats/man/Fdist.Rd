@@ -98,6 +98,7 @@ rf(n, df1, df2, ncp)
   especially in the tails, for large values.
 }
 \seealso{
+  \link{Distributions} for other standard distributions, including
   \code{\link{dchisq}} for chi-squared and \code{\link{dt}} for Student's
   t distributions.
 }

@@ -64,7 +64,9 @@ rexp(n, rate = 1)
   Wiley, New York.
 }
 \seealso{
-  \code{\link{exp}} for the exponential function,
+  \code{\link{exp}} for the exponential function.
+
+  \link{Distributions} for other standard distributions, including
   \code{\link{dgamma}} for the gamma distribution and
   \code{\link{dweibull}} for the Weibull distribution, both of which
   generalize the exponential.

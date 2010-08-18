@@ -1,6 +1,6 @@
 % File src/library/stats/man/Normal.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2008 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Normal}
@@ -61,8 +61,8 @@ rnorm(n, mean = 0, sd = 1)
   precise results up to about 16 digits.
 }
 \seealso{
-  \code{\link{runif}} and \code{\link{.Random.seed}} about random number
-  generation, and \code{\link{dlnorm}} for the \emph{Log}normal distribution.
+  \link{Distributions} for other standard distributions, including
+  \code{\link{dlnorm}} for the \emph{Log}normal distribution.
 }
 \source{
   For \code{pnorm}, based on

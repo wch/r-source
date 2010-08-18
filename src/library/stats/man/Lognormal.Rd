@@ -71,6 +71,7 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   Wiley, New York.
 }
 \seealso{
+  \link{Distributions} for other standard distributions, including
   \code{\link{dnorm}} for the normal distribution.
 }
 \examples{

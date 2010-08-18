@@ -136,9 +136,12 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   Chapter 6: Gamma and Related Functions.
 }
 \seealso{
-  \code{\link{gamma}} for the gamma function, \code{\link{dbeta}} for
-  the Beta distribution and \code{\link{dchisq}} for the chi-squared
-  distribution which is a special case of the Gamma distribution.
+  \code{\link{gamma}} for the gamma function.
+
+  \link{Distributions} for other standard distributions, including
+  \code{\link{dbeta}} for the Beta distribution and \code{\link{dchisq}}
+  for the chi-squared distribution which is a special case of the Gamma
+  distribution.
 }
 \examples{
 -log(dgamma(1:4, shape=1))

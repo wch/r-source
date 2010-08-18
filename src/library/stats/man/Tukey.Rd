@@ -52,6 +52,7 @@ qtukey(p, nmeans, df, nranges = 1, lower.tail = TRUE, log.p = FALSE)
   \emph{Journal of Statistical Computation and Simulation}, \bold{30}, 1--15.
 }
 \seealso{
+  \link{Distributions} for standard distributions, including
   \code{\link{pnorm}} and \code{\link{qnorm}} for the corresponding
   functions for the normal distribution.
 }

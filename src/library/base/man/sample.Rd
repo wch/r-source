@@ -82,8 +82,10 @@ sample.int(n, size = n, replace = FALSE, prob = NULL)
   Ripley, B. D. (1987) \emph{Stochastic Simulation}. Wiley.
 }
 \seealso{
-  Package \pkg{sampling} for other methods of weighted sampling without
-  replacement.
+  \code{\link{RNG}} about random number generation.
+
+  CRAN package \pkg{sampling} for other methods of weighted sampling
+  without replacement.
 }
 \examples{
 x <- 1:12

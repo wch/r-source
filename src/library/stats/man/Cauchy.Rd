@@ -64,6 +64,7 @@ rcauchy(n, location = 0, scale = 1)
   Wiley, New York.
 }
 \seealso{
+  \link{Distributions} for other standard distributions, including
   \code{\link{dt}} for the t distribution which generalizes
   \code{dcauchy(*, l = 0, s = 1)}.
 }

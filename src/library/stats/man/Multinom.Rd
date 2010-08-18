@@ -60,7 +60,9 @@ dmultinom(x, size = NULL, prob, log = FALSE)
   natural at first, the returned matrix is more efficient because of
   columnwise storage.
 }
-\seealso{\code{\link{rbinom}} which is a special case conceptually.
+\seealso{
+  \link{Distributions} for standard distributions, including
+  \code{\link{dbinom}} which is a special case conceptually.
 %% but does not return 2-vectors
 }
 \examples{

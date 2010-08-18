@@ -77,6 +77,9 @@ rhyper(nn, m, n, k)
   \emph{Univariate Discrete Distributions},
   Second Edition. New York: Wiley.
 }
+\seealso{
+  \link{Distributions} for other standard distributions.
+}
 \examples{
 m <- 10; n <- 7; k <- 8
 x <- 0:(k+1)

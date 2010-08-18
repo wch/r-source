@@ -126,7 +126,10 @@ rt(n, df, ncp)
   \emph{Continuous Univariate Distributions}, volume 2, chapters 28 and 31.
   Wiley, New York.
 }
-\seealso{\code{\link{df}} for the F distribution.}
+\seealso{
+  \link{Distributions} for other standard distributions, including
+  \code{\link{df}} for the F distribution.
+}
 \examples{
 require(graphics)
 

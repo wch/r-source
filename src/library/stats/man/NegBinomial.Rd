@@ -90,6 +90,7 @@ rnbinom(n, size, prob, mu)
   Springer-Verlag, New York. Page 480.
 }
 \seealso{
+  \link{Distributions} for standard distributions, including
   \code{\link{dbinom}} for the binomial, \code{\link{dpois}} for the
   Poisson and \code{\link{dgeom}} for the geometric distribution, which
   is a special case of the negative binomial.

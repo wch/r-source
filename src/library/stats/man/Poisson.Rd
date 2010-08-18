@@ -73,8 +73,11 @@ rpois(n, lambda)
    \emph{ACM Transactions on Mathematical Software}, \bold{8}, 163--179.
 }
 \seealso{
+  \link{Distributions} for other standard distributions, including
   \code{\link{dbinom}} for the binomial and \code{\link{dnbinom}} for
   the negative binomial distribution.
+
+  \code{\link{poisson.test}}.
 }
 \examples{
 require(graphics)

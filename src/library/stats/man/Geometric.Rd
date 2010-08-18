@@ -62,6 +62,7 @@ rgeom(n, prob)
   Springer-Verlag, New York. Page 480.
 }
 \seealso{
+  \link{Distributions} for other standard distributions, including
   \code{\link{dnbinom}} for the negative binomial which generalizes
   the geometric distribution.
 }

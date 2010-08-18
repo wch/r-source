@@ -1,6 +1,6 @@
 % File src/library/stats/man/simulate.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{simulate}
@@ -80,6 +80,7 @@ simulate(object, nsim, seed, \dots)
   \pkg{SuppDists} package, which must be installed.
 }
 \seealso{
+  \code{\link{RNG}} about random number generation in \R,
   \code{\link{fitted.values}} and \code{\link{residuals}} for related methods;
   \code{\link{glm}}, \code{\link{lm}} for model fitting.
 

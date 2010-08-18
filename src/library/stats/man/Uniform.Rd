@@ -1,6 +1,6 @@
 % File src/library/stats/man/Uniform.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Uniform}
@@ -60,8 +60,9 @@ runif(n, min=0, max=1)
   Wadsworth & Brooks/Cole.
 }
 \seealso{
-  \code{\link{.Random.seed}} about random number generation,
-  \code{\link{rnorm}}, etc for other distributions.
+  \code{\link{RNG}} about random number generation in \R.
+
+  \link{Distributions} for other standard distributions.
 }
 \examples{
 u <- runif(20)
