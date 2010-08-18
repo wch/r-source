@@ -2997,6 +2997,7 @@ and to simulate from the distribution.
 @item negative binomial @tab @code{nbinom} @tab @code{size, prob}
 @item normal @tab @code{norm} @tab @code{mean, sd}
 @item Poisson @tab @code{pois} @tab @code{lambda}
+@item signed rank @tab @code{signrank} @tab @code{n}
 @item Student's t @tab @code{t} @tab @code{df, ncp}
 @item uniform @tab @code{unif} @tab @code{min, max}
 @item Weibull @tab @code{weibull} @tab @code{shape, scale}
@@ -3010,9 +3011,9 @@ CDF, @samp{q} for the quantile function and @samp{r} for simulation
 (@emph{r}andom deviates).  The first argument is @code{x} for
 @code{d@var{xxx}}, @code{q} for @code{p@var{xxx}}, @code{p} for
 @code{q@var{xxx}} and @code{n} for @code{r@var{xxx}} (except for
-@code{rhyper} and @code{rwilcox}, for which it is @code{nn}).  In not
-quite all cases is the non-centrality parameter @code{ncp} are currently
-available: see the on-line help for details.
+@code{rhyper}, @code{rsignrank} and @code{rwilcox}, for which it is
+@code{nn}).  In not quite all cases is the non-centrality parameter
+@code{ncp} currently available: see the on-line help for details.
 
 The @code{p@var{xxx}} and @code{q@var{xxx}} functions all have logical
 arguments @code{lower.tail} and @code{log.p} and the @code{d@var{xxx}}
@@ -3030,7 +3031,9 @@ TRUE)}), directly.
 
 In addition there are functions @code{ptukey} and @code{qtukey} for the
 distribution of the studentized range of samples from a normal
-distribution.
+distribution, and @code{dmultinom} and @code{rmultinom} for the
+multinomial distribution. Further distributions are available in
+contributed packages, notably @pkg{SuppDists}.
 
 Here are some examples
 
@@ -3040,6 +3043,9 @@ Here are some examples
 > ## @r{upper 1% point for an F(2, 7) distribution}
 > qf(0.01, 2, 7, lower.tail = FALSE)
 @end example
+
+See the on-line help on @code{RNG} for how random-number generation is
+done in @R{}.
 
 @node  Examining the distribution of a set of data, One- and two-sample tests, R as a set of statistical tables, Probability distributions
 @section Examining the distribution of a set of data

@@ -248,8 +248,12 @@ set.seed(seed, kind = NULL, normal.kind = NULL)
 }
 \author{of RNGkind: Martin Maechler. Current implementation, B. D. Ripley}
 
-\seealso{\code{\link{runif}}, \code{\link{rnorm}}, \ldots.}
-%       this is ./Uniform.Rd
+\seealso{
+  \code{\link{sample}} for random sampling with and without replacement.
+  
+  \link{Distributions} for functions for random-variate generation from
+  standard distributions.
+}
 \examples{\donttest{
 require(stats)
 
