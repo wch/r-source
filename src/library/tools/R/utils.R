@@ -333,9 +333,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                           sep = "\n"))
     } else if(index && nzchar(texi2dvi)) { # MiKTeX on Windows
         extra <- ""
-        ext <- if(pdf) "pdf" else "dvi"
-        pdf <- if(pdf) "--pdf" else ""
-        quiet <- if(quiet) "--quiet" else ""
+        #ext <- if(pdf) "pdf" else "dvi"
 
         ## look for MiKTeX (which this almost certainly is)
         ## and set the path to R's style files.
@@ -352,7 +350,9 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             extra <- paste(extra, paste(paths, collapse = " "))
         }
         ## this only gives a failure in some cases, e.g. not for bibtex errors.
-        system(paste(shQuote(texi2dvi), quiet, pdf,
+        system(paste(shQuote(texi2dvi),
+                     quiet <- if(quiet) "--quiet" else "",
+                     if(pdf) "--pdf" else "",
                      shQuote(file), extra),
                intern=TRUE, ignore.stderr=TRUE)
         msg <- ""
