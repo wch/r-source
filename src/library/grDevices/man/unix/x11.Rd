@@ -165,12 +165,14 @@ X11.options(\dots, reset = FALSE)
   to \file{~/.fonts.conf} or \file{/etc/fonts/local.conf} may circumvent
   this problem.
 \preformatted{
+<fontconfig>
 <match target="pattern">
   <test name="family"><string>Symbol</string></test>
   <edit name="family" mode="prepend" binding="same">
     <string>Standard Symbols L</string>
   </edit>
 </match>
+</fontconfig>
 }
 }
 

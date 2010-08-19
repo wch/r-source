@@ -234,10 +234,12 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   to \file{~/.fonts.conf} or \file{/etc/fonts/local.conf} may circumvent
   this problem.
 \preformatted{
+<fontconfig>    
 <alias binding="same">
   <family>ZapfDingbats</family>
   <accept><family>Dingbats</family></accept>
 </alias>
+</fontconfig>  
 }
 #endif
 }
