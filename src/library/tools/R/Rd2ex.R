@@ -161,15 +161,9 @@ Rd2ex <-
             name <- as.character(Rd[[ which(nameblk)[1L] ]])
             of0("### Name: ", name, "\n")
         }
-        titleblk <- sections == "\\title"
-        if (any(titleblk)) {
-            title <- as.character(Rd[[ which(titleblk)[1L] ]])
-            ## remove empty lines, leading whitespace
-            title <- paste(psub1("^\\s+", "", title[nzchar(title)]),
-                           collapse=" ")
-            ## FIXME: more?
-            title <- psub("(---|--)", "-", title)
-        } else title <- "No title found"
+        title <- .Rd_format_title(.Rd_get_title(Rd))
+        if (!length(title))
+            title <- "No title found"
         of0(wr(paste("Title: ", title, sep='')), "\n")
         aliasblks <- sections == "\\alias"
         if (any(aliasblks)) {

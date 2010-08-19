@@ -174,7 +174,7 @@ lxhalf  1.6615  6.4794
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: update-methods
-> ### Title: Methods for Function `update' in Package `stats4'
+> ### Title: Methods for Function 'update' in Package 'stats4'
 > ### Aliases: update-methods update,ANY-method update,mle-method
 > ### Keywords: methods
 > 

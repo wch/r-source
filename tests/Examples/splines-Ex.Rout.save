@@ -523,7 +523,7 @@ attr(,"class")
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: xyVector
-> ### Title: Construct an xyVector Object
+> ### Title: Construct an 'xyVector' Object
 > ### Aliases: xyVector
 > ### Keywords: models
 > 

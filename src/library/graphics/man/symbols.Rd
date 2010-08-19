@@ -11,7 +11,7 @@
 \concept{rectangle}
 \concept{thermometer}
 \concept{boxplot}
-\title{Draw Symbols (Circles, Squares, Stars, Thermometers, Boxplots) on a Plot}
+\title{Draw Symbols (Circles, Squares, Stars, Thermometers, Boxplots)}
 \description{
   This function draws symbols on a plot.  One of six symbols;
   \emph{circles}, \emph{squares}, \emph{rectangles}, \emph{stars},

@@ -1,7 +1,7 @@
 \name{classesToAM}
 \alias{classesToAM}
 \title{
-Compute an Adjacency Matrix for Superclasses of one or more Class Definitions
+Compute an Adjacency Matrix for Superclasses of Class Definitions
 }
 \description{
 Given a vector of class names or a list of class definitions, the

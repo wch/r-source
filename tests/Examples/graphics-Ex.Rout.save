@@ -1803,7 +1803,7 @@ armed.forces
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: plot.design
-> ### Title: Plot Univariate Effects of a `Design' or Model
+> ### Title: Plot Univariate Effects of a 'Design' or Model
 > ### Aliases: plot.design
 > ### Keywords: hplot
 > 
@@ -1895,7 +1895,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: plot.table
-> ### Title: Plot Methods for `table' Objects
+> ### Title: Plot Methods for 'table' Objects
 > ### Aliases: plot.table lines.table points.table
 > ### Keywords: hplot category
 > 
@@ -2748,7 +2748,6 @@ List of 3
 > 
 > ### Name: symbols
 > ### Title: Draw Symbols (Circles, Squares, Stars, Thermometers, Boxplots)
-> ###   on a Plot
 > ### Aliases: symbols
 > ### Keywords: aplot hplot multivariate
 > 

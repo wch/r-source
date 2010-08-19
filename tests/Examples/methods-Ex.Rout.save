@@ -939,8 +939,8 @@ b 4 6 8 1 3
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: classesToAM
-> ### Title: Compute an Adjacency Matrix for Superclasses of one or more
-> ###   Class Definitions
+> ### Title: Compute an Adjacency Matrix for Superclasses of Class
+> ###   Definitions
 > ### Aliases: classesToAM
 > ### Keywords: classes programming
 > 
@@ -1062,6 +1062,38 @@ Creating a generic for ‘paste’ in package ‘.GlobalEnv’
 > for(gen in c("numMax", "cc", "paste")) removeGeneric(gen)
 > for(cl in c("Number", "vdate", "cdate")) removeClass(cl)
 > ## End Don't show
+> 
+> 
+> 
+> cleanEx()
+> nameEx("evalSource")
+> ### * evalSource
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: evalSource
+> ### Title: Use Function Definitions from a Source File without Reinstalling
+> ###   a
+> ### Aliases: evalSource insertSource sourceEnvironment-class
+> ### Keywords: programming methods
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D ## Suppose package P0 has a source file "all.R"
+> ##D ## First, evaluate the source, and from it
+> ##D ## insert the revised version of methods for summary()
+> ##D   env <- insertSource("./P0/R/all.R", package = "P0",
+> ##D      methods = "summary")
+> ##D ## now test one of the methods, tracing  the version from the source
+> ##D   trace("summary", signature = "myMat", browser, edit = env)
+> ##D ## After testing, remove the browser() call but keep the source
+> ##D   trace("summary", signature = "myMat", edit = env)
+> ##D ## Now insert all the (other) revised functions and methods
+> ##D ## without re-evaluating the source file.
+> ##D ## The package name is included in the object env.
+> ##D   insertSource(env)
+> ## End(Not run)
 > 
 > 
 > 
