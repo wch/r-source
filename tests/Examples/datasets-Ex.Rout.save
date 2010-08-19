@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-08-14 r52732)
+R version 2.12.0 Under development (unstable) (2010-08-19 r52785)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
@@ -1690,7 +1690,7 @@ The p-value is 0.191
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: anscombe
-> ### Title: Anscombe's Quartet of ``Identical'' Simple Linear Regressions
+> ### Title: Anscombe's Quartet of "Identical" Simple Linear Regressions
 > ### Aliases: anscombe
 > ### Keywords: datasets
 > 
