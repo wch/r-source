@@ -525,6 +525,9 @@
 
       \item \code{parse()} did not backquote some default arguments in
       the \samp{\usage} section.  (Reported by Claudia Beleites.)
+
+      \item \code{writeBin()} disallows attempts to write 2GB or
+      more in a single call. (PR#14362)
     }
   }
 }
