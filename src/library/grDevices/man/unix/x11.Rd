@@ -156,6 +156,22 @@ X11.options(\dots, reset = FALSE)
   Pango, \code{type="cairo"} is not the default (as from \R 2.11.0)
   unless Pango is available.  These problems include mixing up bold and
   italic and selecting incorrect glyphs.
+  
+  %  https://bugs.launchpad.net/ubuntu/+source/fontconfig/+bug/551977
+  Problems with incorrect rendering of symbols (e.g. of
+  \code{quote(pi)}) have been seen on Linux systems which have the Wine
+  symbol font installed---\code{fontconfig} then prefers this and
+  misinterprets its encoding.  Adding the following lines
+  to \file{~/.fonts.conf} or \file{/etc/fonts/local.conf} may circumvent
+  this problem.
+\preformatted{
+<match target="pattern">
+  <test name="family"><string>Symbol</string></test>
+  <edit name="family" mode="prepend" binding="same">
+    <string>Standard Symbols L</string>
+  </edit>
+</match>
+}
 }
 
 \section{Resources}{

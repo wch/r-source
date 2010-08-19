@@ -229,16 +229,16 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   On some systems the default plotting character \code{pch = 1} is
   displayed in some PDF viewers incorrectly as a \code{"q"}
   character.  (These seem to be viewers based on the \samp{poppler} PDF
-  rendering library). This may be due to incorrect or incomplete mapping
+  rendering library).  This may be due to incorrect or incomplete mapping
   of font names to those used by the system.  Adding the following lines
   to \file{~/.fonts.conf} or \file{/etc/fonts/local.conf} may circumvent
   this problem.
-  \preformatted{
+\preformatted{
 <alias binding="same">
-       <family>ZapfDingbats</family>
-       <accept><family>Dingbats</family></accept>
+  <family>ZapfDingbats</family>
+  <accept><family>Dingbats</family></accept>
 </alias>
-  }
+}
 #endif
 }
 \seealso{
