@@ -206,6 +206,17 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
          texi2dvi = getOption("texi2dvi"),
          texinputs = NULL, index = TRUE)
 {
+    do_cleanup <- function(clean)
+        if(clean) {
+            ## output file will be created in the current directory
+            out_file <- paste(basename(file_path_sans_ext(file)),
+                              if(pdf) "pdf" else "dvi",
+                              sep = ".")
+            files <- list.files(all.files = TRUE) %w/o% c(".", "..", out_file)
+            file.remove(files[file_test("-nt", files, ".timestamp")])
+        }
+
+
     ## Run texi2dvi on a latex file, or emulate it.
 
     if(is.null(texi2dvi) || !nzchar(texi2dvi))
@@ -216,13 +227,13 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     Rtexmf <- file.path(R.home("share"), "texmf")
     Rtexinputs <- file.path(Rtexmf, "tex", "latex")
     ## "" forces use of default paths.
-    texinputs <- paste(c(texinputs0, Rtexinputs, ""), 
+    texinputs <- paste(c(texinputs0, Rtexinputs, ""),
                       collapse = envSep)
     ## not clear if this is needed, but works
-    if(.Platform$OS.type == "windows") 
+    if(.Platform$OS.type == "windows")
         texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
     Rbstinputs <- file.path(Rtexmf, "bibtex", "bst")
-    bstinputs <- paste(c(texinputs0, Rbstinputs, ""), 
+    bstinputs <- paste(c(texinputs0, Rbstinputs, ""),
                       collapse = envSep)
 
     otexinputs <- Sys.getenv("TEXINPUTS", unset = NA)
@@ -244,6 +255,11 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     } else on.exit(Sys.setenv(BSTINPUTS = obstinputs), add = TRUE)
     Sys.setenv(BSTINPUTS = paste(obstinputs, bstinputs, sep = envSep))
 
+    if (clean) {
+        file.create(".timestamp")
+        on.exit(file.remove(".timestamp"))
+        Sys.sleep(0.1) # wait long enough for files to be after the timestamp
+    }
     if(index && nzchar(texi2dvi) && .Platform$OS.type != "windows") {
         ## switch off the use of texindy in texi2dvi >= 1.157
         Sys.setenv(TEXINDY = "false")
@@ -258,7 +274,6 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## error messages in log files should work for both regular and
         ## file line error indicators.)
 
-        file.create(".timestamp")
         out <- .shell_with_capture(paste(shQuote(texi2dvi), opt_pdf,
                                          opt_quiet, opt_extra,
                                          shQuote(file)))
@@ -308,16 +323,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                              sep = "\n")
         }
 
-        ## Clean up as needed.
-        if(clean) {
-            out_file <- paste(file_path_sans_ext(file),
-                              if(pdf) "pdf" else "dvi",
-                              sep = ".")
-            files <- list.files(all.files = TRUE) %w/o% c(".", "..",
-                                                          out_file)
-            file.remove(files[file_test("-nt", files, ".timestamp")])
-        }
-        file.remove(".timestamp")
+        do_cleanup(clean)
 
         if(nzchar(msg))
             stop(msg, domain = NA)
@@ -329,7 +335,6 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         extra <- ""
         ext <- if(pdf) "pdf" else "dvi"
         pdf <- if(pdf) "--pdf" else ""
-        file.create(".timestamp")
         quiet <- if(quiet) "--quiet" else ""
 
         ## look for MiKTeX (which this almost certainly is)
@@ -339,7 +344,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ver <- system(paste(shQuote(texi2dvi), "--version"), intern = TRUE)
         if(length(grep("MiKTeX", ver[1L]))) {
             ## AFAICS need separate -I for each element of texinputs.
-            texinputs <- c(texinputs0, 
+            texinputs <- c(texinputs0,
                            Rtexinputs,
                            Rbstinputs)
 	    texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
@@ -370,18 +375,12 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                              sep = "\n")
         }
 
-        if(nzchar(msg))
+        do_cleanup(clean)
+        if(nzchar(msg)) {
             msg <- paste(gettextf("running 'texi2dvi' on '%s' failed", file),
                          msg, "", sep = "\n")
-        if(clean) {
-            out_file <- paste(file_path_sans_ext(file), ext, sep = ".")
-            files <- list.files(all.files = TRUE) %w/o% c(".", "..",
-                                                          out_file)
-            file.remove(files[file_test("-nt", files, ".timestamp")])
+            stop(msg, call. = FALSE, domain = NA)
         }
-        file.remove(".timestamp")
-
-        if(nzchar(msg)) stop(msg, call. = FALSE, domain = NA)
     } else {
         ## Do not have texi2dvi or don't want to index
         ## Needed on Windows except for MiKTeX
@@ -391,7 +390,8 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## If it is called with MiKTeX then TEXINPUTS etc will be ignored.
 
         texfile <- shQuote(file)
-        base <- file_path_sans_ext(file)
+        ## 'file' could be a file path
+        base <- basename(file_path_sans_ext(file))
         idxfile <- paste(base, ".idx", sep="")
         latex <- if(pdf) Sys.getenv("PDFLATEX", "pdflatex")
         else  Sys.getenv("LATEX", "latex")
@@ -419,7 +419,9 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
             if(nmiss == nmiss_prev &&
                !length(grep("Rerun to get", Log)) ) break
         }
+        do_cleanup(clean)
     }
+    invisible(NULL)
 }
 
 ### * Internal utility variables.

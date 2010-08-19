@@ -301,6 +301,10 @@
       use of a \code{"tzone"} attribute with \code{"\%Z"} and
       \code{"\%z"} formats, but it is not always possible.  (Wish of
       \PR{14358}.)
+
+      \item \code{tools::texi2dvi(file, clean = TRUE)} now works in more cases
+      (e.g. where emulation is used and when \file{file} is not in the
+      current directory).
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{

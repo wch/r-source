@@ -47,12 +47,17 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
   
   MiKTeX has a \code{texi2dvi} executable but no other Windows TeX
   installation that we know of does, so emulation is used on e.g. TeXLive
-  installations.
+  installations on Windows.
   
   Occasionally indices contain special characters which cause indexing
   to fail (particularly when using the \samp{hyperref} LaTeX package)
   even on valid input.  The argument \code{index = FALSE} is provided to
   allow package manuals to be made when this happens: it uses emulation.
+}
+\value{
+  Invisible \code{NULL}.  Used for the side effect of creating a dvi or
+  PDF file in the current working directory (and maybe other files,
+  especially if \code{clean = FALSE}. 
 }
 \author{Achim Zeileis and R-core}
 \keyword{utilities}
