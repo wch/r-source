@@ -3795,6 +3795,7 @@ function(package, dir, lib.loc = NULL)
             if(Call %in% c("library", "require")) {
                 ## Zelig has library()
                 if(length(e) >= 2L) {
+                    ## FIXME: and base has library(.lib.loc = .Library)
                     pkg <- sub('^"(.*)"$', '\\1', pkg)
                     ## <NOTE>
                     ## Using code analysis, we really don't know which
@@ -3953,6 +3954,7 @@ function(package, dir, lib.loc = NULL)
             if(length(e) >= 2L) pkg <- deparse(e[[2L]])
             if(Call %in% c("library", "require")) {
                 if(length(e) >= 2L) {
+                    ## FIXME: base has library(.lib.loc = .Library)
                     pkg <- sub('^"(.*)"$', '\\1', pkg)
                     ## <NOTE>
                     ## Using code analysis, we really don't know which
@@ -4053,6 +4055,7 @@ function(dir, lib.loc = NULL)
             if(length(e) >= 2L) pkg <- deparse(e[[2L]])
             if(Call %in% c("library", "require")) {
                 if(length(e) >= 2L) {
+                    ## FIXME: base has library(.lib.loc = .Library)
                     pkg <- sub('^"(.*)"$', '\\1', pkg)
                     ## <NOTE>
                     ## Using code analysis, we really don't know which
