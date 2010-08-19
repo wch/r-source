@@ -34,13 +34,16 @@ grid.layout(nrow = 1, ncol = 1,
     If a matrix, non-zero values indicate that the corresponding
     row and column should be respected (see examples below).
   }
-  \item{just}{A string vector indicating how the layout should be
+  \item{just}{A string or numeric
+    vector specifying how the 
+    layout should be
     justified if it is not the same size as its parent viewport.
     If there are two values, the first
     value specifies horizontal justification and the second value specifies
-    vertical justification.  Possible values are: \code{"left"},
+    vertical justification.  Possible string values are: \code{"left"},
     \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
-    and \code{"top"}.  NOTE that in this context,
+    and \code{"top"}.  For numeric values, 0 means left alignment
+    and 1 means right alignment. NOTE that in this context,
     \code{"left"}, for example, means align the left
     edge of the left-most layout column with the left edge of the
     parent viewport.}
