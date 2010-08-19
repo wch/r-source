@@ -333,7 +333,6 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
                           sep = "\n"))
     } else if(index && nzchar(texi2dvi)) { # MiKTeX on Windows
         extra <- ""
-        #ext <- if(pdf) "pdf" else "dvi"
 
         ## look for MiKTeX (which this almost certainly is)
         ## and set the path to R's style files.
@@ -342,33 +341,33 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ver <- system(paste(shQuote(texi2dvi), "--version"), intern = TRUE)
         if(length(grep("MiKTeX", ver[1L]))) {
             ## AFAICS need separate -I for each element of texinputs.
-            texinputs <- c(texinputs0,
-                           Rtexinputs,
-                           Rbstinputs)
+            texinputs <- c(texinputs0, Rtexinputs, Rbstinputs)
 	    texinputs <- gsub("\\", "/", texinputs, fixed = TRUE)
 	    paths <- paste ("-I", shQuote(texinputs))
             extra <- paste(extra, paste(paths, collapse = " "))
         }
+        ## 'file' could be a file path
+        base <- basename(file_path_sans_ext(file))
         ## this only gives a failure in some cases, e.g. not for bibtex errors.
         system(paste(shQuote(texi2dvi),
-                     quiet <- if(quiet) "--quiet" else "",
+                     if(quiet) "--quiet" else "",
                      if(pdf) "--pdf" else "",
                      shQuote(file), extra),
                intern=TRUE, ignore.stderr=TRUE)
         msg <- ""
         ## (La)TeX errors.
-        log <- paste(file_path_sans_ext(file), "log", sep = ".")
-        if(file_test("-f", log)) {
-            lines <- .get_LaTeX_errors_from_log_file(log)
+        logfile <- paste(base, "log", sep = ".")
+        if(file_test("-f", logfile)) {
+            lines <- .get_LaTeX_errors_from_log_file(logfile)
             if(length(lines))
                 msg <- paste(msg, "LaTeX errors:",
                              paste(lines, collapse = "\n"),
                              sep = "\n")
         }
         ## BibTeX errors.
-        log <- paste(file_path_sans_ext(file), "blg", sep = ".")
-        if(file_test("-f", log)) {
-            lines <- .get_BibTeX_errors_from_blg_file(log)
+        logfile <- paste(base, "blg", sep = ".")
+        if(file_test("-f", logfile)) {
+            lines <- .get_BibTeX_errors_from_blg_file(logfile)
             if(length(lines))
                 msg <- paste(msg, "BibTeX errors:",
                              paste(lines, collapse = "\n"),
