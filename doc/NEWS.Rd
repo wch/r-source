@@ -518,7 +518,8 @@
       \item Rendering of S3 and S4 methods in man pages has been
       corrected and made consistent across output formats.
 
-      \item Simple markup is now allowed in Rd titles.
+      \item Simple markup is now allowed in \samp{\title} sections
+      in \file{.Rd} files.
 
       \item The behaviour of \code{as.logical()} on factors (to use the
       levels) was lost in \R 2.6.0 and has been restored.
