@@ -60,23 +60,20 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   
   % at least on Linux the shell cannot be changed.
   How the command is run differs by platform: Unix-alikes use a shell
-  (normally \file{/bin/sh}), and Windows executes the command directly
-  (extensions \file{.exe}, \file{.com}) or as a batch file (extensions
-  \file{.cmd} and \file{.bat}).
+  (normally \file{/bin/sh}), and Windows executes the command directly.
 #ifdef windows
-  (These extensions are tried in turn if none is supplied.)
+  \code{command} must be an executable (extensions \file{.exe},
+  \file{.com}) or as a batch file (extensions \file{.cmd} and
+  \file{.bat}): these extensions are tried in turn if none is supplied.)
   This means that redirection, pipes, \dots cannot be used: see
   \code{\link{shell}}.  (To use DOS internal commands use
-  \code{paste(Sys.getenv("COMSPEC"),"/c", cmd)}.)
+  \code{paste(Sys.getenv("COMSPEC"),"/c", \var{cmd})}.)
   
   The search path for \code{command} may be system-dependent: it will
   include the \R \file{bin} directory, the working directory and the
   Windows system directories before \code{PATH}.
 #endif
 #ifdef unix
-  This means that redirection, pipes, \dots cannot be used on Windows,
-  which has a function \code{shell} for use when shell facilities are
-  needed.
 
   If \code{intern} is \code{TRUE} then \code{popen} is used to invoke the
   command and the output collected, line by line, into an \R
@@ -188,6 +185,42 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 #endif
 }
 
+\section{Differences between Unix and Windows}{
+  How processes are launched differs fundamentally between Windows and
+  Unix-alike operating systems, as do the higher-level OS functions on
+  which the \R function is built.  So it should not be surprising that
+  there are many differences between OSes in how \code{system} behaves.
+  For the benefit of programmers, the more important ones are summarized
+  in this section.
+
+  \itemize{
+    \item The most important difference is that on Unix-alike what
+    \code{system} does is to launch a shell which then runs
+    \code{command}.  On Windows the command is run directly -- use
+    \code{shell} for an interface than does run \code{comamnd}
+    \emph{via} a shell (but by default the Windows shell
+    \command{cmd.exe}).
+
+    This means that it cannot be assumed that redirection or piping will
+    work in \code{system} (redirection sometimes does, but we have seen
+    cases where it stopped working after a security patch), and
+    \code{shell} must be used on Windows.
+
+    \item The behaviour on error is different.  With \code{intern=TRUE},
+    failure to run the command is an \R error on Windows, whereas on
+    Unix it has to be deduced from the output returned.  With
+    \code{intern=FALSE} the error codes are quite different---whereas
+    \code{0} always indicates success, failure to run the command is
+    indicated by \code{52512} on Unix and \code{-1} on Windows.
+    
+    \item The quoting conventions for \code{command} differ, but
+    \code{\link{shQuote}} is a portable interface.
+    
+    \item Arguments \code{show.output.on.console}, \code{minimized},
+    \code{invisible} only do something on Windows (and relevant to a GUI
+    interface only).
+  }
+}
 \seealso{
 #ifdef windows
   \code{\link{shell}} or \code{\link{shell.exec}} for a less raw
