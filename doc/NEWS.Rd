@@ -529,6 +529,10 @@
 
       \item \code{writeBin()} disallows attempts to write 2GB or
       more in a single call. (PR#14362)
+
+      \item \code{new()} and \code{getClass()} will now work if Class
+      is a subclass of \code{"classRepresentation"} and should also be
+      faster in typical calls.
     }
   }
 }

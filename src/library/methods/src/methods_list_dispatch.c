@@ -819,6 +819,23 @@ SEXP R_identC(SEXP e1, SEXP e2)
 	return R_FALSE;
 }
 
+SEXP R_getClassFromCache(SEXP class, SEXP table)
+{
+    SEXP value;
+    if(TYPEOF(class) == STRSXP) {
+	value = findVarInFrame(table, install(CHAR(STRING_ELT(class, 0))));
+	if(value == R_UnboundValue)
+	    return R_NilValue;
+	else /* may return a list if multiple instances of class */
+	    return value;
+    }
+    else if(TYPEOF(class) != S4SXP)
+	error(_("Class should be either a character-string name or a class definition"));
+    else /* assumes a class def, but might check */
+	return class;
+}
+	
+
 static SEXP do_inherited_table(SEXP class_objs, SEXP fdef, SEXP mtable, SEXP ev)
 {
     static SEXP dotFind = NULL, f; SEXP  e, ee;

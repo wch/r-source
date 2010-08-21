@@ -14,7 +14,8 @@ functions without reinstalling a large package.
 \usage{
 evalSource(source, package = "", lock = TRUE, cache = FALSE)
 
-insertSource(source, package = "", functions = , methods = )
+insertSource(source, package = "", functions = , methods = ,
+           force = )
 
 }
 \arguments{
@@ -63,6 +64,12 @@ The default settings are generally recommended, the \code{lock} to
 support the credibility of the object returned as a snapshot of the
 source file, and the second so that method definitions can be inserted
 later by \code{insertSource} using the trace mechanism.
+}
+\item{force}{
+If \code{FALSE}, only functions currently in the environment will be
+redefined, using \code{\link{trace}}.  If \code{TRUE}, other
+objects/functions will be simply assigned.  By default, \code{TRUE} if
+neither the \code{functions} nor the \code{methods} argument is supplied.
 }
 
 }

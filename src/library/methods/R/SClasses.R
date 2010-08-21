@@ -206,13 +206,9 @@ getClassDef <-
   function(Class, where = topenv(parent.frame()), package = packageSlot(Class),
            inherits = TRUE)
 {
-    ## FIXME:  really wants to be is(Class, "classRepresentation") but
-    ## generates inf. loop in booting methods package (also for new())
-    if(.identC(class(Class), "classRepresentation"))
-        return(Class)
-    if(inherits)
+    if(inherits) #includes both the lookup and Class being alread a definition
       value <- .getClassFromCache(Class, where)
-    else
+    else # want to force a search for the metadata in this case (Why?)
       value <- NULL
     if(is.null(value)) {
 	cname <-
@@ -239,13 +235,16 @@ getClass <-
   function(Class, .Force = FALSE,
 	   where = .classEnv(Class, topenv(parent.frame()), FALSE))
 {
-    value <- getClassDef(Class, where)
+    value <- .getClassFromCache(Class, where) # the quick way
     if(is.null(value)) {
-	if(!.Force)
-	    stop(gettextf("\"%s\" is not a defined class", Class), domain = NA)
-	else
-	    value <- makeClassRepresentation(Class, package = "base",
-					     virtual = TRUE, where = where)
+        value <- getClassDef(Class, where) # searches
+        if(is.null(value)) {
+            if(!.Force)
+                stop(gettextf("\"%s\" is not a defined class", Class), domain = NA)
+            else
+                value <- makeClassRepresentation(Class, package = "base",
+                                                 virtual = TRUE, where = where)
+        }
     }
     value
 }
@@ -376,25 +375,12 @@ isClass <-
 new <-
   ## Generate an object from the specified class.
   ##
-  ## If other arguments are included, these are the values for named slots
-  ## in the object, or an object that can be coerced into this class.
   ## Note that the basic vector classes, `"numeric"', etc. are implicitly defined,
   ## so one can use `new' for these classes.
-  ###
-  ### Unnamed arguments are objects from this class or a superclass.
   ##
   function(Class, ...)
-    ## NB: the *name* of the first argument is automatically invalid as slot name
-    ## --  in  new(., <slot> = <val>)
 {
-    ## get the class definition, completing it if this is the first reference
-    ## to this class in this session.
-    ClassDef <-
-	if(.identC(class(Class), "classRepresentation"))
-	    ## FIXME:  really wants to be is(Class, "classRepresentation") but
-	    ## generates inf. loop in booting methods package (also for getClassDef)
-	    Class
-	else getClass(Class, where = topenv(parent.frame()))
+    ClassDef <- getClass(Class, where = topenv(parent.frame()))
     value <- .Call("R_do_new_object", ClassDef, PACKAGE = "base")
     initialize(value, ...)
 }

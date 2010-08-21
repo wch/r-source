@@ -155,6 +155,8 @@
             value
         }
     if(!isGeneric("initialize", envir)) {
+        ## save the default method
+        assign(".initialize", initialize, envir)
         setGeneric("initialize",  .initGeneric, where = envir, useAsDefault = TRUE, simpleInheritanceOnly = TRUE)
     }
     setMethod("initialize", "signature",

@@ -34,6 +34,7 @@ SEXP R_el_named(SEXP object, SEXP what);
 SEXP R_externalptr_prototype_object();
 SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env, SEXP package);
 SEXP R_get_slot(SEXP obj, SEXP name);
+SEXP R_getClassFromCache(SEXP class, SEXP table);
 SEXP R_hasSlot(SEXP obj, SEXP name);
 SEXP R_identC(SEXP e1, SEXP e2);
 SEXP R_initMethodDispatch(SEXP envir);

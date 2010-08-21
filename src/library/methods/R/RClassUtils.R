@@ -933,6 +933,7 @@ possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
         ## look for class1 in the known subclasses of class2
         if(!is.null(ClassDef2)) {
             ext <- ClassDef2@subclasses
+            ## check for a classUnion definition, not a plain "classRepresentation"
             if(!.identC(class(ClassDef2), "classRepresentation") &&
                isClassUnion(ClassDef2))
                 ## a simple TRUE iff class1 or one of its superclasses belongs to the union
@@ -1896,9 +1897,13 @@ substituteFunctionArgs <-
     }
 }
 
+## the workhorse of class access
+## The underlying C code will return name if it is not a character vector
+## in the assumption this is a classRepresentation or subclass of that.
+## In principle, this could replace the checks on class(name) in getClassDef
+## and new(), which don't work for subclasses of classRepresentation anyway.
 .getClassFromCache <- function(name, where) {
-    if(exists(name, envir = .classTable, inherits = FALSE)) {
-	value <- get(name, envir = .classTable)
+	value <- .Call("R_getClassFromCache", name, .classTable, PACKAGE = "methods")
 	if(is.list(value)) { ## multiple classes with this name
 	    pkg <- packageSlot(name)
 	    if(is.null(pkg))
@@ -1907,11 +1912,11 @@ substituteFunctionArgs <-
 	    i <- match(pkg, pkgs, 0L)
 	    if(i == 0L) ## try 'methods':
 		i <- match("methods", pkgs, 0L)
-	    if(i > 0L) value[[i]]	# else NULL
+	    if(i > 0L) value[[i]]
+            else NULL
 	}
-	else
+	else #either a class definition or NULL
 	    value
-    } ## else NULL
 }
 
 ### insert superclass information into all the subclasses of this

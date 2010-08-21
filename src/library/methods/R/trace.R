@@ -636,6 +636,7 @@ insertSource <- function(source, package = "",
                          functions = allPlainObjects(),
                          methods = (if(missing(functions)) allMethodTables() else NULL)
 ##                         ,classes = (if(missing(functions)) allClassDefs() else NULL)
+                         , force = missing(functions) & missing(methods)
                      ){
     MPattern <- .TableMetaPattern()
     CPattern <- .ClassMetaPattern()
@@ -760,6 +761,8 @@ insertSource <- function(source, package = "",
                .TraceWithMethods(this, where = envwhere, edit = env))
             objectsDone <- c(objectsDone, this)
         }
+        else if(force)
+            assign(this, thisObj, envir = envwhere)
         else if(!is.function(thisObj))
             notTraceable <- c(notTraceable, this)
         else if(is.null(thisWhere))
@@ -772,7 +775,7 @@ insertSource <- function(source, package = "",
         message(gettextf("New functions aren't currently inserted (not untraceable): %s",
                  paste(newObjects, collapse = ", ")), domain = NA)
     if(length(objectsDone) > 0)
-        message(gettextf("Functions inserted through trace(): %s",
+        message(gettextf("Modified functions inserted through trace(): %s",
                  paste(objectsDone, collapse = ", ")), domain = NA)
     for(i in seq_along(methods)) {
         .copyMethods(methods[[i]], methodNames[[i]], env, envp)

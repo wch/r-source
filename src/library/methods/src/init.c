@@ -31,6 +31,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(R_dummy_extern_place, 0),
     CALLDEF(R_el_named, 2),
     CALLDEF(R_externalptr_prototype_object, 0),
+    CALLDEF(R_getClassFromCache, 2),
     CALLDEF(R_getGeneric, 4),
     CALLDEF(R_get_slot, 2),
     CALLDEF(R_hasSlot, 2),
