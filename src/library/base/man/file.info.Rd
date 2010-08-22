@@ -1,6 +1,6 @@
 % File src/library/base/man/file.info.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2009 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{file.info}
@@ -18,6 +18,9 @@ file.info(\dots)
 }
 \details{
   The file paths are tilde-expanded: see \code{\link{path.expand}}.
+  What constitutes a \sQuote{file} is OS-dependent but includes
+  directories (However, directory names must not include a trailing
+  backslash or slash on Windows.)
 
   The file \sQuote{mode} follows POSIX conventions, giving three octal
   digits summarizing the permissions for the file owner, the owner's
