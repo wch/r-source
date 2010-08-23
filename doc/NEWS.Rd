@@ -305,6 +305,8 @@
       \item \code{tools::texi2dvi(file, clean = TRUE)} now works in more cases
       (e.g. where emulation is used and when \file{file} is not in the
       current directory).
+
+      \item New function \code{droplevels()} to remove unused factor levels											
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{

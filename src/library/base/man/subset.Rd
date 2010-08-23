@@ -53,6 +53,11 @@ subset(x, \dots)
   The \code{drop} argument is passed on to the indexing method for
   matrices and data frames: note that the default for matrices is
   different from that for indexing.
+
+  It can happen that factors have empty levels after subsetting. They
+  are not removed, because that could be undesirable. Notice the
+  \code{\link{dropLevels}} function introduced in R version 2.12.0.
+
 }
 \value{
   An object similar to \code{x} contain just the selected elements (for
@@ -68,6 +73,7 @@ subset(x, \dots)
 \seealso{
   \code{\link{[}}, % = ./Extract.Rd
   \code{\link{transform}}
+  \code{\link{dropLevels}}
 }
 \examples{
 subset(airquality, Temp > 80, select = c(Ozone, Temp))

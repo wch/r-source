@@ -87,6 +87,16 @@ nlevels <- function(x) length(levels(x))
     y
 }
 
+dropLevels <- function(x, ...) UseMethod("dropLevels")
+dropLevels.factor <- function(x, ...) factor(x)
+dropLevels.data.frame <- function(x, exclude = NULL, ...)
+  {
+    ix <- sapply(x, is.factor)
+    if (!is.null(exclude)) ix[exclude] <- FALSE
+    x[ix] <- lapply(x[ix], factor)
+    x
+  }
+
 as.vector.factor <- function(x, mode="any")
 {
     if(mode=="list") as.list(x)

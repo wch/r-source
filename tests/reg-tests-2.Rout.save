@@ -1,5 +1,5 @@
 
-R version 2.12.0 Under development (unstable) (2010-07-29 r52637)
+R version 2.12.0 Under development (unstable) (2010-08-22 r52792)
 Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-apple-darwin10.4.0 (64-bit)
@@ -3175,13 +3175,13 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
  [1] $<-           Math          Ops           Summary       [            
  [6] [<-           [[            [[<-          aggregate     anyDuplicated
 [11] as.data.frame as.list       as.matrix     by            cbind        
-[16] dim           dimnames      dimnames<-    duplicated    edit         
-[21] format        formula       head          is.na         mean         
-[26] merge         na.exclude    na.omit       plot          print        
-[31] prompt        rbind         row.names     row.names<-   rowsum       
-[36] split         split<-       stack         str           subset       
-[41] summary       t             tail          transform     unique       
-[46] unstack       within       
+[16] dim           dimnames      dimnames<-    dropLevels    duplicated   
+[21] edit          format        formula       head          is.na        
+[26] mean          merge         na.exclude    na.omit       plot         
+[31] print         prompt        rbind         row.names     row.names<-  
+[36] rowsum        split         split<-       stack         str          
+[41] subset        summary       t             tail          transform    
+[46] unique        unstack       within       
 > meth2gen("dendrogram")
 [1] [[         cophenetic cut        labels     plot       print      reorder   
 [8] rev        str       
