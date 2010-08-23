@@ -138,18 +138,16 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 \value{
   If \code{intern = TRUE}, a character vector giving the output of the
   command, one line per character string.  (Output lines of more than
-  8095 characters will be split.)  If the command could not be run or
-  gives an error
-#ifdef unix
-  this will be reported on the shell's \file{stderr} (unless
-  \code{popen} is not supported, when there is an \R error).
-#endif
+  8095 characters will be split.)  If the command could not be run
+   an \R error is generated.
 #ifdef windows
-  an \R error is generated.
-#endif
-#ifdef windows
-  This also captures \code{stderr} on the RGui console unless
+  Under the RGui console this also captures \code{stderr} unless
   \code{ignore.stderr = TRUE}.
+#endif
+#ifdef Unix
+  If \code{command} runs but gives a non-zero exit status this will be
+  reported with a warning. (NB: the status reported by the OS is on
+  most systems 256 times that reported by the command). 
 #endif
 
   If \code{intern = FALSE}, the return value is an error code (\code{0}
@@ -169,8 +167,8 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   the error code returned by the command, and if \code{wait = FALSE} it
   is \code{0} (the conventional success value).
 #ifdef windows
-  Some Windows commands return out-of-range error values (e.g. -1) and so
-  only the bottom 16 bits of the value are used.
+  Some Windows commands return out-of-range error values
+  (e.g. \code{-1}) and so only the bottom 16 bits of the value are used.
 
   If \code{intern = FALSE} and \code{show.output.on.console = TRUE}
   the \file{stdout} and \file{stderr} (unless \code{ignore.stderr =
@@ -197,28 +195,25 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
     \item The most important difference is that on Unix-alike what
     \code{system} does is to launch a shell which then runs
     \code{command}.  On Windows the command is run directly -- use
-    \code{shell} for an interface than does run \code{comamnd}
-    \emph{via} a shell (but by default the Windows shell
-    \command{cmd.exe}).
+    \code{shell} for an interface which runs \code{comamnd} \emph{via} a
+    shell (by default the Windows shell \command{cmd.exe}).
 
     This means that it cannot be assumed that redirection or piping will
     work in \code{system} (redirection sometimes does, but we have seen
-    cases where it stopped working after a security patch), and
+    cases where it stopped working after a Windows security patch), and
     \code{shell} must be used on Windows.
 
-    \item The behaviour on error is different.  With \code{intern=TRUE},
-    failure to run the command is an \R error on Windows, whereas on
-    Unix it has to be deduced from the output returned.  With
-    \code{intern=FALSE} the error codes are quite different---whereas
-    \code{0} always indicates success, failure to run the command is
-    indicated by \code{52512} on Unix and \code{-1} on Windows.
+    \item The behaviour on error is different.  With \code{intern =
+    FALSE} the error codes are quite different --- whereas \code{0}
+    always indicates success, failure to run the command is indicated by
+    \code{52512} on Unix and \code{-1} on Windows.
     
     \item The quoting conventions for \code{command} differ, but
     \code{\link{shQuote}} is a portable interface.
     
     \item Arguments \code{show.output.on.console}, \code{minimized},
-    \code{invisible} only do something on Windows (and relevant to a GUI
-    interface only).
+    \code{invisible} only do something on Windows (and are only relevant
+    to a GUI interface there).
   }
 }
 \seealso{
@@ -242,7 +237,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 t1 <- try(system("who", intern = TRUE))
 
 try(system("ls fizzlipuzzli", intern = TRUE, ignore.stderr = TRUE))
-# empty since file doesn't exist
+# zero-length result since file does not exist, and will give warning.
 }
 #endif
 #ifdef windows

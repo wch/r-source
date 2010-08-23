@@ -2915,13 +2915,12 @@ function(dir)
     if(make == "") make <- "make"
 
     lines <-
-        tryCatch(system(sprintf("%s -f %s -f %s",
-                                make,
-                                shQuote(mfile),
-                                shQuote(file.path(R.home("share"),
-                                                  "make", "check.mk"))),
-                        intern = TRUE, ignore.stderr = TRUE),
-                 error = identity)
+        suppressWarnings(tryCatch(system(sprintf("%s -f %s -f %s",
+                                                 make,
+                                                 shQuote(mfile),
+                                                 shQuote(file.path(R.home("share"), "make", "check.mk"))),
+                                         intern = TRUE, ignore.stderr = TRUE),
+                                  error = identity))
     if(!length(lines) || inherits(lines, "error"))
         return(bad_flags)
 

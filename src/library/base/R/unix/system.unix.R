@@ -47,7 +47,8 @@ Sys.which <- function(names)
 {
     res <- character(length(names)); names(res) <- names
     for(i in names) {
-        ans <- system(paste("which", i), intern=TRUE, ignore.stderr=TRUE)
+        ans <- suppressWarnings(system(paste("which", i), intern=TRUE,
+                                       ignore.stderr=TRUE))
         res[i] <- if(length(ans)) ans[1] else ""
     }
     res

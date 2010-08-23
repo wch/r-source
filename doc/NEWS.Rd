@@ -302,11 +302,16 @@
       \code{"\%z"} formats, but it is not always possible.  (Wish of
       \PR{14358}.)
 
-      \item \code{tools::texi2dvi(file, clean = TRUE)} now works in more cases
-      (e.g. where emulation is used and when \file{file} is not in the
-      current directory).
+      \item \code{tools::texi2dvi(file, clean = TRUE)} now works in more
+      cases (e.g. where emulation is used and when \file{file} is not in
+      the current directory).
 
-      \item New function \code{droplevels()} to remove unused factor levels											
+      \item New function \code{droplevels()} to remove unused factor levels.
+
+      \item \code{system(intern = TRUE)} now gives an error on a
+      Unix-alike (as well as on Windows) if \code{command} cannot be
+      run.  It reports a non-success exit status from running
+      \code{command} as a warning.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{

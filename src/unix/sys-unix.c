@@ -258,17 +258,16 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     if (!isValidStringF(CAR(args)))
-	errorcall(call, _("non-empty character argument expected"));
-    if (isLogical(CADR(args)) && (read = LOGICAL(CADR(args))[0]) != NA_INTEGER)
-	;
-    else
-	errorcall(call, _("'intern' must be logical and not NA"));
+	error(_("non-empty character argument expected"));
+    read = asLogical(CADR(args));
+    if (read == NA_INTEGER)
+	error(_("'intern' must be logical and not NA"));
     if (read) {
 #ifdef HAVE_POPEN
 	FILE *fp;
 	char *x = "r", buf[INTERN_BUFSIZE];
 	const char *cmd;
-	int i, j;
+	int i, j, res;
 	SEXP tchar, rval;
 
 	PROTECT(tlist);
@@ -286,16 +285,33 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    UNPROTECT(1);
 	    PROTECT(tlist = CONS(tchar, tlist));
 	}
-	pclose(fp);
-	rval = allocVector(STRSXP, i);;
+	res = pclose(fp);
+	if (res == 32512) {/* 256*127, aka -1 */
+	    if (errno)
+		error(_("error in running command: %s"), strerror(errno));
+	    else
+		error(_("error in running command"));
+	} else if (res) {
+	    if (errno)
+		warningcall(R_NilValue, 
+			    _("running command '%s' had status %d: and error message %s"), 
+			    cmd, res, 
+			    strerror(errno));
+	    else 
+		warningcall(R_NilValue, 
+			    _("running command '%s' had status %d"), 
+			    cmd, res);
+	}
+	
+	rval = allocVector(STRSXP, i);
 	for (j = (i - 1); j >= 0; j--) {
 	    SET_STRING_ELT(rval, j, CAR(tlist));
 	    tlist = CDR(tlist);
 	}
 	UNPROTECT(1);
-	return (rval);
+	return rval;
 #else /* not HAVE_POPEN */
-	errorcall(call, _("'intern=TRUE' is not implemented on this platform"));
+	error(_("'intern=TRUE' is not implemented on this platform"));
 	return R_NilValue;
 #endif /* not HAVE_POPEN */
     }
