@@ -245,7 +245,6 @@ SEXP attribute_hidden do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 
-#ifdef HAVE_POPEN
 FILE *R_popen(const char *command, const char *type)
 {
     FILE *fp;
@@ -262,11 +261,10 @@ FILE *R_popen(const char *command, const char *type)
 #endif
     return fp;
 }
-#endif /* HAVE_POPEN */
 
 int R_system(const char *command)
 {
-    int val;
+    int res;
 #ifdef __APPLE_CC__
     /* Luke recommends this to fix PR#1140 */
     sigset_t ss;
@@ -278,16 +276,23 @@ int R_system(const char *command)
     if(useaqua) {
 	/* FIXME, is Cocoa's interface not const char*? */
 	cmdcpy = acopy_string(command);
-	val = ptr_CocoaSystem(cmdcpy);
+	res = ptr_CocoaSystem(cmdcpy);
     }
     else
 #endif
-    val = system(command);
+    res = system(command);
     sigprocmask(SIG_UNBLOCK, &ss, NULL);
 #else
-    val = system(command);
+    res = system(command);
 #endif
-    return val;
+#ifdef HAVE_SYS_WAIT_H
+	if (WIFEXITED(res)) res = WEXITSTATUS(res);
+	else res = 0;
+#else
+	/* assume that this is shifted if a multiple of 256 */
+	if ((res % 256) == 0) res = res/256;
+#endif
+    return res;
 }
 
 #if defined(__APPLE__)

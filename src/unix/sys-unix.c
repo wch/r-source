@@ -254,16 +254,15 @@ void R_setStartTime(void) {}
 SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP tlist = R_NilValue;
-    int read = 0;
+    int intern = 0;
 
     checkArity(op, args);
     if (!isValidStringF(CAR(args)))
 	error(_("non-empty character argument expected"));
-    read = asLogical(CADR(args));
-    if (read == NA_INTEGER)
+    intern = asLogical(CADR(args));
+    if (intern == NA_INTEGER)
 	error(_("'intern' must be logical and not NA"));
-    if (read) {
-#ifdef HAVE_POPEN
+    if (intern) { /* intern = TRUE */
 	FILE *fp;
 	char *x = "r", buf[INTERN_BUFSIZE];
 	const char *cmd;
@@ -277,7 +276,7 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("cannot popen '%s', probable reason '%s'"),
 		  cmd, strerror(errno));
 	for (i = 0; fgets(buf, INTERN_BUFSIZE, fp); i++) {
-	    read = strlen(buf);
+	    int read = strlen(buf);
 	    if(read >= INTERN_BUFSIZE - 1)
 		warning(_("line %d may be truncated in call to system(, intern = TRUE)"), i + 1);
 	    if (read > 0 && buf[read-1] == '\n')
@@ -287,7 +286,14 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(tlist = CONS(tchar, tlist));
 	}
 	res = pclose(fp);
-	if (res == 32512) {/* 256*127, aka -1 */
+#ifdef HAVE_SYS_WAIT_H
+	if (WIFEXITED(res)) res = WEXITSTATUS(res);
+	else res = 0;
+#else
+	/* assume that this is shifted if a multiple of 256 */
+	if ((res % 256) == 0) res = res/256;
+#endif
+	if ((res & 0xff)  == 127) {/* 127, aka -1 */
 	    if (errno)
 		error(_("error in running command: %s'"), strerror(errno));
 	    else
@@ -311,12 +317,8 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	UNPROTECT(1);
 	return rval;
-#else /* not HAVE_POPEN */
-	error(_("'intern=TRUE' is not implemented on this platform"));
-	return R_NilValue;
-#endif /* not HAVE_POPEN */
     }
-    else {
+    else { /* intern =  FALSE */
 #ifdef HAVE_AQUA
 	R_Busy(1);
 #endif

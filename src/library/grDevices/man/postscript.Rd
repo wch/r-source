@@ -308,10 +308,9 @@ postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
     unless \code{command} arranges to delete it.
 
     \item \code{file=""} or \code{file="|cmd"} can be used to print
-    using a pipe on systems that support \file{popen}.  Failure to open the
-    command will probably be reported to the terminal but not to
-    \file{popen}, in which case close the device by \code{dev.off}
-    immediately.
+    using a pipe.  Failure to open the command will probably be reported
+    to the terminal but not to \R, in which case close the
+    device by \code{dev.off} immediately.
   }
 #ifdef windows
   Only the first of these will work on Windows, and the default

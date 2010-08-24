@@ -1836,15 +1836,13 @@ stopifnot(length(res) == 1 && res == 1)
 ## gave NULL in 1.6.1
 
 
-## Undocumented line limit in system(intern=TRUE)
+## Formerly undocumented line limit in system(intern=TRUE)
 ## Naoki Takebayashi <ntakebay@bio.indiana.edu> 2002-12-07
 tmp <- tempfile()
 long <- paste(rep("0123456789", 20), collapse="")
 cat(long, "\n", sep="", file=tmp)
-# system(intern=TRUE) depends on popen.
-junk <- try(system(paste("cat", tmp), intern = TRUE))
-if(!inherits(junk, "try-error"))
-    stopifnot(length(junk) == 1, nchar(junk[1]) == 200)
+junk <- system(paste("cat", tmp), intern = TRUE)
+stopifnot(length(junk) == 1, nchar(junk[1]) == 200)
 ## and split truncated on 1.6.1
 
 

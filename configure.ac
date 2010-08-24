@@ -1693,6 +1693,9 @@ R_CHECK_FUNCS([sigaction sigaltstack sigemptyset], [#include <signal.h>])
 ## va_copy is C99
 R_CHECK_FUNCS([va_copy __va_copy], [#include <stdarg.h>])
 R_CHECK_FUNCS([fdopen popen], [#include <stdio.h>])
+if test "${ac_cv_have_decl_popen}" = "no"; then
+   AC_MSG_ERROR([Building R requires the 'stat' system call])
+fi
 ## system is C89: [un]setenv are POSIX and BSD
 R_CHECK_FUNCS([setenv system unsetenv], [#include <stdlib.h>])
 ## strcoll is C89

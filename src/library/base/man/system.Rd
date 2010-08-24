@@ -18,10 +18,6 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   \item{command}{the system command to be invoked, as a string.}
   \item{intern}{a logical (not \code{NA}) which indicates whether to
     make the output of the command an \R object.
-#ifdef unix
-    Not available unless \code{popen} is supported on the platform
-    (which it almost always is).
-#endif
   }
   \item{ignore.stderr}{a logical (not \code{NA}) indicating whether
     error messages written to \file{stderr} should be ignored.}
@@ -155,15 +151,12 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   explicitly).  If the command could not be run for any reason, the
   value is
 #ifdef unix
-  \code{256*127 = 52512}.
+  \code{127}.
 #endif
 #ifdef windows
   \code{-1}.  (An \R warning is also generated.)
 #endif
   Otherwise if \code{wait = TRUE} the value is
-#ifdef unix
-  256 times
-#endif
   the error code returned by the command, and if \code{wait = FALSE} it
   is \code{0} (the conventional success value).
 #ifdef windows
@@ -203,10 +196,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
     cases where it stopped working after a Windows security patch), and
     \code{shell} must be used on Windows.
 
-    \item The behaviour on error is different.  With \code{intern =
-    FALSE} the error codes are quite different --- whereas \code{0}
-    always indicates success, failure to run the command is indicated by
-    \code{52512} on Unix and \code{-1} on Windows.
+    \item The behaviour on error is different in subtle ways.
     
     \item The quoting conventions for \code{command} differ, but
     \code{\link{shQuote}} is a portable interface.
@@ -233,7 +223,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 
 # t1 is a character vector, each one
 # representing a separate line of output from who
-# (if the platform has popen and who)
+# (if the platform has who)
 t1 <- try(system("who", intern = TRUE))
 
 try(system("ls fizzlipuzzli", intern = TRUE, ignore.stderr = TRUE))

@@ -312,6 +312,14 @@
       Unix-alike (as well as on Windows) if \code{command} cannot be
       run.  It reports a non-success exit status from running
       \code{command} as a warning.
+
+      \item On a Unix-alike an attempt is made to return the actual exit
+      status of the command in \code{system(intern = FALSE)}: previously
+      this had been system-dependent but on POSIX-compliant systems the
+      value return was 256 times the status.
+
+      \item \code{system(intern = TRUE)} and \code{pipe()} connections
+      are guaranteed to be avaliable on all builds of \R.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
@@ -447,6 +455,8 @@
       \item File \file{NEWS} is no longer in the sources, but generated as
       part of the installation.  The primary source for changes is now
       \file{doc/NEWS.Rd}.
+
+      \item The \code{popen} system call is not required to build \R.
     }
   }
   \subsection{BUG FIXES}{
