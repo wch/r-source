@@ -273,8 +273,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   although \code{fileEncoding} can be used to specify the encoding of
   the input file (or a connection can be specified which re-encodes),
   the implied re-encoding must be possible.  This is not a problem in
-  UTF-8 locales, but it can be on Windows---\code{\link{readLines}} or
-  \code{\link{scan}} be used to avoid this limitation since they have
+  UTF-8 locales, but it can be on Windows --- \code{\link{readLines}} or
+  \code{\link{scan}} can be used to avoid this limitation since they have
   special provisions to convert input to UTF-8.
 }
 
