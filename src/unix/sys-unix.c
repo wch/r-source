@@ -254,7 +254,7 @@ void R_setStartTime(void) {}
 SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP tlist = R_NilValue;
-    int read=0;
+    int read = 0;
 
     checkArity(op, args);
     if (!isValidStringF(CAR(args)))
@@ -272,6 +272,7 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	PROTECT(tlist);
 	cmd = translateChar(STRING_ELT(CAR(args), 0));
+	errno = 0; /* precaution */
 	if(!(fp = R_popen(cmd, x)))
 	    error(_("cannot popen '%s', probable reason '%s'"),
 		  cmd, strerror(errno));
@@ -288,13 +289,13 @@ SEXP attribute_hidden do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	res = pclose(fp);
 	if (res == 32512) {/* 256*127, aka -1 */
 	    if (errno)
-		error(_("error in running command: %s"), strerror(errno));
+		error(_("error in running command: %s'"), strerror(errno));
 	    else
 		error(_("error in running command"));
 	} else if (res) {
 	    if (errno)
 		warningcall(R_NilValue, 
-			    _("running command '%s' had status %d: and error message %s"), 
+			    _("running command '%s' had status %d: and error message '%s'"), 
 			    cmd, res, 
 			    strerror(errno));
 	    else 
