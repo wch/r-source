@@ -36,17 +36,17 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 #ifdef windows
   \item{show.output.on.console}{logical (not \code{NA}), indicates
     whether to capture the output of the command and show it on the \R
-    console (not used by \code{Rterm}, which captures the output unless
-    \code{wait} is false).}
+    console (not used by \code{Rterm}, which shows the output in the
+    terminal unless \code{wait} is false).}
   \item{minimized}{logical (not \code{NA}), indicates whether the
-    command window should be initially displayed as a minimized window.}
+    command window should be displayed initially as a minimized window.}
   \item{invisible}{logical (not \code{NA}), indicates whether the
     command window should be visible on the screen.}
 #endif
 }
 \details{
   \code{command} is parsed as a command plus arguments separated by spaces.
-  So if the path to the command (or a filepath argument) contains
+  So if the path to the command (or an argument) contains
   spaces, it must be quoted e.g. by \code{\link{shQuote}}.
 #ifdef windows
   Only double quotes are allowed on Windows: see the examples.  (Note: a
@@ -70,6 +70,8 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   Windows system directories before \code{PATH}.
 #endif
 #ifdef unix
+  \code{command} can be anything the shell regards as executable,
+  including shell scripts.
 
   If \code{intern} is \code{TRUE} then \code{popen} is used to invoke the
   command and the output collected, line by line, into an \R
@@ -81,69 +83,18 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   time: it is recommended to name all arguments after the first.
 }
 
-#ifdef unix
-\section{Stdout and stderr}{
-  Error messages written to \file{stderr} will be sent by the shell to
-  the terminal unless \code{ignore.stderr = TRUE}.  They can be captured
-  (in the most likely shells) by
-\preformatted{
-    system("some command 2>&1", intern=TRUE)
-}
-  What happens to output sent to \file{stdout} and \file{stderr} if
-  \code{intern = FALSE} is interface-specific, and it is unsafe to
-  assume that such messages will appear on a console (they do on the
-  Mac OS X console, but not on some others).
-}
-\note{
-  \code{wait} is implemented by appending \code{&} to the command: this
-  is shell-dependent, but required by POSIX and so widely supported.
-}
-#endif
-
-#ifdef windows
-\section{Interaction with the command}{
-  Precisely what is seen by the user depends on the optional
-  parameters, whether \code{Rgui} or \code{Rterm} is being used, and whether
-  a console command or GUI application is run by the command.
-  
-  By default nothing will be seen in either system until the command finishes
-  and the output is displayed. 
-  
-  For console commands \code{Rgui} will open a new \sQuote{console}, so
-  if \code{invisible} is false, a commands window will appear for the duration
-  of the command. For \code{Rterm} a separate commands window will appear
-  for console applications only if \code{wait = FALSE} and
-  \code{invisible = FALSE}.  
-
-  GUI applications will not display in either system unless
-  \code{invisible} is true.
-  
-  It is possible to interrupt the running command from the keyboard
-  (using the \samp{Esc} key in \code{Rgui} or \samp{Ctrl-C} in
-  \code{Rterm}) or the \code{Rgui} menu: this should at least return
-  control to the \R console.  \R will attempt to shut down the process
-  cleanly, but may need to force it to terminate, with the possibility
-  of losing unsaved work, etc.  
-
-  Do not try to run console applications that require user
-  input from \code{Rgui} setting \code{intern = TRUE} and/or
-  \code{show.output.on.console = TRUE}.  They will not work.
-}
-#endif
-
 \value{
   If \code{intern = TRUE}, a character vector giving the output of the
   command, one line per character string.  (Output lines of more than
-  8095 characters will be split.)  If the command could not be run
+  8095 bytes will be split.)  If the command could not be run
    an \R error is generated.
 #ifdef windows
-  Under the RGui console this also captures \code{stderr} unless
-  \code{ignore.stderr = TRUE}.
+  Under the \code{Rgui} console \code{intern = TRUE} also captures
+  \code{stderr} unless \code{ignore.stderr = TRUE}.
 #endif
 #ifdef Unix
   If \code{command} runs but gives a non-zero exit status this will be
-  reported with a warning. (NB: the status reported by the OS is on
-  most systems 256 times that reported by the command). 
+  reported with a warning. 
 #endif
 
   If \code{intern = FALSE}, the return value is an error code (\code{0}
@@ -156,11 +107,11 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 #ifdef windows
   \code{-1}.  (An \R warning is also generated.)
 #endif
-  Otherwise if \code{wait = TRUE} the value is
-  the error code returned by the command, and if \code{wait = FALSE} it
-  is \code{0} (the conventional success value).
+  Otherwise if \code{wait = TRUE} the value is the exit status returned
+  by the command, and if \code{wait = FALSE} it is \code{0} (the
+  conventional success value).
 #ifdef windows
-  Some Windows commands return out-of-range error values
+  Some Windows commands return out-of-range status values
   (e.g. \code{-1}) and so only the bottom 16 bits of the value are used.
 
   If \code{intern = FALSE} and \code{show.output.on.console = TRUE}
@@ -176,10 +127,94 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 #endif
 }
 
+\section{Detecting if a command can be run}{
+  This can be extremely tricky.  Perhaps the safest way is to run
+  something like
+\preformatted{
+    res <- system("foo --version")  
+}
+  and to check the return value.  One would hope that this gave the
+  success value (\code{0}) but not always.  If the command is not
+  present, the return value will be \code{127}, but possibly
+  \code{256*127} or \code{-1} on earlier versions of \R, so the best
+  idea is to test for one of those values.  (And of course the command
+  could itself use \code{127} or \code{-1} as an exit status.)
+
+  An alternative is to capture and analyse the output by something like
+\preformatted{
+    res <- system("foo --version", intern = TRUE, ignore.stderr = TRUE)
+}
+  This has several difficulties:
+  \enumerate{
+    \item This gives an error if the command is not present as from \R
+    2.12.0 and on Windows on earlier versions of \R.  So it needs to be
+    wrapped in a \code{\link{try}} construction.
+    \item Some commands send such output to \file{stdout}, some to
+    \file{stderr} and in at least one case which depends on the version
+    of the command.  So something like
+\preformatted{
+    res <- try(system("foo --version 2>&1", intern = TRUE))
+}
+has to be used,
+    \item The latter is not portable to Windows (where \code{shell} must
+    be used).
+  }
+}
+
+#ifdef unix
+\section{Stdout and stderr}{
+  Error messages written to \file{stderr} will be sent by the shell to
+  the terminal unless \code{ignore.stderr = TRUE}.  They can be captured
+  (in the most likely shells) by
+\preformatted{
+    system("some command 2>&1", intern=TRUE)
+}
+  What happens to output sent to \file{stdout} or \file{stderr} if
+  \code{intern = FALSE} is interface-specific, and it is unsafe to
+  assume that such messages will appear on a console (they do on the
+  Mac OS X console, but not on some others).
+}
+\note{
+  \code{wait} is implemented by appending \code{&} to the command: this
+  is shell-dependent, but required by POSIX and so widely supported.
+}
+#endif
+
+#ifdef windows
+\section{Interaction with the command}{
+  Precisely what is seen by the user depends on the optional parameters,
+  whether \code{Rgui} or \code{Rterm} is being used, and whether a
+  console command or GUI application is run by the command.
+  
+  By default nothing will be seen in either front-end until the command
+  finishes and the output is displayed.
+  
+  For console commands \code{Rgui} will open a new \sQuote{console}, so
+  if \code{invisible = FALSE}, a commands window will appear for the
+  duration of the command.  For \code{Rterm} a separate commands window
+  will appear for console applications only if \code{wait = FALSE} and
+  \code{invisible = FALSE}.
+
+  GUI applications will not display in either front-end unless
+  \code{invisible} is true.
+  
+  It is possible to interrupt a running command being waited for from
+  the keyboard (using the \samp{Esc} key in \code{Rgui} or \samp{Ctrl-C}
+  in \code{Rterm}) or from the \code{Rgui} menu: this should at least
+  return control to the \R console.  \R will attempt to shut down the
+  process cleanly, but may need to force it to terminate, with the
+  possibility of losing unsaved work, etc.
+
+  Do not try to run console applications that require user
+  input from \code{Rgui} setting \code{intern = TRUE} and/or
+  \code{show.output.on.console = TRUE}.  They will not work.
+}
+#endif
+
 \section{Differences between Unix and Windows}{
   How processes are launched differs fundamentally between Windows and
   Unix-alike operating systems, as do the higher-level OS functions on
-  which the \R function is built.  So it should not be surprising that
+  which this \R function is built.  So it should not be surprising that
   there are many differences between OSes in how \code{system} behaves.
   For the benefit of programmers, the more important ones are summarized
   in this section.
@@ -202,7 +237,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
     \code{\link{shQuote}} is a portable interface.
     
     \item Arguments \code{show.output.on.console}, \code{minimized},
-    \code{invisible} only do something on Windows (and are only relevant
+    \code{invisible} only do something on Windows (and are most relevant
     to a GUI interface there).
   }
 }
