@@ -322,8 +322,8 @@ FileReadConsole(const char *prompt, char *buf, int len, int addhistory)
     /* translate if necessary */
     if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
 	size_t res, inb = strlen(buf), onb = len;
-	const char *ib = buf; char *ob, *obuf;
-	ob = obuf = alloca(len+1);
+	const char *ib = buf; 
+	char obuf[len+1], *ob = obuf;
 	if(!cd) {
 	    cd = Riconv_open("", R_StdinEnc);
 	    if(!cd) error(_("encoding '%s' is not recognised"), R_StdinEnc);

@@ -27,11 +27,6 @@
 #include <string.h>
 #include <stdlib.h> /* for getenv */
 
-#ifdef __GNUC__
-# undef alloca
-# define alloca(x) __builtin_alloca((x))
-#endif
-
 #ifndef min
 /* in stdlib.h in Win64 headers */
 # define min(a, b) (a < b ? a : b)
@@ -63,7 +58,6 @@ static int rt_completion(char *buf, int offset, int *loc)
     int i, alen, cursor_position = *loc;
     char *partial_line = buf;
     const char *additional_text;
-    char *pline, *cmd;
     SEXP cmdSexp, cmdexpr, ans = R_NilValue;
     ParseStatus status;
 
@@ -97,13 +91,13 @@ static int rt_completion(char *buf, int offset, int *loc)
     }
 
     /* FIXME: need to escape quotes properly */
-    pline = alloca(strlen(partial_line) + 1);
+    char pline[strlen(partial_line) + 1];
     strcpy(pline, partial_line);
     /* poor attempt at escaping quotes that sort of works */
     alen = strlen(pline);
     for (i = 0; i < alen; i++) if (pline[i] == '"') pline[i] = '\'';
 
-    cmd = alloca(strlen(pline) + 100);
+    char cmd[strlen(pline) + 100];
     sprintf(cmd, "utils:::.win32consoleCompletion(\"%s\", %d)",
 	    pline, cursor_position);
     PROTECT(cmdSexp = mkString(cmd));
