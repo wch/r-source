@@ -77,7 +77,7 @@ isOpen(con, rw = "")
 isIncomplete(con)
 }
 \arguments{
-  \item{description}{character string. A description of the connection:
+  \item{description}{character string.  A description of the connection:
     see \sQuote{Details}.}
   \item{open}{character.  A description of how to open the connection
     (if it should be opened initially).  See section \sQuote{Modes} for
@@ -238,8 +238,8 @@ isIncomplete(con)
   \code{isOpen} returns a logical value, whether the connection is
   currently open.
 
-  \code{isIncomplete} returns a logical value, whether last read attempt
-  was blocked, or for an output text connection whether there is
+  \code{isIncomplete} returns a logical value, whether the last read
+  attempt was blocked, or for an output text connection whether there is
   unflushed output.
 }
 
@@ -269,7 +269,7 @@ isIncomplete(con)
 #endif
 
   For many connections there is little or no difference between text and
-  binary modes. For file-like connections on Windows, translation of
+  binary modes.  For file-like connections on Windows, translation of
   line endings (between LF and CRLF) is done in text mode only (but text
   read operations on connections such as \code{\link{readLines}},
   \code{\link{scan}} and \code{\link{source}} work for any form of line
@@ -435,7 +435,7 @@ isIncomplete(con)
 #ifdef windows
   When writing to the clipboard, the output is copied to the clipboard
   only when the connection is closed or flushed.  There is a 32Kb limit
-  on the text to be written to the clipboard. This can be raised by
+  on the text to be written to the clipboard.  This can be raised by
   using e.g. \code{file("clipboard-128")} to give 128Kb.
 
   The clipboard works in Unicode wide characters, so encodings might
