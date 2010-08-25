@@ -37,6 +37,10 @@
       \item \command{Rcmd} has a new sub-command \command{texify} to run
        MiKTeX's \file{texify.exe} with arguments to find files such as
        \file{Sweave.sty}.  See the examples in \code{?Sweave}.
+
+       \item \code{system(intern = FALSE)} now return \code{127} (the
+       same as Unix-alikes) rather than \code{-1} if the command cannot
+       be run, and (like Unix-alikes) no longer gives a warning.
     }
   }
   \subsection{INSTALLATION}{
@@ -116,6 +120,11 @@
       \item A fix intended for Mac OS X was incorrectly applied to
       Windows, so \code{iconv(x, from, "")} in a C locale was interpreted as
       requesting translation to UTF-8.
+
+      \item \code{system(intern=TRUE)} often returned \code{0}
+      rather than an error status if the command could not be found, if
+      run from \code{Rterm} or from \code{Rgui} with
+      \code{show.output.on.console = FALSE}.
     }
   }
 }

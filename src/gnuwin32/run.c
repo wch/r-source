@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
- *  Copyright (C) 1999-2001  Guido Masarotto  and Brian Ripley
- *            (C) 2007-8     the R Development Core Team
+ *  Copyright  (C) 1999-2001  Guido Masarotto  and Brian Ripley
+ *             (C) 2007-10    The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -336,7 +336,7 @@ int runcmd(const char *cmd, cetype_t enc, int wait, int visible, const char *fin
     int ret = 0;
     PROCESS_INFORMATION pi;
 
-/* I hope no program will use this as an error code */
+    memset(&pi, 0, sizeof(pi));
     pcreate(cmd, enc, !wait, visible, 
     		      hIN,
     		      INVALID_HANDLE_VALUE,

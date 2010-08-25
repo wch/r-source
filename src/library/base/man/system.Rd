@@ -86,8 +86,8 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 \value{
   If \code{intern = TRUE}, a character vector giving the output of the
   command, one line per character string.  (Output lines of more than
-  8095 bytes will be split.)  If the command could not be run
-   an \R error is generated.
+  8095 bytes will be split.)  If the command could not be run an \R
+  error is generated.
 #ifdef windows
   Under the \code{Rgui} console \code{intern = TRUE} also captures
   \code{stderr} unless \code{ignore.stderr = TRUE}.
@@ -100,16 +100,9 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   If \code{intern = FALSE}, the return value is an error code (\code{0}
   for success), given the invisible attribute (so needs to be printed
   explicitly).  If the command could not be run for any reason, the
-  value is
-#ifdef unix
-  \code{127}.
-#endif
-#ifdef windows
-  \code{-1}.  (An \R warning is also generated.)
-#endif
-  Otherwise if \code{wait = TRUE} the value is the exit status returned
-  by the command, and if \code{wait = FALSE} it is \code{0} (the
-  conventional success value).
+  value is \code{127}.  Otherwise if \code{wait = TRUE} the value is the
+  exit status returned by the command, and if \code{wait = FALSE} it is
+  \code{0} (the conventional success value).
 #ifdef windows
   Some Windows commands return out-of-range status values
   (e.g. \code{-1}) and so only the bottom 16 bits of the value are used.
@@ -231,7 +224,8 @@ has to be used,
     cases where it stopped working after a Windows security patch), and
     \code{shell} must be used on Windows.
 
-    \item The behaviour on error is different in subtle ways.
+    \item The behaviour on error is different in subtle ways (and has
+    differed between \R versions).
     
     \item The quoting conventions for \code{command} differ, but
     \code{\link{shQuote}} is a portable interface.

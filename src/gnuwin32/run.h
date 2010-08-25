@@ -1,7 +1,7 @@
 /*
  *  A simple 'reading' pipe (and a command executor)
  *  Copyright (C) 1999  Guido Masarotto
- *            (C) 2004-8  The R Development Core Team
+ *            (C) 2004-10  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ typedef struct structRPIPE rpipe;
 
 /*
  * runcmd and rpipeClose return the exit code of the process
- * if runcmd return -1, problems in process start
+ * if runcmd return NOLAUNCH, problems in process start
 */
 #define runcmd Rf_runcmd
 int   runcmd(const char *cmd, cetype_t enc, int wait, int visible, const char *finput);
@@ -45,4 +45,5 @@ int rpipeClose(rpipe *r);
 
 char *runerror(void);
 
-#define NOLAUNCH -1
+/* Changed in R 2.12.0 to be the conventional Unix value -- previously -1 */
+#define NOLAUNCH 127

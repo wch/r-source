@@ -1,8 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2007  Robert Gentleman, Ross Ihaka
- *                            and the R Development Core Team
+ *  Copyright (C) 1997--201o  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -160,7 +159,7 @@ double R_getClockIncrement(void)
  * flag =0 don't wait/ignore stdout
  * flag =1 wait/ignore stdout
  * flag =2 wait/copy stdout to the console
- * flag =3 wait/return stdout
+ * flag =3 wait/return stdout (intern=TRUE)
  * Add 10 to minimize application
  * Add 20 to make application "invisible"
 */
@@ -210,8 +209,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    getCharCE(STRING_ELT(CAR(args), 0)),
 		    flag, vis,
 		    CHAR(STRING_ELT(CADDR(args), 0)));
-	if (ll == NOLAUNCH)
-	    warning(runerror());
+	// if (ll == NOLAUNCH) warning(runerror());
     } else {
 	int m = 0;
 	if(flag == 2 /* show on console */ || CharacterMode == RGui) m = 2;
@@ -221,9 +219,8 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 		       vis, CHAR(STRING_ELT(CADDR(args), 0)), m);
 	if (!fp) {
 	    /* If we are capturing standard output generate an error */
-	    if (flag == 3)
-		error(runerror());
-	    warning(runerror());
+	    if (flag == 3) error(runerror());
+	    // warning(runerror());
 	    ll = NOLAUNCH;
 	} else {
 	    if (flag == 3)
@@ -245,13 +242,13 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     if ((CharacterMode != RGui) && ignore_stderr)
 	SetStdHandle(STD_ERROR_HANDLE, hERR);
     if (flag == 3) {
-	rval = allocVector(STRSXP, i);;
+	PROTECT(rval = allocVector(STRSXP, i));
 	for (j = (i - 1); j >= 0; j--) {
 	    SET_STRING_ELT(rval, j, CAR(tlist));
 	    tlist = CDR(tlist);
 	}
-	UNPROTECT(1);
-	return (rval);
+	UNPROTECT(2);
+	return rval;
     } else {
 	tlist = ScalarInteger(ll);
 	R_Visible = 0;
