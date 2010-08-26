@@ -115,7 +115,8 @@ static char *expandcmd(const char *cmd)
    newconsole != 0 to use a new console (if not waiting)
    visible = -1, 0, 1 for hide, minimized, default
    inpipe != 0 to duplicate I/O handles
-   pi is set based on the newly created process, with the hThread handle closed.
+   pi is set based on the newly created process,
+   with the hThread handle closed.
 */
 
 extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
@@ -137,9 +138,8 @@ static void pcreate(const char* cmd, cetype_t enc,
     sa.lpSecurityDescriptor = NULL;
     sa.bInheritHandle = TRUE;
 
-    /* FIXME: this might need to be done in wchar */
-    if (!(ecmd = expandcmd(cmd))) /* error message already set */
-	return;
+    /* FIXME: this might need to be done in wchar_t */
+    if (!(ecmd = expandcmd(cmd))) return; /* error message already set */
 
     inpipe = (hIN != INVALID_HANDLE_VALUE) 
 	|| (hOUT != INVALID_HANDLE_VALUE) 
@@ -317,12 +317,16 @@ static int pwait2(HANDLE p)
 }
 
 /*
-   wait != 0 says wait for child to terminate before returning.
-   visible = -1, 0, 1 for hide, minimized, default
-   finput is either NULL or the name of a file from which to
-     redirect stdin for the child.
- */
-int runcmd(const char *cmd, cetype_t enc, int wait, int visible, const char *finput)
+  Used for external commands in file.show() and edit(), and for
+  system(intern=FALSE).
+
+  wait != 0 says wait for child to terminate before returning.
+  visible = -1, 0, 1 for hide, minimized, default
+  finput is either NULL or the name of a file from which to
+  redirect stdin for the child.
+*/
+int runcmd(const char *cmd, cetype_t enc, int wait, int visible, 
+	   const char *finput)
 {
     HANDLE hIN = getInputHandle(finput);
     int ret = 0;

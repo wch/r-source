@@ -14,7 +14,8 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-system <- function(command, intern = FALSE, ignore.stderr = FALSE,
+system <- function(command, intern = FALSE,
+                   ignore.stdout = FALSE, ignore.stderr = FALSE,
                    wait = TRUE, input = NULL,
                    show.output.on.console = TRUE, minimized = FALSE,
                    invisible = TRUE)
@@ -25,11 +26,14 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
 
     if(!is.logical(intern) || is.na(intern))
         stop("'intern' must be TRUE or FALSE")
+    if(!is.logical(ignore.stdout) || is.na(ignore.stdout))
+        stop("'ignore.stdout' must be TRUE or FALSE")
     if(!is.logical(ignore.stderr) || is.na(ignore.stderr))
         stop("'ignore.stderr' must be TRUE or FALSE")
     if(!is.logical(wait) || is.na(wait))
         stop("'wait' must be TRUE or FALSE")
 
+    if(ignore.stdout) command <- paste(command, ">/dev/null")
     if(ignore.stderr) command <- paste(command, "2>/dev/null")
     if(!is.null(input)) {
         if(!is.character(input))

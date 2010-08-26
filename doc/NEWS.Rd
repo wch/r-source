@@ -313,10 +313,13 @@
       run.  It reports a non-success exit status from running
       \code{command} as a warning.
 
-      \item On a Unix-alike an attempt is made to return the actual exit
+      On a Unix-alike an attempt is made to return the actual exit
       status of the command in \code{system(intern = FALSE)}: previously
       this had been system-dependent but on POSIX-compliant systems the
       value return was 256 times the status.
+
+      \item \code{system()} has a new argument \code{ignore.stdout}
+      which can be used to (portably) ignore standard output.
 
       \item \code{system(intern = TRUE)} and \code{pipe()} connections
       are guaranteed to be avaliable on all builds of \R.

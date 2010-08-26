@@ -10,17 +10,18 @@
   \code{system} invokes the OS command specified by \code{command}.
 }
 \usage{
-system(command, intern = FALSE, ignore.stderr = FALSE,
+system(command, intern = FALSE,
+       ignore.stdout = FALSE, ignore.stderr = FALSE,
        wait = TRUE, input = NULL, show.output.on.console = TRUE,
        minimized = FALSE, invisible = TRUE)
 }
 \arguments{
-  \item{command}{the system command to be invoked, as a string.}
+  \item{command}{the system command to be invoked, as a character string.}
   \item{intern}{a logical (not \code{NA}) which indicates whether to
-    make the output of the command an \R object.
-  }
-  \item{ignore.stderr}{a logical (not \code{NA}) indicating whether
-    error messages written to \file{stderr} should be ignored.}
+    capture the output of the command as an \R character vector.}
+  \item{ignore.stdout, ignore.stderr}{a logical (not \code{NA})
+    indicating whether messages written to \file{stdout} or
+    \file{stderr} should be ignored.}
   \item{wait}{a logical (not \code{NA}) indicating whether the \R
     interpreter should wait for the command to finish, or run it
     asynchronously.  This will be ignored (and the interpreter will
@@ -59,7 +60,7 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   (normally \file{/bin/sh}), and Windows executes the command directly.
 #ifdef windows
   \code{command} must be an executable (extensions \file{.exe},
-  \file{.com}) or as a batch file (extensions \file{.cmd} and
+  \file{.com}) or a batch file (extensions \file{.cmd} and
   \file{.bat}): these extensions are tried in turn if none is supplied.)
   This means that redirection, pipes, \dots cannot be used: see
   \code{\link{shell}}.  (To use DOS internal commands use
@@ -110,11 +111,11 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
   Some Windows commands return out-of-range status values
   (e.g. \code{-1}) and so only the bottom 16 bits of the value are used.
 
-  If \code{intern = FALSE} and \code{show.output.on.console = TRUE}
-  the \file{stdout} and \file{stderr} (unless \code{ignore.stderr =
-    TRUE}) output from a command that is a console application should
-  appear in the \R console (\code{Rgui}) or the window running \R
-  (\code{Rterm}).
+  If \code{intern = FALSE, wait = TRUE, show.output.on.console = TRUE} the
+  \file{stdout} and \file{stderr} (unless \code{ignore.stdout = TRUE} or
+  \code{ignore.stderr = TRUE}) output from a command that is a
+  \sQuote{console application} should appear in the \R console
+  (\code{Rgui}) or the window running \R (\code{Rterm}).
 
   Not all Windows executables properly respect redirection of output, or
   may only do so from a console application such as \code{Rterm} and not

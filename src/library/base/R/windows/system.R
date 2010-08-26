@@ -14,13 +14,16 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
-system <- function(command, intern = FALSE, ignore.stderr = FALSE,
+system <- function(command, intern = FALSE,
+                   ignore.stdout = FALSE, ignore.stderr = FALSE,
                    wait = TRUE, input = NULL,
                    show.output.on.console = TRUE, minimized = FALSE,
                    invisible = TRUE)
 {
     if(!is.logical(intern) || is.na(intern))
         stop("'intern' must be TRUE or FALSE")
+    if(!is.logical(ignore.stdout) || is.na(ignore.stdout))
+        stop("'ignore.stdout' must be TRUE or FALSE")
     if(!is.logical(ignore.stderr) || is.na(ignore.stderr))
         stop("'ignore.stderr' must be TRUE or FALSE")
     if(!is.logical(wait) || is.na(wait))
@@ -48,6 +51,7 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
     }
     if (invisible) flag <- 20L + flag
     else if (minimized) flag <- 10L + flag
+    if(ignore.stdout) flag <- flag + 40L
     if(ignore.stderr) flag <- flag + 100L
     .Internal(system(command, as.integer(flag), f))
 }
