@@ -88,10 +88,17 @@ summary.matrix <- function(object, ...) {
     summary.data.frame(as.data.frame.matrix(object), ...)
 }
 
-## <FIXME> use encodeString here, and its justify options
 summary.data.frame <-
     function(object, maxsum = 7, digits = max(3, getOption("digits") - 3), ...)
 {
+    ncw <- function(x) {
+        z <- nchar(x, type="w")
+        if (any(na <- is.na(z))) {
+            # FIXME: can we do better
+            z[na] <- nchar(encodeString(z[na]), "b")
+        }
+        z
+    }
     # compute results to full precision.
     z <- lapply(as.list(object), summary, maxsum = maxsum, digits = 12, ...)
     nv <- length(object)
@@ -103,16 +110,18 @@ summary.data.frame <-
         if(is.matrix(sms)) {
             ## need to produce a single column, so collapse matrix
             ## across rows
-            cn <- paste(nm[i], gsub("^ +", "", colnames(sms)), sep=".")
+            cn <- paste(nm[i], gsub("^ +", "", colnames(sms), useBytes = TRUE),
+                        sep=".")
             tmp <- format(sms)
             if(nrow(sms) < nr)
                 tmp <- rbind(tmp, matrix("", nr - nrow(sms), ncol(sms)))
             sms <- apply(tmp, 1L, function(x) paste(x, collapse="  "))
             ## produce a suitable colname: undoing padding
-            wid <- sapply(tmp[1L, ], nchar, type="w")
+            wid <- sapply(tmp[1L, ], nchar, type="w") # might be NA
             blanks <- paste(character(max(wid)), collapse = " ")
-            pad0 <- floor((wid-nchar(cn, type="w"))/2)
-            pad1 <- wid - nchar(cn, type="w") - pad0
+            wcn <- ncw(cn)
+            pad0 <- floor((wid - wcn)/2)
+            pad1 <- wid - wcn - pad0
             cn <- paste(substring(blanks, 1L, pad0), cn,
                         substring(blanks, 1L, pad1), sep = "")
             nm[i] <- paste(cn, collapse="  ")
@@ -121,7 +130,7 @@ summary.data.frame <-
             lbs <- format(names(sms))
             sms <- paste(lbs, ":", format(sms, digits = digits), "  ",
                          sep = "")
-            lw[i] <- nchar(lbs[1L], type="w")
+            lw[i] <- ncw(lbs[1L])
             length(sms) <- nr
             z[[i]] <- sms
         }
@@ -129,7 +138,7 @@ summary.data.frame <-
     z <- unlist(z, use.names=TRUE)
     dim(z) <- c(nr, nv)
     blanks <- paste(character(max(lw) + 2L), collapse = " ")
-    pad <- floor(lw-nchar(nm, type="w")/2)
+    pad <- floor(lw - ncw(nm)/2)
     nm <- paste(substring(blanks, 1, pad), nm, sep = "")
     dimnames(z) <- list(rep.int("", nr), nm)
     attr(z, "class") <- c("table") #, "matrix")

@@ -322,7 +322,7 @@
       are guaranteed to be avaliable on all builds of \R.
 
       \item \code{Sys.which()} has been altered to return \code{""} if
-      the command is not found even on Solaris.
+      the command is not found (even on Solaris).
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
@@ -553,6 +553,9 @@
       \item \code{new()} and \code{getClass()} will now work if Class
       is a subclass of \code{"classRepresentation"} and should also be
       faster in typical calls.
+
+      \item The \code{summary()} method for data frames makes a better
+      job of names containing characters invalid in the current locale.
     }
   }
 }
