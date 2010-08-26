@@ -320,6 +320,9 @@
 
       \item \code{system(intern = TRUE)} and \code{pipe()} connections
       are guaranteed to be avaliable on all builds of \R.
+
+      \item \code{Sys.which()} has been altered to return \code{""} if
+      the command is not found even on Solaris.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{

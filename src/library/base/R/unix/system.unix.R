@@ -49,6 +49,11 @@ Sys.which <- function(names)
     for(i in names) {
         ans <- suppressWarnings(system(paste("which", i), intern=TRUE,
                                        ignore.stderr=TRUE))
+        ## Solaris' which gives 'no foo in ...' message
+        if(grepl("solaris", R.version$os)) {
+            tmp <- strsplit(ans[1], " ", fixed = TRUE)[[1]]
+            if(identical(tmp[1:3], c("no", i, "in"))) ans <- ""
+        }
         res[i] <- if(length(ans)) ans[1] else ""
     }
     res

@@ -31,7 +31,7 @@ Sys.which(names)
   \code{names}.  The elements are either the full path to the
   executable/script or some indication that no executable of that name was
   found.  Typically the indication is \code{""}, but this does depend on
-  the OS (and is a message on Solaris).
+  the OS (and the known exceptions are changed to \code{""} as from \R 2.12.0).
 
 #ifdef windows
   The paths will be short paths (8+3 components, no spaces) with

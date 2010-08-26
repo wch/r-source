@@ -81,6 +81,9 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 
   The ordering of arguments after the first two has changed from time to
   time: it is recommended to name all arguments after the first.
+  
+  There are many pitfalls in using \code{system} to ascertain if a
+  command can be run --- \code{\link{Sys.which}} is more suitable.
 }
 
 \value{
@@ -120,53 +123,21 @@ system(command, intern = FALSE, ignore.stderr = FALSE,
 #endif
 }
 
-\section{Detecting if a command can be run}{
-  This can be extremely tricky.  Perhaps the safest way is to run
-  something like
-\preformatted{
-    res <- system("foo --version")  
-}
-  and to check the return value.  One would hope that this gave the
-  success value (\code{0}) but not always.  If the command is not
-  present, the return value will be \code{127}, but possibly
-  \code{256*127} or \code{-1} on earlier versions of \R, so the best
-  idea is to test for one of those values.  (And of course the command
-  could itself use \code{127} or \code{-1} as an exit status.)
-
-  An alternative is to capture and analyse the output by something like
-\preformatted{
-    res <- system("foo --version", intern = TRUE, ignore.stderr = TRUE)
-}
-  This has several difficulties:
-  \enumerate{
-    \item This gives an error if the command is not present as from \R
-    2.12.0 and on Windows on earlier versions of \R.  So it needs to be
-    wrapped in a \code{\link{try}} construction.
-    \item Some commands send such output to \file{stdout}, some to
-    \file{stderr} and in at least one case which depends on the version
-    of the command.  So something like
-\preformatted{
-    res <- try(system("foo --version 2>&1", intern = TRUE))
-}
-has to be used,
-    \item The latter is not portable to Windows (where \code{shell} must
-    be used).
-  }
-}
-
 #ifdef unix
 \section{Stdout and stderr}{
-  Error messages written to \file{stderr} will be sent by the shell to
-  the terminal unless \code{ignore.stderr = TRUE}.  They can be captured
-  (in the most likely shells) by
+  For command-line \R, error messages written to \file{stderr} will be
+  sent to the terminal unless \code{ignore.stderr = TRUE}.  They can be
+  captured (in the most likely shells) by
 \preformatted{
     system("some command 2>&1", intern=TRUE)
 }
-  What happens to output sent to \file{stdout} or \file{stderr} if
-  \code{intern = FALSE} is interface-specific, and it is unsafe to
-  assume that such messages will appear on a console (they do on the
-  Mac OS X console, but not on some others).
+  
+  For GUIs, what happens to output sent to \file{stdout} or
+  \file{stderr} if \code{intern = FALSE} is interface-specific, and it
+  is unsafe to assume that such messages will appear on a GUI console
+  (they do on the Mac OS X console, but not on some others).
 }
+
 \note{
   \code{wait} is implemented by appending \code{&} to the command: this
   is shell-dependent, but required by POSIX and so widely supported.
