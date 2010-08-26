@@ -187,20 +187,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   \item{\dots}{Further arguments to be passed to \code{read.table}.}
 }
-\value{
-  A data frame (\code{\link{data.frame}}) containing a representation of
-  the data in the file.
 
-  Empty input is an error unless \code{col.names} is specified, when a
-  0-row data frame is returned: similarly giving just a header line if
-  \code{header = TRUE} results in a 0-row data frame.  Note that in
-  either case the columns will be logical unless \code{colClasses} was
-  supplied.
-
-  Character strings in the result (including factor levels) will have a
-  declared encoding if \code{encoding} is \code{"latin1"} or
-  \code{"UTF-8"}.
-}
 \details{
   This function is the principal means of reading tabular data into \R.
 
@@ -230,13 +217,12 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \code{read.csv} and \code{read.csv2} are identical to
   \code{read.table} except for the defaults.  They are intended for
   reading \sQuote{comma separated value} files (\file{.csv}) or
-  (\code{read.csv2}) the variant
-  used in countries that use a comma as decimal point and a semicolon
-  as field separator.  Similarly, \code{read.delim} and
-  \code{read.delim2} are for reading delimited files, defaulting to the
-  TAB character for the delimiter.  Notice that \code{header = TRUE} and
-  \code{fill = TRUE} in these variants, and that the comment character
-  is disabled.
+  (\code{read.csv2}) the variant used in countries that use a comma as
+  decimal point and a semicolon as field separator.  Similarly,
+  \code{read.delim} and \code{read.delim2} are for reading delimited
+  files, defaulting to the TAB character for the delimiter.  Notice that
+  \code{header = TRUE} and \code{fill = TRUE} in these variants, and
+  that the comment character is disabled.
 
   The rest of the line after a comment character is skipped; quotes
   are not processed in comments.  Complete comment lines are allowed
@@ -247,10 +233,27 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   Quoted fields with embedded newlines are supported except after a
   comment character.
 }
-\note{
-  The columns referred to in \code{as.is} and \code{colClasses} include
-  the column of row names (if any).
 
+\value{
+  A data frame (\code{\link{data.frame}}) containing a representation of
+  the data in the file.
+
+  Empty input is an error unless \code{col.names} is specified, when a
+  0-row data frame is returned: similarly giving just a header line if
+  \code{header = TRUE} results in a 0-row data frame.  Note that in
+  either case the columns will be logical unless \code{colClasses} was
+  supplied.
+
+  Character strings in the result (including factor levels) will have a
+  declared encoding if \code{encoding} is \code{"latin1"} or
+  \code{"UTF-8"}.
+}
+
+\section{Memory usage}{
+  These functions can use a suprising amount of memory when reading
+  large files.  There is extensive discussion in the \sQuote{R Data
+  Import/Export} manual, supplementing the notes here.
+  
   Less memory will be used if \code{colClasses} is specified as one of
   the six \link{atomic} vector classes.  This can be particularly so when
   reading a column that takes many distinct numeric values, as storing
@@ -266,8 +269,13 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \code{read.table} is not the right tool for reading large matrices,
   especially those with many columns: it is designed to read
   \emph{data frames} which may have columns of very different classes.
-  Use \code{\link{scan}} instead.
+  Use \code{\link{scan}} instead for matrices.
+}
 
+\note{
+  The columns referred to in \code{as.is} and \code{colClasses} include
+  the column of row names (if any).
+  
   Because this function uses \code{\link{pushBack}} it can only handle
   character strings which can be represented in the current locale.  So
   although \code{fileEncoding} can be used to specify the encoding of
@@ -279,7 +287,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 }
 
 \seealso{
-  The \emph{R Data Import/Export} manual.
+  The \sQuote{R Data Import/Export} manual.
 
   \code{\link{scan}}, \code{\link{type.convert}},
   \code{\link{read.fwf}} for reading \emph{f}ixed \emph{w}idth
@@ -293,11 +301,13 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \url{http://tools.ietf.org/html/rfc4180} for the IANA definition of
   CSV files (which requires comma as separator and CRLF line endings).
 }
+
 \references{
   Chambers, J. M. (1992)
   \emph{Data for models.}
   Chapter 3 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.
 }
+
 \keyword{file}
 \keyword{connection}
