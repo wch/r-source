@@ -659,6 +659,8 @@
 
       \item \code{tools::undoc()} again detects undocumented data
       objects.  Of course, this also affects \command{R CMD check}.
+
+      \item \code{ksmooth(x,NULL)} no longer segfaults.
     }
   }
 }

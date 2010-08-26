@@ -4884,3 +4884,8 @@ stopifnot(identical(m, sweep(m, 2, apply(m,2, min))))
 ## julian with POSIXlt origin (PR#9908)
 julian(as.POSIXlt("1999-2-1"), origin=as.POSIXlt("1999-1-1"))
 ## failed < 2.6.0
+
+
+## student typo
+try( ksmooth(cars$speed, cars$dists) )
+## now error about y (== NULL);  segfaulted <= 2.11.1
