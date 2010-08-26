@@ -39,6 +39,7 @@ PERL=${PERL-'@PERL@'}
 ## Prefer a POSIX-compliant sed on e.g. Solaris
 SED=${SED-'@SED@'}
 TR=${TR-'@TR@'}
+WHICH=${WHICH-'@WHICH@'}
 ## Prefer a tar that can automagically read compressed archives
 TAR=${TAR-'@TAR@'}
 

@@ -537,6 +537,9 @@ R_PROG_INSTALL
 AC_PATH_PROGS(SED, sed, /bin/sed, [/usr/xpg4/bin:$PATH])
 ## we need an tr that interprets \r for Rdiff
 AC_PATH_PROGS(TR, tr, /bin/tr, [/usr/xpg4/bin:$PATH])
+## 'which' is not POSIX, and might be a shell builtin or alias
+##  (but should not be in 'sh')
+AC_PATH_PROGS(WHICH, which, which)
 ## Make
 : ${MAKE=make}
 AC_SUBST(MAKE)

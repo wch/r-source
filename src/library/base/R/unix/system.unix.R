@@ -46,15 +46,20 @@ system <- function(command, intern = FALSE, ignore.stderr = FALSE,
 Sys.which <- function(names)
 {
     res <- character(length(names)); names(res) <- names
+    ## hopefully configure found /usr/bin/which
+    which <- Sys.getenv("WHICH", "which")
     for(i in names) {
-        ans <- suppressWarnings(system(paste("which", i), intern=TRUE,
+        ans <- suppressWarnings(system(paste(which, i), intern=TRUE,
                                        ignore.stderr=TRUE))
-        ## Solaris' which gives 'no foo in ...' message
+        ## Solaris' which gives 'no foo in ...' message on stdout,
+        ## GNU which does it on stderr
         if(grepl("solaris", R.version$os)) {
             tmp <- strsplit(ans[1], " ", fixed = TRUE)[[1]]
             if(identical(tmp[1:3], c("no", i, "in"))) ans <- ""
         }
         res[i] <- if(length(ans)) ans[1] else ""
+        ## final check that this is a real path and not an error message
+        if(!file.exists(res[i])) res[i] <- ""
     }
     res
 }
