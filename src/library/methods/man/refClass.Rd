@@ -22,6 +22,15 @@ The application interface provided is designed to deal consistently
 with such classes whether implemented entirely in \R{} or through an
 interface to another language.
 }
+\section{NOTE:}{
+The software described here is an initial version.  The eventual goal
+is to support reference-style classes with software in \R itself
+or using inter-system interfaces.  The current implementation (\R
+version 2.12.0) is preliminary and subject to change, and currently
+includes only the \R-only implementation.  Developers are encouraged
+to experiment with the software, but the description here is more than
+usually subject to change.
+}
 \usage{
 setRefClass(Class, fieldClasses = , contains = , classMethods =,
    fieldPrototypes =, basicRefClass = "stdRefClass",
@@ -133,7 +142,7 @@ throughout this document.
 If we need to make the distinction, we will refer to class-based
 methods versus functional methods.
 }
-\section{Fields and Field Accessors}{
+\section{Fields and Class Methods}{
 All the widely used languages implementing class-based methods provide
 for named \dQuote{pieces} of an object.
 The term for these pieces varies with the language; in the \R
@@ -156,6 +165,9 @@ these methods from a basic reference class, either using \R (the
 standard being class \linkS4class{stdRefClass}) or interfacing to
 another system.
 
+Similarly, a class method is invoked on an object using the \code{$}
+operator.  To invoke a class method \code{undo} on an object \code{x},
+call \code{x$undo()}.
 }
 
 \section{Writing Class Methods}{
@@ -170,7 +182,7 @@ Class methods also need to refer to fields in the object.
 A number of
 class-based systems recommend or enforce \emph{accessor methods}
 corresponding to each field.
-In \R version presented here (and fairly often elsewhere
+In the \R version presented here (and fairly often elsewhere
 as well), a field named \code{abc} of an object \code{x} would be
 extracted by \code{x$getAbc()} and assigned by
 \code{x$setAbc(value)}.
@@ -244,6 +256,8 @@ If a directly specified method overrides an inherited one, the current
 mechanism is to include a \code{".prev"} version of the method.  So if
 a class inherited an \code{edit()} method but also defined one
 directly, the previous method can be called as \code{edit.prev()}.
+See the matrix viewer example below.
+One serious drawback is that only one level of inherited method can be used.
 (As with other details, we don't guarantee that this mechanism will
 persist if a better approach comes along.)
 
