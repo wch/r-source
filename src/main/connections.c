@@ -211,7 +211,8 @@ void set_iconv(Rconnection con)
 	con->navail = 50-onb; con->inavail = 0;
 	/* libiconv can handle BOM marks on Windows Unicode files, but
 	   glibc's iconv cannot. Aargh ... */
-	if(streql(con->encname, "UCS-2LE")) con->inavail = -2;
+	if(streql(con->encname, "UCS-2LE") || 
+	   streql(con->encname, "UTF-16LE")) con->inavail = -2;
     }
     if(con->canwrite) {
 	size_t onb = 25;

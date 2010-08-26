@@ -116,14 +116,13 @@ isIncomplete(con)
   C-level \sQuote{standard input} of the process (which need not be
   connected to anything
 #ifdef unix
-  in a console or embedded version of \R), provided the C99 function
-  \code{fdopen} is supported on the platform.
+  in a console or embedded version of \R).
 #endif
 #ifdef windows
   in a console or embedded version of \R, and is not in \code{RGui}).
 #endif
-  (See also \code{\link{stdin}()} for the subtly different R-level concept
-  of \code{stdin}.)
+  See also \code{\link{stdin}()} for the subtly different R-level concept
+  of \code{stdin}.
 
   For \code{url} the description is a complete URL, including scheme
   (such as \samp{http://}, \samp{ftp://} or \samp{file://}).  Proxies
@@ -147,15 +146,14 @@ isIncomplete(con)
   extension if required.
 
   For \code{pipe} the description is the command line to be piped to or
-  from.
-#ifdef windows
-  (This command line is run in the shell specified by the \env{COMSPEC}
-  environment variable.)
-#endif
+  from.  This is run in shell, on Windows that specified by the
+  \env{COMSPEC} environment variable.
 
   For \code{fifo} the description is the path of the fifo.  (Windows
   does not have fifos, so attempts to use this function there are an
-  error.)
+  error.  It was possile to use \code{file} with fifos prior to \R
+  2.10.0, but no longer for reading, and \code{fifo} was always the
+  documented interface.) % PR#14366
 
   All platforms support \code{file}, \code{gzfile}, \code{bzfile},
   \code{xzfile} \code{unz} and \code{url("file://")} connections.  The
@@ -356,19 +354,17 @@ isIncomplete(con)
 
   Re-encoding only works for connections in text mode.
 
-  The encoding \code{"UCS-2LE"} is treated specially, as it is the
-  appropriate value for Windows \sQuote{Unicode} text files.  If the
-  first two bytes are the Byte Order Mark \code{0xFFFE} then these are
-  removed as most implementations of \code{\link{iconv}} do not accept
-  BOMs.  Note that some implementations
-#ifdef windows
-  (including that used on Windows)
-#endif
-  will handle BOMs using encoding \code{"UCS-2"} but many
-#ifdef windows
-  (including that in \code{glibc})
-#endif
-  will not.
+  The encodings \code{"UCS-2LE"} and \code{"UTF-16LE"} are treated
+  specially, as they are appropriate values for Windows \sQuote{Unicode}
+  text files.  If the first two bytes are the Byte Order Mark
+  \code{0xFFFE} then these are removed as some implementations of
+  \code{\link{iconv}} do not accept BOMs.  Note that whereas most
+  implementations will handle BOMs using encoding \code{"UCS-2"} and
+  choose the appropriate byte order, some (including earlier versions of
+  \code{glibc}) will not.  There is a subtle distinction between
+  \code{"UTF-16"} and \code{"UCS-2"} (see
+  \url{http://en.wikipedia.org/wiki/UTF-16/UCS-2}: the use of surrogate
+  pairs is very rare so \code{"UCS-2LE"} is an appropriate first choice.
   
   Requesting a conversion that is not supported is an error, reported
   when the connection is opened.  Exactly what happens when the
@@ -462,8 +458,8 @@ isIncomplete(con)
   known as \code{"*"}.
 
   On (rare) platforms where \code{vsnprintf} does not return the needed length
-  of output there is a 100,000 character output limit on
-  the length of line for \code{fifo}, \code{gzfile}, \code{bzfile} and
+  of output there is a 100,000 character output limit on the length of
+  line for text output on \code{fifo}, \code{gzfile}, \code{bzfile} and
   \code{xzfile} connections: longer lines will be truncated with a
   warning.
 }
