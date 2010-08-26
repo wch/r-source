@@ -41,7 +41,7 @@ static char *expandcmd(const char *cmd)
     char *s, *p, *q, *f, *dest, *src;
     int   d, ext, len = strlen(cmd)+1;
     char buf[len], fl[len], fn[len];
-	  
+
     /* make a copy as we manipulate in place */
     strcpy(buf, cmd);
 
@@ -121,8 +121,8 @@ static char *expandcmd(const char *cmd)
 
 extern size_t Rf_utf8towcs(wchar_t *wc, const char *s, size_t n);
 
-static void pcreate(const char* cmd, cetype_t enc, 
-		      int newconsole, int visible, 
+static void pcreate(const char* cmd, cetype_t enc,
+		      int newconsole, int visible,
 		      HANDLE hIN, HANDLE hOUT, HANDLE hERR,
 		      PROCESS_INFORMATION *pi)
 {
@@ -141,19 +141,19 @@ static void pcreate(const char* cmd, cetype_t enc,
     /* FIXME: this might need to be done in wchar_t */
     if (!(ecmd = expandcmd(cmd))) return; /* error message already set */
 
-    inpipe = (hIN != INVALID_HANDLE_VALUE) 
-	|| (hOUT != INVALID_HANDLE_VALUE) 
+    inpipe = (hIN != INVALID_HANDLE_VALUE)
+	|| (hOUT != INVALID_HANDLE_VALUE)
 	|| (hERR != INVALID_HANDLE_VALUE);
- 
-    if (inpipe) {         
-	HANDLE hNULL = CreateFile("NUL:", GENERIC_READ | GENERIC_WRITE, 0, 
+
+    if (inpipe) {
+	HANDLE hNULL = CreateFile("NUL:", GENERIC_READ | GENERIC_WRITE, 0,
 			   &sa, OPEN_EXISTING, 0, NULL);
-    	HANDLE hTHIS = GetCurrentProcess();			   
+	HANDLE hTHIS = GetCurrentProcess();
 
 	if (hIN == INVALID_HANDLE_VALUE) hIN = hNULL;
 	if (hOUT == INVALID_HANDLE_VALUE) hOUT = hNULL;
 	if (hERR == INVALID_HANDLE_VALUE) hERR = hNULL;
-	
+
 	DuplicateHandle(hTHIS, hIN,
 			hTHIS, &dupIN, 0, TRUE, DUPLICATE_SAME_ACCESS);
 	DuplicateHandle(hTHIS, hOUT,
@@ -162,8 +162,8 @@ static void pcreate(const char* cmd, cetype_t enc,
 			hTHIS, &dupERR, 0, TRUE, DUPLICATE_SAME_ACCESS);
 	CloseHandle(hTHIS);
 	CloseHandle(hNULL);
-    }   
-    
+    }
+
     switch (visible) {
     case -1:
 	showWindow = SW_HIDE;
@@ -172,7 +172,7 @@ static void pcreate(const char* cmd, cetype_t enc,
 	showWindow = SW_SHOWMINIMIZED;
 	break;
     }
-    
+
     if(enc == CE_UTF8) {
 	wsi.cb = sizeof(wsi);
 	wsi.lpReserved = NULL;
@@ -181,7 +181,7 @@ static void pcreate(const char* cmd, cetype_t enc,
 	wsi.lpDesktop = NULL;
 	wsi.lpTitle = NULL;
 	wsi.dwFlags = STARTF_USESHOWWINDOW;
-	wsi.wShowWindow = showWindow;	
+	wsi.wShowWindow = showWindow;
 	if (inpipe) {
 	    wsi.dwFlags |= STARTF_USESTDHANDLES;
 	    wsi.hStdInput  = dupIN;
@@ -196,7 +196,7 @@ static void pcreate(const char* cmd, cetype_t enc,
 	si.lpDesktop = NULL;
 	si.lpTitle = NULL;
 	si.dwFlags = STARTF_USESHOWWINDOW;
-	si.wShowWindow = showWindow;	
+	si.wShowWindow = showWindow;
 	if (inpipe) {
 	    si.dwFlags |= STARTF_USESTDHANDLES;
 	    si.hStdInput  = dupIN;
@@ -260,20 +260,40 @@ char *runerror(void)
     return RunError;
 }
 
-static HANDLE getInputHandle(const char *finput)
+static HANDLE getInputHandle(const char *fin)
 {
-    if (finput && finput[0]) {
+    if (fin && fin[0]) {
 	SECURITY_ATTRIBUTES sa;
 	sa.nLength = sizeof(sa);
 	sa.lpSecurityDescriptor = NULL;
-	sa.bInheritHandle = TRUE;    
-	HANDLE hIN = CreateFile(finput, GENERIC_READ, 0,
-			 &sa, OPEN_EXISTING, 0, NULL);
+	sa.bInheritHandle = TRUE;
+	HANDLE hIN = CreateFile(fin, GENERIC_READ, 0,
+				&sa, OPEN_EXISTING, 0, NULL);
 	if (hIN == INVALID_HANDLE_VALUE) {
-	    strcpy(RunError, _("unable to redirect input"));
+	    snprintf(RunError, 500, 
+		     "unable to redirect input from '%s'", fin);
 	    return NULL;
 	}
 	return hIN;
+    }
+    return INVALID_HANDLE_VALUE;
+}
+
+static HANDLE getOutputHandle(const char *fout)
+{
+    if (fout && fout[0]) {
+	SECURITY_ATTRIBUTES sa;
+	sa.nLength = sizeof(sa);
+	sa.lpSecurityDescriptor = NULL;
+	sa.bInheritHandle = TRUE;
+	HANDLE hOUT = CreateFile(fout, GENERIC_WRITE, 0,
+				 &sa, CREATE_ALWAYS, 0, NULL);
+	if (hOUT == INVALID_HANDLE_VALUE) {
+	    snprintf(RunError, 500, 
+		     "unable to redirect output to '%s'", fout);
+	    return NULL;
+	}
+	return hOUT;
     }
     return INVALID_HANDLE_VALUE;
 }
@@ -285,7 +305,7 @@ BOOL CALLBACK TerminateWindow(HWND hwnd, LPARAM lParam)
     GetWindowThreadProcessId(hwnd, &ID);
 
     if (ID == (DWORD)lParam)
-        PostMessage(hwnd, WM_CLOSE, 0, 0);
+	PostMessage(hwnd, WM_CLOSE, 0, 0);
     return TRUE;
 }
 
@@ -297,11 +317,11 @@ static void terminate_process(void *p)
 {
     PROCESS_INFORMATION *pi = (PROCESS_INFORMATION*)p;
     EnumWindows((WNDENUMPROC)TerminateWindow, (LPARAM)pi->dwProcessId);
-    
+
     if (WaitForSingleObject(pi->hProcess, 5000) == WAIT_TIMEOUT) {
-    	if (R_Interactive)
-    	    GA_askok(_("Child process not responding.  R will terminate it."));
-    	TerminateProcess(pi->hProcess, 99);
+	if (R_Interactive)
+	    GA_askok(_("Child process not responding.  R will terminate it."));
+	TerminateProcess(pi->hProcess, 99);
     }
 }
 
@@ -309,42 +329,39 @@ static int pwait2(HANDLE p)
 {
     DWORD ret;
 
-    while( WaitForSingleObject(p, 100) == WAIT_TIMEOUT ) 
-    	R_CheckUserInterrupt();
-    	
+    while( WaitForSingleObject(p, 100) == WAIT_TIMEOUT )
+	R_CheckUserInterrupt();
+
     GetExitCodeProcess(p, &ret);
     return ret;
 }
 
 /*
   Used for external commands in file.show() and edit(), and for
-  system(intern=FALSE).
+  system(intern=FALSE).  Also called from postscript().
 
   wait != 0 says wait for child to terminate before returning.
   visible = -1, 0, 1 for hide, minimized, default
-  finput is either NULL or the name of a file from which to
+  fin is either NULL or the name of a file from which to
   redirect stdin for the child.
 */
-int runcmd(const char *cmd, cetype_t enc, int wait, int visible, 
-	   const char *finput)
+int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
+	   const char *fin, const char *fout, const char *ferr)
 {
-    HANDLE hIN = getInputHandle(finput);
+    HANDLE hIN = getInputHandle(fin), hOUT = getOutputHandle(fout),
+	hERR = getOutputHandle(ferr);
     int ret = 0;
     PROCESS_INFORMATION pi;
 
     memset(&pi, 0, sizeof(pi));
-    pcreate(cmd, enc, !wait, visible, 
-    		      hIN,
-    		      INVALID_HANDLE_VALUE,
-    		      INVALID_HANDLE_VALUE,
-    		      &pi); 
+    pcreate(cmd, enc, !wait, visible, hIN, hOUT, hERR, &pi);
     if (!pi.hProcess) return NOLAUNCH;
     if (wait) {
-    	RCNTXT cntxt;
-    	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+	RCNTXT cntxt;
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		 R_NilValue, R_NilValue);
-    	cntxt.cend = &terminate_process;
-    	cntxt.cenddata = &pi;
+	cntxt.cend = &terminate_process;
+	cntxt.cenddata = &pi;
 	ret = pwait2(pi.hProcess);
 	endcontext(&cntxt);
 	sprintf(RunError, _("Exit code was %d"), ret);
@@ -352,6 +369,8 @@ int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
     } else ret = 0;
     CloseHandle(pi.hProcess);
     if (hIN != INVALID_HANDLE_VALUE) CloseHandle(hIN);
+    if (hOUT != INVALID_HANDLE_VALUE) CloseHandle(hERR);
+    if (hERR != INVALID_HANDLE_VALUE) CloseHandle(hERR);
     return ret;
 }
 
@@ -360,7 +379,8 @@ int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
      redirect stdin for the child.
    visible = -1, 0, 1 for hide, minimized, default
    io = 0 to read stdout from pipe, 1 to write to pipe,
-   2 to read stdout and stderr from pipe.
+   2 to read stderr from pipe, 
+   3 to read both stdout and stderr from pipe.
  */
 rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
 		  const char *finput, int io)
@@ -390,9 +410,9 @@ rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
 			0, FALSE, DUPLICATE_SAME_ACCESS);
 	CloseHandle(hWritePipe);
 	CloseHandle(hTHIS);
-	pcreate(cmd, enc, 1, visible, 
-	        r->read, INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE,
-	        &(r->pi));
+	pcreate(cmd, enc, 1, visible,
+		r->read, INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE,
+		&(r->pi));
 	r->active = 1;
 	if (!r->pi.hProcess) return NULL; else return r;
     }
@@ -403,14 +423,15 @@ rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
 		    0, FALSE, DUPLICATE_SAME_ACCESS);
     CloseHandle(hReadPipe);
     CloseHandle(hTHIS);
-    
+
     hIN = getInputHandle(finput);
-    pcreate(cmd, enc, 0, visible, 
-            hIN, r->write, 
-            io > 0 ? r->write : INVALID_HANDLE_VALUE,
-            &(r->pi));
+    pcreate(cmd, enc, 0, visible,
+	    hIN, 
+	    (io == 0 || io == 3) ? r->write : INVALID_HANDLE_VALUE,
+	    io >= 2 ? r->write : INVALID_HANDLE_VALUE,
+	    &(r->pi));
     if (hIN != INVALID_HANDLE_VALUE) CloseHandle(hIN);
-    
+
     r->active = 1;
     if (!r->pi.hProcess)
 	return NULL;
@@ -422,17 +443,17 @@ rpipe * rpipeOpen(const char *cmd, cetype_t enc, int visible,
     return r;
 }
 
-static void 
+static void
 rpipeTerminate(rpipe * r)
 {
     if (r->thread) {
-        TerminateThread(r->thread, 0);
-        CloseHandle(r->thread);
-        r->thread = NULL;
+	TerminateThread(r->thread, 0);
+	CloseHandle(r->thread);
+	r->thread = NULL;
     }
     if (r->active) {
-    	terminate_process(&(r->pi));
-    	r->active = 0;
+	terminate_process(&(r->pi));
+	r->active = 0;
     }
 }
 

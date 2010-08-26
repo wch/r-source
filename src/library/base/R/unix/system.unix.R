@@ -47,6 +47,54 @@ system <- function(command, intern = FALSE,
     .Internal(system(command, intern))
 }
 
+system2 <- function(command, args = character(),
+                    stdout = "", stderr = "", wait = TRUE, input = NULL,
+                    minimized = FALSE, invisible = TRUE)
+{
+    if(!missing(minimized) || !missing(invisible))
+        warning("arguments 'minimized' and 'invisible' are for Windows only")
+    if(!is.logical(wait) || is.na(wait))
+        stop("'wait' must be TRUE or FALSE")
+
+    command <- paste(c(shQuote(command), args), collapse = " ")
+
+    if(is.null(stdout)) stdout <- FALSE
+    if(is.null(stderr)) stderr <- FALSE
+
+    if (isTRUE(stderr)) {
+        if (!isTRUE(stdout)) warning("setting stdout = TRUE")
+        stdout <- TRUE
+    }
+    if (identical(stdout, FALSE))
+        command <- paste(command, ">/dev/null")
+    else if(isTRUE(stdout))
+        intern <- TRUE
+    else if(is.character(stdout)) {
+        if(length(stdout) != 1L) stop("'stdout' must be of length 1")
+        if(identical(stdout, stderr)) {
+            command <- paste(command, ">", stdout, "2>&1")
+        } else command <- paste(command, ">", stdout)
+    }
+    if (identical(stderr, FALSE))
+        command <- paste(command, "2>/dev/null")
+    else if(isTRUE(stderr)) { # stdout == TRUE
+        command <- paste(command, "2>&1")
+    } else if(is.character(stderr)) {
+        if(length(stderr) != 1L) stop("'stderr' must be of length 1")
+        paste(command, "2>", stderr)
+    }
+    if(!is.null(input)) {
+        if(!is.character(input))
+            stop("'input' must be a character vector or 'NULL'")
+        f <- tempfile()
+        on.exit(unlink(f))
+        cat(input, file=f, sep="\n")
+        command <- paste(command, "<", f)
+    }
+    if(!wait && !intern) command <- paste(command, "&")
+    .Internal(system(command, intern))
+}
+
 Sys.which <- function(names)
 {
     res <- character(length(names)); names(res) <- names

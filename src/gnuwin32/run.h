@@ -36,9 +36,11 @@ typedef struct structRPIPE rpipe;
  * if runcmd return NOLAUNCH, problems in process start
 */
 #define runcmd Rf_runcmd
-int   runcmd(const char *cmd, cetype_t enc, int wait, int visible, const char *finput);
+int   runcmd(const char *cmd, cetype_t enc, int wait, int visible, 
+	     const char *fin, const char *fout, const char *ferr);
 
-rpipe *rpipeOpen(const char *cmd, cetype_t enc, int visible, const char *finput, int io);
+rpipe *rpipeOpen(const char *cmd, cetype_t enc, int visible, 
+		 const char *finput, int io);
 char  *rpipeGets(rpipe *r, char *buf, int len);
 int rpipeGetc(rpipe *r);
 int rpipeClose(rpipe *r);

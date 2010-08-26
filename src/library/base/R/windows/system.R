@@ -51,9 +51,36 @@ system <- function(command, intern = FALSE,
     }
     if (invisible) flag <- 20L + flag
     else if (minimized) flag <- 10L + flag
-    if(ignore.stdout) flag <- flag + 40L
-    if(ignore.stderr) flag <- flag + 100L
-    .Internal(system(command, as.integer(flag), f))
+    .Internal(system(command, as.integer(flag), f,
+                     !ignore.stdout, !ignore.stderr))
+}
+
+system2 <- function(command, args = character(),
+                    stdout = "", stderr = "", wait = TRUE, input = NULL,
+                    minimized = FALSE, invisible = TRUE)
+{
+    if(!is.logical(wait) || is.na(wait))
+        stop("'wait' must be TRUE or FALSE")
+    if(!is.logical(minimized) || is.na(minimized))
+        stop("'minimized' must be TRUE or FALSE")
+    if(!is.logical(invisible) || is.na(invisible))
+        stop("'invisible' must be TRUE or FALSE")
+    command <- paste(c(shQuote(command), args), collapse = " ")
+
+    if(is.null(stdout)) stdout <- FALSE
+    if(is.null(stderr)) stderr <- FALSE
+
+    if (!is.null(input)) {
+        f <- tempfile()
+        on.exit(unlink(f))
+        cat(input, file = f, sep="\n")
+    } else f <- ""
+    flag <- if (isTRUE(stdout) || isTRUE(stderr)) 3L
+    else if (wait) ifelse(identical(stdout, ""), 2L, 1L)
+    else 0L
+    if (invisible) flag <- 20L + flag
+    else if (minimized) flag <- 10L + flag
+    .Internal(system(command, flag, f, stdout, stderr))
 }
 
 shell <- function(cmd, shell, flag = "/c", intern = FALSE,

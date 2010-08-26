@@ -208,11 +208,13 @@ system(command, intern = FALSE,
   }
 }
 \seealso{
+  \code{\link{system2}}.
 #ifdef windows
+  
   \code{\link{shell}} or \code{\link{shell.exec}} for a less raw
   interface.
-
 #endif
+  
   \code{\link{.Platform}} for platform-specific variables.
   
   \code{\link{pipe}} to set up a pipe connection.

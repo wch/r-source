@@ -158,7 +158,7 @@ SEXP attribute_hidden do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    sprintf(editcmd, "\"%s\" \"%s\"", cmd, filename);
 	else
 	    sprintf(editcmd, "%s \"%s\"", cmd, filename);
-	rc = runcmd(editcmd, CE_NATIVE, 1, 1, "");
+	rc = runcmd(editcmd, CE_NATIVE, 1, 1, NULL, NULL, NULL);
 	if (rc == NOLAUNCH)
 	    errorcall(call, _("unable to run editor '%s'"), cmd);
 	if (rc != 0)
