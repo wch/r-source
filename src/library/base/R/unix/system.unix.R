@@ -56,6 +56,7 @@ system2 <- function(command, args = character(),
     if(!is.logical(wait) || is.na(wait))
         stop("'wait' must be TRUE or FALSE")
 
+    intern <- FALSE
     command <- paste(c(shQuote(command), args), collapse = " ")
 
     if(is.null(stdout)) stdout <- FALSE
@@ -71,9 +72,11 @@ system2 <- function(command, args = character(),
         intern <- TRUE
     else if(is.character(stdout)) {
         if(length(stdout) != 1L) stop("'stdout' must be of length 1")
-        if(identical(stdout, stderr)) {
-            command <- paste(command, ">", stdout, "2>&1")
-        } else command <- paste(command, ">", stdout)
+        if(nzchar(stdout)) {
+            command <- if (identical(stdout, stderr))
+                paste(command, ">", stdout, "2>&1")
+            else command <- paste(command, ">", stdout)
+        }
     }
     if (identical(stderr, FALSE))
         command <- paste(command, "2>/dev/null")
