@@ -72,6 +72,7 @@
         .InitS3Classes(where)
         .InitSpecialTypesAndClasses(where)
         .InitTraceFunctions(where)
+        .InitRefClasses(where)
         ## now seal the classes defined in the package
         for(cl in get(".SealedClasses", where))
             sealClass(cl, where)

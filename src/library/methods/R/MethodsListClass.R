@@ -265,7 +265,8 @@
           array = "Ops", nonStructure = "Ops",
           .environment = "$<-", .environment = "[[<-"),
           array = "[", structure = "[", nonStructure = "[",
-          structure = "Math", nonStructure = "Math"
+          structure = "Math", nonStructure = "Math",
+          stdRefClass = "$"
                 )
     assign(".NeedPrimitiveMethods", needed, where)
     setMethod("Ops", c("structure", "vector"), where = where,

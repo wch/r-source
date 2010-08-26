@@ -839,12 +839,7 @@ showClass <-
 	"\n", sep="")
     x <- ClassDef@slots
     if(length(x)) {
-        n <- length(x)
-        cat("\n",propertiesAreCalled, ":\n", sep="")
-        text <- format(c(names(x), as.character(x)), justify="right")
-        text <- matrix(text, nrow = 2L, ncol = n, byrow = TRUE)
-        dimnames(text) <- list(c("Name:", "Class:"), rep.int("", n))
-        print(text, quote = FALSE)
+        printPropertiesList(x, propertiesAreCalled)
     }
     else
         cat("\nNo ", propertiesAreCalled, ", prototype of class \"",
@@ -858,6 +853,17 @@ showClass <-
     if(length(ext)) {
         cat("\nKnown Subclasses: ")
         showExtends(ext)
+    }
+}
+
+printPropertiesList <- function(x, propertiesAreCalled) {
+    if(length(x)) {
+        n <- length(x)
+        cat("\n",propertiesAreCalled, ":\n", sep="")
+        text <- format(c(names(x), as.character(x)), justify="right")
+        text <- matrix(text, nrow = 2L, ncol = n, byrow = TRUE)
+        dimnames(text) <- list(c("Name:", "Class:"), rep.int("", n))
+        print(text, quote = FALSE)
     }
 }
 

@@ -326,6 +326,10 @@
 
       \item \code{Sys.which()} has been altered to return \code{""} if
       the command is not found (even on Solaris).
+
+      \item A facility for defining reference-based classes (in the
+        OOP style of Java, C++, etc.) has been added experimentally;
+        see ?ReferenceClasses.
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{

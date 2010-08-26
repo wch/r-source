@@ -223,3 +223,8 @@ export(implicitGeneric)
 export(setGenericImplicit)
 export(prohibitGeneric)
 export(registerImplicitGenerics)
+
+## reference classes
+export(setRefClass)
+export(refClassFields)
+export(refClassMethods)
