@@ -829,9 +829,10 @@ SEXP R_getClassFromCache(SEXP class, SEXP table)
 	else /* may return a list if multiple instances of class */
 	    return value;
     }
-    else if(TYPEOF(class) != S4SXP)
+    else if(TYPEOF(class) != S4SXP) {
 	error(_("Class should be either a character-string name or a class definition"));
-    else /* assumes a class def, but might check */
+	return R_NilValue; /* NOT REACHED */
+    } else /* assumes a class def, but might check */
 	return class;
 }
 	
