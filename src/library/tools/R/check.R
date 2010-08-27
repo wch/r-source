@@ -92,12 +92,11 @@ R_run_R <- function(cmd, Ropts, env)
 
     dir.exists <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
-    check_pkg <- function(pkg, pkgoutdir, startdir, libdir, desc,
+    check_pkg <- function(pkg, pkgname, pkgoutdir, startdir, libdir, desc,
                           is_base_pkg, subdirs, extra_arch)
     {
         ## pkg is the argument we received from the main loop.
         ## pkgdir is the corresponding absolute path,
-        ## pkgname the name of the package.
 
         checkingLog(Log, "package directory")
         setwd(startdir)
@@ -105,7 +104,6 @@ R_run_R <- function(cmd, Ropts, env)
         if (dir.exists(pkg)) {
             setwd(pkg) ## wrap in try()?
             pkgdir <- getwd()
-            pkgname <- desc["Package"]
             resultLog(Log, "OK")
         } else {
             errorLog(Log, "Package directory ", sQuote(pkg), "does not exist.")
@@ -1860,7 +1858,7 @@ R_run_R <- function(cmd, Ropts, env)
     check_description <- function()
     {
         checkingLog(Log, "for file ",
-                    sQuote(file.path(pkgname, "DESCRIPTION")))
+                    sQuote(file.path(pkgname0, "DESCRIPTION")))
         if (file.exists(f <- file.path(pkgdir, "DESCRIPTION"))) {
             desc <- try(read.dcf(f))
             if (inherits(desc, "try-error") || !length(desc)) {
@@ -1884,7 +1882,7 @@ R_run_R <- function(cmd, Ropts, env)
             }
         }
         if (!is.na(desc["Bundle"])) {
-            messageLog(Log, "looks like ", sQuote(pkgname),
+            messageLog(Log, "looks like ", sQuote(pkgname0),
                        " is a package bundle -- they are defunct")
             errorLog(Log, "")
             do_exit(1L)
@@ -2359,10 +2357,11 @@ R_run_R <- function(cmd, Ropts, env)
         ## As from 2.1.0 it can also be a tarball
 
         ## $pkgdir is the corresponding absolute path.
-        ## pkgname is the name of the package.
+        ## pkgname0 is the name of the top-level directory
+        ## (and often the name of the package).
         setwd(startdir)
         pkg <- sub("/$", "", pkg)       # strip any trailing '/'
-        opkgname <- pkgname <- basename(pkg)
+        pkgname0 <- basename(pkg)
         is_ascii <- FALSE
 
         thispkg_subdirs <- check_subdirs
@@ -2373,10 +2372,10 @@ R_run_R <- function(cmd, Ropts, env)
         } else {
             istar <- TRUE
             if (thispkg_subdirs == "default") thispkg_subdirs <- "yes-maybe"
-            pkgname <- sub("\\.(tar\\.gz|tgz|tar\\.bz2)$", "", pkgname)
-            pkgname <- sub("_[0-9.-]*$", "", pkgname)
+            pkgname0 <- sub("\\.(tar\\.gz|tgz|tar\\.bz2)$", "", pkgname0)
+            pkgname0 <- sub("_[0-9.-]*$", "", pkgname0)
         }
-        pkgoutdir <- file.path(outdir, paste(pkgname, "Rcheck", sep = "."))
+        pkgoutdir <- file.path(outdir, paste(pkgname0, "Rcheck", sep = "."))
         if (clean && dir.exists(pkgoutdir))
             unlink(pkgoutdir, recursive = TRUE)
         dir.create(pkgoutdir, mode = "0755")
@@ -2393,7 +2392,9 @@ R_run_R <- function(cmd, Ropts, env)
                 do_exit(1L)
             }
             untar(pkg, exdir = dir)
-            pkg <- file.path(dir, pkgname)
+            ## this assumes foo_x.y.tar.gz unpacks to foo, but we are about
+            ## to test that.
+            pkg <- file.path(dir, pkgname0)
         }
         if (!dir.exists(pkg))
             stop("package dir ", sQuote(pkg), " does not exist")
@@ -2444,7 +2445,7 @@ R_run_R <- function(cmd, Ropts, env)
         ## Package sources from the R distribution are special.  They
         ## have a 'DESCRIPTION.in' file (instead of 'DESCRIPTION'),
         ## with Version and License fields containing '@VERSION@' for
-        ## substitution by configure.  Earlier bundles had pakages
+        ## substitution by configure.  Earlier bundles had packages
         ## containing DESCRIPTIION.in, hence the extra check for
         ## Makefile.in.
 
@@ -2458,16 +2459,18 @@ R_run_R <- function(cmd, Ropts, env)
             }
             desc <- desc[1L, ]
             if (desc["Priority"] == "base") {
-                messageLog(Log, "looks like ", sQuote(pkgname),
+                messageLog(Log, "looks like ", sQuote(pkgname0),
                            " is a base package")
                 messageLog(Log, "skipping installation test")
                 is_base_pkg <- TRUE
+                pkgname <- desc["Package"] # should be same as pkgname0
             }
         }
 
         this_multiarch <- multiarch
         if (!is_base_pkg) {
             desc <- check_description()
+            pkgname <- desc["Package"]
 
             ## Check if we have any hope of installing
             OS_type <- desc["OS_type"]
@@ -2522,7 +2525,7 @@ R_run_R <- function(cmd, Ropts, env)
         }   ## end of if (!is_base_pkg)
 
         setwd(startdir)
-        check_pkg(pkgdir, pkgoutdir, startdir, libdir, desc,
+        check_pkg(pkgdir, pkgname, pkgoutdir, startdir, libdir, desc,
                   is_base_pkg, thispkg_subdirs, extra_arch)
         if (!extra_arch && do_manual) {
             setwd(pkgoutdir)
