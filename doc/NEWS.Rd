@@ -551,7 +551,7 @@
       \item The behaviour of \code{as.logical()} on factors (to use the
       levels) was lost in \R 2.6.0 and has been restored.
 
-      \item \code{parse()} did not backquote some default arguments in
+      \item \code{prompt()} did not backquote some default arguments in
       the \samp{\usage} section.  (Reported by Claudia Beleites.)
 
       \item \code{writeBin()} disallows attempts to write 2GB or
@@ -563,6 +563,9 @@
 
       \item The \code{summary()} method for data frames makes a better
       job of names containing characters invalid in the current locale.
+
+      \item \code{[[} sub-assignment for factors could create an invalid
+      factor (reported by Bill Dunlap).
     }
   }
 }

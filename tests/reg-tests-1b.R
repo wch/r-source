@@ -1278,4 +1278,14 @@ cn <- gsub(" ", "", colnames(summary(DF)), useBytes = TRUE)
 stopifnot(identical(cn, c("a", paste("m.", nm, sep="", collapse=""))))
 ##  Had NAs in < 2.12.0
 
+## [[<- could create invalid objects,
+## https://stat.ethz.ch/pipermail/r-devel/2010-August/058312.html
+z0 <- z <- factor(c("Two","Two","Three"), levels=c("One","Two","Three"))
+z[[2]] <- "One"
+stopifnot(typeof(z) == "integer")
+z[[2]] <- "Two"
+stopifnot(identical(z, z0))
+## failed < 2.12.0
+
+
 proc.time()

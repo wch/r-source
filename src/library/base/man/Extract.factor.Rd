@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.factor.Rd
 % Part of the R package, http://www.R-project.org
-% Copyright 1995-2007 R Core Development Team
+% Copyright 1995-2010 R Core Development Team
 % Distributed under GPL 2 or later
 
 \name{Extract.factor}
@@ -8,6 +8,7 @@
 \alias{[.factor}
 \alias{[<-.factor}
 \alias{[[.factor}
+\alias{[[<.factor}
 \description{
   Extract or replace subsets of factors.
 }
@@ -15,6 +16,7 @@
 \method{[}{factor}(x, \dots, drop = FALSE)
 \method{[[}{factor}(x, \dots)
 \method{[}{factor}(x, \dots) <- value
+\method{[[}{factor}(x, \dots) <- value
 }
 \arguments{
   \item{x}{a factor}
