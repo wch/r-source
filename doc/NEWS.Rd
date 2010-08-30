@@ -273,7 +273,7 @@
       \item Package \pkg{utils} now exports and documents functions
       \code{aspell_package_Rd_files()} and
       \code{aspell_package_vignettes()} for spell checking package Rd
-      files and vignettes using Aspell.
+      files and vignettes using Aspell, Ispell or Hunspell.
 
       \item Package news can now be given in Rd format, and
       \code{news()} prefers these \file{inst/NEWS.Rd} files to old-style
