@@ -1,7 +1,8 @@
 
-R version 2.6.0 Under development (unstable) (2007-05-25 r41714)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.12.0 Under development (unstable) (2010-08-18 r52771)
+Copyright (C) 2010 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: i386-pc-mingw32/i386 (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -49,7 +50,9 @@ non-integer value 1e-3 qualified with L; using numeric value
 Warning message:
 integer literal 1.L contains unnecessary decimal point 
 > try(parse(text = "12iL")) # gives syntax error
-Error in parse(text = "12iL") : unexpected symbol in "12iL"
+Error in parse(text = "12iL") : 1:4: unexpected symbol
+1: 12iL
+      ^
 > 
 > 
 > all((0:6) == pi + ((-pi):pi))
@@ -257,6 +260,6 @@ Error in parse(text = "12iL") : unexpected symbol in "12iL"
 > 
 > ## as.list.function() instead of *.default():
 > identical(as.list(as.list),
-+	  alist(x = , ... = , UseMethod("as.list")))
++ 	  alist(x = , ... = , UseMethod("as.list")))
 [1] TRUE
 > 

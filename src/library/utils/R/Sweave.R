@@ -14,6 +14,12 @@
 #  A copy of the GNU General Public License is available at
 #  http://www.r-project.org/Licenses/
 
+# Correspondence between input and output is maintained in two places:
+# Each chunk has a srclines attribute, recording the input lines it corresponds to
+# Each code chunk will have attached srcrefs that duplicate the srclines.
+# We don't need srclines for code, but we do need it for text, and it's easiest
+# to just keep it for everything.
+
 Sweave <- function(file, driver=RweaveLatex(),
                    syntax=getOption("SweaveSyntax"), ...)
 {
@@ -73,8 +79,9 @@ Sweave <- function(file, driver=RweaveLatex(),
             chunkopts <- SweaveParseOptions(chunkopts,
                                             drobj$options,
                                             driver$checkopts)
-            chunk <- NULL
-            chunknr <- chunknr+1
+            chunk <- paste("#line ", linenum+1L, ' "', file, '"', sep="")
+            attr(chunk, "srclines") <- linenum
+            chunknr <- chunknr+1L
             chunkopts$chunknr <- chunknr
         }
         else{
@@ -83,7 +90,11 @@ Sweave <- function(file, driver=RweaveLatex(),
                 if(!(chunkref %in% names(namedchunks)))
                     warning(gettextf("reference to unknown chunk '%s'",
                                      chunkref), domain = NA)
-                line <- namedchunks[[chunkref]]
+                line <- c(namedchunks[[chunkref]],
+                          paste("#line ", linenum+1L, ' "', file, '"', sep=""))
+                #FIXME:  this should really be done through a more general
+                #        mechanism for adding non-executable info to the parse
+                line[1L] <- sub('"$', paste("#from line#", linenum, '#"', sep=""), line[1L])    
             }
             srclines <- c(attr(chunk, "srclines"), rep(linenum, length(line)))
             if(is.null(chunk))
@@ -423,12 +434,17 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
           else
             chunkout <- object$output
 
-	  saveopts <- options(keep.source=options$keep.source)
-	  on.exit(options(saveopts))
-
+	  srcfile <- object$srcfile
           SweaveHooks(options, run=TRUE)
 
-          chunkexps <- try(parse(text=chunk), silent=TRUE)
+          # Note that we edit the error message below, so change both
+          # if you change this line:
+          chunkexps <- try(parse(text=chunk, srcfile=srcfile), silent=TRUE)
+          
+          if (inherits(chunkexps, "try-error"))
+          	chunkexps[1L] <- sub(" parse(text = chunk, srcfile = srcfile) : \n ",
+          	                    "", chunkexps[1L], fixed = TRUE)
+          	                    
           RweaveTryStop(chunkexps, options)
           openSinput <- FALSE
           openSchunk <- FALSE
@@ -441,28 +457,42 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
           srcline <- srclines[1L]
 
 	  srcrefs <- attr(chunkexps, "srcref")
-	  if (options$expand)
-	    lastshown <- 0L
-	  else
-	    lastshown <- srcline - 1L
-	  thisline <- 0
-          for(nce in seq_along(chunkexps))
-            {
-                ce <- chunkexps[[nce]]
-                if (nce <= length(srcrefs) && !is.null(srcref <- srcrefs[[nce]])) {
-                    if (options$expand) {
-                	srcfile <- attr(srcref, "srcfile")
-                	showfrom <- srcref[1L]
-                	showto <- srcref[3L]
-                    } else {
-                    	srcfile <- object$srcfile
-                    	showfrom <- srclines[srcref[1L]]
-                    	showto <- srclines[srcref[3L]]
+	  lastshown <- NA
+	  thisline <- 0L
+	  chunkregexp <- "(.*)#from line#([[:digit:]]+)#"
+          for(nce in seq_along(chunkexps)) {
+ 		ce <- chunkexps[[nce]]
+                if (options$keep.source && nce <= length(srcrefs) && !is.null(srcref <- srcrefs[[nce]])) {
+		    srcfile <- attr(srcref, "srcfile")
+		    showfrom <- srcref[1L]
+		    showto <- srcref[3L]
+		    refline <- srcfile$refline
+                    if (is.null(refline)) {
+                    	if (grepl(chunkregexp, srcfile$filename)) {
+                    	    refline <- as.integer(sub(chunkregexp, "\\2", srcfile$filename))
+                    	    srcfile$filename <- sub(chunkregexp, "\\1", srcfile$filename)
+                    	} else 
+                    	    refline <- NA
+                    	srcfile$refline <- refline
                     }
-                    dce <- getSrcLines(srcfile, lastshown+1, showto)
-	    	    leading <- showfrom-lastshown
-	    	    lastshown <- showto
-                    srcline <- srclines[srcref[3L]]
+                    if (!options$expand && !is.na(refline)) 
+                    	showfrom <- showto <- refline
+                    	
+		    if (!is.na(refline) || is.na(lastshown)) { 
+			# Did we expand a named chunk for this expression or the previous
+			# one?
+			dce <- getSrcLines(srcfile, showfrom, showto)
+			leading <- 1L
+			if (!is.na(refline))
+			    lastshown <- NA
+			else
+			    lastshown <- showto
+		    } else {
+			dce <- getSrcLines(srcfile, lastshown+1L, showto)
+			leading <- showfrom-lastshown
+			lastshown <- showto
+		    }
+                    srcline <- showto
                     while (length(dce) && length(grep("^[[:blank:]]*$", dce[1L]))) {
 	    		dce <- dce[-1L]
 	    		leading <- leading - 1L
@@ -472,14 +502,14 @@ makeRweaveLatexCodeRunner <- function(evalFunc=RweaveEvalWithOpt)
                     leading <- 1L
                 }
                 if(object$debug)
-                  cat("\nRnw> ", paste(dce, collapse="\n+  "),"\n")
+                    cat("\nRnw> ", paste(dce, collapse="\n+  "),"\n")
                 if(options$echo && length(dce)){
                     if(!openSinput){
                         if(!openSchunk){
                             cat("\\begin{Schunk}\n",
                                 file=chunkout, append=TRUE)
-                            linesout[thisline + 1] <- srcline
-                            thisline <- thisline + 1
+                            linesout[thisline + 1L] <- srcline
+                            thisline <- thisline + 1L
                             openSchunk <- TRUE
                         }
                         cat("\\begin{Sinput}",
@@ -944,7 +974,7 @@ RtangleFinish <- function(object, error=FALSE)
     do_exit <- function(status = 0L)
         q("no", status = status, runLast = FALSE)
 
-    if (length(arg) != 1) { Usage(); do_exit(1L) }
+    if (length(arg) != 1L) { Usage(); do_exit(1L) }
     if(arg %in% c("-h", "--help")) { Usage(); do_exit() }
     if(arg %in% c("-v", "--version")) {
         cat("Sweave front-end: ",
@@ -978,7 +1008,7 @@ RtangleFinish <- function(object, error=FALSE)
     do_exit <- function(status = 0L)
         q("no", status = status, runLast = FALSE)
 
-    if (length(arg) != 1) { Usage(); do_exit(1L) }
+    if (length(arg) != 1L) { Usage(); do_exit(1L) }
     if(arg %in% c("-h", "--help")) { Usage(); do_exit() }
     if(arg %in% c("-v", "--version")) {
         cat("Stangle front-end: ",

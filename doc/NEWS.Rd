@@ -337,6 +337,10 @@
 
       Predictions from \code{"loess"} fits are now named from the row
       names of \code{newdata}.
+      
+      \item Parsing errors detected during \code{Sweave()} processing
+      will now be reported referencing their original location in the
+      source file.      
     }
   }
   \subsection{DEPRECATED & DEFUNCT}{
