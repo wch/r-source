@@ -1609,7 +1609,7 @@ R_run_R <- function(cmd, Ropts, env)
         ## Most systems are now on 5.03, but Mac OS 10.5 is 4.17
         ## version 4.21 writes to stdout, 4.23 to stderr
         ## and sets an error status code
-        lines <- system2("file", "--version", TRUE, TRUE)
+        lines <- suppressWarnings(system2("file", "--version", TRUE, TRUE))
         ## a reasonable check -- it does not identify itself well
         have_free_file <-
             any(grepl("^(file-[45]|magic file from)", lines))
@@ -1618,7 +1618,7 @@ R_run_R <- function(cmd, Ropts, env)
             execs <- character()
             for (f in allfiles) {
                 ## watch out for spaces in file names here
-                line <- system2("file", shQuote(f), TRUE, TRUE)
+                line <- suppressWarnings(system2("file", shQuote(f), TRUE, TRUE))
                 if (grepl("executable", line, useBytes=TRUE) &&
                     !grepl("script text", line, useBytes=TRUE))
                     execs <- c(execs, f)
