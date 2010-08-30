@@ -292,8 +292,7 @@ static HANDLE getOutputHandle(const char *fout)
 	    snprintf(RunError, 500, 
 		     "unable to redirect output to '%s'", fout);
 	    return NULL;
-	}
-	return hOUT;
+	} else return hOUT;
     }
     return INVALID_HANDLE_VALUE;
 }
@@ -353,6 +352,8 @@ int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
     int ret = 0;
     PROCESS_INFORMATION pi;
 
+    if (!hOUT || !hERR) return 1;
+
     memset(&pi, 0, sizeof(pi));
     pcreate(cmd, enc, !wait, visible, hIN, hOUT, hERR, &pi);
     if (!pi.hProcess) return NOLAUNCH;
@@ -369,7 +370,7 @@ int runcmd(const char *cmd, cetype_t enc, int wait, int visible,
     } else ret = 0;
     CloseHandle(pi.hProcess);
     if (hIN != INVALID_HANDLE_VALUE) CloseHandle(hIN);
-    if (hOUT != INVALID_HANDLE_VALUE) CloseHandle(hERR);
+    if (hOUT != INVALID_HANDLE_VALUE) CloseHandle(hOUT);
     if (hERR != INVALID_HANDLE_VALUE) CloseHandle(hERR);
     return ret;
 }
