@@ -3175,7 +3175,7 @@ Error in `[.data.frame`(x, 1, c("a", "c")) : undefined columns selected
  [1] $<-           Math          Ops           Summary       [            
  [6] [<-           [[            [[<-          aggregate     anyDuplicated
 [11] as.data.frame as.list       as.matrix     by            cbind        
-[16] dim           dimnames      dimnames<-    dropLevels    duplicated   
+[16] dim           dimnames      dimnames<-    droplevels    duplicated   
 [21] edit          format        formula       head          is.na        
 [26] mean          merge         na.exclude    na.omit       plot         
 [31] print         prompt        rbind         row.names     row.names<-  

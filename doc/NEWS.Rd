@@ -306,7 +306,7 @@
       cases (e.g. where emulation is used and when \file{file} is not in
       the current directory).
 
-      \item New function \code{dropLevels()} to remove unused factor levels.
+      \item New function \code{droplevels()} to remove unused factor levels.
 
       \item \code{system(intern = TRUE)} now gives an error on a
       Unix-alike (as well as on Windows) if \code{command} cannot be
