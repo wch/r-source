@@ -2,7 +2,7 @@ menu .menu
 toplevel .tk-R -menu .menu
 wm protocol .tk-R WM_DELETE_WINDOW {}
 pack [frame .tk-R.toolbar] -anchor n -fill x
-pack [text .tk-R.term -bg white -font 9x15]
+pack [text .tk-R.term -bg white -font [list Courier 14]] -expand true -fill both
 
 ## Implements a "stop button" which sends SIGINT to the R process.
 ## Unfortunately, SIGINTs are not handled gracefully...
