@@ -74,8 +74,8 @@ system2 <- function(command, args = character(),
         if(length(stdout) != 1L) stop("'stdout' must be of length 1")
         if(nzchar(stdout)) {
             command <- if (identical(stdout, stderr))
-                paste(command, ">", stdout, "2>&1")
-            else command <- paste(command, ">", stdout)
+                paste(command, ">", shQuote(stdout), "2>&1")
+            else command <- paste(command, ">", shQuote(stdout))
         }
     }
     if (identical(stderr, FALSE))
@@ -84,7 +84,7 @@ system2 <- function(command, args = character(),
         command <- paste(command, "2>&1")
     } else if(is.character(stderr)) {
         if(length(stderr) != 1L) stop("'stderr' must be of length 1")
-        paste(command, "2>", stderr)
+        paste(command, "2>", shQuote(stderr))
     }
     if(!is.null(input)) {
         if(!is.character(input))
