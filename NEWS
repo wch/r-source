@@ -21,6 +21,10 @@ NEW FEATURES
     o	sessionInfo() gives more detailed platform information,
 	including 32/64-bit and the sub-architecture if one is used.
 
+    o	When building packages from sources it is now possible to
+	create DWARF debugging symbols (dSYM) in each package on
+	Mac OS X by setting PKG_MAKE_DSYM=1 environemnt variable.
+
 
 DEPRECATED & DEFUNCT
 
